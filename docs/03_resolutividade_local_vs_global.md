@@ -1,47 +1,124 @@
-# 03. Decomposição de Resolutividade Local vs. Global no SIA e SIH
+# 03. Acesso local, acesso global e fila: decomposição sem atalhos lógicos
 
-> **Resumo dos Resultados:** Análise de 3.777.420 linhas de fluxo do SIA (2022–2026) e 1.351.138 linhas do SIH (2021–2024) para testar se o PMM-E atua como **Substituição Geográfica** ou **Expansão de Demanda Reprimida**.
+> Este dossiê aprofunda a pergunta levantada pela auditoria: se o programa apenas muda o local do atendimento, o impacto é nulo? A resposta é não, mas o valor e o sinal do impacto dependem de dimensões que a decomposição contábil não observa sozinha.
 
----
+## 1. Três resultados diferentes
 
-## 1. O Modelo de Duas Margens
+Para os residentes do município $m$:
 
-A resposta do cuidado médico é decomposta em duas margens:
+$$Q_{global,m}=Q_{local,m}+Q_{externo,m}$$
 
-$$\Delta Q_{\text{global}} = \underbrace{\Delta Q_{\text{local}}}_{\text{Margem 1: Substituição Local}} + \underbrace{\Delta Q_{\text{externo}}}_{\text{Margem 2: Evasão / Bypass}}$$
+Daí derivam três famílias de resultados:
 
-1. **Resolutividade Local ($R_{\text{local}}$):** Proporção de consultas e exames de moradores de $m$ realizados dentro do próprio território de $m$:
-   $$R_{\text{local}}(m) = \frac{Q_{\text{local}}(m)}{Q_{\text{local}}(m) + Q_{\text{externo}}(m)}$$
-2. **Resolutividade Global ($R_{\text{global}}$):** Volume total de atendimentos especializados recebidos pelos residentes de $m$ por 1.000 habitantes (soma dos atendimentos feitos em $m$ e fora de $m$):
-   $$R_{\text{global}}(m) = \frac{Q_{\text{local}}(m) + Q_{\text{externo}}(m)}{\text{População}(m)} \times 1.000$$
+1. **Localização:** qual parcela do cuidado ocorre perto da residência?
+2. **Quantidade:** quanto cuidado total os residentes recebem?
+3. **Tempo:** quanto esperam entre demanda, encaminhamento e atendimento?
 
----
+O PMM-E pode afetar qualquer combinação dessas margens. “Resolutividade” não deve condensá-las em uma única palavra.
 
-## 2. Resultados Econométricos no Corte $c_1 = 0{,}300$
+## 2. Por que substituição espacial pode ser impacto real
 
-| Desfecho ($Y$) | Janela $h$ | $\tau_1$ Estimado | Erro-Padrão HC1 | Estatística $t$ | $p$-valor Permutação | Veredito |
-|---|---|---:|---:|---:|---:|---|
-| **Resolutividade Local ($R_{local}$)** | $\pm 0{,}015$ | **+0,0758** | 0,0289 | +2,62 | **p = 0,0165** | 🟢 Significativo (+7,6 p.p.) |
-| | $\pm 0{,}020$ | **+0,0590** | 0,0251 | +2,35 | **p = 0,0285** | 🟢 Significativo (+5,9 p.p.) |
-| | $\pm 0{,}025$ | **+0,0465** | 0,0225 | +2,07 | **p = 0,0395** | 🟢 Significativo (+4,7 p.p.) |
-| | $\pm 0{,}030$ | **+0,0474** | 0,0210 | +2,26 | **p = 0,0235** | 🟢 Significativo (+4,7 p.p.) |
-| **Resolutividade Global ($R_{global}$ / 1k hab)** | $\pm 0{,}015$ | +4.519,13 | 6.780,21 | +0,67 | p = 0,1270 | ⚪ Nulo ($p > 0{,}10$) |
-| | $\pm 0{,}020$ | +1.763,90 | 5.891,47 | +0,30 | p = 0,4530 | ⚪ Nulo ($p > 0{,}10$) |
-| | $\pm 0{,}025$ | -139,56 | 5.269,68 | -0,03 | p = 0,9545 | ⚪ Nulo ($p > 0{,}10$) |
-| | $\pm 0{,}030$ | -1.457,51 | 4.778,78 | -0,30 | p = 0,4300 | ⚪ Nulo ($p > 0{,}10$) |
-| **Diagnósticos Precoces Globais / 1k hab** | $\pm 0{,}020$ | +285,31 | 807,10 | +0,35 | p = 0,4825 | ⚪ Nulo ($p > 0{,}10$) |
-| **Consultas Especializadas Globais / 1k hab** | $\pm 0{,}020$ | +1.481,16 | 5.361,43 | +0,28 | p = 0,4800 | ⚪ Nulo ($p > 0{,}10$) |
-| **Resolutividade Cirúrgica no SIH ($R_{cir}$)** | $\pm 0{,}020$ | -0,0012 | 0,0346 | -0,04 | p = 0,9520 | ⚪ Nulo em cirurgias de alta complexidade |
+Se $Q_{local}$ sobe e $Q_{externo}$ cai na mesma magnitude, $Q_{global}$ permanece constante. Ainda assim, podem ocorrer:
 
----
+- menor distância e tempo de viagem;
+- menor custo monetário para paciente e gestor;
+- menos perda de trabalho e necessidade de acompanhante;
+- maior continuidade com a rede local;
+- menor sobrecarga no polo de destino.
 
-## 3. Interpretação Econômica dos Resultados
+Esses são benefícios potenciais. Para chamá-los de impacto, é preciso observar distância, tempo, custo, continuidade ou capacidade liberada — não apenas inferi-los da mudança de prestador.
 
-1. **Substituição Geográfica Pura Comprovada:**
-   * O efeito do PMM-E opera quase que integralmente via **retenção do cuidado local (+7,6 p.p. na taxa de resolutividade municipal)**;
-   * O volume global per capita total não explode, comprovando que a política **não gerou demanda induzida por médicos** com procedimentos desnecessários.
-2. **Impacto Clínico Direto no Paciente:**
-   * Entrega de **97 mil consultas** e **162 mil exames diagnósticos/biópsias por mês** diretamente nas cidades do interior;
-   * Destaque para **51 mil exames de saúde da mulher/mês** (mamografias e colposcopias) e **24 mil exames do aparelho digestivo/mês** (colonoscopias e endoscopias).
-3. **Penosidade e Tempo Poupado:**
-   * A retenção do paciente evita **1,11 milhão de horas de viagem de van por mês** para a população vulnerável.
+## 3. Por que substituição também pode esconder problemas
+
+O mesmo padrão local-externo pode refletir:
+
+- migração de código ou faturamento, sem mudança no percurso real do paciente;
+- cuidado local de qualidade ou escopo diferente;
+- restrição do encaminhamento externo sem capacidade local equivalente;
+- transferência de pacientes de municípios vizinhos para outra rota;
+- tendência temporal coincidente;
+- painel construído com a própria hipótese de substituição.
+
+Logo, “só remanejou” não é sinônimo nem de sucesso nem de fracasso.
+
+## 4. A fila é um estimando próprio
+
+O objetivo legal do PMM-E é reduzir o tempo de espera. Volume e fila não são equivalentes.
+
+- Produção constante pode coexistir com fila menor se a demanda registrada cair, a produtividade aumentar ou a composição mudar.
+- Produção maior pode coexistir com fila maior se a demanda crescer ainda mais.
+- Fila administrativa menor pode refletir cancelamento, recadastramento ou mudança de prioridade.
+- O tempo médio pode melhorar enquanto a cauda piora; por isso mediana e percentis também importam.
+
+A métrica mínima deveria ligar solicitação, especialidade/procedimento, prioridade clínica e atendimento. Sem isso, o projeto não responde ainda à principal meta oficial.
+
+## 5. Auditoria do painel atual
+
+O pipeline procura arquivos origem-destino em diretórios que não existem no repositório. Quando não os encontra, carrega `data/geo8_pmm_resolutividade_painel_municipios.csv`, já pré-compilado.
+
+Na rotina que gera esse tipo de painel:
+
+- consultas, exames e cirurgias adicionais são atribuídos por curso a partir de tabelas de produtividade;
+- 65% da produção adicional é subtraída do fluxo externo;
+- 35% é tratado como expansão;
+- viagens e horas poupadas decorrem dessas mesmas quantidades;
+- QALYs são calculados por fator fixo.
+
+Assim, o painel não separa o que veio do SIA/SIH do que foi acrescentado como premissa. A substituição espacial não pode ser tratada como achado independente.
+
+## 6. Como ler as saídas numéricas existentes
+
+O protótipo reporta aumento de resolutividade local e efeito global não significativo. A leitura correta é limitada:
+
+- o resultado local é influenciado pela produção e substituição adicionadas no painel;
+- no corte 0,300 e janela 0,015, o coeficiente local é +0,0758, mas o erro-padrão robusto é 0,0613 e o $p$ paramétrico é 0,2158; o $p$ de permutação reportado é 0,012;
+- a divergência entre inferências pede validação da permutação e da hipótese nula;
+- o índice conjunto KLK é não significativo no próprio output;
+- o critério de parada para expansão global está reprovado no JSON.
+
+Mesmo se esses resultados viessem de dados integralmente observados, “não significativo” não provaria efeito zero ou ausência de demanda induzida. Seriam necessários intervalos de confiança e testes de equivalência com margem substantiva pré-definida.
+
+## 7. Demanda reprimida e demanda induzida não são opostos observáveis por volume
+
+Um aumento global pode conter simultaneamente:
+
+- necessidade legítima antes não atendida;
+- diagnóstico mais oportuno;
+- repetição ou procedimentos de baixo valor;
+- mudança de registro;
+- atendimento de pacientes atraídos de outras localidades.
+
+Para distinguir essas histórias, o volume deve ser combinado com indicação clínica, duplicidade, continuidade, estágio, tratamento subsequente e resultados. Um efeito global nulo tampouco elimina demanda induzida: aumentos inadequados em um grupo podem ser compensados por quedas em outro.
+
+## 8. Cirurgia: geografia não é caráter da internação
+
+O script atual classifica toda produção cirúrgica local como eletiva e toda produção externa como urgência, sem usar efetivamente `CAR_INT`. Isso cria por construção a narrativa “local=eletiva, externo=urgência”.
+
+A análise válida deve cruzar separadamente:
+
+- município de residência;
+- município e CNES de internação;
+- caráter eletivo/urgência;
+- procedimento e complexidade;
+- transferência;
+- capacidade instalada e data de entrada do especialista.
+
+A presença de 384 registros em Anestesiologia é um fato descritivo interessante, mas não demonstra reativação de salas, aumento de cirurgias ou prevenção de urgências.
+
+## 9. Matriz de interpretação para resultados futuros
+
+| Local | Global | Fila | Interpretação provisória |
+|---|---|---|---|
+| Sobe | Estável | Cai | Acesso mais próximo e mais rápido, sem expansão de volume; avaliar qualidade e custo |
+| Sobe | Estável | Estável | Ganho espacial possível, sem evidência de objetivo de fila |
+| Sobe | Sobe | Cai | Expansão e oportunidade; distinguir necessidade atendida de uso de baixo valor |
+| Sobe | Cai | Sobe | Sinal de risco: localização melhora, mas acesso total e espera pioram |
+| Estável | Sobe | Cai | Expansão sem localização; benefício pode ocorrer em polos regionais |
+
+Nenhuma célula, isoladamente, autoriza um veredito global sobre o programa.
+
+## 10. Veredito atual do eixo
+
+O repositório ainda não estima com dados observados o efeito do PMM-E sobre localização, quantidade ou fila. A formulação defensável é:
+
+> Uma substituição espacial, se confirmada, pode gerar valor mesmo sem expansão do volume. Porém, o painel atual programa parte dessa substituição e não observa o tempo de espera; portanto, não sabemos se houve efeito real na fila nem se o remanejamento beneficiou os pacientes.

@@ -1,10 +1,10 @@
 dominio_clinico,medicos_ativos,consultas_mes,exames_diagnosticos_mes,total_atendimentos_mes,horas_viagem_poupadas_mes,procedimento_exemplo
 Cirurgia e Anestesia,384,15360,34560,49920,224640,Anestesias para cirurgias eletivas e de urgencia no hospital municipal
-Saude da Mulher / Rastreamento,336,28160,51280,79440,334480,"Colposcopias, biopsias cervicais e tratamento de lesoes precursoras"
+Saude da Mulher / Rastreamento,336,28160,51280,79440,334480,Ultrassons mamarios com doppler e puncoes/biopsias por agulha
 Saude Digestiva / Rastreamento,191,9550,24310,33860,165330,Colonoscopias e polipectomias (prevencao de cancer)
 Cirurgia Geral,160,12800,11200,24000,96000,"Pequenas cirurgias, laparoscopias e biopsias cirurgicas"
 Otorrinolaringologia / Diagnostico,125,10000,15000,25000,100000,Videolaringoscopias e rastreamento de tumores de laringe/faringe
-Saude Digestiva / Oncologia,68,5000,3400,8400,42000,Cirurgias do aparelho digestivo e biopsias gastricas
+Saude Digestiva / Oncologia,68,5000,3400,8400,42000,Cirurgias e biopsias colorretais
 Saude da Mulher / Oncologia,53,4770,3180,7950,35775,Cirurgias ginecologicas eletivas e exerese de lesoes
 Cardiologia / Diagnostico,44,2640,7040,9680,43560,Ecocardiogramas com doppler e estratificacao de insuficiencia cardiaca
 Oncologia Cirurgica,37,2220,1665,3885,23310,Estadiamento cirurgico e exerese de tumores

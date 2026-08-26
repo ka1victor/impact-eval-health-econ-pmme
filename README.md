@@ -1,109 +1,121 @@
-# Programa Mais Médicos Especialistas (PMM-E): Avaliação de Impacto e Eficiência em Saúde
+# Programa Mais Médicos Especialistas (PMM-E): agenda de avaliação de impacto
 
-> **Pacote de Replicação e Avaliação Causal** do componente de provimento especializado da Política Nacional de Atenção Especializada em Saúde — Programa *Agora Tem Especialistas* (Lei Federal nº 15.233/2025).
+> Repositório de pesquisa sobre o componente de provimento de especialistas do Programa Agora Tem Especialistas. O projeto está em **fase de auditoria do desenho**: os dados disponíveis já permitem descrever a implantação, mas ainda não sustentam os efeitos causais antes apresentados como resultados consolidados.
 
----
+> [!IMPORTANT]
+> Os números gerados pelo pipeline atual misturam registros observados, painéis pré-compilados e parâmetros definidos no código. Por isso, as estimativas de preenchimento, resolutividade, viagens evitadas, custo-benefício, QALYs, OCI e teleconsulta devem ser lidas como **protótipos ou cenários**, não como evidência de que o programa deu certo ou errado.
 
-> [!WARNING]
-> ### Definição Explicitamente Preliminar de Escopo
-> Esta formulação constitui uma definição **explicitamente preliminar e viva do escopo de pesquisa**, fixada a partir dos primeiros ciclos de microdados federais (2025/2026), sujeita a refinamentos e aprofundamentos metodológicos adicionais conforme novas competências e diretrizes normativas forem incorporadas.
+## A pesquisa em três perguntas que se encadeiam
 
----
+1. **Qual problema o programa tenta resolver?**
+2. **Quais métricas observam cada parte desse problema e quais dados temos para calculá-las?**
+3. **Quais métricas já foram de fato analisadas, o que aprendemos e o que ainda não podemos concluir?**
 
-## 1. Problema de Política Pública e Motivação Oficial
+Essa ordem é substantiva. Não faz sentido escolher um resultado antes de definir qual dimensão do problema ele representa; tampouco faz sentido chamar uma cifra de resultado se ela foi imposta como premissa no próprio código.
 
-* **Nome e Base Legal:** *Programa Mais Médicos Especialistas (PMM-E)* / *Agora Tem Especialistas* (Lei nº 15.233/2025 e Editais SGTES/MS nº 3/2025 e 6/2026).
-* **Período de Execução:** Ciclos de 2025 e 2026 com acompanhamento de microdados mensais de provimento ativo.
-* **Objetivos Oficiais (Art. 2º da Lei nº 15.233/2025):**
-  1. **Redução de Filas e Tempo de Espera:** Acelerar o diagnóstico e o início do tratamento em 6 áreas prioritárias (oncologia, ginecologia, cardiologia, cirurgia geral, ortopedia e oftalmologia/otorrino);
-  2. **Superação de Vazios Assistenciais:** Fixar profissionais em regiões de média e alta vulnerabilidade social sem oferta médica especializada;
-  3. **Integralidade do Cuidado:** Realizar consultas, exames diagnósticos precoces (biópsias, mamografias, endoscopias) e cirurgias eletivas resolutivas localmente, evitando o agravamento clínico do paciente.
-* **Estrutura Salarial:** Escalonamento federal das bolsas pelo Índice de Vulnerabilidade Social (IVS 2010 do IPEA):
-  * **R\$ 10.000/mês** para Faixa 3 (Baixa/Média Vulnerabilidade: $IVS \le 0{,}300$);
-  * **R\$ 15.000/mês** para Faixa 2 (Alta Vulnerabilidade: $0{,}300 < IVS \le 0{,}400$, salto de **+50,0%**);
-  * **R\$ 20.000/mês** para Faixa 1 (Muito Alta Vulnerabilidade: $IVS > 0{,}400$, salto de **+33,3%**).
-* **Dilema Econômico de Política Pública:** Vale mais a pena para o SUS pagar um incentivo financeiro para fixar o especialista no interior ou continuar bancando o transporte sanitário (vans e ambulâncias) de pacientes até os grandes centros? Qual é o piso de incentivo financeiro ótimo para atrair o médico sem gerar sobrepreço aos cofres públicos?
-* **Pergunta de Pesquisa Central:** *Quais os efeitos do Programa Mais Médicos Especialistas sobre os outcomes de saúde dos pacientes e sobre os gastos dos municípios?*
+## 1. Qual problema o programa tenta resolver?
 
----
+A [Lei nº 12.871/2013](https://www2.camara.leg.br/legin/fed/lei/2013/lei-12871-22-outubro-2013-777279-normaatualizada-pl.html) criou o Programa Mais Médicos para reduzir a carência regional de médicos, fortalecer a atenção primária e integrar formação e serviço. Alterações posteriores também incorporaram a qualificação da assistência especializada e a ampliação da especialização em áreas estratégicas.
 
-## 2. Desenho Empírico (Identificação Causal)
+A [Lei nº 15.233/2025](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/l15233.htm) instituiu o Programa Agora Tem Especialistas. Seu art. 1º explicita três objetivos gerais: qualificar e diversificar serviços, ampliar a oferta e reduzir o tempo de espera por consultas, procedimentos e exames especializados. O art. 21 inseriu o Projeto Mais Médicos Especialistas na Lei nº 12.871/2013, destinado ao provimento em regiões prioritárias **com vistas à redução do tempo de espera**.
 
-* **Método (RDD):** Regressão Descontínua no primeiro corte de bolsa do programa: cidades com $IVS \le 0{,}300$ recebem R\$ 10k/mês e cidades com $IVS > 0{,}300$ recebem R\$ 15k/mês (+50%).
-* **Identificação Causal:** O IVS foi calculado pelo IPEA no Censo de 2010 (14 anos antes da criação do programa), sendo imune a manipulação política por prefeitos. Cidades vizinhas ao corte (ex.: $IVS = 0{,}299$ vs. $0{,}301$) são socioeconomicamente idênticas, mudando apenas a remuneração federal.
-* **Validação:** A densidade de municípios em torno do corte é contínua e equilibrada (sem *bunching*), e testes de placebo em cortes falsos ($IVS = 0{,}250$ e $0{,}350$) apresentam efeitos estritamente nulos ($p > 0{,}55$).
+Para este projeto, o problema é organizado em uma cadeia, não em quatro resultados independentes:
 
----
-
-## 3. Evidências Empíricas Robustas (Logo Acima vs. Logo Abaixo do Corte)
-
-| Dimensão Avaliada | Logo Abaixo ($IVS \le 0{,}300$, R\$ 10k) | Logo Acima ($IVS > 0{,}300$, R\$ 15k) | Efeito Causal Líquido (Salto no Corte) |
-|---|:---:|:---:|:---:|
-| **1. Atração Médica** | 48,0% de preenchimento | 83,5% de preenchimento | **+35,5 p.p.** ($\varepsilon = 1{,}48$, $p < 0{,}0001$) |
-| **2. Resolutividade Local** | 38,0% retido na cidade | 72,0% retido na cidade | **+34,0 p.p.** ($p = 0{,}0165$) |
-| **3. Outcomes de Saúde (SIA/SIH)** | Vacância de 52% e fila regional | Atendimento e biópsia no hospital local | **Dobro de exames locais e substituição de urgências por cirurgias eletivas** |
-| **4. Economia de Gastos** | Gasto contínuo com transporte | 140 viagens de van evitadas/mês | **Razão Benefício-Custo de 2,4x** (saldo de +R\$ 6,9 mil/mês por município) |
-
----
-
-## 4. Os 4 Achados Inesperados e Contra-Intuitivos
-
-1. **O Colapso da Elasticidade Salarial (Pagar R\$ 20k não atrai muito mais que R\$ 15k):**
-   * Pagar R\$ 20k/mês tem retorno marginal quase nulo (+9,1 p.p., $\varepsilon = 0{,}31$) comparado ao primeiro degrau (+35,5 p.p., $\varepsilon = 1{,}48$). Acima de R\$ 15k/mês, o gargalo deixa de ser salário e vira infraestrutura física, isolamento geográfico e escolas para os filhos dos médicos.
-2. **O Paradoxo da Retenção (Cidades de R\$ 20k perdem médicos mais rápido):**
-   * Cidades com a maior bolsa (R\$ 20k) perdem médicos mais rápido aos 6 meses ($\tau = -4{,}4\text{ p.p.}$, $p = 0{,}013$) pela precariedade extrema de condições de trabalho em municípios com $IVS > 0{,}400$ sem suporte diagnóstico básico.
-3. **A Ausência de Demanda Induzida por Médicos:**
-   * O programa gerou **substituição geográfica quase pura**: a realização de exames locais aumentou exatamente na mesma proporção em que as viagens para fora caíram, sem inflar artificialmente o volume total per capita de exames supérfluos.
-4. **O Gargalo Oculto do SUS (O problema não era prédio, era Anestesista):**
-   * A chave mestra do programa foi a alocação de **384 anestesiologistas (>25% do total)**, que destravaram centros cirúrgicos municipais preexistentes que estavam ociosos e paralisados por falta do profissional habilitado.
-
----
-
-## 📁 Estrutura do Repositório
-
-```
-impact-eval-health-econ-pmme/
-├── README.md                                    <- Síntese estruturada do paper e evidências
-├── LICENSE                                      <- Licença MIT
-├── requirements.txt                             <- Dependências Python (numpy, scipy, pandas)
-├── .gitignore                                   <- Filtro de arquivos temporários e caches
-├── run_all.py                                   <- Executa o pipeline completo em ~30 segundos
-├── CLAUDE.md & AGENTS.md                        <- Diretrizes metodológicas e governança
-├── TODO.md                                      <- Fila de pesquisa e próximos passos
-├── docs/
-│   ├── 01_dossie_e_motivacao_politica_publica.md <- Base normativa (Lei 15.233), IVS e achados
-│   ├── 02_resultados_rdd_e_elasticidades.md      <- Tabelas completas de RDD no 1º estágio e placebos
-│   ├── 03_resolutividade_local_vs_global.md     <- Decomposição SIA/SIH de fluxo e retenção
-│   ├── 04_auditoria_financeira_e_custo_beneficio.md <- Avaliação de custos, SIOPS e BCR de 2,4x
-│   ├── 05_agora_tem_especialistas_e_teleconsulta.md <- OCI Grupo 09 e teleconsulta (beta = -0,11)
-│   └── 06_metodologia_e_limitacoes.md           <- Regras econométricas, proveniência e defesas
-├── data/
-│   ├── pmm_especialistas_nominal.csv            <- 1.480 médicos ativos em 325 municípios
-│   ├── pmm_especialistas_serie_historica.csv    <- 7.276 registros mensais (2025-2026)
-│   ├── ivs_ipea_2010_municipios.csv             <- 5.565 municípios do IPEA
-│   └── geo8_pmm_resolutividade_painel_municipios.csv <- Painel compilado de fluxo municipal
-├── scripts/
-│   ├── 01_estima_rdd_completo.py                <- Motor econométrico de primeiro estágio
-│   ├── 02_estima_resolutividade_local_global.py <- Motor de fluxo e resolutividade SIA/SIH
-│   ├── 03_analise_descritiva_pacientes.py       <- Tabelas clínicas e horas de viagem poupadas
-│   └── 04_teste_teleconsulta_e_grupo09.py       <- Validação de teleconsulta e Grupo 09
-└── output/
-    ├── geo8_pmm_especialistas_rdd_completo.json <- Resultados numéricos do RDD
-    ├── geo8_pmm_resolutividade_global_local_resultados.json <- Decomposição de resolutividade
-    ├── geo8_pmm_descritiva_pacientes.json       <- Relatório clínico detalhado
-    └── geo8_pmm_descritiva_tabela_pacientes.csv <- Tabela descritiva por domínio clínico
+```text
+escassez/distribuição de especialistas
+        ↓
+capacidade efetivamente disponível
+        ↓
+acesso, deslocamento e tempo de espera
+        ↓
+continuidade, qualidade e desfechos clínicos
+        ↓
+custos públicos e bem-estar dos pacientes
 ```
 
----
+Cada seta é uma hipótese causal a ser testada. Mais médicos não implicam automaticamente mais capacidade; mais produção local não implica automaticamente fila menor; fila menor não implica automaticamente melhor saúde.
 
-## 🚀 Como Reproduzir os Resultados
+Também não tratamos como fato estabelecido que a expansão da atenção primária “criou” um segundo gargalo, que pacientes viajam necessariamente de van ou que centros cirúrgicos estavam ociosos por falta de anestesista. Essas são hipóteses plausíveis, mas exigem dados próprios.
 
-Para executar todo o pipeline econométrico de ponta a ponta:
+## 2. Quais métricas temos e o que elas podem avaliar?
+
+| Eixo | Métrica principal | O que ela responde | Situação no repositório | O que ela não responde sozinha |
+|---|---|---|---|---|
+| **Provimento** | Vagas ofertadas, preenchidas e entrada em exercício | A bolsa altera a ocupação das vagas oferecidas? | **Parcial:** há cadastro nominal de ativos; falta a lista completa de vagas e candidatos | Não mede aumento líquido da oferta municipal nem fila |
+| **Retenção e capacidade** | Sobrevivência do médico no posto; FTE observado no CNES | O profissional permanece e adiciona horas de trabalho? | **Parcial:** há série mensal agregada; FTE é presumido no script | Não mede produção, qualidade ou substituição de outro vínculo |
+| **Acesso espacial** | Atendimentos locais, externos e taxa de bypass | O cuidado migrou para mais perto do paciente? | **Não identificado:** o painel disponível incorpora produção e substituição parametrizadas | Não mede espera, necessidade atendida ou qualidade |
+| **Acesso global e fila** | Atendimentos totais por residente; tempo entre solicitação e atendimento | O total atendido aumentou e a espera caiu? | **Não avaliado:** não há microdado de fila/regulação no repositório | Total estável não prova fila estável; fila menor pode refletir mudança de registro |
+| **Linha de cuidado** | Tempo diagnóstico-terapia, estadiamento, eletivas e urgências | O acesso mais rápido mudou a trajetória clínica? | **Não avaliado** | Volume de exames não equivale a diagnóstico precoce ou saúde melhor |
+| **Custos e bem-estar** | Custo incremental, transporte observado, tempo de viagem e efeitos clínicos | O benefício social excede o custo de oportunidade? | **Cenário parametrizado** | Economia municipal não é automaticamente economia consolidada do SUS |
+| **OCI e teleconsulta** | Migração de códigos, coortes e gradiente de distância | Mudou a capacidade ou apenas o registro? A distância física é um mecanismo? | **Protótipo:** as cifras centrais estão fixadas no código | Não valida, por si só, o efeito do PMM-E |
+
+O inventário completo, incluindo definição, denominador, unidade e ameaça de interpretação de cada métrica, está em [docs/01_dossie_e_motivacao_politica_publica.md](docs/01_dossie_e_motivacao_politica_publica.md).
+
+## 3. O que já analisamos e o que foi surpreendente?
+
+### O que é observado
+
+O arquivo nominal contém, na referência de 12 de agosto de 2026:
+
+- **1.480 registros de profissionais ativos**, correspondentes a 1.478 combinações únicas de UF e CRM;
+- **325 municípios** e **518 estabelecimentos CNES**;
+- **384 registros em Anestesiologia**, a maior categoria do arquivo;
+- 7.276 registros município-curso-competência na série histórica, entre dezembro de 2025 e agosto de 2026.
+
+Isso descreve **onde e em que cursos aparecem participantes ativos**. Não mede taxa de preenchimento, retenção individual, adicional líquido de médicos, cirurgias destravadas ou efeito sobre a fila.
+
+### O resultado mais importante da auditoria
+
+O achado surpreendente até aqui é metodológico: vários resultados que pareciam extremamente precisos são produzidos pelas próprias premissas do pipeline.
+
+- As taxas de preenchimento de 48%, 88% e 94% são atribuídas por faixa de IVS no código; o RDD recupera em grande parte essa regra.
+- A produção mensal por especialista, a substituição de 65% do atendimento externo, as viagens evitadas, o custo de R$ 85 e os QALYs são parâmetros, não desfechos observados.
+- O painel de resolutividade carregado na execução já contém essas transformações; os microdados origem-destino do SIA e do SIH não estão no repositório.
+- As cifras de OCI e os coeficientes de teleconsulta usados no script estão fixados no código; não são estimados nessa execução.
+- Os $p$-valores de permutação do primeiro script e alguns exemplos textuais podem variar entre execuções porque nem todas as fontes de aleatoriedade/ordenação estão fixadas.
+
+Portanto, **ainda não há um efeito causal validado do PMM-E neste repositório**. Essa conclusão não diz que o programa não teve efeito; diz que o desenho atual não distingue as explicações concorrentes.
+
+### Por que “só remanejou” não significa “impacto nulo”
+
+Se o atendimento total dos residentes permanecer constante e uma parcela passar a ocorrer no próprio município, podem existir ganhos reais de tempo, custo de deslocamento, continuidade e conveniência. Mas o mesmo padrão também é compatível com fila inalterada, qualidade diferente, mudança de codificação ou apenas redistribuição de faturamento.
+
+Da mesma forma, um total global estatisticamente indistinguível de zero não prova igualdade: pode refletir baixa potência. E não rejeitar aumento global não descarta demanda induzida. Para afirmar redução de fila, precisamos observar a fila ou uma proxy temporal validada; para afirmar ganho de saúde, precisamos observar a linha de cuidado ou desfechos clínicos.
+
+A análise eixo a eixo está em [docs/07_auditoria_logica_transversal.md](docs/07_auditoria_logica_transversal.md).
+
+## Regra de linguagem a partir desta auditoria
+
+O projeto passa a usar quatro níveis de afirmação:
+
+- **Observado:** calculado diretamente de registros presentes e auditáveis;
+- **Estimado:** produzido por desenho identificador válido e dados observados;
+- **Cenário:** resultado que depende de parâmetros explicitados;
+- **Hipótese:** mecanismo plausível ainda não distinguido empiricamente.
+
+“Comprovou”, “descartou”, “funcionou” e “fracassou” ficam reservados para casos em que o estimando, o contraste e as hipóteses de identificação sustentem a afirmação.
+
+## Estrutura do repositório
+
+```text
+README.md                                  síntese das três perguntas
+TODO.md                                    fila orientada pelas lacunas da auditoria
+docs/01_dossie_e_motivacao_politica_publica.md
+docs/02_resultados_rdd_e_elasticidades.md
+docs/03_resolutividade_local_vs_global.md
+docs/04_auditoria_financeira_e_custo_beneficio.md
+docs/05_agora_tem_especialistas_e_teleconsulta.md
+docs/06_metodologia_e_limitacoes.md
+docs/07_auditoria_logica_transversal.md     crítica transversal do projeto
+scripts/                                   pipeline atual, ainda exploratório
+output/                                    saídas reproduzíveis do pipeline atual
+```
+
+## Execução
 
 ```bash
-# 1. Instalar dependências
 pip install -r requirements.txt
-
-# 2. Executar o pipeline completo (3 etapas em ~30s)
 python run_all.py
 ```
+
+Executar o pipeline reproduz suas saídas numéricas; **não transforma premissas em evidência observada**. A próxima etapa, deliberadamente separada desta auditoria, será decidir como redesenhar e limitar o escopo empírico.

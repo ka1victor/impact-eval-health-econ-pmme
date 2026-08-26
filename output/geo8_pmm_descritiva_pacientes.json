@@ -21,7 +21,7 @@
       "exames_diagnosticos_mes": 51280,
       "total_atendimentos_mes": 79440,
       "horas_viagem_poupadas_mes": 334480,
-      "procedimento_exemplo": "Colposcopias, biopsias cervicais e tratamento de lesoes precursoras"
+      "procedimento_exemplo": "Ultrassons mamarios com doppler e puncoes/biopsias por agulha"
     },
     {
       "dominio_clinico": "Saude Digestiva / Rastreamento",
@@ -57,7 +57,7 @@
       "exames_diagnosticos_mes": 3400,
       "total_atendimentos_mes": 8400,
       "horas_viagem_poupadas_mes": 42000,
-      "procedimento_exemplo": "Cirurgias do aparelho digestivo e biopsias gastricas"
+      "procedimento_exemplo": "Cirurgias e biopsias colorretais"
     },
     {
       "dominio_clinico": "Saude da Mulher / Oncologia",

@@ -1,59 +1,103 @@
-# 04. Auditoria de Gastos Públicos, Despesa Municipal e Análise Custo-Benefício
+# 04. Custos, transporte e bem-estar: do cenário à avaliação econômica
 
-> **Resumo dos Resultados:** Demonstração metodológica de por que a despesa agregada do SIOPS é inadequada para identificação causal e estruturação da análise de custo-benefício financeiro e social.
+> Este dossiê separa três perguntas frequentemente misturadas: quem paga, quais recursos reais são usados e qual valor é gerado para pacientes e sociedade.
 
----
+## 1. Perspectivas diferentes produzem saldos diferentes
 
-## 1. Por que o Gasto Agregado no SIOPS Falha
+| Perspectiva | Custos relevantes | Benefícios relevantes |
+|---|---|---|
+| Federal | Bolsa, administração e supervisão | Eventual redução de outros gastos federais |
+| Municipal | Transporte, regulação e contrapartidas | Recursos locais liberados e menor operação logística |
+| SUS consolidado | Custos reais de todos os entes, sem dupla contagem de transferências | Capacidade liberada, menor uso evitável e saúde |
+| Social | Todos os recursos reais e custos de oportunidade | Tempo, deslocamento, saúde, equidade e produtividade |
 
-Tentar estimar efeitos causais sobre o gasto total de saúde dos municípios no SIOPS incorre em três falhas metodológicas:
+Uma despesa federal maior e uma despesa municipal menor podem ser redistribuição fiscal. Só há economia social quando recursos reais deixam de ser usados ou são empregados de forma mais valiosa.
 
-1. **Inércia do Piso Constitucional (CF/88):**
-   * Prefeituras são obrigadas a aplicar no mínimo **15% da receita em saúde**;
-   * Se o município economiza com combustível de vans ou recebe uma bolsa federal, o orçamento total **não cai**; o recurso é compulsoriamente remanejado para medicamentos, postos ou folha de outros servidores.
-2. **Fungibilidade Total dos Fundos de Saúde (LC 172/2020 e LC 197/2022):**
-   * Os saldos municipais são flexíveis entre blocos de custeio, e o SIOPS não discrimina a linha contábil específica de "van de saúde para a capital".
-3. **Dose Marginal vs. Ruído Orçamentário Agregado:**
-   * Um município de 30 mil habitantes opera orçamento anual de **R\$ 40 a 60 milhões**;
-   * A economia de transporte (R\$ 120 mil/ano) representa **menos de 0,2% da despesa total**, sendo engolida pelo erro-padrão de flutuações anuais.
+## 2. Se o orçamento não cai, o impacto é nulo?
 
----
+Não. O piso constitucional e a fungibilidade podem fazer a economia de transporte reaparecer em medicamentos, pessoal ou outro serviço. Isso é **realocação**, não desaparecimento do benefício.
 
-## 2. A Identificação Financeira por Microdados do SIA e SIH
+Mas não se deve afirmar que a prefeitura economizou ou que o SUS “se pagou” sem observar:
 
-A análise de custos ancora-se em microdados de faturamento direto por paciente:
+- se a viagem foi de fato cancelada;
+- se o veículo continuou operando com outros pacientes;
+- qual parcela do custo era variável e evitável;
+- para onde o recurso foi realocado;
+- se o novo uso produziu valor adicional.
 
-| Dimensão Financeira | Fonte Oficial de Dados | O que registra exatamente | Papel na Avaliação Econômica |
-|---|---|---|---|
-| **Custo Federal da Bolsa** | Editais SGTES/MS e Folha Federal | R\$ 10k, R\$ 15k (+50%) ou R\$ 20k (+33%) por médico/mês | Custo fiscal direto do tratamento ($C_{\text{bolsa}}$) |
-| **Faturamento Ambulatorial Local** | SIA-PA (`VAL_PROD` / `VL_APROVADO`) | Valor em reais pago por cada consulta e biópsia realizada em $m$ | Expansão de produção especializada local ($Q_{\text{local}} \times P_{\text{SUS}}$) |
-| **Faturamento Ambulatorial Externo** | SIA-PA por par Residência $\neq$ Prestador | Valor em reais que deixa de ser faturado nos hospitais polos da capital | Redução do desembolso em centros terciários |
-| **Gasto Hospitalar de Urgência** | SIH-RD (`VAL_TOT` da AIH) | Custo em reais de internações cirúrgicas e diárias de UTI | Economia com hospitalizações graves evitadas |
-| **Custo de Transporte Evitado** | SIA (Pares Origem-Destino) $\times$ Parâmetro de Viagem | Pacientes que deixaram de viajar $\times$ Custo de van/combustível/diária | Benefício econômico logístico ($B_{\text{transporte}} = \Delta \text{Bypass} \times \text{R\$ } 85$) |
+Combustível pode ser evitável no curto prazo; depreciação, contrato de frota e salário do motorista podem não ser. Custo médio e custo marginal são diferentes.
 
----
+## 3. O BCR atual é um cenário determinístico
 
-## 3. Análise Custo-Benefício Direta (Eficiência Logística)
+O cálculo de 2,38x usa:
 
-Para um município típico do interior com 25.000 habitantes localizado a 65 km do polo regional:
+$$
+BCR=\frac{140\text{ viagens/mês}\times R\$85}{R\$5.000}=2,38
+$$
 
-* **Custo Incremental Federal da Bolsa:** R\$ 5.000,00/mês por médico (R\$ 60.000,00/ano);
-* **Viagens de Van Evitadas (SIA):** ~120 a 140 pacientes/mês que deixam de ser transportados;
-* **Custo Médio da Viagem Intermunicipal:** R\$ 85,00 por paciente (ida e volta de 130 km + combustível + manutenção + diária);
-* **Economia Direta de Transporte Sanitário:** $140 \times \text{R\$ } 85 = \mathbf{\text{R\$ } 11.900,00/\text{mês}}$ (R\$ 142.800,00/ano);
-* **Economia Fiscal Líquida para o SUS:** $\text{R\$ } 11.900 - \text{R\$ } 5.000 = \mathbf{\text{R\$ } 6.900,00/\text{mês por município}}$ (+R\$ 82.800,00/ano);
-* **Razão Benefício-Custo Direta (BCR):**
-  $$\text{BCR} = \frac{\text{R\$ } 11.900}{\text{R\$ } 5.000} = \mathbf{2{,}38\text{x}}$$
-  *(Para cada R\$ 1,00 investido no incremento da bolsa federal, o SUS economiza R\$ 2,38 em logística municipal de transporte).*
+As 140 viagens e os R$ 85 são parâmetros fixos; não vêm de rotas ou despesas observadas no repositório. Além disso:
 
----
+- 140 atendimentos externos a menos não significam 140 viagens de van a menos;
+- pacientes compartilham veículos;
+- uma viagem pode atender múltiplas especialidades;
+- o custo incremental da bolsa depende da comparação relevante e do número de profissionais;
+- o benefício municipal e o custo federal pertencem a caixas diferentes;
+- redução de faturamento em um polo não é necessariamente economia, pois o polo pode usar a capacidade liberada.
 
-## 4. Análise Custo-Benefício Social Ampliada (Ganhos Clínicos e QALYs)
+Portanto, 2,38x é uma **ilustração de break-even**, não um resultado causal.
 
-Incorporando os anos de vida ajustados por qualidade (QALYs) gerados pelo diagnóstico precoce de câncer e cardiopatias:
+## 4. Uma forma útil de preservar o cenário: análise de limiar
 
-* **QALYs Gerados por Especialista:** ~112 QALYs/ano (biópsias mamárias/cervicais precoces e estratificação cardiológica);
-* **Valor Social da Saúde Produzida (Parâmetro CONITEC/OMS):** R\$ 50.000,00 por QALY ganho $\implies$ **R\$ 5.600.000,00/ano por município**;
-* **Benefício Social Total:** $\text{R\$ } 5.600.000 + \text{R\$ } 122.400 = \mathbf{\text{R\$ } 5.722.400,00/\text{ano por município}}$;
-* **Razão Benefício-Custo Social Ampliada:**
-  $$\text{BCR}_{\text{social}} = \frac{\text{R\$ } 5.722.400}{\text{R\$ } 60.000} = \mathbf{95{,}4\text{x}}$$
+Em vez de afirmar que o programa se paga, o cenário pode responder:
+
+> Quantas viagens-equivalentes precisam ser evitadas para cobrir um adicional mensal de R$ 5 mil?
+
+Com custo variável de R$ 85 por paciente-viagem, o limiar é:
+
+$$
+N^*=\frac{5.000}{85}\approx 59
+$$
+
+Esse número continua dependendo de R$ 85 e da unidade “paciente-viagem”, mas explicita a pergunta e permite sensibilidade. Se o custo marginal for R$ 30, seriam necessárias cerca de 167 viagens-equivalentes; se for R$ 150, cerca de 34.
+
+## 5. Tempo do paciente é benefício, mas precisa ser observado
+
+Mesmo quando a van continua rodando, atendimento mais próximo pode poupar horas do paciente e do acompanhante. Esse benefício não aparece necessariamente no orçamento.
+
+A medida exige:
+
+- origem e destino efetivos;
+- modo de transporte;
+- tempo porta a porta;
+- frequência;
+- acompanhante;
+- valor do tempo apropriado à análise distributiva.
+
+As 1,11 milhão de horas mensais do output são produzidas por tempos fixos multiplicados pela produtividade presumida de cada curso. Não devem ser descritas como horas observadas ou poupadas.
+
+## 6. QALYs e o risco de amplificar premissas
+
+O BCR social de 95,4x parte de 350 diagnósticos novos, 0,32 QALY por diagnóstico e R$ 50 mil por QALY. Nenhum dos dois primeiros elementos é estimado nos dados atuais.
+
+Quando um mecanismo clínico não observado é multiplicado por uma valoração monetária, a precisão aparente aumenta enquanto a base empírica não muda. Antes de monetizar, é necessário estimar:
+
+1. diagnósticos incrementais, não produção presumida;
+2. mudança de estágio ou tempo de tratamento;
+3. efeito sobre duração e qualidade de vida;
+4. horizonte, desconto e incerteza;
+5. risco de dupla contagem com benefícios de produção e transporte.
+
+## 7. SIOPS: inadequação para uma pergunta não elimina todas as perguntas fiscais
+
+O gasto agregado pode ser ruidoso para detectar transporte. Isso não autoriza dizer que o SIOPS é inútil ou que a economia está comprovada por fluxos físicos. Ele pode servir para:
+
+- descrever composição e restrições orçamentárias;
+- testar se houve realocação entre funções;
+- contextualizar a materialidade do programa;
+- validar ordens de grandeza de gastos locais.
+
+A escolha da fonte deve seguir o estimando: custo marginal de rota pede microcusteio; execução orçamentária pede contabilidade; benefício social pede ambos mais resultados clínicos.
+
+## 8. Veredito atual do eixo
+
+> O pipeline contém cenários úteis para formular limiares, mas não uma análise de custo-benefício empírica. Uma possível substituição espacial pode gerar ganhos de tempo e recursos mesmo sem reduzir o orçamento total; a magnitude, a incidência e o benefício líquido permanecem não avaliados.
