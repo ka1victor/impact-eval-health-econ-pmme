@@ -2,6 +2,8 @@
 
 > Plano de trabalho para o objetivo central do projeto. Ele organiza dependências; não antecipa resultados nem fixa RDD antes de auditar a regra institucional.
 
+O primeiro estudo foi restringido à eficácia operacional do incentivo: cobertura sustentada, seus mecanismos, adicionalidade e uma heterogeneidade pré-especificada por infraestrutura anterior. A definição e os limites estão em [`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md). As demais frentes abaixo formam a agenda posterior e não integram a conclusão do estudo prioritário.
+
 ## 1. Visão geral
 
 ```text
@@ -61,9 +63,10 @@ Estimar o primeiro estágio real da política.
 
 ### Outputs
 
+- cobertura da vaga nos primeiros 180 dias, outcome primário;
 - probabilidade de preenchimento;
 - tempo até entrada;
-- retenção em 6/12 meses;
+- saída, vacância posterior e rotatividade em 180 dias;
 - FTE líquido municipal e regional.
 
 ### Portão
@@ -179,11 +182,12 @@ O IVS 2010 continuará sendo a running variable canônica quando a regra institu
 
 ## 10. Ordem prática das próximas sessões
 
-1. Fechar WP0 e o dicionário de vagas.
-2. Resolver identidade longitudinal e CNES no WP1.
-3. Produzir primeiro estágio e análise de potência.
-4. Adquirir fila e SIA/SIH em paralelo, sem estimar antes da harmonização.
-5. Escolher duas linhas clínicas prioritárias após avaliar cobertura.
-6. Só então iniciar custos e síntese.
+1. Fechar WP0 e determinar se o contraste identifica participação, pacote ou incentivo marginal.
+2. Obter o universo de vagas e reconstruir trajetórias de 180 dias.
+3. Resolver identidade longitudinal e CNES para FTE, vínculos anteriores e infraestrutura prévia.
+4. Definir a mínima mudança substantivamente relevante e executar análise de potência.
+5. Pré-especificar outcome primário, decomposição, uma heterogeneidade confirmatória e regras de linguagem.
+6. Estimar o efeito sobre cobertura sustentada e só então decompor os modos de falha.
+7. Tratar remanejamento inicialmente como decomposição contábil; ampliar a identificação apenas se os dados sustentarem.
 
-O primeiro produto publicável deve ser a avaliação de provimento/retenção. O produto central de política será a avaliação de espera e acesso, condicionada à obtenção dos dados de regulação.
+Fila, produção, clínica e custos ficam adiados até a conclusão desse produto. O primeiro produto publicável será a avaliação de quando o incentivo produz capacidade médica sustentada e adicional.

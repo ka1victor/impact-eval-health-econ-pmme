@@ -2,6 +2,8 @@
 
 > Este documento define o que o projeto quer medir antes de escolher método ou produzir resultados. O foco é o efeito do componente de provimento do PMM-E, não o efeito agregado de todas as frentes do Agora Tem Especialistas.
 
+Na agenda completa, espera e acesso são os outcomes mais próximos do objetivo legal. No primeiro estudo, deliberadamente reduzido, o outcome primário será cobertura sustentada da vaga em 180 dias. Essa escolha mede eficácia operacional do provimento e não substitui espera por uma proxy. Veja [`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md).
+
 ## 1. Pergunta central
 
 O provimento de especialistas em regiões prioritárias aumenta a capacidade efetiva do SUS e melhora o acesso oportuno à atenção especializada? Se sim, por quais mecanismos, para quais pacientes e a que custo?

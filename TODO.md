@@ -6,6 +6,22 @@
 - [x] Preservar as três bases observadas e o histórico do Git.
 - [x] Reorganizar o projeto em torno da cadeia de outcomes.
 - [x] Criar um inventário reprodutível de dados e lacunas.
+- [x] Definir o primeiro estudo como avaliação da eficácia operacional do incentivo.
+- [x] Definir cobertura sustentada em 180 dias como outcome primário.
+- [x] Formalizar modos de falha e limites da conclusão.
+
+## Estudo prioritário — eficácia operacional
+
+- [ ] Auditar se o contraste institucional identifica participação, pacote ou incentivo marginal.
+- [ ] Obter o universo de vagas e seus denominadores por chamamento.
+- [ ] Construir spells de oferta, aceite, entrada, afastamento e saída.
+- [ ] Confirmar janela comum de 180 dias ou reduzi-la antes de observar resultados.
+- [ ] Construir `cobertura_180`, preenchimento, tempo até entrada, vacância e rotatividade.
+- [ ] Vincular CNES mensal para FTE, vínculos anteriores e infraestrutura pré-programa.
+- [ ] Definir a mínima mudança de cobertura relevante e avaliar potência.
+- [ ] Pré-especificar infraestrutura anterior como única heterogeneidade confirmatória.
+- [ ] Separar expansão líquida, substituição e remanejamento.
+- [ ] Reportar um perfil de efeitos, sem índice binário de sucesso.
 
 ## WP0 — Regra, população e exposição
 

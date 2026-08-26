@@ -4,9 +4,11 @@
 
 - Organize toda análise pela cadeia: implementação → força de trabalho → capacidade → acesso → saúde → custos/bem-estar → equidade e spillovers.
 - Comece pelo outcome e pelo estimando; só depois escolha método e base.
+- No estudo prioritário, use cobertura sustentada em 180 dias como outcome primário e trate preenchimento, permanência, rotatividade e FTE como decomposição.
 - Não trate vínculo cadastrado, produção, acesso, espera e saúde como sinônimos.
 - Não classifique um eixo inteiro como sucesso ou fracasso com base em uma única métrica intermediária.
 - Separe expansão líquida de substituição, remanejamento, migração cadastral e deslocamento de pacientes.
+- Não defina grupos causais comparando retrospectivamente casos que deram certo e errado; heterogeneidades devem usar condições pré-tratamento.
 
 ## Dados e proveniência
 
@@ -22,6 +24,7 @@
 - O uso de RDD depende de demonstrar a regra efetiva de elegibilidade/alocação, o cutoff, o primeiro estágio e a ausência de manipulação relevante.
 - Se a implantação não gerar uma descontinuidade válida, escolha outro desenho coerente com a variação observada e registre a mudança de escopo.
 - Reporte estimando, população, período, unidade, contraste, incerteza, diagnósticos e limitações.
+- Diga se o contraste identifica participação no PMM-E, um pacote de regras ou apenas o incentivo marginal.
 - Resultados descritivos devem ser chamados de descritivos; associações não devem receber linguagem causal.
 
 ## Execução

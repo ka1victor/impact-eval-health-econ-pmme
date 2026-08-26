@@ -8,6 +8,14 @@ Por isso, a pergunta central não é apenas quantos médicos aparecem no program
 
 O projeto está na fase de desenho e prontidão dos dados. Ainda não há resultado causal validado. O pipeline atual produz somente um inventário auditável das bases observadas; números de sessões anteriores que dependiam de dados simulados, premissas não documentadas ou inferências incompatíveis com as bases disponíveis foram removidos dos arquivos correntes. O histórico do Git foi preservado.
 
+## Escopo empírico prioritário
+
+> Quando o incentivo adicional do PMM-E transforma vagas ofertadas em capacidade médica sustentada e líquida, e quando resulta apenas em ocupação transitória, substituição ou remanejamento?
+
+O estudo prioritário avaliará **eficácia operacional do provimento**. O outcome primário será a proporção dos primeiros 180 dias após a oferta em que a vaga permaneceu coberta, com decomposição em preenchimento, entrada, permanência, rotatividade e FTE líquido. Infraestrutura anterior ao programa será a heterogeneidade confirmatória.
+
+Isso não equivale a avaliar a eficácia global do PMM-E. Produção, espera, saúde e bem-estar são níveis posteriores da cadeia e permanecerão fora da conclusão desse primeiro estudo. A validação crítica do escopo está em [docs/04_escopo_eficacia_operacional.md](docs/04_escopo_eficacia_operacional.md).
+
 ## A cadeia de efeitos que queremos testar
 
 O programa precisa atravessar uma sequência para produzir bem-estar:
@@ -31,7 +39,7 @@ Cada seta é uma hipótese empírica. Observar uma etapa não autoriza concluir 
 | Retenção e duração | Série agregada mensal por município entre dez/2025 e ago/2026 | Identificador longitudinal, desligamentos, transferências e carga horária | Não mensurável |
 | Oferta líquida de trabalho | Contagem de vínculos ativos | Horas/FTE, vínculos anteriores, substituições e demais vínculos CNES | Não mensurável |
 | Produção e capacidade | Nenhuma base assistencial no repositório | SIA/SUS, SIH/SUS, CNES e definição de procedimentos-alvo | Não mensurável |
-| Acesso e tempo de espera | Nenhuma base de regulação no repositório | Fila, pedidos, agendamentos, atendimento, cancelamento e prioridade clínica | Não mensurável — outcome primário |
+| Acesso e tempo de espera | Nenhuma base de regulação no repositório | Fila, pedidos, agendamentos, atendimento, cancelamento e prioridade clínica | Objetivo final da política; fora do estudo prioritário |
 | Resolutividade local e deslocamento | Município do estabelecimento no retrato nominal | Origem-destino dos pacientes e produção comparável antes/depois | Não mensurável |
 | Desfechos clínicos | Nenhuma base clínica no repositório | APAC, SIH, mortalidade e linhas de cuidado com datas clínicas | Não mensurável |
 | Custos e bem-estar | Nenhuma base de custos no repositório | Gastos do programa, produção, transporte sanitário e custos de pacientes | Não mensurável |
@@ -60,7 +68,7 @@ O trabalho foi dividido em sete frentes:
 - WP5 — calcular custos e bem-estar;
 - WP6 — integrar resultados, heterogeneidade por IVS e spillovers.
 
-O desenho completo está em [docs/03_plano_avaliacao_outcomes.md](docs/03_plano_avaliacao_outcomes.md). As definições de outcomes e estimandos estão em [docs/01_outcomes_e_estimandos.md](docs/01_outcomes_e_estimandos.md), e o inventário de dados e lacunas em [docs/02_inventario_dados_por_outcome.md](docs/02_inventario_dados_por_outcome.md).
+O desenho completo está em [docs/03_plano_avaliacao_outcomes.md](docs/03_plano_avaliacao_outcomes.md). As definições de outcomes e estimandos estão em [docs/01_outcomes_e_estimandos.md](docs/01_outcomes_e_estimandos.md), o inventário de dados e lacunas em [docs/02_inventario_dados_por_outcome.md](docs/02_inventario_dados_por_outcome.md), e o escopo causal prioritário em [docs/04_escopo_eficacia_operacional.md](docs/04_escopo_eficacia_operacional.md).
 
 ## Executar o estado validado do projeto
 
