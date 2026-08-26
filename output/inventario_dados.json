@@ -1,0 +1,135 @@
+{
+  "escopo": "inventario de dados observados; nao contem estimativas causais",
+  "arquivos": {
+    "pmm_especialistas_nominal.csv": {
+      "sha256": "76237f4cb6bf7e9aaccbf22ea443e1070c889c05a0357a3c1cb34ee50f58fc7d",
+      "linhas": 1480,
+      "colunas": [
+        "co_ibge",
+        "co_cnes",
+        "estabelecimento",
+        "tipo_pratica",
+        "cota_medico",
+        "faixa_atracao",
+        "curso",
+        "uf",
+        "municipio",
+        "regiao_saude",
+        "nome",
+        "sexo",
+        "raca_cor",
+        "crm",
+        "dt_inicio_atividade",
+        "ciclo",
+        "regiao",
+        "dt_referencia"
+      ],
+      "crm_uf_unicos": 1478,
+      "municipios_unicos": 325,
+      "cnes_unicos": 518,
+      "cursos_unicos": 16,
+      "datas_referencia": [
+        "2026-08-12"
+      ]
+    },
+    "pmm_especialistas_serie_historica.csv": {
+      "sha256": "98486b5d48fc7a69c8ba9554f0c28cf546c20ff79be31e64c3dccec95d6b981c",
+      "linhas": 7276,
+      "colunas": [
+        "co_cnes",
+        "tipo_estabelecimento",
+        "curso",
+        "faixa_atracao",
+        "co_ibge",
+        "competencia",
+        "estabelecimento",
+        "municipio",
+        "uf",
+        "regiao",
+        "regiao_saude",
+        "qtd_ativos",
+        "qtd_feminino",
+        "qtd_masculino",
+        "qtd_sexo_nao_informado",
+        "ivs"
+      ],
+      "municipios_unicos": 531,
+      "cnes_unicos_preenchidos": 0,
+      "cursos_rotulos_unicos": 40,
+      "competencias": [
+        "abr/26",
+        "ago/26",
+        "dez/25",
+        "fev/26",
+        "jan/26",
+        "jul/26",
+        "jun/26",
+        "mai/26",
+        "mar/26"
+      ]
+    },
+    "ivs_ipea_2010_municipios.csv": {
+      "sha256": "fe46ae9578d08b8596437c13ff4fd7461c7ac85c47b492eb2424f8bcd6d4021e",
+      "linhas": 5565,
+      "colunas": [
+        "cod_ibge6",
+        "cod_ibge7",
+        "municipio_uf",
+        "uf",
+        "nome_uf",
+        "ivs_2010",
+        "ivs_infra_2010",
+        "ivs_ch_2010",
+        "ivs_rt_2010",
+        "idhm_2010",
+        "populacao_2010",
+        "rdpc_2010"
+      ],
+      "municipios_unicos": 5565,
+      "ivs_min": 0.066,
+      "ivs_max": 0.752
+    }
+  },
+  "outcomes": {
+    "preenchimento_vagas": {
+      "status": "nao calculavel",
+      "bloqueio": "denominador de vagas ausente"
+    },
+    "entrada_efetiva": {
+      "status": "parcial",
+      "bloqueio": "somente ativos atuais sao observados"
+    },
+    "retencao_individual": {
+      "status": "nao calculavel",
+      "bloqueio": "serie sem identificador individual"
+    },
+    "fte_liquido": {
+      "status": "nao calculavel",
+      "bloqueio": "CNES e carga horaria mensal ausentes"
+    },
+    "producao_especializada": {
+      "status": "sem dados",
+      "bloqueio": "SIA/SIH ausentes"
+    },
+    "tempo_espera": {
+      "status": "sem dados",
+      "bloqueio": "dados de regulacao ausentes"
+    },
+    "acesso_local_global": {
+      "status": "sem dados",
+      "bloqueio": "fluxo residencia-prestador ausente"
+    },
+    "outcomes_clinicos": {
+      "status": "sem dados",
+      "bloqueio": "APAC/SIH/linha de cuidado ausentes"
+    },
+    "custos_bem_estar": {
+      "status": "sem dados",
+      "bloqueio": "custos e transporte observados ausentes"
+    },
+    "equidade_ivs": {
+      "status": "base disponivel",
+      "bloqueio": "depende de outcomes observados"
+    }
+  }
+}

@@ -1,26 +1,32 @@
-# CLAUDE.md — Diretrizes Metodológicas e Regras de Desenvolvimento
+# Regras de trabalho do projeto
 
-> Repositório dedicado à avaliação de impacto causal e economia da saúde do **Programa Mais Médicos Especialistas (PMM-E)**.
+## Orientação substantiva
 
----
+- Organize toda análise pela cadeia: implementação → força de trabalho → capacidade → acesso → saúde → custos/bem-estar → equidade e spillovers.
+- Comece pelo outcome e pelo estimando; só depois escolha método e base.
+- Não trate vínculo cadastrado, produção, acesso, espera e saúde como sinônimos.
+- Não classifique um eixo inteiro como sucesso ou fracasso com base em uma única métrica intermediária.
+- Separe expansão líquida de substituição, remanejamento, migração cadastral e deslocamento de pacientes.
 
-## 1. As Cinco Regras Metodológicas
+## Dados e proveniência
 
-1. **Rigor Causal Primeiro:** Toda afirmação de efeito causal deve ser sustentada pelo RDD no corte institucional do IVS 2010 ($IVS = 0{,}300$ ou $0{,}400$).
-2. **Inferência Exata:** Reportar sempre erro-padrão robusto clusterizado, estatística $t$ e $p$-valor de permutação exata (mínimo de 2.000 repetições).
-3. **Controle de Testes Múltiplos:** Em famílias de múltiplos desfechos, aplicar FDR de Anderson / Benjamini-Hochberg e Índice Padronizado de Kling-Liebman-Katz (2007).
-4. **Validação de Placebos:** Qualquer resultado só é promovido se os testes de falsos cortes ($IVS = 0{,}250$ e $0{,}350$) resultarem em efeitos estritamente nulos ($p > 0{,}10$).
-5. **Proveniência Obrigatória dos Dados:**
-   - ✅ **Auditado e Verificado:** Microdados oficiais do Ministério da Saúde (SIA, SIH, CNES, SGTES) e IPEA;
-   - ⚠️ **Parâmetro / Premissa:** Valores médios operacionais de transporte ou conversão de QALYs;
-   - ❓ **Dado Não Observável / Hipótese Não Testável.**
+- Nunca altere arquivos observados em `data/`.
+- Toda transformação deve ser produzida por script versionado e gravada em `output/`.
+- Registre fonte, data de referência, cobertura, unidade, chaves, filtros e hash de cada entrada.
+- Não grave dados simulados, parâmetros assumidos ou cenários como se fossem observações.
+- Cenários contrafactuais ou testes sintéticos devem ficar explicitamente rotulados e separados dos resultados empíricos.
 
----
+## Identificação causal
 
-## 2. Padrão de Motivação de Política Pública
+- O IVS 2010 do IPEA é a running variable canônica; não o substitua por IDHM ou PIB per capita sem justificativa econométrica explícita e autorização do autor.
+- O uso de RDD depende de demonstrar a regra efetiva de elegibilidade/alocação, o cutoff, o primeiro estágio e a ausência de manipulação relevante.
+- Se a implantação não gerar uma descontinuidade válida, escolha outro desenho coerente com a variação observada e registre a mudança de escopo.
+- Reporte estimando, população, período, unidade, contraste, incerteza, diagnósticos e limitações.
+- Resultados descritivos devem ser chamados de descritivos; associações não devem receber linguagem causal.
 
-Todo documento ou seção de motivação deve conter as 4 propriedades obrigatórias do projeto:
-1. **Nomeia quem usa o número e para quê;**
-2. **Converte o achado em decisão, não em adjetivo;**
-3. **Tem uma predição com direção e data;**
-4. **Declara o limite do que o número sustenta.**
+## Execução
+
+- `run_all.py` é o ponto de entrada ponta a ponta do estado validado do projeto.
+- Scripts usam caminhos relativos à raiz e devem ser determinísticos.
+- Uma etapa só entra no pipeline após passar validações de esquema, cobertura e coerência substantiva.
+- Resultados antigos no histórico do Git não são evidência vigente. A documentação corrente é a referência para o estado do projeto.

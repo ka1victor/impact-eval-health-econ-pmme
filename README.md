@@ -1,135 +1,84 @@
-# Programa Mais Médicos Especialistas (PMM-E): agenda de avaliação de impacto
+# Avaliação de impacto do Mais Médicos Especialistas
 
-> Repositório de pesquisa sobre o componente de provimento de especialistas do Programa Agora Tem Especialistas. O projeto está em **fase de auditoria do desenho**: os dados disponíveis já permitem descrever a implantação, mas ainda não sustentam os efeitos causais antes apresentados como resultados consolidados.
+Este repositório organiza uma avaliação causal do Projeto Mais Médicos Especialistas (PMM-E). A [Lei 12.871/2013, em sua redação atual](https://www2.camara.leg.br/legin/fed/lei/2013/lei-12871-22-outubro-2013-777279-normaatualizada-pl.html), enquadra a redução da carência regional de médicos e a qualificação da assistência especializada entre os objetivos do Programa Mais Médicos. A [Lei 15.233/2025](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/l15233.htm) criou o projeto de especialistas para prover profissionais em regiões prioritárias com vistas à redução do tempo de espera no SUS.
 
-> [!IMPORTANT]
-> Os números gerados pelo pipeline atual misturam registros observados, painéis pré-compilados e parâmetros definidos no código. Por isso, as estimativas de preenchimento, resolutividade, viagens evitadas, custo-benefício, QALYs, OCI e teleconsulta devem ser lidas como **protótipos ou cenários**, não como evidência de que o programa deu certo ou errado.
+Por isso, a pergunta central não é apenas quantos médicos aparecem no programa. É se o provimento amplia, de fato, o acesso oportuno e resolutivo à atenção especializada — e não apenas desloca médicos, pacientes ou procedimentos entre municípios.
 
-## A pesquisa em três perguntas que se encadeiam
+## Estado atual
 
-1. **Qual problema o programa tenta resolver?**
-2. **Quais métricas observam cada parte desse problema e quais dados temos para calculá-las?**
-3. **Quais métricas já foram de fato analisadas, o que aprendemos e o que ainda não podemos concluir?**
+O projeto está na fase de desenho e prontidão dos dados. Ainda não há resultado causal validado. O pipeline atual produz somente um inventário auditável das bases observadas; números de sessões anteriores que dependiam de dados simulados, premissas não documentadas ou inferências incompatíveis com as bases disponíveis foram removidos dos arquivos correntes. O histórico do Git foi preservado.
 
-Essa ordem é substantiva. Não faz sentido escolher um resultado antes de definir qual dimensão do problema ele representa; tampouco faz sentido chamar uma cifra de resultado se ela foi imposta como premissa no próprio código.
+## A cadeia de efeitos que queremos testar
 
-## 1. Qual problema o programa tenta resolver?
+O programa precisa atravessar uma sequência para produzir bem-estar:
 
-A [Lei nº 12.871/2013](https://www2.camara.leg.br/legin/fed/lei/2013/lei-12871-22-outubro-2013-777279-normaatualizada-pl.html) criou o Programa Mais Médicos para reduzir a carência regional de médicos, fortalecer a atenção primária e integrar formação e serviço. Alterações posteriores também incorporaram a qualificação da assistência especializada e a ampliação da especialização em áreas estratégicas.
+1. vagas e incentivos atraem especialistas;
+2. esses profissionais entram, permanecem e aumentam a oferta líquida de horas;
+3. a capacidade adicional vira consultas, exames, cirurgias e cuidado coordenado;
+4. filas, tempo de espera e deslocamentos diminuem;
+5. diagnóstico e tratamento tornam-se mais oportunos, melhorando a saúde;
+6. os benefícios superam custos públicos, privados e logísticos;
+7. os ganhos alcançam prioritariamente territórios mais vulneráveis, sem apenas transferir escassez para outros lugares.
 
-A [Lei nº 15.233/2025](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/l15233.htm) instituiu o Programa Agora Tem Especialistas. Seu art. 1º explicita três objetivos gerais: qualificar e diversificar serviços, ampliar a oferta e reduzir o tempo de espera por consultas, procedimentos e exames especializados. O art. 21 inseriu o Projeto Mais Médicos Especialistas na Lei nº 12.871/2013, destinado ao provimento em regiões prioritárias **com vistas à redução do tempo de espera**.
+Cada seta é uma hipótese empírica. Observar uma etapa não autoriza concluir que as seguintes ocorreram.
 
-Para este projeto, o problema é organizado em uma cadeia, não em quatro resultados independentes:
+## O que temos em cada outcome
 
-```text
-escassez/distribuição de especialistas
-        ↓
-capacidade efetivamente disponível
-        ↓
-acesso, deslocamento e tempo de espera
-        ↓
-continuidade, qualidade e desfechos clínicos
-        ↓
-custos públicos e bem-estar dos pacientes
-```
+| Outcome de interesse | Evidência disponível hoje | O que falta para avaliá-lo | Estado |
+|---|---|---|---|
+| Vagas, candidaturas e preenchimento | Relação de profissionais ativos em 12/08/2026 | Editais, vagas ofertadas, candidatos, convocações e recusas | Não mensurável |
+| Entrada de especialistas | Data de início dos vínculos ativos e série municipal agregada | Estoque pré-programa comparável, vínculo individual longitudinal e regra de exposição | Parcial |
+| Retenção e duração | Série agregada mensal por município entre dez/2025 e ago/2026 | Identificador longitudinal, desligamentos, transferências e carga horária | Não mensurável |
+| Oferta líquida de trabalho | Contagem de vínculos ativos | Horas/FTE, vínculos anteriores, substituições e demais vínculos CNES | Não mensurável |
+| Produção e capacidade | Nenhuma base assistencial no repositório | SIA/SUS, SIH/SUS, CNES e definição de procedimentos-alvo | Não mensurável |
+| Acesso e tempo de espera | Nenhuma base de regulação no repositório | Fila, pedidos, agendamentos, atendimento, cancelamento e prioridade clínica | Não mensurável — outcome primário |
+| Resolutividade local e deslocamento | Município do estabelecimento no retrato nominal | Origem-destino dos pacientes e produção comparável antes/depois | Não mensurável |
+| Desfechos clínicos | Nenhuma base clínica no repositório | APAC, SIH, mortalidade e linhas de cuidado com datas clínicas | Não mensurável |
+| Custos e bem-estar | Nenhuma base de custos no repositório | Gastos do programa, produção, transporte sanitário e custos de pacientes | Não mensurável |
+| Equidade territorial | IVS 2010 para 5.565 municípios | Vincular exposição e outcomes válidos ao IVS | Parcial |
+| Spillovers e equilíbrio regional | Localização municipal dos vínculos ativos | Origem dos médicos, mobilidade, municípios vizinhos e oferta regional completa | Não mensurável |
 
-Cada seta é uma hipótese causal a ser testada. Mais médicos não implicam automaticamente mais capacidade; mais produção local não implica automaticamente fila menor; fila menor não implica automaticamente melhor saúde.
+“Parcial” significa que há um componente útil, mas insuficiente para estimar o efeito pretendido.
 
-Também não tratamos como fato estabelecido que a expansão da atenção primária “criou” um segundo gargalo, que pacientes viajam necessariamente de van ou que centros cirúrgicos estavam ociosos por falta de anestesista. Essas são hipóteses plausíveis, mas exigem dados próprios.
+## O que sabemos pelas bases observadas
 
-## 2. Quais métricas temos e o que elas podem avaliar?
+- O retrato nominal de 12/08/2026 contém 1.480 registros, 1.478 combinações únicas de UF e CRM, 325 municípios, 518 estabelecimentos CNES e 16 cursos/especialidades registrados.
+- A série histórica contém 7.276 linhas, cobre 531 municípios e nove competências entre dezembro de 2025 e agosto de 2026. Ela não contém CNES preenchido e usa 40 rótulos distintos de curso/especialidade.
+- A base do IPEA contém o IVS 2010 dos 5.565 municípios, variando de 0,066 a 0,752. O IVS é a running variable canônica do projeto, mas seu uso causal depende da auditoria da regra efetiva de elegibilidade e alocação.
 
-| Eixo | Métrica principal | O que ela responde | Situação no repositório | O que ela não responde sozinha |
-|---|---|---|---|---|
-| **Provimento** | Vagas ofertadas, preenchidas e entrada em exercício | A bolsa altera a ocupação das vagas oferecidas? | **Parcial:** há cadastro nominal de ativos; falta a lista completa de vagas e candidatos | Não mede aumento líquido da oferta municipal nem fila |
-| **Retenção e capacidade** | Sobrevivência do médico no posto; FTE observado no CNES | O profissional permanece e adiciona horas de trabalho? | **Parcial:** há série mensal agregada; FTE é presumido no script | Não mede produção, qualidade ou substituição de outro vínculo |
-| **Acesso espacial** | Atendimentos locais, externos e taxa de bypass | O cuidado migrou para mais perto do paciente? | **Não identificado:** o painel disponível incorpora produção e substituição parametrizadas | Não mede espera, necessidade atendida ou qualidade |
-| **Acesso global e fila** | Atendimentos totais por residente; tempo entre solicitação e atendimento | O total atendido aumentou e a espera caiu? | **Não avaliado:** não há microdado de fila/regulação no repositório | Total estável não prova fila estável; fila menor pode refletir mudança de registro |
-| **Linha de cuidado** | Tempo diagnóstico-terapia, estadiamento, eletivas e urgências | O acesso mais rápido mudou a trajetória clínica? | **Não avaliado** | Volume de exames não equivale a diagnóstico precoce ou saúde melhor |
-| **Custos e bem-estar** | Custo incremental, transporte observado, tempo de viagem e efeitos clínicos | O benefício social excede o custo de oportunidade? | **Cenário parametrizado** | Economia municipal não é automaticamente economia consolidada do SUS |
-| **OCI e teleconsulta** | Migração de códigos, coortes e gradiente de distância | Mudou a capacidade ou apenas o registro? A distância física é um mecanismo? | **Protótipo:** as cifras centrais estão fixadas no código | Não valida, por si só, o efeito do PMM-E |
+Esses fatos descrevem os arquivos, não o impacto do programa.
 
-O inventário completo, incluindo definição, denominador, unidade e ameaça de interpretação de cada métrica, está em [docs/01_dossie_e_motivacao_politica_publica.md](docs/01_dossie_e_motivacao_politica_publica.md).
+## Plano de avaliação
 
-## 3. O que já analisamos e o que foi surpreendente?
+O trabalho foi dividido em sete frentes:
 
-### O que é observado
+- WP0 — reconstruir a regra institucional, a elegibilidade e a exposição ao programa;
+- WP1 — medir atração, entrada, permanência e oferta líquida de especialistas;
+- WP2 — medir capacidade e produção adicional;
+- WP3 — medir fila, espera, acesso e deslocamentos;
+- WP4 — medir diagnóstico, tratamento e desfechos de saúde;
+- WP5 — calcular custos e bem-estar;
+- WP6 — integrar resultados, heterogeneidade por IVS e spillovers.
 
-O arquivo nominal contém, na referência de 12 de agosto de 2026:
+O desenho completo está em [docs/03_plano_avaliacao_outcomes.md](docs/03_plano_avaliacao_outcomes.md). As definições de outcomes e estimandos estão em [docs/01_outcomes_e_estimandos.md](docs/01_outcomes_e_estimandos.md), e o inventário de dados e lacunas em [docs/02_inventario_dados_por_outcome.md](docs/02_inventario_dados_por_outcome.md).
 
-- **1.480 registros de profissionais ativos**, correspondentes a 1.478 combinações únicas de UF e CRM;
-- **325 municípios** e **518 estabelecimentos CNES**;
-- **384 registros em Anestesiologia**, a maior categoria do arquivo;
-- 7.276 registros município-curso-competência na série histórica, entre dezembro de 2025 e agosto de 2026.
-
-Isso descreve **onde e em que cursos aparecem participantes ativos**. Não mede taxa de preenchimento, retenção individual, adicional líquido de médicos, cirurgias destravadas ou efeito sobre a fila.
-
-### Achados surpreendentes defensáveis
-
-Até aqui, os achados surpreendentes são **descritivos ou metodológicos**. Nenhum deles autoriza ainda a frase “o PMM-E causou X”.
-
-1. **Anestesiologia concentra cerca de 26% dos registros ativos.** São 384 de 1.480 registros, a maior categoria do arquivo nominal. A concentração é substantivamente interessante e gera uma hipótese sobre capacidade cirúrgica, mas não demonstra que salas foram reativadas ou que cirurgias aumentaram.
-2. **Os efeitos mais espetaculares estavam parcialmente embutidos no código.** As taxas de preenchimento de 48%, 88% e 94% são atribuídas por faixa de IVS; produção mensal, substituição de 65% do atendimento externo, viagens, custo de R$ 85 e QALYs também são parâmetros. A precisão recupera essas regras, não necessariamente uma resposta comportamental observada.
-3. **As duas inferências da resolutividade local contam histórias incompatíveis.** Em $IVS=0{,}300$ e $h=0{,}020$, o protótipo reporta $\tau=+0{,}059$, com $p_{perm}=0{,}0285$, mas $p_{param}=0{,}2673$. Após o ajuste de múltiplos testes implementado, $q=0{,}1425$; o índice conjunto KLK também é não significativo ($p=0{,}2055$). Isso exige auditoria do teste, não promoção do efeito.
-4. **A robustez em falsos cortes não é universal.** No placebo $IVS=0{,}250$, diagnósticos globais apresentam $p_{perm}=0{,}030$ em uma banda e resultados marginais aparecem em outras métricas. Logo, a narrativa anterior de placebos “estritamente nulos” não é sustentada por todas as saídas.
-5. **O resultado global muda de sinal entre bandas.** No corte 0,300, as estimativas de acesso global passam de positivas para negativas conforme $h$ aumenta. Com erros-padrão grandes, isso não prova expansão, substituição pura ou igualdade a zero.
-6. **O pipeline não era numericamente estável.** Os $p$-valores do primeiro script mudam entre execuções por falta de semente NumPy, e alguns exemplos textuais dependem da ordem não determinística de conjuntos.
-
-### O que não conta como achado empírico neste estágio
-
-| Afirmação anterior | Por que não pode ser promovida |
-|---|---|
-| Preenchimento +35,5 p.p. e elasticidade 1,48 | Desfecho de preenchimento atribuído pela própria faixa |
-| “Saturação” acima de R$ 15 mil | Segundo salto também deriva da regra construída; mecanismo de infraestrutura não foi medido |
-| Retenção -4,4 p.p. por precariedade | Retenção não é individual e a infraestrutura não aparece no modelo |
-| Resolutividade local +7,6 p.p. | Painel incorpora produtividade e substituição presumidas; inferências divergem |
-| Ausência de demanda induzida | Não significância global não prova equivalência nem adequação clínica |
-| Anestesiologistas destravaram cirurgias | Há composição profissional, mas não capacidade/produção vinculada |
-| BCR 2,4x ou 95,4x | Viagens, custos, diagnósticos e QALYs são parâmetros de cenário |
-| OCI 86,4% reetiquetagem e teleconsulta valida distância | Cifras estão fixadas no script e não são reestimadas localmente |
-
-Portanto, **ainda não há um efeito causal validado do PMM-E neste repositório**. Essa conclusão não diz que o programa não teve efeito; diz que o desenho atual não distingue as explicações concorrentes.
-
-### Por que “só remanejou” não significa “impacto nulo”
-
-Se o atendimento total dos residentes permanecer constante e uma parcela passar a ocorrer no próprio município, podem existir ganhos reais de tempo, custo de deslocamento, continuidade e conveniência. Mas o mesmo padrão também é compatível com fila inalterada, qualidade diferente, mudança de codificação ou apenas redistribuição de faturamento.
-
-Da mesma forma, um total global estatisticamente indistinguível de zero não prova igualdade: pode refletir baixa potência. E não rejeitar aumento global não descarta demanda induzida. Para afirmar redução de fila, precisamos observar a fila ou uma proxy temporal validada; para afirmar ganho de saúde, precisamos observar a linha de cuidado ou desfechos clínicos.
-
-A análise eixo a eixo está em [docs/07_auditoria_logica_transversal.md](docs/07_auditoria_logica_transversal.md).
-
-## Regra de linguagem a partir desta auditoria
-
-O projeto passa a usar quatro níveis de afirmação:
-
-- **Observado:** calculado diretamente de registros presentes e auditáveis;
-- **Estimado:** produzido por desenho identificador válido e dados observados;
-- **Cenário:** resultado que depende de parâmetros explicitados;
-- **Hipótese:** mecanismo plausível ainda não distinguido empiricamente.
-
-“Comprovou”, “descartou”, “funcionou” e “fracassou” ficam reservados para casos em que o estimando, o contraste e as hipóteses de identificação sustentem a afirmação.
-
-## Estrutura do repositório
-
-```text
-README.md                                  síntese das três perguntas
-TODO.md                                    fila orientada pelas lacunas da auditoria
-docs/01_dossie_e_motivacao_politica_publica.md
-docs/02_resultados_rdd_e_elasticidades.md
-docs/03_resolutividade_local_vs_global.md
-docs/04_auditoria_financeira_e_custo_beneficio.md
-docs/05_agora_tem_especialistas_e_teleconsulta.md
-docs/06_metodologia_e_limitacoes.md
-docs/07_auditoria_logica_transversal.md     crítica transversal do projeto
-scripts/                                   pipeline atual, ainda exploratório
-output/                                    saídas reproduzíveis do pipeline atual
-```
-
-## Execução
+## Executar o estado validado do projeto
 
 ```bash
-pip install -r requirements.txt
 python run_all.py
 ```
 
-Executar o pipeline reproduz suas saídas numéricas; **não transforma premissas em evidência observada**. A próxima etapa, deliberadamente separada desta auditoria, será decidir como redesenhar e limitar o escopo empírico.
+No estágio atual, isso gera `output/inventario_dados.json`, com hashes, cobertura das bases e disponibilidade de cada outcome. Novas etapas só devem entrar no pipeline quando usarem dados observados, tiverem proveniência documentada e responderem a um estimando definido.
+
+## Estrutura
+
+```text
+data/      bases observadas preservadas
+docs/      desenho, inventário e plano de avaliação
+scripts/   etapas reprodutíveis do pipeline
+output/    produtos gerados; atualmente, somente o inventário
+```
+
+## Princípio de interpretação
+
+Nenhum eixo será classificado simplesmente como “deu certo” ou “deu errado”. A conclusão deverá nomear o estimando, a população, o período, o contraste causal, a incerteza e quais elos da cadeia de efeitos foram ou não testados. Aumento local de médicos, por exemplo, pode representar expansão real, substituição de vínculos, remanejamento entre municípios ou mudança cadastral; distinguir essas hipóteses é parte da avaliação.

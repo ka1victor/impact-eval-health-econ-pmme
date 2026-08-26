@@ -1,50 +1,66 @@
-# TODO.md — Fila após a auditoria lógica do PMM-E
+# Próximas etapas
 
-## Concluído nesta etapa
+## Concluído nesta reorganização
 
-- [x] Reorganizar a narrativa em problema → métricas → estado da evidência.
-- [x] Separar registros observados, estimativas, cenários parametrizados e hipóteses.
-- [x] Auditar as inferências de cada eixo sem redesenhar prematuramente o estudo.
-- [x] Registrar que o pipeline atual não sustenta vereditos causais sobre sucesso ou fracasso.
+- [x] Remover dos arquivos correntes resultados e artefatos sem sustentação nas bases observadas.
+- [x] Preservar as três bases observadas e o histórico do Git.
+- [x] Reorganizar o projeto em torno da cadeia de outcomes.
+- [x] Criar um inventário reprodutível de dados e lacunas.
 
-## Dados necessários antes de reestimar
+## WP0 — Regra, população e exposição
 
-- [ ] Obter o universo de vagas ofertadas por município, estabelecimento, especialidade, chamamento e faixa de bolsa.
-- [ ] Obter candidaturas/classificação, aceite, entrada efetiva e desligamento em nível profissional-vaga.
-- [ ] Vincular CNES mensal para medir carga horária observada e possível substituição de vínculos preexistentes.
-- [ ] Incorporar microdados origem-destino do SIA e do SIH com competência, procedimento e caráter de internação; não usar incrementos de produção presumidos.
-- [ ] Obter dados de solicitação e atendimento em regulação, ou construir e validar uma proxy temporal antes de falar em fila.
-- [ ] Obter custos observados de transporte sanitário, distância, ocupação, frequência e fonte pagadora.
-- [ ] Documentar a origem reproduzível dos dados de OCI e teleconsulta; retirar cifras fixadas manualmente da camada de resultados.
+- [ ] Consolidar legislação, editais, portarias, anexos e cronologia de implantação.
+- [ ] Definir unidade de tratamento: município, estabelecimento, vaga, profissional ou região de saúde.
+- [ ] Reconstruir vagas ofertadas, critérios de prioridade, candidaturas, preenchimento e datas efetivas.
+- [ ] Testar se o IVS 2010 determina descontinuamente a probabilidade/intensidade de tratamento.
+- [ ] Definir estimandos, janelas temporais, população-alvo e versões do tratamento.
 
-## Decisões de desenho para a próxima etapa
+## WP1 — Força de trabalho
 
-- [ ] Definir a unidade causal: vaga-especialidade, estabelecimento ou município.
-- [ ] Verificar se o IVS determina apenas o valor da bolsa ou também a seleção/oferta de vagas.
-- [ ] Decidir entre RDD sharp, fuzzy RDD, desenho de encorajamento ou outro contraste, conforme a regra institucional real.
-- [ ] Restringir a amostra a unidades comparáveis e efetivamente expostas à regra de bolsa.
-- [ ] Definir um estimando separado para cada elo: adesão, entrada líquida, capacidade, acesso, fila, clínica e custo.
-- [ ] Pré-especificar desfechos primários, janelas, covariáveis, placebos, testes múltiplos e critérios de interpretação.
-- [ ] Incluir análises de potência e intervalos de confiança; “não significativo” não será traduzido como “igual a zero”.
+- [ ] Obter CNES mensal pré e pós-programa, incluindo carga horária, CBO e natureza do vínculo.
+- [ ] Construir identificador longitudinal seguro de profissional e estabelecimento.
+- [ ] Separar entrada líquida, substituição, transferência e múltiplos vínculos.
+- [ ] Definir retenção em 3, 6, 12 e 24 meses e oferta em FTE.
+- [ ] Harmonizar os 40 rótulos da série histórica com os 16 do retrato nominal.
 
-## Métricas ainda não avaliadas com dados observados adequados
+## WP2 — Capacidade e produção
 
-- [ ] Taxa de preenchimento no primeiro chamamento.
-- [ ] Retenção individual aos 6 e 12 meses.
-- [ ] FTE especializado adicional líquido.
-- [ ] Resolutividade local e global sem componentes simulados.
-- [ ] Tempo de espera por consulta, exame e procedimento.
-- [ ] Tempo entre diagnóstico e terapia.
-- [ ] Estadiamento oncológico inicial.
-- [ ] Composição eletiva/urgência e transferência no SIH.
-- [ ] Transporte e horas de viagem efetivamente evitados.
-- [ ] Razão benefício-custo com análise de sensibilidade e perspectiva fiscal explícita.
-- [ ] Efeitos de transbordamento sobre polos regionais.
+- [ ] Obter SIA/SUS e SIH/SUS antes e depois da implantação.
+- [ ] Definir listas versionadas de consultas, exames, cirurgias e internações sensíveis ao programa.
+- [ ] Medir produção adicional por FTE e capacidade instalada relevante.
+- [ ] Separar produção nova de recodificação, substituição e migração entre prestadores.
 
-## Itens descritivos que podem ser mantidos
+## WP3 — Acesso, fila e deslocamento
 
-- [x] Contagem de 1.480 registros nominais ativos na referência de 12/08/2026.
-- [x] Cobertura descritiva de 325 municípios e 518 estabelecimentos CNES.
-- [x] Composição por curso, incluindo 384 registros em Anestesiologia.
+- [ ] Obter microdados de regulação com solicitação, prioridade, agendamento, atendimento e cancelamento.
+- [ ] Definir tempo de espera, estoque da fila, demanda atendida e censura.
+- [ ] Construir fluxos de residência para atendimento e distâncias/tempos de viagem.
+- [ ] Estimar acesso global e local separadamente para detectar remanejamento.
 
-Esses itens descrevem a implantação observada; não são efeitos do programa.
+## WP4 — Desfechos clínicos
+
+- [ ] Selecionar linhas de cuidado plausivelmente afetadas e registrar mecanismos ex ante.
+- [ ] Vincular diagnóstico, tratamento, internação evitável, gravidade e mortalidade.
+- [ ] Definir horizontes compatíveis com o tempo biológico de cada outcome.
+
+## WP5 — Custos e bem-estar
+
+- [ ] Obter custos fiscais incrementais e pagamentos por componente do programa.
+- [ ] Obter transporte sanitário, distância, tempo e, quando possível, custos privados.
+- [ ] Evitar dupla contagem entre produção, deslocamento e desfechos clínicos.
+- [ ] Produzir custo por unidade adicional e análise de sensibilidade antes de monetizar saúde.
+
+## WP6 — Equidade, spillovers e síntese
+
+- [ ] Vincular outcomes válidos ao IVS 2010 e a estratos pré-especificados.
+- [ ] Mapear mercados/regiões de saúde e municípios vizinhos potencialmente afetados.
+- [ ] Estimar efeitos líquidos regionais, não apenas ganhos dos municípios tratados.
+- [ ] Registrar resultados nulos, imprecisos e testes de robustez junto aos positivos.
+
+## Critério para inserir uma análise no pipeline
+
+- [ ] Base observada com proveniência e hash.
+- [ ] Outcome, denominador e unidade definidos.
+- [ ] Contraste causal e hipótese identificadora documentados.
+- [ ] Diagnósticos e incerteza reproduzíveis.
+- [ ] Linguagem da conclusão limitada ao que foi efetivamente identificado.
