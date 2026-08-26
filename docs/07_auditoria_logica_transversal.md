@@ -221,7 +221,52 @@ O “McCrary proxy” atual é uma razão de contagens em janelas, não um teste
 
 No script 02, o ajuste chamado “FDR de Anderson” implementa a fórmula Benjamini-Hochberg sem impor monotonicidade reversa, e o índice KLK combina resultados simulados e observados. Esses nomes não substituem a auditoria estatística.
 
-## 10. Placar honesto do estado atual
+## 10. Achados surpreendentes defensáveis
+
+O projeto encontrou surpresas relevantes, mas elas precisam ser classificadas corretamente.
+
+### 10.1 Surpresa substantiva observada
+
+**Anestesiologia representa 384 de 1.480 registros ativos, aproximadamente 26% do total.** É a maior categoria do cadastro. O fato motiva investigar se o provimento removeu uma restrição complementar à cirurgia, mas não demonstra capacidade ociosa anterior, produção adicional ou melhora clínica.
+
+### 10.2 Surpresa de mensuração
+
+**Os resultados aparentemente mais fortes recuperam valores inseridos na construção dos desfechos.** O preenchimento varia por faixa porque a própria variável recebe valores por faixa. Produção, substituição externa, viagens, custos e QALYs também combinam parâmetros com registros. Significância extrema não corrige essa circularidade.
+
+### 10.3 Surpresa inferencial
+
+Para resolutividade local em $c=0{,}300$ e $h=0{,}020$, o protótipo entrega:
+
+- $\tau=+0{,}059$;
+- erro-padrão HC1 de 0,0532 e $p_{param}=0{,}2673$;
+- $p_{perm}=0{,}0285$;
+- $q=0{,}1425$ no ajuste implementado;
+- índice conjunto KLK com $p=0{,}2055$.
+
+O desacordo não permite escolher a inferência mais favorável. Ele indica que a hipótese de permutação, a implementação e a família de testes precisam ser revistas.
+
+### 10.4 Surpresa de robustez
+
+Os placebos não são todos nulos. No falso corte $c=0{,}250$, o desfecho de diagnósticos globais apresenta $p_{perm}=0{,}030$ em $h=0{,}020$; outras combinações ficam próximas de 0,10. Ao mesmo tempo, as estimativas globais no corte real mudam de sinal entre bandas: +4.519, +1.764, -140 e -1.458 no output atual. Esse padrão é incompatível com a antiga narrativa de robustez uniforme.
+
+### 10.5 Surpresa de reprodutibilidade
+
+O script 01 não fixa a semente NumPy antes das permutações, de modo que os $p$-valores variam entre execuções. O script 03 escolhe exemplos a partir do primeiro elemento de um `set`, cuja ordem não é garantida. Parte do diff de `output/` pode, portanto, mudar sem mudança substantiva dos dados.
+
+### 10.6 O que permanece hipótese, não achado
+
+- elasticidades 1,48 e 0,31 e “saturação” da bolsa;
+- evasão causada por precariedade de infraestrutura;
+- substituição geográfica pura e ausência de demanda induzida;
+- redução da fila;
+- destravamento cirúrgico por anestesiologistas;
+- viagens e horas efetivamente evitadas;
+- BCR logístico/social;
+- reetiquetagem OCI de 86,4% e validação por teleconsulta.
+
+O achado mais importante da auditoria é, portanto, que **a evidência causal é mais frágil que a precisão aparente das saídas**.
+
+## 11. Placar honesto do estado atual
 
 | Eixo | O que se pode dizer agora | Veredito causal |
 |---|---|---|
@@ -237,7 +282,7 @@ No script 02, o ajuste chamado “FDR de Anderson” implementa a fórmula Benja
 
 O projeto, portanto, não deve escolher entre “deu certo” e “deu errado” neste estágio. A conclusão defensável é mais estreita: **a implantação pode ser descrita, mas o efeito causal por eixo permanece em aberto**.
 
-## 11. Regra para a etapa futura
+## 12. Regra para a etapa futura
 
 O redesenho deverá começar pelo estimando, não pelo método preferido. Para cada eixo:
 

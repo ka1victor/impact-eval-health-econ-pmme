@@ -64,15 +64,29 @@ O arquivo nominal contém, na referência de 12 de agosto de 2026:
 
 Isso descreve **onde e em que cursos aparecem participantes ativos**. Não mede taxa de preenchimento, retenção individual, adicional líquido de médicos, cirurgias destravadas ou efeito sobre a fila.
 
-### O resultado mais importante da auditoria
+### Achados surpreendentes defensáveis
 
-O achado surpreendente até aqui é metodológico: vários resultados que pareciam extremamente precisos são produzidos pelas próprias premissas do pipeline.
+Até aqui, os achados surpreendentes são **descritivos ou metodológicos**. Nenhum deles autoriza ainda a frase “o PMM-E causou X”.
 
-- As taxas de preenchimento de 48%, 88% e 94% são atribuídas por faixa de IVS no código; o RDD recupera em grande parte essa regra.
-- A produção mensal por especialista, a substituição de 65% do atendimento externo, as viagens evitadas, o custo de R$ 85 e os QALYs são parâmetros, não desfechos observados.
-- O painel de resolutividade carregado na execução já contém essas transformações; os microdados origem-destino do SIA e do SIH não estão no repositório.
-- As cifras de OCI e os coeficientes de teleconsulta usados no script estão fixados no código; não são estimados nessa execução.
-- Os $p$-valores de permutação do primeiro script e alguns exemplos textuais podem variar entre execuções porque nem todas as fontes de aleatoriedade/ordenação estão fixadas.
+1. **Anestesiologia concentra cerca de 26% dos registros ativos.** São 384 de 1.480 registros, a maior categoria do arquivo nominal. A concentração é substantivamente interessante e gera uma hipótese sobre capacidade cirúrgica, mas não demonstra que salas foram reativadas ou que cirurgias aumentaram.
+2. **Os efeitos mais espetaculares estavam parcialmente embutidos no código.** As taxas de preenchimento de 48%, 88% e 94% são atribuídas por faixa de IVS; produção mensal, substituição de 65% do atendimento externo, viagens, custo de R$ 85 e QALYs também são parâmetros. A precisão recupera essas regras, não necessariamente uma resposta comportamental observada.
+3. **As duas inferências da resolutividade local contam histórias incompatíveis.** Em $IVS=0{,}300$ e $h=0{,}020$, o protótipo reporta $\tau=+0{,}059$, com $p_{perm}=0{,}0285$, mas $p_{param}=0{,}2673$. Após o ajuste de múltiplos testes implementado, $q=0{,}1425$; o índice conjunto KLK também é não significativo ($p=0{,}2055$). Isso exige auditoria do teste, não promoção do efeito.
+4. **A robustez em falsos cortes não é universal.** No placebo $IVS=0{,}250$, diagnósticos globais apresentam $p_{perm}=0{,}030$ em uma banda e resultados marginais aparecem em outras métricas. Logo, a narrativa anterior de placebos “estritamente nulos” não é sustentada por todas as saídas.
+5. **O resultado global muda de sinal entre bandas.** No corte 0,300, as estimativas de acesso global passam de positivas para negativas conforme $h$ aumenta. Com erros-padrão grandes, isso não prova expansão, substituição pura ou igualdade a zero.
+6. **O pipeline não era numericamente estável.** Os $p$-valores do primeiro script mudam entre execuções por falta de semente NumPy, e alguns exemplos textuais dependem da ordem não determinística de conjuntos.
+
+### O que não conta como achado empírico neste estágio
+
+| Afirmação anterior | Por que não pode ser promovida |
+|---|---|
+| Preenchimento +35,5 p.p. e elasticidade 1,48 | Desfecho de preenchimento atribuído pela própria faixa |
+| “Saturação” acima de R$ 15 mil | Segundo salto também deriva da regra construída; mecanismo de infraestrutura não foi medido |
+| Retenção -4,4 p.p. por precariedade | Retenção não é individual e a infraestrutura não aparece no modelo |
+| Resolutividade local +7,6 p.p. | Painel incorpora produtividade e substituição presumidas; inferências divergem |
+| Ausência de demanda induzida | Não significância global não prova equivalência nem adequação clínica |
+| Anestesiologistas destravaram cirurgias | Há composição profissional, mas não capacidade/produção vinculada |
+| BCR 2,4x ou 95,4x | Viagens, custos, diagnósticos e QALYs são parâmetros de cenário |
+| OCI 86,4% reetiquetagem e teleconsulta valida distância | Cifras estão fixadas no script e não são reestimadas localmente |
 
 Portanto, **ainda não há um efeito causal validado do PMM-E neste repositório**. Essa conclusão não diz que o programa não teve efeito; diz que o desenho atual não distingue as explicações concorrentes.
 
