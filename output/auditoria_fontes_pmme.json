@@ -1,0 +1,323 @@
+{
+  "escopo": "auditoria descritiva de disponibilidade; nao estima efeitos",
+  "data_auditoria": "2026-08-27",
+  "bases_locais": {
+    "pmm_especialistas_nominal.csv": {
+      "sha256": "76237f4cb6bf7e9aaccbf22ea443e1070c889c05a0357a3c1cb34ee50f58fc7d",
+      "linhas": 1480,
+      "campos": [
+        "co_ibge",
+        "co_cnes",
+        "estabelecimento",
+        "tipo_pratica",
+        "cota_medico",
+        "faixa_atracao",
+        "curso",
+        "uf",
+        "municipio",
+        "regiao_saude",
+        "nome",
+        "sexo",
+        "raca_cor",
+        "crm",
+        "dt_inicio_atividade",
+        "ciclo",
+        "regiao",
+        "dt_referencia"
+      ],
+      "referencia": "2026-08-12",
+      "inicio_min": "2025-09-11",
+      "inicio_max": "2026-07-24",
+      "uf_crm_duplicados": 2,
+      "linhas_com_nome": 1480
+    },
+    "pmm_especialistas_serie_historica.csv": {
+      "sha256": "98486b5d48fc7a69c8ba9554f0c28cf546c20ff79be31e64c3dccec95d6b981c",
+      "linhas": 7276,
+      "campos": [
+        "co_cnes",
+        "tipo_estabelecimento",
+        "curso",
+        "faixa_atracao",
+        "co_ibge",
+        "competencia",
+        "estabelecimento",
+        "municipio",
+        "uf",
+        "regiao",
+        "regiao_saude",
+        "qtd_ativos",
+        "qtd_feminino",
+        "qtd_masculino",
+        "qtd_sexo_nao_informado",
+        "ivs"
+      ],
+      "cnes_preenchido": 0,
+      "ativos_por_competencia": {
+        "abr/26": 1350,
+        "ago/26": 1480,
+        "dez/25": 577,
+        "fev/26": 569,
+        "jan/26": 583,
+        "jul/26": 1511,
+        "jun/26": 1501,
+        "mai/26": 1363,
+        "mar/26": 551
+      }
+    },
+    "ivs_ipea_2010_municipios.csv": {
+      "sha256": "fe46ae9578d08b8596437c13ff4fd7461c7ac85c47b492eb2424f8bcd6d4021e",
+      "linhas": 5565,
+      "campos": [
+        "cod_ibge6",
+        "cod_ibge7",
+        "municipio_uf",
+        "uf",
+        "nome_uf",
+        "ivs_2010",
+        "ivs_infra_2010",
+        "ivs_ch_2010",
+        "ivs_rt_2010",
+        "idhm_2010",
+        "populacao_2010",
+        "rdpc_2010"
+      ]
+    }
+  },
+  "planilhas_oficiais": {
+    "2025_ciclo1_chamada1_homologados.xlsx": {
+      "sha256": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b",
+      "bytes": 40259,
+      "sheets": {
+        "Quadro 1": {
+          "linhas_xml": 317
+        }
+      },
+      "homologados": 316,
+      "candidatos_unicos_nome": 316
+    },
+    "2025_ciclo1_chamada2_classificacao_final.xlsx": {
+      "sha256": "5c73a99847708b2749019c634f661771b28c88cb5421e9672e44704e62103e85",
+      "bytes": 86076,
+      "sheets": {
+        "ALOCADOS": {
+          "linhas_xml": 759
+        },
+        "DESCLASSIFICADO": {
+          "linhas_xml": 90
+        }
+      },
+      "linhas_classificacao": 757,
+      "situacoes": {
+        "ALOCADO(A) EM AC": 371,
+        "NAO ALOCADO(A)": 383,
+        "ALOCADO(A) EM PCD": 2,
+        "ALOCADO(A) EM ER": 1
+      },
+      "desclassificados": 88,
+      "candidatos_unicos_nome": 703
+    },
+    "2025_ciclo1_chamada2_homologados.xlsx": {
+      "sha256": "4e85cfe45b2e5e1f7ebef78aa5dc90ba61b7adc5f7046f43a5066803f603e147",
+      "bytes": 55034,
+      "sheets": {
+        "Homologados": {
+          "linhas_xml": 582
+        }
+      },
+      "homologados_publicados": 581,
+      "candidatos_unicos_nome": 581
+    },
+    "2025_ciclo1_chamada2_vagas_e_alocados.xlsx": {
+      "sha256": "f1b8f7533cb13d8aba21d1100ab957e6accac52532fb8235e1b4231343a0588c",
+      "bytes": 155827,
+      "sheets": {
+        "ALOCADOS - VAGAS IMEDIATAS": {
+          "linhas_xml": 99
+        },
+        "VAGAS - CADASTRO RESERVA": {
+          "linhas_xml": 1764
+        }
+      },
+      "linhas_candidatos_vaga_imediata": 98,
+      "situacoes_candidatos": {
+        "CLASSIFICADO/A EM AMPLA CONCORRENCIA": 33,
+        "NAO CLASSIFICADO/A": 65
+      },
+      "linhas_ofertas_cadastro_reserva": 1762,
+      "vagas_cadastro_reserva": 2896
+    },
+    "2026_ciclo2_chamada1_resultado_final_remanescentes.xlsx": {
+      "sha256": "db39d51f9163fd8deedc8727ced37bf3fcdf19b4a6966d91a396e09f5f2a26e6",
+      "bytes": 17548,
+      "sheets": {
+        "Planilha1": {
+          "linhas_xml": 10
+        }
+      },
+      "linhas_resultado": 9,
+      "situacoes": {
+        "ALOCADO": 9
+      },
+      "candidatos_unicos_nome": 9
+    },
+    "2026_ciclo2_chamada1_vagas_retificadas.xlsx": {
+      "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+      "bytes": 153185,
+      "sheets": {
+        "Planilha1": {
+          "linhas_xml": 1549
+        }
+      },
+      "linhas_oferta": 1547,
+      "vagas_imediatas": 1836,
+      "vagas_cadastro_reserva": 1053
+    },
+    "2026_ciclo2_chamada2_resultado_final.xlsx": {
+      "sha256": "8690d6fc381692fc20c59ae077ac8b80ca1ce27dd03d27fd8e1ef17c75abc85f",
+      "bytes": 111857,
+      "sheets": {
+        "Classificados": {
+          "linhas_xml": 1054
+        },
+        "Desclassificados": {
+          "linhas_xml": 56
+        }
+      },
+      "linhas_resultado": 1053,
+      "situacoes": {
+        "CADASTRO RESERVA": 750,
+        "ALOCADO": 303
+      },
+      "candidatos_unicos_nome": 609,
+      "desclassificados": 55
+    },
+    "2026_ciclo2_chamada2_vagas.xlsx": {
+      "sha256": "4815e1558b515d4cdabf245b45e24062ab2e9531abd657b4f24f68bb45b3d3a4",
+      "bytes": 111673,
+      "sheets": {
+        "QUADRO": {
+          "linhas_xml": 1041
+        }
+      },
+      "linhas_oferta": 1039,
+      "vagas_imediatas": 0,
+      "vagas_cadastro_reserva": 1992
+    },
+    "2026_ciclo3_adesao_gestores_resultado_final.xlsx": {
+      "sha256": "0c07d4c972d14bac8ae9b8c99d5edac32f9ea76996ec82e92198065ac63b1f74",
+      "bytes": 495019,
+      "sheets": {
+        "RESULTADO FINAL": {
+          "linhas_xml": 5535
+        },
+        "Adesão_CNES gestão dupla": {
+          "linhas_xml": 326
+        }
+      },
+      "linhas_proposta": 5534,
+      "vagas_priorizadas": 5131,
+      "vagas_imediatas": 1136,
+      "vagas_cadastro_reserva": 3995,
+      "vagas_nao_priorizadas": 7352
+    },
+    "2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx": {
+      "sha256": "d74f268bb7192c80a02c94e54eb4407e60a0923ad7d0310c2c6b432b3dbbb6ee",
+      "bytes": 393041,
+      "sheets": {
+        "Classificados": {
+          "linhas_xml": 4533
+        },
+        "Desclassificados": {
+          "linhas_xml": 1000
+        }
+      },
+      "linhas_resultado": 4532,
+      "situacoes": {
+        "CADASTRO RESERVA": 3826,
+        "ALOCADO - AC": 677,
+        "ALOCADO - PCD": 10,
+        "ALOCADO - ER": 17,
+        "SUB JUDICE": 2
+      },
+      "candidatos_unicos_nome": 2604,
+      "desclassificados": 213
+    },
+    "2026_ciclo3_chamada1_vagas_retificadas.xlsx": {
+      "sha256": "6bc07f48d0eaac37936fc827ebdefd12fb7bf2be86dc26f64a08e1f5b57f5371",
+      "bytes": 244948,
+      "sheets": {
+        "QUADRO DE VAGAS_3° CICLO": {
+          "linhas_xml": 2297
+        }
+      },
+      "linhas_oferta": 2293,
+      "vagas_imediatas": 1132,
+      "vagas_cadastro_reserva": 3999
+    }
+  },
+  "vinculacao": {
+    "nomes_nominal_unicos": 1480,
+    "nomes_publicos_unicos": 4262,
+    "linhas_nominal_com_match_exato_de_nome_publico": 746,
+    "linhas_nominal_com_match_cnes_curso_em_quadro_de_vagas": 1170,
+    "advertencia": "nome e CNES+curso ajudam auditoria, mas nao substituem identificador estavel de vaga ou profissional"
+  },
+  "janelas": [
+    {
+      "chamada": "2025_ciclo1_chamada1",
+      "data_oferta_usada": "2025-07-24",
+      "fim_observado_local": "2026-08-12",
+      "dias_calendario_potenciais": 384,
+      "madura_90": true,
+      "madura_120": true,
+      "madura_180": true,
+      "cobertura_mensuravel": false,
+      "motivo": "fontes locais nao contem spells vaga-profissional nem eventos diarios"
+    },
+    {
+      "chamada": "2025_ciclo1_chamada2",
+      "data_oferta_usada": "2025-09-29",
+      "fim_observado_local": "2026-08-12",
+      "dias_calendario_potenciais": 317,
+      "madura_90": true,
+      "madura_120": true,
+      "madura_180": true,
+      "cobertura_mensuravel": false,
+      "motivo": "fontes locais nao contem spells vaga-profissional nem eventos diarios"
+    },
+    {
+      "chamada": "2026_ciclo2_chamada1_retificacao_final",
+      "data_oferta_usada": "2026-03-19",
+      "fim_observado_local": "2026-08-12",
+      "dias_calendario_potenciais": 146,
+      "madura_90": true,
+      "madura_120": true,
+      "madura_180": false,
+      "cobertura_mensuravel": false,
+      "motivo": "fontes locais nao contem spells vaga-profissional nem eventos diarios"
+    },
+    {
+      "chamada": "2026_ciclo2_chamada2",
+      "data_oferta_usada": "2026-04-16",
+      "fim_observado_local": "2026-08-12",
+      "dias_calendario_potenciais": 118,
+      "madura_90": true,
+      "madura_120": false,
+      "madura_180": false,
+      "cobertura_mensuravel": false,
+      "motivo": "fontes locais nao contem spells vaga-profissional nem eventos diarios"
+    },
+    {
+      "chamada": "2026_ciclo3_chamada1_retificacao",
+      "data_oferta_usada": "2026-07-24",
+      "fim_observado_local": "2026-08-12",
+      "dias_calendario_potenciais": 19,
+      "madura_90": false,
+      "madura_120": false,
+      "madura_180": false,
+      "cobertura_mensuravel": false,
+      "motivo": "fontes locais nao contem spells vaga-profissional nem eventos diarios"
+    }
+  ]
+}
