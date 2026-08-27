@@ -1,0 +1,363 @@
+{
+  "metadados_auditoria": {
+    "data_execucao": "2026-08-27T18:58:47.330183+00:00",
+    "responsavel": "Agente A03 (Sprint Extraordinario de Aquisicao de Dados)",
+    "versao_base_ivs_analisada": "IPEA 2010 (data/ivs_ipea_2010_municipios.csv)",
+    "total_municipios_brasil_ivs": 5565,
+    "total_municipios_serie_pmme": 531,
+    "total_municipios_quadros_vagas_unificados": 1125
+  },
+  "concordancia_ivs_serie_historica": {
+    "total_municipios": 531,
+    "concordantes_com_ivs_2010": 305,
+    "divergentes_de_ivs_2010": 226,
+    "taxa_concordancia_percentual": 57.44,
+    "distribuicao_deslocamentos_rank": {
+      "shift_-2": 2,
+      "shift_-1": 102,
+      "shift_0": 305,
+      "shift_1": 111,
+      "shift_2": 11
+    },
+    "matriz_transicao_calc_vs_texto": {
+      "ALTA VULNERABILIDADE": {
+        "ALTA VULNERABILIDADE": 49,
+        "BAIXA VULNERABILIDADE": 4,
+        "MEDIA VULNERABILIDADE": 54,
+        "MUITO ALTA VULNERABILIDADE": 0,
+        "MUITO BAIXA VULNERABILIDADE": 0,
+        "All": 107
+      },
+      "BAIXA VULNERABILIDADE": {
+        "ALTA VULNERABILIDADE": 0,
+        "BAIXA VULNERABILIDADE": 91,
+        "MEDIA VULNERABILIDADE": 57,
+        "MUITO ALTA VULNERABILIDADE": 0,
+        "MUITO BAIXA VULNERABILIDADE": 7,
+        "All": 155
+      },
+      "MEDIA VULNERABILIDADE": {
+        "ALTA VULNERABILIDADE": 14,
+        "BAIXA VULNERABILIDADE": 22,
+        "MEDIA VULNERABILIDADE": 121,
+        "MUITO ALTA VULNERABILIDADE": 0,
+        "MUITO BAIXA VULNERABILIDADE": 0,
+        "All": 157
+      },
+      "MUITO ALTA VULNERABILIDADE": {
+        "ALTA VULNERABILIDADE": 28,
+        "BAIXA VULNERABILIDADE": 0,
+        "MEDIA VULNERABILIDADE": 7,
+        "MUITO ALTA VULNERABILIDADE": 27,
+        "MUITO BAIXA VULNERABILIDADE": 0,
+        "All": 62
+      },
+      "MUITO BAIXA VULNERABILIDADE": {
+        "ALTA VULNERABILIDADE": 0,
+        "BAIXA VULNERABILIDADE": 31,
+        "MEDIA VULNERABILIDADE": 2,
+        "MUITO ALTA VULNERABILIDADE": 0,
+        "MUITO BAIXA VULNERABILIDADE": 17,
+        "All": 50
+      },
+      "All": {
+        "ALTA VULNERABILIDADE": 91,
+        "BAIXA VULNERABILIDADE": 148,
+        "MEDIA VULNERABILIDADE": 241,
+        "MUITO ALTA VULNERABILIDADE": 27,
+        "MUITO BAIXA VULNERABILIDADE": 24,
+        "All": 531
+      }
+    }
+  },
+  "auditoria_quadros_de_vagas": {
+    "1_2_cadastro_reserva": {
+      "total_linhas_vaga": 1762,
+      "total_municipios": 507,
+      "municipios_faixa_estritamente_unica": 507,
+      "municipios_faixas_multiplas": 0,
+      "ivs_distribuicao_por_faixa": {
+        "FAIXA 1": {
+          "count": 110,
+          "min": 0.26,
+          "mean": 0.4363909090909091,
+          "median": 0.4265,
+          "max": 0.631,
+          "std": 0.07266702941708564
+        },
+        "FAIXA 2": {
+          "count": 134,
+          "min": 0.259,
+          "mean": 0.34714179104477616,
+          "median": 0.3455,
+          "max": 0.456,
+          "std": 0.04220147753980273
+        },
+        "FAIXA 3": {
+          "count": 263,
+          "min": 0.135,
+          "mean": 0.2668022813688213,
+          "median": 0.267,
+          "max": 0.382,
+          "std": 0.048341964078414276
+        }
+      }
+    },
+    "2_1_vagas_retificadas": {
+      "total_linhas_vaga": 1547,
+      "total_municipios": 454,
+      "municipios_faixa_estritamente_unica": 454,
+      "municipios_faixas_multiplas": 0,
+      "ivs_distribuicao_por_faixa": {
+        "FAIXA 1": {
+          "count": 129,
+          "min": 0.321,
+          "mean": 0.44801550387596895,
+          "median": 0.426,
+          "max": 0.719,
+          "std": 0.08508350535063737
+        },
+        "FAIXA 2": {
+          "count": 115,
+          "min": 0.259,
+          "mean": 0.35028695652173913,
+          "median": 0.353,
+          "max": 0.437,
+          "std": 0.037273000721182246
+        },
+        "FAIXA 3": {
+          "count": 210,
+          "min": 0.135,
+          "mean": 0.2656047619047619,
+          "median": 0.267,
+          "max": 0.365,
+          "std": 0.04794675052917221
+        }
+      }
+    },
+    "2_2_vagas_reserva": {
+      "total_linhas_vaga": 1039,
+      "total_municipios": 369,
+      "municipios_faixa_estritamente_unica": 369,
+      "municipios_faixas_multiplas": 0,
+      "ivs_distribuicao_por_faixa": {
+        "FAIXA 1": {
+          "count": 82,
+          "min": 0.321,
+          "mean": 0.4507073170731707,
+          "median": 0.4235,
+          "max": 0.719,
+          "std": 0.09382298644418449
+        },
+        "FAIXA 2": {
+          "count": 90,
+          "min": 0.259,
+          "mean": 0.353,
+          "median": 0.355,
+          "max": 0.437,
+          "std": 0.03667255655792736
+        },
+        "FAIXA 3": {
+          "count": 197,
+          "min": 0.135,
+          "mean": 0.2654060913705584,
+          "median": 0.267,
+          "max": 0.365,
+          "std": 0.04771597049476114
+        }
+      }
+    },
+    "3_1_vagas_retificadas": {
+      "total_linhas_vaga": 2293,
+      "total_municipios": 748,
+      "municipios_faixa_estritamente_unica": 748,
+      "municipios_faixas_multiplas": 0,
+      "ivs_distribuicao_por_faixa": {
+        "FAIXA 1": {
+          "count": 291,
+          "min": 0.257,
+          "mean": 0.4371340206185567,
+          "median": 0.424,
+          "max": 0.719,
+          "std": 0.07831756250820854
+        },
+        "FAIXA 2": {
+          "count": 180,
+          "min": 0.241,
+          "mean": 0.34942222222222225,
+          "median": 0.35,
+          "max": 0.447,
+          "std": 0.04203655705588117
+        },
+        "FAIXA 3": {
+          "count": 276,
+          "min": 0.097,
+          "mean": 0.2623659420289855,
+          "median": 0.265,
+          "max": 0.4,
+          "std": 0.0566687998125976
+        }
+      }
+    }
+  },
+  "mapeamento_regras_por_edital": {
+    "grade_2025_edital_3_2025": {
+      "faixa_1": {
+        "descricao_textual": "Muito alta vulnerabilidade",
+        "bolsa_mensal_anunciada": 20000.0
+      },
+      "faixa_2": {
+        "descricao_textual": "Alta vulnerabilidade",
+        "bolsa_mensal_anunciada": 15000.0
+      },
+      "faixa_3": {
+        "descricao_textual": "Media, baixa ou muito baixa vulnerabilidade",
+        "bolsa_mensal_anunciada": 10000.0
+      },
+      "salto_monetario_candidato_alto_vs_muito_alto": 5000.0,
+      "salto_monetario_candidato_medio_vs_alto": 5000.0
+    },
+    "grade_2026_edital_1_2026_e_edital_28_2026": {
+      "faixa_1": {
+        "descricao_textual": "Muito alta ou alta vulnerabilidade",
+        "bolsa_mensal_liquida_anunciada": 20000.0
+      },
+      "faixa_2": {
+        "descricao_textual": "Media vulnerabilidade",
+        "bolsa_mensal_liquida_anunciada": 15000.0
+      },
+      "faixa_3": {
+        "descricao_textual": "Baixa ou muito baixa vulnerabilidade",
+        "bolsa_mensal_liquida_anunciada": 10000.0
+      },
+      "salto_monetario_candidato_baixa_vs_media": 5000.0,
+      "salto_monetario_candidato_media_vs_alta": 5000.0
+    },
+    "estabilidade_temporal_rotulo_faixa": "Incompativel: Faixa 2 em 2025 equivale a Faixa 1 em 2026; Faixa 3 em 2025 equivale a Faixa 2 em 2026."
+  },
+  "analise_densidade_suporte_cutoffs": [
+    {
+      "cutoff": 0.2,
+      "janela_delta": 0.02,
+      "n_lado_esquerdo": 151,
+      "n_lado_direito": 215,
+      "n_exato_no_ponto": 10,
+      "municipios_no_corte": [
+        "510680",
+        "310640",
+        "350180",
+        "350710",
+        "350780",
+        "354165",
+        "354570",
+        "431400",
+        "432090",
+        "421430"
+      ]
+    },
+    {
+      "cutoff": 0.3,
+      "janela_delta": 0.02,
+      "n_lado_esquerdo": 399,
+      "n_lado_direito": 402,
+      "n_exato_no_ponto": 17,
+      "municipios_no_corte": [
+        "520060",
+        "522060",
+        "522119",
+        "510670",
+        "240490",
+        "170190",
+        "311260",
+        "314460",
+        "315560",
+        "316590",
+        "351490",
+        "353290",
+        "350140",
+        "353650",
+        "410990",
+        "430745",
+        "432240"
+      ]
+    },
+    {
+      "cutoff": 0.4,
+      "janela_delta": 0.02,
+      "n_lado_esquerdo": 353,
+      "n_lado_direito": 359,
+      "n_exato_no_ponto": 20,
+      "municipios_no_corte": [
+        "290600",
+        "230920",
+        "231325",
+        "250600",
+        "251540",
+        "260670",
+        "240670",
+        "280590",
+        "150080",
+        "110050",
+        "313005",
+        "317107",
+        "317080",
+        "353670",
+        "354025",
+        "355390",
+        "351510",
+        "410570",
+        "410600",
+        "290060"
+      ]
+    },
+    {
+      "cutoff": 0.5,
+      "janela_delta": 0.02,
+      "n_lado_esquerdo": 162,
+      "n_lado_direito": 126,
+      "n_exato_no_ponto": 8,
+      "municipios_no_corte": [
+        "270375",
+        "270540",
+        "211280",
+        "150178",
+        "315737",
+        "431220",
+        "420970",
+        "312735"
+      ]
+    }
+  ],
+  "diagnostico_quatro_pilares_a03": {
+    "pilar_a_cutoff_normativo": {
+      "status": "NAO_CONFIRMADO_NO_PMM_E",
+      "evidencia": "Os editais citam categorizacao do IVS mas nao publicam algoritmo numerico de corte nem equacao de arredondamento.",
+      "detalhes": "Os cutoffs 0.200, 0.300, 0.400, 0.500 sao da taxonomia externa do Atlas do Ipea (2015), nao regra explicita do PMM-E."
+    },
+    "pilar_b_escore_administrativo_por_vaga": {
+      "status": "AUSENTE_NAS_BASES_PUBLICAS",
+      "evidencia": "Nenhum quadro de vagas publica a variavel corrida numerica (escore continuo) usada pelo Ministerio.",
+      "detalhes": "As tabelas publicam apenas a categoria ou a faixa ordinal discreta (Faixa 1, 2, 3), impedindo reconstrucao exata da running variable."
+    },
+    "pilar_c_primeiro_estagio_valor_anunciado": {
+      "status": "DETERMINISTICO_CONDICIONAL_A_CATEGORIA_TEXTUAL",
+      "evidencia": "100 por cento de correspondencia entre categoria textual e Faixa anunciada; valor anunciado e funcao exata da faixa no edital.",
+      "detalhes": "Salto anunciado de +R$ 5.000 ou +R$ 10.000 e deterministico condicionalmente a categoria textual, mas nao ao IVS continuo local."
+    },
+    "pilar_d_primeiro_estagio_valor_recebido": {
+      "status": "NAO_OBSERVADO_AGUARDANDO_DADOS_ADMINISTRATIVOS",
+      "evidencia": "Folha de pagamento mensal individualizada nao esta disponivel publicamente.",
+      "detalhes": "Nao e possivel verificar glosas, suspensoes, adicionais de imersao, ajuda de custo ou se participantes de 2025 migraram de valor em 2026."
+    }
+  },
+  "classificacao_contraste_causal": {
+    "tipo_contraste": "INCENTIVO_MARGINAL_ANUNCIADO_COM_SELECAO_MULTICRITERIO",
+    "justificativa": "O IVS nao determina participacao no PMM-E nem criacao de vagas. Condicionalmente a vaga ofertada, a categoria administrativa define o valor anunciado. Como o escore continuo e a regra exata nao foram publicados e 42.56 por cento dos municipios divergem do IVS 2010 local, o contraste nao pode ser estimado por RDD sharp.",
+    "viabilidade_rdd": "INVIAVEL_COM_DADOS_PUBLICOS_ATUAIS",
+    "condicoes_para_futuro_rdd_fuzzy": [
+      "Acesso a tabela de escore administrativo continuo exato usado pela SGTES/MS",
+      "Microdados mensais de pagamentos efetivos (SGP/FNS) para estimar primeiro estagio",
+      "Identificador estavel de vaga para controlar processo de oferta e remanejamento"
+    ]
+  }
+}
