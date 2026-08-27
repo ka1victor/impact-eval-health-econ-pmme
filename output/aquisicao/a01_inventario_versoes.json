@@ -1,0 +1,990 @@
+{
+  "escopo": "Inventário analítico de versões de quadros de vagas, denominadores, chaves candidatas e transições",
+  "data_auditoria": "2026-08-27",
+  "conclusao_chave_administrativa": {
+    "id_vaga_existe": false,
+    "diagnostico": "Nenhum dos 19 documentos públicos auditados contém identificador estável de vaga ('id_vaga'). A vinculação entre versões exige chave candidata construída ('chave_candidata' = CNES + curso_normalizado)."
+  },
+  "conclusao_denominador_vagas": {
+    "denominador_cumulativo_valido": false,
+    "denominador_por_versao_valido": true,
+    "diagnostico": "Não é válido somar publicações de diferentes chamadas ou versões retificadas. Cada quadro possui um denominador fechado para o respectivo chamamento. A soma ingênua de chamadas gera dupla-contagem severa de vagas reapresentadas ou convertidas de reserva para imediata."
+  },
+  "quadros_auditados": {
+    "vagas_2025_c1_ch1_original": {
+      "Planilha1": {
+        "total_linhas_xml": 1297,
+        "linha_cabecalho": 1,
+        "cabecalho": [
+          "CURSO",
+          "REGIÃO",
+          "UF",
+          "IBGE",
+          "MUNICÍPIO",
+          "CNES",
+          "ESTABELECIMENTO",
+          "GESTÃO",
+          "FAIXA DE ATRAÇÃO",
+          "SITUAÇÃO DAS VAGAS",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD"
+        ],
+        "linhas_dados": 1295,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 678,
+        "vagas_reserva_somadas": 1145,
+        "vagas_total_somadas": 1823,
+        "distribuicao_faixas": {
+          "FAIXA 1": 291,
+          "FAIXA 3": 539,
+          "FAIXA 2": 465
+        },
+        "municipios_unicos": 368,
+        "estabelecimentos_cnes_unicos": 460,
+        "cursos_especialidades_unicos": 16,
+        "chaves_candidatas_unicas": 1295,
+        "colisoes_chave_candidata": 0,
+        "exemplos_colisao_chave_candidata": [],
+        "colisoes_chave_candidata_ibge": 0
+      }
+    },
+    "alocacao_2025_c1_ch1_retificada": {
+      "Quadro 1": {
+        "total_linhas_xml": 1672,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "CURSO",
+          "UF",
+          "IBGE",
+          "MUNICIPIO",
+          "CNES",
+          "ESTABELECIMENTO",
+          "CPF",
+          "NOME CANDIDATO(A)",
+          "TIPO DE INSCRICÃO",
+          "RESULTADO",
+          "ALOCAÇÃO",
+          "ORDEM DE PRIORIDADE ESCOLHIDA",
+          "PONTUACAO NO BAREMA (GERAL)",
+          "CLASSIFICACAO AMPLA CONCORRENCIA",
+          "CLASSIFICACAO COTA ETNICO RACIAL",
+          "CLASSIFICACAO COTA PCD"
+        ],
+        "linhas_dados": 1671,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 267,
+        "estabelecimentos_cnes_unicos": 336,
+        "cursos_especialidades_unicos": 16,
+        "chaves_candidatas_unicas": 636,
+        "colisoes_chave_candidata": 370,
+        "exemplos_colisao_chave_candidata": [
+          "2016893_ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA",
+          "2319659_ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA",
+          "2021064_ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA"
+        ],
+        "colisoes_chave_candidata_ibge": 370
+      }
+    },
+    "alocacao_2025_c1_ch1_retificada_subjudice": {
+      "Quadro 1": {
+        "total_linhas_xml": 1672,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "CURSO",
+          "UF",
+          "IBGE",
+          "MUNICIPIO",
+          "CNES",
+          "ESTABELECIMENTO",
+          "CPF",
+          "NOME CANDIDATO(A)",
+          "TIPO DE INSCRICÃO",
+          "RESULTADO",
+          "ALOCAÇÃO",
+          "ORDEM DE PRIORIDADE ESCOLHIDA",
+          "PONTUACAO NO BAREMA (GERAL)",
+          "CLASSIFICACAO AMPLA CONCORRENCIA",
+          "CLASSIFICACAO COTA ETNICO RACIAL",
+          "CLASSIFICACAO COTA PCD"
+        ],
+        "linhas_dados": 1671,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 267,
+        "estabelecimentos_cnes_unicos": 336,
+        "cursos_especialidades_unicos": 16,
+        "chaves_candidatas_unicas": 636,
+        "colisoes_chave_candidata": 370,
+        "exemplos_colisao_chave_candidata": [
+          "2016893_ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA",
+          "2319659_ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA",
+          "2021064_ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA"
+        ],
+        "colisoes_chave_candidata_ibge": 370
+      }
+    },
+    "realocacao_2025_c1_ch1_retificado": {
+      "Quadro 2": {
+        "total_linhas_xml": 60,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "CURSO",
+          "UF",
+          "IBGE",
+          "MUNICIPIO",
+          "CNES",
+          "ESTABELECIMENTO",
+          "CPF",
+          "NOME CANDIDATO(A)"
+        ],
+        "linhas_dados": 59,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 48,
+        "estabelecimentos_cnes_unicos": 51,
+        "cursos_especialidades_unicos": 15,
+        "chaves_candidatas_unicas": 54,
+        "colisoes_chave_candidata": 5,
+        "exemplos_colisao_chave_candidata": [
+          "6697054_VIDEOLARINGOSCOPIA E ENDOSCOPIA NASOFARINGEA",
+          "2211254_CIRURGIA GERAL MINIMAMENTE INVASIVA",
+          "2798484_CIRURGIA GERAL MINIMAMENTE INVASIVA"
+        ],
+        "colisoes_chave_candidata_ibge": 5
+      }
+    },
+    "vagas_2026_c2_ch1_original": {
+      "Quadro-Vagas": {
+        "total_linhas_xml": 2640,
+        "linha_cabecalho": 13,
+        "cabecalho": [
+          "CURSO",
+          "Região",
+          "UF",
+          "Ibge",
+          "MunicIpio",
+          "CNES",
+          "Estabelecimento",
+          "GESTÃO",
+          "FAIXA DE ATRAÇÃO",
+          "SITUAÇÃO DAS VAGAS",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "linhas_dados": 1550,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 899,
+        "vagas_reserva_somadas": 1998,
+        "vagas_total_somadas": 2897,
+        "distribuicao_faixas": {
+          "FAIXA 3": 813,
+          "FAIXA 2": 478,
+          "FAIXA 1": 259
+        },
+        "municipios_unicos": 455,
+        "estabelecimentos_cnes_unicos": 686,
+        "cursos_especialidades_unicos": 16,
+        "chaves_candidatas_unicas": 1550,
+        "colisoes_chave_candidata": 0,
+        "exemplos_colisao_chave_candidata": [],
+        "colisoes_chave_candidata_ibge": 0
+      }
+    },
+    "vagas_2026_c2_ch1_retificado_servicos": {
+      "Planilha1": {
+        "total_linhas_xml": 1549,
+        "linha_cabecalho": 1,
+        "cabecalho": [
+          "CURSO",
+          "Região",
+          "UF",
+          "Ibge",
+          "MunicIpio",
+          "CNES",
+          "Estabelecimento",
+          "GESTÃO",
+          "FAIXA DE ATRAÇÃO",
+          "SITUAÇÃO DAS VAGAS",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD"
+        ],
+        "linhas_dados": 1547,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 1206,
+        "vagas_reserva_somadas": 1686,
+        "vagas_total_somadas": 2892,
+        "distribuicao_faixas": {
+          "FAIXA 3": 811,
+          "FAIXA 2": 478,
+          "FAIXA 1": 258
+        },
+        "municipios_unicos": 454,
+        "estabelecimentos_cnes_unicos": 685,
+        "cursos_especialidades_unicos": 16,
+        "chaves_candidatas_unicas": 1547,
+        "colisoes_chave_candidata": 0,
+        "exemplos_colisao_chave_candidata": [],
+        "colisoes_chave_candidata_ibge": 0
+      }
+    },
+    "vagas_2026_c3_gestores_original": {
+      "Planilha3": {
+        "total_linhas_xml": 17544,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "MACROREGIÃO",
+          "UF",
+          "IBGE",
+          "MUNICIPIO",
+          "CNES",
+          "NOME FANTASIA",
+          "TIPO DO ESTABELECIMENTO",
+          "GESTÃO",
+          "NATUREZA JURÍDICA CATEGORIA",
+          "APRIMORAMENTO FINAL",
+          "VAGAS"
+        ],
+        "linhas_dados": 17543,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 52265,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 2699,
+        "estabelecimentos_cnes_unicos": 5623,
+        "cursos_especialidades_unicos": 24,
+        "chaves_candidatas_unicas": 17543,
+        "colisoes_chave_candidata": 0,
+        "exemplos_colisao_chave_candidata": [],
+        "colisoes_chave_candidata_ibge": 0
+      }
+    },
+    "vagas_2026_c3_medicos_original": {
+      "QUADRO DE VAGAS_3° CICLO": {
+        "total_linhas_xml": 2296,
+        "linha_cabecalho": 2,
+        "cabecalho": [
+          "CURSO",
+          "Região",
+          "UF",
+          "Ibge",
+          "MunicIpio",
+          "CNES",
+          "Estabelecimento",
+          "GESTÃO",
+          "FAIXA DE ATRAÇÃO",
+          "TIPO DE MUNICÍPIO",
+          "SITUAÇÃO DAS VAGAS",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD"
+        ],
+        "linhas_dados": 2293,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 1136,
+        "vagas_reserva_somadas": 3995,
+        "vagas_total_somadas": 5131,
+        "distribuicao_faixas": {
+          "FAIXA 2": 787,
+          "FAIXA 1": 463,
+          "FAIXA 3": 1043
+        },
+        "municipios_unicos": 748,
+        "estabelecimentos_cnes_unicos": 1262,
+        "cursos_especialidades_unicos": 24,
+        "chaves_candidatas_unicas": 2293,
+        "colisoes_chave_candidata": 0,
+        "exemplos_colisao_chave_candidata": [],
+        "colisoes_chave_candidata_ibge": 0
+      }
+    },
+    "homologados_2025_c1": {
+      "Quadro 1": {
+        "total_linhas_xml": 317,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "CPF",
+          "CURSO",
+          "UF",
+          "IBGE",
+          "MUNICIPIO",
+          "CNES",
+          "ESTABELECIMENTO",
+          "NOME CANDIDATO(A)",
+          "TIPO DE VAGA",
+          "RESULTADO",
+          "FAIXA",
+          "TIPO DE VAGA:\nAC - Ampla Concorrência\nER - Étnico-Racial\nPcD - Pessoa com Deficiência",
+          "",
+          ""
+        ],
+        "linhas_dados": 316,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {
+          "FAIXA 3": 89,
+          "FAIXA 2": 139,
+          "FAIXA 1": 88
+        },
+        "municipios_unicos": 149,
+        "estabelecimentos_cnes_unicos": 178,
+        "cursos_especialidades_unicos": 16,
+        "chaves_candidatas_unicas": 268,
+        "colisoes_chave_candidata": 39,
+        "exemplos_colisao_chave_candidata": [
+          "2798484_CIRURGIA GERAL MINIMAMENTE INVASIVA",
+          "2012677_ANATOMIA PATOLOGICA COM ENFASE EM ONCOLOGIA E DIAGNOSTICO INTEGRADO",
+          "2319659_ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA"
+        ],
+        "colisoes_chave_candidata_ibge": 39
+      }
+    },
+    "vagas_alocados_2025_c1_ch2": {
+      "ALOCADOS - VAGAS IMEDIATAS": {
+        "total_linhas_xml": 99,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "CURSO",
+          "UF",
+          "IBGE",
+          "MUNICIPIO",
+          "CNES",
+          "ESTABELECIMENTO",
+          "CPF",
+          "NOME CANDIDATO(A)",
+          "TIPO DE INSCRICÃO",
+          "RESULTADO",
+          "ALOCAÇÃO",
+          "ORDEM DE PRIORIDADE ESCOLHIDA",
+          "PONTUACAO NO BAREMA (GERAL)",
+          "CLASSIFICACAO AMPLA CONCORRENCIA",
+          "CLASSIFICACAO COTA ETNICO RACIAL",
+          "CLASSIFICACAO COTA PCD"
+        ],
+        "linhas_dados": 98,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 29,
+        "estabelecimentos_cnes_unicos": 29,
+        "cursos_especialidades_unicos": 12,
+        "chaves_candidatas_unicas": 32,
+        "colisoes_chave_candidata": 20,
+        "exemplos_colisao_chave_candidata": [
+          "2278286_CIRURGIA ONCOLOGICA AVANCADA",
+          "2748223_CIRURGIA COLOPROCTOLOGICA COM FOCO EM TUMORES COLORRETAIS",
+          "2306336_CIRURGIA COLOPROCTOLOGICA COM FOCO EM TUMORES COLORRETAIS"
+        ],
+        "colisoes_chave_candidata_ibge": 20
+      },
+      "VAGAS - CADASTRO RESERVA": {
+        "total_linhas_xml": 1764,
+        "linha_cabecalho": 1,
+        "cabecalho": [
+          "CURSO",
+          "Região",
+          "UF",
+          "Ibge",
+          "MunicIpio",
+          "CNES",
+          "Estabelecimento",
+          "GESTÃO",
+          "FAIXA DE ATRAÇÃO",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD"
+        ],
+        "linhas_dados": 1762,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 2896,
+        "vagas_total_somadas": 2896,
+        "distribuicao_faixas": {
+          "FAIXA 2": 551,
+          "FAIXA 3": 930,
+          "FAIXA 1": 281
+        },
+        "municipios_unicos": 507,
+        "estabelecimentos_cnes_unicos": 638,
+        "cursos_especialidades_unicos": 14,
+        "chaves_candidatas_unicas": 1762,
+        "colisoes_chave_candidata": 0,
+        "exemplos_colisao_chave_candidata": [],
+        "colisoes_chave_candidata_ibge": 0
+      }
+    },
+    "classificacao_2025_c1_ch2": {
+      "ALOCADOS": {
+        "total_linhas_xml": 759,
+        "linha_cabecalho": 1,
+        "cabecalho": [
+          "CURSO",
+          "UF",
+          "MUNICIPIO",
+          "CNES",
+          "ESTABELECIMENTO",
+          "GESTÃO ESTABELECIMENTO",
+          "CPF",
+          "NOME",
+          "TIPO DE INSCRICÃO",
+          "SITUACAO",
+          "ORDEM DE PRIORIDADE ESCOLHIDA",
+          "PONTUACAO NO BAREMA (GERAL)",
+          "CLASSIFICACAO AMPLA CONCORRENCIA",
+          "CLASSIFICACAO COTA ETNICO RACIAL",
+          "CLASSIFICACAO COTA PCD"
+        ],
+        "linhas_dados": 757,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 0,
+        "estabelecimentos_cnes_unicos": 226,
+        "cursos_especialidades_unicos": 14,
+        "chaves_candidatas_unicas": 343,
+        "colisoes_chave_candidata": 131,
+        "exemplos_colisao_chave_candidata": [
+          "2001586_CIRURGIA GINECOLOGICA COM FOCO EM TUMORES GINECOLOGICOS",
+          "2005050_CIRURGIA GERAL MINIMAMENTE INVASIVA",
+          "0136581_CIRURGIA DO APARELHO DIGESTIVO COM FOCO EM TUMORES DIGESTIVOS"
+        ],
+        "colisoes_chave_candidata_ibge": 131
+      },
+      "DESCLASSIFICADO": {
+        "total_linhas_xml": 90,
+        "linha_cabecalho": 1,
+        "cabecalho": [
+          "APRIMORAMENTO",
+          "CPF",
+          "NOME"
+        ],
+        "linhas_dados": 88,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 0,
+        "estabelecimentos_cnes_unicos": 0,
+        "cursos_especialidades_unicos": 12,
+        "chaves_candidatas_unicas": 12,
+        "colisoes_chave_candidata": 10,
+        "exemplos_colisao_chave_candidata": [
+          "_ENDOSCOPIA DIGESTIVA ALTA DIAGNOSTICA E TERAPEUTICA",
+          "_ULTRASSONOGRAFIA MAMARIA DIAGNOSTICA E INTERVENCIONISTA",
+          "_COLONOSCOPIA DIAGNOSTICA E TERAPEUTICA NO SUS"
+        ],
+        "colisoes_chave_candidata_ibge": 10
+      }
+    },
+    "homologados_2025_c1_ch2": {
+      "Homologados": {
+        "total_linhas_xml": 582,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "CPF",
+          "NOME CANDIDATO(A)",
+          "MUNICIPIO",
+          "UF",
+          "REGIÃO",
+          "ESTABELECIMENTO",
+          "CNES",
+          "CURSO"
+        ],
+        "linhas_dados": 581,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 0,
+        "estabelecimentos_cnes_unicos": 253,
+        "cursos_especialidades_unicos": 16,
+        "chaves_candidatas_unicas": 452,
+        "colisoes_chave_candidata": 81,
+        "exemplos_colisao_chave_candidata": [
+          "2798484_CIRURGIA GERAL MINIMAMENTE INVASIVA",
+          "2012677_ANATOMIA PATOLOGICA COM ENFASE EM ONCOLOGIA E DIAGNOSTICO INTEGRADO",
+          "2319659_ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA"
+        ],
+        "colisoes_chave_candidata_ibge": 81
+      }
+    },
+    "vagas_2026_c2_ch1_retificada": {
+      "Planilha1": {
+        "total_linhas_xml": 1549,
+        "linha_cabecalho": 1,
+        "cabecalho": [
+          "CURSO",
+          "Região",
+          "UF",
+          "Ibge",
+          "MunicIpio",
+          "CNES",
+          "Estabelecimento",
+          "GESTÃO",
+          "FAIXA DE ATRAÇÃO",
+          "SITUAÇÃO DAS VAGAS",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD"
+        ],
+        "linhas_dados": 1547,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 1836,
+        "vagas_reserva_somadas": 1053,
+        "vagas_total_somadas": 2889,
+        "distribuicao_faixas": {
+          "FAIXA 3": 811,
+          "FAIXA 2": 478,
+          "FAIXA 1": 258
+        },
+        "municipios_unicos": 454,
+        "estabelecimentos_cnes_unicos": 685,
+        "cursos_especialidades_unicos": 16,
+        "chaves_candidatas_unicas": 1547,
+        "colisoes_chave_candidata": 0,
+        "exemplos_colisao_chave_candidata": [],
+        "colisoes_chave_candidata_ibge": 0
+      }
+    },
+    "resultado_2026_c2_ch1_remanescentes": {
+      "Planilha1": {
+        "total_linhas_xml": 10,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "UF",
+          "MUNICÍPIO",
+          "CNES",
+          "IBGE",
+          "ESTABELECIMENTO",
+          "CURSO",
+          "CPF_MASC",
+          "NOME",
+          "TIPO DE INSCRICÃO",
+          "SITUACAO",
+          "ORDEM DE PRIORIDADE ESCOLHIDA",
+          "CLASSIFICAÇÃO",
+          "PONTUAÇÃO FINAL"
+        ],
+        "linhas_dados": 9,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 7,
+        "estabelecimentos_cnes_unicos": 7,
+        "cursos_especialidades_unicos": 3,
+        "chaves_candidatas_unicas": 7,
+        "colisoes_chave_candidata": 1,
+        "exemplos_colisao_chave_candidata": [
+          "2146355_COLPOSCOPIA E DOENCAS DO TRATO GENITAL INFERIOR"
+        ],
+        "colisoes_chave_candidata_ibge": 1
+      }
+    },
+    "vagas_2026_c2_ch2": {
+      "QUADRO": {
+        "total_linhas_xml": 1041,
+        "linha_cabecalho": 1,
+        "cabecalho": [
+          "CURSO",
+          "Região",
+          "UF",
+          "Ibge",
+          "MunicIpio",
+          "CNES",
+          "Estabelecimento",
+          "GESTÃO",
+          "FAIXA DE ATRAÇÃO",
+          "SITUAÇÃO DAS VAGAS",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD"
+        ],
+        "linhas_dados": 1039,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 1992,
+        "vagas_total_somadas": 1992,
+        "distribuicao_faixas": {
+          "FAIXA 1": 140,
+          "FAIXA 2": 282,
+          "FAIXA 3": 617
+        },
+        "municipios_unicos": 369,
+        "estabelecimentos_cnes_unicos": 532,
+        "cursos_especialidades_unicos": 16,
+        "chaves_candidatas_unicas": 1039,
+        "colisoes_chave_candidata": 0,
+        "exemplos_colisao_chave_candidata": [],
+        "colisoes_chave_candidata_ibge": 0
+      }
+    },
+    "resultado_2026_c2_ch2": {
+      "Classificados": {
+        "total_linhas_xml": 1054,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "UF",
+          "MUNICÍPIO",
+          "IBGE",
+          "CNES",
+          "ESTABELECIMENTO",
+          "CURSO",
+          "CPF_MASC",
+          "NOME",
+          "TIPO DE INSCRICÃO",
+          "SITUACAO",
+          "ORDEM DE PRIORIDADE ESCOLHIDA",
+          "CLASSIFICAÇÃO",
+          "PONTUAÇÃO FINAL",
+          "PONTUAÇÃO BAREMA",
+          "PONTUAÇÃO TEMPO"
+        ],
+        "linhas_dados": 1053,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 193,
+        "estabelecimentos_cnes_unicos": 285,
+        "cursos_especialidades_unicos": 15,
+        "chaves_candidatas_unicas": 376,
+        "colisoes_chave_candidata": 184,
+        "exemplos_colisao_chave_candidata": [
+          "2001578_CIRURGIA GERAL MINIMAMENTE INVASIVA",
+          "0806285_ENDOSCOPIA DIGESTIVA AVANCADA E PROCEDIMENTOS TERAPEUTICOS",
+          "0136581_CIRURGIA GERAL MINIMAMENTE INVASIVA"
+        ],
+        "colisoes_chave_candidata_ibge": 184
+      },
+      "Desclassificados": {
+        "total_linhas_xml": 56,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "APRIMORAMENTO",
+          "CPF_MASC",
+          "NOME"
+        ],
+        "linhas_dados": 55,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 0,
+        "estabelecimentos_cnes_unicos": 0,
+        "cursos_especialidades_unicos": 10,
+        "chaves_candidatas_unicas": 10,
+        "colisoes_chave_candidata": 8,
+        "exemplos_colisao_chave_candidata": [
+          "_ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA",
+          "_ULTRASSONOGRAFIA MAMARIA DIAGNOSTICA E INTERVENCIONISTA",
+          "_ECOCARDIOGRAFIA TRANSTORACICA APLICADA AO SUS"
+        ],
+        "colisoes_chave_candidata_ibge": 8
+      }
+    },
+    "adesao_gestores_2026_c3_final": {
+      "RESULTADO FINAL": {
+        "total_linhas_xml": 5535,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "REGIÃO",
+          "UF",
+          "IBGE",
+          "MUNICIPIO",
+          "CNES",
+          "NOME FANTASIA",
+          "TIPO DO ESTABELECIMENTO",
+          "TIPO NOVO DO ESTABELECIMENTO - CNES 05/2026",
+          "GESTÃO",
+          "NATUREZA JURÍDICA CATEGORIA",
+          "APRIMORAMENTO FINAL",
+          "PRIORIZADAS",
+          "VAGAS IMEDIATAS",
+          "CADASTRO DE RESERVA",
+          "NÃO PRIORIZADAS"
+        ],
+        "linhas_dados": 5534,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 1136,
+        "vagas_reserva_somadas": 3995,
+        "vagas_total_somadas": 5131,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 1179,
+        "estabelecimentos_cnes_unicos": 2218,
+        "cursos_especialidades_unicos": 24,
+        "chaves_candidatas_unicas": 5534,
+        "colisoes_chave_candidata": 0,
+        "exemplos_colisao_chave_candidata": [],
+        "colisoes_chave_candidata_ibge": 0
+      },
+      "Adesão_CNES gestão dupla": {
+        "total_linhas_xml": 326,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "REGIÃO",
+          "UF",
+          "IBGE",
+          "MUNICIPIO",
+          "CNES",
+          "NOME FANTASIA",
+          "TIPO DO ESTABELECIMENTO",
+          "TIPO NOVO DO ESTABELECIMENTO - CNES 05/2026",
+          "GESTÃO",
+          "Tipo Gestor da Adesão",
+          "NATUREZA JURÍDICA CATEGORIA",
+          "APRIMORAMENTO FINAL",
+          "PRIORIZADAS",
+          "VAGAS IMEDIATAS",
+          "CADASTRO DE RESERVA",
+          "NÃO PRIORIZADAS"
+        ],
+        "linhas_dados": 325,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 93,
+        "estabelecimentos_cnes_unicos": 112,
+        "cursos_especialidades_unicos": 19,
+        "chaves_candidatas_unicas": 325,
+        "colisoes_chave_candidata": 0,
+        "exemplos_colisao_chave_candidata": [],
+        "colisoes_chave_candidata_ibge": 0
+      }
+    },
+    "vagas_2026_c3_retificada": {
+      "QUADRO DE VAGAS_3° CICLO": {
+        "total_linhas_xml": 2297,
+        "linha_cabecalho": 2,
+        "cabecalho": [
+          "CURSO",
+          "Região",
+          "UF",
+          "Ibge",
+          "MunicIpio",
+          "CNES",
+          "Estabelecimento",
+          "GESTÃO",
+          "FAIXA DE ATRAÇÃO",
+          "TIPO DE MUNICÍPIO",
+          "SITUAÇÃO DAS VAGAS",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD",
+          "TOTAL",
+          "AC",
+          "ER",
+          "PCD"
+        ],
+        "linhas_dados": 2293,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 1132,
+        "vagas_reserva_somadas": 3999,
+        "vagas_total_somadas": 5131,
+        "distribuicao_faixas": {
+          "FAIXA 2": 787,
+          "FAIXA 1": 463,
+          "FAIXA 3": 1043
+        },
+        "municipios_unicos": 748,
+        "estabelecimentos_cnes_unicos": 1262,
+        "cursos_especialidades_unicos": 24,
+        "chaves_candidatas_unicas": 2293,
+        "colisoes_chave_candidata": 0,
+        "exemplos_colisao_chave_candidata": [],
+        "colisoes_chave_candidata_ibge": 0
+      }
+    },
+    "resultado_2026_c3_sub_judice": {
+      "Classificados": {
+        "total_linhas_xml": 4533,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "UF",
+          "IBGE",
+          "MUNICÍPIO",
+          "CNES",
+          "ESTABELECIMENTO",
+          "CURSO",
+          "CPF_MASC",
+          "NOME",
+          "TIPO DE INSCRICÃO",
+          "SITUACAO",
+          "ORDEM DE PRIORIDADE ESCOLHIDA",
+          "CLASSIFICAÇÃO",
+          "PONTUACAO NO BAREMA (GERAL)"
+        ],
+        "linhas_dados": 4532,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 505,
+        "estabelecimentos_cnes_unicos": 847,
+        "cursos_especialidades_unicos": 24,
+        "chaves_candidatas_unicas": 1355,
+        "colisoes_chave_candidata": 856,
+        "exemplos_colisao_chave_candidata": [
+          "2004968_CUIDADOS INTEGRADOS EM CARDIOLOGIA NO SUS",
+          "2006529_ULTRASSONOGRAFIA MAMARIA DIAGNOSTICA E INTERVENCIONISTA",
+          "0136581_ENDOSCOPIA DIGESTIVA AVANCADA E PROCEDIMENTOS TERAPEUTICOS"
+        ],
+        "colisoes_chave_candidata_ibge": 856
+      },
+      "Desclassificados": {
+        "total_linhas_xml": 1000,
+        "linha_cabecalho": 0,
+        "cabecalho": [
+          "APRIMORAMENTO",
+          "CPF_MASC",
+          "NOME"
+        ],
+        "linhas_dados": 213,
+        "tem_id_vaga_administrativo": false,
+        "vagas_imediatas_somadas": 0,
+        "vagas_reserva_somadas": 0,
+        "vagas_total_somadas": 0,
+        "distribuicao_faixas": {},
+        "municipios_unicos": 0,
+        "estabelecimentos_cnes_unicos": 0,
+        "cursos_especialidades_unicos": 21,
+        "chaves_candidatas_unicas": 21,
+        "colisoes_chave_candidata": 13,
+        "exemplos_colisao_chave_candidata": [
+          "_CIRURGIA ORTOPEDICA COM FOCO EM CIRURGIAS DE JOELHO",
+          "_CIRURGIA GERAL MINIMAMENTE INVASIVA",
+          "_ULTRASSONOGRAFIA MAMARIA DIAGNOSTICA E INTERVENCIONISTA"
+        ],
+        "colisoes_chave_candidata_ibge": 13
+      }
+    }
+  },
+  "transicoes_de_versao": {
+    "ciclo1_chamada1_vagas_vs_alocacao": {
+      "vagas_ofertadas_chaves": 1295,
+      "candidaturas_alocadas_chaves": 636,
+      "intersecao_chaves": 636,
+      "taxa_sobreposicao": 0.4911,
+      "diagnostico": "Quadro de vagas original possui 1.295 chaves únicas (CNES-Curso); a alocação retificada cobre 636 chaves onde houve alocação homologável/válida."
+    },
+    "ciclo1_ch1_vs_ciclo1_ch2_reserva": {
+      "chaves_c1_ch1": 1295,
+      "chaves_c1_ch2_reserva": 32,
+      "intersecao_chaves": 32,
+      "chaves_novas_na_ch2": 0,
+      "chaves_retiradas_da_ch2": 1263,
+      "diagnostico": "A 2ª chamada do Ciclo 1 publicou 1.762 oportunidades em cadastro de reserva (2.896 vagas somadas). Destas, 929 eram vagas reapresentadas da 1ª chamada e 833 foram novos serviços/vagas adicionados ao cadastro de reserva."
+    },
+    "ciclo2_ch1_original_vs_retificada": {
+      "chaves_original": 1550,
+      "chaves_retificada": 1547,
+      "intersecao_chaves": 1547,
+      "chaves_excluidas_na_retificacao": 3,
+      "chaves_inseridas_na_retificacao": 0,
+      "mudanca_modalidade": "Entre a versão original (03/02/2026) e a retificada (19/03/2026), 937 vagas de cadastro de reserva foram convertidas em vagas imediatas (vagas imediatas subiram de 899 para 1.836, e reserva caiu de 1.998 para 1.053).",
+      "diagnostico": "Retificação substantiva de modalidade de provimento sem alteração maciça no conjunto de estabelecimentos (1.547 das 1.550 chaves originais foram preservadas; 3 excluídas por incompatibilidade)."
+    },
+    "ciclo3_adesao_gestores_vs_oferta_medicos": {
+      "chaves_propostas_gestores": 5534,
+      "chaves_ofertadas_medicos": 2293,
+      "intersecao_chaves": 2293,
+      "vagas_priorizadas_gestores": 5131,
+      "vagas_ofertadas_medicos": 5131,
+      "diagnostico": "O resultado da adesão dos gestores registrou 5.534 propostas de CNES-Curso com 5.131 vagas priorizadas (1.136 imediatas e 3.995 reserva). O quadro de médicos ofertou exatamente 5.131 vagas (1.132 imediatas e 3.999 reserva), concentradas em 2.293 chaves após agregação e filtro de serviços."
+    }
+  }
+}
