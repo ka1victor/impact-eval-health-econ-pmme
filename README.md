@@ -6,7 +6,7 @@ Por isso, a pergunta central não é apenas quantos médicos aparecem no program
 
 ## Estado atual
 
-O projeto está na fase de desenho e prontidão dos dados. Ainda não há resultado causal validado. O pipeline atual produz somente um inventário auditável das bases observadas; números de sessões anteriores que dependiam de dados simulados, premissas não documentadas ou inferências incompatíveis com as bases disponíveis foram removidos dos arquivos correntes. O histórico do Git foi preservado.
+O projeto está na fase de aquisição e prontidão dos dados. Ainda não há resultado causal validado. As auditorias concluíram que o estudo prioritário aguarda identificadores e trajetórias administrativas, regra exata do IVS, pagamentos e CNES mensal. Antes de congelar o protocolo, será executado o [sprint extraordinário de aquisição](prompts/aquisicao_dados/README.md). Números de sessões anteriores que dependiam de dados simulados, premissas não documentadas ou inferências incompatíveis com as bases disponíveis foram removidos dos arquivos correntes. O histórico do Git foi preservado.
 
 ## Escopo empírico prioritário
 
@@ -69,13 +69,16 @@ WP0 completo
 
 WP3 — acesso/fila, WP4 — clínica e WP5 — custos/bem-estar estão guardados e não entram no pipeline atual.
 
-A execução será feita em três fases com portões:
+A execução será feita em três fases com portões. Entre a auditoria inicial e o
+protocolo haverá um sprint de aquisição pública e, se necessário, pedidos
+administrativos:
 
 1. auditorias institucional e de dados;
-2. protocolo congelado;
-3. painéis de vagas e CNES;
-4. estimação causal;
-5. red team e síntese.
+2. aquisições públicas paralelas, integração e pedidos administrativos;
+3. protocolo congelado, somente se o novo portão permitir;
+4. painéis de vagas e CNES;
+5. estimação causal;
+6. red team e síntese.
 
 O roadmap canônico está em [docs/05_roadmap_execucao.md](docs/05_roadmap_execucao.md), os itens adiados em [docs/06_backlog_wp3_wp4_wp5.md](docs/06_backlog_wp3_wp4_wp5.md) e os prompts executáveis em [prompts/README.md](prompts/README.md).
 
@@ -87,7 +90,10 @@ O desenho amplo permanece em [docs/03_plano_avaliacao_outcomes.md](docs/03_plano
 python run_all.py
 ```
 
-No estágio atual, isso gera `output/inventario_dados.json`, com hashes, cobertura das bases e disponibilidade de cada outcome. Novas etapas só devem entrar no pipeline quando usarem dados observados, tiverem proveniência documentada e responderem a um estimando definido.
+No estágio atual, isso atualiza o inventário das bases, a auditoria das fontes
+PMM-E e o plano — sem download automático — das competências CNES. Novas etapas
+só devem entrar no pipeline quando usarem dados observados, tiverem proveniência
+documentada e responderem a um estimando definido.
 
 ## Estrutura
 
