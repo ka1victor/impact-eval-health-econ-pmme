@@ -29,6 +29,12 @@
 
 ## Execução
 
+- `docs/05_roadmap_execucao.md` é a ordem canônica de trabalho. `docs/03_plano_avaliacao_outcomes.md` é a agenda ampla e não deve ser interpretado como fila imediata.
+- Antes de iniciar uma tarefa, leia o prompt correspondente em `prompts/` e confirme que todos os pré-requisitos foram incorporados.
+- WP3, WP4 e WP5 estão guardados conforme `docs/06_backlog_wp3_wp4_wp5.md`; não crie scripts, outputs ou aquisições desses WPs sem autorização explícita do autor.
+- Execute WP0 e WP1 integralmente; de WP2 use apenas infraestrutura prévia; de WP6 use apenas heterogeneidade confirmatória, remanejamento contábil e síntese.
+- Os pares de tarefas 01–02 e 04–05 só podem rodar em paralelo em worktrees isolados.
+- Cada agente deve produzir commit próprio e não fazer push ou merge, salvo instrução explícita do autor.
 - `run_all.py` é o ponto de entrada ponta a ponta do estado validado do projeto.
 - Scripts usam caminhos relativos à raiz e devem ser determinísticos.
 - Uma etapa só entra no pipeline após passar validações de esquema, cobertura e coerência substantiva.

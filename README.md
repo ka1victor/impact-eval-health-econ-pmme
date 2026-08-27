@@ -56,19 +56,30 @@ Cada seta é uma hipótese empírica. Observar uma etapa não autoriza concluir 
 
 Esses fatos descrevem os arquivos, não o impacto do programa.
 
-## Plano de avaliação
+## Roadmap de execução
 
-O trabalho foi dividido em sete frentes:
+Os sete WPs formam a agenda ampla de outcomes; eles não serão executados em sequência neste estudo. O fluxo corrente é:
 
-- WP0 — reconstruir a regra institucional, a elegibilidade e a exposição ao programa;
-- WP1 — medir atração, entrada, permanência e oferta líquida de especialistas;
-- WP2 — medir capacidade e produção adicional;
-- WP3 — medir fila, espera, acesso e deslocamentos;
-- WP4 — medir diagnóstico, tratamento e desfechos de saúde;
-- WP5 — calcular custos e bem-estar;
-- WP6 — integrar resultados, heterogeneidade por IVS e spillovers.
+```text
+WP0 completo
+  → WP1 completo
+  → WP2 apenas para infraestrutura prévia
+  → WP6 apenas para heterogeneidade, remanejamento e síntese
+```
 
-O desenho completo está em [docs/03_plano_avaliacao_outcomes.md](docs/03_plano_avaliacao_outcomes.md). As definições de outcomes e estimandos estão em [docs/01_outcomes_e_estimandos.md](docs/01_outcomes_e_estimandos.md), o inventário de dados e lacunas em [docs/02_inventario_dados_por_outcome.md](docs/02_inventario_dados_por_outcome.md), e o escopo causal prioritário em [docs/04_escopo_eficacia_operacional.md](docs/04_escopo_eficacia_operacional.md).
+WP3 — acesso/fila, WP4 — clínica e WP5 — custos/bem-estar estão guardados e não entram no pipeline atual.
+
+A execução será feita em três fases com portões:
+
+1. auditorias institucional e de dados;
+2. protocolo congelado;
+3. painéis de vagas e CNES;
+4. estimação causal;
+5. red team e síntese.
+
+O roadmap canônico está em [docs/05_roadmap_execucao.md](docs/05_roadmap_execucao.md), os itens adiados em [docs/06_backlog_wp3_wp4_wp5.md](docs/06_backlog_wp3_wp4_wp5.md) e os prompts executáveis em [prompts/README.md](prompts/README.md).
+
+O desenho amplo permanece em [docs/03_plano_avaliacao_outcomes.md](docs/03_plano_avaliacao_outcomes.md). As definições de outcomes e estimandos estão em [docs/01_outcomes_e_estimandos.md](docs/01_outcomes_e_estimandos.md), o inventário de dados e lacunas em [docs/02_inventario_dados_por_outcome.md](docs/02_inventario_dados_por_outcome.md), e o escopo causal prioritário em [docs/04_escopo_eficacia_operacional.md](docs/04_escopo_eficacia_operacional.md).
 
 ## Executar o estado validado do projeto
 
@@ -83,6 +94,7 @@ No estágio atual, isso gera `output/inventario_dados.json`, com hashes, cobertu
 ```text
 data/      bases observadas preservadas
 docs/      desenho, inventário e plano de avaliação
+prompts/   tarefas ordenadas para os agentes executores
 scripts/   etapas reprodutíveis do pipeline
 output/    produtos gerados; atualmente, somente o inventário
 ```

@@ -1,25 +1,22 @@
 # 03. Plano de avaliação dos outcomes
 
-> Plano de trabalho para o objetivo central do projeto. Ele organiza dependências; não antecipa resultados nem fixa RDD antes de auditar a regra institucional.
+> Agenda ampla de outcomes do projeto. Ela não é a fila operacional do estudo prioritário e não fixa RDD antes da auditoria institucional.
 
-O primeiro estudo foi restringido à eficácia operacional do incentivo: cobertura sustentada, seus mecanismos, adicionalidade e uma heterogeneidade pré-especificada por infraestrutura anterior. A definição e os limites estão em [`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md). As demais frentes abaixo formam a agenda posterior e não integram a conclusão do estudo prioritário.
+O primeiro estudo foi restringido à eficácia operacional do incentivo: cobertura sustentada, seus mecanismos, adicionalidade e uma heterogeneidade pré-especificada por infraestrutura anterior. A definição e os limites estão em [`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md), e a ordem executável em [`05_roadmap_execucao.md`](05_roadmap_execucao.md). As demais frentes abaixo formam a agenda posterior.
 
 ## 1. Visão geral
 
 ```text
+ESTUDO ATUAL
 WP0 Regra e exposição
-  ↓
-WP1 Provimento e retenção
-  ↓
-WP2 Capacidade e produção
-  ↓
+  → WP1 Provimento e retenção
+  → WP2 somente infraestrutura prévia
+  → WP6 somente heterogeneidade, remanejamento e síntese
+
+BACKLOG POSTERIOR
 WP3 Acesso, fila e geografia
-  ↓
 WP4 Linhas clínicas
-  ↓
 WP5 Custos e bem-estar
-  ↓
-WP6 Síntese, equidade e transbordamentos
 ```
 
 WP0 e WP1 são bloqueadores. Sem saber quais vagas receberam qual incentivo e se houve capacidade adicional, não existe tratamento bem definido para os outcomes seguintes.
@@ -75,6 +72,8 @@ Sem descontinuidade/exposição relevante em entrada ou FTE, interromper atribui
 
 ## 4. WP2 — capacidade e produção observada
 
+> **Execução parcial agora:** somente CNES e infraestrutura pré-tratamento necessários para FTE, adicionalidade e heterogeneidade. Produção SIA/SIH permanece na agenda posterior.
+
 ### Objetivo
 
 Verificar se profissionais presentes geram capacidade e produção adicionais.
@@ -93,6 +92,8 @@ Verificar se profissionais presentes geram capacidade e produção adicionais.
 Não chamar produção de “atribuível” se não houver ligação temporal, especialidade compatível e contraste contrafactual.
 
 ## 5. WP3 — acesso, fila e geografia
+
+> **Guardado:** não adquirir dados, criar scripts ou estimar este WP no estudo atual. Veja [`06_backlog_wp3_wp4_wp5.md`](06_backlog_wp3_wp4_wp5.md).
 
 ### Objetivo
 
@@ -120,6 +121,8 @@ Nenhum padrão será resumido automaticamente como sucesso/fracasso global.
 
 ## 6. WP4 — linhas clínicas
 
+> **Guardado:** não selecionar linha clínica, vincular bases ou estimar este WP no estudo atual. Veja [`06_backlog_wp3_wp4_wp5.md`](06_backlog_wp3_wp4_wp5.md).
+
 ### Objetivo
 
 Verificar se acesso mais oportuno altera processos e desfechos específicos.
@@ -143,6 +146,8 @@ A concentração de profissionais define prioridade de investigação, não expe
 
 ## 7. WP5 — custos e bem-estar
 
+> **Guardado:** não construir cenários, adquirir dados ou estimar este WP no estudo atual. Veja [`06_backlog_wp3_wp4_wp5.md`](06_backlog_wp3_wp4_wp5.md).
+
 ### Objetivo
 
 Comparar custos incrementais com acesso, tempo e saúde efetivamente produzidos.
@@ -158,6 +163,8 @@ Comparar custos incrementais com acesso, tempo e saúde efetivamente produzidos.
 7. Calcular custo-efetividade apenas para desfechos clínicos estimados.
 
 ## 8. WP6 — síntese, equidade e transbordamentos
+
+> **Execução parcial agora:** uma heterogeneidade confirmatória por infraestrutura prévia, decomposição contábil de remanejamento e síntese. Atribuição causal de spillovers regionais amplos permanece para trabalho posterior.
 
 ### Tarefas
 
@@ -190,4 +197,4 @@ O IVS 2010 continuará sendo a running variable canônica quando a regra institu
 6. Estimar o efeito sobre cobertura sustentada e só então decompor os modos de falha.
 7. Tratar remanejamento inicialmente como decomposição contábil; ampliar a identificação apenas se os dados sustentarem.
 
-Fila, produção, clínica e custos ficam adiados até a conclusão desse produto. O primeiro produto publicável será a avaliação de quando o incentivo produz capacidade médica sustentada e adicional.
+Fila, produção assistencial, clínica e custos ficam adiados conforme [`06_backlog_wp3_wp4_wp5.md`](06_backlog_wp3_wp4_wp5.md). O primeiro produto publicável será a avaliação de quando o incentivo produz capacidade médica sustentada e adicional. A execução deve seguir os prompts ordenados em [`../prompts/README.md`](../prompts/README.md).
