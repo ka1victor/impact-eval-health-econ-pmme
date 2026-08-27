@@ -1,0 +1,86 @@
+{
+  "manifesto": "A04 - Manifesto de Aquisicao de Regras Financeiras e Pagamentos Publicos",
+  "data_auditoria": "2026-08-27",
+  "escopo": "Cadeia de despesa, fontes orcamentarias, regras normativas e viabilidade de dose financeira no PMM-E",
+  "agente_responsavel": "Agente A04",
+  "fontes_auditadas": [
+    {
+      "id": "grade_bolsas_normativa_2025_2026",
+      "arquivo": "data/raw/aquisicao/pagamentos/grade_bolsas_historico_2025_2026.csv",
+      "url_oficial": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos",
+      "provedor": "Ministerio da Saude / SGTES",
+      "cobertura": "Ciclos 1, 2 e 3 (2025-2026), todas as chamadas e faixas de bolsa 1, 2 e 3",
+      "unidade": "Edital / Ciclo / Chamada / Faixa de Atracao",
+      "bytes": 3712,
+      "sha256": "e97558c880adf3b7b9997291da6111c5fb2c05616e0e54e7b966eead0721095f",
+      "licenca_restricao": "Dominio Publico / Dados Oficiais de Editais Federais",
+      "disponibilidade": "L",
+      "diagnostico": "Grade normativa completa de valores anunciados por faixa e ciclo. Evidencia a instabilidade temporal das categorias de IVS entre 2025 e 2026."
+    },
+    {
+      "id": "execucao_orcamentaria_federal_pmme",
+      "arquivo": "data/raw/aquisicao/pagamentos/execucao_orcamentaria_acoes_provimento_2025_2026.csv",
+      "url_oficial": "https://www.siop.gov.br e https://portaldatransparencia.gov.br",
+      "provedor": "Ministerio do Planejamento / STN / CGU / FNS",
+      "cobertura": "Exercicios financeiros de 2025 e 2026 (posicao agosto/2026), acoes orcamentarias 215I, 219A, 20AH e 21CE",
+      "unidade": "Exercicio / UO / Acao Orcamentaria / Plano Orcamentario / Elemento de Despesa",
+      "bytes": 2954,
+      "sha256": "01a934d7d9fb8afb343e2bd06ab895aba4ffd471c8b07d0ede7b789d5071b4e0",
+      "licenca_restricao": "Dominio Publico / Lei de Acesso a Informacao (Lei 12.527/2011)",
+      "disponibilidade": "P",
+      "diagnostico": "Execucao orcamentaria macro (dotacao, empenho, liquidacao e pagamento). Inadequada para dose individual por inexistencia de identificador de vaga e medico."
+    },
+    {
+      "id": "catalogo_normas_financeiras_pmme",
+      "arquivo": "data/raw/aquisicao/pagamentos/normas_regras_financeiras_pmme.json",
+      "url_oficial": "https://www.planalto.gov.br e https://bvsms.saude.gov.br",
+      "provedor": "Presidencia da Republica / Ministerio da Saude",
+      "cobertura": "Legislacao e atos normativos federais de 2025 e 2026 que regem a remuneracao do PMM-E",
+      "unidade": "Ato Normativo Federal",
+      "bytes": 5207,
+      "sha256": "7dfd3133caeb9ea450db17e5537c31657194fc7e4cb5a7d983eefb031a393a01",
+      "licenca_restricao": "Dominio Publico",
+      "disponibilidade": "L",
+      "diagnostico": "Mapeamento dos artigos legais sobre natureza das bolsas (sem vinculo empregaticio, isencao de IRPF), componentes e condicionalidades."
+    },
+    {
+      "id": "inventario_sistemas_pagamento_ms",
+      "arquivo": "data/raw/aquisicao/pagamentos/inventario_sistemas_pagamento_ms.json",
+      "url_oficial": "https://saude.gov.br e https://unasus.gov.br",
+      "provedor": "Ministerio da Saude (SGTES/FNS/UNA-SUS/CGU)",
+      "cobertura": "Sistemas de pagamento, atesto e controle financeiro do SUS (SGP, FNS, SIAFI, Transparencia, UNA-SUS)",
+      "unidade": "Sistema da Informacao Governamental",
+      "bytes": 4247,
+      "sha256": "cddd8d17a9c2e3f50990921e8e9934ab3f43471a529e3ba834f16eea99c9e750",
+      "licenca_restricao": "Dominio Publico / Documentacao Tecnica",
+      "disponibilidade": "L",
+      "diagnostico": "Demonstra que a folha individual de pagamento do PMM-E reside no SGP com acesso restrito, nao sendo publicada em portais de dados abertos."
+    },
+    {
+      "id": "folha_pagamento_individual_sgp",
+      "arquivo": null,
+      "url_oficial": "https://infoms.saude.gov.br (SGP / SGTES)",
+      "provedor": "Ministerio da Saude / SGTES / DGEPSS",
+      "cobertura": "Microdados mensais de pagamentos por medico, vaga e competencia (2025-2026)",
+      "unidade": "Profissional / Vaga / Compet?ncia / Folha Mensal",
+      "bytes": null,
+      "sha256": null,
+      "licenca_restricao": "Acesso Restrito / Sigilo Administrativo e LGPD (exige LAI com chave pseudonimizada)",
+      "disponibilidade": "LAI",
+      "diagnostico": "Base essencial para observacao do valor efetivamente recebido, suspensoes, glosas, retroativos e primeiro estagio do incentivo. Nao publicada em dados abertos."
+    },
+    {
+      "id": "portal_transparencia_favorecidos_cgu",
+      "arquivo": null,
+      "url_oficial": "https://portaldatransparencia.gov.br/despesas/pagamentos",
+      "provedor": "Controladoria-Geral da Uniao (CGU)",
+      "cobertura": "Ordens bancarias emitidas a pessoas fisicas na acao 215I/21CE",
+      "unidade": "Ordem Bancaria / Favorecido",
+      "bytes": null,
+      "sha256": null,
+      "licenca_restricao": "Publico com mascaramento de CPF",
+      "disponibilidade": "I",
+      "diagnostico": "Nao discrimina codigo de vaga do PMM-E, CNES ou programa especifico (mistura PMMB, tutores, residentes e especialistas). Inadequada para linkage longitudinal."
+    }
+  ]
+}

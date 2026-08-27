@@ -1,0 +1,208 @@
+{
+  "metadados": {
+    "titulo": "Matriz Estruturada da Dose Financeira e Cadeia de Despesa do PMM-E",
+    "data_versao": "2026-08-27",
+    "autor": "Agente A04 - Auditoria de Pagamentos Publicos"
+  },
+  "niveis_desagregacao_financeira": [
+    {
+      "nivel": "1. Macro-Orcamentario Federal",
+      "fontes": "SIOP, Siga Brasil, SIAFI",
+      "granularidade_temporal": "Anual / Mensal acumulado",
+      "chaves_disponiveis": [
+        "Ano_Exercicio",
+        "UO (36901 - FNS)",
+        "Acao_Orcamentaria (215I, 219A, 21CE)",
+        "Plano_Orcamentario (PO)",
+        "Elemento_Despesa (33.90.18, 33.90.48)"
+      ],
+      "grau_transparencia_publica": "Totalmente Publico",
+      "permite_identificar_vaga": false,
+      "permite_identificar_profissional": false,
+      "permite_identificar_municipio": false,
+      "adequacao_primeiro_estagio": "Inadequada (agregado macro sem discriminacao de unidades de atendimento)"
+    },
+    {
+      "nivel": "2. Transferencias Fundo a Fundo",
+      "fontes": "Portal FNS (Fundo Nacional de Saude)",
+      "granularidade_temporal": "Mensal por repasse",
+      "chaves_disponiveis": [
+        "Codigo_IBGE_Municipio",
+        "Bloco_Manutencao_ASPS",
+        "Conta_Fundo_Municipal"
+      ],
+      "grau_transparencia_publica": "Totalmente Publico",
+      "permite_identificar_vaga": false,
+      "permite_identificar_profissional": false,
+      "permite_identificar_municipio": true,
+      "adequacao_primeiro_estagio": "Inadequada (a bolsa do PMM-E e paga diretamente pela Uniao ao medico e N?O transita pelo Fundo Municipal de Saude)"
+    },
+    {
+      "nivel": "3. Despesa Direta a Favorecidos (Portal da Transparencia)",
+      "fontes": "Portal da Transparencia da CGU (Documentos de Despesa / OB)",
+      "granularidade_temporal": "Por Ordem Bancaria (Data exata da emiss?o)",
+      "chaves_disponiveis": [
+        "Nome_Favorecido",
+        "CPF_Mascarado",
+        "Numero_OB",
+        "Valor_OB",
+        "UG_Emitente",
+        "Acao_Orcamentaria"
+      ],
+      "grau_transparencia_publica": "Publico com mascaramento LGPD",
+      "permite_identificar_vaga": false,
+      "permite_identificar_profissional": "Parcial (CPF mascarado sem chave institucional comum)",
+      "permite_identificar_municipio": false,
+      "adequacao_primeiro_estagio": "Inadequada (nao informa codigo de vaga, CNES, curso de especialidade, nem separa medicos PMM-E de PMMB tradicional ou residentes)"
+    },
+    {
+      "nivel": "4. Oferta Normativa por Vaga (Editais e Chamamentos)",
+      "fontes": "Quadros de Vagas SGTES/MS (Publicacoes em XLSX e Editais)",
+      "granularidade_temporal": "Por Ciclo e Chamada (Foto est?tica no momento da publicacao)",
+      "chaves_disponiveis": [
+        "Codigo_IBGE",
+        "Codigo_CNES",
+        "Especialidade_Curso",
+        "Faixa_Atracao_Anunciada",
+        "Tipo_Vaga (Imediata / Reserva)"
+      ],
+      "grau_transparencia_publica": "Totalmente Publico",
+      "permite_identificar_vaga": "Chave composta (CNES + Curso + Chamada), sem identificador estavel enico",
+      "permite_identificar_profissional": false,
+      "permite_identificar_municipio": true,
+      "adequacao_primeiro_estagio": "Adequada EXCLUSIVAMENTE para estimando de Intention-to-Treat (ITT) da Oferta do Incentivo"
+    },
+    {
+      "nivel": "5. Folha de Pagamentos Individualizada por Compet?ncia",
+      "fontes": "SGP (Sistema de Gerenciamento de Programas / SGTES / MS)",
+      "granularidade_temporal": "Mensal por competencia de servi?o prestado",
+      "chaves_disponiveis": [
+        "ID_Profissional",
+        "ID_Vaga",
+        "CNES",
+        "Competencia_AnoMes",
+        "Parcela_Fixa",
+        "Parcela_Variavel",
+        "Ajuda_Custo",
+        "Glosas",
+        "Retroativos",
+        "Valor_Liquido_Pago"
+      ],
+      "grau_transparencia_publica": "Restrito / Nao Publicado Abertamente (Disponivel apenas via LAI)",
+      "permite_identificar_vaga": true,
+      "permite_identificar_profissional": true,
+      "permite_identificar_municipio": true,
+      "adequacao_primeiro_estagio": "Ideal e indispensavel para primeiro estagio de Dose Efetivamente Recebida"
+    }
+  ],
+  "cadeia_despesa_comparativo": {
+    "estagios_da_despesa": [
+      {
+        "estagio": "1. Valor Anunciado",
+        "definicao": "Valor nominal bruto/liquido publicado no edital e vinculado e vaga ofertada em funcao da categoria de IVS municipal.",
+        "valores_ciclo_1_2025": {
+          "Faixa_1": 20000.0,
+          "Faixa_2": 15000.0,
+          "Faixa_3": 10000.0
+        },
+        "valores_ciclos_2_3_2026": {
+          "Faixa_1": 20000.0,
+          "Faixa_2": 15000.0,
+          "Faixa_3": 10000.0
+        },
+        "observabilidade_publica": "Observavel nos quadros de vagas e editais oficiais",
+        "fontes": "Editais SGTES/MS 3/2025, 3/2026 e 28/2026"
+      },
+      {
+        "estagio": "2. Valor Devido",
+        "definicao": "Valor apurado pelo Ministerio da Saude ap?s verificacao da data de inicio efetivo, proporcionalidade de dias na competencia inicial, cumprimento de 20h semanais no CNES e frequencia academica na UNA-SUS.",
+        "formula": "Bolsa_Fixa_Prop + Parcela_Variavel_Prop + Ajuda_Custo_Modulo - Glosas_Faltas",
+        "observabilidade_publica": "Nao observavel publicamente (exige microdados do SGP e UNA-SUS)",
+        "fontes": "SGP / SGTES / MS"
+      },
+      {
+        "estagio": "3. Valor Empenhado",
+        "definicao": "Credito or?ament?rio federal reservado no SIAFI para cobertura da folha de bolsas e auxilios de provimento no exercicio financeiro.",
+        "observabilidade_publica": "Observavel em n?vel macro nas acoes 215I, 219A e 21CE",
+        "fontes": "SIAFI / SIOP / Portal da Transparencia"
+      },
+      {
+        "estagio": "4. Valor Liquidado",
+        "definicao": "Reconhecimento formal da obrigacao de pagamento pelo Ministerio da Saude ap?s validacao da folha do SGP.",
+        "observabilidade_publica": "Observavel apenas no agregado da acao orcamentaria",
+        "fontes": "SIAFI / SIOP"
+      },
+      {
+        "estagio": "5. Valor Pago",
+        "definicao": "Efetivo deposito financeiro na conta bancaria do medico bolsista emitido pelo FNS.",
+        "observabilidade_publica": "Nao observavel com vinculacao individual e vaga do PMM-E em dados abertos",
+        "fontes": "FNS / SGP / Banco do Brasil"
+      },
+      {
+        "estagio": "6. Ajustes, Glosas, Estornos e Retroativos",
+        "definicao": "Compensacoes financeiras decorrentes de homologacoes tardias (retroativos), afastamentos medicos/licencas, desistencias retroativas (glosas/estornos) e inconsistencias bancarias.",
+        "observabilidade_publica": "Nao observavel em fontes p?blicas abertas",
+        "fontes": "SGP / FNS"
+      }
+    ]
+  },
+  "instabilidade_temporal_faixas": {
+    "diagnostico": "A definicao das faixas de atracao mudou estruturalmente entre 2025 e 2026. A mesma categoria socioeconomica de IVS recebe faixas e incentivos adicionais diferentes dependendo do ano.",
+    "matriz_cruzamento": [
+      {
+        "categoria_ivs": "Muito Alta Vulnerabilidade (IVS > 0.500)",
+        "faixa_2025": "Faixa 1",
+        "bolsa_2025_brl": 20000.0,
+        "faixa_2026": "Faixa 1",
+        "bolsa_2026_brl": 20000.0,
+        "delta_bolsa": 0.0
+      },
+      {
+        "categoria_ivs": "Alta Vulnerabilidade (0.400 < IVS <= 0.500)",
+        "faixa_2025": "Faixa 2",
+        "bolsa_2025_brl": 15000.0,
+        "faixa_2026": "Faixa 1",
+        "bolsa_2026_brl": 20000.0,
+        "delta_bolsa": 5000.0
+      },
+      {
+        "categoria_ivs": "M?dia Vulnerabilidade (0.300 < IVS <= 0.400)",
+        "faixa_2025": "Faixa 3",
+        "bolsa_2025_brl": 10000.0,
+        "faixa_2026": "Faixa 2",
+        "bolsa_2026_brl": 15000.0,
+        "delta_bolsa": 5000.0
+      },
+      {
+        "categoria_ivs": "Baixa ou Muito Baixa Vulnerabilidade (IVS <= 0.300)",
+        "faixa_2025": "Faixa 3",
+        "bolsa_2025_brl": 10000.0,
+        "faixa_2026": "Faixa 3",
+        "bolsa_2026_brl": 10000.0,
+        "delta_bolsa": 0.0
+      }
+    ],
+    "implicacao_econometrica": "Impossibilidade de empilhamento simples (pooling) de ciclos usando a variavel faixa_atracao sem ajuste da regra temporal e do cutoff correspondente."
+  },
+  "avaliacao_tratamentos_candidatos": {
+    "opcao_a_faixa_anunciada": {
+      "nome": "Tratamento como Faixa Anunciada (Oferta Normativa do Incentivo)",
+      "status": "UNICO TRATAMENTO VIAVEL COM DADOS PUBLICOS",
+      "estimando_identificado": "Intention-to-Treat (ITT) da oferta do incentivo financeiro adicional (+R$ 5.000 ou +R$ 10.000 / mes) condicional e existencia de vaga ofertada.",
+      "requisitos_atendidos": "Observavel nos editais, chamamentos e quadros de vagas retificados.",
+      "limitacoes": "Nao mede a dose de recursos efetivamente transferida aos medicos; nao captura efeito de evasao precoce ou glosas."
+    },
+    "opcao_b_valor_devido": {
+      "nome": "Tratamento como Valor Devido (Dose Teorica Proporcional)",
+      "status": "INVIAVEL COM DADOS PUBLICOS ATUAIS",
+      "motivo_inviabilidade": "Exigiria dados diarios ou mensais de inicio individual de todos os medicos inscritos (nao apenas dos sobreviventes ativos em ago/2026), log de afastamentos e assiduidade na UNA-SUS.",
+      "risco_metodologico": "Assumir valor devido como 12 meses x valor anunciado configuraria imputacao artificial e violaria os padroes de integridade do projeto."
+    },
+    "opcao_c_valor_recebido": {
+      "nome": "Tratamento como Valor Recebido (Dose Financeira Efetiva / Primeiro Estagio Real)",
+      "status": "BLOQUEADO AGUARDANDO LAI / DADOS ADMINISTRATIVOS",
+      "motivo_inviabilidade": "A folha de pagamento individualizada (SGP/FNS) nao e p?blica. Sem ela, o primeiro estagio econometrico (Dose ~ 1[IVS >= c]) e nao identificado.",
+      "proxima_acao_necessaria": "Submeter Pedido Administrativo de Acesso a Informacao (Pedido 4) solicitando microdados pseudonimizados de pagamento por vaga, competencia e profissional."
+    }
+  }
+}

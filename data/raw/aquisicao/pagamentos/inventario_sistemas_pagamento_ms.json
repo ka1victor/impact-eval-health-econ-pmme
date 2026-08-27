@@ -1,0 +1,50 @@
+{
+  "auditoria": "A04 - Invent?rio de Sistemas de Pagamento e Execucao Orcamentaria",
+  "sistemas_auditados": [
+    {
+      "sistema": "SGP - Sistema de Gerenciamento de Programas",
+      "orgao_gestor": "Ministerio da Saude / SGTES / DGEPSS",
+      "papel_na_despesa": "Controle operacional de medicos bolsistas, validacao mensal de frequencia pelo gestor municipal, validacao de atividades de tutoria/ensino, processamento da folha mensal de bolsas, geracao de ordens de pagamento, registro de afastamentos, suspensoes, glosas e desligamentos.",
+      "nivel_de_acesso": "Restrito a gestores municipais autenticados e aos pr?prios medicos participantes via Gov.br",
+      "disponibilidade_publica": "Inexistente em formato aberto / microdados",
+      "campos_internos_relevantes": "ID_Profissional, ID_Vaga, CPF, Compet?ncia, Frequencia_Homologada, Parcela_Fixa_Devida, Parcela_Variavel_Devida, Ajuda_Custo_Devida, Glosas, Valor_Liquido_Autorizado, Data_Envio_Folha",
+      "classificacao_disponibilidade": "LAI"
+    },
+    {
+      "sistema": "FNS - Sistema de Gest?o do Fundo Nacional de Saude",
+      "orgao_gestor": "Ministerio da Saude / FNS",
+      "papel_na_despesa": "Emiss?o f?sica das ordens bancarias (OB) no SIAFI para credito em conta corrente individual no Banco do Brasil; gest?o das transferencias fundo a fundo aos munic?pios (aten??o de m?dia e alta complexidade, teto MAC).",
+      "nivel_de_acesso": "Painel publico FNS exibe transferencias fundo a fundo agregadas aos munic?pios; pagamentos individuais de bolsas a pessoas fisicas nao s?o discriminados com chave de vaga nos relat?rios publicos.",
+      "disponibilidade_publica": "P?blica para repasses a entes; Restrita/Inadequada para bolsas individuais PMM-E",
+      "campos_internos_relevantes": "Numero_OB, Favorecido_CPF_Mascarado, Banco, Agencia, Conta, Valor_Pago, Data_Pagamento, Codigo_Acao, Elemento_339018",
+      "classificacao_disponibilidade": "I"
+    },
+    {
+      "sistema": "SIAFI / SIOP / Siga Brasil - Or?amento Federal",
+      "orgao_gestor": "Ministerio do Planejamento e Or?amento / Secretaria do Tesouro Nacional / Senado Federal",
+      "papel_na_despesa": "Planejamento, registro or?ament?rio e acompanhamento da despesa p?blica federal em n?vel macro (dotacao, empenho, liquidacao, pagamento por acao, plano or?ament?rio e elemento de despesa).",
+      "nivel_de_acesso": "Publico e aberto",
+      "disponibilidade_publica": "Disponivel publicamente em relat?rios agregados por acao orcamentaria e elemento de despesa",
+      "campos_internos_relevantes": "Exercicio, UO, Acao, PO, Elemento, Empenhado, Liquidado, Pago, RAP_Pago",
+      "classificacao_disponibilidade": "P"
+    },
+    {
+      "sistema": "Portal da Transparencia do Governo Federal (CGU)",
+      "orgao_gestor": "Controladoria-Geral da Uniao - CGU",
+      "papel_na_despesa": "Divulgacao p?blica da execucao orcamentaria e financeira da Uniao, contratos, transferencias e pagamentos diretos.",
+      "nivel_de_acesso": "Publico e aberto",
+      "disponibilidade_publica": "Exibe despesas por favorecido e programas, mas as ordens de pagamento de bolsas do Ministerio da Saude aparecem agregadas ou com favorecido sem identificador de vaga, sem CNES e sem distin??o clara entre PMM-E e outros programas de provimento/formacao.",
+      "campos_internos_relevantes": "Data, Orgao, Acao, Favorecido_Nome, Favorecido_CPF_Mascarado, Valor",
+      "classificacao_disponibilidade": "I"
+    },
+    {
+      "sistema": "Plataforma UNA-SUS / Sistema Acad?mico Formador",
+      "orgao_gestor": "Universidade Aberta do SUS / Institui??es Supervisoras",
+      "papel_na_despesa": "Acompanhamento acad?mico do itiner?rio formativo (m?dulos EaD, imers?es presenciais, tutoria e avaliacao de competencias especializadas); requisito obrigat?rio para atesto de regularidade e liberacao da bolsa mensal.",
+      "nivel_de_acesso": "Restrito a alunos-medicos, preceptores e coordenacao",
+      "disponibilidade_publica": "Inexistente em dados abertos",
+      "campos_internos_relevantes": "ID_Aluno, Curso_Especialidade, Modulo_Concluido, Frequencia_Presencial, Avaliacao_Nota, Status_Academico",
+      "classificacao_disponibilidade": "LAI"
+    }
+  ]
+}
