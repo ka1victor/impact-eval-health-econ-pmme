@@ -1,0 +1,180 @@
+{
+  "agente": "A02",
+  "objeto": "selecao e trajetoria administrativa publica",
+  "gerado_em": "2026-08-27",
+  "fontes_processadas": [
+    {
+      "id": "alocacao_2025_c1_retificada",
+      "arquivo": "2025_ciclo1_chamada1_alocacao_retificada.xlsx",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-projeto-mais-medicos-especialistas/quadro-1-profissionais-alocados-conforme-escolha-inicial-1a-ou-2a-opcao-retificado.xlsx",
+      "ciclo": "1",
+      "chamada": "1",
+      "cobertura": "Ciclo 1, chamada 1, alocacao retificada",
+      "unidade_declarada": "profissional alocado/vaga",
+      "etapas_alvo": [
+        "inscricao",
+        "preferencias",
+        "classificacao",
+        "alocacao"
+      ],
+      "fonte": "Ministerio da Saude",
+      "data_extracao": "2026-08-27",
+      "caminho_preservado": null,
+      "bytes": null,
+      "sha256": null,
+      "disponibilidade": "link quebrado / HTTP 404",
+      "erro": "HTTP Error 404: Not Found",
+      "validacao": "fonte oficial inacessivel na data de referencia"
+    },
+    {
+      "id": "homologados_2025_c1",
+      "arquivo": "2025_ciclo1_chamada1_homologados.xlsx",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/lista-de-homologados-medicos-especialistas-1a-chamada.xlsx",
+      "ciclo": "1",
+      "chamada": "1",
+      "cobertura": "Ciclo 1, chamada 1, lista retificada de homologados em 29/09/2025",
+      "unidade_declarada": "profissional homologado/curso/cota",
+      "etapas_alvo": [
+        "homologacao"
+      ],
+      "fonte": "Ministerio da Saude",
+      "data_extracao": "2026-08-27",
+      "caminho_preservado": "data/raw/pmm_e/2025_ciclo1_chamada1_homologados.xlsx",
+      "bytes": 40259,
+      "sha256": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b",
+      "disponibilidade": "preservado localmente em data/raw/pmm_e/",
+      "validacao": "arquivo integro; bytes identicos aos oficiais"
+    },
+    {
+      "id": "vagas_alocados_2025_c1_ch2",
+      "arquivo": "2025_ciclo1_chamada2_vagas_e_alocados.xlsx",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/quadro-de-vagas-da-2a-chamada-e-a-relacao-de-profissionais-alocados-imediatos.xlsx",
+      "ciclo": "1",
+      "chamada": "2",
+      "cobertura": "Ciclo 1, chamada 2, vagas e alocados imediatos",
+      "unidade_declarada": "vaga e profissional alocado",
+      "etapas_alvo": [
+        "classificacao",
+        "alocacao"
+      ],
+      "fonte": "Ministerio da Saude",
+      "data_extracao": "2026-08-27",
+      "caminho_preservado": "data/raw/pmm_e/2025_ciclo1_chamada2_vagas_e_alocados.xlsx",
+      "bytes": 155827,
+      "sha256": "f1b8f7533cb13d8aba21d1100ab957e6accac52532fb8235e1b4231343a0588c",
+      "disponibilidade": "preservado localmente em data/raw/pmm_e/",
+      "validacao": "arquivo integro; bytes identicos aos oficiais"
+    },
+    {
+      "id": "classificacao_2025_c1_ch2",
+      "arquivo": "2025_ciclo1_chamada2_classificacao_final.xlsx",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/resultado-final-com-a-lista-de-classificacao-2a-chamada.xlsx",
+      "ciclo": "1",
+      "chamada": "2",
+      "cobertura": "Ciclo 1, chamada 2, classificacao final e desclassificados",
+      "unidade_declarada": "candidatura/classificacao",
+      "etapas_alvo": [
+        "inscricao",
+        "preferencias",
+        "classificacao",
+        "alocacao",
+        "desclassificacao"
+      ],
+      "fonte": "Ministerio da Saude",
+      "data_extracao": "2026-08-27",
+      "caminho_preservado": "data/raw/pmm_e/2025_ciclo1_chamada2_classificacao_final.xlsx",
+      "bytes": 86076,
+      "sha256": "5c73a99847708b2749019c634f661771b28c88cb5421e9672e44704e62103e85",
+      "disponibilidade": "preservado localmente em data/raw/pmm_e/",
+      "validacao": "arquivo integro; bytes identicos aos oficiais"
+    },
+    {
+      "id": "homologados_2025_c1_ch2",
+      "arquivo": "2025_ciclo1_chamada2_homologados.xlsx",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/lista-de-homologados-medicos-especialistas-2a-chamada.xlsx",
+      "ciclo": "1",
+      "chamada": "2",
+      "cobertura": "Ciclo 1, chamada 2, homologados",
+      "unidade_declarada": "profissional homologado",
+      "etapas_alvo": [
+        "homologacao"
+      ],
+      "fonte": "Ministerio da Saude",
+      "data_extracao": "2026-08-27",
+      "caminho_preservado": "data/raw/pmm_e/2025_ciclo1_chamada2_homologados.xlsx",
+      "bytes": 55034,
+      "sha256": "4e85cfe45b2e5e1f7ebef78aa5dc90ba61b7adc5f7046f43a5066803f603e147",
+      "disponibilidade": "preservado localmente em data/raw/pmm_e/",
+      "validacao": "arquivo integro; bytes identicos aos oficiais"
+    },
+    {
+      "id": "resultado_2026_c2_ch1_remanescentes",
+      "arquivo": "2026_ciclo2_chamada1_resultado_final_remanescentes.xlsx",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/resultado-final-com-vagas-remanescentes.xlsx",
+      "ciclo": "2",
+      "chamada": "1",
+      "cobertura": "Ciclo 2, chamada 1, resultado final com vagas remanescentes em 05/05/2026",
+      "unidade_declarada": "candidatura/alocacao remanescente",
+      "etapas_alvo": [
+        "classificacao",
+        "alocacao_remanescente"
+      ],
+      "fonte": "Ministerio da Saude",
+      "data_extracao": "2026-08-27",
+      "caminho_preservado": "data/raw/pmm_e/2026_ciclo2_chamada1_resultado_final_remanescentes.xlsx",
+      "bytes": 17548,
+      "sha256": "db39d51f9163fd8deedc8727ced37bf3fcdf19b4a6966d91a396e09f5f2a26e6",
+      "disponibilidade": "preservado localmente em data/raw/pmm_e/",
+      "validacao": "arquivo integro; bytes identicos aos oficiais"
+    },
+    {
+      "id": "resultado_2026_c2_ch2",
+      "arquivo": "2026_ciclo2_chamada2_resultado_final.xlsx",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/resultado-final-pmme-2o-ciclo-2a-chamada.xlsx",
+      "ciclo": "2",
+      "chamada": "2",
+      "cobertura": "Ciclo 2, chamada 2, resultado final e desclassificados",
+      "unidade_declarada": "candidatura/alocacao/cadastro reserva",
+      "etapas_alvo": [
+        "inscricao",
+        "preferencias",
+        "classificacao",
+        "alocacao",
+        "cadastro_reserva",
+        "desclassificacao"
+      ],
+      "fonte": "Ministerio da Saude",
+      "data_extracao": "2026-08-27",
+      "caminho_preservado": "data/raw/pmm_e/2026_ciclo2_chamada2_resultado_final.xlsx",
+      "bytes": 111857,
+      "sha256": "8690d6fc381692fc20c59ae077ac8b80ca1ce27dd03d27fd8e1ef17c75abc85f",
+      "disponibilidade": "preservado localmente em data/raw/pmm_e/",
+      "validacao": "arquivo integro; bytes identicos aos oficiais"
+    },
+    {
+      "id": "resultado_2026_c3_sub_judice",
+      "arquivo": "2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-6-2026-pmm-e/resultado-final-3o-ciclo-sub-judice.xlsx",
+      "ciclo": "3",
+      "chamada": "1",
+      "cobertura": "Ciclo 3, chamada 1, resultado final de 25/08/2026, sub judice",
+      "unidade_declarada": "candidatura/alocacao/cadastro reserva/sub judice",
+      "etapas_alvo": [
+        "inscricao",
+        "preferencias",
+        "classificacao",
+        "alocacao",
+        "cadastro_reserva",
+        "sub_judice",
+        "desclassificacao"
+      ],
+      "fonte": "Ministerio da Saude",
+      "data_extracao": "2026-08-27",
+      "caminho_preservado": "data/raw/pmm_e/2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx",
+      "bytes": 393041,
+      "sha256": "d74f268bb7192c80a02c94e54eb4407e60a0923ad7d0310c2c6b432b3dbbb6ee",
+      "disponibilidade": "preservado localmente em data/raw/pmm_e/",
+      "validacao": "arquivo integro; bytes identicos aos oficiais"
+    }
+  ]
+}
