@@ -33,3 +33,9 @@ wheels/
 # Temporarios
 *.tmp
 *.log
+
+# Temporarios
+*.part
+
+# Dados brutos grandes (CNES)
+data/raw/cnes/
