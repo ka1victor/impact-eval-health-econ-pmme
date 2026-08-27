@@ -1,7 +1,7 @@
 {
   "agente": "A03",
   "modulo": "ivs_e_regra_administrativa",
-  "data_geracao": "2026-08-27T18:58:44.578179+00:00",
+  "data_geracao": "2026-08-27T19:57:47.945303+00:00",
   "total_fontes_preservadas": 9,
   "fontes": [
     {
@@ -15,10 +15,10 @@
       "status_aquisicao": "already_exists",
       "http_status": 200,
       "erro": null,
-      "tamanho_bytes": 105958,
+      "tamanho_bytes": 106003,
       "mime_type": "text/html; charset=iso-8859-1",
-      "sha256": "62ded0ebb7e1e585008cd4fc6bba845e4f8efcdc101f7215e6b25e66e2580b26",
-      "data_aquisicao": "2026-08-27T18:58:44.561081+00:00"
+      "sha256": "d53e7877fe2c6dfd95131ecee0a3b6e84c8d443479fe9b7b4dec3e627f55cb2b",
+      "data_aquisicao": "2026-08-27T19:57:47.937185+00:00"
     },
     {
       "id": "edital_sgtes_02_2025_gestores",
@@ -34,7 +34,7 @@
       "tamanho_bytes": 157131,
       "mime_type": "text/html; charset=utf-8",
       "sha256": "2fef58c438ca0b5266a5959795d20f16c991a68703f6c99f710df9edbae804a4",
-      "data_aquisicao": "2026-08-27T18:58:44.561081+00:00"
+      "data_aquisicao": "2026-08-27T19:57:47.937751+00:00"
     },
     {
       "id": "edital_sgtes_03_2025_faq_bolsa",
@@ -47,10 +47,10 @@
       "status_aquisicao": "already_exists",
       "http_status": 200,
       "erro": null,
-      "tamanho_bytes": 102893,
+      "tamanho_bytes": 107228,
       "mime_type": "text/html; charset=utf-8",
-      "sha256": "c71af42f6abaff464e99c37ce60fc22676f1482f92e6780be7de9e6de8dcbffb",
-      "data_aquisicao": "2026-08-27T18:58:44.567219+00:00"
+      "sha256": "a6ff2d5597286176153fc73c986028cd30b98f91667f5c3019d2fa804505a31f",
+      "data_aquisicao": "2026-08-27T19:57:47.937751+00:00"
     },
     {
       "id": "edital_sgtes_01_2026_ciclo2",
@@ -63,10 +63,10 @@
       "status_aquisicao": "already_exists",
       "http_status": 200,
       "erro": null,
-      "tamanho_bytes": 128700,
+      "tamanho_bytes": 133244,
       "mime_type": "text/html; charset=utf-8",
-      "sha256": "3ca76e6fceef05881e22b18828bedd6f584d484287b22985fb8c63ec45ca4061",
-      "data_aquisicao": "2026-08-27T18:58:44.567604+00:00"
+      "sha256": "90b95c902f5c6db58ea64a72eb6bec0cb82769fe145003cd7d02563601b05245",
+      "data_aquisicao": "2026-08-27T19:57:47.937751+00:00"
     },
     {
       "id": "edital_sgtes_05_2026_adesao_ciclo3",
@@ -79,10 +79,10 @@
       "status_aquisicao": "already_exists",
       "http_status": 200,
       "erro": null,
-      "tamanho_bytes": 114997,
+      "tamanho_bytes": 119493,
       "mime_type": "text/html; charset=utf-8",
-      "sha256": "1b7f7bec2ae4430cb5e630f01b5ca36d271607f5d62b4006aa411fb5b2f149f3",
-      "data_aquisicao": "2026-08-27T18:58:44.567604+00:00"
+      "sha256": "38687fbfb2d02ef256d9a1d1f3e8e74372ac090af4c81f789d13f765323caa7e",
+      "data_aquisicao": "2026-08-27T19:57:47.937751+00:00"
     },
     {
       "id": "edital_sgtes_06_2026_edital_28_2026_ciclo3",
@@ -98,7 +98,7 @@
       "tamanho_bytes": 224250,
       "mime_type": "text/html; charset=utf-8",
       "sha256": "eb1e07b44465edc8226efe0743ed1fd8fca97de0f88d5886e249478052c84306",
-      "data_aquisicao": "2026-08-27T18:58:44.567604+00:00"
+      "data_aquisicao": "2026-08-27T19:57:47.945303+00:00"
     },
     {
       "id": "portaria_gm_ms_7177_2025",
@@ -114,7 +114,7 @@
       "tamanho_bytes": 427,
       "mime_type": "application/json",
       "sha256": "3c3c775c71e914c6a06f305ad0fe3ccb2c8eb746f223e4678e504f4d9df202c6",
-      "data_aquisicao": "2026-08-27T18:58:44.573337+00:00"
+      "data_aquisicao": "2026-08-27T19:57:47.945303+00:00"
     },
     {
       "id": "portaria_gm_ms_7266_2025",
@@ -130,7 +130,7 @@
       "tamanho_bytes": 307,
       "mime_type": "application/json",
       "sha256": "65156901594768a741674473edb491b55e2ccd33e8ceb7ced7f44014d52bad7c",
-      "data_aquisicao": "2026-08-27T18:58:44.573337+00:00"
+      "data_aquisicao": "2026-08-27T19:57:47.945303+00:00"
     },
     {
       "id": "ipea_atlas_vulnerabilidade_social_2015",
@@ -146,7 +146,7 @@
       "tamanho_bytes": 512,
       "mime_type": "application/json",
       "sha256": "c93731174b15d5b3905d55eac2b2171e8feba6c66842f2017379ac60a90364fa",
-      "data_aquisicao": "2026-08-27T18:58:44.573337+00:00"
+      "data_aquisicao": "2026-08-27T19:57:47.945303+00:00"
     }
   ]
 }

@@ -12,10 +12,10 @@
       "pagina_catalogo": "https://cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp",
       "cobertura": "Brasil, competencia mensal",
       "unidade": "cadastros CNES mensais; tabelas internas por estabelecimento, profissional-vinculo e infraestrutura",
-      "caminho": null,
-      "bytes": null,
-      "sha256": null,
-      "status": "planejado; bruto grande nao baixado"
+      "caminho": "data/raw/cnes/BASE_DE_DADOS_CNES_202506.ZIP",
+      "bytes": 639832653,
+      "sha256": "b43d12780a1d2ad47ab244272912262fd3b3b59e08c5f2ae715abf2a318e95ba",
+      "status": "preservado localmente"
     },
     {
       "competencia": "202507",
@@ -168,10 +168,10 @@
       "pagina_catalogo": "https://cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp",
       "cobertura": "Brasil, competencia mensal",
       "unidade": "cadastros CNES mensais; tabelas internas por estabelecimento, profissional-vinculo e infraestrutura",
-      "caminho": null,
-      "bytes": null,
-      "sha256": null,
-      "status": "planejado; bruto grande nao baixado"
+      "caminho": "data/raw/cnes/BASE_DE_DADOS_CNES_202607.ZIP",
+      "bytes": 734781715,
+      "sha256": "f4ad8a2b4a156a8be9f3e76fafaba9870b9165bc56e86ac23578ffb609755ec9",
+      "status": "preservado localmente"
     }
   ]
 }

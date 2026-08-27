@@ -2,12 +2,12 @@
   "manifesto_id": "a05_manifesto_cnes",
   "escopo": "Aquisicao e inspecao das competencias mensais do CNES para analise de forca de trabalho, FTE cadastral e infraestrutura pre-tratamento do PMM-E",
   "catalogo_consultado_em": "2026-08-27",
-  "data_geracao": "2026-08-27T16:54:36.352176",
+  "data_geracao": "2026-08-27T16:58:03.904438",
   "modo_execucao": "plan",
   "periodo_planejado": "202406 a 202607",
   "total_competencias_planejadas": 26,
   "total_competencias_baixadas": 3,
-  "workspace_worktree_path": "C:\\Users\\camil\\.gemini\\antigravity\\brain\\11e2d473-f2f5-4b3b-8b52-eb8d63d0c879\\.system_generated\\worktrees\\subagent-Agente-A05---CNES-Mensal-self-cee4f251",
+  "workspace_worktree_path": "C:\\Users\\camil\\Desktop\\Kauã\\Insper\\impact-eval-health-econ-pmme",
   "fontes": [
     {
       "competencia": "202406",

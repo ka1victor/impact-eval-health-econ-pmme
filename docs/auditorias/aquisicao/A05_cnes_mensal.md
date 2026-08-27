@@ -170,7 +170,7 @@ Os 3 estabelecimentos ausentes em 202406 correspondem a unidades de saúde inaug
 ## 9. Instruções de Continuidade e Reprodutibilidade
 
 1. **Localização dos Arquivos Brutos:** Os arquivos ZIP baixados residem no diretório:
-   `C:/Users/camil/.gemini/antigravity/brain/11e2d473-f2f5-4b3b-8b52-eb8d63d0c879/.system_generated/worktrees/subagent-Agente-A05---CNES-Mensal-self-cee4f251/data/raw/cnes`
+   `C:/Users/camil/Desktop/Kauã/Insper/impact-eval-health-econ-pmme/data/raw/cnes`
 2. **Preservação em Worktree:** O coordenador do projeto (ou Agente A06) pode sincronizar esses arquivos brutos diretamente para a árvore principal ou reexecutar o script idempotente:
    ```bash
    python scripts/aquisicao/a05_adquirir_cnes.py --pilot
