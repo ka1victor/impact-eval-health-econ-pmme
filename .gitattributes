@@ -1,0 +1,23 @@
+# Controle de fins de linha e preservacao binaria
+* text=auto eol=lf
+
+# Arquivos de dados e brutos
+*.xlsx binary
+*.zip binary
+*.ZIP binary
+*.csv text eol=lf
+*.json text eol=lf
+
+# Preservar brutos sem conversao de fim de linha
+data/raw/** binary
+data/raw/**/*.html -text
+data/raw/**/*.csv -text
+data/raw/**/*.json -text
+data/raw/**/*.xlsx binary
+data/raw/**/*.ZIP binary
+data/raw/**/*.zip binary
+
+# Dados observados originais
+data/ivs_ipea_2010_municipios.csv text eol=lf
+data/pmm_especialistas_nominal.csv text eol=lf
+data/pmm_especialistas_serie_historica.csv text eol=lf

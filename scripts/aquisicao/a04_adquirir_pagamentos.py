@@ -167,93 +167,96 @@ SISTEMAS_PAGAMENTO_DATA = {
     ]
 }
 
-def write_raw_files() -> dict[str, str]:
-    RAW_PAGAMENTOS_DIR.mkdir(parents=True, exist_ok=True)
+def write_derived_files() -> dict[str, str]:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     hashes = {}
 
-    file_grade = RAW_PAGAMENTOS_DIR / "grade_bolsas_historico_2025_2026.csv"
+    file_grade = OUTPUT_DIR / "a04_grade_bolsas_historico_2025_2026.csv"
     with open(file_grade, mode="w", newline="", encoding="utf-8") as f:
         fieldnames = list(GRADE_BOLSAS_DATA[0].keys())
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(GRADE_BOLSAS_DATA)
-    hashes["grade_bolsas_historico_2025_2026.csv"] = sha256_file(file_grade)
+    hashes["a04_grade_bolsas_historico_2025_2026.csv"] = sha256_file(file_grade)
 
-    file_exec = RAW_PAGAMENTOS_DIR / "execucao_orcamentaria_acoes_provimento_2025_2026.csv"
+    file_exec = OUTPUT_DIR / "a04_execucao_orcamentaria_acoes_provimento_2025_2026.csv"
     with open(file_exec, mode="w", newline="", encoding="utf-8") as f:
         fieldnames = list(EXECUCAO_ORCAMENTARIA_DATA[0].keys())
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(EXECUCAO_ORCAMENTARIA_DATA)
-    hashes["execucao_orcamentaria_acoes_provimento_2025_2026.csv"] = sha256_file(file_exec)
+    hashes["a04_execucao_orcamentaria_acoes_provimento_2025_2026.csv"] = sha256_file(file_exec)
 
-    file_normas = RAW_PAGAMENTOS_DIR / "normas_regras_financeiras_pmme.json"
+    file_normas = OUTPUT_DIR / "a04_normas_regras_financeiras_pmme.json"
     with open(file_normas, mode="w", encoding="utf-8") as f:
         json.dump(NORMAS_REGRAS_DATA, f, ensure_ascii=False, indent=2)
-    hashes["normas_regras_financeiras_pmme.json"] = sha256_file(file_normas)
+    hashes["a04_normas_regras_financeiras_pmme.json"] = sha256_file(file_normas)
 
-    file_sistemas = RAW_PAGAMENTOS_DIR / "inventario_sistemas_pagamento_ms.json"
+    file_sistemas = OUTPUT_DIR / "a04_inventario_sistemas_pagamento_ms.json"
     with open(file_sistemas, mode="w", encoding="utf-8") as f:
         json.dump(SISTEMAS_PAGAMENTO_DATA, f, ensure_ascii=False, indent=2)
-    hashes["inventario_sistemas_pagamento_ms.json"] = sha256_file(file_sistemas)
+    hashes["a04_inventario_sistemas_pagamento_ms.json"] = sha256_file(file_sistemas)
 
     return hashes
 
 
-def build_manifest(raw_hashes: dict[str, str]) -> dict:
-    today_str = date.today().isoformat()
+def build_manifest(derived_hashes: dict[str, str]) -> dict:
+    today_str = "2026-08-28"
     sources = [
         {
             "id": "grade_bolsas_normativa_2025_2026",
-            "arquivo": "data/raw/aquisicao/pagamentos/grade_bolsas_historico_2025_2026.csv",
+            "arquivo": "output/aquisicao/a04_grade_bolsas_historico_2025_2026.csv",
             "url_oficial": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos",
             "provedor": "Ministerio da Saude / SGTES",
+            "natureza": "Tabela derivada consolidada de editais oficiais",
             "cobertura": "Ciclos 1, 2 e 3 (2025-2026), todas as chamadas e faixas de bolsa 1, 2 e 3",
             "unidade": "Edital / Ciclo / Chamada / Faixa de Atracao",
-            "bytes": (RAW_PAGAMENTOS_DIR / "grade_bolsas_historico_2025_2026.csv").stat().st_size,
-            "sha256": raw_hashes["grade_bolsas_historico_2025_2026.csv"],
+            "bytes": (OUTPUT_DIR / "a04_grade_bolsas_historico_2025_2026.csv").stat().st_size,
+            "sha256": derived_hashes["a04_grade_bolsas_historico_2025_2026.csv"],
             "licenca_restricao": "Dominio Publico / Dados Oficiais de Editais Federais",
-            "disponibilidade": "L",
+            "disponibilidade": "Consolidado em output/aquisicao/",
             "diagnostico": "Grade normativa completa de valores anunciados por faixa e ciclo. Evidencia a instabilidade temporal das categorias de IVS entre 2025 e 2026."
         },
         {
             "id": "execucao_orcamentaria_federal_pmme",
-            "arquivo": "data/raw/aquisicao/pagamentos/execucao_orcamentaria_acoes_provimento_2025_2026.csv",
+            "arquivo": "output/aquisicao/a04_execucao_orcamentaria_acoes_provimento_2025_2026.csv",
             "url_oficial": "https://www.siop.gov.br e https://portaldatransparencia.gov.br",
             "provedor": "Ministerio do Planejamento / STN / CGU / FNS",
+            "natureza": "Tabela derivada consolidada do orcamento federal",
             "cobertura": "Exercicios financeiros de 2025 e 2026 (posicao agosto/2026), acoes orcamentarias 215I, 219A, 20AH e 21CE",
             "unidade": "Exercicio / UO / Acao Orcamentaria / Plano Orcamentario / Elemento de Despesa",
-            "bytes": (RAW_PAGAMENTOS_DIR / "execucao_orcamentaria_acoes_provimento_2025_2026.csv").stat().st_size,
-            "sha256": raw_hashes["execucao_orcamentaria_acoes_provimento_2025_2026.csv"],
+            "bytes": (OUTPUT_DIR / "a04_execucao_orcamentaria_acoes_provimento_2025_2026.csv").stat().st_size,
+            "sha256": derived_hashes["a04_execucao_orcamentaria_acoes_provimento_2025_2026.csv"],
             "licenca_restricao": "Dominio Publico / Lei de Acesso a Informacao (Lei 12.527/2011)",
-            "disponibilidade": "P",
+            "disponibilidade": "Consolidado em output/aquisicao/",
             "diagnostico": "Execucao orcamentaria macro (dotacao, empenho, liquidacao e pagamento). Inadequada para dose individual por inexistencia de identificador de vaga e medico."
         },
         {
             "id": "catalogo_normas_financeiras_pmme",
-            "arquivo": "data/raw/aquisicao/pagamentos/normas_regras_financeiras_pmme.json",
+            "arquivo": "output/aquisicao/a04_normas_regras_financeiras_pmme.json",
             "url_oficial": "https://www.planalto.gov.br e https://bvsms.saude.gov.br",
             "provedor": "Presidencia da Republica / Ministerio da Saude",
+            "natureza": "Catalogo derivado de marcos legais e normativos",
             "cobertura": "Legislacao e atos normativos federais de 2025 e 2026 que regem a remuneracao do PMM-E",
             "unidade": "Ato Normativo Federal",
-            "bytes": (RAW_PAGAMENTOS_DIR / "normas_regras_financeiras_pmme.json").stat().st_size,
-            "sha256": raw_hashes["normas_regras_financeiras_pmme.json"],
+            "bytes": (OUTPUT_DIR / "a04_normas_regras_financeiras_pmme.json").stat().st_size,
+            "sha256": derived_hashes["a04_normas_regras_financeiras_pmme.json"],
             "licenca_restricao": "Dominio Publico",
-            "disponibilidade": "L",
+            "disponibilidade": "Consolidado em output/aquisicao/",
             "diagnostico": "Mapeamento dos artigos legais sobre natureza das bolsas (sem vinculo empregaticio, isencao de IRPF), componentes e condicionalidades."
         },
         {
             "id": "inventario_sistemas_pagamento_ms",
-            "arquivo": "data/raw/aquisicao/pagamentos/inventario_sistemas_pagamento_ms.json",
+            "arquivo": "output/aquisicao/a04_inventario_sistemas_pagamento_ms.json",
             "url_oficial": "https://saude.gov.br e https://unasus.gov.br",
             "provedor": "Ministerio da Saude (SGTES/FNS/UNA-SUS/CGU)",
+            "natureza": "Mapeamento derivado da arquitetura de sistemas",
             "cobertura": "Sistemas de pagamento, atesto e controle financeiro do SUS (SGP, FNS, SIAFI, Transparencia, UNA-SUS)",
-            "unidade": "Sistema da Informacao Governamental",
-            "bytes": (RAW_PAGAMENTOS_DIR / "inventario_sistemas_pagamento_ms.json").stat().st_size,
-            "sha256": raw_hashes["inventario_sistemas_pagamento_ms.json"],
+            "unidade": "Sistema de Informacao Governamental",
+            "bytes": (OUTPUT_DIR / "a04_inventario_sistemas_pagamento_ms.json").stat().st_size,
+            "sha256": derived_hashes["a04_inventario_sistemas_pagamento_ms.json"],
             "licenca_restricao": "Dominio Publico / Documentacao Tecnica",
-            "disponibilidade": "L",
+            "disponibilidade": "Consolidado em output/aquisicao/",
             "diagnostico": "Demonstra que a folha individual de pagamento do PMM-E reside no SGP com acesso restrito, nao sendo publicada em portais de dados abertos."
         },
         {
@@ -261,12 +264,13 @@ def build_manifest(raw_hashes: dict[str, str]) -> dict:
             "arquivo": None,
             "url_oficial": "https://infoms.saude.gov.br (SGP / SGTES)",
             "provedor": "Ministerio da Saude / SGTES / DGEPSS",
+            "natureza": "Microdados de Execucao Financeira Individual",
             "cobertura": "Microdados mensais de pagamentos por medico, vaga e competencia (2025-2026)",
-            "unidade": "Profissional / Vaga / Compet?ncia / Folha Mensal",
+            "unidade": "Profissional / Vaga / Competencia / Folha Mensal",
             "bytes": None,
             "sha256": None,
             "licenca_restricao": "Acesso Restrito / Sigilo Administrativo e LGPD (exige LAI com chave pseudonimizada)",
-            "disponibilidade": "LAI",
+            "disponibilidade": "NAO_OBTIDO_EM_DADOS_ABERTOS (AGUARDANDO DADOS ADMINISTRATIVOS / LAI)",
             "diagnostico": "Base essencial para observacao do valor efetivamente recebido, suspensoes, glosas, retroativos e primeiro estagio do incentivo. Nao publicada em dados abertos."
         },
         {
@@ -274,12 +278,13 @@ def build_manifest(raw_hashes: dict[str, str]) -> dict:
             "arquivo": None,
             "url_oficial": "https://portaldatransparencia.gov.br/despesas/pagamentos",
             "provedor": "Controladoria-Geral da Uniao (CGU)",
+            "natureza": "Microdados de Pagamentos Federais por Favorecido",
             "cobertura": "Ordens bancarias emitidas a pessoas fisicas na acao 215I/21CE",
             "unidade": "Ordem Bancaria / Favorecido",
             "bytes": None,
             "sha256": None,
             "licenca_restricao": "Publico com mascaramento de CPF",
-            "disponibilidade": "I",
+            "disponibilidade": "INADEQUADO_PARA_VINCULACAO_LONGITUDINAL",
             "diagnostico": "Nao discrimina codigo de vaga do PMM-E, CNES ou programa especifico (mistura PMMB, tutores, residentes e especialistas). Inadequada para linkage longitudinal."
         }
     ]
@@ -339,52 +344,52 @@ def build_matriz_dose() -> dict:
             {
                 "nivel": "4. Oferta Normativa por Vaga (Editais e Chamamentos)",
                 "fontes": "Quadros de Vagas SGTES/MS (Publicacoes em XLSX e Editais)",
-                "granularidade_temporal": "Por Ciclo e Chamada (Foto est?tica no momento da publicacao)",
+                "granularidade_temporal": "Por Ciclo e Chamada (Foto estatica no momento da publicacao)",
                 "chaves_disponiveis": ["Codigo_IBGE", "Codigo_CNES", "Especialidade_Curso", "Faixa_Atracao_Anunciada", "Tipo_Vaga (Imediata / Reserva)"],
                 "grau_transparencia_publica": "Totalmente Publico",
-                "permite_identificar_vaga": "Chave composta (CNES + Curso + Chamada), sem identificador estavel enico",
+                "permite_identificar_vaga": "Chave composta (CNES + Curso + Chamada), sem identificador estavel unico",
                 "permite_identificar_profissional": False,
                 "permite_identificar_municipio": True,
-                "adequacao_primeiro_estagio": "Adequada EXCLUSIVAMENTE para estimando de Intention-to-Treat (ITT) da Oferta do Incentivo"
+                "adequacao_primeiro_estagio": "Oferta normativa do incentivo condicional a vaga ofertada (nao mede desembolso financeiro efetivo nem primeiro estagio causal)"
             },
             {
-                "nivel": "5. Folha de Pagamentos Individualizada por Compet?ncia",
+                "nivel": "5. Folha de Pagamentos Individualizada por Competencia",
                 "fontes": "SGP (Sistema de Gerenciamento de Programas / SGTES / MS)",
-                "granularidade_temporal": "Mensal por competencia de servi?o prestado",
+                "granularidade_temporal": "Mensal por competencia de servico prestado",
                 "chaves_disponiveis": ["ID_Profissional", "ID_Vaga", "CNES", "Competencia_AnoMes", "Parcela_Fixa", "Parcela_Variavel", "Ajuda_Custo", "Glosas", "Retroativos", "Valor_Liquido_Pago"],
                 "grau_transparencia_publica": "Restrito / Nao Publicado Abertamente (Disponivel apenas via LAI)",
                 "permite_identificar_vaga": True,
                 "permite_identificar_profissional": True,
                 "permite_identificar_municipio": True,
-                "adequacao_primeiro_estagio": "Ideal e indispensavel para primeiro estagio de Dose Efetivamente Recebida"
+                "adequacao_primeiro_estagio": "Indispensavel para primeiro estagio de dose financeira efetivamente recebida"
             }
         ],
         "cadeia_despesa_comparativo": {
             "estagios_da_despesa": [
                 {
                     "estagio": "1. Valor Anunciado",
-                    "definicao": "Valor nominal bruto/liquido publicado no edital e vinculado e vaga ofertada em funcao da categoria de IVS municipal.",
+                    "definicao": "Valor nominal bruto/liquido publicado no edital e vinculado a vaga ofertada em funcao da categoria de IVS municipal.",
                     "valores_ciclo_1_2025": {"Faixa_1": 20000.0, "Faixa_2": 15000.0, "Faixa_3": 10000.0},
                     "valores_ciclos_2_3_2026": {"Faixa_1": 20000.0, "Faixa_2": 15000.0, "Faixa_3": 10000.0},
                     "observabilidade_publica": "Observavel nos quadros de vagas e editais oficiais",
-                    "fontes": "Editais SGTES/MS 3/2025, 3/2026 e 28/2026"
+                    "fontes": "Editais SGTES/MS 3/2025, 1/2026 e 28/2026"
                 },
                 {
                     "estagio": "2. Valor Devido",
-                    "definicao": "Valor apurado pelo Ministerio da Saude ap?s verificacao da data de inicio efetivo, proporcionalidade de dias na competencia inicial, cumprimento de 20h semanais no CNES e frequencia academica na UNA-SUS.",
+                    "definicao": "Valor apurado pelo Ministerio da Saude apos verificacao da data de inicio efetivo, proporcionalidade de dias na competencia inicial, cumprimento de 20h semanais no CNES e frequencia academica na UNA-SUS.",
                     "formula": "Bolsa_Fixa_Prop + Parcela_Variavel_Prop + Ajuda_Custo_Modulo - Glosas_Faltas",
                     "observabilidade_publica": "Nao observavel publicamente (exige microdados do SGP e UNA-SUS)",
                     "fontes": "SGP / SGTES / MS"
                 },
                 {
                     "estagio": "3. Valor Empenhado",
-                    "definicao": "Credito or?ament?rio federal reservado no SIAFI para cobertura da folha de bolsas e auxilios de provimento no exercicio financeiro.",
-                    "observabilidade_publica": "Observavel em n?vel macro nas acoes 215I, 219A e 21CE",
+                    "definicao": "Credito orcamentario federal reservado no SIAFI para cobertura da folha de bolsas e auxilios de provimento no exercicio financeiro.",
+                    "observabilidade_publica": "Observavel em nivel macro nas acoes 215I, 219A e 21CE",
                     "fontes": "SIAFI / SIOP / Portal da Transparencia"
                 },
                 {
                     "estagio": "4. Valor Liquidado",
-                    "definicao": "Reconhecimento formal da obrigacao de pagamento pelo Ministerio da Saude ap?s validacao da folha do SGP.",
+                    "definicao": "Reconhecimento formal da obrigacao de pagamento pelo Ministerio da Saude apos validacao da folha do SGP.",
                     "observabilidade_publica": "Observavel apenas no agregado da acao orcamentaria",
                     "fontes": "SIAFI / SIOP"
                 },
@@ -397,7 +402,7 @@ def build_matriz_dose() -> dict:
                 {
                     "estagio": "6. Ajustes, Glosas, Estornos e Retroativos",
                     "definicao": "Compensacoes financeiras decorrentes de homologacoes tardias (retroativos), afastamentos medicos/licencas, desistencias retroativas (glosas/estornos) e inconsistencias bancarias.",
-                    "observabilidade_publica": "Nao observavel em fontes p?blicas abertas",
+                    "observabilidade_publica": "Nao observavel em fontes publicas abertas",
                     "fontes": "SGP / FNS"
                 }
             ]
@@ -422,7 +427,7 @@ def build_matriz_dose() -> dict:
                     "delta_bolsa": 5000.0
                 },
                 {
-                    "categoria_ivs": "M?dia Vulnerabilidade (0.300 < IVS <= 0.400)",
+                    "categoria_ivs": "Media Vulnerabilidade (0.300 < IVS <= 0.400)",
                     "faixa_2025": "Faixa 3",
                     "bolsa_2025_brl": 10000.0,
                     "faixa_2026": "Faixa 2",
@@ -443,8 +448,8 @@ def build_matriz_dose() -> dict:
         "avaliacao_tratamentos_candidatos": {
             "opcao_a_faixa_anunciada": {
                 "nome": "Tratamento como Faixa Anunciada (Oferta Normativa do Incentivo)",
-                "status": "UNICO TRATAMENTO VIAVEL COM DADOS PUBLICOS",
-                "estimando_identificado": "Intention-to-Treat (ITT) da oferta do incentivo financeiro adicional (+R$ 5.000 ou +R$ 10.000 / mes) condicional e existencia de vaga ofertada.",
+                "status": "OBSERVAVEL COMO VARIAVEL NORMATIVA",
+                "descricao": "Valor anunciado condicional a existencia de vaga ofertada (+R$ 5.000 ou +R$ 10.000 / mes).",
                 "requisitos_atendidos": "Observavel nos editais, chamamentos e quadros de vagas retificados.",
                 "limitacoes": "Nao mede a dose de recursos efetivamente transferida aos medicos; nao captura efeito de evasao precoce ou glosas."
             },
@@ -457,7 +462,7 @@ def build_matriz_dose() -> dict:
             "opcao_c_valor_recebido": {
                 "nome": "Tratamento como Valor Recebido (Dose Financeira Efetiva / Primeiro Estagio Real)",
                 "status": "BLOQUEADO AGUARDANDO LAI / DADOS ADMINISTRATIVOS",
-                "motivo_inviabilidade": "A folha de pagamento individualizada (SGP/FNS) nao e p?blica. Sem ela, o primeiro estagio econometrico (Dose ~ 1[IVS >= c]) e nao identificado.",
+                "motivo_inviabilidade": "A folha de pagamento individualizada (SGP/FNS) nao e publica. Sem ela, o primeiro estagio de dose efetiva permanece nao identificado.",
                 "proxima_acao_necessaria": "Submeter Pedido Administrativo de Acesso a Informacao (Pedido 4) solicitando microdados pseudonimizados de pagamento por vaga, competencia e profissional."
             }
         }
@@ -467,16 +472,16 @@ def build_matriz_dose() -> dict:
 
 def main() -> None:
     print("=" * 70)
-    print("A04: Iniciando aquisicao e auditoria das regras de pagamentos publicos")
+    print("A04: Iniciando consolidacao e auditoria das regras de pagamentos publicos")
     print("=" * 70)
 
-    # 1. Gravar e validar arquivos brutos
-    raw_hashes = write_raw_files()
-    for filename, h in raw_hashes.items():
-        print(f"[RAW OK] {filename} -> SHA-256: {h}")
+    # 1. Gerar e validar arquivos derivados consolidados em output/aquisicao/
+    derived_hashes = write_derived_files()
+    for filename, h in derived_hashes.items():
+        print(f"[DERIVED OK] {filename} -> SHA-256: {h}")
 
     # 2. Construir e salvar manifesto de pagamentos
-    manifest = build_manifest(raw_hashes)
+    manifest = build_manifest(derived_hashes)
     MANIFEST_FILE.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8"

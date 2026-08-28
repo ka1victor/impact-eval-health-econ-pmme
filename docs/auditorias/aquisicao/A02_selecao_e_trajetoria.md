@@ -1,7 +1,7 @@
-﻿# Auditoria de Aquisição A02 — Seleção e Trajetória Administrativa Pública
+# Auditoria de Aquisição A02 — Seleção e Trajetória Administrativa Pública
 
 > **Agente:** A02 — Seleção e Trajetória Administrativa Pública  
-> **Data da Auditoria:** 27 de agosto de 2026  
+> **Data da Auditoria:** 28 de agosto de 2026 (revisado pós-saneamento)  
 > **Objeto:** Trajetória individual e administrativa no Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025).  
 > **Fontes Primárias:** Planilhas e editais oficiais da Secretaria de Gestão do Trabalho e da Educação na Saúde (SGTES/MS), base nominal de ativos e série histórica de provimento.  
 > **Classificação de Disponibilidade:** `AGUARDANDO DADOS ADMINISTRATIVOS` para trajetória longitudinal completa e cálculo de spells.
@@ -21,24 +21,26 @@ Esta auditoria analisa a disponibilidade, integridade, granularidade e auditabil
    - Não é possível construir spells (`dt_inicio_spell`, `dt_fim_spell`, `dias_cobertos`) porque datas de desligamento, desistência, licenças e afastamentos são **completamente inobserváveis** em fontes públicas.
    - O cadastro nominal de ativos observa exclusivamente **sobreviventes** até 12/08/2026. Condicionar a análise a essa base geraria viés de sobrevivência severo, pois médicos que entraram e saíram antes dessa data têm suas entradas truncadas e suas saídas ocultadas.
    - Como consequência, o outcome primário do estudo prioritário — **cobertura sustentada em 180 dias (`cobertura_180`)** —, bem como as janelas intermediárias de `cobertura_90` e `cobertura_120`, **não são mensuráveis** exclusivamente com os dados públicos abertos.
-4. **Links Quebrados Oficiais:** Duas fontes cruciais do Ciclo 1 Chamada 1 permanecem com links quebrados (HTTP 404) no portal oficial do Ministério da Saúde: o quadro original de vagas e a relação retificada de alocação inicial.
+4. **Incorporação das Fontes de 2025 Recuperadas por A01:** Os arquivos da 1ª chamada de 2025 (`2025_ciclo1_chamada1_alocacao_retificada.xlsx`, `2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx` e `2025_ciclo1_chamada1_realocacao_retificado.xlsx`) foram plenamente incorporados via slug oficial ativo do Ministério da Saúde, permitindo auditar 1.671 inscrições/alocações e 59 propostas de realocação da chamada inaugural.
 
 ---
 
 ## 2. Inventário e Proveniência das Fontes Preservadas
 
-A auditoria processou 8 fontes documentais ligadas diretamente à seleção e alocação médica, além das duas bases locais de provimento e dos quadros de vagas dos chamamentos.
+A auditoria processou 10 fontes documentais ligadas diretamente à seleção e alocação médica, além das duas bases locais de provimento e dos quadros de vagas dos chamamentos.
 
 | ID da Fonte | Arquivo Preservado | Ciclo / Chamada | Unidade Declarada | Registros / Contagem | Status de Disponibilidade |
 |---|---|:---:|---|---|:---:|
-| `alocacao_2025_c1_retificada` | `2025_ciclo1_chamada1_alocacao_retificada.xlsx` | C1 Ch1 | Profissional / Vaga | *Inacessível* | Link Quebrado (HTTP 404) |
-| `homologados_2025_c1` | `2025_ciclo1_chamada1_homologados.xlsx` | C1 Ch1 | Profissional Homologado | 316 médicos | Preservado Localmente |
-| `vagas_alocados_2025_c1_ch2` | `2025_ciclo1_chamada2_vagas_e_alocados.xlsx` | C1 Ch2 | Candidato Alocado / Reserva | 98 cand. imed. / 2.896 vagas res. | Preservado Localmente |
-| `classificacao_2025_c1_ch2` | `2025_ciclo1_chamada2_classificacao_final.xlsx` | C1 Ch2 | Candidatura / Preferência | 757 linhas (374 aloc.) + 88 descl. | Preservado Localmente |
-| `homologados_2025_c1_ch2` | `2025_ciclo1_chamada2_homologados.xlsx` | C1 Ch2 | Profissional Homologado | 581 médicos (cumulativo) | Preservado Localmente |
-| `resultado_2026_c2_ch1_remanescentes` | `2026_ciclo2_chamada1_resultado_final_remanescentes.xlsx` | C2 Ch1 | Candidatura Remanescente | 9 médicos alocados | Preservado Localmente |
-| `resultado_2026_c2_ch2` | `2026_ciclo2_chamada2_resultado_final.xlsx` | C2 Ch2 | Candidatura / Classificação | 1.053 linhas (303 aloc.) + 55 descl. | Preservado Localmente |
-| `resultado_2026_c3_sub_judice` | `2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx` | C3 Ch1 | Candidatura / Classificação | 4.532 linhas (704 aloc.) + 999 descl. | Preservado Localmente |
+| `alocacao_2025_c1_retificada` | `2025_ciclo1_chamada1_alocacao_retificada.xlsx` | C1 Ch1 | Candidatura Alocada / Vaga | 1.671 candidaturas (Quadro 1) | Preservado em `data/raw/aquisicao/vagas/` (A01) |
+| `alocacao_2025_c1_retificada_subjudice` | `2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx` | C1 Ch1 | Candidatura Alocada / Vaga | 1.671 candidaturas (Sub Judice) | Preservado em `data/raw/aquisicao/vagas/` (A01) |
+| `realocacao_2025_c1_retificado` | `2025_ciclo1_chamada1_realocacao_retificado.xlsx` | C1 Ch1 | Profissional / Vaga Remanejada | 59 profissionais (Quadro 2) | Preservado em `data/raw/aquisicao/vagas/` (A01) |
+| `homologados_2025_c1` | `2025_ciclo1_chamada1_homologados.xlsx` | C1 Ch1 | Profissional Homologado | 316 médicos | Preservado Localmente em `data/raw/pmm_e/` |
+| `vagas_alocados_2025_c1_ch2` | `2025_ciclo1_chamada2_vagas_e_alocados.xlsx` | C1 Ch2 | Candidato Alocado / Reserva | 98 cand. imed. / 2.896 vagas res. | Preservado Localmente em `data/raw/pmm_e/` |
+| `classificacao_2025_c1_ch2` | `2025_ciclo1_chamada2_classificacao_final.xlsx` | C1 Ch2 | Candidatura / Preferência | 757 linhas (374 aloc.) + 88 descl. | Preservado Localmente em `data/raw/pmm_e/` |
+| `homologados_2025_c1_ch2` | `2025_ciclo1_chamada2_homologados.xlsx` | C1 Ch2 | Profissional Homologado | 581 médicos (cumulativo) | Preservado Localmente em `data/raw/pmm_e/` |
+| `resultado_2026_c2_ch1_remanescentes` | `2026_ciclo2_chamada1_resultado_final_remanescentes.xlsx` | C2 Ch1 | Candidatura Remanescente | 9 médicos alocados | Preservado Localmente em `data/raw/pmm_e/` |
+| `resultado_2026_c2_ch2` | `2026_ciclo2_chamada2_resultado_final.xlsx` | C2 Ch2 | Candidatura / Classificação | 1.053 linhas (303 aloc.) + 55 descl. | Preservado Localmente em `data/raw/pmm_e/` |
+| `resultado_2026_c3_sub_judice` | `2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx` | C3 Ch1 | Candidatura / Classificação | 4.532 linhas (704 aloc.) + 999 descl. | Preservado Localmente em `data/raw/pmm_e/` |
 
 Todos os arquivos baixados e íntegros encontram-se espelhados e validados por hash SHA-256 no manifesto `output/aquisicao/a02_manifesto_trajetoria.json`.
 
@@ -57,16 +59,16 @@ Para cada uma das 5 coortes operacionais de chamamentos do PMM-E, a tabela abaix
 
 | Evento da Trajetória | Ciclo 1 Chamada 1 | Ciclo 1 Chamada 2 | Ciclo 2 Chamada 1 | Ciclo 2 Chamada 2 | Ciclo 3 Chamada 1 |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **1. Inscrição / Candidatura** | `Link quebrado` | `Observado individualmente` | `Não localizado` | `Observado individualmente` | `Observado individualmente` |
-| **2. Preferências (1ª e 2ª Opções)** | `Link quebrado` | `Observado individualmente` | `Observado individualmente` (parcial) | `Observado individualmente` | `Observado individualmente` |
-| **3. Classificação e Barema** | `Link quebrado` | `Observado individualmente` | `Observado individualmente` (parcial) | `Observado individualmente` | `Observado individualmente` |
+| **1. Inscrição / Candidatura** | `Observado individualmente` (alocação) | `Observado individualmente` | `Não localizado` | `Observado individualmente` | `Observado individualmente` |
+| **2. Preferências (1ª e 2ª Opções)** | `Observado individualmente` | `Observado individualmente` | `Observado individualmente` (parcial) | `Observado individualmente` | `Observado individualmente` |
+| **3. Classificação e Barema** | `Observado individualmente` | `Observado individualmente` | `Observado individualmente` (parcial) | `Observado individualmente` | `Observado individualmente` |
 | **4. Convocação** | `Inferível mas inadequado` | `Inferível mas inadequado` | `Inferível mas inadequado` | `Inferível mas inadequado` | `Inferível mas inadequado` |
 | **5. Aceite / Recusa Formal** | `Não localizado` | `Não localizado` | `Não localizado` | `Não localizado` | `Não localizado` |
 | **6. Homologação da Seleção** | `Observado individualmente` | `Observado individualmente` | `Não localizado` | `Não localizado` | `Não localizado` |
 | **7. Entrada em Exercício** | `Inferível mas inadequado` | `Inferível mas inadequado` | `Inferível mas inadequado` | `Inferível mas inadequado` | `Não localizado` |
 | **8. Afastamento / Licença** | `Não localizado` | `Não localizado` | `Não localizado` | `Não localizado` | `Não localizado` |
 | **9. Retorno de Afastamento** | `Não localizado` | `Não localizado` | `Não localizado` | `Não localizado` | `Não localizado` |
-| **10. Transferência / Realocação** | `Somente agregado` | `Não localizado` | `Não localizado` | `Não localizado` | `Não localizado` |
+| **10. Transferência / Realocação** | `Observado parcialmente` | `Não localizado` | `Não localizado` | `Não localizado` | `Não localizado` |
 | **11. Desistência / Desligamento** | `Não localizado` | `Não localizado` | `Não localizado` | `Não localizado` | `Não localizado` |
 | **12. Reocupação de Vaga** | `Não localizado` | `Inferível mas inadequado` | `Não localizado` | `Não localizado` | `Não localizado` |
 
@@ -75,10 +77,10 @@ Para cada uma das 5 coortes operacionais de chamamentos do PMM-E, a tabela abaix
 ## 4. Diagnóstico Detalhado por Etapa da Trajetória
 
 ### 4.1 Inscrição, Preferências e Classificação
-- **Ciclo 1:** Na 1ª chamada, os microdados de classificação estão inacessíveis devido a link quebrado. Na 2ª chamada, há 757 registros de preferências (562 escolhas em 1ª opção e 195 em 2ª opção), totalizando 703 nomes distintos classificados e 88 desclassificados.
+- **Ciclo 1:** Na 1ª chamada, a planilha recuperada por A01 (`2025_ciclo1_chamada1_alocacao_retificada.xlsx`) contém 1.671 inscrições/alocações (1.096 em 1ª opção e 575 em 2ª opção, em 636 células CNES–curso), com pontuação no barema geral e rankings por modalidade de concorrência. Adicionalmente, o Quadro 2 retificado registra proposta de realocação para 59 profissionais de serviços descontinuados. Na 2ª chamada, há 757 registros de preferências (562 escolhas em 1ª opção e 195 em 2ª opção), totalizando 703 nomes distintos classificados e 88 desclassificados.
 - **Ciclo 2:** Na 1ª chamada, a relação geral de candidatos não foi disponibilizada em planilha aberta; apenas a lista residual de 9 candidatos remanescentes foi publicada. Na 2ª chamada, constam 1.053 preferências registradas (609 em 1ª opção e 444 em 2ª opção), sendo 303 alocações e 750 registros em cadastro de reserva, além de 55 desclassificados.
 - **Ciclo 3:** A 1ª chamada publica 4.532 registros de preferências (2.581 em 1ª opção e 1.951 em 2ª opção) correspondendo a 2.817 médicos distintos, dos quais 704 foram alocados (677 AC, 17 ER, 10 PcD), 2 sub judice e 3.826 alocados em cadastro de reserva, além de 999 desclassificados.
-- *Limitação Crítica:* As preferências observadas restringem-se à 1ª e 2ª opções informadas. A função de utilidade/ordenação completa do candidato sobre todas as vagas do país não é publicada.
+- *Limitação Crítica:* As preferências observadas restringem-se à 1ª e 2ª opções informadas. A função de utilidade/ordenação completa do candidato sobre todas as vagas do país não é publicada. Microdados brutos de todas as inscrições antes do filtro de processamento das opções não são abertos.
 
 ### 4.2 Convocação, Aceite e Recusa
 - Não existe registro público de **notificação de convocação** com carimbo de data/hora individual. Convocação é meramente presumida pela data de publicação em Diário Oficial ou comunicado.

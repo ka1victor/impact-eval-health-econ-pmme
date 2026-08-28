@@ -14,10 +14,11 @@
    - **Diagnóstico da falha anterior:** A URL histórica catalogada utilizava o slug longo `chamamento-publico-sgtes-ms-no-3-2025-projeto-mais-medicos-especialistas/`, enquanto o endpoint canônico ativo do portal do MS adota `chamamento-publico-sgtes-ms-no-3-2025-pmm-e/`. A correção da rota permitiu o download íntegro dos 129.157 bytes do quadro de vagas original e dos 165.047 bytes da alocação retificada.
    - Foram adicionalmente localizados e preservados outros 6 arquivos públicos oficiais inéditos, totalizando **19 planilhas auditadas** (8 novas em `data/raw/aquisicao/vagas/` e 11 preservadas em `data/raw/pmm_e/`).
 
-2. **Inexistência de `id_vaga` Administrativo:**
+2. **Inexistência de `id_vaga` Administrativo e Limitação da Unidade:**
    - **Nenhum dos 19 documentos públicos auditados contém um identificador administrativo unívoco e estável de vaga (`id_vaga`).**
    - Não se deve inventar códigos artificiais rotulados como dados primários. Para auditoria técnica entre versões, adota-se a formulação explícita de `chave_candidata = CNES_7digitos + "_" + CURSO_NORMALIZADO`.
-   - Nos quadros de vagas ofertadas, a `chave_candidata` atinge **100% de unicidade (zero colisões)** em todas as publicações. Nas listas de candidatos e homologados, ocorrem colisões esperadas decorrentes de múltiplos candidatos disputando a mesma vaga/especialidade e concorrência por cotas.
+   - A `chave_candidata` identifica uma **célula agregada de oferta** (par estabelecimento de saúde e especialidade/curso), e não uma vaga física individual. Nos quadros de vagas ofertadas, atinge-se 100% de unicidade entre as linhas (zero colisões internas de linhas no quadro). Quando uma célula oferta múltiplas vagas (ex.: 2 ou 3 vagas no mesmo hospital e especialidade), a chave não separa cada vaga nem permite acompanhar sua ocupação de forma desagregada.
+   - Nas listas de candidatos e homologados, ocorrem colisões esperadas decorrentes de múltiplos candidatos disputando a mesma célula/especialidade e concorrência por cotas.
 
 3. **Denominador de Vagas e Proibição de Soma Ingênua de Publicações:**
    - **Não existe um denominador público cumulativo obtido pela soma linear de planilhas.**
@@ -106,8 +107,8 @@ Onde a normalização de curso remove pontuação, acentuação, caixa alta/baix
 ### 5.1 Ciclo 1 (2025)
 - **Chamada 1:** O quadro original de 24/07/2025 ofertou **678 vagas imediatas e 1.145 em cadastro de reserva** (total 1.823 vagas em 1.295 estabelecimentos/cursos).
 - **Retificações:** Em 10/09/2025, o Ministério publicou o Quadro 1 (alocação retificada com 1.671 candidatos para 636 chaves) e o Quadro 2 (proposta de realocação para 59 profissionais que haviam selecionado serviços cuja gestão desistiu ou que apresentavam incompatibilidade técnica).
-- **Transição Ch1 → Ch2:** A 2ª chamada (29/09/2025) não ofertou novas vagas imediatas, publicando apenas **2.896 vagas em cadastro de reserva** em 1.762 chaves.
-  - Das 1.762 chaves, **929 eram vagas reapresentadas da 1ª chamada** e **833 foram novos serviços/vagas adicionados ao cadastro de reserva**.
+- **Transição Ch1 → Ch2:** A 2ª chamada (29/09/2025) não ofertou novas vagas imediatas, publicando apenas **2.896 vagas em cadastro de reserva** em 1.762 células de oferta CNES–curso.
+  - Das 1.762 células, **929 eram células de oferta reapresentadas da 1ª chamada** e **833 foram novas células de oferta adicionadas ao cadastro de reserva** (totalizando 2.896 vagas em reserva somadas).
 
 ### 5.2 Ciclo 2 (2026)
 - **Quadro Original (03/02/2026):** Ofertou 899 vagas imediatas e 1.998 em reserva (total 2.897 vagas em 1.550 chaves).

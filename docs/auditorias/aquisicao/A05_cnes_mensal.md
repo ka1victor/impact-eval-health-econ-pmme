@@ -1,9 +1,9 @@
 # Auditoria e Inspeção do CNES Mensal (A05)
 
-> **Data da Auditoria:** 27 de agosto de 2026
+> **Data da Auditoria:** 28 de agosto de 2026 (revisado pós-saneamento)
 > **Agente:** A05 — Aquisição e Inspeção do CNES Mensal
 > **Escopo:** Avaliação de impacto do Programa Mais Médicos Especialistas (PMM-E / Lei 15.233/2025)
-> **Janela Temporal do CNES:** Junho de 2024 a Julho de 2026 (26 competências planejadas)
+> **Janela Temporal do CNES:** Junho de 2024 a Julho de 2026 (26 competências planejadas; 3 inspecionadas no piloto)
 > **Status:** Piloto de esquema concluído; dicionário e anatomia interna extraídos; diagnóstico de FTE e ponte administrativa documentados.
 
 ---
@@ -18,7 +18,7 @@ A missão do Agente A05 consiste em auditar, catalogar e inspecionar a base de d
 
 ### Conclusão Principal da Auditoria:
 - **Disponibilidade Pública e Esquema:** As bases mensais do CNES são públicas e contêm todas as tabelas necessárias para calcular FTE cadastral agregado e estoque pré-tratamento de infraestrutura. O esquema revelou-se altamente estável entre 2024 e 2026 (com adições marginais documentadas).
-- **Alta Validação Cadastral das Vagas:** 100,0% dos estabelecimentos ofertados no PMM-E foram validados no CNES em 202607 (e 99,42% já existiam no baseline de 202406).
+- **Validação Cadastral dos Estabelecimentos:** 100,0% dos 518 estabelecimentos do snapshot nominal de ativos foram validados no CNES em 202607 (e 99,42% já constavam no baseline de 202406).
 - **Limitação Crítica (A Ausência da Ponte PMM-E–CNES):** O CNES não possui nenhum campo, flag ou código de sub-vínculo público que identifique deterministicamente um bolsista do PMM-E. As bases públicas do PMM-E contêm CRM, Nome e CPF mascarado; o CNES contém CNS e Nome. A vinculação determinística é **inviável com dados estritamente públicos** e depende de chave administrativa via SGTES/LAI (Solicitação A07).
 
 ---
@@ -149,21 +149,21 @@ $$\text{FTE}_{m,t,s} = \sum_{i \in \text{Médicos}_{m,t,s}} \frac{\text{QT\_CARG
 1. **Ausência de Chave Primária Compartilhada:** O edital do PMM-E não publica o número do CNS do médico; o CNES público não publica CRM nem CPF desmascarado.
 2. **Inadequação do Pareamento por Nome:** A correspondência probabilística por string de nome normalizado introduz viés de homonímia, erros de digitação e falsos positivos em um universo nacional de mais de 500 mil médicos cadastrados.
 3. **Implicação Causal:** Sem a ponte administrativa oficial (crosswalk fornecido pela SGTES com identificadores pseudonimizados), o pesquisador **não pode atribuir causalmente um vínculo individual específico ao PMM-E**.
-4. **Recomendação:** A análise em nível agregado de município/CNES (Intention-to-Treat e Painel Diferenças-em-Diferenças / Event Study) é viável e recomendada, enquanto a análise no nível do médico participante depende da liberação do Pedido Administrativo LAI (Agente A07).
+4. **Bloqueio Causal:** A estimação de efeitos causais agregados ou individuais permanece dependente de validação econométrica e dados administrativos, enquanto a análise no nível do médico participante depende da liberação do Pedido Administrativo LAI (Agente A07).
 
 ---
 
 ## 8. Auditoria de Códigos CNES das Vagas do PMM-E no Cadastro Oficial
 
-Verificou-se o cruzamento dos códigos `CO_CNES` presentes nas planilhas de vagas e resultados do PMM-E em relação à base de dados oficial de estabelecimentos do CNES (`tbEstabelecimento`).
+Verificou-se o cruzamento dos códigos `CO_CNES` presentes no cadastro nominal de ativos do PMM-E (`data/pmm_especialistas_nominal.csv`) em relação à base de dados oficial de estabelecimentos do CNES (`tbEstabelecimento`).
 
 ### Resultados do Cruzamento:
-- **Total de CNES Únicos nas Vagas PMM-E:** 518 estabelecimentos.
+- **Total de CNES Únicos no Snapshot Nominal de Ativos:** 518 estabelecimentos.
 - **Competência 202406:** 515 de 518 estabelecimentos localizados na `tbEstabelecimento` (99.42% de cobertura cadastral). Universo total de estabelecimentos no Brasil: 535,727.
 - **Competência 202506:** 517 de 518 estabelecimentos localizados na `tbEstabelecimento` (99.81% de cobertura cadastral). Universo total de estabelecimentos no Brasil: 577,247.
 - **Competência 202607:** 518 de 518 estabelecimentos localizados na `tbEstabelecimento` (100.00% de cobertura cadastral). Universo total de estabelecimentos no Brasil: 631,973.
 
-Os 3 estabelecimentos ausentes em 202406 correspondem a unidades de saúde inauguradas entre o final de 2024 e o início de 2025, atingindo 100,00% de cobertura cadastral na competência 202607.
+Os 3 estabelecimentos do snapshot nominal que não constavam em 202406 passam a constar no cadastro oficial a partir da competência 202506 (compatível com inauguração, habilitação recente ou atualização cadastral de código), atingindo 100,00% de cobertura cadastral na competência 202607.
 
 ---
 
@@ -171,11 +171,11 @@ Os 3 estabelecimentos ausentes em 202406 correspondem a unidades de saúde inaug
 
 1. **Localização dos Arquivos Brutos:** Os arquivos ZIP baixados residem no diretório:
    `C:/Users/camil/Desktop/Kauã/Insper/impact-eval-health-econ-pmme/data/raw/cnes`
-2. **Preservação em Worktree:** O coordenador do projeto (ou Agente A06) pode sincronizar esses arquivos brutos diretamente para a árvore principal ou reexecutar o script idempotente:
+2. **Execução do Piloto de Esquema:**
    ```bash
-   python scripts/aquisicao/a05_adquirir_cnes.py --pilot
+   python scripts/aquisicao/a05_adquirir_cnes.py --inspect-only
    ```
-3. **Execução do Painel Completo (26 meses):** Para realizar o download das 26 competências quando houver espaço em disco e rede disponíveis:
+3. **Download Assíncrono do Painel Completo (26 meses):** Quando houver janela de execução apropriada em segundo plano:
    ```bash
    python scripts/aquisicao/a05_adquirir_cnes.py --full --confirm-large-download
    ```

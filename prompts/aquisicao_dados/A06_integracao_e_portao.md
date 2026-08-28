@@ -2,11 +2,12 @@
 
 ## Pré-requisitos
 
-Execute somente depois de incorporar os commits A01–A05 e confirmar que os ZIPs
-CNES não versionados estão disponíveis no workspace principal com os hashes do
-manifesto A05. Leia todos os relatórios e manifestos da pasta
-`output/aquisicao/`, além de `AGENTS.md`, `CLAUDE.md`, as auditorias 01–02 e o
-roadmap. Esta tarefa é sequencial e tem responsabilidade exclusiva pelas
+Execute somente depois de incorporar os commits A01–A05, concluir o prompt A05R
+com decisão `ENTRADAS APTAS PARA A06` e confirmar que os ZIPs CNES não
+versionados estão disponíveis no workspace principal com os hashes do manifesto
+A05. Leia a revisão e o saneamento pré-A06, todos os relatórios e manifestos da
+pasta `output/aquisicao/`, além de `AGENTS.md`, `CLAUDE.md`, as auditorias 01–02
+e o roadmap. Esta tarefa é sequencial e tem responsabilidade exclusiva pelas
 atualizações compartilhadas.
 
 ## Missão

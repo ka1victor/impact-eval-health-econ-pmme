@@ -1,6 +1,6 @@
 {
   "escopo": "Matriz de disponibilidade e auditabilidade dos eventos da trajetoria publica no PMM-E",
-  "data_auditoria": "2026-08-27",
+  "data_auditoria": "2026-08-28",
   "eventos_chave_avaliados": [
     "inscricao_candidatura",
     "preferencias_ordem",
@@ -25,33 +25,44 @@
       "dias_calendario_ate_corte": 384,
       "status_eventos": {
         "inscricao_candidatura": {
-          "classificacao": "link quebrado",
-          "justificativa": "Planilha oficial de alocacao retificada retornou HTTP 404; microdados brutos de inscricoes nao localizados.",
-          "chaves_presentes": [],
+          "classificacao": "observado individualmente (condicional a alocacao)",
+          "justificativa": "1.671 candidaturas alocadas/classificadas na planilha 2025_ciclo1_chamada1_alocacao_retificada.xlsx (Quadro 1 retificado recuperado por A01). Microdados brutos de inscricoes gerais preliminares anteriores a escolha de vagas nao publicados separadamente.",
+          "chaves_presentes": [
+            "CPF_mascarado_tipo1",
+            "Nome",
+            "Curso",
+            "CNES",
+            "Tipo_Inscricao",
+            "Municipio",
+            "UF",
+            "IBGE"
+          ],
           "chaves_ausentes": [
-            "id_inscricao",
-            "id_candidato_pseudo",
-            "data_inscricao"
+            "id_inscricao_mestre",
+            "data_inscricao_individual"
           ]
         },
         "preferencias_ordem": {
-          "classificacao": "link quebrado",
-          "justificativa": "Quadro de 1a e 2a escolhas da chamada original inacessivel via HTTP 404.",
-          "chaves_presentes": [],
+          "classificacao": "observado individualmente",
+          "justificativa": "Coluna 'ORDEM DE PRIORIDADE ESCOLHIDA' (1ª e 2ª opções). 1.096 candidaturas em 1ª opção e 575 em 2ª opção observadas no Quadro 1 retificado.",
+          "chaves_presentes": [
+            "ORDEM DE PRIORIDADE ESCOLHIDA (1ª e 2ª opções)"
+          ],
           "chaves_ausentes": [
-            "ordem_escolha",
-            "vaga_opcao_1",
-            "vaga_opcao_2"
+            "ranking_completo_todas_vagas"
           ]
         },
         "classificacao_barema": {
-          "classificacao": "link quebrado",
-          "justificativa": "Pontuacoes de barema e ranking da 1a chamada nao preservados (link quebrado).",
-          "chaves_presentes": [],
+          "classificacao": "observado individualmente",
+          "justificativa": "Pontuação no barema geral e classificação em ampla concorrência, cota étnico-racial e cota PCD observadas no Quadro 1 retificado.",
+          "chaves_presentes": [
+            "PONTUACAO NO BAREMA (GERAL)",
+            "CLASSIFICACAO AMPLA CONCORRENCIA",
+            "CLASSIFICACAO COTA ETNICO RACIAL",
+            "CLASSIFICACAO COTA PCD"
+          ],
           "chaves_ausentes": [
-            "pontuacao_barema",
-            "pontuacao_tempo",
-            "ranking"
+            "detalhamento_itens_barema"
           ]
         },
         "convocacao": {
@@ -125,14 +136,16 @@
           ]
         },
         "transferencia_realocacao": {
-          "classificacao": "somente agregado",
-          "justificativa": "Mencoes esparsas em comunicados sem painel individual de origem, destino e data.",
-          "chaves_presentes": [],
+          "classificacao": "observado parcialmente",
+          "justificativa": "Quadro 2 retificado (2025_ciclo1_chamada1_realocacao_retificado.xlsx) contem proposta de realocacao para 59 profissionais de servicos descontinuados/incompativeis. Log continuo de transferencias nao publicado.",
+          "chaves_presentes": [
+            "Quadro 2 Proposta de Realocacao (59 profissionais)"
+          ],
           "chaves_ausentes": [
             "cnes_origem",
             "cnes_destino",
             "dt_transferencia",
-            "motivo"
+            "motivo_detalhado"
           ]
         },
         "desistencia_desligamento": {
@@ -786,6 +799,36 @@
         "1feadb4f524bf78c"
       ],
       "mascara_exemplo": "***.323.683-**",
+      "estrutura": "variavel entre chamadas"
+    },
+    "2025_ciclo1_chamada1_alocacao_retificada.xlsx [Quadro 1]": {
+      "coluna": "CPF",
+      "amostras_pseudonimizadas": [
+        "f9ffdec08b31a568",
+        "1ad885e5d5b19d53",
+        "34982e492f4f2c03"
+      ],
+      "mascara_exemplo": "00950XXXX17",
+      "estrutura": "variavel entre chamadas"
+    },
+    "2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx [Quadro 1]": {
+      "coluna": "CPF",
+      "amostras_pseudonimizadas": [
+        "f9ffdec08b31a568",
+        "1ad885e5d5b19d53",
+        "34982e492f4f2c03"
+      ],
+      "mascara_exemplo": "00950XXXX17",
+      "estrutura": "variavel entre chamadas"
+    },
+    "2025_ciclo1_chamada1_realocacao_retificado.xlsx [Quadro 2]": {
+      "coluna": "CPF",
+      "amostras_pseudonimizadas": [
+        "77c6fa34c0ff7c0d",
+        "3b6583dc500ec385",
+        "9747d1cb7c8e2800"
+      ],
+      "mascara_exemplo": "00237XXXX12",
       "estrutura": "variavel entre chamadas"
     }
   }

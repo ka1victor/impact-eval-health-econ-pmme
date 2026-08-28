@@ -1,4 +1,4 @@
-﻿# ruff: noqa: E501
+# ruff: noqa: E501
 """Audita, adquire e mapeia a trajetoria e selecao administrativa publica do PMM-E.
 
 Script idempotente do Agente A02.
@@ -25,6 +25,7 @@ from xml.etree import ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA_RAW_TRAJETORIA = ROOT / "data" / "raw" / "aquisicao" / "trajetoria"
+DATA_RAW_VAGAS = ROOT / "data" / "raw" / "aquisicao" / "vagas"
 DATA_RAW_PMME = ROOT / "data" / "raw" / "pmm_e"
 DATA_DIR = ROOT / "data"
 OUTPUT_DIR = ROOT / "output" / "aquisicao"
@@ -32,7 +33,7 @@ OUTPUT_DIR = ROOT / "output" / "aquisicao"
 MANIFESTO_PATH = OUTPUT_DIR / "a02_manifesto_trajetoria.json"
 MATRIZ_PATH = OUTPUT_DIR / "a02_matriz_eventos_publicos.json"
 
-AUDIT_DATE = "2026-08-27"
+AUDIT_DATE = "2026-08-28"
 NS_MAIN = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
 NS_REL = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
 NS_PKG_REL = "http://schemas.openxmlformats.org/package/2006/relationships"
@@ -42,12 +43,32 @@ FONTES_TRAJETORIA = [
     {
         "id": "alocacao_2025_c1_retificada",
         "arquivo": "2025_ciclo1_chamada1_alocacao_retificada.xlsx",
-        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-projeto-mais-medicos-especialistas/quadro-1-profissionais-alocados-conforme-escolha-inicial-1a-ou-2a-opcao-retificado.xlsx",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/quadro-1-profissionais-alocados-conforme-escolha-inicial-1a-ou-2a-opcao-retificado.xlsx",
         "ciclo": "1",
         "chamada": "1",
         "cobertura": "Ciclo 1, chamada 1, alocacao retificada",
-        "unidade_declarada": "profissional alocado/vaga",
+        "unidade_declarada": "candidatura alocada/vaga",
         "etapas_alvo": ["inscricao", "preferencias", "classificacao", "alocacao"],
+    },
+    {
+        "id": "alocacao_2025_c1_retificada_subjudice",
+        "arquivo": "2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/quadro-1-profissionais-alocados-conforme-escolha-inicial-1a-ou-2a-opcao-retificado-subjudice.xlsx",
+        "ciclo": "1",
+        "chamada": "1",
+        "cobertura": "Ciclo 1, chamada 1, alocacao retificada sub judice",
+        "unidade_declarada": "candidatura alocada/vaga",
+        "etapas_alvo": ["alocacao", "sub_judice"],
+    },
+    {
+        "id": "realocacao_2025_c1_retificado",
+        "arquivo": "2025_ciclo1_chamada1_realocacao_retificado.xlsx",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/quadro-2-proposta-de-realocacao-dos-profissionais-que-selecionaram-estabelecimentos-de-saude-retificado.xlsx",
+        "ciclo": "1",
+        "chamada": "1",
+        "cobertura": "Ciclo 1, chamada 1, proposta de realocacao retificada",
+        "unidade_declarada": "profissional/vaga_remanejada",
+        "etapas_alvo": ["transferencia_realocacao"],
     },
     {
         "id": "homologados_2025_c1",
@@ -230,6 +251,7 @@ def process_manifest() -> list[dict[str, object]]:
 
     for item in FONTES_TRAJETORIA:
         existing_pmme = DATA_RAW_PMME / item["arquivo"]
+        existing_vagas = DATA_RAW_VAGAS / item["arquivo"]
         target_trajetoria = DATA_RAW_TRAJETORIA / item["arquivo"]
 
         if existing_pmme.exists():
@@ -250,6 +272,46 @@ def process_manifest() -> list[dict[str, object]]:
                 "bytes": file_bytes,
                 "sha256": file_hash,
                 "disponibilidade": "preservado localmente em data/raw/pmm_e/",
+                "validacao": "arquivo integro; bytes identicos aos oficiais",
+            })
+        elif existing_vagas.exists():
+            file_hash = sha256_file(existing_vagas)
+            file_bytes = existing_vagas.stat().st_size
+            manifest_entries.append({
+                "id": item["id"],
+                "arquivo": item["arquivo"],
+                "url": item["url"],
+                "ciclo": item["ciclo"],
+                "chamada": item["chamada"],
+                "cobertura": item["cobertura"],
+                "unidade_declarada": item["unidade_declarada"],
+                "etapas_alvo": item["etapas_alvo"],
+                "fonte": "Ministerio da Saude",
+                "data_extracao": AUDIT_DATE,
+                "caminho_preservado": existing_vagas.relative_to(ROOT).as_posix(),
+                "bytes": file_bytes,
+                "sha256": file_hash,
+                "disponibilidade": "preservado localmente em data/raw/aquisicao/vagas/ (recuperado por A01)",
+                "validacao": "arquivo integro; bytes identicos aos oficiais",
+            })
+        elif target_trajetoria.exists():
+            file_hash = sha256_file(target_trajetoria)
+            file_bytes = target_trajetoria.stat().st_size
+            manifest_entries.append({
+                "id": item["id"],
+                "arquivo": item["arquivo"],
+                "url": item["url"],
+                "ciclo": item["ciclo"],
+                "chamada": item["chamada"],
+                "cobertura": item["cobertura"],
+                "unidade_declarada": item["unidade_declarada"],
+                "etapas_alvo": item["etapas_alvo"],
+                "fonte": "Ministerio da Saude",
+                "data_extracao": AUDIT_DATE,
+                "caminho_preservado": target_trajetoria.relative_to(ROOT).as_posix(),
+                "bytes": file_bytes,
+                "sha256": file_hash,
+                "disponibilidade": "preservado localmente em data/raw/aquisicao/trajetoria/",
                 "validacao": "arquivo integro; bytes identicos aos oficiais",
             })
         else:
@@ -306,7 +368,13 @@ def process_manifest() -> list[dict[str, object]]:
 
 def audit_cpf_patterns() -> dict[str, object]:
     patterns = {}
-    for p in sorted(DATA_RAW_PMME.glob("*.xlsx")):
+    search_dirs = [DATA_RAW_PMME, DATA_RAW_VAGAS]
+    all_files = []
+    for d in search_dirs:
+        if d.exists():
+            all_files.extend(sorted(d.glob("*.xlsx")))
+
+    for p in all_files:
         sheets = xlsx_sheets(p)
         for sname, rows in sheets.items():
             if not rows:
@@ -355,22 +423,22 @@ def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, o
             "dias_calendario_ate_corte": 384,
             "status_eventos": {
                 "inscricao_candidatura": {
-                    "classificacao": "link quebrado",
-                    "justificativa": "Planilha oficial de alocacao retificada retornou HTTP 404; microdados brutos de inscricoes nao localizados.",
-                    "chaves_presentes": [],
-                    "chaves_ausentes": ["id_inscricao", "id_candidato_pseudo", "data_inscricao"],
+                    "classificacao": "observado individualmente (condicional a alocacao)",
+                    "justificativa": "1.671 candidaturas alocadas/classificadas na planilha 2025_ciclo1_chamada1_alocacao_retificada.xlsx (Quadro 1 retificado recuperado por A01). Microdados brutos de inscricoes gerais preliminares anteriores a escolha de vagas nao publicados separadamente.",
+                    "chaves_presentes": ["CPF_mascarado_tipo1", "Nome", "Curso", "CNES", "Tipo_Inscricao", "Municipio", "UF", "IBGE"],
+                    "chaves_ausentes": ["id_inscricao_mestre", "data_inscricao_individual"],
                 },
                 "preferencias_ordem": {
-                    "classificacao": "link quebrado",
-                    "justificativa": "Quadro de 1a e 2a escolhas da chamada original inacessivel via HTTP 404.",
-                    "chaves_presentes": [],
-                    "chaves_ausentes": ["ordem_escolha", "vaga_opcao_1", "vaga_opcao_2"],
+                    "classificacao": "observado individualmente",
+                    "justificativa": "Coluna 'ORDEM DE PRIORIDADE ESCOLHIDA' (1ª e 2ª opções). 1.096 candidaturas em 1ª opção e 575 em 2ª opção observadas no Quadro 1 retificado.",
+                    "chaves_presentes": ["ORDEM DE PRIORIDADE ESCOLHIDA (1ª e 2ª opções)"],
+                    "chaves_ausentes": ["ranking_completo_todas_vagas"],
                 },
                 "classificacao_barema": {
-                    "classificacao": "link quebrado",
-                    "justificativa": "Pontuacoes de barema e ranking da 1a chamada nao preservados (link quebrado).",
-                    "chaves_presentes": [],
-                    "chaves_ausentes": ["pontuacao_barema", "pontuacao_tempo", "ranking"],
+                    "classificacao": "observado individualmente",
+                    "justificativa": "Pontuação no barema geral e classificação em ampla concorrência, cota étnico-racial e cota PCD observadas no Quadro 1 retificado.",
+                    "chaves_presentes": ["PONTUACAO NO BAREMA (GERAL)", "CLASSIFICACAO AMPLA CONCORRENCIA", "CLASSIFICACAO COTA ETNICO RACIAL", "CLASSIFICACAO COTA PCD"],
+                    "chaves_ausentes": ["detalhamento_itens_barema"],
                 },
                 "convocacao": {
                     "classificacao": "inferivel mas inadequado",
@@ -409,10 +477,10 @@ def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, o
                     "chaves_ausentes": ["dt_retorno"],
                 },
                 "transferencia_realocacao": {
-                    "classificacao": "somente agregado",
-                    "justificativa": "Mencoes esparsas em comunicados sem painel individual de origem, destino e data.",
-                    "chaves_presentes": [],
-                    "chaves_ausentes": ["cnes_origem", "cnes_destino", "dt_transferencia", "motivo"],
+                    "classificacao": "observado parcialmente",
+                    "justificativa": "Quadro 2 retificado (2025_ciclo1_chamada1_realocacao_retificado.xlsx) contem proposta de realocacao para 59 profissionais de servicos descontinuados/incompativeis. Log continuo de transferencias nao publicado.",
+                    "chaves_presentes": ["Quadro 2 Proposta de Realocacao (59 profissionais)"],
+                    "chaves_ausentes": ["cnes_origem", "cnes_destino", "dt_transferencia", "motivo_detalhado"],
                 },
                 "desistencia_desligamento": {
                     "classificacao": "nao localizado",

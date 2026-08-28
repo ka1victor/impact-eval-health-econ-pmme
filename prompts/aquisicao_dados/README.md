@@ -22,10 +22,13 @@ Auditorias 01 e 02 incorporadas
              |
              +--> A01 vagas e versões públicas ---------+
              +--> A02 seleção e trajetória pública -----+
-             +--> A03 IVS/regra administrativa ---------+--> A06 integração e portão
-             +--> A04 pagamentos públicos --------------+             |
-             +--> A05 CNES mensal -----------------------+             v
-                                                               A07 pedidos administrativos
+             +--> A03 IVS/regra administrativa ---------+--> A05R saneamento
+             +--> A04 pagamentos públicos --------------+          |
+             +--> A05 CNES mensal -----------------------+          v
+                                                           A06 integração e portão
+                                                                    |
+                                                                    v
+                                                           A07 pedidos administrativos
                                                                         |
                                                                         v
                                                                Prompt 03, se liberado
@@ -37,10 +40,12 @@ e 02. Subagentes que compartilham o mesmo diretório não devem ser disparados e
 paralelo: embora os arquivos de saída sejam separados, commits e mudanças de
 estado do Git continuam compartilhados.
 
-A06 começa apenas depois que os cinco commits de aquisição tiverem sido
-incorporados. A07 começa depois de A06, porque deve pedir somente as lacunas que
-restarem. O prompt 03 só começa se o portão de A06 disser que o tratamento e o
-outcome são mensuráveis; caso contrário, aguarda-se a resposta administrativa.
+A05R começa depois que os cinco commits tiverem sido incorporados e corrige as
+falhas documentadas na revisão pré-A06. A06 só começa depois que A05R declarar
+suas entradas aptas. A07 começa depois de A06, porque deve pedir somente as
+lacunas que restarem. O prompt 03 só começa se o portão de A06 disser que o
+tratamento e o outcome são mensuráveis; caso contrário, aguarda-se a resposta
+administrativa.
 
 ## Responsabilidade exclusiva de cada agente
 
@@ -51,13 +56,15 @@ outcome são mensuráveis; caso contrário, aguarda-se a resposta administrativa
 | A03 | IVS e regra aplicada | `data/raw/aquisicao/ivs_regra/` | `output/aquisicao/a03_manifesto_ivs_regra.json` |
 | A04 | regras e pagamentos | `data/raw/aquisicao/pagamentos/` | `output/aquisicao/a04_manifesto_pagamentos.json` |
 | A05 | CNES mensal | `data/raw/cnes/` | `output/aquisicao/a05_manifesto_cnes.json` |
+| A05R | saneamento | corrige apenas falsos brutos e proveniência | revisa A01–A05 |
 | A06 | integração | não adquire brutos | `output/aquisicao/portao_integrado.json` |
 | A07 | pedidos administrativos | não adquire nem envia | não se aplica |
 
 Os agentes A01–A05 não alteram `README.md`, `run_all.py`, os relatórios das
 auditorias 01–02 nem manifestos de outro agente. Fontes já preservadas podem ser
 referenciadas por hash, sem serem copiadas ou regravadas. Somente A06 atualiza a
-documentação compartilhada.
+documentação compartilhada, exceto A05R, que pode corrigir os produtos A01–A05 e
+registrar o saneamento.
 
 ## Contrato comum de aquisição
 
@@ -96,7 +103,9 @@ estimando. Resultado negativo bem documentado também é uma entrega válida.
    manifesto A05.
 4. Rode `run_all.py` e confira que os três dados observados originais mantiveram
    seus hashes.
-5. Entregue A06 a um agente integrador no estado combinado e com o bruto A05
+5. Entregue A05R a um agente revisor no estado combinado e incorpore seu commit
+   somente se a revisão ficar apta.
+6. Entregue A06 a um agente integrador no estado saneado e com o bruto A05
    disponível.
-6. Se houver lacunas administrativas, entregue A07 no commit de A06.
-7. Só então decida entre executar o prompt 03 ou aguardar os pedidos.
+7. Se houver lacunas administrativas, entregue A07 no commit de A06.
+8. Só então decida entre executar o prompt 03 ou aguardar os pedidos.

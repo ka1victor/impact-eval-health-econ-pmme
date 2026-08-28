@@ -1,6 +1,13 @@
-import os, sys, json, hashlib, unicodedata, datetime, urllib.request, ssl
+import datetime
+import hashlib
+import json
 from pathlib import Path
-import pandas as pd, numpy as np
+import unicodedata
+import urllib.error
+import urllib.request
+import pandas as pd
+
+AUDIT_DATE = '2026-08-28'
 
 def compute_sha256(filepath: Path) -> str:
     sha256 = hashlib.sha256()
@@ -48,7 +55,6 @@ def download_normative_sources(raw_dir: Path) -> list:
         {'id': 'edital_sgtes_05_2026_adesao_ciclo3', 'filename': 'edital_sgtes_05_2026_adesao_ciclo3.html', 'url': 'https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-5-2026-pmm-e', 'descricao': 'Chamamento Publico SGTES/MS 05/2026 - Adesao de gestores e servicos para o Ciclo 3', 'orgao': 'Ministerio da Saude / SGTES', 'tipo': 'text/html; charset=utf-8', 'natureza': 'Edital de Adesao'},
         {'id': 'edital_sgtes_06_2026_edital_28_2026_ciclo3', 'filename': 'edital_sgtes_06_2026_edital_28_2026_ciclo3.html', 'url': 'https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-6-2026-pmm-e/edital', 'descricao': 'Edital SGTES/MS 28/2026 (Ciclo 3) - Regras de bolsas, faixas e remuneracao liquida', 'orgao': 'Ministerio da Saude / SGTES', 'tipo': 'text/html; charset=utf-8', 'natureza': 'Edital de Selecao'},
     ]
-    ssl_ctx = ssl._create_unverified_context()
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7'}
     manifest_entries = []
     for item in sources_to_fetch:
@@ -59,10 +65,10 @@ def download_normative_sources(raw_dir: Path) -> list:
         if not dest_path.exists():
             try:
                 req = urllib.request.Request(item['url'], headers=headers)
-                with urllib.request.urlopen(req, context=ssl_ctx, timeout=20) as resp:
+                with urllib.request.urlopen(req, timeout=20) as resp:
                     data = resp.read()
                     http_status = resp.status
-                    with open(dest_path, 'wb') as f: f.write(data)
+                    dest_path.write_bytes(data)
                 download_status = 'downloaded_now'
             except Exception as e:
                 download_status = 'download_failed'
@@ -70,19 +76,15 @@ def download_normative_sources(raw_dir: Path) -> list:
                 http_status = None
         size_bytes = dest_path.stat().st_size if dest_path.exists() else 0
         sha256_hash = compute_sha256(dest_path) if dest_path.exists() else None
-        manifest_entries.append({'id': item['id'], 'filename': item['filename'], 'relative_path': 'data/raw/aquisicao/ivs_regra/' + item['filename'], 'descricao': item['descricao'], 'orgao_emissor': item['orgao'], 'natureza_juridica': item['natureza'], 'url_oficial': item['url'], 'status_aquisicao': download_status, 'http_status': http_status, 'erro': error_msg, 'tamanho_bytes': size_bytes, 'mime_type': item['tipo'], 'sha256': sha256_hash, 'data_aquisicao': datetime.datetime.now(datetime.timezone.utc).isoformat()})
-    normas_adicionais = [
-        {'id': 'portaria_gm_ms_7177_2025', 'filename': 'portaria_gm_ms_7177_2025_registro.json', 'descricao': 'Portaria GM/MS 7.177, de 10/06/2025 - Institui o Projeto Mais Medicos Especialistas', 'orgao_emissor': 'Ministerio da Saude / Gabinete do Ministro', 'natureza_juridica': 'Portaria Ministerial', 'url_oficial': 'https://bvsms.saude.gov.br/bvs/saudelegis/gm/2025/prt7177_11_06_2025.html', 'status_aquisicao': 'registro_oficial_preservado', 'http_status': 200, 'mime_type': 'application/json', 'conteudo_resumo': {'ementa': 'Institui o Projeto Mais Medicos Especialistas no ambito do Programa Mais Medicos', 'data_assinatura': '2025-06-10', 'data_publicacao_dou': '2025-06-11', 'base_legal': 'Lei 12.871/2013, Lei 10.973/2004, Lei 11.129/2005, Lei 15.233/2025', 'dispositivo_vulnerabilidade': 'Preve adicional e fixacao em regioes prioritarias e de vulnerabilidade; remete criterios de bolsa a ato complementar da SGTES.'}},
-        {'id': 'portaria_gm_ms_7266_2025', 'filename': 'portaria_gm_ms_7266_2025_registro.json', 'descricao': 'Portaria GM/MS 7.266, de 18/06/2025 - Institui o Programa Agora Tem Especialistas', 'orgao_emissor': 'Ministerio da Saude / Gabinete do Ministro', 'natureza_juridica': 'Portaria Ministerial', 'url_oficial': 'https://bvsms.saude.gov.br/bvs/saudelegis/gm/2025/prt7266_18_06_2025.html', 'status_aquisicao': 'registro_oficial_preservado', 'http_status': 200, 'mime_type': 'application/json', 'conteudo_resumo': {'ementa': 'Institui o Programa de Expansao e Qualificacao da Atencao Especializada em Saude - Agora Tem Especialistas', 'data_assinatura': '2025-06-18', 'data_publicacao_dou': '2025-06-19', 'dispositivo_vulnerabilidade': 'Diretrizes de reducao de tempo de espera e desigualdades regionais.'}},
-        {'id': 'ipea_atlas_vulnerabilidade_social_2015', 'filename': 'ipea_atlas_vulnerabilidade_social_2015_registro.json', 'descricao': 'Atlas da Vulnerabilidade Social nos Municipios Brasileiros (Ipea, 2015) - Definicao Metodologica dos Cutoffs', 'orgao_emissor': 'Instituto de Pesquisa Economica Aplicada (IPEA)', 'natureza_juridica': 'Documento Metodologico / Referencia Estatistica', 'url_oficial': 'https://repositorio.ipea.gov.br/bitstream/11058/4381/1/Atlas_da_vulnerabilidade_social_nos_municipios_brasileiros.pdf', 'status_aquisicao': 'registro_oficial_preservado', 'http_status': 200, 'mime_type': 'application/json', 'conteudo_resumo': {'dimensoes': ['Infraestrutura Urbana (ivs_infra)', 'Capital Humano (ivs_ch)', 'Renda e Trabalho (ivs_rt)'], 'faixas_normativas_ipea': {'MUITO_BAIXA': [0.0, 0.2], 'BAIXA': [0.201, 0.3], 'MEDIA': [0.301, 0.4], 'ALTA': [0.401, 0.5], 'MUITO_ALTA': [0.501, 1.0]}, 'precisao_padrao': '3 casas decimais', 'suporte': 'Discreto / granular municipal'}},
+        manifest_entries.append({'id': item['id'], 'filename': item['filename'], 'relative_path': 'data/raw/aquisicao/ivs_regra/' + item['filename'] if dest_path.exists() else None, 'descricao': item['descricao'], 'orgao_emissor': item['orgao'], 'natureza_juridica': item['natureza'], 'url_oficial': item['url'], 'status_aquisicao': download_status, 'http_status': http_status, 'erro': error_msg, 'tamanho_bytes': size_bytes, 'mime_type': item['tipo'], 'sha256': sha256_hash, 'data_aquisicao': AUDIT_DATE})
+    
+    normas_externas = [
+        {'id': 'portaria_gm_ms_7177_2025', 'descricao': 'Portaria GM/MS 7.177, de 10/06/2025 - Institui o Projeto Mais Medicos Especialistas', 'orgao_emissor': 'Ministerio da Saude / Gabinete do Ministro', 'natureza_juridica': 'Portaria Ministerial', 'url_oficial': 'https://bvsms.saude.gov.br/bvs/saudelegis/gm/2025/prt7177_11_06_2025.html', 'status_aquisicao': 'documento_externo_catalogado_sem_bruto_local', 'http_status': None, 'erro': 'Servidor bvsms.saude.gov.br encerra conexao sem resposta durante extracao automatizada; conteudo normativo sumarizado na matriz analitica', 'mime_type': 'text/html'},
+        {'id': 'portaria_gm_ms_7266_2025', 'descricao': 'Portaria GM/MS 7.266, de 18/06/2025 - Institui o Programa Agora Tem Especialistas', 'orgao_emissor': 'Ministerio da Saude / Gabinete do Ministro', 'natureza_juridica': 'Portaria Ministerial', 'url_oficial': 'https://bvsms.saude.gov.br/bvs/saudelegis/gm/2025/prt7266_18_06_2025.html', 'status_aquisicao': 'documento_externo_catalogado_sem_bruto_local', 'http_status': None, 'erro': 'Servidor bvsms.saude.gov.br encerra conexao sem resposta durante extracao automatizada; conteudo normativo sumarizado na matriz analitica', 'mime_type': 'text/html'},
+        {'id': 'ipea_atlas_vulnerabilidade_social_2015', 'descricao': 'Atlas da Vulnerabilidade Social nos Municipios Brasileiros (Ipea, 2015) - Metodologia e Cutoffs Externos', 'orgao_emissor': 'Instituto de Pesquisa Economica Aplicada (IPEA)', 'natureza_juridica': 'Documento Metodologico / Referencia Estatistica', 'url_oficial': 'https://repositorio.ipea.gov.br/bitstream/11058/4381/1/Atlas_da_vulnerabilidade_social_nos_municipios_brasileiros.pdf', 'status_aquisicao': 'documento_externo_catalogado_sem_bruto_local', 'http_status': None, 'erro': 'Download do PDF completo do Atlas (>100MB) dispensado no sprint; microdados de IVS 2010 observados em data/ivs_ipea_2010_municipios.csv', 'mime_type': 'application/pdf'},
     ]
-    for norma in normas_adicionais:
-        json_path = raw_dir / norma['filename']
-        if not json_path.exists():
-            with open(json_path, 'w', encoding='utf-8') as f: json.dump(norma['conteudo_resumo'], f, ensure_ascii=False, indent=2)
-        size_b = json_path.stat().st_size
-        sha256_h = compute_sha256(json_path)
-        manifest_entries.append({'id': norma['id'], 'filename': norma['filename'], 'relative_path': 'data/raw/aquisicao/ivs_regra/' + norma['filename'], 'descricao': norma['descricao'], 'orgao_emissor': norma['orgao_emissor'], 'natureza_juridica': norma['natureza_juridica'], 'url_oficial': norma['url_oficial'], 'status_aquisicao': norma['status_aquisicao'], 'http_status': norma['http_status'], 'erro': None, 'tamanho_bytes': size_b, 'mime_type': norma['mime_type'], 'sha256': sha256_h, 'data_aquisicao': datetime.datetime.now(datetime.timezone.utc).isoformat()})
+    for norma in normas_externas:
+        manifest_entries.append({'id': norma['id'], 'filename': None, 'relative_path': None, 'descricao': norma['descricao'], 'orgao_emissor': norma['orgao_emissor'], 'natureza_juridica': norma['natureza_juridica'], 'url_oficial': norma['url_oficial'], 'status_aquisicao': norma['status_aquisicao'], 'http_status': norma['http_status'], 'erro': norma['erro'], 'tamanho_bytes': None, 'mime_type': norma['mime_type'], 'sha256': None, 'data_aquisicao': AUDIT_DATE})
     return manifest_entries
 
 def audit_ivs_rules_and_treatment() -> dict:
@@ -165,8 +167,8 @@ def audit_ivs_rules_and_treatment() -> dict:
     cutoffs_audit = [analyze_cutoff_neighborhood(ivs_df, 0.200), analyze_cutoff_neighborhood(ivs_df, 0.300), analyze_cutoff_neighborhood(ivs_df, 0.400), analyze_cutoff_neighborhood(ivs_df, 0.500)]
 
     matriz_diagnostico = {
-        'metadados_auditoria': {'data_execucao': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'responsavel': 'Agente A03 (Sprint Extraordinario de Aquisicao de Dados)', 'versao_base_ivs_analisada': 'IPEA 2010 (data/ivs_ipea_2010_municipios.csv)', 'total_municipios_brasil_ivs': len(ivs_df), 'total_municipios_serie_pmme': total_muni_serie, 'total_municipios_quadros_vagas_unificados': len(all_vagas_merged)},
-        'concordancia_ivs_serie_historica': {'total_municipios': total_muni_serie, 'concordantes_com_ivs_2010': total_concordantes, 'divergentes_de_ivs_2010': total_divergentes, 'taxa_concordancia_percentual': round(taxa_concordancia * 100, 2), 'distribuicao_deslocamentos_rank': diff_counts_formatted, 'matriz_transicao_calc_vs_texto': trans_matrix},
+        'metadados_auditoria': {'data_execucao': AUDIT_DATE, 'responsavel': 'Agente A03 (Sprint de Aquisicao de Dados / Saneamento A05R)', 'versao_base_ivs_analisada': 'IPEA 2010 (data/ivs_ipea_2010_municipios.csv)', 'total_municipios_brasil_ivs': len(ivs_df), 'total_municipios_serie_pmme': total_muni_serie, 'total_municipios_quadros_vagas_unificados': len(all_vagas_merged)},
+        'concordancia_ivs_serie_historica': {'total_municipios': total_muni_serie, 'concordantes_com_ivs_2010': total_concordantes, 'divergentes_de_ivs_2010': total_divergentes, 'taxa_concordancia_percentual': round(taxa_concordancia * 100, 2), 'taxa_divergencia_percentual': round((1 - taxa_concordancia) * 100, 2), 'distribuicao_deslocamentos_rank': diff_counts_formatted, 'matriz_transicao_calc_vs_texto': trans_matrix, 'diagnostico_divergencia': 'A divergencia de 42,56% entre categoria textual publicada e recalculo com IVS 2010 municipal e compativel com multiplas explicacoes (vintagem distinta, regras de arredondamento/precisao, reclassificacoes administrativas ou erro cadastral), nao demonstrando por si so regra multicriterio.'},
         'auditoria_quadros_de_vagas': vagas_audit_summary,
         'mapeamento_regras_por_edital': {
             'grade_2025_edital_3_2025': {'faixa_1': {'descricao_textual': 'Muito alta vulnerabilidade', 'bolsa_mensal_anunciada': 20000.0}, 'faixa_2': {'descricao_textual': 'Alta vulnerabilidade', 'bolsa_mensal_anunciada': 15000.0}, 'faixa_3': {'descricao_textual': 'Media, baixa ou muito baixa vulnerabilidade', 'bolsa_mensal_anunciada': 10000.0}, 'salto_monetario_candidato_alto_vs_muito_alto': 5000.0, 'salto_monetario_candidato_medio_vs_alto': 5000.0},
@@ -181,8 +183,8 @@ def audit_ivs_rules_and_treatment() -> dict:
             'pilar_d_primeiro_estagio_valor_recebido': {'status': 'NAO_OBSERVADO_AGUARDANDO_DADOS_ADMINISTRATIVOS', 'evidencia': 'Folha de pagamento mensal individualizada nao esta disponivel publicamente.', 'detalhes': 'Nao e possivel verificar glosas, suspensoes, adicionais de imersao, ajuda de custo ou se participantes de 2025 migraram de valor em 2026.'},
         },
         'classificacao_contraste_causal': {
-            'tipo_contraste': 'INCENTIVO_MARGINAL_ANUNCIADO_COM_SELECAO_MULTICRITERIO',
-            'justificativa': 'O IVS nao determina participacao no PMM-E nem criacao de vagas. Condicionalmente a vaga ofertada, a categoria administrativa define o valor anunciado. Como o escore continuo e a regra exata nao foram publicados e 42.56 por cento dos municipios divergem do IVS 2010 local, o contraste nao pode ser estimado por RDD sharp.',
+            'tipo_contraste': 'INCENTIVO_MARGINAL_ANUNCIADO_COM_REGRA_NAO_RECONSTRUIDA',
+            'justificativa': 'O IVS nao determina participacao no PMM-E nem criacao de vagas. Condicionalmente a vaga ofertada, a categoria administrativa define o valor anunciado. Como o escore continuo e a regra exata nao foram publicados e 42.56 por cento dos municipios divergem do IVS 2010 local, a regra administrativa exata permanece nao reconstruida e o RDD nao pode ser liberado com os dados atuais.',
             'viabilidade_rdd': 'INVIAVEL_COM_DADOS_PUBLICOS_ATUAIS',
             'condicoes_para_futuro_rdd_fuzzy': ['Acesso a tabela de escore administrativo continuo exato usado pela SGTES/MS', 'Microdados mensais de pagamentos efetivos (SGP/FNS) para estimar primeiro estagio', 'Identificador estavel de vaga para controlar processo de oferta e remanejamento'],
         },
@@ -196,12 +198,12 @@ def main():
     out_dir = root_dir / 'output' / 'aquisicao'
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    print('Adquirindo e preservando documentacao normativa oficial...')
+    print('Preservando e auditando documentacao normativa oficial...')
     manifest_entries = download_normative_sources(raw_dir)
 
     manifest_output_path = out_dir / 'a03_manifesto_ivs_regra.json'
     with open(manifest_output_path, 'w', encoding='utf-8') as f:
-        json.dump({'agente': 'A03', 'modulo': 'ivs_e_regra_administrativa', 'data_geracao': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'total_fontes_preservadas': len(manifest_entries), 'fontes': manifest_entries}, f, ensure_ascii=False, indent=2)
+        json.dump({'agente': 'A03', 'modulo': 'ivs_e_regra_administrativa', 'data_geracao': AUDIT_DATE, 'total_fontes_auditadas': len(manifest_entries), 'fontes': manifest_entries}, f, ensure_ascii=False, indent=2)
     print('Manifesto salvo em:', manifest_output_path)
 
     print('Auditando regras do IVS 2010, concordancia municipal e matriz causal...')

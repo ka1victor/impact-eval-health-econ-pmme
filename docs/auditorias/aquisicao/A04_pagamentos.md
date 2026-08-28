@@ -1,6 +1,6 @@
 # Auditoria de regras financeiras e pagamentos publicos do PMM-E (A04)
 
-> **Data da auditoria:** 27 de agosto de 2026  
+> **Data da auditoria:** 28 de agosto de 2026 (revisado pós-saneamento)  
 > **Escopo:** fontes orcamentarias, fluxo financeiro, regras normativas de remuneracao e viabilidade da mensuracao da dose financeira no Projeto Mais Medicos Especialistas (PMM-E / Lei 15.233/2025).  
 > **Nao contem:** estimacao de primeiro estagio, simulacao de doses recebidas ou estimacao de efeitos causais.
 
@@ -8,7 +8,7 @@
 
 ## 1. Conclusao executiva e veredito do tratamento
 
-A auditoria conclui que, nas fontes oficiais publicas abertas atualmente disponiveis, o tratamento financeiro do PMM-E **pode ser medido exclusivamente como (a) FAIXA ANUNCIADA (oferta normativa do incentivo)** condicional a vaga ofertada. 
+A auditoria conclui que, nas fontes oficiais publicas abertas atualmente disponiveis, o tratamento financeiro do PMM-E **pode ser registrado exclusivamente como variavel normativa de FAIXA ANUNCIADA** vinculada a vaga ofertada nos editais. 
 
 O **valor devido (b)** e o **valor efetivamente recebido (c)** **NAO SAO OBSERVAVEIS em fontes publicas**. A folha mensal de pagamento individualizada por medico, vaga e competencia e gerida exclusivamente no Sistema de Gerenciamento de Programas (SGP) da SGTES/MS e nas rotinas centralizadas do Fundo Nacional de Saude (FNS), com acesso restrito a gestores e usuarios autenticados.
 
@@ -17,12 +17,12 @@ Principais conclusoes auditadas:
 1. **Inexistencia de microdado financeiro publico individual:** Nenhum portal publico aberto (Portal da Transparencia da CGU, SIOP, Siga Brasil, Dados Abertos do SUS ou FNS) disponibiliza microdados individualizados de pagamentos de bolsas do PMM-E com chaves que permitam o cruzamento simultaneo entre profissional, codigo de vaga, CNES e competencia mensal de servico.
 2. **Separacao estrita da cadeia de despesa:** Despesa orcamentaria agregada (empenhada/liquidada/paga na Acao Orcamentaria 215I ou 21CE) mede apenas o volume financeiro macro do programa federal. Nao pode ser convertida em pagamento individual nem dividida pelo estoque de ativos para gerar uma "dose media presumida", o que violaria os padroes de integridade do projeto.
 3. **Instabilidade temporal da regra de faixas:** A definicao das faixas de bolsa mudou estruturalmente entre 2025 (Edital SGTES/MS no 3/2025) e 2026 (Editais SGTES/MS no 3/2026 e 28/2026). Municipios de alta vulnerabilidade migraram da Faixa 2 (R$ 15 mil) para a Faixa 1 (R$ 20 mil), e municipios de media vulnerabilidade migraram da Faixa 3 (R$ 10 mil) para a Faixa 2 (R$ 15 mil). Portanto, a variavel `faixa_atracao` nao possui significado temporal estavel e nao admite empilhamento simples (*pooling*) sem parametrizacao da regra de vigencia.
-4. **Veredito do primeiro estagio:** O primeiro estagio econometrico da dose financeira recebida ($D_{it} = \pi_0 + \pi_1 \mathbf{1}[IVS_m \ge c] + g(IVS_m) + \nu_{it}$) encontra-se **bloqueado por falta de dados**. O unico estimando causal identificavel com dados publicos e o **Intention-to-Treat (ITT) da oferta do incentivo anunciado**, cuja identificacao formal ainda depende da resolucao dos bloqueios de escore exato do IVS (A03) e vinculo individual com CNES (A05/A06).
+4. **Veredito do primeiro estagio:** O primeiro estagio econometrico da dose financeira recebida ($D_{it} = \pi_0 + \pi_1 \mathbf{1}[IVS_m \ge c] + g(IVS_m) + \nu_{it}$) encontra-se **bloqueado por falta de dados**. A estimacao de efeitos causais do incentivo efetivo permanece bloqueada aguardando dados administrativos de folha individualizada (SGP/FNS/LAI).
 
 ```text
 ========================================================================================
 VEREDITO DO TRATAMENTO FINANCEIRO:
-(a) Faixa Anunciada (Oferta Normativa):      VIAVEL COM DADOS PUBLICOS (ITT condicional)
+(a) Faixa Anunciada (Oferta Normativa):      OBSERVAVEL COMO VARIAVEL NORMATIVA NO EDITAL
 (b) Valor Devido (Dose Teorica):             INVIAVEL (exige log diario/mensal do SGP)
 (c) Valor Recebido (Dose Efetiva/1o Estagio): BLOQUEADO (aguarda Pedido LAI / SGP)
 ========================================================================================
@@ -32,12 +32,10 @@ VEREDITO DO TRATAMENTO FINANCEIRO:
 
 ## 2. Convencao de disponibilidade e fontes auditadas
 
-Seguindo o padrao estabelecido nas Auditorias 01 e 02 e no `prompts/aquisicao_dados/README.md`, os dados foram classificados conforme a tabela abaixo:
-
 | Codigo | Classificacao | Significado nesta auditoria |
 |---|---|---|
-| `L` | Disponivel localmente | Adquirido, verificado por hash SHA-256 e preservado em `data/raw/aquisicao/pagamentos/` |
-| `P` | Disponivel publicamente | Fonte publica oficial localizada em portais governamentais (SIOP, Transparencia), porem agregada |
+| `OUT` | Consolidado em output | Tabela derivada consolidada em `output/aquisicao/` a partir de editais e orcamento publico |
+| `P` | Disponivel publicamente | Fonte publica oficial localizada em portais governamentais (SIOP, Transparencia), porem agregada macro |
 | `LAI` | Somente por pedido administrativo | Microdados de pagamento individualizado (SGP/FNS/UNA-SUS) protegidos por sigilo e LGPD |
 | `NL` | Nao localizado | Dado inexistente ou nao publicado pelas fontes oficiais consultadas |
 | `I` | Inadequado para o estimando | Dado existente, mas cuja utilizacao para medir dose individual exigiria inferencia indevida ou imputacao artificial |
@@ -177,10 +175,10 @@ A tabela abaixo cruza a categorizacao socioeconomica do IVS e as faixas normativ
 
 ### Opcao (a): Tratamento como Faixa Anunciada (Oferta Normativa do Incentivo)
 * **Definicao formal:** $T_i^{\text{anunciado}} \in \{10.000, 15.000, 20.000\}$ vinculado a vaga $i$ a partir da publicacao oficial do edital.
-* **Status:** **UNICO TRATAMENTO VIAVEL COM DADOS PUBLICOS.**
-* **Estimando identificado:** Efeito de *Intention-to-Treat* (ITT) da oferta de um incentivo financeiro adicional (+R$ 5.000 ou +R$ 10.000 mensais) sobre a probabilidade de escolha da vaga pelo medico e preenchimento inicial, condicional a oferta da vaga.
-* **Vantagens:** Mensuracao objetiva, imune a erros de mensuracao decorrentes de glosas e livre de atritos pos-alocacao.
-* **Limitacoes:** Nao mede a dose monetaria efetivamente embolsada pelo profissional ao longo de 180 ou 360 dias.
+* **Status:** **OBSERVAVEL COMO VARIAVEL NORMATIVA NO EDITAL.**
+* **Descricao:** Descreve a oferta do incentivo financeiro nominal anunciado (+R$ 5.000 ou +R$ 10.000 mensais) condicional a existencia de vaga ofertada.
+* **Vantagens:** Mensuracao objetiva a partir dos editais e quadros de vagas.
+* **Limitacoes:** Nao mede a dose monetaria efetivamente desembolsada ao profissional ao longo do tempo.
 
 ### Opcao (b): Tratamento como Valor Devido (Dose Teorica Proporcional)
 * **Definicao formal:** $T_{it}^{\text{devido}} = \sum_{t=1}^M \text{Bolsa}_{it} \cdot \mathbf{1}[\text{Ativo}_{it}]$.
@@ -192,9 +190,9 @@ A tabela abaixo cruza a categorizacao socioeconomica do IVS e as faixas normativ
 * **Definicao formal:** $D_{it}^{\text{recebido}} = \text{Valor liquido depositado na conta bancaria do profissional na competencia } t$.
 * **Status:** **BLOQUEADO AGUARDANDO LAI / DADOS ADMINISTRATIVOS.**
 * **Motivo da inviabilidade:** A folha individualizada (SGP/FNS) nao e publica.
-* **Implicacao econometrica para o Primeiro Estagio:** Em um modelo Fuzzy RDD com a dose recebida como variavel endogena ($D_i$), a equacao de primeiro estagio:
-  $$D_i = \gamma_0 + \gamma_1 \mathbf{1}[IVS_m \ge c] + f(IVS_m) + \varepsilon_i$$
-  **nao pode ser estimada**, pois $D_i$ e nao observada. Nao e econometricamente valido substituir $D_i$ pelo valor anunciado da vaga e chamar a regressao de "primeiro estagio com compliance perfeito presumido".
+* **Implicacao econometrica para o Primeiro Estagio:** Em um modelo com dose recebida como variavel endogena ($D_i$), a equacao de primeiro estagio:
+  $$D_i = \gamma_0 + \gamma_1 \mathbf{1}[IVS_m \ge c] + f(IVS_m) +  \varepsilon_i$$
+  **nao pode ser estimada**, pois $D_i$ e nao observada em dados abertos.
 
 ---
 
@@ -217,21 +215,21 @@ Para que o projeto possa viabilizar no futuro o primeiro estagio e a mensuracao 
 
 ---
 
-## 9. Manifestos e hashes dos arquivos preservados
+## 9. Manifestos e hashes dos arquivos derivados consolidados
 
-Todos os arquivos brutos gerados e consolidados por esta auditoria foram salvos de forma idempotente em `data/raw/aquisicao/pagamentos/` e estao documentados no manifesto `output/aquisicao/a04_manifesto_pagamentos.json`:
+Todas as tabelas derivadas compiladas por esta auditoria foram consolidadas de forma idempotente em `output/aquisicao/` (sem criacao de falsos brutos em `data/raw/`) e estao documentadas no manifesto `output/aquisicao/a04_manifesto_pagamentos.json`:
 
-| Arquivo Bruto | Unidade de Registro | Tamanho (Bytes) | SHA-256 |
-|---|---|---:|---|
-| `grade_bolsas_historico_2025_2026.csv` | Edital / Ciclo / Chamada / Faixa | 3.712 | `e97558c880adf3b7b9997291da6111c5fb2c05616e0e54e7b966eead0721095f` |
-| `execucao_orcamentaria_acoes_provimento_2025_2026.csv` | Exercicio / UO / Acao / PO / Elemento | 2.954 | `01a934d7d9fb8afb343e2bd06ab895aba4ffd471c8b07d0ede7b789d5071b4e0` |
-| `normas_regras_financeiras_pmme.json` | Ato Normativo Federal | 5.207 | `7dfd3133caeb9ea450db17e5537c31657194fc7e4cb5a7d983eefb031a393a01` |
-| `inventario_sistemas_pagamento_ms.json` | Sistema de Informacao Governamental | 4.247 | `cddd8d17a9c2e3f50990921e8e9934ab3f43471a529e3ba834f16eea99c9e750` |
+| Arquivo Consolidado | Unidade de Registro | SHA-256 (prefixo) |
+|---|---|:---:|
+| `output/aquisicao/a04_grade_bolsas_historico_2025_2026.csv` | Edital / Ciclo / Chamada / Faixa | `e97558c880` |
+| `output/aquisicao/a04_execucao_orcamentaria_acoes_provimento_2025_2026.csv` | Exercicio / UO / Acao / PO / Elemento | `01a934d7d9` |
+| `output/aquisicao/a04_normas_regras_financeiras_pmme.json` | Ato Normativo Federal | `7dfd3133ca` |
+| `output/aquisicao/a04_inventario_sistemas_pagamento_ms.json` | Sistema de Informacao Governamental | `cddd8d17a9` |
 
-### Arquivos de saida consolidados:
+### Arquivos de saida de auditoria:
 - `output/aquisicao/a04_manifesto_pagamentos.json` (SHA-256 verificado)
 - `output/aquisicao/a04_matriz_dose_financeira.json` (SHA-256 verificado)
-- `scripts/aquisicao/a04_adquirir_pagamentos.py` (Script idempotente de reproducao)
+- `scripts/aquisicao/a04_adquirir_pagamentos.py` (Script idempotente de consolidacao)
 
 ---
 
@@ -240,9 +238,9 @@ Todos os arquivos brutos gerados e consolidados por esta auditoria foram salvos 
 ```text
 ========================================================================================
 RESUMO PARA O PORTAO DE INTEGRACAO A06:
-1. Dose financeira por microdado de pagamento: NAO DISPONIVEL PUBLICAMENTE (bloqueio LAI)
-2. Faixa anunciada por vaga ofertada:         DISPONIVEL PUBLICAMENTE nos editais
-3. Estimando empirico liberado:               ITT da oferta do incentivo financeiro
-4. Estimando de primeiro estagio da dose:     BLOQUEADO ate retorno do Pedido 4 (LAI)
+1. Microdados de pagamento individual:   NAO OBTIDOS EM DADOS ABERTOS (bloqueio LAI)
+2. Faixa anunciada por vaga ofertada:    DISPONIVEL COMO VARIAVEL NORMATIVA nos editais
+3. Estimando causal do incentivo:        BLOQUEADO aguardando dados administrativos
+4. Primeiro estagio da dose monetaria:   BLOQUEADO ate retorno do Pedido 4 (LAI)
 ========================================================================================
-```
+````

@@ -706,7 +706,7 @@ def analyze_version_transitions(parsed_docs: dict[str, Any]) -> dict[str, Any]:
             "intersecao_chaves": len(keys_vagas_c1 & keys_vagas_c2),
             "chaves_novas_na_ch2": len(keys_vagas_c2 - keys_vagas_c1),
             "chaves_retiradas_da_ch2": len(keys_vagas_c1 - keys_vagas_c2),
-            "diagnostico": "A 2ª chamada do Ciclo 1 publicou 1.762 oportunidades em cadastro de reserva (2.896 vagas somadas). Destas, 929 eram vagas reapresentadas da 1ª chamada e 833 foram novos serviços/vagas adicionados ao cadastro de reserva."
+            "diagnostico": "A 2ª chamada do Ciclo 1 publicou 1.762 células de oferta em cadastro de reserva (totalizando 2.896 vagas somadas). Destas células, 929 eram células reapresentadas da 1ª chamada e 833 foram novas células de oferta (CNES–curso) adicionadas ao cadastro de reserva."
         }
 
     # Transição 3: Ciclo 2 Chamada 1 Original vs Retificada (19/03/2026)
@@ -781,7 +781,7 @@ def main() -> None:
         "data_auditoria": AUDIT_DATE,
         "conclusao_chave_administrativa": {
             "id_vaga_existe": False,
-            "diagnostico": "Nenhum dos 19 documentos públicos auditados contém identificador estável de vaga ('id_vaga'). A vinculação entre versões exige chave candidata construída ('chave_candidata' = CNES + curso_normalizado)."
+            "diagnostico": "Nenhum dos 19 documentos públicos auditados contém identificador estável de vaga ('id_vaga'). A vinculação entre versões baseia-se na célula de oferta agregada ('chave_candidata' = CNES + curso_normalizado), que identifica a linha da oferta no estabelecimento, não uma vaga física individual."
         },
         "conclusao_denominador_vagas": {
             "denominador_cumulativo_valido": False,

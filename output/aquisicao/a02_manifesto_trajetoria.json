@@ -1,16 +1,16 @@
 {
   "agente": "A02",
   "objeto": "selecao e trajetoria administrativa publica",
-  "gerado_em": "2026-08-27",
+  "gerado_em": "2026-08-28",
   "fontes_processadas": [
     {
       "id": "alocacao_2025_c1_retificada",
       "arquivo": "2025_ciclo1_chamada1_alocacao_retificada.xlsx",
-      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-projeto-mais-medicos-especialistas/quadro-1-profissionais-alocados-conforme-escolha-inicial-1a-ou-2a-opcao-retificado.xlsx",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/quadro-1-profissionais-alocados-conforme-escolha-inicial-1a-ou-2a-opcao-retificado.xlsx",
       "ciclo": "1",
       "chamada": "1",
       "cobertura": "Ciclo 1, chamada 1, alocacao retificada",
-      "unidade_declarada": "profissional alocado/vaga",
+      "unidade_declarada": "candidatura alocada/vaga",
       "etapas_alvo": [
         "inscricao",
         "preferencias",
@@ -18,13 +18,51 @@
         "alocacao"
       ],
       "fonte": "Ministerio da Saude",
-      "data_extracao": "2026-08-27",
-      "caminho_preservado": null,
-      "bytes": null,
-      "sha256": null,
-      "disponibilidade": "link quebrado / HTTP 404",
-      "erro": "HTTP Error 404: Not Found",
-      "validacao": "fonte oficial inacessivel na data de referencia"
+      "data_extracao": "2026-08-28",
+      "caminho_preservado": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada.xlsx",
+      "bytes": 165047,
+      "sha256": "0acfba2a89e0c269b754c0ca0fd5a2426be511f88a3c1a934a41345f8c9ffd0c",
+      "disponibilidade": "preservado localmente em data/raw/aquisicao/vagas/ (recuperado por A01)",
+      "validacao": "arquivo integro; bytes identicos aos oficiais"
+    },
+    {
+      "id": "alocacao_2025_c1_retificada_subjudice",
+      "arquivo": "2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/quadro-1-profissionais-alocados-conforme-escolha-inicial-1a-ou-2a-opcao-retificado-subjudice.xlsx",
+      "ciclo": "1",
+      "chamada": "1",
+      "cobertura": "Ciclo 1, chamada 1, alocacao retificada sub judice",
+      "unidade_declarada": "candidatura alocada/vaga",
+      "etapas_alvo": [
+        "alocacao",
+        "sub_judice"
+      ],
+      "fonte": "Ministerio da Saude",
+      "data_extracao": "2026-08-28",
+      "caminho_preservado": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+      "bytes": 165250,
+      "sha256": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec",
+      "disponibilidade": "preservado localmente em data/raw/aquisicao/vagas/ (recuperado por A01)",
+      "validacao": "arquivo integro; bytes identicos aos oficiais"
+    },
+    {
+      "id": "realocacao_2025_c1_retificado",
+      "arquivo": "2025_ciclo1_chamada1_realocacao_retificado.xlsx",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/quadro-2-proposta-de-realocacao-dos-profissionais-que-selecionaram-estabelecimentos-de-saude-retificado.xlsx",
+      "ciclo": "1",
+      "chamada": "1",
+      "cobertura": "Ciclo 1, chamada 1, proposta de realocacao retificada",
+      "unidade_declarada": "profissional/vaga_remanejada",
+      "etapas_alvo": [
+        "transferencia_realocacao"
+      ],
+      "fonte": "Ministerio da Saude",
+      "data_extracao": "2026-08-28",
+      "caminho_preservado": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_realocacao_retificado.xlsx",
+      "bytes": 15559,
+      "sha256": "7c31cb441b8668eca0c06a6c6a648c731e26d1f14162fe071fd9695ebfe89b86",
+      "disponibilidade": "preservado localmente em data/raw/aquisicao/vagas/ (recuperado por A01)",
+      "validacao": "arquivo integro; bytes identicos aos oficiais"
     },
     {
       "id": "homologados_2025_c1",
@@ -38,7 +76,7 @@
         "homologacao"
       ],
       "fonte": "Ministerio da Saude",
-      "data_extracao": "2026-08-27",
+      "data_extracao": "2026-08-28",
       "caminho_preservado": "data/raw/pmm_e/2025_ciclo1_chamada1_homologados.xlsx",
       "bytes": 40259,
       "sha256": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b",
@@ -58,7 +96,7 @@
         "alocacao"
       ],
       "fonte": "Ministerio da Saude",
-      "data_extracao": "2026-08-27",
+      "data_extracao": "2026-08-28",
       "caminho_preservado": "data/raw/pmm_e/2025_ciclo1_chamada2_vagas_e_alocados.xlsx",
       "bytes": 155827,
       "sha256": "f1b8f7533cb13d8aba21d1100ab957e6accac52532fb8235e1b4231343a0588c",
@@ -81,7 +119,7 @@
         "desclassificacao"
       ],
       "fonte": "Ministerio da Saude",
-      "data_extracao": "2026-08-27",
+      "data_extracao": "2026-08-28",
       "caminho_preservado": "data/raw/pmm_e/2025_ciclo1_chamada2_classificacao_final.xlsx",
       "bytes": 86076,
       "sha256": "5c73a99847708b2749019c634f661771b28c88cb5421e9672e44704e62103e85",
@@ -100,7 +138,7 @@
         "homologacao"
       ],
       "fonte": "Ministerio da Saude",
-      "data_extracao": "2026-08-27",
+      "data_extracao": "2026-08-28",
       "caminho_preservado": "data/raw/pmm_e/2025_ciclo1_chamada2_homologados.xlsx",
       "bytes": 55034,
       "sha256": "4e85cfe45b2e5e1f7ebef78aa5dc90ba61b7adc5f7046f43a5066803f603e147",
@@ -120,7 +158,7 @@
         "alocacao_remanescente"
       ],
       "fonte": "Ministerio da Saude",
-      "data_extracao": "2026-08-27",
+      "data_extracao": "2026-08-28",
       "caminho_preservado": "data/raw/pmm_e/2026_ciclo2_chamada1_resultado_final_remanescentes.xlsx",
       "bytes": 17548,
       "sha256": "db39d51f9163fd8deedc8727ced37bf3fcdf19b4a6966d91a396e09f5f2a26e6",
@@ -144,7 +182,7 @@
         "desclassificacao"
       ],
       "fonte": "Ministerio da Saude",
-      "data_extracao": "2026-08-27",
+      "data_extracao": "2026-08-28",
       "caminho_preservado": "data/raw/pmm_e/2026_ciclo2_chamada2_resultado_final.xlsx",
       "bytes": 111857,
       "sha256": "8690d6fc381692fc20c59ae077ac8b80ca1ce27dd03d27fd8e1ef17c75abc85f",
@@ -169,7 +207,7 @@
         "desclassificacao"
       ],
       "fonte": "Ministerio da Saude",
-      "data_extracao": "2026-08-27",
+      "data_extracao": "2026-08-28",
       "caminho_preservado": "data/raw/pmm_e/2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx",
       "bytes": 393041,
       "sha256": "d74f268bb7192c80a02c94e54eb4407e60a0923ad7d0310c2c6b432b3dbbb6ee",

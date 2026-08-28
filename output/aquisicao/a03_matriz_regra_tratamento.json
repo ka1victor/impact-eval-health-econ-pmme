@@ -1,7 +1,7 @@
 {
   "metadados_auditoria": {
-    "data_execucao": "2026-08-27T19:57:54.120407+00:00",
-    "responsavel": "Agente A03 (Sprint Extraordinario de Aquisicao de Dados)",
+    "data_execucao": "2026-08-28",
+    "responsavel": "Agente A03 (Sprint de Aquisicao de Dados / Saneamento A05R)",
     "versao_base_ivs_analisada": "IPEA 2010 (data/ivs_ipea_2010_municipios.csv)",
     "total_municipios_brasil_ivs": 5565,
     "total_municipios_serie_pmme": 531,
@@ -12,6 +12,7 @@
     "concordantes_com_ivs_2010": 305,
     "divergentes_de_ivs_2010": 226,
     "taxa_concordancia_percentual": 57.44,
+    "taxa_divergencia_percentual": 42.56,
     "distribuicao_deslocamentos_rank": {
       "shift_-2": 2,
       "shift_-1": 102,
@@ -68,7 +69,8 @@
         "MUITO BAIXA VULNERABILIDADE": 24,
         "All": 531
       }
-    }
+    },
+    "diagnostico_divergencia": "A divergencia de 42,56% entre categoria textual publicada e recalculo com IVS 2010 municipal e compativel com multiplas explicacoes (vintagem distinta, regras de arredondamento/precisao, reclassificacoes administrativas ou erro cadastral), nao demonstrando por si so regra multicriterio."
   },
   "auditoria_quadros_de_vagas": {
     "1_2_cadastro_reserva": {
@@ -351,8 +353,8 @@
     }
   },
   "classificacao_contraste_causal": {
-    "tipo_contraste": "INCENTIVO_MARGINAL_ANUNCIADO_COM_SELECAO_MULTICRITERIO",
-    "justificativa": "O IVS nao determina participacao no PMM-E nem criacao de vagas. Condicionalmente a vaga ofertada, a categoria administrativa define o valor anunciado. Como o escore continuo e a regra exata nao foram publicados e 42.56 por cento dos municipios divergem do IVS 2010 local, o contraste nao pode ser estimado por RDD sharp.",
+    "tipo_contraste": "INCENTIVO_MARGINAL_ANUNCIADO_COM_REGRA_NAO_RECONSTRUIDA",
+    "justificativa": "O IVS nao determina participacao no PMM-E nem criacao de vagas. Condicionalmente a vaga ofertada, a categoria administrativa define o valor anunciado. Como o escore continuo e a regra exata nao foram publicados e 42.56 por cento dos municipios divergem do IVS 2010 local, a regra administrativa exata permanece nao reconstruida e o RDD nao pode ser liberado com os dados atuais.",
     "viabilidade_rdd": "INVIAVEL_COM_DADOS_PUBLICOS_ATUAIS",
     "condicoes_para_futuro_rdd_fuzzy": [
       "Acesso a tabela de escore administrativo continuo exato usado pela SGTES/MS",

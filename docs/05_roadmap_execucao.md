@@ -44,6 +44,8 @@ FASE 1 — VIABILIDADE
 01 Auditoria institucional ─┐
                             ├─→ sprint de aquisição A01–A05
 02 Auditoria de dados ──────┘              ↓
+                                  A05R saneamento pré-A06
+                                           ↓
                                   A06 portão integrado
                                            ↓
                               A07 pedidos, se necessários
@@ -63,14 +65,15 @@ FASE 3 — AUDITORIA E ENTREGA
 07 Red team e reprodução ─────→ 08 Síntese final
 ```
 
-Os pares 01–02 e 04–05 podem rodar em paralelo apenas em worktrees ou branches isolados. O agente 03 depende das auditorias, do sprint de aquisição e do portão A06. O agente 06 depende dos painéis validados. O agente 08 depende do red team.
+Os pares 01–02 e 04–05 podem rodar em paralelo apenas em worktrees ou branches isolados. O agente 03 depende das auditorias, do sprint de aquisição saneado e do portão A06. O agente 06 depende dos painéis validados. O agente 08 depende do red team.
 
 Após a execução das auditorias 01–02, o primeiro portão classificou o estudo como
 `aguardando dados`. Por isso, a dependência efetiva do prompt 03 inclui agora o
 sprint extraordinário descrito em
 [`prompts/aquisicao_dados/README.md`](../prompts/aquisicao_dados/README.md).
-A01–A05 podem rodar em paralelo em worktrees isolados; A06 os integra; A07
-prepara pedidos administrativos para as lacunas remanescentes, sem enviá-los.
+A01–A05 podem rodar em paralelo em worktrees isolados; A05R corrige e valida os
+produtos combinados; A06 os integra; A07 prepara pedidos administrativos para as
+lacunas remanescentes, sem enviá-los.
 
 ## 5. Portão depois da Fase 1
 

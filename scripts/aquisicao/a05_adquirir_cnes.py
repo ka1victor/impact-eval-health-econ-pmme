@@ -423,12 +423,11 @@ def audit_pmme_cnes_codes(inspections: Dict[str, Dict[str, Any]]) -> Dict[str, A
     audit_results: Dict[str, Any] = {
         "status": "executada",
         "fontes_pmme_analisadas": [],
-        "cnes_pmme_testados": 0,
-        "cobertura_no_cnes": {},
+        "cnes_nominal_testados": 0,
+        "cobertura_nominal": {},
     }
 
-    pmme_cnes_set: Set[str] = set()
-    pmme_dir = ROOT / "data" / "raw" / "pmm_e"
+    nominal_cnes_set: Set[str] = set()
     nominal_path = ROOT / "data" / "pmm_especialistas_nominal.csv"
 
     if nominal_path.exists():
@@ -438,20 +437,16 @@ def audit_pmme_cnes_codes(inspections: Dict[str, Dict[str, Any]]) -> Dict[str, A
                 for row in reader:
                     cnes = str(row.get("co_cnes", "")).strip()
                     if cnes and cnes.isdigit():
-                        pmme_cnes_set.add(cnes.zfill(7))
-            audit_results["fontes_pmme_analisadas"].append("data/pmm_especialistas_nominal.csv")
+                        nominal_cnes_set.add(cnes.zfill(7))
+            audit_results["fontes_pmme_analisadas"].append("data/pmm_especialistas_nominal.csv (snapshot nominal de ativos)")
         except Exception as e:
             print(f"[AVISO] Erro lendo nominal: {e}")
 
-    if pmme_dir.exists():
-        for xlsx_file in pmme_dir.glob("*.xlsx"):
-            audit_results["fontes_pmme_analisadas"].append(xlsx_file.relative_to(ROOT).as_posix())
-
-    audit_results["cnes_pmme_testados"] = len(pmme_cnes_set)
+    audit_results["cnes_nominal_testados"] = len(nominal_cnes_set)
 
     for comp in PILOT_COMPETENCIAS:
         zip_path = RAW_DIR / f"BASE_DE_DADOS_CNES_{comp}.ZIP"
-        if zip_path.exists() and pmme_cnes_set:
+        if zip_path.exists() and nominal_cnes_set:
             found_cnes: Set[str] = set()
             try:
                 with zipfile.ZipFile(zip_path, "r") as zf:
@@ -474,17 +469,17 @@ def audit_pmme_cnes_codes(inspections: Dict[str, Dict[str, Any]]) -> Dict[str, A
                                         if cnes_val:
                                             found_cnes.add(cnes_val.zfill(7))
 
-                matched = pmme_cnes_set.intersection(found_cnes)
-                match_rate = len(matched) / len(pmme_cnes_set) if pmme_cnes_set else 0.0
-                audit_results["cobertura_no_cnes"][comp] = {
+                matched = nominal_cnes_set.intersection(found_cnes)
+                match_rate = len(matched) / len(nominal_cnes_set) if nominal_cnes_set else 0.0
+                audit_results["cobertura_nominal"][comp] = {
                     "total_cnes_base_cnes": len(found_cnes),
-                    "cnes_pmme_testados": len(pmme_cnes_set),
+                    "cnes_pmme_testados": len(nominal_cnes_set),
                     "cnes_pmme_encontrados": len(matched),
-                    "cnes_pmme_ausentes": len(pmme_cnes_set) - len(matched),
+                    "cnes_pmme_ausentes": len(nominal_cnes_set) - len(matched),
                     "taxa_cobertura": match_rate,
                 }
             except Exception as e:
-                audit_results["cobertura_no_cnes"][comp] = {"erro": str(e)}
+                audit_results["cobertura_nominal"][comp] = {"erro": str(e)}
 
     return audit_results
 
@@ -556,17 +551,16 @@ def generate_audit_report(
 ) -> None:
     """Gera o relatorio completo de auditoria em Markdown."""
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
-
     pilot_entries = [e for e in manifest["fontes"] if e["is_piloto"]]
     downloaded_entries = [e for e in manifest["fontes"] if e["caminho"] is not None]
 
     lines = []
     lines.append("# Auditoria e Inspeção do CNES Mensal (A05)")
     lines.append("")
-    lines.append("> **Data da Auditoria:** 27 de agosto de 2026")
+    lines.append("> **Data da Auditoria:** 28 de agosto de 2026 (revisado pós-saneamento)")
     lines.append("> **Agente:** A05 — Aquisição e Inspeção do CNES Mensal")
     lines.append("> **Escopo:** Avaliação de impacto do Programa Mais Médicos Especialistas (PMM-E / Lei 15.233/2025)")
-    lines.append("> **Janela Temporal do CNES:** Junho de 2024 a Julho de 2026 (26 competências planejadas)")
+    lines.append("> **Janela Temporal do CNES:** Junho de 2024 a Julho de 2026 (26 competências planejadas; 3 inspecionadas no piloto)")
     lines.append("> **Status:** Piloto de esquema concluído; dicionário e anatomia interna extraídos; diagnóstico de FTE e ponte administrativa documentados.")
     lines.append("")
     lines.append("---")
@@ -581,7 +575,7 @@ def generate_audit_report(
     lines.append("")
     lines.append("### Conclusão Principal da Auditoria:")
     lines.append("- **Disponibilidade Pública e Esquema:** As bases mensais do CNES são públicas e contêm todas as tabelas necessárias para calcular FTE cadastral agregado e estoque pré-tratamento de infraestrutura. O esquema revelou-se altamente estável entre 2024 e 2026 (com adições marginais documentadas).")
-    lines.append("- **Alta Validação Cadastral das Vagas:** 100,0% dos estabelecimentos ofertados no PMM-E foram validados no CNES em 202607 (e 99,42% já existiam no baseline de 202406).")
+    lines.append("- **Validação Cadastral dos Estabelecimentos:** 100,0% dos 518 estabelecimentos do snapshot nominal de ativos foram validados no CNES em 202607 (e 99,42% já constavam no baseline de 202406).")
     lines.append("- **Limitação Crítica (A Ausência da Ponte PMM-E–CNES):** O CNES não possui nenhum campo, flag ou código de sub-vínculo público que identifique deterministicamente um bolsista do PMM-E. As bases públicas do PMM-E contêm CRM, Nome e CPF mascarado; o CNES contém CNS e Nome. A vinculação determinística é **inviável com dados estritamente públicos** e depende de chave administrativa via SGTES/LAI (Solicitação A07).")
     lines.append("")
     lines.append("---")
@@ -714,21 +708,21 @@ def generate_audit_report(
     lines.append("1. **Ausência de Chave Primária Compartilhada:** O edital do PMM-E não publica o número do CNS do médico; o CNES público não publica CRM nem CPF desmascarado.")
     lines.append("2. **Inadequação do Pareamento por Nome:** A correspondência probabilística por string de nome normalizado introduz viés de homonímia, erros de digitação e falsos positivos em um universo nacional de mais de 500 mil médicos cadastrados.")
     lines.append("3. **Implicação Causal:** Sem a ponte administrativa oficial (crosswalk fornecido pela SGTES com identificadores pseudonimizados), o pesquisador **não pode atribuir causalmente um vínculo individual específico ao PMM-E**.")
-    lines.append("4. **Recomendação:** A análise em nível agregado de município/CNES (Intention-to-Treat e Painel Diferenças-em-Diferenças / Event Study) é viável e recomendada, enquanto a análise no nível do médico participante depende da liberação do Pedido Administrativo LAI (Agente A07).")
+    lines.append("4. **Bloqueio Causal:** A estimação de efeitos causais agregados ou individuais permanece dependente de validação econométrica e dados administrativos, enquanto a análise no nível do médico participante depende da liberação do Pedido Administrativo LAI (Agente A07).")
     lines.append("")
     lines.append("---")
     lines.append("")
     lines.append("## 8. Auditoria de Códigos CNES das Vagas do PMM-E no Cadastro Oficial")
     lines.append("")
-    lines.append("Verificou-se o cruzamento dos códigos `CO_CNES` presentes nas planilhas de vagas e resultados do PMM-E em relação à base de dados oficial de estabelecimentos do CNES (`tbEstabelecimento`).")
+    lines.append("Verificou-se o cruzamento dos códigos `CO_CNES` presentes no cadastro nominal de ativos do PMM-E (`data/pmm_especialistas_nominal.csv`) em relação à base de dados oficial de estabelecimentos do CNES (`tbEstabelecimento`).")
     lines.append("")
     lines.append("### Resultados do Cruzamento:")
-    lines.append(f"- **Total de CNES Únicos nas Vagas PMM-E:** {cnes_audit.get('cnes_pmme_testados', 0)} estabelecimentos.")
-    for comp, cres in cnes_audit.get("cobertura_no_cnes", {}).items():
+    lines.append(f"- **Total de CNES Únicos no Snapshot Nominal de Ativos:** {cnes_audit.get('cnes_nominal_testados', 0)} estabelecimentos.")
+    for comp, cres in cnes_audit.get("cobertura_nominal", {}).items():
         if "taxa_cobertura" in cres:
             lines.append(f"- **Competência {comp}:** {cres['cnes_pmme_encontrados']} de {cres['cnes_pmme_testados']} estabelecimentos localizados na `tbEstabelecimento` ({cres['taxa_cobertura']*100:.2f}% de cobertura cadastral). Universo total de estabelecimentos no Brasil: {cres['total_cnes_base_cnes']:,}.")
     lines.append("")
-    lines.append("Os 3 estabelecimentos ausentes em 202406 correspondem a unidades de saúde inauguradas entre o final de 2024 e o início de 2025, atingindo 100,00% de cobertura cadastral na competência 202607.")
+    lines.append("Os 3 estabelecimentos do snapshot nominal que não constavam em 202406 passam a constar no cadastro oficial a partir da competência 202506 (compatível com inauguração, habilitação recente ou atualização cadastral de código), atingindo 100,00% de cobertura cadastral na competência 202607.")
     lines.append("")
     lines.append("---")
     lines.append("")
@@ -736,11 +730,11 @@ def generate_audit_report(
     lines.append("")
     lines.append("1. **Localização dos Arquivos Brutos:** Os arquivos ZIP baixados residem no diretório:")
     lines.append(f"   `{RAW_DIR.as_posix()}`")
-    lines.append("2. **Preservação em Worktree:** O coordenador do projeto (ou Agente A06) pode sincronizar esses arquivos brutos diretamente para a árvore principal ou reexecutar o script idempotente:")
+    lines.append("2. **Execução do Piloto de Esquema:**")
     lines.append("   ```bash")
-    lines.append("   python scripts/aquisicao/a05_adquirir_cnes.py --pilot")
+    lines.append("   python scripts/aquisicao/a05_adquirir_cnes.py --inspect-only")
     lines.append("   ```")
-    lines.append("3. **Execução do Painel Completo (26 meses):** Para realizar o download das 26 competências quando houver espaço em disco e rede disponíveis:")
+    lines.append("3. **Download Assíncrono do Painel Completo (26 meses):** Quando houver janela de execução apropriada em segundo plano:")
     lines.append("   ```bash")
     lines.append("   python scripts/aquisicao/a05_adquirir_cnes.py --full --confirm-large-download")
     lines.append("   ```")
@@ -750,7 +744,7 @@ def generate_audit_report(
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with REPORT_PATH.open("w", encoding="utf-8") as f:
         f.write(report_text)
-    print(f"Relatório de auditoria gravado em {REPORT_PATH}")
+    print(f"[RELATÓRIO OK] Auditoria Markdown salva em: {REPORT_PATH.relative_to(ROOT)}")
 
 
 def main() -> None:
