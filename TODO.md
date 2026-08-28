@@ -14,12 +14,14 @@
 - [x] Criar prompts ordenados para os agentes.
 - [x] Guardar explicitamente WP3, WP4 e WP5.
 
-## Fase 1 — viabilidade
+## Fase 1 — viabilidade e aquisição de dados
 
-- [ ] Executar `prompts/01_auditoria_institucional.md`.
-- [ ] Executar `prompts/02_auditoria_dados.md`.
-- [ ] Incorporar e revisar os dois commits.
-- [ ] Executar `prompts/03_protocolo_empirico.md`.
+- [x] Executar `prompts/01_auditoria_institucional.md` (`docs/auditorias/01_regra_institucional.md`).
+- [x] Executar `prompts/02_auditoria_dados.md` (`docs/auditorias/02_disponibilidade_dados.md`).
+- [x] Executar Sprint de Aquisição A01–A05 (vagas, trajetórias, IVS/regras, pagamentos e CNES mensal).
+- [ ] Executar `prompts/aquisicao_dados/A06_integracao_e_portao.md`.
+- [ ] Executar `prompts/aquisicao_dados/A07_pedidos_administrativos.md`.
+- [ ] Executar `prompts/03_protocolo_empirico.md`, se liberado pelo portão A06.
 - [ ] Registrar decisão do portão: prosseguir, parcial, aguardar dados ou parar.
 
 ## Fase 2 — construção e estimação
