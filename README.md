@@ -6,7 +6,7 @@ Por isso, a pergunta central não é apenas quantos médicos aparecem no program
 
 ## Estado atual
 
-O portão integrado A06 foi concluído com a decisão **`aguardar dados administrativos`**. Ainda não há resultado causal validado e o protocolo empírico não foi liberado. As aquisições públicas recuperaram quadros versionados, resultados administrativos publicados, regras normativas e três competências piloto do CNES, mas não entregaram `id_vaga` estável, log completo de eventos, ponte pseudonimizada PMM-E–CNES, regra administrativa reproduzível do IVS ou pagamentos mensais vinculáveis. A decisão e as nove respostas estão em [docs/auditorias/03_portao_apos_aquisicao.md](docs/auditorias/03_portao_apos_aquisicao.md); o próximo passo é preparar os pedidos do A07, sem executar protocolo ou estimação.
+O portão integrado A06 foi concluído com a decisão **`aguardar dados administrativos`**. Ainda não há resultado causal validado e o protocolo empírico não foi liberado. As aquisições públicas recuperaram quadros versionados, resultados administrativos publicados, regras normativas e três competências piloto do CNES, mas não entregaram `id_vaga` estável, log completo de eventos, ponte pseudonimizada PMM-E–CNES, regra administrativa reproduzível do IVS ou pagamentos mensais vinculáveis. A decisão e as nove respostas estão em [docs/auditorias/03_portao_apos_aquisicao.md](docs/auditorias/03_portao_apos_aquisicao.md). Os pacotes A07 foram [preparados](docs/pedidos_dados/README.md), mas permanecem **não enviados**; submissão é decisão externa do autor. O prompt 03 continua bloqueado.
 
 ## Escopo empírico prioritário
 
@@ -74,7 +74,7 @@ protocolo haverá um sprint de aquisição pública e, se necessário, pedidos
 administrativos:
 
 1. auditorias institucional e de dados;
-2. aquisições públicas e portão A06 concluídos; pedidos administrativos A07 são o próximo passo;
+2. aquisições públicas e portão A06 concluídos; pacotes administrativos A07 preparados, mas não enviados;
 3. protocolo congelado, somente após os pedidos serem atendidos e integrados e um novo portão permitir;
 4. painéis de vagas e CNES;
 5. estimação causal;

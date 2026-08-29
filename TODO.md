@@ -21,7 +21,8 @@
 - [x] Executar a primeira rodada A01–A05 (ainda não validada para integração).
 - [x] Executar `prompts/aquisicao_dados/A05R_saneamento_pre_a06.md` (`docs/auditorias/aquisicao/saneamento_pre_a06.md`).
 - [x] Executar `prompts/aquisicao_dados/A06_integracao_e_portao.md` (`aguardar dados administrativos`).
-- [ ] Executar `prompts/aquisicao_dados/A07_pedidos_administrativos.md`.
+- [x] Executar `prompts/aquisicao_dados/A07_pedidos_administrativos.md` (pacotes preparados; todos `não enviado`).
+- [ ] Autor decidir se e como submeter os pacotes A07 aos órgãos competentes.
 - [ ] Executar `prompts/03_protocolo_empirico.md` somente após respostas administrativas, integração e novo portão.
 - [x] Registrar decisão do portão: `aguardar dados administrativos`.
 

@@ -35,7 +35,7 @@ O portão A06 decidiu **`aguardar dados administrativos`**. As aquisições A01�
 - regra administrativa completa do IVS e folha mensal vinculável;
 - informação suficiente para cobertura sustentada, retenção individual ou FTE líquido.
 
-Portanto, o próximo passo é A07. Nenhum agente deve executar o prompt 03 ou iniciar estimação antes de os pedidos serem atendidos, integrados e submetidos a novo portão.
+Os pacotes A07 foram preparados em `docs/pedidos_dados/`, todos com status inicial `não enviado`. A próxima ação depende de decisão externa do autor sobre submissão. Nenhum agente deve executar o prompt 03 ou iniciar estimação antes de respostas serem recebidas, integradas e submetidas a novo portão.
 
 ## 4. Sequência operacional
 
@@ -49,7 +49,7 @@ FASE 1 — VIABILIDADE
                                            ↓
                                   A06 portão integrado [concluído]
                                            ↓
-                              A07 pedidos administrativos [próximo]
+                         A07 pedidos administrativos [preparados; não enviados]
                                            ↓
                               03 Protocolo empírico congelado
                                       ↓

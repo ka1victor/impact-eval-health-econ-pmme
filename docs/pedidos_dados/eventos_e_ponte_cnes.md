@@ -1,0 +1,97 @@
+# Pedido 2 — universo de inscrições, log de eventos e ponte pseudonimizada com o CNES
+
+> Status: **`não enviado`**. O pedido não solicita identificadores civis ao pesquisador e não promete anonimato absoluto.
+
+## Destinatário provável, período e finalidade
+
+**Órgão:** Ministério da Saúde. **Unidades prováveis:** unidade da SGTES responsável pelos registros administrativos do PMM-E e, para a vinculação, a unidade controladora capaz de relacioná-los ao CNES/DATASUS; competências exatas devem ser confirmadas pelo SIC, com encaminhamento interno se necessário.
+
+**Período exato:** eventos e inscrições entre **28/07/2025 e 29/08/2026**, cobrindo todas as chamadas dos ciclos 1, 2 e 3. Incluir eventos posteriores ao fim das inscrições e até o corte, bem como eventos anteriores a 28/07/2025 somente se criarem inscrição/vaga que permaneça no universo solicitado. Para a ponte CNES, vigências que intersectem **01/06/2024 a 29/08/2026**, permitindo validar o baseline e as três competências piloto sem solicitar as 23 competências CNES restantes.
+
+**Finalidade:** auditar o funil completo, reconstruir spells vaga–profissional e mensurar futuramente cobertura de 90/120/180 dias sem viés de sobrevivência; permitir que o controlador vincule participação PMM-E ao cadastro CNES com minimização de dados. Presença cadastral no CNES não será tratada como participação ou capacidade líquida.
+
+## Tabelas solicitadas
+
+### `inscricoes_universo.csv` — uma linha por inscrição submetida
+
+| Campo | Tipo | Definição |
+|---|---|---|
+| `id_inscricao_pseudo` | texto | Chave estável da inscrição, inclusive inválida, retirada ou não publicada. |
+| `id_profissional_pseudo` | texto | Chave estável do profissional nos pacotes PMM-E, sem identificador civil. |
+| `ciclo` | texto | Ciclo da inscrição. |
+| `chamada` | texto | Chamada da inscrição. |
+| `timestamp_submissao` | timestamp | Momento da submissão com fuso. |
+| `status_validacao` | categoria | Resultado documentado da validação administrativa. |
+| `motivo_invalidacao` | texto/NA | Motivo quando aplicável. |
+| `quantidade_opcoes` | inteiro | Número de escolhas submetidas; zero apenas se observado. |
+| `versao_registro` | texto | Versão do registro no corte. |
+
+**Chave:** `id_inscricao_pseudo`. Um registro publicado pode representar uma preferência; um candidato pode ter várias linhas publicadas; nenhuma dessas contagens substitui o universo completo de inscrições.
+
+### `inscricoes_opcoes.csv` — uma linha por inscrição e opção de vaga
+
+| Campo | Tipo | Definição |
+|---|---|---|
+| `id_inscricao_pseudo` | texto | Liga ao universo. |
+| `ordem_opcao` | inteiro | Ordem declarada da preferência. |
+| `id_vaga_pseudo` | texto | Vaga individual escolhida, estável entre pacotes. |
+| `timestamp_escolha` | timestamp/NULL | Momento registrado da escolha ou alteração. |
+| `status_opcao` | categoria | Situação administrativa da opção no corte. |
+
+**Chave:** `id_inscricao_pseudo + ordem_opcao` por versão vigente; alterações devem aparecer no log de eventos.
+
+### `eventos_longos.csv` — uma linha por evento
+
+Formato longo obrigatório; snapshots de ativos não substituem esta tabela.
+
+| Campo | Tipo | Definição |
+|---|---|---|
+| `id_evento` | texto | Identificador único e estável do evento. |
+| `id_inscricao_pseudo` | texto/NA | Inscrição relacionada; `NA` quando o evento ocorre fora desse objeto. |
+| `id_vaga_pseudo` | texto | Vaga afetada. |
+| `id_profissional_pseudo` | texto/NA | Profissional relacionado; `NA` antes de haver pessoa associada. |
+| `tipo_evento` | categoria | Tipo documentado do evento. |
+| `timestamp` | timestamp | Data e hora efetivas, com fuso e precisão declarada. |
+| `estado_anterior` | texto/NA | Estado imediatamente anterior. |
+| `estado_novo` | texto | Estado resultante. |
+| `motivo` | texto/NA | Motivo documentado; não inferir a partir do estado. |
+| `id_vaga_origem_pseudo` | texto/NA | Origem em transferência/realocação. |
+| `id_vaga_destino_pseudo` | texto/NA | Destino em transferência/realocação. |
+| `vigencia_inicio` | timestamp | Início do efeito administrativo do evento. |
+| `registrado_em` | timestamp | Momento de registro, distinto da vigência. |
+| `versao_evento` | texto | Versão/revisão do evento. |
+| `evento_anulado` | booleano | Indica anulação sem apagar o histórico. |
+
+O vocabulário deve cobrir, quando existirem administrativamente: `inscrição`, `classificação`, `convocação`, `aceite/recusa` (preservados como resultados distinguíveis), `homologação`, `entrada`, `afastamento`, `retorno`, `transferência`, `saída` e `reocupação`. A lista solicita conceitos necessários; não afirma que esses sejam os nomes internos nem que todos existam como evento separado. O dicionário deve mapear os estados reais.
+
+### `ponte_pmme_cnes.csv` — uma linha por profissional e intervalo de validade
+
+Preferência expressa: **o controlador realiza internamente a vinculação** usando os identificadores sob sua guarda e devolve somente:
+
+| Campo | Tipo | Definição |
+|---|---|---|
+| `id_profissional_pseudo` | texto | Mesma chave estável das inscrições, eventos e pagamentos. |
+| `identificador_cnes_pseudo` | texto | Token pseudonimizado estável derivado do identificador profissional no CNES. |
+| `inicio_validade` | data | Início da validade da correspondência. |
+| `fim_validade` | data/NULL | Fim; vazio quando vigente no corte. |
+| `regra_crosswalk` | categoria/texto | Método administrativo de vinculação e versão, sem expor identificadores civis. |
+| `status_vinculo` | categoria | Confirmado, não localizado, ambíguo ou outro domínio documentado. |
+
+**Chave:** `id_profissional_pseudo + inicio_validade`. Não solicitar nem devolver CPF, CNS, CRM, nome, data de nascimento ou endereço quando a vinculação pelo controlador for suficiente.
+
+## Chaves, estabilidade e semântica
+
+`id_vaga_pseudo` deve ser idêntico ao pacote de vagas; `id_profissional_pseudo`, estável em inscrições, eventos, ponte e folha; `id_evento`, imutável mesmo após correção. Anulações e revisões devem ser versionadas, não apagadas. Ausência de evento nunca significa automaticamente recusa, saída ou zero dias; `NULL` significa desconhecido/não registrado; `0` apenas valor observado igual a zero; `NA` apenas não aplicável.
+
+Solicitam-se CSV UTF-8/ZIP, timestamps ISO 8601, dicionário, data de corte, histórico de revisões, regras de atualização, domínios e hashes SHA-256, conforme [README](README.md). A pseudonimização deve usar segredo sob controle do órgão e evitar tokens derivados diretamente de identificadores civis sem proteção adequada.
+
+## Alternativas hierarquizadas
+
+1. Quatro tabelas completas, com linkage realizado pelo controlador.
+2. Se a ponte linha a linha não puder sair: o controlador agrega o CNES por `id_profissional_pseudo` e competência e devolve indicadores/cargas cadastrais estritamente necessários, mantendo a tabela de eventos individual pseudonimizada.
+3. Se microdados só puderem ser acessados em ambiente seguro: disponibilização controlada com exportação apenas de resultados de completude; ainda sem entrega de identificadores civis.
+4. Se eventos individuais forem legalmente inviáveis: contagens por vaga–dia e estado, acompanhadas do universo de vagas e regras de transição. Essa alternativa não permite spells individuais completos e não fecha A07-02/A07-03 sem avaliação adicional.
+
+## Teste objetivo de completude
+
+A resposta é completa se: (a) toda inscrição submetida no período tem `id_inscricao_pseudo`, inclusive as não publicadas; (b) toda opção referencia inscrição e vaga existentes; (c) `id_evento` é único e todos os eventos estão em linhas separadas; (d) transições inválidas, duplicidades e timestamps regressivos são zero ou explicados; (e) entradas, afastamentos, retornos, transferências e saídas reconciliam o estado no corte; (f) cada profissional associado tem ponte confirmada ou status/motivo explícito; (g) as chaves são estáveis entre arquivos; e (h) dicionário, corte, revisões, manifesto, hashes e quantificação de supressões acompanham a entrega.
