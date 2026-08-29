@@ -6,7 +6,7 @@ Por isso, a pergunta central não é apenas quantos médicos aparecem no program
 
 ## Estado atual
 
-O projeto está na fase de aquisição e prontidão dos dados. Ainda não há resultado causal validado. As auditorias concluíram que o estudo prioritário aguarda identificadores e trajetórias administrativas, regra exata do IVS, pagamentos e CNES mensal. Antes de congelar o protocolo, será executado o [sprint extraordinário de aquisição](prompts/aquisicao_dados/README.md). Números de sessões anteriores que dependiam de dados simulados, premissas não documentadas ou inferências incompatíveis com as bases disponíveis foram removidos dos arquivos correntes. O histórico do Git foi preservado.
+O portão integrado A06 foi concluído com a decisão **`aguardar dados administrativos`**. Ainda não há resultado causal validado e o protocolo empírico não foi liberado. As aquisições públicas recuperaram quadros versionados, resultados administrativos publicados, regras normativas e três competências piloto do CNES, mas não entregaram `id_vaga` estável, log completo de eventos, ponte pseudonimizada PMM-E–CNES, regra administrativa reproduzível do IVS ou pagamentos mensais vinculáveis. A decisão e as nove respostas estão em [docs/auditorias/03_portao_apos_aquisicao.md](docs/auditorias/03_portao_apos_aquisicao.md); o próximo passo é preparar os pedidos do A07, sem executar protocolo ou estimação.
 
 ## Escopo empírico prioritário
 
@@ -34,11 +34,11 @@ Cada seta é uma hipótese empírica. Observar uma etapa não autoriza concluir 
 
 | Outcome de interesse | Evidência disponível hoje | O que falta para avaliá-lo | Estado |
 |---|---|---|---|
-| Vagas, candidaturas e preenchimento | Relação de profissionais ativos em 12/08/2026 | Editais, vagas ofertadas, candidatos, convocações e recusas | Não mensurável |
-| Entrada de especialistas | Data de início dos vínculos ativos e série municipal agregada | Estoque pré-programa comparável, vínculo individual longitudinal e regra de exposição | Parcial |
+| Vagas, candidaturas e preenchimento | Quadros versionados e resultados publicados, com denominadores por publicação | `id_vaga`, deduplicação entre reapresentações, universo de inscrições, aceite e recusa | Parcial |
+| Entrada de especialistas | Data de início dos ativos no corte e etapas administrativas publicadas | Fluxo completo de entradas, inclusive de quem saiu antes do snapshot | Parcial |
 | Retenção e duração | Série agregada mensal por município entre dez/2025 e ago/2026 | Identificador longitudinal, desligamentos, transferências e carga horária | Não mensurável |
-| Oferta líquida de trabalho | Contagem de vínculos ativos | Horas/FTE, vínculos anteriores, substituições e demais vínculos CNES | Não mensurável |
-| Produção e capacidade | Nenhuma base assistencial no repositório | SIA/SUS, SIH/SUS, CNES e definição de procedimentos-alvo | Não mensurável |
+| Oferta líquida de trabalho | Esquema de vínculos e carga horária em três competências piloto do CNES | Painel mensal completo e ponte pseudonimizada PMM-E–CNES | Não mensurável |
+| Produção e capacidade | Esquema piloto do CNES para infraestrutura cadastral | Painel validado; SIA/SUS e SIH/SUS permanecem fora do estudo prioritário | Parcial apenas para infraestrutura |
 | Acesso e tempo de espera | Nenhuma base de regulação no repositório | Fila, pedidos, agendamentos, atendimento, cancelamento e prioridade clínica | Objetivo final da política; fora do estudo prioritário |
 | Resolutividade local e deslocamento | Município do estabelecimento no retrato nominal | Origem-destino dos pacientes e produção comparável antes/depois | Não mensurável |
 | Desfechos clínicos | Nenhuma base clínica no repositório | APAC, SIH, mortalidade e linhas de cuidado com datas clínicas | Não mensurável |
@@ -74,8 +74,8 @@ protocolo haverá um sprint de aquisição pública e, se necessário, pedidos
 administrativos:
 
 1. auditorias institucional e de dados;
-2. aquisições públicas paralelas, integração e pedidos administrativos;
-3. protocolo congelado, somente se o novo portão permitir;
+2. aquisições públicas e portão A06 concluídos; pedidos administrativos A07 são o próximo passo;
+3. protocolo congelado, somente após os pedidos serem atendidos e integrados e um novo portão permitir;
 4. painéis de vagas e CNES;
 5. estimação causal;
 6. red team e síntese.
@@ -91,9 +91,8 @@ python run_all.py
 ```
 
 No estágio atual, isso atualiza o inventário das bases, a auditoria das fontes
-PMM-E e o plano — sem download automático — das competências CNES. Novas etapas
-só devem entrar no pipeline quando usarem dados observados, tiverem proveniência
-documentada e responderem a um estimando definido.
+PMM-E, o plano — sem download automático — das competências CNES e reproduz o
+portão A06. O pipeline não executa A07, protocolo ou estimação.
 
 ## Estrutura
 

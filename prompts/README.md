@@ -33,4 +33,9 @@ obrigatório antes do prompt 03. A01–A05 dividem aquisições públicas sem
 sobreposição; A05R saneia e valida; A06 integra; A07 prepara, mas não envia,
 pedidos administrativos.
 
+O A06 foi concluído com a decisão **`aguardar dados administrativos`**. O próximo
+prompt é `aquisicao_dados/A07_pedidos_administrativos.md`, limitado aos seis
+pedidos fechados no portão. O prompt 03 não está liberado e não deve ser executado
+até que as respostas administrativas sejam incorporadas e reavaliadas.
+
 WP3, WP4 e WP5 não têm prompts de execução porque estão guardados. Seu backlog está em [`docs/06_backlog_wp3_wp4_wp5.md`](../docs/06_backlog_wp3_wp4_wp5.md).

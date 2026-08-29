@@ -10,6 +10,7 @@ STEPS = [
     ROOT / "scripts" / "00_inventario_dados.py",
     ROOT / "scripts" / "02_auditar_fontes_pmme.py",
     ROOT / "scripts" / "03_planejar_aquisicao_cnes.py",
+    ROOT / "scripts" / "aquisicao" / "a06_integrar_portao.py",
 ]
 
 

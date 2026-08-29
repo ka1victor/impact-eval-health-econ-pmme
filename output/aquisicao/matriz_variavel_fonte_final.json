@@ -1,0 +1,167 @@
+{
+  "matriz": "A06 — variável × fonte final",
+  "data_referencia": "2026-08-29",
+  "decisao_do_portao": "aguardar dados administrativos",
+  "regras_de_leitura": [
+    "Observado não implica adequado para identificação causal.",
+    "Não somar versões ou chamadas que possam reapresentar vagas.",
+    "Não inferir participação no PMM-E a partir de presença no CNES.",
+    "Não converter maturidade de calendário em cobertura mensurável."
+  ],
+  "variaveis": [
+    {
+      "variavel": "celula_cnes_curso",
+      "unidade": "célula agregada por publicação",
+      "disponibilidade": "observado",
+      "fonte": "output/aquisicao/a01_inventario_versoes.json",
+      "limite": "Não é quantidade nem vaga individual."
+    },
+    {
+      "variavel": "quantidade_vagas_publicacao",
+      "unidade": "vaga contada na versão",
+      "disponibilidade": "observado",
+      "fonte": "output/aquisicao/a01_inventario_versoes.json",
+      "limite": "Não somar chamadas ou versões."
+    },
+    {
+      "variavel": "id_vaga_estavel",
+      "unidade": "vaga individual longitudinal",
+      "disponibilidade": "não observado",
+      "fonte": "output/aquisicao/a01_inventario_versoes.json",
+      "limite": "Chave construída não substitui id administrativo."
+    },
+    {
+      "variavel": "universo_inscricoes",
+      "unidade": "inscrição submetida",
+      "disponibilidade": "não observado",
+      "fonte": "output/aquisicao/a02_matriz_eventos_publicos.json",
+      "limite": "Resultados publicados não demonstram universo completo."
+    },
+    {
+      "variavel": "registro_publicado_c1_ch1",
+      "unidade": "linha de preferência/resultado",
+      "disponibilidade": "observado",
+      "fonte": "output/aquisicao/a02_matriz_eventos_publicos.json",
+      "limite": "1.671 linhas; não são candidatos únicos."
+    },
+    {
+      "variavel": "candidato_na_publicacao_c1_ch1",
+      "unidade": "CPF mascarado + nome dentro da publicação",
+      "disponibilidade": "parcial",
+      "fonte": "output/aquisicao/a02_matriz_eventos_publicos.json",
+      "limite": "993 chaves; não é identificador estável global."
+    },
+    {
+      "variavel": "aceite_recusa",
+      "unidade": "evento individual",
+      "disponibilidade": "não observado",
+      "fonte": "output/aquisicao/a02_matriz_eventos_publicos.json",
+      "limite": "Necessário para trajetória."
+    },
+    {
+      "variavel": "entrada_saida_afastamento",
+      "unidade": "evento individual com timestamp",
+      "disponibilidade": "não observado",
+      "fonte": "output/aquisicao/a02_matriz_eventos_publicos.json",
+      "limite": "Snapshot só contém sobreviventes ativos."
+    },
+    {
+      "variavel": "cobertura_90_120_180",
+      "unidade": "dias cobertos por vaga",
+      "disponibilidade": "não mensurável",
+      "fonte": "output/aquisicao/a02_matriz_eventos_publicos.json",
+      "limite": "Faltam eventos e id_vaga."
+    },
+    {
+      "variavel": "ivs_ipea_2010",
+      "unidade": "município",
+      "disponibilidade": "observado como referência",
+      "fonte": "data/ivs_ipea_2010_municipios.csv",
+      "limite": "Running variable canônica, mas não prova aplicação administrativa."
+    },
+    {
+      "variavel": "escore_ivs_aplicado_por_vaga",
+      "unidade": "vaga/publicação",
+      "disponibilidade": "não observado",
+      "fonte": "output/aquisicao/a03_matriz_regra_tratamento.json",
+      "limite": "Vintagem, precisão e cutoff não confirmados."
+    },
+    {
+      "variavel": "faixa_anunciada",
+      "unidade": "célula/vaga publicada",
+      "disponibilidade": "parcial",
+      "fonte": "output/aquisicao/a04_grade_anunciada_2025.csv",
+      "limite": "Grade monetária verificável somente para 2025."
+    },
+    {
+      "variavel": "valor_devido",
+      "unidade": "profissional-vaga-competência",
+      "disponibilidade": "não observado",
+      "fonte": "output/aquisicao/a04_matriz_dose_financeira.json",
+      "limite": "Anunciado não implica devido."
+    },
+    {
+      "variavel": "empenhado_liquidado",
+      "unidade": "execução orçamentária",
+      "disponibilidade": "não adquirido",
+      "fonte": "output/aquisicao/a04_manifesto_pagamentos.json",
+      "limite": "Sem consulta oficial reproduzível preservada."
+    },
+    {
+      "variavel": "valor_pago",
+      "unidade": "profissional-vaga-competência",
+      "disponibilidade": "não observado",
+      "fonte": "output/aquisicao/a04_matriz_dose_financeira.json",
+      "limite": "Sem microdados vinculáveis."
+    },
+    {
+      "variavel": "snapshot_nominal",
+      "unidade": "registro de participante ativo",
+      "disponibilidade": "observado",
+      "fonte": "data/pmm_especialistas_nominal.csv",
+      "limite": "1.480 registros e 518 CNES; não é o universo ofertado."
+    },
+    {
+      "variavel": "uniao_cnes_quadros_a01",
+      "unidade": "estabelecimento em cinco versões",
+      "disponibilidade": "observado",
+      "fonte": "output/aquisicao/a05_auditoria_universos_cnes.json",
+      "limite": "1.930 CNES; não somar quantidades entre chamadas."
+    },
+    {
+      "variavel": "presenca_estabelecimento_cnes",
+      "unidade": "CNES-competência",
+      "disponibilidade": "observado em piloto",
+      "fonte": "output/aquisicao/a05_auditoria_universos_cnes.json",
+      "limite": "Presença cadastral não prova participação ou capacidade líquida."
+    },
+    {
+      "variavel": "vinculos_e_fte_cadastral",
+      "unidade": "profissional-CNES-competência",
+      "disponibilidade": "esquema observado; painel incompleto",
+      "fonte": "output/aquisicao/a05_dicionario_tabelas_cnes.json",
+      "limite": "Três competências não formam painel mensal completo."
+    },
+    {
+      "variavel": "infraestrutura",
+      "unidade": "CNES-competência",
+      "disponibilidade": "esquema observado; painel incompleto",
+      "fonte": "output/aquisicao/a05_dicionario_tabelas_cnes.json",
+      "limite": "Leitos, equipamentos e serviços disponíveis cadastralmente."
+    },
+    {
+      "variavel": "ponte_pmme_cnes",
+      "unidade": "profissional pseudonimizado",
+      "disponibilidade": "não observado",
+      "fonte": "output/aquisicao/a05_auditoria_universos_cnes.json",
+      "limite": "Nome não é chave determinística."
+    },
+    {
+      "variavel": "participacao_pmme",
+      "unidade": "profissional-vaga-tempo",
+      "disponibilidade": "não identificada no CNES",
+      "fonte": "output/aquisicao/a05_auditoria_universos_cnes.json",
+      "limite": "Cadastro CNES não contém marcador defensável do programa."
+    }
+  ]
+}

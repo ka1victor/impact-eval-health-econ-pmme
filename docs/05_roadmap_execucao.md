@@ -24,17 +24,18 @@ O estudo avalia eficácia operacional do provimento. Seu outcome primário prete
 
 O que fica guardado em WP3–WP5 está especificado em [`06_backlog_wp3_wp4_wp5.md`](06_backlog_wp3_wp4_wp5.md).
 
-## 3. Bloqueio atual
+## 3. Bloqueio atual após o A06
 
-As três bases preservadas permitem inventariar participantes, municípios e IVS. Elas não contêm:
+O portão A06 decidiu **`aguardar dados administrativos`**. As aquisições A01–A05 permitem versionar quadros por publicação, descrever resultados publicados e inspecionar o esquema do CNES em três competências. Elas ainda não contêm:
 
-- universo e denominador de vagas;
+- identificador estável da vaga e denominador deduplicado entre reapresentações;
 - trajetória individual completa de entrada e saída;
-- identificador individual na série histórica;
-- CNES mensal e carga horária;
+- chave pseudonimizada comum ao PMM-E e ao CNES;
+- painel CNES mensal completo — há somente três competências piloto;
+- regra administrativa completa do IVS e folha mensal vinculável;
 - informação suficiente para cobertura sustentada, retenção individual ou FTE líquido.
 
-Portanto, nenhum agente deve iniciar estimação antes dos portões de viabilidade institucional e de dados.
+Portanto, o próximo passo é A07. Nenhum agente deve executar o prompt 03 ou iniciar estimação antes de os pedidos serem atendidos, integrados e submetidos a novo portão.
 
 ## 4. Sequência operacional
 
@@ -46,9 +47,9 @@ FASE 1 — VIABILIDADE
 02 Auditoria de dados ──────┘              ↓
                                   A05R saneamento pré-A06
                                            ↓
-                                  A06 portão integrado
+                                  A06 portão integrado [concluído]
                                            ↓
-                              A07 pedidos, se necessários
+                              A07 pedidos administrativos [próximo]
                                            ↓
                               03 Protocolo empírico congelado
                                       ↓
@@ -74,6 +75,11 @@ sprint extraordinário descrito em
 A01–A05 podem rodar em paralelo em worktrees isolados; A05R corrige e valida os
 produtos combinados; A06 os integra; A07 prepara pedidos administrativos para as
 lacunas remanescentes, sem enviá-los.
+
+O A06 foi concluído em 29/08/2026 com **1 requisito que passou, 3 parciais e
+5 que falharam** entre as nove perguntas obrigatórias. A decisão foi
+`aguardar dados administrativos`. A lista fechada de seis lacunas para A07 está
+em [`03_portao_apos_aquisicao.md`](auditorias/03_portao_apos_aquisicao.md).
 
 ## 5. Portão depois da Fase 1
 

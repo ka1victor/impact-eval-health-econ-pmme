@@ -20,10 +20,10 @@
 - [x] Executar `prompts/02_auditoria_dados.md` (`docs/auditorias/02_disponibilidade_dados.md`).
 - [x] Executar a primeira rodada A01–A05 (ainda não validada para integração).
 - [x] Executar `prompts/aquisicao_dados/A05R_saneamento_pre_a06.md` (`docs/auditorias/aquisicao/saneamento_pre_a06.md`).
-- [ ] Executar `prompts/aquisicao_dados/A06_integracao_e_portao.md`.
+- [x] Executar `prompts/aquisicao_dados/A06_integracao_e_portao.md` (`aguardar dados administrativos`).
 - [ ] Executar `prompts/aquisicao_dados/A07_pedidos_administrativos.md`.
-- [ ] Executar `prompts/03_protocolo_empirico.md`, se liberado pelo portão A06.
-- [ ] Registrar decisão do portão: prosseguir, parcial, aguardar dados ou parar.
+- [ ] Executar `prompts/03_protocolo_empirico.md` somente após respostas administrativas, integração e novo portão.
+- [x] Registrar decisão do portão: `aguardar dados administrativos`.
 
 ## Fase 2 — construção e estimação
 
