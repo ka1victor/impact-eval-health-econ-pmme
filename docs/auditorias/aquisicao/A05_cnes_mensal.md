@@ -4,7 +4,7 @@
 > **Agente:** A05 — Aquisição e Inspeção do CNES Mensal
 > **Escopo:** Avaliação de impacto do Programa Mais Médicos Especialistas (PMM-E / Lei 15.233/2025)
 > **Janela Temporal do CNES:** Junho de 2024 a Julho de 2026 (26 competências planejadas; 3 inspecionadas no piloto)
-> **Status:** Piloto de esquema concluído; dicionário e anatomia interna extraídos; diagnóstico de FTE e ponte administrativa documentados.
+> **Status:** Piloto de esquema e aquisição pública parcial; 3 de 26 competências adquiridas.
 
 ---
 
@@ -17,9 +17,9 @@ A missão do Agente A05 consiste em auditar, catalogar e inspecionar a base de d
 4. **Verificar a estabilidade de esquema e integridade de chaves:** consistência dos microdados entre o período pré-oferta (202406), o início das chamadas públicas (202506) e o corte mais recente (202607).
 
 ### Conclusão Principal da Auditoria:
-- **Disponibilidade Pública e Esquema:** As bases mensais do CNES são públicas e contêm todas as tabelas necessárias para calcular FTE cadastral agregado e estoque pré-tratamento de infraestrutura. O esquema revelou-se altamente estável entre 2024 e 2026 (com adições marginais documentadas).
-- **Validação Cadastral dos Estabelecimentos:** 100,0% dos 518 estabelecimentos do snapshot nominal de ativos foram validados no CNES em 202607 (e 99,42% já constavam no baseline de 202406).
-- **Limitação Crítica (A Ausência da Ponte PMM-E–CNES):** O CNES não possui nenhum campo, flag ou código de sub-vínculo público que identifique deterministicamente um bolsista do PMM-E. As bases públicas do PMM-E contêm CRM, Nome e CPF mascarado; o CNES contém CNS e Nome. A vinculação determinística é **inviável com dados estritamente públicos** e depende de chave administrativa via SGTES/LAI (Solicitação A07).
+- **Aquisição parcial:** somente as competências 202406, 202506 e 202607 foram preservadas e inspecionadas. Elas servem para validar esquema e cobertura cadastral, não para formar um painel de avaliação.
+- **Dois universos separados:** o snapshot nominal contém 1,480 registros e 518 CNES distintos; os quadros finais escolhidos em A01 são relidos diretamente e auditados por versão.
+- **Limitação crítica:** o CNES público não identifica deterministicamente participantes do PMM-E. Cadastro, carga declarada e existência do estabelecimento não demonstram presença, horas realizadas ou efeito do programa.
 
 ---
 
@@ -125,7 +125,7 @@ $$\text{FTE}_{m,t,s} = \sum_{i \in \text{Médicos}_{m,t,s}} \frac{\text{QT\_CARG
 ### 6.2 O que o CNES Permite Medir:
 1. **Estoque e FTE Médico por Município:** Variação no FTE total e no número de profissionais únicos atuando no município ao longo do tempo.
 2. **Decomposição da Carga Horária:** Separação entre oferta ambulatorial especializada vs hospitalar.
-3. **Detecção Contábil de Remanejamento Intra-SUS:** Médicos que já possuíam vínculo no mesmo município antes do programa e tiveram redução de carga em um CNES simultaneamente ao aumento em outro.
+3. **Descrição de mudanças cadastrais:** com painel completo, seria possível descrever variações simultâneas de carga declarada entre vínculos; classificá-las como remanejamento provocado pelo programa exigiria identificação e desenho adicionais.
 
 ### 6.3 O que o CNES NÃO Mede (Cuidados Substantivos):
 - **Carga Cadastrada vs Horas Reais:** O CNES registra a carga horária *declarada/contratada*, não ponto eletrônico, presença efetiva ou produtividade clínica.
@@ -148,35 +148,65 @@ $$\text{FTE}_{m,t,s} = \sum_{i \in \text{Médicos}_{m,t,s}} \frac{\text{QT\_CARG
 ### O Desafio da Identificação Individual:
 1. **Ausência de Chave Primária Compartilhada:** O edital do PMM-E não publica o número do CNS do médico; o CNES público não publica CRM nem CPF desmascarado.
 2. **Inadequação do Pareamento por Nome:** A correspondência probabilística por string de nome normalizado introduz viés de homonímia, erros de digitação e falsos positivos em um universo nacional de mais de 500 mil médicos cadastrados.
-3. **Implicação Causal:** Sem a ponte administrativa oficial (crosswalk fornecido pela SGTES com identificadores pseudonimizados), o pesquisador **não pode atribuir causalmente um vínculo individual específico ao PMM-E**.
-4. **Bloqueio Causal:** A estimação de efeitos causais agregados ou individuais permanece dependente de validação econométrica e dados administrativos, enquanto a análise no nível do médico participante depende da liberação do Pedido Administrativo LAI (Agente A07).
+3. **Implicação de mensuração:** sem uma ponte administrativa oficial, não é possível afirmar que um vínculo público específico pertence a um participante do PMM-E.
+4. **Limite deste piloto:** a disponibilidade do CNES não identifica tratamento nem valida estratégia causal; isso depende de decisão posterior do portão e, para análises individuais, de ponte administrativa segura.
 
 ---
 
-## 8. Auditoria de Códigos CNES das Vagas do PMM-E no Cadastro Oficial
+## 8. Auditoria Separada dos Dois Universos
 
-Verificou-se o cruzamento dos códigos `CO_CNES` presentes no cadastro nominal de ativos do PMM-E (`data/pmm_especialistas_nominal.csv`) em relação à base de dados oficial de estabelecimentos do CNES (`tbEstabelecimento`).
+A05 relê as planilhas XLSX reais selecionadas por A01. O snapshot nominal e os quadros de oferta têm unidades diferentes e não são intercambiáveis.
 
-### Resultados do Cruzamento:
-- **Total de CNES Únicos no Snapshot Nominal de Ativos:** 518 estabelecimentos.
-- **Competência 202406:** 515 de 518 estabelecimentos localizados na `tbEstabelecimento` (99.42% de cobertura cadastral). Universo total de estabelecimentos no Brasil: 535,727.
-- **Competência 202506:** 517 de 518 estabelecimentos localizados na `tbEstabelecimento` (99.81% de cobertura cadastral). Universo total de estabelecimentos no Brasil: 577,247.
-- **Competência 202607:** 518 de 518 estabelecimentos localizados na `tbEstabelecimento` (100.00% de cobertura cadastral). Universo total de estabelecimentos no Brasil: 631,973.
+### 8.1 Universo 1 — snapshot nominal de participantes ativos
 
-Os 3 estabelecimentos do snapshot nominal que não constavam em 202406 passam a constar no cadastro oficial a partir da competência 202506 (compatível com inauguração, habilitação recente ou atualização cadastral de código), atingindo 100,00% de cobertura cadastral na competência 202607.
+Fonte: `data/pmm_especialistas_nominal.csv` (`76237f4cb6bf7e9aaccbf22ea443e1070c889c05a0357a3c1cb34ee50f58fc7d`).
+
+| Linhas de participantes | Linhas com CNES válido | CNES distintos | Repetições de CNES entre registros | Perdas de normalização |
+|---:|---:|---:|---:|---|
+| 1,480 | 1,480 | 518 | 962 | `{}` |
+
+Uma linha representa participante ativo na data de referência. Um CNES repetido pode refletir pessoas distintas no mesmo estabelecimento; não representa, por si só, duplicidade de vaga.
+
+### 8.2 Universo 2 — células CNES–curso dos quadros finais de A01
+
+| Versão escolhida | Arquivo-fonte | Linhas/células lidas | Células válidas | CNES distintos | Células duplicadas | Repetições de CNES entre células | Perdas CNES/curso | Vagas físicas na versão |
+|---|---|---:|---:|---:|---:|---:|---|---:|
+| Ciclo 1, chamada 1 — quadro original (versão de oferta disponível) | `data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx` | 1,295 | 1,295 | 460 | 0 | 835 | `{}` | 1,823 |
+| Ciclo 1, chamada 2 — quadro de cadastro de reserva | `data/raw/pmm_e/2025_ciclo1_chamada2_vagas_e_alocados.xlsx` | 1,762 | 1,762 | 638 | 0 | 1,124 | `{}` | 2,896 |
+| Ciclo 2, chamada 1 — quadro retificado final de 19/03/2026 | `data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx` | 1,547 | 1,547 | 685 | 0 | 862 | `{}` | 2,889 |
+| Ciclo 2, chamada 2 — quadro publicado em 16/04/2026 | `data/raw/pmm_e/2026_ciclo2_chamada2_vagas.xlsx` | 1,039 | 1,039 | 532 | 0 | 507 | `{}` | 1,992 |
+| Ciclo 3, chamada 1 — quadro retificado de 24/07/2026 | `data/raw/pmm_e/2026_ciclo3_chamada1_vagas_retificadas.xlsx` | 2,293 | 2,293 | 1,262 | 0 | 1,031 | `{}` | 5,131 |
+
+A união das 5 versões escolhidas contém **1,930 estabelecimentos distintos**. Esse número serve apenas como denominador cadastral. Células e vagas não são somadas entre chamadas porque ofertas podem ser reapresentadas.
+
+### 8.3 Cobertura nas três competências piloto
+
+| Competência | Snapshot ativo | União dos quadros A01 | Universo nacional em `tbEstabelecimento` |
+|---|---:|---:|---:|
+| 202406 | 515/518 (99.42%) | 1,904/1,930 (98.65%) | 535,727 |
+| 202506 | 517/518 (99.81%) | 1,927/1,930 (99.84%) | 577,247 |
+| 202607 | 518/518 (100.00%) | 1,930/1,930 (100.00%) | 631,973 |
+
+Cobertura indica somente que o código aparece no cadastro daquela competência. Alterações entre competências não permitem inferir inauguração, início de atividade, presença de participante ou efeito do PMM-E sem observar e documentar esses eventos.
+
+#### Cobertura dos quadros A01 por versão
+
+| Versão | 202406 | 202506 | 202607 |
+|---|---:|---:|---:|
+| Ciclo 1, chamada 1 — quadro original (versão de oferta disponível) | 459/460 (99.78%) | 460/460 (100.00%) | 460/460 (100.00%) |
+| Ciclo 1, chamada 2 — quadro de cadastro de reserva | 635/638 (99.53%) | 638/638 (100.00%) | 638/638 (100.00%) |
+| Ciclo 2, chamada 1 — quadro retificado final de 19/03/2026 | 681/685 (99.42%) | 685/685 (100.00%) | 685/685 (100.00%) |
+| Ciclo 2, chamada 2 — quadro publicado em 16/04/2026 | 528/532 (99.25%) | 532/532 (100.00%) | 532/532 (100.00%) |
+| Ciclo 3, chamada 1 — quadro retificado de 24/07/2026 | 1,240/1,262 (98.26%) | 1,259/1,262 (99.76%) | 1,262/1,262 (100.00%) |
 
 ---
 
 ## 9. Instruções de Continuidade e Reprodutibilidade
 
-1. **Localização dos Arquivos Brutos:** Os arquivos ZIP baixados residem no diretório:
-   `C:/Users/camil/Desktop/Kauã/Insper/impact-eval-health-econ-pmme/data/raw/cnes`
+1. **Localização dos arquivos brutos:** `data/raw/cnes/`.
 2. **Execução do Piloto de Esquema:**
    ```bash
    python scripts/aquisicao/a05_adquirir_cnes.py --inspect-only
    ```
-3. **Download Assíncrono do Painel Completo (26 meses):** Quando houver janela de execução apropriada em segundo plano:
-   ```bash
-   python scripts/aquisicao/a05_adquirir_cnes.py --full --confirm-large-download
-   ```
+3. **Painel integral adiado:** as 23 competências restantes não devem ser baixadas até existir ponte PMM-E–CNES ou decisão explícita do portão sobre o desenho e o denominador necessários.
 

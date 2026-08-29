@@ -108,6 +108,7 @@ Onde a normalização de curso remove pontuação, acentuação, caixa alta/baix
 - **Chamada 1:** O quadro original de 24/07/2025 ofertou **678 vagas imediatas e 1.145 em cadastro de reserva** (total 1.823 vagas em 1.295 estabelecimentos/cursos).
 - **Retificações:** Em 10/09/2025, o Ministério publicou o Quadro 1 (alocação retificada com 1.671 candidatos para 636 chaves) e o Quadro 2 (proposta de realocação para 59 profissionais que haviam selecionado serviços cuja gestão desistiu ou que apresentavam incompatibilidade técnica).
 - **Transição Ch1 → Ch2:** A 2ª chamada (29/09/2025) não ofertou novas vagas imediatas, publicando apenas **2.896 vagas em cadastro de reserva** em 1.762 células de oferta CNES–curso.
+  - A comparação usa explicitamente a aba `VAGAS - CADASTRO RESERVA`. A outra aba do mesmo arquivo contém 98 registros de profissionais alocados em vagas imediatas e não integra o denominador de ofertas da 2ª chamada.
   - Das 1.762 células, **929 eram células de oferta reapresentadas da 1ª chamada** e **833 foram novas células de oferta adicionadas ao cadastro de reserva** (totalizando 2.896 vagas em reserva somadas).
 
 ### 5.2 Ciclo 2 (2026)

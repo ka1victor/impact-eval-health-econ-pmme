@@ -1,63 +1,52 @@
 {
-  "projeto": "Programa Mais Medicos Especialistas (PMM-E / Lei 15.233/2025)",
-  "auditoria": "A04 - Regras Financeiras e Pagamentos Publicos",
-  "data_referencia": "2026-08-27",
-  "marcos_legais_e_normativos": [
+  "titulo": "Catalogo de fontes normativas usadas pela A04",
+  "data_auditoria": "2026-08-28",
+  "natureza": "artefato derivado; nao e resposta oficial bruta",
+  "fontes": [
     {
-      "ato": "Lei ne 15.233, de 2025",
-      "tipo": "Lei Federal",
+      "id": "faq_bolsa_chamamento_sgtes_3_2025",
+      "documento": "FAQ oficial do Chamamento Publico SGTES/MS no 3/2025",
+      "versao": "pagina preservada em 2026-08-28",
+      "url_oficial": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/faq/qual-o-valor-da-bolsa-formacao",
+      "arquivo_local": "data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_faq_bolsa.html",
+      "uso_a04": "fonte da grade de valores anunciados de 2025",
+      "status_aquisicao": "BRUTO_OFICIAL_LOCAL_REUTILIZADO",
+      "tamanho_bytes": 107228,
+      "sha256": "a6ff2d5597286176153fc73c986028cd30b98f91667f5c3019d2fa804505a31f"
+    },
+    {
+      "id": "lei_15233_2025",
+      "documento": "Lei no 15.233, de 7 de outubro de 2025",
+      "versao": "texto oficial preservado em 2026-08-28",
       "url_oficial": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/l15233.htm",
-      "artigos_relevantes": "Art. 21 (inclui arts. 22-D, 22-E e 22-F na Lei ne 12.871/2013)",
-      "disposicoes_financeiras": "Institui o PMM-E; autoriza a concess?o de bolsa-formacao e outros benef?cios para medicos especialistas em regi?es priorit?rias; preve incentivos adicionais em ereas de alta vulnerabilidade social e Amaz?nia Legal, condicionados a regulamentacao e disponibilidade orcamentaria; define pagamento direto pela Uniao sem vinculo empregaticio.",
-      "natureza_tributaria": "Isenta de IRPF (art. 26 da Lei 9.250/1995 c/c art. 19 da Lei 12.871/2013); enquadramento como contribuinte individual obrigat?rio do RGPS."
+      "arquivo_local": "data/raw/aquisicao/ivs_regra/lei_15233_2025.html",
+      "uso_a04": "marco legal; nao e fonte de execucao financeira individual",
+      "status_aquisicao": "BRUTO_OFICIAL_LOCAL_REUTILIZADO",
+      "tamanho_bytes": 106003,
+      "sha256": "d53e7877fe2c6dfd95131ecee0a3b6e84c8d443479fe9b7b4dec3e627f55cb2b"
     },
     {
-      "ato": "Portaria GM/MS ne 7.177, de 10 de junho de 2025",
-      "tipo": "Portaria Ministerial",
-      "url_oficial": "https://bvsms.saude.gov.br/bvs/saudelegis/gm/2025/prt7177_11_06_2025.html",
-      "artigos_relevantes": "Arts. 4?, 7?, 11 e 14",
-      "disposicoes_financeiras": "Regulamenta o PMM-E como integracao ensino-servi?o no embito do Programa Agora Tem Especialistas; estabelece a bolsa-formacao com componente fixo e variavel de atracao conforme vulnerabilidade; preve bolsa de tutoria/mentoria; define que os recursos correm e conta de dotacoes orcamentarias da SGTES e FNS.",
-      "natureza_tributaria": "Bolsa de car?ter formativo e indenizat?rio."
-    },
-    {
-      "ato": "Portaria GM/MS ne 7.266, de 18 de junho de 2025",
-      "tipo": "Portaria Ministerial",
-      "url_oficial": "https://bvsms.saude.gov.br/bvs/saudelegis/gm/2025/prt7266_18_06_2025.html",
-      "artigos_relevantes": "Arts. 3e e 8?",
-      "disposicoes_financeiras": "Estrutura as diretrizes do Programa Agora Tem Especialistas, integracao de redes assistenciais, redu??o de filas e incentivos de fixacao especializada.",
-      "natureza_tributaria": "Nao especifica al?quotas."
-    },
-    {
-      "ato": "Edital SGTES/MS ne 2, de 2025",
-      "tipo": "Edital de Ades?o de Gestores",
-      "url_oficial": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-no-02-2025-saes/edital",
-      "artigos_relevantes": "Itens 3 e 6",
-      "disposicoes_financeiras": "Fixa contrapartidas municipais e estaduais (infraestrutura f?sica, insumos, acolhimento, integracao de rede); despesa da bolsa-formacao e 100% federal (SGTES/FNS); nao he repasse fundo a fundo da bolsa ao munic?pio.",
-      "natureza_tributaria": "Despesa direta federal."
-    },
-    {
-      "ato": "Edital SGTES/MS ne 3, de 2025 e Retificacoes",
-      "tipo": "Edital de Chamamento de Medicos - Ciclo 1",
-      "url_oficial": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e",
-      "artigos_relevantes": "Itens 9, 10 e 11; Retificacao publicada em 29/09/2025",
-      "disposicoes_financeiras": "Grade de bolsas 2025: Faixa 1 (Muito Alta Vulnerabilidade: R$ 20.000,00), Faixa 2 (Alta: R$ 15.000,00), Faixa 3 (M?dia/Baixa/Muito Baixa: R$ 10.000,00); carga hor?ria de 20h semanais; ajuda de custo para deslocamento a atividades presenciais obrigat?rias do aprimoramento; valores liquidos de IRPF; pagamento condicionado e homologacao e frequencia atestada.",
-      "natureza_tributaria": "Bolsa l?quida sem desconto de IRPF."
-    },
-    {
-      "ato": "Chamamento Publico SGTES/MS ne 1/2026 e Edital ne 3/2026",
-      "tipo": "Edital de Chamamento de Medicos - Ciclo 2",
+      "id": "pagina_chamamento_sgtes_1_2026",
+      "documento": "Pagina oficial do Chamamento Publico SGTES/MS no 1/2026",
+      "versao": "pagina preservada em 2026-08-28",
       "url_oficial": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/chamamento-publico-sgtes-ms-no-1-2026-pmm-e",
-      "artigos_relevantes": "Item 11 (Bolsa e Benef?cios)",
-      "disposicoes_financeiras": "Nova grade de bolsas 2026: Faixa 1 (Muito Alta e Alta Vulnerabilidade: R$ 20.000,00), Faixa 2 (M?dia Vulnerabilidade: R$ 15.000,00), Faixa 3 (Baixa e Muito Baixa Vulnerabilidade: R$ 10.000,00); Parcela fixa de R$ 10.000,00 + componente variavel de ate R$ 10.000,00.",
-      "natureza_tributaria": "Bolsa sem vinculo empregaticio."
+      "arquivo_local": "data/raw/aquisicao/ivs_regra/edital_sgtes_01_2026_ciclo2.html",
+      "uso_a04": "pagina catalogada; o HTML preservado nao sustenta uma grade monetaria exata",
+      "status_aquisicao": "BRUTO_OFICIAL_LOCAL_REUTILIZADO",
+      "tamanho_bytes": 133244,
+      "sha256": "90b95c902f5c6db58ea64a72eb6bec0cb82769fe145003cd7d02563601b05245"
     },
     {
-      "ato": "Chamamento Publico SGTES/MS ne 6/2026 e Edital ne 28/2026",
-      "tipo": "Edital de Chamamento de Medicos - Ciclo 3",
+      "id": "pagina_edital_sgtes_28_2026",
+      "documento": "Pagina oficial do Edital SGTES/MS no 28/2026",
+      "versao": "pagina preservada em 2026-08-28",
       "url_oficial": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-6-2026-pmm-e/edital",
-      "artigos_relevantes": "Itens 11 e 12",
-      "disposicoes_financeiras": "Mant?m grade de 2026 (Faixas 1, 2 e 3 a R$ 20k, 15k e 10k); regulamenta ajuda de custo por m?dulo presencial; estabelece regras de suspens?o por descumprimento de carga hor?ria (20h) ou evasao academica na UNA-SUS.",
-      "natureza_tributaria": "Bolsa de provimento e aprimoramento."
+      "arquivo_local": "data/raw/aquisicao/ivs_regra/edital_sgtes_06_2026_edital_28_2026_ciclo3.html",
+      "uso_a04": "pagina catalogada; o HTML preservado nao sustenta uma grade monetaria exata",
+      "status_aquisicao": "BRUTO_OFICIAL_LOCAL_REUTILIZADO",
+      "tamanho_bytes": 224250,
+      "sha256": "eb1e07b44465edc8226efe0743ed1fd8fca97de0f88d5886e249478052c84306"
     }
-  ]
+  ],
+  "limite": "Somente o FAQ de 2025 sustenta valores monetarios exatos na A04 atual. As paginas de 2026 sao catalogadas, mas nao foram usadas para publicar uma grade exata."
 }

@@ -29,6 +29,7 @@ DATA_RAW_VAGAS = ROOT / "data" / "raw" / "aquisicao" / "vagas"
 DATA_RAW_PMME = ROOT / "data" / "raw" / "pmm_e"
 DATA_DIR = ROOT / "data"
 OUTPUT_DIR = ROOT / "output" / "aquisicao"
+A01_MANIFEST_PATH = OUTPUT_DIR / "a01_manifesto_vagas.json"
 
 MANIFESTO_PATH = OUTPUT_DIR / "a02_manifesto_trajetoria.json"
 MATRIZ_PATH = OUTPUT_DIR / "a02_matriz_eventos_publicos.json"
@@ -47,8 +48,10 @@ FONTES_TRAJETORIA = [
         "ciclo": "1",
         "chamada": "1",
         "cobertura": "Ciclo 1, chamada 1, alocacao retificada",
-        "unidade_declarada": "candidatura alocada/vaga",
-        "etapas_alvo": ["inscricao", "preferencias", "classificacao", "alocacao"],
+        "unidade_declarada": "registro publicado de preferencia/classificacao/alocacao; uma ou duas linhas por candidato",
+        "etapas_alvo": ["preferencias", "classificacao", "alocacao"],
+        "data_publicacao": "2025-09-10",
+        "papel_analitico": "versao retificada preservada somente para comparacao; nao somar a versao sub judice",
     },
     {
         "id": "alocacao_2025_c1_retificada_subjudice",
@@ -57,8 +60,10 @@ FONTES_TRAJETORIA = [
         "ciclo": "1",
         "chamada": "1",
         "cobertura": "Ciclo 1, chamada 1, alocacao retificada sub judice",
-        "unidade_declarada": "candidatura alocada/vaga",
-        "etapas_alvo": ["alocacao", "sub_judice"],
+        "unidade_declarada": "registro publicado de preferencia/classificacao/alocacao; uma ou duas linhas por candidato",
+        "etapas_alvo": ["preferencias", "classificacao", "alocacao", "sub_judice"],
+        "data_publicacao": "2025-09-19",
+        "papel_analitico": "versao canonica para contagens da primeira chamada; substitui a retificada de 10/09/2025",
     },
     {
         "id": "realocacao_2025_c1_retificado",
@@ -69,6 +74,8 @@ FONTES_TRAJETORIA = [
         "cobertura": "Ciclo 1, chamada 1, proposta de realocacao retificada",
         "unidade_declarada": "profissional/vaga_remanejada",
         "etapas_alvo": ["transferencia_realocacao"],
+        "data_publicacao": "2025-09-10",
+        "papel_analitico": "quadro complementar de proposta de realocacao; nao somar como nova candidatura",
     },
     {
         "id": "homologados_2025_c1",
@@ -97,8 +104,8 @@ FONTES_TRAJETORIA = [
         "ciclo": "1",
         "chamada": "2",
         "cobertura": "Ciclo 1, chamada 2, classificacao final e desclassificados",
-        "unidade_declarada": "candidatura/classificacao",
-        "etapas_alvo": ["inscricao", "preferencias", "classificacao", "alocacao", "desclassificacao"],
+        "unidade_declarada": "registro publicado de preferencia/classificacao",
+        "etapas_alvo": ["resultado_publicado", "preferencias", "classificacao", "alocacao", "desclassificacao"],
     },
     {
         "id": "homologados_2025_c1_ch2",
@@ -117,7 +124,7 @@ FONTES_TRAJETORIA = [
         "ciclo": "2",
         "chamada": "1",
         "cobertura": "Ciclo 2, chamada 1, resultado final com vagas remanescentes em 05/05/2026",
-        "unidade_declarada": "candidatura/alocacao remanescente",
+        "unidade_declarada": "registro publicado de resultado/alocacao remanescente",
         "etapas_alvo": ["classificacao", "alocacao_remanescente"],
     },
     {
@@ -127,8 +134,8 @@ FONTES_TRAJETORIA = [
         "ciclo": "2",
         "chamada": "2",
         "cobertura": "Ciclo 2, chamada 2, resultado final e desclassificados",
-        "unidade_declarada": "candidatura/alocacao/cadastro reserva",
-        "etapas_alvo": ["inscricao", "preferencias", "classificacao", "alocacao", "cadastro_reserva", "desclassificacao"],
+        "unidade_declarada": "registro publicado de preferencia/classificacao/alocacao/cadastro reserva",
+        "etapas_alvo": ["resultado_publicado", "preferencias", "classificacao", "alocacao", "cadastro_reserva", "desclassificacao"],
     },
     {
         "id": "resultado_2026_c3_sub_judice",
@@ -137,8 +144,8 @@ FONTES_TRAJETORIA = [
         "ciclo": "3",
         "chamada": "1",
         "cobertura": "Ciclo 3, chamada 1, resultado final de 25/08/2026, sub judice",
-        "unidade_declarada": "candidatura/alocacao/cadastro reserva/sub judice",
-        "etapas_alvo": ["inscricao", "preferencias", "classificacao", "alocacao", "cadastro_reserva", "sub_judice", "desclassificacao"],
+        "unidade_declarada": "registro publicado de preferencia/classificacao/alocacao/cadastro reserva/sub judice",
+        "etapas_alvo": ["resultado_publicado", "preferencias", "classificacao", "alocacao", "cadastro_reserva", "sub_judice", "desclassificacao"],
     },
 ]
 
@@ -358,12 +365,182 @@ def process_manifest() -> list[dict[str, object]]:
                     "caminho_preservado": None,
                     "bytes": None,
                     "sha256": None,
-                    "disponibilidade": "link quebrado / HTTP 404",
+                    "disponibilidade": "fonte oficial indisponivel na tentativa de consulta",
                     "erro": str(e),
                     "validacao": "fonte oficial inacessivel na data de referencia",
                 })
 
+    source_specs = {item["id"]: item for item in FONTES_TRAJETORIA}
+    a01_by_file: dict[str, dict[str, object]] = {}
+    if A01_MANIFEST_PATH.exists():
+        a01_manifest = json.loads(A01_MANIFEST_PATH.read_text(encoding="utf-8"))
+        a01_by_file = {
+            str(entry["arquivo"]): entry
+            for entry in a01_manifest.get("fontes", [])
+            if entry.get("arquivo")
+        }
+
+    for entry in manifest_entries:
+        spec = source_specs[str(entry["id"])]
+        if spec.get("data_publicacao"):
+            entry["data_publicacao"] = spec["data_publicacao"]
+        if spec.get("papel_analitico"):
+            entry["papel_analitico"] = spec["papel_analitico"]
+
+        a01_entry = a01_by_file.get(str(entry["arquivo"]))
+        if a01_entry:
+            hash_matches = bool(entry.get("sha256")) and (
+                entry["sha256"] == a01_entry.get("sha256")
+            )
+            entry["linhagem_a01"] = {
+                "manifesto": A01_MANIFEST_PATH.relative_to(ROOT).as_posix(),
+                "id_a01": a01_entry.get("id"),
+                "status_aquisicao_a01": a01_entry.get("status_aquisicao"),
+                "data_extracao_a01": a01_entry.get("data_extracao"),
+                "sha256_confere": hash_matches,
+            }
+            if entry.get("caminho_preservado") and not hash_matches:
+                raise RuntimeError(
+                    f"Hash A02 diverge do manifesto A01 para {entry['arquivo']}"
+                )
+
     return manifest_entries
+
+
+def _sheet_records(path: Path, sheet_name: str) -> tuple[list[str], list[list[str]]]:
+    """Le uma tabela XLSX e devolve cabecalho e linhas normalizados."""
+    sheets = xlsx_sheets(path)
+    if sheet_name not in sheets or len(sheets[sheet_name]) < 2:
+        raise RuntimeError(f"Planilha sem tabela utilizavel: {path.name} [{sheet_name}]")
+    raw_rows = sheets[sheet_name]
+    header = [normalize(value) for value in raw_rows[0]]
+    rows = [[normalize(value) for value in row] for row in raw_rows[1:]]
+    return header, rows
+
+
+def audit_first_call_2025() -> dict[str, object]:
+    """Reconta a primeira chamada sem somar publicacoes retificadas."""
+    regular_path = DATA_RAW_VAGAS / "2025_ciclo1_chamada1_alocacao_retificada.xlsx"
+    canonical_path = (
+        DATA_RAW_VAGAS
+        / "2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx"
+    )
+    relocation_path = DATA_RAW_VAGAS / "2025_ciclo1_chamada1_realocacao_retificado.xlsx"
+    for path in (regular_path, canonical_path, relocation_path):
+        if not path.exists():
+            raise FileNotFoundError(f"Fonte recuperada por A01 ausente: {path}")
+
+    regular_header, regular_rows = _sheet_records(regular_path, "Quadro 1")
+    canonical_header, canonical_rows = _sheet_records(canonical_path, "Quadro 1")
+    _, relocation_rows = _sheet_records(relocation_path, "Quadro 2")
+    if regular_header != canonical_header:
+        raise RuntimeError("Cabecalhos das versoes retificadas nao coincidem")
+
+    index = {column: position for position, column in enumerate(canonical_header)}
+    required = {
+        "CPF",
+        "NOME CANDIDATO(A)",
+        "RESULTADO",
+        "ALOCACAO",
+        "ORDEM DE PRIORIDADE ESCOLHIDA",
+    }
+    missing = sorted(required - set(index))
+    if missing:
+        raise RuntimeError(f"Colunas esperadas ausentes no Quadro 1: {missing}")
+
+    def value(row: list[str], column: str) -> str:
+        position = index[column]
+        return row[position] if position < len(row) else ""
+
+    def candidate_key(row: list[str]) -> tuple[str, str]:
+        return value(row, "CPF"), value(row, "NOME CANDIDATO(A)")
+
+    def record_key(row: list[str]) -> tuple[str, str, str, str, str]:
+        return (
+            *candidate_key(row),
+            value(row, "CNES"),
+            value(row, "CURSO"),
+            value(row, "ORDEM DE PRIORIDADE ESCOLHIDA"),
+        )
+
+    regular_by_key = {record_key(row): row for row in regular_rows}
+    canonical_by_key = {record_key(row): row for row in canonical_rows}
+    common_keys = regular_by_key.keys() & canonical_by_key.keys()
+    changed_keys = [
+        key for key in common_keys if regular_by_key[key] != canonical_by_key[key]
+    ]
+
+    preference_counts = Counter(
+        value(row, "ORDEM DE PRIORIDADE ESCOLHIDA") for row in canonical_rows
+    )
+    result_counts = Counter(value(row, "RESULTADO") for row in canonical_rows)
+    allocation_counts = Counter(value(row, "ALOCACAO") for row in canonical_rows)
+    candidate_keys = {candidate_key(row) for row in canonical_rows}
+    cpf_keys = {key[0] for key in candidate_keys if key[0]}
+    name_keys = {key[1] for key in candidate_keys if key[1]}
+    sub_judice_marked = sum(
+        1
+        for row in canonical_rows
+        if any("SUB JUDICE" in cell for cell in row[len(canonical_header):])
+    )
+
+    return {
+        "fontes": {
+            "versao_comparacao": regular_path.relative_to(ROOT).as_posix(),
+            "versao_canonica": canonical_path.relative_to(ROOT).as_posix(),
+            "quadro_realocacao": relocation_path.relative_to(ROOT).as_posix(),
+        },
+        "regra_versionamento": (
+            "A publicacao retificada sub judice de 19/09/2025 e a versao "
+            "canonica para contagens. A retificada de 10/09/2025 serve apenas "
+            "para comparar alteracoes e nunca e somada a ela."
+        ),
+        "unidade_observada": (
+            "registro publicado de preferencia/classificacao/alocacao; um "
+            "candidato pode ocupar duas linhas, uma por opcao"
+        ),
+        "versao_canonica": {
+            "registros_publicados": len(canonical_rows),
+            "chaves_candidato_distintas_cpf_nome": len(candidate_keys),
+            "cpfs_mascarados_distintos": len(cpf_keys),
+            "nomes_normalizados_distintos": len(name_keys),
+            "registros_primeira_opcao": preference_counts["1A OPCAO"],
+            "registros_segunda_opcao": preference_counts["2A OPCAO"],
+            "registros_classificados": sum(
+                count
+                for result, count in result_counts.items()
+                if result.startswith("CLASSIFICACAO EM")
+            ),
+            "locais_confirmados_inicio": allocation_counts[
+                "LOCAL DE ATUACAO CONFIRMADO PARA INICIO DAS ATIVIDADES"
+            ],
+            "locais_desconsiderados_gestao": allocation_counts[
+                "LOCAL DE ATUACAO DESCONSIDERADO A PEDIDO DA GESTAO LOCAL OU "
+                "POR NAO TER CAPACIDADE INSTALADA SUFICIENTE (OBSERVAR O QUADRO 2)"
+            ],
+            "registros_marcados_sub_judice": sub_judice_marked,
+        },
+        "comparacao_versoes": {
+            "registros_retificada_10_09": len(regular_rows),
+            "registros_retificada_sub_judice_19_09": len(canonical_rows),
+            "chaves_registro_adicionadas": len(canonical_by_key.keys() - regular_by_key.keys()),
+            "chaves_registro_removidas": len(regular_by_key.keys() - canonical_by_key.keys()),
+            "chaves_registro_com_conteudo_alterado": len(changed_keys),
+        },
+        "proposta_realocacao": {
+            "registros_publicados": len(relocation_rows),
+            "interpretacao": (
+                "propostas de realocacao de profissionais; nao sao novas "
+                "inscricoes e nao sao somadas ao Quadro 1"
+            ),
+        },
+        "universo_completo_inscricoes_observado": False,
+        "limitacao_universo": (
+            "As publicacoes permitem contar registros divulgados e chaves de "
+            "candidato presentes no resultado, mas nao demonstram conter todas "
+            "as inscricoes submetidas antes dos filtros administrativos."
+        ),
+    }
 
 
 def audit_cpf_patterns() -> dict[str, object]:
@@ -397,7 +574,12 @@ def audit_cpf_patterns() -> dict[str, object]:
     return patterns
 
 
-def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, object]:
+def build_event_matrix(
+    manifest_entries: list[dict[str, object]],
+    first_call_audit: dict[str, object],
+) -> dict[str, object]:
+    del manifest_entries  # A disponibilidade detalhada permanece no manifesto A02.
+    first_call_counts = first_call_audit["versao_canonica"]
     eventos_chave = [
         "inscricao_candidatura",
         "preferencias_ordem",
@@ -423,20 +605,34 @@ def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, o
             "dias_calendario_ate_corte": 384,
             "status_eventos": {
                 "inscricao_candidatura": {
-                    "classificacao": "observado individualmente (condicional a alocacao)",
-                    "justificativa": "1.671 candidaturas alocadas/classificadas na planilha 2025_ciclo1_chamada1_alocacao_retificada.xlsx (Quadro 1 retificado recuperado por A01). Microdados brutos de inscricoes gerais preliminares anteriores a escolha de vagas nao publicados separadamente.",
+                    "classificacao": "universo completo nao observado; resultado publicado parcialmente observado",
+                    "justificativa": (
+                        f"A versao canonica recuperada por A01 contem "
+                        f"{first_call_counts['registros_publicados']} registros "
+                        f"de preferencia/classificacao/alocacao e "
+                        f"{first_call_counts['chaves_candidato_distintas_cpf_nome']} "
+                        "chaves distintas CPF mascarado-nome. Um candidato pode "
+                        "ocupar duas linhas. A publicacao nao prova conter todas "
+                        "as inscricoes submetidas antes dos filtros administrativos."
+                    ),
                     "chaves_presentes": ["CPF_mascarado_tipo1", "Nome", "Curso", "CNES", "Tipo_Inscricao", "Municipio", "UF", "IBGE"],
                     "chaves_ausentes": ["id_inscricao_mestre", "data_inscricao_individual"],
                 },
                 "preferencias_ordem": {
-                    "classificacao": "observado individualmente",
-                    "justificativa": "Coluna 'ORDEM DE PRIORIDADE ESCOLHIDA' (1ª e 2ª opções). 1.096 candidaturas em 1ª opção e 575 em 2ª opção observadas no Quadro 1 retificado.",
+                    "classificacao": "observado individualmente no resultado publicado",
+                    "justificativa": (
+                        "Coluna 'ORDEM DE PRIORIDADE ESCOLHIDA': "
+                        f"{first_call_counts['registros_primeira_opcao']} registros "
+                        f"de 1a opcao e {first_call_counts['registros_segunda_opcao']} "
+                        "de 2a opcao na versao sub judice. A cobertura restringe-se "
+                        "aos registros divulgados."
+                    ),
                     "chaves_presentes": ["ORDEM DE PRIORIDADE ESCOLHIDA (1ª e 2ª opções)"],
                     "chaves_ausentes": ["ranking_completo_todas_vagas"],
                 },
                 "classificacao_barema": {
-                    "classificacao": "observado individualmente",
-                    "justificativa": "Pontuação no barema geral e classificação em ampla concorrência, cota étnico-racial e cota PCD observadas no Quadro 1 retificado.",
+                    "classificacao": "observado individualmente no resultado publicado",
+                    "justificativa": "Pontuação no barema geral e classificação em ampla concorrência, cota étnico-racial e cota PCD observadas no Quadro 1 retificado sub judice escolhido como versão canônica.",
                     "chaves_presentes": ["PONTUACAO NO BAREMA (GERAL)", "CLASSIFICACAO AMPLA CONCORRENCIA", "CLASSIFICACAO COTA ETNICO RACIAL", "CLASSIFICACAO COTA PCD"],
                     "chaves_ausentes": ["detalhamento_itens_barema"],
                 },
@@ -460,7 +656,7 @@ def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, o
                 },
                 "entrada_exercicio": {
                     "classificacao": "inferivel mas inadequado",
-                    "justificativa": "dt_inicio_atividade observada no snapshot nominal de 12/08/2026 APENAS para os 265 homologados que permaneceram ativos. Inexistente para quem desistiu antes de agosto/2026.",
+                    "justificativa": "dt_inicio_atividade aparece no snapshot nominal de 12/08/2026 somente para participantes ainda ativos e passíveis de ligação. Entradas de quem saiu antes do corte não são recuperadas por esse snapshot.",
                     "chaves_presentes": ["dt_inicio_atividade (sobreviventes)"],
                     "chaves_ausentes": ["dt_inicio_geral", "log_frequencia"],
                 },
@@ -484,7 +680,7 @@ def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, o
                 },
                 "desistencia_desligamento": {
                     "classificacao": "nao localizado",
-                    "justificativa": "17 medicos homologados na 1a chamada nao constam na lista da 2a chamada e 51 nao estao no nominal de 12/08/2026. Motivo, data e natureza da saida sao totalmente inobservaveis.",
+                    "justificativa": "Ausência em uma publicação posterior ou no snapshot nominal não identifica desligamento: diferenças de universo, máscara e cobertura impedem atribuir motivo, data ou natureza de saída.",
                     "chaves_presentes": [],
                     "chaves_ausentes": ["dt_desligamento", "tipo_desligamento", "motivo_desligamento"],
                 },
@@ -505,8 +701,8 @@ def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, o
             "dias_calendario_ate_corte": 317,
             "status_eventos": {
                 "inscricao_candidatura": {
-                    "classificacao": "observado individualmente",
-                    "justificativa": "757 registros de preferencias de candidatos classificados/alocados e 88 desclassificados na planilha 2025_ciclo1_chamada2_classificacao_final.xlsx.",
+                    "classificacao": "universo completo nao observado; resultado publicado parcialmente observado",
+                    "justificativa": "A planilha publica 757 registros de preferencia/classificacao e 88 registros desclassificados. Esses registros nao demonstram corresponder ao universo completo de inscricoes submetidas.",
                     "chaves_presentes": ["CPF_mascarado_tipo2", "Nome", "Curso", "CNES", "Tipo_Inscricao"],
                     "chaves_ausentes": ["id_inscricao_mestre", "timestamp_inscricao"],
                 },
@@ -624,7 +820,7 @@ def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, o
                 },
                 "entrada_exercicio": {
                     "classificacao": "inferivel mas inadequado",
-                    "justificativa": "758 medicos do Ciclo 2 iniciaram atividade em marco/abril 2026 no cadastro nominal de 12/08/2026. Apenas sobreviventes sao observados.",
+                    "justificativa": "O cadastro nominal de 12/08/2026 registra datas de início apenas para participantes ainda ativos no corte; não recupera entradas de quem já havia saído.",
                     "chaves_presentes": ["dt_inicio_atividade (sobreviventes nominais)"],
                     "chaves_ausentes": ["fluxo_completo_entradas"],
                 },
@@ -669,8 +865,8 @@ def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, o
             "dias_calendario_ate_corte": 118,
             "status_eventos": {
                 "inscricao_candidatura": {
-                    "classificacao": "observado individualmente",
-                    "justificativa": "Planilha 2026_ciclo2_chamada2_resultado_final.xlsx contem 1.053 linhas de classificados (303 alocados, 750 reserva) e 55 desclassificados.",
+                    "classificacao": "universo completo nao observado; resultado publicado parcialmente observado",
+                    "justificativa": "A planilha publica 1.053 registros de resultado (303 alocados e 750 em cadastro de reserva) e 55 registros desclassificados. Nao ha prova de cobertura de todas as inscricoes submetidas.",
                     "chaves_presentes": ["CPF_mascarado_tipo4", "Nome", "Curso", "CNES", "IBGE", "Tipo_Inscricao"],
                     "chaves_ausentes": ["id_inscricao_mestre"],
                 },
@@ -706,7 +902,7 @@ def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, o
                 },
                 "entrada_exercicio": {
                     "classificacao": "inferivel mas inadequado",
-                    "justificativa": "183 medicos com inicio em junho/2026 constam como ativos em 12/08/2026. Somente sobreviventes observados.",
+                    "justificativa": "O cadastro nominal de 12/08/2026 registra datas de início apenas para participantes ainda ativos no corte; não recupera entradas de quem já havia saído.",
                     "chaves_presentes": ["dt_inicio_atividade (sobreviventes)"],
                     "chaves_ausentes": ["todas_entradas"],
                 },
@@ -751,8 +947,8 @@ def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, o
             "dias_calendario_ate_corte": 19,
             "status_eventos": {
                 "inscricao_candidatura": {
-                    "classificacao": "observado individualmente",
-                    "justificativa": "Planilha 2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx contem 4.532 linhas de classificados (704 alocados, 3.826 reserva, 2 sub judice) e 999 desclassificados.",
+                    "classificacao": "universo completo nao observado; resultado publicado parcialmente observado",
+                    "justificativa": "A planilha publica 4.532 registros de resultado (704 alocados, 3.826 em cadastro de reserva e 2 sub judice) e 999 registros desclassificados. Nao ha prova de cobertura de todas as inscricoes submetidas.",
                     "chaves_presentes": ["CPF_mascarado_tipo5", "Nome", "Curso", "CNES", "IBGE", "Tipo_Inscricao"],
                     "chaves_ausentes": ["id_inscricao_mestre"],
                 },
@@ -863,6 +1059,7 @@ def build_event_matrix(manifest_entries: list[dict[str, object]]) -> dict[str, o
         "data_auditoria": AUDIT_DATE,
         "eventos_chave_avaliados": eventos_chave,
         "coortes_avaliadas": coortes,
+        "auditoria_primeira_chamada_2025": first_call_audit,
         "avaliacao_spells_e_cobertura": spells_avaliacao,
     }
 
@@ -873,7 +1070,8 @@ def main() -> None:
 
     manifest_entries = process_manifest()
     cpf_patterns = audit_cpf_patterns()
-    matriz_result = build_event_matrix(manifest_entries)
+    first_call_audit = audit_first_call_2025()
+    matriz_result = build_event_matrix(manifest_entries, first_call_audit)
     matriz_result["padroes_mascara_cpf"] = cpf_patterns
 
     manifest_output = {

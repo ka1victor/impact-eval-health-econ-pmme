@@ -1,0 +1,398 @@
+{
+  "status": "executada",
+  "classificacao": "piloto de esquema e aquisição pública parcial",
+  "competencias_adquiridas": 3,
+  "competencias_planejadas": 26,
+  "universos": {
+    "snapshot_nominal_ativos": {
+      "arquivo": "data/pmm_especialistas_nominal.csv",
+      "sha256": "76237f4cb6bf7e9aaccbf22ea443e1070c889c05a0357a3c1cb34ee50f58fc7d",
+      "status": "lido",
+      "linhas_snapshot_lidas": 1480,
+      "linhas_com_cnes_valido": 1480,
+      "cnes_distintos": 518,
+      "repeticoes_de_cnes_entre_registros": 962,
+      "perdas_normalizacao": {},
+      "nota_unidade": "Cada linha é um registro de participante ativo na data de referência; repetição de CNES pode representar participantes distintos no mesmo estabelecimento e não é duplicidade de vaga."
+    },
+    "quadros_vagas_a01": {
+      "versoes_finais_escolhidas": {
+        "vagas_2025_c1_ch1_original": {
+          "id": "vagas_2025_c1_ch1_original",
+          "rotulo": "Ciclo 1, chamada 1 — quadro original (versão de oferta disponível)",
+          "arquivo": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx",
+          "sha256": "51c6807f6bc2efa252b5236d89c5384ae484c4d47c8b65d4161c3facbfebe304",
+          "status": "lido",
+          "aba": "Planilha1",
+          "linha_cabecalho_base_zero": 1,
+          "linhas_quadro_lidas": 1295,
+          "linhas_com_curso": 1295,
+          "linhas_com_cnes_valido": 1295,
+          "celulas_cnes_curso_validas": 1295,
+          "celulas_cnes_curso_distintas": 1295,
+          "duplicidades_exatas_celula_cnes_curso": 0,
+          "cnes_distintos": 460,
+          "repeticoes_de_cnes_entre_celulas": 835,
+          "perdas_normalizacao": {},
+          "vagas_fisicas_somadas_na_versao": 1823,
+          "nota_unidade": "Cada linha válida é uma célula agregada CNES–curso. CNES repetido entre células não é duplicidade de vaga; a quantidade de vagas físicas é a soma dos campos TOTAL desta versão."
+        },
+        "vagas_alocados_2025_c1_ch2": {
+          "id": "vagas_alocados_2025_c1_ch2",
+          "rotulo": "Ciclo 1, chamada 2 — quadro de cadastro de reserva",
+          "arquivo": "data/raw/pmm_e/2025_ciclo1_chamada2_vagas_e_alocados.xlsx",
+          "sha256": "f1b8f7533cb13d8aba21d1100ab957e6accac52532fb8235e1b4231343a0588c",
+          "status": "lido",
+          "aba": "VAGAS - CADASTRO RESERVA",
+          "linha_cabecalho_base_zero": 1,
+          "linhas_quadro_lidas": 1762,
+          "linhas_com_curso": 1762,
+          "linhas_com_cnes_valido": 1762,
+          "celulas_cnes_curso_validas": 1762,
+          "celulas_cnes_curso_distintas": 1762,
+          "duplicidades_exatas_celula_cnes_curso": 0,
+          "cnes_distintos": 638,
+          "repeticoes_de_cnes_entre_celulas": 1124,
+          "perdas_normalizacao": {},
+          "vagas_fisicas_somadas_na_versao": 2896,
+          "nota_unidade": "Cada linha válida é uma célula agregada CNES–curso. CNES repetido entre células não é duplicidade de vaga; a quantidade de vagas físicas é a soma dos campos TOTAL desta versão."
+        },
+        "vagas_2026_c2_ch1_retificada": {
+          "id": "vagas_2026_c2_ch1_retificada",
+          "rotulo": "Ciclo 2, chamada 1 — quadro retificado final de 19/03/2026",
+          "arquivo": "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+          "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+          "status": "lido",
+          "aba": "Planilha1",
+          "linha_cabecalho_base_zero": 1,
+          "linhas_quadro_lidas": 1547,
+          "linhas_com_curso": 1547,
+          "linhas_com_cnes_valido": 1547,
+          "celulas_cnes_curso_validas": 1547,
+          "celulas_cnes_curso_distintas": 1547,
+          "duplicidades_exatas_celula_cnes_curso": 0,
+          "cnes_distintos": 685,
+          "repeticoes_de_cnes_entre_celulas": 862,
+          "perdas_normalizacao": {},
+          "vagas_fisicas_somadas_na_versao": 2889,
+          "nota_unidade": "Cada linha válida é uma célula agregada CNES–curso. CNES repetido entre células não é duplicidade de vaga; a quantidade de vagas físicas é a soma dos campos TOTAL desta versão."
+        },
+        "vagas_2026_c2_ch2": {
+          "id": "vagas_2026_c2_ch2",
+          "rotulo": "Ciclo 2, chamada 2 — quadro publicado em 16/04/2026",
+          "arquivo": "data/raw/pmm_e/2026_ciclo2_chamada2_vagas.xlsx",
+          "sha256": "4815e1558b515d4cdabf245b45e24062ab2e9531abd657b4f24f68bb45b3d3a4",
+          "status": "lido",
+          "aba": "QUADRO",
+          "linha_cabecalho_base_zero": 1,
+          "linhas_quadro_lidas": 1039,
+          "linhas_com_curso": 1039,
+          "linhas_com_cnes_valido": 1039,
+          "celulas_cnes_curso_validas": 1039,
+          "celulas_cnes_curso_distintas": 1039,
+          "duplicidades_exatas_celula_cnes_curso": 0,
+          "cnes_distintos": 532,
+          "repeticoes_de_cnes_entre_celulas": 507,
+          "perdas_normalizacao": {},
+          "vagas_fisicas_somadas_na_versao": 1992,
+          "nota_unidade": "Cada linha válida é uma célula agregada CNES–curso. CNES repetido entre células não é duplicidade de vaga; a quantidade de vagas físicas é a soma dos campos TOTAL desta versão."
+        },
+        "vagas_2026_c3_retificada": {
+          "id": "vagas_2026_c3_retificada",
+          "rotulo": "Ciclo 3, chamada 1 — quadro retificado de 24/07/2026",
+          "arquivo": "data/raw/pmm_e/2026_ciclo3_chamada1_vagas_retificadas.xlsx",
+          "sha256": "6bc07f48d0eaac37936fc827ebdefd12fb7bf2be86dc26f64a08e1f5b57f5371",
+          "status": "lido",
+          "aba": "QUADRO DE VAGAS_3° CICLO",
+          "linha_cabecalho_base_zero": 2,
+          "linhas_quadro_lidas": 2293,
+          "linhas_com_curso": 2293,
+          "linhas_com_cnes_valido": 2293,
+          "celulas_cnes_curso_validas": 2293,
+          "celulas_cnes_curso_distintas": 2293,
+          "duplicidades_exatas_celula_cnes_curso": 0,
+          "cnes_distintos": 1262,
+          "repeticoes_de_cnes_entre_celulas": 1031,
+          "perdas_normalizacao": {},
+          "vagas_fisicas_somadas_na_versao": 5131,
+          "nota_unidade": "Cada linha válida é uma célula agregada CNES–curso. CNES repetido entre células não é duplicidade de vaga; a quantidade de vagas físicas é a soma dos campos TOTAL desta versão."
+        }
+      },
+      "consolidado_sem_somar_vagas_entre_chamadas": {
+        "cnes_distintos_uniao": 1930,
+        "nota": "União de estabelecimentos para validação cadastral. Vagas físicas e células de oferta não são somadas entre chamadas, pois podem ser reapresentadas."
+      }
+    }
+  },
+  "cobertura_piloto": {
+    "snapshot_nominal_ativos": {
+      "202406": {
+        "cnes_testados": 518,
+        "cnes_encontrados": 515,
+        "cnes_ausentes": 3,
+        "taxa_cobertura": 0.9942084942084942,
+        "codigos_ausentes": [
+          "4963938",
+          "5523419",
+          "5788110"
+        ],
+        "total_cnes_base_cnes": 535727
+      },
+      "202506": {
+        "cnes_testados": 518,
+        "cnes_encontrados": 517,
+        "cnes_ausentes": 1,
+        "taxa_cobertura": 0.9980694980694981,
+        "codigos_ausentes": [
+          "5788110"
+        ],
+        "total_cnes_base_cnes": 577247
+      },
+      "202607": {
+        "cnes_testados": 518,
+        "cnes_encontrados": 518,
+        "cnes_ausentes": 0,
+        "taxa_cobertura": 1.0,
+        "codigos_ausentes": [],
+        "total_cnes_base_cnes": 631973
+      }
+    },
+    "quadros_vagas_a01_consolidado": {
+      "202406": {
+        "cnes_testados": 1930,
+        "cnes_encontrados": 1904,
+        "cnes_ausentes": 26,
+        "taxa_cobertura": 0.9865284974093265,
+        "codigos_ausentes": [
+          "4726553",
+          "4730224",
+          "4737288",
+          "4760867",
+          "4771737",
+          "4773713",
+          "4775821",
+          "4824377",
+          "4927907",
+          "4962850",
+          "4962877",
+          "4963938",
+          "4974190",
+          "5105692",
+          "5314194",
+          "5326389",
+          "5507189",
+          "5523214",
+          "5523419",
+          "5539587",
+          "5609623",
+          "5652545",
+          "5724953",
+          "5989620",
+          "8049785",
+          "8186332"
+        ],
+        "total_cnes_base_cnes": 535727
+      },
+      "202506": {
+        "cnes_testados": 1930,
+        "cnes_encontrados": 1927,
+        "cnes_ausentes": 3,
+        "taxa_cobertura": 0.9984455958549223,
+        "codigos_ausentes": [
+          "5989620",
+          "8049785",
+          "8186332"
+        ],
+        "total_cnes_base_cnes": 577247
+      },
+      "202607": {
+        "cnes_testados": 1930,
+        "cnes_encontrados": 1930,
+        "cnes_ausentes": 0,
+        "taxa_cobertura": 1.0,
+        "codigos_ausentes": [],
+        "total_cnes_base_cnes": 631973
+      }
+    },
+    "quadros_vagas_a01_por_versao": {
+      "vagas_2025_c1_ch1_original": {
+        "202406": {
+          "cnes_testados": 460,
+          "cnes_encontrados": 459,
+          "cnes_ausentes": 1,
+          "taxa_cobertura": 0.9978260869565218,
+          "codigos_ausentes": [
+            "4730224"
+          ],
+          "total_cnes_base_cnes": 535727
+        },
+        "202506": {
+          "cnes_testados": 460,
+          "cnes_encontrados": 460,
+          "cnes_ausentes": 0,
+          "taxa_cobertura": 1.0,
+          "codigos_ausentes": [],
+          "total_cnes_base_cnes": 577247
+        },
+        "202607": {
+          "cnes_testados": 460,
+          "cnes_encontrados": 460,
+          "cnes_ausentes": 0,
+          "taxa_cobertura": 1.0,
+          "codigos_ausentes": [],
+          "total_cnes_base_cnes": 631973
+        }
+      },
+      "vagas_alocados_2025_c1_ch2": {
+        "202406": {
+          "cnes_testados": 638,
+          "cnes_encontrados": 635,
+          "cnes_ausentes": 3,
+          "taxa_cobertura": 0.9952978056426333,
+          "codigos_ausentes": [
+            "4730224",
+            "4962850",
+            "4963938"
+          ],
+          "total_cnes_base_cnes": 535727
+        },
+        "202506": {
+          "cnes_testados": 638,
+          "cnes_encontrados": 638,
+          "cnes_ausentes": 0,
+          "taxa_cobertura": 1.0,
+          "codigos_ausentes": [],
+          "total_cnes_base_cnes": 577247
+        },
+        "202607": {
+          "cnes_testados": 638,
+          "cnes_encontrados": 638,
+          "cnes_ausentes": 0,
+          "taxa_cobertura": 1.0,
+          "codigos_ausentes": [],
+          "total_cnes_base_cnes": 631973
+        }
+      },
+      "vagas_2026_c2_ch1_retificada": {
+        "202406": {
+          "cnes_testados": 685,
+          "cnes_encontrados": 681,
+          "cnes_ausentes": 4,
+          "taxa_cobertura": 0.9941605839416059,
+          "codigos_ausentes": [
+            "4730224",
+            "4963938",
+            "5523419",
+            "5539587"
+          ],
+          "total_cnes_base_cnes": 535727
+        },
+        "202506": {
+          "cnes_testados": 685,
+          "cnes_encontrados": 685,
+          "cnes_ausentes": 0,
+          "taxa_cobertura": 1.0,
+          "codigos_ausentes": [],
+          "total_cnes_base_cnes": 577247
+        },
+        "202607": {
+          "cnes_testados": 685,
+          "cnes_encontrados": 685,
+          "cnes_ausentes": 0,
+          "taxa_cobertura": 1.0,
+          "codigos_ausentes": [],
+          "total_cnes_base_cnes": 631973
+        }
+      },
+      "vagas_2026_c2_ch2": {
+        "202406": {
+          "cnes_testados": 532,
+          "cnes_encontrados": 528,
+          "cnes_ausentes": 4,
+          "taxa_cobertura": 0.9924812030075187,
+          "codigos_ausentes": [
+            "4730224",
+            "4963938",
+            "5523419",
+            "5539587"
+          ],
+          "total_cnes_base_cnes": 535727
+        },
+        "202506": {
+          "cnes_testados": 532,
+          "cnes_encontrados": 532,
+          "cnes_ausentes": 0,
+          "taxa_cobertura": 1.0,
+          "codigos_ausentes": [],
+          "total_cnes_base_cnes": 577247
+        },
+        "202607": {
+          "cnes_testados": 532,
+          "cnes_encontrados": 532,
+          "cnes_ausentes": 0,
+          "taxa_cobertura": 1.0,
+          "codigos_ausentes": [],
+          "total_cnes_base_cnes": 631973
+        }
+      },
+      "vagas_2026_c3_retificada": {
+        "202406": {
+          "cnes_testados": 1262,
+          "cnes_encontrados": 1240,
+          "cnes_ausentes": 22,
+          "taxa_cobertura": 0.9825673534072901,
+          "codigos_ausentes": [
+            "4726553",
+            "4737288",
+            "4760867",
+            "4771737",
+            "4773713",
+            "4775821",
+            "4824377",
+            "4927907",
+            "4962877",
+            "4963938",
+            "4974190",
+            "5105692",
+            "5314194",
+            "5326389",
+            "5507189",
+            "5523214",
+            "5609623",
+            "5652545",
+            "5724953",
+            "5989620",
+            "8049785",
+            "8186332"
+          ],
+          "total_cnes_base_cnes": 535727
+        },
+        "202506": {
+          "cnes_testados": 1262,
+          "cnes_encontrados": 1259,
+          "cnes_ausentes": 3,
+          "taxa_cobertura": 0.9976228209191759,
+          "codigos_ausentes": [
+            "5989620",
+            "8049785",
+            "8186332"
+          ],
+          "total_cnes_base_cnes": 577247
+        },
+        "202607": {
+          "cnes_testados": 1262,
+          "cnes_encontrados": 1262,
+          "cnes_ausentes": 0,
+          "taxa_cobertura": 1.0,
+          "codigos_ausentes": [],
+          "total_cnes_base_cnes": 631973
+        }
+      }
+    }
+  },
+  "limites": [
+    "CNES cadastral não demonstra presença, carga efetivamente trabalhada nem participação no PMM-E.",
+    "As três competências validam aquisição, esquema e existência cadastral; não validam desenho causal.",
+    "O painel integral permanece adiado até existir ponte PMM-E–CNES ou decisão explícita do portão."
+  ]
+}

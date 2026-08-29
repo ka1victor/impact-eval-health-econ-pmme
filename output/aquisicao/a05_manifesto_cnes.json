@@ -2,7 +2,7 @@
   "manifesto_id": "a05_manifesto_cnes",
   "escopo": "Aquisicao e inspecao das competencias mensais do CNES para analise de forca de trabalho, FTE cadastral e infraestrutura pre-tratamento do PMM-E",
   "catalogo_consultado_em": "2026-08-27",
-  "data_geracao": "2026-08-28T20:06:01.643960",
+  "data_geracao": "2026-08-28",
   "modo_execucao": "inspect_only",
   "periodo_planejado": "202406 a 202607",
   "total_competencias_planejadas": 26,

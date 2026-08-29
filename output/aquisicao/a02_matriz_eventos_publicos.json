@@ -25,8 +25,8 @@
       "dias_calendario_ate_corte": 384,
       "status_eventos": {
         "inscricao_candidatura": {
-          "classificacao": "observado individualmente (condicional a alocacao)",
-          "justificativa": "1.671 candidaturas alocadas/classificadas na planilha 2025_ciclo1_chamada1_alocacao_retificada.xlsx (Quadro 1 retificado recuperado por A01). Microdados brutos de inscricoes gerais preliminares anteriores a escolha de vagas nao publicados separadamente.",
+          "classificacao": "universo completo nao observado; resultado publicado parcialmente observado",
+          "justificativa": "A versao canonica recuperada por A01 contem 1671 registros de preferencia/classificacao/alocacao e 993 chaves distintas CPF mascarado-nome. Um candidato pode ocupar duas linhas. A publicacao nao prova conter todas as inscricoes submetidas antes dos filtros administrativos.",
           "chaves_presentes": [
             "CPF_mascarado_tipo1",
             "Nome",
@@ -43,8 +43,8 @@
           ]
         },
         "preferencias_ordem": {
-          "classificacao": "observado individualmente",
-          "justificativa": "Coluna 'ORDEM DE PRIORIDADE ESCOLHIDA' (1ª e 2ª opções). 1.096 candidaturas em 1ª opção e 575 em 2ª opção observadas no Quadro 1 retificado.",
+          "classificacao": "observado individualmente no resultado publicado",
+          "justificativa": "Coluna 'ORDEM DE PRIORIDADE ESCOLHIDA': 993 registros de 1a opcao e 678 de 2a opcao na versao sub judice. A cobertura restringe-se aos registros divulgados.",
           "chaves_presentes": [
             "ORDEM DE PRIORIDADE ESCOLHIDA (1ª e 2ª opções)"
           ],
@@ -53,8 +53,8 @@
           ]
         },
         "classificacao_barema": {
-          "classificacao": "observado individualmente",
-          "justificativa": "Pontuação no barema geral e classificação em ampla concorrência, cota étnico-racial e cota PCD observadas no Quadro 1 retificado.",
+          "classificacao": "observado individualmente no resultado publicado",
+          "justificativa": "Pontuação no barema geral e classificação em ampla concorrência, cota étnico-racial e cota PCD observadas no Quadro 1 retificado sub judice escolhido como versão canônica.",
           "chaves_presentes": [
             "PONTUACAO NO BAREMA (GERAL)",
             "CLASSIFICACAO AMPLA CONCORRENCIA",
@@ -107,7 +107,7 @@
         },
         "entrada_exercicio": {
           "classificacao": "inferivel mas inadequado",
-          "justificativa": "dt_inicio_atividade observada no snapshot nominal de 12/08/2026 APENAS para os 265 homologados que permaneceram ativos. Inexistente para quem desistiu antes de agosto/2026.",
+          "justificativa": "dt_inicio_atividade aparece no snapshot nominal de 12/08/2026 somente para participantes ainda ativos e passíveis de ligação. Entradas de quem saiu antes do corte não são recuperadas por esse snapshot.",
           "chaves_presentes": [
             "dt_inicio_atividade (sobreviventes)"
           ],
@@ -150,7 +150,7 @@
         },
         "desistencia_desligamento": {
           "classificacao": "nao localizado",
-          "justificativa": "17 medicos homologados na 1a chamada nao constam na lista da 2a chamada e 51 nao estao no nominal de 12/08/2026. Motivo, data e natureza da saida sao totalmente inobservaveis.",
+          "justificativa": "Ausência em uma publicação posterior ou no snapshot nominal não identifica desligamento: diferenças de universo, máscara e cobertura impedem atribuir motivo, data ou natureza de saída.",
           "chaves_presentes": [],
           "chaves_ausentes": [
             "dt_desligamento",
@@ -178,8 +178,8 @@
       "dias_calendario_ate_corte": 317,
       "status_eventos": {
         "inscricao_candidatura": {
-          "classificacao": "observado individualmente",
-          "justificativa": "757 registros de preferencias de candidatos classificados/alocados e 88 desclassificados na planilha 2025_ciclo1_chamada2_classificacao_final.xlsx.",
+          "classificacao": "universo completo nao observado; resultado publicado parcialmente observado",
+          "justificativa": "A planilha publica 757 registros de preferencia/classificacao e 88 registros desclassificados. Esses registros nao demonstram corresponder ao universo completo de inscricoes submetidas.",
           "chaves_presentes": [
             "CPF_mascarado_tipo2",
             "Nome",
@@ -372,7 +372,7 @@
         },
         "entrada_exercicio": {
           "classificacao": "inferivel mas inadequado",
-          "justificativa": "758 medicos do Ciclo 2 iniciaram atividade em marco/abril 2026 no cadastro nominal de 12/08/2026. Apenas sobreviventes sao observados.",
+          "justificativa": "O cadastro nominal de 12/08/2026 registra datas de início apenas para participantes ainda ativos no corte; não recupera entradas de quem já havia saído.",
           "chaves_presentes": [
             "dt_inicio_atividade (sobreviventes nominais)"
           ],
@@ -431,8 +431,8 @@
       "dias_calendario_ate_corte": 118,
       "status_eventos": {
         "inscricao_candidatura": {
-          "classificacao": "observado individualmente",
-          "justificativa": "Planilha 2026_ciclo2_chamada2_resultado_final.xlsx contem 1.053 linhas de classificados (303 alocados, 750 reserva) e 55 desclassificados.",
+          "classificacao": "universo completo nao observado; resultado publicado parcialmente observado",
+          "justificativa": "A planilha publica 1.053 registros de resultado (303 alocados e 750 em cadastro de reserva) e 55 registros desclassificados. Nao ha prova de cobertura de todas as inscricoes submetidas.",
           "chaves_presentes": [
             "CPF_mascarado_tipo4",
             "Nome",
@@ -496,7 +496,7 @@
         },
         "entrada_exercicio": {
           "classificacao": "inferivel mas inadequado",
-          "justificativa": "183 medicos com inicio em junho/2026 constam como ativos em 12/08/2026. Somente sobreviventes observados.",
+          "justificativa": "O cadastro nominal de 12/08/2026 registra datas de início apenas para participantes ainda ativos no corte; não recupera entradas de quem já havia saído.",
           "chaves_presentes": [
             "dt_inicio_atividade (sobreviventes)"
           ],
@@ -557,8 +557,8 @@
       "dias_calendario_ate_corte": 19,
       "status_eventos": {
         "inscricao_candidatura": {
-          "classificacao": "observado individualmente",
-          "justificativa": "Planilha 2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx contem 4.532 linhas de classificados (704 alocados, 3.826 reserva, 2 sub judice) e 999 desclassificados.",
+          "classificacao": "universo completo nao observado; resultado publicado parcialmente observado",
+          "justificativa": "A planilha publica 4.532 registros de resultado (704 alocados, 3.826 em cadastro de reserva e 2 sub judice) e 999 registros desclassificados. Nao ha prova de cobertura de todas as inscricoes submetidas.",
           "chaves_presentes": [
             "CPF_mascarado_tipo5",
             "Nome",
@@ -669,6 +669,40 @@
       }
     }
   ],
+  "auditoria_primeira_chamada_2025": {
+    "fontes": {
+      "versao_comparacao": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada.xlsx",
+      "versao_canonica": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+      "quadro_realocacao": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_realocacao_retificado.xlsx"
+    },
+    "regra_versionamento": "A publicacao retificada sub judice de 19/09/2025 e a versao canonica para contagens. A retificada de 10/09/2025 serve apenas para comparar alteracoes e nunca e somada a ela.",
+    "unidade_observada": "registro publicado de preferencia/classificacao/alocacao; um candidato pode ocupar duas linhas, uma por opcao",
+    "versao_canonica": {
+      "registros_publicados": 1671,
+      "chaves_candidato_distintas_cpf_nome": 993,
+      "cpfs_mascarados_distintos": 993,
+      "nomes_normalizados_distintos": 993,
+      "registros_primeira_opcao": 993,
+      "registros_segunda_opcao": 678,
+      "registros_classificados": 527,
+      "locais_confirmados_inicio": 468,
+      "locais_desconsiderados_gestao": 59,
+      "registros_marcados_sub_judice": 1
+    },
+    "comparacao_versoes": {
+      "registros_retificada_10_09": 1671,
+      "registros_retificada_sub_judice_19_09": 1671,
+      "chaves_registro_adicionadas": 0,
+      "chaves_registro_removidas": 0,
+      "chaves_registro_com_conteudo_alterado": 3
+    },
+    "proposta_realocacao": {
+      "registros_publicados": 59,
+      "interpretacao": "propostas de realocacao de profissionais; nao sao novas inscricoes e nao sao somadas ao Quadro 1"
+    },
+    "universo_completo_inscricoes_observado": false,
+    "limitacao_universo": "As publicacoes permitem contar registros divulgados e chaves de candidato presentes no resultado, mas nao demonstram conter todas as inscricoes submetidas antes dos filtros administrativos."
+  },
   "avaliacao_spells_e_cobertura": {
     "viabilidade_spells_publicos": false,
     "razoes_bloqueio_spells": [

@@ -334,6 +334,10 @@ def numeric(val: object) -> int:
         return 0
 
 
+def format_integer_pt_br(value: int) -> str:
+    return f"{value:,}".replace(",", ".")
+
+
 def col_index(reference: str) -> int:
     letters = re.match(r"[A-Z]+", reference)
     if not letters:
@@ -668,7 +672,23 @@ def parse_vacancy_workbook(path: Path, doc_id: str) -> dict[str, Any]:
         }
 
         result["sheets_info"][sheet_name] = sheet_summary
-        if result["quadro_principal"] is None and len(parsed_rows) > 0 and sheet_name.upper() not in {"DESCLASSIFICADO", "DESCLASSIFICADOS", "ADESÃO_CNES GESTÃO DUPLA"}:
+        # O arquivo da 2ª chamada do Ciclo 1 combina uma aba de profissionais
+        # alocados com o quadro de vagas em cadastro de reserva. Para comparar
+        # ofertas entre chamadas, a aba principal deve ser explicitamente a de
+        # vagas; escolher apenas a primeira aba confundia alocação com oferta.
+        normalized_sheet_name = normalize(sheet_name)
+        is_c1_ch2_reserve_sheet = (
+            doc_id == "vagas_alocados_2025_c1_ch2"
+            and "VAGAS" in normalized_sheet_name
+            and "CADASTRO RESERVA" in normalized_sheet_name
+        )
+        is_default_main_sheet = (
+            doc_id != "vagas_alocados_2025_c1_ch2"
+            and result["quadro_principal"] is None
+            and normalized_sheet_name
+            not in {"DESCLASSIFICADO", "DESCLASSIFICADOS", "ADESAO_CNES GESTAO DUPLA"}
+        )
+        if len(parsed_rows) > 0 and (is_c1_ch2_reserve_sheet or is_default_main_sheet):
             result["quadro_principal"] = {
                 "sheet_name": sheet_name,
                 "summary": sheet_summary,
@@ -687,12 +707,19 @@ def analyze_version_transitions(parsed_docs: dict[str, Any]) -> dict[str, Any]:
     if c1_vagas and c1_aloc:
         keys_vagas = {r["chave_candidata"] for r in c1_vagas["rows"]}
         keys_aloc = {r["chave_candidata"] for r in c1_aloc["rows"]}
+        offered_keys = len(keys_vagas)
+        allocated_keys = len(keys_aloc)
+        overlapping_keys = len(keys_vagas & keys_aloc)
         transitions["ciclo1_chamada1_vagas_vs_alocacao"] = {
-            "vagas_ofertadas_chaves": len(keys_vagas),
-            "candidaturas_alocadas_chaves": len(keys_aloc),
-            "intersecao_chaves": len(keys_vagas & keys_aloc),
-            "taxa_sobreposicao": round(len(keys_vagas & keys_aloc) / len(keys_vagas), 4) if keys_vagas else 0,
-            "diagnostico": "Quadro de vagas original possui 1.295 chaves únicas (CNES-Curso); a alocação retificada cobre 636 chaves onde houve alocação homologável/válida."
+            "vagas_ofertadas_chaves": offered_keys,
+            "candidaturas_alocadas_chaves": allocated_keys,
+            "intersecao_chaves": overlapping_keys,
+            "taxa_sobreposicao": round(overlapping_keys / offered_keys, 4) if offered_keys else 0,
+            "diagnostico": (
+                f"Quadro de vagas original possui {format_integer_pt_br(offered_keys)} chaves únicas "
+                f"(CNES-Curso); a alocação retificada cobre {format_integer_pt_br(allocated_keys)} "
+                "chaves onde houve alocação homologável/válida."
+            ),
         }
 
     # Transição 2: Ciclo 1 Chamada 1 vs Ciclo 1 Chamada 2
@@ -700,13 +727,26 @@ def analyze_version_transitions(parsed_docs: dict[str, Any]) -> dict[str, Any]:
     if c1_vagas and c1_ch2:
         keys_vagas_c1 = {r["chave_candidata"] for r in c1_vagas["rows"]}
         keys_vagas_c2 = {r["chave_candidata"] for r in c1_ch2["rows"]}
+        reserve_keys = len(keys_vagas_c2)
+        overlapping_reserve_keys = len(keys_vagas_c1 & keys_vagas_c2)
+        new_reserve_keys = len(keys_vagas_c2 - keys_vagas_c1)
+        removed_reserve_keys = len(keys_vagas_c1 - keys_vagas_c2)
+        reserve_vacancies = c1_ch2["summary"]["vagas_reserva_somadas"]
         transitions["ciclo1_ch1_vs_ciclo1_ch2_reserva"] = {
+            "aba_c1_ch2_reserva": c1_ch2["sheet_name"],
             "chaves_c1_ch1": len(keys_vagas_c1),
-            "chaves_c1_ch2_reserva": len(keys_vagas_c2),
-            "intersecao_chaves": len(keys_vagas_c1 & keys_vagas_c2),
-            "chaves_novas_na_ch2": len(keys_vagas_c2 - keys_vagas_c1),
-            "chaves_retiradas_da_ch2": len(keys_vagas_c1 - keys_vagas_c2),
-            "diagnostico": "A 2ª chamada do Ciclo 1 publicou 1.762 células de oferta em cadastro de reserva (totalizando 2.896 vagas somadas). Destas células, 929 eram células reapresentadas da 1ª chamada e 833 foram novas células de oferta (CNES–curso) adicionadas ao cadastro de reserva."
+            "chaves_c1_ch2_reserva": reserve_keys,
+            "intersecao_chaves": overlapping_reserve_keys,
+            "chaves_novas_na_ch2": new_reserve_keys,
+            "chaves_retiradas_da_ch2": removed_reserve_keys,
+            "diagnostico": (
+                f"A 2ª chamada do Ciclo 1 publicou {format_integer_pt_br(reserve_keys)} células de "
+                f"oferta em cadastro de reserva (totalizando {format_integer_pt_br(reserve_vacancies)} "
+                f"vagas somadas). Destas células, {format_integer_pt_br(overlapping_reserve_keys)} "
+                "eram células reapresentadas da 1ª chamada e "
+                f"{format_integer_pt_br(new_reserve_keys)} foram novas células de oferta (CNES–curso) "
+                "adicionadas ao cadastro de reserva."
+            ),
         }
 
     # Transição 3: Ciclo 2 Chamada 1 Original vs Retificada (19/03/2026)

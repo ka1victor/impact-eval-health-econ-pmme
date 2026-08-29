@@ -962,11 +962,12 @@
       "diagnostico": "Quadro de vagas original possui 1.295 chaves únicas (CNES-Curso); a alocação retificada cobre 636 chaves onde houve alocação homologável/válida."
     },
     "ciclo1_ch1_vs_ciclo1_ch2_reserva": {
+      "aba_c1_ch2_reserva": "VAGAS - CADASTRO RESERVA",
       "chaves_c1_ch1": 1295,
-      "chaves_c1_ch2_reserva": 32,
-      "intersecao_chaves": 32,
-      "chaves_novas_na_ch2": 0,
-      "chaves_retiradas_da_ch2": 1263,
+      "chaves_c1_ch2_reserva": 1762,
+      "intersecao_chaves": 929,
+      "chaves_novas_na_ch2": 833,
+      "chaves_retiradas_da_ch2": 366,
       "diagnostico": "A 2ª chamada do Ciclo 1 publicou 1.762 células de oferta em cadastro de reserva (totalizando 2.896 vagas somadas). Destas células, 929 eram células reapresentadas da 1ª chamada e 833 foram novas células de oferta (CNES–curso) adicionadas ao cadastro de reserva."
     },
     "ciclo2_ch1_original_vs_retificada": {
