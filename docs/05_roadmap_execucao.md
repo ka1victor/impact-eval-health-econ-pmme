@@ -1,209 +1,283 @@
-# 05. Plano principal mínimo
+# 05. Plano principal: vagas viram médicos?
 
-> Decisão vigente. Este documento substitui, para a execução atual, o plano de
-> cobertura individual de vagas. O desenho anterior continua preservado como
-> agenda futura, mas não será executado agora.
+> Decisão vigente. Este documento é a fila operacional canônica. O desenho
+> individual anterior permanece preservado como agenda futura, mas não será
+> executado nesta versão.
 
-## 1. Pergunta que será respondida
+## 1. Pergunta substantiva
 
-> Ser classificada inicialmente como **vaga imediata**, em vez de **apenas
-> cadastro de reserva**, aumentou o número mensal de especialistas elegíveis
-> cadastrados no estabelecimento contemplado pelo PMM-E?
+> A disponibilização de vagas do PMM-E para preenchimento imediato aumentou o
+> número de especialistas nos municípios contemplados? Os novos médicos
+> permaneceram pelo maior horizonte comum observado?
 
-Esse é um estudo do efeito da **priorização imediata** sobre a oferta médica
-cadastral local. Não é um estudo do efeito global do PMM-E, do preenchimento de
-cada vaga ou da permanência individual dos bolsistas.
+Em linguagem curta: **vagas viram médicos — e eles permanecem?**
 
-## 2. Por que este é o plano principal
+O estudo mede a oferta médica cadastral local. Não mede o efeito global do
+PMM-E sobre produção, espera ou saúde e não identifica nominalmente quais
+profissionais são bolsistas. A inferência é sobre a disponibilização imediata
+da vaga dentro do universo publicado, não sobre elegibilidade nacional ao
+programa.
 
-Ele usa o melhor contraste atualmente disponível em dados públicos:
+## 2. Por que a pergunta é relevante
 
-- tratamento e comparação estão no mesmo quadro administrativo;
-- a unidade `CNES–curso` está explicitamente identificada na oferta;
-- o CNES mensal permite medir o estoque de médicos sem identificar nominalmente
-  os participantes do PMM-E;
-- o ciclo 1 já possui uma janela pré e pós razoavelmente simétrica;
-- a pergunta é estreita e pode ser respondida antes de incorporar produção,
-  filas, internações ou desfechos clínicos.
+O PMM-E pretende ampliar o provimento de especialistas em áreas prioritárias.
+Uma vaga publicada só representa capacidade adicional se for seguida por maior
+presença médica local. O efeito pode assumir formas diferentes:
 
-O desenho é da mesma família da estratégia anteriormente discutida — painel
-mensal com DiD/DDD —, mas troca o estimando individual bloqueado por um estimando
-agregado mensurável com dados públicos.
+- aumento persistente do estoque municipal de especialistas;
+- entrada seguida de saída rápida;
+- troca de profissionais sem mudança do estoque;
+- remanejamento entre estabelecimentos do mesmo município;
+- deslocamento entre municípios, sem expansão regional líquida.
 
-## 3. O que o contraste significa
+O outcome municipal evita chamar uma troca de hospital dentro do mesmo
+município de atração local. Resultados no estabelecimento e na região de saúde
+serão diagnósticos de redistribuição, não novas famílias de outcomes.
 
-O tratamento será fixado pela publicação de 24/07/2025:
+## 3. Contraste administrativo usado para identificação
+
+O tratamento será fixado pelo quadro original do ciclo 1, chamada 1, publicado
+em 24/07/2025. Após agregar todos os CNES do município:
 
 ```text
-Immediate_is = 1  se a célula CNES i – curso s tinha vaga imediata
-Immediate_is = 0  se a célula tinha apenas cadastro de reserva
+Immediate_ms = 1  se o município m tinha ao menos uma vaga imediata no curso s
+Immediate_ms = 0  se tinha vaga apenas em cadastro de reserva no curso s
 ```
 
-Na planilha do ciclo 1, chamada 1, há:
+No quadro de origem existem 1.295 células CNES–curso: 503 apenas imediatas, 782
+apenas em reserva e 10 com ambas as modalidades. Esses números descrevem a
+fonte, não a amostra municipal final. A agregação `município–curso`, a ponte
+curso–CBO e os requisitos de variação dentro do município determinarão a
+amostra identificadora antes da observação dos efeitos.
 
-- 503 células apenas com vagas imediatas;
-- 782 células apenas em cadastro de reserva;
-- 10 células com as duas modalidades, que serão excluídas da especificação
-  principal;
-- 460 estabelecimentos, dos quais 165 têm cursos em modalidades distintas e
-  ajudam a identificar comparações dentro do próprio CNES.
+Cadastro de reserva não significa ausência do programa. Ele pode ser
+reapresentado, convertido ou alocado posteriormente. Portanto, o estimando é:
 
-Os totais acima se referem a **células CNES–curso**, não ao número de vagas. O
-tratamento é binário e mede o pacote associado à classificação inicial da célula;
-não estima o efeito por vaga adicional.
+> efeito da disponibilização inicial para preenchimento imediato, comparada à
+> permanência inicial apenas em cadastro de reserva, entre
+> municípios–especialidades incluídos no mesmo quadro administrativo.
 
-Cadastro de reserva não é ausência de programa nem um grupo nunca exposto. Vagas
-em reserva podem ser reapresentadas, convertidas ou posteriormente alocadas. Por
-isso, o estimando será descrito como:
+A classificação inicial permanecerá fixa. Ativações posteriores da reserva
+serão documentadas e tratadas como cruzamento entre regimes no seguimento; não
+serão usadas para redefinir retrospectivamente tratamento ou amostra.
 
-> efeito da classificação inicial como imediata, comparada à classificação
-> inicial apenas em reserva.
+## 4. Dados, unidade e outcomes
 
-Na análise principal, a classificação de julho permanecerá fixa. Reclassificar
-ou censurar controles depois de conversões poderia condicionar a amostra a
-eventos posteriores ao tratamento. A ativação posterior de reservas será
-registrada como contaminação do contraste e tende a aproximar os grupos.
-
-## 4. Dados e janela
-
-### Oferta
+### 4.1 Oferta
 
 Fonte principal:
 `data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx`.
 
-Somente o ciclo 1, chamada 1, entrará na primeira versão. Não serão somadas
-reapresentações nem outras chamadas.
+Somente o ciclo 1, chamada 1, define a coorte inicial. Reapresentações e
+retificações não serão somadas como novas vagas. Chamadas posteriores serão
+usadas apenas para auditar novas exposições durante o seguimento.
 
-### Outcome
+### 4.2 Unidade principal
 
-Será adquirido o painel público mensal completo do CNES entre **junho de 2024 e
-julho de 2026**. Os identificadores de CNES, profissional e CBO serão preservados
-como texto.
+A unidade será `município–curso–mês`. Para cada curso, será congelado um
+conjunto defensável de CBOs a partir dos requisitos oficiais. O mesmo
+profissional será contado uma única vez dentro do município–curso–mês, ainda
+que possua mais de um vínculo ou CNES local.
 
-A unidade será `CNES–curso–mês`. Cada curso deverá ter um conjunto de CBOs
-elegíveis definido por regra oficial congelada antes da construção do outcome.
+Os identificadores serão tratados como texto. Identificadores civis não serão
+publicados; os produtos analíticos usarão somente as chaves técnicas mínimas.
 
-Outcome único da primeira versão:
+### 4.3 Outcome primário
 
 ```text
-especialistas_ist = número de CO_PROFISSIONAL_SUS distintos
-                    no CNES i, no mês t, pertencentes ao conjunto
-                    de CBOs elegíveis para o curso s
+especialistas_mst = número de CO_PROFISSIONAL_SUS distintos
+                    no município m, no mês t, pertencentes
+                    aos CBOs elegíveis para o curso s
 ```
 
-O outcome mede estoque cadastral de especialistas. Um aumento é compatível com
-atração ou expansão da oferta no estabelecimento, mas não prova que os médicos
-adicionais sejam bolsistas do PMM-E.
+Esse outcome mede estoque cadastral de especialistas. Um aumento é compatível
+com expansão da oferta local, mas não prova que os profissionais adicionais
+sejam bolsistas nem que as horas cadastradas tenham sido realizadas.
 
-### Calendário
+### 4.4 Mecanismos secundários
+
+Usando a estabilidade longitudinal de `CO_PROFISSIONAL_SUS`, que deverá ser
+validada antes do uso:
+
+- `entradas_mst`: profissionais presentes no mês e ausentes do mesmo
+  município–curso nos seis meses anteriores;
+- `saidas_mst`: profissionais cuja última presença é seguida por pelo menos três
+  competências consecutivas de ausência;
+- `saldo_mst`: entradas menos saídas;
+- `entrantes_presentes_6m`: entrantes da coorte pós-oferta ainda observados no
+  mesmo município–curso seis meses após a entrada;
+- `entrantes_presentes_12m`: a mesma medida em doze meses, somente quando toda a
+  coorte congelada possuir seguimento comum maduro.
+
+Entradas e saídas serão contagens, não taxas divididas por estoque
+pós-tratamento. A proporção retida entre entrantes será apenas descritiva,
+porque o tratamento pode alterar a composição de quem entra.
+
+## 5. Janela e maturidade
+
+A primeira versão utilizará as 26 competências planejadas do CNES:
 
 - pré-tratamento: 2024-06 a 2025-06;
-- 2025-07: mês de transição, excluído;
-- pós-tratamento: 2025-08 a 2026-07.
+- 2025-07: mês de transição, excluído da DDD estática;
+- pós-tratamento observado: 2025-08 a 2026-07.
 
-Como a oferta foi publicada em 24/07/2025, agosto de 2025 será o primeiro mês
-pós. A escolha é determinada pelo calendário, não pelos resultados.
+Toda a trajetória pós disponível será mostrada. A versão inicial permite
+acompanhar o estoque por aproximadamente doze meses depois do anúncio. Para
+presença seis meses após a entrada, a coorte madura será formada por entradas
+entre 2025-08 e 2026-01.
 
-## 5. Único portão técnico antes do painel
+Presença doze meses depois da entrada ainda não é comum e madura nessa janela.
+Ela fica pré-especificada para uma atualização prospectiva do painel, sem
+misturar profissionais com tempos distintos de seguimento. Novas competências
+ampliarão o horizonte; não substituirão nem redefinirão a janela da primeira
+versão. Para acompanhar por doze meses toda a coorte de entradas de 2025-08 a
+2026-01, será necessário estender o painel até 2027-01.
+
+Saídas serão calculadas somente nos meses para os quais existam três
+competências posteriores. Observações sem seguimento suficiente serão marcadas
+como censuradas, nunca como permanência ou ausência.
+
+## 6. Portões antes da estimação
+
+### 6.1 Relevância da classificação administrativa
+
+Antes de construir outcomes, as listas públicas de alocação e homologação do
+ciclo 1 serão usadas para verificar se a classificação imediata prediz uma
+probabilidade substantivamente maior de alocação/homologação que a condição
+apenas em reserva.
+
+Esse teste é um portão de relevância, não uma estimativa de impacto. Se a
+classificação não separar exposições administrativas, ela não será usada como
+tratamento causal.
+
+### 6.2 Ponte curso–CBO
 
 É obrigatório construir e auditar a correspondência `curso PMM-E → CBO(s)` a
-partir dos requisitos oficiais de elegibilidade. Essa ponte ainda não está
-pronta no repositório.
-
-Antes de baixar e transformar todo o painel, o portão deve informar:
+partir dos requisitos oficiais de elegibilidade. O portão deverá informar:
 
 1. quais CBOs representam cada curso;
 2. se a correspondência é unívoca ou envolve múltiplas especialidades;
-3. quais células de um mesmo CNES têm conjuntos de CBOs sobrepostos;
-4. quantas observações permanecem numa amostra não ambígua.
+3. onde conjuntos de CBOs se sobrepõem;
+4. quantos municípios–curso permanecem numa amostra não ambígua;
+5. quantos municípios possuem simultaneamente cursos imediatos e apenas em
+   reserva e, portanto, identificam a DDD com efeitos município–mês.
 
-A especificação principal usará apenas cursos com mapeamento defensável. Células
-com conjuntos sobrepostos e modalidades conflitantes no mesmo CNES serão
-excluídas ou colapsadas por regra escrita antes de observar os outcomes. Se não
-houver amostra comparável suficiente após esse portão, o projeto não usará a
-DDD para fazer afirmação causal.
+### 6.3 Integridade longitudinal do CNES
 
-## 6. Estimação principal
+Antes de calcular entradas ou saídas, serão validados:
 
-Como o ciclo 1 possui uma única data inicial de exposição, não é necessário usar
-Callaway–Sant'Anna ou Sun–Abraham na primeira versão. A especificação principal
-será a DDD estática:
+- estabilidade de `CO_PROFISSIONAL_SUS` entre competências;
+- duplicidades entre vínculos e estabelecimentos;
+- distinção entre ausência real, arquivo ausente e registro não aplicável;
+- mudanças de CBO, CNES e município;
+- cobertura temporal idêntica nos grupos de tratamento e comparação.
+
+Nenhum artefato ainda não versionado será tratado como produto validado.
+
+## 7. Estratégia de identificação
+
+Como o ciclo 1 possui uma única data inicial de exposição, a especificação
+principal será uma DDD estática:
 
 ```text
-Y_ist = alpha_is
-      + gamma_it
+Y_mst = alpha_ms
+      + gamma_mt
       + delta_st
-      + beta (Immediate_is × Post_t)
-      + epsilon_ist
+      + beta (Immediate_ms × Post_t)
+      + epsilon_mst
 ```
 
 em que:
 
-- `alpha_is` são efeitos fixos da célula CNES–curso;
-- `gamma_it` são efeitos fixos CNES–mês, que absorvem choques gerais do
-  estabelecimento;
-- `delta_st` são efeitos fixos curso–mês, que absorvem choques comuns ao curso;
-- `beta` é a diferença pós-oferta entre células inicialmente imediatas e células
-  inicialmente em reserva, líquida desses três conjuntos de efeitos fixos.
+- `alpha_ms` são efeitos fixos município–curso;
+- `gamma_mt` são efeitos fixos município–mês, que absorvem choques gerais do
+  mercado médico local;
+- `delta_st` são efeitos fixos curso–mês, que absorvem choques nacionais da
+  especialidade;
+- `beta` é a diferença pós-oferta entre cursos inicialmente imediatos e apenas
+  em reserva, líquida desses efeitos.
 
-O modelo principal será linear em número de médicos, para que `beta` seja lido
-diretamente em especialistas. A inferência será agrupada por município. Serão
-reportados o número de municípios, a distribuição de células por cluster e a
-sensibilidade a clusters dominantes.
+O outcome primário será estimado em níveis, para que `beta` seja interpretado
+em número de especialistas. A inferência será agrupada por município; serão
+reportados número e tamanho dos clusters e sensibilidade a municípios
+dominantes.
 
-## 7. Diagnóstico mínimo
+Um estudo de evento com a mesma estrutura mostrará todos os meses pré e pós
+observados. Com uma única coorte inicial, Callaway–Sant'Anna e Sun–Abraham não
+são necessários nesta versão. Métodos sintéticos não serão usados para
+"corrigir" retrospectivamente pré-tendências incompatíveis.
 
-Além da estimativa estática, será produzido um estudo de evento com a mesma
-estrutura de efeitos fixos. Ele servirá para mostrar tendências anteriores,
-antecipação e dinâmica; não será usado para escolher retrospectivamente a janela
-mais favorável.
+## 8. Condições para linguagem causal
 
-A primeira entrega conterá somente:
+A classificação imediata não foi aleatória. O fato de os grupos pertencerem ao
+mesmo quadro melhora a comparabilidade, mas não garante identificação. A
+interpretação causal exige:
 
-1. tabela de construção e perdas da amostra;
-2. tabela descritiva de baseline por modalidade;
-3. gráfico de médias mensais por grupo;
-4. gráfico de evento com leads e lags;
-5. coeficiente principal da DDD, intervalo de confiança e interpretação em
-   número de especialistas.
+1. relevância administrativa da classificação imediata;
+2. suporte entre cursos imediatos e em reserva dentro dos municípios;
+3. tendências paralelas condicionais antes da oferta;
+4. ausência de choque simultâneo específico dos cursos tratados;
+5. resultado não concentrado em poucos municípios;
+6. perdas e mudanças cadastrais não diferenciais;
+7. documentação das exposições posteriores do grupo de reserva.
 
-A priorização imediata não foi aleatória. O fato de os grupos pertencerem ao
-mesmo processo administrativo melhora comparabilidade, mas não garante
-identificação. A interpretação causal exige tendências paralelas condicionais
-aos efeitos fixos e ausência de choque específico simultâneo à célula tratada.
-Se houver pré-tendências substantivas, falta de suporte ou concentração do
-resultado em poucos locais, a entrega será nomeada **comparação ajustada**, não
-impacto causal.
+Se os diagnósticos falharem, a entrega será denominada **comparação ajustada**,
+não impacto causal. Não se escolherá retrospectivamente janela, amostra ou
+método em função do sinal dos resultados.
 
-## 8. O que não será feito agora
+## 9. Escopo ativo e congelado
 
-Ficam congelados, sem tarefas de execução na primeira versão:
+Entram na primeira versão:
 
-- ciclos 2 e 3 e qualquer painel de adoção escalonada;
-- Callaway–Sant'Anna, Sun–Abraham, synthetic DiD e matrix completion;
-- RDD pelo IVS, efeito de incentivo financeiro e variáveis instrumentais;
-- identificação individual de bolsistas, cobertura de vagas e retenção
-  individual;
-- FTE, entradas, saídas, churn e permanência em seis ou doze meses;
-- remanejamento entre CNES, municípios ou regiões de saúde;
-- produção SIA/SUS, internações SIH/SUS, filas, exames e outcomes de saúde;
-- custos, custo-benefício, heterogeneidades e correção por múltiplos outcomes;
-- envio dos pedidos administrativos A07.
+- ciclo 1, chamada 1;
+- painel CNES mensal de 2024-06 a 2026-07;
+- estoque municipal de especialistas como outcome primário;
+- entradas, saídas, saldo e presença seis meses depois como mecanismos;
+- presença em doze meses como atualização pré-especificada quando madura;
+- diagnósticos no CNES e na região para distinguir remanejamento;
+- DDD estática e estudo de evento.
 
-Esses itens só serão reabertos por nova decisão explícita após a entrega da
-versão mínima.
+Permanecem congelados:
 
-## 9. Sequência operacional fechada
+- ciclos 2 e 3 como coortes de tratamento e adoção escalonada;
+- RDD pelo IVS e efeito causal dos diferentes valores de bolsa;
+- synthetic DiD, matrix completion e variáveis instrumentais;
+- FTE, produção SIA/SUS, internações SIH/SUS, filas e outcomes de saúde;
+- custos, custo-benefício e heterogeneidades adicionais;
+- identificação individual de bolsistas e envio dos pedidos A07.
+
+As faixas anunciadas poderão aparecer apenas em descrições de baseline. Não
+serão interpretadas como efeito causal da bolsa sem running variable e regra
+administrativa validadas.
+
+## 10. Sequência operacional
 
 ```text
-1. Congelar a ponte curso–CBO e a amostra elegível
-2. Adquirir as 26 competências CNES
-3. Construir um único outcome mensal de estoque
-4. Produzir descritivas, DDD estática e estudo de evento
-5. Auditar pré-tendências, suporte, clusters e perdas
-6. Entregar nota curta com linguagem proporcional à identificação
+1. Validar a relevância de imediata versus reserva nas listas públicas
+2. Congelar a ponte curso–CBO e a amostra municipal identificadora
+3. Adquirir e validar as 26 competências CNES
+4. Construir o painel município–curso–mês e o estoque de especialistas
+5. Construir entradas, saídas e coortes de presença com censura explícita
+6. Produzir descritivas, DDD estática e estudo de evento
+7. Auditar pré-tendências, suporte, clusters, perdas e novas exposições
+8. Entregar nota com linguagem proporcional à identificação
+9. Atualizar presença em doze meses quando a coorte comum estiver madura
 ```
 
-Não há outra frente em paralelo. O plano individual anterior permanece bloqueado
-por dados administrativos; este plano agregado não depende de identificar quais
-médicos pertencem ao PMM-E.
+Não há outra frente empírica autorizada em paralelo. O plano individual
+anterior continua bloqueado por dados administrativos. O plano agregado atual
+não depende de identificar quais médicos pertencem ao PMM-E.
+
+## 11. Definição de conclusão
+
+O trabalho estará concluído quando puder informar, com horizonte e linguagem
+compatíveis com os dados:
+
+> Entre municípios–especialidades incluídos no mesmo quadro do PMM-E, a
+> disponibilização imediata alterou em X o estoque cadastral de especialistas
+> ao longo de Y meses. O padrão refletiu entrada persistente, saída, reposição
+> ou remanejamento, dentro dos limites do contraste observado.
+
+A conclusão declarará explicitamente que presença cadastral não prova
+participação individual no PMM-E, horas efetivamente trabalhadas, produção ou
+efeito sobre pacientes.

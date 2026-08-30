@@ -1,85 +1,96 @@
 # Avaliação de impacto do Mais Médicos Especialistas
 
 Este repositório organiza uma avaliação do Programa Mais Médicos Especialistas
-(PMM-E). A primeira versão foi deliberadamente reduzida a uma pergunta que pode
-ser enfrentada com dados públicos:
+(PMM-E). A primeira versão foi reduzida a uma pergunta relevante e mensurável
+com dados públicos:
 
-> Ser classificada inicialmente como **vaga imediata**, em vez de **apenas
-> cadastro de reserva**, aumentou o número de especialistas cadastrados no
-> estabelecimento contemplado?
+> **A disponibilização de vagas do PMM-E para preenchimento imediato aumentou
+> o número de especialistas nos municípios contemplados? Os novos médicos
+> permaneceram pelo maior horizonte comum observado?**
+
+Em linguagem curta: **vagas viram médicos — e eles permanecem?**
 
 ## Decisão atual
 
-O plano principal é um painel mensal `CNES–curso–mês` do ciclo 1, chamada 1. O
-tratamento é a classificação publicada em 24/07/2025 e o outcome é o número de
-profissionais distintos em CBOs elegíveis para o curso.
+O painel principal será `município–curso–mês` para o ciclo 1, chamada 1. A
+exposição é a existência inicial de ao menos uma vaga imediata para o curso no
+município; a comparação é ter apenas cadastro de reserva no mesmo quadro.
 
-Na planilha oficial há 1.295 células: 503 apenas com vagas imediatas, 782 apenas
-em reserva e 10 com as duas modalidades. Elas abrangem 460 estabelecimentos; em
-165 deles existem cursos em modalidades distintas.
+O outcome primário é o número de especialistas distintos no município. Entradas,
+saídas, saldo e presença seis meses depois da entrada serão mecanismos
+secundários. A presença em doze meses está pré-especificada para quando a coorte
+comum tiver seguimento maduro; para a coorte de entradas até 2026-01, isso exige
+CNES até 2027-01.
 
-Será usada uma DDD com efeitos fixos de célula, CNES–mês e curso–mês. Como existe
-uma única data de exposição na primeira versão, métodos para adoção escalonada
-não são necessários agora. O período será junho de 2024 a julho de 2026, com
-julho de 2025 excluído como transição.
+A primeira versão usará o CNES mensal de junho de 2024 a julho de 2026:
 
-O plano completo e seus limites estão em
-[`docs/05_roadmap_execucao.md`](docs/05_roadmap_execucao.md). A fila fechada está
-em [`TODO.md`](TODO.md).
+- 2024-06 a 2025-06: pré-tratamento;
+- 2025-07: transição;
+- 2025-08 a 2026-07: trajetória pós disponível.
+
+Será usada uma DDD com efeitos fixos de município–curso, município–mês e
+curso–mês, acompanhada por estudo de evento. O plano completo e seus portões
+estão em [`docs/05_roadmap_execucao.md`](docs/05_roadmap_execucao.md); a fila
+operacional está em [`TODO.md`](TODO.md).
 
 ## Interpretação correta
 
-O contraste mede o efeito da **priorização imediata**, não o efeito de participar
-do PMM-E versus não participar. Cadastro de reserva pode levar a alocação
-posterior; por isso ele é uma condição de menor prioridade, não um grupo
-permanentemente não tratado.
+"Vaga imediata" e "cadastro de reserva" são o contraste empírico, não o tema do
+trabalho. O estimando mede o efeito de disponibilizar inicialmente uma vaga para
+preenchimento imediato, em vez de mantê-la apenas em reserva, entre
+municípios–especialidades incluídos no mesmo processo.
 
-O outcome mede oferta médica cadastral líquida no estabelecimento. Não identifica
-quais médicos são bolsistas, não mede retenção individual e não demonstra, por si
-só, melhora de produção, espera ou saúde. A priorização também não foi aleatória:
-a leitura causal dependerá de comparabilidade e tendências paralelas. Se os
+Cadastro de reserva não é ausência permanente do programa e pode receber
+exposição posterior. A classificação também não foi aleatória. A leitura causal
+dependerá de relevância administrativa, suporte e tendências paralelas. Se os
 diagnósticos falharem, o resultado será apresentado como comparação ajustada.
+
+O estudo mede oferta médica cadastral total no município, não identifica
+individualmente bolsistas e não demonstra, por si só, horas trabalhadas,
+produção, redução de espera ou melhora de saúde.
 
 ## Estado dos dados
 
-- O quadro de oferta do ciclo 1 já está preservado e auditado.
-- Três competências piloto do CNES confirmam a existência dos campos de
-  profissional, CBO e carga horária.
-- Ainda faltam a ponte oficial `curso PMM-E → CBO(s)` e as 23 competências CNES
-  restantes para completar o painel de 26 meses.
-- Ainda não há resultado de impacto estimado.
+- O quadro de oferta do ciclo 1 está preservado e auditado.
+- A fonte contém 1.295 células CNES–curso: 503 apenas imediatas, 782 apenas em
+  reserva e 10 com ambas as modalidades.
+- Três competências piloto do CNES confirmam os campos necessários; o painel
+  versionado completo ainda não foi validado.
+- A ponte oficial `curso PMM-E → CBO(s)`, a relevância de imediata versus reserva
+  e a estabilidade longitudinal dos identificadores são portões obrigatórios.
+- Ainda não existe resultado de impacto validado.
 
-O portão A06 anterior continua válido para o antigo estimando de cobertura e
-retenção individual, que permanece bloqueado por dados administrativos. O novo
-estimando agregado não exige vincular nominalmente participantes do PMM-E ao
-CNES.
+O portão A06 continua válido para o desenho individual anterior, bloqueado por
+dados administrativos. O plano agregado atual não exige vincular nominalmente
+participantes do PMM-E ao CNES.
 
-## Escopo congelado
+## Escopo da primeira versão
 
-Não entram na primeira versão: ciclos 2 e 3; RDD pelo IVS; Callaway–Sant'Anna,
-Sun–Abraham ou métodos sintéticos; FTE e rotatividade; mobilidade regional;
-produção, filas, internações e outcomes de saúde; custos; heterogeneidades; envio
-dos pedidos administrativos.
+Entram: ciclo 1; estoque municipal de especialistas; entradas, saídas, saldo e
+presença seis meses depois; diagnósticos de remanejamento; DDD e estudo de
+evento.
 
-Os documentos `01` a `04` e `06` preservam a agenda mais ampla e o desenho
-individual anterior, mas não constituem tarefas correntes.
+Permanecem congelados: ciclos 2 e 3 como novas coortes; RDD pelo IVS; efeito
+causal dos valores de bolsa; métodos sintéticos; FTE; SIA/SUS; SIH/SUS; filas;
+outcomes de saúde; custos; identificação individual de bolsistas; e envio dos
+pedidos administrativos A07.
 
-## Executar o estado já validado
+## Executar o estado validado
 
 ```bash
 python run_all.py
 ```
 
-No estado atual, o comando apenas reproduz inventários e auditorias existentes.
-A nova estimação só será incorporada depois de a ponte curso–CBO e o painel
-mensal serem construídos e validados.
+O comando reproduz apenas o estado incorporado e validado do repositório. Novas
+rotinas entrarão no pipeline somente depois de passarem pelos portões de esquema,
+cobertura e coerência substantiva.
 
 ## Estrutura
 
 ```text
 data/      bases observadas preservadas
 docs/      decisões, auditorias e plano empírico
-prompts/   fila antiga, congelada até ser alinhada ao plano mínimo
+prompts/   tarefas históricas e orientação da fila vigente
 scripts/   rotinas reprodutíveis
-output/    produtos gerados
+output/    produtos gerados e validados
 ```

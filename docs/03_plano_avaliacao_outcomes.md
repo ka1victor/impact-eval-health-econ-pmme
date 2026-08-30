@@ -7,11 +7,14 @@
 > Agenda ampla de outcomes do projeto. Ela não é a fila operacional da primeira
 > versão e não fixa RDD antes da auditoria institucional.
 
-O desenho anterior foi restringido à cobertura sustentada, seus mecanismos,
-adicionalidade e uma heterogeneidade por infraestrutura anterior. Ele está
-preservado em [`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md).
-O plano mínimo vigente está em [`05_roadmap_execucao.md`](05_roadmap_execucao.md).
-As frentes abaixo formam apenas a agenda posterior.
+O desenho individual anterior foi restringido à cobertura sustentada, seus
+mecanismos, adicionalidade e uma heterogeneidade por infraestrutura anterior.
+Ele está preservado em
+[`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md). O plano
+mínimo vigente usa dados públicos para medir estoque municipal, entradas,
+saídas e presença posterior dos novos médicos; sua definição está em
+[`05_roadmap_execucao.md`](05_roadmap_execucao.md). As frentes abaixo formam
+apenas a agenda posterior.
 
 ## 1. Visão geral
 

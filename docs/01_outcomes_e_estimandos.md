@@ -1,8 +1,10 @@
 # 01. Outcomes e estimandos do PMM-E
 
-> **Status:** agenda conceitual ampla. Para a primeira versão, o único estimando
-> ativo é o efeito da priorização imediata sobre o estoque cadastral de
-> especialistas, definido em [`05_roadmap_execucao.md`](05_roadmap_execucao.md).
+> **Status:** agenda conceitual ampla. Na primeira versão, a pergunta ativa é se
+> a disponibilização imediata de vagas aumenta o estoque municipal de
+> especialistas e se os novos médicos permanecem pelo horizonte comum maduro.
+> O estimando e a fila estão definidos em
+> [`05_roadmap_execucao.md`](05_roadmap_execucao.md).
 >
 > Este documento define o que o projeto quer medir antes de escolher método ou produzir resultados. O foco é o efeito do componente de provimento do PMM-E, não o efeito agregado de todas as frentes do Agora Tem Especialistas.
 
@@ -10,6 +12,11 @@ Na agenda completa, espera e acesso são os outcomes mais próximos do objetivo
 legal. O desenho anterior havia escolhido cobertura sustentada da vaga em 180
 dias; ele está preservado em [`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md),
 mas não será executado na primeira versão.
+
+No plano vigente, o estoque em `município–curso–mês` é o outcome primário.
+Entradas, saídas, saldo e presença seis meses depois são mecanismos; presença em
+doze meses será incorporada apenas quando a coorte congelada tiver seguimento
+comum. Presença cadastral não será tratada como identificação de bolsista.
 
 ## 1. Pergunta central
 

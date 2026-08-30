@@ -2,7 +2,8 @@
 
 > **Status:** desenho anterior preservado, mas congelado. A análise individual de
 > cobertura e retenção continua dependendo de dados administrativos e não será
-> executada na primeira versão. O plano vigente é o painel público agregado em
+> executada na primeira versão. O plano vigente é o painel público agregado de
+> estoque municipal, fluxos e presença posterior em
 > [`05_roadmap_execucao.md`](05_roadmap_execucao.md).
 >
 > Registro do escopo empírico individual anterior. Este documento define o que
@@ -17,7 +18,7 @@ Essa formulação é deliberadamente mais estreita que “quando o programa é e
 
 ## 2. Três níveis distintos de eficácia
 
-| Nível | Pergunta | Situação no estudo prioritário |
+| Nível | Pergunta | Situação no desenho individual histórico |
 |---|---|---|
 | Operacional | O incentivo produz cobertura sustentada e oferta médica adicional? | Objeto central |
 | Assistencial | A capacidade adicional produz atendimento e reduz espera? | Fora do escopo atual |
@@ -40,7 +41,9 @@ Não nomear como “efeito do programa” uma estimativa que compare apenas duas
 
 ## 4. Outcome primário
 
-A unidade preferencial é a vaga-especialidade-chamamento. Para vagas com seguimento comum, o outcome primário será:
+No desenho individual histórico, a unidade preferencial é a
+vaga-especialidade-chamamento. Para vagas com seguimento comum, o outcome
+primário seria:
 
 ```text
 cobertura_180 = dias com profissional em exercício nos 180 dias após a oferta / 180
@@ -58,7 +61,9 @@ Se houver carga horária comparável, será construída também a medida `FTE-di
 - FTE líquido municipal;
 - origem dos vínculos anteriores e simultâneos.
 
-Cobertura é o outcome primário. Os demais descrevem mecanismos e não concorrem retrospectivamente para se tornar “o resultado principal”.
+Nesse desenho histórico, cobertura é o outcome primário. Os demais descrevem
+mecanismos e não concorrem retrospectivamente para se tornar “o resultado
+principal”.
 
 ## 5. Perfis de resultado
 

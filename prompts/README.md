@@ -1,9 +1,11 @@
 # Prompts operacionais dos agentes
 
-> **Fila congelada.** Estes prompts pertencem ao desenho individual anterior e
-> não devem ser executados na primeira versão. A única sequência autorizada está
-> em [`docs/05_roadmap_execucao.md`](../docs/05_roadmap_execucao.md) e deverá
-> receber prompts próprios apenas quando a implementação começar.
+> **Fila histórica congelada.** Estes prompts pertencem ao desenho individual
+> anterior e não devem ser usados para executar a primeira versão. A sequência
+> autorizada é o plano público agregado em
+> [`docs/05_roadmap_execucao.md`](../docs/05_roadmap_execucao.md): relevância de
+> imediata versus reserva, ponte curso–CBO, painel municipal, estoque, fluxos,
+> presença posterior, DDD e diagnósticos.
 >
 Esta pasta preserva as tarefas do roadmap anterior. A ordem abaixo é histórica e
 não constitui uma fila autorizada.
@@ -44,5 +46,10 @@ preparou os pacotes limitados às seis lacunas fechadas no portão, todos com
 status `não enviado`. A submissão depende de decisão externa do autor. O prompt
 03 não está liberado e não deve ser executado até que eventuais respostas
 administrativas sejam incorporadas e reavaliadas em novo portão.
+
+Esse bloqueio continua válido para o desenho individual anterior. Ele não
+impede o plano agregado vigente, que não identifica bolsistas nem usa os pedidos
+administrativos. Nenhum prompt desta fila deve ser reinterpretado para pular os
+portões definidos no roadmap atual.
 
 WP3, WP4 e WP5 não têm prompts de execução porque estão guardados. Seu backlog está em [`docs/06_backlog_wp3_wp4_wp5.md`](../docs/06_backlog_wp3_wp4_wp5.md).
