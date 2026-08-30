@@ -1,16 +1,8 @@
-"""01_avaliar_portao_relevancia.py — Portão de Relevância Administrativa do PMM-E.
+"""Avalia se imediata versus reserva produz exposição administrativa distinta.
 
-Este script audita se a classificação inicial de vagas anunciadas (IMEDIATA vs CADASTRO DE RESERVA)
-no Ciclo 1, Chamada 1 (24/07/2025) prediz uma probabilidade substantivamente distinta de
-alocação e homologação médica efetiva.
-
-Conforme a Seção 6.1 de docs/05_roadmap_execucao.md:
-- O contraste é um portão de relevância (primeiro estágio administrativo), não impacto de saúde.
-- Documenta rigorosamente a taxa de preenchimento imediato e a ativação de cadastros de reserva.
-
-Entregáveis:
-- output/avaliacao_impacto/relatorios/01_relatorio_portao_relevancia.json
-- output/avaliacao_impacto/tabelas/tabela_portao_relevancia.csv
+O portão é estimado no mesmo grão município-curso e na mesma amostra
+confirmatória que identifica a DDD. Homologação é tratada como resultado de
+candidatura, não como entrada em exercício.
 """
 
 from __future__ import annotations
@@ -18,213 +10,187 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
-import numpy as np
 import pandas as pd
-from scipy import stats
+
+from model_utils import atomic_to_csv, fit_absorbed_ols, result_for
+
 
 ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_DIR = ROOT / "output" / "avaliacao_impacto"
-RELATORIOS_DIR = OUTPUT_DIR / "relatorios"
-TABELAS_DIR = OUTPUT_DIR / "tabelas"
-
-TRATAMENTO_FILE = ROOT / "output" / "aquisicao" / "quadro_vagas_tratamento.parquet"
-HOMOLOGADOS_FILE = ROOT / "data" / "raw" / "pmm_e" / "2025_ciclo1_chamada1_homologados.xlsx"
-ALOCACAO_FILE = ROOT / "data" / "raw" / "aquisicao" / "vagas" / "2025_ciclo1_chamada1_alocacao_retificada.xlsx"
-
-
-def norm_cnes(v: Any) -> str:
-    d = re.sub(r"\D", "", str(v))
-    return d.zfill(7) if d and int(d) > 0 else ""
+OUT = ROOT / "output" / "avaliacao_impacto"
+REL = OUT / "relatorios"
+TAB = OUT / "tabelas"
+TRATAMENTO = ROOT / "output" / "aquisicao" / "quadro_vagas_tratamento.parquet"
+PONTE = ROOT / "output" / "aquisicao" / "ponte_curso_cbo_oficial.json"
+HOMOLOGADOS = ROOT / "data" / "raw" / "pmm_e" / "2025_ciclo1_chamada1_homologados.xlsx"
+ALOCACAO = ROOT / "data" / "raw" / "aquisicao" / "vagas" / "2025_ciclo1_chamada1_alocacao_retificada.xlsx"
 
 
-def get_cid(v: Any) -> int:
-    m = re.match(r"^(\d{1,2})", str(v).strip())
-    return int(m.group(1)) if m else 0
+def norm_cnes(value: Any) -> str:
+    digits = re.sub(r"\D", "", str(value))
+    return digits.zfill(7) if digits else ""
+
+
+def course_id(value: Any) -> int | None:
+    match = re.match(r"^(\d{1,2})", str(value).strip())
+    return int(match.group(1)) if match else None
 
 
 def main() -> None:
-    print("=== [Etapa 1] Avaliação do Portão de Relevância Administrativa ===")
-    RELATORIOS_DIR.mkdir(parents=True, exist_ok=True)
-    TABELAS_DIR.mkdir(parents=True, exist_ok=True)
+    REL.mkdir(parents=True, exist_ok=True)
+    TAB.mkdir(parents=True, exist_ok=True)
+    trat = pd.read_parquet(TRATAMENTO).copy()
+    with PONTE.open("r", encoding="utf-8") as handle:
+        bridge = json.load(handle)
+    unambiguous = {int(x["cod_curso"]) for x in bridge["catalogo_cursos"] if not x.get("sobreposicao", True)}
 
-    # 1. Carregar base de tratamento canônica
-    df_trat = pd.read_parquet(TRATAMENTO_FILE)
-    print(f"Total de células CNES-Curso no universo: {len(df_trat):,}")
+    hom = pd.read_excel(HOMOLOGADOS)
+    hom["co_cnes_7d"] = hom["CNES"].map(norm_cnes)
+    hom["cod_curso"] = hom["CURSO"].map(course_id)
+    hom_counts = hom.groupby(["co_cnes_7d", "cod_curso"], as_index=False).size().rename(columns={"size": "n_homologados"})
 
-    # 2. Carregar homologações
-    df_hom = pd.read_excel(HOMOLOGADOS_FILE)
-    df_hom["co_cnes_7d"] = df_hom["CNES"].apply(norm_cnes)
-    df_hom["cod_curso"] = df_hom["CURSO"].apply(get_cid)
-    hom_counts = (
-        df_hom.groupby(["co_cnes_7d", "cod_curso"])
-        .size()
-        .reset_index(name="n_homologados")
+    aloc = pd.read_excel(ALOCACAO)
+    aloc["co_cnes_7d"] = aloc["CNES"].map(norm_cnes)
+    aloc["cod_curso"] = aloc["CURSO"].map(course_id)
+    col = next(c for c in aloc.columns if "ALOCA" in c)
+    aloc = aloc[aloc[col].astype("string").str.contains("CONFIRMADO", case=False, na=False)]
+    aloc_counts = aloc.groupby(["co_cnes_7d", "cod_curso"], as_index=False).size().rename(columns={"size": "n_alocados_confirmados"})
+
+    cell = trat.merge(hom_counts, on=["co_cnes_7d", "cod_curso"], how="left").merge(
+        aloc_counts, on=["co_cnes_7d", "cod_curso"], how="left"
     )
-
-    # 3. Carregar alocações
-    df_al = pd.read_excel(ALOCACAO_FILE)
-    df_al["co_cnes_7d"] = df_al["CNES"].apply(norm_cnes)
-    df_al["cod_curso"] = df_al["CURSO"].apply(get_cid)
-    col_aloc = [c for c in df_al.columns if "ALOCA" in c][0]
-    df_al_conf = df_al[df_al[col_aloc].str.contains("CONFIRMADO", na=False)]
-    aloc_counts = (
-        df_al_conf.groupby(["co_cnes_7d", "cod_curso"])
-        .size()
-        .reset_index(name="n_alocados_confirmados")
+    cell[["n_homologados", "n_alocados_confirmados"]] = cell[["n_homologados", "n_alocados_confirmados"]].fillna(0)
+    muni = (
+        cell.groupby(["co_ibge_6d", "cod_curso"], as_index=False)
+        .agg(
+            qt_vagas_imediatas=("qt_vagas_imediatas", "sum"),
+            qt_vagas_reserva=("qt_vagas_reserva", "sum"),
+            qt_vagas_total=("qt_vagas_total", "sum"),
+            n_alocados_confirmados=("n_alocados_confirmados", "sum"),
+            n_homologados=("n_homologados", "sum"),
+        )
     )
+    muni["modalidade"] = "MISTA"
+    muni.loc[(muni["qt_vagas_imediatas"] > 0) & (muni["qt_vagas_reserva"] == 0), "modalidade"] = "IMEDIATA"
+    muni.loc[(muni["qt_vagas_imediatas"] == 0) & (muni["qt_vagas_reserva"] > 0), "modalidade"] = "RESERVA"
+    muni["immediate_ms"] = (muni["modalidade"] == "IMEDIATA").astype(int)
+    muni["curso_sem_sobreposicao"] = muni["cod_curso"].isin(unambiguous)
+    muni["tem_alocado"] = (muni["n_alocados_confirmados"] > 0).astype(int)
+    muni["tem_homologado"] = (muni["n_homologados"] > 0).astype(int)
+    sample = muni[muni["modalidade"].isin(["IMEDIATA", "RESERVA"]) & muni["curso_sem_sobreposicao"]].copy()
+    valid_munis = sample.groupby("co_ibge_6d")["immediate_ms"].nunique()
+    sample = sample[sample["co_ibge_6d"].isin(valid_munis[valid_munis > 1].index)].copy()
+    sample["municipio_fe"] = sample["co_ibge_6d"].astype(str)
+    sample["curso_fe"] = sample["cod_curso"].astype(str)
 
-    # 4. Integrar na base celular
-    df = pd.merge(df_trat, hom_counts, on=["co_cnes_7d", "cod_curso"], how="left")
-    df["n_homologados"] = df["n_homologados"].fillna(0).astype(int)
-    df["tem_homologado"] = (df["n_homologados"] > 0).astype(int)
+    # Nível Celular (CNES x Curso) - Unidade Canônica de Oferta
+    cell["tem_alocado"] = (cell["n_alocados_confirmados"] > 0).astype(int)
+    cell["tem_homologado"] = (cell["n_homologados"] > 0).astype(int)
+    cell_sample = cell[cell["modalidade_original"].isin(["IMEDIATA", "RESERVA"])].copy()
+    cell_sample["immediate_is"] = (cell_sample["modalidade_original"] == "IMEDIATA").astype(int)
+    cell_sample["curso_fe"] = cell_sample["cod_curso"].astype(str)
+    cell_sample["uf_fe"] = cell_sample["sg_uf"].astype(str)
 
-    df = pd.merge(df, aloc_counts, on=["co_cnes_7d", "cod_curso"], how="left")
-    df["n_alocados_confirmados"] = df["n_alocados_confirmados"].fillna(0).astype(int)
-    df["tem_alocado"] = (df["n_alocados_confirmados"] > 0).astype(int)
+    cell_i = cell_sample[cell_sample["immediate_is"] == 1]
+    cell_r = cell_sample[cell_sample["immediate_is"] == 0]
+    raw_aloc_diff = float(cell_i["tem_alocado"].mean() - cell_r["tem_alocado"].mean())
+    raw_hom_diff = float(cell_i["tem_homologado"].mean() - cell_r["tem_homologado"].mean())
 
-    # 5. Análise por modalidade (Imediata vs Reserva)
-    amostra_imediata = df[df["modalidade_original"] == "IMEDIATA"]
-    amostra_reserva = df[df["modalidade_original"] == "RESERVA"]
-    amostra_dupla = df[df["modalidade_original"] == "DUPLA"]
+    rows: list[dict[str, Any]] = []
+    model_results: dict[str, Any] = {}
+    for outcome, label in (
+        ("tem_alocado", "Alocação confirmada para início (Célula CNES-Curso)"),
+        ("tem_homologado", "Candidatura homologada (Célula CNES-Curso)"),
+    ):
+        raw_i = float(cell_i[outcome].mean())
+        raw_r = float(cell_r[outcome].mean())
+        model, diag = fit_absorbed_ols(cell_sample, outcome, ["immediate_is"], ["curso_fe", "uf_fe"], "co_ibge_6d")
+        adjusted = result_for(model, "immediate_is")
+        model_results[outcome] = {**adjusted, "diagnosticos": diag}
+        rows.append(
+            {
+                "Nível": "Célula CNES-Curso",
+                "Métrica": label,
+                "Taxa imediata (%)": round(100 * raw_i, 2),
+                "Taxa reserva (%)": round(100 * raw_r, 2),
+                "Diferença bruta (p.p.)": round(100 * (raw_i - raw_r), 2),
+                "Diferença ajustada FE (p.p.)": round(100 * adjusted["beta"], 2),
+                "Erro-padrão ajustado (p.p.)": round(100 * adjusted["se"], 2),
+                "P-valor ajustado": adjusted["p_valor"],
+                "N células": len(cell_sample),
+                "N municípios": cell_sample["co_ibge_6d"].nunique(),
+            }
+        )
 
-    # Taxas celulares
-    taxa_aloc_imed = float(amostra_imediata["tem_alocado"].mean())
-    taxa_aloc_res = float(amostra_reserva["tem_alocado"].mean())
-    diff_aloc = taxa_aloc_imed - taxa_aloc_res
+    for outcome, label in (
+        ("tem_alocado", "Alocação confirmada (Amostra DDD Município-Curso)"),
+        ("tem_homologado", "Candidatura homologada (Amostra DDD Município-Curso)"),
+    ):
+        raw_i = float(sample.loc[sample["immediate_ms"] == 1, outcome].mean())
+        raw_r = float(sample.loc[sample["immediate_ms"] == 0, outcome].mean())
+        model, diag = fit_absorbed_ols(sample, outcome, ["immediate_ms"], ["municipio_fe", "curso_fe"], "co_ibge_6d")
+        adjusted = result_for(model, "immediate_ms")
+        model_results[f"{outcome}_muni_ddd"] = {**adjusted, "diagnosticos": diag}
+        rows.append(
+            {
+                "Nível": "Município-Curso (DDD)",
+                "Métrica": label,
+                "Taxa imediata (%)": round(100 * raw_i, 2),
+                "Taxa reserva (%)": round(100 * raw_r, 2),
+                "Diferença bruta (p.p.)": round(100 * (raw_i - raw_r), 2),
+                "Diferença ajustada FE (p.p.)": round(100 * adjusted["beta"], 2),
+                "Erro-padrão ajustado (p.p.)": round(100 * adjusted["se"], 2),
+                "P-valor ajustado": adjusted["p_valor"],
+                "N células": len(sample),
+                "N municípios": sample["co_ibge_6d"].nunique(),
+            }
+        )
 
-    taxa_hom_imed = float(amostra_imediata["tem_homologado"].mean())
-    taxa_hom_res = float(amostra_reserva["tem_homologado"].mean())
-    diff_hom = taxa_hom_imed - taxa_hom_res
+    table = pd.DataFrame(rows)
+    atomic_to_csv(table, TAB / "tabela_portao_relevancia.csv", index=False, encoding="utf-8-sig")
 
-    # Testes t-test
-    ttest_aloc = stats.ttest_ind(
-        amostra_imediata["tem_alocado"], amostra_reserva["tem_alocado"], equal_var=False
-    )
-    ttest_hom = stats.ttest_ind(
-        amostra_imediata["tem_homologado"], amostra_reserva["tem_homologado"], equal_var=False
-    )
-
-    # 6. Agregação municipal (município-curso)
-    df_muni = (
-        df.groupby(["co_ibge_6d", "cod_curso"])
-        .agg({
-            "qt_vagas_imediatas": "sum",
-            "qt_vagas_reserva": "sum",
-            "qt_vagas_total": "sum",
-            "n_alocados_confirmados": "sum",
-            "n_homologados": "sum",
-            "immediate_is": "max",
-        })
-        .reset_index()
-    )
-    df_muni["tem_alocado_muni"] = (df_muni["n_alocados_confirmados"] > 0).astype(int)
-    df_muni["tem_hom_muni"] = (df_muni["n_homologados"] > 0).astype(int)
-
-    muni_imed = df_muni[df_muni["immediate_is"] == 1]
-    muni_res = df_muni[df_muni["immediate_is"] == 0]
-
-    taxa_aloc_muni_imed = float(muni_imed["tem_alocado_muni"].mean())
-    taxa_aloc_muni_res = float(muni_res["tem_alocado_muni"].mean())
-    taxa_hom_muni_imed = float(muni_imed["tem_hom_muni"].mean())
-    taxa_hom_muni_res = float(muni_res["tem_hom_muni"].mean())
-
-    # Tabela resumo estruturada
-    tabela_relevancia = pd.DataFrame([
-        {
-            "Nível": "Célula CNES-Curso",
-            "Métrica": "Taxa de Alocação Confirmada (%)",
-            "Vagas Imediatas": round(taxa_aloc_imed * 100, 2),
-            "Cadastro Reserva": round(taxa_aloc_res * 100, 2),
-            "Diferença": round(diff_aloc * 100, 2),
-            "Estatística t": round(float(ttest_aloc.statistic), 3),
-            "P-valor": float(ttest_aloc.pvalue),
+    # A decisão deve usar exatamente o grão, a amostra e a variação que
+    # identificam a DDD. O contraste celular amplo fica apenas como descrição:
+    # ele não substitui um primeiro estágio na amostra município-curso.
+    first_stage = model_results["tem_alocado_muni_ddd"]
+    relevant_same_sample = first_stage["beta"] > 0 and first_stage["p_valor"] < 0.10
+    status = "APROVADO" if relevant_same_sample else "NAO_APROVADO"
+    report = {
+        "status_portao": status,
+        "criterio_decisao": (
+            "associação ajustada positiva entre modalidade imediata e alocação confirmada, "
+            "com p < 0,10, no mesmo grão município-curso e na mesma amostra que identifica a DDD"
+        ),
+        "nota_pre_especificacao": (
+            "O roadmap anterior exigia relevância substantiva, mas não registrava limiar numérico. "
+            "A regra acima é um portão conservador de execução, não uma pré-especificação ex ante."
+        ),
+        "diferenca_celular_alocacao_pp": round(100 * raw_aloc_diff, 2),
+        "diferenca_celular_homologacao_pp": round(100 * raw_hom_diff, 2),
+        "n_celulas_universo": int(len(cell_sample)),
+        "n_municipios_universo": int(cell_sample["co_ibge_6d"].nunique()),
+        "amostra_ddd_municipio_curso": {
+            "n_celulas": int(len(sample)),
+            "n_municipios": int(sample["co_ibge_6d"].nunique()),
         },
-        {
-            "Nível": "Célula CNES-Curso",
-            "Métrica": "Taxa de Homologação Efetiva (%)",
-            "Vagas Imediatas": round(taxa_hom_imed * 100, 2),
-            "Cadastro Reserva": round(taxa_hom_res * 100, 2),
-            "Diferença": round(diff_hom * 100, 2),
-            "Estatística t": round(float(ttest_hom.statistic), 3),
-            "P-valor": float(ttest_hom.pvalue),
-        },
-        {
-            "Nível": "Célula Município-Curso",
-            "Métrica": "Taxa de Alocação Confirmada (%)",
-            "Vagas Imediatas": round(taxa_aloc_muni_imed * 100, 2),
-            "Cadastro Reserva": round(taxa_aloc_muni_res * 100, 2),
-            "Diferença": round((taxa_aloc_muni_imed - taxa_aloc_muni_res) * 100, 2),
-            "Estatística t": round(float(stats.ttest_ind(muni_imed["tem_alocado_muni"], muni_res["tem_alocado_muni"]).statistic), 3),
-            "P-valor": float(stats.ttest_ind(muni_imed["tem_alocado_muni"], muni_res["tem_alocado_muni"]).pvalue),
-        },
-        {
-            "Nível": "Célula Município-Curso",
-            "Métrica": "Taxa de Homologação Efetiva (%)",
-            "Vagas Imediatas": round(taxa_hom_muni_imed * 100, 2),
-            "Cadastro Reserva": round(taxa_hom_muni_res * 100, 2),
-            "Diferença": round((taxa_hom_muni_imed - taxa_hom_muni_res) * 100, 2),
-            "Estatística t": round(float(stats.ttest_ind(muni_imed["tem_hom_muni"], muni_res["tem_hom_muni"]).statistic), 3),
-            "P-valor": float(stats.ttest_ind(muni_imed["tem_hom_muni"], muni_res["tem_hom_muni"]).pvalue),
-        },
-    ])
-
-    out_csv = TABELAS_DIR / "tabela_portao_relevancia.csv"
-    tabela_relevancia.to_csv(out_csv, index=False, encoding="utf-8-sig")
-
-    # Relatório JSON
-    resultado_relatorio: Dict[str, Any] = {
-        "status_portao": "APROVADO",
-        "conclusao": "A classificação imediata prediz aumento substantivo e altamente significante na alocação (+19.17 p.p., p < 1e-8) e homologação (+9.78 p.p., p < 1e-4).",
-        "totais_universo": {
-            "total_celulas_cnes_curso": len(df),
-            "total_celulas_municipio_curso": len(df_muni),
-            "total_vagas_anunciadas": int(df["qt_vagas_total"].sum()),
-            "total_alocados_confirmados": int(df["n_alocados_confirmados"].sum()),
-            "total_homologados": int(df["n_homologados"].sum()),
-        },
-        "estatisticas_celulares": {
-            "imediata": {
-                "n_celulas": len(amostra_imediata),
-                "vagas_total": int(amostra_imediata["qt_vagas_total"].sum()),
-                "alocados_total": int(amostra_imediata["n_alocados_confirmados"].sum()),
-                "homologados_total": int(amostra_imediata["n_homologados"].sum()),
-                "taxa_alocacao_confirmada": taxa_aloc_imed,
-                "taxa_homologacao_efetiva": taxa_hom_imed,
-            },
-            "reserva": {
-                "n_celulas": len(amostra_reserva),
-                "vagas_total": int(amostra_reserva["qt_vagas_total"].sum()),
-                "alocados_total": int(amostra_reserva["n_alocados_confirmados"].sum()),
-                "homologados_total": int(amostra_reserva["n_homologados"].sum()),
-                "taxa_alocacao_confirmada": taxa_aloc_res,
-                "taxa_homologacao_efetiva": taxa_hom_res,
-            },
-            "dupla": {
-                "n_celulas": len(amostra_dupla),
-                "vagas_total": int(amostra_dupla["qt_vagas_total"].sum()),
-                "alocados_total": int(amostra_dupla["n_alocados_confirmados"].sum()),
-                "homologados_total": int(amostra_dupla["n_homologados"].sum()),
-                "taxa_alocacao_confirmada": float(amostra_dupla["tem_alocado"].mean()),
-                "taxa_homologacao_efetiva": float(amostra_dupla["tem_homologado"].mean()),
-            },
-        },
-        "diagnostico_cruzamento_regimes": {
-            "alocacao_em_reserva": "22.38% das células de reserva tiveram alocação confirmada via convocações e repescagens no período pós-anúncio.",
-            "implicacao_estimando": "O estimando capta o efeito da oferta para preenchimento imediato versus permanência inicial em reserva (intenção de tratar administrativa), sem reclassificação ex-post.",
-        },
+        "resultados_ajustados": model_results,
+        "tabela_resumo": table.to_dict(orient="records"),
+        "interpretacao": (
+            f"O portão foi {status}. No universo CNES-curso, a diferença bruta foi "
+            f"+{raw_aloc_diff*100:.2f} p.p.; isso não se transporta para a amostra identificadora. "
+            f"Na amostra município-curso da DDD, a associação ajustada com alocação foi "
+            f"{first_stage['beta']*100:+.2f} p.p. (p={first_stage['p_valor']:.4f}). "
+            "Homologação registra candidatura homologada, não entrada em exercício."
+        ),
     }
-
-    out_json = RELATORIOS_DIR / "01_relatorio_portao_relevancia.json"
-    with out_json.open("w", encoding="utf-8") as f:
-        json.dump(resultado_relatorio, f, ensure_ascii=False, indent=2)
-
-    print(f"[OK] Portão de Relevância avaliado com sucesso:")
-    print(f"     Taxa de alocação confirmada: Imediata = {taxa_aloc_imed*100:.1f}% vs Reserva = {taxa_aloc_res*100:.1f}% (Diff: +{diff_aloc*100:.1f} p.p., p={ttest_aloc.pvalue:.2e})")
-    print(f"     Taxa de homologação: Imediata = {taxa_hom_imed*100:.1f}% vs Reserva = {taxa_hom_res*100:.1f}% (Diff: +{diff_hom*100:.1f} p.p., p={ttest_hom.pvalue:.2e})")
-    print(f"     Relatório: {out_json}")
-    print(f"     Tabela: {out_csv}")
+    with (REL / "01_relatorio_portao_relevancia.json").open("w", encoding="utf-8") as handle:
+        json.dump(report, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
+    print(
+        f"[OK] Portão avaliado: {status}; primeiro estágio na amostra DDD "
+        f"{first_stage['beta']*100:+.2f} p.p. (p={first_stage['p_valor']:.4f})."
+    )
 
 
 if __name__ == "__main__":

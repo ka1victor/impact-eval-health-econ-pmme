@@ -1,17 +1,10 @@
-\begin{table}
-\caption{Diagnósticos de Redistribuição, Robustez e Heterogeneidade}
-\label{tab:robustez_redistribuicao}
-\begin{tabular}{llllllll}
+\begin{tabular}{llrrrrrrr}
 \toprule
-Grupo & Especificação / Subamostra & Coeficiente Beta & Erro-Padrão Clusterizado & IC 95% & P-valor & N Obs & N Clusters \\
+Grupo & Especificação & Beta & Erro-padrão & IC 95% inferior & IC 95% superior & P-valor & N & Clusters \\
 \midrule
-A. Redistribuição Espacial & 1. Nível Estabelecimento (CNES) & -0.1630 & (0.1963) & [-0.5477, 0.2216] & 0.4062 & 32,125 & 460 \\
-A. Redistribuição Espacial & 2. Nível Município (Canônico DDD) & -0.2318 & (0.2010) & [-0.6258, 0.1623] & 0.2490 & 20,225 & 152 \\
-A. Redistribuição Espacial & 3. Nível Região de Saúde (Spillovers) & 0.3084 & (0.3831) & [-0.4424, 1.0592] & 0.4208 & 18,850 & 109 \\
-B. Sensibilidade Amostral & 4. Excluindo Top 3 Municípios com Mais Vagas & -0.0801 & (0.1317) & [-0.3383, 0.1781] & 0.5432 & 19,350 & 149 \\
-B. Sensibilidade Amostral & 5. Apenas CBOs Estritamente Unívocos (1:1) & -0.2758 & (0.3490) & [-0.9598, 0.4081] & 0.4293 & 10,150 & 145 \\
-C. Heterogeneidade IVS 2010 & 6. Municípios de Alta / Muito Alta Vulnerabilidade (IVS) & 0.4938** & (0.2456) & [0.0124, 0.9752] & 0.0444 & 3,100 & 28 \\
-C. Heterogeneidade IVS 2010 & 7. Municípios de Média / Baixa Vulnerabilidade (IVS) & -0.3396 & (0.2285) & [-0.7875, 0.1083] & 0.1372 & 17,125 & 124 \\
+Escala geográfica & Município completo (principal) & -0.445908 & 0.245636 & -0.933762 & 0.041946 & 0.072732 & 7975 & 93 \\
+Escala geográfica & Estabelecimento ofertante (diagnóstico) & -0.443275 & 0.400189 & -1.237972 & 0.351422 & 0.270864 & 7525 & 94 \\
+Sensibilidade amostral & Principal sem os 3 municípios com mais vagas & -0.407092 & 0.267907 & -0.939416 & 0.125233 & 0.132174 & 7600 & 90 \\
+Placebo temporal & Placebo: falso início em 2025-01 usando apenas o pré & -0.031401 & 0.188913 & -0.406598 & 0.343797 & 0.868351 & 4147 & 93 \\
 \bottomrule
 \end{tabular}
-\end{table}

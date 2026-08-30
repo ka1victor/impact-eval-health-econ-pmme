@@ -52,4 +52,11 @@ impede o plano agregado vigente, que não identifica bolsistas nem usa os pedido
 administrativos. Nenhum prompt desta fila deve ser reinterpretado para pular os
 portões definidos no roadmap atual.
 
+O plano agregado foi executado em 30/08/2026 e terminou como **comparação
+ajustada**: imediata versus reserva não apresentou primeiro estágio na amostra
+município–curso da DDD. Essa execução não libera o prompt 03, não transforma
+os pedidos A07 em enviados e não autoriza escolher um novo estimador depois do
+resultado. Veja
+[`docs/auditorias/04_auditoria_pipeline_agregado.md`](../docs/auditorias/04_auditoria_pipeline_agregado.md).
+
 WP3, WP4 e WP5 não têm prompts de execução porque estão guardados. Seu backlog está em [`docs/06_backlog_wp3_wp4_wp5.md`](../docs/06_backlog_wp3_wp4_wp5.md).

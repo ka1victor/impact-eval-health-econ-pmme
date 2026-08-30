@@ -1,7 +1,6 @@
-﻿Mecanismo Analisado,Efeito DDD (Beta),Erro-Padrão,P-valor,Média Pré (Trat),Média Pré (Ctrl),Média Pós (Trat),Média Pós (Ctrl),N Obs
-1. Entradas Mensais (Inflows),0.0113,(0.0195),0.5624,0.058,0.062,0.145,0.152,"20,225"
-2. Saídas Mensais (Outflows),-0.0031,(0.0148),0.8313,0.045,0.043,0.037,0.047,"20,225"
-3. Saldo Líquido (Entradas - Saídas),0.0144,(0.0238),0.5453,0.012,0.018,0.108,0.105,"20,225"
-4. Churn Bruto (Entradas + Saídas),0.0081,(0.0250),0.7451,0.103,0.105,0.182,0.199,"20,225"
-5. Retenção 6 Meses (Coorte 2025-08 a 2026-01),+0.0 p.p.,-,Descritivo,-,-,100.0% (172/172),100.0% (194/194),"7,032"
-6. Retenção 12 Meses (Seguimento Completo),Censurado,-,-,-,-,Requer extensão até 2027-01,Requer extensão até 2027-01,-
+﻿Mecanismo,Beta DDD,Erro-padrão,IC 95% inferior,IC 95% superior,P-valor,Primeiro mês,Último mês,N,Clusters
+Entradas após seis meses de ausência,-0.07279239773181248,0.04208054066879998,-0.1563679837592987,0.010783188295673735,0.08701327361004356,202412,202607,6061,93
+Saídas confirmadas por três meses posteriores,-0.01843645842242051,0.05043458076658552,-0.11860388917844203,0.08173097233360102,0.7155385812076187,202406,202604,7018,93
+Saldo líquido nas competências com ambas as margens observáveis,-0.0633628592787368,0.06411224150304574,-0.19069530486980657,0.06396958631233296,0.32559233996844394,202412,202604,5104,93
+Churn bruto nas competências com ambas as margens observáveis,-0.08140968821600483,0.07470737218171007,-0.2297849778730898,0.06696560144108013,0.27868512350277885,202412,202604,5104,93
+Presença aos 6 meses (descritiva; diferença p.p.),7.15834357158343,,,,,202508,202601,1914,93

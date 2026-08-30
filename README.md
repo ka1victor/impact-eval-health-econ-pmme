@@ -12,6 +12,9 @@ Em linguagem curta: **vagas viram médicos — e eles permanecem?**
 
 ## Decisão atual
 
+> **Resultado da execução de 30/08/2026:** comparação ajustada, não impacto
+> causal. O portão de relevância falhou na amostra que identifica a DDD.
+
 O painel principal será `município–curso–mês` para o ciclo 1, chamada 1. A
 exposição é a existência inicial de ao menos uma vaga imediata para o curso no
 município; a comparação é ter apenas cadastro de reserva no mesmo quadro.
@@ -28,10 +31,11 @@ A primeira versão usará o CNES mensal de junho de 2024 a julho de 2026:
 - 2025-07: transição;
 - 2025-08 a 2026-07: trajetória pós disponível.
 
-Será usada uma DDD com efeitos fixos de município–curso, município–mês e
-curso–mês, acompanhada por estudo de evento. O plano completo e seus portões
-estão em [`docs/05_roadmap_execucao.md`](docs/05_roadmap_execucao.md); a fila
-operacional está em [`TODO.md`](TODO.md).
+Foi executada uma DDD com efeitos fixos de município–curso, município–mês e
+curso–mês, acompanhada por estudo de evento. O plano completo está em
+[`docs/05_roadmap_execucao.md`](docs/05_roadmap_execucao.md), e a auditoria do
+pipeline e dos resultados está em
+[`docs/auditorias/04_auditoria_pipeline_agregado.md`](docs/auditorias/04_auditoria_pipeline_agregado.md).
 
 ## Interpretação correta
 
@@ -49,19 +53,22 @@ O estudo mede oferta médica cadastral total no município, não identifica
 individualmente bolsistas e não demonstra, por si só, horas trabalhadas,
 produção, redução de espera ou melhora de saúde.
 
-## Estado dos dados
+## Estado dos dados e da evidência
 
-- O quadro de oferta do ciclo 1 está preservado e auditado.
-- A fonte contém 1.295 células CNES–curso: 503 apenas imediatas, 782 apenas em
-  reserva e 10 com ambas as modalidades.
-- Três competências piloto do CNES confirmam os campos necessários; o painel
-  versionado completo ainda não foi validado.
-- Uma ponte candidata `curso PMM-E → CBO(s)` e scripts de aquisição estão
-  versionados, mas proveniência, sobreposições, perdas e integração municipal
-  ainda precisam passar pelos portões do roadmap.
-- A relevância de imediata versus reserva e a estabilidade longitudinal dos
-  identificadores continuam sem validação conclusiva.
-- Ainda não existe resultado de impacto validado.
+- O quadro de oferta do ciclo 1 está preservado e auditado: 1.295 células
+  CNES–curso, das quais 503 apenas imediatas, 782 apenas em reserva e 10 mistas.
+- As 26 competências do CNES foram processadas, de 2024-06 a 2026-07, usando
+  todos os estabelecimentos dos 368 municípios do quadro.
+- O painel municipal deduplica `CO_PROFISSIONAL_SUS`; não soma a lista nominal,
+  não presume 40 horas e censura margens sem seguimento.
+- A ponte curso–CBO é operacional, não uma crosswalk oficial. Dez cursos sem
+  CBO compartilhado formam a amostra confirmatória.
+- No grão e na amostra da DDD, imediata versus reserva não prediz alocação:
+  +2,79 p.p., erro-padrão 6,89 p.p., `p=0,6871`. O portão causal não foi
+  aprovado.
+- A diferença ajustada principal no estoque foi −0,446 especialista por
+  município–curso (IC 95% [−0,934; 0,042]). Esse número não é interpretado
+  como efeito causal.
 
 O portão A06 continua válido para o desenho individual anterior, bloqueado por
 dados administrativos. O plano agregado atual não exige vincular nominalmente
@@ -84,9 +91,11 @@ pedidos administrativos A07.
 python run_all.py
 ```
 
-O comando reproduz apenas o estado incorporado e validado do repositório. Novas
-rotinas entrarão no pipeline somente depois de passarem pelos portões de esquema,
-cobertura e coerência substantiva.
+O comando exige que os 26 arquivos mensais listados no manifesto CNES já
+estejam disponíveis localmente. Ele reproduz a integração, os portões, a
+comparação ajustada, tabelas, figuras e nota técnica. Novas rotinas entram no
+pipeline somente depois de passarem pelos portões de esquema, cobertura e
+coerência substantiva.
 
 ## Estrutura
 

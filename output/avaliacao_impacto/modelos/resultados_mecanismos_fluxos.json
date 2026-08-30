@@ -1,95 +1,125 @@
 {
+  "amostra": "confirmatória, cursos sem CBO compartilhado",
   "mecanismos_ddd": [
     {
-      "mecanismo": "1. Entradas Mensais (Inflows)",
-      "outcome": "n_entradas",
-      "beta_ddd": 0.011275031403039109,
-      "se": 0.01946283501609526,
-      "t_stat": 0.5793108451936705,
-      "p_valor": 0.5623794490107086,
+      "beta": -0.07279239773181248,
+      "se": 0.04208054066879998,
+      "t_stat": -1.7298351345990042,
+      "p_valor": 0.08701327361004353,
       "ci_95": [
-        -0.02687142426555264,
-        0.049421487071630854
+        -0.15636798376402167,
+        0.01078318830039672
       ],
-      "media_pre_trat": 0.057692307692307696,
-      "media_pre_ctrl": 0.06178489702517163,
-      "media_pos_trat": 0.14516129032258066,
-      "media_pos_ctrl": 0.15217391304347827,
-      "n_obs": 20225,
-      "n_clusters": 152
+      "mecanismo": "Entradas após seis meses de ausência",
+      "outcome": "n_entradas_6m",
+      "n_obs": 6061,
+      "n_clusters": 93,
+      "primeira_competencia_observavel": "202412",
+      "ultima_competencia_observavel": "202607",
+      "diagnosticos_numericos": {
+        "convergiu": true,
+        "iteracoes": 46,
+        "tolerancia": 1e-10,
+        "max_mudanca_final": 8.602912826560782e-11,
+        "max_media_grupo_residual": 5.851208406681963e-11,
+        "n_clusters": 93,
+        "n_obs": 6061
+      }
     },
     {
-      "mecanismo": "2. Saídas Mensais (Outflows)",
-      "outcome": "n_saidas",
-      "beta_ddd": -0.003146319670883963,
-      "se": 0.014769222886885505,
-      "t_stat": -0.21303217474480476,
-      "p_valor": 0.8313018668312712,
+      "beta": -0.01843645842242051,
+      "se": 0.05043458076658552,
+      "t_stat": -0.36555193167453154,
+      "p_valor": 0.7155385812076186,
       "ci_95": [
-        -0.032093464608824236,
-        0.025800825267056314
+        -0.11860388918410264,
+        0.08173097233926163
       ],
-      "media_pre_trat": 0.045492142266335814,
-      "media_pre_ctrl": 0.04330223552191516,
-      "media_pos_trat": 0.036738351254480286,
-      "media_pos_ctrl": 0.04691075514874142,
-      "n_obs": 20225,
-      "n_clusters": 152
+      "mecanismo": "Saídas confirmadas por três meses posteriores",
+      "outcome": "n_saidas_confirmadas_3m",
+      "n_obs": 7018,
+      "n_clusters": 93,
+      "primeira_competencia_observavel": "202406",
+      "ultima_competencia_observavel": "202604",
+      "diagnosticos_numericos": {
+        "convergiu": true,
+        "iteracoes": 45,
+        "tolerancia": 1e-10,
+        "max_mudanca_final": 9.721290439301811e-11,
+        "max_media_grupo_residual": 6.611870079220594e-11,
+        "n_clusters": 93,
+        "n_obs": 7018
+      }
     },
     {
-      "mecanismo": "3. Saldo Líquido (Entradas - Saídas)",
+      "beta": -0.0633628592787368,
+      "se": 0.06411224150304574,
+      "t_stat": -0.9883114018986009,
+      "p_valor": 0.3255923399684437,
+      "ci_95": [
+        -0.19069530487700231,
+        0.0639695863195287
+      ],
+      "mecanismo": "Saldo líquido nas competências com ambas as margens observáveis",
       "outcome": "saldo_liquido",
-      "beta_ddd": 0.014421351073923049,
-      "se": 0.023846275106899385,
-      "t_stat": 0.6047632600594528,
-      "p_valor": 0.5453363085256469,
-      "ci_95": [
-        -0.03231648930103378,
-        0.06115919144887987
-      ],
-      "media_pre_trat": 0.012200165425971878,
-      "media_pre_ctrl": 0.01848266150325647,
-      "media_pos_trat": 0.10842293906810035,
-      "media_pos_ctrl": 0.10526315789473684,
-      "n_obs": 20225,
-      "n_clusters": 152
+      "n_obs": 5104,
+      "n_clusters": 93,
+      "primeira_competencia_observavel": "202412",
+      "ultima_competencia_observavel": "202604",
+      "diagnosticos_numericos": {
+        "convergiu": true,
+        "iteracoes": 45,
+        "tolerancia": 1e-10,
+        "max_mudanca_final": 9.253925403740482e-11,
+        "max_media_grupo_residual": 6.29399102280992e-11,
+        "n_clusters": 93,
+        "n_obs": 5104
+      }
     },
     {
-      "mecanismo": "4. Churn Bruto (Entradas + Saídas)",
-      "outcome": "churn_bruto",
-      "beta_ddd": 0.008128711732155115,
-      "se": 0.02500437854893745,
-      "t_stat": 0.3250915321189033,
-      "p_valor": 0.7451117975858108,
+      "beta": -0.08140968821600483,
+      "se": 0.07470737218171007,
+      "t_stat": -1.0897142522694117,
+      "p_valor": 0.2786851235027785,
       "ci_95": [
-        -0.04087896967956818,
-        0.05713639314387842
+        -0.2297849778814747,
+        0.06696560144946503
       ],
-      "media_pre_trat": 0.10318444995864351,
-      "media_pre_ctrl": 0.10508713254708678,
-      "media_pos_trat": 0.18189964157706093,
-      "media_pos_ctrl": 0.19908466819221968,
-      "n_obs": 20225,
-      "n_clusters": 152
+      "mecanismo": "Churn bruto nas competências com ambas as margens observáveis",
+      "outcome": "churn_bruto",
+      "n_obs": 5104,
+      "n_clusters": 93,
+      "primeira_competencia_observavel": "202412",
+      "ultima_competencia_observavel": "202604",
+      "diagnosticos_numericos": {
+        "convergiu": true,
+        "iteracoes": 45,
+        "tolerancia": 1e-10,
+        "max_mudanca_final": 9.253925403740482e-11,
+        "max_media_grupo_residual": 6.29399102280992e-11,
+        "n_clusters": 93,
+        "n_obs": 5104
+      }
     }
   ],
-  "analise_retencao_6m": {
-    "coorte_entrada": "2025-08 a 2026-01",
-    "janela_avaliacao": "2026-02 a 2026-07",
+  "presenca_6m_descritiva": {
+    "coortes_entrada": "2025-08 a 2026-01",
+    "definicao": "entrante após seis meses de ausência ainda observado no mesmo município-curso em t+6",
+    "nota": "A taxa é descritiva porque condiciona em entrada, que pode ser afetada pelo tratamento.",
     "imediata": {
-      "entradas_totais": 172.0,
-      "retidos_6m": 172.0,
-      "taxa_retencao_pct": 100.0
+      "entrantes_elegiveis": 137.0,
+      "presentes_6m": 119.0,
+      "taxa_presenca_6m_pct": 86.86131386861314
     },
     "reserva": {
-      "entradas_totais": 194.0,
-      "retidos_6m": 194.0,
-      "taxa_retencao_pct": 100.0
+      "entrantes_elegiveis": 202.0,
+      "presentes_6m": 161.0,
+      "taxa_presenca_6m_pct": 79.70297029702971
     },
-    "diferenca_taxa_retencao_pp": 0.0
+    "diferenca_pp_descritiva": 7.15834357158343
   },
-  "retencao_12m": {
-    "status": "CENSURADO",
-    "justificativa": "Para avaliar 12 meses de retenção de toda a coorte de entradas 2025-08 a 2026-01, é necessário estender o painel até 2027-01."
+  "presenca_12m": {
+    "status": "CENSURADA",
+    "requisito": "CNES até 2027-01 para a coorte encerrada em 2026-01"
   }
 }

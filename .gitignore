@@ -33,6 +33,7 @@ wheels/
 # Temporarios
 *.tmp
 *.log
+.matplotlib-cache/
 
 # Temporarios
 *.part
@@ -40,3 +41,6 @@ wheels/
 # Dados brutos grandes (CNES)
 data/raw/cnes/
 output/aquisicao/cnes_mensal/
+output/aquisicao/cnes_vinculos_medicos_2024_2026.parquet
+output/painel_municipio_curso_mensal.parquet
+output/painel_regiao_curso_mensal.parquet

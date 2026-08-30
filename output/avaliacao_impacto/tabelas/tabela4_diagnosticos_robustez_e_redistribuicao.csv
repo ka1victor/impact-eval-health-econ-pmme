@@ -1,8 +1,5 @@
-﻿Grupo,Especificação / Subamostra,Coeficiente Beta,Erro-Padrão Clusterizado,IC 95%,P-valor,N Obs,N Clusters
-A. Redistribuição Espacial,1. Nível Estabelecimento (CNES),-0.1630,(0.1963),"[-0.5477, 0.2216]",0.4062,"32,125",460
-A. Redistribuição Espacial,2. Nível Município (Canônico DDD),-0.2318,(0.2010),"[-0.6258, 0.1623]",0.2490,"20,225",152
-A. Redistribuição Espacial,3. Nível Região de Saúde (Spillovers),0.3084,(0.3831),"[-0.4424, 1.0592]",0.4208,"18,850",109
-B. Sensibilidade Amostral,4. Excluindo Top 3 Municípios com Mais Vagas,-0.0801,(0.1317),"[-0.3383, 0.1781]",0.5432,"19,350",149
-B. Sensibilidade Amostral,5. Apenas CBOs Estritamente Unívocos (1:1),-0.2758,(0.3490),"[-0.9598, 0.4081]",0.4293,"10,150",145
-C. Heterogeneidade IVS 2010,6. Municípios de Alta / Muito Alta Vulnerabilidade (IVS),0.4938**,(0.2456),"[0.0124, 0.9752]",0.0444,"3,100",28
-C. Heterogeneidade IVS 2010,7. Municípios de Média / Baixa Vulnerabilidade (IVS),-0.3396,(0.2285),"[-0.7875, 0.1083]",0.1372,"17,125",124
+﻿Grupo,Especificação,Beta,Erro-padrão,IC 95% inferior,IC 95% superior,P-valor,N,Clusters
+Escala geográfica,Município completo (principal),-0.44590831510756845,0.2456357790600829,-0.9337621748248607,0.04194554460972377,0.07273234053096783,7975,93
+Escala geográfica,Estabelecimento ofertante (diagnóstico),-0.44327520522631747,0.4001894762432113,-1.2379721931896428,0.35142178273700786,0.2708638444414931,7525,94
+Sensibilidade amostral,Principal sem os 3 municípios com mais vagas,-0.40709186837723055,0.267906511638294,-0.9394164004260511,0.12523266367159003,0.13217392012484647,7600,90
+Placebo temporal,Placebo: falso início em 2025-01 usando apenas o pré,-0.03140053231957884,0.18891307419691772,-0.40659820405404773,0.34379713941489004,0.8683510641784786,4147,93

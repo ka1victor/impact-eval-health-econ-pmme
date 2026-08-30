@@ -1,5 +1,5 @@
-﻿Nível,Métrica,Vagas Imediatas,Cadastro Reserva,Diferença,Estatística t,P-valor
-Célula CNES-Curso,Taxa de Alocação Confirmada (%),41.55,22.38,19.17,7.215,1.1124085799045674e-12
-Célula CNES-Curso,Taxa de Homologação Efetiva (%),25.25,15.47,9.78,4.193,3.011428366063907e-05
-Célula Município-Curso,Taxa de Alocação Confirmada (%),43.35,23.82,19.53,7.216,9.549379797761738e-13
-Célula Município-Curso,Taxa de Homologação Efetiva (%),27.04,16.71,10.33,4.308,1.7829295108550683e-05
+﻿Nível,Métrica,Taxa imediata (%),Taxa reserva (%),Diferença bruta (p.p.),Diferença ajustada FE (p.p.),Erro-padrão ajustado (p.p.),P-valor ajustado,N células,N municípios
+Célula CNES-Curso,Alocação confirmada para início (Célula CNES-Curso),41.55,22.38,19.17,5.97,3.41,0.08058445930885728,1285,368
+Célula CNES-Curso,Candidatura homologada (Célula CNES-Curso),25.25,15.47,9.78,1.9,2.98,0.524999155320377,1285,368
+Município-Curso (DDD),Alocação confirmada (Amostra DDD Município-Curso),38.46,41.61,-3.14,2.79,6.89,0.687134028627881,319,93
+Município-Curso (DDD),Candidatura homologada (Amostra DDD Município-Curso),27.47,30.66,-3.18,-2.45,6.54,0.7088735423382674,319,93

@@ -19,16 +19,23 @@
 ## Portões obrigatórios
 
 - [x] Verificar, com alocações e homologações públicas, se a classificação
-  imediata gera exposição administrativa substantivamente distinta da reserva (`01_avaliar_portao_relevancia.py`: +19.17 p.p. em alocação, +9.78 p.p. em homologação).
-- [x] Auditar a proveniência e validar a ponte candidata versionada entre os 16
-  cursos do ciclo 1 e CBOs (`output/aquisicao/ponte_curso_cbo_oficial.json`).
+  imediata gera exposição administrativa substantivamente distinta da reserva.
+  O portão **falhou na amostra identificadora**: +2,79 p.p., EP 6,89 p.p.,
+  `p=0,6871`. Os +19,17 p.p. brutos no universo CNES–curso não substituem esse
+  teste.
+- [x] Auditar a proveniência e congelar a ponte operacional entre os 16 cursos
+  do ciclo 1 e CBOs. Ela não é uma crosswalk oficial, apesar do nome histórico
+  `output/aquisicao/ponte_curso_cbo_oficial.json`.
 - [x] Resolver sobreposições de CBO entre cursos antes de observar efeitos (especificação com CBOs unívocos na Tabela 2 e Tabela 4).
 - [x] Agregar o tratamento para `município–curso` e quantificar a amostra que
-  identifica a DDD dentro do município (152 municípios, 819 células município-curso).
-- [x] Validar estabilidade mensal de `CO_PROFISSIONAL_SUS`, duplicidades e
-  significado de ausência no CNES.
+  identifica a DDD dentro do município (1.184 células em 368 municípios; 319
+  células em 93 municípios no portão confirmatório).
+- [x] Quantificar continuidade mensal de `CO_PROFISSIONAL_SUS`, remover
+  duplicidades intramunicipais e distinguir zero de censura. A continuidade
+  observada não substitui documentação externa da chave.
 - [x] Parar a afirmação causal se relevância, suporte ou integridade longitudinal
-  falharem (relevância e pré-tendências aprovadas: teste Wald F = 5.0188, p = 0.4136).
+  falharem. A linguagem causal foi interrompida pela falha de relevância; o
+  teste de pré-tendências foi `F=1,262`, `p=0,2546`.
 
 ## Construção dos dados
 
@@ -36,9 +43,9 @@
 - [x] Construir o painel `município–curso–mês` e deduplicar profissionais entre
   CNES do mesmo município (`painel_municipio_curso_mes.parquet`).
 - [x] Construir o estoque mensal de especialistas (`especialistas_mst`).
-- [x] Construir entradas com seis meses anteriores de ausência observada (`n_entradas`).
-- [x] Construir saídas apenas quando houver três meses posteriores observados (`n_saidas`).
-- [x] Construir saldo e a coorte madura de entrantes presentes seis meses depois (`permanencia_6m`).
+- [x] Construir entradas com seis meses anteriores de ausência observada (`n_entradas_6m`).
+- [x] Construir saídas apenas quando houver três meses posteriores observados (`n_saidas_confirmadas_3m`).
+- [x] Construir saldo e a coorte madura de entrantes presentes seis meses depois (`entrantes_presentes_6m`).
 - [x] Registrar como censuradas as observações sem horizonte suficiente (12 meses formalmente censurados).
 - [x] Documentar novas ofertas aos controles durante o seguimento (22.38% de alocação em reservas documentados).
 
@@ -49,12 +56,13 @@
 - [x] Estimar a DDD estática do estoque e o estudo de evento (`tabela2_ddd_estatica_resultado_primario.csv` e `figura1_estudo_evento_ddd_dinamico.png`).
 - [x] Aplicar a mesma lógica aos mecanismos maduros, sem condicionar a análise
   causal ao conjunto de entrantes (`tabela3_mecanismos_fluxos_e_retencao.csv` e `figura4_decomposicao_mecanismos_fluxos.png`).
-- [x] Comparar resultados no CNES, município e região como diagnóstico de
-  remanejamento (`tabela4_diagnosticos_robustez_e_redistribuicao.csv` e `figura2_diagnostico_redistribuicao.png`).
+- [x] Comparar município completo e CNES ofertante como diagnóstico de local de
+  alocação; manter a região apenas descritiva, sem estimativa causal de spillover
+  (`tabela4_diagnosticos_robustez_e_redistribuicao.csv`).
 - [x] Auditar pré-tendências, suporte, perdas, clusters dominantes e exposições
   posteriores.
-- [x] Entregar nota curta, classificando o resultado como causal somente se as
-  hipóteses forem defensáveis (`03_nota_tecnica_avaliacao_impacto_pmme.md`).
+- [x] Entregar nota curta com status **comparação ajustada**, pois o portão
+  administrativo falhou (`03_nota_tecnica_avaliacao_impacto_pmme.md`).
 - [x] Integrar scripts e produtos ao `run_all.py` somente depois da validação.
 
 ## Atualização prospectiva

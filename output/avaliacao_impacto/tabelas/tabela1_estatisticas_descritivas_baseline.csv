@@ -1,11 +1,6 @@
-﻿Variável de Caracterização,Vagas Imediatas (Média),Vagas Imediatas (DP),Cadastro Reserva (Média),Cadastro Reserva (DP),Diferença,P-valor
-Estoque Pré-Tratamento de Especialistas (Médicos),4.24,(6.46),3.96,(5.85),+0.28,0.4496
-Taxa de Cobertura Pré-Tratamento (>=1 Médico),0.82,(0.38),0.79,(0.40),+0.03,0.2337
-Carga Horária Semanal Total (Horas/Semana),71.63,(127.03),56.63,(95.05),+15.00**,0.0300
-Carga Horária Ambulatorial (Horas/Semana),33.93,(58.76),26.94,(42.94),+6.99**,0.0277
-Carga Horária Hospitalar (Horas/Semana),36.60,(75.42),29.58,(62.09),+7.02*,0.0959
-Total de Vagas PMM-E Anunciadas na Célula,1.43,(0.92),1.59,(1.07),-0.16***,0.0072
-População Municipal (Censo 2010),39050.48,(73633.81),33684.42,(83202.88),+5366.06,0.2471
-Índice de Vulnerabilidade Social (IVS IPEA 2010),0.34,(0.07),0.34,(0.08),+0.00,0.6620
-IDHM Municipal (2010),0.70,(0.04),0.69,(0.04),+0.00,0.3141
-Renda Domiciliar Per Capita (R$ 2010),471.36,(130.59),471.88,(122.85),-0.51,0.9464
+﻿Variável,Imediata média,Imediata DP,Reserva média,Reserva DP,Diferença bruta,Diferença padronizada,N imediata,N reserva
+Estoque médio pré,7.2464074387151305,9.551865809534872,10.852330151600224,10.957286856644883,-3.6059227128850937,-0.35081760558124636,182,137
+Proporção de meses com cobertura pré,0.9070160608622148,0.27599515960727405,0.9635036496350365,0.18820979861687795,-0.056487588772821784,-0.2391350424817042,182,137
+Vagas anunciadas na célula,1.5879120879120878,1.166032624169048,1.5985401459854014,1.025124483219983,-0.010628058073313573,-0.009680866738042804,182,137
+População municipal 2010,40625.54945054945,76064.759112011,30713.394160583943,64941.90745076322,9912.155289965507,0.14015592816596037,182,137
+IVS 2010,0.3411978021978022,0.06394286465192468,0.3461605839416058,0.07112005524801028,-0.0049627817438036015,-0.07338490174045156,182,137

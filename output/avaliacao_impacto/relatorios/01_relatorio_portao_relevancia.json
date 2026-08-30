@@ -1,41 +1,142 @@
 {
-  "status_portao": "APROVADO",
-  "conclusao": "A classificação imediata prediz aumento substantivo e altamente significante na alocação (+19.17 p.p., p < 1e-8) e homologação (+9.78 p.p., p < 1e-4).",
-  "totais_universo": {
-    "total_celulas_cnes_curso": 1295,
-    "total_celulas_municipio_curso": 1184,
-    "total_vagas_anunciadas": 1823,
-    "total_alocados_confirmados": 468,
-    "total_homologados": 296
+  "status_portao": "NAO_APROVADO",
+  "criterio_decisao": "associação ajustada positiva entre modalidade imediata e alocação confirmada, com p < 0,10, no mesmo grão município-curso e na mesma amostra que identifica a DDD",
+  "nota_pre_especificacao": "O roadmap anterior exigia relevância substantiva, mas não registrava limiar numérico. A regra acima é um portão conservador de execução, não uma pré-especificação ex ante.",
+  "diferenca_celular_alocacao_pp": 19.17,
+  "diferenca_celular_homologacao_pp": 9.78,
+  "n_celulas_universo": 1285,
+  "n_municipios_universo": 368,
+  "amostra_ddd_municipio_curso": {
+    "n_celulas": 319,
+    "n_municipios": 93
   },
-  "estatisticas_celulares": {
-    "imediata": {
-      "n_celulas": 503,
-      "vagas_total": 668,
-      "alocados_total": 253,
-      "homologados_total": 151,
-      "taxa_alocacao_confirmada": 0.415506958250497,
-      "taxa_homologacao_efetiva": 0.2524850894632207
+  "resultados_ajustados": {
+    "tem_alocado": {
+      "beta": 0.05972435751193,
+      "se": 0.03408647313157363,
+      "t_stat": 1.7521424783782777,
+      "p_valor": 0.08058445930885727,
+      "ci_95": [
+        -0.007304951661149854,
+        0.12675366668500984
+      ],
+      "diagnosticos": {
+        "convergiu": true,
+        "iteracoes": 15,
+        "tolerancia": 1e-10,
+        "max_mudanca_final": 2.90816259962412e-11,
+        "max_media_grupo_residual": 5.503425493103009e-12,
+        "n_clusters": 368,
+        "n_obs": 1285
+      }
     },
-    "reserva": {
-      "n_celulas": 782,
-      "vagas_total": 1134,
-      "alocados_total": 211,
-      "homologados_total": 142,
-      "taxa_alocacao_confirmada": 0.2237851662404092,
-      "taxa_homologacao_efetiva": 0.1547314578005115
+    "tem_homologado": {
+      "beta": 0.018981820334157944,
+      "se": 0.0298331151704226,
+      "t_stat": 0.6362667869487885,
+      "p_valor": 0.5249991553203766,
+      "ci_95": [
+        -0.03968347755792813,
+        0.07764711822624402
+      ],
+      "diagnosticos": {
+        "convergiu": true,
+        "iteracoes": 14,
+        "tolerancia": 1e-10,
+        "max_mudanca_final": 7.183887339168304e-11,
+        "max_media_grupo_residual": 1.3601983428479513e-11,
+        "n_clusters": 368,
+        "n_obs": 1285
+      }
     },
-    "dupla": {
-      "n_celulas": 10,
-      "vagas_total": 21,
-      "alocados_total": 4,
-      "homologados_total": 3,
-      "taxa_alocacao_confirmada": 0.3,
-      "taxa_homologacao_efetiva": 0.2
+    "tem_alocado_muni_ddd": {
+      "beta": 0.02785417073855955,
+      "se": 0.06894217720365181,
+      "t_stat": 0.40402220916638154,
+      "p_valor": 0.6871340286278808,
+      "ci_95": [
+        -0.10907094406643342,
+        0.16477928554355253
+      ],
+      "diagnosticos": {
+        "convergiu": true,
+        "iteracoes": 47,
+        "tolerancia": 1e-10,
+        "max_mudanca_final": 6.295053367466608e-11,
+        "max_media_grupo_residual": 4.281535542771664e-11,
+        "n_clusters": 93,
+        "n_obs": 319
+      }
+    },
+    "tem_homologado_muni_ddd": {
+      "beta": -0.024494868103618662,
+      "se": 0.06540199433381118,
+      "t_stat": -0.3745278466371695,
+      "p_valor": 0.7088735423382673,
+      "ci_95": [
+        -0.15438887415131639,
+        0.10539913794407905
+      ],
+      "diagnosticos": {
+        "convergiu": true,
+        "iteracoes": 47,
+        "tolerancia": 1e-10,
+        "max_mudanca_final": 6.295053367466608e-11,
+        "max_media_grupo_residual": 4.281535542771664e-11,
+        "n_clusters": 93,
+        "n_obs": 319
+      }
     }
   },
-  "diagnostico_cruzamento_regimes": {
-    "alocacao_em_reserva": "22.38% das células de reserva tiveram alocação confirmada via convocações e repescagens no período pós-anúncio.",
-    "implicacao_estimando": "O estimando capta o efeito da oferta para preenchimento imediato versus permanência inicial em reserva (intenção de tratar administrativa), sem reclassificação ex-post."
-  }
+  "tabela_resumo": [
+    {
+      "Nível": "Célula CNES-Curso",
+      "Métrica": "Alocação confirmada para início (Célula CNES-Curso)",
+      "Taxa imediata (%)": 41.55,
+      "Taxa reserva (%)": 22.38,
+      "Diferença bruta (p.p.)": 19.17,
+      "Diferença ajustada FE (p.p.)": 5.97,
+      "Erro-padrão ajustado (p.p.)": 3.41,
+      "P-valor ajustado": 0.08058445930885727,
+      "N células": 1285,
+      "N municípios": 368
+    },
+    {
+      "Nível": "Célula CNES-Curso",
+      "Métrica": "Candidatura homologada (Célula CNES-Curso)",
+      "Taxa imediata (%)": 25.25,
+      "Taxa reserva (%)": 15.47,
+      "Diferença bruta (p.p.)": 9.78,
+      "Diferença ajustada FE (p.p.)": 1.9,
+      "Erro-padrão ajustado (p.p.)": 2.98,
+      "P-valor ajustado": 0.5249991553203766,
+      "N células": 1285,
+      "N municípios": 368
+    },
+    {
+      "Nível": "Município-Curso (DDD)",
+      "Métrica": "Alocação confirmada (Amostra DDD Município-Curso)",
+      "Taxa imediata (%)": 38.46,
+      "Taxa reserva (%)": 41.61,
+      "Diferença bruta (p.p.)": -3.14,
+      "Diferença ajustada FE (p.p.)": 2.79,
+      "Erro-padrão ajustado (p.p.)": 6.89,
+      "P-valor ajustado": 0.6871340286278808,
+      "N células": 319,
+      "N municípios": 93
+    },
+    {
+      "Nível": "Município-Curso (DDD)",
+      "Métrica": "Candidatura homologada (Amostra DDD Município-Curso)",
+      "Taxa imediata (%)": 27.47,
+      "Taxa reserva (%)": 30.66,
+      "Diferença bruta (p.p.)": -3.18,
+      "Diferença ajustada FE (p.p.)": -2.45,
+      "Erro-padrão ajustado (p.p.)": 6.54,
+      "P-valor ajustado": 0.7088735423382673,
+      "N células": 319,
+      "N municípios": 93
+    }
+  ],
+  "interpretacao": "O portão foi NAO_APROVADO. No universo CNES-curso, a diferença bruta foi +19.17 p.p.; isso não se transporta para a amostra identificadora. Na amostra município-curso da DDD, a associação ajustada com alocação foi +2.79 p.p. (p=0.6871). Homologação registra candidatura homologada, não entrada em exercício."
 }

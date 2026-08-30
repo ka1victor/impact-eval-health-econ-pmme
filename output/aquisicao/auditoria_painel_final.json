@@ -1,15 +1,450 @@
 {
-  "status": "CONCLUIDO_COM_SUCESSO",
-  "timestamp": "2026-08-30T02:35:21.411706",
-  "total_linhas": 33670,
-  "total_celulas": 1295,
-  "total_competencias": 26,
-  "estatisticas_painel": {
-    "soma_especialistas_mes": 134047,
-    "soma_entradas": 2948,
-    "soma_saidas": 1320,
-    "soma_retidos_6m": 1324,
-    "cobertura_media": 0.810959310959311,
-    "fte_medio_semanal": 64.87041877041877
+  "status": "APROVADO_PARA_ESTIMACAO",
+  "data_execucao": "2026-08-30T19:36:11",
+  "desenho": "CNES-only; universo municipal completo; sem identificação nominal de bolsistas",
+  "ponte": {
+    "arquivo": "output/aquisicao/ponte_curso_cbo_oficial.json",
+    "versao": "2.0_operacional_auditada",
+    "status_substantivo": "OPERACIONAL_NAO_PUBLICADA_COMO_CROSSWALK_OFICIAL",
+    "cursos_sem_sobreposicao": [
+      1,
+      2,
+      3,
+      5,
+      9,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  "cobertura": {
+    "inicio": "202406",
+    "fim": "202607",
+    "n_competencias": 26
+  },
+  "amostra": {
+    "municipios": 368,
+    "celulas_municipio_curso": 1184,
+    "celulas_confirmatorias": 587,
+    "municipios_identificadores_confirmatorios": 93,
+    "cnes_ofertantes": 460,
+    "cnes_observados_em_todos_os_municipios_max_mensal": 30556
+  },
+  "definicoes": {
+    "estoque": "CO_PROFISSIONAL_SUS distinto em qualquer CNES do município, dentro dos CBOs operacionais do curso",
+    "entrada": "presente em t e ausente nos seis meses anteriores observados",
+    "saida": "presente em t e ausente nos três meses posteriores observados",
+    "presenca_6m": "entrante elegível em t observado no mesmo município-curso em t+6",
+    "zero": "competência presente sem profissional elegível na célula",
+    "ausente": "métrica censurada por janela longitudinal insuficiente"
+  },
+  "checks": {
+    "26_competencias_presentes": true,
+    "painel_municipal_balanceado": true,
+    "painel_cnes_balanceado": true,
+    "painel_regional_balanceado": true,
+    "nenhuma_lista_nominal_incorporada": true,
+    "estoque_municipal_nao_negativo": true,
+    "censura_entradas_primeiros_6_meses": true,
+    "censura_saidas_ultimos_3_meses": true
+  },
+  "auditoria_mensal": [
+    {
+      "competencia": "202406",
+      "linhas_fonte": 1577081,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 26826,
+      "profissionais_municipio_curso": 15456,
+      "duplicacoes_intramunicipais_removidas": 11370,
+      "cnes_observados_nos_municipios": 28986
+    },
+    {
+      "competencia": "202407",
+      "linhas_fonte": 1589093,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 27000,
+      "profissionais_municipio_curso": 15546,
+      "duplicacoes_intramunicipais_removidas": 11454,
+      "cnes_observados_nos_municipios": 28910
+    },
+    {
+      "competencia": "202408",
+      "linhas_fonte": 1596900,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 26995,
+      "profissionais_municipio_curso": 15597,
+      "duplicacoes_intramunicipais_removidas": 11398,
+      "cnes_observados_nos_municipios": 28978
+    },
+    {
+      "competencia": "202409",
+      "linhas_fonte": 1593349,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 26945,
+      "profissionais_municipio_curso": 15590,
+      "duplicacoes_intramunicipais_removidas": 11355,
+      "cnes_observados_nos_municipios": 28817
+    },
+    {
+      "competencia": "202410",
+      "linhas_fonte": 1601624,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 27191,
+      "profissionais_municipio_curso": 15718,
+      "duplicacoes_intramunicipais_removidas": 11473,
+      "cnes_observados_nos_municipios": 29158
+    },
+    {
+      "competencia": "202411",
+      "linhas_fonte": 1608112,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 27199,
+      "profissionais_municipio_curso": 15729,
+      "duplicacoes_intramunicipais_removidas": 11470,
+      "cnes_observados_nos_municipios": 29255
+    },
+    {
+      "competencia": "202412",
+      "linhas_fonte": 1617598,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 27274,
+      "profissionais_municipio_curso": 15758,
+      "duplicacoes_intramunicipais_removidas": 11516,
+      "cnes_observados_nos_municipios": 29276
+    },
+    {
+      "competencia": "202501",
+      "linhas_fonte": 1621631,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 27175,
+      "profissionais_municipio_curso": 15696,
+      "duplicacoes_intramunicipais_removidas": 11479,
+      "cnes_observados_nos_municipios": 29302
+    },
+    {
+      "competencia": "202502",
+      "linhas_fonte": 1626730,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 27148,
+      "profissionais_municipio_curso": 15708,
+      "duplicacoes_intramunicipais_removidas": 11440,
+      "cnes_observados_nos_municipios": 29350
+    },
+    {
+      "competencia": "202503",
+      "linhas_fonte": 1637505,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 27279,
+      "profissionais_municipio_curso": 15803,
+      "duplicacoes_intramunicipais_removidas": 11476,
+      "cnes_observados_nos_municipios": 29492
+    },
+    {
+      "competencia": "202504",
+      "linhas_fonte": 1644409,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 27505,
+      "profissionais_municipio_curso": 15913,
+      "duplicacoes_intramunicipais_removidas": 11592,
+      "cnes_observados_nos_municipios": 29548
+    },
+    {
+      "competencia": "202505",
+      "linhas_fonte": 1653296,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 27707,
+      "profissionais_municipio_curso": 16005,
+      "duplicacoes_intramunicipais_removidas": 11702,
+      "cnes_observados_nos_municipios": 29597
+    },
+    {
+      "competencia": "202506",
+      "linhas_fonte": 1662159,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 27916,
+      "profissionais_municipio_curso": 16111,
+      "duplicacoes_intramunicipais_removidas": 11805,
+      "cnes_observados_nos_municipios": 29672
+    },
+    {
+      "competencia": "202507",
+      "linhas_fonte": 1669656,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 28103,
+      "profissionais_municipio_curso": 16207,
+      "duplicacoes_intramunicipais_removidas": 11896,
+      "cnes_observados_nos_municipios": 29822
+    },
+    {
+      "competencia": "202508",
+      "linhas_fonte": 1677827,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 28260,
+      "profissionais_municipio_curso": 16316,
+      "duplicacoes_intramunicipais_removidas": 11944,
+      "cnes_observados_nos_municipios": 29958
+    },
+    {
+      "competencia": "202509",
+      "linhas_fonte": 1685691,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 28478,
+      "profissionais_municipio_curso": 16482,
+      "duplicacoes_intramunicipais_removidas": 11996,
+      "cnes_observados_nos_municipios": 30081
+    },
+    {
+      "competencia": "202510",
+      "linhas_fonte": 1690984,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 28838,
+      "profissionais_municipio_curso": 16660,
+      "duplicacoes_intramunicipais_removidas": 12178,
+      "cnes_observados_nos_municipios": 30070
+    },
+    {
+      "competencia": "202511",
+      "linhas_fonte": 1695340,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 29087,
+      "profissionais_municipio_curso": 16823,
+      "duplicacoes_intramunicipais_removidas": 12264,
+      "cnes_observados_nos_municipios": 29973
+    },
+    {
+      "competencia": "202512",
+      "linhas_fonte": 1702293,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 29132,
+      "profissionais_municipio_curso": 16872,
+      "duplicacoes_intramunicipais_removidas": 12260,
+      "cnes_observados_nos_municipios": 29803
+    },
+    {
+      "competencia": "202601",
+      "linhas_fonte": 1713486,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 29353,
+      "profissionais_municipio_curso": 16985,
+      "duplicacoes_intramunicipais_removidas": 12368,
+      "cnes_observados_nos_municipios": 29737
+    },
+    {
+      "competencia": "202602",
+      "linhas_fonte": 1717638,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 29433,
+      "profissionais_municipio_curso": 17087,
+      "duplicacoes_intramunicipais_removidas": 12346,
+      "cnes_observados_nos_municipios": 29675
+    },
+    {
+      "competencia": "202603",
+      "linhas_fonte": 1732429,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 29832,
+      "profissionais_municipio_curso": 17348,
+      "duplicacoes_intramunicipais_removidas": 12484,
+      "cnes_observados_nos_municipios": 29773
+    },
+    {
+      "competencia": "202604",
+      "linhas_fonte": 1745051,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 30199,
+      "profissionais_municipio_curso": 17549,
+      "duplicacoes_intramunicipais_removidas": 12650,
+      "cnes_observados_nos_municipios": 29967
+    },
+    {
+      "competencia": "202605",
+      "linhas_fonte": 1758035,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 30433,
+      "profissionais_municipio_curso": 17655,
+      "duplicacoes_intramunicipais_removidas": 12778,
+      "cnes_observados_nos_municipios": 30149
+    },
+    {
+      "competencia": "202606",
+      "linhas_fonte": 1770894,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 30831,
+      "profissionais_municipio_curso": 17842,
+      "duplicacoes_intramunicipais_removidas": 12989,
+      "cnes_observados_nos_municipios": 30386
+    },
+    {
+      "competencia": "202607",
+      "linhas_fonte": 1781518,
+      "ids_profissionais_invalidos_descartados": 0,
+      "registros_municipais_antes_deduplicacao": 31127,
+      "profissionais_municipio_curso": 17996,
+      "duplicacoes_intramunicipais_removidas": 13131,
+      "cnes_observados_nos_municipios": 30556
+    }
+  ],
+  "diagnostico_identificador_longitudinal": {
+    "campo": "CO_PROFISSIONAL_SUS",
+    "escopo": "continuidade de pessoa-município-curso entre competências adjacentes",
+    "mediana_sobrevivencia_sobre_mes_anterior_pct": 99.15971776779988,
+    "min_sobrevivencia_sobre_mes_anterior_pct": 98.64830562254093,
+    "mediana_participacao_de_ids_ja_observados_pct": 98.46298031865042,
+    "min_participacao_de_ids_ja_observados_pct": 97.63085081853816,
+    "pares_adjacentes": [
+      {
+        "de": "202406",
+        "para": "202407",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.4047619047619,
+        "participacao_de_ids_ja_observados_pct": 98.82928084394699
+      },
+      {
+        "de": "202407",
+        "para": "202408",
+        "sobrevivencia_sobre_mes_anterior_pct": 98.95149877782066,
+        "participacao_de_ids_ja_observados_pct": 98.62794127075719
+      },
+      {
+        "de": "202408",
+        "para": "202409",
+        "sobrevivencia_sobre_mes_anterior_pct": 98.76258254792589,
+        "participacao_de_ids_ja_observados_pct": 98.80692751763951
+      },
+      {
+        "de": "202409",
+        "para": "202410",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.15971776779988,
+        "participacao_de_ids_ja_observados_pct": 98.35220766000764
+      },
+      {
+        "de": "202410",
+        "para": "202411",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.36378674131569,
+        "participacao_de_ids_ja_observados_pct": 99.29429715811558
+      },
+      {
+        "de": "202411",
+        "para": "202412",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.33880094093712,
+        "participacao_de_ids_ja_observados_pct": 99.15598426196217
+      },
+      {
+        "de": "202412",
+        "para": "202501",
+        "sobrevivencia_sobre_mes_anterior_pct": 98.64830562254093,
+        "participacao_de_ids_ja_observados_pct": 99.03797145769623
+      },
+      {
+        "de": "202501",
+        "para": "202502",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.05708460754332,
+        "participacao_de_ids_ja_observados_pct": 98.98141074611662
+      },
+      {
+        "de": "202502",
+        "para": "202503",
+        "sobrevivencia_sobre_mes_anterior_pct": 98.80952380952381,
+        "participacao_de_ids_ja_observados_pct": 98.21552869708283
+      },
+      {
+        "de": "202503",
+        "para": "202504",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.24065050939694,
+        "participacao_de_ids_ja_observados_pct": 98.55464085967448
+      },
+      {
+        "de": "202504",
+        "para": "202505",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.03223779299944,
+        "participacao_de_ids_ja_observados_pct": 98.46298031865042
+      },
+      {
+        "de": "202505",
+        "para": "202506",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.4251796313652,
+        "participacao_de_ids_ja_observados_pct": 98.77102600707592
+      },
+      {
+        "de": "202506",
+        "para": "202507",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.03792439947861,
+        "participacao_de_ids_ja_observados_pct": 98.45128648115012
+      },
+      {
+        "de": "202507",
+        "para": "202508",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.17936694021103,
+        "participacao_de_ids_ja_observados_pct": 98.51679333169895
+      },
+      {
+        "de": "202508",
+        "para": "202509",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.00710958568277,
+        "participacao_de_ids_ja_observados_pct": 98.00995024875621
+      },
+      {
+        "de": "202509",
+        "para": "202510",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.16272297051329,
+        "participacao_de_ids_ja_observados_pct": 98.1032412965186
+      },
+      {
+        "de": "202510",
+        "para": "202511",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.29771908763506,
+        "participacao_de_ids_ja_observados_pct": 98.33561195981692
+      },
+      {
+        "de": "202511",
+        "para": "202512",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.25102538191761,
+        "participacao_de_ids_ja_observados_pct": 98.96277856804173
+      },
+      {
+        "de": "202512",
+        "para": "202601",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.09909909909909,
+        "participacao_de_ids_ja_observados_pct": 98.43979982337356
+      },
+      {
+        "de": "202601",
+        "para": "202602",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.07565498969679,
+        "participacao_de_ids_ja_observados_pct": 98.48422777550185
+      },
+      {
+        "de": "202602",
+        "para": "202603",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.12213963832153,
+        "participacao_de_ids_ja_observados_pct": 97.63085081853816
+      },
+      {
+        "de": "202603",
+        "para": "202604",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.27369149181462,
+        "participacao_de_ids_ja_observados_pct": 98.13664596273291
+      },
+      {
+        "de": "202604",
+        "para": "202605",
+        "sobrevivencia_sobre_mes_anterior_pct": 98.8774289133284,
+        "participacao_de_ids_ja_observados_pct": 98.28377230246389
+      },
+      {
+        "de": "202605",
+        "para": "202606",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.17870291702067,
+        "participacao_de_ids_ja_observados_pct": 98.13922206030713
+      },
+      {
+        "de": "202606",
+        "para": "202607",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.21533460374397,
+        "participacao_de_ids_ja_observados_pct": 98.36630362302733
+      }
+    ],
+    "limite": "Continuidade empírica elevada é compatível com chave longitudinal estável, mas não substitui documentação externa do identificador nem distingue mudança real de cadastro."
   }
 }

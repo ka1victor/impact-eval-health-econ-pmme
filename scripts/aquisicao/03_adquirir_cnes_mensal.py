@@ -253,7 +253,7 @@ def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     MONTHLY_PARQUET_DIR.mkdir(parents=True, exist_ok=True)
 
-    print("=== [Subagente 2] Aquisição e Extração Resiliente do CNES (26 Competências) ===", flush=True)
+    print("=== Aquisição e Extração Resiliente do CNES (26 Competências) ===", flush=True)
     print(f"Período: {ALL_COMPETENCIAS[0]} a {ALL_COMPETENCIAS[-1]} (Total: {len(ALL_COMPETENCIAS)} meses)\n", flush=True)
 
     manifest_entries = []
@@ -319,7 +319,7 @@ def main() -> None:
     with MANIFEST_FILE.open("w", encoding="utf-8") as f:
         json.dump(
             {
-                "subagente": "Subagente 2 — CNES Mensal",
+                "gerador": "scripts/aquisicao/03_adquirir_cnes_mensal.py",
                 "data_execucao": datetime.date.today().isoformat(),
                 "periodo_planejado": "2024-06 a 2026-07",
                 "total_competencias_planejadas": len(ALL_COMPETENCIAS),

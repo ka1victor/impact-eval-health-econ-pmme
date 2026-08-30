@@ -1,150 +1,95 @@
 [
   {
-    "nome_modelo": "M1_DiD_Basico",
-    "descricao": "DiD com FE Célula e Mês",
-    "outcome": "especialistas_mst",
-    "beta": 0.05726250590416062,
-    "se": 0.11154731364104509,
-    "t_stat": 0.5133472428428814,
-    "p_valor": 0.6077084426508417,
+    "beta": -0.44590831510756845,
+    "se": 0.2456357790600829,
+    "t_stat": -1.8153231455687022,
+    "p_valor": 0.07273234053096783,
     "ci_95": [
-      -0.16136621140448124,
-      0.27589122321280246
+      -0.9337621748524301,
+      0.04194554463729311
     ],
-    "r2_within": 0.00015896196962472686,
-    "n_obs": 29300,
-    "n_clusters": 368,
-    "media_dep_var": 4.312559726962458,
-    "desv_padrao_dep_var": 6.424199259159513,
-    "media_pre_tratamento": 4.2274464196710415,
-    "media_pre_controle": 3.944016491266139,
+    "nome_modelo": "M1_DDD_Principal_Confirmatoria",
+    "descricao": "DDD do estoque; cursos sem CBO compartilhado",
+    "outcome": "especialistas_mst",
+    "n_obs": 7975,
+    "n_clusters": 93,
+    "media_pre_tratamento": 7.246407438715131,
+    "media_pre_controle": 10.852330151600224,
     "efeitos_fixos": [
-      "cell_id",
-      "competencia"
-    ]
+      "município-curso",
+      "município-mês",
+      "curso-mês"
+    ],
+    "diagnosticos_numericos": {
+      "convergiu": true,
+      "iteracoes": 48,
+      "tolerancia": 1e-10,
+      "max_mudanca_final": 8.125511374856842e-11,
+      "max_media_grupo_residual": 5.526512580900089e-11,
+      "n_clusters": 93,
+      "n_obs": 7975
+    }
   },
   {
-    "nome_modelo": "M2_DiD_Curso_Mes",
-    "descricao": "DiD com FE Célula e Curso-Mês",
-    "outcome": "especialistas_mst",
-    "beta": 0.017024940698383697,
-    "se": 0.2009897392814901,
-    "t_stat": 0.08470552158157652,
-    "p_valor": 0.9324955061599967,
+    "beta": -0.23189251298998884,
+    "se": 0.1519102683927911,
+    "t_stat": -1.5265097971546557,
+    "p_valor": 0.12898877838569775,
     "ci_95": [
-      -0.3769077095554323,
-      0.41095759095219964
+      -0.5320528221252411,
+      0.06826779614526343
     ],
-    "r2_within": 8.161011515794847e-06,
-    "n_obs": 29300,
-    "n_clusters": 368,
-    "media_dep_var": 4.312559726962458,
-    "desv_padrao_dep_var": 6.424199259159513,
-    "media_pre_tratamento": 4.2274464196710415,
-    "media_pre_controle": 3.944016491266139,
+    "nome_modelo": "M2_DDD_Ampliada",
+    "descricao": "DDD do estoque; 16 cursos como sensibilidade operacional",
+    "outcome": "especialistas_mst",
+    "n_obs": 20150,
+    "n_clusters": 151,
+    "media_pre_tratamento": 11.16852770885029,
+    "media_pre_controle": 10.308578518255938,
     "efeitos_fixos": [
-      "cell_id",
-      "course_month"
-    ]
+      "município-curso",
+      "município-mês",
+      "curso-mês"
+    ],
+    "diagnosticos_numericos": {
+      "convergiu": true,
+      "iteracoes": 32,
+      "tolerancia": 1e-10,
+      "max_mudanca_final": 6.090883353238041e-11,
+      "max_media_grupo_residual": 3.1155189539333605e-11,
+      "n_clusters": 151,
+      "n_obs": 20150
+    }
   },
   {
-    "nome_modelo": "M3_DDD_Principal",
-    "descricao": "DDD Canônica com FE Célula, Município-Mês e Curso-Mês",
-    "outcome": "especialistas_mst",
-    "beta": -0.23175280851568641,
-    "se": 0.20103381865985057,
-    "t_stat": -1.1528050855354461,
-    "p_valor": 0.24899039655851418,
+    "beta": 0.007288905319240404,
+    "se": 0.015404939942676272,
+    "t_stat": 0.47315376407589654,
+    "p_valor": 0.6372242024778708,
     "ci_95": [
-      -0.6257718527635499,
-      0.16226623573217697
+      -0.023306635114362866,
+      0.03788444575284367
     ],
-    "r2_within": 0.002053666105158669,
-    "n_obs": 20225,
-    "n_clusters": 152,
-    "media_dep_var": 4.199703337453647,
-    "desv_padrao_dep_var": 5.773061889749066,
-    "media_pre_tratamento": 3.8968155500413566,
-    "media_pre_controle": 3.9614504488646367,
-    "efeitos_fixos": [
-      "cell_id",
-      "muni_month",
-      "course_month"
-    ]
-  },
-  {
-    "nome_modelo": "M4_DDD_Univocos",
-    "descricao": "DDD Canônica em CBOs Estritamente Unívocos (sem sobreposição)",
-    "outcome": "especialistas_mst",
-    "beta": -0.27583342334336874,
-    "se": 0.3489729350534061,
-    "t_stat": -0.7904149452196222,
-    "p_valor": 0.4292854769039217,
-    "ci_95": [
-      -0.95980780762728,
-      0.4081409609405426
-    ],
-    "r2_within": 0.003024212223825984,
-    "n_obs": 10150,
-    "n_clusters": 145,
-    "media_dep_var": 4.469852216748769,
-    "desv_padrao_dep_var": 5.670565519374646,
-    "media_pre_tratamento": 2.984126984126984,
-    "media_pre_controle": 6.173826173826174,
-    "efeitos_fixos": [
-      "cell_id",
-      "muni_month",
-      "course_month"
-    ]
-  },
-  {
-    "nome_modelo": "M5_DDD_Cobertura_Binaria",
-    "descricao": "DDD Canônica sobre Probabilidade de Cobertura Local (>=1 Médico)",
+    "nome_modelo": "M3_DDD_Cobertura",
+    "descricao": "DDD da probabilidade de ao menos um especialista",
     "outcome": "cobertura_binaria_mst",
-    "beta": 0.03353387888908117,
-    "se": 0.020341123417376615,
-    "t_stat": 1.6485755580458505,
-    "p_valor": 0.09923461950847384,
-    "ci_95": [
-      -0.006333990414061297,
-      0.07340174819222364
-    ],
-    "r2_within": 0.0022578073629239137,
-    "n_obs": 20225,
-    "n_clusters": 152,
-    "media_dep_var": 0.8267490729295427,
-    "desv_padrao_dep_var": 0.3784734148769858,
-    "media_pre_tratamento": 0.8219602977667494,
-    "media_pre_controle": 0.7980989262453794,
+    "n_obs": 7975,
+    "n_clusters": 93,
+    "media_pre_tratamento": 0.9070160608622148,
+    "media_pre_controle": 0.9635036496350365,
     "efeitos_fixos": [
-      "cell_id",
-      "muni_month",
-      "course_month"
-    ]
-  },
-  {
-    "nome_modelo": "M6_DDD_Carga_Horaria_FTE",
-    "descricao": "DDD Canônica sobre Carga Horária Semanal Total (Horas/Semana)",
-    "outcome": "fte_total",
-    "beta": -3.3482571433224693,
-    "se": 4.457607859387061,
-    "t_stat": -0.7511331747747922,
-    "p_valor": 0.4525725121483959,
-    "ci_95": [
-      -12.085008004923795,
-      5.388493718278857
+      "município-curso",
+      "município-mês",
+      "curso-mês"
     ],
-    "r2_within": 0.00100177246963562,
-    "n_obs": 20225,
-    "n_clusters": 152,
-    "media_dep_var": 69.99100123609394,
-    "desv_padrao_dep_var": 114.75101269732895,
-    "media_pre_tratamento": 63.3116211745244,
-    "media_pre_controle": 58.34853018834712,
-    "efeitos_fixos": [
-      "cell_id",
-      "muni_month",
-      "course_month"
-    ]
+    "diagnosticos_numericos": {
+      "convergiu": true,
+      "iteracoes": 45,
+      "tolerancia": 1e-10,
+      "max_mudanca_final": 8.55472914729205e-11,
+      "max_media_grupo_residual": 5.818445031335884e-11,
+      "n_clusters": 93,
+      "n_obs": 7975
+    }
   }
 ]

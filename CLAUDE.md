@@ -43,6 +43,10 @@
   de imediata versus reserva, ponte curso–CBO, painel CNES, estoque municipal,
   mecanismos maduros, DDD e estudo de evento. Demais WPs permanecem como
   agenda, salvo nova autorização expressa do autor.
+- A execução agregada de 30/08/2026 terminou como comparação ajustada: o
+  portão de relevância falhou na amostra município–curso da DDD. Não promover
+  esses resultados a efeito causal nem escolher filtros, janelas ou estimadores
+  retrospectivamente para mudar essa conclusão.
 - Os pares de tarefas 01–02 e 04–05 só podem rodar em paralelo em worktrees isolados.
 - Cada agente deve produzir commit próprio e não fazer push ou merge, salvo instrução explícita do autor.
 - `run_all.py` é o ponto de entrada ponta a ponta do estado validado do projeto.

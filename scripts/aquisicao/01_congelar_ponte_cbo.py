@@ -1,4 +1,4 @@
-"""01_congelar_ponte_cbo.py — Ponte Oficial Curso PMM-E -> CBOs MTE/CNES.
+"""01_congelar_ponte_cbo.py — Ponte operacional Curso PMM-E -> CBOs CNES.
 
 Este script estabelece e congela a correspondência determinística entre os 16 cursos
 de formação/aprimoramento do Programa Mais Médicos Especialistas (PMM-E / Lei 15.233/2025)
@@ -250,15 +250,47 @@ def construir_dicionario_cbo() -> Dict[str, Any]:
         item["cod_curso"] for item in CURSOS_PMME_CBO if item["sobreposicao"]
     ]
 
+    catalogo_auditado: List[Dict[str, Any]] = []
+    for item in CURSOS_PMME_CBO:
+        registro = dict(item)
+        registro["status_uso"] = "CONFIRMATORIO_SEM_SOBREPOSICAO" if not item["sobreposicao"] else "SENSIBILIDADE_AMPLIADA"
+        registro["natureza_correspondencia"] = (
+            "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; "
+            "não é uma crosswalk publicada pelo controlador do PMM-E."
+        )
+        catalogo_auditado.append(registro)
+
     resultado: Dict[str, Any] = {
-        "versao_ponte": "1.0_oficial",
+        "versao_ponte": "2.0_operacional_auditada",
+        "status_substantivo": "OPERACIONAL_NAO_PUBLICADA_COMO_CROSSWALK_OFICIAL",
         "data_congelamento": "2026-08-30",
         "total_cursos_pmme": len(CURSOS_PMME_CBO),
         "total_cbos_distintos": len(todos_cbos_unicos),
         "cursos_estritamente_univocos": cursos_estritamente_univocos,
         "cursos_sobrepostos": cursos_sobrepostos,
-        "catalogo_cursos": CURSOS_PMME_CBO,
+        "catalogo_cursos": catalogo_auditado,
         "cbo_para_cursos_map": cbo_to_cursos,
+        "fontes_institucionais": [
+            {
+                "titulo": "Chamamento Público SGTES/MS nº 3/2025 — requisitos de participação",
+                "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/faq/quem-pode-participar-do-chamamento",
+                "uso": "Confirma que os participantes devem ser especialistas nas especialidades ou áreas listadas no edital e possuir RQE ou qualificação equivalente.",
+            },
+            {
+                "titulo": "Página institucional do Projeto Mais Médicos Especialistas",
+                "url": "https://www.gov.br/saude/pt-br/composicao/sgtes/mais-medicos/medico-e-medica/especialistas",
+                "uso": "Confirma objetivo de provimento, aprimoramento em serviço e especialidades contempladas.",
+            },
+            {
+                "titulo": "Consulta oficial da Classificação Brasileira de Ocupações",
+                "url": "https://consulta.trabalho.gov.br/empregador/cbo/procuracbo/default.asp",
+                "uso": "Fonte dos códigos e títulos ocupacionais usados no CNES.",
+            },
+        ],
+        "limite_de_validade": (
+            "As fontes sustentam especialidades elegíveis e títulos CBO, mas não publicam uma ponte curso-CBO. "
+            "Por isso, cursos com CBO compartilhado ficam fora da análise confirmatória."
+        ),
         "regras_resolucao_sobreposicao": {
             "especificacao_principal_puro": "Utilizar os cursos com mapeamento estrito 1:1 sem sobreposição para inferência basal incontaminada.",
             "especificacao_agregada": "Em células com cursos sobrepostos no mesmo CNES, consolidar ao nível de especialidade compartilhada ou colapsar no CNES.",

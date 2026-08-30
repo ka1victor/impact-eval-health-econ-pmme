@@ -44,7 +44,7 @@ STEPS = [
 def main() -> None:
     start_time = time.time()
     print("================================================================================")
-    print("   PIPELINE DE AVALIAÇÃO CAUSAL DE IMPACTO — PMM-E (LEI Nº 15.233/2025)        ")
+    print("   PIPELINE DE PAINEL E AVALIAÇÃO EMPÍRICA — PMM-E (LEI Nº 15.233/2025)      ")
     print("================================================================================\n")
     print(f"Diretório Raiz: {ROOT}")
     print(f"Diretório de Destino: {OUTPUT_DIR}\n")

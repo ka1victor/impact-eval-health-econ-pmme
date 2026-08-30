@@ -1,332 +1,413 @@
-"""05_integrar_painel_analitico.py — Integração do Painel Analítico CNES x Curso x Mês e Auditoria.
+"""Constrói painéis CNES-only para a avaliação agregada do PMM-E.
 
-Este script une os quatro eixos de dados do pipeline:
-1. Quadro canônico de tratamento de vagas do PMM-E (`output/aquisicao/quadro_vagas_tratamento.parquet`);
-2. Ponte congelada de Cursos PMM-E para CBOs (`output/aquisicao/ponte_curso_cbo_oficial.json`);
-3. Microdados mensais de vínculos médicos do CNES para as 26 competências (`output/aquisicao/cnes_mensal/`);
-4. Malha territorial com IVS 2010, IDHM, população e Regiões de Saúde (`output/aquisicao/malha_municipios_regioes_saude.parquet`).
-
-Ele constrói o painel balanceado `CNES × Curso × Mês` (2024-06 a 2026-07 = 26 competências)
-e calcula todas as métricas de estoque e dinâmica:
-- `n_especialistas_distintos`: Contagem única de médicos ativos na célula
-- `fte_ambulatorial_total`, `fte_hospitalar_total`, `fte_total`: Carga horária semanal
-- `n_entradas`, `n_saidas`, `saldo_liquido`, `churn_bruto`: Dinâmica longitudinal
-- `permanencia_6m`, `permanencia_12m`: Rastreamento de retenção de coortes
-- `deslocamento_origem`: Rastreio de migração (mesmo município, mesma região, outra UF, novo cadastro)
-- `cobertura_binaria`: Indicador se a célula possui ao menos 1 especialista ativo
-
-Entregáveis:
-- `output/painel_cnes_especialidade_mensal.parquet`
-- `output/aquisicao/auditoria_painel_final.json`
-- `output/aquisicao/relatorio_auditoria_painel.json`
+Regras substantivas:
+- exige as 26 competências reais; nunca carrega o último mês;
+- usa todos os CNES dos municípios incluídos no quadro do ciclo 1;
+- conta CO_PROFISSIONAL_SUS uma vez por município-curso-mês;
+- não incorpora a lista nominal do PMM-E e não imputa carga horária;
+- entrada requer seis meses anteriores de ausência observada;
+- saída requer três meses posteriores consecutivos de ausência;
+- presença em seis meses é calculada sobre coortes individuais maduras.
 """
 
 from __future__ import annotations
 
-import datetime
+import datetime as dt
 import json
-import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any
 
 import numpy as np
 import pandas as pd
 
+
 ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_DIR = ROOT / "output"
-AQUISICAO_DIR = OUTPUT_DIR / "aquisicao"
-MONTHLY_CNES_DIR = AQUISICAO_DIR / "cnes_mensal"
+OUT = ROOT / "output"
+AQUISICAO = OUT / "aquisicao"
+MONTHLY = AQUISICAO / "cnes_mensal"
 
-PONTE_FILE = AQUISICAO_DIR / "ponte_curso_cbo_oficial.json"
-TRATAMENTO_FILE = AQUISICAO_DIR / "quadro_vagas_tratamento.parquet"
-TERRITORIO_FILE = AQUISICAO_DIR / "malha_municipios_regioes_saude.parquet"
-NOMINAL_FILE = ROOT / "data" / "pmm_especialistas_nominal.csv"
+PONTE_FILE = AQUISICAO / "ponte_curso_cbo_oficial.json"
+TRATAMENTO_FILE = AQUISICAO / "quadro_vagas_tratamento.parquet"
+TERRITORIO_FILE = AQUISICAO / "malha_municipios_regioes_saude.parquet"
 
-OUT_PAINEL = OUTPUT_DIR / "painel_cnes_especialidade_mensal.parquet"
-OUT_AUDITORIA = AQUISICAO_DIR / "auditoria_painel_final.json"
-OUT_RELATORIO = AQUISICAO_DIR / "relatorio_auditoria_painel.json"
+OUT_MUNI = OUT / "painel_municipio_curso_mensal.parquet"
+OUT_CNES = OUT / "painel_cnes_especialidade_mensal.parquet"
+OUT_REGIAO = OUT / "painel_regiao_curso_mensal.parquet"
+OUT_AUDITORIA = AQUISICAO / "auditoria_painel_final.json"
+OUT_RELATORIO = AQUISICAO / "relatorio_auditoria_painel.json"
 
-ALL_COMPETENCIAS = [
-    f"{year}{month:02d}"
-    for year, first, last in ((2024, 6, 12), (2025, 1, 12), (2026, 1, 7))
-    for month in range(first, last + 1)
+COMPETENCIAS = [
+    f"{ano}{mes:02d}"
+    for ano, inicio, fim in ((2024, 6, 12), (2025, 1, 12), (2026, 1, 7))
+    for mes in range(inicio, fim + 1)
 ]
 
 
-def get_course_id(val: Any) -> Optional[int]:
-    m = re.match(r"^(\d{1,2})", str(val).strip())
-    return int(m.group(1)) if m else None
+def _modalidade(imediatas: pd.Series, reserva: pd.Series) -> pd.Series:
+    out = pd.Series("INDEFINIDA", index=imediatas.index, dtype="string")
+    out[(imediatas > 0) & (reserva == 0)] = "IMEDIATA"
+    out[(imediatas == 0) & (reserva > 0)] = "RESERVA"
+    out[(imediatas > 0) & (reserva > 0)] = "MISTA"
+    return out
 
 
-def load_cbo_bridge() -> Dict[int, List[str]]:
-    with PONTE_FILE.open("r", encoding="utf-8") as f:
-        data = json.load(f)
-    mapping = {}
-    for item in data.get("catalogo_cursos", []):
-        mapping[item["cod_curso"]] = item["cbos_elegiveis"]
-    return mapping
+def _load_bridge() -> tuple[dict[str, list[int]], dict[int, dict[str, Any]], dict[str, Any]]:
+    with PONTE_FILE.open("r", encoding="utf-8") as handle:
+        raw = json.load(handle)
+    catalogo = {int(x["cod_curso"]): x for x in raw["catalogo_cursos"]}
+    cbo_to_courses: dict[str, list[int]] = {}
+    for curso, item in catalogo.items():
+        for cbo in item["cbos_elegiveis"]:
+            cbo_to_courses.setdefault(str(cbo).zfill(6), []).append(curso)
+    return cbo_to_courses, catalogo, raw
+
+
+def _prepare_treatments(
+    trat: pd.DataFrame, territorio: pd.DataFrame, catalogo: dict[int, dict[str, Any]]
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    trat = trat.copy()
+    trat["co_cnes_7d"] = trat["co_cnes_7d"].astype("string").str.replace(r"\D", "", regex=True).str.zfill(7)
+    trat["co_ibge_6d"] = trat["co_ibge_6d"].astype("string").str.replace(r"\D", "", regex=True).str.zfill(6)
+    trat["cod_curso"] = trat["cod_curso"].astype(int)
+    curso_sem_sobreposicao = {
+        curso: not bool(item.get("sobreposicao", True)) for curso, item in catalogo.items()
+    }
+    trat["curso_sem_sobreposicao"] = trat["cod_curso"].map(curso_sem_sobreposicao).fillna(False)
+
+    t_cnes = trat[
+        [
+            "co_cnes_7d", "co_ibge_6d", "cod_curso", "no_curso",
+            "qt_vagas_imediatas", "qt_vagas_reserva", "qt_vagas_total",
+            "modalidade_original", "immediate_is", "curso_sem_sobreposicao",
+        ]
+    ].drop_duplicates(["co_cnes_7d", "cod_curso"])
+    t_cnes["amostra_principal"] = t_cnes["modalidade_original"].isin(["IMEDIATA", "RESERVA"])
+
+    t_muni = (
+        trat.groupby(["co_ibge_6d", "cod_curso"], as_index=False)
+        .agg(
+            no_curso=("no_curso", "first"),
+            qt_vagas_imediatas=("qt_vagas_imediatas", "sum"),
+            qt_vagas_reserva=("qt_vagas_reserva", "sum"),
+            qt_vagas_total=("qt_vagas_total", "sum"),
+            n_cnes_ofertantes=("co_cnes_7d", "nunique"),
+            curso_sem_sobreposicao=("curso_sem_sobreposicao", "first"),
+        )
+    )
+    t_muni["modalidade_ms"] = _modalidade(t_muni["qt_vagas_imediatas"], t_muni["qt_vagas_reserva"])
+    t_muni["immediate_ms"] = (t_muni["modalidade_ms"] == "IMEDIATA").astype(int)
+    t_muni["amostra_principal"] = t_muni["modalidade_ms"].isin(["IMEDIATA", "RESERVA"])
+    t_muni["amostra_confirmatoria"] = t_muni["amostra_principal"] & t_muni["curso_sem_sobreposicao"]
+
+    for sample_col, out_col in (
+        ("amostra_principal", "within_muni_var_ampliada"),
+        ("amostra_confirmatoria", "within_muni_var_confirmatoria"),
+    ):
+        nmod = t_muni.loc[t_muni[sample_col]].groupby("co_ibge_6d")["immediate_ms"].nunique()
+        valid = set(nmod[nmod > 1].index)
+        t_muni[out_col] = t_muni["co_ibge_6d"].isin(valid)
+
+    terr_cols = [
+        "co_ibge_6d", "co_ibge_7d", "no_municipio", "sg_uf", "macro_regiao_saude",
+        "no_regiao_saude", "ivs_2010", "ivs_categoria", "populacao_2010",
+    ]
+    terr = territorio[terr_cols].drop_duplicates("co_ibge_6d").copy()
+    terr["co_ibge_6d"] = terr["co_ibge_6d"].astype("string").str.zfill(6)
+    terr["region_id"] = terr["sg_uf"].astype("string") + "|" + terr["no_regiao_saude"].astype("string")
+    t_muni = t_muni.merge(terr, on="co_ibge_6d", how="left", validate="many_to_one")
+
+    t_regiao = (
+        t_muni.dropna(subset=["region_id"])
+        .groupby(["region_id", "sg_uf", "no_regiao_saude", "cod_curso"], as_index=False)
+        .agg(
+            no_curso=("no_curso", "first"),
+            qt_vagas_imediatas=("qt_vagas_imediatas", "sum"),
+            qt_vagas_reserva=("qt_vagas_reserva", "sum"),
+            qt_vagas_total=("qt_vagas_total", "sum"),
+            curso_sem_sobreposicao=("curso_sem_sobreposicao", "first"),
+        )
+    )
+    t_regiao["modalidade_rs"] = _modalidade(t_regiao["qt_vagas_imediatas"], t_regiao["qt_vagas_reserva"])
+    t_regiao["immediate_rs"] = (t_regiao["modalidade_rs"] == "IMEDIATA").astype(int)
+    t_regiao["amostra_principal"] = t_regiao["modalidade_rs"].isin(["IMEDIATA", "RESERVA"])
+    return t_muni, t_cnes, t_regiao
+
+
+def _expand_courses(df: pd.DataFrame, cbo_to_courses: dict[str, list[int]]) -> pd.DataFrame:
+    out = df.copy()
+    out["co_cbo_6d"] = out["co_cbo_6d"].astype("string").str.replace(r"\D", "", regex=True).str.zfill(6)
+    out["cod_curso"] = out["co_cbo_6d"].map(cbo_to_courses)
+    out = out.dropna(subset=["cod_curso"]).explode("cod_curso")
+    out["cod_curso"] = out["cod_curso"].astype(int)
+    return out
+
+
+def _balanced_skeleton(keys: pd.DataFrame) -> pd.DataFrame:
+    months = pd.DataFrame({"competencia": COMPETENCIAS})
+    return keys.assign(_join=1).merge(months.assign(_join=1), on="_join").drop(columns="_join")
+
+
+def _add_time(panel: pd.DataFrame) -> pd.DataFrame:
+    panel = panel.copy()
+    panel["ano"] = panel["competencia"].str[:4].astype(int)
+    panel["mes"] = panel["competencia"].str[4:].astype(int)
+    panel["post_t"] = (panel["competencia"] >= "202508").astype(int)
+    panel["mes_transicao"] = (panel["competencia"] == "202507").astype(int)
+    return panel
+
+
+def _sets_by_cell(long: pd.DataFrame, cell_cols: list[str]) -> dict[tuple[Any, ...], list[set[str]]]:
+    month_index = {m: i for i, m in enumerate(COMPETENCIAS)}
+    cells: dict[tuple[Any, ...], list[set[str]]] = {}
+    for key, part in long.groupby(cell_cols, sort=False):
+        if not isinstance(key, tuple):
+            key = (key,)
+        months = [set() for _ in COMPETENCIAS]
+        for comp, pmonth in part.groupby("competencia", sort=False):
+            months[month_index[str(comp)]] = set(pmonth["co_profissional_sus"].astype(str))
+        cells[key] = months
+    return cells
+
+
+def _longitudinal_id_diagnostics(long: pd.DataFrame) -> dict[str, Any]:
+    """Quantifica continuidade observada sem alegar validação externa da chave."""
+    monthly: dict[str, set[tuple[str, int, str]]] = {}
+    for comp, part in long.groupby("competencia", sort=False):
+        monthly[str(comp)] = set(
+            part[["co_ibge_6d", "cod_curso", "co_profissional_sus"]]
+            .itertuples(index=False, name=None)
+        )
+    adjacent: list[dict[str, Any]] = []
+    for previous, current in zip(COMPETENCIAS[:-1], COMPETENCIAS[1:], strict=True):
+        prev_set = monthly.get(previous, set())
+        curr_set = monthly.get(current, set())
+        overlap = len(prev_set & curr_set)
+        adjacent.append(
+            {
+                "de": previous,
+                "para": current,
+                "sobrevivencia_sobre_mes_anterior_pct": 100 * overlap / len(prev_set) if prev_set else None,
+                "participacao_de_ids_ja_observados_pct": 100 * overlap / len(curr_set) if curr_set else None,
+            }
+        )
+    survival = [x["sobrevivencia_sobre_mes_anterior_pct"] for x in adjacent if x["sobrevivencia_sobre_mes_anterior_pct"] is not None]
+    carryover = [x["participacao_de_ids_ja_observados_pct"] for x in adjacent if x["participacao_de_ids_ja_observados_pct"] is not None]
+    return {
+        "campo": "CO_PROFISSIONAL_SUS",
+        "escopo": "continuidade de pessoa-município-curso entre competências adjacentes",
+        "mediana_sobrevivencia_sobre_mes_anterior_pct": float(np.median(survival)),
+        "min_sobrevivencia_sobre_mes_anterior_pct": float(np.min(survival)),
+        "mediana_participacao_de_ids_ja_observados_pct": float(np.median(carryover)),
+        "min_participacao_de_ids_ja_observados_pct": float(np.min(carryover)),
+        "pares_adjacentes": adjacent,
+        "limite": (
+            "Continuidade empírica elevada é compatível com chave longitudinal estável, "
+            "mas não substitui documentação externa do identificador nem distingue mudança real de cadastro."
+        ),
+    }
+
+
+def _build_municipal_panel(long: pd.DataFrame, treatment: pd.DataFrame) -> pd.DataFrame:
+    skeleton = _balanced_skeleton(treatment)
+    active = _sets_by_cell(long, ["co_ibge_6d", "cod_curso"])
+    records: list[dict[str, Any]] = []
+    for row in treatment[["co_ibge_6d", "cod_curso"]].itertuples(index=False):
+        key = (row.co_ibge_6d, row.cod_curso)
+        months = active.get(key, [set() for _ in COMPETENCIAS])
+        entries: list[set[str] | None] = []
+        exits: list[set[str] | None] = []
+        for idx, current in enumerate(months):
+            prior = set().union(*months[idx - 6:idx]) if idx >= 6 else None
+            future = set().union(*months[idx + 1:idx + 4]) if idx + 3 < len(months) else None
+            entries.append(current - prior if prior is not None else None)
+            exits.append(current - future if future is not None else None)
+        for idx, comp in enumerate(COMPETENCIAS):
+            ent = entries[idx]
+            ex = exits[idx]
+            mature6 = ent is not None and idx + 6 < len(months)
+            present6 = len(ent & months[idx + 6]) if mature6 else np.nan
+            n_ent = len(ent) if ent is not None else np.nan
+            n_exit = len(ex) if ex is not None else np.nan
+            records.append(
+                {
+                    "co_ibge_6d": row.co_ibge_6d,
+                    "cod_curso": row.cod_curso,
+                    "competencia": comp,
+                    "especialistas_mst": len(months[idx]),
+                    "cobertura_binaria_mst": int(bool(months[idx])),
+                    "n_entradas_6m": n_ent,
+                    "n_saidas_confirmadas_3m": n_exit,
+                    "saldo_liquido": n_ent - n_exit if not (pd.isna(n_ent) or pd.isna(n_exit)) else np.nan,
+                    "churn_bruto": n_ent + n_exit if not (pd.isna(n_ent) or pd.isna(n_exit)) else np.nan,
+                    "entrantes_elegiveis_6m": n_ent if mature6 else np.nan,
+                    "entrantes_presentes_6m": present6,
+                    "coorte_6m_madura": bool(mature6),
+                    "entrada_observavel": ent is not None,
+                    "saida_observavel": ex is not None,
+                }
+            )
+    metrics = pd.DataFrame(records)
+    panel = skeleton.merge(metrics, on=["co_ibge_6d", "cod_curso", "competencia"], how="left", validate="one_to_one")
+    panel["treat_x_post"] = panel["immediate_ms"] * (panel["competencia"] >= "202508").astype(int)
+    return _add_time(panel)
+
+
+def _build_stock_panel(
+    long: pd.DataFrame, treatment: pd.DataFrame, key_cols: list[str], outcome: str
+) -> pd.DataFrame:
+    skeleton = _balanced_skeleton(treatment)
+    stock = (
+        long.groupby(key_cols + ["competencia"], as_index=False)["co_profissional_sus"]
+        .nunique()
+        .rename(columns={"co_profissional_sus": outcome})
+    )
+    panel = skeleton.merge(stock, on=key_cols + ["competencia"], how="left", validate="one_to_one")
+    panel[outcome] = panel[outcome].fillna(0).astype(int)
+    return _add_time(panel)
+
+
+def _require_months() -> list[Path]:
+    paths = [MONTHLY / f"cnes_vinculos_medicos_{comp}.parquet" for comp in COMPETENCIAS]
+    missing = [p.name for p in paths if not p.exists()]
+    if missing:
+        raise RuntimeError(f"Painel CNES incompleto; competências ausentes: {', '.join(missing)}")
+    return paths
 
 
 def main() -> None:
-    print("=== [Subagente 4] Construção do Painel Analítico Mensal (CNES × Curso × Mês) e Auditoria ===")
+    print("=== Integração CNES-only: município-curso-mês ===")
+    paths = _require_months()
+    cbo_to_courses, catalogo, bridge_raw = _load_bridge()
+    trat = pd.read_parquet(TRATAMENTO_FILE)
+    territorio = pd.read_parquet(TERRITORIO_FILE)
+    t_muni, t_cnes, t_regiao = _prepare_treatments(trat, territorio, catalogo)
 
-    # 1. Carregar Quadro de Tratamento
-    print(f"Lendo quadro de tratamento: {TRATAMENTO_FILE.name}...")
-    df_tratamento = pd.read_parquet(TRATAMENTO_FILE)
-    n_celulas = len(df_tratamento)
-    print(f"Total de células CNES-Curso no universo: {n_celulas:,}")
+    target_munis = set(t_muni["co_ibge_6d"])
+    target_cnes = set(t_cnes["co_cnes_7d"])
+    target_regions = set(t_regiao["region_id"])
+    terr_map = territorio[["co_ibge_6d", "sg_uf", "no_regiao_saude"]].drop_duplicates("co_ibge_6d").copy()
+    terr_map["co_ibge_6d"] = terr_map["co_ibge_6d"].astype("string").str.zfill(6)
+    terr_map["region_id"] = terr_map["sg_uf"].astype("string") + "|" + terr_map["no_regiao_saude"].astype("string")
+    muni_to_region = terr_map.set_index("co_ibge_6d")["region_id"].to_dict()
 
-    # 2. Carregar Ponte CBO
-    print(f"Lendo ponte CBO: {PONTE_FILE.name}...")
-    cbo_bridge = load_cbo_bridge()
+    muni_keys = t_muni[["co_ibge_6d", "cod_curso"]].drop_duplicates()
+    cnes_keys = t_cnes[["co_cnes_7d", "cod_curso"]].drop_duplicates()
+    reg_keys = t_regiao[["region_id", "cod_curso"]].drop_duplicates()
 
-    # 3. Carregar Malha Territorial
-    print(f"Lendo malha territorial: {TERRITORIO_FILE.name}...")
-    df_territorio = pd.read_parquet(TERRITORIO_FILE)
+    muni_parts: list[pd.DataFrame] = []
+    cnes_parts: list[pd.DataFrame] = []
+    reg_parts: list[pd.DataFrame] = []
+    monthly_audit: list[dict[str, Any]] = []
+    required_cols = ["competencia", "co_cnes_7d", "co_profissional_sus", "co_cbo_6d", "co_municipio_gestor"]
 
-    # 4. Carregar Médicos Nominais do PMM-E para tracking refinado
-    df_nom = pd.read_csv(NOMINAL_FILE) if NOMINAL_FILE.exists() else pd.DataFrame()
-    if not df_nom.empty:
-        df_nom["co_cnes_7d"] = df_nom["co_cnes"].astype(str).str.zfill(7)
-        df_nom["cod_curso"] = df_nom["curso"].apply(get_course_id)
-        df_nom["dt_inicio"] = pd.to_datetime(df_nom["dt_inicio_atividade"], errors="coerce")
-        df_nom["comp_inicio"] = df_nom["dt_inicio"].dt.strftime("%Y%m")
+    for comp, path in zip(COMPETENCIAS, paths, strict=True):
+        month = pd.read_parquet(path, columns=required_cols)
+        if set(month["competencia"].astype(str).unique()) != {comp}:
+            raise RuntimeError(f"Competência interna incompatível em {path.name}")
+        month["co_municipio_gestor"] = month["co_municipio_gestor"].astype("string").str.replace(r"\D", "", regex=True).str.zfill(6)
+        month["co_cnes_7d"] = month["co_cnes_7d"].astype("string").str.replace(r"\D", "", regex=True).str.zfill(7)
+        prof = month["co_profissional_sus"].astype("string").str.strip()
+        valid_prof = prof.notna() & ~prof.isin(["", "nan", "None", "<NA>"])
+        invalid_prof = int((~valid_prof).sum())
+        month = month.loc[valid_prof].copy()
+        month["co_profissional_sus"] = prof.loc[valid_prof]
+        expanded = _expand_courses(month, cbo_to_courses)
 
-    # 5. Processamento mês a mês para agregação celular e dinâmica longitudinal
-    unique_cells = df_tratamento[["co_cnes_7d", "cod_curso"]].drop_duplicates().values.tolist()
-    target_cnes_set = set(df_tratamento["co_cnes_7d"].unique())
+        muni = expanded.loc[expanded["co_municipio_gestor"].isin(target_munis)].rename(columns={"co_municipio_gestor": "co_ibge_6d"})
+        muni = muni.merge(muni_keys, on=["co_ibge_6d", "cod_curso"], how="inner")
+        muni = muni[["competencia", "co_ibge_6d", "cod_curso", "co_cnes_7d", "co_profissional_sus"]]
+        before_muni = len(muni)
+        muni = muni.drop_duplicates(["competencia", "co_ibge_6d", "cod_curso", "co_profissional_sus"])
+        muni_parts.append(muni)
 
-    panel_records: List[Dict[str, Any]] = []
+        cnes = expanded.loc[expanded["co_cnes_7d"].isin(target_cnes)]
+        cnes = cnes.merge(cnes_keys, on=["co_cnes_7d", "cod_curso"], how="inner")
+        cnes = cnes[["competencia", "co_cnes_7d", "cod_curso", "co_profissional_sus"]].drop_duplicates()
+        cnes_parts.append(cnes)
 
-    # Estruturas para rastrear dinâmica longitudinal:
-    prev_active_by_cell: Dict[Tuple[str, int], Set[str]] = {}
-    prev_fte_by_cell: Dict[Tuple[str, int], Tuple[float, float, float]] = {}
-    cohort_entries: Dict[Tuple[str, int, str], Set[str]] = {}
-    last_known_cnes_data: Optional[Dict[Tuple[str, str], List[Dict[str, Any]]]] = None
+        expanded["region_id"] = expanded["co_municipio_gestor"].map(muni_to_region)
+        reg = expanded.loc[expanded["region_id"].isin(target_regions)]
+        reg = reg.merge(reg_keys, on=["region_id", "cod_curso"], how="inner")
+        reg = reg[["competencia", "region_id", "cod_curso", "co_profissional_sus"]].drop_duplicates()
+        reg_parts.append(reg)
 
-    for comp_idx, comp in enumerate(ALL_COMPETENCIAS):
-        p_month = MONTHLY_CNES_DIR / f"cnes_vinculos_medicos_{comp}.parquet"
-        is_real_cnes = p_month.exists()
-
-        if is_real_cnes:
-            df_m = pd.read_parquet(p_month)
-            df_m_target = df_m[df_m["co_cnes_7d"].isin(target_cnes_set)].copy()
-
-            # Indexar registros do mês alvo por (cnes, cbo)
-            cnes_cbo_records: Dict[Tuple[str, str], List[Dict[str, Any]]] = {}
-            for row in df_m_target.to_dict(orient="records"):
-                cbo = str(row.get("co_cbo_6d", "")).zfill(6)
-                key = (str(row["co_cnes_7d"]), cbo)
-                if key not in cnes_cbo_records:
-                    cnes_cbo_records[key] = []
-                cnes_cbo_records[key].append(row)
-            last_known_cnes_data = cnes_cbo_records
-        else:
-            cnes_cbo_records = last_known_cnes_data or {}
-
-        # Médicos PMM-E que iniciaram até a competência atual
-        pmme_active_by_cell: Dict[Tuple[str, int], Set[str]] = {}
-        if not df_nom.empty:
-            df_active_pmme = df_nom[df_nom["comp_inicio"] <= comp]
-            for _, r in df_active_pmme.iterrows():
-                if pd.notna(r["cod_curso"]) and r["co_cnes_7d"] in target_cnes_set:
-                    k = (str(r["co_cnes_7d"]), int(r["cod_curso"]))
-                    if k not in pmme_active_by_cell:
-                        pmme_active_by_cell[k] = set()
-                    prof_id = f"PMME_{r['crm']}_{r['uf']}"
-                    pmme_active_by_cell[k].add(prof_id)
-
-        for cnes, curso in unique_cells:
-            cnes = str(cnes)
-            curso = int(curso)
-            eligible_cbos = cbo_bridge.get(curso, [])
-
-            # Recuperar vínculos no CNES
-            matching_rows = []
-            for cbo in eligible_cbos:
-                matching_rows.extend(cnes_cbo_records.get((cnes, cbo), []))
-
-            # Profissionais ativos nesta célula no mês atual
-            active_cnes_profs = {
-                str(r.get("co_profissional_sus", ""))
-                for r in matching_rows
-                if str(r.get("co_profissional_sus", "")).strip()
-            }
-            active_pmme_profs = pmme_active_by_cell.get((cnes, curso), set())
-            active_profs = active_cnes_profs | active_pmme_profs
-            n_distinct = len(active_profs)
-
-            # Carga horária
-            if matching_rows:
-                fte_amb = sum(
-                    float(r.get("ch_ambulatorial", r.get("qt_carga_horaria_ambulatorial", 0)) or 0)
-                    for r in matching_rows
-                )
-                fte_hosp = sum(
-                    float(r.get("ch_hospitalar", r.get("qt_carga_hor_hosp_sus", 0)) or 0)
-                    for r in matching_rows
-                )
-                fte_outros = sum(
-                    float(r.get("ch_outros", r.get("qt_carga_horaria_outros", 0)) or 0)
-                    for r in matching_rows
-                )
-                prev_fte_by_cell[(cnes, curso)] = (fte_amb, fte_hosp, fte_outros)
-            else:
-                prev_ftes = prev_fte_by_cell.get((cnes, curso), (0.0, 0.0, 0.0))
-                fte_amb, fte_hosp, fte_outros = prev_ftes
-
-            # Se houver médicos do PMM-E, adicionar carga horária padrão (40h semanais)
-            if active_pmme_profs:
-                fte_amb += len(active_pmme_profs) * 20.0
-                fte_hosp += len(active_pmme_profs) * 20.0
-
-            fte_tot = fte_amb + fte_hosp + fte_outros
-
-            # Dinâmica longitudinal
-            prev_profs = prev_active_by_cell.get((cnes, curso), set())
-            if comp_idx == 0:
-                n_entradas = 0
-                n_saidas = 0
-                entrantes = set()
-            else:
-                entrantes = active_profs - prev_profs
-                saidas = prev_profs - active_profs
-                n_entradas = len(entrantes)
-                n_saidas = len(saidas)
-
-            saldo_liq = n_entradas - n_saidas
-            churn = n_entradas + n_saidas
-
-            # Registrar coorte de entrantes
-            if entrantes:
-                cohort_entries[(cnes, curso, comp)] = entrantes
-
-            # Rastreamento de permanência (6 meses e 12 meses anteriores)
-            permanencia_6m = 0
-            permanencia_12m = 0
-
-            if comp_idx >= 6:
-                comp_6m_ago = ALL_COMPETENCIAS[comp_idx - 6]
-                cohort_6m = cohort_entries.get((cnes, curso, comp_6m_ago), set())
-                if cohort_6m:
-                    permanencia_6m = len(cohort_6m & active_profs)
-
-            if comp_idx >= 12:
-                comp_12m_ago = ALL_COMPETENCIAS[comp_idx - 12]
-                cohort_12m = cohort_entries.get((cnes, curso, comp_12m_ago), set())
-                if cohort_12m:
-                    permanencia_12m = len(cohort_12m & active_profs)
-
-            # Atualizar estado anterior da célula
-            prev_active_by_cell[(cnes, curso)] = active_profs
-
-            # Post indicator e mês de transição
-            is_post = 1 if comp >= "202508" else 0
-            is_transicao = 1 if comp == "202507" else 0
-
-            panel_records.append({
-                "co_cnes_7d": cnes,
-                "cod_curso": curso,
+        monthly_audit.append(
+            {
                 "competencia": comp,
-                "ano": int(comp[:4]),
-                "mes": int(comp[4:]),
-                "post_t": is_post,
-                "mes_transicao": is_transicao,
-                "n_especialistas_distintos": n_distinct,
-                "cobertura_binaria": 1 if n_distinct >= 1 else 0,
-                "fte_ambulatorial_total": fte_amb,
-                "fte_hospitalar_total": fte_hosp,
-                "fte_outros_total": fte_outros,
-                "fte_total": fte_tot,
-                "n_entradas": n_entradas,
-                "n_saidas": n_saidas,
-                "saldo_liquido": saldo_liq,
-                "churn_bruto": churn,
-                "permanencia_6m": permanencia_6m,
-                "permanencia_12m": permanencia_12m,
-                "desloc_mesmo_cnes": 0,
-                "desloc_mesmo_municipio": 0,
-                "desloc_outra_uf": 0,
-                "desloc_novo_cadastro": n_entradas,
-            })
+                "linhas_fonte": int(len(month)),
+                "ids_profissionais_invalidos_descartados": invalid_prof,
+                "registros_municipais_antes_deduplicacao": int(before_muni),
+                "profissionais_municipio_curso": int(len(muni)),
+                "duplicacoes_intramunicipais_removidas": int(before_muni - len(muni)),
+                "cnes_observados_nos_municipios": int(expanded.loc[expanded["co_municipio_gestor"].isin(target_munis), "co_cnes_7d"].nunique()),
+            }
+        )
+        print(f"  {comp}: {len(muni):,} profissionais município-curso após deduplicação")
 
-    df_panel = pd.DataFrame(panel_records)
+    long_muni = pd.concat(muni_parts, ignore_index=True)
+    long_cnes = pd.concat(cnes_parts, ignore_index=True)
+    long_reg = pd.concat(reg_parts, ignore_index=True)
+    id_diagnostics = _longitudinal_id_diagnostics(long_muni)
 
-    # 6. Merge com os atributos de tratamento
-    tratamento_cols = [
-        "co_cnes_7d",
-        "cod_curso",
-        "no_curso",
-        "immediate_is",
-        "modalidade_original",
-        "qt_vagas_imediatas",
-        "qt_vagas_reserva",
-        "qt_vagas_total",
-        "faixa_atracao_anunciada",
-        "co_ibge_6d",
-        "sg_uf",
-        "no_municipio",
-        "no_estabelecimento",
-        "tipo_gestao",
-        "flag_overlap_cbo",
-        "amostra_principal",
-        "flag_cnes_multiplas_modalidades",
-    ]
-    df_panel = df_panel.merge(df_tratamento[tratamento_cols], on=["co_cnes_7d", "cod_curso"], how="left")
+    panel_muni = _build_municipal_panel(long_muni, t_muni)
+    panel_cnes = _build_stock_panel(long_cnes, t_cnes, ["co_cnes_7d", "cod_curso"], "especialistas_ist")
+    panel_reg = _build_stock_panel(long_reg, t_regiao, ["region_id", "cod_curso"], "especialistas_rst")
 
-    # 7. Merge com covariáveis territoriais do IVS
-    territorio_cols = [
-        "co_ibge_6d",
-        "co_ibge_7d",
-        "macro_regiao_saude",
-        "no_regiao_saude",
-        "ivs_2010",
-        "ivs_infra_2010",
-        "ivs_ch_2010",
-        "ivs_rt_2010",
-        "ivs_categoria",
-        "idhm_2010",
-        "populacao_2010",
-        "rdpc_2010",
-    ]
-    df_panel = df_panel.merge(df_territorio[territorio_cols], on="co_ibge_6d", how="left")
-
-    # 8. Salvar painel analítico
-    df_panel.to_parquet(OUT_PAINEL, index=False)
-    print(f"\n[OK] Painel analítico mensal gravado em: {OUT_PAINEL}")
-    print(f"     Dimensões: {df_panel.shape[0]:,} linhas x {df_panel.shape[1]} colunas")
-    print(f"     Células distintas (CNES x Curso): {len(unique_cells):,}")
-    print(f"     Competências temporais: {len(ALL_COMPETENCIAS)} meses (202406 a 202607)")
-
-    # 9. Relatório de auditoria
-    total_medicos_obs = df_panel["n_especialistas_distintos"].sum()
-    total_entradas_obs = df_panel["n_entradas"].sum()
-    total_saidas_obs = df_panel["n_saidas"].sum()
-    total_retidos_6m = df_panel["permanencia_6m"].sum()
-
-    auditoria_json: Dict[str, Any] = {
-        "status": "CONCLUIDO_COM_SUCESSO",
-        "timestamp": datetime.datetime.now().isoformat(),
-        "total_linhas": len(df_panel),
-        "total_celulas": len(unique_cells),
-        "total_competencias": len(ALL_COMPETENCIAS),
-        "estatisticas_painel": {
-            "soma_especialistas_mes": int(total_medicos_obs),
-            "soma_entradas": int(total_entradas_obs),
-            "soma_saidas": int(total_saidas_obs),
-            "soma_retidos_6m": int(total_retidos_6m),
-            "cobertura_media": float(df_panel["cobertura_binaria"].mean()),
-            "fte_medio_semanal": float(df_panel["fte_total"].mean()),
-        },
+    checks = {
+        "26_competencias_presentes": len(paths) == 26,
+        "painel_municipal_balanceado": len(panel_muni) == len(t_muni) * 26 and not panel_muni.duplicated(["co_ibge_6d", "cod_curso", "competencia"]).any(),
+        "painel_cnes_balanceado": len(panel_cnes) == len(t_cnes) * 26,
+        "painel_regional_balanceado": len(panel_reg) == len(t_regiao) * 26,
+        "nenhuma_lista_nominal_incorporada": True,
+        "estoque_municipal_nao_negativo": bool((panel_muni["especialistas_mst"] >= 0).all()),
+        "censura_entradas_primeiros_6_meses": bool(panel_muni.loc[panel_muni["competencia"] < "202412", "n_entradas_6m"].isna().all()),
+        "censura_saidas_ultimos_3_meses": bool(panel_muni.loc[panel_muni["competencia"] > "202604", "n_saidas_confirmadas_3m"].isna().all()),
     }
+    if not all(checks.values()):
+        failed = [k for k, ok in checks.items() if not ok]
+        raise RuntimeError(f"Portão de integridade falhou: {', '.join(failed)}")
 
-    with OUT_AUDITORIA.open("w", encoding="utf-8") as f:
-        json.dump(auditoria_json, f, ensure_ascii=False, indent=2)
+    panel_muni.to_parquet(OUT_MUNI, index=False)
+    panel_cnes.to_parquet(OUT_CNES, index=False)
+    panel_reg.to_parquet(OUT_REGIAO, index=False)
 
-    with OUT_RELATORIO.open("w", encoding="utf-8") as f:
-        json.dump(auditoria_json, f, ensure_ascii=False, indent=2)
-
-    print(f"[OK] Auditoria salva em: {OUT_AUDITORIA}")
+    audit = {
+        "status": "APROVADO_PARA_ESTIMACAO",
+        "data_execucao": dt.datetime.now().isoformat(timespec="seconds"),
+        "desenho": "CNES-only; universo municipal completo; sem identificação nominal de bolsistas",
+        "ponte": {
+            "arquivo": str(PONTE_FILE.relative_to(ROOT)).replace("\\", "/"),
+            "versao": bridge_raw.get("versao_ponte"),
+            "status_substantivo": bridge_raw.get("status_substantivo", "OPERACIONAL_NAO_OFICIAL"),
+            "cursos_sem_sobreposicao": sorted(int(k) for k, v in catalogo.items() if not v.get("sobreposicao", True)),
+        },
+        "cobertura": {"inicio": COMPETENCIAS[0], "fim": COMPETENCIAS[-1], "n_competencias": len(COMPETENCIAS)},
+        "amostra": {
+            "municipios": int(t_muni["co_ibge_6d"].nunique()),
+            "celulas_municipio_curso": int(len(t_muni)),
+            "celulas_confirmatorias": int(t_muni["amostra_confirmatoria"].sum()),
+            "municipios_identificadores_confirmatorios": int(t_muni.loc[t_muni["within_muni_var_confirmatoria"], "co_ibge_6d"].nunique()),
+            "cnes_ofertantes": int(t_cnes["co_cnes_7d"].nunique()),
+            "cnes_observados_em_todos_os_municipios_max_mensal": int(max(x["cnes_observados_nos_municipios"] for x in monthly_audit)),
+        },
+        "definicoes": {
+            "estoque": "CO_PROFISSIONAL_SUS distinto em qualquer CNES do município, dentro dos CBOs operacionais do curso",
+            "entrada": "presente em t e ausente nos seis meses anteriores observados",
+            "saida": "presente em t e ausente nos três meses posteriores observados",
+            "presenca_6m": "entrante elegível em t observado no mesmo município-curso em t+6",
+            "zero": "competência presente sem profissional elegível na célula",
+            "ausente": "métrica censurada por janela longitudinal insuficiente",
+        },
+        "checks": checks,
+        "auditoria_mensal": monthly_audit,
+        "diagnostico_identificador_longitudinal": id_diagnostics,
+    }
+    for path in (OUT_AUDITORIA, OUT_RELATORIO):
+        with path.open("w", encoding="utf-8") as handle:
+            json.dump(audit, handle, ensure_ascii=False, indent=2)
+            handle.write("\n")
+    print(f"[OK] Painel municipal: {OUT_MUNI} ({len(panel_muni):,} linhas)")
+    print(f"[OK] Portão de integridade: {audit['status']}")
 
 
 if __name__ == "__main__":

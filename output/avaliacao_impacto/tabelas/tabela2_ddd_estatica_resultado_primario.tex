@@ -1,16 +1,9 @@
-\begin{table}
-\caption{Resultados Principais da Tripla Diferença (DDD) Estática — PMM-E Ciclo 1}
-\label{tab:ddd_principal}
-\begin{tabular}{lllllllllllll}
+\begin{tabular}{lllrrrrrrrrr}
 \toprule
-Modelo & Descrição / Especificação & Outcome Analisado & Coeficiente Beta (DDD) & Erro-Padrão Clusterizado & IC 95% & Estatística t & P-valor & Média Pre-Tratamento & Média Pre-Controle & N Observações & N Clusters (Municípios) & R² Within \\
+Modelo & Especificação & Outcome & Beta & Erro-padrão cluster & IC 95% inferior & IC 95% superior & P-valor & N & Clusters & Média pré imediata & Média pré reserva \\
 \midrule
-M1_DiD_Basico & DiD com FE Célula e Mês & especialistas_mst & 0.0573 & (0.1115) & [-0.1614, 0.2759] & 0.513 & 0.6077 & 4.227 & 3.944 & 29,300 & 368 & 0.0002 \\
-M2_DiD_Curso_Mes & DiD com FE Célula e Curso-Mês & especialistas_mst & 0.0170 & (0.2010) & [-0.3769, 0.4110] & 0.085 & 0.9325 & 4.227 & 3.944 & 29,300 & 368 & 0.0000 \\
-M3_DDD_Principal & DDD Canônica com FE Célula, Município-Mês e Curso-Mês & especialistas_mst & -0.2318 & (0.2010) & [-0.6258, 0.1623] & -1.153 & 0.2490 & 3.897 & 3.961 & 20,225 & 152 & 0.0021 \\
-M4_DDD_Univocos & DDD Canônica em CBOs Estritamente Unívocos (sem sobreposição) & especialistas_mst & -0.2758 & (0.3490) & [-0.9598, 0.4081] & -0.790 & 0.4293 & 2.984 & 6.174 & 10,150 & 145 & 0.0030 \\
-M5_DDD_Cobertura_Binaria & DDD Canônica sobre Probabilidade de Cobertura Local (>=1 Médico) & cobertura_binaria_mst & 0.0335* & (0.0203) & [-0.0063, 0.0734] & 1.649 & 0.0992 & 0.822 & 0.798 & 20,225 & 152 & 0.0023 \\
-M6_DDD_Carga_Horaria_FTE & DDD Canônica sobre Carga Horária Semanal Total (Horas/Semana) & fte_total & -3.3483 & (4.4576) & [-12.0850, 5.3885] & -0.751 & 0.4526 & 63.312 & 58.349 & 20,225 & 152 & 0.0010 \\
+M1_DDD_Principal_Confirmatoria & DDD do estoque; cursos sem CBO compartilhado & especialistas_mst & -0.445908 & 0.245636 & -0.933762 & 0.041946 & 0.072732 & 7975 & 93 & 7.246407 & 10.852330 \\
+M2_DDD_Ampliada & DDD do estoque; 16 cursos como sensibilidade operacional & especialistas_mst & -0.231893 & 0.151910 & -0.532053 & 0.068268 & 0.128989 & 20150 & 151 & 11.168528 & 10.308579 \\
+M3_DDD_Cobertura & DDD da probabilidade de ao menos um especialista & cobertura_binaria_mst & 0.007289 & 0.015405 & -0.023307 & 0.037884 & 0.637224 & 7975 & 93 & 0.907016 & 0.963504 \\
 \bottomrule
 \end{tabular}
-\end{table}

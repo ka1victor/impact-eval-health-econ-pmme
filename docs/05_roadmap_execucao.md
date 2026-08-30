@@ -4,6 +4,23 @@
 > individual anterior permanece preservado como agenda futura, mas não será
 > executado nesta versão.
 
+## 0. Estado após a execução
+
+O pipeline foi executado de ponta a ponta com as 26 competências do CNES. A
+versão agregada está concluída como **comparação ajustada**, não como avaliação
+causal. A razão é anterior ao resultado do CNES: no mesmo grão
+município–curso e na mesma amostra que identifica a DDD, a modalidade imediata
+não prediz alocação confirmada (+2,79 p.p.; EP 6,89 p.p.; `p=0,6871`).
+
+A diferença ajustada principal no estoque foi −0,446 especialista por
+município–curso (IC 95% [−0,934; 0,042]). Ela não é denominada efeito do
+PMM-E. O teste conjunto de pré-tendências (`p=0,2546`) e o placebo temporal
+(`p=0,8684`) não corrigem a falta de primeiro estágio.
+
+A auditoria de implementação, os resultados permitidos e as conclusões vedadas
+estão em
+[`auditorias/04_auditoria_pipeline_agregado.md`](auditorias/04_auditoria_pipeline_agregado.md).
+
 ## 1. Pergunta substantiva
 
 > A disponibilização de vagas do PMM-E para preenchimento imediato aumentou o
@@ -288,3 +305,10 @@ compatíveis com os dados:
 A conclusão declarará explicitamente que presença cadastral não prova
 participação individual no PMM-E, horas efetivamente trabalhadas, produção ou
 efeito sobre pacientes.
+
+### 11.1 Resultado desta versão
+
+A execução respondeu apenas à parte descritiva e ajustada da pergunta. Ela não
+preenche a formulação causal acima porque o portão de relevância falhou na
+amostra identificadora. Repetir a mesma DDD com filtros, janelas ou estimadores
+escolhidos pelo sinal observado não é próximo passo autorizado.

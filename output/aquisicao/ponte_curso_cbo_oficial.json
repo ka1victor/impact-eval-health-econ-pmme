@@ -1,5 +1,6 @@
 {
-  "versao_ponte": "1.0_oficial",
+  "versao_ponte": "2.0_operacional_auditada",
+  "status_substantivo": "OPERACIONAL_NAO_PUBLICADA_COMO_CROSSWALK_OFICIAL",
   "data_congelamento": "2026-08-30",
   "total_cursos_pmme": 16,
   "total_cbos_distintos": 17,
@@ -37,7 +38,9 @@
       "sobreposicao": false,
       "cursos_compartilhados": [],
       "grau_univocidade": "UNIVOCA",
-      "observacoes": "Mapeamento 1:1 estrito sem concorrência com outros cursos do programa."
+      "observacoes": "Mapeamento 1:1 estrito sem concorrência com outros cursos do programa.",
+      "status_uso": "CONFIRMATORIO_SEM_SOBREPOSICAO",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 2,
@@ -52,7 +55,9 @@
       "sobreposicao": false,
       "cursos_compartilhados": [],
       "grau_univocidade": "UNIVOCA",
-      "observacoes": "Mapeamento 1:1 estrito para cirurgiões gerais."
+      "observacoes": "Mapeamento 1:1 estrito para cirurgiões gerais.",
+      "status_uso": "CONFIRMATORIO_SEM_SOBREPOSICAO",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 3,
@@ -67,7 +72,9 @@
       "sobreposicao": false,
       "cursos_compartilhados": [],
       "grau_univocidade": "UNIVOCA",
-      "observacoes": "Mapeamento 1:1 para cirurgia oncológica."
+      "observacoes": "Mapeamento 1:1 para cirurgia oncológica.",
+      "status_uso": "CONFIRMATORIO_SEM_SOBREPOSICAO",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 4,
@@ -84,7 +91,9 @@
         7
       ],
       "grau_univocidade": "SOBREPOSTA_SECUNDARIA",
-      "observacoes": "CBO 225280 é primário do curso 04 e compõe conjunto ampliado do curso 07 (Colonoscopia)."
+      "observacoes": "CBO 225280 é primário do curso 04 e compõe conjunto ampliado do curso 07 (Colonoscopia).",
+      "status_uso": "SENSIBILIDADE_AMPLIADA",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 5,
@@ -99,7 +108,9 @@
       "sobreposicao": false,
       "cursos_compartilhados": [],
       "grau_univocidade": "UNIVOCA",
-      "observacoes": "Mapeamento 1:1 para cirurgia do aparelho digestivo."
+      "observacoes": "Mapeamento 1:1 para cirurgia do aparelho digestivo.",
+      "status_uso": "CONFIRMATORIO_SEM_SOBREPOSICAO",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 6,
@@ -116,7 +127,9 @@
         8
       ],
       "grau_univocidade": "SOBREPOSTA_DIRETA",
-      "observacoes": "Compartilha CBO 225250 diretamente com o curso 08 (Colposcopia)."
+      "observacoes": "Compartilha CBO 225250 diretamente com o curso 08 (Colposcopia).",
+      "status_uso": "SENSIBILIDADE_AMPLIADA",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 7,
@@ -137,7 +150,9 @@
         11
       ],
       "grau_univocidade": "MULTIESPECIALIDADE",
-      "observacoes": "Procedimento realizado por endoscopistas (225310), coloproctologistas (225280) e gastroenterologistas (225165)."
+      "observacoes": "Procedimento realizado por endoscopistas (225310), coloproctologistas (225280) e gastroenterologistas (225165).",
+      "status_uso": "SENSIBILIDADE_AMPLIADA",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 8,
@@ -154,7 +169,9 @@
         6
       ],
       "grau_univocidade": "SOBREPOSTA_DIRETA",
-      "observacoes": "Compartilha CBO 225250 diretamente com o curso 06 (Cirurgia Ginecológica)."
+      "observacoes": "Compartilha CBO 225250 diretamente com o curso 06 (Cirurgia Ginecológica).",
+      "status_uso": "SENSIBILIDADE_AMPLIADA",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 9,
@@ -169,7 +186,9 @@
       "sobreposicao": false,
       "cursos_compartilhados": [],
       "grau_univocidade": "UNIVOCA",
-      "observacoes": "Mapeamento 1:1 para cardiologistas executores de ecocardiografia."
+      "observacoes": "Mapeamento 1:1 para cardiologistas executores de ecocardiografia.",
+      "status_uso": "CONFIRMATORIO_SEM_SOBREPOSICAO",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 10,
@@ -188,7 +207,9 @@
         11
       ],
       "grau_univocidade": "SOBREPOSTA_DIRETA",
-      "observacoes": "Compartilha CBOs com os cursos 07 e 11."
+      "observacoes": "Compartilha CBOs com os cursos 07 e 11.",
+      "status_uso": "SENSIBILIDADE_AMPLIADA",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 11,
@@ -207,7 +228,9 @@
         10
       ],
       "grau_univocidade": "SOBREPOSTA_DIRETA",
-      "observacoes": "Compartilha CBOs com os cursos 07 e 10."
+      "observacoes": "Compartilha CBOs com os cursos 07 e 10.",
+      "status_uso": "SENSIBILIDADE_AMPLIADA",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 12,
@@ -222,7 +245,9 @@
       "sobreposicao": false,
       "cursos_compartilhados": [],
       "grau_univocidade": "UNIVOCA",
-      "observacoes": "Mapeamento 1:1 para oncologia clínica."
+      "observacoes": "Mapeamento 1:1 para oncologia clínica.",
+      "status_uso": "CONFIRMATORIO_SEM_SOBREPOSICAO",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 13,
@@ -237,7 +262,9 @@
       "sobreposicao": false,
       "cursos_compartilhados": [],
       "grau_univocidade": "UNIVOCA",
-      "observacoes": "Mapeamento 1:1 para médicos radioterapeutas."
+      "observacoes": "Mapeamento 1:1 para médicos radioterapeutas.",
+      "status_uso": "CONFIRMATORIO_SEM_SOBREPOSICAO",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 14,
@@ -253,7 +280,9 @@
       "sobreposicao": false,
       "cursos_compartilhados": [],
       "grau_univocidade": "MULTIESPECIALIDADE_EXCLUSIVA",
-      "observacoes": "Abrange CBOs 225320 e 225255 sem colisão com outros cursos PMM-E."
+      "observacoes": "Abrange CBOs 225320 e 225255 sem colisão com outros cursos PMM-E.",
+      "status_uso": "CONFIRMATORIO_SEM_SOBREPOSICAO",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 15,
@@ -268,7 +297,9 @@
       "sobreposicao": false,
       "cursos_compartilhados": [],
       "grau_univocidade": "UNIVOCA",
-      "observacoes": "Mapeamento 1:1 para otorrinolaringologistas."
+      "observacoes": "Mapeamento 1:1 para otorrinolaringologistas.",
+      "status_uso": "CONFIRMATORIO_SEM_SOBREPOSICAO",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     },
     {
       "cod_curso": 16,
@@ -285,7 +316,9 @@
       "sobreposicao": false,
       "cursos_compartilhados": [],
       "grau_univocidade": "FAMILIA_PATOLOGIA",
-      "observacoes": "Abrange CBOs 225148 (Anatomopatologista), 225325 (Patologista) e 225305 (Citopatologista)."
+      "observacoes": "Abrange CBOs 225148 (Anatomopatologista), 225325 (Patologista) e 225305 (Citopatologista).",
+      "status_uso": "CONFIRMATORIO_SEM_SOBREPOSICAO",
+      "natureza_correspondencia": "Correspondência operacional entre a especialidade/area indicada pelo curso e o titulo da CBO; não é uma crosswalk publicada pelo controlador do PMM-E."
     }
   ],
   "cbo_para_cursos_map": {
@@ -347,6 +380,24 @@
       16
     ]
   },
+  "fontes_institucionais": [
+    {
+      "titulo": "Chamamento Público SGTES/MS nº 3/2025 — requisitos de participação",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/faq/quem-pode-participar-do-chamamento",
+      "uso": "Confirma que os participantes devem ser especialistas nas especialidades ou áreas listadas no edital e possuir RQE ou qualificação equivalente."
+    },
+    {
+      "titulo": "Página institucional do Projeto Mais Médicos Especialistas",
+      "url": "https://www.gov.br/saude/pt-br/composicao/sgtes/mais-medicos/medico-e-medica/especialistas",
+      "uso": "Confirma objetivo de provimento, aprimoramento em serviço e especialidades contempladas."
+    },
+    {
+      "titulo": "Consulta oficial da Classificação Brasileira de Ocupações",
+      "url": "https://consulta.trabalho.gov.br/empregador/cbo/procuracbo/default.asp",
+      "uso": "Fonte dos códigos e títulos ocupacionais usados no CNES."
+    }
+  ],
+  "limite_de_validade": "As fontes sustentam especialidades elegíveis e títulos CBO, mas não publicam uma ponte curso-CBO. Por isso, cursos com CBO compartilhado ficam fora da análise confirmatória.",
   "regras_resolucao_sobreposicao": {
     "especificacao_principal_puro": "Utilizar os cursos com mapeamento estrito 1:1 sem sobreposição para inferência basal incontaminada.",
     "especificacao_agregada": "Em células com cursos sobrepostos no mesmo CNES, consolidar ao nível de especialidade compartilhada ou colapsar no CNES."

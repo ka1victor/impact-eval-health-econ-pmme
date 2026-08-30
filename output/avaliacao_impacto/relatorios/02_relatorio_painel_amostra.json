@@ -1,36 +1,37 @@
 {
-  "data_processamento": "2026-08-30",
-  "periodo_cobertura": {
-    "inicio": "2024-06",
-    "fim": "2026-07",
-    "total_meses": 26,
-    "meses_pre": 13,
-    "mes_transicao": "2025-07",
-    "meses_pos": 12
+  "status": "APROVADO",
+  "periodo": {
+    "inicio": "202406",
+    "fim": "202607",
+    "meses": 26
   },
-  "painel_municipal_canonico": {
-    "total_linhas": 30784,
-    "total_municipios": 368,
-    "total_celulas_municipio_curso": 1184,
-    "distribuicao_modalidade": {
+  "painel_municipal": {
+    "linhas": 30784,
+    "municipios": 368,
+    "celulas": 1184,
+    "celulas_confirmatorias": 587,
+    "municipios_identificadores_confirmatorios": 93,
+    "modalidades": {
       "RESERVA": 709,
       "IMEDIATA": 463,
-      "DUPLA": 12
-    },
-    "amostra_identificadora_ddd": {
-      "municipios_com_variacao_intra": 152,
-      "celulas_municipio_curso_com_variacao": 819,
-      "percentual_amostra_identificadora": 69.17
+      "MISTA": 12
     }
   },
-  "painel_cnes_diagnostico": {
-    "total_linhas": 33670,
-    "total_cnes": 460,
-    "total_celulas_cnes_curso": 1295
+  "painel_cnes": {
+    "linhas": 33670,
+    "cnes": 460
   },
-  "painel_regional_diagnostico": {
-    "total_linhas": 24050,
-    "total_regioes_saude": 186,
-    "total_celulas_regiao_curso": 828
-  }
+  "painel_regional": {
+    "linhas": 24050,
+    "regioes": 207
+  },
+  "checks": {
+    "26_competencias_municipais": true,
+    "municipal_sem_duplicatas": true,
+    "cnes_sem_duplicatas": true,
+    "regional_sem_duplicatas": true,
+    "outcome_primario_presente": true,
+    "mecanismos_com_censura": true
+  },
+  "observacao": "O painel municipal usa todos os CNES dos municípios e deduplica CO_PROFISSIONAL_SUS; CNES e região são diagnósticos, não novos estimandos causais."
 }

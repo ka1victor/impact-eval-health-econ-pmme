@@ -1,164 +1,162 @@
-"""08_gerar_nota_tecnica_final.py — Geração da Nota Técnica Final de Avaliação Causal.
-
-Este script sintetiza todos os resultados empíricos, testes de hipótese e diagnósticos
-de identificação em um documento técnico formal e executivo:
-`output/avaliacao_impacto/relatorios/03_nota_tecnica_avaliacao_impacto_pmme.md`.
-
-Estrutura da Nota Técnica:
-1. Sumário Executivo e Principais Achados
-2. Desenho Institucional e Contraste Administrativo (Ciclo 1 Chamada 1)
-3. Dados, Harmonização Territorial e Portões Pré-Estimação
-4. Estratégia de Identificação Econométrica (Tripla Diferença Canônica e Estudo de Evento)
-5. Resultados Principais: Vagas Imediatas Viram Médicos?
-6. Dinâmica e Mecanismos: Entradas, Saídas e Retenção Longitudinal
-7. Diagnósticos de Redistribuição e Heterogeneidade pelo IVS 2010
-8. Limitações Metodológicas e Recomendações de Política Pública
-
-Entregáveis:
-- output/avaliacao_impacto/relatorios/03_nota_tecnica_avaliacao_impacto_pmme.md
-"""
+"""Gera nota técnica exclusivamente a partir dos artefatos da execução corrente."""
 
 from __future__ import annotations
 
-import datetime
+import datetime as dt
 import json
 from pathlib import Path
-from typing import Any, Dict
 
-import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_DIR = ROOT / "output" / "avaliacao_impacto"
-RELATORIOS_DIR = OUTPUT_DIR / "relatorios"
-TABELAS_DIR = OUTPUT_DIR / "tabelas"
-MODELOS_DIR = OUTPUT_DIR / "modelos"
+OUT = ROOT / "output" / "avaliacao_impacto"
+REL = OUT / "relatorios"
+MODELS = OUT / "modelos"
 
-NOTA_TECNICA_MD = RELATORIOS_DIR / "03_nota_tecnica_avaliacao_impacto_pmme.md"
+
+def load(path: Path):
+    with path.open("r", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def fmt(value: float) -> str:
+    return f"{value:.3f}"
 
 
 def main() -> None:
-    print("=== [Etapa 8] Geração da Nota Técnica Final de Avaliação Causal ===")
-    RELATORIOS_DIR.mkdir(parents=True, exist_ok=True)
+    REL.mkdir(parents=True, exist_ok=True)
+    gate = load(REL / "01_relatorio_portao_relevancia.json")
+    sample = load(REL / "02_relatorio_painel_amostra.json")
+    ddd = load(MODELS / "resultados_ddd_estatica.json")
+    event = load(MODELS / "resultados_estudo_evento.json")
+    mechanisms = load(MODELS / "resultados_mecanismos_fluxos.json")
+    robustness = load(MODELS / "resultados_robustez_e_redistribuicao.json")
 
-    # 1. Carregar artefatos gerados nas etapas anteriores
-    with open(RELATORIOS_DIR / "01_relatorio_portao_relevancia.json", "r", encoding="utf-8") as f:
-        rel_portao = json.load(f)
+    primary = next(x for x in ddd if x["nome_modelo"] == "M1_DDD_Principal_Confirmatoria")
+    expanded = next(x for x in ddd if x["nome_modelo"] == "M2_DDD_Ampliada")
+    coverage = next(x for x in ddd if x["nome_modelo"] == "M3_DDD_Cobertura")
+    pre = event["wald_pre_tendencias"]
+    placebo = next(x for x in robustness["modelos"] if x["grupo_analise"] == "Placebo temporal")
+    retention = mechanisms["presenca_6m_descritiva"]
+    conditional_ok = gate["status_portao"] == "APROVADO" and pre["p_valor"] >= 0.10 and placebo["p_valor"] >= 0.10
+    status = "INTERPRETAÇÃO CAUSAL CONDICIONAL" if conditional_ok else "COMPARAÇÃO AJUSTADA"
+    first_stage = gate["resultados_ajustados"]["tem_alocado_muni_ddd"]
+    gate_text = (
+        "A modalidade imediata separou positivamente a alocação na amostra identificadora."
+        if gate["status_portao"] == "APROVADO"
+        else (
+            "A modalidade imediata não separou a alocação na amostra identificadora; "
+            "por isso, as regressões abaixo não identificam o impacto causal do programa."
+        )
+    )
 
-    with open(MODELOS_DIR / "resultados_ddd_estatica.json", "r", encoding="utf-8") as f:
-        mod_ddd = json.load(f)
+    text = f"""# Nota técnica — vagas viram médicos e eles permanecem?
 
-    with open(MODELOS_DIR / "resultados_estudo_evento.json", "r", encoding="utf-8") as f:
-        mod_event = json.load(f)
+> Data da execução: {dt.date.today().isoformat()}
+> Status: **{status}**
+> Unidade principal: município–curso–mês
+> Janela: 2024-06 a 2026-07
 
-    with open(MODELOS_DIR / "resultados_mecanismos_fluxos.json", "r", encoding="utf-8") as f:
-        mod_mec = json.load(f)
+## Pergunta e estimando
 
-    with open(MODELOS_DIR / "resultados_robustez_e_redistribuicao.json", "r", encoding="utf-8") as f:
-        mod_rob = json.load(f)
+A análise pergunta se disponibilizar inicialmente uma vaga do primeiro ciclo do
+PMM-E para preenchimento imediato, em vez de mantê-la apenas em cadastro de
+reserva, alterou o estoque cadastral de especialistas no município. O contraste
+é uma intenção de tratar administrativa dentro do mesmo quadro de vagas; não
+é PMM-E versus ausência do programa e não identifica individualmente bolsistas.
 
-    # Extrair coeficientes chave
-    m3_principal = next(m for m in mod_ddd if m["nome_modelo"] == "M3_DDD_Principal")
-    m5_cobertura = next(m for m in mod_ddd if m["nome_modelo"] == "M5_DDD_Cobertura_Binaria")
-    wald_event = mod_event["wald_pre_tendencias"]
-    
-    rob_alta_ivs = next((r for r in mod_rob if "Alta" in r["especificacao"]), None)
-    rob_cnes = next(r for r in mod_rob if "Estabelecimento" in r["especificacao"])
-    rob_regiao = next(r for r in mod_rob if "Região" in r["especificacao"])
+## Dados corrigidos
 
-    conteudo_md = f"""# Nota Técnica — Avaliação Causal de Impacto do Programa Mais Médicos Especialistas (PMM-E)
+O painel usa exclusivamente os 26 arquivos mensais do CNES e todos os
+estabelecimentos dos {sample['painel_municipal']['municipios']} municípios da
+amostra. `CO_PROFISSIONAL_SUS` é deduplicado no município–curso–mês. A lista
+nominal do PMM-E não é somada ao CNES, nenhuma carga horária é presumida e
+competências ausentes interrompem o pipeline.
 
-> **Projeto:** Avaliação de Impacto e Economia da Saúde — PMM-E (Lei nº 15.233/2025)  
-> **Unidade de Análise Canônica:** Célula Município–Curso–Mês (Painel Balanceado 2024-06 a 2026-07)  
-> **Data de Emissão:** 30 de Agosto de 2026  
-> **Status:** Concluído e Validado  
+O universo confirmatório possui
+{sample['painel_municipal']['celulas_confirmatorias']} células
+município–curso. A especificação com variação dentro do município usa
+{gate['amostra_ddd_municipio_curso']['n_celulas']} células em
+{gate['amostra_ddd_municipio_curso']['n_municipios']} municípios com cursos nas
+duas modalidades. Ela exclui cursos cujos CBOs são compartilhados com outro
+curso do ciclo. A ponte é operacional e auditável, mas não é uma crosswalk
+publicada pelo Ministério da Saúde.
 
----
+## Relevância administrativa
 
-## 1. Sumário Executivo e Pergunta Substantiva
+O portão foi **{gate['status_portao']}** no mesmo grão e amostra da DDD. A
+associação ajustada entre modalidade imediata e alocação confirmada foi
+{100 * first_stage['beta']:.2f} p.p. (EP {100 * first_stage['se']:.2f};
+p={first_stage['p_valor']:.4f}). {gate_text} A diferença observada no universo
+CNES–curso não substitui esse teste no grão da análise. Homologação mede uma
+candidatura homologada, não entrada em exercício no CNES.
 
-A presente nota técnica responde à questão central do provimento médico especializado no Sistema Único de Saúde (SUS): **A disponibilização de vagas do PMM-E para preenchimento imediato aumentou o estoque de médicos especialistas nos municípios contemplados, e esses profissionais permaneceram ao longo do horizonte observado?**
+## Resultado principal
 
-### Principais Achados Empíricos:
-1. **Portão de Relevância Administrativa (Primeiro Estágio):** A classificação de vagas para preenchimento imediato aumentou em **+19,17 pontos percentuais** a probabilidade de alocação médica confirmada ($41,55\%$ vs $22,38\%$, $p < 10^{{-11}}$) e em **+9,78 p.p.** a taxa de homologação efetiva ($25,25\%$ vs $15,47\%$, $p < 10^{{-4}}$).
-2. **Impacto sobre o Estoque Municipal de Especialistas:** A estimativa de Tripla Diferença (DDD) estática canônica — controlando por efeitos fixos de célula município-curso ($\alpha_{{ms}}$), choques locais município-mês ($\gamma_{{mt}}$) e dinâmica nacional curso-mês ($\delta_{{st}}$) — indica um efeito médio não significativamente diferente de zero no conjunto agregado de municípios ($\hat{{\beta}} = {m3_principal['beta']:.4f}$, erro-padrão $= {m3_principal['se']:.4f}$, $p = {m3_principal['p_valor']:.4f}$).
-3. **Probabilidade de Cobertura Local ($\ge 1$ Especialista Ativo):** Houve aumento positivo de **+{m5_cobertura['beta']*100:.2f} pontos percentuais** na probabilidade de o município manter ao menos um especialista ativo na especialidade contemplada ($\hat{{\beta}} = +{m5_cobertura['beta']:.4f}$, $p = {m5_cobertura['p_valor']:.4f}$), sugerindo ganho de cobertura extensiva em municípios com vazios assistenciais.
-4. **Validade das Pré-Tendências Paralelas:** O estudo de evento dinâmico confirma que as trajetórias pré-anúncio (2024-06 a 2025-06) eram estritamente paralelas entre os grupos ($F = {wald_event['estatistica_f']:.4f}$, $p = {wald_event['p_valor']:.4f}$), validando econometricamente a identificação causal.
-5. **Heterogeneidade Crítica por Vulnerabilidade Social (IVS 2010):** Em municípios de **Alta e Muito Alta Vulnerabilidade Social (IVS $\ge 0,400$)**, a oferta de vagas imediatas gerou um ganho líquido robusto e estatisticamente significante de **+{rob_alta_ivs['beta']:.4f} médicos especialistas por célula** ($p = {rob_alta_ivs['p_valor']:.4f}$), confirmando que a atração do programa é altamente eficaz onde as carências estruturais são mais severas.
-6. **Mecanismos e Retenção:** A coorte de médicos entrantes no período pós-oferta maduro (2025-08 a 2026-01) apresentou **100% de taxa de permanência cadastral aos 6 meses** em ambos os grupos. A avaliação de permanência aos 12 meses encontra-se pré-especificada e censurada, requerendo extensão do CNES até 2027-01.
+A especificação DDD confirmatória, com efeitos fixos município–curso,
+município–mês e curso–mês, produziu uma diferença ajustada de
+**{fmt(primary['beta'])} especialista** por célula
+(EP {fmt(primary['se'])}; IC 95% [{fmt(primary['ci_95'][0])},
+{fmt(primary['ci_95'][1])}]; p={primary['p_valor']:.4f}). O intervalo deve ser
+usado para avaliar tanto aumentos relevantes quanto reduções compatíveis com
+os dados. Como o portão administrativo falhou na amostra identificadora, esse
+número não deve ser chamado de efeito causal.
 
----
+Na amostra ampliada dos 16 cursos, a estimativa foi {fmt(expanded['beta'])}
+(IC 95% [{fmt(expanded['ci_95'][0])}, {fmt(expanded['ci_95'][1])}]). Para a
+probabilidade de haver ao menos um especialista, a estimativa confirmatória foi
+{100 * coverage['beta']:.2f} p.p. (IC 95% [{100 * coverage['ci_95'][0]:.2f},
+{100 * coverage['ci_95'][1]:.2f}] p.p.).
 
-## 2. Desenho Institucional e Amostra Identificadora
+## Dinâmica, entradas e presença posterior
 
-O PMM-E (Lei 15.233/2025) estruturou a oferta pública do Ciclo 1 Chamada 1 (24/07/2025) dividindo as vagas entre preenchimento **IMEDIATO** e **CADASTRO DE RESERVA**. 
+Entradas exigem seis meses anteriores de ausência observada; saídas exigem três
+meses posteriores consecutivos de ausência. As bordas sem seguimento são
+censuradas, não preenchidas com zero.
 
-A amostra municipal é composta por **1.184 células município–curso** distribuídas em **368 municípios** e **186 Regiões de Saúde**. A identificação da DDD com efeitos fixos município–mês apoia-se em **152 municípios que possuem simultaneamente cursos imediatos e reserva**, totalizando **819 células município-curso** (69,2% da amostra municipal).
+Entre entrantes de 2025-08 a 2026-01, a presença no mesmo
+município–curso seis meses depois foi
+{retention['imediata']['taxa_presenca_6m_pct']:.1f}% na modalidade imediata e
+{retention['reserva']['taxa_presenca_6m_pct']:.1f}% na reserva. Essa comparação
+é descritiva porque condiciona em entrada, que pode ser afetada pelo tratamento.
+A presença em doze meses permanece censurada até haver CNES até 2027-01.
 
----
+## Diagnósticos de identificação
 
-## 3. Resultados Econométricos Consolidados
+O teste conjunto dos coeficientes pré-tratamento produziu F={pre['estatistica_f']:.3f}
+(p={pre['p_valor']:.4f}); o maior coeficiente pré em valor absoluto foi
+{pre['max_abs_beta_pre']:.3f}. Não rejeitar a hipótese nula não prova tendências
+paralelas. O placebo com falso início em 2025-01 estimou {fmt(placebo['beta'])}
+(p={placebo['p_valor']:.4f}).
 
-### Tabela 2 — Resultados Principais da Tripla Diferença (DDD) Estática
+O painel regional é mantido apenas como diagnóstico descritivo. Como a exposição
+é municipal e pode gerar interferência, ele não é apresentado como estimativa
+causal de spillovers.
 
-| Modelo | Especificação / Controles | Outcome | Coeficiente $\hat{{\beta}}$ | Erro-Padrão | P-valor | IC 95% |
-|:---|:---|:---|:---:|:---:|:---:|:---:|
-| **M1** | DiD Básico (Célula + Mês) | Estoque de Médicos | $+0,0626$ | $(0,1165)$ | $0,5910$ | $[-0,1658; +0,2910]$ |
-| **M2** | DiD com FE Curso-Mês | Estoque de Médicos | $+0,0179$ | $(0,2038)$ | $0,9299$ | $[-0,3815; +0,4173]$ |
-| **M3** | **DDD Canônica Principal** | Estoque de Médicos | **${m3_principal['beta']:.4f}$** | **$({m3_principal['se']:.4f})$** | **${m3_principal['p_valor']:.4f}$** | **$[{m3_principal['ci_95'][0]:.4f}; {m3_principal['ci_95'][1]:.4f}]$** |
-| **M4** | DDD CBOs Estritamente Unívocos | Estoque de Médicos | $-0,3408$ | $(0,3407)$ | $0,3171$ | $[-1,0085; +0,3269]$ |
-| **M5** | DDD Cobertura Binária ($\ge 1$ Médico) | Indicador Binário | **$+0,0389^*$** | **$(0,0222)$** | **$0,0793$** | **$[-0,0045; +0,0823]$** |
-| **M6** | DDD Carga Horária Semanal Total | Horas Semanais (FTE) | $-3,9557$ | $(4,4255)$ | $0,3714$ | $[-12,6294; +4,7181]$ |
+## Interpretação máxima
 
-*Erros-padrão clusterizados ao nível municipal. Janela pré: 2024-06 a 2025-06; mês de transição 2025-07 excluído; janela pós: 2025-08 a 2026-07.*
+Esta execução não sustenta uma afirmação causal sobre o PMM-E. Ela mostra que,
+na comparação ajustada escolhida, não apareceu aumento do estoque de
+especialistas em municípios–cursos classificados como imediatos relativamente
+aos mantidos em reserva. Isso não equivale a demonstrar que o programa não teve
+efeito: o contraste perdeu relevância justamente na amostra que identifica a
+DDD. O CNES mede presença cadastral total, não confirma que o profissional seja
+bolsista, que cumpra horas efetivas, que produza procedimentos ou que melhore
+desfechos de pacientes.
 
----
+## Artefatos
 
-## 4. Diagnósticos de Redistribuição Espacial e Spillovers
-
-Para investigar se o provimento gerou canibalização de vínculos dentro do mesmo município ou redistribuição regional, compararam-se os estimadores em três escalas geográficas concêntricas:
-
-1. **Nível Estabelecimento (CNES):** $\hat{{\beta}} = {rob_cnes['beta']:.4f}$ ($p = {rob_cnes['p_valor']:.4f}$);
-2. **Nível Município (Canônico):** $\hat{{\beta}} = {m3_principal['beta']:.4f}$ ($p = {m3_principal['p_valor']:.4f}$);
-3. **Nível Região de Saúde (Spillover Regional):** $\hat{{\beta}} = +{rob_regiao['beta']:.4f}$ ($p = {rob_regiao['p_valor']:.4f}$).
-
-O coeficiente positivo na escala regional ($+0,28$) em contraste com o nível municipal indica que o programa atua como indutor de capacidade técnica regional agregada, sem provocar fuga de médicos de municípios vizinhos da mesma região de saúde.
-
----
-
-## 5. Heterogeneidade pelo Índice de Vulnerabilidade Social (IVS 2010 IPEA)
-
-A estratificação pela running variable canônica do IVS 2010 revela o canal distributivo do PMM-E:
-
-- **Municípios de Alta e Muito Alta Vulnerabilidade Social (IVS $\ge 0,400$):**
-  $$\hat{{\beta}}_{{\text{{IVS Alto}}}} = +{rob_alta_ivs['beta']:.4f}^{{**}} \quad (EP = {rob_alta_ivs['se']:.4f}, \quad p = {rob_alta_ivs['p_valor']:.4f})$$
-- **Municípios de Média e Baixa Vulnerabilidade Social (IVS $< 0,400$):**
-  $$\hat{{\beta}}_{{\text{{IVS Baixo/Médio}}}} = -0,3920^* \quad (EP = 0,2286, \quad p = 0,0864)$$
-
-**Conclusão Substantiva:** O PMM-E é altamente eficaz na atração e expansão líquida de especialistas exatamente nos territórios prioritários de maior vulnerabilidade socioeconômica, onde a carência médica histórica impede a atração espontânea de mercado.
-
----
-
-## 6. Limitações Metodológicas e Declaração de Escopo
-
-1. **Vínculo Cadastral vs. Produção Real:** A presença de registros ativos no CNES e no sistema PMM-E mensura capacidade cadastral instalada, não garantindo cumprimento integral de horas ambulatoriais ou redução imediata de filas cirúrgicas.
-2. **Cruzamento entre Regimes no Seguimento:** Conforme documentado no portão de relevância, 22,38% das células originalmente em cadastro de reserva receberam médicos ao longo dos 12 meses pós-anúncio através de chamadas complementares, atenuando a diferença observada no estimando de intenção de tratar (ITT).
-3. **Maturidade Temporal:** A retenção a 12 meses permanece formalmente censurada e será atualizada prospectivamente com a extensão do CNES até 2027-01.
-
----
-
-## 7. Inventário de Artefatos Gerados
-
-Todos os produtos e dados consolidados encontram-se estruturados no diretório `output/avaliacao_impacto/`:
-- **Painéis:** `output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet`
-- **Tabelas:** `output/avaliacao_impacto/tabelas/tabela1_estatisticas_descritivas_baseline.csv` a `tabela4_diagnosticos_robustez_e_redistribuicao.csv`
-- **Figuras:** `output/avaliacao_impacto/figuras/figura1_estudo_evento_ddd_dinamico.png` a `figura4_decomposicao_mecanismos_fluxos.png`
-- **Modelos:** `output/avaliacao_impacto/modelos/resultados_ddd_estatica.json`, `resultados_estudo_evento.json`, etc.
+- `tabelas/tabela1_estatisticas_descritivas_baseline.csv`
+- `tabelas/tabela2_ddd_estatica_resultado_primario.csv`
+- `tabelas/tabela3_mecanismos_fluxos_e_retencao.csv`
+- `tabelas/tabela4_diagnosticos_robustez_e_redistribuicao.csv`
+- `figuras/figura1_estudo_evento_ddd_dinamico.png`
+- `figuras/figura2_diagnostico_redistribuicao.png`
+- `figuras/figura3_trajetoria_estoque_por_modalidade.png`
+- `figuras/figura4_decomposicao_mecanismos_fluxos.png`
 """
-
-    with NOTA_TECNICA_MD.open("w", encoding="utf-8") as f:
-        f.write(conteudo_md)
-
-    print(f"[OK] Nota Técnica Final gerada com sucesso em: {NOTA_TECNICA_MD}")
+    target = REL / "03_nota_tecnica_avaliacao_impacto_pmme.md"
+    target.write_text(text, encoding="utf-8")
+    print(f"[OK] Nota técnica gerada com status: {status}")
 
 
 if __name__ == "__main__":
