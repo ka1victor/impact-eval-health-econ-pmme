@@ -1,6 +1,13 @@
 # 04. Quando o incentivo é eficaz?
 
-> Validação crítica do escopo empírico prioritário. Este documento define o que será chamado de eficácia, como os modos de falha serão analisados e qual é o limite das conclusões.
+> **Status:** desenho anterior preservado, mas congelado. A análise individual de
+> cobertura e retenção continua dependendo de dados administrativos e não será
+> executada na primeira versão. O plano vigente é o painel público agregado em
+> [`05_roadmap_execucao.md`](05_roadmap_execucao.md).
+>
+> Registro do escopo empírico individual anterior. Este documento define o que
+> seria chamado de eficácia nesse desenho, seus modos de falha e os limites das
+> conclusões.
 
 ## 1. Pergunta de pesquisa
 

@@ -1,8 +1,15 @@
 # 01. Outcomes e estimandos do PMM-E
 
+> **Status:** agenda conceitual ampla. Para a primeira versão, o único estimando
+> ativo é o efeito da priorização imediata sobre o estoque cadastral de
+> especialistas, definido em [`05_roadmap_execucao.md`](05_roadmap_execucao.md).
+>
 > Este documento define o que o projeto quer medir antes de escolher método ou produzir resultados. O foco é o efeito do componente de provimento do PMM-E, não o efeito agregado de todas as frentes do Agora Tem Especialistas.
 
-Na agenda completa, espera e acesso são os outcomes mais próximos do objetivo legal. No primeiro estudo, deliberadamente reduzido, o outcome primário será cobertura sustentada da vaga em 180 dias. Essa escolha mede eficácia operacional do provimento e não substitui espera por uma proxy. Veja [`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md).
+Na agenda completa, espera e acesso são os outcomes mais próximos do objetivo
+legal. O desenho anterior havia escolhido cobertura sustentada da vaga em 180
+dias; ele está preservado em [`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md),
+mas não será executado na primeira versão.
 
 ## 1. Pergunta central
 

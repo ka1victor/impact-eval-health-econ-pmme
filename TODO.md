@@ -1,59 +1,33 @@
-# Próximas etapas
+# Próximas etapas — versão mínima
 
-> Ordem operacional resumida. A especificação completa está em `docs/05_roadmap_execucao.md`, e cada tarefa tem um prompt em `prompts/`.
+> A única fila autorizada é a do plano em `docs/05_roadmap_execucao.md`.
 
-## Concluído
+## Decisões concluídas
 
-- [x] Remover artefatos sem sustentação nas bases observadas.
-- [x] Preservar as três bases observadas e o histórico do Git.
-- [x] Organizar outcomes e inventariar lacunas.
-- [x] Definir eficácia operacional como primeiro estudo.
-- [x] Definir cobertura sustentada como outcome primário pretendido.
-- [x] Formalizar modos de falha e limites da conclusão.
-- [x] Separar agenda ampla de roadmap executável.
-- [x] Criar prompts ordenados para os agentes.
-- [x] Guardar explicitamente WP3, WP4 e WP5.
+- [x] Trocar o estimando individual bloqueado por um estimando agregado
+  mensurável no CNES.
+- [x] Fixar o ciclo 1, chamada 1, como única coorte inicial.
+- [x] Definir vaga imediata versus apenas cadastro de reserva como contraste.
+- [x] Definir estoque mensal de especialistas como único outcome principal.
+- [x] Excluir julho de 2025 como mês de transição.
+- [x] Congelar todos os demais outcomes e métodos.
 
-## Fase 1 — viabilidade e aquisição de dados
+## Fila única de implementação
 
-- [x] Executar `prompts/01_auditoria_institucional.md` (`docs/auditorias/01_regra_institucional.md`).
-- [x] Executar `prompts/02_auditoria_dados.md` (`docs/auditorias/02_disponibilidade_dados.md`).
-- [x] Executar a primeira rodada A01–A05 (ainda não validada para integração).
-- [x] Executar `prompts/aquisicao_dados/A05R_saneamento_pre_a06.md` (`docs/auditorias/aquisicao/saneamento_pre_a06.md`).
-- [x] Executar `prompts/aquisicao_dados/A06_integracao_e_portao.md` (`aguardar dados administrativos`).
-- [x] Executar `prompts/aquisicao_dados/A07_pedidos_administrativos.md` (pacotes preparados; todos `não enviado`).
-- [ ] Autor decidir se e como submeter os pacotes A07 aos órgãos competentes.
-- [ ] Executar `prompts/03_protocolo_empirico.md` somente após respostas administrativas, integração e novo portão.
-- [x] Registrar decisão do portão: `aguardar dados administrativos`.
+- [ ] Validar e congelar a ponte oficial entre os 16 cursos do ciclo 1 e CBOs.
+- [ ] Resolver sobreposições de CBO entre cursos antes de observar outcomes.
+- [ ] Confirmar a amostra final de células imediatas e em reserva.
+- [ ] Adquirir as 26 competências CNES de 2024-06 a 2026-07.
+- [ ] Construir o painel `CNES–curso–mês` e o número de especialistas distintos.
+- [ ] Produzir tabela de perdas, baseline e tendências brutas.
+- [ ] Estimar a DDD estática e o estudo de evento.
+- [ ] Auditar pré-tendências, suporte, clusters e influência regional.
+- [ ] Entregar uma nota curta, classificando o resultado como causal somente se
+  as hipóteses forem defensáveis.
+- [ ] Integrar as novas etapas ao `run_all.py` depois de validadas.
 
-## Fase 2 — construção e estimação
+## Congelado
 
-- [ ] Executar `prompts/04_painel_vagas_cobertura.md`, se autorizado.
-- [ ] Executar `prompts/05_cnes_fte_infraestrutura.md`, se autorizado.
-- [ ] Reconciliar chaves, perdas amostrais, cobertura e FTE.
-- [ ] Executar `prompts/06_estimacao_causal.md`.
-- [ ] Confirmar que `run_all.py` reproduz todas as etapas validadas.
-
-## Fase 3 — auditoria e entrega
-
-- [ ] Executar `prompts/07_red_team.md`.
-- [ ] Resolver ameaças sérias ou reduzir a linguagem.
-- [ ] Executar `prompts/08_sintese_final.md`.
-- [ ] Validar reprodução ponta a ponta e documentação final.
-
-## Fora da execução atual
-
-- [ ] WP3 — acesso, fila e deslocamento: guardado.
-- [ ] WP4 — desfechos clínicos: guardado.
-- [ ] WP5 — custos e bem-estar: guardado.
-
-Não marcar esses itens como pendências operacionais. As condições futuras de reabertura estão em `docs/06_backlog_wp3_wp4_wp5.md`.
-
-## Critério para inserir uma etapa no pipeline
-
-- [ ] Pré-requisitos anteriores incorporados.
-- [ ] Base observada com proveniência e hash.
-- [ ] Outcome, denominador, unidade e janela definidos.
-- [ ] Contraste causal e hipótese identificadora documentados.
-- [ ] Diagnósticos e incerteza reproduzíveis.
-- [ ] Linguagem limitada ao que foi identificado.
+Não executar agora: ciclos 2–3; RDD/IVS; métodos escalonados ou sintéticos; FTE;
+entrada, saída, churn ou retenção; mobilidade regional; SIA/SUS; SIH/SUS; filas;
+outcomes clínicos; custos; heterogeneidades; pedidos administrativos A07.

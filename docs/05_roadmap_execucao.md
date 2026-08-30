@@ -1,148 +1,209 @@
-# 05. Roadmap de execução do estudo prioritário
+# 05. Plano principal mínimo
 
-> Este é o roadmap operacional canônico. O encadeamento completo de outcomes em `03_plano_avaliacao_outcomes.md` é uma agenda de pesquisa de longo prazo, não a fila de execução atual.
+> Decisão vigente. Este documento substitui, para a execução atual, o plano de
+> cobertura individual de vagas. O desenho anterior continua preservado como
+> agenda futura, mas não será executado agora.
 
-## 1. Produto que será executado agora
+## 1. Pergunta que será respondida
 
-Pergunta:
+> Ser classificada inicialmente como **vaga imediata**, em vez de **apenas
+> cadastro de reserva**, aumentou o número mensal de especialistas elegíveis
+> cadastrados no estabelecimento contemplado pelo PMM-E?
 
-> Quando o incentivo adicional do PMM-E transforma vagas ofertadas em capacidade médica sustentada e líquida, e quando resulta apenas em ocupação transitória, substituição ou remanejamento?
+Esse é um estudo do efeito da **priorização imediata** sobre a oferta médica
+cadastral local. Não é um estudo do efeito global do PMM-E, do preenchimento de
+cada vaga ou da permanência individual dos bolsistas.
 
-O estudo avalia eficácia operacional do provimento. Seu outcome primário pretendido é a proporção da janela comum de acompanhamento em que a vaga permaneceu coberta. A janela-alvo é 180 dias, condicionada à disponibilidade de seguimento definida antes de observar efeitos.
+## 2. Por que este é o plano principal
 
-## 2. Quais WPs entram agora
+Ele usa o melhor contraste atualmente disponível em dados públicos:
 
-| WP | Uso no estudo prioritário | Situação |
-|---|---|---|
-| WP0 — regra e exposição | Auditar tratamento, cutoff, vagas e contraste causal | Executar integralmente |
-| WP1 — força de trabalho | Construir cobertura, entrada, permanência, rotatividade e FTE | Executar integralmente |
-| WP2 — capacidade e produção | Usar somente infraestrutura prévia como moderador | Executar parcialmente |
-| WP3 — acesso e fila | Nenhuma estimação nesta etapa | Guardado |
-| WP4 — clínica | Nenhuma estimação nesta etapa | Guardado |
-| WP5 — custos e bem-estar | Nenhuma estimação nesta etapa | Guardado |
-| WP6 — síntese e spillovers | Heterogeneidade confirmatória, decomposição contábil de remanejamento e síntese | Executar parcialmente |
+- tratamento e comparação estão no mesmo quadro administrativo;
+- a unidade `CNES–curso` está explicitamente identificada na oferta;
+- o CNES mensal permite medir o estoque de médicos sem identificar nominalmente
+  os participantes do PMM-E;
+- o ciclo 1 já possui uma janela pré e pós razoavelmente simétrica;
+- a pergunta é estreita e pode ser respondida antes de incorporar produção,
+  filas, internações ou desfechos clínicos.
 
-O que fica guardado em WP3–WP5 está especificado em [`06_backlog_wp3_wp4_wp5.md`](06_backlog_wp3_wp4_wp5.md).
+O desenho é da mesma família da estratégia anteriormente discutida — painel
+mensal com DiD/DDD —, mas troca o estimando individual bloqueado por um estimando
+agregado mensurável com dados públicos.
 
-## 3. Bloqueio atual após o A06
+## 3. O que o contraste significa
 
-O portão A06 decidiu **`aguardar dados administrativos`**. As aquisições A01–A05 permitem versionar quadros por publicação, descrever resultados publicados e inspecionar o esquema do CNES em três competências. Elas ainda não contêm:
-
-- identificador estável da vaga e denominador deduplicado entre reapresentações;
-- trajetória individual completa de entrada e saída;
-- chave pseudonimizada comum ao PMM-E e ao CNES;
-- painel CNES mensal completo — há somente três competências piloto;
-- regra administrativa completa do IVS e folha mensal vinculável;
-- informação suficiente para cobertura sustentada, retenção individual ou FTE líquido.
-
-Os pacotes A07 foram preparados em `docs/pedidos_dados/`, todos com status inicial `não enviado`. A próxima ação depende de decisão externa do autor sobre submissão. Nenhum agente deve executar o prompt 03 ou iniciar estimação antes de respostas serem recebidas, integradas e submetidas a novo portão.
-
-## 4. Sequência operacional
+O tratamento será fixado pela publicação de 24/07/2025:
 
 ```text
-FASE 1 — VIABILIDADE
-
-01 Auditoria institucional ─┐
-                            ├─→ sprint de aquisição A01–A05
-02 Auditoria de dados ──────┘              ↓
-                                  A05R saneamento pré-A06
-                                           ↓
-                                  A06 portão integrado [concluído]
-                                           ↓
-                         A07 pedidos administrativos [preparados; não enviados]
-                                           ↓
-                              03 Protocolo empírico congelado
-                                      ↓
-                               PORTÃO: prosseguir?
-                                      ↓
-FASE 2 — CONSTRUÇÃO E ESTIMAÇÃO
-
-04 Painel de vagas ─────────┐
-                            ├─→ 06 Identificação e estimação
-05 CNES/FTE/infraestrutura ─┘
-                                      ↓
-FASE 3 — AUDITORIA E ENTREGA
-
-07 Red team e reprodução ─────→ 08 Síntese final
+Immediate_is = 1  se a célula CNES i – curso s tinha vaga imediata
+Immediate_is = 0  se a célula tinha apenas cadastro de reserva
 ```
 
-Os pares 01–02 e 04–05 podem rodar em paralelo apenas em worktrees ou branches isolados. O agente 03 depende das auditorias, do sprint de aquisição saneado e do portão A06. O agente 06 depende dos painéis validados. O agente 08 depende do red team.
+Na planilha do ciclo 1, chamada 1, há:
 
-Após a execução das auditorias 01–02, o primeiro portão classificou o estudo como
-`aguardando dados`. Por isso, a dependência efetiva do prompt 03 inclui agora o
-sprint extraordinário descrito em
-[`prompts/aquisicao_dados/README.md`](../prompts/aquisicao_dados/README.md).
-A01–A05 podem rodar em paralelo em worktrees isolados; A05R corrige e valida os
-produtos combinados; A06 os integra; A07 prepara pedidos administrativos para as
-lacunas remanescentes, sem enviá-los.
+- 503 células apenas com vagas imediatas;
+- 782 células apenas em cadastro de reserva;
+- 10 células com as duas modalidades, que serão excluídas da especificação
+  principal;
+- 460 estabelecimentos, dos quais 165 têm cursos em modalidades distintas e
+  ajudam a identificar comparações dentro do próprio CNES.
 
-O A06 foi concluído em 29/08/2026 com **1 requisito que passou, 3 parciais e
-5 que falharam** entre as nove perguntas obrigatórias. A decisão foi
-`aguardar dados administrativos`. A lista fechada de seis lacunas para A07 está
-em [`03_portao_apos_aquisicao.md`](auditorias/03_portao_apos_aquisicao.md).
+Os totais acima se referem a **células CNES–curso**, não ao número de vagas. O
+tratamento é binário e mede o pacote associado à classificação inicial da célula;
+não estima o efeito por vaga adicional.
 
-## 5. Portão depois da Fase 1
+Cadastro de reserva não é ausência de programa nem um grupo nunca exposto. Vagas
+em reserva podem ser reapresentadas, convertidas ou posteriormente alocadas. Por
+isso, o estimando será descrito como:
 
-O protocolo deve responder, antes de qualquer estimação:
+> efeito da classificação inicial como imediata, comparada à classificação
+> inicial apenas em reserva.
 
-1. O contraste identifica participação, incentivo marginal ou pacote?
-2. A regra usa efetivamente o IVS 2010 e qual é o cutoff?
-3. Existe universo de vagas e denominador confiável?
-4. Existe trajetória temporal suficiente para cobertura sustentada?
-5. Qual é a maior janela comum possível sem olhar os efeitos?
-6. Há chave para vincular vaga, participante e CNES?
-7. FTE e infraestrutura podem ser medidos com informação pré-tratamento?
-8. A amostra tem potência para o efeito principal e para uma interação?
+Na análise principal, a classificação de julho permanecerá fixa. Reclassificar
+ou censurar controles depois de conversões poderia condicionar a amostra a
+eventos posteriores ao tratamento. A ativação posterior de reservas será
+registrada como contaminação do contraste e tende a aproximar os grupos.
 
-Saídas permitidas:
+## 4. Dados e janela
 
-- **prosseguir:** pergunta, tratamento, dados e contraste estão definidos;
-- **prosseguir parcialmente:** estimar apenas o que os dados identificam e reduzir a linguagem;
-- **parar:** não há contraste ou mensuração defensável;
-- **aguardar dados:** pergunta permanece, mas exige fonte ainda indisponível.
+### Oferta
 
-Não redefinir o outcome silenciosamente apenas para aproveitar as bases existentes.
+Fonte principal:
+`data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx`.
 
-## 6. Entregáveis por fase
+Somente o ciclo 1, chamada 1, entrará na primeira versão. Não serão somadas
+reapresentações nem outras chamadas.
 
-### Fase 1
+### Outcome
 
-- `docs/auditorias/01_regra_institucional.md`;
-- `docs/auditorias/02_disponibilidade_dados.md`;
-- manifestos e hashes de novas fontes;
-- `docs/07_protocolo_empirico_congelado.md`.
+Será adquirido o painel público mensal completo do CNES entre **junho de 2024 e
+julho de 2026**. Os identificadores de CNES, profissional e CBO serão preservados
+como texto.
 
-### Fase 2
+A unidade será `CNES–curso–mês`. Cada curso deverá ter um conjunto de CBOs
+elegíveis definido por regra oficial congelada antes da construção do outcome.
 
-- painel vaga–especialidade–chamamento;
-- spells de ocupação e fluxo de exclusões;
-- painel profissional–vínculo–mês;
-- FTE, infraestrutura prévia e remanejamento contábil;
-- scripts determinísticos integrados ao `run_all.py`;
-- tabelas, figuras e resultados estruturados.
+Outcome único da primeira versão:
 
-### Fase 3
+```text
+especialistas_ist = número de CO_PROFISSIONAL_SUS distintos
+                    no CNES i, no mês t, pertencentes ao conjunto
+                    de CBOs elegíveis para o curso s
+```
 
-- `docs/auditorias/03_red_team_e_reprodutibilidade.md`;
-- correções ou limitações classificadas;
-- relatório final e README atualizados;
-- reprodução ponta a ponta a partir das fontes documentadas.
+O outcome mede estoque cadastral de especialistas. Um aumento é compatível com
+atração ou expansão da oferta no estabelecimento, mas não prova que os médicos
+adicionais sejam bolsistas do PMM-E.
 
-## 7. Regras de coordenação dos agentes
+### Calendário
 
-- Cada agente lê `AGENTS.md`, `CLAUDE.md`, este roadmap e seu prompt integralmente.
-- Cada agente respeita os pré-requisitos e não avança para a fase seguinte.
-- Dados brutos existentes nunca são modificados.
-- Dados não observados nunca são preenchidos com simulação ou premissas.
-- Cada agente entrega commit próprio; não faz push nem merge.
-- Trabalho paralelo exige worktrees isolados.
-- O integrador revisa os commits na ordem deste roadmap.
-- Um resultado antigo no histórico do Git não vale como evidência vigente.
+- pré-tratamento: 2024-06 a 2025-06;
+- 2025-07: mês de transição, excluído;
+- pós-tratamento: 2025-08 a 2026-07.
 
-## 8. Definição de conclusão
+Como a oferta foi publicada em 24/07/2025, agosto de 2025 será o primeiro mês
+pós. A escolha é determinada pelo calendário, não pelos resultados.
 
-O estudo estará pronto quando puder sustentar, com dados observados:
+## 5. Único portão técnico antes do painel
 
-> Próximo ao contraste institucional analisado, determinada condição de incentivo alterou em X a cobertura das vagas durante Y dias. O resultado ocorreu principalmente por entrada/permanência, correspondeu a Z de capacidade líquida e foi ou não condicionado pela infraestrutura anterior.
+É obrigatório construir e auditar a correspondência `curso PMM-E → CBO(s)` a
+partir dos requisitos oficiais de elegibilidade. Essa ponte ainda não está
+pronta no repositório.
 
-A conclusão deve também declarar que o estudo não mede diretamente produção, espera, saúde, custos ou eficácia global do PMM-E.
+Antes de baixar e transformar todo o painel, o portão deve informar:
+
+1. quais CBOs representam cada curso;
+2. se a correspondência é unívoca ou envolve múltiplas especialidades;
+3. quais células de um mesmo CNES têm conjuntos de CBOs sobrepostos;
+4. quantas observações permanecem numa amostra não ambígua.
+
+A especificação principal usará apenas cursos com mapeamento defensável. Células
+com conjuntos sobrepostos e modalidades conflitantes no mesmo CNES serão
+excluídas ou colapsadas por regra escrita antes de observar os outcomes. Se não
+houver amostra comparável suficiente após esse portão, o projeto não usará a
+DDD para fazer afirmação causal.
+
+## 6. Estimação principal
+
+Como o ciclo 1 possui uma única data inicial de exposição, não é necessário usar
+Callaway–Sant'Anna ou Sun–Abraham na primeira versão. A especificação principal
+será a DDD estática:
+
+```text
+Y_ist = alpha_is
+      + gamma_it
+      + delta_st
+      + beta (Immediate_is × Post_t)
+      + epsilon_ist
+```
+
+em que:
+
+- `alpha_is` são efeitos fixos da célula CNES–curso;
+- `gamma_it` são efeitos fixos CNES–mês, que absorvem choques gerais do
+  estabelecimento;
+- `delta_st` são efeitos fixos curso–mês, que absorvem choques comuns ao curso;
+- `beta` é a diferença pós-oferta entre células inicialmente imediatas e células
+  inicialmente em reserva, líquida desses três conjuntos de efeitos fixos.
+
+O modelo principal será linear em número de médicos, para que `beta` seja lido
+diretamente em especialistas. A inferência será agrupada por município. Serão
+reportados o número de municípios, a distribuição de células por cluster e a
+sensibilidade a clusters dominantes.
+
+## 7. Diagnóstico mínimo
+
+Além da estimativa estática, será produzido um estudo de evento com a mesma
+estrutura de efeitos fixos. Ele servirá para mostrar tendências anteriores,
+antecipação e dinâmica; não será usado para escolher retrospectivamente a janela
+mais favorável.
+
+A primeira entrega conterá somente:
+
+1. tabela de construção e perdas da amostra;
+2. tabela descritiva de baseline por modalidade;
+3. gráfico de médias mensais por grupo;
+4. gráfico de evento com leads e lags;
+5. coeficiente principal da DDD, intervalo de confiança e interpretação em
+   número de especialistas.
+
+A priorização imediata não foi aleatória. O fato de os grupos pertencerem ao
+mesmo processo administrativo melhora comparabilidade, mas não garante
+identificação. A interpretação causal exige tendências paralelas condicionais
+aos efeitos fixos e ausência de choque específico simultâneo à célula tratada.
+Se houver pré-tendências substantivas, falta de suporte ou concentração do
+resultado em poucos locais, a entrega será nomeada **comparação ajustada**, não
+impacto causal.
+
+## 8. O que não será feito agora
+
+Ficam congelados, sem tarefas de execução na primeira versão:
+
+- ciclos 2 e 3 e qualquer painel de adoção escalonada;
+- Callaway–Sant'Anna, Sun–Abraham, synthetic DiD e matrix completion;
+- RDD pelo IVS, efeito de incentivo financeiro e variáveis instrumentais;
+- identificação individual de bolsistas, cobertura de vagas e retenção
+  individual;
+- FTE, entradas, saídas, churn e permanência em seis ou doze meses;
+- remanejamento entre CNES, municípios ou regiões de saúde;
+- produção SIA/SUS, internações SIH/SUS, filas, exames e outcomes de saúde;
+- custos, custo-benefício, heterogeneidades e correção por múltiplos outcomes;
+- envio dos pedidos administrativos A07.
+
+Esses itens só serão reabertos por nova decisão explícita após a entrega da
+versão mínima.
+
+## 9. Sequência operacional fechada
+
+```text
+1. Congelar a ponte curso–CBO e a amostra elegível
+2. Adquirir as 26 competências CNES
+3. Construir um único outcome mensal de estoque
+4. Produzir descritivas, DDD estática e estudo de evento
+5. Auditar pré-tendências, suporte, clusters e perdas
+6. Entregar nota curta com linguagem proporcional à identificação
+```
+
+Não há outra frente em paralelo. O plano individual anterior permanece bloqueado
+por dados administrativos; este plano agregado não depende de identificar quais
+médicos pertencem ao PMM-E.

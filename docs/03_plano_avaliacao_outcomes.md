@@ -1,13 +1,22 @@
 # 03. Plano de avaliação dos outcomes
 
-> Agenda ampla de outcomes do projeto. Ela não é a fila operacional do estudo prioritário e não fixa RDD antes da auditoria institucional.
+> **Status:** agenda de longo prazo, sem tarefas autorizadas na primeira versão.
+> O plano corrente e mínimo está em
+> [`05_roadmap_execucao.md`](05_roadmap_execucao.md).
+>
+> Agenda ampla de outcomes do projeto. Ela não é a fila operacional da primeira
+> versão e não fixa RDD antes da auditoria institucional.
 
-O primeiro estudo foi restringido à eficácia operacional do incentivo: cobertura sustentada, seus mecanismos, adicionalidade e uma heterogeneidade pré-especificada por infraestrutura anterior. A definição e os limites estão em [`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md), e a ordem executável em [`05_roadmap_execucao.md`](05_roadmap_execucao.md). As demais frentes abaixo formam a agenda posterior.
+O desenho anterior foi restringido à cobertura sustentada, seus mecanismos,
+adicionalidade e uma heterogeneidade por infraestrutura anterior. Ele está
+preservado em [`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md).
+O plano mínimo vigente está em [`05_roadmap_execucao.md`](05_roadmap_execucao.md).
+As frentes abaixo formam apenas a agenda posterior.
 
 ## 1. Visão geral
 
 ```text
-ESTUDO ATUAL
+DESENHO ANTERIOR CONGELADO
 WP0 Regra e exposição
   → WP1 Provimento e retenção
   → WP2 somente infraestrutura prévia

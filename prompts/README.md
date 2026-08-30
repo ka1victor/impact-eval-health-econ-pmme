@@ -1,6 +1,12 @@
 # Prompts operacionais dos agentes
 
-Esta pasta contém as tarefas executáveis do roadmap definido em [`docs/05_roadmap_execucao.md`](../docs/05_roadmap_execucao.md).
+> **Fila congelada.** Estes prompts pertencem ao desenho individual anterior e
+> não devem ser executados na primeira versão. A única sequência autorizada está
+> em [`docs/05_roadmap_execucao.md`](../docs/05_roadmap_execucao.md) e deverá
+> receber prompts próprios apenas quando a implementação começar.
+>
+Esta pasta preserva as tarefas do roadmap anterior. A ordem abaixo é histórica e
+não constitui uma fila autorizada.
 
 ## Ordem
 
