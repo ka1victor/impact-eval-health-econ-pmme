@@ -1,0 +1,100 @@
+[
+  {
+    "grupo_analise": "A. Redistribuição Espacial",
+    "especificacao": "1. Nível Estabelecimento (CNES)",
+    "beta": -0.16300687545284304,
+    "se": 0.19625471212402926,
+    "t_stat": -0.8305883394525874,
+    "p_valor": 0.40620622424628605,
+    "ci_95": [
+      -0.5476590430122167,
+      0.2216452921065306
+    ],
+    "n_obs": 32125,
+    "n_clusters": 460
+  },
+  {
+    "grupo_analise": "A. Redistribuição Espacial",
+    "especificacao": "2. Nível Município (Canônico DDD)",
+    "beta": -0.23175280851568641,
+    "se": 0.20103381865985057,
+    "t_stat": -1.1528050855354461,
+    "p_valor": 0.24899039655851418,
+    "ci_95": [
+      -0.6257718527635499,
+      0.16226623573217697
+    ],
+    "n_obs": 20225,
+    "n_clusters": 152
+  },
+  {
+    "grupo_analise": "A. Redistribuição Espacial",
+    "especificacao": "3. Nível Região de Saúde (Spillovers)",
+    "beta": 0.3083938262209608,
+    "se": 0.3830642046521897,
+    "t_stat": 0.8050708535948242,
+    "p_valor": 0.4207787939659914,
+    "ci_95": [
+      -0.4423982186638117,
+      1.0591858711057331
+    ],
+    "n_obs": 18850,
+    "n_clusters": 109
+  },
+  {
+    "grupo_analise": "B. Sensibilidade Amostral",
+    "especificacao": "4. Excluindo Top 3 Municípios com Mais Vagas",
+    "beta": -0.08009907064482889,
+    "se": 0.1317479026341825,
+    "t_stat": -0.6079722640233278,
+    "p_valor": 0.5432058695677939,
+    "ci_95": [
+      -0.33832021484651637,
+      0.17812207355685855
+    ],
+    "n_obs": 19350,
+    "n_clusters": 149
+  },
+  {
+    "grupo_analise": "B. Sensibilidade Amostral",
+    "especificacao": "5. Apenas CBOs Estritamente Unívocos (1:1)",
+    "beta": -0.27583342334336874,
+    "se": 0.3489729350534061,
+    "t_stat": -0.7904149452196222,
+    "p_valor": 0.4292854769039217,
+    "ci_95": [
+      -0.95980780762728,
+      0.4081409609405426
+    ],
+    "n_obs": 10150,
+    "n_clusters": 145
+  },
+  {
+    "grupo_analise": "C. Heterogeneidade IVS 2010",
+    "especificacao": "6. Municípios de Alta / Muito Alta Vulnerabilidade (IVS)",
+    "beta": 0.49379115071212826,
+    "se": 0.24563346234304045,
+    "t_stat": 2.010276393134589,
+    "p_valor": 0.044401943961033245,
+    "ci_95": [
+      0.012358411121893342,
+      0.9752238903023631
+    ],
+    "n_obs": 3100,
+    "n_clusters": 28
+  },
+  {
+    "grupo_analise": "C. Heterogeneidade IVS 2010",
+    "especificacao": "7. Municípios de Média / Baixa Vulnerabilidade (IVS)",
+    "beta": -0.3396250601174555,
+    "se": 0.22852656638730223,
+    "t_stat": -1.4861513279898748,
+    "p_valor": 0.13723909825785383,
+    "ci_95": [
+      -0.7875288997471697,
+      0.10827877951225856
+    ],
+    "n_obs": 17125,
+    "n_clusters": 124
+  }
+]

@@ -4,7 +4,7 @@ Este script realiza a aquisição resiliente, validação e extração streaming
 mensais do CNES (junho de 2024 a julho de 2026 = 26 competências) para avaliação causal do PMM-E.
 
 Fontes e regras:
-- Download paralelo e resiliente de `http://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_AAAAMM.ZIP` para `data/raw/cnes/`.
+- Download primário via FTP DATASUS (`ftp://ftp.datasus.gov.br/cnes/BASE_DE_DADOS_CNES_AAAAMM.ZIP`) com fallback HTTP.
 - Idempotência com download temporário `.part` e teste de integridade do ZIP antes da persistência.
 - Extração em streaming seletivo: lê diretamente do arquivo ZIP as tabelas `tbCargaHorariaSus` e `tbEstabelecimento`,
   filtrando todos os vínculos de médicos especialistas (famílias CBO 2251, 2252, 2253).
@@ -41,7 +41,8 @@ MONTHLY_PARQUET_DIR = OUTPUT_DIR / "cnes_mensal"
 CONSOLIDATED_PARQUET = OUTPUT_DIR / "cnes_vinculos_medicos_2024_2026.parquet"
 MANIFEST_FILE = OUTPUT_DIR / "manifesto_cnes_26_competencias.json"
 
-BASE_URL = "http://cnes.datasus.gov.br/EstatisticasServlet?path="
+FTP_BASE_URL = "ftp://ftp.datasus.gov.br/cnes/"
+HTTP_BASE_URL = "http://cnes.datasus.gov.br/EstatisticasServlet?path="
 CATALOG_REFERER = "https://cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp"
 
 # 26 competências: 2024-06 a 2026-07
@@ -60,10 +61,13 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def download_single_month(competencia: str, timeout: int = 900, max_retries: int = 4) -> Tuple[str, bool, Optional[str], Optional[int], Optional[str]]:
+def download_zip(
+    competencia: str,
+    destination: Path,
+    timeout: int = 600,
+    max_retries: int = 3,
+) -> Tuple[bool, Optional[str], Optional[int], Optional[str]]:
     filename = f"BASE_DE_DADOS_CNES_{competencia}.ZIP"
-    destination = RAW_CNES_DIR / filename
-    url = f"{BASE_URL}{filename}"
 
     if destination.exists():
         try:
@@ -73,9 +77,9 @@ def download_single_month(competencia: str, timeout: int = 900, max_retries: int
                         file_hash = sha256_file(destination)
                         file_size = destination.stat().st_size
                         print(f"  [OK LOCAL] {filename} ({file_size / (1024*1024):.1f} MB, sha256: {file_hash[:12]}...)", flush=True)
-                        return competencia, True, file_hash, file_size, None
+                        return True, file_hash, file_size, None
         except Exception as e:
-            print(f"  [AVISO] Arquivo existente {filename} corrompido: {e}. Rebaixando...", flush=True)
+            print(f"  [AVISO] Arquivo {filename} corrompido ({e}). Rebaixando...", flush=True)
 
     temp_dest = destination.with_suffix(".zip.part")
     if temp_dest.exists():
@@ -85,75 +89,73 @@ def download_single_month(competencia: str, timeout: int = 900, max_retries: int
             pass
 
     destination.parent.mkdir(parents=True, exist_ok=True)
-    req = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) PMME-CNES-Acquisition/1.0",
-            "Referer": CATALOG_REFERER,
-            "Accept": "application/zip,*/*",
-        },
-    )
+
+    urls = [
+        (f"{FTP_BASE_URL}{filename}", {}),
+        (f"{HTTP_BASE_URL}{filename}", {"User-Agent": "Mozilla/5.0", "Referer": CATALOG_REFERER}),
+    ]
 
     for attempt in range(1, max_retries + 1):
-        try:
-            print(f"  -> Baixando {filename} (tentativa {attempt}/{max_retries})...", flush=True)
-            t0 = time.time()
-            digest = hashlib.sha256()
-            total_bytes = 0
+        for url, headers in urls:
+            try:
+                protocol = "FTP" if url.startswith("ftp") else "HTTP"
+                print(f"  -> Baixando {filename} via {protocol} (tentativa {attempt}/{max_retries})...", flush=True)
+                t0 = time.time()
+                digest = hashlib.sha256()
+                total_bytes = 0
 
-            with urllib.request.urlopen(req, timeout=timeout) as response:
-                first_chunk = response.read(2)
-                if first_chunk != b"PK":
-                    raise RuntimeError(f"Resposta HTTP não é ZIP (magic bytes: {first_chunk!r})")
+                req = urllib.request.Request(url, headers=headers) if headers else url
+                with urllib.request.urlopen(req, timeout=timeout) as response:
+                    first_chunk = response.read(2)
+                    if first_chunk != b"PK":
+                        raise RuntimeError(f"Resposta remota não é ZIP (magic bytes: {first_chunk!r})")
 
-                with temp_dest.open("wb") as handle:
-                    handle.write(first_chunk)
-                    digest.update(first_chunk)
-                    total_bytes += len(first_chunk)
+                    with temp_dest.open("wb") as handle:
+                        handle.write(first_chunk)
+                        digest.update(first_chunk)
+                        total_bytes += len(first_chunk)
 
-                    last_log = time.time()
-                    while True:
-                        chunk = response.read(2 * 1024 * 1024)
-                        if not chunk:
-                            break
-                        handle.write(chunk)
-                        digest.update(chunk)
-                        total_bytes += len(chunk)
+                        last_log = time.time()
+                        while True:
+                            chunk = response.read(2 * 1024 * 1024)
+                            if not chunk:
+                                break
+                            handle.write(chunk)
+                            digest.update(chunk)
+                            total_bytes += len(chunk)
 
-                        if time.time() - last_log >= 15:
-                            elapsed = time.time() - t0
-                            speed = total_bytes / (1024 * 1024 * elapsed) if elapsed > 0 else 0
-                            print(f"     {filename}: {total_bytes / (1024*1024):.1f} MB ({speed:.2f} MB/s)", flush=True)
-                            last_log = time.time()
+                            if time.time() - last_log >= 15:
+                                elapsed = time.time() - t0
+                                speed = total_bytes / (1024 * 1024 * elapsed) if elapsed > 0 else 0
+                                print(f"     {filename}: {total_bytes / (1024*1024):.1f} MB ({speed:.2f} MB/s)", flush=True)
+                                last_log = time.time()
 
-            if not zipfile.is_zipfile(temp_dest):
-                raise RuntimeError("Arquivo baixado não é ZIP íntegro.")
+                if not zipfile.is_zipfile(temp_dest):
+                    raise RuntimeError("Arquivo baixado não é ZIP íntegro.")
 
-            with zipfile.ZipFile(temp_dest, "r") as zf:
-                if zf.testzip() is not None:
-                    raise RuntimeError("Teste de integridade do ZIP falhou.")
+                with zipfile.ZipFile(temp_dest, "r") as zf:
+                    if zf.testzip() is not None:
+                        raise RuntimeError("Teste de integridade do ZIP falhou.")
 
-            if destination.exists():
-                destination.unlink()
-            temp_dest.replace(destination)
+                if destination.exists():
+                    destination.unlink()
+                temp_dest.replace(destination)
 
-            elapsed = time.time() - t0
-            file_hash = digest.hexdigest()
-            print(f"  [CONCLUÍDO] {filename} em {elapsed:.1f}s ({total_bytes / (1024*1024):.1f} MB, sha256: {file_hash[:12]}...)", flush=True)
-            return competencia, True, file_hash, total_bytes, None
+                elapsed = time.time() - t0
+                file_hash = digest.hexdigest()
+                print(f"  [CONCLUÍDO] {filename} em {elapsed:.1f}s ({total_bytes / (1024*1024):.1f} MB, sha256: {file_hash[:12]}...)", flush=True)
+                return True, file_hash, total_bytes, None
 
-        except Exception as exc:
-            print(f"  [ERRO] Falha no download de {filename} (tentativa {attempt}): {exc}", flush=True)
-            if temp_dest.exists():
-                try:
-                    temp_dest.unlink()
-                except Exception:
-                    pass
-            if attempt == max_retries:
-                return competencia, False, None, None, str(exc)
-            time.sleep(4)
+            except Exception as exc:
+                print(f"  [AVISO] Tentativa {protocol} falhou para {filename}: {exc}", flush=True)
+                if temp_dest.exists():
+                    try:
+                        temp_dest.unlink()
+                    except Exception:
+                        pass
+                time.sleep(2)
 
-    return competencia, False, None, None, "Max retries excedido"
+    return False, None, None, "Max retries excedido"
 
 
 def extract_cnes_month(competencia: str, zip_path: Path) -> pd.DataFrame:
@@ -245,7 +247,6 @@ def extract_cnes_month(competencia: str, zip_path: Path) -> pd.DataFrame:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--force-download", action="store_true", help="Força novo download de todos os arquivos")
-    parser.add_argument("--workers", type=int, default=3, help="Número de threads simultâneas para download")
     args = parser.parse_args()
 
     RAW_CNES_DIR.mkdir(parents=True, exist_ok=True)
@@ -255,43 +256,31 @@ def main() -> None:
     print("=== [Subagente 2] Aquisição e Extração Resiliente do CNES (26 Competências) ===", flush=True)
     print(f"Período: {ALL_COMPETENCIAS[0]} a {ALL_COMPETENCIAS[-1]} (Total: {len(ALL_COMPETENCIAS)} meses)\n", flush=True)
 
-    # 1. Download paralelo resiliente dos arquivos ausentes
-    missing_competencias = [
-        comp for comp in ALL_COMPETENCIAS
-        if not (RAW_CNES_DIR / f"BASE_DE_DADOS_CNES_{comp}.ZIP").exists() or args.force_download
-    ]
-
-    download_results: Dict[str, Tuple[bool, Optional[str], Optional[int], Optional[str]]] = {}
-    if missing_competencias:
-        print(f"Iniciando download paralelo de {len(missing_competencias)} competências ausentes com {args.workers} workers...", flush=True)
-        with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as executor:
-            futures = {executor.submit(download_single_month, comp): comp for comp in missing_competencias}
-            for fut in concurrent.futures.as_completed(futures):
-                comp, ok, fhash, fsize, err = fut.result()
-                download_results[comp] = (ok, fhash, fsize, err)
-    else:
-        print("Todas as 26 bases brutas já estão preservadas em data/raw/cnes/.", flush=True)
-
-    # 2. Processar e extrair para Parquet mensal
     manifest_entries = []
     monthly_dfs = []
 
-    for comp in ALL_COMPETENCIAS:
+    for comp_idx, comp in enumerate(ALL_COMPETENCIAS):
         zip_name = f"BASE_DE_DADOS_CNES_{comp}.ZIP"
         dest_zip = RAW_CNES_DIR / zip_name
         dest_parquet = MONTHLY_PARQUET_DIR / f"cnes_vinculos_medicos_{comp}.parquet"
 
-        if not dest_zip.exists():
-            print(f"  [PULANDO] Arquivo bruto {zip_name} ausente.", flush=True)
+        print(f"[{comp_idx + 1}/{len(ALL_COMPETENCIAS)}] Processando competência {comp}...", flush=True)
+
+        # 1. Download se necessário
+        ok, file_hash, file_size, err = download_zip(comp, dest_zip)
+        if not ok:
+            print(f"  [FALHA] Não foi possível adquirir {zip_name}: {err}", flush=True)
             manifest_entries.append({
                 "competencia": comp,
                 "arquivo": zip_name,
-                "status": "arquivo_ausente",
+                "status": "falha_download",
+                "erro": err,
                 "sha256": None,
                 "bytes": None,
             })
             continue
 
+        # 2. Extração para parquet individual (com cache idempotente)
         if dest_parquet.exists() and not args.force_download:
             print(f"  [OK CACHE] Parquet mensal já existe: {dest_parquet.name}", flush=True)
             df_m = pd.read_parquet(dest_parquet)
@@ -305,8 +294,8 @@ def main() -> None:
             "competencia": comp,
             "arquivo": zip_name,
             "caminho_zip": dest_zip.relative_to(ROOT).as_posix(),
-            "bytes_zip": dest_zip.stat().st_size,
-            "sha256_zip": sha256_file(dest_zip),
+            "bytes_zip": file_size or dest_zip.stat().st_size,
+            "sha256_zip": file_hash or sha256_file(dest_zip),
             "status": "adquirido_e_extraido",
             "caminho_parquet": dest_parquet.relative_to(ROOT).as_posix(),
             "linhas_vinculos_medicos": len(df_m),

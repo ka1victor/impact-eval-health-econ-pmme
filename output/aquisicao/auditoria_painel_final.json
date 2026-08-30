@@ -1,0 +1,15 @@
+{
+  "status": "CONCLUIDO_COM_SUCESSO",
+  "timestamp": "2026-08-30T02:35:21.411706",
+  "total_linhas": 33670,
+  "total_celulas": 1295,
+  "total_competencias": 26,
+  "estatisticas_painel": {
+    "soma_especialistas_mes": 134047,
+    "soma_entradas": 2948,
+    "soma_saidas": 1320,
+    "soma_retidos_6m": 1324,
+    "cobertura_media": 0.810959310959311,
+    "fte_medio_semanal": 64.87041877041877
+  }
+}

@@ -39,3 +39,4 @@ wheels/
 
 # Dados brutos grandes (CNES)
 data/raw/cnes/
+output/aquisicao/cnes_mensal/

@@ -1,0 +1,41 @@
+{
+  "status_portao": "APROVADO",
+  "conclusao": "A classificação imediata prediz aumento substantivo e altamente significante na alocação (+19.17 p.p., p < 1e-8) e homologação (+9.78 p.p., p < 1e-4).",
+  "totais_universo": {
+    "total_celulas_cnes_curso": 1295,
+    "total_celulas_municipio_curso": 1184,
+    "total_vagas_anunciadas": 1823,
+    "total_alocados_confirmados": 468,
+    "total_homologados": 296
+  },
+  "estatisticas_celulares": {
+    "imediata": {
+      "n_celulas": 503,
+      "vagas_total": 668,
+      "alocados_total": 253,
+      "homologados_total": 151,
+      "taxa_alocacao_confirmada": 0.415506958250497,
+      "taxa_homologacao_efetiva": 0.2524850894632207
+    },
+    "reserva": {
+      "n_celulas": 782,
+      "vagas_total": 1134,
+      "alocados_total": 211,
+      "homologados_total": 142,
+      "taxa_alocacao_confirmada": 0.2237851662404092,
+      "taxa_homologacao_efetiva": 0.1547314578005115
+    },
+    "dupla": {
+      "n_celulas": 10,
+      "vagas_total": 21,
+      "alocados_total": 4,
+      "homologados_total": 3,
+      "taxa_alocacao_confirmada": 0.3,
+      "taxa_homologacao_efetiva": 0.2
+    }
+  },
+  "diagnostico_cruzamento_regimes": {
+    "alocacao_em_reserva": "22.38% das células de reserva tiveram alocação confirmada via convocações e repescagens no período pós-anúncio.",
+    "implicacao_estimando": "O estimando capta o efeito da oferta para preenchimento imediato versus permanência inicial em reserva (intenção de tratar administrativa), sem reclassificação ex-post."
+  }
+}

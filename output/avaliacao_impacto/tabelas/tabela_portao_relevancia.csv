@@ -1,0 +1,5 @@
+﻿Nível,Métrica,Vagas Imediatas,Cadastro Reserva,Diferença,Estatística t,P-valor
+Célula CNES-Curso,Taxa de Alocação Confirmada (%),41.55,22.38,19.17,7.215,1.1124085799045674e-12
+Célula CNES-Curso,Taxa de Homologação Efetiva (%),25.25,15.47,9.78,4.193,3.011428366063907e-05
+Célula Município-Curso,Taxa de Alocação Confirmada (%),43.35,23.82,19.53,7.216,9.549379797761738e-13
+Célula Município-Curso,Taxa de Homologação Efetiva (%),27.04,16.71,10.33,4.308,1.7829295108550683e-05
