@@ -20,7 +20,8 @@
 
 - [ ] Verificar, com alocações e homologações públicas, se a classificação
   imediata gera exposição administrativa substantivamente distinta da reserva.
-- [ ] Validar e congelar a ponte oficial entre os 16 cursos do ciclo 1 e CBOs.
+- [ ] Auditar a proveniência e validar a ponte candidata versionada entre os 16
+  cursos do ciclo 1 e CBOs; o nome `oficial` do arquivo não encerra o portão.
 - [ ] Resolver sobreposições de CBO entre cursos antes de observar efeitos.
 - [ ] Agregar o tratamento para `município–curso` e quantificar a amostra que
   identifica a DDD dentro do município.

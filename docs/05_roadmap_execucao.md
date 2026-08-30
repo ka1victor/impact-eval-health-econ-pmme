@@ -162,6 +162,11 @@ partir dos requisitos oficiais de elegibilidade. O portão deverá informar:
 5. quantos municípios possuem simultaneamente cursos imediatos e apenas em
    reserva e, portanto, identificam a DDD com efeitos município–mês.
 
+O arquivo `output/aquisicao/ponte_curso_cbo_oficial.json` e seu script gerador
+estão versionados como artefatos candidatos. O nome do arquivo não substitui a
+auditoria: proveniência de cada correspondência, sobreposições e perdas da
+amostra ainda devem passar por este portão antes da construção do outcome.
+
 ### 6.3 Integridade longitudinal do CNES
 
 Antes de calcular entradas ou saídas, serão validados:
@@ -172,7 +177,9 @@ Antes de calcular entradas ou saídas, serão validados:
 - mudanças de CBO, CNES e município;
 - cobertura temporal idêntica nos grupos de tratamento e comparação.
 
-Nenhum artefato ainda não versionado será tratado como produto validado.
+A existência ou o versionamento de um artefato não o torna automaticamente um
+produto validado. Scripts e outputs só mudam o estado da fila depois de passarem
+pelos testes substantivos correspondentes.
 
 ## 7. Estratégia de identificação
 

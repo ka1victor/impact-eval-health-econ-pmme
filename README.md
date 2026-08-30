@@ -56,8 +56,11 @@ produção, redução de espera ou melhora de saúde.
   reserva e 10 com ambas as modalidades.
 - Três competências piloto do CNES confirmam os campos necessários; o painel
   versionado completo ainda não foi validado.
-- A ponte oficial `curso PMM-E → CBO(s)`, a relevância de imediata versus reserva
-  e a estabilidade longitudinal dos identificadores são portões obrigatórios.
+- Uma ponte candidata `curso PMM-E → CBO(s)` e scripts de aquisição estão
+  versionados, mas proveniência, sobreposições, perdas e integração municipal
+  ainda precisam passar pelos portões do roadmap.
+- A relevância de imediata versus reserva e a estabilidade longitudinal dos
+  identificadores continuam sem validação conclusiva.
 - Ainda não existe resultado de impacto validado.
 
 O portão A06 continua válido para o desenho individual anterior, bloqueado por
