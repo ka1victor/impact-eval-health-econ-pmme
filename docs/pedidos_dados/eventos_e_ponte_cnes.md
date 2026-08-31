@@ -40,6 +40,54 @@
 
 **Chave:** `id_inscricao_pseudo + ordem_opcao` por versão vigente; alterações devem aparecer no log de eventos.
 
+### `opcoes_elegiveis.csv` — uma linha por inscrição, vaga disponível e intervalo de visibilidade
+
+Esta tabela representa o **conjunto de escolha efetivamente disponível** ao candidato no momento da decisão. Não deve conter apenas as opções selecionadas.
+
+| Campo | Tipo | Definição |
+|---|---|---|
+| `id_inscricao_pseudo` | texto | Inscrição para a qual a alternativa estava disponível. |
+| `id_vaga_pseudo` | texto | Vaga individual elegível ou exibida. |
+| `inicio_visibilidade` | timestamp | Início do intervalo em que a opção podia ser escolhida. |
+| `fim_visibilidade` | timestamp/NULL | Fim exclusivo do intervalo; vazio se disponível no corte. |
+| `elegivel` | booleano | Indica se o profissional cumpria os critérios no intervalo. |
+| `motivo_inelegibilidade` | categoria/NA | Regra administrativa quando a vaga era visível, mas não elegível. |
+| `status_disponibilidade` | categoria | Disponível, temporariamente indisponível, ocupada, retirada ou domínio real documentado. |
+| `versao_catalogo` | texto | Versão da oferta e das regras usada para produzir a linha. |
+
+**Chave:** `id_inscricao_pseudo + id_vaga_pseudo + inicio_visibilidade`. Se a materialização inscrição–vaga for operacionalmente excessiva, aceita-se o catálogo versionado de vagas mais as regras e atributos pseudonimizados necessários para o controlador reconstruir exatamente esse conjunto. A ausência desta tabela limita a análise à descrição das opções escolhidas e impede estimar preferências frente às oportunidades reais.
+
+### `perfil_preferencia_minimizado.csv` — atributos pré-escolha, categorizados
+
+Solicitam-se somente atributos administrativos existentes antes da escolha e necessários para heterogeneidade de preferência, em formato minimizado:
+
+| Campo | Tipo | Definição |
+|---|---|---|
+| `id_profissional_pseudo` | texto | Chave estável, sem identificador civil. |
+| `faixa_tempo_desde_especializacao` | categoria/NA | Faixas pré-definidas e suficientemente agregadas. |
+| `experiencia_sus_previa` | booleano/NA | Indicador administrativo anterior à inscrição. |
+| `experiencia_area_vulneravel_previa` | booleano/NA | Indicador anterior à inscrição, quando já existente no sistema. |
+| `faixa_etaria` | categoria/NA | Faixa ampla, somente se necessária e autorizada. |
+
+Não se solicita endereço, data de nascimento, currículo narrativo ou dado criado a partir do desfecho. A escolha de município vulnerável não deve ser usada para construir retrospectivamente uma proxy de “vocação”.
+
+### `vinculos_profissional_opcao.csv` — indicadores territoriais derivados pelo controlador
+
+Uma linha por profissional e vaga presente no conjunto de escolha, produzida internamente sem divulgar localidades pessoais:
+
+| Campo | Tipo | Definição |
+|---|---|---|
+| `id_profissional_pseudo` | texto | Liga ao perfil e às inscrições. |
+| `id_vaga_pseudo` | texto | Alternativa de trabalho/formação. |
+| `mesma_uf_residencia_opcao` | booleano/NA | Residência pré-inscrição e vaga estão na mesma UF. |
+| `mesma_uf_nascimento_opcao` | booleano/NA | Nascimento e vaga estão na mesma UF. |
+| `mesma_uf_graduacao_opcao` | booleano/NA | Graduação e vaga estão na mesma UF. |
+| `mesma_uf_residencia_medica_opcao` | booleano/NA | Residência médica/formação especializada e vaga estão na mesma UF. |
+| `faixa_distancia_residencia_opcao` | categoria/NA | Faixa de distância ou tempo de viagem, calculada pelo controlador. |
+| `regra_derivacao` | texto | Fonte, data de referência, faixas e versão da transformação. |
+
+**Chave:** `id_profissional_pseudo + id_vaga_pseudo`. Indicadores derivados são preferíveis à entrega de município de residência, nascimento ou formação. Células raras devem seguir a política de proteção do órgão.
+
 ### `eventos_longos.csv` — uma linha por evento
 
 Formato longo obrigatório; snapshots de ativos não substituem esta tabela.
@@ -87,11 +135,11 @@ Solicitam-se CSV UTF-8/ZIP, timestamps ISO 8601, dicionário, data de corte, his
 
 ## Alternativas hierarquizadas
 
-1. Quatro tabelas completas, com linkage realizado pelo controlador.
+1. Sete tabelas completas, com conjunto de escolha e linkage realizados pelo controlador.
 2. Se a ponte linha a linha não puder sair: o controlador agrega o CNES por `id_profissional_pseudo` e competência e devolve indicadores/cargas cadastrais estritamente necessários, mantendo a tabela de eventos individual pseudonimizada.
 3. Se microdados só puderem ser acessados em ambiente seguro: disponibilização controlada com exportação apenas de resultados de completude; ainda sem entrega de identificadores civis.
 4. Se eventos individuais forem legalmente inviáveis: contagens por vaga–dia e estado, acompanhadas do universo de vagas e regras de transição. Essa alternativa não permite spells individuais completos e não fecha A07-02/A07-03 sem avaliação adicional.
 
 ## Teste objetivo de completude
 
-A resposta é completa se: (a) toda inscrição submetida no período tem `id_inscricao_pseudo`, inclusive as não publicadas; (b) toda opção referencia inscrição e vaga existentes; (c) `id_evento` é único e todos os eventos estão em linhas separadas; (d) transições inválidas, duplicidades e timestamps regressivos são zero ou explicados; (e) entradas, afastamentos, retornos, transferências e saídas reconciliam o estado no corte; (f) cada profissional associado tem ponte confirmada ou status/motivo explícito; (g) as chaves são estáveis entre arquivos; e (h) dicionário, corte, revisões, manifesto, hashes e quantificação de supressões acompanham a entrega.
+A resposta é completa se: (a) toda inscrição submetida no período tem `id_inscricao_pseudo`, inclusive as não publicadas; (b) toda opção escolhida referencia inscrição e vaga existentes; (c) o conjunto elegível/visível é reconstruível no timestamp da decisão; (d) vínculos territoriais são derivados sem divulgar localidades pessoais; (e) `id_evento` é único e todos os eventos estão em linhas separadas; (f) transições inválidas, duplicidades e timestamps regressivos são zero ou explicados; (g) entradas, afastamentos, retornos, transferências e saídas reconciliam o estado no corte; (h) cada profissional associado tem ponte confirmada ou status/motivo explícito; (i) as chaves são estáveis entre arquivos; e (j) dicionário, corte, revisões, manifesto, hashes e quantificação de supressões acompanham a entrega.

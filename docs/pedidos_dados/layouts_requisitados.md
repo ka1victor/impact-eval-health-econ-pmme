@@ -11,6 +11,9 @@ Este documento consolida o contrato técnico sugerido. Os campos são **nomes de
 | `regra_ivs_vaga.csv` | vaga–vigência da regra | `id_vaga_pseudo + vigencia_inicio` | vaga |
 | `inscricoes_universo.csv` | inscrição submetida | `id_inscricao_pseudo` | profissional |
 | `inscricoes_opcoes.csv` | inscrição–opção | `id_inscricao_pseudo + ordem_opcao` | inscrição, vaga |
+| `opcoes_elegiveis.csv` | inscrição–vaga–intervalo de visibilidade | `id_inscricao_pseudo + id_vaga_pseudo + inicio_visibilidade` | inscrição, vaga |
+| `perfil_preferencia_minimizado.csv` | profissional | `id_profissional_pseudo` | profissional |
+| `vinculos_profissional_opcao.csv` | profissional–vaga | `id_profissional_pseudo + id_vaga_pseudo` | profissional, vaga |
 | `eventos_longos.csv` | evento individual | `id_evento` | inscrição, vaga, profissional, vaga origem/destino |
 | `ponte_pmme_cnes.csv` | profissional–intervalo | `id_profissional_pseudo + inicio_validade` | profissional |
 | `folha_componentes.csv` | competência–vaga–profissional–componente–versão | chave composta correspondente | vaga, profissional |
@@ -24,8 +27,8 @@ Este documento consolida o contrato técnico sugerido. Os campos são **nomes de
 | Chave | Escopo | Requisito de estabilidade |
 |---|---|---|
 | `id_vaga_pseudo` | vagas, opções, eventos, regra IVS e pagamentos | Mesma vaga física através de retificações, reapresentações, mudança de modalidade, ocupações e reocupações. Não derivar apenas de CNES–curso. |
-| `id_profissional_pseudo` | inscrições, eventos, ponte e pagamentos | Mesma pessoa através de ciclos, chamadas e fontes administrativas; não expor identificador civil. |
-| `id_inscricao_pseudo` | universo, opções e eventos | Persistir após validação, retirada ou correção. |
+| `id_profissional_pseudo` | inscrições, perfil minimizado, vínculos territoriais, eventos, ponte e pagamentos | Mesma pessoa através de ciclos, chamadas e fontes administrativas; não expor identificador civil. |
+| `id_inscricao_pseudo` | universo, opções escolhidas, opções elegíveis e eventos | Persistir após validação, retirada ou correção. |
 | `identificador_cnes_pseudo` | ponte | Estável para a identidade CNES enquanto válida; mudanças devem abrir novo intervalo. |
 | `id_evento` | eventos | Imutável; correções criam versão/anulação, não reutilizam o ID. |
 
