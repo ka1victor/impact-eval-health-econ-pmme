@@ -26,11 +26,16 @@ Atualizar as bases até seis meses e executar exatamente o plano congelado em
 2. Adquira somente as seis competências necessárias, com o mesmo pipeline e
    validações do pré-período.
 3. Rode testes de cobertura e esquema antes de unir tratamento e outcome.
-4. Estime DDD/event study do núcleo geral e o módulo assistencial autorizado.
+4. Estime o DiD/event study principal de anestesiologia no município; depois,
+   sem alterar o outcome, rode CNES como localização do efeito, SIH como
+   secundário clínico autorizado e a generalização predefinida para os cursos
+   12 e 24. Curso 2/CBO 225225 permanece sensibilidade.
 5. Reporte wild cluster bootstrap, intervalos, MDE e testes de equivalência.
 6. Rode apenas placebos e robustez pré-especificados: leads, data falsa prévia,
    negativos, pesos de sobreposição, leave-one-region-out e synthetic DiD.
-7. Decomponha estoque, entradas, saídas e entrantes presentes no sexto mês.
+7. Decomponha estoque de anestesiologistas, entradas, saídas e entrantes
+   presentes no sexto mês; não esconda os efeitos específicos por curso em um
+   pool dominado por anestesiologia.
 8. Quando a assinatura da Nota 59 tiver passado o portão, reporte cobertura,
    entrada, saída e permanência dos participantes PMM-E identificados no CNES,
    sem divulgar identificadores e sem confundi-los com o estoque total.

@@ -17,7 +17,6 @@ import ftplib
 import socket
 import hashlib
 from typing import List, Optional
-import pyreaddbc
 import pandas as pd
 
 socket.setdefaulttimeout(20)
@@ -40,6 +39,13 @@ def compute_sha256(filepath: str) -> str:
 
 def decompress_dbc_to_dbf(input_dbc: str, output_dbf: str) -> str:
     """Descompacta arquivo DBC do DATASUS para DBF."""
+    try:
+        import pyreaddbc
+    except ModuleNotFoundError as exc:
+        raise RuntimeError(
+            "Dependencia opcional 'pyreaddbc' ausente; instale-a no ambiente "
+            "da sessao C3-02B antes de adquirir DBCs."
+        ) from exc
     short_dbc = get_short_path_name(os.path.abspath(input_dbc))
     short_dbf = get_short_path_name(os.path.abspath(output_dbf))
     
@@ -149,6 +155,7 @@ def download_datasus_dbc(filename: str, dest_path: str, remote_dir: str = '/diss
             sha256 = compute_sha256(dest_path)
             return {
                 "filename": filename,
+                "source_url": f"ftp://ftp.datasus.gov.br{remote_dir}/{filename}",
                 "dest_path": dest_path,
                 "size_bytes": size_bytes,
                 "sha256": sha256,

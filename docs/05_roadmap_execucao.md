@@ -331,8 +331,12 @@ escolhidos pelo sinal observado não é próximo passo autorizado.
 ## 12. Próximo estudo, sem reabrir o ciclo 1
 
 O autor autorizou em 30/08/2026 uma avaliação prospectiva separada do ciclo 3.
-O núcleo geral usa imediata pura versus não priorizada pura; o módulo secundário
-testa anestesiologia/cirurgias com SIH. A preparação deve seguir, em ordem,
+O estudo principal usa imediata pura versus não priorizada pura de
+anestesiologia para medir estoque e permanência municipal; cirurgias no SIH são
+o secundário clínico condicionado, e oncologia clínica/medicina intensiva são
+generalizações separadas. O C3-02 provou viabilidade técnica do SIH, mas a
+revisão bloqueou o C3-03 até a correção C3-02B de proveniência, fluxos
+interestaduais, braço municipal e SIGTAP. A preparação deve seguir, em ordem,
 [`prompts/avaliacao_ciclo3/`](../prompts/avaliacao_ciclo3/README.md). Estimação
 só ocorrerá quando seis meses comuns estiverem maduros e o protocolo tiver sido
 congelado sem consultar o pós-período.

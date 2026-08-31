@@ -5,16 +5,18 @@
 - Organize toda análise pela cadeia: implementação → força de trabalho → capacidade → acesso → saúde → custos/bem-estar → equidade e spillovers.
 - Comece pelo outcome e pelo estimando; só depois escolha método e base.
 - No estudo prospectivo vigente do ciclo 3, use o estoque municipal de
-  especialistas como outcome primário e entradas, saídas, saldo e presença
-  posterior como mecanismos. Anestesiologia/SIH é módulo assistencial
-  confirmatório condicional aos portões pré-tratamento. Use seis meses na
-  primeira atualização e doze meses somente quando a coorte tiver seguimento
-  completo.
+  anestesiologistas como outcome primário e entradas, saídas, saldo e presença
+  posterior como mecanismos. Cirurgias/SIH são o secundário clínico
+  condicionado aos portões pré-tratamento. Oncologia clínica e medicina
+  intensiva são generalizações separadas; não as agregue de modo a esconder o
+  peso de anestesiologia. Use seis meses na primeira atualização e doze meses
+  somente quando a coorte tiver seguimento completo.
 - Não trate vínculo cadastrado, produção, acesso, espera e saúde como sinônimos.
 - Não classifique um eixo inteiro como sucesso ou fracasso com base em uma única métrica intermediária.
 - Separe expansão líquida de substituição, remanejamento, migração cadastral e
-  deslocamento de pacientes. No plano vigente, o município–curso–mês é a
-  unidade principal; CNES e região de saúde são diagnósticos de redistribuição.
+  deslocamento de pacientes. No plano vigente, município–mês é a unidade
+  principal de anestesiologia; município–curso–mês serve à generalização, e
+  CNES/região de saúde diagnosticam redistribuição.
 - Não defina grupos causais comparando retrospectivamente casos que deram certo e errado; heterogeneidades devem usar condições pré-tratamento.
 
 ## Dados e proveniência
@@ -56,7 +58,8 @@
   portão de relevância falhou na amostra município–curso da DDD. Não promover
   esses resultados a efeito causal nem escolher filtros, janelas ou estimadores
   retrospectivamente para mudar essa conclusão.
-- Nos prompts C3-01 a C3-04, não consulte outcomes pós-tratamento. Nos prompts
+- C3-03 só pode rodar depois de o corretivo C3-02B aprovar o painel SIH. Nos
+  prompts C3-01 a C3-04, não consulte outcomes pós-tratamento. Nos prompts
   C3-05 e C3-06, não reescolha amostra, outcome ou estimador depois de observar
   resultados.
 - Os pares de tarefas 01–02 e 04–05 só podem rodar em paralelo em worktrees isolados.

@@ -16,8 +16,10 @@ número de entrantes pós-oferta ainda presentes no décimo segundo mês.
 2. Acrescente competências com os mesmos scripts, filtros, SIGTAP e manifestos.
 3. Reexecute o protocolo congelado, agora com horizonte de doze meses.
 4. Reporte lado a lado seis e doze meses; não substitua o primeiro resultado.
-5. Meça estoque, entradas, saídas, churn e entrantes ainda presentes, sem usar
-   taxa condicionada aos entrantes como outcome causal principal.
+5. Meça primeiro o estoque de anestesiologistas, entradas, saídas, churn e
+   entrantes ainda presentes; mantenha oncologia clínica e medicina intensiva
+   como generalização separada e não use taxa condicionada aos entrantes como
+   outcome causal principal.
 6. Se a assinatura da Nota 59 estiver validada, atualize também o número de
    participantes PMM-E ainda registrados, saídas e reposições; mantenha o
    estimando ITT por célula ofertada.

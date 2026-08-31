@@ -77,11 +77,19 @@
 
 ## Ciclo 3 prospectivo
 
-- [x] C3-01 — congelar coorte, exposição, `T0`, pontes e suporte (`output/avaliacao_ciclo3/coorte_c3_congelada.parquet`, `docs/auditorias/05_coorte_c3_e_exposicao.md`).
-- [x] C3-02 — executar piloto SIH exclusivamente pré-tratamento para
-  anestesiologia (`output/avaliacao_ciclo3/sih_pre/painel_sih_cnes_pre.parquet`, `docs/auditorias/06_piloto_sih_anestesiologia.md`).
-- [x] C3-03 — executar potência, placebos e pré-tendências no pré-período e
-  congelar o plano (`output/avaliacao_ciclo3/diagnosticos_pre.csv`, `docs/13_plano_pre_analise_ciclo3.md`, `output/avaliacao_ciclo3/registro_pre_analise.json`).
+- [x] C3-01 — congelar coorte, exposição e ponte; correção independente fixou
+  como núcleo integral somente os cursos 1, 12 e 24
+  (`output/avaliacao_ciclo3/coorte_c3_congelada.parquet`,
+  `docs/auditorias/05_coorte_c3_e_exposicao.md`).
+- [x] C3-02 — executar piloto técnico SIH pré-tratamento para anestesiologia;
+  viabilidade confirmada, mas painel ainda não liberado como insumo causal
+  (`docs/auditorias/06_piloto_sih_anestesiologia.md`).
+- [ ] C3-02B — reexecutar 27 UFs, persistir manifesto dos 675 arquivos, corrigir
+  exposição municipal, historicizar SIGTAP e medir pico de disco
+  (`prompts/avaliacao_ciclo3/02b_corrigir_e_validar_sih_pre.md`).
+- [ ] C3-03 — somente depois do C3-02B, executar potência, múltiplos placebos,
+  equivalência de pré-tendências e congelar o plano. Artefatos que ainda usem
+  “sete cursos unívocos” ou números contraditórios não são aceitos.
 - [ ] C3-04 — pilotar SIA/ecocardiografia somente se o portão ordenar (arquivado em espera conforme decisão do torneio C3-03).
 - [ ] C3-05 — estimar a versão de seis meses apenas com seguimento comum maduro (aguardando T0+6m em março/2027).
 - [ ] C3-06 — atualizar a mesma análise aos doze meses, sem redesenho (aguardando T0+12m em setembro/2027).

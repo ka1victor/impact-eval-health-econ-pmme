@@ -1,5 +1,9 @@
 # C3-02 — Piloto SIH pré-tratamento para anestesiologia
 
+> **Executado em 30/08/2026 com ressalvas.** Não reexecute esta versão como
+> portão final. Use o corretivo
+> [`02b_corrigir_e_validar_sih_pre.md`](02b_corrigir_e_validar_sih_pre.md).
+
 ## Objetivo
 
 Implementar aquisição leve e auditável do SIH/RD e construir somente outcomes

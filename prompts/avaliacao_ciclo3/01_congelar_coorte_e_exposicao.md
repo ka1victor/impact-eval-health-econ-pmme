@@ -1,5 +1,8 @@
 # C3-01 — Congelar coorte, exposição e suporte
 
+> **Executado e corrigido em 30/08/2026.** Este prompt permanece como registro
+> reprodutível; a próxima sessão é C3-02B.
+
 ## Objetivo
 
 Construir e auditar, sem usar outcomes pós-tratamento, a coorte prospectiva do
@@ -48,8 +51,9 @@ priorizada pura.
    presente na disseminação e reconcilie vínculos com alocações; não presuma
    completude.
 9. Congele a família geral com CBO oficial não sobreposto e suporte em ambos os
-   braços. Os seis cursos já auditados são um limite inferior, não uma restrição
-   arbitrária.
+   braços. A transcrição correta produz exatamente os cursos 1 (`225151`), 12
+   (`225121`) e 24 (`225150`). O curso 2 aceita `225225` e `225220` e, portanto,
+   só pode entrar como sensibilidade no CBO exclusivo `225225`.
 10. Produza suporte em três níveis: CNES–curso, município–curso e região–curso;
    identifique suporte dentro do mesmo CNES e município.
 11. Marque cointervenções: outros cursos imediatos, especialmente cursos

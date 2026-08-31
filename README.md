@@ -80,23 +80,30 @@ O ciclo 1 permanece encerrado como comparação ajustada. A próxima tentativa
 causal não reutilizará filtros ou estimadores para mudar esse resultado. Ela
 congelará prospectivamente o ciclo 3 antes de observar seus outcomes:
 
-- núcleo confirmatório: efeito de oferta imediata pura versus proposta não
-  priorizada pura sobre o estoque municipal de especialistas na família de
-  cursos com CBO oficial não sobreposto;
-- módulo assistencial condicional: anestesiologia e cirurgias eletivas no SIH;
+- estudo principal: oferta imediata pura versus proposta não priorizada pura de
+  anestesiologia sobre o estoque municipal de anestesiologistas aos seis e
+  doze meses;
+- desfecho clínico-chave condicional: cirurgias eletivas no SIH;
+- generalização secundária: oncologia clínica e medicina intensiva, com efeitos
+  separados; cirurgia geral/CBO 225225 apenas como sensibilidade;
 - alternativa somente se o pré-período justificar: ecocardiografia no SIA;
 - RDD do IVS preservado como estudo do adicional de bolsa, ainda bloqueado pela
   regra administrativa não reconstruída.
 
 A Nota Técnica nº 59/2026 criou uma assinatura cadastral potencialmente
-observável dos participantes no CNES. O primeiro prompt auditará sua implementação
-e o Anexo I oficial de curso–CBO antes de qualquer outcome pós-tratamento.
+observável dos participantes no CNES. O C3-01 já corrigiu a ponte do Anexo I: os
+únicos cursos com suporte comparativo e ponte integral sem sobreposição são 1,
+12 e 24. O piloto C3-02 comprovou que o SIH é público e manejável (2,14 GiB para
+25 competências/24 UFs), mas a revisão encontrou falhas de proveniência,
+fluxos interestaduais, classificação municipal e SIGTAP. A próxima sessão é o
+C3-02B corretivo, não uma estimação.
 
 A estratégia e seus limites estão em
 [`docs/12_estrategia_causal_prospectiva_ciclo3.md`](docs/12_estrategia_causal_prospectiva_ciclo3.md).
 Os prompts ordenados para sessões futuras estão em
 [`prompts/avaliacao_ciclo3/`](prompts/avaliacao_ciclo3/README.md). Nenhum efeito
-do ciclo 3 foi estimado.
+do ciclo 3 foi estimado e o protocolo C3-03 ainda não está validamente
+congelado.
 
 ## Escopo da primeira versão
 

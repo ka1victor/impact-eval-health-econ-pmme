@@ -3,13 +3,13 @@
 02_adquirir_sih_pre.py — Aquisição e Painel Pré-Tratamento do SIH/SUS para Anestesiologia (PMM-E)
 
 Este script implementa o Prompt C3-02 da avaliação prospectiva do Ciclo 3 com processamento concorrente robusto:
-1. Executa o benchmark obrigatório de tempo e espaço de descompressão DBC -> Parquet.
+1. Executa o benchmark obrigatório de tempo de descompressão DBC -> Parquet;
+   o C3-02B deverá instrumentar também o pico de espaço.
 2. Baixa e processa concorrentemente as competências pré-tratamento (2024-06 a 2026-06) do SIH/RD
-   para as 24 UFs com presença de estabelecimentos da coorte de Anestesiologia.
+   para as 27 UFs: isso é necessário para observar destinos fora da UF de residência.
 3. Filtra apenas procedimentos cirúrgicos (Grupo 04 do SIGTAP), distinguindo AIH inicial (IDENT=1)
    de continuidade (IDENT=5) e internações eletivas (CAR_INT=01) de urgências.
-4. Descarta arquivos intermediários (.dbc/.dbf) imediatamente após a extração, garantindo pegada
-   de disco inferior a 200 MB durante todo o processamento.
+4. Descarta arquivos intermediários (.dbc/.dbf) imediatamente após a extração.
 5. Constrói dois painéis pré-tratamento balanceados:
    - CNES–mês: AIHs cirúrgicas eletivas e totais no estabelecimento contemplado/controle.
    - Município–mês: Cirurgias de ocorrência local, residentes operados no município e evasão de pacientes.
@@ -24,6 +24,7 @@ import time
 import json
 import uuid
 import tempfile
+from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import pandas as pd
 import numpy as np
@@ -50,6 +51,12 @@ COMPETENCIAS = [
     '202601', '202602', '202603', '202604', '202605', '202606'
 ]
 
+UFS_BRASIL = [
+    'AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS',
+    'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC',
+    'SE', 'SP', 'TO'
+]
+
 SUBGRUPOS_CIRURGICOS_SIGTAP = [
     {"subgrupo": "0401", "ds_subgrupo": "Pequenas cirurgias e cirurgias de pele, tecido celular subcutaneo e mucosa"},
     {"subgrupo": "0402", "ds_subgrupo": "Cirurgia de glandulas endocrinas"},
@@ -70,6 +77,35 @@ SUBGRUPOS_CIRURGICOS_SIGTAP = [
     {"subgrupo": "0417", "ds_subgrupo": "Cirurgias multiplas"},
     {"subgrupo": "0418", "ds_subgrupo": "Transplantes de orgaos, tecidos e celulas"}
 ]
+
+
+def construir_meta_municipal(df_anes: pd.DataFrame) -> pd.DataFrame:
+    """Classifica exposição no município sem escolher uma linha arbitrária."""
+    registros = []
+    for ibge, grp in df_anes.groupby('ibge'):
+        bracos = set(grp['classificacao_braco'])
+        tem_imediata = 'imediata_pura' in bracos
+        tem_controle = 'nao_priorizada_pura' in bracos
+        tem_reserva_ou_mista = bool(bracos & {'reserva_pura', 'mista'})
+        if tem_imediata and not tem_reserva_ou_mista:
+            exposicao = 'imediata_pura'
+        elif tem_controle and not tem_imediata and not tem_reserva_ou_mista:
+            exposicao = 'nao_priorizada_pura'
+        else:
+            exposicao = 'excluida_reserva_mista'
+
+        cointervencao = bool(grp['cointervencao_cirurgica_muni'].any())
+        amostra = exposicao in {'imediata_pura', 'nao_priorizada_pura'}
+        registros.append({
+            'ibge': ibge,
+            'uf': grp['uf'].iloc[0],
+            'classificacao_braco': exposicao,
+            'bracos_anestesia_no_municipio': '|'.join(sorted(bracos)),
+            'amostra_anestesia_total': amostra,
+            'cointervencao_cirurgica_muni': cointervencao,
+            'amostra_anestesia_isolada': amostra and not cointervencao,
+        })
+    return pd.DataFrame(registros)
 
 def process_single_file(uf: str, cmpt: str, target_cnes: set, target_ibge: set, temp_dir: str):
     yy = cmpt[2:4]
@@ -156,19 +192,23 @@ def process_single_file(uf: str, cmpt: str, target_cnes: set, target_ibge: set, 
 
         res['manifesto'] = {
             'arquivo': fname,
+            'source_url': dl_info['source_url'],
             'uf': uf,
             'competencia': cmpt,
             'size_bytes': dl_info['size_bytes'],
             'sha256': dl_info['sha256'],
             'linhas_lidas': len(df_raw),
+            'adquirido_em_utc': datetime.now(timezone.utc).isoformat(),
             'status': 'SUCCESS'
         }
 
     except Exception as e:
         res['manifesto'] = {
             'arquivo': fname,
+            'source_url': f"ftp://ftp.datasus.gov.br/dissemin/publicos/SIHSUS/200801_/Dados/{fname}",
             'uf': uf,
             'competencia': cmpt,
+            'adquirido_em_utc': datetime.now(timezone.utc).isoformat(),
             'status': f'ERROR: {str(e)}'
         }
     finally:
@@ -191,11 +231,11 @@ def main():
     df_anes = df_coorte[df_coorte['cod_curso'] == 1].copy()
     target_cnes = set(df_anes['cnes'].unique())
     target_ibge = set(df_anes['ibge'].unique())
-    target_ufs = sorted(df_anes[df_anes['classificacao_braco'].isin(['imediata_pura', 'nao_priorizada_pura'])]['uf'].unique())
+    target_ufs = UFS_BRASIL
 
     print(f"Total estabelecimentos (CNES) na coorte de Anestesiologia: {len(target_cnes)}", flush=True)
     print(f"Total municípios (IBGE) na coorte de Anestesiologia: {len(target_ibge)}", flush=True)
-    print(f"Total UFs com CNES tratados/controles: {len(target_ufs)} ({', '.join(target_ufs)})", flush=True)
+    print(f"Total UFs processadas para fluxos de residencia: {len(target_ufs)} ({', '.join(target_ufs)})", flush=True)
 
     print("\n[2/6] Executando benchmark de descompressão e filtragem (Goiás, 2025-01)...", flush=True)
     bench_res = run_benchmark()
@@ -238,6 +278,26 @@ def main():
                 rate = completed_count / elapsed if elapsed > 0 else 0
                 print(f"Progresso: {completed_count}/{total_files} arquivos processados ({completed_count/total_files:.1%}) em {elapsed:.1f}s ({rate:.1f} arq/s)...", flush=True)
 
+    manifesto_files = sorted(manifesto_files, key=lambda x: (x.get('competencia', ''), x.get('uf', '')))
+    f_manifesto_files = os.path.join(OUTPUT_DIR, 'manifesto_arquivos_sih_pre.csv')
+    pd.DataFrame(manifesto_files).to_csv(f_manifesto_files, index=False, encoding='utf-8')
+    erros = [item for item in manifesto_files if item.get('status') != 'SUCCESS']
+    if len(manifesto_files) != total_files or erros:
+        f_out_man = os.path.join(OUTPUT_DIR, 'manifesto_sih_pre.json')
+        with open(f_out_man, 'w', encoding='utf-8') as f:
+            json.dump({
+                "protocolo": "PILOTO_SIH_PRE_TRATAMENTO_ANESTESIOLOGIA",
+                "status_portao_c3_03": "BLOQUEADO_FALHA_AQUISICAO",
+                "total_arquivos_esperados": total_files,
+                "total_manifestos": len(manifesto_files),
+                "total_erros": len(erros),
+                "manifesto_arquivos_sha256": compute_sha256(f_manifesto_files),
+            }, f, indent=2, ensure_ascii=False)
+        raise RuntimeError(
+            f"Aquisição incompleta: {len(manifesto_files)}/{total_files} manifestos; "
+            f"{len(erros)} erros. Painéis balanceados não serão gerados com falhas silenciosas."
+        )
+
     print("\n[4/6] Consolidando e balanceando painéis analíticos pré-tratamento...", flush=True)
     
     # 4.1 Painel CNES–mês
@@ -261,7 +321,7 @@ def main():
     df_p_res = pd.DataFrame(residente_records) if residente_records else pd.DataFrame()
     
     grid_muni = pd.MultiIndex.from_product([sorted(list(target_ibge)), COMPETENCIAS], names=['ibge', 'competencia']).to_frame().reset_index(drop=True)
-    df_muni_meta = df_anes[['ibge', 'uf', 'classificacao_braco', 'amostra_anestesia_total', 'amostra_anestesia_isolada']].drop_duplicates(subset=['ibge'])
+    df_muni_meta = construir_meta_municipal(df_anes)
     grid_muni = grid_muni.merge(df_muni_meta, on='ibge', how='left')
     
     if len(df_p_muni) > 0:
@@ -283,25 +343,31 @@ def main():
     grid_muni.to_parquet(f_out_muni, index=False)
     print(f"-> Painel Município–mês salvo: {f_out_muni} ({len(grid_muni):,} linhas balanceadas)", flush=True)
 
-    print("\n[5/6] Salvando dicionário SIGTAP e manifesto...", flush=True)
+    print("\n[5/6] Salvando catálogo candidato e manifesto...", flush=True)
     df_sigtap = pd.DataFrame(SUBGRUPOS_CIRURGICOS_SIGTAP)
+    df_sigtap['regra_operacional'] = 'PROC_REA inicia por 04'
+    df_sigtap['status_historicizacao'] = 'CANDIDATO_NAO_HISTORICIZADO'
     f_out_sigtap = os.path.join(OUTPUT_DIR, 'dicionario_procedimentos_anestesia.csv')
     df_sigtap.to_csv(f_out_sigtap, index=False, encoding='utf-8')
-    print(f"-> Dicionário SIGTAP salvo: {f_out_sigtap}", flush=True)
+    print(f"-> Catálogo candidato salvo: {f_out_sigtap}", flush=True)
 
     manifesto_sih = {
         "protocolo": "PILOTO_SIH_PRE_TRATAMENTO_ANESTESIOLOGIA",
+        "status_portao_c3_03": "BLOQUEADO_ATE_HISTORICIZAR_SIGTAP_E_MEDIR_PICO",
         "data_execucao": "2026-08-30",
         "janela_pre": f"{COMPETENCIAS[0]} a {COMPETENCIAS[-1]} ({len(COMPETENCIAS)} competencias)",
         "ufs_processadas": target_ufs,
         "total_arquivos_processados": completed_count,
+        "total_arquivos_sucesso": len(manifesto_files),
+        "total_arquivos_erro": 0,
         "total_bytes_transferidos": total_bytes_downloaded,
         "total_megabytes_transferidos": round(total_bytes_downloaded / (1024 * 1024), 2),
         "benchmark_amostral": bench_res,
         "arquivos_gerados_hashes": {
             "painel_sih_cnes_pre.parquet": compute_sha256(f_out_cnes),
             "painel_sih_muni_pre.parquet": compute_sha256(f_out_muni),
-            "dicionario_procedimentos_anestesia.csv": compute_sha256(f_out_sigtap)
+            "dicionario_procedimentos_anestesia.csv": compute_sha256(f_out_sigtap),
+            "manifesto_arquivos_sih_pre.csv": compute_sha256(f_manifesto_files)
         },
         "metricas_pre_painel": {
             "total_estabelecimentos_cnes": len(target_cnes),
@@ -362,14 +428,16 @@ def gerar_relatorio_piloto(man, df_cnes, df_muni):
     doc_content = f"""# Auditoria do Piloto SIH Pré-Tratamento — Anestesiologia (PMM-E)
 
 > **Data de Execução:** {man['data_execucao']}  
-> **Status:** Piloto SIH Pré-Tratamento Concluído com Sucesso (Prompt C3-02)  
+> **Status:** Piloto técnico concluído; validação substantiva pendente
 > **Painéis Gerados:** `output/avaliacao_ciclo3/sih_pre/painel_sih_cnes_pre.parquet` e `painel_sih_muni_pre.parquet`
 
 ---
 
 ## 1. Benchmark de Descompressão e Armazenamento
 
-A aquisição foi estruturada em modo estrito de streaming local (processando arquivo por arquivo e descartando imediatamente os intermediários), comprovando a viabilidade técnica e economia de disco:
+A aquisição usa processamento arquivo a arquivo e descarta intermediários. O
+benchmark comprova a viabilidade de leitura; o pico de disco ainda deve ser
+instrumentado, não inferido.
 
 | Métrica | Resultado Observado (GO 2025-01) |
 |---|---:|
@@ -377,7 +445,7 @@ A aquisição foi estruturada em modo estrito de streaming local (processando ar
 | Tempo de Download | {bm['tempo_download_s']} s |
 | Tempo de Descompressão & Parser | {bm['tempo_descompressao_e_leitura_s']} s |
 | Linhas Processadas | {bm['total_linhas']:,} linhas |
-| **Pico de Disco Temporário** | **< 150 MB** |
+| Pico de Disco Temporário | não instrumentado nesta versão |
 | **Volume Total Transferido no Pré-Painel** | **{man['total_megabytes_transferidos']:.2f} MB** |
 
 ---
@@ -386,8 +454,11 @@ A aquisição foi estruturada em modo estrito de streaming local (processando ar
 
 O painel cobre **25 competências mensais ({man['janela_pre']})** para os {met['total_estabelecimentos_cnes']} estabelecimentos e {met['total_municipios_ibge']} municípios da coorte de Anestesiologia do Ciclo 3.
 
-### 2.1 Critérios de Definição das Cirurgias Eletivas
-- **Grupo 04 do SIGTAP:** Códigos de procedimentos iniciados por `04` (Procedimentos Cirúrgicos).
+### 2.1 Definição operacional candidata
+- **Grupo 04:** códigos de `PROC_REA` iniciados por `04`. A tabela produzida é
+  um catálogo de subgrupos, não uma historicização mensal do SIGTAP; logo, o
+  desfecho ainda não pode ser chamado de família clínica definitiva ligada à
+  anestesiologia.
 - **AIH Inicial (`IDENT = '1'`):** Garante a contagem de internações únicas, descartando AIHs de continuidade (`IDENT = '5'`).
 - **Caráter Eletivo (`CAR_INT = '01'`):** Separa cirurgias programadas de atendimentos de urgência (`CAR_INT = '02'`).
 
@@ -398,12 +469,15 @@ O painel cobre **25 competências mensais ({man['janela_pre']})** para os {met['
 
 ---
 
-## 3. Próximo Portão: C3-03 (Torneio Pré-Tratamento)
+## 3. Limitações que bloqueiam o C3-03
 
-Com o painel do SIH construído exclusivamente sobre dados anteriores a $T_0$, o próximo passo é executar o **Prompt C3-03**:
-1. Testar pré-tendências paralelas e placebos temporais para cirurgias eletivas.
-2. Calcular o Efeito Mínimo Detectável (MDE) para o módulo de cirurgias.
-3. Arbitrar por critérios objetivos se o módulo assistencial de anestesiologia será confirmatório ou exploratório, congelando o **Plano de Pré-Análise** oficial.
+Antes do torneio, uma execução corretiva deve: (i) registrar URL, tamanho, hash,
+linhas e status dos 675 arquivos UF--competência; (ii) falhar se qualquer arquivo
+estiver ausente; (iii) processar as 27 UFs para captar destinos interestaduais;
+(iv) classificar o município com todos os seus braços, sem escolher a primeira
+linha; (v) historicizar ou justificar formalmente a regra SIGTAP; e (vi) medir o
+pico de disco. Até lá, estes painéis provam viabilidade e ordem de grandeza, mas
+não autorizam congelar o protocolo causal.
 """
     with open(f_doc, 'w', encoding='utf-8') as f:
         f.write(doc_content)

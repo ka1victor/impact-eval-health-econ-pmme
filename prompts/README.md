@@ -65,7 +65,8 @@ WP3, WP4 e WP5 não têm prompts de execução no pipeline principal porque est�
 
 O resultado do ciclo 1 permanece fechado como comparação ajustada. A avaliação
 prospectiva separada do ciclo 3 deve seguir
-[`avaliacao_ciclo3/README.md`](avaliacao_ciclo3/README.md): primeiro congelar a
-coorte, depois pilotar SIH no pré-período e somente então congelar o protocolo.
+[`avaliacao_ciclo3/README.md`](avaliacao_ciclo3/README.md): a coorte foi
+congelada e o SIH pilotado; agora é obrigatório corrigir o piloto pelo C3-02B
+antes de congelar o protocolo no C3-03.
 Os efeitos de seis e doze meses não podem ser estimados antes da maturidade
 comum. Essa fila não libera o prompt 03 do desenho individual nem envia A07.

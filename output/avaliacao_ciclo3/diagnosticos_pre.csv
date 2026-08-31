@@ -1,5 +1,0 @@
-modulo,amostra,n_unidades_tratadas,n_unidades_controle,media_baseline_tratado,media_baseline_controle,placebo_beta_pseudo_post,placebo_se,placebo_pval,placebo_ic95,tendencia_linear_beta,tendencia_linear_pval,mde_80_potencia,margem_equivalencia,pvalor_equivalencia,status_pre_tendencia
-Cirurgias Eletivas CNES (SIH),Anestesiologia Imediata vs Nao Priorizada,119,305,89.14050420168067,109.4872131147541,1.908,4.951,0.7,"[-7.796, 11.612]",0.273,0.46,13.873,5.0,0.2661,COMPATIVEL
-Cirurgias Eletivas Municipio Total (SIH),Anestesiologia Total,78,247,451.49179487179487,224.30753036437247,19.52,14.815,0.1876,"[-9.517, 48.557]",1.2279,0.0006,41.512,10.0,0.7398,COMPATIVEL
-Cirurgias Eletivas Municipio Isolado (SIH),Anestesiologia Isolada,62,218,330.6909677419355,199.55449541284403,9.992,12.204,0.413,"[-13.929, 33.912]",0.5511,0.1211,34.197,10.0,0.4997,COMPATIVEL
-Força de Trabalho Médica Geral (DDD CNES),7 Cursos Unívocos C3,16,78,6.4326923076923075,7.04388560157791,-0.983,0.47,0.0365,"[-1.904, -0.062]",-0.0742,0.0,1.317,1.0,0.4854,ALERTA_TENDENCIA

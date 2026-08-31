@@ -1,8 +1,9 @@
 # Estratégia causal prospectiva do ciclo 3
 
-> **Decisão em 30/08/2026:** preservar a coorte do terceiro ciclo antes da
-> observação dos resultados; usar força de trabalho como núcleo confirmatório e
-> anestesiologia/cirurgias como módulo assistencial confirmatório condicional.
+> **Decisão revista em 30/08/2026:** preservar a coorte do terceiro ciclo antes
+> da observação dos resultados; usar anestesiologia como estudo principal de
+> força de trabalho, cirurgias como desfecho clínico-chave condicionado a um
+> portão prévio e os demais cursos como generalização secundária.
 > Este documento é um plano. Ele não contém estimativas pós-tratamento e não
 > reabre o protocolo individual bloqueado por dados administrativos.
 
@@ -10,43 +11,62 @@
 
 O trabalho terá uma pergunta principal simples e relevante:
 
-> Qual é o efeito de uma oferta imediata do PMM-E, em comparação com uma
-> proposta do mesmo ciclo que não foi priorizada, sobre a oferta municipal de
-> especialistas compatíveis com o curso ao longo de seis e doze meses?
+> Qual é o efeito de uma oferta imediata de anestesiologia pelo PMM-E, em
+> comparação com uma proposta de anestesiologia do mesmo ciclo que não foi
+> priorizada, sobre o número e a permanência de anestesiologistas no município
+> aos seis e doze meses?
 
 O estimando principal é uma intenção de tratar pela **priorização imediata** no
 terceiro ciclo. Não é o efeito de “participar efetivamente”, do número de bolsas
-preenchidas ou do valor da bolsa. A família confirmatória será formada, antes do
-pós-período, pelos cursos com mapeamento oficial curso–CBO não sobreposto e
-suporte nos dois braços. Seis cursos já demonstram um limite inferior de suporte;
-o Anexo I da Nota Técnica nº 59/2026 permite auditar os 24 cursos do ciclo 3 sem
-inventar uma ponte local.
+preenchidas ou do valor da bolsa. Anestesiologia foi escolhida antes do
+pós-período porque tem ponte normativa integral (`225151`), maior suporte entre
+os cursos sem sobreposição (119 CNES imediatos e 305 não priorizados) e uma
+cadeia substantiva testável entre provimento, permanência e produção cirúrgica.
 
-O módulo assistencial responderá, se passar os portões pré-tratamento:
+Essa escolha não elimina a pergunta geral. Oncologia clínica (`225121`) e
+medicina intensiva (`225150`) formarão a generalização secundária, com efeitos
+separados e um resumo empilhado predefinido. Eles não serão somados de forma a
+esconder que anestesiologia domina numericamente o conjunto. Cirurgia geral
+(curso 2) ficará como sensibilidade no CBO exclusivo `225225`, pois a norma
+também aceita `225220`, compartilhado com outro curso.
+
+O desfecho assistencial responderá, se passar os portões pré-tratamento:
 
 > Uma oferta imediata de anestesiologia perioperatória elevou a realização de
 > cirurgias eletivas compatíveis no estabelecimento e a oferta cirúrgica para os
 > moradores dos municípios contemplados?
 
-Esse módulo usará SIH/SUS. Anestesiologia é uma escolha substantiva, não uma
-subamostra escolhida por resultado: é um insumo transversal à produção
-cirúrgica, teve 119 células CNES–curso com oferta imediata, 290 vagas imediatas e
-133 alocações publicadas. Ainda assim, a análise de cirurgias só será
-confirmatória se qualidade, suporte, pré-tendências e potência forem aceitáveis
-sem consultar qualquer resultado posterior ao início.
+O SIH será secundário-chave, não co-primário automático: o programa pode elevar
+o estoque médico antes que limitações de sala, equipe ou demanda permitam elevar
+cirurgias. Anestesiologia teve 290 vagas imediatas e 133 alocações publicadas,
+mas alocação publicada não prova início. A análise cirúrgica só receberá
+linguagem causal condicional se proveniência, ponte clínica, suporte,
+pré-tendências e potência forem aceitáveis sem consultar qualquer resultado
+posterior ao início.
 
 Ecocardiografia/SIA é a primeira alternativa condicional, e não um terceiro
-desfecho acrescentado por conveniência. A decisão entre anestesiologia e essa
-alternativa será tomada por uma rubrica congelada no pré-período.
+desfecho acrescentado por conveniência. A decisão entre o módulo cirúrgico/SIH e
+essa alternativa ambulatorial será tomada por uma rubrica congelada no
+pré-período; ela não substitui o estudo principal de força de trabalho em
+anestesiologia.
 
 ## 2. O que SIH e SIA permitem observar
 
 ### 2.1 Situação no repositório
 
-Não há hoje arquivos `.dbc`/`.dbf`, Parquets ou painéis analíticos de SIH/SIA
-no repositório. Há apenas o prompt preparatório
-[`prompts/infraestrutura_datasus_dbc.md`](../prompts/infraestrutura_datasus_dbc.md),
-ainda não executado. Os Parquets mensais já existentes são do CNES.
+O repositório agora contém um piloto SIH pré-tratamento, com 25 competências
+entre 2024-06 e 2026-06, 612 CNES e 456 municípios da coorte ampla de
+anestesiologia. A execução transferiu 2,14 GiB e produziu painéis persistentes
+de menos de 0,5 MiB no total. Não há dados SIA locais.
+
+A revisão independente, porém, encontrou pendências antes de usar o piloto para
+pré-tendências: os manifestos individuais não foram persistidos; apenas 24 UFs
+foram lidas, truncando possíveis destinos interestaduais; um município com
+imediata e reserva foi classificado pela primeira linha; e o CSV de subgrupos
+não é uma historicização do SIGTAP. Esses pontos estão no
+[`relatório C3-02`](auditorias/06_piloto_sih_anestesiologia.md) e no prompt
+corretivo C3-02B. Portanto, SIH está tecnicamente viável, mas o painel atual não
+está liberado para congelar o protocolo.
 
 SIH e SIA são fontes públicas do DATASUS:
 
@@ -99,10 +119,12 @@ com uma combinação específica:
 
 O arquivo público `tbCargaHorariaSus` contém `IND_VINCULACAO`,
 `NU_CNPJ_DETALHAMENTO_VINCULO`, CBO, cargas horárias e
-`CO_PROFISSIONAL_SUS`. O pipeline atual preservou o primeiro, mas descartou o
-CNPJ de detalhamento; por isso, ainda não é possível aplicar a assinatura nos
-Parquets existentes. `070102` isolado é genérico: havia 19.255 vínculos com esse
-código em 2026-07, antes da implementação observável do terceiro ciclo.
+`CO_PROFISSIONAL_SUS`. O pipeline histórico preservou o primeiro, mas descartou
+o CNPJ de detalhamento; por isso, ainda não é possível aplicar a assinatura nos
+Parquets antigos. Na base bruta pública de 2026-07 havia 21.500 vínculos
+`070102`, dos quais 7.924 também tinham o CNPJ do Ministério da Saúde. A
+combinação continua incluindo APS e ciclos anteriores e, sozinha, não identifica
+o ciclo 3.
 
 Essa assinatura pode fornecer, sem identificadores civis:
 
@@ -111,11 +133,15 @@ Essa assinatura pode fornecer, sem identificadores civis:
 - permanência do mesmo `CO_PROFISSIONAL_SUS` em seis e doze meses;
 - saídas, reposições e outros vínculos públicos do mesmo profissional.
 
-Ela melhora decisivamente a mensuração do primeiro estágio e da rotatividade,
+Ela pode melhorar decisivamente a mensuração do primeiro estágio e da rotatividade,
 mas **não cria exogeneidade**. A primeira tarefa deve comprovar que a combinação
 chega à disseminação pública, é preenchida pelos gestores e reconcilia com as
 alocações publicadas. Atraso, sub-registro ou uso inconsistente serão tratados
 como erro de mensuração, não como ausência de participação.
+
+`CO_PROFISSIONAL_SUS` será tratado como identificador operacional público cuja
+estabilidade precisa ser testada. Não se presume algoritmo MD5, identificador
+civil, anonimato absoluto nem continuidade perfeita entre competências.
 
 ## 3. Onde existe — e onde não existe — exogeneidade
 
@@ -184,42 +210,40 @@ CNES–curso:
 - 3.241 apenas não priorizadas;
 - 247 com imediata e reserva.
 
-Para os seis cursos já cobertos pela ponte anterior e com braços comparáveis, o
-suporte puro — um limite inferior antes da auditoria do Anexo I — é:
+O Anexo I da Nota Técnica nº 59/2026 foi transcrito integralmente e as
+sobreposições foram recalculadas por código. Entre os 15 cursos com alguma
+observação nos dois braços, somente três têm ponte integral sem CBO compartilhado:
 
 | Curso | CNES–curso imediatas | CNES–curso não priorizadas |
 |---|---:|---:|
 | Anestesiologia perioperatória | 119 | 305 |
-| Cirurgia geral minimamente invasiva | 33 | 337 |
-| Ecocardiografia transtorácica | 56 | 261 |
 | Oncologia clínica | 12 | 39 |
-| Radioterapia | 7 | 21 |
-| Ultrassonografia mamária | 13 | 774 |
-| **Total** | **240** | **1.737** |
+| Medicina intensiva | 6 | 83 |
+| **Total de células** | **137** | **427** |
 
-Há 104 municípios com pelo menos um curso imediato e um não priorizado dentro
-dessa família mínima, somando 524 células (182 imediatas e 342 não priorizadas). No
-mesmo CNES, há 105 estabelecimentos e 267 células (119 imediatas e 148 não
-priorizadas). Esses subconjuntos permitem absorver choques município–mês ou
-CNES–mês, mas mudam a população-alvo e não serão escolhidos depois dos
-resultados.
+O núcleo empilhado não será o outcome principal: anestesiologia representa 119
+das 137 células imediatas e dominaria o resultado. Oncologia e intensiva serão
+reportadas separadamente e em resumo secundário com pesos predefinidos. A ponte
+anterior errou, entre outros pontos, radioterapia (`225320`, compartilhado com o
+curso 14), mastologia (`225255`, compartilhado com o curso 14) e medicina
+intensiva (`225150`). O JSON corrigido e os testes são a única fonte analítica
+autorizada para o ciclo 3.
 
-A Nota Técnica nº 59/2026 também fornece CBOs para os cursos 17–24 e revisa
-algumas pontes antigas. O C3-01 deverá construir uma nova matriz normativa,
-quantificar sobreposições e congelar a família geral. O conjunto de seis acima
-não será mantido artificialmente se a fonte oficial permitir uma família maior
-sem dupla contagem.
-
-Na anestesiologia, existem 77 municípios imediatos e 247 não priorizados. Ao
-excluir municípios com outra oferta imediata cirúrgica concorrente, restam 45 e
-187, respectivamente. Entre os 45 tratados mais limpos havia 100 vagas e 37
-alocações, em 18 municípios. Isso melhora a interpretação, mas pode reduzir a
-potência; os dois estimandos serão diferenciados antes da estimação:
+Na anestesiologia, há 78 municípios com alguma célula imediata e 247 somente
+não priorizados; um dos 78 também contém reserva e deve ser excluído, deixando
+77 tratados municipais puros. O indicador preliminar de ausência de outro curso
+cirúrgico imediato sugere 62 municípios imediatos e 218 controles, mas será
+recalculado depois da correção municipal C3-02B. Isso melhora a interpretação e
+reduz potência; os estimandos serão diferenciados antes da estimação:
 
 - **efeito total da oferta de anestesiologia**, permitindo cointervenções
   publicadas; e
 - **efeito da oferta isolada de anestesiologia**, sem outra oferta cirúrgica
   imediata no município.
+
+Uma variante ainda mais estrita excluirá qualquer outra oferta imediata do
+PMM-E, mesmo não cirúrgica. Ela será robustez porque altera a população-alvo e
+não pode ser escolhida depois dos resultados.
 
 O segundo será confirmatório apenas se passar o portão de potência. O primeiro
 não será apresentado como efeito exclusivo de um anestesiologista quando houver
@@ -227,16 +251,17 @@ outros cursos cirúrgicos imediatos.
 
 ## 5. Outcomes e horizontes
 
-### 5.1 Núcleo geral — força de trabalho
+### 5.1 Principal — força de trabalho em anestesiologia
 
-Unidade principal: município–curso–mês. A unidade CNES–curso–mês mede efeito no
-serviço; região de saúde–curso–mês diagnostica criação líquida versus
-redistribuição.
+Unidade principal: município–mês. A unidade CNES–mês mede efeito no serviço;
+região de saúde–mês diagnostica criação líquida versus redistribuição. O braço
+municipal será construído com todas as células de anestesiologia e excluirá o
+município que combina imediata e reserva.
 
 Outcome primário:
 
-- número de profissionais distintos com CBO compatível no sexto mês após o
-  início comum do tratamento.
+- número de anestesiologistas distintos (`CBO 225151`) no sexto mês após o
+  início operacional comum do tratamento.
 
 O mesmo outcome será atualizado no décimo segundo mês, sem transformar o
 horizonte que “funcionar” em novo primário. O estudo de evento mostrará todos os
@@ -258,10 +283,20 @@ Não será usada como outcome principal uma taxa de retenção condicionada aos 
 entraram, pois a entrada é pós-tratamento. O número de novos entrantes ainda
 presentes é válido sem transformar o conjunto de entrantes no denominador causal.
 
-### 5.2 Anestesiologia — produção cirúrgica no SIH
+### 5.2 Generalização secundária
+
+Oncologia clínica e medicina intensiva repetirão o mesmo outcome nos CBOs
+`225121` e `225150`. Cada efeito será mostrado separadamente. Um resumo
+empilhado, se aprovado no pré-período, usará pesos fixados antes do pós e não
+será descrito como “efeito médio geral” sem explicitar sua composição. O curso 2
+entrará somente como sensibilidade no CBO exclusivo `225225`.
+
+### 5.3 Anestesiologia — produção cirúrgica no SIH
 
 O dicionário de procedimentos será definido com versões mensais do SIGTAP antes
-de consultar o pós-período. O outcome assistencial primário candidato é:
+de consultar o pós-período. O piloto atual usa todo o grupo 04; isso é uma
+definição operacional ampla e ainda não demonstra sensibilidade específica à
+anestesiologia. O outcome assistencial chave candidato é:
 
 - número mensal de AIHs iniciais, de caráter eletivo, em uma família cirúrgica
   compatível pré-especificada, realizadas no CNES contemplado.
@@ -281,7 +316,7 @@ Serão mantidas apenas AIHs iniciais quando o estimando for número de internaç
 AIHs de continuidade não serão contadas como novas cirurgias. Produção fora do
 SUS não é observada.
 
-### 5.3 Alternativa condicional — ecocardiografia/SIA
+### 5.4 Alternativa condicional — ecocardiografia/SIA
 
 Ecocardiografia possui ligação clínica direta com procedimentos ambulatoriais e
 uma amostra razoável de propostas, mas somente 24 alocações foram publicadas nas
@@ -296,29 +331,33 @@ de anestesia se a rubrica pré-tratamento mostrar simultaneamente:
 
 ## 6. Especificação e inferência
 
-Para a família geral, a especificação preferida no suporte dentro de município é:
+Para anestesiologia, a especificação principal com data comum é:
 
 \[
-Y_{mct}=\alpha_{mc}+\gamma_{mt}+\delta_{ct}
+Y_{mt}=\alpha_m+\lambda_t
 +\sum_{k\neq -1}\beta_k
-\left(\text{Imediata}_{mc}\times 1[t-T_0=k]\right)+\varepsilon_{mct},
+\left(\text{Imediata}_{m}\times 1[t-T_0=k]\right)+\varepsilon_{mt},
 \]
 
-em que `m` é município, `c` é curso e `T0` será a primeira competência em que a
-entrada dos médicos poderia aparecer no CNES. Efeitos fixos município–curso,
-município–mês e curso–mês absorvem diferenças permanentes, choques gerais do
-município e choques nacionais de cada curso. A versão CNES troca município por
-estabelecimento.
+em que `m` é município e `T0` será a primeira competência em que a entrada dos
+médicos do ciclo 3 puder ser observada no CNES. Efeitos fixos municipais e
+mensais absorvem diferenças permanentes e choques nacionais. Especificações com
+UF–mês ou região–mês, tendências prévias e pesos de sobreposição serão
+predefinidas apenas com dados pré-tratamento.
+
+A generalização secundária empilhará município–curso–mês para os cursos 1, 12 e
+24. A DDD com município–mês e curso–mês será usada somente onde houver variação
+dentro do município; fora desse suporte, serão reportados DiDs específicos por
+curso. Não se apresentará a DDD estrita como se usasse todas as 564 células.
 
 Como há uma data comum e controles não priorizados, não são necessários
 Callaway–Sant'Anna ou Sun–Abraham no desenho principal. Um TWFE/event study
 saturado é adequado. Synthetic DiD poderá ser robustez; não será usado para
 “consertar” pré-tendências incompatíveis.
 
-Para anestesiologia, com um único curso, será usado DiD/event study entre
-municípios ou CNES imediatos e não priorizados, com ajuste de trajetórias
-pré-tratamento fixado antes do pós-período. A variante isolada excluirá, por regra
-ex ante, outras ofertas cirúrgicas imediatas.
+No nível do CNES, será usado o mesmo DiD/event study como análise de localização
+do efeito. A variante isolada excluirá, por regra ex ante, outras ofertas
+cirúrgicas imediatas; uma versão mais estrita excluirá qualquer outra imediata.
 
 Inferência:
 
@@ -362,28 +401,30 @@ condicional mais ou menos crível.
 
 ## 8. Hierarquia das alternativas
 
-1. **Principal:** família oficial de cursos com CBO não sobreposto, força de
-   trabalho municipal e DDD prospectiva; seis cursos são o suporte mínimo já
-   auditado.
-2. **Módulo assistencial preferido:** anestesiologia e cirurgias no SIH.
-3. **Alternativa equivalente em ambição:** ecocardiografia e exames no SIA,
+1. **Principal:** anestesiologia (`225151`), estoque municipal no mês 6 e a
+   mesma medida atualizada no mês 12, por DiD/event study prospectivo.
+2. **Secundário clínico-chave:** anestesiologia e cirurgias no SIH, condicionado
+   à correção C3-02B e ao portão pré-tratamento.
+3. **Generalização de política:** oncologia clínica e medicina intensiva,
+   separadas e em resumo empilhado predefinido; curso 2/CBO 225225 como
+   sensibilidade.
+4. **Alternativa equivalente em ambição clínica:** ecocardiografia e exames no SIA,
    acionada apenas pela rubrica pré-tratamento.
-4. **Exploratória:** cirurgia minimamente invasiva e produção correspondente;
-   mecanismo claro, mas somente 33 células CNES–curso imediatas.
 5. **Estudo causal distinto:** RDD do IVS para o adicional de bolsa, se a regra
    administrativa for recuperada.
 6. **Robustez histórica curta:** conversão de reserva em imediata no ciclo 2;
    limitada por seleção desconhecida e rápida reoferta dos controles.
 
-Essa hierarquia evita dois erros: reduzir todo o projeto a anestesiologia antes
-do teste de potência ou multiplicar linhas clínicas até encontrar um resultado.
+Essa hierarquia evita dois erros: confundir o estudo principal coerente de
+anestesiologia com uma alegação sobre todas as especialidades, ou multiplicar
+linhas clínicas até encontrar um resultado.
 
 ## 9. Sequência operacional e calendário
 
-1. Congelar a coorte, a exposição e as pontes com dados administrativos já
-   públicos.
-2. Construir piloto SIH pré-tratamento e historicizar SIGTAP.
-3. Executar a rubrica usando somente pré-dados; congelar o plano de análise e
+1. Manter a coorte e a ponte normativa corrigida congeladas.
+2. Reexecutar o SIH pelo C3-02B, com 27 UFs, manifesto por arquivo, exposição
+   municipal correta, pico medido e SIGTAP historicizado.
+3. Executar o C3-03 usando somente pré-dados; congelar o plano de análise e
    seus hashes.
 4. Aguardar seguimento comum de seis meses e só então atualizar CNES/SIH.
 5. Estimar a versão de seis meses sem reescolher método, amostra ou outcome.
