@@ -3,21 +3,24 @@ datasus_dbc.py — Módulo utilitário para download, descompressão e conversã
 
 Fornece funções robustas para processar arquivos DBC para DBF/DataFrame/Parquet, tratando caminhos
 Windows (8.3 short paths), integridade de tipos, zeros à esquerda e remoção limpa de arquivos temporários.
+Utiliza ftplib com transferência binária direta e isolamento thread-safe por UUID.
 """
 
 from __future__ import annotations
 import os
 import sys
+import uuid
 import ctypes
 import tempfile
-import urllib.request
+import ftplib
+import socket
 import hashlib
-from typing import List, Optional, Callable
+from typing import List, Optional
 import pyreaddbc
 from dbfread import DBF
 import pandas as pd
-import pyarrow as pa
-import pyarrow.parquet as pq
+
+socket.setdefaulttimeout(20)
 
 def get_short_path_name(long_name: str) -> str:
     """Converte caminho longo para formato Windows 8.3 (evita erros em extensões C com caminhos unicode)."""
@@ -46,10 +49,11 @@ def decompress_dbc_to_dbf(input_dbc: str, output_dbf: str) -> str:
     return output_dbf
 
 def read_dbc(input_dbc: str, encoding: str = 'iso-8859-1', cols: Optional[List[str]] = None) -> pd.DataFrame:
-    """Lê arquivo DBC e retorna como pandas DataFrame, limpando intermediários."""
+    """Lê arquivo DBC e retorna como pandas DataFrame, limpando intermediários com isolamento por UUID."""
     temp_dir = tempfile.gettempdir()
+    unique_id = uuid.uuid4().hex[:8]
     base_name = os.path.splitext(os.path.basename(input_dbc))[0]
-    temp_dbf = os.path.join(temp_dir, f"{base_name}_{os.getpid()}.dbf")
+    temp_dbf = os.path.join(temp_dir, f"{base_name}_{unique_id}.dbf")
     
     try:
         decompress_dbc_to_dbf(input_dbc, temp_dbf)
@@ -66,34 +70,35 @@ def read_dbc(input_dbc: str, encoding: str = 'iso-8859-1', cols: Optional[List[s
             except OSError:
                 pass
 
-def download_datasus_dbc(url: str, dest_path: str, max_retries: int = 3, timeout: int = 60) -> dict:
-    """Baixa arquivo DBC do DATASUS com tratamento de retentativas e registro de metadados."""
+def download_datasus_dbc(filename: str, dest_path: str, remote_dir: str = '/dissemin/publicos/SIHSUS/200801_/Dados', max_retries: int = 3) -> dict:
+    """Baixa arquivo DBC do FTP do DATASUS de forma direta via ftplib."""
     os.makedirs(os.path.dirname(os.path.abspath(dest_path)), exist_ok=True)
-    temp_download = dest_path + ".part"
+    temp_download = dest_path + f".{uuid.uuid4().hex[:6]}.part"
     
     last_err = None
     for attempt in range(1, max_retries + 1):
+        ftp = None
         try:
-            req = urllib.request.Request(
-                url,
-                headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) DATASUS-Impact-Evaluation'}
-            )
-            with urllib.request.urlopen(req, timeout=timeout) as response, open(temp_download, 'wb') as out_file:
-                chunk_size = 65536
-                while True:
-                    chunk = response.read(chunk_size)
-                    if not chunk:
-                        break
-                    out_file.write(chunk)
+            ftp = ftplib.FTP('ftp.datasus.gov.br', timeout=20)
+            ftp.login()
+            ftp.cwd(remote_dir)
+            
+            with open(temp_download, 'wb') as f:
+                ftp.retrbinary(f"RETR {filename}", f.write)
+            
+            ftp.quit()
             
             if os.path.exists(dest_path):
-                os.remove(dest_path)
+                try:
+                    os.remove(dest_path)
+                except OSError:
+                    pass
             os.rename(temp_download, dest_path)
             
             size_bytes = os.path.getsize(dest_path)
             sha256 = compute_sha256(dest_path)
             return {
-                "url": url,
+                "filename": filename,
                 "dest_path": dest_path,
                 "size_bytes": size_bytes,
                 "sha256": sha256,
@@ -101,10 +106,15 @@ def download_datasus_dbc(url: str, dest_path: str, max_retries: int = 3, timeout
             }
         except Exception as e:
             last_err = e
+            if ftp:
+                try:
+                    ftp.close()
+                except Exception:
+                    pass
             if os.path.exists(temp_download):
                 try:
                     os.remove(temp_download)
                 except OSError:
                     pass
     
-    raise IOError(f"Falha ao baixar {url} após {max_retries} tentativas: {last_err}")
+    raise IOError(f"Falha ao baixar {filename} após {max_retries} tentativas: {last_err}")

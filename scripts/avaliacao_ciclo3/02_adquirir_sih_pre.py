@@ -2,9 +2,9 @@
 """
 02_adquirir_sih_pre.py — Aquisição e Painel Pré-Tratamento do SIH/SUS para Anestesiologia (PMM-E)
 
-Este script implementa o Prompt C3-02 da avaliação prospectiva do Ciclo 3:
+Este script implementa o Prompt C3-02 da avaliação prospectiva do Ciclo 3 com processamento concorrente:
 1. Executa o benchmark obrigatório de tempo e espaço de descompressão DBC -> Parquet.
-2. Baixa e processa seletivamente as competências pré-tratamento (2024-06 a 2026-06) do SIH/RD
+2. Baixa e processa concorrentemente as competências pré-tratamento (2024-06 a 2026-06) do SIH/RD
    para as 24 UFs com presença de estabelecimentos da coorte de Anestesiologia.
 3. Filtra apenas procedimentos cirúrgicos (Grupo 04 do SIGTAP), distinguindo AIH inicial (IDENT=1)
    de continuidade (IDENT=5) e internações eletivas (CAR_INT=01) de urgências.
@@ -22,9 +22,11 @@ import os
 import sys
 import time
 import json
+import uuid
 import tempfile
+import threading
 import hashlib
-import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import pandas as pd
 import numpy as np
 
@@ -73,158 +75,177 @@ SUBGRUPOS_CIRURGICOS_SIGTAP = [
     {"subgrupo": "0418", "ds_subgrupo": "Transplantes de orgaos, tecidos e celulas"}
 ]
 
-def main():
-    print("=" * 80)
-    print("C3-02: PILOTO SIH PRÉ-TRATAMENTO PARA ANESTESIOLOGIA (PMM-E)")
-    print("=" * 80)
+def process_single_file(uf: str, cmpt: str, target_cnes: set, target_ibge: set, temp_dir: str):
+    """Processa um único arquivo UF-competência de forma isolada e thread-safe."""
+    yy = cmpt[2:4]
+    mm = cmpt[4:6]
+    fname = f"RD{uf}{yy}{mm}.dbc"
+    url = f"ftp://ftp.datasus.gov.br/dissemin/publicos/SIHSUS/200801_/Dados/{fname}"
+    dest_dbc = os.path.join(temp_dir, f"{fname}_{uuid.uuid4().hex[:6]}.dbc")
+    
+    res = {
+        'cnes_records': [],
+        'muni_records': [],
+        'residente_records': [],
+        'manifesto': None,
+        'bytes': 0
+    }
+    
+    try:
+        dl_info = download_datasus_dbc(url, dest_dbc, timeout=30)
+        res['bytes'] = dl_info['size_bytes']
+        
+        cols_sih = ['UF_ZI', 'ANO_CMPT', 'MES_CMPT', 'CNES', 'MUNIC_RES', 'MUNIC_MOV', 'PROC_REA', 'CAR_INT', 'IDENT', 'DIAS_PERM', 'MORTE', 'VAL_TOT']
+        df_raw = read_dbc(dest_dbc, cols=cols_sih)
+        
+        df_raw['CNES'] = df_raw['CNES'].astype(str).str.strip().str.zfill(7)
+        df_raw['MUNIC_RES'] = df_raw['MUNIC_RES'].astype(str).str.strip().str.zfill(6)
+        df_raw['MUNIC_MOV'] = df_raw['MUNIC_MOV'].astype(str).str.strip().str.zfill(6)
+        df_raw['PROC_REA'] = df_raw['PROC_REA'].astype(str).str.strip().str.zfill(10)
+        df_raw['CAR_INT'] = df_raw['CAR_INT'].astype(str).str.strip()
+        df_raw['IDENT'] = df_raw['IDENT'].astype(str).str.strip()
+        df_raw['DIAS_PERM'] = pd.to_numeric(df_raw['DIAS_PERM'], errors='coerce').fillna(0)
+        df_raw['MORTE'] = pd.to_numeric(df_raw['MORTE'], errors='coerce').fillna(0)
+        df_raw['VAL_TOT'] = pd.to_numeric(df_raw['VAL_TOT'], errors='coerce').fillna(0)
 
-    # 1. Carregar coorte congelada
-    print("\n[1/6] Carregando coorte congelada do Ciclo 3...")
+        df_raw['is_inicial'] = df_raw['IDENT'] == '1'
+        df_raw['is_cirurgica'] = df_raw['PROC_REA'].str.startswith('04') & df_raw['is_inicial']
+        df_raw['is_cirurgica_eletiva'] = df_raw['is_cirurgica'] & (df_raw['CAR_INT'] == '01')
+        
+        # 1. CNES
+        df_cnes_target = df_raw[df_raw['CNES'].isin(target_cnes)]
+        if len(df_cnes_target) > 0:
+            for cnes_val, grp in df_cnes_target.groupby('CNES'):
+                res['cnes_records'].append({
+                    'cnes': cnes_val,
+                    'competencia': cmpt,
+                    'uf': uf,
+                    'n_aih_total_cnes': len(grp),
+                    'n_aih_inicial_total_cnes': int(grp['is_inicial'].sum()),
+                    'n_cirurgias_totais_cnes': int(grp['is_cirurgica'].sum()),
+                    'n_cirurgias_eletivas_cnes': int(grp['is_cirurgica_eletiva'].sum()),
+                    'dias_perm_cirurgica_eletiva': float(grp[grp['is_cirurgica_eletiva']]['DIAS_PERM'].sum()),
+                    'obitos_cirurgicos_eletivos': int(grp[grp['is_cirurgica_eletiva']]['MORTE'].sum()),
+                    'val_tot_cirurgico_eletivo': float(grp[grp['is_cirurgica_eletiva']]['VAL_TOT'].sum())
+                })
+
+        # 2. Município de Ocorrência
+        df_muni_target = df_raw[df_raw['MUNIC_MOV'].isin(target_ibge)]
+        if len(df_muni_target) > 0:
+            for ibge_val, grp in df_muni_target.groupby('MUNIC_MOV'):
+                res['muni_records'].append({
+                    'ibge': ibge_val,
+                    'competencia': cmpt,
+                    'uf': uf,
+                    'n_cirurgias_eletivas_ocorrencia': int(grp['is_cirurgica_eletiva'].sum()),
+                    'n_cirurgias_totais_ocorrencia': int(grp['is_cirurgica'].sum()),
+                    'n_aih_total_ocorrencia': len(grp)
+                })
+
+        # 3. Município de Residência
+        df_res_target = df_raw[df_raw['MUNIC_RES'].isin(target_ibge)]
+        if len(df_res_target) > 0:
+            for ibge_val, grp in df_res_target.groupby('MUNIC_RES'):
+                eletivas_locais = grp[grp['is_cirurgica_eletiva'] & (grp['MUNIC_MOV'] == ibge_val)]
+                eletivas_fora = grp[grp['is_cirurgica_eletiva'] & (grp['MUNIC_MOV'] != ibge_val)]
+                res['residente_records'].append({
+                    'ibge': ibge_val,
+                    'competencia': cmpt,
+                    'uf': uf,
+                    'n_cirurgias_eletivas_res_local': len(eletivas_locais),
+                    'n_cirurgias_eletivas_res_fora': len(eletivas_fora),
+                    'n_cirurgias_eletivas_res_total': len(grp[grp['is_cirurgica_eletiva']])
+                })
+
+        res['manifesto'] = {
+            'arquivo': fname,
+            'uf': uf,
+            'competencia': cmpt,
+            'size_bytes': dl_info['size_bytes'],
+            'sha256': dl_info['sha256'],
+            'linhas_lidas': len(df_raw),
+            'status': 'SUCCESS'
+        }
+
+    except Exception as e:
+        res['manifesto'] = {
+            'arquivo': fname,
+            'uf': uf,
+            'competencia': cmpt,
+            'status': f'ERROR: {str(e)}'
+        }
+    finally:
+        if os.path.exists(dest_dbc):
+            try:
+                os.remove(dest_dbc)
+            except OSError:
+                pass
+                
+    return res
+
+def main():
+    print("=" * 80, flush=True)
+    print("C3-02: PILOTO SIH PRÉ-TRATAMENTO PARA ANESTESIOLOGIA (PMM-E)", flush=True)
+    print("=" * 80, flush=True)
+
+    print("\n[1/6] Carregando coorte congelada do Ciclo 3...", flush=True)
     df_coorte = pd.read_parquet(F_COORTE)
     
-    # Amostra de anestesiologia (Curso 01)
     df_anes = df_coorte[df_coorte['cod_curso'] == 1].copy()
     target_cnes = set(df_anes['cnes'].unique())
     target_ibge = set(df_anes['ibge'].unique())
     target_ufs = sorted(df_anes[df_anes['classificacao_braco'].isin(['imediata_pura', 'nao_priorizada_pura'])]['uf'].unique())
 
-    print(f"Total estabelecimentos (CNES) na coorte de Anestesiologia: {len(target_cnes)}")
-    print(f"Total municípios (IBGE) na coorte de Anestesiologia: {len(target_ibge)}")
-    print(f"Total UFs com CNES tratados/controles: {len(target_ufs)} ({', '.join(target_ufs)})")
+    print(f"Total estabelecimentos (CNES) na coorte de Anestesiologia: {len(target_cnes)}", flush=True)
+    print(f"Total municípios (IBGE) na coorte de Anestesiologia: {len(target_ibge)}", flush=True)
+    print(f"Total UFs com CNES tratados/controles: {len(target_ufs)} ({', '.join(target_ufs)})", flush=True)
 
-    # 2. Executar Benchmark Obrigatório
-    print("\n[2/6] Executando benchmark de descompressão e filtragem (Goiás, 2025-01)...")
+    print("\n[2/6] Executando benchmark de descompressão e filtragem (Goiás, 2025-01)...", flush=True)
     bench_res = run_benchmark()
+    print(f"Benchmark: {bench_res['total_linhas']:,} linhas em {bench_res['tempo_descompressao_e_leitura_s']}s (Tamanho: {bench_res['tamanho_mb']} MB)", flush=True)
 
-    # 3. Processar SIH/RD para todas as UFs e competências pré-tratamento
-    print(f"\n[3/6] Processando SIH/RD para {len(target_ufs)} UFs x {len(COMPETENCIAS)} competências pré-tratamento...")
+    print(f"\n[3/6] Processando SIH/RD concorrentemente para {len(target_ufs)} UFs x {len(COMPETENCIAS)} competências...", flush=True)
     
     cnes_records = []
     muni_records = []
     residente_records = []
     manifesto_files = []
     
-    total_files = len(target_ufs) * len(COMPETENCIAS)
-    processed_count = 0
-    total_bytes_downloaded = 0
-    t_start = time.time()
-    
+    tasks = []
     temp_dir = tempfile.gettempdir()
-    
     for uf in target_ufs:
         for cmpt in COMPETENCIAS:
-            processed_count += 1
-            yy = cmpt[2:4]
-            mm = cmpt[4:6]
-            fname = f"RD{uf}{yy}{mm}.dbc"
-            url = f"ftp://ftp.datasus.gov.br/dissemin/publicos/SIHSUS/200801_/Dados/{fname}"
-            dest_dbc = os.path.join(temp_dir, fname)
+            tasks.append((uf, cmpt))
             
-            try:
-                # Download
-                dl_info = download_datasus_dbc(url, dest_dbc, timeout=30)
-                total_bytes_downloaded += dl_info['size_bytes']
-                
-                # Leitura e filtragem
-                cols_sih = ['UF_ZI', 'ANO_CMPT', 'MES_CMPT', 'CNES', 'MUNIC_RES', 'MUNIC_MOV', 'PROC_REA', 'CAR_INT', 'IDENT', 'DIAS_PERM', 'MORTE', 'VAL_TOT']
-                df_raw = read_dbc(dest_dbc, cols=cols_sih)
-                
-                # Padronizar colunas
-                df_raw['CNES'] = df_raw['CNES'].astype(str).str.strip().str.zfill(7)
-                df_raw['MUNIC_RES'] = df_raw['MUNIC_RES'].astype(str).str.strip().str.zfill(6)
-                df_raw['MUNIC_MOV'] = df_raw['MUNIC_MOV'].astype(str).str.strip().str.zfill(6)
-                df_raw['PROC_REA'] = df_raw['PROC_REA'].astype(str).str.strip().str.zfill(10)
-                df_raw['CAR_INT'] = df_raw['CAR_INT'].astype(str).str.strip()
-                df_raw['IDENT'] = df_raw['IDENT'].astype(str).str.strip()
-                df_raw['DIAS_PERM'] = pd.to_numeric(df_raw['DIAS_PERM'], errors='coerce').fillna(0)
-                df_raw['MORTE'] = pd.to_numeric(df_raw['MORTE'], errors='coerce').fillna(0)
-                df_raw['VAL_TOT'] = pd.to_numeric(df_raw['VAL_TOT'], errors='coerce').fillna(0)
+    total_files = len(tasks)
+    total_bytes_downloaded = 0
+    t_start = time.time()
+    completed_count = 0
 
-                # Flags de interesse
-                df_raw['is_inicial'] = df_raw['IDENT'] == '1'
-                df_raw['is_cirurgica'] = df_raw['PROC_REA'].str.startswith('04') & df_raw['is_inicial']
-                df_raw['is_cirurgica_eletiva'] = df_raw['is_cirurgica'] & (df_raw['CAR_INT'] == '01')
-                
-                # 1. Agregação por CNES Alvo
-                df_cnes_target = df_raw[df_raw['CNES'].isin(target_cnes)]
-                if len(df_cnes_target) > 0:
-                    for cnes_val, grp in df_cnes_target.groupby('CNES'):
-                        cnes_records.append({
-                            'cnes': cnes_val,
-                            'competencia': cmpt,
-                            'uf': uf,
-                            'n_aih_total_cnes': len(grp),
-                            'n_aih_inicial_total_cnes': grp['is_inicial'].sum(),
-                            'n_cirurgias_totais_cnes': grp['is_cirurgica'].sum(),
-                            'n_cirurgias_eletivas_cnes': grp['is_cirurgica_eletiva'].sum(),
-                            'dias_perm_cirurgica_eletiva': grp[grp['is_cirurgica_eletiva']]['DIAS_PERM'].sum(),
-                            'obitos_cirurgicos_eletivos': grp[grp['is_cirurgica_eletiva']]['MORTE'].sum(),
-                            'val_tot_cirurgico_eletivo': grp[grp['is_cirurgica_eletiva']]['VAL_TOT'].sum()
-                        })
-
-                # 2. Agregação por Município de Ocorrência (MUNIC_MOV)
-                df_muni_target = df_raw[df_raw['MUNIC_MOV'].isin(target_ibge)]
-                if len(df_muni_target) > 0:
-                    for ibge_val, grp in df_muni_target.groupby('MUNIC_MOV'):
-                        muni_records.append({
-                            'ibge': ibge_val,
-                            'competencia': cmpt,
-                            'uf': uf,
-                            'n_cirurgias_eletivas_ocorrencia': grp['is_cirurgica_eletiva'].sum(),
-                            'n_cirurgias_totais_ocorrencia': grp['is_cirurgica'].sum(),
-                            'n_aih_total_ocorrencia': len(grp)
-                        })
-
-                # 3. Agregação por Município de Residência (MUNIC_RES) para medir evasão / resolutividade
-                df_res_target = df_raw[df_raw['MUNIC_RES'].isin(target_ibge)]
-                if len(df_res_target) > 0:
-                    for ibge_val, grp in df_res_target.groupby('MUNIC_RES'):
-                        eletivas_locais = grp[grp['is_cirurgica_eletiva'] & (grp['MUNIC_MOV'] == ibge_val)]
-                        eletivas_fora = grp[grp['is_cirurgica_eletiva'] & (grp['MUNIC_MOV'] != ibge_val)]
-                        residente_records.append({
-                            'ibge': ibge_val,
-                            'competencia': cmpt,
-                            'uf': uf,
-                            'n_cirurgias_eletivas_res_local': len(eletivas_locais),
-                            'n_cirurgias_eletivas_res_fora': len(eletivas_fora),
-                            'n_cirurgias_eletivas_res_total': len(grp[grp['is_cirurgica_eletiva']])
-                        })
-
-                manifesto_files.append({
-                    'arquivo': fname,
-                    'uf': uf,
-                    'competencia': cmpt,
-                    'size_bytes': dl_info['size_bytes'],
-                    'sha256': dl_info['sha256'],
-                    'linhas_lidas': len(df_raw),
-                    'status': 'SUCCESS'
-                })
-
-            except Exception as e:
-                manifesto_files.append({
-                    'arquivo': fname,
-                    'uf': uf,
-                    'competencia': cmpt,
-                    'status': f'ERROR: {str(e)}'
-                })
-            finally:
-                if os.path.exists(dest_dbc):
-                    try:
-                        os.remove(dest_dbc)
-                    except OSError:
-                        pass
-
-            if processed_count % 50 == 0 or processed_count == total_files:
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        futures = {executor.submit(process_single_file, uf, cmpt, target_cnes, target_ibge, temp_dir): (uf, cmpt) for uf, cmpt in tasks}
+        
+        for future in as_completed(futures):
+            completed_count += 1
+            res = future.result()
+            
+            cnes_records.extend(res['cnes_records'])
+            muni_records.extend(res['muni_records'])
+            residente_records.extend(res['residente_records'])
+            if res['manifesto']:
+                manifesto_files.append(res['manifesto'])
+            total_bytes_downloaded += res['bytes']
+            
+            if completed_count % 50 == 0 or completed_count == total_files:
                 elapsed = time.time() - t_start
-                print(f"Progresso: {processed_count}/{total_files} arquivos processados ({processed_count/total_files:.1%}) em {elapsed:.1f}s...")
+                rate = completed_count / elapsed if elapsed > 0 else 0
+                print(f"Progresso: {completed_count}/{total_files} arquivos processados ({completed_count/total_files:.1%}) em {elapsed:.1f}s ({rate:.1f} arq/s)...", flush=True)
 
-    # 4. Consolidar Painéis Pré-Tratamento Balanceados
-    print("\n[4/6] Consolidando e balanceando painéis analíticos pré-tratamento...")
+    print("\n[4/6] Consolidando e balanceando painéis analíticos pré-tratamento...", flush=True)
     
     # 4.1 Painel CNES–mês
     df_p_cnes = pd.DataFrame(cnes_records) if cnes_records else pd.DataFrame(columns=['cnes', 'competencia', 'uf', 'n_cirurgias_eletivas_cnes', 'n_cirurgias_totais_cnes'])
     
-    # Balancear painel CNES x Competência com zeros explícitos
     grid_cnes = pd.MultiIndex.from_product([sorted(list(target_cnes)), COMPETENCIAS], names=['cnes', 'competencia']).to_frame().reset_index(drop=True)
     df_cnes_meta = df_anes[['cnes', 'ibge', 'uf', 'classificacao_braco', 'amostra_anestesia_total', 'amostra_anestesia_isolada', 'cointervencao_cirurgica_muni']].drop_duplicates()
     grid_cnes = grid_cnes.merge(df_cnes_meta, on='cnes', how='left')
@@ -232,11 +253,11 @@ def main():
     df_sih_cnes = grid_cnes.merge(df_p_cnes, on=['cnes', 'competencia', 'uf'], how='left')
     for col in ['n_aih_total_cnes', 'n_aih_inicial_total_cnes', 'n_cirurgias_totais_cnes', 'n_cirurgias_eletivas_cnes', 'dias_perm_cirurgica_eletiva', 'obitos_cirurgicos_eletivos', 'val_tot_cirurgico_eletivo']:
         if col in df_sih_cnes.columns:
-            df_sih_cnes[col] = df_sih_cnes[col].fillna(0).astype(int)
+            df_sih_cnes[col] = df_sih_cnes[col].fillna(0)
 
     f_out_cnes = os.path.join(SIH_PRE_DIR, 'painel_sih_cnes_pre.parquet')
     df_sih_cnes.to_parquet(f_out_cnes, index=False)
-    print(f"-> Painel CNES–mês salvo: {f_out_cnes} ({len(df_sih_cnes):,} linhas balanceadas)")
+    print(f"-> Painel CNES–mês salvo: {f_out_cnes} ({len(df_sih_cnes):,} linhas balanceadas)", flush=True)
 
     # 4.2 Painel Município–mês
     df_p_muni = pd.DataFrame(muni_records) if muni_records else pd.DataFrame()
@@ -253,9 +274,8 @@ def main():
         
     for col in ['n_cirurgias_eletivas_ocorrencia', 'n_cirurgias_totais_ocorrencia', 'n_aih_total_ocorrencia', 'n_cirurgias_eletivas_res_local', 'n_cirurgias_eletivas_res_fora', 'n_cirurgias_eletivas_res_total']:
         if col in grid_muni.columns:
-            grid_muni[col] = grid_muni[col].fillna(0).astype(int)
+            grid_muni[col] = grid_muni[col].fillna(0)
 
-    # Taxa de resolutividade cirúrgica local (moradores operados localmente / total de cirurgias de moradores)
     grid_muni['taxa_resolutividade_cirurgica'] = np.where(
         grid_muni['n_cirurgias_eletivas_res_total'] > 0,
         grid_muni['n_cirurgias_eletivas_res_local'] / grid_muni['n_cirurgias_eletivas_res_total'],
@@ -264,21 +284,20 @@ def main():
 
     f_out_muni = os.path.join(SIH_PRE_DIR, 'painel_sih_muni_pre.parquet')
     grid_muni.to_parquet(f_out_muni, index=False)
-    print(f"-> Painel Município–mês salvo: {f_out_muni} ({len(grid_muni):,} linhas balanceadas)")
+    print(f"-> Painel Município–mês salvo: {f_out_muni} ({len(grid_muni):,} linhas balanceadas)", flush=True)
 
-    # 5. Salvar Dicionário de Procedimentos e Manifesto
-    print("\n[5/6] Salvando dicionário SIGTAP e manifesto...")
+    print("\n[5/6] Salvando dicionário SIGTAP e manifesto...", flush=True)
     df_sigtap = pd.DataFrame(SUBGRUPOS_CIRURGICOS_SIGTAP)
     f_out_sigtap = os.path.join(OUTPUT_DIR, 'dicionario_procedimentos_anestesia.csv')
     df_sigtap.to_csv(f_out_sigtap, index=False, encoding='utf-8')
-    print(f"-> Dicionário SIGTAP salvo: {f_out_sigtap}")
+    print(f"-> Dicionário SIGTAP salvo: {f_out_sigtap}", flush=True)
 
     manifesto_sih = {
         "protocolo": "PILOTO_SIH_PRE_TRATAMENTO_ANESTESIOLOGIA",
         "data_execucao": "2026-08-30",
         "janela_pre": f"{COMPETENCIAS[0]} a {COMPETENCIAS[-1]} ({len(COMPETENCIAS)} competencias)",
         "ufs_processadas": target_ufs,
-        "total_arquivos_processados": processed_count,
+        "total_arquivos_processados": completed_count,
         "total_bytes_transferidos": total_bytes_downloaded,
         "total_megabytes_transferidos": round(total_bytes_downloaded / (1024 * 1024), 2),
         "benchmark_amostral": bench_res,
@@ -299,21 +318,19 @@ def main():
     f_out_man = os.path.join(OUTPUT_DIR, 'manifesto_sih_pre.json')
     with open(f_out_man, 'w', encoding='utf-8') as f:
         json.dump(manifesto_sih, f, indent=2, ensure_ascii=False)
-    print(f"-> Manifesto SIH salvo: {f_out_man}")
+    print(f"-> Manifesto SIH salvo: {f_out_man}", flush=True)
 
-    # 6. Gerar Relatório de Auditoria do Piloto SIH
-    print("\n[6/6] Gerando relatório de auditoria do piloto...")
+    print("\n[6/6] Gerando relatório de auditoria do piloto...", flush=True)
     gerar_relatorio_piloto(manifesto_sih, df_sih_cnes, grid_muni)
 
-    print("\n" + "=" * 80)
-    print("PROMPT C3-02 CONCLUÍDO COM SUCESSO!")
-    print("=" * 80)
-
+    print("\n" + "=" * 80, flush=True)
+    print("PROMPT C3-02 CONCLUÍDO COM SUCESSO!", flush=True)
+    print("=" * 80, flush=True)
 
 def run_benchmark():
     url = "ftp://ftp.datasus.gov.br/dissemin/publicos/SIHSUS/200801_/Dados/RDGO2501.dbc"
     temp_dir = tempfile.gettempdir()
-    dest_dbc = os.path.join(temp_dir, "benchmark_RDGO2501.dbc")
+    dest_dbc = os.path.join(temp_dir, f"benchmark_RDGO2501_{uuid.uuid4().hex[:6]}.dbc")
     
     t0 = time.time()
     dl_info = download_datasus_dbc(url, dest_dbc)
@@ -325,8 +342,11 @@ def run_benchmark():
     t_parse = time.time() - t1
     
     if os.path.exists(dest_dbc):
-        os.remove(dest_dbc)
-        
+        try:
+            os.remove(dest_dbc)
+        except OSError:
+            pass
+            
     return {
         "arquivo": "RDGO2501.dbc",
         "tamanho_bytes": dl_info['size_bytes'],
@@ -336,7 +356,6 @@ def run_benchmark():
         "total_linhas": len(df),
         "sha256": dl_info['sha256']
     }
-
 
 def gerar_relatorio_piloto(man, df_cnes, df_muni):
     f_doc = os.path.join(DOCS_DIR, '06_piloto_sih_anestesiologia.md')
@@ -391,7 +410,7 @@ Com o painel do SIH construído exclusivamente sobre dados anteriores a $T_0$, o
 """
     with open(f_doc, 'w', encoding='utf-8') as f:
         f.write(doc_content)
-    print(f"-> Relatório salvo: {f_doc}")
+    print(f"-> Relatório salvo: {f_doc}", flush=True)
 
 if __name__ == '__main__':
     main()
