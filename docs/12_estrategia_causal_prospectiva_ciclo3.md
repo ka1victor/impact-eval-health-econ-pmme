@@ -59,14 +59,14 @@ entre 2024-06 e 2026-06, 612 CNES e 456 municípios da coorte ampla de
 anestesiologia. A execução transferiu 2,14 GiB e produziu painéis persistentes
 de menos de 0,5 MiB no total. Não há dados SIA locais.
 
-A revisão independente, porém, encontrou pendências antes de usar o piloto para
-pré-tendências: os manifestos individuais não foram persistidos; apenas 24 UFs
-foram lidas, truncando possíveis destinos interestaduais; um município com
-imediata e reserva foi classificado pela primeira linha; e o CSV de subgrupos
-não é uma historicização do SIGTAP. Esses pontos estão no
-[`relatório C3-02`](auditorias/06_piloto_sih_anestesiologia.md) e no prompt
-corretivo C3-02B. Portanto, SIH está tecnicamente viável, mas o painel atual não
-está liberado para congelar o protocolo.
+A revisão independente encontrou pendências antes de usar o piloto para
+pré-tendências. O corretivo C3-02B foi tentado em 31/08/2026: persistiu uma linha
+para cada um dos 675 pares UF--competência, historicizou as 25 versões SIGTAP e
+confirmou a classificação de 77 municípios tratados puros, 247 controles puros
+e um município imediata+reserva excluído. Porém, o FTP oficial não continha
+`RDAC2606.dbc` e `RDRR2606.dbc`. Foram 673 sucessos; as duas ausências não foram
+convertidas em zeros. O [`relatório C3-02B`](auditorias/06_piloto_sih_anestesiologia.md)
+mantém o painel bloqueado e, portanto, C3-03 não foi executado.
 
 SIH e SIA são fontes públicas do DATASUS:
 
@@ -422,9 +422,9 @@ linhas clínicas até encontrar um resultado.
 ## 9. Sequência operacional e calendário
 
 1. Manter a coorte e a ponte normativa corrigida congeladas.
-2. Reexecutar o SIH pelo C3-02B, com 27 UFs, manifesto por arquivo, exposição
-   municipal correta, pico medido e SIGTAP historicizado.
-3. Executar o C3-03 usando somente pré-dados; congelar o plano de análise e
+2. Reexecutar o SIH pelo C3-02B quando AC/RR 2026-06 estiverem publicados, com
+   27 UFs, 675 sucessos, exposição municipal correta, pico medido e SIGTAP já historicizado.
+3. Só então executar o C3-03 usando somente pré-dados; congelar o plano de análise e
    seus hashes.
 4. Aguardar seguimento comum de seis meses e só então atualizar CNES/SIH.
 5. Estimar a versão de seis meses sem reescolher método, amostra ou outcome.

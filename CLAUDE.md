@@ -62,6 +62,9 @@
   prompts C3-01 a C3-04, não consulte outcomes pós-tratamento. Nos prompts
   C3-05 e C3-06, não reescolha amostra, outcome ou estimador depois de observar
   resultados.
+- Em 31/08/2026, C3-02B ficou em 673/675 porque `RDAC2606.dbc` e
+  `RDRR2606.dbc` estavam ausentes do FTP oficial. Não trate essas ausências como
+  zeros. C3-03 permanece bloqueado até 675 sucessos.
 - Os pares de tarefas 01–02 e 04–05 só podem rodar em paralelo em worktrees isolados.
 - Cada agente deve produzir commit próprio e não fazer push ou merge, salvo instrução explícita do autor.
 - `run_all.py` é o ponto de entrada ponta a ponta do estado validado do projeto.

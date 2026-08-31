@@ -84,10 +84,11 @@
 - [x] C3-02 — executar piloto técnico SIH pré-tratamento para anestesiologia;
   viabilidade confirmada, mas painel ainda não liberado como insumo causal
   (`docs/auditorias/06_piloto_sih_anestesiologia.md`).
-- [ ] C3-02B — reexecutar 27 UFs, persistir manifesto dos 675 arquivos, corrigir
-  exposição municipal, historicizar SIGTAP e medir pico de disco
-  (`prompts/avaliacao_ciclo3/02b_corrigir_e_validar_sih_pre.md`).
-- [ ] C3-03 — somente depois do C3-02B, executar potência, múltiplos placebos,
+- [ ] C3-02B — tentativa de 31/08/2026 persistiu 675 manifestos e historicizou
+  25 SIGTAP, mas ficou bloqueada em 673 sucessos: `RDAC2606.dbc` e
+  `RDRR2606.dbc` não estavam no FTP oficial. Repetir só após ambos aparecerem;
+  não imputar zeros (`prompts/avaliacao_ciclo3/02b_corrigir_e_validar_sih_pre.md`).
+- [ ] C3-03 — bloqueado; somente depois de o C3-02B obter 675 sucessos, executar potência, múltiplos placebos,
   equivalência de pré-tendências e congelar o plano. Artefatos que ainda usem
   “sete cursos unívocos” ou números contraditórios não são aceitos.
 - [ ] C3-04 — pilotar SIA/ecocardiografia somente se o portão ordenar (arquivado em espera conforme decisão do torneio C3-03).

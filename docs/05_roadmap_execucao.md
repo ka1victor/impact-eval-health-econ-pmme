@@ -334,9 +334,12 @@ O autor autorizou em 30/08/2026 uma avaliação prospectiva separada do ciclo 3.
 O estudo principal usa imediata pura versus não priorizada pura de
 anestesiologia para medir estoque e permanência municipal; cirurgias no SIH são
 o secundário clínico condicionado, e oncologia clínica/medicina intensiva são
-generalizações separadas. O C3-02 provou viabilidade técnica do SIH, mas a
-revisão bloqueou o C3-03 até a correção C3-02B de proveniência, fluxos
-interestaduais, braço municipal e SIGTAP. A preparação deve seguir, em ordem,
+generalizações separadas. O C3-02 provou viabilidade técnica do SIH. A tentativa
+C3-02B de 31/08/2026 historicizou as 25 versões SIGTAP e produziu manifesto
+para os 675 pares, mas o FTP oficial não continha AC e RR em 2026-06: foram 673
+sucessos e duas falhas documentadas, sem zeros fabricados. Assim, C3-03 não foi
+executado e continua bloqueado até os dois arquivos aparecerem e o C3-02B passar
+integralmente. A preparação deve seguir, em ordem,
 [`prompts/avaliacao_ciclo3/`](../prompts/avaliacao_ciclo3/README.md). Estimação
 só ocorrerá quando seis meses comuns estiverem maduros e o protocolo tiver sido
 congelado sem consultar o pós-período.

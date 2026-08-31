@@ -93,17 +93,19 @@ congelará prospectivamente o ciclo 3 antes de observar seus outcomes:
 A Nota Técnica nº 59/2026 criou uma assinatura cadastral potencialmente
 observável dos participantes no CNES. O C3-01 já corrigiu a ponte do Anexo I: os
 únicos cursos com suporte comparativo e ponte integral sem sobreposição são 1,
-12 e 24. O piloto C3-02 comprovou que o SIH é público e manejável (2,14 GiB para
-25 competências/24 UFs), mas a revisão encontrou falhas de proveniência,
-fluxos interestaduais, classificação municipal e SIGTAP. A próxima sessão é o
-C3-02B corretivo, não uma estimação.
+12 e 24. O C3-02B tentou os 675 pares de 27 UFs × 25 competências: 673 foram
+processados, mas `RDAC2606.dbc` e `RDRR2606.dbc` não existiam no FTP oficial em
+31/08/2026. As 25 versões SIGTAP foram historicizadas. Conforme a regra
+*fail-closed*, as ausências não viraram zeros e os painéis preliminares do
+C3-02 não foram promovidos. O próximo passo é repetir o C3-02B quando os dois
+arquivos aparecerem; C3-03 continua bloqueado.
 
 A estratégia e seus limites estão em
 [`docs/12_estrategia_causal_prospectiva_ciclo3.md`](docs/12_estrategia_causal_prospectiva_ciclo3.md).
 Os prompts ordenados para sessões futuras estão em
 [`prompts/avaliacao_ciclo3/`](prompts/avaliacao_ciclo3/README.md). Nenhum efeito
-do ciclo 3 foi estimado e o protocolo C3-03 ainda não está validamente
-congelado.
+do ciclo 3 foi estimado, o C3-03 não foi executado e qualquer estimação aguarda
+seis meses comuns maduros após o protocolo pré-tratamento ser congelado.
 
 ## Escopo da primeira versão
 

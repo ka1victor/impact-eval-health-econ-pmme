@@ -1,55 +1,56 @@
 {
-  "protocolo": "PILOTO_SIH_PRE_TRATAMENTO_ANESTESIOLOGIA",
-  "data_execucao": "2026-08-30",
-  "janela_pre": "202406 a 202606 (25 competencias)",
-  "ufs_processadas": [
-    "AL",
-    "AM",
-    "AP",
-    "BA",
-    "CE",
-    "ES",
-    "GO",
-    "MA",
-    "MG",
-    "MS",
-    "MT",
-    "PA",
-    "PB",
-    "PE",
-    "PI",
-    "PR",
-    "RJ",
-    "RN",
-    "RO",
-    "RS",
-    "SC",
-    "SE",
-    "SP",
-    "TO"
-  ],
-  "total_arquivos_processados": 600,
-  "total_bytes_transferidos": 2243597883,
-  "total_megabytes_transferidos": 2139.66,
-  "benchmark_amostral": {
-    "arquivo": "RDGO2501.dbc",
-    "tamanho_bytes": 2805508,
-    "tamanho_mb": 2.68,
-    "tempo_download_s": 1.71,
-    "tempo_descompressao_e_leitura_s": 0.39,
-    "total_linhas": 38096,
-    "sha256": "741a013bedbd2ffd9ac0963c37d13917b636f7ea7d62db3c07ca287e05a99ab9"
+  "protocolo": "C3-02B_SIH_PRE_TRATAMENTO_ANESTESIOLOGIA",
+  "status_portao_c3_03": "BLOQUEADO_FONTE_OFICIAL_INCOMPLETA",
+  "data_execucao": "2026-08-31",
+  "t0_provisorio": "202609",
+  "janela_solicitada": {
+    "inicio": "202406",
+    "fim": "202606",
+    "n_competencias": 25,
+    "ufs": 27,
+    "arquivos_esperados": 675
+  },
+  "resultado_tentativa": {
+    "manifestos": 675,
+    "sucessos": 673,
+    "falhas": 2,
+    "arquivos_ausentes_no_catalogo_oficial": [
+      "RDAC2606.dbc",
+      "RDRR2606.dbc"
+    ],
+    "catalogo_consultado_em_utc": "2026-08-31T03:59:06.687609+00:00",
+    "regra": "não criar zero estrutural; não construir painéis C3-02B"
+  },
+  "sigtap": {
+    "status": "HISTORICIZADO_25_COMPETENCIAS",
+    "competencias": 25,
+    "linhas_grupo04_competencia_procedimento": 42358
+  },
+  "trafego_tentativa_principal": {
+    "sih_673_sucessos_bytes": 2298070098,
+    "sih_673_sucessos_mib": 2191.61,
+    "benchmark_repetido_bytes": 2805508,
+    "sigtap_25_bytes": 52286554,
+    "total_parcial_bytes": 2353162160,
+    "total_parcial_mib": 2244.15,
+    "observacao": "falhas FTP 550 não transferiram arquivos; reaquisicao corretiva do SIGTAP não somada"
+  },
+  "armazenamento_temporario": {
+    "pico_bytes": null,
+    "status": "NAO_PERSISTIDO_APOS_FALHA_DO_PORTAO",
+    "observacao": "o código agora persiste o estado bloqueado antes de nova execução; nenhum valor foi inferido"
+  },
+  "paineis_existentes": {
+    "status": "PRELIMINARES_C3_02_NAO_APROVADOS_POR_C3_02B",
+    "painel_sih_cnes_pre.parquet": "e5be9a144eb66712bf53b787d66898d5b07ad5a4c25f25c326b7db5017620ede",
+    "painel_sih_muni_pre.parquet": "4465de97e4d84fa1366f6c741cfdb8771e9ba9061bf22fde7ba6027bad9e94f4"
   },
   "arquivos_gerados_hashes": {
-    "painel_sih_cnes_pre.parquet": "e5be9a144eb66712bf53b787d66898d5b07ad5a4c25f25c326b7db5017620ede",
-    "painel_sih_muni_pre.parquet": "4465de97e4d84fa1366f6c741cfdb8771e9ba9061bf22fde7ba6027bad9e94f4",
-    "dicionario_procedimentos_anestesia.csv": "4e827334f809fa06ce666d3481dca3eefa12ea450fb1571774caa0dc60e53233"
+    "manifesto_arquivos_sih_pre.csv": "fc9be34bf46de47954ed3d0fc01830fb4f8947df4ebc4c696653073f026ac072",
+    "dicionario_procedimentos_anestesia.csv": "bb11285532e35b28eaacd48b5ba696f633b25ee5917250f20cdc3d8a0d1fd29c",
+    "manifesto_sigtap_pre.csv": "f88b7251f4ca3cec912a18929a506bc477242b9e89047e74d2ec0da7bcc3ee63"
   },
-  "metricas_pre_painel": {
-    "total_estabelecimentos_cnes": 612,
-    "total_municipios_ibge": 456,
-    "total_cirurgias_eletivas_cnes_pre": 1535731,
-    "media_mensal_cirurgias_eletivas_cnes_tratado": 89.14050420168067,
-    "media_mensal_cirurgias_eletivas_cnes_controle": 109.4872131147541
-  }
+  "proxima_acao": "repetir C3-02B somente quando RDAC2606.dbc e RDRR2606.dbc aparecerem no FTP oficial",
+  "c3_03": "BLOQUEADO",
+  "estimacao_pos_tratamento": "PROIBIDA_ATE_SEIS_MESES_MADUROS"
 }
