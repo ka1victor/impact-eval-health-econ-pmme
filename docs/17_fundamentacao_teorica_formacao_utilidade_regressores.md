@@ -21,180 +21,145 @@ O objeto teórico relevante não é o efeito isolado de “salário” ou de “
 7. vínculos territoriais, distância e custos de mudança;
 8. a opção externa de não aderir ou trabalhar em outro local.
 
-Essa formulação combina utilidade aleatória e escolha discreta (McFadden, 1974), diferenciais compensatórios e equilíbrio espacial (Roback, 1982), mobilidade dinâmica (Kennan e Walker, 2011), matching por missão (Besley e Ghatak, 2005) e evidências específicas sobre localização de médicos (Scott, 2001; Costa, Nunes e Sanches, 2024).
+A hierarquia de fundamentação adotada neste memo é deliberada. O núcleo vem de dois **modelos microeconômicos publicados**: a escolha locacional intertemporal de um médico em Moehling et al. (2020) e o modelo de esforço e matching por missão de Besley e Ghatak (2005). Roback (1982) fornece a base de equilíbrio espacial. McFadden (1974), Costa, Nunes e Sanches (2024) e os experimentos de escolha entram depois, na passagem para mensuração e estimação; suas especificações econométricas não são apresentadas como teoria da utilidade.
 
 No PMM-E, o pagamento deve ser tratado como **bolsa-formação**, e não automaticamente como “salário municipal + bônus”. A documentação oficial descreve bolsa de R$ 10 mil, R$ 15 mil ou R$ 20 mil conforme a faixa de IVS, 20 horas semanais de atividades e ausência de vínculo empregatício. O programa também oferece mentoria, imersões e certificação. Portanto, renda corrente, custo de oportunidade do tempo e valor futuro da formação são componentes distintos da utilidade.
 
 A decomposição também é coerente com evidência brasileira. Um experimento de escolha discreta em Minas Gerais incluiu localização, remuneração, vínculo, jornada, acesso à residência e condições de trabalho. Entrevistas nas “rotas da escassez” destacaram remuneração, flexibilidade, infraestrutura da unidade, origem do profissional, infraestrutura urbana e lazer. Esses resultados apoiam a inclusão dos argumentos, mas não fixam seus coeficientes no PMM-E.
 
-## 2. Equação 1 — utilidade de fluxo e formas funcionais
+## 2. Equação 1 — escolha locacional de um médico no modelo publicado
 
-Considere o médico $i$, da especialidade $s$, avaliando o município $m$ no período $t$. Uma forma suficientemente geral, mas disciplinada pela teoria, é:
-
-$$
-\begin{aligned}
-u_{ismt}={}&
-\underbrace{\frac{C_{ismt}^{1-\sigma_i}-1}{1-\sigma_i}}_{\text{consumo real}}
--\underbrace{\frac{\theta_i}{1+\eta_i}
-\left[\frac{E_{ismt}}{(1+K_{smt})^{\lambda_{is}}}\right]^{1+\eta_i}}_{\text{custo de esforço}}
-+\underbrace{\kappa_{is}\ln(1+K_{smt})}_{\text{condições clínicas}}\\
-&+\underbrace{\gamma_iG_{ismt}}_{\text{formação e carreira}}
-+\underbrace{\mu_iM_iN_{mt}}_{\text{missão} \times \text{necessidade}}
-+\underbrace{a_iA_{mt}}_{\text{amenidades}}
-+\underbrace{\rho_iTies_{im}}_{\text{vínculos locais}}
--\underbrace{\phi_iD_{im}^{\nu_i}}_{\text{distância e separação}}
-+\varepsilon_{ismt},
-\end{aligned}
-\tag{1}
-$$
-
-Os parâmetros satisfazem $\sigma_i>0$, $\theta_i>0$, $\eta_i>0$, $\lambda_{is}\geq0$, $\kappa_{is}\geq0$, $\gamma_i\geq0$, $\mu_i\geq0$, $a_i\geq0$, $\rho_i\geq0$, $\phi_i>0$ e $\nu_i>0$. A teoria disciplina principalmente sinais e curvaturas; os valores desses parâmetros são objetos empíricos.
-
-em que
+O ponto de partida canônico será a Equação (1) de **Moehling, Niemesh, Thomasson e Treber (2020)**. Os autores apresentam explicitamente um problema microeconômico de escolha locacional do médico antes de introduzir qualquer modelo econométrico:
 
 $$
-C_{ismt}=\frac{Y^{out}_{it}+B_{mt}-Cost_{imt}}{P_{mt}}>0.
+\arg\max_{i\in\mathcal I} U(\omega_i)
+=
+\arg\max_{i\in\mathcal I}
+\left\{
+\sum_t \delta^t
+\left[
+\frac{\mathbb E\!\left(w^{(s)}_{it}\right)}{p_{it}}
+-c^{(s)}_{it}
+\right]
+\right\}.
+\tag{1; Moehling et al., 2020}
 $$
 
-Aqui, $B$ é a bolsa; $Y^{out}$ representa outras rendas compatíveis com o programa; $Cost$ inclui deslocamento, dupla moradia e outros custos monetários; e $P$ é um índice de custo de vida. $E$ reúne horas efetivas, demanda, plantões, imprevisibilidade, carga administrativa e risco clínico. $K$ é infraestrutura e suporte específicos da especialidade. $G$ representa formação, mentoria, certificação, autonomia e valor de carreira. $M_i$ é a orientação pró-social do médico e $N_m$ é a necessidade assistencial. $A$ reúne amenidades locais; $Ties$, vínculos de origem, residência ou formação; e $D$, distância ou tempo de viagem.
+Esta é a equação do próprio paper, com sua notação preservada. O médico escolhe a localidade $i$ que maximiza o valor presente da remuneração real esperada menos os custos e desamenidades de consumo da localidade. No artigo, $t$ indexa o ano, $s$ o grupo de qualificação, $w$ a remuneração nominal esperada, $p$ o nível de preços local, $c$ as amenidades ou desamenidades e custos locais, e $\delta$ o fator de desconto.
 
-Quando $\sigma_i=1$, o primeiro termo converge para $\ln C_{ismt}$. A família CRRA impõe utilidade crescente e côncava da renda:
+Os autores incluem em $c$ a preferência por vida rural ou urbana, proximidade da família e outros atributos locacionais. Hospitais, laboratórios, tamanho do mercado, estradas, proximidade de outros profissionais e escola médica são tratados como **amenidades produtivas**: elas podem elevar a remuneração esperada. A equação, portanto, separa duas vias pelas quais uma localidade afeta a escolha: qualidade de vida/custos de um lado e produtividade/retorno profissional do outro.
+
+### 2.1 Sinais e forma funcional que vêm da Equação (1)
+
+Defina o valor da localidade por $\Omega_i$, igual ao termo entre chaves. Então, para cada período:
 
 $$
-\frac{\partial u}{\partial B}
-=\frac{C^{-\sigma_i}}{P}>0,
+\frac{\partial \Omega_i}{\partial \mathbb E(w^{(s)}_{it})}
+=\frac{\delta^t}{p_{it}}>0,
 \qquad
-\frac{\partial^2 u}{\partial B^2}
-=-\frac{\sigma_i C^{-\sigma_i-1}}{P^2}<0
-\quad (\sigma_i>0).
-$$
-
-Portanto, a hipótese teórica não é apenas “mais bolsa aumenta utilidade”; ela também prevê **retorno marginal decrescente**. Uma diferença de R$ 5 mil tende a importar relativamente mais quando o consumo disponível inicial é menor.
-
-O termo de esforço impõe custo crescente e convexo:
-
-$$
-\frac{\partial u}{\partial E}<0,
+\frac{\partial \Omega_i}{\partial p_{it}}
+=-\delta^t\frac{\mathbb E(w^{(s)}_{it})}{p_{it}^2}<0,
 \qquad
-\frac{\partial^2 u}{\partial E^2}<0,
+\frac{\partial \Omega_i}{\partial c^{(s)}_{it}}
+=-\delta^t<0.
+$$
+
+Essas derivadas não são uma nova função proposta para o PMM-E; são implicações algébricas diretas da equação publicada. Elas fundamentam as hipóteses de que remuneração real esperada eleva o valor da opção, custo de vida reduz esse valor e desamenidades locais o reduzem.
+
+Crucialmente, a remuneração entra **linearmente em nível e deflacionada por preços**. O paper não impõe utilidade logarítmica, CRRA ou exponencial. Se o projeto adotar este modelo como fundamento, o benchmark teórico para a bolsa é, portanto, o valor real em nível. Uma transformação logarítmica seria uma hipótese teórica alternativa; uma exponencial não é implicada pelo modelo.
+
+### 2.2 Tradução dos primitivos para o PMM-E
+
+| Primitivo original | Leitura no PMM-E | Conteúdo observável prioritário |
+|---|---|---|
+| $\mathbb E(w)/p$ | retorno monetário real esperado da opção | bolsa real, outras rendas compatíveis e custo de vida |
+| $c$ | custo/desamenidade de morar e trabalhar no local | distância da família, dupla moradia, segurança, escolas, lazer e conectividade |
+| amenidades produtivas em $\mathbb E(w)$ | capacidade de exercer a especialidade e produzir capital profissional | hospitais, laboratórios, equipamentos, equipe, referência, mentoria e rede profissional |
+| $\delta$ | valor presente de retornos atuais e futuros | duração da formação e retorno futuro esperado da certificação |
+| heterogeneidade em $s$ | atributos têm valores distintos por tipo de médico | especialidade, estágio de carreira e vínculo territorial prévio |
+
+O IVS não aparece como um bem ou mal primitivo na Equação (1). Ele pode elevar a bolsa, sinalizar maior necessidade assistencial e, simultaneamente, correlacionar-se com preços, amenidades, infraestrutura e pressão de trabalho. Por isso, o sinal total do IVS sobre a utilidade permanece teoricamente ambíguo. O IVS 2010 continua sendo a **running variable canônica** do projeto; essa decomposição serve para interpretar mecanismos, não para substituí-lo por IDHM ou PIB per capita.
+
+## 3. Equação 2 — salário, esforço e propósito em um modelo de missão
+
+A Equação (1) de Moehling et al. acomoda amenidades locacionais, mas não abre a caixa de esforço e propósito. Para esses mecanismos, o complemento teórico vem do modelo principal–agente de **Besley e Ghatak (2005)**. No modelo publicado, um agente do tipo $j$ trabalha para uma organização/principal do tipo $i$; o sucesso do projeto ocorre com probabilidade igual ao esforço $e_{ij}$. As utilidades originais são:
+
+$$
+u^p_{ij}=(\pi_i-b_{ij})e_{ij}-w_{ij},
 \qquad
-\frac{\partial^2 u}{\partial E\,\partial K}>0.
+u^a_{ij}=e_{ij}(b_{ij}+\theta_{ij})+w_{ij}-\frac{1}{2}e_{ij}^{2}.
+\tag{2; Besley e Ghatak, 2005}
 $$
 
-A última desigualdade formaliza a hipótese de que equipe, equipamentos e retaguarda reduzem a desutilidade marginal da pressão assistencial. Não significa que qualquer item do CNES seja igualmente relevante: $K_{smt}$ deve ser construído de forma específica à especialidade e em período anterior ao tratamento quando usado como covariável basal.
+$w_{ij}$ é o pagamento fixo, $b_{ij}$ o bônus pago em caso de sucesso, $\pi_i$ o valor do sucesso para a organização e $\theta_{ij}$ o benefício não pecuniário que o agente recebe quando o projeto tem sucesso. Esse último termo é o **matching de missão**: ele é maior quando a missão da organização coincide com aquilo que motiva o trabalhador.
 
-### 2.1 Por que não impor IVS negativo
-
-Se $R_m$ denota o IVS 2010, a derivada total contém mecanismos de sinais opostos:
+A compatibilidade de incentivos do modelo produz:
 
 $$
-\frac{du}{dR_m}
-=u_B\frac{dB}{dR_m}
-+u_N\frac{dN}{dR_m}
-+u_A\frac{dA}{dR_m}
-+u_E\frac{dE}{dR_m}
-+u_K\frac{dK}{dR_m}
-+u_D\frac{dD}{dR_m},
+e^*_{ij}
+=\arg\max_{e\in[0,1]}
+\left\{e(b_{ij}+\theta_{ij})+w_{ij}-\frac12e^2\right\}
+=b_{ij}+\theta_{ij},
+\tag{3; Besley e Ghatak, 2005}
 $$
 
-com $u_B,u_N,u_A,u_K>0$ e $u_E,u_D<0$ para um médico orientado pela missão.
+para a solução interior considerada pelos autores. Três hipóteses saem diretamente desse bloco teórico:
 
-Em geral, $dN/dR>0$, enquanto amenidades e condições de trabalho podem piorar com a vulnerabilidade. Para médicos com forte orientação por missão, o termo $\mu_iM_i\,dN/dR$ pode compensar parte das desamenidades. Por isso:
+1. **Pagamento fixo eleva utilidade:** $\partial u^a/\partial w=1$ no modelo, portanto a forma é linear.
+2. **Esforço tem custo convexo:** o termo $-e^2/2$ implica $\partial^2u^a/\partial e^2=-1$.
+3. **Propósito depende de matching e de resultado:** o ganho de missão é $e\theta$, não uma constante positiva atribuída a qualquer local vulnerável. Maior $\theta$ eleva tanto a utilidade associada ao sucesso quanto o esforço ótimo.
 
-$$
-\operatorname{sign}\left(\frac{du}{dIVS}\right)
-\quad\text{é teoricamente ambíguo.}
-$$
+O artigo menciona expressamente médicos comprometidos com salvar vidas como exemplo de agente motivado. Entretanto, ele não diz que todos os médicos valorizam igualmente toda missão pública. Para o PMM-E, $\theta_{ij}$ exige uma medida prévia de orientação do médico e uma medida da missão/necessidade da opção. Usar apenas IVS alto como sinônimo de propósito apagaria o mecanismo de matching do paper.
 
-O IVS 2010 continua sendo a **running variable canônica** do projeto. Amenidades, infraestrutura e necessidade ajudam a interpretar mecanismos; não autorizam substituir o IVS por IDHM ou PIB per capita.
+Também é necessário preservar a interpretação original de $e$: ele é esforço **escolhido** e aumenta a probabilidade de sucesso. Carga assistencial imposta, plantões e falta de equipe não são literalmente $e$. Utilizar o custo quadrático como motivação para uma hipótese de desutilidade convexa da carga é uma extensão disciplinada pelo modelo, mas deve ser rotulada como tal.
 
-### 2.2 Disposição a aceitar uma desamenidade
+## 4. O que os modelos publicados autorizam sobre formas funcionais
 
-Para qualquer atributo $x$, a compensação monetária marginal que mantém a utilidade constante é:
-
-$$
-\frac{dB}{dx}\bigg|_{du=0}=-\frac{u_x}{u_B}.
-$$
-
-Com utilidade $u=\alpha\ln C-\gamma d$, em que $d$ é uma desamenidade, a compensação exata para um aumento finito $\Delta d>0$ é:
-
-$$
-WTA_B(\Delta d)
-=PC\left[\exp\left(\frac{\gamma}{\alpha}\Delta d\right)-1\right]
-\approx PC\frac{\gamma}{\alpha}\Delta d
-\quad\text{para mudanças pequenas.}
-$$
-
-O resultado mantém $P$ fixo e mede a WTA na unidade monetária da bolsa. Assim, uma WTA que cresce exponencialmente para grandes perdas de amenidade pode emergir de **utilidade logarítmica da renda**. Não é necessário postular utilidade exponencial da renda.
-
-## 3. Equação 2 — entrada, permanência e valor futuro da formação
-
-A decisão de entrada é prospectiva. Se o programa dura até $T$, o valor líquido da opção é:
-
-$$
-V^{enter}_{ism0}
-=-F_{im}
-+\mathbb{E}_0\left[\sum_{t=0}^{T}\delta_i^t u_{ismt}\right]
-+\delta_i^{T+1}\Gamma_{is,m}
--V^{out}_{is0},
-\tag{2}
-$$
-
-onde $0<\delta_i\leq1$ é o fator de desconto, $F_{im}$ é o custo inicial de mudança e informação; $\Gamma_{is,m}$ é o valor pós-programa da certificação, da aprendizagem e da rede profissional; e $V^{out}$ é o valor da melhor alternativa externa. O médico se candidata, ranqueia ou aceita a vaga quando esse valor supera o das demais opções disponíveis.
-
-A equação gera quatro previsões dinâmicas:
-
-1. **Custos de mudança pesam mais na entrada.** Depois da mudança, parte de $F_{im}$ é irrecuperável, criando dependência de estado.
-2. **Capital local pode crescer com a duração.** Relações com equipe, pacientes e comunidade elevam o custo de saída.
-3. **Burnout pode acumular.** Pressão persistente e baixa resolutividade podem reduzir a utilidade ao longo do tempo.
-4. **Formação e bolsa têm horizontes diferentes.** A bolsa eleva consumo corrente; mentoria e certificação também alteram $\Gamma$. Uma saída próxima ao fim do curso é hipótese testável, não consequência necessária.
-
-Retenção condicional aos que entraram não mede automaticamente o mesmo efeito da atração. Uma bolsa maior pode alterar a composição dos entrantes; comparar apenas quem entrou condiciona em uma variável afetada pelo tratamento.
-
-## 4. Linear, logarítmica, potência ou exponencial?
-
-| Objeto | Forma teórica preferida | Forma empírica inicial | Interpretação |
+| Componente | Forma no paper teórico | Sinal/curvatura autorizados | Decisão para o PMM-E |
 |---|---|---|---|
-| Consumo/renda disponível | CRRA; log quando $\sigma=1$ | $\ln C$, quando $C$ puder ser construído | Utilidade marginal positiva e decrescente |
-| Salto causal da bolsa no RDD | Regra administrativa discreta | dummy acima do corte e tendências locais em IVS | Efeito local de uma dose de R$ 5 mil; não substituir por $\ln B$ no tratamento principal |
-| Esforço/carga | custo potência, $\eta>0$ | nível + quadrado, spline ou categorias pré-especificadas | Sobrecarga marginal crescente |
-| Infraestrutura | produtividade com retornos decrescentes e complementaridade | $\ln(1+K_s)$ e $K_s\times Especialidade$ | Ganho maior onde o insumo é tecnicamente necessário |
-| Distância | custo crescente; curvatura não determinada pela teoria | $\ln(1+d)$, tempo de viagem ou faixas | Grande diferença entre vínculo local e mudança; menor precisão dos km adicionais muito distantes |
-| Amenidades | índice de consumo local | componentes padronizados ou índice pré-definido | Evitar usar o IVS como proxy perfeita de lazer, segurança e escola |
-| Densidade médica | pares/suporte versus competição | spline ou categorias | Sinal e curvatura potencialmente não monotônicos |
-| Propósito | matching entre tipo e missão | $Need_m\times M_i$, com $M_i$ medido antes da escolha | Necessidade isolada não identifica propósito |
-| Probabilidade de escolha | utilidade aleatória | conditional/mixed logit | A exponencial pertence ao link probabilístico |
+| Remuneração locacional | $\mathbb E(w)/p$ em Moehling et al. | positiva e linear no valor real | benchmark em nível real; faixas da bolsa preservadas no desenho causal |
+| Pagamento fixo | $+w$ em Besley–Ghatak | positivo e linear | não impor log ou exponencial como especificação principal |
+| Custo de vida | remuneração dividida por $p$ | negativo | deflacionar quando houver índice defensável; aluguel pode entrar separadamente |
+| Desamenidades | $-c$ em Moehling et al. | negativas e aditivas; curvatura não fixada | distância, família, segurança, escola e lazer em bloco separado |
+| Esforço | $-e^2/2$ em Besley–Ghatak | custo marginal crescente | hipótese quadrática para esforço; carga observada requer ponte conceitual explícita |
+| Missão | $+e\theta$ em Besley–Ghatak | positiva quando há matching; complementar ao sucesso | medir tipo pró-social antes da escolha e interagir com missão/necessidade da vaga |
+| Formação futura | soma descontada $\sum_t\delta^t[\cdot]$ | retornos futuros valem menos quando mais distantes | tratar certificação/mentoria como alteração do fluxo futuro esperado, não como renda corrente |
 
-Uma especificação linear de renda é defensável como aproximação local de primeira ordem, especialmente perto de um cutoff. Para diferenças amplas de renda, a forma log/CRRA é teoricamente mais coerente. A forma CARA, $v(C)=-e^{-aC}$, impõe aversão absoluta ao risco constante e não é a escolha padrão para renda positiva em decisões locacionais; ela só deve ser usada se houver razão substantiva e comparação de ajuste.
+### 4.1 Linear, logarítmica ou exponencial para renda?
 
-No logit condicional, a exponencial surge porque se assume erro extremo-valor tipo I:
+A escolha canônica deste memo passa a ser **linear em remuneração real**, porque essa é a forma das equações teóricas publicadas selecionadas, e não apenas porque o sinal positivo seja intuitivo. Nesses modelos, a utilidade marginal do pagamento é constante. Logo, eles não autorizam afirmar, a priori, retorno marginal decrescente da bolsa.
 
-$$
-P_i(m\mid\mathcal{J}_{it})
-=\frac{\exp(\bar V_{im}/s)}
-{\exp(V_i^{out}/s)+\sum_{j\in\mathcal{J}_{it}}\exp(\bar V_{ij}/s)}.
-$$
+Uma função logarítmica ou CRRA poderia ser adotada por outro modelo de consumo côncavo, mas isso seria uma mudança de fundamento teórico e deve vir acompanhada da citação do modelo escolhido. A função exponencial do tipo CARA, $-\exp(-aw)$, é uma representação de preferência sob risco com aversão absoluta constante; ela não aparece nos modelos selecionados de escolha locacional médica ou missão.
 
-Isso **não** significa que renda entre exponencialmente na utilidade. Pode-se ter $\bar V_{im}=\alpha\ln C_{im}+\beta X_{im}$ e, ao mesmo tempo, probabilidade logit.
+Portanto:
+
+- **modelo teórico principal:** bolsa/remuneração real em nível;
+- **não impor:** retorno marginal decrescente da renda sem trocar ou ampliar o modelo teórico;
+- **não usar:** utilidade exponencial da renda como escolha automática;
+- **não confundir:** a exponencial que aparece em probabilidades logit pertence ao mecanismo probabilístico de escolha, não à utilidade monetária do trabalhador.
+
+Como checagem de coerência mais geral, Roback (1982) parte do problema microeconômico $\max U(x,l^c;s)$ sujeito a $w+I=x+rl^c$: salário expande o orçamento, aluguel o reduz e a amenidade $s$ entra diretamente na utilidade. Roback não escolhe entre linear, log ou exponencial; logo, seu modelo fundamenta os **argumentos** da utilidade e a necessidade de considerar custo de moradia, mas não deve ser citado como fundamento de uma curvatura específica.
 
 ## 5. Hipóteses estruturais e sinais esperados
 
 | Hipótese | Predição para escolha/atração | Predição para saída | Restrição ou ressalva |
 |---|---:|---:|---|
-| H1. Bolsa/renda real | $+$, com efeito marginal decrescente | $-$ enquanto vigente | Bolsa é função administrativa do IVS |
-| H2. Carga, plantão e imprevisibilidade | $-$, possivelmente convexo | $+$ | Jornada contratada comum não identifica diferenças de carga efetiva |
-| H3. Infraestrutura, equipe e referência | $+$ | $-$ | Efeito maior em especialidades procedimentais |
+| H1. Bolsa/renda real | $+$ e linear no modelo selecionado | $-$ enquanto vigente | O modelo não impõe utilidade marginal decrescente; bolsa é função administrativa do IVS |
+| H2. Carga, plantão e imprevisibilidade | $-$; convexidade é uma extensão do custo quadrático do esforço | $+$ | Esforço escolhido em Besley–Ghatak não é idêntico a carga imposta |
+| H3. Infraestrutura, equipe e referência | $+$ como amenidade produtiva | $-$ | Heterogeneidade por especialidade é hipótese adicional |
 | H4. Autonomia e flexibilidade | $+$ | $-$ | Podem compensar parcialmente ausência de vínculo |
-| H5. Formação, mentoria e certificação | $+$ | $-$ durante o curso | Efeito provavelmente maior no início da carreira |
+| H5. Formação, mentoria e certificação | $+$ se elevar o fluxo futuro esperado | $-$ durante o curso | Entra pela soma descontada; heterogeneidade por carreira é hipótese empírica |
 | H6. Amenidades, segurança e conectividade | $+$ | $-$ | Custo de moradia entra separadamente no consumo real |
 | H7. Distância e separação familiar | $-$ | $+$ | Mesma região de residência/origem/formação deve elevar utilidade |
-| H8. Necessidade assistencial $\times$ orientação pró-social | $+$ | $-$ | O efeito médio do IVS permanece ambíguo |
+| H8. Missão da vaga $\times$ orientação pró-social | $+$ quando elevar $\theta_{ij}$ | $-$ | Necessidade/IVS isolados não medem matching; efeito médio do IVS permanece ambíguo |
 | H9. Densidade de pares | ambígua/não linear | ambígua | Suporte e aprendizado versus competição |
 | H10. Duração | dependência de estado positiva ou burnout | não monotônica | Exige dados longitudinais além do cumprimento contratual |
 
 Não há fundamento geral para impor $\beta_{Bolsa\times IVS}>0$. Em uma utilidade aditiva, a bolsa pode compensar uma desamenidade sem qualquer interação. Uma interação positiva exigiria a hipótese adicional de que a utilidade marginal da bolsa cresce com o IVS. Como a bolsa é mecanicamente definida por faixas de IVS, uma regressão global com ambos não separa seus efeitos causais.
 
 ## 6. Tradução para as especificações do projeto
+
+As equações desta seção são implementações econométricas e **não** a fundamentação microeconômica. A teoria do memo está nas Equações (1)–(3), transcritas dos papers; esta seção apenas mostra como seus primitivos orientam variáveis e desenhos empíricos.
 
 ### 6.1 Atração e preenchimento com os dados atuais
 
@@ -250,6 +215,8 @@ O modelo adequado é conditional logit, rank-ordered logit ou mixed logit com:
 - distância ou tempo de viagem entre origem e oferta;
 - heterogeneidade por especialidade e estágio de carreira;
 - capacidade da vaga e regras de alocação separadas da preferência.
+
+Coerentemente com Moehling et al. e Besley–Ghatak, a remuneração real em nível deve ser a forma principal. Log da remuneração pode ser apresentado como robustez associada a um modelo alternativo de utilidade côncava; forma exponencial não deve ser incluída sem fundamento teórico adicional.
 
 Sem o conjunto de alternativas, observam-se apenas opções escolhidas, não escolhas frente a oportunidades reais. Sem não candidatos, identifica-se no máximo a localização condicional à candidatura, e não a margem extensiva de participar.
 
@@ -327,12 +294,18 @@ Razões como $-\beta_x/\beta_B$ têm interpretação monetária somente quando o
 
 ## 9. Referências essenciais e uso correto
 
-- **McFadden, D. (1974).** [*Conditional Logit Analysis of Qualitative Choice Behavior*](https://eml.berkeley.edu/reprints/mcfadden/zarembka.pdf). Base para utilidade aleatória, conjunto de escolha e conditional logit.
+### Modelos microeconômicos que geram as equações do memo
+
+- **Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020).** [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w) ([manuscrito dos autores com a Equação 1](https://niemesgt.github.io/files/MoehlingNiemeshThomassonTreber2019.pdf)). Fornece o problema intertemporal de escolha locacional do médico usado na Equação (1): remuneração real esperada menos custos/desamenidades locais.
+- **Besley, T.; Ghatak, M. (2005).** [*Competition and Incentives with Motivated Agents*](https://doi.org/10.1257/0002828054201413) ([PDF dos autores](https://personal.lse.ac.uk/ghatak/motivated.pdf)). Fornece as utilidades e a restrição de incentivos reproduzidas nas Equações (2)–(3): pagamento fixo, bônus, matching de missão e custo quadrático do esforço.
+- **Roback, J. (1982).** [*Wages, Rents, and the Quality of Life*](https://doi.org/10.1086/261120) ([PDF](https://www.nathanschiff.com/webdocs/grad_urban/urban_papers/Roback_JPE_1982.pdf)). Fornece a microfundamentação espacial de consumo, terra/moradia e amenidades e o equilíbrio de salários e aluguéis. Não fixa uma curvatura específica para renda.
 - **Becker, G. S. (1965).** [*A Theory of the Allocation of Time*](https://doi.org/10.2307/2228949). Fundamenta o custo de oportunidade do tempo e a escolha entre trabalho, consumo e demais usos do tempo.
-- **Roback, J. (1982).** [*Wages, Rents, and the Quality of Life*](https://doi.org/10.1086/261120). Fundamenta diferenciais compensatórios; o sinal do salário observado não é trivial quando amenidades também afetam produtividade e custos locais.
 - **Glaeser, E. L.; Kolko, J.; Saiz, A. (2001).** [*Consumer City*](https://doi.org/10.1093/jeg/1.1.27). Fundamenta a entrada de lazer, serviços e outras amenidades locais na escolha residencial.
-- **Kennan, J.; Walker, J. R. (2011).** [*The Effect of Expected Income on Individual Migration Decisions*](https://doi.org/10.3982/ECTA4657). Fundamenta decisão dinâmica, custos de mudança e repetição de escolhas locacionais.
-- **Besley, T.; Ghatak, M. (2005).** [*Competition and Incentives with Motivated Agents*](https://doi.org/10.1257/0002828054201413). Fundamenta heterogeneidade de motivação e matching por missão; não implica que incentivo financeiro seja irrelevante.
+- **Kennan, J.; Walker, J. R. (2011).** [*The Effect of Expected Income on Individual Migration Decisions*](https://doi.org/10.3982/ECTA4657). Extensão para decisão dinâmica, custos de mudança e repetição de escolhas locacionais; não é a equação principal deste memo.
+
+### Modelagem e evidência empírica para a passagem aos dados
+
+- **McFadden, D. (1974).** [*Conditional Logit Analysis of Qualitative Choice Behavior*](https://eml.berkeley.edu/reprints/mcfadden/zarembka.pdf). Base para estimar escolhas discretas; não é usado como a equação microeconômica substantiva do trabalho médico.
 - **Costa, F.; Nunes, L.; Sanches, F. M. (2024).** [*How to Attract Physicians to Underserved Areas? Policy Recommendations from a Structural Model*](https://doi.org/10.1162/rest_a_01155). Evidência brasileira de preferências por salário real, amenidades, infraestrutura e vínculos de nascimento/formação.
 - **Scott, A. (2001).** [*Eliciting GPs' Preferences for Pecuniary and Non-Pecuniary Job Characteristics*](https://doi.org/10.1016/S0167-6296(00)00083-7). Mostra como características não pecuniárias do trabalho entram na escolha médica e na WTA.
 - **Scott, A. et al. (2013).** [*Getting Doctors into the Bush*](https://doi.org/10.1016/j.socscimed.2013.05.002). Mostra que pacotes de trabalho e características da localidade importam conjuntamente.
@@ -346,13 +319,13 @@ Razões como $-\beta_x/\beta_B$ têm interpretação monetária somente quando o
 
 ## 10. Decisões de modelagem consolidadas
 
-1. Usar a Equação (1) para justificar sinais e formas funcionais, sem alegar que os pesos já são identificados.
-2. Preferir log/CRRA para renda em modelos amplos; usar nível/dummy no efeito local da regra de bolsa.
-3. Modelar esforço com convexidade e infraestrutura como complemento específico da especialidade.
-4. Não impor sinal negativo ao IVS nem interação positiva `Bolsa × IVS`.
-5. Manter IVS 2010 do IPEA como running variable canônica.
-6. Separar renda corrente, formação e valor futuro da certificação.
-7. Incluir opção externa e conjunto real de alternativas em futuros modelos individuais.
-8. Separar atração, alocação administrativa e retenção.
-9. Usar somente covariáveis pré-tratamento na especificação do efeito total.
-10. Tratar propósito, preferências familiares e burnout como heterogeneidade não observada até que sejam medidos de forma prévia e defensável.
+1. Usar Moehling et al. (2020), e não uma função criada para o projeto, como equação canônica da escolha locacional do médico.
+2. Usar Besley e Ghatak (2005) como fundamento de esforço, custo quadrático e matching por missão.
+3. Adotar remuneração real em nível como forma principal; não impor log/CRRA nem exponencial sem mudar explicitamente o modelo teórico.
+4. Não afirmar retorno marginal decrescente da bolsa a partir dos modelos selecionados.
+5. Tratar convexidade da carga observada como extensão do custo de esforço, não como identidade literal.
+6. Não impor sinal negativo ao IVS nem interação positiva `Bolsa × IVS`.
+7. Manter IVS 2010 do IPEA como running variable canônica.
+8. Separar renda corrente de retornos futuros de formação e certificação na soma descontada.
+9. Incluir opção externa e conjunto real de alternativas em futuros modelos individuais; separar atração, alocação e retenção.
+10. Medir orientação por missão antes da escolha; não construir “vocação” a partir da escolha observada.
