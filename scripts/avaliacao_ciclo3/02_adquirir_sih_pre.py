@@ -2,7 +2,7 @@
 """
 02_adquirir_sih_pre.py — Aquisição e Painel Pré-Tratamento do SIH/SUS para Anestesiologia (PMM-E)
 
-Este script implementa o Prompt C3-02 da avaliação prospectiva do Ciclo 3 com processamento concorrente:
+Este script implementa o Prompt C3-02 da avaliação prospectiva do Ciclo 3 com processamento concorrente robusto:
 1. Executa o benchmark obrigatório de tempo e espaço de descompressão DBC -> Parquet.
 2. Baixa e processa concorrentemente as competências pré-tratamento (2024-06 a 2026-06) do SIH/RD
    para as 24 UFs com presença de estabelecimentos da coorte de Anestesiologia.
@@ -24,8 +24,6 @@ import time
 import json
 import uuid
 import tempfile
-import threading
-import hashlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import pandas as pd
 import numpy as np
@@ -45,7 +43,6 @@ os.makedirs(DOCS_DIR, exist_ok=True)
 
 F_COORTE = os.path.join(OUTPUT_DIR, 'coorte_c3_congelada.parquet')
 
-# Competências pré-tratamento disponíveis (2024-06 a 2026-06)
 COMPETENCIAS = [
     '202406', '202407', '202408', '202409', '202410', '202411', '202412',
     '202501', '202502', '202503', '202504', '202505', '202506',
@@ -53,7 +50,6 @@ COMPETENCIAS = [
     '202601', '202602', '202603', '202604', '202605', '202606'
 ]
 
-# Dicionário de subgrupos do Grupo 04 do SIGTAP (Procedimentos Cirúrgicos)
 SUBGRUPOS_CIRURGICOS_SIGTAP = [
     {"subgrupo": "0401", "ds_subgrupo": "Pequenas cirurgias e cirurgias de pele, tecido celular subcutaneo e mucosa"},
     {"subgrupo": "0402", "ds_subgrupo": "Cirurgia de glandulas endocrinas"},
@@ -76,11 +72,9 @@ SUBGRUPOS_CIRURGICOS_SIGTAP = [
 ]
 
 def process_single_file(uf: str, cmpt: str, target_cnes: set, target_ibge: set, temp_dir: str):
-    """Processa um único arquivo UF-competência de forma isolada e thread-safe."""
     yy = cmpt[2:4]
     mm = cmpt[4:6]
     fname = f"RD{uf}{yy}{mm}.dbc"
-    url = f"ftp://ftp.datasus.gov.br/dissemin/publicos/SIHSUS/200801_/Dados/{fname}"
     dest_dbc = os.path.join(temp_dir, f"{fname}_{uuid.uuid4().hex[:6]}.dbc")
     
     res = {
@@ -92,12 +86,15 @@ def process_single_file(uf: str, cmpt: str, target_cnes: set, target_ibge: set, 
     }
     
     try:
-        dl_info = download_datasus_dbc(url, dest_dbc, timeout=30)
+        dl_info = download_datasus_dbc(fname, dest_dbc)
         res['bytes'] = dl_info['size_bytes']
         
         cols_sih = ['UF_ZI', 'ANO_CMPT', 'MES_CMPT', 'CNES', 'MUNIC_RES', 'MUNIC_MOV', 'PROC_REA', 'CAR_INT', 'IDENT', 'DIAS_PERM', 'MORTE', 'VAL_TOT']
         df_raw = read_dbc(dest_dbc, cols=cols_sih)
         
+        if len(df_raw) == 0:
+            return res
+            
         df_raw['CNES'] = df_raw['CNES'].astype(str).str.strip().str.zfill(7)
         df_raw['MUNIC_RES'] = df_raw['MUNIC_RES'].astype(str).str.strip().str.zfill(6)
         df_raw['MUNIC_MOV'] = df_raw['MUNIC_MOV'].astype(str).str.strip().str.zfill(6)
@@ -204,7 +201,7 @@ def main():
     bench_res = run_benchmark()
     print(f"Benchmark: {bench_res['total_linhas']:,} linhas em {bench_res['tempo_descompressao_e_leitura_s']}s (Tamanho: {bench_res['tamanho_mb']} MB)", flush=True)
 
-    print(f"\n[3/6] Processando SIH/RD concorrentemente para {len(target_ufs)} UFs x {len(COMPETENCIAS)} competências...", flush=True)
+    print(f"\n[3/6] Processando SIH/RD concorrentemente (4 workers) para {len(target_ufs)} UFs x {len(COMPETENCIAS)} competências...", flush=True)
     
     cnes_records = []
     muni_records = []
@@ -222,7 +219,7 @@ def main():
     t_start = time.time()
     completed_count = 0
 
-    with ThreadPoolExecutor(max_workers=8) as executor:
+    with ThreadPoolExecutor(max_workers=4) as executor:
         futures = {executor.submit(process_single_file, uf, cmpt, target_cnes, target_ibge, temp_dir): (uf, cmpt) for uf, cmpt in tasks}
         
         for future in as_completed(futures):
@@ -236,7 +233,7 @@ def main():
                 manifesto_files.append(res['manifesto'])
             total_bytes_downloaded += res['bytes']
             
-            if completed_count % 50 == 0 or completed_count == total_files:
+            if completed_count % 25 == 0 or completed_count == total_files:
                 elapsed = time.time() - t_start
                 rate = completed_count / elapsed if elapsed > 0 else 0
                 print(f"Progresso: {completed_count}/{total_files} arquivos processados ({completed_count/total_files:.1%}) em {elapsed:.1f}s ({rate:.1f} arq/s)...", flush=True)
@@ -328,12 +325,12 @@ def main():
     print("=" * 80, flush=True)
 
 def run_benchmark():
-    url = "ftp://ftp.datasus.gov.br/dissemin/publicos/SIHSUS/200801_/Dados/RDGO2501.dbc"
+    fname = "RDGO2501.dbc"
     temp_dir = tempfile.gettempdir()
-    dest_dbc = os.path.join(temp_dir, f"benchmark_RDGO2501_{uuid.uuid4().hex[:6]}.dbc")
+    dest_dbc = os.path.join(temp_dir, f"benchmark_{fname}_{uuid.uuid4().hex[:6]}.dbc")
     
     t0 = time.time()
-    dl_info = download_datasus_dbc(url, dest_dbc)
+    dl_info = download_datasus_dbc(fname, dest_dbc)
     t_dl = time.time() - t0
     
     t1 = time.time()
@@ -348,7 +345,7 @@ def run_benchmark():
             pass
             
     return {
-        "arquivo": "RDGO2501.dbc",
+        "arquivo": fname,
         "tamanho_bytes": dl_info['size_bytes'],
         "tamanho_mb": round(dl_info['size_bytes'] / (1024 * 1024), 2),
         "tempo_download_s": round(t_dl, 2),

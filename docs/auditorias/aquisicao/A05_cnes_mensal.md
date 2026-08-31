@@ -1,5 +1,15 @@
 # Auditoria e Inspeção do CNES Mensal (A05)
 
+> **Adendo prospectivo de 30/08/2026:** a Nota Técnica nº
+> 59/2026-CGPLAD/DEGEPS/SGTES/MS definiu uma assinatura específica para o
+> registro dos participantes do PMM-E no CNES: `IND_VINCULACAO=070102`, CNPJ de
+> detalhamento `00394544012787`, CBO do Anexo I e cargas horárias próprias. O
+> `tbCargaHorariaSus` público contém esses campos, porém o pipeline A05 não
+> preservou o CNPJ e a implementação da regra ainda não foi validada. Portanto,
+> a limitação descrita abaixo continua correta para os Parquets A05, enquanto o
+> ciclo 3 ganha uma rota prospectiva a ser auditada em
+> [`../../12_estrategia_causal_prospectiva_ciclo3.md`](../../12_estrategia_causal_prospectiva_ciclo3.md).
+
 > **Data da Auditoria:** 28 de agosto de 2026 (revisado pós-saneamento)
 > **Agente:** A05 — Aquisição e Inspeção do CNES Mensal
 > **Escopo:** Avaliação de impacto do Programa Mais Médicos Especialistas (PMM-E / Lei 15.233/2025)

@@ -34,7 +34,7 @@ de análise antes da primeira atualização pós-tratamento.
 4. Calcule MDE com cluster no município e simulação coerente com a estrutura do
    painel.
 5. Compare, por rubrica pré-definida:
-   - seis cursos/força de trabalho;
+   - família oficial não sobreposta/força de trabalho;
    - anestesia total/SIH;
    - anestesia isolada de outros cursos cirúrgicos;
    - ecocardiografia/SIA apenas com metadados e pré-CNES, sem baixar SIA.

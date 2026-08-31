@@ -61,320 +61,121 @@ def parse_course(x):
         return int(m.group(1)), m.group(2).strip().upper()
     return None, s.upper()
 
-CATALOGO_24_CURSOS = [
-    {
-        "cod_curso": 1,
-        "no_curso_padronizado": "ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA",
-        "especialidade_cfm": "Anestesiologia",
-        "cbo_primario": "225151",
-        "ds_cbo_primario": "MEDICO ANESTESIOLOGISTA",
-        "cbos_elegiveis": ["225151"],
-        "sobreposicao": False,
-        "grau_univocidade": "UNIVOCA",
-        "cursos_concorrentes": [],
-        "status_uso": "CONFIRMATORIO_PRINCIPAL",
-        "observacoes": "Mapeamento 1:1 estrito; base do modulo assistencial de cirurgias no SIH."
-    },
-    {
-        "cod_curso": 2,
-        "no_curso_padronizado": "CIRURGIA GERAL MINIMAMENTE INVASIVA",
-        "especialidade_cfm": "Cirurgia Geral",
-        "cbo_primario": "225225",
-        "ds_cbo_primario": "MEDICO CIRURGIAO GERAL",
-        "cbos_elegiveis": ["225225"],
-        "sobreposicao": False,
-        "grau_univocidade": "UNIVOCA",
-        "cursos_concorrentes": [],
-        "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
-        "observacoes": "Mapeamento 1:1 estrito para cirurgioes gerais."
-    },
-    {
-        "cod_curso": 3,
-        "no_curso_padronizado": "CIRURGIA ONCOLOGICA AVANCADA",
-        "especialidade_cfm": "Cancerologia Cirurgica",
-        "cbo_primario": "225290",
-        "ds_cbo_primario": "MEDICO CANCEROLOGISTA CIRURGICO",
-        "cbos_elegiveis": ["225290"],
-        "sobreposicao": False,
-        "grau_univocidade": "UNIVOCA",
-        "cursos_concorrentes": [],
-        "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
-        "observacoes": "Apenas 13 CNES imediatos e 0 nao priorizados no Ciclo 3."
-    },
-    {
-        "cod_curso": 4,
-        "no_curso_padronizado": "CIRURGIA COLOPROCTOLOGICA COM FOCO EM TUMORES COLORRETAIS",
-        "especialidade_cfm": "Coloproctologia",
-        "cbo_primario": "225280",
-        "ds_cbo_primario": "MEDICO COLOPROCTOLOGISTA",
-        "cbos_elegiveis": ["225280"],
-        "sobreposicao": True,
-        "grau_univocidade": "SOBREPOSTA_SECUNDARIA",
-        "cursos_concorrentes": [20],
-        "status_uso": "EXPLORATORIO_SOBREPOSTO",
-        "observacoes": "Compartilha CBO com curso 20 (Cirurgia Robotica Colorretal)."
-    },
-    {
-        "cod_curso": 5,
-        "no_curso_padronizado": "CIRURGIA DO APARELHO DIGESTIVO COM FOCO EM TUMORES DIGESTIVOS",
-        "especialidade_cfm": "Cirurgia do Aparelho Digestivo",
-        "cbo_primario": "225220",
-        "ds_cbo_primario": "MEDICO CIRURGIAO DO APARELHO DIGESTIVO",
-        "cbos_elegiveis": ["225220"],
-        "sobreposicao": False,
-        "grau_univocidade": "UNIVOCA",
-        "cursos_concorrentes": [],
-        "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
-        "observacoes": "Apenas 1 CNES imediato e 0 nao priorizados."
-    },
-    {
-        "cod_curso": 6,
-        "no_curso_padronizado": "CIRURGIA GINECOLOGICA COM FOCO EM TUMORES GINECOLOGICOS",
-        "especialidade_cfm": "Ginecologia e Obstetricia",
-        "cbo_primario": "225250",
-        "ds_cbo_primario": "MEDICO GINECOLOGISTA E OBSTETRA",
-        "cbos_elegiveis": ["225250"],
-        "sobreposicao": True,
-        "grau_univocidade": "SOBREPOSTA_DIRETA",
-        "cursos_concorrentes": [8],
-        "status_uso": "EXPLORATORIO_SOBREPOSTO",
-        "observacoes": "Compartilha CBO com curso 08 (Colposcopia)."
-    },
-    {
-        "cod_curso": 7,
-        "no_curso_padronizado": "COLONOSCOPIA DIAGNOSTICA E TERAPEUTICA NO SUS",
-        "especialidade_cfm": "Endoscopia",
-        "cbo_primario": "225310",
-        "ds_cbo_primario": "MEDICO EM ENDOSCOPIA",
-        "cbos_elegiveis": ["225310"],
-        "sobreposicao": True,
-        "grau_univocidade": "MULTIESPECIALIDADE",
-        "cursos_concorrentes": [10, 11],
-        "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
-        "observacoes": "25 imediatas e 0 nao priorizadas."
-    },
-    {
-        "cod_curso": 8,
-        "no_curso_padronizado": "COLPOSCOPIA E DOENCAS DO TRATO GENITAL INFERIOR",
-        "especialidade_cfm": "Ginecologia e Obstetricia",
-        "cbo_primario": "225250",
-        "ds_cbo_primario": "MEDICO GINECOLOGISTA E OBSTETRA",
-        "cbos_elegiveis": ["225250"],
-        "sobreposicao": True,
-        "grau_univocidade": "SOBREPOSTA_DIRETA",
-        "cursos_concorrentes": [6],
-        "status_uso": "EXPLORATORIO_SOBREPOSTO",
-        "observacoes": "Compartilha CBO com curso 06."
-    },
-    {
-        "cod_curso": 9,
-        "no_curso_padronizado": "ECOCARDIOGRAFIA TRANSTORACICA APLICADA AO SUS",
-        "especialidade_cfm": "Cardiologia",
-        "cbo_primario": "225120",
-        "ds_cbo_primario": "MEDICO CARDIOLOGISTA",
-        "cbos_elegiveis": ["225120"],
-        "sobreposicao": True,
-        "grau_univocidade": "SOBREPOSTA_DIRETA",
-        "cursos_concorrentes": [18],
-        "status_uso": "MODULO_CONDICIONAL_SIA",
-        "observacoes": "56 CNES imediatos vs 261 controles. CBO compartilhado com curso 18."
-    },
-    {
-        "cod_curso": 10,
-        "no_curso_padronizado": "ENDOSCOPIA DIGESTIVA AVANCADA E PROCEDIMENTOS TERAPEUTICOS",
-        "especialidade_cfm": "Endoscopia",
-        "cbo_primario": "225310",
-        "ds_cbo_primario": "MEDICO EM ENDOSCOPIA",
-        "cbos_elegiveis": ["225310"],
-        "sobreposicao": True,
-        "grau_univocidade": "SOBREPOSTA_DIRETA",
-        "cursos_concorrentes": [7, 11],
-        "status_uso": "EXPLORATORIO_SOBREPOSTO",
-        "observacoes": "4 imediatas vs 153 controles. CBO compartilhado com cursos 07 e 11."
-    },
-    {
-        "cod_curso": 11,
-        "no_curso_padronizado": "ENDOSCOPIA DIGESTIVA ALTA DIAGNOSTICA E TERAPEUTICA",
-        "especialidade_cfm": "Endoscopia",
-        "cbo_primario": "225310",
-        "ds_cbo_primario": "MEDICO EM ENDOSCOPIA",
-        "cbos_elegiveis": ["225310"],
-        "sobreposicao": True,
-        "grau_univocidade": "SOBREPOSTA_DIRETA",
-        "cursos_concorrentes": [7, 10],
-        "status_uso": "EXPLORATORIO_SOBREPOSTO",
-        "observacoes": "22 imediatas vs 169 controles. CBO compartilhado com cursos 07 e 10."
-    },
-    {
-        "cod_curso": 12,
-        "no_curso_padronizado": "ONCOLOGIA CLINICA: CANCERES PREVALENTES NO SUS",
-        "especialidade_cfm": "Oncologia Clinica",
-        "cbo_primario": "225121",
-        "ds_cbo_primario": "MEDICO ONCOLOGISTA CLINICO",
-        "cbos_elegiveis": ["225121"],
-        "sobreposicao": False,
-        "grau_univocidade": "UNIVOCA",
-        "cursos_concorrentes": [],
-        "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
-        "observacoes": "12 imediatas vs 39 controles. Mapeamento univoco."
-    },
-    {
-        "cod_curso": 13,
-        "no_curso_padronizado": "RADIOTERAPIA: PLANEJAMENTO E EXECUCAO NO SUS",
-        "especialidade_cfm": "Radioterapia",
-        "cbo_primario": "225330",
-        "ds_cbo_primario": "MEDICO RADIOTERAPEUTA",
-        "cbos_elegiveis": ["225330"],
-        "sobreposicao": False,
-        "grau_univocidade": "UNIVOCA",
-        "cursos_concorrentes": [],
-        "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
-        "observacoes": "7 imediatas vs 21 controles. Mapeamento univoco."
-    },
-    {
-        "cod_curso": 14,
-        "no_curso_padronizado": "ULTRASSONOGRAFIA MAMARIA DIAGNOSTICA E INTERVENCIONISTA",
-        "especialidade_cfm": "Radiologia e Diagnostico por Imagem",
-        "cbo_primario": "225320",
-        "ds_cbo_primario": "MEDICO EM RADIOLOGIA E DIAGNOSTICO POR IMAGEM",
-        "cbos_elegiveis": ["225320"],
-        "sobreposicao": False,
-        "grau_univocidade": "MULTIESPECIALIDADE_EXCLUSIVA",
-        "cursos_concorrentes": [],
-        "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
-        "observacoes": "13 imediatas vs 774 controles. Sem outro curso com CBO 225320."
-    },
-    {
-        "cod_curso": 15,
-        "no_curso_padronizado": "VIDEOLARINGOSCOPIA E ENDOSCOPIA NASOFARINGEA",
-        "especialidade_cfm": "Otorrinolaringologia",
-        "cbo_primario": "225275",
-        "ds_cbo_primario": "MEDICO OTORRINOLARINGOLOGISTA",
-        "cbos_elegiveis": ["225275"],
-        "sobreposicao": False,
-        "grau_univocidade": "UNIVOCA",
-        "cursos_concorrentes": [],
-        "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
-        "observacoes": "14 imediatas vs 0 nao priorizados."
-    },
-    {
-        "cod_curso": 16,
-        "no_curso_padronizado": "ANATOMIA PATOLOGICA COM ENFASE EM ONCOLOGIA E DIAGNOSTICO INTEGRADO",
-        "especialidade_cfm": "Patologia",
-        "cbo_primario": "225148",
-        "ds_cbo_primario": "MEDICO ANATOMOPATOLOGISTA",
-        "cbos_elegiveis": ["225148", "225118"],
-        "sobreposicao": False,
-        "grau_univocidade": "FAMILIA_PATOLOGIA",
-        "cursos_concorrentes": [],
-        "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
-        "observacoes": "8 imediatas vs 0 nao priorizados."
-    },
-    {
-        "cod_curso": 17,
-        "no_curso_padronizado": "PSIQUIATRIA CLINICA EM CENTROS DE ATENCAO PSICOSSOCIAL",
-        "especialidade_cfm": "Psiquiatria",
-        "cbo_primario": "225133",
-        "ds_cbo_primario": "MEDICO PSIQUIATRA",
-        "cbos_elegiveis": ["225133", "225134", "225135"],
-        "sobreposicao": False,
-        "grau_univocidade": "UNIVOCA",
-        "cursos_concorrentes": [],
-        "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
-        "observacoes": "30 imediatas vs 0 nao priorizados."
-    },
-    {
-        "cod_curso": 18,
-        "no_curso_padronizado": "CUIDADOS INTEGRADOS EM CARDIOLOGIA NO SUS",
-        "especialidade_cfm": "Cardiologia",
-        "cbo_primario": "225120",
-        "ds_cbo_primario": "MEDICO CARDIOLOGISTA",
-        "cbos_elegiveis": ["225120"],
-        "sobreposicao": True,
-        "grau_univocidade": "SOBREPOSTA_DIRETA",
-        "cursos_concorrentes": [9],
-        "status_uso": "EXPLORATORIO_SOBREPOSTO",
-        "observacoes": "18 imediatas vs 741 controles. Compartilha CBO com curso 09."
-    },
-    {
-        "cod_curso": 19,
-        "no_curso_padronizado": "CIRURGIA ROBOTICA APLICADA AO TRATAMENTO DE TUMORES UROLOGICOS",
-        "especialidade_cfm": "Urologia",
-        "cbo_primario": "225285",
-        "ds_cbo_primario": "MEDICO UROLOGISTA",
-        "cbos_elegiveis": ["225285"],
-        "sobreposicao": False,
-        "grau_univocidade": "UNIVOCA",
-        "cursos_concorrentes": [],
-        "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
-        "observacoes": "1 imediata vs 0 nao priorizados."
-    },
-    {
-        "cod_curso": 20,
-        "no_curso_padronizado": "CIRURGIA ROBOTICA APLICADA AO TRATAMENTO DE TUMORES COLORRETAIS",
-        "especialidade_cfm": "Coloproctologia",
-        "cbo_primario": "225280",
-        "ds_cbo_primario": "MEDICO COLOPROCTOLOGISTA",
-        "cbos_elegiveis": ["225280", "225220", "225225"],
-        "sobreposicao": True,
-        "grau_univocidade": "SOBREPOSTA_DIRETA",
-        "cursos_concorrentes": [4],
-        "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
-        "observacoes": "2 imediatas vs 0 nao priorizados."
-    },
-    {
-        "cod_curso": 21,
-        "no_curso_padronizado": "CIRURGIA MAMARIA ONCOLOGICA E RECONSTRUTIVA",
-        "especialidade_cfm": "Mastologia",
-        "cbo_primario": "225260",
-        "ds_cbo_primario": "MEDICO MASTOLOGISTA",
-        "cbos_elegiveis": ["225260"],
-        "sobreposicao": False,
-        "grau_univocidade": "UNIVOCA",
-        "cursos_concorrentes": [],
-        "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
-        "observacoes": "7 imediatas vs 30 controles. Mapeamento univoco."
-    },
-    {
-        "cod_curso": 22,
-        "no_curso_padronizado": "CIRURGIA ORTOPEDICA COM FOCO EM CIRURGIAS DE JOELHO",
-        "especialidade_cfm": "Ortopedia e Traumatologia",
-        "cbo_primario": "225270",
-        "ds_cbo_primario": "MEDICO ORTOPEDISTA E TRAUMATOLOGISTA",
-        "cbos_elegiveis": ["225270"],
-        "sobreposicao": True,
-        "grau_univocidade": "SOBREPOSTA_DIRETA",
-        "cursos_concorrentes": [23],
-        "status_uso": "EXPLORATORIO_SOBREPOSTO",
-        "observacoes": "4 imediatas vs 113 controles. Compartilha CBO com curso 23 (que tem 0 controles)."
-    },
-    {
-        "cod_curso": 23,
-        "no_curso_padronizado": "CIRURGIA DO QUADRIL COM FOCO EM RECONSTRUCOES E ARTROPLASTIAS",
-        "especialidade_cfm": "Ortopedia e Traumatologia",
-        "cbo_primario": "225270",
-        "ds_cbo_primario": "MEDICO ORTOPEDISTA E TRAUMATOLOGISTA",
-        "cbos_elegiveis": ["225270"],
-        "sobreposicao": True,
-        "grau_univocidade": "SOBREPOSTA_DIRETA",
-        "cursos_concorrentes": [22],
-        "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
-        "observacoes": "10 imediatas vs 0 nao priorizados."
-    },
-    {
-        "cod_curso": 24,
-        "no_curso_padronizado": "ROTINAS ASSISTENCIAIS EM MEDICINA INTENSIVA NO SUS",
-        "especialidade_cfm": "Medicina Intensiva",
-        "cbo_primario": "225112",
-        "ds_cbo_primario": "MEDICO INTENSIVISTA",
-        "cbos_elegiveis": ["225112", "225109", "225110"],
-        "sobreposicao": False,
-        "grau_univocidade": "UNIVOCA",
-        "cursos_concorrentes": [],
-        "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
-        "observacoes": "6 imediatas vs 83 controles. Mapeamento univoco."
-    }
+NOTA_TECNICA_59_URL = (
+    "https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/"
+    "notas-tecnicas/2026/nota-tecnica-no-59-2026-cgplad-degeps-sgtes-ms.pdf"
+)
+
+# Transcricao do Anexo I, paginas 4--7. A lista e deliberadamente separada da
+# classificacao analitica: primeiro preservamos todos os CBOs aceitos pela norma;
+# depois o codigo calcula, sem julgamento manual, quais cursos compartilham CBO.
+CURSOS_NOTA_59 = [
+    (1, "ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA", "Anestesiologia", ["225151"]),
+    (2, "CIRURGIA GERAL MINIMAMENTE INVASIVA", "Cirurgia Geral", ["225225", "225220"]),
+    (3, "CIRURGIA ONCOLOGICA AVANCADA", "Cancerologia Cirurgica", ["225290"]),
+    (4, "CIRURGIA COLOPROCTOLOGICA COM FOCO EM TUMORES COLORRETAIS", "Coloproctologia", ["225290", "225280"]),
+    (5, "CIRURGIA DO APARELHO DIGESTIVO COM FOCO EM TUMORES DIGESTIVOS", "Cirurgia do Aparelho Digestivo", ["225280", "225220"]),
+    (6, "CIRURGIA GINECOLOGICA COM FOCO EM TUMORES GINECOLOGICOS", "Ginecologia e Obstetricia", ["225250", "225290"]),
+    (7, "COLONOSCOPIA DIAGNOSTICA E TERAPEUTICA NO SUS", "Endoscopia", ["225310", "225280"]),
+    (8, "COLPOSCOPIA E DOENCAS DO TRATO GENITAL INFERIOR", "Ginecologia e Obstetricia", ["225250"]),
+    (9, "ECOCARDIOGRAFIA TRANSTORACICA APLICADA AO SUS", "Cardiologia", ["225120"]),
+    (10, "ENDOSCOPIA DIGESTIVA AVANCADA E PROCEDIMENTOS TERAPEUTICOS", "Endoscopia", ["225310"]),
+    (11, "ENDOSCOPIA DIGESTIVA ALTA DIAGNOSTICA E TERAPEUTICA", "Endoscopia", ["225310"]),
+    (12, "ONCOLOGIA CLINICA: CANCERES PREVALENTES NO SUS", "Oncologia Clinica", ["225121"]),
+    (13, "RADIOTERAPIA: PLANEJAMENTO E EXECUCAO NO SUS", "Radioterapia", ["225320"]),
+    (14, "ULTRASSONOGRAFIA MAMARIA DIAGNOSTICA E INTERVENCIONISTA", "Radiologia e Diagnostico por Imagem", ["225320", "225255", "225250"]),
+    (15, "VIDEOLARINGOSCOPIA E ENDOSCOPIA NASOFARINGEA", "Otorrinolaringologia", ["225275"]),
+    (16, "ANATOMIA PATOLOGICA COM ENFASE EM ONCOLOGIA E DIAGNOSTICO INTEGRADO", "Patologia", ["225325"]),
+    (17, "PSIQUIATRIA CLINICA EM CENTROS DE ATENCAO PSICOSSOCIAL", "Psiquiatria", ["225133"]),
+    (18, "CUIDADOS INTEGRADOS EM CARDIOLOGIA NO SUS", "Cardiologia", ["225120"]),
+    (19, "CIRURGIA ROBOTICA APLICADA AO TRATAMENTO DE TUMORES UROLOGICOS", "Urologia", ["225285"]),
+    (20, "CIRURGIA ROBOTICA APLICADA AO TRATAMENTO DE TUMORES COLORRETAIS", "Coloproctologia", ["225280"]),
+    (21, "CIRURGIA MAMARIA ONCOLOGICA E RECONSTRUTIVA", "Mastologia", ["225255"]),
+    (22, "CIRURGIA ORTOPEDICA COM FOCO EM CIRURGIAS DE JOELHO", "Ortopedia e Traumatologia", ["225270"]),
+    (23, "CIRURGIA DO QUADRIL COM FOCO EM RECONSTRUCOES E ARTROPLASTIAS", "Ortopedia e Traumatologia", ["225270"]),
+    (24, "ROTINAS ASSISTENCIAIS EM MEDICINA INTENSIVA NO SUS", "Medicina Intensiva", ["225150"]),
 ]
+
+CBO_DESCRICOES = {
+    "225120": "MEDICO CARDIOLOGISTA",
+    "225121": "MEDICO ONCOLOGISTA CLINICO",
+    "225133": "MEDICO PSIQUIATRA",
+    "225150": "MEDICO INTENSIVISTA",
+    "225151": "MEDICO ANESTESIOLOGISTA",
+    "225220": "MEDICO CIRURGIAO DO APARELHO DIGESTIVO",
+    "225225": "MEDICO CIRURGIAO GERAL",
+    "225250": "MEDICO GINECOLOGISTA E OBSTETRA",
+    "225255": "MEDICO MASTOLOGISTA",
+    "225270": "MEDICO ORTOPEDISTA E TRAUMATOLOGISTA",
+    "225275": "MEDICO OTORRINOLARINGOLOGISTA",
+    "225280": "MEDICO COLOPROCTOLOGISTA",
+    "225285": "MEDICO UROLOGISTA",
+    "225290": "MEDICO CANCEROLOGISTA CIRURGICO",
+    "225310": "MEDICO EM ENDOSCOPIA",
+    "225320": "MEDICO EM RADIOLOGIA E DIAGNOSTICO POR IMAGEM",
+    "225325": "MEDICO PATOLOGISTA",
+}
+
+CURSOS_SEM_CONTROLE_NAO_PRIORIZADO = {3, 5, 7, 15, 16, 17, 19, 20, 23}
+
+
+def construir_catalogo_nota_59():
+    """Deriva sobreposicoes e status de uso a partir da transcricao normativa."""
+    cursos_por_cbo = {}
+    for cod_curso, _, _, cbos in CURSOS_NOTA_59:
+        for cbo in cbos:
+            cursos_por_cbo.setdefault(cbo, set()).add(cod_curso)
+
+    catalogo = []
+    for cod_curso, nome, especialidade, cbos in CURSOS_NOTA_59:
+        concorrentes = sorted({
+            outro
+            for cbo in cbos
+            for outro in cursos_por_cbo[cbo]
+            if outro != cod_curso
+        })
+        cbos_exclusivos = [cbo for cbo in cbos if cursos_por_cbo[cbo] == {cod_curso}]
+        if not concorrentes:
+            grau = "UNIVOCA"
+        elif cbos_exclusivos:
+            grau = "MISTA_COM_CBO_EXCLUSIVO"
+        else:
+            grau = "SOBREPOSTA"
+
+        if cod_curso == 1:
+            status = "CONFIRMATORIO_PRINCIPAL"
+        elif cod_curso in CURSOS_SEM_CONTROLE_NAO_PRIORIZADO:
+            status = "SEM_SUPORTE_NAO_PRIORIZADA"
+        elif cod_curso == 2:
+            status = "SENSIBILIDADE_CBO_EXCLUSIVO"
+        elif cod_curso == 9:
+            status = "MODULO_CONDICIONAL_SIA"
+        elif grau == "UNIVOCA":
+            status = "CONFIRMATORIO_NUCLEO_GERAL"
+        else:
+            status = "EXPLORATORIO_SOBREPOSTO"
+
+        catalogo.append({
+            "cod_curso": cod_curso,
+            "no_curso_padronizado": nome,
+            "especialidade_cfm": especialidade,
+            "cbo_primario": cbos[0],
+            "ds_cbo_primario": CBO_DESCRICOES[cbos[0]],
+            "cbos_elegiveis": cbos,
+            "cbos_exclusivos_no_ciclo": cbos_exclusivos,
+            "sobreposicao": bool(concorrentes),
+            "grau_univocidade": grau,
+            "cursos_concorrentes": concorrentes,
+            "status_uso": status,
+            "observacoes": (
+                "Transcricao integral dos CBOs elegiveis do Anexo I; "
+                "sobreposicao calculada entre os 24 cursos."
+            ),
+        })
+    return catalogo
+
+
+CATALOGO_24_CURSOS = construir_catalogo_nota_59()
 
 def main():
     print("=" * 80)
@@ -494,6 +295,9 @@ def main():
     df_coorte['grau_univocidade'] = df_coorte['cod_curso'].map(lambda x: mapa_ponte[x]['grau_univocidade'])
     df_coorte['status_uso_ponte'] = df_coorte['cod_curso'].map(lambda x: mapa_ponte[x]['status_uso'])
     df_coorte['curso_sem_sobreposicao'] = df_coorte['cod_curso'].map(lambda x: not mapa_ponte[x]['sobreposicao'])
+    df_coorte['curso_confirmatorio_geral'] = df_coorte['status_uso_ponte'].isin([
+        'CONFIRMATORIO_PRINCIPAL', 'CONFIRMATORIO_NUCLEO_GERAL'
+    ])
 
     # Marcacao de cointervencao cirurgica para Anestesiologia (curso 1)
     cirurgicos_cursos = [2, 3, 4, 5, 6, 19, 20, 21, 22, 23]
@@ -512,7 +316,8 @@ def main():
 
     # Amostras do desenho
     df_coorte['amostra_principal_c3'] = df_coorte['classificacao_braco'].isin(['imediata_pura', 'nao_priorizada_pura'])
-    df_coorte['amostra_confirmatoria_geral'] = df_coorte['amostra_principal_c3'] & df_coorte['curso_sem_sobreposicao']
+    df_coorte['amostra_confirmatoria_geral'] = df_coorte['amostra_principal_c3'] & df_coorte['curso_confirmatorio_geral']
+    df_coorte['amostra_sensibilidade_curso2'] = df_coorte['amostra_principal_c3'] & (df_coorte['cod_curso'] == 2)
     df_coorte['amostra_anestesia_total'] = df_coorte['amostra_principal_c3'] & (df_coorte['cod_curso'] == 1)
     df_coorte['amostra_anestesia_isolada'] = df_coorte['amostra_anestesia_total'] & (~df_coorte['cointervencao_cirurgica_muni'])
 
@@ -528,7 +333,10 @@ def main():
             "IND_VINCULACAO": "070102 (Bolsa - Bolsista)",
             "NU_CNPJ_DETALHAMENTO_VINCULO": "00394544012787 (Ministerio da Saude)",
             "CARGA_HORARIA_PADRAO_PMME": "16h assistenciais + 4h formativas (total 20h)",
-            "CO_PROFISSIONAL_SUS": "Pseudonimo MD5 16 hexadecimais preservado"
+            "CO_PROFISSIONAL_SUS": (
+                "Identificador operacional publico; estabilidade longitudinal e "
+                "algoritmo de formacao ainda precisam ser validados"
+            )
         },
         "metricas_competencia_202607": {
             "total_vinculos_bolsa_070102": 21500,
@@ -589,12 +397,23 @@ def main():
 
     # 6.3 JSON da ponte normativa Nota Tecnica 59/2026
     ponte_json_data = {
-        "versao_ponte": "3.0_normativa_nota59_sgtes_ms",
+        "versao_ponte": "3.1_normativa_nota59_sgtes_ms_corrigida",
         "data_congelamento": "2026-08-30",
         "base_normativa": "Nota Tecnica no 59/2026-CGPLAD/DEGEPS/SGTES/MS (Anexo I)",
+        "fonte_oficial": NOTA_TECNICA_59_URL,
+        "paginas_transcritas_pdf": [4, 5, 6, 7],
+        "regra_sobreposicao": "Derivada programaticamente da intersecao dos CBOs elegiveis entre cursos",
         "total_cursos_pmme": 24,
         "total_cursos_com_suporte_comparativo": int(df_support['tem_suporte_comparativo'].sum()),
-        "cursos_confirmatorios_sem_sobreposicao": df_support[df_support['status_uso'] == 'CONFIRMATORIO_NUCLEO_GERAL']['cod_curso'].tolist() + [1],
+        "cursos_confirmatorios_sem_sobreposicao": df_support[
+            df_support['status_uso'].isin(['CONFIRMATORIO_PRINCIPAL', 'CONFIRMATORIO_NUCLEO_GERAL'])
+            & df_support['tem_suporte_comparativo']
+        ]['cod_curso'].tolist(),
+        "sensibilidade_curso_2": {
+            "motivo": "O curso aceita 225225 (exclusivo no ciclo) e 225220 (compartilhado com o curso 5)",
+            "cbo_exclusivo": "225225",
+            "uso": "Analise secundaria pre-especificada, nao integrante do nucleo 1:1 integral"
+        },
         "catalogo_cursos": CATALOGO_24_CURSOS
     }
     f_out_ponte = os.path.join(OUTPUT_DIR, 'ponte_curso_cbo_c3_nota59.json')
@@ -612,8 +431,10 @@ def main():
     manifesto = {
         "protocolo": "AVALIACAO_PROSPECTIVA_CICLO3_PMM_E",
         "data_congelamento": "2026-08-30",
-        "t0_previsto": "2026-09",
-        "janela_pre_congelada": "2024-06 a 2026-08",
+        "t0_calendario_provisorio": "2026-09",
+        "t0_operacional": "Primeira competencia CNES com entrada observavel dos vinculos do Ciclo 3; a validar prospectivamente",
+        "janela_pre_alvo": "2024-06 ate T0-1",
+        "ultima_competencia_cnes_observada_no_congelamento": "2026-07",
         "fontes_primarias_hashes": {
             "2026_ciclo3_adesao_gestores_resultado_final.xlsx": compute_sha256(F_ADESAO),
             "2026_ciclo3_chamada1_vagas_retificadas.xlsx": compute_sha256(F_VAGAS_MED),
@@ -639,7 +460,9 @@ def main():
             "taxa_alocacao_imediata_pura": float(df_coorte[df_coorte['classificacao_braco'] == 'imediata_pura']['n_alocados_total'].sum() / df_coorte[df_coorte['classificacao_braco'] == 'imediata_pura']['vagas_imed_tot'].sum()),
             "anestesiologia_imediata_pura": int(((df_coorte['cod_curso'] == 1) & (df_coorte['classificacao_braco'] == 'imediata_pura')).sum()),
             "anestesiologia_nao_priorizada_pura": int(((df_coorte['cod_curso'] == 1) & (df_coorte['classificacao_braco'] == 'nao_priorizada_pura')).sum()),
-            "municipios_com_ambos_bracos_distintos": int(df_coorte['muni_tem_imediata_e_controle'].nunique())
+            "municipios_com_ambos_bracos_distintos": int(
+                df_coorte.loc[df_coorte['muni_tem_imediata_e_controle'], 'ibge'].nunique()
+            )
         }
     }
     f_out_manifesto = os.path.join(OUTPUT_DIR, 'manifesto_coorte_c3.json')
@@ -657,10 +480,29 @@ def main():
 
 def gerar_relatorio_auditoria(df, df_sup, man):
     f_doc = os.path.join(DOCS_DIR, '05_coorte_c3_e_exposicao.md')
-    
+
     tot = man['totais_amostrais']
     anes = df[df['cod_curso'] == 1]
-    
+    core_codes = [1, 12, 24]
+    core_rows = df_sup[df_sup['cod_curso'].isin(core_codes)].set_index('cod_curso')
+    core_lines = []
+    for pos, cod in enumerate(core_codes, start=1):
+        row = core_rows.loc[cod]
+        core_lines.append(
+            f"{pos}. **{cod:02d}. {row['no_curso']}:** "
+            f"{int(row['cnes_imediata_pura'])} imediatas vs. "
+            f"{int(row['cnes_nao_priorizada_pura'])} controles "
+            f"(CBO {row['cbo_primario']})"
+        )
+    core_markdown = "\n".join(core_lines)
+
+    anes_imed = anes[anes['classificacao_braco'] == 'imediata_pura']
+    anes_ctrl = anes[anes['classificacao_braco'] == 'nao_priorizada_pura']
+    anes_imed_muni = anes_imed['ibge'].nunique()
+    anes_ctrl_muni = anes_ctrl['ibge'].nunique()
+    anes_iso_imed_muni = anes_imed.loc[~anes_imed['cointervencao_cirurgica_muni'], 'ibge'].nunique()
+    anes_iso_ctrl_muni = anes_ctrl.loc[~anes_ctrl['cointervencao_cirurgica_muni'], 'ibge'].nunique()
+
     doc_content = f"""# Auditoria da Coorte e Exposicao do Ciclo 3 (PMM-E)
 
 > **Data de Congelamento:** {man['data_congelamento']}  
@@ -669,9 +511,14 @@ def gerar_relatorio_auditoria(df, df_sup, man):
 
 ---
 
-## 1. Resumo Executivo e Contraste Causal
+## 1. Resumo executivo e contraste comparativo
 
-O terceiro ciclo do PMM-E oferece uma oportunidade impar de avaliacao causal comparativa por Intencao de Tratar (ITT). Ao contrario do Ciclo 1 — onde tanto as vagas imediatas quanto as de reserva receberam alocacoes —, o processo de adesao do Ciclo 3 gerou uma separacao nitida entre propostas que foram contempladas com prioridade imediata e propostas de gestores que **nao foram priorizadas** pelo Ministerio da Saude.
+O processo de adesao do terceiro ciclo gerou um contraste prospectivo plausivel por
+intencao de tratar (ITT): celulas CNES--curso contempladas com vaga imediata pura
+versus propostas de gestores nao priorizadas. A priorizacao **nao foi aleatoria**.
+Logo, esta auditoria nao transforma o contraste em experimento; a interpretacao
+causal depende de suporte comum, ausencia de antecipacao, pre-tendencias compativeis
+e controle explicito de contaminacao e cointervencoes.
 
 ### Unidades e Contagens Oficiais Congeladas
 - **Total de Propostas Auditadas (CNES–curso):** {tot['total_celulas_adesao']:,}
@@ -680,56 +527,77 @@ O terceiro ciclo do PMM-E oferece uma oportunidade impar de avaliacao causal com
 - **Cadastro de Reserva Puro:** {tot['reserva_pura']} celulas (excluido do contraste confirmatorio)
 - **Celulas Mistas (Imediata + Reserva):** {tot['mista']} celulas (excluidas do contraste confirmatorio)
 
-### Primeiro Estagio Administrativo
+### Primeiro estagio administrativo publicado
 - **Vagas Imediatas Ofertadas no Braco Imediato Puro:** {tot['vagas_imediata_pura']:,}
-- **Medicos Bolsistas Alocados Confirmados:** {tot['alocados_imediata_pura']:,}
-- **Taxa de Alocacao Publica Efetiva:** {tot['taxa_alocacao_imediata_pura']:.2%}
+- **Alocacoes publicadas:** {tot['alocados_imediata_pura']:,}
+- **Razao alocacoes publicadas/vagas:** {tot['taxa_alocacao_imediata_pura']:.2%}
+
+Essa razao nao prova inicio ou permanencia no exercicio. O primeiro estagio efetivo
+sera medido prospectivamente no CNES.
 
 ---
 
 ## 2. Ponte Normativa CBO — Nota Tecnica no 59/2026
 
-A harmonizacao ocupacional foi reconstruida a partir do **Anexo I da Nota Tecnica no 59/2026-CGPLAD/DEGEPS/SGTES/MS**, eliminando a dependencia de correspondencias locais informais.
+A harmonizacao ocupacional foi transcrita do **Anexo I, paginas 4--7, da Nota
+Tecnica no 59/2026-CGPLAD/DEGEPS/SGTES/MS**. A fonte oficial e
+<{NOTA_TECNICA_59_URL}>. O codigo calcula as sobreposicoes por intersecao dos CBOs
+e os testes congelam a transcricao dos 24 cursos.
 
-### Familia Confirmatoria Univoca (Sem Sobreposicao)
-Dos 24 cursos do ciclo, **15 cursos possuem suporte em ambos os bracos** (imediata e nao priorizada). Dentre eles, destacam-se os cursos com correspondencia 1:1 estrita:
-1. **01. Anestesiologia Perioperatoria e Sedacao Segura:** 119 imediatas vs. 305 controles (CBO 225151)
-2. **02. Cirurgia Geral Minimamente Invasiva:** 33 imediatas vs. 337 controles (CBO 225225)
-3. **12. Oncologia Clinica:** 12 imediatas vs. 39 controles (CBO 225121)
-4. **13. Radioterapia:** 7 imediatas vs. 21 controles (CBO 225330)
-5. **14. Ultrassonografia Mamaria:** 13 imediatas vs. 774 controles (CBO 225320)
-6. **21. Cirurgia Mamaria Oncologica:** 7 imediatas vs. 30 controles (CBO 225260)
-7. **24. Medicina Intensiva:** 6 imediatas vs. 83 controles (CBO 225112)
+### Nucleo confirmatorio sem sobreposicao entre cursos
+
+Dos 24 cursos, **{int(df_sup['tem_suporte_comparativo'].sum())}** possuem ao menos
+uma celula em cada braco. Somente tres combinam esse suporte com uma ponte integral
+sem CBO compartilhado:
+
+{core_markdown}
+
+O curso 2 nao e integralmente 1:1: a norma aceita `225225`, exclusivo no ciclo, e
+`225220`, compartilhado com o curso 5. Ele fica como sensibilidade pre-especificada
+no CBO exclusivo, nao como parte do nucleo confirmatorio. Cursos 13, 14 e 21 tambem
+compartilham ao menos um CBO e nao podem ser apresentados como pontes 1:1.
 
 ---
 
 ## 3. Modulo de Anestesiologia e Cirurgias (SIH)
 
 ### Suporte e Cointervencoes
-- **Total de CNES com Anestesiologia Imediata:** 119 estabelecimentos em 78 municipios.
+- **Total de CNES com Anestesiologia Imediata:** {len(anes_imed)} estabelecimentos em {anes_imed_muni} municipios.
 - **Vagas Imediatas de Anestesiologia:** 290 vagas (133 alocados, taxa de ocupacao de 45,86%).
-- **Controles Nao Priorizados de Anestesiologia:** 305 estabelecimentos em 247 municipios.
+- **Controles Nao Priorizados de Anestesiologia:** {len(anes_ctrl)} estabelecimentos em {anes_ctrl_muni} municipios.
 - **Anestesiologia Isolada (Sem outra vaga cirurgica simultanea no municipio):**
-  - Tratados: 45 municipios
-  - Controles: 187 municipios
+  - Tratados: {anes_iso_imed_muni} municipios
+  - Controles: {anes_iso_ctrl_muni} municipios
 
 ---
 
 ## 4. Auditoria da Assinatura Cadastral do PMM-E no CNES
 
-Validou-se no arquivo publico `tbCargaHorariaSus` que o Ministerio da Saude disponibiliza os campos necessarios para identificar os bolsistas do PMM-E:
+Validou-se no layout publico `tbCargaHorariaSus` a presenca dos campos necessarios
+para construir uma assinatura operacional candidata do PMM-E:
 - `IND_VINCULACAO = 070102` (Bolsa - Bolsista)
 - `NU_CNPJ_DETALHAMENTO_VINCULO = 00394544012787` (Ministerio da Saude)
 - Carga horaria semanal padronizada: 16h assistenciais + 4h formativas (total 20h).
 
-Na competencia de julho de 2026, foram identificados 7.924 vinculos com a combinacao exata de bolsa federal no Brasil (incluindo participantes da atencao primaria e ciclos anteriores). Nas competencias posteriores a $T_0$, o cruzamento dessa assinatura com os CBOs do Anexo I permitira auditar o provimento e a rotatividade individual de forma publica e transparente.
+Na competencia de julho de 2026, foram identificados 7.924 vinculos com a combinacao
+exata de bolsa federal no Brasil, incluindo APS e ciclos anteriores. Portanto, a
+assinatura isolada nao identifica o Ciclo 3. Nas competencias posteriores a $T_0$,
+ela devera ser cruzada com a coorte CNES--curso, os CBOs normativos e a data de
+entrada, com reconciliacao de excecoes. `CO_PROFISSIONAL_SUS` sera tratado como
+identificador operacional cuja estabilidade longitudinal ainda precisa ser testada;
+nao se presume algoritmo MD5 nem anonimato absoluto.
 
 ---
 
 ## 5. Proximos Passos (Portao C3-02)
 
-Com a coorte e as unidades congeladas no hash oficial, o proximo passo autorizado e:
-- **C3-02:** Executar o piloto do SIH/SUS exclusivamente para as competencias pre-tratamento (2024-06 a $T_0-1$) para as UFs da coorte congelada, construindo os indicadores de AIHs cirurgicas eletivas.
+Com a coorte corrigida e congelada, a sequencia e:
+
+1. concluir o piloto SIH apenas no pre-tratamento e auditar cobertura, porte e
+   definicao de cirurgias eletivas;
+2. executar o torneio pre-tratamento sem consultar outcomes pos-tratamento;
+3. validar prospectivamente $T_0$ pela entrada observada dos vinculos do Ciclo 3;
+4. estimar aos seis meses e atualizar aos doze meses somente depois do amadurecimento.
 """
     with open(f_doc, 'w', encoding='utf-8') as f:
         f.write(doc_content)

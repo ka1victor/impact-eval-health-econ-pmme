@@ -14,9 +14,10 @@ priorizada pura.
 - `docs/auditorias/02_disponibilidade_dados.md`;
 - `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md`;
 - `docs/auditorias/aquisicao/A03_ivs_e_regra.md`;
-- `docs/auditorias/aquisicao/A04_ponte_profissional_cnes.md`;
+- `docs/auditorias/aquisicao/A04_pagamentos.md`;
 - `docs/auditorias/aquisicao/A05_cnes_mensal.md`;
-- Nota Técnica nº 59/2026-CGPLAD/DEGEPS/SGTES/MS, inclusive Anexo I;
+- [Nota Técnica nº 59/2026-CGPLAD/DEGEPS/SGTES/MS](https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/notas-tecnicas/2026/nota-tecnica-no-59-2026-cgplad-degeps-sgtes-ms.pdf/view),
+  inclusive Anexo I;
 - `output/aquisicao/ponte_curso_cbo_oficial.json`;
 - arquivos públicos locais do ciclo 3 em `data/raw/pmm_e/` e
   `data/raw/aquisicao/vagas/`.

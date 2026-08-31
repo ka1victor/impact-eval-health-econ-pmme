@@ -1,5 +1,13 @@
 # A04 — Regras financeiras e pagamentos públicos
 
+> **Adendo prospectivo de 30/08/2026:** a Nota Técnica nº
+> 59/2026-CGPLAD/DEGEPS/SGTES/MS definiu vínculo `070102`, CNPJ de detalhamento
+> do Ministério da Saúde, CBO e cargas horárias para registrar bolsistas PMM-E
+> no CNES. Essa combinação pode funcionar como ponte pública no ciclo 3, mas
+> ainda precisa ser observada e reconciliada com as alocações. Ela não revela
+> pagamentos devidos ou realizados e, portanto, não altera a conclusão
+> financeira histórica abaixo.
+
 ## Resultado
 
 A A04 observa **parcialmente o valor anunciado**, como regra normativa, e não

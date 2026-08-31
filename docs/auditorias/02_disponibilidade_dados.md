@@ -1,5 +1,15 @@
 # Auditoria de disponibilidade dos dados
 
+> **Adendo prospectivo de 30/08/2026:** a Nota Técnica nº
+> 59/2026-CGPLAD/DEGEPS/SGTES/MS, publicada em 24/07/2026, definiu uma
+> assinatura cadastral potencial do PMM-E no CNES (`IND_VINCULACAO=070102`,
+> CNPJ de detalhamento do Ministério da Saúde, CBO e cargas horárias). O arquivo
+> público `tbCargaHorariaSus` contém esses campos, mas o pipeline consolidado
+> descartou o CNPJ e a implementação pelos gestores ainda não foi testada. Isso
+> abre uma nova auditoria prospectiva para o ciclo 3; não altera a conclusão
+> desta auditoria sobre os arquivos então integrados. Veja
+> [`../12_estrategia_causal_prospectiva_ciclo3.md`](../12_estrategia_causal_prospectiva_ciclo3.md).
+
 > **Data da auditoria:** 27 de agosto de 2026
 >
 > **Escopo:** vagas e trajetória administrativa do PMM-E, CNES mensal, chaves de vinculação e maturidade das janelas de 90, 120 e 180 dias.
