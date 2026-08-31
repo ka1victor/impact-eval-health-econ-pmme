@@ -5,8 +5,8 @@
     "t_stat": -1.8153231455687022,
     "p_valor": 0.07273234053096783,
     "ci_95": [
-      -0.9337621748524301,
-      0.04194554463729311
+      -0.9337621748248607,
+      0.04194554460972377
     ],
     "nome_modelo": "M1_DDD_Principal_Confirmatoria",
     "descricao": "DDD do estoque; cursos sem CBO compartilhado",
@@ -34,10 +34,10 @@
     "beta": -0.23189251298998884,
     "se": 0.1519102683927911,
     "t_stat": -1.5265097971546557,
-    "p_valor": 0.12898877838569775,
+    "p_valor": 0.1289887783856977,
     "ci_95": [
-      -0.5320528221252411,
-      0.06826779614526343
+      -0.5320528221237666,
+      0.06826779614378889
     ],
     "nome_modelo": "M2_DDD_Ampliada",
     "descricao": "DDD do estoque; 16 cursos como sensibilidade operacional",
@@ -65,10 +65,10 @@
     "beta": 0.007288905319240404,
     "se": 0.015404939942676272,
     "t_stat": 0.47315376407589654,
-    "p_valor": 0.6372242024778708,
+    "p_valor": 0.637224202477871,
     "ci_95": [
-      -0.023306635114362866,
-      0.03788444575284367
+      -0.023306635112633867,
+      0.03788444575111467
     ],
     "nome_modelo": "M3_DDD_Cobertura",
     "descricao": "DDD da probabilidade de ao menos um especialista",

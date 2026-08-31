@@ -1,8 +1,9 @@
 # 05. Plano principal: vagas viram médicos?
 
-> Decisão vigente. Este documento é a fila operacional canônica. O desenho
-> individual anterior permanece preservado como agenda futura, mas não será
-> executado nesta versão.
+> Registro canônico da primeira versão, já executada. O desenho individual
+> anterior permanece preservado como agenda futura. A próxima avaliação
+> prospectiva está em
+> [`12_estrategia_causal_prospectiva_ciclo3.md`](12_estrategia_causal_prospectiva_ciclo3.md).
 
 ## 0. Estado após a execução
 
@@ -288,9 +289,23 @@ administrativa validadas.
 9. Atualizar presença em doze meses quando a coorte comum estiver madura
 ```
 
-Não há outra frente empírica autorizada em paralelo. O plano individual
-anterior continua bloqueado por dados administrativos. O plano agregado atual
-não depende de identificar quais médicos pertencem ao PMM-E.
+Durante a execução desta versão não havia outra frente empírica autorizada. O
+plano individual anterior continua bloqueado por dados administrativos. O
+resultado do ciclo 1 permanece fechado e não depende de identificar quais
+médicos pertencem ao PMM-E. A preparação prospectiva posterior do ciclo 3 tem
+fila e portões próprios; não reabre nem corrige retrospectivamente esta análise.
+
+### 10.1 Infraestrutura de Dados Paralelizável (Parser DBC -> Parquet)
+
+Tarefas de engenharia de dados desacopladas do modelo econométrico podem ser desenvolvidas em paralelo (ex: em worktree/branch isolado) sem interferir no pipeline principal:
+- **Prompt:** [`prompts/infraestrutura_datasus_dbc.md`](../prompts/infraestrutura_datasus_dbc.md).
+- **Utilidade:** Habilitar a ingestão e conversão de microdados do DATASUS distribuídos em `.dbc` (SIA ambulatorial / APAC e SIH hospitalar / AIH) diretamente para `.parquet` colunar com compressão `zstd`.
+- **Eficiência e Escopo Local:** o parser foi especificado para filtragem
+  seletiva durante a ingestão. Isso pode manter a pegada persistente pequena,
+  mas não reduz o tráfego: uma competência nacional observada tinha 84,6 MiB no
+  SIH/RD e 1,70 GiB no SIA/PA. O piloto deve medir o custo antes de prometer
+  limite de disco.
+- **Isolamento:** Prepara a infraestrutura para eventual reabertura de WP3 e WP4 sem violar o congelamento metodológico da V1 nem alterar arquivos de `data/`.
 
 ## 11. Definição de conclusão
 
@@ -312,3 +327,12 @@ A execução respondeu apenas à parte descritiva e ajustada da pergunta. Ela n�
 preenche a formulação causal acima porque o portão de relevância falhou na
 amostra identificadora. Repetir a mesma DDD com filtros, janelas ou estimadores
 escolhidos pelo sinal observado não é próximo passo autorizado.
+
+## 12. Próximo estudo, sem reabrir o ciclo 1
+
+O autor autorizou em 30/08/2026 uma avaliação prospectiva separada do ciclo 3.
+O núcleo geral usa imediata pura versus não priorizada pura; o módulo secundário
+testa anestesiologia/cirurgias com SIH. A preparação deve seguir, em ordem,
+[`prompts/avaliacao_ciclo3/`](../prompts/avaliacao_ciclo3/README.md). Estimação
+só ocorrerá quando seis meses comuns estiverem maduros e o protocolo tiver sido
+congelado sem consultar o pós-período.

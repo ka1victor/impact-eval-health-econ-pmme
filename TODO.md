@@ -1,8 +1,8 @@
-# Próximas etapas — vagas viram médicos?
+# Próximas etapas — avaliação prospectiva do ciclo 3
 
-> A única fila empírica autorizada é a do plano em
-> `docs/05_roadmap_execucao.md`. Todos os artefatos e etapas encontram-se
-> versionados e salvos no diretório `output/avaliacao_impacto/`.
+> O ciclo 1 foi concluído como comparação ajustada. A nova fila autorizada está
+> em `prompts/avaliacao_ciclo3/`; a estratégia está em
+> `docs/12_estrategia_causal_prospectiva_ciclo3.md`.
 
 ## Decisões concluídas
 
@@ -65,16 +65,31 @@
   administrativo falhou (`03_nota_tecnica_avaliacao_impacto_pmme.md`).
 - [x] Integrar scripts e produtos ao `run_all.py` somente depois da validação.
 
-## Atualização prospectiva
+## Atualização prospectiva e infraestrutura paralela
 
 - [ ] Acrescentar novas competências sem redefinir a janela da primeira versão.
 - [ ] Estimar presença doze meses depois somente quando toda a coorte congelada
   possuir seguimento comum maduro, com extensão do CNES até 2027-01 para a
   coorte de entradas encerrada em 2026-01.
+- [ ] Construir módulo utilitário DBC -> Parquet do DATASUS, começando por um
+  benchmark SIH e medindo separadamente tráfego, pico temporário e espaço
+  persistente (`prompts/infraestrutura_datasus_dbc.md`).
+
+## Ciclo 3 prospectivo
+
+- [x] C3-01 — congelar coorte, exposição, `T0`, pontes e suporte (`output/avaliacao_ciclo3/coorte_c3_congelada.parquet`, `docs/auditorias/05_coorte_c3_e_exposicao.md`).
+- [ ] C3-02 — executar piloto SIH exclusivamente pré-tratamento para
+  anestesiologia.
+- [ ] C3-03 — executar potência, placebos e pré-tendências no pré-período e
+  congelar o plano.
+- [ ] C3-04 — pilotar SIA/ecocardiografia somente se o portão ordenar.
+- [ ] C3-05 — estimar a versão de seis meses apenas com seguimento comum maduro.
+- [ ] C3-06 — atualizar a mesma análise aos doze meses, sem redesenho.
 
 ## Congelado
 
-Não executar agora: ciclos 2–3 como novas coortes; RDD/IVS; efeito causal das
-faixas de bolsa; métodos escalonados ou sintéticos; FTE; produção, filas,
-outcomes clínicos e custos; identificação individual de bolsistas; pedidos
-administrativos A07.
+Não executar agora: estimação do ciclo 3 antes da maturidade; ciclo 2 como nova
+coorte; RDD/IVS; efeito causal das faixas de bolsa; fila; outcomes clínicos além
+do módulo condicional de produção cirúrgica; custos; identificação individual
+de bolsistas; pedidos administrativos A07. Synthetic DiD pode ser robustez
+pré-especificada no ciclo 3, nunca reparo retrospectivo de pré-tendências.

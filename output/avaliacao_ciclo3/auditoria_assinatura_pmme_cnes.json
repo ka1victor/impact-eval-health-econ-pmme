@@ -1,0 +1,18 @@
+{
+  "arquivo_cnes": "BASE_DE_DADOS_CNES_202607.ZIP",
+  "competencia_auditada": "202607",
+  "data_auditoria": "2026-08-30",
+  "status_assinatura": "CONFIRMADA_NO_LAYOUT_PUBLICO",
+  "campos_validados": {
+    "IND_VINCULACAO": "070102 (Bolsa - Bolsista)",
+    "NU_CNPJ_DETALHAMENTO_VINCULO": "00394544012787 (Ministerio da Saude)",
+    "CARGA_HORARIA_PADRAO_PMME": "16h assistenciais + 4h formativas (total 20h)",
+    "CO_PROFISSIONAL_SUS": "Pseudonimo MD5 16 hexadecimais preservado"
+  },
+  "metricas_competencia_202607": {
+    "total_vinculos_bolsa_070102": 21500,
+    "total_vinculos_cnpj_ms": 20193,
+    "total_vinculos_exatos_bolsa_ms": 7924,
+    "observacao": "Inclui medicos de APS e participantes anteriores. O rastreamento de bolsistas C3 exigira cruzar com CBOs do Anexo I e data de inicio T0."
+  }
+}

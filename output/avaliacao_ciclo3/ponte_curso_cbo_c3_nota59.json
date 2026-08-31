@@ -1,0 +1,410 @@
+{
+  "versao_ponte": "3.0_normativa_nota59_sgtes_ms",
+  "data_congelamento": "2026-08-30",
+  "base_normativa": "Nota Tecnica no 59/2026-CGPLAD/DEGEPS/SGTES/MS (Anexo I)",
+  "total_cursos_pmme": 24,
+  "total_cursos_com_suporte_comparativo": 15,
+  "cursos_confirmatorios_sem_sobreposicao": [
+    2,
+    12,
+    13,
+    14,
+    21,
+    24,
+    1
+  ],
+  "catalogo_cursos": [
+    {
+      "cod_curso": 1,
+      "no_curso_padronizado": "ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA",
+      "especialidade_cfm": "Anestesiologia",
+      "cbo_primario": "225151",
+      "ds_cbo_primario": "MEDICO ANESTESIOLOGISTA",
+      "cbos_elegiveis": [
+        "225151"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "UNIVOCA",
+      "cursos_concorrentes": [],
+      "status_uso": "CONFIRMATORIO_PRINCIPAL",
+      "observacoes": "Mapeamento 1:1 estrito; base do modulo assistencial de cirurgias no SIH."
+    },
+    {
+      "cod_curso": 2,
+      "no_curso_padronizado": "CIRURGIA GERAL MINIMAMENTE INVASIVA",
+      "especialidade_cfm": "Cirurgia Geral",
+      "cbo_primario": "225225",
+      "ds_cbo_primario": "MEDICO CIRURGIAO GERAL",
+      "cbos_elegiveis": [
+        "225225"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "UNIVOCA",
+      "cursos_concorrentes": [],
+      "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
+      "observacoes": "Mapeamento 1:1 estrito para cirurgioes gerais."
+    },
+    {
+      "cod_curso": 3,
+      "no_curso_padronizado": "CIRURGIA ONCOLOGICA AVANCADA",
+      "especialidade_cfm": "Cancerologia Cirurgica",
+      "cbo_primario": "225290",
+      "ds_cbo_primario": "MEDICO CANCEROLOGISTA CIRURGICO",
+      "cbos_elegiveis": [
+        "225290"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "UNIVOCA",
+      "cursos_concorrentes": [],
+      "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
+      "observacoes": "Apenas 13 CNES imediatos e 0 nao priorizados no Ciclo 3."
+    },
+    {
+      "cod_curso": 4,
+      "no_curso_padronizado": "CIRURGIA COLOPROCTOLOGICA COM FOCO EM TUMORES COLORRETAIS",
+      "especialidade_cfm": "Coloproctologia",
+      "cbo_primario": "225280",
+      "ds_cbo_primario": "MEDICO COLOPROCTOLOGISTA",
+      "cbos_elegiveis": [
+        "225280"
+      ],
+      "sobreposicao": true,
+      "grau_univocidade": "SOBREPOSTA_SECUNDARIA",
+      "cursos_concorrentes": [
+        20
+      ],
+      "status_uso": "EXPLORATORIO_SOBREPOSTO",
+      "observacoes": "Compartilha CBO com curso 20 (Cirurgia Robotica Colorretal)."
+    },
+    {
+      "cod_curso": 5,
+      "no_curso_padronizado": "CIRURGIA DO APARELHO DIGESTIVO COM FOCO EM TUMORES DIGESTIVOS",
+      "especialidade_cfm": "Cirurgia do Aparelho Digestivo",
+      "cbo_primario": "225220",
+      "ds_cbo_primario": "MEDICO CIRURGIAO DO APARELHO DIGESTIVO",
+      "cbos_elegiveis": [
+        "225220"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "UNIVOCA",
+      "cursos_concorrentes": [],
+      "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
+      "observacoes": "Apenas 1 CNES imediato e 0 nao priorizados."
+    },
+    {
+      "cod_curso": 6,
+      "no_curso_padronizado": "CIRURGIA GINECOLOGICA COM FOCO EM TUMORES GINECOLOGICOS",
+      "especialidade_cfm": "Ginecologia e Obstetricia",
+      "cbo_primario": "225250",
+      "ds_cbo_primario": "MEDICO GINECOLOGISTA E OBSTETRA",
+      "cbos_elegiveis": [
+        "225250"
+      ],
+      "sobreposicao": true,
+      "grau_univocidade": "SOBREPOSTA_DIRETA",
+      "cursos_concorrentes": [
+        8
+      ],
+      "status_uso": "EXPLORATORIO_SOBREPOSTO",
+      "observacoes": "Compartilha CBO com curso 08 (Colposcopia)."
+    },
+    {
+      "cod_curso": 7,
+      "no_curso_padronizado": "COLONOSCOPIA DIAGNOSTICA E TERAPEUTICA NO SUS",
+      "especialidade_cfm": "Endoscopia",
+      "cbo_primario": "225310",
+      "ds_cbo_primario": "MEDICO EM ENDOSCOPIA",
+      "cbos_elegiveis": [
+        "225310"
+      ],
+      "sobreposicao": true,
+      "grau_univocidade": "MULTIESPECIALIDADE",
+      "cursos_concorrentes": [
+        10,
+        11
+      ],
+      "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
+      "observacoes": "25 imediatas e 0 nao priorizadas."
+    },
+    {
+      "cod_curso": 8,
+      "no_curso_padronizado": "COLPOSCOPIA E DOENCAS DO TRATO GENITAL INFERIOR",
+      "especialidade_cfm": "Ginecologia e Obstetricia",
+      "cbo_primario": "225250",
+      "ds_cbo_primario": "MEDICO GINECOLOGISTA E OBSTETRA",
+      "cbos_elegiveis": [
+        "225250"
+      ],
+      "sobreposicao": true,
+      "grau_univocidade": "SOBREPOSTA_DIRETA",
+      "cursos_concorrentes": [
+        6
+      ],
+      "status_uso": "EXPLORATORIO_SOBREPOSTO",
+      "observacoes": "Compartilha CBO com curso 06."
+    },
+    {
+      "cod_curso": 9,
+      "no_curso_padronizado": "ECOCARDIOGRAFIA TRANSTORACICA APLICADA AO SUS",
+      "especialidade_cfm": "Cardiologia",
+      "cbo_primario": "225120",
+      "ds_cbo_primario": "MEDICO CARDIOLOGISTA",
+      "cbos_elegiveis": [
+        "225120"
+      ],
+      "sobreposicao": true,
+      "grau_univocidade": "SOBREPOSTA_DIRETA",
+      "cursos_concorrentes": [
+        18
+      ],
+      "status_uso": "MODULO_CONDICIONAL_SIA",
+      "observacoes": "56 CNES imediatos vs 261 controles. CBO compartilhado com curso 18."
+    },
+    {
+      "cod_curso": 10,
+      "no_curso_padronizado": "ENDOSCOPIA DIGESTIVA AVANCADA E PROCEDIMENTOS TERAPEUTICOS",
+      "especialidade_cfm": "Endoscopia",
+      "cbo_primario": "225310",
+      "ds_cbo_primario": "MEDICO EM ENDOSCOPIA",
+      "cbos_elegiveis": [
+        "225310"
+      ],
+      "sobreposicao": true,
+      "grau_univocidade": "SOBREPOSTA_DIRETA",
+      "cursos_concorrentes": [
+        7,
+        11
+      ],
+      "status_uso": "EXPLORATORIO_SOBREPOSTO",
+      "observacoes": "4 imediatas vs 153 controles. CBO compartilhado com cursos 07 e 11."
+    },
+    {
+      "cod_curso": 11,
+      "no_curso_padronizado": "ENDOSCOPIA DIGESTIVA ALTA DIAGNOSTICA E TERAPEUTICA",
+      "especialidade_cfm": "Endoscopia",
+      "cbo_primario": "225310",
+      "ds_cbo_primario": "MEDICO EM ENDOSCOPIA",
+      "cbos_elegiveis": [
+        "225310"
+      ],
+      "sobreposicao": true,
+      "grau_univocidade": "SOBREPOSTA_DIRETA",
+      "cursos_concorrentes": [
+        7,
+        10
+      ],
+      "status_uso": "EXPLORATORIO_SOBREPOSTO",
+      "observacoes": "22 imediatas vs 169 controles. CBO compartilhado com cursos 07 e 10."
+    },
+    {
+      "cod_curso": 12,
+      "no_curso_padronizado": "ONCOLOGIA CLINICA: CANCERES PREVALENTES NO SUS",
+      "especialidade_cfm": "Oncologia Clinica",
+      "cbo_primario": "225121",
+      "ds_cbo_primario": "MEDICO ONCOLOGISTA CLINICO",
+      "cbos_elegiveis": [
+        "225121"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "UNIVOCA",
+      "cursos_concorrentes": [],
+      "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
+      "observacoes": "12 imediatas vs 39 controles. Mapeamento univoco."
+    },
+    {
+      "cod_curso": 13,
+      "no_curso_padronizado": "RADIOTERAPIA: PLANEJAMENTO E EXECUCAO NO SUS",
+      "especialidade_cfm": "Radioterapia",
+      "cbo_primario": "225330",
+      "ds_cbo_primario": "MEDICO RADIOTERAPEUTA",
+      "cbos_elegiveis": [
+        "225330"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "UNIVOCA",
+      "cursos_concorrentes": [],
+      "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
+      "observacoes": "7 imediatas vs 21 controles. Mapeamento univoco."
+    },
+    {
+      "cod_curso": 14,
+      "no_curso_padronizado": "ULTRASSONOGRAFIA MAMARIA DIAGNOSTICA E INTERVENCIONISTA",
+      "especialidade_cfm": "Radiologia e Diagnostico por Imagem",
+      "cbo_primario": "225320",
+      "ds_cbo_primario": "MEDICO EM RADIOLOGIA E DIAGNOSTICO POR IMAGEM",
+      "cbos_elegiveis": [
+        "225320"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "MULTIESPECIALIDADE_EXCLUSIVA",
+      "cursos_concorrentes": [],
+      "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
+      "observacoes": "13 imediatas vs 774 controles. Sem outro curso com CBO 225320."
+    },
+    {
+      "cod_curso": 15,
+      "no_curso_padronizado": "VIDEOLARINGOSCOPIA E ENDOSCOPIA NASOFARINGEA",
+      "especialidade_cfm": "Otorrinolaringologia",
+      "cbo_primario": "225275",
+      "ds_cbo_primario": "MEDICO OTORRINOLARINGOLOGISTA",
+      "cbos_elegiveis": [
+        "225275"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "UNIVOCA",
+      "cursos_concorrentes": [],
+      "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
+      "observacoes": "14 imediatas vs 0 nao priorizados."
+    },
+    {
+      "cod_curso": 16,
+      "no_curso_padronizado": "ANATOMIA PATOLOGICA COM ENFASE EM ONCOLOGIA E DIAGNOSTICO INTEGRADO",
+      "especialidade_cfm": "Patologia",
+      "cbo_primario": "225148",
+      "ds_cbo_primario": "MEDICO ANATOMOPATOLOGISTA",
+      "cbos_elegiveis": [
+        "225148",
+        "225118"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "FAMILIA_PATOLOGIA",
+      "cursos_concorrentes": [],
+      "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
+      "observacoes": "8 imediatas vs 0 nao priorizados."
+    },
+    {
+      "cod_curso": 17,
+      "no_curso_padronizado": "PSIQUIATRIA CLINICA EM CENTROS DE ATENCAO PSICOSSOCIAL",
+      "especialidade_cfm": "Psiquiatria",
+      "cbo_primario": "225133",
+      "ds_cbo_primario": "MEDICO PSIQUIATRA",
+      "cbos_elegiveis": [
+        "225133",
+        "225134",
+        "225135"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "UNIVOCA",
+      "cursos_concorrentes": [],
+      "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
+      "observacoes": "30 imediatas vs 0 nao priorizados."
+    },
+    {
+      "cod_curso": 18,
+      "no_curso_padronizado": "CUIDADOS INTEGRADOS EM CARDIOLOGIA NO SUS",
+      "especialidade_cfm": "Cardiologia",
+      "cbo_primario": "225120",
+      "ds_cbo_primario": "MEDICO CARDIOLOGISTA",
+      "cbos_elegiveis": [
+        "225120"
+      ],
+      "sobreposicao": true,
+      "grau_univocidade": "SOBREPOSTA_DIRETA",
+      "cursos_concorrentes": [
+        9
+      ],
+      "status_uso": "EXPLORATORIO_SOBREPOSTO",
+      "observacoes": "18 imediatas vs 741 controles. Compartilha CBO com curso 09."
+    },
+    {
+      "cod_curso": 19,
+      "no_curso_padronizado": "CIRURGIA ROBOTICA APLICADA AO TRATAMENTO DE TUMORES UROLOGICOS",
+      "especialidade_cfm": "Urologia",
+      "cbo_primario": "225285",
+      "ds_cbo_primario": "MEDICO UROLOGISTA",
+      "cbos_elegiveis": [
+        "225285"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "UNIVOCA",
+      "cursos_concorrentes": [],
+      "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
+      "observacoes": "1 imediata vs 0 nao priorizados."
+    },
+    {
+      "cod_curso": 20,
+      "no_curso_padronizado": "CIRURGIA ROBOTICA APLICADA AO TRATAMENTO DE TUMORES COLORRETAIS",
+      "especialidade_cfm": "Coloproctologia",
+      "cbo_primario": "225280",
+      "ds_cbo_primario": "MEDICO COLOPROCTOLOGISTA",
+      "cbos_elegiveis": [
+        "225280",
+        "225220",
+        "225225"
+      ],
+      "sobreposicao": true,
+      "grau_univocidade": "SOBREPOSTA_DIRETA",
+      "cursos_concorrentes": [
+        4
+      ],
+      "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
+      "observacoes": "2 imediatas vs 0 nao priorizados."
+    },
+    {
+      "cod_curso": 21,
+      "no_curso_padronizado": "CIRURGIA MAMARIA ONCOLOGICA E RECONSTRUTIVA",
+      "especialidade_cfm": "Mastologia",
+      "cbo_primario": "225260",
+      "ds_cbo_primario": "MEDICO MASTOLOGISTA",
+      "cbos_elegiveis": [
+        "225260"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "UNIVOCA",
+      "cursos_concorrentes": [],
+      "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
+      "observacoes": "7 imediatas vs 30 controles. Mapeamento univoco."
+    },
+    {
+      "cod_curso": 22,
+      "no_curso_padronizado": "CIRURGIA ORTOPEDICA COM FOCO EM CIRURGIAS DE JOELHO",
+      "especialidade_cfm": "Ortopedia e Traumatologia",
+      "cbo_primario": "225270",
+      "ds_cbo_primario": "MEDICO ORTOPEDISTA E TRAUMATOLOGISTA",
+      "cbos_elegiveis": [
+        "225270"
+      ],
+      "sobreposicao": true,
+      "grau_univocidade": "SOBREPOSTA_DIRETA",
+      "cursos_concorrentes": [
+        23
+      ],
+      "status_uso": "EXPLORATORIO_SOBREPOSTO",
+      "observacoes": "4 imediatas vs 113 controles. Compartilha CBO com curso 23 (que tem 0 controles)."
+    },
+    {
+      "cod_curso": 23,
+      "no_curso_padronizado": "CIRURGIA DO QUADRIL COM FOCO EM RECONSTRUCOES E ARTROPLASTIAS",
+      "especialidade_cfm": "Ortopedia e Traumatologia",
+      "cbo_primario": "225270",
+      "ds_cbo_primario": "MEDICO ORTOPEDISTA E TRAUMATOLOGISTA",
+      "cbos_elegiveis": [
+        "225270"
+      ],
+      "sobreposicao": true,
+      "grau_univocidade": "SOBREPOSTA_DIRETA",
+      "cursos_concorrentes": [
+        22
+      ],
+      "status_uso": "SEM_SUPORTE_NAO_PRIORIZADA",
+      "observacoes": "10 imediatas vs 0 nao priorizados."
+    },
+    {
+      "cod_curso": 24,
+      "no_curso_padronizado": "ROTINAS ASSISTENCIAIS EM MEDICINA INTENSIVA NO SUS",
+      "especialidade_cfm": "Medicina Intensiva",
+      "cbo_primario": "225112",
+      "ds_cbo_primario": "MEDICO INTENSIVISTA",
+      "cbos_elegiveis": [
+        "225112",
+        "225109",
+        "225110"
+      ],
+      "sobreposicao": false,
+      "grau_univocidade": "UNIVOCA",
+      "cursos_concorrentes": [],
+      "status_uso": "CONFIRMATORIO_NUCLEO_GERAL",
+      "observacoes": "6 imediatas vs 83 controles. Mapeamento univoco."
+    }
+  ]
+}

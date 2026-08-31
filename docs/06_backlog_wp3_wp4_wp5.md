@@ -1,6 +1,9 @@
 # 06. Backlog guardado: WP3, WP4 e WP5
 
-> Este documento preserva a agenda posterior sem transformá-la em trabalho corrente. Nenhum agente deve implementar estes WPs durante o estudo de eficácia operacional, salvo nova decisão explícita do autor.
+> Este documento preserva a agenda posterior sem transformá-la em trabalho
+> corrente. A decisão explícita de 30/08/2026 abriu somente um módulo limitado
+> de anestesiologia/SIH no ciclo 3, sujeito a portões pré-tratamento. O restante
+> dos WPs continua guardado.
 
 ## 1. Por que ficam guardados
 
@@ -90,6 +93,12 @@ O adiamento não implica que esses outcomes sejam menos importantes. Tempo de es
 
 - Não criar scripts ou outputs de WP3–WP5 no pipeline atual.
 - Não baixar grandes bases desses WPs “por precaução”.
+- Utilitários desacoplados de engenharia de dados (parser DBC -> Parquet) podem ser construídos de forma isolada via [`prompts/infraestrutura_datasus_dbc.md`](../prompts/infraestrutura_datasus_dbc.md) sem acoplamento aos modelos causais.
+- Exceção autorizada: piloto SIH pré-tratamento e eventual atualização de
+  anestesiologia conforme
+  [`prompts/avaliacao_ciclo3/`](../prompts/avaliacao_ciclo3/README.md). SIA só
+  poderá ser adquirido se o portão pré-tratamento acionar a alternativa de
+  ecocardiografia.
 - Novas fontes podem ser anotadas neste backlog, sem iniciar análise.
 - A reabertura exige decisão explícita, atualização do roadmap e novo prompt.
 - Nenhum resultado do estudo operacional será extrapolado para esses WPs.

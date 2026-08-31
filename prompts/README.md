@@ -59,4 +59,13 @@ os pedidos A07 em enviados e não autoriza escolher um novo estimador depois do
 resultado. Veja
 [`docs/auditorias/04_auditoria_pipeline_agregado.md`](../docs/auditorias/04_auditoria_pipeline_agregado.md).
 
-WP3, WP4 e WP5 não têm prompts de execução porque estão guardados. Seu backlog está em [`docs/06_backlog_wp3_wp4_wp5.md`](../docs/06_backlog_wp3_wp4_wp5.md).
+WP3, WP4 e WP5 não têm prompts de execução no pipeline principal porque estão guardados (ver [`docs/06_backlog_wp3_wp4_wp5.md`](../docs/06_backlog_wp3_wp4_wp5.md)). No entanto, o módulo de engenharia de dados preparatório está documentado em [`infraestrutura_datasus_dbc.md`](infraestrutura_datasus_dbc.md) (100% paralelizável, com foco em ingestão leve e eficiente em disco).
+
+## Nova fila prospectiva
+
+O resultado do ciclo 1 permanece fechado como comparação ajustada. A avaliação
+prospectiva separada do ciclo 3 deve seguir
+[`avaliacao_ciclo3/README.md`](avaliacao_ciclo3/README.md): primeiro congelar a
+coorte, depois pilotar SIH no pré-período e somente então congelar o protocolo.
+Os efeitos de seis e doze meses não podem ser estimados antes da maturidade
+comum. Essa fila não libera o prompt 03 do desenho individual nem envia A07.

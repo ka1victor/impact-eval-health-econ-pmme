@@ -6,8 +6,8 @@
       "t_stat": -1.8153231455687022,
       "p_valor": 0.07273234053096783,
       "ci_95": [
-        -0.9337621748524301,
-        0.04194554463729311
+        -0.9337621748248607,
+        0.04194554460972377
       ],
       "grupo_analise": "Escala geográfica",
       "especificacao": "Município completo (principal)",
@@ -28,10 +28,10 @@
       "beta": -0.44327520522631747,
       "se": 0.4001894762432113,
       "t_stat": -1.1076633233526643,
-      "p_valor": 0.27086384444149303,
+      "p_valor": 0.2708638444414931,
       "ci_95": [
-        -1.237972193232191,
-        0.35142178277955605
+        -1.2379721931896428,
+        0.35142178273700786
       ],
       "grupo_analise": "Escala geográfica",
       "especificacao": "Estabelecimento ofertante (diagnóstico)",
@@ -52,10 +52,10 @@
       "beta": -0.40709186837723055,
       "se": 0.267906511638294,
       "t_stat": -1.5195295772685569,
-      "p_valor": 0.13217392012484638,
+      "p_valor": 0.13217392012484647,
       "ci_95": [
-        -0.9394164004615523,
-        0.12523266370709119
+        -0.9394164004260511,
+        0.12523266367159003
       ],
       "grupo_analise": "Sensibilidade amostral",
       "especificacao": "Principal sem os 3 municípios com mais vagas",
@@ -78,8 +78,8 @@
       "t_stat": -0.16621682989949016,
       "p_valor": 0.8683510641784786,
       "ci_95": [
-        -0.4065982040752507,
-        0.343797139436093
+        -0.40659820405404773,
+        0.34379713941489004
       ],
       "grupo_analise": "Placebo temporal",
       "especificacao": "Placebo: falso início em 2025-01 usando apenas o pré",

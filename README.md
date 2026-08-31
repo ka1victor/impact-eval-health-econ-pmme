@@ -74,16 +74,42 @@ O portão A06 continua válido para o desenho individual anterior, bloqueado por
 dados administrativos. O plano agregado atual não exige vincular nominalmente
 participantes do PMM-E ao CNES.
 
+## Próxima avaliação prospectiva
+
+O ciclo 1 permanece encerrado como comparação ajustada. A próxima tentativa
+causal não reutilizará filtros ou estimadores para mudar esse resultado. Ela
+congelará prospectivamente o ciclo 3 antes de observar seus outcomes:
+
+- núcleo confirmatório: efeito de oferta imediata pura versus proposta não
+  priorizada pura sobre o estoque municipal de especialistas na família de
+  cursos com CBO oficial não sobreposto;
+- módulo assistencial condicional: anestesiologia e cirurgias eletivas no SIH;
+- alternativa somente se o pré-período justificar: ecocardiografia no SIA;
+- RDD do IVS preservado como estudo do adicional de bolsa, ainda bloqueado pela
+  regra administrativa não reconstruída.
+
+A Nota Técnica nº 59/2026 criou uma assinatura cadastral potencialmente
+observável dos participantes no CNES. O primeiro prompt auditará sua implementação
+e o Anexo I oficial de curso–CBO antes de qualquer outcome pós-tratamento.
+
+A estratégia e seus limites estão em
+[`docs/12_estrategia_causal_prospectiva_ciclo3.md`](docs/12_estrategia_causal_prospectiva_ciclo3.md).
+Os prompts ordenados para sessões futuras estão em
+[`prompts/avaliacao_ciclo3/`](prompts/avaliacao_ciclo3/README.md). Nenhum efeito
+do ciclo 3 foi estimado.
+
 ## Escopo da primeira versão
 
 Entram: ciclo 1; estoque municipal de especialistas; entradas, saídas, saldo e
 presença seis meses depois; diagnósticos de remanejamento; DDD e estudo de
 evento.
 
-Permanecem congelados: ciclos 2 e 3 como novas coortes; RDD pelo IVS; efeito
-causal dos valores de bolsa; métodos sintéticos; FTE; SIA/SUS; SIH/SUS; filas;
-outcomes de saúde; custos; identificação individual de bolsistas; e envio dos
-pedidos administrativos A07.
+Permanecem congelados **nesta primeira versão**: ciclos 2 e 3 como novas
+coortes; RDD pelo IVS; efeito causal dos valores de bolsa; métodos sintéticos;
+FTE; SIA/SUS; SIH/SUS; filas; outcomes de saúde; custos; identificação
+individual de bolsistas; e envio dos pedidos administrativos A07. A preparação
+prospectiva separada do ciclo 3 segue os próprios portões e não altera o
+resultado desta versão.
 
 ## Executar o estado validado
 

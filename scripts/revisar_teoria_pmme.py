@@ -1,0 +1,131 @@
+﻿# -*- coding: utf-8 -*-
+"""
+scripts/revisar_teoria_pmme.py
+Estrutura e formaliza o arcabouço microeconômico do PMM-E integrando os 7 pilares teóricos seminais.
+"""
+
+import json
+import os
+import pandas as pd
+
+THEORETICAL_PILLARS = [
+    {
+        "pilar_id": "PILAR_01",
+        "nome": "Equilíbrio Espacial e Diferenciais Compensatórios para Médicos",
+        "paper_canônico": "Roback (1982, JPE) & Rosen (1986)",
+        "autores": "Roback, Jennifer; Rosen, Sherwin",
+        "ano": 1982,
+        "periodico": "Journal of Political Economy",
+        "volume": "Vol. 90, No. 6, pp. 1257–1278",
+        "paginas": 22,
+        "paginas_foco": "pp. 1257–1272 (Seções 1 a 3: 15 págs)",
+        "equacao_central": r"V(w_m, r_m; A_m) = \bar{u} \implies \frac{\partial w_m}{\partial A_m} = -\frac{V_{A}}{V_{w}} < 0",
+        "mecanismo_teorico": "O médico especialista possui alta elasticidade de mobilidade geográfica. Em equilíbrio espacial, postos de trabalho em municípios com baixas amenidades urbanas/hospitalares (alto IVS) exigem um diferencial salarial compensatório (\Delta w) proporcional à desamenidade local para equalizar a utilidade indireta à utilidade de reserva.",
+        "implicacao_testavel_pmme": "A adesão e preenchimento de vagas no PMM-E dependem monotonicamente do valor da bolsa e da pontuação adicional compensatória em relação ao IVS 2010.",
+        "sessao_artigo": "Seção Teórica: Curva de Oferta Médica Espacial"
+    },
+    {
+        "pilar_id": "PILAR_02",
+        "nome": "Coordenação de Mercado, Falhas de Busca e Matching Centralizado",
+        "paper_canônico": "Roth (1984, JPE) & Agarwal (2015, AER)",
+        "autores": "Roth, Alvin E.; Agarwal, Nikhil",
+        "ano": 2015,
+        "periodico": "American Economic Review",
+        "volume": "Vol. 105, No. 7, pp. 1939–1978",
+        "paginas": 40,
+        "paginas_foco": "pp. 1940–1958 (Seções I a III: 18 págs)",
+        "equacao_central": r"\max_{\mu \in \mathcal{M}} \sum_{i} u_i(\mu(i)) \quad \text{s.t. estabilidade e restrições de capacidade } q_m",
+        "mecanismo_teorico": "O mercado médico descentralizado sofre com atritos informacionais severos, congestionamento de processos seletivos e unraveling temporal. Um clearinghouse centralizado (edital federal) reduz custos de busca, elimina externalidades de congestionamento e viabiliza matches estáveis entre hospitais periféricos e médicos em formação.",
+        "implicacao_testavel_pmme": "A centralização do edital pelo Ministério da Saúde produz um salto descontínuo de preenchimento de vagas imediatas em relação a seleções municipais autônomas.",
+        "sessao_artigo": "Seção Teórica: O Mecanismo de Alocação Centralizada"
+    },
+    {
+        "pilar_id": "PILAR_03",
+        "nome": "Função de Produção Hospitalar e Complementaridade Capital-Trabalho",
+        "paper_canônico": "Acemoglu & Finkelstein (2008, JPE) & Chandra & Skinner (2012, JEL)",
+        "autores": "Acemoglu, Daron; Finkelstein, Amy",
+        "ano": 2008,
+        "periodico": "Journal of Political Economy",
+        "volume": "Vol. 116, No. 5, pp. 837–880",
+        "paginas": 44,
+        "paginas_foco": "pp. 839–858 (Seções I a III: 20 págs)",
+        "equacao_central": r"Y = F(K, L; T), \quad \frac{\partial^2 Y}{\partial L \partial K} > 0 \implies \text{Produtividade marginal do especialista } \frac{\partial Y}{\partial L} \text{ é crescente em } K",
+        "mecanismo_teorico": "Diferente do médico generalista da Atenção Primária, o especialista médico possui estrita complementaridade com capital físico (leitos cirúrgicos, tomógrafos, equipamentos de imagem). A alocação de trabalho especializado ($L$) em ambientes desprovidos de capital físico ($K$) gera retornos marginais decrescentes ou nulos na resolutividade.",
+        "implicacao_testavel_pmme": "O impacto do PMM-E sobre internações locais e exames de média complexidade deve ser heterogêneo e significativamente maior em estabelecimentos com parque tecnológico instalado.",
+        "sessao_artigo": "Seção Teórica: Complementaridade Fator-Tecnologia"
+    },
+    {
+        "pilar_id": "PILAR_04",
+        "nome": "Federalismo Fiscal, Otimização Municipal e Crowding-Out",
+        "paper_canônico": "Baicker & Staiger (2005, QJE) & Gordon (2004, JPubE)",
+        "autores": "Baicker, Katherine; Staiger, Douglas",
+        "ano": 2005,
+        "periodico": "Quarterly Journal of Economics",
+        "volume": "Vol. 120, No. 1, pp. 345–386",
+        "paginas": 42,
+        "paginas_foco": "pp. 348–360 (Seção II: 12 págs)",
+        "equacao_central": r"\max_{L_m^{proprio}, G_m} U(L_m, G_m) \quad \text{s.t. } w_m L_m^{proprio} + G_m = R_m + w_{bolsa} L_m^{fed}",
+        "mecanismo_teorico": "Quando o governo federal subsidia uma parcela do insumo médico ($L_m^{fed}$), o gestor municipal pode realocar recursos próprios para outros gastos públicos ($G_m$) ou descontinuar contratações CLT/estatutárias preexistentes. Isso gera um efeito substituição fiscal (\Delta L^{liquido} < \Delta L^{fed}).",
+        "implicacao_testavel_pmme": "O efeito líquido sobre o estoque total de especialistas no CNES pode ser inferior a 1,0 (coeficiente de substituição estatisticamente diferente de 1).",
+        "sessao_artigo": "Seção Teórica: Comportamento Fiscal do Gestor e Substituição de Vínculos"
+    },
+    {
+        "pilar_id": "PILAR_05",
+        "nome": "Teoria de Contratos Multitarefa e Alocação de Esforço Médico",
+        "paper_canônico": "Holmstrom & Milgrom (1991, JLEO)",
+        "autores": "Holmstrom, Bengt; Milgrom, Paul",
+        "ano": 1991,
+        "periodico": "Journal of Law, Economics, & Organization",
+        "volume": "Vol. 7, Special Issue, pp. 24–52",
+        "paginas": 29,
+        "paginas_foco": "pp. 24–38 (Seções 1 a 3: 15 págs)",
+        "equacao_central": r"e_1^*, e_2^* = \arg\max_{e_1, e_2} \left[ \alpha_1 p_1(e_1) + \alpha_2 p_2(e_2) - C(e_1, e_2) \right], \quad C_{12} > 0",
+        "mecanismo_teorico": "O médico do PMM-E aloca esforço entre duas atividades com custos convexos conjuntos: $e_1$ (produção assistencial imediata no hospital/ambulatório) e $e_2$ (tempo dedicado à especialização acadêmica e estudo). Como a tarefa assistencial é mais facilmente monitorável pelo gestor local, incentivos pontuais podem comprimir o investimento formativo de longo prazo.",
+        "implicacao_testavel_pmme": "A retenção e o desempenho pós-programa dependem do equilíbrio no desenho contratual entre horas assistenciais e horas formativas.",
+        "sessao_artigo": "Seção Teórica: O Dilema Assistencial-Pedagógico do Bolsista"
+    },
+    {
+        "pilar_id": "PILAR_06",
+        "nome": "Políticas Baseadas no Lugar (Place-Based) e Equilíbrio de Bem-Estar",
+        "paper_canônico": "Kline & Moretti (2014, AnnRevEcon) & Glaeser & Gottlieb (2008)",
+        "autores": "Kline, Patrick; Moretti, Enrico",
+        "ano": 2014,
+        "periodico": "Annual Review of Economics",
+        "volume": "Vol. 6, pp. 629–662",
+        "paginas": 34,
+        "paginas_foco": "pp. 631–648 (Seções 1 a 3: 17 págs)",
+        "equacao_central": r"W = \sum_{m} N_m \left[ v_m(w_m, r_m) - c_m \right] + \text{Spillovers de Produtividade/Saúde}",
+        "mecanismo_teorico": "Políticas públicas que subsidiam a atração de capital humano para regiões desfavorecidas só geram ganhos líquidos de bem-estar agregado se as externalidades marginais de saúde geradas no local receptor superarem as perdas de aglomeração do polo emissor.",
+        "implicacao_testavel_pmme": "O PMM-E reduz a desigualdade espacial no acesso a especialistas sem gerar desassistência nos municípios vizinhos (ausência de spillovers negativos severos).",
+        "sessao_artigo": "Seção Teórica: Eficiência Agregada vs Equidade Distributiva"
+    },
+    {
+        "pilar_id": "PILAR_07",
+        "nome": "Tomada de Decisão Médica sob Incerteza e Resolutividade Diagnóstica",
+        "paper_canônico": "Currie & MacLeod (2017, JLE) & Arrow (1963, AER)",
+        "autores": "Currie, Janet; MacLeod, W. Bentley",
+        "ano": 2017,
+        "periodico": "Journal of Labor Economics",
+        "volume": "Vol. 35, No. 1, pp. 1–43",
+        "paginas": 43,
+        "paginas_foco": "pp. 4–20 (Modelo Teórico: 16 págs)",
+        "equacao_central": r"P(\text{Encaminhamento} \mid \text{Sintoma } s, \text{Expertise } \theta) = f(s, \theta), \quad \frac{\partial P(\text{Encam})}{\partial \theta} < 0",
+        "mecanismo_teorico": "O médico generalista enfrenta alta incerteza diagnóstica em patologias complexas, gerando alta taxa de encaminhamentos para centros terciários distantes. A introdução de expertise especializada local ($\theta$) melhora a precisão diagnóstica, reduz transferências evitáveis e aumenta a resolutividade municipal.",
+        "implicacao_testavel_pmme": "A presença do especialista do PMM-E reduz os fluxos de pacientes que viajam para fora da região de saúde (redução de Tratamento Fora do Domicílio - TFD).",
+        "sessao_artigo": "Seção Teórica: O Modelo de Decisão e Resolutividade Diagnóstica"
+    }
+]
+
+def main():
+    os.makedirs("output/revisao_literatura", exist_ok=True)
+    os.makedirs("docs", exist_ok=True)
+    
+    df = pd.DataFrame(THEORETICAL_PILLARS)
+    df.to_csv("output/revisao_literatura/pilares_teoricos_pmme.csv", index=False, encoding="utf-8-sig")
+    with open("output/revisao_literatura/pilares_teoricos_pmme.json", "w", encoding="utf-8") as f:
+        json.dump(THEORETICAL_PILLARS, f, indent=2, ensure_ascii=False)
+        
+    print("Sucesso: 7 Pilares Teóricos seminais estruturados e exportados.")
+
+if __name__ == "__main__":
+    main()

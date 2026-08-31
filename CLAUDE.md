@@ -4,10 +4,12 @@
 
 - Organize toda análise pela cadeia: implementação → força de trabalho → capacidade → acesso → saúde → custos/bem-estar → equidade e spillovers.
 - Comece pelo outcome e pelo estimando; só depois escolha método e base.
-- No estudo prioritário vigente, use o estoque municipal de especialistas como
-  outcome primário e entradas, saídas, saldo e presença posterior como
-  mecanismos. Use todo o horizonte comum maduro; seis meses entram na primeira
-  versão e doze meses somente quando a coorte tiver seguimento completo.
+- No estudo prospectivo vigente do ciclo 3, use o estoque municipal de
+  especialistas como outcome primário e entradas, saídas, saldo e presença
+  posterior como mecanismos. Anestesiologia/SIH é módulo assistencial
+  confirmatório condicional aos portões pré-tratamento. Use seis meses na
+  primeira atualização e doze meses somente quando a coorte tiver seguimento
+  completo.
 - Não trate vínculo cadastrado, produção, acesso, espera e saúde como sinônimos.
 - Não classifique um eixo inteiro como sucesso ou fracasso com base em uma única métrica intermediária.
 - Separe expansão líquida de substituição, remanejamento, migração cadastral e
@@ -34,11 +36,18 @@
 
 ## Execução
 
-- `docs/05_roadmap_execucao.md` é a ordem canônica de trabalho. `docs/03_plano_avaliacao_outcomes.md` é a agenda ampla e não deve ser interpretado como fila imediata.
+- `docs/05_roadmap_execucao.md` preserva a execução validada do ciclo 1.
+  `docs/12_estrategia_causal_prospectiva_ciclo3.md` e
+  `prompts/avaliacao_ciclo3/README.md` são a ordem canônica da próxima avaliação.
+  `docs/03_plano_avaliacao_outcomes.md` é agenda ampla e não deve ser
+  interpretado como fila imediata.
 - Antes de iniciar uma tarefa, confirme a fila vigente em
   `docs/05_roadmap_execucao.md`. Os prompts históricos em `prompts/` não
   autorizam executar o desenho individual anterior.
-- WP3, WP4 e WP5 estão guardados conforme `docs/06_backlog_wp3_wp4_wp5.md`; não crie scripts, outputs ou aquisições desses WPs sem autorização explícita do autor.
+- WP3, WP4 e WP5 continuam guardados conforme
+  `docs/06_backlog_wp3_wp4_wp5.md`, exceto o módulo explícito e limitado de
+  anestesiologia/SIH autorizado na fila C3. Não amplie essa exceção para fila,
+  saúde, custos ou SIA sem o portão previsto.
 - Na primeira versão, execute somente o plano agregado do ciclo 1: relevância
   de imediata versus reserva, ponte curso–CBO, painel CNES, estoque municipal,
   mecanismos maduros, DDD e estudo de evento. Demais WPs permanecem como
@@ -47,6 +56,9 @@
   portão de relevância falhou na amostra município–curso da DDD. Não promover
   esses resultados a efeito causal nem escolher filtros, janelas ou estimadores
   retrospectivamente para mudar essa conclusão.
+- Nos prompts C3-01 a C3-04, não consulte outcomes pós-tratamento. Nos prompts
+  C3-05 e C3-06, não reescolha amostra, outcome ou estimador depois de observar
+  resultados.
 - Os pares de tarefas 01–02 e 04–05 só podem rodar em paralelo em worktrees isolados.
 - Cada agente deve produzir commit próprio e não fazer push ou merge, salvo instrução explícita do autor.
 - `run_all.py` é o ponto de entrada ponta a ponta do estado validado do projeto.
