@@ -2,9 +2,10 @@
 
 ## Condição de execução
 
-Execute somente quando todas as unidades congeladas tiverem seis competências
-pós-`T0` completas e publicadas em CNES e, para o módulo selecionado, SIH ou
-SIA. Confirme a maturidade sem abrir resultados agregados por braço.
+Execute somente quando a competência CNES `202703` estiver completa, publicada
+e madura para todas as unidades congeladas. SIH completo é exigido somente para
+o submódulo clínico; sua ausência não bloqueia força de trabalho. Confirme a
+maturidade sem abrir resultados agregados por braço.
 
 ## Objetivo
 
@@ -26,10 +27,10 @@ Atualizar as bases até seis meses e executar exatamente o plano congelado em
 2. Adquira somente as seis competências necessárias, com o mesmo pipeline e
    validações do pré-período.
 3. Rode testes de cobertura e esquema antes de unir tratamento e outcome.
-4. Estime o DiD/event study principal de anestesiologia no município; depois,
-   sem alterar o outcome, rode CNES como localização do efeito, SIH como
-   secundário clínico autorizado e a generalização predefinida para os cursos
-   12 e 24. Curso 2/CBO 225225 permanece sensibilidade.
+4. Estime o DiD/event study principal de anestesiologia no CNES ofertante;
+   depois, sem alterar o outcome, rode município como oferta líquida local, SIH
+   somente se autorizado pelo portão clínico e a generalização descritiva
+   predefinida para os cursos 12 e 24. Curso 2/CBO 225225 permanece sensibilidade.
 5. Reporte wild cluster bootstrap, intervalos, MDE e testes de equivalência.
 6. Rode apenas placebos e robustez pré-especificados: leads, data falsa prévia,
    negativos, pesos de sobreposição, leave-one-region-out e synthetic DiD.

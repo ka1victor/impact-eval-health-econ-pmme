@@ -2,7 +2,7 @@
 
 > **Execução:** 2026-08-31<br>
 > **Status:** bloqueado por fonte oficial incompleta<br>
-> **C3-03:** não executado
+> **C3-03 clínico/SIH:** bloqueado; força de trabalho/CNES é independente
 
 ## Resultado
 
@@ -34,7 +34,8 @@ que sejam confundidos com a correção.
 
 ## Portão
 
-O C3-03 permanece bloqueado. Próxima ação: verificar novamente o FTP e executar
-o C3-02B integral quando os dois arquivos forem publicados. Nenhum outcome
-pós-tratamento foi consultado e nenhuma estimação foi feita. C3-05 continua
-proibido até seis meses comuns maduros e publicados.
+O portão clínico do C3-03 permanece bloqueado. O torneio de força de trabalho
+foi executado separadamente, somente com CNES pré-T0. Próxima ação clínica:
+verificar novamente o FTP e executar o C3-02B integral quando os dois arquivos
+forem publicados. Nenhum outcome pós-tratamento foi consultado e nenhuma
+estimação foi feita. C3-05 continua proibido até `202703` estar madura.

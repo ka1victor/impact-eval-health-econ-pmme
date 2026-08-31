@@ -88,11 +88,14 @@
   25 SIGTAP, mas ficou bloqueada em 673 sucessos: `RDAC2606.dbc` e
   `RDRR2606.dbc` não estavam no FTP oficial. Repetir só após ambos aparecerem;
   não imputar zeros (`prompts/avaliacao_ciclo3/02b_corrigir_e_validar_sih_pre.md`).
-- [ ] C3-03 — bloqueado; somente depois de o C3-02B obter 675 sucessos, executar potência, múltiplos placebos,
-  equivalência de pré-tendências e congelar o plano. Artefatos que ainda usem
-  “sete cursos unívocos” ou números contraditórios não são aceitos.
-- [ ] C3-04 — pilotar SIA/ecocardiografia somente se o portão ordenar (arquivado em espera conforme decisão do torneio C3-03).
-- [ ] C3-05 — estimar a versão de seis meses apenas com seguimento comum maduro (aguardando T0+6m em março/2027).
+- [x] C3-03 — separar portões e executar o torneio de força de trabalho com 26
+  competências CNES estritamente pré-T0. Protocolo congelado; anestesiologia
+  classificada como `associacao_ajustada` (MDE 2,22 no CNES e 4,44 no
+  município). Nenhum efeito foi estimado.
+- [x] C3-04 — não acionar: SIA/ecocardiografia não venceu a rubrica nem
+  substitui automaticamente o SIH incompleto.
+- [ ] C3-05 — estimar a versão de seis meses apenas com seguimento comum maduro
+  (aguardando competência CNES `202703` publicada e validada).
 - [ ] C3-06 — atualizar a mesma análise aos doze meses, sem redesenho (aguardando T0+12m em setembro/2027).
 
 ## Congelado

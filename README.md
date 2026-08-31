@@ -81,8 +81,8 @@ causal não reutilizará filtros ou estimadores para mudar esse resultado. Ela
 congelará prospectivamente o ciclo 3 antes de observar seus outcomes:
 
 - estudo principal: oferta imediata pura versus proposta não priorizada pura de
-  anestesiologia sobre o estoque municipal de anestesiologistas aos seis e
-  doze meses;
+  anestesiologia sobre o estoque no CNES ofertante aos seis e doze meses, com
+  estoque municipal como teste obrigatório de oferta líquida;
 - desfecho clínico-chave condicional: cirurgias eletivas no SIH;
 - generalização secundária: oncologia clínica e medicina intensiva, com efeitos
   separados; cirurgia geral/CBO 225225 apenas como sensibilidade;
@@ -97,15 +97,20 @@ observável dos participantes no CNES. O C3-01 já corrigiu a ponte do Anexo I: 
 processados, mas `RDAC2606.dbc` e `RDRR2606.dbc` não existiam no FTP oficial em
 31/08/2026. As 25 versões SIGTAP foram historicizadas. Conforme a regra
 *fail-closed*, as ausências não viraram zeros e os painéis preliminares do
-C3-02 não foram promovidos. O próximo passo é repetir o C3-02B quando os dois
-arquivos aparecerem; C3-03 continua bloqueado.
+C3-02 não foram promovidos. Esse bloqueio foi separado do CNES: o C3-03 de
+força de trabalho foi executado apenas com o pré e congelou o plano em
+[`docs/13_plano_pre_analise_ciclo3.md`](docs/13_plano_pre_analise_ciclo3.md).
+Anestesiologia ficou como associação ajustada: suporte aprovado, mas
+equivalência e potência para um especialista insuficientes. C3-02B ainda deve
+ser repetido quando os dois arquivos aparecerem, exclusivamente para liberar o
+módulo clínico.
 
 A estratégia e seus limites estão em
 [`docs/12_estrategia_causal_prospectiva_ciclo3.md`](docs/12_estrategia_causal_prospectiva_ciclo3.md).
 Os prompts ordenados para sessões futuras estão em
 [`prompts/avaliacao_ciclo3/`](prompts/avaliacao_ciclo3/README.md). Nenhum efeito
-do ciclo 3 foi estimado, o C3-03 não foi executado e qualquer estimação aguarda
-seis meses comuns maduros após o protocolo pré-tratamento ser congelado.
+do ciclo 3 foi estimado. Qualquer estimação aguarda a competência `202703`
+madura e seguirá a especificação congelada, sem redesenho pelo resultado.
 
 ## Escopo da primeira versão
 

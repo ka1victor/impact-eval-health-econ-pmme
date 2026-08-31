@@ -122,22 +122,28 @@ class SihPreCiclo3Test(unittest.TestCase):
 
         blocked = json.loads((output / "manifesto_sih_pre.json").read_text(encoding="utf-8"))
         self.assertEqual(
-            blocked["status_portao_c3_03"],
+            blocked["status_portao_clinico_c3_03"],
             "BLOQUEADO_FONTE_OFICIAL_INCOMPLETA",
         )
-        self.assertEqual(blocked["c3_03"], "BLOQUEADO")
+        self.assertEqual(blocked["c3_03_clinico_sih"], "BLOQUEADO")
+        self.assertIn("CONCLUIDO_COM_CNES_PRE", blocked["c3_03_forca_trabalho"])
         self.assertIsNone(blocked["armazenamento_temporario"]["pico_bytes"])
 
-    def test_c3_03_nao_foi_executado(self) -> None:
+    def test_c3_03_forca_trabalho_separado_do_portao_sih(self) -> None:
         output = ROOT / "output" / "avaliacao_ciclo3"
-        forbidden = [
+        required = [
             output / "diagnosticos_pre.csv",
             output / "potencia_pre.json",
             output / "decisao_torneio_pre.json",
             output / "registro_pre_analise.json",
             ROOT / "docs" / "13_plano_pre_analise_ciclo3.md",
         ]
-        self.assertFalse(any(path.exists() for path in forbidden))
+        self.assertTrue(all(path.exists() for path in required))
+        decision = json.loads((output / "decisao_torneio_pre.json").read_text(encoding="utf-8"))
+        self.assertEqual(
+            decision["modulo_clinico_sih"]["status_operacional"],
+            "BLOQUEADO_TEMPORARIAMENTE_FONTE_INCOMPLETA",
+        )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,71 @@
+{
+  "protocolo": "C3-03-registro-pre-analise",
+  "congelado_em": "2026-08-31",
+  "t0_calendario": "202609",
+  "janela_pre": {
+    "inicio": "202406",
+    "fim": "202607",
+    "competencias": 26
+  },
+  "leitura_pos_t0": false,
+  "efeitos_pos_tratamento_estimados": false,
+  "auditoria_estimadores": {
+    "status": "APROVADA",
+    "coeficiente_within": 0.6946340038720448,
+    "coeficiente_dummies": 0.6946340038720444,
+    "diferenca_absoluta": 3.3306690738754696e-16,
+    "bootstrap_deterministico": true,
+    "observacao": "Auditoria sintética de construção FE, clusters e reprodutibilidade; nenhum efeito real estimado."
+  },
+  "assinatura_pmme_completa": false,
+  "arquivos_entrada_cnes": {
+    "cnes_vinculos_medicos_202406.parquet": "5f59bcbf2a9f01819cbca0a0da53147325f9b518a2169019e152146cf53ea568",
+    "cnes_vinculos_medicos_202407.parquet": "bc8ae273978af68135ca446069806f965b3ba73498ac04886cbc4d920fa5ab29",
+    "cnes_vinculos_medicos_202408.parquet": "5b44c7f80c2ca219e9d34369a455403f915c0c36c446473832760c70d4381a84",
+    "cnes_vinculos_medicos_202409.parquet": "d90a57e6a79877e6584ca0731a39c4345bc5f26cbb365829bf26b7219e4e916e",
+    "cnes_vinculos_medicos_202410.parquet": "e35b0278785c782040c1d9bdcc1b989a08b75215fe83b1e48a9bc9adea58de8b",
+    "cnes_vinculos_medicos_202411.parquet": "ac3da9c3bbac12a309379403d97cf7a88e97ccc2b8a942e39b14a518002144b1",
+    "cnes_vinculos_medicos_202412.parquet": "ef7b5323519d672ac7ce055b6fc7b6f04f2a53978e67d4a304599ef25f8f3b8c",
+    "cnes_vinculos_medicos_202501.parquet": "1f62724c5f12d559b4e640cc31906e80e6e719d87a0dca08354e7d5d616aaf95",
+    "cnes_vinculos_medicos_202502.parquet": "442666c9ca4ed38815d0344db2839c4c60730284de2c28e9fe6ed9dd2e34520d",
+    "cnes_vinculos_medicos_202503.parquet": "99c62247676d014b24bd819b8ab69d79dbdb63fd83990e00b6a03ee4c9103da9",
+    "cnes_vinculos_medicos_202504.parquet": "34147fece06f2ddb49620e8ff90f68e85cd47375b19da9bd05aee8ae8dab89ec",
+    "cnes_vinculos_medicos_202505.parquet": "2e8d0cb678d5e98fdfada7c631247c0519aa16151fef7f528adcbee7d8a639af",
+    "cnes_vinculos_medicos_202506.parquet": "e3c6ed8092076717c484c3084331a036c50cc8393848cd63f47f82385c983be1",
+    "cnes_vinculos_medicos_202507.parquet": "d055e50bf5cf88fa6b270b026e7274f25f0e65212ca35b8dccb97ff2948e1f9d",
+    "cnes_vinculos_medicos_202508.parquet": "e3aa18e83b8e68ab71772c85f89ddd438b77c3096e44a637235f77884171469e",
+    "cnes_vinculos_medicos_202509.parquet": "283de31c3c669c5968302ccfb19fe7015d4ebdae243f7f5724d4379bf6181803",
+    "cnes_vinculos_medicos_202510.parquet": "efcac8f1af48fbbece122aecd5f277110221b62e4cf3dd91d011313134751ce7",
+    "cnes_vinculos_medicos_202511.parquet": "cabc5134fd43697a59118b361c41b7b08fb55abd83b192aca4066069483417ea",
+    "cnes_vinculos_medicos_202512.parquet": "1cf648d79152721a706a35c93738fca2b85469018f72fc8ab8949bd4f4bb4582",
+    "cnes_vinculos_medicos_202601.parquet": "c922682f17b57e49672dd60f9056400fe5cc3af85f4660fecccca0d7113c8946",
+    "cnes_vinculos_medicos_202602.parquet": "adde36b423c407621b9c1c2f19f38750bbe299414d2555ed66a7fef8c6e93e45",
+    "cnes_vinculos_medicos_202603.parquet": "1f42bc3cf3b77adf89ba72e2666b7e18e8518bb75e4cb9918a69dcedbec446f1",
+    "cnes_vinculos_medicos_202604.parquet": "16d6ff6e79a71d9dde42b0b2ea6f2fa35aea3e9efda5b95e4b845fff6a9d7ef2",
+    "cnes_vinculos_medicos_202605.parquet": "727b6681151a5303450fbb960339907f7c40ee3ea9197993aa2cfc02d1369a98",
+    "cnes_vinculos_medicos_202606.parquet": "cee6daa58e06f33a8b842c35bac252e84d4a58735dc8ffd83d77d679bd4359c8",
+    "cnes_vinculos_medicos_202607.parquet": "67a4d4194461c9f9b4c6b68a12600d200167969198b3302837cb40399f9fae21"
+  },
+  "hashes_artefatos_congelados": {
+    "output/avaliacao_ciclo3/cnes_pre/painel_forca_trabalho_pre.parquet": "a8290e64aabb20a5029867e61ede02c2ce0bd1f81df66a4dc5625647e4e7a8b7",
+    "output/avaliacao_ciclo3/cnes_pre/painel_forca_trabalho_cnes_pre.parquet": "66b273e50b6caaf364b77c891c0c5b0200973a87f0c35ee4696b869b37de5555",
+    "output/avaliacao_ciclo3/cnes_pre/unidades_elegiveis_congeladas.csv": "af3ada52668df77b7ccf95c29bc80b16fc25562f2daf63fd56ab95bc4d557aad",
+    "output/avaliacao_ciclo3/cnes_pre/unidades_excluidas_congeladas.csv": "d0bddcd61336bcb1362c5afbd406f4f4deb8bad37a041a48a1b010b2c7c24b0e",
+    "output/avaliacao_ciclo3/cnes_pre/cnes_elegiveis_congelados.csv": "265d241cd82018092772dbc2c1301dcd032cba7611a86d9acba4116beafc1676",
+    "output/avaliacao_ciclo3/cnes_pre/cnes_excluidos_congelados.csv": "68b498b267ac1adb9da7b978eacd7720d931a64453ee9a19095673510e66809f",
+    "output/avaliacao_ciclo3/pesos_sobreposicao_pre.csv": "d38c93b002cdf3a22465f341828a0ef283c51205be50d11c11e726672d1e4428",
+    "output/avaliacao_ciclo3/diagnosticos_pre.csv": "e5f45c22659c9ac6e7828f56942def82565ed1d522fe0312700b78b6e781895b",
+    "output/avaliacao_ciclo3/potencia_pre.json": "07c43715df0858079201a03914ec176ba1b287256d75b101e19737c1a9d4e6ce",
+    "output/avaliacao_ciclo3/decisao_torneio_pre.json": "9f2f85475a73011bc9b4fbada869e7ef88648070bf26c07e3c81699d87bb6d75",
+    "docs/13_plano_pre_analise_ciclo3.md": "f17291c61aea6037752e26ae1cd51c1819d08462f1e0e3ad6e927e2cdc45be04"
+  },
+  "regras": {
+    "tratamento_cnes": "todas as observações da célula CNES-curso são imediata_pura",
+    "controle_cnes": "todas as observações da célula CNES-curso são nao_priorizada_pura",
+    "tratamento_municipio": "todas as células município-curso são imediata_pura",
+    "controle_municipio": "todas as células município-curso são nao_priorizada_pura",
+    "exclusoes": "qualquer reserva, mista ou combinação local",
+    "inferência_futura": "FE de unidade e mês; cluster município; wild cluster bootstrap-t restrito e reestudantizado",
+    "synthetic_did": "somente robustez, nunca reparo de pré-tendência"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "protocolo": "C3-03-potencia-pre",
+  "data_corte": "2026-08-31",
+  "t0": "202609",
+  "outcome": "mudança em especialistas distintos na unidade analítica (CNES ou município) em seis meses",
+  "mudanca_minima_relevante": 1.0,
+  "metodo": "bootstrap empírico por cluster municipal, no suporte comum e com pesos de sobreposição, de mudanças prévias de seis meses; teste bilateral 5%",
+  "resultados": {
+    "anestesiologia__cnes_ofertante": {
+      "mde_80": 2.22,
+      "potencia_efeito_1": 0.2278,
+      "n_tratados": 99,
+      "n_controles": 298,
+      "clusters_municipais": 312,
+      "simulacoes": 5000,
+      "semente": 20260832,
+      "mudanca": "especialistas_distintos_202607_menos_202601"
+    },
+    "oncologia_clinica__cnes_ofertante": {
+      "mde_80": 1.22,
+      "potencia_efeito_1": 0.6242,
+      "n_tratados": 11,
+      "n_controles": 34,
+      "clusters_municipais": 41,
+      "simulacoes": 5000,
+      "semente": 20260843,
+      "mudanca": "especialistas_distintos_202607_menos_202601"
+    },
+    "medicina_intensiva__cnes_ofertante": {
+      "mde_80": null,
+      "potencia_efeito_1": null,
+      "n_tratados": 1,
+      "n_controles": 26
+    },
+    "cirurgia_geral_cbo_exclusivo__cnes_ofertante": {
+      "mde_80": 1.7,
+      "potencia_efeito_1": 0.3844,
+      "n_tratados": 25,
+      "n_controles": 270,
+      "clusters_municipais": 233,
+      "simulacoes": 5000,
+      "semente": 20260833,
+      "mudanca": "especialistas_distintos_202607_menos_202601"
+    },
+    "anestesiologia__municipio": {
+      "mde_80": 4.44,
+      "potencia_efeito_1": 0.09,
+      "n_tratados": 70,
+      "n_controles": 225,
+      "clusters_municipais": 295,
+      "simulacoes": 5000,
+      "semente": 20260832,
+      "mudanca": "especialistas_distintos_202607_menos_202601"
+    },
+    "oncologia_clinica__municipio": {
+      "mde_80": 3.96,
+      "potencia_efeito_1": 0.1254,
+      "n_tratados": 7,
+      "n_controles": 24,
+      "clusters_municipais": 31,
+      "simulacoes": 5000,
+      "semente": 20260843,
+      "mudanca": "especialistas_distintos_202607_menos_202601"
+    },
+    "medicina_intensiva__municipio": {
+      "mde_80": null,
+      "potencia_efeito_1": null,
+      "n_tratados": 1,
+      "n_controles": 1
+    },
+    "cirurgia_geral_cbo_exclusivo__municipio": {
+      "mde_80": 2.74,
+      "potencia_efeito_1": 0.1756,
+      "n_tratados": 19,
+      "n_controles": 170,
+      "clusters_municipais": 189,
+      "simulacoes": 5000,
+      "semente": 20260833,
+      "mudanca": "especialistas_distintos_202607_menos_202601"
+    }
+  }
+}

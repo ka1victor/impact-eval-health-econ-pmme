@@ -2,7 +2,8 @@
 
 > **Status:** C3-01 concluído e corrigido; C3-02 executado como piloto técnico;
 > C3-02B tentado em 31/08/2026 e bloqueado por dois arquivos oficiais ausentes.
-> C3-03 não foi executado. A
+> C3-03 foi executado para força de trabalho usando somente CNES pré; o SIH
+> segue bloqueado separadamente. A
 > estratégia substantiva está em
 > [`docs/12_estrategia_causal_prospectiva_ciclo3.md`](../../docs/12_estrategia_causal_prospectiva_ciclo3.md).
 
@@ -13,8 +14,8 @@
 | 1 | [`01_congelar_coorte_e_exposicao.md`](01_congelar_coorte_e_exposicao.md) | Concluído | coorte e ponte normativa corrigidas |
 | 2 | [`02_piloto_sih_anestesiologia.md`](02_piloto_sih_anestesiologia.md) | Executado com ressalvas | viabilidade e painel preliminar |
 | 3 | [`02b_corrigir_e_validar_sih_pre.md`](02b_corrigir_e_validar_sih_pre.md) | Repetir quando AC/RR 2026-06 aparecerem | 673/675; SIGTAP 25/25; bloqueio documentado |
-| 4 | [`03_torneio_pre_tratamento_e_pre_analise.md`](03_torneio_pre_tratamento_e_pre_analise.md) | **Bloqueado até 675/675** | desenho e protocolo ainda não congelados |
-| 5 | [`04_piloto_sia_condicional.md`](04_piloto_sia_condicional.md) | Só se o portão 3 acionar | alternativa ecocardiografia/SIA |
+| 4 | [`03_torneio_pre_tratamento_e_pre_analise.md`](03_torneio_pre_tratamento_e_pre_analise.md) | Concluído no CNES | protocolo congelado; SIH continua em portão separado |
+| 5 | [`04_piloto_sia_condicional.md`](04_piloto_sia_condicional.md) | Não acionar | ecocardiografia não substitui automaticamente o SIH |
 | 6 | [`05_estimacao_seis_meses.md`](05_estimacao_seis_meses.md) | Somente com seis meses maduros | primeira análise causal condicional |
 | 7 | [`06_atualizacao_doze_meses.md`](06_atualizacao_doze_meses.md) | Somente com doze meses maduros | durabilidade e retenção |
 
@@ -33,8 +34,9 @@
 
 ## Estado atual
 
-- estudo principal: anestesiologia/força de trabalho, planejado e sem efeitos
-  pós-tratamento;
+- estudo principal: anestesiologia/força de trabalho no CNES ofertante, com
+  município como teste de oferta líquida; classificação `associacao_ajustada` e
+  nenhum efeito pós-tratamento;
 - generalização: oncologia clínica e medicina intensiva; curso 2/CBO 225225 como
   sensibilidade;
 - SIH local: painéis preliminares C3-02 presentes, mas não aprovados; tentativa
@@ -44,7 +46,7 @@
 - coorte C3: congelada em produto analítico;
 - assinatura pública da Nota Técnica nº 59/2026: ainda não validada nas
   competências CNES futuras;
-- protocolo prospectivo: ainda não congelado;
+- protocolo prospectivo: congelado em `docs/13_plano_pre_analise_ciclo3.md`;
 - efeitos pós-tratamento: não estimados.
 
 O “C3-03” desta fila é um torneio exclusivamente pré-tratamento e não é o

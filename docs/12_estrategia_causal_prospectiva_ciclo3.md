@@ -13,8 +13,8 @@ O trabalho terá uma pergunta principal simples e relevante:
 
 > Qual é o efeito de uma oferta imediata de anestesiologia pelo PMM-E, em
 > comparação com uma proposta de anestesiologia do mesmo ciclo que não foi
-> priorizada, sobre o número e a permanência de anestesiologistas no município
-> aos seis e doze meses?
+> priorizada, sobre o número e a permanência de anestesiologistas no CNES
+> ofertante e, como teste de oferta líquida, no município aos seis e doze meses?
 
 O estimando principal é uma intenção de tratar pela **priorização imediata** no
 terceiro ciclo. Não é o efeito de “participar efetivamente”, do número de bolsas
@@ -44,11 +44,17 @@ linguagem causal condicional se proveniência, ponte clínica, suporte,
 pré-tendências e potência forem aceitáveis sem consultar qualquer resultado
 posterior ao início.
 
-Ecocardiografia/SIA é a primeira alternativa condicional, e não um terceiro
-desfecho acrescentado por conveniência. A decisão entre o módulo cirúrgico/SIH e
-essa alternativa ambulatorial será tomada por uma rubrica congelada no
-pré-período; ela não substitui o estudo principal de força de trabalho em
-anestesiologia.
+Ecocardiografia/SIA era a primeira alternativa condicional, e não um terceiro
+desfecho acrescentado por conveniência. A rubrica prévia não a selecionou: SIA
+não será baixado nem substituirá automaticamente o SIH incompleto. Essa decisão
+não altera o estudo principal de força de trabalho em anestesiologia.
+
+O torneio C3-03 foi concluído em 31/08/2026 sem abrir o pós. No CNES, há 119
+tratados e 305 controles, MDE de 2,22 especialistas e suporte suficiente, mas
+os intervalos não demonstraram equivalência de pré-tendências. No município,
+há 77 tratados e 247 controles e MDE de 4,44. A classificação congelada é
+`associacao_ajustada`; detalhes e linguagem permitida estão no
+[`plano de pré-análise`](13_plano_pre_analise_ciclo3.md).
 
 ## 2. O que SIH e SIA permitem observar
 
@@ -66,7 +72,9 @@ confirmou a classificação de 77 municípios tratados puros, 247 controles puro
 e um município imediata+reserva excluído. Porém, o FTP oficial não continha
 `RDAC2606.dbc` e `RDRR2606.dbc`. Foram 673 sucessos; as duas ausências não foram
 convertidas em zeros. O [`relatório C3-02B`](auditorias/06_piloto_sih_anestesiologia.md)
-mantém o painel bloqueado e, portanto, C3-03 não foi executado.
+mantém o painel clínico bloqueado. Esse portão foi separado do CNES: C3-03
+executou o torneio de força de trabalho apenas com dados pré-T0, sem usar os
+painéis SIH preliminares.
 
 SIH e SIA são fontes públicas do DATASUS:
 
@@ -253,10 +261,10 @@ outros cursos cirúrgicos imediatos.
 
 ### 5.1 Principal — força de trabalho em anestesiologia
 
-Unidade principal: município–mês. A unidade CNES–mês mede efeito no serviço;
-região de saúde–mês diagnostica criação líquida versus redistribuição. O braço
-municipal será construído com todas as células de anestesiologia e excluirá o
-município que combina imediata e reserva.
+Unidade principal direta: CNES–mês. Município–mês é o secundário-chave que
+separa ganho no serviço de criação líquida local; região de saúde–mês permanece
+diagnóstico de redistribuição. O braço municipal usa todas as células de
+anestesiologia e exclui qualquer combinação com reserva ou modalidades mistas.
 
 Outcome primário:
 
@@ -421,18 +429,16 @@ linhas clínicas até encontrar um resultado.
 
 ## 9. Sequência operacional e calendário
 
-1. Manter a coorte e a ponte normativa corrigida congeladas.
-2. Reexecutar o SIH pelo C3-02B quando AC/RR 2026-06 estiverem publicados, com
-   27 UFs, 675 sucessos, exposição municipal correta, pico medido e SIGTAP já historicizado.
-3. Só então executar o C3-03 usando somente pré-dados; congelar o plano de análise e
-   seus hashes.
-4. Aguardar seguimento comum de seis meses e só então atualizar CNES/SIH.
-5. Estimar a versão de seis meses sem reescolher método, amostra ou outcome.
-6. Atualizar a mesma análise aos doze meses.
+1. Manter a coorte, a ponte, os pesos e o protocolo C3-03 congelados.
+2. Acrescentar competências CNES sem consultar efeitos até `202703` estar madura.
+3. Reexecutar o SIH pelo C3-02B quando AC/RR 2026-06 estiverem publicados, com
+   27 UFs, 675 sucessos, exposição municipal correta, pico medido e SIGTAP já
+   historicizado; isso libera apenas o subprotocolo clínico.
+4. Estimar a versão de seis meses sem reescolher método, amostra ou outcome.
+5. Atualizar a mesma análise aos doze meses.
 
-Se `T0` for setembro de 2026, seis meses completos terminam em fevereiro de
-2027 e doze meses em agosto de 2027; deve-se acrescentar a defasagem de
-publicação do CNES/SIH. O prompt de congelamento fixará a data exata.
+Com `T0=202609`, os endpoints congelados são `202703` e `202709`; deve-se
+acrescentar a defasagem de publicação do CNES/SIH.
 
 ## 10. Conclusões que não serão feitas
 

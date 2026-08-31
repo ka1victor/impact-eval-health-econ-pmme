@@ -1,6 +1,6 @@
 {
   "protocolo": "C3-02B_SIH_PRE_TRATAMENTO_ANESTESIOLOGIA",
-  "status_portao_c3_03": "BLOQUEADO_FONTE_OFICIAL_INCOMPLETA",
+  "status_portao_clinico_c3_03": "BLOQUEADO_FONTE_OFICIAL_INCOMPLETA",
   "data_execucao": "2026-08-31",
   "t0_provisorio": "202609",
   "janela_solicitada": {
@@ -51,6 +51,7 @@
     "manifesto_sigtap_pre.csv": "f88b7251f4ca3cec912a18929a506bc477242b9e89047e74d2ec0da7bcc3ee63"
   },
   "proxima_acao": "repetir C3-02B somente quando RDAC2606.dbc e RDRR2606.dbc aparecerem no FTP oficial",
-  "c3_03": "BLOQUEADO",
+  "c3_03_forca_trabalho": "INDEPENDENTE_DESTE_MANIFESTO_CONCLUIDO_COM_CNES_PRE",
+  "c3_03_clinico_sih": "BLOQUEADO",
   "estimacao_pos_tratamento": "PROIBIDA_ATE_SEIS_MESES_MADUROS"
 }

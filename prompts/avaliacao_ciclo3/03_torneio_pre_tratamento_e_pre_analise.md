@@ -3,15 +3,17 @@
 ## Objetivo
 
 Usar somente exposição e outcomes anteriores a `T0` para verificar a viabilidade
-do estudo principal de anestesiologia, de seu módulo cirúrgico e da generalização
-para outros cursos. Congelar um plano antes da primeira atualização
-pós-tratamento. O torneio classifica credibilidade; ele não escolhe a menor
-estatística `p`.
+do estudo principal de anestesiologia e da generalização para outros cursos.
+O portão da força de trabalho depende do CNES pré; o portão clínico depende
+separadamente do SIH pré completo. Congelar um plano antes da primeira
+atualização pós-tratamento. O torneio classifica credibilidade; ele não escolhe
+a menor estatística `p`.
 
 ## Entradas obrigatórias
 
-- C3-01 e **C3-02B** incorporados e aprovados;
-- coorte, ponte, CNES pré e SIH pré validados;
+- C3-01 incorporado e aprovado;
+- coorte, ponte e CNES pré validados para força de trabalho;
+- C3-02B e SIH pré completos somente para liberar o submódulo clínico;
 - `docs/12_estrategia_causal_prospectiva_ciclo3.md`;
 - auditoria do pipeline agregado do ciclo 1, para não repetir seleção
   retrospectiva.
@@ -32,8 +34,10 @@ estatística `p`.
 ## Trabalho
 
 1. Congele a hierarquia substantiva antes dos diagnósticos:
-   - **principal:** oferta imediata de anestesiologia sobre o estoque municipal
-     de anestesiologistas no mês 6, com atualização da mesma medida no mês 12;
+   - **principal direto:** oferta imediata de anestesiologia sobre o estoque no
+     CNES ofertante no mês 6, com atualização no mês 12;
+   - **secundário-chave:** estoque municipal nos mesmos horizontes, necessário
+     para separar expansão local de remanejamento entre estabelecimentos;
    - **mecanismos:** primeiro vínculo PMM-E, entradas, saídas, churn e número de
      entrantes/participantes ainda presentes, sem usar taxa condicionada a
      entrantes como outcome causal primário;
@@ -92,13 +96,17 @@ estatística `p`.
 
 ## Portão
 
-O JSON deve conter decisão única por módulo, razões, números usados e hashes.
+O JSON deve conter decisão única por módulo e nível, razões, números usados e hashes.
 Resultados narrativos, CSVs de diagnóstico, MDE e JSON de decisão precisam
 concordar exatamente. Se anestesiologia falhar equivalência de pré-tendência ou
 suporte, a análise futura será associação ajustada. Se o módulo SIH falhar
 potência ou ponte clínica, ele será exploratório e não será substituído
 automaticamente por outro outcome. A generalização não pode esconder que
 anestesiologia domina numericamente o núcleo de três cursos.
+
+Incompletude do SIH não impede congelar o protocolo de força de trabalho e não
+autoriza usar painéis clínicos preliminares. Registre os dois portões
+separadamente.
 
 Valide determinismo, referências locais, sintaxe JSON, testes e
 `git diff --check`. Não modifique brutos. Crie commit próprio e não faça push.

@@ -2,8 +2,9 @@
 
 ## Condição de execução
 
-Execute somente quando toda a coorte congelada tiver doze competências comuns
-e maduras após `T0`. A análise de seis meses deve estar incorporada e auditada.
+Execute somente quando a competência CNES `202709` estiver completa e madura
+para toda a coorte congelada. A análise de seis meses deve estar incorporada e
+auditada.
 
 ## Objetivo
 

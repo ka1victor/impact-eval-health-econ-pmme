@@ -969,7 +969,7 @@ def main() -> None:
             )
             manifest = {
                 "protocolo": "C3-02B_SIH_PRE_TRATAMENTO_ANESTESIOLOGIA",
-                "status_portao_c3_03": "APROVADO_EXCLUSIVAMENTE_PRE_TRATAMENTO",
+                "status_portao_clinico_c3_03": "APROVADO_EXCLUSIVAMENTE_PRE_TRATAMENTO",
                 "data_execucao": datetime.now(timezone.utc).date().isoformat(),
                 "t0_provisorio": T0_PROVISORIO,
                 "janela_pre": {
@@ -1097,7 +1097,7 @@ def finalize_blocked_attempt() -> None:
     checked_at = datetime.now(timezone.utc).isoformat()
     blocked = {
         "protocolo": "C3-02B_SIH_PRE_TRATAMENTO_ANESTESIOLOGIA",
-        "status_portao_c3_03": "BLOQUEADO_FONTE_OFICIAL_INCOMPLETA",
+        "status_portao_clinico_c3_03": "BLOQUEADO_FONTE_OFICIAL_INCOMPLETA",
         "data_execucao": datetime.now(timezone.utc).date().isoformat(),
         "t0_provisorio": T0_PROVISORIO,
         "janela_solicitada": {
@@ -1145,7 +1145,8 @@ def finalize_blocked_attempt() -> None:
             "manifesto_sigtap_pre.csv": compute_sha256(str(sigtap_manifest_path)),
         },
         "proxima_acao": "repetir C3-02B somente quando RDAC2606.dbc e RDRR2606.dbc aparecerem no FTP oficial",
-        "c3_03": "BLOQUEADO",
+        "c3_03_forca_trabalho": "INDEPENDENTE_DESTE_MANIFESTO_CONCLUIDO_COM_CNES_PRE",
+        "c3_03_clinico_sih": "BLOQUEADO",
         "estimacao_pos_tratamento": "PROIBIDA_ATE_SEIS_MESES_MADUROS",
     }
     (OUTPUT / "manifesto_sih_pre.json").write_text(
@@ -1156,7 +1157,7 @@ def finalize_blocked_attempt() -> None:
 
 > **Execução:** {blocked['data_execucao']}<br>
 > **Status:** bloqueado por fonte oficial incompleta<br>
-> **C3-03:** não executado
+> **C3-03 clínico/SIH:** bloqueado; força de trabalho/CNES é independente
 
 ## Resultado
 
@@ -1188,10 +1189,11 @@ que sejam confundidos com a correção.
 
 ## Portão
 
-O C3-03 permanece bloqueado. Próxima ação: verificar novamente o FTP e executar
-o C3-02B integral quando os dois arquivos forem publicados. Nenhum outcome
-pós-tratamento foi consultado e nenhuma estimação foi feita. C3-05 continua
-proibido até seis meses comuns maduros e publicados.
+O portão clínico do C3-03 permanece bloqueado. O torneio de força de trabalho
+é independente e usa somente CNES pré-T0. Próxima ação clínica: verificar
+novamente o FTP e executar o C3-02B integral quando os dois arquivos forem
+publicados. Nenhum outcome pós-tratamento foi consultado e nenhuma estimação
+foi feita. C3-05 continua proibido até `202703` estar madura.
 """
     DOC.write_text(report, encoding="utf-8")
 
