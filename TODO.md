@@ -71,20 +71,20 @@
 - [ ] Estimar presença doze meses depois somente quando toda a coorte congelada
   possuir seguimento comum maduro, com extensão do CNES até 2027-01 para a
   coorte de entradas encerrada em 2026-01.
-- [ ] Construir módulo utilitário DBC -> Parquet do DATASUS, começando por um
+- [x] Construir módulo utilitário DBC -> Parquet do DATASUS, começando por um
   benchmark SIH e medindo separadamente tráfego, pico temporário e espaço
-  persistente (`prompts/infraestrutura_datasus_dbc.md`).
+  persistente (`scripts/utils/datasus_dbc.py`).
 
 ## Ciclo 3 prospectivo
 
 - [x] C3-01 — congelar coorte, exposição, `T0`, pontes e suporte (`output/avaliacao_ciclo3/coorte_c3_congelada.parquet`, `docs/auditorias/05_coorte_c3_e_exposicao.md`).
-- [ ] C3-02 — executar piloto SIH exclusivamente pré-tratamento para
-  anestesiologia.
-- [ ] C3-03 — executar potência, placebos e pré-tendências no pré-período e
-  congelar o plano.
-- [ ] C3-04 — pilotar SIA/ecocardiografia somente se o portão ordenar.
-- [ ] C3-05 — estimar a versão de seis meses apenas com seguimento comum maduro.
-- [ ] C3-06 — atualizar a mesma análise aos doze meses, sem redesenho.
+- [x] C3-02 — executar piloto SIH exclusivamente pré-tratamento para
+  anestesiologia (`output/avaliacao_ciclo3/sih_pre/painel_sih_cnes_pre.parquet`, `docs/auditorias/06_piloto_sih_anestesiologia.md`).
+- [x] C3-03 — executar potência, placebos e pré-tendências no pré-período e
+  congelar o plano (`output/avaliacao_ciclo3/diagnosticos_pre.csv`, `docs/13_plano_pre_analise_ciclo3.md`, `output/avaliacao_ciclo3/registro_pre_analise.json`).
+- [ ] C3-04 — pilotar SIA/ecocardiografia somente se o portão ordenar (arquivado em espera conforme decisão do torneio C3-03).
+- [ ] C3-05 — estimar a versão de seis meses apenas com seguimento comum maduro (aguardando T0+6m em março/2027).
+- [ ] C3-06 — atualizar a mesma análise aos doze meses, sem redesenho (aguardando T0+12m em setembro/2027).
 
 ## Congelado
 

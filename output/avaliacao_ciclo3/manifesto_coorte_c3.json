@@ -1,8 +1,10 @@
 {
   "protocolo": "AVALIACAO_PROSPECTIVA_CICLO3_PMM_E",
   "data_congelamento": "2026-08-30",
-  "t0_previsto": "2026-09",
-  "janela_pre_congelada": "2024-06 a 2026-08",
+  "t0_calendario_provisorio": "2026-09",
+  "t0_operacional": "Primeira competencia CNES com entrada observavel dos vinculos do Ciclo 3; a validar prospectivamente",
+  "janela_pre_alvo": "2024-06 ate T0-1",
+  "ultima_competencia_cnes_observada_no_congelamento": "2026-07",
   "fontes_primarias_hashes": {
     "2026_ciclo3_adesao_gestores_resultado_final.xlsx": "0c07d4c972d14bac8ae9b8c99d5edac32f9ea76996ec82e92198065ac63b1f74",
     "2026_ciclo3_chamada1_vagas_retificadas.xlsx": "6bc07f48d0eaac37936fc827ebdefd12fb7bf2be86dc26f64a08e1f5b57f5371",
@@ -10,10 +12,10 @@
     "BASE_DE_DADOS_CNES_202607.ZIP": "f4ad8a2b4a156a8be9f3e76fafaba9870b9165bc56e86ac23578ffb609755ec9"
   },
   "arquivos_gerados_hashes": {
-    "coorte_c3_congelada.parquet": "79208d7f871a8118f534577c2c0dd7f632195683fbba7b7c05b448bb53126710",
-    "suporte_c3.csv": "e6732b5c09ee6785662d5d887cc594f84dfbe148a30c2849344ae6f86f8c1a1d",
-    "ponte_curso_cbo_c3_nota59.json": "559f95c26088162bc4561f650f2a2b9935fe0d4c2a4a1a6a9a0becafe5ff59b6",
-    "auditoria_assinatura_pmme_cnes.json": "b4a2b493323dca4155102adaa08d97243ef48098c5407379b39121ceece6c796"
+    "coorte_c3_congelada.parquet": "37c4b9441d0b237a3d0931ec1e766073658fa839ef1c677157bfdf0892f7d541",
+    "suporte_c3.csv": "a4510b8b33b87fc64c0dc5b9f6319a969a57a1160ec7540a92064e0081274dcf",
+    "ponte_curso_cbo_c3_nota59.json": "0d5312d904b9d5d1c7e98f164b3bff893ad0dd77871cc0da5dcb4174e60a0de1",
+    "auditoria_assinatura_pmme_cnes.json": "8f43a04850d1116f5edab91f71104d65740c344fd0684f8bf3f7db301529fd42"
   },
   "totais_amostrais": {
     "total_celulas_adesao": 5534,
@@ -28,6 +30,6 @@
     "taxa_alocacao_imediata_pura": 0.4489795918367347,
     "anestesiologia_imediata_pura": 119,
     "anestesiologia_nao_priorizada_pura": 305,
-    "municipios_com_ambos_bracos_distintos": 2
+    "municipios_com_ambos_bracos_distintos": 205
   }
 }

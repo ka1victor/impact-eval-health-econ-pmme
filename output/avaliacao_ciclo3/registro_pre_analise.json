@@ -1,0 +1,32 @@
+{
+  "protocolo_id": "PMM-E-C3-PROSPECTIVE-2026",
+  "data_congelamento": "2026-08-30",
+  "status_registro": "CONGELADO_PRE_TRATAMENTO",
+  "t0": "2026-09",
+  "janela_pre": "2024-06 a 2026-08",
+  "hashes_insumos_congelados": {
+    "coorte_c3_congelada.parquet": "37c4b9441d0b237a3d0931ec1e766073658fa839ef1c677157bfdf0892f7d541",
+    "painel_sih_cnes_pre.parquet": "e5be9a144eb66712bf53b787d66898d5b07ad5a4c25f25c326b7db5017620ede",
+    "painel_sih_muni_pre.parquet": "4465de97e4d84fa1366f6c741cfdb8771e9ba9061bf22fde7ba6027bad9e94f4",
+    "ponte_curso_cbo_c3_nota59.json": "559f95c26088162bc4561f650f2a2b9935fe0d4c2a4a1a6a9a0becafe5ff59b6",
+    "diagnosticos_pre.csv": "433bf205026723249df0ac4db48c26b313675199a0095d278b46f232bd751963",
+    "decisao_torneio_pre.json": "b18882c64314e99e7d59186dd8215e3c4a133b87758ddeb95567018e04ce435e"
+  },
+  "especificacao_confirmatory_core": {
+    "unidade": "municipio-curso-mes e cnes-curso-mes",
+    "estimando": "Intenção de Tratar (ITT) pela Priorização Imediata no Ciclo 3",
+    "equacao": "Y_ist = alpha_is + gamma_it + delta_st + beta * (Imediata_is * Post_t) + e_ist",
+    "inferencia": "Erros agrupados por Município e Wild Cluster Bootstrap",
+    "outcomes_primarios": [
+      "especialistas_distintos_cbo_mes",
+      "n_cirurgias_eletivas_cnes_mes"
+    ],
+    "outcomes_secundarios": [
+      "n_participantes_assinatura_pmme_cnes",
+      "entrantes_presentes_6m",
+      "entrantes_presentes_12m",
+      "n_cirurgias_eletivas_ocorrencia_muni",
+      "taxa_resolutividade_cirurgica_local"
+    ]
+  }
+}

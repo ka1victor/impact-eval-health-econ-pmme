@@ -1,0 +1,15 @@
+{
+  "cirurgias_eletivas_cnes": {
+    "mde": 13.873,
+    "mde_pct_baseline": 15.6,
+    "status": "CONFIRMATORIO"
+  },
+  "cirurgias_muni_isolado": {
+    "mde": 34.197,
+    "status": "CONFIRMATORIO"
+  },
+  "forca_trabalho_geral": {
+    "mde": 1.317,
+    "status": "EXPLORATORIO"
+  }
+}

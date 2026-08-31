@@ -7,7 +7,7 @@
     "IND_VINCULACAO": "070102 (Bolsa - Bolsista)",
     "NU_CNPJ_DETALHAMENTO_VINCULO": "00394544012787 (Ministerio da Saude)",
     "CARGA_HORARIA_PADRAO_PMME": "16h assistenciais + 4h formativas (total 20h)",
-    "CO_PROFISSIONAL_SUS": "Pseudonimo MD5 16 hexadecimais preservado"
+    "CO_PROFISSIONAL_SUS": "Identificador operacional publico; estabilidade longitudinal e algoritmo de formacao ainda precisam ser validados"
   },
   "metricas_competencia_202607": {
     "total_vinculos_bolsa_070102": 21500,
