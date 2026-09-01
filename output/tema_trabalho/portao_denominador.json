@@ -1,0 +1,128 @@
+{
+  "protocolo": "A1_PORTAO_DENOMINADOR_ATRACAO",
+  "data_referencia": "2026-09-01",
+  "efeitos_estimados": false,
+  "portao": "APROVADO_CELULA",
+  "decisao": {
+    "denominador_por_vaga": false,
+    "denominador_por_celula": true,
+    "outcome_primario_liberado": "alguma confirmação ou homologação observada na célula CNES-curso",
+    "outcomes_bloqueados": [
+      "taxa de preenchimento por vaga",
+      "candidaturas por vaga",
+      "retenção individual do bolsista"
+    ],
+    "unidade_recomendada": "célula CNES-curso dentro de cada chamada e versão publicada"
+  },
+  "criterios": {
+    "id_vaga_fisica_persistente_disponivel": false,
+    "capacidade_imediata_numerica_em_todas_as_chamadas": false,
+    "nenhuma_violacao_da_capacidade_total_publicada_ch1": false,
+    "chaves_de_evento_validas": true,
+    "chave_analitica_unica": true
+  },
+  "fontes": {
+    "output/aquisicao/quadro_vagas_tratamento.parquet": {
+      "sha256": "41e1d3afee23994821361d8a60d9e507e3b1c25cf69ae882c10008ae27d8b149"
+    },
+    "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx": {
+      "sha256": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec"
+    },
+    "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada.xlsx": {
+      "sha256": "0acfba2a89e0c269b754c0ca0fd5a2426be511f88a3c1a934a41345f8c9ffd0c"
+    },
+    "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_realocacao_retificado.xlsx": {
+      "sha256": "7c31cb441b8668eca0c06a6c6a648c731e26d1f14162fe071fd9695ebfe89b86"
+    },
+    "data/raw/pmm_e/2025_ciclo1_chamada1_homologados.xlsx": {
+      "sha256": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b"
+    },
+    "data/raw/pmm_e/2025_ciclo1_chamada2_vagas_e_alocados.xlsx": {
+      "sha256": "f1b8f7533cb13d8aba21d1100ab957e6accac52532fb8235e1b4231343a0588c"
+    },
+    "data/raw/pmm_e/2025_ciclo1_chamada2_classificacao_final.xlsx": {
+      "sha256": "5c73a99847708b2749019c634f661771b28c88cb5421e9672e44704e62103e85"
+    },
+    "data/raw/pmm_e/2025_ciclo1_chamada2_homologados.xlsx": {
+      "sha256": "4e85cfe45b2e5e1f7ebef78aa5dc90ba61b7adc5f7046f43a5066803f603e147"
+    }
+  },
+  "chamada_1": {
+    "quadro_original": {
+      "celulas": 1295,
+      "vagas_imediatas": 678,
+      "vagas_reserva": 1145
+    },
+    "versoes_alocacao": {
+      "canonica": "2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+      "comparacao_nao_somada": "2025_ciclo1_chamada1_alocacao_retificada.xlsx",
+      "comparacao": {
+        "registros_versao_anterior": 1671,
+        "registros_versao_canonica": 1671,
+        "chaves_adicionadas": 0,
+        "chaves_removidas": 0,
+        "registros_com_conteudo_alterado": 3,
+        "registros_com_marcacao_em_coluna_adicional": 1
+      }
+    },
+    "confirmacoes": 468,
+    "locais_desconsiderados": 59,
+    "propostas_realocacao": 59,
+    "homologacoes": 316,
+    "homologacoes_em_celula_do_quadro_original": 296,
+    "homologacoes_fora_do_quadro_original": 20,
+    "celulas_homologacao_fora_do_quadro_original": 18,
+    "trilha_homologacao": {
+      "confirmacao_exata": 279,
+      "realocacao_exata": 21,
+      "pessoa_confirmada_local_diferente": 11,
+      "pessoa_realocada_local_diferente": 4,
+      "sem_evento_anterior_localizado": 1
+    },
+    "celulas_confirmacao_acima_vagas_imediatas": 10,
+    "celulas_confirmacao_acima_capacidade_total_publicada": 15,
+    "confirmacoes_excedentes_capacidade_total_publicada": 20
+  },
+  "chamada_2": {
+    "quadro_cadastro_reserva": {
+      "celulas": 1762,
+      "vagas_reserva_publicadas": 2896,
+      "vagas_imediatas_numericas_publicadas": false
+    },
+    "publicacao_preliminar": {
+      "registros": 98,
+      "pessoas_distintas_por_nome": 92,
+      "classificados": 33,
+      "nota": "o nome da aba não transforma os 98 registros em 98 alocados"
+    },
+    "classificacao_final": {
+      "registros": 757,
+      "alocados": 374
+    },
+    "segunda_lista_homologados": {
+      "registros": 581,
+      "reaparecem_da_primeira_lista": 299,
+      "novos_na_segunda_lista": 282,
+      "homologados_ch1_ausentes_na_segunda_lista": 17,
+      "total_distinto_observado_nas_duas_listas": 598,
+      "novos_em_celula_do_quadro_reserva_ch2": 272,
+      "novos_fora_do_quadro_reserva_ch2": 10,
+      "trilha_novos": {
+        "reaparece_da_lista_ch1": 299,
+        "novo_com_alocacao_final": 270,
+        "novo_apenas_em_classificacao_preliminar": 10,
+        "novo_sem_evento_anterior_localizado": 2
+      },
+      "nota": "a lista de 581 não é soma simples: há entradas novas e ausências relativas à lista anterior"
+    }
+  },
+  "matriz": {
+    "linhas": 3323,
+    "linhas_chamada_1": 1324,
+    "linhas_chamada_2": 1999,
+    "registros_fora_do_quadro_publicado": 266,
+    "contém_dados_pessoais": false,
+    "caminho": "output/tema_trabalho/matriz_funil_ciclo1.parquet"
+  },
+  "implicacao_econometrica": "A população pode ser congelada por célula CNES-curso e versão. As quantidades publicadas não identificam vagas físicas persistentes nem fornecem capacidade imediata comparável nas duas chamadas; por isso, razões com número de vagas no denominador permanecem proibidas."
+}

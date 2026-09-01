@@ -4,8 +4,8 @@
 > trabalho econométrico de implementação, com núcleo associativo e upgrade
 > causal condicionado. A base sustenta atração administrativa e persistência da
 > oferta médica local, mas não sustenta hoje “efeito total do PMM-E” nem
-> retenção individual dos bolsistas. O primeiro portão operacional é reconciliar
-> o denominador de preenchimento.
+> retenção individual dos bolsistas. O portão A1 foi concluído em 01/09/2026
+> como `APROVADO_CELULA`: há população por célula, mas não denominador por vaga.
 
 ## 1. Tema e pergunta
 
@@ -129,8 +129,8 @@ para escolher cutoff, janela ou especificação.
 
 | Margem | Outcome preferido | Situação atual | Linguagem máxima |
 |---|---|---|---|
-| Atração administrativa | alocados confirmados / vagas imediatas efetivamente ofertadas | parcialmente observável; denominador precisa reconciliação | preenchimento administrativo |
-| Homologação | homologados / vagas imediatas | observável parcialmente | candidatura homologada, não entrada em atividade |
+| Atração administrativa | alguma confirmação/homologação na célula CNES–curso | aprovado por A1 | preenchimento administrativo da célula |
+| Homologação | alguma homologação na célula CNES–curso | aprovado por A1 | candidatura homologada, não entrada em atividade |
 | Procura | candidaturas válidas / vaga | universo não público | bloqueado até A07-02 |
 | Entrada local | variação do estoque e entradas no CNES | observável agregadamente | oferta cadastrada local |
 | Provimento em 6 meses | estoque/cobertura municipal em horizonte fixo | viável agregadamente | persistência da oferta local |
@@ -142,34 +142,34 @@ para escolher cutoff, janela ou especificação.
 
 ### Denominador de preenchimento
 
-Cadastro de reserva não é vaga imediatamente disponível. O denominador
-principal deve conter apenas vagas imediatas efetivamente abertas na chamada e
-na versão válida. O quadro congelado contém 678 vagas imediatas e 1.145 de
-reserva, totalizando 1.823. Reapresentações não serão somadas como vagas novas.
+A1 reprovou o denominador por vaga e aprovou o denominador por célula. O quadro
+original contém 678 vagas imediatas e 1.145 posições de reserva, mas não há
+`id_vaga` persistente; a segunda chamada não publica capacidade imediata
+numérica; e 15 células da primeira chamada possuem vinte confirmações a mais
+do que a capacidade total original. Reapresentações não serão somadas como
+vagas novas.
 
-Antes da estimação, alocação e homologação precisam ser reconciliadas com esse
-denominador no mesmo grão `município–CNES–curso–chamada`. A ausência de
-`id_vaga` individual impede afirmar qual vaga física foi ocupada quando uma
-célula contém mais de um posto.
-
-A conferência de 31/08/2026 encontrou:
+A reconciliação concluída em 01/09/2026 encontrou:
 
 - 468 profissionais com “local de atuação confirmado”; todos pertencem a uma
   chave CNES–curso presente no quadro inicial;
 - 257 confirmações em células com vaga imediata, mas 211 em células
   originalmente classificadas apenas como reserva;
 - dez células com vaga imediata possuem mais confirmações do que a quantidade
-  imediata publicada;
+  imediata publicada; em 15 células, as confirmações superam até a soma original
+  de imediatas e reserva;
 - 316 homologações foram publicadas; 296 estão em chaves do quadro inicial e
-  vinte registros, distribuídos em 18 chaves, não fecham diretamente com ele;
-- entre as vagas imediatas originais, a razão descritiva
-  confirmação/vaga é 40,1% fora das capitais e 22,4% nas capitais.
+  vinte registros, distribuídos em 18 chaves, estão fora dele; 21 homologações
+  fecham exatamente com propostas de realocação;
+- a segunda lista possui 581 homologados, mas somente 299 reaparecem da primeira;
+  há 282 novos e 17 anteriores ausentes, totalizando 598 pessoas distintas
+  observadas em pelo menos uma lista.
 
-O último contraste não é resultado econométrico nem evidência contra ou a favor
-da “força gravitacional” dos centros. Ele pode refletir composição de cursos,
-faixas de bolsa, gestão, transformação de reservas, realocação ou diferenças de
-versionamento. Até a reconciliação, o outcome seguro é “confirmação ou
-homologação observada na célula publicada”, não “vaga física preenchida”.
+O outcome seguro é “alguma confirmação ou homologação observada na célula”, não
+“vaga física preenchida”. Razões confirmação/vaga produzidas na auditoria
+anterior ficam despromovidas a diagnóstico inválido para inferência. A trilha
+completa está em
+[`auditorias/08_portao_denominador_atracao.md`](auditorias/08_portao_denominador_atracao.md).
 
 ## 5. Atração, retenção e seleção pós-tratamento
 
@@ -194,10 +194,11 @@ retornos e reocupações.
 
 ### Núcleo associativo
 
-- unidade administrativa: `município–curso–chamada`, preservando o número de
-  vagas como denominador;
-- modelos candidatos: binomial para contagem preenchida/total, fractional logit
-  para taxas e modelo linear como transparência/robustez;
+- unidade administrativa primária: célula `CNES–curso–chamada–versão`, com
+  agregação municipal apenas em especificações previamente definidas;
+- modelos candidatos: probabilidade linear e logit para o indicador de alguma
+  confirmação/homologação; contagens somente como descrição ou robustez
+  pré-especificada, nunca divididas por uma capacidade de vaga não identificada;
 - efeitos fixos candidatos: curso e UF; chamada quando mais de uma chamada for
   comparável;
 - covariadas prévias: estoque de especialistas, população, infraestrutura
@@ -242,8 +243,8 @@ O diagnóstico reproduzível está em
 | Regra administrativa | 177/368 municípios divergem da reconstrução local | RDD bloqueada em R1 |
 | Suporte 0,400 | 12/8 municípios em ±0,010; 30/18 em ±0,020 | promissor, não aprovado |
 | Suporte 0,500 | 5/5 em ±0,010; 8/6 em ±0,020 | fraco; somente replicação potencial |
-| Alocação | 468 confirmações em chaves da oferta; 211 em células originalmente de reserva | outcome administrativo existe; denominador ainda bloqueado |
-| Homologação | 316 registros; vinte não fecham diretamente com o quadro inicial | reconciliar realocações e versões |
+| Alocação | 468 confirmações; 211 em células originalmente de reserva; 15 células acima da capacidade total original | A1 aprovou outcome binário por célula e reprovou taxa por vaga |
+| Homologação | 316 na primeira lista; 581 na segunda, com 299 reaparições, 282 novos e 17 anteriores ausentes | versões e realocações reconciliadas; não interpretar como log de permanência |
 | CNES | 26 competências, 2024-06 a 2026-07, 368 municípios | oferta local agregada e horizonte de seis meses tecnicamente viáveis |
 | Ponte curso–CBO | 10 de 16 cursos sem sobreposição | núcleo CNES precisa restringir/estratificar |
 | Presença individual | snapshot de sobreviventes e máscaras incompatíveis | retenção individual inviável hoje |
@@ -271,7 +272,7 @@ passarem. Uma não pode emprestar linguagem da outra.
 
 | Sessão | Trabalho autorizado | Entregável mínimo | Portão para avançar |
 |---:|---|---|---|
-| A1 | reconciliar oferta, reserva, alocação, realocação e homologação do ciclo 1 | `matriz_funil_ciclo1.parquet`, relatório de perdas e `portao_denominador.json` | numerador e população definidos sem somar reapresentações |
+| A1 — concluído | reconciliar oferta, reserva, alocação, realocação e homologação do ciclo 1 | matriz, relatório e portão reproduzíveis | `APROVADO_CELULA`; taxa por vaga proibida |
 | A2 | construir tipologia territorial prévia | matriz capital/metropolitano/interior e dicionário de fontes | classificação completa e congelada antes dos modelos |
 | A3 | definir estimandos associativos, covariadas, MDE, missing e inferência | registro de pré-análise com hashes | outcome primário e regra de linguagem aprovados |
 | A4 | estimar atração/implementação | tabela principal, especificações de sensibilidade e diagnóstico de influência | resultados não dependem de uma única UF, curso ou município |
@@ -294,9 +295,9 @@ Os prompts executáveis dessas sessões estão em
 
 ## 10. Regras de decisão finais
 
-1. Se A1 não produzir denominador confiável, o outcome primário será binário
-   por célula (“alguma confirmação/homologação observada”), com a modalidade
-   original explícita; não haverá taxa de preenchimento por vaga.
+1. A1 produziu denominador confiável apenas por célula. O outcome primário será
+   binário (“alguma confirmação/homologação observada”), com chamada, versão e
+   modalidade original explícitas; não haverá taxa de preenchimento por vaga.
 2. Candidaturas por vaga, tempo até preenchimento e spells dependem de A07-02.
 3. “Retenção” só entra no título se uma ponte individual e um log de eventos
    permitirem observar entrada, saída, censura e reocupação. Até lá, usar

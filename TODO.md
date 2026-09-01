@@ -10,11 +10,13 @@
   tema (`output/tema_trabalho/diagnostico_atracao_provimento_interior.json`).
 - [x] Fixar a formulação defensável como atração administrativa e persistência
   da oferta médica local, não retenção individual do bolsista.
-- [ ] A1 — reconciliar as 468 confirmações, 316 homologações, realocações e
+- [x] A1 — reconciliar as 468 confirmações, 316 homologações, realocações e
   versões com a oferta original; explicar as 211 confirmações em células de
   reserva e as dez células imediatas acima da capacidade publicada.
-- [ ] A1 — decidir formalmente entre denominador por vaga e outcome binário por
+- [x] A1 — decidir formalmente entre denominador por vaga e outcome binário por
   célula (`prompts/avaliacao_atracao_interior/01_reconciliar_funil_ciclo1.md`).
+- [x] A1 — portão `APROVADO_CELULA`: usar alguma confirmação/homologação por
+  célula; não estimar taxa de preenchimento por vaga.
 - [ ] A2 — construir e congelar tipologia capital/metropolitano/interior
   próximo/interior remoto sem consultar outcomes.
 - [ ] A3 — congelar outcome, população, MDE, covariadas, inferência e linguagem.
@@ -36,7 +38,7 @@
 - [ ] R2 — construir matriz de cointervenções do Agora Tem Especialistas e
   decidir se o cutoff isola bolsa ou pacote.
 - [ ] R3 — congelar amostra, cutoff, janela, outcomes, inferência e hashes.
-- [ ] Antes de R3, reconciliar as 678 vagas imediatas com alocações e
+- [x] Antes de R3, reconciliar as 678 vagas imediatas com alocações e
   homologações no grão município–CNES–curso–chamada por meio de A1.
 - [ ] R4 — estimar procura/alocação somente se R1–R3 passarem.
 - [ ] R5/R6 — manter CNES e SIH/SIA condicionados aos portões anteriores.

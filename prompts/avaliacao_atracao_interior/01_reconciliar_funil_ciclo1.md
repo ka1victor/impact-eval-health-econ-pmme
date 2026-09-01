@@ -1,5 +1,9 @@
 # A1 — Reconciliar o funil administrativo do ciclo 1
 
+> **Executado em 01/09/2026:** `APROVADO_CELULA`. O denominador por vaga foi
+> reprovado; o outcome liberado é alguma confirmação/homologação observada na
+> célula. Ver `docs/auditorias/08_portao_denominador_atracao.md`.
+
 ## Objetivo
 
 Construir a população e o denominador antes de qualquer estimação. Explicar por
@@ -39,4 +43,3 @@ vinte homologações não fecham diretamente com o quadro inicial.
 `APROVADO_VAGA`, `APROVADO_CELULA` ou `REPROVADO`. Se apenas a célula for
 aprovada, remover “taxa de preenchimento por vaga” do texto e usar “alguma
 confirmação/homologação observada”.
-

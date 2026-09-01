@@ -28,8 +28,9 @@ O tema, os outcomes e o veredito de viabilidade estão em
 Uma auditoria reproduzível confirmou 350 municípios fora das capitais, 593 das
 678 vagas imediatas nesse grupo e 26 competências CNES. Também encontrou que
 211 das 468 confirmações públicas pertencem a células originalmente apenas de
-reserva; portanto, o denominador deve ser reconciliado antes de se falar em taxa
-de preenchimento. As sessões do núcleo estão organizadas em
+reserva. A1 concluiu a reconciliação como `APROVADO_CELULA`: a análise usará
+alguma confirmação/homologação por célula e não taxa de preenchimento por vaga.
+As sessões do núcleo estão organizadas em
 [`prompts/avaliacao_atracao_interior/`](prompts/avaliacao_atracao_interior/README.md).
 Ele pergunta se oferecer R$ 5 mil mensais adicionais alterou procura e
 preenchimento de vagas próximas a um cutoff administrativo do IVS. Em 2025, os
@@ -38,8 +39,8 @@ cutoffs candidatos são `0,400/0,401` e `0,500/0,501`; não existe salto em
 
 O RDD ainda não tem amostra estimável aprovada: primeiro é necessário reproduzir
 a faixa da bolsa com o escore administrativo exato. Se o portão passar, a
-unidade primária será município–curso–chamada, preservando vagas imediatas como
-denominador, e os outcomes serão procura e preenchimento. CNES, SIH e SIA são extensões
+unidade primária será município–curso–chamada, com outcome administrativo
+binário por célula; vagas imediatas não formarão denominador. CNES, SIH e SIA são extensões
 condicionais, não a primeira estimação.
 
 O diagnóstico encerrado usa `município–curso–mês` no ciclo 1 e o CNES mensal de
@@ -132,15 +133,15 @@ madura e seguirá a especificação congelada, sem redesenho pelo resultado.
 
 ## Escopo e bloqueios
 
-Entram agora duas auditorias sem nova estimação: A1 reconcilia o funil público e
-R1 reconstrói a regra da bolsa. A2 pode começar somente depois de A1 e congela a
-tipologia territorial sem outcomes. A DDD, o estoque, os fluxos e a presença em
+O portão A1 foi concluído como `APROVADO_CELULA`; R1 ainda reconstrói a regra da
+bolsa. A2 está liberado para congelar a tipologia territorial sem outcomes. A
+DDD, o estoque, os fluxos e a presença em
 seis meses permanecem como resultados fechados do diagnóstico anterior.
 
 Permanecem congelados: estimação do ciclo 3 antes da maturidade; efeito da dose
 recebida sem pagamentos; SIA/SUS, SIH/SUS, fila, saúde e custos antes dos
 portões do RDD; identificação individual sem ponte; e envio dos pedidos A07.
-Estão liberados A1, R1 e, condicionalmente, A2/R2. A3 deve congelar o protocolo
+Estão liberados A2 e R1; R2 continua condicionado a R1. A3 deve congelar o protocolo
 antes de A4. Métodos sintéticos não serão usados para reparar
 retrospectivamente a DDD anterior.
 

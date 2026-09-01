@@ -3,8 +3,8 @@
 > **Fila histórica congelada.** Estes prompts pertencem ao desenho individual
 > anterior. A comparação agregada descrita em
 > [`docs/05_roadmap_execucao.md`](../docs/05_roadmap_execucao.md) também já foi
-> executada e não deve ser reaberta. As filas imediatas são A1 do núcleo
-> associativo e R1 do upgrade causal. Seus sucessores dependem dos respectivos
+> executada e não deve ser reaberta. A1 do núcleo associativo foi concluído como
+> `APROVADO_CELULA`; as filas imediatas são A2 e R1. Seus sucessores dependem dos respectivos
 > portões.
 >
 Esta pasta preserva as tarefas do roadmap anterior. A ordem abaixo é histórica e
@@ -75,7 +75,7 @@ O desenho substantivo e o piso publicável estão documentados em
 
 O núcleo de entrega segue
 [`avaliacao_atracao_interior/README.md`](avaliacao_atracao_interior/README.md).
-Somente A1 está liberado agora. A2 depende da população aprovada em A1; A3
+A1 foi concluído como `APROVADO_CELULA`. A2 está liberado; A3
 congela o protocolo; A4–A6 permanecem bloqueados até os respectivos portões.
 Essa fila produz econometria associativa e não herda linguagem causal do RDD.
 
