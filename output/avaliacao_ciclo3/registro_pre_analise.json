@@ -49,14 +49,14 @@
   "hashes_artefatos_congelados": {
     "output/avaliacao_ciclo3/cnes_pre/painel_forca_trabalho_pre.parquet": "a8290e64aabb20a5029867e61ede02c2ce0bd1f81df66a4dc5625647e4e7a8b7",
     "output/avaliacao_ciclo3/cnes_pre/painel_forca_trabalho_cnes_pre.parquet": "66b273e50b6caaf364b77c891c0c5b0200973a87f0c35ee4696b869b37de5555",
-    "output/avaliacao_ciclo3/cnes_pre/unidades_elegiveis_congeladas.csv": "af3ada52668df77b7ccf95c29bc80b16fc25562f2daf63fd56ab95bc4d557aad",
-    "output/avaliacao_ciclo3/cnes_pre/unidades_excluidas_congeladas.csv": "d0bddcd61336bcb1362c5afbd406f4f4deb8bad37a041a48a1b010b2c7c24b0e",
-    "output/avaliacao_ciclo3/cnes_pre/cnes_elegiveis_congelados.csv": "265d241cd82018092772dbc2c1301dcd032cba7611a86d9acba4116beafc1676",
-    "output/avaliacao_ciclo3/cnes_pre/cnes_excluidos_congelados.csv": "68b498b267ac1adb9da7b978eacd7720d931a64453ee9a19095673510e66809f",
-    "output/avaliacao_ciclo3/pesos_sobreposicao_pre.csv": "d38c93b002cdf3a22465f341828a0ef283c51205be50d11c11e726672d1e4428",
-    "output/avaliacao_ciclo3/diagnosticos_pre.csv": "e5f45c22659c9ac6e7828f56942def82565ed1d522fe0312700b78b6e781895b",
-    "output/avaliacao_ciclo3/potencia_pre.json": "07c43715df0858079201a03914ec176ba1b287256d75b101e19737c1a9d4e6ce",
-    "output/avaliacao_ciclo3/decisao_torneio_pre.json": "9f2f85475a73011bc9b4fbada869e7ef88648070bf26c07e3c81699d87bb6d75",
+    "output/avaliacao_ciclo3/cnes_pre/unidades_elegiveis_congeladas.csv": "5246a448f96db60380e19f62fa841a530a4f38c95bad597be0d3503ec7f54b25",
+    "output/avaliacao_ciclo3/cnes_pre/unidades_excluidas_congeladas.csv": "409e3b3130242d0638ef9df634c374bee57a59bde72fe64be56e80b1d317f02c",
+    "output/avaliacao_ciclo3/cnes_pre/cnes_elegiveis_congelados.csv": "52b6535c1f7e4811564dd36fe18ad78cb356fbcd705f62044d2fa84a3efe16be",
+    "output/avaliacao_ciclo3/cnes_pre/cnes_excluidos_congelados.csv": "6e95db557198954c658e6a0d8c0c0f4eb8173fd13b29a88d69a04a9dae982dbc",
+    "output/avaliacao_ciclo3/pesos_sobreposicao_pre.csv": "363399b46190f2dfc1f07a19efefd1fdac28a69376989ec9eed7ecf425e8ed71",
+    "output/avaliacao_ciclo3/diagnosticos_pre.csv": "729c16cee1522ae7ccd7b58b3387a1900628074aa7a7aba1a519bc125e2d6696",
+    "output/avaliacao_ciclo3/potencia_pre.json": "22a672b1ca1195bc26060ddb0453ef089add7d5d71843d7e5e6e5ce5975b9e88",
+    "output/avaliacao_ciclo3/decisao_torneio_pre.json": "641e6f5d04a0db1d775e96f464bba2d9778767aa40f8b6d438752ff4e1109d8c",
     "docs/13_plano_pre_analise_ciclo3.md": "f17291c61aea6037752e26ae1cd51c1819d08462f1e0e3ad6e927e2cdc45be04"
   },
   "regras": {
