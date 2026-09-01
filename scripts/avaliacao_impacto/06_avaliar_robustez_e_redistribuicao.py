@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
+import sys
 from typing import Any
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(__file__).resolve().parents[2] / ".matplotlib-cache"))
@@ -14,6 +15,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.append(str(ROOT / "scripts" / "utils"))
+from theme_pmme import PMMEPalette, setup_editorial_theme, add_editorial_header, add_editorial_footer
 from model_utils import atomic_savefig, atomic_to_csv, fit_absorbed_ols, result_for
 
 
@@ -121,22 +125,71 @@ def main() -> None:
     )
     (TABLES / "tabela4_diagnosticos_robustez_e_redistribuicao.tex").write_text(table.to_latex(index=False), encoding="utf-8")
 
+    setup_editorial_theme()
     geo = [r for r in results if r["grupo_analise"] == "Escala geográfica"]
-    fig, ax = plt.subplots(figsize=(9, 4.5), dpi=200)
+    fig, ax = plt.subplots(figsize=(11.8, 5.2), dpi=300)
+
     y = np.arange(len(geo))
     beta = np.array([r["beta"] for r in geo])
     low = np.array([r["ci_95"][0] for r in geo])
     high = np.array([r["ci_95"][1] for r in geo])
-    ax.axvline(0, color="black", linestyle="--")
-    ax.errorbar(beta, y, xerr=[beta - low, high - beta], fmt="o", capsize=4)
+
+    # Faixas de fundo limpas e contrastantes
+    ax.axhspan(-0.5, 0.5, color='#EFF6FF', alpha=0.6, zorder=0)
+    ax.axhspan(0.5, 1.5, color='#F0FDFA', alpha=0.6, zorder=0)
+
+    ax.axvline(0, color=PMMEPalette.PRIMARY_NAVY, linestyle='-', linewidth=0.85, alpha=0.7, zorder=2)
+
+    colors = [PMMEPalette.ACCENT_BLUE, PMMEPalette.ACCENT_TEAL]
+
+    for i in range(len(geo)):
+        ax.errorbar(
+            beta[i], y[i], xerr=[[beta[i] - low[i]], [high[i] - beta[i]]],
+            fmt="o", color=colors[i], ecolor=colors[i], elinewidth=1.6, capsize=4.5, capthick=1.3,
+            markersize=6.5, markeredgecolor='white', markeredgewidth=1.0, zorder=4
+        )
+        # Rótulo numérico exato com badge
+        txt = f"{beta[i]:+.3f}  [IC 95%: {low[i]:.3f}; {high[i]:.3f}]".replace('.', ',')
+        pos_x = max(high[i] + 0.08, 0.10)
+        ax.text(pos_x, y[i], txt, ha='left', va='center',
+                fontsize=8.8, fontweight='bold', color=colors[i],
+                bbox=dict(boxstyle='square,pad=0.20', facecolor='white', edgecolor='none', alpha=0.92), zorder=5)
+
+    # As estimativas são próximas, mas os intervalos não excluem redistribuição.
+    ax.text(-0.55, -0.32,
+            "Diagnóstico de escala:\nAs estimativas municipal (–0,446) e do estabelecimento (–0,443) são próximas,\nmas os intervalos amplos não descartam redistribuição intramunicipal.",
+            fontsize=8.2, color='#1E40AF', ha='center', va='center',
+            bbox=dict(boxstyle='square,pad=0.35', facecolor='#EFF6FF', edgecolor='#93C5FD', lw=0.9), zorder=5)
+
+    add_editorial_header(
+        fig,
+        title="Diagnóstico de Escala: Estabelecimento Ofertante vs. Município",
+        subtitle="Comparação de diferenças DDD ajustadas; intervalos amplos impedem excluir redistribuição (CNES 2024–2026)",
+        kicker="DIAGNÓSTICO DE REDISTRIBUIÇÃO ESPACIAL",
+        y_top=0.97
+    )
+    add_editorial_footer(
+        fig,
+        source="CNES / DATASUS e Ministério da Saúde (2024–2026)",
+        notes="Diagnóstico associativo. Modelos com efeitos fixos de unidade-curso, unidade-mês e curso-mês; erros agrupados por município.",
+        y_bottom=0.022
+    )
+
     ax.set_yticks(y)
-    ax.set_yticklabels([r["especificacao"] for r in geo])
-    ax.set_xlabel("Diferença estimada no estoque")
-    ax.set_title("Município completo versus estabelecimento ofertante")
-    fig.tight_layout()
-    atomic_savefig(fig, FIGURES / "figura2_diagnostico_redistribuicao.png")
+    labels = [
+        "Município Completo\n(Especificação Principal DDD)",
+        "Estabelecimento Ofertante\n(Diagnóstico de Foco Local)"
+    ]
+    ax.set_yticklabels(labels, fontsize=9.0, fontweight='bold', color=PMMEPalette.PRIMARY_NAVY)
+    ax.set_xlabel("Diferença Ajustada no Estoque de Especialistas", fontsize=9.2, labelpad=7)
+    ax.set_xlim(-1.60, 1.15)
+    ax.set_ylim(-0.6, 1.6)
+    ax.grid(True, axis='x')
+
+    fig.subplots_adjust(top=0.79, bottom=0.14, left=0.28, right=0.95)
+    atomic_savefig(fig, FIGURES / "figura2_diagnostico_redistribuicao.png", dpi=300)
     plt.close(fig)
-    print("[OK] Robustez concluída; região preservada como diagnóstico descritivo.")
+    print("[OK] Robustez concluída; figura editorial 2 gerada com sucesso.")
 
 
 if __name__ == "__main__":

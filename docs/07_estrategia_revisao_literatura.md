@@ -2,25 +2,26 @@
 
 > **Documento Estratégico e Metodológico**  
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
-> **Pergunta Central:** *Vagas viram médicos? Efeito do PMM-E sobre a disponibilidade local, persistência e redistribuição de especialistas.*  
-> **Data:** 30 de Agosto de 2026  
+> **Tema Central:** *Atração e Retenção de Médicos Especialistas em Cidades do Interior com base nas Diferentes Bolsas e no IVS (Índice de Vulnerabilidade Social).*  
+> **Pergunta Central:** *Em que medida as bolsas escalonadas e o edital do PMM-E induzem a atração imediata (novas entradas) e a retenção sustentada (permanência/sobrevida) de especialistas no interior do Brasil, e como esse efeito varia ao longo da distribuição de vulnerabilidade (IVS)?*  
+> **Data:** 31 de Agosto de 2026  
 > **Status:** Vigente e Estruturado  
 
 ---
 
 ## 1. Introdução e Contextualização do Problema
 
-O objetivo desta estratégia de revisão de literatura é fornecer uma fundamentação teórica rigorosa, um mapeamento empírico exaustivo e diretrizes de modelagem econométrica para a avaliação de impacto do **Programa Mais Médicos Especialistas (PMM-E)**.
+O objetivo desta estratégia de revisão de literatura é fornecer uma fundamentação teórica rigorosa, um mapeamento empírico exaustivo e diretrizes de modelagem econométrica para avaliar a **atração e fixação de médicos especialistas em municípios do interior vulnerável**.
 
-O núcleo do estudo não investiga apenas uma "classificação administrativa" de edital, mas sim uma pergunta central de economia da saúde e economia do trabalho:
-$$\text{"A intervenção pública de oferta e subsídio a vagas especializadas gera capacidade médica adicional líquida e persistente nos municípios vulneráveis, ou induz apenas substituição de vínculos locais, rotatividade acelerada e remanejamento espacial entre estabelecimentos e regiões vizinhas?"}$$
+O núcleo do estudo investiga perguntas fundamentais de economia do trabalho e economia da saúde:
+$$\text{"Como o escalonamento financeiro de bolsas federais e o edital centralizado alteram as taxas brutas de entrada (atração), saída (evasão) e sobrevida de especialistas em cidades do interior com diferentes níveis de IVS?"}$$
 
 A revisão é estruturada em **cinco pilares interconectados**:
-1. **Fundamentação Teórica:** Teoria do mercado de trabalho médico, diferenciais compensatórios, fricções de busca e matching, complementaridade de capital e economia dos incentivos públicos.
-2. **Evidência Empírica Nacional e Internacional:** Avaliações de programas de provimento médico (PMM tradicional, PROVAB, NHSC, J-1 visa waivers, esquemas de bonding/incentivos rurais) e literatura de retenção de especialistas.
-3. **Inspirações para Modelagem Econométrica:** Tripla Diferença (DDD), dinâmica de estudos de evento, métricas de fluxos de trabalhadores (*worker flows*) e retenção sem viés de seleção pós-tratamento, e diagnósticos de *spillovers* espaciais.
-4. **Inspirações para Dados, Variáveis e Heterogeneidades:** Identificação de covariáveis estruturais de baseline (capacidade instalada hospitalar, IVS 2010, amenidades) e canais de heterogeneidade (faixas de bolsa, tipo de especialidade).
-5. **Protocolo Operacional de Execução:** Estratégia sistemática de busca (OpenAlex, PubMed, Europe PMC, SciELO, IPEA, NBER), strings booleanas, critérios de triagem e matriz de síntese de evidências.
+1. **Fundamentação Teórica:** Equilíbrio hedônico espacial (Roback 1982), preferências locacionais e Willingness to Accept (Sivey et al. 2012), matching sob bolsas (Agarwal 2015) e complementaridade de capital hospitalar (Acemoglu & Finkelstein 2008).
+2. **Evidência Empírica Nacional e Internacional:** Worker flows de médicos no interior (Gravelle et al. 2018), análise longitudinal de sobrevida de Cox (Russell et al. 2021), coortes de retenção sob bolsa ativa vs. pós-obrigação (Pathman et al. 2004) e revisões globais de return-of-service (Bärnighausen & Bloom 2009).
+3. **Inspirações para Modelagem Econométrica:** Decomposição de fluxos de trabalhadores no CNES mensal, Desenho de Descontinuidade de Regressão (RDD) nos cutoffs de IVS (0,400 e 0,500) e Tripla Diferença (DDD).
+4. **Inspirações para Dados e Heterogeneidades:** Running variable canônica do **IVS 2010 do IPEA**, infraestrutura hospitalar instalada no CNES e faixas de bolsa.
+5. **Protocolo Operacional de Execução:** Estratégia sistemática de busca (OpenAlex, PubMed, NBER, SciELO), strings booleanas e matriz estruturada de evidências.
 
 ---
 
@@ -28,10 +29,10 @@ A revisão é estruturada em **cinco pilares interconectados**:
 
 ```mermaid
 graph TD
-    A["Teoria do Mercado de Trabalho Médico"] --> B["Diferenciais Compensatórios & Localização<br/>(Rosen 1974, 1986; Roback 1982; Moretti 2011)"]
-    A --> C["Fricções de Busca & Matching<br/>(Mortensen-Pissarides; Roth & Peranson 1999)"]
-    A --> D["Complementaridade de Capital & Fatores<br/>(Arrow 1963; McGuire 2000; Acemoglu)"]
-    A --> E["Incentivos Públicos & Crowding-Out<br/>(Laffont & Tirole; Holmstrom & Milgrom)"]
+    A["Teoria do Mercado de Trabalho Médico no Interior"] --> B["Equilíbrio Espacial & IVS<br/>(Roback 1982; Sivey et al. 2012)"]
+    A --> C["Fricções de Busca & Matching<br/>(Agarwal 2015)"]
+    A --> D["Worker Flows: Entradas vs Saídas<br/>(Gravelle et al. 2018)"]
+    A --> E["Incentivos Públicos & Crowding-Out<br/>(Baicker & Staiger 2005)"]
     
     B --> F["Decisão de Atração & Fixação do Especialista"]
     C --> F
@@ -40,25 +41,26 @@ graph TD
 ```
 
 ### 1.1 Teoria dos Diferenciais Compensatórios e Escolha Espacial (Equalizing Differences)
-- **Referências Fundamentais:** Rosen (1974, 1986); Roback (1982); Moretti (2011); Diamond (2016).
-- **Mecanismo:** Médicos especialistas possuem elevado custo de oportunidade, preferências por amenidades urbanas e mercados com maior densidade de renda privada. A atração para municípios vulneráveis ou remotos exige um diferencial salarial compensatório ($\Delta w = w_{\text{remoto}} - w_{\text{polo}}$) que cubra deseconomias de isolamento, ausência de pares e escassez de infraestrutura familiar/social.
-- **Aplicação ao PMM-E:** As bolsas de atração do PMM-E (escalonadas por faixas de incentivo e vulnerabilidade IVS) operam como um choque exógeno de diferencial compensatório. A literatura nos ajuda a formalizar a função de oferta espacial:
-  $$S_{mst} = f(Bolsa_m, IVS_m, Amenidades_m, Infraestrutura_{ms}, SalarioMercado_m)$$
+- **Referências Fundamentais:** Roback (1982); Rosen (1986); Sivey et al. (2012); Moretti (2011).
+- **Mecanismo:** Médicos especialistas possuem elevado custo de oportunidade e fortes preferências por capitais. A atração para municípios vulneráveis ou remotos exige um diferencial salarial compensatório ($\Delta w = w_{\text{remoto}} - w_{\text{polo}}$) que cubra deseconomias de isolamento, ausência de pares e escassez de infraestrutura familiar e médica.
+- **Aplicação ao PMM-E:** As bolsas do PMM-E (escalonadas por faixas de vulnerabilidade IVS) operam como um choque de diferencial compensatório:
+  $$S_{mst} = f(\text{Bolsa}(IVS_m), IVS_m, \text{Amenidades}_m, \text{Infraestrutura}_{ms})$$
 
-### 1.2 Fricções de Busca, Rigidezes e Matching no Mercado de Especialistas
-- **Referências Fundamentais:** Mortensen & Pissarides (1994); Roth & Peranson (1999); Burdett & Mortensen (1998).
-- **Mecanismo:** Mercados de trabalho médico sofrem com severas assimetrias de informação e fricções de coordenação. A criação de um processo centralizado e transparente de vagas reduz custos de busca (*search costs*) tanto para os gestores locais do SUS quanto para médicos recém-formados ou em formação.
-- **Aplicação ao PMM-E:** A disponibilização de vagas imediatas atua reduzindo o atrito de matching, acelerando o tempo de preenchimento em comparação a postos não coordenados.
+### 1.2 Preferências Locacionais, Willingness to Accept (WTA) e Elasticidade da Oferta
+- **Referências Fundamentais:** Sivey et al. (2012); Agarwal (2015).
+- **Mecanismo:** Modelos de utilidade aleatória (RUM) demonstram que a atratividade do posto depende do valor monetário do incentivo e da carga horária hospitalar. Especialistas cirúrgicos exigem compensação financeira substancialmente superior à de clínicos para aceitar postos no interior.
+- **Aplicação ao PMM-E:** Parametrização da sensibilidade da oferta médica a diferentes faixas de bolsa e identificação da heterogeneidade por especialidade.
 
-### 1.3 Complementaridade de Capital Físico e Equipe Multiprofissional
-- **Referências Fundamentais:** Arrow (1963); McGuire (2000); Chandra & Skinner (2012); Currie & MacLeod (2017).
-- **Mecanismo:** Ao contrário da Atenção Primária à Saúde (APS) — onde o médico generalista atua com baixa intensidade de capital físico —, a prática médica especializada requer insumos complementares estritos: centros cirúrgicos, leitos de internação e UTI, equipamentos de diagnóstico por imagem e endoscopia, além de equipes de anestesia e enfermagem especializada.
-- **Aplicação ao PMM-E:** A literatura teórica prevê que a resposta da oferta médica a incentivos financeiros será truncada ou nula em municípios onde a capacidade física instalada for deficiente (*binding constraint* de infraestrutura).
+### 1.3 Dinâmica de Worker Flows: Entradas vs Saídas
+- **Referências Fundamentais:** Gravelle, Scott, Yong & McGrail (2018).
+- **Mecanismo:** Incentivos financeiros geram forte efeito positivo nas decisões de entrada (atração imediata), mas possuem efeito atenuado na redução da taxa de evasão (retenção sustentada).
+- **Aplicação ao PMM-E:** Justifica a decomposição formal do estoque líquido em entradas, saídas e taxa de permanência no CNES mensal.
 
-### 1.4 Teoria de Contratos e Efeito de Substituição (Crowding-Out / Canibalização)
-- **Referências Fundamentais:** Laffont & Tirole (1993); Holmstrom & Milgrom (1991); Prendergast (1999); Baicker & Staiger (2005).
-- **Mecanismo:** O fornecimento de mão de obra subsidiada pelo governo federal para entes subnacionais (municípios e hospitais contratualizados) pode induzir comportamento estratégico local: o gestor municipal substitui contratações regulares diretas pelo profissional financiado pela União, gerando *crowding-out* fiscal e mantendo o estoque líquido inalterado.
-- **Aplicação ao PMM-E:** A análise precisa decompor se a entrada de bolsistas representou adição líquida à força de trabalho municipal ou apenas substituição de médicos municipais preexistentes.
+### 1.4 Federalismo Fiscal e Substituição de Vínculos (Crowding-Out)
+- **Referências Fundamentais:** Baicker & Staiger (2005); Gordon (2004).
+- **Mecanismo:** O fornecimento de bolsas federais pode induzir o gestor municipal a remanejar recursos próprios e descontinuar contratos locais, gerando substituição fiscal.
+- **Aplicação ao PMM-E:** Exige a auditoria explícita do estoque total no CNES para estimar se o ganho de especialistas é líquido ou compensado por demissões locais.
+
 
 ---
 
@@ -125,17 +127,19 @@ graph TD
   - $\alpha_{ms}$ (FE Município–Curso): absorve vantagens comparativas e níveis basais históricos de cada especialidade em cada município;
   - $\gamma_{mt}$ (FE Município–Mês): absorve **todos** os choques locais invariantes à especialidade (gestão, finanças municipais, choques demográficos);
   - $\delta_{st}$ (FE Curso–Mês): absorve **todas** as tendências nacionais da especialidade médica (formação na residência, inovações tecnológicas, sazonalidades);
-  - $\beta$: identifica o efeito causal líquido da disponibilização imediata da vaga em relação à permanência em cadastro de reserva.
+  - $\beta$: mede a diferença ajustada associada à disponibilização imediata da
+    vaga em relação à permanência em cadastro de reserva. A interpretação
+    causal foi vedada após a falha do portão de relevância administrativa.
 
 ### 3.2 Validação Dinâmica e Testes de Pré-Tendências (Event Studies)
 - **Fundamentação:** Freyaldenhoven, Hansen & Shapiro (2019); Roth (2022); Sun & Abraham (2021); Rambachan & Roth (2023).
-- **Prática Canônica:** Estimação de coeficientes dinâmicos $\beta_k$ para todos os meses pré-tratamento ($k \in [2024\text{-}06, 2025\text{-}06]$) normalizando o mês prévio ao anúncio ($2025\text{-}06 = 0$). O teste conjunto de Wald ($H_0: \beta_k = 0, \forall k < 2025\text{-}07$) fornece a auditoria formal da hipótese de tendências paralelas.
+- **Prática Canônica:** Estimação de coeficientes dinâmicos $\beta_k$ para todos os meses pré-tratamento ($k \in [2024\text{-}06, 2025\text{-}06]$) normalizando o mês prévio ao anúncio ($2025\text{-}06 = 0$). O teste conjunto de Wald ($H_0: \beta_k = 0, \forall k < 2025\text{-}07$) é apenas um diagnóstico: não rejeitar zero não prova tendências paralelas, especialmente com poucos clusters e intervalos largos.
 
 ### 3.3 Decomposição de Fluxos de Trabalhadores (*Worker Flows*) e Métricas de Retenção
 - **Fundamentação:** Davis, Faberman & Haltiwanger (2006, 2012); Abowd, Kramarz & Margolis (AKM 1999).
 - **Prevenção de Vieses Metodológicos:** A literatura econômica alerta enfaticamente contra o uso de taxas condicionadas a resultados pós-tratamento (e.g., $\frac{\text{Retidos}}{\text{Entrantes}}$), pois o tratamento altera tanto o numerador quanto a composição do denominador (*endogenous sample selection bias*).
 - **Diretriz Adotada:**
-  1. Estimar modelos econométricos causais sobre **contagens brutas em níveis**: Entradas ($n\_entradas_{mst}$), Saídas ($n\_saidas_{mst}$) e Saldo Líquido ($saldo_{mst}$);
+  1. Estimar modelos ajustados sobre **contagens brutas em níveis**: Entradas ($n\_entradas_{mst}$), Saídas ($n\_saidas_{mst}$) e Saldo Líquido ($saldo_{mst}$), sem linguagem causal enquanto o desenho não satisfizer seus portões;
   2. Apresentar taxas de sobrevivência de coortes pré-especificadas (entrantes de 2025-08 a 2026-01 seguidos por 6 meses) estritamente como estatísticas descritivas de sobrevivência longitudinal;
   3. Marcar explicitamente como censurados os horizontes ainda não maduros (12 meses).
 

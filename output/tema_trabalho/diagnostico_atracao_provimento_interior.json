@@ -1,0 +1,203 @@
+{
+  "protocolo": "AUDITORIA_TEMA_ATRACAO_PROVIMENTO_INTERIOR",
+  "data_referencia": "2026-08-31",
+  "efeitos_estimados": false,
+  "pergunta_recomendada": "Em que medida as vagas do primeiro ciclo do PMM-E foram preenchidas fora das capitais, quais características territoriais estão associadas ao preenchimento e se ele foi acompanhado por persistência da oferta médica local?",
+  "definicao_territorial": {
+    "principal_atual": "fora_capital = município cujo código IBGE não pertence às 27 capitais",
+    "limite": "não capital não significa necessariamente interior remoto; municípios metropolitanos permanecem neste grupo",
+    "upgrade_planejado": "tipologia capital/região metropolitana/interior próximo/interior remoto, congelada antes da estimação"
+  },
+  "fontes": {
+    "output/aquisicao/quadro_vagas_tratamento.parquet": {
+      "sha256": "41e1d3afee23994821361d8a60d9e507e3b1c25cf69ae882c10008ae27d8b149"
+    },
+    "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada.xlsx": {
+      "sha256": "0acfba2a89e0c269b754c0ca0fd5a2426be511f88a3c1a934a41345f8c9ffd0c"
+    },
+    "data/raw/pmm_e/2025_ciclo1_chamada1_homologados.xlsx": {
+      "sha256": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b"
+    },
+    "output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet": {
+      "sha256": "62529ee2c9eea9b45a2d379473fe9ee2c5ecddddb64c39ae8dc78283a8b5d7ee"
+    },
+    "output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json": {
+      "sha256": "fb4cbcb4d3f144146cc04e88d493f401b2fcfe8db19433211885c981a3a3a8ea"
+    }
+  },
+  "oferta_e_resultados_publicos": {
+    "por_territorio": {
+      "capital": {
+        "municipios_oferta": 18,
+        "municipios_vaga_imediata": 14,
+        "celulas_cnes_curso": 73,
+        "celulas_com_vaga_imediata": 39,
+        "vagas_imediatas": 85,
+        "alocacoes_confirmadas_compativeis": 19,
+        "homologacoes_compativeis": 9,
+        "taxa_alocacao_sobre_vagas_imediatas": 0.2235294117647059,
+        "taxa_homologacao_sobre_vagas_imediatas": 0.10588235294117647
+      },
+      "fora_capital": {
+        "municipios_oferta": 350,
+        "municipios_vaga_imediata": 201,
+        "celulas_cnes_curso": 1222,
+        "celulas_com_vaga_imediata": 474,
+        "vagas_imediatas": 593,
+        "alocacoes_confirmadas_compativeis": 238,
+        "homologacoes_compativeis": 145,
+        "taxa_alocacao_sobre_vagas_imediatas": 0.40134907251264756,
+        "taxa_homologacao_sobre_vagas_imediatas": 0.24451939291736932
+      },
+      "total": {
+        "municipios_oferta": 368,
+        "municipios_vaga_imediata": 215,
+        "celulas_cnes_curso": 1295,
+        "celulas_com_vaga_imediata": 513,
+        "vagas_imediatas": 678,
+        "alocacoes_confirmadas_compativeis": 257,
+        "homologacoes_compativeis": 154,
+        "taxa_alocacao_sobre_vagas_imediatas": 0.37905604719764013,
+        "taxa_homologacao_sobre_vagas_imediatas": 0.22713864306784662
+      }
+    },
+    "por_modalidade_original": {
+      "DUPLA": {
+        "celulas_cnes_curso": 10,
+        "vagas_imediatas": 10,
+        "vagas_reserva": 11,
+        "alocacoes_confirmadas": 4,
+        "homologacoes": 3
+      },
+      "IMEDIATA": {
+        "celulas_cnes_curso": 503,
+        "vagas_imediatas": 668,
+        "vagas_reserva": 0,
+        "alocacoes_confirmadas": 253,
+        "homologacoes": 151
+      },
+      "RESERVA": {
+        "celulas_cnes_curso": 782,
+        "vagas_imediatas": 0,
+        "vagas_reserva": 1134,
+        "alocacoes_confirmadas": 211,
+        "homologacoes": 142
+      }
+    },
+    "celulas_municipio_curso": 1184,
+    "alocacoes_confirmadas_publicadas": 468,
+    "alocacoes_confirmadas_em_chave_da_oferta_original": 468,
+    "celulas_alocacao_sem_chave_da_oferta_original": 0,
+    "homologacoes_publicadas": 316,
+    "homologacoes_em_chave_da_oferta_original": 296,
+    "celulas_homologacao_sem_chave_da_oferta_original": 18,
+    "celulas_alocacao_acima_da_capacidade_publicada": 10,
+    "celulas_homologacao_acima_da_capacidade_publicada": 6,
+    "nota": "A lista de alocação fecha nas chaves CNES-curso da oferta, mas 211 confirmações pertencem a células originalmente só de reserva. As taxas sobre vagas imediatas são apenas diagnóstico e não devem ser promovidas a preenchimento antes de reconciliar versões, reapresentações e capacidade."
+  },
+  "painel_cnes": {
+    "competencia_inicial": "202406",
+    "competencia_final": "202607",
+    "por_territorio": {
+      "capital": {
+        "municipios": 18,
+        "celulas_municipio_curso": 62,
+        "competencias": 26,
+        "linhas_coorte_6m_madura": 868,
+        "municipios_com_coorte_6m_madura": 18,
+        "celulas_com_coorte_6m_madura": 62,
+        "linhas_pos_publicacao_com_coorte_6m_madura": 372,
+        "competencias_pos_publicacao_com_coorte_6m_madura": [
+          "202508",
+          "202509",
+          "202510",
+          "202511",
+          "202512",
+          "202601"
+        ],
+        "celulas_com_especialista_na_ultima_competencia": 62,
+        "ultima_competencia": "202607"
+      },
+      "fora_capital": {
+        "municipios": 350,
+        "celulas_municipio_curso": 1122,
+        "competencias": 26,
+        "linhas_coorte_6m_madura": 15708,
+        "municipios_com_coorte_6m_madura": 350,
+        "celulas_com_coorte_6m_madura": 1122,
+        "linhas_pos_publicacao_com_coorte_6m_madura": 6732,
+        "competencias_pos_publicacao_com_coorte_6m_madura": [
+          "202508",
+          "202509",
+          "202510",
+          "202511",
+          "202512",
+          "202601"
+        ],
+        "celulas_com_especialista_na_ultima_competencia": 1066,
+        "ultima_competencia": "202607"
+      }
+    },
+    "cursos_sem_sobreposicao_cbo": 10,
+    "retencao_individual_identificada": false,
+    "horizonte_seis_meses_apos_homologacao": "tecnicamente coberto até 2026-07; o T0 físico ainda deve ser validado",
+    "interpretação": "o painel sustenta outcomes agregados de estoque, entrada e presença posterior; não identifica o bolsista nem a permanência na vaga"
+  },
+  "decisao_por_modulo": [
+    {
+      "modulo": "oferta",
+      "status": "VIAVEL",
+      "evidencia": "1295 células CNES-curso, 368 municípios e 678 vagas imediatas",
+      "linguagem_maxima": "oferta publicada"
+    },
+    {
+      "modulo": "atracao_alocacao",
+      "status": "VIAVEL_COM_RECONCILIACAO",
+      "evidencia": "468 alocações confirmadas; 0 células sem chave na oferta original",
+      "linguagem_maxima": "preenchimento administrativo, não universo de procura"
+    },
+    {
+      "modulo": "homologacao",
+      "status": "VIAVEL_COM_RECONCILIACAO",
+      "evidencia": "316 homologações; 18 células sem chave na oferta original",
+      "linguagem_maxima": "homologação, não início em atividade"
+    },
+    {
+      "modulo": "procura_candidaturas",
+      "status": "BLOQUEADO",
+      "evidencia": "lista publicada não comprova o universo de inscrições válidas",
+      "linguagem_maxima": "não estimar candidaturas por vaga sem A07-02"
+    },
+    {
+      "modulo": "interior",
+      "status": "VIAVEL_COM_DEFINICAO_MINIMA",
+      "evidencia": "código municipal permite separar capitais e não capitais",
+      "linguagem_maxima": "fora das capitais; interior remoto exige tipologia adicional"
+    },
+    {
+      "modulo": "oferta_local_cnes",
+      "status": "VIAVEL_AGREGADO",
+      "evidencia": "26 competências, 368 municípios e 1184 células",
+      "linguagem_maxima": "persistência da oferta médica local"
+    },
+    {
+      "modulo": "retencao_individual_bolsista",
+      "status": "BLOQUEADO",
+      "evidencia": "sem ponte PMM-E-CNES e sem spells administrativos completos",
+      "linguagem_maxima": "não chamar estoque ou presença cadastral de retenção do bolsista"
+    },
+    {
+      "modulo": "rdd_bolsa",
+      "status": "BLOQUEADO_R1",
+      "evidencia": "177 de 368 municípios divergem da regra candidata",
+      "linguagem_maxima": "upgrade causal somente após R1-R3"
+    }
+  ],
+  "veredito": {
+    "tema_faz_sentido": true,
+    "formulacao_defensavel": "atração administrativa e persistência da oferta médica local fora das capitais",
+    "formulacao_nao_defensavel_hoje": "efeito total do PMM-E na atração e retenção individual de médicos do interior",
+    "nucleo_garantido": "econometria associativa de implementação e preenchimento",
+    "upgrade_causal": "RDD do adicional da bolsa condicionado a R1-R3"
+  }
+}

@@ -1,6 +1,8 @@
 {
   "mes_referencia": "202506",
   "n_obs": 8294,
+  "n_celulas_municipio_curso": 319,
+  "n_municipios": 93,
   "n_clusters": 93,
   "diagnosticos_numericos": {
     "convergiu": true,

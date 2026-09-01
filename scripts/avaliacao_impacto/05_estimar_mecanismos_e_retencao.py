@@ -5,14 +5,19 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
+import sys
 from typing import Any
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(__file__).resolve().parents[2] / ".matplotlib-cache"))
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.append(str(ROOT / "scripts" / "utils"))
+from theme_pmme import PMMEPalette, setup_editorial_theme, add_editorial_header, add_editorial_footer
 from model_utils import atomic_savefig, atomic_to_csv, fit_absorbed_ols, result_for
 
 
@@ -121,23 +126,70 @@ def main() -> None:
     )
     (TABLES / "tabela3_mecanismos_fluxos_e_retencao.tex").write_text(table.to_latex(index=False), encoding="utf-8")
 
+    setup_editorial_theme()
     means = (
         df.groupby(["competencia", "modalidade_ms"], as_index=False)
         .agg(entradas=("n_entradas_6m", "mean"), saidas=("n_saidas_confirmadas_3m", "mean"))
     )
-    fig, axes = plt.subplots(1, 2, figsize=(13, 5), dpi=200, sharey=True)
-    for ax, modality in zip(axes, ["IMEDIATA", "RESERVA"], strict=True):
-        part = means[means["modalidade_ms"] == modality]
-        ax.plot(part["competencia"], part["entradas"], label="Entradas (6 meses prévios)")
-        ax.plot(part["competencia"], part["saidas"], label="Saídas (3 meses posteriores)")
-        ax.set_title(modality.title())
-        ax.tick_params(axis="x", rotation=60)
-        ax.legend()
-    fig.suptitle("Fluxos mensais com janelas longitudinais maduras")
-    fig.tight_layout()
-    atomic_savefig(fig, FIGURES / "figura4_decomposicao_mecanismos_fluxos.png")
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13.2, 5.8), dpi=300, sharey=True)
+
+    competencias = sorted(df["competencia"].astype(str).unique())
+    x = np.arange(len(competencias))
+    labels = [f"{m[:4]}-{m[4:]}" for m in competencias]
+
+    # Subplot 1: Modalidade Imediata
+    part1 = means[means["modalidade_ms"] == "IMEDIATA"].sort_values("competencia")
+    ax1.plot(part1["competencia"], part1["entradas"], marker="o", color=PMMEPalette.ACCENT_EMERALD,
+             linewidth=2.0, markersize=4.8, markeredgecolor='white', markeredgewidth=0.7, label="Entradas (6 meses de ausência prévia)", zorder=4)
+    ax1.plot(part1["competencia"], part1["saidas"], marker="s", color=PMMEPalette.ACCENT_CRIMSON, linestyle="--",
+             linewidth=1.8, markersize=4.8, markeredgecolor='white', markeredgewidth=0.7, label="Saídas (3 meses consecutivos de ausência)", zorder=4)
+    ax1.set_title("(A) Modalidade Imediata (Vagas Ofertadas)", fontsize=10.2, fontweight='bold', pad=9)
+    ax1.set_ylabel("Média de Médicos por Célula", fontsize=9.2, labelpad=7)
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(labels, rotation=45, ha="right", fontsize=8.0, fontweight='bold')
+    ax1.set_ylim(-0.02, 0.46)
+    ax1.grid(True, axis='y')
+    ax1.legend(loc='upper left', fontsize=8.2, framealpha=0.95, edgecolor=PMMEPalette.LIGHT_GRAY)
+
+    ax1.text(0.52, 0.80, "Presença aos 6 meses entre entrantes:\n86,9% ainda observados",
+             ha='center', va='center', transform=ax1.transAxes, fontsize=8.4, fontweight='bold', color='#065F46',
+             bbox=dict(boxstyle='square,pad=0.35', facecolor='#ECFDF5', edgecolor='#6EE7B7', lw=0.9), zorder=5)
+
+    # Subplot 2: Cadastro de Reserva
+    part2 = means[means["modalidade_ms"] == "RESERVA"].sort_values("competencia")
+    ax2.plot(part2["competencia"], part2["entradas"], marker="o", color=PMMEPalette.ACCENT_EMERALD,
+             linewidth=2.0, markersize=4.8, markeredgecolor='white', markeredgewidth=0.7, label="Entradas (6 meses prévios)", zorder=4)
+    ax2.plot(part2["competencia"], part2["saidas"], marker="s", color=PMMEPalette.ACCENT_CRIMSON, linestyle="--",
+             linewidth=1.8, markersize=4.8, markeredgecolor='white', markeredgewidth=0.7, label="Saídas (3 meses posteriores)", zorder=4)
+    ax2.set_title("(B) Cadastro de Reserva (Comparador Administrativo)", fontsize=10.2, fontweight='bold', pad=9)
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(labels, rotation=45, ha="right", fontsize=8.0, fontweight='bold')
+    ax2.grid(True, axis='y')
+    ax2.legend(loc='upper left', fontsize=8.2, framealpha=0.95, edgecolor=PMMEPalette.LIGHT_GRAY)
+
+    ax2.text(0.52, 0.80, "Presença aos 6 meses entre entrantes:\n79,7% ainda observados",
+             ha='center', va='center', transform=ax2.transAxes, fontsize=8.4, fontweight='bold', color='#9F1239',
+             bbox=dict(boxstyle='square,pad=0.35', facecolor='#FFF1F2', edgecolor='#FDA4AF', lw=0.9), zorder=5)
+
+    add_editorial_header(
+        fig,
+        title="Decomposição de Mecanismos: Fluxos Mensais de Entradas e Saídas",
+        subtitle="Fluxos cadastrados e presença posterior, por modalidade administrativa inicial (CNES 2024–2026)",
+        kicker="MECANISMOS DESCRITIVOS E ASSOCIAÇÕES AJUSTADAS",
+        y_top=0.97
+    )
+    add_editorial_footer(
+        fig,
+        source="CNES / DATASUS e Ministério da Saúde (2024–2026)",
+        notes="Janelas longitudinais com censura explícita de bordas. Presença aos 6 meses condicionada em entrada observada.",
+        y_bottom=0.020
+    )
+
+    fig.subplots_adjust(top=0.79, bottom=0.14, left=0.07, right=0.96, wspace=0.18)
+    atomic_savefig(fig, FIGURES / "figura4_decomposicao_mecanismos_fluxos.png", dpi=300)
     plt.close(fig)
-    print("[OK] Mecanismos estimados com censura explícita; presença em 6 meses mantida descritiva.")
+    print("[OK] Mecanismos estimados com censura explícita; figura editorial 4 gerada com sucesso.")
 
 
 if __name__ == "__main__":

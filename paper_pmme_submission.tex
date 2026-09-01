@@ -1,0 +1,209 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath,amssymb,booktabs,graphicx,geometry,hyperref}
+\geometry{margin=2.5cm}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+
+\title{Incentivos financeiros, vulnerabilidade territorial e provimento\\
+duradouro de especialistas: evidências do Mais Médicos Especialistas}
+\author{Versão de trabalho}
+\date{31 de agosto de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Este artigo investiga se incentivos financeiros maiores conseguem compensar a
+menor atratividade de territórios vulneráveis no Mais Médicos Especialistas
+(PMM-E). A estratégia separa um núcleo associativo de implementação de um
+upgrade causal condicionado: o gradiente do Índice de Vulnerabilidade Social
+(IVS) descreve a dificuldade territorial, enquanto saltos de R\$ 5 mil na bolsa
+são o tratamento causal candidato. O escore administrativo ainda não foi
+reconstruído; portanto, nenhuma regressão descontínua é estimada nesta versão.
+Como evidência inicial, o painel mensal do Cadastro Nacional de
+Estabelecimentos de Saúde (CNES) compara vagas inicialmente imediatas às
+mantidas em reserva. No universo publicado há 587 células município--curso em
+368 municípios; a amostra com variação identificadora contém 319 células em 93
+municípios. A diferença ajustada na probabilidade de alocação confirmada foi de
+2,79 pontos percentuais, com intervalo de confiança amplo
+($IC_{95\%}=[-10{,}91;16{,}48]$). No CNES, a diferença ajustada pós-política no
+estoque foi de $-0{,}446$ especialista por célula
+($IC_{95\%}=[-0{,}934;0{,}042]$). Esses resultados não sustentam uma conclusão
+causal de sucesso ou fracasso. O trabalho é viável como análise econométrica de
+preenchimento e oferta local persistente, com linguagem associativa. A
+identificação do efeito local da bolsa permanece condicionada à validação do
+escore, da regra histórica, do primeiro estágio e das cointervenções.
+\end{abstract}
+
+\section{Pergunta, contribuição e status da evidência}
+
+O PMM-E procura ampliar a disponibilidade de especialistas no Sistema Único de
+Saúde, inclusive em territórios vulneráveis. A pergunta substantiva é se bolsas
+maiores compensam desvantagens territoriais no preenchimento e no provimento
+duradouro das vagas. ``Provimento duradouro'' significa oferta cadastrada local
+observada em horizonte fixo; não significa retenção individual do bolsista.
+
+Salário anunciado e IVS não são regressoras independentes simples: o primeiro é
+definido, em princípio, pela faixa do segundo. O efeito causal candidato é o
+salto na oferta da bolsa junto ao cutoff. O gradiente de IVS fora do salto é uma
+associação territorial, não o efeito causal da vulnerabilidade.
+
+Enquanto o portão da RDD permanece fechado, a pergunta empiricamente observável
+é mais estreita: estabelecimentos associados a vagas inicialmente imediatas
+apresentaram trajetória diferente daquelas inicialmente mantidas em reserva?
+
+Essa comparação é substantivamente útil para diagnosticar implementação, mas
+não equivale a comparar PMM-E com ausência do programa. A priorização pode
+refletir demanda, capacidade, vulnerabilidade e decisões administrativas não
+observadas. Além disso, o PMM-E integra o Agora Tem Especialistas, pacote com
+outras ações simultâneas. A redação do artigo, portanto, usa ``diferença
+ajustada'' e reserva ``efeito causal'' ao desenho que satisfizer um portão de
+identificação explícito.
+
+\section{Dados, unidades e desfechos}
+
+O painel combina as vagas oficiais do ciclo 1 com vínculos cadastrados no CNES.
+A unidade é a célula município--curso por competência mensal. Curso, especialidade
+e CBO não são conceitos intercambiáveis; o pareamento é documentado e precisa
+ser validado antes de qualquer extensão.
+
+O desfecho principal atual é o estoque cadastrado de especialistas compatíveis.
+Também se examinam cobertura, entradas e saídas mensais. Presença no CNES não
+prova participação no PMM-E, exercício físico efetivo, carga líquida adicional
+ou pagamento de bolsa.
+
+\begin{table}[htbp]
+\centering
+\caption{Escala e composição da análise inicial}
+\begin{tabular}{lr}
+\toprule
+Objeto & Quantidade \\
+\midrule
+Células município--curso no universo publicado & 587 \\
+Municípios no universo publicado & 368 \\
+Células na amostra com variação identificadora & 319 \\
+Municípios na amostra com variação identificadora & 93 \\
+Estoque médio inicial, imediata & 7,25 \\
+Estoque médio inicial, reserva & 10,85 \\
+IVS médio, imediata & 0,341 \\
+IVS médio, reserva & 0,346 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+As diferenças de nível já presentes no início mostram por que a trajetória
+bruta não deve ser lida como experimento natural. Na janela exibida na Figura
+3, a média passa de aproximadamente 7,09 para 8,35 no grupo imediato e de 10,77
+para 12,77 no grupo reserva. O gráfico descreve 319 células em 93 municípios;
+não compara grandes centros com interior nem participantes individuais com não
+participantes.
+
+\section{Estratégia comparativa atual}
+
+A especificação de tripla diferença explora variação entre modalidade, período
+e curso dentro de unidades comparáveis:
+
+\begin{equation}
+Y_{ist}=\alpha_{is}+\gamma_{it}+\delta_{st}
++\beta(\mathrm{Imediata}_{is}\times\mathrm{P\acute{o}s}_t)
++\varepsilon_{ist},
+\end{equation}
+
+em que $i$ denota município ou estabelecimento, $s$ o curso/especialidade e $t$
+a competência mensal. Os efeitos fixos absorvem heterogeneidade permanente da
+célula, choques gerais da unidade no mês e choques nacionais de especialidade.
+Erros-padrão são agrupados no município; a auditoria final deve acrescentar wild
+cluster bootstrap e inferência de randomização quando aplicáveis.
+
+Essa especificação melhora comparabilidade, mas não elimina seleção em
+priorização. O teste conjunto dos coeficientes pré não rejeita zero
+($F=1{,}262$, $p=0{,}255$); isso é compatível com, mas não demonstra, tendências
+paralelas. Poder estatístico limitado e diferenças de composição continuam
+relevantes.
+
+\section{Resultados de implementação}
+
+\begin{table}[htbp]
+\centering
+\caption{Diferenças ajustadas após a prioridade imediata}
+\begin{tabular}{lrrr}
+\toprule
+Desfecho & Estimativa & Erro-padrão & $p$ \\
+\midrule
+Alocação confirmada (p.p.) & 2,79 & 6,89 & 0,687 \\
+Estoque de especialistas & -0,446 & 0,246 & 0,073 \\
+Cobertura (p.p.) & 0,73 & 1,54 & 0,637 \\
+Entradas mensais & -0,073 & 0,042 & 0,087 \\
+Saídas mensais & -0,018 & 0,050 & 0,716 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Os intervalos são largos e incluem efeitos substantivamente distintos. A
+estimativa negativa de estoque é sugestiva, mas não permite afirmar que a oferta
+imediata reduziu especialistas nem que o PMM-E fracassou. Da mesma forma, a
+estimativa no nível do estabelecimento ($-0{,}443$;
+$IC_{95\%}=[-1{,}238;0{,}351]$) não exclui redistribuição ou canibalização.
+
+Entre profissionais classificados como entrantes no painel, 86,9\% no grupo
+imediato e 79,7\% no grupo reserva permanecem observados seis meses depois. Essa
+é uma estatística condicional e descritiva: o tratamento pode alterar quem entra,
+e o CNES não identifica quais entrantes pertencem ao programa. Ela não demonstra
+que ``retenção é alta'' por causa do PMM-E, nem que atração seja o único gargalo.
+
+\section{O que a evidência permite concluir}
+
+Os dados sustentam três afirmações limitadas. Primeiro, a prioridade imediata
+teve primeiro estágio impreciso sobre a alocação confirmada. Segundo, não se
+observa aumento relativo robusto no estoque cadastral durante a janela estudada.
+Terceiro, as trajetórias dos dois grupos já diferiam em nível e composição antes
+da política.
+
+Não se pode derivar destes resultados que infraestrutura, carreira ou desenho
+de seleção causaram o padrão observado; que polos urbanos ``venceram'' a disputa;
+que bolsas nominais são ineficazes; ou que a vinculação direta ao CNES seria a
+reforma ótima. Essas hipóteses podem orientar discussão e testes futuros, desde
+que sejam apresentadas como mecanismos possíveis, não como achados.
+
+\section{Próximo desenho causal: adicional de bolsa}
+
+A estratégia prioritária explora os saltos anunciados de R\$ 5 mil no valor da
+bolsa próximos a IVS 0,400/0,401 e 0,500/0,501. O tratamento é a elegibilidade ao
+valor maior, não a simples existência de uma vaga. O desfecho administrativo
+primário deve ser procura e preenchimento por vaga imediata efetivamente
+ofertada; cadastro de reserva não pertence ao denominador. Efeitos no CNES vêm
+apenas depois de demonstrado esse primeiro estágio.
+
+O desenho só será executado se quatro condições forem verificadas: (i) versão,
+precisão e arredondamento do IVS usados pelo controlador; (ii) reprodução exata
+da faixa anunciada; (iii) suporte local suficiente; e (iv) inexistência de outra
+regra ou componente do Agora Tem Especialistas que salte no mesmo limiar. Uma
+auditoria preliminar encontrou divergência entre a faixa publicada e uma
+reconstrução local do IVS em 177 de 368 municípios do ciclo 1. Assim, o portão
+está fechado até a regra ser reconstruída; não é legítimo estimar a RDD com o
+escore aproximado disponível.
+
+Pela natureza discreta do IVS, randomização local é a abordagem principal
+candidata. RDD local-linear, múltiplas larguras de banda, testes de densidade e
+placebos serão diagnósticos. O limiar 0,400 parece ter suporte mais promissor; o
+de 0,500 pode ser usado como replicação apenas se houver observações suficientes.
+O protocolo operacional e os critérios de interrupção estão documentados em
+\texttt{docs/14\_plano\_implementacao\_rdd\_bolsa.md}; a formulação substantiva
+e a auditoria de viabilidade estão em
+\texttt{docs/15\_incentivos\_ivs\_provimento\_duradouro.md}.
+
+\section{Conclusão}
+
+A primeira análise oferece um diagnóstico relevante da implementação, mas não
+uma estimativa causal definitiva. A contribuição mais rigorosa, hoje, é separar
+desvantagem territorial, incentivo anunciado, preenchimento e oferta local
+persistente. Prioridade administrativa e alocação efetiva são etapas distintas,
+e o painel público não revela um aumento relativo robusto no estoque cadastral
+na janela examinada. A contribuição causal potencial é medir se um adicional de
+bolsa altera procura e preenchimento exatamente nos limiares do IVS. O projeto
+deve resolver primeiro o portão documental da RDD e reservar ``retenção do
+bolsista'' para dados que identifiquem participante, vaga e eventos no tempo.
+
+\end{document}

@@ -1,11 +1,29 @@
-# 05. Plano principal: vagas viram médicos?
+# 05. Roadmap de execução
 
-> Registro canônico da primeira versão, já executada. O desenho individual
-> anterior permanece preservado como agenda futura. A próxima avaliação
-> prospectiva está em
-> [`12_estrategia_causal_prospectiva_ciclo3.md`](12_estrategia_causal_prospectiva_ciclo3.md).
+> A comparação agregada do ciclo 1 está encerrada. A fila imediata é somente o
+> portão de viabilidade do RDD do adicional de bolsa em
+> [`14_plano_implementacao_rdd_bolsa.md`](14_plano_implementacao_rdd_bolsa.md).
+> A formulação substantiva e a auditoria de viabilidade estão em
+> [`15_incentivos_ivs_provimento_duradouro.md`](15_incentivos_ivs_provimento_duradouro.md).
+> O ciclo 3 permanece congelado até maturidade.
 
-## 0. Estado após a execução
+## Fila imediata autorizada
+
+1. Corrigir a camada editorial da comparação imediata versus reserva, sem
+   alterar os resultados auditados.
+2. Executar R1: reconstruir escore, vintagem, arredondamento, cutoff, faixa e
+   valor da bolsa aplicados às vagas do ciclo 1.
+3. Somente se R1 passar, executar R2 de suporte e cointervenções sem outcomes.
+4. Somente se R2 passar, congelar R3 antes de estimar qualquer efeito.
+5. Antes de R4, reconciliar vagas imediatas, alocações e homologações no mesmo
+   grão, sem usar cadastro de reserva como denominador de preenchimento.
+
+R4–R6 não estão autorizados por este registro até os respectivos portões. O
+RDD antigo em `0,300` não deve ser restaurado: a grade de 2025 não tinha salto
+nesse ponto. A divergência atual entre IVS local e faixa anunciada mantém R1 em
+estado `REPROVADO_PENDENTE_DE_RECONSTRUCAO`.
+
+## 0. Estado da comparação agregada após a execução
 
 O pipeline foi executado de ponta a ponta com as 26 competências do CNES. A
 versão agregada está concluída como **comparação ajustada**, não como avaliação
@@ -22,7 +40,10 @@ A auditoria de implementação, os resultados permitidos e as conclusões vedada
 estão em
 [`auditorias/04_auditoria_pipeline_agregado.md`](auditorias/04_auditoria_pipeline_agregado.md).
 
-## 1. Pergunta substantiva
+## 1. Pergunta substantiva da comparação encerrada
+
+> As seções 1–11 preservam o protocolo e a execução da comparação agregada.
+> Elas não constituem uma fila operacional nova e não autorizam reestimação.
 
 > A disponibilização de vagas do PMM-E para preenchimento imediato aumentou o
 > número de especialistas nos municípios contemplados? Os novos médicos
@@ -52,7 +73,7 @@ O outcome municipal evita chamar uma troca de hospital dentro do mesmo
 município de atração local. Resultados no estabelecimento e na região de saúde
 serão diagnósticos de redistribuição, não novas famílias de outcomes.
 
-## 3. Contraste administrativo usado para identificação
+## 3. Contraste administrativo usado na comparação ajustada
 
 O tratamento será fixado pelo quadro original do ciclo 1, chamada 1, publicado
 em 24/07/2025. Após agregar todos os CNES do município:
@@ -69,9 +90,10 @@ curso–CBO e os requisitos de variação dentro do município determinarão a
 amostra identificadora antes da observação dos efeitos.
 
 Cadastro de reserva não significa ausência do programa. Ele pode ser
-reapresentado, convertido ou alocado posteriormente. Portanto, o estimando é:
+reapresentado, convertido ou alocado posteriormente. Portanto, o contraste é:
 
-> efeito da disponibilização inicial para preenchimento imediato, comparada à
+> diferença associada à disponibilização inicial para preenchimento imediato,
+> comparada à
 > permanência inicial apenas em cadastro de reserva, entre
 > municípios–especialidades incluídos no mesmo quadro administrativo.
 
@@ -232,7 +254,7 @@ observados. Com uma única coorte inicial, Callaway–Sant'Anna e Sun–Abraham 
 são necessários nesta versão. Métodos sintéticos não serão usados para
 "corrigir" retrospectivamente pré-tendências incompatíveis.
 
-## 8. Condições para linguagem causal
+## 8. Condições que teriam sido necessárias para linguagem causal
 
 A classificação imediata não foi aleatória. O fato de os grupos pertencerem ao
 mesmo quadro melhora a comparabilidade, mas não garante identificação. A
@@ -250,9 +272,9 @@ Se os diagnósticos falharem, a entrega será denominada **comparação ajustada
 não impacto causal. Não se escolherá retrospectivamente janela, amostra ou
 método em função do sinal dos resultados.
 
-## 9. Escopo ativo e congelado
+## 9. Escopo da primeira versão encerrada
 
-Entram na primeira versão:
+Entraram na primeira versão:
 
 - ciclo 1, chamada 1;
 - painel CNES mensal de 2024-06 a 2026-07;
@@ -262,10 +284,11 @@ Entram na primeira versão:
 - diagnósticos no CNES e na região para distinguir remanejamento;
 - DDD estática e estudo de evento.
 
-Permanecem congelados:
+Permaneceram fora daquela versão:
 
 - ciclos 2 e 3 como coortes de tratamento e adoção escalonada;
-- RDD pelo IVS e efeito causal dos diferentes valores de bolsa;
+- RDD pelo IVS e efeito causal dos diferentes valores de bolsa — agora
+  reaberto somente pelos portões R1–R3 descritos no início deste roadmap;
 - synthetic DiD, matrix completion e variáveis instrumentais;
 - FTE, produção SIA/SUS, internações SIH/SUS, filas e outcomes de saúde;
 - custos, custo-benefício e heterogeneidades adicionais;
@@ -328,7 +351,7 @@ preenche a formulação causal acima porque o portão de relevância falhou na
 amostra identificadora. Repetir a mesma DDD com filtros, janelas ou estimadores
 escolhidos pelo sinal observado não é próximo passo autorizado.
 
-## 12. Próximo estudo, sem reabrir o ciclo 1
+## 12. Replicação prospectiva do ciclo 3
 
 O autor autorizou em 30/08/2026 uma avaliação prospectiva separada do ciclo 3.
 O estudo principal usa imediata pura versus não priorizada pura de

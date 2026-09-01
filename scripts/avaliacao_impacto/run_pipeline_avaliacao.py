@@ -38,6 +38,7 @@ STEPS = [
     SCRIPTS_DIR / "06_avaliar_robustez_e_redistribuicao.py",
     SCRIPTS_DIR / "07_gerar_tabelas_e_figuras.py",
     SCRIPTS_DIR / "08_gerar_nota_tecnica_final.py",
+    SCRIPTS_DIR / "09_gerar_infografico_master_pmme.py",
 ]
 
 

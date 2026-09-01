@@ -2,36 +2,37 @@
 
 > **Documento Teórico Central**  
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
+> **Tema Central:** *Atração e Retenção de Médicos Especialistas em Cidades do Interior com base nas Diferentes Bolsas e no IVS (Índice de Vulnerabilidade Social).*  
 > **Autores:** Equipe de Pesquisa Econômica em Saúde  
-> **Data:** 30 de Agosto de 2026  
+> **Data de Consolidação:** 31 de Agosto de 2026  
 
 ---
 
-## 1. Visão Geral: Por que a Teoria Microeconômica é Indispensável no PMM-E?
+## 1. Visão Geral: Por que a Teoria Microeconômica é Indispensável?
 
-A literatura moderna em Economia da Saúde e Economia do Trabalho (e.g., Acemoglu, Finkelstein, Agarwal, Baicker) estabelece que uma avaliação empírica quase-experimental só alcança validade externa e interpretabilidade causal se estiver firmemente ancorada em um **modelo microeconômico dedutivo**.
+A literatura econômica em provimento de recursos humanos em saúde (Roback 1982; Sivey et al. 2012; Gravelle et al. 2018; Russell et al. 2021) demonstra que **a distribuição geográfica de médicos especialistas no interior não decorre de simples inércia, mas de escolhas microeconômicas de otimização sob fortes diferenciais de remuneração, preferências por amenidades urbanas e custos de isolamento**.
 
-No caso do **Programa Mais Médicos Especialistas (PMM-E)**, a intervenção pública não atua sobre um mercado competitivo sem fricções. O programa atua sobre um complexo sistema de equilíbrio geral caracterizado por:
-1. **Assimetrias de informação e custos de busca espacial** na distribuição geográfica de médicos especialistas.
-2. **Complementaridade estrita de fatores de produção** entre mão de obra médica especializada ($L$) e infraestrutura hospitalar/diagnóstica ($K$).
-3. **Agência intergovernamental e oportunismo fiscal**, em que municípios podem substituir gastos próprios com pessoal por bolsas federais (*crowding-out*).
-4. **Contratos multitarefa**, nos quais o profissional divide seu esforço entre a produção assistencial imediata e o investimento formativo de longo prazo.
+No caso do **PMM-E**, a intervenção federal desenha um esquema de incentivos monetários escalonados (bolsa formação + adicionais de fixação) condicionados ao **Índice de Vulnerabilidade Social (IVS 2010 do IPEA)** para induzir dois comportamentos distintos:
+1. **Atração Imediata (Novas Entradas):** Deslocamento da curva de oferta de médicos especialistas para municípios remotos do interior via preenchimento do gap de *diferencial salarial compensatório*.
+2. **Retenção Sustentada (Permanência / Sobrevivência):** Mitigação da taxa de evasão e rotatividade após o período obrigatório ou término do bônus financeiro ativo.
 
-Este documento formaliza os **7 Pilares Teóricos Seminais** que embasam cada faceta do problema econômico do PMM-E e desenvolve um **Modelo Teórico Unificado** que conecta diretamente a teoria à especificação empírica de Tripla Diferença (DDD) adotada no repositório.
+Este documento formaliza os **7 Pilares Teóricos Seminais** e desenvolve um **Modelo Teórico Unificado** que conecta as preferências dos especialistas, a resposta a bolsas escalonadas e as desamenidades do IVS às especificações empíricas (Worker Flows, RDD nos cutoffs de IVS e Tripla Diferença em Painel CNES).
 
 ```mermaid
 graph TD
-    subgraph "Arcabouço Teórico Integrado do PMM-E"
-        P1["Pilar 1: Equilíbrio Espacial & Diferenciais Compensatórios<br/>(Roback 1982 / Rosen 1986)"] --> M["Modelo Microeconômico Unificado do PMM-E"]
-        P2["Pilar 2: Matching Centralizado & Redução de Fricções<br/>(Roth 1984 / Agarwal 2015)"] --> M
-        P3["Pilar 3: Função de Produção Hospitalar & Capital Físico<br/>(Acemoglu & Finkelstein 2008 / Chandra & Skinner 2012)"] --> M
-        P4["Pilar 4: Federalismo Fiscal & Substituição/Crowding-Out<br/>(Baicker & Staiger 2005 / Gordon 2004)"] --> M
-        P5["Pilar 5: Agência Multitarefa em Contratos Públicos<br/>(Holmstrom & Milgrom 1991)"] --> M
-        P6["Pilar 6: Políticas Baseadas no Lugar & Bem-Estar Social<br/>(Kline & Moretti 2014 / Glaeser & Gottlieb 2008)"] --> M
-        P7["Pilar 7: Decisão sob Incerteza & Resolutividade Diagnóstica<br/>(Currie & MacLeod 2017 / Arrow 1963)"] --> M
+    subgraph "Arcabouço Teórico Integrado do PMM-E no Interior"
+        P1["Pilar 1: Equilíbrio Espacial & Diferenciais por IVS<br/>(Roback 1982)"] --> M["Modelo Microeconômico Unificado<br/>Atração vs Retenção por Bolsa e IVS"]
+        P2["Pilar 2: Preferências Locacionais & WTA<br/>(Sivey et al. 2012)"] --> M
+        P3["Pilar 3: Matching Centralizado sob Bolsas<br/>(Agarwal 2015)"] --> M
+        P4["Pilar 4: Worker Flows em Entradas vs Saídas<br/>(Gravelle et al. 2018)"] --> M
+        P5["Pilar 5: Federalismo Fiscal & Crowding-Out<br/>(Baicker & Staiger 2005)"] --> M
+        P6["Pilar 6: Complementaridade Fator-Infraestrutura<br/>(Acemoglu & Finkelstein 2008)"] --> M
+        P7["Pilar 7: Políticas Place-Based & Bem-Estar Social<br/>(Kline & Moretti 2014)"] --> M
     end
     
-    M --> TEST["Hipóteses Empíricas Testáveis (DDD, CNES Mensal, IVS 2010)"]
+    M --> TEST1["Hipótese 1: Atração Imediata (Salto em Entradas CNES)"]
+    M --> TEST2["Hipótese 2: Retenção e Sobrevida por IVS (Cox / Kaplan-Meier)"]
+    M --> TEST3["Hipótese 3: RDD em Cutoffs de Bolsa no IVS (0,400 e 0,500)"]
 ```
 
 ---
@@ -40,156 +41,118 @@ graph TD
 
 ---
 
-### PILAR 1 — Equilíbrio Espacial e Diferenciais Salariais Compensatórios
-* **Papers Seminais:** **Roback (1982, *JPE*)**; Rosen (1986).
+### PILAR 1 — Equilíbrio Espacial e Diferenciais Salariais Compensatórios por IVS
+* **Paper Canônico:** **Roback (1982, *JPE*)**.
 * **Referência:** Roback, Jennifer. (1982). *Wages, Rents, and the Quality of Life: A General Equilibrium Model of Geographic Differences*. **Journal of Political Economy**, 90(6), 1257–1278.
-* **Extensão:** 22 páginas | **Foco de Leitura:** **pp. 1257–1272 (Seções 1 a 3: 15 págs)**.
+* **Extensão:** 22 páginas | **Foco:** **pp. 1257–1272 (Seções 1 a 3: 15 págs)**.
 * **Mecanismo Econômico Formal:**  
-  O modelo de Roback determina a distribuição espacial de trabalhadores sob livre mobilidade. A condição de equilíbrio exige que a utilidade indireta de um médico especialista seja idêntica entre todas as localidades $m$:
-  $$V(w_m, r_m; A_m) = ar{u}$$
-  onde $w_m$ é a remuneração média local, $r_m$ é o custo de vida/moradia e $A_m$ é o vetor de amenidades locais (infraestrutura urbana, escolas, segurança, lazer e amenidades profissionais hospitalares).  
-  Diferenciando a utilidade indireta em relação às amenidades:
-  $$rac{\partial w_m}{\partial A_m} = -rac{V_{A}(w_m, r_m; A_m)}{V_{w}(w_m, r_m; A_m)} < 0$$
+  O equilíbrio espacial hedônico exige que a utilidade indireta de um especialista com mobilidade perfeita seja constante no território:
+  $$V(w_m, r_m; A_m) = \bar{u}$$
+  onde $w_m$ é a remuneração, $r_m$ é o custo de moradia e $A_m$ é o vetor de amenidades locais (infraestrutura urbana, escolas, lazer e amenidades de prática médica).  
+  Diferenciando implicitamente a utilidade em relação às amenidades:
+  $$\left. \frac{dw_m}{dA_m} \right|_{V = \bar{u}} = -\frac{V_{A}(w_m, r_m; A_m)}{V_{w}(w_m, r_m; A_m)} < 0$$
 * **Aplicação Estrutural ao PMM-E:**  
-  Médicos especialistas apresentam alta elasticidade de renda e forte preferência por amenidades de grandes centros urbanos. Municípios com baixo índice de amenidades e alta vulnerabilidade social (mensurados pelo **IVS 2010 do IPEA**) sofrem de escassez crônica não por falta de demanda, mas porque o mercado local não consegue pagar o **diferencial salarial compensatório ($\Delta w$)** exigido para atraí-los. O PMM-E atua diretamente injetando uma bolsa federal que preenche esse gap de diferencial compensatório.
+  Municípios com desamenidades severas e alta vulnerabilidade socioeconômica (**alto IVS 2010**) geram desutilidade locacional aos médicos. Para que um especialista aceite atuar no interior vulnerável, o programa deve ofertar um **diferencial salarial compensatório ($\Delta w$)** proporcional ao déficit de amenidades ($1 - A_m \propto IVS_m$). As faixas progressivas de bolsa do PMM-E operam exatamente como esse vetor compensatório equalizador.
 
 ---
 
-### PILAR 2 — Falhas de Busca, Congestionamento e Matching Centralizado
-* **Papers Seminais:** **Agarwal (2015, *AER*)**; Roth (1984, *JPE*).
+### PILAR 2 — Preferências Médicas, Willingness to Accept (WTA) e Elasticidade da Bolsa
+* **Paper Canônico:** **Sivey et al. (2012, *JHE*)**.
+* **Referência:** Sivey, Peter; Scott, Anthony; Witt, Julia; Joyce, Catherine; Humphreys, John. (2012). *Junior Doctors' Preferences for Specialty Choice*. **Journal of Health Economics**, 31(6), 813–826.
+* **Extensão:** **14 páginas (Artigo completo)**.
+* **Mecanismo Econômico Formal:**  
+  Sob modelos de utilidade aleatória (RUM), a escolha locacional do médico $i$ pelo município $j$ é:
+  $$U_{ij} = \beta_w w_j + \beta_{loc} Loc_j + \beta_h Horas_j + \varepsilon_{ij}$$
+  O *Willingness to Accept* monetário para aceitar trabalhar no interior remoto é dado por:
+  $$WTA_{interior} = -\frac{\beta_{loc}}{\beta_w}$$
+* **Aplicação Estrutural ao PMM-E:**  
+  Permite parametrizar a elasticidade da oferta médica a diferentes doses de incentivo financeiro (R$ 5.000 vs R$ 10.000 de adicional). Mostra ainda que especialidades com alto custo de oportunidade em consultório privado (cirúrgicas) exigem um WTA substancialmente mais alto para o interior do que especialidades clínicas.
+
+---
+
+### PILAR 3 — Matching Centralizado sob Bolsas e Custos de Busca Espacial
+* **Paper Canônico:** **Agarwal (2015, *AER*)**.
 * **Referência:** Agarwal, Nikhil. (2015). *An Empirical Model of the Medical Match*. **American Economic Review**, 105(7), 1939–1978.
-* **Extensão:** 40 páginas | **Foco de Leitura:** **pp. 1940–1958 (Seções I a III: 18 págs)**.
+* **Extensão:** 40 páginas | **Foco:** **pp. 1940–1958 (Seções I a III: 18 págs)**.
 * **Mecanismo Econômico Formal:**  
-  Mercados descentralizados de médicos residentes e recém-especialistas sofrem com duas falhas severas de mercado:
-  1. *Atritos de busca e assimetria informacional:* Hospitais no interior não conseguem sinalizar suas vagas para formandos em grandes centros.
-  2. *Externalidades de congestionamento e unraveling temporal:* Processos seletivos descentralizados geram desistências em cascata e vagas ociosas.  
-  Agarwal (2015) modela o matching centralizado de médicos sob restrições de capacidade hospitalar $q_m$, mostrando que o clearinghouse centralizado alcança alocações eficientes e estáveis no sentido de Gale-Shapley:
-  $$\mu = rg\max_{\mu \in \mathcal{M}_{	ext{estável}}} \sum_{i \in \mathcal{I}} u_i(\mu(i))$$
+  Mercados descentralizados de especialistas sofrem com atritos informacionais e assimetria de busca: hospitais no interior não alcançam candidatos em centros universitários. A centralização em plataforma nacional de matching com ranking de preferências e subsídios financeiros resolve falhas de coordenação:
+  $$\mu = \arg\max_{\mu \in \mathcal{M}_{\text{estável}}} \sum_{i \in \mathcal{I}} u_i(\mu(i))$$
 * **Aplicação Estrutural ao PMM-E:**  
-  O edital federal unificado do Ministério da Saúde funciona como uma clearinghouse central. Ele reduz a zero os custos de busca para o médico e permite que vagas em hospitais do interior compitam em igualdade de visibilidade com capitais, explicando o salto descontínuo de preenchimento observado nas vagas imediatas.
+  Explica por que o edital centralizado do Ministério da Saúde viabiliza o preenchimento de vagas em municípios remotos que jamais conseguiriam atrair especialistas por processos seletivos locais isolados.
 
 ---
 
-### PILAR 3 — Função de Produção Hospitalar e Complementaridade Fator-Tecnologia
-* **Papers Seminais:** **Acemoglu & Finkelstein (2008, *JPE*)**; Chandra & Skinner (2012, *JEL*).
-* **Referência:** Acemoglu, Daron; Finkelstein, Amy. (2008). *Input and Technology Choices in Regulated Industries: Evidence from the Health Care Sector*. **Journal of Political Economy**, 116(5), 837–880.
-* **Extensão:** 44 páginas | **Foco de Leitura:** **pp. 839–858 (Seções I a III: 20 págs)**.
+### PILAR 4 — Dinâmica de Worker Flows: Efeito de Bônus em Entradas vs. Saídas
+* **Paper Canônico:** **Gravelle, Scott, Yong & McGrail (2018, *SSM*)**.
+* **Referência:** Gravelle, Hugh; Scott, Anthony; Yong, Jongsay; McGrail, Matthew. (2018). *Do Rural Incentives Payments Affect Entries and Exits of General Practitioners?* **Social Science & Medicine**, 216, 88–96.
+* **Extensão:** **9 páginas (Artigo completo)**.
 * **Mecanismo Econômico Formal:**  
-  A produção de cuidados de saúde hospitalares e ambulatoriais especializados é modelada por uma função de produção com complementaridade de insumos:
-  $$Y = F(K, L; T)$$
-  onde $L$ é o trabalho médico especializado, $K$ é o capital físico (leitos cirúrgicos, tomógrafos, equipamentos de ressonância e hemodinâmica) e $T$ é a tecnologia médica.  
-  A hipótese central de complementaridade capital-trabalho estabelece que:
-  $$rac{\partial^2 Y}{\partial L \partial K} > 0 \iff 	ext{A produtividade marginal do especialista } \left(rac{\partial Y}{\partial L}ight) 	ext{ é estritamente crescente no estoque de capital } K$$
+  A variação do estoque médico local é a diferença entre fluxos brutos de entrada e saída:
+  $$\Delta L_{mt} = Entry_{mt}(w_{\text{bolsa}}) - Exit_{mt}(w_{\text{bolsa}})$$
+  Gravelle et al. provam empiricamente que incentivos financeiros possuem alta elasticidade sobre as **novas entradas** ($\frac{\partial Entry}{\partial w} > 0$), mas **efeito quase nulo sobre a evasão de médio prazo** ($\frac{\partial Exit}{\partial w} \approx 0$).
 * **Aplicação Estrutural ao PMM-E:**  
-  Diferentemente da Atenção Primária (onde um estetoscópio e uma UBS básica são suficientes para consultas clínicas gerais), o especialista do PMM-E (e.g., cirurgião geral, ginecologista-obstetra, cardiologista, ortopedista) é um insumo inoperante na ausência de capital físico hospitalar. Isso fundamenta a necessidade de testar empiricamente se o impacto do PMM-E sobre internações e procedimentos locais é heterogêneo em relação à infraestrutura instalada no CNES.
+  Fundamenta nossa hipótese central: as bolsas elevadas do PMM-E são altamente eficazes para atrair especialistas (efeito imediato de entrada), mas a fixação duradoura depende de condições estruturais e vínculo local.
 
 ---
 
-### PILAR 4 — Federalismo Fiscal, Agência do Gestor Municipal e Crowding-Out
-* **Papers Seminais:** **Baicker & Staiger (2005, *QJE*)**; Gordon (2004, *JPubE*).
+### PILAR 5 — Federalismo Fiscal, Otimização Municipal e Crowding-Out
+* **Paper Canônico:** **Baicker & Staiger (2005, *QJE*)**.
 * **Referência:** Baicker, Katherine; Staiger, Douglas. (2005). *Fiscal Shenanigans, Targeted Federal Health Care Funds, and Patient Mortality*. **Quarterly Journal of Economics**, 120(1), 345–386.
-* **Extensão:** 42 páginas | **Foco de Leitura:** **pp. 348–360 (Seção II: Teoria, 12 págs)**.
+* **Extensão:** 42 páginas | **Foco:** **pp. 348–360 (Seção II: Teoria, 12 págs)**.
 * **Mecanismo Econômico Formal:**  
-  O gestor público municipal maximiza uma função de utilidade $U(L_m, G_m)$, onde $L_m = L_m^{	ext{próprio}} + L_m^{	ext{fed}}$ é o estoque total de médicos e $G_m$ são outros gastos públicos municipais. A restrição orçamentária é dada por:
-  $$w_m L_m^{	ext{próprio}} + p_G G_m \le R_m + w_{	ext{bolsa}} L_m^{	ext{fed}}$$
-  Diferenciando a escolha ótima em relação à alocação federal $L_m^{	ext{fed}}$:
-  $$rac{\partial L_m^{	ext{total}}}{\partial L_m^{	ext{fed}}} = 1 + rac{\partial L_m^{	ext{próprio}}}{\partial L_m^{	ext{fed}}}$$
-  Se $rac{\partial L_m^{	ext{próprio}}}{\partial L_m^{	ext{fed}}} = 0 \implies$ **Adição líquida perfeita** ($\Delta L^{	ext{total}} = 1$).  
-  Se $-1 < rac{\partial L_m^{	ext{próprio}}}{\partial L_m^{	ext{fed}}} < 0 \implies$ **Substituição fiscal parcial (*crowding-out*)**.  
-  Se $rac{\partial L_m^{	ext{próprio}}}{\partial L_m^{	ext{fed}}} = -1 \implies$ **Crowding-out total** (o município demite exatamente um médico contratado para cada bolsista federal que entra).
+  O gestor municipal maximiza $U(L_m, G_m)$ sujeito a $w_m L_m^{\text{próprio}} + G_m = R_m + w_{\text{bolsa}} L_m^{\text{fed}}$. A resposta líquida é:
+  $$\frac{\partial L_m^{\text{total}}}{\partial L_m^{\text{fed}}} = 1 + \frac{\partial L_m^{\text{próprio}}}{\partial L_m^{\text{fed}}}$$
+  Se o município cancela contratos preexistentes financiados com receita própria, ocorre substituição fiscal (*crowding-out*).
 * **Aplicação Estrutural ao PMM-E:**  
-  Este pilar fornece a microfundamentação direta para o nosso estimador de estoque no CNES: estimar se $eta_{	ext{DDD}} = 1$ (expansão líquida integral) ou se $eta_{	ext{DDD}} < 1$ devido ao remanejamento ou não renovação de contratos municipais preexistentes.
+  Fundamenta a necessidade de auditar no CNES se as bolsas do PMM-E adicionam especialistas líquidos ou se substituem médicos municipais preexistentes.
 
 ---
 
-### PILAR 5 — Teoria de Contratos Multitarefa e Alocação de Esforço
-* **Papers Seminais:** **Holmstrom & Milgrom (1991, *JLEO*)**.
-* **Referência:** Holmstrom, Bengt; Milgrom, Paul. (1991). *Multitask Principal-Agent Analyses: Incentive Contracts, Asset Ownership, and Job Design*. **Journal of Law, Economics, & Organization**, 7, 24–52.
-* **Extensão:** 29 páginas | **Foco de Leitura:** **pp. 24–38 (Seções 1 a 3: 15 págs)**.
+### PILAR 6 — Complementaridade Trabalho Especializado - Capital Hospitalar
+* **Paper Canônico:** **Acemoglu & Finkelstein (2008, *JPE*)**.
+* **Referência:** Acemoglu, Daron; Finkelstein, Amy. (2008). *Input and Technology Choices in Regulated Industries: Evidence from the Health Care Sector*. **Journal of Political Economy**, 116(5), 837–880.
+* **Extensão:** 44 páginas | **Foco:** **pp. 839–858 (Seções I a III: 20 págs)**.
 * **Mecanismo Econômico Formal:**  
-  O médico participante do PMM-E atua sob um contrato público híbrido que exige dois tipos de esforço:
-  - $e_1$: Esforço na produção assistencial direta no hospital municipal (plantões, consultas, cirurgias).
-  - $e_2$: Esforço no módulo acadêmico de especialização (tutoria, estudos teóricos, cursos).  
-  A função de custo de esforço do médico é convexa com substituição entre tarefas: $C(e_1, e_2)$ com $C_{12} > 0$.  
-  Como a tarefa assistencial $e_1$ é diretamente observável pelo gestor do hospital local (gerando receita de SUS e produção ambulatorial) e a tarefa formativa $e_2$ é difusa e observada apenas pelo Ministério da Saúde, o equilíbrio de esforço distorce a dedicação do profissional em direção à tarefa mais pressionada localmente.
+  A função de produção de procedimentos hospitalares e cirurgias exibe complementaridade estrita:
+  $$Y = F(K, L), \quad \frac{\partial^2 Y}{\partial L \partial K} > 0$$
+  onde $L$ é o médico especialista e $K$ é o capital tecnológico hospitalar (leitos cirúrgicos, tomógrafos, centros cirúrgicos).
 * **Aplicação Estrutural ao PMM-E:**  
-  Modela por que a retenção e o cumprimento de metas de qualificação médica exigem governança institucional rigorosa e monitoramento para evitar que a carga assistencial local canibalize a formação pedagógica do especialista.
+  Explica por que especialistas alocados em cidades do interior desprovidas de hospital estruturado apresentam alta evasão e baixa resolutividade: a falta de $K$ anula a produtividade marginal de $L$.
 
 ---
 
-### PILAR 6 — Políticas Baseadas no Lugar (Place-Based) e Equilíbrio de Bem-Estar
-* **Papers Seminais:** **Kline & Moretti (2014, *Ann. Rev. Econ.*)**; Glaeser & Gottlieb (2008, *JPE*).
+### PILAR 7 — Políticas Place-Based e Balanço de Bem-Estar no Interior
+* **Paper Canônico:** **Kline & Moretti (2014, *Ann. Rev. Econ.*)**.
 * **Referência:** Kline, Patrick; Moretti, Enrico. (2014). *People, Places, and Public Policy: Some Simple Analytics of Local Economic Development Programs*. **Annual Review of Economics**, 6, 629–662.
-* **Extensão:** 34 páginas | **Foco de Leitura:** **pp. 631–648 (Seções 1 a 3: 17 págs)**.
+* **Extensão:** 34 páginas | **Foco:** **pp. 631–648 (Seções 1 a 3: 17 págs)**.
 * **Mecanismo Econômico Formal:**  
-  Analisa o bem-estar agregado social $W$ de políticas que subsidiam a atração de fatores de produção para regiões específicas $m$:
-  $$W = \sum_{m=1}^{M} N_m \cdot v_m(w_m, r_m) + 	ext{Externalidades Espaciais de Saúde e Redução de Iniquidade}$$
-  O programa só gera ganho líquido de eficiência social se:
-  $$	ext{Ganho Marginal Social de Saúde no Município Vulnerável} > 	ext{Custo Marginal do Subsídio Federal} + 	ext{Distorção de Realocação Espacial}$$
+  O bem-estar social agregado de subsidiar médicos no interior é positivo se o ganho de acesso em saúde local superar os custos do subsídio e eventuais distorções espaciais:
+  $$W = \sum_{m} N_m \left[ v_m(w_m, r_m) - c_m \right] + \text{Benefício da Redução de TFD e Mortalidade}$$
 * **Aplicação Estrutural ao PMM-E:**  
-  Permite enquadrar o PMM-E como uma política pública regional de saúde (*place-based health policy*), justificando por que concentrar vagas em municípios com IVS Alto e Muito Alto maximiza o retorno marginal em termos de vidas salvas e redução de custos logísticos de transporte de pacientes.
+  Fundamenta a avaliação de custo-benefício social e eficiência do gasto público federal no provimento de especialistas no interior do Brasil.
 
 ---
 
-### PILAR 7 — Tomada de Decisão Médica sob Incerteza e Resolutividade Diagnóstica
-* **Papers Seminais:** **Currie & MacLeod (2017, *JLE*)**; Arrow (1963, *AER*).
-* **Referência:** Currie, Janet; MacLeod, W. Bentley. (2017). *Diagnosing Expertise: Human Capital, Decision Making, and Performance among Physicians*. **Journal of Labor Economics**, 35(1), 1–43.
-* **Extensão:** 43 páginas | **Foco de Leitura:** **pp. 4–20 (Modelo Teórico: 16 págs)**.
-* **Mecanismo Econômico Formal:**  
-  Um paciente chega ao serviço de saúde local com um vetor de sintomas ruidoso $s = 	heta^* + arepsilon$. O médico deve decidir entre:
-  1. *Diagnosticar e tratar localmente:* Custo clínico $c_{	ext{local}}(	heta)$, cuja eficácia depende do nível de especialização técnica $	heta$ do profissional.
-  2. *Encaminhar para a capital (TFD — Tratamento Fora do Domicílio):* Custo logístico e atraso terapêutico $C_{	ext{transporte}} + \Delta t$.  
-  A probabilidade de encaminhamento desnecessário ou erro de triagem é estritamente decrescente no capital humano especializado:
-  $$rac{\partial P(	ext{Encaminhamento Evitável})}{\partial 	heta} < 0$$
-* **Aplicação Estrutural ao PMM-E:**  
-  Fundamenta teoricamente a métrica de **resolutividade local**: a fixação de um médico especialista no município reduz drasticamente os gastos municipais com ambulâncias e transporte sanitário, resolvendo o problema no próprio território.
+## 3. O Modelo Microeconômico Unificado de Atração e Retenção no Interior
+
+O modelo unificado resolve simultaneamente:
+1. **A Decisão do Especialista:** Aceitar o posto no município $m$ se a remuneração total (salário base + bolsa PMM-E $\Delta w(IVS_m)$) compensar o diferencial hedônico do interior:
+   $$w_{\text{base}} + \Delta w(IVS_m) \ge w_{\text{capital}} + WTA(A_m)$$
+2. **A Dinâmica de Sobrevivência:** A taxa instantânea de evasão médica $\lambda(t \mid IVS_m, K_m)$ segue um modelo de riscos proporcionais de Cox:
+   $$\lambda(t \mid X_m) = \lambda_0(t) \exp\left( \gamma_1 IVS_m + \gamma_2 K_m - \gamma_3 \text{Bolsa}_m \right)$$
+3. **O Efeito nos Cutoffs de IVS:** No limiar de descontinuidade do IVS ($c \in \{0.400, 0.500\}$), a bolsa sofre um salto discreto de R$ 5.000, permitindo identificar a elasticidade local da atração e retenção via RDD:
+   $$\tau_{\text{RDD}} = \lim_{IVS \downarrow c} \mathbb{E}[Y \mid IVS] - \lim_{IVS \uparrow c} \mathbb{E}[Y \mid IVS]$$
 
 ---
 
-## 3. O Modelo Microeconômico Unificado do PMM-E
+## 4. Guia de Atribuição da Equipe (7 Membros)
 
-Integrando os 7 pilares seminais, o modelo do PMM-E é estruturado em três blocos interligados:
-
-```mermaid
-graph LR
-    subgraph "Bloco 1: Médicos"
-        B1["Maximização de Utilidade Espacial<br/>V(w_bolsa, IVS, esforço)"]
-    end
-    
-    subgraph "Bloco 2: Hospital Municipal"
-        B2["Otimização de Custos & Produção<br/>Y = F(K, L_próprio + L_PMM, theta)"]
-    end
-    
-    subgraph "Bloco 3: Ministério da Saúde"
-        B3["Clearinghouse Central de Vagas<br/>Imediatas (T=1) vs Reserva (T=0)"]
-    end
-    
-    B1 --> B3
-    B3 --> B2
-    B2 --> OUT["Desfechos: Estoque CNES, Entradas/Saídas, Resolutividade Local"]
-```
-
-### 3.1 A Equação Estimada de Tripla Diferença (DDD)
-A agregação do modelo microeconômico unificado em nível de município $m$, especialidade/curso $s$ e mês $t$ gera diretamente a especificação canônica estimada no pipeline:
-
-$$Y_{mst} = lpha_{ms} + \gamma_{mt} + \delta_{st} + eta \left( 	ext{Immediate}_{ms} 	imes 	ext{Post}_t ight) + arepsilon_{mst}$$
-
-Onde:
-* $lpha_{ms}$ (Efeito fixo de município-curso): Absorve amenidades locais invariantes e diferenciais compensatórios estruturais de Roback (1982).
-* $\gamma_{mt}$ (Efeito fixo de município-mês): Absorve choques orçamentários locais, oscilações do PIB municipal e decisões fiscais de Baicker & Staiger (2005).
-* $\delta_{st}$ (Efeito fixo de curso-mês): Absorve choques tecnológicos nacionais de Chandra & Skinner (2012) e ciclos de formação médica.
-* $eta$: Identifica o impacto causal líquido da exposição ao edital federal na margem intensiva.
-
----
-
-## 4. Guia de Atribuição e Roteiro de Leitura para os 7 Membros da Equipe
-
-| Membro | Paper Teórico Atribuído | Extensão Recomendada | O que Escrever para a Seção Teórica do Artigo |
+| Membro | Paper Teórico Atribuído | Extensão Foco | O que Redigir para a Seção Teórica |
 |:---:|:---|:---|:---|
-| **Membro 1** | **Roback (1982)** | 15 págs (pp. 1257–1272) | Formalizar a curva de oferta médica espacial e a relação entre bolsa federal e IVS 2010. |
-| **Membro 2** | **Agarwal (2015)** | 18 págs (pp. 1940–1958) | Modelar o edital centralizado como clearinghouse que elimina fricções de matching no SUS. |
-| **Membro 3** | **Acemoglu & Finkelstein (2008)** | 20 págs (pp. 839–858) | Escrever a função de produção hospitalar com complementaridade capital-trabalho ($K, L$). |
-| **Membro 4** | **Baicker & Staiger (2005)** | 12 págs (pp. 348–360) | Deduzir a proposição teórica de crowding-out e substituição de vínculos próprios no CNES. |
-| **Membro 5** | **Holmstrom & Milgrom (1991)** | 15 págs (pp. 24–38) | Modelar o trade-off de agência entre carga horária assistencial no hospital e formação. |
-| **Membro 6** | **Kline & Moretti (2014)** | 17 págs (pp. 631–648) | Redigir o enquadramento de eficiência e bem-estar social de políticas baseadas no lugar. |
-| **Membro 7** | **Currie & MacLeod (2017)** | 16 págs (pp. 4–20) | Modelar a decisão de triagem diagnóstica e redução de Tratamento Fora do Domicílio (TFD). |
+| **Membro 1** | **Roback (1982)** | 15 págs (pp. 1257–1272) | Formalizar o equilíbrio hedônico espacial e a curva de oferta médica compensatória indexada ao IVS 2010. |
+| **Membro 2** | **Sivey et al. (2012)** | 14 págs (Artigo completo) | Modelar as preferências locacionais e a estimativa de WTA para o interior por especialidade. |
+| **Membro 3** | **Agarwal (2015)** | 18 págs (pp. 1940–1958) | Modelar o edital centralizado como mecanismo de matching que reduz custos de busca espacial. |
+| **Membro 4** | **Gravelle et al. (2018)** | 9 págs (Artigo completo) | Formalizar a decomposição de worker flows: sensibilidade de novas entradas vs. persistência de saídas. |
+| **Membro 5** | **Baicker & Staiger (2005)** | 12 págs (pp. 348–360) | Deduzir a proposição teórica de crowding-out fiscal e substituição de vínculos locais no CNES. |
+| **Membro 6** | **Acemoglu & Finkelstein (2008)** | 20 págs (pp. 839–858) | Escrever a função de produção hospitalar e a complementaridade entre especialista e capital físico ($K$). |
+| **Membro 7** | **Kline & Moretti (2014)** | 17 págs (pp. 631–648) | Redigir o enquadramento de eficiência econômica e bem-estar social de políticas place-based no interior. |

@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 scripts/avaliar_rubrica_literatura.py
 Aplica a rúbrica estratégica multidimensional para avaliar exaustivamente a contribuição teórica e empírica de cada paper para o estudo do PMM-E.
@@ -70,7 +70,7 @@ CANDIDATE_PAPERS = [
         "paginas_total": 22,
         "paginas_foco": "Artigo completo (22 págs)",
         "tipo": "Modelo Teórico Canônico de Equilíbrio Geral Espacial",
-        "resumo_analitico": "Modelo canônico que determina simultaneamente salários e aluguéis em equilíbrio espacial. Mostra que regiões com desamenidades (isolamento, baixa infraestrutura) exigem diferenciais salariais compensatórios (\Delta w).",
+        "resumo_analitico": "Modelo canônico que determina simultaneamente salários e aluguéis em equilíbrio espacial. Mostra que regiões com desamenidades (isolamento, baixa infraestrutura) exigem diferenciais salariais compensatórios (\\Delta w).",
         "aderencia_pmme": "Base teórica fundamental para justificar a running variable do IVS e as faixas de bolsa diferenciadas no PMM-E.",
         "t1_modelo_formal": 25,
         "t2_mecanismo_pmme": 25,

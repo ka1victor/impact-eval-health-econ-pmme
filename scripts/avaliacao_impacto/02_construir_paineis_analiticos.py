@@ -44,7 +44,11 @@ def main() -> None:
     for name, source in SOURCES.items():
         if not source.exists():
             raise FileNotFoundError(source)
-        shutil.copyfile(source, DESTINATIONS[name])
+        dst = DESTINATIONS[name]
+        try:
+            shutil.copy2(str(source), str(dst))
+        except Exception:
+            pd.read_parquet(source).to_parquet(dst)
 
     muni = pd.read_parquet(DESTINATIONS["municipal"])
     cnes = pd.read_parquet(DESTINATIONS["cnes"])

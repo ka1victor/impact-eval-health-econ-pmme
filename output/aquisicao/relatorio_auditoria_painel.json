@@ -1,6 +1,6 @@
 {
   "status": "APROVADO_PARA_ESTIMACAO",
-  "data_execucao": "2026-08-30T21:44:08",
+  "data_execucao": "2026-09-01T00:16:44",
   "desenho": "CNES-only; universo municipal completo; sem identificação nominal de bolsistas",
   "ponte": {
     "arquivo": "output/aquisicao/ponte_curso_cbo_oficial.json",

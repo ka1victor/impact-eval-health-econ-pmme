@@ -1,11 +1,11 @@
 # Prompts operacionais dos agentes
 
 > **Fila histórica congelada.** Estes prompts pertencem ao desenho individual
-> anterior e não devem ser usados para executar a primeira versão. A sequência
-> autorizada é o plano público agregado em
-> [`docs/05_roadmap_execucao.md`](../docs/05_roadmap_execucao.md): relevância de
-> imediata versus reserva, ponte curso–CBO, painel municipal, estoque, fluxos,
-> presença posterior, DDD e diagnósticos.
+> anterior. A comparação agregada descrita em
+> [`docs/05_roadmap_execucao.md`](../docs/05_roadmap_execucao.md) também já foi
+> executada e não deve ser reaberta. As filas imediatas são A1 do núcleo
+> associativo e R1 do upgrade causal. Seus sucessores dependem dos respectivos
+> portões.
 >
 Esta pasta preserva as tarefas do roadmap anterior. A ordem abaixo é histórica e
 não constitui uma fila autorizada.
@@ -61,12 +61,31 @@ resultado. Veja
 
 WP3, WP4 e WP5 não têm prompts de execução no pipeline principal porque estão guardados (ver [`docs/06_backlog_wp3_wp4_wp5.md`](../docs/06_backlog_wp3_wp4_wp5.md)). No entanto, o módulo de engenharia de dados preparatório está documentado em [`infraestrutura_datasus_dbc.md`](infraestrutura_datasus_dbc.md) (100% paralelizável, com foco em ingestão leve e eficiente em disco).
 
-## Nova fila prospectiva
+## Fila imediata — RDD da bolsa
+
+A nova tentativa causal segue
+[`avaliacao_rdd_bolsa/README.md`](avaliacao_rdd_bolsa/README.md). Apenas o
+portão de regra e, condicionalmente, o portão de suporte podem ser executados
+agora. Nenhum prompt dessa fila autoriza escolher cutoff pela significância ou
+consultar outcomes antes do registro de pré-análise.
+O desenho substantivo e o piso publicável estão documentados em
+[`docs/15_incentivos_ivs_provimento_duradouro.md`](../docs/15_incentivos_ivs_provimento_duradouro.md).
+
+## Fila imediata — atração e provimento fora das capitais
+
+O núcleo de entrega segue
+[`avaliacao_atracao_interior/README.md`](avaliacao_atracao_interior/README.md).
+Somente A1 está liberado agora. A2 depende da população aprovada em A1; A3
+congela o protocolo; A4–A6 permanecem bloqueados até os respectivos portões.
+Essa fila produz econometria associativa e não herda linguagem causal do RDD.
+
+## Fila prospectiva do ciclo 3
 
 O resultado do ciclo 1 permanece fechado como comparação ajustada. A avaliação
 prospectiva separada do ciclo 3 deve seguir
 [`avaliacao_ciclo3/README.md`](avaliacao_ciclo3/README.md): a coorte foi
 congelada e o SIH pilotado; agora é obrigatório corrigir o piloto pelo C3-02B
-antes de congelar o protocolo no C3-03.
+antes de qualquer módulo clínico. O protocolo de força de trabalho já foi
+congelado no C3-03.
 Os efeitos de seis e doze meses não podem ser estimados antes da maturidade
 comum. Essa fila não libera o prompt 03 do desenho individual nem envia A07.

@@ -4,14 +4,17 @@
 
 - Organize toda análise pela cadeia: implementação → força de trabalho → capacidade → acesso → saúde → custos/bem-estar → equidade e spillovers.
 - Comece pelo outcome e pelo estimando; só depois escolha método e base.
-- No estudo prospectivo vigente do ciclo 3, use o estoque de anestesiologistas
-  no CNES ofertante como outcome direto primário e o estoque municipal como
-  secundário-chave de oferta líquida. Entradas, saídas, saldo e presença
-  posterior são mecanismos. Cirurgias/SIH são o secundário clínico
-  condicionado aos portões pré-tratamento. Oncologia clínica e medicina
-  intensiva são generalizações separadas; não as agregue de modo a esconder o
-  peso de anestesiologia. Use seis meses na primeira atualização e doze meses
-  somente quando a coorte tiver seguimento completo.
+- A fila imediata é o portão de viabilidade do RDD do adicional de bolsa,
+  documentado em `docs/14_plano_implementacao_rdd_bolsa.md`. O efeito candidato
+  é o incentivo marginal de R$ 5 mil, não participação no PMM-E nem o efeito
+  total do Agora Tem Especialistas. Não consulte outcomes antes de reconstruir
+  a regra e congelar o protocolo.
+- `docs/15_incentivos_ivs_provimento_duradouro.md` define a pergunta do artigo:
+  salário anunciado é o instrumento candidato, IVS é gradiente territorial e
+  oferta persistente no CNES não equivale a retenção individual.
+- O ciclo 3 permanece prospectivo e congelado. Use seis meses apenas quando a
+  competência `202703` estiver publicada, completa e madura; doze meses somente
+  quando toda a coorte tiver seguimento comum.
 - Não trate vínculo cadastrado, produção, acesso, espera e saúde como sinônimos.
 - Não classifique um eixo inteiro como sucesso ou fracasso com base em uma única métrica intermediária.
 - Separe expansão líquida de substituição, remanejamento, migração cadastral e
@@ -39,21 +42,22 @@
 ## Execução
 
 - `docs/05_roadmap_execucao.md` preserva a execução validada do ciclo 1.
-  `docs/12_estrategia_causal_prospectiva_ciclo3.md` e
-  `prompts/avaliacao_ciclo3/README.md` são a ordem canônica da próxima avaliação.
+  `docs/14_plano_implementacao_rdd_bolsa.md` e
+  `prompts/avaliacao_rdd_bolsa/README.md` são a fila imediata. A fila do ciclo
+  3 em `prompts/avaliacao_ciclo3/README.md` continua congelada até maturidade.
   `docs/03_plano_avaliacao_outcomes.md` é agenda ampla e não deve ser
   interpretado como fila imediata.
 - Antes de iniciar uma tarefa, confirme a fila vigente em
   `docs/05_roadmap_execucao.md`. Os prompts históricos em `prompts/` não
   autorizam executar o desenho individual anterior.
 - WP3, WP4 e WP5 continuam guardados conforme
-  `docs/06_backlog_wp3_wp4_wp5.md`, exceto o módulo explícito e limitado de
-  anestesiologia/SIH autorizado na fila C3. Não amplie essa exceção para fila,
-  saúde, custos ou SIA sem o portão previsto.
-- Na primeira versão, execute somente o plano agregado do ciclo 1: relevância
-  de imediata versus reserva, ponte curso–CBO, painel CNES, estoque municipal,
-  mecanismos maduros, DDD e estudo de evento. Demais WPs permanecem como
-  agenda, salvo nova autorização expressa do autor.
+  `docs/06_backlog_wp3_wp4_wp5.md`. SIH/SIA só entram depois dos portões R1–R5
+  do novo plano; não use produção clínica para procurar um resultado antes de
+  validar a fonte de exogeneidade.
+- A primeira versão agregada do ciclo 1 já foi executada. Não a reexecute nem
+  redesenhe: relevância, ponte curso–CBO, painel CNES, estoque, mecanismos, DDD
+  e estudo de evento permanecem como registro encerrado. A única execução
+  imediata autorizada é R1 e, condicionalmente, R2 da fila RDD.
 - A execução agregada de 30/08/2026 terminou como comparação ajustada: o
   portão de relevância falhou na amostra município–curso da DDD. Não promover
   esses resultados a efeito causal nem escolher filtros, janelas ou estimadores

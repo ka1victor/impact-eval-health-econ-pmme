@@ -1,12 +1,25 @@
-﻿# -*- coding: utf-8 -*-
-import json
+# -*- coding: utf-8 -*-
+"""
+scripts/gerar_matriz_expandida_md.py
+Gera o markdown output/revisao_literatura/matriz_evidencias_artigos_expandida.md
+com os 14 papers fundamentais (7 teóricos + 7 empíricos) focados na
+Atração e Retenção de Especialistas no Interior com base em Bolsas e IVS.
+"""
 
-with open("output/revisao_literatura/matriz_evidencias_artigos_expandida.json", "r", encoding="utf-8") as f:
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+JSON_PATH = ROOT / "output" / "revisao_literatura" / "matriz_evidencias_artigos_expandida.json"
+OUT_MD_PATH = ROOT / "output" / "revisao_literatura" / "matriz_evidencias_artigos_expandida.md"
+
+with open(JSON_PATH, "r", encoding="utf-8") as f:
     papers = json.load(f)
 
 md = """# Matriz Consolidada e Expandida de Evidências — PMM-E
 
-> Mapeamento estruturado de 14 papers curados (7 Teóricos / Teoria+Empiria + 7 Empíricos) com abordagem Acemoglu e foco operacional para a equipe.
+> **Tema Central:** Avaliação de Impacto da Atração e Retenção de Médicos Especialistas em Cidades do Interior com base nas Diferentes Bolsas e IVS (Índice de Vulnerabilidade Social).  
+> **Mapeamento Estruturado:** 14 papers curados (7 Teóricos / Teoria+Empiria + 7 Empíricos / Métodos) com rigor metodológico e foco operacional para a equipe.
 
 ---
 
@@ -30,7 +43,7 @@ for p in papers:
 """
 
 md += """
-## 2. Literatura Empírica e Quase-Experimentos Análogos (7 Artigos)
+## 2. Literatura Empírica, Sobrevivência e Worker Flows (7 Artigos)
 
 """
 
@@ -49,7 +62,8 @@ for p in papers:
 ---
 """
 
-with open("output/revisao_literatura/matriz_evidencias_artigos_expandida.md", "w", encoding="utf-8") as f:
+with open(OUT_MD_PATH, "w", encoding="utf-8") as f:
     f.write(md)
 
 print("output/revisao_literatura/matriz_evidencias_artigos_expandida.md atualizado com sucesso.")
+

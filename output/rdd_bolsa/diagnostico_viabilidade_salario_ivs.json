@@ -1,0 +1,184 @@
+{
+  "status": "VIAVEL_COM_NUCLEO_ASSOCIATIVO_E_UPGRADE_CAUSAL_CONDICIONAL",
+  "data_referencia": "2026-08-31",
+  "natureza": "diagnostico de esquema, cobertura e identificacao; sem nova estimacao de efeito",
+  "pergunta_recomendada": "Bolsas maiores conseguem compensar as desvantagens territoriais no preenchimento e no provimento duradouro de especialistas?",
+  "fontes": {
+    "output/aquisicao/quadro_vagas_tratamento.parquet": {
+      "sha256": "41e1d3afee23994821361d8a60d9e507e3b1c25cf69ae882c10008ae27d8b149"
+    },
+    "data/ivs_ipea_2010_municipios.csv": {
+      "sha256": "fe46ae9578d08b8596437c13ff4fd7461c7ac85c47b492eb2424f8bcd6d4021e"
+    },
+    "output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet": {
+      "sha256": "62529ee2c9eea9b45a2d379473fe9ee2c5ecddddb64c39ae8dc78283a8b5d7ee"
+    },
+    "output/aquisicao/ponte_curso_cbo_oficial.json": {
+      "sha256": "1770e076a3575f4a574134ef6b80d21df35660ebd151cf9d870273127a2c1b16"
+    },
+    "output/aquisicao/a02_matriz_eventos_publicos.json": {
+      "sha256": "3aba05695cac63ce6d8ac5e4665af4fc4996f8f75d452cffabeb1179a98c3058"
+    },
+    "output/aquisicao/a04_matriz_dose_financeira.json": {
+      "sha256": "692710026c5ada2061e309929585be1e876f691ec94a694b307b84965f3e241d"
+    },
+    "output/avaliacao_impacto/relatorios/01_relatorio_portao_relevancia.json": {
+      "sha256": "7a627835645d2aacecd6eb98b3e1969e77d21eb11f22f22c73e2933f7eb43f0d"
+    }
+  },
+  "oferta_e_bolsa": {
+    "celulas_cnes_curso": 1295,
+    "municipios": 368,
+    "cursos": 16,
+    "vagas_publicadas": 1823,
+    "vagas_imediatas_publicadas": 678,
+    "vagas_reserva_publicadas": 1145,
+    "celulas_por_modalidade_original": {
+      "RESERVA": 782,
+      "IMEDIATA": 503,
+      "DUPLA": 10
+    },
+    "faixa_completa_pct": 100.0,
+    "municipios_por_faixa": {
+      "FAIXA 3": 159,
+      "FAIXA 2": 107,
+      "FAIXA 1": 102
+    },
+    "valor_anunciado_mensal_brl_por_faixa": {
+      "1": 20000.0,
+      "2": 15000.0,
+      "3": 10000.0
+    },
+    "valor_devido_observado": false,
+    "valor_pago_vinculavel_observado": false
+  },
+  "running_variable": {
+    "ivs_local_cobertura_municipios_pct": 100.0,
+    "municipios_faixa_reproduzida": 191,
+    "municipios_faixa_divergente": 177,
+    "matriz_anunciada_vs_recalculada": {
+      "FAIXA 1": {
+        "FAIXA 1": 19,
+        "FAIXA 2": 46,
+        "FAIXA 3": 37
+      },
+      "FAIXA 2": {
+        "FAIXA 1": 0,
+        "FAIXA 2": 13,
+        "FAIXA 3": 94
+      },
+      "FAIXA 3": {
+        "FAIXA 1": 0,
+        "FAIXA 2": 0,
+        "FAIXA 3": 159
+      }
+    },
+    "suporte_preliminar_nao_autorizativo": [
+      {
+        "cutoff": 0.4,
+        "janela": 0.01,
+        "lado_inferior": 12,
+        "lado_superior": 8,
+        "total": 20
+      },
+      {
+        "cutoff": 0.4,
+        "janela": 0.02,
+        "lado_inferior": 30,
+        "lado_superior": 18,
+        "total": 48
+      },
+      {
+        "cutoff": 0.4,
+        "janela": 0.03,
+        "lado_inferior": 42,
+        "lado_superior": 26,
+        "total": 68
+      },
+      {
+        "cutoff": 0.4,
+        "janela": 0.05,
+        "lado_inferior": 77,
+        "lado_superior": 39,
+        "total": 116
+      },
+      {
+        "cutoff": 0.5,
+        "janela": 0.01,
+        "lado_inferior": 5,
+        "lado_superior": 5,
+        "total": 10
+      },
+      {
+        "cutoff": 0.5,
+        "janela": 0.02,
+        "lado_inferior": 8,
+        "lado_superior": 6,
+        "total": 14
+      },
+      {
+        "cutoff": 0.5,
+        "janela": 0.03,
+        "lado_inferior": 11,
+        "lado_superior": 7,
+        "total": 18
+      },
+      {
+        "cutoff": 0.5,
+        "janela": 0.05,
+        "lado_inferior": 20,
+        "lado_superior": 11,
+        "total": 31
+      }
+    ],
+    "portao_rdd": "BLOQUEADO_R1_REGRA_E_ESCORE_NAO_RECONSTRUIDOS",
+    "nota": "O IVS local é candidato analítico, não o escore administrativo comprovado. As divergências não são variação exógena utilizável."
+  },
+  "preenchimento": {
+    "status": "PARCIALMENTE_OBSERVAVEL",
+    "descricao": "Parcialmente observavel (alocacao e homologacao nas planilhas onde disponiveis; sem taxa confiavel onde vagas imediatas nao tem denominador inequivoco)",
+    "portao_imediata_reserva_anterior": "NAO_APROVADO",
+    "universo_inscricoes_completo": false,
+    "tempo_ate_preenchimento": "INOBSERVAVEL_SEM_LOG_DE_EVENTOS"
+  },
+  "cnes": {
+    "competencia_inicial": "202406",
+    "competencia_final": "202607",
+    "competencias": 26,
+    "municipios": 368,
+    "celulas_municipio_curso": 1184,
+    "cursos_com_ponte_sem_sobreposicao": 10,
+    "oferta_local_agregada_6m": "OBSERVAVEL_COM_CENSURA_EXPLICITA",
+    "presenca_12m_coorte_entrantes_ate_202601": "AGUARDA_CNES_202701",
+    "retencao_individual_bolsista": "NAO_IDENTIFICADA_SEM_PONTE_ADMINISTRATIVA",
+    "nota": "O CNES mede vínculo cadastral agregado. Não prova ocupação contínua da vaga, participação no PMM-E, atividade física ou pagamento."
+  },
+  "spells_individuais": {
+    "viavel_com_fontes_publicas": false,
+    "bloqueios": [
+      "Inexistencia de data exata de desligamento/desistencia (dt_fim_spell ausente)",
+      "Inexistencia de log de licencas, afastamentos e retornos para interrupcao e retomada de spells",
+      "Snapshot nominal de 12/08/2026 observa apenas sobreviventes ativos, truncando a entrada de quem saiu antes e omitindo todos os desligados",
+      "Ausencia de id_vaga estavel impede associar profissionais subsequentes a mesma vaga fisica para medir tempo de desocupacao",
+      "Divergencia entre mascaras de CPF e falta de CRM nas planilhas de selecao impede vinculacao deterministica confiavel com o CNES mensal"
+    ],
+    "permanencia": "Inobservavel (sobrevivencia condicional ao corte de 12/08/2026 nao mede curva de retencao sem vies de selecao)",
+    "reocupacao": "Inobservavel (impossivel ligar saida de um profissional a entrada de outro na mesma vaga sem id_vaga estavel)"
+  },
+  "decisao_por_modulo": {
+    "econometria_associativa_preenchimento": "VIAVEL_COM_LIMITES_DE_DENOMINADOR",
+    "gradiente_ivs": "VIAVEL_COMO_ASSOCIACAO_TERRITORIAL",
+    "efeito_causal_do_ivs": "NAO_E_ESTIMANDO_DEFENSAVEL",
+    "efeito_causal_adicional_bolsa": "CONDICIONADO_A_R1_R2_R3",
+    "oferta_local_persistente_6m_cnes": "VIAVEL_COMO_OUTCOME_AGREGADO",
+    "retencao_individual_6m_12m": "BLOQUEADA_SEM_ID_VAGA_E_ID_PROFISSIONAL_ESTAVEIS",
+    "dose_financeira_recebida": "BLOQUEADA_SEM_FOLHA_MENSAL_VINCULAVEL",
+    "sih_sia": "FORA_DO_NUCLEO_E_CONDICIONADO_A_PRIMEIRO_ESTAGIO"
+  },
+  "veredito": {
+    "trabalho_econometrico_relevante": true,
+    "avaliacao_causal_rdd_garantida": false,
+    "piso_publicavel": "análise econométrica de implementação, preenchimento parcial e gradiente territorial, com linguagem associativa",
+    "upgrade_causal": "efeito local da oferta de R$ 5 mil adicionais, somente após reconstrução do escore e da regra e congelamento do protocolo"
+  }
+}

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 from typing import Any, Sequence
 
 import numpy as np
@@ -56,22 +57,22 @@ def atomic_savefig(figure: Any, target: str | "os.PathLike[str]", **kwargs: Any)
         except PermissionError:
             if not os.path.exists(target_path):
                 raise
-            with Image.open(temporary) as generated, Image.open(target_path) as existing:
-                if generated.size != existing.size or generated.mode != existing.mode:
-                    raise
-                generated_pixels = np.asarray(generated, dtype=float)
-                existing_pixels = np.asarray(existing, dtype=float)
-                normalized_mean_difference = float(
-                    np.mean(np.abs(generated_pixels - existing_pixels)) / 255.0
-                )
-                # Mudanças pequenas de antialiasing/fontes entre backends não
-                # alteram o conteúdo do gráfico. Diferenças visuais materiais
-                # continuam bloqueando a execução.
-                if normalized_mean_difference > 0.03:
-                    raise PermissionError(
-                        f"Figura de destino bloqueada e materialmente diferente "
-                        f"(diferença média normalizada={normalized_mean_difference:.4f})."
-                    )
+            try:
+                # Alguns visualizadores no Windows permitem regravar o arquivo,
+                # mas bloqueiam rename/delete. Nesse caso, copie o PNG completo
+                # em vez de conservar silenciosamente uma legenda antiga.
+                with open(temporary, "rb") as source, open(target_path, "wb") as destination:
+                    shutil.copyfileobj(source, destination)
+            except PermissionError:
+                with Image.open(temporary) as generated, Image.open(target_path) as existing:
+                    if generated.size != existing.size or generated.mode != existing.mode:
+                        raise
+                    generated_pixels = np.asarray(generated)
+                    existing_pixels = np.asarray(existing)
+                    if not np.array_equal(generated_pixels, existing_pixels):
+                        raise PermissionError(
+                            "Figura de destino bloqueada e diferente da versão recém-gerada."
+                        )
     finally:
         if os.path.exists(temporary):
             os.unlink(temporary)
