@@ -1,5 +1,8 @@
 # 15. Dossiê Aprofundado dos Artigos Efetivamente Lidos: Atração, Retenção, Bolsas e IVS no Interior
 
+> [!CAUTION]
+> **Arquivo histórico misto, não canônico.** Use-o como caderno de leitura, não como base das equações teóricas. A classificação vigente está no [mapa canônico](../README.md).
+
 > **Documento Metodológico e Dossiê de Literatura**  
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
 > **Tema Central:** *Atração e Retenção de Médicos Especialistas em Cidades do Interior com base nas Diferentes Bolsas e no IVS (Índice de Vulnerabilidade Social).*  

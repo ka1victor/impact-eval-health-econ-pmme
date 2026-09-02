@@ -1,5 +1,8 @@
 # 16. Equações Estruturais da Literatura e Modelo Microeconômico Recomendado para o PMM-E
 
+> [!CAUTION]
+> **Arquivo histórico misto, não canônico.** Algumas equações são reconstruções econométricas, não equações teóricas dos papers. A formulação vigente e a autoria de cada extensão estão no [documento 17](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md).
+
 > **Documento Teórico e Metodológico de Referência**  
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
 > **Tema Recomendado:** *Incentivos financeiros, vulnerabilidade territorial e provimento duradouro de especialistas: evidências do Mais Médicos Especialistas.*  

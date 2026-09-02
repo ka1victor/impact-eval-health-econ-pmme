@@ -1,10 +1,10 @@
 # Fila operacional — RDD do adicional de bolsa
 
 Esta fila implementa
-[`docs/14_plano_implementacao_rdd_bolsa.md`](../../docs/14_plano_implementacao_rdd_bolsa.md).
+[`docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`](../../docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md).
 A pergunta substantiva, os outcomes permitidos e os limites de retenção estão
 em
-[`docs/15_incentivos_ivs_provimento_duradouro.md`](../../docs/15_incentivos_ivs_provimento_duradouro.md).
+[`docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md`](../../docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
 
 | Ordem | Prompt | Autoriza efeitos? | Condição de saída |
 |---:|---|---|---|

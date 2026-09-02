@@ -1,5 +1,8 @@
 # 16. Equações Matemáticas dos 7 Papers Focais e Seleção do Modelo Microeconômico do PMM-E
 
+> [!CAUTION]
+> **Arquivo histórico misto, não canônico.** Equações de estimação pertencem à metodologia ou à literatura empírica. Use o [mapa canônico](../README.md) para encaminhamento.
+
 > **Documento Teórico e Metodológico de Referência**  
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
 > **Tema Recomendado:** *Incentivos financeiros, vulnerabilidade territorial e provimento duradouro de especialistas: evidências do Mais Médicos Especialistas.*  

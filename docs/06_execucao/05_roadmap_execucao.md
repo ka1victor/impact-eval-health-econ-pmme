@@ -2,9 +2,9 @@
 
 > A comparação agregada do ciclo 1 está encerrada. A fila imediata é somente o
 > portão de viabilidade do RDD do adicional de bolsa em
-> [`14_plano_implementacao_rdd_bolsa.md`](14_plano_implementacao_rdd_bolsa.md).
+> [`14_plano_implementacao_rdd_bolsa.md`](../05_identificacao/14_plano_implementacao_rdd_bolsa.md).
 > A formulação substantiva e a auditoria de viabilidade estão em
-> [`15_incentivos_ivs_provimento_duradouro.md`](15_incentivos_ivs_provimento_duradouro.md).
+> [`15_incentivos_ivs_provimento_duradouro.md`](../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
 > O ciclo 3 permanece congelado até maturidade.
 
 ## Fila imediata autorizada
@@ -38,7 +38,7 @@ PMM-E. O teste conjunto de pré-tendências (`p=0,2546`) e o placebo temporal
 
 A auditoria de implementação, os resultados permitidos e as conclusões vedadas
 estão em
-[`auditorias/04_auditoria_pipeline_agregado.md`](auditorias/04_auditoria_pipeline_agregado.md).
+[`docs/auditorias/04_auditoria_pipeline_agregado.md`](../auditorias/04_auditoria_pipeline_agregado.md).
 
 ## 1. Pergunta substantiva da comparação encerrada
 
@@ -321,7 +321,7 @@ fila e portões próprios; não reabre nem corrige retrospectivamente esta anál
 ### 10.1 Infraestrutura de Dados Paralelizável (Parser DBC -> Parquet)
 
 Tarefas de engenharia de dados desacopladas do modelo econométrico podem ser desenvolvidas em paralelo (ex: em worktree/branch isolado) sem interferir no pipeline principal:
-- **Prompt:** [`prompts/infraestrutura_datasus_dbc.md`](../prompts/infraestrutura_datasus_dbc.md).
+- **Prompt:** [`prompts/infraestrutura_datasus_dbc.md`](../../prompts/infraestrutura_datasus_dbc.md).
 - **Utilidade:** Habilitar a ingestão e conversão de microdados do DATASUS distribuídos em `.dbc` (SIA ambulatorial / APAC e SIH hospitalar / AIH) diretamente para `.parquet` colunar com compressão `zstd`.
 - **Eficiência e Escopo Local:** o parser foi especificado para filtragem
   seletiva durante a ingestão. Isso pode manter a pegada persistente pequena,
@@ -367,8 +367,8 @@ CNES pré-T0; o SIH continua bloqueando somente cirurgias. Anestesiologia teve
 suporte, mas falhou equivalência estrita e potência para detectar um especialista:
 MDE 2,22 no CNES e 4,44 no município. A classificação prospectiva é
 `associacao_ajustada`, documentada em
-[`docs/13_plano_pre_analise_ciclo3.md`](13_plano_pre_analise_ciclo3.md). A fila
+[`docs/05_identificacao/13_plano_pre_analise_ciclo3.md`](../05_identificacao/13_plano_pre_analise_ciclo3.md). A fila
 deve seguir
-[`prompts/avaliacao_ciclo3/`](../prompts/avaliacao_ciclo3/README.md). Estimação
+[`prompts/avaliacao_ciclo3/`](../../prompts/avaliacao_ciclo3/README.md). Estimação
 só ocorrerá quando a competência `202703` estiver madura, sem reescolher
 amostra, outcome ou estimador.

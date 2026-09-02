@@ -7,7 +7,7 @@
 
 A formulação substantiva, os outcomes e o diagnóstico de viabilidade deste
 plano estão em
-[`15_incentivos_ivs_provimento_duradouro.md`](15_incentivos_ivs_provimento_duradouro.md).
+[`15_incentivos_ivs_provimento_duradouro.md`](../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
 
 ## 1. Pergunta, tratamento e estimando
 

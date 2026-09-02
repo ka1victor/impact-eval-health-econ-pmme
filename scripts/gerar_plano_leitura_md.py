@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 scripts/gerar_plano_leitura_md.py
-Gera o documento docs/08_plano_leitura_equipe_literatura.md
+Gera o documento docs/90_arquivo_historico/08_plano_leitura_equipe_literatura.md
 com o plano de leitura da equipe focado estritamente na:
 Atração e Retenção de Médicos Especialistas em Cidades do Interior sob Diferentes Bolsas e IVS.
 """
@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 JSON_PATH = ROOT / "output" / "revisao_literatura" / "matriz_evidencias_artigos_expandida.json"
-OUT_MD_PATH = ROOT / "docs" / "08_plano_leitura_equipe_literatura.md"
+OUT_MD_PATH = ROOT / "docs" / "90_arquivo_historico" / "08_plano_leitura_equipe_literatura.md"
 
 with open(JSON_PATH, "r", encoding="utf-8") as f:
     papers = json.load(f)
@@ -219,5 +219,4 @@ Cada membro preencherá uma ficha padronizada em **4 blocos sintéticos**:
 with open(OUT_MD_PATH, "w", encoding="utf-8") as f:
     f.write(md_content)
 
-print("docs/08_plano_leitura_equipe_literatura.md atualizado com sucesso.")
-
+print("docs/90_arquivo_historico/08_plano_leitura_equipe_literatura.md atualizado com sucesso.")

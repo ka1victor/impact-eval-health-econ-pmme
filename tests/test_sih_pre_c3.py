@@ -136,7 +136,7 @@ class SihPreCiclo3Test(unittest.TestCase):
             output / "potencia_pre.json",
             output / "decisao_torneio_pre.json",
             output / "registro_pre_analise.json",
-            ROOT / "docs" / "13_plano_pre_analise_ciclo3.md",
+            ROOT / "docs" / "05_identificacao" / "13_plano_pre_analise_ciclo3.md",
         ]
         self.assertTrue(all(path.exists() for path in required))
         decision = json.loads((output / "decisao_torneio_pre.json").read_text(encoding="utf-8"))

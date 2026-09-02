@@ -1,5 +1,8 @@
 # 16. Modelagem Microeconômica Comparada e Seleção do Framework Teórico do PMM-E
 
+> [!CAUTION]
+> **Arquivo histórico misto, não canônico.** Modelos estimados e equações econométricas aqui reunidos não fundamentam a teoria. Consulte os documentos [17](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md) e [19](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
+
 > **Documento Teórico e Metodológico de Referência**  
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
 > **Tema Central:** *Incentivos financeiros, vulnerabilidade territorial e provimento duradouro de especialistas: evidências do Mais Médicos Especialistas.*  

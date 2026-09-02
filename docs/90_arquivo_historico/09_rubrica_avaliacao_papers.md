@@ -1,5 +1,8 @@
 # 09. Rúbrica Estratégica de Avaliação de Literatura, Auditoria Individual e Ranking
 
+> [!CAUTION]
+> **Arquivo histórico misto, não canônico.** O ranking não autoriza usar trabalhos empíricos para fundamentar equações teóricas. Consulte o [mapa canônico](../README.md).
+
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
 > **Tema Central:** *Atração e Retenção de Médicos Especialistas em Cidades do Interior com base nas Diferentes Bolsas e no IVS (Índice de Vulnerabilidade Social).*  
 > **Objetivo:** Estabelecer uma rúbrica quantitativa e qualitativa multidimensional para auditar 18 papers candidatos, avaliar suas contribuições teóricas e empíricas específicas para o PMM-E, e derivar a seleção ótima dos **papers com maior contribuição ponderada pelo tamanho e aderência ao tema de interior/bolsa/IVS**.  

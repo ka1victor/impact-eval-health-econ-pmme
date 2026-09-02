@@ -46,6 +46,6 @@ exceções. A auditoria preliminar encontrou 177 divergências entre a faixa
 publicada e a reconstrução local em 368 municípios.
 
 O protocolo completo está em
-[`docs/14_plano_implementacao_rdd_bolsa.md`](../../../docs/14_plano_implementacao_rdd_bolsa.md).
+[`docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`](../../../docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md).
 O ciclo 3 continua congelado até seis meses maduros; SIH/SIA só entram após
 portões próprios e auditoria das políticas concomitantes.

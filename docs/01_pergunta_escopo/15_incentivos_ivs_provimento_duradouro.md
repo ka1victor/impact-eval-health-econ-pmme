@@ -1,5 +1,8 @@
 # Atração e provimento duradouro de especialistas fora das capitais
 
+> [!CAUTION]
+> **Documento canônico para pergunta e estimandos, não para teoria.** Afirmações empíricas devem ser tratadas como evidência; a fundamentação microeconômica vigente está no [documento 17](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md).
+
 > **Decisão em 31/08/2026, após conferência das bases:** o tema é viável como
 > trabalho econométrico de implementação, com núcleo associativo e upgrade
 > causal condicionado. A base sustenta atração administrativa e persistência da
@@ -120,7 +123,7 @@ Cutoffs candidatos:
 - `0,500/0,501`: replicação potencial, condicionada à potência.
 
 O desenho seguirá
-[`14_plano_implementacao_rdd_bolsa.md`](14_plano_implementacao_rdd_bolsa.md):
+[`14_plano_implementacao_rdd_bolsa.md`](../05_identificacao/14_plano_implementacao_rdd_bolsa.md):
 R1 reconstrói regra e escore; R2 audita suporte e cointervenções; R3 congela o
 protocolo; R4 abre os outcomes administrativos. Nenhum resultado será usado
 para escolher cutoff, janela ou especificação.
@@ -169,7 +172,7 @@ O outcome seguro é “alguma confirmação ou homologação observada na célul
 “vaga física preenchida”. Razões confirmação/vaga produzidas na auditoria
 anterior ficam despromovidas a diagnóstico inválido para inferência. A trilha
 completa está em
-[`auditorias/08_portao_denominador_atracao.md`](auditorias/08_portao_denominador_atracao.md).
+[`docs/auditorias/08_portao_denominador_atracao.md`](../auditorias/08_portao_denominador_atracao.md).
 
 ## 5. Atração, retenção e seleção pós-tratamento
 
@@ -231,7 +234,7 @@ heterogeneidade, mas não será testada como conclusão principal sem potência.
 ## 7. Viabilidade observada
 
 O diagnóstico reproduzível está em
-[`output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json`](../output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json).
+[`output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json`](../../output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json).
 
 | Bloco | Evidência disponível | Decisão |
 |---|---|---|
@@ -291,7 +294,7 @@ Pista causal paralela:
 | R5 | estimar oferta local agregada próxima ao cutoff | sem ponte, não chamar de retenção do bolsista |
 
 Os prompts executáveis dessas sessões estão em
-[`../prompts/avaliacao_atracao_interior/`](../prompts/avaliacao_atracao_interior/README.md).
+[`prompts/avaliacao_atracao_interior/`](../../prompts/avaliacao_atracao_interior/README.md).
 
 ## 10. Regras de decisão finais
 

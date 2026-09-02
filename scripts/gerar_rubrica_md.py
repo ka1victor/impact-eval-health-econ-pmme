@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 scripts/gerar_rubrica_md.py
-Gera docs/09_rubrica_avaliacao_papers.md e output/revisao_literatura/matriz_rubrica_detalhada.md
+Gera docs/90_arquivo_historico/09_rubrica_avaliacao_papers.md e output/revisao_literatura/matriz_rubrica_detalhada.md
 a partir de output/revisao_literatura/rubrica_ranking_papers.json.
 Foco: Atração e Retenção de Especialistas no Interior com base em Bolsas e IVS.
 """
@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 JSON_PATH = ROOT / "output" / "revisao_literatura" / "rubrica_ranking_papers.json"
-DOC_PATH = ROOT / "docs" / "09_rubrica_avaliacao_papers.md"
+DOC_PATH = ROOT / "docs" / "90_arquivo_historico" / "09_rubrica_avaliacao_papers.md"
 OUT_MD_PATH = ROOT / "output" / "revisao_literatura" / "matriz_rubrica_detalhada.md"
 
 with open(JSON_PATH, "r", encoding="utf-8") as f:
@@ -153,5 +153,4 @@ with open(DOC_PATH, "w", encoding="utf-8") as f:
 with open(OUT_MD_PATH, "w", encoding="utf-8") as f:
     f.write(md)
 
-print("docs/09_rubrica_avaliacao_papers.md e output/revisao_literatura/matriz_rubrica_detalhada.md gerados com sucesso.")
-
+print("docs/90_arquivo_historico/09_rubrica_avaliacao_papers.md e output/revisao_literatura/matriz_rubrica_detalhada.md gerados com sucesso.")

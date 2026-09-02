@@ -1,5 +1,8 @@
 # 10. Fundamentação Teórica Estrutural do Problema do PMM-E
 
+> [!CAUTION]
+> **Arquivo histórico misto, não canônico.** Ele combina referências teóricas e empíricas. Para a fundamentação formal vigente, use exclusivamente o [documento 17](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md).
+
 > **Documento Teórico Central**  
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
 > **Tema Central:** *Atração e Retenção de Médicos Especialistas em Cidades do Interior com base nas Diferentes Bolsas e no IVS (Índice de Vulnerabilidade Social).*  

@@ -17,7 +17,7 @@ nem estimar o pós-período.
 - ausência de resultados pós-tratamento nos insumos analíticos.
 
 Leia `AGENTS.md`, `CLAUDE.md`,
-`docs/12_estrategia_causal_prospectiva_ciclo3.md`, o relatório C3-01, a
+`docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md`, o relatório C3-01, a
 [documentação oficial do SIH](https://wiki.saude.gov.br/sih/index.php/P%C3%A1gina_principal),
 o layout RD e o prompt `prompts/infraestrutura_datasus_dbc.md`.
 

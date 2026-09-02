@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 scripts/gerar_dossie_papers_leitura_efetiva.py
-Gera o documento mestre docs/15_dossie_aprofundado_papers_leitura_efetiva.md
+Gera o documento mestre docs/90_arquivo_historico/15_dossie_aprofundado_papers_leitura_efetiva.md
 documentando exaustivamente os artigos fundamentais efetivamente lidos e analisados para o tema:
 Atração e Retenção de Médicos Especialistas em Cidades do Interior com base nas Diferentes Bolsas e IVS.
 Destaca especialmente os papers novos que não estavam na lista inicial de 7 teóricos clássicos:
@@ -19,7 +19,7 @@ Destaca especialmente os papers novos que não estavam na lista inicial de 7 te�
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT_MD = ROOT / "docs" / "15_dossie_aprofundado_papers_leitura_efetiva.md"
+OUT_MD = ROOT / "docs" / "90_arquivo_historico" / "15_dossie_aprofundado_papers_leitura_efetiva.md"
 
 doc_text = r"""# 15. Dossiê Aprofundado dos Artigos Efetivamente Lidos: Atração, Retenção, Bolsas e IVS no Interior
 

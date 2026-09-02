@@ -4,7 +4,7 @@
 > a disponibilização imediata de vagas aumenta o estoque municipal de
 > especialistas e se os novos médicos permanecem pelo horizonte comum maduro.
 > O estimando e a fila estão definidos em
-> [`05_roadmap_execucao.md`](05_roadmap_execucao.md).
+> [`05_roadmap_execucao.md`](../06_execucao/05_roadmap_execucao.md).
 >
 > Este documento define o que o projeto quer medir antes de escolher método ou produzir resultados. O foco é o efeito do componente de provimento do PMM-E, não o efeito agregado de todas as frentes do Agora Tem Especialistas.
 

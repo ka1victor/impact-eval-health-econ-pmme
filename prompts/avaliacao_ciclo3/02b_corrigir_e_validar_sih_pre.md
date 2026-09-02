@@ -15,7 +15,7 @@ pós-`T0`, não estime efeitos e não congele um plano de análise.
 1. confirme que `HEAD` contém a correção normativa da ponte da Nota Técnica nº
    59/2026 e que os cursos confirmatórios integrais são exatamente 1, 12 e 24;
 2. leia `AGENTS.md`, `CLAUDE.md`,
-   `docs/12_estrategia_causal_prospectiva_ciclo3.md`,
+   `docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md`,
    `docs/auditorias/05_coorte_c3_e_exposicao.md`,
    `docs/auditorias/06_piloto_sih_anestesiologia.md` e os prompts C3-02/C3-03;
 3. confirme que a última competência solicitada é anterior ao `T0` operacional

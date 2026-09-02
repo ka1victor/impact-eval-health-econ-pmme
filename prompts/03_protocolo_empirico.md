@@ -2,7 +2,7 @@
 
 Execute somente depois que os resultados dos prompts 01 e 02 estiverem incorporados ao branch.
 
-Leia `AGENTS.md`, `CLAUDE.md`, `README.md`, `docs/04_escopo_eficacia_operacional.md`, `docs/05_roadmap_execucao.md` e os dois relatórios em `docs/auditorias/`.
+Leia `AGENTS.md`, `CLAUDE.md`, `README.md`, `docs/01_pergunta_escopo/04_escopo_eficacia_operacional.md`, `docs/06_execucao/05_roadmap_execucao.md` e os dois relatórios em `docs/auditorias/`.
 
 ## Missão
 

@@ -5,7 +5,7 @@
 > C3-03 foi executado para força de trabalho usando somente CNES pré; o SIH
 > segue bloqueado separadamente. A
 > estratégia substantiva está em
-> [`docs/12_estrategia_causal_prospectiva_ciclo3.md`](../../docs/12_estrategia_causal_prospectiva_ciclo3.md).
+> [`docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md`](../../docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md).
 
 ## Ordem
 
@@ -46,7 +46,7 @@
 - coorte C3: congelada em produto analítico;
 - assinatura pública da Nota Técnica nº 59/2026: ainda não validada nas
   competências CNES futuras;
-- protocolo prospectivo: congelado em `docs/13_plano_pre_analise_ciclo3.md`;
+- protocolo prospectivo: congelado em `docs/05_identificacao/13_plano_pre_analise_ciclo3.md`;
 - efeitos pós-tratamento: não estimados.
 
 O “C3-03” desta fila é um torneio exclusivamente pré-tratamento e não é o

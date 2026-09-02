@@ -1,9 +1,9 @@
 # R1–R2 — regra, running variable, suporte e cointervenções
 
 Execute somente os portões R1 e R2 de
-`docs/14_plano_implementacao_rdd_bolsa.md`.
+`docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`.
 Leia também integralmente
-`docs/15_incentivos_ivs_provimento_duradouro.md`, que fixa a pergunta,
+`docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md`, que fixa a pergunta,
 denominadores e linguagem permitida.
 
 ## Proibições

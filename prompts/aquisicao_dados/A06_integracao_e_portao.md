@@ -33,7 +33,7 @@ Reavalie o portão que antes classificou o estudo como `aguardando dados`.
 - `output/aquisicao/portao_integrado.json`;
 - `output/aquisicao/matriz_variavel_fonte_final.json`;
 - `docs/auditorias/03_portao_apos_aquisicao.md`;
-- atualização mínima de `README.md`, `docs/05_roadmap_execucao.md` e
+- atualização mínima de `README.md`, `docs/06_execucao/05_roadmap_execucao.md` e
   `prompts/README.md` para refletir a decisão;
 - lista fechada de lacunas que A07 deve converter em pedidos administrativos.
 

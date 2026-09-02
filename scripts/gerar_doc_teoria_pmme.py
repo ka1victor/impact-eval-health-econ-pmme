@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 scripts/gerar_doc_teoria_pmme.py
-Gera o documento mestre docs/10_fundamentacao_teorica_problema_pmme.md
+Gera o documento mestre docs/90_arquivo_historico/10_fundamentacao_teorica_problema_pmme.md
 com a fundamentação teórica formal completa para a:
 Atração e Retenção de Médicos Especialistas em Cidades do Interior com base nas Diferentes Bolsas e IVS.
 """
@@ -9,7 +9,7 @@ Atração e Retenção de Médicos Especialistas em Cidades do Interior com base
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT_MD = ROOT / "docs" / "10_fundamentacao_teorica_problema_pmme.md"
+OUT_MD = ROOT / "docs" / "90_arquivo_historico" / "10_fundamentacao_teorica_problema_pmme.md"
 
 doc_text = r"""# 10. Fundamentação Teórica Estrutural do Problema do PMM-E
 
@@ -175,4 +175,3 @@ with open(OUT_MD, "w", encoding="utf-8") as f:
     f.write(doc_text)
 
 print(f"Documento {OUT_MD} gerado com sucesso.")
-

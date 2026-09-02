@@ -27,7 +27,7 @@ COHORT = OUT / "coorte_c3_congelada.parquet"
 MUNICIPAL = ROOT / "output" / "aquisicao" / "painel_municipios_regioes.parquet"
 CNES_MONTHLY = ROOT / "output" / "aquisicao" / "cnes_mensal"
 SIH_MANIFEST = OUT / "manifesto_sih_pre.json"
-PROTOCOL_DOC = ROOT / "docs" / "13_plano_pre_analise_ciclo3.md"
+PROTOCOL_DOC = ROOT / "docs" / "05_identificacao" / "13_plano_pre_analise_ciclo3.md"
 
 T0 = "202609"
 PRE_START = "202406"

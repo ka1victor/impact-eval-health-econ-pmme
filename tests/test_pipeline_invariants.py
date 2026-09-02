@@ -89,7 +89,7 @@ class PipelineInvariantsTest(unittest.TestCase):
     def test_local_links_in_current_documentation_exist(self) -> None:
         documents = [
             ROOT / "README.md",
-            ROOT / "docs" / "05_roadmap_execucao.md",
+            ROOT / "docs" / "06_execucao" / "05_roadmap_execucao.md",
             ROOT / "docs" / "auditorias" / "04_auditoria_pipeline_agregado.md",
             ROOT / "prompts" / "README.md",
         ]

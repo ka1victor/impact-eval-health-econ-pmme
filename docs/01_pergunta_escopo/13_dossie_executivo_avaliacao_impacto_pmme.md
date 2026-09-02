@@ -77,9 +77,9 @@ controlador.
 
 Plano e prompts executáveis:
 
-- [plano de implementação da RDD](14_plano_implementacao_rdd_bolsa.md);
-- [portão de regra e suporte](../prompts/avaliacao_rdd_bolsa/01_portao_regra_e_suporte.md);
-- [congelamento e estimação administrativa](../prompts/avaliacao_rdd_bolsa/02_congelar_e_estimar_administrativo.md).
+- [plano de implementação da RDD](../05_identificacao/14_plano_implementacao_rdd_bolsa.md);
+- [portão de regra e suporte](../../prompts/avaliacao_rdd_bolsa/01_portao_regra_e_suporte.md);
+- [congelamento e estimação administrativa](../../prompts/avaliacao_rdd_bolsa/02_congelar_e_estimar_administrativo.md).
 
 ## 5. Decisão agora
 

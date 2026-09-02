@@ -71,7 +71,7 @@ para cada um dos 675 pares UF--competência, historicizou as 25 versões SIGTAP 
 confirmou a classificação de 77 municípios tratados puros, 247 controles puros
 e um município imediata+reserva excluído. Porém, o FTP oficial não continha
 `RDAC2606.dbc` e `RDRR2606.dbc`. Foram 673 sucessos; as duas ausências não foram
-convertidas em zeros. O [`relatório C3-02B`](auditorias/06_piloto_sih_anestesiologia.md)
+convertidas em zeros. O [`relatório C3-02B`](../auditorias/06_piloto_sih_anestesiologia.md)
 mantém o painel clínico bloqueado. Esse portão foi separado do CNES: C3-03
 executou o torneio de força de trabalho apenas com dados pré-T0, sem usar os
 painéis SIH preliminares.
@@ -183,9 +183,9 @@ Essa trilha continua bloqueada porque a vintagem, a precisão e a regra aplicada
 por vaga não foram recuperadas; a regra mudou entre 2025 e 2026; e a categoria
 publicada diverge do IVS 2010 local em 226 de 531 municípios. A decisão está
 documentada em
-[`docs/auditorias/01_regra_institucional.md`](auditorias/01_regra_institucional.md)
+[`docs/auditorias/01_regra_institucional.md`](../auditorias/01_regra_institucional.md)
 e
-[`docs/auditorias/aquisicao/A03_ivs_e_regra.md`](auditorias/aquisicao/A03_ivs_e_regra.md).
+[`docs/auditorias/aquisicao/A03_ivs_e_regra.md`](../auditorias/aquisicao/A03_ivs_e_regra.md).
 
 O RDD ficará como estudo secundário de alto valor **somente se** a regra
 administrativa exata e o primeiro estágio forem demonstrados. Faixa publicada
@@ -452,4 +452,4 @@ acrescentar a defasagem de publicação do CNES/SIH.
 - O eventual RDD do IVS não será chamado de efeito do PMM-E inteiro.
 
 Os prompts operacionais estão em
-[`prompts/avaliacao_ciclo3/`](../prompts/avaliacao_ciclo3/README.md).
+[`prompts/avaliacao_ciclo3/`](../../prompts/avaliacao_ciclo3/README.md).

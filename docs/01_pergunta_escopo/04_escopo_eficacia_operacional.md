@@ -4,7 +4,7 @@
 > cobertura e retenção continua dependendo de dados administrativos e não será
 > executada na primeira versão. O plano vigente é o painel público agregado de
 > estoque municipal, fluxos e presença posterior em
-> [`05_roadmap_execucao.md`](05_roadmap_execucao.md).
+> [`05_roadmap_execucao.md`](../06_execucao/05_roadmap_execucao.md).
 >
 > Registro do escopo empírico individual anterior. Este documento define o que
 > seria chamado de eficácia nesse desenho, seus modos de falha e os limites das

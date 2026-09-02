@@ -2,7 +2,7 @@
 
 Você está trabalhando no repositório `impact-eval-health-econ-pmme`.
 
-Leia integralmente `AGENTS.md`, `CLAUDE.md`, `README.md`, `docs/04_escopo_eficacia_operacional.md` e `docs/05_roadmap_execucao.md` antes de agir.
+Leia integralmente `AGENTS.md`, `CLAUDE.md`, `README.md`, `docs/01_pergunta_escopo/04_escopo_eficacia_operacional.md` e `docs/06_execucao/05_roadmap_execucao.md` antes de agir.
 
 ## Missão
 

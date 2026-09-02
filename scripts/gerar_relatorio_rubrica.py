@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 scripts/gerar_relatorio_rubrica.py
-Gera o documento docs/09_rubrica_estrategica_e_selecao_teorica.md
+Gera o documento docs/90_arquivo_historico/09_rubrica_estrategica_e_selecao_teorica.md
 com base na avaliação detalhada dos papers teóricos e empíricos,
 focando na Atração e Retenção de Médicos Especialistas no Interior sob Diferentes Bolsas e IVS.
 """
@@ -9,7 +9,7 @@ focando na Atração e Retenção de Médicos Especialistas no Interior sob Dife
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT_MD = ROOT / "docs" / "09_rubrica_estrategica_e_selecao_teorica.md"
+OUT_MD = ROOT / "docs" / "90_arquivo_historico" / "09_rubrica_estrategica_e_selecao_teorica.md"
 
 md_content = r"""# 09. Rúbrica Estratégica de Avaliação de Literatura e Seleção dos Top Papers Teóricos
 
@@ -123,4 +123,4 @@ with open(OUT_MD, "w", encoding="utf-8") as f:
     f.write(md_content)
 
 
-print("docs/09_rubrica_estrategica_e_selecao_teorica.md gerado com sucesso.")
+print("docs/90_arquivo_historico/09_rubrica_estrategica_e_selecao_teorica.md gerado com sucesso.")

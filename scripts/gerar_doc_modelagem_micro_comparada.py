@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 scripts/gerar_doc_modelagem_micro_comparada.py
-Gera o documento mestre docs/16_modelagem_microeconomica_comparada_e_selecao.md
+Gera o documento mestre docs/90_arquivo_historico/16_modelagem_microeconomica_comparada_e_selecao.md
 contendo:
 1. Todas as equações microeconômicas e econométricas explicadas passo a passo dos novos 7 papers.
 2. Análise comparativa detalhada de qual modelo escolher como base para o tema:
@@ -14,7 +14,7 @@ contendo:
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT_MD = ROOT / "docs" / "16_modelagem_microeconomica_comparada_e_selecao.md"
+OUT_MD = ROOT / "docs" / "90_arquivo_historico" / "16_modelagem_microeconomica_comparada_e_selecao.md"
 
 doc_text = r"""# 16. Modelagem Microeconômica Comparada e Seleção do Framework Teórico do PMM-E
 
@@ -347,4 +347,3 @@ with open(OUT_MD, "w", encoding="utf-8") as f:
     f.write(doc_text)
 
 print(f"Documento {OUT_MD} gerado e salvo com sucesso.")
-

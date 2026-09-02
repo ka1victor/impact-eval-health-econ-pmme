@@ -2,7 +2,7 @@
 
 > **Status:** agenda de longo prazo, sem tarefas autorizadas na primeira versão.
 > O plano corrente e mínimo está em
-> [`05_roadmap_execucao.md`](05_roadmap_execucao.md).
+> [`05_roadmap_execucao.md`](../06_execucao/05_roadmap_execucao.md).
 >
 > Agenda ampla de outcomes do projeto. Ela não é a fila operacional da primeira
 > versão e não fixa RDD antes da auditoria institucional.
@@ -10,10 +10,10 @@
 O desenho individual anterior foi restringido à cobertura sustentada, seus
 mecanismos, adicionalidade e uma heterogeneidade por infraestrutura anterior.
 Ele está preservado em
-[`04_escopo_eficacia_operacional.md`](04_escopo_eficacia_operacional.md). O plano
+[`04_escopo_eficacia_operacional.md`](../01_pergunta_escopo/04_escopo_eficacia_operacional.md). O plano
 mínimo vigente usa dados públicos para medir estoque municipal, entradas,
 saídas e presença posterior dos novos médicos; sua definição está em
-[`05_roadmap_execucao.md`](05_roadmap_execucao.md). As frentes abaixo formam
+[`05_roadmap_execucao.md`](../06_execucao/05_roadmap_execucao.md). As frentes abaixo formam
 apenas a agenda posterior.
 
 ## 1. Visão geral
@@ -105,7 +105,7 @@ Não chamar produção de “atribuível” se não houver ligação temporal, e
 
 ## 5. WP3 — acesso, fila e geografia
 
-> **Guardado:** não adquirir dados, criar scripts ou estimar este WP no estudo atual. Veja [`06_backlog_wp3_wp4_wp5.md`](06_backlog_wp3_wp4_wp5.md).
+> **Guardado:** não adquirir dados, criar scripts ou estimar este WP no estudo atual. Veja [`06_backlog_wp3_wp4_wp5.md`](../06_execucao/06_backlog_wp3_wp4_wp5.md).
 
 ### Objetivo
 
@@ -133,7 +133,7 @@ Nenhum padrão será resumido automaticamente como sucesso/fracasso global.
 
 ## 6. WP4 — linhas clínicas
 
-> **Guardado:** não selecionar linha clínica, vincular bases ou estimar este WP no estudo atual. Veja [`06_backlog_wp3_wp4_wp5.md`](06_backlog_wp3_wp4_wp5.md).
+> **Guardado:** não selecionar linha clínica, vincular bases ou estimar este WP no estudo atual. Veja [`06_backlog_wp3_wp4_wp5.md`](../06_execucao/06_backlog_wp3_wp4_wp5.md).
 
 ### Objetivo
 
@@ -158,7 +158,7 @@ A concentração de profissionais define prioridade de investigação, não expe
 
 ## 7. WP5 — custos e bem-estar
 
-> **Guardado:** não construir cenários, adquirir dados ou estimar este WP no estudo atual. Veja [`06_backlog_wp3_wp4_wp5.md`](06_backlog_wp3_wp4_wp5.md).
+> **Guardado:** não construir cenários, adquirir dados ou estimar este WP no estudo atual. Veja [`06_backlog_wp3_wp4_wp5.md`](../06_execucao/06_backlog_wp3_wp4_wp5.md).
 
 ### Objetivo
 
@@ -209,4 +209,4 @@ O IVS 2010 continuará sendo a running variable canônica quando a regra institu
 6. Estimar o efeito sobre cobertura sustentada e só então decompor os modos de falha.
 7. Tratar remanejamento inicialmente como decomposição contábil; ampliar a identificação apenas se os dados sustentarem.
 
-Fila, produção assistencial, clínica e custos ficam adiados conforme [`06_backlog_wp3_wp4_wp5.md`](06_backlog_wp3_wp4_wp5.md). O primeiro produto publicável será a avaliação de quando o incentivo produz capacidade médica sustentada e adicional. A execução deve seguir os prompts ordenados em [`../prompts/README.md`](../prompts/README.md).
+Fila, produção assistencial, clínica e custos ficam adiados conforme [`06_backlog_wp3_wp4_wp5.md`](../06_execucao/06_backlog_wp3_wp4_wp5.md). O primeiro produto publicável será a avaliação de quando o incentivo produz capacidade médica sustentada e adicional. A execução deve seguir os prompts ordenados em [`prompts/README.md`](../../prompts/README.md).

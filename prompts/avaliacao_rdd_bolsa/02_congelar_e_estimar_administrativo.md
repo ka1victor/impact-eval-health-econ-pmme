@@ -6,7 +6,7 @@ Execute somente se `output/rdd_bolsa/portao_regra_ivs.json` e
 ## R3
 
 1. Leia integralmente os portões e o plano canônico.
-   Inclua `docs/15_incentivos_ivs_provimento_duradouro.md` e preserve a
+   Inclua `docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md` e preserve a
    distinção entre preenchimento, oferta local persistente e retenção individual.
 2. Construa a matriz sem outcomes e preserve seu hash.
 3. Registre cutoff, janela, unidade municipal, amostra, denominadores,

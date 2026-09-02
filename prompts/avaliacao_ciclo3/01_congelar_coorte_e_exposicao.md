@@ -12,7 +12,7 @@ priorizada pura.
 ## Leia integralmente antes de agir
 
 - `AGENTS.md` e `CLAUDE.md`;
-- `docs/12_estrategia_causal_prospectiva_ciclo3.md`;
+- `docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md`;
 - `docs/auditorias/01_regra_institucional.md`;
 - `docs/auditorias/02_disponibilidade_dados.md`;
 - `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md`;

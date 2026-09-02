@@ -5,11 +5,11 @@
 - Organize toda análise pela cadeia: implementação → força de trabalho → capacidade → acesso → saúde → custos/bem-estar → equidade e spillovers.
 - Comece pelo outcome e pelo estimando; só depois escolha método e base.
 - A fila imediata é o portão de viabilidade do RDD do adicional de bolsa,
-  documentado em `docs/14_plano_implementacao_rdd_bolsa.md`. O efeito candidato
+  documentado em `docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`. O efeito candidato
   é o incentivo marginal de R$ 5 mil, não participação no PMM-E nem o efeito
   total do Agora Tem Especialistas. Não consulte outcomes antes de reconstruir
   a regra e congelar o protocolo.
-- `docs/15_incentivos_ivs_provimento_duradouro.md` define a pergunta do artigo:
+- `docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md` define a pergunta do artigo:
   salário anunciado é o instrumento candidato, IVS é gradiente territorial e
   oferta persistente no CNES não equivale a retenção individual.
 - O ciclo 3 permanece prospectivo e congelado. Use seis meses apenas quando a
@@ -41,17 +41,17 @@
 
 ## Execução
 
-- `docs/05_roadmap_execucao.md` preserva a execução validada do ciclo 1.
-  `docs/14_plano_implementacao_rdd_bolsa.md` e
+- `docs/06_execucao/05_roadmap_execucao.md` preserva a execução validada do ciclo 1.
+  `docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md` e
   `prompts/avaliacao_rdd_bolsa/README.md` são a fila imediata. A fila do ciclo
   3 em `prompts/avaliacao_ciclo3/README.md` continua congelada até maturidade.
-  `docs/03_plano_avaliacao_outcomes.md` é agenda ampla e não deve ser
+  `docs/05_identificacao/03_plano_avaliacao_outcomes.md` é agenda ampla e não deve ser
   interpretado como fila imediata.
 - Antes de iniciar uma tarefa, confirme a fila vigente em
-  `docs/05_roadmap_execucao.md`. Os prompts históricos em `prompts/` não
+  `docs/06_execucao/05_roadmap_execucao.md`. Os prompts históricos em `prompts/` não
   autorizam executar o desenho individual anterior.
 - WP3, WP4 e WP5 continuam guardados conforme
-  `docs/06_backlog_wp3_wp4_wp5.md`. SIH/SIA só entram depois dos portões R1–R5
+  `docs/06_execucao/06_backlog_wp3_wp4_wp5.md`. SIH/SIA só entram depois dos portões R1–R5
   do novo plano; não use produção clínica para procurar um resultado antes de
   validar a fonte de exogeneidade.
 - A primeira versão agregada do ciclo 1 já foi executada. Não a reexecute nem

@@ -14,7 +14,7 @@ a menor estatística `p`.
 - C3-01 incorporado e aprovado;
 - coorte, ponte e CNES pré validados para força de trabalho;
 - C3-02B e SIH pré completos somente para liberar o submódulo clínico;
-- `docs/12_estrategia_causal_prospectiva_ciclo3.md`;
+- `docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md`;
 - auditoria do pipeline agregado do ciclo 1, para não repetir seleção
   retrospectiva.
 
@@ -91,7 +91,7 @@ a menor estatística `p`.
 - `output/avaliacao_ciclo3/diagnosticos_pre.csv`;
 - `output/avaliacao_ciclo3/potencia_pre.json`;
 - `output/avaliacao_ciclo3/decisao_torneio_pre.json`;
-- `docs/13_plano_pre_analise_ciclo3.md`;
+- `docs/05_identificacao/13_plano_pre_analise_ciclo3.md`;
 - `output/avaliacao_ciclo3/registro_pre_analise.json`.
 
 ## Portão

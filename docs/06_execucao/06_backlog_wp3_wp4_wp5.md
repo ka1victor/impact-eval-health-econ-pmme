@@ -19,7 +19,7 @@ O adiamento não implica que esses outcomes sejam menos importantes. Tempo de es
 - distinção entre acesso local e global;
 - decomposição origem–destino;
 - hipóteses sobre proximidade, bypass e capacidade liberada nos polos;
-- lista de dados necessários em `02_inventario_dados_por_outcome.md`.
+- lista de dados necessários em `docs/04_dados/02_inventario_dados_por_outcome.md`.
 
 ### O que não será feito agora
 
@@ -93,10 +93,10 @@ O adiamento não implica que esses outcomes sejam menos importantes. Tempo de es
 
 - Não criar scripts ou outputs de WP3–WP5 no pipeline atual.
 - Não baixar grandes bases desses WPs “por precaução”.
-- Utilitários desacoplados de engenharia de dados (parser DBC -> Parquet) podem ser construídos de forma isolada via [`prompts/infraestrutura_datasus_dbc.md`](../prompts/infraestrutura_datasus_dbc.md) sem acoplamento aos modelos causais.
+- Utilitários desacoplados de engenharia de dados (parser DBC -> Parquet) podem ser construídos de forma isolada via [`prompts/infraestrutura_datasus_dbc.md`](../../prompts/infraestrutura_datasus_dbc.md) sem acoplamento aos modelos causais.
 - Exceção autorizada: piloto SIH pré-tratamento e eventual atualização de
   anestesiologia conforme
-  [`prompts/avaliacao_ciclo3/`](../prompts/avaliacao_ciclo3/README.md). SIA só
+  [`prompts/avaliacao_ciclo3/`](../../prompts/avaliacao_ciclo3/README.md). SIA só
   poderá ser adquirido se o portão pré-tratamento acionar a alternativa de
   ecocardiografia.
 - Novas fontes podem ser anotadas neste backlog, sem iniciar análise.

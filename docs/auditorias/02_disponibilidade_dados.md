@@ -8,7 +8,7 @@
 > descartou o CNPJ e a implementação pelos gestores ainda não foi testada. Isso
 > abre uma nova auditoria prospectiva para o ciclo 3; não altera a conclusão
 > desta auditoria sobre os arquivos então integrados. Veja
-> [`../12_estrategia_causal_prospectiva_ciclo3.md`](../12_estrategia_causal_prospectiva_ciclo3.md).
+> [`12_estrategia_causal_prospectiva_ciclo3.md`](../05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md).
 
 > **Data da auditoria:** 27 de agosto de 2026
 >

@@ -1,7 +1,7 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 scripts/gerar_doc_alternativas_modernas.py
-Gera o relatório comparativo formal docs/11_avaliacao_alternativas_teoricas_modernas.md.
+Gera o relatório comparativo formal docs/90_arquivo_historico/11_avaliacao_alternativas_teoricas_modernas.md.
 """
 
 doc_text = """# 11. Análise Comparativa de Alternativas Teóricas Modernas e Compactas para o PMM-E
@@ -153,7 +153,7 @@ graph TD
 | **M7** | **Garicano (2000, JPE)** | pp. 874–888 (Seções I a III) | **14 págs** | Modelo de hierarquia de conhecimento e resolutividade diagnóstica local (TFD). |
 """
 
-with open("docs/11_avaliacao_alternativas_teoricas_modernas.md", "w", encoding="utf-8") as f:
+with open("docs/90_arquivo_historico/11_avaliacao_alternativas_teoricas_modernas.md", "w", encoding="utf-8") as f:
     f.write(doc_text)
 
-print("docs/11_avaliacao_alternativas_teoricas_modernas.md gerado com sucesso.")
+print("docs/90_arquivo_historico/11_avaliacao_alternativas_teoricas_modernas.md gerado com sucesso.")

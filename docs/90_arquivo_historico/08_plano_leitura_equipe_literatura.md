@@ -1,5 +1,8 @@
 # 08. Plano Estratégico de Busca, Leitura da Literatura e Guia de Atribuição da Equipe
 
+> [!CAUTION]
+> **Arquivo histórico misto, não canônico.** A classificação TEO/EMP deste arquivo foi substituída pelo [mapa da documentação](../README.md). Papers que estimam modelos ou regressões são tratados como literatura empírica.
+
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
 > **Tema Central:** *Atração e Retenção de Médicos Especialistas em Cidades do Interior com base nas Diferentes Bolsas e no IVS (Índice de Vulnerabilidade Social).*  
 > **Finalidade:** Protocolo formal de busca bibliográfica, seleção sistemática de literatura recente (2018–2026) e clássica, e guia de divisão de leitura para os 14 membros da equipe de pesquisa.  

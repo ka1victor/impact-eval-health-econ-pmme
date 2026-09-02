@@ -8,7 +8,7 @@
 > preservou o CNPJ e a implementação da regra ainda não foi validada. Portanto,
 > a limitação descrita abaixo continua correta para os Parquets A05, enquanto o
 > ciclo 3 ganha uma rota prospectiva a ser auditada em
-> [`../../12_estrategia_causal_prospectiva_ciclo3.md`](../../12_estrategia_causal_prospectiva_ciclo3.md).
+> [`12_estrategia_causal_prospectiva_ciclo3.md`](../../05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md).
 
 > **Data da Auditoria:** 28 de agosto de 2026 (revisado pós-saneamento)
 > **Agente:** A05 — Aquisição e Inspeção do CNES Mensal
@@ -219,4 +219,3 @@ Cobertura indica somente que o código aparece no cadastro daquela competência.
    python scripts/aquisicao/a05_adquirir_cnes.py --inspect-only
    ```
 3. **Painel integral adiado:** as 23 competências restantes não devem ser baixadas até existir ponte PMM-E–CNES ou decisão explícita do portão sobre o desenho e o denominador necessários.
-
