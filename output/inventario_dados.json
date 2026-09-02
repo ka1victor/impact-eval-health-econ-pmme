@@ -2,7 +2,7 @@
   "escopo": "inventario de dados observados; nao contem estimativas causais",
   "arquivos": {
     "pmm_especialistas_nominal.csv": {
-      "sha256": "76237f4cb6bf7e9aaccbf22ea443e1070c889c05a0357a3c1cb34ee50f58fc7d",
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
       "linhas": 1480,
       "colunas": [
         "co_ibge",
@@ -33,7 +33,7 @@
       ]
     },
     "pmm_especialistas_serie_historica.csv": {
-      "sha256": "98486b5d48fc7a69c8ba9554f0c28cf546c20ff79be31e64c3dccec95d6b981c",
+      "sha256": "3ebc624a7446a017940f00f131085e9bf7199482b7315a5b75d632e2397eb7a0",
       "linhas": 7276,
       "colunas": [
         "co_cnes",
@@ -69,7 +69,7 @@
       ]
     },
     "ivs_ipea_2010_municipios.csv": {
-      "sha256": "fe46ae9578d08b8596437c13ff4fd7461c7ac85c47b492eb2424f8bcd6d4021e",
+      "sha256": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c",
       "linhas": 5565,
       "colunas": [
         "cod_ibge6",

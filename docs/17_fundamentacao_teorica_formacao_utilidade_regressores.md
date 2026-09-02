@@ -1,336 +1,372 @@
-# 17. Base microeconômica da escolha locacional médica
+# 17. Base Microeconômica da Escolha Locacional Médica
 
-> **Escopo:** equações originais, modelo micro adotado e hipóteses derivadas para o relatório
->
-> **Data de consolidação:** 31 de agosto de 2026
+> **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
+> **Objeto:** Decisão intertemporal de alocação espacial, utilidade e oferta de trabalho médico  
+> **Status:** Documento teórico canônico de referência para hipóteses, canais de transmissão e especificações econométricas  
+> **Data de Consolidação:** 31 de agosto de 2026  
 
-## 1. Arquitetura teórica
+---
 
-A fundamentação é organizada em três camadas:
+## 1. Arquitetura Teórica
 
-1. **Moehling et al. (2020) são o núcleo:** apresentam o problema intertemporal de escolha da localidade pelo médico.
-2. **Roback (1982) complementa o bloco espacial:** formaliza amenidades de consumo, custo de moradia e amenidades produtivas.
-3. **Reinhardt (1975) complementa o bloco de produção médica:** explicita utilidade, tempo, renda e produção de serviços médicos.
+A fundamentação microeconômica do projeto estrutura-se em **três camadas complementares**:
 
-Os três trabalhos não escrevem conjuntamente um único modelo. A relação proposta aqui é interpretativa: Roback e Reinhardt ajudam a compreender os canais que permanecem em forma reduzida na equação locacional de Moehling et al. Nenhuma função nova é criada para uni-los.
+```mermaid
+flowchart TD
+    subgraph S1["1. Núcleo de Escolha Locacional Intertemporal"]
+        M["Moehling, Niemesh, Thomasson & Treber (2020)<br/><b>Maximização do Valor Presente da Remuneração Real Líquida de Desamenidades</b>"]
+    end
 
-## 2. Moehling et al. — escolha locacional
+    subgraph S2["2. Bloco de Equilíbrio Espacial e Preços Hedônicos"]
+        R["Roback (1982)<br/><b>Capitalização Espacial de Amenidades de Consumo, Aluguéis e Amenidades Produtivas</b>"]
+    end
 
-Moehling, Niemesh, Thomasson e Treber (2020) escrevem o problema de escolha locacional do médico como:
+    subgraph S3["3. Bloco de Produção Médica e Alocação de Tempo"]
+        Re["Reinhardt (1975)<br/><b>Função de Produção Médica, Trabalho Auxiliar, Insumos Clínicos e Propósito</b>"]
+    end
 
-$$
-\arg\max_{i\in\mathcal I} U(\omega_i)
-=
-\arg\max_{i\in\mathcal I}
-\left\{
-\sum_t \delta^t
-\left[
-\frac{\mathbb E\!\left(w^{(s)}_{it}\right)}{p_{it}}
--c^{(s)}_{it}
-\right]
-\right\}.
-\tag{1; Moehling et al., 2020}
-$$
+    subgraph S4["Implicações Estruturais para o PMM-E"]
+        H["Vetor de Hipóteses Teóricas (H1 a H9)<br/><b>Benchmark Linear da Renda Real | Ambiguidade Teórica do IVS Total</b>"]
+        E["Passagem para Especificações Econométricas<br/><b>RDD nos Cutoffs de IVS | Modelos de Duração | Regressores CNES</b>"]
+    end
 
-Na notação dos autores:
+    R -.->|"Esclarece amenidades vs. produtividade"| M
+    Re -.->|"Abre a tecnologia de produção e alocação de horas"| M
+    M ==> H
+    H ==> E
 
-- $i$ indexa a localidade;
-- $t$ indexa o período;
-- $s$ identifica o grupo de qualificação;
-- $w^{(s)}_{it}$ é a remuneração nominal esperada;
-- $p_{it}$ é o nível de preços local;
-- $c^{(s)}_{it}$ reúne custos e amenidades de consumo ligados à localidade;
-- $\delta$ é o fator de desconto.
+    style M fill:#e8f4f8,stroke:#1a73e8,stroke-width:2px;
+    style R fill:#f3e8fd,stroke:#7b1fa2,stroke-width:2px;
+    style Re fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    style H fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+    style E fill:#fce4ec,stroke:#c2185b,stroke-width:2px;
+```
 
-O médico escolhe a localidade que oferece o maior valor presente da remuneração real esperada, líquida dos custos e desamenidades locacionais representados por $c$.
+1. **Moehling et al. (2020) constituem o núcleo:** formalizam o problema intertemporal de escolha locacional do médico como a maximização do fluxo descontado de remuneração real esperado líquido de desamenidades e custos locais.
+2. **Roback (1982) complementa o bloco espacial:** explicita o mecanismo de equilíbrio espacial geral, no qual amenidades de consumo, custos de moradia (aluguéis) e amenidades produtivas se equilibram no território via diferenciais compensatórios.
+3. **Reinhardt (1975) complementa o bloco de produção médica:** explicita a microfundamentação da prática médica por meio da alocação de tempo (trabalho vs. lazer), insumos auxiliares e de capital físico, tecnologia de produção e senso de responsabilidade comunitária ($D$).
 
-O artigo menciona preferência por vida rural ou urbana e proximidade da família ao discutir $c$. Hospitais, laboratórios, tamanho do mercado, estradas, aglomeração profissional e escolas médicas são tratados separadamente como **amenidades produtivas** capazes de afetar a remuneração nominal esperada.
+> [!NOTE]
+> **Autonomia e Coerência Teórica:**  
+> Os três trabalhos seminais não foram escritos como um modelo único conjunto. A integração aqui adotada é **estritamente interpretativa e conceitual**: Roback (1982) e Reinhardt (1975) abrem os mecanismos econômicos que operam em forma reduzida na equação locacional de Moehling et al. (2020). **Nenhuma função *ad hoc* artificial é inventada** para fundi-los; preservam-se rigorosamente as equações originais publicadas.
 
-Moehling et al. não escrevem uma função de produção. A produção aparece em forma reduzida: características produtivas da localidade alteram $\mathbb E(w^{(s)}_{it})$, que, por sua vez, altera o valor da opção locacional.
+---
 
-## 3. Reinhardt — utilidade, tempo e produção médica
+## 2. Moehling et al. (2020) — Escolha Locacional Intertemporal
 
-Reinhardt (1975) modela a prática médica por meio das seguintes equações:
-
-$$
-U=U(R,Y,L,D;\mathbf Z),
-\tag{6; Reinhardt, 1975}
-$$
-
-$$
-\bar H=R+H,
-\tag{7; Reinhardt, 1975}
-$$
+Moehling, Niemesh, Thomasson e Treber (2020, p. 187) escrevem o problema microeconômico de escolha locacional do médico como:
 
 $$
-q=f(H,L,K;\boldsymbol\Omega),
-\tag{8; Reinhardt, 1975}
+\arg\max_{i \in \mathcal{I}} U(\omega_i) = \arg\max_{i \in \mathcal{I}} \left\{ \sum_t \delta^t \left[ \frac{\mathbb{E}\left(w^{(s)}_{it}\right)}{p_{it}} - c^{(s)}_{it} \right] \right\}
 $$
 
-$$
-Y=[1-t(\pi+I)](\pi+I),
-\tag{9; Reinhardt, 1975}
-$$
+onde:
+
+* $i \in \mathcal{I}$ indexa a localidade / município pertencente ao conjunto de escolhas viáveis $\mathcal{I}$;
+* $t$ indexa o período temporal (horizonte de planejamento);
+* $s$ identifica o grupo de qualificação / especialidade médica;
+* $w^{(s)}_{it}$ é a remuneração nominal esperada do especialista do tipo $s$ no município $i$ no tempo $t$;
+* $p_{it}$ é o nível geral de preços / custo de vida local;
+* $c^{(s)}_{it}$ reúne custos de instalação, custos de transporte e desamenidades de consumo da localidade;
+* $\delta \in (0, 1)$ é o fator de desconto intertemporal subjetivo.
+
+### Mecanismo Econômico
+
+O médico escolhe a localidade que maximiza o **valor presente líquido da remuneração real esperada**, deduzida dos custos e desamenidades locacionais ($c$).
+
+* **Custos e amenidades de consumo ($c$):** O artigo inclui expressamente preferências por estilo de vida (rural vs. urbano), distância da família e custos de moradia/deslocamento.
+* **Amenidades produtivas:** Hospitais, laboratórios, densidade de mercado, malha viária, aglomeração profissional e proximidade de polos universitários são modelados como atributos que elevam o retorno nominal esperado $\mathbb{E}(w^{(s)}_{it})$.
+* **Produção em forma reduzida:** Moehling et al. não especificam uma função de produção clínica explícita; a tecnologia local e o capital hospitalar deslocam o retorno monetário esperado $\mathbb{E}(w)$, que altera o valor da opção espacial.
+
+---
+
+## 3. Reinhardt (1975) — Utilidade, Alocação de Tempo e Produção Médica
+
+Reinhardt (1975, pp. 131–162) formaliza a microeconomia da prática médica através do seguinte sistema estrutural:
+
+### 3.1 Função de Utilidade do Médico
 
 $$
-\pi=pq-wL-rK.
-\tag{10; Reinhardt, 1975}
+U = U(R, Y, L, D; \mathbf{Z})
 $$
 
-Na notação do autor:
-
-- $R$ são horas de lazer;
-- $H$ são horas de trabalho do médico;
-- $\bar H$ é a dotação total de tempo;
-- $Y$ é a renda líquida;
-- $I$ é a renda externa à prática;
-- $q$ é a produção de serviços médicos;
-- $L$ é o trabalho de pessoal auxiliar;
-- $K$ é o índice de insumos não laborais empregado pelo autor;
-- $D$ representa a preocupação do médico com a assistência disponível à comunidade e com sua própria contribuição;
-- $\mathbf Z$ reúne características pessoais e profissionais que deslocam a utilidade;
-- $\boldsymbol\Omega$ reúne deslocadores da tecnologia produtiva;
-- $p$ é o preço ou reembolso por unidade de serviço;
-- $w$ e $r$ são, respectivamente, os preços dos insumos laborais e não laborais.
-
-Aqui a produção é explícita. Horas do médico, trabalho auxiliar e insumos não laborais entram diretamente na tecnologia que gera serviços médicos. Essa produção afeta o lucro e a renda, enquanto a alocação de tempo liga horas de trabalho e lazer.
-
-O símbolo $p$ tem significados diferentes nos dois trabalhos: em Moehling et al. é o nível de preços da localidade; em Reinhardt é o preço ou reembolso do serviço médico.
-
-## 4. Roback — amenidades de consumo e amenidades produtivas
-
-Roback (1982) apresenta o problema do trabalhador como:
+### 3.2 Restrição de Dotação Temporal
 
 $$
-\max_{x,\ell^c} U(x,\ell^c;s)
-\quad\text{sujeito a}\quad
-w+I=x+r\ell^c,
-\tag{1; Roback, 1982}
+\bar{H} = R + H
 $$
 
-com a condição de equilíbrio espacial:
+### 3.3 Função de Produção de Serviços Médicos
 
 $$
-V(w,r;s)=k.
-\tag{2; Roback, 1982}
+q = f(H, L, K; \boldsymbol{\Omega})
 $$
 
-Do lado da produção, a condição de equilíbrio é:
+### 3.4 Renda Líquida Disponível
 
 $$
-C(w,r;s)=1.
-\tag{3; Roback, 1982}
+Y = [1 - t(\pi + I)] \cdot (\pi + I)
 $$
 
-Na notação da autora:
-
-- $x$ é o bem de consumo composto;
-- $\ell^c$ é a quantidade de terra ou moradia consumida;
-- $r$ é o aluguel;
-- $w$ é o salário;
-- $I$ é a renda não laboral;
-- $s$ é uma característica ou amenidade local;
-- $V$ é a utilidade indireta do trabalhador;
-- $C$ é a função de custo da firma.
-
-Roback permite que uma característica local afete diretamente a utilidade do trabalhador e também a produtividade da firma. Salários e aluguéis ajustam-se conjuntamente para compensar diferenças entre localidades.
-
-Esse modelo esclarece a separação usada por Moehling et al.: atributos valorizados no consumo pertencem ao canal de amenidades e custos locacionais, enquanto atributos que alteram a produtividade pertencem ao canal dos retornos produtivos. Roback não fornece uma lista fechada desses atributos.
-
-## 5. Relação entre os três modelos
-
-| Pergunta teórica | Trabalho | Resposta do modelo |
-|---|---|---|
-| Em qual localidade o médico escolhe trabalhar? | Moehling et al. | escolhe o maior valor presente da remuneração real esperada menos custos e amenidades locacionais |
-| Como amenidades, salários e aluguéis se relacionam no espaço? | Roback | amenidades afetam utilidade e/ou produtividade, e salários e aluguéis se ajustam no equilíbrio |
-| Como os serviços médicos são produzidos? | Reinhardt | a produção resulta do uso de tempo do médico, pessoal auxiliar e insumos não laborais |
-
-A conexão pode ser lida da seguinte forma:
-
-1. **Reinhardt explicita a produção médica.**
-2. **Roback mostra como condições de consumo e produção são capitalizadas espacialmente em salários e aluguéis.**
-3. **Moehling et al. condensam esses retornos e custos no problema intertemporal de escolha entre localidades.**
-
-Essa leitura preserva a autonomia dos modelos. A função de produção de Reinhardt não foi escrita por Moehling et al.; a equação locacional de Moehling et al. não aparece em Reinhardt; e Roback é um modelo geral de equilíbrio espacial, não um modelo específico de médicos.
-
-### 5.1 Comparação do tratamento da produção
-
-| Trabalho | Tratamento da produção |
-|---|---|
-| Moehling et al. | não há função de produção explícita; amenidades produtivas deslocam a remuneração nominal esperada |
-| Reinhardt | há uma função de produção explícita de serviços médicos |
-| Roback | a produtividade local aparece na função de custo da firma e na condição de equilíbrio |
-
-## 6. Modelo micro adotado
-
-O modelo microeconômico adotado para o relatório é o problema intertemporal de escolha locacional de **Moehling et al. (2020)**, reproduzido na Seção 2. Ele é adotado sem substituir seus primitivos por uma função criada para o projeto.
-
-Para escrever as estáticas comparativas sem alterar o modelo, o critério do lado direito da equação publicada será apenas denotado por:
+### 3.5 Lucro / Saldo Operacional da Prática
 
 $$
-V_i\equiv
-\sum_t \delta^t
-\left[
-\frac{\mathbb E\!\left(w^{(s)}_{it}\right)}{p_{it}}
--c^{(s)}_{it}
-\right].
+\pi = p q - w L - r K
 $$
 
-Essa linha introduz somente uma abreviação de notação: a escolha continua sendo $\arg\max_i V_i$, exatamente como no problema de Moehling et al.
+onde:
 
-Assim, o médico compara localidades pelo valor presente de:
+* $R$: horas dedicadas ao lazer;
+* $H$: horas dedicadas ao trabalho clínico pelo médico;
+* $\bar{H}$: dotação total de tempo disponível ($\bar{H} = R + H$);
+* $Y$: renda líquida disponível do profissional;
+* $I$: renda externa à prática clínica;
+* $t(\cdot)$: função de tributação sobre a renda total;
+* $q$: volume físico de serviços e procedimentos médicos produzidos;
+* $L$: contratação de pessoal de apoio e enfermagem (trabalho auxiliar);
+* $K$: vetor de insumos de capital físico não laborais (leitos, equipamentos diagnósticos, salas cirúrgicas);
+* $D$: dimensão de responsabilidade comunitária e impacto assistencial percebido pelo médico;
+* $\mathbf{Z}$: vetor de características individuais e de ciclo de vida que deslocam as preferências de utilidade;
+* $\boldsymbol{\Omega}$: parâmetros tecnológicos e de infraestrutura de saúde da rede;
+* $p$: preço unitário ou valor de reembolso/remuneração por unidade de procedimento médico;
+* $w, r$: custos unitários dos fatores auxiliares de trabalho ($w$) e de capital físico ($r$).
 
-1. remuneração nominal esperada;
-2. poder de compra dessa remuneração;
-3. custos e amenidades de consumo ligados à localidade;
-4. retornos presentes e futuros, ponderados pelo fator de desconto.
+> [!TIP]
+> **Distinção de Notação:**  
+> O símbolo $p$ possui significado estritamente diferenciado entre os modelos: em **Moehling et al. (2020)**, $p_{it}$ representa o *índice de preços ao consumidor / custo de vida municipal*; em **Reinhardt (1975)**, $p$ representa a *tarifa de reembolso / remuneração unitária do procedimento clínico*.
 
-Roback e Reinhardt não substituem essa equação. Eles cumprem papéis complementares:
+---
 
-- **Roback** esclarece a distinção entre amenidades de consumo, custo de moradia e características que afetam a produtividade;
-- **Reinhardt** mostra, no caso médico, como tempo e insumos da prática se relacionam com produção, renda e utilidade.
+## 4. Roback (1982) — Amenidades de Consumo e Amenidades Produtivas no Equilíbrio Espacial
 
-Portanto, Moehling et al. fornecem a regra de escolha entre localidades; Roback e Reinhardt dão conteúdo econômico aos canais que podem determinar os termos dessa escolha.
+Roback (1982, pp. 1257–1278) formaliza a equalização espacial de utilidades e custos no território:
 
-## 7. Contextualização posterior para o estudo
-
-Somente depois de apresentar o modelo publicado, seus termos podem ser relacionados ao objeto do estudo:
-
-| Elemento teórico | Interpretação no relatório |
-|---|---|
-| $\mathbb E(w)/p$ em Moehling et al. | retorno monetário real esperado de uma opção |
-| $c$ em Moehling et al. | custos e desamenidades de consumo associados à localidade, incluindo distância familiar e preferência rural ou urbana |
-| amenidades produtivas em Moehling et al. | condições locais que alteram o retorno esperado do exercício profissional |
-| $\delta$ em Moehling et al. | peso atribuído a retornos que ocorrem em momentos diferentes |
-| $s$ e $r$ em Roback | amenidades locais e custo de moradia, com possível capitalização em salários e aluguéis |
-| $R$ e $H$ em Reinhardt | escolha entre lazer e tempo dedicado ao trabalho médico |
-| $L$ e os demais insumos da produção em Reinhardt | organização produtiva da prática médica |
-| $D$ em Reinhardt | preocupação com a assistência disponível à comunidade e com a contribuição do próprio médico |
-
-Essa contextualização não afirma que cada variável disponível corresponde perfeitamente a um primitivo teórico. Ela serve para orientar a construção dos regressores e explicitar quais mecanismos cada um pretende representar.
-
-O IVS não é um argumento primitivo de nenhuma das funções. No estudo, ele pode estar relacionado a vários canais ao mesmo tempo: regra de remuneração, poder de compra, amenidades locais, condições produtivas e necessidade assistencial. Por isso, ele não deve ser identificado exclusivamente com $c$, com uma amenidade de consumo ou com um insumo produtivo.
-
-## 8. Hipóteses derivadas do modelo
-
-As hipóteses abaixo são apresentadas **depois** do modelo porque decorrem de suas equações e de condições de monotonicidade declaradas. As derivadas não são novas funções de utilidade; são implicações das funções publicadas.
-
-### H1. Remuneração real esperada aumenta o valor da opção
-
-Na equação de Moehling et al.:
+### 4.1 Problema de Otimização do Trabalhador
 
 $$
-\frac{\partial V_i}
-{\partial \mathbb E(w^{(s)}_{it})}
-=\frac{\delta^t}{p_{it}}>0,
+\max_{x, \ell^c} U(x, \ell^c; s) \quad \text{sujeito a} \quad w + I = x + r \ell^c
 $$
 
-para $p_{it}>0$ e $\delta>0$. Logo, uma opção com maior remuneração real esperada deve ser mais atraente, mantidos os demais termos constantes.
-
-### H2. Maior nível de preços reduz o valor da remuneração nominal
-
-Ainda em Moehling et al.:
+### 4.2 Condição de Equilíbrio Espacial do Trabalho (Livre Mobilidade)
 
 $$
-\frac{\partial V_i}
-{\partial p_{it}}
-=-\delta^t
-\frac{\mathbb E(w^{(s)}_{it})}{p_{it}^{2}}<0,
+V(w, r; s) = k
 $$
 
-quando a remuneração nominal esperada é positiva. Portanto, o mesmo pagamento nominal produz menor valor quando o nível de preços é maior. Roback reforça esse mecanismo ao explicitar o custo da moradia na restrição orçamentária.
-
-### H3. Custos e desamenidades locacionais reduzem o valor da opção
-
-Se $c$ for codificado como custo ou desamenidade:
+### 4.3 Condição de Equilíbrio da Produção (Custo Unitário Normalizado)
 
 $$
-\frac{\partial V_i}
-{\partial c^{(s)}_{it}}
-=-\delta^t<0.
+C(w, r; s) = 1
 $$
 
-Distância da família e incompatibilidade com o modo de vida preferido são exemplos mencionados na discussão de Moehling et al. Uma amenidade favorável pode ser representada como redução de $c$.
+onde:
 
-### H4. Amenidades produtivas aumentam a atração quando elevam o retorno esperado
+* $x$: consumo do bem numerário composto ($p_x = 1$);
+* $\ell^c$: quantidade de terra / moradia demandada para consumo residencial;
+* $r$: preço da terra / aluguel imobiliário local;
+* $w$: remuneração salarial nominal;
+* $I$: renda não originada do trabalho;
+* $s$: vetor de atributos, amenidades urbanas e características territoriais da localidade;
+* $V(w, r; s)$: função de utilidade indireta do trabalhador;
+* $C(w, r; s)$: função de custo unitário de operação na localidade.
 
-Considere uma amenidade produtiva $a_{it}$ que, como na discussão de Moehling et al., eleve a remuneração nominal esperada. Então:
+### Mecanismo de Capitalização Espacial
+
+O modelo de Roback demonstra que atributos territoriais ($s$) exercem dupla influência no equilíbrio espacial:
+1. **Pelo lado da utilidade (amenidades de consumo):** áreas de maior atratividade e qualidade de vida geram utilidade direta, permitindo que trabalhadores aceitem salários nominais menores e/ou paguem aluguéis mais altos;
+2. **Pelo lado da firma (amenidades produtivas):** infraestrutura local, malha logística e insumos complementares reduzem custos de produção, viabilizando o pagamento de salários nominais superiores.
+
+---
+
+## 5. Relação Estrutural entre os Três Modelos
+
+| Dimensão Teórica | Moehling et al. (2020) | Roback (1982) | Reinhardt (1975) |
+| :--- | :--- | :--- | :--- |
+| **Pergunta Central** | *Qual localidade o médico escolhe para exercer sua profissão?* | *Como amenidades, salários e aluguéis se equalizam no espaço?* | *Como o médico combina tempo, equipe e insumos para produzir saúde?* |
+| **Tratamento da Produção** | **Forma Reduzida:** amenidades produtivas deslocam a remuneração esperada $\mathbb{E}(w)$. | **Função de Custo Geral:** produtividade local entra na função de custo $C(w, r; s)$. | **Função de Produção Explícita:** $q = f(H, L, K; \boldsymbol{\Omega})$. |
+| **Tratamento da Renda** | **Poder de Compra Real:** remuneração deflacionada $\mathbb{E}(w)/p$. | **Restrição Orçamentária:** renda nominal gasta em consumo ($x$) e moradia ($r \ell^c$). | **Lucro da Prática e Impostos:** $Y = [1-t(\pi+I)](\pi+I)$. |
+| **Espaço e Amenidades** | Custos e desamenidades aditivas ($-c$); amenidades produtivas em $\mathbb{E}(w)$. | Vetor $s$ desloca simultaneamente utilidade ($V$) e custos da firma ($C$). | Vetor $\mathbf{Z}$ desloca utilidade; vetor $\boldsymbol{\Omega}$ desloca tecnologia. |
+| **Papel no Projeto PMM-E** | **Equação de Escolha Canônica** para a decisão do especialista. | **Microfundamentação do Equilíbrio Espacial** e diferenciais por IVS. | **Microfundamentação da Infraestrutura Clínica** e restrição temporal. |
+
+---
+
+## 6. Modelo Microeconômico Adotado
+
+O modelo microeconômico adotado como **fundamento canônico** para o estudo é o problema intertemporal de escolha locacional de **Moehling et al. (2020)**. Ele é adotado de forma estrita, preservando seus primitivos.
+
+Para viabilizar a derivação de estáticas comparativas e hipóteses testáveis sem alterar o modelo, define-se o índice de atratividade da localidade $i$ por:
 
 $$
-\frac{\partial V_i}{\partial a_{it}}
-=
-\frac{\delta^t}{p_{it}}
-\frac{\partial \mathbb E(w^{(s)}_{it})}{\partial a_{it}}
->0
+V_i \equiv \sum_t \delta^t \left[ \frac{\mathbb{E}\left(w^{(s)}_{it}\right)}{p_{it}} - c^{(s)}_{it} \right]
 $$
 
-sob a condição
+A regra de decisão ótima do médico especialista consiste em:
 
 $$
-\frac{\partial \mathbb E(w^{(s)}_{it})}{\partial a_{it}}>0.
+i^* = \arg\max_{i \in \mathcal{I}} V_i
 $$
 
-Reinhardt dá conteúdo ao mecanismo produtivo, enquanto Roback mostra que amenidades produtivas também podem ser capitalizadas em salários e aluguéis. O sinal positivo é, portanto, condicional ao efeito da característica sobre o retorno esperado.
+Dessa forma, a avaliação comparativa de cada município pondera:
+1. **Remuneração nominal esperada:** bolsa-formação federal fixada pela política e eventuais contrapartidas;
+2. **Poder de compra real:** nível local de preços e custos habitacionais;
+3. **Custos e desamenidades de consumo:** distância geográfica da família, infraestrutura urbana e transporte;
+4. **Desconto intertemporal:** peso relativo atribuído a ganhos presentes versus benefícios futuros de qualificação e certificação profissional ($\delta^t$).
 
-### H5. Mais tempo de trabalho reduz lazer, mas o efeito total pode ser ambíguo
+---
 
-Da restrição de tempo de Reinhardt,
+## 7. Contextualização e Mapeamento dos Primitivos para o PMM-E
+
+> [!IMPORTANT]
+> **Status Epistemológico do IVS 2010:**  
+> O **Índice de Vulnerabilidade Social (IVS 2010 do IPEA)** não é um primitivo matemático das funções originais. No PMM-E, o IVS atua simultaneamente como:
+> 1. **Regra Administrativa de Pagamento:** determina as faixas de bolsa (R\$ 10.000, R\$ 15.000, R\$ 20.000);
+> 2. **Indicador de Desamenidade Urbana:** correlacionado com menor oferta de lazer e isolamento;
+> 3. **Indicador de Restrição de Capital Físico:** correlacionado com escassez de leitos e equipamentos no CNES;
+> 4. **Indicador de Necessidade de Saúde:** demanda epidemiológica não atendida ($D$).
+> 
+> Por essa razão, **o IVS não pode ser reduzido a uma única dimensão teórica**, e seu efeito líquido total é teoricamente ambíguo. O IVS 2010 permanece a **running variable canônica** do estudo.
+
+| Primitivo Teórico | Interpretação Econômica no PMM-E | Proxy e Mapeamento Empírico no Repositório |
+| :--- | :--- | :--- |
+| $\frac{\mathbb{E}(w)}{p}$ *(Moehling et al.)* | Retorno monetário real esperado da bolsa-formação | Faixa de Bolsa Federal (R\$ 10k / 15k / 20k) deflacionada por índice de custo regional |
+| $c$ *(Moehling et al.)* | Custos de deslocamento, dupla residência e desamenidades | Distância rodoviária até polo regional/capital, indicadores de infraestrutura urbana |
+| Amenidades Produtivas | Infraestrutura hospitalar, apoio diagnóstico e densidade de equipe | Variáveis CNES basais: leitos, tomógrafos, ultrassons, equipe de enfermagem |
+| $\delta^t$ *(Moehling et al.)* | Ponderação intertemporal de retornos de formação e certificação | Duração do programa (12 a 24 meses), bônus de titulação e progressão de carreira |
+| $s, r$ *(Roback)* | Amenidades residenciais e custo local de moradia | Aluguel médio estimado, indicadores de serviços urbanos e segurança pública |
+| $H, R$ *(Reinhardt)* | Divisão da carga de trabalho médico entre SUS e lazer | Carga horária semanal no PMM-E (20h) e acúmulo de vínculos no CNES |
+| $L, K, \boldsymbol{\Omega}$ *(Reinhardt)* | Capital complementar de suporte à prática clínica especializada | Estoque de pessoal auxiliar ($L$) e equipamentos instalados ($K$) no estabelecimento |
+| $D$ *(Reinhardt)* | Motivação por impacto assistencial e compromisso social | Vulnerabilidade social da população atendida e índice de carência de especialistas |
+
+---
+
+## 8. Hipóteses Teóricas Derivadas
+
+As hipóteses estruturais a seguir decorrem diretamente das equações dos modelos canônicos selecionados sob condições explícitas de monotonicidade:
+
+```
++---------------------------------------------------------------------------------------------------+
+| H1: Remuneração Real Esperada (+)          | dV/dE(w) = delta^t / p_it > 0                        |
+| H2: Nível de Preços e Custo de Vida (-)    | dV/dp_it = -delta^t * E(w) / p_it^2 < 0              |
+| H3: Desamenidades e Custo Locacional (-)   | dV/dc = -delta^t < 0                                 |
+| H4: Amenidades Produtivas Complementares(+)| dV/da_it = (delta^t / p_it) * [dE(w)/da_it] > 0      |
+| H5: Desutilidade do Trabalho no Lazer (-)  | dU/dH |_(Y,L,D) = -U_R < 0                           |
+| H6: Capital Clínico e Equipe Auxiliar (+)  | dq/dK > 0, dq/dL > 0 (via expansão de renda/impacto) |
+| H7: Propósito Assistencial Social (+)      | dU/dD = U_D > 0 (condicional a médicos motivados)    |
+| H8: Desconto Temporal da Formação Futura   | Peso delta^t decrescente com o horizonte de tempo t  |
+| H9: Ambiguidade Teórica do IVS Total       | dV/d(IVS) = Sinais opostos entre Bolsa vs. Desamenid.|
++---------------------------------------------------------------------------------------------------+
+```
+
+---
+
+### Hipótese 1. A remuneração real esperada eleva linearmente o valor da opção
+
+Na equação de Moehling et al. (2020), para $p_{it} > 0$ e $\delta > 0$:
 
 $$
-R=\bar H-H.
+\frac{\partial V_i}{\partial \mathbb{E}\left(w^{(s)}_{it}\right)} = \frac{\delta^t}{p_{it}} > 0
 $$
 
-Mantidos os demais argumentos da utilidade constantes e supondo $U_R>0$:
+* **Implicação Empírica:** Aumentos no valor nominal da bolsa-formação elevam de forma monótona a atratividade do município e a taxa de preenchimento de vagas ($Outcome \ 1$), mantidos constantes os preços locais e custos de instalação.
+
+---
+
+### Hipótese 2. Níveis de preços mais altos reduzem a atratividade da remuneração nominal
+
+Diferenciando $V_i$ em relação ao nível de preços local $p_{it}$, para $\mathbb{E}(w^{(s)}_{it}) > 0$:
 
 $$
-\left.
-\frac{\partial U}{\partial H}
-\right|_{Y,L,D}
-=-U_R<0.
+\frac{\partial V_i}{\partial p_{it}} = -\delta^t \frac{\mathbb{E}\left(w^{(s)}_{it}\right)}{p_{it}^2} < 0
 $$
 
-Essa é a desutilidade do tempo de trabalho pelo canal do lazer. O efeito total de $H$ não é necessariamente negativo, pois horas adicionais também podem elevar produção, renda ou a contribuição percebida para a comunidade. Reinhardt não impõe uma forma quadrática nem fixa a magnitude desses canais.
+* **Implicação Empírica:** Uma mesma bolsa nominal de R\$ 15.000 gera menor atratividade e retenção em municípios com elevado custo de vida e aluguel habitacional. O modelo de Roback (1982) reforça esse canal através do custo de terra/moradia ($r \ell^c$).
 
-### H6. Condições produtivas têm efeito positivo apenas sob canais especificados
+---
 
-Na função de produção de Reinhardt, horas, pessoal auxiliar e insumos não laborais determinam $q$. O modelo permite formular a hipótese de que melhores condições produtivas elevem o valor da opção quando:
+### Hipótese 3. Custos e desamenidades locacionais diminuem o valor da opção
 
-- aumentam a renda valorizada pelo médico;
-- reduzem o tempo necessário para determinado nível de produção; ou
-- elevam uma dimensão da assistência que o médico valoriza.
+$$
+\frac{\partial V_i}{\partial c^{(s)}_{it}} = -\delta^t < 0
+$$
 
-Sem uma dessas ligações e sem hipóteses sobre as derivadas de $U$ e de $f$, não há sinal incondicional da característica produtiva sobre a escolha locacional.
+* **Implicação Empírica:** Municípios distantes de capitais, com baixa conectividade e escassas opções de lazer exigem maior diferencial compensatório para atrair profissionais.
 
-### H7. Necessidade assistencial só gera propósito sob preferências compatíveis
+---
 
-Como $D$ entra diretamente na utilidade de Reinhardt, uma melhora na dimensão representada por $D$ aumenta utilidade apenas sob a hipótese de que $U_D>0$, dada a codificação adotada. Necessidade local elevada, isoladamente, não prova que todos os médicos obtenham maior utilidade da opção. A hipótese relevante envolve a interação entre necessidade assistencial e preferências do médico.
+### Hipótese 4. Amenidades produtivas ampliam a atração quando elevam o retorno esperado
 
-### H8. Retornos futuros positivos são descontados
+Seja $a_{it}$ uma amenidade produtiva (ex.: centro cirúrgico equipado, laboratório de imagens) que eleva o rendimento esperado da prática:
 
-Na soma intertemporal de Moehling et al., um retorno positivo no período $t$ recebe peso $\delta^t$. Se $0<\delta<1$, benefícios mais distantes têm menor peso. Assim, oportunidades que elevem retornos profissionais futuros devem aumentar o valor da opção, mas menos quanto mais distante estiver sua realização.
+$$
+\frac{\partial V_i}{\partial a_{it}} = \frac{\delta^t}{p_{it}} \cdot \frac{\partial \mathbb{E}\left(w^{(s)}_{it}\right)}{\partial a_{it}} > 0 \quad \Longleftrightarrow \quad \frac{\partial \mathbb{E}\left(w^{(s)}_{it}\right)}{\partial a_{it}} > 0
+$$
 
-### H9. O efeito total do IVS é teoricamente ambíguo
+* **Implicação Empírica:** A existência de infraestrutura prévia no CNES potencializa o impacto da bolsa federal, aumentando o preenchimento de vagas cirúrgicas e diagnósticas.
 
-Como o IVS pode estar relacionado simultaneamente a remuneração, preços, amenidades, condições produtivas e necessidade assistencial, os modelos não determinam um único sinal para seu efeito total sobre utilidade. Um sinal líquido exige conhecer a intensidade e a direção de cada canal.
+---
 
-Essa ambiguidade é uma hipótese teórica relevante, não uma falha do modelo. Ela impede que vulnerabilidade seja tratada automaticamente como desamenidade, propósito ou precariedade produtiva.
+### Hipótese 5. Horas de trabalho geram desutilidade pelo canal do lazer
 
-## 9. O que as equações autorizam sobre forma funcional
+Da restrição temporal de Reinhardt (1975), $R = \bar{H} - H$. Sob $U_R \equiv \frac{\partial U}{\partial R} > 0$:
 
-Na equação de Moehling et al., a remuneração real esperada entra linearmente e $c$ entra de forma aditiva. Essa é a fundamentação publicada para usar o valor real da remuneração em nível como benchmark.
+$$
+\left. \frac{\partial U}{\partial H} \right|_{Y, L, D} = -U_R < 0
+$$
 
-Reinhardt escreve uma função de utilidade e uma função de produção genéricas. Roback também mantém genéricas a utilidade do trabalhador e a função de custo da firma. Esses dois trabalhos identificam os argumentos relevantes e suas relações, mas não escolhem entre forma linear, logarítmica, CRRA ou exponencial.
+* **Implicação Empírica:** Sobrecargas de plantão e ausência de flexibilidade de jornada reduzem o bem-estar do especialista, acelerando a taxa de evasão ($Exit$).
 
-Portanto, as equações selecionadas não autorizam atribuir a Reinhardt ou Roback uma curvatura que os autores não especificaram. Qualquer hipótese adicional sobre utilidade marginal decrescente da renda, custo convexo das horas ou retornos decrescentes dos insumos exigiria outro fundamento teórico.
+---
 
-Também é necessário distinguir:
+### Hipótese 6. Condições produtivas dependem de canais tecnológicos específicos
 
-- **predições diretas**, como o sinal da remuneração real, do nível de preços e de $c$ na equação de Moehling et al.;
-- **predições condicionais**, como o efeito das condições produtivas ou da necessidade assistencial;
-- **efeitos teoricamente ambíguos**, como o efeito total do IVS.
+Na tecnologia $q = f(H, L, K; \boldsymbol{\Omega})$, melhorias em equipe de enfermagem ($L$) e capital diagnóstico ($K$) expandem a utilidade se:
+1. Elevarem a receita e o rendimento líquido ($\pi$);
+2. Reduzirem o esforço temporal necessário por atendimento;
+3. Ampliarem a resolutividade e o impacto assistencial ($D$).
 
-## 10. Referências
+---
 
-- **Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020).** [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w) ([manuscrito dos autores](https://niemesgt.github.io/files/MoehlingNiemeshThomassonTreber2019.pdf)).
-- **Reinhardt, U. E. (1975).** [*Health Manpower Planning in a Market Context: The Case of Physician Manpower*](https://pure.iiasa.ac.at/213/1/XB-75-001.pdf), em N. T. J. Bailey e M. Thompson (eds.), *Systems Aspects of Health Planning*, pp. 131–162.
-- **Roback, J. (1982).** [*Wages, Rents, and the Quality of Life*](https://doi.org/10.1086/261120) ([PDF](https://www.nathanschiff.com/webdocs/grad_urban/urban_papers/Roback_JPE_1982.pdf)).
+### Hipótese 7. Necessidade de saúde gera utilidade sob preferências orientadas por propósito
+
+Na formulação de Reinhardt (1975), $D$ entra diretamente em $U$. A atuação em áreas carentes amplia o bem-estar do médico se e somente se:
+
+$$
+\frac{\partial U}{\partial D} = U_D > 0
+$$
+
+* **Implicação Empírica:** Municípios com carência assistencial extrema atraem prioritariamente especialistas com forte orientação pró-social e vocação pública para o SUS.
+
+---
+
+### Hipótese 8. Benefícios e certificações futuras sofrem desconto intertemporal
+
+Pelo fator $\delta^t$, ganhos acumulados no período $t$ recebem peso estritamente decrescente quando $0 < \delta < 1$.
+
+* **Implicação Empírica:** O valor formativo do PMM-E (título de especialista e mentoria) exerce maior atração sobre médicos recém-formados em início de carreira do que sobre profissionais seniores consolidados.
+
+---
+
+### Hipótese 9. O efeito líquido total do IVS sobre a escolha é teoricamente ambíguo
+
+Como o IVS 2010 atua simultaneamente em canais com sinais contrários:
+* **Canal Positivo (+):** Faixa de bolsa mais alta (R\$ 20.000 no IVS $\ge 0{,}500$);
+* **Canal Negativo (-):** Maior desamenidade urbana ($c$) e precariedade de capital clínico ($K$);
+* **Canal Condicional ($\pm$):** Necessidade epidemiológica compatível com o vetor de propósito ($D$),
+
+a teoria **não impõe sinal único a priori** para $\frac{dV_i}{d(IVS_m)}$. Essa ambiguidade é um resultado estrutural da teoria, reforçando a necessidade de identificação causal empírica.
+
+---
+
+## 9. Implicações Estruturais sobre Formas Funcionais
+
+1. **Benchmark Linear em Nível Real:** A formulação de Moehling et al. (2020) introduz a remuneração real linearmente ($\mathbb{E}(w)/p$). Portanto, a especificação primária recomendada para o estudo utiliza a bolsa em termos reais em nível, sem impor *a priori* retornos marginais decrescentes artificiais.
+2. **Restrição a Formas Logarítmicas ou Exponenciais:** Embora especificações logarítmicas ($\ln w$) possam ser testadas em análises de sensibilidade (associadas a modelos de utilidade côncava do tipo Bernoulli), elas constituem hipóteses teóricas alternativas e não decorrem da equação de Moehling et al. Funções exponenciais do tipo CARA ($-\exp(-aw)$) não possuem respaldo nos modelos de escolha espacial médica selecionados.
+3. **Não Imposição de Sinal para o IVS:** O modelo veda a imposição mecânica de interações artificiais como $\beta_{\text{Bolsa} \times \text{IVS}} > 0$ sem fundamentação econométrica explícita, preservando a transparência na identificação de cada mecanismo de transmissão.
+
+---
+
+## 10. Referências Canônicas
+
+* **Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020).** [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14(2), 181–225. ([Manuscrito dos Autores](https://niemesgt.github.io/files/MoehlingNiemeshThomassonTreber2019.pdf)).
+* **Reinhardt, U. E. (1975).** [*Health Manpower Planning in a Market Context: The Case of Physician Manpower*](https://pure.iiasa.ac.at/213/1/XB-75-001.pdf), em N. T. J. Bailey e M. Thompson (eds.), *Systems Aspects of Health Planning*, North-Holland / IIASA, pp. 131–162.
+* **Roback, J. (1982).** [*Wages, Rents, and the Quality of Life: A General Equilibrium Model of Geographic Differences*](https://doi.org/10.1086/261120). **Journal of Political Economy**, 90(6), 1257–1278. ([PDF](https://www.nathanschiff.com/webdocs/grad_urban/urban_papers/Roback_JPE_1982.pdf)).

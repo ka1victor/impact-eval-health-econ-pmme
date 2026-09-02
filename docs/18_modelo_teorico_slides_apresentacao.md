@@ -1,62 +1,79 @@
-# 18. Sistema Unificado de Equações Teóricas Microeconômicas para Apresentação (Slides)
+# 18. Sistema de Equações Teóricas Microeconômicas para Apresentação (Slides)
 
 > **Documento Teórico de Referência para Apresentações e Defesas**  
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
-> **Tema Central:** *Incentivos financeiros, vulnerabilidade territorial e provimento duradouro de especialistas: evidências do Mais Médicos Especialistas.*  
-> **Finalidade:** Fornecer um sistema teórico axiomático puro em 3 blocos interligados (Utilidade Estrutural $\rightarrow$ Equilíbrio Espacial de Roback $\rightarrow$ Condição de Diferencial Compensatório), integrando Renda, Esforço, Propósito/Missão e Lazer/Amenidades.  
-> **Data de Consolidação:** 31 de Agosto de 2026  
+> **Base Canônica:** Fundamentação Teórica Consolidada em [Doc 17](file:///c:/Users/camil/Desktop/Kauã/Insper/impact-eval-health-econ-pmme/docs/17_fundamentacao_teorica_formacao_utilidade_regressores.md)  
+> **Finalidade:** Fornecer estrutura visual e roteiro de fala para defesa da fundamentação microeconômica em 3 camadas complementares (Moehling et al. $\rightarrow$ Roback $\rightarrow$ Reinhardt $\rightarrow$ Hipóteses H1–H9).  
+> **Data de Consolidação:** 31 de agosto de 2026  
 
 ---
 
-## O Slide Teórico Perfeito: O Modelo Microeconômico de Escolha Espacial Médica
+## 1. Estrutura dos Slides Teóricos: Arquitetura em Três Camadas
 
 ```
 ====================================================================================================
-               FUNDAMENTAÇÃO TEÓRICA: O EQUILÍBRIO ESPACIAL HEDÔNICO DO ESPECIALISTA
+               FUNDAMENTAÇÃO TEÓRICA MICROECONÔMICA DO PMM-E (SLIDES ACADÊMICOS)
 ====================================================================================================
 ```
 
-### [Bloco 1] Função de Utilidade Estrutural do Médico Especialista
-*(Inspirada em Rosen 1986, p. 643; Besley & Ghatak 2005, AER, p. 618; Roback 1982, JPE, p. 1259)*
+### [Slide 1 / Bloco 1] O Problema Central de Escolha Locacional Intertemporal
+*(Paper Canônico: Moehling, Niemesh, Thomasson & Treber, 2020, p. 187)*
 
-$$U(w_m, e, s_m) = \underbrace{v(w_m)}_{\substack{\text{Utilidade da Renda} \\ \text{(Bolsa + Salário) (+) }}} - \underbrace{c(e)}_{\substack{\text{Desutilidade do Esforço} \\ \text{e Plantões (-) }}} + \underbrace{\theta \cdot \Delta(IVS_m)}_{\substack{\text{Motivação Intrínseca} \\ \text{e Propósito Social (+) }}} + \underbrace{\alpha \cdot s_m}_{\substack{\text{Amenidades Urbanas,} \\ \text{Lazer e Serviços (+) }}}$$
+$$
+i^* = \arg\max_{i \in \mathcal{I}} \left\{ \sum_t \delta^t \left[ \frac{\mathbb{E}\left(w^{(s)}_{it}\right)}{p_{it}} - c^{(s)}_{it} \right] \right\}
+$$
 
-* **Componentes Microeconômicos:**
-  * $v(w_m)$ com $v' > 0, v'' \le 0$: Utilidade côncava do rendimento monetário ($w_m = w_0 + \text{Bolsa}_m$);
-  * $c(e) = \frac{1}{2} e^2$: Custo convexo de esforço e sobrecarga hospitalar (*Becker 1965; McGuire 2000*);
-  * $\theta \cdot \Delta(IVS_m)$: Ganho de utilidade moral gerado pelo impacto assistencial $\Delta$ em áreas desassistidas (*Besley & Ghatak 2005, AER*);
-  * $s_m = -IVS_m$: Vetor de amenidades de qualidade de vida e opções de lazer da cidade (*Glaeser et al. 2001; Diamond 2016*).
-
----
-
-### [Bloco 2] Condição de Indiferença e Equilíbrio Espacial Geral
-*(Roback 1982, Journal of Political Economy, p. 1259, Eq. 1 e Eq. 2)*
-
-Pela condição de livre mobilidade, a utilidade indireta $V(w_m, s_m)$ iguala-se à utilidade de reserva no polo metropolitano ($V_0$):
-
-$$V(w_m, s_m) = V_0$$
-
-Diferenciando totalmente a utilidade indireta no equilíbrio ($dV = 0$):
-
-$$\left. \frac{dw_m}{ds_m} \right|_{V = V_0} = -\frac{\frac{\partial V}{\partial s_m}}{\frac{\partial V}{\partial w_m}} = -\frac{\alpha + \theta \Delta'(s_m)}{v'(w_m)} < 0$$
-
-Como a vulnerabilidade territorial $IVS_m$ representa o déficit de amenidades ($s_m = -IVS_m$):
-
-$$\left. \frac{dw_m}{d(IVS_m)} \right|_{V = V_0} = \frac{\alpha - \theta \Delta'(IVS_m)}{v'(w_m)} > 0$$
+* **Componentes Teóricos:**
+  * $\frac{\mathbb{E}(w^{(s)}_{it})}{p_{it}}$: **Remuneração real esperada** do especialista do tipo $s$ deflacionada pelo nível de preços local $p_{it}$ (Benchmark linear em nível real);
+  * $c^{(s)}_{it}$: **Custos e desamenidades de consumo** da localidade (distância da família, transporte e opções urbanas);
+  * $\delta^t \in (0, 1)$: **Fator de desconto intertemporal**, capturando o valor futuro da formação e titulação;
+  * **Amenidades Produtivas:** Equipamentos e capital hospitalar entram em forma reduzida elevando o retorno esperado $\mathbb{E}(w)$.
 
 ---
 
-### [Bloco 3] A Condição de Compensação Territorial (Willingness to Accept da Bolsa)
-*(Sivey et al. 2012, Journal of Health Economics, p. 816; Rosen 1986, p. 643)*
+### [Slide 2 / Bloco 2] Equilíbrio Espacial e Preços Hedônicos
+*(Paper Canônico: Roback, 1982, Journal of Political Economy, pp. 1257–1278)*
 
-A bolsa federal mínima necessária ($\text{Bolsa}^*$) para viabilizar a atração e retenção do especialista no município $m$ satisfaz:
-
-$$\text{Bolsa}^*(IVS_m) = \underbrace{\left( \frac{\alpha}{v'} \right) \cdot IVS_m}_{\substack{\text{Compensação Financeira por Pobreza} \\ \text{e Falta de Lazer/Amenidades (+) }}} - \underbrace{\left( \frac{\theta}{v'} \right) \cdot \Delta(IVS_m)}_{\substack{\text{Alívio na Bolsa por Motivação} \\ \text{Intrínseca e Missão (-) }}} + \underbrace{\frac{c(e)}{v'}}_{\substack{\text{Compensação de} \\ \text{Esforço/Plantão (+) }}}$$
+1. **Livre Mobilidade do Trabalhador:**
+   $$V(w_m, r_m; s_m) = k$$
+2. **Custo Unitário da Firma / Estabelecimento:**
+   $$C(w_m, r_m; s_m) = 1$$
+3. **Mecanismo de Capitalização:**  
+   Amenidades de consumo elevam a utilidade direta (permitindo salários nominais menores e aluguéis $r_m$ maiores); amenidades produtivas reduzem custos da firma (viabilizando salários nominais maiores).
 
 ---
 
-## 2. Roteiro de Fala para a Apresentação do Slide (Script Acadêmico)
+### [Slide 3 / Bloco 3] Microfundamentação da Prática Médica e Alocação de Tempo
+*(Paper Canônico: Reinhardt, 1975, Systems Aspects of Health Planning, pp. 131–162)*
 
-1. *"Apresentamos o problema de decisão do especialista a partir de uma função de utilidade estrutural microeconômica que integra quatro dimensões de bem-estar: o retorno financeiro da bolsa ($v(w)$), a desutilidade do esforço hospitalar ($c(e)$), o ganho moral de missão pública ao atender no SUS ($\theta \Delta$) e o consumo de amenidades e lazer da localidade ($\alpha s$)."*
-2. *"Pelo teorema de equilíbrio espacial de Roback (1982, JPE), a utilidade do médico precisa se equalizar entre a capital e o interior ($V = V_0$). Ao diferenciarmos essa condição, provamos matematicamente que municípios com alto IVS exigem um gradiente salarial positivo ($\frac{dw}{d(IVS)} > 0$)."*
-3. *"Essa condição deriva diretamente a equação teórica da bolsa compensatória ($\text{Bolsa}^*$): o incentivo financeiro precisa cobrir o custo de isolamento territorial ($\alpha \cdot IVS$), mas é atenuado na medida em que o médico possui compromisso social e vocação pública com o SUS ($\theta \Delta$)."*
+1. **Função de Utilidade:** $U = U(R, Y, L, D; \mathbf{Z})$ com restrição de tempo $\bar{H} = R + H$;
+2. **Função de Produção Médica Explícita:** $q = f(H, L, K; \boldsymbol{\Omega})$;
+3. **Renda Líquida e Lucro:** $Y = [1 - t(\pi + I)](\pi + I)$ onde $\pi = p q - w L - r K$;
+4. **Propósito e Responsabilidade Social:** $D$ mensura o compromisso comunitário do médico, gerando ganho de bem-estar se $U_D > 0$.
+
+---
+
+### [Slide 4 / Bloco 4] Síntese Estrutural e as 9 Hipóteses Testáveis
+
+```
++---------------------------------------------------------------------------------------------------+
+| H1: Remuneração Real (+)                   | dV/dE(w) = delta^t / p_it > 0 (Benchmark linear)     |
+| H2: Nível de Preços Local (-)              | dV/dp = -delta^t * E(w) / p^2 < 0                    |
+| H3: Desamenidades e Isolamento (-)         | dV/dc = -delta^t < 0                                 |
+| H4: Amenidades Produtivas (+)              | dV/da = (delta^t / p) * [dE(w)/da] > 0               |
+| H5: Carga Horária e Lazer (-)              | dU/dH |_(Y,L,D) = -U_R < 0                           |
+| H6: Capital Clínico e Equipe Auxiliar (+)  | dq/dK > 0, dq/dL > 0 (expansão da capacidade CNES)   |
+| H7: Propósito Assistencial Social (+)      | dU/dD = U_D > 0 (condicional a preferências pró-SUS) |
+| H8: Desconto Temporal da Titulação         | Peso delta^t decrescente com a distância do tempo t  |
+| H9: Ambiguidade Teórica do IVS Total       | Efeito líquido depende do balanço Bolsa vs. Desamen. |
++---------------------------------------------------------------------------------------------------+
+```
+
+---
+
+## 2. Roteiro de Fala para a Apresentação dos Slides (Script Acadêmico)
+
+1. *"A decisão de alocação espacial do especialista é modelada rigorosamente a partir de Moehling et al. (2020), no qual o médico escolhe o município que maximiza o valor presente da remuneração real esperada líquida de desamenidades ($V_i = \sum_t \delta^t [\mathbb{E}(w)/p - c]$)."*
+2. *"Para dar conteúdo estrutural aos canais em forma reduzida, complementamos o arcabouço com Roback (1982) — que explica a capitalização espacial em aluguéis e salários — e Reinhardt (1975) — que explicita a função de produção médica ($q=f(H,L,K)$), a alocação de tempo entre trabalho e lazer e a motivação assistencial ($D$)."*
+3. *"Essa arquitetura teórica estabelece como benchmark a resposta linear à remuneração real e demonstra por que o efeito líquido do IVS é teoricamente ambíguo: o IVS eleva a bolsa federal, mas correlaciona-se com desamenidades urbanas e déficit de capital físico. Por isso, a identificação empírica via RDD nos cutoffs de IVS e modelos de duração é essencial."*
+
