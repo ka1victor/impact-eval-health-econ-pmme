@@ -1,0 +1,3 @@
+modelo,r2_media_out,r2_sd_out,r2_insample,rmse_media_out,rmse_sd_out,rmse_insample,n_splits,grupos,nota
+OLS_delta_minimal_atracao_FE,-0.2775370238758921,0.21795878729634435,0.04159033892735553,4.34744331954782,4.400257363939807,6.027117673259925,5,municipio,out-of-sample por municipio; delta_estoque_6m (202509->202603); gap indica overfit FE
+OLS_estoque_6m_minimal,-0.07634702831582973,0.16854246127343195,0.1176561820317562,36.66424266360838,19.61350772493004,39.18189108761904,5,municipio,estoque_6m 202603

@@ -1,0 +1,8 @@
+etapa,n_celulas,n_municipios,nota
+01_quadro_Ch1_cnes_curso,1295,368,quadro_ch1 1295 CNES-curso em 368 municipios (quadro_vagas_tratamento)
+02_municipio_curso_agregado,1184,368,panel agregacao municipio-curso (CNES multiplos por municipio colapsados)
+03_painel_completo_26_comp,30784,368,30784 linhas painel_municipio_curso_mensal 202406-202607
+04_confirmatoria_10_cursos,587,295,"587 celulas municipio-curso sem sobreposicao CBO (ponte 1,2,3,5,9,12,13,14,15,16)"
+05_ampliada_6_cursos_sobrepostos,597,242,"597 celulas com CBO compartilhado (4,6,7,8,10,11) - sensibilidade"
+06_baseline_202509_madura,1184,368,baseline 202509 madura para entradas e presenca 6m (idx15+6=21)
+07_follow_6m_202603_madura,1184,368,follow 6m 202603 observavel; T0 202510->202604 sensibilidade

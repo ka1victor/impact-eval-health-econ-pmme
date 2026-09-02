@@ -1,0 +1,336 @@
+{
+  "protocolo": "A5_MANISFESTO_MATURIDADE_CENSURA",
+  "data_referencia": "2026-09-02",
+  "efeitos_estimados": false,
+  "t0": {
+    "homologacao_data": "2025-09-29",
+    "homologacao_competencia_admin_T0": "202510",
+    "baseline_competencia": "202509",
+    "follow_6m_competencia": "202603",
+    "t0_alternativo_T0_6m": "202604",
+    "alt_baseline": "202507",
+    "alt_follow": "202601",
+    "validacao_fisica_nominal": {
+      "ciclo1_n": 521,
+      "ciclo1_dt_min": "2025-09-11",
+      "ciclo1_dt_max": "2026-03-17",
+      "ciclo1_dt_median": "2025-09-19",
+      "ciclo1_dt_p25": "2025-09-18",
+      "ciclo1_dt_p75": "2025-11-24",
+      "ciclo1_antes_homolog": 274,
+      "ciclo1_apos_homolog": 247,
+      "nota": "snapshot de sobreviventes ativos em 2026-08-12; nao e log completo; dt_inicio antecipado pode refletir registro retroativo/provisorio"
+    },
+    "competencia_t0_idx": 16,
+    "competencias_totais": [
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202411",
+      "202412",
+      "202501",
+      "202502",
+      "202503",
+      "202504",
+      "202505",
+      "202506",
+      "202507",
+      "202508",
+      "202509",
+      "202510",
+      "202511",
+      "202512",
+      "202601",
+      "202602",
+      "202603",
+      "202604",
+      "202605",
+      "202606",
+      "202607"
+    ],
+    "n_competencias": 26,
+    "nota": "T0_admin e primeira competencia completa apos homologacao 2025-09-29 (202510). T0 fisico aproximado via snapshot sobreviventes mediano 2025-09-19 (IQ 2025-09-18 a 2025-11-24), 274 antes vs 247 apos homologacao; nao e log completo, por isso baseline pre-T0 202509 e follow 6m 202603 sao horizonte comum documentado."
+  },
+  "ponte_curso_cbo": {
+    "cursos_estritamente_univocos_confirmatorios": [
+      1,
+      2,
+      3,
+      5,
+      9,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "n_cursos_confirmatorios": 10,
+    "n_cursos_sobrepostos": 6,
+    "celulas_confirmatorias_202509": 587,
+    "celulas_ampliada_sobreposta": 597,
+    "total_celulas_municipio_curso": 1184,
+    "municipios_confirmatorios": 295,
+    "municipios_ampliada": 368,
+    "status_substantivo": "OPERACIONAL_NAO_PUBLICADA_COMO_CROSSWALK_OFICIAL",
+    "versao_ponte": "2.0_operacional_auditada",
+    "regra": "Primario restrito ao nucleo sem sobreposicao (587 celulas, 295 mun); sensibilidade inclui ampliada 597 celulas sobrepostas estratificadas; nao colapsar CBOs compartilhados no primario para evitar contaminacao"
+  },
+  "horizonte_e_censura": {
+    "horizonte_comum_6m_primario": "202509 -> 202603 (6 meses)",
+    "horizonte_T0_6m_sensibilidade": "202510 -> 202604",
+    "censura_entradas_6m": "requer 6 meses anteriores observados; censurado se competencia <202412; baseline 202509 observavel",
+    "censura_saidas_3m": "requer 3 meses posteriores; censurado se competencia >202604; follow 202603 observavel",
+    "censura_presenca_6m": "coorte madura se idx+6 <26; madura ate 202601 inclusive; baseline 202509 madura (15+6=21), follow 202603 nao madura para sua propria coorte",
+    "definicoes": {
+      "estoque": "CO_PROFISSIONAL_SUS distinto em qualquer CNES do municipio, dentro dos CBOs operacionais do curso (contagem unica por municipio-curso-mes)",
+      "cobertura": "1[estoque>0] na celula municipio-curso",
+      "entrada": "presente em t e ausente nos 6 meses anteriores observados",
+      "saida": "presente em t e ausente nos 3 meses posteriores observados",
+      "presenca_6m_nivel": "numero de entrantes elegiveis em t observados no mesmo municipio-curso em t+6 (nivel, nao taxa); denominador elegiveis reportado separadamente",
+      "saldo": "entradas - saidas na competencia"
+    }
+  },
+  "checks": {
+    "26_competencias_presentes": true,
+    "painel_balanceado_1184x26": true,
+    "nenhuma_lista_nominal_incorporada": true,
+    "estoque_nao_censurado": true,
+    "censura_entradas_primeiros_6_meses": true,
+    "entradas_observaveis_apos_202412": true,
+    "censura_saidas_ultimos_3_meses": true,
+    "saidas_observaveis_ate_202604": true,
+    "censura_presenca_coorte_madura_ate_202601": true,
+    "presenca_observavel_ate_202601": true,
+    "baseline_202509_madura_para_6m": true,
+    "follow_202603_observavel": true,
+    "t0_admin_202510_primeira_apos_homolog": true
+  },
+  "diagnostico_identificador_longitudinal": {
+    "campo": "CO_PROFISSIONAL_SUS",
+    "escopo": "continuidade de pessoa-município-curso entre competências adjacentes",
+    "mediana_sobrevivencia_sobre_mes_anterior_pct": 99.15971776779988,
+    "min_sobrevivencia_sobre_mes_anterior_pct": 98.64830562254093,
+    "mediana_participacao_de_ids_ja_observados_pct": 98.46298031865042,
+    "min_participacao_de_ids_ja_observados_pct": 97.63085081853816,
+    "pares_adjacentes": [
+      {
+        "de": "202406",
+        "para": "202407",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.4047619047619,
+        "participacao_de_ids_ja_observados_pct": 98.82928084394699
+      },
+      {
+        "de": "202407",
+        "para": "202408",
+        "sobrevivencia_sobre_mes_anterior_pct": 98.95149877782066,
+        "participacao_de_ids_ja_observados_pct": 98.62794127075719
+      },
+      {
+        "de": "202408",
+        "para": "202409",
+        "sobrevivencia_sobre_mes_anterior_pct": 98.76258254792589,
+        "participacao_de_ids_ja_observados_pct": 98.80692751763951
+      },
+      {
+        "de": "202409",
+        "para": "202410",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.15971776779988,
+        "participacao_de_ids_ja_observados_pct": 98.35220766000764
+      },
+      {
+        "de": "202410",
+        "para": "202411",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.36378674131569,
+        "participacao_de_ids_ja_observados_pct": 99.29429715811558
+      },
+      {
+        "de": "202411",
+        "para": "202412",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.33880094093712,
+        "participacao_de_ids_ja_observados_pct": 99.15598426196217
+      },
+      {
+        "de": "202412",
+        "para": "202501",
+        "sobrevivencia_sobre_mes_anterior_pct": 98.64830562254093,
+        "participacao_de_ids_ja_observados_pct": 99.03797145769623
+      },
+      {
+        "de": "202501",
+        "para": "202502",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.05708460754332,
+        "participacao_de_ids_ja_observados_pct": 98.98141074611662
+      },
+      {
+        "de": "202502",
+        "para": "202503",
+        "sobrevivencia_sobre_mes_anterior_pct": 98.80952380952381,
+        "participacao_de_ids_ja_observados_pct": 98.21552869708283
+      },
+      {
+        "de": "202503",
+        "para": "202504",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.24065050939694,
+        "participacao_de_ids_ja_observados_pct": 98.55464085967448
+      },
+      {
+        "de": "202504",
+        "para": "202505",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.03223779299944,
+        "participacao_de_ids_ja_observados_pct": 98.46298031865042
+      },
+      {
+        "de": "202505",
+        "para": "202506",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.4251796313652,
+        "participacao_de_ids_ja_observados_pct": 98.77102600707592
+      },
+      {
+        "de": "202506",
+        "para": "202507",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.03792439947861,
+        "participacao_de_ids_ja_observados_pct": 98.45128648115012
+      },
+      {
+        "de": "202507",
+        "para": "202508",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.17936694021103,
+        "participacao_de_ids_ja_observados_pct": 98.51679333169895
+      },
+      {
+        "de": "202508",
+        "para": "202509",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.00710958568277,
+        "participacao_de_ids_ja_observados_pct": 98.00995024875621
+      },
+      {
+        "de": "202509",
+        "para": "202510",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.16272297051329,
+        "participacao_de_ids_ja_observados_pct": 98.1032412965186
+      },
+      {
+        "de": "202510",
+        "para": "202511",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.29771908763506,
+        "participacao_de_ids_ja_observados_pct": 98.33561195981692
+      },
+      {
+        "de": "202511",
+        "para": "202512",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.25102538191761,
+        "participacao_de_ids_ja_observados_pct": 98.96277856804173
+      },
+      {
+        "de": "202512",
+        "para": "202601",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.09909909909909,
+        "participacao_de_ids_ja_observados_pct": 98.43979982337356
+      },
+      {
+        "de": "202601",
+        "para": "202602",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.07565498969679,
+        "participacao_de_ids_ja_observados_pct": 98.48422777550185
+      },
+      {
+        "de": "202602",
+        "para": "202603",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.12213963832153,
+        "participacao_de_ids_ja_observados_pct": 97.63085081853816
+      },
+      {
+        "de": "202603",
+        "para": "202604",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.27369149181462,
+        "participacao_de_ids_ja_observados_pct": 98.13664596273291
+      },
+      {
+        "de": "202604",
+        "para": "202605",
+        "sobrevivencia_sobre_mes_anterior_pct": 98.8774289133284,
+        "participacao_de_ids_ja_observados_pct": 98.28377230246389
+      },
+      {
+        "de": "202605",
+        "para": "202606",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.17870291702067,
+        "participacao_de_ids_ja_observados_pct": 98.13922206030713
+      },
+      {
+        "de": "202606",
+        "para": "202607",
+        "sobrevivencia_sobre_mes_anterior_pct": 99.21533460374397,
+        "participacao_de_ids_ja_observados_pct": 98.36630362302733
+      }
+    ],
+    "limite": "Continuidade empírica elevada é compatível com chave longitudinal estável, mas não substitui documentação externa do identificador nem distingue mudança real de cadastro."
+  },
+  "amostra": {
+    "municipios": 368,
+    "celulas_municipio_curso": 1184,
+    "celulas_confirmatorias": 587,
+    "celulas_ampliada": 597,
+    "competencias": 26,
+    "linhas_painel": 30784,
+    "baseline": "202509",
+    "follow": "202603"
+  },
+  "potencia_referencia_A3": {
+    "global_MDE_p30": 0.0379,
+    "por_estrato": {
+      "capital": 0.1613,
+      "metropolitano": 0.084,
+      "interior_proximo_polo": 0.0483,
+      "interior_remoto": 0.1087
+    },
+    "nota": "MDE para outcome binario atracao; para estoque delta continuo poder depende de variancia stock (sd delta ~6.16, estoque sd ~38); 1184 celulas mantem poder global"
+  },
+  "hashes_entradas": {
+    "output/painel_municipio_curso_mensal.parquet": {
+      "sha256": "62529ee2c9eea9b45a2d379473fe9ee2c5ecddddb64c39ae8dc78283a8b5d7ee"
+    },
+    "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
+      "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
+    },
+    "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
+      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
+    },
+    "output/tema_trabalho/manifesto_tipologia_territorial.json": {
+      "sha256": "80bc3811eb2664fb7a94fbaf5aa51894f3e731ccad03db840017866390cac9cc"
+    },
+    "output/tema_trabalho/portao_denominador.json": {
+      "sha256": "4698b9437513ced588de1d892580ebc95517cc4b707e18f8323697a8ae53175d"
+    },
+    "output/tema_trabalho/registro_pre_analise_atracao.json": {
+      "sha256": "42a8a279eb680bcaf7b5e3138ae3c03e7f49b6576176a4254bf487635035907c"
+    },
+    "output/tema_trabalho/potencia_atracao.json": {
+      "sha256": "e3fe2dc76989b3f2f5874049b8cf9ba31c913f6f6da08a8c1ebe24d5b1250847"
+    },
+    "output/aquisicao/ponte_curso_cbo_oficial.json": {
+      "sha256": "1770e076a3575f4a574134ef6b80d21df35660ebd151cf9d870273127a2c1b16"
+    },
+    "output/aquisicao/manifesto_cnes_26_competencias.json": {
+      "sha256": "a85f52e39430badc7c837c6c7649097dae97f00e79c90a505ab0def02da04ea4"
+    }
+  },
+  "arquivos": {
+    "painel_T0": "output/tema_trabalho/A5_painel_T0.parquet",
+    "cross_section": "output/tema_trabalho/A5_cross_section_6m.csv",
+    "tabela_construcao": "output/tema_trabalho/A5_tabela_00_construcao_steps.csv",
+    "tabela_amostra": "output/tema_trabalho/A5_tabela_01_amostra_construcao.csv",
+    "tabela_trajetoria_mensal": "output/tema_trabalho/A5_tabela_01b_trajetoria_mensal.csv",
+    "tabela_trajetoria_atracao": "output/tema_trabalho/A5_tabela_01c_trajetoria_por_atracao.csv",
+    "tabela_descritiva_outcomes": "output/tema_trabalho/A5_tabela_02_descritiva_outcomes_6m.csv"
+  },
+  "avisos_linguagem": [
+    "Nao chamar presenca no CNES de participacao no PMM-E, atividade fisica ou retencao individual.",
+    "Sem primeiro estagio causal do RDD, nao atribuir CNES ao adicional da bolsa; faixa-IVS colinearidade impede separar efeito bolsa.",
+    "Analise principal incondicional (estoque/cobertura em nivel municipal); presenca em nivel nao taxa condicional.",
+    "Retencao individual bloqueada sem ponte PMM-E-CNES e sem log completo.",
+    "Atracao como preditor associativo; nao causal."
+  ]
+}
