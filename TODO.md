@@ -22,7 +22,7 @@
   (540/540 municípios A1 classificados; 25 capitais, 101 metropolitanos strict,
   238 interior próximo, 176 interior remoto; REGIC 2018 + RM/RIDE 2022 strict
   — RM/RIDE apenas Metropolitana/Integrada, exclui Colar/Área/Entorno; AU 44 fora).
-- [x] A3 — congelar outcome binário por célula, unidade célula com cluster município, covariadas pré-oferta, FE curso+UF, MDE global 3,8pp (p=0,30) e linguagem associativa (`registro_pre_analise_atracao.json` + `potencia_atracao.json`).
+- [x] A3 — congelar outcome binário por célula, unidade célula com cluster município, covariadas pré-oferta, FE curso+UF, MDE global 3,8pp (p=0,30; DEFF 1,126) e por estrato quadro Ch1 strict 16,1% capital 73/18 / 8,4% metro 265/72 / 4,8% próximo 811/203 / 10,9% remoto 146/75 (DEFF floor, hashes território REGIC/RM), linguagem associativa (`registro_pre_analise_atracao.json` + `potencia_atracao.json` + `31_secao_econometrica_A3.md`).
 - [ ] A4 — estimar atração apenas após A1–A3.
 - [ ] A5/A6 — avaliar CNES agregado e executar red team sem chamar o resultado
   de retenção individual ou efeito total do PMM-E.

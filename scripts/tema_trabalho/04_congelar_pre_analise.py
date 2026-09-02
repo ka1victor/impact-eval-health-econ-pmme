@@ -24,6 +24,9 @@ MATRIZ_TIPOLOGIA = ROOT / "output" / "tema_trabalho" / "matriz_tipologia_territo
 MALHA = ROOT / "output" / "aquisicao" / "malha_municipios_regioes_saude.parquet"
 MANIFESTO_TIPOLOGIA = ROOT / "output" / "tema_trabalho" / "manifesto_tipologia_territorial.json"
 PORTAO_A1 = ROOT / "output" / "tema_trabalho" / "portao_denominador.json"
+DATA_TERRITORIO = ROOT / "data" / "raw" / "aquisicao" / "territorio"
+REGIC_XLSX = DATA_TERRITORIO / "REGIC2018_Municipios_Hierarquia_e_regiao.xlsx"
+RM_XLSX = DATA_TERRITORIO / "Composicao_RMs_RIDEs_AglomUrbanas_2022_v2.xlsx"
 
 OUT_REGISTRO = OUT_DIR / "registro_pre_analise_atracao.json"
 OUT_POTENCIA = OUT_DIR / "potencia_atracao.json"
@@ -59,7 +62,7 @@ def mde_diferenca_dois_grupos(n1: int, n2: int, p: float = 0.5, deff: float = 1.
 
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    for p in [QUADRO, MATRIZ_TIPOLOGIA, MALHA, MANIFESTO_TIPOLOGIA, PORTAO_A1]:
+    for p in [QUADRO, MATRIZ_TIPOLOGIA, MALHA, MANIFESTO_TIPOLOGIA, PORTAO_A1, REGIC_XLSX, RM_XLSX]:
         if not p.exists():
             raise FileNotFoundError(p)
 
@@ -82,16 +85,29 @@ def main() -> None:
     icc_assumido = 0.05
     deff = 1 + (m_medio - 1) * icc_assumido if not math.isnan(m_medio) else 1.0
 
-    # Distribuição por estrato (quadro Ch1)
+    # Distribuição por estrato (quadro Ch1) — clusters corretos via join quadro↔tipologia
+    # Usa municípios distintos do quadro Ch1 por estrato (368 no total), não n_municipios_populacao_A1 (540)
+    tipologia_for_join = tipologia[["co_ibge_6d", "estrato"]].copy()
+    tipologia_for_join["co_ibge_6d"] = tipologia_for_join["co_ibge_6d"].astype(str).str.replace(r"\D", "", regex=True).str.zfill(6)
+    quadro_for_join = quadro.copy()
+    quadro_for_join["co_ibge_6d"] = quadro_for_join["co_ibge_6d"].astype(str).str.replace(r"\D", "", regex=True).str.zfill(6)
+    quadro_estratos = quadro_for_join.merge(tipologia_for_join, on="co_ibge_6d", how="left")
+    mun_por_estrato_quadro = quadro_estratos.groupby("estrato")["co_ibge_6d"].nunique().to_dict()
+    cel_por_estrato_quadro = quadro_estratos.groupby("estrato").size().to_dict()
+
     por_estrato = {}
     for _, row in suporte[suporte["estrato"] != "total"].iterrows():
         estr = str(row["estrato"])
-        n = int(row["n_celulas_quadro_ch1"])
-        g = int(row["n_municipios_populacao_A1"])  # aproxima clusters no estrato (pop A1 tem 540, mas quadro Ch1 tem subset)
+        # n vindo do quadro (conferido com suporte) e g = municípios distintos no quadro neste estrato
+        n = int(cel_por_estrato_quadro.get(estr, int(row["n_celulas_quadro_ch1"])))
+        g = int(mun_por_estrato_quadro.get(estr, 0))
+        # Guarda: se houver divergência entre suporte e quadro, prioriza quadro
+        assert n == int(row["n_celulas_quadro_ch1"]), f"divergência n_celulas {estr}: suporte {row['n_celulas_quadro_ch1']} vs quadro {n}"
         # Para MDE do estrato isolado (taxa vs 0) e diferença estrato vs resto
-        # Usa DEFF do estrato (m = n / g)
+        # Usa DEFF do estrato (m = n / g), floor em 1 para evitar DEFF<1 quando m<1
         m_e = n / g if g else float("nan")
-        deff_e = 1 + (m_e - 1) * icc_assumido if g and not math.isnan(m_e) else 1.0
+        deff_e_raw = 1 + (m_e - 1) * icc_assumido if g and not math.isnan(m_e) else 1.0
+        deff_e = max(1.0, deff_e_raw)
         n_resto = n_celulas_ch1 - n
         por_estrato[estr] = {
             "n_celulas": n,
@@ -114,7 +130,7 @@ def main() -> None:
             "m_medio_celulas_por_municipio": round(m_medio, 2),
             "icc_assumido": icc_assumido,
             "deff_assumido": round(deff, 3),
-            "nota": "Potência sob p assumido (0.30 plausível, 0.50 conservador); sem consultar outcome observado. DEFF = 1+(m-1)*ICC.",
+            "nota": "Potência sob p assumido (0.30 plausível, 0.50 conservador); sem consultar outcome observado. DEFF = max(1,1+(m-1)*ICC).",
         },
         "alfa_bilateral": ALPHA,
         "poder_alvo": POWER,
@@ -164,9 +180,9 @@ def main() -> None:
             "bloqueados_hoje": ["retenção individual do bolsista (sem ponte PMM-E–CNES)", "fila/candidaturas por vaga (sem universo de inscrições)"],
         },
         "tipologia_congelada": {
-            "fonte": "A2 APROVADO_4_ESTRATOS — REGIC 2018 + RM/RIDE 2022",
+            "fonte": "A2 APROVADO_4_ESTRATOS strict — REGIC 2018 + RM/RIDE 2022 strict (Região Metropolitana/Integrada, exclui 57 Colar/Área/Entorno)",
             "estratos": ["capital", "metropolitano", "interior_proximo_polo", "interior_remoto"],
-            "cobertura_A1": "540/540",
+            "cobertura_A1": "540/540 (25 capital / 101 metropolitano / 238 interior_proximo / 176 interior_remoto); quadro Ch1 368 mun. (18/72/203/75)",
             "uso": "heterogeneidade pre-especificada (efeito por estrato) e covariada; não redefinir após resultados",
         },
         "covariadas_exclusivamente_pre_oferta": {
@@ -226,7 +242,7 @@ def main() -> None:
         },
         "hashes_entradas": {
             str(p.relative_to(ROOT)).replace("\\", "/"): {"sha256": sha256(p)}
-            for p in [QUADRO, MATRIZ_TIPOLOGIA, MALHA, MANIFESTO_TIPOLOGIA, PORTAO_A1]
+            for p in [QUADRO, MATRIZ_TIPOLOGIA, MALHA, MANIFESTO_TIPOLOGIA, PORTAO_A1, REGIC_XLSX, RM_XLSX]
         },
         "hashes_artefatos_A1_A2": {
             str((OUT_DIR / "matriz_funil_ciclo1.parquet").relative_to(ROOT)).replace("\\", "/"): {"sha256": sha256(MATRIZ_FUNIL)},
@@ -251,7 +267,7 @@ def main() -> None:
 
 > Registro: `output/tema_trabalho/registro_pre_analise_atracao.json`
 > Potência: `output/tema_trabalho/potencia_atracao.json`
-> Tipologia: A2 `APROVADO_4_ESTRATOS` — 540/540 municípios
+> Tipologia: A2 `APROVADO_4_ESTRATOS` strict — 540/540 municípios (25/101/238/176); quadro Ch1 368 mun. (18/72/203/75) — REGIC 2018 + RM/RIDE 2022 strict
 
 **Pergunta.** Quais características territoriais e das vagas estão associadas ao
 preenchimento administrativo (alguma confirmação/homologação na célula) e,
@@ -272,10 +288,12 @@ Poisson/NB apenas descritivo para contagens.
 região de saúde, estoque pré 202407–202506, faixa anunciada, curso, UF, chamada.
 
 **Potência.** Global MDE 80% ≈ {potencia['mde_global']['mde_80_pp_p30']:.1%} (p=0.30)
-a {potencia['mde_global']['mde_80_pp_p50']:.1%} (p=0.50) com DEFF={potencia['amostra_primaria']['deff_assumido']};
-por estrato: remoto ≈ {por_estrato['interior_remoto']['mde_80_pp_p30']:.1%},
-metropolitano ≈ {por_estrato['metropolitano']['mde_80_pp_p30']:.1%}. Mínima
-relevante 10pp (sens. 5pp).
+a {potencia['mde_global']['mde_80_pp_p50']:.1%} (p=0.50) com DEFF={potencia['amostra_primaria']['deff_assumido']} (m≈{potencia['amostra_primaria']['m_medio_celulas_por_municipio']}, ICC=0.05);
+por estrato (quadro Ch1, DEFF=max(1,1+(m-1)*ICC)): capital {por_estrato['capital']['n_celulas']}/{por_estrato['capital']['n_municipios']} m≈{por_estrato['capital']['m_medio_celulas_por_municipio']} MDE≈{por_estrato['capital']['mde_80_pp_p30']:.1%} (p30, DEFF {por_estrato['capital']['deff_assumido']}),
+metropolitano {por_estrato['metropolitano']['n_celulas']}/{por_estrato['metropolitano']['n_municipios']} MDE≈{por_estrato['metropolitano']['mde_80_pp_p30']:.1%},
+interior_proximo {por_estrato['interior_proximo_polo']['n_celulas']}/{por_estrato['interior_proximo_polo']['n_municipios']} MDE≈{por_estrato['interior_proximo_polo']['mde_80_pp_p30']:.1%},
+interior_remoto {por_estrato['interior_remoto']['n_celulas']}/{por_estrato['interior_remoto']['n_municipios']} MDE≈{por_estrato['interior_remoto']['mde_80_pp_p30']:.1%}.
+Mínima relevante 10pp (sens. 5pp); MDE>10pp indica poder limitado para nulidade.
 
 **Linguagem.** Associativa apenas; sem efeito causal do PMM-E/bolsa/IVS.
 """

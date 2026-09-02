@@ -2,7 +2,7 @@
 
 > Registro: `output/tema_trabalho/registro_pre_analise_atracao.json`
 > Potência: `output/tema_trabalho/potencia_atracao.json`
-> Tipologia: A2 `APROVADO_4_ESTRATOS` — 540/540 municípios
+> Tipologia: A2 `APROVADO_4_ESTRATOS` strict — 540/540 municípios (25/101/238/176); quadro Ch1 368 mun. (18/72/203/75) — REGIC 2018 + RM/RIDE 2022 strict
 
 **Pergunta.** Quais características territoriais e das vagas estão associadas ao
 preenchimento administrativo (alguma confirmação/homologação na célula) e,
@@ -23,9 +23,11 @@ Poisson/NB apenas descritivo para contagens.
 região de saúde, estoque pré 202407–202506, faixa anunciada, curso, UF, chamada.
 
 **Potência.** Global MDE 80% ≈ 3.8% (p=0.30)
-a 4.1% (p=0.50) com DEFF=1.126;
-por estrato: remoto ≈ 10.6%,
-metropolitano ≈ 7.9%. Mínima
-relevante 10pp (sens. 5pp).
+a 4.1% (p=0.50) com DEFF=1.126 (m≈3.52, ICC=0.05);
+por estrato (quadro Ch1, DEFF=max(1,1+(m-1)*ICC)): capital 73/18 m≈4.06 MDE≈16.1% (p30, DEFF 1.153),
+metropolitano 265/72 MDE≈8.4%,
+interior_proximo 811/203 MDE≈4.8%,
+interior_remoto 146/75 MDE≈10.9%.
+Mínima relevante 10pp (sens. 5pp); MDE>10pp indica poder limitado para nulidade.
 
 **Linguagem.** Associativa apenas; sem efeito causal do PMM-E/bolsa/IVS.

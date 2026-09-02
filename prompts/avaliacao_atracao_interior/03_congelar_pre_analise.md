@@ -1,9 +1,10 @@
 # A3 — Congelar a pré-análise do núcleo associativo
 
 > **Executado em 02/09/2026:** congelado — outcome binário por célula, unidade
-> célula com cluster município, FE curso+UF, MDE global 3,8pp (p=0,30).
-> Ver `docs/auditorias/10_pre_analise_atracao.md` e
-> `output/tema_trabalho/registro_pre_analise_atracao.json`.
+> célula com cluster município, FE curso+UF, MDE global 3,8pp (p=0,30; 1,126) e por
+> estrato strict 16,1%/8,4%/4,8%/10,9% (quadro Ch1 73/18, 265/72, 811/203, 146/75;
+> DEFF floor, hashes REGIC/RM). **Corrigido em loop até perfeito em 02/09/2026.**
+> Ver `docs/auditorias/10_pre_analise_atracao.md` e `11_auditoria_A3_potencia_pendencias.md`.
 
 ## Objetivo
 

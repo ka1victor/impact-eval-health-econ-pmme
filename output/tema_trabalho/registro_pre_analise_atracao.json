@@ -34,14 +34,14 @@
     ]
   },
   "tipologia_congelada": {
-    "fonte": "A2 APROVADO_4_ESTRATOS — REGIC 2018 + RM/RIDE 2022",
+    "fonte": "A2 APROVADO_4_ESTRATOS strict — REGIC 2018 + RM/RIDE 2022 strict (Região Metropolitana/Integrada, exclui 57 Colar/Área/Entorno)",
     "estratos": [
       "capital",
       "metropolitano",
       "interior_proximo_polo",
       "interior_remoto"
     ],
-    "cobertura_A1": "540/540",
+    "cobertura_A1": "540/540 (25 capital / 101 metropolitano / 238 interior_proximo / 176 interior_remoto); quadro Ch1 368 mun. (18/72/203/75)",
     "uso": "heterogeneidade pre-especificada (efeito por estrato) e covariada; não redefinir após resultados"
   },
   "covariadas_exclusivamente_pre_oferta": {
@@ -104,16 +104,22 @@
       "sha256": "41e1d3afee23994821361d8a60d9e507e3b1c25cf69ae882c10008ae27d8b149"
     },
     "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
-      "sha256": "4c07fa609588359556205f8f1e0fca5e4034a5257f6e91ae541e62ce1fcdaa0d"
+      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
     },
     "output/aquisicao/malha_municipios_regioes_saude.parquet": {
       "sha256": "fbc90bfc1ba4914da94a0ac199ac083ab37b085d21870d4bf0ff9be407f8bfe2"
     },
     "output/tema_trabalho/manifesto_tipologia_territorial.json": {
-      "sha256": "4322b1593c4fea82a20c062bd50572f00161babe4a5e929777e01c3e2be3e8de"
+      "sha256": "80bc3811eb2664fb7a94fbaf5aa51894f3e731ccad03db840017866390cac9cc"
     },
     "output/tema_trabalho/portao_denominador.json": {
       "sha256": "4698b9437513ced588de1d892580ebc95517cc4b707e18f8323697a8ae53175d"
+    },
+    "data/raw/aquisicao/territorio/REGIC2018_Municipios_Hierarquia_e_regiao.xlsx": {
+      "sha256": "f1d29395964e4827d8294d27b57bcffb36fc47918f91b8ecee4efdbac1cda03e"
+    },
+    "data/raw/aquisicao/territorio/Composicao_RMs_RIDEs_AglomUrbanas_2022_v2.xlsx": {
+      "sha256": "ac12c746ea9d337ea3982b7a591c15cb2da6231410738218abb947933ba64cfa"
     }
   },
   "hashes_artefatos_A1_A2": {
@@ -121,7 +127,7 @@
       "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
     },
     "output/tema_trabalho/suporte_estratos_territoriais.csv": {
-      "sha256": "731299cb8daa5b74e337a0ad4be4f0c98fe04cf9f6f9f0985eae267dcdc36978"
+      "sha256": "8a998641b059b7d86615e44bc47d439c288dc409f0d6261a0e7015984063c478"
     }
   },
   "portao_para_A4": "Não executar A4 sem este registro assinado por hash e sem MDE reportado; qualquer desvio deve ser emendado e datado."

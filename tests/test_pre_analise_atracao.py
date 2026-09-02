@@ -60,6 +60,45 @@ class PreAnaliseAtracaoTest(unittest.TestCase):
             self.potencia["por_estrato"]["interior_proximo_polo"]["mde_80_pp_p30"],
             self.potencia["por_estrato"]["capital"]["mde_80_pp_p30"],
         )
+        # DEFF nunca <1 (floor)
+        for estr, vals in self.potencia["por_estrato"].items():
+            self.assertGreaterEqual(vals["deff_assumido"], 1.0, f"DEFF<1 em {estr}")
+            self.assertGreater(vals["m_medio_celulas_por_municipio"], 1.0, f"m<1 em {estr} — usa populacao A1 em vez de quadro")
+        # n_municipios deve ser do quadro Ch1 (368), não populacao A1 (540)
+        self.assertEqual(self.potencia["por_estrato"]["capital"]["n_municipios"], 18)
+        self.assertEqual(self.potencia["por_estrato"]["metropolitano"]["n_municipios"], 72)
+        self.assertEqual(self.potencia["por_estrato"]["interior_proximo_polo"]["n_municipios"], 203)
+        self.assertEqual(self.potencia["por_estrato"]["interior_remoto"]["n_municipios"], 75)
+        self.assertEqual(self.potencia["por_estrato"]["capital"]["n_celulas"], 73)
+        self.assertEqual(self.potencia["por_estrato"]["metropolitano"]["n_celulas"], 265)
+        self.assertEqual(self.potencia["por_estrato"]["interior_proximo_polo"]["n_celulas"], 811)
+        self.assertEqual(self.potencia["por_estrato"]["interior_remoto"]["n_celulas"], 146)
+        self.assertEqual(self.potencia["amostra_primaria"]["n_municipios_clusters"], 368)
+        self.assertEqual(self.potencia["amostra_primaria"]["n_celulas"], 1295)
+
+    def test_potencia_mde_numerico(self) -> None:
+        # Valida MDE 80% p=0.30 contra DEFF correto (ICC=0.05) com tolerância 0.001
+        # Valores congelados após correção strict (18/72/203/75)
+        esperado = {
+            "capital": 0.1613,
+            "metropolitano": 0.0840,
+            "interior_proximo_polo": 0.0483,
+            "interior_remoto": 0.1087,
+        }
+        for estr, exp in esperado.items():
+            obt = self.potencia["por_estrato"][estr]["mde_80_pp_p30"]
+            self.assertAlmostEqual(obt, exp, places=3, msg=f"MDE {estr} esperado {exp} obtido {obt}")
+
+    def test_potencia_clusters_quadro_coerencia(self) -> None:
+        # Garante que potência por estrato usa join quadro↔tipologia (clusters do quadro), não populacao A1
+        import pandas as pd
+
+        quadro = pd.read_parquet(QUADRO)
+        tip = pd.read_parquet(ROOT / "output" / "tema_trabalho" / "matriz_tipologia_territorial.parquet")
+        qj = quadro.merge(tip[["co_ibge_6d", "estrato"]], on="co_ibge_6d", how="left")
+        por_mun = qj.groupby("estrato")["co_ibge_6d"].nunique().to_dict()
+        for estr, g in por_mun.items():
+            self.assertEqual(self.potencia["por_estrato"][estr]["n_municipios"], int(g))
 
     def test_linguagem_maxima(self) -> None:
         ling = self.registro["linguagem_maxima"]
@@ -70,6 +109,38 @@ class PreAnaliseAtracaoTest(unittest.TestCase):
     def test_hashes_presentes(self) -> None:
         self.assertIn("output/aquisicao/quadro_vagas_tratamento.parquet", self.registro["hashes_entradas"])
         self.assertGreater(len(self.registro["hashes_entradas"]), 3)
+        # Território versionado deve estar nos hashes (REGIC + RM/RIDE)
+        self.assertIn("data/raw/aquisicao/territorio/REGIC2018_Municipios_Hierarquia_e_regiao.xlsx", self.registro["hashes_entradas"])
+        self.assertIn("data/raw/aquisicao/territorio/Composicao_RMs_RIDEs_AglomUrbanas_2022_v2.xlsx", self.registro["hashes_entradas"])
+        self.assertIn("output/tema_trabalho/manifesto_tipologia_territorial.json", self.registro["hashes_entradas"])
+        self.assertIn("output/tema_trabalho/portao_denominador.json", self.registro["hashes_entradas"])
+        # Hashes conferem com arquivos
+        import hashlib
+
+        def sha(p: Path) -> str:
+            h = hashlib.sha256()
+            with (ROOT / p).open("rb") as f:
+                for chunk in iter(lambda: f.read(1 << 20), b""):
+                    h.update(chunk)
+            return h.hexdigest()
+
+        for rel, meta in self.registro["hashes_entradas"].items():
+            self.assertEqual(sha(rel), meta["sha256"], f"hash diverge {rel}")
+        for rel, meta in self.registro["hashes_artefatos_A1_A2"].items():
+            self.assertEqual(sha(rel), meta["sha256"], f"hash artefato diverge {rel}")
+
+    def test_tipologia_congelada_strict(self) -> None:
+        tip = self.registro["tipologia_congelada"]
+        self.assertIn("strict", tip["fonte"].lower())
+        self.assertIn("540/540", tip["cobertura_A1"])
+        self.assertIn("25", tip["cobertura_A1"])
+        self.assertIn("101", tip["cobertura_A1"])
+        self.assertIn("368", tip["cobertura_A1"])
+
+    def test_secao_econometrica_completa(self) -> None:
+        secao = (ROOT / "docs" / "06_execucao" / "31_secao_econometrica_A3.md").read_text(encoding="utf-8")
+        for termo in ["capital", "metropolitano", "interior_proximo", "interior_remoto", "DEFF", "MDE"]:
+            self.assertIn(termo, secao)
 
     def test_quadro_consistencia(self) -> None:
         q = pd.read_parquet(QUADRO)

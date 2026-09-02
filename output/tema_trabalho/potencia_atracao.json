@@ -8,7 +8,7 @@
     "m_medio_celulas_por_municipio": 3.52,
     "icc_assumido": 0.05,
     "deff_assumido": 1.126,
-    "nota": "Potência sob p assumido (0.30 plausível, 0.50 conservador); sem consultar outcome observado. DEFF = 1+(m-1)*ICC."
+    "nota": "Potência sob p assumido (0.30 plausível, 0.50 conservador); sem consultar outcome observado. DEFF = max(1,1+(m-1)*ICC)."
   },
   "alfa_bilateral": 0.05,
   "poder_alvo": 0.8,
@@ -23,39 +23,39 @@
   "por_estrato": {
     "capital": {
       "n_celulas": 73,
-      "n_municipios": 25,
-      "m_medio_celulas_por_municipio": 2.92,
-      "deff_assumido": 1.096,
-      "mde_80_pp_p50": 0.1716,
-      "mde_80_pp_p30": 0.1573,
-      "mde_diferenca_vs_resto_p50": 0.1767
+      "n_municipios": 18,
+      "m_medio_celulas_por_municipio": 4.06,
+      "deff_assumido": 1.153,
+      "mde_80_pp_p50": 0.176,
+      "mde_80_pp_p30": 0.1613,
+      "mde_diferenca_vs_resto_p50": 0.1812
     },
     "metropolitano": {
-      "n_celulas": 289,
-      "n_municipios": 104,
-      "m_medio_celulas_por_municipio": 2.78,
-      "deff_assumido": 1.089,
-      "mde_80_pp_p50": 0.086,
-      "mde_80_pp_p30": 0.0788,
-      "mde_diferenca_vs_resto_p50": 0.0976
+      "n_celulas": 265,
+      "n_municipios": 72,
+      "m_medio_celulas_por_municipio": 3.68,
+      "deff_assumido": 1.134,
+      "mde_80_pp_p50": 0.0916,
+      "mde_80_pp_p30": 0.084,
+      "mde_diferenca_vs_resto_p50": 0.1027
     },
     "interior_proximo_polo": {
-      "n_celulas": 787,
-      "n_municipios": 235,
-      "m_medio_celulas_por_municipio": 3.35,
-      "deff_assumido": 1.117,
-      "mde_80_pp_p50": 0.0528,
-      "mde_80_pp_p30": 0.0484,
-      "mde_diferenca_vs_resto_p50": 0.0843
+      "n_celulas": 811,
+      "n_municipios": 203,
+      "m_medio_celulas_por_municipio": 4.0,
+      "deff_assumido": 1.15,
+      "mde_80_pp_p50": 0.0527,
+      "mde_80_pp_p30": 0.0483,
+      "mde_diferenca_vs_resto_p50": 0.0863
     },
     "interior_remoto": {
       "n_celulas": 146,
-      "n_municipios": 176,
-      "m_medio_celulas_por_municipio": 0.83,
-      "deff_assumido": 0.991,
-      "mde_80_pp_p50": 0.1154,
-      "mde_80_pp_p30": 0.1058,
-      "mde_diferenca_vs_resto_p50": 0.1226
+      "n_municipios": 75,
+      "m_medio_celulas_por_municipio": 1.95,
+      "deff_assumido": 1.047,
+      "mde_80_pp_p50": 0.1186,
+      "mde_80_pp_p30": 0.1087,
+      "mde_diferenca_vs_resto_p50": 0.126
     }
   },
   "interpretacao": {
