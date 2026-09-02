@@ -1,0 +1,128 @@
+{
+  "protocolo": "A3_REGISTRO_PRE_ANALISE_ATRACAO",
+  "data_referencia": "2026-09-02",
+  "efeitos_estimados": false,
+  "pergunta": "Quais características territoriais e das vagas estão associadas à dificuldade de preenchimento (alguma confirmação/homologação observada na célula) e, condicionalmente, à persistência da oferta médica local?",
+  "populacao": {
+    "primaria": "1295 células CNES–curso do quadro Ch1 (ciclo 1, chamada 1, oferta 2025-07-24), em 368 municípios",
+    "estendida": "3057 células do funil A1 (Ch1 1324 + Ch2 1999 linhas, 266 fora do quadro sem município excluídas da tipologia)",
+    "exclusoes": "266 registros fora do quadro publicado sem município na matriz A1; 5 municípios novos pós-2010 mantêm estrato mas sem IVS",
+    "unidade_analitica": "célula CNES–curso (chamada mantida como covariada/estratificação; não somar versões como vagas novas)",
+    "unidade_inferencia": "município (cluster-robusto; exposição varia no município, células do mesmo município não são independentes)"
+  },
+  "outcome_primario": {
+    "nome": "alguma_confirmacao_ou_homologacao_na_celula",
+    "definicao": "1[ n_confirmacoes_ch1 >0 ou n_homologacoes_ch1 >0 na célula CNES–curso da chamada ] (A1 APROVADO_CELULA)",
+    "tipo": "binário por célula",
+    "denominador": "célula (não taxa por vaga; taxas com vagas no denominador permanecem proibidas)",
+    "outcomes_bloqueados": [
+      "taxa de preenchimento por vaga",
+      "candidaturas por vaga",
+      "retenção individual do bolsista"
+    ],
+    "chamada": "Ch1 primária; Ch2 descritiva sem taxa por vaga (Ch2 não publica vagas imediatas numéricas)"
+  },
+  "outcomes_secundarios_condicionais": {
+    "nota": "Somente após validar T0 físico do CNES; não nesta etapa",
+    "candidatos": [
+      "estoque_especialistas_municipio_curso_mes (CNES, agregado)",
+      "persistência da oferta local (presença em 6m, stock)"
+    ],
+    "bloqueados_hoje": [
+      "retenção individual do bolsista (sem ponte PMM-E–CNES)",
+      "fila/candidaturas por vaga (sem universo de inscrições)"
+    ]
+  },
+  "tipologia_congelada": {
+    "fonte": "A2 APROVADO_4_ESTRATOS — REGIC 2018 + RM/RIDE 2022",
+    "estratos": [
+      "capital",
+      "metropolitano",
+      "interior_proximo_polo",
+      "interior_remoto"
+    ],
+    "cobertura_A1": "540/540",
+    "uso": "heterogeneidade pre-especificada (efeito por estrato) e covariada; não redefinir após resultados"
+  },
+  "covariadas_exclusivamente_pre_oferta": {
+    "permitidas": [
+      "estrato A2 (4 níveis)",
+      "ivs_2010 (canônico), ivs_subindices (infra/ch/rt), ivs_categoria",
+      "populacao_2010 (log), rdpc_2010, idhm_2010 (descritivo)",
+      "macro_regiao_saude, no_regiao_saude",
+      "estoque_especialistas_pre_12m_media (CNES 202407–202506) e por 10k",
+      "faixa_atracao_anunciada (F1/F2/F3) — descritiva, não efeito causal de salário",
+      "cod_curso (16 níveis), sg_uf",
+      "chamada (quando Ch1+Ch2)"
+    ],
+    "proibidas": [
+      "qualquer variável pós-oferta (alocação, homologação, CNES pós 202507)",
+      "id_vaga física (inexistente), taxa por vaga como outcome",
+      "substituição de IVS por IDHM/RDPC sem justificativa"
+    ],
+    "tratamento_missing": "municípios novos pós-2010: IVS NA mantido, estrato via REGIC/RM; estoque pré NA mantido; NAO_CLASSIFICADO exigiria fallback — não ocorreu (0 casos em A1)",
+    "outliers": "população e estoque winsorizados apenas como sensibilidade pre-especificada (p99), não como default",
+    "transformacoes": "log1p(populacao_2010); IVS linear + splines como sensibilidade; padronização apenas para regularização se usada"
+  },
+  "especificacao": {
+    "modelos_candidatos_primarios": [
+      "LPM com FE de curso e UF, cluster município (primário por interpretabilidade direta em pp)",
+      "Logit com FE de curso e UF, AME, cluster município (primário alternativo; OR apenas como robustez)"
+    ],
+    "modelos_secundarios_robustez": [
+      "Binomial com denominador =1 por célula (equivale a logit por célula; fractional logit se taxa tivesse denominador válido — não se aplica aqui)",
+      "Poisson/NB apenas para contagens com exposição bem definida (n_confirmacoes como contagem, offset log(1) trivial — descritivo)"
+    ],
+    "efeitos_fixos": "curso (16) e UF (até 27, colapsar UF com <5 clusters em região); chamada quando Ch1+Ch2",
+    "heterogeneidade_pre_especificada": "estrato A2 (4 níveis) interagido com IVS contínuo; curso como modificador descritivo (não testar 16 hipóteses independentes)",
+    "pesos": "não ponderar por vagas (denominador inválido); pesos por estrato/UF apenas como sensibilidade com estimando redefinido explicitamente",
+    "multiplicidade": "controle FDR (Benjamini-Hochberg) para família de 4 estratos; cursos como exploração, não confirmatória",
+    "influencia": "leave-one-municipality-out e DFBETAS clusterizados como diagnóstico; não remover outliers influentes do primário"
+  },
+  "inferencia": {
+    "unidade_cluster": "município (co_ibge_6d)",
+    "metodo": "HC cluster-robusto (LPM/logit) com G clusters; se G<30 em subgrupo, reportar também wild cluster bootstrap",
+    "graus_liberdade": "G-1",
+    "nao_fazer": "não usar SE robusto apenas heterocedástico sem cluster; não tratar células do mesmo município como independentes"
+  },
+  "potencia_e_relevancia": {
+    "minima_diferenca_relevante": "10% (10pp) na taxa de atração binária; sensibilidade 5pp",
+    "referencia_potencia": "output/tema_trabalho/potencia_atracao.json (p assumido 0.30/0.50, DEFF com ICC=0.05)",
+    "regra_interpretacao": "MDE >10pp => poder limitado para afirmar nulidade; reportar IC e não apenas p-valor"
+  },
+  "separacao_explicacao_previsao": {
+    "explicacao_associativa": "coeficientes parciais de estrato/IVS ajustados por curso/UF; linguagem associativa (associado a, gradiente), nunca causal",
+    "previsao": "apenas se pre-especificada com validação cruzada fora da amostra (k-fold por município); métricas AUC/Brier para LPM/logit, não R2 in-sample como prova",
+    "proibido": "chamar coeficiente de faixa de bolsa de efeito do salário; chamar coeficiente de IVS de efeito da vulnerabilidade"
+  },
+  "linguagem_maxima": {
+    "permitido": "atração administrativa (alguma confirmação/homologação observada), preenchimento parcialmente observável, gradiente territorial, persistência da oferta local (quando CNES validado)",
+    "proibido": "taxa de preenchimento por vaga, retenção individual do bolsista, efeito causal do PMM-E/bolsa/IVS, candidaturas por vaga"
+  },
+  "hashes_entradas": {
+    "output/aquisicao/quadro_vagas_tratamento.parquet": {
+      "sha256": "41e1d3afee23994821361d8a60d9e507e3b1c25cf69ae882c10008ae27d8b149"
+    },
+    "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
+      "sha256": "4c07fa609588359556205f8f1e0fca5e4034a5257f6e91ae541e62ce1fcdaa0d"
+    },
+    "output/aquisicao/malha_municipios_regioes_saude.parquet": {
+      "sha256": "fbc90bfc1ba4914da94a0ac199ac083ab37b085d21870d4bf0ff9be407f8bfe2"
+    },
+    "output/tema_trabalho/manifesto_tipologia_territorial.json": {
+      "sha256": "4322b1593c4fea82a20c062bd50572f00161babe4a5e929777e01c3e2be3e8de"
+    },
+    "output/tema_trabalho/portao_denominador.json": {
+      "sha256": "4698b9437513ced588de1d892580ebc95517cc4b707e18f8323697a8ae53175d"
+    }
+  },
+  "hashes_artefatos_A1_A2": {
+    "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
+      "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
+    },
+    "output/tema_trabalho/suporte_estratos_territoriais.csv": {
+      "sha256": "731299cb8daa5b74e337a0ad4be4f0c98fe04cf9f6f9f0985eae267dcdc36978"
+    }
+  },
+  "portao_para_A4": "Não executar A4 sem este registro assinado por hash e sem MDE reportado; qualquer desvio deve ser emendado e datado."
+}

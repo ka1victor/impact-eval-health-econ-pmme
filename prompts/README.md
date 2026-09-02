@@ -3,8 +3,9 @@
 > **Fila histórica congelada.** Estes prompts pertencem ao desenho individual
 > anterior. A comparação agregada descrita em
 > [`docs/06_execucao/05_roadmap_execucao.md`](../docs/06_execucao/05_roadmap_execucao.md) também já foi
-> executada e não deve ser reaberta. A1 foi concluído como `APROVADO_CELULA` e
-> A2 como `APROVADO_4_ESTRATOS`; a fila imediata é A3 (e R1 no RDD).
+> executada e não deve ser reaberta. A1 foi concluído como `APROVADO_CELULA`,
+> A2 como `APROVADO_4_ESTRATOS` e A3 congelado (outcome binário por célula,
+> cluster município, MDE 3,8pp); a fila imediata é A4 (e R1 no RDD).
 > Seus sucessores dependem dos respectivos portões.
 >
 Esta pasta preserva as tarefas do roadmap anterior. A ordem abaixo é histórica e
@@ -75,9 +76,9 @@ O desenho substantivo e o piso publicável estão documentados em
 
 O núcleo de entrega segue
 [`avaliacao_atracao_interior/README.md`](avaliacao_atracao_interior/README.md).
-A1 foi concluído como `APROVADO_CELULA` e A2 como `APROVADO_4_ESTRATOS`
-(540/540 municípios A1 nos 4 estratos via REGIC 2018 + RM/RIDE 2022).
-A3 está liberado; A4–A6 permanecem bloqueados até os respectivos portões.
+A1 foi concluído como `APROVADO_CELULA`, A2 como `APROVADO_4_ESTRATOS`
+(540/540 municípios) e A3 congelado (registro + potência, MDE 3,8pp).
+A4 está liberado; A5–A6 permanecem bloqueados até os respectivos portões.
 Essa fila produz econometria associativa e não herda linguagem causal do RDD.
 
 ## Fila prospectiva do ciclo 3

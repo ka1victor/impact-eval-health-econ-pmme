@@ -1,5 +1,10 @@
 # A3 — Congelar a pré-análise do núcleo associativo
 
+> **Executado em 02/09/2026:** congelado — outcome binário por célula, unidade
+> célula com cluster município, FE curso+UF, MDE global 3,8pp (p=0,30).
+> Ver `docs/auditorias/10_pre_analise_atracao.md` e
+> `output/tema_trabalho/registro_pre_analise_atracao.json`.
+
 ## Objetivo
 
 Fixar pergunta, população, outcome, covariadas, estimadores e linguagem antes

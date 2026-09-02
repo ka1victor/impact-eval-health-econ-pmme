@@ -21,7 +21,7 @@
   próximo/interior remoto sem consultar outcomes — `APROVADO_4_ESTRATOS`
   (540/540 municípios A1 classificados; 25 capitais, 104 metropolitanos,
   235 interior próximo, 176 interior remoto; REGIC 2018 + RM/RIDE 2022).
-- [ ] A3 — congelar outcome, população, MDE, covariadas, inferência e linguagem.
+- [x] A3 — congelar outcome binário por célula, unidade célula com cluster município, covariadas pré-oferta, FE curso+UF, MDE global 3,8pp (p=0,30) e linguagem associativa (`registro_pre_analise_atracao.json` + `potencia_atracao.json`).
 - [ ] A4 — estimar atração apenas após A1–A3.
 - [ ] A5/A6 — avaliar CNES agregado e executar red team sem chamar o resultado
   de retenção individual ou efeito total do PMM-E.
