@@ -44,11 +44,11 @@ class TipologiaTerritorialTest(unittest.TestCase):
         self.assertIn("capital", estratos_a1)
 
     def test_strata_counts_match_manifest(self) -> None:
-        # A1 distribution congelada
+        # A1 distribution congelada — strict RM/RIDE (exclui Colar/Área/Entorno)
         counts = self.matrix[self.matrix["in_populacao_A1"]]["estrato"].value_counts().to_dict()
         self.assertEqual(counts.get("capital"), 25)
-        self.assertEqual(counts.get("metropolitano"), 104)
-        self.assertEqual(counts.get("interior_proximo_polo"), 235)
+        self.assertEqual(counts.get("metropolitano"), 101)
+        self.assertEqual(counts.get("interior_proximo_polo"), 238)
         self.assertEqual(counts.get("interior_remoto"), 176)
 
     def test_no_outcome_columns_consulted(self) -> None:
@@ -90,6 +90,28 @@ class TipologiaTerritorialTest(unittest.TestCase):
         lowered = [c.lower() for c in self.matrix.columns]
         self.assertFalse(any("cpf" in c for c in lowered))
         self.assertFalse(any("candidato" in c for c in lowered))
+
+    def test_rm_ride_strict_exclui_colar_area_entorno(self) -> None:
+        # Strict: Colar/Área/Entorno não são metropolitano; devem cair em interior
+        # 3 colares em A1: 3113404 Caratinga, 3133808 Itaúna, 3147105 Pará de Minas → interior_proximo_polo
+        for cod6 in ["311340", "313380", "314710"]:
+            row = self.matrix[self.matrix["co_ibge_6d"] == cod6].iloc[0]
+            self.assertEqual(row["estrato"], "interior_proximo_polo", f"{cod6} deveria ser interior_proximo (colar)")
+            self.assertFalse(row["flag_rm_ride_2022"])
+        # RIDE Petrolina/Juazeiro mantidos como metropolitano (Região Administrativa Integrada)
+        for cod6 in ["261110", "291840"]:
+            row = self.matrix[self.matrix["co_ibge_6d"] == cod6].iloc[0]
+            self.assertEqual(row["estrato"], "metropolitano")
+            self.assertTrue(row["flag_rm_ride_2022"])
+        # Nacional: strict 1306 metropolitanos (vs 1363 inclusive) — confere manifesto
+        self.assertEqual(self.gate["rm_detalhe"]["rm_ride_strict_municipios_unicos"], 1331)
+        self.assertEqual((self.matrix["estrato"] == "metropolitano").sum(), 1306)
+
+    def test_no_colar_in_metropolitano_gate(self) -> None:
+        self.assertIn("rm_detalhe", self.gate)
+        excl = self.gate["rm_detalhe"]["rm_excluidos_colar_area_entorno_counts"]
+        self.assertEqual(excl.get("Colar Metropolitano"), 24)
+        self.assertEqual(excl.get("Área de Expansão Metropolitana"), 10)
 
 
 if __name__ == "__main__":

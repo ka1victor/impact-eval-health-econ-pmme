@@ -9,7 +9,7 @@ Execute uma sessão por vez e preserve os outputs aprovados antes de avançar:
 | Ordem | Prompt | Estado inicial | Dependência |
 |---:|---|---|---|
 | A1 | [`01_reconciliar_funil_ciclo1.md`](01_reconciliar_funil_ciclo1.md) | concluído: `APROVADO_CELULA` | auditoria de viabilidade concluída |
-| A2 | [`02_construir_tipologia_territorial.md`](02_construir_tipologia_territorial.md) | concluído: `APROVADO_4_ESTRATOS` | 540/540 municípios A1; REGIC 2018 + RM/RIDE 2022 |
+| A2 | [`02_construir_tipologia_territorial.md`](02_construir_tipologia_territorial.md) | concluído: `APROVADO_4_ESTRATOS` | 540/540 municípios A1 (25/101/238/176 strict); REGIC 2018 + RM/RIDE 2022 strict |
 | A3 | [`03_congelar_pre_analise.md`](03_congelar_pre_analise.md) | concluído: congelado | registro + potência + hashes; A4 liberado |
 | A4 | [`04_estimar_atracao.md`](04_estimar_atracao.md) | liberado | registro A3 com hashes |
 | A5 | [`05_avaliar_provimento_cnes.md`](05_avaliar_provimento_cnes.md) | bloqueado | A4 e T0 físico validado |

@@ -1,38 +1,37 @@
 # A2 — Tipologia territorial (capital / metropolitano / interior próximo / interior remoto)
 
-> **Data:** 2 de setembro de 2026
+> **Data:** 2 de setembro de 2026 — corrigido strict RM/RIDE em 02/09/2026 (ver §2)
 > **Decisão:** `APROVADO_4_ESTRATOS`
 > **População A1 coberta:** 540/540 municípios (100%); 266 registros da matriz A1 sem município são fora do quadro publicado e não entram na tipologia
-> **Fontes oficiais:** IBGE REGIC 2018 (hierarquia) + IBGE Composição de RMs/RIDEs 2022 (31/12/2022, pré-PMM-E) + IVS 2010 IPEA (canônico) + CNES 202407–202506
+> **Fontes oficiais:** IBGE REGIC 2018 (hierarquia) + IBGE Composição de RMs/RIDEs 2022 strict (31/12/2022, só Metropolitana/Integrada/Administrativa Integrada — exclui Colar/Área/Entorno; AU 44 fora) + IVS 2010 IPEA (canônico) + CNES 202407–202506
 
 ## 1. Conclusão executiva
 
 A população aprovada em A1 foi integralmente classificada nos quatro estratos
-sem consultar alocação, homologação ou CNES pós:
+sem consultar alocação, homologação ou CNES pós (correção strict 02/09/2026: 3 municípios do antigo metropolitano — Caratinga/MG, Itaúna/MG, Pará de Minas/MG — eram só Colar e voltaram para interior próximo):
 
 | Estrato | Municípios A1 | % A1 | Células quadro Ch1 | Vagas imediatas |
 |---|---:|---:|---:|---:|
 | capital | 25 | 4,6% | 73 | 85 |
-| metropolitano | 104 | 19,3% | 289 | 149 |
-| interior próximo (conectado a polo) | 235 | 43,5% | 787 | 383 |
+| metropolitano | 101 | 18,7% | 265 | 137 |
+| interior próximo (conectado a polo) | 238 | 44,1% | 811 | 395 |
 | interior remoto | 176 | 32,6% | 146 | 61 |
 | **total A1** | **540** | **100%** | **1.295** | **678** |
 
-Nacionalmente (5570 municípios): 27 capitais, 1.363 metropolitanos (RM/RIDE 2022),
-873 interior próximo, 3.307 interior remoto. A variação é suficiente para estimar
+Nacionalmente (5570 municípios): 27 capitais, 1.306 metropolitanos strict (RM/RIDE 2022 — só Metropolitana/Integrada/Administrativa; exclui 24 Colar +16 Colar BH +10 Área +7 Entorno), 886 interior próximo, 3.351 interior remoto. A variação é suficiente para estimar
 heterogeneidade territorial sem redefinir a amostra após os resultados.
 
 A remoticidade não foi inferida apenas por ser não capital: segue a hierarquia
 urbana da REGIC 2018 (centro local = remoto; demais níveis = polo/conectado).
 
-## 2. Regra congelada
+## 2. Regra congelada (strict)
 
 - **capital:** `co_ibge_7d` ∈ 27 capitais oficiais (DTB estável).
-- **metropolitano:** não capital e membro de RM ou RIDE na composição oficial IBGE
-  de 31/12/2022 (pré-PMM-E; `Composicao_RMs_RIDEs_AglomUrbanas_2022_v2.xlsx`).
-- **interior remoto:** não capital, não RM/RIDE e `REGIC hierarquia_grupo = 5 - Centro Local`
+- **metropolitano:** não capital e membro strict de RM ou RIDE na composição oficial IBGE
+  de 31/12/2022 (pré-PMM-E; `Composicao_RMs_RIDEs_AglomUrbanas_2022_v2.xlsx` — só categorias `Região Metropolitana`, `Região Integrada` e `Região Administrativa Integrada` (Polo Petrolina/Juazeiro mantido); exclui `Colar Metropolitano` (24), `Colar Metropolitano de Belo Horizonte` (16), `Área de Expansão Metropolitana` (10) e `Entorno Metropolitano` (7); Aglomerações Urbanas (44 mun.) fora por desenho).
+- **interior remoto:** não capital, não RM/RIDE strict e `REGIC hierarquia_grupo = 5 - Centro Local`
   (com ou sem integrante de arranjo populacional).
-- **interior próximo (conectado a polo):** não capital, não RM/RIDE e
+- **interior próximo (conectado a polo):** não capital, não RM/RIDE strict e
   `hierarquia_grupo ∈ {1-Metrópole, 2-Capital Regional, 3-Centro Sub-Regional, 4-Centro de Zona}`
   (com ou sem integrante de AP) — municípios com função de polo ou sub-polo regional.
 
@@ -104,8 +103,8 @@ ou taxa por vaga (proibidas por A1).
 ```
 
 O script gera atomicamente matriz, suporte e manifesto. Os testes verificam
-cobertura integral A1, distribuição 25/104/235/176, ausência de colunas de
-outcome, unicidade da chave, privacidade, e regra de missing para os 5 novos.
+cobertura integral A1, distribuição 25/101/238/176 strict, ausência de colunas de
+outcome, unicidade da chave, privacidade, regra de missing para os 5 novos e exclusão de Colar/Área/Entorno.
 
 ## 7. Próximo portão
 

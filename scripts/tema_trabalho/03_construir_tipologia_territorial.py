@@ -2,7 +2,7 @@
 
 Fontes oficiais usadas para classificação, todas anteriores ao PMM-E:
 - 27 Capitais (códigos oficiais IBGE, estáveis).
-- RM/RIDE 2022 (IBGE, composição oficial de 31/12/2022 — pré-PMM-E).
+- RM/RIDE 2022 strict (IBGE Composicao 31/12/2022 — apenas Regiao Metropolitana/Regiao Integrada; exclui Colar/Area/Entorno; AU 44 mun. fora por desenho).
 - REGIC 2018 — Hierarquia e região de influência (IBGE, 2018 — centralidade).
 
 Medidas contínuas prévias preservadas (sem consultar outcomes):
@@ -126,14 +126,6 @@ def main() -> None:
     download_if_missing(REGIC_URL, REGIC_XLSX)
     download_if_missing(RM_URL, RM_XLSX)
 
-    # Copia temporária de inspeção (se baixada em TMP por sessão anterior)
-    tmp_regic = Path(r"C:\Users\camil\AppData\Local\Temp\opencode\regic2018_municipios.xlsx")
-    tmp_rm = Path(r"C:\Users\camil\AppData\Local\Temp\opencode\composicao_rm_2022.xlsx")
-    if tmp_regic.exists() and not REGIC_XLSX.exists():
-        REGIC_XLSX.write_bytes(tmp_regic.read_bytes())
-    if tmp_rm.exists() and not RM_XLSX.exists():
-        RM_XLSX.write_bytes(tmp_rm.read_bytes())
-
     for path in [MALHA, MATRIZ_FUNIL, PAINEL_CNES, QUADRO, REGIC_XLSX, RM_XLSX]:
         if not path.exists():
             raise FileNotFoundError(path)
@@ -192,9 +184,19 @@ def main() -> None:
     rm = pd.DataFrame(rows2, columns=header2)
     rm["cod7"] = rm["COD_MUN"].astype(str).str.replace(r"\D", "", regex=True).str.zfill(7)
     rm["cod6"] = rm["cod7"].str[:6]
-    rm_set_7 = set(rm["cod7"])
-    # Guarda categoria para auditoria
-    rm_categoria_counts = rm["NOME_CATMETROPOL"].value_counts().to_dict()
+    # Strict RM/RIDE: apenas Região Metropolitana / Região Integrada / Região Administrativa Integrada (exclui Colar, Área de Expansão e Entorno)
+    # O arquivo Composicao_RMs_RIDEs_AglomUrbanas... contém também Colares, Áreas e Entornos que não são RM/RIDE stricto sensu.
+    # A aba Aglomerações Urbanas (44 mun.) não é RM/RIDE e permanece excluída por desenho (ver manifesto).
+    is_rm_ride = (
+        rm["NOME_CATMETROPOL"].str.startswith("Região Metropolitana", na=False)
+        | rm["NOME_CATMETROPOL"].str.startswith("Região Integrada", na=False)
+        | rm["NOME_CATMETROPOL"].str.startswith("Região Administrativa", na=False)
+    )
+    rm_filtrado = rm[is_rm_ride].copy()
+    rm_set_7 = set(rm_filtrado["cod7"])
+    # Guarda categoria para auditoria (apenas RM/RIDE estritos)
+    rm_categoria_counts = rm_filtrado["NOME_CATMETROPOL"].value_counts().to_dict()
+    rm_excluidos_counts = rm[~is_rm_ride]["NOME_CATMETROPOL"].value_counts().to_dict()
 
     # 5. Universo A1 — municípios presentes na matriz do funil (sem outcomes)
     matriz = pd.read_parquet(MATRIZ_FUNIL, columns=["co_ibge_6d"]).copy()
@@ -412,9 +414,8 @@ def main() -> None:
     ]["co_ibge_7d"].tolist()
 
     gate = "APROVADO_4_ESTRATOS" if (cobertura_a1 == 1.0 and len(nao_classificados_a1) == 0) else "REPROVADO"
-    # Se não for possível construir remoticidade, cairia para APROVADO_CAPITAL_VS_FORA
-    if gate == "REPROVADO":
-        gate = "APROVADO_CAPITAL_VS_FORA" if n_a1_classificados > 0 else "REPROVADO"
+    # Fallback APROVADO_CAPITAL_VS_FORA exigiria decisão manual e redefinição de hipóteses (retirar interior_remoto);
+    # não aprovado automaticamente — mantém REPROVADO para revisão humana.
 
     # 11. Manifesto
     manifesto: dict[str, Any] = {
@@ -425,10 +426,10 @@ def main() -> None:
         "decisao": {
             "estrutura_minima": ["capital", "metropolitano", "interior_proximo_polo", "interior_remoto"],
             "usa_fonte_oficial_versionada": True,
-            "fonte_metropolitano": "IBGE Composicao RMs/RIDEs 2022 (31/12/2022)",
+            "fonte_metropolitano": "IBGE Composicao RMs/RIDEs 2022 (31/12/2022) — strict RM/RIDE (Regiao Metropolitana/Regiao Integrada), exclui Colar/Area/Entorno; Aglomeracoes Urbanas (44 mun.) nao sao RM/RIDE e permanecem fora",
             "fonte_remoticidade": "IBGE REGIC 2018 Hierarquia e regiao de influencia",
             "ivs_canonico": "IVS 2010 IPEA (nao substituir por IDHM/RDPC sem justificativa)",
-            "fallback_se_remoticidade_impossivel": "manter apenas fora_das_capitais e retirar interior_remoto das hipoteses",
+            "fallback_se_remoticidade_impossivel": "manter apenas fora_das_capitais e retirar interior_remoto das hipoteses (requer decisao manual; nao aprovado automaticamente)",
             "consultou_outcomes": False,
             "colunas_outcome_bloqueadas": sorted(forbidden_cols),
         },
@@ -458,11 +459,19 @@ def main() -> None:
             "por_uf_top10_populacao_A1": uf_counts,
             "por_curso_top10_quadro": curso_counts,
         },
+        "rm_detalhe": {
+            "rm_ride_strict_municipios_unicos": len(rm_set_7),
+            "rm_ride_strict_linhas": int(is_rm_ride.sum()),
+            "rm_categoria_counts_strict": rm_categoria_counts,
+            "rm_excluidos_colar_area_entorno_counts": rm_excluidos_counts,
+            "aglomeracoes_urbanas_44_mun_excluidas_por_desenho": True,
+            "nota": "Inclusive sem filtro teria 1388 mun. únicos (57 Colar/Área/Entorno a mais — 24+16+10+7 — dos quais 3 em A1). Strict corrige para 1331 únicos (1316 nacionais após remover 27 capitais duplas).",
+        },
         "regras_congeladas": {
             "capital": "co_ibge_7d em 27 capitais oficiais",
-            "metropolitano": "nao capital e membro de RM ou RIDE (IBGE 2022)",
-            "interior_proximo_polo": "nao capital, nao RM/RIDE, REGIC hierarquia_grupo 1-4 (Metropole/Capital Regional/Centro Sub-Regional/Centro de Zona, com ou sem integrante de AP)",
-            "interior_remoto": "nao capital, nao RM/RIDE, REGIC hierarquia_grupo 5 (Centro Local, com ou sem integrante de AP) — nao inferido apenas por ser nao capital",
+            "metropolitano": "nao capital e membro de RM ou RIDE strict 2022 (Regiao Metropolitana/Regiao Integrada; exclui Colar/Area/Entorno; AU 44 mun. nao contadas)",
+            "interior_proximo_polo": "nao capital, nao RM/RIDE strict, REGIC hierarquia_grupo 1-4 (Metropole/Capital Regional/Centro Sub-Regional/Centro de Zona, com ou sem integrante de AP)",
+            "interior_remoto": "nao capital, nao RM/RIDE strict, REGIC hierarquia_grupo 5 (Centro Local, com ou sem integrante de AP) — nao inferido apenas por ser nao capital",
             "medidas_continuas_preservadas": [
                 "ivs_2010 (+ subindices infra/ch/rt, categoria)",
                 "populacao_2010",
