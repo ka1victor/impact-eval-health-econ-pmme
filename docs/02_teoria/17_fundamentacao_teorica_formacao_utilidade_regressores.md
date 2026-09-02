@@ -8,184 +8,260 @@
 
 ## 1. Modelo principal: escolha locacional em Moehling et al. (2020)
 
-Moehling et al. (2020, eq. 1) modelam a distribuição espacial de médicos por meio da maximização intertemporal dos retornos líquidos esperados de cada localidade:
+Moehling et al. (2020, eq. 1, p. 184) formulam a distribuição espacial de médicos a partir da maximização intertemporal dos retornos líquidos esperados de cada localidade:
 
 ```math
-\arg\max_{i \in I}\;U(\omega_i)
+\arg\max_{j \in J}\;U(\omega_j)
 =
-\arg\max_{i \in I}
+\arg\max_{j \in J}
 \sum_t\delta^t
 \left[
-\frac{\mathbb{E}\!\left(w_{it}^{(s)}\right)}{p_{it}}
-- c_{it}^{(s)}
+\frac{\mathbb{E}\!\left(w_{jt}^{(s)}\right)}{p_{jt}}
+- c_{jt}^{(s)}
 \right].
 ```
 
-- $i \in I$: localidade de atuação (município ou condado);
-- $t$ e $\delta \in (0,1)$: períodos de tempo e fator de desconto intertemporal;
-- $s$: especialidade ou qualificação médica;
-- $w_{it}^{(s)}$: rendimento nominal auferido na localidade;
-- $p_{it}$: nível de preços local (custo de vida);
-- $c_{it}^{(s)}$: custo locacional líquido não pecuniário (amenidades, moradia, distância familiar e condições de trabalho).
+- $j \in J$: localidade de atuação (município ou condado);
+- $t$ e $\delta \in (0,1)$: períodos de exercício profissional e fator de desconto intertemporal;
+- $s$: especialidade ou grupo de qualificação médica;
+- $w_{jt}^{(s)}$: rendimento nominal auferido na localidade;
+- $p_{jt}$: nível de preços local (custo de vida);
+- $c_{jt}^{(s)}$: custo locacional líquido não pecuniário, que agrega preferências pessoais, amenidades, moradia, condições de trabalho e proximidade da família ([Moehling et al., 2020, p. 184](https://doi.org/10.1007/s11698-019-00187-w)).
 
-### Adaptação ao PMM-E
+### Adaptação ao PMM-E e convenção de notação
 
-Para a avaliação do Programa Mais Médicos Especialistas (Lei nº 15.233/2025), o médico $r$ escolhe o município $m \in \mathcal{M}$ (ou a opção externa de não adesão, $0$) resolvendo:
+No artigo original de Moehling, o índice $i$ foi utilizado para representar localidades ($i \in I$). Na notação microeconômica usual de economia espacial e mobilidade de trabalho, adota-se uma convenção mais intuitiva e livre de ambiguidades:
+- Indexa-se o **médico** por $i$ (indivíduo);
+- Indexa-se o **município de atuação (destino)** por $m \in \mathcal{M}$ (ou a opção externa de não adesão por $0$);
+- Indexa-se o **município de origem/família do médico** por $o(i)$;
+- Indexa-se a especialidade médica por $s$.
+
+A decisão ótima de candidatura e ocupação da vaga é dada por:
 
 ```math
-m_r^* \in \arg\max_{m \in \mathcal{M} \cup \{0\}} V_{rm}^{(s)}.
+m_i^* \in \arg\max_{m \in \mathcal{M} \cup \{0\}} V_{im}^{(s)}.
 ```
 
-A bolsa federal é pré-fixada pelo Índice de Vulnerabilidade Social do município, $B_m(IVS_m)$, entrando diretamente na remuneração esperada $w_{rmt}^{(s)}$. Na especificação basal (sem microdados granulares do médico ou da unidade de saúde), a utilidade esperada é expressa em forma reduzida:
+No PMM-E (Lei nº 15.233/2025), o médico bolsista não recebe pagamento por produção marginal, mas uma bolsa pré-fixada como função da vulnerabilidade do município, $B_m(IVS_m)$. A bolsa entra diretamente na remuneração esperada $w_{imt}^{(s)}$. 
+
+Na especificação basal mínima (antes da abertura dos componentes com microdados), a utilidade esperada é expressa em forma reduzida:
 
 ```math
-V_{rm}^{(s,0)}
+V_{im}^{(s,0)}
 =
 \sum_t\delta^t
 \left[
-\frac{\mathbb{E}\!\left(w_{rmt}^{(s)}\mid B_m(IVS_m)\right)}{p_{mt}}
+\frac{\mathbb{E}\!\left(w_{imt}^{(s)}\mid B_m(IVS_m)\right)}{p_{mt}}
 - c_0^{(s)}(IVS_m)
 \right]
-+\varepsilon_{rm}.
++\varepsilon_{im}.
 ```
 
-- $c_0^{(s)}(IVS_m)$ é o custo locacional líquido latente associado ao município, resumindo desvantagens e amenidades não observadas.
-- $\varepsilon_{rm}$ é o choque idiossincrático de preferência.
-- O sinal de $c_0'(IVS)$ não é imposto: maior vulnerabilidade pode encarecer o exercício profissional (pior infraestrutura), mas também atrair médicos vocacionados (maior utilidade social).
+- $c_0^{(s)}(IVS_m)$ é o custo locacional líquido latente associado ao município, resumindo todas as desvantagens e amenidades não observadas.
+- $\varepsilon_{im}$ é o choque idiossincrático de preferência do médico $i$ pelo município $m$.
+- Não se impõe *a priori* que $c_0'(IVS) > 0$: desvantagens de infraestrutura competem com oportunidades de maior impacto social para médicos vocacionados.
 
 ---
 
-## 2. Complementos teóricos: abrindo o custo locacional
+## 2. Microfundamentação dos componentes do custo locacional
 
-A literatura microeconômica permite abrir as camadas que compõem o custo locacional $c_{it}^{(s)}$. Cada bloco abaixo traz a formulação original e seu papel conceitual:
+Para compreender os canais econômicos que constituem $c$, a teoria microeconômica decompõe estruturalmente esse custo. Cada bloco abaixo apresenta o artigo teórico de referência, sua equação exata e a derivada parcial do custo locacional.
 
-### 2.1. Distância e raízes locais: Moehling et al. (2020) e Sivey et al. (2012)
+### 2.1. Distância geográfica da origem: Moehling et al. (2020)
 
-Moehling et al. (2020) destacam a proximidade familiar como determinante central de $c$, e Sivey et al. (2012) mostram que médicos exigem compensações substanciais para atuar longe de suas origens. Havendo dados de nascimento, formação ou residência prévia:
+Moehling et al. (2020, p. 184) destacam explicitamente que o custo locacional não pecuniário inclui a proximidade da rede de apoio familiar (*"proximity to family"*). 
+
+Sendo $o(i)$ o município de origem/família do médico $i$ e $m$ o município do posto de trabalho, a distância física ou tempo de viagem é $\text{dist}_{im} = d(o(i), m)$. O componente de distanciamento do custo é expresso como:
 
 ```math
-c^{\text{dist}}_{rm} = \phi_d(d_{rm}), \qquad \phi_d' > 0,
+c^{\text{dist}}_{im} = \phi(\text{dist}_{im}).
 ```
 
-em que $d_{rm}$ é a distância física ou tempo de deslocamento entre a origem do médico $r$ e o município $m$.
-
-### 2.2. Equilíbrio espacial e amenidades: Roback (1982) e Redding & Rossi-Hansberg (2017)
-
-Roback (1982, eq. 1-2) estabelece que desvantagens territoriais exigem salários nominais maiores ($w_m$) ou aluguéis menores ($r_m$) para manter a utilidade de equilíbrio constante:
-
+**Derivada parcial do custo:**
 ```math
-V(w_m, r_m; s_m) = \bar{u}
-\implies
-\left. \frac{dw}{ds} \right|_{dV=0} < 0,
-\quad
-\left. \frac{dr}{ds} \right|_{dV=0} > 0.
+\frac{\partial c^{\text{dist}}_{im}}{\partial \text{dist}_{im}} = \phi'(\text{dist}_{im}) > 0.
 ```
 
-Redding e Rossi-Hansberg (2017, eq. 24) modernizam essa relação com escolha discreta e custos de transporte:
+*Fundamentação na literatura:* Moehling et al. (2020, p. 184, eq. 1; [manuscrito, p. 6](https://niemesgt.github.io/files/MoehlingNiemeshThomassonTreber2019.pdf)). Como a proximidade familiar gera utilidade direta e amenidade de convivência, afastar-se da origem impõe custos logísticos e psicológicos crescentes, elevando estritamente o custo locacional ($\frac{\partial c}{\partial \text{dist}} > 0$).
+
+### 2.2. Preço de moradia e amenidades: Redding e Rossi-Hansberg (2017)
+
+Redding e Rossi-Hansberg (2017, p. 28, eq. 24) modelam a utilidade indireta de um indivíduo $o$, residente no local $n$ e empregado no local $i$:
 
 ```math
-u_{nio} = \frac{z_{nio}B_n w_i}{\kappa_{ni}Q_n^{\,1-\beta_R}}
-\implies
-c^{\text{espacial}}_m \approx (1-\beta_R)\ln Q_m - \ln B_m + \ln\kappa_{rm},
+u_{nio} = \frac{z_{nio}B_n w_i}{\kappa_{ni}Q_n^{\,1-\beta}}.
 ```
 
-em que $Q_m$ é o preço da moradia local, $B_m$ são as amenidades e $\kappa_{rm}$ é o custo de deslocamento pendular.
+**Significado de cada termo:**
+- $u_{nio}$: utilidade indireta do trabalhador individual;
+- $w_i$: **salário nominal auferido no local de trabalho** $i$;
+- $B_n$: **amenidades residenciais no local de moradia** $n$ (qualidade de vida, segurança, infraestrutura urbana);
+- $Q_n$: **preço do espaço residencial (custo de moradia/aluguel)** na localidade $n$;
+- $\kappa_{ni} \ge 1$: **custo iceberg de deslocamento pendular** (*commuting*) entre residência $n$ e trabalho $i$ ($\kappa_{ii} = 1$);
+- $z_{nio}$: choque de preferência idiossincrática com distribuição de Fréchet;
+- $1-\beta \in (0,1)$: **parcela da renda despendida em habitação** (sendo $\beta$ a fração gasta em bens comercializáveis).
 
-### 2.3. Custo da prática e tecnologia médica: Choné & Ma (2011) e Reinhardt (1975)
-
-Choné e Ma (2011, eq. 1) formalizam a utilidade médica sob agência e altruísmo clínico:
+**Derivação da função custo:**
+No modelo de Moehling et al. (2020), a utilidade intertemporal compara o logaritmo da renda real contra o custo locacional ($\ln w - c$). Tomando o logaritmo natural de $u_{nio}$:
+$$\ln u_{nio} = \ln w_i - \left[ (1-\beta)\ln Q_n - \ln B_n + \ln \kappa_{ni} - \ln z_{nio} \right].$$
+Para um médico que reside e trabalha no mesmo município ($n = i = m$, de modo que $\kappa_{mm} = 1$ e $\ln\kappa_{mm} = 0$), comparando diretamente com $\ln w_m - c_m^{\text{espacial}}$, a função de custo espacial líquido é:
 
 ```math
-U^{CM}(q, R) = R - C(q) + \beta_P V_P(q),
+c^{\text{espacial}}_m = (1-\beta)\ln Q_m - \ln B_m.
 ```
 
-em que $R$ é a remuneração, $C(q)$ é o custo de esforço de atender $q$ pacientes, $V_P(q)$ é o benefício do paciente e $\beta_P \ge 0$ é o grau de altruísmo médico.
-
-Pela tecnologia de produção de Reinhardt (1975), $q = f(H, L, K)$, em que $K$ é a infraestrutura clínica e $L$ a equipe de apoio. Invertendo a função, o custo de esforço clínico líquido é:
-
+**Derivadas parciais do custo:**
 ```math
-c^{\text{clínico}}_{rmt} = C(q_{rmt}; K_m, L_m) - \beta_{P,r} V_P(q_{rmt}).
-```
-
-Postos com infraestrutura precária ($K_m$ baixo) elevam o custo de esforço do médico e reduzem o retorno em saúde.
-
-### 2.4. Motivação intrínseca e missão pública: Barigozzi & Burani (2016)
-
-Barigozzi e Burani (2016, eq. 1-2) comparam o profissional em hospitais com fins lucrativos ($F$) versus instituições orientadas por missão pública ($N$):
-
-```math
-u_F = w_F - \frac{1}{2}\theta x^2,
+\frac{\partial c^{\text{espacial}}_m}{\partial Q_m} = \frac{1-\beta}{Q_m} > 0,
 \qquad
-u_N = w_N - \frac{1}{2}\theta x^2 + \gamma,
+\frac{\partial c^{\text{espacial}}_m}{\partial B_m} = -\frac{1}{B_m} < 0.
 ```
 
-em que $\gamma > 0$ é o prêmio intrínseco de atuar em uma organização engajada com uma causa social. No PMM-E, médicos vocacionados auferem um ganho não monetário de missão que atua como atenuante do custo territorial:
+*Fundamentação na literatura:* Redding e Rossi-Hansberg (2017, p. 28, eq. 24; [manuscrito, p. 28](https://rossihansberg.economics.uchicago.edu/QSE.pdf)). Moradias mais caras ($Q_m$) aumentam o custo locacional de forma proporcional à participação do aluguel no orçamento ($1-\beta$), enquanto melhores amenidades urbanas locais ($B_m$) reduzem a desutilidade de viver no município.
+
+### 2.3. Custo da prática, tecnologia clínica e altruísmo: Choné & Ma (2011) e Reinhardt (1975)
+
+Choné e Ma (2011, p. 232, eq. 1) formulam a função de utilidade exata do médico sob agência:
 
 ```math
-g^{\text{missão}}_{rm} = \gamma_r \mu_m.
+U = R - C(q) + \alpha B(q),
 ```
+
+em que:
+- $R$ é a remuneração/transferência financeira total recebida pelo médico;
+- $q$ é a quantidade ou intensidade de cuidados e tratamentos clínicos prestados;
+- $C(q)$ é o custo de esforço clínico do médico para produzir $q$, com $C'(q) > 0$ e $C''(q) > 0$;
+- $B(q)$ é o benefício de saúde auferido pelo paciente, com $B'(q) > 0$ e $B''(q) \le 0$;
+- $\alpha \ge 0$ é o coeficiente de altruísmo do médico em relação à melhora clínica do paciente.
+
+Pela teoria da tecnologia de produção médica de Reinhardt (1975, caps. 3 e 4), a quantidade de consultas e procedimentos $q$ é produzida via:
+
+```math
+q = f(L_D, L_A, K),
+```
+
+em que $L_D$ é o tempo/esforço de trabalho médico, $L_A$ é a mão de obra de suporte/enfermagem (*auxiliary labor*) e $K$ é o capital físico instalado (consultórios, leitos e equipamentos diagnósticos). Invertendo a função para explicitar a demanda de esforço do médico:
+
+```math
+C(q) = C(q; L_A, K), \qquad \text{com } \frac{\partial C}{\partial K} < 0, \quad \frac{\partial C}{\partial L_A} < 0.
+```
+
+#### A questão central: quando o efeito de $q$ sobre a utilidade é positivo?
+
+Como a bolsa federal do PMM-E é pré-fixada no edital ($\frac{\partial R}{\partial q} = 0$), o efeito marginal de atender mais pacientes sobre a utilidade do médico é:
+
+```math
+\frac{\partial U}{\partial q} = \alpha B'(q) - \frac{\partial C(q; L_A, K)}{\partial q}.
+```
+
+O atendimento de pacientes incute **positivamente** na utilidade pelo canal do altruísmo ($\alpha B'(q) > 0$), mas **negativamente** pelo canal da desutilidade de esforço ($- \frac{\partial C}{\partial q} < 0$).
+
+Portanto, o atendimento adicional gera ganho líquido de utilidade ($\frac{\partial U}{\partial q} > 0$) se e somente se:
+
+```math
+\alpha B'(q) > \frac{\partial C(q; L_A, K)}{\partial q}.
+```
+
+Essa condição estabelece os limiares das variáveis para os quais atender pacientes é gratificante:
+1. **Grau de altruísmo ($\alpha$ elevado):** médicos com forte vocação social derivam utilidade moral que supera o cansaço clínico;
+2. **Gravidade do paciente / benefício marginal ($B'(q)$ elevado):** em comunidades de alta vulnerabilidade onde a assistência médica é escassa, cada atendimento evita sequelas graves ou mortalidade, maximizando $B'(q)$;
+3. **Infraestrutura hospitalar e equipe ($K$ e $L_A$ elevados):** como $\frac{\partial^2 C}{\partial q \partial K} < 0$ e $\frac{\partial^2 C}{\partial q \partial L_A} < 0$, postos bem equipados reduzem o esforço marginal do médico por paciente, viabilizando $\frac{\partial U}{\partial q} > 0$.
+
+Inversamente, em postos precários desprovidos de capital e equipe ($K \to 0$, $L_A \to 0$), o custo marginal de esforço $\frac{\partial C}{\partial q}$ explode, tornando $\frac{\partial U}{\partial q} < 0$ para qualquer $q$, o que resulta em sobrecarga clínica severa e esgotamento profissional (*burnout*).
+
+Isolando a parcela não remuneratória como o custo clínico líquido, $c^{\text{clínico}} = C(q; L_A, K) - \alpha B(q)$:
+
+**Derivadas parciais do custo:**
+```math
+\frac{\partial c^{\text{clínico}}}{\partial K} = \frac{\partial C}{\partial K} < 0,
+\qquad
+\frac{\partial c^{\text{clínico}}}{\partial L_A} = \frac{\partial C}{\partial L_A} < 0,
+\qquad
+\frac{\partial c^{\text{clínico}}}{\partial \alpha} = -B(q) < 0.
+```
+
+*Fundamentação na literatura:* Choné e Ma (2011, p. 232, eq. 1; [manuscrito, p. 4](https://people.bu.edu/ma/CHONE-MA_Annals2011.pdf)); Reinhardt (1975). Mais capital ($K$) e mais equipe de enfermagem ($L_A$) reduzem o esforço médico, e maior altruísmo ($\alpha$) valoriza o resultado do paciente, reduzindo o custo subjetivo da prática médica.
 
 ---
 
-## 3. Modelo integrado simplificado
+## 3. Disponibilidade de dados, o IVS do IPEA e o modelo canônico operacional
 
-A conexão entre o modelo principal e os complementos é direta: os complementos não concorrem com Moehling, mas fornecem a **microfundamentação estrutural do custo locacional líquido** $c_{rmt}^{(s)}$.
+### Confronto com os dados: quais variáveis realmente observamos?
 
-Na especificação expandida, o custo locacional decompõe-se de forma aditiva:
+Na execução concreta da pesquisa empírica do PMM-E, avalia-se a disponibilidade dos dados:
+- **Distância da origem do médico ($d_{im}$):** não observada nos editais públicos (exigiria cruzamentos restritos de dados de naturalidade/graduação);
+- **Preços municipais de habitação ($Q_m$) e amenidades ($B_m$):** inexiste índice de preços ou de aluguel residencial para os 5.570 municípios do país;
+- **Volume e esforço clínico individual ($q$ e $C(q)$):** prontuários e produtividade ambulatorial individualizada por médico no momento da escolha do edital não estão disponíveis.
+
+O que a política pública e as bases administrativas **efetivamente disponibilizam** para todos os municípios é:
+1. O valor da **bolsa federal anunciada** por vaga, $B_m(IVS_m)$;
+2. O **Índice de Vulnerabilidade Social (IVS 2010 do IPEA)**, running variable canônica da Lei nº 15.233/2025.
+
+### Composição do IVS do IPEA: a justificativa das variáveis
+
+O IVS do IPEA não é um índice arbitrário. Ele é composto por **3 sub-índices de igual peso (1/3 cada) e 16 indicadores censitários** que mapeiam diretamente os canais teóricos deduzidos acima:
+
+1. **Sub-índice de Infraestrutura Urbana (peso 1/3 — 3 indicadores):**
+   - % de pessoas em domicílios sem abastecimento de água tratada e esgotamento sanitário adequado;
+   - % de pessoas em domicílios sem coleta de lixo regular;
+   - % da população que gasta mais de 1 hora no deslocamento residência-trabalho.
+   *Conexão teórica:* Mapeia diretamente a ausência de amenidades urbanas ($B_m$ baixo) e custos de transporte/isolamento espacial de Redding e Rossi-Hansberg (2017).
+
+2. **Sub-índice de Capital Humano (peso 1/3 — 7 indicadores):**
+   - Taxa de mortalidade infantil (até 1 ano de idade);
+   - % de mães adolescentes (10 a 17 anos);
+   - % de mães chefes de família sem ensino fundamental completo e com filhos menores de 15 anos;
+   - Taxa de analfabetismo da população de 15 anos ou mais;
+   - % de crianças em domicílios onde ninguém completou o ensino fundamental;
+   - % de crianças de 0 a 5 anos que não frequentam a escola;
+   - % de jovens de 15 a 24 anos que não estudam nem trabalham ("nem-nem").
+   *Conexão teórica:* A mortalidade infantil e a privação humana refletem carência severa de saúde, gerando elevado retorno marginal ao tratamento ($B'(q)$ alto em Choné e Ma), mas também indicam carência de infraestrutura física ($K$ baixo em Reinhardt).
+
+3. **Sub-índice de Renda e Trabalho (peso 1/3 — 6 indicadores):**
+   - Proporção de pessoas com renda domiciliar per capita vulnerável à pobreza extrema ou pobreza;
+   - Taxa de desocupação da população de 18 anos ou mais;
+   - Taxa de ocupados informais sem ensino fundamental completo;
+   - Razão de dependência de renda (idosos e crianças sobre população potencialmente ativa);
+   - Taxa de trabalho infantil (10 a 14 anos).
+   *Conexão teórica:* Municípios com baixa capacidade contributiva e dependência social dependem exclusivamente da atenção do SUS, exigindo maior esforço assistencial local.
+
+### O modelo canônico operacional
+
+Por estrita parcimônia e aderência aos dados existentes, **adota-se o modelo simples em forma reduzida**:
 
 ```math
-c_{rmt}^{(s)}
-=
-c_0^{(s)}(IVS_m)
-+ c^{\text{dist}}_{rm}
-+ c^{\text{espacial}}_{m}
-+ c^{\text{clínico}}_{rmt}
-- g^{\text{missão}}_{rm}.
+c_m = c_0(IVS_m).
 ```
 
-Substituindo essa decomposição na função de utilidade de Moehling et al. (2020):
+A função de utilidade operacional do médico no PMM-E é expressa como:
 
 ```math
-V_{rm}^{(s)}
+V_{im}^{(s)}
 =
 \sum_t\delta^t
 \left[
-\frac{\mathbb{E}\!\left(w_{rmt}^{(s)}\mid B_m(IVS_m)\right)}{p_{mt}}
-- c_{rmt}^{(s)}
+\frac{\mathbb{E}\!\left(w_{imt}^{(s)}\mid B_m(IVS_m)\right)}{p_{mt}}
+- c_0^{(s)}(IVS_m)
 \right]
-+\varepsilon_{rm},
-\qquad
-m_r^* \in \arg\max_{m \in \mathcal{M} \cup \{0\}} V_{rm}^{(s)}.
++\varepsilon_{im},
 ```
 
-### Regra de colapso empírico
+com a regra de alocação:
 
-- **Sem microdados adicionais:** todos os termos granulares permanecem absorvidos em $c_0^{(s)}(IVS_m)$, recaindo de forma exata e elegante no modelo basal.
-- **Com microdados adicionais:** cada variável mensurada substitui parte da variância de $c_0$, tornando o resíduo mais puro e evitando qualquer dupla contagem.
+```math
+m_i^* \in \arg\max_{m \in \mathcal{M} \cup \{0\}} V_{im}^{(s)}.
+```
 
----
-
-## 4. Regra prática de correspondência empírica
-
-| Dados empíricos disponíveis | Parcela explicitada em $c_{rmt}$ | Fundamentação teórica |
-|---|---|---|
-| Apenas bolsa federal e IVS | Nenhuma: $c_{rmt} = c_0(IVS_m)$ | Moehling et al. (2020) |
-| Origem, graduação ou residência prévia | $c^{\text{dist}}_{rm} = \phi_d(d_{rm})$ | Moehling et al. (2020); Sivey et al. (2012) |
-| Preços de moradia, aluguéis ou amenidades | $c^{\text{espacial}}_m \approx (1-\beta)\ln Q_m - \ln B_m$ | Roback (1982); Redding e Rossi-Hansberg (2017) |
-| Produção e infraestrutura da unidade | $c^{\text{clínico}} = C(q; K_m) - \beta_P V_P(q)$ | Choné e Ma (2011); Reinhardt (1975) |
-| Trajetória no SUS ou motivação pró-social | $-g^{\text{missão}}_{rm} = -\gamma_r \mu_m$ | Barigozzi e Burani (2016) |
-
-A literatura empírica aplicada (e.g., Diamond, 2016; Costa, Nunes e Sanches, 2024) fornece estimativas para calibrar essas elasticidades, catalogada no [documento 19](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
+Os complementos teóricos de Redding & Rossi-Hansberg e Choné & Ma / Reinhardt não prometem regressores que não possuímos; eles atuam como a **fundamentação estrutural de por que e através de quais canais o IVS sintetiza o custo de viver e exercer a medicina no município**.
 
 ---
 
-## 5. Referências
+## 4. Referências
 
-- Barigozzi, F.; Burani, N. (2016). [*Competition and Screening with Motivated Health Professionals*](https://doi.org/10.1016/j.jhealeco.2016.06.003). **Journal of Health Economics**, 50, 358--371.
-- Choné, P.; Ma, C.-T. A. (2011). [*Optimal Health Care Contract under Physician Agency*](https://people.bu.edu/ma/CHONE-MA_Annals2011.pdf). **Annals of Economics and Statistics**, 101/102, 229--256.
-- Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14, 181--225.
-- Redding, S. J.; Rossi-Hansberg, E. (2017). [*Quantitative Spatial Economics*](https://doi.org/10.1146/annurev-economics-063016-103713). **Annual Review of Economics**, 9, 21--58.
-- Reinhardt, U. E. (1975). *Physician Productivity and the Demand for Health Manpower: An Economic Analysis*. Ballinger Publishing Company.
-- Roback, J. (1982). [*Wages, Rents, and the Quality of Life: A Spatial Equilibrium Model*](https://doi.org/10.1086/261120). **Journal of Political Economy**, 90(6), 1257--1278.
-- Sivey, P.; Scott, A.; Witt, J.; Joyce, C.; Humphreys, J. (2012). [*Junior Doctors' Preferences for Specialty and Location: A Discrete Choice Experiment*](https://doi.org/10.1016/j.jhealeco.2012.06.002). **Journal of Health Economics**, 31(6), 813--823.
+- Choné, P.; Ma, C.-T. A. (2011). [*Optimal Health Care Contract under Physician Agency*](https://people.bu.edu/ma/CHONE-MA_Annals2011.pdf). **Annals of Economics and Statistics**, 101/102, 229--256. [p. 232, eq. 1].
+- IPEA (2015). [*Atlas da Vulnerabilidade Social nos Municípios Brasileiros*](https://ivs.ipea.gov.br). **Instituto de Pesquisa Econômica Aplicada**, Brasília.
+- Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14, 181--225. [p. 184, eq. 1; manuscrito p. 6].
+- Redding, S. J.; Rossi-Hansberg, E. (2017). [*Quantitative Spatial Economics*](https://doi.org/10.1146/annurev-economics-063016-103713). **Annual Review of Economics**, 9, 21--58. [p. 28, eq. 24; manuscrito p. 28].
+- Reinhardt, U. E. (1975). *Physician Productivity and the Demand for Health Manpower: An Economic Analysis*. Ballinger Publishing Company. [caps. 3 e 4].
+
 
