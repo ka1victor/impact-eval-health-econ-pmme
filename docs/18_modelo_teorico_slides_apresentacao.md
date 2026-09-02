@@ -3,54 +3,61 @@
 > **Documento Teórico de Referência para Apresentações e Defesas**  
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
 > **Base Canônica:** Fundamentação Teórica Consolidada em [Doc 17](file:///c:/Users/camil/Desktop/Kauã/Insper/impact-eval-health-econ-pmme/docs/17_fundamentacao_teorica_formacao_utilidade_regressores.md)  
-> **Finalidade:** Fornecer estrutura visual e roteiro de fala para defesa da fundamentação microeconômica em 3 camadas complementares (Moehling et al. $\rightarrow$ Roback $\rightarrow$ Reinhardt).  
+> **Finalidade:** Fornecer estrutura visual e roteiro de fala para defesa do Modelo Microeconômico Unificado (Moehling como núcleo com $c(R, L, D, \mathbf{Z}; r, s)$ microfundamentado por Roback e Reinhardt).  
 > **Data de Consolidação:** 31 de agosto de 2026  
 
 ---
 
-## 1. Estrutura dos Slides Teóricos: Arquitetura em Três Camadas
+## 1. Estrutura dos Slides Teóricos: Modelo Unificado
 
-### [Slide 1] O Problema Central de Escolha Locacional Intertemporal
-*(Paper Canônico: Moehling, Niemesh, Thomasson & Treber, 2020)*
+### [Slide 1] O Ponto de Partida: O Problema Intertemporal de Moehling et al. (2020)
 
 $$
 i^* = \arg\max_{i \in \mathcal{I}} \sum_t \delta^t \left[ \frac{\mathbb{E}(w^{(s)}_{it})}{p_{it}} - c^{(s)}_{it} \right]
 $$
 
-* **Componentes Teóricos:**
-  * $\frac{\mathbb{E}(w^{(s)}_{it})}{p_{it}}$: **Remuneração real esperada** deflacionada pelo nível de preços local $p_{it}$ (Benchmark linear em nível real);
-  * $c^{(s)}_{it}$: **Custos e desamenidades de consumo** da localidade (distância da família, transporte e opções urbanas);
-  * $\delta^t \in (0, 1)$: **Fator de desconto intertemporal**, capturando o valor futuro da formação e titulação;
-  * **Amenidades Produtivas:** Equipamentos e capital hospitalar entram em forma reduzida elevando o retorno esperado $\mathbb{E}(w)$.
+* **O que $c$ representa em Moehling et al.?**  
+  Um termo agregado em forma reduzida para custos e desamenidades de consumo (estilo de vida rural/urbano e proximidade da família), enquanto amenidades produtivas deslocam $\mathbb{E}(w)$.
+* **A Limitação:** Moehling et al. não abrem a "caixa-preta" de $c$ (carga de trabalho, equipe, aluguel, infraestrutura e vocação pública).
 
 ---
 
-### [Slide 2] Equilíbrio Espacial e Preços Hedônicos
-*(Paper Canônico: Roback, 1982)*
+### [Slide 2] Abrindo a Caixa de $c$: A Microfundamentação Estrutural
+*(Contribuições Teóricas de Roback 1982 e Reinhardt 1975)*
 
-1. **Livre Mobilidade do Trabalhador:**
-   $$V(w_m, r_m; s_m) = k$$
-2. **Custo Unitário da Firma / Estabelecimento:**
-   $$C(w_m, r_m; s_m) = 1$$
-3. **Mecanismo de Capitalização:**  
-   Amenidades de consumo elevam a utilidade direta (permitindo salários nominais menores e aluguéis $r_m$ maiores); amenidades produtivas reduzem custos da firma (viabilizando salários nominais maiores).
+$$
+c^{(s)}_{it} = c\Big(R_{it}, L_{it}, D_{it}, \mathbf{Z}_i; \; r_{it}, s_{it}\Big)
+$$
+
+* **Do Bloco de Reinhardt (1975) — Prática Médica e Alocação de Tempo:**
+  * $R = \bar{H} - H$: perda de lazer e excesso de jornada elevam a desutilidade ($\frac{\partial c}{\partial R} < 0$);
+  * $L$: escassez de equipe de enfermagem/apoio sobrecarrega o médico ($\frac{\partial c}{\partial L} < 0$);
+  * $D$: necessidade de saúde gera utilidade moral / propósito assistencial ($\frac{\partial c}{\partial D} < 0$);
+  * $\mathbf{Z}$: heterogeneidade de preferências, especialidade e vínculos de origem.
+* **Do Bloco de Roback (1982) — Equilíbrio Espacial e Habitação:**
+  * $r$: custos locais de moradia e aluguel elevam a despesa do médico ($\frac{\partial c}{\partial r} > 0$);
+  * $s$: amenidades urbanas, lazer, segurança e conectividade reduzem $c$ ($\frac{\partial c}{\partial s} < 0$).
 
 ---
 
-### [Slide 3] Microfundamentação da Prática Médica e Alocação de Tempo
-*(Paper Canônico: Reinhardt, 1975)*
+### [Slide 3] O Modelo Microeconômico Unificado do PMM-E
 
-1. **Função de Utilidade:** $U = U(R, Y, L, D; \mathbf{Z})$ com restrição de tempo $\bar{H} = R + H$;
-2. **Função de Produção Médica Explícita:** $q = f(H, L, K; \boldsymbol{\Omega})$;
-3. **Renda Líquida e Lucro:** $Y = [1 - t(\pi + I)](\pi + I)$ onde $\pi = p q - w L - r K$;
-4. **Propósito e Responsabilidade Social:** $D$ mensura o compromisso comunitário do médico, gerando ganho de bem-estar se $U_D > 0$.
+$$
+V_i = \sum_t \delta^t \left[ \frac{\mathbb{E}(w^{(s)}_{it})}{p_{it}} - c\Big(R_{it}, L_{it}, D_{it}, \mathbf{Z}_i; \; r_{it}, s_{it}\Big) \right], \qquad i^* = \arg\max_{i \in \mathcal{I}} V_i
+$$
+
+* **Por que o Efeito Total do IVS é Teoricamente Ambíguo?**
+  * **Canal Positivo (+):** Faixas de bolsa maiores do governo federal ($\Delta \mathbb{E}(w) > 0$);
+  * **Canal Negativo (-):** Déficit de amenidades urbanas ($s$) e de suporte clínico ($L, K$), aumentando $c$;
+  * **Canal Condicional ($\pm$):** Oportunidade de impacto assistencial ($D$) atenuando $c$ para médicos vocacionados ($\mathbf{Z}$).
 
 ---
 
 ## 2. Roteiro de Fala para a Apresentação dos Slides (Script Acadêmico)
 
-1. *"A decisão de alocação espacial do especialista é modelada rigorosamente a partir de Moehling et al. (2020), no qual o médico escolhe o município que maximiza o valor presente da remuneração real esperada líquida de desamenidades ($V_i = \sum_t \delta^t [\mathbb{E}(w)/p - c]$)."*
-2. *"Para dar conteúdo estrutural aos canais em forma reduzida, complementamos o arcabouço com Roback (1982) — que explica a capitalização espacial em aluguéis e salários — e Reinhardt (1975) — que explicita a função de produção médica ($q=f(H,L,K)$), a alocação de tempo entre trabalho e lazer e a motivação assistencial ($D$)."*
-3. *"Essa arquitetura teórica estabelece como benchmark a resposta linear à remuneração real e demonstra por que o efeito líquido do IVS é teoricamente ambíguo: o IVS eleva a bolsa federal, mas correlaciona-se com desamenidades urbanas e déficit de capital físico. Por isso, a identificação empírica via RDD nos cutoffs de IVS e modelos de duração é essencial."*
+1. *"Partimos do problema intertemporal de escolha locacional de Moehling et al. (2020), no qual o médico maximiza o fluxo descontado de remuneração real esperado líquido de um termo de custos locacionais $c$."*
+2. *"No artigo original de Moehling et al., o termo $c$ é uma 'caixa-preta' aditiva que captura apenas preferências genéricas por estilo de vida e proximidade familiar. No nosso estudo, abrimos estruturalmente essa caixa: microfundamentamos $c$ como uma função $c(R, L, D, \mathbf{Z}; r, s)$, incorporando a alocação de tempo, equipe e propósito de Reinhardt (1975) e o custo de moradia e amenidades de Roback (1982)."*
+3. *"Essa unificação gera um modelo completo e rigoroso: ele preserva o benchmark linear para a remuneração real e explica por que o efeito total do IVS é teoricamente ambíguo, operando positivamente sobre a bolsa federal e em direções opostas sobre as desamenidades e o propósito assistencial."*
+
 
 
