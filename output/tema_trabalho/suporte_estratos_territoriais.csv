@@ -1,0 +1,6 @@
+estrato,ordem,n_municipios_nacional,n_municipios_populacao_A1,n_celulas_quadro_ch1,n_celulas_funil_A1,vagas_imediatas_publicadas,vagas_reserva_publicadas,municipios_com_estoque_pre_disponivel,ivs_medio_nacional,populacao_2010_media_nacional
+capital,1,27,25,73,250,85,83,18,0.32566666666666666,438440.0
+metropolitano,2,1363,104,289,641,149,243,75,0.32040544518027964,10213.17880794702
+interior_proximo_polo,3,873,235,787,1661,383,684,200,0.3115475372279496,10092.239404352806
+interior_remoto,4,3307,176,146,505,61,135,75,0.3582586206896552,2215.600423472474
+total,99,5570,540,1295,3057,678,1145,368,0.3415288409703504,7520.7349505840075

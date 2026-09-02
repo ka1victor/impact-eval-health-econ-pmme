@@ -1,5 +1,10 @@
 # A2 — Construir e congelar a tipologia territorial
 
+> **Executado em 02/09/2026:** `APROVADO_4_ESTRATOS` — 540/540 municípios A1
+> classificados nos 4 estratos (25 capital, 104 metropolitano, 235 interior
+> próximo, 176 remoto) com REGIC 2018 + RM/RIDE 2022. Ver
+> `docs/auditorias/09_tipologia_territorial.md`.
+
 ## Objetivo
 
 Substituir o rótulo amplo “interior” por medidas territoriais observáveis e

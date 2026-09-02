@@ -22,14 +22,16 @@ Há três camadas separadas no repositório:
 > e o RDD do adicional da bolsa continua bloqueado até a reconstrução da regra.
 
 O plano rápido está em
-[`docs/14_plano_implementacao_rdd_bolsa.md`](docs/14_plano_implementacao_rdd_bolsa.md).
+[`docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`](docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md).
 O tema, os outcomes e o veredito de viabilidade estão em
-[`docs/15_incentivos_ivs_provimento_duradouro.md`](docs/15_incentivos_ivs_provimento_duradouro.md).
+[`docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md`](docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
 Uma auditoria reproduzível confirmou 350 municípios fora das capitais, 593 das
 678 vagas imediatas nesse grupo e 26 competências CNES. Também encontrou que
 211 das 468 confirmações públicas pertencem a células originalmente apenas de
 reserva. A1 concluiu a reconciliação como `APROVADO_CELULA`: a análise usará
 alguma confirmação/homologação por célula e não taxa de preenchimento por vaga.
+A2 concluiu a tipologia como `APROVADO_4_ESTRATOS` (540/540 municípios A1 em
+capital/metropolitano/interior próximo/remoto via REGIC 2018 + RM/RIDE 2022).
 As sessões do núcleo estão organizadas em
 [`prompts/avaliacao_atracao_interior/`](prompts/avaliacao_atracao_interior/README.md).
 Ele pergunta se oferecer R$ 5 mil mensais adicionais alterou procura e
@@ -52,7 +54,7 @@ junho de 2024 a julho de 2026:
 
 Nele foi executada uma DDD com efeitos fixos de município–curso, município–mês e
 curso–mês, acompanhada por estudo de evento. O plano completo está em
-[`docs/05_roadmap_execucao.md`](docs/05_roadmap_execucao.md), e a auditoria do
+[`docs/06_execucao/05_roadmap_execucao.md`](docs/06_execucao/05_roadmap_execucao.md), e a auditoria do
 pipeline e dos resultados está em
 [`docs/auditorias/04_auditoria_pipeline_agregado.md`](docs/auditorias/04_auditoria_pipeline_agregado.md).
 
@@ -118,14 +120,14 @@ processados, mas `RDAC2606.dbc` e `RDRR2606.dbc` não existiam no FTP oficial em
 *fail-closed*, as ausências não viraram zeros e os painéis preliminares do
 C3-02 não foram promovidos. Esse bloqueio foi separado do CNES: o C3-03 de
 força de trabalho foi executado apenas com o pré e congelou o plano em
-[`docs/13_plano_pre_analise_ciclo3.md`](docs/13_plano_pre_analise_ciclo3.md).
+[`docs/05_identificacao/13_plano_pre_analise_ciclo3.md`](docs/05_identificacao/13_plano_pre_analise_ciclo3.md).
 Anestesiologia ficou como associação ajustada: suporte aprovado, mas
 equivalência e potência para um especialista insuficientes. C3-02B ainda deve
 ser repetido quando os dois arquivos aparecerem, exclusivamente para liberar o
 módulo clínico.
 
 A estratégia e seus limites estão em
-[`docs/12_estrategia_causal_prospectiva_ciclo3.md`](docs/12_estrategia_causal_prospectiva_ciclo3.md).
+[`docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md`](docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md).
 Os prompts ordenados para sessões futuras estão em
 [`prompts/avaliacao_ciclo3/`](prompts/avaliacao_ciclo3/README.md). Nenhum efeito
 do ciclo 3 foi estimado. Qualquer estimação aguarda a competência `202703`
@@ -159,9 +161,11 @@ coerência substantiva.
 
 ## Estrutura
 
+A documentação acadêmica segue o [mapa canônico dos blocos](docs/README.md). Ele separa literatura empírica, literatura teórica/modelo microeconômico, metodologia de identificação e resultados. O [modelo teórico](docs/02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md) não usa papers empíricos como fundamento das equações; esses trabalhos ficam no [catálogo empírico](docs/03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
+
 ```text
 data/      bases observadas preservadas
-docs/      decisões, auditorias e plano empírico
+docs/      pergunta, teoria, literatura empírica, identificação e auditorias
 prompts/   tarefas históricas e orientação da fila vigente
 scripts/   rotinas reprodutíveis
 output/    produtos gerados e validados

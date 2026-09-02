@@ -2,10 +2,10 @@
 
 > **Fila histórica congelada.** Estes prompts pertencem ao desenho individual
 > anterior. A comparação agregada descrita em
-> [`docs/05_roadmap_execucao.md`](../docs/05_roadmap_execucao.md) também já foi
-> executada e não deve ser reaberta. A1 do núcleo associativo foi concluído como
-> `APROVADO_CELULA`; as filas imediatas são A2 e R1. Seus sucessores dependem dos respectivos
-> portões.
+> [`docs/06_execucao/05_roadmap_execucao.md`](../docs/06_execucao/05_roadmap_execucao.md) também já foi
+> executada e não deve ser reaberta. A1 foi concluído como `APROVADO_CELULA` e
+> A2 como `APROVADO_4_ESTRATOS`; a fila imediata é A3 (e R1 no RDD).
+> Seus sucessores dependem dos respectivos portões.
 >
 Esta pasta preserva as tarefas do roadmap anterior. A ordem abaixo é histórica e
 não constitui uma fila autorizada.
@@ -59,7 +59,7 @@ os pedidos A07 em enviados e não autoriza escolher um novo estimador depois do
 resultado. Veja
 [`docs/auditorias/04_auditoria_pipeline_agregado.md`](../docs/auditorias/04_auditoria_pipeline_agregado.md).
 
-WP3, WP4 e WP5 não têm prompts de execução no pipeline principal porque estão guardados (ver [`docs/06_backlog_wp3_wp4_wp5.md`](../docs/06_backlog_wp3_wp4_wp5.md)). No entanto, o módulo de engenharia de dados preparatório está documentado em [`infraestrutura_datasus_dbc.md`](infraestrutura_datasus_dbc.md) (100% paralelizável, com foco em ingestão leve e eficiente em disco).
+WP3, WP4 e WP5 não têm prompts de execução no pipeline principal porque estão guardados (ver [`docs/06_execucao/06_backlog_wp3_wp4_wp5.md`](../docs/06_execucao/06_backlog_wp3_wp4_wp5.md)). No entanto, o módulo de engenharia de dados preparatório está documentado em [`infraestrutura_datasus_dbc.md`](infraestrutura_datasus_dbc.md) (100% paralelizável, com foco em ingestão leve e eficiente em disco).
 
 ## Fila imediata — RDD da bolsa
 
@@ -69,14 +69,15 @@ portão de regra e, condicionalmente, o portão de suporte podem ser executados
 agora. Nenhum prompt dessa fila autoriza escolher cutoff pela significância ou
 consultar outcomes antes do registro de pré-análise.
 O desenho substantivo e o piso publicável estão documentados em
-[`docs/15_incentivos_ivs_provimento_duradouro.md`](../docs/15_incentivos_ivs_provimento_duradouro.md).
+[`docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md`](../docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
 
 ## Fila imediata — atração e provimento fora das capitais
 
 O núcleo de entrega segue
 [`avaliacao_atracao_interior/README.md`](avaliacao_atracao_interior/README.md).
-A1 foi concluído como `APROVADO_CELULA`. A2 está liberado; A3
-congela o protocolo; A4–A6 permanecem bloqueados até os respectivos portões.
+A1 foi concluído como `APROVADO_CELULA` e A2 como `APROVADO_4_ESTRATOS`
+(540/540 municípios A1 nos 4 estratos via REGIC 2018 + RM/RIDE 2022).
+A3 está liberado; A4–A6 permanecem bloqueados até os respectivos portões.
 Essa fila produz econometria associativa e não herda linguagem causal do RDD.
 
 ## Fila prospectiva do ciclo 3

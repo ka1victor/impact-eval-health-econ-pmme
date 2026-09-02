@@ -17,8 +17,10 @@
   célula (`prompts/avaliacao_atracao_interior/01_reconciliar_funil_ciclo1.md`).
 - [x] A1 — portão `APROVADO_CELULA`: usar alguma confirmação/homologação por
   célula; não estimar taxa de preenchimento por vaga.
-- [ ] A2 — construir e congelar tipologia capital/metropolitano/interior
-  próximo/interior remoto sem consultar outcomes.
+- [x] A2 — construir e congelar tipologia capital/metropolitano/interior
+  próximo/interior remoto sem consultar outcomes — `APROVADO_4_ESTRATOS`
+  (540/540 municípios A1 classificados; 25 capitais, 104 metropolitanos,
+  235 interior próximo, 176 interior remoto; REGIC 2018 + RM/RIDE 2022).
 - [ ] A3 — congelar outcome, população, MDE, covariadas, inferência e linguagem.
 - [ ] A4 — estimar atração apenas após A1–A3.
 - [ ] A5/A6 — avaliar CNES agregado e executar red team sem chamar o resultado
@@ -28,7 +30,7 @@
 
 - [x] Retirar da camada editorial a linguagem causal não sustentada pela DDD.
 - [x] Auditar a viabilidade de salário, IVS, preenchimento e provimento
-  duradouro (`docs/15_incentivos_ivs_provimento_duradouro.md`).
+  duradouro (`docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md`).
 - [ ] R1 — recuperar a running variable administrativa exata, vintagem,
   precisão, arredondamento e cutoffs da grade de 2025.
 - [ ] R1 — reproduzir 100% das faixas anunciadas ou documentar exceções
