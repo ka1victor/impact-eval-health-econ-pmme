@@ -8,14 +8,14 @@
 
 Os estudos deste documento podem documentar fatos estilizados, sugerir heterogeneidades e variáveis observáveis, orientar comparações e informar a discussão dos resultados.
 
-Eles não podem ser citados como fonte das primitivas, restrições ou sinais do modelo microeconômico do PMM-E. Para a demarcação adotada no projeto, uma função de utilidade inserida em um modelo estimado continua pertencendo ao desenho empírico daquele artigo.
+Resultados estimados, calibrações e sinais encontrados nesses estudos pertencem à literatura empírica. Quando um artigo empírico oferece uma equação de escolha útil, sua formulação teórica pode ser reproduzida separadamente no documento 17, com a adaptação e os limites explicitados.
 
 ## 2. Estudos centrais e uso permitido
 
 | Estudo | Natureza empírica | Contribuição para o PMM-E | Uso vedado |
 |---|---|---|---|
 | Diamond (2016) | equilíbrio espacial estimado com dados de cidades dos EUA | mostrar como uma aplicação empírica trata renda, moradia, amenidades e heterogeneidade | fundamentar a função de utilidade ou os sinais teóricos |
-| Moehling et al. (2020) | estudo histórico sobre educação médica e escassez rural | motivar formação, origem e infraestrutura produtiva | funcionar como núcleo do modelo teórico |
+| Moehling et al. (2020) | estudo histórico sobre educação médica e escassez rural, com modelo simples de escolha | motivar formação, origem e infraestrutura produtiva; a equação de escolha fundamenta o documento 17 | transportar suas magnitudes históricas para o PMM-E |
 | Costa, Nunes e Sanches (2019/2024) | escolha discreta com coeficientes aleatórios estimada para médicos generalistas formados no Brasil | motivar vínculos de nascimento/formação, salários reais, amenidades e infraestrutura | fornecer primitivas teóricas ou ser extrapolado automaticamente para especialistas |
 
 ## 3. Costa, Nunes e Sanches
@@ -38,7 +38,7 @@ Diamond estima um modelo de equilíbrio espacial com salários, aluguéis, ameni
 
 > Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14(2), 181–225.
 
-O estudo histórico-empírico pode motivar mecanismos de formação, origem, infraestrutura produtiva e escassez rural. Sua equação de escolha não é usada como núcleo teórico.
+O estudo histórico-empírico motiva mecanismos de formação, origem, infraestrutura produtiva e escassez rural. Sua equação de escolha é reproduzida, separadamente de seus resultados, como núcleo do [modelo teórico](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md).
 
 ## 6. Ponte permitida para o desenho empírico
 

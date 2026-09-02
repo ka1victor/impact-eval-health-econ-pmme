@@ -30,17 +30,17 @@ A literatura empírica informa fatos, comparações, covariáveis candidatas e h
 | Tipo de trabalho | Destino | Pode fundamentar equação teórica? |
 |---|---|---:|
 | teoria pura ou síntese teórica sem estimação própria | documento 17 | sim, no limite exato do modelo |
-| modelo estrutural estimado, experimento, quase-experimento ou estudo observacional | documento 19 | não |
+| modelo estrutural estimado, experimento, quase-experimento ou estudo observacional | documento 19 | resultados e estimação, não; uma equação teórica pode ser reproduzida no documento 17 com uso separado |
 | paper de método econométrico | documentos 12–14 | não; fundamenta o estimador |
 | documento normativo ou administrativo | inventário/auditorias | não; fundamenta a regra institucional |
 
-Se um artigo tem teoria e estimação, o projeto o classifica como empírico para evitar contaminação entre blocos. Sua estrutura pode inspirar a ponte teoria–dados, mas não serve como autoridade para primitivas ou sinais.
+Se um artigo tem teoria e estimação, o projeto o classifica como empírico para resultados, calibração e comparação. Uma equação teórica do próprio artigo pode fundamentar o documento 17 se for reproduzida com seu uso delimitado; resultados e sinais estimados não passam a ser primitivas teóricas por isso.
 
 ## 4. Arquivos históricos mistos
 
 Os documentos 07–11, o dossiê 15 de papers e as versões 16 sobre seleção de modelos e “equações dos papers” estão em [`90_arquivo_historico/`](90_arquivo_historico/). Foram produzidos antes desta demarcação e misturam teoria, evidência e econometria.
 
-Eles são **cadernos históricos de trabalho**, não fontes canônicas para a redação final. Equações de Cox, logit/probit, DiD, DDD e RDD neles reproduzidas pertencem à metodologia; resultados de Sivey, Gravelle, Russell, Pathman, Somville, Diamond, Moehling e Costa–Nunes–Sanches pertencem à literatura empírica.
+Eles são **cadernos históricos de trabalho**, não fontes canônicas para a redação final. Equações de Cox, logit/probit, DiD, DDD e RDD neles reproduzidas pertencem à metodologia; resultados de Sivey, Gravelle, Russell, Pathman, Somville, Diamond, Moehling e Costa–Nunes–Sanches pertencem à literatura empírica. A equação de escolha de Moehling, tratada separadamente, pertence ao documento teórico canônico.
 
 ## 5. Checklist antes de incluir uma referência
 
