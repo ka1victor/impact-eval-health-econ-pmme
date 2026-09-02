@@ -1,0 +1,6 @@
+etapa,n_celulas,n_municipios,nota
+01_funil_total_A1,3323,540,3323 linhas Ch1 1324 + Ch2 1999
+02_exclui_sem_municipio,266,0,fora do quadro sem municipio (29 Ch1 +237 Ch2)
+03_estendida_A1,3057,540,3057 = 3323-266
+04_primaria_quadro_Ch1,1295,368,1295 quadro Ch1 (368 mun) outcome 30.3%
+05_exclui_29_fora_quadro_Ch1_com_mun,29,29,"Ch1 fora do quadro com municipio, não primária"

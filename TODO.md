@@ -23,7 +23,7 @@
   238 interior próximo, 176 interior remoto; REGIC 2018 + RM/RIDE 2022 strict
   — RM/RIDE apenas Metropolitana/Integrada, exclui Colar/Área/Entorno; AU 44 fora).
 - [x] A3 — congelar outcome binário por célula, unidade célula com cluster município, covariadas pré-oferta, FE curso+UF, MDE global 3,8pp (p=0,30; DEFF 1,126) e por estrato quadro Ch1 strict 16,1% capital 73/18 / 8,4% metro 265/72 / 4,8% próximo 811/203 / 10,9% remoto 146/75 (DEFF floor, hashes território REGIC/RM), linguagem associativa (`registro_pre_analise_atracao.json` + `potencia_atracao.json` + `31_secao_econometrica_A3.md`).
-- [ ] A4 — estimar atração apenas após A1–A3.
+- [x] A4 — estimar atração com LPM/Logit FE curso+UF cluster município (1295 células, 368 municípios; metro +29.4pp p<0.001 vs remoto, capital +23.2pp p=0.007, próximo +12.7pp p=0.003; Logit AME 29.3/25.0/10.8pp; AUC out 0.756 in 0.798; LOO UF/curso e influência municipal robustos; faixa/IVS separados sem causalidade; winsor p99 e IVS quadrático preservam gradiente) (`05_estimar_atracao.py` + `A4_estimativas_atracao.json` + `A4_relatorio_diagnostico.md` + 17 tabelas/figuras, 84 testes OK).
 - [ ] A5/A6 — avaliar CNES agregado e executar red team sem chamar o resultado
   de retenção individual ou efeito total do PMM-E.
 

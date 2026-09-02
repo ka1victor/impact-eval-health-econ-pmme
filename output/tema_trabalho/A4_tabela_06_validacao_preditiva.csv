@@ -1,0 +1,3 @@
+modelo,auc_media_out,auc_sd_out,auc_insample,brier_media_out,brier_sd_out,brier_insample,n_splits,grupos,nota
+LPM_minimal,0.7566283746903585,0.02058950288300658,0.7984772318229775,0.1771403814080017,0.007971768791205877,0.16045728483891625,5,municipio,out-of-sample por municipio; in-sample AUC indica overfit FE
+Logit_minimal,0.7564507390996129,0.02152074250622245,0.8007340205254933,0.17874697165594977,0.01036442606578281,0.1585105091080419,5,municipio,out-of-sample por municipio; in-sample AUC indica overfit FE
