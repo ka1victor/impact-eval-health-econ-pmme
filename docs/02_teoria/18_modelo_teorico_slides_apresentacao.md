@@ -86,8 +86,8 @@ c_{rmt}^{(s)}
 c_0^{(s)}(IVS_m)
 + c^{\text{dist}}_{rm}
 + c^{\text{espacial}}_{m}
-+ \left[ C(q_{rmt}; K_m) - \beta_{P,r} V_P(q_{rmt}) \right]
-- \gamma_r \mu_m.
++ c^{\text{clínico}}_{rmt}
+- g^{\text{missão}}_{rm}.
 ```
 
 - Cada termo microfundamenta analiticamente uma camada observável do custo de viver e praticar medicina no local.
