@@ -9,9 +9,9 @@
 Moehling et al. (2020, eq. 1):
 
 ```math
-\underset{i\in I}{\operatorname{arg\,max}}\;U(\omega_i)
+\arg\max_{i \in I}\;U(\omega_i)
 =
-\underset{i\in I}{\operatorname{arg\,max}}
+\arg\max_{i \in I}
 \left\{
 \sum_t\delta^t
 \left[
@@ -36,23 +36,29 @@ V_{rm}^{(s,0)}
 +\varepsilon_{rm}.
 ```
 
-- A bolsa é fixa em relação à produção e compõe a remuneração esperada.
-- $c_0(IVS)$ é a parcela ainda latente do custo locacional.
-- Não se impõe o sinal de $c_0'(IVS)$.
+- A bolsa federal é fixa em relação à produção e compõe a remuneração esperada.
+- $c_0(IVS)$ é a parcela latente em forma reduzida do custo locacional líquido.
+- Não se impõe o sinal de $c_0'(IVS)$: desvantagens de infraestrutura competem com oportunidades de impacto social.
 
 ## Slide 2 — O que cada complemento abre dentro de $c$
 
-Equações originais:
+Equações originais da literatura:
 
 ```math
+V(w_m, r_m; s_m) = \bar{u},
+\qquad
 u_{nio}^{RRH}
 =
 \frac{z_{nio}B_n w_i}
-{\kappa_{ni}Q_n^{\,1-\beta_R}},
-\qquad
+{\kappa_{ni}Q_n^{\,1-\beta_R}}.
+```
+
+```math
 U^{CM}(q,R)
 =
-R-C(q)+\beta_PV_P(q).
+R-C(q)+\beta_PV_P(q),
+\qquad
+q = f(H, L, K; \Omega).
 ```
 
 ```math
@@ -65,34 +71,30 @@ u_N^{BB}
 w_N-\frac{1}{2}\theta x_N^2+\gamma.
 ```
 
-| Dado adicional | Parcela explicitada | Conexão com Moehling |
+| Dado empírico adicional | Parcela explicitada | Artigos de fundamentação original |
 |---|---|---|
-| origem ou residência anterior | $c^d(d)$ | abre proximidade familiar já contida em $c$ |
-| preços, amenidades ou deslocamento | $c^S$ | abre o componente espacial de $c$ |
-| produção e condições da prática | $c^P=C-\beta_PG$ | abre custo clínico líquido do benefício ao paciente |
-| motivação ou congruência de propósito | $-g^M=-\gamma\mu$ | acrescenta missão além do benefício do paciente |
+| Origem, graduação ou residência anterior | $c^{\text{dist}}_{rm} = \phi_d(d_{rm})$ | Moehling et al. (2020); Sivey et al. (2012) |
+| Preços de moradia, aluguéis e amenidades | $c^{\text{espacial}}_m = (1-\beta)\ln Q_m - \ln B_m$ | Roback (1982); Redding e Rossi-Hansberg (2017) |
+| Cuidado médico e insumos da unidade | $c^{\text{clínico}} = C(q; K_m) - \beta_PV_P(q)$ | Choné e Ma (2011); Reinhardt (1975) |
+| Trajetória e motivação pró-social | $-g^{\text{missão}} = -\gamma_r\mu_m$ | Barigozzi e Burani (2016) |
 
-## Slide 3 — Composição antes da versão final
+## Slide 3 — Decomposição estrutural simplificada
 
 ```math
-\widetilde c_{rmt}^{(s)}
+c_{rmt}^{(s)}
 =
 c_0^{(s)}(IVS_m)
-+a_d c_{rm}^{d}
-+a_S\lambda_S c_{rm}^{S}
-+a_P\lambda_P
-\left[
-C\!\left(q_{rmt};H_{rmt},L_{mt},K_{mt},\Omega_{mt}\right)
--\beta_{P,r}G\!\left(q_{rmt},D_{mt}\right)
-\right]
--a_M\lambda_M\gamma_r\mu_m.
++ c^{\text{dist}}_{rm}
++ c^{\text{espacial}}_{m}
++ \left[ C(q_{rmt}; K_m) - \beta_{P,r} V_P(q_{rmt}) \right]
+- \gamma_r \mu_m.
 ```
 
-- $a_k=1$ somente quando a dimensão puder ser construída com dados adequados.
-- Ao abrir uma dimensão, $c_0$ vira o resíduo e deixa de contê-la, evitando dupla contagem.
-- Reinhardt interpreta $H,L,K,\Omega$ como insumos de produção; eles afetam primeiro $q$.
+- Cada termo microfundamenta analiticamente uma camada observável do custo de viver e praticar medicina no local.
+- Quando uma dimensão é observada e mensurada, ela substitui parte da variância de $c_0$, evitando dupla contagem.
+- Reinhardt fundamenta a infraestrutura ($K_m$) e equipe ($L_m$) como insumos que deslocam o custo de esforço clínico $C(q)$.
 
-## Slide 4 — Versão final e escolha
+## Slide 4 — Versão final integrada e regra de colapso
 
 ```math
 V_{rm}^{(s)}
@@ -102,16 +104,16 @@ V_{rm}^{(s)}
 \frac{
 \mathbb{E}\!\left(w_{rmt}^{(s)}\mid B_m(IVS_m)\right)
 }{p_{mt}}
--\widetilde c_{rmt}^{(s)}
+-c_{rmt}^{(s)}
 \right]
 +\varepsilon_{rm},
 \qquad
 m_r^*
 \in
-\underset{m\in\mathcal{M}\cup\{0\}}{\operatorname{arg\,max}}
+\arg\max_{m \in \mathcal{M} \cup \{0\}}
 \;V_{rm}^{(s)}.
 ```
 
-Sem dados adicionais, todos os $a_k$ são zero e a equação retorna ao modelo principal. Não observamos diretamente $c$ ou $V$; observamos entrada, alocação, estoque, saída e presença após seis meses.
-
-Diamond e Costa--Nunes--Sanches fornecem evidência empírica complementar, catalogada no [documento 19](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
+- **Propriedade de colapso empírico:** sem microdados adicionais, todos os termos específicos permanecem absorvidos em $c_0(IVS_m)$, retornando identicamente ao modelo básico.
+- Não observamos diretamente $c$ ou $V$; o modelo fornece a estrutura teórica para estimar inscrição, homologação, alocação e sobrevivência no CNES aos 6 e 12 meses.
+- Evidência empírica aplicada (Diamond 2016; Costa, Nunes e Sanches 2024) catalogada no [documento 19](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
