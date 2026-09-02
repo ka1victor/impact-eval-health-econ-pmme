@@ -4,147 +4,209 @@
 > **Status:** documento teórico canônico<br>
 > **Atualização:** 2 de setembro de 2026
 
-## 1. Modelo principal
+## 1. Modelo principal: escolha locacional em Moehling et al.
 
-O núcleo é a escolha locacional dinâmica de Moehling et al. (2020):
+Moehling et al. (2020, eq. 1) partem de uma comparação intertemporal dos retornos de cada localidade. Na notação original do artigo:
 
-$$
-V_{im}^{(s)}
+```math
+\underset{i\in I}{\operatorname{arg\,max}}\;U(\omega_i)
 =
-\sum_t \delta^t
+\underset{i\in I}{\operatorname{arg\,max}}
+\left\{
+\sum_t\delta^t
 \left[
-\frac{\mathbb{E}(w_{imt}^{(s)})}{p_{mt}}
--c_{mt}^{(s)}
-\right],
-\qquad
-m_i^*\in\arg\max_{m\in\mathcal{M}\cup\{0\}} V_{im}^{(s)}.
-$$
+\frac{\mathbb{E}\!\left(w_{it}^{(s)}\right)}{p_{it}}
+-c_{it}^{(s)}
+\right]
+\right\}.
+```
 
-Para o PMM-E, a bolsa anunciada compõe a remuneração esperada; ela não remunera produção clínica marginal. A versão empiricamente parcimoniosa trata o custo locacional como uma forma reduzida da vulnerabilidade administrativa:
+No original, $i$ é a localidade, $t$ é o ano, $s$ é o grupo de qualificação, $w$ é a remuneração nominal, $p$ é o nível de preços e $\delta$ é o fator de desconto. O termo $c$ reúne amenidades e custos de consumo específicos do local, inclusive preferências por áreas rurais ou urbanas e proximidade da família. Amenidades produtivas, como hospitais e laboratórios, afetam primeiro a remuneração nominal esperada.
 
-$$
-c_{mt}^{(s)}=c^{(s)}(IVS_m).
-$$
+### Adaptação mínima ao PMM-E
 
-Definindo o incentivo real anunciado como
+Para evitar que $i$ represente simultaneamente médico e localidade, usamos $r$ para o médico e $m$ para o município. A especialidade é indexada por $s$, e a opção $0$ representa não ocupar a vaga. A regra de escolha passa a ser:
 
-$$
-b_{imt}(IVS_m)
-\equiv
-\frac{\mathbb{E}\!\left(w_{imt}^{(s)}\mid B_m(IVS_m)\right)}{p_{mt}},
-$$
+```math
+m_r^*
+\in
+\underset{m\in\mathcal{M}\cup\{0\}}{\operatorname{arg\,max}}
+\;V_{rm}^{(s)}.
+```
 
-a regra pode ser escrita como
+A bolsa anunciada, $B_m(IVS_m)$, compõe a remuneração esperada. Como o médico não recebe por produção, ela entra em $w$ e não como preço marginal de cada atendimento:
 
-$$
-V_{im}^{(s)}
+```math
+V_{rm}^{(s,0)}
 =
 \sum_t\delta^t
-\left[b_{imt}(IVS_m)-c^{(s)}(IVS_m)\right]
-+\varepsilon_{im}.
-$$
+\left[
+\frac{
+\mathbb{E}\!\left(
+w_{rmt}^{(s)}\mid B_m(IVS_m)
+\right)
+}{p_{mt}}
+-c_0^{(s)}(IVS_m)
+\right]
++\varepsilon_{rm}.
+```
 
-Não se impõe $c'(IVS)>0$. Maior vulnerabilidade pode elevar o custo de viver e trabalhar no município, mas também pode representar maior oportunidade de impacto para médicos vocacionados. O sinal líquido é uma questão empírica. Nem $c$ nem $V$ são regredidos diretamente: eles interpretam os desfechos observáveis de entrada, alocação, estoque, saída e presença após seis meses.
+Essa é a versão principal e empiricamente viável antes de obter dados adicionais. O termo $c_0(IVS)$ é um custo locacional líquido em forma reduzida: resume a parte ainda não observada das condições de viver e trabalhar no município.
 
-## 2. Complementos diretos, condicionados aos dados
+Não se impõe $c_0'(IVS)>0$. Maior vulnerabilidade pode significar piores amenidades e condições de trabalho, elevando o custo, mas também maior oportunidade de impacto para médicos vocacionados, reduzindo o custo líquido. Não observamos nem regredimos $c_0$ ou $V$ diretamente; eles interpretam os desfechos de entrada, alocação, estoque, saída e presença após seis meses.
 
-Os complementos abaixo não substituem o modelo principal. Eles entram somente se houver medida pré-tratamento que permita uma operacionalização honesta.
+## 2. Como os complementos abrem o custo locacional
+
+Cada complemento abaixo substitui uma parte antes latente de $c_0$. Portanto, acrescentar uma medida observável exige redefinir $c_0$ como o resíduo ainda não explicado; não se soma a mesma dimensão duas vezes.
 
 ### Proximidade familiar e trajetória anterior
 
-Se houver origem, residência anterior ou rede profissional observável, ela é uma extensão direta de Moehling, não um canal espacial autônomo:
+Moehling et al. já incluem proximidade da família entre os atributos de $c$. Se houver origem, local de formação, residência anterior ou rede profissional, essa dimensão pode ser explicitada como:
 
-$$
-c_{im}^{(s)}=c^{(s)}(IVS_m,d_{im}),
-$$
+```math
+c_{rm}^{d}=\phi_d(d_{rm}),
+```
 
-em que $d_{im}$ mede a distância à família, à residência anterior ou à rede profissional, conforme a informação disponível.
+em que a interpretação de $d_{rm}$ deve seguir exatamente a informação recebida. Distância à terra natal ou à residência anterior é, assim, uma operacionalização direta de Moehling, não uma contribuição que dependa de Roback.
 
-### Componente espacial do custo
+### Preços, amenidades e deslocamento
 
-Com dados de preços, moradia, amenidades ou fricções de deslocamento, Redding e Rossi-Hansberg (2017) oferecem uma microfundamentação contemporânea para uma parcela de $c$. Uma forma reduzida de sua utilidade indireta é:
+Redding e Rossi-Hansberg (2017, eq. 24) escrevem a utilidade indireta de uma pessoa $o$, residente em $n$ e empregada em $i$, como:
 
-$$
-u^{S}_{n j o}
+```math
+u_{nio}
 =
-\frac{z_{n j o}A_n w_j}
-{\kappa_{n j}Q_n^{1-\eta}}.
-$$
+\frac{z_{nio}B_n w_i}
+{\kappa_{ni}Q_n^{\,1-\beta_R}}.
+```
 
-Logo, um índice espacial de custo pode ser definido como
+Essa é a equação original, apenas com o parâmetro de participação renomeado para $\beta_R$ a fim de não confundi-lo com o peso do benefício do paciente usado adiante. No artigo, $z_{nio}$ é a preferência idiossincrática, $B_n$ representa amenidades residenciais, $w_i$ é o salário, $\kappa_{ni}$ é o custo de deslocamento e $Q_n$ é o preço do espaço residencial.
 
-$$
-c^{S}_{n j o}
+Tomando logaritmos e separando o salário, obtemos o seguinte índice autoral para a parcela espacial do custo de Moehling:
+
+```math
+c_{rm}^{S}
 =
-\log \kappa_{n j}+(1-\eta)\log Q_n
--\log A_n-\log z_{n j o}.
-$$
+\log\kappa_{rm}
++(1-\beta_R)\log Q_m
+-\log B_m^{A}
+-\log z_{rm}.
+```
 
-Esse complemento explica apenas o custo locacional. Salários e preços não devem ser contados novamente quando já aparecem em $b_{imt}$. Roback (1982) permanece como antecedente da tradição de compensação espacial, mas a extensão só é usada se os dados a sustentarem.
+Usamos $B_m^{A}$ para amenidades e preservamos $B_m(IVS_m)$ para a bolsa. O salário continua no primeiro termo da utilidade principal. O índice de preços $p_{mt}$ e o preço residencial $Q_m$ também não devem representar duas vezes o mesmo custo de moradia. A extensão espacial só entra quando houver medidas compatíveis; Roback (1982) permanece como antecedente da compensação espacial.
 
-### Prática médica e benefício ao paciente
+### Custo da prática e benefício ao paciente
 
-Choné e Ma (2011) formalizam a utilidade da prática como
+Choné e Ma (2011) escrevem originalmente a utilidade de agência do médico como:
 
-$$
-U^{CM}=R-C(q)+\beta V(q).
-$$
+```math
+U^{CM}(q,R)
+=
+R-C(q)+\beta_P V_P(q).
+```
 
-Aqui, $R$ é o pagamento total, $C(q)$ é o custo de produzir atendimento e $\beta V(q)$ é o valor atribuído ao benefício do paciente. Como a bolsa do PMM-E é fixa em relação a $q$, a adaptação útil é deslocar o canal de prática para o custo líquido:
+No artigo, $R$ é o pagamento total, $C(q)$ é o custo de prescrever a quantidade $q$, $V_P(q)$ é o benefício do paciente e $\beta_P>0$ é o peso que o médico atribui a esse benefício. Os subscritos $P$ são apenas rótulos nossos para distinguir esse benefício da utilidade locacional $V_{rm}$.
 
-$$
-c^{P}_{imt}
-=C(q_{imt};H_{imt},L_{mt},K_{mt},\Omega_{mt})
--\beta_iG(q_{imt},D_{mt}).
-$$
+No PMM-E, o pagamento da bolsa é fixo em relação a $q$ e já aparece em $w_{rmt}$. Para evitar dupla contagem, o complemento importa apenas a parte não remuneratória da equação original:
 
-Reinhardt (1975) pode fundamentar a tecnologia de produção,
+```math
+c_{rmt}^{P}
+=
+C\!\left(q_{rmt};H_{rmt},L_{mt},K_{mt},\Omega_{mt}\right)
+-\beta_{P,r}G\!\left(q_{rmt},D_{mt}\right).
+```
 
-$$
-q_{imt}=f(H_{imt},L_{mt},K_{mt};\Omega_{mt}),
-$$
+Essa segunda equação é uma adaptação autoral. $G$ renomeia o benefício do paciente; $H$, $L$, $K$ e $\Omega$ permitem que jornada, equipe, capital e organização da rede desloquem o custo de produzir cuidado.
 
-mas seus insumos pertencem primeiro a $q$, e não automaticamente a $c$. Se só houver infraestrutura pré-tratamento, o uso empírico adequado é heterogeneidade da resposta ao programa por $K^{\mathrm{pre}}$, não a estimação direta de $c^P$.
+Reinhardt (1975) continua útil para interpretar esses elementos como insumos de uma tecnologia de produção médica. Eles afetam primeiro $q$ e somente depois $c^P$; não entram automaticamente no custo locacional. Se houver apenas infraestrutura pré-tratamento, o uso mais defensável é testar heterogeneidade da resposta ao programa por essa infraestrutura.
 
-### Missão
+### Missão além do benefício do paciente
 
-Barigozzi e Burani (2016) representam missão na utilidade do profissional como
+Barigozzi e Burani (2016) distinguem a utilidade do trabalhador em um hospital com fins lucrativos, $F$, e em um hospital sem fins lucrativos orientado por missão, $N$. Na formulação original:
 
-$$
-U^M=w-\frac{\theta e^2}{2}+\gamma e.
-$$
+```math
+u_F
+=
+w_F-\frac{1}{2}\theta x_F^2,
+```
 
-No PMM-E, esse mecanismo pode entrar como $g^M_{imt}=\gamma_i\mu_{mt}(e)$: propósito associado ao esforço ou ao local. Ele é distinto de $\beta_iG(q,D)$, que representa o benefício do paciente gerado pelo atendimento.
+```math
+u_N
+=
+w_N-\frac{1}{2}\theta x_N^2+\gamma.
+```
 
-Juntando apenas os complementos observáveis, uma expansão possível é
+$x$ é esforço, $\theta$ determina o custo de esforço e $\gamma$ é o benefício não monetário de trabalhar na organização cuja missão o profissional compartilha. No modelo de 2016, esse prêmio não depende diretamente do esforço. Isso o distingue tanto do custo de trabalhar quanto do benefício clínico do paciente em Choné e Ma.
 
-$$
-\widetilde c_{imt}^{(s)}
-=c^{(s)}(IVS_m,d_{im})
-+\lambda_Sc^S_{imt}
-+\lambda_P\left[C(q_{imt};H_{imt},L_{mt},K_{mt},\Omega_{mt})-\beta_iG(q_{imt},D_{mt})\right]
--\lambda_M\gamma_i\mu_{mt}(e),
-$$
+Para o PMM-E, a generalização autoral é um encaixe entre motivação individual e missão percebida no posto:
 
-substituindo $c_{mt}^{(s)}$ por $\widetilde c_{imt}^{(s)}$ na equação principal de Moehling.
+```math
+g_{rm}^{M}=\gamma_r\mu_m.
+```
 
-## 3. Regra prática de incorporação
+Esse termo só deve ser aberto se houver uma medida defensável de motivação, trajetória vocacional ou congruência de missão.
 
-| Dados efetivamente disponíveis | Complemento | Papel teórico |
+## 3. Versão integrada do modelo
+
+Depois de apresentar as equações originais e seus mapeamentos, o custo locacional expandido pode ser composto como:
+
+```math
+\widetilde c_{rmt}^{(s)}
+=
+c_0^{(s)}(IVS_m)
++a_d\,c_{rm}^{d}
++a_S\lambda_S c_{rm}^{S}
++a_P\lambda_P
+\left[
+C\!\left(q_{rmt};H_{rmt},L_{mt},K_{mt},\Omega_{mt}\right)
+-\beta_{P,r}G\!\left(q_{rmt},D_{mt}\right)
+\right]
+-a_M\lambda_M\gamma_r\mu_m.
+```
+
+Os indicadores $a_k\in\{0,1\}$ registram se a dimensão correspondente pode ser construída com dados adequados; os $\lambda_k$ colocam índices originalmente medidos em escalas diferentes na unidade do custo locacional. Sempre que $a_k=1$, $c_0$ passa a representar apenas o resíduo, excluindo a dimensão aberta.
+
+Substituindo esse custo na estrutura de Moehling, obtemos a versão final:
+
+```math
+V_{rm}^{(s)}
+=
+\sum_t\delta^t
+\left[
+\frac{
+\mathbb{E}\!\left(
+w_{rmt}^{(s)}\mid B_m(IVS_m)
+\right)
+}{p_{mt}}
+-\widetilde c_{rmt}^{(s)}
+\right]
++\varepsilon_{rm},
+\qquad
+m_r^*
+\in
+\underset{m\in\mathcal{M}\cup\{0\}}{\operatorname{arg\,max}}
+\;V_{rm}^{(s)}.
+```
+
+Sem dados adicionais, $a_d=a_S=a_P=a_M=0$ e a versão final volta exatamente ao modelo principal com $c_0=c(IVS)$. Assim, os complementos tornam o modelo escalável sem prometer regressores inexistentes.
+
+## 4. Regra prática de incorporação
+
+| Dados efetivamente disponíveis | Parcela aberta de $c$ | Fundamentação |
 |---|---|---|
-| apenas bolsa e IVS | $c=c(IVS)$ | modelo principal de Moehling |
-| origem ou residência anterior | $c=c(IVS,d)$ | proximidade familiar e trajetória |
-| preços, moradia ou deslocamento | $c^S$ | Redding--Rossi-Hansberg; tradição Roback |
-| produção, equipe ou infraestrutura | $C-\beta G$ ou heterogeneidade por insumos | Choné--Ma; tecnologia de Reinhardt |
-| medida de propósito ou esforço | $-\gamma\mu$ | Barigozzi--Burani |
+| apenas bolsa e IVS | nenhuma: $c_0=c(IVS)$ | Moehling et al. |
+| origem, formação ou residência anterior | $c^d(d)$ | proximidade já contida em Moehling |
+| preços, moradia, amenidades ou deslocamento | $c^S$ | Redding--Rossi-Hansberg; tradição Roback |
+| produção e condições da prática | $c^P=C-\beta_PG$ | Choné--Ma; Reinhardt para a tecnologia |
+| motivação ou congruência de propósito | $-g^M=-\gamma\mu$ | Barigozzi--Burani |
 
-Sem dados para uma extensão, a respectiva referência serve apenas como microfundamentação de componente latente de $c$, e não como pilar de uma especificação estimada.
+Diamond (2016) e Costa, Nunes e Sanches (2024; working paper de 2019) permanecem na [literatura empírica](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md). Eles ajudam a escolher medidas e avaliar plausibilidade, mas não substituem as equações originais acima.
 
-## 4. Referências
+## 5. Referências
 
-- Barigozzi, F.; Burani, N. (2016). *Competition and Screening in the Market for Health Care Providers*. **Journal of Health Economics**, 47, 85--103. [Working paper](https://ftp.iza.org/dp8468.pdf).
-- Choné, P.; Ma, C.-T. A. (2011). *Optimal Health Care Contract under Physician Agency*. **Annals of Economics and Statistics**, 101/102, 229--256. [Texto](https://www.jstor.org/stable/41219166).
-- Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). *Medical Education Reforms and the Origins of the Rural Physician Shortage*. **Cliometrica**, 14, 181--225. [Artigo](https://doi.org/10.1007/s11698-019-00187-w).
-- Redding, S. J.; Rossi-Hansberg, E. (2017). *Quantitative Spatial Economics*. **Annual Review of Economics**, 9, 21--58. [Artigo](https://doi.org/10.1146/annurev-economics-063016-103713).
-- Reinhardt, U. E. (1975). *Physician Productivity and the Demand for Health Manpower*. **Milbank Memorial Fund Quarterly**, 53, 406--423.
-- Roback, J. (1982). *Wages, Rents, and the Quality of Life*. **Journal of Political Economy**, 90, 1257--1278.
+- Barigozzi, F.; Burani, N. (2016). [*Competition and Screening with Motivated Health Professionals*](https://doi.org/10.1016/j.jhealeco.2016.06.003). **Journal of Health Economics**, 50, 358--371. [Working paper com o modelo](https://amsacta.unibo.it/5354/1/WP1072.pdf).
+- Choné, P.; Ma, C.-T. A. (2011). [*Optimal Health Care Contract under Physician Agency*](https://people.bu.edu/ma/CHONE-MA_Annals2011.pdf). **Annals of Economics and Statistics**, 101/102, 229--256.
+- Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14, 181--225. [Manuscrito com a equação](https://niemesgt.github.io/files/MoehlingNiemeshThomassonTreber2019.pdf).
+- Redding, S. J.; Rossi-Hansberg, E. (2017). [*Quantitative Spatial Economics*](https://doi.org/10.1146/annurev-economics-063016-103713). **Annual Review of Economics**, 9, 21--58. [Manuscrito com a equação](https://rossihansberg.economics.uchicago.edu/QSE.pdf).
+- Reinhardt, U. E. (1975). *Physician Productivity and the Demand for Health Manpower: An Economic Analysis*. Ballinger.
+- Roback, J. (1982). [*Wages, Rents, and the Quality of Life*](https://doi.org/10.1086/261120). **Journal of Political Economy**, 90(6), 1257--1278.
