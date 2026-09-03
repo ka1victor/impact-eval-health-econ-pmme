@@ -1,8 +1,8 @@
 # 18. Modelo microeconômico para apresentação
 
 > **Classificação:** síntese da teoria, sem evidência empírica<br>
-> **Base canônica:** [documento 17](17_fundamentacao_teorica_formacao_utilidade_regressores.md)<br>
-> **Atualização:** 2 de setembro de 2026
+> **Base canônica:** [modelo_micro.md](modelo_micro.md)<br>
+> **Atualização:** 3 de setembro de 2026
 
 ## Slide 1 — Núcleo original e adaptação ao PMM-E
 

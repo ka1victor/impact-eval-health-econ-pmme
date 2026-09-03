@@ -1,7 +1,7 @@
 # A4 — Atração e implementação: diagnóstico e linguagem autorizada (02/09/2026)
 
-> Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash 42a8a279)
-> Potência: `output/tema_trabalho/potencia_atracao.json` MDE global 3.8% p30, estrato capital 16.1%/metro 8.4%/próximo 4.8%/remoto 10.9% (DEFF floor)
+> Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash 797f160d)
+> Potência: `output/tema_trabalho/potencia_atracao.json`; MDE aproximado dos contrastes vs remoto: capital 19.5%, metro 13.7%, próximo 11.9%
 > Tipologia A2 strict 540/540 (25/101/238/176) quadro 368 (18/72/203/75)
 > Amostra primária: **1295 células CNES–curso Ch1 em 368 municípios**; estendida 3057 (1762 Ch2)
 
@@ -25,7 +25,7 @@ População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, refor
 | interior proximo polo | 0.127 (0.043)** | 0.042 a 0.211 | 0.005 |
 | metropolitano | 0.294 (0.061)*** | 0.175 a 0.413 | 0.000 |
 
-N=1295, G=368, R²=0.238, outcome médio 30.3%. DEFF global 1.126 (m3.52) — MDE 3.8% indica poder adequado para efeito global; por estrato capital MDE 16.1% e remoto 10.9% limitam nulidade fina.
+N=1295, G=368, R²=0.238, outcome médio 30.3%. O benchmark global de 3,8% mede precisão de uma proporção, não potência do coeficiente. Para os contrastes efetivos contra remoto, os MDEs aproximados são 19.5% (capital), 13.7% (metro) e 11.9% (próximo).
 
 **Logit AME (mesma spec):**
 
@@ -37,6 +37,8 @@ N=1295, G=368, R²=0.238, outcome médio 30.3%. DEFF global 1.126 (m3.52) — MD
 
 
 Concordância LPM–Logit: gradiente metro > capital > próximo > remoto (ref.) persiste; magnitude LPM ≈ AME (dif. <2pp).
+
+**Robustez de definição e unidade.** Separando o funil, o contraste metropolitano vs remoto é 0.285 para alguma confirmação e 0.250 para alguma homologação. Colapsando múltiplos CNES para 1.184 células município–curso, o contraste é 0.331 (p=0.000). O gradiente não depende da união dos estágios nem do peso implícito de municípios com mais de um CNES.
 
 ## 3. Sensibilidade e separações (sem causalidade)
 
@@ -81,8 +83,8 @@ GroupKFold 5 splits por município (treino e teste sem compartilhar município):
 
 ## 6. Figuras
 
-- `A4_figura_01_prob_ajustada_estrato.png`: prob ajustada por estrato (LPM FE, IC cluster).
-- `A4_figura_02_gradiente_ivs.png`: Q1–Q4 IVS (observada vs ajustada).
+- `A4_figura_01_prob_ajustada_estrato.png`: médias marginais por estrato com IC95% delta-method cluster, inclusive a referência.
+- `A4_figura_02_gradiente_ivs.png`: quartis observados e curva marginal com composição curso/UF mantida fixa.
 - `A4_figura_03_faixa_descritiva.png`: FAIXA 1–3 (observada vs ajustada FE) — colinearidade faixa–IVS impede leitura causal.
 
 ## 7. Linguagem autorizada

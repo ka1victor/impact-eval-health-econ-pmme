@@ -2,208 +2,181 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[brazil]{babel}
-\usepackage{amsmath,amssymb,booktabs,graphicx,geometry,hyperref}
+\usepackage{amsmath,booktabs,graphicx,geometry,hyperref}
 \geometry{margin=2.5cm}
 \hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
 
-\title{Incentivos financeiros, vulnerabilidade territorial e provimento\\
-duradouro de especialistas: evidências do Mais Médicos Especialistas}
+\title{Atração administrativa de médicos especialistas e gradientes territoriais:\\
+evidências de implementação do PMM-E}
 \author{Versão de trabalho}
-\date{31 de agosto de 2026}
+\date{3 de setembro de 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Este artigo investiga se incentivos financeiros maiores conseguem compensar a
-menor atratividade de territórios vulneráveis no Mais Médicos Especialistas
-(PMM-E). A estratégia separa um núcleo associativo de implementação de um
-upgrade causal condicionado: o gradiente do Índice de Vulnerabilidade Social
-(IVS) descreve a dificuldade territorial, enquanto saltos de R\$ 5 mil na bolsa
-são o tratamento causal candidato. O escore administrativo ainda não foi
-reconstruído; portanto, nenhuma regressão descontínua é estimada nesta versão.
-Como evidência inicial, o painel mensal do Cadastro Nacional de
-Estabelecimentos de Saúde (CNES) compara vagas inicialmente imediatas às
-mantidas em reserva. No universo publicado há 587 células município--curso em
-368 municípios; a amostra com variação identificadora contém 319 células em 93
-municípios. A diferença ajustada na probabilidade de alocação confirmada foi de
-2,79 pontos percentuais, com intervalo de confiança amplo
-($IC_{95\%}=[-10{,}91;16{,}48]$). No CNES, a diferença ajustada pós-política no
-estoque foi de $-0{,}446$ especialista por célula
-($IC_{95\%}=[-0{,}934;0{,}042]$). Esses resultados não sustentam uma conclusão
-causal de sucesso ou fracasso. O trabalho é viável como análise econométrica de
-preenchimento e oferta local persistente, com linguagem associativa. A
-identificação do efeito local da bolsa permanece condicionada à validação do
-escore, da regra histórica, do primeiro estágio e das cointervenções.
+Este artigo examina a distribuição territorial da atração administrativa no
+primeiro ciclo do Programa Mais Médicos Especialistas (PMM-E). A análise
+principal cobre 1.295 células estabelecimento--curso em 368 municípios. Alguma
+confirmação ou homologação ocorreu em 30,3\% das células. Em modelo linear com
+efeitos fixos de curso e unidade da federação e erros agrupados por município,
+células metropolitanas apresentaram probabilidade 29,4 pontos percentuais maior
+de atração que células do interior remoto. O contraste foi 19,8 pontos no
+ajuste completo, 28,5 pontos ao usar apenas confirmação, 25,0 pontos ao usar
+apenas homologação e 33,1 pontos ao colapsar a amostra para município--curso.
+Como evidência secundária, um estudo dinâmico do Cadastro Nacional de
+Estabelecimentos de Saúde (CNES), restrito a 587 células de dez cursos com CBO
+unívoco em 295 municípios, encontrou diferença associada à atração de 0,50
+médico cadastrado em março de 2026 (EP 0,23), relativa a junho de 2025. A
+distribuição dessa mudança é assimétrica e contém uma observação extrema de
+211. Os resultados documentam um gradiente territorial de implementação e uma
+trajetória cadastral diferencial modesta. Não identificam efeito causal da
+bolsa, provimento atribuível ao programa ou retenção individual.
 \end{abstract}
 
-\section{Pergunta, contribuição e status da evidência}
+\section{Pergunta e contribuição}
 
-O PMM-E procura ampliar a disponibilidade de especialistas no Sistema Único de
-Saúde, inclusive em territórios vulneráveis. A pergunta substantiva é se bolsas
-maiores compensam desvantagens territoriais no preenchimento e no provimento
-duradouro das vagas. ``Provimento duradouro'' significa oferta cadastrada local
-observada em horizonte fixo; não significa retenção individual do bolsista.
+O PMM-E pretende ampliar a disponibilidade de especialistas no Sistema Único
+de Saúde, inclusive em territórios vulneráveis. A pergunta empiricamente
+identificável nesta etapa é onde a oferta administrativa conseguiu atrair ao
+menos uma confirmação ou homologação e como essa atração se distribuiu entre
+capitais, áreas metropolitanas, interior próximo a polos e interior remoto.
 
-Salário anunciado e IVS não são regressoras independentes simples: o primeiro é
-definido, em princípio, pela faixa do segundo. O efeito causal candidato é o
-salto na oferta da bolsa junto ao cutoff. O gradiente de IVS fora do salto é uma
-associação territorial, não o efeito causal da vulnerabilidade.
+Essa formulação é mais estreita que estimar o efeito causal do valor da bolsa.
+Faixa anunciada e IVS 2010 são ligados pela regra administrativa e não devem ser
+tratados como fontes independentes de variação. Uma auditoria não reproduziu a
+faixa publicada em 177 dos 368 municípios; por isso, o desenho de regressão
+descontínua foi encerrado no primeiro portão. O IVS 2010 permanece a running
+variable canônica para eventual retomada, condicionada à recuperação do escore,
+da vintagem e da regra exatos.
 
-Enquanto o portão da RDD permanece fechado, a pergunta empiricamente observável
-é mais estreita: estabelecimentos associados a vagas inicialmente imediatas
-apresentaram trajetória diferente daquelas inicialmente mantidas em reserva?
+A contribuição atual é dupla. Primeiro, documentamos a desigualdade territorial
+na realização do funil administrativo com denominador auditável. Segundo,
+avaliamos, separadamente e em caráter descritivo, se municípios--curso com
+atração apresentaram trajetória distinta de oferta médica cadastrada no CNES.
 
-Essa comparação é substantivamente útil para diagnosticar implementação, mas
-não equivale a comparar PMM-E com ausência do programa. A priorização pode
-refletir demanda, capacidade, vulnerabilidade e decisões administrativas não
-observadas. Além disso, o PMM-E integra o Agora Tem Especialistas, pacote com
-outras ações simultâneas. A redação do artigo, portanto, usa ``diferença
-ajustada'' e reserva ``efeito causal'' ao desenho que satisfizer um portão de
-identificação explícito.
+\section{Dados, população e desfechos}
 
-\section{Dados, unidades e desfechos}
+A coorte principal contém as células CNES--curso do quadro da primeira chamada.
+Não usamos o número de vagas físicas como denominador porque confirmações em
+cadastro de reserva, reapresentações e células com eventos acima da capacidade
+publicada impedem uma correspondência estável vaga--evento. O desfecho de
+atração é, portanto, binário: alguma confirmação ou homologação na célula.
 
-O painel combina as vagas oficiais do ciclo 1 com vínculos cadastrados no CNES.
-A unidade é a célula município--curso por competência mensal. Curso, especialidade
-e CBO não são conceitos intercambiáveis; o pareamento é documentado e precisa
-ser validado antes de qualquer extensão.
+A tipologia territorial foi congelada antes dos resultados a partir da REGIC
+2018 e das RM/RIDE 2022. A categoria de referência é interior remoto. A amostra
+tem 1.295 células, 368 municípios e 393 células com atração (30,3\%).
 
-O desfecho principal atual é o estoque cadastrado de especialistas compatíveis.
-Também se examinam cobertura, entradas e saídas mensais. Presença no CNES não
-prova participação no PMM-E, exercício físico efetivo, carga líquida adicional
-ou pagamento de bolsa.
+Para a análise secundária, agregamos vínculos CNES dentro de cada
+município--curso em 26 competências, de junho de 2024 a julho de 2026. A amostra
+confirmatória inclui 587 células de dez cursos com CBO sem sobreposição, em 295
+municípios. Junho de 2025 é a última referência inequivocamente anterior à
+oferta; setembro de 2025 não é baseline porque as datas físicas observadas
+começam naquele mês. O desfecho é o estoque distinto de profissionais
+cadastrados no município--curso. Ele não identifica médicos participantes do
+PMM-E, exercício físico efetivo ou retenção individual.
 
-\begin{table}[htbp]
-\centering
-\caption{Escala e composição da análise inicial}
-\begin{tabular}{lr}
-\toprule
-Objeto & Quantidade \\
-\midrule
-Células município--curso no universo publicado & 587 \\
-Municípios no universo publicado & 368 \\
-Células na amostra com variação identificadora & 319 \\
-Municípios na amostra com variação identificadora & 93 \\
-Estoque médio inicial, imediata & 7,25 \\
-Estoque médio inicial, reserva & 10,85 \\
-IVS médio, imediata & 0,341 \\
-IVS médio, reserva & 0,346 \\
-\bottomrule
-\end{tabular}
-\end{table}
+\section{Estratégia empírica}
 
-As diferenças de nível já presentes no início mostram por que a trajetória
-bruta não deve ser lida como experimento natural. Na janela exibida na Figura
-3, a média passa de aproximadamente 7,09 para 8,35 no grupo imediato e de 10,77
-para 12,77 no grupo reserva. O gráfico descreve 319 células em 93 municípios;
-não compara grandes centros com interior nem participantes individuais com não
-participantes.
-
-\section{Estratégia comparativa atual}
-
-A especificação de tripla diferença explora variação entre modalidade, período
-e curso dentro de unidades comparáveis:
-
+O modelo principal de atração é
 \begin{equation}
-Y_{ist}=\alpha_{is}+\gamma_{it}+\delta_{st}
-+\beta(\mathrm{Imediata}_{is}\times\mathrm{P\acute{o}s}_t)
-+\varepsilon_{ist},
+ A_{ics}=\alpha+\sum_{k\neq r}\beta_k T_{ik}+\gamma_c+\delta_s+\varepsilon_{ics},
 \end{equation}
+em que $A_{ics}$ indica atração na célula de município $i$, curso $c$ e UF $s$;
+$T_{ik}$ representa os estratos territoriais; e $r$ é interior remoto. Os
+erros-padrão são agrupados por município. Um Logit com efeitos marginais médios
+é alternativa pré-especificada. O ajuste completo acrescenta IVS 2010,
+logaritmo da população, estoque prévio e faixa anunciada.
 
-em que $i$ denota município ou estabelecimento, $s$ o curso/especialidade e $t$
-a competência mensal. Os efeitos fixos absorvem heterogeneidade permanente da
-célula, choques gerais da unidade no mês e choques nacionais de especialidade.
-Erros-padrão são agrupados no município; a auditoria final deve acrescentar wild
-cluster bootstrap e inferência de randomização quando aplicáveis.
+As robustez incluem separar confirmação de homologação, colapsar múltiplos CNES
+para município--curso, winsorizar covariadas e excluir uma UF, curso ou
+município por vez. O benchmark global de 3,8 pontos percentuais mede precisão de
+uma proporção e não é o MDE de um coeficiente territorial. Para o contraste
+metropolitano versus interior remoto, o MDE prévio aproximado é 13,7 pontos sob
+$p=0{,}30$.
 
-Essa especificação melhora comparabilidade, mas não elimina seleção em
-priorização. O teste conjunto dos coeficientes pré não rejeita zero
-($F=1{,}262$, $p=0{,}255$); isso é compatível com, mas não demonstra, tendências
-paralelas. Poder estatístico limitado e diferenças de composição continuam
-relevantes.
+Na análise dinâmica, estimamos interações entre atração realizada e cada
+competência, omitindo junho de 2025. O modelo absorve efeitos fixos de
+município--curso, curso--mês e UF--mês, com erros agrupados por município. Como
+atração é um resultado realizado, e não tratamento exógeno, os coeficientes são
+diferenças condicionais de trajetória, não efeitos do programa.
 
-\section{Resultados de implementação}
+\section{Resultados}
 
 \begin{table}[htbp]
 \centering
-\caption{Diferenças ajustadas após a prioridade imediata}
-\begin{tabular}{lrrr}
+\caption{Contraste metropolitano versus interior remoto na atração}
+\begin{tabular}{lrr}
 \toprule
-Desfecho & Estimativa & Erro-padrão & $p$ \\
+Especificação/desfecho & Diferença (p.p.) & Erro-padrão (p.p.) \\
 \midrule
-Alocação confirmada (p.p.) & 2,79 & 6,89 & 0,687 \\
-Estoque de especialistas & -0,446 & 0,246 & 0,073 \\
-Cobertura (p.p.) & 0,73 & 1,54 & 0,637 \\
-Entradas mensais & -0,073 & 0,042 & 0,087 \\
-Saídas mensais & -0,018 & 0,050 & 0,716 \\
+LPM pré-especificado & 29,4 & 6,1 \\
+Logit, efeito marginal médio & 29,3 & 6,4 \\
+Ajuste completo & 19,8 & 8,5 \\
+Apenas confirmação & 28,5 & 6,0 \\
+Apenas homologação & 25,0 & 5,0 \\
+Unidade município--curso & 33,1 & 6,1 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Os intervalos são largos e incluem efeitos substantivamente distintos. A
-estimativa negativa de estoque é sugestiva, mas não permite afirmar que a oferta
-imediata reduziu especialistas nem que o PMM-E fracassou. Da mesma forma, a
-estimativa no nível do estabelecimento ($-0{,}443$;
-$IC_{95\%}=[-1{,}238;0{,}351]$) não exclui redistribuição ou canibalização.
+O gradiente metropolitano é grande em relação ao MDE do contraste e permanece
+positivo nas variações de estágio e unidade. No modelo principal, capital e
+interior próximo também apresentam diferenças positivas de 23,2 e 12,7 pontos,
+respectivamente. No ajuste completo, esses dois contrastes atenuam e perdem
+precisão; o metropolitano permanece em 19,8 pontos ($p=0{,}020$), embora a
+correção FDR entre estratos seja limítrofe. IVS e faixa não fornecem evidência
+separável de um mecanismo monetário.
 
-Entre profissionais classificados como entrantes no painel, 86,9\% no grupo
-imediato e 79,7\% no grupo reserva permanecem observados seis meses depois. Essa
-é uma estatística condicional e descritiva: o tratamento pode alterar quem entra,
-e o CNES não identifica quais entrantes pertencem ao programa. Ela não demonstra
-que ``retenção é alta'' por causa do PMM-E, nem que atração seja o único gargalo.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.94\textwidth]{output/tema_trabalho/A4_figura_01_prob_ajustada_estrato.png}
+\caption{Probabilidades ajustadas de atração por estrato territorial. Intervalos
+de 95\% usam erros agrupados por município, inclusive para a referência.}
+\end{figure}
 
-\section{O que a evidência permite concluir}
+No CNES, o teste conjunto dos coeficientes anteriores à referência não rejeita
+zero ($F=1{,}03$, $p=0{,}420$). Em março de 2026, a diferença associada à
+atração é 0,50 profissional por célula (EP 0,23; $p=0{,}033$). A sensibilidade
+com todos os 16 cursos produz 0,60 (EP 0,22; $p=0{,}006$), mas mistura CBOs
+sobrepostos e não é a amostra principal.
 
-Os dados sustentam três afirmações limitadas. Primeiro, a prioridade imediata
-teve primeiro estágio impreciso sobre a alocação confirmada. Segundo, não se
-observa aumento relativo robusto no estoque cadastral durante a janela estudada.
-Terceiro, as trajetórias dos dois grupos já diferiam em nível e composição antes
-da política.
+A mudança entre junho de 2025 e março de 2026 tem mediana zero sem atração e um
+com atração. As médias são 0,55 e 2,29, respectivamente, enquanto os máximos são
+25 e 211. Essa discrepância mostra por que o resultado deve ser apresentado com
+medianas, caudas e análise winsorizada. Modelos de nível também carregam
+diferenças anteriores à oferta e ficam restritos a diagnóstico.
 
-Não se pode derivar destes resultados que infraestrutura, carreira ou desenho
-de seleção causaram o padrão observado; que polos urbanos ``venceram'' a disputa;
-que bolsas nominais são ineficazes; ou que a vinculação direta ao CNES seria a
-reforma ótima. Essas hipóteses podem orientar discussão e testes futuros, desde
-que sejam apresentadas como mecanismos possíveis, não como achados.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.97\textwidth]{output/tema_trabalho/A5_figura_04_estudo_evento_atracao.png}
+\caption{Evolução diferencial do estoque cadastrado associada à atração
+administrativa. Junho de 2025 é a referência.}
+\end{figure}
 
-\section{Próximo desenho causal: adicional de bolsa}
+\section{Limitações e escopo da interpretação}
 
-A estratégia prioritária explora os saltos anunciados de R\$ 5 mil no valor da
-bolsa próximos a IVS 0,400/0,401 e 0,500/0,501. O tratamento é a elegibilidade ao
-valor maior, não a simples existência de uma vaga. O desfecho administrativo
-primário deve ser procura e preenchimento por vaga imediata efetivamente
-ofertada; cadastro de reserva não pertence ao denominador. Efeitos no CNES vêm
-apenas depois de demonstrado esse primeiro estágio.
+Confirmação e homologação são etapas administrativas, não exercício. O CNES é
+um cadastro agregado e não revela quais profissionais pertencem ao programa.
+Datas físicas são observadas apenas para sobreviventes e variam entre setembro
+de 2025 e março de 2026. Atração realizada pode refletir demanda, capacidade,
+centralidade urbana e outras decisões não observadas. Não rejeitar
+pré-tendências tampouco prova paralelismo.
 
-O desenho só será executado se quatro condições forem verificadas: (i) versão,
-precisão e arredondamento do IVS usados pelo controlador; (ii) reprodução exata
-da faixa anunciada; (iii) suporte local suficiente; e (iv) inexistência de outra
-regra ou componente do Agora Tem Especialistas que salte no mesmo limiar. Uma
-auditoria preliminar encontrou divergência entre a faixa publicada e uma
-reconstrução local do IVS em 177 de 368 municípios do ciclo 1. Assim, o portão
-está fechado até a regra ser reconstruída; não é legítimo estimar a RDD com o
-escore aproximado disponível.
-
-Pela natureza discreta do IVS, randomização local é a abordagem principal
-candidata. RDD local-linear, múltiplas larguras de banda, testes de densidade e
-placebos serão diagnósticos. O limiar 0,400 parece ter suporte mais promissor; o
-de 0,500 pode ser usado como replicação apenas se houver observações suficientes.
-O protocolo operacional e os critérios de interrupção estão documentados em
-\texttt{docs/14\_plano\_implementacao\_rdd\_bolsa.md}; a formulação substantiva
-e a auditoria de viabilidade estão em
-\texttt{docs/15\_incentivos\_ivs\_provimento\_duradouro.md}.
+Consequentemente, não derivamos efeitos sobre retenção individual,
+resolutividade, exames, internações, filas ou custo-benefício. Esses objetos
+exigem ponte nominal, logs administrativos, pagamentos e bases SIH/SIA com
+portões próprios.
 
 \section{Conclusão}
 
-A primeira análise oferece um diagnóstico relevante da implementação, mas não
-uma estimativa causal definitiva. A contribuição mais rigorosa, hoje, é separar
-desvantagem territorial, incentivo anunciado, preenchimento e oferta local
-persistente. Prioridade administrativa e alocação efetiva são etapas distintas,
-e o painel público não revela um aumento relativo robusto no estoque cadastral
-na janela examinada. A contribuição causal potencial é medir se um adicional de
-bolsa altera procura e preenchimento exatamente nos limiares do IVS. O projeto
-deve resolver primeiro o portão documental da RDD e reservar ``retenção do
-bolsista'' para dados que identifiquem participante, vaga e eventos no tempo.
+O achado mais sólido é a desigualdade territorial na atração administrativa:
+células metropolitanas tiveram probabilidade substancialmente maior de avançar
+no funil que células do interior remoto, e o padrão resiste à mudança de estágio
+e unidade. A dinâmica do CNES é compatível com uma diferença positiva e modesta
+na oferta cadastrada posterior, mas é sensível a caudas e composição. O artigo,
+portanto, sustenta uma avaliação associativa de implementação. Uma avaliação
+causal do adicional da bolsa requer reconstruir primeiro a regra do IVS e
+pré-registrar um novo desenho.
 
 \end{document}

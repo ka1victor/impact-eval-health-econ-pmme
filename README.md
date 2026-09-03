@@ -6,20 +6,20 @@ deliberadamente separados.
 
 Há três camadas separadas no repositório:
 
-1. **Tema principal com entrega garantida:** quais características territoriais
-   e das vagas estão associadas à atração administrativa e à persistência da
-   oferta médica local fora das capitais?
+1. **Resultado principal:** quais características territoriais estão associadas
+   à atração administrativa no primeiro ciclo?
 2. **Upgrade causal:** R$ 5 mil adicionais de bolsa aumentam a
    procura e o preenchimento das vagas junto aos limiares administrativos do
    IVS?
-3. **Diagnóstico já executado:** vagas inicialmente imediatas apresentaram
-   trajetória de estoque CNES diferente das inicialmente mantidas em reserva?
+3. **Resultado secundário:** células município–curso com atração administrativa
+   apresentaram evolução distinta da oferta médica cadastrada no CNES?
 
 ## Decisão atual
 
-> **Resultado vigente:** o tema é viável como econometria associativa de
-> implementação. Imediata versus reserva continua sendo comparação ajustada,
-> e o RDD do adicional da bolsa continua bloqueado até a reconstrução da regra.
+> **Resultado vigente:** o núcleo publicável é uma econometria associativa de
+> implementação. Em 1.295 células/368 municípios, metropolitano está associado
+> a +29,4pp de atração versus interior remoto (+19,8pp no ajuste completo). A
+> dinâmica CNES é secundária; o RDD continua encerrado em R1.
 
 O plano rápido está em
 [`docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`](docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md).
@@ -45,7 +45,7 @@ unidade primária será município–curso–chamada, com outcome administrativo
 binário por célula; vagas imediatas não formarão denominador. CNES, SIH e SIA são extensões
 condicionais, não a primeira estimação.
 
-O diagnóstico encerrado usa `município–curso–mês` no ciclo 1 e o CNES mensal de
+O diagnóstico histórico imediata versus reserva usa `município–curso–mês` no ciclo 1 e o CNES mensal de
 junho de 2024 a julho de 2026:
 
 - 2024-06 a 2025-06: pré-tratamento;
@@ -58,7 +58,7 @@ curso–mês, acompanhada por estudo de evento. O plano completo está em
 pipeline e dos resultados está em
 [`docs/auditorias/04_auditoria_pipeline_agregado.md`](docs/auditorias/04_auditoria_pipeline_agregado.md).
 
-## Interpretação correta do diagnóstico encerrado
+## Interpretação correta do diagnóstico histórico
 
 "Vaga imediata" e "cadastro de reserva" são o contraste empírico, não o tema do
 trabalho. O contraste mede a diferença ajustada após disponibilizar inicialmente
@@ -84,12 +84,19 @@ produção, redução de espera ou melhora de saúde.
   não presume 40 horas e censura margens sem seguimento.
 - A ponte curso–CBO é operacional, não uma crosswalk oficial. Dez cursos sem
   CBO compartilhado formam a amostra confirmatória.
+- A4 é o resultado principal: atração em 30,3% das células; metropolitano
+  +29,4pp versus interior remoto, preservado em confirmação (+28,5pp),
+  homologação (+25,0pp) e unidade município–curso (+33,1pp).
+- A5 usa como principal 587 células município–curso em 295 municípios, referência
+  limpa 202506 e follow-up 202603. O estudo dinâmico encontra +0,50 profissional
+  cadastrado em março de 2026 (EP 0,23), em linguagem estritamente associativa;
+  a mediana é 1 e o máximo 211 no grupo com atração.
 - No grão e na amostra da DDD, imediata versus reserva não prediz alocação:
   +2,79 p.p., erro-padrão 6,89 p.p., `p=0,6871`. O portão causal não foi
   aprovado.
-- A diferença ajustada principal no estoque foi −0,446 especialista por
-  município–curso (IC 95% [−0,934; 0,042]). Esse número não é interpretado
-  como efeito causal.
+- A antiga diferença imediata versus reserva de −0,446 especialista é mantida
+  apenas como diagnóstico histórico de outro estimando, não como resultado
+  principal do artigo.
 
 O portão A06 continua válido para o desenho individual anterior, bloqueado por
 dados administrativos. O plano agregado atual não exige vincular nominalmente
@@ -135,16 +142,16 @@ madura e seguirá a especificação congelada, sem redesenho pelo resultado.
 
 ## Escopo e bloqueios
 
-O portão A1 foi concluído como `APROVADO_CELULA`; R1 ainda reconstrói a regra da
-bolsa. A2 está liberado para congelar a tipologia territorial sem outcomes. A
-DDD, o estoque, os fluxos e a presença em
-seis meses permanecem como resultados fechados do diagnóstico anterior.
+O portão A1 foi concluído como `APROVADO_CELULA`; A2–A6 foram executados e
+auditados. R1 não reproduziu a regra da bolsa, portanto o RDD está encerrado
+até que surja documentação administrativa nova. A DDD imediata versus reserva
+permanece como diagnóstico histórico, separado da A4 e da A5 revisada.
 
 Permanecem congelados: estimação do ciclo 3 antes da maturidade; efeito da dose
 recebida sem pagamentos; SIA/SUS, SIH/SUS, fila, saúde e custos antes dos
 portões do RDD; identificação individual sem ponte; e envio dos pedidos A07.
-Estão liberados A2 e R1; R2 continua condicionado a R1. A3 deve congelar o protocolo
-antes de A4. Métodos sintéticos não serão usados para reparar
+Uma eventual retomada começa em R1; R2 continua condicionado à sua aprovação.
+Métodos sintéticos não serão usados para reparar
 retrospectivamente a DDD anterior.
 
 ## Executar o estado validado
@@ -154,14 +161,13 @@ python run_all.py
 ```
 
 O comando exige que os 26 arquivos mensais listados no manifesto CNES já
-estejam disponíveis localmente. Ele reproduz a integração, os portões, a
-comparação ajustada, tabelas, figuras e nota técnica. Novas rotinas entram no
-pipeline somente depois de passarem pelos portões de esquema, cobertura e
-coerência substantiva.
+estejam disponíveis localmente. Ele reproduz a integração, a comparação
+histórica e as etapas A1–A6 do núcleo associativo, incluindo tabelas, figuras,
+red team e manifesto de hashes.
 
 ## Estrutura
 
-A documentação acadêmica segue o [mapa canônico dos blocos](docs/README.md). Ele separa literatura empírica, literatura teórica/modelo microeconômico, metodologia de identificação e resultados. O [modelo teórico](docs/02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md) não usa papers empíricos como fundamento das equações; esses trabalhos ficam no [catálogo empírico](docs/03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
+A documentação acadêmica segue o [mapa canônico dos blocos](docs/README.md). Ele separa literatura empírica, literatura teórica/modelo microeconômico, metodologia de identificação e resultados. O [modelo teórico](docs/02_teoria/modelo_micro.md) não usa papers empíricos como fundamento das equações; esses trabalhos ficam no [catálogo empírico](docs/03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
 
 ```text
 data/      bases observadas preservadas

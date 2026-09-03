@@ -101,19 +101,19 @@
   },
   "hashes_entradas": {
     "output/aquisicao/quadro_vagas_tratamento.parquet": {
-      "sha256": "41e1d3afee23994821361d8a60d9e507e3b1c25cf69ae882c10008ae27d8b149"
+      "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f"
     },
     "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
       "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
     },
     "output/aquisicao/malha_municipios_regioes_saude.parquet": {
-      "sha256": "fbc90bfc1ba4914da94a0ac199ac083ab37b085d21870d4bf0ff9be407f8bfe2"
+      "sha256": "5c188c3de49e985e858eb4b156bcb3fed890ace7173fe8eb7ba160da2e643e03"
     },
     "output/tema_trabalho/manifesto_tipologia_territorial.json": {
-      "sha256": "80bc3811eb2664fb7a94fbaf5aa51894f3e731ccad03db840017866390cac9cc"
+      "sha256": "81cf5637a9e5f1e3867db7b617d0fb090da4138672ee600cd02bf516e0dcf1f6"
     },
     "output/tema_trabalho/portao_denominador.json": {
-      "sha256": "4698b9437513ced588de1d892580ebc95517cc4b707e18f8323697a8ae53175d"
+      "sha256": "aabb0f3db8a0f060087e4e6f1cdeb90559c90e5ed5e467c929aa49fd700e9ec9"
     },
     "data/raw/aquisicao/territorio/REGIC2018_Municipios_Hierarquia_e_regiao.xlsx": {
       "sha256": "f1d29395964e4827d8294d27b57bcffb36fc47918f91b8ecee4efdbac1cda03e"

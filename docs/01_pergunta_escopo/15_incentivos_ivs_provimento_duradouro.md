@@ -1,7 +1,7 @@
 # Atração e provimento duradouro de especialistas fora das capitais
 
 > [!CAUTION]
-> **Documento canônico para pergunta e estimandos, não para teoria.** Afirmações empíricas devem ser tratadas como evidência; a fundamentação microeconômica vigente está no [documento 17](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md).
+> **Documento canônico para pergunta e estimandos, não para teoria.** Afirmações empíricas devem ser tratadas como evidência; a fundamentação microeconômica vigente está em [modelo_micro.md](../02_teoria/modelo_micro.md).
 
 > **Decisão em 31/08/2026, após conferência das bases:** o tema é viável como
 > trabalho econométrico de implementação, com núcleo associativo e upgrade

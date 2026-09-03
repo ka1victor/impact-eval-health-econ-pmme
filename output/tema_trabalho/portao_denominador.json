@@ -23,7 +23,7 @@
   },
   "fontes": {
     "output/aquisicao/quadro_vagas_tratamento.parquet": {
-      "sha256": "41e1d3afee23994821361d8a60d9e507e3b1c25cf69ae882c10008ae27d8b149"
+      "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f"
     },
     "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx": {
       "sha256": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec"

@@ -34,6 +34,8 @@
       }
     },
     "alternativo_logit_AME": {
+      "convergiu": true,
+      "metodo": "lbfgs",
       "ame_estrato": {
         "estrato_capital": 0.2500513199434005,
         "estrato_interior_proximo_polo": 0.10773369376352554,
@@ -44,6 +46,64 @@
         "estrato_interior_proximo_polo": 0.04020812763643838,
         "estrato_metropolitano": 0.06413141532706976
       }
+    },
+    "robustez_estagios_funil": {
+      "alguma_confirmacao": {
+        "media": 0.29884169884169887,
+        "coef_estrato": {
+          "estrato_capital": 0.22439672340533534,
+          "estrato_interior_proximo_polo": 0.12247552438501798,
+          "estrato_metropolitano": 0.28522664150294025
+        },
+        "se_estrato": {
+          "estrato_capital": 0.0860237009469749,
+          "estrato_interior_proximo_polo": 0.042798676927578494,
+          "estrato_metropolitano": 0.05965487655834023
+        },
+        "p_estrato": {
+          "estrato_capital": 0.00909279676231514,
+          "estrato_interior_proximo_polo": 0.004214205726937021,
+          "estrato_metropolitano": 1.7418294148872261e-06
+        }
+      },
+      "alguma_homologacao": {
+        "media": 0.19305019305019305,
+        "coef_estrato": {
+          "estrato_capital": 0.13397497852519136,
+          "estrato_interior_proximo_polo": 0.10458582107552036,
+          "estrato_metropolitano": 0.24950473866121572
+        },
+        "se_estrato": {
+          "estrato_capital": 0.06659786793486806,
+          "estrato_interior_proximo_polo": 0.03713230768349177,
+          "estrato_metropolitano": 0.049830998543964763
+        },
+        "p_estrato": {
+          "estrato_capital": 0.044251495234235175,
+          "estrato_interior_proximo_polo": 0.004853914988053697,
+          "estrato_metropolitano": 5.527957491565111e-07
+        }
+      }
+    },
+    "robustez_municipio_curso": {
+      "n": 1184,
+      "n_clusters": 368,
+      "coef_estrato": {
+        "estrato_capital": 0.2702768545487433,
+        "estrato_interior_proximo_polo": 0.13324156365238893,
+        "estrato_metropolitano": 0.33094398554753035
+      },
+      "se_estrato": {
+        "estrato_capital": 0.09136849672530176,
+        "estrato_interior_proximo_polo": 0.04383672724612814,
+        "estrato_metropolitano": 0.06076208408995336
+      },
+      "p_estrato": {
+        "estrato_capital": 0.0030954493717487382,
+        "estrato_interior_proximo_polo": 0.0023697423217923543,
+        "estrato_metropolitano": 5.1354953528828286e-08
+      },
+      "nota": "colapso por municipio-curso evita peso implicito de multiplos CNES"
     },
     "sensibilidade_full": {
       "coef_estrato_full": {
@@ -218,11 +278,11 @@
     },
     {
       "modelo": "Logit_minimal",
-      "auc_media_out": 0.7564507390996129,
-      "auc_sd_out": 0.02152074250622245,
+      "auc_media_out": 0.7563289239350743,
+      "auc_sd_out": 0.02128678677480949,
       "auc_insample": 0.8007340205254933,
-      "brier_media_out": 0.17874697165594977,
-      "brier_sd_out": 0.01036442606578281,
+      "brier_media_out": 0.17874561703743835,
+      "brier_sd_out": 0.01036534609404088,
       "brier_insample": 0.1585105091080419,
       "n_splits": 5,
       "grupos": "municipio",
@@ -230,17 +290,16 @@
     }
   ],
   "potencia_referencia": {
-    "global_MDE_p30": 0.0379,
-    "por_estrato_MDE_p30": {
-      "capital": 0.1613,
-      "metropolitano": 0.084,
-      "interior_proximo_polo": 0.0483,
-      "interior_remoto": 0.1087
+    "benchmark_global_proporcao_p30": 0.0379,
+    "contrastes_vs_interior_remoto_p30": {
+      "capital": 0.1946,
+      "metropolitano": 0.1374,
+      "interior_proximo_polo": 0.119
     }
   },
   "hashes_entradas": {
     "output/aquisicao/quadro_vagas_tratamento.parquet": {
-      "sha256": "41e1d3afee23994821361d8a60d9e507e3b1c25cf69ae882c10008ae27d8b149"
+      "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f"
     },
     "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
       "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
@@ -249,16 +308,16 @@
       "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
     },
     "output/tema_trabalho/manifesto_tipologia_territorial.json": {
-      "sha256": "80bc3811eb2664fb7a94fbaf5aa51894f3e731ccad03db840017866390cac9cc"
+      "sha256": "81cf5637a9e5f1e3867db7b617d0fb090da4138672ee600cd02bf516e0dcf1f6"
     },
     "output/tema_trabalho/portao_denominador.json": {
-      "sha256": "4698b9437513ced588de1d892580ebc95517cc4b707e18f8323697a8ae53175d"
+      "sha256": "aabb0f3db8a0f060087e4e6f1cdeb90559c90e5ed5e467c929aa49fd700e9ec9"
     },
     "output/tema_trabalho/registro_pre_analise_atracao.json": {
-      "sha256": "42a8a279eb680bcaf7b5e3138ae3c03e7f49b6576176a4254bf487635035907c"
+      "sha256": "797f160d32f9f00e699508d7415c5240848b3108eb2fe2feaf4f09d41dd02f74"
     },
     "output/tema_trabalho/potencia_atracao.json": {
-      "sha256": "e3fe2dc76989b3f2f5874049b8cf9ba31c913f6f6da08a8c1ebe24d5b1250847"
+      "sha256": "def99ef739d5a7d124de5790c085acc3716a8645da9e1fb676ed9258fe8dafb1"
     }
   },
   "arquivos": {
@@ -269,6 +328,8 @@
     "tabela_amostra_uf": "output/tema_trabalho/A4_tabela_01d_amostra_uf.csv",
     "tabela_principal_LPM": "output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv",
     "tabela_logit_AME": "output/tema_trabalho/A4_tabela_02b_logit_AME.csv",
+    "tabela_estagios_funil": "output/tema_trabalho/A4_tabela_02c_confirmacao_homologacao.csv",
+    "tabela_municipio_curso": "output/tema_trabalho/A4_tabela_02d_municipio_curso.csv",
     "tabela_separacao": "output/tema_trabalho/A4_tabela_03_separacao_faixa_ivs_remoticidade.csv",
     "tabela_ajuste_completo": "output/tema_trabalho/A4_tabela_03b_ajuste_completo.csv",
     "tabela_winsorizado": "output/tema_trabalho/A4_tabela_03c_winsorizado.csv",

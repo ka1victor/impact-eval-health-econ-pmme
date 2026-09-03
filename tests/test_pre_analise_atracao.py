@@ -53,8 +53,9 @@ class PreAnaliseAtracaoTest(unittest.TestCase):
     def test_potencia_global_e_por_estrato(self) -> None:
         self.assertAlmostEqual(self.potencia["alfa_bilateral"], 0.05)
         self.assertAlmostEqual(self.potencia["poder_alvo"], 0.80)
-        # Global MDE ~3-4pp bem abaixo de 10pp relevante
+        # O global é apenas benchmark de uma proporção, não potência do contraste.
         self.assertLess(self.potencia["mde_global"]["mde_80_pp_p30"], 0.05)
+        self.assertIn("não é o MDE", self.potencia["mde_global"]["rotulo"])
         # Próximo é o estrato mais potenciado (maior n)
         self.assertLess(
             self.potencia["por_estrato"]["interior_proximo_polo"]["mde_80_pp_p30"],
@@ -88,6 +89,14 @@ class PreAnaliseAtracaoTest(unittest.TestCase):
         for estr, exp in esperado.items():
             obt = self.potencia["por_estrato"][estr]["mde_80_pp_p30"]
             self.assertAlmostEqual(obt, exp, places=3, msg=f"MDE {estr} esperado {exp} obtido {obt}")
+
+    def test_potencia_contrastes_vs_remoto(self) -> None:
+        contrastes = self.potencia["contrastes_vs_interior_remoto"]
+        self.assertEqual(set(contrastes), {"capital", "metropolitano", "interior_proximo_polo"})
+        for vals in contrastes.values():
+            self.assertEqual(vals["referencia"], "interior_remoto")
+            self.assertGreater(vals["mde_80_pp_p30"], 0.10)
+            self.assertGreater(vals["mde_80_pp_p50"], vals["mde_80_pp_p30"])
 
     def test_potencia_clusters_quadro_coerencia(self) -> None:
         # Garante que potência por estrato usa join quadro↔tipologia (clusters do quadro), não populacao A1

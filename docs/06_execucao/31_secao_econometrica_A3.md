@@ -22,12 +22,14 @@ Poisson/NB apenas descritivo para contagens.
 **Covariadas.** Estrato A2, IVS 2010 canônico (+ subíndices), log(pop 2010),
 região de saúde, estoque pré 202407–202506, faixa anunciada, curso, UF, chamada.
 
-**Potência.** Global MDE 80% ≈ 3.8% (p=0.30)
-a 4.1% (p=0.50) com DEFF=1.126 (m≈3.52, ICC=0.05);
-por estrato (quadro Ch1, DEFF=max(1,1+(m-1)*ICC)): capital 73/18 m≈4.06 MDE≈16.1% (p30, DEFF 1.153),
-metropolitano 265/72 MDE≈8.4%,
-interior_proximo 811/203 MDE≈4.8%,
-interior_remoto 146/75 MDE≈10.9%.
-Mínima relevante 10pp (sens. 5pp); MDE>10pp indica poder limitado para nulidade.
+**Potência.** O antigo valor global de 3.8%
+é mantido apenas como benchmark de precisão de uma proporção e **não** como
+MDE dos coeficientes territoriais. Para os contrastes efetivamente estimados
+contra interior_remoto (referência), os MDEs aproximados a 80% (p=0,30; DEFF por estrato)
+são: capital 19.5%,
+metropolitano 13.7% e
+interior_proximo_polo 11.9%.
+São benchmarks analíticos; não substituem simulação com a matriz completa do
+modelo. A mínima diferença relevante permanece 10 p.p. (sensibilidade 5 p.p.).
 
 **Linguagem.** Associativa apenas; sem efeito causal do PMM-E/bolsa/IVS.

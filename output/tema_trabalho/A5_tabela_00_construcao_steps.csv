@@ -4,5 +4,5 @@ etapa,n_celulas,n_municipios,nota
 03_painel_completo_26_comp,30784,368,30784 linhas painel_municipio_curso_mensal 202406-202607
 04_confirmatoria_10_cursos,587,295,"587 celulas municipio-curso sem sobreposicao CBO (ponte 1,2,3,5,9,12,13,14,15,16)"
 05_ampliada_6_cursos_sobrepostos,597,242,"597 celulas com CBO compartilhado (4,6,7,8,10,11) - sensibilidade"
-06_baseline_202509_madura,1184,368,baseline 202509 madura para entradas e presenca 6m (idx15+6=21)
-07_follow_6m_202603_madura,1184,368,follow 6m 202603 observavel; T0 202510->202604 sensibilidade
+06_referencia_limpa_202506,1184,368,ultima competencia inequivocamente anterior a publicacao da oferta em julho de 2025
+07_follow_comum_202603,1184,368,fim da janela comum; 9 meses apos a referencia limpa e exposicao heterogenea

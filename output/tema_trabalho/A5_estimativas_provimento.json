@@ -1,27 +1,28 @@
 {
   "protocolo": "A5_ESTIMATIVAS_PROVIMENTO",
-  "data_referencia": "2026-09-02",
+  "data_referencia": "2026-09-03",
   "efeitos_estimados": true,
-  "linguagem": "associativa (associado a, persistencia da oferta local); proibido efeito causal do PMM-E/bolsa/IVS e retencao individual",
+  "linguagem": "associativa (trajetoria diferencial e evolucao do estoque cadastral); proibido efeito causal do PMM-E/bolsa/IVS, provimento causal e retencao individual",
   "populacao": {
     "painel_municipio_curso": "1184 celulas municipio-curso (368 municipios) x26 competencias 202406-202607 =30784 linhas",
     "confirmatoria_10_cursos": "587 celulas (295 mun) CBO sem sobreposicao",
     "ampliada_6_cursos": "597 celulas (242 mun) sobrepostos",
-    "cross_section_6m": "1184 celulas baseline 202509 -> follow 202603",
+    "cross_section_janela": "1184 celulas referencia pre-oferta 202506 -> follow comum 202603",
+    "amostra_primaria_modelos": "587 celulas municipio-curso, 295 municipios, dez cursos com CBO univoco",
     "unidade_analitica": "municipio-curso (agregacao de CNES dentro do municipio)",
-    "unidade_inferencia": "municipio (cluster-robusto; G=368)"
+    "unidade_inferencia": "municipio (cluster-robusto; G=295 na amostra principal)"
   },
   "t0_e_horizonte": {
     "T0_admin": "202510",
-    "baseline": "202509",
-    "follow_6m": "202603",
+    "referencia_pre_oferta": "202506",
+    "follow_comum": "202603",
     "T0_fisico_mediano": "2025-09-19",
     "censura": "entradas <202412 censurado, saidas >202604 censurado, presenca madura ate 202601"
   },
   "outcomes_permitidos": {
     "estoque_mst": "estoque municipal do CBO (contagem distinta por municipio-curso-mes)",
     "cobertura_binaria_mst": "1[estoque>0]",
-    "n_entradas_6m": "entradas apos ausencia 6m observada",
+    "n_entradas_6m": "novos vinculos no mes t apos washout de 6 meses; nao fluxo acumulado em seis meses",
     "n_saidas_confirmadas_3m": "saidas com 3m posteriores observados",
     "saldo_liquido": "entradas - saidas",
     "presentes_6m_nivel": "numero entrantes elegiveis em baseline ainda presentes 6m depois (nivel, nao taxa)",
@@ -33,169 +34,238 @@
     ]
   },
   "modelos": {
-    "estoque_6m_minimal": {
-      "formula": "estoque_6m ~ atracao_muni + FE curso(16) + FE UF(colapsada) cluster mun",
-      "n": 1184,
+    "principal_dinamico_confirmatorio": {
+      "referencia": "202506",
+      "n_obs": 15262,
+      "n_celulas": 587,
+      "n_clusters": 295,
+      "pre_F": 1.0310168153748378,
+      "pre_p": 0.4200572921596164,
+      "mar2026_beta": 0.5001997255486619,
+      "mar2026_se": 0.23401243502090036,
+      "mar2026_p": 0.033382760895665047,
+      "efeitos_fixos": [
+        "municipio-curso",
+        "curso-mes",
+        "UF-mes"
+      ],
+      "diagnosticos": {
+        "convergiu": true,
+        "iteracoes": 21,
+        "tolerancia": 1e-10,
+        "max_mudanca_final": 9.664824496269375e-11,
+        "max_media_grupo_residual": 2.586688116787725e-11,
+        "n_clusters": 295,
+        "n_obs": 15262
+      },
+      "linguagem": "trajetoria diferencial associativa; atracao e resultado realizado"
+    },
+    "sensibilidade_dinamica_ampliada": {
+      "referencia": "202506",
+      "n_obs": 30784,
+      "n_celulas": 1184,
       "n_clusters": 368,
-      "coef_atracao": 12.005801335975804,
-      "se_atracao": 3.7073599104789343,
-      "p_atracao": 0.0012021499519670059,
-      "r2": 0.1176561820317562
+      "pre_F": 1.2495916773793816,
+      "pre_p": 0.2471848977529915,
+      "mar2026_beta": 0.6016414082668455,
+      "mar2026_se": 0.2175580553718953,
+      "mar2026_p": 0.005972037094673278,
+      "efeitos_fixos": [
+        "municipio-curso",
+        "curso-mes",
+        "UF-mes"
+      ],
+      "diagnosticos": {
+        "convergiu": true,
+        "iteracoes": 17,
+        "tolerancia": 1e-10,
+        "max_mudanca_final": 5.4843352081945795e-11,
+        "max_media_grupo_residual": 1.1014262033290676e-11,
+        "n_clusters": 368,
+        "n_obs": 30784
+      },
+      "linguagem": "trajetoria diferencial associativa; atracao e resultado realizado"
+    },
+    "distribuicao_delta_confirmatoria": {
+      "0": {
+        "n": 372,
+        "media": 0.5483870967741935,
+        "mediana": 0.0,
+        "proporcao_aumento": 0.32526881720430106,
+        "p05": -1.0,
+        "p95": 3.0,
+        "min": -14.0,
+        "max": 25.0
+      },
+      "1": {
+        "n": 215,
+        "media": 2.2883720930232556,
+        "mediana": 1.0,
+        "proporcao_aumento": 0.5767441860465117,
+        "p05": -1.0,
+        "p95": 6.0,
+        "min": -6.0,
+        "max": 211.0
+      }
+    },
+    "estoque_6m_minimal": {
+      "formula": "estoque_follow ~ atracao_muni + FE curso(10) + FE UF(colapsada) cluster mun; diagnostico de nivel, nao resultado principal",
+      "n": 587,
+      "n_clusters": 295,
+      "coef_atracao": 7.132261147182274,
+      "se_atracao": 3.6401629765523413,
+      "p_atracao": 0.05007477561505022,
+      "r2": 0.10264268611637117
     },
     "estoque_6m_full": {
-      "coef_atracao": 5.705029560767316,
-      "se": 2.542260321965653,
-      "p": 0.024827405914398703
+      "coef_atracao": 0.09160797720137204,
+      "se": 0.34562233375913753,
+      "p": 0.7909692110718395
     },
     "delta_minimal": {
-      "coef_atracao": 0.6408563639029182,
-      "se_atracao": 0.4009054751931258,
-      "p_atracao": 0.1099267745615271,
-      "r2": 0.04159033892735553
+      "coef_atracao": 1.2948856220641443,
+      "se_atracao": 0.7749055146839907,
+      "p_atracao": 0.09471696052854692,
+      "r2": 0.05988821118692855
     },
     "delta_full": {
-      "coef_atracao": 0.4616065108055072,
-      "se_atracao": 0.2664160958516683,
-      "p_atracao": 0.08315745437416588
+      "coef_atracao": 0.09160797720135455,
+      "se_atracao": 0.34562233375913765,
+      "p_atracao": 0.7909692110718786
     },
     "cobertura_6m_minimal": {
-      "coef_atracao": 0.04403914122744709,
-      "se_atracao": 0.014082113165991733,
-      "p_atracao": 0.0017641346869653558
+      "coef_atracao": 0.05411049276485441,
+      "se_atracao": 0.020034831153095005,
+      "p_atracao": 0.006916855326985702
     },
     "entradas_minimal": {
-      "coef_atracao": 0.34485584704921357,
-      "se_atracao": 0.14446533689772556,
-      "p_atracao": 0.01698102680340998
+      "coef_atracao": 0.3901832363497244,
+      "se_atracao": 0.24293021620017227,
+      "p_atracao": 0.10824016987419227
     },
     "presentes_minimal_nivel": {
-      "coef_atracao": 0.38443762527319225,
-      "se_atracao": 0.08927230598506683,
-      "p_atracao": 1.6597180735621778e-05
+      "coef_atracao": 0.03792257443044027,
+      "se_atracao": 0.043844299211712234,
+      "p_atracao": 0.3870731453058992
     },
     "T0_alternativo_delta": {
-      "coef_atracao": 0.5661256399734567,
-      "se_atracao": 0.2694659939853713,
-      "p_atracao": 0.03564826838695547
+      "coef_atracao": 0.6408563639029171,
+      "se_atracao": 0.4009054751931254,
+      "p_atracao": 0.10992677456152736
     },
     "delta_winsorizado_p99": {
-      "coef_atracao": 0.3267203608669727,
-      "se_atracao": 0.12524319240463955,
-      "p_atracao": 0.009089018090456358
+      "coef_atracao": 0.6047577536675134,
+      "se_atracao": 0.2147581292509309,
+      "p_atracao": 0.0048626468920437505
     },
     "delta_strat_confirmatoria": {
-      "coef_atracao": 1.0802439547636864,
-      "se_atracao": 0.7325150915399125,
-      "p_atracao": 0.14029176598716817
+      "coef_atracao": 1.2948856220641443,
+      "se_atracao": 0.7749055146839907,
+      "p_atracao": 0.09471696052854692
     },
     "delta_strat_ampliada": {
-      "coef_atracao": 0.1753990701091002,
-      "se_atracao": 0.23223002604989765,
-      "p_atracao": 0.45008002496724564
+      "coef_atracao": 0.926485774212511,
+      "se_atracao": 0.38516346182905187,
+      "p_atracao": 0.016153213497954646
     },
     "delta_heterogeneidade_estrato": {
-      "coef_atracao": 0.5241150839798717,
-      "se_atracao": 0.3516374510914917
+      "coef_atracao": 0.4812744047211707,
+      "se_atracao": 0.5452863170852963
     }
   },
   "influencia": {
     "leave_one_UF_range": {
-      "min": 0.2767931347851194,
-      "max": 0.7879195353679349,
-      "std": 0.09617487711288326
+      "min": 0.5809280275351467,
+      "max": 1.6029854510937462,
+      "std": 0.17316335947329622
     },
     "leave_one_curso_range": {
-      "min": 0.199848390199927,
-      "max": 0.8306030742109722,
-      "std": 0.13084593858046806
+      "min": 0.34471489934932886,
+      "max": 1.945061042228366,
+      "std": 0.3995417158505988
     },
     "leave_one_municipio": {
-      "atracao_delta_min": 0.2767931347851194,
-      "max": 0.6979894125914783,
-      "sd": 0.021251914035074808,
-      "base": 0.6408563639029182
+      "atracao_delta_min": 0.5809280275351467,
+      "max": 1.46831971855805,
+      "sd": 0.04580505737290239,
+      "base": 1.2948856220641443
     },
     "top_influentes": [
       {
         "co_ibge_6d": "530010",
         "termo": "atracao_muni",
-        "coef_excluido": 0.2767931347851194,
-        "delta": -0.3640632291177988,
-        "dfbeta": -0.9081024122766614,
+        "coef_excluido": 0.5809280275351467,
+        "delta": -0.7139575945289975,
+        "dfbeta": -0.9213479333930822,
         "n_excluido": 1
-      },
-      {
-        "co_ibge_6d": "140047",
-        "termo": "atracao_muni",
-        "coef_excluido": 0.5791413676208323,
-        "delta": -0.06171499628208588,
-        "dfbeta": -0.15393902079375762,
-        "n_excluido": 8
       },
       {
         "co_ibge_6d": "251080",
         "termo": "atracao_muni",
-        "coef_excluido": 0.6979894125914783,
-        "delta": 0.05713304868856006,
-        "dfbeta": 0.14251002349378666,
-        "n_excluido": 10
+        "coef_excluido": 1.46831971855805,
+        "delta": 0.17343409649390584,
+        "dfbeta": 0.22381321749224214,
+        "n_excluido": 5
       },
       {
         "co_ibge_6d": "355710",
         "termo": "atracao_muni",
-        "coef_excluido": 0.6924802400150015,
-        "delta": 0.0516238761120833,
-        "dfbeta": 0.1287681992549861,
+        "coef_excluido": 1.4115794756888407,
+        "delta": 0.11669385362469642,
+        "dfbeta": 0.1505910738966474,
         "n_excluido": 2
       },
       {
-        "co_ibge_6d": "140010",
+        "co_ibge_6d": "522045",
         "termo": "atracao_muni",
-        "coef_excluido": 0.5995111602388487,
-        "delta": -0.041345203664069574,
-        "dfbeta": -0.10312955602353048,
-        "n_excluido": 14
+        "coef_excluido": 1.1953299802461497,
+        "delta": -0.09955564181799459,
+        "dfbeta": -0.12847455584129341,
+        "n_excluido": 1
+      },
+      {
+        "co_ibge_6d": "355370",
+        "termo": "atracao_muni",
+        "coef_excluido": 1.3637719302670481,
+        "delta": 0.06888630820290387,
+        "dfbeta": 0.08889639691233318,
+        "n_excluido": 2
       }
     ]
   },
   "validacao_preditiva": [
     {
       "modelo": "OLS_delta_minimal_atracao_FE",
-      "r2_media_out": -0.2775370238758921,
-      "r2_sd_out": 0.21795878729634435,
-      "r2_insample": 0.04159033892735553,
-      "rmse_media_out": 4.34744331954782,
-      "rmse_sd_out": 4.400257363939807,
-      "rmse_insample": 6.027117673259925,
+      "r2_media_out": -1.268376545657657,
+      "r2_sd_out": 1.3373837650500113,
+      "r2_insample": 0.05988821118692855,
+      "rmse_media_out": 6.49586747298054,
+      "rmse_sd_out": 6.257912874369804,
+      "rmse_insample": 8.74593634784099,
       "n_splits": 5,
       "grupos": "municipio",
-      "nota": "out-of-sample por municipio; delta_estoque_6m (202509->202603); gap indica overfit FE"
+      "nota": "apendice preditivo; variacao do estoque 202506->202603 na amostra confirmatoria"
     },
     {
       "modelo": "OLS_estoque_6m_minimal",
-      "r2_media_out": -0.07634702831582973,
-      "r2_sd_out": 0.16854246127343195,
-      "r2_insample": 0.1176561820317562,
-      "rmse_media_out": 36.66424266360838,
-      "rmse_sd_out": 19.61350772493004,
-      "rmse_insample": 39.18189108761904,
+      "r2_media_out": -0.4340167491393011,
+      "r2_sd_out": 0.46974508482902694,
+      "r2_insample": 0.10264268611637117,
+      "rmse_media_out": 31.423561309983562,
+      "rmse_sd_out": 25.296595937344488,
+      "rmse_insample": 38.91461108006598,
       "n_splits": 5,
       "grupos": "municipio",
       "nota": "estoque_6m 202603"
     }
   ],
   "potencia_referencia": {
-    "global_MDE_p30": 0.0379,
-    "por_estrato_MDE_p30": {
-      "capital": 0.1613,
-      "metropolitano": 0.084,
-      "interior_proximo_polo": 0.0483,
-      "interior_remoto": 0.1087
-    }
+    "benchmark_global_proporcao_p30": 0.0379,
+    "nota": "nao se aplica diretamente ao outcome continuo A5"
   },
   "hashes_entradas": {
     "output/painel_municipio_curso_mensal.parquet": {
-      "sha256": "62529ee2c9eea9b45a2d379473fe9ee2c5ecddddb64c39ae8dc78283a8b5d7ee"
+      "sha256": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059"
     },
     "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
       "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
@@ -204,16 +274,16 @@
       "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
     },
     "output/tema_trabalho/manifesto_tipologia_territorial.json": {
-      "sha256": "80bc3811eb2664fb7a94fbaf5aa51894f3e731ccad03db840017866390cac9cc"
+      "sha256": "81cf5637a9e5f1e3867db7b617d0fb090da4138672ee600cd02bf516e0dcf1f6"
     },
     "output/tema_trabalho/portao_denominador.json": {
-      "sha256": "4698b9437513ced588de1d892580ebc95517cc4b707e18f8323697a8ae53175d"
+      "sha256": "aabb0f3db8a0f060087e4e6f1cdeb90559c90e5ed5e467c929aa49fd700e9ec9"
     },
     "output/tema_trabalho/registro_pre_analise_atracao.json": {
-      "sha256": "42a8a279eb680bcaf7b5e3138ae3c03e7f49b6576176a4254bf487635035907c"
+      "sha256": "797f160d32f9f00e699508d7415c5240848b3108eb2fe2feaf4f09d41dd02f74"
     },
     "output/tema_trabalho/potencia_atracao.json": {
-      "sha256": "e3fe2dc76989b3f2f5874049b8cf9ba31c913f6f6da08a8c1ebe24d5b1250847"
+      "sha256": "def99ef739d5a7d124de5790c085acc3716a8645da9e1fb676ed9258fe8dafb1"
     },
     "output/aquisicao/ponte_curso_cbo_oficial.json": {
       "sha256": "1770e076a3575f4a574134ef6b80d21df35660ebd151cf9d870273127a2c1b16"
@@ -241,15 +311,17 @@
     "tabela_loo": "output/tema_trabalho/A5_tabela_04_leave_one_out.csv",
     "tabela_influencia": "output/tema_trabalho/A5_tabela_05_influencia_municipal.csv",
     "tabela_preditiva": "output/tema_trabalho/A5_tabela_06_validacao_preditiva.csv",
+    "tabela_estudo_evento": "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv",
     "figura_traj_estrato": "output/tema_trabalho/A5_figura_01_trajetoria_estoque_estrato.png",
     "figura_traj_atracao": "output/tema_trabalho/A5_figura_02_trajetoria_estoque_atracao.png",
-    "figura_delta": "output/tema_trabalho/A5_figura_03_delta_estoque_atracao.png"
+    "figura_delta": "output/tema_trabalho/A5_figura_03_delta_estoque_atracao.png",
+    "figura_estudo_evento": "output/tema_trabalho/A5_figura_04_estudo_evento_atracao.png"
   },
   "avisos": [
     "Atracao como preditor associativo; sem causalidade.",
     "Sem primeiro estagio causal do RDD, nao atribuir CNES ao adicional da bolsa.",
     "Ponte confirmatoria 587 celulas primaria; ampliada 597 como sensibilidade nao primaria.",
     "Oferta cadastrada local; nao participar PMM-E nem retencao individual.",
-    "Horizonte 6m comum documentado com censura; presenca em nivel nao taxa condicional."
+    "Junho de 2025 e referencia limpa; setembro de 2025 fica apenas como janela antiga parcialmente tratada."
   ]
 }

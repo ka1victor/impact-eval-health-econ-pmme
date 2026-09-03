@@ -111,6 +111,17 @@ class EstimativasAtracaoA4Test(unittest.TestCase):
         p_sq = float(spl[spl["termo"] == "ivs_2010_sq"]["p_valor"].values[0])
         self.assertGreater(p_sq, 0.05)
 
+    def test_robustez_estagios_e_municipio_curso(self) -> None:
+        estagios = pd.read_csv(OUT / "A4_tabela_02c_confirmacao_homologacao.csv")
+        self.assertEqual(set(estagios["outcome_estagio"]), {"alguma_confirmacao", "alguma_homologacao"})
+        for outcome in ["alguma_confirmacao", "alguma_homologacao"]:
+            row = estagios[(estagios["outcome_estagio"] == outcome) & (estagios["termo"] == "estrato_metropolitano")].iloc[0]
+            self.assertGreater(row["coef"], 0.20)
+        mc = pd.read_csv(OUT / "A4_tabela_02d_municipio_curso.csv")
+        row = mc[mc["termo"] == "estrato_metropolitano"].iloc[0]
+        self.assertEqual(int(row["n"]), 1184)
+        self.assertGreater(row["coef"], 0.25)
+
     def test_separacao_faixa_ivs(self) -> None:
         sep = pd.read_csv(OUT / "A4_tabela_03_separacao_faixa_ivs_remoticidade.csv")
         # Deve conter faixa, ivs, inter

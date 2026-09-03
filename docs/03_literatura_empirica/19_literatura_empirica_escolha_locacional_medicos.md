@@ -38,7 +38,7 @@ Diamond estima um modelo de equilíbrio espacial com salários, aluguéis, ameni
 
 > Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14(2), 181–225.
 
-O estudo histórico-empírico motiva mecanismos de formação, origem, infraestrutura produtiva e escassez rural. Sua equação de escolha é reproduzida, separadamente de seus resultados, como núcleo do [modelo teórico](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md).
+O estudo histórico-empírico motiva mecanismos de formação, origem, infraestrutura produtiva e escassez rural. Sua equação de escolha é reproduzida, separadamente de seus resultados, como núcleo do [modelo microeconômico](../02_teoria/modelo_micro.md).
 
 ## 6. Ponte permitida para o desenho empírico
 
@@ -50,4 +50,4 @@ O estudo histórico-empírico motiva mecanismos de formação, origem, infraestr
 | infraestrutura clínica | heterogeneidade por especialidade | congelar no pré-tratamento quando necessário |
 | proximidade e custo de deslocamento | mecanismo locacional | definir rede e tempo de viagem antes de observar resultados |
 
-O uso empírico requer correspondência com um primitivo do [modelo teórico](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md), temporalidade adequada e compatibilidade com a estratégia causal. Achados de outras políticas não impõem sinais aos coeficientes do RDD do PMM-E.
+O uso empírico requer correspondência com um primitivo do [modelo microeconômico](../02_teoria/modelo_micro.md), temporalidade adequada e compatibilidade com a estratégia causal. Achados de outras políticas não impõem sinais aos coeficientes do RDD do PMM-E.

@@ -20,6 +20,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import warnings
 from pathlib import Path
 from typing import Any
 
@@ -89,6 +90,8 @@ TABELA_AMOSTRA_UF = OUT_DIR / f"{PREFIX}_tabela_01d_amostra_uf.csv"
 TABELA_CONSTRUCAO = OUT_DIR / f"{PREFIX}_tabela_00_construcao_steps.csv"
 TABELA_PRINCIPAL_LPM = OUT_DIR / f"{PREFIX}_tabela_02_modelo_principal_LPM.csv"
 TABELA_PRINCIPAL_LOGIT = OUT_DIR / f"{PREFIX}_tabela_02b_logit_AME.csv"
+TABELA_ESTAGIOS = OUT_DIR / f"{PREFIX}_tabela_02c_confirmacao_homologacao.csv"
+TABELA_MUNI_CURSO = OUT_DIR / f"{PREFIX}_tabela_02d_municipio_curso.csv"
 TABELA_SEP = OUT_DIR / f"{PREFIX}_tabela_03_separacao_faixa_ivs_remoticidade.csv"
 TABELA_SENS_AJUST = OUT_DIR / f"{PREFIX}_tabela_03b_ajuste_completo.csv"
 TABELA_SENS_WINSOR = OUT_DIR / f"{PREFIX}_tabela_03c_winsorizado.csv"
@@ -111,6 +114,13 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda: f.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def savefig_atomic(path: Path, **kwargs) -> None:
+    """Grava em arquivo temporário antes de substituir o PNG publicado."""
+    tmp = path.with_name(path.stem + ".tmp" + path.suffix)
+    plt.savefig(tmp, **kwargs)
+    tmp.replace(path)
 
 
 def bh_fdr(pvals: np.ndarray) -> np.ndarray:
@@ -241,12 +251,23 @@ def fit_lpm(y: pd.Series, X: pd.DataFrame, groups: pd.Series):
 
 def fit_logit(y: pd.Series, X: pd.DataFrame, groups: pd.Series):
     mod = sm.Logit(y.astype(float), X)
-    # method lbfgs pode ser mais estável com muitas dummies
-    try:
-        res = mod.fit(cov_type="cluster", cov_kwds={"groups": groups, "use_correction": True}, disp=0, maxiter=200, method="lbfgs")
-    except Exception:
-        res = mod.fit(cov_type="cluster", cov_kwds={"groups": groups, "use_correction": True}, disp=0, maxiter=200)
-    return res
+    last_error = None
+    for method, maxiter in (("lbfgs", 1000), ("bfgs", 1000), ("newton", 500)):
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                res = mod.fit(
+                    cov_type="cluster",
+                    cov_kwds={"groups": groups, "use_correction": True},
+                    disp=0,
+                    maxiter=maxiter,
+                    method=method,
+                )
+            if bool(res.mle_retvals.get("converged", False)):
+                return res
+        except Exception as exc:
+            last_error = exc
+    raise RuntimeError(f"Logit alternativo não convergiu: {last_error}")
 
 
 def summarize_res(res, X: pd.DataFrame, y: pd.Series, groups: pd.Series, label: str) -> pd.DataFrame:
@@ -426,6 +447,54 @@ def main() -> None:
     tmp = TABELA_PRINCIPAL_LOGIT.with_suffix(".csv.tmp")
     ame_df.to_csv(tmp, index=False)
     tmp.replace(TABELA_PRINCIPAL_LOGIT)
+
+    # Robustez substantiva: o gradiente deve aparecer nos dois estágios do
+    # funil administrativo, e não apenas na união confirmação/homologação.
+    estagios = []
+    resultados_estagios = {}
+    for nome, coluna in [
+        ("alguma_confirmacao", "n_confirmacoes_ch1"),
+        ("alguma_homologacao", "n_homologacoes_ch1"),
+    ]:
+        y_stage = (df_prim[coluna].fillna(0) > 0).astype(float)
+        res_stage = fit_lpm(y_stage, X_min, g_prim)
+        tab_stage = summarize_res(res_stage, X_min, y_stage, g_prim, f"LPM_{nome}_minimal")
+        tab_stage["outcome_estagio"] = nome
+        estagios.append(tab_stage)
+        resultados_estagios[nome] = {
+            "media": float(y_stage.mean()),
+            "coef_estrato": {k: float(v) for k, v in res_stage.params.filter(like="estrato_").items()},
+            "se_estrato": {k: float(v) for k, v in res_stage.bse.filter(like="estrato_").items()},
+            "p_estrato": {k: float(v) for k, v in res_stage.pvalues.filter(like="estrato_").items()},
+        }
+    tab_estagios = pd.concat(estagios, ignore_index=True)
+    tmp = TABELA_ESTAGIOS.with_suffix(".csv.tmp")
+    tab_estagios.to_csv(tmp, index=False)
+    tmp.replace(TABELA_ESTAGIOS)
+
+    # Robustez ao peso implícito de múltiplos CNES: colapsa para
+    # município-curso e mantém o mesmo modelo territorial.
+    muni_curso = (
+        df_prim.groupby(["co_ibge_6d", "cod_curso"], as_index=False, observed=True)
+        .agg(
+            outcome_alguma_confirmacao_ou_homologacao=("outcome_alguma_confirmacao_ou_homologacao", "max"),
+            estrato=("estrato", "first"),
+            sg_uf=("sg_uf", "first"),
+            uf_fe=("uf_fe", "first"),
+        )
+    )
+    muni_curso["estrato"] = pd.Categorical(
+        muni_curso["estrato"],
+        categories=["interior_remoto", "capital", "metropolitano", "interior_proximo_polo"],
+    )
+    y_mc = muni_curso["outcome_alguma_confirmacao_ou_homologacao"].astype(float)
+    g_mc = muni_curso["co_ibge_6d"]
+    X_mc = build_X(muni_curso, "minimal")
+    res_mc = fit_lpm(y_mc, X_mc, g_mc)
+    tab_mc = summarize_res(res_mc, X_mc, y_mc, g_mc, "LPM_municipio_curso_minimal")
+    tmp = TABELA_MUNI_CURSO.with_suffix(".csv.tmp")
+    tab_mc.to_csv(tmp, index=False)
+    tmp.replace(TABELA_MUNI_CURSO)
 
     # --------------------------------------------------
     # 3. Sensibilidades: full ajustado e separações
@@ -610,7 +679,11 @@ def main() -> None:
             pass
         # Logit
         try:
-            res_cv_log = sm.Logit(y_train, X_train.values).fit(disp=0, maxiter=200)
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                res_cv_log = sm.Logit(y_train, X_train.values).fit(disp=0, maxiter=1000, method="lbfgs")
+            if not bool(res_cv_log.mle_retvals.get("converged", False)):
+                continue
             pred_log = res_cv_log.predict(X_test_aligned.values)
             pred_log = np.clip(pred_log, 0, 1)
             aucs_logit.append(roc_auc_score_manual(y_test, pred_log))
@@ -660,51 +733,41 @@ def main() -> None:
             df_cf["estrato"] = pd.Categorical([lev] * len(df), categories=["interior_remoto", "capital", "metropolitano", "interior_proximo_polo"], ordered=False)
             X_cf = build_X(df_cf, "minimal")
             X_cf = X_cf.reindex(columns=X_template.columns, fill_value=0)
-            pred = res.predict(X_cf)
-            pred = np.clip(pred, 0, 1)
-            probs[lev] = float(pred.mean())
+            xbar = X_cf.mean(axis=0).to_numpy(dtype=float)
+            pred = float(xbar @ res.params.to_numpy(dtype=float))
+            se = float(np.sqrt(xbar @ res.cov_params().to_numpy(dtype=float) @ xbar))
+            probs[lev] = {
+                "prob": float(np.clip(pred, 0, 1)),
+                "se": se,
+                "ci_low": float(np.clip(pred - 1.96 * se, 0, 1)),
+                "ci_high": float(np.clip(pred + 1.96 * se, 0, 1)),
+            }
         return probs
 
     probs = marginal_prob_por_estrato(df_prim, X_min, res_lpm_min)
-    # IC via delta? Aproxima via SE do coef (para diferença vs remoto)
-    # Para figura, usa ponto + IC do coeficiente (convertido para prob base)
-    base_prob = probs["interior_remoto"]
-    # Coefs: diferença vs remoto
-    estrato_coefs = {k.replace("estrato_", ""): v for k, v in res_lpm_min.params.filter(like="estrato_").items()}
-    estrato_se = {k.replace("estrato_", ""): v for k, v in res_lpm_min.bse.filter(like="estrato_").items()}
-
-    # Plot
+    # Plot com incerteza da média marginal completa, inclusive referência.
     order = ["interior_remoto", "capital", "metropolitano", "interior_proximo_polo"]
     labels = {"interior_remoto": "Interior remoto\n(ref.)", "capital": "Capital", "metropolitano": "Metropolitano", "interior_proximo_polo": "Interior próximo\n(conectado)"}
-    y_vals = [probs[l] for l in order]
-    y_err_low = []
-    y_err_high = []
-    for l in order:
-        if l == "interior_remoto":
-            # IC para base prob via SE da const? Aproxima sem IC (referência)
-            y_err_low.append(0)
-            y_err_high.append(0)
-        else:
-            se = estrato_se.get(l, 0)
-            y_err_low.append(1.96 * se)
-            y_err_high.append(1.96 * se)
+    y_vals = [probs[l]["prob"] for l in order]
+    y_err_low = [probs[l]["prob"] - probs[l]["ci_low"] for l in order]
+    y_err_high = [probs[l]["ci_high"] - probs[l]["prob"] for l in order]
 
     plt.figure(figsize=(8, 5))
     x = np.arange(len(order))
-    # barras com erro
-    plt.bar(x, y_vals, color=["#6c757d", "#495057", "#007bff", "#17a2b8"], alpha=0.9, yerr=[y_err_low, y_err_high], capsize=6, error_kw={"elinewidth": 1.5})
+    plt.errorbar(x, y_vals, yerr=[y_err_low, y_err_high], fmt="o", color="#1769aa", ecolor="#263238", capsize=6, markersize=8, linewidth=1.6)
     plt.xticks(x, [labels[l] for l in order], fontsize=9)
     plt.ylabel("Probabilidade ajustada de atração (LPM, FE curso+UF, cluster município)", fontsize=9)
-    plt.ylim(0, max(y_vals) * 1.35)
+    plt.ylim(0, min(1, max(probs[l]["ci_high"] for l in order) + 0.08))
     for i, (yv, lev) in enumerate(zip(y_vals, order)):
         plt.text(i, yv + 0.015, f"{yv:.1%}\n(n={tab_prim[tab_prim['estrato']==lev]['n_celulas'].values[0] if lev in tab_prim['estrato'].values else ''})", ha="center", fontsize=8)
     plt.title("Atração por território — probabilidades ajustadas (primária 1295 células, 368 municípios)\nLPM com FE curso e UF, IC95% cluster município; linguagem associativa", fontsize=9, pad=12)
     plt.tight_layout()
-    plt.savefig(FIG_PROB_ESTRATO, dpi=300)
+    savefig_atomic(FIG_PROB_ESTRATO, dpi=300)
     plt.close()
 
     # Figura 2: gradiente IVS (binned quartis vs contínuo)
-    # Usa modelo ivs_only + FE, mostra prob média por quartil e linha loess linear
+    # Usa modelo ivs_only + FE. A curva ajustada mantém a composição de
+    # curso/UF constante e varia apenas o IVS no valor mediano de cada quartil.
     df_prim_ivsq = df_prim.copy()
     df_prim_ivsq["ivs_q"] = pd.qcut(df_prim_ivsq["ivs_2010"], 4, labels=["Q1", "Q2", "Q3", "Q4"], duplicates="drop")
     # prob por quartil (observado e ajustado ivs_only)
@@ -715,26 +778,34 @@ def main() -> None:
     for q in sorted(df_prim_ivsq["ivs_q"].unique()):
         mask = df_prim_ivsq["ivs_q"] == q
         sub = df_prim[mask]
-        X_sub = build_X(sub, "ivs_only")
-        X_sub = X_sub.reindex(columns=X_ivs.columns, fill_value=0)
-        pred = res_ivs_lpm.predict(X_sub)
-        probs_q.append((str(q), float(pred.mean()), float(sub["outcome_alguma_confirmacao_ou_homologacao"].mean()), int(mask.sum())))
+        ivs_med = float(sub["ivs_2010"].median())
+        df_cf = df_prim.copy()
+        df_cf["ivs_2010"] = ivs_med
+        X_cf = build_X(df_cf, "ivs_only").reindex(columns=X_ivs.columns, fill_value=0)
+        xbar = X_cf.mean(axis=0).to_numpy(dtype=float)
+        pred = float(xbar @ res_ivs_lpm.params.to_numpy(dtype=float))
+        se = float(np.sqrt(xbar @ res_ivs_lpm.cov_params().to_numpy(dtype=float) @ xbar))
+        probs_q.append((str(q), ivs_med, pred, se, float(sub["outcome_alguma_confirmacao_ou_homologacao"].mean()), int(mask.sum())))
     plt.figure(figsize=(8, 5))
     qs = [p[0] for p in probs_q]
-    y_adj = [p[1] for p in probs_q]
-    y_obs = [p[2] for p in probs_q]
-    x = np.arange(len(qs))
-    plt.plot(x, y_obs, marker="o", label="Observada", color="black", linewidth=1.5)
-    plt.plot(x, y_adj, marker="s", label="Ajustada (LPM FE curso+UF + IVS)", color="#007bff", linewidth=1.5)
-    for i, (qo, ya, yo, n) in enumerate(probs_q):
-        plt.text(i, ya + 0.01, f"n={n}", ha="center", fontsize=7)
-    plt.xticks(x, [f"{q}\nIVS {df_prim[df_prim['ivs_quartil']==q]['ivs_2010'].min():.2f}–{df_prim[df_prim['ivs_quartil']==q]['ivs_2010'].max():.2f}" if q in df_prim['ivs_quartil'].cat.categories else q for q in qs], fontsize=7)
+    x = np.array([p[1] for p in probs_q])
+    y_adj = np.array([p[2] for p in probs_q])
+    se_adj = np.array([p[3] for p in probs_q])
+    y_obs = np.array([p[4] for p in probs_q])
+    plt.scatter(x, y_obs, label="Observada no quartil", color="black", s=42, zorder=3)
+    plt.plot(x, y_adj, marker="s", label="Marginal ajustada (composição fixa)", color="#007bff", linewidth=1.5)
+    plt.fill_between(x, np.clip(y_adj - 1.96 * se_adj, 0, 1), np.clip(y_adj + 1.96 * se_adj, 0, 1), color="#007bff", alpha=0.15, label="IC95% ajustado")
+    for q, xv, ya, se, yo, n in probs_q:
+        plt.text(xv, max(ya, yo) + 0.008, f"{q}; n={n}", ha="center", fontsize=7)
+    lower = max(0.0, float(min(y_obs.min(), (y_adj - 1.96 * se_adj).min())) - 0.01)
+    upper = min(1.0, float(max(y_obs.max(), (y_adj + 1.96 * se_adj).max())) + 0.035)
+    plt.ylim(lower, upper)
     plt.ylabel("Probabilidade de atração", fontsize=9)
-    plt.xlabel("Quartil de IVS 2010 (Q1 baixo vulnerabilidade → Q4 alta)", fontsize=9)
+    plt.xlabel("IVS 2010 mediano em cada quartil", fontsize=9)
     plt.title("Gradiente por vulnerabilidade (IVS) — sem efeito causal\nLPM com FE curso+UF, cluster município; IVS linear coef não significativo", fontsize=9)
     plt.legend(fontsize=8)
     plt.tight_layout()
-    plt.savefig(FIG_IVS, dpi=300)
+    savefig_atomic(FIG_IVS, dpi=300)
     plt.close()
 
     # Figura 3: faixa descritiva (desagregada, sem causalidade)
@@ -774,7 +845,7 @@ def main() -> None:
     plt.title("Faixa anunciada e atração — descritivo, não efeito causal da bolsa\nLPM com FE curso+UF, cluster município; faixa não isolada de IVS (colinearidade)", fontsize=9)
     plt.legend(fontsize=8)
     plt.tight_layout()
-    plt.savefig(FIG_FAIXA, dpi=300)
+    savefig_atomic(FIG_FAIXA, dpi=300)
     plt.close()
 
     # --------------------------------------------------
@@ -809,8 +880,19 @@ def main() -> None:
                 "p_estrato": {k: float(v) for k, v in res_lpm_min.pvalues.filter(like="estrato_").items()},
             },
             "alternativo_logit_AME": {
+                "convergiu": bool(res_logit_min.mle_retvals.get("converged", False)),
+                "metodo": str(res_logit_min.mle_settings.get("optimizer", "desconhecido")),
                 "ame_estrato": {row["termo"]: float(row["ame"]) for _, row in ame_df[ame_df["termo"].str.startswith("estrato_")].iterrows()},
                 "se_ame_estrato": {row["termo"]: float(row["se_ame"]) for _, row in ame_df[ame_df["termo"].str.startswith("estrato_")].iterrows()},
+            },
+            "robustez_estagios_funil": resultados_estagios,
+            "robustez_municipio_curso": {
+                "n": int(len(muni_curso)),
+                "n_clusters": int(g_mc.nunique()),
+                "coef_estrato": {k: float(v) for k, v in res_mc.params.filter(like="estrato_").items()},
+                "se_estrato": {k: float(v) for k, v in res_mc.bse.filter(like="estrato_").items()},
+                "p_estrato": {k: float(v) for k, v in res_mc.pvalues.filter(like="estrato_").items()},
+                "nota": "colapso por municipio-curso evita peso implicito de multiplos CNES",
             },
             "sensibilidade_full": {
                 "coef_estrato_full": {k: float(v) for k, v in res_lpm_full.params.filter(like="estrato_").items()},
@@ -839,8 +921,8 @@ def main() -> None:
         },
         "validacao_preditiva": pred_df.to_dict(orient="records"),
         "potencia_referencia": {
-            "global_MDE_p30": pot["mde_global"]["mde_80_pp_p30"],
-            "por_estrato_MDE_p30": {k: v["mde_80_pp_p30"] for k, v in pot["por_estrato"].items()},
+            "benchmark_global_proporcao_p30": pot["mde_global"]["mde_80_pp_p30"],
+            "contrastes_vs_interior_remoto_p30": {k: v["mde_80_pp_p30"] for k, v in pot["contrastes_vs_interior_remoto"].items()},
         },
         "hashes_entradas": {
             str(p.relative_to(ROOT)).replace("\\", "/"): {"sha256": sha256(p)} for p in [QUADRO, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3]
@@ -853,6 +935,8 @@ def main() -> None:
             "tabela_amostra_uf": str(TABELA_AMOSTRA_UF.relative_to(ROOT)).replace("\\", "/"),
             "tabela_principal_LPM": str(TABELA_PRINCIPAL_LPM.relative_to(ROOT)).replace("\\", "/"),
             "tabela_logit_AME": str(TABELA_PRINCIPAL_LOGIT.relative_to(ROOT)).replace("\\", "/"),
+            "tabela_estagios_funil": str(TABELA_ESTAGIOS.relative_to(ROOT)).replace("\\", "/"),
+            "tabela_municipio_curso": str(TABELA_MUNI_CURSO.relative_to(ROOT)).replace("\\", "/"),
             "tabela_separacao": str(TABELA_SEP.relative_to(ROOT)).replace("\\", "/"),
             "tabela_ajuste_completo": str(TABELA_SENS_AJUST.relative_to(ROOT)).replace("\\", "/"),
             "tabela_winsorizado": str(TABELA_SENS_WINSOR.relative_to(ROOT)).replace("\\", "/"),
@@ -907,7 +991,7 @@ def main() -> None:
     relatorio = f"""# A4 — Atração e implementação: diagnóstico e linguagem autorizada (02/09/2026)
 
 > Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash {sha256(REGISTRO_A3)[:8]})
-> Potência: `output/tema_trabalho/potencia_atracao.json` MDE global 3.8% p30, estrato capital 16.1%/metro 8.4%/próximo 4.8%/remoto 10.9% (DEFF floor)
+> Potência: `output/tema_trabalho/potencia_atracao.json`; MDE aproximado dos contrastes vs remoto: capital {pot['contrastes_vs_interior_remoto']['capital']['mde_80_pp_p30']:.1%}, metro {pot['contrastes_vs_interior_remoto']['metropolitano']['mde_80_pp_p30']:.1%}, próximo {pot['contrastes_vs_interior_remoto']['interior_proximo_polo']['mde_80_pp_p30']:.1%}
 > Tipologia A2 strict 540/540 (25/101/238/176) quadro 368 (18/72/203/75)
 > Amostra primária: **1295 células CNES–curso Ch1 em 368 municípios**; estendida 3057 (1762 Ch2)
 
@@ -928,7 +1012,7 @@ População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, refor
 | Estrato | coef (SE) cluster | IC95% | q FDR (3 testes) |
 |---|---|---|---|
 {lpm_rows_md}
-N=1295, G=368, R²={res_lpm_min.rsquared:.3f}, outcome médio {y_prim.mean():.1%}. DEFF global 1.126 (m3.52) — MDE 3.8% indica poder adequado para efeito global; por estrato capital MDE 16.1% e remoto 10.9% limitam nulidade fina.
+N=1295, G=368, R²={res_lpm_min.rsquared:.3f}, outcome médio {y_prim.mean():.1%}. O benchmark global de 3,8% mede precisão de uma proporção, não potência do coeficiente. Para os contrastes efetivos contra remoto, os MDEs aproximados são {pot['contrastes_vs_interior_remoto']['capital']['mde_80_pp_p30']:.1%} (capital), {pot['contrastes_vs_interior_remoto']['metropolitano']['mde_80_pp_p30']:.1%} (metro) e {pot['contrastes_vs_interior_remoto']['interior_proximo_polo']['mde_80_pp_p30']:.1%} (próximo).
 
 **Logit AME (mesma spec):**
 
@@ -937,6 +1021,8 @@ N=1295, G=368, R²={res_lpm_min.rsquared:.3f}, outcome médio {y_prim.mean():.1%
 {ame_rows_md}
 
 Concordância LPM–Logit: gradiente metro > capital > próximo > remoto (ref.) persiste; magnitude LPM ≈ AME (dif. <2pp).
+
+**Robustez de definição e unidade.** Separando o funil, o contraste metropolitano vs remoto é {resultados_estagios['alguma_confirmacao']['coef_estrato']['estrato_metropolitano']:.3f} para alguma confirmação e {resultados_estagios['alguma_homologacao']['coef_estrato']['estrato_metropolitano']:.3f} para alguma homologação. Colapsando múltiplos CNES para 1.184 células município–curso, o contraste é {res_mc.params['estrato_metropolitano']:.3f} (p={res_mc.pvalues['estrato_metropolitano']:.3f}). O gradiente não depende da união dos estágios nem do peso implícito de municípios com mais de um CNES.
 
 ## 3. Sensibilidade e separações (sem causalidade)
 
@@ -972,8 +1058,8 @@ GroupKFold 5 splits por município (treino e teste sem compartilhar município):
 
 ## 6. Figuras
 
-- `A4_figura_01_prob_ajustada_estrato.png`: prob ajustada por estrato (LPM FE, IC cluster).
-- `A4_figura_02_gradiente_ivs.png`: Q1–Q4 IVS (observada vs ajustada).
+- `A4_figura_01_prob_ajustada_estrato.png`: médias marginais por estrato com IC95% delta-method cluster, inclusive a referência.
+- `A4_figura_02_gradiente_ivs.png`: quartis observados e curva marginal com composição curso/UF mantida fixa.
 - `A4_figura_03_faixa_descritiva.png`: FAIXA 1–3 (observada vs ajustada FE) — colinearidade faixa–IVS impede leitura causal.
 
 ## 7. Linguagem autorizada

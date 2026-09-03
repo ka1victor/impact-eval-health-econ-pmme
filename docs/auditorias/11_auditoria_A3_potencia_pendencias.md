@@ -24,3 +24,7 @@
 ## 3. Registro de decisão
 
 Pendências da auditoria inicial foram **todas corrigidas em loop** nesta data, sem reabrir estimações (só pré-análise). `potencia_atracao.json` e `registro_pre_analise_atracao.json` re-congelados com hashes `742945f6`/`80bc3811`/`8a998641` verificados; `31_secao_econometrica_A3.md` completa; `tests/test_pre_analise_atracao.py` 12/12 OK (70/70 total). Próxima emenda só se A4 detectar desvio datado.
+
+## 4. Emenda pós-estimação de 03/09/2026
+
+A revisão da A4 identificou que os MDEs acima eram de uma proporção dentro de cada estrato, não dos contrastes de regressão contra a categoria de referência. O cálculo foi mantido apenas como benchmark descritivo e foram adicionados MDEs de duas proporções com DEFF separado para cada lado do contraste: 19,5pp para capital, 13,7pp para metropolitano e 11,9pp para interior próximo, sempre versus interior remoto e sob p=0,30. Esta emenda corrige a interpretação de potência sem alterar população, outcome ou especificação congelados.

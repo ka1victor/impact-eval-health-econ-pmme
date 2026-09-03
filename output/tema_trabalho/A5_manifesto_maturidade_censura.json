@@ -1,15 +1,15 @@
 {
   "protocolo": "A5_MANISFESTO_MATURIDADE_CENSURA",
-  "data_referencia": "2026-09-02",
+  "data_referencia": "2026-09-03",
   "efeitos_estimados": false,
   "t0": {
     "homologacao_data": "2025-09-29",
     "homologacao_competencia_admin_T0": "202510",
-    "baseline_competencia": "202509",
-    "follow_6m_competencia": "202603",
+    "referencia_pre_oferta_competencia": "202506",
+    "follow_comum_competencia": "202603",
     "t0_alternativo_T0_6m": "202604",
-    "alt_baseline": "202507",
-    "alt_follow": "202601",
+    "alt_baseline": "202509",
+    "alt_follow": "202603",
     "validacao_fisica_nominal": {
       "ciclo1_n": 521,
       "ciclo1_dt_min": "2025-09-11",
@@ -51,7 +51,7 @@
       "202607"
     ],
     "n_competencias": 26,
-    "nota": "T0_admin e primeira competencia completa apos homologacao 2025-09-29 (202510). T0 fisico aproximado via snapshot sobreviventes mediano 2025-09-19 (IQ 2025-09-18 a 2025-11-24), 274 antes vs 247 apos homologacao; nao e log completo, por isso baseline pre-T0 202509 e follow 6m 202603 sao horizonte comum documentado."
+    "nota": "Junho de 2025 e a referencia inequivocamente pre-oferta. Setembro de 2025 nao e baseline limpo: o snapshot registra inicio mediano em 2025-09-19 e entradas ate 2026-03-17. O follow comum 202603 representa nove meses de calendario desde a referencia, com exposicao fisica heterogenea."
   },
   "ponte_curso_cbo": {
     "cursos_estritamente_univocos_confirmatorios": [
@@ -68,7 +68,7 @@
     ],
     "n_cursos_confirmatorios": 10,
     "n_cursos_sobrepostos": 6,
-    "celulas_confirmatorias_202509": 587,
+    "celulas_confirmatorias_referencia": 587,
     "celulas_ampliada_sobreposta": 597,
     "total_celulas_municipio_curso": 1184,
     "municipios_confirmatorios": 295,
@@ -78,15 +78,15 @@
     "regra": "Primario restrito ao nucleo sem sobreposicao (587 celulas, 295 mun); sensibilidade inclui ampliada 597 celulas sobrepostas estratificadas; nao colapsar CBOs compartilhados no primario para evitar contaminacao"
   },
   "horizonte_e_censura": {
-    "horizonte_comum_6m_primario": "202509 -> 202603 (6 meses)",
+    "janela_dinamica_primaria": "202506 -> 202603 (referencia limpa e follow comum; 9 meses de calendario)",
     "horizonte_T0_6m_sensibilidade": "202510 -> 202604",
-    "censura_entradas_6m": "requer 6 meses anteriores observados; censurado se competencia <202412; baseline 202509 observavel",
+    "censura_entradas_6m": "requer 6 meses anteriores observados; censurado se competencia <202412; o nome significa washout, nao fluxo acumulado em seis meses",
     "censura_saidas_3m": "requer 3 meses posteriores; censurado se competencia >202604; follow 202603 observavel",
-    "censura_presenca_6m": "coorte madura se idx+6 <26; madura ate 202601 inclusive; baseline 202509 madura (15+6=21), follow 202603 nao madura para sua propria coorte",
+    "censura_presenca_6m": "coorte madura se idx+6 <26; madura ate 202601 inclusive; a coorte da referencia 202506 e observada em 202512",
     "definicoes": {
       "estoque": "CO_PROFISSIONAL_SUS distinto em qualquer CNES do municipio, dentro dos CBOs operacionais do curso (contagem unica por municipio-curso-mes)",
       "cobertura": "1[estoque>0] na celula municipio-curso",
-      "entrada": "presente em t e ausente nos 6 meses anteriores observados",
+      "entrada": "novo vinculo observado no mes t apos washout de 6 meses; nao e total acumulado de entradas em seis meses",
       "saida": "presente em t e ausente nos 3 meses posteriores observados",
       "presenca_6m_nivel": "numero de entrantes elegiveis em t observados no mesmo municipio-curso em t+6 (nivel, nao taxa); denominador elegiveis reportado separadamente",
       "saldo": "entradas - saidas na competencia"
@@ -103,7 +103,7 @@
     "saidas_observaveis_ate_202604": true,
     "censura_presenca_coorte_madura_ate_202601": true,
     "presenca_observavel_ate_202601": true,
-    "baseline_202509_madura_para_6m": true,
+    "referencia_202506_madura_para_6m": true,
     "follow_202603_observavel": true,
     "t0_admin_202510_primeira_apos_homolog": true
   },
@@ -275,22 +275,21 @@
     "celulas_ampliada": 597,
     "competencias": 26,
     "linhas_painel": 30784,
-    "baseline": "202509",
+    "referencia_pre_oferta": "202506",
     "follow": "202603"
   },
   "potencia_referencia_A3": {
-    "global_MDE_p30": 0.0379,
-    "por_estrato": {
-      "capital": 0.1613,
-      "metropolitano": 0.084,
-      "interior_proximo_polo": 0.0483,
-      "interior_remoto": 0.1087
+    "benchmark_global_proporcao_p30": 0.0379,
+    "contrastes_vs_remoto": {
+      "capital": 0.1946,
+      "metropolitano": 0.1374,
+      "interior_proximo_polo": 0.119
     },
-    "nota": "MDE para outcome binario atracao; para estoque delta continuo poder depende de variancia stock (sd delta ~6.16, estoque sd ~38); 1184 celulas mantem poder global"
+    "nota": "Potencia A3 refere-se ao outcome binario de atracao e nao deve ser transportada para o estoque continuo do A5."
   },
   "hashes_entradas": {
     "output/painel_municipio_curso_mensal.parquet": {
-      "sha256": "62529ee2c9eea9b45a2d379473fe9ee2c5ecddddb64c39ae8dc78283a8b5d7ee"
+      "sha256": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059"
     },
     "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
       "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
@@ -299,16 +298,16 @@
       "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
     },
     "output/tema_trabalho/manifesto_tipologia_territorial.json": {
-      "sha256": "80bc3811eb2664fb7a94fbaf5aa51894f3e731ccad03db840017866390cac9cc"
+      "sha256": "81cf5637a9e5f1e3867db7b617d0fb090da4138672ee600cd02bf516e0dcf1f6"
     },
     "output/tema_trabalho/portao_denominador.json": {
-      "sha256": "4698b9437513ced588de1d892580ebc95517cc4b707e18f8323697a8ae53175d"
+      "sha256": "aabb0f3db8a0f060087e4e6f1cdeb90559c90e5ed5e467c929aa49fd700e9ec9"
     },
     "output/tema_trabalho/registro_pre_analise_atracao.json": {
-      "sha256": "42a8a279eb680bcaf7b5e3138ae3c03e7f49b6576176a4254bf487635035907c"
+      "sha256": "797f160d32f9f00e699508d7415c5240848b3108eb2fe2feaf4f09d41dd02f74"
     },
     "output/tema_trabalho/potencia_atracao.json": {
-      "sha256": "e3fe2dc76989b3f2f5874049b8cf9ba31c913f6f6da08a8c1ebe24d5b1250847"
+      "sha256": "def99ef739d5a7d124de5790c085acc3716a8645da9e1fb676ed9258fe8dafb1"
     },
     "output/aquisicao/ponte_curso_cbo_oficial.json": {
       "sha256": "1770e076a3575f4a574134ef6b80d21df35660ebd151cf9d870273127a2c1b16"
@@ -324,12 +323,14 @@
     "tabela_amostra": "output/tema_trabalho/A5_tabela_01_amostra_construcao.csv",
     "tabela_trajetoria_mensal": "output/tema_trabalho/A5_tabela_01b_trajetoria_mensal.csv",
     "tabela_trajetoria_atracao": "output/tema_trabalho/A5_tabela_01c_trajetoria_por_atracao.csv",
-    "tabela_descritiva_outcomes": "output/tema_trabalho/A5_tabela_02_descritiva_outcomes_6m.csv"
+    "tabela_descritiva_outcomes": "output/tema_trabalho/A5_tabela_02_descritiva_outcomes_6m.csv",
+    "tabela_estudo_evento": "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv",
+    "figura_estudo_evento": "output/tema_trabalho/A5_figura_04_estudo_evento_atracao.png"
   },
   "avisos_linguagem": [
     "Nao chamar presenca no CNES de participacao no PMM-E, atividade fisica ou retencao individual.",
     "Sem primeiro estagio causal do RDD, nao atribuir CNES ao adicional da bolsa; faixa-IVS colinearidade impede separar efeito bolsa.",
-    "Analise principal incondicional (estoque/cobertura em nivel municipal); presenca em nivel nao taxa condicional.",
+    "Analise principal e a dinamica do estoque na ponte confirmatoria, referenciada em 202506; niveis e fluxos sao secundarios.",
     "Retencao individual bloqueada sem ponte PMM-E-CNES e sem log completo.",
     "Atracao como preditor associativo; nao causal."
   ]

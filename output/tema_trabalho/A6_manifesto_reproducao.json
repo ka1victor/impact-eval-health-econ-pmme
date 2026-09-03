@@ -1,0 +1,136 @@
+{
+  "protocolo": "A6_MANIFESTO_REPRODUCAO",
+  "data_referencia": "2026-09-03",
+  "gerador": "scripts/tema_trabalho/07_red_team_sintese.py",
+  "fila": "A1->A6: núcleo associativo; upgrade causal bloqueado",
+  "comandos_reproducao": [
+    ".venv\\Scripts\\python.exe scripts/tema_trabalho/02_reconciliar_funil_ciclo1.py",
+    ".venv\\Scripts\\python.exe scripts/tema_trabalho/03_construir_tipologia_territorial.py",
+    ".venv\\Scripts\\python.exe scripts/tema_trabalho/04_congelar_pre_analise.py",
+    ".venv\\Scripts\\python.exe scripts/tema_trabalho/05_estimar_atracao.py",
+    ".venv\\Scripts\\python.exe scripts/tema_trabalho/06_avaliar_provimento_cnes.py",
+    ".venv\\Scripts\\python.exe scripts/tema_trabalho/07_red_team_sintese.py",
+    ".venv\\Scripts\\python.exe -m unittest discover -s tests -q"
+  ],
+  "versoes": {
+    "python": "3.12.13 (main, Aug  7 2026, 02:26:41) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "pandas": "3.0.5",
+    "numpy": "2.5.2",
+    "statsmodels": "0.15.0"
+  },
+  "hashes_entradas_e_artefatos": {
+    "output/aquisicao/quadro_vagas_tratamento.parquet": {
+      "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f",
+      "bytes": 40440
+    },
+    "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
+      "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15",
+      "bytes": 71157
+    },
+    "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
+      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+      "bytes": 280913
+    },
+    "output/tema_trabalho/portao_denominador.json": {
+      "sha256": "aabb0f3db8a0f060087e4e6f1cdeb90559c90e5ed5e467c929aa49fd700e9ec9",
+      "bytes": 5290
+    },
+    "output/tema_trabalho/registro_pre_analise_atracao.json": {
+      "sha256": "797f160d32f9f00e699508d7415c5240848b3108eb2fe2feaf4f09d41dd02f74",
+      "bytes": 8591
+    },
+    "output/tema_trabalho/potencia_atracao.json": {
+      "sha256": "def99ef739d5a7d124de5790c085acc3716a8645da9e1fb676ed9258fe8dafb1",
+      "bytes": 2998
+    },
+    "output/aquisicao/ponte_curso_cbo_oficial.json": {
+      "sha256": "1770e076a3575f4a574134ef6b80d21df35660ebd151cf9d870273127a2c1b16",
+      "bytes": 16623
+    },
+    "output/painel_municipio_curso_mensal.parquet": {
+      "sha256": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059",
+      "bytes": 109578
+    },
+    "output/tema_trabalho/A4_estimativas_atracao.json": {
+      "sha256": "5f189784338954f1d4e43e65e11e0f96fc6bcb2f08c4623a8b131ab939847fd7",
+      "bytes": 13930
+    },
+    "output/tema_trabalho/A5_estimativas_provimento.json": {
+      "sha256": "023824167b9e640c0a2deeb3104e593aad855d5d17beaceee1d89bdb241dc087",
+      "bytes": 12931
+    },
+    "output/tema_trabalho/A5_manifesto_maturidade_censura.json": {
+      "sha256": "fd1c8f96e2d97db4946a80093c6f3d370f3d0f2a6ad9af4c9d82507d4319170d",
+      "bytes": 13679
+    },
+    "output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv": {
+      "sha256": "ab5b18460ce896c9895ee9a5ba65c6112d8959707ea3955a58771f7eb7333636",
+      "bytes": 7915
+    },
+    "output/tema_trabalho/A4_tabela_02c_confirmacao_homologacao.csv": {
+      "sha256": "56409752bb400cb72b894a11381e620bf25b17040c250d106ce649b341cdc61f",
+      "bytes": 16461
+    },
+    "output/tema_trabalho/A4_tabela_02d_municipio_curso.csv": {
+      "sha256": "3cfcb3a69f5b04a8c6e8d6df7b3894232776161a29db49c57246f79502a8d188",
+      "bytes": 7420
+    },
+    "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv": {
+      "sha256": "65da111a1950b3a595923d5dd64d6fcd22415e94a91f25b12262985d4e252948",
+      "bytes": 7781
+    },
+    "docs/auditorias/09_red_team_atracao_provimento.md": {
+      "sha256": "b4b158fb8bd7f694715634dde82f7b485e0d645b59099ed1c8e7da964cc20c90",
+      "bytes": 5635
+    },
+    "output/tema_trabalho/A6_matriz_afirmacao_evidencia_limite.csv": {
+      "sha256": "e72e9adb9239459964cbf9a9a5416cb3f76e5b71a896d1f15e1e96b5ab52418c",
+      "bytes": 1646
+    },
+    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": {
+      "sha256": "da3692b73d23263ad799ae7deaf4552aeb466503d1b0969743e65d85989d8bcb",
+      "bytes": 3704
+    }
+  },
+  "docs_hash8": {
+    "docs/auditorias/09_red_team_atracao_provimento.md": "b4b158fb",
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "e72e9adb",
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "e0b514b8",
+    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "da3692b7"
+  },
+  "portoes": {
+    "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",
+    "A2_APROVADO_4_ESTRATOS": "output/tema_trabalho/manifesto_tipologia_territorial.json",
+    "A3_CONGELADO": "output/tema_trabalho/registro_pre_analise_atracao.json",
+    "A4_ASSOCIATIVO": "output/tema_trabalho/A4_estimativas_atracao.json",
+    "A5_DINAMICA_ASSOCIATIVA": "output/tema_trabalho/A5_estimativas_provimento.json",
+    "R1_RDD_ENCERRADO": "output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json"
+  },
+  "limites_reafirmados": [
+    "Sem taxa por vaga física",
+    "Sem efeito causal da faixa ou do IVS",
+    "Sem retenção individual no CNES agregado",
+    "Sem SIH/SIA, fila, saúde ou custo-benefício sem novo portão",
+    "A5 sensível a composição, caudas e tempo de exposição"
+  ],
+  "checklist_A6_passou": [
+    "denominador_versionamento",
+    "populacao_territorial_previa",
+    "selecao_municipios_cursos_estabs",
+    "inferencia_municipal_concentracao",
+    "distincao_confirmacao_homologacao_entrada_permanencia",
+    "ivs_faixa_nao_independentes",
+    "cnes_nao_retencao",
+    "rdd_encerrado_R1",
+    "sem_sih_sia_fila"
+  ],
+  "entregaveis_A6": {
+    "red_team": "docs/auditorias/09_red_team_atracao_provimento.md",
+    "matriz_csv_docs": "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv",
+    "matriz_csv_out": "output/tema_trabalho/A6_matriz_afirmacao_evidencia_limite.csv",
+    "matriz_md": "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md",
+    "sintese": "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md",
+    "manifesto": "output/tema_trabalho/A6_manifesto_reproducao.json"
+  }
+}

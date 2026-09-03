@@ -18,7 +18,8 @@
   "sensibilidade_5pp": 0.05,
   "mde_global": {
     "mde_80_pp_p50": 0.0413,
-    "mde_80_pp_p30": 0.0379
+    "mde_80_pp_p30": 0.0379,
+    "rotulo": "benchmark de precisão de uma proporção; não é o MDE dos coeficientes territoriais"
   },
   "por_estrato": {
     "capital": {
@@ -28,7 +29,7 @@
       "deff_assumido": 1.153,
       "mde_80_pp_p50": 0.176,
       "mde_80_pp_p30": 0.1613,
-      "mde_diferenca_vs_resto_p50": 0.1812
+      "mde_diferenca_vs_resto_p50": 0.1811
     },
     "metropolitano": {
       "n_celulas": 265,
@@ -46,7 +47,7 @@
       "deff_assumido": 1.15,
       "mde_80_pp_p50": 0.0527,
       "mde_80_pp_p30": 0.0483,
-      "mde_diferenca_vs_resto_p50": 0.0863
+      "mde_diferenca_vs_resto_p50": 0.0857
     },
     "interior_remoto": {
       "n_celulas": 146,
@@ -55,11 +56,34 @@
       "deff_assumido": 1.047,
       "mde_80_pp_p50": 0.1186,
       "mde_80_pp_p30": 0.1087,
-      "mde_diferenca_vs_resto_p50": 0.126
+      "mde_diferenca_vs_resto_p50": 0.1265
+    }
+  },
+  "contrastes_vs_interior_remoto": {
+    "capital": {
+      "referencia": "interior_remoto",
+      "n_estrato": 73,
+      "n_referencia": 146,
+      "mde_80_pp_p30": 0.1946,
+      "mde_80_pp_p50": 0.2123
+    },
+    "metropolitano": {
+      "referencia": "interior_remoto",
+      "n_estrato": 265,
+      "n_referencia": 146,
+      "mde_80_pp_p30": 0.1374,
+      "mde_80_pp_p50": 0.1499
+    },
+    "interior_proximo_polo": {
+      "referencia": "interior_remoto",
+      "n_estrato": 811,
+      "n_referencia": 146,
+      "mde_80_pp_p30": 0.119,
+      "mde_80_pp_p50": 0.1298
     }
   },
   "interpretacao": {
-    "regra": "MDE <= 10% é bem potenciado para 10pp; MDE > 10pp indica poder limitado para heterogeneidade fina por estrato/curso.",
+    "regra": "A inferência substantiva usa os MDEs dos contrastes versus interior remoto; o benchmark global de uma proporção não mede potência do coeficiente de regressão.",
     "cursos": "Cursos com <50 células terão MDE >15pp mesmo sob p=0.30; análise por curso será descritiva ou agrupada.",
     "ufs": "UFs com poucos municípios exigem agrupamento por região; não estimar efeito UF isolado com <10 clusters."
   }

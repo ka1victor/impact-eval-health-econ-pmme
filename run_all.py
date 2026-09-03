@@ -14,6 +14,13 @@ STEPS = [
     ROOT / "scripts" / "aquisicao" / "04_harmonizar_territorio_ibge.py",
     ROOT / "scripts" / "aquisicao" / "05_integrar_painel_analitico.py",
     ROOT / "scripts" / "avaliacao_impacto" / "run_pipeline_avaliacao.py",
+    ROOT / "scripts" / "tema_trabalho" / "01_auditar_atracao_provimento_interior.py",
+    ROOT / "scripts" / "tema_trabalho" / "02_reconciliar_funil_ciclo1.py",
+    ROOT / "scripts" / "tema_trabalho" / "03_construir_tipologia_territorial.py",
+    ROOT / "scripts" / "tema_trabalho" / "04_congelar_pre_analise.py",
+    ROOT / "scripts" / "tema_trabalho" / "05_estimar_atracao.py",
+    ROOT / "scripts" / "tema_trabalho" / "06_avaliar_provimento_cnes.py",
+    ROOT / "scripts" / "tema_trabalho" / "07_red_team_sintese.py",
 ]
 
 
@@ -24,7 +31,7 @@ def main() -> None:
         subprocess.run([sys.executable, str(script)], cwd=ROOT, check=True)
         print()
 
-    print("Pipeline executado com sucesso! Todos os artefatos consolidados foram salvos em output/avaliacao_impacto/ e output/aquisicao/.")
+    print("Pipeline executado com sucesso! Artefatos consolidados salvos em output/aquisicao/, output/avaliacao_impacto/ e output/tema_trabalho/.")
 
 
 if __name__ == "__main__":

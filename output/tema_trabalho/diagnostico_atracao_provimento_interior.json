@@ -10,7 +10,7 @@
   },
   "fontes": {
     "output/aquisicao/quadro_vagas_tratamento.parquet": {
-      "sha256": "41e1d3afee23994821361d8a60d9e507e3b1c25cf69ae882c10008ae27d8b149"
+      "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f"
     },
     "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada.xlsx": {
       "sha256": "0acfba2a89e0c269b754c0ca0fd5a2426be511f88a3c1a934a41345f8c9ffd0c"
@@ -19,7 +19,7 @@
       "sha256": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b"
     },
     "output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet": {
-      "sha256": "62529ee2c9eea9b45a2d379473fe9ee2c5ecddddb64c39ae8dc78283a8b5d7ee"
+      "sha256": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059"
     },
     "output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json": {
       "sha256": "cc3886f3770688045b5783d50f67b8ada0191dd2dfd033c32bd67c4cf00e3979"

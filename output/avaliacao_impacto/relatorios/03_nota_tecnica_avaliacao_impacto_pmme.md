@@ -1,6 +1,6 @@
 # Nota técnica — vagas viram médicos e eles permanecem?
 
-> Data da execução: 2026-09-02
+> Data da execução: 2026-09-03
 > Status: **COMPARAÇÃO AJUSTADA**
 > Unidade principal: município–curso–mês
 > Janela: 2024-06 a 2026-07

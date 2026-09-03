@@ -30,16 +30,16 @@
   },
   "fontes": {
     "output/aquisicao/malha_municipios_regioes_saude.parquet": {
-      "sha256": "fbc90bfc1ba4914da94a0ac199ac083ab37b085d21870d4bf0ff9be407f8bfe2"
+      "sha256": "5c188c3de49e985e858eb4b156bcb3fed890ace7173fe8eb7ba160da2e643e03"
     },
     "output/aquisicao/quadro_vagas_tratamento.parquet": {
-      "sha256": "41e1d3afee23994821361d8a60d9e507e3b1c25cf69ae882c10008ae27d8b149"
+      "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f"
     },
     "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
       "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
     },
     "output/painel_cnes_especialidade_mensal.parquet": {
-      "sha256": "bd1127e032208a7bec698f53cb0e9f8c49cdf711978ed2e877cd8b5b90a7d234"
+      "sha256": "364d6148e0b594bd68b8efe8945f51c4553e62f2e889b2b85c79f09213368417"
     },
     "data/raw/aquisicao/territorio/REGIC2018_Municipios_Hierarquia_e_regiao.xlsx": {
       "sha256": "f1d29395964e4827d8294d27b57bcffb36fc47918f91b8ecee4efdbac1cda03e"

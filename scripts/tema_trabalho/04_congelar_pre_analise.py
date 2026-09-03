@@ -55,8 +55,20 @@ def mde_proporcao(n: int, p: float = 0.5, deff: float = 1.0) -> float:
     return (Z_ALPHA + Z_POWER) * se
 
 
-def mde_diferenca_dois_grupos(n1: int, n2: int, p: float = 0.5, deff: float = 1.0) -> float:
-    se = math.sqrt(p * (1 - p) * (1 / n1 + 1 / n2)) * math.sqrt(deff)
+def mde_diferenca_dois_grupos(
+    n1: int,
+    n2: int,
+    p: float = 0.5,
+    deff1: float = 1.0,
+    deff2: float = 1.0,
+) -> float:
+    """MDE aproximado para um contraste entre dois grupos clusterizados.
+
+    O cálculo continua sendo um benchmark analítico, não uma simulação do
+    modelo multivariado. Diferentemente do antigo MDE de uma proporção, ele
+    incorpora os tamanhos e os efeitos de desenho dos dois lados do contraste.
+    """
+    se = math.sqrt(p * (1 - p) * (deff1 / n1 + deff2 / n2))
     return (Z_ALPHA + Z_POWER) * se
 
 
@@ -116,7 +128,39 @@ def main() -> None:
             "deff_assumido": round(deff_e, 3),
             "mde_80_pp_p50": round(mde_proporcao(n, p=0.5, deff=deff_e), 4),
             "mde_80_pp_p30": round(mde_proporcao(n, p=0.30, deff=deff_e), 4),
-            "mde_diferenca_vs_resto_p50": round(mde_diferenca_dois_grupos(n, n_resto, p=0.5, deff=deff_e), 4) if n_resto > 0 else None,
+            "mde_diferenca_vs_resto_p50": round(mde_diferenca_dois_grupos(n, n_resto, p=0.5, deff1=deff_e, deff2=deff), 4) if n_resto > 0 else None,
+        }
+
+    # Contrastes que correspondem aos coeficientes territoriais do modelo A4.
+    # Interior remoto é a categoria de referência congelada em A3.
+    ref = por_estrato["interior_remoto"]
+    contrastes_vs_remoto = {}
+    for estr in ["capital", "metropolitano", "interior_proximo_polo"]:
+        cur = por_estrato[estr]
+        contrastes_vs_remoto[estr] = {
+            "referencia": "interior_remoto",
+            "n_estrato": cur["n_celulas"],
+            "n_referencia": ref["n_celulas"],
+            "mde_80_pp_p30": round(
+                mde_diferenca_dois_grupos(
+                    cur["n_celulas"],
+                    ref["n_celulas"],
+                    p=0.30,
+                    deff1=cur["deff_assumido"],
+                    deff2=ref["deff_assumido"],
+                ),
+                4,
+            ),
+            "mde_80_pp_p50": round(
+                mde_diferenca_dois_grupos(
+                    cur["n_celulas"],
+                    ref["n_celulas"],
+                    p=0.50,
+                    deff1=cur["deff_assumido"],
+                    deff2=ref["deff_assumido"],
+                ),
+                4,
+            ),
         }
 
     # MDE global
@@ -141,10 +185,12 @@ def main() -> None:
         "mde_global": {
             "mde_80_pp_p50": round(mde_proporcao(n_celulas_ch1, p=0.5, deff=deff), 4),
             "mde_80_pp_p30": round(mde_proporcao(n_celulas_ch1, p=0.30, deff=deff), 4),
+            "rotulo": "benchmark de precisão de uma proporção; não é o MDE dos coeficientes territoriais",
         },
         "por_estrato": por_estrato,
+        "contrastes_vs_interior_remoto": contrastes_vs_remoto,
         "interpretacao": {
-            "regra": f"MDE <= {MIN_DIFF_PP:.0%} é bem potenciado para 10pp; MDE > 10pp indica poder limitado para heterogeneidade fina por estrato/curso.",
+            "regra": "A inferência substantiva usa os MDEs dos contrastes versus interior remoto; o benchmark global de uma proporção não mede potência do coeficiente de regressão.",
             "cursos": "Cursos com <50 células terão MDE >15pp mesmo sob p=0.30; análise por curso será descritiva ou agrupada.",
             "ufs": "UFs com poucos municípios exigem agrupamento por região; não estimar efeito UF isolado com <10 clusters.",
         },
@@ -287,13 +333,15 @@ Poisson/NB apenas descritivo para contagens.
 **Covariadas.** Estrato A2, IVS 2010 canônico (+ subíndices), log(pop 2010),
 região de saúde, estoque pré 202407–202506, faixa anunciada, curso, UF, chamada.
 
-**Potência.** Global MDE 80% ≈ {potencia['mde_global']['mde_80_pp_p30']:.1%} (p=0.30)
-a {potencia['mde_global']['mde_80_pp_p50']:.1%} (p=0.50) com DEFF={potencia['amostra_primaria']['deff_assumido']} (m≈{potencia['amostra_primaria']['m_medio_celulas_por_municipio']}, ICC=0.05);
-por estrato (quadro Ch1, DEFF=max(1,1+(m-1)*ICC)): capital {por_estrato['capital']['n_celulas']}/{por_estrato['capital']['n_municipios']} m≈{por_estrato['capital']['m_medio_celulas_por_municipio']} MDE≈{por_estrato['capital']['mde_80_pp_p30']:.1%} (p30, DEFF {por_estrato['capital']['deff_assumido']}),
-metropolitano {por_estrato['metropolitano']['n_celulas']}/{por_estrato['metropolitano']['n_municipios']} MDE≈{por_estrato['metropolitano']['mde_80_pp_p30']:.1%},
-interior_proximo {por_estrato['interior_proximo_polo']['n_celulas']}/{por_estrato['interior_proximo_polo']['n_municipios']} MDE≈{por_estrato['interior_proximo_polo']['mde_80_pp_p30']:.1%},
-interior_remoto {por_estrato['interior_remoto']['n_celulas']}/{por_estrato['interior_remoto']['n_municipios']} MDE≈{por_estrato['interior_remoto']['mde_80_pp_p30']:.1%}.
-Mínima relevante 10pp (sens. 5pp); MDE>10pp indica poder limitado para nulidade.
+**Potência.** O antigo valor global de {potencia['mde_global']['mde_80_pp_p30']:.1%}
+é mantido apenas como benchmark de precisão de uma proporção e **não** como
+MDE dos coeficientes territoriais. Para os contrastes efetivamente estimados
+contra interior_remoto (referência), os MDEs aproximados a 80% (p=0,30; DEFF por estrato)
+são: capital {contrastes_vs_remoto['capital']['mde_80_pp_p30']:.1%},
+metropolitano {contrastes_vs_remoto['metropolitano']['mde_80_pp_p30']:.1%} e
+interior_proximo_polo {contrastes_vs_remoto['interior_proximo_polo']['mde_80_pp_p30']:.1%}.
+São benchmarks analíticos; não substituem simulação com a matriz completa do
+modelo. A mínima diferença relevante permanece 10 p.p. (sensibilidade 5 p.p.).
 
 **Linguagem.** Associativa apenas; sem efeito causal do PMM-E/bolsa/IVS.
 """
@@ -302,7 +350,7 @@ Mínima relevante 10pp (sens. 5pp); MDE>10pp indica poder limitado para nulidade
     tmp_s.replace(secao_path)
 
     print(f"[OK] A3 congelado: registro em {OUT_REGISTRO.name}, potência em {OUT_POTENCIA.name}")
-    print(f"     Global MDE 80% (p=0.30): {potencia['mde_global']['mde_80_pp_p30']:.1%} | DEFF {potencia['amostra_primaria']['deff_assumido']}")
+    print(f"     Benchmark global de uma proporcao (p=0.30): {potencia['mde_global']['mde_80_pp_p30']:.1%} | DEFF {potencia['amostra_primaria']['deff_assumido']}")
 
 
 if __name__ == "__main__":

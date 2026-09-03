@@ -1,7 +1,8 @@
 # Próximas etapas
 
-> O ciclo 1 foi concluído como comparação ajustada. O tema principal passa a
-> ter um núcleo associativo com portões próprios e um upgrade causal pelo RDD.
+> O ciclo 1 foi concluído como análise associativa de implementação. O resultado
+> principal é a atração administrativa por território (A4); a dinâmica agregada
+> do CNES é secundária (A5). Um upgrade causal exige novo portão e protocolo.
 > O ciclo 3 continua congelado até maturidade.
 
 ## Fila imediata — tema de atração e provimento fora das capitais
@@ -22,9 +23,10 @@
   (540/540 municípios A1 classificados; 25 capitais, 101 metropolitanos strict,
   238 interior próximo, 176 interior remoto; REGIC 2018 + RM/RIDE 2022 strict
   — RM/RIDE apenas Metropolitana/Integrada, exclui Colar/Área/Entorno; AU 44 fora).
-- [x] A3 — congelar outcome binário por célula, unidade célula com cluster município, covariadas pré-oferta, FE curso+UF, MDE global 3,8pp (p=0,30; DEFF 1,126) e por estrato quadro Ch1 strict 16,1% capital 73/18 / 8,4% metro 265/72 / 4,8% próximo 811/203 / 10,9% remoto 146/75 (DEFF floor, hashes território REGIC/RM), linguagem associativa (`registro_pre_analise_atracao.json` + `potencia_atracao.json` + `31_secao_econometrica_A3.md`).
-- [x] A5 — avaliar persistência da oferta médica local no CNES agregado (painel T0 alinhado 30.784 linhas, 1184 células, 368 mun, horizonte comum 6m; modelos minimal e full FE curso+UF cluster município; LOO e influência municipal; validação preditiva GroupKFold; sem causalidade; 14 testes OK) (`scripts/tema_trabalho/06_avaliar_provimento_cnes.py` + `A5_estimativas_provimento.json` + `A5_relatorio_diagnostico.md` + 20 tabelas/figuras).
-- [ ] A6 — executar red team e auditoria de sensibilidade sem chamar o resultado de retenção individual ou efeito total do PMM-E.
+- [x] A3 — congelar outcome binário por célula, FE curso+UF e cluster municipal. O valor global de 3,8pp foi reclassificado como benchmark de uma proporção; os MDEs dos contrastes contra interior remoto são 19,5pp (capital), 13,7pp (metropolitano) e 11,9pp (interior próximo).
+- [x] A4 — estimar atração em 1.295 células/368 municípios: metropolitano +29,4pp versus interior remoto no LPM mínimo e +19,8pp no completo; resultado preservado em confirmação (+28,5pp), homologação (+25,0pp) e colapso município–curso (+33,1pp).
+- [x] A5 — estimar a evolução do estoque cadastrado com referência limpa em 202506, follow-up 202603 e amostra confirmatória de 587 células/295 municípios. Estudo dinâmico com FE célula, curso–mês e UF–mês; resultado secundário associativo, sem linguagem de provimento causal ou retenção.
+- [x] A6 — executar red team, matriz afirmação–evidência–limite, síntese e manifesto reproduzível.
 
 ## Fila imediata — RDD do adicional de bolsa
 
@@ -50,9 +52,9 @@
 - [x] Fixar o ciclo 1, chamada 1, como coorte inicial.
 - [x] Usar vaga imediata versus apenas cadastro de reserva como contraste, não
   como pergunta substantiva.
-- [x] Formular a pergunta como efeito sobre oferta médica local e persistência.
-- [x] Definir `município–curso–mês` como unidade principal.
-- [x] Definir estoque municipal de especialistas como outcome primário.
+- [x] Formular a pergunta principal como gradiente territorial da atração administrativa.
+- [x] Definir célula CNES–curso como unidade principal de A4 e `município–curso–mês` como unidade secundária de A5.
+- [x] Definir atração binária como outcome primário e estoque cadastrado como outcome secundário.
 - [x] Usar todo o pós maduro e pré-especificar presença em 6 e 12 meses.
 - [x] Manter RDD, efeito causal da bolsa e métodos sintéticos fora da primeira
   versão.
@@ -104,7 +106,7 @@
   posteriores.
 - [x] Entregar nota curta com status **comparação ajustada**, pois o portão
   administrativo falhou (`03_nota_tecnica_avaliacao_impacto_pmme.md`).
-- [x] Integrar scripts e produtos ao `run_all.py` somente depois da validação.
+- [x] Integrar os scripts A1–A6 e seus produtos ao `run_all.py` depois da validação.
 
 ## Atualização prospectiva e infraestrutura paralela
 
