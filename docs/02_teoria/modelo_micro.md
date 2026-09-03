@@ -112,15 +112,22 @@ Pela função de produção médica (Reinhardt, 1975), a infraestrutura hospital
 
 ### 2.4. O modelo teórico integrado completo
 
-Consolidando os blocos, a utilidade intertemporal do médico especialista $s$ ao escolher a vaga no município $m$ é formalizada como:
+Consolidando os blocos desenvolvidos, a decisão locacional intertemporal do médico especialista $s$ é expressa em harmonia direta com a formulação de Moehling et al. (2020):
 
 ```math
-V_{im}^{(s)} = \sum_t \delta^t \left[ \frac{\mathbb{E}\!\left(w_{imt}^{(s)}\right)}{p_{mt}} - c_{im}^{(s)} \right] + \varepsilon_{im},
-\qquad
-m_i^* \in \arg\max_{m \in \mathcal{M} \cup \{0\}} V_{im}^{(s)},
+\arg\max_{m \in M}\;U_i(\omega_m)
+=
+\arg\max_{m \in M}
+\left\{
+\sum_t \delta^t
+\left[
+\frac{\mathbb{E}\!\left(w_{mt}^{(s)}\right)}{p_{mt}}
+- c_{im}^{(s)}
+\right]
+\right\},
 ```
 
-com o custo locacional decomposto em seus determinantes estruturais:
+em que o custo locacional não pecuniário $c_{im}^{(s)}$ é formalmente aberto em seus componentes microfundamentados:
 
 ```math
 c_{im}^{(s)} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}}_{\text{Custo Geográfico e Amenidades}} + \underbrace{C(q_{im}; L_m, K_m, s) - \alpha_i B(q_{im}; L_m, K_m)}_{\text{Custo Laboral Líquido de Realização}}.
