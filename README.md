@@ -8,22 +8,25 @@ Há quatro camadas separadas no repositório:
 
 1. **Resultado principal:** quais características territoriais estão associadas
    à atração administrativa no primeiro ciclo?
-2. **Upgrade causal focal:** ganhar marginalmente a vaga de primeira opção
-   aumenta a entrada e a presença posterior do especialista no PMM-E?
-3. **Upgrade causal territorial:** R$ 5 mil adicionais de bolsa aumentam a
+2. **Upgrade causal principal:** R$ 5 mil adicionais de bolsa aumentam a
    procura e o preenchimento das vagas junto aos limiares administrativos do
    IVS?
+3. **Upgrade causal alternativo:** ganhar marginalmente a vaga de primeira
+   opção aumenta a entrada e a presença posterior do especialista no PMM-E?
 4. **Resultado secundário:** células município–curso com atração administrativa
    apresentaram evolução distinta da oferta médica cadastrada no CNES?
 
 ## Decisão atual
 
-> **Resultado vigente:** A4 e A5 continuam associativos. A7 encontrou um novo
-> corte candidato: em 136 pares da primeira chamada, o último selecionado tem
-> +46,3 p.p. de homologação e +27,2 p.p. de presença ativa em 12/08/2026 versus
-> o primeiro não selecionado; na segunda chamada, +77,2 p.p. e +56,1 p.p. O
-> padrão ainda não é causal porque os desempates por mesma UF e idade não são
-> observados nas planilhas públicas.
+> **Resultado vigente:** A4 e A5 continuam associativos. A RDD da bolsa segue
+> como pergunta causal principal, mas o IVS 2010 público não reproduz 177 das
+> 368 faixas do ciclo 1 e não gera primeiro estágio estável em `0,400` ou
+> `0,500`; sharp e fuzzy RDD públicas estão bloqueadas. A7 é a alternativa
+> causal mais promissora: encontrou descontinuidades grandes de homologação e
+> presença, mas os desempates por mesma UF e idade ainda não são observados.
+
+A decisão consolidada, todos os achados e a sequência de avanço estão em
+[`docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md`](docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md).
 
 O desenho focal recomendado está em
 [`docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md`](docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md).
@@ -46,10 +49,12 @@ cutoffs candidatos são `0,400/0,401` e `0,500/0,501`; não existe salto em
 `0,300` nessa grade.
 
 O RDD ainda não tem amostra estimável aprovada: primeiro é necessário reproduzir
-a faixa da bolsa com o escore administrativo exato. Se o portão passar, a
-unidade primária será município–curso–chamada, com outcome administrativo
-binário por célula; vagas imediatas não formarão denominador. CNES, SIH e SIA são extensões
-condicionais, não a primeira estimação.
+a faixa da bolsa com o escore administrativo exato. O teste adicional mostrou
+que usar o IVS público como instrumento fuzzy também não funciona: em `0,500`,
+a bolsa é R$ 20 mil dos dois lados nas janelas principais; em `0,400`, o salto
+muda de sinal conforme a janela. Se o portão passar, a atribuição e a inferência
+serão municipais, com outcomes de atração agregados sem criar taxa por vaga.
+CNES, SIH e SIA são extensões condicionais, não a primeira estimação.
 
 O diagnóstico histórico imediata versus reserva usa `município–curso–mês` no ciclo 1 e o CNES mensal de
 junho de 2024 a julho de 2026:
@@ -174,7 +179,7 @@ python run_all.py
 ```
 O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A7, incluindo tabelas, figuras, red team, corte de seleção e manifestos.
 
-### Suíte de testes automatizados (108 testes)
+### Suíte de testes automatizados (112 testes)
 ```bash
 python run_tests.py
 ```
@@ -193,4 +198,4 @@ Cada diretório principal possui documentação autônoma orientando seu conteú
 | [`output/`](output/README.md) | [Guia de Artefatos](output/README.md) | Painéis analíticos, estimativas, tabelas, figuras e manifestos reproduzíveis |
 | [`prompts/`](prompts/README.md) | [Fila e Histórico](prompts/README.md) | Sessões executadas, cadernos de prompts e especificações de pesquisa |
 | [`scripts/`](scripts/README.md) | [Guia de Scripts](scripts/README.md) | Rotinas modulares de aquisição, estimação, avaliação de impacto e utilitários |
-| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 108 testes automatizados garantindo integridade econométrica e invariantes |
+| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 112 testes automatizados garantindo integridade econométrica e invariantes |

@@ -5,6 +5,11 @@
 > de reserva permanece encerrada como associação ajustada. Nenhum resultado de
 > efeito será consultado antes da aprovação dos portões abaixo.
 
+> **Atualização em 04/09/2026:** o IVS público também falhou como instrumento
+> fuzzy para a bolsa anunciada. A decisão consolidada, as alternativas e a nova
+> ordem operacional estão em
+> [`16_sintese_achados_e_novo_plano_causal.md`](16_sintese_achados_e_novo_plano_causal.md).
+
 A formulação substantiva, os outcomes e o diagnóstico de viabilidade deste
 plano estão em
 [`15_incentivos_ivs_provimento_duradouro.md`](../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
@@ -85,8 +90,9 @@ com as faixas publicadas permanecer sem explicação.
 Estados possíveis:
 
 - `APROVADO_SHARP`: o lado do cutoff determina perfeitamente o valor anunciado;
-- `APROVADO_FUZZY`: há exceções documentadas, mas o salto no valor recebido é
-  forte e mensurável;
+- `APROVADO_FUZZY`: há exceções documentadas, mas o salto no tratamento
+  declarado é forte e mensurável — valor anunciado para efeito da oferta ou
+  valor recebido para efeito da dose;
 - `REPROVADO`: escore, regra ou salto não são reconstruíveis.
 
 O diagnóstico público atual encontra divergência entre faixa anunciada e faixa
@@ -108,6 +114,28 @@ A diagonal soma 191 municípios e as células fora da diagonal somam 177. Essa
 reconstrução **não valida a regra**: os cutoffs são da taxonomia do Atlas do
 Ipea, enquanto os documentos preservados não publicam o algoritmo numérico nem
 o escore contínuo efetivamente usado pelo PMM-E.
+
+### Diagnóstico adicional: a RDD fuzzy pública também não passa
+
+Foi estimado o primeiro estágio entre o IVS 2010 disponível e o valor anunciado,
+sempre com uma observação por município. No corte `0,400/0,401`, a diferença
+bruta é -R$ 625 na janela de 0,010, praticamente zero na janela de 0,020 e só
+fica positiva ao ampliar a janela; o salto local-linear muda de sinal entre as
+especificações. No corte `0,500/0,501`, todos os municípios nas janelas de 0,010
+a 0,050 recebem R$ 20 mil nos dois lados, de modo que o primeiro estágio é
+exatamente zero.
+
+Portanto, usar o IVS público como instrumento para a faixa publicada não salva
+o desenho: falta relevância estável no primeiro estágio. A única janela de
+0,010 em `0,400` que produz um coeficiente local-linear positivo é incompatível
+com a diferença bruta negativa, usa apenas 20 municípios e não se sustenta nas
+demais janelas; ela não será selecionada retrospectivamente.
+
+Os números são reproduzidos por
+`scripts/rdd_bolsa/01_auditar_primeiro_estagio_publico.py` e preservados em
+`output/rdd_bolsa/a01_primeiro_estagio_publico.csv`. Esse resultado reprova
+somente o desenho fuzzy com o arquivo público candidato. Ele não elimina uma
+RDD sharp futura com o escore administrativo correto.
 
 ## 4. R2 — suporte, composição e pacote de políticas
 
@@ -187,18 +215,21 @@ de conhecimento prévio sobre qualquer outcome do projeto.
 
 ### Núcleo público executável
 
-1. `alocados_confirmados / vagas_publicadas` por município–curso;
-2. indicador de ao menos uma alocação confirmada;
-3. `homologados / vagas_publicadas`, mantido separado de entrada em atividade.
+1. proporção municipal de células município–curso publicadas com alguma
+   confirmação ou homologação;
+2. indicador de ao menos uma atração administrativa no município;
+3. número de células município–curso com atração, como outcome secundário;
+4. modelo no nível da célula com agrupamento municipal, como robustez.
 
-O denominador será o quadro vigente da chamada, sem somar reapresentações.
-Resultados serão agregados ou inferidos no nível municipal, porque o valor da
-bolsa não varia entre cursos do mesmo município.
+O denominador público é o conjunto versionado de **células publicadas**, não a
+quantidade de vagas físicas. Cada município receberá o mesmo peso na análise
+principal, porque o tratamento é municipal. Confirmação e homologação serão
+mantidas separadas de início em atividade.
 
 ### Núcleo ampliado condicionado a dados administrativos
 
-1. candidaturas válidas por vaga;
-2. probabilidade de receber ao menos uma candidatura;
+1. candidaturas válidas por oferta/vaga estável;
+2. probabilidade de uma oferta receber ao menos uma candidatura;
 3. aceite, homologação e entrada;
 4. tempo até preenchimento e reocupação.
 

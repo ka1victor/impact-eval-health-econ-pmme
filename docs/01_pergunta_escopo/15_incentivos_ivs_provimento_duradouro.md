@@ -10,6 +10,11 @@
 > retenção individual dos bolsistas. O portão A1 foi concluído em 01/09/2026
 > como `APROVADO_CELULA`: há população por célula, mas não denominador por vaga.
 
+> **Atualização em 04/09/2026:** a sharp RDD e a fuzzy RDD com o IVS público
+> foram reprovadas; o desenho permanece recuperável com o escore administrativo
+> correto. Todos os resultados e o novo plano estão em
+> [16_sintese_achados_e_novo_plano_causal.md](../05_identificacao/16_sintese_achados_e_novo_plano_causal.md).
+
 ## 1. Tema e pergunta
 
 Título de trabalho recomendado:

@@ -55,7 +55,9 @@ output/
   - `quadro_vagas_tratamento.parquet`: universo de 1.295 células de oferta do ciclo 1.
   - `malha_municipios_regioes_saude.parquet` e `painel_municipios_regioes.parquet`: harmonização territorial IBGE/IPEA.
 
-- **`rdd_bolsa/`:** Diagnósticos de viabilidade da grade salarial e teste de replicação do escore administrativo IVS 2010.
+- **`rdd_bolsa/`:** Diagnósticos de viabilidade da grade salarial, teste de
+  replicação do escore administrativo IVS 2010 e primeiro estágio público em
+  `a01_primeiro_estagio_publico.csv/.json`.
 
 - **`avaliacao_ciclo3/`:** Coorte congelada, manifesto dos 673 arquivos hospitalares SIH/SUS e auditoria pré-tratamento de anestesiologia.
 

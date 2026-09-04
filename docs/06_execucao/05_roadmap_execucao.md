@@ -3,14 +3,16 @@
 > A comparação agregada do ciclo 1 está encerrada. A fila imediata é somente o
 > portão de viabilidade do RDD do adicional de bolsa em
 > [`14_plano_implementacao_rdd_bolsa.md`](../05_identificacao/14_plano_implementacao_rdd_bolsa.md).
+> A decisão consolidada e a hierarquia das alternativas estão em
+> [`16_sintese_achados_e_novo_plano_causal.md`](../05_identificacao/16_sintese_achados_e_novo_plano_causal.md).
 > A formulação substantiva e a auditoria de viabilidade estão em
 > [`15_incentivos_ivs_provimento_duradouro.md`](../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
 > O ciclo 3 permanece congelado até maturidade.
 
 ## Fila imediata autorizada
 
-1. Corrigir a camada editorial da comparação imediata versus reserva, sem
-   alterar os resultados auditados.
+1. Submeter, após decisão do autor, os pedidos administrativos de escore/regra
+   e de inscrições/eventos; nenhuma minuta foi enviada ainda.
 2. Executar R1: reconstruir escore, vintagem, arredondamento, cutoff, faixa e
    valor da bolsa aplicados às vagas do ciclo 1.
 3. Somente se R1 passar, executar R2 de suporte e cointervenções sem outcomes.
@@ -22,6 +24,12 @@ R4–R6 não estão autorizados por este registro até os respectivos portões. 
 RDD antigo em `0,300` não deve ser restaurado: a grade de 2025 não tinha salto
 nesse ponto. A divergência atual entre IVS local e faixa anunciada mantém R1 em
 estado `REPROVADO_PENDENTE_DE_RECONSTRUCAO`.
+
+O diagnóstico adicional do primeiro estágio também reprova a alternativa fuzzy
+com o IVS público: em `0,400`, diferenças brutas e saltos local-lineares são
+instáveis entre janelas; em `0,500`, a bolsa anunciada é R$ 20 mil nos dois
+lados entre as janelas 0,010 e 0,050. Essa falha não elimina uma RDD futura com
+o escore administrativo correto.
 
 ## 0. Estado da comparação agregada após a execução
 

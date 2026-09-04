@@ -17,17 +17,18 @@ Ele executa sequencialmente:
 2. `scripts/02_auditar_fontes_pmme.py` — auditoria e integridade de fontes oficiais.
 3. `scripts/aquisicao/01_congelar_ponte_cbo.py` — congelamento da ponte operacional curso–CBO.
 4. `scripts/aquisicao/02_consolidar_quadro_vagas.py` — consolidação da matriz de vagas e tratamento.
-5. `scripts/aquisicao/04_harmonizar_territorio_ibge.py` — harmonização territorial e malha do IVS 2010.
-6. `scripts/aquisicao/05_integrar_painel_analitico.py` — construção do painel analítico CNES mensal.
-7. `scripts/avaliacao_impacto/run_pipeline_avaliacao.py` — pipeline completo do diagnóstico histórico DDD (etapas 01 a 09).
-8. `scripts/tema_trabalho/01_auditar_atracao_provimento_interior.py` — diagnóstico de atração e provimento.
-9. `scripts/tema_trabalho/02_reconciliar_funil_ciclo1.py` — reconciliação do funil administrativo (A1).
-10. `scripts/tema_trabalho/03_construir_tipologia_territorial.py` — estratificação territorial em 4 níveis (A2).
-11. `scripts/tema_trabalho/04_congelar_pre_analise.py` — pré-análise e cálculo de potência econométrica (A3).
-12. `scripts/tema_trabalho/05_estimar_atracao.py` — estimação dos modelos LPM e Logit de atração (A4).
-13. `scripts/tema_trabalho/06_avaliar_provimento_cnes.py` — avaliação da evolução do estoque médico cadastrado no CNES (A5).
-14. `scripts/tema_trabalho/07_red_team_sintese.py` — síntese red team, matriz de evidências e manifesto reproduzível (A6).
-15. `scripts/tema_trabalho/08_auditar_cutoff_selecao.py` — auditoria do último selecionado versus primeiro não selecionado, ligação agregada a homologação/presença ativa e portão causal (A7).
+5. `scripts/rdd_bolsa/01_auditar_primeiro_estagio_publico.py` — auditoria municipal do salto da bolsa anunciada nos cutoffs candidatos do IVS público.
+6. `scripts/aquisicao/04_harmonizar_territorio_ibge.py` — harmonização territorial e malha do IVS 2010.
+7. `scripts/aquisicao/05_integrar_painel_analitico.py` — construção do painel analítico CNES mensal.
+8. `scripts/avaliacao_impacto/run_pipeline_avaliacao.py` — pipeline completo do diagnóstico histórico DDD (etapas 01 a 09).
+9. `scripts/tema_trabalho/01_auditar_atracao_provimento_interior.py` — diagnóstico de atração e provimento.
+10. `scripts/tema_trabalho/02_reconciliar_funil_ciclo1.py` — reconciliação do funil administrativo (A1).
+11. `scripts/tema_trabalho/03_construir_tipologia_territorial.py` — estratificação territorial em 4 níveis (A2).
+12. `scripts/tema_trabalho/04_congelar_pre_analise.py` — pré-análise e cálculo de potência econométrica (A3).
+13. `scripts/tema_trabalho/05_estimar_atracao.py` — estimação dos modelos LPM e Logit de atração (A4).
+14. `scripts/tema_trabalho/06_avaliar_provimento_cnes.py` — avaliação da evolução do estoque médico cadastrado no CNES (A5).
+15. `scripts/tema_trabalho/07_red_team_sintese.py` — síntese red team, matriz de evidências e manifesto reproduzível (A6).
+16. `scripts/tema_trabalho/08_auditar_cutoff_selecao.py` — auditoria do último selecionado versus primeiro não selecionado, ligação agregada a homologação/presença ativa e portão causal (A7).
 
 ---
 

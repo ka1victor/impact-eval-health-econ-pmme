@@ -11,6 +11,7 @@ STEPS = [
     ROOT / "scripts" / "02_auditar_fontes_pmme.py",
     ROOT / "scripts" / "aquisicao" / "01_congelar_ponte_cbo.py",
     ROOT / "scripts" / "aquisicao" / "02_consolidar_quadro_vagas.py",
+    ROOT / "scripts" / "rdd_bolsa" / "01_auditar_primeiro_estagio_publico.py",
     ROOT / "scripts" / "aquisicao" / "04_harmonizar_territorio_ibge.py",
     ROOT / "scripts" / "aquisicao" / "05_integrar_painel_analitico.py",
     ROOT / "scripts" / "avaliacao_impacto" / "run_pipeline_avaliacao.py",

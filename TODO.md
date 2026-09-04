@@ -33,6 +33,13 @@
 - [x] Retirar da camada editorial a linguagem causal não sustentada pela DDD.
 - [x] Auditar a viabilidade de salário, IVS, preenchimento e provimento
   duradouro (`docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md`).
+- [x] Auditar o primeiro estágio entre IVS 2010 público e bolsa anunciada: sem
+  salto estável em `0,400` e salto zero em `0,500` nas janelas principais;
+  fuzzy RDD pública reprovada.
+- [x] Consolidar achados, alternativas, linguagem e plano fail-closed em
+  `docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md`.
+- [ ] Submeter, após escolha do canal pelo autor, os pedidos de vaga/regra IVS
+  e de universo de inscrições/eventos; as minutas permanecem não enviadas.
 - [ ] R1 — recuperar a running variable administrativa exata, vintagem,
   precisão, arredondamento e cutoffs da grade de 2025.
 - [ ] R1 — reproduzir 100% das faixas anunciadas ou documentar exceções

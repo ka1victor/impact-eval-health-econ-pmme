@@ -2,6 +2,12 @@
 
 > Preparados em 29/08/2026. **Nenhum pedido foi enviado, nenhum termo foi aceito e nenhum órgão foi contatado.** A submissão depende de decisão externa do autor.
 
+> **Prioridade em 04/09/2026:** os pacotes 1 e 2 são o caminho mínimo para a
+> pergunta causal de atração pelo adicional da bolsa. O pacote 3 não é necessário
+> para estimar o efeito da oferta anunciada; ele só é prioritário se o estimando
+> passar a ser a dose efetivamente recebida. Ver a
+> [síntese causal](../05_identificacao/16_sintese_achados_e_novo_plano_causal.md).
+
 ## Escopo fechado
 
 Estes documentos operacionalizam exclusivamente as seis lacunas fechadas pelo portão A06: A07-01 cadastro e versionamento de vagas; A07-02 inscrições e eventos; A07-03 ponte pseudonimizada PMM-E–CNES; A07-04 regra histórica do IVS por vaga; A07-05 folha mensal e execução financeira vinculável; e A07-06 documentação e historicização dos painéis.

@@ -27,43 +27,43 @@
       "corte_taxonomia": 0.4,
       "fronteira_discreta": 0.4005,
       "bandwidth": 0.01,
-      "n_abaixo": 10,
+      "n_abaixo": 12,
       "n_acima": 8,
-      "n_total": 18,
-      "media_abaixo_mil_brl": 18.5,
+      "n_total": 20,
+      "media_abaixo_mil_brl": 18.75,
       "media_acima_mil_brl": 18.125,
-      "diferenca_bruta_mil_brl": -0.375,
-      "salto_local_linear_mil_brl": 4.393843962189489,
-      "erro_padrao_hc1_mil_brl": 1.6043786993322595,
-      "p_valor": 0.0061690579764980095
+      "diferenca_bruta_mil_brl": -0.625,
+      "salto_local_linear_mil_brl": 4.064945915702859,
+      "erro_padrao_hc1_mil_brl": 1.721861731754733,
+      "p_valor": 0.018236283570733213
     },
     {
       "corte_taxonomia": 0.4,
       "fronteira_discreta": 0.4005,
       "bandwidth": 0.02,
-      "n_abaixo": 28,
+      "n_abaixo": 30,
       "n_acima": 18,
-      "n_total": 46,
-      "media_abaixo_mil_brl": 18.035714285714285,
+      "n_total": 48,
+      "media_abaixo_mil_brl": 18.0,
       "media_acima_mil_brl": 18.055555555555554,
-      "diferenca_bruta_mil_brl": 0.019841269841268883,
-      "salto_local_linear_mil_brl": 0.19037543560673242,
-      "erro_padrao_hc1_mil_brl": 2.06391652640112,
-      "p_valor": 0.9265074446198347
+      "diferenca_bruta_mil_brl": 0.05555555555555358,
+      "salto_local_linear_mil_brl": 0.20183721750191452,
+      "erro_padrao_hc1_mil_brl": 2.0212257016354314,
+      "p_valor": 0.9204564081936241
     },
     {
       "corte_taxonomia": 0.4,
       "fronteira_discreta": 0.4005,
       "bandwidth": 0.03,
-      "n_abaixo": 41,
+      "n_abaixo": 42,
       "n_acima": 26,
-      "n_total": 67,
-      "media_abaixo_mil_brl": 17.439024390243905,
+      "n_total": 68,
+      "media_abaixo_mil_brl": 17.380952380952383,
       "media_acima_mil_brl": 18.076923076923077,
-      "diferenca_bruta_mil_brl": 0.637898686679172,
-      "salto_local_linear_mil_brl": -0.30981647450738437,
-      "erro_padrao_hc1_mil_brl": 1.5569092694053583,
-      "p_valor": 0.8422670002489988
+      "diferenca_bruta_mil_brl": 0.6959706959706935,
+      "salto_local_linear_mil_brl": -0.32853197443275484,
+      "erro_padrao_hc1_mil_brl": 1.5436368631034487,
+      "p_valor": 0.8314596941078883
     },
     {
       "corte_taxonomia": 0.4,
@@ -75,40 +75,40 @@
       "media_abaixo_mil_brl": 16.623376623376622,
       "media_acima_mil_brl": 18.333333333333332,
       "diferenca_bruta_mil_brl": 1.7099567099567103,
-      "salto_local_linear_mil_brl": -0.7031671515383713,
-      "erro_padrao_hc1_mil_brl": 1.1045869556444459,
-      "p_valor": 0.5243930368625549
+      "salto_local_linear_mil_brl": -0.7112325024624324,
+      "erro_padrao_hc1_mil_brl": 1.0995374498624402,
+      "p_valor": 0.5177309694184684
     },
     {
       "corte_taxonomia": 0.4,
       "fronteira_discreta": 0.4005,
       "bandwidth": 0.08,
-      "n_abaixo": 129,
+      "n_abaixo": 130,
       "n_acima": 51,
-      "n_total": 180,
-      "media_abaixo_mil_brl": 15.58139534883721,
+      "n_total": 181,
+      "media_abaixo_mil_brl": 15.576923076923077,
       "media_acima_mil_brl": 18.72549019607843,
-      "diferenca_bruta_mil_brl": 3.1440948472412185,
-      "salto_local_linear_mil_brl": -0.8943863776441235,
-      "erro_padrao_hc1_mil_brl": 0.8499441350337688,
-      "p_valor": 0.29266723931874983
+      "diferenca_bruta_mil_brl": 3.148567119155352,
+      "salto_local_linear_mil_brl": -0.8967502761177049,
+      "erro_padrao_hc1_mil_brl": 0.8472471328453665,
+      "p_valor": 0.28986025872845633
     },
     {
-      "corte_taxonomia": 0.49999999999999994,
+      "corte_taxonomia": 0.5,
       "fronteira_discreta": 0.5005,
       "bandwidth": 0.01,
-      "n_abaixo": 4,
+      "n_abaixo": 5,
       "n_acima": 5,
-      "n_total": 9,
+      "n_total": 10,
       "media_abaixo_mil_brl": 20.0,
       "media_acima_mil_brl": 20.0,
       "diferenca_bruta_mil_brl": 0.0,
-      "salto_local_linear_mil_brl": 9.036600216565339e-15,
-      "erro_padrao_hc1_mil_brl": 4.873840001834602e-15,
-      "p_valor": 0.06372445942428422
+      "salto_local_linear_mil_brl": 0.0,
+      "erro_padrao_hc1_mil_brl": 1.0814463806489035e-14,
+      "p_valor": 1.0
     },
     {
-      "corte_taxonomia": 0.49999999999999994,
+      "corte_taxonomia": 0.5,
       "fronteira_discreta": 0.5005,
       "bandwidth": 0.02,
       "n_abaixo": 8,
@@ -117,12 +117,12 @@
       "media_abaixo_mil_brl": 20.0,
       "media_acima_mil_brl": 20.0,
       "diferenca_bruta_mil_brl": 0.0,
-      "salto_local_linear_mil_brl": -3.552713678800501e-15,
-      "erro_padrao_hc1_mil_brl": 1.2179895112637257e-14,
-      "p_valor": 0.7705261623332522
+      "salto_local_linear_mil_brl": 0.0,
+      "erro_padrao_hc1_mil_brl": 1.7494210343963956e-14,
+      "p_valor": 1.0
     },
     {
-      "corte_taxonomia": 0.49999999999999994,
+      "corte_taxonomia": 0.5,
       "fronteira_discreta": 0.5005,
       "bandwidth": 0.03,
       "n_abaixo": 11,
@@ -131,12 +131,12 @@
       "media_abaixo_mil_brl": 20.0,
       "media_acima_mil_brl": 20.0,
       "diferenca_bruta_mil_brl": 0.0,
-      "salto_local_linear_mil_brl": 5.329070518200751e-15,
-      "erro_padrao_hc1_mil_brl": 8.203908157114157e-15,
-      "p_valor": 0.5159654568309138
+      "salto_local_linear_mil_brl": 4.440892098500626e-15,
+      "erro_padrao_hc1_mil_brl": 3.5099467781953666e-15,
+      "p_valor": 0.2057886731108992
     },
     {
-      "corte_taxonomia": 0.49999999999999994,
+      "corte_taxonomia": 0.5,
       "fronteira_discreta": 0.5005,
       "bandwidth": 0.05,
       "n_abaixo": 20,
@@ -145,24 +145,39 @@
       "media_abaixo_mil_brl": 20.0,
       "media_acima_mil_brl": 20.0,
       "diferenca_bruta_mil_brl": 0.0,
-      "salto_local_linear_mil_brl": -3.3306690738754696e-15,
-      "erro_padrao_hc1_mil_brl": 9.520444711261141e-15,
-      "p_valor": 0.7264558850703922
+      "salto_local_linear_mil_brl": -5.551115123125783e-15,
+      "erro_padrao_hc1_mil_brl": 1.53214671627602e-14,
+      "p_valor": 0.717120661460918
     },
     {
-      "corte_taxonomia": 0.49999999999999994,
+      "corte_taxonomia": 0.5,
       "fronteira_discreta": 0.5005,
       "bandwidth": 0.08,
-      "n_abaixo": 41,
+      "n_abaixo": 42,
       "n_acima": 15,
-      "n_total": 56,
-      "media_abaixo_mil_brl": 19.26829268292683,
+      "n_total": 57,
+      "media_abaixo_mil_brl": 19.166666666666668,
       "media_acima_mil_brl": 20.0,
-      "diferenca_bruta_mil_brl": 0.7317073170731696,
-      "salto_local_linear_mil_brl": -0.357576582907043,
-      "erro_padrao_hc1_mil_brl": 0.1622349176172037,
-      "p_valor": 0.027519652142277036
+      "diferenca_bruta_mil_brl": 0.8333333333333321,
+      "salto_local_linear_mil_brl": -0.3626107356328684,
+      "erro_padrao_hc1_mil_brl": 0.16335884387602528,
+      "p_valor": 0.026437845752939292
     }
   ],
-  "interpretacao": "Um salto anunciado robusto é condição necessária para uma RDD fuzzy pública, mas não suficiente. Ainda é preciso justificar institucionalmente que o corte da taxonomia afeta a faixa, auditar continuidade das covariáveis e excluir ou documentar outros componentes que também mudem no mesmo corte."
+  "resumo_cutoffs": {
+    "0.4": {
+      "estimativas_locais_positivas": 2,
+      "diferencas_brutas_positivas": 3,
+      "total_janelas": 4,
+      "salto_estavel_em_todas_as_janelas": false
+    },
+    "0.5": {
+      "estimativas_locais_positivas": 0,
+      "diferencas_brutas_positivas": 0,
+      "total_janelas": 4,
+      "salto_estavel_em_todas_as_janelas": false
+    }
+  },
+  "portao_fuzzy_com_ivs_publico": "REPROVADO_SEM_SALTO_ESTAVEL",
+  "interpretacao": "Nas quatro janelas principais, nenhum cutoff apresenta simultaneamente diferença bruta e salto local-linear positivos em todas as especificações. Logo, o IVS 2010 público não gera um primeiro estágio estável para a faixa anunciada. Mesmo que aparecesse um salto robusto, ele ainda seria condição necessária, não suficiente, para uma RDD fuzzy pública."
 }

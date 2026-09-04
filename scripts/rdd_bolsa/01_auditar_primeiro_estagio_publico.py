@@ -32,9 +32,10 @@ VALOR_POR_FAIXA = {
 def _estimativa_local_linear(
     frame: pd.DataFrame, boundary: float, bandwidth: float
 ) -> dict[str, float | int]:
-    sample = frame.loc[
-        frame["ivs_2010"].between(boundary - bandwidth, boundary + bandwidth)
-    ].copy()
+    cutoff = round(float(boundary - 0.0005), 3)
+    lado_abaixo = frame["ivs_2010"].between(cutoff - bandwidth, cutoff)
+    lado_acima = frame["ivs_2010"].between(cutoff + 0.001, cutoff + bandwidth)
+    sample = frame.loc[lado_abaixo | lado_acima].copy()
     sample["acima"] = (sample["ivs_2010"] >= boundary).astype(float)
     sample["x_c"] = sample["ivs_2010"] - boundary
     sample["acima_x_c"] = sample["acima"] * sample["x_c"]
@@ -47,7 +48,7 @@ def _estimativa_local_linear(
         )
 
     design = sm.add_constant(sample[["acima", "x_c", "acima_x_c"]])
-    weights = np.maximum(0.0, 1.0 - sample["x_c"].abs() / bandwidth)
+    weights = np.maximum(0.0, 1.0 - sample["x_c"].abs() / (bandwidth + 0.0005))
     model = sm.WLS(sample["valor_anunciado_mensal_brl"] / 1_000, design, weights=weights)
     fit = model.fit(cov_type="HC1")
 
@@ -60,7 +61,7 @@ def _estimativa_local_linear(
         / 1_000
     )
     return {
-        "corte_taxonomia": float(boundary - 0.0005),
+        "corte_taxonomia": cutoff,
         "fronteira_discreta": boundary,
         "bandwidth": bandwidth,
         "n_abaixo": n_abaixo,
@@ -114,6 +115,29 @@ def main() -> None:
             labels=["ivs_ate_0_400", "ivs_0_401_a_0_500", "ivs_acima_0_500"],
         ),
     )
+    janelas_principais = {0.010, 0.020, 0.030, 0.050}
+    resumo_cutoffs = {}
+    for corte in (0.4, 0.5):
+        linhas = [
+            row
+            for row in estimativas
+            if row["corte_taxonomia"] == corte
+            and row["bandwidth"] in janelas_principais
+        ]
+        resumo_cutoffs[str(corte)] = {
+            "estimativas_locais_positivas": int(
+                sum(row["salto_local_linear_mil_brl"] > 1e-6 for row in linhas)
+            ),
+            "diferencas_brutas_positivas": int(
+                sum(row["diferenca_bruta_mil_brl"] > 1e-6 for row in linhas)
+            ),
+            "total_janelas": len(linhas),
+            "salto_estavel_em_todas_as_janelas": bool(
+                all(row["salto_local_linear_mil_brl"] > 1e-6 for row in linhas)
+                and all(row["diferenca_bruta_mil_brl"] > 1e-6 for row in linhas)
+            ),
+        }
+
     relatorio = {
         "status": "DIAGNOSTICO_NAO_AUTORIZATIVO",
         "unidade": "municipio com vaga publicada no ciclo 1 de 2025",
@@ -129,11 +153,14 @@ def main() -> None:
             for row in cruzamento.index
         },
         "estimativas": estimativas,
+        "resumo_cutoffs": resumo_cutoffs,
+        "portao_fuzzy_com_ivs_publico": "REPROVADO_SEM_SALTO_ESTAVEL",
         "interpretacao": (
-            "Um salto anunciado robusto é condição necessária para uma RDD fuzzy pública, "
-            "mas não suficiente. Ainda é preciso justificar institucionalmente que o corte "
-            "da taxonomia afeta a faixa, auditar continuidade das covariáveis e excluir "
-            "ou documentar outros componentes que também mudem no mesmo corte."
+            "Nas quatro janelas principais, nenhum cutoff apresenta simultaneamente "
+            "diferença bruta e salto local-linear positivos em todas as especificações. "
+            "Logo, o IVS 2010 público não gera um primeiro estágio estável para a faixa "
+            "anunciada. Mesmo que aparecesse um salto robusto, ele ainda seria condição "
+            "necessária, não suficiente, para uma RDD fuzzy pública."
         ),
     }
 

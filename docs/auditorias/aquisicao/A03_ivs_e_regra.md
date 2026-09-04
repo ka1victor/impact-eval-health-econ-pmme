@@ -5,6 +5,14 @@
 > **Escopo:** Documentacao normativa, auditoria do IVS 2010 IPEA e avaliacao de viabilidade do desenho RDD no PMM-E (Lei 15.233/2025).
 > **Outputs:** `data/raw/aquisicao/ivs_regra/`, `output/aquisicao/a03_manifesto_ivs_regra.json`, `output/aquisicao/a03_matriz_regra_tratamento.json`.
 
+> **Atualizacao em 04/09/2026:** o primeiro estagio foi testado diretamente com
+> uma observacao por municipio. O valor anunciado nao apresenta salto estavel
+> em `0,400` e tem salto zero em `0,500` nas janelas 0,010–0,050. Assim, a
+> fuzzy RDD com o IVS publico tambem foi reprovada. Uma fuzzy futura para o
+> efeito da oferta exige escore administrativo e salto no valor anunciado;
+> pagamentos sao necessarios apenas para o efeito da dose recebida. Ver
+> [sintese e plano atual](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md).
+
 ---
 
 ## 1. Sumario Executivo
