@@ -1,6 +1,6 @@
 {
   "protocolo": "A5_ESTIMATIVAS_PROVIMENTO",
-  "data_referencia": "2026-09-03",
+  "data_referencia": "2026-09-04",
   "efeitos_estimados": true,
   "linguagem": "associativa (trajetoria diferencial e evolucao do estoque cadastral); proibido efeito causal do PMM-E/bolsa/IVS, provimento causal e retencao individual",
   "populacao": {

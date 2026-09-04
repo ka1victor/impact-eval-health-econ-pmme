@@ -1,0 +1,63 @@
+{
+  "status": "DESENHO_PROMISSOR_MAS_NAO_CAUSAL_COM_DADOS_PUBLICOS",
+  "pergunta_recomendada": "Efeito local de ganhar a vaga de primeira opção sobre homologação e presença ativa posterior no PMM-E.",
+  "unidade": "par de candidatos no mesmo curso-CNES: último selecionado e primeiro não selecionado",
+  "suporte": {
+    "pares_adjacentes_total_quatro_publicacoes": 423,
+    "pares_com_mesmo_escore_publicado": 184,
+    "pares_com_outcome_2025": 193,
+    "pares_mesmo_escore_com_outcome_2025": 81
+  },
+  "resultados_preliminares": {
+    "ch1_homologacao_diferenca_pp": 46.32352941176471,
+    "ch1_ativo_snapshot_diferenca_pp": 27.205882352941174,
+    "ch2_homologacao_diferenca_pp": 77.19298245614034,
+    "ch2_ativo_snapshot_diferenca_pp": 56.14035087719298
+  },
+  "por_que_ainda_nao_causal": [
+    "ranking é discreto e candidatos adjacentes diferem em escore e desempates",
+    "o edital desempata por mesma UF de domicílio/nascimento e depois maior idade",
+    "os campos individuais de desempate não estão nas planilhas públicas",
+    "recursos, cotas, realocações e locais desconsiderados precisam ser reconstruídos",
+    "a ligação pública usa nome exato; falta identificador pseudonimizado estável"
+  ],
+  "dados_minimos_para_upgrade": [
+    "id_profissional_pseudo e id_vaga_pseudo estáveis",
+    "barema final e histórico de recursos",
+    "indicador do desempate mesma UF para cada candidato-vaga",
+    "idade em dias no corte ou distância em dias ao limiar etário, sem data de nascimento",
+    "quantidade de vagas por modalidade e ordem completa de alocação",
+    "eventos de confirmação, homologação, início e saída com datas"
+  ],
+  "estimando_causal_condicional": "ITT local de ser selecionado na primeira opção; desfechos: homologação, início e ativo aos 90/180 dias.",
+  "desenho_condicional": "RDD empilhado na idade dentro de blocos curso-CNES x barema x indicador mesma-UF, ou randomização local somente após demonstrar comparabilidade.",
+  "fontes_oficiais": {
+    "edital_3_2025": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-projeto-mais-medicos-especialistas/edital-de-chamamento-publico-no-3-2025.pdf"
+  },
+  "linkage": {
+    "metodo_publico_exploratorio": "nome_normalizado_exato_e_unico_sem_fuzzy_match",
+    "cpf": "mascaras_incompativeis_entre_publicacoes",
+    "homologados_ch1": 316,
+    "homologados_ch1_ligados": 316,
+    "novos_homologados_ch2": 282,
+    "novos_homologados_ch2_ligados": 270,
+    "ativos_ciclo1_em_snapshot": 521,
+    "data_snapshot": "2026-08-12",
+    "limite": "ausencia_no_snapshot_mede_nao_estar_ativo_na_data; nao_reconstroi_duracao_ou_saida"
+  },
+  "hashes_entradas": {
+    "data\\raw\\aquisicao\\vagas\\2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec",
+    "data\\raw\\pmm_e\\2025_ciclo1_chamada1_homologados.xlsx": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b",
+    "data\\raw\\pmm_e\\2025_ciclo1_chamada2_classificacao_final.xlsx": "5c73a99847708b2749019c634f661771b28c88cb5421e9672e44704e62103e85",
+    "data\\raw\\pmm_e\\2025_ciclo1_chamada2_homologados.xlsx": "4e85cfe45b2e5e1f7ebef78aa5dc90ba61b7adc5f7046f43a5066803f603e147",
+    "data\\raw\\pmm_e\\2026_ciclo2_chamada2_resultado_final.xlsx": "8690d6fc381692fc20c59ae077ac8b80ca1ce27dd03d27fd8e1ef17c75abc85f",
+    "data\\raw\\pmm_e\\2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx": "d74f268bb7192c80a02c94e54eb4407e60a0923ad7d0310c2c6b432b3dbbb6ee",
+    "data\\pmm_especialistas_nominal.csv": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5"
+  },
+  "arquivos": {
+    "suporte": "output\\tema_trabalho\\A7_tabela_01_suporte_cutoffs.csv",
+    "resultados": "output\\tema_trabalho\\A7_tabela_02_descontinuidades_preliminares.csv",
+    "relatorio": "output\\tema_trabalho\\A7_relatorio_cutoff_selecao.md"
+  },
+  "privacidade": "Nenhum nome, CPF, hash de candidato ou linha individual foi persistido."
+}

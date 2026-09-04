@@ -27,6 +27,7 @@ Ele executa sequencialmente:
 12. `scripts/tema_trabalho/05_estimar_atracao.py` — estimação dos modelos LPM e Logit de atração (A4).
 13. `scripts/tema_trabalho/06_avaliar_provimento_cnes.py` — avaliação da evolução do estoque médico cadastrado no CNES (A5).
 14. `scripts/tema_trabalho/07_red_team_sintese.py` — síntese red team, matriz de evidências e manifesto reproduzível (A6).
+15. `scripts/tema_trabalho/08_auditar_cutoff_selecao.py` — auditoria do último selecionado versus primeiro não selecionado, ligação agregada a homologação/presença ativa e portão causal (A7).
 
 ---
 

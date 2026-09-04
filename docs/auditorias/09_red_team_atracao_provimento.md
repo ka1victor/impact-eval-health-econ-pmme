@@ -1,6 +1,6 @@
 # A6 — Red team da evidência empírica
 
-> Data: 2026-09-03  
+> Data: 2026-09-04  
 > Escopo máximo: evidência associativa de implementação e evolução da oferta médica cadastrada.  
 > Resultado principal: atração administrativa (A4). Resultado secundário: dinâmica agregada do CNES (A5).
 

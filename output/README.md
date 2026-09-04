@@ -41,6 +41,7 @@ output/
   - `A4_tabela_02_modelo_principal_LPM.csv`, `A4_tabela_02b_logit_AME.csv` e figuras de gradiente (A4 — estimação de atração).
   - `A5_relatorio_diagnostico.md` e tabelas dinâmicas de oferta cadastrada (A5 — evolução CNES).
   - `A6_matriz_afirmacao_evidencia_limite.csv` e `A6_manifesto_reproducao.json` (A6 — auditoria de afirmações e manifesto com hashes SHA-256).
+  - `A7_tabela_01_suporte_cutoffs.csv`, `A7_tabela_02_descontinuidades_preliminares.csv` e `A7_cutoff_selecao_resumo.json` (A7 — corte candidato, outcomes de homologação/presença ativa e portão causal).
 
 - **`avaliacao_impacto/`:** Artefatos da investigação histórica agregada DDD (2024–2026):
   - `dados/`: painel município–curso–mês e subamostra confirmatória de 10 cursos unívocos.

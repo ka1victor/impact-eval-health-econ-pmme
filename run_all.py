@@ -21,6 +21,7 @@ STEPS = [
     ROOT / "scripts" / "tema_trabalho" / "05_estimar_atracao.py",
     ROOT / "scripts" / "tema_trabalho" / "06_avaliar_provimento_cnes.py",
     ROOT / "scripts" / "tema_trabalho" / "07_red_team_sintese.py",
+    ROOT / "scripts" / "tema_trabalho" / "08_auditar_cutoff_selecao.py",
 ]
 
 

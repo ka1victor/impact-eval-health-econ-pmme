@@ -17,6 +17,8 @@ Eles preservam as distinções obrigatórias: célula CNES–curso, quantidade e
 | 3 | [Pagamentos mensais](pagamentos_mensais.md) | A07-05 | Ministério da Saúde, unidade gestora da bolsa e unidade de execução financeira, a serem identificadas pelo SIC | Reutilizar as chaves dos pacotes 1 e 2 | `não enviado` |
 | 4 | [Documentação e reposição](documentacao_e_reposicao.md) | A07-06 | Ministério da Saúde, unidade produtora dos painéis e unidade responsável pelas páginas dos chamamentos | Pode tramitar em paralelo; documentação deve acompanhar os demais | `não enviado` |
 
+Para o trabalho curto de atração/retenção, o [pedido focal do corte de seleção](cutoff_selecao_causal.md) extrai o subconjunto mínimo dos pacotes 1 e 2: regra de desempate, distância etária ao cutoff, chaves pseudonimizadas e eventos de entrada/presença.
+
 “Provável” não afirma competência interna. Se a unidade indicada não custodiar os dados, solicita-se encaminhamento interno ao custodiante competente, sem presumir o nome de sistema, base ou campo interno.
 
 ## Padrão comum de entrega solicitado

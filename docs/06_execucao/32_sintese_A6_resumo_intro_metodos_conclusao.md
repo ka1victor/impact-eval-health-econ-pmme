@@ -2,7 +2,7 @@
 
 > **Título recomendado:** Atração administrativa de médicos especialistas e gradientes territoriais: evidências de implementação do PMM-E.  
 > **Nível de identificação:** associativo. RDD encerrado em R1; retenção individual não identificada.  
-> **Hashes:** A4 `5f189784`; A5 `02382416`.
+> **Hashes:** A4 `5f189784`; A5 `ed05afac`.
 
 ## Resumo
 

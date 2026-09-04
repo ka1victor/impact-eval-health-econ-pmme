@@ -1,6 +1,6 @@
 {
   "protocolo": "A6_MANIFESTO_REPRODUCAO",
-  "data_referencia": "2026-09-03",
+  "data_referencia": "2026-09-04",
   "gerador": "scripts/tema_trabalho/07_red_team_sintese.py",
   "fila": "A1->A6: núcleo associativo; upgrade causal bloqueado",
   "comandos_reproducao": [
@@ -13,7 +13,7 @@
     ".venv\\Scripts\\python.exe -m unittest discover -s tests -q"
   ],
   "versoes": {
-    "python": "3.12.13 (main, Aug  7 2026, 02:26:41) [MSC v.1944 64 bit (AMD64)]",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
     "platform": "Windows-11-10.0.26200-SP0",
     "pandas": "3.0.5",
     "numpy": "2.5.2",
@@ -57,11 +57,11 @@
       "bytes": 13930
     },
     "output/tema_trabalho/A5_estimativas_provimento.json": {
-      "sha256": "023824167b9e640c0a2deeb3104e593aad855d5d17beaceee1d89bdb241dc087",
+      "sha256": "ed05afac53789bff3c172023dfd49ea88e34b5d3f308223e0258c4838c865b52",
       "bytes": 12931
     },
     "output/tema_trabalho/A5_manifesto_maturidade_censura.json": {
-      "sha256": "fd1c8f96e2d97db4946a80093c6f3d370f3d0f2a6ad9af4c9d82507d4319170d",
+      "sha256": "1a9a28997b491ccdd5ea42b5367daca937ec107318730a2b364589c7f2dbc90f",
       "bytes": 13679
     },
     "output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv": {
@@ -81,7 +81,7 @@
       "bytes": 7781
     },
     "docs/auditorias/09_red_team_atracao_provimento.md": {
-      "sha256": "b4b158fb8bd7f694715634dde82f7b485e0d645b59099ed1c8e7da964cc20c90",
+      "sha256": "6da25dfc9a26253ccd8e87587090bd7292bb75c406a581194f1aebbc2c11fd27",
       "bytes": 5635
     },
     "output/tema_trabalho/A6_matriz_afirmacao_evidencia_limite.csv": {
@@ -89,15 +89,15 @@
       "bytes": 1646
     },
     "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": {
-      "sha256": "da3692b73d23263ad799ae7deaf4552aeb466503d1b0969743e65d85989d8bcb",
+      "sha256": "b38131b7e81dc4e31eb61bf58abb12c1e5ed118a05406ce7b067f04d84e59cb3",
       "bytes": 3704
     }
   },
   "docs_hash8": {
-    "docs/auditorias/09_red_team_atracao_provimento.md": "b4b158fb",
+    "docs/auditorias/09_red_team_atracao_provimento.md": "6da25dfc",
     "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "e72e9adb",
-    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "e0b514b8",
-    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "da3692b7"
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "ca97cd68",
+    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "b38131b7"
   },
   "portoes": {
     "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",

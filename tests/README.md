@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **102 testes em 13 módulos**, garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **108 testes em 14 módulos**, garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -34,6 +34,7 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_estimativas_atracao_a4.py`](test_estimativas_atracao_a4.py) | A4 Atração | Estimação LPM e Logit de atração (+29,4pp metropolitano vs remoto), erros clusterizados por município, invariância da amostra N=1.295 células em 368 municípios. |
 | [`test_provimento_cnes_a5.py`](test_provimento_cnes_a5.py) | A5 Dinâmica CNES | Avaliação da oferta médica local cadastrada no CNES (amostra confirmatória de 587 células em 295 municípios, referência 202506 e follow-up 202603, tom estritamente associativo). |
 | [`test_red_team_a6.py`](test_red_team_a6.py) | A6 Red Team | Auditoria das 11 afirmações substantivas na matriz afirmação–evidência–limite e validação do manifesto de hashes reproduzíveis. |
+| [`test_cutoff_selecao_a7.py`](test_cutoff_selecao_a7.py) | A7 Corte de seleção | Suporte dos pares adjacentes, resultados de homologação/presença ativa, proteção de dados pessoais e bloqueio explícito de linguagem causal sem os desempates. |
 | [`test_tipologia_territorial.py`](test_tipologia_territorial.py) | A2 Território | Classificação em 4 estratos (Capital, Metropolitano, Interior Próximo e Interior Remoto) via REGIC 2018 + RM/RIDE 2022 strict, sem consulta a desfechos. |
 | [`test_reconciliacao_funil_ciclo1.py`](test_reconciliacao_funil_ciclo1.py) | A1 Funil | Auditoria de confirmações em células de reserva e formalização do portão `APROVADO_CELULA`. |
 | [`test_pre_analise_atracao.py`](test_pre_analise_atracao.py) | A3 Pré-Análise | Congelamento dos contrastes e MDEs calculados antes da estimação de A4, verificação de hashes de entrada e clusterização. |

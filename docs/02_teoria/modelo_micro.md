@@ -65,18 +65,18 @@ em que:
 
 ---
 
-### 2.2. Custo laboral: exaustão, sensação de dever cumprido e volume de atendimentos ($q$)
+### 2.2. Custo laboral: cansaço, satisfação e volume de atendimentos ($q$)
 
-Com base em Choné e Ma (2011, p. 232, eq. 1), a desutilidade clínica líquida de atender $q$ pacientes é:
+Com base em Choné e Ma (2011, p. 232, eq. 1), a desutilidade clínica líquida de atender $q$ pacientes é expressa pelo custo laboral não pecuniário líquido:
 
 ```math
 c^{\text{laboral}}(q) = C(q) - \alpha B(q),
 ```
 
 em que:
-- $C(q)$: **exaustão física e mental** ($C' > 0$, com $C'' > 0$ por desgaste biológico e cognitivo crescente);
+- $C(q)$: **cansaço e exaustão física/mental** ($C' > 0$, com $C'' > 0$ por desgaste biológico e cognitivo crescente);
 - $B(q)$: **benefício efetivo de saúde gerado** ($B' > 0$, com $B'' < 0$ pela priorização de casos mais urgentes na triagem);
-- $\alpha \ge 0$: **sensação de dever cumprido e altruísmo** (satisfação intrínseca pela melhora do paciente).
+- $\alpha \ge 0$: **satisfação moral e sensação de dever cumprido** (satisfação intrínseca pela melhora do paciente).
 
 #### Trade-off de $q$ e convexidade estrita:
 O custo marginal $c'(q) = C'(q) - \alpha B'(q)$ tem sinal incerto *a priori*, mas a derivada segunda é inequivocamente positiva:
@@ -85,13 +85,15 @@ O custo marginal $c'(q) = C'(q) - \alpha B'(q)$ tem sinal incerto *a priori*, ma
 c''(q) = C''(q) - \alpha B''(q) \gg 0.
 ```
 
-Essa convexidade garante uma curva de custo não pecuniário em **formato de U**, com ponto de mínimo em $q^*$ ($C'(q^*) = \alpha B'(q^*)$):
+Essa convexidade garante uma curva de custo não pecuniário em **formato de U**, com ponto de satisfação líquida máxima em $q_{c_{\max}}$ ($C'(q_{c_{\max}}) = \alpha B'(q_{c_{\max}})$) e cruzamento de custo neutro em $q_{c=0}$ ($C(q_{c=0}) = \alpha B(q_{c=0})$):
 
 ![Curva de Custo Laboral Líquido](figuras/curva_custo_laboral_burnout.png)
 
-1. **Zona de Dever Cumprido ($q < q^*$):** A sensação de dever cumprido supera o cansaço inicial ($\alpha B' > C' \implies c'(q) < 0$), e atender pacientes reduz a desutilidade líquida da prática médica.
-2. **Ponto Ótimo ($q = q^*$):** A exaustão marginal equilibra exatamente a sensação de dever cumprido ($C'(q^*) = \alpha B'(q^*)$), minimizando o custo não pecuniário líquido.
-3. **Zona de Exaustão ($q > q^*$):** A exaustão física e mental cresce aceleradamente e supera o benefício marginal do dever cumprido ($C' \gg \alpha B' \implies c'(q) > 0$), gerando sobrecarga clínica e desutilidade crescente.
+1. **Zona 1: Utilidade Laboral Crescente ($q < q_{c_{\max}}$):** A satisfação marginal supera o cansaço marginal ($\alpha B' > C' \implies c'(q) < 0$). Atender pacientes adicionais reduz o custo laboral líquido, gerando utilidade líquida crescente.
+2. **Ponto Ótimo ($q = q_{c_{\max}}$):** O cansaço marginal equilibra exatamente a satisfação adicional ($c'(q_{c_{\max}}) = 0 \iff C' = \alpha B'$), atingindo a **satisfação líquida máxima** (ponto de custo laboral mínimo).
+3. **Zona 2: Utilidade Laboral Decrescente ($q_{c_{\max}} < q < q_{c=0}$):** O cansaço marginal passa a superar a satisfação marginal ($c'(q) > 0 \implies C' > \alpha B'$), tornando a utilidade marginal decrescente. No entanto, o custo acumulado ainda é negativo ($c < 0$), significando que a satisfação total acumulada ainda excede o cansaço ($\alpha B > C$).
+4. **Ponto Notável de Custo Neutro ($q = q_{c=0}$):** O cansaço total acumulado iguala a satisfação total ($C = \alpha B \iff c = 0$).
+5. **Zona 3: Cansaço Supera a Satisfação ($q > q_{c=0}$):** O custo laboral líquido torna-se estritamente positivo ($c > 0 \iff C > \alpha B$), impondo desutilidade líquida pela sobrecarga e exaustão clínica.
 
 ---
 

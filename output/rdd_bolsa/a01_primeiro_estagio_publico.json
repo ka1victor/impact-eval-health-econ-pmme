@@ -1,0 +1,168 @@
+{
+  "status": "DIAGNOSTICO_NAO_AUTORIZATIVO",
+  "unidade": "municipio com vaga publicada no ciclo 1 de 2025",
+  "n_municipios": 368,
+  "tratamento": "valor mensal anunciado, em milhares de reais",
+  "running_variable_candidata": "IVS Ipea 2010 disponível localmente",
+  "nota_fronteira": "Como o IVS observado tem três casas decimais, a fronteira numérica entre 0,400 e 0,401 é representada por 0,4005. O mesmo vale para 0,500/0,501.",
+  "matriz_faixa_anunciada_por_intervalo_ivs": {
+    "FAIXA 1": {
+      "ivs_ate_0_400": 37,
+      "ivs_0_401_a_0_500": 46,
+      "ivs_acima_0_500": 19
+    },
+    "FAIXA 2": {
+      "ivs_ate_0_400": 94,
+      "ivs_0_401_a_0_500": 13,
+      "ivs_acima_0_500": 0
+    },
+    "FAIXA 3": {
+      "ivs_ate_0_400": 159,
+      "ivs_0_401_a_0_500": 0,
+      "ivs_acima_0_500": 0
+    }
+  },
+  "estimativas": [
+    {
+      "corte_taxonomia": 0.4,
+      "fronteira_discreta": 0.4005,
+      "bandwidth": 0.01,
+      "n_abaixo": 10,
+      "n_acima": 8,
+      "n_total": 18,
+      "media_abaixo_mil_brl": 18.5,
+      "media_acima_mil_brl": 18.125,
+      "diferenca_bruta_mil_brl": -0.375,
+      "salto_local_linear_mil_brl": 4.393843962189489,
+      "erro_padrao_hc1_mil_brl": 1.6043786993322595,
+      "p_valor": 0.0061690579764980095
+    },
+    {
+      "corte_taxonomia": 0.4,
+      "fronteira_discreta": 0.4005,
+      "bandwidth": 0.02,
+      "n_abaixo": 28,
+      "n_acima": 18,
+      "n_total": 46,
+      "media_abaixo_mil_brl": 18.035714285714285,
+      "media_acima_mil_brl": 18.055555555555554,
+      "diferenca_bruta_mil_brl": 0.019841269841268883,
+      "salto_local_linear_mil_brl": 0.19037543560673242,
+      "erro_padrao_hc1_mil_brl": 2.06391652640112,
+      "p_valor": 0.9265074446198347
+    },
+    {
+      "corte_taxonomia": 0.4,
+      "fronteira_discreta": 0.4005,
+      "bandwidth": 0.03,
+      "n_abaixo": 41,
+      "n_acima": 26,
+      "n_total": 67,
+      "media_abaixo_mil_brl": 17.439024390243905,
+      "media_acima_mil_brl": 18.076923076923077,
+      "diferenca_bruta_mil_brl": 0.637898686679172,
+      "salto_local_linear_mil_brl": -0.30981647450738437,
+      "erro_padrao_hc1_mil_brl": 1.5569092694053583,
+      "p_valor": 0.8422670002489988
+    },
+    {
+      "corte_taxonomia": 0.4,
+      "fronteira_discreta": 0.4005,
+      "bandwidth": 0.05,
+      "n_abaixo": 77,
+      "n_acima": 39,
+      "n_total": 116,
+      "media_abaixo_mil_brl": 16.623376623376622,
+      "media_acima_mil_brl": 18.333333333333332,
+      "diferenca_bruta_mil_brl": 1.7099567099567103,
+      "salto_local_linear_mil_brl": -0.7031671515383713,
+      "erro_padrao_hc1_mil_brl": 1.1045869556444459,
+      "p_valor": 0.5243930368625549
+    },
+    {
+      "corte_taxonomia": 0.4,
+      "fronteira_discreta": 0.4005,
+      "bandwidth": 0.08,
+      "n_abaixo": 129,
+      "n_acima": 51,
+      "n_total": 180,
+      "media_abaixo_mil_brl": 15.58139534883721,
+      "media_acima_mil_brl": 18.72549019607843,
+      "diferenca_bruta_mil_brl": 3.1440948472412185,
+      "salto_local_linear_mil_brl": -0.8943863776441235,
+      "erro_padrao_hc1_mil_brl": 0.8499441350337688,
+      "p_valor": 0.29266723931874983
+    },
+    {
+      "corte_taxonomia": 0.49999999999999994,
+      "fronteira_discreta": 0.5005,
+      "bandwidth": 0.01,
+      "n_abaixo": 4,
+      "n_acima": 5,
+      "n_total": 9,
+      "media_abaixo_mil_brl": 20.0,
+      "media_acima_mil_brl": 20.0,
+      "diferenca_bruta_mil_brl": 0.0,
+      "salto_local_linear_mil_brl": 9.036600216565339e-15,
+      "erro_padrao_hc1_mil_brl": 4.873840001834602e-15,
+      "p_valor": 0.06372445942428422
+    },
+    {
+      "corte_taxonomia": 0.49999999999999994,
+      "fronteira_discreta": 0.5005,
+      "bandwidth": 0.02,
+      "n_abaixo": 8,
+      "n_acima": 6,
+      "n_total": 14,
+      "media_abaixo_mil_brl": 20.0,
+      "media_acima_mil_brl": 20.0,
+      "diferenca_bruta_mil_brl": 0.0,
+      "salto_local_linear_mil_brl": -3.552713678800501e-15,
+      "erro_padrao_hc1_mil_brl": 1.2179895112637257e-14,
+      "p_valor": 0.7705261623332522
+    },
+    {
+      "corte_taxonomia": 0.49999999999999994,
+      "fronteira_discreta": 0.5005,
+      "bandwidth": 0.03,
+      "n_abaixo": 11,
+      "n_acima": 7,
+      "n_total": 18,
+      "media_abaixo_mil_brl": 20.0,
+      "media_acima_mil_brl": 20.0,
+      "diferenca_bruta_mil_brl": 0.0,
+      "salto_local_linear_mil_brl": 5.329070518200751e-15,
+      "erro_padrao_hc1_mil_brl": 8.203908157114157e-15,
+      "p_valor": 0.5159654568309138
+    },
+    {
+      "corte_taxonomia": 0.49999999999999994,
+      "fronteira_discreta": 0.5005,
+      "bandwidth": 0.05,
+      "n_abaixo": 20,
+      "n_acima": 11,
+      "n_total": 31,
+      "media_abaixo_mil_brl": 20.0,
+      "media_acima_mil_brl": 20.0,
+      "diferenca_bruta_mil_brl": 0.0,
+      "salto_local_linear_mil_brl": -3.3306690738754696e-15,
+      "erro_padrao_hc1_mil_brl": 9.520444711261141e-15,
+      "p_valor": 0.7264558850703922
+    },
+    {
+      "corte_taxonomia": 0.49999999999999994,
+      "fronteira_discreta": 0.5005,
+      "bandwidth": 0.08,
+      "n_abaixo": 41,
+      "n_acima": 15,
+      "n_total": 56,
+      "media_abaixo_mil_brl": 19.26829268292683,
+      "media_acima_mil_brl": 20.0,
+      "diferenca_bruta_mil_brl": 0.7317073170731696,
+      "salto_local_linear_mil_brl": -0.357576582907043,
+      "erro_padrao_hc1_mil_brl": 0.1622349176172037,
+      "p_valor": 0.027519652142277036
+    }
+  ],
+  "interpretacao": "Um salto anunciado robusto é condição necessária para uma RDD fuzzy pública, mas não suficiente. Ainda é preciso justificar institucionalmente que o corte da taxonomia afeta a faixa, auditar continuidade das covariáveis e excluir ou documentar outros componentes que também mudem no mesmo corte."
+}

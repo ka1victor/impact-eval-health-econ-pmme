@@ -4,24 +4,30 @@ Este repositório organiza uma avaliação do Programa Mais Médicos Especialist
 (PMM-E). A comparação pública já executada e o novo desenho causal são
 deliberadamente separados.
 
-Há três camadas separadas no repositório:
+Há quatro camadas separadas no repositório:
 
 1. **Resultado principal:** quais características territoriais estão associadas
    à atração administrativa no primeiro ciclo?
-2. **Upgrade causal:** R$ 5 mil adicionais de bolsa aumentam a
+2. **Upgrade causal focal:** ganhar marginalmente a vaga de primeira opção
+   aumenta a entrada e a presença posterior do especialista no PMM-E?
+3. **Upgrade causal territorial:** R$ 5 mil adicionais de bolsa aumentam a
    procura e o preenchimento das vagas junto aos limiares administrativos do
    IVS?
-3. **Resultado secundário:** células município–curso com atração administrativa
+4. **Resultado secundário:** células município–curso com atração administrativa
    apresentaram evolução distinta da oferta médica cadastrada no CNES?
 
 ## Decisão atual
 
-> **Resultado vigente:** o núcleo publicável é uma econometria associativa de
-> implementação. Em 1.295 células/368 municípios, metropolitano está associado
-> a +29,4pp de atração versus interior remoto (+19,8pp no ajuste completo). A
-> dinâmica CNES é secundária; o RDD continua encerrado em R1.
+> **Resultado vigente:** A4 e A5 continuam associativos. A7 encontrou um novo
+> corte candidato: em 136 pares da primeira chamada, o último selecionado tem
+> +46,3 p.p. de homologação e +27,2 p.p. de presença ativa em 12/08/2026 versus
+> o primeiro não selecionado; na segunda chamada, +77,2 p.p. e +56,1 p.p. O
+> padrão ainda não é causal porque os desempates por mesma UF e idade não são
+> observados nas planilhas públicas.
 
-O plano rápido está em
+O desenho focal recomendado está em
+[`docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md`](docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md).
+O plano territorial da bolsa está em
 [`docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`](docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md).
 O tema, os outcomes e o veredito de viabilidade estão em
 [`docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md`](docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
@@ -91,6 +97,11 @@ produção, redução de espera ou melhora de saúde.
   limpa 202506 e follow-up 202603. O estudo dinâmico encontra +0,50 profissional
   cadastrado em março de 2026 (EP 0,23), em linguagem estritamente associativa;
   a mediana é 1 e o máximo 211 no grupo com atração.
+- A7 identifica 423 pares adjacentes de seleção em quatro publicações, dos quais
+  193 têm outcomes de 2025 e 81 empatam no escore publicado. As diferenças em
+  homologação e presença ativa são grandes nas duas chamadas, mas ficam
+  classificadas como descontinuidades preliminares até que os campos de
+  desempate e as chaves pseudonimizadas sejam obtidos.
 - No grão e na amostra da DDD, imediata versus reserva não prediz alocação:
   +2,79 p.p., erro-padrão 6,89 p.p., `p=0,6871`. O portão causal não foi
   aprovado.
@@ -142,15 +153,16 @@ madura e seguirá a especificação congelada, sem redesenho pelo resultado.
 
 ## Escopo e bloqueios
 
-O portão A1 foi concluído como `APROVADO_CELULA`; A2–A6 foram executados e
+O portão A1 foi concluído como `APROVADO_CELULA`; A2–A7 foram executados e
 auditados. R1 não reproduziu a regra da bolsa, portanto o RDD está encerrado
 até que surja documentação administrativa nova. A DDD imediata versus reserva
 permanece como diagnóstico histórico, separado da A4 e da A5 revisada.
 
 Permanecem congelados: estimação do ciclo 3 antes da maturidade; efeito da dose
 recebida sem pagamentos; SIA/SUS, SIH/SUS, fila, saúde e custos antes dos
-portões do RDD; identificação individual sem ponte; e envio dos pedidos A07.
-Uma eventual retomada começa em R1; R2 continua condicionado à sua aprovação.
+portões do RDD; retenção contínua sem log de eventos; e envio dos pedidos A07.
+O corte candidato só avança com os desempates por UF/idade e chaves estáveis; a
+retomada do RDD territorial começa em R1 e R2 continua condicionado à sua aprovação.
 Métodos sintéticos não serão usados para reparar
 retrospectivamente a DDD anterior.
 
@@ -160,9 +172,9 @@ retrospectivamente a DDD anterior.
 ```bash
 python run_all.py
 ```
-O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A6 do núcleo associativo, incluindo tabelas, figuras, red team e manifesto de hashes.
+O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A7, incluindo tabelas, figuras, red team, corte de seleção e manifestos.
 
-### Suíte de testes automatizados (102 testes)
+### Suíte de testes automatizados (108 testes)
 ```bash
 python run_tests.py
 ```
@@ -181,4 +193,4 @@ Cada diretório principal possui documentação autônoma orientando seu conteú
 | [`output/`](output/README.md) | [Guia de Artefatos](output/README.md) | Painéis analíticos, estimativas, tabelas, figuras e manifestos reproduzíveis |
 | [`prompts/`](prompts/README.md) | [Fila e Histórico](prompts/README.md) | Sessões executadas, cadernos de prompts e especificações de pesquisa |
 | [`scripts/`](scripts/README.md) | [Guia de Scripts](scripts/README.md) | Rotinas modulares de aquisição, estimação, avaliação de impacto e utilitários |
-| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 102 testes automatizados garantindo integridade econométrica e invariantes |
+| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 108 testes automatizados garantindo integridade econométrica e invariantes |
