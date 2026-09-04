@@ -9,7 +9,7 @@ Atração e Retenção de Médicos Especialistas em Cidades do Interior sob Dife
 import json
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
 JSON_PATH = ROOT / "output" / "revisao_literatura" / "matriz_evidencias_artigos_expandida.json"
 OUT_MD_PATH = ROOT / "docs" / "90_arquivo_historico" / "08_plano_leitura_equipe_literatura.md"
 

@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
 OUTPUT_DIR = ROOT / "output" / "revisao_literatura"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 

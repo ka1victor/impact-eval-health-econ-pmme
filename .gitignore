@@ -30,15 +30,17 @@ wheels/
 *.swo
 .DS_Store
 
-# Temporarios
+# Temporários, caches e logs
 *.tmp
 *.log
-.matplotlib-cache/
-
-# Temporarios
 *.part
+.matplotlib-cache/
+.pytest_cache/
+.coverage
+htmlcov/
+tmp/
 
-# Dados brutos grandes (CNES)
+# Dados brutos grandes e parquets analíticos pesados (reproduzíveis via scripts)
 data/raw/cnes/
 output/aquisicao/cnes_mensal/
 output/aquisicao/cnes_vinculos_medicos_2024_2026.parquet

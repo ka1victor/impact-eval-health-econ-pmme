@@ -8,7 +8,7 @@ focando na Atração e Retenção de Médicos Especialistas no Interior sob Dife
 
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
 OUT_MD = ROOT / "docs" / "90_arquivo_historico" / "09_rubrica_estrategica_e_selecao_teorica.md"
 
 md_content = r"""# 09. Rúbrica Estratégica de Avaliação de Literatura e Seleção dos Top Papers Teóricos

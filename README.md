@@ -156,23 +156,29 @@ retrospectivamente a DDD anterior.
 
 ## Executar o estado validado
 
+### Pipeline completo de replicação
 ```bash
 python run_all.py
 ```
+O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A6 do núcleo associativo, incluindo tabelas, figuras, red team e manifesto de hashes.
 
-O comando exige que os 26 arquivos mensais listados no manifesto CNES já
-estejam disponíveis localmente. Ele reproduz a integração, a comparação
-histórica e as etapas A1–A6 do núcleo associativo, incluindo tabelas, figuras,
-red team e manifesto de hashes.
-
-## Estrutura
-
-A documentação acadêmica segue o [mapa canônico dos blocos](docs/README.md). Ele separa literatura empírica, literatura teórica/modelo microeconômico, metodologia de identificação e resultados. O [modelo teórico](docs/02_teoria/modelo_micro.md) não usa papers empíricos como fundamento das equações; esses trabalhos ficam no [catálogo empírico](docs/03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
-
-```text
-data/      bases observadas preservadas
-docs/      pergunta, teoria, literatura empírica, identificação e auditorias
-prompts/   tarefas históricas e orientação da fila vigente
-scripts/   rotinas reprodutíveis
-output/    produtos gerados e validados
+### Suíte de testes automatizados (102 testes)
+```bash
+python run_tests.py
 ```
+Executa a validação formal de integridade dos dados, invariantes de painel, pre-analysis conformity, estimadores LPM/Logit e rastreabilidade documental.
+
+---
+
+## Estrutura do Repositório
+
+Cada diretório principal possui documentação autônoma orientando seu conteúdo, regras e padrões de reprodutibilidade:
+
+| Diretório | Documentação | Função e Conteúdo |
+|---|---|---|
+| [`data/`](data/README.md) | [Guia de Dados](data/README.md) | Bases observadas brutas, editais e microdados preservados (leitura estrita) |
+| [`docs/`](docs/README.md) | [Mapa Canônico](docs/README.md) | Pergunta, modelo microeconômico, literatura empírica, identificação e auditorias |
+| [`output/`](output/README.md) | [Guia de Artefatos](output/README.md) | Painéis analíticos, estimativas, tabelas, figuras e manifestos reproduzíveis |
+| [`prompts/`](prompts/README.md) | [Fila e Histórico](prompts/README.md) | Sessões executadas, cadernos de prompts e especificações de pesquisa |
+| [`scripts/`](scripts/README.md) | [Guia de Scripts](scripts/README.md) | Rotinas modulares de aquisição, estimação, avaliação de impacto e utilitários |
+| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 102 testes automatizados garantindo integridade econométrica e invariantes |

@@ -8,7 +8,7 @@ Atração e Retenção de Médicos Especialistas em Cidades do Interior com base
 
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
 OUT_MD = ROOT / "docs" / "90_arquivo_historico" / "10_fundamentacao_teorica_problema_pmme.md"
 
 doc_text = r"""# 10. Fundamentação Teórica Estrutural do Problema do PMM-E

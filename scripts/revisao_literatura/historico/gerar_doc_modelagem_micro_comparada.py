@@ -13,7 +13,7 @@ contendo:
 
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
 OUT_MD = ROOT / "docs" / "90_arquivo_historico" / "16_modelagem_microeconomica_comparada_e_selecao.md"
 
 doc_text = r"""# 16. Modelagem Microeconômica Comparada e Seleção do Framework Teórico do PMM-E

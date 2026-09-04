@@ -18,7 +18,7 @@ Destaca especialmente os papers novos que não estavam na lista inicial de 7 te�
 
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
 OUT_MD = ROOT / "docs" / "90_arquivo_historico" / "15_dossie_aprofundado_papers_leitura_efetiva.md"
 
 doc_text = r"""# 15. Dossiê Aprofundado dos Artigos Efetivamente Lidos: Atração, Retenção, Bolsas e IVS no Interior

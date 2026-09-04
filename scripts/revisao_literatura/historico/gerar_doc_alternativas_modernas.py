@@ -153,7 +153,11 @@ graph TD
 | **M7** | **Garicano (2000, JPE)** | pp. 874–888 (Seções I a III) | **14 págs** | Modelo de hierarquia de conhecimento e resolutividade diagnóstica local (TFD). |
 """
 
-with open("docs/90_arquivo_historico/11_avaliacao_alternativas_teoricas_modernas.md", "w", encoding="utf-8") as f:
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+out_file = ROOT / "docs" / "90_arquivo_historico" / "11_avaliacao_alternativas_teoricas_modernas.md"
+with open(out_file, "w", encoding="utf-8") as f:
     f.write(doc_text)
 
-print("docs/90_arquivo_historico/11_avaliacao_alternativas_teoricas_modernas.md gerado com sucesso.")
+print(f"{out_file} gerado com sucesso.")

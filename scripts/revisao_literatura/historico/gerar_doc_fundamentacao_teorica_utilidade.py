@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
 OUT_MD = ROOT / "docs" / "90_arquivo_historico" / "17_modelo_unificado_legado.md"
 
 DOC = r"""# 17. Base Microeconômica Unificada da Escolha Locacional Médica

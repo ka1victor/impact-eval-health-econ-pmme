@@ -9,7 +9,7 @@ Foco: Atração e Retenção de Especialistas no Interior com base em Bolsas e I
 import json
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
 JSON_PATH = ROOT / "output" / "revisao_literatura" / "rubrica_ranking_papers.json"
 DOC_PATH = ROOT / "docs" / "90_arquivo_historico" / "09_rubrica_avaliacao_papers.md"
 OUT_MD_PATH = ROOT / "output" / "revisao_literatura" / "matriz_rubrica_detalhada.md"
