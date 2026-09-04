@@ -65,7 +65,7 @@ em que:
 
 ---
 
-### 2.2. Custo laboral: cansaço, realização e volume de atendimentos ($q$)
+### 2.2. Custo laboral: exaustão, sensação de dever cumprido e volume de atendimentos ($q$)
 
 Com base em Choné e Ma (2011, p. 232, eq. 1), a desutilidade clínica líquida de atender $q$ pacientes é:
 
@@ -74,9 +74,9 @@ c^{\text{laboral}}(q) = C(q) - \alpha B(q),
 ```
 
 em que:
-- $C(q)$: **cansaço físico e mental** ($C' > 0$, com $C'' > 0$ por desgaste biológico e cognitivo crescente);
+- $C(q)$: **exaustão física e mental** ($C' > 0$, com $C'' > 0$ por desgaste biológico e cognitivo crescente);
 - $B(q)$: **benefício efetivo de saúde gerado** ($B' > 0$, com $B'' < 0$ pela priorização de casos mais urgentes na triagem);
-- $\alpha \ge 0$: **altruísmo e sensação de dever cumprido** (satisfação intrínseca pela melhora do paciente).
+- $\alpha \ge 0$: **sensação de dever cumprido e altruísmo** (satisfação intrínseca pela melhora do paciente).
 
 #### Trade-off de $q$ e convexidade estrita:
 O custo marginal $c'(q) = C'(q) - \alpha B'(q)$ tem sinal incerto *a priori*, mas a derivada segunda é inequivocamente positiva:
@@ -89,9 +89,9 @@ Essa convexidade garante uma curva de custo não pecuniário em **formato de U**
 
 ![Curva de Custo Laboral Líquido](figuras/curva_custo_laboral_burnout.png)
 
-1. **Zona Vocacional ($q < q^*$):** O dever cumprido supera o cansaço ($\alpha B' > C' \implies c'(q) < 0$), e atender pacientes reduz a desutilidade líquida da prática médica.
-2. **Ponto Ótimo ($q = q^*$):** O cansaço marginal equilibra exatamente a satisfação moral, minimizando o custo não pecuniário.
-3. **Zona de Burnout ($q > q^*$):** O cansaço físico explode e o benefício marginal arrefece ($C' \gg \alpha B' \implies c'(q) > 0$), gerando sobrecarga clínica e abandono do posto.
+1. **Zona de Dever Cumprido ($q < q^*$):** A sensação de dever cumprido supera o cansaço inicial ($\alpha B' > C' \implies c'(q) < 0$), e atender pacientes reduz a desutilidade líquida da prática médica.
+2. **Ponto Ótimo ($q = q^*$):** A exaustão marginal equilibra exatamente a sensação de dever cumprido ($C'(q^*) = \alpha B'(q^*)$), minimizando o custo não pecuniário líquido.
+3. **Zona de Exaustão ($q > q^*$):** A exaustão física e mental cresce aceleradamente e supera o benefício marginal do dever cumprido ($C' \gg \alpha B' \implies c'(q) > 0$), gerando sobrecarga clínica e desutilidade crescente.
 
 ---
 
