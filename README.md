@@ -27,6 +27,10 @@ Há quatro camadas separadas no repositório:
 
 A decisão consolidada, todos os achados e a sequência de avanço estão em
 [`docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md`](docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md).
+O estado efetivamente executado dos portões está em
+[`docs/06_execucao/33_status_execucao_plano_causal.md`](docs/06_execucao/33_status_execucao_plano_causal.md):
+R1 público reprovado, R2–R4 bloqueados, pacote administrativo pronto e triagem
+aguardando recebimento.
 
 O desenho focal recomendado está em
 [`docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md`](docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md).

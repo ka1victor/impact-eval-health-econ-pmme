@@ -11,8 +11,8 @@
 
 ## Fila imediata autorizada
 
-1. Submeter, após decisão do autor, os pedidos administrativos de escore/regra
-   e de inscrições/eventos; nenhuma minuta foi enviada ainda.
+1. Submeter, após decisão do autor, a solicitação focal já pronta de
+   escore/regra e de inscrições/eventos; nenhum pedido foi enviado ainda.
 2. Executar R1: reconstruir escore, vintagem, arredondamento, cutoff, faixa e
    valor da bolsa aplicados às vagas do ciclo 1.
 3. Somente se R1 passar, executar R2 de suporte e cointervenções sem outcomes.
@@ -30,6 +30,12 @@ com o IVS público: em `0,400`, diferenças brutas e saltos local-lineares são
 instáveis entre janelas; em `0,500`, a bolsa anunciada é R$ 20 mil nos dois
 lados entre as janelas 0,010 e 0,050. Essa falha não elimina uma RDD futura com
 o escore administrativo correto.
+
+O estado executado e verificável dos portões está em
+[`33_status_execucao_plano_causal.md`](33_status_execucao_plano_causal.md). R1
+foi materializado em matriz municipal; a triagem administrativa está pronta e
+aguarda recebimento; o controlador impede a criação de R3/R4 enquanto o portão
+permanecer reprovado.
 
 ## 0. Estado da comparação agregada após a execução
 

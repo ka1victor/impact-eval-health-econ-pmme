@@ -41,6 +41,9 @@ class PrimeiroEstagioPublicoRddTest(unittest.TestCase):
             row = linhas[(0.5, janela)]
             self.assertAlmostEqual(row["media_abaixo_mil_brl"], 20.0)
             self.assertAlmostEqual(row["media_acima_mil_brl"], 20.0)
+            self.assertEqual(row["salto_local_linear_mil_brl"], 0.0)
+            self.assertEqual(row["erro_padrao_hc1_mil_brl"], 0.0)
+            self.assertIsNone(row["p_valor"])
 
     def test_resultado_e_diagnostico_nao_autorizativo(self) -> None:
         self.assertEqual(self.report["status"], "DIAGNOSTICO_NAO_AUTORIZATIVO")

@@ -432,6 +432,26 @@ R5  Início/presença/retenção somente com eventos válidos
 Nenhum pedido foi enviado por esta documentação; os arquivos atuais são
 minutas técnicas.
 
+### Estado executado em 04/09/2026
+
+- o portão R1 público foi materializado em uma matriz de 368 municípios e
+  reprovado por 177 divergências, sem abrir outcomes;
+- o controlador fail-closed confirma que R2–R4 permanecem bloqueados e que não
+  existem artefatos prematuros de pré-análise ou efeito RDD;
+- a solicitação focal conjunta está pronta para submissão, mas segue não
+  enviada porque canal, credenciais, termos e protocolo dependem de autorização
+  do autor;
+- a triagem automática de eventual resposta está pronta e registra
+  `AGUARDANDO_RECEBIMENTO`; ausência de arquivo não é convertida em zero;
+- dados administrativos recebidos serão preservados em diretório bruto
+  ignorado pelo Git, e somente metadados, hashes e diagnósticos sem linhas
+  individuais poderão ser versionados.
+
+O ledger reproduzível de execução está em
+[33_status_execucao_plano_causal.md](../06_execucao/33_status_execucao_plano_causal.md).
+Este estado é execução correta do plano sob o portão atual: estimar R4 apesar da
+falha de R1 violaria, em vez de executar, a estratégia causal.
+
 ## 8. Linguagem máxima por cenário
 
 | Cenário | Formulação permitida |

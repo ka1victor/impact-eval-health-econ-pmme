@@ -1,0 +1,68 @@
+{
+  "data_execucao": "2026-09-04",
+  "status_geral": "PARCIAL_EXECUTADO_AGUARDANDO_DADOS_ADMINISTRATIVOS",
+  "estimacao_rdd_atracao_autorizada": false,
+  "fail_closed_verificado": true,
+  "artefatos_proibidos_encontrados": [],
+  "etapas": {
+    "P0": {
+      "status": "CONCLUIDO",
+      "evidencia": "síntese, diagnóstico público e plano causal versionados"
+    },
+    "P1": {
+      "status": "PRONTO_NAO_ENVIADO",
+      "evidencia": "texto focal, layouts e pedidos técnicos completos; falta canal autorizado"
+    },
+    "R1": {
+      "status": "REPROVADO_PENDENTE_DE_RECONSTRUCAO",
+      "evidencia": "matriz municipal e portão público reproduzíveis"
+    },
+    "R2": {
+      "status": "BLOQUEADO_POR_R1",
+      "evidencia": "não abrir outcomes; escore administrativo ainda ausente"
+    },
+    "R3": {
+      "status": "BLOQUEADO_ATE_R1_R2",
+      "evidencia": "pré-análise prospectiva não criada prematuramente"
+    },
+    "R4": {
+      "status": "BLOQUEADO_ATE_R1_R3",
+      "evidencia": "nenhum efeito RDD de atração estimado"
+    },
+    "R5": {
+      "status": "FORA_DO_NUCLEO_CURTO",
+      "evidencia": "presença/retenção depende de eventos válidos e só segue após R4"
+    }
+  },
+  "r1": {
+    "n_municipios": 368,
+    "n_divergentes": 177,
+    "pct_divergentes": 48.09782608695652
+  },
+  "primeiro_estagio_publico": "REPROVADO_SEM_SALTO_ESTAVEL",
+  "alternativa_a7": {
+    "status": "DESENHO_PROMISSOR_MAS_NAO_CAUSAL_COM_DADOS_PUBLICOS",
+    "pares_adjacentes": 423,
+    "pares_outcome_2025": 193,
+    "pares_mesmo_escore_outcome_2025": 81
+  },
+  "pacote_solicitacao": {
+    "status": "PRONTO_NAO_ENVIADO",
+    "arquivos_sha256": {
+      "docs/pedidos_dados/solicitacao_focal_rdd_bolsa.md": "3bc9c59c5bc9846930c65da7c00341ee105184cdf5899a0eb437afa82e8566c5",
+      "docs/pedidos_dados/vagas_e_regra_ivs.md": "b55dbe3fa9aafc769b5b034e784d5ccc2ae71aa2c8eb5198207de97fdfd1d51c",
+      "docs/pedidos_dados/eventos_e_ponte_cnes.md": "056ee717c4affbb71bc3b2e8e7155fd6a657b4108db1d2818cf8c2c8d8983684",
+      "docs/pedidos_dados/cutoff_selecao_causal.md": "3800285bef8e0fd831a3810620c33359e4511889d7c74dda8ad3632cc1e958c8"
+    },
+    "canal_submissao": null,
+    "protocolo": null
+  },
+  "triagem_resposta": {
+    "status": "AGUARDANDO_RECEBIMENTO",
+    "arquivos_recebidos": 0,
+    "ausencia_interpretada_como_zero": false,
+    "r1_pronto_para_reexecucao": false,
+    "estimacao_liberada": false
+  },
+  "proxima_acao": "Autor escolher e autorizar o canal; submeter conjuntamente regra/vagas e inscrições/eventos; ao receber, preservar bruto e repetir R1."
+}

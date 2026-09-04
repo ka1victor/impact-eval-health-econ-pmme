@@ -11,6 +11,7 @@ STEPS = [
     ROOT / "scripts" / "02_auditar_fontes_pmme.py",
     ROOT / "scripts" / "aquisicao" / "01_congelar_ponte_cbo.py",
     ROOT / "scripts" / "aquisicao" / "02_consolidar_quadro_vagas.py",
+    ROOT / "scripts" / "rdd_bolsa" / "01_auditar_regra_e_suporte.py",
     ROOT / "scripts" / "rdd_bolsa" / "01_auditar_primeiro_estagio_publico.py",
     ROOT / "scripts" / "aquisicao" / "04_harmonizar_territorio_ibge.py",
     ROOT / "scripts" / "aquisicao" / "05_integrar_painel_analitico.py",
@@ -23,6 +24,8 @@ STEPS = [
     ROOT / "scripts" / "tema_trabalho" / "06_avaliar_provimento_cnes.py",
     ROOT / "scripts" / "tema_trabalho" / "07_red_team_sintese.py",
     ROOT / "scripts" / "tema_trabalho" / "08_auditar_cutoff_selecao.py",
+    ROOT / "scripts" / "rdd_bolsa" / "03_triagem_resposta_administrativa.py",
+    ROOT / "scripts" / "rdd_bolsa" / "02_controlar_execucao_plano_causal.py",
 ]
 
 

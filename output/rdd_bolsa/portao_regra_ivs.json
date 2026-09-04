@@ -1,0 +1,60 @@
+{
+  "status": "PORTAO_CAUSAL",
+  "data_execucao": "2026-09-04",
+  "escopo": "ciclo 1, chamada 1, ofertas publicadas em 24/07/2025",
+  "unidade_atribuicao": "municipio",
+  "outcomes_abertos": false,
+  "decisao_r1": "REPROVADO_PENDENTE_DE_RECONSTRUCAO",
+  "motivo_decisao": "A taxonomia externa aplicada ao IVS público não reproduz 100% das faixas anunciadas e não comprova a running variable administrativa.",
+  "requisitos_r1": {
+    "municipio_escore_faixa_valor_vigencia_completos": false,
+    "escore_unico_por_municipio_vigencia": "NAO_AVALIAVEL_SEM_ESCORE_ADMINISTRATIVO",
+    "regra_reproduz_100_pct_ou_excecoes_previas": false,
+    "tratamento_dos_mass_points_de_cutoff_documentado": false,
+    "fontes_e_hashes_preservados": true
+  },
+  "diagnostico_publico": {
+    "n_municipios": 368,
+    "n_reproduzidos": 191,
+    "n_divergentes": 177,
+    "pct_divergentes": 48.09782608695652,
+    "matriz_faixa_anunciada_por_recalculada": {
+      "FAIXA 1": {
+        "FAIXA 1": 19,
+        "FAIXA 2": 46,
+        "FAIXA 3": 37
+      },
+      "FAIXA 2": {
+        "FAIXA 1": 0,
+        "FAIXA 2": 13,
+        "FAIXA 3": 94
+      },
+      "FAIXA 3": {
+        "FAIXA 1": 0,
+        "FAIXA 2": 0,
+        "FAIXA 3": 159
+      }
+    },
+    "running_variable": "IVS Ipea 2010 público candidato",
+    "taxonomia_externa": {
+      "ivs_ate_0_400": "FAIXA 3",
+      "ivs_0_401_a_0_500": "FAIXA 2",
+      "ivs_acima_0_500": "FAIXA 1"
+    }
+  },
+  "fontes": {
+    "output/aquisicao/quadro_vagas_tratamento.parquet": {
+      "sha256": "41e1d3afee23994821361d8a60d9e507e3b1c25cf69ae882c10008ae27d8b149"
+    },
+    "data/ivs_ipea_2010_municipios.csv": {
+      "sha256": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c"
+    }
+  },
+  "bloqueios_resultantes": {
+    "r2": "BLOQUEADO_POR_R1",
+    "r3": "BLOQUEADO_POR_R1",
+    "r4": "BLOQUEADO_POR_R1",
+    "r5": "BLOQUEADO_POR_R1"
+  },
+  "proximo_passo": "Submeter o pedido focal de escore/regra e repetir R1 com o pacote administrativo, preservando exceções documentadas antes dos outcomes."
+}

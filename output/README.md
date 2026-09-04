@@ -57,7 +57,10 @@ output/
 
 - **`rdd_bolsa/`:** Diagnósticos de viabilidade da grade salarial, teste de
   replicação do escore administrativo IVS 2010 e primeiro estágio público em
-  `a01_primeiro_estagio_publico.csv/.json`.
+  `a01_primeiro_estagio_publico.csv/.json`; portão R1 e matriz municipal em
+  `portao_regra_ivs.json` e `matriz_municipio_regra_ivs.csv`; triagem e ledger
+  de execução em `triagem_resposta_administrativa.json` e
+  `status_execucao_plano_causal.json`.
 
 - **`avaliacao_ciclo3/`:** Coorte congelada, manifesto dos 673 arquivos hospitalares SIH/SUS e auditoria pré-tratamento de anestesiologia.
 

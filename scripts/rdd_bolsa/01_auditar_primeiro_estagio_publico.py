@@ -31,7 +31,7 @@ VALOR_POR_FAIXA = {
 
 def _estimativa_local_linear(
     frame: pd.DataFrame, boundary: float, bandwidth: float
-) -> dict[str, float | int]:
+) -> dict[str, float | int | None]:
     cutoff = round(float(boundary - 0.0005), 3)
     lado_abaixo = frame["ivs_2010"].between(cutoff - bandwidth, cutoff)
     lado_acima = frame["ivs_2010"].between(cutoff + 0.001, cutoff + bandwidth)
@@ -47,11 +47,6 @@ def _estimativa_local_linear(
             f"Suporte insuficiente em boundary={boundary}, bandwidth={bandwidth}."
         )
 
-    design = sm.add_constant(sample[["acima", "x_c", "acima_x_c"]])
-    weights = np.maximum(0.0, 1.0 - sample["x_c"].abs() / (bandwidth + 0.0005))
-    model = sm.WLS(sample["valor_anunciado_mensal_brl"] / 1_000, design, weights=weights)
-    fit = model.fit(cov_type="HC1")
-
     media_abaixo = float(
         sample.loc[sample["acima"] == 0, "valor_anunciado_mensal_brl"].mean()
         / 1_000
@@ -60,6 +55,20 @@ def _estimativa_local_linear(
         sample.loc[sample["acima"] == 1, "valor_anunciado_mensal_brl"].mean()
         / 1_000
     )
+    outcome = sample["valor_anunciado_mensal_brl"] / 1_000
+    if outcome.nunique() == 1:
+        salto, erro, p_valor = 0.0, 0.0, None
+    else:
+        design = sm.add_constant(sample[["acima", "x_c", "acima_x_c"]])
+        weights = np.maximum(
+            0.0, 1.0 - sample["x_c"].abs() / (bandwidth + 0.0005)
+        )
+        model = sm.WLS(outcome, design, weights=weights)
+        fit = model.fit(cov_type="HC1")
+        salto = round(float(fit.params["acima"]), 12)
+        erro = round(float(fit.bse["acima"]), 12)
+        p_valor = round(float(fit.pvalues["acima"]), 12)
+
     return {
         "corte_taxonomia": cutoff,
         "fronteira_discreta": boundary,
@@ -67,12 +76,12 @@ def _estimativa_local_linear(
         "n_abaixo": n_abaixo,
         "n_acima": n_acima,
         "n_total": int(len(sample)),
-        "media_abaixo_mil_brl": media_abaixo,
-        "media_acima_mil_brl": media_acima,
-        "diferenca_bruta_mil_brl": media_acima - media_abaixo,
-        "salto_local_linear_mil_brl": float(fit.params["acima"]),
-        "erro_padrao_hc1_mil_brl": float(fit.bse["acima"]),
-        "p_valor": float(fit.pvalues["acima"]),
+        "media_abaixo_mil_brl": round(media_abaixo, 12),
+        "media_acima_mil_brl": round(media_acima, 12),
+        "diferenca_bruta_mil_brl": round(media_acima - media_abaixo, 12),
+        "salto_local_linear_mil_brl": salto,
+        "erro_padrao_hc1_mil_brl": erro,
+        "p_valor": p_valor,
     }
 
 

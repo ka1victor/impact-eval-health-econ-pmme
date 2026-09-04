@@ -8,6 +8,11 @@
 > passar a ser a dose efetivamente recebida. Ver a
 > [síntese causal](../05_identificacao/16_sintese_achados_e_novo_plano_causal.md).
 
+O texto único pronto para submissão, ainda não enviado, está em
+[`solicitacao_focal_rdd_bolsa.md`](solicitacao_focal_rdd_bolsa.md). Ele remete
+aos layouts detalhados abaixo e deixa canal, protocolo e eventuais termos em
+aberto para decisão expressa do autor.
+
 ## Escopo fechado
 
 Estes documentos operacionalizam exclusivamente as seis lacunas fechadas pelo portão A06: A07-01 cadastro e versionamento de vagas; A07-02 inscrições e eventos; A07-03 ponte pseudonimizada PMM-E–CNES; A07-04 regra histórica do IVS por vaga; A07-05 folha mensal e execução financeira vinculável; e A07-06 documentação e historicização dos painéis.

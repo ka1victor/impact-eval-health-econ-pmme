@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **112 testes em 15 módulos**, garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **123 testes em 17 módulos**, garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -41,6 +41,8 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_tema_atracao_provimento.py`](test_tema_atracao_provimento.py) | Auditoria de Tema | Viabilidade do tema de atração administrativa e delimitação entre provimento local e retenção individual. |
 | [`test_viabilidade_salario_ivs.py`](test_viabilidade_salario_ivs.py) | RDD Bolsa | Verificação da falha de replicação das faixas salariais em 177 municípios e encerramento preventivo do portão R1 do RDD. |
 | [`test_primeiro_estagio_publico_rdd.py`](test_primeiro_estagio_publico_rdd.py) | RDD Bolsa — primeiro estágio | Confirma que o IVS 2010 público não produz salto estável na bolsa anunciada em 0,400 ou 0,500 e impede uma RDD fuzzy improvisada. |
+| [`test_portao_regra_rdd.py`](test_portao_regra_rdd.py) | RDD Bolsa — R1 e execução | Valida a matriz municipal, as 177 divergências, a não promoção do IVS público a escore administrativo, o pacote não enviado e o bloqueio fail-closed de R2–R5. |
+| [`test_triagem_admin_rdd.py`](test_triagem_admin_rdd.py) | RDD Bolsa — resposta administrativa | Testa ausência sem imputação, interrupção diante de identificadores pessoais não solicitados e liberação restrita à reexecução de R1 após uma entrega estruturalmente completa. |
 | [`test_coorte_c3.py`](test_coorte_c3.py) | Ciclo 3 Coorte | Congelamento dos cursos 1, 12 e 24 com suporte integral e verificação da assinatura cadastral (Nota Técnica nº 59/2026). |
 | [`test_sih_pre_c3.py`](test_sih_pre_c3.py) | Ciclo 3 SIH Pré | Auditoria dos dados hospitalares do SIH, dicionário SIGTAP e regra *fail-closed* ante ausência de arquivos no FTP. |
 | [`test_pre_analysis_c3.py`](test_pre_analysis_c3.py) | Ciclo 3 Pré-Análise | Torneio pré-tratamento de anestesiologia e congelamento de protocolo antes da maturidade de 202703. |

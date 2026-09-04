@@ -42,6 +42,7 @@ tmp/
 
 # Dados brutos grandes e parquets analíticos pesados (reproduzíveis via scripts)
 data/raw/cnes/
+data/raw/administrativo_rdd_bolsa/
 output/aquisicao/cnes_mensal/
 output/aquisicao/cnes_vinculos_medicos_2024_2026.parquet
 output/painel_municipio_curso_mensal.parquet

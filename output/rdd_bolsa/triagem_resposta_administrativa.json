@@ -1,0 +1,10 @@
+{
+  "data_execucao": "2026-09-04",
+  "status": "AGUARDANDO_RECEBIMENTO",
+  "input_dir": "data/raw/administrativo_rdd_bolsa",
+  "ausencia_interpretada_como_zero": false,
+  "arquivos_recebidos": 0,
+  "r1_pronto_para_reexecucao": false,
+  "estimacao_liberada": false,
+  "nota": "Nenhuma resposta foi recebida; diretório bruto não foi criado nem alterado."
+}

@@ -38,8 +38,14 @@
   fuzzy RDD pública reprovada.
 - [x] Consolidar achados, alternativas, linguagem e plano fail-closed em
   `docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md`.
+- [x] Materializar R1 público em matriz municipal, relatório e JSON de decisão:
+  191/368 faixas reproduzidas, 177 divergentes; R1 permanece reprovado.
+- [x] Preparar a solicitação focal conjunta e a triagem automática de resposta,
+  sem enviar pedido nem versionar futuros microdados administrativos.
+- [x] Implementar o controlador fail-closed que bloqueia R2–R4 enquanto R1 não
+  for aprovado e registra o estado executado do plano causal.
 - [ ] Submeter, após escolha do canal pelo autor, os pedidos de vaga/regra IVS
-  e de universo de inscrições/eventos; as minutas permanecem não enviadas.
+  e de universo de inscrições/eventos; o pacote está pronto, mas não enviado.
 - [ ] R1 — recuperar a running variable administrativa exata, vintagem,
   precisão, arredondamento e cutoffs da grade de 2025.
 - [ ] R1 — reproduzir 100% das faixas anunciadas ou documentar exceções
