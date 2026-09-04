@@ -1,41 +1,35 @@
 # 05. Roadmap de execução
 
-> A comparação agregada do ciclo 1 está encerrada. A fila imediata é somente o
-> portão de viabilidade do RDD do adicional de bolsa em
-> [`14_plano_implementacao_rdd_bolsa.md`](../05_identificacao/14_plano_implementacao_rdd_bolsa.md).
-> A decisão consolidada e a hierarquia das alternativas estão em
-> [`16_sintese_achados_e_novo_plano_causal.md`](../05_identificacao/16_sintese_achados_e_novo_plano_causal.md).
+> **Atualização em 04/09/2026:** a comparação agregada e a RDD pública da bolsa
+> estão encerradas. O A8 por cutoff de escore foi executado com fontes já
+> locais e passa a ser o núcleo causal do trabalho curto. A decisão vigente
+> está em
+> [`17_plano_causal_publico_cutoff_escore.md`](../05_identificacao/17_plano_causal_publico_cutoff_escore.md).
+> As seções históricas abaixo permanecem para rastreabilidade.
 > A formulação substantiva e a auditoria de viabilidade estão em
 > [`15_incentivos_ivs_provimento_duradouro.md`](../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
 > O ciclo 3 permanece congelado até maturidade.
 
 ## Fila imediata autorizada
 
-1. Submeter, após decisão do autor, a solicitação focal já pronta de
-   escore/regra e de inscrições/eventos; nenhum pedido foi enviado ainda.
-2. Executar R1: reconstruir escore, vintagem, arredondamento, cutoff, faixa e
-   valor da bolsa aplicados às vagas do ciclo 1.
-3. Somente se R1 passar, executar R2 de suporte e cointervenções sem outcomes.
-4. Somente se R2 passar, congelar R3 antes de estimar qualquer efeito.
-5. Antes de R4, reconciliar vagas imediatas, alocações e homologações no mesmo
-   grão, sem usar cadastro de reserva como denominador de preenchimento.
+1. Usar A4 apenas para motivar o gradiente territorial de atração.
+2. Usar A8 como núcleo causal: 36 pares de 2025 sem empate e separados por um
+   ponto no cutoff da primeira opção.
+3. Reportar homologação como adesão administrativa e presença ativa em
+   12/08/2026 como resultado substantivo principal, sempre incondicional à
+   entrada.
+4. Reportar placebo abaixo do cutoff, janelas alternativas, leave-one-out e a
+   replicação direcional do ciclo 2 de 2026.
+5. Redigir limites antes de heterogeneidades: causalidade local condicional,
+   score discreto, protocolo retrospectivo e ausência de retenção contínua.
 
-R4–R6 não estão autorizados por este registro até os respectivos portões. O
-RDD antigo em `0,300` não deve ser restaurado: a grade de 2025 não tinha salto
-nesse ponto. A divergência atual entre IVS local e faixa anunciada mantém R1 em
-estado `REPROVADO_PENDENTE_DE_RECONSTRUCAO`.
-
-O diagnóstico adicional do primeiro estágio também reprova a alternativa fuzzy
-com o IVS público: em `0,400`, diferenças brutas e saltos local-lineares são
-instáveis entre janelas; em `0,500`, a bolsa anunciada é R$ 20 mil nos dois
-lados entre as janelas 0,010 e 0,050. Essa falha não elimina uma RDD futura com
-o escore administrativo correto.
+Nenhum pedido de dados será submetido. A RDD em `0,300`, `0,400` ou `0,500`
+não deve ser restaurada com o IVS público atual. A antiga fila R1–R6 permanece
+arquivada nas seções posteriores apenas para documentar decisões já tomadas.
 
 O estado executado e verificável dos portões está em
-[`33_status_execucao_plano_causal.md`](33_status_execucao_plano_causal.md). R1
-foi materializado em matriz municipal; a triagem administrativa está pronta e
-aguarda recebimento; o controlador impede a criação de R3/R4 enquanto o portão
-permanecer reprovado.
+[`33_status_execucao_plano_causal.md`](33_status_execucao_plano_causal.md). O
+A8 está concluído, e a trilha administrativa foi encerrada sem envio.
 
 ## 0. Estado da comparação agregada após a execução
 

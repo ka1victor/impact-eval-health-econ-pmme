@@ -30,8 +30,9 @@ Ele executa sequencialmente:
 15. `scripts/tema_trabalho/06_avaliar_provimento_cnes.py` — avaliação da evolução do estoque médico cadastrado no CNES (A5).
 16. `scripts/tema_trabalho/07_red_team_sintese.py` — síntese red team, matriz de evidências e manifesto reproduzível (A6).
 17. `scripts/tema_trabalho/08_auditar_cutoff_selecao.py` — auditoria do último selecionado versus primeiro não selecionado, ligação agregada a homologação/presença ativa e portão causal (A7).
-18. `scripts/rdd_bolsa/03_triagem_resposta_administrativa.py` — registra ausência/estrutura/hashes de eventual resposta, sem persistir linhas nem converter ausência em zero.
-19. `scripts/rdd_bolsa/02_controlar_execucao_plano_causal.py` — consolida o estado dos portões e aplica o bloqueio fail-closed de R3/R4.
+18. `scripts/tema_trabalho/09_estimar_cutoff_escore_estrito.py` — estima o efeito local condicional no corte, excluindo empates e exigindo gap de um ponto; gera placebos, sensibilidades e replicação (A8).
+19. `scripts/rdd_bolsa/03_triagem_resposta_administrativa.py` — registra ausência/estrutura/hashes de eventual resposta, sem persistir linhas nem converter ausência em zero.
+20. `scripts/rdd_bolsa/02_controlar_execucao_plano_causal.py` — consolida o estado dos portões e aplica o bloqueio fail-closed de R3/R4.
 
 ---
 
@@ -48,14 +49,14 @@ scripts/
 ├── avaliacao_impacto/                  # Pipeline do diagnóstico histórico DDD agregada
 ├── rdd_bolsa/                          # Diagnóstico de viabilidade do RDD do IVS / adicional
 ├── revisao_literatura/                 # Mineração bibliográfica e geradores históricos
-├── tema_trabalho/                      # Núcleo principal de atração e dinâmica local (A1–A7)
+├── tema_trabalho/                      # Núcleo principal de atração e cutoff causal local (A1–A8)
 └── utils/                              # Utilitários compartilhados (DBC parser, gráficos, tema)
 ```
 
 ### Detalhamento por Domínio:
 
 - **`aquisicao/`:** Scripts responsáveis pela ingestão, higienização, mapeamento curso–CBO e integração longitudinal das 26 competências do CNES. Contém tanto a rotina de produção (`01_` a `05_`) quanto os scripts de auditoria de versões (`a01_` a `a06_`).
-- **`tema_trabalho/`:** Contém a cadeia empírica central do artigo (A1 a A7), desde a auditoria inicial, construção da tipologia territorial (REGIC + RMs), pré-análise, estimações econométricas principais (LPM/Logit com clustering municipal) até o red team de encerramento.
+- **`tema_trabalho/`:** Contém a cadeia empírica central do artigo (A1 a A8), desde a auditoria inicial, tipologia territorial e resultados associativos até o cutoff estrito de seleção, seus placebos e a replicação pública.
 - **`avaliacao_impacto/`:** Reúne o pipeline do diagnóstico histórico DDD (imediatas vs reserva). Avalia portão de relevância, constrói painéis analíticos, estima modelos estáticos e dinâmicos (estudo de evento), testa mecanismos, gera figuras, nota técnica e infográfico.
 - **`rdd_bolsa/`:** Rotinas de R1, primeiro estágio público, triagem administrativa e controle fail-closed para o desenho baseado no adicional de R$ 5 mil e limiares do IVS 2010.
 - **`avaliacao_ciclo3/`:** Pipeline prospectivo do ciclo 3 (congelamento de coorte, ingestão de dados de procedimentos hospitalares SIH/SUS pré-tratamento e auditoria de potência).

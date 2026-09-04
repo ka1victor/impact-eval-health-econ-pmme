@@ -1,12 +1,25 @@
 # Síntese dos achados e novo plano causal — atração de especialistas, bolsa e IVS
 
-> **Documento canônico de decisão em 04/09/2026.** Este texto consolida os
-> resultados já produzidos, distingue evidência associativa de identificação
-> causal e fixa a próxima estratégia. Em caso de conflito sobre a prioridade do
-> desenho, este documento complementa e atualiza os planos 14 e 15; as
-> auditorias continuam prevalecendo para os fatos observados nos dados.
+> **Atualização em 04/09/2026:** este diagnóstico permanece canônico para a
+> inviabilidade pública da RDD da bolsa, mas sua prioridade de execução foi
+> substituída pelo
+> [`17_plano_causal_publico_cutoff_escore.md`](17_plano_causal_publico_cutoff_escore.md).
+> O pedido administrativo foi cancelado. O A8 encontrou, com dados já locais,
+> um efeito local condicional de ganhar a primeira opção usando 36 pares sem
+> empate e separados por um ponto.
 
-## 1. Decisão executiva
+## 1. Decisão executiva — registro anterior e atualização
+
+**Decisão vigente:** o trabalho curto passa a ter o A8 como núcleo causal.
+Ganhar marginalmente a primeira opção elevou a homologação no mesmo
+curso–CNES em 63,9 p.p. e a presença ativa posterior em 33,3 p.p. O placebo
+imediatamente abaixo do cutoff é nulo, as sensibilidades não invertem o sinal e
+o ciclo 2 de 2026 replica a direção (+36,4 p.p.), ainda com pouca precisão. A
+causalidade é local e condicional à comparabilidade entre candidatos separados
+por um ponto; o protocolo é retrospectivo e o grau de rigor é moderado.
+
+O texto abaixo preserva a decisão anterior sobre o IVS para fins de
+rastreabilidade. Ela não define mais a fila de execução.
 
 O trabalho não perdeu sua pergunta causal. A pergunta mais alinhada ao tema
 continua sendo:

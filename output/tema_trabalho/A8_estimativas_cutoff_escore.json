@@ -1,0 +1,79 @@
+{
+  "status": "EFEITO_LOCAL_CAUSAL_CONDICIONAL",
+  "grau_de_rigor": "MODERADO",
+  "por_que_nao_alto": [
+    "score discreto e apenas um mass point de cada lado",
+    "hipotese de comparabilidade local nao e integralmente testavel",
+    "protocolo retrospectivo apos o A7 ter aberto os outcomes",
+    "ligacao entre publicacoes usa nome normalizado e curso-CNES",
+    "homologacao e um outcome administrativo proximo da propria alocacao"
+  ],
+  "estimando": "ITT local de ganhar a primeira opcao entre candidatos de ampla concorrencia separados por um ponto no mesmo curso-CNES",
+  "resultado_principal_2025": {
+    "n_pares": 36,
+    "homologacao_mesma_celula": {
+      "selecionado": 0.6388888888888888,
+      "nao_selecionado": 0.0,
+      "diferenca": 0.6388888888888888,
+      "ic95_convencional": [
+        0.474065743201988,
+        0.8037120345757897
+      ],
+      "p_exato": 2.384185791015625e-07
+    },
+    "ativo_mesma_celula_snapshot": {
+      "selecionado": 0.4166666666666667,
+      "nao_selecionado": 0.08333333333333333,
+      "diferenca": 0.3333333333333333,
+      "ic95_convencional": [
+        0.13521508580604277,
+        0.5314515808606238
+      ],
+      "p_exato": 0.004180908203125
+    }
+  },
+  "placebo_imediatamente_abaixo_2025": {
+    "n_pares": 30,
+    "homologacao_diferenca": -0.03333333333333333,
+    "ativo_diferenca": 0.0
+  },
+  "replicacao_2026": {
+    "n_pares": 11,
+    "ativo_mesma_celula_diferenca": 0.36363636363636365,
+    "ic95_convencional": [
+      0.024691870722828912,
+      0.7025808565498983
+    ],
+    "p_exato": 0.125,
+    "interpretacao": "direcao consistente, mas poucos discordantes e inferencia imprecisa"
+  },
+  "dependencia": {
+    "linhas_em_celulas_repetidas_entre_chamadas_2025": 0,
+    "nomes_repetidos_nos_pares_primarios_2025": 0
+  },
+  "leave_one_out": {
+    "homologacao_mesma_celula": {
+      "min": 0.5806451612903226,
+      "max": 0.7096774193548387,
+      "n_exclusoes": 23
+    },
+    "ativo_mesma_celula_snapshot": {
+      "min": 0.2727272727272727,
+      "max": 0.3870967741935484,
+      "n_exclusoes": 23
+    }
+  },
+  "interpretacao_autorizada": "Sob comparabilidade local, ganhar marginalmente a primeira opcao aumentou a adesao e a presenca posterior naquele curso-CNES.",
+  "interpretacao_proibida": "Os resultados nao identificam o efeito da bolsa, do IVS, do PMM-E sobre o estoque geral nem a decisao de se candidatar.",
+  "privacidade": "Nomes e CPFs sao processados somente em memoria; nenhum identificador individual ou par reidentificavel e persistido.",
+  "arquivos": {
+    "protocolo": "output\\tema_trabalho\\A8_protocolo_cutoff_escore.json",
+    "suporte": "output\\tema_trabalho\\A8_tabela_01_suporte_escore_estrito.csv",
+    "estimativas": "output\\tema_trabalho\\A8_tabela_02_estimativas_escore_estrito.csv",
+    "placebos": "output\\tema_trabalho\\A8_tabela_03_placebos_escore_estrito.csv",
+    "sensibilidade": "output\\tema_trabalho\\A8_tabela_04_sensibilidade_gap.csv",
+    "leave_one_out": "output\\tema_trabalho\\A8_tabela_05_leave_one_out.csv",
+    "figura": "output\\tema_trabalho\\A8_figura_01_efeitos_cutoff_escore.png",
+    "relatorio": "output\\tema_trabalho\\A8_relatorio_cutoff_escore.md"
+  }
+}

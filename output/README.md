@@ -29,7 +29,7 @@ output/
 ├── avaliacao_impacto/                     # Diagnóstico histórico DDD (tabelas, figuras, notas)
 ├── rdd_bolsa/                             # Diagnóstico de viabilidade do RDD do IVS
 ├── revisao_literatura/                    # Rúbricas e matrizes comparativas de papers
-└── tema_trabalho/                         # Núcleo principal de atração e provimento (A1–A7)
+└── tema_trabalho/                         # Núcleo principal de atração e cutoff local (A1–A8)
 ```
 
 ### Detalhamento por Domínio:
@@ -42,6 +42,7 @@ output/
   - `A5_relatorio_diagnostico.md` e tabelas dinâmicas de oferta cadastrada (A5 — evolução CNES).
   - `A6_matriz_afirmacao_evidencia_limite.csv` e `A6_manifesto_reproducao.json` (A6 — auditoria de afirmações e manifesto com hashes SHA-256).
   - `A7_tabela_01_suporte_cutoffs.csv`, `A7_tabela_02_descontinuidades_preliminares.csv` e `A7_cutoff_selecao_resumo.json` (A7 — corte candidato, outcomes de homologação/presença ativa e portão causal).
+  - `A8_tabela_02_estimativas_escore_estrito.csv`, `A8_tabela_03_placebos_escore_estrito.csv`, `A8_tabela_04_sensibilidade_gap.csv` e `A8_estimativas_cutoff_escore.json` (A8 — efeito local condicional de ganhar a primeira opção, sem empates e com gap de um ponto).
 
 - **`avaliacao_impacto/`:** Artefatos da investigação histórica agregada DDD (2024–2026):
   - `dados/`: painel município–curso–mês e subamostra confirmatória de 10 cursos unívocos.

@@ -1,0 +1,47 @@
+{
+  "protocolo": "A8_PROTOCOLO_RETROSPECTIVO_CUTOFF_ESCORE_ESTRITO",
+  "data_congelamento": "2026-09-04",
+  "pre_registro": false,
+  "outcomes_previamente_observados": true,
+  "nota": "O A7 e os calculos de viabilidade precederam este congelamento. O documento organiza uma analise retrospectiva e nao deve ser descrito como pre-registrado ou confirmatorio prospectivo.",
+  "pergunta": "Qual e o efeito local de ganhar a vaga de primeira opcao sobre homologacao e presenca posterior no mesmo curso-CNES?",
+  "populacao_principal": "2025, primeira opcao, ampla concorrencia, corte sharp no rank, ultimo selecionado e primeiro nao selecionado separados por um ponto.",
+  "tratamento": "ganhar a alocacao da primeira opcao",
+  "running_variable": "pontuacao publicada centrada no cutoff especifico da celula",
+  "estimando": "ITT local entre candidatos marginais da mesma celula curso-CNES",
+  "outcome_de_processo": "homologacao no mesmo curso-CNES",
+  "outcome_substantivo_principal": "ativo no mesmo curso-CNES em 2026-08-12",
+  "sensibilidades": [
+    "homologacao ou atividade em qualquer local",
+    "gap positivo de ate dois pontos",
+    "qualquer gap positivo",
+    "primeira e segunda chamadas separadas",
+    "leave-one-course e leave-one-UF",
+    "replicacao no ciclo 2 de 2026"
+  ],
+  "placebos": [
+    "duas posicoes imediatamente abaixo do cutoff",
+    "duas posicoes imediatamente acima do cutoff quando houver suporte"
+  ],
+  "inferencia": "diferenca pareada, IC t convencional identificado como tal e teste exato bicaudal condicionado aos pares discordantes",
+  "hipotese_identificadora": "dentro da janela de um ponto, os resultados potenciais seriam comparaveis na ausencia da alocacao; o score nao gera outra descontinuidade no cutoff especifico da vaga",
+  "linguagem_proibida": [
+    "efeito da bolsa ou do IVS",
+    "efeito total do PMM-E",
+    "efeito sobre candidaturas ex ante",
+    "retencao individual continua ou duracao ate saida"
+  ],
+  "fontes": {
+    "edital_2025": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-projeto-mais-medicos-especialistas/edital-de-chamamento-publico-no-3-2025.pdf",
+    "pagina_publicacoes_2026": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/chamamento-publico-sgtes-ms-no-1-2026-pmm-e"
+  },
+  "hashes_entradas": {
+    "data\\raw\\aquisicao\\vagas\\2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec",
+    "data\\raw\\pmm_e\\2025_ciclo1_chamada1_homologados.xlsx": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b",
+    "data\\raw\\pmm_e\\2025_ciclo1_chamada2_classificacao_final.xlsx": "5c73a99847708b2749019c634f661771b28c88cb5421e9672e44704e62103e85",
+    "data\\raw\\pmm_e\\2025_ciclo1_chamada2_homologados.xlsx": "4e85cfe45b2e5e1f7ebef78aa5dc90ba61b7adc5f7046f43a5066803f603e147",
+    "data\\raw\\pmm_e\\2026_ciclo2_chamada2_resultado_final.xlsx": "8690d6fc381692fc20c59ae077ac8b80ca1ce27dd03d27fd8e1ef17c75abc85f",
+    "data\\pmm_especialistas_nominal.csv": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5"
+  },
+  "privacidade": "Nomes e CPFs sao processados somente em memoria; nenhum identificador individual ou par reidentificavel e persistido."
+}

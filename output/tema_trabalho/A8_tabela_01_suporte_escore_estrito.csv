@@ -1,0 +1,4 @@
+ciclo_chamada,pares_adjacentes,pares_cutoff_ampla_concorrencia,pares_gap_1_ac,pares_gap_2_ac,pares_empate_excluidos,violacoes_gap_1,placebos_abaixo_gap_1_ac,placebos_acima_gap_1_ac
+2025_C1_CH1,136,123,30,27,48,0,20,3
+2025_C1_CH2,57,53,6,11,28,0,10,2
+2026_C2_CH2,56,50,11,10,26,0,8,4

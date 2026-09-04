@@ -20,8 +20,8 @@ A literatura empírica informa fatos, comparações, covariáveis candidatas e h
 | [02 — Teoria](02_teoria/) | [modelo microeconômico](02_teoria/modelo_micro.md), [hipóteses e viabilidade empírica](02_teoria/hipoteses_e_viabilidade_empirica.md) e [versão para slides](02_teoria/18_modelo_teorico_slides_apresentacao.md) | apresentar primitivas, derivações e sketch da transposição empírica |
 | [03 — Literatura empírica](03_literatura_empirica/) | [catálogo de escolha locacional de médicos](03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md) | reunir fatos e evidência externa, incluindo Diamond, Moehling e Costa–Nunes–Sanches |
 | [04 — Dados](04_dados/) | [inventário por outcome](04_dados/02_inventario_dados_por_outcome.md), [dossiê oficial de bases](04_dados/20_dossie_bases_dados_saude_brasil_pmme.md) e [pedidos administrativos](pedidos_dados/) | mapear fontes, layouts, chaves e critérios de completude |
-| [05 — Identificação](05_identificacao/) | [plano amplo](05_identificacao/03_plano_avaliacao_outcomes.md), [estratégia prospectiva](05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md), [pré-análise](05_identificacao/13_plano_pre_analise_ciclo3.md), [RDD da bolsa](05_identificacao/14_plano_implementacao_rdd_bolsa.md), [corte de seleção](05_identificacao/15_cutoff_selecao_atracao_retencao.md) e [síntese dos achados e novo plano causal](05_identificacao/16_sintese_achados_e_novo_plano_causal.md) | registrar identificação, estimandos, evidência alcançada e decisões de avanço |
-| [06 — Execução](06_execucao/) | [roadmap](06_execucao/05_roadmap_execucao.md) e [backlog](06_execucao/06_backlog_wp3_wp4_wp5.md) | ordenar entregas, portões e frentes adiadas |
+| [05 — Identificação](05_identificacao/) | [plano amplo](05_identificacao/03_plano_avaliacao_outcomes.md), [estratégia prospectiva](05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md), [pré-análise](05_identificacao/13_plano_pre_analise_ciclo3.md), [RDD da bolsa](05_identificacao/14_plano_implementacao_rdd_bolsa.md), [corte de seleção](05_identificacao/15_cutoff_selecao_atracao_retencao.md), [síntese dos achados](05_identificacao/16_sintese_achados_e_novo_plano_causal.md) e [plano causal público executado](05_identificacao/17_plano_causal_publico_cutoff_escore.md) | registrar identificação, estimandos, evidência alcançada e decisões de avanço |
+| [06 — Execução](06_execucao/) | [roadmap](06_execucao/05_roadmap_execucao.md), [estado causal executado](06_execucao/33_status_execucao_plano_causal.md) e [minuta do trabalho curto](06_execucao/34_minuta_trabalho_curto_cutoff_escore.md) | ordenar entregas, registrar portões e manter a redação-base |
 | [Auditorias](auditorias/) | auditorias institucionais, de disponibilidade e aquisição | registrar o estado observado dos dados e da implementação |
 | [90 — Arquivo histórico](90_arquivo_historico/) | versões anteriores de revisão e modelagem | preservar rastreabilidade sem concorrer com os documentos canônicos |
 
@@ -57,6 +57,6 @@ Em caso de conflito:
 
 1. o documento 17 prevalece para teoria;
 2. o documento 19 prevalece para classificação da literatura empírica;
-3. os documentos 12–16 prevalecem para identificação, e o documento 16 fixa a
+3. os documentos 12–17 prevalecem para identificação, e o documento 17 fixa a
    prioridade atual entre os desenhos;
 4. as auditorias prevalecem para o estado observado dos dados.

@@ -1,7 +1,11 @@
 # Corte de seleção para atração e presença posterior
 
-> **Estado em 04/09/2026:** desenho promissor, ainda não causal com dados públicos.  
-> **Estimando candidato:** efeito local de ganhar a vaga de primeira opção sobre entrada e presença ativa posterior no PMM-E.
+> **Atualização em 04/09/2026:** o A8 removeu empates, restringiu o contraste a
+> um ponto e executou o desenho com dados públicos. O resultado passou a ser
+> classificado como efeito local causal **condicional**, com rigor moderado.
+> A especificação, os resultados e os limites vigentes estão no
+> [`17_plano_causal_publico_cutoff_escore.md`](17_plano_causal_publico_cutoff_escore.md).
+> Este documento preserva o plano anterior e não deve prevalecer em conflitos.
 
 ## 1. Por que este desenho é mais adequado ao trabalho curto
 

@@ -1,0 +1,9 @@
+ciclo_chamada,amostra,desfecho,n_pares,media_acima,media_abaixo,diferenca,erro_padrao_pareado,ic95_convencional_inferior,ic95_convencional_superior,discordantes_favoraveis,discordantes_contrarios,p_exato_pareado_bicaudal,classificacao_inferencial
+2025_C1_CH1_E_CH2,placebo_abaixo_gap_1_ac,homologacao_mesma_celula,30,0.0,0.03333333333333333,-0.03333333333333333,0.033333333333333326,-0.10150765473775678,0.034840988071090116,0,1,1.0,PLACEBO
+2025_C1_CH1_E_CH2,placebo_abaixo_gap_1_ac,ativo_mesma_celula_snapshot,30,0.06666666666666667,0.06666666666666667,0.0,0.06780635036208103,-0.13867955768536372,0.13867955768536372,2,2,1.0,PLACEBO
+2025_C1_CH1_E_CH2,placebo_abaixo_gap_1_ac,homologacao_qualquer_local,30,0.13333333333333333,0.06666666666666667,0.06666666666666667,0.08211756827352529,-0.10128261810620333,0.23461595143953667,4,2,0.6875,PLACEBO
+2025_C1_CH1_E_CH2,placebo_abaixo_gap_1_ac,ativo_qualquer_local_snapshot,30,0.1,0.13333333333333333,-0.03333333333333333,0.07555668243468873,-0.1878640999099661,0.12119743324329946,2,3,1.0,PLACEBO
+2025_C1_CH1_E_CH2,placebo_acima_gap_1_ac,homologacao_mesma_celula,5,0.4,0.6,-0.2,0.20000000000000004,-0.7552890210395589,0.3552890210395588,0,1,1.0,PLACEBO
+2025_C1_CH1_E_CH2,placebo_acima_gap_1_ac,ativo_mesma_celula_snapshot,5,0.2,0.4,-0.2,0.20000000000000004,-0.7552890210395589,0.3552890210395588,0,1,1.0,PLACEBO
+2025_C1_CH1_E_CH2,placebo_acima_gap_1_ac,homologacao_qualquer_local,5,0.4,0.6,-0.2,0.20000000000000004,-0.7552890210395589,0.3552890210395588,0,1,1.0,PLACEBO
+2025_C1_CH1_E_CH2,placebo_acima_gap_1_ac,ativo_qualquer_local_snapshot,5,0.4,0.6,-0.2,0.20000000000000004,-0.7552890210395589,0.3552890210395588,0,1,1.0,PLACEBO

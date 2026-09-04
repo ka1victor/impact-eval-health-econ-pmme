@@ -8,31 +8,30 @@ Há quatro camadas separadas no repositório:
 
 1. **Resultado principal:** quais características territoriais estão associadas
    à atração administrativa no primeiro ciclo?
-2. **Upgrade causal principal:** R$ 5 mil adicionais de bolsa aumentam a
-   procura e o preenchimento das vagas junto aos limiares administrativos do
-   IVS?
-3. **Upgrade causal alternativo:** ganhar marginalmente a vaga de primeira
-   opção aumenta a entrada e a presença posterior do especialista no PMM-E?
+2. **Resultado causal principal:** ganhar marginalmente a vaga de primeira
+   opção aumenta a homologação e a presença posterior do especialista naquele
+   curso–CNES?
+3. **Pergunta causal arquivada:** R$ 5 mil adicionais de bolsa aumentam a
+   procura e o preenchimento junto aos limiares administrativos do IVS?
 4. **Resultado secundário:** células município–curso com atração administrativa
    apresentaram evolução distinta da oferta médica cadastrada no CNES?
 
 ## Decisão atual
 
-> **Resultado vigente:** A4 e A5 continuam associativos. A RDD da bolsa segue
-> como pergunta causal principal, mas o IVS 2010 público não reproduz 177 das
-> 368 faixas do ciclo 1 e não gera primeiro estágio estável em `0,400` ou
-> `0,500`; sharp e fuzzy RDD públicas estão bloqueadas. A7 é a alternativa
-> causal mais promissora: encontrou descontinuidades grandes de homologação e
-> presença, mas os desempates por mesma UF e idade ainda não são observados.
+> **Resultado vigente:** o A8 é o núcleo causal do trabalho curto. Em 36 pares
+> de candidatos de ampla concorrência, sem empates e separados por exatamente
+> um ponto no cutoff da mesma primeira opção, ganhar a vaga elevou a
+> homologação no mesmo curso–CNES em **63,9 p.p.** e a presença ativa posterior
+> em **33,3 p.p.** A interpretação é causal local sob comparabilidade dos pares,
+> com rigor moderado. A4 e A5 permanecem associativos.
 
 A decisão consolidada, todos os achados e a sequência de avanço estão em
-[`docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md`](docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md).
+[`docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`](docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md).
 O estado efetivamente executado dos portões está em
 [`docs/06_execucao/33_status_execucao_plano_causal.md`](docs/06_execucao/33_status_execucao_plano_causal.md):
-R1 público reprovado, R2–R4 bloqueados, pacote administrativo pronto e triagem
-aguardando recebimento.
+A8 concluído, RDD-IVS arquivada e pedido administrativo cancelado sem envio.
 
-O desenho focal recomendado está em
+O plano anterior do cutoff está preservado em
 [`docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md`](docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md).
 O plano territorial da bolsa está em
 [`docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`](docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md).
@@ -47,18 +46,10 @@ A2 concluiu a tipologia como `APROVADO_4_ESTRATOS` (540/540 municípios A1 em
 capital/metropolitano/interior próximo/remoto via REGIC 2018 + RM/RIDE 2022).
 As sessões do núcleo estão organizadas em
 [`prompts/avaliacao_atracao_interior/`](prompts/avaliacao_atracao_interior/README.md).
-Ele pergunta se oferecer R$ 5 mil mensais adicionais alterou procura e
-preenchimento de vagas próximas a um cutoff administrativo do IVS. Em 2025, os
-cutoffs candidatos são `0,400/0,401` e `0,500/0,501`; não existe salto em
-`0,300` nessa grade.
-
-O RDD ainda não tem amostra estimável aprovada: primeiro é necessário reproduzir
-a faixa da bolsa com o escore administrativo exato. O teste adicional mostrou
-que usar o IVS público como instrumento fuzzy também não funciona: em `0,500`,
-a bolsa é R$ 20 mil dos dois lados nas janelas principais; em `0,400`, o salto
-muda de sinal conforme a janela. Se o portão passar, a atribuição e a inferência
-serão municipais, com outcomes de atração agregados sem criar taxa por vaga.
-CNES, SIH e SIA são extensões condicionais, não a primeira estimação.
+A RDD da bolsa foi avaliada e arquivada: o IVS público não reproduz a faixa
+administrativa nem gera primeiro estágio estável em `0,400` ou `0,500`. O
+arquivo público não será usado como running variable por conveniência, e o
+trabalho atual não depende de obter outro escore.
 
 O diagnóstico histórico imediata versus reserva usa `município–curso–mês` no ciclo 1 e o CNES mensal de
 junho de 2024 a julho de 2026:
@@ -106,11 +97,11 @@ produção, redução de espera ou melhora de saúde.
   limpa 202506 e follow-up 202603. O estudo dinâmico encontra +0,50 profissional
   cadastrado em março de 2026 (EP 0,23), em linguagem estritamente associativa;
   a mediana é 1 e o máximo 211 no grupo com atração.
-- A7 identifica 423 pares adjacentes de seleção em quatro publicações, dos quais
-  193 têm outcomes de 2025 e 81 empatam no escore publicado. As diferenças em
-  homologação e presença ativa são grandes nas duas chamadas, mas ficam
-  classificadas como descontinuidades preliminares até que os campos de
-  desempate e as chaves pseudonimizadas sejam obtidos.
+- A7 identifica 423 pares adjacentes de seleção em quatro publicações. O A8
+  restringe o núcleo a 36 pares de 2025 em ampla concorrência, primeira opção,
+  sem empate e com gap exato de um ponto. O efeito local condicional é +63,9
+  p.p. em homologação e +33,3 p.p. em presença ativa no mesmo curso–CNES; o
+  placebo abaixo é nulo e a replicação de 2026 tem direção consistente.
 - No grão e na amostra da DDD, imediata versus reserva não prediz alocação:
   +2,79 p.p., erro-padrão 6,89 p.p., `p=0,6871`. O portão causal não foi
   aprovado.
@@ -118,9 +109,9 @@ produção, redução de espera ou melhora de saúde.
   apenas como diagnóstico histórico de outro estimando, não como resultado
   principal do artigo.
 
-O portão A06 continua válido para o desenho individual anterior, bloqueado por
-dados administrativos. O plano agregado atual não exige vincular nominalmente
-participantes do PMM-E ao CNES.
+O antigo portão A06 permanece apenas como registro do desenho individual
+anterior. O A8 não depende de entrega administrativa e não persiste
+identificadores pessoais nos artefatos analíticos.
 
 ## Avaliação prospectiva do ciclo 3
 
@@ -162,18 +153,16 @@ madura e seguirá a especificação congelada, sem redesenho pelo resultado.
 
 ## Escopo e bloqueios
 
-O portão A1 foi concluído como `APROVADO_CELULA`; A2–A7 foram executados e
-auditados. R1 não reproduziu a regra da bolsa, portanto o RDD está encerrado
-até que surja documentação administrativa nova. A DDD imediata versus reserva
-permanece como diagnóstico histórico, separado da A4 e da A5 revisada.
+O portão A1 foi concluído como `APROVADO_CELULA`; A2–A8 foram executados e
+auditados. O A8 é o resultado causal principal. R1 não reproduziu a regra da
+bolsa, portanto a RDD-IVS está arquivada. A DDD imediata versus reserva
+permanece como diagnóstico histórico, separado da A4, da A5 e do A8.
 
-Permanecem congelados: estimação do ciclo 3 antes da maturidade; efeito da dose
-recebida sem pagamentos; SIA/SUS, SIH/SUS, fila, saúde e custos antes dos
-portões do RDD; retenção contínua sem log de eventos; e envio dos pedidos A07.
-O corte candidato só avança com os desempates por UF/idade e chaves estáveis; a
-retomada do RDD territorial começa em R1 e R2 continua condicionado à sua aprovação.
-Métodos sintéticos não serão usados para reparar
-retrospectivamente a DDD anterior.
+Permanecem fora do núcleo: estimação do ciclo 3 antes da maturidade; efeito da
+dose recebida sem pagamentos; SIA/SUS, SIH/SUS, fila, saúde e custos; retenção
+contínua sem log de eventos; empates dependentes de UF/idade; e qualquer RDD do
+IVS público sem primeiro estágio. Métodos sintéticos não serão usados para
+reparar retrospectivamente a DDD anterior.
 
 ## Executar o estado validado
 
@@ -181,9 +170,9 @@ retrospectivamente a DDD anterior.
 ```bash
 python run_all.py
 ```
-O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A7, incluindo tabelas, figuras, red team, corte de seleção e manifestos.
+O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A8, incluindo tabelas, figuras, red team, cutoff estrito e manifestos.
 
-### Suíte de testes automatizados (112 testes)
+### Suíte de testes automatizados (131 testes)
 ```bash
 python run_tests.py
 ```
@@ -202,4 +191,4 @@ Cada diretório principal possui documentação autônoma orientando seu conteú
 | [`output/`](output/README.md) | [Guia de Artefatos](output/README.md) | Painéis analíticos, estimativas, tabelas, figuras e manifestos reproduzíveis |
 | [`prompts/`](prompts/README.md) | [Fila e Histórico](prompts/README.md) | Sessões executadas, cadernos de prompts e especificações de pesquisa |
 | [`scripts/`](scripts/README.md) | [Guia de Scripts](scripts/README.md) | Rotinas modulares de aquisição, estimação, avaliação de impacto e utilitários |
-| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 112 testes automatizados garantindo integridade econométrica e invariantes |
+| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 131 testes automatizados garantindo integridade econométrica e invariantes |
