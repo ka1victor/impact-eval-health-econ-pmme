@@ -166,6 +166,19 @@ reparar retrospectivamente a DDD anterior.
 
 ## Executar o estado validado
 
+### Ambiente
+
+O `requirements.txt` fixa `numpy==2.5.2` e `pandas==3.0.5`, que exigem **Python
+3.12 ou superior**. Em versões anteriores a instalação falha e a suíte coleta
+apenas parte dos módulos, com erro de importação em vez de falha explícita.
+
+```bash
+python3.13 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+```
+
+Use o interpretador do ambiente virtual nos comandos abaixo.
+
 ### Pipeline completo de replicação
 ```bash
 python run_all.py

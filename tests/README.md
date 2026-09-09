@@ -6,6 +6,11 @@ Este diretório reúne a suíte de testes automatizados do projeto, composta por
 
 ## 1. Como Executar os Testes
 
+A suíte exige **Python 3.12 ou superior** com as dependências de
+`requirements.txt` instaladas. Em versões anteriores o `unittest` não consegue
+importar os módulos que dependem de `pandas` e reporta erro de importação, não
+falha substantiva.
+
 O repositório disponibiliza um executor direto na raiz:
 
 ```bash
