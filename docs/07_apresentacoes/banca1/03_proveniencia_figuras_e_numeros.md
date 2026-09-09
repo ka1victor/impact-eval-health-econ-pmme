@@ -74,36 +74,41 @@ seção 7.
 | Prêmio compensatório da ordem de 35% a 65% da renda | síntese de Scott et al. (2013), Miranda et al. (2012) e Costa et al. (2024) | é síntese do projeto, não número de um paper. Deve ser apresentada como tal |
 | 30,3% das 1.295 células com confirmação; 31,6% / 37,4% / 23,6% por faixa | quadro de vagas do ciclo 1, chamada 1 | `output/tema_trabalho/A4_relatorio_diagnostico.md`, linha 12; n = 291 / 465 / 539 |
 
-### Slide 11 — viabilidade
+### Slide 11 — viabilidade empírica
 
 | Número | Fonte |
 |---|---|
-| 1.295 células estabelecimento–curso, 368 municípios | quadro de vagas do ciclo 1, chamada 1 |
+| 1.295 vagas estabelecimento–curso, 368 municípios | quadro de vagas do ciclo 1, chamada 1 |
+| 177 dos 368 municípios com faixa publicada diferente da recalculada | portão R1 |
 | CNES mensal, jun/2024 a jul/2026 | `output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet` |
 
 ---
 
 ## 3. Pendências e ressalvas
 
-### `P1` — Reinhardt: a equação é de 1972, não de 1975
+### Reinhardt: retirado do slide
 
-O projeto cita Reinhardt (1975), *Physician Productivity and the Demand for
-Health Manpower*, caps. 3 e 4, e o livro não tem sua especificação transcrita no
-repositório. A equação exibida no slide 7,
-$Q = f(H, X_1, X_2, \ldots, X_n)$, é a forma geral do artigo
-**Reinhardt (1972), *Review of Economics and Statistics* 54(1), 55–66**, onde
-$Q$ é a taxa de produto do consultório, $H$ o insumo de tempo do médico e o
-vetor $X$ os demais insumos, entre eles pessoal auxiliar e capital. A citação do
-slide deve dizer 1972. Se a banca pedir a especificação estimada, é preciso
-recuperá-la do artigo ou do livro.
+O projeto citava Reinhardt (1975), *Physician Productivity and the Demand for
+Health Manpower*, e o livro não tem sua especificação transcrita no
+repositório; a única forma verificável é a geral do artigo de **1972**,
+$Q = f(H, X_1, \ldots, X_n)$, no *Review of Economics and Statistics* 54(1).
 
-### `P2` — a régua de 35% a 65% é síntese, não citação
+Avaliado o que a citação acrescenta: Choné e Ma (2011) já escrevem o custo de
+atender como $C(q; L, K)$, de modo que equipe e capital já estão no modelo por
+essa via. O que Reinhardt acrescentaria é que esses insumos também **elevam o
+benefício produzido** — mas escrever $B(q; L, K)$ em vez de $B(q)$ é extensão
+deste projeto, não dele. A citação foi retirada do slide 7 e a extensão passou a
+ser creditada ao projeto no slide 9. Reinhardt permanece como referência
+secundária em [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md),
+seção 2.3, agora com o artigo de 1972 no lugar da equação.
+
+### `P1` — a régua de 35% a 65% é síntese, não citação
 
 Nenhum artigo publica esse intervalo. Ele resume Scott et al. (2013), que
 estima 37% a 130% na Austrália, e Miranda et al. (2012), que simula +50% e +75%
 no Peru. Apresentar como síntese do projeto.
 
-### `P3` — comparabilidade do prêmio com a bolsa
+### `P2` — comparabilidade do prêmio com a bolsa
 
 Os prêmios compensatórios da literatura são sobre a **renda total** do médico. A
 bolsa do PMM-E remunera **20 horas semanais**. Traduzir R$ 5 mil em "+50%" e
@@ -111,7 +116,7 @@ comparar com a régua australiana pressupõe que a bolsa seja a fração dominan
 do rendimento — hipótese sobre composição de vínculos, não dado. O slide 5
 declara essa ressalva.
 
-### `P4` — `populacao_2010` não é população residente
+### `P3` — `populacao_2010` não é população residente
 
 A coluna do arquivo do IVS soma 41.852.890 contra 190.755.799 do Censo 2010, com
 razão variando de 0,10 a 0,42 entre municípios. Não é usada como denominador

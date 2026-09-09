@@ -34,14 +34,14 @@ sustenta**. A posição na apresentação fica em um elemento separado — no
 markdown, a linha em `código` logo abaixo do título; no slide, uma faixa fina
 fora do título.
 
-Títulos dos slides 3 a 11, curtos e declarativos:
+Títulos dos slides 3 a 11 — curtos, declarativos e sem palavra difícil:
 
 3. Faltam especialistas justamente onde trabalhar é mais difícil
 4. O PMM-E paga mais onde a vulnerabilidade é maior
 5. Pagar mais funciona?
 6. Pergunta
-7. Três primitivas teóricas
-8. A decisão locacional do médico
+7. De onde vem o modelo
+8. Como o médico escolhe onde trabalhar
 9. O custo de estar ali
 10. Duas hipóteses
 11. Viabilidade empírica
@@ -58,7 +58,25 @@ Todo número exibido traz a fonte no próprio slide. Não há notas de apresenta
 nem justificativas no documento de conteúdo: o que precisa ser dito está no
 slide ou não está.
 
-### 2.4 Vocabulário
+### 2.4 A banca 1 é teórica
+
+Fora da motivação, **nada de econometria**. Não entram estimador,
+especificação, regressão, coeficiente, elasticidade, colinearidade, desenho de
+identificação nem o vocabulário de descontinuidade. Literatura empírica também
+não: o slide 7 traz apenas trabalhos teóricos.
+
+A motivação é a exceção declarada. Ali, antes da pergunta, entra evidência sobre
+o que se pode esperar da política — inclusive de trabalhos empíricos de outros
+países — porque é o que justifica perguntar. Mesmo ali, o desenho de cada estudo
+é descrito em palavras comuns: "sorteou o salário anunciado", e não "RCT com
+randomização em dois estágios".
+
+A viabilidade empírica descreve **o que se consegue medir**, não como se
+estimaria. A dificuldade de separar bolsa de vulnerabilidade é apresentada como
+fato sobre os dados — não existe município com bolsa alta e vulnerabilidade
+baixa — sem nomear estimadores.
+
+### 2.5 Vocabulário
 
 | Não dizer | Dizer |
 |---|---|
@@ -109,6 +127,17 @@ Duas rodadas de revisão do autor sobre a versão em markdown.
 | 10 | a tabela de como cada objeto aparece nos dados sai daqui |
 | 11 | e entra aqui, condensada e ligada a H1 e H2, junto com o desafio de identificação |
 | 12 | slide de perguntas eliminado: a apresentação termina na viabilidade empírica |
+
+### Terceira rodada
+
+| Alvo | Ajuste |
+|---|---|
+| títulos | simplificados: "Três primitivas teóricas" virou "De onde vem o modelo"; "A decisão locacional do médico" virou "Como o médico escolhe onde trabalhar" |
+| escopo | a banca 1 é teórica. Literatura empírica sai do slide 7; qualquer referência a econometria ou estimação sai de todos os slides, exceto na motivação |
+| slide 5 | reescrito como narrativa em três movimentos — funciona, é caro, não segura — no lugar da tabela de estudos. Desenhos descritos em palavras comuns |
+| slide 7 | **Reinhardt removido**. Choné & Ma já colocam equipe e capital no custo de atender; o que Reinhardt acrescentaria é que esses insumos também elevam o benefício produzido, mas essa extensão é do projeto, não dele. Some-se a isso que a equação verificável é do artigo de 1972, não do livro de 1975 que o projeto cita. Mantido como referência secundária em `modelo_micro.md` |
+| slide 9 | a extensão $B(q; L, K)$ passa a ser creditada ao projeto, não a Reinhardt |
+| slide 11 | reescrito sem vocabulário econométrico: passa a perguntar se há como medir cada peça do modelo, e declara as duas que ficam de fora |
 
 ## 5. Defeitos do material anterior
 

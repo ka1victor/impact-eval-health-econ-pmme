@@ -106,7 +106,7 @@ Essa convexidade garante uma curva de custo não pecuniário em **formato de U**
 
 ### 2.3. Infraestrutura, insumos e pessoal de saúde ($L$ e $K$)
 
-Pela função de produção médica (Reinhardt, 1975), a infraestrutura hospitalar instalada ($K$) e a equipe de apoio/enfermagem ($L$) exercem um **efeito duplo**:
+A infraestrutura hospitalar instalada ($K$) e a equipe de apoio/enfermagem ($L$) exercem um **efeito duplo**. O primeiro canal está em Choné e Ma (2011), que já escrevem o custo de atender como $C(q; L, K)$. O segundo é **extensão deste projeto**, motivada pela função de produção médica de Reinhardt (1972, 1975), na qual o produto do consultório depende de insumos não médicos: escrevemos o benefício como $B(q; L, K)$, e não $B(q)$.
 1. **Reduzem o cansaço:** $\frac{\partial C}{\partial K} < 0$ e $\frac{\partial C}{\partial L} < 0$ (apoio técnico e retaguarda para segunda opinião diminuem a penosidade do trabalho).
 2. **Multiplicam o benefício de saúde:** $\frac{\partial B}{\partial K} > 0$ e $\frac{\partial B}{\partial L} > 0$. A falta de medicamentos essenciais, insumos cirúrgicos ou maquinário quebrado esvaziam a resolutividade curativa do atendimento.
 
@@ -282,4 +282,5 @@ A transposição dessas hipóteses para especificações, variáveis e bases est
 - Choné, P.; Ma, C.-T. A. (2011). [*Optimal Health Care Contract under Physician Agency*](https://people.bu.edu/ma/CHONE-MA_Annals2011.pdf). **Annals of Economics and Statistics**, 101/102, 229--256. [p. 232, eq. 1].
 - Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14, 181--225. [p. 184, eq. 1].
 - Redding, S. J.; Rossi-Hansberg, E. (2017). [*Quantitative Spatial Economics*](https://doi.org/10.1146/annurev-economics-063016-103713). **Annual Review of Economics**, 9, 21--58. [p. 28, eq. 24].
-- Reinhardt, U. E. (1975). *Physician Productivity and the Demand for Health Manpower: An Economic Analysis*. Ballinger Publishing Company. [caps. 3 e 4].
+- Reinhardt, U. E. (1972). [*A Production Function for Physician Services*](https://doi.org/10.2307/1927495). **The Review of Economics and Statistics**, 54(1), 55--66. [forma geral $Q = f(H, X_1, \ldots, X_n)$].
+- Reinhardt, U. E. (1975). *Physician Productivity and the Demand for Health Manpower: An Economic Analysis*. Ballinger Publishing Company. [caps. 3 e 4]. Referência secundária: a especificação estimada não está transcrita neste repositório.

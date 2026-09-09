@@ -40,10 +40,11 @@ dados e o que falta. Nenhum resultado de estimação entra nessa apresentação.
 | Item | Estado |
 |---|---|
 | Conteúdo completo, 11 slides em três partes, margem de preenchimento | ✅ [`02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md) |
-| Feedback dos professores e duas rodadas de revisão do autor rastreados | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seções 3 e 4 |
+| Feedback dos professores e três rodadas de revisão do autor rastreados | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seções 3 e 4 |
 | Todas as figuras do deck geradas por script ou conceituais | ✅ `scripts/apresentacao/gerar_figuras_banca1.py` |
 | Evidência internacional sobre incentivos catalogada e conferida na fonte | ✅ [`19_...md`](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md), seção 7 |
-| Referência de Reinhardt, régua de 35–65%, comparabilidade do prêmio | ⚠️ ressalvas registradas, não bloqueantes |
+| Escopo teórico fixado: econometria só na motivação | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seção 2.4 |
+| Régua de 35–65%, comparabilidade do prêmio, denominador populacional | ⚠️ ressalvas registradas, não bloqueantes |
 
 Regra: o conteúdo vive em markdown, com as figuras versionadas junto. Qualquer
 deck montado a partir dele é artefato derivado, e divergência é erro do deck.
