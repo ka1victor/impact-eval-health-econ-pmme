@@ -196,6 +196,54 @@ aplicar a taxonomia externa ao IVS 2010 local. Os outros **177 municípios
 | Faixa 2 | 0 | 13 | 94 |
 | Faixa 3 | 0 | 0 | 159 |
 
+### 3.5.1 Diagnóstico corrigido em 09/09/2026 — a regra existe; o escore é que falta
+
+A reauditoria independente (`docs/auditorias/13_reauditoria_independente_A1_A8.md`)
+mostrou que a leitura acima está formulada de modo enganoso. Não é verdade que "a
+regra não é reproduzível". Três fatos, todos verificáveis nos dados observados:
+
+1. **A regra é determinística.** Na janela estável de fev a ago/2026, o rótulo
+   administrativo de IVS determina a faixa de bolsa em **527 de 527 municípios**,
+   sem uma única ambiguidade. Determinismo global do mapa rótulo → faixa: 100%.
+2. **A regra aplicada não é a publicada.** O FAQ SGTES 03/2025 diz "Faixa 1
+   (muito alta): R$ 20.000; Faixa 2 (alta): R$ 15.000; Faixa 3 (média, baixa ou
+   muito baixa): R$ 10.000". A regra de facto, em oito das nove competências, é
+   um degrau mais generosa: **muito alta e alta → Faixa 1; média → Faixa 2;
+   baixa e muito baixa → Faixa 3**. Só a competência jan/2026 segue o texto.
+3. **Nenhuma regra de corte sobre o IVS 2010 público pode recuperar a
+   atribuição.** Não se trata de tentativas malsucedidas, e sim de um teto:
+
+   | Regra testada sobre o IVS 2010 | Acerto |
+   |---|---:|
+   | Cortes fixos do IPEA (0,2 / 0,3 / 0,4 / 0,5) | 57,1% |
+   | Quintis nacionais | 56,0% |
+   | Quintis dos municípios do programa | 49,9% |
+   | **Teto de qualquer regra monótona de corte** | **65,1%** |
+   | **Teto de qualquer regra de dois cortes, para a faixa** | **78,0%** |
+
+   A melhor regra de dois cortes concebível erra no mínimo **119 de 540
+   municípios**, apesar de a correlação de Spearman entre IVS 2010 e faixa ser
+   `ρ = 0,812`. A associação é monótona e forte; a função de corte não existe.
+
+Consequência para o desenho: o salto é nítido no escore administrativo
+verdadeiro e aparece **liso** no IVS 2010, porque este é outra safra. É a
+assinatura clássica de erro de medida na *running variable*, que destrói a
+identificação por descontinuidade sem que a regra deixe de ser determinística.
+
+Consequência para o pedido: o que se precisa obter é **um único campo** — o
+escore administrativo de IVS por município, com safra, precisão e arredondamento.
+Com ele o primeiro estágio é *sharp* por construção, porque a categoria já
+determina a faixa em 527/527. Sem ele, nenhuma engenhosidade sobre o dado público
+resolve.
+
+Registre-se também que **não há variação temporal a explorar**: entre fev/2026 e
+ago/2026 houve zero mudanças de faixa em seis pares de competências consecutivas.
+As mudanças aparentes de dez/2025 e jan/2026 são artefato de safra de rotulagem,
+não reclassificação administrativa. Não existe diferença-em-diferenças de salário
+neste dado.
+
+### 3.5.2 Leitura anterior, preservada
+
 A divergência pode decorrer de vintagem, arquivo, precisão, arredondamento,
 recodificação, exceções ou erro. Enquanto sua origem não for documentada, ela
 não constitui variação exógena e o IVS público não é a running variable

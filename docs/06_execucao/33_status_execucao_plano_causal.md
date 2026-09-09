@@ -6,9 +6,12 @@
 
 ## Decisão vigente
 
-O pedido administrativo foi cancelado e não foi enviado. A RDD da bolsa pelo
-IVS público permanece reprovada por ausência de regra reproduzível e de
-primeiro estágio estável, mas não bloqueia mais o trabalho curto.
+O pedido administrativo não foi enviado. A RDD da bolsa pelo IVS público
+permanece bloqueada, mas o diagnóstico foi corrigido em 09/09/2026: a regra
+administrativa **é** determinística — o rótulo de IVS determina a faixa em 527 de
+527 municípios — e o que falta é o **escore contínuo** que gera essa categoria.
+Nenhuma regra de corte sobre o IVS 2010 do IPEA pode recuperá-lo; o teto
+demonstrado é 78,0%. Isso não bloqueia o trabalho curto.
 **Nenhum pedido foi enviado e nenhum efeito RDD da bolsa foi estimado.**
 
 O núcleo causal agora é o cutoff de seleção por escore. A amostra principal
@@ -27,7 +30,7 @@ ponto.
 | A8-P4 | `APROVADO_DIAGNOSTICOS` | placebo abaixo nulo; gaps alternativos e leave-one-out sem inversão de sinal |
 | A8-P5 | `REPLICACAO_DIRECIONAL` | 11 pares em 2026; +36,4 p.p. em presença ativa, teste exato `p=0,125` |
 | A8-P6 | `AUDITADO` | outputs agregados sem PII, hashes de entrada e testes automatizados |
-| RDD-IVS | `ARQUIVADO_SEM_PRIMEIRO_ESTAGIO` | IVS público não reproduz 177/368 faixas e não gera salto estável na bolsa |
+| RDD-IVS | `ARQUIVADO_ESCORE_NAO_OBSERVADO` | a regra é determinística (527/527), mas nenhuma regra de corte sobre o IVS 2010 público a recupera: teto de 78,0% para qualquer regra de dois cortes |
 | Pedido administrativo | `CANCELADO_NAO_ENVIADO` | nenhum recebimento ou espera integra o plano atual |
 
 ## Resultado e alcance

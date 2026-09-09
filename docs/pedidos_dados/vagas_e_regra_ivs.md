@@ -8,6 +8,35 @@
 
 **Período exato:** de **24/07/2025 a 29/08/2026**, incluindo todas as versões vigentes e substituídas das vagas dos ciclos 1, 2 e 3 publicadas ou mantidas administrativamente até a data final. Incluir registros criados antes de 24/07/2025 apenas quando forem origem administrativa de vaga publicada no período.
 
+## Justificativa técnica revista em 09/09/2026
+
+Este pedido foi originalmente arquivado sob a justificativa de que "a regra
+administrativa não é reproduzível". **Essa justificativa estava errada e foi
+substituída.** A reauditoria independente estabeleceu o seguinte, tudo
+verificável nos dados já públicos:
+
+- A regra **é** determinística: na janela estável de fev a ago/2026, o rótulo
+  administrativo de IVS determina a faixa de bolsa em **527 de 527 municípios**,
+  sem uma única ambiguidade.
+- A regra aplicada **não é** a publicada no FAQ SGTES 03/2025. De facto, muito
+  alta e alta vulnerabilidade → Faixa 1 (R$ 20.000); média → Faixa 2
+  (R$ 15.000); baixa e muito baixa → Faixa 3 (R$ 10.000).
+- **Nenhuma regra de corte sobre o IVS 2010 do IPEA reproduz a atribuição.** O
+  teto de qualquer regra monótona é 65,1%; o de qualquer regra de dois cortes
+  para a faixa é 78,0%, errando no mínimo 119 de 540 municípios, apesar de
+  `ρ = 0,812` de Spearman.
+
+Portanto o que falta **não é a regra, e sim o escore**. O item de maior valor
+deste pedido, e o único estritamente indispensável para destravar o desenho, é o
+**escore administrativo de IVS por município, com safra, precisão e regra de
+arredondamento**. Com esse campo o primeiro estágio da descontinuidade é *sharp*
+por construção, porque a categoria administrativa já determina a faixa em
+527/527. Sem ele, nenhuma manipulação do dado público resolve — é uma
+impossibilidade demonstrada, não uma tentativa malsucedida.
+
+Registre-se ainda que não há variação temporal a explorar: zero mudanças de faixa
+em seis pares de competências consecutivas entre fev e ago/2026.
+
 **Finalidade pública e de pesquisa:** documentar a implementação, a transparência do denominador de vagas e a regra administrativa do incentivo, permitindo distinguir criação, retificação, reapresentação e retirada. A finalidade é avaliação independente de política pública; não se solicita resultado causal nem decisão sobre elegibilidade individual.
 
 ## Tabelas e grãos
