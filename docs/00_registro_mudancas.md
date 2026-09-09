@@ -85,6 +85,55 @@ canônica do projeto.
 
 ---
 
+## 09/09/2026 — Terceira revisão da banca 1: escopo teórico e saída de Reinhardt
+
+Motivo: terceira rodada de revisão do autor, fixando o escopo da banca.
+
+### Regra de escopo
+
+**A banca 1 é teórica.** Fora da motivação, nenhum slide traz literatura
+empírica, econometria ou estimação. A motivação é a exceção declarada: ali,
+antes da pergunta, entra evidência sobre o que se pode esperar da política,
+inclusive de trabalhos empíricos, porque é o que justifica perguntar. A regra
+está em
+[`07_apresentacoes/banca1/01_roteiro_narrativo.md`](07_apresentacoes/banca1/01_roteiro_narrativo.md),
+seção 2.4.
+
+Consequências: o slide 11 foi reescrito sem vocabulário econométrico — passa a
+perguntar se há como medir cada peça do modelo e declara as duas que ficam de
+fora, a renda no mercado privado local e a distância até a família. O slide 5
+descreve o desenho de cada estudo em palavras comuns.
+
+### Reinhardt retirado do slide 7
+
+Choné e Ma (2011) já escrevem o custo de atender como $C(q; L, K)$: equipe e
+capital instalado já entram no modelo por essa via. O que Reinhardt
+acrescentaria é que esses insumos também elevam o benefício produzido — mas
+escrever $B(q; L, K)$ em vez de $B(q)$ é **extensão deste projeto**, não dele. A
+citação saiu do slide e a extensão passou a ser creditada ao projeto.
+
+Reinhardt permanece como referência secundária em
+[`02_teoria/modelo_micro.md`](02_teoria/modelo_micro.md), seção 2.3, agora com a
+distinção correta entre os dois canais e com a referência de **1972**, cuja
+forma geral $Q = f(H, X_1, \ldots, X_n)$ é verificável, ao lado do livro de 1975
+que o projeto citava sem transcrever.
+
+### Slide 5 reescrito como narrativa
+
+No lugar da tabela de quatro estudos, três movimentos: **funciona** — o
+experimento mexicano que sorteou o salário anunciado; **é caro** — a régua
+australiana e o custo-efetividade brasileiro; **não segura** — a retenção
+americana após o fim da obrigação. Fecha com o degrau do PMM-E dentro da faixa
+que a literatura estima ser necessária, e com o fato de que no primeiro ciclo a
+bolsa maior não trouxe mais gente.
+
+### Títulos simplificados
+
+"Três primitivas teóricas" virou **"De onde vem o modelo"**; "A decisão
+locacional do médico" virou **"Como o médico escolhe onde trabalhar"**.
+
+---
+
 ## 09/09/2026 — Segunda revisão da banca 1: evidência internacional, retaguarda profissional e estrutura em três partes
 
 Motivo: segunda rodada de revisão do autor, ponto a ponto, sobre a versão em

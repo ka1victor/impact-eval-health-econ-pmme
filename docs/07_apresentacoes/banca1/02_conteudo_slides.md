@@ -67,8 +67,9 @@ complementação de renda que o médico teria na capital.
 
 **Fontes:** CNES, competência 06/2025, CBOs dos 10 cursos do programa com
 correspondência unívoca curso–CBO, 295 municípios com vaga no ciclo 1;
-população residente do Censo 2022 (IBGE). Faixa 1 tem 19 pares
-município–especialidade: a mediana é robusta, a proporção é frágil.
+população residente do Censo 2022 (IBGE). A Faixa 1 tem só 19 pares
+município–especialidade, então a porcentagem oscila com poucos casos; a mediana
+não.
 
 ---
 
@@ -115,30 +116,57 @@ Municípios Brasileiros* (2015).
 
 ## 5 — Pagar mais funciona?
 
-`Parte I · Motivação · 3 de 3`
+O programa aposta que dinheiro compensa lugar ruim. Essa aposta já foi feita em
+outros países, e sabemos três coisas sobre ela.
 
-| Estudo | País e desenho | Achado |
-|---|---|---|
-| Dal Bó, Finan & Rossi (2013), *QJE* | México — salário anunciado **sorteado** entre 106 postos de um concurso público real | Salário 33% maior eleva a aceitação da vaga em **15 p.p.** Em postos a mais de 200 km, a aceitação sobe de **25% para cerca de 80%** — e o aumento **anula** a rejeição a municípios de IDH baixo |
-| Scott et al. (2013), *Soc Sci Med* | Austrália — experimento de escolha discreta, 3.727 clínicos gerais | **65% não mudariam de lugar por nenhum pacote oferecido.** Quem mudaria exige de **37%** (cidade de 5 a 20 mil hab.) a **130%** da renda anual (pior posto) |
-| Costa, Nunes & Sanches (2024), *REStat* | Brasil — modelo estrutural de escolha discreta, generalistas formados entre 2001 e 2013 | Oferta **inelástica**: elasticidade-salário em torno de **0,4** nas metrópoles e **0,7** no interior. Elevar em **50%** o salário público no interior do N/NE corrige apenas **12,4%** do desequilíbrio, a **US$ 15,7 mi por ponto percentual** — contra **US$ 2,2 a 5,1 mi** das cotas por local de nascimento, que corrigem **63,8%** |
-| Pathman, Konrad & Ricketts (1992), *JAMA* | EUA — coorte de 9 anos, 412 médicos em clínicas rurais | Oito anos depois, **12%** dos médicos com bolsa e obrigação de serviço seguiam na clínica original, contra **39%** dos que foram sem obrigação |
+### Funciona — e funciona mais justamente onde o lugar é pior
 
-**O dinheiro move a chegada, e move mais justamente onde o posto é pior.** É a
-aposta do PMM-E, e ela tem respaldo experimental.
+No México, um concurso público de verdade **sorteou o salário anunciado** entre
+106 postos. Onde o salário era 33% maior, a aceitação da vaga subiu **15 pontos
+percentuais**. E nos postos a mais de 200 km da cidade natal do candidato, a
+aceitação foi de **25% para cerca de 80%** — o aumento salarial **anulou** a
+rejeição a municípios mais pobres.
 
-**Mas o preço é alto.** A literatura estima um prêmio de 35% a 65% da renda para
-deslocar um médico para área remota. O degrau do PMM-E — R$ 5 mil sobre
-R$ 10 mil, ou **+50%** — cai dentro dessa faixa, o que torna a pergunta empírica
-e não retórica. Ressalva: os prêmios da literatura são sobre a **renda total**,
-e a bolsa cobre 20 horas semanais.
+> Dal Bó, Finan & Rossi (2013), *Quarterly Journal of Economics*
 
-**E no PMM-E a bolsa maior não ordenou o preenchimento.** Das 1.295 vagas
-estabelecimento–curso da primeira chamada, 30,3% tiveram alguma confirmação ou
-homologação: **31,6% na Faixa 1, 37,4% na Faixa 2 e 23,6% na Faixa 3.**
+### Mas é caro, e no Brasil pode ser caro demais
 
-**Fontes:** referências citadas na tabela; quadro de vagas e resultados do ciclo
-1, chamada 1 (Ministério da Saúde, 2025).
+Na Austrália, perguntou-se a 3.727 clínicos o que os faria mudar de cidade.
+**65% responderam que não mudariam por nada.** Quem mudaria pedia de **37%**
+(cidade de 5 a 20 mil habitantes) a **130%** da renda anual (o pior posto).
+
+No Brasil, um modelo calibrado com todos os generalistas formados entre 2001 e
+2013 estima que aumentar em **50%** o salário público no interior do Norte e do
+Nordeste corrigiria apenas **12,4%** do desequilíbrio na distribuição de
+médicos — ao custo de **US$ 15,7 milhões por ponto percentual**. Reservar vagas
+nas faculdades de medicina para quem nasceu nessas regiões corrigiria **63,8%**,
+por **US$ 2,2 a 5,1 milhões**.
+
+> Scott et al. (2013), *Social Science & Medicine*; Costa, Nunes & Sanches (2024), *Review of Economics and Statistics*
+
+### E o médico vai embora quando a obrigação acaba
+
+Nos Estados Unidos, oito anos depois, **12%** dos médicos que foram para
+clínicas rurais com bolsa e obrigação de permanência ainda estavam lá — contra
+**39%** dos que foram sem obrigação nenhuma.
+
+> Pathman, Konrad & Ricketts (1992), *JAMA*
+
+### Onde o PMM-E entra
+
+O degrau do programa — R$ 5 mil sobre R$ 10 mil, ou **+50%** — cai dentro da
+faixa que essa literatura estima ser necessária para deslocar um médico. Está
+no tamanho certo, em tese.
+
+Só que no primeiro ciclo **a bolsa maior não trouxe mais gente**: das 1.295
+vagas da primeira chamada, 30,3% tiveram alguém confirmado — **31,6% na Faixa 1,
+37,4% na Faixa 2 e 23,6% na Faixa 3**.
+
+**Ressalva:** os percentuais da literatura são sobre a renda total do médico, e
+a bolsa do PMM-E remunera 20 horas semanais.
+
+**Fontes:** referências citadas acima; quadro de vagas e resultados do ciclo 1,
+chamada 1 (Ministério da Saúde, 2025).
 
 ---
 
@@ -153,20 +181,17 @@ homologação: **31,6% na Faixa 1, 37,4% na Faixa 2 e 23,6% na Faixa 3.**
 
 # Parte II — Teoria
 
-## 7 — Três primitivas teóricas
-
-`Parte II · Literatura teórica`
+## 7 — De onde vem o modelo
 
 | Referência | Ideia central | Equação original |
 |---|---|---|
 | **Moehling, Niemesh, Thomasson & Treber (2020)**, eq. 1, p. 184 | O médico escolhe a localidade que maximiza o valor presente do rendimento real, líquido do custo não pecuniário de viver ali | $\arg\max_{i \in I} \sum_t \delta^t \left[ \dfrac{\mathbb{E}(w_{it}^{(s)})}{p_{it}} - c_{it}^{(s)} \right]$ |
-| **Choné & Ma (2011)**, eq. 1, p. 232 | A utilidade do médico soma a renda, subtrai o custo de atender e soma o benefício ao paciente, ponderado pelo altruísmo | $U = R - C(q; L, K) + \alpha B(q)$ |
-| **Reinhardt (1972)**, *REStat* 54(1) | O produto do consultório depende das horas do médico e de um vetor de outros insumos — pessoal auxiliar e capital instalado | $Q = f(H, X_1, X_2, \ldots, X_n)$ |
+| **Choné & Ma (2011)**, eq. 1, p. 232 | A utilidade do médico soma a renda, subtrai o custo de atender e soma o benefício ao paciente, ponderado pelo altruísmo. Equipe e capital instalado entram no custo de atender | $U = R - C(q; L, K) + \alpha B(q)$ |
 | **Redding & Rossi-Hansberg (2017)**, eq. 24, p. 28 | A utilidade de trabalhar em um lugar depende do salário, das amenidades e do custo de moradia locais | $u_{nio} = \dfrac{z_{nio} B_n w_i}{\kappa_{ni} Q_n^{1-\beta}}$ |
 
 ---
 
-## 8 — A decisão locacional do médico
+## 8 — Como o médico escolhe onde trabalhar
 
 `Parte II · Modelo microeconômico · 1 de 2`
 
@@ -199,11 +224,12 @@ $$c_{im} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rur
 | $C(q)$ | $C' > 0,\ C'' > 0$ | Atender cansa, e cansa de forma crescente |
 | $\alpha_i B(q)$ | $B' > 0,\ B'' < 0$ | Curar dá satisfação, ponderada pelo altruísmo $\alpha_i$ |
 
-Equipe ($L$) e capital instalado ($K$) atuam duas vezes — reduzem o cansaço,
-$\partial C / \partial K < 0$, e ampliam o benefício produzido,
-$\partial B / \partial K > 0$ — de modo que $\partial c / \partial K < 0$ por
-dois caminhos. Como no município vulnerável $L$ e $K$ são baixos, **o mesmo
-lugar que paga mais é o que impõe maior custo laboral**.
+Equipe ($L$) e capital instalado ($K$) atuam duas vezes: reduzem o cansaço,
+$\partial C / \partial K < 0$, e — nossa extensão a Choné & Ma — ampliam o
+benefício que o atendimento produz, $\partial B / \partial K > 0$. Por dois
+caminhos, então, $\partial c / \partial K < 0$. Como no município vulnerável
+$L$ e $K$ são baixos, **o mesmo lugar que paga mais é o que impõe maior custo
+de trabalho**.
 
 ![Custo laboral líquido em função do volume de atendimentos](../../02_teoria/figuras/curva_custo_laboral_burnout.png)
 
@@ -238,23 +264,20 @@ $$\frac{\Delta B_m}{p_m} > \Delta c_0, \qquad \Delta B_m = \text{R\$ } 5.000$$
 
 ## 11 — Viabilidade empírica
 
-`Parte III`
+**Temos como medir cada peça do modelo?**
 
-**Como cada hipótese aparece nos dados que temos**
+| Peça do modelo | O que observamos | Fonte |
+|---|---|---|
+| Preenchimento da vaga | se a vaga teve alguém confirmado ou homologado | quadro de vagas do ciclo 1: 1.295 vagas em 368 municípios |
+| Bolsa $B_m$ | o valor anunciado na vaga: R$ 10, 15 ou 20 mil | edital |
+| Custo $c_m$ | o IVS e suas três dimensões; se o município é capital, metropolitano, polo do interior ou interior remoto; quantos especialistas já havia antes | Ipea; REGIC 2018; CNES mensal, jun/2024 a jul/2026 |
+| Mercado local $w^{\text{priv}}_m$ | — | não observado |
 
-| | Objeto do modelo | Variável observada | Fonte |
-|:---:|---|---|---|
-| **Desfecho** | preenchimento da vaga | alguma confirmação ou homologação na célula estabelecimento–curso | quadro de vagas do ciclo 1 — 1.295 células, 368 municípios |
-| **H1** | remuneração $B_m$ | faixa anunciada na vaga: R$ 10, 15 ou 20 mil | edital |
-| **H2** | custo $c_m$ | IVS 2010 e seus três sub-índices; tipologia territorial; estoque prévio de especialistas no município | Ipea; REGIC 2018; CNES mensal, jun/2024 a jul/2026 |
+Sim, para o essencial. Duas peças ficam de fora: a **renda que o médico obteria
+no mercado privado local** e a **distância até a família**.
 
-**O desafio.** A bolsa é função da categoria de IVS: **não existe município com
-bolsa alta e vulnerabilidade baixa**. Por construção da regra, $B_m$ e
-$c_0(IVS_m)$ são colineares, e uma regressão que inclua os dois separa H1 de H2
-apenas por extrapolação funcional.
-
-A saída é comparar municípios **na fronteira entre faixas**, onde a bolsa salta
-R$ 5 mil e a vulnerabilidade é praticamente a mesma. Isso exige recuperar o
-escore administrativo que o Ministério de fato aplicou — a faixa publicada não
-reproduz os cortes do Ipea em 177 dos 368 municípios. Até lá, o que se estima é
-**gradiente, não efeito da bolsa**.
+**A dificuldade.** A bolsa e a vulnerabilidade andam juntas porque a regra fixa
+uma pela outra: **não existe município com bolsa alta e vulnerabilidade baixa**.
+Separar o que vem do dinheiro do que vem do lugar exige comparar municípios
+parecidos que caíram em faixas diferentes — e a faixa publicada não coincide com
+a que sai dos cortes do Ipea em 177 dos 368 municípios do ciclo 1.
