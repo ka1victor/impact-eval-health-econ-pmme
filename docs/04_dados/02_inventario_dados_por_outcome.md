@@ -31,6 +31,18 @@ Uso: fotografia dos participantes ativos e composição do provimento. Limites: 
 
 Uso: evolução agregada município-curso. Limites: `co_cnes` está vazio em todas as linhas; não há identificador individual; os 40 rótulos precisam ser harmonizados com os 16 cursos do cadastro nominal; meses recentes têm censura para retenção de 6/12 meses.
 
+### `output/aquisicao/populacao_censo2022_municipios.csv` (derivada)
+
+- 5.570 municípios; população residente total de 203.080.756;
+- fonte: IBGE, Censo Demográfico 2022, SIDRA tabela 4709, variável 93;
+- adquirida por `scripts/aquisicao/06_adquirir_populacao_censo2022.py`, com
+  bruto em `data/raw/aquisicao/populacao/` e manifesto com hash em
+  `output/aquisicao/manifesto_populacao_censo2022.json`.
+
+Uso: **único denominador populacional válido do repositório**. Motivo na seção
+4.1. Limite: população de 2022, fixa no tempo; adequada para taxas em 2024–2026,
+não para tendências demográficas.
+
 ## 2. Disponibilidade por outcome
 
 | Outcome | O que temos | O que falta | Prontidão |
@@ -98,6 +110,31 @@ Uso: evolução agregada município-curso. Limites: `co_cnes` está vazio em tod
 - distinguir ausência verdadeira de zero e campo faltante;
 - criar dicionário e hash de cada arquivo de origem;
 - não armazenar no diretório `data/` nenhuma coluna construída por hipótese comportamental.
+
+### 4.0 `populacao_2010` não é população residente
+
+Registro aberto em 09/09/2026. A coluna `populacao_2010` de
+`data/ivs_ipea_2010_municipios.csv` soma **41.852.890** habitantes contra
+**190.755.799** do Censo 2010. A razão para o valor censitário varia de 0,10
+(Curitiba, Porto Alegre) a 0,42 (Salvador) e correlaciona com vulnerabilidade;
+a mediana municipal é 1.895, quando a real em 2010 era cerca de 10.900. É alguma
+subpopulação do Atlas do Ipea, não o total residente.
+
+Consequências:
+
+- qualquer taxa por habitante com esse denominador sai inflada em cerca de 4,5
+  vezes e distorcida de forma não uniforme entre municípios;
+- `estoque_pre_por_10k` em `output/tema_trabalho/matriz_tipologia_territorial.parquet`
+  e `estoque_por_10k` em `A5_painel_T0.parquet` herdam o problema;
+- `log_pop`, usado como covariável nos módulos A4 e A5, é logaritmo de uma
+  variável mal rotulada — o ajuste continua válido como controle de escala,
+  mas não pode ser lido como população;
+- `output/avaliacao_impacto/tabelas/tabela1_estatisticas_descritivas_baseline`
+  rotula a variável como "População municipal 2010". O rótulo está incorreto.
+
+Decisão: o denominador populacional passa a ser o Censo 2022 (seção 1). As
+saídas históricas não são reescritas à mão; a correção do rótulo e de
+`estoque_pre_por_10k` entra na próxima execução dos scripts correspondentes.
 
 ### 4.1 Números publicados que não reproduzem nas bases
 

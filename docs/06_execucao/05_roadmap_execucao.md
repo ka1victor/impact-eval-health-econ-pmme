@@ -39,11 +39,10 @@ dados e o que falta. Nenhum resultado de estimação entra nessa apresentação.
 
 | Item | Estado |
 |---|---|
-| Conteúdo completo, nas três partes da banca | ✅ [`02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md) |
-| Feedback dos professores incorporado e rastreado | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seção 3 |
-| Figuras derivadas do repositório, geradas por script | ✅ `scripts/apresentacao/gerar_figuras_banca1.py` |
-| Figura regional corrigida | ✅ pendência encerrada em 09/09/2026 |
-| Manifesto das figuras de fonte externa | ⚠️ aberta, não bloqueante |
+| Conteúdo completo, 12 slides nas três partes da banca, margem de preenchimento | ✅ [`02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md) |
+| Feedback dos professores e ajustes do autor rastreados | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seções 3 e 4 |
+| Figuras por habitante geradas por script, com denominador do Censo 2022 | ✅ `scripts/apresentacao/gerar_figuras_banca1.py` |
+| Manifesto da figura externa de deslocamento; equação original de Reinhardt | ⚠️ abertas, não bloqueantes |
 
 Regra: o conteúdo vive em markdown, com as figuras versionadas junto. Qualquer
 deck montado a partir dele é artefato derivado, e divergência é erro do deck.

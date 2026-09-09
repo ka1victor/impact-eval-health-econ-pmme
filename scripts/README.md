@@ -44,7 +44,8 @@ scripts/
 ├── 01_adquirir_fontes_pmme.py          # Download idempotente de editais e planilhas públicas
 ├── 02_auditar_fontes_pmme.py           # Auditoria estrutural e hashes de fontes do PMM-E
 ├── 03_planejar_aquisicao_cnes.py       # Planejamento e manifesto de competências CNES
-├── aquisicao/                          # Tratamento de vagas, ponte CBO, malha e painel
+├── apresentacao/                       # Figuras da apresentação da banca 1, geradas de output/
+├── aquisicao/                          # Tratamento de vagas, ponte CBO, malha, painel e população
 ├── avaliacao_ciclo3/                   # Protocolo prospectivo e piloto do ciclo 3
 ├── avaliacao_impacto/                  # Pipeline do diagnóstico histórico DDD agregada
 ├── rdd_bolsa/                          # Diagnóstico de viabilidade do RDD do IVS / adicional
@@ -55,7 +56,8 @@ scripts/
 
 ### Detalhamento por Domínio:
 
-- **`aquisicao/`:** Scripts responsáveis pela ingestão, higienização, mapeamento curso–CBO e integração longitudinal das 26 competências do CNES. Contém tanto a rotina de produção (`01_` a `05_`) quanto os scripts de auditoria de versões (`a01_` a `a06_`).
+- **`aquisicao/`:** Scripts responsáveis pela ingestão, higienização, mapeamento curso–CBO e integração longitudinal das 26 competências do CNES. Contém tanto a rotina de produção (`01_` a `05_`) quanto os scripts de auditoria de versões (`a01_` a `a06_`). O `06_adquirir_populacao_censo2022.py` baixa a população residente do Censo 2022 (IBGE/SIDRA), único denominador populacional válido do repositório — a coluna `populacao_2010` do arquivo do IVS não é população residente.
+- **`apresentacao/`:** `gerar_figuras_banca1.py` produz as figuras da banca 1 em `output/apresentacao_banca1/`, com manifesto de entradas e hashes. Lê o painel município–curso–mês e a população do Censo 2022; não recalcula nada do pipeline analítico.
 - **`tema_trabalho/`:** Contém a cadeia empírica central do artigo (A1 a A8), desde a auditoria inicial, tipologia territorial e resultados associativos até o cutoff estrito de seleção, seus placebos e a replicação pública.
 - **`avaliacao_impacto/`:** Reúne o pipeline do diagnóstico histórico DDD (imediatas vs reserva). Avalia portão de relevância, constrói painéis analíticos, estima modelos estáticos e dinâmicos (estudo de evento), testa mecanismos, gera figuras, nota técnica e infográfico.
 - **`rdd_bolsa/`:** Rotinas de R1, primeiro estágio público, triagem administrativa e controle fail-closed para o desenho baseado no adicional de R$ 5 mil e limiares do IVS 2010.

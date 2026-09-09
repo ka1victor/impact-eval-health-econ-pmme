@@ -11,11 +11,13 @@ A banca 1 apresenta o **desenho conceitual** do trabalho, em três partes:
 
 | Parte | Conteúdo |
 |:---:|---|
-| **1** | Motivação e pergunta |
-| **2** | Literatura teórica, modelo micro e hipóteses |
-| **3** | Viabilidade empírica |
+| **1** | Motivação e pergunta — slides 3 a 6 |
+| **2** | Literatura teórica, modelo micro e hipóteses — slides 7 a 10 |
+| **3** | Viabilidade empírica — slide 11 |
 
-A Parte 3 apenas declara **onde estão os dados** e o que ainda falta adquirir.
+A Parte 3 apenas declara **onde estão os dados** e qual é o desafio de
+identificação. A margem tratada é o **preenchimento** das vagas; permanência
+fica fora desta apresentação.
 Nenhum resultado é apresentado, porque nenhum está autorizado a ser promovido a
 evidência causal no estado atual do projeto — ver
 [`docs/06_execucao/05_roadmap_execucao.md`](../../06_execucao/05_roadmap_execucao.md).
@@ -31,7 +33,7 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 
 | Documento | Função |
 |---|---|
-| [Conteúdo da apresentação](02_conteudo_slides.md) | **o documento principal** — os 15 slides, com título, corpo, figuras e notas, para ler de ponta a ponta |
+| [Conteúdo da apresentação](02_conteudo_slides.md) | **o documento principal** — os 12 slides, com título, corpo, figuras e fontes, para ler de ponta a ponta |
 | [Roteiro narrativo](01_roteiro_narrativo.md) | arco das três partes, regras de composição e rastreio do feedback dos professores |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | origem e reprodutibilidade de cada número exibido |
 
@@ -39,26 +41,27 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 
 | Onde | O quê |
 |---|---|
-| `figuras/` | imagens de fonte externa, preservadas do material anterior: manchetes, especialistas por UF e deslocamento por região |
-| `output/apresentacao_banca1/` | figuras geradas por [`scripts/apresentacao/gerar_figuras_banca1.py`](../../../scripts/apresentacao/gerar_figuras_banca1.py): bolsa por faixa e distribuição regional, com manifesto e hash da base de entrada |
+| `figuras/` | imagens de fonte externa preservadas do material anterior: manchetes e deslocamento por região (a de especialistas por UF ficou guardada, mas não é mais usada) |
+| `output/apresentacao_banca1/` | figuras geradas por [`scripts/apresentacao/gerar_figuras_banca1.py`](../../../scripts/apresentacao/gerar_figuras_banca1.py): bolsa por faixa, especialistas por habitante em jun/2025 por faixa, e a mesma taxa mensal de 2024 a 2026 — com manifesto e hashes |
+| `docs/02_teoria/figuras/` | curva conceitual do custo laboral |
 
 Para regerar:
 
 ```bash
+python3 scripts/aquisicao/06_adquirir_populacao_censo2022.py   # denominador, uma vez
 python3 scripts/apresentacao/gerar_figuras_banca1.py
 ```
 
 ## 4. Estado
 
-| Parte | Conteúdo | Figuras | Proveniência |
-|---|:---:|:---:|:---:|
-| Capa e roteiro | ✅ | não se aplica | não se aplica |
-| 1. Motivação e pergunta | ✅ | ✅ | ⚠️ duas figuras externas sem manifesto |
-| 2. Literatura, modelo e hipóteses | ✅ | não usa figura | ✅ |
-| 3. Viabilidade empírica | ✅ | não usa figura | ✅ |
+| Parte | Slides | Conteúdo | Figuras | Proveniência |
+|---|:---:|:---:|:---:|:---:|
+| Capa e sumário | 1–2 | ✅ | — | — |
+| 1. Motivação e pergunta | 3–6 | ✅ | ✅ | ⚠️ deslocamento por região sem manifesto |
+| 2. Literatura, modelo e hipóteses | 7–10 | ✅ | ✅ | ⚠️ equação original de Reinhardt não transcrita |
+| 3. Viabilidade empírica | 11 | ✅ | — | ✅ |
 
-Uma pendência aberta, não bloqueante: registrar edição, tabela, data e hash das
-duas figuras de fonte externa. Detalhe em
+Nenhuma pendência bloqueia o conteúdo. Detalhe em
 [03 — Proveniência](03_proveniencia_figuras_e_numeros.md#3-pendência-aberta).
 
 ## 5. Onde o conteúdo vive na documentação

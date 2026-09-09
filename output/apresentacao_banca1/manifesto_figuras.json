@@ -1,41 +1,161 @@
 {
-  "entrada": {
-    "caminho": "data/pmm_especialistas_nominal.csv",
-    "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
-    "dt_referencia": "2026-08-12",
-    "recorte": "ciclo == 1",
-    "registros": 521
-  },
-  "constantes_externas": {
-    "estoque_2024": {
-      "valores": {
-        "Nordeste": 14.5,
-        "Norte": 6.1,
-        "Centro-Oeste": 7.5,
-        "Sudeste": 55.3,
-        "Sul": 16.6
-      },
-      "fonte": "Scheffer, M. (coord.). Demografia Médica no Brasil 2025",
-      "reproduzivel_no_repositorio": false
+  "entradas": {
+    "painel": {
+      "caminho": "output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet",
+      "sha256": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059",
+      "filtro": "curso_sem_sobreposicao == 1"
     },
-    "bolsa_por_faixa": {
-      "valores": {
-        "Faixa 3": 10000,
-        "Faixa 2": 15000,
-        "Faixa 1": 20000
-      },
-      "fonte": "Lei nº 15.233/2025 e edital do PMM-E"
+    "populacao": {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "be44691344e748a1141af589b220b1fd5daffade4bb857be31515d9390295bb8",
+      "fonte": "IBGE, Censo 2022, SIDRA tabela 4709"
     }
   },
-  "participacao_pmme_ciclo1_pct": {
-    "Nordeste": 60.3,
-    "Norte": 12.1,
-    "Centro-Oeste": 3.6,
-    "Sudeste": 23.0,
-    "Sul": 1.0
+  "regra_de_faixa": {
+    "grade": "Edital SGTES/MS nº 3/2025",
+    "mapeamento": {
+      "MUITO_ALTA": "Faixa 1",
+      "ALTA": "Faixa 2",
+      "MEDIA": "Faixa 3",
+      "BAIXA": "Faixa 3",
+      "MUITO_BAIXA": "Faixa 3"
+    }
   },
+  "marcos": {
+    "ultima_pre": "202506",
+    "primeira_pos": "202510"
+  },
+  "cobertura": {
+    "municipios": 295,
+    "cursos_unívocos": [
+      1,
+      2,
+      3,
+      5,
+      9,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "competencias": [
+      "202406",
+      "202607"
+    ],
+    "detalhe_por_categoria_ivs_em_202506": {
+      "ALTA": {
+        "municipios": 46,
+        "por_100k": 9.97
+      },
+      "BAIXA": {
+        "municipios": 89,
+        "por_100k": 12.46
+      },
+      "MEDIA": {
+        "municipios": 132,
+        "por_100k": 17.6
+      },
+      "MUITO_ALTA": {
+        "municipios": 15,
+        "por_100k": 7.33
+      },
+      "MUITO_BAIXA": {
+        "municipios": 13,
+        "por_100k": 25.82
+      }
+    }
+  },
+  "serie_por_100k": {
+    "Faixa 3": {
+      "202406": 15.37,
+      "202407": 15.46,
+      "202408": 15.48,
+      "202409": 15.55,
+      "202410": 15.56,
+      "202411": 15.59,
+      "202412": 15.61,
+      "202501": 15.57,
+      "202502": 15.55,
+      "202503": 15.61,
+      "202504": 15.78,
+      "202505": 15.88,
+      "202506": 16.03,
+      "202507": 16.18,
+      "202508": 16.34,
+      "202509": 16.49,
+      "202510": 16.81,
+      "202511": 17.01,
+      "202512": 17.15,
+      "202601": 17.34,
+      "202602": 17.48,
+      "202603": 17.8,
+      "202604": 18.05,
+      "202605": 18.25,
+      "202606": 18.43,
+      "202607": 18.76
+    },
+    "Faixa 2": {
+      "202406": 9.3,
+      "202407": 9.51,
+      "202408": 9.49,
+      "202409": 9.53,
+      "202410": 9.69,
+      "202411": 9.65,
+      "202412": 9.62,
+      "202501": 9.6,
+      "202502": 9.69,
+      "202503": 9.74,
+      "202504": 9.87,
+      "202505": 9.92,
+      "202506": 9.97,
+      "202507": 10.2,
+      "202508": 10.24,
+      "202509": 10.51,
+      "202510": 10.28,
+      "202511": 10.42,
+      "202512": 10.52,
+      "202601": 10.61,
+      "202602": 10.84,
+      "202603": 11.2,
+      "202604": 11.38,
+      "202605": 11.38,
+      "202606": 11.66,
+      "202607": 11.94
+    },
+    "Faixa 1": {
+      "202406": 7.67,
+      "202407": 7.5,
+      "202408": 7.5,
+      "202409": 7.5,
+      "202410": 7.5,
+      "202411": 7.5,
+      "202412": 7.67,
+      "202501": 7.67,
+      "202502": 7.67,
+      "202503": 7.67,
+      "202504": 6.99,
+      "202505": 7.33,
+      "202506": 7.33,
+      "202507": 7.33,
+      "202508": 7.67,
+      "202509": 7.84,
+      "202510": 7.5,
+      "202511": 7.5,
+      "202512": 7.67,
+      "202601": 7.67,
+      "202602": 8.01,
+      "202603": 7.67,
+      "202604": 7.67,
+      "202605": 8.01,
+      "202606": 8.01,
+      "202607": 8.87
+    }
+  },
+  "leitura": "descritiva; sem grupo de comparação; presença cadastral, não participação",
   "figuras": [
-    "output/apresentacao_banca1/distribuicao_regional.png",
-    "output/apresentacao_banca1/bolsa_por_faixa.png"
+    "output/apresentacao_banca1/bolsa_por_faixa.png",
+    "output/apresentacao_banca1/oferta_pre_por_faixa.png",
+    "output/apresentacao_banca1/oferta_antes_depois_por_faixa.png"
   ]
 }
