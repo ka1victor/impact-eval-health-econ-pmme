@@ -4,6 +4,12 @@
 > **Base canônica:** [modelo_micro.md](modelo_micro.md)<br>
 > **Atualização:** 3 de setembro de 2026
 
+> [!NOTE]
+> **Este documento é conteúdo teórico condensado, não o deck.** O conteúdo
+> canônico da apresentação da banca 1 — títulos, corpo, figuras e proveniência —
+> está em [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md).
+> Em caso de divergência sobre o que vai ao slide, aquele documento prevalece.
+
 ## Slide 1 — Núcleo original e adaptação ao PMM-E
 
 Moehling et al. (2020, eq. 1, p. 184):
