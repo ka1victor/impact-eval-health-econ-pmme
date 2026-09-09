@@ -100,14 +100,29 @@ A implementação que divergir dos alvos é erro de implementação, não result
   torno da impossibilidade demonstrada (teto de 78,0% para qualquer regra de dois
   cortes) e do primeiro estágio sharp (527/527). Sem envio.
 
-- [ ] C4 — A5 usa o mesmo balde único `RESTO` nos modelos secundários de corte
-  transversal (`06_avaliar_provimento_cnes.py:194`). O estudo de evento, que é a
-  manchete, **não** é afetado: ele absorve `sg_uf` direto, com as 27 unidades. Mas
-  o `delta_minimal` secundário vai de **+1,2949 (EP 0,7749, p=0,095)** com o balde
-  para **+0,5014 (EP 0,2508, p=0,046)** em macrorregião e **+0,5002** sem colapso.
-  O balde é o mecanismo pelo qual o outlier de Brasília contamina o modelo: com
-  efeito fixo de UF próprio, o DF absorve o outlier inteiro. Nenhum desses números
-  aparece no artigo. Exige emenda ao plano antes de implementar.
+## Fila pós-auditoria — 23 itens em `docs/06_execucao/36_backlog_pos_auditoria.md`
+
+Agrupados por consequência, com alvo numérico medido antes de qualquer alteração.
+A ordem sugerida de execução e as restrições estão no próprio backlog.
+
+- [ ] Grupo A — muda número publicado (3 itens): balde `RESTO` nos modelos
+  secundários de A5 (`+1,2949` → `+0,5014`); wild cluster bootstrap que o A3 exige
+  e nunca foi computado; efeito marginal médio do logit com contrafactual
+  impossível. Cada um exige emenda escrita e commitada antes de implementar.
+- [ ] Grupo B — muda artefato, não muda número publicado (7 itens): censura gravada
+  como zero em `presentes_6m`; relatório de A5 que é código morto; manifesto de
+  reprodução de A6 que não reproduz; nota aritmética errada na tipologia;
+  multiplicidade nunca tratada; rótulos enganosos; `sg_uf` de tipo misto.
+- [ ] Grupo C — documentação e linguagem (9 itens): o 30,3% é da primeira chamada
+  e não do ciclo; afirmação falsa sobre sub judice; IC fora do espaço de
+  parâmetros; portão de A1 apresentado como teste; MDE por estrato com fórmula de
+  proporção única; MDE ex-ante otimista; quatro ameaças ausentes do red team;
+  assinatura de CPF não comparável; dois estimadores idênticos apresentados como
+  duas evidências.
+- [ ] Grupo D — bloqueado (4 itens): compilação do artigo, sem TeX no ambiente;
+  ciclo 3 aguardando `RDAC2606`/`RDRR2606`, competência `202703` e `T0+12m`; envio
+  do pedido do escore de IVS, que é decisão do autor; microdados do CNES ausentes
+  do repositório.
 
 ## Decisões concluídas
 
