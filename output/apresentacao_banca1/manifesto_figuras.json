@@ -7,7 +7,7 @@
     },
     "populacao": {
       "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
-      "sha256": "be44691344e748a1141af589b220b1fd5daffade4bb857be31515d9390295bb8",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
       "fonte": "IBGE, Censo 2022, SIDRA tabela 4709"
     }
   },
@@ -156,6 +156,7 @@
   "figuras": [
     "output/apresentacao_banca1/bolsa_por_faixa.png",
     "output/apresentacao_banca1/oferta_pre_por_faixa.png",
+    "output/apresentacao_banca1/retaguarda_por_faixa.png",
     "output/apresentacao_banca1/oferta_antes_depois_por_faixa.png"
   ]
 }
