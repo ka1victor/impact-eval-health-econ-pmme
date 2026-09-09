@@ -1,7 +1,7 @@
 # 10. Fundamentação Teórica Estrutural do Problema do PMM-E
 
 > [!CAUTION]
-> **Arquivo histórico misto, não canônico.** Ele combina referências teóricas e empíricas. Para a fundamentação formal vigente, use exclusivamente o [documento 17](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md).
+> **Arquivo histórico misto, não canônico.** Ele combina referências teóricas e empíricas. Para a fundamentação formal vigente, use exclusivamente o [modelo microeconômico](../02_teoria/modelo_micro.md).
 
 > **Documento Teórico Central**  
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  

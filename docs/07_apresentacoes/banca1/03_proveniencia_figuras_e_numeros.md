@@ -75,6 +75,8 @@ Nenhum recorte reproduz o conjunto. O erro é material: a participação do
 Sudeste no deck anterior está subestimada em mais de doze pontos percentuais, o
 que **exagera a redistributividade** que o slide 6 afirma.
 
+Registrado também em [`docs/04_dados/02_inventario_dados_por_outcome.md`](../../04_dados/02_inventario_dados_por_outcome.md), seção 4.1.
+
 **Ação exigida antes do deck final:** gerar a figura por script versionado a
 partir de `data/pmm_especialistas_nominal.csv`, gravando a saída em `output/`,
 com a unidade declarada no rótulo (profissionais ativos, ciclo 1, referência

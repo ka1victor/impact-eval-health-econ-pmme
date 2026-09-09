@@ -1,8 +1,9 @@
 # Hipóteses e Viabilidade Empírica: Transposição do Modelo Teórico
 
-> **Classificação:** sketch da seção empírica e hipóteses econômicas de trabalho<br>
-> **Fundamentação microeconômica:** ver [modelo_micro.md](modelo_micro.md)<br>
-> **Atualização:** 3 de setembro de 2026
+> **Classificação:** transposição empírica do modelo — especificação candidata, mapeamento de variáveis e hipóteses operacionais<br>
+> **Derivação das hipóteses:** [modelo_micro.md](modelo_micro.md), seção 4<br>
+> **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slide 12<br>
+> **Atualização:** 9 de setembro de 2026
 
 > *[Nota metodológica: Este documento funciona como um esboço preliminar (sketch) de transposição empírica para guiar a econometria aplicada do projeto. Como a estratégia final de identificação causal, o poder estatístico dos estimandos e a disponibilidade de microdados estão sendo investigados e refinados na execução empírica (ver `docs/06_execucao/` e `docs/auditorias/`), as formulações operacionais e as hipóteses abaixo são tratadas como uma agenda de trabalho em aberto, e não como escolhas axiomáticas congeladas.]*
 
@@ -56,24 +57,72 @@ A tabela abaixo sintetiza como os primitivos teóricos do [modelo microeconômic
 | **Tecnologia Médica ($s$)** | `cod_curso` (16 FEs) | Edital PMM-E | Diferencia prática clínica leve de cirúrgica pesada. |
 | **Custo de Vida Regional ($p_m$)** | `sg_uf` (Efeitos Fixos) | IBGE | Absorve o nível de preços estadual e especificidades regionais. |
 
-### A decomposição do IVS e o risco econométrico de forças opostas:
-O repositório armazena os **3 sub-índices do IVS** (`ivs_infra_2010`, `ivs_ch_2010`, `ivs_rt_2010`), permitindo decompor a *running variable*:
-1. **Infraestrutura Urbana:** Desamenidade física pura (esgoto, lixo, transporte $> 1$h), elevando o custo locacional ($c \uparrow$).
-2. **Capital Humano:** Urgência social e gravidade sanitária (mortalidade infantil, vulnerabilidade), ativando a vocação do médico altruísta ($B'(q) \uparrow \implies c \downarrow$), embora sinalize escassez de insumos ($K \downarrow \implies C \uparrow$).
-3. **Renda e Trabalho:** Pobreza extrema, eliminando o mercado privado pagador ($w = B$).
+### Decomposição do IVS e consequência econométrica
 
-> **Implicação econométrica:** Como as dimensões do IVS operam em sentidos divergentes, **não se pode assumir monotonicidade de que $c_0'(IVS) > 0$ a priori**. Avaliar se esses efeitos se anulam no IVS global é uma das investigações centrais da econometria empírica.
+A correspondência entre os três sub-índices do IVS e os blocos do custo
+teórico está em [modelo_micro.md](modelo_micro.md), seção 3.1, e não é repetida
+aqui. O que interessa a este documento é a consequência para a estimação.
 
----
+O repositório armazena os três sub-índices separadamente
+(`ivs_infra_2010`, `ivs_ch_2010`, `ivs_rt_2010`), o que permite decompor a
+*running variable*. Como as dimensões operam em sentidos divergentes,
+**não se pode assumir $c_0'(IVS) > 0$ a priori**. Três implicações práticas:
 
-## 4. Hipóteses preliminares a serem investigadas
+1. um coeficiente global do IVS próximo de zero é compatível com dois efeitos
+   grandes que se cancelam, e não deve ser lido como ausência de gradiente;
+2. a decomposição em sub-índices é diagnóstico, não busca de especificação —
+   deve ser declarada antes de observar outcomes;
+3. o argumento de identificação repousa sobre o **degrau** da bolsa na fronteira
+   de faixa, precisamente porque o gradiente é de sinal ambíguo.
 
-A partir da transposição teórica, quatro hipóteses preliminares orientam a agenda econométrica:
+## 4. Hipóteses operacionais
 
-1. **Hipótese 1 (Compensação Financeira da Bolsa):** O preenchimento de vagas na descontinuidade requer que o salto financeiro supere o salto no custo latente: $\frac{\Delta B_m}{p_m} > \Delta c_0$. Vacância persistente na Faixa 1 (R$ 20k) indica que o custo territorial latente excede o diferencial de R$ 5k da política.
-2. **Hipótese 2 (Penalidade da Subalocação no Interior):** Controlando pela bolsa e pelo IVS, municípios isolados (onde $w = B$) terão menor taxa de ocupação e menor persistência no CNES aos 6 e 12 meses do que polos metropolitanos com mercado privado ($w > B$).
-3. **Hipótese 3 (Heterogeneidade Clínico vs. Cirúrgico):** Especialidades cirúrgicas dependem de capital hospitalar instalado ($K$). A taxa de vacância no alto IVS tende a ser maior para cirurgiões do que para clínicos: $\left.\frac{\partial \Pr}{\partial IVS}\right|_{\text{cirúrgico}} \ll \left.\frac{\partial \Pr}{\partial IVS}\right|_{\text{clínico}}$.
-4. **Hipótese 4 (Decomposição do IVS: Desamenidade vs. Urgência Social):** Em modelos com sub-índices desagregados, a Infraestrutura Urbana deve exercer efeito negativo sobre a fixação médica ($c \uparrow$), enquanto o Capital Humano pode apresentar efeito atenuado ou positivo ($B' \uparrow$).
+As quatro hipóteses abaixo **não são postuladas aqui**: são a leitura empírica
+das derivadas obtidas em [modelo_micro.md](modelo_micro.md), seção 4.2. Esta
+seção apenas diz, para cada uma, o que seria observado nos dados do projeto.
+
+| # | Hipótese derivada | Forma testável com as bases do projeto | Margem |
+|:---:|---|---|---|
+| **H1** | Compensação financeira: $\partial\Pr(\text{aceitar})/\partial B_m > 0$ | salto no preenchimento administrativo da célula CNES–curso na fronteira de faixa. Vacância persistente na Faixa 1 indica $\Delta c_0 > \Delta B/p$ | entrar |
+| **H2** | Persistência: $\partial\Pr(\text{permanecer})/\partial B_m > 0$ | salto no estoque e na cobertura municipal do CBO em horizonte fixo de 6 e 12 meses, com data-base explícita | ficar |
+| **H3** | Renda alternativa: $\partial^2\Pr/\partial B_m\partial w^{\text{alt}} < 0$ | **leitura territorial** — interação entre faixa e ausência de mercado privado local, onde $w = B$; **leitura individual** — exigiria microdado de renda que o projeto não possui | heterogeneidade |
+| **H4** | Decomposição do IVS: sinal de $c_0'(IVS)$ indefinido | infraestrutura urbana com efeito negativo sobre fixação e capital humano com efeito atenuado ou positivo, em modelos com sub-índices desagregados | diagnóstico |
+
+### 4.1 Hipótese complementar de heterogeneidade tecnológica
+
+Especialidades cirúrgicas dependem de capital hospitalar instalado ($K$).
+Espera-se, portanto, gradiente mais adverso para cirurgiões do que para
+clínicos:
+
+```math
+\left.\frac{\partial \Pr}{\partial IVS}\right|_{\text{cirúrgico}}
+\;\ll\;
+\left.\frac{\partial \Pr}{\partial IVS}\right|_{\text{clínico}} .
+```
+
+Ela decorre da mesma estática comparativa, pela via de $\partial c/\partial K < 0$,
+e é tratada como heterogeneidade pré-declarada, não como hipótese principal.
+
+### 4.2 Correspondência com as hipóteses apresentadas na banca 1
+
+A apresentação leva três hipóteses; este documento mantém quatro mais a
+complementar. O mapeamento é fixo e deve ser usado em qualquer arguição:
+
+| Slide 12 da banca 1 | Documento canônico | Observação |
+|---|---|---|
+| H1 — preenchimento | H1 | idêntica |
+| H2 — permanência da oferta local | H2 | margem derivada do horizonte intertemporal; **não** é retenção individual |
+| H3 — renda alternativa | H3, leitura territorial | a leitura individual fica registrada, mas não é testável hoje |
+| não apresentada | H4 e seção 4.1 | extensões, disponíveis como slides de apoio |
+
+### 4.3 Linguagem permitida
+
+Nenhuma dessas hipóteses autoriza linguagem causal por si só. O salto na
+fronteira só recebe interpretação causal se a regra de atribuição, o suporte e
+as demais condições do desenho passarem pelos portões registrados em
+[`docs/06_execucao/05_roadmap_execucao.md`](../06_execucao/05_roadmap_execucao.md).
+Enquanto isso, "gradiente", "associação" e "preenchimento administrativo" são os
+termos corretos.
 
 ---
 

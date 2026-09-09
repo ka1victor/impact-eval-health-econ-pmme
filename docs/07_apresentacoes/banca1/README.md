@@ -56,7 +56,23 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 Nenhuma dessas pendências impede escrever o deck em LaTeX: as três são de
 figura e manifesto, não de conteúdo. O conteúdo textual está congelado.
 
-## 5. Defeitos do deck anterior corrigidos aqui
+## 5. Onde o conteúdo desta apresentação vive na documentação
+
+Esta apresentação não cria conteúdo. Cada bloco tem um documento canônico de
+origem, e é lá que a informação deve ser corrigida primeiro:
+
+| Bloco | Documento canônico |
+|---|---|
+| Pergunta | [`01_pergunta_escopo/15_...md`](../../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md), "Formulação curta canônica" |
+| Literatura | [`03_literatura_empirica/19_...md`](../../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md), seções 2 e 7 |
+| Modelo teórico | [`02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), seções 1 a 4 |
+| Hipóteses | [`02_teoria/hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), seção 4 |
+| Viabilidade empírica | [`04_dados/02_inventario_dados_por_outcome.md`](../../04_dados/02_inventario_dados_por_outcome.md) e [`auditorias/08_portao_denominador_atracao.md`](../../auditorias/08_portao_denominador_atracao.md) |
+
+O histórico da reorganização que acompanhou esta entrega está em
+[`docs/00_registro_mudancas.md`](../../00_registro_mudancas.md).
+
+## 6. Defeitos do deck anterior corrigidos aqui
 
 O arquivo `PEE__Modelo_econômico.pptx` (11 slides) entrou nesta documentação já
 corrigido. Os defeitos encontrados e o tratamento dado estão registrados na

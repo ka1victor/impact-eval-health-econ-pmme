@@ -29,6 +29,10 @@
 - Registre fonte, data de referência, cobertura, unidade, chaves, filtros e hash de cada entrada.
 - Não grave dados simulados, parâmetros assumidos ou cenários como se fossem observações.
 - Cenários contrafactuais ou testes sintéticos devem ficar explicitamente rotulados e separados dos resultados empíricos.
+- Figura ou número exibido em slide, artigo ou relatório segue a mesma regra de
+  proveniência de qualquer saída: quando deriva de base do repositório, é gerada
+  por script versionado e lida de `output/`. Gráfico produzido fora do pipeline
+  não entra em apresentação.
 
 ## Identificação causal
 
@@ -76,4 +80,11 @@
 - `run_all.py` é o ponto de entrada ponta a ponta do estado validado do projeto.
 - Scripts usam caminhos relativos à raiz e devem ser determinísticos.
 - Uma etapa só entra no pipeline após passar validações de esquema, cobertura e coerência substantiva.
+- `docs/07_apresentacoes/` guarda o conteúdo canônico do que é apresentado. O
+  arquivo `.pptx` ou `.tex` é artefato derivado: divergência entre deck e
+  documento de conteúdo é erro do deck. A banca 1 termina na viabilidade
+  empírica e não apresenta resultado de estimação.
+- Mudança estrutural na documentação — arquivo criado, fundido, removido,
+  renomeado ou movido — abre entrada em `docs/00_registro_mudancas.md` no mesmo
+  commit.
 - Resultados antigos no histórico do Git não são evidência vigente. A documentação corrente é a referência para o estado do projeto.

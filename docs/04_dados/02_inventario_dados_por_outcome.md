@@ -99,6 +99,19 @@ Uso: evolução agregada município-curso. Limites: `co_cnes` está vazio em tod
 - criar dicionário e hash de cada arquivo de origem;
 - não armazenar no diretório `data/` nenhuma coluna construída por hipótese comportamental.
 
+### 4.1 Números publicados que não reproduzem nas bases
+
+Registro aberto em 09/09/2026, na conferência do material da banca 1.
+
+| Número publicado | Onde apareceu | Situação |
+|---|---|---|
+| Participação regional dos ativos do PMM-E: Norte 18,0%, Centro-Oeste 6,8%, Sudeste 10,6%, Sul 4,3% | figura de motivação do deck `PEE__Modelo_econômico.pptx` | **não reproduz**. Apenas o Nordeste (60,3%) coincide com o ciclo 1 de `pmm_especialistas_nominal.csv`. A mesma base dá Sudeste 23,0%, Norte 12,1%, Centro-Oeste 3,6% e Sul 1,0%. Recortes alternativos testados (ciclos 1+2, série histórica de dez/2025, contagem de municípios distintos) também não reproduzem o conjunto |
+
+Consequência de regra: **figura derivada de base do repositório é gerada por
+script versionado e lida de `output/`**. Gráfico produzido fora do pipeline não
+entra em apresentação, artigo ou relatório. O detalhamento está em
+[`docs/07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md`](../07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md).
+
 ## 5. Regra de incorporação
 
 Uma nova base só entra no pipeline quando vier acompanhada de:

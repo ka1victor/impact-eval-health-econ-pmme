@@ -127,7 +127,7 @@
     - não é o efeito de participar do PMM-E;
     - não é o efeito total do programa Agora Tem Especialistas;
     - não é o efeito causal do IVS — vulnerabilidade não é tratamento manipulável.
-- **Fonte:** [`docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md`](../../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md), seção 1.
+- **Fonte:** [`docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md`](../../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md), "Formulação curta canônica".
 - **Nota:** o bloco "o que a pergunta não é" existe para evitar a arguição mais provável — a de que o trabalho estaria reivindicando avaliar o programa inteiro. O estimando candidato é o incentivo marginal, próximo a uma fronteira administrativa.
 
 ---
@@ -157,7 +157,7 @@
   | Sivey, Scott, Witt, Joyce & Humphreys (2012) | experimento de escolha discreta: disposição a aceitar posto remoto responde a incentivo monetário |
 
   **A lacuna:** essas evidências vêm de escolha declarada, de variação salarial de mercado ou de contexto histórico. Nenhuma observa um **valor de bolsa fixado por regra pública, descontínuo em um escore territorial**, como o do PMM-E.
-- **Fonte:** [`docs/03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md`](../../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md); [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), seção 3.
+- **Fonte:** [`docs/03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md`](../../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md), seções 2 e 7.
 - **Nota:** a separação em duas colunas não é estética, é regra do projeto: trabalho empírico não fundamenta equação teórica, e magnitude estimada em outro contexto não vira primitiva. Moehling é a única exceção declarada — sua **equação de escolha** fundamenta a teoria; suas magnitudes históricas, não.
 
 ---
@@ -183,7 +183,7 @@
     | $c_{im}$ | tudo o que torna estar naquele município custoso e não é pago em dinheiro |
 
   - A alternativa $m=0$ é ficar fora do programa. Aceitar a vaga exige $V_{im} \geq V_{i0}$.
-- **Fonte:** [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), seção 1.
+- **Fonte:** [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), seções 1 e 3.
 - **Nota:** o horizonte $\sum_t\delta^t$ não é ornamento: é o que permite tratar **entrar** e **ficar** como duas margens do mesmo problema, e não como dois modelos.
 
 ## Slide 10 — O custo de estar ali
@@ -230,7 +230,7 @@
     | $\dfrac{\partial^2 \Pr(\text{aceitar})}{\partial B_m\,\partial w^{\text{alt}}_i} < 0$ | o mesmo real de bolsa pesa mais para quem tem menor renda alternativa | **H3** |
 
   - E uma implicação de sinal ambíguo, que o desenho precisa enfrentar: $c_0'(IVS)$ **não é monotônico**. Infraestrutura urbana precária eleva o custo; carência sanitária eleva $B'(q)$ e pode reduzi-lo via altruísmo.
-- **Fonte:** [`docs/02_teoria/hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), seções 1 e 4.
+- **Fonte:** [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), seção 4 — a condição de degrau e a estática comparativa estão derivadas lá.
 - **Nota:** este é o slide que responde ao pedido de derivar as hipóteses diretamente. A ambiguidade de $c_0'(IVS)$ é declarada aqui de propósito: é honestidade teórica e, ao mesmo tempo, a justificativa para estudar o **degrau** e não o gradiente.
 
 ---
@@ -252,7 +252,7 @@
   - **H3 tem uma versão territorial e uma individual.** A territorial é testável com dados públicos (tipologia REGIC + RM/RIDE). A individual exige microdado de renda que o projeto não possui.
   - **Extensão registrada, fora do slide se faltar tempo (H4):** decompondo o IVS, a dimensão de infraestrutura urbana deve elevar o custo, enquanto a de capital humano pode atenuá-lo.
 - **Fonte:** [`docs/02_teoria/hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), seção 4.
-- **Nota — correspondência com as hipóteses canônicas:** o documento canônico lista quatro hipóteses e a apresentação leva três. O mapeamento é: H1 do slide $=$ H1 canônica (compensação financeira); H2 do slide é margem nova, derivada do horizonte intertemporal; H3 do slide $=$ H2 canônica (subalocação, $w=B$) na leitura territorial; H3 canônica (clínico versus cirúrgico) e H4 canônica (decomposição do IVS) ficam como extensões. Se arguida, esta é a resposta.
+- **Nota — correspondência com as hipóteses canônicas:** a tabela de mapeamento está em [`hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), seção 4.2, e é a resposta pronta caso a banca pergunte por que a apresentação leva três e o documento lista quatro mais uma complementar.
 - **Nota — linguagem:** H2 fala em **persistência da oferta local**, não em retenção do bolsista. Retenção individual exigiria identificador longitudinal que não existe nas bases públicas; dizer "retenção" em slide seria afirmar mais do que o dado permite.
 
 ---

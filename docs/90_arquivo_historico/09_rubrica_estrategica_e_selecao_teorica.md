@@ -1,7 +1,7 @@
 # 09. Rúbrica Estratégica de Avaliação de Literatura e Seleção dos Top Papers Teóricos
 
 > [!CAUTION]
-> **Arquivo histórico misto, não canônico.** A seleção teórica foi substituída pelo [documento 17](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md); evidência e modelos estimados ficam no [documento 19](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
+> **Arquivo histórico misto, não canônico.** A seleção teórica foi substituída pelo [modelo microeconômico](../02_teoria/modelo_micro.md); evidência e modelos estimados ficam no [catálogo de literatura empírica](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
 
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
 > **Tema Central:** *Atração e Retenção de Médicos Especialistas em Cidades do Interior com base nas Diferentes Bolsas e no IVS (Índice de Vulnerabilidade Social).*  

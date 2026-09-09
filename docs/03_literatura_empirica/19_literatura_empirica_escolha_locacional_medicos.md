@@ -2,21 +2,22 @@
 
 > **Classificação:** literatura empírica<br>
 > **Status:** catálogo canônico para motivação empírica e comparação de resultados<br>
-> **Atualização:** 2 de setembro de 2026
+> **Atualização:** 9 de setembro de 2026
 
 ## 1. Regra de uso
 
 Os estudos deste documento podem documentar fatos estilizados, sugerir heterogeneidades e variáveis observáveis, orientar comparações e informar a discussão dos resultados.
 
-Resultados estimados, calibrações e sinais encontrados nesses estudos pertencem à literatura empírica. Quando um artigo empírico oferece uma equação de escolha útil, sua formulação teórica pode ser reproduzida separadamente no documento 17, com a adaptação e os limites explicitados.
+Resultados estimados, calibrações e sinais encontrados nesses estudos pertencem à literatura empírica. Quando um artigo empírico oferece uma equação de escolha útil, sua formulação teórica pode ser reproduzida separadamente no [modelo microeconômico](../02_teoria/modelo_micro.md), com a adaptação e os limites explicitados.
 
 ## 2. Estudos centrais e uso permitido
 
 | Estudo | Natureza empírica | Contribuição para o PMM-E | Uso vedado |
 |---|---|---|---|
 | Diamond (2016) | equilíbrio espacial estimado com dados de cidades dos EUA | mostrar como uma aplicação empírica trata renda, moradia, amenidades e heterogeneidade | fundamentar a função de utilidade ou os sinais teóricos |
-| Moehling et al. (2020) | estudo histórico sobre educação médica e escassez rural, com modelo simples de escolha | motivar formação, origem e infraestrutura produtiva; a equação de escolha fundamenta o documento 17 | transportar suas magnitudes históricas para o PMM-E |
+| Moehling et al. (2020) | estudo histórico sobre educação médica e escassez rural, com modelo simples de escolha | motivar formação, origem e infraestrutura produtiva; a equação de escolha fundamenta o [modelo microeconômico](../02_teoria/modelo_micro.md) | transportar suas magnitudes históricas para o PMM-E |
 | Costa, Nunes e Sanches (2019/2024) | escolha discreta com coeficientes aleatórios estimada para médicos generalistas formados no Brasil | motivar vínculos de nascimento/formação, salários reais, amenidades e infraestrutura | fornecer primitivas teóricas ou ser extrapolado automaticamente para especialistas |
+| Sivey et al. (2012) | experimento de escolha discreta com médicos em formação na Austrália | mostrar que a disposição a aceitar posto remoto responde a incentivo monetário e quantificar a ordem de grandeza do trade-off | tratar preferência declarada como comportamento observado, ou transportar valores australianos para o Brasil |
 
 ## 3. Costa, Nunes e Sanches
 
@@ -51,3 +52,29 @@ O estudo histórico-empírico motiva mecanismos de formação, origem, infraestr
 | proximidade e custo de deslocamento | mecanismo locacional | definir rede e tempo de viagem antes de observar resultados |
 
 O uso empírico requer correspondência com um primitivo do [modelo microeconômico](../02_teoria/modelo_micro.md), temporalidade adequada e compatibilidade com a estratégia causal. Achados de outras políticas não impõem sinais aos coeficientes do RDD do PMM-E.
+
+## 7. A lacuna que este trabalho ocupa
+
+Os três estudos centrais observam variação salarial de mercado, escolha
+declarada em experimento ou contexto histórico. Nenhum deles observa o objeto
+do PMM-E: **um valor de remuneração fixado por regra pública, uniforme dentro
+da faixa e descontínuo em um escore territorial publicado**.
+
+| Fonte de variação | Estudos | O que ela não permite |
+|---|---|---|
+| salário de mercado observado | Costa, Nunes e Sanches; Diamond | separar preço do lugar de preço da política; o salário é endógeno às condições locais |
+| preferência declarada | Sivey et al. | garantir que a escolha hipotética se realize sob restrição orçamentária e oferta efetiva |
+| choque histórico de formação | Moehling et al. | transportar magnitudes para um sistema de saúde e um mercado de trabalho distintos |
+| **regra administrativa com degrau** | **PMM-E** | — |
+
+Essa é a contribuição empírica pretendida, e também o motivo de o estimando
+candidato ser o **incentivo marginal na fronteira de faixa**, e não a
+participação no programa. Ver
+[`docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md`](../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
+
+## 8. Referências
+
+- Costa, F.; Nunes, J.; Sanches, F. (2024). *Physician Allocation and Health Care Delivery: Evidence from Brazil*. Working Paper.
+- Diamond, R. (2016). [*The Determinants and Welfare Implications of US Workers' Diverging Location Choices by Skill: 1980–2000*](https://doi.org/10.1257/aer.20131706). **American Economic Review**, 106(3), 479–524.
+- Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14, 181–225.
+- Sivey, P.; Scott, A.; Witt, J.; Joyce, C.; Humphreys, J. (2012). [*Junior Doctors' Preferences for Specialty and Location: A Discrete Choice Experiment*](https://doi.org/10.1016/j.jhealeco.2012.06.002). **Journal of Health Economics**, 31(6), 813–823.
