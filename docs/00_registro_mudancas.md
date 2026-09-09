@@ -85,6 +85,74 @@ canônica do projeto.
 
 ---
 
+## 09/09/2026 — Segunda revisão da banca 1: evidência internacional, retaguarda profissional e estrutura em três partes
+
+Motivo: segunda rodada de revisão do autor, ponto a ponto, sobre a versão em
+markdown.
+
+### Estrutura
+
+A apresentação passou de 12 para **11 slides**, organizados em **Parte I —
+Introdução** (motivação, pergunta), **Parte II — Teoria** (literatura teórica,
+modelo microeconômico, hipóteses) e **Parte III — Empiria** (viabilidade
+empírica). O slide de perguntas foi eliminado: a apresentação termina na
+viabilidade.
+
+### Mudanças de conteúdo
+
+| Slide | Mudança |
+|---|---|
+| 3 | passou a explicar as desvantagens territoriais **na perspectiva do médico**. Nova figura de retaguarda profissional. Saíram as manchetes e o gráfico de deslocamento por região |
+| 4 | explicação em três passos de como o IVS vira valor de bolsa |
+| 5 | refeito: deixa de mostrar a evolução da oferta e passa a trazer **evidência externa** sobre se incentivo financeiro atrai médico para área desassistida |
+| 7 | equações corrigidas para renderizar em tabela; Choné & Ma e Reinhardt em linhas separadas, cada um com sua equação original |
+| 10 → 11 | a tabela de como cada objeto aparece nos dados saiu das hipóteses e entrou na viabilidade empírica |
+
+### Por que o gráfico de deslocamento saiu
+
+Verificação no edital: a Portaria GM/MS nº 7.177/2025 declara quatro objetivos —
+**provimento, fixação, equilíbrio territorial e formação**. Reduzir deslocamento
+de paciente **não é objetivo declarado**; fluxo de usuários aparece apenas como
+um entre vários critérios de priorização de vagas (Edital SGTES/MS nº 2/2025,
+itens 3.8–3.10). Além disso a figura media custo do paciente, quando o slide
+trata do custo do médico.
+
+### Acrescentado à literatura empírica
+
+[`03_literatura_empirica/19_...md`](03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md)
+ganhou a seção 7, com evidência sobre incentivos financeiros para provimento em
+áreas desassistidas, em quatro blocos: o que move a alocação, a ordem de
+grandeza do prêmio exigido, a evidência de que é caro ou insuficiente, e a
+permanência que não acompanha a atração. Dez referências novas. Os números de
+Costa, Nunes e Sanches (2024) foram conferidos no PDF do working paper —
+elasticidade de 0,4 e 0,7, redução de 12,4% do desequilíbrio a US$ 15,7 milhões
+por ponto percentual contra US$ 2,2 a 5,1 milhões das cotas.
+
+Registro relevante para o desenho: **nenhum estudo dessa literatura usa RDD**. A
+evidência causal disponível é RCT de oferta salarial, DiD sobre elegibilidade
+geográfica ou coorte observacional.
+
+### Figuras
+
+| Arquivo | Situação |
+|---|---|
+| `output/apresentacao_banca1/retaguarda_por_faixa.png` | **nova**: colegas da mesma especialidade por município, por faixa |
+| `output/apresentacao_banca1/oferta_antes_depois_por_faixa.png` | continua sendo gerada, mas **saiu do deck** |
+| `figuras/motivacao_manchetes.png`, `figuras/deslocamento_por_regiao.png`, `figuras/especialistas_por_uf.png` | preservadas, **não usadas** |
+
+Nenhuma figura de fonte externa entra mais no deck: as três em uso são geradas
+por script e a quarta é ilustração conceitual do modelo.
+
+### Ressalva de citação
+
+A equação de Reinhardt exibida no slide 7 é a forma geral do artigo de **1972**
+no *Review of Economics and Statistics*, não do livro de 1975 que o projeto
+cita. Registrado em
+[`07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md`](07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md),
+seção 3.
+
+---
+
 ## 09/09/2026 — Revisão de conteúdo da banca 1, população do Censo 2022 e achado sobre `populacao_2010`
 
 Motivo: revisão ponto a ponto do autor sobre a primeira versão em markdown, e

@@ -39,10 +39,11 @@ dados e o que falta. Nenhum resultado de estimação entra nessa apresentação.
 
 | Item | Estado |
 |---|---|
-| Conteúdo completo, 12 slides nas três partes da banca, margem de preenchimento | ✅ [`02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md) |
-| Feedback dos professores e ajustes do autor rastreados | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seções 3 e 4 |
-| Figuras por habitante geradas por script, com denominador do Censo 2022 | ✅ `scripts/apresentacao/gerar_figuras_banca1.py` |
-| Manifesto da figura externa de deslocamento; equação original de Reinhardt | ⚠️ abertas, não bloqueantes |
+| Conteúdo completo, 11 slides em três partes, margem de preenchimento | ✅ [`02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md) |
+| Feedback dos professores e duas rodadas de revisão do autor rastreados | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seções 3 e 4 |
+| Todas as figuras do deck geradas por script ou conceituais | ✅ `scripts/apresentacao/gerar_figuras_banca1.py` |
+| Evidência internacional sobre incentivos catalogada e conferida na fonte | ✅ [`19_...md`](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md), seção 7 |
+| Referência de Reinhardt, régua de 35–65%, comparabilidade do prêmio | ⚠️ ressalvas registradas, não bloqueantes |
 
 Regra: o conteúdo vive em markdown, com as figuras versionadas junto. Qualquer
 deck montado a partir dele é artefato derivado, e divergência é erro do deck.
