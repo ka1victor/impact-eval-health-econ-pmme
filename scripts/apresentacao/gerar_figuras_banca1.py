@@ -200,6 +200,56 @@ def figura_oferta_pre(agregado: pd.DataFrame) -> Path:
     return destino
 
 
+def figura_retaguarda_por_faixa() -> Path:
+    """Quantos colegas da mesma especialidade o médico encontraria no município."""
+    painel = pd.read_parquet(PAINEL)
+    painel = painel[(painel["curso_sem_sobreposicao"] == 1) & (painel["competencia"] == ULTIMA_PRE)]
+    painel = painel.assign(faixa=painel["ivs_categoria"].map(FAIXA_2025))
+    resumo = painel.groupby("faixa").agg(
+        celulas=("especialistas_mst", "size"),
+        mediana=("especialistas_mst", "median"),
+        ate_um=("especialistas_mst", lambda s: (s <= 1).mean() * 100),
+    ).loc[ORDEM_FAIXAS]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11.0, 4.0), dpi=200)
+
+    barras = ax1.bar([ROTULO_FAIXA[f] for f in ORDEM_FAIXAS], resumo["mediana"], 0.55,
+                     color=[COR_BARRA[f] for f in ORDEM_FAIXAS])
+    for barra, valor in zip(barras, resumo["mediana"]):
+        ax1.annotate(f"{valor:.0f}", (barra.get_x() + barra.get_width() / 2, valor),
+                     textcoords="offset points", xytext=(0, 5), ha="center",
+                     fontsize=13, color=VERDE_ESCURO, fontweight="bold")
+    ax1.set_ylabel("Colegas da mesma especialidade\n(mediana por município)", fontsize=10, color=TINTA_SUAVE)
+    ax1.set_ylim(0, resumo["mediana"].max() * 1.3)
+    _limpar_moldura(ax1)
+
+    barras = ax2.bar([ROTULO_FAIXA[f] for f in ORDEM_FAIXAS], resumo["ate_um"], 0.55,
+                     color=[COR_BARRA[f] for f in ORDEM_FAIXAS])
+    for barra, (faixa, linha) in zip(barras, resumo.iterrows()):
+        ax2.annotate(f"{linha['ate_um']:.0f}%".replace(".", ","),
+                     (barra.get_x() + barra.get_width() / 2, linha["ate_um"]),
+                     textcoords="offset points", xytext=(0, 5), ha="center",
+                     fontsize=13, color=VERDE_ESCURO, fontweight="bold")
+        ax2.annotate(f"n = {int(linha['celulas'])}",
+                     (barra.get_x() + barra.get_width() / 2, 0),
+                     textcoords="offset points", xytext=(0, 6), ha="center",
+                     fontsize=8.5, color="white" if faixa != "Faixa 3" else TINTA_SUAVE)
+    ax2.set_ylabel("Sozinho ou com um único colega\n(% dos municípios)", fontsize=10, color=TINTA_SUAVE)
+    ax2.set_ylim(0, resumo["ate_um"].max() * 1.35)
+    _limpar_moldura(ax2)
+
+    for eixo in (ax1, ax2):
+        eixo.tick_params(axis="x", labelsize=9.5)
+
+    _rodape(fig, "Junho de 2025. Especialistas da mesma especialidade cadastrados no município, "
+                 "por par município–especialidade. Faixa 1 tem apenas 19 pares: a proporção é frágil, "
+                 "a mediana é robusta.", y=-0.14)
+    destino = SAIDA / "retaguarda_por_faixa.png"
+    fig.savefig(destino, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    return destino
+
+
 def figura_oferta_antes_depois(agregado: pd.DataFrame) -> Path:
     largo = agregado.pivot(index="competencia", columns="faixa", values="por_100k").sort_index()
     x = list(range(len(largo.index)))
@@ -249,6 +299,7 @@ def main() -> None:
     gerados = [
         figura_bolsa_por_faixa(),
         figura_oferta_pre(agregado),
+        figura_retaguarda_por_faixa(),
         figura_oferta_antes_depois(agregado),
     ]
 
