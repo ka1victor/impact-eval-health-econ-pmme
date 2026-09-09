@@ -363,17 +363,41 @@ a outro município, deslocando estoque), a expansão CBO→curso, e
 
 ---
 
-# Ordem sugerida de execução
+# Fila de execução — normativa
 
-| Sessão | Itens | Por quê |
-|---|---|---|
-| 1 | **A-1** | Simetria com o C1 já feito, alvo medido, sem efeito no artigo. Emenda curta. |
-| 2 | **A-2 + A-3 + C-6** | Todos são inferência/precisão de A4, recomputáveis na mesma execução, e todos precisam ser refeitos na especificação pós-C1. |
-| 3 | **C-7** | Red team: publicar o placebo já medido, a heterogeneidade de pré-tendência e o teste de deslocamento. É o que mais adiciona credibilidade por unidade de trabalho. |
-| 4 | **B-1, B-2, B-5, B-6, C-9** | Higiene de A5 num commit coeso. |
-| 5 | **B-3, C-1, C-2, C-3, C-4, C-5, C-8** | Documentação e rótulos; nenhum exige reexecução pesada. |
-| — | **B-4, B-7** | Decidir errata contra reexecução da tipologia congelada. Recomendo errata. |
-| — | **D-1 a D-4** | Revisar a condição de desbloqueio, não executar. |
+**Esta ordem é a fila vigente, não uma sugestão.** Uma sessão que for executar
+itens deste backlog começa pela primeira sessão ainda aberta e não pula adiante,
+salvo decisão explícita do autor registrada aqui. A ordem foi construída por
+dependência e por risco, não por conveniência: as sessões 1 e 2 mexem em número,
+e a 2 depende de a especificação do C1 já estar valendo.
+
+| Sessão | Estado | Itens | Por quê nesta ordem |
+|---|---|---|---|
+| 1 | `ABERTA` | **A-1** | Simetria com o C1 já feito, alvo medido, sem efeito no artigo. Emenda curta. |
+| 2 | `ABERTA` | **A-2 + A-3 + C-6** | Todos são inferência e precisão de A4, recomputáveis na mesma execução. **Depende da sessão 1 não estar em curso** e da especificação pós-C1 valendo, porque os três alvos precisam ser refeitos nela. |
+| 3 | `ABERTA` | **C-7** | Red team: publicar o placebo já medido, a heterogeneidade de pré-tendência e o teste de deslocamento. É o que mais adiciona credibilidade por unidade de trabalho. |
+| 4 | `ABERTA` | **B-1, B-2, B-5, B-6, C-9** | Higiene de A5 num commit coeso. Depois da 3, porque a 3 pode acrescentar seções ao mesmo relatório que a B-2 reescreve. |
+| 5 | `ABERTA` | **B-3, C-1, C-2, C-3, C-4, C-5, C-8** | Documentação e rótulos; nenhum exige reexecução pesada. Por último porque vários citam números que as sessões 1 a 4 podem mudar. |
+| — | `DECISÃO DO AUTOR` | **B-4, B-7** | Errata contra reexecução da tipologia congelada. Recomendo errata. Não executar sem a decisão. |
+| — | `BLOQUEADA` | **D-1 a D-4** | Revisar a condição de desbloqueio, não executar. |
+
+## Protocolo de sessão
+
+Ao **iniciar** uma sessão desta fila:
+
+1. Confirme aqui qual é a primeira sessão `ABERTA`. Não pule.
+2. Se a sessão contém item do **Grupo A**, escreva a emenda ao plano — o que muda,
+   por quê, alvo esperado, o que não muda — e **commite a emenda antes de tocar em
+   código**, como foi feito em `35_plano_correcoes_pos_auditoria.md`.
+3. Releia as restrições em "O que esta fila não autoriza".
+
+Ao **terminar**:
+
+4. Suíte verde e conferidor do artigo passando são portão, não formalidade.
+5. Troque o estado da sessão para `CONCLUIDA` **neste arquivo**, com o hash do
+   commit, e ajuste o ponteiro de próxima sessão no `TODO.md` e no
+   `05_roadmap_execucao.md`. Sem isso a próxima sessão não sabe onde a fila parou.
+6. Se um alvo congelado não reproduzir, **pare**: é achado, não resultado novo.
 
 ## O que esta fila não autoriza
 

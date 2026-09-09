@@ -103,7 +103,14 @@ A implementação que divergir dos alvos é erro de implementação, não result
 ## Fila pós-auditoria — 23 itens em `docs/06_execucao/36_backlog_pos_auditoria.md`
 
 Agrupados por consequência, com alvo numérico medido antes de qualquer alteração.
-A ordem sugerida de execução e as restrições estão no próprio backlog.
+A ordem de execução do backlog é **normativa**, com estado por sessão e protocolo
+de início e encerramento. Comece pela primeira sessão `ABERTA` e não pule adiante.
+
+> **Próxima sessão: 1 — item A-1.** Balde `RESTO` nos modelos secundários de A5:
+> `delta_minimal` vai de `+1,2949` (EP 0,7749) para `+0,5014` (EP 0,2508) em
+> macrorregião, ou `+0,5002` sem colapso. O estudo de evento, que é a manchete de
+> A5, **não** é afetado — absorve `sg_uf` direto. Nenhum desses números aparece no
+> artigo. Por ser Grupo A, exige emenda escrita e commitada antes de implementar.
 
 - [ ] Grupo A — muda número publicado (3 itens): balde `RESTO` nos modelos
   secundários de A5 (`+1,2949` → `+0,5014`); wild cluster bootstrap que o A3 exige

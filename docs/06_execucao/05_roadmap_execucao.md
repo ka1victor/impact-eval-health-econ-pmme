@@ -15,8 +15,13 @@
 > numérico e abriu uma fila de correções. Os itens C1, C2 e C3 foram executados
 > conforme `35_plano_correcoes_pos_auditoria.md`. **A fila vigente de correções é
 > `36_backlog_pos_auditoria.md`**, com 23 itens agrupados por consequência e alvos
-> numéricos congelados. Itens do Grupo A exigem emenda escrita e commitada antes
-> de implementar.
+> numéricos congelados. A ordem de execução daquele documento é **normativa**: a
+> sessão que for executá-lo começa pela primeira sessão `ABERTA` e não pula
+> adiante sem decisão do autor. Itens do Grupo A exigem emenda escrita e
+> commitada **antes** de tocar em código.
+>
+> **Próxima sessão da fila: 1 — item A-1**, o balde `RESTO` nos modelos
+> secundários de A5 (`+1,2949` → `+0,5014`). Exige emenda prévia, por ser Grupo A.
 
 ## Fila imediata autorizada
 
