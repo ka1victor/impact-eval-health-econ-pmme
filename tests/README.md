@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **131 testes em 18 módulos**, garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **132 testes em 18 módulos**, garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -37,7 +37,7 @@ python -m unittest tests/test_pipeline_invariants.py
 |---|:---:|---|
 | [`test_pipeline_invariants.py`](test_pipeline_invariants.py) | Invariantes | Balanceamento do painel (26 meses), não imputação de FTE/horas, censura de margens longitudinais, ponte CBO operacional, convergência numérica dos modelos e validade de todos os links de documentação. |
 | [`test_estimativas_atracao_a4.py`](test_estimativas_atracao_a4.py) | A4 Atração | Estimação LPM e Logit de atração (+29,4pp metropolitano vs remoto), erros clusterizados por município, invariância da amostra N=1.295 células em 368 municípios. |
-| [`test_provimento_cnes_a5.py`](test_provimento_cnes_a5.py) | A5 Dinâmica CNES | Avaliação da oferta médica local cadastrada no CNES (amostra confirmatória de 587 células em 295 municípios, referência 202506 e follow-up 202603, tom estritamente associativo). |
+| [`test_provimento_cnes_a5.py`](test_provimento_cnes_a5.py) | A5 Dinâmica CNES | Avaliação da oferta médica local cadastrada no CNES (amostra confirmatória de 587 células em 295 municípios, referência 202506 e follow-up 202603, tom estritamente associativo). Inclui a conferência de proveniência dos hashes de entrada, ausente até 09/09/2026. |
 | [`test_red_team_a6.py`](test_red_team_a6.py) | A6 Red Team | Auditoria das 11 afirmações substantivas na matriz afirmação–evidência–limite e validação do manifesto de hashes reproduzíveis. |
 | [`test_cutoff_selecao_a7.py`](test_cutoff_selecao_a7.py) | A7 Corte de seleção | Suporte dos pares adjacentes, resultados de homologação/presença ativa, proteção de dados pessoais e bloqueio explícito de linguagem causal sem os desempates. |
 | [`test_cutoff_escore_estrito_a8.py`](test_cutoff_escore_estrito_a8.py) | A8 Cutoff estrito | Suporte sem empates e gap de um ponto, efeitos principais, placebos, sensibilidades, replicação de 2026, linguagem causal condicional e proteção de dados pessoais. |

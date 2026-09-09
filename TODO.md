@@ -73,8 +73,16 @@
 - [x] A8-P5 — replicação de 2026: 11 pares, +36,4 p.p., teste exato `p=0,125`;
   classificada como direcional e imprecisa.
 - [x] A8-P6 — auditar proteção de dados, hashes de entrada e testes.
-- [ ] Redigir o trabalho curto em torno do A8, com A4 como motivação descritiva,
-  A5 no apêndice associativo e RDD-IVS e DDD apenas como rotas descartadas.
+- [x] Redigir o trabalho curto em torno do A8, com A4 como motivação descritiva,
+  A5 no apêndice associativo e RDD-IVS e DDD apenas como rotas descartadas
+  (`paper_pmme_submission.tex`). Literatura e bibliografia incorporadas: 16
+  referências, todas presentes nos documentos do repositório.
+- [x] Instrumentar a conferência automática do artigo: 184 cifras mapeadas para
+  arquivo-fonte e localizador em `A8_conferencia_numeros_artigo.csv`, com
+  `10_conferir_numeros_artigo.py` integrado ao `run_all.py`.
+- [ ] Compilar o `.tex` e revisar as provas. Não há compilador LaTeX no ambiente
+  de execução; a validação feita foi estrutural (ambientes balanceados, colunas
+  das tabelas, `\label`/`\ref` e existência das figuras).
 
 ## Decisões concluídas
 

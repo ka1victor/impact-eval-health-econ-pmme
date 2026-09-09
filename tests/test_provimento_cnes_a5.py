@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import unittest
 from pathlib import Path
 
@@ -11,6 +12,17 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "output" / "tema_trabalho"
+
+# Entradas declaradas por A5 que o pipeline regera e o repositorio nao versiona.
+REGERAVEIS_NAO_VERSIONADOS = {"output/painel_municipio_curso_mensal.parquet"}
+
+
+def sha(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
 class ProvimentoCnesA5Test(unittest.TestCase):
@@ -21,6 +33,36 @@ class ProvimentoCnesA5Test(unittest.TestCase):
         cls.manifest = json.loads((OUT / "A5_manifesto_maturidade_censura.json").read_text(encoding="utf-8"))
         cls.est = json.loads((OUT / "A5_estimativas_provimento.json").read_text(encoding="utf-8"))
         cls.report = (OUT / "A5_relatorio_diagnostico.md").read_text(encoding="utf-8")
+
+    def test_hashes_entradas_conferem(self) -> None:
+        # Proveniencia de A5, ausente ate entao: A3, A4 e A6 ja checavam seus
+        # hashes de entrada, mas A5 nao, e por isso registros obsoletos de A5
+        # passavam despercebidos. Os sha256 sao sempre da forma canonica LF
+        # imposta pelo .gitattributes; um tree com CRLF produz outro digest.
+        #
+        # Uma unica entrada declarada nao e versionada: o painel mensal
+        # municipio-curso e regeravel pelo pipeline e esta no .gitignore. Num
+        # clone limpo ele nao existe, entao a existencia so e exigida dos
+        # arquivos versionados; se o painel estiver presente, o hash e cobrado
+        # como qualquer outro.
+        for artefato, hashes in [
+            ("A5_estimativas_provimento.json", self.est["hashes_entradas"]),
+            ("A5_manifesto_maturidade_censura.json", self.manifest["hashes_entradas"]),
+        ]:
+            self.assertGreater(len(hashes), 3, f"bloco de hashes incompleto em {artefato}")
+            conferidos = 0
+            for rel, meta in hashes.items():
+                caminho = ROOT / rel
+                if not caminho.exists():
+                    self.assertIn(
+                        rel,
+                        REGERAVEIS_NAO_VERSIONADOS,
+                        f"missing {artefato}: {rel}",
+                    )
+                    continue
+                self.assertEqual(sha(caminho), meta["sha256"], f"hash diverge {artefato}: {rel}")
+                conferidos += 1
+            self.assertGreater(conferidos, 3, f"poucas entradas conferidas em {artefato}")
 
     def test_painel_balanceado(self) -> None:
         self.assertEqual(len(self.panel), 1184 * 26)
