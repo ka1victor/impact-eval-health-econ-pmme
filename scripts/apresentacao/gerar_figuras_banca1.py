@@ -14,6 +14,16 @@ Figuras:
 3. `oferta_antes_depois_por_faixa.png` — a mesma taxa, mensal, de junho de
    2024 a julho de 2026, com marcos da oferta e da homologação.
 
+4. `retaguarda_por_faixa.png` — colegas da mesma especialidade que o médico
+   encontraria no município, por faixa de 2025.
+
+5. `vagas_ciclo1_por_regiao.png` — células estabelecimento–curso e vagas
+   imediatas do ciclo 1 (chamada 1) por grande região, do quadro de vagas.
+
+6. `preenchimento_ciclo1.png` — proporção de células com alguma confirmação ou
+   homologação, por faixa anunciada e por estrato territorial, lida das tabelas
+   descritivas do módulo A4 (`output/tema_trabalho/`). Leitura descritiva.
+
 Numerador: `especialistas_mst` do painel município–curso–mês, restrito aos
 cursos com correspondência unívoca curso–CBO (evita contar a mesma pessoa em
 dois cursos). É presença cadastral no CNES nos CBOs do programa, não
@@ -44,6 +54,25 @@ RAIZ = Path(__file__).resolve().parents[2]
 PAINEL = RAIZ / "output" / "avaliacao_impacto" / "dados" / "painel_municipio_curso_mes.parquet"
 POPULACAO = RAIZ / "output" / "aquisicao" / "populacao_censo2022_municipios.csv"
 SAIDA = RAIZ / "output" / "apresentacao_banca1"
+QUADRO = RAIZ / "output" / "aquisicao" / "quadro_vagas_tratamento.parquet"
+A4_ESTRATO = RAIZ / "output" / "tema_trabalho" / "A4_tabela_01_amostra_construcao.csv"
+A4_FAIXA = RAIZ / "output" / "tema_trabalho" / "A4_tabela_01b_amostra_faixa.csv"
+
+REGIAO_UF = {
+    "Norte": ["AC", "AM", "AP", "PA", "RO", "RR", "TO"],
+    "Nordeste": ["AL", "BA", "CE", "MA", "PB", "PE", "PI", "RN", "SE"],
+    "Centro-Oeste": ["DF", "GO", "MS", "MT"],
+    "Sudeste": ["ES", "MG", "RJ", "SP"],
+    "Sul": ["PR", "RS", "SC"],
+}
+ORDEM_REGIOES = ["Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"]
+ROTULO_ESTRATO = {
+    "capital": "Capital",
+    "metropolitano": "Metropolitano",
+    "interior_proximo_polo": "Interior\nconectado a polo",
+    "interior_remoto": "Interior\nremoto",
+}
+ORDEM_ESTRATOS = ["capital", "metropolitano", "interior_proximo_polo", "interior_remoto"]
 
 VERDE_ESCURO = "#1F4022"
 VERDE_MEDIO = "#8FAF95"
@@ -289,6 +318,104 @@ def figura_oferta_antes_depois(agregado: pd.DataFrame) -> Path:
     return destino
 
 
+def figura_vagas_por_regiao() -> tuple[Path, dict]:
+    """Células e vagas imediatas do ciclo 1 por grande região."""
+    quadro = pd.read_parquet(QUADRO)
+    uf_para_regiao = {uf: r for r, ufs in REGIAO_UF.items() for uf in ufs}
+    quadro = quadro.assign(regiao=quadro["sg_uf"].map(uf_para_regiao))
+    assert quadro["regiao"].notna().all(), "UF sem região"
+    resumo = quadro.groupby("regiao").agg(
+        celulas=("co_cnes_7d", "size"),
+        imediatas=("qt_vagas_imediatas", "sum"),
+        reserva=("qt_vagas_reserva", "sum"),
+        municipios=("co_ibge_6d", "nunique"),
+    ).loc[ORDEM_REGIOES]
+
+    fig, ax = plt.subplots(figsize=(9.0, 4.2), dpi=200)
+    x = list(range(len(ORDEM_REGIOES)))
+    largura = 0.38
+    b1 = ax.bar([i - largura / 2 for i in x], resumo["celulas"], largura,
+                color=VERDE_MEDIO, label="Células estabelecimento–curso")
+    b2 = ax.bar([i + largura / 2 for i in x], resumo["imediatas"], largura,
+                color=VERDE_ESCURO, label="Vagas imediatas")
+    for barras in (b1, b2):
+        for barra in barras:
+            ax.annotate(f"{int(barra.get_height())}",
+                        (barra.get_x() + barra.get_width() / 2, barra.get_height()),
+                        textcoords="offset points", xytext=(0, 4), ha="center",
+                        fontsize=10, color=TINTA)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"{r}\n{int(resumo.loc[r, 'municipios'])} municípios" for r in ORDEM_REGIOES],
+                       fontsize=9.5)
+    ax.set_ylim(0, resumo["celulas"].max() * 1.2)
+    ax.legend(frameon=False, fontsize=9.5, loc="upper right")
+    _limpar_moldura(ax)
+    _rodape(fig, "Ciclo 1, chamada 1: 1.295 células em 460 estabelecimentos e 368 municípios; 678 vagas "
+                 "imediatas e 1.145 posições de cadastro de reserva. Quadro de vagas do Edital SGTES/MS nº 3/2025.",
+            y=-0.10)
+    destino = SAIDA / "vagas_ciclo1_por_regiao.png"
+    fig.savefig(destino, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    return destino, {r: {k: int(v) for k, v in linha.items()} for r, linha in resumo.to_dict("index").items()}
+
+
+def figura_preenchimento_ciclo1() -> tuple[Path, dict]:
+    """Proporção de células com alguma confirmação ou homologação, por faixa anunciada e por estrato."""
+    faixa = pd.read_csv(A4_FAIXA).set_index("faixa")
+    faixa = faixa.loc[["FAIXA 3", "FAIXA 2", "FAIXA 1"]]
+    estrato = pd.read_csv(A4_ESTRATO)
+    estrato = estrato[estrato["amostra"] == "primaria_1295_Ch1"].set_index("estrato").loc[ORDEM_ESTRATOS]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11.4, 4.2), dpi=200,
+                                   gridspec_kw={"width_ratios": [3, 4]})
+
+    rot_faixa = {"FAIXA 3": "Faixa 3\nR$ 10 mil", "FAIXA 2": "Faixa 2\nR$ 15 mil", "FAIXA 1": "Faixa 1\nR$ 20 mil"}
+    cores = [VERDE_CLARO, VERDE_MEDIO, VERDE_ESCURO]
+    barras = ax1.bar([rot_faixa[f] for f in faixa.index], faixa["outcome_medio"] * 100, 0.55, color=cores)
+    for barra, (nome, linha) in zip(barras, faixa.iterrows()):
+        ax1.annotate(f"{linha['outcome_medio'] * 100:.1f}%".replace(".", ","),
+                     (barra.get_x() + barra.get_width() / 2, linha["outcome_medio"] * 100),
+                     textcoords="offset points", xytext=(0, 5), ha="center",
+                     fontsize=12.5, color=VERDE_ESCURO, fontweight="bold")
+        ax1.annotate(f"n = {int(linha['n_celulas'])}", (barra.get_x() + barra.get_width() / 2, 0),
+                     textcoords="offset points", xytext=(0, 6), ha="center", fontsize=8.5,
+                     color="white" if nome != "FAIXA 3" else TINTA_SUAVE)
+    ax1.set_title("Por faixa de bolsa anunciada", fontsize=10.5, color=TINTA, loc="left")
+    ax1.set_ylabel("Células com alguma confirmação\nou homologação (%)", fontsize=10, color=TINTA_SUAVE)
+    ax1.set_ylim(0, 60)
+    _limpar_moldura(ax1)
+
+    barras = ax2.bar([ROTULO_ESTRATO[e] for e in ORDEM_ESTRATOS], estrato["outcome_medio"] * 100, 0.55,
+                     color=[VERDE_ESCURO, VERDE_ESCURO, VERDE_MEDIO, VERDE_CLARO])
+    for barra, (nome, linha) in zip(barras, estrato.iterrows()):
+        ax2.annotate(f"{linha['outcome_medio'] * 100:.1f}%".replace(".", ","),
+                     (barra.get_x() + barra.get_width() / 2, linha["outcome_medio"] * 100),
+                     textcoords="offset points", xytext=(0, 5), ha="center",
+                     fontsize=12.5, color=VERDE_ESCURO, fontweight="bold")
+        ax2.annotate(f"n = {int(linha['n_celulas'])}", (barra.get_x() + barra.get_width() / 2, 0),
+                     textcoords="offset points", xytext=(0, 6), ha="center", fontsize=8.5,
+                     color="white" if nome in ("capital", "metropolitano") else TINTA_SUAVE)
+    ax2.set_title("Por estrato territorial", fontsize=10.5, color=TINTA, loc="left")
+    ax2.set_ylim(0, 60)
+    _limpar_moldura(ax2)
+    for eixo in (ax1, ax2):
+        eixo.tick_params(axis="x", labelsize=9.5)
+
+    _rodape(fig, "Ciclo 1, chamada 1: 1.295 células estabelecimento–curso em 368 municípios; média geral de 30,3%. "
+                 "Faixa é a publicada na vaga. Estratos pela REGIC 2018 e composição de RMs/RIDEs 2022 (IBGE). "
+                 "Leitura descritiva: proporções brutas, sem ajuste.", y=-0.12)
+    destino = SAIDA / "preenchimento_ciclo1.png"
+    fig.savefig(destino, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    meta = {
+        "por_faixa": {f: {"n": int(l["n_celulas"]), "pct": round(float(l["outcome_medio"]) * 100, 1)}
+                      for f, l in faixa.iterrows()},
+        "por_estrato": {e: {"n": int(l["n_celulas"]), "pct": round(float(l["outcome_medio"]) * 100, 1)}
+                        for e, l in estrato.iterrows()},
+    }
+    return destino, meta
+
+
 def main() -> None:
     SAIDA.mkdir(parents=True, exist_ok=True)
     antigo = SAIDA / "distribuicao_regional.png"
@@ -296,11 +423,15 @@ def main() -> None:
         antigo.unlink()   # substituída pelas figuras por habitante
 
     agregado, meta = taxas_por_faixa()
+    fig_regiao, meta_regiao = figura_vagas_por_regiao()
+    fig_preench, meta_preench = figura_preenchimento_ciclo1()
     gerados = [
         figura_bolsa_por_faixa(),
         figura_oferta_pre(agregado),
         figura_retaguarda_por_faixa(),
         figura_oferta_antes_depois(agregado),
+        fig_regiao,
+        fig_preench,
     ]
 
     serie = agregado.pivot(index="competencia", columns="faixa", values="por_100k").round(2)
@@ -310,7 +441,12 @@ def main() -> None:
                        "filtro": "curso_sem_sobreposicao == 1"},
             "populacao": {"caminho": str(POPULACAO.relative_to(RAIZ)), "sha256": _hash(POPULACAO),
                           "fonte": "IBGE, Censo 2022, SIDRA tabela 4709"},
+            "quadro_vagas": {"caminho": str(QUADRO.relative_to(RAIZ)), "sha256": _hash(QUADRO)},
+            "a4_estrato": {"caminho": str(A4_ESTRATO.relative_to(RAIZ)), "sha256": _hash(A4_ESTRATO)},
+            "a4_faixa": {"caminho": str(A4_FAIXA.relative_to(RAIZ)), "sha256": _hash(A4_FAIXA)},
         },
+        "vagas_ciclo1_por_regiao": meta_regiao,
+        "preenchimento_ciclo1": meta_preench,
         "regra_de_faixa": {"grade": "Edital SGTES/MS nº 3/2025", "mapeamento": FAIXA_2025},
         "marcos": {"ultima_pre": ULTIMA_PRE, "primeira_pos": PRIMEIRA_POS},
         "cobertura": meta,

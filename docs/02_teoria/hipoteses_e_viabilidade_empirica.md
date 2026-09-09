@@ -2,7 +2,7 @@
 
 > **Classificação:** transposição empírica do modelo — especificação candidata, mapeamento de variáveis e hipóteses operacionais<br>
 > **Derivação das hipóteses:** [modelo_micro.md](modelo_micro.md), seção 4<br>
-> **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slide 12<br>
+> **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 17 e 18<br>
 > **Atualização:** 9 de setembro de 2026
 
 > *[Nota metodológica: Este documento funciona como um esboço preliminar (sketch) de transposição empírica para guiar a econometria aplicada do projeto. Como a estratégia final de identificação causal, o poder estatístico dos estimandos e a disponibilidade de microdados estão sendo investigados e refinados na execução empírica (ver `docs/06_execucao/` e `docs/auditorias/`), as formulações operacionais e as hipóteses abaixo são tratadas como uma agenda de trabalho em aberto, e não como escolhas axiomáticas congeladas.]*
