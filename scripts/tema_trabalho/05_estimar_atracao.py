@@ -99,6 +99,7 @@ TABELA_SENS_SPLINE = OUT_DIR / f"{PREFIX}_tabela_03d_ivs_spline.csv"
 TABELA_LOO = OUT_DIR / f"{PREFIX}_tabela_04_leave_one_out.csv"
 TABELA_INFLUENCIA = OUT_DIR / f"{PREFIX}_tabela_05_influencia_municipal.csv"
 TABELA_PRED = OUT_DIR / f"{PREFIX}_tabela_06_validacao_preditiva.csv"
+TABELA_SENS_COLAPSO = OUT_DIR / f"{PREFIX}_tabela_07_sensibilidade_colapso_uf.csv"
 FIG_PROB_ESTRATO = OUT_DIR / f"{PREFIX}_figura_01_prob_ajustada_estrato.png"
 FIG_IVS = OUT_DIR / f"{PREFIX}_figura_02_gradiente_ivs.png"
 FIG_FAIXA = OUT_DIR / f"{PREFIX}_figura_03_faixa_descritiva.png"
@@ -106,6 +107,17 @@ JSON_ESTIMATIVAS = OUT_DIR / f"{PREFIX}_estimativas_atracao.json"
 RELATORIO_MD = OUT_DIR / f"{PREFIX}_relatorio_diagnostico.md"
 
 ALPHA = 0.05
+
+# Colapso do FE de UF. O protocolo congelado em A3 manda colapsar UF com menos de
+# cinco clusters EM REGIÃO; a variante primária é essa, e as demais são
+# sensibilidade publicada em A4_tabela_07_sensibilidade_colapso_uf.csv.
+COLAPSO_PRIMARIO = "macro_regiao"
+MACRO_SEM_REGIAO = "SEM_REGIAO_SAUDE"
+VARIANTES_COLAPSO_UF = [
+    ("macro_regiao", "Protocolo A3: UF com <5 clusters colapsada na macrorregião de saúde", True),
+    ("balde_unico", "Balde único RESTO para toda UF com <5 clusters (implementação anterior)", False),
+    ("sem_colapso", "Sem colapso: 27 UFs como níveis próprios de FE", False),
+]
 
 
 def sha256(path: Path) -> str:
@@ -137,6 +149,35 @@ def bh_fdr(pvals: np.ndarray) -> np.ndarray:
     cummin = np.clip(cummin, 0, 1)
     q[order] = cummin
     return q
+
+
+def colapsar_uf_fe(df: pd.DataFrame, small_ufs: set[str], variante: str) -> pd.Series:
+    """Constrói o efeito fixo de UF sob uma das três variantes de colapso.
+
+    O registro A3 (`efeitos_fixos`) manda "colapsar UF com <5 clusters **em
+    região**". A variante primária implementa exatamente isso: cada UF pequena é
+    substituída pela sua macrorregião de saúde (`macro_regiao_saude`), com
+    prefixo `MACRO_` para impedir colisão com sigla de UF real. As outras duas
+    variantes existem apenas como sensibilidade publicada
+    (`A4_tabela_07_sensibilidade_colapso_uf.csv`), não como escolha aberta.
+
+    - `macro_regiao` (primária, protocolo A3): UF pequena -> `MACRO_<macrorregião>`.
+    - `balde_unico`: UF pequena -> `RESTO` (implementação anterior; mistura
+      macrorregiões distintas no mesmo nível de FE).
+    - `sem_colapso`: nenhuma UF é colapsada (27 níveis).
+    """
+    uf = df["sg_uf"].astype("string")
+    if variante == "sem_colapso":
+        return uf.astype(object)
+    if variante == "balde_unico":
+        return uf.where(~uf.isin(small_ufs), "RESTO").astype(object)
+    if variante != "macro_regiao":
+        raise ValueError(f"variante de colapso desconhecida: {variante}")
+    macro = df["macro_regiao_saude"].astype("string").fillna("").str.strip()
+    # Municípios sem macrorregião de saúde publicada na tipologia formam um
+    # nível próprio, explicitamente rotulado, em vez de herdar uma região.
+    macro = macro.where(macro.ne(""), MACRO_SEM_REGIAO)
+    return uf.where(~uf.isin(small_ufs), "MACRO_" + macro).astype(object)
 
 
 def prepare_df_primary() -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -174,7 +215,7 @@ def prepare_df_primary() -> tuple[pd.DataFrame, pd.DataFrame]:
     # Colapsar UF com <5 clusters (A3: colapsar UF com <5 clusters em região)
     clust = qm.groupby("sg_uf")["co_ibge_6d"].nunique()
     small_ufs_local = set(clust[clust < 5].index.tolist())
-    qm["uf_fe"] = qm["sg_uf"].where(~qm["sg_uf"].isin(small_ufs_local), "RESTO")
+    qm["uf_fe"] = colapsar_uf_fe(qm, small_ufs_local, COLAPSO_PRIMARIO)
     # Estrato categórico com referência interior_remoto (mais remoto)
     qm["estrato"] = pd.Categorical(qm["estrato"], categories=["interior_remoto", "capital", "metropolitano", "interior_proximo_polo"], ordered=False)
     # Extended: funil drop NA ibge (3057)
@@ -184,7 +225,7 @@ def prepare_df_primary() -> tuple[pd.DataFrame, pd.DataFrame]:
     ext["log_pop"] = np.log1p(ext["populacao_2010"].astype(float))
     ext["estoque_por_10k"] = ext["estoque_pre_por_10k"].astype(float)
     # uf_fe para extended também colapsado baseado no primário (para comparabilidade)
-    ext["uf_fe"] = ext["sg_uf"].where(~ext["sg_uf"].isin(small_ufs_local), "RESTO")
+    ext["uf_fe"] = colapsar_uf_fe(ext, small_ufs_local, COLAPSO_PRIMARIO)
     # estrato categorical same levels (capitals etc)
     ext["estrato"] = pd.Categorical(ext["estrato"], categories=["interior_remoto", "capital", "metropolitano", "interior_proximo_polo"], ordered=False)
 
@@ -360,7 +401,12 @@ def main() -> None:
     uf_clust = df_prim.groupby("sg_uf")["co_ibge_6d"].nunique().reset_index().rename(columns={"co_ibge_6d": "n_municipios"})
     uf_cells = df_prim.groupby("sg_uf")["outcome_alguma_confirmacao_ou_homologacao"].agg(["count", "mean"]).reset_index()
     uf_tab = uf_clust.merge(uf_cells, on="sg_uf")
-    uf_tab["uf_fe"] = np.where(uf_tab["n_municipios"] < 5, "RESTO", uf_tab["sg_uf"])
+    # Rótulo do FE efetivamente usado: UF pequena entra pela macrorregião de saúde.
+    mapa_uf_fe = (
+        df_prim.groupby("sg_uf", observed=True)["uf_fe"]
+        .agg(lambda s: ";".join(sorted(set(s.astype(str)))))
+    )
+    uf_tab["uf_fe"] = uf_tab["sg_uf"].map(mapa_uf_fe)
 
     # Monta tabela amostra consolidada (long) por estrato
     amostra_long = pd.concat([tab_prim, tab_ext], ignore_index=True)
@@ -495,6 +541,81 @@ def main() -> None:
     tmp = TABELA_MUNI_CURSO.with_suffix(".csv.tmp")
     tab_mc.to_csv(tmp, index=False)
     tmp.replace(TABELA_MUNI_CURSO)
+
+    # Sensibilidade ao colapso do FE de UF. A primária é a do protocolo A3
+    # (macrorregião de saúde) e está fixada em COLAPSO_PRIMARIO; as outras duas
+    # são publicadas lado a lado para tornar a escolha auditável, não para
+    # permitir troca depois de ver o coeficiente. Amostra, desfecho, cluster e
+    # referência (interior_remoto) são idênticos nas três.
+    z_alpha = scipy_stats.norm.ppf(1 - ALPHA / 2)
+    sens_colapso_rows = []
+    resumo_colapso: dict[str, Any] = {}
+    termos_estrato = ["estrato_capital", "estrato_metropolitano", "estrato_interior_proximo_polo"]
+    for variante, descricao, eh_primaria in VARIANTES_COLAPSO_UF:
+        df_var = df_prim.copy()
+        df_var["uf_fe"] = colapsar_uf_fe(df_prim, small_ufs, variante)
+        X_var = build_X(df_var, "minimal")
+        res_var = fit_lpm(y_prim, X_var, g_prim)
+        n_niveis = int(pd.Series(df_var["uf_fe"]).nunique())
+        for termo in termos_estrato:
+            sens_colapso_rows.append({
+                "variante": variante,
+                "descricao": descricao,
+                "primaria": bool(eh_primaria),
+                "termo": termo,
+                "estrato": termo.replace("estrato_", ""),
+                "referencia": "interior_remoto",
+                "coef": float(res_var.params[termo]),
+                "se_cluster": float(res_var.bse[termo]),
+                "ci_low": float(res_var.params[termo] - z_alpha * res_var.bse[termo]),
+                "ci_high": float(res_var.params[termo] + z_alpha * res_var.bse[termo]),
+                "p_valor": float(res_var.pvalues[termo]),
+                "n_niveis_uf_fe": n_niveis,
+                "n": int(len(y_prim)),
+                "n_clusters": int(g_prim.nunique()),
+            })
+        resumo_colapso[variante] = {
+            "descricao": descricao,
+            "primaria": bool(eh_primaria),
+            "n_niveis_uf_fe": n_niveis,
+            "coef_estrato": {t: float(res_var.params[t]) for t in termos_estrato},
+            "se_estrato": {t: float(res_var.bse[t]) for t in termos_estrato},
+            "p_estrato": {t: float(res_var.pvalues[t]) for t in termos_estrato},
+        }
+        if eh_primaria:
+            for termo in termos_estrato:
+                if not np.isclose(res_var.params[termo], res_lpm_min.params[termo], atol=1e-10):
+                    raise AssertionError(
+                        f"variante primária de colapso ({variante}) diverge do modelo principal em {termo}"
+                    )
+    df_sens_colapso = pd.DataFrame(sens_colapso_rows)
+    tmp = TABELA_SENS_COLAPSO.with_suffix(".csv.tmp")
+    df_sens_colapso.to_csv(tmp, index=False)
+    tmp.replace(TABELA_SENS_COLAPSO)
+
+    # Limite conhecido do colapso primário: municípios de UF pequena sem
+    # macrorregião de saúde publicada na tipologia caem num nível residual.
+    sem_macro = df_prim[
+        df_prim["sg_uf"].isin(small_ufs)
+        & df_prim["uf_fe"].astype(str).eq(f"MACRO_{MACRO_SEM_REGIAO}")
+    ]
+    if sem_macro.empty:
+        limite_sem_macro = "Todas as UFs pequenas têm macrorregião de saúde publicada na tipologia."
+    else:
+        lista_sem_macro = ", ".join(
+            f"{r['no_municipio']}/{r['sg_uf']}"
+            for _, r in sem_macro.drop_duplicates("co_ibge_6d").sort_values(["sg_uf", "co_ibge_6d"]).iterrows()
+        )
+        limite_sem_macro = (
+            f"Limite conhecido: os {sem_macro['co_ibge_6d'].nunique()} municípios de UF pequena sem macrorregião "
+            f"publicada na tipologia ({lista_sem_macro}; {len(sem_macro)} células, estratos "
+            f"{', '.join(sorted(set(sem_macro['estrato'].astype(str))))}) formam o nível residual "
+            f"MACRO_{MACRO_SEM_REGIAO}, que ainda agrega UFs de macrorregiões distintas."
+        )
+    aviso_sem_macro = (
+        "FE de UF segue o protocolo A3: UF com <5 clusters entra pela macrorregião de saúde. "
+        + limite_sem_macro
+    )
 
     # --------------------------------------------------
     # 3. Sensibilidades: full ajustado e separações
@@ -870,7 +991,7 @@ def main() -> None:
         "outcome": "alguma_confirmacao_ou_homologacao_na_celula (binário por célula; A1 APROVADO_CELULA; taxa por vaga proibida)",
         "modelos": {
             "primario_LPM_minimal": {
-                "formula": "outcome ~ estrato(4) + FE curso(16) + FE UF(colapsada RESTO para <5 clusters) com cluster município",
+                "formula": "outcome ~ estrato(4) + FE curso(16) + FE UF(UF com <5 clusters colapsada na macrorregião de saúde, conforme A3) com cluster município",
                 "n": int(len(df_prim)),
                 "n_clusters": int(g_prim.nunique()),
                 "outcome_medio": float(y_prim.mean()),
@@ -904,6 +1025,22 @@ def main() -> None:
                 "coef_estrato": {k: float(v) for k, v in res_wins.params.filter(like="estrato_").items()},
                 "coef_ivs": float(res_wins.params.get("ivs_2010", np.nan)),
                 "nota": "log_pop e estoque winsorizados p01-p99 como sensibilidade pre-especificada",
+            },
+            "sensibilidade_colapso_uf": {
+                "protocolo_A3": "curso (16) e UF (até 27, colapsar UF com <5 clusters em região)",
+                "variante_primaria": COLAPSO_PRIMARIO,
+                "ufs_colapsadas": sorted(small_ufs),
+                "niveis_uf_fe_primario": int(pd.Series(df_prim["uf_fe"]).nunique()),
+                "mapa_uf_pequena_para_fe": {
+                    uf: sorted(set(df_prim.loc[df_prim["sg_uf"] == uf, "uf_fe"].astype(str)))
+                    for uf in sorted(small_ufs)
+                },
+                "variantes": resumo_colapso,
+                "nota": (
+                    "Primária fixada no protocolo A3 (macrorregião de saúde), não escolhida após ver o "
+                    "coeficiente; balde único RESTO e ausência de colapso publicados como sensibilidade "
+                    "em A4_tabela_07_sensibilidade_colapso_uf.csv."
+                ),
             },
             "sensibilidade_ivs_quadratico": {
                 "coef_estrato": {k: float(v) for k, v in res_spline.params.filter(like="estrato_").items()},
@@ -944,6 +1081,7 @@ def main() -> None:
             "tabela_loo": str(TABELA_LOO.relative_to(ROOT)).replace("\\", "/"),
             "tabela_influencia": str(TABELA_INFLUENCIA.relative_to(ROOT)).replace("\\", "/"),
             "tabela_preditiva": str(TABELA_PRED.relative_to(ROOT)).replace("\\", "/"),
+            "tabela_sensibilidade_colapso_uf": str(TABELA_SENS_COLAPSO.relative_to(ROOT)).replace("\\", "/"),
             "figura_prob_estrato": str(FIG_PROB_ESTRATO.relative_to(ROOT)).replace("\\", "/"),
             "figura_ivs": str(FIG_IVS.relative_to(ROOT)).replace("\\", "/"),
             "figura_faixa": str(FIG_FAIXA.relative_to(ROOT)).replace("\\", "/"),
@@ -954,6 +1092,7 @@ def main() -> None:
             "Capital com G=18 <30: IC cluster nominal; wild bootstrap recomendado para subgrupo, não computado nesta entrega.",
             "Não ponderar por vagas; pesos por estrato alteram estimando.",
             "Cursos como exploração; FDR apenas para família 4 estratos.",
+            aviso_sem_macro,
         ],
     }
 
@@ -973,6 +1112,18 @@ def main() -> None:
     ame_rows_md = ""
     for _, row in ame_df[ame_df["termo"].str.startswith("estrato_")].iterrows():
         ame_rows_md += f"| {row['termo'].replace('estrato_', '').replace('_', ' ')} | {row['ame']:.3f} ({row['se_ame']:.3f}) | {row['ci_low']:.3f} a {row['ci_high']:.3f} |\n"
+
+    colapso_md = ""
+    for variante, _descricao, eh_primaria in VARIANTES_COLAPSO_UF:
+        r = resumo_colapso[variante]
+        marca = " **(primária)**" if eh_primaria else ""
+        colapso_md += (
+            f"| `{variante}`{marca} | {r['n_niveis_uf_fe']} | "
+            f"{r['coef_estrato']['estrato_capital']:+.4f} | "
+            f"{r['coef_estrato']['estrato_metropolitano']:+.4f} | "
+            f"{r['coef_estrato']['estrato_interior_proximo_polo']:+.4f} |\n"
+        )
+    celulas_uf_pequena = df_prim[df_prim["sg_uf"].isin(small_ufs)]["estrato"].value_counts()
 
     loo_md = ""
     if not df_loo.empty:
@@ -999,13 +1150,13 @@ def main() -> None:
 
 Primária 1295: outcome médio **{y_prim.mean():.1%}** (393/1295). Por estrato: capital {df_prim[df_prim['estrato']=='capital']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (73), metropolitano {df_prim[df_prim['estrato']=='metropolitano']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (265), interior próximo {df_prim[df_prim['estrato']=='interior_proximo_polo']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (811), remoto {df_prim[df_prim['estrato']=='interior_remoto']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (146). Ver `A4_tabela_01_amostra_construcao.csv` (por estrato) + `A4_tabela_00_construcao_steps.csv` (3323→3057→1295, 266 sem municipio, 29 fora quadro Ch1 com municipio).
 
-Faixa anunciada (descritiva, não causal): FAIXA1 31.6% (n=291), FAIXA2 37.4% (465), FAIXA3 23.6% (539) — ver `A4_tabela_01b_amostra_faixa.csv`. IVS 2010 mediano {df_prim['ivs_2010'].median():.3f}; Q1–Q4 prevalência ver figura 02; correlação IVS–outcome {df_prim['ivs_2010'].corr(df_prim['outcome_alguma_confirmacao_ou_homologacao']):.2f} (associativa). Estoque pré médio {df_prim['estoque_especialistas_pre_12m_media'].mean():.1f} por município; log(pop) mediano {df_prim['log_pop'].median():.2f}. Curso distribuição ver `A4_tabela_01c_amostra_curso.csv` (16 cursos, min 22 max 188), UF ver `A4_tabela_01d_amostra_uf.csv` (27 UFs, 8 com <5 clusters colapsadas em RESTO: {', '.join(sorted(small_ufs))}) para FE.
+Faixa anunciada (descritiva, não causal): FAIXA1 31.6% (n=291), FAIXA2 37.4% (465), FAIXA3 23.6% (539) — ver `A4_tabela_01b_amostra_faixa.csv`. IVS 2010 mediano {df_prim['ivs_2010'].median():.3f}; Q1–Q4 prevalência ver figura 02; correlação IVS–outcome {df_prim['ivs_2010'].corr(df_prim['outcome_alguma_confirmacao_ou_homologacao']):.2f} (associativa). Estoque pré médio {df_prim['estoque_especialistas_pre_12m_media'].mean():.1f} por município; log(pop) mediano {df_prim['log_pop'].median():.2f}. Curso distribuição ver `A4_tabela_01c_amostra_curso.csv` (16 cursos, min 22 max 188), UF ver `A4_tabela_01d_amostra_uf.csv` (27 UFs, 8 com <5 clusters colapsadas na macrorregião de saúde conforme A3 — {', '.join(sorted(small_ufs))} —, resultando em {pd.Series(df_prim['uf_fe']).nunique()} níveis de FE) para FE.
 
 População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, reforçando que Ch2 é cadastro reserva sem capacidade imediata numérica; análise conjunta mantém FE de chamada. Construção sem escolher amostra por resultado; 266 sem municipio e 29 fora quadro mantidos fora da primária por definição prévia.
 
 ## 2. Modelo primário exatamente como congelado em A3
 
-**Especificação:** `outcome ~ estrato (ref. interior_remoto) + FE curso (16) + FE UF (colapsada)`, LPM com cluster município (G=368, G−1 gl). Logit AME mesma spec como alternativo.
+**Especificação:** `outcome ~ estrato (ref. interior_remoto) + FE curso (16) + FE UF (UF com <5 clusters colapsada na macrorregião de saúde, como manda o registro A3)`, LPM com cluster município (G=368, G−1 gl). Logit AME mesma spec como alternativo.
 
 **LPM minimal — coeficientes estrato (pp vs interior_remoto):**
 
@@ -1025,6 +1176,13 @@ Concordância LPM–Logit: gradiente metro > capital > próximo > remoto (ref.) 
 **Robustez de definição e unidade.** Separando o funil, o contraste metropolitano vs remoto é {resultados_estagios['alguma_confirmacao']['coef_estrato']['estrato_metropolitano']:.3f} para alguma confirmação e {resultados_estagios['alguma_homologacao']['coef_estrato']['estrato_metropolitano']:.3f} para alguma homologação. Colapsando múltiplos CNES para 1.184 células município–curso, o contraste é {res_mc.params['estrato_metropolitano']:.3f} (p={res_mc.pvalues['estrato_metropolitano']:.3f}). O gradiente não depende da união dos estágios nem do peso implícito de municípios com mais de um CNES.
 
 ## 3. Sensibilidade e separações (sem causalidade)
+
+- **Colapso do FE de UF.** O registro A3 manda "colapsar UF com <5 clusters **em região**". A primária implementa isso: cada uma das {len(small_ufs)} UFs pequenas entra pela sua macrorregião de saúde. As três variantes, com a mesma amostra (N=1295), o mesmo desfecho, o mesmo cluster (G=368) e a mesma referência `interior_remoto`:
+
+| Variante do colapso | Níveis de FE UF | Capital | Metropolitano | Interior próximo |
+|---|---:|---:|---:|---:|
+{colapso_md}
+A escolha da primária é a do protocolo, não uma seleção posterior ao resultado; as três ficam publicadas em `A4_tabela_07_sensibilidade_colapso_uf.csv` com EP cluster, p-valor, níveis de FE e N. O balde único `RESTO`, usado antes da auditoria, punha num único nível de FE quatro macrorregiões, com {int(celulas_uf_pequena.get('capital', 0))} células de capital contra {int(celulas_uf_pequena.get('interior_remoto', 0))} de interior remoto — exatamente a comparação entre estados que o FE de UF deveria impedir. O contraste metropolitano é estável entre as três variantes; o de capital é o que se move. {limite_sem_macro}
 
 - **Ajuste completo** (+ IVS linear, log pop, estoque/10k, faixa): estrato metro {res_lpm_full.params['estrato_metropolitano']:.3f} (p={res_lpm_full.pvalues['estrato_metropolitano']:.3f}), capital {res_lpm_full.params['estrato_capital']:.3f} (ns), próximo {res_lpm_full.params['estrato_interior_proximo_polo']:.3f} (ns); IVS {res_lpm_full.params['ivs_2010']:.3f} (p={res_lpm_full.pvalues['ivs_2010']:.3f}, ns); log pop {res_lpm_full.params['log_pop']:.3f} (p={res_lpm_full.pvalues['log_pop']:.3f}); faixa FAIXA2 vs FAIXA1 {res_lpm_full.params.get('faixa_FAIXA 2', 0):.3f} (ns), FAIXA3 vs FAIXA1 {res_lpm_full.params.get('faixa_FAIXA 3', 0):.3f} (ns). Com ajuste, gradiente atenua — UF e curso capturam parte da variação territorial. Ver `A4_tabela_03b_ajuste_completo.csv`.
 

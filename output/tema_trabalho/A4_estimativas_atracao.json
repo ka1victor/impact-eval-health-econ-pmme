@@ -12,76 +12,76 @@
   "outcome": "alguma_confirmacao_ou_homologacao_na_celula (binário por célula; A1 APROVADO_CELULA; taxa por vaga proibida)",
   "modelos": {
     "primario_LPM_minimal": {
-      "formula": "outcome ~ estrato(4) + FE curso(16) + FE UF(colapsada RESTO para <5 clusters) com cluster município",
+      "formula": "outcome ~ estrato(4) + FE curso(16) + FE UF(UF com <5 clusters colapsada na macrorregião de saúde, conforme A3) com cluster município",
       "n": 1295,
       "n_clusters": 368,
       "outcome_medio": 0.30347490347490347,
-      "r2": 0.2375696807443819,
+      "r2": 0.2609059222097405,
       "coef_estrato": {
-        "estrato_capital": 0.23177834639585423,
-        "estrato_interior_proximo_polo": 0.12660196219154224,
-        "estrato_metropolitano": 0.2942337986639331
+        "estrato_capital": 0.3264038045413463,
+        "estrato_interior_proximo_polo": 0.12065001700234028,
+        "estrato_metropolitano": 0.2792856656562696
       },
       "se_estrato": {
-        "estrato_capital": 0.08602026249868958,
-        "estrato_interior_proximo_polo": 0.043146666096024036,
-        "estrato_metropolitano": 0.060638512016031515
+        "estrato_capital": 0.07179160434535373,
+        "estrato_interior_proximo_polo": 0.043120940431196554,
+        "estrato_metropolitano": 0.05855041209586844
       },
       "p_estrato": {
-        "estrato_capital": 0.007050232138949098,
-        "estrato_interior_proximo_polo": 0.0033438331726470716,
-        "estrato_metropolitano": 1.2206273430886325e-06
+        "estrato_capital": 5.453355294769253e-06,
+        "estrato_interior_proximo_polo": 0.005142887906441984,
+        "estrato_metropolitano": 1.842227959023983e-06
       }
     },
     "alternativo_logit_AME": {
       "convergiu": true,
       "metodo": "lbfgs",
       "ame_estrato": {
-        "estrato_capital": 0.2500513199434053,
-        "estrato_interior_proximo_polo": 0.10773369376352389,
-        "estrato_metropolitano": 0.29276054704150734
+        "estrato_capital": 0.3606285380634823,
+        "estrato_interior_proximo_polo": 0.10092990592161327,
+        "estrato_metropolitano": 0.2784158060001861
       },
       "se_ame_estrato": {
-        "estrato_capital": 0.10068306858374182,
-        "estrato_interior_proximo_polo": 0.040208127636437906,
-        "estrato_metropolitano": 0.06413141532706981
+        "estrato_capital": 0.07360973696592635,
+        "estrato_interior_proximo_polo": 0.04021390837182188,
+        "estrato_metropolitano": 0.06195583710853281
       }
     },
     "robustez_estagios_funil": {
       "alguma_confirmacao": {
         "media": 0.29884169884169887,
         "coef_estrato": {
-          "estrato_capital": 0.22439672340533548,
-          "estrato_interior_proximo_polo": 0.12247552438501765,
-          "estrato_metropolitano": 0.2852266415029401
+          "estrato_capital": 0.31890524426043776,
+          "estrato_interior_proximo_polo": 0.1164936983140095,
+          "estrato_metropolitano": 0.27020163836977434
         },
         "se_estrato": {
-          "estrato_capital": 0.0860237009469753,
-          "estrato_interior_proximo_polo": 0.04279867692757878,
-          "estrato_metropolitano": 0.0596548765583403
+          "estrato_capital": 0.07158108586389432,
+          "estrato_interior_proximo_polo": 0.042754724089790475,
+          "estrato_metropolitano": 0.057474840818299136
         },
         "p_estrato": {
-          "estrato_capital": 0.009092796762315423,
-          "estrato_interior_proximo_polo": 0.0042142057269373805,
-          "estrato_metropolitano": 1.741829414887297e-06
+          "estrato_capital": 8.383035829122552e-06,
+          "estrato_interior_proximo_polo": 0.0064360385769317175,
+          "estrato_metropolitano": 2.586168316173307e-06
         }
       },
       "alguma_homologacao": {
         "media": 0.19305019305019305,
         "coef_estrato": {
-          "estrato_capital": 0.13397497852519183,
-          "estrato_interior_proximo_polo": 0.10458582107552017,
-          "estrato_metropolitano": 0.24950473866121553
+          "estrato_capital": 0.22514299238467542,
+          "estrato_interior_proximo_polo": 0.10017035262808492,
+          "estrato_metropolitano": 0.23811355238125362
         },
         "se_estrato": {
-          "estrato_capital": 0.06659786793486838,
-          "estrato_interior_proximo_polo": 0.03713230768349194,
-          "estrato_metropolitano": 0.04983099854396482
+          "estrato_capital": 0.04474238504554004,
+          "estrato_interior_proximo_polo": 0.0369867340402993,
+          "estrato_metropolitano": 0.04802265347669896
         },
         "p_estrato": {
-          "estrato_capital": 0.044251495234235445,
-          "estrato_interior_proximo_polo": 0.004853914988053963,
-          "estrato_metropolitano": 5.527957491565378e-07
+          "estrato_capital": 4.854282749522593e-07,
+          "estrato_interior_proximo_polo": 0.006763337337113549,
+          "estrato_metropolitano": 7.109113385360458e-07
         }
       }
     },
@@ -89,201 +89,308 @@
       "n": 1184,
       "n_clusters": 368,
       "coef_estrato": {
-        "estrato_capital": 0.270276854548744,
-        "estrato_interior_proximo_polo": 0.13324156365238882,
-        "estrato_metropolitano": 0.3309439855475308
+        "estrato_capital": 0.3823826463775998,
+        "estrato_interior_proximo_polo": 0.1277443935838482,
+        "estrato_metropolitano": 0.31554234065184256
       },
       "se_estrato": {
-        "estrato_capital": 0.09136849672530235,
-        "estrato_interior_proximo_polo": 0.04383672724612816,
-        "estrato_metropolitano": 0.060762084089953594
+        "estrato_capital": 0.07907658615863167,
+        "estrato_interior_proximo_polo": 0.043832085628609296,
+        "estrato_metropolitano": 0.05841526456373671
       },
       "p_estrato": {
-        "estrato_capital": 0.003095449371748851,
-        "estrato_interior_proximo_polo": 0.002369742321792377,
-        "estrato_metropolitano": 5.135495352883244e-08
+        "estrato_capital": 1.32745409712598e-06,
+        "estrato_interior_proximo_polo": 0.0035636871019488615,
+        "estrato_metropolitano": 6.60084653029743e-08
       },
       "nota": "colapso por municipio-curso evita peso implicito de multiplos CNES"
     },
     "sensibilidade_full": {
       "coef_estrato_full": {
-        "estrato_capital": 0.0658145014798212,
-        "estrato_interior_proximo_polo": 0.0766405541879451,
-        "estrato_metropolitano": 0.1976701620658174
+        "estrato_capital": 0.19813836508812943,
+        "estrato_interior_proximo_polo": 0.08245836781655516,
+        "estrato_metropolitano": 0.2085285439175969
       },
-      "coef_ivs": -0.04306797004100516,
-      "coef_log_pop": 0.04636284575290972,
+      "coef_ivs": -0.24486226212600726,
+      "coef_log_pop": 0.035815525076022,
       "coef_faixa": {
-        "faixa_FAIXA 2": 0.020843481808137977,
-        "faixa_FAIXA 3": -0.07008200339608861
+        "faixa_FAIXA 2": -0.010989007926539096,
+        "faixa_FAIXA 3": -0.09993296505602194
       }
     },
     "sensibilidade_winsorizado_p99": {
       "coef_estrato": {
-        "estrato_capital": 0.07513133190077942,
-        "estrato_interior_proximo_polo": 0.08048638266436002,
-        "estrato_metropolitano": 0.20198643393693036
+        "estrato_capital": 0.2051837480993767,
+        "estrato_interior_proximo_polo": 0.08554480804238852,
+        "estrato_metropolitano": 0.2117372805222849
       },
-      "coef_ivs": -0.039733332630874606,
+      "coef_ivs": -0.2432238906936755,
       "nota": "log_pop e estoque winsorizados p01-p99 como sensibilidade pre-especificada"
+    },
+    "sensibilidade_colapso_uf": {
+      "protocolo_A3": "curso (16) e UF (até 27, colapsar UF com <5 clusters em região)",
+      "variante_primaria": "macro_regiao",
+      "ufs_colapsadas": [
+        "AL",
+        "AP",
+        "DF",
+        "ES",
+        "PB",
+        "PE",
+        "RR",
+        "SE"
+      ],
+      "niveis_uf_fe_primario": 24,
+      "mapa_uf_pequena_para_fe": {
+        "AL": [
+          "MACRO_NORDESTE",
+          "MACRO_SEM_REGIAO_SAUDE"
+        ],
+        "AP": [
+          "MACRO_NORTE",
+          "MACRO_SEM_REGIAO_SAUDE"
+        ],
+        "DF": [
+          "MACRO_CENTRO-OESTE"
+        ],
+        "ES": [
+          "MACRO_SEM_REGIAO_SAUDE",
+          "MACRO_SUDESTE"
+        ],
+        "PB": [
+          "MACRO_NORDESTE"
+        ],
+        "PE": [
+          "MACRO_NORDESTE"
+        ],
+        "RR": [
+          "MACRO_NORTE"
+        ],
+        "SE": [
+          "MACRO_NORDESTE"
+        ]
+      },
+      "variantes": {
+        "macro_regiao": {
+          "descricao": "Protocolo A3: UF com <5 clusters colapsada na macrorregião de saúde",
+          "primaria": true,
+          "n_niveis_uf_fe": 24,
+          "coef_estrato": {
+            "estrato_capital": 0.3264038045413463,
+            "estrato_metropolitano": 0.2792856656562696,
+            "estrato_interior_proximo_polo": 0.12065001700234028
+          },
+          "se_estrato": {
+            "estrato_capital": 0.07179160434535373,
+            "estrato_metropolitano": 0.05855041209586844,
+            "estrato_interior_proximo_polo": 0.043120940431196554
+          },
+          "p_estrato": {
+            "estrato_capital": 5.453355294769253e-06,
+            "estrato_metropolitano": 1.842227959023983e-06,
+            "estrato_interior_proximo_polo": 0.005142887906441984
+          }
+        },
+        "balde_unico": {
+          "descricao": "Balde único RESTO para toda UF com <5 clusters (implementação anterior)",
+          "primaria": false,
+          "n_niveis_uf_fe": 20,
+          "coef_estrato": {
+            "estrato_capital": 0.23177834639585423,
+            "estrato_metropolitano": 0.2942337986639331,
+            "estrato_interior_proximo_polo": 0.12660196219154224
+          },
+          "se_estrato": {
+            "estrato_capital": 0.08602026249868958,
+            "estrato_metropolitano": 0.060638512016031515,
+            "estrato_interior_proximo_polo": 0.043146666096024036
+          },
+          "p_estrato": {
+            "estrato_capital": 0.007050232138949098,
+            "estrato_metropolitano": 1.2206273430886325e-06,
+            "estrato_interior_proximo_polo": 0.0033438331726470716
+          }
+        },
+        "sem_colapso": {
+          "descricao": "Sem colapso: 27 UFs como níveis próprios de FE",
+          "primaria": false,
+          "n_niveis_uf_fe": 27,
+          "coef_estrato": {
+            "estrato_capital": 0.3357517553458076,
+            "estrato_metropolitano": 0.2732668897701397,
+            "estrato_interior_proximo_polo": 0.12003029077521564
+          },
+          "se_estrato": {
+            "estrato_capital": 0.06856535667961851,
+            "estrato_metropolitano": 0.059010726882028554,
+            "estrato_interior_proximo_polo": 0.043135226658562925
+          },
+          "p_estrato": {
+            "estrato_capital": 9.740326456941315e-07,
+            "estrato_metropolitano": 3.642551238164305e-06,
+            "estrato_interior_proximo_polo": 0.005391673389522403
+          }
+        }
+      },
+      "nota": "Primária fixada no protocolo A3 (macrorregião de saúde), não escolhida após ver o coeficiente; balde único RESTO e ausência de colapso publicados como sensibilidade em A4_tabela_07_sensibilidade_colapso_uf.csv."
     },
     "sensibilidade_ivs_quadratico": {
       "coef_estrato": {
-        "estrato_capital": 0.06579696430326236,
-        "estrato_interior_proximo_polo": 0.07761777319324042,
-        "estrato_metropolitano": 0.19924563079649854
+        "estrato_capital": 0.19840981019965623,
+        "estrato_interior_proximo_polo": 0.0839202402115133,
+        "estrato_metropolitano": 0.21088195653212782
       },
-      "coef_ivs_linear": -0.517582328532582,
-      "coef_ivs_sq": 0.6357080594390008,
-      "p_ivs_sq": 0.6772152894228458,
+      "coef_ivs_linear": -0.9568383515654444,
+      "coef_ivs_sq": 0.9523862853136568,
+      "p_ivs_sq": 0.5299122492234005,
       "nota": "IVS linear + quadrático como proxy de spline; p não significativo mantém linear"
     }
   },
   "influencia": {
     "leave_one_UF_range": {
       "min": {
-        "estrato_capital": 0.20189032120908718,
-        "estrato_interior_proximo_polo": 0.09739144842225146,
-        "estrato_metropolitano": 0.26844181516552723
+        "estrato_capital": 0.2987181555176249,
+        "estrato_interior_proximo_polo": 0.08728737639453756,
+        "estrato_metropolitano": 0.25251511991717934
       },
       "max": {
-        "estrato_capital": 0.2869997408471157,
-        "estrato_interior_proximo_polo": 0.14541504967025082,
-        "estrato_metropolitano": 0.32963803977573874
+        "estrato_capital": 0.3614058801552438,
+        "estrato_interior_proximo_polo": 0.13905169480103421,
+        "estrato_metropolitano": 0.3153753212105753
       },
       "std": {
-        "estrato_capital": 0.018213059816959302,
-        "estrato_interior_proximo_polo": 0.007653949303040096,
-        "estrato_metropolitano": 0.011949368770657455
+        "estrato_capital": 0.016070757058100744,
+        "estrato_interior_proximo_polo": 0.008233003010803371,
+        "estrato_metropolitano": 0.011198293992736056
       }
     },
     "leave_one_curso_range": {
       "min": {
-        "estrato_capital": 0.17072685499638998,
-        "estrato_interior_proximo_polo": 0.09640072209391094,
-        "estrato_metropolitano": 0.27028462294936095
+        "estrato_capital": 0.27328782804938057,
+        "estrato_interior_proximo_polo": 0.08963548525123585,
+        "estrato_metropolitano": 0.2549443056096732
       },
       "max": {
-        "estrato_capital": 0.26842834122614745,
-        "estrato_interior_proximo_polo": 0.1591215700475169,
-        "estrato_metropolitano": 0.3235616877477595
+        "estrato_capital": 0.3620274235486141,
+        "estrato_interior_proximo_polo": 0.15624529344893126,
+        "estrato_metropolitano": 0.31043555941686063
       },
       "std": {
-        "estrato_capital": 0.024132449266104857,
-        "estrato_interior_proximo_polo": 0.014070122249232868,
-        "estrato_metropolitano": 0.013581658213308171
+        "estrato_capital": 0.02334933800146104,
+        "estrato_interior_proximo_polo": 0.01474486627070023,
+        "estrato_metropolitano": 0.01349460044338078
       }
     },
     "leave_one_municipio_metropolitano": {
-      "estrato_metropolitano_leave_one_mun_min": 0.28040615959032356,
-      "max": 0.3205087901075279,
-      "sd": 0.0035032357606737392,
-      "base": 0.2942337986639331
+      "estrato_metropolitano_leave_one_mun_min": 0.2649752511096561,
+      "max": 0.3053889464238234,
+      "sd": 0.003375576412045917,
+      "base": 0.2792856656562696
     },
     "top_influentes": [
       {
-        "co_ibge_6d": "160030",
+        "co_ibge_6d": "130260",
         "termo": "estrato_capital",
-        "coef_excluido": 0.274607437777017,
-        "delta": 0.04282909138116278,
-        "dfbeta": 0.4978953811238978,
-        "n_excluido": 8
+        "coef_excluido": 0.3652537537153505,
+        "delta": 0.038849949174004195,
+        "dfbeta": 0.5411489202430467,
+        "n_excluido": 5
       },
       {
         "co_ibge_6d": "231290",
         "termo": "estrato_metropolitano",
-        "coef_excluido": 0.3205087901075279,
-        "delta": 0.026274991443594797,
-        "dfbeta": 0.43330534622367145,
+        "coef_excluido": 0.3053889464238234,
+        "delta": 0.026103280767553805,
+        "dfbeta": 0.44582573944677256,
         "n_excluido": 21
       },
       {
-        "co_ibge_6d": "140010",
+        "co_ibge_6d": "120040",
         "termo": "estrato_capital",
-        "coef_excluido": 0.2660172053070632,
-        "delta": 0.03423885891120895,
-        "dfbeta": 0.3980324857963616,
-        "n_excluido": 15
+        "coef_excluido": 0.35636091089879807,
+        "delta": 0.029957106357451746,
+        "dfbeta": 0.41727868642331767,
+        "n_excluido": 10
       },
       {
         "co_ibge_6d": "312670",
         "termo": "estrato_interior_proximo_polo",
-        "coef_excluido": 0.14366761239557108,
-        "delta": 0.017065650204028837,
-        "dfbeta": 0.3955265087237282,
+        "coef_excluido": 0.13738937393125086,
+        "delta": 0.016739356928910584,
+        "dfbeta": 0.38819554400998685,
         "n_excluido": 8
       },
       {
         "co_ibge_6d": "110020",
         "termo": "estrato_capital",
-        "coef_excluido": 0.2023379653007366,
-        "delta": -0.029440381095117624,
-        "dfbeta": -0.34224937520466314,
+        "coef_excluido": 0.3023889219147851,
+        "delta": -0.024014882626561207,
+        "dfbeta": -0.33450823178484135,
         "n_excluido": 5
-      },
-      {
-        "co_ibge_6d": "251080",
-        "termo": "estrato_capital",
-        "coef_excluido": 0.2583781456942855,
-        "delta": 0.026599799298431287,
-        "dfbeta": 0.30922713469790336,
-        "n_excluido": 10
-      },
-      {
-        "co_ibge_6d": "230020",
-        "termo": "estrato_interior_proximo_polo",
-        "coef_excluido": 0.1396925133436968,
-        "delta": 0.013090551152154573,
-        "dfbeta": 0.3033965851039616,
-        "n_excluido": 4
       },
       {
         "co_ibge_6d": "140047",
         "termo": "estrato_capital",
-        "coef_excluido": 0.2062912517664852,
-        "delta": -0.025487094629369045,
-        "dfbeta": -0.29629175602384744,
+        "coef_excluido": 0.3038050302829851,
+        "delta": -0.02259877425836121,
+        "dfbeta": -0.31478296751316126,
         "n_excluido": 8
       },
       {
-        "co_ibge_6d": "130260",
+        "co_ibge_6d": "230020",
+        "termo": "estrato_interior_proximo_polo",
+        "coef_excluido": 0.1335252454652467,
+        "delta": 0.01287522846290641,
+        "dfbeta": 0.29858412952403085,
+        "n_excluido": 4
+      },
+      {
+        "co_ibge_6d": "410690",
         "termo": "estrato_capital",
-        "coef_excluido": 0.25637616464353763,
-        "delta": 0.024597818247683395,
-        "dfbeta": 0.2859537687188308,
-        "n_excluido": 5
+        "coef_excluido": 0.30648176958018003,
+        "delta": -0.01992203496116629,
+        "dfbeta": -0.2774981161492266,
+        "n_excluido": 2
       },
       {
         "co_ibge_6d": "312670",
         "termo": "estrato_metropolitano",
-        "coef_excluido": 0.3101249736462118,
-        "delta": 0.015891174982278655,
-        "dfbeta": 0.262064065458555,
+        "coef_excluido": 0.29489870588368083,
+        "delta": 0.015613040227411223,
+        "dfbeta": 0.2666597837406672,
         "n_excluido": 8
+      },
+      {
+        "co_ibge_6d": "140010",
+        "termo": "estrato_capital",
+        "coef_excluido": 0.30812320587863506,
+        "delta": -0.018280598662711256,
+        "dfbeta": -0.25463421286383825,
+        "n_excluido": 15
       }
     ]
   },
   "validacao_preditiva": [
     {
       "modelo": "LPM_minimal",
-      "auc_media_out": 0.7566283746903585,
-      "auc_sd_out": 0.02058950288300658,
-      "auc_insample": 0.7984772318229775,
-      "brier_media_out": 0.1771403814080017,
-      "brier_sd_out": 0.007971768791205841,
-      "brier_insample": 0.16045728483891625,
+      "auc_media_out": 0.7743316201105938,
+      "auc_sd_out": 0.02636254333861652,
+      "auc_insample": 0.8120743837556349,
+      "brier_media_out": 0.17030925835085137,
+      "brier_sd_out": 0.007335312743109348,
+      "brier_insample": 0.1553670023284286,
       "n_splits": 5,
       "grupos": "municipio",
       "nota": "out-of-sample por municipio; in-sample AUC indica overfit FE"
     },
     {
       "modelo": "Logit_minimal",
-      "auc_media_out": 0.7563289239350743,
-      "auc_sd_out": 0.02128678677480949,
-      "auc_insample": 0.8007340205254933,
-      "brier_media_out": 0.1787456170375191,
-      "brier_sd_out": 0.010365346093991396,
-      "brier_insample": 0.15851050910804176,
+      "auc_media_out": 0.7752754193959429,
+      "auc_sd_out": 0.027595776963467263,
+      "auc_insample": 0.8150237244912352,
+      "brier_media_out": 0.17063614057780604,
+      "brier_sd_out": 0.009289221115592031,
+      "brier_insample": 0.15251432989999303,
       "n_splits": 5,
       "grupos": "municipio",
       "nota": "out-of-sample por municipio; in-sample AUC indica overfit FE"
@@ -337,6 +444,7 @@
     "tabela_loo": "output/tema_trabalho/A4_tabela_04_leave_one_out.csv",
     "tabela_influencia": "output/tema_trabalho/A4_tabela_05_influencia_municipal.csv",
     "tabela_preditiva": "output/tema_trabalho/A4_tabela_06_validacao_preditiva.csv",
+    "tabela_sensibilidade_colapso_uf": "output/tema_trabalho/A4_tabela_07_sensibilidade_colapso_uf.csv",
     "figura_prob_estrato": "output/tema_trabalho/A4_figura_01_prob_ajustada_estrato.png",
     "figura_ivs": "output/tema_trabalho/A4_figura_02_gradiente_ivs.png",
     "figura_faixa": "output/tema_trabalho/A4_figura_03_faixa_descritiva.png"
@@ -346,6 +454,7 @@
     "IVS linear não significativo; gradiente descritivo.",
     "Capital com G=18 <30: IC cluster nominal; wild bootstrap recomendado para subgrupo, não computado nesta entrega.",
     "Não ponderar por vagas; pesos por estrato alteram estimando.",
-    "Cursos como exploração; FDR apenas para família 4 estratos."
+    "Cursos como exploração; FDR apenas para família 4 estratos.",
+    "FE de UF segue o protocolo A3: UF com <5 clusters entra pela macrorregião de saúde. Limite conhecido: os 4 municípios de UF pequena sem macrorregião publicada na tipologia (UNIAO DOS PALMARES/AL, OIAPOQUE/AP, CACHOEIRO DE ITAPEMIRIM/ES, LINHARES/ES; 6 células, estratos interior_proximo_polo, interior_remoto) formam o nível residual MACRO_SEM_REGIAO_SAUDE, que ainda agrega UFs de macrorregiões distintas."
   ]
 }
