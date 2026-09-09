@@ -15,6 +15,34 @@
 - **Visual** identifica a figura pelo código de proveniência (`F1`…`F6`).
 - **Nota** não vai ao slide: é fala do apresentador e defesa antecipada de arguição.
 
+## Restrições medidas no template Insper
+
+Verificadas em 09/09/2026 renderizando o próprio `PEE__Modelo_econômico.pptx`.
+Não são preferências: são limites do master que o deck herda.
+
+| Restrição | Valor | Consequência |
+|---|---|---|
+| Título em uma linha | **~60 caracteres** | acima disso o texto avança sobre o logo Insper, no canto superior direito |
+| Faixa de título | 0,61 polegada de altura, uma linha | título de duas linhas exige ampliar a faixa no master, alteração única |
+| Equações nativas | OMML com fallback em imagem | ver nota abaixo |
+
+Nove dos títulos deste documento excedem 60 caracteres. Na montagem do deck,
+cada um é resolvido por encurtamento ou, quando o takeaway não sobrevive ao
+corte, por faixa de duas linhas. O takeaway prevalece sobre o limite: título
+curto que perde a afirmação é pior que faixa maior.
+
+> [!IMPORTANT]
+> **Equações não devem ser inseridas como equação nativa do PowerPoint.**
+> As equações do deck anterior são OMML dentro de `mc:AlternateContent`, com uma
+> imagem em `mc:Fallback`. O PowerPoint exibe a equação; qualquer outro
+> renderizador exibe a imagem de fallback, que fica desatualizada após uma
+> edição. Na prática isso torna a conferência visual não confiável justamente
+> nos slides 9 a 11, que são os mais densos em notação.
+>
+> Decisão: **equação entra como imagem renderizada em LaTeX**, gerada por script
+> em `output/`. Ganha-se tipografia melhor, conferência visual confiável e
+> proveniência; perde-se a edição por clique, que não é necessária.
+
 ---
 
 ## Slide 1 — Capa
