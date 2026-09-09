@@ -1,9 +1,13 @@
 # Próximas etapas
 
-> O ciclo 1 foi concluído como análise associativa de implementação. O resultado
-> principal é a atração administrativa por território (A4); a dinâmica agregada
-> do CNES é secundária (A5). Um upgrade causal exige novo portão e protocolo.
-> O ciclo 3 continua congelado até maturidade.
+> **Núcleo causal vigente: A8 — cutoff de escore de seleção.** O ciclo 1
+> permanece como análise associativa de implementação: A4 é motivação
+> descritiva do gradiente territorial e A5 é evidência associativa de apêndice.
+> A RDD da bolsa pelo IVS está arquivada por ausência de primeiro estágio e o
+> pedido administrativo foi cancelado sem envio. O ciclo 3 continua congelado
+> até maturidade. Decisão canônica em
+> `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`; portões
+> executados em `docs/06_execucao/33_status_execucao_plano_causal.md`.
 
 ## Fila imediata — tema de atração e provimento fora das capitais
 
@@ -28,7 +32,7 @@
 - [x] A5 — estimar a evolução do estoque cadastrado com referência limpa em 202506, follow-up 202603 e amostra confirmatória de 587 células/295 municípios. Estudo dinâmico com FE célula, curso–mês e UF–mês; resultado secundário associativo, sem linguagem de provimento causal ou retenção.
 - [x] A6 — executar red team, matriz afirmação–evidência–limite, síntese e manifesto reproduzível.
 
-## Fila imediata — RDD do adicional de bolsa
+## Trilha encerrada — RDD do adicional de bolsa
 
 - [x] Retirar da camada editorial a linguagem causal não sustentada pela DDD.
 - [x] Auditar a viabilidade de salário, IVS, preenchimento e provimento
@@ -44,21 +48,33 @@
   sem enviar pedido nem versionar futuros microdados administrativos.
 - [x] Implementar o controlador fail-closed que bloqueia R2–R4 enquanto R1 não
   for aprovado e registra o estado executado do plano causal.
-- [ ] Submeter, após escolha do canal pelo autor, os pedidos de vaga/regra IVS
-  e de universo de inscrições/eventos; o pacote está pronto, mas não enviado.
-- [ ] R1 — recuperar a running variable administrativa exata, vintagem,
-  precisão, arredondamento e cutoffs da grade de 2025.
-- [ ] R1 — reproduzir 100% das faixas anunciadas ou documentar exceções
-  normativas anteriores aos outcomes.
-- [ ] R2 — medir suporte municipal, mass points, MDE e concentração sem abrir
-  outcomes.
-- [ ] R2 — construir matriz de cointervenções do Agora Tem Especialistas e
-  decidir se o cutoff isola bolsa ou pacote.
-- [ ] R3 — congelar amostra, cutoff, janela, outcomes, inferência e hashes.
 - [x] Antes de R3, reconciliar as 678 vagas imediatas com alocações e
   homologações no grão município–CNES–curso–chamada por meio de A1.
-- [ ] R4 — estimar procura/alocação somente se R1–R3 passarem.
-- [ ] R5/R6 — manter CNES e SIH/SIA condicionados aos portões anteriores.
+- [x] **Encerrar a trilha.** O pedido administrativo foi `CANCELADO_NAO_ENVIADO`
+  e a RDD-IVS ficou `ARQUIVADO_SEM_PRIMEIRO_ESTAGIO`. R1 a R6 e a submissão dos
+  pedidos deixam de ser fila: nenhum resultado do trabalho depende de resposta
+  do Ministério. O pacote de solicitação e a triagem permanecem versionados,
+  prontos, caso o autor decida retomar a pergunta da bolsa no futuro.
+
+## Fila imediata — núcleo causal A8 (cutoff de escore)
+
+- [x] A7 — auditar o cutoff de seleção como diagnóstico exploratório; o recorte
+  amplo misturava empates e gaps maiores, o que motivou o A8.
+- [x] A8-P0 — congelar protocolo, amostra, tratamento, outcomes, inferência e
+  linguagem proibida, registrando que o protocolo é **retrospectivo**, pois o
+  A7 já havia aberto os outcomes.
+- [x] A8-P1/P2 — suporte e recorte estrito: 36 pares em 2025 (30 na chamada 1 e
+  6 na chamada 2), ampla concorrência, primeira opção, gap de exatamente um
+  ponto e exclusão de empates.
+- [x] A8-P3 — estimar: +63,9 p.p. em homologação e +33,3 p.p. em presença ativa
+  no mesmo curso–CNES.
+- [x] A8-P4 — placebo abaixo do cutoff, sensibilidade de gap e leave-one-out
+  sem inversão de sinal.
+- [x] A8-P5 — replicação de 2026: 11 pares, +36,4 p.p., teste exato `p=0,125`;
+  classificada como direcional e imprecisa.
+- [x] A8-P6 — auditar proteção de dados, hashes de entrada e testes.
+- [ ] Redigir o trabalho curto em torno do A8, com A4 como motivação descritiva,
+  A5 no apêndice associativo e RDD-IVS e DDD apenas como rotas descartadas.
 
 ## Decisões concluídas
 
@@ -156,8 +172,11 @@
 
 ## Congelado
 
-Não executar agora: efeitos do ciclo 3 antes da maturidade; R4–R6 antes de R1–R3;
-efeito da dose recebida sem folha; fila, outcomes clínicos e custos antes do
-primeiro estágio; identificação individual sem ponte; envio de A07. Synthetic
-DiD pode ser robustez pré-especificada, nunca reparo retrospectivo de
-pré-tendências.
+Não executar agora: efeitos do ciclo 3 antes da maturidade; efeito da dose
+recebida sem folha; fila, outcomes clínicos e custos; identificação individual
+sem ponte; envio de A07. A RDD do IVS público não deve ser restaurada em
+`0,300`, `0,400` ou `0,500` sem recuperar a regra administrativa. Heterogeneidades
+do A8 por remoticidade, IVS, curso ou região são exploratórias e não podem virar
+conclusão com 36 pares. Não inferir curva de sobrevivência a partir do snapshot,
+pois isso seleciona sobreviventes. Synthetic DiD pode ser robustez
+pré-especificada, nunca reparo retrospectivo de pré-tendências.
