@@ -1,6 +1,6 @@
 {
   "protocolo": "A5_MANISFESTO_MATURIDADE_CENSURA",
-  "data_referencia": "2026-09-04",
+  "data_referencia": "2026-09-09",
   "efeitos_estimados": false,
   "t0": {
     "homologacao_data": "2025-09-29",
@@ -298,19 +298,19 @@
       "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
     },
     "output/tema_trabalho/manifesto_tipologia_territorial.json": {
-      "sha256": "81cf5637a9e5f1e3867db7b617d0fb090da4138672ee600cd02bf516e0dcf1f6"
+      "sha256": "eb3839b5438d620933db8a74a04110798f919cf2153bda4e4df486c8146437be"
     },
     "output/tema_trabalho/portao_denominador.json": {
-      "sha256": "aabb0f3db8a0f060087e4e6f1cdeb90559c90e5ed5e467c929aa49fd700e9ec9"
+      "sha256": "0055baf7ebc110cc7143395a3f2090893a1888b718fd0645db318cf06850489a"
     },
     "output/tema_trabalho/registro_pre_analise_atracao.json": {
-      "sha256": "797f160d32f9f00e699508d7415c5240848b3108eb2fe2feaf4f09d41dd02f74"
+      "sha256": "eb2bf81284d9ecb9b13f14e0cce8d4c45bf69d0d7b74edb5e1ab4d6252444b5f"
     },
     "output/tema_trabalho/potencia_atracao.json": {
-      "sha256": "def99ef739d5a7d124de5790c085acc3716a8645da9e1fb676ed9258fe8dafb1"
+      "sha256": "91fa905537be55cc39b727eed66bedce24c283699088966bc693c77ea2b9079f"
     },
     "output/aquisicao/ponte_curso_cbo_oficial.json": {
-      "sha256": "1770e076a3575f4a574134ef6b80d21df35660ebd151cf9d870273127a2c1b16"
+      "sha256": "ed8c2a9a3fcda4f0f261b5321da7750da389cc0f574f2e5ac5140e5ebd8f2d9e"
     },
     "output/aquisicao/manifesto_cnes_26_competencias.json": {
       "sha256": "a85f52e39430badc7c837c6c7649097dae97f00e79c90a505ab0def02da04ea4"

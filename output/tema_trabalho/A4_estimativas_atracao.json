@@ -16,72 +16,72 @@
       "n": 1295,
       "n_clusters": 368,
       "outcome_medio": 0.30347490347490347,
-      "r2": 0.23756968074438167,
+      "r2": 0.2375696807443819,
       "coef_estrato": {
-        "estrato_capital": 0.23177834639585412,
-        "estrato_interior_proximo_polo": 0.12660196219154257,
-        "estrato_metropolitano": 0.29423379866393334
+        "estrato_capital": 0.23177834639585423,
+        "estrato_interior_proximo_polo": 0.12660196219154224,
+        "estrato_metropolitano": 0.2942337986639331
       },
       "se_estrato": {
-        "estrato_capital": 0.08602026249868881,
-        "estrato_interior_proximo_polo": 0.04314666609602368,
-        "estrato_metropolitano": 0.060638512016031376
+        "estrato_capital": 0.08602026249868958,
+        "estrato_interior_proximo_polo": 0.043146666096024036,
+        "estrato_metropolitano": 0.060638512016031515
       },
       "p_estrato": {
-        "estrato_capital": 0.007050232138948622,
-        "estrato_interior_proximo_polo": 0.0033438331726467325,
-        "estrato_metropolitano": 1.2206273430885465e-06
+        "estrato_capital": 0.007050232138949098,
+        "estrato_interior_proximo_polo": 0.0033438331726470716,
+        "estrato_metropolitano": 1.2206273430886325e-06
       }
     },
     "alternativo_logit_AME": {
       "convergiu": true,
       "metodo": "lbfgs",
       "ame_estrato": {
-        "estrato_capital": 0.2500513199434005,
-        "estrato_interior_proximo_polo": 0.10773369376352554,
-        "estrato_metropolitano": 0.29276054704150417
+        "estrato_capital": 0.2500513199434053,
+        "estrato_interior_proximo_polo": 0.10773369376352389,
+        "estrato_metropolitano": 0.29276054704150734
       },
       "se_ame_estrato": {
-        "estrato_capital": 0.10068306858374199,
-        "estrato_interior_proximo_polo": 0.04020812763643838,
-        "estrato_metropolitano": 0.06413141532706976
+        "estrato_capital": 0.10068306858374182,
+        "estrato_interior_proximo_polo": 0.040208127636437906,
+        "estrato_metropolitano": 0.06413141532706981
       }
     },
     "robustez_estagios_funil": {
       "alguma_confirmacao": {
         "media": 0.29884169884169887,
         "coef_estrato": {
-          "estrato_capital": 0.22439672340533534,
-          "estrato_interior_proximo_polo": 0.12247552438501798,
-          "estrato_metropolitano": 0.28522664150294025
+          "estrato_capital": 0.22439672340533548,
+          "estrato_interior_proximo_polo": 0.12247552438501765,
+          "estrato_metropolitano": 0.2852266415029401
         },
         "se_estrato": {
-          "estrato_capital": 0.0860237009469749,
-          "estrato_interior_proximo_polo": 0.042798676927578494,
-          "estrato_metropolitano": 0.05965487655834023
+          "estrato_capital": 0.0860237009469753,
+          "estrato_interior_proximo_polo": 0.04279867692757878,
+          "estrato_metropolitano": 0.0596548765583403
         },
         "p_estrato": {
-          "estrato_capital": 0.00909279676231514,
-          "estrato_interior_proximo_polo": 0.004214205726937021,
-          "estrato_metropolitano": 1.7418294148872261e-06
+          "estrato_capital": 0.009092796762315423,
+          "estrato_interior_proximo_polo": 0.0042142057269373805,
+          "estrato_metropolitano": 1.741829414887297e-06
         }
       },
       "alguma_homologacao": {
         "media": 0.19305019305019305,
         "coef_estrato": {
-          "estrato_capital": 0.13397497852519136,
-          "estrato_interior_proximo_polo": 0.10458582107552036,
-          "estrato_metropolitano": 0.24950473866121572
+          "estrato_capital": 0.13397497852519183,
+          "estrato_interior_proximo_polo": 0.10458582107552017,
+          "estrato_metropolitano": 0.24950473866121553
         },
         "se_estrato": {
-          "estrato_capital": 0.06659786793486806,
-          "estrato_interior_proximo_polo": 0.03713230768349177,
-          "estrato_metropolitano": 0.049830998543964763
+          "estrato_capital": 0.06659786793486838,
+          "estrato_interior_proximo_polo": 0.03713230768349194,
+          "estrato_metropolitano": 0.04983099854396482
         },
         "p_estrato": {
-          "estrato_capital": 0.044251495234235175,
-          "estrato_interior_proximo_polo": 0.004853914988053697,
-          "estrato_metropolitano": 5.527957491565111e-07
+          "estrato_capital": 0.044251495234235445,
+          "estrato_interior_proximo_polo": 0.004853914988053963,
+          "estrato_metropolitano": 5.527957491565378e-07
         }
       }
     },
@@ -89,176 +89,176 @@
       "n": 1184,
       "n_clusters": 368,
       "coef_estrato": {
-        "estrato_capital": 0.2702768545487433,
-        "estrato_interior_proximo_polo": 0.13324156365238893,
-        "estrato_metropolitano": 0.33094398554753035
+        "estrato_capital": 0.270276854548744,
+        "estrato_interior_proximo_polo": 0.13324156365238882,
+        "estrato_metropolitano": 0.3309439855475308
       },
       "se_estrato": {
-        "estrato_capital": 0.09136849672530176,
-        "estrato_interior_proximo_polo": 0.04383672724612814,
-        "estrato_metropolitano": 0.06076208408995336
+        "estrato_capital": 0.09136849672530235,
+        "estrato_interior_proximo_polo": 0.04383672724612816,
+        "estrato_metropolitano": 0.060762084089953594
       },
       "p_estrato": {
-        "estrato_capital": 0.0030954493717487382,
-        "estrato_interior_proximo_polo": 0.0023697423217923543,
-        "estrato_metropolitano": 5.1354953528828286e-08
+        "estrato_capital": 0.003095449371748851,
+        "estrato_interior_proximo_polo": 0.002369742321792377,
+        "estrato_metropolitano": 5.135495352883244e-08
       },
       "nota": "colapso por municipio-curso evita peso implicito de multiplos CNES"
     },
     "sensibilidade_full": {
       "coef_estrato_full": {
-        "estrato_capital": 0.06581450147982211,
-        "estrato_interior_proximo_polo": 0.07664055418794526,
-        "estrato_metropolitano": 0.19767016206581814
+        "estrato_capital": 0.0658145014798212,
+        "estrato_interior_proximo_polo": 0.0766405541879451,
+        "estrato_metropolitano": 0.1976701620658174
       },
-      "coef_ivs": -0.043067970041003996,
-      "coef_log_pop": 0.04636284575290953,
+      "coef_ivs": -0.04306797004100516,
+      "coef_log_pop": 0.04636284575290972,
       "coef_faixa": {
-        "faixa_FAIXA 2": 0.020843481808138054,
-        "faixa_FAIXA 3": -0.07008200339608857
+        "faixa_FAIXA 2": 0.020843481808137977,
+        "faixa_FAIXA 3": -0.07008200339608861
       }
     },
     "sensibilidade_winsorizado_p99": {
       "coef_estrato": {
-        "estrato_capital": 0.07513133190077946,
-        "estrato_interior_proximo_polo": 0.08048638266435974,
-        "estrato_metropolitano": 0.20198643393692994
+        "estrato_capital": 0.07513133190077942,
+        "estrato_interior_proximo_polo": 0.08048638266436002,
+        "estrato_metropolitano": 0.20198643393693036
       },
-      "coef_ivs": -0.0397333326308736,
+      "coef_ivs": -0.039733332630874606,
       "nota": "log_pop e estoque winsorizados p01-p99 como sensibilidade pre-especificada"
     },
     "sensibilidade_ivs_quadratico": {
       "coef_estrato": {
-        "estrato_capital": 0.06579696430326283,
+        "estrato_capital": 0.06579696430326236,
         "estrato_interior_proximo_polo": 0.07761777319324042,
-        "estrato_metropolitano": 0.19924563079649824
+        "estrato_metropolitano": 0.19924563079649854
       },
-      "coef_ivs_linear": -0.5175823285325882,
-      "coef_ivs_sq": 0.635708059439012,
-      "p_ivs_sq": 0.677215289422839,
+      "coef_ivs_linear": -0.517582328532582,
+      "coef_ivs_sq": 0.6357080594390008,
+      "p_ivs_sq": 0.6772152894228458,
       "nota": "IVS linear + quadrático como proxy de spline; p não significativo mantém linear"
     }
   },
   "influencia": {
     "leave_one_UF_range": {
       "min": {
-        "estrato_capital": 0.20189032120908637,
-        "estrato_interior_proximo_polo": 0.09739144842225106,
-        "estrato_metropolitano": 0.26844181516552623
+        "estrato_capital": 0.20189032120908718,
+        "estrato_interior_proximo_polo": 0.09739144842225146,
+        "estrato_metropolitano": 0.26844181516552723
       },
       "max": {
-        "estrato_capital": 0.2869997408471153,
-        "estrato_interior_proximo_polo": 0.14541504967025087,
-        "estrato_metropolitano": 0.3296380397757391
+        "estrato_capital": 0.2869997408471157,
+        "estrato_interior_proximo_polo": 0.14541504967025082,
+        "estrato_metropolitano": 0.32963803977573874
       },
       "std": {
-        "estrato_capital": 0.018213059816959296,
-        "estrato_interior_proximo_polo": 0.00765394930304017,
-        "estrato_metropolitano": 0.01194936877065762
+        "estrato_capital": 0.018213059816959302,
+        "estrato_interior_proximo_polo": 0.007653949303040096,
+        "estrato_metropolitano": 0.011949368770657455
       }
     },
     "leave_one_curso_range": {
       "min": {
-        "estrato_capital": 0.1707268549963899,
-        "estrato_interior_proximo_polo": 0.09640072209391082,
-        "estrato_metropolitano": 0.27028462294936073
+        "estrato_capital": 0.17072685499638998,
+        "estrato_interior_proximo_polo": 0.09640072209391094,
+        "estrato_metropolitano": 0.27028462294936095
       },
       "max": {
-        "estrato_capital": 0.2684283412261464,
+        "estrato_capital": 0.26842834122614745,
         "estrato_interior_proximo_polo": 0.1591215700475169,
-        "estrato_metropolitano": 0.3235616877477596
+        "estrato_metropolitano": 0.3235616877477595
       },
       "std": {
-        "estrato_capital": 0.02413244926610473,
-        "estrato_interior_proximo_polo": 0.014070122249233,
-        "estrato_metropolitano": 0.013581658213308164
+        "estrato_capital": 0.024132449266104857,
+        "estrato_interior_proximo_polo": 0.014070122249232868,
+        "estrato_metropolitano": 0.013581658213308171
       }
     },
     "leave_one_municipio_metropolitano": {
-      "estrato_metropolitano_leave_one_mun_min": 0.2804061595903229,
-      "max": 0.32050879010752786,
-      "sd": 0.003503235760673726,
-      "base": 0.29423379866393334
+      "estrato_metropolitano_leave_one_mun_min": 0.28040615959032356,
+      "max": 0.3205087901075279,
+      "sd": 0.0035032357606737392,
+      "base": 0.2942337986639331
     },
     "top_influentes": [
       {
         "co_ibge_6d": "160030",
         "termo": "estrato_capital",
-        "coef_excluido": 0.2746074377770169,
+        "coef_excluido": 0.274607437777017,
         "delta": 0.04282909138116278,
-        "dfbeta": 0.49789538112390225,
+        "dfbeta": 0.4978953811238978,
         "n_excluido": 8
       },
       {
         "co_ibge_6d": "231290",
         "termo": "estrato_metropolitano",
-        "coef_excluido": 0.32050879010752786,
-        "delta": 0.02627499144359452,
-        "dfbeta": 0.43330534622366784,
+        "coef_excluido": 0.3205087901075279,
+        "delta": 0.026274991443594797,
+        "dfbeta": 0.43330534622367145,
         "n_excluido": 21
       },
       {
         "co_ibge_6d": "140010",
         "termo": "estrato_capital",
-        "coef_excluido": 0.26601720530706324,
-        "delta": 0.03423885891120912,
-        "dfbeta": 0.398032485796367,
+        "coef_excluido": 0.2660172053070632,
+        "delta": 0.03423885891120895,
+        "dfbeta": 0.3980324857963616,
         "n_excluido": 15
       },
       {
         "co_ibge_6d": "312670",
         "termo": "estrato_interior_proximo_polo",
-        "coef_excluido": 0.14366761239557113,
-        "delta": 0.01706565020402856,
-        "dfbeta": 0.39552650872372497,
+        "coef_excluido": 0.14366761239557108,
+        "delta": 0.017065650204028837,
+        "dfbeta": 0.3955265087237282,
         "n_excluido": 8
       },
       {
         "co_ibge_6d": "110020",
         "termo": "estrato_capital",
-        "coef_excluido": 0.20233796530073656,
-        "delta": -0.029440381095117568,
-        "dfbeta": -0.34224937520466553,
+        "coef_excluido": 0.2023379653007366,
+        "delta": -0.029440381095117624,
+        "dfbeta": -0.34224937520466314,
         "n_excluido": 5
       },
       {
         "co_ibge_6d": "251080",
         "termo": "estrato_capital",
-        "coef_excluido": 0.2583781456942853,
-        "delta": 0.026599799298431176,
-        "dfbeta": 0.3092271346979048,
+        "coef_excluido": 0.2583781456942855,
+        "delta": 0.026599799298431287,
+        "dfbeta": 0.30922713469790336,
         "n_excluido": 10
       },
       {
         "co_ibge_6d": "230020",
         "termo": "estrato_interior_proximo_polo",
-        "coef_excluido": 0.13969251334369695,
-        "delta": 0.013090551152154378,
-        "dfbeta": 0.3033965851039596,
+        "coef_excluido": 0.1396925133436968,
+        "delta": 0.013090551152154573,
+        "dfbeta": 0.3033965851039616,
         "n_excluido": 4
       },
       {
         "co_ibge_6d": "140047",
         "termo": "estrato_capital",
-        "coef_excluido": 0.20629125176648602,
-        "delta": -0.0254870946293681,
-        "dfbeta": -0.2962917560238391,
+        "coef_excluido": 0.2062912517664852,
+        "delta": -0.025487094629369045,
+        "dfbeta": -0.29629175602384744,
         "n_excluido": 8
       },
       {
         "co_ibge_6d": "130260",
         "termo": "estrato_capital",
-        "coef_excluido": 0.2563761646435374,
-        "delta": 0.024597818247683284,
-        "dfbeta": 0.28595376871883205,
+        "coef_excluido": 0.25637616464353763,
+        "delta": 0.024597818247683395,
+        "dfbeta": 0.2859537687188308,
         "n_excluido": 5
       },
       {
         "co_ibge_6d": "312670",
         "termo": "estrato_metropolitano",
-        "coef_excluido": 0.31012497364621133,
-        "delta": 0.01589117498227799,
-        "dfbeta": 0.2620640654585446,
+        "coef_excluido": 0.3101249736462118,
+        "delta": 0.015891174982278655,
+        "dfbeta": 0.262064065458555,
         "n_excluido": 8
       }
     ]
@@ -270,7 +270,7 @@
       "auc_sd_out": 0.02058950288300658,
       "auc_insample": 0.7984772318229775,
       "brier_media_out": 0.1771403814080017,
-      "brier_sd_out": 0.007971768791205877,
+      "brier_sd_out": 0.007971768791205841,
       "brier_insample": 0.16045728483891625,
       "n_splits": 5,
       "grupos": "municipio",
@@ -281,9 +281,9 @@
       "auc_media_out": 0.7563289239350743,
       "auc_sd_out": 0.02128678677480949,
       "auc_insample": 0.8007340205254933,
-      "brier_media_out": 0.17874561703743835,
-      "brier_sd_out": 0.01036534609404088,
-      "brier_insample": 0.1585105091080419,
+      "brier_media_out": 0.1787456170375191,
+      "brier_sd_out": 0.010365346093991396,
+      "brier_insample": 0.15851050910804176,
       "n_splits": 5,
       "grupos": "municipio",
       "nota": "out-of-sample por municipio; in-sample AUC indica overfit FE"
@@ -308,16 +308,16 @@
       "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
     },
     "output/tema_trabalho/manifesto_tipologia_territorial.json": {
-      "sha256": "81cf5637a9e5f1e3867db7b617d0fb090da4138672ee600cd02bf516e0dcf1f6"
+      "sha256": "eb3839b5438d620933db8a74a04110798f919cf2153bda4e4df486c8146437be"
     },
     "output/tema_trabalho/portao_denominador.json": {
-      "sha256": "aabb0f3db8a0f060087e4e6f1cdeb90559c90e5ed5e467c929aa49fd700e9ec9"
+      "sha256": "0055baf7ebc110cc7143395a3f2090893a1888b718fd0645db318cf06850489a"
     },
     "output/tema_trabalho/registro_pre_analise_atracao.json": {
-      "sha256": "797f160d32f9f00e699508d7415c5240848b3108eb2fe2feaf4f09d41dd02f74"
+      "sha256": "eb2bf81284d9ecb9b13f14e0cce8d4c45bf69d0d7b74edb5e1ab4d6252444b5f"
     },
     "output/tema_trabalho/potencia_atracao.json": {
-      "sha256": "def99ef739d5a7d124de5790c085acc3716a8645da9e1fb676ed9258fe8dafb1"
+      "sha256": "91fa905537be55cc39b727eed66bedce24c283699088966bc693c77ea2b9079f"
     }
   },
   "arquivos": {

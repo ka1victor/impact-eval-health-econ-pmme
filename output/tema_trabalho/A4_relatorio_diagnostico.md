@@ -1,6 +1,6 @@
 # A4 — Atração e implementação: diagnóstico e linguagem autorizada (02/09/2026)
 
-> Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash 797f160d)
+> Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash eb2bf812)
 > Potência: `output/tema_trabalho/potencia_atracao.json`; MDE aproximado dos contrastes vs remoto: capital 19.5%, metro 13.7%, próximo 11.9%
 > Tipologia A2 strict 540/540 (25/101/238/176) quadro 368 (18/72/203/75)
 > Amostra primária: **1295 células CNES–curso Ch1 em 368 municípios**; estendida 3057 (1762 Ch2)
