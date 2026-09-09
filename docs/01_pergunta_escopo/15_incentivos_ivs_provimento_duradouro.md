@@ -22,6 +22,29 @@ Título de trabalho recomendado:
 > **Atração de médicos especialistas e persistência da oferta local fora das
 > capitais: evidências de implementação do Mais Médicos Especialistas.**
 
+### Formulação curta canônica
+
+Usada em capa, resumo e apresentação, e preferida sempre que couber uma única
+linha:
+
+> **Bolsa maior compensa município pior?**
+
+Leitura precisa da mesma pergunta: *um degrau de R$ 5 mil na bolsa-formação é
+suficiente para vencer a desvantagem territorial de um município mais
+vulnerável?* Ela se decompõe em duas margens observáveis:
+
+| | Margem | Pergunta operacional | Outcome correspondente |
+|---|---|---|---|
+| a | entrar | a vaga com bolsa maior é preenchida? | preenchimento administrativo da célula CNES–curso |
+| b | ficar | a oferta médica local persiste depois da entrada? | estoque e cobertura municipal do CBO em horizonte fixo |
+
+**O que a pergunta não é.** Não é o efeito de participar do PMM-E; não é o
+efeito total do Agora Tem Especialistas; não é o efeito causal do IVS. As três
+formulações alternativas foram consideradas e descartadas pelas razões da seção
+2 e do bloco imediatamente abaixo.
+
+### Formulações longas
+
 Pergunta empírica principal:
 
 > Em que medida as vagas do primeiro ciclo do PMM-E foram preenchidas fora das

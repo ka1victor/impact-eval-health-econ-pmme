@@ -1,8 +1,15 @@
 # Modelo Microeconômico da Escolha Locacional Médica
 
-> **Classificação:** fundamentação teórica canônica pura (primitivos, derivações e modelo integrado)<br>
-> **Extensão empírica e hipóteses:** ver [hipoteses_e_viabilidade_empirica.md](hipoteses_e_viabilidade_empirica.md)<br>
-> **Atualização:** 3 de setembro de 2026
+> **Classificação:** fundamentação teórica canônica — primitivos, derivações, adaptação ao PMM-E e derivação das hipóteses<br>
+> **Transposição empírica:** [hipoteses_e_viabilidade_empirica.md](hipoteses_e_viabilidade_empirica.md)<br>
+> **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 9 a 12<br>
+> **Atualização:** 9 de setembro de 2026
+
+> [!NOTE]
+> Este documento absorveu, em 09/09/2026, o antigo `18_modelo_teorico_slides_apresentacao.md`.
+> A adaptação ao PMM-E e as equações originais dos complementos estão na seção 3;
+> a derivação das hipóteses, na seção 4. O documento 18 foi removido para não
+> manter duas versões concorrentes da mesma teoria.
 
 ---
 
@@ -137,7 +144,140 @@ c_{im}^{(s)} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text
 
 ---
 
-## 3. Referências teóricas
+## 3. Adaptação ao PMM-E: a bolsa fixada por regra
+
+O programa introduz no modelo um elemento que a literatura de escolha locacional
+raramente observa: **um componente da remuneração fixado por regra pública e
+descontínuo em um escore territorial**. A bolsa-formação $B_m$ não é negociada
+com o médico nem determinada pelo mercado local; é atribuída ao município por
+faixa de vulnerabilidade.
+
+Escrevendo a decisão do médico $i$ sobre o município $m$, com a alternativa
+$m=0$ representando ficar fora do programa:
+
+```math
+V_{im}^{(s)}
+=
+\sum_t\delta^t
+\left[
+\frac{\mathbb{E}\!\left(w_{imt}^{(s)}\mid B_m(IVS_m)\right)}{p_{mt}}
+- c_{im}^{(s)}
+\right]
++\varepsilon_{im},
+\qquad
+m_i^{\ast} \in \arg\max_{m \in \mathcal{M} \cup \{0\}} V_{im}^{(s)}.
+```
+
+Duas restrições de observabilidade obrigam a uma forma reduzida. Não se observa
+distância à cidade da família, preço local de aluguel nem esforço clínico
+individual $q$. Observa-se, para 100% dos municípios, a bolsa $B_m$ e o IVS 2010
+do IPEA. O custo locacional é então escrito como função do escore territorial
+mais um desvio individual:
+
+```math
+c_{im}^{(s)} = c_0^{(s)}(IVS_m) + \eta_i .
+```
+
+### 3.1 Por que o IVS é a variável que organiza o custo latente
+
+O IVS do IPEA agrega 16 indicadores censitários em três sub-índices, e cada um
+deles corresponde a um bloco distinto do custo microfundamentado na seção 2:
+
+| Sub-índice do IVS | Indicadores | Bloco teórico correspondente | Efeito esperado sobre $c$ |
+|---|---|---|:---:|
+| Infraestrutura urbana | saneamento, coleta de lixo, tempo de deslocamento | amenidades $A_m$ e custo espacial (Redding & Rossi-Hansberg) | $\uparrow$ |
+| Capital humano | mortalidade infantil, mães adolescentes, analfabetismo | gravidade do caso $B'(q)$ e escassez de capital $K$ (Choné & Ma; Reinhardt) | ambíguo |
+| Renda e trabalho | extrema pobreza, desemprego, informalidade | ausência de mercado privado pagador, logo $w \to B$ | $\uparrow$ |
+
+O sub-índice de capital humano é o que impede assumir monotonicidade: carência
+sanitária eleva o benefício marginal de atender ($B'(q)\uparrow$, o que **reduz**
+o custo laboral líquido de um médico altruísta) ao mesmo tempo em que sinaliza
+falta de insumos ($K\downarrow$, o que **eleva** o cansaço). Portanto
+
+```math
+c_0'(IVS) \; \gtrless \; 0 ,
+```
+
+e o sinal é questão empírica, não postulado. Essa é a razão teórica para
+estudar o **degrau** da bolsa na fronteira de faixa, e não o gradiente do IVS.
+
+### 3.2 Equações originais dos complementos
+
+Redding e Rossi-Hansberg (2017, eq. 24, p. 28), de onde vem o componente
+espacial do custo:
+
+```math
+u_{nio} = \frac{z_{nio}B_n w_i}{\kappa_{ni}Q_n^{\,1-\beta}}
+\implies
+c^{\text{espacial}}_m = (1-\beta)\ln Q_m - \ln A_m .
+```
+
+Choné e Ma (2011, eq. 1, p. 232), com Reinhardt (1975), de onde vem o
+componente clínico:
+
+```math
+U = R - C(q; L, K) + \alpha B(q)
+\implies
+c^{\text{laboral}}_{im} = C(q; L, K) - \alpha B(q).
+```
+
+---
+
+## 4. Da condição de aceitação às hipóteses
+
+O modelo só é útil ao trabalho empírico se produzir hipóteses por derivação, e
+não por analogia. Esta seção faz essa passagem.
+
+### 4.1 Condição de aceitação
+
+O médico aceita a vaga no município $m$ quando o valor da vaga supera sua
+melhor alternativa. Normalizando a alternativa em $\bar{v}_i$ e usando a forma
+reduzida da seção 3:
+
+```math
+\frac{B_m}{p_m} - c_0(IVS_m) \;\geq\; \bar{v}_i .
+```
+
+Comparando dois municípios contíguos separados pela fronteira administrativa
+entre faixas de bolsa, o preenchimento do lado mais vulnerável exige que o
+degrau monetário supere o degrau de custo latente:
+
+```math
+\boxed{\;\frac{\Delta B_m}{p_m} \;>\; \Delta c_0\;}
+\qquad\text{com}\qquad
+\Delta B_m = \text{R\$ }5.000 .
+```
+
+Essa desigualdade é o objeto do trabalho. Ela não pergunta se o PMM-E funciona;
+pergunta se **o preço que o programa colocou sobre a vulnerabilidade é
+suficiente** para vencer a desvantagem que ele pretende compensar.
+
+### 4.2 Estática comparativa e hipóteses derivadas
+
+| # | Derivada | Origem no modelo | Hipótese |
+|:---:|---|---|---|
+| **H1** | $\dfrac{\partial \Pr(\text{aceitar})}{\partial B_m} > 0$ | $B_m$ entra aditivamente na remuneração real esperada | quanto maior a bolsa, maior a probabilidade de preenchimento |
+| **H2** | $\dfrac{\partial \Pr(\text{permanecer em } t{+}k)}{\partial B_m} > 0$ | a bolsa entra em **todo** período do somatório $\sum_t\delta^t$, não apenas no primeiro | quanto maior a bolsa, maior a persistência da oferta local após o período inicial |
+| **H3** | $\dfrac{\partial^2 \Pr(\text{aceitar})}{\partial B_m \, \partial w^{\text{alt}}} < 0$ | a bolsa concorre com a renda alternativa dentro do mesmo termo $\mathbb{E}(w\mid B)$ | o efeito da bolsa é maior onde e para quem a renda alternativa é menor |
+| **H4** | $\text{sinal}\left(c_0'(IVS)\right)$ indefinido | sub-índices do IVS operam em sentidos opostos (seção 3.1) | decompondo o IVS, infraestrutura urbana eleva o custo e capital humano pode atenuá-lo |
+
+H2 merece nota: ela não é uma hipótese sobre retenção individual. O modelo
+prevê persistência da **decisão locacional**, e o dado disponível observa
+oferta cadastrada no município, não o mesmo profissional na mesma vaga. A
+distinção é mantida em toda a transposição empírica.
+
+H3 tem duas leituras, ambas derivadas da mesma cruzada. A leitura individual
+compara médicos por renda alternativa e exige microdado de renda. A leitura
+territorial compara municípios pela existência de mercado privado local: onde
+não há demanda privada adjacente, a remuneração colapsa no piso da bolsa,
+$w = B$, e a bolsa é a totalidade do incentivo.
+
+A transposição dessas hipóteses para especificações, variáveis e bases está em
+[hipoteses_e_viabilidade_empirica.md](hipoteses_e_viabilidade_empirica.md).
+
+---
+
+## 5. Referências teóricas
 
 - Choné, P.; Ma, C.-T. A. (2011). [*Optimal Health Care Contract under Physician Agency*](https://people.bu.edu/ma/CHONE-MA_Annals2011.pdf). **Annals of Economics and Statistics**, 101/102, 229--256. [p. 232, eq. 1].
 - Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14, 181--225. [p. 184, eq. 1].

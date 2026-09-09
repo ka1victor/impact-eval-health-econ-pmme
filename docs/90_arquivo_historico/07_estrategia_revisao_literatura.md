@@ -1,7 +1,7 @@
 # 07. Estratégia de Revisão Profunda de Literatura e Fundamentação Econométrica
 
 > [!CAUTION]
-> **Arquivo histórico misto, não canônico.** Foi produzido antes da separação entre teoria, evidência empírica e econometria. Use o [mapa da documentação](../README.md), o [modelo teórico](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md) e a [literatura empírica](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
+> **Arquivo histórico misto, não canônico.** Foi produzido antes da separação entre teoria, evidência empírica e econometria. Use o [mapa da documentação](../README.md), o [modelo teórico](../02_teoria/modelo_micro.md) e a [literatura empírica](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
 
 > **Documento Estratégico e Metodológico**  
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  

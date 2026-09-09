@@ -1,7 +1,7 @@
 # 11. Análise Comparativa de Alternativas Teóricas Modernas e Compactas para o PMM-E
 
 > [!CAUTION]
-> **Arquivo histórico misto, não canônico.** Sua recomendação foi superada pela auditoria de demarcação registrada nos documentos [17](../02_teoria/17_fundamentacao_teorica_formacao_utilidade_regressores.md) e [19](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
+> **Arquivo histórico misto, não canônico.** Sua recomendação foi superada pela auditoria de demarcação registrada nos documentos [17](../02_teoria/modelo_micro.md) e [19](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md).
 
 > **Projeto:** Avaliação de Impacto e Economia da Saúde — Programa Mais Médicos Especialistas (PMM-E / Lei nº 15.233/2025)  
 > **Objetivo:** Avaliar sistematicamente se existem alternativas teóricas mais recentes (2005–2025), mais concisas em número de páginas ou com maior poder explicativo específico para cada um dos 7 pilares teóricos do PMM-E.  

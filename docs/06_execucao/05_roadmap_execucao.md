@@ -31,6 +31,23 @@ O estado executado e verificável dos portões está em
 [`33_status_execucao_plano_causal.md`](33_status_execucao_plano_causal.md). O
 A8 está concluído, e a trilha administrativa foi encerrada sem envio.
 
+## Entrega de banca 1
+
+Paralela à fila analítica e independente dela. A banca 1 apresenta o desenho
+conceitual e **termina na viabilidade empírica**, declarando onde estão os
+dados e o que falta. Nenhum resultado de estimação entra nessa apresentação.
+
+| Item | Estado |
+|---|---|
+| Conteúdo completo, nas três partes da banca | ✅ [`02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md) |
+| Feedback dos professores incorporado e rastreado | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seção 3 |
+| Figuras derivadas do repositório, geradas por script | ✅ `scripts/apresentacao/gerar_figuras_banca1.py` |
+| Figura regional corrigida | ✅ pendência encerrada em 09/09/2026 |
+| Manifesto das figuras de fonte externa | ⚠️ aberta, não bloqueante |
+
+Regra: o conteúdo vive em markdown, com as figuras versionadas junto. Qualquer
+deck montado a partir dele é artefato derivado, e divergência é erro do deck.
+
 ## 0. Estado da comparação agregada após a execução
 
 O pipeline foi executado de ponta a ponta com as 26 competências do CNES. A
