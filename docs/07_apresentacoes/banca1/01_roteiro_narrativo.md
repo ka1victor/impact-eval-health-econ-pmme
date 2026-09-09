@@ -1,4 +1,4 @@
-# 01. Roteiro narrativo da banca 1
+# Roteiro narrativo da banca 1
 
 > **Classificação:** decisão de comunicação, não de método<br>
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
@@ -8,108 +8,119 @@
 
 ## 1. Arco da apresentação
 
-A apresentação tem um único fio condutor: **um preço foi colocado sobre a
-vulnerabilidade territorial, e ainda não se sabe se esse preço compra o que se
-pretendia comprar.**
+Um único fio condutor: **um preço foi colocado sobre a vulnerabilidade
+territorial, e ainda não se sabe se esse preço compra o preenchimento das vagas
+que pretendia comprar.**
 
 | Parte | Conteúdo | Papel narrativo | Slides |
 |:---:|---|---|:---:|
-| — | Capa e roteiro | contrato com a banca | 1–2 |
-| **1** | Motivação e pergunta | estabelecer que existe um problema, que existe uma política que coloca preço sobre ele, e que o efeito desse preço é questão em aberto; então converter isso em uma pergunta única | 3–7 |
-| **2** | Literatura teórica, modelo micro e hipóteses | mostrar de onde vêm as primitivas, derivar a condição que governa a decisão do médico e ler as hipóteses **como corolários** dessa condição | 8–12 |
-| **3** | Viabilidade empírica | declarar onde estão os dados, o que permitem afirmar e o que falta | 13–14 |
-| — | Encerramento | perguntas | 15 |
+| — | Capa e sumário | contrato com a banca | 1–2 |
+| **1** | Motivação e pergunta | há um problema territorial, há uma política que coloca preço sobre ele, os primeiros efeitos observados não ordenam pelo preço; disso sai uma pergunta única | 3–6 |
+| **2** | Literatura teórica, modelo microeconômico e hipóteses | de onde vêm as primitivas, a condição que governa a decisão do médico, e as duas hipóteses que saem dela por derivação | 7–10 |
+| **3** | Viabilidade empírica | o que temos, o que dá para medir hoje e qual é o desafio de identificação | 11 |
+| — | Encerramento | perguntas | 12 |
 
-A Parte 3 encerra a entrega. Identificação, estimadores e resultados **não
-entram** nesta banca.
+A banca 1 cobre a margem **preenchimento**. Permanência da oferta fica fora
+desta apresentação, embora continue no escopo do projeto.
 
 ---
 
-## 2. Regras de composição adotadas
+## 2. Regras de composição
 
-### 2.1 Título é takeaway, seção é tracking
+### 2.1 Título é takeaway, seção é rastreio
 
-Nenhum título de slide nomeia a seção. O título carrega **a afirmação que o
-slide sustenta**, em frase completa, legível isoladamente. A localização na
-apresentação é responsabilidade de um elemento visual separado e permanente.
+Nenhum título nomeia a seção. O título carrega **a afirmação que o slide
+sustenta**. A posição na apresentação fica em um elemento separado — no
+markdown, a linha em `código` logo abaixo do título; no slide, uma faixa fina
+fora do título.
 
-| Elemento | Onde fica | Conteúdo |
-|---|---|---|
-| Título | topo do slide, corpo maior | takeaway em frase completa |
-| Tracking de seção | faixa fina superior ou lateral, tipografia menor | nome do bloco e posição, ex.: `Motivação · 2 de 4` |
+Sequência de títulos dos slides 3 a 11. Lidos em ordem, são o argumento inteiro:
 
-Consequência prática: quem lê apenas os títulos, em sequência, obtém o
-argumento inteiro da apresentação. Esse é o teste de aceitação do deck.
-
-Sequência de títulos resultante, na ordem dos slides 3 a 14:
-
-1. A escassez de especialistas já é tratada como urgência sanitária pelo próprio governo.
-2. Onde há menos especialista, o paciente percorre mais quilômetros.
-3. O programa responde com um preço explícito pela vulnerabilidade do município.
-4. As vagas foram de fato para as regiões desassistidas, o que não diz que foram preenchidas nem mantidas.
-5. Bolsa maior compensa município pior?
-6. A literatura modela a escolha locacional do médico, mas não testa um preço fixado por regra.
-7. O médico aceita a vaga quando o ganho monetário supera o custo de estar ali.
-8. O custo de estar ali tem duas partes, e a infraestrutura entra nas duas.
-9. Da condição de aceitação saem três hipóteses testáveis.
-10. As três hipóteses distinguem entrar, ficar e para quem o incentivo pesa mais.
-11. Temos o cadastro de quem está ativo e a regra da bolsa.
-12. Falta o denominador: sem universo de vagas, descrevemos, não testamos.
+1. A escassez de especialistas é territorial — e já é tratada como urgência sanitária.
+2. O programa responde com um preço explícito pela vulnerabilidade do município.
+3. Depois da oferta a presença de especialistas cresceu em todas as faixas, mas só 30% das vagas tiveram confirmação — e a bolsa maior não ordenou o preenchimento.
+4. Bolsa maior compensa município pior no preenchimento das vagas?
+5. O modelo combina três primitivas da literatura teórica.
+6. O médico aceita a vaga quando a remuneração real supera o custo de estar ali.
+7. O custo de estar ali tem duas partes, e a infraestrutura entra nas duas.
+8. Da condição de aceitação saem duas hipóteses: remuneração atrai, custo repele.
+9. Os dados são públicos; o desafio empírico é separar bolsa de vulnerabilidade, que a regra amarra.
 
 ### 2.2 Uma afirmação por slide
 
-Slide com dois gráficos só é admitido quando os dois sustentam **a mesma**
-afirmação (caso do slide 4: escassez e distância são a mesma dor medida por dois
-ângulos). Painel de quatro gráficos com quatro afirmações distintas foi
-desmembrado.
+Slide com mais de uma figura só quando todas sustentam **a mesma** afirmação. O
+slide 3 tem três elementos visuais — manchetes, gradiente por faixa e distância
+— porque os três dizem que a escassez é territorial.
 
-### 2.3 Vocabulário
+### 2.3 Fontes, não notas
 
-Nesta apresentação, e em toda fala associada:
+Todo número exibido traz a fonte no próprio slide. Não há notas de apresentador
+nem justificativas no documento de conteúdo: o que precisa ser dito está no
+slide ou não está.
+
+### 2.4 Vocabulário
 
 | Não dizer | Dizer |
 |---|---|
-| efeito do PMM-E | associação observada na implementação do PMM-E |
+| efeito do PMM-E, efeito da bolsa | associação; gradiente; evolução observada |
 | efeito da vulnerabilidade | gradiente de vulnerabilidade |
-| retenção do médico | permanência da oferta local no cadastro |
-| vaga preenchida | profissional ativo no cadastro (enquanto não houver denominador de vagas) |
+| vaga preenchida | célula com alguma confirmação ou homologação |
+| especialistas do município | presença cadastral no CNES nos CBOs do programa |
 
 ---
 
 ## 3. Rastreio do feedback dos professores
 
-| # | Feedback | Diagnóstico do deck anterior | Ajuste aplicado |
-|---|---|---|---|
-| 1 | **Títulos: colocar só o takeaway, não o nome da seção (tracking separado)** | Todos os títulos eram rótulos de seção com numeral romano: `I. Motivação: …`, `II. Pergunta`, `III. Literatura`, `IV. Modelo Teórico: Função Utilidade`, `V. Hipóteses`, `VI. Viabilidade Empírica`. O slide não afirmava nada. | Cada slide recebeu título em frase completa com a afirmação que ele sustenta (lista em 2.1). Numeral romano e nome do bloco saíram do título e passaram a compor o tracking, em faixa própria. |
-| 2 | **Motivação: dividir storytelling entre (i) dor, (ii) política, (iii) efeitos** | Os quatro fatos motivacionais estavam empilhados em um único painel 2×2 (escassez, distância, faixas de bolsa e alocação regional), repetido em dois slides consecutivos. Dor, desenho da política e resultado observado apareciam com o mesmo peso visual, sem ordem causal. | A motivação virou quatro slides em três tempos: **(i) a dor** — manchetes (slide 3) e as duas medidas territoriais, escassez e distância (slide 4); **(ii) a política** — a regra de faixas e o valor da bolsa, com a mecânica institucional (slide 5); **(iii) os efeitos** — para onde as vagas foram, com a ressalva explícita de que alocação não é preenchimento nem permanência (slide 6). |
-| 3 | **Pergunta: simplificar** | A formulação tinha três objetos em uma frase: *"Bolsas maiores conseguem compensar as desvantagens territoriais no preenchimento e na manutenção das vagas do PMM-E?"* | A pergunta central passou a caber em uma linha — **"Bolsa maior compensa município pior?"** — e a decomposição operacional (entrar / ficar) desceu para duas subperguntas subordinadas. O slide ganhou um bloco "o que a pergunta não é", que exclui efeito total do programa e efeito causal do IVS. |
-| 4 | **Teoria: derivar hipóteses diretamente** | A teoria terminava em uma função utilidade com marcadores `X` não preenchidos, e as hipóteses apareciam dois slides depois, sem ligação formal com o modelo. | O bloco teórico foi reescrito em três passos que terminam na hipótese: condição de aceitação (slide 9), abertura do custo locacional (slide 10) e **estática comparativa que produz as hipóteses** (slide 11), em que cada derivada parcial é rotulada com a hipótese H1, H2 ou H3 que ela gera. O slide de hipóteses (12) passou a ser a leitura empírica dos corolários, não uma lista nova. |
+| # | Feedback | Ajuste aplicado |
+|---|---|---|
+| 1 | **Títulos: só o takeaway, não o nome da seção (tracking separado)** | Todos os títulos eram rótulos de seção com numeral romano. Cada slide recebeu título em frase completa com a afirmação que sustenta; o nome da parte e a posição foram para o rastreio, fora do título. |
+| 2 | **Motivação: dividir entre (i) dor, (ii) política, (iii) efeitos** | O painel 2×2 repetido em dois slides virou três slides em sequência causal: o problema (slide 3), a política que responde a ele (slide 4) e o que se observa depois dela (slide 5). |
+| 3 | **Pergunta: simplificar** | De *"Bolsas maiores conseguem compensar as desvantagens territoriais no preenchimento e na manutenção das vagas do PMM-E?"* para **"Bolsa maior compensa município pior no preenchimento das vagas?"**, com a leitura em termos do modelo em uma linha. |
+| 4 | **Teoria: derivar hipóteses diretamente** | O bloco teórico termina em um slide que escreve a condição de aceitação e dela tira as duas hipóteses como derivadas parciais — remuneração real com sinal positivo, custo locacional com sinal negativo — e as junta na condição de degrau. |
+
+## 4. Ajustes de conteúdo de 09/09/2026
+
+Decisões do autor sobre a primeira versão do conteúdo em markdown.
+
+| Slide | Ajuste |
+|---|---|
+| 1 | título formal e completo, nomeando os dois objetos das hipóteses — incentivos e custos territoriais — e o programa |
+| 2 | sumário só com os títulos das três partes |
+| 3 | manchetes e medidas do problema no mesmo slide; o gráfico por UF de fonte externa foi substituído pelo gradiente de especialistas por habitante por faixa de bolsa, calculado do CNES e do Censo 2022 — mesma unidade e mesma dimensão da política |
+| 4 | explicação de onde vem a vulnerabilidade declarada: IVS, dimensões, cortes do Ipea e conversão em faixa; retirada a frase sobre "o dobro" e "degrau de R$ 5 mil" |
+| 5 | efeitos observados em **especialistas por habitante, antes e depois**, por faixa, no lugar da participação regional; acrescentada a taxa de confirmação por faixa do quadro de vagas |
+| 6 | retirado o bloco "o que a pergunta não é" |
+| 7 | apenas literatura teórica; colunas simples; coluna com a equação original de cada trabalho |
+| 8 | a leitura do termo de remuneração inclui o mercado local: a bolsa precisa compensar também a renda privada perdida |
+| 9 | os dois parágrafos após a tabela foram fundidos; figura do custo laboral incluída |
+| 10 | hipóteses reduzidas a duas — remuneração e custo — sobre preenchimento apenas, com a leitura de como cada objeto aparece nos dados |
+| 11 | viabilidade em um único slide, simples e geral |
+| todos | retiradas as notas de apresentador e as fontes que apontavam para documentos internos; ficaram apenas as fontes dos dados exibidos |
 
 ---
 
-## 4. Defeitos do deck anterior e tratamento
+## 5. Defeitos do material anterior
 
-Encontrados na leitura de `PEE__Modelo_econômico.pptx` (11 slides,
-09/09/2026). Não são feedback da banca; são defeitos de arquivo.
+Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.
 
-| # | Defeito | Onde | Tratamento |
-|---|---|---|---|
-| D1 | **Literatura de outro trabalho.** O slide de literatura trazia economia do crime — Becker (1968), Ehrlich (1973), Fella & Gallipoli (2014), Bennett & Ouazad (2020), Dix-Carneiro et al. (2018), Deshpande & Mueller-Smith (2022) — sem qualquer relação com escolha locacional médica. | slide 6 | Substituído pela literatura canônica do projeto, separada em teórica e empírica conforme a regra de classificação de [`docs/README.md`](../../README.md#3-regra-de-classificação-de-referências). |
-| D2 | **Função utilidade não preenchida.** Nove marcadores de texto `X` e três imagens vazias no lugar das equações. | slide 8 | Reescrito a partir de [`modelo_micro.md`](../../02_teoria/modelo_micro.md), com as equações explícitas nos slides 9–11. |
-| D3 | **Slide duplicado.** O painel 2×2 da motivação aparecia idêntico nos slides 4 e 5, o segundo apenas sobreposto pela pergunta. | slides 4–5 | Desmembrado conforme o feedback 2; a pergunta ganhou slide próprio, sem o painel atrás. |
-| D4 | **Placeholder de master.** Texto `Click to edit Master title style` e `Click to edit Master text styles` visível na camada do sumário. | slide 2 | Eliminado na reescrita; o roteiro passa a ser conteúdo, não placeholder. |
-| D5 | **Blocos vazios.** Modelo teórico, viabilidade empírica e Q&A eram slides de título isolado, sem conteúdo. | slides 7, 10, 11 | Modelo teórico e viabilidade receberam conteúdo próprio; o divisor de bloco vira transição de tracking, não slide vazio. |
-| D6 | **Série regional não reprodutível.** O gráfico "PMM-E (ativos em 2025)" exibe valores que não se obtêm de nenhuma base de `data/`. | slides 4–5 | Registrado como pendência bloqueante em [03 — Proveniência](03_proveniencia_figuras_e_numeros.md#p1--distribuição-regional-do-pmm-e), com os valores reprodutíveis calculados. |
+| Defeito | Tratamento |
+|---|---|
+| Slide de literatura com economia do crime — Becker, Ehrlich, Fella & Gallipoli, Bennett & Ouazad, Dix-Carneiro et al., Deshpande & Mueller-Smith | substituído pela literatura teórica do projeto |
+| Função utilidade com nove marcadores `X` e equações vazias | reescrita a partir do modelo canônico |
+| Painel de motivação duplicado em dois slides | desmembrado em três slides |
+| Placeholder de master visível no sumário | eliminado |
+| Blocos sem conteúdo (modelo teórico, viabilidade, perguntas) | preenchidos |
+| Gráfico de participação regional com valores não reprodutíveis | substituído por especialistas por habitante, gerados por script |
 
 ---
 
-## 5. Tempo estimado
+## 6. Tempo estimado
 
 | Parte | Slides | Minutos |
 |---|:---:|:---:|
-| Capa e roteiro | 2 | 1 |
-| 1. Motivação e pergunta | 5 | 7 |
-| 2. Literatura teórica, modelo micro e hipóteses | 5 | 11 |
-| 3. Viabilidade empírica | 2 | 4 |
+| Capa e sumário | 2 | 1 |
+| 1. Motivação e pergunta | 4 | 7 |
+| 2. Literatura teórica, modelo e hipóteses | 4 | 10 |
+| 3. Viabilidade empírica | 1 | 2 |
 | Encerramento | 1 | — |
-| **Total** | **15** | **23** |
+| **Total** | **12** | **20** |

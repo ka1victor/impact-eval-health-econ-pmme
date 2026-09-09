@@ -105,15 +105,21 @@ e é tratada como heterogeneidade pré-declarada, não como hipótese principal.
 
 ### 4.2 Correspondência com as hipóteses apresentadas na banca 1
 
-A apresentação leva três hipóteses; este documento mantém quatro mais a
-complementar. O mapeamento é fixo e deve ser usado em qualquer arguição:
+A banca 1 trata apenas da margem **preenchimento** e leva duas hipóteses, as
+derivadas diretas da condição de aceitação:
 
-| Slide 12 da banca 1 | Documento canônico | Observação |
+| Banca 1 | Enunciado | Documento canônico |
 |---|---|---|
-| H1 — preenchimento | H1 | idêntica |
-| H2 — permanência da oferta local | H2 | margem derivada do horizonte intertemporal; **não** é retenção individual |
-| H3 — renda alternativa | H3, leitura territorial | a leitura individual fica registrada, mas não é testável hoje |
-| não apresentada | H4 e seção 4.1 | extensões, disponíveis como slides de apoio |
+| H1 | maior remuneração real aumenta a probabilidade de preenchimento — $\partial\Pr/\partial(B_m/p_m) > 0$ | H1 |
+| H2 | maior custo locacional reduz a probabilidade de preenchimento — $\partial\Pr/\partial c_m < 0$ | operacionaliza-se por H3 (mercado privado), H4 (sub-índices do IVS) e 4.1 (infraestrutura), todas leituras do mesmo $c_m$ |
+| — | persistência da oferta | H2 canônica; fora da banca 1, permanece no escopo do projeto |
+
+A apresentação declara, no mesmo slide, como cada objeto aparece nos dados: o
+preenchimento por célula CNES–curso; a bolsa como faixa anunciada, colinear
+com a categoria de IVS por construção da regra; o custo como IVS, sub-índices,
+tipologia territorial e estoque prévio. E declara o limite: separar H1 de H2
+exige a fronteira entre faixas com o escore administrativo, que não está
+recuperado — até lá, o que se estima é gradiente.
 
 ### 4.3 Linguagem permitida
 

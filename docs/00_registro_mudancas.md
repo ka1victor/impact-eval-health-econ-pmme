@@ -85,6 +85,56 @@ canônica do projeto.
 
 ---
 
+## 09/09/2026 — Revisão de conteúdo da banca 1, população do Censo 2022 e achado sobre `populacao_2010`
+
+Motivo: revisão ponto a ponto do autor sobre a primeira versão em markdown, e
+a descoberta de que o repositório não tinha denominador populacional válido.
+
+### Conteúdo
+
+A apresentação passou de 15 para **12 slides**, na margem de **preenchimento**
+apenas. Mudanças por slide em
+[`07_apresentacoes/banca1/01_roteiro_narrativo.md`](07_apresentacoes/banca1/01_roteiro_narrativo.md),
+seção 4. As hipóteses foram reduzidas a duas — remuneração real com sinal
+positivo e custo locacional com sinal negativo sobre a probabilidade de
+preenchimento — e o slide passou a declarar como cada objeto aparece nos dados
+e o limite de identificação.
+
+### Criado
+
+| Arquivo | Conteúdo |
+|---|---|
+| `scripts/aquisicao/06_adquirir_populacao_censo2022.py` | baixa a população residente municipal do Censo 2022 (IBGE/SIDRA, tabela 4709), com bruto em `data/raw/aquisicao/populacao/` e manifesto com hash |
+| `output/aquisicao/populacao_censo2022_municipios.csv` | 5.570 municípios, 203.080.756 habitantes |
+| `output/apresentacao_banca1/oferta_pre_por_faixa.png` | especialistas por 100 mil habitantes em jun/2025, por faixa de bolsa |
+| `output/apresentacao_banca1/oferta_antes_depois_por_faixa.png` | a mesma taxa, mensal, jun/2024 a jul/2026 |
+
+### Removido
+
+| Arquivo | Motivo |
+|---|---|
+| `output/apresentacao_banca1/distribuicao_regional.png` | participação no total confunde tamanho do programa com tamanho da população; substituída pelas figuras por habitante |
+
+### Achado registrado
+
+`populacao_2010`, única variável populacional de `data/`, **não é população
+residente**: soma 41,85 milhões contra 190,76 milhões do Censo 2010, com razão
+variando de 0,10 a 0,42 entre municípios. Afeta `estoque_pre_por_10k`, a
+covariável `log_pop` dos módulos A4 e A5 e o rótulo da tabela 1 de estatísticas
+descritivas. Registrado em
+[`04_dados/02_inventario_dados_por_outcome.md`](04_dados/02_inventario_dados_por_outcome.md),
+seção 4.0. As saídas históricas não foram reescritas.
+
+### Acrescentado a documentos existentes
+
+| Documento | Acréscimo |
+|---|---|
+| [`04_dados/02_inventario_dados_por_outcome.md`](04_dados/02_inventario_dados_por_outcome.md) | base derivada de população do Censo 2022; seção 4.0 |
+| [`02_teoria/hipoteses_e_viabilidade_empirica.md`](02_teoria/hipoteses_e_viabilidade_empirica.md) | seção 4.2 refeita para as duas hipóteses da banca |
+| [`scripts/README.md`](../scripts/README.md) | `apresentacao/` e o script de população no mapa |
+
+---
+
 ## 09/09/2026 — Conteúdo da banca 1 em markdown, figuras versionadas e correção da figura regional
 
 Motivo: a entrega passa a ser lida no GitHub e no Obsidian, não montada como

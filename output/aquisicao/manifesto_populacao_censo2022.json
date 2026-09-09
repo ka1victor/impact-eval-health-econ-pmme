@@ -1,0 +1,14 @@
+{
+  "fonte": "IBGE, Censo Demográfico 2022, via SIDRA tabela 4709, variável 93 (população residente)",
+  "url": "https://apisidra.ibge.gov.br/values/t/4709/n6/all/v/93/p/2022?formato=json",
+  "data_aquisicao": "2026-09-09",
+  "nivel_territorial": "município (n6)",
+  "periodo": "2022",
+  "registros_municipais": 5570,
+  "populacao_total": 203080756,
+  "arquivo_bruto": "data/raw/aquisicao/populacao/sidra_4709_populacao_residente_2022.json",
+  "sha256_bruto": "bc464f32f97bbedfb5c986e58be0d2cdeb759b014fcbeb0de2facd62e34a50be",
+  "arquivo_limpo": "output/aquisicao/populacao_censo2022_municipios.csv",
+  "sha256_limpo": "be44691344e748a1141af589b220b1fd5daffade4bb857be31515d9390295bb8",
+  "observacao": "Substitui `populacao_2010` como denominador populacional. Aquela coluna não é população residente total (soma 41.852.890 em 2010)."
+}
