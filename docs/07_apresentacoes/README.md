@@ -8,8 +8,8 @@
 1. Esta seção **não cria conteúdo novo**. Todo número, equação ou afirmação
    apresentada em slide deve ter origem declarada em um documento canônico das
    seções 01–06 ou em fonte externa citada com edição, tabela e data.
-2. O documento de conteúdo de slides é a fonte de verdade para o deck. O arquivo
-   `.pptx` ou `.tex` é derivado dele, nunca o contrário.
+2. O conteúdo vive em markdown, com as figuras versionadas junto. Qualquer deck
+   montado a partir dele — `.pptx`, `.tex` ou outro — é artefato derivado.
 3. Quando um número exibido em slide não for reprodutível por script do
    repositório, isso é registrado como pendência de proveniência antes da
    apresentação, e não depois.
@@ -21,7 +21,7 @@
 
 | Apresentação | Escopo | Estado | Documentos |
 |---|---|---|---|
-| [Banca 1](banca1/) | motivação → pergunta → literatura → teoria → hipóteses → viabilidade empírica (termina em onde estão os dados) | conteúdo congelado para diagramação em LaTeX | [README](banca1/README.md), [roteiro](banca1/01_roteiro_narrativo.md), [conteúdo dos slides](banca1/02_conteudo_slides.md), [proveniência](banca1/03_proveniencia_figuras_e_numeros.md) |
+| [Banca 1](banca1/) | três partes: motivação e pergunta; literatura teórica, modelo micro e hipóteses; viabilidade empírica | conteúdo completo em markdown, com figuras | [README](banca1/README.md), [roteiro](banca1/01_roteiro_narrativo.md), [conteúdo dos slides](banca1/02_conteudo_slides.md), [proveniência](banca1/03_proveniencia_figuras_e_numeros.md) |
 
 ## 3. O que não entra em apresentação
 

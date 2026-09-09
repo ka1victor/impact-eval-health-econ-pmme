@@ -85,6 +85,57 @@ canônica do projeto.
 
 ---
 
+## 09/09/2026 — Conteúdo da banca 1 em markdown, figuras versionadas e correção da figura regional
+
+Motivo: a entrega passa a ser lida no GitHub e no Obsidian, não montada como
+deck. O conteúdo deixa de ser especificação de slide e vira documento legível de
+ponta a ponta, com as figuras dentro do repositório.
+
+### Estrutura da apresentação
+
+Reorganizada nas três partes da banca 1, no lugar dos seis blocos anteriores:
+
+| Parte | Conteúdo | Slides |
+|:---:|---|:---:|
+| 1 | Motivação e pergunta | 3–7 |
+| 2 | Literatura teórica, modelo micro e hipóteses | 8–12 |
+| 3 | Viabilidade empírica | 13–14 |
+
+O slide de literatura passou a liderar pela literatura **teórica**, com cada
+trabalho declarando qual primitiva fornece e onde ela entra no modelo. A
+evidência empírica ficou como bloco de apoio ao argumento da lacuna.
+
+### Figuras
+
+| Arquivo | Origem |
+|---|---|
+| `docs/07_apresentacoes/banca1/figuras/motivacao_manchetes.png` | externa, preservada do material anterior |
+| `docs/07_apresentacoes/banca1/figuras/especialistas_por_uf.png` | externa, Demografia Médica no Brasil 2025 |
+| `docs/07_apresentacoes/banca1/figuras/deslocamento_por_regiao.png` | externa, REGIC 2018 |
+| `output/apresentacao_banca1/bolsa_por_faixa.png` | gerada por script |
+| `output/apresentacao_banca1/distribuicao_regional.png` | gerada por script |
+
+Criado `scripts/apresentacao/gerar_figuras_banca1.py`, que grava as duas figuras
+geradas e um `manifesto_figuras.json` com hash SHA-256 da base de entrada,
+recorte aplicado, data de referência e as constantes externas usadas.
+
+### Pendência encerrada
+
+A figura de distribuição regional foi regerada a partir de
+`data/pmm_especialistas_nominal.csv`, ciclo 1. Os valores corretos são Nordeste
+60,3%, Sudeste 23,0%, Norte 12,1%, Centro-Oeste 3,6% e Sul 1,0%. A versão
+anterior trazia o Sudeste com 10,6%, doze pontos percentuais abaixo, o que
+exagerava a redistributividade afirmada no slide. Permanece aberta apenas a
+pendência de manifesto das figuras de fonte externa.
+
+### Removido
+
+A seção de restrições de template e a decisão sobre equações nativas em
+PowerPoint saíram do documento de conteúdo. Eram específicas da produção de
+`.pptx`, que deixou de ser o formato da entrega.
+
+---
+
 ## Antes de 09/09/2026
 
 A reorganização em seções numeradas 01 a 06, com `90_arquivo_historico/`, é

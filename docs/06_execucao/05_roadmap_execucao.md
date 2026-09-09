@@ -39,16 +39,14 @@ dados e o que falta. Nenhum resultado de estimação entra nessa apresentação.
 
 | Item | Estado |
 |---|---|
-| Conteúdo dos slides congelado | ✅ [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md) |
+| Conteúdo completo, nas três partes da banca | ✅ [`02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md) |
 | Feedback dos professores incorporado e rastreado | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seção 3 |
-| Proveniência de cada número exibido | ⚠️ três pendências abertas |
-| Figura regional regerada por script | 🔴 pendente, bloqueia o slide 6 |
-| Manifesto das figuras de fonte externa | 🔴 pendente |
-| Figura da condição de aceitação | 🔴 pendente, bloqueia o slide 11 |
-| Deck montado e compartilhado com o grupo | 🔴 pendente |
+| Figuras derivadas do repositório, geradas por script | ✅ `scripts/apresentacao/gerar_figuras_banca1.py` |
+| Figura regional corrigida | ✅ pendência encerrada em 09/09/2026 |
+| Manifesto das figuras de fonte externa | ⚠️ aberta, não bloqueante |
 
-Regra: o arquivo do deck é artefato derivado. Conteúdo divergente entre deck e
-documento de conteúdo é erro do deck.
+Regra: o conteúdo vive em markdown, com as figuras versionadas junto. Qualquer
+deck montado a partir dele é artefato derivado, e divergência é erro do deck.
 
 ## 0. Estado da comparação agregada após a execução
 

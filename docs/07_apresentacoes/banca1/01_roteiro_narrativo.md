@@ -12,18 +12,15 @@ A apresentação tem um único fio condutor: **um preço foi colocado sobre a
 vulnerabilidade territorial, e ainda não se sabe se esse preço compra o que se
 pretendia comprar.**
 
-| # | Bloco | Papel narrativo | Slides |
-|---|---|---|---|
+| Parte | Conteúdo | Papel narrativo | Slides |
+|:---:|---|---|:---:|
 | — | Capa e roteiro | contrato com a banca | 1–2 |
-| I | Motivação | estabelecer que existe um problema, que existe uma política e que o efeito dela é uma questão em aberto | 3–6 |
-| II | Pergunta | converter o problema em uma pergunta única e respondível | 7 |
-| III | Literatura | mostrar que há um arcabouço pronto para essa pergunta e o que ele não resolve | 8 |
-| IV | Modelo teórico | derivar, do arcabouço, a condição que governa a decisão do médico | 9–11 |
-| V | Hipóteses | ler as hipóteses **como corolários** da condição derivada | 12 |
-| VI | Viabilidade empírica | declarar onde estão os dados e o que falta | 13–14 |
+| **1** | Motivação e pergunta | estabelecer que existe um problema, que existe uma política que coloca preço sobre ele, e que o efeito desse preço é questão em aberto; então converter isso em uma pergunta única | 3–7 |
+| **2** | Literatura teórica, modelo micro e hipóteses | mostrar de onde vêm as primitivas, derivar a condição que governa a decisão do médico e ler as hipóteses **como corolários** dessa condição | 8–12 |
+| **3** | Viabilidade empírica | declarar onde estão os dados, o que permitem afirmar e o que falta | 13–14 |
 | — | Encerramento | perguntas | 15 |
 
-O bloco VI encerra a entrega. Identificação, estimadores e resultados **não
+A Parte 3 encerra a entrega. Identificação, estimadores e resultados **não
 entram** nesta banca.
 
 ---
@@ -44,12 +41,12 @@ apresentação é responsabilidade de um elemento visual separado e permanente.
 Consequência prática: quem lê apenas os títulos, em sequência, obtém o
 argumento inteiro da apresentação. Esse é o teste de aceitação do deck.
 
-Sequência de títulos resultante:
+Sequência de títulos resultante, na ordem dos slides 3 a 14:
 
 1. A escassez de especialistas já é tratada como urgência sanitária pelo próprio governo.
 2. Onde há menos especialista, o paciente percorre mais quilômetros.
 3. O programa responde com um preço explícito pela vulnerabilidade do município.
-4. As vagas foram de fato para as regiões desassistidas — o que não diz que foram preenchidas nem mantidas.
+4. As vagas foram de fato para as regiões desassistidas, o que não diz que foram preenchidas nem mantidas.
 5. Bolsa maior compensa município pior?
 6. A literatura modela a escolha locacional do médico, mas não testa um preço fixado por regra.
 7. O médico aceita a vaga quando o ganho monetário supera o custo de estar ali.
@@ -108,14 +105,11 @@ Encontrados na leitura de `PEE__Modelo_econômico.pptx` (11 slides,
 
 ## 5. Tempo estimado
 
-| Bloco | Slides | Minutos |
+| Parte | Slides | Minutos |
 |---|:---:|:---:|
 | Capa e roteiro | 2 | 1 |
-| I. Motivação | 4 | 5 |
-| II. Pergunta | 1 | 2 |
-| III. Literatura | 1 | 3 |
-| IV. Modelo teórico | 3 | 6 |
-| V. Hipóteses | 1 | 2 |
-| VI. Viabilidade empírica | 2 | 4 |
+| 1. Motivação e pergunta | 5 | 7 |
+| 2. Literatura teórica, modelo micro e hipóteses | 5 | 11 |
+| 3. Viabilidade empírica | 2 | 4 |
 | Encerramento | 1 | — |
 | **Total** | **15** | **23** |

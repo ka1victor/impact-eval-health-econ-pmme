@@ -1,0 +1,41 @@
+{
+  "entrada": {
+    "caminho": "data/pmm_especialistas_nominal.csv",
+    "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
+    "dt_referencia": "2026-08-12",
+    "recorte": "ciclo == 1",
+    "registros": 521
+  },
+  "constantes_externas": {
+    "estoque_2024": {
+      "valores": {
+        "Nordeste": 14.5,
+        "Norte": 6.1,
+        "Centro-Oeste": 7.5,
+        "Sudeste": 55.3,
+        "Sul": 16.6
+      },
+      "fonte": "Scheffer, M. (coord.). Demografia Médica no Brasil 2025",
+      "reproduzivel_no_repositorio": false
+    },
+    "bolsa_por_faixa": {
+      "valores": {
+        "Faixa 3": 10000,
+        "Faixa 2": 15000,
+        "Faixa 1": 20000
+      },
+      "fonte": "Lei nº 15.233/2025 e edital do PMM-E"
+    }
+  },
+  "participacao_pmme_ciclo1_pct": {
+    "Nordeste": 60.3,
+    "Norte": 12.1,
+    "Centro-Oeste": 3.6,
+    "Sudeste": 23.0,
+    "Sul": 1.0
+  },
+  "figuras": [
+    "output/apresentacao_banca1/distribuicao_regional.png",
+    "output/apresentacao_banca1/bolsa_por_faixa.png"
+  ]
+}
