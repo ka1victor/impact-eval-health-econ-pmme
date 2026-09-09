@@ -9,6 +9,84 @@
       "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
       "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
       "fonte": "IBGE, Censo 2022, SIDRA tabela 4709"
+    },
+    "quadro_vagas": {
+      "caminho": "output/aquisicao/quadro_vagas_tratamento.parquet",
+      "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f"
+    },
+    "a4_estrato": {
+      "caminho": "output/tema_trabalho/A4_tabela_01_amostra_construcao.csv",
+      "sha256": "f4b40892b52798a2f532a9146f27c6274f129b8283441a1d2a15642a5da56e45"
+    },
+    "a4_faixa": {
+      "caminho": "output/tema_trabalho/A4_tabela_01b_amostra_faixa.csv",
+      "sha256": "97858d45fce37fa128f1687d94f4001025ab7635bf7f2d84cc71e9c2da3605e6"
+    }
+  },
+  "vagas_ciclo1_por_regiao": {
+    "Norte": {
+      "celulas": 246,
+      "imediatas": 159,
+      "reserva": 245,
+      "municipios": 69
+    },
+    "Nordeste": {
+      "celulas": 505,
+      "imediatas": 256,
+      "reserva": 348,
+      "municipios": 110
+    },
+    "Centro-Oeste": {
+      "celulas": 102,
+      "imediatas": 52,
+      "reserva": 91,
+      "municipios": 46
+    },
+    "Sudeste": {
+      "celulas": 362,
+      "imediatas": 170,
+      "reserva": 407,
+      "municipios": 107
+    },
+    "Sul": {
+      "celulas": 80,
+      "imediatas": 41,
+      "reserva": 54,
+      "municipios": 36
+    }
+  },
+  "preenchimento_ciclo1": {
+    "por_faixa": {
+      "FAIXA 3": {
+        "n": 539,
+        "pct": 23.6
+      },
+      "FAIXA 2": {
+        "n": 465,
+        "pct": 37.4
+      },
+      "FAIXA 1": {
+        "n": 291,
+        "pct": 31.6
+      }
+    },
+    "por_estrato": {
+      "capital": {
+        "n": 73,
+        "pct": 35.6
+      },
+      "metropolitano": {
+        "n": 265,
+        "pct": 44.9
+      },
+      "interior_proximo_polo": {
+        "n": 811,
+        "pct": 26.9
+      },
+      "interior_remoto": {
+        "n": 146,
+        "pct": 20.5
+      }
     }
   },
   "regra_de_faixa": {
@@ -157,6 +235,8 @@
     "output/apresentacao_banca1/bolsa_por_faixa.png",
     "output/apresentacao_banca1/oferta_pre_por_faixa.png",
     "output/apresentacao_banca1/retaguarda_por_faixa.png",
-    "output/apresentacao_banca1/oferta_antes_depois_por_faixa.png"
+    "output/apresentacao_banca1/oferta_antes_depois_por_faixa.png",
+    "output/apresentacao_banca1/vagas_ciclo1_por_regiao.png",
+    "output/apresentacao_banca1/preenchimento_ciclo1.png"
   ]
 }

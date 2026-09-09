@@ -2,7 +2,7 @@
 
 > **Classificação:** fundamentação teórica canônica — primitivos, derivações, adaptação ao PMM-E e derivação das hipóteses<br>
 > **Transposição empírica:** [hipoteses_e_viabilidade_empirica.md](hipoteses_e_viabilidade_empirica.md)<br>
-> **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 9 a 12<br>
+> **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 12 a 17<br>
 > **Atualização:** 9 de setembro de 2026
 
 > [!NOTE]

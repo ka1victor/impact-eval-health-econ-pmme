@@ -39,8 +39,8 @@ dados e o que falta. Nenhum resultado de estimação entra nessa apresentação.
 
 | Item | Estado |
 |---|---|
-| Conteúdo completo, 11 slides em três partes, margem de preenchimento | ✅ [`02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md) |
-| Feedback dos professores e três rodadas de revisão do autor rastreados | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seções 3 e 4 |
+| Conteúdo completo, 18 slides nas seis seções da banca (motivação, pergunta, literatura teórica, modelo, hipóteses, viabilidade), margem de preenchimento | ✅ [`02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md) |
+| Feedback dos professores e quatro rodadas de revisão do autor rastreados | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seções 3 e 4 |
 | Todas as figuras do deck geradas por script ou conceituais | ✅ `scripts/apresentacao/gerar_figuras_banca1.py` |
 | Evidência internacional sobre incentivos catalogada e conferida na fonte | ✅ [`19_...md`](../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md), seção 7 |
 | Escopo teórico fixado: econometria só na motivação | ✅ [`01_roteiro_narrativo.md`](../07_apresentacoes/banca1/01_roteiro_narrativo.md), seção 2.4 |

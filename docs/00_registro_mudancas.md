@@ -85,6 +85,55 @@ canônica do projeto.
 
 ---
 
+## 09/09/2026 — Quarta revisão da banca 1: seis seções, 18 slides e edital no repositório
+
+Motivo: o sumário do conteúdo usava "Parte I/II/III", que não é a estrutura da
+banca 1. A estrutura correta tem seis seções — motivação, pergunta, literatura
+teórica, modelo microeconômico, hipóteses, viabilidade empírica — e cada uma
+pode ocupar quantos slides o argumento pedir. O conteúdo foi reescrito para
+essa estrutura e aprofundado onde estava raso.
+
+### O que mudou em [`07_apresentacoes/banca1/02_conteudo_slides.md`](07_apresentacoes/banca1/02_conteudo_slides.md)
+
+| Seção | Antes | Agora |
+|---|---|---|
+| 1. Motivação | 3 slides | 8 slides, em três blocos: **problema** (retrato nacional da Demografia Médica 2025 e manchetes; nossos dados por faixa; as desvantagens na visão do médico), **política** (o que é o PMM-E — lei, quem participa, aprimoramento em serviço, 16 cursos, como a vaga chega, ciclo 1 por região; e a regra IVS → faixa → bolsa) e **efeito incerto** (evidência a favor; evidência contra; o preenchimento do ciclo 1 por faixa e por estrato) |
+| 2. Pergunta | 1 slide | 1 slide, com a leitura em dois objetos — preço e desvantagem |
+| 3. Literatura teórica | tabela | tabela com parágrafo dizendo o que cada tradição resolve |
+| 4. Modelo | 2 slides | 4 slides: decisão; **o que a bolsa paga e o que não paga** (novo — bolsa e mercado local); custo; **o IVS organiza o custo** (novo — as três dimensões do índice e o sinal ambíguo de $c_0'$) |
+| 5. Hipóteses | 1 slide | 1 slide, derivação em quatro passos |
+| 6. Viabilidade | 1 slide | 1 slide, com custo de vida e distância da família na tabela |
+
+### O que foi criado
+
+| Arquivo | Conteúdo | Por que existe |
+|---|---|---|
+| `data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf` | texto integral do Edital SGTES/MS nº 3/2025 (DOU, 24/07/2025), SHA-256 `417c82d9…d9afb2` | o repositório tinha só o FAQ da bolsa; o slide "O que é o PMM-E" cita itens do edital (objeto, requisitos, cursos, escolha de locais, barema, bolsa) que precisavam de fonte primária local |
+| `output/apresentacao_banca1/vagas_ciclo1_por_regiao.png` | células e vagas imediatas do ciclo 1 por região | figura do slide 6, gerada por script |
+| `output/apresentacao_banca1/preenchimento_ciclo1.png` | proporção de células preenchidas por faixa anunciada e por estrato territorial | figura do slide 10, gerada por script a partir das tabelas descritivas do módulo A4 |
+
+### O que foi acrescentado a documentos existentes
+
+| Documento | Acréscimo |
+|---|---|
+| [`07_apresentacoes/banca1/01_roteiro_narrativo.md`](07_apresentacoes/banca1/01_roteiro_narrativo.md) | arco reescrito nas seis seções; títulos dos 18 slides; quarta rodada de ajustes; tempo estimado |
+| [`07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md`](07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md) | figuras F5 e F6; números dos slides 3, 5, 6 e 10; fontes documentais externas conferidas em 09/09/2026 |
+| [`07_apresentacoes/banca1/README.md`](07_apresentacoes/banca1/README.md) | estrutura em seis seções; estado por seção |
+| `scripts/apresentacao/gerar_figuras_banca1.py` | funções `figura_vagas_por_regiao` e `figura_preenchimento_ciclo1`; manifesto com as novas entradas |
+
+### Fontes externas conferidas para o slide 3
+
+Demografia Médica no Brasil 2025 (Scheffer et al., FMUSP/AMB): 597 mil
+médicos em 2024, 353.287 especialistas (59,1%); Sudeste com 55,4% dos
+especialistas e Norte com 5,9%; 453 especialistas por 100 mil habitantes no
+Distrito Federal, 68 no Maranhão e 70 no Pará — conferidos na cobertura da
+Agência Brasil (abril de 2025). Portaria GM/MS nº 7.061/2025 reconheceu
+situação de urgência em saúde pública por 24 meses em razão do tempo de espera
+na atenção especializada. A manchete do Senado Notícias de 25/09/2025 foi
+conferida na página original.
+
+---
+
 ## 09/09/2026 — Terceira revisão da banca 1: escopo teórico e saída de Reinhardt
 
 Motivo: terceira rodada de revisão do autor, fixando o escopo da banca.
