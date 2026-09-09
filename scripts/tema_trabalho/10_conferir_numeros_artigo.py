@@ -840,46 +840,86 @@ registrar("A5_TXT_AMOSTRA", "Apendice B", "Celulas e municipios da amostra confi
 a5_f, loc_f = json_valor(A5_JSON, "modelos/principal_dinamico_confirmatorio/pre_F")
 a5_pre_p, loc_pp = json_valor(A5_JSON, "modelos/principal_dinamico_confirmatorio/pre_p")
 trecho_a5_pre = f"com $F$ de {decimal_br(a5_f, 2)} e $p$ de {decimal_br(a5_pre_p, 3)}"
-registrar("A5_TXT_PRE_F", "Apendice B", "Teste conjunto dos coeficientes pre-referencia",
-          decimal_br(a5_f, 2), A5_JSON, loc_f, a5_f, "2 casas", trecho_a5_pre)
-registrar("A5_TXT_PRE_P", "Apendice B", "p-valor do teste conjunto pre-referencia",
-          decimal_br(a5_pre_p, 3), A5_JSON, loc_pp, a5_pre_p, "3 casas", trecho_a5_pre)
+A5_LOO = "output/tema_trabalho/A5_tabela_09_leave_one_curso_evento.csv"
+A5_REF = "output/tema_trabalho/A5_tabela_10_sensibilidade_referencia.csv"
+
+_pp = "modelos/principal_proporcional_confirmatorio"
+a5p_f, loc_pf = json_valor(A5_JSON, f"{_pp}/pre_F")
+a5p_pp, loc_ppp = json_valor(A5_JSON, f"{_pp}/pre_p")
+a5p_b, loc_pb = json_valor(A5_JSON, f"{_pp}/mar2026_beta")
+a5p_se, loc_pse = json_valor(A5_JSON, f"{_pp}/mar2026_se")
+trecho_a5_pre = f"com $F$ de {decimal_br(a5p_f, 2)} e $p$ de {decimal_br(a5p_pp, 3)}"
+trecho_a5_prop = (
+    f"é de {decimal_br(a5p_b, 3)} log-ponto por célula, com erro-padrão de "
+    f"{decimal_br(a5p_se, 3)} e $p$ inferior a 0,001"
+)
 
 a5_beta, loc_b = csv_valor(A5_EVENTO, {"amostra": "confirmatoria_587", "competencia": "202603"}, "beta")
 a5_se, loc_s = csv_valor(A5_EVENTO, {"amostra": "confirmatoria_587", "competencia": "202603"}, "se_cluster")
 a5_p, loc_p = csv_valor(A5_EVENTO, {"amostra": "confirmatoria_587", "competencia": "202603"}, "p_valor")
 trecho_a5_mar = (
-    f"a diferença associada à atração é de {decimal_br(a5_beta, 2)} profissional por célula, "
-    f"com erro-padrão de {decimal_br(a5_se, 2)} e $p$ de {decimal_br(a5_p, 3)}"
+    f"em nível é {decimal_br(a5_beta, 2)} profissional por célula, com erro-padrão de "
+    f"{decimal_br(a5_se, 2)} e $p$ de {decimal_br(a5_p, 3)}"
 )
-registrar("A5_TXT_MAR_BETA", "Apendice B", "Diferenca associada em marco de 2026",
+
+_fn = {"escala": "nivel", "competencia": "202603"}
+loo14_b, loc_l14b = csv_valor(A5_LOO, {**_fn, "subamostra": "sem_curso_14"}, "beta")
+loo14_p, loc_l14p = csv_valor(A5_LOO, {**_fn, "subamostra": "sem_curso_14"}, "p_valor")
+loo8_b, loc_l8b = csv_valor(A5_LOO, {**_fn, "subamostra": "somente_8_cbo_1_para_1"}, "beta")
+loo8_p, loc_l8p = csv_valor(A5_LOO, {**_fn, "subamostra": "somente_8_cbo_1_para_1"}, "p_valor")
+trecho_a5_frag = (
+    f"cai para {decimal_br(loo14_b, 2)}, com $p$ de {decimal_br(loo14_p, 3)}, e ao restringir "
+    f"aos oito cursos cuja correspondência com o CBO é estritamente unívoca cai para "
+    f"{decimal_br(loo8_b, 2)}, com $p$ de {decimal_br(loo8_p, 3)}"
+)
+
+ref_b, loc_rb = csv_valor(A5_REF, {"escala": "nivel", "referencia": "media_12_meses_pre"}, "beta")
+ref_p, loc_rp = csv_valor(A5_REF, {"escala": "nivel", "referencia": "media_12_meses_pre"}, "p_valor")
+trecho_a5_ref = (
+    f"é {decimal_br(ref_b, 2)} com $p$ de {decimal_br(ref_p, 3)}"
+)
+
+_fp = {"escala": "proporcional", "competencia": "202603"}
+ploo14_b, loc_p14 = csv_valor(A5_LOO, {**_fp, "subamostra": "sem_curso_14"}, "beta")
+ploo8_b, loc_p8 = csv_valor(A5_LOO, {**_fp, "subamostra": "somente_8_cbo_1_para_1"}, "beta")
+trecho_a5_psobrev = (
+    f"{decimal_br(ploo14_b, 3)} sem o curso de radiologia e {decimal_br(ploo8_b, 3)} nos oito "
+    f"cursos estritos"
+)
+
+registrar("A5_TXT_PRE_F", "Apendice B", "Teste conjunto pre-referencia na escala proporcional",
+          decimal_br(a5p_f, 2), A5_JSON, loc_pf, a5p_f, "2 casas", trecho_a5_pre)
+registrar("A5_TXT_PRE_P", "Apendice B", "p-valor do teste conjunto pre-referencia proporcional",
+          decimal_br(a5p_pp, 3), A5_JSON, loc_ppp, a5p_pp, "3 casas", trecho_a5_pre)
+
+registrar("A5_TXT_PROP_BETA", "Apendice B", "Diferenca proporcional em marco de 2026",
+          decimal_br(a5p_b, 3), A5_JSON, loc_pb, a5p_b, "3 casas", trecho_a5_prop)
+registrar("A5_TXT_PROP_SE", "Apendice B", "Erro-padrao da diferenca proporcional",
+          decimal_br(a5p_se, 3), A5_JSON, loc_pse, a5p_se, "3 casas", trecho_a5_prop)
+
+registrar("A5_TXT_MAR_BETA", "Apendice B", "Diferenca em nivel em marco de 2026",
           decimal_br(a5_beta, 2), A5_EVENTO, loc_b, a5_beta, "2 casas", trecho_a5_mar)
-registrar("A5_TXT_MAR_SE", "Apendice B", "Erro-padrao da diferenca em marco de 2026",
+registrar("A5_TXT_MAR_SE", "Apendice B", "Erro-padrao da diferenca em nivel",
           decimal_br(a5_se, 2), A5_EVENTO, loc_s, a5_se, "2 casas", trecho_a5_mar)
-registrar("A5_TXT_MAR_P", "Apendice B", "p-valor da diferenca em marco de 2026",
+registrar("A5_TXT_MAR_P", "Apendice B", "p-valor da diferenca em nivel",
           decimal_br(a5_p, 3), A5_EVENTO, loc_p, a5_p, "3 casas", trecho_a5_mar)
 
-a5_amp_n, loc_an = json_valor(A5_JSON, "modelos/sensibilidade_dinamica_ampliada/n_celulas")
-a5_amp_b, loc_ab = json_valor(A5_JSON, "modelos/sensibilidade_dinamica_ampliada/mar2026_beta")
-a5_amp_se, loc_as = json_valor(A5_JSON, "modelos/sensibilidade_dinamica_ampliada/mar2026_se")
-a5_amp_p, loc_apv = json_valor(A5_JSON, "modelos/sensibilidade_dinamica_ampliada/mar2026_p")
-trecho_a5_amp = (
-    f"Uma sensibilidade com as {milhar(a5_amp_n)} células de todos os cursos produz "
-    f"{decimal_br(a5_amp_b, 2)}, com erro-padrão de {decimal_br(a5_amp_se, 2)} e $p$ de "
-    f"{decimal_br(a5_amp_p, 3)}"
-)
-for chave, bruto, local, formatado, transformacao, descricao in [
-    ("N", a5_amp_n, loc_an, milhar(a5_amp_n), "inteiro com separador de milhar",
-     "Celulas da sensibilidade ampliada"),
-    ("BETA", a5_amp_b, loc_ab, decimal_br(a5_amp_b, 2), "2 casas",
-     "Diferenca da sensibilidade ampliada"),
-    ("SE", a5_amp_se, loc_as, decimal_br(a5_amp_se, 2), "2 casas",
-     "Erro-padrao da sensibilidade ampliada"),
-    ("P", a5_amp_p, loc_apv, decimal_br(a5_amp_p, 3), "3 casas",
-     "p-valor da sensibilidade ampliada"),
-]:
-    registrar(f"A5_TXT_AMPLIADA_{chave}", "Apendice B", descricao, formatado, A5_JSON,
-              local, bruto, transformacao, trecho_a5_amp)
+registrar("A5_TXT_LOO14_BETA", "Apendice B", "Nivel sem o curso de radiologia",
+          decimal_br(loo14_b, 2), A5_LOO, loc_l14b, loo14_b, "2 casas", trecho_a5_frag)
+registrar("A5_TXT_LOO14_P", "Apendice B", "p-valor em nivel sem radiologia",
+          decimal_br(loo14_p, 3), A5_LOO, loc_l14p, loo14_p, "3 casas", trecho_a5_frag)
+registrar("A5_TXT_LOO8_BETA", "Apendice B", "Nivel nos oito cursos estritos",
+          decimal_br(loo8_b, 2), A5_LOO, loc_l8b, loo8_b, "2 casas", trecho_a5_frag)
+registrar("A5_TXT_LOO8_P", "Apendice B", "p-valor em nivel nos oito estritos",
+          decimal_br(loo8_p, 3), A5_LOO, loc_l8p, loo8_p, "3 casas", trecho_a5_frag)
+registrar("A5_TXT_REF_BETA", "Apendice B", "Nivel contra a media dos doze meses pre",
+          decimal_br(ref_b, 2), A5_REF, loc_rb, ref_b, "2 casas", trecho_a5_ref)
+registrar("A5_TXT_REF_P", "Apendice B", "p-valor contra a media dos doze meses pre",
+          decimal_br(ref_p, 3), A5_REF, loc_rp, ref_p, "3 casas", trecho_a5_ref)
+registrar("A5_TXT_PLOO14", "Apendice B", "Proporcional sem o curso de radiologia",
+          decimal_br(ploo14_b, 3), A5_LOO, loc_p14, ploo14_b, "3 casas", trecho_a5_psobrev)
+registrar("A5_TXT_PLOO8", "Apendice B", "Proporcional nos oito cursos estritos",
+          decimal_br(ploo8_b, 3), A5_LOO, loc_p8, ploo8_b, "3 casas", trecho_a5_psobrev)
 
 delta_sem_med, loc_dsm = json_valor(A5_JSON, "modelos/distribuicao_delta_confirmatoria/0/mediana")
 delta_sem_media, loc_dsa = json_valor(A5_JSON, "modelos/distribuicao_delta_confirmatoria/0/media")

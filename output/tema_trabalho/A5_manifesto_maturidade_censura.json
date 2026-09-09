@@ -54,7 +54,7 @@
     "nota": "Junho de 2025 e a referencia inequivocamente pre-oferta. Setembro de 2025 nao e baseline limpo: o snapshot registra inicio mediano em 2025-09-19 e entradas ate 2026-03-17. O follow comum 202603 representa nove meses de calendario desde a referencia, com exposicao fisica heterogenea."
   },
   "ponte_curso_cbo": {
-    "cursos_estritamente_univocos_confirmatorios": [
+    "cursos_cbo_nao_compartilhado_confirmatorios": [
       1,
       2,
       3,
@@ -67,6 +67,22 @@
       16
     ],
     "n_cursos_confirmatorios": 10,
+    "cursos_cbo_estritamente_1_para_1": [
+      1,
+      2,
+      3,
+      5,
+      9,
+      12,
+      13,
+      15
+    ],
+    "n_cursos_cbo_estritamente_1_para_1": 8,
+    "cursos_nao_compartilhados_com_multiplos_cbo": {
+      "14": "MULTIESPECIALIDADE_EXCLUSIVA",
+      "16": "FAMILIA_PATOLOGIA"
+    },
+    "nota_nomenclatura": "A chave da ponte se chama cursos_estritamente_univocos, mas descreve cursos cujo CBO nao e compartilhado com outro curso do PMM-E. Dos dez, 8 tem mapeamento estritamente 1:1; os cursos [14, 16] agregam mais de um CBO. Os artefatos de A5 usam 'CBO nao compartilhado entre cursos'; a ponte nao foi alterada.",
     "n_cursos_sobrepostos": 6,
     "celulas_confirmatorias_referencia": 587,
     "celulas_ampliada_sobreposta": 597,
@@ -75,7 +91,7 @@
     "municipios_ampliada": 368,
     "status_substantivo": "OPERACIONAL_NAO_PUBLICADA_COMO_CROSSWALK_OFICIAL",
     "versao_ponte": "2.0_operacional_auditada",
-    "regra": "Primario restrito ao nucleo sem sobreposicao (587 celulas, 295 mun); sensibilidade inclui ampliada 597 celulas sobrepostas estratificadas; nao colapsar CBOs compartilhados no primario para evitar contaminacao"
+    "regra": "Primario restrito ao nucleo sem CBO compartilhado (587 celulas, 295 mun); sensibilidade inclui ampliada 597 celulas com CBO compartilhado, estratificadas; nao colapsar CBOs compartilhados no primario para evitar contaminacao"
   },
   "horizonte_e_censura": {
     "janela_dinamica_primaria": "202506 -> 202603 (referencia limpa e follow comum; 9 meses de calendario)",
@@ -325,7 +341,11 @@
     "tabela_trajetoria_atracao": "output/tema_trabalho/A5_tabela_01c_trajetoria_por_atracao.csv",
     "tabela_descritiva_outcomes": "output/tema_trabalho/A5_tabela_02_descritiva_outcomes_6m.csv",
     "tabela_estudo_evento": "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv",
-    "figura_estudo_evento": "output/tema_trabalho/A5_figura_04_estudo_evento_atracao.png"
+    "tabela_estudo_evento_proporcional": "output/tema_trabalho/A5_tabela_08_estudo_evento_proporcional.csv",
+    "tabela_leave_one_curso_evento": "output/tema_trabalho/A5_tabela_09_leave_one_curso_evento.csv",
+    "tabela_sensibilidade_referencia": "output/tema_trabalho/A5_tabela_10_sensibilidade_referencia.csv",
+    "figura_estudo_evento": "output/tema_trabalho/A5_figura_04_estudo_evento_atracao.png",
+    "figura_estudo_evento_proporcional": "output/tema_trabalho/A5_figura_05_estudo_evento_proporcional.png"
   },
   "avisos_linguagem": [
     "Nao chamar presenca no CNES de participacao no PMM-E, atividade fisica ou retencao individual.",

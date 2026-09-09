@@ -53,51 +53,51 @@
       "bytes": 109578
     },
     "output/tema_trabalho/A4_estimativas_atracao.json": {
-      "sha256": "d7a9c4ef5cdca247711b6ea21044c00df5939061e9f36ca463d2999d190a1d62",
-      "bytes": 13579
+      "sha256": "a5bddf6167b3bcda69c0a5cfce18b3c421ec73e5abf002a2956b245a6a2f6f1f",
+      "bytes": 17849
     },
     "output/tema_trabalho/A5_estimativas_provimento.json": {
-      "sha256": "fd451278ada61cdecbd1597befa30e705308dd9bfd0f9e1cf8b46f2c75d2d102",
-      "bytes": 12594
+      "sha256": "fd7c2f9e6ebafa5136f9d1e38fd7bf0b7db24e139496eb77d7d4658c96fe64ca",
+      "bytes": 57888
     },
     "output/tema_trabalho/A5_manifesto_maturidade_censura.json": {
-      "sha256": "ab36d7b82154f71f86c2cca6708eca79af42361439479cd46da05f33de62540b",
-      "bytes": 13342
+      "sha256": "2507700a4dff24e6af930bbf894b3fbd094114a178637fd2d5c2006de800a7ce",
+      "bytes": 14420
     },
     "output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv": {
-      "sha256": "6970bfc0edaf19604727b2703758c5ef6933b19d9edd190ae71e4e16329d7537",
-      "bytes": 7838
+      "sha256": "75a253b8904a62f3291b0685a61158da6db32020596c338e21b06e2634304c06",
+      "bytes": 8690
     },
     "output/tema_trabalho/A4_tabela_02c_confirmacao_homologacao.csv": {
-      "sha256": "55de8736bc77a58ff38fa2b0128162ca2165a8e3ddb3cd73cef63113fec24172",
-      "bytes": 16376
+      "sha256": "35ef57eb513fe74b88a7d291718c94c1da416f71f542e011af8d9471d6eb0070",
+      "bytes": 18100
     },
     "output/tema_trabalho/A4_tabela_02d_municipio_curso.csv": {
-      "sha256": "939e0191f995ce3291db263ab68de7d26825928c67ff2289fc16582b92a6203e",
-      "bytes": 7390
+      "sha256": "420f000e1b2282ddfd23b5abdca4c6e089f72e1e9f4ee49721db854623b4deb5",
+      "bytes": 8188
     },
     "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv": {
-      "sha256": "ab44c1feb82dea17aa9f468aeb0d17b5fa091a4509d9776f3c086f77fb1df92c",
-      "bytes": 7720
+      "sha256": "199bbb20f94e2b70656bbbd40ee701e94b2d109dadb7102afaabbc3f92c3497b",
+      "bytes": 12361
     },
     "docs/auditorias/09_red_team_atracao_provimento.md": {
-      "sha256": "f372f92b74841ec5391de98de349d275e4f72d45f25494f6c5798fd632238bfb",
-      "bytes": 5558
+      "sha256": "a6ceff20be5520f1af2875afeb8ca19b574112461ddf8e4609237984e937412b",
+      "bytes": 5650
     },
     "output/tema_trabalho/A6_matriz_afirmacao_evidencia_limite.csv": {
-      "sha256": "85fdd40cf15824eed49856a24d32848c1ac1b8d748b3d334be3c842b76b78d65",
+      "sha256": "01a4248e8df3253f8bb71f86c119d4e5772bc6633fe82343978d9e9b958d00e7",
       "bytes": 1634
     },
     "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": {
-      "sha256": "d3f6a6fa9115681beeccdc1e6c0b9bab1ed9112220ec61fde788056a7214425b",
-      "bytes": 3681
+      "sha256": "0c28eb5cf047fe79a1323fd822c5998dd010651b51d3800953bdd3322b3f3f62",
+      "bytes": 3704
     }
   },
   "docs_hash8": {
-    "docs/auditorias/09_red_team_atracao_provimento.md": "f372f92b",
-    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "85fdd40c",
-    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "c15c5f91",
-    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "d3f6a6fa"
+    "docs/auditorias/09_red_team_atracao_provimento.md": "a6ceff20",
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "01a4248e",
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "c51bd810",
+    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "0c28eb5c"
   },
   "portoes": {
     "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",

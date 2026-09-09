@@ -637,29 +637,37 @@ remoto.
 \toprule
 Especificação ou desfecho & Diferença (p.p.) & Erro-padrão (p.p.) \\
 \midrule
-Modelo linear pré-especificado & 29,4 & 6,1 \\
-Logit, efeito marginal médio & 29,3 & 6,4 \\
-Ajuste completo & 19,8 & 8,5 \\
-Apenas confirmação & 28,5 & 6,0 \\
-Apenas homologação & 25,0 & 5,0 \\
-Unidade município--curso & 33,1 & 6,1 \\
+Modelo linear pré-especificado & 27,9 & 5,9 \\
+Logit, efeito marginal médio & 27,8 & 6,2 \\
+Ajuste completo & 20,9 & 7,8 \\
+Apenas confirmação & 27,0 & 5,7 \\
+Apenas homologação & 23,8 & 4,8 \\
+Unidade município--curso & 31,6 & 5,8 \\
 \bottomrule
 \end{tabular}
 
 \vspace{2pt}
 \begin{minipage}{0.86\textwidth}
 \footnotesize \textit{Nota:} 1.295 células e 368 municípios; erros agrupados por
-município. O ajuste completo acrescenta IVS 2010, logaritmo da população,
-estoque médico prévio e faixa anunciada. Todas as diferenças são associativas.
+município. Efeitos fixos de curso e de unidade da federação, com as oito unidades
+de menos de cinco municípios colapsadas em macrorregião de saúde, conforme o
+protocolo congelado antes dos desfechos. O ajuste completo acrescenta IVS 2010,
+logaritmo da população, estoque médico prévio e faixa anunciada; como população e
+faixa são fortemente determinadas pelo próprio estrato, ele responde a uma
+pergunta distinta da do modelo mínimo, e não é o mesmo contraste melhor ajustado.
+Todas as diferenças são associativas.
 \end{minipage}
 \end{table}
 
 No modelo principal, capital e interior próximo a polos também apresentam
-diferenças positivas em relação ao interior remoto, de 23,2 e 12,7 pontos
+diferenças positivas em relação ao interior remoto, de 32,6 e 12,1 pontos
 percentuais. No ajuste completo, esses dois contrastes atenuam e perdem precisão,
-enquanto o contraste metropolitano permanece em 19,8 pontos percentuais, com $p$
-de 0,020 e valor $q$ de 0,060 após correção FDR entre estratos, portanto
-limítrofe. IVS e faixa anunciada não fornecem evidência separável de um mecanismo
+enquanto o contraste metropolitano permanece em 20,9 pontos percentuais, com $p$
+de 0,008 e valor $q$ de 0,023 após correção FDR entre estratos. A atenuação do
+ajuste completo vem quase inteiramente do logaritmo da população, que tem $R^2$ de
+0,49 contra as próprias variáveis indicadoras de estrato; não se trata de curso e
+unidade da federação absorverem variação territorial, pois ambos já estão no
+modelo mínimo. IVS e faixa anunciada não fornecem evidência separável de um mecanismo
 monetário, o que é coerente com a colinearidade entre faixa e regra
 administrativa discutida no Apêndice \ref{sec:rotas}.
 
@@ -701,12 +709,24 @@ federação--mês, com erros agrupados por município. Como atração é um resu
 realizado, e não tratamento atribuído, os coeficientes são diferenças
 condicionais de trajetória.
 
-O teste conjunto dos coeficientes anteriores à referência não rejeita zero, com
-$F$ de 1,03 e $p$ de 0,420. Em março de 2026, a diferença associada à atração é
-de 0,50 profissional por célula, com erro-padrão de 0,23 e $p$ de 0,033. Uma
-sensibilidade com as 1.184 células de todos os cursos produz 0,60, com
-erro-padrão de 0,22 e $p$ de 0,006, mas mistura CBOs sobrepostos e não é a
-amostra principal.
+O desfecho é reportado em \textbf{escala proporcional}, com o logaritmo de um mais o
+estoque. A razão é substantiva: o desfecho em nível soma profissionais de
+municípios cujos estoques diferem em ordens de grandeza, de modo que um curso de
+estoque grande domina o resultado por construção, e a pergunta pretendida é a
+variação relativa da oferta local. O teste conjunto dos coeficientes anteriores à
+referência não rejeita zero, com $F$ de 0,63 e $p$ de 0,813. Em março de 2026, a
+diferença associada à atração é de 0,068 log-ponto por célula, com erro-padrão de
+0,018 e $p$ inferior a 0,001, o que corresponde a cerca de 7\% de estoque.
+
+A mesma quantidade em nível é 0,50 profissional por célula, com erro-padrão de
+0,23 e $p$ de 0,033, mas é frágil: ao excluir o curso de radiologia cai para 0,20,
+com $p$ de 0,366, e ao restringir aos oito cursos cuja correspondência com o CBO é
+estritamente unívoca cai para 0,12, com $p$ de 0,608. Contra a média dos doze
+meses anteriores, em vez do mês de referência, é 0,41 com $p$ de 0,174. A escala
+proporcional sobrevive aos mesmos exercícios: 0,059 sem o curso de radiologia e
+0,057 nos oito cursos estritos, ambos com $p$ abaixo de 0,011. Por isso a
+proporcional é a forma primária de reportar este apêndice, e a de nível é mantida
+apenas como sensibilidade explicitamente frágil.
 
 A distribuição da variação entre junho de 2025 e março de 2026 é assimétrica.
 Sem atração, a mediana é 0 e a média é 0,55, com máximo de 25; com atração, a

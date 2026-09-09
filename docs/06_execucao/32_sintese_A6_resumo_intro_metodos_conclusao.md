@@ -2,11 +2,11 @@
 
 > **Título recomendado:** Atração administrativa de médicos especialistas e gradientes territoriais: evidências de implementação do PMM-E.  
 > **Nível de identificação:** associativo. RDD encerrado em R1; retenção individual não identificada.  
-> **Hashes:** A4 `d7a9c4ef`; A5 `fd451278`.
+> **Hashes:** A4 `a5bddf61`; A5 `fd7c2f9e`.
 
 ## Resumo
 
-Analisamos a implementação do primeiro ciclo do PMM-E em 1.295 células CNES–curso de 368 municípios. Alguma confirmação ou homologação ocorreu em 30,3% das células. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade 29.4 pontos percentuais maior que as do interior remoto; o contraste foi 19.8 pontos no ajuste completo, 28.5 na confirmação, 25.0 na homologação e 33.1 ao colapsar para município–curso. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO unívoco encontrou diferença associada à atração de 0.50 médico cadastrado em março/2026 (EP 0.23), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
+Analisamos a implementação do primeiro ciclo do PMM-E em 1.295 células CNES–curso de 368 municípios. Alguma confirmação ou homologação ocorreu em 30,3% das células. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade 27.9 pontos percentuais maior que as do interior remoto; o contraste foi 20.9 pontos no ajuste completo, 27.0 na confirmação, 23.8 na homologação e 31.6 ao colapsar para município–curso. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO não compartilhado entre cursos encontrou diferença associada à atração de 0.50 médico cadastrado em março/2026 (EP 0.23), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
 
 ## Introdução
 

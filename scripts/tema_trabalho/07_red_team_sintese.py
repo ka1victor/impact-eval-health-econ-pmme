@@ -92,7 +92,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ### 3. Seleção de municípios, cursos e estabelecimentos
 
 **Refutação tentada:** misturar cursos com ponte CBO sobreposta e atribuir a mudança a uma especialidade específica.  
-**Veredito:** A4 cobre 1.295 células em 368 municípios; A5 principal restringe-se a 587 células município–curso de dez cursos com CBO unívoco, em 295 municípios. A amostra ampliada é apenas sensibilidade.
+**Veredito:** A4 cobre 1.295 células em 368 municípios; A5 principal restringe-se a 587 células município–curso de dez cursos cujo CBO não é compartilhado com outro curso do PMM-E, em 295 municípios; apenas oito desses cursos têm CBO estritamente 1:1. A amostra ampliada é apenas sensibilidade.
 
 ### 4. Inferência municipal e concentração
 
@@ -179,7 +179,7 @@ O núcleo útil é a desigualdade territorial na atração administrativa, robus
 
 ## Resumo
 
-Analisamos a implementação do primeiro ciclo do PMM-E em 1.295 células CNES–curso de 368 municípios. Alguma confirmação ou homologação ocorreu em 30,3% das células. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade {pct(metro)} pontos percentuais maior que as do interior remoto; o contraste foi {pct(metro_full)} pontos no ajuste completo, {pct(confirm)} na confirmação, {pct(homolog)} na homologação e {pct(collapsed)} ao colapsar para município–curso. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO unívoco encontrou diferença associada à atração de {event['mar2026_beta']:.2f} médico cadastrado em março/2026 (EP {event['mar2026_se']:.2f}), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
+Analisamos a implementação do primeiro ciclo do PMM-E em 1.295 células CNES–curso de 368 municípios. Alguma confirmação ou homologação ocorreu em 30,3% das células. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade {pct(metro)} pontos percentuais maior que as do interior remoto; o contraste foi {pct(metro_full)} pontos no ajuste completo, {pct(confirm)} na confirmação, {pct(homolog)} na homologação e {pct(collapsed)} ao colapsar para município–curso. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO não compartilhado entre cursos encontrou diferença associada à atração de {event['mar2026_beta']:.2f} médico cadastrado em março/2026 (EP {event['mar2026_se']:.2f}), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
 
 ## Introdução
 

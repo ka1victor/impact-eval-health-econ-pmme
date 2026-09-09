@@ -23,7 +23,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ### 3. Seleção de municípios, cursos e estabelecimentos
 
 **Refutação tentada:** misturar cursos com ponte CBO sobreposta e atribuir a mudança a uma especialidade específica.  
-**Veredito:** A4 cobre 1.295 células em 368 municípios; A5 principal restringe-se a 587 células município–curso de dez cursos com CBO unívoco, em 295 municípios. A amostra ampliada é apenas sensibilidade.
+**Veredito:** A4 cobre 1.295 células em 368 municípios; A5 principal restringe-se a 587 células município–curso de dez cursos cujo CBO não é compartilhado com outro curso do PMM-E, em 295 municípios; apenas oito desses cursos têm CBO estritamente 1:1. A amostra ampliada é apenas sensibilidade.
 
 ### 4. Inferência municipal e concentração
 
@@ -33,7 +33,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ### 5. Confirmação, homologação, entrada e permanência
 
 **Refutação tentada:** chamar confirmação de entrada física ou presença cadastral de retenção.  
-**Veredito:** os estágios são separados. Em A4, o contraste metropolitano é 28.5 pp para confirmação e 25.0 pp para homologação. Em A5, “entrada” é um novo vínculo no mês após washout de seis meses, não um fluxo acumulado semestral.
+**Veredito:** os estágios são separados. Em A4, o contraste metropolitano é 27.0 pp para confirmação e 23.8 pp para homologação. Em A5, “entrada” é um novo vínculo no mês após washout de seis meses, não um fluxo acumulado semestral.
 
 ### 6. IVS e faixa de bolsa
 
@@ -57,9 +57,9 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 
 ## Ataques ao resultado principal (A4)
 
-- O contraste metropolitano versus interior remoto é 29.4 pp no LPM pré-especificado e 19.8 pp no ajuste completo.
-- Separar o funil preserva o sinal: 28.5 pp em confirmação e 25.0 pp em homologação.
-- Colapsar múltiplos CNES para município–curso aumenta o contraste para 33.1 pp; logo, o resultado não decorre do peso implícito de estabelecimentos múltiplos.
+- O contraste metropolitano versus interior remoto é 27.9 pp no LPM pré-especificado e 20.9 pp no ajuste completo.
+- Separar o funil preserva o sinal: 27.0 pp em confirmação e 23.8 pp em homologação.
+- Colapsar múltiplos CNES para município–curso aumenta o contraste para 31.6 pp; logo, o resultado não decorre do peso implícito de estabelecimentos múltiplos.
 - Winsorizar covariadas e executar leave-one-out não inverte o gradiente. O resultado é robusto como associação territorial, não como efeito da bolsa.
 
 ## Ataques ao resultado secundário (A5)
