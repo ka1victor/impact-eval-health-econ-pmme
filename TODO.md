@@ -84,6 +84,22 @@
   de execução; a validação feita foi estrutural (ambientes balanceados, colunas
   das tabelas, `\label`/`\ref` e existência das figuras).
 
+## Fila imediata — correções pós-auditoria (plano congelado em 09/09/2026)
+
+Plano e alvos numéricos em `docs/06_execucao/35_plano_correcoes_pos_auditoria.md`.
+A implementação que divergir dos alvos é erro de implementação, não resultado novo.
+
+- [ ] C1 — A4: colapsar UF em macrorregião, como o protocolo A3 declara, em vez
+  do balde único `RESTO`. Capital vai de +0,2318 para +0,3264; metropolitano de
+  +0,2942 para +0,2793. Publicar as três variantes como sensibilidade.
+- [ ] C2 — A5: promover a escala proporcional (`log1p`, +0,0684, `p=0,0002`) a
+  forma primária, publicar leave-one-curso-out do coeficiente de evento e a
+  sensibilidade de mês de referência, e corrigir os graus de liberdade que
+  ignoram os FE absorvidos (`p` de 0,033 para 0,044).
+- [ ] C3 — refazer a justificativa do pedido do escore administrativo de IVS em
+  torno da impossibilidade demonstrada (teto de 78,0% para qualquer regra de dois
+  cortes) e do primeiro estágio sharp (527/527). Sem envio.
+
 ## Decisões concluídas
 
 - [x] Fixar o ciclo 1, chamada 1, como coorte inicial.
