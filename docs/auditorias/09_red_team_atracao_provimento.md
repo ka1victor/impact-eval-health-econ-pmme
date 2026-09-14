@@ -33,7 +33,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ### 5. Confirmação, homologação, entrada e permanência
 
 **Refutação tentada:** chamar confirmação de entrada física ou presença cadastral de retenção.  
-**Veredito:** os estágios são separados. Em A4, o contraste metropolitano é 27.0 pp para confirmação e 23.8 pp para homologação. Em A5, “entrada” é um novo vínculo no mês após washout de seis meses, não um fluxo acumulado semestral.
+**Veredito:** os estágios são separados. Em A4, o contraste metropolitano é 27,0 pp para confirmação e 23,8 pp para homologação. Em A5, “entrada” é um novo vínculo no mês após washout de seis meses, não um fluxo acumulado semestral.
 
 ### 6. IVS e faixa de bolsa
 
@@ -57,17 +57,17 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 
 ## Ataques ao resultado principal (A4)
 
-- O contraste metropolitano versus interior remoto é 27.9 pp no LPM pré-especificado e 20.9 pp no ajuste completo.
-- Separar o funil preserva o sinal: 27.0 pp em confirmação e 23.8 pp em homologação.
-- Colapsar múltiplos CNES para município–curso aumenta o contraste para 31.6 pp; logo, o resultado não decorre do peso implícito de estabelecimentos múltiplos.
+- O contraste metropolitano versus interior remoto é 27,9 pp no LPM pré-especificado e 20,9 pp no ajuste completo.
+- Separar o funil preserva o sinal: 27,0 pp em confirmação e 23,8 pp em homologação.
+- Colapsar múltiplos CNES para município–curso aumenta o contraste para 31,6 pp; logo, o resultado não decorre do peso implícito de estabelecimentos múltiplos.
 - Winsorizar covariadas e executar leave-one-out não inverte o gradiente. O resultado é robusto como associação territorial, não como efeito da bolsa.
 
 ## Ataques ao resultado secundário (A5)
 
 - Setembro/2025 foi rejeitado como baseline porque já contém exposição física. A referência limpa é junho/2025 e o follow-up comum é março/2026.
-- O estudo dinâmico usa efeitos fixos de célula, curso–mês e UF–mês, com cluster municipal. Em março/2026, a diferença associada à atração é 0.50 (EP 0.23; p=0.033); o teste conjunto prévio tem p=0.420.
-- A sensibilidade ampliada produz 0.60 (p=0.006), mas mistura CBOs sobrepostos.
-- A distribuição é assimétrica: sem atração, média 0.55, mediana 0, máximo 25; com atração, média 2.29, mediana 1, máximo 211. Winsorizar muda materialmente a precisão, portanto médias simples não bastam.
+- O estudo dinâmico usa efeitos fixos de célula, curso–mês e UF–mês, com cluster municipal. Em março/2026, a diferença associada à atração é 0,50 (EP 0,23; p=0,033); o teste conjunto prévio tem p=0,420.
+- A sensibilidade ampliada produz 0,60 (p=0,006), mas mistura CBOs sobrepostos.
+- A distribuição é assimétrica: sem atração, média 0,55, mediana 0, máximo 25; com atração, média 2,29, mediana 1, máximo 211. Winsorizar muda materialmente a precisão, portanto médias simples não bastam.
 - O modelo de nível é dominado por diferenças basais e a validação preditiva fora da amostra é fraca. Ambos ficam como diagnósticos.
 
 ## Veredito geral

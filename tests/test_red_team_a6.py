@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 import json
 import hashlib
+import re
 import unittest
 from pathlib import Path
 
@@ -106,6 +107,45 @@ class RedTeamA6Test(unittest.TestCase):
         self.assertTrue("rdd" in low and "r1" in low)
         # hashes mentioned
         self.assertIn("hash", low)
+
+    def test_sintese_separa_primeira_chamada_do_ciclo(self):
+        """C-1: 30,3% é da primeira chamada; o ciclo 1 inteiro é 35,6%.
+
+        A síntese dizia "primeiro ciclo ... 30,3% das células", colando o número
+        da primeira chamada no ciclo. Os dois têm o mesmo denominador (1.295) e
+        numeradores diferentes: 393 contra 461, porque 68 células sem desfecho na
+        primeira chamada receberam homologado novo na segunda, somando 84
+        pessoas. O paper_pmme_submission.tex já era explícito.
+        """
+        txt = DOCS_SINTESE.read_text(encoding="utf-8")
+        self.assertIn("quadro da primeira chamada", txt)
+        self.assertIn("393", txt)
+        self.assertIn("30,3%", txt)
+        self.assertIn("461", txt)
+        self.assertIn("35,6%", txt)
+        self.assertIn("ciclo 1 inteiro", txt)
+        self.assertIn("68 células", txt)
+        self.assertIn("84 pessoas", txt)
+
+        # A frase defeituosa não pode voltar: "primeiro ciclo" seguido do 30,3%
+        # sem o qualificador do quadro da primeira chamada entre os dois.
+        self.assertNotIn("implementação do primeiro ciclo do PMM-E em 1.295", txt)
+
+    def test_prosa_gerada_usa_virgula_decimal(self):
+        """C-1, bônus: documento em português não publica `27.9`."""
+        for caminho in (DOCS_SINTESE, DOCS_REDTEAM, MATRIZ_MD):
+            texto = caminho.read_text(encoding="utf-8")
+            # O ponto também é separador de milhar em português (1.295). Só o
+            # separador decimal está em teste, então o de milhar sai antes.
+            sem_milhar = re.sub(r"(?<=\d)\.(?=\d{3}(?!\d))", "\u2009", texto)
+            achados = re.findall(r"(?<![\w./])\d+\.\d+(?![\w./])", sem_milhar)
+            self.assertEqual(
+                achados, [], f"ponto decimal em texto português: {caminho.name} {achados}"
+            )
+
+        sintese = DOCS_SINTESE.read_text(encoding="utf-8")
+        self.assertIn("27,9 pontos percentuais", sintese)
+        self.assertNotIn("27.9", sintese)
 
     def test_manifesto_reproducao_completo(self):
         man = json.loads(MANIFESTO.read_text(encoding="utf-8"))

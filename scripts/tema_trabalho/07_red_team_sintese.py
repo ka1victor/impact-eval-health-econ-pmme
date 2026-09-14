@@ -58,8 +58,52 @@ def atomic_text(path: Path, value: str) -> None:
     tmp.replace(path)
 
 
+def num(value: float, casas: int = 2) -> str:
+    """Formata em convenção brasileira. Os documentos gerados são em português."""
+    return f"{value:.{casas}f}".replace(".", ",")
+
+
 def pct(value: float) -> str:
-    return f"{100 * value:.1f}"
+    return num(100 * value, 1)
+
+
+def prevalencia_atracao() -> dict[str, float]:
+    """Separa o desfecho da primeira chamada do desfecho do ciclo 1 inteiro.
+
+    Os dois não são o mesmo número e vinham sendo confundidos: 30,3% é a
+    prevalência no **quadro da primeira chamada**, que é a população primária de
+    A4. Pelo ciclo 1 inteiro a prevalência é maior, porque células sem desfecho
+    na primeira chamada receberam homologado novo na segunda (item C-1).
+    """
+    funil = pd.read_parquet(FUNIL)
+    chave = ["co_cnes_7d", "cod_curso"]
+    quadro = funil.loc[funil["in_quadro_ch1_original"] == True, chave].drop_duplicates()  # noqa: E712
+    ch1 = (
+        funil.loc[funil["chamada"] == 1]
+        .groupby(chave, as_index=False)[["n_confirmacoes_ch1", "n_homologacoes_ch1"]]
+        .sum()
+    )
+    ch2 = (
+        funil.loc[funil["chamada"] == 2]
+        .groupby(chave, as_index=False)[["n_homologacoes_novas_ch2"]]
+        .sum()
+    )
+    celulas = quadro.merge(ch1, on=chave, how="left").merge(ch2, on=chave, how="left").fillna(0)
+
+    primeira = (celulas["n_confirmacoes_ch1"] > 0) | (celulas["n_homologacoes_ch1"] > 0)
+    novas = (~primeira) & (celulas["n_homologacoes_novas_ch2"] > 0)
+    ciclo = primeira | (celulas["n_homologacoes_novas_ch2"] > 0)
+
+    total = int(len(celulas))
+    return {
+        "celulas": total,
+        "ch1_celulas": int(primeira.sum()),
+        "ch1_prop": float(primeira.sum()) / total,
+        "ciclo_celulas": int(ciclo.sum()),
+        "ciclo_prop": float(ciclo.sum()) / total,
+        "celulas_novas_ch2": int(novas.sum()),
+        "pessoas_novas_ch2": int(celulas.loc[novas, "n_homologacoes_novas_ch2"].sum()),
+    }
 
 
 def _caminho_de_step(no: ast.expr) -> str:
@@ -176,6 +220,8 @@ def main() -> None:
     expanded = m5["sensibilidade_dinamica_ampliada"]
     dist0 = m5["distribuicao_delta_confirmatoria"]["0"]
     dist1 = m5["distribuicao_delta_confirmatoria"]["1"]
+    prev = prevalencia_atracao()
+    celulas_fmt = f"{prev['celulas']:,}".replace(",", ".")
     date = dt.date.today().isoformat()
 
     redteam = f"""# A6 — Red team da evidência empírica
@@ -245,9 +291,9 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ## Ataques ao resultado secundário (A5)
 
 - Setembro/2025 foi rejeitado como baseline porque já contém exposição física. A referência limpa é junho/2025 e o follow-up comum é março/2026.
-- O estudo dinâmico usa efeitos fixos de célula, curso–mês e UF–mês, com cluster municipal. Em março/2026, a diferença associada à atração é {event['mar2026_beta']:.2f} (EP {event['mar2026_se']:.2f}; p={event['mar2026_p']:.3f}); o teste conjunto prévio tem p={event['pre_p']:.3f}.
-- A sensibilidade ampliada produz {expanded['mar2026_beta']:.2f} (p={expanded['mar2026_p']:.3f}), mas mistura CBOs sobrepostos.
-- A distribuição é assimétrica: sem atração, média {dist0['media']:.2f}, mediana {dist0['mediana']:.0f}, máximo {dist0['max']:.0f}; com atração, média {dist1['media']:.2f}, mediana {dist1['mediana']:.0f}, máximo {dist1['max']:.0f}. Winsorizar muda materialmente a precisão, portanto médias simples não bastam.
+- O estudo dinâmico usa efeitos fixos de célula, curso–mês e UF–mês, com cluster municipal. Em março/2026, a diferença associada à atração é {num(event['mar2026_beta'])} (EP {num(event['mar2026_se'])}; p={num(event['mar2026_p'], 3)}); o teste conjunto prévio tem p={num(event['pre_p'], 3)}.
+- A sensibilidade ampliada produz {num(expanded['mar2026_beta'])} (p={num(expanded['mar2026_p'], 3)}), mas mistura CBOs sobrepostos.
+- A distribuição é assimétrica: sem atração, média {num(dist0['media'])}, mediana {num(dist0['mediana'], 0)}, máximo {num(dist0['max'], 0)}; com atração, média {num(dist1['media'])}, mediana {num(dist1['mediana'], 0)}, máximo {num(dist1['max'], 0)}. Winsorizar muda materialmente a precisão, portanto médias simples não bastam.
 - O modelo de nível é dominado por diferenças basais e a validação preditiva fora da amostra é fraca. Ambos ficam como diagnósticos.
 
 ## Veredito geral
@@ -259,15 +305,18 @@ O núcleo útil é a desigualdade territorial na atração administrativa, robus
     atomic_text(REDTEAM, redteam)
 
     matrix_rows = [
-        ("Atração administrativa média de 30,3%", "393 de 1.295 células", "Célula não é vaga física", "prevalência administrativa observada"),
+        (f"Atração administrativa de {pct(prev['ch1_prop'])}% no quadro da primeira chamada",
+         f"{prev['ch1_celulas']} de {celulas_fmt} células; pelo ciclo 1 inteiro, {prev['ciclo_celulas']} ({pct(prev['ciclo_prop'])}%)",
+         "Célula não é vaga física; primeira chamada não é o ciclo inteiro",
+         "prevalência administrativa observada"),
         (f"Metropolitano associado a +{pct(metro)} pp versus remoto", "LPM com FE curso e UF; cluster município", f"Ajuste completo: +{pct(metro_full)} pp", "associado a maior atração"),
         ("Resultado preservado em confirmação", f"Contraste metropolitano +{pct(confirm)} pp", "Confirmação não é entrada física", "associação no estágio de confirmação"),
         ("Resultado preservado em homologação", f"Contraste metropolitano +{pct(homolog)} pp", "Homologação não é exercício", "associação no estágio de homologação"),
         ("Resultado preservado ao colapsar CNES", f"Município–curso: +{pct(collapsed)} pp", "Muda o peso analítico", "robustez à unidade"),
         ("IVS/faixa não identificam efeito marginal", "Coeficientes conjuntos instáveis e R1 falhou", "Regra administrativa não reproduzida", "gradiente descritivo"),
-        (f"Dinâmica CNES em março/2026: +{event['mar2026_beta']:.2f}", f"FE célula, curso–mês, UF–mês; p={event['mar2026_p']:.3f}", "Atração é resultado realizado; sem grupo causal", "associado a trajetória diferencial"),
-        ("Pré-tendências não rejeitadas", f"Teste conjunto p={event['pre_p']:.3f}", "Não rejeitar não prova paralelismo", "diagnóstico favorável, não validação causal"),
-        ("Distribuição da mudança é assimétrica", f"Medianas {dist0['mediana']:.0f} e {dist1['mediana']:.0f}; máximo com atração {dist1['max']:.0f}", "Cauda extrema influencia a média", "descrever média, mediana e caudas"),
+        (f"Dinâmica CNES em março/2026: +{num(event['mar2026_beta'])}", f"FE célula, curso–mês, UF–mês; p={num(event['mar2026_p'], 3)}", "Atração é resultado realizado; sem grupo causal", "associado a trajetória diferencial"),
+        ("Pré-tendências não rejeitadas", f"Teste conjunto p={num(event['pre_p'], 3)}", "Não rejeitar não prova paralelismo", "diagnóstico favorável, não validação causal"),
+        ("Distribuição da mudança é assimétrica", f"Medianas {num(dist0['mediana'], 0)} e {num(dist1['mediana'], 0)}; máximo com atração {num(dist1['max'], 0)}", "Cauda extrema influencia a média", "descrever média, mediana e caudas"),
         ("CNES não mede retenção individual", "Agregação município–curso", "Sem ponte nominal de bolsistas", "oferta médica cadastrada local"),
         ("RDD, SIH/SIA e custo-benefício fora do núcleo", "RDD encerrado em R1; bases/portões ausentes", "Sem identificação ou linkage", "não afirmar sem novo desenho"),
     ]
@@ -290,7 +339,7 @@ O núcleo útil é a desigualdade territorial na atração administrativa, robus
 
 ## Resumo
 
-Analisamos a implementação do primeiro ciclo do PMM-E em 1.295 células CNES–curso de 368 municípios. Alguma confirmação ou homologação ocorreu em 30,3% das células. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade {pct(metro)} pontos percentuais maior que as do interior remoto; o contraste foi {pct(metro_full)} pontos no ajuste completo, {pct(confirm)} na confirmação, {pct(homolog)} na homologação e {pct(collapsed)} ao colapsar para município–curso. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO não compartilhado entre cursos encontrou diferença associada à atração de {event['mar2026_beta']:.2f} médico cadastrado em março/2026 (EP {event['mar2026_se']:.2f}), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
+Analisamos o **quadro da primeira chamada** do primeiro ciclo do PMM-E, {celulas_fmt} células CNES–curso em 368 municípios. Alguma confirmação ou homologação **na própria primeira chamada** ocorreu em {prev['ch1_celulas']} células, {pct(prev['ch1_prop'])}% do quadro — é essa a prevalência da população primária de A4. Somando as homologações novas da segunda chamada, o **ciclo 1 inteiro** alcança {prev['ciclo_celulas']} das mesmas {celulas_fmt} células, {pct(prev['ciclo_prop'])}%: {prev['celulas_novas_ch2']} células sem desfecho na primeira chamada receberam homologado novo na segunda, somando {prev['pessoas_novas_ch2']} pessoas. Os dois números medem coisas diferentes e não são intercambiáveis. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade {pct(metro)} pontos percentuais maior que as do interior remoto; o contraste foi {pct(metro_full)} pontos no ajuste completo, {pct(confirm)} na confirmação, {pct(homolog)} na homologação e {pct(collapsed)} ao colapsar para município–curso. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO não compartilhado entre cursos encontrou diferença associada à atração de {num(event['mar2026_beta'])} médico cadastrado em março/2026 (EP {num(event['mar2026_se'])}), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
 
 ## Introdução
 

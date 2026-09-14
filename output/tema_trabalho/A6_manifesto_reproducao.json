@@ -162,20 +162,20 @@
       "presente": true
     },
     "docs/auditorias/09_red_team_atracao_provimento.md": {
-      "sha256": "4650d99e8aa45a51d82eda27c64e1dde42520e40f2fe00513b238a1779202ced",
+      "sha256": "1a49e114e29a66a33da857288ad0e80a12901de2741df03c477206eb64d6fcc1",
       "bytes": 5650,
       "papel": "red team gerado aqui",
       "presente": true
     },
     "output/tema_trabalho/A6_matriz_afirmacao_evidencia_limite.csv": {
-      "sha256": "01a4248e8df3253f8bb71f86c119d4e5772bc6633fe82343978d9e9b958d00e7",
-      "bytes": 1634,
+      "sha256": "4b0077df10c846ffc2273b1bf0721e68bd11e349f61f8d246178ec59b0607bb0",
+      "bytes": 1750,
       "papel": "matriz afirmação–evidência–limite gerada aqui",
       "presente": true
     },
     "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": {
-      "sha256": "634f973cbd5c72fe2e6f51b020f53fbb4e8fd376da092edcd5bb9ee3a57478ad",
-      "bytes": 3704,
+      "sha256": "c33fa9323697be3fefe9c916841156109bbbf00a69ed10c0b5a74a7ff48ef8b6",
+      "bytes": 4114,
       "papel": "síntese gerada aqui",
       "presente": true
     }
@@ -185,10 +185,10 @@
   ],
   "nota_insumos_ausentes": "Insumo declarado no desenho e ausente do disco aparece acima com sha256 nulo, presente=false e motivo_ausencia. Entrada omitida significaria que o insumo não faz parte do desenho.",
   "docs_hash8": {
-    "docs/auditorias/09_red_team_atracao_provimento.md": "4650d99e",
-    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "01a4248e",
-    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "90a61601",
-    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "634f973c"
+    "docs/auditorias/09_red_team_atracao_provimento.md": "1a49e114",
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "4b0077df",
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "82320a34",
+    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "c33fa932"
   },
   "portoes": {
     "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",
