@@ -20,8 +20,17 @@
 > adiante sem decisão do autor. Itens do Grupo A exigem emenda escrita e
 > commitada **antes** de tocar em código.
 >
-> **Próxima sessão da fila: 1 — item A-1**, o balde `RESTO` nos modelos
-> secundários de A5 (`+1,2949` → `+0,5014`). Exige emenda prévia, por ser Grupo A.
+> **Atualização em 14/09/2026: sessão 2 concluída** (A-2, A-3, C-6), com a
+> emenda 1 do `35_plano_correcoes_pos_auditoria.md` commitada antes do código. O
+> wild cluster bootstrap que o A3 exigia foi computado, o efeito marginal médio do
+> logit passou a contrastar o bloco inteiro de estrato contra o interior remoto
+> (`27,8 / 6,2` → `25,1 / 5,2` na Tabela A1), e o MDE ex-post de `16,4` p.p. passou
+> a ser publicado ao lado do ex-ante de `13,7`. O LPM primário não mudou e o
+> conferidor do artigo foi de 190 para 193 cifras, todas aprovadas.
+>
+> **Próxima sessão da fila: 3 — item C-7**, red team, na parte documental; a parte
+> medida depende de D-4. A **sessão 5** está `ABERTA`. As sessões **1 e 4**
+> permanecem bloqueadas por achado e por dado ausente.
 
 ## Fila imediata autorizada
 

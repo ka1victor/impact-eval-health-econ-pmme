@@ -639,7 +639,7 @@ remoto.
 Especificação ou desfecho & Diferença (p.p.) & Erro-padrão (p.p.) \\
 \midrule
 Modelo linear pré-especificado & 27,9 & 5,9 \\
-Logit, efeito marginal médio & 27,8 & 6,2 \\
+Logit, efeito marginal médio & 25,1 & 5,2 \\
 Ajuste completo & 20,9 & 7,8 \\
 Apenas confirmação & 27,0 & 5,7 \\
 Apenas homologação & 23,8 & 4,8 \\
@@ -652,7 +652,11 @@ Unidade município--curso & 31,6 & 5,8 \\
 \footnotesize \textit{Nota:} 1.295 células e 368 municípios; erros agrupados por
 município. Efeitos fixos de curso e de unidade da federação, com as oito unidades
 de menos de cinco municípios colapsadas em macrorregião de saúde, conforme o
-protocolo congelado antes dos desfechos. O ajuste completo acrescenta IVS 2010,
+protocolo congelado antes dos desfechos. No logit, o efeito marginal médio troca
+o bloco inteiro de indicadoras de estrato contra o interior remoto, e não uma
+indicadora isolada, de modo que o contraste não passa por células
+simultaneamente metropolitanas e capitais; o erro-padrão vem do método delta
+sobre a mesma matriz de covariância agrupada. O ajuste completo acrescenta IVS 2010,
 logaritmo da população, estoque médico prévio e faixa anunciada; como população e
 faixa são fortemente determinadas pelo próprio estrato, ele responde a uma
 pergunta distinta da do modelo mínimo, e não é o mesmo contraste melhor ajustado.
@@ -678,7 +682,21 @@ Para referência de precisão, o benchmark global de 3,8 pontos percentuais mede
 precisão de uma proporção e não é o efeito mínimo detectável de um coeficiente
 territorial; para o contraste metropolitano contra interior remoto, o efeito
 mínimo detectável aproximado é de 13,7 pontos percentuais sob probabilidade base
-de 0,30.
+de 0,30. Esse valor é ex-ante e analítico, e subestima o que o modelo entrega,
+porque a fórmula ignora que os efeitos fixos de curso e de unidade da federação
+absorvem variação do próprio estrato. Calculado a partir do erro-padrão agrupado
+efetivamente realizado, a 80\% de poder e 5\% bilateral, o efeito mínimo
+detectável ex-post do mesmo contraste é de 16,4 pontos percentuais. Reportamos os
+dois, e o ex-post é o que descreve a precisão do resultado publicado.
+
+O protocolo congelado exige inferência de pequena amostra sempre que um subgrupo
+tenha menos de trinta municípios, e o estrato capital tem 18. Aplicamos o
+bootstrap selvagem agrupado com nula imposta, pesos de Rademacher por município e
+1.999 replicações. Os três contrastes territoriais permanecem significativos a
+5\%, com valores $p$ maiores que os agrupados nominais, como esperado quando os
+grupos são poucos. Os dois estão publicados lado a lado; o valor $p$ principal
+continua sendo o agrupado nominal, e a correção de multiplicidade entre estratos
+segue calculada sobre ele.
 
 \begin{figure}[htbp]
 \centering

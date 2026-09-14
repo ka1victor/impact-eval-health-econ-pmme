@@ -37,15 +37,22 @@
       "convergiu": true,
       "metodo": "lbfgs",
       "ame_estrato": {
+        "estrato_capital": 0.3402812828196651,
+        "estrato_interior_proximo_polo": 0.0907512501764372,
+        "estrato_metropolitano": 0.2512735404571222
+      },
+      "se_ame_estrato": {
+        "estrato_capital": 0.07573982575376402,
+        "estrato_interior_proximo_polo": 0.035028669070121435,
+        "estrato_metropolitano": 0.052392023906092176
+      },
+      "contrafactual_ame_estrato": "troca do bloco inteiro de indicadoras de estrato contra interior_remoto; EP por método delta sobre a VCE cluster-robusta do próprio logit",
+      "ame_estrato_statsmodels_dummy_true": {
         "estrato_capital": 0.3606285380634823,
         "estrato_interior_proximo_polo": 0.10092990592161327,
         "estrato_metropolitano": 0.2784158060001861
       },
-      "se_ame_estrato": {
-        "estrato_capital": 0.07360973696592635,
-        "estrato_interior_proximo_polo": 0.04021390837182188,
-        "estrato_metropolitano": 0.06195583710853281
-      }
+      "nota_ame_statsmodels": "valor anterior, mantido só para auditoria: get_margeff(dummy=True) altera apenas a coluna do estrato avaliado e deixa as demais indicadoras do bloco no valor observado, gerando células simultaneamente capital e metropolitana. Superestima o contraste. Não é o valor publicado."
     },
     "robustez_estagios_funil": {
       "alguma_confirmacao": {
@@ -402,7 +409,41 @@
       "capital": 0.1946,
       "metropolitano": 0.1374,
       "interior_proximo_polo": 0.119
-    }
+    },
+    "mde_ex_post_do_ep_realizado_p80": {
+      "capital": 0.20113029751855774,
+      "metropolitano": 0.16403396904220777,
+      "interior_proximo_polo": 0.12080698930317012
+    },
+    "ep_realizado_cluster": {
+      "capital": 0.07179160434535373,
+      "metropolitano": 0.05855041209586844,
+      "interior_proximo_polo": 0.043120940431196554
+    },
+    "otimismo_do_ex_ante": {
+      "capital": 0.0335575412053327,
+      "metropolitano": 0.19384256944838263,
+      "interior_proximo_polo": 0.015184784060253134
+    },
+    "nota_ex_ante_vs_ex_post": "contrastes_vs_interior_remoto_p30 é o MDE EX-ANTE de A3, mantido sem alteração: fórmula analítica de diferença de proporções com DEFF, que ignora a variação do próprio estrato absorvida pelos FE de curso e de UF e por isso é otimista. mde_ex_post_do_ep_realizado_p80 = (z_{1-alpha/2}+z_poder) x EP cluster-robusto realizado do coeficiente, a 80% de poder e 5% bilateral. A3 continua congelado e não foi reexecutado. Detalhe em A4_tabela_09_mde_ex_ante_ex_post.csv."
+  },
+  "inferencia_wild_cluster_bootstrap": {
+    "motivo": "registro A3 exige wild cluster bootstrap quando um subgrupo tem G<30; capital tem G=18 na amostra primária (A4_tabela_01_amostra_construcao.csv). A reauditoria registra ainda que o G=368 do cluster principal é nominal, por concentração da variância de estrato_metropolitano em poucos municípios; esse diagnóstico é da auditoria e não é recomputado neste módulo.",
+    "metodo": "wild cluster bootstrap-t restrito; pesos Rademacher por município; nula imposta",
+    "b_replicacoes": 1999,
+    "semente": 42,
+    "convencao_p": "p = (1 + #{|t*| >= |t_obs|}) / (B + 1), bilateral",
+    "p_wild_por_estrato": {
+      "estrato_capital": 0.0015,
+      "estrato_metropolitano": 0.0005,
+      "estrato_interior_proximo_polo": 0.0115
+    },
+    "p_nominal_por_estrato": {
+      "estrato_capital": 5.453355294769253e-06,
+      "estrato_metropolitano": 1.842227959023983e-06,
+      "estrato_interior_proximo_polo": 0.005142887906441984
+    },
+    "nota": "coluna adicional de honestidade da precisão: o p principal continua sendo o cluster-robusto nominal, e o q de FDR entre estratos segue calculado sobre ele. Detalhe em A4_tabela_08_wild_cluster_bootstrap.csv."
   },
   "hashes_entradas": {
     "output/aquisicao/quadro_vagas_tratamento.parquet": {
@@ -445,6 +486,8 @@
     "tabela_influencia": "output/tema_trabalho/A4_tabela_05_influencia_municipal.csv",
     "tabela_preditiva": "output/tema_trabalho/A4_tabela_06_validacao_preditiva.csv",
     "tabela_sensibilidade_colapso_uf": "output/tema_trabalho/A4_tabela_07_sensibilidade_colapso_uf.csv",
+    "tabela_wild_cluster_bootstrap": "output/tema_trabalho/A4_tabela_08_wild_cluster_bootstrap.csv",
+    "tabela_mde_ex_ante_ex_post": "output/tema_trabalho/A4_tabela_09_mde_ex_ante_ex_post.csv",
     "figura_prob_estrato": "output/tema_trabalho/A4_figura_01_prob_ajustada_estrato.png",
     "figura_ivs": "output/tema_trabalho/A4_figura_02_gradiente_ivs.png",
     "figura_faixa": "output/tema_trabalho/A4_figura_03_faixa_descritiva.png"
@@ -452,7 +495,9 @@
   "avisos": [
     "Faixa não isolada de IVS; coeficiente descritivo, não efeito causal da bolsa.",
     "IVS linear não significativo; gradiente descritivo.",
-    "Capital com G=18 <30: IC cluster nominal; wild bootstrap recomendado para subgrupo, não computado nesta entrega.",
+    "Capital tem G=18 <30 na amostra primária, que é o gatilho literal do registro A3. O wild cluster bootstrap exigido foi computado (Rademacher, nula imposta, B=1999, semente 42) e está em A4_tabela_08_wild_cluster_bootstrap.csv. O p wild é coluna adicional; o p principal continua sendo o cluster-robusto nominal.",
+    "O MDE ex-ante de A3 é otimista contra o modelo estimado, porque a fórmula analítica ignora a variação do estrato absorvida pelos FE de curso e UF. O MDE ex-post do EP realizado é publicado ao lado, sem apagar o ex-ante, em A4_tabela_09_mde_ex_ante_ex_post.csv.",
+    "AME do logit: o contraste de estrato troca o bloco inteiro de indicadoras contra interior_remoto. get_margeff(dummy=True) alteraria só a coluna avaliada, mantendo as demais no valor observado e gerando células simultaneamente capital e metropolitana; esse valor fica em coluna própria apenas para auditoria.",
     "Não ponderar por vagas; pesos por estrato alteram estimando.",
     "Cursos como exploração; FDR apenas para família 4 estratos.",
     "FE de UF segue o protocolo A3: UF com <5 clusters entra pela macrorregião de saúde. Limite conhecido: os 4 municípios de UF pequena sem macrorregião publicada na tipologia (UNIAO DOS PALMARES/AL, OIAPOQUE/AP, CACHOEIRO DE ITAPEMIRIM/ES, LINHARES/ES; 6 células, estratos interior_proximo_polo, interior_remoto) formam o nível residual MACRO_SEM_REGIAO_SAUDE, que ainda agrega UFs de macrorregiões distintas."

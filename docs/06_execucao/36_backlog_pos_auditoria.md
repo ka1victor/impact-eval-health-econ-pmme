@@ -146,6 +146,50 @@ alvo é indicativo — registre isso na emenda.
 honestidade da precisão reportada, e deve entrar como nota de rodapé ou coluna
 adicional, não como troca do `p` principal.
 
+### Executado em 14/09/2026 — sessão 2. Direção reproduz; `p` de capital sai da faixa
+
+Especificação vigente (macrorregião, 24 níveis), Rademacher, nula imposta,
+`B = 1999`, semente `42` declarada na emenda antes de rodar:
+
+| Estrato | t | p nominal | p wild | vs. alvo indicativo |
+|---|---:|---:|---:|---|
+| metropolitano | 4,770 | 1,84e-06 | **0,0005** (0 de 1999) | reproduz |
+| capital | 4,547 | 5,45e-06 | **0,0015** (2 de 1999) | uma ordem abaixo de 0,0185 |
+| interior próximo | 2,798 | 5,14e-03 | **0,0115** (22 de 1999) | ordem de 0,0070 |
+
+`p wild >= p nominal` nos três, e os três seguem significativos a 5%.
+
+**Capital não é erro de implementação, e isso foi verificado antes de aceitar o
+número.** A mesma implementação, aplicada em diagnóstico somente-leitura à
+especificação anterior ao C1, devolve `t` de 4,852 / 2,694 / 2,934 e `p` nominal
+de 1,221e-06 / 7,050e-03 / 3,344e-03 — **dígito a dígito os valores congelados
+neste item** — e reproduz o `0 de 1999` exato de metropolitano. Os `p` wild saem
+0,0005 / 0,0225 / 0,0065 contra os 0,0005 / 0,0185 / 0,0070 medidos pela
+auditoria: diferença de ruído de Monte Carlo de semente distinta, com erro-padrão
+de simulação de cerca de 0,0031 nessa faixa.
+
+O que move capital é o próprio C1, que leva o coeficiente de +0,2318 a +0,3264 e
+o `t` de 2,694 a 4,547. `t` maior implica `p` de bootstrap menor. O alvo
+indicativo envelheceu com a especificação, como a ressalva da emenda previa.
+
+### Achado colateral — o `61,5%` da reauditoria não foi reproduzido
+
+Este item e a reauditoria motivam o bootstrap com *"a variância de
+`estrato_metropolitano` concentra 61,5% nos cinco maiores municípios, dando `G`
+efetivo ≈ 32"*. Nenhuma das cinco definições naturais testadas devolve 61,5%:
+soma de quadrados do regressor centrado por município (23,1%), quadrado da soma
+do escore de cluster (51,2%), contagem de células metropolitanas (29,1%), e as
+duas versões residualizadas por Frisch–Waugh–Lovell (12,8% e 31,9%).
+
+**Não se procurou uma sexta definição que batesse.** Escolher a definição depois
+de ver qual reproduz o número é o que esta fila proíbe.
+
+**Consequência adotada:** o `61,5%` e o `G` efetivo ≈ 32 não são publicados como
+resultado de A4 nem citados no artigo. O bootstrap é justificado pelo gatilho
+literal do A3 — `G < 30` em subgrupo, e capital tem `G = 18`, de
+`A4_tabela_01_amostra_construcao.csv`. **Não corrigido:** a definição do `61,5%`
+segue em aberto na reauditoria, e resolvê-la é de quem a escreveu.
+
 ## A-3 · Efeito marginal médio do logit com contrafactual impossível
 
 **Onde:** `scripts/tema_trabalho/05_estimar_atracao.py`, chamada a
@@ -169,6 +213,22 @@ Superestimação de 0,9 a 3,0 p.p. Sinal, ordem e significância intactos.
 
 **Efeito no artigo:** a Tabela A1 do apêndice publica a linha "Logit, efeito
 marginal médio". O LPM é o primário e não muda.
+
+### Executado em 14/09/2026 — sessão 2. Reproduz
+
+Na especificação vigente, o AME passa a trocar o bloco inteiro contra
+`interior_remoto`, com EP por método delta sobre a VCE cluster-robusta:
+
+| Estrato | AME antigo | AME por bloco | Δ (p.p.) |
+|---|---:|---:|---:|
+| metropolitano | 0,2784 | **0,2513** (EP 0,0524) | −2,71 |
+| capital | 0,3606 | **0,3403** (EP 0,0757) | −2,03 |
+| interior próximo | 0,1009 | **0,0908** (EP 0,0350) | −1,02 |
+
+Dentro da faixa de 1 a 3 p.p. do alvo, todas reduções, com sinal, ordenação,
+significância e concordância com o LPM intactos. O valor antigo ficou em coluna
+própria de `A4_tabela_02b_logit_AME.csv`, para auditoria. A Tabela A1 do artigo
+passou de `27,8 / 6,2` para `25,1 / 5,2`; o LPM primário não mudou.
 
 ---
 
@@ -363,6 +423,21 @@ próprio estrato. O artigo cita 13,7 p.p. como MDE do contraste metropolitano; o
 número que o modelo entrega é 17,0. Medido na especificação anterior ao C1;
 recomputar.
 
+### Executado em 14/09/2026 — sessão 2. Reproduz
+
+Recomputado na especificação vigente, com `MDE = 2,801585 x EP realizado`:
+
+| Estrato | EP realizado | MDE ex-post | MDE ex-ante A3 | Otimismo |
+|---|---:|---:|---:|---:|
+| capital | 0,07179 | 20,1 p.p. | 19,5 p.p. | 3,4% |
+| metropolitano | 0,05855 | **16,4 p.p.** | 13,7 p.p. | **19,4%** |
+| interior próximo | 0,04312 | 12,1 p.p. | 11,9 p.p. | 1,5% |
+
+Direção igual à da medição anterior ao C1 — ex-post maior que ex-ante nos três.
+O otimismo de capital cai de 23,8% para 3,4% porque o C1 reduziu o EP de capital;
+o de metropolitano permanece e é o caso relevante. O ex-ante **não** foi apagado
+nem recalculado, e A3 não foi reexecutado. O artigo passa a citar os dois.
+
 ## C-7 · Ameaças ausentes do red team
 
 Quatro, com o que já foi medido:
@@ -491,7 +566,7 @@ e a 2 depende de a especificação do C1 já estar valendo.
 | Sessão | Estado | Itens | Por quê nesta ordem |
 |---|---|---|---|
 | 1 | `BLOQUEADA_ACHADO` | **A-1** | Alvo da variante a adotar não reproduz, e a definição de efeito fixo é decisão do autor. Também depende de D-4. Detalhe na seção A-1. |
-| 2 | `ABERTA` | **A-2 + A-3 + C-6** | Todos são inferência e precisão de A4, recomputáveis na mesma execução. A especificação pós-C1 já vale e A4 foi reexecutado com sucesso em 14/09/2026, então a sessão está liberada. |
+| 2 | `CONCLUIDA` (emenda `9e5de6d`, execução `fbc5f58`) | **A-2 + A-3 + C-6** | Executada em 14/09/2026 na especificação vigente. Emenda 1 do `35` commitada antes do código. Resultado e achado colateral na seção A-2 e no `35`. |
 | 3 | `PARCIAL` | **C-7** | Red team. A parte documental — forma funcional e leitura correta do que já existe — é executável. Publicar placebo, heterogeneidade de pré-tendência e deslocamento exige regravar artefato de A5, bloqueado por D-4. |
 | 4 | `BLOQUEADA_D4` | **B-1, B-2, B-5, B-6, C-9** | Higiene de A5. Toda ela regrava tabela ou relatório de A5; nenhum caminho legítimo sem o painel do CNES. |
 | 5 | `ABERTA` | **B-3, C-1, C-2, C-3, C-4, C-5, C-8** | Documentação e rótulos; nenhum exige reexecução pesada. Por último porque vários citam números que as sessões 1 a 4 podem mudar — com 1, 3 e 4 travadas, esse risco caiu. |

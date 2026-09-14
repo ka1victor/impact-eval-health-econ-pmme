@@ -1,7 +1,7 @@
 # A4 — Atração e implementação: diagnóstico e linguagem autorizada (02/09/2026)
 
 > Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash eb2bf812)
-> Potência: `output/tema_trabalho/potencia_atracao.json`; MDE aproximado dos contrastes vs remoto: capital 19.5%, metro 13.7%, próximo 11.9%
+> Potência: `output/tema_trabalho/potencia_atracao.json`; MDE **ex-ante** dos contrastes vs remoto: capital 19.5%, metro 13.7%, próximo 11.9%. O MDE **ex-post** do EP realizado está na seção 2 e em `A4_tabela_09_mde_ex_ante_ex_post.csv`
 > Tipologia A2 strict 540/540 (25/101/238/176) quadro 368 (18/72/203/75)
 > Amostra primária: **1295 células CNES–curso Ch1 em 368 municípios**; estendida 3057 (1762 Ch2)
 
@@ -25,18 +25,38 @@ População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, refor
 | interior proximo polo | 0.121 (0.043)** | 0.036 a 0.205 | 0.005 |
 | metropolitano | 0.279 (0.059)*** | 0.165 a 0.394 | 0.000 |
 
-N=1295, G=368, R²=0.261, outcome médio 30.3%. O benchmark global de 3,8% mede precisão de uma proporção, não potência do coeficiente. Para os contrastes efetivos contra remoto, os MDEs aproximados são 19.5% (capital), 13.7% (metro) e 11.9% (próximo).
+N=1295, G=368, R²=0.261, outcome médio 30.3%. O benchmark global de 3,8% mede precisão de uma proporção, não potência do coeficiente. Para os contrastes efetivos contra remoto, os MDEs **ex-ante** aproximados são 19.5% (capital), 13.7% (metro) e 11.9% (próximo).
 
-**Logit AME (mesma spec):**
+**Logit AME (mesma spec):** o contraste de estrato troca o **bloco inteiro** de indicadoras contra `interior_remoto`, e não uma indicadora isolada. A última coluna traz, só para auditoria, o valor que `get_margeff(dummy=True)` devolvia: ele altera apenas a coluna do estrato avaliado e mantém as demais no valor observado, o que constrói células simultaneamente capital e metropolitana — um contrafactual que não existe na população — e superestima o contraste.
 
-| Estrato | AME (SE) | IC95% |
-|---|---|---|
-| capital | 0.361 (0.074) | 0.216 a 0.505 |
-| interior proximo polo | 0.101 (0.040) | 0.022 a 0.180 |
-| metropolitano | 0.278 (0.062) | 0.157 a 0.400 |
+| Estrato | AME (SE) | IC95% | AME antigo (indicadora isolada) |
+|---|---|---|---|
+| capital | 0.340 (0.076) | 0.192 a 0.489 | 0.361 |
+| interior proximo polo | 0.091 (0.035) | 0.022 a 0.159 | 0.101 |
+| metropolitano | 0.251 (0.052) | 0.149 a 0.354 | 0.278 |
 
 
 Concordância LPM–Logit: gradiente metro > capital > próximo > remoto (ref.) persiste; magnitude LPM ≈ AME (dif. <2pp).
+
+**Wild cluster bootstrap (registro A3).** O A3 manda reportar wild cluster bootstrap quando um subgrupo tem `G<30`, e capital tem `G=18` na amostra primária. A reauditoria acrescenta que o `G=368` do cluster principal é nominal, por concentração da variância de `estrato_metropolitano` em poucos municípios; esse diagnóstico é da auditoria e não é recomputado aqui. Procedimento restrito, pesos de Rademacher por município, `B=1999`, semente `42`, `p = (1 + excedentes) / (B + 1)`:
+
+| Estrato | t observado | p nominal cluster | p wild | excedentes |
+|---|---|---|---|---|
+| capital | 4.547 | 0.00001 | 0.0015 | 2 de 1999 |
+| metropolitano | 4.770 | 0.00000 | 0.0005 | 0 de 1999 |
+| interior proximo polo | 2.798 | 0.00514 | 0.0115 | 22 de 1999 |
+
+
+O `p` wild é **coluna adicional**, não substituto: o `p` principal continua sendo o cluster-robusto nominal, e o `q` de FDR entre estratos segue calculado sobre ele.
+
+**Potência ex-post.** O MDE ex-ante de A3 é analítico e ignora que os FE de curso e de UF absorvem variação do próprio estrato, então subestima o erro-padrão que o modelo entrega. Os dois ficam publicados lado a lado; o ex-ante **não** é recalculado, porque A3 é protocolo congelado:
+
+| Estrato | EP realizado | MDE ex-post | MDE ex-ante A3 | otimismo do ex-ante |
+|---|---|---|---|---|
+| capital | 0.07179 | 20.1% | 19.5% | +3.4% |
+| metropolitano | 0.05855 | 16.4% | 13.7% | +19.4% |
+| interior proximo polo | 0.04312 | 12.1% | 11.9% | +1.5% |
+
 
 **Robustez de definição e unidade.** Separando o funil, o contraste metropolitano vs remoto é 0.270 para alguma confirmação e 0.238 para alguma homologação. Colapsando múltiplos CNES para 1.184 células município–curso, o contraste é 0.316 (p=0.000). O gradiente não depende da união dos estágios nem do peso implícito de municípios com mais de um CNES.
 
@@ -103,7 +123,7 @@ Permitido: atração administrativa (alguma confirmação/homologação observad
 
 ## 8. Limites e próximos passos
 
-- Capital G=18 <30: IC nominal; para heterogeneidade fina por estrato, reportar wild bootstrap se G pequeno (não computado nesta entrega).
+- Capital G=18 <30 na amostra primária, gatilho literal do registro A3. O wild cluster bootstrap exigido foi computado (Rademacher, nula imposta, B=1999, semente 42) e está na seção 2 e em `A4_tabela_08_wild_cluster_bootstrap.csv`. O p wild é coluna adicional; o p principal continua sendo o cluster-robusto nominal.
 - Cursos <50 células (ex. curso 3 n=26) MDE >15pp — análise por curso descritiva.
 - Não estimar dose recebida (salário) nem retenção individual; A5 validará T0 físico CNES e ponte CBO 10/16 sem sobreposição.
 - Pesos por vagas alteram estimando; não ponderado é primário.

@@ -826,6 +826,32 @@ registrar("A4_TXT_P30", "Apendice A", "Probabilidade base usada no calculo de po
           "0,30", A4_JSON, "chave potencia_referencia/..._p30", "p30",
           "sufixo p30 da chave de potencia", "sob probabilidade base de 0,30")
 
+# MDE ex-post e inferencia de pequena amostra (emenda 1 do plano 35; itens C-6 e A-2)
+mde_post, loc_mde_post = json_valor(
+    A4_JSON, "potencia_referencia/mde_ex_post_do_ep_realizado_p80/metropolitano")
+registrar_texto("A4_TXT_MDE_EX_POST", "Apendice A",
+                "Efeito minimo detectavel ex-post do contraste metropolitano",
+                pontos(mde_post), A4_JSON, loc_mde_post, mde_post,
+                "proporcao x100, 1 casa",
+                "detectável ex-post do mesmo contraste é de {v} pontos percentuais")
+
+a4_g_capital, loc_gcap = csv_valor(
+    "output/tema_trabalho/A4_tabela_01_amostra_construcao.csv",
+    {"amostra": "primaria_1295_Ch1", "estrato": "capital"}, "n_municipios")
+registrar_texto("A4_TXT_G_CAPITAL", "Apendice A",
+                "Municipios do estrato capital, gatilho G<30 do protocolo A3",
+                inteiro(a4_g_capital),
+                "output/tema_trabalho/A4_tabela_01_amostra_construcao.csv",
+                loc_gcap, a4_g_capital, "inteiro",
+                "e o estrato capital tem {v}")
+
+b_wild, loc_bwild = json_valor(A4_JSON, "inferencia_wild_cluster_bootstrap/b_replicacoes")
+registrar_texto("A4_TXT_B_WILD", "Apendice A",
+                "Replicacoes do wild cluster bootstrap",
+                milhar(b_wild), A4_JSON, loc_bwild, b_wild,
+                "inteiro com separador de milhar",
+                "por município e {v} replicações")
+
 
 # ------------------------------------------------ Apendice B: A5 (associativo)
 
