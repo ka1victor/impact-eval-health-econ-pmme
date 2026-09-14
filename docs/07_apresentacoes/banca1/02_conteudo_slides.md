@@ -1,8 +1,8 @@
 # Conteúdo da apresentação — banca 1
 
-> Conteúdo integral da apresentação, em markdown, para ler de ponta a ponta.
-> Cada seção é um slide; o cabeçalho é o título do slide. A linha em `código` é
-> o rastreio de seção, exibido fora do título.
+> Texto integral da apresentação em Markdown.
+> Cada seção corresponde a um slide. O cabeçalho contém o título e a linha em
+> `código` registra a posição do slide na apresentação.
 > **Atualização:** 9 de setembro de 2026.
 
 ---
@@ -13,7 +13,7 @@
 
 # Desvantagens territoriais na escolha locacional de médicos especialistas
 
-### Um modelo microeconômico para o preenchimento de vagas do Programa Mais Médicos Especialistas
+### Um modelo microeconômico do preenchimento de vagas no Programa Mais Médicos Especialistas
 
 Autoria · instituição · data da banca
 
@@ -24,7 +24,7 @@ Autoria · instituição · data da banca
 `sem rastreio`
 
 1. Motivação
-2. Pergunta
+2. Pergunta de pesquisa
 3. Literatura teórica
 4. Modelo microeconômico
 5. Hipóteses
@@ -34,24 +34,25 @@ Autoria · instituição · data da banca
 
 # 1. Motivação
 
-## 3 — Especialistas não faltam; faltam no interior
+## 3 — A distribuição de especialistas é concentrada nos grandes centros
 
 `1. Motivação · Problema · 1 de 3`
 
-O Brasil tinha, em 2024, **353 mil médicos especialistas** — 59% dos 597 mil
-médicos do país. O problema não é o número. É onde eles estão.
+Em 2024, o Brasil tinha **353 mil médicos especialistas**, o equivalente a 59%
+dos 597 mil médicos em atividade no país. Esse contingente, porém, estava
+distribuído de forma bastante desigual pelo território.
 
 | | |
 |---|---|
-| **55%** dos especialistas estão no Sudeste; **6%** no Norte | Demografia Médica 2025 |
-| **453** especialistas por 100 mil habitantes no Distrito Federal; **68** no Maranhão e **70** no Pará | Demografia Médica 2025 |
-| "apenas **10%** dos especialistas atendem no SUS. Além disso, há concentração desses profissionais nas capitais e regiões mais ricas do país" | Senado Notícias, 25/09/2025, citando o Ministério da Saúde |
+| **55%** dos especialistas estavam no Sudeste e **6%** no Norte | Demografia Médica 2025 |
+| O Distrito Federal tinha **453** especialistas por 100 mil habitantes; o Maranhão, **68**; e o Pará, **70** | Demografia Médica 2025 |
+| Apenas **10%** dos especialistas atendiam no SUS, segundo o Ministério da Saúde | Senado Notícias, 25/09/2025 |
 
-Quem sente a falta é o paciente do SUS fora dos grandes centros. Em 2025 o
-Ministério da Saúde reconheceu **situação de urgência em saúde pública** em todo
-o país, por 24 meses, em razão do tempo de espera por consultas, exames e
-cirurgias na atenção especializada — e lançou o programa Agora Tem
-Especialistas, do qual o PMM-E é o braço de provimento.
+A escassez é mais aguda para os pacientes do SUS que vivem fora dos grandes
+centros. Em 2025, diante das filas para consultas, exames e cirurgias na atenção
+especializada, o Ministério da Saúde declarou situação de urgência em saúde
+pública por 24 meses. Nesse contexto foi criado o Agora Tem Especialistas, do
+qual o PMM-E é o componente voltado ao provimento de médicos.
 
 > *"Ministério da Saúde decreta situação de urgência em saúde pública pelos
 > próximos dois anos"* — Correio do Povo, 07/05/2025
@@ -65,23 +66,26 @@ recortes de imprensa citados.
 
 ---
 
-## 4 — Onde a bolsa é maior, já havia menos especialistas
+## 4 — Municípios com bolsas maiores partiam de uma oferta menor
 
 `1. Motivação · Problema · 2 de 3`
 
-O retrato nacional se repete dentro do programa. Nos 295 municípios que
-receberam vaga no ciclo 1, um mês antes da oferta ser publicada:
+Esse padrão também aparece entre os municípios contemplados pelo programa. Nos
+295 municípios com vagas no ciclo 1, a oferta de especialistas já era menor nas
+faixas de bolsa mais altas antes da publicação do edital.
 
 ![Especialistas por 100 mil habitantes em junho de 2025, por faixa de bolsa](../../../output/apresentacao_banca1/oferta_pre_por_faixa.png)
 
-**Menos da metade.** Havia **16,0 especialistas por 100 mil habitantes** nos
-municípios que pagariam R$ 10 mil e **7,3** nos que pagariam R$ 20 mil.
+Em junho de 2025, havia **16,0 especialistas por 100 mil habitantes** nos
+municípios que receberiam vagas com bolsa de R$ 10 mil. Entre os municípios com
+bolsa de R$ 20 mil, eram **7,3 por 100 mil**.
 
 ![Colegas da mesma especialidade no município, junho de 2025](../../../output/apresentacao_banca1/retaguarda_por_faixa.png)
 
-**E quem vai, vai sozinho.** Na Faixa 1, o especialista encontraria **2
-colegas** da sua especialidade no município (mediana), contra 5 na Faixa 3; em
-**42%** dos casos seria o único, ou teria um só colega.
+A diferença também aparece dentro de cada especialidade. Na Faixa 1, a mediana
+era de **2 colegas da mesma especialidade** no município, ante 5 na Faixa 3. Em
+**42%** dos pares município–especialidade da Faixa 1, o participante seria o
+único especialista ou teria apenas um colega.
 
 **Fontes:** CNES, competência 06/2025; profissionais nos CBOs dos 10 cursos do
 programa com correspondência unívoca curso–CBO; 295 municípios com vaga nesses
@@ -91,35 +95,34 @@ porcentagem oscila com poucos casos, a mediana não.
 
 ---
 
-## 5 — O que o médico vê ao decidir
+## 5 — Quais características do município pesam na decisão do médico?
 
 `1. Motivação · Problema · 3 de 3`
 
-Para o médico, "município vulnerável" não é um índice. É um conjunto de
-desvantagens concretas. Quatro aparecem de forma consistente na literatura —
-duas delas nós conseguimos medir.
+O rótulo de “município vulnerável” reúne condições bastante diferentes. A
+literatura sobre escolha locacional destaca quatro fatores relevantes para o
+médico; os dados disponíveis permitem observar dois deles, ao menos em parte.
 
-| Desvantagem | O que significa para o médico | Medimos? |
+| Fator | Como pode afetar a escolha | Medimos? |
 |---|---|:---:|
-| **Retaguarda profissional** | poucos ou nenhum colega da mesma especialidade; sem segunda opinião, sem escala de plantão, sem a quem encaminhar o caso difícil | sim — slide anterior |
-| **Infraestrutura** | equipamento, insumos e equipe de apoio escassos; o atendimento cansa mais e resolve menos | em parte — leitos e equipamentos do CNES |
-| **Distância da família** | o custo de viver longe de onde a família está, e onde o médico nasceu ou se formou | não |
-| **Mercado privado ausente** | sem consultório ou plano de saúde local, a remuneração se reduz ao que o programa paga | não |
+| **Retaguarda profissional** | poucos colegas da mesma especialidade, menor possibilidade de segunda opinião e maior dificuldade para organizar escalas ou encaminhar casos complexos | sim — slide anterior |
+| **Infraestrutura** | escassez de equipamentos, insumos e equipe de apoio, com possível aumento do esforço necessário para atender | em parte — leitos e equipamentos do CNES |
+| **Distância da família** | custo de morar longe da família e dos lugares onde o médico nasceu ou se formou | não |
+| **Mercado privado local** | menor possibilidade de complementar a renda com consultório, planos de saúde ou hospitais privados | não |
 
-O que a literatura diz sobre o peso de cada uma:
+Há evidência empírica de que esses fatores importam:
 
-- Nos Estados Unidos do início do século XX, a escolha do lugar já dependia de
-  *"preferences over rural or urban living, or other location-specific
-  attributes, such as proximity to family"* (Moehling et al., 2020).
-- No Brasil, entre 50 mil generalistas formados de 2001 a 2013, **a proximidade
-  do lugar de nascimento ou de formação é o principal fator** da escolha
-  locacional; salário e infraestrutura importam, mas em escala menor (Costa,
-  Nunes & Sanches, 2024).
-- Na Austrália, perguntou-se a 3.727 clínicos o que os faria mudar para o
-  interior. **65% não mudariam por pacote nenhum.** Para os demais, o valor
-  exigido depende do tamanho da cidade e — nas palavras dos autores — *"not
-  only of the area but also of the characteristics of the job"* (Scott et al.,
-  2013).
+- Moehling et al. (2020) mostram que, nos Estados Unidos do início do século XX,
+  a escolha locacional já respondia à preferência por áreas rurais ou urbanas,
+  à proximidade da família e a outros atributos específicos do lugar.
+- Costa, Nunes & Sanches (2024), acompanhando cerca de 50 mil generalistas
+  formados no Brasil entre 2001 e 2013, identificam a proximidade do local de
+  nascimento ou de formação como o principal determinante da localização.
+  Salário e infraestrutura também influenciam a escolha, mas menos.
+- Em um experimento de escolha com 3.727 clínicos australianos, 65% não
+  aceitariam mudar para o interior em nenhum dos pacotes oferecidos. Entre os
+  demais, a compensação exigida variava com o tamanho da cidade e com as
+  características do trabalho (Scott et al., 2013).
 
 **Fontes:** Moehling, Niemesh, Thomasson & Treber (2020), *Cliometrica*,
 p. 184; Costa, Nunes & Sanches (2024), *Review of Economics and Statistics*;
@@ -127,45 +130,45 @@ Scott et al. (2013), *Social Science & Medicine*.
 
 ---
 
-## 6 — O que é o PMM-E
+## 6 — Desenho institucional do PMM-E
 
 `1. Motivação · Política · 1 de 2`
 
-**Lei.** A Lei nº 15.233/2025 criou o Projeto Mais Médicos Especialistas
-dentro do Programa Mais Médicos, *"destinado ao provimento de profissionais
-com vistas à redução no tempo de espera de atendimento ao usuário do SUS, nas
-regiões prioritárias"*, como braço formativo do programa Agora Tem
-Especialistas.
+A Lei nº 15.233/2025 criou o Projeto Mais Médicos Especialistas dentro do
+Programa Mais Médicos. Seu objetivo é reduzir o tempo de espera por atendimento
+especializado no SUS em regiões prioritárias, como parte da estratégia do Agora
+Tem Especialistas.
 
-**Quem.** Médicos com diploma brasileiro ou revalidado e **registro de
-especialista (RQE)** na área da vaga. Não é concurso nem emprego: o médico
-recebe **bolsa-formação** mensal do Ministério da Saúde, sem vínculo.
+Podem participar médicos com diploma brasileiro ou revalidado e **registro de
+especialista (RQE)** na área da vaga. A participação não constitui concurso ou
+vínculo de emprego: o Ministério da Saúde paga uma **bolsa-formação mensal**.
 
-**O quê.** Um **aprimoramento em serviço** de **12 meses**, com **20 horas
-semanais** em estabelecimento do SUS, supervisão e mentoria de uma instituição
-formadora, e imersões em serviços de referência. São **16 cursos**: 6
-cirúrgicos (anestesiologia; cirurgia geral, oncológica, colorretal, digestiva e
-ginecológica) e 10 ambulatoriais (endoscopia e colonoscopia, oncologia clínica,
-radioterapia, ecocardiografia, ultrassonografia mamária, colposcopia,
-videolaringoscopia, anatomia patológica). O foco é o câncer e o diagnóstico
-que o SUS mais espera.
+O programa oferece **aprimoramento em serviço por 12 meses**, com **20 horas
+semanais** em um estabelecimento do SUS, supervisão, mentoria e períodos de
+imersão em serviços de referência. Há **16 cursos**, dos quais 6 são cirúrgicos
+(anestesiologia; cirurgia geral, oncológica, colorretal, digestiva e
+ginecológica) e 10 são ambulatoriais (endoscopia e colonoscopia, oncologia
+clínica, radioterapia, ecocardiografia, ultrassonografia mamária, colposcopia,
+videolaringoscopia e anatomia patológica). A oferta se concentra no diagnóstico
+e no tratamento do câncer.
 
-**Como a vaga chega ao médico.** O estado ou município indica o serviço e a
-especialidade; a comissão bipartite prioriza; o Ministério analisa a capacidade
-instalada e publica o quadro de vagas com município, estabelecimento, curso e
-faixa de bolsa. O médico escolhe **até dois locais**, em ordem de preferência,
-e é classificado por titulação e tempo de formação. O serviço não pode
-substituir profissional já contratado por um bolsista.
+Estados e municípios indicam os serviços e as especialidades. Após a
+priorização pela comissão bipartite e a análise da capacidade instalada, o
+Ministério publica as vagas por município, estabelecimento, curso e valor da
+bolsa. Cada candidato pode indicar **até dois locais**, em ordem de preferência,
+e a classificação considera titulação e tempo de formação. O edital proíbe a
+substituição de profissionais já contratados por bolsistas.
 
-**Onde, no primeiro ciclo (julho de 2025).**
+**Ciclo 1, julho de 2025**
 
 ![Células e vagas imediatas do ciclo 1 por região](../../../output/apresentacao_banca1/vagas_ciclo1_por_regiao.png)
 
-**1.295 vagas** estabelecimento–curso em **460 estabelecimentos** e **368
-municípios**, em todas as UFs; 678 para preenchimento imediato e 1.145 em
-cadastro de reserva. O Nordeste concentra 39% das vagas; Minas Gerais é o
-estado com mais vagas (252). Dois terços dos municípios têm menos de 100 mil
-habitantes; 18 são capitais.
+O primeiro ciclo publicou **1.295 vagas** estabelecimento–curso em **460
+estabelecimentos** de **368 municípios**, distribuídos por todas as UFs. Eram
+678 vagas de preenchimento imediato e 1.145 posições em cadastro de reserva. O
+Nordeste reuniu 39% das vagas, e Minas Gerais teve a maior oferta estadual, com
+252. Dois terços dos municípios tinham menos de 100 mil habitantes; 18 eram
+capitais.
 
 **Fontes:** Lei nº 15.233/2025, art. 22-D; Portaria GM/MS nº 7.177/2025;
 Edital SGTES/MS nº 3/2025 (DOU 24/07/2025), itens 1, 3, 4, 5, 10 e 11; quadro
@@ -173,22 +176,21 @@ de vagas do ciclo 1, chamada 1; Censo 2022 (IBGE).
 
 ---
 
-## 7 — A bolsa remunera o lugar
+## 7 — O valor da bolsa é definido pela vulnerabilidade do município
 
 `1. Motivação · Política · 2 de 2`
 
-O valor da bolsa não depende da especialidade, da carga nem do que o médico
-produz. Depende de **onde fica o município**, em três passos:
+A bolsa não varia com a especialidade, a carga de trabalho ou a produção do
+médico. No edital de 2025, o valor dependia da categoria territorial atribuída
+ao município a partir do IVS:
 
-1. **O índice.** O IVS 2010 do Ipea resume, em um número de 0 a 1, dezesseis
-   indicadores do Censo 2010 em três dimensões: infraestrutura urbana
-   (saneamento, lixo, tempo de deslocamento), capital humano (mortalidade
-   infantil, analfabetismo, crianças fora da escola) e renda e trabalho
-   (pobreza, desemprego, informalidade).
-2. **A categoria.** O Ipea corta o índice em cinco categorias: muito baixa
-   (até 0,200), baixa (0,201–0,300), média (0,301–0,400), alta (0,401–0,500) e
-   muito alta (acima de 0,500).
-3. **O valor.** O edital de 2025 agrupou as cinco categorias em três faixas.
+1. O **IVS 2010**, calculado pelo Ipea, varia de 0 a 1 e reúne dezesseis
+   indicadores do Censo 2010. O índice abrange infraestrutura urbana, capital
+   humano e renda e trabalho.
+2. O Ipea classifica os municípios em cinco categorias: muito baixa (até
+   0,200), baixa (0,201–0,300), média (0,301–0,400), alta (0,401–0,500) e muito
+   alta (acima de 0,500).
+3. O edital agrupou essas categorias em três faixas de bolsa.
 
 | Categoria de IVS | Faixa | Bolsa mensal |
 |---|:---:|---:|
@@ -198,11 +200,12 @@ produz. Depende de **onde fica o município**, em três passos:
 
 ![Bolsa mensal por faixa de atração](../../../output/apresentacao_banca1/bolsa_por_faixa.png)
 
-No ciclo 1, 102 municípios foram publicados na Faixa 1, 107 na Faixa 2 e 159
-na Faixa 3. Dois cuidados: a categoria que vale é a **publicada na vaga**, e em
-**177 dos 368 municípios** ela não coincide com a que se obtém aplicando os
-cortes do Ipea ao IVS local; e a grade mudou em 2026, quando a categoria
-*alta* passou à Faixa 1.
+No ciclo 1, foram publicados 102 municípios na Faixa 1, 107 na Faixa 2 e 159
+na Faixa 3. Há, contudo, uma divergência importante: em **177 dos 368
+municípios**, a categoria publicada não coincide com a classificação obtida ao
+aplicar os cortes do Ipea ao IVS municipal. Além disso, a regra foi alterada em
+2026, quando os municípios de vulnerabilidade *alta* passaram à Faixa 1. Na
+análise, portanto, deve prevalecer a faixa efetivamente publicada em cada vaga.
 
 **Fontes:** Edital SGTES/MS nº 3/2025, item 11.1.3, e retificação; Chamamento
 SGTES/MS nº 1/2026; Ipea, *Atlas da Vulnerabilidade Social nos Municípios
@@ -210,85 +213,94 @@ Brasileiros* (2015); quadro de vagas do ciclo 1.
 
 ---
 
-## 8 — Pagar mais funciona: a evidência a favor
+## 8 — Evidências sobre a resposta a incentivos financeiros
 
 `1. Motivação · Efeito incerto · 1 de 3`
 
-O programa aposta que dinheiro compensa lugar ruim. A aposta tem precedente.
+Há evidência de que uma remuneração maior pode aumentar a aceitação de vagas em
+localidades menos atraentes.
 
-**No México, o salário foi sorteado.** Um concurso público real distribuiu 106
-postos em municípios pobres e anunciou, ao acaso, dois salários. Onde o
-salário era 33% maior, a aceitação da vaga subiu **15 pontos percentuais**. E
-o efeito foi maior onde o lugar era pior: nos postos a mais de 200 km da
-cidade natal do candidato, a aceitação foi de **25% para cerca de 80%** — o
-aumento **anulou** a rejeição aos municípios de menor desenvolvimento humano,
-sem atrair candidatos menos qualificados ou menos motivados.
+Em um concurso público no México, 106 postos em municípios pobres foram
+associados aleatoriamente a dois níveis salariais. Um salário 33% maior elevou a
+aceitação em **15 pontos percentuais**. O efeito foi mais forte nos postos a
+mais de 200 km da cidade natal do candidato: a taxa de aceitação passou de
+**25% para cerca de 80%**. O aumento salarial também eliminou a diferença de
+aceitação associada ao menor desenvolvimento humano do município, sem reduzir a
+qualificação ou a motivação dos candidatos.
 
 > Dal Bó, Finan & Rossi (2013), *Quarterly Journal of Economics*
 
-**O degrau do PMM-E tem o tamanho que a literatura pede.** Os estudos que
-medem quanto um médico exige para ir a um posto pior chegam a valores entre
-**37% e 64%** da renda anual para cidades pequenas (Austrália), e a oferta de
-médicos no interior brasileiro responde a salário com elasticidade da ordem de
-**0,7**. O degrau do programa — R$ 5 mil sobre R$ 10 mil, ou **+50%** — cai
-dentro dessa faixa.
+A variação entre as faixas do PMM-E tem magnitude comparável às compensações
+estimadas em estudos anteriores. Para cidades pequenas na Austrália, elas
+ficaram entre **37% e 64% da renda anual** do médico. No Brasil, a elasticidade
+da oferta de médicos no interior em relação ao salário foi estimada em cerca de
+**0,7**. Entre as bolsas de R$ 10 mil e R$ 15 mil do PMM-E, o aumento é de
+**50%**.
 
-> Scott et al. (2013), *Social Science & Medicine*; Costa, Nunes & Sanches (2024), *Review of Economics and Statistics*
+> Scott et al. (2013), *Social Science & Medicine*; Costa, Nunes & Sanches
+> (2024), *Review of Economics and Statistics*
 
-**Ressalva:** os percentuais da literatura são sobre a renda total do médico; a
-bolsa do PMM-E remunera 20 horas semanais.
+Essas magnitudes não são diretamente equivalentes: os estudos citados tratam
+da renda total do médico, enquanto a bolsa do PMM-E remunera uma carga de 20
+horas semanais.
 
 ---
 
-## 9 — Mas é caro, e não segura: a evidência contra
+## 9 — Limites dos incentivos financeiros
 
 `1. Motivação · Efeito incerto · 2 de 3`
 
-**Muitos não vão por preço nenhum.** Dos 3.727 clínicos australianos, **65%**
-escolheram ficar onde estavam em todos os cenários oferecidos. Para o pior
-posto, quem mudaria pedia **130%** da renda anual.
+O efeito do salário é limitado quando a preferência por localização é forte. No
+experimento australiano, **65% dos 3.727 clínicos** permaneceram na alternativa
+de origem em todos os cenários. Entre os médicos dispostos a aceitar o posto
+menos atraente, a compensação exigida chegava a **130% da renda anual**.
 
 > Scott et al. (2013), *Social Science & Medicine*
 
-**No Brasil, salário compra pouco e custa muito.** Um modelo calibrado com
-todos os generalistas formados entre 2001 e 2013 estima que aumentar em **50%**
-o salário público no interior do Norte e do Nordeste corrigiria **12,4%** do
-desequilíbrio na distribuição de médicos — a **US$ 15,7 milhões por ponto
-percentual**. Reservar vagas nas faculdades de medicina para quem nasceu
-nessas regiões corrigiria **63,8%**, por **US$ 2,2 a 5,1 milhões** o ponto.
+Para o Brasil, um modelo estimado com os generalistas formados entre 2001 e 2013
+simula que um aumento de **50% no salário público** no interior do Norte e do
+Nordeste reduziria **12,4%** do desequilíbrio na distribuição de médicos, a um
+custo de **US$ 15,7 milhões por ponto percentual**. A reserva de vagas em
+faculdades de medicina para estudantes nascidos nessas regiões reduziria 63,8%
+do desequilíbrio, a um custo estimado entre **US$ 2,2 milhões e US$ 5,1 milhões
+por ponto percentual**.
 
 > Costa, Nunes & Sanches (2024), *Review of Economics and Statistics*
 
-**E o médico vai embora quando a obrigação acaba.** Nos Estados Unidos, oito
-anos depois, **12%** dos médicos que foram para clínicas rurais com bolsa e
-obrigação de permanência ainda estavam lá — contra **39%** dos que foram sem
-obrigação nenhuma.
+Também há dúvidas sobre retenção. Nos Estados Unidos, oito anos após o início
+da atuação, **12%** dos médicos enviados a clínicas rurais por programas com
+bolsa e obrigação de permanência continuavam no local. Entre os que escolheram
+essas clínicas sem obrigação contratual, a proporção era de **39%**.
 
 > Pathman, Konrad & Ricketts (1992), *JAMA*
 
-Dinheiro move alocação, mas é caro, não move todo mundo, e não garante que quem
-foi fique. A evidência não decide se um degrau de R$ 5 mil basta.
+Em conjunto, esses resultados sugerem que incentivos financeiros alteram a
+alocação, mas podem ter custo elevado, alcance restrito e pouco efeito sobre a
+permanência. A literatura não permite concluir, de antemão, se a diferença de
+R$ 5 mil entre as faixas do PMM-E é suficiente.
 
 ---
 
-## 10 — No primeiro ciclo, a bolsa maior não ordenou o preenchimento
+## 10 — Resultados descritivos do primeiro ciclo
 
 `1. Motivação · Efeito incerto · 3 de 3`
 
-Das 1.295 vagas da primeira chamada, **30%** tiveram alguém confirmado ou
-homologado. A bolsa maior não veio acompanhada de mais preenchimento — e o
-território, sim, ordenou o resultado:
+Das 1.295 vagas publicadas na primeira chamada, **30%** tiveram um candidato
+confirmado ou homologado. As taxas não aumentam monotonicamente com o valor da
+bolsa, mas variam de forma clara entre os tipos de território.
 
 ![Preenchimento do ciclo 1 por faixa de bolsa e por estrato territorial](../../../output/apresentacao_banca1/preenchimento_ciclo1.png)
 
-- Por **faixa de bolsa**: 23,6% na Faixa 3 (R$ 10 mil), 37,4% na Faixa 2
-  (R$ 15 mil), **31,6% na Faixa 1 (R$ 20 mil)**. Pagar o dobro não preencheu
-  mais que pagar uma vez e meia.
-- Por **território**: 44,9% nos municípios metropolitanos, 35,6% nas capitais,
-  26,9% no interior conectado a um polo e **20,5% no interior remoto**.
+- Por **faixa de bolsa**, o preenchimento foi de 23,6% na Faixa 3 (R$ 10 mil),
+  37,4% na Faixa 2 (R$ 15 mil) e **31,6% na Faixa 1 (R$ 20 mil)**.
+- Por **tipo de território**, as taxas foram de 44,9% nos municípios
+  metropolitanos, 35,6% nas capitais, 26,9% no interior conectado a um polo e
+  **20,5% no interior remoto**.
 
-Isso é descrição, não efeito: as faixas diferem em muito mais do que no valor
-da bolsa. Mas é o suficiente para colocar a pergunta.
+Essas comparações são descritivas. Os municípios das três faixas diferem em
+várias dimensões além do valor da bolsa, de modo que as taxas não identificam o
+efeito causal da remuneração. Ainda assim, o padrão mostra por que é necessário
+separar o efeito da bolsa das características do território.
 
 **Fontes:** quadro de vagas e resultados do ciclo 1, chamada 1 (Ministério da
 Saúde, 2025); estratos pela REGIC 2018 e pela composição de regiões
@@ -298,202 +310,215 @@ metropolitanas e RIDEs de 2022 (IBGE).
 
 # 2. Pergunta
 
-## 11 — Pergunta
+## 11 — Pergunta de pesquisa
 
 `2. Pergunta`
 
-> **Maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas
-> desvantagens territoriais na atração de médicos especialistas?**
+> **As bolsas maiores oferecidas pelo PMM-E aos municípios mais vulneráveis
+> compensam as desvantagens territoriais na atração de médicos especialistas?**
 
-Dois objetos, um contra o outro: o **preço** que a política colocou sobre a
-vulnerabilidade — o degrau de R$ 5 mil entre faixas — e a **desvantagem** que
-esse preço pretende compensar. A margem que observamos é o **preenchimento da
-vaga**: se, ao final da chamada, apareceu alguém disposto a ocupá-la.
+A análise contrapõe o incentivo financeiro criado pelo programa — diferenças
+de R$ 5 mil entre as faixas — às condições locais que esse incentivo procura
+compensar. O desfecho observado é o **preenchimento da vaga**, definido pela
+existência de um candidato confirmado ou homologado ao final da chamada.
 
 ---
 
 # 3. Literatura teórica
 
-## 12 — De onde vem o modelo
+## 12 — Referências para a construção do modelo
 
 `3. Literatura teórica`
 
-O modelo junta três tradições. A primeira dá a **estrutura da decisão**: o
-médico compara lugares pelo rendimento real que cada um oferece, descontado do
-que custa viver ali. As outras duas abrem o custo: uma diz o que há dentro do
-**custo geográfico**, a outra o que há dentro do **custo de trabalhar**.
+O modelo combina três abordagens. Moehling et al. (2020) fornecem a estrutura
+geral da escolha locacional. Redding & Rossi-Hansberg (2017) ajudam a decompor
+os custos associados ao lugar, e Choné & Ma (2011), os custos e benefícios do
+trabalho médico.
 
-| Referência | Ideia central | Equação original |
+| Referência | Contribuição para o modelo | Equação original |
 |---|---|---|
-| **Moehling, Niemesh, Thomasson & Treber (2020)**, eq. 1, p. 184 | O médico escolhe a localidade que maximiza o valor presente do rendimento real, líquido do custo não pecuniário de viver ali | $\arg\max_{i \in I} \sum_t \delta^t \left[ \dfrac{\mathbb{E}(w_{it}^{(s)})}{p_{it}} - c_{it}^{(s)} \right]$ |
-| **Redding & Rossi-Hansberg (2017)**, eq. 24, p. 28 | A utilidade de trabalhar em um lugar depende do salário, das amenidades e do custo de moradia locais | $u_{nio} = \dfrac{z_{nio} B_n w_i}{\kappa_{ni} Q_n^{1-\beta}}$ |
-| **Choné & Ma (2011)**, eq. 1, p. 232 | A utilidade do médico soma a renda, subtrai o custo de atender e soma o benefício ao paciente, ponderado pelo altruísmo. Equipe e capital instalado entram no custo de atender | $U = R - C(q; L, K) + \alpha B(q)$ |
+| **Moehling, Niemesh, Thomasson & Treber (2020)**, eq. 1, p. 184 | O médico escolhe a localidade que maximiza o valor presente da remuneração real, líquido do custo não pecuniário de viver no local | $\arg\max_{i \in I} \sum_t \delta^t \left[ \dfrac{\mathbb{E}(w_{it}^{(s)})}{p_{it}} - c_{it}^{(s)} \right]$ |
+| **Redding & Rossi-Hansberg (2017)**, eq. 24, p. 28 | A utilidade de trabalhar em uma localidade depende do salário, das amenidades e do custo de moradia | $u_{nio} = \dfrac{z_{nio} B_n w_i}{\kappa_{ni} Q_n^{1-\beta}}$ |
+| **Choné & Ma (2011)**, eq. 1, p. 232 | A utilidade do médico considera a renda, o custo do atendimento e o benefício produzido para o paciente; equipe e capital afetam o custo de atender | $U = R - C(q; L, K) + \alpha B(q)$ |
 
-Nenhuma das três trata de um componente da remuneração fixado por regra
-pública sobre um índice territorial. É isso que a adaptação ao PMM-E
-acrescenta.
+A adaptação proposta incorpora um elemento que não aparece nesses modelos: uma
+parcela da remuneração definida por uma regra pública baseada em um índice de
+vulnerabilidade territorial.
 
 ---
 
 # 4. Modelo microeconômico
 
-## 13 — Como o médico escolhe onde trabalhar
+## 13 — Escolha entre municípios e opção de não participar
 
 `4. Modelo microeconômico · 1 de 4`
 
-Adaptando Moehling et al. (2020), o médico $i$ escolhe o município $m$ que
-maximiza o valor presente líquido da carreira:
+Com base em Moehling et al. (2020), o médico $i$ escolhe o município $m$ que
+maximiza o valor presente líquido associado à sua carreira:
 
 $$V_{im} = \sum_t \delta^t \left[ \frac{\mathbb{E}(w_{imt} \mid B_m)}{p_{mt}} - c_{im} \right] + \varepsilon_{im}, \qquad m_i^{\ast} \in \arg\max_{m \in \mathcal{M} \cup \{0\}} V_{im}$$
 
-| Termo | Leitura |
+| Termo | Interpretação |
 |---|---|
-| $\mathbb{E}(w_{imt} \mid B_m)$ | remuneração esperada no município, dada a bolsa $B_m$ fixada pela regra |
-| $p_{mt}$ | custo de vida local: o que importa é a remuneração **real** |
-| $c_{im}$ | tudo o que torna estar naquele município custoso e não é pago em dinheiro |
-| $\delta^t$ | a decisão é de carreira, não de um mês: o médico pesa o que o lugar oferece ao longo do tempo |
-| $\varepsilon_{im}$ | gostos individuais que não observamos |
+| $\mathbb{E}(w_{imt} \mid B_m)$ | remuneração esperada no município, condicionada à bolsa $B_m$ definida pela regra do programa |
+| $p_{mt}$ | custo de vida local, que converte a remuneração nominal em remuneração real |
+| $c_{im}$ | custos não pecuniários associados à presença e ao trabalho no município |
+| $\delta^t$ | peso atribuído aos rendimentos e custos futuros |
+| $\varepsilon_{im}$ | preferências individuais não observadas |
 
-A alternativa $m = 0$ é ficar fora do programa. A vaga em $m$ é aceita quando
-$V_{im} \geq V_{i0}$ e $m$ é a melhor opção entre as disponíveis.
+A alternativa $m=0$ representa a não participação no programa. Uma vaga no
+município $m$ é aceita quando $V_{im} \geq V_{i0}$ e seu valor é maior que o das
+demais opções disponíveis ao candidato.
 
 ---
 
-## 14 — O que a bolsa paga — e o que não paga
+## 14 — Bolsa do programa e renda no mercado local
 
 `4. Modelo microeconômico · 2 de 4`
 
-A remuneração tem duas partes: a bolsa, que a regra fixa, e o que o médico
-obtém no **mercado local** fora das 20 horas do programa:
+A remuneração esperada é composta pela bolsa do programa e pela renda que o
+médico pode obter no mercado local durante as horas restantes:
 
 $$\mathbb{E}(w_{imt} \mid B_m) = B_m + w^{\text{priv}}_m$$
 
-| Onde | Mercado privado | Remuneração |
+| Localização | Possibilidades no mercado privado | Remuneração esperada |
 |---|---|---|
-| Capital ou região metropolitana | consultório, planos de saúde, hospitais privados | $w = B + w^{\text{priv}}$, com $w^{\text{priv}}$ alto |
-| Interior isolado | sem demanda privada que sustente a especialidade | $w \to B$ |
+| Capital ou região metropolitana | consultório, planos de saúde e hospitais privados | $w = B + w^{\text{priv}}$, com $w^{\text{priv}}$ alto |
+| Interior isolado | menor demanda privada para sustentar a especialidade | $w \to B$ |
 
-Duas consequências. Primeiro, a bolsa maior do interior pode significar
-**remuneração total menor**: R$ 20 mil sem complemento contra R$ 10 mil mais o
-consultório da capital. Para compensar, $B$ precisa cobrir também a renda
-privada que o médico deixa de ganhar. Segundo, onde $w^{\text{priv}} \approx 0$
-a bolsa é **toda** a remuneração — e é exatamente ali que a política mais
-aposta nela.
+Assim, uma bolsa nominalmente maior no interior pode coexistir com remuneração
+total menor. A comparação relevante pode ser, por exemplo, entre R$ 20 mil sem
+renda complementar e R$ 10 mil acrescidos da atividade privada em uma capital.
+Para compensar a localização, a bolsa precisa cobrir parte da renda privada à
+qual o médico renuncia.
 
-O deflator $p_{mt}$ trabalha no sentido oposto: o custo de vida é menor no
-interior, o que valoriza a mesma bolsa em termos reais.
+O custo de vida $p_{mt}$ atua na direção contrária. Se for menor no interior,
+uma mesma bolsa terá maior poder de compra. O efeito final depende da diferença
+entre esses dois componentes.
 
 ---
 
-## 15 — O custo de estar ali
+## 15 — Componentes não pecuniários da escolha locacional
 
 `4. Modelo microeconômico · 3 de 4`
 
+O custo não pecuniário é dividido em um componente geográfico e outro ligado
+ao exercício da medicina:
+
 $$c_{im} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}}_{\text{geográfico}} + \underbrace{C(q; L_m, K_m) - \alpha_i B(q; L_m, K_m)}_{\text{laboral líquido}}$$
 
-| Componente | Sinal | Significado |
+| Componente | Sinal | Interpretação |
 |---|:---:|---|
-| $\phi(\text{dist})$ | $\phi' > 0$ | afastar-se da família custa, e custa mais a cada quilômetro |
-| $-\gamma A_m$ | $< 0$ | amenidade urbana — saneamento, segurança, escola — compensa |
-| $\theta_i^{\text{rural}}$ | $\gtrless 0$ | gosto pessoal por cidade pequena ou grande |
-| $C(q)$ | $C' > 0,\ C'' > 0$ | atender cansa, e cansa de forma crescente |
-| $\alpha_i B(q)$ | $B' > 0,\ B'' < 0$ | curar dá satisfação, ponderada pelo altruísmo $\alpha_i$ |
+| $\phi(\text{dist})$ | $\phi' > 0$ | custo de se afastar da família ou de outras redes pessoais |
+| $-\gamma A_m$ | $< 0$ | amenidades locais, como saneamento, segurança e escolas, reduzem o custo de viver no município |
+| $\theta_i^{\text{rural}}$ | $\gtrless 0$ | preferência individual por cidades menores ou maiores |
+| $C(q)$ | $C' > 0,\ C'' > 0$ | custo do esforço necessário para realizar os atendimentos |
+| $\alpha_i B(q)$ | $B' > 0,\ B'' < 0$ | benefício gerado ao paciente, ponderado pelo altruísmo do médico $\alpha_i$ |
 
-O bloco geográfico vem de Redding & Rossi-Hansberg; o laboral, de Choné & Ma.
-Equipe ($L$) e capital instalado ($K$) atuam duas vezes no bloco laboral:
-reduzem o cansaço, $\partial C / \partial K < 0$, e — nossa extensão a Choné &
-Ma — ampliam o benefício que o atendimento produz, $\partial B / \partial K > 0$.
-Por dois caminhos, $\partial c / \partial K < 0$. Como no município vulnerável
-$L$ e $K$ são baixos, **o mesmo lugar que paga mais é o que impõe maior custo
-de trabalho**.
+O componente geográfico segue Redding & Rossi-Hansberg; o componente laboral
+parte de Choné & Ma. Equipe ($L$) e capital instalado ($K$) reduzem o custo do
+atendimento, $\partial C / \partial K < 0$. Como extensão ao modelo de Choné &
+Ma, supõe-se também que esses recursos aumentem o benefício produzido pelo
+atendimento, $\partial B / \partial K > 0$. Pelos dois canais,
+$\partial c / \partial K < 0$.
+
+Municípios vulneráveis tendem a oferecer menos equipe e capital. Portanto, a
+bolsa mais alta pode estar associada justamente aos locais onde o exercício da
+medicina impõe maior custo.
 
 ![Custo laboral líquido em função do volume de atendimentos](../../02_teoria/figuras/curva_custo_laboral_burnout.png)
 
 ---
 
-## 16 — O IVS organiza o custo
+## 16 — O IVS como medida das condições territoriais
 
 `4. Modelo microeconômico · 4 de 4`
 
-Distância da família, aluguel e esforço clínico não são observados. O que se
-observa, para todo município, é o IVS. Escrevemos então o custo como função do
-índice mais um desvio individual:
+Não observamos diretamente a distância da família, o custo de moradia ou o
+esforço clínico enfrentado por cada médico. O IVS, por sua vez, está disponível
+para todos os municípios. O custo é então parametrizado como função do índice e
+de um componente individual:
 
 $$c_{im} = c_0(IVS_m) + \eta_i$$
 
-Isso não é atalho: cada dimensão do IVS corresponde a um bloco do custo.
+As três dimensões do IVS se relacionam a componentes distintos do modelo:
 
-| Dimensão do IVS | Indicadores | Bloco do custo | Efeito sobre $c$ |
+| Dimensão do IVS | Indicadores | Relação com o modelo | Efeito esperado sobre $c$ |
 |---|---|---|:---:|
-| Infraestrutura urbana | saneamento, lixo, tempo de deslocamento | amenidades $A_m$ | $\uparrow$ |
-| Renda e trabalho | pobreza, desemprego, informalidade | mercado privado ausente, $w \to B$ | $\uparrow$ |
-| Capital humano | mortalidade infantil, analfabetismo, mães adolescentes | gravidade do caso, $B'(q)\uparrow$; e escassez de equipe e capital, $K\downarrow$ | **ambíguo** |
+| Infraestrutura urbana | saneamento, coleta de lixo e tempo de deslocamento | amenidades $A_m$ | $\uparrow$ |
+| Renda e trabalho | pobreza, desemprego e informalidade | menor mercado privado local, $w \to B$ | $\uparrow$ |
+| Capital humano | mortalidade infantil, analfabetismo e mães adolescentes | maior benefício marginal do atendimento, $B'(q)\uparrow$; menor disponibilidade de equipe e capital, $K\downarrow$ | **ambíguo** |
 
-A terceira linha é o que impede assumir que o custo cresce com o índice.
-Carência sanitária eleva o benefício de atender — o que **reduz** o custo para
-um médico altruísta — ao mesmo tempo em que sinaliza falta de insumos — o que
-**eleva** o cansaço. Logo $c_0'(IVS) \gtrless 0$: o sinal é questão empírica.
+O efeito da dimensão de capital humano não tem sinal definido. Uma situação
+sanitária pior pode aumentar o benefício percebido por um médico altruísta e,
+com isso, reduzir seu custo líquido. Ao mesmo tempo, pode indicar escassez de
+insumos e maior esforço para atender. Portanto, não se impõe a hipótese de que
+$c_0'(IVS)$ seja necessariamente positivo.
 
-É por isso que o objeto do trabalho é o **degrau** da bolsa entre faixas, e
-não a inclinação do índice.
+Essa ambiguidade recomenda concentrar a análise nas mudanças discretas da bolsa
+entre as faixas, e não interpretar a inclinação do IVS como efeito do custo.
 
 ---
 
 # 5. Hipóteses
 
-## 17 — Duas hipóteses
+## 17 — Hipóteses do modelo
 
 `5. Hipóteses`
 
-**Passo 1 — a condição de aceitação.** O médico $i$ aceita a vaga em $m$
-quando o que ela vale supera sua melhor alternativa $\bar{v}_i$:
+O médico $i$ aceita uma vaga no município $m$ quando o valor dessa alternativa
+é pelo menos igual ao de sua melhor opção fora dela, representada por
+$\bar{v}_i$:
 
 $$\frac{B_m + w^{\text{priv}}_m}{p_m} - c_0(IVS_m) \geq \bar{v}_i$$
 
-**Passo 2 — do médico à vaga.** A vaga é preenchida se existir ao menos um
-candidato para quem a desigualdade vale. Tudo o que aumenta o lado esquerdo
-aumenta essa probabilidade.
+A vaga será preenchida se houver pelo menos um candidato para o qual essa
+condição seja satisfeita. Disso resultam duas hipóteses:
 
-**Passo 3 — as derivadas.**
-
-| | Hipótese | Derivada |
+| | Hipótese | Implicação |
 |:---:|---|---|
-| **H1** | Maior remuneração real aumenta a probabilidade de preenchimento da vaga | $\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial (B_m / p_m)} > 0$ |
-| **H2** | Maior custo locacional reduz a probabilidade de preenchimento da vaga | $\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial c_m} < 0$ |
+| **H1** | Uma remuneração real maior aumenta a probabilidade de preenchimento da vaga | $\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial (B_m / p_m)} > 0$ |
+| **H2** | Um custo locacional maior reduz a probabilidade de preenchimento da vaga | $\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial c_m} < 0$ |
 
-**Passo 4 — as duas juntas.** Na fronteira entre duas faixas, o preenchimento
-do lado mais vulnerável exige que o degrau monetário supere o degrau de custo:
+Na fronteira entre duas faixas, a bolsa compensará a maior vulnerabilidade se o
+ganho real de remuneração superar a variação do custo locacional:
 
 $$\frac{\Delta B_m}{p_m} > \Delta c_0, \qquad \Delta B_m = \text{R\$ } 5.000$$
 
-A pergunta da apresentação é se essa desigualdade vale.
+A análise empírica procura verificar se essa condição é compatível com o padrão
+de preenchimento observado.
 
 ---
 
 # 6. Viabilidade empírica
 
-## 18 — Viabilidade empírica
+## 18 — Dados disponíveis e desafio de identificação
 
 `6. Viabilidade empírica`
 
-**Temos como medir cada peça do modelo?**
+Os dados disponíveis cobrem o desfecho, a regra de remuneração e boa parte das
+características territoriais previstas pelo modelo.
 
-| Peça do modelo | O que observamos | Fonte |
+| Componente | Variável observada | Fonte |
 |---|---|---|
-| Preenchimento da vaga | se a vaga teve alguém confirmado ou homologado | quadro de vagas e resultados do ciclo 1: 1.295 vagas em 368 municípios |
-| Bolsa $B_m$ | o valor anunciado na vaga: R$ 10, 15 ou 20 mil | edital |
-| Custo $c_m$ | o IVS e suas três dimensões; se o município é capital, metropolitano, polo do interior ou interior remoto; quantos especialistas e que estrutura já havia | Ipea; REGIC 2018 e RMs 2022 (IBGE); CNES mensal, jun/2024 a jul/2026 |
-| Custo de vida $p_m$ | diferenças entre estados | IBGE |
-| Mercado local $w^{\text{priv}}_m$ | — | não observado |
-| Distância da família | — | não observado |
+| Preenchimento da vaga | existência de candidato confirmado ou homologado | quadro de vagas e resultados do ciclo 1: 1.295 vagas em 368 municípios |
+| Bolsa $B_m$ | valor publicado para a vaga: R$ 10 mil, R$ 15 mil ou R$ 20 mil | edital |
+| Custo $c_m$ | IVS e suas três dimensões; tipologia territorial; quantidade de especialistas; estrutura de atendimento | Ipea; REGIC 2018 e RMs 2022 (IBGE); CNES mensal, jun/2024 a jul/2026 |
+| Custo de vida $p_m$ | diferenças de preços entre estados | IBGE |
+| Mercado local $w^{\text{priv}}_m$ | não observado | — |
+| Distância da família | não observada | — |
 
-Sim, para o essencial. Duas peças ficam de fora — a renda no mercado privado
-local e a distância da família — e entram no modelo como parte do custo que o
-IVS e a tipologia territorial resumem.
+A renda no mercado privado e a distância da família não são observadas. Na
+especificação empírica, sua influência será aproximada pelo IVS, pela tipologia
+territorial e pelas demais características municipais disponíveis.
 
-**A dificuldade.** A bolsa e a vulnerabilidade andam juntas porque a regra
-fixa uma pela outra: **não existe município com bolsa alta e vulnerabilidade
-baixa**. Separar H1 de H2 exige comparar municípios parecidos que caíram em
-faixas diferentes — e a faixa publicada não coincide com a que sai dos cortes
-do Ipea em 177 dos 368 municípios do ciclo 1. Recuperar a regra exata que o
-Ministério aplicou é o primeiro passo do trabalho empírico.
+O principal desafio é separar remuneração e vulnerabilidade. A própria regra do
+programa vincula uma à outra, de modo que não há municípios pouco vulneráveis
+recebendo bolsas altas. A identificação exige comparar municípios semelhantes
+que tenham sido classificados em faixas distintas.
+
+Para isso, ainda é necessário esclarecer como a regra foi aplicada. Em **177
+dos 368 municípios** do ciclo 1, a faixa publicada não coincide com a que seria
+obtida pela aplicação direta dos cortes do Ipea ao IVS municipal. Reconstruir o
+critério usado pelo Ministério da Saúde é, portanto, a primeira etapa da análise
+empírica.
