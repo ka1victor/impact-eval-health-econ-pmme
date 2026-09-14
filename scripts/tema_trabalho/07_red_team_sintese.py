@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import datetime as dt
 import hashlib
 import json
@@ -27,6 +28,20 @@ MATRIX_OUT_CSV = OUT / "A6_matriz_afirmacao_evidencia_limite.csv"
 MATRIX_MD = AUD / "09_matriz_afirmacao_evidencia_limite.md"
 SYNTHESIS = EXEC / "32_sintese_A6_resumo_intro_metodos_conclusao.md"
 MANIFEST = OUT / "A6_manifesto_reproducao.json"
+FUNIL = OUT / "matriz_funil_ciclo1.parquet"
+RUN_ALL = ROOT / "run_all.py"
+
+# Interpretador do ambiente documentado no README. O manifesto registrava
+# `.venv\\Scripts\\python.exe` enquanto `versoes.platform` gravava Linux; quem
+# seguisse o manifesto não conseguiria reproduzir nada (item B-3 do backlog).
+PYTHON_REPRO = ".venv/bin/python"
+PYTHON_MINIMO = "3.12"
+
+MOTIVO_CNES_AUSENTE = (
+    "microdados mensais do CNES não versionados (data/raw/cnes/ é gitignored) e "
+    "reconstruir o painel exige mais de 16 GB de ZIPs das 26 competências; ver "
+    "docs/06_execucao/36_backlog_pos_auditoria.md, item D-4"
+)
 
 
 def sha256(path: Path) -> str:
@@ -43,8 +58,148 @@ def atomic_text(path: Path, value: str) -> None:
     tmp.replace(path)
 
 
+def num(value: float, casas: int = 2) -> str:
+    """Formata em convenção brasileira. Os documentos gerados são em português."""
+    return f"{value:.{casas}f}".replace(".", ",")
+
+
 def pct(value: float) -> str:
-    return f"{100 * value:.1f}"
+    return num(100 * value, 1)
+
+
+def prevalencia_atracao() -> dict[str, float]:
+    """Separa o desfecho da primeira chamada do desfecho do ciclo 1 inteiro.
+
+    Os dois não são o mesmo número e vinham sendo confundidos: 30,3% é a
+    prevalência no **quadro da primeira chamada**, que é a população primária de
+    A4. Pelo ciclo 1 inteiro a prevalência é maior, porque células sem desfecho
+    na primeira chamada receberam homologado novo na segunda (item C-1).
+    """
+    funil = pd.read_parquet(FUNIL)
+    chave = ["co_cnes_7d", "cod_curso"]
+    quadro = funil.loc[funil["in_quadro_ch1_original"] == True, chave].drop_duplicates()  # noqa: E712
+    ch1 = (
+        funil.loc[funil["chamada"] == 1]
+        .groupby(chave, as_index=False)[["n_confirmacoes_ch1", "n_homologacoes_ch1"]]
+        .sum()
+    )
+    ch2 = (
+        funil.loc[funil["chamada"] == 2]
+        .groupby(chave, as_index=False)[["n_homologacoes_novas_ch2"]]
+        .sum()
+    )
+    celulas = quadro.merge(ch1, on=chave, how="left").merge(ch2, on=chave, how="left").fillna(0)
+
+    primeira = (celulas["n_confirmacoes_ch1"] > 0) | (celulas["n_homologacoes_ch1"] > 0)
+    novas = (~primeira) & (celulas["n_homologacoes_novas_ch2"] > 0)
+    ciclo = primeira | (celulas["n_homologacoes_novas_ch2"] > 0)
+
+    total = int(len(celulas))
+    return {
+        "celulas": total,
+        "ch1_celulas": int(primeira.sum()),
+        "ch1_prop": float(primeira.sum()) / total,
+        "ciclo_celulas": int(ciclo.sum()),
+        "ciclo_prop": float(ciclo.sum()) / total,
+        "celulas_novas_ch2": int(novas.sum()),
+        "pessoas_novas_ch2": int(celulas.loc[novas, "n_homologacoes_novas_ch2"].sum()),
+    }
+
+
+def _caminho_de_step(no: ast.expr) -> str:
+    """Reduz a expressão `ROOT / "a" / "b.py"` de `run_all.py` a um caminho POSIX."""
+    partes: list[str] = []
+    atual = no
+    while isinstance(atual, ast.BinOp) and isinstance(atual.op, ast.Div):
+        if not isinstance(atual.right, ast.Constant) or not isinstance(atual.right.value, str):
+            raise RuntimeError(f"passo de run_all.py não é literal: {ast.dump(no)}")
+        partes.append(atual.right.value)
+        atual = atual.left
+    if not (isinstance(atual, ast.Name) and atual.id == "ROOT"):
+        raise RuntimeError(f"passo de run_all.py não parte de ROOT: {ast.dump(no)}")
+    return "/".join(reversed(partes))
+
+
+def passos_do_pipeline() -> list[str]:
+    """Lê a lista `STEPS` de `run_all.py` sem executá-lo.
+
+    Motivo: a sequência de reprodução era mantida à mão no manifesto, começava
+    em `02_reconciliar_funil_ciclo1.py` e omitia A1 e **toda** a aquisição,
+    inclusive `scripts/aquisicao/05_integrar_painel_analitico.py`, que constrói
+    o insumo de A5. Derivar do ponto de entrada impede que as duas divirjam.
+    """
+    arvore = ast.parse(RUN_ALL.read_text(encoding="utf-8"))
+    for no in arvore.body:
+        if isinstance(no, ast.Assign) and any(
+            isinstance(alvo, ast.Name) and alvo.id == "STEPS" for alvo in no.targets
+        ):
+            if not isinstance(no.value, (ast.List, ast.Tuple)):
+                raise RuntimeError("STEPS de run_all.py não é uma lista literal")
+            return [_caminho_de_step(elemento) for elemento in no.value.elts]
+    raise RuntimeError("STEPS não encontrado em run_all.py")
+
+
+def insumos_declarados() -> list[tuple[Path, str, str | None]]:
+    """Insumos e artefatos que o desenho de A1–A6 exige, com o papel de cada um.
+
+    A terceira posição é o motivo **conhecido** de ausência. Um insumo que faz
+    parte do desenho e não está no disco continua tendo entrada no manifesto,
+    marcada como ausente: omiti-lo apagaria a proveniência em silêncio sempre
+    que o manifesto fosse regerado numa máquina sem os microdados. Um insumo
+    que não faz parte do desenho simplesmente não aparece nesta lista.
+    """
+    return [
+        (ROOT / "output/aquisicao/quadro_vagas_tratamento.parquet", "quadro de vagas publicado, insumo de A1", None),
+        (ROOT / "output/aquisicao/ponte_curso_cbo_oficial.json", "ponte curso–CBO congelada", None),
+        (ROOT / "output/aquisicao/manifesto_cnes_26_competencias.json", "manifesto das 26 competências mensais do CNES", None),
+        (ROOT / "data/pmm_especialistas_nominal.csv", "retrato nominal observado, insumo de A7/A8", None),
+        (ROOT / "data/ivs_ipea_2010_municipios.csv", "IVS 2010 do IPEA, running variable canônica", None),
+        (FUNIL, "matriz do funil do ciclo 1, saída de A1", None),
+        (OUT / "matriz_tipologia_territorial.parquet", "tipologia territorial congelada, saída de A2", None),
+        (OUT / "portao_denominador.json", "portão do denominador, A1", None),
+        (OUT / "registro_pre_analise_atracao.json", "pré-análise congelada, A3", None),
+        (OUT / "potencia_atracao.json", "cálculo de potência declarado em A3", None),
+        (ROOT / "output/painel_municipio_curso_mensal.parquet", "painel município–curso mensal do CNES, insumo de A5", MOTIVO_CNES_AUSENTE),
+        (OUT / "A5_painel_T0.parquet", "painel em T0, dataset de estimação de A5", None),
+        (A4, "estimativas de A4", None),
+        (A5, "estimativas de A5", None),
+        (OUT / "A5_manifesto_maturidade_censura.json", "maturidade e censura declaradas em A5", None),
+        (OUT / "A4_tabela_02_modelo_principal_LPM.csv", "modelo principal de A4", None),
+        (OUT / "A4_tabela_02c_confirmacao_homologacao.csv", "estágios do funil em A4", None),
+        (OUT / "A4_tabela_02d_municipio_curso.csv", "colapso município–curso em A4", None),
+        (OUT / "A5_tabela_07_estudo_evento_atracao.csv", "estudo de evento de A5", None),
+        (REDTEAM, "red team gerado aqui", None),
+        (MATRIX_OUT_CSV, "matriz afirmação–evidência–limite gerada aqui", None),
+        (SYNTHESIS, "síntese gerada aqui", None),
+    ]
+
+
+def hashear_insumos() -> tuple[dict[str, dict[str, object]], list[str]]:
+    """Hasheia cada insumo do desenho; marca explicitamente o que está ausente."""
+    hashes: dict[str, dict[str, object]] = {}
+    ausentes: list[str] = []
+    for caminho, papel, motivo in insumos_declarados():
+        rel = caminho.relative_to(ROOT).as_posix()
+        if caminho.exists():
+            hashes[rel] = {
+                "sha256": sha256(caminho),
+                "bytes": caminho.stat().st_size,
+                "papel": papel,
+                "presente": True,
+            }
+            continue
+        hashes[rel] = {
+            "sha256": None,
+            "bytes": None,
+            "papel": papel,
+            "presente": False,
+            "motivo_ausencia": motivo
+            or "ausência não prevista no desenho; investigar antes de confiar neste manifesto",
+        }
+        ausentes.append(rel)
+    return hashes, ausentes
+
+
 
 
 def main() -> None:
@@ -63,8 +218,19 @@ def main() -> None:
     collapsed = m4["robustez_municipio_curso"]["coef_estrato"]["estrato_metropolitano"]
     event = m5["principal_dinamico_confirmatorio"]
     expanded = m5["sensibilidade_dinamica_ampliada"]
+    prop = m5["principal_proporcional_confirmatorio"]
+    loo_prop = [e for e in a5["leave_one_curso_evento"] if e["escala"] == "proporcional"]
+    loo_nivel = [e for e in a5["leave_one_curso_evento"] if e["escala"] == "nivel"]
+    prop_um_fora = [e for e in loo_prop if e["subamostra"].startswith("sem_curso_")]
+    prop_min = min(prop_um_fora, key=lambda e: e["beta"])
+    prop_max = max(prop_um_fora, key=lambda e: e["beta"])
+    prop_estritos = next(e for e in loo_prop if e["subamostra"] == "somente_8_cbo_1_para_1")
+    nivel_estritos = next(e for e in loo_nivel if e["subamostra"] == "somente_8_cbo_1_para_1")
+    nivel_sem14 = next(e for e in loo_nivel if e["subamostra"] == "sem_curso_14")
     dist0 = m5["distribuicao_delta_confirmatoria"]["0"]
     dist1 = m5["distribuicao_delta_confirmatoria"]["1"]
+    prev = prevalencia_atracao()
+    celulas_fmt = f"{prev['celulas']:,}".replace(",", ".")
     date = dt.date.today().isoformat()
 
     redteam = f"""# A6 — Red team da evidência empírica
@@ -134,29 +300,43 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ## Ataques ao resultado secundário (A5)
 
 - Setembro/2025 foi rejeitado como baseline porque já contém exposição física. A referência limpa é junho/2025 e o follow-up comum é março/2026.
-- O estudo dinâmico usa efeitos fixos de célula, curso–mês e UF–mês, com cluster municipal. Em março/2026, a diferença associada à atração é {event['mar2026_beta']:.2f} (EP {event['mar2026_se']:.2f}; p={event['mar2026_p']:.3f}); o teste conjunto prévio tem p={event['pre_p']:.3f}.
-- A sensibilidade ampliada produz {expanded['mar2026_beta']:.2f} (p={expanded['mar2026_p']:.3f}), mas mistura CBOs sobrepostos.
-- A distribuição é assimétrica: sem atração, média {dist0['media']:.2f}, mediana {dist0['mediana']:.0f}, máximo {dist0['max']:.0f}; com atração, média {dist1['media']:.2f}, mediana {dist1['mediana']:.0f}, máximo {dist1['max']:.0f}. Winsorizar muda materialmente a precisão, portanto médias simples não bastam.
+- O estudo dinâmico usa efeitos fixos de célula, curso–mês e UF–mês, com cluster municipal. Em março/2026, a diferença associada à atração é {num(event['mar2026_beta'])} (EP {num(event['mar2026_se'])}; p={num(event['mar2026_p'], 3)}); o teste conjunto prévio tem p={num(event['pre_p'], 3)}.
+- A sensibilidade ampliada produz {num(expanded['mar2026_beta'])} (p={num(expanded['mar2026_p'], 3)}), mas mistura CBOs sobrepostos.
+- A distribuição é assimétrica: sem atração, média {num(dist0['media'])}, mediana {num(dist0['mediana'], 0)}, máximo {num(dist0['max'], 0)}; com atração, média {num(dist1['media'])}, mediana {num(dist1['mediana'], 0)}, máximo {num(dist1['max'], 0)}. Winsorizar muda materialmente a precisão, portanto médias simples não bastam.
 - O modelo de nível é dominado por diferenças basais e a validação preditiva fora da amostra é fraca. Ambos ficam como diagnósticos.
+
+### Forma funcional: o que é frágil é o nível, não a proporção
+
+**Refutação tentada:** atribuir o resultado secundário à escala de medida, testando se ele sobrevive à troca de nível por proporção e à retirada de cada curso.
+**Veredito:** a fragilidade é **do nível**, e é específica dele. Em nível, o coeficiente de março/2026 cai de {num(event['mar2026_beta'])} para {num(nivel_sem14['beta'])} sem o curso 14 (p={num(nivel_sem14['p_valor'], 3)}) e para {num(nivel_estritos['beta'])} nos oito cursos com CBO estritamente 1:1 (p={num(nivel_estritos['p_valor'], 3)}) — deixa de ser distinguível de zero. Somar profissionais de municípios com estoques de ordens de grandeza diferentes faz um curso de estoque grande dominar o coeficiente mecanicamente.
+
+Na escala proporcional, que é a primária, o mesmo exercício não desfaz o resultado: {num(prop['mar2026_beta'], 3)} (EP {num(prop['mar2026_se'], 3)}; p={num(prop['mar2026_p'], 4)}) na amostra completa, entre {num(prop_min['beta'], 3)} e {num(prop_max['beta'], 3)} ao retirar um curso por vez, e {num(prop_estritos['beta'], 3)} (p={num(prop_estritos['p_valor'], 3)}) nos oito cursos estritos. O enunciado correto, portanto, não é o de vulnerabilidade genérica a caudas que este documento trazia antes do item C2 do plano `35`: é que **o nível é frágil à composição de cursos e a proporção não é**. A escolha da escala proporcional é substantiva — mede variação relativa da oferta local, que é a pergunta pretendida — e vale nas duas direções do resultado.
+
+### Ameaças que este red team não testou
+
+Honestidade de escopo: três ameaças levantadas pela reauditoria independente **não** são testadas aqui, e a ausência não deve ser lida como aprovação. São elas o **placebo** sobre células sem atração em municípios com atração, a **heterogeneidade de pré-tendência** por curso, e o **deslocamento** entre municípios da mesma região de saúde, que o `CLAUDE.md` exige separar de expansão líquida. Todas exigiriam regravar artefato de A5, hoje impossível neste ambiente: o painel do CNES não está versionado. Condição de desbloqueio e o que a reauditoria mediu por conta própria estão em `docs/06_execucao/36_backlog_pos_auditoria.md`, itens C-7 e D-4.
 
 ## Veredito geral
 
-O núcleo útil é a desigualdade territorial na atração administrativa, robusta ao estágio do funil e à unidade analítica. A evolução do estoque cadastral após a oferta é compatível com uma diferença positiva modesta, mas vulnerável a caudas, composição e tempo de exposição heterogêneo. Não há base para reivindicar efeito causal, provimento atribuível ao programa ou retenção individual.
+O núcleo útil é a desigualdade territorial na atração administrativa, robusta ao estágio do funil e à unidade analítica. A evolução do estoque cadastral após a oferta é compatível com uma diferença positiva modesta: na escala proporcional ela sobrevive à retirada de qualquer curso e à restrição aos CBOs estritos; na escala de nível, não. O que limita a leitura é a composição de cursos no nível, o tempo de exposição física heterogêneo e três ameaças ainda não testadas. Não há base para reivindicar efeito causal, provimento atribuível ao programa ou retenção individual.
 
 *Gerado por `scripts/tema_trabalho/07_red_team_sintese.py`.*
 """
     atomic_text(REDTEAM, redteam)
 
     matrix_rows = [
-        ("Atração administrativa média de 30,3%", "393 de 1.295 células", "Célula não é vaga física", "prevalência administrativa observada"),
+        (f"Atração administrativa de {pct(prev['ch1_prop'])}% no quadro da primeira chamada",
+         f"{prev['ch1_celulas']} de {celulas_fmt} células; pelo ciclo 1 inteiro, {prev['ciclo_celulas']} ({pct(prev['ciclo_prop'])}%)",
+         "Célula não é vaga física; primeira chamada não é o ciclo inteiro",
+         "prevalência administrativa observada"),
         (f"Metropolitano associado a +{pct(metro)} pp versus remoto", "LPM com FE curso e UF; cluster município", f"Ajuste completo: +{pct(metro_full)} pp", "associado a maior atração"),
         ("Resultado preservado em confirmação", f"Contraste metropolitano +{pct(confirm)} pp", "Confirmação não é entrada física", "associação no estágio de confirmação"),
         ("Resultado preservado em homologação", f"Contraste metropolitano +{pct(homolog)} pp", "Homologação não é exercício", "associação no estágio de homologação"),
         ("Resultado preservado ao colapsar CNES", f"Município–curso: +{pct(collapsed)} pp", "Muda o peso analítico", "robustez à unidade"),
         ("IVS/faixa não identificam efeito marginal", "Coeficientes conjuntos instáveis e R1 falhou", "Regra administrativa não reproduzida", "gradiente descritivo"),
-        (f"Dinâmica CNES em março/2026: +{event['mar2026_beta']:.2f}", f"FE célula, curso–mês, UF–mês; p={event['mar2026_p']:.3f}", "Atração é resultado realizado; sem grupo causal", "associado a trajetória diferencial"),
-        ("Pré-tendências não rejeitadas", f"Teste conjunto p={event['pre_p']:.3f}", "Não rejeitar não prova paralelismo", "diagnóstico favorável, não validação causal"),
-        ("Distribuição da mudança é assimétrica", f"Medianas {dist0['mediana']:.0f} e {dist1['mediana']:.0f}; máximo com atração {dist1['max']:.0f}", "Cauda extrema influencia a média", "descrever média, mediana e caudas"),
+        (f"Dinâmica CNES em março/2026: +{num(event['mar2026_beta'])}", f"FE célula, curso–mês, UF–mês; p={num(event['mar2026_p'], 3)}", "Atração é resultado realizado; sem grupo causal", "associado a trajetória diferencial"),
+        ("Pré-tendências não rejeitadas", f"Teste conjunto p={num(event['pre_p'], 3)}", "Não rejeitar não prova paralelismo", "diagnóstico favorável, não validação causal"),
+        ("Distribuição da mudança é assimétrica", f"Medianas {num(dist0['mediana'], 0)} e {num(dist1['mediana'], 0)}; máximo com atração {num(dist1['max'], 0)}", "Cauda extrema influencia a média", "descrever média, mediana e caudas"),
         ("CNES não mede retenção individual", "Agregação município–curso", "Sem ponte nominal de bolsistas", "oferta médica cadastrada local"),
         ("RDD, SIH/SIA e custo-benefício fora do núcleo", "RDD encerrado em R1; bases/portões ausentes", "Sem identificação ou linkage", "não afirmar sem novo desenho"),
     ]
@@ -179,7 +359,7 @@ O núcleo útil é a desigualdade territorial na atração administrativa, robus
 
 ## Resumo
 
-Analisamos a implementação do primeiro ciclo do PMM-E em 1.295 células CNES–curso de 368 municípios. Alguma confirmação ou homologação ocorreu em 30,3% das células. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade {pct(metro)} pontos percentuais maior que as do interior remoto; o contraste foi {pct(metro_full)} pontos no ajuste completo, {pct(confirm)} na confirmação, {pct(homolog)} na homologação e {pct(collapsed)} ao colapsar para município–curso. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO não compartilhado entre cursos encontrou diferença associada à atração de {event['mar2026_beta']:.2f} médico cadastrado em março/2026 (EP {event['mar2026_se']:.2f}), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
+Analisamos o **quadro da primeira chamada** do primeiro ciclo do PMM-E, {celulas_fmt} células CNES–curso em 368 municípios. Alguma confirmação ou homologação **na própria primeira chamada** ocorreu em {prev['ch1_celulas']} células, {pct(prev['ch1_prop'])}% do quadro — é essa a prevalência da população primária de A4. Somando as homologações novas da segunda chamada, o **ciclo 1 inteiro** alcança {prev['ciclo_celulas']} das mesmas {celulas_fmt} células, {pct(prev['ciclo_prop'])}%: {prev['celulas_novas_ch2']} células sem desfecho na primeira chamada receberam homologado novo na segunda, somando {prev['pessoas_novas_ch2']} pessoas. Os dois números medem coisas diferentes e não são intercambiáveis. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade {pct(metro)} pontos percentuais maior que as do interior remoto; o contraste foi {pct(metro_full)} pontos no ajuste completo, {pct(confirm)} na confirmação, {pct(homolog)} na homologação e {pct(collapsed)} ao colapsar para município–curso. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO não compartilhado entre cursos encontrou diferença associada à atração de {num(event['mar2026_beta'])} médico cadastrado em março/2026 (EP {num(event['mar2026_se'])}), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
 
 ## Introdução
 
@@ -193,53 +373,38 @@ A análise secundária usa 26 competências CNES e, como amostra principal, 587 
 
 ## Conclusão
 
-O resultado publicável é um gradiente territorial de atração: municípios metropolitanos apresentam maior probabilidade de atração administrativa que o interior remoto, e o padrão resiste à separação entre confirmação e homologação e ao colapso da unidade. A dinâmica do CNES sugere diferença positiva posterior, com pré-tendências não rejeitadas, mas a cauda extrema, a composição e o tempo de exposição física heterogêneo limitam sua interpretação. Sem base para efeito causal do adicional da bolsa, retenção individual, resolutividade, fila, SIH/SIA ou custo-benefício, esses objetos exigem novos dados e novo protocolo antes de qualquer estimação.
+O resultado publicável é um gradiente territorial de atração: municípios metropolitanos apresentam maior probabilidade de atração administrativa que o interior remoto, e o padrão resiste à separação entre confirmação e homologação e ao colapso da unidade. A dinâmica do CNES sugere diferença positiva posterior, com pré-tendências não rejeitadas, e a escala proporcional — a primária — resiste à retirada de qualquer curso e à restrição aos CBOs estritos, enquanto a escala de nível não resiste: é o nível que é frágil à composição de cursos. O tempo de exposição física heterogêneo e três ameaças ainda não testadas — placebo, heterogeneidade de pré-tendência e deslocamento entre municípios — continuam limitando a interpretação. Sem base para efeito causal do adicional da bolsa, retenção individual, resolutividade, fila, SIH/SIA ou custo-benefício, esses objetos exigem novos dados e novo protocolo antes de qualquer estimação.
 """
     atomic_text(SYNTHESIS, synthesis)
 
-    key_files = [
-        ROOT / "output/aquisicao/quadro_vagas_tratamento.parquet",
-        OUT / "matriz_funil_ciclo1.parquet",
-        OUT / "matriz_tipologia_territorial.parquet",
-        OUT / "portao_denominador.json",
-        OUT / "registro_pre_analise_atracao.json",
-        OUT / "potencia_atracao.json",
-        ROOT / "output/aquisicao/ponte_curso_cbo_oficial.json",
-        ROOT / "output/painel_municipio_curso_mensal.parquet",
-        A4,
-        A5,
-        OUT / "A5_manifesto_maturidade_censura.json",
-        OUT / "A4_tabela_02_modelo_principal_LPM.csv",
-        OUT / "A4_tabela_02c_confirmacao_homologacao.csv",
-        OUT / "A4_tabela_02d_municipio_curso.csv",
-        OUT / "A5_tabela_07_estudo_evento_atracao.csv",
-        REDTEAM,
-        MATRIX_OUT_CSV,
-        SYNTHESIS,
-    ]
-    hashes = {
-        path.relative_to(ROOT).as_posix(): {"sha256": sha256(path), "bytes": path.stat().st_size}
-        for path in key_files if path.exists()
-    }
+    hashes, insumos_ausentes = hashear_insumos()
     docs_hash = {
         path.relative_to(ROOT).as_posix(): sha256(path)[:8]
         for path in (REDTEAM, MATRIX_DOC_CSV, MATRIX_MD, SYNTHESIS)
     }
-    commands = [
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/02_reconciliar_funil_ciclo1.py",
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/03_construir_tipologia_territorial.py",
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/04_congelar_pre_analise.py",
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/05_estimar_atracao.py",
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/06_avaliar_provimento_cnes.py",
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/07_red_team_sintese.py",
-        ".venv\\Scripts\\python.exe -m unittest discover -s tests -q",
-    ]
+    commands = [f"{PYTHON_REPRO} {passo}" for passo in passos_do_pipeline()]
+    commands.append(f"{PYTHON_REPRO} run_tests.py")
     manifest = {
         "protocolo": "A6_MANIFESTO_REPRODUCAO",
         "data_referencia": date,
         "gerador": "scripts/tema_trabalho/07_red_team_sintese.py",
         "fila": "A1->A6: núcleo associativo; upgrade causal bloqueado",
+        "ambiente_exigido": {
+            "python_minimo": PYTHON_MINIMO,
+            "interpretador": PYTHON_REPRO,
+            "como_montar": [
+                "python3.13 -m venv .venv",
+                ".venv/bin/pip install -r requirements.txt",
+            ],
+            "por_que": (
+                "numpy e pandas fixados no requirements.txt exigem Python 3.12 ou "
+                "superior; sob outro ambiente os artefatos são reescritos a partir "
+                "da 14ª casa decimal e a cadeia de SHA-256 quebra em silêncio"
+            ),
+        },
+        "comando_unico": f"{PYTHON_REPRO} run_all.py",
         "comandos_reproducao": commands,
+        "comandos_derivados_de": "run_all.py (lista STEPS)",
         "versoes": {
             "python": sys.version,
             "platform": platform.platform(),
@@ -248,6 +413,12 @@ O resultado publicável é um gradiente territorial de atração: municípios me
             "statsmodels": statsmodels.__version__,
         },
         "hashes_entradas_e_artefatos": hashes,
+        "insumos_ausentes": insumos_ausentes,
+        "nota_insumos_ausentes": (
+            "Insumo declarado no desenho e ausente do disco aparece acima com "
+            "sha256 nulo, presente=false e motivo_ausencia. Entrada omitida "
+            "significaria que o insumo não faz parte do desenho."
+        ),
         "docs_hash8": docs_hash,
         "portoes": {
             "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",

@@ -298,6 +298,29 @@ O mesmo cuidado vale para os dois documentos de auditoria que o script regrava,
 `09_red_team_atracao_provimento.md` e `09_matriz_afirmacao_evidencia_limite.md`:
 eles mudam de hash a cada execução porque carregam a data de referência.
 
+### Executado em 14/09/2026 — sessão 5, commit `2375267`
+
+Corrigido **antes** de o gerador ser rodado por qualquer outro motivo, para que
+as demais correções da sessão não levassem a degradação junto.
+
+`insumos_declarados()` passa a listar cada insumo com o papel que cumpre no
+desenho, e `hashear_insumos()` distingue os dois casos: insumo do desenho ausente
+do disco continua tendo entrada, com `sha256: null`, `presente: false` e
+`motivo_ausencia`; insumo que não faz parte do desenho simplesmente não aparece
+na lista. O manifesto ganha também `insumos_ausentes`, que hoje traz exatamente
+`output/painel_municipio_curso_mensal.parquet`.
+
+Os demais pontos do item: os comandos deixam de ser caminhos Windows e passam a
+`.venv/bin/python`; a sequência deixa de ser mantida à mão e é **derivada da
+lista `STEPS` de `run_all.py` por leitura de AST**, então cobre A1 e toda a
+aquisição, inclusive `scripts/aquisicao/05_integrar_painel_analitico.py`, e não
+pode divergir do ponto de entrada; passam a ser hasheados `A5_painel_T0.parquet`,
+`data/pmm_especialistas_nominal.csv`, `data/ivs_ipea_2010_municipios.csv` e
+`output/aquisicao/manifesto_cnes_26_competencias.json`. Novo bloco
+`ambiente_exigido` registra Python ≥ 3.12 e o interpretador.
+
+Três testes novos em `tests/test_red_team_a6.py`.
+
 ## B-4 · Nota aritmética errada no manifesto da tipologia
 
 **Onde:** `output/tema_trabalho/manifesto_tipologia_territorial.json`,
@@ -368,6 +391,23 @@ chamada"). O defeito é só deste documento — que é gerado por
 **Bônus:** o mesmo documento usa ponto decimal (`27.9`) em texto português, onde o
 resto do projeto usa vírgula.
 
+### Executado em 14/09/2026 — sessão 5, commit `093fb44`
+
+Números conferidos nos artefatos antes de escrever, sobre
+`matriz_funil_ciclo1.parquet`: primeira chamada **393 / 1.295 = 30,3%**; ciclo 1
+inteiro **461 / 1.295 = 35,6%**; **68** células sem desfecho na primeira chamada
+receberam homologado novo na segunda, somando **84** pessoas. Reproduz o alvo.
+
+Corrigido no gerador, não no arquivo. `prevalencia_atracao()` calcula as duas
+prevalências a partir do artefato versionado, então nenhum dos dois números fica
+escrito à mão; o resumo e a linha correspondente da matriz publicam as duas com
+o rótulo de qual é qual. O `paper_pmme_submission.tex` já estava correto e não
+foi tocado.
+
+Bônus do item: `num()` passa a formatar em convenção brasileira e `pct()` passa
+por ele, então a síntese, o red team e a matriz saem com vírgula decimal. Dois
+testes novos.
+
 ## C-2 · Afirmação falsa sobre linhas sub judice
 
 O artigo e `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md` afirmam
@@ -379,6 +419,29 @@ Numericamente imaterial — a linha cai num par de placebo e na amostra de empat
 e removê-la move o placebo de `0,000` para `+0,034`. Mas a afirmação é falsa e
 precisa ser corrigida ou executada.
 
+### Executado em 14/09/2026 — sessão 5, commit `8c4d3e9`. Caminho: corrigir a afirmação
+
+Verificado nos insumos, sem alterar nada em `data/`:
+
+| Publicação | marcador sub judice | o código lê? |
+|---|---|---|
+| `2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx` | 1 linha em `Unnamed: 16` (coluna 17 de 17) | **não** — `read_call1` usa as colunas 0,1,4,6,7,8,9,10,11,12,13 |
+| `2025_ciclo1_chamada2_classificacao_final.xlsx` | nenhum, em nenhuma célula | n/a |
+| publicações de 2026 | coluna `SITUACAO` | sim — `read_support_2026` filtra |
+
+**Decisão: corrigir a afirmação, não executar o filtro.** Executá-lo mudaria
+número publicado e mexeria na amostra congelada de A8, que esta fila proíbe
+alterar e que exigiria emenda prévia; a sessão 5 só carrega itens dos grupos B e
+C. Como a diferença é imaterial, executar compraria nada ao custo de mexer em
+amostra congelada. Corrigir o texto descreve exatamente o que o código faz.
+
+O artigo passa a dizer que o descarte vale para as publicações de 2026 e que o
+recorte do ciclo 1 não o faz. O `17_plano_causal_publico_cutoff_escore.md` perde
+o bullet de "O que fortalece o desenho" e ganha o registro em "O que impede rigor
+alto". Não foi afirmado em que par a linha cai: isso não é verificável a partir
+dos artefatos publicados, que são agregados, e a medição correspondente é da
+reauditoria, não deste repositório. Um teste novo amarra a afirmação ao código.
+
 ## C-3 · Intervalo de confiança fora do espaço de parâmetros
 
 `A8_tabela_02`, linha `2025_C1_CH2` de homologação, traz
@@ -386,6 +449,42 @@ precisa ser corrigida ou executada.
 rotulam "convencional" e a seção 5 do relatório diz que os intervalos `t` não
 resolvem a discretização, mas nenhuma ressalva sinaliza **este** valor específico
 e nenhum intervalo exato é oferecido ao lado.
+
+### Executado em 14/09/2026 — sessão 5, commit `e7fc9e9`
+
+São **duas** as linhas fora do espaço, não uma: `2025_C1_CH2` / `gap_1_ac` em
+`homologacao_mesma_celula` e em `homologacao_qualquer_local`, ambas com
+`ic95_convencional_superior = 1,2618`.
+
+O intervalo exato condicional — Clopper–Pearson sobre os pares discordantes, o
+análogo exato do teste de McNemar que a tabela já usa — é **−0,0364 a 0,8333**.
+Além de caber no espaço de parâmetros, ele **cobre o zero**, enquanto o
+convencional não cobre; isso é coerente com o `p` exato de `0,0625` já publicado.
+A leitura correta dessas duas linhas é de efeito direcional impreciso sobre seis
+pares, e não de efeito estabelecido.
+
+Publicado **ao lado**, sem tocar em A8: `scripts/tema_trabalho/09b_intervalos_exatos_escore.py`
+lê `A8_tabela_02` e `A8_tabela_03` já publicadas e grava
+`output/tema_trabalho/A8_tabela_06_intervalos_exatos.csv`. Amostra, desfecho e
+estimador de A8 seguem intactos. Ressalva escrita em
+[`docs/auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md), errata E-1.
+
+### Achado colateral — A8 não reproduz byte a byte
+
+No ambiente documentado, reexecutar `09_estimar_cutoff_escore_estrito.py` altera
+seis artefatos de A8: as colunas de intervalo de confiança a partir do **15º
+dígito significativo** (`0,41394184915555393` contra `0,413941849155554`) e o
+PNG, de 63.929 para 75.121 bytes. Diferenças, erros-padrão, contagens de pares,
+discordantes e `p` exatos são idênticos dígito a dígito, e o conferidor do artigo
+segue aprovando.
+
+**Duas execuções consecutivas agora são idênticas entre si**, incluindo o PNG: o
+script é determinístico neste ambiente, e o que não bate é o artefato
+versionado, gravado sob outro estado de biblioteca. **Não regravado de
+propósito** — fazer os artefatos baterem seria ajustar até fechar. O que deixa de
+valer é a generalização de que o repositório inteiro reproduz byte a byte sob o
+ambiente documentado: verificada para A4 e A1, **falsa para A8**. Regravar A8 e
+reemitir os hashes é decisão do autor.
 
 ## C-4 · Portão de A1 apresentado como teste
 
@@ -398,6 +497,28 @@ publica em `criterios` como se tivessem sido testadas contra os dados.
 **Duas saídas:** derivar as duas constantes de uma checagem real de esquema, ou
 renomeá-las como asserções documentais. A segunda é honesta e barata.
 
+### Tentado e revertido em 14/09/2026 — sessão 5, commit `1893e95`. **BLOQUEADO por D-4**
+
+A saída recomendada — renomear as duas constantes como asserções documentais —
+foi implementada, separando `criterios` em `criterios_testados` e
+`premissas_documentais`, e **revertida**. Motivo: ela muda o SHA-256 de
+`output/tema_trabalho/portao_denominador.json`, que está fixado como hash de
+entrada em `registro_pre_analise_atracao.json` (A3),
+`A4_estimativas_atracao.json`, `A5_estimativas_provimento.json` e
+`A5_manifesto_maturidade_censura.json`. Três testes de hash falharam ao tentar.
+
+Reparar a cadeia exigiria reexecutar A3, A4 e A5, e **A5 não é regravável sem os
+microdados do CNES** (D-4). O item é barato em código e caro na cadeia de
+proveniência, ao contrário do que a recomendação original supunha.
+
+**O que ficou.** A ressalva no ponto exato do código, dizendo que as duas são
+premissas documentais e não testes e que `APROVADO_VAGA` é inatingível por
+construção, mais um teste que fixa o estado atual para a pendência não se
+perder. A correção do JSON continua pendente e **entra junto da primeira
+reexecução legítima de A5**, quando D-4 for desbloqueado.
+
+Confirmado após a reversão: A1 reexecuta byte a byte idêntico.
+
 ## C-5 · MDE por estrato de A3 com fórmula de proporção única
 
 O `mde_global` foi corretamente rerrotulado, mas o bloco `por_estrato` continua
@@ -409,6 +530,23 @@ inteira para o grupo complementar, em vez do DEFF do próprio complemento.
 
 Nada disso entra no artigo, que usa só os contrastes, esses corretos. **Restrição
 de congelamento:** A3 é protocolo congelado; prefira errata a reexecução.
+
+### Executado em 14/09/2026 — sessão 5, commit `e7fc9e9`. Errata, não reexecução
+
+Os três defeitos confirmados por leitura do código e reprodução aritmética:
+o bloco `por_estrato` usa `mde_proporcao`, cujo EP é o de **uma** proporção;
+o multiplicador é `Z_ALPHA + Z_POWER = 2,8016`, não 2; e
+`mde_diferenca_vs_resto_p50` passa `deff2 = 1,126`, o DEFF da amostra inteira, e
+não o do complemento. Reproduzido à mão: capital,
+`sqrt(0,25/73)·sqrt(1,153)·2,8016 = 0,176`, exatamente o publicado.
+
+Como o item recomenda, **errata em vez de reexecução**: o docstring de
+`mde_proporcao` e um comentário no ponto exato do código foram corrigidos,
+porque não alteram saída nenhuma, e a errata está em
+[`docs/auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md), E-2.
+Os artefatos de A3 seguem intactos, com hashes `91fa9055…` e `eb2bf812…`
+conferidos após a edição. O artigo usa só os contrastes versus interior remoto,
+que estão corretos.
 
 ## C-6 · MDE ex-ante é otimista contra o modelo estimado
 
@@ -460,6 +598,40 @@ Quatro, com o que já foi medido:
    "vulnerável a caudas" quando o diagnóstico correto é "o **nível** é frágil à
    composição; a **proporção** não é".
 
+### Executado em 14/09/2026 — sessão 3, commit `a8107cb`. **Só a quarta ameaça**
+
+**Por que a sessão 3 rodou junto da 5.** A sessão 4 está bloqueada por D-4. Das
+quatro ameaças deste item, as três primeiras exigem regravar artefato de A5 e
+ficam bloqueadas pelo mesmo motivo; só a quarta é executável, e ela divide o
+gerador `07_red_team_sintese.py` com os itens da sessão 5. Juntar as duas foi o
+tratamento previsto para bloqueio, não um furo de fila.
+
+**Quarta ameaça — forma funcional.** O red team dizia "vulnerável a caudas".
+Depois do item C2 do plano `35`, que promoveu a escala proporcional a primária,
+o diagnóstico correto é outro, e o leave-one-curso-out já publicado em A5 o
+sustenta:
+
+| escala | amostra completa | sem o curso 14 | oito cursos estritos |
+|---|---:|---:|---:|
+| nível | 0,50 | 0,20 (`p = 0,366`) | 0,12 (`p = 0,608`) |
+| proporcional | 0,068 (`p = 0,0002`) | 0,059 (`p = 0,004`) | 0,057 (`p = 0,010`) |
+
+Ou seja: **o nível é frágil à composição de cursos e a proporção não é.** A nova
+seção do red team publica isso com os números lidos do artefato, e a conclusão
+da síntese acompanha. Acrescentada também a seção "Ameaças que este red team não
+testou", que nomeia as três bloqueadas e aponta para este item e para D-4.
+
+**As três primeiras ameaças continuam bloqueadas por D-4.** Placebo,
+heterogeneidade de pré-tendência e deslocamento entre municípios exigem regravar
+artefato de A5, e `output/painel_municipio_curso_mensal.parquet` não existe nesta
+máquina. Os valores citados nos itens 1 e 2 acima — o placebo de `0,092`
+(`p = 0,761`) e os `F` por curso — **são medição da reauditoria independente, não
+artefato deste repositório**, e não foram reproduzidos aqui. Nenhum deles foi
+publicado em artefato, e nenhum teste novo foi inventado para substituí-los.
+
+Dois testes novos, um deles amarrado ao próprio `A5_estimativas_provimento.json`,
+para que a afirmação caia se o artefato mudar.
+
 ## C-8 · Assinatura de CPF não comparável entre máscaras
 
 Os homologados mascaram as posições 4–7 do CPF (`711XXX14162`); a classificação
@@ -468,6 +640,31 @@ coincide entre os dois formatos de homologado. Hoje inerte — o pareamento
 verificado é 299/299 com zero discordância —, mas se alguém usar a assinatura para
 cruzar homologados com a classificação final, o pareamento sai errado. Vale um
 comentário no código e um teste que falhe se o uso se espalhar.
+
+### Executado em 14/09/2026 — sessão 5, commit `1893e95`
+
+Máscaras verificadas nos próprios insumos, sem nada persistido:
+
+| Publicação | máscara | dígitos visíveis | `digits[-4:]` |
+|---|---|---|---|
+| homologados Ch1 | `999XXX99999` | 1-3, 7-11 | posições 8,9,10,11 |
+| homologados Ch2 | `999.XXX.X99-99` | 1-3, 8-11 | posições 8,9,10,11 |
+| classificação final Ch2 | `999.99X.XXX-99` | 1-5, 10-11 | posições 4,5,10,11 |
+| alocação Ch1 | `99999XXXX99` | 1-5, 10-11 | posições 4,5,10,11 |
+
+O item mencionava só a classificação final; **a alocação da Ch1 está na mesma
+família incompatível**, e também recebe `cpf_position`. Uma linha dela tem padrão
+`EBE99XXXXC9`, com três dígitos, e a guarda `len >= 7` já devolve string vazia.
+
+Confirmado que hoje é inerte: o único cruzamento é `homolog_c1` contra
+`homolog_c2`, com **299 de 299** e **zero discordância** entre nome e assinatura.
+
+`cpf_signature_34` ganha a tabela acima e a ressalva de que só vale entre
+homologados. O teste novo percorre a AST do script e falha se
+`_cpf_signature_34` for lido a partir de qualquer quadro fora de
+`{result, homolog_c1, homolog_c2}` — conferido que dispara ao simular o uso
+espalhado. Um segundo teste garante que nem a assinatura nem o nome chegam a
+artefato.
 
 ## C-9 · `delta_full` e `estoque_6m_full` são o mesmo estimador
 
@@ -567,9 +764,9 @@ e a 2 depende de a especificação do C1 já estar valendo.
 |---|---|---|---|
 | 1 | `BLOQUEADA_ACHADO` | **A-1** | Alvo da variante a adotar não reproduz, e a definição de efeito fixo é decisão do autor. Também depende de D-4. Detalhe na seção A-1. |
 | 2 | `CONCLUIDA` (emenda `9e5de6d`, execução `fbc5f58`) | **A-2 + A-3 + C-6** | Executada em 14/09/2026 na especificação vigente. Emenda 1 do `35` commitada antes do código. Resultado e achado colateral na seção A-2 e no `35`. |
-| 3 | `PARCIAL` | **C-7** | Red team. A parte documental — forma funcional e leitura correta do que já existe — é executável. Publicar placebo, heterogeneidade de pré-tendência e deslocamento exige regravar artefato de A5, bloqueado por D-4. |
+| 3 | `PARCIAL_EXECUTADA` (14/09/2026, `a8107cb`) | **C-7** | Red team. A quarta ameaça — forma funcional — foi executada junto da sessão 5, porque a sessão 4 está bloqueada e as duas dividem o gerador `07_red_team_sintese.py`. Placebo, heterogeneidade de pré-tendência e deslocamento **continuam bloqueados por D-4**: exigem regravar artefato de A5. |
 | 4 | `BLOQUEADA_D4` | **B-1, B-2, B-5, B-6, C-9** | Higiene de A5. Toda ela regrava tabela ou relatório de A5; nenhum caminho legítimo sem o painel do CNES. |
-| 5 | `ABERTA` | **B-3, C-1, C-2, C-3, C-4, C-5, C-8** | Documentação e rótulos; nenhum exige reexecução pesada. Por último porque vários citam números que as sessões 1 a 4 podem mudar — com 1, 3 e 4 travadas, esse risco caiu. |
+| 5 | `CONCLUIDA` (14/09/2026) | **B-3, C-1, C-2, C-3, C-5, C-8** — **C-4 bloqueado** | Executada com a sessão 3. Commits: B-3 `2375267`, C-1 `093fb44`, C-2 `8c4d3e9`, C-3 e C-5 `e7fc9e9`, C-4 e C-8 `1893e95`. O C-4 não foi concluído: a renomeação recomendada muda o SHA-256 de `portao_denominador.json`, fixado como hash de entrada em A3, A4 e A5 — ver a seção C-4. |
 | — | `DECISÃO DO AUTOR` | **B-4, B-7** | Errata contra reexecução da tipologia congelada. Recomendo errata. Não executar sem a decisão. |
 | — | `RESOLVIDO` | **D-1** | TeX instalado; artigo compila. Só a revisão de provas pelo autor continua pendente. |
 | — | `BLOQUEADA` | **D-2 a D-4** | Revisar a condição de desbloqueio, não executar. |

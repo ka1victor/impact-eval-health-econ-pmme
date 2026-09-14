@@ -63,7 +63,39 @@ def course_id(value: object) -> int | None:
 
 
 def cpf_signature_34(value: object) -> str:
-    """Primeiros três e últimos quatro dígitos visíveis, apenas entre homologações."""
+    """Primeiros três e últimos quatro dígitos visíveis.
+
+    **Só comparável entre as duas listas de homologados.** Não use esta
+    assinatura para cruzar homologados com a classificação final nem com a
+    alocação: o resultado seria errado em silêncio (item C-8 do backlog
+    pós-auditoria).
+
+    O motivo é que cada publicação mascara posições diferentes do CPF, e a
+    assinatura "3 primeiros + 4 últimos" é tirada dos dígitos **visíveis**, não
+    das posições do CPF. Padrões verificados em 14/09/2026, sobre os próprios
+    insumos:
+
+    | Publicação | Máscara | Dígitos visíveis | `digits[-4:]` |
+    |---|---|---|---|
+    | homologados Ch1 | `999XXX99999` | 1-3, 7-11 | posições 8,9,10,11 |
+    | homologados Ch2 | `999.XXX.X99-99` | 1-3, 8-11 | posições 8,9,10,11 |
+    | classificação final Ch2 | `999.99X.XXX-99` | 1-5, 10-11 | posições 4,5,10,11 |
+    | alocação Ch1 | `99999XXXX99` | 1-5, 10-11 | posições 4,5,10,11 |
+
+    As duas primeiras coincidem, e é exatamente esse o único cruzamento feito
+    hoje: `homolog_c1` contra `homolog_c2`, com 299 de 299 pareamentos e zero
+    discordância entre nome e assinatura. As duas últimas formam outra família e
+    **não** são comparáveis com as duas primeiras, apesar de a função devolver
+    uma string do mesmo formato para todas.
+
+    O `person_events` calcula a coluna sempre que recebe `cpf_position`, então a
+    assinatura existe em quadros onde não deve ser usada para cruzamento. O
+    teste `test_assinatura_cpf_nao_cruza_familias_de_mascara` falha se o uso se
+    espalhar para além do par de homologados.
+
+    Nenhuma assinatura, CPF ou nome é persistido em artefato: as colunas
+    auxiliares têm prefixo `_` e são descartadas antes da gravação.
+    """
     digits = re.sub(r"\D", "", "" if pd.isna(value) else str(value))
     return digits[:3] + digits[-4:] if len(digits) >= 7 else ""
 
@@ -359,6 +391,9 @@ def main() -> None:
 
     # A segunda lista não é perfeitamente cumulativa: 299 pessoas reaparecem,
     # 17 homologados da lista anterior não reaparecem e 282 são novos registros.
+    # Único cruzamento por assinatura de CPF autorizado: homologados contra
+    # homologados, que compartilham a mesma família de máscara. Ver
+    # cpf_signature_34 antes de estender isto a qualquer outra publicação.
     old_names = set(homolog_c1["_person_name"])
     old_signatures = set(homolog_c1["_cpf_signature_34"])
     repeated_c1 = homolog_c2["_person_name"].isin(old_names) | homolog_c2[
@@ -472,9 +507,24 @@ def main() -> None:
     )
     over_total = c1_in_frame["n_confirmacoes_ch1"] > total_capacity
 
-    # Condições explícitas do portão.
+    # Premissas documentais, não testes (item C-4 do backlog pós-auditoria).
+    #
+    # As duas constantes abaixo são literais e sempre foram. Elas descrevem uma
+    # propriedade das fontes publicadas — nenhum dos oito insumos traz coluna de
+    # identificador de vaga física, e a chamada 2 não publica quantidade
+    # imediata comparável à da chamada 1 —, e essa descrição é factualmente
+    # correta. O que estava errado era publicá-las em `criterios`, junto de
+    # verificações realmente computadas, como se tivessem sido testadas contra
+    # os dados. Elas agora saem num bloco próprio, `premissas_documentais`.
+    #
+    # Consequência que o bloco separado torna visível: como as duas são sempre
+    # falsas, `APROVADO_VAGA` é inatingível por construção, e `REPROVADO`
+    # depende só das duas verificações de chave. O portão real que este script
+    # decide é entre `APROVADO_CELULA` e `REPROVADO`.
     vacancy_id_available = False
     immediate_capacity_all_calls = False
+
+    # Verificações de fato computadas sobre os dados.
     no_capacity_violations = not bool(over_total.any())
     event_keys_valid = bool(
         matrix["co_cnes_7d"].ne("").all() & matrix["cod_curso"].between(1, 16).all()
@@ -507,6 +557,12 @@ def main() -> None:
             ],
             "unidade_recomendada": "célula CNES-curso dentro de cada chamada e versão publicada",
         },
+        # C-4: as duas primeiras chaves são premissas documentais, não testes.
+        # A separação em `criterios_testados` + `premissas_documentais` foi
+        # implementada e revertida em 14/09/2026: ela muda o SHA-256 deste
+        # arquivo, que está fixado como hash de entrada em A3, A4, A5 e no
+        # manifesto de maturidade de A5 — e A5 não é regravável sem os
+        # microdados do CNES (item D-4). Ver o item C-4 do backlog.
         "criterios": {
             "id_vaga_fisica_persistente_disponivel": vacancy_id_available,
             "capacidade_imediata_numerica_em_todas_as_chamadas": immediate_capacity_all_calls,

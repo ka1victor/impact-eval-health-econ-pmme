@@ -49,8 +49,24 @@ def sha256(path: Path) -> str:
 
 
 def mde_proporcao(n: int, p: float = 0.5, deff: float = 1.0) -> float:
-    """MDE bilateral para diferença de proporções vs baseline (aprox. 2*SE). Usa n total; assume divisão ~50/50 para MDE conservador."""
-    # Para comparação de um estrato vs resto, n efetivo ~ 2 / (1/n1+1/n0) — mas aqui reportamos MDE marginal para um grupo vs 0 com n observações
+    """MDE bilateral de **uma proporção única**, não de uma diferença.
+
+    Atenção ao que esta função não é (item C-5 do backlog pós-auditoria). O
+    docstring anterior dizia "MDE bilateral para diferença de proporções vs
+    baseline (aprox. 2*SE)" e errava duas vezes:
+
+    1. o erro-padrão abaixo é o de **uma** proporção, `sqrt(p(1-p)/n)`, não o de
+       uma diferença entre dois grupos — para isso existe
+       `mde_diferenca_dois_grupos`, que soma as variâncias dos dois lados;
+    2. o multiplicador não é 2, e sim `Z_ALPHA + Z_POWER = 2,8016` para alfa
+       bilateral de 5% e poder de 80%.
+
+    O bloco `mde_global` do artefato já carrega o rótulo correto. O bloco
+    `por_estrato` publica `mde_80_pp_p50` e `mde_80_pp_p30` calculados por esta
+    função e **sem** rótulo equivalente; como A3 é protocolo congelado, a
+    correção está registrada como errata em
+    `docs/auditorias/14_erratas_artefatos_congelados.md`, não por reexecução.
+    """
     se = math.sqrt(p * (1 - p) / n) * math.sqrt(deff)
     return (Z_ALPHA + Z_POWER) * se
 
@@ -128,6 +144,10 @@ def main() -> None:
             "deff_assumido": round(deff_e, 3),
             "mde_80_pp_p50": round(mde_proporcao(n, p=0.5, deff=deff_e), 4),
             "mde_80_pp_p30": round(mde_proporcao(n, p=0.30, deff=deff_e), 4),
+            # Errata C-5: os dois MDE acima são de uma proporção única, não de
+            # diferença; e `deff` abaixo é o DEFF da amostra inteira, não o do
+            # complemento do estrato. Congelado; ver
+            # docs/auditorias/14_erratas_artefatos_congelados.md.
             "mde_diferenca_vs_resto_p50": round(mde_diferenca_dois_grupos(n, n_resto, p=0.5, deff1=deff_e, deff2=deff), 4) if n_resto > 0 else None,
         }
 

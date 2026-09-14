@@ -111,11 +111,24 @@ de início e encerramento. Comece pela primeira sessão `ABERTA` e não pule adi
 > de `16,4` p.p. ao lado do ex-ante de `13,7`. O LPM primário não mudou. O
 > conferidor foi de 190 para 193 cifras.
 >
-> **Próxima sessão: 3 — item C-7**, red team, na parte documental (forma funcional
-> e leitura correta do que já existe). Publicar placebo, heterogeneidade de
-> pré-tendência e deslocamento continua bloqueado por D-4. A **sessão 5** está
-> `ABERTA` e não depende de dado ausente. As sessões **1 e 4** seguem bloqueadas:
-> a 1 por achado sobre o alvo de A-1, mais D-4; a 4 inteiramente por D-4.
+> **Sessões 3 e 5 executadas em 14/09/2026, juntas**, porque a 4 está bloqueada e
+> as duas dividem o gerador `07_red_team_sintese.py`. Da sessão 3 só a quarta
+> ameaça do C-7 era executável: o red team passa a dizer que **o nível é frágil à
+> composição de cursos e a proporção não é**, em vez de "vulnerável a caudas".
+> Placebo, heterogeneidade de pré-tendência e deslocamento **continuam bloqueados
+> por D-4**. A sessão 5 fechou B-3, C-1, C-2, C-3, C-5 e C-8; **o C-4 ficou
+> bloqueado por D-4**, porque a renomeação recomendada muda o hash de
+> `portao_denominador.json`, fixado como entrada em A3, A4 e A5. Nenhuma cifra do
+> artigo mudou: o conferidor segue em 193. A suíte foi de 144 para 156 testes.
+>
+> **Achado a decidir:** A8 **não reproduz byte a byte** no ambiente documentado —
+> só as colunas de IC, do 15º dígito em diante, mais o PNG. Não foi regravado;
+> ver o item C-3 do backlog.
+>
+> **Próxima sessão: nenhuma `ABERTA`.** As sessões **1, 4** e o restante da **3**
+> seguem bloqueadas: a 1 por achado sobre o alvo de A-1 mais D-4; a 4 e a parte
+> medida da 3 inteiramente por D-4. O que destrava a fila é a decisão do autor
+> sobre A-1 e o acesso aos microdados do CNES.
 
 - [ ] Grupo A — muda número publicado (3 itens): balde `RESTO` nos modelos
   secundários de A5 (`+1,2949` → `+0,5014`), **bloqueado** por achado e por D-4;

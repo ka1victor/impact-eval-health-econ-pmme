@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import ast
 import json
 import hashlib
+import re
 import unittest
 from pathlib import Path
 
@@ -16,6 +18,25 @@ OUT_MATRIZ_CSV = ROOT / "output" / "tema_trabalho" / "A6_matriz_afirmacao_eviden
 DOCS_SINTESE = ROOT / "docs" / "06_execucao" / "32_sintese_A6_resumo_intro_metodos_conclusao.md"
 MANIFESTO = ROOT / "output" / "tema_trabalho" / "A6_manifesto_reproducao.json"
 MATRIZ_MD = ROOT / "docs" / "auditorias" / "09_matriz_afirmacao_evidencia_limite.md"
+
+
+def _steps_de_run_all() -> list[str]:
+    """Lê `STEPS` de run_all.py de forma independente do gerador."""
+    arvore = ast.parse((ROOT / "run_all.py").read_text(encoding="utf-8"))
+    for no in arvore.body:
+        if isinstance(no, ast.Assign) and any(
+            isinstance(alvo, ast.Name) and alvo.id == "STEPS" for alvo in no.targets
+        ):
+            caminhos = []
+            for elemento in no.value.elts:
+                partes = []
+                atual = elemento
+                while isinstance(atual, ast.BinOp):
+                    partes.append(atual.right.value)
+                    atual = atual.left
+                caminhos.append("/".join(reversed(partes)))
+            return caminhos
+    raise AssertionError("STEPS não encontrado em run_all.py")
 
 
 def sha(p: Path) -> str:
@@ -87,6 +108,75 @@ class RedTeamA6Test(unittest.TestCase):
         # hashes mentioned
         self.assertIn("hash", low)
 
+    def test_sintese_separa_primeira_chamada_do_ciclo(self):
+        """C-1: 30,3% é da primeira chamada; o ciclo 1 inteiro é 35,6%.
+
+        A síntese dizia "primeiro ciclo ... 30,3% das células", colando o número
+        da primeira chamada no ciclo. Os dois têm o mesmo denominador (1.295) e
+        numeradores diferentes: 393 contra 461, porque 68 células sem desfecho na
+        primeira chamada receberam homologado novo na segunda, somando 84
+        pessoas. O paper_pmme_submission.tex já era explícito.
+        """
+        txt = DOCS_SINTESE.read_text(encoding="utf-8")
+        self.assertIn("quadro da primeira chamada", txt)
+        self.assertIn("393", txt)
+        self.assertIn("30,3%", txt)
+        self.assertIn("461", txt)
+        self.assertIn("35,6%", txt)
+        self.assertIn("ciclo 1 inteiro", txt)
+        self.assertIn("68 células", txt)
+        self.assertIn("84 pessoas", txt)
+
+        # A frase defeituosa não pode voltar: "primeiro ciclo" seguido do 30,3%
+        # sem o qualificador do quadro da primeira chamada entre os dois.
+        self.assertNotIn("implementação do primeiro ciclo do PMM-E em 1.295", txt)
+
+    def test_prosa_gerada_usa_virgula_decimal(self):
+        """C-1, bônus: documento em português não publica `27.9`."""
+        for caminho in (DOCS_SINTESE, DOCS_REDTEAM, MATRIZ_MD):
+            texto = caminho.read_text(encoding="utf-8")
+            # O ponto também é separador de milhar em português (1.295). Só o
+            # separador decimal está em teste, então o de milhar sai antes.
+            sem_milhar = re.sub(r"(?<=\d)\.(?=\d{3}(?!\d))", "\u2009", texto)
+            achados = re.findall(r"(?<![\w./])\d+\.\d+(?![\w./])", sem_milhar)
+            self.assertEqual(
+                achados, [], f"ponto decimal em texto português: {caminho.name} {achados}"
+            )
+
+        sintese = DOCS_SINTESE.read_text(encoding="utf-8")
+        self.assertIn("27,9 pontos percentuais", sintese)
+        self.assertNotIn("27.9", sintese)
+
+    def test_red_team_diagnostica_nivel_e_nao_caudas(self):
+        """C-7, quarta ameaça: o frágil é o nível, não a proporção.
+
+        Depois do item C2 do plano 35, que promoveu a escala proporcional a
+        primária, dizer que o resultado é "vulnerável a caudas" deixou de ser o
+        diagnóstico correto. O leave-one-curso-out publicado em A5 mostra o
+        nível caindo de 0,50 para 0,12 nos oito cursos estritos, enquanto a
+        proporção fica na mesma ordem de grandeza e significativa.
+        """
+        txt = DOCS_REDTEAM.read_text(encoding="utf-8")
+        low = txt.lower()
+        self.assertNotIn("vulnerável a caudas", low)
+        self.assertIn("o nível é frágil à composição", low)
+        self.assertIn("a proporção não é", low)
+
+        a5 = json.loads((ROOT / "output" / "tema_trabalho" / "A5_estimativas_provimento.json").read_text(encoding="utf-8"))
+        loo = a5["leave_one_curso_evento"]
+        estritos = {e["escala"]: e for e in loo if e["subamostra"] == "somente_8_cbo_1_para_1"}
+        # A afirmação do documento tem de continuar verdadeira nos artefatos.
+        self.assertGreater(estritos["nivel"]["p_valor"], 0.05, "nível deixou de ser frágil")
+        self.assertLess(estritos["proporcional"]["p_valor"], 0.05, "proporção deixou de resistir")
+
+    def test_red_team_declara_as_ameacas_nao_testadas(self):
+        """C-7: as três ameaças bloqueadas por D-4 não podem ficar implícitas."""
+        low = DOCS_REDTEAM.read_text(encoding="utf-8").lower()
+        self.assertIn("ameaças que este red team não testou", low)
+        for ameaca in ["placebo", "heterogeneidade de pré-tendência", "deslocamento"]:
+            self.assertIn(ameaca, low, f"ameaça não declarada: {ameaca}")
+        self.assertIn("36_backlog_pos_auditoria.md", low)
+
     def test_manifesto_reproducao_completo(self):
         man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
         self.assertIn("comandos_reproducao", man)
@@ -97,13 +187,91 @@ class RedTeamA6Test(unittest.TestCase):
         # check hashes conferem for at least quadro
         for rel, meta in man["hashes_entradas_e_artefatos"].items():
             p = ROOT / rel
-            if p.exists():
+            if p.exists() and meta.get("presente", True):
                 self.assertEqual(sha(p), meta["sha256"], f"hash diverge {rel}")
         self.assertIn("versoes", man)
         self.assertIn("python", man["versoes"])
         self.assertIn("limites_reafirmados", man)
         self.assertIn("portoes", man)
         self.assertIn("R1_RDD_ENCERRADO", " ".join(man["portoes"].keys()))
+
+    def test_manifesto_cobre_a_aquisicao_e_o_ambiente_real(self):
+        """B-3: a sequência publicada tem de ser a que reproduz, na plataforma certa.
+
+        O manifesto listava caminhos Windows sob `platform` Linux e começava em
+        `02_reconciliar_funil_ciclo1.py`, omitindo A1 e toda a aquisição.
+        """
+        man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+        comandos = man["comandos_reproducao"]
+
+        for comando in comandos:
+            self.assertNotIn("\\", comando, f"caminho Windows no manifesto: {comando}")
+            self.assertNotIn("Scripts", comando, f"caminho Windows no manifesto: {comando}")
+
+        cmds = " ".join(comandos)
+        for obrigatorio in [
+            "scripts/aquisicao/05_integrar_painel_analitico.py",
+            "scripts/aquisicao/02_consolidar_quadro_vagas.py",
+            "scripts/tema_trabalho/01_auditar_atracao_provimento_interior.py",
+        ]:
+            self.assertIn(obrigatorio, cmds, f"etapa ausente do manifesto: {obrigatorio}")
+
+        # A sequência tem de ser exatamente a de run_all.py, sem divergir dela.
+        passos = [linha.split(" ", 1)[1] for linha in comandos]
+        esperado = _steps_de_run_all() + ["run_tests.py"]
+        self.assertEqual(passos, esperado)
+
+        ambiente = man["ambiente_exigido"]
+        self.assertEqual(ambiente["python_minimo"], "3.12")
+        self.assertIn("/", ambiente["interpretador"])
+        self.assertNotIn("\\", ambiente["interpretador"])
+
+        # O defeito original era a incoerência entre o separador dos comandos e
+        # a plataforma registrada ao lado deles, no mesmo arquivo.
+        plataforma = man["versoes"]["platform"]
+        self.assertNotIn(
+            "Windows",
+            plataforma,
+            "manifesto gravado em Windows: reveja a convenção de caminho antes de publicar",
+        )
+
+    def test_manifesto_hasheia_os_insumos_do_desenho(self):
+        """B-3: os quatro insumos que faltavam têm de estar hasheados."""
+        man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+        hashes = man["hashes_entradas_e_artefatos"]
+        for rel in [
+            "output/tema_trabalho/A5_painel_T0.parquet",
+            "data/pmm_especialistas_nominal.csv",
+            "data/ivs_ipea_2010_municipios.csv",
+            "output/aquisicao/manifesto_cnes_26_competencias.json",
+        ]:
+            self.assertIn(rel, hashes, f"insumo não hasheado: {rel}")
+            self.assertTrue(hashes[rel]["presente"], rel)
+            self.assertEqual(len(hashes[rel]["sha256"]), 64, rel)
+
+    def test_insumo_ausente_e_marcado_e_nao_sumido(self):
+        """B-3: insumo ausente do disco não pode desaparecer do manifesto.
+
+        Regerar o manifesto numa máquina sem os microdados do CNES removia em
+        silêncio a entrada de `painel_municipio_curso_mensal.parquet`. A
+        proveniência ficava mais pobre sem nenhum aviso.
+        """
+        man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+        hashes = man["hashes_entradas_e_artefatos"]
+        painel = "output/painel_municipio_curso_mensal.parquet"
+        self.assertIn(painel, hashes, "insumo do desenho sumiu do manifesto")
+
+        entrada = hashes[painel]
+        if (ROOT / painel).exists():
+            self.assertTrue(entrada["presente"])
+            self.assertNotIn(painel, man["insumos_ausentes"])
+            return
+
+        self.assertFalse(entrada["presente"])
+        self.assertIsNone(entrada["sha256"])
+        self.assertIn(painel, man["insumos_ausentes"])
+        self.assertIn("D-4", entrada["motivo_ausencia"])
+        self.assertTrue(entrada["papel"], "insumo ausente sem papel declarado")
 
     def test_red_team_tenta_refutar(self):
         txt = DOCS_REDTEAM.read_text(encoding="utf-8")
