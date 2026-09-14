@@ -7,6 +7,8 @@ a divergência é detectada e que o modo estrito realmente interrompe.
 
 from __future__ import annotations
 
+from contextlib import redirect_stderr
+from io import StringIO
 from pathlib import Path
 import sys
 import unittest
@@ -45,16 +47,24 @@ class VerificacaoAmbienteTest(unittest.TestCase):
         originais = ambiente.divergencias
 
         ambiente.divergencias = lambda: ["divergência sintética de teste"]
+        # A verificação imprime o diagnóstico em stderr; capturamos para não
+        # poluir a saída da suíte com um alarme que é apenas simulado.
+        capturado = StringIO()
         try:
-            with self.assertRaises(SystemExit):
-                ambiente.verificar_ambiente(estrito=True)
-            # Sem estrito, apenas devolve a lista.
-            self.assertEqual(
-                ambiente.verificar_ambiente(estrito=False),
-                ["divergência sintética de teste"],
-            )
+            with redirect_stderr(capturado):
+                with self.assertRaises(SystemExit):
+                    ambiente.verificar_ambiente(estrito=True)
+                # Sem estrito, apenas devolve a lista.
+                self.assertEqual(
+                    ambiente.verificar_ambiente(estrito=False),
+                    ["divergência sintética de teste"],
+                )
         finally:
             ambiente.divergencias = originais
+
+        saida = capturado.getvalue()
+        self.assertIn("divergência sintética de teste", saida)
+        self.assertIn("a execução foi interrompida", saida)
 
     def test_sem_divergencia_nao_interrompe(self):
         originais = ambiente.divergencias
