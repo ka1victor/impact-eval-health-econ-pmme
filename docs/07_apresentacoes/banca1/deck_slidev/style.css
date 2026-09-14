@@ -1,0 +1,735 @@
+/* ------------------------------------------------------------------ *
+ * Deck da banca 1 — estilo sobre o slidev-theme-academic
+ * Paleta alinhada às figuras do repositório (verde do matplotlib).
+ *
+ * Fontes empacotadas localmente (@fontsource): o build não depende de
+ * rede, e o Chromium do Playwright não alcança fonts.googleapis.com.
+ * ------------------------------------------------------------------ */
+
+@import '@fontsource/source-sans-3/latin-400.css';
+@import '@fontsource/source-sans-3/latin-400-italic.css';
+@import '@fontsource/source-sans-3/latin-600.css';
+@import '@fontsource/source-sans-3/latin-600-italic.css';
+@import '@fontsource/source-sans-3/latin-700.css';
+@import '@fontsource/montserrat/latin-600.css';
+@import '@fontsource/montserrat/latin-700.css';
+
+:root {
+  --pmme-green: #1f3d28;
+  --pmme-green-mid: #4a7359;
+  --pmme-sage: #8fb39b;
+  --pmme-sage-soft: #cfdfd4;
+  --pmme-sage-wash: #eef4ef;
+  --pmme-ink: #1b1f1c;
+  --pmme-body: #2c322e;
+  --pmme-muted: #66736a;
+  --pmme-faint: #7d887f;
+  --pmme-rule: #d9e1db;
+  --pmme-paper: #ffffff;
+  --slidev-theme-primary: #1f3d28;
+}
+
+html,
+body,
+#slide-content {
+  background: var(--pmme-paper);
+  font-family: 'Source Sans 3', 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+}
+
+.slidev-layout h1,
+.capa-titulo,
+.card-lbl,
+.chip,
+.passo-lbl,
+.fonte-lbl,
+.sumario-t,
+.stat-num,
+.hip-tag {
+  font-family: Montserrat, 'Source Sans 3', Helvetica, Arial, sans-serif;
+}
+
+/* ---------------------------- base ---------------------------------- */
+
+.slidev-layout {
+  position: relative;
+  background: var(--pmme-paper);
+  color: var(--pmme-body);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  padding: 2.65rem 2.9rem 2.35rem;
+  overflow: hidden;
+}
+
+.slidev-layout h1 {
+  font-size: 1.78rem;
+  line-height: 1.16;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--pmme-green);
+  margin: 0 0 0.7rem 0;
+  padding-bottom: 0.45rem;
+  border-bottom: 2px solid var(--pmme-sage);
+}
+
+.slidev-layout p {
+  margin: 0 0 0.62rem 0;
+  line-height: 1.48;
+}
+
+.slidev-layout strong {
+  font-weight: 700;
+  color: var(--pmme-green);
+}
+
+.slidev-layout em {
+  font-style: italic;
+  color: var(--pmme-body);
+}
+
+.slidev-layout ul {
+  list-style: none;
+  margin: 0.2rem 0 0.4rem 0;
+  padding: 0;
+}
+
+.slidev-layout ul > li {
+  position: relative;
+  margin: 0 0 0.5rem 0 !important;
+  padding-left: 0.95rem !important;
+  line-height: 1.45;
+}
+
+.slidev-layout ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.34rem;
+  height: 0.34rem;
+  background: var(--pmme-sage);
+}
+
+.slidev-layout a {
+  border: 0;
+  color: inherit;
+}
+
+/* -------------------- faixa de rastreio (topo) ---------------------- */
+
+.rastreio-band {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.72rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.9rem;
+  background: var(--pmme-sage-wash);
+  border-bottom: 1px solid var(--pmme-rule);
+  font-size: 0.6rem;
+  letter-spacing: 0.055em;
+  color: var(--pmme-muted);
+  z-index: 5;
+}
+
+.rastreio-right {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.rastreio-cont {
+  color: var(--pmme-faint);
+}
+
+.rastreio-num {
+  color: var(--pmme-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------ faixa de fontes --------------------------- */
+
+.fonte-band {
+  position: absolute;
+  left: 2.9rem;
+  right: 2.9rem;
+  bottom: 0.72rem;
+  display: flex;
+  gap: 0.45rem;
+  align-items: baseline;
+  border-top: 1px solid var(--pmme-rule);
+  padding-top: 0.3rem;
+  font-size: 0.545rem;
+  line-height: 1.32;
+  color: var(--pmme-faint);
+  z-index: 4;
+}
+
+.fonte-lbl {
+  flex: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--pmme-sage);
+}
+
+.fonte-txt {
+  flex: 1;
+}
+
+/* --------------------------- figuras -------------------------------- */
+
+.fig-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+}
+
+.fig-box img {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* --------------------------- grades --------------------------------- */
+
+.cols {
+  display: flex;
+  gap: 1.1rem;
+  align-items: flex-start;
+}
+
+/* flex em vez de grid: com grid, a largura intrínseca das figuras (mais de
+   1.500 px) vira o mínimo automático da trilha e esmaga a coluna de texto */
+.cols > * {
+  min-width: 0;
+}
+
+.cols-2 > *,
+.cols-3 > *,
+.cols-4 > * {
+  flex: 1 1 0;
+}
+
+.cols-38 > *:first-child {
+  flex: 0 1 38%;
+}
+.cols-38 > *:last-child {
+  flex: 1 1 62%;
+}
+
+.cols-45 > *:first-child {
+  flex: 0 1 45%;
+}
+.cols-45 > *:last-child {
+  flex: 1 1 55%;
+}
+
+.cols-55 > *:first-child {
+  flex: 0 1 55%;
+}
+.cols-55 > *:last-child {
+  flex: 1 1 45%;
+}
+
+.center-y {
+  align-items: center;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* --------------------------- cartões -------------------------------- */
+
+.card {
+  background: var(--pmme-sage-wash);
+  border-left: 3px solid var(--pmme-sage);
+  padding: 0.6rem 0.8rem 0.65rem;
+}
+
+.card-lbl {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--pmme-green-mid);
+  margin-bottom: 0.25rem;
+}
+
+.card p:last-child,
+.card ul:last-child,
+.card ul:last-child li:last-child {
+  margin-bottom: 0 !important;
+}
+
+.card-plain {
+  background: transparent;
+  border-left: 2px solid var(--pmme-sage-soft);
+  padding: 0.15rem 0 0.15rem 0.8rem;
+}
+
+/* números em destaque */
+
+.stat {
+  background: var(--pmme-sage-wash);
+  border-top: 3px solid var(--pmme-green);
+  padding: 0.85rem 0.95rem 0.9rem;
+  height: 100%;
+  min-height: 8.6rem;
+}
+
+.stat-num {
+  display: block;
+  font-size: 2.05rem;
+  line-height: 1.05;
+  font-weight: 700;
+  color: var(--pmme-green);
+  letter-spacing: -0.02em;
+}
+
+.stat-num small {
+  font-size: 0.6em;
+  font-weight: 700;
+}
+
+.stat-txt {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.84rem;
+  line-height: 1.38;
+  color: var(--pmme-body);
+}
+
+/* destaque em linha, para a afirmação do slide */
+
+.callout {
+  background: var(--pmme-green);
+  color: #f2f7f3;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.42;
+}
+
+.callout strong {
+  color: #ffffff;
+}
+
+.callout-soft {
+  background: var(--pmme-sage-wash);
+  border-left: 3px solid var(--pmme-green);
+  padding: 0.6rem 0.85rem;
+  font-size: 0.93rem;
+  line-height: 1.42;
+}
+
+.ressalva {
+  border: 1px solid var(--pmme-rule);
+  background: #fbfcfb;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--pmme-muted);
+}
+
+.ressalva strong {
+  color: var(--pmme-green-mid);
+}
+
+/* citação de literatura ou manchete */
+
+.cite {
+  font-size: 0.72rem;
+  color: var(--pmme-muted);
+  letter-spacing: 0.01em;
+  margin-top: 0.25rem;
+}
+
+.manchete {
+  border-left: 3px solid var(--pmme-sage);
+  padding: 0.35rem 0 0.35rem 0.75rem;
+}
+
+.manchete-txt {
+  display: block;
+  font-style: italic;
+  font-size: 0.92rem;
+  line-height: 1.36;
+  color: var(--pmme-ink);
+}
+
+.manchete-src {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.65rem;
+  color: var(--pmme-faint);
+}
+
+/* --------------------------- tabelas -------------------------------- */
+
+.slidev-layout table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+  margin: 0.2rem 0 0.3rem;
+}
+
+.slidev-layout thead th {
+  text-align: left;
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--pmme-green-mid);
+  border-bottom: 1.5px solid var(--pmme-green);
+  padding: 0.28rem 0.55rem;
+  background: transparent;
+}
+
+.slidev-layout tbody tr {
+  border-bottom: 1px solid var(--pmme-rule);
+}
+
+.slidev-layout tbody tr:nth-child(even) {
+  background: #f7faf8;
+}
+
+.slidev-layout td {
+  padding: 0.38rem 0.55rem;
+  vertical-align: top;
+  line-height: 1.35;
+}
+
+.slidev-layout td:first-child {
+  color: var(--pmme-green);
+  font-weight: 600;
+}
+
+.tbl-tight table {
+  font-size: 0.76rem;
+}
+
+.tbl-tight td {
+  padding: 0.3rem 0.5rem;
+}
+
+.tbl-center td:last-child,
+.tbl-center th:last-child {
+  text-align: center;
+}
+
+/* coluna do meio centrada (tabela de componentes do custo) */
+.tbl-sinal td:nth-child(2),
+.tbl-sinal th:nth-child(2) {
+  text-align: center;
+}
+
+.tbl-sinal td:first-child,
+.tbl-sinal td:nth-child(2) {
+  white-space: nowrap;
+}
+
+.nowrap-last td:last-child,
+.nowrap-last th:last-child {
+  white-space: nowrap;
+}
+
+/* ------------------------- matemática ------------------------------- */
+
+.slidev-layout .katex-display {
+  margin: 0.55rem 0;
+  font-size: 1.02em;
+}
+
+.eq {
+  background: var(--pmme-sage-wash);
+  border-left: 3px solid var(--pmme-green);
+  padding: 0.35rem 0.8rem;
+  margin: 0.35rem 0 0.55rem;
+}
+
+.eq .katex-display {
+  margin: 0.3rem 0;
+}
+
+.eq-lg .katex-display {
+  font-size: 1.12em;
+}
+
+.slidev-layout table .katex {
+  font-size: 0.98em;
+}
+
+/* --------------------------- passos --------------------------------- */
+
+.passo-lbl {
+  display: inline-block;
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--pmme-green);
+  padding: 0.1rem 0.45rem;
+  margin-bottom: 0.3rem;
+}
+
+.fluxo {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.fluxo > .card {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.fluxo > .fluxo-seta {
+  flex: none;
+}
+
+.fluxo-seta {
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  color: var(--pmme-sage);
+}
+
+.num-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: var(--pmme-green);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-right: 0.4rem;
+  flex: none;
+}
+
+/* ------------------------ capa e sumário ---------------------------- */
+
+.slidev-layout.cover {
+  padding: 3rem 3.4rem;
+  background: var(--pmme-paper);
+}
+
+.capa-rule {
+  width: 4.5rem;
+  height: 4px;
+  background: var(--pmme-sage);
+  margin-bottom: 1.15rem;
+}
+
+.capa-titulo {
+  font-size: 2.35rem;
+  line-height: 1.13;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--pmme-green);
+  margin: 0 0 0.85rem 0;
+  max-width: 27ch;
+}
+
+.capa-sub {
+  font-size: 1.12rem;
+  line-height: 1.35;
+  color: var(--pmme-body);
+  max-width: 45ch;
+  margin: 0 0 1.6rem 0;
+}
+
+.capa-meta {
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: var(--pmme-faint);
+  border-top: 1px solid var(--pmme-rule);
+  padding-top: 0.7rem;
+  max-width: 32rem;
+}
+
+.sumario {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 0.9rem;
+}
+
+.sumario-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  border-bottom: 1px solid var(--pmme-rule);
+  padding-bottom: 0.42rem;
+}
+
+.sumario-n {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--pmme-sage);
+  width: 1.4rem;
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.sumario-t {
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: var(--pmme-green);
+}
+
+.sumario-d {
+  font-size: 0.72rem;
+  color: var(--pmme-faint);
+  margin-left: auto;
+}
+
+/* ------------------------- utilitários ------------------------------ */
+
+.lead {
+  font-size: 1.05rem;
+  line-height: 1.44;
+  color: var(--pmme-body);
+}
+
+.sm {
+  font-size: 0.86rem;
+  line-height: 1.42;
+}
+
+.xs {
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.mut {
+  color: var(--pmme-muted);
+}
+
+.tight {
+  margin-bottom: 0 !important;
+}
+
+.mt-s {
+  margin-top: 0.5rem;
+}
+
+.mt-m {
+  margin-top: 0.85rem;
+}
+
+.pergunta {
+  background: var(--pmme-green);
+  color: #ffffff;
+  padding: 1.6rem 1.8rem;
+  font-size: 1.62rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.chip {
+  display: inline-block;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--pmme-green-mid);
+  border: 1px solid var(--pmme-sage);
+  padding: 0.08rem 0.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.hip {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.9rem;
+  align-items: center;
+  background: var(--pmme-sage-wash);
+  border-left: 3px solid var(--pmme-green);
+  padding: 0.7rem 0.9rem;
+}
+
+.hip-tag {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--pmme-green);
+  line-height: 1;
+}
+
+/* ------------------- equilíbrio vertical da página ------------------ *
+ * O título fica ancorado no alto, fora do fluxo; o corpo é centrado no
+ * espaço restante. Evita slide com todo o conteúdo grudado no topo e
+ * um vazio grande embaixo. Todos os títulos deste deck cabem em uma
+ * linha, o que mantém o recuo do corpo constante.
+ * ------------------------------------------------------------------- */
+
+.slidev-layout.centrado {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 6.1rem;
+  padding-bottom: 3.1rem;
+}
+
+.slidev-layout.centrado > h1 {
+  position: absolute;
+  top: 2.7rem;
+  left: 2.9rem;
+  right: 2.9rem;
+  margin: 0;
+}
+
+/* a capa mantém o fluxo normal */
+.slidev-layout.cover.centrado {
+  display: block;
+  padding: 3.1rem 3.4rem;
+}
+
+.slidev-layout.cover.centrado > h1 {
+  position: static;
+}
+
+/* o primeiro e o último filho do corpo não acumulam margem externa */
+.slidev-layout.centrado > p:last-of-type {
+  margin-bottom: 0;
+}
+
+.slidev-layout.cover h1 {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* parágrafos escritos como markdown dentro de um div (necessário quando a
+   frase carrega matemática: markdown-it não processa HTML bruto) */
+div.lead > p,
+div.sm > p,
+div.xs > p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* o cabeçalho da tabela é em caixa alta, mas um símbolo matemático não pode
+   mudar de caixa: "c" não é "C" */
+.slidev-layout thead th .katex,
+.fonte-lbl .katex,
+.card-lbl .katex,
+.passo-lbl .katex,
+.chip .katex {
+  text-transform: none;
+}

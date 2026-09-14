@@ -8,6 +8,38 @@
 
 ---
 
+## 14/09/2026 — Deck Slidev da banca 1
+
+Motivo: montar o deck apresentável da banca 1 a partir do documento de conteúdo,
+sem tocar no conteúdo. O deck é artefato derivado; o canônico continua em
+`07_apresentacoes/banca1/02_conteudo_slides.md`.
+
+### O que foi criado
+
+| Arquivo | Conteúdo | Por que existe |
+|---|---|---|
+| [`07_apresentacoes/banca1/deck_slidev/slides.md`](07_apresentacoes/banca1/deck_slidev/slides.md) | os 18 slides do documento em 36 páginas Slidev, tema `slidev-theme-academic` | a entrega da banca precisa de um deck projetável; o markdown de conteúdo é para leitura, não para projeção |
+| [`07_apresentacoes/banca1/deck_slidev/README.md`](07_apresentacoes/banca1/deck_slidev/README.md) | como rodar e exportar, mapeamento slide do documento → páginas, decisões de composição | o mapeamento 1→N precisa ser auditável contra o documento de conteúdo |
+| `07_apresentacoes/banca1/deck_slidev/style.css` e `components/` | estilo, faixa de rastreio de seção, faixa de fontes, figura com proporção travada | as regras de composição da seção 2 do roteiro — título é takeaway, rastreio fora do título, fonte que não compete com o conteúdo — são decisões visuais e viram CSS |
+| `07_apresentacoes/banca1/deck_slidev/package.json` e `package-lock.json` | versões exatas de `@slidev/cli` (52.19.1), do tema (3.0.1) e das fontes empacotadas | build determinístico |
+| `scripts/apresentacao/build_deck_slidev.sh` | exportação do PDF e dos PNG de revisão | figura ou número exibido em slide segue a mesma regra de proveniência de qualquer saída: é gerado por script versionado |
+
+### Saída gerada
+
+`output/apresentacao_banca1/deck_slidev/banca1_slidev.pdf`, 36 páginas. Os PNG
+por página, usados na revisão visual, são derivados do mesmo deck e ficam fora
+do versionamento.
+
+### O que não mudou
+
+Nenhum arquivo da documentação foi movido, fundido ou removido. O conteúdo dos
+18 slides, os números, as citações e as fontes vieram inalterados de
+`02_conteudo_slides.md`; os 16 títulos dos slides 3 a 18 são os literais da
+seção 2.1 do roteiro. As seis figuras são as que já existiam em
+`output/apresentacao_banca1/` e em `docs/02_teoria/figuras/`: o build cria
+links simbólicos para elas em um diretório de trabalho não versionado, sem
+gerar, editar nem copiar imagem alguma para dentro do repositório.
+
 ## 09/09/2026 — Seção de apresentações, absorção do documento 18 e limpeza de referências
 
 Motivo: preparar a entrega da banca 1 e eliminar as três duplicações de conteúdo

@@ -47,3 +47,13 @@ output/aquisicao/cnes_mensal/
 output/aquisicao/cnes_vinculos_medicos_2024_2026.parquet
 output/painel_municipio_curso_mensal.parquet
 output/painel_regiao_curso_mensal.parquet
+
+# Deck Slidev da banca 1: dependencias e figuras materializadas em tempo de build
+docs/07_apresentacoes/banca1/deck_slidev/node_modules/
+docs/07_apresentacoes/banca1/deck_slidev/public/
+docs/07_apresentacoes/banca1/deck_slidev/.slidev/
+docs/07_apresentacoes/banca1/deck_slidev/dist/
+node_modules/
+
+# PNG de revisao por pagina do deck Slidev (derivado do mesmo PDF)
+output/apresentacao_banca1/deck_slidev/png/
