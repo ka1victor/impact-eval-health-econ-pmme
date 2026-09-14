@@ -101,8 +101,7 @@ O grau correto é **moderado**, e não alto.
 - tratamento determinado por um cutoff administrativo dentro da mesma vaga;
 - curso, estabelecimento, chamada, primeira preferência e modalidade de
   concorrência mantidos constantes em cada par;
-- exclusão de empates e de linhas explicitamente rotuladas como sub judice nas
-  publicações que trazem esse marcador;
+- exclusão de empates;
 - nenhuma violação do sentido do gap nos pares principais;
 - outcomes definidos no mesmo curso–CNES e em qualquer local;
 - placebos, janelas alternativas, leave-one-out e replicação externa;
@@ -119,7 +118,20 @@ O grau correto é **moderado**, e não alto.
 - homologação muito próxima da própria etapa de seleção, tornando a presença
   posterior o resultado substantivamente mais informativo;
 - protocolo retrospectivo: o A7 já havia aberto os outcomes antes do recorte
-  estrito ser congelado.
+  estrito ser congelado;
+- **o recorte do ciclo 1 não exclui linhas sub judice.** Este documento afirmava
+  a exclusão como ponto forte do desenho, e a afirmação era falsa para o ciclo 1.
+  Verificado em 14/09/2026, por leitura direta dos insumos: a classificação final
+  da segunda chamada não traz marcador algum de sub judice, e o quadro da
+  primeira chamada o traz em uma única linha, na coluna adicional sem cabeçalho
+  (`Unnamed: 16`), que `read_call1` em
+  `scripts/tema_trabalho/08_auditar_cutoff_selecao.py` nunca lê — ela seleciona
+  as colunas de 0 a 13 e ignora a 16. O único filtro de sub judice do código está
+  em `read_support_2026`, sobre a coluna `SITUACAO`, e alcança apenas as
+  publicações de 2026. A diferença é numericamente imaterial, mas a afirmação foi
+  corrigida em vez de executada: aplicar o filtro mudaria número publicado e
+  mexeria na amostra congelada de A8, o que exige emenda prévia. Ver o item C-2
+  de `docs/06_execucao/36_backlog_pos_auditoria.md`.
 
 O teste exato pareado é mais transparente que depender somente de aproximações
 assintóticas, mas ele também é condicional à hipótese de comparabilidade local.
