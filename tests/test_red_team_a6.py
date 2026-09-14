@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import json
 import hashlib
 import unittest
@@ -16,6 +17,25 @@ OUT_MATRIZ_CSV = ROOT / "output" / "tema_trabalho" / "A6_matriz_afirmacao_eviden
 DOCS_SINTESE = ROOT / "docs" / "06_execucao" / "32_sintese_A6_resumo_intro_metodos_conclusao.md"
 MANIFESTO = ROOT / "output" / "tema_trabalho" / "A6_manifesto_reproducao.json"
 MATRIZ_MD = ROOT / "docs" / "auditorias" / "09_matriz_afirmacao_evidencia_limite.md"
+
+
+def _steps_de_run_all() -> list[str]:
+    """Lê `STEPS` de run_all.py de forma independente do gerador."""
+    arvore = ast.parse((ROOT / "run_all.py").read_text(encoding="utf-8"))
+    for no in arvore.body:
+        if isinstance(no, ast.Assign) and any(
+            isinstance(alvo, ast.Name) and alvo.id == "STEPS" for alvo in no.targets
+        ):
+            caminhos = []
+            for elemento in no.value.elts:
+                partes = []
+                atual = elemento
+                while isinstance(atual, ast.BinOp):
+                    partes.append(atual.right.value)
+                    atual = atual.left
+                caminhos.append("/".join(reversed(partes)))
+            return caminhos
+    raise AssertionError("STEPS não encontrado em run_all.py")
 
 
 def sha(p: Path) -> str:
@@ -97,13 +117,91 @@ class RedTeamA6Test(unittest.TestCase):
         # check hashes conferem for at least quadro
         for rel, meta in man["hashes_entradas_e_artefatos"].items():
             p = ROOT / rel
-            if p.exists():
+            if p.exists() and meta.get("presente", True):
                 self.assertEqual(sha(p), meta["sha256"], f"hash diverge {rel}")
         self.assertIn("versoes", man)
         self.assertIn("python", man["versoes"])
         self.assertIn("limites_reafirmados", man)
         self.assertIn("portoes", man)
         self.assertIn("R1_RDD_ENCERRADO", " ".join(man["portoes"].keys()))
+
+    def test_manifesto_cobre_a_aquisicao_e_o_ambiente_real(self):
+        """B-3: a sequência publicada tem de ser a que reproduz, na plataforma certa.
+
+        O manifesto listava caminhos Windows sob `platform` Linux e começava em
+        `02_reconciliar_funil_ciclo1.py`, omitindo A1 e toda a aquisição.
+        """
+        man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+        comandos = man["comandos_reproducao"]
+
+        for comando in comandos:
+            self.assertNotIn("\\", comando, f"caminho Windows no manifesto: {comando}")
+            self.assertNotIn("Scripts", comando, f"caminho Windows no manifesto: {comando}")
+
+        cmds = " ".join(comandos)
+        for obrigatorio in [
+            "scripts/aquisicao/05_integrar_painel_analitico.py",
+            "scripts/aquisicao/02_consolidar_quadro_vagas.py",
+            "scripts/tema_trabalho/01_auditar_atracao_provimento_interior.py",
+        ]:
+            self.assertIn(obrigatorio, cmds, f"etapa ausente do manifesto: {obrigatorio}")
+
+        # A sequência tem de ser exatamente a de run_all.py, sem divergir dela.
+        passos = [linha.split(" ", 1)[1] for linha in comandos]
+        esperado = _steps_de_run_all() + ["run_tests.py"]
+        self.assertEqual(passos, esperado)
+
+        ambiente = man["ambiente_exigido"]
+        self.assertEqual(ambiente["python_minimo"], "3.12")
+        self.assertIn("/", ambiente["interpretador"])
+        self.assertNotIn("\\", ambiente["interpretador"])
+
+        # O defeito original era a incoerência entre o separador dos comandos e
+        # a plataforma registrada ao lado deles, no mesmo arquivo.
+        plataforma = man["versoes"]["platform"]
+        self.assertNotIn(
+            "Windows",
+            plataforma,
+            "manifesto gravado em Windows: reveja a convenção de caminho antes de publicar",
+        )
+
+    def test_manifesto_hasheia_os_insumos_do_desenho(self):
+        """B-3: os quatro insumos que faltavam têm de estar hasheados."""
+        man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+        hashes = man["hashes_entradas_e_artefatos"]
+        for rel in [
+            "output/tema_trabalho/A5_painel_T0.parquet",
+            "data/pmm_especialistas_nominal.csv",
+            "data/ivs_ipea_2010_municipios.csv",
+            "output/aquisicao/manifesto_cnes_26_competencias.json",
+        ]:
+            self.assertIn(rel, hashes, f"insumo não hasheado: {rel}")
+            self.assertTrue(hashes[rel]["presente"], rel)
+            self.assertEqual(len(hashes[rel]["sha256"]), 64, rel)
+
+    def test_insumo_ausente_e_marcado_e_nao_sumido(self):
+        """B-3: insumo ausente do disco não pode desaparecer do manifesto.
+
+        Regerar o manifesto numa máquina sem os microdados do CNES removia em
+        silêncio a entrada de `painel_municipio_curso_mensal.parquet`. A
+        proveniência ficava mais pobre sem nenhum aviso.
+        """
+        man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+        hashes = man["hashes_entradas_e_artefatos"]
+        painel = "output/painel_municipio_curso_mensal.parquet"
+        self.assertIn(painel, hashes, "insumo do desenho sumiu do manifesto")
+
+        entrada = hashes[painel]
+        if (ROOT / painel).exists():
+            self.assertTrue(entrada["presente"])
+            self.assertNotIn(painel, man["insumos_ausentes"])
+            return
+
+        self.assertFalse(entrada["presente"])
+        self.assertIsNone(entrada["sha256"])
+        self.assertIn(painel, man["insumos_ausentes"])
+        self.assertIn("D-4", entrada["motivo_ausencia"])
+        self.assertTrue(entrada["papel"], "insumo ausente sem papel declarado")
 
     def test_red_team_tenta_refutar(self):
         txt = DOCS_REDTEAM.read_text(encoding="utf-8")

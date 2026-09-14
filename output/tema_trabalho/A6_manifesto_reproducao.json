@@ -3,15 +3,41 @@
   "data_referencia": "2026-09-14",
   "gerador": "scripts/tema_trabalho/07_red_team_sintese.py",
   "fila": "A1->A6: núcleo associativo; upgrade causal bloqueado",
+  "ambiente_exigido": {
+    "python_minimo": "3.12",
+    "interpretador": ".venv/bin/python",
+    "como_montar": [
+      "python3.13 -m venv .venv",
+      ".venv/bin/pip install -r requirements.txt"
+    ],
+    "por_que": "numpy e pandas fixados no requirements.txt exigem Python 3.12 ou superior; sob outro ambiente os artefatos são reescritos a partir da 14ª casa decimal e a cadeia de SHA-256 quebra em silêncio"
+  },
+  "comando_unico": ".venv/bin/python run_all.py",
   "comandos_reproducao": [
-    ".venv\\Scripts\\python.exe scripts/tema_trabalho/02_reconciliar_funil_ciclo1.py",
-    ".venv\\Scripts\\python.exe scripts/tema_trabalho/03_construir_tipologia_territorial.py",
-    ".venv\\Scripts\\python.exe scripts/tema_trabalho/04_congelar_pre_analise.py",
-    ".venv\\Scripts\\python.exe scripts/tema_trabalho/05_estimar_atracao.py",
-    ".venv\\Scripts\\python.exe scripts/tema_trabalho/06_avaliar_provimento_cnes.py",
-    ".venv\\Scripts\\python.exe scripts/tema_trabalho/07_red_team_sintese.py",
-    ".venv\\Scripts\\python.exe -m unittest discover -s tests -q"
+    ".venv/bin/python scripts/00_inventario_dados.py",
+    ".venv/bin/python scripts/02_auditar_fontes_pmme.py",
+    ".venv/bin/python scripts/aquisicao/01_congelar_ponte_cbo.py",
+    ".venv/bin/python scripts/aquisicao/02_consolidar_quadro_vagas.py",
+    ".venv/bin/python scripts/rdd_bolsa/01_auditar_regra_e_suporte.py",
+    ".venv/bin/python scripts/rdd_bolsa/01_auditar_primeiro_estagio_publico.py",
+    ".venv/bin/python scripts/aquisicao/04_harmonizar_territorio_ibge.py",
+    ".venv/bin/python scripts/aquisicao/05_integrar_painel_analitico.py",
+    ".venv/bin/python scripts/avaliacao_impacto/run_pipeline_avaliacao.py",
+    ".venv/bin/python scripts/tema_trabalho/01_auditar_atracao_provimento_interior.py",
+    ".venv/bin/python scripts/tema_trabalho/02_reconciliar_funil_ciclo1.py",
+    ".venv/bin/python scripts/tema_trabalho/03_construir_tipologia_territorial.py",
+    ".venv/bin/python scripts/tema_trabalho/04_congelar_pre_analise.py",
+    ".venv/bin/python scripts/tema_trabalho/05_estimar_atracao.py",
+    ".venv/bin/python scripts/tema_trabalho/06_avaliar_provimento_cnes.py",
+    ".venv/bin/python scripts/tema_trabalho/07_red_team_sintese.py",
+    ".venv/bin/python scripts/tema_trabalho/08_auditar_cutoff_selecao.py",
+    ".venv/bin/python scripts/tema_trabalho/09_estimar_cutoff_escore_estrito.py",
+    ".venv/bin/python scripts/rdd_bolsa/03_triagem_resposta_administrativa.py",
+    ".venv/bin/python scripts/rdd_bolsa/02_controlar_execucao_plano_causal.py",
+    ".venv/bin/python scripts/tema_trabalho/10_conferir_numeros_artigo.py",
+    ".venv/bin/python run_tests.py"
   ],
+  "comandos_derivados_de": "run_all.py (lista STEPS)",
   "versoes": {
     "python": "3.13.12 (main, Feb  4 2026, 09:25:39) [GCC 13.3.0]",
     "platform": "Linux-6.18.44-fc-v24-x86_64-with-glibc2.39",
@@ -22,73 +48,142 @@
   "hashes_entradas_e_artefatos": {
     "output/aquisicao/quadro_vagas_tratamento.parquet": {
       "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f",
-      "bytes": 40440
-    },
-    "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
-      "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15",
-      "bytes": 71157
-    },
-    "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
-      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
-      "bytes": 280913
-    },
-    "output/tema_trabalho/portao_denominador.json": {
-      "sha256": "0055baf7ebc110cc7143395a3f2090893a1888b718fd0645db318cf06850489a",
-      "bytes": 5162
-    },
-    "output/tema_trabalho/registro_pre_analise_atracao.json": {
-      "sha256": "eb2bf81284d9ecb9b13f14e0cce8d4c45bf69d0d7b74edb5e1ab4d6252444b5f",
-      "bytes": 8457
-    },
-    "output/tema_trabalho/potencia_atracao.json": {
-      "sha256": "91fa905537be55cc39b727eed66bedce24c283699088966bc693c77ea2b9079f",
-      "bytes": 2908
+      "bytes": 40440,
+      "papel": "quadro de vagas publicado, insumo de A1",
+      "presente": true
     },
     "output/aquisicao/ponte_curso_cbo_oficial.json": {
       "sha256": "ed8c2a9a3fcda4f0f261b5321da7750da389cc0f574f2e5ac5140e5ebd8f2d9e",
-      "bytes": 16218
+      "bytes": 16218,
+      "papel": "ponte curso–CBO congelada",
+      "presente": true
+    },
+    "output/aquisicao/manifesto_cnes_26_competencias.json": {
+      "sha256": "a85f52e39430badc7c837c6c7649097dae97f00e79c90a505ab0def02da04ea4",
+      "bytes": 13292,
+      "papel": "manifesto das 26 competências mensais do CNES",
+      "presente": true
+    },
+    "data/pmm_especialistas_nominal.csv": {
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
+      "bytes": 361832,
+      "papel": "retrato nominal observado, insumo de A7/A8",
+      "presente": true
+    },
+    "data/ivs_ipea_2010_municipios.csv": {
+      "sha256": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c",
+      "bytes": 502970,
+      "papel": "IVS 2010 do IPEA, running variable canônica",
+      "presente": true
+    },
+    "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
+      "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15",
+      "bytes": 71157,
+      "papel": "matriz do funil do ciclo 1, saída de A1",
+      "presente": true
+    },
+    "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
+      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+      "bytes": 280913,
+      "papel": "tipologia territorial congelada, saída de A2",
+      "presente": true
+    },
+    "output/tema_trabalho/portao_denominador.json": {
+      "sha256": "0055baf7ebc110cc7143395a3f2090893a1888b718fd0645db318cf06850489a",
+      "bytes": 5162,
+      "papel": "portão do denominador, A1",
+      "presente": true
+    },
+    "output/tema_trabalho/registro_pre_analise_atracao.json": {
+      "sha256": "eb2bf81284d9ecb9b13f14e0cce8d4c45bf69d0d7b74edb5e1ab4d6252444b5f",
+      "bytes": 8457,
+      "papel": "pré-análise congelada, A3",
+      "presente": true
+    },
+    "output/tema_trabalho/potencia_atracao.json": {
+      "sha256": "91fa905537be55cc39b727eed66bedce24c283699088966bc693c77ea2b9079f",
+      "bytes": 2908,
+      "papel": "cálculo de potência declarado em A3",
+      "presente": true
+    },
+    "output/painel_municipio_curso_mensal.parquet": {
+      "sha256": null,
+      "bytes": null,
+      "papel": "painel município–curso mensal do CNES, insumo de A5",
+      "presente": false,
+      "motivo_ausencia": "microdados mensais do CNES não versionados (data/raw/cnes/ é gitignored) e reconstruir o painel exige mais de 16 GB de ZIPs das 26 competências; ver docs/06_execucao/36_backlog_pos_auditoria.md, item D-4"
+    },
+    "output/tema_trabalho/A5_painel_T0.parquet": {
+      "sha256": "bcdb9848bd546ec7b716dda1715d2c835a8bc22c4c63e06602d4c2facc2138eb",
+      "bytes": 131031,
+      "papel": "painel em T0, dataset de estimação de A5",
+      "presente": true
     },
     "output/tema_trabalho/A4_estimativas_atracao.json": {
       "sha256": "7e9176a8da1d6c4c8f65e22bd839ed03349b4560c72ee9fc4a8a9a1efc5089ee",
-      "bytes": 21808
+      "bytes": 21808,
+      "papel": "estimativas de A4",
+      "presente": true
     },
     "output/tema_trabalho/A5_estimativas_provimento.json": {
       "sha256": "fd7c2f9e6ebafa5136f9d1e38fd7bf0b7db24e139496eb77d7d4658c96fe64ca",
-      "bytes": 57888
+      "bytes": 57888,
+      "papel": "estimativas de A5",
+      "presente": true
     },
     "output/tema_trabalho/A5_manifesto_maturidade_censura.json": {
       "sha256": "2507700a4dff24e6af930bbf894b3fbd094114a178637fd2d5c2006de800a7ce",
-      "bytes": 14420
+      "bytes": 14420,
+      "papel": "maturidade e censura declaradas em A5",
+      "presente": true
     },
     "output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv": {
       "sha256": "3e7cf00700b2990967c83ffddc05fd58163e2890fd547e7bd1194e3d59b8ee0e",
-      "bytes": 8765
+      "bytes": 8765,
+      "papel": "modelo principal de A4",
+      "presente": true
     },
     "output/tema_trabalho/A4_tabela_02c_confirmacao_homologacao.csv": {
       "sha256": "35ef57eb513fe74b88a7d291718c94c1da416f71f542e011af8d9471d6eb0070",
-      "bytes": 18100
+      "bytes": 18100,
+      "papel": "estágios do funil em A4",
+      "presente": true
     },
     "output/tema_trabalho/A4_tabela_02d_municipio_curso.csv": {
       "sha256": "420f000e1b2282ddfd23b5abdca4c6e089f72e1e9f4ee49721db854623b4deb5",
-      "bytes": 8188
+      "bytes": 8188,
+      "papel": "colapso município–curso em A4",
+      "presente": true
     },
     "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv": {
       "sha256": "199bbb20f94e2b70656bbbd40ee701e94b2d109dadb7102afaabbc3f92c3497b",
-      "bytes": 12361
+      "bytes": 12361,
+      "papel": "estudo de evento de A5",
+      "presente": true
     },
     "docs/auditorias/09_red_team_atracao_provimento.md": {
       "sha256": "4650d99e8aa45a51d82eda27c64e1dde42520e40f2fe00513b238a1779202ced",
-      "bytes": 5650
+      "bytes": 5650,
+      "papel": "red team gerado aqui",
+      "presente": true
     },
     "output/tema_trabalho/A6_matriz_afirmacao_evidencia_limite.csv": {
       "sha256": "01a4248e8df3253f8bb71f86c119d4e5772bc6633fe82343978d9e9b958d00e7",
-      "bytes": 1634
+      "bytes": 1634,
+      "papel": "matriz afirmação–evidência–limite gerada aqui",
+      "presente": true
     },
     "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": {
       "sha256": "634f973cbd5c72fe2e6f51b020f53fbb4e8fd376da092edcd5bb9ee3a57478ad",
-      "bytes": 3704
+      "bytes": 3704,
+      "papel": "síntese gerada aqui",
+      "presente": true
     }
   },
+  "insumos_ausentes": [
+    "output/painel_municipio_curso_mensal.parquet"
+  ],
+  "nota_insumos_ausentes": "Insumo declarado no desenho e ausente do disco aparece acima com sha256 nulo, presente=false e motivo_ausencia. Entrada omitida significaria que o insumo não faz parte do desenho.",
   "docs_hash8": {
     "docs/auditorias/09_red_team_atracao_provimento.md": "4650d99e",
     "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "01a4248e",

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import datetime as dt
 import hashlib
 import json
@@ -27,6 +28,20 @@ MATRIX_OUT_CSV = OUT / "A6_matriz_afirmacao_evidencia_limite.csv"
 MATRIX_MD = AUD / "09_matriz_afirmacao_evidencia_limite.md"
 SYNTHESIS = EXEC / "32_sintese_A6_resumo_intro_metodos_conclusao.md"
 MANIFEST = OUT / "A6_manifesto_reproducao.json"
+FUNIL = OUT / "matriz_funil_ciclo1.parquet"
+RUN_ALL = ROOT / "run_all.py"
+
+# Interpretador do ambiente documentado no README. O manifesto registrava
+# `.venv\\Scripts\\python.exe` enquanto `versoes.platform` gravava Linux; quem
+# seguisse o manifesto não conseguiria reproduzir nada (item B-3 do backlog).
+PYTHON_REPRO = ".venv/bin/python"
+PYTHON_MINIMO = "3.12"
+
+MOTIVO_CNES_AUSENTE = (
+    "microdados mensais do CNES não versionados (data/raw/cnes/ é gitignored) e "
+    "reconstruir o painel exige mais de 16 GB de ZIPs das 26 competências; ver "
+    "docs/06_execucao/36_backlog_pos_auditoria.md, item D-4"
+)
 
 
 def sha256(path: Path) -> str:
@@ -45,6 +60,102 @@ def atomic_text(path: Path, value: str) -> None:
 
 def pct(value: float) -> str:
     return f"{100 * value:.1f}"
+
+
+def _caminho_de_step(no: ast.expr) -> str:
+    """Reduz a expressão `ROOT / "a" / "b.py"` de `run_all.py` a um caminho POSIX."""
+    partes: list[str] = []
+    atual = no
+    while isinstance(atual, ast.BinOp) and isinstance(atual.op, ast.Div):
+        if not isinstance(atual.right, ast.Constant) or not isinstance(atual.right.value, str):
+            raise RuntimeError(f"passo de run_all.py não é literal: {ast.dump(no)}")
+        partes.append(atual.right.value)
+        atual = atual.left
+    if not (isinstance(atual, ast.Name) and atual.id == "ROOT"):
+        raise RuntimeError(f"passo de run_all.py não parte de ROOT: {ast.dump(no)}")
+    return "/".join(reversed(partes))
+
+
+def passos_do_pipeline() -> list[str]:
+    """Lê a lista `STEPS` de `run_all.py` sem executá-lo.
+
+    Motivo: a sequência de reprodução era mantida à mão no manifesto, começava
+    em `02_reconciliar_funil_ciclo1.py` e omitia A1 e **toda** a aquisição,
+    inclusive `scripts/aquisicao/05_integrar_painel_analitico.py`, que constrói
+    o insumo de A5. Derivar do ponto de entrada impede que as duas divirjam.
+    """
+    arvore = ast.parse(RUN_ALL.read_text(encoding="utf-8"))
+    for no in arvore.body:
+        if isinstance(no, ast.Assign) and any(
+            isinstance(alvo, ast.Name) and alvo.id == "STEPS" for alvo in no.targets
+        ):
+            if not isinstance(no.value, (ast.List, ast.Tuple)):
+                raise RuntimeError("STEPS de run_all.py não é uma lista literal")
+            return [_caminho_de_step(elemento) for elemento in no.value.elts]
+    raise RuntimeError("STEPS não encontrado em run_all.py")
+
+
+def insumos_declarados() -> list[tuple[Path, str, str | None]]:
+    """Insumos e artefatos que o desenho de A1–A6 exige, com o papel de cada um.
+
+    A terceira posição é o motivo **conhecido** de ausência. Um insumo que faz
+    parte do desenho e não está no disco continua tendo entrada no manifesto,
+    marcada como ausente: omiti-lo apagaria a proveniência em silêncio sempre
+    que o manifesto fosse regerado numa máquina sem os microdados. Um insumo
+    que não faz parte do desenho simplesmente não aparece nesta lista.
+    """
+    return [
+        (ROOT / "output/aquisicao/quadro_vagas_tratamento.parquet", "quadro de vagas publicado, insumo de A1", None),
+        (ROOT / "output/aquisicao/ponte_curso_cbo_oficial.json", "ponte curso–CBO congelada", None),
+        (ROOT / "output/aquisicao/manifesto_cnes_26_competencias.json", "manifesto das 26 competências mensais do CNES", None),
+        (ROOT / "data/pmm_especialistas_nominal.csv", "retrato nominal observado, insumo de A7/A8", None),
+        (ROOT / "data/ivs_ipea_2010_municipios.csv", "IVS 2010 do IPEA, running variable canônica", None),
+        (FUNIL, "matriz do funil do ciclo 1, saída de A1", None),
+        (OUT / "matriz_tipologia_territorial.parquet", "tipologia territorial congelada, saída de A2", None),
+        (OUT / "portao_denominador.json", "portão do denominador, A1", None),
+        (OUT / "registro_pre_analise_atracao.json", "pré-análise congelada, A3", None),
+        (OUT / "potencia_atracao.json", "cálculo de potência declarado em A3", None),
+        (ROOT / "output/painel_municipio_curso_mensal.parquet", "painel município–curso mensal do CNES, insumo de A5", MOTIVO_CNES_AUSENTE),
+        (OUT / "A5_painel_T0.parquet", "painel em T0, dataset de estimação de A5", None),
+        (A4, "estimativas de A4", None),
+        (A5, "estimativas de A5", None),
+        (OUT / "A5_manifesto_maturidade_censura.json", "maturidade e censura declaradas em A5", None),
+        (OUT / "A4_tabela_02_modelo_principal_LPM.csv", "modelo principal de A4", None),
+        (OUT / "A4_tabela_02c_confirmacao_homologacao.csv", "estágios do funil em A4", None),
+        (OUT / "A4_tabela_02d_municipio_curso.csv", "colapso município–curso em A4", None),
+        (OUT / "A5_tabela_07_estudo_evento_atracao.csv", "estudo de evento de A5", None),
+        (REDTEAM, "red team gerado aqui", None),
+        (MATRIX_OUT_CSV, "matriz afirmação–evidência–limite gerada aqui", None),
+        (SYNTHESIS, "síntese gerada aqui", None),
+    ]
+
+
+def hashear_insumos() -> tuple[dict[str, dict[str, object]], list[str]]:
+    """Hasheia cada insumo do desenho; marca explicitamente o que está ausente."""
+    hashes: dict[str, dict[str, object]] = {}
+    ausentes: list[str] = []
+    for caminho, papel, motivo in insumos_declarados():
+        rel = caminho.relative_to(ROOT).as_posix()
+        if caminho.exists():
+            hashes[rel] = {
+                "sha256": sha256(caminho),
+                "bytes": caminho.stat().st_size,
+                "papel": papel,
+                "presente": True,
+            }
+            continue
+        hashes[rel] = {
+            "sha256": None,
+            "bytes": None,
+            "papel": papel,
+            "presente": False,
+            "motivo_ausencia": motivo
+            or "ausência não prevista no desenho; investigar antes de confiar neste manifesto",
+        }
+        ausentes.append(rel)
+    return hashes, ausentes
+
+
 
 
 def main() -> None:
@@ -197,49 +308,34 @@ O resultado publicável é um gradiente territorial de atração: municípios me
 """
     atomic_text(SYNTHESIS, synthesis)
 
-    key_files = [
-        ROOT / "output/aquisicao/quadro_vagas_tratamento.parquet",
-        OUT / "matriz_funil_ciclo1.parquet",
-        OUT / "matriz_tipologia_territorial.parquet",
-        OUT / "portao_denominador.json",
-        OUT / "registro_pre_analise_atracao.json",
-        OUT / "potencia_atracao.json",
-        ROOT / "output/aquisicao/ponte_curso_cbo_oficial.json",
-        ROOT / "output/painel_municipio_curso_mensal.parquet",
-        A4,
-        A5,
-        OUT / "A5_manifesto_maturidade_censura.json",
-        OUT / "A4_tabela_02_modelo_principal_LPM.csv",
-        OUT / "A4_tabela_02c_confirmacao_homologacao.csv",
-        OUT / "A4_tabela_02d_municipio_curso.csv",
-        OUT / "A5_tabela_07_estudo_evento_atracao.csv",
-        REDTEAM,
-        MATRIX_OUT_CSV,
-        SYNTHESIS,
-    ]
-    hashes = {
-        path.relative_to(ROOT).as_posix(): {"sha256": sha256(path), "bytes": path.stat().st_size}
-        for path in key_files if path.exists()
-    }
+    hashes, insumos_ausentes = hashear_insumos()
     docs_hash = {
         path.relative_to(ROOT).as_posix(): sha256(path)[:8]
         for path in (REDTEAM, MATRIX_DOC_CSV, MATRIX_MD, SYNTHESIS)
     }
-    commands = [
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/02_reconciliar_funil_ciclo1.py",
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/03_construir_tipologia_territorial.py",
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/04_congelar_pre_analise.py",
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/05_estimar_atracao.py",
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/06_avaliar_provimento_cnes.py",
-        ".venv\\Scripts\\python.exe scripts/tema_trabalho/07_red_team_sintese.py",
-        ".venv\\Scripts\\python.exe -m unittest discover -s tests -q",
-    ]
+    commands = [f"{PYTHON_REPRO} {passo}" for passo in passos_do_pipeline()]
+    commands.append(f"{PYTHON_REPRO} run_tests.py")
     manifest = {
         "protocolo": "A6_MANIFESTO_REPRODUCAO",
         "data_referencia": date,
         "gerador": "scripts/tema_trabalho/07_red_team_sintese.py",
         "fila": "A1->A6: núcleo associativo; upgrade causal bloqueado",
+        "ambiente_exigido": {
+            "python_minimo": PYTHON_MINIMO,
+            "interpretador": PYTHON_REPRO,
+            "como_montar": [
+                "python3.13 -m venv .venv",
+                ".venv/bin/pip install -r requirements.txt",
+            ],
+            "por_que": (
+                "numpy e pandas fixados no requirements.txt exigem Python 3.12 ou "
+                "superior; sob outro ambiente os artefatos são reescritos a partir "
+                "da 14ª casa decimal e a cadeia de SHA-256 quebra em silêncio"
+            ),
+        },
+        "comando_unico": f"{PYTHON_REPRO} run_all.py",
         "comandos_reproducao": commands,
+        "comandos_derivados_de": "run_all.py (lista STEPS)",
         "versoes": {
             "python": sys.version,
             "platform": platform.platform(),
@@ -248,6 +344,12 @@ O resultado publicável é um gradiente territorial de atração: municípios me
             "statsmodels": statsmodels.__version__,
         },
         "hashes_entradas_e_artefatos": hashes,
+        "insumos_ausentes": insumos_ausentes,
+        "nota_insumos_ausentes": (
+            "Insumo declarado no desenho e ausente do disco aparece acima com "
+            "sha256 nulo, presente=false e motivo_ausencia. Entrada omitida "
+            "significaria que o insumo não faz parte do desenho."
+        ),
         "docs_hash8": docs_hash,
         "portoes": {
             "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",
