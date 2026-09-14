@@ -30,6 +30,25 @@ TIPOLOGIA = ROOT / "output" / "tema_trabalho" / "matriz_tipologia_territorial.pa
 OUT = ROOT / "output" / "rdd_bolsa" / "a01b_reconstrucao_regra_faixa.json"
 
 ORDEM_VALOR = {"FAIXA 3": 10_000, "FAIXA 2": 15_000, "FAIXA 1": 20_000}
+NIVEL = {"FAIXA 3": 1, "FAIXA 2": 2, "FAIXA 1": 3}
+EDITAL = ROOT / "data" / "raw" / "aquisicao" / "ivs_regra" / "edital_sgtes_03_2025_dou.pdf"
+
+# Transcricao literal das clausulas do Edital de Chamamento Publico SGTES/MS
+# n. 3/2025 que fixam a bolsa. Nao e dado observado: e texto normativo, e o
+# hash do PDF de origem viaja junto no bloco "fontes".
+CLAUSULAS_EDITAL = {
+    "11.1.3": ("O valor da bolsa-formacao e estabelecido conforme criterios de localizacao e "
+               "vulnerabilidade definidos de acordo com a faixa de atracao definida no Anexo IV "
+               "no site do Mais Medicos."),
+    "11.1.4": ("Para fins de alocacao [...] foi estabelecido o criterio de faixa de atracao com "
+               "base na categorizacao municipal do Indice de Vulnerabilidade Social IVS: "
+               "a) muito alta vulnerabilidade -> Faixa 1, R$ 20.000; "
+               "b) alta vulnerabilidade -> Faixa 2, R$ 15.000; "
+               "c) media, baixa ou muito baixa -> Faixa 3, R$ 10.000."),
+}
+# Categorias do Atlas da Vulnerabilidade Social do Ipea, que e a fonte do IVS
+# citado. Muito alta > 0,500; alta em (0,400; 0,500]; o resto, Faixa 3.
+CORTES_CATEGORIA = (0.400, 0.500)
 CORTES_ATLAS = (0.400, 0.500)
 
 NUMERICAS = [
@@ -200,6 +219,33 @@ def main() -> None:
                            "pct": round(100 * float((predito == valor).mean()), 2)}
     arvore3 = crescer(X, valor, np.arange(n), 0, 3)
 
+    # A regra do edital, aplicada ao IVS 2010 publico. O ponto nao e quanto ela
+    # acerta, e a ASSIMETRIA dos erros: se o IVS fosse um piso administrativo,
+    # ninguem receberia menos do que a categoria manda.
+    nivel = base.faixa_atracao_anunciada.map(NIVEL).to_numpy(dtype=int)
+    nivel_edital = np.where(ivs > CORTES_CATEGORIA[1], 3,
+                            np.where(ivs > CORTES_CATEGORIA[0], 2, 1))
+    abaixo_do_piso = int((nivel < nivel_edital).sum())
+    acima_do_piso = int((nivel > nivel_edital).sum())
+
+    # Nas janelas em torno dos dois cortes nominais, o que de fato varia?
+    cortes_sem_acao = {}
+    for corte in CORTES_CATEGORIA:
+        janelas = {}
+        for h in (0.010, 0.020, 0.030, 0.050):
+            esquerda = (ivs > corte - h) & (ivs <= corte)
+            direita = (ivs > corte) & (ivs <= corte + h)
+            janelas[f"{h:.3f}"] = {
+                lado: {
+                    "n": int(m.sum()),
+                    "valor_medio_mil_brl": (round(float(valor[m].mean() / 1000), 4)
+                                            if m.any() else None),
+                    "faixas": base.faixa_atracao_anunciada[m].value_counts().to_dict(),
+                }
+                for lado, m in (("esquerda", esquerda), ("direita", direita))
+            }
+        cortes_sem_acao[f"{corte:.3f}"] = janelas
+
     # Quem escapa da melhor regra possivel? Se os desvios fossem ruido de
     # medida, os dois lados seriam parecidos. Se forem sistematicos, eles
     # identificam o criterio que falta — e medem o vies de qualquer pareamento
@@ -263,6 +309,31 @@ def main() -> None:
             "faixas_presentes_na_janela": sorted(
                 base.faixa_atracao_anunciada[perto_do_melhor].unique().tolist()),
         },
+        "regra_do_edital": {
+            "clausulas_transcritas": CLAUSULAS_EDITAL,
+            "o_que_o_edital_publica": ("as tres categorias de vulnerabilidade e os tres valores; "
+                                       "nao publica limiar numerico, vintagem do IVS nem o "
+                                       "algoritmo. A clausula 11.1.3 remete ao Anexo IV e cita "
+                                       "criterios de LOCALIZACAO ao lado de vulnerabilidade"),
+            "anexo_iv_presente_no_repositorio": False,
+        },
+        "ivs_e_piso_e_nunca_teto": {
+            "municipios_abaixo_da_categoria_do_edital": abaixo_do_piso,
+            "municipios_acima_da_categoria_do_edital": acima_do_piso,
+            "leitura": ("a divergencia e estritamente unidirecional: nenhum municipio recebe "
+                        "menos do que a categoria de IVS manda e 177 recebem mais. O IVS nao e "
+                        "o criterio da bolsa; e o piso dela. O que promove acima do piso e o "
+                        "criterio de localizacao do Anexo IV, ausente daqui"),
+        },
+        "cortes_nominais_sem_acao_local": {
+            "janelas": cortes_sem_acao,
+            "leitura": ("em 0,500 os dois lados sao 100% FAIXA 1 em toda janela ate 0,05: nao ha "
+                        "o que saltar. Em 0,400 nao ha nenhum municipio de FAIXA 3 por perto — o "
+                        "maior IVS da FAIXA 3 e 0,372 — e a composicao dos dois lados e "
+                        "equivalente. O piso existe, mas nao morde em nenhum dos dois cortes "
+                        "nominais: quando o IVS chega la, a promocao pelo outro criterio ja "
+                        "aconteceu"),
+        },
         "quem_escapa_da_regra": {
             "perfil": perfil,
             "leitura": ("os desvios nao sao ruido. Quem recebe MAIS do que o IVS preveria e "
@@ -285,7 +356,7 @@ def main() -> None:
             "regra_reconstruida": False,
             "r1_continua": "REPROVADO_PENDENTE_DE_RECONSTRUCAO",
         },
-        "fontes": {str(p.relative_to(ROOT)): {"sha256": sha256(p)} for p in (QUADRO, IVS, TIPOLOGIA)},
+        "fontes": {str(p.relative_to(ROOT)): {"sha256": sha256(p)} for p in (QUADRO, IVS, TIPOLOGIA, EDITAL)},
     }
 
     OUT.parent.mkdir(parents=True, exist_ok=True)

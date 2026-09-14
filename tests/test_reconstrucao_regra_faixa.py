@@ -80,3 +80,37 @@ class TestQuemEscapaDaRegra(unittest.TestCase):
 
         self.assertGreater(prop_remoto("acima_do_previsto"), prop_remoto("abaixo_do_previsto"))
         self.assertGreater(prop_remoto("acima_do_previsto"), prop_remoto("no_previsto"))
+
+
+class TestRegraDoEditalEPiso(unittest.TestCase):
+    """O IVS e piso, e os cortes nominais nao mordem. Sao os dois fatos que
+    matam a RDD no IVS; se algum deixar de valer, a conclusao muda."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.d = json.loads(ARTEFATO.read_text(encoding="utf-8"))
+
+    def test_ninguem_recebe_menos_que_a_categoria_do_edital(self) -> None:
+        piso = self.d["ivs_e_piso_e_nunca_teto"]
+        self.assertEqual(piso["municipios_abaixo_da_categoria_do_edital"], 0)
+        self.assertGreater(piso["municipios_acima_da_categoria_do_edital"], 0)
+
+    def test_o_anexo_iv_continua_ausente(self) -> None:
+        self.assertFalse(self.d["regra_do_edital"]["anexo_iv_presente_no_repositorio"])
+
+    def test_em_0_500_nao_ha_o_que_saltar(self) -> None:
+        for h, janela in self.d["cortes_nominais_sem_acao_local"]["janelas"]["0.500"].items():
+            for lado in ("esquerda", "direita"):
+                faixas = janela[lado]["faixas"]
+                self.assertEqual(list(faixas), ["FAIXA 1"], f"janela {h}, {lado}")
+
+    def test_em_0_400_a_faixa_3_ja_sumiu_antes_do_corte(self) -> None:
+        estreita = self.d["cortes_nominais_sem_acao_local"]["janelas"]["0.400"]["0.010"]
+        for lado in ("esquerda", "direita"):
+            self.assertNotIn("FAIXA 3", estreita[lado]["faixas"])
+
+    def test_o_edital_e_fonte_com_hash(self) -> None:
+        fontes = self.d["fontes"]
+        self.assertTrue(any("edital" in chave for chave in fontes))
+        for meta in fontes.values():
+            self.assertRegex(meta["sha256"], r"^[0-9a-f]{64}$")

@@ -75,6 +75,166 @@
       "FAIXA 3"
     ]
   },
+  "regra_do_edital": {
+    "clausulas_transcritas": {
+      "11.1.3": "O valor da bolsa-formacao e estabelecido conforme criterios de localizacao e vulnerabilidade definidos de acordo com a faixa de atracao definida no Anexo IV no site do Mais Medicos.",
+      "11.1.4": "Para fins de alocacao [...] foi estabelecido o criterio de faixa de atracao com base na categorizacao municipal do Indice de Vulnerabilidade Social IVS: a) muito alta vulnerabilidade -> Faixa 1, R$ 20.000; b) alta vulnerabilidade -> Faixa 2, R$ 15.000; c) media, baixa ou muito baixa -> Faixa 3, R$ 10.000."
+    },
+    "o_que_o_edital_publica": "as tres categorias de vulnerabilidade e os tres valores; nao publica limiar numerico, vintagem do IVS nem o algoritmo. A clausula 11.1.3 remete ao Anexo IV e cita criterios de LOCALIZACAO ao lado de vulnerabilidade",
+    "anexo_iv_presente_no_repositorio": false
+  },
+  "ivs_e_piso_e_nunca_teto": {
+    "municipios_abaixo_da_categoria_do_edital": 0,
+    "municipios_acima_da_categoria_do_edital": 177,
+    "leitura": "a divergencia e estritamente unidirecional: nenhum municipio recebe menos do que a categoria de IVS manda e 177 recebem mais. O IVS nao e o criterio da bolsa; e o piso dela. O que promove acima do piso e o criterio de localizacao do Anexo IV, ausente daqui"
+  },
+  "cortes_nominais_sem_acao_local": {
+    "janelas": {
+      "0.400": {
+        "0.010": {
+          "esquerda": {
+            "n": 10,
+            "valor_medio_mil_brl": 18.5,
+            "faixas": {
+              "FAIXA 1": 7,
+              "FAIXA 2": 3
+            }
+          },
+          "direita": {
+            "n": 8,
+            "valor_medio_mil_brl": 18.125,
+            "faixas": {
+              "FAIXA 1": 5,
+              "FAIXA 2": 3
+            }
+          }
+        },
+        "0.020": {
+          "esquerda": {
+            "n": 28,
+            "valor_medio_mil_brl": 18.0357,
+            "faixas": {
+              "FAIXA 1": 17,
+              "FAIXA 2": 11
+            }
+          },
+          "direita": {
+            "n": 18,
+            "valor_medio_mil_brl": 18.0556,
+            "faixas": {
+              "FAIXA 1": 11,
+              "FAIXA 2": 7
+            }
+          }
+        },
+        "0.030": {
+          "esquerda": {
+            "n": 41,
+            "valor_medio_mil_brl": 17.439,
+            "faixas": {
+              "FAIXA 1": 21,
+              "FAIXA 2": 19,
+              "FAIXA 3": 1
+            }
+          },
+          "direita": {
+            "n": 26,
+            "valor_medio_mil_brl": 18.0769,
+            "faixas": {
+              "FAIXA 1": 16,
+              "FAIXA 2": 10
+            }
+          }
+        },
+        "0.050": {
+          "esquerda": {
+            "n": 77,
+            "valor_medio_mil_brl": 16.6234,
+            "faixas": {
+              "FAIXA 2": 42,
+              "FAIXA 1": 30,
+              "FAIXA 3": 5
+            }
+          },
+          "direita": {
+            "n": 39,
+            "valor_medio_mil_brl": 18.3333,
+            "faixas": {
+              "FAIXA 1": 26,
+              "FAIXA 2": 13
+            }
+          }
+        }
+      },
+      "0.500": {
+        "0.010": {
+          "esquerda": {
+            "n": 4,
+            "valor_medio_mil_brl": 20.0,
+            "faixas": {
+              "FAIXA 1": 4
+            }
+          },
+          "direita": {
+            "n": 5,
+            "valor_medio_mil_brl": 20.0,
+            "faixas": {
+              "FAIXA 1": 5
+            }
+          }
+        },
+        "0.020": {
+          "esquerda": {
+            "n": 8,
+            "valor_medio_mil_brl": 20.0,
+            "faixas": {
+              "FAIXA 1": 8
+            }
+          },
+          "direita": {
+            "n": 6,
+            "valor_medio_mil_brl": 20.0,
+            "faixas": {
+              "FAIXA 1": 6
+            }
+          }
+        },
+        "0.030": {
+          "esquerda": {
+            "n": 11,
+            "valor_medio_mil_brl": 20.0,
+            "faixas": {
+              "FAIXA 1": 11
+            }
+          },
+          "direita": {
+            "n": 7,
+            "valor_medio_mil_brl": 20.0,
+            "faixas": {
+              "FAIXA 1": 7
+            }
+          }
+        },
+        "0.050": {
+          "esquerda": {
+            "n": 20,
+            "valor_medio_mil_brl": 20.0,
+            "faixas": {
+              "FAIXA 1": 20
+            }
+          },
+          "direita": {
+            "n": 11,
+            "valor_medio_mil_brl": 20.0,
+            "faixas": {
+              "FAIXA 1": 11
+            }
+          }
+        }
+      }
+    },
+    "leitura": "em 0,500 os dois lados sao 100% FAIXA 1 em toda janela ate 0,05: nao ha o que saltar. Em 0,400 nao ha nenhum municipio de FAIXA 3 por perto — o maior IVS da FAIXA 3 e 0,372 — e a composicao dos dois lados e equivalente. O piso existe, mas nao morde em nenhum dos dois cortes nominais: quando o IVS chega la, a promocao pelo outro criterio ja aconteceu"
+  },
   "quem_escapa_da_regra": {
     "perfil": {
       "acima_do_previsto": {
@@ -183,6 +343,9 @@
     },
     "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
       "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
+    },
+    "data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf": {
+      "sha256": "417c82d903ab6cf26ca17a5b50705175de40ccc539f0fd2f1e66a3ad9daf6fb2"
     }
   }
 }

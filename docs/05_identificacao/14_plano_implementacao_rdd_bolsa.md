@@ -175,6 +175,61 @@ candidata erra, é que nenhuma função de limiar do IVS público pode acertar. 
 torna o pedido administrativo de **D-3** o único caminho para o estimando da
 bolsa, e não uma formalidade.
 
+### O que o edital de fato diz, e por que isso encerra a RDD no IVS
+
+Lido em 14/09/2026 no PDF do DOU preservado em
+`data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf`, com hash registrado
+no artefato. Duas cláusulas importam:
+
+- **11.1.4** dá a regra que sempre se supôs: Faixa 1 para muito alta
+  vulnerabilidade, Faixa 2 para alta, Faixa 3 para média, baixa ou muito baixa.
+  São as categorias do Atlas do Ipea, isto é, os cortes `0,400` e `0,500`. A
+  taxonomia testada pela auditoria anterior era, portanto, a correta.
+- **11.1.3** diz o que faltava: o valor é estabelecido "conforme critérios de
+  **localização** e vulnerabilidade definidos de acordo com a faixa de atração
+  definida no **Anexo IV** no site do Mais Médicos".
+
+O edital não publica limiar numérico, vintagem do IVS nem algoritmo. O documento
+operativo é o Anexo IV, que **não está no repositório**. O FAQ oficial da bolsa
+repete as três categorias e também não traz limiar.
+
+**O dado mostra exatamente a estrutura que as duas cláusulas descrevem.** A
+divergência entre faixa anunciada e categoria de IVS é **estritamente
+unidirecional**: `0` municípios recebem menos do que a categoria manda e `177`
+recebem mais. Isso não é ruído de vintagem nem erro de medida — uma vintagem
+diferente erraria nos dois sentidos.
+
+> **O IVS não é o critério da bolsa. É o piso dela.** A categoria de IVS garante
+> um valor mínimo, e o critério de localização do Anexo IV promove 48% dos
+> municípios acima desse piso, nunca abaixo.
+
+**E o piso não morde em nenhum dos dois cortes nominais.** É isso que encerra o
+desenho:
+
+| Corte | Janela | Esquerda | Direita |
+|---|---|---|---|
+| `0,500` | ±0,050 | 20 municípios, **100% Faixa 1** | 11 municípios, **100% Faixa 1** |
+| `0,400` | ±0,010 | 10 municípios: 7 Faixa 1, 3 Faixa 2 | 8 municípios: 5 Faixa 1, 3 Faixa 2 |
+
+Em `0,500` não há o que saltar: os dois lados já estão no teto de R$ 20 mil. Em
+`0,400` não há nenhum município de Faixa 3 por perto — o maior IVS da Faixa 3 é
+`0,372` — e a composição dos dois lados é equivalente, com a média até caindo ao
+cruzar o corte. Quando o IVS chega ao limiar, a promoção pelo outro critério já
+aconteceu.
+
+**Conclusão de identificação.** A descontinuidade no IVS não falha por potência:
+falha porque **o tratamento é localmente constante nos dois cortes**. Onde a
+bolsa de fato varia — a faixa de IVS entre `0,25` e `0,44`, em que as três faixas
+coexistem — a variação é governada pelo critério de localização, que não
+observamos. Nenhuma escolha de janela, kernel ou estimador contorna isso.
+
+**Testes de regra composta, todos negativos.** Foram testadas hipóteses de que o
+piso do IVS seria promovido por uma condição simples: interior remoto (216/368),
+renda per capita baixa (255), Norte/Nordeste (237), porte populacional (182),
+ausência de RM/RIDE (182), estoque prévio baixo (180). Também bases alternativas:
+maior subíndice do IVS (272, mas errando 62 para menos, o que viola o piso),
+média dos subíndices (192). Nenhuma se aproxima de reproduzir a regra.
+
 **Por que comparar municípios parecidos também não resolve.** Há suporte comum:
 municípios de IVS semelhante recebem bolsas diferentes — é justamente o que as
 inversões acima significam. O problema é o que gera essa variação. Dos 83
