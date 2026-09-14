@@ -787,6 +787,39 @@ Estão espalhadas pelos itens; esta lista existe para que não se perca nenhuma.
 Nenhuma delas foi tomada por sessão de agente, de propósito: todas escolhem
 entre alternativas defensáveis, e a fila proíbe escolher depois de ver o efeito.
 
+**Correção de ordenação, 14/09/2026.** A tabela abaixo estava ordenada pela
+lógica interna da fila, e nessa ordem o envio dos pedidos administrativos
+aparecia por último, como escolha de canal. Isso subestima o item. A fila de
+fato não depende do **D-3**, mas a **pergunta declarada do projeto depende**: o
+efeito do salto no valor anunciado da bolsa está bloqueado em R1 porque o escore
+administrativo não foi obtido, e nenhum outro item desta lista muda isso. Ver o
+diagnóstico abaixo. Quem for priorizar pelo que o projeto se propõe a medir, e
+não pelo que a fila consegue executar, começa pelo D-3.
+
+### Por que o D-3 é o único caminho para o efeito da bolsa
+
+Três fatos, todos já registrados em artefato, fecham as alternativas públicas:
+
+1. **A bolsa não varia dentro do município.** A faixa é municipal e o valor é
+   função dela — R$ 10 mil, R$ 15 mil, R$ 20 mil. Como a faixa é atribuída por
+   vulnerabilidade, variação de bolsa é também variação de território. Sem
+   descontinuidade na regra, os dois efeitos são a mesma variação e nenhuma
+   especificação os separa.
+2. **A regra não é reconstruível com o IVS público.** `portao_regra_ivs.json`
+   registra 191 faixas reproduzidas em 368 e **177 divergentes**, com assimetria
+   sistemática — 94 células de Faixa 2 anunciada recalculam para Faixa 3.
+3. **O desenho fuzzy falha por relevância, não por potência.**
+   `a01_primeiro_estagio_publico.json` registra primeiro estágio **exatamente
+   zero** no corte `0,500` (todos recebem R$ 20 mil dos dois lados nas janelas de
+   0,010 a 0,050) e salto que troca de sinal entre bandas no corte `0,400`
+   (+4,06 / +0,20 / −0,33 / −0,71), com a diferença bruta negativa justamente na
+   janela cujo coeficiente é positivo.
+
+Nota sobre o escopo do pedido: obtido o escore, R1 identifica o efeito do valor
+**anunciado** — intenção de tratar da oferta. O efeito do valor **recebido**
+exige folha de pagamento, como o próprio plano `14` já diz. São dois insumos
+distintos e convém pedi-los no mesmo ato.
+
 | # | Decisão | Onde está o detalhe | Por que não foi decidida aqui |
 |---|---|---|---|
 | 1 | Definição do efeito fixo para as quatro células sem macrorregião publicada: nível residual rotulado, com 24 níveis, ou o que a auditoria mediu, com 23 e quatro células sem efeito fixo | item **A-1** | os dois coeficientes já são conhecidos, +0,5062 e +0,5014; escolher agora seria escolher vendo o efeito. Resolvida a definição, o alvo precisa ser reemitido antes da emenda |
@@ -794,7 +827,7 @@ entre alternativas defensáveis, e a fila proíbe escolher depois de ver o efeit
 | 3 | Portão de A1 publicado como critério testado, quando as duas constantes são literais | item **C-4** | a renomeação honesta muda o SHA-256 de `portao_denominador.json`, fixado como hash de entrada em A3, A4 e A5. Reparar exigiria reexecutar A5, hoje impossível por D-4 |
 | 4 | Regravar ou não os artefatos de A8 sob o ambiente documentado | [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md) | manter conserva a cadeia de hashes e preserva caminhos Windows incorretos; regravar conserta os caminhos e obriga a reemitir os hashes. Nenhum número publicado muda nos dois casos |
 | 5 | Revisão de provas do PDF | item **D-1** | a compilação deixou de ser impedimento; a leitura do artigo é do autor |
-| 6 | Envio dos pedidos administrativos | item **D-3** | escolha de canal e autorização são do autor. Nada na fila depende disso |
+| 6 | Envio dos pedidos administrativos — **na prática, a de maior consequência** | item **D-3** | escolha de canal e autorização são do autor. Nenhum item *desta fila* depende disso, mas a pergunta declarada do projeto depende: é o que destrava R1 e, com ele, o efeito da bolsa. Ver a correção de ordenação acima |
 
 Três itens **não** são decisão, e sim espera por dado externo: `C3-02B` depende
 de dois arquivos aparecerem no FTP oficial, `C3-05` da competência `202703`
