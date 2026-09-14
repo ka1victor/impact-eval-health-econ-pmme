@@ -781,6 +781,25 @@ e a 2 depende de a especificação do C1 já estar valendo.
 | — | `RESOLVIDO` | **D-1** | TeX instalado; artigo compila. Só a revisão de provas pelo autor continua pendente. |
 | — | `BLOQUEADA` | **D-2 a D-4** | Revisar a condição de desbloqueio, não executar. |
 
+## Decisões que dependem do autor — consolidadas em 14/09/2026
+
+Estão espalhadas pelos itens; esta lista existe para que não se perca nenhuma.
+Nenhuma delas foi tomada por sessão de agente, de propósito: todas escolhem
+entre alternativas defensáveis, e a fila proíbe escolher depois de ver o efeito.
+
+| # | Decisão | Onde está o detalhe | Por que não foi decidida aqui |
+|---|---|---|---|
+| 1 | Definição do efeito fixo para as quatro células sem macrorregião publicada: nível residual rotulado, com 24 níveis, ou o que a auditoria mediu, com 23 e quatro células sem efeito fixo | item **A-1** | os dois coeficientes já são conhecidos, +0,5062 e +0,5014; escolher agora seria escolher vendo o efeito. Resolvida a definição, o alvo precisa ser reemitido antes da emenda |
+| 2 | Errata contra reexecução da tipologia congelada | itens **B-4** e **B-7** | reexecutar regrava o manifesto e quebra a cadeia de hashes a jusante, obrigando a refazer A3–A6, para corrigir uma frase e um tipo de coluna. A fila já recomenda a errata |
+| 3 | Portão de A1 publicado como critério testado, quando as duas constantes são literais | item **C-4** | a renomeação honesta muda o SHA-256 de `portao_denominador.json`, fixado como hash de entrada em A3, A4 e A5. Reparar exigiria reexecutar A5, hoje impossível por D-4 |
+| 4 | Regravar ou não os artefatos de A8 sob o ambiente documentado | [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md) | manter conserva a cadeia de hashes e preserva caminhos Windows incorretos; regravar conserta os caminhos e obriga a reemitir os hashes. Nenhum número publicado muda nos dois casos |
+| 5 | Revisão de provas do PDF | item **D-1** | a compilação deixou de ser impedimento; a leitura do artigo é do autor |
+| 6 | Envio dos pedidos administrativos | item **D-3** | escolha de canal e autorização são do autor. Nada na fila depende disso |
+
+Três itens **não** são decisão, e sim espera por dado externo: `C3-02B` depende
+de dois arquivos aparecerem no FTP oficial, `C3-05` da competência `202703`
+madura e `C3-06` de setembro de 2027. Ver **D-2**.
+
 ## Protocolo de sessão
 
 Ao **iniciar** uma sessão desta fila:
