@@ -166,13 +166,26 @@ reparar retrospectivamente a DDD anterior.
 
 ## Executar o estado validado
 
+### Ambiente
+
+O `requirements.txt` fixa `numpy==2.5.2` e `pandas==3.0.5`, que exigem **Python
+3.12 ou superior**. Em versões anteriores a instalação falha e a suíte coleta
+apenas parte dos módulos, com erro de importação em vez de falha explícita.
+
+```bash
+python3.13 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+```
+
+Use o interpretador do ambiente virtual nos comandos abaixo.
+
 ### Pipeline completo de replicação
 ```bash
 python run_all.py
 ```
 O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A8, incluindo tabelas, figuras, red team, cutoff estrito e manifestos.
 
-### Suíte de testes automatizados (131 testes)
+### Suíte de testes automatizados (132 testes)
 ```bash
 python run_tests.py
 ```
@@ -191,4 +204,4 @@ Cada diretório principal possui documentação autônoma orientando seu conteú
 | [`output/`](output/README.md) | [Guia de Artefatos](output/README.md) | Painéis analíticos, estimativas, tabelas, figuras e manifestos reproduzíveis |
 | [`prompts/`](prompts/README.md) | [Fila e Histórico](prompts/README.md) | Sessões executadas, cadernos de prompts e especificações de pesquisa |
 | [`scripts/`](scripts/README.md) | [Guia de Scripts](scripts/README.md) | Rotinas modulares de aquisição, estimação, avaliação de impacto e utilitários |
-| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 131 testes automatizados garantindo integridade econométrica e invariantes |
+| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 132 testes automatizados garantindo integridade econométrica e invariantes |

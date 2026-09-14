@@ -10,6 +10,19 @@
 > [`15_incentivos_ivs_provimento_duradouro.md`](../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
 > O ciclo 3 permanece congelado até maturidade.
 
+> **Atualização em 09/09/2026:** a reauditoria independente de A1 a A8
+> (`../auditorias/13_reauditoria_independente_A1_A8.md`) confirmou o núcleo
+> numérico e abriu uma fila de correções. Os itens C1, C2 e C3 foram executados
+> conforme `35_plano_correcoes_pos_auditoria.md`. **A fila vigente de correções é
+> `36_backlog_pos_auditoria.md`**, com 23 itens agrupados por consequência e alvos
+> numéricos congelados. A ordem de execução daquele documento é **normativa**: a
+> sessão que for executá-lo começa pela primeira sessão `ABERTA` e não pula
+> adiante sem decisão do autor. Itens do Grupo A exigem emenda escrita e
+> commitada **antes** de tocar em código.
+>
+> **Próxima sessão da fila: 1 — item A-1**, o balde `RESTO` nos modelos
+> secundários de A5 (`+1,2949` → `+0,5014`). Exige emenda prévia, por ser Grupo A.
+
 ## Fila imediata autorizada
 
 1. Usar A4 apenas para motivar o gradiente territorial de atração.

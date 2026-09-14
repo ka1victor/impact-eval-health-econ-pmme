@@ -116,13 +116,67 @@ def absorb_fixed_effects(
     return values, diagnostics
 
 
+def _corrigir_gl_absorvidos(
+    model: Any,
+    diagnostics: dict[str, Any],
+    n_obs: int,
+    k_visiveis: int,
+    n_absorbed: int,
+) -> tuple[Any, dict[str, Any]]:
+    """Reescala o sanduíche agrupado para que `K` inclua os FE absorvidos.
+
+    A correção de pequenas amostras do statsmodels usa
+    `(G/(G-1)) * ((N-1)/(N-k))` com `k` igual ao número de regressores
+    visíveis. Sobre variáveis já residualizadas, isso ignora os parâmetros de
+    efeito fixo estimados na absorção. `reghdfe` e `fixest` contam esses
+    parâmetros em `K`. A razão entre as duas convenções é exatamente
+    `(N - k_visiveis) / (N - K_total)`, aplicada aqui à matriz de covariância,
+    de modo que erro-padrão, `t`, `p`, intervalo de confiança, `t_test` e
+    `f_test` do resultado ficam todos na mesma convenção.
+    """
+    if n_absorbed < 0:
+        raise ValueError("n_absorbed não pode ser negativo.")
+    k_total = k_visiveis + n_absorbed
+    if n_obs - k_total <= 0:
+        raise RuntimeError(
+            f"Graus de liberdade esgotados: N={n_obs}, K={k_total} (visíveis {k_visiveis} "
+            f"+ absorvidos {n_absorbed})."
+        )
+    fator = (n_obs - k_visiveis) / (n_obs - k_total)
+    alvo = getattr(model, "_results", model)
+    if "bse" in vars(alvo) or "pvalues" in vars(alvo):
+        raise RuntimeError(
+            "Covariância já consumida antes da correção de graus de liberdade."
+        )
+    alvo.cov_params_default = alvo.cov_params_default * fator
+    diagnostics["k_regressores_visiveis"] = int(k_visiveis)
+    diagnostics["n_parametros_fe_absorvidos"] = int(n_absorbed)
+    diagnostics["k_total_convencao_fe"] = int(k_total)
+    diagnostics["fator_correcao_variancia"] = float(fator)
+    diagnostics["convencao_graus_liberdade"] = (
+        "reghdfe/fixest: K inclui os parâmetros de efeito fixo absorvidos"
+    )
+    return model, diagnostics
+
+
 def fit_absorbed_ols(
     df: pd.DataFrame,
     outcome: str,
     regressors: Sequence[str],
     fixed_effects: Sequence[str],
     cluster: str,
+    n_absorbed: int | None = None,
 ) -> tuple[Any, dict[str, Any]]:
+    """Ajusta OLS agrupado sobre variáveis residualizadas pelos efeitos fixos.
+
+    `n_absorbed` é opcional e não altera o comportamento histórico: quando fica
+    em `None`, o ajuste e os diagnósticos são idênticos aos da versão anterior
+    desta função, que continua sendo a usada pelos scripts 03 a 06 de
+    `scripts/avaliacao_impacto/`. Quando informado, o número de parâmetros de
+    efeito fixo absorvidos entra na correção de pequenas amostras do sanduíche
+    agrupado (convenção `reghdfe`/`fixest`), em vez de contar apenas os
+    regressores visíveis (convenção padrão do statsmodels).
+    """
     cols = [outcome, *regressors]
     residualized, diagnostics = absorb_fixed_effects(df, cols, fixed_effects)
     y = residualized[outcome]
@@ -136,6 +190,10 @@ def fit_absorbed_ols(
     )
     diagnostics["n_clusters"] = int(df[cluster].nunique())
     diagnostics["n_obs"] = int(len(df))
+    if n_absorbed is not None:
+        model, diagnostics = _corrigir_gl_absorvidos(
+            model, diagnostics, int(len(df)), len(regressors), int(n_absorbed)
+        )
     return model, diagnostics
 
 

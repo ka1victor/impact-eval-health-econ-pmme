@@ -91,10 +91,14 @@ TABELA_LOO = OUT_DIR / f"{PREFIX}_tabela_04_leave_one_out.csv"
 TABELA_INFLUENCIA = OUT_DIR / f"{PREFIX}_tabela_05_influencia_municipal.csv"
 TABELA_PRED = OUT_DIR / f"{PREFIX}_tabela_06_validacao_preditiva.csv"
 TABELA_EVENTO = OUT_DIR / f"{PREFIX}_tabela_07_estudo_evento_atracao.csv"
+TABELA_EVENTO_PROP = OUT_DIR / f"{PREFIX}_tabela_08_estudo_evento_proporcional.csv"
+TABELA_LOO_EVENTO = OUT_DIR / f"{PREFIX}_tabela_09_leave_one_curso_evento.csv"
+TABELA_SENS_REF = OUT_DIR / f"{PREFIX}_tabela_10_sensibilidade_referencia.csv"
 FIG_TRAJ_ESTRATO = OUT_DIR / f"{PREFIX}_figura_01_trajetoria_estoque_estrato.png"
 FIG_TRAJ_ATRACAO = OUT_DIR / f"{PREFIX}_figura_02_trajetoria_estoque_atracao.png"
 FIG_DELTA = OUT_DIR / f"{PREFIX}_figura_03_delta_estoque_atracao.png"
 FIG_EVENTO = OUT_DIR / f"{PREFIX}_figura_04_estudo_evento_atracao.png"
+FIG_EVENTO_PROP = OUT_DIR / f"{PREFIX}_figura_05_estudo_evento_proporcional.png"
 JSON_MANISFESTO = OUT_DIR / f"{PREFIX}_manifesto_maturidade_censura.json"
 JSON_ESTIMATIVAS = OUT_DIR / f"{PREFIX}_estimativas_provimento.json"
 RELATORIO_MD = OUT_DIR / f"{PREFIX}_relatorio_diagnostico.md"
@@ -220,7 +224,27 @@ def main() -> None:
         }
     # ponte stats
     ponte = json.loads(PONTE_FILE.read_text(encoding="utf-8"))
+    # A chave da ponte se chama "cursos_estritamente_univocos", mas o que ela
+    # lista sao os cursos cujo CBO nao e compartilhado com outro curso do
+    # PMM-E. Dois deles mapeiam mais de um CBO na propria ponte (curso 14,
+    # MULTIESPECIALIDADE_EXCLUSIVA; curso 16, FAMILIA_PATOLOGIA), entao
+    # "univoco" e rotulo falso para a amostra confirmatoria. A ponte nao e
+    # alterada aqui; apenas a nomenclatura dos artefatos de A5 e corrigida
+    # para "CBO nao compartilhado entre cursos", e os cursos com mapeamento
+    # estritamente 1:1 passam a ser contados e publicados a parte.
     cursos_sem_sobre = ponte["cursos_estritamente_univocos"]
+    catalogo_ponte = {int(c["cod_curso"]): c for c in ponte["catalogo_cursos"]}
+    cursos_cbo_1_para_1 = sorted(
+        int(cod)
+        for cod in cursos_sem_sobre
+        if len(catalogo_ponte[int(cod)]["cbos_elegiveis"]) == 1
+        and not catalogo_ponte[int(cod)]["sobreposicao"]
+    )
+    cursos_multi_cbo_sem_compartilhamento = {
+        int(cod): catalogo_ponte[int(cod)]["grau_univocidade"]
+        for cod in sorted(cursos_sem_sobre)
+        if len(catalogo_ponte[int(cod)]["cbos_elegiveis"]) > 1
+    }
     # panel confirmatoria stats
     confirmatoria_cells = panel[panel["competencia"]==BASELINE_COMP]["amostra_confirmatoria"].sum()
     total_cells = len(baseline_df)
@@ -258,7 +282,7 @@ def main() -> None:
         {"etapa":"01_quadro_Ch1_cnes_curso","n_celulas":1295,"n_municipios":368,"nota":"quadro_ch1 1295 CNES-curso em 368 municipios (quadro_vagas_tratamento)"},
         {"etapa":"02_municipio_curso_agregado","n_celulas":1184,"n_municipios":368,"nota":"panel agregacao municipio-curso (CNES multiplos por municipio colapsados)"},
         {"etapa":"03_painel_completo_26_comp","n_celulas":1184*26,"n_municipios":368,"nota":"30784 linhas painel_municipio_curso_mensal 202406-202607"},
-        {"etapa":"04_confirmatoria_10_cursos","n_celulas":587,"n_municipios":295,"nota":"587 celulas municipio-curso sem sobreposicao CBO (ponte 1,2,3,5,9,12,13,14,15,16)"},
+        {"etapa":"04_confirmatoria_10_cursos","n_celulas":587,"n_municipios":295,"nota":"587 celulas municipio-curso com CBO nao compartilhado entre cursos (ponte 1,2,3,5,9,12,13,14,15,16); oito deles com CBO estritamente 1:1"},
         {"etapa":"05_ampliada_6_cursos_sobrepostos","n_celulas":597,"n_municipios":242,"nota":"597 celulas com CBO compartilhado (4,6,7,8,10,11) - sensibilidade"},
         {"etapa":"06_referencia_limpa_202506","n_celulas":1184,"n_municipios":368,"nota":"ultima competencia inequivocamente anterior a publicacao da oferta em julho de 2025"},
         {"etapa":"07_follow_comum_202603","n_celulas":1184,"n_municipios":368,"nota":"fim da janela comum; 9 meses apos a referencia limpa e exposicao heterogenea"},
@@ -451,8 +475,9 @@ def main() -> None:
         df["q_fdr_atracao"]=np.nan
         return df
 
-    # Amostra principal: somente os dez cursos com ponte CBO unívoca.
-    # As células de cursos sobrepostos permanecem como sensibilidade ampliada.
+    # Amostra principal: somente os dez cursos cujo CBO não é compartilhado
+    # com outro curso do PMM-E. As células de cursos com CBO compartilhado
+    # permanecem como sensibilidade ampliada.
     analysis = cross[cross["amostra_confirmatoria"]].copy()
     groups = analysis["co_ibge_6d"]
     # Outcomes
@@ -717,11 +742,31 @@ def main() -> None:
     # Atracao_muni é um resultado administrativo realizado, não tratamento
     # exógeno. O estudo de evento descreve trajetórias diferenciais e absorve
     # heterogeneidade fixa da célula, choques curso-mês e UF-mês.
-    def estimate_event(sample: pd.DataFrame, label: str):
+    #
+    # Duas escalas são estimadas. A proporcional, com log1p do estoque, é a
+    # forma primária de reportar A5: o desfecho em nível soma profissionais de
+    # municípios com estoques de ordens de grandeza diferentes, então um curso
+    # de estoque grande domina o coeficiente mecanicamente. A escala de nível
+    # permanece publicada como sensibilidade, e é frágil à composição de
+    # cursos (ver `A5_tabela_09`) e ao mês de referência (`A5_tabela_10`).
+    #
+    # Duas convenções de graus de liberdade são publicadas lado a lado. As
+    # colunas sem sufixo usam `k` = regressores visíveis (padrão do
+    # statsmodels), que é a convenção dos números já divulgados. As colunas
+    # `*_gl_fe` contam também os parâmetros de efeito fixo absorvidos
+    # (convenção reghdfe/fixest) e são a convenção correta para inferência.
+    EVENT_FE = ["cell_id", "course_month", "uf_month"]
+    ESCALAS_EVENTO = {
+        "nivel": ("especialistas_mst", "estoque em nivel (numero de profissionais)"),
+        "proporcional": ("log_estoque_mst", "log1p do estoque (variacao relativa)"),
+    }
+
+    def _preparar_evento(sample: pd.DataFrame):
         ev = sample.copy()
         ev["cell_id"] = ev["co_ibge_6d"].astype(str) + "_" + ev["cod_curso"].astype(str)
         ev["course_month"] = ev["cod_curso"].astype(str) + "_" + ev["competencia"].astype(str)
         ev["uf_month"] = ev["sg_uf"].astype(str) + "_" + ev["competencia"].astype(str)
+        ev["log_estoque_mst"] = np.log1p(ev["especialistas_mst"].astype(float))
         terms = []
         for comp in COMPETENCIAS:
             if comp == BASELINE_COMP:
@@ -729,67 +774,280 @@ def main() -> None:
             term = f"event_{comp}"
             ev[term] = ev["atracao_muni"].astype(float) * (ev["competencia"].astype(str) == comp).astype(float)
             terms.append(term)
-        model, diagnostics = fit_absorbed_ols(
-            ev,
-            "especialistas_mst",
-            terms,
-            ["cell_id", "course_month", "uf_month"],
-            "co_ibge_6d",
+        return ev, terms
+
+    def _parametros_fe(frame: pd.DataFrame, fe_columns) -> int:
+        """Parametros de efeito fixo absorvidos na convencao reghdfe/fixest.
+
+        Soma os niveis de cada dimensao e desconta uma constante por dimensao
+        adicional, que e a redundancia de posto entre as dimensoes.
+        """
+        return int(sum(frame[fe].nunique() for fe in fe_columns) - (len(fe_columns) - 1))
+
+    def _ajustar_evento(sample: pd.DataFrame, escala: str):
+        """Ajusta o estudo de evento nas duas convencoes de graus de liberdade."""
+        outcome = ESCALAS_EVENTO[escala][0]
+        ev, terms = _preparar_evento(sample)
+        n_fe = _parametros_fe(ev, EVENT_FE)
+        modelo_k, diag_k = fit_absorbed_ols(ev, outcome, terms, EVENT_FE, "co_ibge_6d")
+        modelo_fe, diag_fe = fit_absorbed_ols(
+            ev, outcome, terms, EVENT_FE, "co_ibge_6d", n_absorbed=n_fe
         )
+        contexto = {
+            "ev": ev,
+            "terms": terms,
+            "escala": escala,
+            "outcome": outcome,
+            "n_fe": n_fe,
+            "n_obs": int(len(ev)),
+            "n_celulas": int(ev[["co_ibge_6d", "cod_curso"]].drop_duplicates().shape[0]),
+            "n_clusters": int(ev["co_ibge_6d"].nunique()),
+            "n_cursos": int(ev["cod_curso"].nunique()),
+            "diagnosticos": diag_k,
+            "diagnosticos_gl_fe": diag_fe,
+        }
+        return modelo_k, modelo_fe, contexto
+
+    def _contraste(modelo, terms, pesos: dict[str, float]) -> dict[str, float]:
+        """Testa uma combinacao linear dos coeficientes de evento."""
+        vetor = np.zeros((1, len(terms)))
+        for termo, peso in pesos.items():
+            vetor[0, terms.index(termo)] += peso
+        teste = modelo.t_test(vetor)
+        beta = float(np.ravel(teste.effect)[0])
+        se = float(np.ravel(teste.sd)[0])
+        lo, hi = [float(x) for x in np.ravel(teste.conf_int())[:2]]
+        return {
+            "beta": beta,
+            "se": se,
+            "t": float(np.ravel(teste.tvalue)[0]),
+            "p": float(np.ravel(teste.pvalue)[0]),
+            "ci_low": lo,
+            "ci_high": hi,
+        }
+
+    def estimate_event(sample: pd.DataFrame, label: str, escala: str = "nivel"):
+        modelo_k, modelo_fe, ctx = _ajustar_evento(sample, escala)
+        terms = ctx["terms"]
         rows = []
         for comp in COMPETENCIAS:
             if comp == BASELINE_COMP:
-                beta = se = 0.0
-                pval = 1.0
-                lo = hi = 0.0
+                base = {"beta": 0.0, "se": 0.0, "p": 1.0, "ci_low": 0.0, "ci_high": 0.0}
+                corr = dict(base)
             else:
                 term = f"event_{comp}"
-                beta = float(model.params[term])
-                se = float(model.bse[term])
-                pval = float(model.pvalues[term])
-                lo, hi = [float(x) for x in model.conf_int().loc[term]]
+                lo_k, hi_k = [float(x) for x in modelo_k.conf_int().loc[term]]
+                lo_f, hi_f = [float(x) for x in modelo_fe.conf_int().loc[term]]
+                base = {
+                    "beta": float(modelo_k.params[term]),
+                    "se": float(modelo_k.bse[term]),
+                    "p": float(modelo_k.pvalues[term]),
+                    "ci_low": lo_k,
+                    "ci_high": hi_k,
+                }
+                corr = {
+                    "beta": float(modelo_fe.params[term]),
+                    "se": float(modelo_fe.bse[term]),
+                    "p": float(modelo_fe.pvalues[term]),
+                    "ci_low": lo_f,
+                    "ci_high": hi_f,
+                }
             rows.append({
                 "amostra": label,
+                "escala": escala,
                 "competencia": comp,
                 "fase": "PRE" if comp < "202507" else ("TRANSICAO" if comp < T0_ADMIN_COMP else "POS_ADMIN"),
-                "beta": beta,
-                "se_cluster": se,
-                "ci_low": lo,
-                "ci_high": hi,
-                "p_valor": pval,
+                "beta": base["beta"],
+                "se_cluster": base["se"],
+                "ci_low": base["ci_low"],
+                "ci_high": base["ci_high"],
+                "p_valor": base["p"],
+                "se_cluster_gl_fe": corr["se"],
+                "ci_low_gl_fe": corr["ci_low"],
+                "ci_high_gl_fe": corr["ci_high"],
+                "p_valor_gl_fe": corr["p"],
                 "referencia": comp == BASELINE_COMP,
-                "n_obs": int(len(ev)),
-                "n_celulas": int(ev[["co_ibge_6d", "cod_curso"]].drop_duplicates().shape[0]),
-                "n_clusters": int(ev["co_ibge_6d"].nunique()),
+                "n_obs": ctx["n_obs"],
+                "n_celulas": ctx["n_celulas"],
+                "n_clusters": ctx["n_clusters"],
+                "n_parametros_fe_absorvidos": ctx["n_fe"],
             })
         pre_terms = [f"event_{c}" for c in COMPETENCIAS if c < BASELINE_COMP]
         restriction = np.zeros((len(pre_terms), len(terms)))
         for i, term in enumerate(pre_terms):
             restriction[i, terms.index(term)] = 1
-        ftest = model.f_test(restriction)
+        ftest = modelo_k.f_test(restriction)
+        ftest_fe = modelo_fe.f_test(restriction)
+        # Referencia alternativa: media dos doze meses pre estimados. A
+        # referencia 202506 e o ponto mais baixo do caminho pre, e o contraste
+        # contra a media do periodo pre e a sensibilidade correspondente.
+        pesos_media_pre = {f"event_{c}": -1.0 / len(pre_terms) for c in [t.replace("event_", "") for t in pre_terms]}
+        pesos_media_pre["event_202603"] = pesos_media_pre.get("event_202603", 0.0) + 1.0
+        media_pre_k = _contraste(modelo_k, terms, pesos_media_pre)
+        media_pre_fe = _contraste(modelo_fe, terms, pesos_media_pre)
         summary = {
             "referencia": BASELINE_COMP,
-            "n_obs": int(len(ev)),
-            "n_celulas": int(ev[["co_ibge_6d", "cod_curso"]].drop_duplicates().shape[0]),
-            "n_clusters": int(ev["co_ibge_6d"].nunique()),
+            "escala": escala,
+            "outcome": ctx["outcome"],
+            "descricao_escala": ESCALAS_EVENTO[escala][1],
+            "n_obs": ctx["n_obs"],
+            "n_celulas": ctx["n_celulas"],
+            "n_clusters": ctx["n_clusters"],
+            "n_cursos": ctx["n_cursos"],
             "pre_F": float(np.asarray(ftest.fvalue).item()),
             "pre_p": float(np.asarray(ftest.pvalue).item()),
-            "mar2026_beta": float(model.params["event_202603"]),
-            "mar2026_se": float(model.bse["event_202603"]),
-            "mar2026_p": float(model.pvalues["event_202603"]),
+            "pre_F_gl_fe": float(np.asarray(ftest_fe.fvalue).item()),
+            "pre_p_gl_fe": float(np.asarray(ftest_fe.pvalue).item()),
+            "mar2026_beta": float(modelo_k.params["event_202603"]),
+            "mar2026_se": float(modelo_k.bse["event_202603"]),
+            "mar2026_p": float(modelo_k.pvalues["event_202603"]),
+            "mar2026_se_gl_fe": float(modelo_fe.bse["event_202603"]),
+            "mar2026_p_gl_fe": float(modelo_fe.pvalues["event_202603"]),
+            "mar2026_vs_media_pre_beta": media_pre_k["beta"],
+            "mar2026_vs_media_pre_se": media_pre_k["se"],
+            "mar2026_vs_media_pre_p": media_pre_k["p"],
+            "mar2026_vs_media_pre_se_gl_fe": media_pre_fe["se"],
+            "mar2026_vs_media_pre_p_gl_fe": media_pre_fe["p"],
+            "n_parametros_fe_absorvidos": ctx["n_fe"],
+            "k_regressores_visiveis": len(terms),
+            "fator_correcao_variancia_gl_fe": float(ctx["diagnosticos_gl_fe"]["fator_correcao_variancia"]),
             "efeitos_fixos": ["municipio-curso", "curso-mes", "UF-mes"],
-            "diagnosticos": diagnostics,
+            "diagnosticos": ctx["diagnosticos"],
+            "convencao_colunas": (
+                "colunas sem sufixo: k = regressores visiveis (padrao statsmodels, "
+                "convencao dos numeros ja divulgados); colunas _gl_fe: K inclui os "
+                "parametros de efeito fixo absorvidos (reghdfe/fixest), convencao "
+                "correta para inferencia"
+            ),
             "linguagem": "trajetoria diferencial associativa; atracao e resultado realizado",
         }
-        return pd.DataFrame(rows), summary
+        return pd.DataFrame(rows), summary, (modelo_k, modelo_fe, ctx)
 
-    event_primary, event_primary_summary = estimate_event(
-        panel[panel["amostra_confirmatoria"]].copy(), "confirmatoria_587"
+    amostra_confirmatoria = panel[panel["amostra_confirmatoria"]].copy()
+    event_primary, event_primary_summary, ajuste_primario = estimate_event(
+        amostra_confirmatoria, "confirmatoria_587"
     )
-    event_expanded, event_expanded_summary = estimate_event(panel.copy(), "ampliada_1184")
+    event_expanded, event_expanded_summary, _ = estimate_event(panel.copy(), "ampliada_1184")
     event_table = pd.concat([event_primary, event_expanded], ignore_index=True)
     tmp = TABELA_EVENTO.with_suffix(".csv.tmp")
     event_table.to_csv(tmp, index=False); tmp.replace(TABELA_EVENTO)
+
+    # === Escala proporcional: forma primaria de reportar A5 ===
+    event_prop_primary, event_prop_primary_summary, ajuste_prop_primario = estimate_event(
+        amostra_confirmatoria, "confirmatoria_587", escala="proporcional"
+    )
+    event_prop_expanded, event_prop_expanded_summary, _ = estimate_event(
+        panel.copy(), "ampliada_1184", escala="proporcional"
+    )
+    event_prop_table = pd.concat([event_prop_primary, event_prop_expanded], ignore_index=True)
+    tmp = TABELA_EVENTO_PROP.with_suffix(".csv.tmp")
+    event_prop_table.to_csv(tmp, index=False); tmp.replace(TABELA_EVENTO_PROP)
+
+    # === Leave-one-curso-out do coeficiente de evento de marco/2026 ===
+    # O leave-one-out publicado ate aqui (`A5_tabela_04`) era do modelo
+    # secundario de delta em corte transversal, nao do coeficiente de
+    # manchete. Este exercicio deixa a composicao de cursos auditavel nas duas
+    # escalas, incluindo a subamostra dos oito cursos com CBO estritamente 1:1.
+    subamostras_loo = [("todos_10_cursos", sorted(int(c) for c in cursos_sem_sobre), "amostra confirmatoria completa")]
+    for curso in sorted(int(c) for c in cursos_sem_sobre):
+        restantes = [c for c in sorted(int(x) for x in cursos_sem_sobre) if c != curso]
+        subamostras_loo.append((f"sem_curso_{curso:02d}", restantes, f"exclui o curso {curso}"))
+    subamostras_loo.append((
+        "somente_8_cbo_1_para_1",
+        list(cursos_cbo_1_para_1),
+        "somente os cursos com CBO estritamente 1:1 na ponte",
+    ))
+    loo_evento_rows = []
+    for escala in ("proporcional", "nivel"):
+        for nome, cursos_incluidos, nota in subamostras_loo:
+            sub = amostra_confirmatoria[amostra_confirmatoria["cod_curso"].isin(cursos_incluidos)].copy()
+            modelo_k, modelo_fe, ctx = _ajustar_evento(sub, escala)
+            lo_k, hi_k = [float(x) for x in modelo_k.conf_int().loc["event_202603"]]
+            lo_f, hi_f = [float(x) for x in modelo_fe.conf_int().loc["event_202603"]]
+            loo_evento_rows.append({
+                "escala": escala,
+                "subamostra": nome,
+                "cursos_incluidos": ";".join(str(c) for c in cursos_incluidos),
+                "n_cursos": len(cursos_incluidos),
+                "competencia": FOLLOW_6M_COMP,
+                "beta": float(modelo_k.params["event_202603"]),
+                "se_cluster": float(modelo_k.bse["event_202603"]),
+                "ci_low": lo_k,
+                "ci_high": hi_k,
+                "p_valor": float(modelo_k.pvalues["event_202603"]),
+                "se_cluster_gl_fe": float(modelo_fe.bse["event_202603"]),
+                "ci_low_gl_fe": lo_f,
+                "ci_high_gl_fe": hi_f,
+                "p_valor_gl_fe": float(modelo_fe.pvalues["event_202603"]),
+                "n_obs": ctx["n_obs"],
+                "n_celulas": ctx["n_celulas"],
+                "n_clusters": ctx["n_clusters"],
+                "n_parametros_fe_absorvidos": ctx["n_fe"],
+                "nota": nota,
+            })
+    loo_evento = pd.DataFrame(loo_evento_rows)
+    tmp = TABELA_LOO_EVENTO.with_suffix(".csv.tmp")
+    loo_evento.to_csv(tmp, index=False); tmp.replace(TABELA_LOO_EVENTO)
+
+    # === Sensibilidade de mes de referencia ===
+    # 202506 e o ponto mais baixo do caminho pre. Cada linha reancora o
+    # coeficiente de 202603 em uma referencia alternativa, incluindo a media
+    # dos doze meses pre estimados.
+    meses_pre = [c for c in COMPETENCIAS if c <= BASELINE_COMP]
+    meses_pre_estimados = [c for c in meses_pre if c != BASELINE_COMP]
+    ref_rows = []
+    for escala, (modelo_k, modelo_fe, ctx) in [
+        ("proporcional", ajuste_prop_primario),
+        ("nivel", ajuste_primario),
+    ]:
+        terms = ctx["terms"]
+        alternativas = []
+        for comp in meses_pre:
+            pesos = {"event_202603": 1.0}
+            if comp != BASELINE_COMP:
+                pesos[f"event_{comp}"] = pesos.get(f"event_{comp}", 0.0) - 1.0
+            alternativas.append((comp, "mes", pesos, f"referencia deslocada para {comp}"))
+        pesos_media = {f"event_{c}": -1.0 / len(meses_pre_estimados) for c in meses_pre_estimados}
+        pesos_media["event_202603"] = pesos_media.get("event_202603", 0.0) + 1.0
+        alternativas.append((
+            "media_12_meses_pre",
+            "media",
+            pesos_media,
+            "media dos doze meses pre estimados (a referencia 202506 nao entra na media)",
+        ))
+        pesos_media_incl = {f"event_{c}": -1.0 / len(meses_pre) for c in meses_pre_estimados}
+        pesos_media_incl["event_202603"] = pesos_media_incl.get("event_202603", 0.0) + 1.0
+        alternativas.append((
+            "media_13_meses_pre_com_referencia",
+            "media",
+            pesos_media_incl,
+            "media dos treze meses pre, contando a referencia 202506 como zero",
+        ))
+        for nome, tipo, pesos, nota in alternativas:
+            ck = _contraste(modelo_k, terms, pesos)
+            cf = _contraste(modelo_fe, terms, pesos)
+            ref_rows.append({
+                "escala": escala,
+                "referencia": nome,
+                "tipo_referencia": tipo,
+                "competencia_avaliada": FOLLOW_6M_COMP,
+                "beta": ck["beta"],
+                "se_cluster": ck["se"],
+                "ci_low": ck["ci_low"],
+                "ci_high": ck["ci_high"],
+                "p_valor": ck["p"],
+                "se_cluster_gl_fe": cf["se"],
+                "ci_low_gl_fe": cf["ci_low"],
+                "ci_high_gl_fe": cf["ci_high"],
+                "p_valor_gl_fe": cf["p"],
+                "n_obs": ctx["n_obs"],
+                "n_clusters": ctx["n_clusters"],
+                "n_parametros_fe_absorvidos": ctx["n_fe"],
+                "nota": nota,
+            })
+    sens_referencia = pd.DataFrame(ref_rows)
+    tmp = TABELA_SENS_REF.with_suffix(".csv.tmp")
+    sens_referencia.to_csv(tmp, index=False); tmp.replace(TABELA_SENS_REF)
 
     # Distribuição da variação na amostra principal: a média é acompanhada por
     # mediana, probabilidade de aumento e extremos, sem esconder o outlier.
@@ -876,6 +1134,23 @@ def main() -> None:
     plt.tight_layout()
     savefig_atomic(FIG_EVENTO, dpi=300); plt.close()
 
+    # Figura 5: escala proporcional, forma primaria de reportar A5. O intervalo
+    # usa a convencao de graus de liberdade que conta os efeitos fixos
+    # absorvidos.
+    epp = event_prop_primary.copy()
+    x = np.arange(len(epp))
+    plt.figure(figsize=(11,5.8))
+    plt.axhline(0, color="black", linewidth=.8)
+    plt.axvspan(comp_index["202507"]-.5, comp_index[T0_ADMIN_COMP]-.5, color="#fff3cd", alpha=.6, label="transicao administrativa")
+    plt.axvline(comp_index[T0_ADMIN_COMP], color="#b71c1c", linestyle="--", linewidth=1.2, label="T0 administrativo 202510")
+    plt.errorbar(x, epp["beta"], yerr=[epp["beta"]-epp["ci_low_gl_fe"], epp["ci_high_gl_fe"]-epp["beta"]], fmt="o", color="#00695c", capsize=3, markersize=4)
+    plt.xticks(np.arange(0,len(COMPETENCIAS),2), [c for i,c in enumerate(COMPETENCIAS) if i%2==0], rotation=45, fontsize=7)
+    plt.ylabel("Diferenca ajustada em log1p do estoque vs junho/2025")
+    plt.title("Escala proporcional (primaria): evolucao diferencial do estoque associada a atracao\n587 municipio-curso; FE celula, curso-mes e UF-mes; cluster municipio; IC com GL de FE absorvidos")
+    plt.legend(fontsize=8)
+    plt.tight_layout()
+    savefig_atomic(FIG_EVENTO_PROP, dpi=300); plt.close()
+
     # === JSONs ===
     # Manifesto maturidade
     pot = json.loads(POTENCIA_A3.read_text(encoding="utf-8"))
@@ -901,8 +1176,19 @@ def main() -> None:
             "nota": "Junho de 2025 e a referencia inequivocamente pre-oferta. Setembro de 2025 nao e baseline limpo: o snapshot registra inicio mediano em 2025-09-19 e entradas ate 2026-03-17. O follow comum 202603 representa nove meses de calendario desde a referencia, com exposicao fisica heterogenea."
         },
         "ponte_curso_cbo": {
-            "cursos_estritamente_univocos_confirmatorios": cursos_sem_sobre,
+            "cursos_cbo_nao_compartilhado_confirmatorios": cursos_sem_sobre,
             "n_cursos_confirmatorios": len(cursos_sem_sobre),
+            "cursos_cbo_estritamente_1_para_1": cursos_cbo_1_para_1,
+            "n_cursos_cbo_estritamente_1_para_1": len(cursos_cbo_1_para_1),
+            "cursos_nao_compartilhados_com_multiplos_cbo": cursos_multi_cbo_sem_compartilhamento,
+            "nota_nomenclatura": (
+                "A chave da ponte se chama cursos_estritamente_univocos, mas descreve "
+                "cursos cujo CBO nao e compartilhado com outro curso do PMM-E. Dos dez, "
+                f"{len(cursos_cbo_1_para_1)} tem mapeamento estritamente 1:1; os cursos "
+                f"{sorted(cursos_multi_cbo_sem_compartilhamento)} agregam mais de um CBO. "
+                "Os artefatos de A5 usam 'CBO nao compartilhado entre cursos'; a ponte "
+                "nao foi alterada."
+            ),
             "n_cursos_sobrepostos": len([c for c in range(1,17) if c not in cursos_sem_sobre]),
             "celulas_confirmatorias_referencia": int(confirmatoria_cells),
             "celulas_ampliada_sobreposta": int(total_cells - confirmatoria_cells),
@@ -911,7 +1197,7 @@ def main() -> None:
             "municipios_ampliada": int(panel["co_ibge_6d"].nunique()),
             "status_substantivo": bridge_raw.get("status_substantivo"),
             "versao_ponte": bridge_raw.get("versao_ponte"),
-            "regra": "Primario restrito ao nucleo sem sobreposicao (587 celulas, 295 mun); sensibilidade inclui ampliada 597 celulas sobrepostas estratificadas; nao colapsar CBOs compartilhados no primario para evitar contaminacao",
+            "regra": "Primario restrito ao nucleo sem CBO compartilhado (587 celulas, 295 mun); sensibilidade inclui ampliada 597 celulas com CBO compartilhado, estratificadas; nao colapsar CBOs compartilhados no primario para evitar contaminacao",
         },
         "horizonte_e_censura": {
             "janela_dinamica_primaria": f"{BASELINE_COMP} -> {FOLLOW_6M_COMP} (referencia limpa e follow comum; 9 meses de calendario)",
@@ -957,7 +1243,11 @@ def main() -> None:
             "tabela_trajetoria_atracao": str(TABELA_TRAJ_ATRACAO.relative_to(ROOT)).replace("\\","/"),
             "tabela_descritiva_outcomes": str(TABELA_DESC_OUTCOMES.relative_to(ROOT)).replace("\\","/"),
             "tabela_estudo_evento": str(TABELA_EVENTO.relative_to(ROOT)).replace("\\","/"),
+            "tabela_estudo_evento_proporcional": str(TABELA_EVENTO_PROP.relative_to(ROOT)).replace("\\","/"),
+            "tabela_leave_one_curso_evento": str(TABELA_LOO_EVENTO.relative_to(ROOT)).replace("\\","/"),
+            "tabela_sensibilidade_referencia": str(TABELA_SENS_REF.relative_to(ROOT)).replace("\\","/"),
             "figura_estudo_evento": str(FIG_EVENTO.relative_to(ROOT)).replace("\\","/"),
+            "figura_estudo_evento_proporcional": str(FIG_EVENTO_PROP.relative_to(ROOT)).replace("\\","/"),
         },
         "avisos_linguagem": [
             "Nao chamar presenca no CNES de participacao no PMM-E, atividade fisica ou retencao individual.",
@@ -983,7 +1273,7 @@ def main() -> None:
             "confirmatoria_10_cursos": "587 celulas (295 mun) CBO sem sobreposicao",
             "ampliada_6_cursos": "597 celulas (242 mun) sobrepostos",
             "cross_section_janela": f"1184 celulas referencia pre-oferta {BASELINE_COMP} -> follow comum {FOLLOW_6M_COMP}",
-            "amostra_primaria_modelos": "587 celulas municipio-curso, 295 municipios, dez cursos com CBO univoco",
+            "amostra_primaria_modelos": "587 celulas municipio-curso, 295 municipios, dez cursos com CBO nao compartilhado entre cursos (oito deles estritamente 1:1)",
             "unidade_analitica":"municipio-curso (agregacao de CNES dentro do municipio)",
             "unidade_inferencia":"municipio (cluster-robusto; G=295 na amostra principal)",
         },
@@ -1003,7 +1293,55 @@ def main() -> None:
             "presentes_6m_nivel": "numero entrantes elegiveis em baseline ainda presentes 6m depois (nivel, nao taxa)",
             "bloqueados": ["retencao individual do bolsista","atividade fisica confirmada","WTA","taxa por vaga"],
         },
+        "escala_de_reporte": {
+            "primaria": "proporcional (log1p do estoque municipio-curso)",
+            "sensibilidade": "nivel (numero de profissionais), publicada e explicitamente fragil",
+            "motivo": (
+                "O desfecho em nivel soma profissionais de municipios com estoques de "
+                "ordens de grandeza diferentes, entao um curso de estoque grande domina "
+                "o coeficiente mecanicamente. A escala proporcional mede variacao "
+                "relativa da oferta local, que e a pergunta pretendida. A escolha e "
+                "substantiva, nao estatistica, e vale para as duas direcoes do resultado."
+            ),
+            "fragilidade_do_nivel": (
+                "O coeficiente em nivel de 202603 cai de 0,500 para 0,200 sem o curso 14 "
+                "e para 0,121 nos oito cursos com CBO estritamente 1:1; contra a media "
+                "dos doze meses pre, e 0,405. Ver A5_tabela_09 e A5_tabela_10."
+            ),
+            "linguagem": "associativa nas duas escalas; atracao e resultado realizado, nao tratamento atribuido",
+        },
+        "correcao_graus_liberdade": {
+            "problema": (
+                "fit_absorbed_ols roda sm.OLS sobre variaveis residualizadas com "
+                "use_correction=True, e o statsmodels conta k = regressores visiveis, "
+                "ignorando os parametros de efeito fixo absorvidos."
+            ),
+            "convencao_correta": "reghdfe/fixest: K inclui os efeitos fixos absorvidos",
+            "k_regressores_visiveis": event_primary_summary["k_regressores_visiveis"],
+            "n_parametros_fe_absorvidos": event_primary_summary["n_parametros_fe_absorvidos"],
+            "k_total": event_primary_summary["k_regressores_visiveis"] + event_primary_summary["n_parametros_fe_absorvidos"],
+            "n_obs": event_primary_summary["n_obs"],
+            "fator_correcao_variancia": event_primary_summary["fator_correcao_variancia_gl_fe"],
+            "nivel_202603_se_k_visivel": event_primary_summary["mar2026_se"],
+            "nivel_202603_p_k_visivel": event_primary_summary["mar2026_p"],
+            "nivel_202603_se_gl_fe": event_primary_summary["mar2026_se_gl_fe"],
+            "nivel_202603_p_gl_fe": event_primary_summary["mar2026_p_gl_fe"],
+            "proporcional_202603_se_k_visivel": event_prop_primary_summary["mar2026_se"],
+            "proporcional_202603_p_k_visivel": event_prop_primary_summary["mar2026_p"],
+            "proporcional_202603_se_gl_fe": event_prop_primary_summary["mar2026_se_gl_fe"],
+            "proporcional_202603_p_gl_fe": event_prop_primary_summary["mar2026_p_gl_fe"],
+            "nota": (
+                "As colunas e chaves sem sufixo preservam a convencao dos numeros ja "
+                "divulgados (k = 25 regressores visiveis) para que continuem auditaveis; "
+                "as com sufixo _gl_fe usam a convencao correta e sao as que devem ser "
+                "citadas. O parametro n_absorbed de model_utils.fit_absorbed_ols e "
+                "opt-in: sem ele, o comportamento historico dos scripts de "
+                "scripts/avaliacao_impacto/ fica inalterado."
+            ),
+        },
         "modelos": {
+            "principal_proporcional_confirmatorio": event_prop_primary_summary,
+            "sensibilidade_proporcional_ampliada": event_prop_expanded_summary,
             "principal_dinamico_confirmatorio": event_primary_summary,
             "sensibilidade_dinamica_ampliada": event_expanded_summary,
             "distribuicao_delta_confirmatoria": distribution_summary,
@@ -1072,6 +1410,8 @@ def main() -> None:
                 "se_atracao": float(res_het.bse.get("atracao_muni", np.nan)),
             },
         },
+        "leave_one_curso_evento": loo_evento.to_dict(orient="records"),
+        "sensibilidade_mes_referencia": sens_referencia.to_dict(orient="records"),
         "influencia": {
             "leave_one_UF_range": df_loo[df_loo["tipo"]=="leave_one_UF"]["coef"].agg(["min","max","std"]).to_dict() if not df_loo.empty else {},
             "leave_one_curso_range": df_loo[df_loo["tipo"]=="leave_one_curso"]["coef"].agg(["min","max","std"]).to_dict() if not df_loo.empty else {},
@@ -1109,6 +1449,10 @@ def main() -> None:
             "tabela_influencia": str(TABELA_INFLUENCIA.relative_to(ROOT)).replace("\\","/"),
             "tabela_preditiva": str(TABELA_PRED.relative_to(ROOT)).replace("\\","/"),
             "tabela_estudo_evento": str(TABELA_EVENTO.relative_to(ROOT)).replace("\\","/"),
+            "tabela_estudo_evento_proporcional": str(TABELA_EVENTO_PROP.relative_to(ROOT)).replace("\\","/"),
+            "tabela_leave_one_curso_evento": str(TABELA_LOO_EVENTO.relative_to(ROOT)).replace("\\","/"),
+            "tabela_sensibilidade_referencia": str(TABELA_SENS_REF.relative_to(ROOT)).replace("\\","/"),
+            "figura_estudo_evento_proporcional": str(FIG_EVENTO_PROP.relative_to(ROOT)).replace("\\","/"),
             "figura_traj_estrato": str(FIG_TRAJ_ESTRATO.relative_to(ROOT)).replace("\\","/"),
             "figura_traj_atracao": str(FIG_TRAJ_ATRACAO.relative_to(ROOT)).replace("\\","/"),
             "figura_delta": str(FIG_DELTA.relative_to(ROOT)).replace("\\","/"),
@@ -1116,6 +1460,9 @@ def main() -> None:
         },
         "avisos": [
             "Atracao como preditor associativo; sem causalidade.",
+            "Escala primaria de reporte e a proporcional (log1p); a escala em nivel e sensibilidade fragil a composicao de cursos e ao mes de referencia.",
+            "Inferencia deve citar as colunas _gl_fe, que contam os efeitos fixos absorvidos nos graus de liberdade.",
+            "Dez cursos com CBO nao compartilhado entre cursos; apenas oito tem CBO estritamente 1:1.",
             "Sem primeiro estagio causal do RDD, nao atribuir CNES ao adicional da bolsa.",
             "Ponte confirmatoria 587 celulas primaria; ampliada 597 como sensibilidade nao primaria.",
             "Oferta cadastrada local; nao participar PMM-E nem retencao individual.",
@@ -1149,7 +1496,7 @@ def main() -> None:
 > Tipologia A2 strict 540/540 (25/101/238/176) painel 368 mun 1184 celulas municipio-curso
 > Amostra A5: **1184 celulas municipio-curso (368 municipios) x26 competencias =30784 linhas**; confirmatoria 587 (295 mun) sem sobreposicao
 > T0_admin: **{T0_ADMIN_COMP}** (primeira competencia apos homologacao 2025-09-29); baseline {BASELINE_COMP} -> follow 6m {FOLLOW_6M_COMP}; horizonte comum 6 meses maduro
-> Ponte: 10 cursos estritamente univocos (1,2,3,5,9,12,13,14,15,16) como primario; 6 cursos sobrepostos (4,6,7,8,10,11) sensibilidade
+> Ponte: 10 cursos com CBO nao compartilhado entre cursos (1,2,3,5,9,12,13,14,15,16) como primario, dos quais 8 com CBO estritamente 1:1; 6 cursos com CBO compartilhado (4,6,7,8,10,11) como sensibilidade
 
 ## 1. Construcao, painel alinhado ao T0 e maturidade/censura
 
@@ -1163,7 +1510,7 @@ Painel analitico `A5_painel_T0.parquet` (30784 linhas) alinha `t_rel_T0 = compet
 
 Censura documentada: 26 competencias 202406-202607 completas; estoque nunca censurado (0 se sem profissional); entradas indisponiveis 202406-202411 (primeiros 6m), saidas indisponiveis 202605-202607 (ultimos 3m), presenca madura ate baseline 202601 (inclui {BASELINE_COMP}). Ver `A5_manifesto_maturidade_censura.json` e `A5_tabela_00_construcao_steps.csv`.
 
-T0 fisico validado: nominal ciclo1 n=521, dt_inicio de {nominal_stats.get("ciclo1_dt_min")} a {nominal_stats.get("ciclo1_dt_max")}, mediano {nominal_stats.get("ciclo1_dt_median")} (p25 {nominal_stats.get("ciclo1_dt_p25")} p75 {nominal_stats.get("ciclo1_dt_p75")}), {nominal_stats.get("ciclo1_antes_homolog")} antes vs {nominal_stats.get("ciclo1_apos_homolog")} apos homologacao {T0_HOMOLOG_DATE}. Snapshot de sobreviventes ativos em 2026-08-12, nao log completo, por isso T0_admin {T0_ADMIN_COMP} e usado como referencia agregada e baseline {BASELINE_COMP} como ultima pre-T0 madura. Ponte restrita ao nucleo sem sobreposicao (587 celulas) como primario: FTE cadastral por CNES nao contamina cursos compartilhados.
+T0 fisico validado: nominal ciclo1 n=521, dt_inicio de {nominal_stats.get("ciclo1_dt_min")} a {nominal_stats.get("ciclo1_dt_max")}, mediano {nominal_stats.get("ciclo1_dt_median")} (p25 {nominal_stats.get("ciclo1_dt_p25")} p75 {nominal_stats.get("ciclo1_dt_p75")}), {nominal_stats.get("ciclo1_antes_homolog")} antes vs {nominal_stats.get("ciclo1_apos_homolog")} apos homologacao {T0_HOMOLOG_DATE}. Snapshot de sobreviventes ativos em 2026-08-12, nao log completo, por isso T0_admin {T0_ADMIN_COMP} e usado como referencia agregada e baseline {BASELINE_COMP} como ultima pre-T0 madura. Ponte restrita ao nucleo sem CBO compartilhado (587 celulas) como primario: FTE cadastral por CNES nao contamina cursos compartilhados.
 
 ## 2. Trajetoria agregada (antes dos coeficientes)
 
@@ -1194,7 +1541,7 @@ Leave-one-UF (27) e leave-one-curso (16) para delta minimal: range coef atracao 
 
 Leave-one-municipio (368) DFBETA para atracao em delta: base {infl_summary.get("base",0):.3f} range {infl_summary.get("atracao_delta_min",0):.3f} a {infl_summary.get("max",0):.3f} sd {infl_summary.get("sd",0):.3f}; top influentes: {", ".join([f"{r['co_ibge_6d']} Δ{r['delta']:.2f} DFBETA{r['dfbeta']:.2f}" for r in estimativas["influencia"]["top_influentes"][:3]] ) } . Nenhum |DFBETA|>1.5. Ver `A5_tabela_05_influencia_municipal.csv`.
 
-Curso como exploracao: 10 cursos confirmatorios contribuem; cursos sobrepostos estratificados mostram sensibilidade sem mudar primario.
+Curso como exploracao: 10 cursos confirmatorios contribuem; cursos com CBO compartilhado, estratificados, mostram sensibilidade sem mudar primario.
 
 ## 5. Validacao preditiva por municipio (GroupKFold 5)
 
@@ -1211,7 +1558,7 @@ Estoque 6m: R2 out {pred_df[pred_df["modelo"]=="OLS_estoque_6m_minimal"]["r2_med
 
 Permitido: oferta cadastrada local, persistencia da oferta local (estoque/cobertura/entradas/saldo/presentes em nivel), gradiente territorial, associado a. **Proibido:** retenção individual do bolsista, atividade fisica confirmada, efeito causal do PMM-E/bolsa/IVS, WTA, taxa por vaga, dose recebida.
 
-Decisao explicita: **Pode** ligar descriptiva e associativamente o outcome A1 binario por celula (atracao administrativa max ao municipio-curso) ao painel CNES agregado no horizonte 6m comum {BASELINE_COMP}->{FOLLOW_6M_COMP} usando especificacoes pre-definidas, FE curso/UF e cluster municipio, com ponte restrita ao nucleo sem sobreposicao como primario e estratificacao ampliada como sensibilidade. A ligacao e **somente associativa** (persistencia da oferta local onde houve atracao vs onde nao houve), reportada em nivel e diferenca bruta/ajustada, sem taxa condicional a entrantes.
+Decisao explicita: **Pode** ligar descriptiva e associativamente o outcome A1 binario por celula (atracao administrativa max ao municipio-curso) ao painel CNES agregado no horizonte 6m comum {BASELINE_COMP}->{FOLLOW_6M_COMP} usando especificacoes pre-definidas, FE curso/UF e cluster municipio, com ponte restrita ao nucleo sem CBO compartilhado como primario e estratificacao ampliada como sensibilidade. A ligacao e **somente associativa** (persistencia da oferta local onde houve atracao vs onde nao houve), reportada em nivel e diferenca bruta/ajustada, sem taxa condicional a entrantes.
 
 **Nao pode:** chamar delta ou presenca de efeito do PMM-E/bolsa adicional; nao chamar presenca no CNES de participacao confirmada no programa; nao usar presenca condicionada so nos entrantes como retencao; nao interpretar entradas tardias 202605+ sem censura; nao converter faixa anunciada em dose causal (colinearidade IVS-faixa).
 
@@ -1226,12 +1573,37 @@ Decisao explicita: **Pode** ligar descriptiva e associativamente o outcome A1 bi
 *Gerado por `scripts/tema_trabalho/06_avaliar_provimento_cnes.py` em {dt.date.today().isoformat()}. Hashes verificados em `A5_estimativas_provimento.json` e `A5_manifesto_maturidade_censura.json`.*
 """
 
+    # Recortes citados no relatório publicado, lidos das próprias tabelas
+    # gravadas acima para que texto e artefato não possam divergir.
+    def _linha_loo(escala: str, subamostra: str) -> dict:
+        sel = loo_evento[(loo_evento["escala"] == escala) & (loo_evento["subamostra"] == subamostra)]
+        if sel.empty:
+            raise AssertionError(f"leave-one-curso-out sem linha {escala}/{subamostra}")
+        return sel.iloc[0].to_dict()
+
+    def _linha_ref(escala: str, referencia: str) -> dict:
+        sel = sens_referencia[(sens_referencia["escala"] == escala) & (sens_referencia["referencia"] == referencia)]
+        if sel.empty:
+            raise AssertionError(f"sensibilidade de referencia sem linha {escala}/{referencia}")
+        return sel.iloc[0].to_dict()
+
+    loo_nivel_sem14 = _linha_loo("nivel", "sem_curso_14")
+    loo_nivel_8 = _linha_loo("nivel", "somente_8_cbo_1_para_1")
+    loo_prop_sem14 = _linha_loo("proporcional", "sem_curso_14")
+    loo_prop_8 = _linha_loo("proporcional", "somente_8_cbo_1_para_1")
+    ref_nivel_media = _linha_ref("nivel", "media_12_meses_pre")
+    ref_prop_media = _linha_ref("proporcional", "media_12_meses_pre")
+    n_cursos_1_para_1 = len(cursos_cbo_1_para_1)
+    cursos_multi_lista = " e ".join(
+        f"{cod} ({grau})" for cod, grau in sorted(cursos_multi_cbo_sem_compartilhamento.items())
+    )
+
     # Relatório revisado: substitui a narrativa antiga de "seis meses" e
     # explicita que o modelo principal é dinâmico e confirmatório.
     relatorio = f"""# A5 — Evolução da oferta médica cadastrada local no CNES
 
 > **Nível de identificação:** associativo; atração administrativa é resultado realizado, não tratamento exógeno.
-> **Amostra principal:** 587 células município–curso, 295 municípios e 10 cursos com ponte CBO unívoca.
+> **Amostra principal:** 587 células município–curso, 295 municípios e 10 cursos cujo CBO não é compartilhado com outro curso do PMM-E; oito deles têm CBO estritamente 1:1.
 > **Referência limpa:** junho/2025, última competência anterior à publicação da oferta.
 > **Follow comum:** março/2026; nove meses de calendário desde a referência, com tempo de exposição física heterogêneo.
 
@@ -1239,25 +1611,45 @@ Decisao explicita: **Pode** ligar descriptiva e associativamente o outcome A1 bi
 
 Setembro/2025 não é usado como baseline principal. O snapshot nominal registra início mediano em {nominal_stats.get('ciclo1_dt_median')}, com datas entre {nominal_stats.get('ciclo1_dt_min')} e {nominal_stats.get('ciclo1_dt_max')}; portanto, setembro já contém exposição parcial. A janela setembro/2025–março/2026 permanece apenas como diagnóstico histórico em `A5_tabela_03f_sensibilidade_T0_alternativo.csv`.
 
-Os modelos principais usam somente a ponte sem sobreposição. As 597 células dos seis cursos com CBO compartilhado aparecem como sensibilidade ampliada, nunca misturadas ao estimando principal.
+Os modelos principais usam somente a ponte sem CBO compartilhado. As 597 células dos seis cursos com CBO compartilhado aparecem como sensibilidade ampliada, nunca misturadas ao estimando principal.
 
-## 2. Resultado principal: dinâmica do estoque
+## 2. Resultado principal: dinâmica proporcional do estoque
 
 O estudo de evento compara a trajetória do estoque CNES de células com e sem atração administrativa, relativamente a junho/2025. Ele absorve efeitos fixos município–curso, curso–mês e UF–mês e agrupa a inferência por município.
 
-- Teste conjunto dos coeficientes anteriores à referência: F={event_primary_summary['pre_F']:.3f}, p={event_primary_summary['pre_p']:.3f}. A não rejeição não prova comparabilidade.
-- Em março/2026, a diferença ajustada relativa a junho/2025 é {event_primary_summary['mar2026_beta']:.3f} especialista (EP {event_primary_summary['mar2026_se']:.3f}, p={event_primary_summary['mar2026_p']:.3f}).
+**A escala proporcional é a forma primária de reportar A5.** O desfecho em nível soma profissionais de municípios com estoques de ordens de grandeza diferentes, de modo que um curso com estoque grande domina o coeficiente mecanicamente; a escala proporcional mede variação relativa da oferta local, que é a pergunta pretendida. A escolha é substantiva e vale independentemente da direção do resultado.
+
+- Em março/2026, a diferença ajustada em `log1p` do estoque, relativa a junho/2025, é {event_prop_primary_summary['mar2026_beta']:.4f} (EP {event_prop_primary_summary['mar2026_se_gl_fe']:.4f}, p={event_prop_primary_summary['mar2026_p_gl_fe']:.4f} na convenção que conta os efeitos fixos absorvidos; EP {event_prop_primary_summary['mar2026_se']:.4f} e p={event_prop_primary_summary['mar2026_p']:.4f} na convenção anterior).
+- Teste conjunto dos coeficientes anteriores à referência: F={event_prop_primary_summary['pre_F']:.3f}, p={event_prop_primary_summary['pre_p']:.3f}. A não rejeição não prova comparabilidade.
 - A estimativa descreve evolução diferencial associada à atração; não é efeito do PMM-E, da bolsa ou do IVS.
 
-A tabela completa está em `A5_tabela_07_estudo_evento_atracao.csv`; a figura principal é `A5_figura_04_estudo_evento_atracao.png`.
+Tabela em `A5_tabela_08_estudo_evento_proporcional.csv`; figura em `A5_figura_05_estudo_evento_proporcional.png`.
 
-## 3. Distribuição e sensibilidade
+## 3. Escala em nível: sensibilidade explicitamente frágil
+
+A especificação em nível continua publicada, mas **não** como forma primária, porque é frágil a duas coisas que nenhum artefato testava antes.
+
+- Em março/2026, a diferença ajustada em nível é {event_primary_summary['mar2026_beta']:.3f} especialista (EP {event_primary_summary['mar2026_se_gl_fe']:.4f}, p={event_primary_summary['mar2026_p_gl_fe']:.4f} na convenção com efeitos fixos absorvidos; EP {event_primary_summary['mar2026_se']:.4f} e p={event_primary_summary['mar2026_p']:.4f} na convenção anterior). Teste conjunto pré-referência: F={event_primary_summary['pre_F']:.3f}, p={event_primary_summary['pre_p']:.3f}.
+- **Composição de cursos.** Sem o curso 14 o coeficiente cai para {loo_nivel_sem14['beta']:.3f} (p={loo_nivel_sem14['p_valor']:.3f}); restrito aos oito cursos com CBO estritamente 1:1, cai para {loo_nivel_8['beta']:.3f} (p={loo_nivel_8['p_valor']:.3f}). Na escala proporcional os mesmos recortes dão {loo_prop_sem14['beta']:.4f} (p={loo_prop_sem14['p_valor']:.4f}) e {loo_prop_8['beta']:.4f} (p={loo_prop_8['p_valor']:.4f}). O leave-one-curso-out completo, nas duas escalas, está em `A5_tabela_09_leave_one_curso_evento.csv`.
+- **Mês de referência.** Junho/2025 é o ponto mais baixo do caminho pré. Contra a média dos doze meses pré estimados, o coeficiente em nível de março/2026 é {ref_nivel_media['beta']:.3f} (EP {ref_nivel_media['se_cluster']:.3f}, p={ref_nivel_media['p_valor']:.3f}); na escala proporcional, {ref_prop_media['beta']:.4f} (EP {ref_prop_media['se_cluster']:.4f}, p={ref_prop_media['p_valor']:.4f}). Todas as referências alternativas estão em `A5_tabela_10_sensibilidade_referencia.csv`.
+
+O curso 14 mede todos os radiologistas do município, não a competência específica do curso, e é o que sustenta o coeficiente em nível. A tabela de nível permanece em `A5_tabela_07_estudo_evento_atracao.csv` e a figura em `A5_figura_04_estudo_evento_atracao.png`.
+
+Nomenclatura: os dez cursos da amostra confirmatória têm **CBO não compartilhado entre cursos** do PMM-E, e não "CBO unívoco". Apenas {n_cursos_1_para_1} deles têm mapeamento estritamente 1:1; os cursos {cursos_multi_lista} agregam mais de um CBO na própria ponte. A ponte não foi alterada.
+
+## 4. Graus de liberdade dos efeitos fixos absorvidos
+
+O ajuste roda OLS sobre variáveis já residualizadas, e a correção de pequenas amostras do statsmodels conta apenas os {event_primary_summary['k_regressores_visiveis']} regressores visíveis, ignorando os {event_primary_summary['n_parametros_fe_absorvidos']} parâmetros de efeito fixo absorvidos. Na convenção de `reghdfe`/`fixest`, com `K` incluindo os efeitos fixos, o erro-padrão do coeficiente em nível de março/2026 passa de {event_primary_summary['mar2026_se']:.4f} para {event_primary_summary['mar2026_se_gl_fe']:.4f} e o `p` de {event_primary_summary['mar2026_p']:.4f} para {event_primary_summary['mar2026_p_gl_fe']:.4f}.
+
+As duas convenções são publicadas lado a lado: colunas sem sufixo preservam os números já divulgados; colunas com sufixo `_gl_fe` usam a convenção correta e são as que devem ser citadas. O parâmetro correspondente em `model_utils.fit_absorbed_ols` é opt-in, de modo que os scripts da versão agregada do ciclo 1 permanecem inalterados.
+
+## 5. Distribuição e diagnósticos secundários
 
 Na amostra confirmatória, a variação junho/2025–março/2026 tem mediana {analysis['delta_estoque_6m'].median():.1f} e máximo {analysis['delta_estoque_6m'].max():.0f}. Entre células com atração, a média é {distribution_summary['1']['media']:.2f}, a mediana {distribution_summary['1']['mediana']:.1f} e {distribution_summary['1']['proporcao_aumento']:.1%} apresentam aumento; sem atração, os valores são {distribution_summary['0']['media']:.2f}, {distribution_summary['0']['mediana']:.1f} e {distribution_summary['0']['proporcao_aumento']:.1%}.
 
 As regressões de nível, cobertura, novos vínculos mensais após washout, presença da coorte e validação preditiva são diagnósticos secundários. `n_entradas_6m` significa novo vínculo observado no mês após seis meses de ausência, e não entradas acumuladas ao longo de seis meses.
 
-## 4. Linguagem autorizada
+## 6. Linguagem autorizada
 
 Permitido: **evolução do estoque cadastral**, **trajetória diferencial associada à atração**, cobertura e novos vínculos mensais após washout. Proibido: provimento causal, retenção individual do bolsista, atividade física confirmada, efeito causal do PMM-E/bolsa/IVS, taxa por vaga ou dose recebida.
 
@@ -1268,11 +1660,45 @@ O CNES não identifica participantes do programa. Sem log completo, ponte indivi
     tmp = RELATORIO_MD.with_suffix(".md.tmp")
     tmp.write_text(relatorio, encoding="utf-8")
     tmp.replace(RELATORIO_MD)
+    # === Portao de aceitacao contra os alvos congelados ===
+    # docs/06_execucao/35_plano_correcoes_pos_auditoria.md registrou os numeros
+    # antes da implementacao. Divergencia aqui e erro de implementacao, nao
+    # resultado novo, e por isso interrompe a execucao.
+    alvos = [
+        ("proporcional 10 cursos, beta 202603", event_prop_primary_summary["mar2026_beta"], 0.0684, 4),
+        ("proporcional 10 cursos, p 202603", event_prop_primary_summary["mar2026_p"], 0.0002, 4),
+        ("proporcional sem curso 14, beta 202603", float(loo_prop_sem14["beta"]), 0.0592, 4),
+        ("proporcional 8 CBO 1:1, beta 202603", float(loo_prop_8["beta"]), 0.0570, 4),
+        ("proporcional 8 CBO 1:1, p 202603", float(loo_prop_8["p_valor"]), 0.0100, 4),
+        ("nivel sem curso 14, beta 202603", float(loo_nivel_sem14["beta"]), 0.200, 3),
+        ("nivel 8 CBO 1:1, beta 202603", float(loo_nivel_8["beta"]), 0.121, 3),
+        ("nivel vs media dos 12 meses pre, beta", float(ref_nivel_media["beta"]), 0.405, 3),
+        ("nivel vs media dos 12 meses pre, p", float(ref_nivel_media["p_valor"]), 0.174, 3),
+        ("nivel 202603, EP com GL de FE absorvidos", event_primary_summary["mar2026_se_gl_fe"], 0.2469, 4),
+        ("nivel 202603, p com GL de FE absorvidos", event_primary_summary["mar2026_p_gl_fe"], 0.0437, 4),
+    ]
+    divergencias = [
+        f"{nome}: obtido {round(obtido, casas)} contra alvo {alvo}"
+        for nome, obtido, alvo, casas in alvos
+        if round(obtido, casas) != alvo
+    ]
+    if divergencias:
+        raise AssertionError(
+            "Alvos congelados do plano C2 nao reproduzidos: " + "; ".join(divergencias)
+        )
+
     print(
-        f"[OK] A5 concluido: principal dinamico {int(event_primary['n_celulas'].iloc[0])} celulas "
-        f"referencia {BASELINE_COMP}; mar/2026 beta {event_primary.loc[event_primary['competencia']=='202603','beta'].iloc[0]:.3f} "
-        f"p {event_primary.loc[event_primary['competencia']=='202603','p_valor'].iloc[0]:.3f}; "
-        f"delta cross-section diagnostico {cd['coef_atracao']:.3f} p {cd['p_atracao']:.3f}"
+        f"[OK] A5 concluido: primario proporcional (log1p) {int(event_prop_primary['n_celulas'].iloc[0])} celulas, "
+        f"referencia {BASELINE_COMP}; mar/2026 beta {event_prop_primary_summary['mar2026_beta']:.4f} "
+        f"p {event_prop_primary_summary['mar2026_p_gl_fe']:.4f} (GL com FE absorvidos); "
+        f"nivel como sensibilidade fragil beta {event_primary_summary['mar2026_beta']:.3f} "
+        f"EP {event_primary_summary['mar2026_se_gl_fe']:.4f} p {event_primary_summary['mar2026_p_gl_fe']:.4f}; "
+        f"leave-one-curso-out em nivel: sem o curso 14 {float(loo_nivel_sem14['beta']):.3f}, "
+        f"oito CBO 1:1 {float(loo_nivel_8['beta']):.3f}; "
+        f"contra a media dos doze meses pre {float(ref_nivel_media['beta']):.3f} "
+        f"(p {float(ref_nivel_media['p_valor']):.3f}); "
+        f"{len(cursos_sem_sobre)} cursos com CBO nao compartilhado, {n_cursos_1_para_1} estritamente 1:1; "
+        f"{len(alvos)} alvos congelados conferidos"
     )
 
 if __name__=="__main__":

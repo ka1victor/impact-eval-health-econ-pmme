@@ -2,7 +2,7 @@ etapa,n_celulas,n_municipios,nota
 01_quadro_Ch1_cnes_curso,1295,368,quadro_ch1 1295 CNES-curso em 368 municipios (quadro_vagas_tratamento)
 02_municipio_curso_agregado,1184,368,panel agregacao municipio-curso (CNES multiplos por municipio colapsados)
 03_painel_completo_26_comp,30784,368,30784 linhas painel_municipio_curso_mensal 202406-202607
-04_confirmatoria_10_cursos,587,295,"587 celulas municipio-curso sem sobreposicao CBO (ponte 1,2,3,5,9,12,13,14,15,16)"
+04_confirmatoria_10_cursos,587,295,"587 celulas municipio-curso com CBO nao compartilhado entre cursos (ponte 1,2,3,5,9,12,13,14,15,16); oito deles com CBO estritamente 1:1"
 05_ampliada_6_cursos_sobrepostos,597,242,"597 celulas com CBO compartilhado (4,6,7,8,10,11) - sensibilidade"
 06_referencia_limpa_202506,1184,368,ultima competencia inequivocamente anterior a publicacao da oferta em julho de 2025
 07_follow_comum_202603,1184,368,fim da janela comum; 9 meses apos a referencia limpa e exposicao heterogenea

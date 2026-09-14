@@ -27,6 +27,7 @@ STEPS = [
     ROOT / "scripts" / "tema_trabalho" / "09_estimar_cutoff_escore_estrito.py",
     ROOT / "scripts" / "rdd_bolsa" / "03_triagem_resposta_administrativa.py",
     ROOT / "scripts" / "rdd_bolsa" / "02_controlar_execucao_plano_causal.py",
+    ROOT / "scripts" / "tema_trabalho" / "10_conferir_numeros_artigo.py",
 ]
 
 

@@ -31,6 +31,7 @@ Ele executa sequencialmente:
 16. `scripts/tema_trabalho/07_red_team_sintese.py` — síntese red team, matriz de evidências e manifesto reproduzível (A6).
 17. `scripts/tema_trabalho/08_auditar_cutoff_selecao.py` — auditoria do último selecionado versus primeiro não selecionado, ligação agregada a homologação/presença ativa e portão causal (A7).
 18. `scripts/tema_trabalho/09_estimar_cutoff_escore_estrito.py` — estima o efeito local condicional no corte, excluindo empates e exigindo gap de um ponto; gera placebos, sensibilidades e replicação (A8).
+19. `scripts/tema_trabalho/10_conferir_numeros_artigo.py` — relê os artefatos de A4, A5, A7, A8 e dos portões descartados, reformata cada valor no padrão do artigo e exige que o trecho exista em `paper_pmme_submission.tex`; grava o mapeamento número–fonte em `A8_conferencia_numeros_artigo.csv` e falha se alguma cifra do artigo não tiver origem rastreável.
 19. `scripts/rdd_bolsa/03_triagem_resposta_administrativa.py` — registra ausência/estrutura/hashes de eventual resposta, sem persistir linhas nem converter ausência em zero.
 20. `scripts/rdd_bolsa/02_controlar_execucao_plano_causal.py` — consolida o estado dos portões e aplica o bloqueio fail-closed de R3/R4.
 

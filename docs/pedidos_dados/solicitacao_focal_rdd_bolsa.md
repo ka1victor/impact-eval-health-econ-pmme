@@ -4,6 +4,20 @@
 > O envio depende da escolha e autorização do canal pelo autor. Este texto não
 > aceita termos, não autoriza transferência de dados e não contém dados pessoais.
 
+
+## Prioridade revista em 09/09/2026
+
+O item indispensável deste pacote é **um único campo**: o escore administrativo
+de IVS por município, com safra, precisão e arredondamento. A auditoria
+demonstrou que a regra que liga categoria de IVS a faixa de bolsa é
+determinística em 527 de 527 municípios, e que nenhuma regra de corte sobre o
+IVS 2010 público pode recuperá-la — o teto de qualquer regra de dois cortes é
+78,0%. Obtido o escore, o primeiro estágio é *sharp* por construção. Os demais
+itens seguem desejáveis, mas não são o gargalo.
+
+Detalhamento em `docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md`,
+seção 3.5.1.
+
 ## Texto principal sugerido
 
 Solicito, para fins de pesquisa e avaliação independente de política pública,
