@@ -132,7 +132,25 @@ seção 7.
 | 23,6% / 37,4% / 31,6% por faixa publicada (n = 539 / 465 / 291) | `F6`, `A4_tabela_01b_amostra_faixa.csv` |
 | 35,6% / 44,9% / 26,9% / 20,5% por estrato (n = 73 / 265 / 811 / 146) | `F6`, `A4_tabela_01_amostra_construcao.csv`, amostra primária |
 
-### Slide 18 — viabilidade empírica
+### Slides 12 a 14 — as três tradições teóricas
+
+| Número | Fonte |
+|---|---|
+| Moehling, Niemesh, Thomasson & Treber (2020), eq. 1, p. 184, e a definição de $c$ | `docs/02_teoria/modelo_micro.md`, §1 |
+| Redding & Rossi-Hansberg (2017), eq. 24, p. 28, e a redução a $c^{\text{espacial}}$ | idem, §2.1 e §3.2 |
+| Choné & Ma (2011), eq. 1, p. 232; formato em U e as três zonas | idem, §2.2 |
+| $\partial B/\partial K > 0$ como extensão do projeto, motivada por Reinhardt (1972, 1975) | idem, §2.3 |
+| Limitação de commuting: CNES e edital não informam residência | idem, §2.1 |
+
+### Slide 15 — a junção das três
+
+| Número | Fonte |
+|---|---|
+| $V_{im}$ integrado e a abertura de $c_{im}$ em dois blocos | `docs/02_teoria/modelo_micro.md`, §2.4 |
+| Condição de aceitação $V_{im} \geq V_{i0}$ | idem, §4.1 |
+| Nenhuma das três trata de remuneração fixada por regra sobre índice territorial | idem, §3 |
+
+### Slide 19 — viabilidade empírica
 
 | Número | Fonte |
 |---|---|
@@ -161,7 +179,7 @@ atender como $C(q; L, K)$, de modo que equipe e capital já estão no modelo por
 essa via. O que Reinhardt acrescentaria é que esses insumos também **elevam o
 benefício produzido** — mas escrever $B(q; L, K)$ em vez de $B(q)$ é extensão
 deste projeto, não dele. A citação foi retirada do slide de literatura e a
-extensão passou a ser creditada ao projeto no slide 15. Reinhardt permanece
+extensão passou a ser creditada ao projeto no slide 14. Reinhardt permanece
 como referência secundária em
 [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), seção 2.3.
 

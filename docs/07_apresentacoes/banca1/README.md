@@ -41,7 +41,7 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 
 | Documento | Função |
 |---|---|
-| [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — os 18 slides com título, corpo, figuras, fontes e ressalvas abertas. Diz exatamente o que vai à tela, e nada além; os decks derivam dele |
+| [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — os 19 slides com título, corpo, figuras, fontes e ressalvas abertas. Diz exatamente o que vai à tela, e nada além; os decks derivam dele |
 | [Roteiro narrativo](01_roteiro_narrativo.md) | arco das seis seções, lógica de cada bloco da motivação, regras de composição e rastreio do feedback |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | origem e reprodutibilidade de cada número exibido |
 

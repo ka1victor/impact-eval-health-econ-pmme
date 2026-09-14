@@ -20,8 +20,8 @@ pedir — a motivação, que tem mais a dizer, ocupa oito; as demais, um a quatr
 | — Capa e sumário | contrato com a banca | 1–2 |
 | **1. Motivação** | em três blocos. **Problema:** especialistas existem, mas não no interior; nos municípios do programa já havia menos especialistas e menos colegas onde a bolsa seria maior; para o médico, "vulnerável" são quatro desvantagens concretas. **Política:** o que é o PMM-E — lei, quem participa, aprimoramento em serviço, 16 cursos, como a vaga chega, onde está — e a regra que faz o IVS virar bolsa. **Efeito incerto:** a evidência a favor de pagar mais, a evidência contra, e o que o primeiro ciclo mostrou | 3–10 |
 | **2. Pergunta** | a pergunta, e a leitura em dois objetos: o preço e a desvantagem | 11 |
-| **3. Literatura teórica** | as três tradições que o modelo junta e o que cada uma resolve | 12 |
-| **4. Modelo microeconômico** | a decisão; o que a bolsa paga e o que não paga; o custo de estar ali; por que o IVS organiza o custo | 13–16 |
+| **3. Literatura teórica** | uma tradição por slide: a estrutura da decisão, o custo geográfico, o custo laboral | 12–14 |
+| **4. Modelo microeconômico** | como juntamos as três; o que a bolsa paga e o que não paga; por que o IVS organiza o custo | 15–17 |
 | **5. Hipótese** | da condição de aceitação à hipótese única e à condição de degrau, em quatro passos | 17 |
 | **6. Viabilidade empírica** | o que se consegue medir de cada peça, o que fica de fora, e por que separar bolsa de vulnerabilidade é difícil | 18 |
 
@@ -102,7 +102,7 @@ não como imagem de recorte.
 Fora da motivação, **nada de econometria**. Não entram estimador,
 especificação, regressão, coeficiente, elasticidade, colinearidade, desenho de
 identificação nem o vocabulário de descontinuidade. Literatura empírica também
-não: o slide 12 traz apenas trabalhos teóricos.
+não: os slides 12 a 14 trazem apenas trabalhos teóricos.
 
 A motivação é a exceção declarada. Ali, antes da pergunta, entra evidência sobre
 o que se pode esperar da política — inclusive de trabalhos empíricos de outros
@@ -209,7 +209,7 @@ faixa, registradas em
 | 7 | passa a apresentar as **duas** cláusulas do edital, a 11.1.4 (categorias de IVS) e a 11.1.3, que cita critérios de **localização** e remete ao **Anexo IV**. Registra que a divergência é unidirecional — 0 municípios abaixo do piso de IVS, 177 acima — e que, portanto, o IVS é piso da bolsa, não critério dela |
 | 18 | a reconstrução da regra, que era descrita como "primeira etapa da análise empírica", **foi executada**. O slide passa a dar o resultado: há suporte comum, mas o tratamento é localmente constante nos dois cortes de IVS e a variação residual está alinhada com remoticidade. A conclusão de viabilidade sobre a RDD no IVS é negativa e específica, e o desenho causal do trabalho não depende dela |
 
-Correção adicional ao slide 18: a afirmação de que "não há municípios pouco
+Correção adicional ao slide 19 (antigo 18): a afirmação de que "não há municípios pouco
 vulneráveis recebendo bolsas altas" era **falsa** no próprio dado do
 repositório — 37 municípios com IVS ≤ 0,400 estão na Faixa 1 e 94 na Faixa 2.
 
@@ -224,6 +224,33 @@ partir do documento canônico já corrigido, como manda a regra da seção: o de
 artefato derivado, e divergência entre deck e documento é erro do deck.
 
 O Beamer volta a compilar sem nenhum Overfull \hbox ou \vbox.
+
+## 4c. Reestruturação de 14/09/2026 — uma tradição por slide
+
+A pedido do autor. A literatura teórica cabia num slide só, com as três equações
+originais empilhadas numa tabela, e o custo aparecia inteiro num slide do
+modelo. Cada tradição passa a ter o seu, e a seção do modelo passa a **mostrar a
+junção** em vez de reintroduzir as peças.
+
+| Antes | Depois |
+|---|---|
+| 12 — De onde vem o modelo (as três tradições numa tabela) | **12** — A decisão: onde vale a pena estar (Moehling et al.)<br>**13** — Abrindo o custo, parte 1: o lugar (Redding & Rossi-Hansberg)<br>**14** — Abrindo o custo, parte 2: o trabalho (Choné & Ma, com Reinhardt) |
+| 13 — Como o médico escolhe onde trabalhar | **15** — Como juntamos os três |
+| 15 — O custo de estar ali (geográfico e laboral juntos) | dissolvido: o bloco geográfico vai para o 13, o laboral e a figura de *burnout* para o 14, a decomposição de $c_{im}$ para o 15 |
+| 14 e 16 | renumerados para **16** e **17**, sem mudança de conteúdo |
+
+O que cada slide novo ganhou, e que não cabia antes: no 12, a definição literal
+de $c$ pelos autores e o papel da qualificação $s$; no 13, a redução de
+Redding & Rossi-Hansberg a $c^{\text{espacial}}$ e a limitação de *commuting*
+assumida, já que o CNES não informa residência; no 14, o formato em U com as
+zonas e a separação explícita entre o canal que já está em Choné & Ma
+($\partial C/\partial K < 0$) e o que é extensão deste projeto
+($\partial B/\partial K > 0$, via Reinhardt).
+
+Nada de conteúdo novo: tudo sai de
+[`02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), §1, §2.1, §2.2,
+§2.3, §2.4 e §3.2, que já separava assim. A apresentação vai de **18 para 19
+slides**; os dois decks foram reconstruídos, o Beamer sem nenhum Overfull.
 
 ## 5. Defeitos do material anterior
 
@@ -248,8 +275,8 @@ Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.
 | Capa e sumário | 2 | 1 |
 | 1. Motivação | 8 | 11 |
 | 2. Pergunta | 1 | 1 |
-| 3. Literatura teórica | 1 | 2 |
-| 4. Modelo microeconômico | 4 | 8 |
+| 3. Literatura teórica | 3 | 5 |
+| 4. Modelo microeconômico | 3 | 6 |
 | 5. Hipótese | 1 | 3 |
 | 6. Viabilidade empírica | 1 | 2 |
-| **Total** | **18** | **28** |
+| **Total** | **19** | **29** |

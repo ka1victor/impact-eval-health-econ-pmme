@@ -535,98 +535,192 @@ Dinheiro move alocação, mas é caro, não move todo mundo, e não garante que 
 
 ---
 
-<Rastreio cont="1 de 2">3. Literatura teórica</Rastreio>
+<Rastreio>3. Literatura teórica · 1 de 3</Rastreio>
 
-# De onde vem o modelo
+# A decisão: onde vale a pena estar
 
-<p class="lead tight">O modelo junta <strong>três tradições</strong>.</p>
+<p class="lead tight"><strong>Moehling, Niemesh, Thomasson &amp; Treber (2020)</strong> dão a <strong>estrutura da decisão</strong>: escolhe-se a localidade que maximiza o valor presente do rendimento <strong>real</strong>, líquido do custo não pecuniário de viver ali.</p>
 
-<div class="cols cols-3 mt-s">
-  <div class="card-plain"><span class="chip">Estrutura da decisão</span><br><span class="xs">o médico compara lugares pelo rendimento real que cada um oferece, descontado do que custa viver ali</span></div>
-  <div class="card-plain"><span class="chip">Custo geográfico</span><br><span class="xs">o que há dentro do custo de <strong>estar</strong> naquele lugar</span></div>
-  <div class="card-plain"><span class="chip">Custo de trabalhar</span><br><span class="xs">o que há dentro do custo de <strong>atender</strong> naquele lugar</span></div>
-</div>
+<div class="eq eq-lg" style="margin-top:0.2rem">
 
-<div class="card mt-m">
-<span class="card-lbl">Moehling, Niemesh, Thomasson &amp; Treber (2020) · eq. 1, p. 184 · estrutura da decisão</span>
-
-O médico escolhe a localidade que **maximiza o valor presente do rendimento real**, líquido do custo não pecuniário de viver ali.
-
-$$\arg\max_{i \in I} \sum_t \delta^t \left[ \dfrac{\mathbb{E}(w_{it}^{(s)})}{p_{it}} - c_{it}^{(s)} \right]$$
+$$\arg\max_{i \in I} \left\{ \sum_t \delta^t \left[ \dfrac{\mathbb{E}(w_{it}^{(s)})}{p_{it}} - c_{it}^{(s)} \right] \right\}$$
 
 </div>
 
----
+<div class="tbl-sinal mt-s fill fill-tbl">
 
-<Rastreio cont="2 de 2">3. Literatura teórica</Rastreio>
-
-# De onde vem o modelo
-
-<div class="card" style="margin-top:0.1rem">
-<span class="card-lbl">Redding &amp; Rossi-Hansberg (2017) · eq. 24, p. 28 · custo geográfico</span>
-
-A utilidade de trabalhar em um lugar depende do **salário, das amenidades e do custo de moradia locais**.
-
-$$u_{nio} = \dfrac{z_{nio}\, B_n\, w_i}{\kappa_{ni}\, Q_n^{1-\beta}}$$
-
-</div>
-
-<div class="card mt-s">
-<span class="card-lbl">Choné &amp; Ma (2011) · eq. 1, p. 232 · custo de trabalhar</span>
-
-A utilidade do médico soma a renda, subtrai o **custo de atender** e soma o **benefício ao paciente**, ponderado pelo altruísmo. Equipe e capital instalado entram no custo de atender.
-
-$$U = R - C(q; L, K) + \alpha B(q)$$
+| Termo | Leitura |
+|---|---|
+| $\sum_t \delta^t$ | a escolha é de **carreira**: fixar-se ou migrar ao fim do vínculo |
+| $\mathbb{E}(w^{(s)}_{it}) / p_{it}$ | rendimento **deflacionado** pelo custo de vida local |
+| $c^{(s)}_{it}$ | o que torna estar ali custoso e **não é pago em dinheiro** |
+| $s$ | generalista atende em posto simples; **especialista** precisa de centro cirúrgico e leito |
 
 </div>
 
 <div class="callout mt-s">
 
-Nenhuma das três trata de um componente da remuneração **fixado por regra pública sobre um índice territorial**. É isso que a adaptação ao PMM-E acrescenta.
+Na definição dos próprios autores, $c$ reúne *"preferences over rural or urban living, or other location-specific attributes, such as proximity to family"* — uma **caixa-preta**. As duas referências seguintes a abrem.
+
+</div>
+
+<Fonte>Moehling et al. (2020), <em>Cliometrica</em> 14, p. 184, eq. 1.</Fonte>
+
+---
+
+<Rastreio>3. Literatura teórica · 2 de 3</Rastreio>
+
+# Abrindo o custo, parte 1: o lugar
+
+<p class="lead tight"><strong>Redding &amp; Rossi-Hansberg (2017)</strong> dão o <strong>custo geográfico</strong>: a utilidade de trabalhar num lugar depende do salário, das <strong>amenidades</strong> e do <strong>custo de moradia</strong>.</p>
+
+<div class="eq" style="margin-top:0.2rem">
+
+$$u_{nio} = \dfrac{z_{nio}\, B_n\, w_i}{\kappa_{ni}\, Q_n^{\,1-\beta}} \quad\Longrightarrow\quad c^{\text{espacial}}_m = (1-\beta)\ln Q_m - \ln A_m$$
+
+</div>
+
+<p class="sm tight">Somado à proximidade da família de Moehling et al.:</p>
+
+<div class="eq eq-lg">
+
+$$c^{\text{geo}}_{im} = \phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}$$
+
+</div>
+
+<div class="tbl-sinal mt-s fill fill-tbl">
+
+| Componente | Sinal | Significado |
+|---|---|---|
+| $\phi(\text{dist}_{im})$ | $\phi' > 0$ | afastar-se da família custa, e custa mais a cada quilômetro |
+| $-\gamma A_m$ | $< 0$ | amenidade urbana — saneamento, segurança, escola — compensa |
+| $\theta_i^{\text{rural}}$ | $\gtrless 0$ | gosto por cidade pequena ou grande, sem sinal universal |
+
+</div>
+
+<Fonte rotulo="Limitação">CNES e edital não informam a residência do profissional, por sigilo fiscal. A unidade é o município do estabelecimento: $\text{dist}$ entra como latente.</Fonte>
+
+---
+
+<Rastreio cont="1 de 2">3. Literatura teórica · 3 de 3</Rastreio>
+
+# Abrindo o custo, parte 2: o trabalho
+
+<p class="lead tight"><strong>Choné &amp; Ma (2011)</strong> dão o <strong>custo laboral</strong>: soma-se a renda, subtrai-se o custo de atender e soma-se o benefício ao paciente, ponderado pelo <strong>altruísmo</strong>.</p>
+
+<div class="eq" style="margin-top:0.2rem">
+
+$$U = R - C(q; L, K) + \alpha B(q) \quad\Longrightarrow\quad c^{\text{laboral}}_{im} = C(q; L_m, K_m) - \alpha_i B(q; L_m, K_m)$$
+
+</div>
+
+<div class="tbl-sinal mt-s fill fill-tbl">
+
+| Componente | Derivadas | Significado |
+|---|---|---|
+| $C(q)$ | $C' > 0,\ C'' > 0$ | atender cansa, e cansa de forma **crescente** |
+| $\alpha_i B(q)$ | $B' > 0,\ B'' < 0$ | curar dá satisfação, decrescente porque a triagem prioriza o caso grave |
+
+</div>
+
+<div class="callout mt-s">
+
+O custo marginal $c'(q) = C' - \alpha B'$ tem **sinal incerto**, mas $c'' \gg 0$: a curva é um **U**.
 
 </div>
 
 ---
 
-<Rastreio>4. Modelo microeconômico · 1 de 4</Rastreio>
+<Rastreio cont="2 de 2">3. Literatura teórica · 3 de 3</Rastreio>
 
-# Como o médico escolhe onde trabalhar
+# Abrindo o custo, parte 2: o trabalho
 
 <div class="sm tight">
 
-Adaptando Moehling et al. (2020), o médico $i$ escolhe o município $m$ que maximiza o valor presente líquido da carreira:
+Há uma zona em que atender mais **reduz** o custo líquido, um mínimo, e uma zona de exaustão.
 
 </div>
 
-<div class="eq eq-lg gap-s">
+<Fig src="/fig/curva_custo_laboral_burnout.png" alt="Custo laboral líquido em função do volume de atendimentos" h="fill" class="fill" />
+
+<div class="cols cols-2 mt-s">
+
+<div class="card">
+<span class="card-lbl">Reduzem o cansaço — já em Choné &amp; Ma</span>
+
+$$\frac{\partial C}{\partial K} < 0$$
+
+</div>
+
+<div class="card">
+<span class="card-lbl">Ampliam o benefício — extensão deste projeto, via Reinhardt</span>
+
+$$\frac{\partial B}{\partial K} > 0$$
+
+</div>
+
+</div>
+
+<Fonte rotulo="Figura">Ilustração conceitual do modelo de Choné &amp; Ma (2011); não é estimação nem dado observado. Por dois caminhos, $\partial c^{\text{laboral}}/\partial K < 0$.</Fonte>
+
+---
+
+<Rastreio cont="1 de 2">4. Modelo microeconômico · 1 de 3</Rastreio>
+
+# Como juntamos os três
+
+<div class="sm tight">
+
+A estrutura vem de Moehling et al.; o custo, que neles era caixa-preta, é aberto pelas outras duas.
+
+</div>
+
+<div class="eq eq-lg" style="margin-top:0.2rem">
 
 $$V_{im} = \sum_t \delta^t \left[ \frac{\mathbb{E}(w_{imt} \mid B_m)}{p_{mt}} - c_{im} \right] + \varepsilon_{im}$$
 
-$$m_i^{\ast} \in \arg\max_{m \in \mathcal{M} \cup \{0\}} V_{im}$$
+</div>
+
+<div class="eq">
+
+$$c_{im} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}}_{\text{Redding \& Rossi-Hansberg}} + \underbrace{C(q; L_m, K_m) - \alpha_i B(q; L_m, K_m)}_{\text{Choné \& Ma, com a extensão em } B}$$
 
 </div>
 
-<div class="tbl-xtight gap-s">
+<div class="tbl-sinal mt-s fill fill-tbl">
 
-| Termo | Leitura |
+| De onde vem | O que entrega |
 |---|---|
-| $\mathbb{E}(w_{imt} \mid B_m)$ | remuneração esperada no município, dada a bolsa $B_m$ fixada pela regra |
-| $p_{mt}$ | custo de vida local: o que importa é a remuneração **real** |
-| $c_{im}$ | tudo o que torna estar naquele município custoso e não é pago em dinheiro |
-| $\delta^t$ | a decisão é de carreira, não de um mês: o médico pesa o que o lugar oferece ao longo do tempo |
-| $\varepsilon_{im}$ | gostos individuais que não observamos |
-
-</div>
-
-<div class="callout-soft gap-s">
-
-A alternativa $m = 0$ é **ficar fora do programa**. A vaga em $m$ é aceita quando $V_{im} \geq V_{i0}$ e $m$ é a melhor opção entre as disponíveis.
+| **Moehling et al. (2020)** | o $\arg\max$ intertemporal, o deflator $p_{mt}$ e a existência de $c$ |
+| **Redding &amp; Rossi-Hansberg (2017)** | distância, amenidades e custo de moradia dentro de $c$ |
+| **Choné &amp; Ma (2011)**, com Reinhardt | esforço, altruísmo e o papel de $L$ e $K$ dentro de $c$ |
 
 </div>
 
 ---
 
-<Rastreio cont="1 de 2">4. Modelo microeconômico · 2 de 4</Rastreio>
+<Rastreio cont="2 de 2">4. Modelo microeconômico · 1 de 3</Rastreio>
+
+# Como juntamos os três
+
+<div class="card mt-s">
+<span class="card-lbl">A decisão</span>
+
+A alternativa $m = 0$ é **ficar fora do programa**. A vaga em $m$ é aceita quando $V_{im} \geq V_{i0}$ e $m$ é a melhor entre as disponíveis. O termo $\varepsilon_{im}$ recolhe os gostos que não observamos.
+
+</div>
+
+<div class="callout mt-m">
+
+Nenhuma das três trata de um componente da remuneração **fixado por regra pública sobre um índice territorial**. É isso, e só isso, que a adaptação ao PMM-E acrescenta.
+
+</div>
+
+<p class="sm" style="margin-top:1.4rem">É o que as duas páginas seguintes desenvolvem.</p>
+
+---
+
+<Rastreio cont="1 de 2">4. Modelo microeconômico · 2 de 3</Rastreio>
 
 # O que a bolsa paga — e o que não paga
 
@@ -649,7 +743,7 @@ $$\mathbb{E}(w_{imt} \mid B_m) = B_m + w^{\text{priv}}_m$$
 
 ---
 
-<Rastreio cont="2 de 2">4. Modelo microeconômico · 2 de 4</Rastreio>
+<Rastreio cont="2 de 2">4. Modelo microeconômico · 2 de 3</Rastreio>
 
 # O que a bolsa paga — e o que não paga
 
@@ -679,91 +773,7 @@ O deflator $p_{mt}$ trabalha no **sentido oposto**: o custo de vida é menor no 
 
 ---
 
-<Rastreio cont="1 de 3">4. Modelo microeconômico · 3 de 4</Rastreio>
-
-# O custo de estar ali
-
-<div class="eq eq-lg" style="margin-top:0.2rem">
-
-$$c_{im} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}}_{\text{geográfico}} + \underbrace{C(q; L_m, K_m) - \alpha_i B(q; L_m, K_m)}_{\text{laboral líquido}}$$
-
-</div>
-
-<div class="tbl-sinal mt-s fill fill-tbl">
-
-| Componente | Sinal | Significado |
-|---|---|---|
-| $\phi(\text{dist})$ | $\phi' > 0$ | afastar-se da família custa, e custa mais a cada quilômetro |
-| $-\gamma A_m$ | $< 0$ | amenidade urbana — saneamento, segurança, escola — compensa |
-| $\theta_i^{\text{rural}}$ | $\gtrless 0$ | gosto pessoal por cidade pequena ou grande |
-| $C(q)$ | $C' > 0,\ C'' > 0$ | atender cansa, e cansa de forma crescente |
-| $\alpha_i B(q)$ | $B' > 0,\ B'' < 0$ | curar dá satisfação, ponderada pelo altruísmo $\alpha_i$ |
-
-</div>
-
-<Fonte rotulo="Origem">O bloco geográfico vem de Redding &amp; Rossi-Hansberg (2017); o laboral, de Choné &amp; Ma (2011).</Fonte>
-
----
-
-<Rastreio cont="2 de 3">4. Modelo microeconômico · 3 de 4</Rastreio>
-
-# O custo de estar ali
-
-<div class="lead tight">
-
-Equipe ($L$) e capital instalado ($K$) atuam **duas vezes** no bloco laboral:
-
-</div>
-
-<div class="cols cols-2 mt-s">
-
-<div class="card">
-<span class="card-lbl">Reduzem o cansaço</span>
-
-$$\frac{\partial C}{\partial K} < 0$$
-
-</div>
-
-<div class="card">
-<span class="card-lbl">Ampliam o benefício — nossa extensão a Choné &amp; Ma</span>
-
-$$\frac{\partial B}{\partial K} > 0$$
-
-</div>
-
-</div>
-
-<div class="eq mt-s">
-
-Por dois caminhos, $\dfrac{\partial c}{\partial K} < 0$.
-
-</div>
-
-<div class="callout mt-s">
-
-Como no município vulnerável $L$ e $K$ são baixos, **o mesmo lugar que paga mais é o que impõe maior custo de trabalho**.
-
-</div>
-
----
-
-<Rastreio cont="3 de 3">4. Modelo microeconômico · 3 de 4</Rastreio>
-
-# O custo de estar ali
-
-<div class="sm tight">
-
-O custo laboral líquido $c^{\text{laboral}}(q) = C(q) - \alpha B(q)$ cai enquanto a satisfação cresce mais que o cansaço, e sobe depois:
-
-</div>
-
-<Fig src="/fig/curva_custo_laboral_burnout.png" alt="Custo laboral líquido em função do volume de atendimentos" h="fill" class="fill" />
-
-<Fonte rotulo="Figura">Ilustração conceitual do modelo de Choné &amp; Ma (2011); não é estimação nem dado observado.</Fonte>
-
----
-
-<Rastreio cont="1 de 2">4. Modelo microeconômico · 4 de 4</Rastreio>
+<Rastreio cont="1 de 2">4. Modelo microeconômico · 3 de 3</Rastreio>
 
 # O IVS organiza o custo
 
@@ -789,7 +799,7 @@ $$c_{im} = c_0(IVS_m) + \eta_i$$
 
 ---
 
-<Rastreio cont="2 de 2">4. Modelo microeconômico · 4 de 4</Rastreio>
+<Rastreio cont="2 de 2">4. Modelo microeconômico · 3 de 3</Rastreio>
 
 # O IVS organiza o custo
 

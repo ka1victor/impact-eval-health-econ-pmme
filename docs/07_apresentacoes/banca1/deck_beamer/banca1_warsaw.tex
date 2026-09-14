@@ -675,112 +675,209 @@ Mais Médicos Especialistas}
 \end{frame}
 
 % ===========================================================================
-% 12 — De onde vem o modelo                                  (1 frame)
+% 12 — A decisão: onde vale a pena estar                     (1 frame)
 % ===========================================================================
-\rastreio{3. Literatura teórica}
+\rastreio{3. Literatura teórica \textperiodcentered\ 1 de 3}
 
-\begin{frame}{De onde vem o modelo}
+\begin{frame}{A decisão: onde vale a pena estar}
   \vspace{0.2em}
-  {\small O modelo junta \textbf{três tradições}: a primeira dá a
-  \lead{estrutura da decisão}; as outras duas \lead{abrem o custo} --- uma o
-  custo geográfico, a outra o custo de trabalhar.}
-
-  \only<1>{%
-    \vspace*{\stretch{1}}
-    \begin{beamercolorbox}[wd=\textwidth,sep=1.1em,rounded=true]{block body}
-      \normalsize
-      \textbf{Moehling, Niemesh, Thomasson \& Treber (2020)}, eq. 1, p. 184
-      \hfill {\color{cinzaFonte}\small estrutura da decisão}\\[0.5em]
-      O médico escolhe a localidade que maximiza o valor presente do rendimento
-      real, líquido do custo não pecuniário de viver ali.
-      \\[-0.2em]
-      \[
-        \arg\max_{i \in I}\ \sum_t \delta^t
-        \left[ \dfrac{\mathbb{E}\!\left(w_{it}^{(s)}\right)}{p_{it}}
-        - c_{it}^{(s)} \right]
-      \]
-    \end{beamercolorbox}
-    \vspace*{\stretch{1.3}}
-  }%
-  \only<2>{%
-    \vspace{0.5em}
-    \begin{beamercolorbox}[wd=\textwidth,sep=0.5em,rounded=true]{block body}
-      \footnotesize
-      \textbf{Redding \& Rossi-Hansberg (2017)}, eq. 24, p. 28
-      \hfill {\color{cinzaFonte}custo geográfico}\\[0.2em]
-      A utilidade de trabalhar em um lugar depende do salário, das amenidades e
-      do custo de moradia locais.
-      \\[-0.7em]
-      \[ u_{nio} = \dfrac{z_{nio}\, B_n\, w_i}{\kappa_{ni}\, Q_n^{1-\beta}} \]
-    \end{beamercolorbox}
-
-    \vspace{0.45em}
-    \begin{beamercolorbox}[wd=\textwidth,sep=0.5em,rounded=true]{block body}
-      \footnotesize
-      \textbf{Choné \& Ma (2011)}, eq. 1, p. 232
-      \hfill {\color{cinzaFonte}custo de trabalhar}\\[0.2em]
-      A utilidade do médico soma a renda, subtrai o custo de atender e soma o
-      benefício ao paciente, ponderado pelo altruísmo. Equipe e capital
-      instalado entram no custo de atender.
-      \\[-0.7em]
-      \[ U = R - C(q; L, K) + \alpha B(q) \]
-    \end{beamercolorbox}
-
-    \vspace{0.5em}
-    {\footnotesize Nenhuma das três trata de um componente da remuneração
-    fixado por \lead{regra pública sobre um índice territorial}. É isso que a
-    adaptação ao PMM-E acrescenta.}
-  }%
-\end{frame}
-
-% ===========================================================================
-% 13 — Como o médico escolhe onde trabalhar                  (1 frame)
-% A equacao e o glossario dos seus termos na mesma tela.
-% ===========================================================================
-\rastreio{4. Modelo microeconômico \textperiodcentered\ 1 de 4}
-
-\begin{frame}{Como o médico escolhe onde trabalhar}
-  \vspace{0.2em}
-  {\small Adaptando Moehling et al. (2020), o médico $i$ escolhe o município
-  $m$ que maximiza o \lead{valor presente líquido da carreira}:}
+  {\small \textbf{Moehling, Niemesh, Thomasson \& Treber (2020)}, eq. 1,
+  p. 184, dão a \lead{estrutura da decisão}: escolhe-se a localidade que
+  maximiza o valor presente do rendimento \textbf{real}, líquido do custo não
+  pecuniário de viver ali.}
 
   \vspace{-0.3em}
   \[
-    V_{im} = \sum_t \delta^t
-    \left[ \frac{\mathbb{E}(w_{imt} \mid B_m)}{p_{mt}} - c_{im} \right]
-    + \varepsilon_{im},
-    \qquad
-    m_i^{\ast} \in \arg\max_{m \in \mathcal{M} \cup \{0\}} V_{im}
+    \arg\max_{i \in I}\ \left\{ \sum_t \delta^t
+    \left[ \dfrac{\mathbb{E}\!\left(w_{it}^{(s)}\right)}{p_{it}}
+    - c_{it}^{(s)} \right] \right\}
   \]
-  \vspace{-0.8em}
+  \vspace{-1.0em}
 
-  {\small A alternativa $m = 0$ é \textbf{ficar fora do programa}. A vaga em
-  $m$ é aceita quando $V_{im} \geq V_{i0}$ e $m$ é a melhor opção entre as
-  disponíveis.}
-
-  \vspace{0.5em}
-  {\footnotesize\renewcommand{\arraystretch}{1.08}
-  \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{0.20\textwidth} L@{}}
+  {\footnotesize\renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{0.19\textwidth} L@{}}
     \toprule
     \bfseries Termo & \bfseries Leitura \\
     \midrule
-    $\mathbb{E}(w_{imt} \mid B_m)$ & remuneração esperada no município, dada
-      a bolsa $B_m$ fixada pela regra \\
-    $p_{mt}$ & custo de vida local: o que importa é a remuneração
-      \textbf{real} \\
-    $c_{im}$ & tudo o que torna estar naquele município custoso e não é pago
-      em dinheiro \\
-    $\delta^t$ & a decisão é de carreira, não de um mês: o médico pesa o que
-      o lugar oferece ao longo do tempo \\
-    $\varepsilon_{im}$ & gostos individuais que não observamos \\
+    $\sum_t \delta^t$ & a escolha é de \textbf{carreira}: fixar-se ou migrar ao
+      fim do vínculo \\
+    $\mathbb{E}(w^{(s)}_{it}) / p_{it}$ & rendimento \textbf{deflacionado} pelo
+      custo de vida local \\
+    $c^{(s)}_{it}$ & o que torna estar ali custoso e \textbf{não é pago em
+      dinheiro} \\
+    $s$ & generalista atende em posto simples; \textbf{especialista} precisa de
+      centro cirúrgico e leito \\
     \bottomrule
   \end{tabularx}}
+
+  \vspace{0.6em}
+  {\footnotesize Na definição dos próprios autores, $c$ reúne
+  \textit{``preferences over rural or urban living, or other location-specific
+  attributes, such as proximity to family''} --- uma \lead{caixa-preta}. As
+  duas referências seguintes a abrem.}
 \end{frame}
 
 % ===========================================================================
-% 14 — O que a bolsa paga — e o que não paga                 (1 frame)
+% 13 — Abrindo o custo, parte 1: o lugar                     (1 frame)
 % ===========================================================================
-\rastreio{4. Modelo microeconômico \textperiodcentered\ 2 de 4}
+\rastreio{3. Literatura teórica \textperiodcentered\ 2 de 3}
+
+\begin{frame}{Abrindo o custo, parte 1: o lugar}
+  \vspace{0.2em}
+  {\small \textbf{Redding \& Rossi-Hansberg (2017)}, eq. 24, p. 28, dão o
+  \lead{custo geográfico}: a utilidade de trabalhar num lugar depende do
+  salário, das \textbf{amenidades} e do \textbf{custo de moradia}.}
+
+  \vspace{-0.4em}
+  \[ u_{nio} = \dfrac{z_{nio}\, B_n\, w_i}{\kappa_{ni}\, Q_n^{\,1-\beta}}
+     \quad\Longrightarrow\quad
+     c^{\text{espacial}}_m = (1-\beta)\ln Q_m - \ln A_m \]
+  \vspace{-1.0em}
+
+  {\small Somado à proximidade da família de Moehling et al.:}
+
+  \vspace{-0.5em}
+  \[ c^{\text{geo}}_{im} = \phi(\text{dist}_{im}) - \gamma A_m
+     + \theta_i^{\text{rural}} \]
+  \vspace{-1.0em}
+
+  {\footnotesize\renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{0.16\textwidth} >{\centering\arraybackslash}p{0.11\textwidth} L@{}}
+    \toprule
+    \bfseries Componente & \bfseries Sinal & \bfseries Significado \\
+    \midrule
+    $\phi(\text{dist}_{im})$ & $\phi' > 0$ & afastar-se da família custa, e
+      custa mais a cada quilômetro \\
+    $-\gamma A_m$ & $< 0$ & amenidade urbana --- saneamento, segurança, escola
+      --- compensa \\
+    $\theta_i^{\text{rural}}$ & $\gtrless 0$ & gosto por cidade pequena ou
+      grande, sem sinal universal \\
+    \bottomrule
+  \end{tabularx}}
+
+  \vspace{0.5em}
+  {\footnotesize \textbf{Limitação assumida.} CNES e edital não informam a
+  residência do profissional, por sigilo fiscal. A unidade é o \textbf{município
+  do estabelecimento}: $\text{dist}$ entra como latente.}
+\end{frame}
+
+% ===========================================================================
+% 14 — Abrindo o custo, parte 2: o trabalho                  (2 frames)
+% ===========================================================================
+\rastreio{3. Literatura teórica \textperiodcentered\ 3 de 3}
+
+\begin{frame}{Abrindo o custo, parte 2: o trabalho}
+  \only<1>{%
+    \vspace{0.2em}
+    {\small \textbf{Choné \& Ma (2011)}, eq. 1, p. 232, dão o \lead{custo
+    laboral}: soma-se a renda, subtrai-se o custo de atender e soma-se o
+    benefício ao paciente, ponderado pelo \textbf{altruísmo}.}
+
+    \vspace{-0.3em}
+    \[ U = R - C(q; L, K) + \alpha B(q)
+       \quad\Longrightarrow\quad
+       c^{\text{laboral}}_{im} = C(q; L_m, K_m) - \alpha_i B(q; L_m, K_m) \]
+    \vspace{-1.0em}
+
+    {\footnotesize\renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{0.14\textwidth} >{\centering\arraybackslash}p{0.22\textwidth} L@{}}
+      \toprule
+      \bfseries Componente & \bfseries Derivadas & \bfseries Significado \\
+      \midrule
+      $C(q)$ & $C' > 0,\ C'' > 0$ & atender cansa, e cansa de forma
+        \textbf{crescente} \\
+      $\alpha_i B(q)$ & $B' > 0,\ B'' < 0$ & curar dá satisfação, decrescente
+        porque a triagem prioriza o caso grave \\
+      \bottomrule
+    \end{tabularx}}
+
+    \vspace{0.8em}
+    \begin{destaque}[0.93\textwidth]
+      O custo marginal $c'(q) = C' - \alpha B'$ tem \textbf{sinal incerto}, mas
+      $c'' \gg 0$: a curva é um \textbf{U}.
+    \end{destaque}
+  }%
+  \only<2>{%
+    \vspace{0.2em}
+    {\small Há uma zona em que atender mais \textbf{reduz} o custo líquido, um
+    mínimo, e uma zona de exaustão.}
+
+    \vspace{0.3em}
+    \centerline{%
+      \includegraphics[width=0.86\textwidth,height=0.46\textheight,keepaspectratio]%
+        {curva_custo_laboral_burnout}}
+
+    \vspace{0.4em}
+    {\footnotesize \lead{Equipe ($L$) e capital ($K$) atuam duas vezes.}
+    Reduzem o cansaço, $\partial C/\partial K < 0$ --- canal que já está em
+    Choné \& Ma. E \textbf{ampliam o benefício}, $\partial B/\partial K > 0$:
+    sem medicamento, insumo cirúrgico ou maquinário em funcionamento, o
+    atendimento perde resolutividade. Esse segundo canal é \textbf{extensão
+    deste projeto}, motivada pela função de produção médica de Reinhardt (1972,
+    1975). Por dois caminhos, $\partial c^{\text{laboral}}/\partial K < 0$.}
+  }%
+\end{frame}
+
+% ===========================================================================
+% 15 — Como juntamos os três                                 (2 frames)
+% ===========================================================================
+\rastreio{4. Modelo microeconômico \textperiodcentered\ 1 de 3}
+
+\begin{frame}{Como juntamos os três}
+  \only<1>{%
+    \vspace{0.2em}
+    {\small A estrutura vem de Moehling et al.; o custo, que neles era
+    caixa-preta, é aberto pelas outras duas.}
+
+    \vspace{-0.3em}
+    \[ V_{im} = \sum_t \delta^t \left[ \frac{\mathbb{E}(w_{imt} \mid B_m)}{p_{mt}}
+       - c_{im} \right] + \varepsilon_{im} \]
+    \vspace{-1.4em}
+    \[ c_{im} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m
+       + \theta_i^{\text{rural}}}_{\text{Redding \& Rossi-Hansberg}}
+       + \underbrace{C(q; L_m, K_m)
+       - \alpha_i B(q; L_m, K_m)}_{\text{Choné \& Ma, com a extensão em } B} \]
+    \vspace{-1.0em}
+
+    {\footnotesize\renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.32\textwidth} L@{}}
+      \toprule
+      \bfseries De onde vem & \bfseries O que entrega \\
+      \midrule
+      Moehling et al. (2020) & o $\arg\max$ intertemporal, o deflator $p_{mt}$
+        e a existência de $c$ \\
+      Redding \& Rossi-Hansberg (2017) & distância, amenidades e custo de
+        moradia dentro de $c$ \\
+      Choné \& Ma (2011), com Reinhardt & esforço, altruísmo e o papel de $L$ e
+        $K$ dentro de $c$ \\
+      \bottomrule
+    \end{tabularx}}
+  }%
+  \only<2>{%
+    \vspace{1.0em}
+    \begin{beamercolorbox}[wd=\textwidth,sep=0.9em,rounded=true]{block body}
+      \small \textbf{A decisão.} A alternativa $m = 0$ é \textbf{ficar fora do
+      programa}. A vaga em $m$ é aceita quando $V_{im} \geq V_{i0}$ e $m$ é a
+      melhor entre as disponíveis. O termo $\varepsilon_{im}$ recolhe os gostos
+      que não observamos.
+    \end{beamercolorbox}
+
+    \vspace{1.6em}
+    \begin{destaque}[0.93\textwidth]
+      Nenhuma das três trata de um componente da remuneração fixado por
+      \textbf{regra pública sobre um índice territorial}. É isso, e só isso,
+      que a adaptação ao PMM-E acrescenta.
+    \end{destaque}
+
+    \vspace{1.2em}
+    {\centering\small É o que os dois slides seguintes desenvolvem.\par}
+  }%
+\end{frame}
+
+% ===========================================================================
+% 16 — O que a bolsa paga — e o que não paga                 (1 frame)
+% ===========================================================================
+\rastreio{4. Modelo microeconômico \textperiodcentered\ 2 de 3}
 
 \begin{frame}{O que a bolsa paga --- e o que não paga}
   \vspace{0.3em}
@@ -827,71 +924,9 @@ Mais Médicos Especialistas}
 \end{frame}
 
 % ===========================================================================
-% 15 — O custo de estar ali                                  (2 frames)
+% 17 — O IVS organiza o custo                                (1 frame)
 % ===========================================================================
-\rastreio{4. Modelo microeconômico \textperiodcentered\ 3 de 4}
-
-\begin{frame}{O custo de estar ali}
-  \vspace{0.1em}
-  \[
-    c_{im} =
-    \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}}%
-      _{\text{geográfico}}
-    + \underbrace{C(q; L_m, K_m) - \alpha_i B(q; L_m, K_m)}%
-      _{\text{laboral líquido}}
-  \]
-  \vspace{-0.7em}
-
-  {\footnotesize O bloco \textbf{geográfico} vem de Redding \&
-  Rossi-Hansberg; o \textbf{laboral}, de Choné \& Ma.}
-
-  \vspace{0.4em}
-  {\footnotesize\renewcommand{\arraystretch}{1.08}
-  \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{0.18\textwidth} >{\centering\arraybackslash}p{0.19\textwidth} L@{}}
-    \toprule
-    \bfseries Componente & \bfseries Sinal & \bfseries Significado \\
-    \midrule
-    $\phi(\text{dist})$ & $\phi' > 0$ & afastar-se da família custa, e custa
-      mais a cada quilômetro \\
-    $-\gamma A_m$ & $< 0$ & amenidade urbana --- saneamento, segurança,
-      escola --- compensa \\
-    $\theta_i^{\text{rural}}$ & $\gtrless 0$ & gosto pessoal por cidade pequena
-      ou grande \\
-    $C(q)$ & $C' > 0,\ C'' > 0$ & atender cansa, e cansa de forma crescente \\
-    $\alpha_i B(q)$ & $B' > 0,\ B'' < 0$ & curar dá satisfação, ponderada pelo
-      altruísmo $\alpha_i$ \\
-    \bottomrule
-  \end{tabularx}}
-
-  \vspace{0.6em}
-  {\footnotesize Equipe ($L$) e capital instalado ($K$) atuam \lead{duas
-  vezes} no bloco laboral: reduzem o cansaço, $\partial C/\partial K < 0$, e
-  ampliam o benefício que o atendimento produz, $\partial B/\partial K > 0$.
-  Por dois caminhos, $\partial c/\partial K < 0$. A segunda é \textbf{extensão
-  deste projeto} a Choné \& Ma.}
-\end{frame}
-
-\begin{frame}{O custo de estar ali}
-  \vspace{0.3em}
-  \begin{center}
-    \includegraphics[width=\textwidth,height=0.49\textheight,keepaspectratio]%
-      {curva_custo_laboral_burnout}
-  \end{center}
-
-  \vspace{0.35em}
-  \begin{destaque}
-    \small Como no município vulnerável $L$ e $K$ são baixos, o mesmo lugar
-    que paga mais é o que impõe maior custo de trabalho.
-  \end{destaque}
-
-  \fonte{\textbf{Fonte:} ilustração conceitual do modelo --- custo laboral
-  líquido em função do volume de atendimentos.}
-\end{frame}
-
-% ===========================================================================
-% 16 — O IVS organiza o custo                                (1 frame)
-% ===========================================================================
-\rastreio{4. Modelo microeconômico \textperiodcentered\ 4 de 4}
+\rastreio{4. Modelo microeconômico \textperiodcentered\ 3 de 3}
 
 \begin{frame}{O IVS organiza o custo}
   \only<1>{%
@@ -962,7 +997,7 @@ Mais Médicos Especialistas}
 \end{frame}
 
 % ===========================================================================
-% 17 — A hipótese                                            (1 frame)
+% 18 — A hipótese                                            (1 frame)
 % ===========================================================================
 \rastreio{5. Hipótese}
 
@@ -1028,7 +1063,7 @@ Mais Médicos Especialistas}
 \end{frame}
 
 % ===========================================================================
-% 18 — Viabilidade empírica                                  (1 frame)
+% 19 — Viabilidade empírica                                  (1 frame)
 % ===========================================================================
 \rastreio{6. Viabilidade empírica}
 

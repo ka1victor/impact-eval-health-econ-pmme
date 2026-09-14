@@ -311,53 +311,131 @@ apareceu alguém disposto a ocupá-la.
 
 # 3. Literatura teórica
 
-## 12 — De onde vem o modelo
+## 12 — A decisão: onde vale a pena estar
 
-`3. Literatura teórica`
+`3. Literatura teórica · 1 de 3`
 
-O modelo junta **três tradições**: a primeira dá a **estrutura da decisão**; as
-outras duas **abrem o custo** — uma o custo geográfico, a outra o custo de
-trabalhar.
+**Moehling, Niemesh, Thomasson & Treber (2020)**, eq. 1, p. 184, dão a
+**estrutura da decisão**: o médico escolhe a localidade que maximiza o valor
+presente do rendimento **real**, líquido do custo não pecuniário de viver ali.
 
-| Referência | Ideia central | Equação original |
-|---|---|---|
-| **Moehling, Niemesh, Thomasson & Treber (2020)**, eq. 1, p. 184 — *estrutura da decisão* | Escolhe a localidade que maximiza o valor presente do rendimento real, líquido do custo não pecuniário de viver ali | $\arg\max_{i \in I} \sum_t \delta^t \left[ \dfrac{\mathbb{E}(w_{it}^{(s)})}{p_{it}} - c_{it}^{(s)} \right]$ |
-| **Redding & Rossi-Hansberg (2017)**, eq. 24, p. 28 — *custo geográfico* | A utilidade de trabalhar em um lugar depende do salário, das amenidades e do custo de moradia locais | $u_{nio} = \dfrac{z_{nio} B_n w_i}{\kappa_{ni} Q_n^{1-\beta}}$ |
-| **Choné & Ma (2011)**, eq. 1, p. 232 — *custo de trabalhar* | Soma a renda, subtrai o custo de atender e soma o benefício ao paciente, ponderado pelo altruísmo; equipe e capital entram no custo de atender | $U = R - C(q; L, K) + \alpha B(q)$ |
+$$\arg\max_{i \in I} \left\{ \sum_t \delta^t \left[ \frac{\mathbb{E}(w_{it}^{(s)})}{p_{it}} - c_{it}^{(s)} \right] \right\}$$
 
-Nenhuma das três trata de um componente da remuneração fixado por **regra
-pública sobre um índice territorial**. É isso que a adaptação ao PMM-E
-acrescenta.
+| Termo | Leitura |
+|---|---|
+| $\sum_t \delta^t$ | a escolha é de **carreira**, não de um mês: fixar-se ou migrar ao fim do vínculo |
+| $\mathbb{E}(w^{(s)}_{it}) / p_{it}$ | rendimento **deflacionado** pelo custo de vida local |
+| $c^{(s)}_{it}$ | tudo o que torna estar ali custoso e **não é pago em dinheiro** |
+| $s$ | qualificação: generalista atende em posto simples; **especialista** precisa de centro cirúrgico e leito |
+
+Na definição dos próprios autores, $c$ reúne *"preferences over rural or urban
+living, or other location-specific attributes, such as proximity to family"* —
+uma **caixa-preta**. As duas referências seguintes a abrem.
+
+**Fontes:** Moehling et al. (2020), *Cliometrica* 14, p. 184, eq. 1;
+[`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), §1.
+
+---
+
+## 13 — Abrindo o custo, parte 1: o lugar
+
+`3. Literatura teórica · 2 de 3`
+
+**Redding & Rossi-Hansberg (2017)**, eq. 24, p. 28, dão o **custo geográfico**:
+a utilidade de trabalhar num lugar depende do salário, das **amenidades** e do
+**custo de moradia** locais.
+
+$$u_{nio} = \frac{z_{nio}\, B_n\, w_i}{\kappa_{ni}\, Q_n^{\,1-\beta}} \quad\Longrightarrow\quad c^{\text{espacial}}_m = (1-\beta)\ln Q_m - \ln A_m$$
+
+Somado à proximidade da família de Moehling et al., o bloco fica:
+
+$$c^{\text{geo}}_{im} = \phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}$$
+
+| Componente | Sinal | Significado |
+|---|:---:|---|
+| $\phi(\text{dist}_{im})$ | $\phi' > 0$ | afastar-se da família custa, e custa mais a cada quilômetro |
+| $-\gamma A_m$ | $< 0$ | amenidade urbana — saneamento, segurança, escola — compensa |
+| $\theta_i^{\text{rural}}$ | $\gtrless 0$ | gosto pessoal por cidade pequena ou grande, sem sinal universal |
+
+**Uma limitação assumida.** CNES e edital não informam a residência do
+profissional, por sigilo fiscal. A unidade de análise é o **município do
+estabelecimento**, não o de moradia: $\text{dist}$ entra como latente.
+
+**Fontes:** Redding & Rossi-Hansberg (2017), *Annual Review of Economics* 9,
+p. 28, eq. 24; [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), §2.1 e §3.2.
+
+---
+
+## 14 — Abrindo o custo, parte 2: o trabalho
+
+`3. Literatura teórica · 3 de 3`
+
+**Choné & Ma (2011)**, eq. 1, p. 232, dão o **custo laboral**: o médico soma a
+renda, subtrai o custo de atender e soma o benefício ao paciente, ponderado
+pelo **altruísmo**.
+
+$$U = R - C(q; L, K) + \alpha B(q) \quad\Longrightarrow\quad c^{\text{laboral}}_{im} = C(q; L_m, K_m) - \alpha_i B(q; L_m, K_m)$$
+
+| Componente | Derivadas | Significado |
+|---|:---:|---|
+| $C(q)$ | $C' > 0,\ C'' > 0$ | atender cansa, e cansa de forma **crescente** |
+| $\alpha_i B(q)$ | $B' > 0,\ B'' < 0$ | curar dá satisfação, decrescente porque a triagem prioriza o caso grave |
+
+O custo marginal $c'(q) = C' - \alpha B'$ tem **sinal incerto**, mas
+$c'' \gg 0$: a curva é um **U**. Há uma zona em que atender mais *reduz* o custo
+líquido, um mínimo, e uma zona de exaustão.
+
+![Custo laboral líquido em função do volume de atendimentos](../../02_teoria/figuras/curva_custo_laboral_burnout.png)
+
+**Equipe ($L$) e capital ($K$) atuam duas vezes.** Reduzem o cansaço,
+$\partial C/\partial K < 0$ — canal que já está em Choné & Ma. E **ampliam o
+benefício**, $\partial B/\partial K > 0$: sem medicamento, insumo cirúrgico ou
+maquinário em funcionamento, o atendimento perde resolutividade. Esse segundo
+canal é **extensão deste projeto**, motivada pela função de produção médica de
+Reinhardt (1972, 1975). Por dois caminhos, $\partial c^{\text{laboral}}/\partial K < 0$.
+
+**Fontes:** Choné & Ma (2011), *International Journal of Health Care Finance
+and Economics* 11, p. 232, eq. 1; Reinhardt (1972, 1975);
+[`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), §2.2 e §2.3.
 
 ---
 
 # 4. Modelo microeconômico
 
-## 13 — Como o médico escolhe onde trabalhar
+## 15 — Como juntamos os três
 
-`4. Modelo microeconômico · 1 de 4`
+`4. Modelo microeconômico · 1 de 3`
 
-Adaptando Moehling et al. (2020), o médico $i$ escolhe o município $m$ que
-maximiza o **valor presente líquido da carreira**:
+A estrutura vem de Moehling et al.; o custo, que neles era caixa-preta, é
+aberto pelas outras duas. O médico $i$ escolhe o município $m$ que maximiza o
+valor presente líquido da carreira:
 
-$$V_{im} = \sum_t \delta^t \left[ \frac{\mathbb{E}(w_{imt} \mid B_m)}{p_{mt}} - c_{im} \right] + \varepsilon_{im}, \qquad m_i^{\ast} \in \arg\max_{m \in \mathcal{M} \cup \{0\}} V_{im}$$
+$$V_{im} = \sum_t \delta^t \left[ \frac{\mathbb{E}(w_{imt} \mid B_m)}{p_{mt}} - c_{im} \right] + \varepsilon_{im}$$
 
-A alternativa $m = 0$ é **ficar fora do programa**. A vaga em $m$ é aceita
-quando $V_{im} \geq V_{i0}$ e $m$ é a melhor opção entre as disponíveis.
+$$c_{im} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}}_{\text{Redding \& Rossi-Hansberg}} + \underbrace{C(q; L_m, K_m) - \alpha_i B(q; L_m, K_m)}_{\text{Choné \& Ma, com a extensão em } B}$$
 
-| Termo | Leitura |
+| De onde vem | O que entrega |
 |---|---|
-| $\mathbb{E}(w_{imt} \mid B_m)$ | remuneração esperada no município, dada a bolsa $B_m$ fixada pela regra |
-| $p_{mt}$ | custo de vida local: o que importa é a remuneração **real** |
-| $c_{im}$ | tudo o que torna estar ali custoso e não é pago em dinheiro |
-| $\delta^t$ | a decisão é de carreira, não de um mês |
-| $\varepsilon_{im}$ | gostos individuais que não observamos |
+| **Moehling et al. (2020)** | o $\arg\max$ intertemporal, o deflator $p_{mt}$ e a existência de $c$ |
+| **Redding & Rossi-Hansberg (2017)** | distância, amenidades e custo de moradia dentro de $c$ |
+| **Choné & Ma (2011)**, com Reinhardt | esforço, altruísmo e o papel de $L$ e $K$ dentro de $c$ |
+
+**A decisão.** A alternativa $m = 0$ é **ficar fora do programa**. A vaga em $m$
+é aceita quando $V_{im} \geq V_{i0}$ e $m$ é a melhor entre as disponíveis. O
+termo $\varepsilon_{im}$ recolhe os gostos que não observamos.
+
+**O que nenhuma das três tem.** Nenhuma trata de um componente da remuneração
+**fixado por regra pública sobre um índice territorial**. É isso, e só isso, que
+a adaptação ao PMM-E acrescenta — e é o que os dois slides seguintes
+desenvolvem.
+
+**Fontes:** [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), §2.4 e §3.
 
 ---
 
-## 14 — O que a bolsa paga — e o que não paga
+## 16 — O que a bolsa paga — e o que não paga
 
-`4. Modelo microeconômico · 2 de 4`
+`4. Modelo microeconômico · 2 de 3`
 
 A remuneração tem duas partes: a **bolsa**, que a regra fixa, e o que o médico
 obtém no **mercado local** fora das 20 horas do programa:
@@ -379,39 +457,9 @@ interior, o que valoriza a mesma bolsa em termos reais.
 
 ---
 
-## 15 — O custo de estar ali
+## 17 — O IVS organiza o custo
 
-`4. Modelo microeconômico · 3 de 4`
-
-$$c_{im} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}}_{\text{geográfico}} + \underbrace{C(q; L_m, K_m) - \alpha_i B(q; L_m, K_m)}_{\text{laboral líquido}}$$
-
-O bloco **geográfico** vem de Redding & Rossi-Hansberg; o **laboral**, de Choné
-& Ma.
-
-| Componente | Sinal | Significado |
-|---|:---:|---|
-| $\phi(\text{dist})$ | $\phi' > 0$ | afastar-se da família custa, e custa mais a cada quilômetro |
-| $-\gamma A_m$ | $< 0$ | amenidade urbana — saneamento, segurança, escola — compensa |
-| $\theta_i^{\text{rural}}$ | $\gtrless 0$ | gosto pessoal por cidade pequena ou grande |
-| $C(q)$ | $C' > 0,\ C'' > 0$ | atender cansa, e cansa de forma crescente |
-| $\alpha_i B(q)$ | $B' > 0,\ B'' < 0$ | curar dá satisfação, ponderada pelo altruísmo $\alpha_i$ |
-
-Equipe ($L$) e capital instalado ($K$) atuam **duas vezes** no bloco laboral:
-reduzem o cansaço, $\partial C / \partial K < 0$, e ampliam o benefício que o
-atendimento produz, $\partial B / \partial K > 0$. Por dois caminhos,
-$\partial c / \partial K < 0$. A segunda é **extensão deste projeto** a Choné &
-Ma.
-
-![Custo laboral líquido em função do volume de atendimentos](../../02_teoria/figuras/curva_custo_laboral_burnout.png)
-
-Como no município vulnerável $L$ e $K$ são baixos, **o mesmo lugar que paga
-mais é o que impõe maior custo de trabalho**.
-
----
-
-## 16 — O IVS organiza o custo
-
-`4. Modelo microeconômico · 4 de 4`
+`4. Modelo microeconômico · 3 de 3`
 
 Distância da família, aluguel e esforço clínico **não são observados**. O que se
 observa, para todo município, é o **IVS**. Escrevemos o custo como função do
@@ -423,9 +471,9 @@ Isso não é atalho: **cada dimensão do IVS corresponde a um bloco do custo.**
 
 | Dimensão do IVS | Indicadores | Bloco do custo | Efeito sobre $c$ |
 |---|---|---|:---:|
-| Infraestrutura urbana | saneamento, lixo, tempo de deslocamento | amenidades $A_m$ | $\uparrow$ |
-| Renda e trabalho | pobreza, desemprego, informalidade | mercado privado ausente, $w \to B$ | $\uparrow$ |
-| Capital humano | mortalidade infantil, analfabetismo, mães adolescentes | gravidade do caso, $B'(q)\uparrow$; escassez de equipe e capital, $K\downarrow$ | **ambíguo** |
+| Infraestrutura urbana | saneamento, lixo, tempo de deslocamento | amenidades $A_m$ — slide 13 | $\uparrow$ |
+| Renda e trabalho | pobreza, desemprego, informalidade | mercado privado ausente, $w \to B$ — slide 16 | $\uparrow$ |
+| Capital humano | mortalidade infantil, analfabetismo, mães adolescentes | gravidade do caso, $B'(q)\uparrow$; escassez de $L$ e $K$ — slide 14 | **ambíguo** |
 
 A terceira linha é o que impede assumir que o custo cresce com o índice.
 Carência sanitária **eleva o benefício** de atender — o que **reduz** o custo
@@ -440,7 +488,7 @@ a inclinação do índice.
 
 # 5. Hipótese
 
-## 17 — A hipótese
+## 18 — A hipótese
 
 `5. Hipótese`
 
@@ -475,7 +523,7 @@ A pergunta da apresentação é se essa desigualdade vale.
 
 # 6. Viabilidade empírica
 
-## 18 — Viabilidade empírica
+## 19 — Viabilidade empírica
 
 `6. Viabilidade empírica`
 
