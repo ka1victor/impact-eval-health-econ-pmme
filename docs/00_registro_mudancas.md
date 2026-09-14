@@ -8,6 +8,46 @@
 
 ---
 
+## 14/09/2026 — Trava de ambiente, correção de série pré-C1 e achados da fila
+
+Motivo: a tentativa de executar a fila pós-auditoria expôs que o repositório
+roda em silêncio sob ambiente errado, e que a correção C1 não tinha propagado
+para a documentação.
+
+### O que foi criado
+
+| Arquivo | Conteúdo | Por que existe |
+|---|---|---|
+| [`scripts/utils/ambiente.py`](../scripts/utils/ambiente.py) | verificação do interpretador e das versões fixadas | rodar sob versão próxima da fixada não dá erro, mas reescreve artefato a partir da 14ª casa decimal e quebra a cadeia de hashes sem aviso |
+| [`tests/test_verificacao_ambiente.py`](../tests/test_verificacao_ambiente.py) | seis testes da trava | a trava só protege se ela mesma estiver coberta |
+
+`run_all.py`, que grava artefato, passa a **abortar** diante de divergência.
+`run_tests.py`, que apenas lê, **avisa** e segue. A suíte vai de 138 para 144
+testes.
+
+### O que foi corrigido
+
+A série de A4 no `README.md` e em
+[`05_identificacao/16_sintese_achados_e_novo_plano_causal.md`](05_identificacao/16_sintese_achados_e_novo_plano_causal.md)
+ainda era a anterior ao C1, do balde único `RESTO`. Passa a ser a da
+especificação primária vigente: metropolitano +27,9 p.p. no lugar de +29,4,
+capital +32,6 no lugar de +23,2, e assim por diante. O `paper_pmme_submission.tex`
+já estava correto, e o conferidor de números seguiu aprovando as 190 cifras.
+
+`docs/auditorias/12_proveniencia_fins_de_linha.md` **não** foi alterado: ele
+registra o estado observado numa data anterior ao C1, e corrigir seus números
+falsificaria o registro.
+
+### O que foi registrado
+
+[`06_execucao/36_backlog_pos_auditoria.md`](06_execucao/36_backlog_pos_auditoria.md)
+recebeu os achados que travam a fila: o alvo congelado do item A-1 não reproduz,
+A5 não é reexecutável sem os microdados do CNES, e regenerar o manifesto de A6
+hoje removeria em silêncio um registro de proveniência. O item D-1 passou a
+resolvido, porque o artigo compilou.
+
+---
+
 ## 09/09/2026 — Seção de apresentações, absorção do documento 18 e limpeza de referências
 
 Motivo: preparar a entrega da banca 1 e eliminar as três duplicações de conteúdo

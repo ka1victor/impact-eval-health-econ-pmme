@@ -221,6 +221,23 @@ Não hasheia `A5_painel_T0.parquet`, que é o dataset de estimação, nem
 **Nota de ambiente:** o comando correto neste repositório exige Python ≥ 3.12; ver
 a seção de ambiente do `README.md`.
 
+### Verificado em 14/09/2026 — regenerar o manifesto hoje o piora
+
+`07_red_team_sintese.py` foi executado no ambiente documentado, com Python
+3.13.12 e numpy 2.5.2. Ele roda sem erro, mas **remove em silêncio** a entrada de
+`output/painel_municipio_curso_mensal.parquet` de `hashes_entradas_e_artefatos`,
+porque o arquivo não existe nesta máquina (item D-4). O registro de proveniência
+some sem nenhum aviso, e o manifesto fica mais pobre do que o publicado.
+
+Isso acrescenta um requisito ao item, que antes era só de conteúdo: o gerador
+deve distinguir **insumo ausente** de **insumo inexistente no desenho**, gravando
+a entrada com marca explícita de ausência e o motivo, em vez de omiti-la. Sem
+isso, qualquer reexecução em ambiente sem os microdados degrada a auditoria.
+
+O mesmo cuidado vale para os dois documentos de auditoria que o script regrava,
+`09_red_team_atracao_provimento.md` e `09_matriz_afirmacao_evidencia_limite.md`:
+eles mudam de hash a cada execução porque carregam a data de referência.
+
 ## B-4 · Nota aritmética errada no manifesto da tipologia
 
 **Onde:** `output/tema_trabalho/manifesto_tipologia_territorial.json`,
@@ -440,11 +457,19 @@ não é afetada: A4 lê apenas artefatos versionados presentes e foi reexecutado
 sucesso, reproduzindo os alvos do C1 (capital +0,3264, metropolitano +0,2793,
 interior próximo +0,1207, 24 níveis de efeito fixo).
 
-**Nota de reprodutibilidade observada na mesma verificação:** reexecutar A4 neste
-ambiente reescreve doze arquivos com diferenças a partir da 14ª casa decimal, por
-não determinismo de BLAS entre versões de biblioteca. Nenhuma conclusão muda, mas
-a cadeia de hashes de A6 é sensível a isso. Qualquer sessão que reexecute A4 deve
-declarar essa origem ao commitar, e não tratar a diferença como resultado novo.
+**Nota de reprodutibilidade, corrigida.** Uma primeira verificação sugeriu que
+reexecutar A4 reescrevia doze arquivos com diferenças a partir da 14ª casa
+decimal, e atribuiu isso a não determinismo de BLAS. **Estava errado.** A causa
+era o interpretador: o `python3` do sistema é 3.11 com numpy 2.4.6, enquanto o
+`requirements.txt` fixa numpy 2.5.2 e o `README.md` exige Python 3.12 ou
+superior. Montado o ambiente documentado com `python3.13` — as mesmas versões que
+o manifesto A6 registra —, `05_estimar_atracao.py` reexecuta **sem alterar um
+único byte** das saídas de A4, e a suíte segue verde.
+
+A conclusão é mais forte que a nota original: **o repositório é reprodutível byte
+a byte no ambiente que ele documenta**. Diferença numérica em reexecução é sinal
+de ambiente errado, não de indeterminismo tolerável, e não deve ser declarada
+como ruído em commit nenhum.
 
 ---
 

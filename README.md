@@ -90,9 +90,14 @@ produção, redução de espera ou melhora de saúde.
   não presume 40 horas e censura margens sem seguimento.
 - A ponte curso–CBO é operacional, não uma crosswalk oficial. Dez cursos sem
   CBO compartilhado formam a amostra confirmatória.
-- A4 é o resultado principal: atração em 30,3% das células; metropolitano
-  +29,4pp versus interior remoto, preservado em confirmação (+28,5pp),
-  homologação (+25,0pp) e unidade município–curso (+33,1pp).
+- A4 é o resultado principal: atração em 30,3% das células do quadro da primeira
+  chamada; metropolitano +27,9pp versus interior remoto, preservado em
+  confirmação (+27,0pp), homologação (+23,8pp) e unidade município–curso
+  (+31,6pp). Os valores são os da especificação primária vigente, com as oito
+  unidades da federação de menos de cinco municípios colapsadas em macrorregião
+  de saúde conforme o protocolo congelado — a correção C1 de
+  [`35_plano_correcoes_pos_auditoria.md`](docs/06_execucao/35_plano_correcoes_pos_auditoria.md).
+  A série anterior, de +29,4pp, vinha do balde único e não é mais a primária.
 - A5 usa como principal 587 células município–curso em 295 municípios, referência
   limpa 202506 e follow-up 202603. O estudo dinâmico encontra +0,50 profissional
   cadastrado em março de 2026 (EP 0,23), em linguagem estritamente associativa;
@@ -179,13 +184,27 @@ python3.13 -m venv .venv
 
 Use o interpretador do ambiente virtual nos comandos abaixo.
 
+**Por que o ambiente é obrigatório, e não recomendado.** Instalar versões
+próximas das fixadas — por exemplo numpy 2.4.6 em vez de 2.5.2 — não produz
+erro. Os scripts terminam com sucesso e a suíte passa. O que muda são as saídas,
+a partir da 14ª casa decimal. Como a proveniência do projeto é ancorada em
+SHA-256 de arquivo, rodar o pipeline sob outro ambiente reescreve artefatos e
+quebra a cadeia de hashes sem que nada avise. Verificado em 14/09/2026: sob o
+ambiente documentado, `05_estimar_atracao.py` reexecuta sem alterar um byte;
+sob Python 3.11 com numpy 2.4.6, reescreve doze arquivos.
+
+Por isso os dois pontos de entrada verificam o ambiente antes de rodar, via
+[`scripts/utils/ambiente.py`](scripts/utils/ambiente.py). O `run_all.py`, que
+grava artefato, **aborta** diante de divergência. O `run_tests.py`, que apenas
+lê, **avisa** e segue.
+
 ### Pipeline completo de replicação
 ```bash
 python run_all.py
 ```
 O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A8, incluindo tabelas, figuras, red team, cutoff estrito e manifestos.
 
-### Suíte de testes automatizados (132 testes)
+### Suíte de testes automatizados (144 testes)
 ```bash
 python run_tests.py
 ```

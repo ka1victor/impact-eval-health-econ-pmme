@@ -112,15 +112,26 @@ População primária: 1.295 células CNES–curso da primeira chamada de 2025, 
 | Estrato | Proporção bruta com atração | Diferença ajustada vs. interior remoto, modelo mínimo |
 |---|---:|---:|
 | interior remoto | 20,5% | referência |
-| interior próximo de polo | 26,9% | +12,7 p.p. (EP 4,3) |
-| capital | 35,6% | +23,2 p.p. (EP 8,6) |
-| metropolitano | 44,9% | +29,4 p.p. (EP 6,1) |
+| interior próximo de polo | 26,9% | +12,1 p.p. (EP 4,3) |
+| capital | 35,6% | +32,6 p.p. (EP 7,2) |
+| metropolitano | 44,9% | +27,9 p.p. (EP 5,9) |
 
-No modelo completo, o contraste metropolitano cai para +19,8 p.p.
-(`p=0,0199`; `q=0,0596`). O padrão metropolitano versus remoto permanece ao
-separar confirmação (+28,5 p.p.), homologação (+25,0 p.p.) e ao colapsar a
-unidade para município–curso (+33,1 p.p.). Leave-one-UF, leave-one-curso e
+No modelo completo, o contraste metropolitano cai para +20,9 p.p.
+(`p=0,0078`; `q=0,0234`). O padrão metropolitano versus remoto permanece ao
+separar confirmação (+27,0 p.p.), homologação (+23,8 p.p.) e ao colapsar a
+unidade para município–curso (+31,6 p.p.). Leave-one-UF, leave-one-curso e
 leave-one-município não invertem o sinal metropolitano.
+
+> **Série atualizada em 14/09/2026.** Os valores acima são os da especificação
+> primária vigente, com as oito unidades da federação de menos de cinco
+> municípios colapsadas em macrorregião de saúde, conforme o protocolo A3
+> congelado antes dos desfechos. A série anterior — metropolitano +29,4 p.p.,
+> capital +23,2, interior próximo +12,7, completo +19,8, confirmação +28,5,
+> homologação +25,0 e município–curso +33,1 — vinha do balde único `RESTO` e foi
+> substituída pela correção C1 de
+> [`35_plano_correcoes_pos_auditoria.md`](../06_execucao/35_plano_correcoes_pos_auditoria.md).
+> O contraste de capital é o que mais se move, de +23,2 para +32,6 p.p., e foi
+> ele que motivou a correção. As proporções brutas são descritivas e não mudam.
 
 **Interpretação permitida:** há um gradiente territorial robusto de atração
 administrativa. **Interpretação proibida:** municípios metropolitanos atraíram

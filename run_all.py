@@ -6,6 +6,9 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from utils.ambiente import verificar_ambiente  # noqa: E402
 STEPS = [
     ROOT / "scripts" / "00_inventario_dados.py",
     ROOT / "scripts" / "02_auditar_fontes_pmme.py",
@@ -32,6 +35,11 @@ STEPS = [
 
 
 def main() -> None:
+    # O pipeline grava artefato versionado, cuja proveniencia e ancorada em
+    # SHA-256. Ambiente divergente reescreve arquivo em silencio, entao aqui a
+    # verificacao aborta em vez de avisar.
+    verificar_ambiente(estrito=True)
+
     print("Iniciando execução do pipeline consolidado do PMM-E...\n")
     for script in STEPS:
         print(f">> Executando {script.relative_to(ROOT)}...")
