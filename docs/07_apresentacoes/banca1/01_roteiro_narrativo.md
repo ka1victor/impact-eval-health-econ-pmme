@@ -22,7 +22,7 @@ pedir — a motivação, que tem mais a dizer, ocupa oito; as demais, um a quatr
 | **2. Pergunta** | a pergunta, e a leitura em dois objetos: o preço e a desvantagem | 11 |
 | **3. Literatura teórica** | as três tradições que o modelo junta e o que cada uma resolve | 12 |
 | **4. Modelo microeconômico** | a decisão; o que a bolsa paga e o que não paga; o custo de estar ali; por que o IVS organiza o custo | 13–16 |
-| **5. Hipóteses** | da condição de aceitação às duas hipóteses e à condição de degrau, em quatro passos | 17 |
+| **5. Hipótese** | da condição de aceitação à hipótese única e à condição de degrau, em quatro passos | 17 |
 | **6. Viabilidade empírica** | o que se consegue medir de cada peça, o que fica de fora, e por que separar bolsa de vulnerabilidade é difícil | 18 |
 
 A seção 6 encerra a entrega: não há slide de perguntas. A margem tratada é o
@@ -79,7 +79,7 @@ Títulos dos slides 3 a 18 — curtos, declarativos e sem palavra difícil:
 14. O que a bolsa paga — e o que não paga
 15. O custo de estar ali
 16. O IVS organiza o custo
-17. Duas hipóteses
+17. A hipótese
 18. Viabilidade empírica
 
 ### 2.2 Uma afirmação por slide
@@ -134,7 +134,7 @@ baixa — sem nomear estimadores.
 | 1 | **Títulos: só o takeaway, não o nome da seção (tracking separado)** | Todos os títulos eram rótulos de seção com numeral romano. Cada slide recebeu título em frase completa com a afirmação que sustenta; o nome da seção e a posição foram para o rastreio, fora do título. |
 | 2 | **Motivação: dividir entre (i) dor, (ii) política, (iii) efeitos** | O painel 2×2 repetido em dois slides virou três blocos em sequência causal — problema (slides 3 a 5), política (6 e 7) e efeito incerto (8 a 10) — cada um com os slides que o argumento pede. |
 | 3 | **Pergunta: simplificar** | De *"Bolsas maiores conseguem compensar as desvantagens territoriais no preenchimento e na manutenção das vagas do PMM-E?"* para **"Maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas desvantagens territoriais na atração de médicos especialistas?"**, com a leitura em dois objetos logo abaixo. |
-| 4 | **Teoria: derivar hipóteses diretamente** | O bloco teórico termina em um slide que escreve a condição de aceitação e dela tira as duas hipóteses como derivadas parciais — remuneração real com sinal positivo, custo locacional com sinal negativo — e as junta na condição de degrau. |
+| 4 | **Teoria: derivar a hipótese diretamente** | O bloco teórico termina em um slide que escreve a condição de aceitação e dela tira a hipótese como derivada parcial da remuneração real, com sinal positivo, e chega à condição de degrau. O custo locacional aparece como obstáculo de identificação, não como segunda hipótese. |
 
 ## 4. Ajustes de conteúdo de 09/09/2026
 
@@ -150,7 +150,7 @@ Quatro rodadas de revisão do autor sobre a versão em markdown.
 | pergunta | retirado o bloco "o que a pergunta não é" |
 | literatura | apenas teórica, com a equação original de cada trabalho |
 | modelo | o termo de remuneração passou a incluir o mercado local |
-| hipóteses | reduzidas a duas, sobre preenchimento apenas |
+| hipóteses | reduzidas a uma, sobre preenchimento apenas |
 | todos | retiradas as notas de apresentador e as fontes internas; ficaram as fontes dos dados exibidos |
 
 ### Segunda rodada
@@ -165,7 +165,7 @@ Quatro rodadas de revisão do autor sobre a versão em markdown.
 | 6 | pergunta na formulação do autor |
 | 7 | retirada a coluna "o que entra no nosso modelo"; Choné & Ma e Reinhardt passam a ter cada um sua equação original, em linhas separadas; equações corrigidas para renderizar dentro de tabela |
 | 10 | a tabela de como cada objeto aparece nos dados sai daqui |
-| 11 | e entra aqui, condensada e ligada a H1 e H2, junto com o desafio de identificação |
+| 11 | e entra aqui, condensada e ligada a H1, junto com o desafio de identificação |
 | 12 | slide de perguntas eliminado: a apresentação termina na viabilidade empírica |
 
 ### Terceira rodada
@@ -194,7 +194,7 @@ De 11 para 18 slides.
 | pergunta | acrescida da leitura em dois objetos — preço e desvantagem — e da margem observada |
 | literatura | ganha parágrafo dizendo o que cada tradição resolve e uma linha sobre o que nenhuma trata |
 | modelo | de 2 para 4 slides: entram "O que a bolsa paga — e o que não paga", que desenvolve $w = B + w^{\text{priv}}$ e o deflator, e "O IVS organiza o custo", que traz a correspondência entre as três dimensões do índice e os blocos do custo e o sinal ambíguo de $c_0'(IVS)$ — o argumento que justifica estudar o degrau |
-| hipóteses | derivação escrita em quatro passos numerados |
+| hipóteses | derivação escrita em quatro passos numerados, com uma hipótese |
 | viabilidade | custo de vida e distância da família entram na tabela; fecha com o primeiro passo do trabalho empírico |
 
 ## 4b. Ajustes de 14/09/2026 — correção de agrupamento e da regra da bolsa
@@ -212,6 +212,18 @@ faixa, registradas em
 Correção adicional ao slide 18: a afirmação de que "não há municípios pouco
 vulneráveis recebendo bolsas altas" era **falsa** no próprio dado do
 repositório — 37 municípios com IVS ≤ 0,400 estão na Faixa 1 e 94 na Faixa 2.
+
+### Decks derivados, corrigidos no mesmo ato
+
+Os decks Beamer e Slidev tinham sido construídos a partir da versão anterior do
+documento canônico e **promoveram o número errado a manchete**: título "Onde a
+bolsa é maior, já havia menos especialistas" e callout "menos da metade dos
+especialistas por habitante". Sob a faixa publicada a relação é a inversa —
+18,3 na Faixa 1 contra 15,0 na Faixa 3. Ambos foram corrigidos e recompilados a
+partir do documento canônico já corrigido, como manda a regra da seção: o deck é
+artefato derivado, e divergência entre deck e documento é erro do deck.
+
+O Beamer volta a compilar sem nenhum Overfull \hbox ou \vbox.
 
 ## 5. Defeitos do material anterior
 
@@ -238,6 +250,6 @@ Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.
 | 2. Pergunta | 1 | 1 |
 | 3. Literatura teórica | 1 | 2 |
 | 4. Modelo microeconômico | 4 | 8 |
-| 5. Hipóteses | 1 | 3 |
+| 5. Hipótese | 1 | 3 |
 | 6. Viabilidade empírica | 1 | 2 |
 | **Total** | **18** | **28** |

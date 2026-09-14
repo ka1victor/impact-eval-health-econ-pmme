@@ -66,6 +66,207 @@ Fora isso, nada foi criado, movido ou removido: as demais correções das sessõ
 3 e 5 são de conteúdo dentro de arquivos que permaneceram no mesmo lugar. A
 suíte vai de 144 para 156 testes.
 
+## 14/09/2026 — Banca 1: hipótese única, e o deck Beamer eleito e comprimido
+
+Duas mudanças, de origens diferentes, no mesmo commit.
+
+### A pedido da banca: uma hipótese, não duas
+
+Os professores pediram que a apresentação ficasse com **uma única hipótese, a
+primeira**. A correção foi feita primeiro no documento canônico e só depois nos
+artefatos derivados, como manda a regra de proveniência.
+
+| Documento | O que mudou |
+|---|---|
+| [`07_apresentacoes/banca1/02_conteudo_slides.md`](07_apresentacoes/banca1/02_conteudo_slides.md) | slide 17 passou de "Duas hipóteses" a **"A hipótese"**; a seção 5 ficou no singular, no título e no sumário; a tabela de derivadas ficou só com H1; o passo 4 foi reescrito. O documento inteiro foi reescrito no mesmo commit — ver adiante |
+| [`07_apresentacoes/banca1/01_roteiro_narrativo.md`](07_apresentacoes/banca1/01_roteiro_narrativo.md) | título literal do slide 17, papel narrativo da seção 5 e as três linhas que contavam "duas hipóteses" |
+| [`02_teoria/hipoteses_e_viabilidade_empirica.md`](02_teoria/hipoteses_e_viabilidade_empirica.md) | seção 4.2 refeita: a banca 1 leva uma hipótese. O conjunto canônico H1–H4 **não** mudou — mudou o que a apresentação enuncia |
+| [`07_apresentacoes/banca1/README.md`](07_apresentacoes/banca1/README.md) | seção 5 no singular nas três tabelas |
+
+**O que aconteceu com o custo locacional.** A antiga H2 — maior custo reduz o
+preenchimento — não virou nota de rodapé nem sumiu: passou a ser apresentada
+como **obstáculo de identificação**, que é o que ela é. O custo não varia
+livremente, porque a regra do edital o amarra à bolsa e os dois sobem juntos;
+ele é o que torna H1 difícil de testar, não uma segunda afirmação a testar. A
+condição de degrau $\Delta B/p > \Delta c_0$ continua no slide, como
+consequência da condição de aceitação na fronteira entre faixas.
+
+A frase do slide 18 que dizia "separar H1 de H2" passou a "isolar o efeito da
+bolsa do efeito do custo", no documento de conteúdo e nos dois decks.
+
+### Decisão do autor: vai-se com o Beamer, mais limpo e mais comprimido
+
+Dos dois decks construídos em paralelo, o **Beamer (Warsaw) é o escolhido**. Ele
+foi então limpo e comprimido.
+
+| Arquivo | O que mudou |
+|---|---|
+| [`07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex`](07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex) | reescrito: de **36 frames em 37 páginas** para **22 frames em 29 páginas** |
+| [`scripts/apresentacao/build_deck_beamer.sh`](../scripts/apresentacao/build_deck_beamer.sh) | passou a relatar também `Overfull \vbox` |
+| [`07_apresentacoes/banca1/deck_beamer/README.md`](07_apresentacoes/banca1/deck_beamer/README.md) | mapa de frames refeito; seções 3.1, 3.3, 3.4 e 5 reescritas |
+| `output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf` | recompilado, 29 páginas |
+
+**Uma barra só, embaixo.** A `headline` do Warsaw foi esvaziada e o rastreio de
+seção desceu para o rodapé, no lugar antes ocupado pelo título do trabalho — que
+se repetia em todas as páginas sem acrescentar nada a quem já leu a capa. A
+faixa de `frametitle` com degradê, que é o que torna o tema reconhecível, ficou,
+agora encostada no corpo. Saíram também as sombras das caixas de destaque. O
+ganho é de cerca de uma linha e meia de texto em **todos** os frames.
+
+**Compressão.** Sete slides do documento que estavam repartidos em dois, três ou
+quatro frames de mesmo título dentro de uma só subseção foram fundidos em frame
+único; outros sete viraram **um frame com dois overlays**. `\insertframenumber`
+conta frames, não páginas: em um frame com overlay o rodapé exibe o mesmo
+número nas duas telas, sob o mesmo título e o mesmo rastreio — para a banca é um
+slide que se completa, não um slide novo. E overlay não custa tempo de fala além
+do que o conteúdo já custa, o que importa contra os 28 minutos da seção 6 do
+roteiro.
+
+O slide 13 do documento ganhou o caminho inverso: o overlay que separava a
+função-valor do seu glossário deixou de ser necessário, porque a altura
+recuperada fez os dois caberem na mesma tela.
+
+**O que saiu.** Prosa de ligação, citação que ilustrava sem acrescentar fato,
+duas manchetes de jornal em caixa que repetiam a frase ao lado, e vão morto.
+**Nenhuma afirmação e nenhum número do documento de conteúdo saíram** — todos os
+valores exibidos foram reconferidos um a um contra a versão anterior do `.tex`.
+
+**Verificação.** O build termina sem nenhum `Overfull \hbox` ou `\vbox` — nenhum
+frame estoura a altura, que era o modo de falha esperado ao comprimir. Duas
+execuções produzem o mesmo PDF byte a byte. As 29 páginas foram revistas uma a
+uma em PNG.
+
+### O documento canônico foi reescrito para ser a base concisa
+
+Até aqui o deck estava **mais enxuto que o documento canônico** — divergência na
+direção errada: quem lê a fonte de verdade encontrava prosa, citação e manchete
+que a apresentação não mostra. `02_conteudo_slides.md` foi reescrito para dizer
+exatamente o que vai à tela, e nada além.
+
+| O que saiu | Onde |
+|---|---|
+| duas manchetes de jornal em citação recuada | slide 3 |
+| as duas citações em inglês que ilustravam sem acrescentar fato | slides 5 e 8 |
+| linhas `> Referência` soltas, que duplicavam o bloco `Fontes:` | slides 8 e 9 |
+| prosa de ligação e repetição de rótulo | todos |
+
+Dois ajustes de forma, no mesmo espírito: os números que **a figura já rotula**
+— 16,0 / 10,0 / 7,3, os 5 / 3 / 2 colegas, os 15% / 34% / 42% e as sete
+porcentagens de preenchimento — passaram da prosa para a **legenda da figura**,
+que é onde eles são o registro do que a plateia vê sem obrigá-la a ler duas
+vezes; e as duas ressalvas abertas (cursos ambulatoriais, figura do custo
+laboral) ganharam seção própria no fim, em vez de ficarem só nos README dos
+decks.
+
+O cabeçalho do documento agora declara o que ele é: fonte de verdade, decks
+derivados, banca teórica que termina na viabilidade empírica.
+
+**Conferência de equivalência.** Todo número exibido no `.tex` foi procurado no
+documento, e todo número do documento, no `.tex`. A única diferença que resta é
+a esperada: os treze valores rotulados dentro das figuras estão no documento e
+não no texto do deck, por causa da regra de não repetir em prosa o número que a
+figura carrega. As afirmações foram conferidas uma a uma pelo mesmo método.
+
+### O deck Slidev permanece, sincronizado apenas no conteúdo
+
+O deck em `deck_slidev/` não foi descartado do repositório, mas deixou de ser
+candidato. Recebeu apenas a mudança de conteúdo — hipótese única e a frase do
+slide 18 — para não divergir do documento canônico. Sua composição não foi
+retrabalhada, e a página 31 ficou com folga no rodapé por causa da linha de H2
+removida.
+
+---
+
+## 14/09/2026 — Decks da banca 1 em duas tecnologias: Beamer (Warsaw) e Slidev (academic)
+
+Motivo: produzir o artefato de projeção da banca 1, que até aqui existia só como
+markdown de leitura. Foram feitos dois decks em paralelo, em tecnologias
+diferentes, para comparação de clareza de apresentação. Ambos derivam de
+[`07_apresentacoes/banca1/02_conteudo_slides.md`](07_apresentacoes/banca1/02_conteudo_slides.md).
+Nenhuma afirmação, número, citação ou figura foi criada aqui: o documento de
+conteúdo continua sendo a fonte de verdade, e divergência entre deck e documento
+é erro do deck.
+
+### Deck A — LaTeX Beamer, tema Warsaw
+
+#### O que foi criado
+
+| Arquivo | Conteúdo | Por que existe |
+|---|---|---|
+| [`07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex`](07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex) | deck em Beamer, tema Warsaw, 16:9, 36 frames em 37 páginas | a banca 1 tinha conteúdo canônico em markdown e nenhum artefato de projeção versionado |
+| [`07_apresentacoes/banca1/deck_beamer/README.md`](07_apresentacoes/banca1/deck_beamer/README.md) | como compilar, mapeamento slide do documento → frames e decisões de composição | o corte de um slide do documento em vários frames precisa ser rastreável |
+| `scripts/apresentacao/build_deck_beamer.sh` | build determinístico: confere as figuras, roda `pdflatex` duas vezes, relata `Overfull \hbox`, grava o PDF em `output/` e limpa auxiliares | regra do projeto: saída de apresentação é produzida por script versionado |
+| `output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf` | PDF compilado, 37 páginas | artefato derivado, regerável pelo script |
+
+#### Decisões registradas
+
+| Decisão | Conteúdo |
+|---|---|
+| Mapeamento | os 18 slides do documento viram 36 frames; cada frame repete o título literal e a linha de rastreio do slide de origem, exibida em faixa fina fora do título |
+| Repetição | onde a figura já rotula o número, o texto ao lado traz só a afirmação; nenhum valor aparece duas vezes na mesma tela |
+| Overlay | o glossário da função-valor (slide 13) fica no mesmo frame da equação, em segundo overlay, para não deixar o referente fora da tela |
+| Figuras | apenas as seis já versionadas — cinco de `output/apresentacao_banca1/` e a ilustração conceitual de `02_teoria/figuras/` — lidas por `\graphicspath` relativo à raiz, sem recorte, edição ou regeração. Cada figura tem uma única legenda, no mesmo formato `Fontes:` dos frames de texto |
+| Ressalva registrada | em projeção, a legenda e as anotações de zona de `F4` (curva de custo laboral) ficam em torno de 5 pt e não são legíveis. O deck não pode regerar a figura; a decisão sobre refazê-la com tipografia maior é do autor. Detalhe no README do deck, seção 4.1 |
+| Tema | Warsaw preservado no `frametitle` com degradê e sombra e nos blocos arredondados; a barra de navegação da headline foi trocada pela faixa de rastreio e o rodapé de três caixas por uma faixa fina; paleta trocada do azul padrão para o verde das figuras |
+| Escopo | mantido o da banca 1 — termina na viabilidade empírica, sem slide de perguntas e sem resultado de estimação |
+
+### Deck B — Slidev, tema `slidev-theme-academic`
+
+#### O que foi criado
+
+| Arquivo | Conteúdo | Por que existe |
+|---|---|---|
+| [`07_apresentacoes/banca1/deck_slidev/slides.md`](07_apresentacoes/banca1/deck_slidev/slides.md) | os 18 slides do documento em 33 páginas Slidev, tema `slidev-theme-academic` | a entrega da banca precisa de um deck projetável; o markdown de conteúdo é para leitura, não para projeção |
+| [`07_apresentacoes/banca1/deck_slidev/README.md`](07_apresentacoes/banca1/deck_slidev/README.md) | como rodar e exportar, mapeamento slide do documento → páginas, decisões de composição | o mapeamento 1→N precisa ser auditável contra o documento de conteúdo |
+| `07_apresentacoes/banca1/deck_slidev/style.css` e `components/` | estilo, faixa de rastreio de seção, faixa de fontes, figura com proporção travada | as regras de composição da seção 2 do roteiro — título é takeaway, rastreio fora do título, fonte que não compete com o conteúdo — são decisões visuais e viram CSS |
+| `07_apresentacoes/banca1/deck_slidev/package.json` e `package-lock.json` | versões exatas de `@slidev/cli` (52.19.1), do tema (3.0.1) e das fontes empacotadas | build determinístico |
+| `scripts/apresentacao/build_deck_slidev.sh` | exportação do PDF e dos PNG de revisão | figura ou número exibido em slide segue a mesma regra de proveniência de qualquer saída: é gerado por script versionado |
+
+#### Saída gerada
+
+`output/apresentacao_banca1/deck_slidev/banca1_slidev.pdf`, 33 páginas. Os PNG
+por página, usados na revisão visual, são derivados do mesmo deck e ficam fora
+do versionamento.
+
+#### Segunda rodada de revisão, no mesmo dia
+
+O deck saiu de 36 para 33 páginas. Três fusões: a figura do preenchimento do
+ciclo 1 voltou a caber com sua leitura em uma página; a equação do valor
+presente voltou a ficar na mesma página que o glossário dos seus termos; e os
+quatro passos das hipóteses passaram de três páginas para duas. Onde a figura já
+rotula o número na barra, o texto ao lado ficou só com a afirmação, sem relistar
+o que a figura mostra. Nada de conteúdo foi cortado: só repetição e vão.
+
+Ressalva registrada no README do deck: o documento canônico anuncia "10
+ambulatoriais" e lista oito itens. O deck transcreve como está; a correção cabe
+ao documento canônico, não ao artefato derivado.
+
+#### Terceira rodada de revisão, no mesmo dia
+
+O espaço livre da página passou a ser ocupado por quem ganha com ele: a figura
+cresce até a barra de fontes sem distorcer, a tabela de quatro linhas ou mais se
+estica, e nas páginas sem figura nem tabela o corpo do texto aumenta em vez de
+ser esticado. Cartão e lista continuam sem esticar. As cinco páginas em que o
+vão de rodapé permanece estão nomeadas no README do deck, com o motivo de cada
+uma. Contagem de páginas inalterada.
+
+#### O que não mudou
+
+Nenhum arquivo da documentação foi movido, fundido ou removido. O conteúdo dos
+18 slides, os números, as citações e as fontes vieram inalterados de
+`02_conteudo_slides.md`; os 16 títulos dos slides 3 a 18 são os literais da
+seção 2.1 do roteiro. As seis figuras são as que já existiam em
+`output/apresentacao_banca1/` e em `docs/02_teoria/figuras/`: o build cria
+links simbólicos para elas em um diretório de trabalho não versionado, sem
+gerar, editar nem copiar imagem alguma para dentro do repositório.
+
+### Ponto de atenção herdado do documento de conteúdo
+
+O slide 6 de `02_conteudo_slides.md` anuncia **10 cursos ambulatoriais** e
+enumera oito itens entre parênteses. Os dois decks transcrevem a lista como
+está, por fidelidade; a conferência no Edital SGTES/MS nº 3/2025 fica pendente
+no documento canônico, não nos decks.
+
 ---
 
 ## 09/09/2026 — Seção de apresentações, absorção do documento 18 e limpeza de referências
