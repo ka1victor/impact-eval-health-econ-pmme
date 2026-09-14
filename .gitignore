@@ -40,6 +40,9 @@ wheels/
 htmlcov/
 tmp/
 
+# Worktrees isolados de agentes (scratch do harness, nunca conteudo do projeto)
+.claude/worktrees/
+
 # Dados brutos grandes e parquets analíticos pesados (reproduzíveis via scripts)
 data/raw/cnes/
 data/raw/administrativo_rdd_bolsa/
