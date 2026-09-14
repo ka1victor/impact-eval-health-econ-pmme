@@ -8,15 +8,19 @@
 
 ---
 
-## 14/09/2026 — Deck Beamer (tema Warsaw) da banca 1
+## 14/09/2026 — Decks da banca 1 em duas tecnologias: Beamer (Warsaw) e Slidev (academic)
 
-Motivo: produzir o artefato de apresentação da banca 1 em LaTeX Beamer, derivado
-de [`07_apresentacoes/banca1/02_conteudo_slides.md`](07_apresentacoes/banca1/02_conteudo_slides.md).
+Motivo: produzir o artefato de projeção da banca 1, que até aqui existia só como
+markdown de leitura. Foram feitos dois decks em paralelo, em tecnologias
+diferentes, para comparação de clareza de apresentação. Ambos derivam de
+[`07_apresentacoes/banca1/02_conteudo_slides.md`](07_apresentacoes/banca1/02_conteudo_slides.md).
 Nenhuma afirmação, número, citação ou figura foi criada aqui: o documento de
 conteúdo continua sendo a fonte de verdade, e divergência entre deck e documento
 é erro do deck.
 
-### O que foi criado
+### Deck A — LaTeX Beamer, tema Warsaw
+
+#### O que foi criado
 
 | Arquivo | Conteúdo | Por que existe |
 |---|---|---|
@@ -25,7 +29,7 @@ conteúdo continua sendo a fonte de verdade, e divergência entre deck e documen
 | `scripts/apresentacao/build_deck_beamer.sh` | build determinístico: confere as figuras, roda `pdflatex` duas vezes, relata `Overfull \hbox`, grava o PDF em `output/` e limpa auxiliares | regra do projeto: saída de apresentação é produzida por script versionado |
 | `output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf` | PDF compilado, 37 páginas | artefato derivado, regerável pelo script |
 
-### Decisões registradas
+#### Decisões registradas
 
 | Decisão | Conteúdo |
 |---|---|
@@ -37,12 +41,62 @@ conteúdo continua sendo a fonte de verdade, e divergência entre deck e documen
 | Tema | Warsaw preservado no `frametitle` com degradê e sombra e nos blocos arredondados; a barra de navegação da headline foi trocada pela faixa de rastreio e o rodapé de três caixas por uma faixa fina; paleta trocada do azul padrão para o verde das figuras |
 | Escopo | mantido o da banca 1 — termina na viabilidade empírica, sem slide de perguntas e sem resultado de estimação |
 
+### Deck B — Slidev, tema `slidev-theme-academic`
+
+#### O que foi criado
+
+| Arquivo | Conteúdo | Por que existe |
+|---|---|---|
+| [`07_apresentacoes/banca1/deck_slidev/slides.md`](07_apresentacoes/banca1/deck_slidev/slides.md) | os 18 slides do documento em 33 páginas Slidev, tema `slidev-theme-academic` | a entrega da banca precisa de um deck projetável; o markdown de conteúdo é para leitura, não para projeção |
+| [`07_apresentacoes/banca1/deck_slidev/README.md`](07_apresentacoes/banca1/deck_slidev/README.md) | como rodar e exportar, mapeamento slide do documento → páginas, decisões de composição | o mapeamento 1→N precisa ser auditável contra o documento de conteúdo |
+| `07_apresentacoes/banca1/deck_slidev/style.css` e `components/` | estilo, faixa de rastreio de seção, faixa de fontes, figura com proporção travada | as regras de composição da seção 2 do roteiro — título é takeaway, rastreio fora do título, fonte que não compete com o conteúdo — são decisões visuais e viram CSS |
+| `07_apresentacoes/banca1/deck_slidev/package.json` e `package-lock.json` | versões exatas de `@slidev/cli` (52.19.1), do tema (3.0.1) e das fontes empacotadas | build determinístico |
+| `scripts/apresentacao/build_deck_slidev.sh` | exportação do PDF e dos PNG de revisão | figura ou número exibido em slide segue a mesma regra de proveniência de qualquer saída: é gerado por script versionado |
+
+#### Saída gerada
+
+`output/apresentacao_banca1/deck_slidev/banca1_slidev.pdf`, 33 páginas. Os PNG
+por página, usados na revisão visual, são derivados do mesmo deck e ficam fora
+do versionamento.
+
+#### Segunda rodada de revisão, no mesmo dia
+
+O deck saiu de 36 para 33 páginas. Três fusões: a figura do preenchimento do
+ciclo 1 voltou a caber com sua leitura em uma página; a equação do valor
+presente voltou a ficar na mesma página que o glossário dos seus termos; e os
+quatro passos das hipóteses passaram de três páginas para duas. Onde a figura já
+rotula o número na barra, o texto ao lado ficou só com a afirmação, sem relistar
+o que a figura mostra. Nada de conteúdo foi cortado: só repetição e vão.
+
+Ressalva registrada no README do deck: o documento canônico anuncia "10
+ambulatoriais" e lista oito itens. O deck transcreve como está; a correção cabe
+ao documento canônico, não ao artefato derivado.
+
+#### Terceira rodada de revisão, no mesmo dia
+
+O espaço livre da página passou a ser ocupado por quem ganha com ele: a figura
+cresce até a barra de fontes sem distorcer, a tabela de quatro linhas ou mais se
+estica, e nas páginas sem figura nem tabela o corpo do texto aumenta em vez de
+ser esticado. Cartão e lista continuam sem esticar. As cinco páginas em que o
+vão de rodapé permanece estão nomeadas no README do deck, com o motivo de cada
+uma. Contagem de páginas inalterada.
+
+#### O que não mudou
+
+Nenhum arquivo da documentação foi movido, fundido ou removido. O conteúdo dos
+18 slides, os números, as citações e as fontes vieram inalterados de
+`02_conteudo_slides.md`; os 16 títulos dos slides 3 a 18 são os literais da
+seção 2.1 do roteiro. As seis figuras são as que já existiam em
+`output/apresentacao_banca1/` e em `docs/02_teoria/figuras/`: o build cria
+links simbólicos para elas em um diretório de trabalho não versionado, sem
+gerar, editar nem copiar imagem alguma para dentro do repositório.
+
 ### Ponto de atenção herdado do documento de conteúdo
 
 O slide 6 de `02_conteudo_slides.md` anuncia **10 cursos ambulatoriais** e
-enumera oito itens entre parênteses. O deck transcreve a lista como está, por
-fidelidade; a conferência no Edital SGTES/MS nº 3/2025 fica pendente no
-documento canônico, não no deck.
+enumera oito itens entre parênteses. Os dois decks transcrevem a lista como
+está, por fidelidade; a conferência no Edital SGTES/MS nº 3/2025 fica pendente
+no documento canônico, não nos decks.
 
 ---
 

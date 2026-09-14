@@ -1,0 +1,21 @@
+{
+  "name": "banca1-deck-slidev",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Deck da banca 1 do projeto PMM-E em Slidev, tema academico",
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "dependencies": {
+    "@fontsource/montserrat": "5.3.0",
+    "@fontsource/source-sans-3": "5.3.0",
+    "@fontsource/source-serif-4": "5.3.0",
+    "@slidev/cli": "52.19.1",
+    "playwright-chromium": "1.56.1",
+    "slidev-theme-academic": "3.0.1",
+    "vue": "3.5.22"
+  }
+}
