@@ -62,6 +62,62 @@ protocolo. Registrar as três variantes em tabela, como foi feito no
 **Portão:** reproduzir os três valores acima; suíte verde; conferidor do artigo
 inalterado em 190 cifras.
 
+### Achado de 14/09/2026 — o alvo da variante a adotar NÃO reproduz
+
+A sessão 1 parou antes de implementar, como manda o protocolo. Conferência
+read-only sobre `A5_painel_T0.parquet`, replicando `build_X("minimal")`/`fit_ols`
+de A5 e a função `colapsar_uf_fe` do C1 em A4:
+
+| Variante | coef | EP | p | níveis | alvo |
+|---|---:|---:|---:|---:|---|
+| Balde único `RESTO` | +1,2949 | 0,7749 | 0,0947 | 20 | reproduz |
+| **Colapso em macrorregião (C1 literal)** | **+0,5062** | **0,2506** | **0,0434** | **24** | **não reproduz** |
+| Sem colapso | +0,5002 | 0,2414 | 0,0382 | 27 | reproduz |
+
+**Causa.** Quatro células da amostra confirmatória não têm `macro_regiao_saude`
+publicada: Oiapoque/AP e, no Espírito Santo, Cachoeiro de Itapemirim e Linhares.
+É o mesmo conjunto que o relatório de A4 já rotula como `MACRO_SEM_REGIAO_SAUDE`.
+
+O C1, em `05_estimar_atracao.py:176-180`, trata esse caso de propósito: cria um
+**nível residual rotulado** para essas células, o que dá 24 níveis e +0,5062. O
+alvo congelado de +0,5014 com 23 níveis só aparece quando `uf_fe` fica **ausente**
+nessas quatro células e `pd.get_dummies` as descarta em silêncio, jogando-as na
+categoria de referência **sem efeito fixo de UF nenhum**. Isso foi verificado
+explicitamente: a variante "ausente → referência" devolve +0,5014 / 0,2508 /
+0,0456 / 23 níveis, exatamente o alvo.
+
+Ou seja, a medição congelada da variante que este item manda adotar carrega a
+mesma classe de defeito que o item A-1 existe para corrigir — células sem efeito
+fixo próprio. Em A4 o tratamento com 24 níveis reproduziu os alvos do C1 na
+íntegra, então a assimetria está na medição de A5, não na implementação de A4.
+
+**Decisão do autor, antes de qualquer emenda.** Qual é a definição correta do
+colapso para células sem macrorregião publicada: nível residual rotulado, com 24
+níveis e simetria real com o C1, ou o que a auditoria mediu, com 23 níveis e
+quatro células sem efeito fixo? A diferença substantiva é pequena — +0,5062
+contra +0,5014, `p` de 0,0434 contra 0,0456, mesma direção e mesma conclusão —
+mas são definições de efeito fixo diferentes, e **escolher depois de ver os dois
+coeficientes é o que esta fila proíbe**. Resolvida a definição, o alvo precisa ser
+reemitido aqui antes de a emenda ao `35` ser escrita.
+
+**Cobertura do alvo é parcial, e isso também é decisão.** `uf_fe` alimenta muito
+mais do que `delta_minimal`: as tabelas `03`, `03b`–`03i`, `04` de leave-one-out,
+`05` de influência e `06` de validação preditiva. O item congela alvo para um
+único coeficiente; adotar macrorregião move todos os outros sem alvo declarado.
+
+**Segunda implementação do colapso.** `A5_tabela_01e_amostra_uf.csv` é gerada na
+linha 349 com `np.where(n_municipios<5,"RESTO",sg_uf)`, independente da linha 198.
+Qualquer correção precisa tocar as duas.
+
+**O que o achado não muda.** A manchete de A5 está a salvo: o estudo de evento
+monta `uf_month` a partir de `sg_uf` direto, nas duas escalas, sem passar por
+`uf_fe`. As seis cifras de A5 conferidas no artigo vêm de descritivas, não de
+modelos com `uf_fe`. E `A5_tabela_11` está livre: as tabelas de A5 vão hoje até a
+10.
+
+**Bloqueio adicional, independente da decisão acima:** ver D-4. A5 não é
+reexecutável neste ambiente.
+
 ## A-2 · Wild cluster bootstrap que o A3 exige e nunca foi computado
 
 **Onde:** `scripts/tema_trabalho/05_estimar_atracao.py`; o A3 exige o
@@ -331,12 +387,19 @@ apresenta como duas evidências.
 
 # Grupo D — bloqueado
 
-## D-1 · Compilação do artigo
+## D-1 · Compilação do artigo — `DESBLOQUEADO em 14/09/2026`
 
-Não há `pdflatex`, `xelatex` nem `tectonic` no ambiente de execução. A validação
-feita é estrutural: ambientes balanceados, colunas das tabelas coerentes,
-`\label`/`\ref` sem pendência, figuras existentes. **A revisão de provas continua
-pendente e é do autor**, ou de uma sessão com TeX instalado.
+TeX Live foi instalado no ambiente e o artigo **compilou pela primeira vez**:
+12 páginas, zero referência indefinida, as 16 chaves de bibliografia usadas e
+definidas, e as três figuras encontradas nos caminhos declarados. O conferidor
+`10_conferir_numeros_artigo.py` seguiu aprovando as 190 cifras.
+
+A compilação revelou um defeito que a validação estrutural não pegava: a tabela
+`tab:principal` estourava a margem em 59,43 pt. Corrigida para `\footnotesize`
+com `\tabcolsep` de 4 pt; a compilação passa a sair sem nenhum `Overfull \hbox`.
+
+**A revisão de provas — leitura do PDF pelo autor — continua pendente e é do
+autor.** O que deixa de ser verdade é a impossibilidade de compilar.
 
 ## D-2 · Ciclo 3
 
@@ -361,6 +424,28 @@ hoje: `co_municipio_gestor` (que pode atribuir estabelecimento de gestão estadu
 a outro município, deslocando estoque), a expansão CBO→curso, e
 `CO_PROFISSIONAL_SUS` como chave longitudinal.
 
+### Confirmado em 14/09/2026 — este item bloqueia a fila, não só a auditoria
+
+Verificado diretamente: `output/painel_municipio_curso_mensal.parquet` não existe
+em lugar nenhum da máquina, e `06_avaliar_provimento_cnes.py` aborta na linha 160
+com `FileNotFoundError` nesse caminho. O painel é produzido por
+`05_integrar_painel_analitico.py` a partir dos ZIPs mensais do CNES, que o
+manifesto de aquisição registra em cerca de 640 MB por competência — mais de
+16 GB para as 26 competências, acima do que este ambiente comporta.
+
+**Consequência para a fila:** nenhuma tabela de A5 pode ser regravada aqui, e a
+regra do projeto proíbe produzir saída fora de script versionado. Isso bloqueia
+as **sessões 1 e 4 por inteiro** e a parte medida da **sessão 3**. A **sessão 2**
+não é afetada: A4 lê apenas artefatos versionados presentes e foi reexecutado com
+sucesso, reproduzindo os alvos do C1 (capital +0,3264, metropolitano +0,2793,
+interior próximo +0,1207, 24 níveis de efeito fixo).
+
+**Nota de reprodutibilidade observada na mesma verificação:** reexecutar A4 neste
+ambiente reescreve doze arquivos com diferenças a partir da 14ª casa decimal, por
+não determinismo de BLAS entre versões de biblioteca. Nenhuma conclusão muda, mas
+a cadeia de hashes de A6 é sensível a isso. Qualquer sessão que reexecute A4 deve
+declarar essa origem ao commitar, e não tratar a diferença como resultado novo.
+
 ---
 
 # Fila de execução — normativa
@@ -371,15 +456,23 @@ salvo decisão explícita do autor registrada aqui. A ordem foi construída por
 dependência e por risco, não por conveniência: as sessões 1 e 2 mexem em número,
 e a 2 depende de a especificação do C1 já estar valendo.
 
+> **Estado revisto em 14/09/2026.** A tentativa de executar a sessão 1 produziu
+> dois achados que mudam a fila: o alvo congelado da variante a adotar não
+> reproduz (ver A-1) e A5 não é reexecutável neste ambiente (ver D-4). A ordem
+> abaixo permanece, mas três sessões passam a depender de decisão ou de dado
+> ausente. Pular uma sessão bloqueada para executar a seguinte **não** é furar a
+> fila: é o tratamento previsto para bloqueio, e o motivo fica registrado aqui.
+
 | Sessão | Estado | Itens | Por quê nesta ordem |
 |---|---|---|---|
-| 1 | `ABERTA` | **A-1** | Simetria com o C1 já feito, alvo medido, sem efeito no artigo. Emenda curta. |
-| 2 | `ABERTA` | **A-2 + A-3 + C-6** | Todos são inferência e precisão de A4, recomputáveis na mesma execução. **Depende da sessão 1 não estar em curso** e da especificação pós-C1 valendo, porque os três alvos precisam ser refeitos nela. |
-| 3 | `ABERTA` | **C-7** | Red team: publicar o placebo já medido, a heterogeneidade de pré-tendência e o teste de deslocamento. É o que mais adiciona credibilidade por unidade de trabalho. |
-| 4 | `ABERTA` | **B-1, B-2, B-5, B-6, C-9** | Higiene de A5 num commit coeso. Depois da 3, porque a 3 pode acrescentar seções ao mesmo relatório que a B-2 reescreve. |
-| 5 | `ABERTA` | **B-3, C-1, C-2, C-3, C-4, C-5, C-8** | Documentação e rótulos; nenhum exige reexecução pesada. Por último porque vários citam números que as sessões 1 a 4 podem mudar. |
+| 1 | `BLOQUEADA_ACHADO` | **A-1** | Alvo da variante a adotar não reproduz, e a definição de efeito fixo é decisão do autor. Também depende de D-4. Detalhe na seção A-1. |
+| 2 | `ABERTA` | **A-2 + A-3 + C-6** | Todos são inferência e precisão de A4, recomputáveis na mesma execução. A especificação pós-C1 já vale e A4 foi reexecutado com sucesso em 14/09/2026, então a sessão está liberada. |
+| 3 | `PARCIAL` | **C-7** | Red team. A parte documental — forma funcional e leitura correta do que já existe — é executável. Publicar placebo, heterogeneidade de pré-tendência e deslocamento exige regravar artefato de A5, bloqueado por D-4. |
+| 4 | `BLOQUEADA_D4` | **B-1, B-2, B-5, B-6, C-9** | Higiene de A5. Toda ela regrava tabela ou relatório de A5; nenhum caminho legítimo sem o painel do CNES. |
+| 5 | `ABERTA` | **B-3, C-1, C-2, C-3, C-4, C-5, C-8** | Documentação e rótulos; nenhum exige reexecução pesada. Por último porque vários citam números que as sessões 1 a 4 podem mudar — com 1, 3 e 4 travadas, esse risco caiu. |
 | — | `DECISÃO DO AUTOR` | **B-4, B-7** | Errata contra reexecução da tipologia congelada. Recomendo errata. Não executar sem a decisão. |
-| — | `BLOQUEADA` | **D-1 a D-4** | Revisar a condição de desbloqueio, não executar. |
+| — | `RESOLVIDO` | **D-1** | TeX instalado; artigo compila. Só a revisão de provas pelo autor continua pendente. |
+| — | `BLOQUEADA` | **D-2 a D-4** | Revisar a condição de desbloqueio, não executar. |
 
 ## Protocolo de sessão
 
