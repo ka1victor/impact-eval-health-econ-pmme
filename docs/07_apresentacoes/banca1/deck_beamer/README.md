@@ -11,6 +11,9 @@ deck*. Nenhuma afirmação, número, citação ou referência deste `.tex` foi c
 aqui; tudo vem de `02_conteudo_slides.md`. Correção de conteúdo se faz primeiro
 no documento canônico e só depois no deck.
 
+**Tamanho:** 18 slides do documento, **36 frames**, **37 páginas de PDF** — a
+página a mais é o segundo overlay do frame 25, que não é um slide novo.
+
 ---
 
 ## 1. Como compilar
@@ -24,14 +27,15 @@ O script:
 
 1. posiciona-se na raiz do repositório (todos os caminhos são relativos a ela);
 2. confere que as seis figuras existem antes de chamar o LaTeX;
-3. roda `pdflatex` duas vezes (a segunda resolve a contagem total de páginas do
-   rodapé), com `-halt-on-error`;
+3. roda `pdflatex` duas vezes (a segunda resolve a contagem total do rodapé),
+   com `-halt-on-error`;
 4. relata qualquer `Overfull \hbox` da última passada;
 5. grava `output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf` e remove os
    auxiliares.
 
-`SOURCE_DATE_EPOCH` e `FORCE_SOURCE_DATE` são fixados no script, de modo que
-duas execuções sobre a mesma entrada produzam o mesmo PDF.
+`SOURCE_DATE_EPOCH=1789344000` (14/09/2026, 00:00 UTC) e `FORCE_SOURCE_DATE`
+são fixados no script, de modo que duas execuções sobre a mesma entrada
+produzam byte a byte o mesmo PDF.
 
 **Requisitos:** `pdflatex` com `beamer`, `beamerthemeWarsaw.sty`,
 `texlive-latex-extra`, `texlive-fonts-recommended`, `lmodern` e
@@ -42,12 +46,12 @@ relativo à raiz:
 
 | Código | Arquivo | Frame |
 |---|---|:---:|
-| `F1` | `output/apresentacao_banca1/oferta_pre_por_faixa.png` | 6 |
-| `F2` | `output/apresentacao_banca1/retaguarda_por_faixa.png` | 7 |
-| `F5` | `output/apresentacao_banca1/vagas_ciclo1_por_regiao.png` | 14 |
-| `F3` | `output/apresentacao_banca1/bolsa_por_faixa.png` | 17 |
-| `F6` | `output/apresentacao_banca1/preenchimento_ciclo1.png` | 23 |
-| `F4` | `docs/02_teoria/figuras/curva_custo_laboral_burnout.png` | 34 |
+| `F1` | `output/apresentacao_banca1/oferta_pre_por_faixa.png` | 5 |
+| `F2` | `output/apresentacao_banca1/retaguarda_por_faixa.png` | 6 |
+| `F5` | `output/apresentacao_banca1/vagas_ciclo1_por_regiao.png` | 12 |
+| `F3` | `output/apresentacao_banca1/bolsa_por_faixa.png` | 14 |
+| `F6` | `output/apresentacao_banca1/preenchimento_ciclo1.png` | 20 |
+| `F4` | `docs/02_teoria/figuras/curva_custo_laboral_burnout.png` | 30 |
 
 Nenhuma figura é gerada, editada ou recortada por este deck. Para regerar as
 cinco de `output/`, ver [`../README.md`](../README.md), seção 3.
@@ -56,36 +60,94 @@ cinco de `output/`, ver [`../README.md`](../README.md), seção 3.
 
 ## 2. Mapeamento: slide do documento → frames do deck
 
-18 slides do documento, **41 frames**. O rastreio de seção exibido é sempre o
-do slide de origem, literal; quando um slide vira mais de um frame, todos
-repetem o mesmo rastreio e o mesmo título.
+O rastreio de seção exibido é sempre o do slide de origem, literal; quando um
+slide vira mais de um frame, todos repetem o mesmo rastreio e o mesmo título.
 
-| Slide do documento | Frames | O que ficou em cada frame |
-|---|:---:|---|
-| 1 — Capa | 1 | capa |
-| 2 — Sumário | 2 | as seis seções, em duas colunas |
-| 3 — Especialistas não faltam; faltam no interior | 3–4 | **3** retrato nacional: 353 mil, 55%/6%, 453/68/70, manchete do Senado. **4** urgência em saúde pública e as duas manchetes |
-| 4 — Onde a bolsa é maior, já havia menos especialistas | 5–7 | **5** as duas afirmações numéricas (“menos da metade”, “vai sozinho”) e a fonte completa. **6** figura `F1`. **7** figura `F2` |
-| 5 — O que o médico vê ao decidir | 8–9 | **8** tabela das quatro desvantagens e do que se mede. **9** as três evidências da literatura sobre o peso de cada uma |
-| 6 — O que é o PMM-E | 10–14 | **10** Lei e Quem. **11** O quê: aprimoramento em serviço e os 16 cursos. **12** como a vaga chega ao médico. **13** onde, no primeiro ciclo: os números. **14** figura `F5` |
-| 7 — A bolsa remunera o lugar | 15–18 | **15** os três passos (índice, categoria, valor). **16** tabela categoria–faixa–bolsa e a contagem 102/107/159. **17** figura `F3`. **18** os dois cuidados |
-| 8 — Pagar mais funciona: a evidência a favor | 19–20 | **19** o experimento mexicano. **20** a régua do prêmio compensatório, o degrau de +50% e a ressalva das 20 horas |
-| 9 — Mas é caro, e não segura: a evidência contra | 21–22 | **21** Austrália e Brasil. **22** Estados Unidos e o fecho “dinheiro move alocação, mas…” |
-| 10 — No primeiro ciclo, a bolsa maior não ordenou o preenchimento | 23–24 | **23** os 30% e a figura `F6`. **24** leitura por faixa e por território, e “descrição, não efeito” |
-| 11 — Pergunta | 25 | a pergunta, os dois objetos e a margem observada |
-| 12 — De onde vem o modelo | 26–27 | **26** a estrutura da decisão (Moehling et al.). **27** o custo geográfico (Redding & Rossi-Hansberg), o custo de trabalhar (Choné & Ma) e o que nenhuma das três trata |
-| 13 — Como o médico escolhe onde trabalhar | 28–29 | **28** a equação, a regra de escolha e a condição de aceitação. **29** a tabela termo a termo |
-| 14 — O que a bolsa paga — e o que não paga | 30–31 | **30** a decomposição `B + w^priv` e a tabela capital/interior. **31** as duas consequências e o deflator |
-| 15 — O custo de estar ali | 32–34 | **32** a equação com os dois blocos e a tabela de componentes. **33** o papel duplo de `L` e `K`. **34** figura `F4` |
-| 16 — O IVS organiza o custo | 35–36 | **35** `c = c₀(IVS) + η` e a correspondência dimensão–bloco. **36** a ambiguidade do sinal e por que o objeto é o degrau |
-| 17 — Duas hipóteses | 37–39 | **37** passos 1 e 2. **38** passo 3: H1 e H2. **39** passo 4: a condição de degrau |
-| 18 — Viabilidade empírica | 40–41 | **40** a tabela peça a peça. **41** o que fica de fora, a dificuldade e o primeiro passo |
+| Slide do documento | Frames | Páginas | O que ficou em cada frame |
+|---|:---:|:---:|---|
+| 1 — Capa | 1 | 1 | capa |
+| 2 — Sumário | 2 | 2 | as seis seções, em duas colunas |
+| 3 — Especialistas não faltam; faltam no interior | 3–4 | 3–4 | **3** retrato nacional: 353 mil, 55%/6%, 453/68/70, citação do Senado. **4** urgência em saúde pública e as duas manchetes |
+| 4 — Onde a bolsa é maior, já havia menos especialistas | 5–6 | 5–6 | **5** figura `F1` com a afirmação "menos da metade". **6** figura `F2` com a afirmação "e quem vai, vai sozinho" |
+| 5 — O que o médico vê ao decidir | 7–8 | 7–8 | **7** tabela das quatro desvantagens e do que se mede. **8** as três evidências da literatura sobre o peso de cada uma |
+| 6 — O que é o PMM-E | 9–12 | 9–12 | **9** Lei e Quem. **10** O quê: aprimoramento em serviço e os 16 cursos. **11** como a vaga chega ao médico. **12** onde, no primeiro ciclo: os números ao lado da figura `F5` |
+| 7 — A bolsa remunera o lugar | 13–15 | 13–15 | **13** os três passos (índice, categoria, valor). **14** tabela categoria–faixa–bolsa ao lado da figura `F3`, com a contagem 102/107/159. **15** os dois cuidados |
+| 8 — Pagar mais funciona: a evidência a favor | 16–17 | 16–17 | **16** o experimento mexicano. **17** a régua do prêmio compensatório, o degrau de +50% e a ressalva das 20 horas |
+| 9 — Mas é caro, e não segura: a evidência contra | 18–19 | 18–19 | **18** Austrália e Brasil. **19** Estados Unidos e o fecho "dinheiro move alocação, mas…" |
+| 10 — No primeiro ciclo, a bolsa maior não ordenou o preenchimento | 20–21 | 20–21 | **20** os 30% e a figura `F6`. **21** a leitura por faixa e por território, sem repetir os números da figura, e "descrição, não efeito" |
+| 11 — Pergunta | 22 | 22 | a pergunta, os dois objetos e a margem observada |
+| 12 — De onde vem o modelo | 23–24 | 23–24 | **23** a estrutura da decisão (Moehling et al.). **24** o custo geográfico (Redding & Rossi-Hansberg), o custo de trabalhar (Choné & Ma) e o que nenhuma das três trata |
+| 13 — Como o médico escolhe onde trabalhar | 25 | 25–26 | **frame único com dois overlays**: a equação fica fixa; no primeiro overlay, a condição de aceitação; no segundo, o glossário termo a termo |
+| 14 — O que a bolsa paga — e o que não paga | 26–27 | 27–28 | **26** a decomposição `B + w^priv` e a tabela capital/interior. **27** as duas consequências e o deflator |
+| 15 — O custo de estar ali | 28–30 | 29–31 | **28** a equação com os dois blocos e a tabela de componentes. **29** o papel duplo de `L` e `K`. **30** figura `F4` |
+| 16 — O IVS organiza o custo | 31–32 | 32–33 | **31** `c = c₀(IVS) + η` e a correspondência dimensão–bloco. **32** a ambiguidade do sinal e por que o objeto é o degrau |
+| 17 — Duas hipóteses | 33–34 | 34–35 | **33** passos 1 e 2. **34** passo 3 (H1 e H2) e passo 4 (a condição de degrau) |
+| 18 — Viabilidade empírica | 35–36 | 36–37 | **35** a tabela peça a peça. **36** o que fica de fora, a dificuldade e o primeiro passo |
 
 ---
 
 ## 3. Decisões de composição
 
-### 3.1 O que o tema Warsaw ganhou e o que perdeu
+### 3.1 O texto não repete o número que a figura já rotula
+
+Regra aplicada em todo o deck: **quando a figura carrega o número rotulado, o
+texto ao lado fica só com a afirmação**. A figura prova, a frase interpreta.
+
+| Frame | Números que ficam só na figura | O que o texto diz |
+|:---:|---|---|
+| 5 | 16,0 / 10,0 / 7,3 | "menos da metade de especialistas por habitante onde a bolsa seria maior" |
+| 6 | 5 / 3 / 2 colegas; 15% / 34% / 42% | "encontraria menos colegas da sua especialidade — e é lá que é maior a chance de ser o único, ou de ter um só colega" |
+| 20–21 | 23,6% / 37,4% / 31,6%; 35,6% / 44,9% / 26,9% / 20,5% | "pagar o dobro não preencheu mais que pagar uma vez e meia"; "o preenchimento cai do município metropolitano e da capital para o interior conectado a um polo, e é menor no interior remoto" |
+
+Os números continuam todos na tela, dentro da figura, com a mesma redação do
+documento de conteúdo. O que desapareceu foi a segunda exibição do mesmo valor
+em prosa, que obrigava a plateia a ler tudo duas vezes.
+
+Números que a figura **não** rotula continuam em texto: 295 municípios (frame
+5), 1.295 / 460 / 368 / 678 / 1.145 / 39% / 252 / 18 capitais (frame 12),
+102 / 107 / 159 (frame 14), 30% das 1.295 vagas (frame 20).
+
+### 3.2 Overlay onde o segundo frame explicaria o primeiro
+
+O slide 13 do documento traz a função-valor e, logo abaixo, o glossário que
+explica **aquela** equação. Separar os dois em frames deixaria o glossário sem
+o referente na tela. O frame 25 resolve isso com `\only`: a equação fica fixa
+no topo nos dois overlays; muda só o que vem abaixo — primeiro a condição de
+aceitação, depois a tabela Termo/Leitura. São duas páginas de PDF e **um** slide
+de fala.
+
+Nos slides 15 e 16 o problema não existe: equação e tabela já estão no mesmo
+frame (28 e 31).
+
+### 3.3 Uma só legenda por figura, no formato do resto do deck
+
+As cinco figuras geradas por script trazem, dentro do próprio PNG, uma linha de
+proveniência em corpo minúsculo. O deck **não** acrescenta uma segunda legenda
+centralizada: a fonte aparece uma única vez, no bloco `Fontes:` em negrito,
+alinhado à esquerda, separado por filete fino — exatamente como nos frames de
+texto. A linha interna do PNG é parte da figura e não pode ser alterada.
+
+O mesmo vale para as citações: em todo o deck, referência bibliográfica vai no
+bloco `Fontes:` do rodapé do frame. Nenhuma referência aparece solta em cinza
+dentro do corpo.
+
+### 3.4 Fusões e densidade
+
+- **Slide 4** passou de três frames para dois: cada figura ficou com a sua
+  afirmação, e o frame de texto que repetia os números deixou de existir.
+- **Slide 6**: os números do ciclo 1 e a figura `F5` estavam em frames
+  separados e vieram para o mesmo frame, em duas colunas — texto à esquerda,
+  figura à direita, que assim ganhou largura em vez de perder.
+- **Slide 7**: a tabela categoria–faixa–bolsa e a figura `F3` diziam a mesma
+  coisa em dois frames. Foram fundidas em um, lado a lado.
+- **Slide 17**: os passos 3 e 4 ocupavam dois frames pela metade cada; estão
+  num só.
+- **Slide 13**: dois frames viraram um frame com dois overlays.
+
+O resultado é 36 frames para os 28 minutos previstos na seção 6 do roteiro, com
+a motivação em 19 frames. Não houve corte de conteúdo — só de repetição.
+
+### 3.5 O que o tema Warsaw ganhou e o que perdeu
 
 Mantidos, porque são o que torna o tema reconhecível: o `frametitle` em faixa
 com degradê e sombra, os blocos arredondados com sombra do tema interno
@@ -95,88 +157,68 @@ Alterados, em nome da legibilidade:
 
 - **Cor.** O azul padrão foi trocado por um verde escuro que casa com a paleta
   das figuras já versionadas (`#16301F` e `#2A5539`), de modo que gráfico e
-  slide não briguem. O degradê do `frametitle` vai de `#2A5539` a `#16301F`.
+  slide não briguem.
 - **Headline.** A barra de navegação de seções/subseções do Warsaw foi
   substituída por uma **faixa fina de rastreio**, em verde muito claro, com a
-  linha de rastreio do slide de origem em `\scriptsize`. Isso atende à regra
-  “o rastreio aparece no slide, fora do título” sem a poluição da barra
-  original.
-- **Footline.** As três caixas coloridas com autor, título, data e página foram
-  substituídas por uma faixa fina única: título curto à esquerda, `frame/total`
-  à direita.
+  linha de rastreio do slide de origem em `\scriptsize`.
+- **Footline.** As três caixas com autor, título, data e página viraram uma
+  faixa fina única: título curto à esquerda, `frame/total` à direita. Em um
+  frame com overlays, os dois números são iguais — é o mesmo slide.
 - **Símbolos de navegação.** Removidos.
 
-### 3.2 Título, rastreio e fontes
+### 3.6 Tabelas e matemática
 
-- Os 16 títulos dos slides 3 a 18 são usados **literalmente**, como fixados na
-  seção 2.1 do roteiro. Nenhum título nomeia a seção.
-- O rastreio fica na faixa do topo, nunca no título. Um slide dividido em N
-  frames repete o rastreio do documento sem sufixo — o corte é invisível para
-  a banca.
-- Toda fonte vai ao rodapé do frame, em `\scriptsize` cinza, separada do corpo
-  por um filete verde claro. Em frames que são só figura, a fonte vira uma
-  linha única de legenda, também em `\scriptsize` cinza.
-
-### 3.3 Por que 41 frames e não 18
-
-A regra “uma afirmação por slide” e a exigência de legibilidade não cabem em 18
-telas: o slide 6 do documento, por exemplo, tem lei, público, formato, 16
-cursos, fluxo da vaga, números do ciclo 1 e uma figura. O documento continua
-sendo a unidade de conteúdo; o frame é a unidade de exibição. Cada divisão
-mantém título e rastreio, e nenhuma informação exibida contradiz o documento.
-
-### 3.4 Figuras em frame próprio
-
-As cinco figuras geradas por script trazem eixos, rótulos de categoria e uma
-legenda de proveniência dentro da própria imagem. Espremidas em meia largura,
-essas marcações ficam ilegíveis em projeção. `F1`, `F2`, `F5`, `F3` e `F4`
-ganharam por isso **frame dedicado**, com largura total e altura até
-`0,80–0,82\textheight`; o texto que as acompanhava no documento foi para o
-frame vizinho, sob o mesmo título. `F6` é larga o bastante (proporção 2,5:1)
-para caber com uma linha de texto acima.
-
-Nenhuma figura foi recortada, redimensionada em arquivo ou regerada — só
-escalada por `\includegraphics` com `keepaspectratio`.
-
-### 3.5 Tabelas
-
-`booktabs` em todas; `tabularx` quando alguma coluna precisa quebrar linha.
-Valores monetários alinhados à direita. Onde a tabela do documento não cabia
-com folga — as quatro desvantagens (frame 8) e a correspondência IVS–custo
-(frame 35) — reduziu-se para `\footnotesize` com `\arraystretch` menor, em vez
-de encolher a fonte até o ilegível. A tabela categoria–faixa–bolsa (frame 16)
-foi separada da figura `F3` para que nenhuma das duas ficasse espremida.
-
-### 3.6 Matemática
+`booktabs` em todas as tabelas; `tabularx` quando alguma coluna quebra linha;
+valores monetários à direita. Onde a tabela não cabia com folga — as quatro
+desvantagens (frame 7), o glossário da função-valor (frame 25), a
+correspondência IVS–custo (frame 31), as duas hipóteses (frame 34) e a
+viabilidade (frame 35) — reduziu-se para `\footnotesize` com `\arraystretch`
+menor, em vez de encolher a fonte até o ilegível.
 
 Todas as equações dos slides 12 a 17 do documento são reproduzidas em `amsmath`
-como display, sem redução de corpo. A única reorganização visual é no slide 13:
-o `\arg\max` que o documento põe na mesma linha da função-valor, separado por
-`\qquad`, foi para uma segunda linha centralizada.
+como display, sem redução de corpo, inclusive a função-valor com o `\arg\max`
+na mesma linha, como no documento.
 
 ### 3.7 Vocabulário
 
 Nenhuma palavra escrita fora do documento de conteúdo introduz econometria ou
-estimação; a única prosa de ligação acrescentada é neutra. As substituições da
-seção 2.5 do roteiro já vêm resolvidas do documento — “célula com alguma
-confirmação ou homologação”, “presença cadastral no CNES”, “gradiente” — e
-foram preservadas.
+estimação. As substituições da seção 2.5 do roteiro já vêm resolvidas do
+documento — "célula com alguma confirmação ou homologação", "presença cadastral
+no CNES", "gradiente" — e foram preservadas.
 
 ---
 
-## 4. Verificação feita nesta versão
+## 4. Ressalvas registradas
+
+### 4.1 `F4` — a figura do custo laboral é ilegível em projeção
+
+A ilustração conceitual `docs/02_teoria/figuras/curva_custo_laboral_burnout.png`
+tem 3.473 × 2.130 px e carrega uma legenda de cinco entradas mais quatro
+anotações de zona, todas em corpo pequeno em relação à altura da imagem. No
+frame 30 ela ocupa a altura máxima que o frame permite (`0,74\textheight`, com
+largura de cerca de 9,5 cm); mesmo assim, **a legenda e as anotações de zona
+ficam em torno de 5 pt na tela projetada** e não são legíveis do fundo da sala.
+As três curvas e os dois pontos de inflexão continuam legíveis.
+
+O deck não regera, não recorta e não edita a figura — regra de proveniência do
+projeto. **A decisão sobre regerar `F4` com tipografia maior é do autor**, e
+teria de ser feita no script que a produz, não aqui.
+
+### 4.2 Divergência herdada no número de cursos ambulatoriais
+
+O slide 6 de `02_conteudo_slides.md` anuncia **10 cursos ambulatoriais** e
+enumera oito itens entre parênteses. O deck transcreve a lista como está, por
+fidelidade. A correção, se houver, é no documento canônico.
+
+---
+
+## 5. Verificação feita nesta versão
 
 - `bash scripts/apresentacao/build_deck_beamer.sh` termina sem erro de LaTeX e
   sem nenhum `Overfull \hbox`.
-- As 41 páginas foram convertidas em PNG (`pdftoppm -png -r 90`) e revistas uma
-  a uma: nenhuma tem texto vazando do frame, tabela cortada, figura deformada
-  ou sobreposição com o rodapé.
+- Duas execuções seguidas produzem o mesmo PDF (mesmo `md5sum`).
+- As 37 páginas foram convertidas em PNG (`pdftoppm -png -r 90`) e revistas uma
+  a uma: nenhuma tem texto vazando do frame, tabela cortada, bloco de fonte
+  sobreposto ao rodapé, figura deformada ou legenda duplicada.
 - Os 18 slides do documento estão representados, na ordem, com os 16 títulos
   literais dos slides 3 a 18.
-
-## 5. Ponto de atenção herdado do documento
-
-No frame 11, a lista dos cursos ambulatoriais é transcrita literalmente do
-documento de conteúdo, que anuncia **10 ambulatoriais** e enumera oito itens
-entre parênteses. A divergência é do documento canônico, não do deck; corrigi-la
-aqui violaria a regra de fidelidade. Registrada para conferência no edital.

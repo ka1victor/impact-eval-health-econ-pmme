@@ -45,7 +45,7 @@ done
 mkdir -p "${OUT_REL}"
 
 # Reprodutibilidade: congela a data embutida no PDF.
-export SOURCE_DATE_EPOCH=1757808000   # 2025-09-14T00:00:00Z
+export SOURCE_DATE_EPOCH=1789344000   # 2026-09-14T00:00:00Z
 export FORCE_SOURCE_DATE=1
 
 # Duas passadas: a segunda resolve \inserttotalframenumber.
