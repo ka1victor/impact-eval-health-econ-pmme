@@ -31,26 +31,36 @@ apresentação, embora continue no escopo do projeto.
 
 ### 1.1 A lógica de cada bloco da motivação
 
-O bloco **problema** vai do geral ao particular e termina no ponto de vista do
-médico, porque é dele que a teoria parte. O retrato nacional (slide 3) diz que
-a escassez é territorial, não numérica. Os dados do programa (slide 4) mostram
-que a mesma coisa vale dentro dos 368 municípios que receberam vaga. O slide 5
-traduz "município vulnerável" em quatro desvantagens que o médico enfrenta —
-retaguarda, infraestrutura, distância da família, mercado privado — e diz quais
-delas medimos. São essas quatro que reaparecem, formalizadas, nos slides 14 e 15.
+O bloco **problema** mostra a dor pelos dois lados. O retrato nacional (slide
+3) diz que a escassez é territorial, não numérica. O slide 4 vira a câmera para
+quem decide: para o médico, "município vulnerável" não é um índice, são quatro
+desvantagens concretas — retaguarda, infraestrutura, distância da família,
+mercado privado — e o slide diz quais delas medimos. São essas quatro que
+reaparecem, formalizadas, nos slides 14 e 15. O bloco fecha dizendo que nenhuma
+se resolve sozinha, o que abre espaço para a política.
 
 O bloco **política** responde à pergunta que qualquer banca faz — "o que é
-exatamente esse programa?" — antes de discutir a bolsa. O slide 6 resume o
-edital: quem, o quê, como, onde. O slide 7 isola a única peça da política que
-o trabalho estuda: a regra que transforma o índice em valor.
+exatamente esse programa?". O slide 5 resume o edital: quem, o quê, como, onde,
+e termina apontando que cada vaga sai publicada com uma faixa de bolsa. O slide
+6 isola essa peça, a única que o trabalho estuda: a regra que transforma o
+índice em valor, e por que o IVS é piso e não critério.
 
 O bloco **efeito incerto** é a exceção declarada ao escopo teórico (seção 2.4).
-Ele existe para justificar a pergunta, e por isso precisa mostrar que a
-resposta não é óbvia: a evidência internacional diz que pagar mais funciona
-(slide 8), mas que é caro, não move todo mundo e não segura ninguém (slide 9);
-e o primeiro ciclo do PMM-E mostra que a faixa maior não veio com mais
-preenchimento, enquanto o território ordenou o resultado (slide 10). Sem esse
-bloco a pergunta pareceria retórica.
+Ele existe para justificar a pergunta, e por isso precisa mostrar que a resposta
+não é óbvia. Abre com a discordância das duas medidas de oferta (slide 7): por
+habitante a bolsa maior não vai para onde falta mais, mas em número de colegas
+vai — o programa põe R$ 5 mil a mais onde o médico trabalharia sozinho. Segue
+com a evidência internacional, que diz que pagar mais funciona (slide 8), mas
+que é caro, não move todo mundo e não segura ninguém (slide 9). Fecha com o
+primeiro ciclo do próprio PMM-E (slide 10). Sem esse bloco a pergunta pareceria
+retórica.
+
+**Por que esta ordem, e não outra.** O slide 7 fala em "faixa publicada",
+"Faixa 1" e "categoria de IVS" como vocabulário corrente, e remete à divergência
+entre faixa publicada e categoria recalculada. Enquanto ele vinha antes do bloco
+da política, a plateia encontrava esses termos duas telas antes de saber o que
+significavam, e o slide precisava remeter para a frente. A política vem antes
+porque é ela que dá o vocabulário e o objeto.
 
 ---
 
@@ -85,7 +95,7 @@ Títulos dos slides 3 a 18 — curtos, declarativos e sem palavra difícil:
 ### 2.2 Uma afirmação por slide
 
 Slide com mais de uma figura só quando todas sustentam **a mesma** afirmação. O
-slide 4 tem duas figuras — oferta por habitante e colegas por município —
+slide 7 tem duas figuras — oferta por habitante e colegas por município —
 porque as duas dizem que, onde a bolsa seria maior, já havia menos
 especialistas. O slide 10 tem uma figura em dois painéis porque o contraste
 entre faixa e território é a afirmação.
@@ -132,7 +142,7 @@ baixa — sem nomear estimadores.
 | # | Feedback | Ajuste aplicado |
 |---|---|---|
 | 1 | **Títulos: só o takeaway, não o nome da seção (tracking separado)** | Todos os títulos eram rótulos de seção com numeral romano. Cada slide recebeu título em frase completa com a afirmação que sustenta; o nome da seção e a posição foram para o rastreio, fora do título. |
-| 2 | **Motivação: dividir entre (i) dor, (ii) política, (iii) efeitos** | O painel 2×2 repetido em dois slides virou três blocos em sequência causal — problema (slides 3 a 5), política (6 e 7) e efeito incerto (8 a 10) — cada um com os slides que o argumento pede. |
+| 2 | **Motivação: dividir entre (i) dor, (ii) política, (iii) efeitos** | O painel 2×2 repetido em dois slides virou três blocos em sequência causal — problema (slides 3 e 4), política (5 e 6) e efeito incerto (7 a 10) — cada um com os slides que o argumento pede. |
 | 3 | **Pergunta: simplificar** | De *"Bolsas maiores conseguem compensar as desvantagens territoriais no preenchimento e na manutenção das vagas do PMM-E?"* para **"Maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas desvantagens territoriais na atração de médicos especialistas?"**, com a leitura em dois objetos logo abaixo. |
 | 4 | **Teoria: derivar a hipótese diretamente** | O bloco teórico termina em um slide que escreve a condição de aceitação e dela tira a hipótese como derivada parcial da remuneração real, com sinal positivo, e chega à condição de degrau. O custo locacional aparece como obstáculo de identificação, não como segunda hipótese. |
 
