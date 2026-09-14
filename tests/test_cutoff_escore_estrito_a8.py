@@ -202,5 +202,34 @@ class CutoffEscoreEstritoA8Test(unittest.TestCase):
         self.assertIn("não exclui linhas sub judice", plano)
 
 
+    def test_intervalos_exatos_cobrem_o_ic_fora_do_espaco(self) -> None:
+        """C-3: o IC convencional de 1,2618 fica sinalizado e ganha o exato ao lado.
+
+        A diferença de duas proporções vive em [-1, 1]. O intervalo exato
+        condicional respeita esse espaço por construção, então nenhuma linha
+        pode sair dele; e as duas linhas de 2025_C1_CH2 cujo IC convencional
+        estoura têm de estar marcadas.
+        """
+        exatos = pd.read_csv(OUT / "A8_tabela_06_intervalos_exatos.csv")
+
+        self.assertFalse(exatos["ic95_exato_superior"].gt(1.0).any())
+        self.assertFalse(exatos["ic95_exato_inferior"].lt(-1.0).any())
+
+        fora = exatos[exatos["ic95_convencional_fora_do_espaco"]]
+        self.assertEqual(len(fora), 2)
+        self.assertEqual(set(fora["ciclo_chamada"]), {"2025_C1_CH2"})
+        for linha in fora.itertuples(index=False):
+            self.assertGreater(linha.ic95_convencional_superior, 1.0)
+            self.assertLessEqual(linha.ic95_exato_superior, 1.0)
+            # O exato cobre o zero onde o convencional não cobria, coerente com
+            # o p exato de 0,0625 já publicado.
+            self.assertLess(linha.ic95_exato_inferior, 0.0)
+            self.assertGreater(linha.p_exato_pareado_bicaudal, 0.05)
+
+        # As linhas vêm das tabelas publicadas de A8, sem reestimar nada.
+        self.assertEqual(set(exatos["origem"]), {"A8_tabela_02", "A8_tabela_03"})
+        self.assertEqual(len(exatos), len(self.estimates) + len(self.placebos))
+
+
 if __name__ == "__main__":
     unittest.main()

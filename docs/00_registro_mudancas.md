@@ -46,6 +46,26 @@ A5 não é reexecutável sem os microdados do CNES, e regenerar o manifesto de A
 hoje removeria em silêncio um registro de proveniência. O item D-1 passou a
 resolvido, porque o artigo compilou.
 
+### Sessões 3 e 5 da fila, no mesmo dia
+
+Executadas juntas porque a sessão 4 está bloqueada por D-4 e as duas dividem o
+gerador `07_red_team_sintese.py`. Da sessão 3 só a quarta ameaça do item C-7 é
+executável; as três primeiras exigem regravar artefato de A5 e continuam
+bloqueadas.
+
+| Arquivo | Conteúdo | Por que existe |
+|---|---|---|
+| [`auditorias/14_erratas_artefatos_congelados.md`](auditorias/14_erratas_artefatos_congelados.md) | erratas E-1 (IC fora do espaço de parâmetros em A8) e E-2 (MDE por estrato do A3), mais o achado de que A8 não reproduz byte a byte | os dois artefatos são congelados, e corrigi-los custaria mais do que corrigir a afirmação sobre eles; a errata deixa o valor onde está e conserta o que se pode dizer dele |
+| [`../scripts/tema_trabalho/09b_intervalos_exatos_escore.py`](../scripts/tema_trabalho/09b_intervalos_exatos_escore.py) | intervalo exato condicional ao lado do convencional, a partir das tabelas de A8 já publicadas | o item C-3 pede o intervalo exato "ao lado"; publicá-lo em artefato próprio atende sem tocar em A8 |
+
+O script entra em `run_all.py` logo após `09_estimar_cutoff_escore_estrito.py` e
+grava `output/tema_trabalho/A8_tabela_06_intervalos_exatos.csv`. Nenhuma tabela
+de A8 é regravada, e amostra, desfecho e estimador de A8 continuam intactos.
+
+Fora isso, nada foi criado, movido ou removido: as demais correções das sessões
+3 e 5 são de conteúdo dentro de arquivos que permaneceram no mesmo lugar. A
+suíte vai de 144 para 156 testes.
+
 ---
 
 ## 09/09/2026 — Seção de apresentações, absorção do documento 18 e limpeza de referências
