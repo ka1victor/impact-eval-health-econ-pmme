@@ -46,6 +46,8 @@ class: centrado
 </div>
 
 ---
+class: centrado stat-lg
+---
 
 <Rastreio cont="1 de 2">1. Motivação · Problema · 1 de 3</Rastreio>
 
@@ -78,7 +80,7 @@ class: centrado
 
 <p class="lead">Quem sente a falta é o paciente do SUS fora dos grandes centros. Em 2025 o Ministério da Saúde reconheceu <strong>situação de urgência em saúde pública</strong> em todo o país, por 24 meses, em razão do tempo de espera por consultas, exames e cirurgias na atenção especializada — e lançou o programa Agora Tem Especialistas, do qual o <strong>PMM-E é o braço de provimento</strong>.</p>
 
-<div class="stack mt-m">
+<div class="stack mt-m manchete-lg">
   <div class="manchete">
     <span class="manchete-txt">“Ministério da Saúde decreta situação de urgência em saúde pública pelos próximos dois anos”</span>
     <span class="manchete-src">Correio do Povo, 07/05/2025</span>
@@ -97,19 +99,19 @@ class: centrado
 
 # Onde a bolsa é maior, já havia menos especialistas
 
-<div class="cols cols-38 center-y" style="margin-top:0.2rem">
+<div class="cols cols-38 fill" style="margin-top:0.2rem">
   <div class="stack">
 
 <p class="sm">O retrato nacional se repete dentro do programa. Nos <strong>295 municípios</strong> que receberam vaga no ciclo 1, um mês antes da oferta ser publicada:</p>
 
 <div class="callout">
 
-**Menos da metade.** Onde a bolsa seria maior, a oferta por habitante já era **menos da metade** da dos municípios de bolsa menor.
+**Menos da metade.** Onde a bolsa seria maior, já havia **menos da metade** dos especialistas por habitante.
 
 </div>
 
   </div>
-  <Fig src="/fig/oferta_pre_por_faixa.png" alt="Especialistas por 100 mil habitantes em junho de 2025, por faixa de bolsa" h="20rem" />
+  <Fig src="/fig/oferta_pre_por_faixa.png" alt="Especialistas por 100 mil habitantes em junho de 2025, por faixa de bolsa" h="fill" />
 </div>
 
 <Fonte>CNES, competência 06/2025; 295 municípios com vaga no ciclo 1; Censo 2022 (IBGE). Faixa pela categoria de IVS do Ipea.</Fonte>
@@ -126,7 +128,7 @@ class: centrado
 
 </div>
 
-<Fig src="/fig/retaguarda_por_faixa.png" alt="Colegas da mesma especialidade no município, junho de 2025" h="17.5rem" class="mt-s" />
+<Fig src="/fig/retaguarda_por_faixa.png" alt="Colegas da mesma especialidade no município, junho de 2025" h="fill" class="fill mt-s" />
 
 <Fonte>CNES, competência 06/2025; mesma definição da página anterior. Faixa pela categoria de IVS do Ipea.</Fonte>
 
@@ -498,7 +500,7 @@ Dinheiro move alocação, mas é caro, não move todo mundo, e não garante que 
 
 <p class="sm tight">Das <strong>1.295 vagas</strong> da primeira chamada, <strong>30%</strong> tiveram alguém confirmado ou homologado. A bolsa maior não veio acompanhada de mais preenchimento — e o território, sim, ordenou o resultado:</p>
 
-<Fig src="/fig/preenchimento_ciclo1.png" alt="Preenchimento do ciclo 1 por faixa de bolsa e por estrato territorial" h="15.5rem" class="gap-s" />
+<Fig src="/fig/preenchimento_ciclo1.png" alt="Preenchimento do ciclo 1 por faixa de bolsa e por estrato territorial" h="fill" class="fill gap-s" />
 
 <div class="callout gap-s">
 
@@ -755,7 +757,7 @@ O custo laboral líquido $c^{\text{laboral}}(q) = C(q) - \alpha B(q)$ cai enquan
 
 </div>
 
-<Fig src="/fig/curva_custo_laboral_burnout.png" alt="Custo laboral líquido em função do volume de atendimentos" h="22.5rem" />
+<Fig src="/fig/curva_custo_laboral_burnout.png" alt="Custo laboral líquido em função do volume de atendimentos" h="fill" class="fill" />
 
 <Fonte rotulo="Figura">Ilustração conceitual do modelo de Choné &amp; Ma (2011); não é estimação nem dado observado.</Fonte>
 
@@ -938,6 +940,8 @@ A pergunta da apresentação é **se essa desigualdade vale**.
 
 </div>
 
+---
+class: centrado bloco-lg
 ---
 
 <Rastreio cont="2 de 2">6. Viabilidade empírica</Rastreio>

@@ -43,6 +43,15 @@ Ressalva registrada no README do deck: o documento canônico anuncia "10
 ambulatoriais" e lista oito itens. O deck transcreve como está; a correção cabe
 ao documento canônico, não ao artefato derivado.
 
+### Terceira rodada de revisão, no mesmo dia
+
+O espaço livre da página passou a ser ocupado por quem ganha com ele: a figura
+cresce até a barra de fontes sem distorcer, a tabela de quatro linhas ou mais se
+estica, e nas páginas sem figura nem tabela o corpo do texto aumenta em vez de
+ser esticado. Cartão e lista continuam sem esticar. As cinco páginas em que o
+vão de rodapé permanece estão nomeadas no README do deck, com o motivo de cada
+uma. Contagem de páginas inalterada.
+
 ### O que não mudou
 
 Nenhum arquivo da documentação foi movido, fundido ou removido. O conteúdo dos

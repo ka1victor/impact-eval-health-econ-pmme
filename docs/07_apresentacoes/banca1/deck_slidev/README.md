@@ -3,7 +3,7 @@
 > **Fonte de verdade do conteúdo:** [`../02_conteudo_slides.md`](../02_conteudo_slides.md)<br>
 > **Regras de composição:** [`../01_roteiro_narrativo.md`](../01_roteiro_narrativo.md), seção 2<br>
 > **Proveniência:** [`../03_proveniencia_figuras_e_numeros.md`](../03_proveniencia_figuras_e_numeros.md)<br>
-> **Atualização:** 14 de setembro de 2026 (segunda rodada de revisão)
+> **Atualização:** 14 de setembro de 2026 (terceira rodada de revisão)
 
 Este diretório é **artefato derivado**. Regra do projeto: divergência entre deck
 e documento de conteúdo é erro do deck, nunca do documento. Nenhuma afirmação,
@@ -189,15 +189,40 @@ de 0,6 rem. Todos os títulos do deck cabem em uma linha, o que mantém o recuo 
 corpo idêntico em toda a apresentação — sem faixa morta entre o título e o
 primeiro elemento.
 
-Onde o último bloco da página é uma **tabela de quatro linhas ou mais**, ela
-recebe `fill fill-tbl` e se estica até a barra de fontes, com as células
-centradas na altura ganha: a página fica preenchida e as linhas, mais fáceis de
-separar à distância. Cartões e listas **não** são esticados — cartão alto com o
-texto no topo vira caixa oca, o que é pior que o vão. Nesses casos o
-preenchimento vem do tamanho intrínseco (cartão de número com 12 rem de altura
-mínima e conteúdo centrado, manchete com mais respiro), não de deformação.
+O espaço que sobra é ocupado por quem ganha com isso, e só por ele:
 
-### 3.8 Matemática
+- **Figura** — `<Fig h="fill">` consome toda a altura livre até a barra de
+  fontes. A imagem é posicionada em absoluto (para não depender de altura
+  percentual dentro de um item flex) e `object-fit: contain` preserva a
+  proporção: a figura cresce, nunca distorce. É o que a plateia precisa enxergar
+  de longe, então é o primeiro a receber o espaço — páginas 5, 6, 18 e 27.
+- **Tabela de quatro linhas ou mais** — `fill fill-tbl` estica a tabela com as
+  células centradas na altura ganha; as linhas ficam mais fáceis de separar à
+  distância — páginas 7, 25, 28 e 32.
+- **Corpo do texto** — nas páginas sem figura nem tabela, o conteúdo **cresce**
+  em vez de ser esticado: manchete a 1,32 rem (são citações, ganham com isso),
+  passos do fluxo a 1,25 rem, número em destaque a 2,45 rem, equação isolada a
+  1,42 em.
+
+**Cartões e listas não são esticados.** Cartão alto com o texto no topo vira
+caixa oca, e caixa oca é pior que vão. Onde crescer o conteúdo não fecha a
+página inteira, o vão de rodapé fica — ver a seção 3.8.
+
+### 3.8 Vão de rodapé que permanece
+
+Depois de crescer figura, tabela e corpo de texto, cinco páginas ainda terminam
+antes da barra de fontes. Em cada uma, fechar o resto exigiria deformar um
+bloco, e o julgamento foi deixar o vão:
+
+| Página | Por que o vão fica |
+|:--:|---|
+| 3 | dois blocos apenas (frase e três cartões de número). Os cartões já estão com 12 rem e o tipo aumentado; esticá-los mais devolve a caixa oca |
+| 4 | duas manchetes a 1,32 rem. Acima disso a citação passa a competir com o título |
+| 5 | a figura é **limitada pela largura** da coluna, não pela altura: com proporção 1,94:1 ela já usa toda a largura disponível. `object-fit: contain` a centra no espaço restante, de modo que o vão fica dividido acima e abaixo, e não despejado embaixo |
+| 30 | a equação já está a 1,42 em; é a maior que cabe sem encostar nas bordas do painel |
+| 33 | os três blocos já estão a 1,05 rem com 1,15 rem de respiro interno |
+
+### 3.9 Matemática
 
 As equações dos slides 13 a 17 do documento são renderizadas por KaTeX.
 Alterações de notação em relação ao documento: **nenhuma**. Foi conferido
@@ -208,7 +233,7 @@ Um cuidado de estilo: o cabeçalho de tabela é em caixa alta, e `text-transform
 transformaria o símbolo `c` em `C`. A regra é anulada dentro de `.katex` — um
 símbolo matemático não pode mudar de caixa.
 
-### 3.9 O que não foi feito
+### 3.10 O que não foi feito
 
 - **Sem páginas de divisão de seção.** A faixa de rastreio já nomeia a seção em
   toda página; páginas extras só para anunciar a seção custariam tempo de fala

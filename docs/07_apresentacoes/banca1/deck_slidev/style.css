@@ -836,3 +836,95 @@ div.xs > p {
   padding-top: 2.3rem;
   padding-bottom: 2.3rem;
 }
+
+/* ------------------------------------------------------------------ *
+ * Figura que consome a altura livre até a barra de fontes.
+ * A imagem é posicionada em absoluto para não depender de altura
+ * percentual dentro de um item flex; `object-fit: contain` preserva a
+ * proporção — a figura cresce, nunca distorce.
+ * ------------------------------------------------------------------ */
+
+.fig-box.fig-fill {
+  position: relative;
+  width: 100%;
+}
+
+.fig-box.fig-fill img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+}
+
+/* linha de duas colunas em que a figura ocupa a altura da página */
+.cols.fill {
+  align-items: stretch;
+}
+
+.cols.fill > .stack {
+  justify-content: center;
+}
+
+/* ------------------------------------------------------------------ *
+ * Páginas de texto que sobravam altura: o conteúdo cresce, em vez de
+ * ser esticado. Cada modificador vale só onde está aplicado.
+ * ------------------------------------------------------------------ */
+
+.manchete-lg {
+  gap: 1.5rem;
+}
+
+.manchete-lg .manchete {
+  padding: 1.75rem 0 1.75rem 1.15rem;
+  border-left-width: 4px;
+}
+
+.manchete-lg .manchete-txt {
+  font-size: 1.32rem;
+  line-height: 1.42;
+}
+
+.manchete-lg .manchete-src {
+  font-size: 0.76rem;
+  margin-top: 0.35rem;
+}
+
+.passos-lg {
+  gap: 1.9rem;
+}
+
+.passos-lg .card-plain {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.stat-lg .stat-num {
+  font-size: 2.45rem;
+}
+
+.stat-lg .stat-txt {
+  font-size: 0.97rem;
+  margin-top: 0.55rem;
+}
+
+.bloco-lg .callout,
+.bloco-lg .card,
+.bloco-lg .callout-soft {
+  font-size: 1.05rem;
+  padding: 1.15rem 1.15rem;
+}
+
+.bloco-lg .card p {
+  margin-bottom: 0.8rem;
+}
+
+.eq-tall {
+  padding-top: 2.1rem;
+  padding-bottom: 2.1rem;
+}
+
+.eq-tall .katex-display {
+  font-size: 1.42em;
+}
