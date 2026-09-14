@@ -28,9 +28,25 @@
 > a ser publicado ao lado do ex-ante de `13,7`. O LPM primário não mudou e o
 > conferidor do artigo foi de 190 para 193 cifras, todas aprovadas.
 >
-> **Próxima sessão da fila: 3 — item C-7**, red team, na parte documental; a parte
-> medida depende de D-4. A **sessão 5** está `ABERTA`. As sessões **1 e 4**
-> permanecem bloqueadas por achado e por dado ausente.
+> **Atualização em 14/09/2026: sessões 3 e 5 executadas juntas**, porque a 4 está
+> bloqueada por D-4 e as duas dividem o gerador `07_red_team_sintese.py`. Da
+> sessão 3 só a quarta ameaça do C-7 era executável, e o red team passa a
+> registrar que **o nível é frágil à composição de cursos e a proporção não é**;
+> placebo, heterogeneidade de pré-tendência e deslocamento continuam bloqueados. A
+> sessão 5 fechou B-3, C-1, C-2, C-3, C-5 e C-8, e **o C-4 ficou bloqueado**: a
+> renomeação recomendada muda o SHA-256 de `portao_denominador.json`, fixado como
+> hash de entrada em A3, A4 e A5, e A5 não é regravável sem os microdados do CNES.
+> Nenhuma cifra do artigo mudou e o conferidor segue aprovando as 193.
+>
+> Registrado também um achado de reprodutibilidade: **A8 não reproduz byte a
+> byte** sob o ambiente documentado, nas colunas de intervalo de confiança a
+> partir do 15º dígito significativo e no PNG. A1 e A4 reproduzem. Os artefatos de
+> A8 **não** foram regravados; a decisão é do autor, e o detalhe está no item C-3
+> do backlog e na errata `../auditorias/14_erratas_artefatos_congelados.md`.
+>
+> **Nenhuma sessão da fila está `ABERTA`.** As sessões **1 e 4**, o restante da
+> **3** e o item **C-4** dependem de decisão do autor sobre A-1 ou do acesso aos
+> microdados do CNES (D-4).
 
 ## Fila imediata autorizada
 
