@@ -16,7 +16,7 @@ Cada seção ocupa quantos slides o argumento pedir.
 | **2. Pergunta** | 11 | a pergunta e sua leitura em dois objetos |
 | **3. Literatura teórica** | 12 | as três tradições que o modelo junta |
 | **4. Modelo microeconômico** | 13–16 | decisão; remuneração; custo; o IVS como organizador do custo |
-| **5. Hipóteses** | 17 | derivação em quatro passos |
+| **5. Hipótese** | 17 | derivação em quatro passos, com uma hipótese |
 | **6. Viabilidade empírica** | 18 | o que se mede, o que falta, a dificuldade |
 
 **A banca 1 é teórica.** Fora da motivação, nada de econometria ou estimação, e
@@ -79,7 +79,7 @@ usado**. Ver [03 — Proveniência](03_proveniencia_figuras_e_numeros.md#figuras
 | 2. Pergunta | 11 | ✅ | — | — |
 | 3. Literatura teórica | 12 | ✅ | — | ✅ |
 | 4. Modelo microeconômico | 13–16 | ✅ | ✅ | ✅ |
-| 5. Hipóteses | 17 | ✅ | — | — |
+| 5. Hipótese | 17 | ✅ | — | — |
 | 6. Viabilidade empírica | 18 | ✅ | — | ✅ |
 
 Cinco ressalvas registradas, nenhuma bloqueante: a comparação do degrau com a
@@ -101,7 +101,7 @@ origem, e é lá que a informação deve ser corrigida primeiro:
 | Pergunta | [`01_pergunta_escopo/15_...md`](../../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md), "Formulação curta canônica" |
 | Literatura teórica | [`02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), seção 5 |
 | Modelo micro | [`02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), seções 1 a 4 |
-| Hipóteses | [`02_teoria/hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), seção 4 |
+| Hipótese | [`02_teoria/hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), seção 4 |
 | Viabilidade empírica | [`04_dados/02_inventario_dados_por_outcome.md`](../../04_dados/02_inventario_dados_por_outcome.md) e [`auditorias/08_portao_denominador_atracao.md`](../../auditorias/08_portao_denominador_atracao.md) |
 
 O histórico da reorganização que acompanhou esta entrega está em

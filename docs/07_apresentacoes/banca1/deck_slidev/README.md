@@ -132,7 +132,7 @@ conteúdo.
 | 14 | O que a bolsa paga — e o que não paga | 23–24 | 23: a decomposição e o contraste capital/interior. 24: as duas consequências e o deflator |
 | 15 | O custo de estar ali | 25–27 | 25: a equação e os componentes. 26: equipe e capital agindo duas vezes. 27: a curva de custo laboral (F4) |
 | 16 | O IVS organiza o custo | 28–29 | 28: a redução ao índice e a correspondência com as dimensões. 29: a ambiguidade do sinal e o degrau como objeto |
-| 17 | Duas hipóteses | **30–31** | 30: passos 1 e 2. 31: passos 3 e 4 — H1, H2 e a condição de degrau |
+| 17 | A hipótese | **30–31** | 30: passos 1 e 2. 31: passos 3 e 4 — H1 e a condição de degrau |
 | 18 | Viabilidade empírica | 32–33 | 32: o que se mede de cada peça. 33: o que fica de fora, a dificuldade e o primeiro passo |
 
 ### 3.3 A figura prova, a frase interpreta

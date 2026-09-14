@@ -65,12 +65,24 @@ for passada in 1 2; do
   fi
 done
 
-# Relatório de Overfull \hbox, para revisão de composição.
+# Relatório de composição. O \hbox pega texto que vaza pela lateral; o \vbox,
+# frame cujo conteúdo não cabe na altura e invade o rodapé — o modo de falha
+# típico quando se comprime conteúdo em menos frames.
+falhou=0
 if grep -q "Overfull \\\\hbox" "${OUT_REL}/${BASE}.passada2.txt"; then
   echo "AVISO: Overfull \\hbox encontrados:"
   grep "Overfull \\\\hbox" "${OUT_REL}/${BASE}.passada2.txt" || true
-else
-  echo "OK: nenhum Overfull \\hbox."
+  falhou=1
+fi
+if grep -q "Overfull \\\\vbox" "${OUT_REL}/${BASE}.passada2.txt"; then
+  echo "AVISO: Overfull \\vbox encontrados (conteúdo estourando a altura do frame):"
+  grep -c "Overfull \\\\vbox" "${OUT_REL}/${BASE}.passada2.txt" | \
+    sed 's/^/  ocorrências: /'
+  grep -n "Overfull \\\\vbox" "${OUT_REL}/${BASE}.passada2.txt" | head -n 40 || true
+  falhou=1
+fi
+if [[ "${falhou}" -eq 0 ]]; then
+  echo "OK: nenhum Overfull \\hbox ou \\vbox."
 fi
 
 # Limpeza dos auxiliares.

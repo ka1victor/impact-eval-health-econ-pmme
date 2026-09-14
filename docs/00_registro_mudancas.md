@@ -8,6 +8,86 @@
 
 ---
 
+## 14/09/2026 — Banca 1: hipótese única, e o deck Beamer eleito e comprimido
+
+Duas mudanças, de origens diferentes, no mesmo commit.
+
+### A pedido da banca: uma hipótese, não duas
+
+Os professores pediram que a apresentação ficasse com **uma única hipótese, a
+primeira**. A correção foi feita primeiro no documento canônico e só depois nos
+artefatos derivados, como manda a regra de proveniência.
+
+| Documento | O que mudou |
+|---|---|
+| [`07_apresentacoes/banca1/02_conteudo_slides.md`](07_apresentacoes/banca1/02_conteudo_slides.md) | slide 17 passou de "Duas hipóteses" a **"A hipótese"**; a seção 5 ficou no singular, no título e no sumário; a tabela de derivadas ficou só com H1; o passo 4 foi reescrito |
+| [`07_apresentacoes/banca1/01_roteiro_narrativo.md`](07_apresentacoes/banca1/01_roteiro_narrativo.md) | título literal do slide 17, papel narrativo da seção 5 e as três linhas que contavam "duas hipóteses" |
+| [`02_teoria/hipoteses_e_viabilidade_empirica.md`](02_teoria/hipoteses_e_viabilidade_empirica.md) | seção 4.2 refeita: a banca 1 leva uma hipótese. O conjunto canônico H1–H4 **não** mudou — mudou o que a apresentação enuncia |
+| [`07_apresentacoes/banca1/README.md`](07_apresentacoes/banca1/README.md) | seção 5 no singular nas três tabelas |
+
+**O que aconteceu com o custo locacional.** A antiga H2 — maior custo reduz o
+preenchimento — não virou nota de rodapé nem sumiu: passou a ser apresentada
+como **obstáculo de identificação**, que é o que ela é. O custo não varia
+livremente, porque a regra do edital o amarra à bolsa e os dois sobem juntos;
+ele é o que torna H1 difícil de testar, não uma segunda afirmação a testar. A
+condição de degrau $\Delta B/p > \Delta c_0$ continua no slide, como
+consequência da condição de aceitação na fronteira entre faixas.
+
+A frase do slide 18 que dizia "separar H1 de H2" passou a "isolar o efeito da
+bolsa do efeito do custo", no documento de conteúdo e nos dois decks.
+
+### Decisão do autor: vai-se com o Beamer, mais limpo e mais comprimido
+
+Dos dois decks construídos em paralelo, o **Beamer (Warsaw) é o escolhido**. Ele
+foi então limpo e comprimido.
+
+| Arquivo | O que mudou |
+|---|---|
+| [`07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex`](07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex) | reescrito: de **36 frames em 37 páginas** para **22 frames em 29 páginas** |
+| [`scripts/apresentacao/build_deck_beamer.sh`](../scripts/apresentacao/build_deck_beamer.sh) | passou a relatar também `Overfull \vbox` |
+| [`07_apresentacoes/banca1/deck_beamer/README.md`](07_apresentacoes/banca1/deck_beamer/README.md) | mapa de frames refeito; seções 3.1, 3.3, 3.4 e 5 reescritas |
+| `output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf` | recompilado, 29 páginas |
+
+**Uma barra só, embaixo.** A `headline` do Warsaw foi esvaziada e o rastreio de
+seção desceu para o rodapé, no lugar antes ocupado pelo título do trabalho — que
+se repetia em todas as páginas sem acrescentar nada a quem já leu a capa. A
+faixa de `frametitle` com degradê, que é o que torna o tema reconhecível, ficou,
+agora encostada no corpo. Saíram também as sombras das caixas de destaque. O
+ganho é de cerca de uma linha e meia de texto em **todos** os frames.
+
+**Compressão.** Sete slides do documento que estavam repartidos em dois, três ou
+quatro frames de mesmo título dentro de uma só subseção foram fundidos em frame
+único; outros sete viraram **um frame com dois overlays**. `\insertframenumber`
+conta frames, não páginas: em um frame com overlay o rodapé exibe o mesmo
+número nas duas telas, sob o mesmo título e o mesmo rastreio — para a banca é um
+slide que se completa, não um slide novo. E overlay não custa tempo de fala além
+do que o conteúdo já custa, o que importa contra os 28 minutos da seção 6 do
+roteiro.
+
+O slide 13 do documento ganhou o caminho inverso: o overlay que separava a
+função-valor do seu glossário deixou de ser necessário, porque a altura
+recuperada fez os dois caberem na mesma tela.
+
+**O que saiu.** Prosa de ligação, citação que ilustrava sem acrescentar fato,
+duas manchetes de jornal em caixa que repetiam a frase ao lado, e vão morto.
+**Nenhuma afirmação e nenhum número do documento de conteúdo saíram** — todos os
+valores exibidos foram reconferidos um a um contra a versão anterior do `.tex`.
+
+**Verificação.** O build termina sem nenhum `Overfull \hbox` ou `\vbox` — nenhum
+frame estoura a altura, que era o modo de falha esperado ao comprimir. Duas
+execuções produzem o mesmo PDF byte a byte. As 29 páginas foram revistas uma a
+uma em PNG.
+
+### O deck Slidev permanece, sincronizado apenas no conteúdo
+
+O deck em `deck_slidev/` não foi descartado do repositório, mas deixou de ser
+candidato. Recebeu apenas a mudança de conteúdo — hipótese única e a frase do
+slide 18 — para não divergir do documento canônico. Sua composição não foi
+retrabalhada, e a página 31 ficou com folga no rodapé por causa da linha de H2
+removida.
+
+---
+
 ## 14/09/2026 — Decks da banca 1 em duas tecnologias: Beamer (Warsaw) e Slidev (academic)
 
 Motivo: produzir o artefato de projeção da banca 1, que até aqui existia só como

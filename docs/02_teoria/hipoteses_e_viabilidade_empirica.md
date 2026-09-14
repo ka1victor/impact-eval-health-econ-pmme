@@ -105,21 +105,23 @@ e é tratada como heterogeneidade pré-declarada, não como hipótese principal.
 
 ### 4.2 Correspondência com as hipóteses apresentadas na banca 1
 
-A banca 1 trata apenas da margem **preenchimento** e leva duas hipóteses, as
-derivadas diretas da condição de aceitação:
+A banca 1 trata apenas da margem **preenchimento** e leva **uma** hipótese, a
+derivada direta da condição de aceitação. A redução a uma só é decisão da banca,
+registrada em 14/09/2026; ela não altera o conjunto canônico H1–H4 deste
+documento, apenas o que a apresentação enuncia como hipótese a testar.
 
 | Banca 1 | Enunciado | Documento canônico |
 |---|---|---|
 | H1 | maior remuneração real aumenta a probabilidade de preenchimento — $\partial\Pr/\partial(B_m/p_m) > 0$ | H1 |
-| H2 | maior custo locacional reduz a probabilidade de preenchimento — $\partial\Pr/\partial c_m < 0$ | operacionaliza-se por H3 (mercado privado), H4 (sub-índices do IVS) e 4.1 (infraestrutura), todas leituras do mesmo $c_m$ |
+| — | custo locacional, $\partial\Pr/\partial c_m < 0$ | apresentado como **obstáculo de identificação**, não como hipótese: o custo não varia livremente, porque a regra do edital o amarra à bolsa. Operacionaliza-se por H3 (mercado privado), H4 (sub-índices do IVS) e 4.1 (infraestrutura), todas leituras do mesmo $c_m$ |
 | — | persistência da oferta | H2 canônica; fora da banca 1, permanece no escopo do projeto |
 
 A apresentação declara, no mesmo slide, como cada objeto aparece nos dados: o
 preenchimento por célula CNES–curso; a bolsa como faixa anunciada, colinear
 com a categoria de IVS por construção da regra; o custo como IVS, sub-índices,
-tipologia territorial e estoque prévio. E declara o limite: separar H1 de H2
-exige a fronteira entre faixas com o escore administrativo, que não está
-recuperado — até lá, o que se estima é gradiente.
+tipologia territorial e estoque prévio. E declara o limite: isolar o efeito da
+bolsa do efeito do custo exige a fronteira entre faixas com o escore
+administrativo, que não está recuperado — até lá, o que se estima é gradiente.
 
 ### 4.3 Linguagem permitida
 

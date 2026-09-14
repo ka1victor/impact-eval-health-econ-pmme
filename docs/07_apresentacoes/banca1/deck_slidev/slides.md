@@ -41,7 +41,7 @@ class: centrado
   <div class="sumario-item"><span class="sumario-n">2</span><span class="sumario-t">Pergunta</span></div>
   <div class="sumario-item"><span class="sumario-n">3</span><span class="sumario-t">Literatura teórica</span></div>
   <div class="sumario-item"><span class="sumario-n">4</span><span class="sumario-t">Modelo microeconômico</span></div>
-  <div class="sumario-item"><span class="sumario-n">5</span><span class="sumario-t">Hipóteses</span></div>
+  <div class="sumario-item"><span class="sumario-n">5</span><span class="sumario-t">Hipótese</span></div>
   <div class="sumario-item"><span class="sumario-n">6</span><span class="sumario-t">Viabilidade empírica</span></div>
 </div>
 
@@ -829,9 +829,9 @@ $$c_0'(IVS) \gtrless 0$$
 
 ---
 
-<Rastreio cont="1 de 2">5. Hipóteses</Rastreio>
+<Rastreio cont="1 de 2">5. Hipótese</Rastreio>
 
-# Duas hipóteses
+# A hipótese
 
 <div style="margin-top:0.2rem">
 <span class="passo-lbl">Passo 1 · a condição de aceitação</span>
@@ -861,12 +861,12 @@ A vaga é preenchida se **existir ao menos um candidato** para quem a desigualda
 
 ---
 
-<Rastreio cont="2 de 2">5. Hipóteses</Rastreio>
+<Rastreio cont="2 de 2">5. Hipótese</Rastreio>
 
-# Duas hipóteses
+# A hipótese
 
 <div style="margin-top:0.1rem">
-<span class="passo-lbl">Passo 3 · as derivadas</span>
+<span class="passo-lbl">Passo 3 · a hipótese — o trabalho testa uma só</span>
 </div>
 
 <div class="stack gap-s">
@@ -885,26 +885,13 @@ $$\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial (B_m / p_m)} > 0$$
   </div>
 </div>
 
-<div class="hip">
-  <span class="hip-tag">H2</span>
-  <div class="hip-txt">
-
-Maior **custo locacional** reduz a probabilidade de preenchimento da vaga.
-
-  </div>
-  <div class="hip-eq">
-
-$$\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial c_m} < 0$$
-
-  </div>
-</div>
 
 </div>
 
 <div class="gap-m">
-<span class="passo-lbl">Passo 4 · as duas juntas</span>
+<span class="passo-lbl">Passo 4 · o custo é obstáculo, não hipótese</span>
 
-<p class="sm">Na fronteira entre duas faixas, o preenchimento do lado mais vulnerável exige que o <strong>degrau monetário supere o degrau de custo</strong>:</p>
+<p class="sm">O custo locacional não entra como segunda hipótese porque não varia livremente: a regra do edital o amarra à bolsa, e os dois sobem juntos. Na fronteira entre duas faixas, o preenchimento do lado mais vulnerável exige que o <strong>degrau monetário supere o degrau de custo</strong>:</p>
 
 <div class="eq eq-lg">
 
@@ -959,7 +946,7 @@ class: centrado bloco-lg
 
 A bolsa e a vulnerabilidade andam juntas porque a regra fixa uma pela outra: **não existe município com bolsa alta e vulnerabilidade baixa**.
 
-Separar H1 de H2 exige comparar municípios parecidos que caíram em faixas diferentes — e a faixa publicada não coincide com a que sai dos cortes do Ipea em **177 dos 368 municípios** do ciclo 1.
+Isolar o efeito da bolsa do efeito do custo exige comparar municípios parecidos que caíram em faixas diferentes — e a faixa publicada não coincide com a que sai dos cortes do Ipea em **177 dos 368 municípios** do ciclo 1.
 
 </div>
 

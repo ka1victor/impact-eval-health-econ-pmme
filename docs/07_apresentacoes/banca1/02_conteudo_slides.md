@@ -27,7 +27,7 @@ Autoria · instituição · data da banca
 2. Pergunta
 3. Literatura teórica
 4. Modelo microeconômico
-5. Hipóteses
+5. Hipótese
 6. Viabilidade empírica
 
 ---
@@ -439,11 +439,11 @@ não a inclinação do índice.
 
 ---
 
-# 5. Hipóteses
+# 5. Hipótese
 
-## 17 — Duas hipóteses
+## 17 — A hipótese
 
-`5. Hipóteses`
+`5. Hipótese`
 
 **Passo 1 — a condição de aceitação.** O médico $i$ aceita a vaga em $m$
 quando o que ela vale supera sua melhor alternativa $\bar{v}_i$:
@@ -454,15 +454,19 @@ $$\frac{B_m + w^{\text{priv}}_m}{p_m} - c_0(IVS_m) \geq \bar{v}_i$$
 candidato para quem a desigualdade vale. Tudo o que aumenta o lado esquerdo
 aumenta essa probabilidade.
 
-**Passo 3 — as derivadas.**
+**Passo 3 — a hipótese.** O trabalho testa uma só.
 
 | | Hipótese | Derivada |
 |:---:|---|---|
 | **H1** | Maior remuneração real aumenta a probabilidade de preenchimento da vaga | $\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial (B_m / p_m)} > 0$ |
-| **H2** | Maior custo locacional reduz a probabilidade de preenchimento da vaga | $\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial c_m} < 0$ |
 
-**Passo 4 — as duas juntas.** Na fronteira entre duas faixas, o preenchimento
-do lado mais vulnerável exige que o degrau monetário supere o degrau de custo:
+**Passo 4 — o custo é obstáculo, não hipótese.** O custo locacional não entra
+como segunda hipótese porque não varia livremente: a regra do edital o amarra
+à bolsa, e os dois sobem juntos. Ele é o que torna H1 difícil de testar, não
+uma segunda afirmação a testar.
+
+Na fronteira entre duas faixas, o preenchimento do lado mais vulnerável exige
+que o degrau monetário supere o degrau de custo:
 
 $$\frac{\Delta B_m}{p_m} > \Delta c_0, \qquad \Delta B_m = \text{R\$ } 5.000$$
 
@@ -493,7 +497,7 @@ IVS e a tipologia territorial resumem.
 
 **A dificuldade.** A bolsa e a vulnerabilidade andam juntas porque a regra
 fixa uma pela outra: **não existe município com bolsa alta e vulnerabilidade
-baixa**. Separar H1 de H2 exige comparar municípios parecidos que caíram em
-faixas diferentes — e a faixa publicada não coincide com a que sai dos cortes
+baixa**. Isolar o efeito da bolsa do efeito do custo exige comparar municípios
+parecidos que caíram em faixas diferentes — e a faixa publicada não coincide com a que sai dos cortes
 do Ipea em 177 dos 368 municípios do ciclo 1. Recuperar a regra exata que o
 Ministério aplicou é o primeiro passo do trabalho empírico.
