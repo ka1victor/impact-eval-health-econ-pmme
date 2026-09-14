@@ -702,7 +702,30 @@ autor.** O que deixa de ser verdade é a impossibilidade de compilar.
 
 O pacote está pronto e a justificativa foi reescrita pelo item C3 do plano `35` em
 torno da impossibilidade demonstrada. **O envio é decisão do autor** — escolha de
-canal e autorização. Nada na fila depende disso.
+canal e autorização. Nenhum item desta fila depende disso, mas a pergunta
+declarada do projeto depende inteiramente.
+
+### O pedido ficou mais preciso em 14/09/2026
+
+A leitura do edital mudou o que se deve pedir. Não é "o escore de IVS": a
+cláusula 11.1.4 já publica a regra sobre o IVS, e ela é o **piso** da bolsa. O
+que promove 177 municípios acima desse piso é o critério de **localização** da
+cláusula 11.1.3, definido no **Anexo IV**. Pedir o escore de IVS traria algo que
+já se tem.
+
+Itens a pedir, em ordem de utilidade:
+
+1. **Anexo IV do Edital SGTES/MS nº 3/2025**, com a faixa de atração por
+   município e a data de vigência — é o documento operativo citado pelo próprio
+   edital e ausente do repositório.
+2. **Os critérios de localização** da cláusula 11.1.3: quais são, como se
+   combinam com a categoria de IVS e se a promoção é de uma faixa ou mais.
+3. **A vintagem e a fonte do IVS** efetivamente usada, com a regra de
+   arredondamento.
+4. **Folha de pagamento da bolsa**, se o alvo incluir o valor recebido e não
+   apenas o anunciado — sem ela, R1 identifica intenção de tratar da oferta.
+
+Os três primeiros destravam R1; o quarto separa dose de oferta.
 
 ## D-4 · Microdados do CNES ausentes do repositório
 
