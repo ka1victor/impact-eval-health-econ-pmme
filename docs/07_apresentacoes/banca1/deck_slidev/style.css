@@ -161,9 +161,9 @@ body,
   gap: 0.45rem;
   align-items: baseline;
   border-top: 1px solid var(--pmme-rule);
-  padding-top: 0.3rem;
-  font-size: 0.545rem;
-  line-height: 1.32;
+  padding-top: 0.32rem;
+  font-size: 0.62rem;
+  line-height: 1.34;
   color: var(--pmme-faint);
   z-index: 4;
 }
@@ -254,7 +254,7 @@ body,
 .card {
   background: var(--pmme-sage-wash);
   border-left: 3px solid var(--pmme-sage);
-  padding: 0.6rem 0.8rem 0.65rem;
+  padding: 0.72rem 0.95rem 0.78rem;
 }
 
 .card-lbl {
@@ -284,9 +284,12 @@ body,
 .stat {
   background: var(--pmme-sage-wash);
   border-top: 3px solid var(--pmme-green);
-  padding: 0.85rem 0.95rem 0.9rem;
+  padding: 1.05rem 1.05rem;
   height: 100%;
-  min-height: 8.6rem;
+  min-height: 12rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .stat-num {
@@ -357,13 +360,13 @@ body,
 
 .manchete {
   border-left: 3px solid var(--pmme-sage);
-  padding: 0.35rem 0 0.35rem 0.75rem;
+  padding: 1.05rem 0 1.05rem 0.95rem;
 }
 
 .manchete-txt {
   display: block;
   font-style: italic;
-  font-size: 0.92rem;
+  font-size: 1rem;
   line-height: 1.36;
   color: var(--pmme-ink);
 }
@@ -656,12 +659,23 @@ body,
 
 .hip {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.9rem;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.2rem 1.1rem;
   align-items: center;
   background: var(--pmme-sage-wash);
   border-left: 3px solid var(--pmme-green);
-  padding: 0.7rem 0.9rem;
+  padding: 0.65rem 0.9rem;
+}
+
+.hip-txt p {
+  margin: 0;
+  font-size: 0.97rem;
+  line-height: 1.4;
+}
+
+.hip-eq .katex-display {
+  margin: 0;
+  font-size: 1.02em;
 }
 
 .hip-tag {
@@ -681,8 +695,8 @@ body,
 .slidev-layout.centrado {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: 6.1rem;
+  justify-content: flex-start;
+  padding-top: 5.95rem;
   padding-bottom: 3.1rem;
 }
 
@@ -732,4 +746,93 @@ div.xs > p {
 .passo-lbl .katex,
 .chip .katex {
   text-transform: none;
+}
+
+/* tabela mais compacta, para a página que junta equação e glossário */
+.tbl-xtight table {
+  font-size: 0.79rem;
+}
+
+.tbl-xtight td {
+  padding: 0.2rem 0.5rem;
+}
+
+.tbl-xtight thead th {
+  padding: 0.18rem 0.5rem;
+}
+
+/* fluxo numerado com mais presença (página "como a vaga chega ao médico") */
+.passos-lg {
+  gap: 1.3rem;
+}
+
+.passos-lg .card-plain {
+  display: flex;
+  align-items: baseline;
+  padding: 0.3rem 0 0.3rem 0.9rem;
+  font-size: 1.04rem;
+  line-height: 1.45;
+}
+
+/* respiro explícito entre blocos de uma mesma página */
+.gap-s {
+  margin-top: 0.75rem;
+}
+
+.gap-m {
+  margin-top: 1.15rem;
+}
+
+/* ------------------------------------------------------------------ *
+ * .fill — o bloco absorve a altura que sobra até a barra de fontes.
+ * Usado no último bloco estruturante da página, para que o conteúdo
+ * ocupe a página inteira em vez de deixar um vão embaixo.
+ * ------------------------------------------------------------------ */
+
+.fill {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.fill.stack {
+  justify-content: space-between;
+}
+
+.fill.eq {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.fill-tbl table {
+  height: 100%;
+}
+
+.fill-tbl td {
+  vertical-align: middle;
+}
+
+.fill.cols > .card,
+.fill.cols > .card-plain,
+.fill.cols > .callout,
+.fill.cols > .callout-soft,
+.fill.cols > .stat {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* cartão esticado não deve virar uma caixa vazia com o texto no topo:
+   o conteúdo fica centrado na altura que o cartão ganhou */
+.fill.stack > .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* painel de equação alto, para a página que traz um passo só */
+.eq-tall {
+  padding-top: 2.3rem;
+  padding-bottom: 2.3rem;
 }

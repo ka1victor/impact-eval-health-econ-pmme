@@ -104,7 +104,7 @@ class: centrado
 
 <div class="callout">
 
-**Menos da metade.** Havia **16,0 especialistas por 100 mil habitantes** nos municípios que pagariam R$ 10 mil e **7,3** nos que pagariam R$ 20 mil.
+**Menos da metade.** Onde a bolsa seria maior, a oferta por habitante já era **menos da metade** da dos municípios de bolsa menor.
 
 </div>
 
@@ -112,7 +112,7 @@ class: centrado
   <Fig src="/fig/oferta_pre_por_faixa.png" alt="Especialistas por 100 mil habitantes em junho de 2025, por faixa de bolsa" h="20rem" />
 </div>
 
-<Fonte>CNES, competência 06/2025; profissionais nos CBOs dos 10 cursos do programa com correspondência unívoca curso–CBO; 295 municípios com vaga nesses cursos no ciclo 1; população residente do Censo 2022 (IBGE). Faixa pela categoria de IVS do Ipea.</Fonte>
+<Fonte>CNES, competência 06/2025; 295 municípios com vaga no ciclo 1; Censo 2022 (IBGE). Faixa pela categoria de IVS do Ipea.</Fonte>
 
 ---
 
@@ -122,13 +122,13 @@ class: centrado
 
 <div class="callout">
 
-**E quem vai, vai sozinho.** Na Faixa 1, o especialista encontraria **2 colegas** da sua especialidade no município (mediana), contra 5 na Faixa 3; em **42%** dos casos seria o único, ou teria um só colega.
+**E quem vai, vai sozinho.** Onde a bolsa seria maior, a mediana de colegas da mesma especialidade é a menor — e é ali que mais vezes o especialista **seria o único, ou teria um só colega**.
 
 </div>
 
 <Fig src="/fig/retaguarda_por_faixa.png" alt="Colegas da mesma especialidade no município, junho de 2025" h="17.5rem" class="mt-s" />
 
-<Fonte>CNES, competência 06/2025; mesma definição de profissionais e municípios da página anterior. A Faixa 1 tem 19 pares município–especialidade: a porcentagem oscila com poucos casos, a mediana não.</Fonte>
+<Fonte>CNES, competência 06/2025; mesma definição da página anterior. Faixa pela categoria de IVS do Ipea.</Fonte>
 
 ---
 
@@ -138,7 +138,7 @@ class: centrado
 
 <p class="lead">Para o médico, “município vulnerável” não é um índice. É um conjunto de desvantagens concretas. Quatro aparecem de forma consistente na literatura — <strong>duas delas nós conseguimos medir</strong>.</p>
 
-<div class="tbl-center">
+<div class="tbl-center fill fill-tbl">
 
 | Desvantagem | O que significa para o médico | Medimos? |
 |---|---|---|
@@ -211,7 +211,27 @@ Médicos com diploma brasileiro ou revalidado e **registro de especialista (RQE)
 <div class="card mt-s">
 <span class="card-lbl">O quê</span>
 
-Um **aprimoramento em serviço** de **12 meses**, com **20 horas semanais** em estabelecimento do SUS, supervisão e mentoria de uma instituição formadora, e imersões em serviços de referência. São **16 cursos**: **6 cirúrgicos** (anestesiologia; cirurgia geral, oncológica, colorretal, digestiva e ginecológica) e **10 ambulatoriais** (endoscopia e colonoscopia, oncologia clínica, radioterapia, ecocardiografia, ultrassonografia mamária, colposcopia, videolaringoscopia, anatomia patológica). O foco é o câncer e o diagnóstico que o SUS mais espera.
+Um **aprimoramento em serviço** de **12 meses**, com **20 horas semanais** em estabelecimento do SUS, supervisão e mentoria de uma instituição formadora, e imersões em serviços de referência. São **16 cursos**:
+
+<div class="cols cols-2 gap-s">
+
+<div class="card-plain">
+<span class="chip">6 cirúrgicos</span>
+
+<span class="xs">anestesiologia; cirurgia geral, oncológica, colorretal, digestiva e ginecológica</span>
+
+</div>
+
+<div class="card-plain">
+<span class="chip">10 ambulatoriais</span>
+
+<span class="xs">endoscopia e colonoscopia, oncologia clínica, radioterapia, ecocardiografia, ultrassonografia mamária, colposcopia, videolaringoscopia, anatomia patológica</span>
+
+</div>
+
+</div>
+
+<p class="sm gap-s tight">O foco é o <strong>câncer</strong> e o <strong>diagnóstico</strong> que o SUS mais espera.</p>
 
 </div>
 
@@ -225,14 +245,14 @@ Um **aprimoramento em serviço** de **12 meses**, com **20 horas semanais** em e
 
 <p class="lead tight"><strong>Como a vaga chega ao médico.</strong></p>
 
-<div class="stack mt-s">
-  <div class="card-plain"><span class="num-badge">1</span><span class="sm">O <strong>estado ou município</strong> indica o serviço e a especialidade.</span></div>
-  <div class="card-plain"><span class="num-badge">2</span><span class="sm">A <strong>comissão bipartite</strong> prioriza.</span></div>
-  <div class="card-plain"><span class="num-badge">3</span><span class="sm">O <strong>Ministério</strong> analisa a capacidade instalada e publica o quadro de vagas com município, estabelecimento, curso e <strong>faixa de bolsa</strong>.</span></div>
-  <div class="card-plain"><span class="num-badge">4</span><span class="sm">O <strong>médico</strong> escolhe <strong>até dois locais</strong>, em ordem de preferência, e é classificado por titulação e tempo de formação.</span></div>
+<div class="stack passos-lg mt-s">
+  <div class="card-plain"><span class="num-badge">1</span><span>O <strong>estado ou município</strong> indica o serviço e a especialidade.</span></div>
+  <div class="card-plain"><span class="num-badge">2</span><span>A <strong>comissão bipartite</strong> prioriza.</span></div>
+  <div class="card-plain"><span class="num-badge">3</span><span>O <strong>Ministério</strong> analisa a capacidade instalada e publica o quadro de vagas com município, estabelecimento, curso e <strong>faixa de bolsa</strong>.</span></div>
+  <div class="card-plain"><span class="num-badge">4</span><span>O <strong>médico</strong> escolhe <strong>até dois locais</strong>, em ordem de preferência, e é classificado por titulação e tempo de formação.</span></div>
 </div>
 
-<div class="ressalva mt-m">O serviço <strong>não pode substituir</strong> profissional já contratado por um bolsista.</div>
+<div class="ressalva gap-m">O serviço <strong>não pode substituir</strong> profissional já contratado por um bolsista.</div>
 
 <Fonte>Edital SGTES/MS nº 3/2025 (DOU 24/07/2025), itens 4 e 5.</Fonte>
 
@@ -472,45 +492,17 @@ Dinheiro move alocação, mas é caro, não move todo mundo, e não garante que 
 
 ---
 
-<Rastreio cont="1 de 2">1. Motivação · Efeito incerto · 3 de 3</Rastreio>
+<Rastreio>1. Motivação · Efeito incerto · 3 de 3</Rastreio>
 
 # No primeiro ciclo, a bolsa maior não ordenou o preenchimento
 
 <p class="sm tight">Das <strong>1.295 vagas</strong> da primeira chamada, <strong>30%</strong> tiveram alguém confirmado ou homologado. A bolsa maior não veio acompanhada de mais preenchimento — e o território, sim, ordenou o resultado:</p>
 
-<Fig src="/fig/preenchimento_ciclo1.png" alt="Preenchimento do ciclo 1 por faixa de bolsa e por estrato territorial" h="19rem" class="mt-s" />
+<Fig src="/fig/preenchimento_ciclo1.png" alt="Preenchimento do ciclo 1 por faixa de bolsa e por estrato territorial" h="15.5rem" class="gap-s" />
 
-<Fonte>Quadro de vagas e resultados do ciclo 1, chamada 1 (Ministério da Saúde, 2025); estratos pela REGIC 2018 e pela composição de regiões metropolitanas e RIDEs de 2022 (IBGE).</Fonte>
+<div class="callout gap-s">
 
----
-
-<Rastreio cont="2 de 2">1. Motivação · Efeito incerto · 3 de 3</Rastreio>
-
-# No primeiro ciclo, a bolsa maior não ordenou o preenchimento
-
-<div class="cols cols-2" style="margin-top:0.2rem">
-
-<div class="card">
-<span class="card-lbl">Por faixa de bolsa</span>
-
-**23,6%** na Faixa 3 (R$ 10 mil) · **37,4%** na Faixa 2 (R$ 15 mil) · **31,6%** na Faixa 1 (R$ 20 mil).
-
-Pagar o dobro não preencheu mais que pagar uma vez e meia.
-
-</div>
-
-<div class="card">
-<span class="card-lbl">Por território</span>
-
-**44,9%** nos municípios metropolitanos · **35,6%** nas capitais · **26,9%** no interior conectado a um polo · **20,5%** no interior remoto.
-
-</div>
-
-</div>
-
-<div class="callout mt-m">
-
-Isso é **descrição, não efeito**: as faixas diferem em muito mais do que no valor da bolsa. Mas é o suficiente para colocar a pergunta.
+**Pagar o dobro não preencheu mais que pagar uma vez e meia**, e o preenchimento cai da capital e da região metropolitana para o interior remoto. Isso é **descrição, não efeito**: as faixas diferem em muito mais do que no valor da bolsa. Mas é o suficiente para colocar a pergunta.
 
 </div>
 
@@ -522,11 +514,11 @@ Isso é **descrição, não efeito**: as faixas diferem em muito mais do que no 
 
 # Pergunta
 
-<div class="pergunta" style="margin-top:0.4rem">Maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas desvantagens territoriais na atração de médicos especialistas?</div>
+<div class="pergunta" style="margin-top:0.3rem">Maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas desvantagens territoriais na atração de médicos especialistas?</div>
 
-<p class="sm mt-m tight">Dois objetos, um contra o outro:</p>
+<p class="sm tight" style="margin-top:1.4rem">Dois objetos, um contra o outro:</p>
 
-<div class="cols cols-2 mt-s">
+<div class="cols cols-2 gap-s">
   <div class="card">
     <span class="card-lbl">O preço</span>
     <span class="sm">que a política colocou sobre a vulnerabilidade — o <strong>degrau de R$ 5 mil</strong> entre faixas.</span>
@@ -537,7 +529,7 @@ Isso é **descrição, não efeito**: as faixas diferem em muito mais do que no 
   </div>
 </div>
 
-<p class="sm mt-m">A margem que observamos é o <strong>preenchimento da vaga</strong>: se, ao final da chamada, apareceu alguém disposto a ocupá-la.</p>
+<p class="sm" style="margin-top:1.4rem">A margem que observamos é o <strong>preenchimento da vaga</strong>: se, ao final da chamada, apareceu alguém disposto a ocupá-la.</p>
 
 ---
 
@@ -594,41 +586,25 @@ Nenhuma das três trata de um componente da remuneração **fixado por regra pú
 
 ---
 
-<Rastreio cont="1 de 2">4. Modelo microeconômico · 1 de 4</Rastreio>
+<Rastreio>4. Modelo microeconômico · 1 de 4</Rastreio>
 
 # Como o médico escolhe onde trabalhar
 
-<div class="lead tight">
+<div class="sm tight">
 
 Adaptando Moehling et al. (2020), o médico $i$ escolhe o município $m$ que maximiza o valor presente líquido da carreira:
 
 </div>
 
-<div class="eq eq-lg mt-s">
+<div class="eq eq-lg gap-s">
 
 $$V_{im} = \sum_t \delta^t \left[ \frac{\mathbb{E}(w_{imt} \mid B_m)}{p_{mt}} - c_{im} \right] + \varepsilon_{im}$$
-
-</div>
-
-<div class="eq eq-lg">
 
 $$m_i^{\ast} \in \arg\max_{m \in \mathcal{M} \cup \{0\}} V_{im}$$
 
 </div>
 
-<div class="callout mt-s">
-
-A alternativa $m = 0$ é **ficar fora do programa**. A vaga em $m$ é aceita quando $V_{im} \geq V_{i0}$ e $m$ é a melhor opção entre as disponíveis.
-
-</div>
-
----
-
-<Rastreio cont="2 de 2">4. Modelo microeconômico · 1 de 4</Rastreio>
-
-# Como o médico escolhe onde trabalhar
-
-<p class="sm tight">Cada termo, em palavras:</p>
+<div class="tbl-xtight gap-s">
 
 | Termo | Leitura |
 |---|---|
@@ -637,6 +613,14 @@ A alternativa $m = 0$ é **ficar fora do programa**. A vaga em $m$ é aceita qua
 | $c_{im}$ | tudo o que torna estar naquele município custoso e não é pago em dinheiro |
 | $\delta^t$ | a decisão é de carreira, não de um mês: o médico pesa o que o lugar oferece ao longo do tempo |
 | $\varepsilon_{im}$ | gostos individuais que não observamos |
+
+</div>
+
+<div class="callout-soft gap-s">
+
+A alternativa $m = 0$ é **ficar fora do programa**. A vaga em $m$ é aceita quando $V_{im} \geq V_{i0}$ e $m$ é a melhor opção entre as disponíveis.
+
+</div>
 
 ---
 
@@ -703,7 +687,7 @@ $$c_{im} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rur
 
 </div>
 
-<div class="tbl-sinal mt-s">
+<div class="tbl-sinal mt-s fill fill-tbl">
 
 | Componente | Sinal | Significado |
 |---|---|---|
@@ -791,7 +775,7 @@ $$c_{im} = c_0(IVS_m) + \eta_i$$
 
 <p class="sm tight">Isso não é atalho: <strong>cada dimensão do IVS corresponde a um bloco do custo</strong>.</p>
 
-<div class="tbl-tight tbl-center mt-s">
+<div class="tbl-tight tbl-center mt-s fill fill-tbl">
 
 | Dimensão do IVS | Indicadores | Bloco do custo | Efeito sobre $c$ |
 |---|---|---|---|
@@ -843,7 +827,7 @@ $$c_0'(IVS) \gtrless 0$$
 
 ---
 
-<Rastreio cont="1 de 3">5. Hipóteses</Rastreio>
+<Rastreio cont="1 de 2">5. Hipóteses</Rastreio>
 
 # Duas hipóteses
 
@@ -856,7 +840,7 @@ O médico $i$ aceita a vaga em $m$ quando o que ela vale supera sua melhor alter
 
 </div>
 
-<div class="eq eq-lg mt-s">
+<div class="eq eq-lg eq-tall mt-s">
 
 $$\frac{B_m + w^{\text{priv}}_m}{p_m} - c_0(IVS_m) \geq \bar{v}_i$$
 
@@ -875,21 +859,24 @@ A vaga é preenchida se **existir ao menos um candidato** para quem a desigualda
 
 ---
 
-<Rastreio cont="2 de 3">5. Hipóteses</Rastreio>
+<Rastreio cont="2 de 2">5. Hipóteses</Rastreio>
 
 # Duas hipóteses
 
-<div style="margin-top:0.2rem">
+<div style="margin-top:0.1rem">
 <span class="passo-lbl">Passo 3 · as derivadas</span>
 </div>
 
-<div class="stack mt-s">
+<div class="stack gap-s">
 
 <div class="hip">
   <span class="hip-tag">H1</span>
-  <div>
+  <div class="hip-txt">
 
 Maior **remuneração real** aumenta a probabilidade de preenchimento da vaga.
+
+  </div>
+  <div class="hip-eq">
 
 $$\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial (B_m / p_m)} > 0$$
 
@@ -898,9 +885,12 @@ $$\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial (B_m / p_m)} > 0$$
 
 <div class="hip">
   <span class="hip-tag">H2</span>
-  <div>
+  <div class="hip-txt">
 
 Maior **custo locacional** reduz a probabilidade de preenchimento da vaga.
+
+  </div>
+  <div class="hip-eq">
 
 $$\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial c_m} < 0$$
 
@@ -909,25 +899,19 @@ $$\dfrac{\partial \Pr(\text{preenchimento}_m)}{\partial c_m} < 0$$
 
 </div>
 
----
-
-<Rastreio cont="3 de 3">5. Hipóteses</Rastreio>
-
-# Duas hipóteses
-
-<div style="margin-top:0.2rem">
+<div class="gap-m">
 <span class="passo-lbl">Passo 4 · as duas juntas</span>
 
-<p class="lead">Na fronteira entre duas faixas, o preenchimento do lado mais vulnerável exige que o <strong>degrau monetário supere o degrau de custo</strong>:</p>
+<p class="sm">Na fronteira entre duas faixas, o preenchimento do lado mais vulnerável exige que o <strong>degrau monetário supere o degrau de custo</strong>:</p>
 
-<div class="eq eq-lg mt-s">
+<div class="eq eq-lg">
 
 $$\frac{\Delta B_m}{p_m} > \Delta c_0, \qquad \Delta B_m = \text{R\$ } 5.000$$
 
 </div>
 </div>
 
-<div class="callout mt-m">
+<div class="callout gap-s">
 
 A pergunta da apresentação é **se essa desigualdade vale**.
 
@@ -941,7 +925,7 @@ A pergunta da apresentação é **se essa desigualdade vale**.
 
 <p class="lead tight"><strong>Temos como medir cada peça do modelo?</strong></p>
 
-<div class="tbl-tight mt-s">
+<div class="tbl-tight mt-s fill fill-tbl">
 
 | Peça do modelo | O que observamos | Fonte |
 |---|---|---|

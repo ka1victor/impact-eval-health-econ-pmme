@@ -26,9 +26,22 @@ sem tocar no conteúdo. O deck é artefato derivado; o canônico continua em
 
 ### Saída gerada
 
-`output/apresentacao_banca1/deck_slidev/banca1_slidev.pdf`, 36 páginas. Os PNG
+`output/apresentacao_banca1/deck_slidev/banca1_slidev.pdf`, 33 páginas. Os PNG
 por página, usados na revisão visual, são derivados do mesmo deck e ficam fora
 do versionamento.
+
+### Segunda rodada de revisão, no mesmo dia
+
+O deck saiu de 36 para 33 páginas. Três fusões: a figura do preenchimento do
+ciclo 1 voltou a caber com sua leitura em uma página; a equação do valor
+presente voltou a ficar na mesma página que o glossário dos seus termos; e os
+quatro passos das hipóteses passaram de três páginas para duas. Onde a figura já
+rotula o número na barra, o texto ao lado ficou só com a afirmação, sem relistar
+o que a figura mostra. Nada de conteúdo foi cortado: só repetição e vão.
+
+Ressalva registrada no README do deck: o documento canônico anuncia "10
+ambulatoriais" e lista oito itens. O deck transcreve como está; a correção cabe
+ao documento canônico, não ao artefato derivado.
 
 ### O que não mudou
 

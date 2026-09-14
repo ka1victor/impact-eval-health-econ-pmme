@@ -3,7 +3,7 @@
 > **Fonte de verdade do conteúdo:** [`../02_conteudo_slides.md`](../02_conteudo_slides.md)<br>
 > **Regras de composição:** [`../01_roteiro_narrativo.md`](../01_roteiro_narrativo.md), seção 2<br>
 > **Proveniência:** [`../03_proveniencia_figuras_e_numeros.md`](../03_proveniencia_figuras_e_numeros.md)<br>
-> **Atualização:** 14 de setembro de 2026
+> **Atualização:** 14 de setembro de 2026 (segunda rodada de revisão)
 
 Este diretório é **artefato derivado**. Regra do projeto: divergência entre deck
 e documento de conteúdo é erro do deck, nunca do documento. Nenhuma afirmação,
@@ -98,14 +98,19 @@ depende de rede e o resultado é sempre o mesmo:
 
 ### 3.1 Um slide do documento pode virar mais de uma página
 
-O documento tem **18 slides**; o deck tem **36 páginas**. O critério foi sempre
-o mesmo: **uma afirmação por página** (roteiro, seção 2.2) e nada de página
-sobrecarregada. Quando um slide do documento carregava dois movimentos
-distintos do argumento, ele foi partido. Nenhuma informação foi acrescentada,
-removida ou alterada nesse processo.
+O documento tem **18 slides**; o deck tem **33 páginas**. O critério foi sempre
+o mesmo: **uma afirmação por página** (roteiro, seção 2.2), sem página
+sobrecarregada e sem página curta demais para existir sozinha. Quando um slide
+do documento carregava dois movimentos distintos do argumento, ele foi partido;
+quando a divisão deixava duas metades magras, elas voltaram a ser uma.
+Nenhuma informação foi acrescentada, removida ou alterada nesse processo.
 
 O título literal da seção 2.1 do roteiro é **repetido** em todas as páginas do
 mesmo slide; a faixa de rastreio distingue "1 de 2", "2 de 2" e assim por diante.
+
+O orçamento de fala é o da seção 6 do roteiro: **28 minutos para os 18 slides**.
+Página a mais custa tempo de fala, então repetição e vão foram cortados; nunca
+conteúdo.
 
 ### 3.2 Mapeamento documento → páginas
 
@@ -116,21 +121,33 @@ mesmo slide; a faixa de rastreio distingue "1 de 2", "2 de 2" e assim por diante
 | 3 | Especialistas não faltam; faltam no interior | 3–4 | 3: o retrato numérico. 4: a urgência reconhecida e as manchetes |
 | 4 | Onde a bolsa é maior, já havia menos especialistas | 5–6 | 5: oferta por habitante (F1). 6: retaguarda de colegas (F2) |
 | 5 | O que o médico vê ao decidir | 7–8 | 7: as quatro desvantagens e o que medimos. 8: o que a literatura diz sobre o peso de cada uma |
-| 6 | O que é o PMM-E | 9–11 | 9: lei, quem, o quê. 10: como a vaga chega ao médico. 11: onde, no ciclo 1 (F5) |
+| 6 | O que é o PMM-E | 9–11 | 9: lei, quem, o quê (com os 16 cursos em dois blocos). 10: como a vaga chega ao médico. 11: onde, no ciclo 1 (F5) |
 | 7 | A bolsa remunera o lugar | 12–13 | 12: os três passos, índice → categoria → valor. 13: a grade (F3), as contagens e os dois cuidados |
 | 8 | Pagar mais funciona: a evidência a favor | 14–15 | 14: o experimento mexicano. 15: a régua do prêmio e a ressalva |
 | 9 | Mas é caro, e não segura: a evidência contra | 16–17 | 16: Austrália e Brasil. 17: Estados Unidos e o fecho do bloco |
-| 10 | No primeiro ciclo, a bolsa maior não ordenou o preenchimento | 18–19 | 18: o fato e a figura em dois painéis (F6). 19: as duas leituras e a ressalva descritiva |
-| 11 | Pergunta | 20 | — |
-| 12 | De onde vem o modelo | 21–22 | 21: as três tradições e Moehling et al. 22: Redding & Rossi-Hansberg, Choné & Ma, e o que falta nas três |
-| 13 | Como o médico escolhe onde trabalhar | 23–24 | 23: a equação e a regra de aceitação. 24: a leitura de cada termo |
-| 14 | O que a bolsa paga — e o que não paga | 25–26 | 25: a decomposição e o contraste capital/interior. 26: as duas consequências e o deflator |
-| 15 | O custo de estar ali | 27–29 | 27: a equação e os componentes. 28: equipe e capital agindo duas vezes. 29: a curva de custo laboral (F4) |
-| 16 | O IVS organiza o custo | 30–31 | 30: a redução ao índice e a correspondência com as dimensões. 31: a ambiguidade do sinal e o degrau como objeto |
-| 17 | Duas hipóteses | 32–34 | 32: passos 1 e 2. 33: passo 3, H1 e H2. 34: passo 4, a condição de degrau |
-| 18 | Viabilidade empírica | 35–36 | 35: o que se mede de cada peça. 36: o que fica de fora, a dificuldade e o primeiro passo |
+| 10 | No primeiro ciclo, a bolsa maior não ordenou o preenchimento | **18** | a figura em dois painéis (F6), que já rotula os sete números, mais a leitura e a ressalva descritiva |
+| 11 | Pergunta | 19 | — |
+| 12 | De onde vem o modelo | 20–21 | 20: as três tradições e Moehling et al. 21: Redding & Rossi-Hansberg, Choné & Ma, e o que falta nas três |
+| 13 | Como o médico escolhe onde trabalhar | **22** | a equação, o glossário dos termos logo abaixo dela e a regra de aceitação |
+| 14 | O que a bolsa paga — e o que não paga | 23–24 | 23: a decomposição e o contraste capital/interior. 24: as duas consequências e o deflator |
+| 15 | O custo de estar ali | 25–27 | 25: a equação e os componentes. 26: equipe e capital agindo duas vezes. 27: a curva de custo laboral (F4) |
+| 16 | O IVS organiza o custo | 28–29 | 28: a redução ao índice e a correspondência com as dimensões. 29: a ambiguidade do sinal e o degrau como objeto |
+| 17 | Duas hipóteses | **30–31** | 30: passos 1 e 2. 31: passos 3 e 4 — H1, H2 e a condição de degrau |
+| 18 | Viabilidade empírica | 32–33 | 32: o que se mede de cada peça. 33: o que fica de fora, a dificuldade e o primeiro passo |
 
-### 3.3 Rastreio de seção
+### 3.3 A figura prova, a frase interpreta
+
+Onde a figura **já traz o número rotulado na barra**, o texto ao lado fica só
+com a afirmação — "Menos da metade", "E quem vai, vai sozinho", "Pagar o dobro
+não preencheu mais que pagar uma vez e meia". Repetir em texto um número que a
+barra já mostra faz a plateia ler duas vezes e não saber onde olhar. Números que
+a figura **não** mostra — 295 municípios, 1.295 vagas, 30%, 102/107/159 — seguem
+em texto normalmente, com a fonte no rodapé.
+
+É a mesma regra que fundiu as páginas do slide 10 do documento em uma só: sem a
+relista dos sete percentuais, a figura e a leitura cabem juntas.
+
+### 3.4 Rastreio de seção
 
 A linha em `código` de cada slide do documento aparece **fora do título**, em
 faixa fina no topo da página, em corpo pequeno e cor esmaecida — componente
@@ -138,7 +155,7 @@ faixa fina no topo da página, em corpo pequeno e cor esmaecida — componente
 continuação ("2 de 3") e o número da página. A paginação nativa do tema foi
 desativada (`themeConfig.paginationX/Y` vazios) para não duplicar o contador.
 
-### 3.4 Fontes dos números
+### 3.5 Fontes dos números
 
 Toda página que exibe número traz a fonte em faixa fina no rodapé — componente
 `components/Fonte.vue`, corpo 0,545 rem, cinza esverdeado. Fonte nunca compete
@@ -146,7 +163,7 @@ com o conteúdo. As figuras trazem ainda a própria legenda embutida, gerada pel
 script de figuras; a faixa de rodapé complementa com cobertura, unidade e
 recorte.
 
-### 3.5 Hierarquia visual
+### 3.6 Hierarquia visual
 
 - **Título** em Montserrat, verde escuro, com filete esverdeado embaixo.
 - **Afirmação central** em caixa verde sólida (`.callout`) — é o que a banca lê
@@ -164,14 +181,23 @@ recorte.
 A paleta foi tirada das próprias figuras do repositório (o verde escuro e o
 sálvia do matplotlib), para que figura e slide pareçam a mesma peça.
 
-### 3.6 Equilíbrio vertical
+### 3.7 Equilíbrio vertical
 
 Todas as páginas usam a classe `centrado`: o título fica ancorado no alto, fora
-do fluxo, e o corpo é centrado no espaço restante. Sem isso, o conteúdo se
-acumulava no topo com um vazio grande embaixo. Todos os títulos do deck cabem em
-uma linha, o que mantém constante o recuo do corpo.
+do fluxo, e o corpo **começa logo abaixo do filete**, com um respiro constante
+de 0,6 rem. Todos os títulos do deck cabem em uma linha, o que mantém o recuo do
+corpo idêntico em toda a apresentação — sem faixa morta entre o título e o
+primeiro elemento.
 
-### 3.7 Matemática
+Onde o último bloco da página é uma **tabela de quatro linhas ou mais**, ela
+recebe `fill fill-tbl` e se estica até a barra de fontes, com as células
+centradas na altura ganha: a página fica preenchida e as linhas, mais fáceis de
+separar à distância. Cartões e listas **não** são esticados — cartão alto com o
+texto no topo vira caixa oca, o que é pior que o vão. Nesses casos o
+preenchimento vem do tamanho intrínseco (cartão de número com 12 rem de altura
+mínima e conteúdo centrado, manchete com mais respiro), não de deformação.
+
+### 3.8 Matemática
 
 As equações dos slides 13 a 17 do documento são renderizadas por KaTeX.
 Alterações de notação em relação ao documento: **nenhuma**. Foi conferido
@@ -182,7 +208,7 @@ Um cuidado de estilo: o cabeçalho de tabela é em caixa alta, e `text-transform
 transformaria o símbolo `c` em `C`. A regra é anulada dentro de `.katex` — um
 símbolo matemático não pode mudar de caixa.
 
-### 3.8 O que não foi feito
+### 3.9 O que não foi feito
 
 - **Sem páginas de divisão de seção.** A faixa de rastreio já nomeia a seção em
   toda página; páginas extras só para anunciar a seção custariam tempo de fala
@@ -193,6 +219,18 @@ símbolo matemático não pode mudar de caixa.
   está no slide ou não está.
 - **Sem animação ou transição.** `transition: none`. Cliques progressivos
   fragmentariam a leitura de páginas que já são uma afirmação cada.
+
+---
+
+## 3-bis. Ressalva de fidelidade registrada
+
+O documento canônico, no slide 6, anuncia **"10 ambulatoriais"** e lista **oito**
+itens (endoscopia e colonoscopia, oncologia clínica, radioterapia,
+ecocardiografia, ultrassonografia mamária, colposcopia, videolaringoscopia,
+anatomia patológica). A divergência foi **transcrita como está**: o rótulo diz
+"10 ambulatoriais" e a lista traz os oito itens do documento. Correção de
+conteúdo se faz primeiro no documento canônico, nunca no deck — regra do
+projeto. A divergência foi levada ao autor.
 
 ---
 
