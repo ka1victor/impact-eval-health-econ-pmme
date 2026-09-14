@@ -738,10 +738,20 @@ superior. Montado o ambiente documentado com `python3.13` — as mesmas versões
 o manifesto A6 registra —, `05_estimar_atracao.py` reexecuta **sem alterar um
 único byte** das saídas de A4, e a suíte segue verde.
 
-A conclusão é mais forte que a nota original: **o repositório é reprodutível byte
-a byte no ambiente que ele documenta**. Diferença numérica em reexecução é sinal
-de ambiente errado, não de indeterminismo tolerável, e não deve ser declarada
-como ruído em commit nenhum.
+A conclusão correta é mais estreita do que a que escrevi primeiro. **A4 reproduz
+byte a byte no ambiente documentado**, e diferença numérica ali é sinal de
+ambiente errado, não de indeterminismo tolerável — não deve ser declarada como
+ruído em commit nenhum.
+
+**A generalização para o repositório inteiro é falsa, e foi corrigida no mesmo
+dia.** A sessão 3/5 mostrou que A8 **não** reproduz: reexecutar
+`09_estimar_cutoff_escore_estrito.py` altera seis artefatos, nas colunas de
+intervalo de confiança a partir do 15º dígito e no tamanho do PNG. Duas
+execuções consecutivas são idênticas entre si, então o script é determinístico;
+o que não bate é o artefato versionado, gravado sob outro estado de biblioteca —
+em outra plataforma, como mostram os caminhos com barra invertida do Windows que
+ele ainda carrega. Detalhe e decisão pendente em
+[`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md).
 
 ---
 

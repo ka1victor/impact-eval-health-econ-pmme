@@ -198,6 +198,16 @@ Por isso os dois pontos de entrada verificam o ambiente antes de rodar, via
 grava artefato, **aborta** diante de divergência. O `run_tests.py`, que apenas
 lê, **avisa** e segue.
 
+**Uma ressalva, para não prometer demais.** O ambiente correto é condição
+necessária, não suficiente para reprodução byte a byte de tudo. A4 reproduz byte
+a byte. **A8 não**: seus artefatos versionados foram gravados em outra
+plataforma — ainda carregam caminhos com barra invertida do Windows — e
+reexecutá-los aqui muda as colunas de intervalo de confiança a partir do 15º
+dígito. Nenhum número publicado é afetado, porque o artigo reporta precisão
+muito acima disso, e o conferidor segue aprovando. Regravar A8 é decisão
+pendente do autor, com os dois lados pesados em
+[`docs/auditorias/14_erratas_artefatos_congelados.md`](docs/auditorias/14_erratas_artefatos_congelados.md).
+
 ### Pipeline completo de replicação
 ```bash
 python run_all.py

@@ -154,3 +154,30 @@ documentado — verificada para A4, e **falsa para A8**.
 fazê-los bater seria ajustar até o resultado fechar, que é o que a fila proíbe.
 A decisão de regravar A8 sob o ambiente documentado — e de registrar o novo
 conjunto de hashes — é do autor, e está anotada no item C-3 da fila.
+
+### Complemento de 14/09/2026 — há um defeito objetivo junto do juízo
+
+A discussão acima é sobre dígitos, e nela cabe juízo. Junto dela viaja um
+defeito que não depende de juízo nenhum: **os artefatos versionados de A8
+registram os caminhos dos insumos com barra invertida do Windows**, seis
+ocorrências em `A8_protocolo_cutoff_escore.json` e oito em
+`A8_estimativas_cutoff_escore.json`, do tipo
+`data\raw\pmm_e\2025_ciclo1_chamada1_homologados.xlsx`. O manifesto de
+reprodução do próprio repositório declara a plataforma como
+`Linux-6.18.44-fc-v24-x86_64-with-glibc2.39`.
+
+Não é divergência de precisão: é registro de proveniência gravado num formato
+que não corresponde à plataforma declarada e que não resolve para caminho válido
+aqui. Reexecutar `09_estimar_cutoff_escore_estrito.py` no ambiente documentado
+corrige isso sozinho, gravando caminhos POSIX relativos à raiz.
+
+Isso muda o peso da decisão do autor. Regravar A8 **não seria apenas** trocar
+dígitos irrelevantes para fazer hash bater; seria também consertar um registro
+de proveniência que hoje está errado. Os dois efeitos vêm no mesmo ato e não
+podem ser separados, porque ambos saem da mesma reexecução.
+
+A recomendação desta errata continua sendo que a decisão é do autor, mas com a
+ponderação explícita: **manter os artefatos como estão preserva a cadeia de
+hashes e conserva caminhos Windows incorretos; regravá-los conserta os caminhos
+e obriga a reemitir os hashes de A8 onde eles estiverem fixados.** Amostra,
+desfecho e estimador de A8 não mudam em nenhum dos dois caminhos.
