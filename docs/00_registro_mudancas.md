@@ -8,6 +8,68 @@
 
 ---
 
+## 14/09/2026 — Banca 1: a motivação reordenada para seguir o argumento
+
+A motivação estava fragmentada porque estava fora de ordem lógica, e a correção
+de agrupamento da mesma data agravou o sintoma: o slide 4 passou a remeter
+explicitamente a "(slide 7)" para explicar a divergência entre faixa publicada e
+categoria recalculada — uma referência para a frente, duas telas adiante. O
+slide falava em "faixa publicada", "Faixa 1" e "categoria de IVS" antes de
+qualquer um desses termos ter sido definido.
+
+### A nova ordem
+
+Os três blocos pedidos pelos professores — dor, política, efeitos — foram
+mantidos. Mudou o que está dentro de cada um.
+
+| Bloco | Antes | Agora |
+|---|---|---|
+| **O problema** | 3, 4, 5 | **3, 4** — a escassez é territorial; e, do outro lado, para o médico ela é um pacote de desvantagens concretas |
+| **A política** | 6, 7 | **5, 6** — o que é o programa, e a regra que põe preço no lugar |
+| **O efeito é incerto** | 8, 9, 10 | **7 a 10** — as duas medidas de oferta discordam e a bolsa maior vai para onde o médico fica sozinho; a evidência internacional não decide; o primeiro ciclo tampouco |
+
+Em números de slide: o antigo 4 passou a **7**; o antigo 5 passou a **4**; os
+antigos 6 e 7 passaram a **5** e **6**. Os slides 8 a 18 não mudaram.
+
+O antigo slide 4 migrou para a **abertura do bloco do efeito**, que é onde ele
+argumenta em vez de apenas descrever, e onde seus termos já foram definidos.
+
+### As costuras
+
+| Slide | Frase |
+|:---:|---|
+| 4 | fecha em "nenhuma dessas desvantagens se resolve sozinha. É aí que entra a política" |
+| 5 | fecha em "cada vaga sai publicada com uma faixa de bolsa. É essa regra — e só ela — que o trabalho estuda" |
+| 7 | abre em "onde a regra manda o dinheiro?" e fecha em "o programa põe R$ 5 mil a mais onde o médico trabalharia sozinho" |
+
+A referência cruzada do slide 7 passou a apontar para o **slide 6**, que agora o
+antecede. A coluna "Medimos?" da retaguarda dizia "sim — slide anterior",
+referência que a nova ordem quebraria; passou a nomear a fonte, CNES.
+
+**Nada foi reafirmado da versão anterior à correção de agrupamento.** As frases
+de costura foram escritas sobre o achado corrigido: por habitante a bolsa maior
+**não** vai para onde falta mais; em número de colegas, vai.
+
+### Verificação
+
+- Equivalência documento ⇄ deck conferida nos dois sentidos, contra a linha de
+  base da `main`: **nenhuma divergência nova** foi introduzida.
+- Nenhuma sobra da afirmação antiga ("menos da metade", "já havia menos
+  especialistas") no documento ou no deck.
+- Beamer em 22 frames e 29 páginas, sem `Overfull \hbox` ou `\vbox`; Slidev
+  reordenado junto, em 33 páginas.
+
+### Ponto de atenção aberto
+
+A figura `F2` rotula as barras de mediana com **zero casas decimais**
+(`f"{valor:.0f}"` em `scripts/apresentacao/gerar_figuras_banca1.py`), enquanto o
+texto do slide 7 fala em **2,5** e **6,5** colegas. Na tela a figura mostra
+**2** e **6**. A divergência é de formatação, não de dado, e é anterior a esta
+entrada. Não foi corrigida aqui para não misturar mudança de pipeline com
+reordenação narrativa.
+
+---
+
 ## 14/09/2026 — Trava de ambiente, correção de série pré-C1 e achados da fila
 
 Motivo: a tentativa de executar a fila pós-auditoria expôs que o repositório

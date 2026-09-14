@@ -39,7 +39,7 @@ Autoria · instituição · data da banca
 
 ## 3 — Especialistas não faltam; faltam no interior
 
-`1. Motivação · Problema · 1 de 3`
+`1. Motivação · O problema · 1 de 2`
 
 O Brasil tinha, em 2024, **353 mil médicos especialistas** — 59% dos 597 mil
 médicos do país. O problema não é o número. É onde eles estão.
@@ -62,41 +62,17 @@ dados do Ministério da Saúde.
 
 ---
 
-## 4 — Onde a bolsa é maior, o médico fica sozinho
+## 4 — O que o médico vê ao decidir
 
-`1. Motivação · Problema · 2 de 3`
+`1. Motivação · O problema · 2 de 2`
 
-Nos **295 municípios** com vaga no ciclo 1, um mês antes da oferta e agrupados
-pela **faixa efetivamente publicada**, as duas medidas de oferta discordam — e é
-a discordância que importa.
-
-![Especialistas por 100 mil habitantes, jun/2025 — 15,0 na Faixa 3, 14,4 na Faixa 2, 18,3 na Faixa 1](../../../output/apresentacao_banca1/oferta_pre_por_faixa.png)
-
-![Colegas da mesma especialidade no município, jun/2025 — mediana de 6,5, 5,0 e 2,5 da Faixa 3 à Faixa 1; em 12%, 18% e 31% dos casos o especialista seria o único ou teria um só colega](../../../output/apresentacao_banca1/retaguarda_por_faixa.png)
-
-**Por habitante, a bolsa maior não vai para onde falta mais** — vai para
-municípios pequenos, onde poucos profissionais já produzem taxa alta. **Em
-número de colegas, vai.** É o isolamento profissional, não a cobertura
-populacional, que a Faixa 1 tem de compensar.
-
-**Fontes:** CNES 06/2025 — profissionais nos CBOs dos 10 cursos com
-correspondência unívoca curso–CBO, nos 295 municípios com vaga no ciclo 1;
-população do Censo 2022 (IBGE); **faixa pela bolsa publicada em cada vaga**, não
-pela categoria de IVS recalculada — as duas divergem em 177 dos 368 municípios
-(slide 7). A Faixa 1 tem 150 pares município–especialidade em 85 municípios.
-
----
-
-## 5 — O que o médico vê ao decidir
-
-`1. Motivação · Problema · 3 de 3`
-
-Para o médico, "município vulnerável" não é um índice: é um conjunto de
-desvantagens concretas — **duas delas nós conseguimos medir**.
+**O problema tem outro lado: a decisão do médico.** Para ele, "município
+vulnerável" não é um índice — é um conjunto de desvantagens concretas, e
+**duas delas nós conseguimos medir**.
 
 | Desvantagem | O que significa para o médico | Medimos? |
 |---|---|:---:|
-| **Retaguarda profissional** | sem segunda opinião, sem plantão, sem a quem encaminhar o caso difícil | sim — slide anterior |
+| **Retaguarda profissional** | sem segunda opinião, sem plantão, sem a quem encaminhar o caso difícil | sim — colegas da especialidade no CNES |
 | **Infraestrutura** | equipamento, insumos e equipe escassos: atender cansa mais e resolve menos | em parte — CNES |
 | **Distância da família** | viver longe de onde a família está e onde se formou | não |
 | **Mercado privado ausente** | a remuneração se reduz ao que o programa paga | não |
@@ -107,14 +83,16 @@ proximidade do lugar de nascimento ou de formação é o principal fator**;
 salário e infraestrutura pesam menos. **Austrália**, 3.727 clínicos: **65% não
 mudariam por pacote nenhum**.
 
+Nenhuma dessas desvantagens se resolve sozinha. É aí que entra a política.
+
 **Fontes:** Moehling et al. (2020), *Cliometrica*, p. 184; Costa, Nunes &
 Sanches (2024), *REStat*; Scott et al. (2013), *Social Science & Medicine*.
 
 ---
 
-## 6 — O que é o PMM-E
+## 5 — O que é o PMM-E
 
-`1. Motivação · Política · 1 de 2`
+`1. Motivação · A política · 1 de 2`
 
 **Lei.** A Lei nº 15.233/2025 criou o Projeto Mais Médicos Especialistas dentro
 do Programa Mais Médicos, *"destinado ao provimento de profissionais com vistas
@@ -155,15 +133,18 @@ cadastro de reserva. O **Nordeste** concentra 39% das vagas; **Minas Gerais** é
 o estado com mais vagas (252). Dois terços dos municípios têm menos de 100 mil
 habitantes; **18 são capitais**.
 
+Cada vaga do quadro sai publicada com uma **faixa de bolsa**. É essa regra —
+e só ela — que o trabalho estuda.
+
 **Fontes:** Lei nº 15.233/2025, art. 22-D; Portaria GM/MS nº 7.177/2025; Edital
 SGTES/MS nº 3/2025 (DOU 24/07/2025), itens 1, 3–5, 10 e 11; quadro de vagas do
 ciclo 1, chamada 1; Censo 2022 (IBGE).
 
 ---
 
-## 7 — A bolsa remunera o lugar
+## 6 — A bolsa remunera o lugar
 
-`1. Motivação · Política · 2 de 2`
+`1. Motivação · A política · 2 de 2`
 
 O valor da bolsa **não** depende da especialidade, da carga nem do que o médico
 produz. Depende de **onde fica o município**, em três passos:
@@ -211,9 +192,37 @@ Brasileiros* (2015); quadro de vagas do ciclo 1.
 
 ---
 
+## 7 — Onde a bolsa é maior, o médico fica sozinho
+
+`1. Motivação · O efeito é incerto · 1 de 4`
+
+**Onde a regra manda o dinheiro?** Nos **295 municípios** com vaga no ciclo 1,
+um mês antes da oferta e agrupados pela **faixa efetivamente publicada**, as
+duas medidas de oferta discordam — e é a discordância que importa.
+
+![Especialistas por 100 mil habitantes, jun/2025 — 15,0 na Faixa 3, 14,4 na Faixa 2, 18,3 na Faixa 1](../../../output/apresentacao_banca1/oferta_pre_por_faixa.png)
+
+![Colegas da mesma especialidade no município, jun/2025 — mediana de 6,5, 5,0 e 2,5 da Faixa 3 à Faixa 1; em 12%, 18% e 31% dos casos o especialista seria o único ou teria um só colega](../../../output/apresentacao_banca1/retaguarda_por_faixa.png)
+
+**Por habitante, a bolsa maior não vai para onde falta mais** — vai para
+municípios pequenos, onde poucos profissionais já produzem taxa alta. **Em
+número de colegas, vai.** É o isolamento profissional, não a cobertura
+populacional, que a Faixa 1 tem de compensar.
+
+O programa põe **R$ 5 mil a mais** onde o médico trabalharia sozinho. Isso
+compensa?
+
+**Fontes:** CNES 06/2025 — profissionais nos CBOs dos 10 cursos com
+correspondência unívoca curso–CBO, nos 295 municípios com vaga no ciclo 1;
+população do Censo 2022 (IBGE); **faixa pela bolsa publicada em cada vaga**, não
+pela categoria de IVS recalculada — as duas divergem em 177 dos 368 municípios
+(slide 6). A Faixa 1 tem 150 pares município–especialidade em 85 municípios.
+
+---
+
 ## 8 — Pagar mais funciona: a evidência a favor
 
-`1. Motivação · Efeito incerto · 1 de 3`
+`1. Motivação · O efeito é incerto · 2 de 4`
 
 O programa aposta que dinheiro compensa lugar ruim. A aposta tem precedente.
 
@@ -242,7 +251,7 @@ Science & Medicine*; Costa, Nunes & Sanches (2024), *REStat*.
 
 ## 9 — Mas é caro, e não segura: a evidência contra
 
-`1. Motivação · Efeito incerto · 2 de 3`
+`1. Motivação · O efeito é incerto · 3 de 4`
 
 **Muitos não vão por preço nenhum.** Dos **3.727 clínicos australianos**, **65%**
 escolheram ficar onde estavam em todos os cenários oferecidos. Para o pior
@@ -269,7 +278,7 @@ Sanches (2024), *REStat*; Pathman, Konrad & Ricketts (1992), *JAMA*.
 
 ## 10 — No primeiro ciclo, a bolsa maior não ordenou o preenchimento
 
-`1. Motivação · Efeito incerto · 3 de 3`
+`1. Motivação · O efeito é incerto · 4 de 4`
 
 Das **1.295 vagas** da primeira chamada, **30%** tiveram alguém confirmado ou
 homologado.
@@ -569,7 +578,7 @@ descontinuidade no **escore de seleção do candidato**, não no IVS.
 
 ## Ressalvas abertas
 
-1. **Cursos ambulatoriais.** O slide 6 anuncia **10** e enumera **oito**. A
+1. **Cursos ambulatoriais.** O slide 5 anuncia **10** e enumera **oito**. A
    contagem do edital não foi reconferida; os decks transcrevem como está.
 2. **Figura do custo laboral.** Em projeção, legenda e anotações de zona de
    `curva_custo_laboral_burnout.png` ficam em torno de 5 pt e não são legíveis

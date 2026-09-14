@@ -49,7 +49,7 @@ class: centrado
 class: centrado stat-lg
 ---
 
-<Rastreio cont="1 de 2">1. Motivação · Problema · 1 de 3</Rastreio>
+<Rastreio cont="1 de 2">1. Motivação · O problema · 1 de 2</Rastreio>
 
 # Especialistas não faltam; faltam no interior
 
@@ -74,7 +74,7 @@ class: centrado stat-lg
 
 ---
 
-<Rastreio cont="2 de 2">1. Motivação · Problema · 1 de 3</Rastreio>
+<Rastreio cont="2 de 2">1. Motivação · O problema · 1 de 2</Rastreio>
 
 # Especialistas não faltam; faltam no interior
 
@@ -95,46 +95,7 @@ class: centrado stat-lg
 
 ---
 
-<Rastreio cont="1 de 2">1. Motivação · Problema · 2 de 3</Rastreio>
-
-# Onde a bolsa é maior, o médico fica sozinho
-
-<div class="cols cols-38 fill" style="margin-top:0.2rem">
-  <div class="stack">
-
-<p class="sm">O retrato nacional se repete dentro do programa. Nos <strong>295 municípios</strong> que receberam vaga no ciclo 1, um mês antes da oferta ser publicada:</p>
-
-<div class="callout">
-
-**Por habitante, a bolsa maior não vai para onde falta mais.** Ela vai para municípios pequenos, onde poucos profissionais já produzem taxa alta: **18,3** por 100 mil na Faixa 1 contra **15,0** na Faixa 3.
-
-</div>
-
-  </div>
-  <Fig src="/fig/oferta_pre_por_faixa.png" alt="Especialistas por 100 mil habitantes em junho de 2025, por faixa de bolsa" h="fill" />
-</div>
-
-<Fonte>CNES, competência 06/2025; 295 municípios com vaga no ciclo 1; Censo 2022 (IBGE). <strong>Faixa pela bolsa publicada em cada vaga</strong>, não pela categoria de IVS recalculada — as duas divergem em 177 dos 368 municípios.</Fonte>
-
----
-
-<Rastreio cont="2 de 2">1. Motivação · Problema · 2 de 3</Rastreio>
-
-# Onde a bolsa é maior, o médico fica sozinho
-
-<div class="callout">
-
-**Em número de colegas, vai.** Na Faixa 1 a mediana é de **2,5** colegas da mesma especialidade contra **6,5** na Faixa 3, e em **31%** dos casos o especialista **seria o único, ou teria um só colega** — contra 12% na Faixa 3.
-
-</div>
-
-<Fig src="/fig/retaguarda_por_faixa.png" alt="Colegas da mesma especialidade no município, junho de 2025" h="fill" class="fill mt-s" />
-
-<Fonte>CNES, competência 06/2025; mesma definição da página anterior. Faixa pela bolsa publicada em cada vaga.</Fonte>
-
----
-
-<Rastreio cont="1 de 2">1. Motivação · Problema · 3 de 3</Rastreio>
+<Rastreio cont="1 de 2">1. Motivação · O problema · 2 de 2</Rastreio>
 
 # O que o médico vê ao decidir
 
@@ -153,7 +114,7 @@ class: centrado stat-lg
 
 ---
 
-<Rastreio cont="2 de 2">1. Motivação · Problema · 3 de 3</Rastreio>
+<Rastreio cont="2 de 2">1. Motivação · O problema · 2 de 2</Rastreio>
 
 # O que o médico vê ao decidir
 
@@ -188,7 +149,7 @@ Perguntou-se o que os faria mudar para o interior. **65% não mudariam por pacot
 
 ---
 
-<Rastreio cont="1 de 3">1. Motivação · Política · 1 de 2</Rastreio>
+<Rastreio cont="1 de 3">1. Motivação · A política · 1 de 2</Rastreio>
 
 # O que é o PMM-E
 
@@ -241,7 +202,7 @@ Um **aprimoramento em serviço** de **12 meses**, com **20 horas semanais** em e
 
 ---
 
-<Rastreio cont="2 de 3">1. Motivação · Política · 1 de 2</Rastreio>
+<Rastreio cont="2 de 3">1. Motivação · A política · 1 de 2</Rastreio>
 
 # O que é o PMM-E
 
@@ -260,7 +221,7 @@ Um **aprimoramento em serviço** de **12 meses**, com **20 horas semanais** em e
 
 ---
 
-<Rastreio cont="3 de 3">1. Motivação · Política · 1 de 2</Rastreio>
+<Rastreio cont="3 de 3">1. Motivação · A política · 1 de 2</Rastreio>
 
 # O que é o PMM-E
 
@@ -289,7 +250,7 @@ Um **aprimoramento em serviço** de **12 meses**, com **20 horas semanais** em e
 
 ---
 
-<Rastreio cont="1 de 2">1. Motivação · Política · 2 de 2</Rastreio>
+<Rastreio cont="1 de 2">1. Motivação · A política · 2 de 2</Rastreio>
 
 # A bolsa remunera o lugar
 
@@ -338,7 +299,7 @@ Um **aprimoramento em serviço** de **12 meses**, com **20 horas semanais** em e
 
 ---
 
-<Rastreio cont="2 de 2">1. Motivação · Política · 2 de 2</Rastreio>
+<Rastreio cont="2 de 2">1. Motivação · A política · 2 de 2</Rastreio>
 
 # A bolsa remunera o lugar
 
@@ -367,7 +328,46 @@ A divergência tem **uma direção só**: em 177 dos 368, **zero** municípios a
 
 ---
 
-<Rastreio cont="1 de 2">1. Motivação · Efeito incerto · 1 de 3</Rastreio>
+<Rastreio cont="1 de 2">1. Motivação · O efeito é incerto · 1 de 4</Rastreio>
+
+# Onde a bolsa é maior, o médico fica sozinho
+
+<div class="cols cols-38 fill" style="margin-top:0.2rem">
+  <div class="stack">
+
+<p class="sm">O retrato nacional se repete dentro do programa. Nos <strong>295 municípios</strong> que receberam vaga no ciclo 1, um mês antes da oferta ser publicada:</p>
+
+<div class="callout">
+
+**Por habitante, a bolsa maior não vai para onde falta mais.** Ela vai para municípios pequenos, onde poucos profissionais já produzem taxa alta: **18,3** por 100 mil na Faixa 1 contra **15,0** na Faixa 3.
+
+</div>
+
+  </div>
+  <Fig src="/fig/oferta_pre_por_faixa.png" alt="Especialistas por 100 mil habitantes em junho de 2025, por faixa de bolsa" h="fill" />
+</div>
+
+<Fonte>CNES, competência 06/2025; 295 municípios com vaga no ciclo 1; Censo 2022 (IBGE). <strong>Faixa pela bolsa publicada em cada vaga</strong>, não pela categoria de IVS recalculada — as duas divergem em 177 dos 368 municípios.</Fonte>
+
+---
+
+<Rastreio cont="2 de 2">1. Motivação · O efeito é incerto · 1 de 4</Rastreio>
+
+# Onde a bolsa é maior, o médico fica sozinho
+
+<div class="callout">
+
+**Em número de colegas, vai.** Na Faixa 1 a mediana é de **2,5** colegas da mesma especialidade contra **6,5** na Faixa 3, e em **31%** dos casos o especialista **seria o único, ou teria um só colega** — contra 12% na Faixa 3.
+
+</div>
+
+<Fig src="/fig/retaguarda_por_faixa.png" alt="Colegas da mesma especialidade no município, junho de 2025" h="fill" class="fill mt-s" />
+
+<Fonte>CNES, competência 06/2025; mesma definição da página anterior. Faixa pela bolsa publicada em cada vaga.</Fonte>
+
+---
+
+<Rastreio cont="1 de 2">1. Motivação · O efeito é incerto · 2 de 4</Rastreio>
 
 # Pagar mais funciona: a evidência a favor
 
@@ -396,7 +396,7 @@ A divergência tem **uma direção só**: em 177 dos 368, **zero** municípios a
 
 ---
 
-<Rastreio cont="2 de 2">1. Motivação · Efeito incerto · 1 de 3</Rastreio>
+<Rastreio cont="2 de 2">1. Motivação · O efeito é incerto · 2 de 4</Rastreio>
 
 # Pagar mais funciona: a evidência a favor
 
@@ -431,7 +431,7 @@ A divergência tem **uma direção só**: em 177 dos 368, **zero** municípios a
 
 ---
 
-<Rastreio cont="1 de 2">1. Motivação · Efeito incerto · 2 de 3</Rastreio>
+<Rastreio cont="1 de 2">1. Motivação · O efeito é incerto · 3 de 4</Rastreio>
 
 # Mas é caro, e não segura: a evidência contra
 
@@ -464,7 +464,7 @@ Um modelo calibrado com todos os generalistas formados entre 2001 e 2013 estima 
 
 ---
 
-<Rastreio cont="2 de 2">1. Motivação · Efeito incerto · 2 de 3</Rastreio>
+<Rastreio cont="2 de 2">1. Motivação · O efeito é incerto · 3 de 4</Rastreio>
 
 # Mas é caro, e não segura: a evidência contra
 
@@ -494,7 +494,7 @@ Dinheiro move alocação, mas é caro, não move todo mundo, e não garante que 
 
 ---
 
-<Rastreio>1. Motivação · Efeito incerto · 3 de 3</Rastreio>
+<Rastreio>1. Motivação · O efeito é incerto · 4 de 4</Rastreio>
 
 # No primeiro ciclo, a bolsa maior não ordenou o preenchimento
 
