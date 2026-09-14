@@ -20,7 +20,7 @@ artefatos derivados, como manda a regra de proveniência.
 
 | Documento | O que mudou |
 |---|---|
-| [`07_apresentacoes/banca1/02_conteudo_slides.md`](07_apresentacoes/banca1/02_conteudo_slides.md) | slide 17 passou de "Duas hipóteses" a **"A hipótese"**; a seção 5 ficou no singular, no título e no sumário; a tabela de derivadas ficou só com H1; o passo 4 foi reescrito |
+| [`07_apresentacoes/banca1/02_conteudo_slides.md`](07_apresentacoes/banca1/02_conteudo_slides.md) | slide 17 passou de "Duas hipóteses" a **"A hipótese"**; a seção 5 ficou no singular, no título e no sumário; a tabela de derivadas ficou só com H1; o passo 4 foi reescrito. O documento inteiro foi reescrito no mesmo commit — ver adiante |
 | [`07_apresentacoes/banca1/01_roteiro_narrativo.md`](07_apresentacoes/banca1/01_roteiro_narrativo.md) | título literal do slide 17, papel narrativo da seção 5 e as três linhas que contavam "duas hipóteses" |
 | [`02_teoria/hipoteses_e_viabilidade_empirica.md`](02_teoria/hipoteses_e_viabilidade_empirica.md) | seção 4.2 refeita: a banca 1 leva uma hipótese. O conjunto canônico H1–H4 **não** mudou — mudou o que a apresentação enuncia |
 | [`07_apresentacoes/banca1/README.md`](07_apresentacoes/banca1/README.md) | seção 5 no singular nas três tabelas |
@@ -77,6 +77,37 @@ valores exibidos foram reconferidos um a um contra a versão anterior do `.tex`.
 frame estoura a altura, que era o modo de falha esperado ao comprimir. Duas
 execuções produzem o mesmo PDF byte a byte. As 29 páginas foram revistas uma a
 uma em PNG.
+
+### O documento canônico foi reescrito para ser a base concisa
+
+Até aqui o deck estava **mais enxuto que o documento canônico** — divergência na
+direção errada: quem lê a fonte de verdade encontrava prosa, citação e manchete
+que a apresentação não mostra. `02_conteudo_slides.md` foi reescrito para dizer
+exatamente o que vai à tela, e nada além.
+
+| O que saiu | Onde |
+|---|---|
+| duas manchetes de jornal em citação recuada | slide 3 |
+| as duas citações em inglês que ilustravam sem acrescentar fato | slides 5 e 8 |
+| linhas `> Referência` soltas, que duplicavam o bloco `Fontes:` | slides 8 e 9 |
+| prosa de ligação e repetição de rótulo | todos |
+
+Dois ajustes de forma, no mesmo espírito: os números que **a figura já rotula**
+— 16,0 / 10,0 / 7,3, os 5 / 3 / 2 colegas, os 15% / 34% / 42% e as sete
+porcentagens de preenchimento — passaram da prosa para a **legenda da figura**,
+que é onde eles são o registro do que a plateia vê sem obrigá-la a ler duas
+vezes; e as duas ressalvas abertas (cursos ambulatoriais, figura do custo
+laboral) ganharam seção própria no fim, em vez de ficarem só nos README dos
+decks.
+
+O cabeçalho do documento agora declara o que ele é: fonte de verdade, decks
+derivados, banca teórica que termina na viabilidade empírica.
+
+**Conferência de equivalência.** Todo número exibido no `.tex` foi procurado no
+documento, e todo número do documento, no `.tex`. A única diferença que resta é
+a esperada: os treze valores rotulados dentro das figuras estão no documento e
+não no texto do deck, por causa da regra de não repetir em prosa o número que a
+figura carrega. As afirmações foram conferidas uma a uma pelo mesmo método.
 
 ### O deck Slidev permanece, sincronizado apenas no conteúdo
 
