@@ -127,19 +127,21 @@ Mais Médicos Especialistas}
 % ===========================================================================
 \rastreio{}
 \begin{frame}[plain]
-  \vfill
+  \vspace*{\stretch{1.10}}
   \begin{center}
-    \begin{beamercolorbox}[wd=0.82\textwidth,sep=0.9em,center,rounded=true,%
-      shadow=true]{title}
-      \usebeamerfont{title}\inserttitle\par
-      \vspace{0.45em}
-      {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}
-    \end{beamercolorbox}
+    \begin{minipage}{0.82\textwidth}
+      \begin{beamercolorbox}[wd=\textwidth,sep=0.9em,center,rounded=true,%
+        shadow=true]{title}
+        \usebeamerfont{title}\inserttitle\par
+        \vspace{0.45em}
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}
+      \end{beamercolorbox}
+    \end{minipage}
 
     \vspace{1.1em}
     {\color{cinzaFonte}\small\insertauthor\par}
   \end{center}
-  \vfill
+  \vspace*{\stretch{0.90}}
 \end{frame}
 
 % ===========================================================================
@@ -253,11 +255,10 @@ Mais Médicos Especialistas}
   municípios} com vaga no ciclo 1, um mês antes da oferta, \lead{menos da
   metade} de especialistas por habitante onde a bolsa seria maior.}
 
-  \vspace{0.3em}
-  \begin{center}
-    \includegraphics[width=\textwidth,height=0.58\textheight,keepaspectratio]%
-      {oferta_pre_por_faixa}
-  \end{center}
+  \vspace{0.4em}
+  \centerline{%
+    \includegraphics[width=\textwidth,height=0.62\textheight,keepaspectratio]%
+      {oferta_pre_por_faixa}}
 
   \fonte{\textbf{Fontes:} CNES 06/2025 --- profissionais nos CBOs dos 10 cursos
   com correspondência unívoca curso--CBO, nos 295 municípios com vaga no ciclo
@@ -270,11 +271,10 @@ Mais Médicos Especialistas}
   menos colegas da sua especialidade --- e é lá que é maior a chance de ser o
   único, ou de ter um só colega.}
 
-  \vspace{0.3em}
-  \begin{center}
-    \includegraphics[width=\textwidth,height=0.58\textheight,keepaspectratio]%
-      {retaguarda_por_faixa}
-  \end{center}
+  \vspace{0.4em}
+  \centerline{%
+    \includegraphics[width=\textwidth,height=0.62\textheight,keepaspectratio]%
+      {retaguarda_por_faixa}}
 
   \fonte{\textbf{Fontes:} CNES 06/2025, nos 295 municípios com vaga no ciclo 1;
   faixa pela categoria de IVS do Ipea. A Faixa 1 tem 19 pares
@@ -422,11 +422,12 @@ Mais Médicos Especialistas}
   \end{enumerate}}
 
   \vspace{0.9em}
-  \centering
-  \begin{beamercolorbox}[wd=0.86\textwidth,sep=0.7em,rounded=true]{block body}
+  \centerline{\begin{minipage}{0.86\textwidth}%
+  \begin{beamercolorbox}[wd=\textwidth,sep=0.7em,rounded=true]{block body}
     \small O serviço \textbf{não pode substituir} profissional já contratado
     por um bolsista.
-  \end{beamercolorbox}
+  \end{beamercolorbox}%
+  \end{minipage}}
 
   \fonte{\textbf{Fontes:} Portaria GM/MS nº 7.177/2025; Edital SGTES/MS
   nº 3/2025 (DOU 24/07/2025), itens 4 e 5.}
@@ -435,24 +436,24 @@ Mais Médicos Especialistas}
 \begin{frame}{O que é o PMM-E}
   \vspace{0.4em}
   \begin{columns}[T]
-    \begin{column}{0.31\textwidth}
-      {\footnotesize\lead{Onde, no primeiro ciclo (julho de 2025).}
+    \begin{column}{0.40\textwidth}
+      {\small\lead{Onde, no primeiro ciclo (julho de 2025).}
 
-      \vspace{0.5em}
+      \vspace{0.6em}
       \num{1.295 vagas} estabelecimento--curso em \num{460 estabelecimentos}
       e \num{368 municípios}, em todas as UFs --- 678 para preenchimento
       imediato e 1.145 em cadastro de reserva.
 
-      \vspace{0.5em}
+      \vspace{0.6em}
       O \textbf{Nordeste} concentra 39\% das vagas; \textbf{Minas Gerais} é o
       estado com mais vagas (252).
 
-      \vspace{0.5em}
+      \vspace{0.6em}
       Dois terços dos municípios têm menos de 100 mil habitantes;
       \textbf{18 são capitais}.}
     \end{column}
-    \begin{column}{0.65\textwidth}
-      \includegraphics[width=\textwidth,height=0.66\textheight,keepaspectratio]%
+    \begin{column}{0.57\textwidth}
+      \includegraphics[width=\textwidth,height=0.70\textheight,keepaspectratio]%
         {vagas_ciclo1_por_regiao}
     \end{column}
   \end{columns}
@@ -591,11 +592,12 @@ Mais Médicos Especialistas}
   com elasticidade da ordem de \num{0,7}.}
 
   \vspace{0.9em}
-  \centering
-  \begin{beamercolorbox}[wd=0.80\textwidth,sep=0.8em,rounded=true,shadow=true]{block title}
-    \centering O degrau do programa --- R\$ 5 mil sobre R\$ 10 mil, ou
+  \centerline{\begin{minipage}{0.80\textwidth}%
+  \begin{beamercolorbox}[wd=\textwidth,sep=0.8em,center,rounded=true,shadow=true]{block title}
+    O degrau do programa --- R\$ 5 mil sobre R\$ 10 mil, ou
     \textbf{+50\%} --- cai dentro dessa faixa.
-  \end{beamercolorbox}
+  \end{beamercolorbox}%
+  \end{minipage}}
 
   \vspace{1.0em}
   \raggedright
@@ -1081,33 +1083,25 @@ Mais Médicos Especialistas}
 \rastreio{5. Hipóteses}
 
 \begin{frame}{Duas hipóteses}
-  \vspace{0.5em}
-  \lead{Passo 1 --- a condição de aceitação.}
-  {\small O médico $i$ aceita a vaga em $m$ quando o que ela vale supera sua
-  melhor alternativa $\bar{v}_i$:}
-
   \vspace{0.2em}
+  {\small\lead{Passo 1 --- a condição de aceitação.} O médico $i$ aceita a vaga
+  em $m$ quando o que ela vale supera sua melhor alternativa $\bar{v}_i$:}
+
+  \vspace{-0.3em}
   \[
     \frac{B_m + w^{\text{priv}}_m}{p_m} - c_0(IVS_m) \geq \bar{v}_i
   \]
+  \vspace{-0.9em}
 
-  \vspace{1.0em}
-  \lead{Passo 2 --- do médico à vaga.}
+  {\small\lead{Passo 2 --- do médico à vaga.} A vaga é preenchida se existir
+  \textbf{ao menos um} candidato para quem a desigualdade vale. Tudo o que
+  aumenta o lado esquerdo aumenta essa probabilidade.}
 
-  \vspace{0.4em}
-  \begin{beamercolorbox}[wd=\textwidth,sep=0.85em,rounded=true]{block body}
-    \small A vaga é preenchida se existir \textbf{ao menos um} candidato para
-    quem a desigualdade vale. Tudo o que aumenta o lado esquerdo aumenta essa
-    probabilidade.
-  \end{beamercolorbox}
-\end{frame}
+  \vspace{0.9em}
+  {\small\lead{Passo 3 --- as derivadas.}}
 
-\begin{frame}{Duas hipóteses}
-  \vspace{0.2em}
-  \lead{Passo 3 --- as derivadas.}
-
-  \vspace{0.4em}
-  {\footnotesize\renewcommand{\arraystretch}{1.1}
+  \vspace{0.3em}
+  {\footnotesize\renewcommand{\arraystretch}{1.05}
   \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{0.06\textwidth} L >{\centering\arraybackslash}p{0.33\textwidth}@{}}
     \toprule
     & \bfseries Hipótese & \bfseries Derivada \\
@@ -1115,25 +1109,35 @@ Mais Médicos Especialistas}
     \textbf{H1} & Maior \textbf{remuneração real} aumenta a probabilidade de
       preenchimento da vaga
       & $\dfrac{\partial \Pr(\text{preench.}_m)}{\partial (B_m / p_m)} > 0$ \\
-    \addlinespace[0.5em]
+    \addlinespace[0.35em]
     \textbf{H2} & Maior \textbf{custo locacional} reduz a probabilidade de
       preenchimento da vaga
       & $\dfrac{\partial \Pr(\text{preench.}_m)}{\partial c_m} < 0$ \\
     \bottomrule
   \end{tabularx}}
+\end{frame}
 
-  \vspace{1.0em}
+\begin{frame}{Duas hipóteses}
+  \vspace{1.2em}
   \lead{Passo 4 --- as duas juntas.}
-  {\small Na fronteira entre duas faixas, o preenchimento do lado mais
-  vulnerável exige que o \textbf{degrau monetário} supere o \textbf{degrau de
-  custo}:}
 
-  \vspace{-0.2em}
-  \[ \frac{\Delta B_m}{p_m} > \Delta c_0,
-     \qquad \Delta B_m = \text{R\$ }5.000 \]
-  \vspace{-0.8em}
+  \vspace{0.7em}
+  Na fronteira entre duas faixas, o preenchimento do lado mais vulnerável exige
+  que o \textbf{degrau monetário} supere o \textbf{degrau de custo}:
 
-  \centering{\small A pergunta da apresentação é se essa desigualdade vale.\par}
+  \vspace{0.9em}
+  \begin{center}
+    \begin{minipage}{0.68\textwidth}
+      \begin{beamercolorbox}[wd=\textwidth,sep=1.0em,center,rounded=true,%
+        shadow=true]{block body}
+        $\displaystyle \frac{\Delta B_m}{p_m} > \Delta c_0,
+         \quad \Delta B_m = \text{R\$ }5.000$
+      \end{beamercolorbox}
+    \end{minipage}
+
+    \vspace{1.4em}
+    {\large A pergunta da apresentação é se essa desigualdade vale.}
+  \end{center}
 \end{frame}
 
 % ===========================================================================

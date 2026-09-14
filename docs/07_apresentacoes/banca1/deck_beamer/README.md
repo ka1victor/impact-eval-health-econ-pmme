@@ -81,7 +81,7 @@ slide vira mais de um frame, todos repetem o mesmo rastreio e o mesmo título.
 | 14 — O que a bolsa paga — e o que não paga | 26–27 | 27–28 | **26** a decomposição `B + w^priv` e a tabela capital/interior. **27** as duas consequências e o deflator |
 | 15 — O custo de estar ali | 28–30 | 29–31 | **28** a equação com os dois blocos e a tabela de componentes. **29** o papel duplo de `L` e `K`. **30** figura `F4` |
 | 16 — O IVS organiza o custo | 31–32 | 32–33 | **31** `c = c₀(IVS) + η` e a correspondência dimensão–bloco. **32** a ambiguidade do sinal e por que o objeto é o degrau |
-| 17 — Duas hipóteses | 33–34 | 34–35 | **33** passos 1 e 2. **34** passo 3 (H1 e H2) e passo 4 (a condição de degrau) |
+| 17 — Duas hipóteses | 33–34 | 34–35 | **33** passos 1, 2 e 3 — a condição de aceitação, a passagem do médico à vaga e a tabela H1/H2. **34** passo 4 sozinho: a condição de degrau |
 | 18 — Viabilidade empírica | 35–36 | 36–37 | **35** a tabela peça a peça. **36** o que fica de fora, a dificuldade e o primeiro passo |
 
 ---
@@ -140,8 +140,10 @@ dentro do corpo.
   figura à direita, que assim ganhou largura em vez de perder.
 - **Slide 7**: a tabela categoria–faixa–bolsa e a figura `F3` diziam a mesma
   coisa em dois frames. Foram fundidas em um, lado a lado.
-- **Slide 17**: os passos 3 e 4 ocupavam dois frames pela metade cada; estão
-  num só.
+- **Slide 17**: os quatro passos estavam repartidos 2 + 2, com o segundo frame
+  carregando a tabela de derivadas e mais duas equações. O passo 3 subiu para o
+  primeiro frame; o passo 4 — a condição de degrau, que é a conclusão do bloco
+  teórico — ficou sozinho no segundo, em caixa destacada.
 - **Slide 13**: dois frames viraram um frame com dois overlays.
 
 O resultado é 36 frames para os 28 minutos previstos na seção 6 do roteiro, com
@@ -167,6 +169,16 @@ Alterados, em nome da legibilidade:
 - **Símbolos de navegação.** Removidos.
 
 ### 3.6 Tabelas e matemática
+
+As figuras que dividem frame com texto são limitadas pela **altura**, não pela
+largura: o teto de altura de cada uma foi ajustado até o limite em que o bloco
+`Fontes:` ainda cabe acima do rodapé, para que a barra ocupe o máximo de largura
+possível e o rótulo de categoria (`Faixa 3 / R$ 10 mil / média, baixa ou muito
+baixa`) continue legível em projeção. No frame 12 o texto fica em coluna própria
+ao lado da figura, larga o bastante para não picotar as linhas.
+
+Caixas de destaque mais estreitas que o bloco de texto são centradas via
+`minipage`: `\centering` sozinho não centra um `beamercolorbox` de largura fixa.
 
 `booktabs` em todas as tabelas; `tabularx` quando alguma coluna quebra linha;
 valores monetários à direita. Onde a tabela não cabia com folga — as quatro
@@ -219,6 +231,7 @@ fidelidade. A correção, se houver, é no documento canônico.
 - Duas execuções seguidas produzem o mesmo PDF (mesmo `md5sum`).
 - As 37 páginas foram convertidas em PNG (`pdftoppm -png -r 90`) e revistas uma
   a uma: nenhuma tem texto vazando do frame, tabela cortada, bloco de fonte
-  sobreposto ao rodapé, figura deformada ou legenda duplicada.
+  sobreposto ao rodapé, figura deformada, legenda duplicada ou caixa de destaque
+  fora de eixo.
 - Os 18 slides do documento estão representados, na ordem, com os 16 títulos
   literais dos slides 3 a 18.
