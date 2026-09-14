@@ -106,16 +106,23 @@ Agrupados por consequência, com alvo numérico medido antes de qualquer altera�
 A ordem de execução do backlog é **normativa**, com estado por sessão e protocolo
 de início e encerramento. Comece pela primeira sessão `ABERTA` e não pule adiante.
 
-> **Próxima sessão: 1 — item A-1.** Balde `RESTO` nos modelos secundários de A5:
-> `delta_minimal` vai de `+1,2949` (EP 0,7749) para `+0,5014` (EP 0,2508) em
-> macrorregião, ou `+0,5002` sem colapso. O estudo de evento, que é a manchete de
-> A5, **não** é afetado — absorve `sg_uf` direto. Nenhum desses números aparece no
-> artigo. Por ser Grupo A, exige emenda escrita e commitada antes de implementar.
+> **Sessão 2 concluída em 14/09/2026** (A-2, A-3, C-6). A Tabela A1 do artigo
+> passou a publicar o AME por bloco (`27,8 / 6,2` → `25,1 / 5,2`) e o MDE ex-post
+> de `16,4` p.p. ao lado do ex-ante de `13,7`. O LPM primário não mudou. O
+> conferidor foi de 190 para 193 cifras.
+>
+> **Próxima sessão: 3 — item C-7**, red team, na parte documental (forma funcional
+> e leitura correta do que já existe). Publicar placebo, heterogeneidade de
+> pré-tendência e deslocamento continua bloqueado por D-4. A **sessão 5** está
+> `ABERTA` e não depende de dado ausente. As sessões **1 e 4** seguem bloqueadas:
+> a 1 por achado sobre o alvo de A-1, mais D-4; a 4 inteiramente por D-4.
 
 - [ ] Grupo A — muda número publicado (3 itens): balde `RESTO` nos modelos
-  secundários de A5 (`+1,2949` → `+0,5014`); wild cluster bootstrap que o A3 exige
-  e nunca foi computado; efeito marginal médio do logit com contrafactual
-  impossível. Cada um exige emenda escrita e commitada antes de implementar.
+  secundários de A5 (`+1,2949` → `+0,5014`), **bloqueado** por achado e por D-4;
+  **wild cluster bootstrap concluído em 14/09/2026** (metro `0,0005`, capital
+  `0,0015`, próximo `0,0115`); **efeito marginal médio do logit corrigido para o
+  contraste de bloco em 14/09/2026**. Cada um exige emenda escrita e commitada
+  antes de implementar.
 - [ ] Grupo B — muda artefato, não muda número publicado (7 itens): censura gravada
   como zero em `presentes_6m`; relatório de A5 que é código morto; manifesto de
   reprodução de A6 que não reproduz; nota aritmética errada na tipologia;
@@ -123,10 +130,12 @@ de início e encerramento. Comece pela primeira sessão `ABERTA` e não pule adi
 - [ ] Grupo C — documentação e linguagem (9 itens): o 30,3% é da primeira chamada
   e não do ciclo; afirmação falsa sobre sub judice; IC fora do espaço de
   parâmetros; portão de A1 apresentado como teste; MDE por estrato com fórmula de
-  proporção única; MDE ex-ante otimista; quatro ameaças ausentes do red team;
+  proporção única; **MDE ex-ante otimista, concluído em 14/09/2026** (ex-post de
+  `16,4` p.p. publicado ao lado do ex-ante de `13,7`); quatro ameaças ausentes do red team;
   assinatura de CPF não comparável; dois estimadores idênticos apresentados como
   duas evidências.
-- [ ] Grupo D — bloqueado (4 itens): compilação do artigo, sem TeX no ambiente;
+- [ ] Grupo D — bloqueado (4 itens): compilação do artigo, **desbloqueada**, o
+  artigo compila em 12 páginas sem transbordo de caixa nem referência indefinida;
   ciclo 3 aguardando `RDAC2606`/`RDRR2606`, competência `202703` e `T0+12m`; envio
   do pedido do escore de IVS, que é decisão do autor; microdados do CNES ausentes
   do repositório.
