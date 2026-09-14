@@ -1,9 +1,10 @@
 # Banca 1 — apresentação do projeto
 
-> **Formato:** markdown com imagens, para ler no GitHub ou no Obsidian<br>
+> **Deck vigente:** `.pptx` sobre o template do autor — `output/apresentacao_banca1/deck_banca1_modelo_economico.pptx`<br>
+> **Formato da documentação:** markdown com imagens, para ler no GitHub ou no Obsidian<br>
 > **Escopo:** seis seções, terminando na viabilidade empírica<br>
 > **Fora do escopo:** estratégia de identificação executada, estimadores, resultados e robustez<br>
-> **Atualização:** 9 de setembro de 2026
+> **Atualização:** 14 de setembro de 2026
 
 ## 1. O que esta entrega é
 
@@ -44,6 +45,43 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 | [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — os 19 slides com título, corpo, figuras, fontes e ressalvas abertas. Diz exatamente o que vai à tela, e nada além; os decks derivam dele |
 | [Roteiro narrativo](01_roteiro_narrativo.md) | arco das seis seções, lógica de cada bloco da motivação, regras de composição e rastreio do feedback |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | origem e reprodutibilidade de cada número exibido |
+| [Deck `.pptx`](deck_pptx/README.md) | o template de entrada do deck vigente, como montá-lo e por que as equações novas são imagens |
+
+## 2-A. Qual deck é o vigente
+
+O deck apresentado na banca é o **`.pptx` montado sobre o template desenhado
+pelo autor**. Ele é artefato derivado como qualquer outro: o template é entrada
+versionada em [`deck_pptx/`](deck_pptx/), o conteúdo é aplicado por script e a
+saída vai para `output/`.
+
+| Item | Caminho |
+|---|---|
+| Template (entrada, não editar à mão para mudar conteúdo) | `docs/07_apresentacoes/banca1/deck_pptx/base_modelo_economico.pptx` |
+| Script que monta | `scripts/apresentacao/montar_deck_banca1_pptx.py` |
+| Deck (saída) | `output/apresentacao_banca1/deck_banca1_modelo_economico.pptx` |
+| Manifesto de proveniência | `output/apresentacao_banca1/manifesto_deck_banca1.json` |
+| Equações renderizadas | `output/apresentacao_banca1/equacoes/` |
+
+Para reconstruir, a partir da raiz do repositório:
+
+```bash
+python3 scripts/apresentacao/gerar_figuras_banca1.py            # figuras de dados
+python3 scripts/apresentacao/gerar_figura_custo_laboral_deck.py # curva de custo laboral do deck
+python3 scripts/apresentacao/montar_deck_banca1_pptx.py         # deck
+```
+
+Instruções completas, dependências e a razão de as equações novas serem imagens
+em vez de OMML estão em [`deck_pptx/README.md`](deck_pptx/README.md). A
+proveniência do deck, da curva de custo laboral e de cada equação está na seção
+1-A de [03 — Proveniência](03_proveniencia_figuras_e_numeros.md#1-a-deck-pptx--figuras-equações-e-o-arquivo-montado).
+
+**`deck_beamer/` e `deck_slidev/` refletem a estrutura anterior, de 19 slides, e
+estão divergentes do deck vigente**: ordem, títulos e composição dos slides
+mudaram no `.pptx`, e a curva de custo laboral do `.pptx` é a versão de projeção
+`custo_laboral_deck.png`, não a figura do documento de teoria. Os dois
+diretórios ficam preservados como registro da estrutura anterior; não são o que
+vai à banca e não devem ser usados como referência do que está na tela. As
+tabelas das seções 1, 3 e 4 abaixo também descrevem a estrutura anterior.
 
 ## 3. Figuras
 
