@@ -70,8 +70,19 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 - A distribuição é assimétrica: sem atração, média 0,55, mediana 0, máximo 25; com atração, média 2,29, mediana 1, máximo 211. Winsorizar muda materialmente a precisão, portanto médias simples não bastam.
 - O modelo de nível é dominado por diferenças basais e a validação preditiva fora da amostra é fraca. Ambos ficam como diagnósticos.
 
+### Forma funcional: o que é frágil é o nível, não a proporção
+
+**Refutação tentada:** atribuir o resultado secundário à escala de medida, testando se ele sobrevive à troca de nível por proporção e à retirada de cada curso.
+**Veredito:** a fragilidade é **do nível**, e é específica dele. Em nível, o coeficiente de março/2026 cai de 0,50 para 0,20 sem o curso 14 (p=0,366) e para 0,12 nos oito cursos com CBO estritamente 1:1 (p=0,608) — deixa de ser distinguível de zero. Somar profissionais de municípios com estoques de ordens de grandeza diferentes faz um curso de estoque grande dominar o coeficiente mecanicamente.
+
+Na escala proporcional, que é a primária, o mesmo exercício não desfaz o resultado: 0,068 (EP 0,018; p=0,0002) na amostra completa, entre 0,056 e 0,088 ao retirar um curso por vez, e 0,057 (p=0,010) nos oito cursos estritos. O enunciado correto, portanto, não é o de vulnerabilidade genérica a caudas que este documento trazia antes do item C2 do plano `35`: é que **o nível é frágil à composição de cursos e a proporção não é**. A escolha da escala proporcional é substantiva — mede variação relativa da oferta local, que é a pergunta pretendida — e vale nas duas direções do resultado.
+
+### Ameaças que este red team não testou
+
+Honestidade de escopo: três ameaças levantadas pela reauditoria independente **não** são testadas aqui, e a ausência não deve ser lida como aprovação. São elas o **placebo** sobre células sem atração em municípios com atração, a **heterogeneidade de pré-tendência** por curso, e o **deslocamento** entre municípios da mesma região de saúde, que o `CLAUDE.md` exige separar de expansão líquida. Todas exigiriam regravar artefato de A5, hoje impossível neste ambiente: o painel do CNES não está versionado. Condição de desbloqueio e o que a reauditoria mediu por conta própria estão em `docs/06_execucao/36_backlog_pos_auditoria.md`, itens C-7 e D-4.
+
 ## Veredito geral
 
-O núcleo útil é a desigualdade territorial na atração administrativa, robusta ao estágio do funil e à unidade analítica. A evolução do estoque cadastral após a oferta é compatível com uma diferença positiva modesta, mas vulnerável a caudas, composição e tempo de exposição heterogêneo. Não há base para reivindicar efeito causal, provimento atribuível ao programa ou retenção individual.
+O núcleo útil é a desigualdade territorial na atração administrativa, robusta ao estágio do funil e à unidade analítica. A evolução do estoque cadastral após a oferta é compatível com uma diferença positiva modesta: na escala proporcional ela sobrevive à retirada de qualquer curso e à restrição aos CBOs estritos; na escala de nível, não. O que limita a leitura é a composição de cursos no nível, o tempo de exposição física heterogêneo e três ameaças ainda não testadas. Não há base para reivindicar efeito causal, provimento atribuível ao programa ou retenção individual.
 
 *Gerado por `scripts/tema_trabalho/07_red_team_sintese.py`.*

@@ -218,6 +218,15 @@ def main() -> None:
     collapsed = m4["robustez_municipio_curso"]["coef_estrato"]["estrato_metropolitano"]
     event = m5["principal_dinamico_confirmatorio"]
     expanded = m5["sensibilidade_dinamica_ampliada"]
+    prop = m5["principal_proporcional_confirmatorio"]
+    loo_prop = [e for e in a5["leave_one_curso_evento"] if e["escala"] == "proporcional"]
+    loo_nivel = [e for e in a5["leave_one_curso_evento"] if e["escala"] == "nivel"]
+    prop_um_fora = [e for e in loo_prop if e["subamostra"].startswith("sem_curso_")]
+    prop_min = min(prop_um_fora, key=lambda e: e["beta"])
+    prop_max = max(prop_um_fora, key=lambda e: e["beta"])
+    prop_estritos = next(e for e in loo_prop if e["subamostra"] == "somente_8_cbo_1_para_1")
+    nivel_estritos = next(e for e in loo_nivel if e["subamostra"] == "somente_8_cbo_1_para_1")
+    nivel_sem14 = next(e for e in loo_nivel if e["subamostra"] == "sem_curso_14")
     dist0 = m5["distribuicao_delta_confirmatoria"]["0"]
     dist1 = m5["distribuicao_delta_confirmatoria"]["1"]
     prev = prevalencia_atracao()
@@ -296,9 +305,20 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 - A distribuição é assimétrica: sem atração, média {num(dist0['media'])}, mediana {num(dist0['mediana'], 0)}, máximo {num(dist0['max'], 0)}; com atração, média {num(dist1['media'])}, mediana {num(dist1['mediana'], 0)}, máximo {num(dist1['max'], 0)}. Winsorizar muda materialmente a precisão, portanto médias simples não bastam.
 - O modelo de nível é dominado por diferenças basais e a validação preditiva fora da amostra é fraca. Ambos ficam como diagnósticos.
 
+### Forma funcional: o que é frágil é o nível, não a proporção
+
+**Refutação tentada:** atribuir o resultado secundário à escala de medida, testando se ele sobrevive à troca de nível por proporção e à retirada de cada curso.
+**Veredito:** a fragilidade é **do nível**, e é específica dele. Em nível, o coeficiente de março/2026 cai de {num(event['mar2026_beta'])} para {num(nivel_sem14['beta'])} sem o curso 14 (p={num(nivel_sem14['p_valor'], 3)}) e para {num(nivel_estritos['beta'])} nos oito cursos com CBO estritamente 1:1 (p={num(nivel_estritos['p_valor'], 3)}) — deixa de ser distinguível de zero. Somar profissionais de municípios com estoques de ordens de grandeza diferentes faz um curso de estoque grande dominar o coeficiente mecanicamente.
+
+Na escala proporcional, que é a primária, o mesmo exercício não desfaz o resultado: {num(prop['mar2026_beta'], 3)} (EP {num(prop['mar2026_se'], 3)}; p={num(prop['mar2026_p'], 4)}) na amostra completa, entre {num(prop_min['beta'], 3)} e {num(prop_max['beta'], 3)} ao retirar um curso por vez, e {num(prop_estritos['beta'], 3)} (p={num(prop_estritos['p_valor'], 3)}) nos oito cursos estritos. O enunciado correto, portanto, não é o de vulnerabilidade genérica a caudas que este documento trazia antes do item C2 do plano `35`: é que **o nível é frágil à composição de cursos e a proporção não é**. A escolha da escala proporcional é substantiva — mede variação relativa da oferta local, que é a pergunta pretendida — e vale nas duas direções do resultado.
+
+### Ameaças que este red team não testou
+
+Honestidade de escopo: três ameaças levantadas pela reauditoria independente **não** são testadas aqui, e a ausência não deve ser lida como aprovação. São elas o **placebo** sobre células sem atração em municípios com atração, a **heterogeneidade de pré-tendência** por curso, e o **deslocamento** entre municípios da mesma região de saúde, que o `CLAUDE.md` exige separar de expansão líquida. Todas exigiriam regravar artefato de A5, hoje impossível neste ambiente: o painel do CNES não está versionado. Condição de desbloqueio e o que a reauditoria mediu por conta própria estão em `docs/06_execucao/36_backlog_pos_auditoria.md`, itens C-7 e D-4.
+
 ## Veredito geral
 
-O núcleo útil é a desigualdade territorial na atração administrativa, robusta ao estágio do funil e à unidade analítica. A evolução do estoque cadastral após a oferta é compatível com uma diferença positiva modesta, mas vulnerável a caudas, composição e tempo de exposição heterogêneo. Não há base para reivindicar efeito causal, provimento atribuível ao programa ou retenção individual.
+O núcleo útil é a desigualdade territorial na atração administrativa, robusta ao estágio do funil e à unidade analítica. A evolução do estoque cadastral após a oferta é compatível com uma diferença positiva modesta: na escala proporcional ela sobrevive à retirada de qualquer curso e à restrição aos CBOs estritos; na escala de nível, não. O que limita a leitura é a composição de cursos no nível, o tempo de exposição física heterogêneo e três ameaças ainda não testadas. Não há base para reivindicar efeito causal, provimento atribuível ao programa ou retenção individual.
 
 *Gerado por `scripts/tema_trabalho/07_red_team_sintese.py`.*
 """
@@ -353,7 +373,7 @@ A análise secundária usa 26 competências CNES e, como amostra principal, 587 
 
 ## Conclusão
 
-O resultado publicável é um gradiente territorial de atração: municípios metropolitanos apresentam maior probabilidade de atração administrativa que o interior remoto, e o padrão resiste à separação entre confirmação e homologação e ao colapso da unidade. A dinâmica do CNES sugere diferença positiva posterior, com pré-tendências não rejeitadas, mas a cauda extrema, a composição e o tempo de exposição física heterogêneo limitam sua interpretação. Sem base para efeito causal do adicional da bolsa, retenção individual, resolutividade, fila, SIH/SIA ou custo-benefício, esses objetos exigem novos dados e novo protocolo antes de qualquer estimação.
+O resultado publicável é um gradiente territorial de atração: municípios metropolitanos apresentam maior probabilidade de atração administrativa que o interior remoto, e o padrão resiste à separação entre confirmação e homologação e ao colapso da unidade. A dinâmica do CNES sugere diferença positiva posterior, com pré-tendências não rejeitadas, e a escala proporcional — a primária — resiste à retirada de qualquer curso e à restrição aos CBOs estritos, enquanto a escala de nível não resiste: é o nível que é frágil à composição de cursos. O tempo de exposição física heterogêneo e três ameaças ainda não testadas — placebo, heterogeneidade de pré-tendência e deslocamento entre municípios — continuam limitando a interpretação. Sem base para efeito causal do adicional da bolsa, retenção individual, resolutividade, fila, SIH/SIA ou custo-benefício, esses objetos exigem novos dados e novo protocolo antes de qualquer estimação.
 """
     atomic_text(SYNTHESIS, synthesis)
 

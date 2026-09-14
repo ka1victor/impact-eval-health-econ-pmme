@@ -147,6 +147,36 @@ class RedTeamA6Test(unittest.TestCase):
         self.assertIn("27,9 pontos percentuais", sintese)
         self.assertNotIn("27.9", sintese)
 
+    def test_red_team_diagnostica_nivel_e_nao_caudas(self):
+        """C-7, quarta ameaça: o frágil é o nível, não a proporção.
+
+        Depois do item C2 do plano 35, que promoveu a escala proporcional a
+        primária, dizer que o resultado é "vulnerável a caudas" deixou de ser o
+        diagnóstico correto. O leave-one-curso-out publicado em A5 mostra o
+        nível caindo de 0,50 para 0,12 nos oito cursos estritos, enquanto a
+        proporção fica na mesma ordem de grandeza e significativa.
+        """
+        txt = DOCS_REDTEAM.read_text(encoding="utf-8")
+        low = txt.lower()
+        self.assertNotIn("vulnerável a caudas", low)
+        self.assertIn("o nível é frágil à composição", low)
+        self.assertIn("a proporção não é", low)
+
+        a5 = json.loads((ROOT / "output" / "tema_trabalho" / "A5_estimativas_provimento.json").read_text(encoding="utf-8"))
+        loo = a5["leave_one_curso_evento"]
+        estritos = {e["escala"]: e for e in loo if e["subamostra"] == "somente_8_cbo_1_para_1"}
+        # A afirmação do documento tem de continuar verdadeira nos artefatos.
+        self.assertGreater(estritos["nivel"]["p_valor"], 0.05, "nível deixou de ser frágil")
+        self.assertLess(estritos["proporcional"]["p_valor"], 0.05, "proporção deixou de resistir")
+
+    def test_red_team_declara_as_ameacas_nao_testadas(self):
+        """C-7: as três ameaças bloqueadas por D-4 não podem ficar implícitas."""
+        low = DOCS_REDTEAM.read_text(encoding="utf-8").lower()
+        self.assertIn("ameaças que este red team não testou", low)
+        for ameaca in ["placebo", "heterogeneidade de pré-tendência", "deslocamento"]:
+            self.assertIn(ameaca, low, f"ameaça não declarada: {ameaca}")
+        self.assertIn("36_backlog_pos_auditoria.md", low)
+
     def test_manifesto_reproducao_completo(self):
         man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
         self.assertIn("comandos_reproducao", man)

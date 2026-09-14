@@ -162,8 +162,8 @@
       "presente": true
     },
     "docs/auditorias/09_red_team_atracao_provimento.md": {
-      "sha256": "1a49e114e29a66a33da857288ad0e80a12901de2741df03c477206eb64d6fcc1",
-      "bytes": 5650,
+      "sha256": "9ae634c6cafb0c6c31df225b66b138cb082d0136a803d6b1de6295ca5e258ddf",
+      "bytes": 7837,
       "papel": "red team gerado aqui",
       "presente": true
     },
@@ -174,8 +174,8 @@
       "presente": true
     },
     "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": {
-      "sha256": "c33fa9323697be3fefe9c916841156109bbbf00a69ed10c0b5a74a7ff48ef8b6",
-      "bytes": 4114,
+      "sha256": "af1b5d97d2b96f703fd220725f25acd440c3667060f011ea7b3f30784d3ef9ce",
+      "bytes": 4422,
       "papel": "síntese gerada aqui",
       "presente": true
     }
@@ -185,10 +185,10 @@
   ],
   "nota_insumos_ausentes": "Insumo declarado no desenho e ausente do disco aparece acima com sha256 nulo, presente=false e motivo_ausencia. Entrada omitida significaria que o insumo não faz parte do desenho.",
   "docs_hash8": {
-    "docs/auditorias/09_red_team_atracao_provimento.md": "1a49e114",
+    "docs/auditorias/09_red_team_atracao_provimento.md": "9ae634c6",
     "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "4b0077df",
     "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "82320a34",
-    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "c33fa932"
+    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "af1b5d97"
   },
   "portoes": {
     "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",
