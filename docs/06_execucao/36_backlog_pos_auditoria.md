@@ -808,12 +808,17 @@ Três fatos, todos já registrados em artefato, fecham as alternativas públicas
 2. **A regra não é reconstruível com o IVS público.** `portao_regra_ivs.json`
    registra 191 faixas reproduzidas em 368 e **177 divergentes**, com assimetria
    sistemática — 94 células de Faixa 2 anunciada recalculam para Faixa 3.
-3. **O desenho fuzzy falha por relevância, não por potência.**
-   `a01_primeiro_estagio_publico.json` registra primeiro estágio **exatamente
-   zero** no corte `0,500` (todos recebem R$ 20 mil dos dois lados nas janelas de
-   0,010 a 0,050) e salto que troca de sinal entre bandas no corte `0,400`
-   (+4,06 / +0,20 / −0,33 / −0,71), com a diferença bruta negativa justamente na
-   janela cujo coeficiente é positivo.
+3. **O desenho fuzzy falhou onde não havia regra.** Verificado em 14/09/2026 por
+   `01b_reconstruir_regra_faixa.py`: o IVS máximo da Faixa 2 é `0,437`, de modo
+   que na janela de `0,05` em torno de `0,500` **só existe Faixa 1 dos dois
+   lados**. O primeiro estágio nulo medido ali mede ausência de regra no ponto,
+   não ausência de resposta à bolsa.
+4. **E nenhum limiar funciona.** Os intervalos de IVS das três faixas se
+   sobrepõem, e há **2.763 inversões em 44.073 pares** (6,3%) — IVS maior com
+   bolsa menor. A melhor regra de dois cortes possível acerta 285 de 368
+   (77,4%), em `0,323/0,377`; a taxonomia do Atlas acerta 191. Covariáveis
+   municipais pré-tratamento não fecham a conta. O critério efetivo usa
+   informação que não está em nenhuma base deste repositório.
 
 Nota sobre o escopo do pedido: obtido o escore, R1 identifica o efeito do valor
 **anunciado** — intenção de tratar da oferta. O efeito do valor **recebido**

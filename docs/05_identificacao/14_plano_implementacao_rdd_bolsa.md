@@ -137,6 +137,49 @@ Os números são reproduzidos por
 somente o desenho fuzzy com o arquivo público candidato. Ele não elimina uma
 RDD sharp futura com o escore administrativo correto.
 
+### Correção de 14/09/2026 — o corte de 0,500 não era um corte
+
+O diagnóstico acima testou uma única taxonomia candidata, a do Atlas do Ipea
+(`0,400` e `0,500`), e leu o resultado como falta de relevância. A leitura
+precisa ser corrigida, e ela **agrava** o problema em vez de aliviá-lo.
+
+`scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py` faz a pergunta anterior:
+existe **alguma** regra de limiar no IVS público que reproduza a faixa
+anunciada? Artefato em `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`.
+
+**O corte de 0,500 é vazio.** O IVS máximo entre os municípios de Faixa 2 é
+`0,437`. Na janela de `0,05` em torno de `0,500` há 31 municípios e **todos são
+Faixa 1**, dos dois lados. O primeiro estágio exatamente nulo medido ali não
+mede ausência de resposta à bolsa: mede ausência de regra naquele ponto. Era um
+RDD estimado onde a regra não tem ação.
+
+**Nenhum limiar reproduz a faixa.** Os intervalos de IVS das três faixas se
+sobrepõem — Faixa 3 vai até `0,372`, Faixa 2 começa em `0,277`; Faixa 2 vai até
+`0,437`, Faixa 1 começa em `0,303`. Em 44.073 pares comparáveis há **2.763
+inversões (6,3%)**: municípios com IVS *maior* que recebem bolsa *menor*. Uma
+única inversão já basta para provar que nenhuma regra de limiar monótona no IVS
+público reproduz o anúncio, qualquer que seja o corte.
+
+**Quanto falta.** A busca exaustiva sobre todos os pares de cortes acerta no
+máximo **285 de 368 (77,4%)**, em `0,323` e `0,377` — longe dos `0,400/0,500`
+supostos, que acertam 191 (51,9%). Acrescentar covariáveis municipais
+pré-tratamento (tipologia, população, renda, IDHM, componentes do IVS, estoque
+prévio, UF, região de saúde) não fecha a conta: com 2 a 3 divisões chega-se a
+79–82%, o mesmo patamar da melhor regra de limiar, e só com profundidade 8 se
+chega a 97,3% — com 368 observações, isso é memorização, não regra.
+
+**Consequência.** O critério efetivo da bolsa usa informação que **não está**
+em nenhuma base deste repositório. R1 continua `REPROVADO_PENDENTE_DE_RECONSTRUCAO`,
+agora por um motivo mais forte e mais bem medido: não é que a taxonomia
+candidata erra, é que nenhuma função de limiar do IVS público pode acertar. Isso
+torna o pedido administrativo de **D-3** o único caminho para o estimando da
+bolsa, e não uma formalidade.
+
+**O que este diagnóstico não autoriza.** O corte de `0,323` foi encontrado por
+busca de ajuste, não lido em ato normativo. Ele é hipótese a confrontar com o
+documento pedido em D-3, e **não** um cutoff onde estimar efeito. Estimar ali
+seria escolher o corte pelos dados e depois abrir o outcome.
+
 ## 4. R2 — suporte, composição e pacote de políticas
 
 R2 deve ser executado sem abrir outcomes de procura, alocação ou CNES pós.

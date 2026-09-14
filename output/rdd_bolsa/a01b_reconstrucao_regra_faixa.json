@@ -1,0 +1,135 @@
+{
+  "status": "DIAGNOSTICO_NAO_AUTORIZATIVO",
+  "portao": "R1",
+  "data_execucao": "2026-09-14",
+  "outcomes_abertos": false,
+  "escopo": "ciclo 1, chamada 1; 368 municipios com vaga publicada",
+  "pergunta": "A faixa anunciada da bolsa e reconstruivel por regra de limiar no IVS 2010 publico?",
+  "resposta": "NAO",
+  "faixa_por_ivs": {
+    "FAIXA 3": {
+      "n": 159,
+      "ivs_min": 0.141,
+      "ivs_max": 0.372,
+      "ivs_mediana": 0.265
+    },
+    "FAIXA 2": {
+      "n": 107,
+      "ivs_min": 0.277,
+      "ivs_max": 0.437,
+      "ivs_mediana": 0.354
+    },
+    "FAIXA 1": {
+      "n": 102,
+      "ivs_min": 0.303,
+      "ivs_max": 0.715,
+      "ivs_mediana": 0.4255
+    }
+  },
+  "sobreposicao": {
+    "faixa3_max_supera_faixa2_min": true,
+    "faixa2_max_supera_faixa1_min": true,
+    "leitura": "os intervalos de IVS das tres faixas se sobrepoem; nenhum limiar os separa"
+  },
+  "monotonicidade": {
+    "pares_comparaveis": 44073,
+    "concordantes": 41310,
+    "inversoes": 2763,
+    "pct_inversoes": 6.2691
+  },
+  "regra_de_limiar": {
+    "taxonomia_atlas": {
+      "cortes": [
+        0.4,
+        0.5
+      ],
+      "acertos": 191,
+      "n": 368,
+      "pct": 51.9
+    },
+    "melhor_possivel": {
+      "acertos": 285,
+      "n": 368,
+      "cortes": [
+        0.323,
+        0.377
+      ],
+      "pct": 77.45
+    },
+    "leitura": "mesmo o melhor par de cortes possivel deixa 83 municipios fora; uma regra administrativa reproduziria praticamente todos"
+  },
+  "corte_de_0_500_nao_tem_acao": {
+    "ivs_max_da_faixa2": 0.437,
+    "municipios_na_janela_0_05": 31,
+    "faixas_presentes_na_janela": [
+      "FAIXA 1"
+    ],
+    "leitura": "nenhum municipio de FAIXA 2 chega a 0,450; na janela de 0,05 em torno de 0,500 so existe FAIXA 1 dos dois lados. O primeiro estagio nulo medido nesse corte mede a ausencia de regra ali, nao a ausencia de resposta a bolsa"
+  },
+  "densidade_no_melhor_corte": {
+    "corte": 0.323,
+    "municipios_na_janela_0_05": 162,
+    "faixas_presentes_na_janela": [
+      "FAIXA 1",
+      "FAIXA 2",
+      "FAIXA 3"
+    ]
+  },
+  "covariaveis_observaveis": {
+    "acerto_por_profundidade": {
+      "2": {
+        "acertos": 291,
+        "pct": 79.08
+      },
+      "3": {
+        "acertos": 302,
+        "pct": 82.07
+      },
+      "4": {
+        "acertos": 319,
+        "pct": 86.68
+      },
+      "6": {
+        "acertos": 341,
+        "pct": 92.66
+      },
+      "8": {
+        "acertos": 358,
+        "pct": 97.28
+      }
+    },
+    "arvore_profundidade_3": [
+      "[ivs_2010 <= 0.3235]",
+      "  [ivs_2010 <= 0.276]",
+      "    -> 10000",
+      "    [populacao_2010 <= 3367]",
+      "      -> 15000",
+      "      -> 10000",
+      "  [rdpc_2010 <= 399.2]",
+      "    [ivs_infra_2010 <= 0.242]",
+      "      -> 20000",
+      "      -> 20000",
+      "    [ivs_ch_2010 <= 0.4905]",
+      "      -> 15000",
+      "      -> 20000"
+    ],
+    "leitura": "com duas a tres divisoes chega-se ao mesmo patamar da melhor regra de limiar; so profundidade 8 se aproxima de 100%, e com 368 observacoes isso e memorizacao, nao regra"
+  },
+  "conclusoes": {
+    "ivs_publico_e_criterio_unico": false,
+    "cortes_do_atlas_sao_da_regra": false,
+    "regra_reconstruida": false,
+    "r1_continua": "REPROVADO_PENDENTE_DE_RECONSTRUCAO"
+  },
+  "fontes": {
+    "output/aquisicao/quadro_vagas_tratamento.parquet": {
+      "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f"
+    },
+    "data/ivs_ipea_2010_municipios.csv": {
+      "sha256": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c"
+    },
+    "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
+      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
+    }
+  }
+}

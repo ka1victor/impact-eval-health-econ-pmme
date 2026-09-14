@@ -29,6 +29,8 @@ STEPS = [
     ROOT / "scripts" / "tema_trabalho" / "08_auditar_cutoff_selecao.py",
     ROOT / "scripts" / "tema_trabalho" / "09_estimar_cutoff_escore_estrito.py",
     ROOT / "scripts" / "tema_trabalho" / "09b_intervalos_exatos_escore.py",
+    # Depende da matriz de tipologia produzida em tema_trabalho/03.
+    ROOT / "scripts" / "rdd_bolsa" / "01b_reconstruir_regra_faixa.py",
     ROOT / "scripts" / "rdd_bolsa" / "03_triagem_resposta_administrativa.py",
     ROOT / "scripts" / "rdd_bolsa" / "02_controlar_execucao_plano_causal.py",
     ROOT / "scripts" / "tema_trabalho" / "10_conferir_numeros_artigo.py",
