@@ -75,6 +75,59 @@
       "FAIXA 3"
     ]
   },
+  "quem_escapa_da_regra": {
+    "perfil": {
+      "acima_do_previsto": {
+        "n": 41,
+        "medianas": {
+          "ivs_2010": 0.316,
+          "populacao_2010": 7933.0,
+          "rdpc_2010": 414.78,
+          "estoque_pre_por_10k": 5.2812,
+          "estoque_especialistas_pre_12m_media": 4.0
+        },
+        "estratos": {
+          "interior_proximo_polo": 25,
+          "interior_remoto": 12,
+          "metropolitano": 3,
+          "capital": 1
+        }
+      },
+      "no_previsto": {
+        "n": 285,
+        "medianas": {
+          "ivs_2010": 0.323,
+          "populacao_2010": 13041.0,
+          "rdpc_2010": 488.57,
+          "estoque_pre_por_10k": 4.4405,
+          "estoque_especialistas_pre_12m_media": 7.0
+        },
+        "estratos": {
+          "interior_proximo_polo": 160,
+          "interior_remoto": 61,
+          "metropolitano": 52,
+          "capital": 12
+        }
+      },
+      "abaixo_do_previsto": {
+        "n": 42,
+        "medianas": {
+          "ivs_2010": 0.384,
+          "populacao_2010": 32179.0,
+          "rdpc_2010": 479.51,
+          "estoque_pre_por_10k": 3.9159,
+          "estoque_especialistas_pre_12m_media": 6.9583
+        },
+        "estratos": {
+          "interior_proximo_polo": 18,
+          "metropolitano": 17,
+          "capital": 5,
+          "interior_remoto": 2
+        }
+      }
+    },
+    "leitura": "os desvios nao sao ruido. Quem recebe MAIS do que o IVS preveria e sistematicamente menor, mais pobre e mais remoto; quem recebe MENOS e maior e metropolitano. Como remoticidade e o previsor mais forte do desfecho em A4, qualquer pareamento que compare municipios de IVS semelhante com bolsas diferentes esta usando exatamente essa variacao e confunde bolsa com remoticidade, contra a bolsa"
+  },
   "covariaveis_observaveis": {
     "acerto_por_profundidade": {
       "2": {

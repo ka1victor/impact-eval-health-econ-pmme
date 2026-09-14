@@ -175,6 +175,23 @@ candidata erra, é que nenhuma função de limiar do IVS público pode acertar. 
 torna o pedido administrativo de **D-3** o único caminho para o estimando da
 bolsa, e não uma formalidade.
 
+**Por que comparar municípios parecidos também não resolve.** Há suporte comum:
+municípios de IVS semelhante recebem bolsas diferentes — é justamente o que as
+inversões acima significam. O problema é o que gera essa variação. Dos 83
+municípios fora da melhor regra, os 41 que recebem **mais** do que o IVS
+preveria têm mediana de população de 7.933 contra 32.179 dos 42 que recebem
+**menos**, renda per capita menor (R$ 414,78 contra R$ 479,51) e 12 de 41 em
+interior remoto contra 2 de 42. Os desvios não são ruído de medida: são
+sistematicamente alinhados com remoticidade e porte.
+
+Isso é fatal para o pareamento porque **remoticidade é o previsor mais forte do
+próprio desfecho** neste projeto — o gradiente de A4 vai de interior remoto a
+capital com +32,6 p.p. Parear por IVS e comparar bolsas diferentes usa exatamente
+a variação residual que está correlacionada com o gradiente territorial, e o viés
+tem direção conhecida: municípios com bolsa maior são os mais difíceis de prover,
+de modo que a comparação subestima o efeito da bolsa, podendo até inverter-lhe o
+sinal. O artefato registra esse perfil em `quem_escapa_da_regra`.
+
 **O que este diagnóstico não autoriza.** O corte de `0,323` foi encontrado por
 busca de ajuste, não lido em ato normativo. Ele é hipótese a confrontar com o
 documento pedido em D-3, e **não** um cutoff onde estimar efeito. Estimar ali

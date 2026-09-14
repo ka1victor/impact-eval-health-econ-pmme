@@ -54,3 +54,29 @@ class TestReconstrucaoRegraFaixa(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestQuemEscapaDaRegra(unittest.TestCase):
+    """O desvio da melhor regra tem de continuar sendo sistematico, nao ruido.
+
+    Se um dia os tres grupos ficarem parecidos, o argumento contra o pareamento
+    cai junto, e a fila precisa saber disso.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.perfil = json.loads(ARTEFATO.read_text(encoding="utf-8"))["quem_escapa_da_regra"]["perfil"]
+
+    def test_quem_recebe_mais_e_menor_e_mais_pobre(self) -> None:
+        acima = self.perfil["acima_do_previsto"]["medianas"]
+        abaixo = self.perfil["abaixo_do_previsto"]["medianas"]
+        self.assertLess(acima["populacao_2010"], abaixo["populacao_2010"])
+        self.assertLess(acima["rdpc_2010"], abaixo["rdpc_2010"])
+
+    def test_quem_recebe_mais_e_mais_remoto(self) -> None:
+        def prop_remoto(grupo: str) -> float:
+            estratos = self.perfil[grupo]["estratos"]
+            return estratos.get("interior_remoto", 0) / self.perfil[grupo]["n"]
+
+        self.assertGreater(prop_remoto("acima_do_previsto"), prop_remoto("abaixo_do_previsto"))
+        self.assertGreater(prop_remoto("acima_do_previsto"), prop_remoto("no_previsto"))

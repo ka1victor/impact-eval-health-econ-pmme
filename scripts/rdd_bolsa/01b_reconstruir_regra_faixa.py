@@ -200,6 +200,26 @@ def main() -> None:
                            "pct": round(100 * float((predito == valor).mean()), 2)}
     arvore3 = crescer(X, valor, np.arange(n), 0, 3)
 
+    # Quem escapa da melhor regra possivel? Se os desvios fossem ruido de
+    # medida, os dois lados seriam parecidos. Se forem sistematicos, eles
+    # identificam o criterio que falta — e medem o vies de qualquer pareamento
+    # que use essa variacao residual como se fosse exogena.
+    predito = np.where(ivs <= melhor["cortes"][0], 10_000,
+                       np.where(ivs <= melhor["cortes"][1], 15_000, 20_000))
+    desvio = np.select([valor > predito, valor < predito],
+                       ["acima_do_previsto", "abaixo_do_previsto"], "no_previsto")
+    comparaveis = ["ivs_2010", "populacao_2010", "rdpc_2010", "estoque_pre_por_10k",
+                   "estoque_especialistas_pre_12m_media"]
+    perfil = {
+        grupo: {
+            "n": int((desvio == grupo).sum()),
+            "medianas": {c: round(float(base.loc[desvio == grupo, c].median()), 4)
+                         for c in comparaveis},
+            "estratos": base.loc[desvio == grupo, "estrato"].value_counts().to_dict(),
+        }
+        for grupo in ("acima_do_previsto", "no_previsto", "abaixo_do_previsto")
+    }
+
     janela = 0.05
     perto_de_500 = np.abs(ivs - 0.500) <= janela
     perto_do_melhor = np.abs(ivs - melhor["cortes"][0]) <= janela
@@ -242,6 +262,15 @@ def main() -> None:
             "municipios_na_janela_0_05": int(perto_do_melhor.sum()),
             "faixas_presentes_na_janela": sorted(
                 base.faixa_atracao_anunciada[perto_do_melhor].unique().tolist()),
+        },
+        "quem_escapa_da_regra": {
+            "perfil": perfil,
+            "leitura": ("os desvios nao sao ruido. Quem recebe MAIS do que o IVS preveria e "
+                        "sistematicamente menor, mais pobre e mais remoto; quem recebe MENOS e "
+                        "maior e metropolitano. Como remoticidade e o previsor mais forte do "
+                        "desfecho em A4, qualquer pareamento que compare municipios de IVS "
+                        "semelhante com bolsas diferentes esta usando exatamente essa variacao "
+                        "e confunde bolsa com remoticidade, contra a bolsa"),
         },
         "covariaveis_observaveis": {
             "acerto_por_profundidade": arvores,
