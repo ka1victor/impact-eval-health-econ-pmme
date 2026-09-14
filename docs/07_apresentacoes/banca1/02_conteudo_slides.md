@@ -66,32 +66,39 @@ recortes de imprensa citados.
 
 ---
 
-## 4 — Municípios com bolsas maiores partiam de uma oferta menor
+## 4 — Onde a bolsa é maior, o médico tem menos colegas — mas não menos oferta por habitante
 
 `1. Motivação · Problema · 2 de 3`
 
-Esse padrão também aparece entre os municípios contemplados pelo programa. Nos
-295 municípios com vagas no ciclo 1, a oferta de especialistas já era menor nas
-faixas de bolsa mais altas antes da publicação do edital.
+Nos 295 municípios com vaga no ciclo 1, agrupados **pela faixa de bolsa
+efetivamente publicada**, as duas medidas de oferta discordam — e a discordância
+é informativa.
 
 ![Especialistas por 100 mil habitantes em junho de 2025, por faixa de bolsa](../../../output/apresentacao_banca1/oferta_pre_por_faixa.png)
 
-Em junho de 2025, havia **16,0 especialistas por 100 mil habitantes** nos
-municípios que receberiam vagas com bolsa de R$ 10 mil. Entre os municípios com
-bolsa de R$ 20 mil, eram **7,3 por 100 mil**.
+Por habitante, a oferta prévia era **maior** onde a bolsa é maior: **18,3
+especialistas por 100 mil** nos municípios de Faixa 1 (R$ 20 mil), contra **15,0**
+na Faixa 3 (R$ 10 mil) e 14,4 na Faixa 2. Municípios de Faixa 1 são pequenos, e
+poucos profissionais bastam para produzir uma taxa alta.
 
 ![Colegas da mesma especialidade no município, junho de 2025](../../../output/apresentacao_banca1/retaguarda_por_faixa.png)
 
-A diferença também aparece dentro de cada especialidade. Na Faixa 1, a mediana
-era de **2 colegas da mesma especialidade** no município, ante 5 na Faixa 3. Em
-**42%** dos pares município–especialidade da Faixa 1, o participante seria o
-único especialista ou teria apenas um colega.
+Em números absolutos, que é o que o médico enxerga ao escolher onde trabalhar, a
+ordem se inverte. Na Faixa 1 a mediana era de **2,5 colegas da mesma
+especialidade** no município, contra 5,0 na Faixa 2 e 6,5 na Faixa 3. Em **31%**
+dos pares município–especialidade da Faixa 1, o participante seria o único
+especialista ou teria apenas um colega — ante 12% na Faixa 3.
+
+A leitura é que a bolsa maior não compensa uma escassez *per capita*: ela vai
+para lugares pequenos, onde a taxa por habitante pode ser até favorável mas a
+**retaguarda profissional é rala**. É essa dimensão — isolamento profissional, não
+cobertura populacional — que o desenho precisa levar a sério.
 
 **Fontes:** CNES, competência 06/2025; profissionais nos CBOs dos 10 cursos do
 programa com correspondência unívoca curso–CBO; 295 municípios com vaga nesses
-cursos no ciclo 1; população residente do Censo 2022 (IBGE). Faixa pela
-categoria de IVS do Ipea. A Faixa 1 tem 19 pares município–especialidade: a
-porcentagem oscila com poucos casos, a mediana não.
+cursos no ciclo 1; população residente do Censo 2022 (IBGE). **Faixa pela bolsa
+publicada em cada vaga**, não pela categoria de IVS recalculada — as duas diferem
+em 177 dos 368 municípios (ver slide 7).
 
 ---
 
@@ -176,40 +183,52 @@ de vagas do ciclo 1, chamada 1; Censo 2022 (IBGE).
 
 ---
 
-## 7 — O valor da bolsa é definido pela vulnerabilidade do município
+## 7 — O IVS é o piso da bolsa, não o critério dela
 
 `1. Motivação · Política · 2 de 2`
 
 A bolsa não varia com a especialidade, a carga de trabalho ou a produção do
-médico. No edital de 2025, o valor dependia da categoria territorial atribuída
-ao município a partir do IVS:
+médico. O edital de 2025 traz **duas** cláusulas sobre como o valor é fixado, e
+elas dizem coisas diferentes:
 
-1. O **IVS 2010**, calculado pelo Ipea, varia de 0 a 1 e reúne dezesseis
-   indicadores do Censo 2010. O índice abrange infraestrutura urbana, capital
-   humano e renda e trabalho.
-2. O Ipea classifica os municípios em cinco categorias: muito baixa (até
-   0,200), baixa (0,201–0,300), média (0,301–0,400), alta (0,401–0,500) e muito
-   alta (acima de 0,500).
-3. O edital agrupou essas categorias em três faixas de bolsa.
+- **11.1.4** define a faixa de atração "com base na categorização municipal do
+  IVS": muito alta → Faixa 1, alta → Faixa 2, média/baixa/muito baixa → Faixa 3.
+- **11.1.3** diz que o valor segue "critérios de **localização** e
+  vulnerabilidade definidos de acordo com a faixa de atração definida no
+  **Anexo IV** no site do Mais Médicos".
 
 | Categoria de IVS | Faixa | Bolsa mensal |
 |---|:---:|---:|
-| muito alta | 1 | R$ 20.000 |
-| alta | 2 | R$ 15.000 |
-| média, baixa ou muito baixa | 3 | R$ 10.000 |
+| muito alta (> 0,500) | 1 | R$ 20.000 |
+| alta (0,401–0,500) | 2 | R$ 15.000 |
+| média, baixa ou muito baixa (≤ 0,400) | 3 | R$ 10.000 |
 
 ![Bolsa mensal por faixa de atração](../../../output/apresentacao_banca1/bolsa_por_faixa.png)
 
-No ciclo 1, foram publicados 102 municípios na Faixa 1, 107 na Faixa 2 e 159
-na Faixa 3. Há, contudo, uma divergência importante: em **177 dos 368
-municípios**, a categoria publicada não coincide com a classificação obtida ao
-aplicar os cortes do Ipea ao IVS municipal. Além disso, a regra foi alterada em
-2026, quando os municípios de vulnerabilidade *alta* passaram à Faixa 1. Na
-análise, portanto, deve prevalecer a faixa efetivamente publicada em cada vaga.
+No ciclo 1 foram publicados 102 municípios na Faixa 1, 107 na Faixa 2 e 159 na
+Faixa 3. Em **177 dos 368**, a faixa publicada não coincide com a categoria de
+IVS — e a divergência tem uma direção só:
 
-**Fontes:** Edital SGTES/MS nº 3/2025, item 11.1.3, e retificação; Chamamento
-SGTES/MS nº 1/2026; Ipea, *Atlas da Vulnerabilidade Social nos Municípios
-Brasileiros* (2015); quadro de vagas do ciclo 1.
+> **Nenhum município recebe menos do que a categoria de IVS manda. 177 recebem
+> mais.** Zero violações para baixo em 368 casos.
+
+Uma vintagem diferente do índice, ou erro de medida, erraria nos dois sentidos.
+A assimetria perfeita indica regra: a categoria de IVS fixa um **piso**, e o
+critério de localização da cláusula 11.1.3 promove 48% dos municípios acima
+dele. O Anexo IV, que é o documento operativo, não é reproduzido no edital —
+constam dele apenas os Anexos I a III — e não está entre as fontes preservadas.
+
+A grade também mudou em 2026, quando a vulnerabilidade *alta* passou à Faixa 1.
+Aplicada ao ciclo 1, essa regra acerta 224 dos 368 contra 191 da regra de 2025;
+nem uma, nem outra, nem a união das duas (237) reproduz o que foi publicado. Na
+análise, portanto, prevalece a faixa efetivamente publicada em cada vaga.
+
+**Fontes:** Edital SGTES/MS nº 3/2025, itens 11.1.3 e 11.1.4 (PDF do DOU
+preservado, com hash); FAQ oficial da bolsa; Chamamento SGTES/MS nº 1/2026;
+Ipea, *Atlas da Vulnerabilidade Social nos Municípios Brasileiros* (2015);
+quadro de vagas do ciclo 1. Reconstrução em
+[`docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`](../../05_identificacao/14_plano_implementacao_rdd_bolsa.md)
+e em `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`.
 
 ---
 
@@ -512,13 +531,36 @@ A renda no mercado privado e a distância da família não são observadas. Na
 especificação empírica, sua influência será aproximada pelo IVS, pela tipologia
 territorial e pelas demais características municipais disponíveis.
 
-O principal desafio é separar remuneração e vulnerabilidade. A própria regra do
-programa vincula uma à outra, de modo que não há municípios pouco vulneráveis
-recebendo bolsas altas. A identificação exige comparar municípios semelhantes
-que tenham sido classificados em faixas distintas.
+O principal desafio é separar remuneração e vulnerabilidade. A reconstrução da
+regra, que era a primeira etapa prevista da análise empírica, já foi executada e
+tem três resultados.
 
-Para isso, ainda é necessário esclarecer como a regra foi aplicada. Em **177
-dos 368 municípios** do ciclo 1, a faixa publicada não coincide com a que seria
-obtida pela aplicação direta dos cortes do Ipea ao IVS municipal. Reconstruir o
-critério usado pelo Ministério da Saúde é, portanto, a primeira etapa da análise
-empírica.
+**Primeiro: há suporte comum, ao contrário do que se supunha.** Municípios pouco
+vulneráveis *recebem* bolsas altas — 37 municípios com IVS ≤ 0,400 estão na Faixa
+1 e 94 na Faixa 2. Os intervalos de IVS das três faixas se sobrepõem, e a Faixa 1
+começa em IVS 0,303, dentro da categoria *média*. Não falta variação.
+
+**Segundo: a descontinuidade no IVS não existe onde os cortes estão.** Em torno
+de 0,500, os dois lados são 100% Faixa 1 em qualquer janela até ±0,050 — não há
+o que saltar. Em torno de 0,400, nenhum município de Faixa 3 aparece por perto (o
+maior IVS da Faixa 3 é 0,372) e a composição dos dois lados é equivalente. O
+tratamento é **localmente constante nos dois cortes**: quando o IVS chega ao
+limiar, a promoção pelo outro critério já ocorreu. Nenhuma escolha de janela,
+kernel ou estimador contorna isso.
+
+**Terceiro: a variação que sobra não é exógena.** Dos 83 municípios fora da
+melhor regra de limiar possível, os 41 promovidos acima do piso têm mediana de
+população de 7.933 contra 32.179 dos 42 rebaixados, renda per capita menor e
+proporção muito maior de interior remoto. Como a remoticidade é o previsor mais
+forte do próprio desfecho, comparar municípios semelhantes com bolsas diferentes
+confunde bolsa com posição territorial — e o viés tem direção conhecida, contra
+a bolsa: quem recebeu mais é quem é mais difícil de prover.
+
+A conclusão de viabilidade é, portanto, negativa e específica: **o efeito causal
+do valor da bolsa não é identificável com as fontes públicas disponíveis**, e a
+razão não é potência amostral. Destravá-lo exige o Anexo IV e os critérios de
+localização da cláusula 11.1.3, que definem a atribuição e não são públicos.
+
+Isso não bloqueia o projeto. O desenho causal do trabalho é outro — a
+descontinuidade no escore de seleção do candidato —, e a inviabilidade da RDD no
+IVS é ela própria um resultado de viabilidade, que é o escopo desta banca.

@@ -197,6 +197,22 @@ De 11 para 18 slides.
 | hipóteses | derivação escrita em quatro passos numerados |
 | viabilidade | custo de vida e distância da família entram na tabela; fecha com o primeiro passo do trabalho empírico |
 
+## 4b. Ajustes de 14/09/2026 — correção de agrupamento e da regra da bolsa
+
+Origem: a leitura do Edital SGTES/MS nº 3/2025 e a reconstrução da regra da
+faixa, registradas em
+[`05_identificacao/14_plano_implementacao_rdd_bolsa.md`](../../05_identificacao/14_plano_implementacao_rdd_bolsa.md).
+
+| Slide | Ajuste |
+|---|---|
+| 4 | **Defeito de proveniência corrigido.** As figuras `F1` e `F2` agrupavam os municípios pela categoria de IVS **recalculada**, enquanto o texto falava em "municípios com bolsa de R$ 10 mil". Como as duas coisas divergem em 177 dos 368 municípios, 48% dos rótulos estavam errados. Regeradas pela **faixa publicada**. A taxa por 100 mil habitantes **inverte de sinal**: era 16,0 na Faixa 3 contra 7,3 na Faixa 1, passa a 15,0 contra 18,3. A retaguarda profissional sobrevive e fica mais precisa: mediana de 2,5 colegas na Faixa 1 contra 6,5 na Faixa 3. O título muda para refletir a discordância entre as duas medidas, que é substantiva: a bolsa maior vai para municípios pequenos, de taxa per capita favorável e retaguarda rala |
+| 7 | passa a apresentar as **duas** cláusulas do edital, a 11.1.4 (categorias de IVS) e a 11.1.3, que cita critérios de **localização** e remete ao **Anexo IV**. Registra que a divergência é unidirecional — 0 municípios abaixo do piso de IVS, 177 acima — e que, portanto, o IVS é piso da bolsa, não critério dela |
+| 18 | a reconstrução da regra, que era descrita como "primeira etapa da análise empírica", **foi executada**. O slide passa a dar o resultado: há suporte comum, mas o tratamento é localmente constante nos dois cortes de IVS e a variação residual está alinhada com remoticidade. A conclusão de viabilidade sobre a RDD no IVS é negativa e específica, e o desenho causal do trabalho não depende dela |
+
+Correção adicional ao slide 18: a afirmação de que "não há municípios pouco
+vulneráveis recebendo bolsas altas" era **falsa** no próprio dado do
+repositório — 37 municípios com IVS ≤ 0,400 estão na Faixa 1 e 94 na Faixa 2.
+
 ## 5. Defeitos do material anterior
 
 Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.

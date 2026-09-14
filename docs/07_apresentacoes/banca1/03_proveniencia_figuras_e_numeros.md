@@ -71,8 +71,9 @@ Fontes externas, conferidas em 09/09/2026.
 
 | Número | Fonte |
 |---|---|
-| 16,0 e 7,3 especialistas por 100 mil hab. (Faixa 3 e Faixa 1), jun/2025 | `F1` |
-| Mediana de 2 colegas na Faixa 1 contra 5 na Faixa 3; 42% sozinho ou com um único colega | `F2`. Faixa 1 tem 19 pares município–especialidade: a proporção é frágil, a mediana é robusta |
+| 18,3 / 14,4 / 15,0 especialistas por 100 mil hab. (Faixas 1, 2 e 3 publicadas), jun/2025 | `F1`, agrupado pela faixa publicada no quadro de vagas |
+| Mediana de 2,5 colegas na Faixa 1, 5,0 na Faixa 2 e 6,5 na Faixa 3; 31% contra 12% sozinho ou com um único colega | `F2`, agrupado pela faixa publicada. Faixa 1 tem 150 pares município–especialidade em 85 municípios |
+| Agrupamento por faixa publicada, e não por categoria de IVS recalculada | corrigido em 14/09/2026 em `scripts/apresentacao/gerar_figuras_banca1.py`; a versão anterior rotulava errado 177 dos 368 municípios e invertia o sinal de `F1` |
 
 ### Slide 5 — o que o médico vê
 
@@ -102,6 +103,10 @@ Fontes externas, conferidas em 09/09/2026.
 | 102 / 107 / 159 municípios por faixa publicada | quadro de vagas do ciclo 1 |
 | 177 dos 368 municípios com faixa publicada diferente da recalculada | portão R1, `docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md`, §3.5 |
 | Grade mudou em 2026: *alta* passou à Faixa 1 | Chamamento SGTES/MS nº 1/2026; auditoria §6.4 |
+| Cláusulas 11.1.3 (localização + Anexo IV) e 11.1.4 (categorias de IVS) | Edital SGTES/MS nº 3/2025, PDF do DOU preservado em `data/raw/aquisicao/ivs_regra/`, com SHA-256 registrado no artefato |
+| 0 municípios abaixo do piso de IVS, 177 acima | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py` |
+| Regra de 2026 aplicada ao ciclo 1 acerta 224/368; união das duas regras, 237/368 | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py` |
+| Anexo IV não reproduzido no edital (constam I a III) | mesmo PDF, índice de anexos |
 
 ### Slides 8 e 9 — a evidência
 
@@ -133,6 +138,11 @@ seção 7.
 |---|---|
 | 1.295 vagas estabelecimento–curso, 368 municípios | quadro de vagas do ciclo 1, chamada 1 |
 | 177 dos 368 municípios com faixa publicada diferente da recalculada | portão R1 |
+| 37 municípios com IVS ≤ 0,400 na Faixa 1; 94 na Faixa 2; Faixa 1 começa em IVS 0,303 | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py` |
+| Em ±0,050 de 0,500, os dois lados são 100% Faixa 1 | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py` |
+| Maior IVS da Faixa 3 é 0,372; em ±0,010 de 0,400 não há Faixa 3 de nenhum lado | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py` |
+| 83 municípios fora da melhor regra de limiar; 41 promovidos com mediana de população 7.933 contra 32.179 dos 42 rebaixados | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py` |
+| Remoticidade como previsor mais forte do desfecho | `A4_tabela_02_modelo_principal_LPM.csv` e `A4_tabela_02b_logit_AME.csv` |
 | CNES mensal, jun/2024 a jul/2026 | `output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet` |
 
 ---

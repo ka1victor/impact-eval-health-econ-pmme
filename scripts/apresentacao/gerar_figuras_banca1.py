@@ -92,9 +92,9 @@ FAIXA_2025 = {
 }
 ORDEM_FAIXAS = ["Faixa 3", "Faixa 2", "Faixa 1"]
 ROTULO_FAIXA = {
-    "Faixa 3": "Faixa 3\nR$ 10 mil\nmédia, baixa ou muito baixa",
-    "Faixa 2": "Faixa 2\nR$ 15 mil\nalta",
-    "Faixa 1": "Faixa 1\nR$ 20 mil\nmuito alta",
+    "Faixa 3": "Faixa 3\nR$ 10 mil",
+    "Faixa 2": "Faixa 2\nR$ 15 mil",
+    "Faixa 1": "Faixa 1\nR$ 20 mil",
 }
 COR_FAIXA = {"Faixa 3": VERDE_CLARO_LINHA, "Faixa 2": VERDE_MEDIO, "Faixa 1": VERDE_ESCURO}
 COR_BARRA = {"Faixa 3": VERDE_CLARO, "Faixa 2": VERDE_MEDIO, "Faixa 1": VERDE_ESCURO}
@@ -128,6 +128,25 @@ def _rodape(fig, texto: str, y: float = -0.06) -> None:
     fig.text(0.5, y, texto, ha="center", fontsize=8.5, color=TINTA_SUAVE, wrap=True)
 
 
+def faixa_publicada() -> pd.DataFrame:
+    """Faixa efetivamente publicada em cada município, do quadro de vagas.
+
+    Agrupar pela categoria de IVS recalculada rotularia errado 177 dos 368
+    municípios: a categoria é o piso da bolsa, não o valor pago. Quem aparece
+    num gráfico "por faixa de bolsa" tem de ser quem recebeu aquela bolsa.
+    """
+    quadro = pd.read_parquet(QUADRO)
+    faixas = (
+        quadro[["co_ibge_6d", "faixa_atracao_anunciada"]]
+        .drop_duplicates()
+        .assign(co_ibge_6d=lambda f: f.co_ibge_6d.astype(str))
+    )
+    if faixas.groupby("co_ibge_6d").faixa_atracao_anunciada.nunique().gt(1).any():
+        raise SystemExit("faixa publicada não é única por município")
+    faixas["faixa"] = faixas["faixa_atracao_anunciada"].str.title().str.replace("Faixa ", "Faixa ")
+    return faixas[["co_ibge_6d", "faixa"]]
+
+
 def _fmt(valor: float) -> str:
     return f"{valor:.1f}".replace(".", ",")
 
@@ -139,12 +158,14 @@ def taxas_por_faixa() -> tuple[pd.DataFrame, dict]:
     pop = pd.read_csv(POPULACAO, dtype={"co_ibge_7d": str})
 
     municipio_mes = (
-        painel.groupby(["competencia", "co_ibge_7d", "ivs_categoria"], as_index=False)
-        ["especialistas_mst"].sum()
+        painel.groupby(["competencia", "co_ibge_6d", "co_ibge_7d", "ivs_categoria"],
+                       as_index=False)["especialistas_mst"].sum()
         .merge(pop[["co_ibge_7d", "populacao_2022"]], on="co_ibge_7d", how="left")
     )
     assert municipio_mes["populacao_2022"].notna().all(), "município sem população"
-    municipio_mes["faixa"] = municipio_mes["ivs_categoria"].map(FAIXA_2025)
+    municipio_mes["co_ibge_6d"] = municipio_mes["co_ibge_6d"].astype(str)
+    municipio_mes = municipio_mes.merge(faixa_publicada(), on="co_ibge_6d", how="left")
+    assert municipio_mes["faixa"].notna().all(), "município sem faixa publicada"
 
     agregado = (
         municipio_mes.groupby(["competencia", "faixa"])
@@ -233,7 +254,9 @@ def figura_retaguarda_por_faixa() -> Path:
     """Quantos colegas da mesma especialidade o médico encontraria no município."""
     painel = pd.read_parquet(PAINEL)
     painel = painel[(painel["curso_sem_sobreposicao"] == 1) & (painel["competencia"] == ULTIMA_PRE)]
-    painel = painel.assign(faixa=painel["ivs_categoria"].map(FAIXA_2025))
+    painel = (painel.assign(co_ibge_6d=painel["co_ibge_6d"].astype(str))
+              .merge(faixa_publicada(), on="co_ibge_6d", how="left"))
+    assert painel["faixa"].notna().all(), "célula sem faixa publicada"
     resumo = painel.groupby("faixa").agg(
         celulas=("especialistas_mst", "size"),
         mediana=("especialistas_mst", "median"),
