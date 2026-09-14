@@ -119,10 +119,10 @@ conteúdo.
 | 1 | *Capa* | 1 | — |
 | 2 | *Sumário* | 2 | — |
 | 3 | Especialistas não faltam; faltam no interior | 3–4 | 3: o retrato numérico. 4: a urgência reconhecida e as manchetes |
-| 4 | Onde a bolsa é maior, já havia menos especialistas | 5–6 | 5: oferta por habitante (F1). 6: retaguarda de colegas (F2) |
-| 5 | O que o médico vê ao decidir | 7–8 | 7: as quatro desvantagens e o que medimos. 8: o que a literatura diz sobre o peso de cada uma |
-| 6 | O que é o PMM-E | 9–11 | 9: lei, quem, o quê (com os 16 cursos em dois blocos). 10: como a vaga chega ao médico. 11: onde, no ciclo 1 (F5) |
-| 7 | A bolsa remunera o lugar | 12–13 | 12: os três passos, índice → categoria → valor. 13: a grade (F3), as contagens e os dois cuidados |
+| 4 | O que o médico vê ao decidir | 5–6 | 5: as quatro desvantagens e o que medimos. 6: o peso de cada uma na literatura |
+| 5 | O que é o PMM-E | 7–9 | 7: lei, quem, o quê. 8: como a vaga chega. 9: onde, no ciclo 1 (F5) |
+| 6 | A bolsa remunera o lugar | 10–11 | 10: os três passos. 11: a grade (F3), as contagens e as cláusulas |
+| 7 | Onde a bolsa é maior, o médico fica sozinho | 12–13 | 12: oferta por habitante (F1). 13: retaguarda de colegas (F2) |
 | 8 | Pagar mais funciona: a evidência a favor | 14–15 | 14: o experimento mexicano. 15: a régua do prêmio e a ressalva |
 | 9 | Mas é caro, e não segura: a evidência contra | 16–17 | 16: Austrália e Brasil. 17: Estados Unidos e o fecho do bloco |
 | 10 | No primeiro ciclo, a bolsa maior não ordenou o preenchimento | **18** | a figura em dois painéis (F6), que já rotula os sete números, mais a leitura e a ressalva descritiva |

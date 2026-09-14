@@ -67,15 +67,7 @@ Fontes externas, conferidas em 09/09/2026.
 | "apenas 10% dos especialistas atendem no SUS. Além disso, há concentração desses profissionais nas capitais e regiões mais ricas do país" | Senado Notícias, 25/09/2025, citando dados do Ministério da Saúde | conferido na página original. Nota: a Demografia Médica 2025 reporta, para cirurgiões, 10% atuando **exclusivamente** no SUS; a manchete é citada como manchete, não como estatística do trabalho |
 | Situação de urgência em saúde pública por 24 meses, em razão do tempo de espera na atenção especializada | Portaria GM/MS nº 7.061, de 6 de junho de 2025 | conferido em reprodução do DOU. A manchete do Correio do Povo de 07/05/2025 antecede a portaria e é citada como manchete |
 
-### Slide 4 — o problema nos dados do programa
-
-| Número | Fonte |
-|---|---|
-| 18,3 / 14,4 / 15,0 especialistas por 100 mil hab. (Faixas 1, 2 e 3 publicadas), jun/2025 | `F1`, agrupado pela faixa publicada no quadro de vagas |
-| Mediana de 2,5 colegas na Faixa 1, 5,0 na Faixa 2 e 6,5 na Faixa 3; 31% contra 12% sozinho ou com um único colega | `F2`, agrupado pela faixa publicada. Faixa 1 tem 150 pares município–especialidade em 85 municípios |
-| Agrupamento por faixa publicada, e não por categoria de IVS recalculada | corrigido em 14/09/2026 em `scripts/apresentacao/gerar_figuras_banca1.py`; a versão anterior rotulava errado 177 dos 368 municípios e invertia o sinal de `F1` |
-
-### Slide 5 — o que o médico vê
+### Slide 4 — o que o médico vê
 
 | Afirmação | Fonte | Verificação |
 |---|---|---|
@@ -83,7 +75,7 @@ Fontes externas, conferidas em 09/09/2026.
 | proximidade do lugar de nascimento ou formação é o principal fator; salário e infraestrutura importam em escala menor; ~50 mil generalistas formados de 2001 a 2013 | Costa, Nunes & Sanches (2024), *REStat* 106(1) | conferido no PDF e na cobertura do estudo (Gazeta do Povo, 2019, sobre a versão *working paper* do Ieps, 49.989 médicos) |
 | 3.727 clínicos; 65% não mudariam; "depends not only on the area but also on the characteristics of the job" | Scott et al. (2013), *Soc Sci Med* 96 | **conferido no resumo** (Europe PMC, PMID 24034949) |
 
-### Slide 6 — o que é o PMM-E
+### Slide 5 — o que é o PMM-E
 
 | Número ou afirmação | Fonte |
 |---|---|
@@ -93,7 +85,7 @@ Fontes externas, conferidas em 09/09/2026.
 | 1.295 células, 460 estabelecimentos, 368 municípios, 27 UFs; 678 imediatas, 1.145 reserva; Nordeste 505 células (39%); MG 252 células | `F5` e `output/aquisicao/quadro_vagas_tratamento.parquet` |
 | dois terços dos municípios com menos de 100 mil habitantes (66,0%); 18 capitais | quadro de vagas × Censo 2022; tipologia A2 (`docs/auditorias/09_tipologia_territorial.md`) |
 
-### Slide 7 — a regra da bolsa
+### Slide 6 — a regra da bolsa
 
 | Número | Fonte |
 |---|---|
@@ -107,6 +99,14 @@ Fontes externas, conferidas em 09/09/2026.
 | 0 municípios abaixo do piso de IVS, 177 acima | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py` |
 | Regra de 2026 aplicada ao ciclo 1 acerta 224/368; união das duas regras, 237/368 | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py` |
 | Anexo IV não reproduzido no edital (constam I a III) | mesmo PDF, índice de anexos |
+
+### Slide 7 — o problema nos dados do programa
+
+| Número | Fonte |
+|---|---|
+| 18,3 / 14,4 / 15,0 especialistas por 100 mil hab. (Faixas 1, 2 e 3 publicadas), jun/2025 | `F1`, agrupado pela faixa publicada no quadro de vagas |
+| Mediana de 2,5 colegas na Faixa 1, 5,0 na Faixa 2 e 6,5 na Faixa 3; 31% contra 12% sozinho ou com um único colega | `F2`, agrupado pela faixa publicada. Faixa 1 tem 150 pares município–especialidade em 85 municípios |
+| Agrupamento por faixa publicada, e não por categoria de IVS recalculada | corrigido em 14/09/2026 em `scripts/apresentacao/gerar_figuras_banca1.py`; a versão anterior rotulava errado 177 dos 368 municípios e invertia o sinal de `F1` |
 
 ### Slides 8 e 9 — a evidência
 
