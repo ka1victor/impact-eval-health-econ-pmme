@@ -1,6 +1,6 @@
 {
   "protocolo": "A6_MANIFESTO_REPRODUCAO",
-  "data_referencia": "2026-09-09",
+  "data_referencia": "2026-09-14",
   "gerador": "scripts/tema_trabalho/07_red_team_sintese.py",
   "fila": "A1->A6: núcleo associativo; upgrade causal bloqueado",
   "comandos_reproducao": [
@@ -48,13 +48,9 @@
       "sha256": "ed8c2a9a3fcda4f0f261b5321da7750da389cc0f574f2e5ac5140e5ebd8f2d9e",
       "bytes": 16218
     },
-    "output/painel_municipio_curso_mensal.parquet": {
-      "sha256": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059",
-      "bytes": 109578
-    },
     "output/tema_trabalho/A4_estimativas_atracao.json": {
-      "sha256": "a5bddf6167b3bcda69c0a5cfce18b3c421ec73e5abf002a2956b245a6a2f6f1f",
-      "bytes": 17849
+      "sha256": "7e9176a8da1d6c4c8f65e22bd839ed03349b4560c72ee9fc4a8a9a1efc5089ee",
+      "bytes": 21808
     },
     "output/tema_trabalho/A5_estimativas_provimento.json": {
       "sha256": "fd7c2f9e6ebafa5136f9d1e38fd7bf0b7db24e139496eb77d7d4658c96fe64ca",
@@ -65,8 +61,8 @@
       "bytes": 14420
     },
     "output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv": {
-      "sha256": "75a253b8904a62f3291b0685a61158da6db32020596c338e21b06e2634304c06",
-      "bytes": 8690
+      "sha256": "3e7cf00700b2990967c83ffddc05fd58163e2890fd547e7bd1194e3d59b8ee0e",
+      "bytes": 8765
     },
     "output/tema_trabalho/A4_tabela_02c_confirmacao_homologacao.csv": {
       "sha256": "35ef57eb513fe74b88a7d291718c94c1da416f71f542e011af8d9471d6eb0070",
@@ -81,7 +77,7 @@
       "bytes": 12361
     },
     "docs/auditorias/09_red_team_atracao_provimento.md": {
-      "sha256": "a6ceff20be5520f1af2875afeb8ca19b574112461ddf8e4609237984e937412b",
+      "sha256": "4650d99e8aa45a51d82eda27c64e1dde42520e40f2fe00513b238a1779202ced",
       "bytes": 5650
     },
     "output/tema_trabalho/A6_matriz_afirmacao_evidencia_limite.csv": {
@@ -89,15 +85,15 @@
       "bytes": 1634
     },
     "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": {
-      "sha256": "0c28eb5cf047fe79a1323fd822c5998dd010651b51d3800953bdd3322b3f3f62",
+      "sha256": "634f973cbd5c72fe2e6f51b020f53fbb4e8fd376da092edcd5bb9ee3a57478ad",
       "bytes": 3704
     }
   },
   "docs_hash8": {
-    "docs/auditorias/09_red_team_atracao_provimento.md": "a6ceff20",
+    "docs/auditorias/09_red_team_atracao_provimento.md": "4650d99e",
     "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "01a4248e",
-    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "c51bd810",
-    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "0c28eb5c"
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "90a61601",
+    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "634f973c"
   },
   "portoes": {
     "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",

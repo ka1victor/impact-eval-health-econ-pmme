@@ -429,3 +429,92 @@ rótulo de cada um. O 13,7 **não é apagado**.
 Direção e ordem de grandeza reproduzidas nos três itens; `run_tests.py` verde;
 `10_conferir_numeros_artigo.py` aprovando **todas** as cifras do artigo; e o
 artigo compilando sem transbordo de caixa e sem referência indefinida.
+
+---
+
+# Emenda 1 — resultado da execução (14/09/2026)
+
+> Registrado **depois** de executar, contra os alvos declarados acima. Commit da
+> emenda: `9e5de6d`. Nenhuma implementação foi ajustada para bater alvo.
+
+## E1-B (A-3) e E1-C (C-6) reproduzem
+
+**AME por bloco**, especificação vigente:
+
+| Estrato | AME antigo (indicadora isolada) | AME por bloco | Δ (p.p.) |
+|---|---:|---:|---:|
+| capital | 0,3606 | **0,3403** (EP 0,0757) | −2,03 |
+| metropolitano | 0,2784 | **0,2513** (EP 0,0524) | −2,71 |
+| interior próximo | 0,1009 | **0,0908** (EP 0,0350) | −1,02 |
+
+Dentro da faixa de 1 a 3 p.p. declarada, todas as reduções, sinal, ordenação e
+significância intactos, e a concordância com o LPM preservada.
+
+**MDE ex-post**: 20,1 / 16,4 / 12,1 p.p. contra ex-ante 19,5 / 13,7 / 11,9, com
+otimismo de 3,4% / 19,4% / 1,5%. Exatamente o alvo declarado.
+
+## E1-A (A-2) reproduz a direção; o `p` de capital fica fora da faixa declarada
+
+| Estrato | t | p nominal | p wild obtido | faixa declarada |
+|---|---:|---:|---:|---|
+| metropolitano | 4,770 | 1,84e-06 | **0,0005** (0 de 1999) | casa de 0,0005 ✔ |
+| capital | 4,547 | 5,45e-06 | **0,0015** (2 de 1999) | ordem de 10⁻² ✘ |
+| interior próximo | 2,798 | 5,14e-03 | **0,0115** (22 de 1999) | 10⁻³ a 10⁻² ✔ (borda) |
+
+`p wild >= p nominal` nos três, e os três seguem significativos a 5%: a direção,
+que é o que a emenda fixou como portão, reproduz.
+
+**Por que capital sai da faixa, e por que isso não é erro de implementação.** A
+faixa de 10⁻² foi derivada do `t = 2,694` da especificação **anterior ao C1**. O
+C1 é justamente a correção que move capital mais: o coeficiente vai de +0,2318
+para +0,3264 e o `t` de 2,694 para 4,547. Um `t` quase 70% maior produz
+necessariamente um `p` de bootstrap menor. O alvo indicativo envelheceu junto com
+a especificação, exatamente como a ressalva desta emenda previa.
+
+**Verificação independente, antes de aceitar o número.** A mesma implementação
+foi aplicada, em diagnóstico somente-leitura, à especificação anterior ao C1:
+
+| Estrato | t obtido | t do backlog | p nominal obtido | p nominal do backlog | p wild obtido | p wild do backlog |
+|---|---:|---:|---:|---:|---:|---:|
+| metropolitano | 4,852 | 4,852 | 1,221e-06 | 1,22e-06 | 0,0005 (0/1999) | ≤ 0,0005 (0/1999) |
+| capital | 2,694 | 2,694 | 7,050e-03 | 0,00705 | 0,0225 | 0,0185 |
+| interior próximo | 2,934 | 2,934 | 3,344e-03 | 0,00334 | 0,0065 | 0,0070 |
+
+Os `t` e os `p` nominais batem dígito a dígito, e metropolitano reproduz o
+`0 de 1999` exato. As duas diferenças restantes de `p` wild são ruído de Monte
+Carlo de semente distinta — a auditoria não publicou a sua —, com erro-padrão de
+simulação de cerca de 0,0031 em `B = 1999` nessa faixa de `p`. A implementação
+está validada; o que mudou foi a especificação.
+
+## Achado colateral — o `61,5%` da reauditoria não foi reproduzido
+
+A reauditoria motiva o bootstrap dizendo que *"a variância de
+`estrato_metropolitano` concentra 61,5% nos cinco maiores municípios, dando `G`
+efetivo ≈ 32"*. Nenhuma das cinco definições naturais testadas devolve 61,5%:
+soma de quadrados do regressor centrado por município (23,1%), quadrado da soma
+do escore de cluster (51,2%), contagem de células metropolitanas (29,1%), e as
+duas versões residualizadas por Frisch–Waugh–Lovell (12,8% e 31,9%).
+
+**Não se procurou uma sexta definição que batesse**, porque escolher a definição
+depois de ver qual reproduz o número é precisamente o que esta fila proíbe.
+
+**Consequência adotada:** o `61,5%` e o `G` efetivo ≈ 32 **não** são publicados
+como resultado de A4 nem citados no artigo. O bootstrap passa a ser justificado
+pelo gatilho literal do protocolo A3 — `G < 30` em subgrupo, e capital tem
+`G = 18`, número que vem de `A4_tabela_01_amostra_construcao.csv`. O diagnóstico
+da auditoria continua onde está, atribuído a ela.
+
+**Não corrigido:** a definição exata do `61,5%` continua em aberto em
+`docs/auditorias/13_reauditoria_independente_A1_A8.md`. Resolver isso é decisão
+de quem escreveu a auditoria, não desta sessão.
+
+## Efeito no artigo
+
+- Tabela A1, linha "Logit, efeito marginal médio": **27,8 / 6,2 → 25,1 / 5,2**.
+- Nota da Tabela A1: passa a dizer o que o AME contrasta.
+- Apêndice A: o MDE ex-ante de 13,7 p.p. é mantido e passa a vir acompanhado do
+  ex-post de 16,4 p.p., com o rótulo de cada um; parágrafo novo sobre o
+  bootstrap.
+- A linha "Modelo linear pré-especificado" (27,9 / 5,9), que é o primário, **não
+  muda**, e nenhum outro número do artigo muda.
+- O conferidor passa de 190 para **193** cifras, todas aprovadas.

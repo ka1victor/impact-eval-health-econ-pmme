@@ -1,0 +1,4 @@
+termo,espec,coef,se_cluster,t_observado,p_nominal_cluster,p_wild_cluster,n_excedentes,b_replicacoes,semente,n,n_clusters,t_estrela_p975,metodo
+estrato_capital,LPM_minimal_estrato_FEcurso_FEuf_cluster,0.3264038045413463,0.07179160434535373,4.546545623512911,5.453355294769253e-06,0.0015,2,1999,42,1295,368,2.4197507774529714,wild cluster bootstrap-t restrito; pesos Rademacher por municipio; nula imposta
+estrato_metropolitano,LPM_minimal_estrato_FEcurso_FEuf_cluster,0.2792856656562696,0.05855041209586844,4.770003415159102,1.842227959023983e-06,0.0005,0,1999,42,1295,368,2.018201518869128,wild cluster bootstrap-t restrito; pesos Rademacher por municipio; nula imposta
+estrato_interior_proximo_polo,LPM_minimal_estrato_FEcurso_FEuf_cluster,0.12065001700234028,0.043120940431196554,2.797944938024905,0.005142887906441984,0.0115,22,1999,42,1295,368,2.0667665785846867,wild cluster bootstrap-t restrito; pesos Rademacher por municipio; nula imposta

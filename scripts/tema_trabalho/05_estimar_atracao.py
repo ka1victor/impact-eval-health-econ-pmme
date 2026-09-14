@@ -100,6 +100,8 @@ TABELA_LOO = OUT_DIR / f"{PREFIX}_tabela_04_leave_one_out.csv"
 TABELA_INFLUENCIA = OUT_DIR / f"{PREFIX}_tabela_05_influencia_municipal.csv"
 TABELA_PRED = OUT_DIR / f"{PREFIX}_tabela_06_validacao_preditiva.csv"
 TABELA_SENS_COLAPSO = OUT_DIR / f"{PREFIX}_tabela_07_sensibilidade_colapso_uf.csv"
+TABELA_WILD = OUT_DIR / f"{PREFIX}_tabela_08_wild_cluster_bootstrap.csv"
+TABELA_MDE = OUT_DIR / f"{PREFIX}_tabela_09_mde_ex_ante_ex_post.csv"
 FIG_PROB_ESTRATO = OUT_DIR / f"{PREFIX}_figura_01_prob_ajustada_estrato.png"
 FIG_IVS = OUT_DIR / f"{PREFIX}_figura_02_gradiente_ivs.png"
 FIG_FAIXA = OUT_DIR / f"{PREFIX}_figura_03_faixa_descritiva.png"
@@ -107,6 +109,35 @@ JSON_ESTIMATIVAS = OUT_DIR / f"{PREFIX}_estimativas_atracao.json"
 RELATORIO_MD = OUT_DIR / f"{PREFIX}_relatorio_diagnostico.md"
 
 ALPHA = 0.05
+
+# --------------------------------------------------------------------------
+# Inferência de pequena amostra — wild cluster bootstrap (emenda 1, item A-2).
+#
+# O registro A3 (`inferencia`) manda: "HC cluster-robusto (LPM/logit) com G
+# clusters; se G<30 em subgrupo, reportar também wild cluster bootstrap". A
+# condição está satisfeita: capital tem G=18. A reauditoria acrescenta que o
+# G=368 do cluster principal é nominal, por concentração da variância de
+# `estrato_metropolitano` em poucos municípios; esse diagnóstico está em
+# `docs/auditorias/13_reauditoria_independente_A1_A8.md` e NÃO é recomputado
+# aqui. O gatilho que este módulo usa é o literal do protocolo: G<30 em
+# subgrupo.
+#
+# Especificação congelada na emenda 1 de `35_plano_correcoes_pos_auditoria.md`
+# ANTES de rodar: nula imposta, pesos de Rademacher por cluster de município,
+# B=1999, semente declarada, p bilateral por (1 + excedentes) / (B + 1).
+#
+# O p do bootstrap é COLUNA ADICIONAL. O p principal continua sendo o cluster
+# -robusto nominal, e o q de FDR continua calculado sobre ele.
+# --------------------------------------------------------------------------
+SEED_WILD_BOOTSTRAP = 42
+B_WILD_BOOTSTRAP = 1999
+TERMOS_WILD = ["estrato_capital", "estrato_metropolitano", "estrato_interior_proximo_polo"]
+
+# Potência ex-post (emenda 1, item C-6). MDE = (z_{1-alpha/2} + z_poder) * EP
+# realizado, a 80% de poder e 5% bilateral — os mesmos parâmetros do ex-ante de
+# A3. O ex-ante NÃO é recalculado nem apagado: A3 é protocolo congelado.
+PODER_MDE = 0.80
+Z_MDE = float(scipy_stats.norm.ppf(1 - ALPHA / 2) + scipy_stats.norm.ppf(PODER_MDE))
 
 # Colapso do FE de UF. O protocolo congelado em A3 manda colapsar UF com menos de
 # cinco clusters EM REGIÃO; a variante primária é essa, e as demais são
@@ -178,6 +209,153 @@ def colapsar_uf_fe(df: pd.DataFrame, small_ufs: set[str], variante: str) -> pd.S
     # nível próprio, explicitamente rotulado, em vez de herdar uma região.
     macro = macro.where(macro.ne(""), MACRO_SEM_REGIAO)
     return uf.where(~uf.isin(small_ufs), "MACRO_" + macro).astype(object)
+
+
+def _cluster_t_stats(
+    X: np.ndarray,
+    y: np.ndarray,
+    starts: np.ndarray,
+    n_clusters: int,
+    idx_alvo: int,
+    xtx_inv: np.ndarray,
+) -> float:
+    """t cluster-robusto de um coeficiente, com as linhas já ordenadas por cluster.
+
+    Reproduz a variância de `sm.OLS(...).fit(cov_type="cluster",
+    use_correction=True)`: meat por soma dos escores dentro de cada cluster e
+    correção de amostra finita G/(G-1) * (n-1)/(n-k).
+    """
+    n, k = X.shape
+    beta = xtx_inv @ (X.T @ y)
+    resid = y - X @ beta
+    escore = X * resid[:, None]
+    # Soma por cluster: as linhas estão ordenadas, então reduceat é exato.
+    soma_cluster = np.add.reduceat(escore, starts, axis=0)
+    meat = soma_cluster.T @ soma_cluster
+    correcao = (n_clusters / (n_clusters - 1.0)) * ((n - 1.0) / (n - k))
+    var = correcao * (xtx_inv @ meat @ xtx_inv)
+    se = math.sqrt(var[idx_alvo, idx_alvo])
+    return float(beta[idx_alvo] / se)
+
+
+def wild_cluster_bootstrap(
+    y: pd.Series,
+    X: pd.DataFrame,
+    groups: pd.Series,
+    termo: str,
+    b_reps: int = B_WILD_BOOTSTRAP,
+    seed: int = SEED_WILD_BOOTSTRAP,
+) -> dict[str, Any]:
+    """Wild cluster bootstrap-t restrito para H0: coeficiente de `termo` = 0.
+
+    Procedimento (Cameron, Gelbach e Miller), congelado na emenda 1 antes de
+    rodar:
+
+    1. Ajusta o modelo RESTRITO, sem a coluna de `termo` — a nula é imposta.
+    2. Em cada replicação sorteia um peso de Rademacher por CLUSTER e monta
+       `y* = y_ajustado_restrito + residuo_restrito * peso_do_cluster`.
+    3. Reajusta o modelo irrestrito em `y*` e guarda o `t` cluster-robusto.
+    4. `p = (1 + #{|t*| >= |t_obs|}) / (B + 1)`, bilateral. Zero rejeições
+       devolve 1/(B+1), nunca zero.
+
+    O `t` observado vem do mesmo estimador do ajuste principal, de modo que a
+    estatística bootstrapada e a observada são comparáveis.
+    """
+    if termo not in X.columns:
+        raise KeyError(f"termo ausente da matriz de desenho: {termo}")
+
+    # Ordena por cluster uma única vez: habilita soma por reduceat.
+    ordem = np.argsort(groups.to_numpy(), kind="stable")
+    g_ord = groups.to_numpy()[ordem]
+    X_ord = X.to_numpy(dtype=float)[ordem]
+    y_ord = y.to_numpy(dtype=float)[ordem]
+    starts = np.flatnonzero(np.r_[True, g_ord[1:] != g_ord[:-1]])
+    n_clusters = len(starts)
+    # Índice do cluster de cada linha, para espalhar o peso sorteado.
+    id_cluster = np.repeat(np.arange(n_clusters), np.diff(np.r_[starts, len(g_ord)]))
+
+    idx_alvo = list(X.columns).index(termo)
+    xtx_inv = np.linalg.inv(X_ord.T @ X_ord)
+    t_obs = _cluster_t_stats(X_ord, y_ord, starts, n_clusters, idx_alvo, xtx_inv)
+
+    # Modelo restrito: nula imposta removendo a coluna do termo avaliado.
+    X_r = np.delete(X_ord, idx_alvo, axis=1)
+    beta_r = np.linalg.lstsq(X_r, y_ord, rcond=None)[0]
+    ajustado_r = X_r @ beta_r
+    resid_r = y_ord - ajustado_r
+
+    rng = np.random.default_rng(seed)
+    excedentes = 0
+    t_estrela = np.empty(b_reps, dtype=float)
+    for b in range(b_reps):
+        pesos = rng.integers(0, 2, size=n_clusters) * 2.0 - 1.0  # Rademacher
+        y_star = ajustado_r + resid_r * pesos[id_cluster]
+        t_b = _cluster_t_stats(X_ord, y_star, starts, n_clusters, idx_alvo, xtx_inv)
+        t_estrela[b] = t_b
+        if abs(t_b) >= abs(t_obs):
+            excedentes += 1
+
+    p_wild = (1.0 + excedentes) / (b_reps + 1.0)
+    return {
+        "termo": termo,
+        "t_observado": t_obs,
+        "p_wild_cluster": p_wild,
+        "n_excedentes": int(excedentes),
+        "b_replicacoes": int(b_reps),
+        "semente": int(seed),
+        "n_clusters": int(n_clusters),
+        "t_estrela_p975": float(np.quantile(np.abs(t_estrela), 0.95)),
+        "metodo": "wild cluster bootstrap-t restrito; pesos Rademacher por municipio; nula imposta",
+    }
+
+
+def ame_bloco_categorico(
+    res_logit,
+    X: pd.DataFrame,
+    colunas_bloco: list[str],
+) -> pd.DataFrame:
+    """AME de um bloco de indicadoras mutuamente exclusivas contra a referência.
+
+    Corrige o item A-3. `get_margeff(dummy=True)` altera apenas a coluna da
+    indicadora avaliada e mantém as demais no valor observado, o que produz
+    células simultaneamente capital e metropolitana — um contrafactual que não
+    existe na população. O contraste correto troca o BLOCO INTEIRO:
+
+        AME_L = média_i [ Λ(x_i com bloco = L) − Λ(x_i com bloco = 0) ]
+
+    O braço de referência zera todas as indicadoras do bloco, o que devolve a
+    categoria omitida (`interior_remoto`); o braço tratado liga apenas a do
+    estrato avaliado. Curso, UF e demais covariadas ficam no valor observado.
+
+    O erro-padrão sai do método delta sobre a MESMA matriz de covariância
+    cluster-robusta usada no ajuste, preservando o cluster de município:
+
+        g = média_i [ λ(x_i^L) x_i^L − λ(x_i^0) x_i^0 ],  Var = g' V g
+    """
+    beta = res_logit.params.reindex(X.columns).to_numpy(dtype=float)
+    vcov = np.asarray(res_logit.cov_params().reindex(index=X.columns, columns=X.columns))
+    base = X.to_numpy(dtype=float).copy()
+    pos = {c: i for i, c in enumerate(X.columns)}
+
+    # Braço de referência: bloco inteiro zerado -> categoria omitida.
+    x_ref = base.copy()
+    for col in colunas_bloco:
+        x_ref[:, pos[col]] = 0.0
+    p_ref = 1.0 / (1.0 + np.exp(-(x_ref @ beta)))
+    lam_ref = p_ref * (1.0 - p_ref)
+    grad_ref = (lam_ref[:, None] * x_ref).mean(axis=0)
+
+    linhas = []
+    for col in colunas_bloco:
+        x_trt = x_ref.copy()
+        x_trt[:, pos[col]] = 1.0
+        p_trt = 1.0 / (1.0 + np.exp(-(x_trt @ beta)))
+        lam_trt = p_trt * (1.0 - p_trt)
+        grad = (lam_trt[:, None] * x_trt).mean(axis=0) - grad_ref
+        ame = float((p_trt - p_ref).mean())
+        se = float(math.sqrt(max(grad @ vcov @ grad, 0.0)))
+        linhas.append({"termo": col, "ame_bloco": ame, "se_ame_bloco": se})
+    return pd.DataFrame(linhas)
 
 
 def prepare_df_primary() -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -354,6 +532,10 @@ def main() -> None:
         if not p.exists():
             raise FileNotFoundError(p)
 
+    # Potência ex-ante de A3: lida cedo porque o MDE ex-post do item C-6 é
+    # publicado ao lado dela, junto do modelo primário. Leitura somente.
+    pot = json.loads(POTENCIA_A3.read_text(encoding="utf-8"))
+
     df_prim, df_ext = prepare_df_primary()
     # y, groups primários
     y_prim = df_prim["outcome_alguma_confirmacao_ou_homologacao"].astype(float)
@@ -443,6 +625,75 @@ def main() -> None:
     res_lpm_min = fit_lpm(y_prim, X_min, g_prim)
     tab_lpm_min = summarize_res(res_lpm_min, X_min, y_prim, g_prim, "LPM_minimal_estrato_FEcurso_FEuf_cluster")
 
+    # Wild cluster bootstrap exigido pelo registro A3 quando há subgrupo com
+    # G<30 (capital, G=18). Item A-2 / emenda 1. Entra como COLUNA ADICIONAL:
+    # o p principal segue sendo o cluster-robusto nominal.
+    wild_rows = [
+        wild_cluster_bootstrap(y_prim, X_min, g_prim, termo)
+        for termo in TERMOS_WILD
+    ]
+    wild_df = pd.DataFrame(wild_rows)
+    wild_df = wild_df.merge(
+        tab_lpm_min[["termo", "coef", "se_cluster", "p_valor"]].rename(
+            columns={"p_valor": "p_nominal_cluster"}),
+        on="termo", how="left",
+    )
+    wild_df["espec"] = "LPM_minimal_estrato_FEcurso_FEuf_cluster"
+    wild_df["n"] = len(y_prim)
+    wild_df = wild_df[[
+        "termo", "espec", "coef", "se_cluster", "t_observado",
+        "p_nominal_cluster", "p_wild_cluster", "n_excedentes", "b_replicacoes",
+        "semente", "n", "n_clusters", "t_estrela_p975", "metodo",
+    ]]
+    tmp = TABELA_WILD.with_suffix(".csv.tmp")
+    wild_df.to_csv(tmp, index=False)
+    tmp.replace(TABELA_WILD)
+    # Coluna adicional APENAS na tabela principal, sem tocar em p_valor nem em
+    # q. Em cópia própria: `tab_lpm_min` é reaproveitada na tabela 03 de
+    # separação, onde as demais especificações não têm bootstrap e a coluna só
+    # produziria vazio.
+    tab_lpm_min_publicada = tab_lpm_min.merge(
+        wild_df[["termo", "p_wild_cluster"]], on="termo", how="left")
+
+    # Potência ex-post do EP realizado (item C-6 / emenda 1), publicada AO LADO
+    # do MDE ex-ante de A3, que permanece intacto.
+    mde_ex_ante = {
+        k: float(v["mde_80_pp_p30"])
+        for k, v in pot["contrastes_vs_interior_remoto"].items()
+    }
+    mapa_mde = {
+        "estrato_capital": "capital",
+        "estrato_metropolitano": "metropolitano",
+        "estrato_interior_proximo_polo": "interior_proximo_polo",
+    }
+    mde_rows = []
+    for termo, chave in mapa_mde.items():
+        ep = float(tab_lpm_min.loc[tab_lpm_min["termo"] == termo, "se_cluster"].iloc[0])
+        ex_post = Z_MDE * ep
+        ex_ante = mde_ex_ante[chave]
+        mde_rows.append({
+            "estrato": chave,
+            "termo": termo,
+            "ep_realizado_cluster": ep,
+            "mde_ex_post_p80": ex_post,
+            "mde_ex_ante_A3_p80_p30": ex_ante,
+            "razao_ex_post_sobre_ex_ante": ex_post / ex_ante,
+            "otimismo_do_ex_ante": (ex_post - ex_ante) / ex_ante,
+            "z_bilateral_mais_poder": Z_MDE,
+            "poder": PODER_MDE,
+            "alpha": ALPHA,
+            "nota": (
+                "ex-ante A3: formula analitica de diferenca de proporcoes com DEFF, "
+                "ignora a variacao do estrato absorvida pelos FE de curso e UF; "
+                "ex-post: (z_{1-alpha/2}+z_poder) x EP cluster-robusto realizado. "
+                "A3 permanece congelado e nao foi reexecutado."
+            ),
+        })
+    mde_df = pd.DataFrame(mde_rows)
+    tmp = TABELA_MDE.with_suffix(".csv.tmp")
+    mde_df.to_csv(tmp, index=False)
+    tmp.replace(TABELA_MDE)
+
     # Logit AME alternativo mesma spec
     res_logit_min = fit_logit(y_prim, X_min, g_prim)
     # AME cluster SE precisa delta method; statsmodels get_margeff não suporta cluster diretamente, mas usa se da coef e transforma?
@@ -476,6 +727,29 @@ def main() -> None:
         "n_clusters": g_prim.nunique(),
         "outcome_medio": y_prim.mean(),
     })
+    # Item A-3 / emenda 1: o AME do bloco de estrato passa a trocar o BLOCO
+    # INTEIRO de indicadoras contra interior_remoto. `get_margeff(dummy=True)`
+    # altera só a coluna avaliada e deixa as demais no valor observado, o que
+    # gera células simultaneamente capital e metropolitana — contrafactual que
+    # não existe na população. O valor antigo não é apagado: fica em coluna
+    # própria, e cada linha passa a declarar o método que a gerou.
+    ame_df["ame_statsmodels_dummy_true"] = ame_df["ame"]
+    ame_df["se_ame_statsmodels_dummy_true"] = ame_df["se_ame"]
+    ame_df["metodo_ame"] = "statsmodels get_margeff(dummy=True); indicadora isolada"
+
+    colunas_bloco_estrato = [c for c in X_min.columns if c.startswith("estrato_")]
+    ame_bloco = ame_bloco_categorico(res_logit_min, X_min, colunas_bloco_estrato)
+    mapa_ame = ame_bloco.set_index("termo")["ame_bloco"].to_dict()
+    mapa_se = ame_bloco.set_index("termo")["se_ame_bloco"].to_dict()
+    linhas_bloco = ame_df["termo"].isin(mapa_ame)
+    ame_df.loc[linhas_bloco, "ame"] = ame_df.loc[linhas_bloco, "termo"].map(mapa_ame)
+    ame_df.loc[linhas_bloco, "se_ame"] = ame_df.loc[linhas_bloco, "termo"].map(mapa_se)
+    ame_df.loc[linhas_bloco, "metodo_ame"] = (
+        "contraste de bloco vs interior_remoto; EP por metodo delta sobre a VCE cluster-robusta"
+    )
+    ame_df["z"] = ame_df["ame"] / ame_df["se_ame"]
+    ame_df["p_valor"] = 2 * (1 - scipy_stats.norm.cdf(np.abs(ame_df["z"])))
+
     ame_df["ci_low"] = ame_df["ame"] - scipy_stats.norm.ppf(1 - ALPHA / 2) * ame_df["se_ame"]
     ame_df["ci_high"] = ame_df["ame"] + scipy_stats.norm.ppf(1 - ALPHA / 2) * ame_df["se_ame"]
     # FDR para estrato AME
@@ -485,9 +759,9 @@ def main() -> None:
     else:
         ame_df["q_fdr_estrato"] = np.nan
 
-    # Salva LPM minimal
+    # Salva LPM minimal (com a coluna adicional do wild cluster bootstrap)
     tmp = TABELA_PRINCIPAL_LPM.with_suffix(".csv.tmp")
-    tab_lpm_min.to_csv(tmp, index=False)
+    tab_lpm_min_publicada.to_csv(tmp, index=False)
     tmp.replace(TABELA_PRINCIPAL_LPM)
     # Salva Logit AME
     tmp = TABELA_PRINCIPAL_LOGIT.with_suffix(".csv.tmp")
@@ -972,8 +1246,7 @@ def main() -> None:
     # --------------------------------------------------
     # 7. JSON estimativas + hashes + diagnóstico
     # --------------------------------------------------
-    # Potência referência para interpretação
-    pot = json.loads(POTENCIA_A3.read_text(encoding="utf-8"))
+    # Potência referência para interpretação: `pot` já foi lida no início de main().
     reg = json.loads(REGISTRO_A3.read_text(encoding="utf-8"))
     manifesto = json.loads(MANIFESTO_TIP.read_text(encoding="utf-8"))
 
@@ -1005,6 +1278,20 @@ def main() -> None:
                 "metodo": str(res_logit_min.mle_settings.get("optimizer", "desconhecido")),
                 "ame_estrato": {row["termo"]: float(row["ame"]) for _, row in ame_df[ame_df["termo"].str.startswith("estrato_")].iterrows()},
                 "se_ame_estrato": {row["termo"]: float(row["se_ame"]) for _, row in ame_df[ame_df["termo"].str.startswith("estrato_")].iterrows()},
+                "contrafactual_ame_estrato": (
+                    "troca do bloco inteiro de indicadoras de estrato contra interior_remoto; "
+                    "EP por método delta sobre a VCE cluster-robusta do próprio logit"
+                ),
+                "ame_estrato_statsmodels_dummy_true": {
+                    row["termo"]: float(row["ame_statsmodels_dummy_true"])
+                    for _, row in ame_df[ame_df["termo"].str.startswith("estrato_")].iterrows()
+                },
+                "nota_ame_statsmodels": (
+                    "valor anterior, mantido só para auditoria: get_margeff(dummy=True) altera apenas "
+                    "a coluna do estrato avaliado e deixa as demais indicadoras do bloco no valor "
+                    "observado, gerando células simultaneamente capital e metropolitana. Superestima "
+                    "o contraste. Não é o valor publicado."
+                ),
             },
             "robustez_estagios_funil": resultados_estagios,
             "robustez_municipio_curso": {
@@ -1060,6 +1347,47 @@ def main() -> None:
         "potencia_referencia": {
             "benchmark_global_proporcao_p30": pot["mde_global"]["mde_80_pp_p30"],
             "contrastes_vs_interior_remoto_p30": {k: v["mde_80_pp_p30"] for k, v in pot["contrastes_vs_interior_remoto"].items()},
+            "mde_ex_post_do_ep_realizado_p80": {
+                row["estrato"]: float(row["mde_ex_post_p80"]) for _, row in mde_df.iterrows()
+            },
+            "ep_realizado_cluster": {
+                row["estrato"]: float(row["ep_realizado_cluster"]) for _, row in mde_df.iterrows()
+            },
+            "otimismo_do_ex_ante": {
+                row["estrato"]: float(row["otimismo_do_ex_ante"]) for _, row in mde_df.iterrows()
+            },
+            "nota_ex_ante_vs_ex_post": (
+                "contrastes_vs_interior_remoto_p30 é o MDE EX-ANTE de A3, mantido sem alteração: "
+                "fórmula analítica de diferença de proporções com DEFF, que ignora a variação do "
+                "próprio estrato absorvida pelos FE de curso e de UF e por isso é otimista. "
+                "mde_ex_post_do_ep_realizado_p80 = (z_{1-alpha/2}+z_poder) x EP cluster-robusto "
+                "realizado do coeficiente, a 80% de poder e 5% bilateral. A3 continua congelado e "
+                "não foi reexecutado. Detalhe em A4_tabela_09_mde_ex_ante_ex_post.csv."
+            ),
+        },
+        "inferencia_wild_cluster_bootstrap": {
+            "motivo": (
+                "registro A3 exige wild cluster bootstrap quando um subgrupo tem G<30; capital tem "
+                "G=18 na amostra primária (A4_tabela_01_amostra_construcao.csv). A reauditoria "
+                "registra ainda que o G=368 do cluster principal é nominal, por concentração da "
+                "variância de estrato_metropolitano em poucos municípios; esse diagnóstico é da "
+                "auditoria e não é recomputado neste módulo."
+            ),
+            "metodo": "wild cluster bootstrap-t restrito; pesos Rademacher por município; nula imposta",
+            "b_replicacoes": int(B_WILD_BOOTSTRAP),
+            "semente": int(SEED_WILD_BOOTSTRAP),
+            "convencao_p": "p = (1 + #{|t*| >= |t_obs|}) / (B + 1), bilateral",
+            "p_wild_por_estrato": {
+                row["termo"]: float(row["p_wild_cluster"]) for _, row in wild_df.iterrows()
+            },
+            "p_nominal_por_estrato": {
+                row["termo"]: float(row["p_nominal_cluster"]) for _, row in wild_df.iterrows()
+            },
+            "nota": (
+                "coluna adicional de honestidade da precisão: o p principal continua sendo o "
+                "cluster-robusto nominal, e o q de FDR entre estratos segue calculado sobre ele. "
+                "Detalhe em A4_tabela_08_wild_cluster_bootstrap.csv."
+            ),
         },
         "hashes_entradas": {
             str(p.relative_to(ROOT)).replace("\\", "/"): {"sha256": sha256(p)} for p in [QUADRO, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3]
@@ -1082,6 +1410,8 @@ def main() -> None:
             "tabela_influencia": str(TABELA_INFLUENCIA.relative_to(ROOT)).replace("\\", "/"),
             "tabela_preditiva": str(TABELA_PRED.relative_to(ROOT)).replace("\\", "/"),
             "tabela_sensibilidade_colapso_uf": str(TABELA_SENS_COLAPSO.relative_to(ROOT)).replace("\\", "/"),
+            "tabela_wild_cluster_bootstrap": str(TABELA_WILD.relative_to(ROOT)).replace("\\", "/"),
+            "tabela_mde_ex_ante_ex_post": str(TABELA_MDE.relative_to(ROOT)).replace("\\", "/"),
             "figura_prob_estrato": str(FIG_PROB_ESTRATO.relative_to(ROOT)).replace("\\", "/"),
             "figura_ivs": str(FIG_IVS.relative_to(ROOT)).replace("\\", "/"),
             "figura_faixa": str(FIG_FAIXA.relative_to(ROOT)).replace("\\", "/"),
@@ -1089,7 +1419,24 @@ def main() -> None:
         "avisos": [
             "Faixa não isolada de IVS; coeficiente descritivo, não efeito causal da bolsa.",
             "IVS linear não significativo; gradiente descritivo.",
-            "Capital com G=18 <30: IC cluster nominal; wild bootstrap recomendado para subgrupo, não computado nesta entrega.",
+            (
+                "Capital tem G=18 <30 na amostra primária, que é o gatilho literal do registro A3. "
+                f"O wild cluster bootstrap exigido foi computado (Rademacher, nula imposta, B={B_WILD_BOOTSTRAP}, "
+                f"semente {SEED_WILD_BOOTSTRAP}) e está em A4_tabela_08_wild_cluster_bootstrap.csv. "
+                "O p wild é coluna adicional; o p principal continua sendo o cluster-robusto nominal."
+            ),
+            (
+                "O MDE ex-ante de A3 é otimista contra o modelo estimado, porque a fórmula analítica "
+                "ignora a variação do estrato absorvida pelos FE de curso e UF. O MDE ex-post do EP "
+                "realizado é publicado ao lado, sem apagar o ex-ante, em "
+                "A4_tabela_09_mde_ex_ante_ex_post.csv."
+            ),
+            (
+                "AME do logit: o contraste de estrato troca o bloco inteiro de indicadoras contra "
+                "interior_remoto. get_margeff(dummy=True) alteraria só a coluna avaliada, mantendo as "
+                "demais no valor observado e gerando células simultaneamente capital e metropolitana; "
+                "esse valor fica em coluna própria apenas para auditoria."
+            ),
             "Não ponderar por vagas; pesos por estrato alteram estimando.",
             "Cursos como exploração; FDR apenas para família 4 estratos.",
             aviso_sem_macro,
@@ -1111,7 +1458,23 @@ def main() -> None:
         lpm_rows_md += f"| {row['termo'].replace('estrato_', '').replace('_', ' ')} | {fmt_coef(row['coef'], row['se_cluster'], row['p_valor'])} | {row['ci_low']:.3f} a {row['ci_high']:.3f} | {row['q_fdr_estrato']:.3f} |\n"
     ame_rows_md = ""
     for _, row in ame_df[ame_df["termo"].str.startswith("estrato_")].iterrows():
-        ame_rows_md += f"| {row['termo'].replace('estrato_', '').replace('_', ' ')} | {row['ame']:.3f} ({row['se_ame']:.3f}) | {row['ci_low']:.3f} a {row['ci_high']:.3f} |\n"
+        ame_rows_md += f"| {row['termo'].replace('estrato_', '').replace('_', ' ')} | {row['ame']:.3f} ({row['se_ame']:.3f}) | {row['ci_low']:.3f} a {row['ci_high']:.3f} | {row['ame_statsmodels_dummy_true']:.3f} |\n"
+
+    wild_rows_md = ""
+    for _, row in wild_df.iterrows():
+        wild_rows_md += (
+            f"| {row['termo'].replace('estrato_', '').replace('_', ' ')} "
+            f"| {row['t_observado']:.3f} | {row['p_nominal_cluster']:.5f} "
+            f"| {row['p_wild_cluster']:.4f} | {int(row['n_excedentes'])} de {int(row['b_replicacoes'])} |\n"
+        )
+
+    mde_rows_md = ""
+    for _, row in mde_df.iterrows():
+        mde_rows_md += (
+            f"| {row['estrato'].replace('_', ' ')} | {row['ep_realizado_cluster']:.5f} "
+            f"| {row['mde_ex_post_p80']:.1%} | {row['mde_ex_ante_A3_p80_p30']:.1%} "
+            f"| {row['otimismo_do_ex_ante']:+.1%} |\n"
+        )
 
     colapso_md = ""
     for variante, _descricao, eh_primaria in VARIANTES_COLAPSO_UF:
@@ -1142,7 +1505,7 @@ def main() -> None:
     relatorio = f"""# A4 — Atração e implementação: diagnóstico e linguagem autorizada (02/09/2026)
 
 > Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash {sha256(REGISTRO_A3)[:8]})
-> Potência: `output/tema_trabalho/potencia_atracao.json`; MDE aproximado dos contrastes vs remoto: capital {pot['contrastes_vs_interior_remoto']['capital']['mde_80_pp_p30']:.1%}, metro {pot['contrastes_vs_interior_remoto']['metropolitano']['mde_80_pp_p30']:.1%}, próximo {pot['contrastes_vs_interior_remoto']['interior_proximo_polo']['mde_80_pp_p30']:.1%}
+> Potência: `output/tema_trabalho/potencia_atracao.json`; MDE **ex-ante** dos contrastes vs remoto: capital {pot['contrastes_vs_interior_remoto']['capital']['mde_80_pp_p30']:.1%}, metro {pot['contrastes_vs_interior_remoto']['metropolitano']['mde_80_pp_p30']:.1%}, próximo {pot['contrastes_vs_interior_remoto']['interior_proximo_polo']['mde_80_pp_p30']:.1%}. O MDE **ex-post** do EP realizado está na seção 2 e em `A4_tabela_09_mde_ex_ante_ex_post.csv`
 > Tipologia A2 strict 540/540 (25/101/238/176) quadro 368 (18/72/203/75)
 > Amostra primária: **1295 células CNES–curso Ch1 em 368 municípios**; estendida 3057 (1762 Ch2)
 
@@ -1163,15 +1526,29 @@ População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, refor
 | Estrato | coef (SE) cluster | IC95% | q FDR (3 testes) |
 |---|---|---|---|
 {lpm_rows_md}
-N=1295, G=368, R²={res_lpm_min.rsquared:.3f}, outcome médio {y_prim.mean():.1%}. O benchmark global de 3,8% mede precisão de uma proporção, não potência do coeficiente. Para os contrastes efetivos contra remoto, os MDEs aproximados são {pot['contrastes_vs_interior_remoto']['capital']['mde_80_pp_p30']:.1%} (capital), {pot['contrastes_vs_interior_remoto']['metropolitano']['mde_80_pp_p30']:.1%} (metro) e {pot['contrastes_vs_interior_remoto']['interior_proximo_polo']['mde_80_pp_p30']:.1%} (próximo).
+N=1295, G=368, R²={res_lpm_min.rsquared:.3f}, outcome médio {y_prim.mean():.1%}. O benchmark global de 3,8% mede precisão de uma proporção, não potência do coeficiente. Para os contrastes efetivos contra remoto, os MDEs **ex-ante** aproximados são {pot['contrastes_vs_interior_remoto']['capital']['mde_80_pp_p30']:.1%} (capital), {pot['contrastes_vs_interior_remoto']['metropolitano']['mde_80_pp_p30']:.1%} (metro) e {pot['contrastes_vs_interior_remoto']['interior_proximo_polo']['mde_80_pp_p30']:.1%} (próximo).
 
-**Logit AME (mesma spec):**
+**Logit AME (mesma spec):** o contraste de estrato troca o **bloco inteiro** de indicadoras contra `interior_remoto`, e não uma indicadora isolada. A última coluna traz, só para auditoria, o valor que `get_margeff(dummy=True)` devolvia: ele altera apenas a coluna do estrato avaliado e mantém as demais no valor observado, o que constrói células simultaneamente capital e metropolitana — um contrafactual que não existe na população — e superestima o contraste.
 
-| Estrato | AME (SE) | IC95% |
-|---|---|---|
+| Estrato | AME (SE) | IC95% | AME antigo (indicadora isolada) |
+|---|---|---|---|
 {ame_rows_md}
 
 Concordância LPM–Logit: gradiente metro > capital > próximo > remoto (ref.) persiste; magnitude LPM ≈ AME (dif. <2pp).
+
+**Wild cluster bootstrap (registro A3).** O A3 manda reportar wild cluster bootstrap quando um subgrupo tem `G<30`, e capital tem `G=18` na amostra primária. A reauditoria acrescenta que o `G=368` do cluster principal é nominal, por concentração da variância de `estrato_metropolitano` em poucos municípios; esse diagnóstico é da auditoria e não é recomputado aqui. Procedimento restrito, pesos de Rademacher por município, `B={B_WILD_BOOTSTRAP}`, semente `{SEED_WILD_BOOTSTRAP}`, `p = (1 + excedentes) / (B + 1)`:
+
+| Estrato | t observado | p nominal cluster | p wild | excedentes |
+|---|---|---|---|---|
+{wild_rows_md}
+
+O `p` wild é **coluna adicional**, não substituto: o `p` principal continua sendo o cluster-robusto nominal, e o `q` de FDR entre estratos segue calculado sobre ele.
+
+**Potência ex-post.** O MDE ex-ante de A3 é analítico e ignora que os FE de curso e de UF absorvem variação do próprio estrato, então subestima o erro-padrão que o modelo entrega. Os dois ficam publicados lado a lado; o ex-ante **não** é recalculado, porque A3 é protocolo congelado:
+
+| Estrato | EP realizado | MDE ex-post | MDE ex-ante A3 | otimismo do ex-ante |
+|---|---|---|---|---|
+{mde_rows_md}
 
 **Robustez de definição e unidade.** Separando o funil, o contraste metropolitano vs remoto é {resultados_estagios['alguma_confirmacao']['coef_estrato']['estrato_metropolitano']:.3f} para alguma confirmação e {resultados_estagios['alguma_homologacao']['coef_estrato']['estrato_metropolitano']:.3f} para alguma homologação. Colapsando múltiplos CNES para 1.184 células município–curso, o contraste é {res_mc.params['estrato_metropolitano']:.3f} (p={res_mc.pvalues['estrato_metropolitano']:.3f}). O gradiente não depende da união dos estágios nem do peso implícito de municípios com mais de um CNES.
 
@@ -1226,7 +1603,7 @@ Permitido: atração administrativa (alguma confirmação/homologação observad
 
 ## 8. Limites e próximos passos
 
-- Capital G=18 <30: IC nominal; para heterogeneidade fina por estrato, reportar wild bootstrap se G pequeno (não computado nesta entrega).
+- Capital G=18 <30 na amostra primária, gatilho literal do registro A3. O wild cluster bootstrap exigido foi computado (Rademacher, nula imposta, B={B_WILD_BOOTSTRAP}, semente {SEED_WILD_BOOTSTRAP}) e está na seção 2 e em `A4_tabela_08_wild_cluster_bootstrap.csv`. O p wild é coluna adicional; o p principal continua sendo o cluster-robusto nominal.
 - Cursos <50 células (ex. curso 3 n=26) MDE >15pp — análise por curso descritiva.
 - Não estimar dose recebida (salário) nem retenção individual; A5 validará T0 físico CNES e ponte CBO 10/16 sem sobreposição.
 - Pesos por vagas alteram estimando; não ponderado é primário.
