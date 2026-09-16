@@ -89,6 +89,46 @@
       }
     }
   },
+  "estatisticas_publicadas_slide_4": {
+    "especialistas_por_uf_extremos": {
+      "valores": {
+        "DF": 453,
+        "SP": 244,
+        "PA": 70,
+        "MA": 68
+      },
+      "unidade": "especialistas por 100 mil habitantes",
+      "referencia": "dez/2024",
+      "cobertura": "4 UFs com valor citado, de 27",
+      "fonte": "Demografia Médica no Brasil 2025 (FMUSP/AMB), na cobertura da Agência Brasil, abril de 2025",
+      "fonte_primaria_confirmada": false
+    },
+    "deslocamento_por_regiao": {
+      "valores": {
+        "Norte": 276,
+        "Centro-Oeste": 256,
+        "Nordeste": 179,
+        "Sudeste": 107,
+        "Sul": 101
+      },
+      "unidade": "km, distância média para serviços de alta complexidade",
+      "cobertura": "5 grandes regiões",
+      "fonte": "atribuído à REGIC 2018 (IBGE); tabela de origem não localizada",
+      "fonte_primaria_confirmada": false
+    },
+    "dupla_pratica_cirurgioes": {
+      "valores": {
+        "Exclusivamente público ou SUS": 7.7,
+        "Dupla prática público e privado": 72.4,
+        "Exclusivamente privado": 19.9
+      },
+      "unidade": "% dos cirurgiões respondentes",
+      "cobertura": "inquérito por amostra do Colégio Brasileiro de Cirurgiões, 1544 respondentes de 6869 elegíveis; não é censo",
+      "fonte": "Demografia Médica no Brasil 2025 (FMUSP/AMB), cap. 13, Fig. 1, p. 254",
+      "fonte_primaria_confirmada": true
+    },
+    "leitura": "estatísticas publicadas, declaradas como constantes no script; não derivam de base do repositório e não são estimativas do projeto"
+  },
   "regra_de_faixa": {
     "grade": "Edital SGTES/MS nº 3/2025",
     "mapeamento": {
@@ -232,6 +272,9 @@
   },
   "leitura": "descritiva; sem grupo de comparação; presença cadastral, não participação",
   "figuras": [
+    "output/apresentacao_banca1/especialistas_por_uf_extremos.png",
+    "output/apresentacao_banca1/deslocamento_por_regiao.png",
+    "output/apresentacao_banca1/dupla_pratica_cirurgioes.png",
     "output/apresentacao_banca1/bolsa_por_faixa.png",
     "output/apresentacao_banca1/oferta_pre_por_faixa.png",
     "output/apresentacao_banca1/retaguarda_por_faixa.png",

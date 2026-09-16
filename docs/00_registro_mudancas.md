@@ -8,6 +8,77 @@
 
 ---
 
+## 17/09/2026 — Banca 1: corte de texto na seção 1, e as figuras do slide 4 entram no pipeline
+
+A pedido do autor, sobre a seção 1 da apresentação, com um pedido geral acima de
+todos — **corta texto** — e quatro específicos: gráfico no lugar de texto e de
+tabela no slide do Problema, refatoração do slide da Política com análise do PR
+de ajuste estrutural aberto, e dois a favor e dois contra na literatura do slide
+de Efeitos. O número de slides **não mudou**: seguem 16, em três seções. Os
+builds caem de **33 para 32**.
+
+### Informação que mudou de lugar
+
+- O **diagrama de teoria da mudança** sai do slide 5 (Política) e vai para o
+  slide 7 (Pergunta de pesquisa), como primeiro build. É onde ele faz o trabalho
+  que o roteiro já lhe atribuía: separar os elos escritos em ato oficial dos que
+  são suposição do programa é o que torna a pergunta inevitável. O slide 5 cai de
+  cinco builds para três; o slide 7 sobe de um para dois, e nenhum slide do deck
+  passa de três.
+- As figuras `especialistas_por_uf.png` e `deslocamento_por_regiao.png` saem de
+  `docs/07_apresentacoes/banca1/figuras/` e passam a ser **geradas** em
+  `output/apresentacao_banca1/`. Os dois PNGs antigos ficam no lugar, como
+  material preservado do deck do grupo, e voltam à lista de figuras não usadas.
+
+### Arquivos novos, todos derivados
+
+Três figuras passam a ser produzidas por
+[`scripts/apresentacao/gerar_figuras_banca1.py`](../scripts/apresentacao/gerar_figuras_banca1.py),
+em `output/apresentacao_banca1/`: `especialistas_por_uf_extremos.png`,
+`deslocamento_por_regiao.png` e `dupla_pratica_cirurgioes.png`. Os valores são
+estatísticas publicadas, declaradas no script como constantes com fonte, página e
+cobertura, e repetidas no `manifesto_figuras.json` sob
+`estatisticas_publicadas_slide_4`, cada uma com `fonte_primaria_confirmada`.
+Nenhuma deriva de base do repositório, e nenhuma é estimativa do projeto.
+
+### Um defeito encontrado na conferência
+
+A figura de especialistas por UF do deck do grupo **não era usável**. Calibrada
+pelos dois únicos rótulos impressos — DF 453,5 e MA 68,2 —, as barras
+intermediárias dão **SP ≈ 419** e **PA ≈ 135**, contra os **244** e **70** da
+série que a proveniência cita. Só os dois extremos batem; a série das outras
+catorze barras não tem origem conhecida. A figura nova mostra os **quatro**
+valores com fonte registrada, e o panorama das 27 unidades só volta quando a
+tabela por UF da *Demografia Médica 2025* estiver registrada em `data/raw/` com
+hash. A pendência 1 mudou de conteúdo por isso: era de forma, virou de cobertura.
+
+### O que veio do PR de ajuste estrutural
+
+Dos nove itens de
+[`06_execucao/37_proposta_ajuste_estrutural.md`](06_execucao/37_proposta_ajuste_estrutural.md),
+entram só os de **rótulo e texto**, que é a onda 1 da sequência que o próprio PR
+propõe. **D1**: "1.295 vagas" vira "1.295 **células** estabelecimento–curso", com
+as 678 vagas imediatas ditas na tela, nos slides 5 e 6. **F2**: o pacote
+formativo entra no slide 5 como o que **não** varia. **F5** não entra: o PR o
+lista como decisão do autor, e ele vira a **pendência 8** de
+[02 — Conteúdo](07_apresentacoes/banca1/02_conteudo_slides.md) e `P10` de
+[03 — Proveniência](07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md).
+Nada que toque estimativa foi executado.
+
+### Conteúdo que saiu da tela
+
+Nenhum número mudou de valor. Saíram do corpo dos slides, e seguem rastreados em
+[03 — Proveniência](07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md):
+os quatro marcadores do retrato nacional e a tabela dos três percentuais de
+atuação, que **entraram nas figuras**; os 16 cursos e os 6 títulos de oncologia;
+a contribuição previdenciária e o adicional não regulamentado; duas das quatro
+células da literatura contrária, Costa, Nunes & Sanches (2024) — que continua no
+slide 10 — e Pathman, Konrad & Ricketts (1992); e os dois números do slide 6 que
+eram **saída de estimação**, o +20,9 p.p. ajustado e o +0,50 com erro padrão
+0,234, porque a banca 1 não apresenta resultado de estimação.
+
+---
+
 ## 16/09/2026 — Banca 1: nova estrutura em 3 seções, 16 slides, e cabeçalho como slide
 
 A pedido do autor, que trouxe a estrutura pronta e comentários por bloco. A

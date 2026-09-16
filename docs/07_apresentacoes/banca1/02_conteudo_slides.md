@@ -3,7 +3,7 @@ documento: Conteúdo da apresentação — banca 1
 papel: fonte de verdade do que vai à tela
 escopo: teórico, termina na viabilidade empírica; sem resultado de estimação
 slides: 16
-atualizacao: 16 de setembro de 2026
+atualizacao: 17 de setembro de 2026
 ---
 
 > [!IMPORTANT]
@@ -32,8 +32,8 @@ atualizacao: 16 de setembro de 2026
 > **14 linhas de tela**. Quatro builds foram compilados de verdade em Beamer
 > 16:9, 11 pt, tema Warsaw, todos **sem Overfull** e com folga vertical: a tabela
 > das duas cláusulas e as duas figuras lado a lado no slide 5, o diagrama da
-> teoria da mudança como cadeia TikZ no mesmo slide, e a tabela do que falta no
-> slide 15.
+> teoria da mudança como cadeia TikZ — que em 17/09/2026 passou ao slide 7 — e a
+> tabela do que falta no slide 15.
 >
 > Os decks em [`deck_beamer/`](deck_beamer/) e [`deck_slidev/`](deck_slidev/)
 > são **derivados** deste arquivo: divergência entre deck e documento é erro do
@@ -48,9 +48,9 @@ atualizacao: 16 de setembro de 2026
 | 2 | conteúdo | 1 | — | Sumário | Sumário |
 | 3 | capa | 1 | 1 | — | **Motivação e Pergunta** |
 | 4 | conteúdo | 3 | 1 | Problema | O especialista está longe do interior — e quase nunca é só do SUS |
-| 5 | conteúdo | 5 | 1 | Política | A bolsa é do município, não do médico nem da especialidade |
+| 5 | conteúdo | 3 | 1 | Política | A bolsa é do município, não do médico nem da especialidade |
 | 6 | conteúdo | 3 | 1 | Efeitos | O programa já deu sinais; a literatura aponta para os dois lados |
-| 7 | conteúdo | 1 | 1 | Pergunta de Pesquisa | A pergunta que organiza o trabalho |
+| 7 | conteúdo | 2 | 1 | Pergunta de Pesquisa | A pergunta que organiza o trabalho |
 | 8 | capa | 1 | 2 | — | **Literatura Teórica e Modelo Microeconômico** |
 | 9 | conteúdo | 2 | 2 | Visão geral | A escolha locacional maximiza a renda real líquida |
 | 10 | conteúdo | 3 | 2 | Custo da localidade | O custo da localidade tem duas metades: o lugar e o trabalho |
@@ -110,26 +110,14 @@ Gabriel Benegra · Kauã Santos · Vinicius Sbruzzi
 
 ### Onde eles estão
 
-- **353 mil** especialistas em 2024, **59%** dos médicos do país.
-- **55,4%** no Sudeste, **5,9%** no Norte.
-- **453** por 100 mil habitantes no DF, **68** no MA.
-- Para alta complexidade, a população do Norte percorre **276 km**; a do Sul, **101 km**.
+![Especialistas por 100 mil habitantes, dez/2024 — 453 no DF e 244 em SP, contra 70 no PA e 68 no MA](../../../output/apresentacao_banca1/especialistas_por_uf_extremos.png)
+![Distância média para serviços de alta complexidade — 276 km no Norte, 101 km no Sul](../../../output/apresentacao_banca1/deslocamento_por_regiao.png)
 
-| Figura na tela | O que mostra |
-|---|---|
-| **I.** A escassez é territorial | especialistas por 100 mil habitantes, por UF, 2024 |
-| **II.** O acesso exige distância | deslocamento médio para alta complexidade, em km, por região |
+> **A escassez é territorial — e onde há menos especialista o paciente anda mais.**
 
 ### De quem é o tempo desse especialista
 
-Dedicação **exclusiva** ao SUS é rara. Único recorte setorial da *Demografia
-Médica 2025*: inquérito com **1.544 cirurgiões**, não censo.
-
-| Onde o cirurgião atua | |
-|---|---:|
-| Dupla prática, público **e** privado | **72,4%** |
-| Exclusivamente privado | **19,9%** |
-| Exclusivamente público ou SUS | **7,7%** |
+![Setor de atuação dos cirurgiões — 72,4% em dupla prática, 19,9% exclusivamente no privado, 7,7% exclusivamente no público ou SUS](../../../output/apresentacao_banca1/dupla_pratica_cirurgioes.png)
 
 **O SUS não compra a carreira do especialista. Compra uma fração dela** — e
 disputa o resto com o mercado privado. A bolsa do PMM-E compra **20 horas**
@@ -137,10 +125,8 @@ dessa fração.
 
 ### E quais especialistas faltam
 
-- **16 cursos**: 6 cirúrgicos, 10 ambulatoriais.
-- Maiores ofertas do ciclo 1: **endoscopia digestiva alta** (188),
-  **colonoscopia** (164), **anestesiologia** (147).
-- **6 dos 16** títulos citam câncer, tumores ou oncologia.
+- Maiores ofertas do ciclo 1: **endoscopia digestiva alta**, **colonoscopia** e
+  **anestesiologia**.
 - Em 2025 o Ministério declarou **urgência em saúde pública por 24 meses** pelo
   tempo de espera, e lançou o **Agora Tem Especialistas**, de que o PMM-E é o
   braço de provimento.
@@ -148,7 +134,18 @@ dessa fração.
 **Fontes:** Scheffer et al., *Demografia Médica no Brasil 2025* (FMUSP/AMB),
 cap. 11 e cap. 13, Fig. 1, p. 254; deslocamento: origem provável na REGIC 2018
 (IBGE), **a confirmar**; Portaria GM/MS nº 7.061/2025; Edital SGTES/MS nº
-3/2025, Tabela 3; `output/aquisicao/quadro_vagas_tratamento.parquet`.
+3/2025, Tabela 3; `output/aquisicao/quadro_vagas_tratamento.parquet`; figuras
+por `scripts/apresentacao/gerar_figuras_banca1.py`.
+
+> [!NOTE]
+> **Nota de produção — as três figuras.** Desde 17/09/2026 as três saem do
+> pipeline, e o texto que elas substituem saiu da tela: os quatro marcadores do
+> retrato nacional, a tabela dos três percentuais de atuação e os dois
+> marcadores de cursos. A ressalva de cobertura do inquérito — **1.544
+> cirurgiões, não censo** — continua **na tela**, dentro do rodapé da figura.
+> A figura de UF é dos **extremos**, não das 27 unidades: só quatro UFs têm
+> valor em fonte registrada. A do deck do grupo mostrava 16 barras e **não é
+> usável** — ver a pendência 1.
 
 > [!NOTE]
 > **Nota de produção — o que não dá para dizer.** A frase "apenas 10% dos
@@ -165,54 +162,144 @@ cap. 11 e cap. 13, Fig. 1, p. 254; deslocamento: origem provável na REGIC 2018
 
 `1. Motivação e Pergunta · Política`
 
-### O que é o PMM-E
+### O que o programa oferece
 
-- **Lei nº 15.233/2025**: provimento de especialistas para reduzir o **tempo de
-  espera** do usuário do SUS em regiões prioritárias.
-- **Bolsa-formação** mensal do Ministério, **sem vínculo**. Não é concurso.
-- Até **12 meses**, **20 horas semanais**, em estabelecimento do SUS, com
-  **RQE** na área da vaga.
-- Ciclo 1, julho de 2025: **1.295 vagas**, **460 estabelecimentos**, **368
-  municípios**, todas as UFs.
+![Valor mensal da bolsa-formação por faixa de atração](../../../output/apresentacao_banca1/bolsa_por_faixa.png)
 
-### O que determina o valor oferecido
+**Lei nº 15.233/2025**, para reduzir o **tempo de espera** do SUS.
+Bolsa-formação **sem vínculo**, até **12 meses**, **20 h semanais**, **RQE**
+exigido, com supervisão de instituição formadora — **igual em toda vaga**. O
+**valor** é a única coisa que varia. Ciclo 1, jul/2025: **1.295 células**
+estabelecimento–curso em **368 municípios**, **678** com vaga imediata.
 
-**Não determinam:** especialidade, curso, estabelecimento, carga, produção,
-desempenho, nem o médico.
+> **O programa não forma especialista: exige RQE e compra 20 horas de quem já é.**
 
-**Determina:** o **município**, e só ele. No ciclo 1, nenhum município e nenhuma
-célula município–curso aparece com mais de uma faixa.
+### Quem fixa o valor
+
+**Não fixam:** especialidade, curso, estabelecimento, carga, produção,
+desempenho — nem o médico. **Fixa:** o **município**, e só ele.
 
 | Cláusula | O que fixa o valor | Situação |
 |---|---|---|
 | **11.1.4** | categoria de **IVS 2010** do Ipea: muito alta → **R$ 20 mil**, alta → **R$ 15 mil**, demais → **R$ 10 mil** | pública |
 | **11.1.3** | *"critérios de **localização e vulnerabilidade** definidos de acordo com a faixa de atração definida no **Anexo IV**"* | **não público** |
 
-Duas notas de bolso: incide **contribuição previdenciária** (item 11.2); e o
-**adicional** para Amazônia Legal, territórios indígenas e alta vulnerabilidade
-está na **Lei** (art. 22-D, §4º) mas **não foi regulamentado** no ciclo 1.
-
-### O IVS é o piso, não o critério
-
-![Valor mensal da bolsa-formação por faixa de atração](../../../output/apresentacao_banca1/bolsa_por_faixa.png)
-
 Em **177 dos 368** municípios a faixa publicada está **acima** da categoria de
-IVS; **zero** abaixo. Erro de medida erraria nos dois sentidos: a categoria fixa
-um **mínimo**, e o critério de localização promove **48%** dos municípios acima
-dele.
+IVS; **zero** abaixo.
 
-### Onde a regra manda o dinheiro
+> **O IVS é o piso da bolsa, não o critério dela.**
+
+### Para onde a regra manda o dinheiro
 
 ![Especialistas por 100 mil habitantes, jun/2025 — 15,0 na Faixa 3, 14,4 na Faixa 2, 18,3 na Faixa 1](../../../output/apresentacao_banca1/oferta_pre_por_faixa.png)
 ![Colegas da mesma especialidade no município, jun/2025 — mediana de 6,5, 5,0 e 2,5 da Faixa 3 à Faixa 1](../../../output/apresentacao_banca1/retaguarda_por_faixa.png)
 
 **Por habitante**, a bolsa maior não vai para onde falta mais. **Em colegas**,
-vai: a mediana cai de **6,5** para **2,5**, e a chance de estar só ou com um
-colega sobe de **12%** para **31%**.
+vai: a mediana cai de **6,5** para **2,5**.
 
 > **A Faixa 1 compensa isolamento, não cobertura.**
 
-### A teoria da mudança que o desenho supõe
+**Fontes:** Lei nº 15.233/2025, art. 21; Edital SGTES/MS nº 3/2025, itens 1.1,
+1.2.1, 1.2.5, 11.1 a 11.4; Ipea, *Atlas da Vulnerabilidade Social* (2015); CNES
+06/2025 e Censo 2022 (IBGE); `output/aquisicao/quadro_vagas_tratamento.parquet`;
+figuras por `scripts/apresentacao/gerar_figuras_banca1.py`.
+
+> [!NOTE]
+> **Nota de produção — o que saiu daqui em 17/09/2026.** O slide tinha **cinco
+> builds** e passou a **três**. Saíram da tela: o diagrama de **teoria da
+> mudança**, que foi para o **slide 7**, onde faz o trabalho de tornar a
+> pergunta inevitável; a frase sobre nenhuma célula município–curso aparecer com
+> mais de uma faixa, que é conferência, não argumento; e as duas notas de bolso
+> — a **contribuição previdenciária** do item 11.2 e o **adicional** da Lei
+> (art. 22-D, §4º) para Amazônia Legal, territórios indígenas e alta
+> vulnerabilidade, **não regulamentado** no ciclo 1. As duas continuam
+> registradas em `auditorias/01_regra_institucional.md` e servem para responder
+> à banca; nenhuma vira afirmação sobre o tamanho líquido do degrau, que
+> depende do teto de contribuição e não foi calculado.
+
+> [!NOTE]
+> **Nota de produção — três correções do PR de ajuste estrutural.** (1) **D1**:
+> "1.295 vagas" virou **1.295 células** estabelecimento–curso, com as **678**
+> vagas imediatas ditas na tela — chamar célula de vaga reintroduzia o
+> denominador que o portão A1 rejeitou. (2) **F2**: o pacote formativo entrou no
+> slide como o que **não** varia — é o que sustenta, mais adiante, que o
+> contraste de R$ 5 mil compara valor com pacote constante dos dois lados.
+> (3) **F5**, **pendente de decisão do autor**: a retaguarda é medida no
+> **município**, mas 42,6% das células estão em estabelecimento de gestão
+> estadual e 93 dos 460 CNES têm "REGIONAL" no nome — o incentivo é fixado pelo
+> IVS do município-sede e a clientela é regional. Cabe uma linha no build 3
+> ("a medida é municipal; para hospital regional a fronteira relevante é
+> outra") ou uma limitação declarada. Não entrou na tela sem essa decisão.
+
+---
+
+## O programa já deu sinais; a literatura aponta para os dois lados
+
+`1. Motivação e Pergunta · Efeitos`
+
+### O que o ciclo 1 mostra
+
+![Preenchimento do ciclo 1 — por faixa: 23,6% na Faixa 3, 37,4% na Faixa 2, 31,6% na Faixa 1; por território: 44,9% metropolitano, 35,6% capitais, 26,9% interior conectado, 20,5% interior remoto](../../../output/apresentacao_banca1/preenchimento_ciclo1.png)
+
+Das **1.295 células** da primeira chamada, **393 (30,3%)** tiveram alguém
+confirmado ou homologado.
+
+### A leitura
+
+- **Por faixa, não há ordem.** Pagar o dobro (31,6%) não preencheu mais que
+  pagar uma vez e meia (37,4%).
+- **Por território, há.** De **44,9%** no metropolitano a **20,5%** no interior
+  remoto.
+
+> **Isto é descrição, não efeito.** As faixas diferem em muito mais que na
+> bolsa, e território prevê melhor que ela. Linguagem correta: **gradiente** e
+> **associação**.
+
+### A literatura aponta para os dois lados
+
+| Pagar mais funciona | Pagar mais não basta |
+|---|---|
+| **México, salário sorteado.** Em 106 postos, salário **33% maior** elevou a aceitação em **15 p.p.**; a mais de 200 km da cidade natal, de 25% para cerca de **80%**, sem perda de qualificação. | **Brasil, o programa-irmão.** No Mais Médicos, **+15,1** médicos do programa por 100 mil viraram **+5,7** de expansão **líquida**. O resto substituiu quem já estava lá. |
+| **O degrau tem o tamanho que a literatura pede.** O prêmio exigido para um posto pior vai de **37% a 64%** da renda anual, e a elasticidade da oferta no interior é **0,7**. O degrau do PMM-E é **+50%**. | **Austrália, a maioria não vai por preço.** De 3.727 clínicos, **65%** ficaram onde estavam em **todos** os cenários. Para o pior posto, quem mudaria pedia **130%** da renda anual. |
+
+**Ressalva:** os percentuais são sobre a **renda total** do médico; a bolsa
+remunera **20 horas**.
+
+> **A evidência não decide se um degrau de R$ 5 mil basta.**
+
+**Fontes:** Dal Bó, Finan & Rossi (2013), *QJE*; Scott et al. (2013), *Soc Sci
+Med* 96; Hone et al. (2020), *BMC HSR* 20:873. Ciclo 1:
+`output/tema_trabalho/`, módulos A4 e A5.
+
+> [!NOTE]
+> **Nota de produção — dois de cada lado, e o que saiu.** A tabela tinha dois a
+> favor e **quatro** contra. Ficaram os dois que atacam elos distintos: a
+> **expansão líquida** (Hone) e a **não resposta a preço** (Scott). Saíram da
+> tela, e ficam de reserva para pergunta da banca: **Costa, Nunes & Sanches
+> (2024)**, *REStat* — subir 50% o salário público no interior do N e NE
+> corrige **12,4%** do desequilíbrio a **US$ 15,7 mi** por ponto, contra
+> **63,8%** por US$ 2,2 a 5,1 mi reservando vaga na faculdade para quem nasceu
+> ali; e **Pathman, Konrad & Ricketts (1992)**, *JAMA* — oito anos depois,
+> **12%** dos que foram por obrigação seguiam lá, contra **39%** dos que foram
+> sem. Costa et al. continua citado no slide 10.
+
+> [!NOTE]
+> **Nota de produção — o que saiu da leitura.** Saíram dois números que são
+> **saída de estimação**, e a banca 1 não apresenta resultado de estimação:
+> **+0,50** especialista cadastrado por célula com atração em mar/2026, erro
+> padrão **0,234**; e o contraste ajustado de **+20,9 p.p.** do estrato
+> metropolitano. O gradiente bruto por território continua na tela, na figura e
+> na leitura. A série mensal por faixa é reprodutível e pode entrar como
+> contexto descritivo; a tabela de inclinações pré/pós do deck do grupo, não —
+> motivo e critério de fechamento na **pendência 4**.
+
+---
+
+## A pergunta que organiza o trabalho
+
+`1. Motivação e Pergunta · Pergunta de Pesquisa`
+
+### A cadeia que a política supõe
 
 ```mermaid
 flowchart LR
@@ -229,82 +316,10 @@ flowchart LR
 ```
 
 **Verde e cheia:** está em ato oficial. **Laranja e tracejada:** suposição.
+Nem o elo cheio seguinte assegura **oferta líquida**: o edital só veda
+substituição de quem já está lá.
 
-> **A banca 1 para no terceiro elo, e o primeiro elo suposto é a nossa hipótese.**
-> Nem o elo cheio seguinte assegura **oferta líquida**: o bolsista faz 20 horas,
-> não tem vínculo, e o edital só **veda substituição** de quem já está lá.
-
-**Fontes:** Lei nº 15.233/2025, art. 21; Edital SGTES/MS nº 3/2025, itens 1.1,
-1.2.1, 1.2.5, 11.1 a 11.4; Ipea, *Atlas da Vulnerabilidade Social* (2015); CNES
-06/2025 e Censo 2022 (IBGE); figuras por
-`scripts/apresentacao/gerar_figuras_banca1.py`.
-
-> [!NOTE]
-> **Nota de produção.** É o slide mais denso do deck: **cinco builds**, contra
-> dois ou três dos demais. Se ficar pesado na banca, o candidato natural a virar
-> slide próprio é "Onde a regra manda o dinheiro", único build com duas figuras.
-> No Beamer, as duas figuras vão **lado a lado** em `columns` de
-> `0.48\textwidth` cada, e o diagrama da teoria da mudança é uma cadeia TikZ
-> horizontal de seis nós em `font=\tiny`, que ocupa cerca de um quarto da altura
-> do frame — compilada e conferida em 16/09/2026.
-
----
-
-## O programa já deu sinais; a literatura aponta para os dois lados
-
-`1. Motivação e Pergunta · Efeitos`
-
-### O que o ciclo 1 mostra
-
-Das **1.295 vagas** da primeira chamada, **393 (30,3%)** tiveram alguém
-confirmado ou homologado.
-
-![Preenchimento do ciclo 1 — por faixa: 23,6% na Faixa 3, 37,4% na Faixa 2, 31,6% na Faixa 1; por território: 44,9% metropolitano, 35,6% capitais, 26,9% interior conectado, 20,5% interior remoto](../../../output/apresentacao_banca1/preenchimento_ciclo1.png)
-
-### A leitura
-
-- **Por faixa, não há ordem.** Pagar o dobro (31,6%) não preencheu mais que
-  pagar uma vez e meia (37,4%).
-- **Por território, há.** De 44,9% no metropolitano a 20,5% no interior remoto.
-  Ajustado, o metropolitano fica **+20,9 p.p.** acima.
-- **O estoque se move.** Em mar/2026, células com atração têm **+0,50**
-  especialista cadastrado sobre jun/2025 (erro padrão **0,234**), sem
-  pré-tendência detectável.
-
-> **Isto é descrição, não efeito.** As faixas diferem em muito mais que na
-> bolsa, e território prevê melhor que ela. **Nenhum destes números é efeito
-> causal do PMM-E**; o slide 16 explica por quê. Linguagem correta: **gradiente**
-> e **associação**.
-
-### A literatura aponta para os dois lados
-
-| Pagar mais funciona | Pagar mais não basta, ou não fica |
-|---|---|
-| **México, salário sorteado.** Em 106 postos, salário **33% maior** elevou a aceitação em **15 p.p.**; a mais de 200 km da cidade natal, de 25% para cerca de **80%**, sem perda de qualificação. | **Brasil, o programa-irmão.** No Mais Médicos, **+15,1** médicos do programa por 100 mil viraram **+5,7** de expansão **líquida**. O resto substituiu quem já estava lá. |
-| **O degrau tem o tamanho que a literatura pede.** O prêmio exigido para um posto pior vai de **37% a 64%** da renda anual, e a elasticidade da oferta no interior é **0,7**. O degrau do PMM-E é **+50%**. | **Austrália, a maioria não vai por preço.** De 3.727 clínicos, **65%** ficaram onde estavam em **todos** os cenários. Para o pior posto, quem mudaria pedia **130%** da renda anual. |
-| | **Brasil, caro por ponto.** Em simulação, subir 50% o salário público no interior do N e NE **corrigiria** **12,4%** do desequilíbrio, a **US$ 15,7 mi** por ponto; reservar vaga na faculdade **para quem nasceu ali** corrigiria **63,8%**, por US$ 2,2 a 5,1 mi. |
-| | **EUA, quem vai por obrigação vai embora.** Oito anos depois, **12%** dos que foram com obrigação seguiam lá, contra **39%** dos que foram sem. |
-
-**Ressalva:** os percentuais são sobre a **renda total** do médico; a bolsa
-remunera **20 horas**.
-
-> **A evidência não decide se um degrau de R$ 5 mil basta.**
-
-**Fontes:** Dal Bó, Finan & Rossi (2013), *QJE*; Hone et al. (2020), *BMC HSR*
-20:873; Scott et al. (2013), *Soc Sci Med* 96; Costa, Nunes & Sanches (2024),
-*REStat*; Pathman, Konrad & Ricketts (1992), *JAMA*. Ciclo 1:
-`output/tema_trabalho/`, módulos A4 e A5.
-
-> [!NOTE]
-> **Nota de produção.** A série mensal por faixa do deck atual é reprodutível e
-> pode entrar como contexto descritivo; a tabela de inclinações pré/pós que a
-> acompanha, não. Motivo e critério de fechamento na **pendência 4**.
-
----
-
-## A pergunta que organiza o trabalho
-
-`1. Motivação e Pergunta · Pergunta de Pesquisa`
+### A pergunta
 
 > ### O incentivo financeiro oferecido pelo PMM-E funciona para atrair especialistas para regiões mais vulneráveis?
 
@@ -313,13 +328,22 @@ Dois objetos, um contra o outro:
 - o **preço** que a política pôs sobre a vulnerabilidade, o degrau de **R$ 5 mil**;
 - a **desvantagem** que esse preço pretende compensar.
 
-A margem observada é o **preenchimento da vaga**. Permanência fica fora desta banca.
+A margem observada é o **preenchimento da vaga** — o terceiro elo da cadeia, e o
+primeiro elo suposto é a hipótese do trabalho. Permanência fica fora desta banca.
+
+**Fontes:** Lei nº 15.233/2025; Edital SGTES/MS nº 3/2025, item 1.2.5;
+[`01_pergunta_escopo/15`](../../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
 
 > [!NOTE]
-> **Nota de produção.** Formulação canônica equivalente, em
+> **Nota de produção.** O diagrama veio do slide 5 em 17/09/2026. É onde ele
+> trabalha: separa os elos **escritos em ato oficial** dos que são **suposição
+> do programa**, e é isso que torna a pergunta inevitável em vez de retórica.
+> Formulação canônica equivalente, em
 > [`01_pergunta_escopo/15`](../../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md):
 > *"maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas
-> desvantagens territoriais na atração de médicos especialistas?"*.
+> desvantagens territoriais na atração de médicos especialistas?"*. No Beamer o
+> diagrama é a cadeia TikZ horizontal de seis nós em `font=\tiny`, compilada em
+> 16/09/2026 sem Overfull.
 
 ---
 
@@ -643,20 +667,21 @@ viés funciona **contra** a bolsa — podendo inverter o sinal do que se estimar
 
 <!-- deck:fim -->
 
-## Pendências abertas em 16/09/2026
+## Pendências abertas em 17/09/2026
 
 Registradas aqui porque afetam o que vai à tela. Detalhe e rastreio em
 [03 — Proveniência](03_proveniencia_figuras_e_numeros.md).
 
 | # | Pendência | Efeito | O que fecha |
 |:---:|---|---|---|
-| **1** | As duas figuras do slide 4 — especialistas por UF e deslocamento médio por região — vêm de fontes externas e **não são geradas por script versionado** | bloqueia a regra de proveniência do projeto | acrescentar as duas séries a `gerar_figuras_banca1.py`, lendo de `output/`, com a fonte registrada |
-| **2** | Os valores do gráfico de deslocamento (Norte 276 km … Sul 101 km) **não tiveram a fonte primária confirmada** | número em tela sem rastreio | localizar a tabela da REGIC 2018 sobre deslocamentos para serviços de saúde e registrar o arquivo em `data/raw/` |
+| **1** | ✅ **Fechada em 17/09/2026 quanto ao pipeline, aberta quanto à cobertura.** As três figuras do slide 4 passaram a sair de `gerar_figuras_banca1.py`. Mas a figura de UF do deck do grupo **não era usável**: calibrada pelos dois rótulos impressos, ela põe **SP em ≈ 419** e **PA em ≈ 135**, contra os **244** e **70** da série citada na proveniência — só os dois extremos rotulados batem. A figura nova é dos **quatro** valores com fonte registrada, não das 27 UFs | a tela perde o panorama completo por UF | registrar em `data/raw/` a tabela por UF da *Demografia Médica 2025*, com hash, e trocar a figura dos extremos pela das 27 unidades |
+| **2** | Os valores do gráfico de deslocamento (Norte 276 km … Sul 101 km) **não tiveram a fonte primária confirmada**. Desde 17/09/2026 a figura é gerada por script, e o rodapé dela diz *"atribuído à REGIC 2018 (IBGE); fonte primária a confirmar"* — o pipeline não confirma fonte | número em tela sem rastreio | localizar a tabela da REGIC 2018 sobre deslocamentos para serviços de saúde e registrar o arquivo em `data/raw/` |
 | **3** | A proveniência registrava "10% dos cirurgiões atuando exclusivamente no SUS"; a fonte primária diz **7,7%** | número errado, agora corrigido no slide 4 | ✅ corrigido em 16/09/2026; PDF da *Demografia Médica 2025* a registrar em `data/raw/` com hash |
 | **4** | A tabela de inclinações pré/pós por faixa do deck do grupo (0,012 / 0,271 …) **não é reproduzível** a partir do repositório e não tem grupo de comparação | seria resultado sem rastreio | mantida **fora** do slide 6; a série mensal por faixa é reprodutível e pode entrar como contexto descritivo |
 | **5** | "Sudeste 55,4% dos especialistas" está conferido em **cobertura**, não localizado no PDF integral | ressalva de fonte | conferir na *Demografia Médica 2025* ao registrar o PDF |
-| **6** | Os decks Beamer e Slidev ainda estão na estrutura de **15 slides** | divergência deck × documento | reconstruir os dois decks sobre esta estrutura |
+| **6** | Os decks Beamer e Slidev ainda estão na estrutura de **15 slides**; a estrutura vigente tem 16 slides e **32 builds** | divergência deck × documento | reconstruir os dois decks sobre esta estrutura |
 | **7** | O slide 16 pede uma figura que ainda **não existe**: IVS contra faixa publicada, com os cortes marcados | o slide fica só em texto, e o achado central da viabilidade fica sem imagem | acrescentar a figura a `gerar_figuras_banca1.py`, lendo `output/rdd_bolsa/matriz_municipio_regra_ivs.csv` |
+| **8** | **Decisão do autor, do PR de ajuste estrutural (F5).** A retaguarda do slide 5 é medida no **município**, mas 42,6% das células estão em estabelecimento de gestão estadual e 93 dos 460 CNES têm "REGIONAL" no nome: o incentivo é fixado pelo IVS do município-sede e a clientela é regional | ou o slide ganha uma linha de limitação, ou o descasamento vira argumento próprio da motivação | decisão do autor; o teste de deslocamento intrarregional depende da malha territorial versionada (F4 do mesmo PR) |
 
 ## Ressalvas de conteúdo encerradas
 

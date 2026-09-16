@@ -12,7 +12,7 @@ Um único fio condutor: **um preço foi colocado sobre a vulnerabilidade
 territorial, e ainda não se sabe se esse preço compra o preenchimento das vagas
 que pretendia comprar.**
 
-A banca 1 tem **três seções**, **16 slides** e **33 builds**. Cada seção abre com
+A banca 1 tem **três seções**, **16 slides** e **32 builds**. Cada seção abre com
 uma divisória e ocupa quantos slides o argumento pedir — a motivação, que tem
 mais a dizer, e o fecho empírico ocupam quatro slides de conteúdo cada; o bloco
 teórico, três.
@@ -28,7 +28,7 @@ topo de [02_conteudo_slides.md](02_conteudo_slides.md).
 | Seção | Papel narrativo | Slides |
 |---|---|:---:|
 | — Capa e sumário | contrato com a banca; o sumário aparece **uma vez** | 1–2 |
-| **1. Motivação e Pergunta** | em quatro movimentos. **Problema:** especialistas existem, mas não no interior — e dedicação exclusiva ao SUS é rara, de modo que o programa compra uma fração da carreira. **Política:** o que é o PMM-E, o que determina a remuneração oferecida e o que o desenho oficial supõe sem escrever. **Efeitos:** o que o ciclo 1 já mostrou e uma literatura que aponta para os dois lados. **Pergunta:** o preço contra a desvantagem | 3–7 |
+| **1. Motivação e Pergunta** | em quatro movimentos. **Problema:** especialistas existem, mas não no interior — e dedicação exclusiva ao SUS é rara, de modo que o programa compra uma fração da carreira. **Política:** o pacote que é igual em toda vaga, quem fixa o valor e para onde a regra manda o dinheiro. **Efeitos:** o que o ciclo 1 já mostrou e uma literatura que aponta para os dois lados, dois de cada. **Pergunta:** a cadeia que o desenho oficial supõe sem escrever, e o preço contra a desvantagem | 3–7 |
 | **2. Literatura Teórica e Modelo Microeconômico** | a equação de escolha e a caixa-preta do custo; o custo aberto em lugar e trabalho, com as quatro desvantagens mapeadas termo a termo; a remuneração da localidade, que a bolsa não esgota | 8–11 |
 | **3. Hipótese e Viabilidade Empírica** | a junção das três tradições sobre o PMM-E e o sinal ambíguo do custo; a hipótese em quatro passos; o que se consegue medir; e por que a regra, do jeito que é, não identifica o efeito da bolsa | 12–16 |
 
@@ -38,17 +38,26 @@ apresentação, embora continue no escopo do projeto.
 
 ### 1.1 A lógica da seção 1 — Motivação e Pergunta
 
-O bloco **problema** cabe num slide (4) e mostra a dor pelos dois lados. Abre
-com o retrato nacional — a escassez é territorial, não numérica: 55,4% dos
-especialistas no Sudeste contra 5,9% no Norte, 453 por 100 mil habitantes no
-Distrito Federal contra 68 no Maranhão. Depois vira a câmera para a relação
-entre o especialista e o SUS, que é o ponto que faltava: **dedicação exclusiva
+O bloco **problema** cabe num slide (4) e mostra a dor pelos dois lados, **em
+figura**. Abre com o retrato territorial: a razão de especialistas por 100 mil
+habitantes nas duas maiores e nas duas menores unidades da federação — 453 no
+Distrito Federal contra 68 no Maranhão — e a distância média percorrida para
+alta complexidade, de 276 km no Norte a 101 km no Sul. Depois vira a câmera para
+a relação entre o especialista e o SUS, também em figura: **dedicação exclusiva
 ao SUS é rara** — 72,4% dos cirurgiões vivem de dupla prática, 19,9% só do
 privado e 7,7% só do público. O SUS não compra a carreira de um especialista,
 compra uma fração dela, e disputa o resto com o mercado local. O slide fecha
-dizendo **quais** especialistas: 16 cursos, com peso em diagnóstico e
-oncologia — endoscopia digestiva alta, colonoscopia e anestesiologia
-perioperatória são os três maiores em oferta no ciclo 1.
+dizendo **quais** especialistas — endoscopia digestiva alta, colonoscopia e
+anestesiologia, as maiores ofertas do ciclo 1 — e emendando no programa que
+responde por eles.
+
+Desde 17/09/2026 os três builds são **figura e uma frase**, e não lista de
+números: o pedido do autor foi *"gráfico > texto"* e *"gráfico > tabela"*, com
+"quanto menos texto, melhor". Nenhum número exibido mudou de valor; os que
+saíram do corpo do slide ou estão **dentro** da figura ou seguem registrados em
+[03 — Proveniência](03_proveniencia_figuras_e_numeros.md). A ressalva que não
+podia sair — o recorte setorial é **inquérito com 1.544 cirurgiões, não censo** —
+ficou no **rodapé da própria figura**, que é conteúdo de tela.
 
 A tabela das quatro desvantagens **saiu** daqui em 16/09/2026 e foi para o
 slide 10, onde cada uma é mapeada a um termo do modelo. O problema deixa de
@@ -57,47 +66,55 @@ fazer uma coisa só: estabelecer o fato territorial e a divisão com o setor
 privado. O que ele abre é o slide 11 — se o SUS compra 20 horas, o resto da
 remuneração é o mercado local.
 
-O bloco **política** responde, num slide (5), às duas perguntas que qualquer
-banca faz. A primeira é "o que é exatamente esse programa?" — lei, bolsa sem
-vínculo, RQE, 20 horas, até 12 meses, 1.295 vagas em 368 municípios no ciclo 1.
-A segunda, textual no slide, é **o que determina a remuneração oferecida**: o
-município, e só ele — nenhum município e nenhuma célula município–curso aparece
-com mais de uma faixa. O valor sai de **duas cláusulas que não dizem a mesma
-coisa**: a 11.1.4, que publica a grade de três faixas sobre a categoria de IVS,
-e a 11.1.3, que remete a critérios de localização definidos num **Anexo IV que
-não é público**. Daí a formulação que a apresentação carrega até o fim: o IVS é
-o **piso** da bolsa, não o critério dela — 177 dos 368 municípios divergem da
-categoria, e todos os 177 para cima. Fecham o slide duas notas que mudam o valor
-de bolso e costumam passar batido — a contribuição previdenciária e o adicional
-da Lei, que existe e não foi regulamentado.
+O bloco **política** responde, num slide (5) e em **três** builds, ao que
+qualquer banca pergunta. O primeiro diz **o que o programa oferece**, e a ênfase
+mudou em 17/09/2026: bolsa-formação sem vínculo, até 12 meses, 20 horas
+semanais, RQE exigido e supervisão de instituição formadora são **iguais em toda
+vaga** — o valor é a única coisa que varia. É a correção F2 do PR de ajuste
+estrutural, e é ela que sustenta, mais adiante, a afirmação de que o contraste de
+R$ 5 mil compara valor com **pacote constante dos dois lados**. No mesmo build
+entra a escala do ciclo 1 com o rótulo certo, correção D1 do mesmo PR: **1.295
+células** estabelecimento–curso em 368 municípios, 678 delas com vaga imediata —
+chamar célula de vaga reintroduzia o denominador que o portão A1 rejeitou.
 
-O mesmo slide mostra **onde a regra manda o dinheiro**, nas duas medidas de
-oferta prévia que discordam, e termina no diagrama de **teoria da mudança**. O
-diagrama é a peça nova de 16/09/2026 e faz um trabalho que nenhum texto fazia:
-separa os elos **escritos em ato oficial** — a regra de valor, o provimento como
-finalidade, a redução da espera como objetivo — dos elos que são **suposição do
-programa**: que o valor da bolsa muda a escolha de local, que bolsa maior gera
-preenchimento, que presença cadastral vira produção. É ele que torna a pergunta
-inevitável, porque a banca 1 para no terceiro elo — o preenchimento — e o
-primeiro elo suposto é exatamente a hipótese do trabalho.
+O segundo build diz **quem fixa o valor**: o município, e só ele, por duas
+cláusulas que não dizem a mesma coisa — a 11.1.4, que publica a grade de três
+faixas sobre a categoria de IVS, e a 11.1.3, que remete a critérios de
+localização definidos num **Anexo IV que não é público**. Daí a formulação que a
+apresentação carrega até o fim: o IVS é o **piso** da bolsa, não o critério dela
+— 177 dos 368 municípios divergem da categoria, e todos os 177 para cima. O
+terceiro mostra **para onde a regra manda o dinheiro**, nas duas medidas de
+oferta prévia que discordam: por habitante, a bolsa maior não vai para onde
+falta mais; em colegas da mesma especialidade, vai.
+
+O que **saiu** do slide 5 em 17/09/2026 está na seção 4g. O diagrama de teoria
+da mudança não foi cortado: **mudou de slide**, e é hoje o primeiro build do 7.
 
 O bloco **efeitos** (6) é a exceção declarada ao escopo teórico (seção 2.4).
 Ele existe para justificar a pergunta, e por isso precisa mostrar que a resposta
-não é óbvia. Abre pelo que o próprio programa já disse: 30,3% de preenchimento
-no ciclo 1, **sem ordem por faixa** de bolsa e **com ordem por território**, do
-metropolitano ao interior remoto. Segue com a literatura a favor e contra lado a
-lado — o salário sorteado no México, a régua do prêmio compensatório, a
-elasticidade de 0,7, contra a maioria australiana que não se move por preço
-nenhum, o custo por ponto percentual no Brasil, a evasão americana de quem foi
-por obrigação e, acrescentada em 16/09/2026, a expansão do Mais Médicos que
-Hone et al. (2020) mostram ser **bruta e não líquida**: +15,1 médicos do
-programa por 100 mil habitantes resultam em +5,7 de expansão líquida. Sem esse
-bloco a pergunta pareceria retórica; com ele, o fecho é que a evidência não
-decide.
+não é óbvia. Abre pelo que o próprio programa já disse: 30,3% das células com
+alguma confirmação ou homologação no ciclo 1, **sem ordem por faixa** de bolsa e
+**com ordem por território**, de 44,9% no metropolitano a 20,5% no interior
+remoto. Segue com a literatura, **dois de cada lado** desde 17/09/2026: a favor,
+o salário sorteado no México e a régua do prêmio compensatório, que põe o degrau
+do PMM-E dentro da faixa que a literatura pede; contra, a expansão do Mais
+Médicos que Hone et al. (2020) mostram ser **bruta e não líquida** — +15,1
+médicos do programa por 100 mil viram +5,7 — e a maioria australiana que não se
+move por preço nenhum. Os dois contra atacam **elos distintos**: um diz que o
+preenchimento pode não virar oferta, o outro que o preço pode não mover a
+decisão. Sem esse bloco a pergunta pareceria retórica; com ele, o fecho é que a
+evidência não decide.
 
-O bloco **pergunta** (7) põe a pergunta na versão de tela do autor e a lê em
-dois objetos, o preço e a desvantagem, declarando a margem observada: o
-preenchimento da vaga, não a permanência.
+O bloco **pergunta** (7) ganhou, em 17/09/2026, o **primeiro** build: o diagrama
+de teoria da mudança, que separa os elos **escritos em ato oficial** — a regra de
+valor, o provimento como finalidade, a redução da espera como objetivo — dos
+elos que são **suposição do programa**: que o valor da bolsa muda a escolha de
+local, que bolsa maior gera preenchimento, que presença cadastral vira produção.
+É ele que torna a pergunta inevitável, e é por isso que passou para cá: a banca 1
+para no terceiro elo — o preenchimento — e o primeiro elo suposto é exatamente a
+hipótese do trabalho. No segundo build vem a pergunta na versão de tela do autor,
+lida em dois objetos, o preço e a desvantagem, com a margem observada declarada:
+o preenchimento da vaga, não a permanência.
 
 **Por que esta ordem, e não outra.** O slide 6 usa "faixa publicada", "Faixa 1"
 e "categoria de IVS" como vocabulário corrente, e lê o preenchimento do ciclo 1
@@ -232,15 +249,18 @@ que o custo de Moehling et al. se abre em lugar e trabalho; o slide 13 junta a
 equação completa e as dimensões do IVS porque a afirmação é que a regra fixa a
 remuneração enquanto o índice organiza o custo.
 
-**O slide que mais força a regra.** O slide 5 carrega três figuras, um diagrama
-e duas cláusulas de edital — o material de três slides da estrutura anterior. A
-afirmação continua única, "a bolsa é do município", e cada peça a sustenta: a
-grade mostra o valor que a regra fixa, as duas medidas de oferta mostram para
-onde ela manda o dinheiro, o diagrama mostra o que ela supõe sem escrever. É o
-slide mais denso do deck — **cinco builds**, contra dois ou três dos demais — e
-segue sendo o primeiro candidato a divisão se a projeção ficar apertada. O corte
-natural é o que o próprio slide registra em nota de produção: "Onde a regra
-manda o dinheiro" vira slide próprio, por ser o único build com duas figuras.
+**O slide que mais forçava a regra.** Até 17/09/2026 o slide 5 carregava três
+figuras, um diagrama e duas cláusulas de edital — o material de três slides da
+estrutura anterior — em **cinco builds**. A afirmação era única, "a bolsa é do
+município", mas o diagrama sustentava outra: o que a política **supõe** sem
+escrever. Ele passou ao slide 7, onde essa afirmação é a do título, e o slide 5
+ficou com **três** builds e uma afirmação só. Nenhum slide passa de três builds
+desde então, e o teto deixou de ser cinco.
+
+**O caso simétrico.** O slide 7 tinha **um** build, e a pergunta é a afirmação
+mais importante do deck. Ganhar o diagrama antes dela não divide a afirmação:
+constrói a mesma, em dois passos — a cadeia mostra onde a pergunta mora, e a
+pergunta vem.
 
 ### 2.3 Fontes, não notas — e o que não vai à tela
 
@@ -309,9 +329,10 @@ afirmação do título continua uma só, e o build apenas controla em que ordem 
   equação num build, interpretação no seguinte. Build sem trabalho próprio é
   pausa decorativa, e não entra.
 
-São **33 builds em 16 slides**, com a contagem por slide na coluna **Builds** do
+São **32 builds em 16 slides**, com a contagem por slide na coluna **Builds** do
 mapa de [02_conteudo_slides.md](02_conteudo_slides.md) e a lista dos passos na
-seção 4f. O slide 5 é o mais denso, com cinco.
+seção 4g. Desde 17/09/2026 **nenhum slide passa de três builds**; eram 33, com
+cinco no slide 5.
 
 ---
 
@@ -331,6 +352,7 @@ seção 4f. O slide 5 é o mais denso, com cinco.
 | 2 | **Motivação: dividir entre (i) dor, (ii) política, (iii) efeitos** | O painel 2×2 repetido em dois slides virou três blocos em sequência causal — problema (slides 3 e 4), política (5 e 6) e efeito incerto (7 a 10) — cada um com os slides que o argumento pede. |
 | 3 | **Pergunta: simplificar** | De *"Bolsas maiores conseguem compensar as desvantagens territoriais no preenchimento e na manutenção das vagas do PMM-E?"* para **"Maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas desvantagens territoriais na atração de médicos especialistas?"**, com a leitura em dois objetos logo abaixo. |
 | 4 | **Teoria: derivar a hipótese diretamente** | O bloco teórico termina em um slide que escreve a condição de aceitação e dela tira a hipótese como derivada parcial da remuneração real, com sinal positivo, e chega à condição de degrau. O custo locacional aparece como obstáculo de identificação, não como segunda hipótese. |
+| 5 | **Corta texto. Gráfico > texto; gráfico > tabela. Política: refatora tudo. Literatura: dois a favor e dois contra** (17/09/2026) | Slide 4: os três builds viraram figura e uma frase, com três figuras novas saindo do pipeline. Slide 5: de cinco builds para três, com o diagrama passando ao slide 7 e as correções D1 e F2 do PR de ajuste estrutural aplicadas. Slide 6: a tabela ficou em dois de cada lado, e saíram da tela os dois números que eram saída de estimação. Detalhe na seção 4g. |
 
 **Onde cada ajuste está hoje.** O feedback 1 continua valendo, com a exceção
 registrada na seção 2.1: as três divisórias nomeiam a seção, e é a função delas.
@@ -719,6 +741,102 @@ mudança do slide 5; os **33 builds**, como `\only<n>` no Beamer e cliques no
 Slidev; e a regra do que não vai à tela — `**Fontes:**` em rodapé pequeno, nota
 de produção em lugar nenhum.
 
+## 4g. Corte de 17/09/2026 — menos texto, e a figura no lugar da lista
+
+A pedido do autor, sobre a seção 1 inteira e com um pedido geral acima de todos:
+**corta texto**. Os específicos foram quatro, e estão citados abaixo como
+chegaram. A rodada **não mexeu em número de slides**: continuam 16, em três
+seções. Mudou a densidade — **33 builds passaram a 32** — e, no slide 4, a forma:
+onde havia lista de números, há figura.
+
+### O pedido, item a item
+
+| Onde | Pedido do autor | O que foi feito |
+|---|---|---|
+| 4 · **Onde eles estão** | *"gráfico > texto. Isso vale pra todas as partes. Quanto menos texto, melhor. O que tínhamos antes, no pdf que mandei, com os dois gráficos, era melhor pra esse build"* | os quatro marcadores saíram; entram as **duas figuras** — extremos por UF e deslocamento por região — e uma frase |
+| 4 · **De quem é o tempo desse especialista** | *"gráfico > tabela"* | a tabela dos três percentuais virou **barra única de 100%**, com a ressalva de cobertura dentro do rodapé da figura |
+| 4 · **E quais especialistas faltam** | *"menos texto. Só cita as principais especialidades, e traz o último bullet que conecta com o programa"* | de quatro marcadores para **dois**: as três maiores ofertas do ciclo 1, sem as contagens, e o marcador que emenda no Agora Tem Especialistas |
+| 5 · **Política** | *"refatora tudo pra comunicar melhor, porque vamos precisar cortar bastante desse conteúdo pra poder comunicar direito. Analisa também o que tá no PR que foi aberto"* | de **cinco** builds para **três**; o diagrama foi para o slide 7; três itens do PR aplicados ou registrados |
+| 6 · **Literatura** | *"deixa só dois a favor e dois contra"* | de dois e **quatro** para **dois e dois** |
+
+### As três figuras do slide 4, agora do pipeline
+
+O slide 4 pedia figura, e a regra do projeto é que gráfico exibido sai de script
+versionado e é lido de `output/`. As duas figuras que vinham do deck do grupo
+eram a **pendência 1**. As três passaram a ser geradas por
+[`gerar_figuras_banca1.py`](../../../scripts/apresentacao/gerar_figuras_banca1.py),
+com os valores declarados como constantes com fonte, página e cobertura, e
+repetidos no `manifesto_figuras.json`:
+
+| Figura | O que mostra | Fonte primária |
+|---|---|---|
+| `especialistas_por_uf_extremos.png` | 453 no DF e 244 em SP, contra 70 no PA e 68 no MA | Demografia Médica 2025, na cobertura da Agência Brasil — **não confirmada no PDF** |
+| `deslocamento_por_regiao.png` | 276 km no Norte a 101 km no Sul | atribuída à REGIC 2018 — **não confirmada**, pendência 2 |
+| `dupla_pratica_cirurgioes.png` | 72,4% · 19,9% · 7,7% | Demografia Médica 2025, cap. 13, Fig. 1, p. 254 — **conferida** |
+
+**A figura de UF do grupo não era usável, e isso foi medido.** Calibrando a
+imagem pelos dois únicos rótulos impressos — DF 453,5 e MA 68,2 —, as barras
+intermediárias dão **SP ≈ 419** e **PA ≈ 135**, contra os **244** e **70** da
+série que a própria proveniência cita. Só os dois extremos rotulados batem: as
+outras catorze barras não correspondem à fonte declarada. Por isso a figura nova
+é dos **quatro** valores com fonte registrada, e não das 27 unidades. Recuperar o
+panorama completo exige registrar em `data/raw/` a tabela por UF da *Demografia
+Médica 2025*, com hash — é o que a pendência 1 passou a pedir.
+
+**Gerar não confirma fonte.** O deslocamento por região continua sem fonte
+primária localizada; o que mudou é que a ressalva agora está no **rodapé da
+figura**, e não só na linha de fontes. A pendência 2 segue aberta.
+
+### O slide 5, refeito
+
+| Build, antes | Depois |
+|---|---|
+| O que é o PMM-E | **O que o programa oferece** — o pacote que é igual em toda vaga, e o valor como única coisa que varia |
+| O que determina o valor oferecido | **Quem fixa o valor** — fundido com o seguinte |
+| O IVS é o piso, não o critério | idem: as duas cláusulas e os 177 de 368 num build só |
+| Onde a regra manda o dinheiro | **Para onde a regra manda o dinheiro** — sem mudança de conteúdo |
+| A teoria da mudança que o desenho supõe | **passou ao slide 7** |
+
+Saíram da tela, e estão registradas na nota de produção do slide: a frase sobre
+nenhuma célula município–curso aparecer com mais de uma faixa, que é conferência
+e não argumento; e as duas notas de bolso — contribuição previdenciária do item
+11.2 e o adicional do art. 22-D, §4º, não regulamentado no ciclo 1. Nenhuma das
+duas vira afirmação sobre o **tamanho líquido** do degrau: isso depende do teto
+de contribuição e não foi calculado.
+
+### O que veio do PR de ajuste estrutural
+
+O autor pediu que o PR aberto entrasse na análise. Dos nove itens, três tocam a
+seção 1, e só os que são **rótulo e texto** foram aplicados — a onda 1 da
+sequência que o próprio PR propõe. Nada que toque estimativa entrou.
+
+| Item | O que diz | Tratamento aqui |
+|---|---|---|
+| **D1** | "1.295 vagas" são 1.295 **células**; as vagas imediatas são 678 | aplicado nos slides 5 e 6. Corrige-se a palavra, não o número |
+| **F2** | a bolsa entra na teoria como salário puro; o pacote formativo fica de fora | aplicado no slide 5 como o que **não** varia. A consequência teórica — a margem pode ser *acrescentar atividade*, não migrar — é da seção 2 e não entrou aqui |
+| **F5** | a retaguarda é municipal, mas 42,6% das células são de gestão estadual e 93 de 460 CNES são "REGIONAL" | **não aplicado**: o próprio PR o lista como decisão do autor, entre linha de limitação e argumento próprio da motivação. Virou a **pendência 8** |
+
+### O slide 6, e os dois números que saíram
+
+A tabela da literatura ficou com **dois de cada lado**. A favor, o salário
+sorteado no México e a régua do prêmio compensatório. Contra, a expansão bruta
+do Mais Médicos e a maioria australiana que não se move por preço — os dois
+atacam elos distintos. Saíram da tela, e ficam de reserva para pergunta da banca,
+Costa, Nunes & Sanches (2024), que continua citado no slide 10, e Pathman,
+Konrad & Ricketts (1992).
+
+Saíram também da **leitura** dois números que são **saída de estimação**, e a
+banca 1 não apresenta resultado de estimação: o +0,50 especialista por célula com
+atração, com erro padrão 0,234, e o contraste ajustado de +20,9 p.p. do estrato
+metropolitano. O gradiente **bruto** por território continua na tela, na figura e
+na leitura, e continua chamado de gradiente.
+
+### O que a próxima reconstrução dos decks precisa contemplar
+
+Aos quatro requisitos da seção 4f somam-se dois, e um deles muda de endereço: os
+**32 builds**, nenhum slide passando de três; e o diagrama de teoria da mudança
+no **slide 7**, não no 5.
+
 ## 5. Defeitos do material anterior
 
 Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.
@@ -731,7 +849,7 @@ Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.
 | Placeholder de master visível no sumário | eliminado |
 | Blocos sem conteúdo (modelo teórico, viabilidade, perguntas) | preenchidos |
 | Gráfico de participação regional com valores não reprodutíveis | substituído por especialistas por habitante, gerados por script |
-| Gráfico de especialistas por UF montado à mão a partir da Demografia Médica | substituído pelos dois extremos citados em texto, com fonte, e pelos dados do programa gerados por script |
+| Gráfico de especialistas por UF montado à mão a partir da Demografia Médica | **defeito confirmado em 17/09/2026**: calibrada pelos dois rótulos impressos, a figura punha SP em ≈ 419 e PA em ≈ 135, contra os 244 e 70 da série citada — só os dois extremos rotulados batiam. Substituída por uma figura gerada por script com os **quatro** valores que têm fonte registrada |
 
 ---
 
@@ -742,31 +860,31 @@ densidade de cada slide, com as divisórias custando segundos.
 
 **O critério, agora que há builds.** O tempo é do **material**, não do número de
 telas: um build não acrescenta conteúdo, apenas reparte o que já estava no
-slide. A compressão da seção 4f, por si, não muda a conta — quem a muda são as
-**duas remoções** do mesmo dia, a tabela das três tradições no slide 9 e a
-equação de decomposição do custo no slide 13, que eram material dito duas vezes.
-Sai cerca de um minuto do bloco teórico. Os builds entram na tabela como
-verificação de densidade, não como unidade de tempo.
+slide. A compressão da seção 4f, por si, não mudou a conta — quem a mudou foram
+as **duas remoções** do mesmo dia, a tabela das três tradições no slide 9 e a
+equação de decomposição do custo no slide 13. O corte da seção 4g mexe de novo,
+e só na seção 1: saíram quatro marcadores do slide 4, duas células da tabela da
+literatura e dois números da leitura do slide 6; o diagrama apenas trocou de
+slide, e por isso não sai da conta. Os builds entram na tabela como verificação
+de densidade, não como unidade de tempo.
 
 | Seção | Slides | Builds | Minutos |
 |---|:---:|:---:|:---:|
 | Capa e sumário | 2 | 2 | 1 |
-| 1. Motivação e Pergunta | 5 | 13 | 10 |
+| 1. Motivação e Pergunta | 5 | 12 | 9 |
 | 2. Literatura Teórica e Modelo Microeconômico | 4 | 8 | 5 |
 | 3. Hipótese e Viabilidade Empírica | 5 | 10 | 9 |
-| **Total** | **16** | **33** | **25** |
+| **Total** | **16** | **32** | **24** |
 
-São **um minuto a mais** que os 24 da estrutura de 15 slides, e um a menos que
-os 26 estimados antes da compressão. A conta não é do número de slides, é do
-material: as três divisórias somam menos de um minuto, mas o slide 5 concentra o
-que eram três slides e o slide 6 o que eram dois, e a viabilidade, agora em dois
-slides, ganhou espaço para separar "há dado" de "o dado identifica". O
-acréscimo de conteúdo de 16/09/2026 — dupla prática, cursos críticos, teoria da
-mudança e Hone et al. — cabe nesse mesmo delta.
+São os mesmos **24 minutos** da estrutura de 15 slides, por caminho diferente:
+a estrutura de 16 slides tinha subido para 25, e o corte da seção 4g devolveu o
+minuto — não pelas telas, que não mudaram de número, mas pelo material que saiu
+da seção 1. As três divisórias seguem somando menos de um minuto.
 
-**Verificação por build.** 25 minutos para 33 builds dão cerca de **45 segundos
+**Verificação por build.** 24 minutos para 32 builds dão cerca de **45 segundos
 por build**, com as quatro telas de capa e divisória custando segundos e os
-builds de conteúdo, um pouco mais; o slide 5, com cinco, fica em torno de quatro
-minutos. Nenhum build previsto passa de um minuto e meio. Se algum passar no
-ensaio, o problema é de material no build, e a saída é a da seção 2.6: repartir
-em dois, não acelerar a fala.
+builds de conteúdo, um pouco mais. Como nenhum slide passa de **três** builds, o
+teto por slide caiu de cerca de quatro minutos para pouco mais de dois. Nenhum
+build previsto passa de um minuto e meio. Se algum passar no ensaio, o problema
+é de material no build, e a saída é a da seção 2.6: repartir em dois, não
+acelerar a fala.

@@ -2,7 +2,7 @@
 
 > **Regra aplicada:** todo número exibido declara fonte, data de referência, cobertura, unidade e reprodutibilidade<br>
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
-> **Atualização:** 16 de setembro de 2026
+> **Atualização:** 17 de setembro de 2026
 
 > [!IMPORTANT]
 > **A numeração mudou em 16/09/2026.** O deck passou a ter **16 slides em 3
@@ -24,8 +24,15 @@
 > alcance da regra 4 da seção 4: **número no corpo de um slide precisa de linha
 > na seção 2**. Número que só aparece em nota de produção ou em linha de fontes
 > continua registrado aqui, marcado como fora da tela — sai do alcance da regra,
-> nunca do rastreio. Na mesma revisão os `###` viraram **builds** (33 builds em
-> 16 slides), não slides novos: a numeração desta seção continua a de slides.
+> nunca do rastreio. Na mesma revisão os `###` viraram **builds** — 33 em 16
+> slides, e **32** desde o corte de 17/09/2026 —, não slides novos: a numeração
+> desta seção continua a de slides.
+>
+> **Uma consequência do corte de 17/09/2026.** Número que sai do corpo do slide
+> e entra **dentro de uma figura** continua **na tela**: a figura é conteúdo de
+> tela, e o seu rodapé também. É o caso dos percentuais da dupla prática e da
+> ressalva de cobertura do inquérito, e é por isso que a linha da regra 4 vale
+> igual para eles.
 > Linha cuja saída da tela é de 16/09/2026 leva a marca **"saiu da tela em
 > 16/09/2026, mantida por rastreio"**; número que nunca foi exibido é declarado
 > como tal. O conteúdo de [02](02_conteudo_slides.md) passou por **mais de uma
@@ -39,8 +46,9 @@
 
 | Código | Figura | Slide | Arquivo | Origem |
 |---|---|:---:|---|---|
-| `E1` | Especialistas por 100 mil habitantes, por UF, 2024 | 4 | `docs/07_apresentacoes/banca1/figuras/especialistas_por_uf.png` | Demografia Médica 2025; **externa, montada à mão** — ver `P6` |
-| `E2` | Deslocamento médio para serviços de alta complexidade, por região | 4 | `docs/07_apresentacoes/banca1/figuras/deslocamento_por_regiao.png` | atribuída à REGIC 2018; **externa e sem fonte primária confirmada** — ver `P6` e `P7` |
+| `E1` | Especialistas por 100 mil habitantes: as duas maiores e as duas menores UFs, 2024 | 4 | `output/apresentacao_banca1/especialistas_por_uf_extremos.png` | Demografia Médica 2025; gerada por script desde 17/09/2026 — ver `P6` |
+| `E2` | Deslocamento médio para serviços de alta complexidade, por região | 4 | `output/apresentacao_banca1/deslocamento_por_regiao.png` | atribuída à REGIC 2018; gerada por script desde 17/09/2026, **sem fonte primária confirmada** — ver `P7` |
+| `E3` | Setor de atuação dos cirurgiões: dupla prática, só privado, só público ou SUS | 4 | `output/apresentacao_banca1/dupla_pratica_cirurgioes.png` | Demografia Médica 2025, cap. 13, Fig. 1, p. 254; gerada por script desde 17/09/2026 |
 | `F3` | Bolsa mensal por faixa de atração | 5 | `output/apresentacao_banca1/bolsa_por_faixa.png` | Edital SGTES/MS nº 3/2025, gerada por script |
 | `F1` | Especialistas por 100 mil habitantes em jun/2025, por faixa publicada | 5 | `output/apresentacao_banca1/oferta_pre_por_faixa.png` | CNES + Censo 2022, gerada por script |
 | `F2` | Colegas da mesma especialidade no município, jun/2025, por faixa publicada | 5 | `output/apresentacao_banca1/retaguarda_por_faixa.png` | CNES, gerada por script |
@@ -49,12 +57,29 @@
 `F4` (curva de custo laboral) e `F5` (vagas por região) saíram do deck no corte
 de 16/09/2026 e estão listadas abaixo entre as figuras não usadas.
 
-`F1`, `F2`, `F3` e `F6` são produzidas por
+**As sete são produzidas** por
 [`scripts/apresentacao/gerar_figuras_banca1.py`](../../../scripts/apresentacao/gerar_figuras_banca1.py),
 que grava `output/apresentacao_banca1/manifesto_figuras.json` com o hash das
-entradas, o filtro aplicado e as séries por faixa, região e estrato. **`E1` e
-`E2` não são**: vêm do deck do grupo e violam a regra de proveniência do
-projeto enquanto não forem geradas por script — é a pendência `P6`.
+entradas, o filtro aplicado e as séries por faixa, região e estrato. Desde
+17/09/2026 isso inclui `E1`, `E2` e `E3`, que **não derivam de base do
+repositório**: os valores são estatísticas publicadas, declaradas no script como
+constantes com fonte, página e cobertura, e repetidas no manifesto sob
+`estatisticas_publicadas_slide_4`, cada uma com o campo
+`fonte_primaria_confirmada`. **Gerar por script resolve a forma, não a fonte:**
+`E1` e `E2` seguem sem fonte primária conferida — `P5`, `P6` e `P7`.
+
+**Definição de `E1`.** Os **quatro** valores por UF que têm fonte registrada —
+DF 453, SP 244, PA 70, MA 68 —, não as 27 unidades. A figura equivalente do deck
+do grupo mostrava 16 barras e **não era usável**: calibrada pelos dois rótulos
+impressos (DF 453,5 e MA 68,2), punha **SP em ≈ 419** e **PA em ≈ 135**, contra
+os 244 e 70 da série citada nesta seção. Só os dois extremos rotulados batiam.
+Ver `P6`.
+
+**Definição de `E3`.** Barra única de 100% com os três percentuais do cap. 13,
+Fig. 1, p. 254. O rodapé da figura — que é **conteúdo de tela** — carrega a
+ressalva de cobertura: inquérito por amostra do Colégio Brasileiro de Cirurgiões,
+**1.544 respondentes**, não censo, sem recorte equivalente para outras
+especialidades.
 
 **Definição comum de `F1` e `F2`.** Profissionais distintos com vínculo no CNES
 nos CBOs dos **10 cursos com correspondência unívoca curso–CBO** (1, 2, 3, 5, 9,
@@ -89,9 +114,13 @@ estrato, declarado como **associativo**.
 | `output/apresentacao_banca1/oferta_antes_depois_por_faixa.png` | série mensal de especialistas por 100 mil habitantes, 2024–2026. Saiu do deck na segunda rodada de revisão: sem grupo de comparação, não se lê como efeito do programa. O script continua gerando; a série está no `manifesto_figuras.json` e é a única parte reprodutível da tabela do deck do grupo — ver `P8` |
 | `docs/07_apresentacoes/banca1/figuras/motivacao_manchetes.png` | recortes de imprensa com cabeçalho do deck anterior. As manchetes entraram no slide do Problema como citação textual em 09/09/2026 e saíram no corte de 16/09/2026; a portaria de urgência continua citada em texto no slide 4, e a manchete dos 10% deixou a tela: depois da compressão de 16/09/2026 ela só aparece em **nota de produção**, como advertência a quem monta o deck |
 
-`especialistas_por_uf.png` e `deslocamento_por_regiao.png` saíram desta lista em
-16/09/2026: a reescrita do slide 4 as **recolocou na tela** e elas passaram a
-`E1` e `E2`, com as pendências `P6` e `P7` abertas.
+`docs/07_apresentacoes/banca1/figuras/especialistas_por_uf.png` e
+`docs/07_apresentacoes/banca1/figuras/deslocamento_por_regiao.png` — os arquivos
+do deck do grupo — **voltaram a esta lista em 17/09/2026**, agora em definitivo:
+`E1` e `E2` passaram a ser gerados por script e gravados em `output/`. Os dois
+PNGs antigos ficam preservados como material do deck anterior. O de UF **não
+pode voltar à tela** enquanto suas barras intermediárias contradisserem a série
+citada; ver `P6`.
 
 ---
 
@@ -105,6 +134,19 @@ rebaixou a manchete dos 10%. A compressão do mesmo dia tirou do corpo do slide 
 manchete e a citação do item 1.2.1 do edital; a revisão seguinte devolveu o
 tamanho do inquérito e manteve na tela a portaria de urgência. Também saiu da
 tela o total de **597 mil** médicos. As linhas abaixo estão marcadas uma a uma.
+
+> [!IMPORTANT]
+> **O corte de 17/09/2026 mudou onde os números estão, não quais são.** O slide
+> passou a ser figura e uma frase por build. Saíram do **corpo** do slide, e
+> **entraram na figura**, que é conteúdo de tela: os quatro marcadores do
+> retrato nacional — hoje `E1` e `E2` — e a tabela dos três percentuais de
+> atuação, hoje `E3`. Saíram da tela **inteiramente**, e seguem aqui por
+> rastreio: **353 mil** especialistas e **59%** dos médicos; **55,4%** no
+> Sudeste e **5,9%** no Norte; **16 cursos, 6 cirúrgicos e 10 ambulatoriais**;
+> **6 dos 16** títulos citando câncer, tumores ou oncologia; e as contagens de
+> células das três maiores ofertas — 188, 164 e 147 —, cujos **nomes** continuam
+> na tela. A ressalva de cobertura do inquérito **não saiu**: migrou para o
+> rodapé de `E3`. Nenhum valor foi alterado.
 
 | Número | Fonte | Verificação |
 |---|---|---|
@@ -123,6 +165,22 @@ tela o total de **597 mil** médicos. As linhas abaixo estão marcadas uma a uma
 | Situação de urgência em saúde pública por 24 meses, em razão do tempo de espera na atenção especializada | Portaria GM/MS nº 7.061, de 6 de junho de 2025 | conferido em reprodução do DOU. **Está na tela**, no terceiro build do slide 4: *"Em 2025 o Ministério declarou **urgência em saúde pública por 24 meses** pelo tempo de espera, e lançou o **Agora Tem Especialistas**, de que o PMM-E é o braço de provimento"*. O registro anterior, de que estaria fora da tela, foi corrigido em 16/09/2026 |
 
 ### Slide 5 — Política: o que é o PMM-E e o que fixa a bolsa
+
+> [!IMPORTANT]
+> **O corte de 17/09/2026.** O slide passou de **cinco** builds para **três**.
+> **Entrou na tela**, correção D1 do PR de ajuste estrutural: o rótulo **célula**
+> no lugar de *vaga* — "1.295 **células** estabelecimento–curso" — e as **678**
+> vagas imediatas, que estavam fora da tela desde 16/09/2026. **Entrou na tela**,
+> correção F2 do mesmo PR: o pacote formativo dito como o que **não** varia —
+> bolsa-formação sem vínculo, 12 meses, 20 horas, RQE e supervisão de instituição
+> formadora. **Saíram da tela, mantidas por rastreio:** a contribuição
+> previdenciária do item 11.2; o adicional do art. 22-D, §4º, e o registro de que
+> não foi regulamentado no ciclo 1; a afirmação de que nenhuma célula
+> município–curso aparece com mais de uma faixa; os **48%** promovidos, que eram
+> a forma proporcional dos mesmos 177/368, hoje só em contagem; e os **31%**
+> contra **12%** de médicos sozinhos ou com um único colega. **Mudou de slide:**
+> a teoria da mudança, que é hoje o primeiro build do slide 7 — a linha
+> correspondente desta seção está lá. Nenhum valor foi alterado.
 
 | Número ou afirmação | Fonte |
 |---|---|
@@ -147,7 +205,6 @@ tela o total de **597 mil** médicos. As linhas abaixo estão marcadas uma a uma
 | 18,3 / 14,4 / 15,0 especialistas por 100 mil hab. (Faixas 1, 2 e 3 publicadas), jun/2025 | `F1`, agrupado pela faixa publicada no quadro de vagas |
 | Mediana de 2,5 colegas na Faixa 1, 5,0 na Faixa 2 e 6,5 na Faixa 3; 31% contra 12% sozinho ou com um único colega | `F2`, agrupado pela faixa publicada. Faixa 1 tem 150 pares município–especialidade em 85 municípios |
 | Agrupamento por faixa publicada, e não por categoria de IVS recalculada | corrigido em 14/09/2026 em `scripts/apresentacao/gerar_figuras_banca1.py`; a versão anterior rotulava errado 177 dos 368 municípios e invertia o sinal de `F1` — ver `P4` |
-| Teoria da mudança: regra de valor (11.1.3 e 11.1.4), provimento como finalidade (art. 22-D e item 1.1.2), redução da espera como objetivo (art. 22-D e itens 1.2.1 e 1.2.5.V) | Lei nº 15.233/2025 e Edital SGTES/MS nº 3/2025. O que está em **laranja e tracejado** no diagrama — assim nomeado na tela desde 16/09/2026 — é o que **nenhum ato afirma**: é leitura do projeto sobre o que os atos deixam de dizer, não citação. A ressalva de **oferta líquida** que fecha o slide — 20 horas, sem vínculo, e o edital apenas **vedando substituição** de quem já está lá — apoia-se no item **4.1.6**, registrado na linha do edital acima |
 
 ### Slide 6 — Efeitos: o ciclo 1 e a literatura
 
@@ -157,6 +214,20 @@ tela o total de **597 mil** médicos. As linhas abaixo estão marcadas uma a uma
 > slide 16 explica por quê. Desde 16/09/2026 esse bloco deixou de ser um
 > `CAUTION` e passou a **citação de tela**, com a remissão ao slide 16 e as duas
 > palavras permitidas, **gradiente** e **associação**.
+
+> [!IMPORTANT]
+> **O corte de 17/09/2026.** **Saíram da tela dois números que são saída de
+> estimação**, e a banca 1 não apresenta resultado de estimação: o **+20,9 p.p.**
+> do estrato metropolitano no modelo ajustado e o **+0,50** especialista
+> cadastrado do módulo A5, com o erro padrão **0,234** e a expressão "sem
+> pré-tendência detectável". O gradiente **bruto** por território — 44,9% a
+> 20,5% — continua na tela, na figura e na leitura. **Saíram da tela, e ficam de
+> reserva para pergunta da banca**, duas das quatro células do lado "não basta":
+> Costa, Nunes & Sanches (2024), com os 12,4% a US$ 15,7 mi por ponto e os 63,8%
+> por US$ 2,2 a 5,1 mi — o autor pediu dois a favor e dois contra —, e Pathman,
+> Konrad & Ricketts (1992), com os 12% contra 39% após oito anos. Costa et al.
+> continua na tela **no slide 10**. **Mudou de rótulo:** "1.295 vagas" virou
+> "1.295 **células**", correção D1. Nenhum valor foi alterado.
 
 | Número | Fonte |
 |---|---|
@@ -178,8 +249,12 @@ tela o total de **597 mil** médicos. As linhas abaixo estão marcadas uma a uma
 
 ### Slide 7 — Pergunta de pesquisa
 
+O diagrama de teoria da mudança veio do slide 5 em 17/09/2026; a linha abaixo
+veio com ele, sem alteração de conteúdo.
+
 | Número | Fonte |
 |---|---|
+| Teoria da mudança: regra de valor (11.1.3 e 11.1.4), provimento como finalidade (art. 22-D e item 1.1.2), redução da espera como objetivo (art. 22-D e itens 1.2.1 e 1.2.5.V) | Lei nº 15.233/2025 e Edital SGTES/MS nº 3/2025. O que está em **laranja e tracejado** no diagrama — assim nomeado na tela desde 16/09/2026 — é o que **nenhum ato afirma**: é leitura do projeto sobre o que os atos deixam de dizer, não citação. A ressalva de **oferta líquida** que fecha o slide — 20 horas, sem vínculo, e o edital apenas **vedando substituição** de quem já está lá — apoia-se no item **4.1.6**, registrado na linha do edital acima |
 | Degrau de **R$ 5 mil** entre faixas | Edital SGTES/MS nº 3/2025, item 11.1.3 (R$ 10 / 15 / 20 mil) |
 | "maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas desvantagens territoriais na atração de médicos especialistas?" | [`01_pergunta_escopo/15`](../../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md) — formulação canônica. **Saiu da tela em 16/09/2026, mantida por rastreio:** a citação literal passou à nota de produção do slide 7. Na tela está a versão de manchete do deck, *"O incentivo financeiro oferecido pelo PMM-E funciona para atrair especialistas para regiões mais vulneráveis?"*, que é a mesma pergunta em linguagem de tela |
 
@@ -360,28 +435,43 @@ Pendência residual, **não bloqueante**: o PDF da *Demografia Médica no Brasil
 seção 4. Ao registrá-lo, conferir no original a distribuição regional de
 especialistas.
 
-### `P6` — as duas figuras do slide 4 não são geradas por script versionado
+### `P6` — as figuras do slide 4 fora do pipeline, e o que a medição encontrou
 
-`E1` (especialistas por 100 mil habitantes por UF) e `E2` (deslocamento médio
-para serviços de alta complexidade por região) vêm do **deck do grupo**, montadas
-fora do pipeline. Isso **contraria a regra de proveniência do `CLAUDE.md`**:
-figura derivada de base do repositório é gerada por script versionado e lida de
-`output/`; gráfico produzido fora do pipeline não entra em apresentação.
+**Estado em 17/09/2026: a parte de forma está fechada; a de cobertura, não.**
 
-As duas estão na tela porque carregam o argumento do slide 4, e a alternativa —
-tirá-las — deixaria o slide sem a evidência territorial. A pendência é de
-**forma, não de conteúdo** no caso de `E1`, cuja série está conferida em
-cobertura (453 no DF, 68 no MA); em `E2` é de forma **e** de fonte, ver `P7`.
+Até 16/09/2026, `E1` (especialistas por 100 mil habitantes por UF) e `E2`
+(deslocamento médio para alta complexidade por região) vinham do **deck do
+grupo**, montadas fora do pipeline — o que **contraria a regra de proveniência do
+`CLAUDE.md`**: gráfico produzido fora do pipeline não entra em apresentação. Com
+o pedido de "gráfico > texto" para o slide 4, a exceção deixou de ser
+sustentável: pôr **mais** peso numa figura fora do pipeline agrava a violação em
+vez de tolerá-la.
 
-A compressão de 16/09/2026 tirou da tabela de figuras do slide 4 a coluna
-**Estado**, que declarava na tela "falta gerar por script". A pendência deixou de
-ser visível para a banca: continua aberta aqui e na lista de pendências de
-[02](02_conteudo_slides.md), mas nada na tela a anuncia.
+As três figuras do slide 4 passaram então a ser geradas por
+`scripts/apresentacao/gerar_figuras_banca1.py`, com os valores declarados como
+constantes com fonte, página e cobertura, e repetidos no manifesto.
 
-**O que fecha:** acrescentar as duas séries a
-`scripts/apresentacao/gerar_figuras_banca1.py`, lendo de `output/`, com a fonte
-registrada no `manifesto_figuras.json`. Enquanto isso não acontecer, as duas
-figuras são exceção declarada, não prática aceita.
+**A figura de UF do grupo não era usável, e isso foi medido.** Calibrando a
+imagem pelos dois únicos rótulos impressos — DF 453,5 e MA 68,2 —, as dezesseis
+barras dão a série abaixo, contra os quatro valores que esta seção registra:
+
+| UF | Barra da figura do grupo | Série citada nesta seção |
+|---|---:|---:|
+| DF | 453,5 | 453 |
+| SP | ≈ 419 | **244** |
+| PA | ≈ 135 | **70** |
+| MA | 68,2 | 68 |
+
+Só os dois extremos rotulados batem; as outras catorze barras não correspondem à
+fonte declarada, e a série que elas desenham **não tem origem conhecida**. Por
+isso `E1` passou a ser a figura dos **quatro** valores com fonte registrada, e
+não das 27 unidades: a tela perde o panorama completo, e não ganha uma série que
+ninguém consegue rastrear.
+
+**O que fecha:** registrar em `data/raw/` a tabela por UF da *Demografia Médica
+2025*, com hash — o mesmo PDF que `P5` já pede —, e trocar `E1` pela figura das
+27 unidades. Enquanto isso não acontecer, o panorama completo por UF **não vai à
+tela**, em nenhuma versão.
 
 ### `P7` — os valores do gráfico de deslocamento não têm fonte primária confirmada
 
@@ -398,10 +488,15 @@ do slide perdeu a frase "fonte primária ainda não confirmada", e o "a confirma
 ficou só na linha de fontes, que desce a nota de rodapé. Enquanto a checagem não
 se fizer, tratá-los como **ilustrativos** e não como estatística do trabalho.
 
+**O que mudou em 17/09/2026.** `E2` passou a ser gerada por script, e o rodapé
+da figura — que é **conteúdo de tela** — diz *"atribuído à REGIC 2018 (IBGE);
+fonte primária a confirmar"*. A ressalva voltou à tela, agora dentro da figura.
+**Gerar não confirma fonte:** a pendência continua aberta, e o manifesto marca a
+série com `fonte_primaria_confirmada: false`.
+
 **O que fecha:** localizar a tabela da REGIC 2018 sobre deslocamentos para
-serviços de saúde, registrar o arquivo em `data/raw/` com hash e gerar `E2` por
-script (fecha `P6` e `P7` juntos). Se a fonte não for localizada, os valores
-saem da tela.
+serviços de saúde e registrar o arquivo em `data/raw/` com hash. Se a fonte não
+for localizada, os valores saem da tela.
 
 ### `P8` — a tabela de inclinações pré/pós por faixa do deck do grupo não é reproduzível
 
@@ -460,6 +555,27 @@ tem IVS, categoria recalculada e `valor_anunciado_mensal_brl` por município.
 lendo de `output/`, e registrá-la na seção 1 deste documento. Enquanto não
 existir, o slide 16 fica só em texto — o que é aceitável, mas desperdiça o
 argumento mais forte da seção.
+
+### `P10` — a retaguarda é municipal, e o serviço é em parte regional
+
+Aberta em 17/09/2026 a partir do item **F5** do PR de ajuste estrutural. `F2`
+mede colegas da mesma especialidade **no município**, e é dela que sai a
+afirmação de tela *"a Faixa 1 compensa isolamento, não cobertura"*. O quadro de
+vagas do ciclo 1 mostra que boa parte do serviço é regional: **552 de 1.295
+células (42,6%)** estão em estabelecimento de gestão estadual, e **93 dos 460**
+CNES têm "REGIONAL" no nome, com 339 células (26,2%). Para um hospital regional,
+a retaguarda relevante é a do estabelecimento e da região, não a do município.
+
+A medida **não é falsa** — é mais estreita que a frase. E o descasamento tem
+interesse próprio: o incentivo é fixado pelo IVS do **município-sede**, e a
+clientela é a da **região**. Isso é propriedade do desenho da política, não
+defeito da medição.
+
+**O que fecha:** decisão do autor, que o próprio PR registra como tal — ou uma
+linha de limitação no terceiro build do slide 5, ou o descasamento como argumento
+próprio da motivação. O teste de deslocamento intrarregional que verificaria o
+ponto depende da malha territorial versionada, item F4 do mesmo PR, e está
+bloqueado. Nada entrou na tela sem essa decisão.
 
 ## 4. Regra permanente
 

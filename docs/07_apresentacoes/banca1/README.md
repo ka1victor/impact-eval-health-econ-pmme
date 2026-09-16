@@ -3,7 +3,7 @@
 > **Formato:** markdown com imagens, para ler no GitHub ou no Obsidian<br>
 > **Escopo:** três seções, terminando na viabilidade empírica<br>
 > **Fora do escopo:** estratégia de identificação executada, estimadores, resultados e robustez<br>
-> **Atualização:** 16 de setembro de 2026
+> **Atualização:** 17 de setembro de 2026
 
 ## 1. O que esta entrega é
 
@@ -14,7 +14,7 @@ argumento pedir — e, desde a reorganização de 16/09/2026, nenhum a mais.
 | Seção | Slides | Conteúdo |
 |---|:---:|---|
 | **Capa e sumário** | 1–2 | a capa e o sumário, que aparece **uma vez** |
-| **1. Motivação e Pergunta** | 3–7 | divisória (3); problema (4): o retrato territorial e a dupla prática; política (5): o que é o PMM-E, o que determina a bolsa e onde a regra manda o dinheiro; efeitos (6): o ciclo 1 e a literatura dos dois lados; pergunta de pesquisa (7) |
+| **1. Motivação e Pergunta** | 3–7 | divisória (3); problema (4): o retrato territorial e a dupla prática, **em figura**; política (5): o pacote que é igual em toda vaga, quem fixa o valor e para onde a regra manda o dinheiro; efeitos (6): o ciclo 1 e a literatura, dois de cada lado; pergunta de pesquisa (7): a cadeia que a política supõe, e a pergunta |
 | **2. Literatura Teórica e Modelo Microeconômico** | 8–11 | divisória (8); visão geral (9): a equação de escolha de Moehling et al. e a caixa-preta do custo; custo da localidade (10): o lugar, com Redding & Rossi-Hansberg, e o trabalho, com Choné & Ma; remuneração da localidade (11): a bolsa é parte, não todo |
 | **3. Hipótese e Viabilidade Empírica** | 12–16 | divisória (12); implicações para o PMM-E (13); hipótese do trabalho (14); disponibilidade de dados (15); desafio metodológico (16) |
 
@@ -23,8 +23,8 @@ argumento pedir — e, desde a reorganização de 16/09/2026, nenhum a mais.
 primeiro ou segundo nível é um slide**: `#` é layout de capa — a capa e as três
 divisórias de seção — e `##` é layout de conteúdo, os doze slides restantes. O
 terceiro nível, `###`, **não abre slide**: marca um **build** dentro do slide,
-um `\only<n>` no Beamer e um clique no Slidev. São **33 builds nos 16 slides**,
-o mais denso sendo o slide 5, com cinco. A tabela "Mapa da apresentação", no
+um `\only<n>` no Beamer e um clique no Slidev. São **32 builds nos 16 slides** e,
+desde o corte de 17/09/2026, **nenhum slide passa de três builds**. A tabela "Mapa da apresentação", no
 topo daquele arquivo, dá a correspondência completa entre número, layout,
 builds, seção, rótulo do roteiro e título de tela; é dela que este README
 deriva.
@@ -57,31 +57,39 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 
 | Documento | Função |
 |---|---|
-| [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — os **16 slides** e **33 builds**, com título, corpo, figuras, fontes e ressalvas. `###` marca build, não slide; a linha de fontes e os blocos de **nota de produção** não vão à tela, e todo o resto do corpo vai. Os decks derivam dele |
+| [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — os **16 slides** e **32 builds**, com título, corpo, figuras, fontes e ressalvas. `###` marca build, não slide; a linha de fontes e os blocos de **nota de produção** não vão à tela, e todo o resto do corpo vai. Os decks derivam dele |
 | [Roteiro narrativo](01_roteiro_narrativo.md) | arco das seções, lógica de cada bloco, regras de composição — inclusive a do build, na seção 2.6 —, rastreio do feedback e histórico das revisões, inclusive a reorganização de 16/09/2026 e a compressão do mesmo dia (seção 4f) |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | origem e reprodutibilidade de cada número exibido |
 | [Deck Beamer](deck_beamer/) · [Deck Slidev](deck_slidev/) | artefatos derivados, com script de build cada um; PDFs em `output/apresentacao_banca1/`. Em 16/09/2026 os dois ainda estão na **estrutura anterior, de 15 slides** — divergência conhecida e datada, a resolver na próxima reconstrução |
 
 ## 3. Figuras
 
-As quatro figuras geradas por script continuam em uso e mudaram de slide na
-reorganização de 16/09/2026: as três do bloco da política ficaram juntas no
-slide 5, e o preenchimento do ciclo 1 passou ao slide 6.
+Desde 17/09/2026 **todas as figuras do deck saem do pipeline**. São sete, e as
+três do slide 4 são novas: o corte daquele dia trocou lista de números por
+figura, e pôr mais peso numa figura montada à mão agravaria a violação da regra
+de proveniência em vez de tolerá-la.
 
 | Figura | Slide | Origem |
 |---|:---:|---|
+| Especialistas por 100 mil hab., duas maiores e duas menores UFs | 4 | Demografia Médica 2025 |
+| Deslocamento médio para alta complexidade, por região | 4 | atribuído à REGIC 2018, **fonte a confirmar** |
+| Setor de atuação dos cirurgiões | 4 | Demografia Médica 2025, cap. 13 |
 | Bolsa mensal por faixa | 5 | edital |
 | Especialistas por 100 mil habitantes por faixa publicada | 5 | CNES + Censo 2022 |
 | Colegas da mesma especialidade por faixa publicada | 5 | CNES |
 | Preenchimento do ciclo 1 por faixa e por estrato | 6 | tabelas descritivas do módulo A4 |
 
-O **slide 4 pede duas figuras que ainda não são geradas por script** —
-especialistas por 100 mil habitantes por UF e deslocamento médio para serviços
-de alta complexidade por região. As duas vêm hoje do deck do grupo e, enquanto
-não forem produzidas pelo pipeline e lidas de `output/`, estão fora da regra de
-proveniência do projeto: são as pendências 1 e 2 do fim de
-[02 — Conteúdo](02_conteudo_slides.md). Fora essas duas, nenhuma figura de fonte
-externa entra no deck; números externos entram em texto, com fonte.
+As três do slide 4 **não derivam de base do repositório**: os valores são
+estatísticas publicadas, declaradas no script como constantes com fonte, página
+e cobertura, e repetidas no `manifesto_figuras.json` com o campo
+`fonte_primaria_confirmada`. **Gerar por script resolve a forma, não a fonte** —
+duas delas seguem sem fonte primária conferida, pendências 1, 2 e 5.
+
+A figura de UF do deck do grupo **não voltou**: medida contra os dois rótulos
+impressos, ela punha SP em ≈ 419 e PA em ≈ 135, contra os 244 e 70 da série
+citada. A figura nova é dos **quatro** valores com fonte registrada, e o
+panorama das 27 unidades só volta quando a tabela por UF da *Demografia Médica
+2025* estiver registrada em `data/raw/` com hash.
 
 Para regerar:
 
@@ -109,26 +117,30 @@ bash scripts/apresentacao/build_deck_slidev.sh        # Node 22, Chromium local
 | Seção | Slides | Conteúdo | Figuras | Proveniência |
 |---|:---:|:---:|:---:|:---:|
 | Capa e sumário | 1–2 | ✅ | — | — |
-| 1. Motivação e Pergunta | 3–7 | ✅ | ⚠️ | ✅ |
+| 1. Motivação e Pergunta | 3–7 | ✅ | ✅ | ⚠️ |
 | 2. Literatura Teórica e Modelo Microeconômico | 8–11 | ✅ | — | ✅ |
 | 3. Hipótese e Viabilidade Empírica | 12–16 | ✅ | — | ✅ |
 
-O ⚠️ é do slide 4: as quatro figuras dos slides 5 e 6 saem do pipeline, as duas
-do slide 4 ainda não.
+O ⚠️ mudou de coluna em 17/09/2026. **Figuras** ficou ✅: as sete saem do
+pipeline. **Proveniência** ficou ⚠️ no bloco da motivação, e a razão é a mesma
+que antes estava escondida atrás da forma — duas séries do slide 4 seguem sem
+fonte primária conferida. Gerar por script não confirma fonte.
 
 As **três ressalvas de conteúdo** continuam encerradas desde 16/09/2026 — a
 contagem de cursos ambulatoriais, a figura do custo laboral e a citação direta
-da Portaria GM/MS nº 7.177/2025. Abertas há **sete pendências**, listadas com
+da Portaria GM/MS nº 7.177/2025. Abertas há **oito pendências**, listadas com
 efeito e critério de fechamento no fim de
-[02 — Conteúdo](02_conteudo_slides.md): as duas figuras do slide 4 fora do
-pipeline (1) e a fonte primária do deslocamento por região (2), que são as que
-tocam a regra de proveniência; o PDF da *Demografia Médica 2025* a registrar em
-`data/raw/` com hash, depois de corrigido o número da dupla prática (3); a
-tabela de inclinações pré/pós do deck do grupo, não reproduzível e por isso
-mantida fora do slide 6 (4); o percentual do Sudeste conferido em cobertura e
-não no PDF integral (5); os dois decks ainda na estrutura de 15 slides (6); e a
-figura que falta ao slide 16 — IVS contra faixa publicada, com os cortes
-marcados, que é o que sustenta o achado de viabilidade (7).
+[02 — Conteúdo](02_conteudo_slides.md): a cobertura da figura por UF, que hoje é
+dos quatro valores com fonte e não das 27 unidades (1), e a fonte primária do
+deslocamento por região (2), que são as que tocam a regra de proveniência; o PDF
+da *Demografia Médica 2025* a registrar em `data/raw/` com hash, depois de
+corrigido o número da dupla prática (3); a tabela de inclinações pré/pós do deck
+do grupo, não reproduzível e por isso mantida fora do slide 6 (4); o percentual
+do Sudeste conferido em cobertura e não no PDF integral (5); os dois decks ainda
+na estrutura de 15 slides (6); a figura que falta ao slide 16 — IVS contra faixa
+publicada, com os cortes marcados, que é o que sustenta o achado de viabilidade
+(7); e a decisão do autor sobre a fronteira municipal da medida de retaguarda,
+vinda do PR de ajuste estrutural (8).
 O rastreio número a número segue em
 [03 — Proveniência](03_proveniencia_figuras_e_numeros.md#3-pendências-e-ressalvas).
 

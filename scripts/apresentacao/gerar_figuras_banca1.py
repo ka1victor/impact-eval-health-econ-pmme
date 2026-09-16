@@ -24,6 +24,19 @@ Figuras:
    homologação, por faixa anunciada e por estrato territorial, lida das tabelas
    descritivas do módulo A4 (`output/tema_trabalho/`). Leitura descritiva.
 
+As três figuras do slide 4 não derivam de base do repositório: os valores são
+estatísticas publicadas, declaradas abaixo como constantes com fonte, página e
+cobertura, e repetidas no manifesto. Nenhuma é estimativa nossa.
+
+7. `especialistas_por_uf_extremos.png` — razão de especialistas por 100 mil
+   habitantes nas duas maiores e nas duas menores UFs, 2024.
+
+8. `deslocamento_por_regiao.png` — distância média percorrida para serviços de
+   alta complexidade, por grande região. Fonte primária **não confirmada**.
+
+9. `dupla_pratica_cirurgioes.png` — setor de atuação dos cirurgiões: dupla
+   prática, exclusivamente privado, exclusivamente público ou SUS.
+
 Numerador: `especialistas_mst` do painel município–curso–mês, restrito aos
 cursos com correspondência unívoca curso–CBO (evita contar a mesma pessoa em
 dois cursos). É presença cadastral no CNES nos CBOs do programa, não
@@ -107,6 +120,47 @@ BOLSA_POR_FAIXA = [
     ("Faixa 2\nalta", 15_000),
     ("Faixa 1\nmuito alta", 20_000),
 ]
+
+# --------------------------------------------------------------------------
+# Estatísticas publicadas usadas no slide 4. Não derivam de base do
+# repositório: entram aqui como constantes com fonte, para que a figura seja
+# produzida pelo pipeline e não montada à mão. O manifesto repete cada valor
+# com a sua fonte e o seu estado de confirmação.
+# --------------------------------------------------------------------------
+
+# Scheffer, M. et al., "Demografia Médica no Brasil 2025" (FMUSP/AMB), dados de
+# dez/2024, na cobertura da Agência Brasil (abril de 2025): "Distrito Federal e
+# São Paulo respondem pelas maiores razões de especialistas por 100 mil
+# habitantes (453 e 244, especificamente), enquanto Maranhão e Pará respondem
+# pelas menores taxas no país (68 e 70, respectivamente)".
+# São as quatro UFs com valor citado; as demais 23 não têm valor em fonte
+# registrada no repositório, e por isso a figura é dos extremos, não das 27.
+ESPECIALISTAS_POR_UF = [("DF", 453), ("SP", 244), ("PA", 70), ("MA", 68)]
+
+# Deslocamento médio para serviços de alta complexidade, por grande região,
+# atribuído à REGIC 2018 (IBGE). FONTE PRIMÁRIA NÃO CONFIRMADA: os valores vêm
+# do deck do grupo e a tabela de origem não foi localizada. Pendência P7 de
+# docs/07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md.
+DESLOCAMENTO_POR_REGIAO = [
+    ("Norte", 276), ("Centro-Oeste", 256), ("Nordeste", 179),
+    ("Sudeste", 107), ("Sul", 101),
+]
+DESLOCAMENTO_FONTE_CONFIRMADA = False
+
+# Scheffer, M. et al., "Demografia Médica no Brasil 2025" (FMUSP/AMB), cap. 13,
+# Figura 1, p. 254: "predomina a dupla prática (72,4%). Apenas 7,7% dos
+# cirurgiões atuam, exclusivamente, no setor público ou no atendimento a
+# pacientes do SUS; enquanto 19,9% atuam somente no setor privado".
+# Inquérito por amostra do Colégio Brasileiro de Cirurgiões: 1.544 respondentes
+# de 6.869 elegíveis, entre os 42.426 cirurgiões do país. Não é censo, e não há
+# recorte equivalente para outras especialidades em fonte pública.
+DUPLA_PRATICA = [
+    ("Exclusivamente\npúblico ou SUS", 7.7, VERDE_ESCURO, "white"),
+    ("Dupla prática\npúblico e privado", 72.4, VERDE_MEDIO, TINTA),
+    ("Exclusivamente\nprivado", 19.9, VERDE_CLARO, TINTA),
+]
+DUPLA_PRATICA_RESPONDENTES = 1_544
+DUPLA_PRATICA_ELEGIVEIS = 6_869
 
 
 def _hash(caminho: Path) -> str:
@@ -196,6 +250,78 @@ def taxas_por_faixa() -> tuple[pd.DataFrame, dict]:
         },
     }
     return agregado, meta
+
+
+def figura_especialistas_por_uf() -> Path:
+    """Razão de especialistas por 100 mil habitantes: as duas maiores e as duas menores UFs."""
+    fig, ax = plt.subplots(figsize=(8.4, 4.0), dpi=200)
+    rotulos = [uf for uf, _ in ESPECIALISTAS_POR_UF]
+    valores = [v for _, v in ESPECIALISTAS_POR_UF]
+    cores = [VERDE_ESCURO, VERDE_MEDIO, VERDE_CLARO_LINHA, VERDE_CLARO]
+    barras = ax.bar(rotulos, valores, 0.55, color=cores)
+    for barra, valor in zip(barras, valores):
+        ax.annotate(f"{valor}", (barra.get_x() + barra.get_width() / 2, valor),
+                    textcoords="offset points", xytext=(0, 5),
+                    ha="center", fontsize=12.5, color=VERDE_ESCURO, fontweight="bold")
+    ax.set_ylabel("Especialistas por 100 mil habitantes", fontsize=10.5, color=TINTA_SUAVE)
+    ax.set_ylim(0, max(valores) * 1.22)
+    _limpar_moldura(ax)
+    ax.tick_params(axis="x", labelsize=12)
+    _rodape(fig, "Dezembro de 2024. As duas maiores e as duas menores razões entre as unidades da "
+                 "federação. Demografia Médica no Brasil 2025 (FMUSP/AMB).", y=-0.09)
+    destino = SAIDA / "especialistas_por_uf_extremos.png"
+    fig.savefig(destino, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    return destino
+
+
+def figura_deslocamento_por_regiao() -> Path:
+    """Distância média percorrida para serviços de alta complexidade, por região."""
+    fig, ax = plt.subplots(figsize=(8.4, 4.0), dpi=200)
+    rotulos = [r for r, _ in DESLOCAMENTO_POR_REGIAO]
+    valores = [v for _, v in DESLOCAMENTO_POR_REGIAO]
+    cores = [VERDE_ESCURO, VERDE_MEDIO, VERDE_MEDIO, VERDE_CLARO_LINHA, VERDE_CLARO]
+    barras = ax.bar(rotulos, valores, 0.55, color=cores)
+    for barra, valor in zip(barras, valores):
+        ax.annotate(f"{valor} km", (barra.get_x() + barra.get_width() / 2, valor),
+                    textcoords="offset points", xytext=(0, 5),
+                    ha="center", fontsize=12.5, color=VERDE_ESCURO, fontweight="bold")
+    ax.set_ylabel("Distância média (km)", fontsize=10.5, color=TINTA_SUAVE)
+    ax.set_ylim(0, max(valores) * 1.22)
+    _limpar_moldura(ax)
+    ax.tick_params(axis="x", labelsize=10.5)
+    _rodape(fig, "Deslocamento para serviços de alta complexidade. Atribuído à REGIC 2018 (IBGE); "
+                 "fonte primária a confirmar.", y=-0.08)
+    destino = SAIDA / "deslocamento_por_regiao.png"
+    fig.savefig(destino, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    return destino
+
+
+def figura_dupla_pratica() -> Path:
+    """Setor de atuação dos cirurgiões, em barra única de 100%."""
+    fig, ax = plt.subplots(figsize=(8.4, 1.8), dpi=200)
+    esquerda = 0.0
+    for rotulo, valor, cor, tinta in DUPLA_PRATICA:
+        ax.barh([0], [valor], left=esquerda, height=0.5, color=cor)
+        ax.annotate(_fmt(valor) + "%", (esquerda + valor / 2, 0),
+                    ha="center", va="center", fontsize=12.5, color=tinta, fontweight="bold")
+        ax.annotate(rotulo.replace("\n", " "), (esquerda + valor / 2, -0.38),
+                    ha="center", va="top", fontsize=9, color=TINTA_SUAVE)
+        esquerda += valor
+    assert abs(esquerda - 100.0) < 0.05, "os três setores não somam 100%"
+    ax.set_xlim(0, 100)
+    ax.set_ylim(-0.58, 0.4)
+    ax.axis("off")
+    respondentes = f"{DUPLA_PRATICA_RESPONDENTES:,}".replace(",", ".")
+    _rodape(fig, "Cirurgiões, por setor de atuação. Inquérito por amostra do Colégio Brasileiro de "
+                 f"Cirurgiões, {respondentes} respondentes — não é censo, e não há recorte "
+                 "equivalente para outras especialidades. Demografia Médica no Brasil 2025 "
+                 "(FMUSP/AMB), cap. 13, Fig. 1, p. 254.", y=-0.24)
+    destino = SAIDA / "dupla_pratica_cirurgioes.png"
+    fig.savefig(destino, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    return destino
 
 
 def figura_bolsa_por_faixa() -> Path:
@@ -449,6 +575,9 @@ def main() -> None:
     fig_regiao, meta_regiao = figura_vagas_por_regiao()
     fig_preench, meta_preench = figura_preenchimento_ciclo1()
     gerados = [
+        figura_especialistas_por_uf(),
+        figura_deslocamento_por_regiao(),
+        figura_dupla_pratica(),
         figura_bolsa_por_faixa(),
         figura_oferta_pre(agregado),
         figura_retaguarda_por_faixa(),
@@ -470,6 +599,35 @@ def main() -> None:
         },
         "vagas_ciclo1_por_regiao": meta_regiao,
         "preenchimento_ciclo1": meta_preench,
+        "estatisticas_publicadas_slide_4": {
+            "especialistas_por_uf_extremos": {
+                "valores": dict(ESPECIALISTAS_POR_UF),
+                "unidade": "especialistas por 100 mil habitantes",
+                "referencia": "dez/2024",
+                "cobertura": "4 UFs com valor citado, de 27",
+                "fonte": "Demografia Médica no Brasil 2025 (FMUSP/AMB), na cobertura da "
+                         "Agência Brasil, abril de 2025",
+                "fonte_primaria_confirmada": False,
+            },
+            "deslocamento_por_regiao": {
+                "valores": dict(DESLOCAMENTO_POR_REGIAO),
+                "unidade": "km, distância média para serviços de alta complexidade",
+                "cobertura": "5 grandes regiões",
+                "fonte": "atribuído à REGIC 2018 (IBGE); tabela de origem não localizada",
+                "fonte_primaria_confirmada": DESLOCAMENTO_FONTE_CONFIRMADA,
+            },
+            "dupla_pratica_cirurgioes": {
+                "valores": {r.replace("\n", " "): v for r, v, _, _ in DUPLA_PRATICA},
+                "unidade": "% dos cirurgiões respondentes",
+                "cobertura": f"inquérito por amostra do Colégio Brasileiro de Cirurgiões, "
+                             f"{DUPLA_PRATICA_RESPONDENTES} respondentes de "
+                             f"{DUPLA_PRATICA_ELEGIVEIS} elegíveis; não é censo",
+                "fonte": "Demografia Médica no Brasil 2025 (FMUSP/AMB), cap. 13, Fig. 1, p. 254",
+                "fonte_primaria_confirmada": True,
+            },
+            "leitura": "estatísticas publicadas, declaradas como constantes no script; "
+                       "não derivam de base do repositório e não são estimativas do projeto",
+        },
         "regra_de_faixa": {"grade": "Edital SGTES/MS nº 3/2025", "mapeamento": FAIXA_2025},
         "marcos": {"ultima_pre": ULTIMA_PRE, "primeira_pos": PRIMEIRA_POS},
         "cobertura": meta,
