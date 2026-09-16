@@ -74,6 +74,20 @@ O script de montagem falha se uma figura esperada não existir em
 primeira execução das figuras de dados exige o denominador populacional, obtido
 uma única vez por `scripts/aquisicao/06_adquirir_populacao_censo2022.py`.
 
+**Dependências.** `python-pptx` e `lxml` estão em `requirements.txt` desde
+16/09/2026. O que **não** está lá, porque são pacotes de sistema, e sem os quais
+a montagem falha ou a conferência fica infiel:
+
+| Pacote | Para quê | Sintoma se faltar |
+|---|---|---|
+| `texlive-latex-extra`, `dvipng` | renderizar as equações | o script aborta ao gerar o primeiro PNG |
+| `cm-super` | fontes vetoriais do LaTeX | erro `Missing cm-super package, required by Matplotlib` |
+| `fonts-montserrat` | a fonte do template | o deck monta, mas qualquer render de conferência troca a fonte e mede o texto errado |
+| `libreoffice-impress` | converter o `.pptx` em PDF para conferir | `soffice` responde `source file could not be loaded` |
+
+Num ambiente Debian ou Ubuntu:
+`apt-get install -y texlive-latex-extra dvipng cm-super fonts-montserrat libreoffice-impress`.
+
 **Dependências além de `requirements.txt`:** `python-pptx` e `lxml`, para
 escrever o `.pptx`, e uma instalação de LaTeX com `dvipng` — o script usa
 `text.usetex` do matplotlib, e não o `mathtext`, porque as equações pedem
