@@ -128,8 +128,8 @@
       "presente": true
     },
     "output/tema_trabalho/A5_estimativas_provimento.json": {
-      "sha256": "95278e76bd1ebfa10cd7278e3d7f4bab9795c32fa3d45e288d85a7794f81af23",
-      "bytes": 58503,
+      "sha256": "73b9362916d92091eb486c49ca71de17a14dfad4f3afca3802a8f935ed8e85f4",
+      "bytes": 66589,
       "papel": "estimativas de A5",
       "presente": true
     },
@@ -176,7 +176,7 @@
       "presente": true
     },
     "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": {
-      "sha256": "3936926ba1d0997954fd68779a3588cf7bd904b252b69098d638fb70e56e1fd1",
+      "sha256": "45d60f2003544ee8ca90e51ffa7475ec6d85406335f7262b27bc3f1dbe4e8b2d",
       "bytes": 4422,
       "papel": "síntese gerada aqui",
       "presente": true
@@ -190,7 +190,7 @@
     "docs/auditorias/09_red_team_atracao_provimento.md": "cf01503e",
     "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "4b0077df",
     "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "f82efdb9",
-    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "3936926b"
+    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "45d60f20"
   },
   "portoes": {
     "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",

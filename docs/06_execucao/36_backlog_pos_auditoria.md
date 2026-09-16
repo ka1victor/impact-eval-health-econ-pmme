@@ -118,6 +118,37 @@ modelos com `uf_fe`. E `A5_tabela_11` está livre: as tabelas de A5 vão hoje at
 **Bloqueio adicional, independente da decisão acima:** ver D-4. A5 não é
 reexecutável neste ambiente.
 
+### Executado em 16/09/2026 — sessão 1. Reproduz os três alvos reemitidos
+
+**Decisão (delegada pelo autor em 16/09/2026): nível residual rotulado, 24
+níveis**, a mesma definição de `colapsar_uf_fe` do C1 em A4. Fundamento e alvos
+reemitidos na **emenda 2** do `35_plano_correcoes_pos_auditoria.md`, commitada
+antes do código (`03ccc1c`): o princípio "município sem macrorregião forma nível
+próprio, em vez de herdar uma região" foi fixado pelo C1 em 09/09/2026, antes de
+qualquer coeficiente de A5 ser medido; a alternativa de 23 níveis deixa quatro
+células sem efeito fixo de UF, que é a classe de defeito que este item corrige;
+e as duas variantes levam à mesma conclusão. O alvo de +0,5014 / 23 níveis do
+quadro acima deixou de ser alvo e ficou como medição.
+
+Execução no modo de reestimação (D-4 parcialmente destravado), com
+`colapsar_uf_fe` copiada de A4 para A5 e aplicada nas **duas** implementações
+— coluna do painel e `A5_tabela_01e_amostra_uf.csv`:
+
+| Variante | coef | EP | p | níveis | alvo da emenda 2 |
+|---|---:|---:|---:|---:|---|
+| Balde único `RESTO` | +1,2949 | 0,7749 | 0,0947 | 20 | reproduz |
+| **Colapso em macrorregião, residual rotulado (primária)** | **+0,5062** | **0,2506** | **0,0434** | **24** | **reproduz** |
+| Sem colapso | +0,5002 | 0,2414 | 0,0382 | 27 | reproduz |
+
+As três variantes, para os cinco modelos `minimal` de corte transversal, estão
+em `A5_tabela_11_sensibilidade_colapso_uf.csv`; o próprio script confere os 12
+valores de `delta_minimal` como alvo congelado, ao lado dos 11 do C2. As tabelas
+`03`–`03i`, `04`, `05` e `06` mudaram por consequência mecânica da definição de
+efeito fixo, como a emenda previa e sem alvo prévio. O estudo de evento não
+mudou: `0,0684` e `0,50` idênticos. `A5_painel_T0.parquet` não foi regravado;
+sua coluna `uf_fe` traz a definição superada e é recomputada em memória.
+Nenhuma cifra do artigo mudou. Três testes novos.
+
 ## A-2 · Wild cluster bootstrap que o A3 exige e nunca foi computado
 
 **Onde:** `scripts/tema_trabalho/05_estimar_atracao.py`; o A3 exige o
@@ -825,7 +856,7 @@ e a 2 depende de a especificação do C1 já estar valendo.
 
 | Sessão | Estado | Itens | Por quê nesta ordem |
 |---|---|---|---|
-| 1 | `BLOQUEADA_ACHADO` | **A-1** | Alvo da variante a adotar não reproduz, e a definição de efeito fixo é decisão do autor. Também depende de D-4. Detalhe na seção A-1. |
+| 1 | `CONCLUIDA` (emenda `03ccc1c`, execução na seção A-1) | **A-1** | Executada em 16/09/2026 depois de D-4 ser parcialmente destravado (`da4d6f7`). Decisão delegada pelo autor: residual rotulado, 24 níveis. Os três alvos reemitidos reproduzem. |
 | 2 | `CONCLUIDA` (emenda `9e5de6d`, execução `fbc5f58`) | **A-2 + A-3 + C-6** | Executada em 14/09/2026 na especificação vigente. Emenda 1 do `35` commitada antes do código. Resultado e achado colateral na seção A-2 e no `35`. |
 | 3 | `PARCIAL_EXECUTADA` (14/09/2026, `a8107cb`) | **C-7** | Red team. A quarta ameaça — forma funcional — foi executada junto da sessão 5, porque a sessão 4 está bloqueada e as duas dividem o gerador `07_red_team_sintese.py`. Placebo, heterogeneidade de pré-tendência e deslocamento **continuam bloqueados por D-4**: exigem regravar artefato de A5. |
 | 4 | `BLOQUEADA_D4` | **B-1, B-2, B-5, B-6, C-9** | Higiene de A5. Toda ela regrava tabela ou relatório de A5; nenhum caminho legítimo sem o painel do CNES. |

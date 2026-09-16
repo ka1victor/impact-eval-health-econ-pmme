@@ -625,3 +625,17 @@ move todos os outros sem alvo declarado. Tratamento adotado:
 2. O script continua conferindo os 11 alvos do C2.
 3. Suíte verde e conferidor do artigo inalterado em 193 cifras.
 4. Divergência em qualquer dos três: **parar** — é achado, não resultado novo.
+
+# Emenda 2 — resultado da execução (16/09/2026)
+
+> **Estado:** `EXECUTADA`. Commit da emenda: `03ccc1c`, anterior ao código.
+> Nenhuma implementação foi ajustada para bater alvo.
+
+Os três alvos reemitidos reproduzem em quatro casas, com o número de níveis
+declarado: `RESTO` +1,2949 / 0,7749 / 0,0947 / 20; macrorregião com residual
+rotulado **+0,5062 / 0,2506 / 0,0434 / 24**; sem colapso +0,5002 / 0,2414 /
+0,0382 / 27. O script confere os 12 valores como alvo congelado, ao lado dos 11
+do C2 (23 alvos). Os cinco modelos `minimal` nas três variantes estão em
+`A5_tabela_11_sensibilidade_colapso_uf.csv`. O estudo de evento não mudou;
+`A5_painel_T0.parquet` não foi regravado; nenhuma cifra do artigo mudou e o
+conferidor segue aprovando 193. Suíte: 174 testes verdes.

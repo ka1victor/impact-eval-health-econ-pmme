@@ -45,7 +45,7 @@ As duas convenções são publicadas lado a lado: colunas sem sufixo preservam o
 
 Na amostra confirmatória, a variação junho/2025–março/2026 tem mediana 0.0 e máximo 211. Entre células com atração, a média é 2.29, a mediana 1.0 e 57.7% apresentam aumento; sem atração, os valores são 0.55, 0.0 e 32.5%.
 
-As regressões de nível, cobertura, novos vínculos mensais após washout, presença da coorte e validação preditiva são diagnósticos secundários. `n_entradas_6m` significa novo vínculo observado no mês após seis meses de ausência, e não entradas acumuladas ao longo de seis meses.
+As regressões de nível, cobertura, novos vínculos mensais após washout, presença da coorte e validação preditiva são diagnósticos secundários. Nelas, o efeito fixo de UF colapsa as unidades com menos de cinco municípios (14, 16, 25, 26, 27, 28, 32, 53) na macrorregião de saúde, com nível residual rotulado para município sem macrorregião publicada — 24 níveis na amostra confirmatória, a mesma definição do C1 em A4 (item A-1). O balde único `RESTO` anterior inflava o coeficiente de `delta_minimal` de 0.5062 para 1.2949; as três variantes estão em `A5_tabela_11_sensibilidade_colapso_uf.csv`. O estudo de evento absorve UF–mês com as 27 unidades e não passa por esse colapso. `n_entradas_6m` significa novo vínculo observado no mês após seis meses de ausência, e não entradas acumuladas ao longo de seis meses.
 
 ## 6. Linguagem autorizada
 

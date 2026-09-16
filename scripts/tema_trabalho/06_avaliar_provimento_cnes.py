@@ -120,6 +120,39 @@ MOTIVO_PAINEL_MENSAL_AUSENTE = (
 
 ALPHA = 0.05
 
+# Efeito fixo de UF (item A-1, emenda 2 do plano 35). O protocolo A3 manda
+# colapsar UF com menos de cinco municipios "em regiao"; A5 implementava um
+# balde unico `RESTO`, que mistura macrorregioes. A variante primaria passa a
+# ser a mesma do C1 em A4: UF pequena -> `MACRO_<macrorregiao de saude>`, e
+# municipio sem macrorregiao publicada forma nivel proprio rotulado.
+MACRO_SEM_REGIAO = "SEM_REGIAO_SAUDE"
+VARIANTE_UF_FE_PRIMARIA = "macro_regiao"
+VARIANTES_UF_FE = ("balde_unico", "macro_regiao", "sem_colapso")
+TABELA_SENS_UF_FE = OUT_DIR / f"{PREFIX}_tabela_11_sensibilidade_colapso_uf.csv"
+
+
+def colapsar_uf_fe(df: pd.DataFrame, small_ufs: set, variante: str) -> pd.Series:
+    """Constroi o efeito fixo de UF sob uma das tres variantes de colapso.
+
+    Copia fiel de `colapsar_uf_fe` em `05_estimar_atracao.py` (C1), para que A4
+    e A5 usem a mesma definicao:
+
+    - `macro_regiao` (primaria, protocolo A3): UF pequena -> `MACRO_<macrorregiao>`;
+      municipio sem macrorregiao publicada -> `MACRO_SEM_REGIAO_SAUDE`.
+    - `balde_unico`: UF pequena -> `RESTO` (implementacao anterior a A-1).
+    - `sem_colapso`: nenhuma UF colapsada (27 niveis).
+    """
+    uf = df["sg_uf"].astype("string")
+    if variante == "sem_colapso":
+        return uf.astype(object)
+    if variante == "balde_unico":
+        return uf.where(~uf.isin(small_ufs), "RESTO").astype(object)
+    if variante != "macro_regiao":
+        raise ValueError(f"variante de colapso desconhecida: {variante}")
+    macro = df["macro_regiao_saude"].astype("string").fillna("").str.strip()
+    macro = macro.where(macro.ne(""), MACRO_SEM_REGIAO)
+    return uf.where(~uf.isin(small_ufs), "MACRO_" + macro).astype(object)
+
 
 def sha256(path: Path) -> str:
     h = hashlib.sha256()
@@ -274,6 +307,10 @@ def main() -> None:
     _baseline_tmp = panel[panel["competencia"]==BASELINE_COMP].copy()
     clust = _baseline_tmp.groupby("sg_uf")["co_ibge_6d"].nunique()
     small_ufs = set(clust[clust<5].index.tolist())
+    # A coluna `uf_fe` gravada em `A5_painel_T0.parquet` antes da emenda 2 traz
+    # a definicao superada (balde `RESTO`). Ela e recomputada aqui em memoria,
+    # nos dois modos; no modo de reestimacao o parquet nao e regravado.
+    panel["uf_fe"] = colapsar_uf_fe(panel, small_ufs, VARIANTE_UF_FE_PRIMARIA)
     baseline_df = panel[panel["competencia"]==BASELINE_COMP].copy()
     _continuar(panel, modo_painel, extras_hash, comp_index, t0_idx, small_ufs, baseline_df)
 
@@ -317,7 +354,7 @@ def construir_painel_t0() -> pd.DataFrame:
     _baseline_tmp = panel[panel["competencia"]==BASELINE_COMP].copy()
     clust = _baseline_tmp.groupby("sg_uf")["co_ibge_6d"].nunique()
     small_ufs = set(clust[clust<5].index.tolist())
-    panel["uf_fe"] = panel["sg_uf"].where(~panel["sg_uf"].isin(small_ufs), "RESTO")
+    panel["uf_fe"] = colapsar_uf_fe(panel, small_ufs, VARIANTE_UF_FE_PRIMARIA)
     # For consistency, use same small_ufs for all times
 
     # Save painel T0
@@ -474,7 +511,13 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
     uf_tab = baseline_df.groupby("sg_uf")["co_ibge_6d"].nunique().reset_index().rename(columns={"co_ibge_6d":"n_municipios"})
     uf_cells = baseline_df.groupby("sg_uf")["especialistas_mst"].agg(["count","mean"]).reset_index()
     uf_tab = uf_tab.merge(uf_cells, on="sg_uf")
-    uf_tab["uf_fe"] = np.where(uf_tab["n_municipios"]<5,"RESTO", uf_tab["sg_uf"])
+    # Niveis de efeito fixo que cada UF ocupa na variante primaria; uma UF
+    # pequena pode ocupar dois niveis quando parte dos municipios nao tem
+    # macrorregiao de saude publicada.
+    niveis_uf = baseline_df.groupby("sg_uf")["uf_fe"].agg(lambda v: ";".join(sorted(set(map(str, v)))))
+    uf_tab["uf_fe"] = uf_tab["sg_uf"].map(niveis_uf)
+    uf_tab["colapsada"] = uf_tab["n_municipios"] < 5
+    uf_tab["variante_uf_fe"] = VARIANTE_UF_FE_PRIMARIA
     tmp = TABELA_UF.with_suffix(".csv.tmp")
     uf_tab.to_csv(tmp,index=False); tmp.replace(TABELA_UF)
 
@@ -663,6 +706,48 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
     tab_pres = pd.concat([tab_pres_min, tab_pres_full], ignore_index=True)
     tmp = TABELA_MODELO_PRESENCA.with_suffix(".csv.tmp")
     tab_pres.to_csv(tmp,index=False); tmp.replace(TABELA_MODELO_PRESENCA)
+
+    # === Sensibilidade do colapso de UF (A-1, emenda 2): tres variantes ===
+    # Portao numerico da emenda: delta_minimal por variante. As demais linhas
+    # tornam auditavel a consequencia mecanica da definicao de FE nos outros
+    # modelos secundarios de corte transversal; nenhuma entra no artigo.
+    modelos_sens_uf = [
+        ("delta_estoque_6m_minimal", y_delta),
+        ("estoque_6m_minimal", y_estoque_6m),
+        ("cobertura_6m_minimal", y_cobertura_6m),
+        ("entradas_6m_minimal", y_entradas),
+        ("presentes_baseline_6m_minimal", y_presentes),
+    ]
+    sens_uf_rows = []
+    for variante in VARIANTES_UF_FE:
+        df_var = analysis.copy()
+        df_var["uf_fe"] = colapsar_uf_fe(df_var, small_ufs, variante)
+        X_var = build_X(df_var, "minimal")
+        n_niveis = int(df_var["uf_fe"].nunique())
+        for modelo, y_var in modelos_sens_uf:
+            res_var = fit_ols(y_var, X_var, groups)
+            sens_uf_rows.append({
+                "modelo": modelo,
+                "variante_uf_fe": variante,
+                "primaria": variante == VARIANTE_UF_FE_PRIMARIA,
+                "termo": "atracao_muni",
+                "coef": float(res_var.params["atracao_muni"]),
+                "se_cluster": float(res_var.bse["atracao_muni"]),
+                "p_valor": float(res_var.pvalues["atracao_muni"]),
+                "n": int(len(y_var)),
+                "n_clusters": int(groups.nunique()),
+                "n_niveis_uf_fe": n_niveis,
+                "ufs_colapsadas": ";".join(sorted(small_ufs)),
+                "nota": {
+                    "balde_unico": "implementacao anterior a A-1: UFs pequenas num unico nivel RESTO",
+                    "macro_regiao": "protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado",
+                    "sem_colapso": "27 UFs, sem colapso",
+                }[variante],
+            })
+    tab_sens_uf = pd.DataFrame(sens_uf_rows)
+    _sel = tab_sens_uf[tab_sens_uf["modelo"] == "delta_estoque_6m_minimal"].set_index("variante_uf_fe")
+    tmp = TABELA_SENS_UF_FE.with_suffix(".csv.tmp")
+    tab_sens_uf.to_csv(tmp,index=False); tmp.replace(TABELA_SENS_UF_FE)
 
     # Sensibilidade T0 alternativo (baseline 202507 -> follow 202601)
     alt_base = panel[panel["competencia"]==ALT_BASELINE].copy()
@@ -1541,6 +1626,20 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
                 "se_atracao": float(res_het.bse.get("atracao_muni", np.nan)),
             },
         },
+        "efeito_fixo_uf": {
+            "variante_primaria": VARIANTE_UF_FE_PRIMARIA,
+            "n_niveis_amostra_confirmatoria": int(analysis["uf_fe"].nunique()),
+            "ufs_colapsadas": sorted(small_ufs),
+            "nivel_residual": f"MACRO_{MACRO_SEM_REGIAO}",
+            "sensibilidade": tab_sens_uf.to_dict(orient="records"),
+            "nota": (
+                "Item A-1 / emenda 2 do plano 35: UF com menos de cinco municipios e "
+                "colapsada na macrorregiao de saude, como o protocolo A3 declara e "
+                "como o C1 fez em A4; municipio sem macrorregiao publicada forma nivel "
+                "proprio rotulado. O estudo de evento nao usa uf_fe (absorve UF-mes com "
+                "as 27 UFs) e nao e afetado."
+            ),
+        },
         "leave_one_curso_evento": loo_evento.to_dict(orient="records"),
         "sensibilidade_mes_referencia": sens_referencia.to_dict(orient="records"),
         "influencia": {
@@ -1586,6 +1685,7 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
             "tabela_estudo_evento_proporcional": str(TABELA_EVENTO_PROP.relative_to(ROOT)).replace("\\","/"),
             "tabela_leave_one_curso_evento": str(TABELA_LOO_EVENTO.relative_to(ROOT)).replace("\\","/"),
             "tabela_sensibilidade_referencia": str(TABELA_SENS_REF.relative_to(ROOT)).replace("\\","/"),
+            "tabela_sensibilidade_colapso_uf": str(TABELA_SENS_UF_FE.relative_to(ROOT)).replace("\\","/"),
             "figura_estudo_evento_proporcional": str(FIG_EVENTO_PROP.relative_to(ROOT)).replace("\\","/"),
             "figura_traj_estrato": str(FIG_TRAJ_ESTRATO.relative_to(ROOT)).replace("\\","/"),
             "figura_traj_atracao": str(FIG_TRAJ_ATRACAO.relative_to(ROOT)).replace("\\","/"),
@@ -1781,7 +1881,7 @@ As duas convenções são publicadas lado a lado: colunas sem sufixo preservam o
 
 Na amostra confirmatória, a variação junho/2025–março/2026 tem mediana {analysis['delta_estoque_6m'].median():.1f} e máximo {analysis['delta_estoque_6m'].max():.0f}. Entre células com atração, a média é {distribution_summary['1']['media']:.2f}, a mediana {distribution_summary['1']['mediana']:.1f} e {distribution_summary['1']['proporcao_aumento']:.1%} apresentam aumento; sem atração, os valores são {distribution_summary['0']['media']:.2f}, {distribution_summary['0']['mediana']:.1f} e {distribution_summary['0']['proporcao_aumento']:.1%}.
 
-As regressões de nível, cobertura, novos vínculos mensais após washout, presença da coorte e validação preditiva são diagnósticos secundários. `n_entradas_6m` significa novo vínculo observado no mês após seis meses de ausência, e não entradas acumuladas ao longo de seis meses.
+As regressões de nível, cobertura, novos vínculos mensais após washout, presença da coorte e validação preditiva são diagnósticos secundários. Nelas, o efeito fixo de UF colapsa as unidades com menos de cinco municípios ({", ".join(sorted(small_ufs))}) na macrorregião de saúde, com nível residual rotulado para município sem macrorregião publicada — {int(analysis["uf_fe"].nunique())} níveis na amostra confirmatória, a mesma definição do C1 em A4 (item A-1). O balde único `RESTO` anterior inflava o coeficiente de `delta_minimal` de {float(_sel.loc["macro_regiao", "coef"]):.4f} para {float(_sel.loc["balde_unico", "coef"]):.4f}; as três variantes estão em `A5_tabela_11_sensibilidade_colapso_uf.csv`. O estudo de evento absorve UF–mês com as 27 unidades e não passa por esse colapso. `n_entradas_6m` significa novo vínculo observado no mês após seis meses de ausência, e não entradas acumuladas ao longo de seis meses.
 
 ## 6. Linguagem autorizada
 
@@ -1811,6 +1911,19 @@ O CNES não identifica participantes do programa. Sem log completo, ponte indivi
         ("nivel 202603, EP com GL de FE absorvidos", event_primary_summary["mar2026_se_gl_fe"], 0.2469, 4),
         ("nivel 202603, p com GL de FE absorvidos", event_primary_summary["mar2026_p_gl_fe"], 0.0437, 4),
     ]
+    # Emenda 2 do plano 35 (A-1): delta_minimal por variante de colapso de UF.
+    for variante, alvo_coef, alvo_se, alvo_p, alvo_niveis in [
+        ("balde_unico", 1.2949, 0.7749, 0.0947, 20),
+        ("macro_regiao", 0.5062, 0.2506, 0.0434, 24),
+        ("sem_colapso", 0.5002, 0.2414, 0.0382, 27),
+    ]:
+        linha = _sel.loc[variante]
+        alvos += [
+            (f"A-1 delta_minimal {variante}, coef", float(linha["coef"]), alvo_coef, 4),
+            (f"A-1 delta_minimal {variante}, EP", float(linha["se_cluster"]), alvo_se, 4),
+            (f"A-1 delta_minimal {variante}, p", float(linha["p_valor"]), alvo_p, 4),
+            (f"A-1 delta_minimal {variante}, niveis", float(linha["n_niveis_uf_fe"]), float(alvo_niveis), 0),
+        ]
     divergencias = [
         f"{nome}: obtido {round(obtido, casas)} contra alvo {alvo}"
         for nome, obtido, alvo, casas in alvos
@@ -1818,7 +1931,7 @@ O CNES não identifica participantes do programa. Sem log completo, ponte indivi
     ]
     if divergencias:
         raise AssertionError(
-            "Alvos congelados do plano C2 nao reproduzidos: " + "; ".join(divergencias)
+            "Alvos congelados do plano 35 (C2 e emenda 2) nao reproduzidos: " + "; ".join(divergencias)
         )
 
     print(

@@ -293,6 +293,53 @@ class ProvimentoCnesA5Test(unittest.TestCase):
         self.assertTrue(pd.api.types.is_string_dtype(painel["competencia"]))
         self.assertTrue(isinstance(painel["estrato"].dtype, pd.CategoricalDtype))
 
+    # ------------------------------------------------------------------
+    # A-1 / emenda 2 do plano 35: colapso de UF em macrorregiao
+    # ------------------------------------------------------------------
+    def test_a1_colapso_uf_em_macrorregiao_reproduz_alvos_da_emenda_2(self) -> None:
+        tab = pd.read_csv(OUT / "A5_tabela_11_sensibilidade_colapso_uf.csv")
+        self.assertEqual(sorted(tab["variante_uf_fe"].unique()), ["balde_unico", "macro_regiao", "sem_colapso"])
+        delta = tab[tab["modelo"] == "delta_estoque_6m_minimal"].set_index("variante_uf_fe")
+        alvos = {
+            "balde_unico": (1.2949, 0.7749, 0.0947, 20),
+            "macro_regiao": (0.5062, 0.2506, 0.0434, 24),
+            "sem_colapso": (0.5002, 0.2414, 0.0382, 27),
+        }
+        for variante, (coef, se, p, niveis) in alvos.items():
+            linha = delta.loc[variante]
+            self.assertEqual(round(float(linha["coef"]), 4), coef, variante)
+            self.assertEqual(round(float(linha["se_cluster"]), 4), se, variante)
+            self.assertEqual(round(float(linha["p_valor"]), 4), p, variante)
+            self.assertEqual(int(linha["n_niveis_uf_fe"]), niveis, variante)
+        self.assertTrue(bool(delta.loc["macro_regiao", "primaria"]))
+        self.assertFalse(bool(delta.loc["balde_unico", "primaria"]))
+
+    def test_a1_variante_primaria_e_a_do_c1(self) -> None:
+        fe = self.est["efeito_fixo_uf"]
+        self.assertEqual(fe["variante_primaria"], "macro_regiao")
+        self.assertEqual(fe["n_niveis_amostra_confirmatoria"], 24)
+        self.assertEqual(fe["nivel_residual"], "MACRO_SEM_REGIAO_SAUDE")
+        self.assertEqual(len(fe["ufs_colapsadas"]), 8)
+        # O balde RESTO saiu das duas implementacoes: painel e tabela de UF.
+        conf = self.cross[self.cross["amostra_confirmatoria"]]
+        self.assertNotIn("RESTO", set(conf["uf_fe"].astype(str)))
+        self.assertEqual(conf["uf_fe"].nunique(), 24)
+        self.assertIn("MACRO_SEM_REGIAO_SAUDE", set(conf["uf_fe"].astype(str)))
+        uf_tab = pd.read_csv(OUT / "A5_tabela_01e_amostra_uf.csv")
+        self.assertNotIn("RESTO", set(uf_tab["uf_fe"].astype(str)))
+        self.assertEqual(int(uf_tab["colapsada"].sum()), 8)
+        # O delta_minimal publicado na tabela 03b e a variante primaria.
+        t03b = pd.read_csv(OUT / "A5_tabela_03b_modelo_delta_estoque.csv")
+        sel = t03b[(t03b["espec"] == "OLS_delta_estoque_minimal") & (t03b["termo"] == "atracao_muni")]
+        self.assertEqual(round(float(sel["coef"].iloc[0]), 4), 0.5062)
+
+    def test_a1_estudo_de_evento_nao_e_afetado(self) -> None:
+        # A manchete de A5 absorve UF-mes com as 27 UFs e nao passa por uf_fe.
+        prop = self.est["modelos"]["principal_proporcional_confirmatorio"]
+        self.assertEqual(round(prop["mar2026_beta"], 4), 0.0684)
+        nivel = self.est["modelos"]["principal_dinamico_confirmatorio"]
+        self.assertEqual(round(nivel["mar2026_beta"], 3), 0.5)
+
 
 if __name__ == "__main__":
     unittest.main()
