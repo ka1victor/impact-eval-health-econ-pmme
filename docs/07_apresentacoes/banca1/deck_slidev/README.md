@@ -1,9 +1,23 @@
 # Deck Slidev da banca 1
 
+> [!WARNING]
+> **Este deck está desatualizado em relação ao documento canônico.** Desde
+> **16/09/2026**, [`../02_conteudo_slides.md`](../02_conteudo_slides.md) tem
+> **16 slides em 3 seções**, com divisórias de seção e convenção nova de
+> cabeçalhos; este deck continua na **estrutura anterior, de 15 slides em 6
+> seções**, exportada em 26 páginas. A reconstrução ficou para depois, por
+> decisão do autor.
+>
+> A divergência é **conhecida e datada** — é a pendência 6 do fim do documento
+> de conteúdo — e não altera a regra do projeto: **o documento canônico vence**.
+> Enquanto os dois não forem reconciliados, os números de slide, os títulos e os
+> mapeamentos deste README descrevem o **estado anterior**, não o que vai à tela.
+
 > **Fonte de verdade do conteúdo:** [`../02_conteudo_slides.md`](../02_conteudo_slides.md)<br>
 > **Regras de composição:** [`../01_roteiro_narrativo.md`](../01_roteiro_narrativo.md), seção 2<br>
 > **Proveniência:** [`../03_proveniencia_figuras_e_numeros.md`](../03_proveniencia_figuras_e_numeros.md)<br>
-> **Atualização:** 16 de setembro de 2026 (corte de 19 para 15 slides)
+> **Atualização:** 16 de setembro de 2026 (corte de 19 para 15 slides; deck
+> parado nessa estrutura)
 
 Este diretório é **artefato derivado**. Regra do projeto: divergência entre deck
 e documento de conteúdo é erro do deck, nunca do documento. Nenhuma afirmação,
@@ -97,19 +111,29 @@ depende de rede e o resultado é sempre o mesmo:
 
 ### 3.1 Um slide do documento pode virar mais de uma página
 
-O documento tem **15 slides**; o deck tem **26 páginas**. O critério foi sempre
-o mesmo: **uma afirmação por página** (roteiro, seção 2.2), sem página
-sobrecarregada e sem página curta demais para existir sozinha. Quando um slide
-do documento carrega dois movimentos distintos do argumento, ele é partido;
-quando a divisão deixaria duas metades magras, elas ficam juntas. Nenhuma
-informação é acrescentada, removida ou alterada nesse processo.
+Na estrutura anterior, à qual este deck corresponde, o documento tinha **15
+slides** e o deck tem **26 páginas**. O critério foi sempre o mesmo: **uma
+afirmação por página** (roteiro, seção 2.2), sem página sobrecarregada e sem
+página curta demais para existir sozinha. Quando um slide do documento carrega
+dois movimentos distintos do argumento, ele é partido; quando a divisão deixaria
+duas metades magras, elas ficam juntas. Nenhuma informação é acrescentada,
+removida ou alterada nesse processo.
 
 O título literal da seção 2.1 do roteiro é **repetido** em todas as páginas do
 mesmo slide; a faixa de rastreio distingue "1 de 2", "2 de 2" e assim por diante.
 
-O orçamento de fala é o da seção 6 do roteiro: **24 minutos para os 15 slides**.
+O orçamento de fala registrado para aquela estrutura era o da seção 6 do
+roteiro: **24 minutos para os 15 slides**. Ele é um dos itens a rever na
+reconstrução sobre os 16 slides atuais.
 
-### 3.2 Mapeamento documento → páginas
+### 3.2 Mapeamento documento → páginas (estado anterior, 15 slides)
+
+> [!NOTE]
+> A tabela abaixo descreve o deck **como ele está**: mapeia os **15 slides da
+> estrutura anterior** do documento de conteúdo. A coluna "Slide do documento" e
+> os títulos **não correspondem** ao documento canônico vigente, de 16 slides em
+> 3 seções. Serve para operar e revisar o PDF existente e como ponto de partida
+> da reconstrução, não como descrição do que vai à tela.
 
 | Slide do documento | Título | Páginas | O que ficou em cada página |
 |:---:|---|:---:|---|
@@ -179,14 +203,17 @@ são esticados: cartão alto com o texto no topo vira caixa oca.
 
 ### 3.8 Matemática
 
-As equações dos slides 10 a 14 do documento são renderizadas por KaTeX, sem
-alteração de notação. O cabeçalho de tabela é em caixa alta, e `text-transform`
-transformaria o símbolo `c` em `C`; a regra é anulada dentro de `.katex`.
+As equações dos slides 10 a 14 do documento (numeração anterior) são
+renderizadas por KaTeX, sem alteração de notação. O cabeçalho de tabela é em
+caixa alta, e `text-transform` transformaria o símbolo `c` em `C`; a regra é
+anulada dentro de `.katex`.
 
 ### 3.9 O que não foi feito
 
 - **Sem páginas de divisão de seção.** A faixa de rastreio já nomeia a seção em
-  toda página.
+  toda página. **Decisão superada** pelo documento canônico de 16/09/2026, que
+  passou a abrir cada seção com uma divisória própria (slides 3, 8 e 12): a
+  reconstrução terá de acomodá-las.
 - **Sem slide de perguntas.** A apresentação termina na viabilidade empírica.
 - **Sem notas de apresentador.** Regra 2.3 do roteiro.
 - **Sem animação ou transição.** `transition: none`.
@@ -211,10 +238,16 @@ trechos de rodapé passaram a texto corrido.
 
 ## 4. Ressalvas
 
-Nenhuma aberta. A divergência entre "10 ambulatoriais" e a lista de oito,
-transcrita por fidelidade na versão anterior, foi encerrada no documento
-canônico em 16/09/2026: o slide passou a dar só a contagem, conferida no edital
-e no quadro de vagas.
+**Uma aberta:** a divergência com o documento canônico descrita no aviso do topo
+— 26 páginas para 15 slides em 6 seções, contra 16 slides em 3 seções —,
+registrada como pendência 6 no fim de
+[`../02_conteudo_slides.md`](../02_conteudo_slides.md). Fecha com a reconstrução
+do deck sobre a estrutura vigente.
+
+A ressalva de conteúdo da versão anterior — a divergência entre "10
+ambulatoriais" e a lista de oito, transcrita por fidelidade — foi encerrada no
+documento canônico em 16/09/2026: o slide passou a dar só a contagem, conferida
+no edital e no quadro de vagas.
 
 ---
 

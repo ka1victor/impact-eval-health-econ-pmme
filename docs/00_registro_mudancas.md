@@ -8,6 +8,70 @@
 
 ---
 
+## 16/09/2026 — Banca 1: nova estrutura em 3 seções, 16 slides, e cabeçalho como slide
+
+A pedido do autor, que trouxe a estrutura pronta e comentários por bloco. A
+apresentação sai de **6 seções e 15 slides** para **3 seções e 16 slides**, e o
+documento canônico passa a ter uma convenção de cabeçalho que o torna
+diretamente conversível em deck.
+
+### A convenção nova
+
+Entre os comentários `deck:inicio` e `deck:fim` de
+[`02_conteudo_slides.md`](07_apresentacoes/banca1/02_conteudo_slides.md), **cada
+cabeçalho é um slide**: `#` é layout de capa — a capa e as três divisórias de
+seção — e `##` é layout de conteúdo. O que está fora dos marcadores é
+documentação, não vai à tela. A tabela "Mapa da apresentação", no topo do
+arquivo, é a correspondência autoritativa entre rótulo do roteiro, número e
+título de tela.
+
+### O rearranjo
+
+| Seção nova | Slides | Vem de |
+|---|:---:|---|
+| **1. Motivação e Pergunta** | 3–7 | antigas seções 1 e 2, em quatro blocos: Problema, Política, Efeitos, Pergunta |
+| **2. Literatura Teórica e Modelo Microeconômico** | 8–11 | antigas seções 3 e 4, fundidas em Visão geral, Custo da localidade e Remuneração da localidade |
+| **3. Hipótese e Viabilidade Empírica** | 12–16 | antigas seções 5 e 6, abertas em Implicações, Hipótese, Disponibilidade de dados e Desafio metodológico |
+
+O sumário passa a aparecer **uma vez**; as três divisórias de seção substituem
+as repetições. "Remuneração da localidade", "Disponibilidade de dados" e
+"Desafio metodológico" ganham slide próprio.
+
+### Informação que mudou de lugar
+
+- A tabela das **quatro desvantagens do médico** sai do slide de problema e vai
+  para o slide de custo da localidade, onde cada desvantagem é mapeada a um
+  termo do modelo.
+- As figuras de **oferta prévia** e **retaguarda por faixa** saem do antigo
+  slide 6 e passam ao slide de política, junto com a figura da bolsa: as três
+  respondem à mesma pergunta, que é onde a regra manda o dinheiro.
+
+### Conteúdo novo
+
+- **O que determina a remuneração oferecida**, em texto: o valor é do município
+  e só dele — nenhum município e nenhuma célula município–curso tem mais de uma
+  faixa —, fixado por duas cláusulas que divergem, com a previdência incidindo e
+  com o adicional do art. 22-D, §4º previsto em lei e não regulamentado no ciclo 1.
+- **Teoria da mudança** em diagrama, separando os elos escritos em ato oficial
+  dos três elos que são suposição do programa.
+- **Hone et al. (2020)** entra na literatura contrária, por separar expansão
+  bruta de líquida.
+
+### Correção de erro factual
+
+A proveniência registrava "10% dos cirurgiões atuando exclusivamente no SUS". A
+fonte primária diz **7,7%** exclusivamente públicos, 19,9% exclusivamente
+privados e 72,4% em dupla prática. A manchete corrente de que "apenas 10% dos
+especialistas atendem no SUS" foi rebaixada a não citável: é fala em debate
+parlamentar, sem metodologia, e conflita com a própria fonte primária.
+
+### Divergência assumida
+
+Os decks Beamer e Slidev permanecem na estrutura de **15 slides** até a próxima
+reconstrução, por decisão do autor. A divergência está anunciada no topo de
+`02_conteudo_slides.md` e nos dois READMEs de deck.
+
+
 ## 16/09/2026 — Banca 1: corte de 19 para 15 slides, para o arco narrativo
 
 A pedido do autor: **cortar além de comprimir**, para facilitar a narrativa. A

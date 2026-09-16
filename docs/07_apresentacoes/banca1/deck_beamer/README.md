@@ -1,20 +1,32 @@
 # Deck Beamer da banca 1 — tema Warsaw
 
+> [!WARNING]
+> **Este deck está desatualizado em relação ao documento canônico.** Desde
+> **16/09/2026**, [`../02_conteudo_slides.md`](../02_conteudo_slides.md) tem
+> **16 slides em 3 seções**, com divisórias de seção e convenção nova de
+> cabeçalhos; este deck continua na **estrutura anterior, de 15 slides em 6
+> seções**. A reconstrução ficou para depois, por decisão do autor.
+>
+> A divergência é **conhecida e datada** — é a pendência 6 do fim do documento
+> de conteúdo — e não altera a regra do projeto: **o documento canônico vence**.
+> Enquanto os dois não forem reconciliados, os números de slide, os títulos e os
+> mapeamentos deste README descrevem o **estado anterior**, não o que vai à tela.
+
 > **Classificação:** artefato **derivado**<br>
 > **Fonte de verdade do conteúdo:** [`../02_conteudo_slides.md`](../02_conteudo_slides.md)<br>
 > **Regras de composição:** [`../01_roteiro_narrativo.md`](../01_roteiro_narrativo.md), seção 2<br>
 > **Proveniência:** [`../03_proveniencia_figuras_e_numeros.md`](../03_proveniencia_figuras_e_numeros.md)<br>
-> **Atualização:** 16 de setembro de 2026
+> **Atualização:** 16 de setembro de 2026 (deck na estrutura de 15 slides)
 
 Regra do projeto: *divergência entre deck e documento de conteúdo é erro do
 deck*. Nenhuma afirmação, número, citação ou referência deste `.tex` foi criada
 aqui; tudo vem de `02_conteudo_slides.md`. Correção de conteúdo se faz primeiro
 no documento canônico e só depois no deck.
 
-**Tamanho:** 15 slides do documento, **15 frames**, **27 páginas de PDF**. As
-doze páginas a mais são overlays: no rodapé o contador mostra `frame / 15`, e um
-frame com overlay não muda de número — para a banca, é um slide só. Cada slide
-do documento é exatamente um frame.
+**Tamanho, no estado anterior:** 15 slides do documento, **15 frames**,
+**27 páginas de PDF**. As doze páginas a mais são overlays: no rodapé o contador
+mostra `frame / 15`, e um frame com overlay não muda de número — para a banca, é
+um slide só. Cada slide daquela versão do documento é exatamente um frame.
 
 ---
 
@@ -48,12 +60,16 @@ produzam byte a byte o mesmo PDF.
 **Figuras.** O deck lê apenas figuras já versionadas em
 `output/apresentacao_banca1/`, por `\graphicspath` relativo à raiz:
 
-| Código | Arquivo | Frame |
+| Código | Arquivo | Frame (estado anterior) |
 |---|---|:---:|
 | `F3` | `bolsa_por_faixa.png` | 5, overlay 2 |
 | `F1` | `oferta_pre_por_faixa.png` | 6, overlay 1 |
 | `F2` | `retaguarda_por_faixa.png` | 6, overlay 2 |
 | `F6` | `preenchimento_ciclo1.png` | 8 |
+
+Os quatro arquivos continuam em uso, mas **mudaram de slide** no documento
+canônico: `F3`, `F1` e `F2` estão hoje no slide 5 e `F6` no slide 6. Os números
+de frame acima são os do deck atual, ainda na estrutura anterior.
 
 Nenhuma figura é gerada, editada ou recortada por este deck. `F4` (curva de
 custo laboral) e `F5` (vagas por região) saíram do deck em 16/09/2026. Para
@@ -61,7 +77,14 @@ regerar as figuras, ver [`../README.md`](../README.md), seção 3.
 
 ---
 
-## 2. Mapeamento: slide do documento → frame do deck
+## 2. Mapeamento: slide do documento → frame do deck (estado anterior, 15 slides)
+
+> [!NOTE]
+> A tabela abaixo descreve o deck **como ele está**: mapeia os **15 slides da
+> estrutura anterior** do documento de conteúdo. As colunas "Slide = frame" e
+> "Título" **não correspondem** ao documento canônico vigente, de 16 slides em 3
+> seções. Serve para operar e revisar o PDF existente e como ponto de partida da
+> reconstrução, não como descrição do que vai à tela.
 
 O rastreio de seção exibido é sempre o do slide de origem, literal. Um slide é
 um frame; quando o conteúdo pede mais de uma tela, o frame usa overlays com o
@@ -108,7 +131,10 @@ arredondados do tema interno `rounded` continuam.
 
 ### 3.2 Um slide, um frame
 
-Desde o corte de 16/09/2026 o documento tem 15 slides e o deck tem 15 frames.
+Na estrutura anterior, à qual este deck corresponde, o documento tinha 15
+slides e o deck tem 15 frames. A correspondência de um para um é a regra a
+preservar quando o deck for reconstruído sobre os 16 slides atuais.
+
 Onde o documento tem mais conteúdo do que cabe numa tela legível, o frame usa
 overlays: `\insertframenumber` conta **frames**, não páginas, de modo que os
 overlays exibem o mesmo número no rodapé, sob o mesmo título e o mesmo
@@ -175,8 +201,8 @@ ambiente `destaque` ou por `minipage`. `booktabs` em todas as tabelas;
 Onde a tabela não cabia com folga, reduziu-se para `\footnotesize` com
 `\arraystretch` menor.
 
-Todas as equações dos slides 10 a 14 do documento são reproduzidas em `amsmath`
-como display, sem redução de corpo.
+Todas as equações dos slides 10 a 14 do documento (numeração anterior) são
+reproduzidas em `amsmath` como display, sem redução de corpo.
 
 ### 3.7 Vocabulário
 
@@ -188,14 +214,19 @@ documento e foram preservadas.
 
 ## 4. Ressalvas
 
-Nenhuma aberta. As duas registradas na versão anterior — a figura `F4`
-ilegível em projeção e a divergência entre "10 ambulatoriais" e a lista de oito
-— foram encerradas no documento canônico em 16/09/2026: `F4` saiu do deck e a
-enumeração de cursos foi substituída pela contagem conferida.
+**Uma aberta:** a divergência com o documento canônico descrita no aviso do topo
+— 15 frames em 6 seções contra 16 slides em 3 seções —, registrada como
+pendência 6 no fim de [`../02_conteudo_slides.md`](../02_conteudo_slides.md).
+Fecha com a reconstrução do deck sobre a estrutura vigente.
+
+As duas ressalvas de conteúdo da versão anterior — a figura `F4` ilegível em
+projeção e a divergência entre "10 ambulatoriais" e a lista de oito — foram
+encerradas no documento canônico em 16/09/2026: `F4` saiu do deck e a enumeração
+de cursos foi substituída pela contagem conferida.
 
 ---
 
-## 5. Verificação feita nesta versão
+## 5. Verificação feita nesta versão (estrutura de 15 slides)
 
 - `bash scripts/apresentacao/build_deck_beamer.sh` termina sem erro de LaTeX e
   sem nenhum `Overfull \hbox` **ou `\vbox`**. Os três `\vbox` da primeira
@@ -204,5 +235,6 @@ enumeração de cursos foi substituída pela contagem conferida.
 - As 27 páginas foram convertidas em PNG (`pdftoppm -png -r 60`) e revistas em
   folha de contato: nenhuma com texto vazando do frame, tabela cortada, bloco de
   fonte sobreposto ao rodapé ou figura deformada.
-- Os 15 slides do documento estão representados, na ordem, com os 13 títulos
-  literais dos slides 3 a 15.
+- Os 15 slides do documento **então vigentes** estavam representados, na ordem,
+  com os 13 títulos literais dos slides 3 a 15. Nada disso foi reverificado
+  contra a estrutura de 16 slides.
