@@ -2,7 +2,7 @@
 
 > **Classificação:** decisão de comunicação, não de método<br>
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
-> **Atualização:** 16 de setembro de 2026
+> **Atualização:** 17 de setembro de 2026
 
 ---
 
@@ -12,10 +12,10 @@ Um único fio condutor: **um preço foi colocado sobre a vulnerabilidade
 territorial, e ainda não se sabe se esse preço compra o preenchimento das vagas
 que pretendia comprar.**
 
-A banca 1 tem **três seções**, **16 slides** e **32 builds**. Cada seção abre com
+A banca 1 tem **três seções**, **17 slides** e **32 builds**. Cada seção abre com
 uma divisória e ocupa quantos slides o argumento pedir — a motivação, que tem
-mais a dizer, e o fecho empírico ocupam quatro slides de conteúdo cada; o bloco
-teórico, três.
+mais a dizer, ocupa cinco slides de conteúdo; o bloco teórico, quatro; o fecho,
+três.
 
 **A convenção de cabeçalhos.** No documento de conteúdo, entre os comentários
 `deck:inicio` e `deck:fim`, **cada cabeçalho de primeiro ou segundo nível é um
@@ -28,9 +28,9 @@ topo de [02_conteudo_slides.md](02_conteudo_slides.md).
 | Seção | Papel narrativo | Slides |
 |---|---|:---:|
 | — Capa e sumário | contrato com a banca; o sumário aparece **uma vez** | 1–2 |
-| **1. Motivação e Pergunta** | em quatro movimentos. **Problema:** especialistas existem, mas não no interior — e dedicação exclusiva ao SUS é rara, de modo que o programa compra uma fração da carreira. **Política:** o pacote que é igual em toda vaga, quem fixa o valor e para onde a regra manda o dinheiro. **Efeitos:** o que o ciclo 1 já mostrou e uma literatura que aponta para os dois lados, dois de cada. **Pergunta:** a cadeia que o desenho oficial supõe sem escrever, e o preço contra a desvantagem | 3–7 |
-| **2. Literatura Teórica e Modelo Microeconômico** | a equação de escolha e a caixa-preta do custo; o custo aberto em lugar e trabalho, com as quatro desvantagens mapeadas termo a termo; a remuneração da localidade, que a bolsa não esgota | 8–11 |
-| **3. Hipótese e Viabilidade Empírica** | a junção das três tradições sobre o PMM-E e o sinal ambíguo do custo; a hipótese em quatro passos; o que se consegue medir; e por que a regra, do jeito que é, não identifica o efeito da bolsa | 12–16 |
+| **1. Motivação e Pergunta** | em cinco movimentos. **Problema:** especialistas existem, mas não no interior — e dedicação exclusiva ao SUS é rara, de modo que o programa compra uma fração da carreira. **Política:** o pacote que é igual em toda vaga e quem fixa o valor. **IVS:** o que o índice que fixa o valor mede, e para onde a regra manda o dinheiro. **Efeitos:** o que o ciclo 1 já mostrou e uma literatura que aponta para os dois lados, dois de cada. **Pergunta:** a cadeia que o desenho oficial supõe sem escrever, e o preço contra a desvantagem | 3–8 |
+| **2. Literatura Teórica e Modelo Microeconômico** | as três tradições com suas **equações originais**; a equação de escolha conjunta e a caixa-preta do custo; o custo aberto em lugar e trabalho, com as três desvantagens lidas termo a termo; a remuneração da localidade, de que a bolsa é o **piso** | 9–13 |
+| **3. Hipótese e Viabilidade Empírica** | a junção das três tradições sobre o PMM-E, a condição de aceitação e a fronteira entre faixas; a hipótese sozinha na tela; e o que se consegue medir | 14–17 |
 
 A seção 3 encerra a entrega: não há slide de perguntas. A margem tratada é o
 **preenchimento** das vagas; permanência da oferta fica fora desta
@@ -59,11 +59,11 @@ saíram do corpo do slide ou estão **dentro** da figura ou seguem registrados e
 podia sair — o recorte setorial é **inquérito com 1.544 cirurgiões, não censo** —
 ficou no **rodapé da própria figura**, que é conteúdo de tela.
 
-A tabela das quatro desvantagens **saiu** daqui em 16/09/2026 e foi para o
-slide 10, onde cada uma é mapeada a um termo do modelo. O problema deixa de
-antecipar vocabulário que só se justifica depois da equação, e o slide 4 passa a
-fazer uma coisa só: estabelecer o fato territorial e a divisão com o setor
-privado. O que ele abre é o slide 11 — se o SUS compra 20 horas, o resto da
+A tabela das desvantagens **saiu** daqui em 16/09/2026 e foi para o slide do
+custo, hoje o 12, onde cada uma é mapeada a um termo do modelo. O problema deixa
+de antecipar vocabulário que só se justifica depois da equação, e o slide 4 passa
+a fazer uma coisa só: estabelecer o fato territorial e a divisão com o setor
+privado. O que ele abre é o slide 13 — se o SUS compra 20 horas, o resto da
 remuneração é o mercado local.
 
 O bloco **política** responde, num slide (5) e em **três** builds, ao que
@@ -87,10 +87,28 @@ terceiro mostra **para onde a regra manda o dinheiro**, nas duas medidas de
 oferta prévia que discordam: por habitante, a bolsa maior não vai para onde
 falta mais; em colegas da mesma especialidade, vai.
 
-O que **saiu** do slide 5 em 17/09/2026 está na seção 4g. O diagrama de teoria
-da mudança não foi cortado: **mudou de slide**, e é hoje o primeiro build do 7.
+O que **saiu** do slide 5 em 17/09/2026 está nas seções 4g e 4h. O diagrama de
+teoria da mudança não foi cortado: **mudou de slide**, e é hoje o primeiro build
+do 8.
 
-O bloco **efeitos** (6) é a exceção declarada ao escopo teórico (seção 2.4).
+O bloco **IVS e suas dimensões** (6) é novo, e veio da seção 3. A regra fixa o
+valor da bolsa sobre um índice; a banca precisa saber o que esse índice mede
+antes de ver para onde o dinheiro vai, e não três seções depois. O primeiro build
+diz o que o IVS é — 16 indicadores do Censo 2010 resumidos de 0 a 1, para todos
+os municípios, e as categorias do item 11.1.4 — e registra que ele é a **parte
+pública** da regra do valor. O segundo abre as **três dimensões**, cada uma com
+os seus indicadores e com o que ela significa para quem vai morar e atender ali:
+infraestrutura urbana, capital humano, renda e trabalho.
+
+Aqui a apresentação passou a dizer, a pedido do autor, que **as três apontam para
+o mesmo lado** — quanto maior o índice, mais caro viver e mais duro atender. O
+documento canônico não diz isso: em
+[`modelo_micro.md`](../../02_teoria/modelo_micro.md), §3.1, o sinal de
+$c_0'(IVS)$ é **ambíguo**, porque carência sanitária eleva o benefício de atender
+ao mesmo tempo que sinaliza falta de insumo. A divergência é deliberada, está nas
+notas de produção dos slides 6, 15 e 17, e é a **pendência 9**.
+
+O bloco **efeitos** (7) é a exceção declarada ao escopo teórico (seção 2.4).
 Ele existe para justificar a pergunta, e por isso precisa mostrar que a resposta
 não é óbvia. Abre pelo que o próprio programa já disse: 30,3% das células com
 alguma confirmação ou homologação no ciclo 1, **sem ordem por faixa** de bolsa e
@@ -105,7 +123,7 @@ preenchimento pode não virar oferta, o outro que o preço pode não mover a
 decisão. Sem esse bloco a pergunta pareceria retórica; com ele, o fecho é que a
 evidência não decide.
 
-O bloco **pergunta** (7) ganhou, em 17/09/2026, o **primeiro** build: o diagrama
+O bloco **pergunta** (8) ganhou, em 17/09/2026, o **primeiro** build: o diagrama
 de teoria da mudança, que separa os elos **escritos em ato oficial** — a regra de
 valor, o provimento como finalidade, a redução da espera como objetivo — dos
 elos que são **suposição do programa**: que o valor da bolsa muda a escolha de
@@ -116,89 +134,108 @@ hipótese do trabalho. No segundo build vem a pergunta na versão de tela do aut
 lida em dois objetos, o preço e a desvantagem, com a margem observada declarada:
 o preenchimento da vaga, não a permanência.
 
-**Por que esta ordem, e não outra.** O slide 6 usa "faixa publicada", "Faixa 1"
+**Por que esta ordem, e não outra.** O slide 7 usa "faixa publicada", "Faixa 1"
 e "categoria de IVS" como vocabulário corrente, e lê o preenchimento do ciclo 1
-contra a grade de valores. A política vem antes porque é ela que dá o
+contra a grade de valores. A política e o IVS vêm antes porque são eles que dão o
 vocabulário e o objeto; a pergunta vem depois dos efeitos porque só depois deles
 ela deixa de ser retórica.
 
 ### 1.2 A lógica da seção 2 — Literatura Teórica e Modelo Microeconômico
 
-O slide 9 apresenta a **equação de escolha** de Moehling et al. e diz o que ela
-faz em português: divide o salário pelos preços locais, subtrai o custo não
-pecuniário, desconta e soma a carreira, compara as localidades. São dois builds,
-a equação e a leitura. Fecha declarando o buraco: na definição dos próprios
-autores, o custo $c$ é uma **caixa-preta** de preferências por viver no interior
-e proximidade da família.
+O slide 10 abre a seção com as **três tradições** lado a lado e, na terceira
+coluna, as **equações originais** de cada uma — Moehling et al., Redding &
+Rossi-Hansberg e Choné & Ma. A tabela é a que abria o slide da visão geral até
+16/09/2026, quando saiu por redundância (seção 4f); ela voltou em 17/09/2026, a
+pedido do autor, com a coluna "Primitiva que fornece" trocada por **"Equações
+originais"**. O que ela resolve é o problema que o slide do custo tinha: com as
+equações originais aqui, lá cabe a leitura termo a termo.
 
-A tabela que catalogava as **três tradições** lado a lado, e que abria este
-slide, **saiu** em 16/09/2026 (seção 4f): Moehling é o próprio slide 9, e
-Redding & Rossi-Hansberg e Choné & Ma são o slide 10. Cada tradição passa a ser
-apresentada no momento em que faz trabalho, e não antes; a única síntese das
-três é a do slide 13, que agora as nomeia.
+É também aqui que fica a advertência de notação, que antes ficava no slide do
+custo: $B_n$ é **amenidade** em Redding & Rossi-Hansberg, $B(q)$ é **benefício ao
+paciente** em Choné & Ma, e a **bolsa** é $B_m$, do slide 13 em diante.
 
-O slide 10 abre a caixa em duas metades — o **lugar**, com Redding &
-Rossi-Hansberg, e o **trabalho**, com Choné & Ma e a extensão em $B(q; L, K)$
-creditada ao projeto. É aqui que desembarca a tabela das **quatro desvantagens**
-que antes ficava no problema, e ela funciona melhor: cada desvantagem cai num
-bloco do custo — retaguarda em $L$, infraestrutura em $K$, distância da família
-em $\phi(\text{dist})$, mercado privado ausente em $w^{\text{priv}}$ — e a
-última coluna diz se medimos. A tabela deixa de ser uma lista e passa a ser a
-tradução do modelo para a linguagem de quem decide.
+O slide 11 apresenta o **modelo conjunto** — a equação de escolha na notação do
+projeto, com $i$ o médico e $m$ o município — e diz o que ela faz em português:
+deflaciona a remuneração, subtrai o custo do lugar, desconta a carreira inteira e
+devolve o município de maior valor. São dois builds, a equação e a
+**interpretação**. O rótulo do segundo era "O que a conta faz, e o que ela
+esconde" e virou **"Interpretação"** em 17/09/2026, quando o autor pediu
+linguagem simples e sintética nos rótulos ao longo de toda a apresentação. Fecha
+declarando o buraco: na definição dos próprios autores, o custo $c$ é uma
+**caixa-preta** de preferências por viver no interior e proximidade da família.
 
-O slide 11 é novo como slide, não como conteúdo: na estrutura anterior, a
-**remuneração da localidade** eram duas frases antes de uma equação, dentro do
-slide do IVS. Ela sustenta sozinha a afirmação mais contraintuitiva da
-apresentação — a bolsa do interior é o **dobro** da bolsa da capital e a
-remuneração **total** pode ser **menor**, porque na capital a bolsa é um piso
-somado a um mercado e no interior é o teto. É também onde o slide 4 volta: se
-7,7% dos cirurgiões atuam exclusivamente no setor público, então
-$w^{\text{priv}} > 0$ é a regra, e a ausência de mercado privado é, ela própria,
-uma desvantagem do lugar que a bolsa precisa compensar.
+O slide 12 abre a caixa em duas metades — o **lugar** e o **trabalho** — e, desde
+17/09/2026, mostra só as equações que o projeto **infere** das originais,
+$c^{\text{geo}}$ e $c^{\text{laboral}}$, com a definição dos seus termos. O
+terceiro build é o que o autor apontou como o padrão a seguir: as desvantagens
+**na visão do médico**, uma linha por termo — sem retaguarda em $L$, sem
+infraestrutura em $K$, longe da família em $\phi(\text{dist})$ —, com a última
+coluna dizendo se medimos. Eram quatro: a quarta, **mercado privado ausente**,
+passou ao slide 13, porque é de remuneração e não de custo.
+
+O slide 13 sustenta sozinho a afirmação mais contraintuitiva da apresentação, e
+em 17/09/2026 o objetivo dele ficou explícito: a lei fixa a **bolsa**, não a
+remuneração, e por construção **remuneração $\geq$ bolsa**. A bolsa do interior é
+o dobro da bolsa da capital e a remuneração **total** pode ser **menor**, porque
+na capital a bolsa é um piso somado a um mercado e no interior ela é quase tudo.
+Dois ajustes do mesmo dia tiram o exagero da versão anterior: o mercado privado
+do interior isolado é **menor, não nulo** — é o que a dupla prática do slide 4
+sustenta —, e o custo de vida é **suposto menor**, com a ressalva, na própria
+tabela, de que o custo logístico encarece parte da cesta.
 
 ### 1.3 A lógica da seção 3 — Hipótese e Viabilidade Empírica
 
-O slide 13 faz a junção: escreve $V_{im}$ e remete cada metade ao slide que a
-construiu — a remuneração ao 11, o custo ao 10 —, declara o que Moehling,
-Redding & Rossi-Hansberg e Choné & Ma **não têm**, remuneração fixada por regra
-pública sobre um índice territorial, e mapeia cada termo do modelo sobre uma
-variável do programa. A equação que reescrevia a decomposição de $c_{im}$ saiu
-em 16/09/2026 (seção 4f), por repetir o slide 10; ficou a referência cruzada.
+O slide 15 faz a junção e, desde 17/09/2026, carrega toda a análise da seção. O
+primeiro build escreve $V_{im}$ — **sem termo de erro**, porque esta banca é
+estritamente teórica — e remete cada metade ao slide que a construiu: a
+remuneração ao 13, o custo ao 12. Declara o que Moehling, Redding &
+Rossi-Hansberg e Choné & Ma **não têm**, remuneração fixada por regra pública
+sobre um índice territorial, e mapeia cada termo do modelo sobre uma variável do
+programa, com $\mathbf{B}$ e $\mathbf{w}^{\text{priv}}$ em negrito para separar o
+que a regra fixa do que o mercado dá.
 
-Daí sai o argumento que justifica o objeto do trabalho: como a dimensão de
-capital humano do IVS **eleva o benefício** de atender e ao mesmo tempo
-**sinaliza falta de insumo**, o sinal de $c_0'(IVS)$ é ambíguo. Por isso o
-objeto é o **degrau** da bolsa entre faixas, e não a inclinação do índice.
+O build que explicava **por que o IVS organiza o custo** saiu daqui e virou o
+slide 6, na seção 1. O que restou é uma linha na tabela: o custo entra pelo IVS e
+**cresce** com ele — a monotonicidade da pendência 9.
 
-O slide 14 deriva **H1** em quatro passos, da condição de aceitação individual à
-probabilidade de a vaga ser preenchida, e termina na condição de degrau —
-$\Delta B_m / p_m > \Delta c_0$, com $\Delta B_m = \text{R\$ } 5.000$. O quarto passo é
-o que impede a leitura errada: o custo locacional **não** é uma segunda
-hipótese, porque não varia livremente; ele é o que torna H1 difícil de testar.
+Os dois builds seguintes vieram do slide da hipótese. A **condição de aceitação**
+diz que o médico aceita quando a vaga supera sua melhor alternativa, e que a vaga
+é preenchida se existir ao menos um candidato para quem isso vale. A **fronteira
+entre faixas** põe o custo como obstáculo, e não como segunda hipótese, e escreve
+a aposta da política na forma exata: $\Delta B_m / p_m > \Delta c_0$, com
+$\Delta B_m = \text{R\$ } 5.000$.
 
-Os slides 15 e 16 respondem separadamente a duas perguntas que a estrutura
-anterior misturava num só slide. A primeira é **"há dado?"** — e a resposta é
-sim para o essencial, com desfecho e instrumento observados diretamente, custo
-observado por proxies declaradas, e duas ausências nomeadas que são justamente
-os dois termos que o modelo diz serem decisivos: remuneração de mercado local e
-distância da família. A segunda é **"o dado identifica?"** — e a resposta é não,
-por uma razão que não é amostral.
+O slide 16 ficou **só** com a hipótese, a pedido do autor: o enunciado de H1, a
+derivada e a margem — preenchimento, não permanência. Um build, de propósito.
+
+O slide 17 responde à pergunta **"há dado?"**: sim para o essencial, com desfecho
+e instrumento observados diretamente e o custo do lugar entrando inteiro pelo
+**IVS**, declarado como a proxy do que não se mede. A tabela do que falta ganhou
+uma coluna — **por onde entra** cada ausência. Mercado local, custo de moradia,
+capital e volume entram pelo índice; distância da família não é do lugar, e fica
+no desvio individual $\eta_i$.
 
 ### 1.4 O fecho da apresentação
 
-O deck constrói, do slide 4 ao 14, uma hipótese sobre o **valor da bolsa**. O
-slide 16 precisa então dizer duas coisas na ordem certa: primeiro, que a
-conclusão de viabilidade é sobre esse objeto — e ela é negativa com fonte
-pública, porque o IVS é piso e não critério, e o Anexo IV não é público;
-segundo, o que fica de pé — a pergunta continua a do trabalho, a relação
-faixa–preenchimento é reportada como gradiente, e o desenho causal já disponível
-responde a outra pergunta, o efeito de **ganhar a vaga**. Sem a primeira frase,
-a banca ouve onze slides sobre a bolsa e um fecho sobre outra coisa. É a razão
-de o antigo slide 15 ter sido reescrito, e não cortado, em 16/09/2026
-(seção 4d), e de ele ter sido **desdobrado em dois**, e não encolhido, na
-reestruturação do mesmo dia (seção 4e): misturar "quais termos observamos" com
-"por que a regra não identifica" fazia a viabilidade parecer um problema de
-falta de dado, quando é um problema de regra.
+Até 17/09/2026 o deck terminava num slide de **desafio metodológico**, que dizia
+por que a regra, do jeito que é, não identifica o efeito da bolsa. O autor pediu
+que ele saísse: a separação entre efeito da bolsa e efeito da vulnerabilidade não
+é tratada nesta apresentação. O deck passa a terminar na **disponibilidade de
+dados** — que é a viabilidade empírica no sentido em que esta banca a trata: o
+que se consegue medir.
+
+O que saiu não foi perdido nem desmentido. A reconstrução da regra (R1,
+14/09/2026) continua em
+[`05_identificacao/16`](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
+§3.5: há suporte comum, não há descontinuidade nos dois cortes e a variação que
+sobra segue a remoticidade. É material de resposta à banca, não de slide.
+
+Uma consequência para a fala, que quem apresentar precisa ter clara: o deck
+constrói, do slide 4 ao 16, uma hipótese sobre o **valor da bolsa**, e agora
+termina sem dizer o que já se sabe sobre a viabilidade de testá-la com fonte
+pública. Se a banca perguntar, a resposta é a mesma de sempre — o IVS é piso e
+não critério, e o Anexo IV não é público. Só não é conclusão de tela nesta
+entrega.
 
 ---
 
@@ -215,23 +252,30 @@ As **três divisórias** são a exceção, e existem para isso: são o único lu
 que o nome da seção aparece grande. Foi o que permitiu tirar as repetições do
 sumário sem deixar a banca sem mapa.
 
-Títulos dos slides 3 a 16 — curtos, declarativos e sem palavra difícil; em
+Títulos dos slides 3 a 17 — curtos, declarativos e sem palavra difícil; em
 negrito, as divisórias:
 
 3. **1. Motivação e Pergunta**
 4. O especialista está longe do interior — e quase nunca é só do SUS
 5. A bolsa é do município, não do médico nem da especialidade
-6. O programa já deu sinais; a literatura aponta para os dois lados
-7. A pergunta que organiza o trabalho
-8. **2. Literatura Teórica e Modelo Microeconômico**
-9. A escolha locacional maximiza a renda real líquida
-10. O custo da localidade tem duas metades: o lugar e o trabalho
-11. A bolsa não é toda a remuneração da localidade
-12. **3. Hipótese e Viabilidade Empírica**
-13. No PMM-E, a regra fixa a remuneração e o IVS organiza o custo
-14. Da condição de aceitação sai a hipótese
-15. Há dado para quase todo termo — e sabemos quais faltam
-16. Separar o efeito da bolsa do efeito da vulnerabilidade
+6. Quanto maior o IVS, mais difícil é exercer ali
+7. O programa já deu sinais; a literatura aponta para os dois lados
+8. A pergunta que organiza o trabalho
+9. **2. Literatura Teórica e Modelo Microeconômico**
+10. Três tradições sustentam uma equação
+11. A escolha locacional maximiza a renda real líquida
+12. O custo da localidade tem duas metades: o lugar e o trabalho
+13. A bolsa é o piso da remuneração, não o total
+14. **3. Hipótese e Viabilidade Empírica**
+15. No PMM-E, a regra fixa a remuneração e o IVS organiza o custo
+16. Mais remuneração real, mais vagas preenchidas
+17. Há dado para quase todo termo — e sabemos quais faltam
+
+**Rótulo de build também é título.** Desde 17/09/2026 os rótulos de build usam
+**linguagem simples e sintética**, a pedido do autor: "O que a conta faz, e o que
+ela esconde" virou **"Interpretação"** no slide 11, e o mesmo rótulo fecha o
+slide 13. Quando o build tem nome próprio no argumento — "O lugar", "O
+trabalho", "A condição de aceitação" —, é esse nome que fica.
 
 ### 2.2 Uma afirmação por slide
 
@@ -239,25 +283,27 @@ Slide com mais de uma figura só quando todas sustentam **a mesma** afirmação.
 slide 5 mostra duas medidas de oferta prévia — especialistas por habitante e
 colegas da mesma especialidade — porque a **discordância** entre elas é a
 afirmação: por habitante a bolsa maior não vai para onde falta mais; em número
-de colegas, vai. O slide 6 tem uma figura em dois painéis porque o contraste
+de colegas, vai. O slide 7 tem uma figura em dois painéis porque o contraste
 entre faixa e território é a afirmação.
 
-Slide fundido obedece à mesma regra por afirmação, não por tema: o slide 6 junta
+Slide fundido obedece à mesma regra por afirmação, não por tema: o slide 7 junta
 o ciclo 1 e a literatura internacional porque a afirmação é uma só — há sinal, e
-ele não decide; o slide 10 junta os dois blocos do custo porque a afirmação é
-que o custo de Moehling et al. se abre em lugar e trabalho; o slide 13 junta a
-equação completa e as dimensões do IVS porque a afirmação é que a regra fixa a
-remuneração enquanto o índice organiza o custo.
+ele não decide; o slide 12 junta os dois blocos do custo porque a afirmação é
+que o custo de Moehling et al. se abre em lugar e trabalho; o slide 15 junta a
+equação completa, a condição de aceitação e a fronteira entre faixas porque a
+afirmação é uma só — a regra fixa a remuneração enquanto o índice organiza o
+custo, e é disso que sai a aposta de R$ 5 mil.
 
 **O slide que mais forçava a regra.** Até 17/09/2026 o slide 5 carregava três
 figuras, um diagrama e duas cláusulas de edital — o material de três slides da
 estrutura anterior — em **cinco builds**. A afirmação era única, "a bolsa é do
 município", mas o diagrama sustentava outra: o que a política **supõe** sem
-escrever. Ele passou ao slide 7, onde essa afirmação é a do título, e o slide 5
-ficou com **três** builds e uma afirmação só. Nenhum slide passa de três builds
+escrever. Ele passou ao slide da pergunta de pesquisa — o **8** na numeração de
+17 slides —, onde essa afirmação é a do título, e o slide 5 ficou com **três**
+builds e uma afirmação só. Nenhum slide passa de três builds
 desde então, e o teto deixou de ser cinco.
 
-**O caso simétrico.** O slide 7 tinha **um** build, e a pergunta é a afirmação
+**O caso simétrico.** O slide da pergunta tinha **um** build, e a pergunta é a afirmação
 mais importante do deck. Ganhar o diagrama antes dela não divide a afirmação:
 constrói a mesma, em dois passos — a cadeia mostra onde a pergunta mora, e a
 pergunta vem.
@@ -284,23 +330,25 @@ continua escrita no slide.
 
 Fora da seção 1, **nada de econometria**. Não entram estimador, especificação,
 regressão, coeficiente, elasticidade, colinearidade, desenho de identificação
-nem o vocabulário de descontinuidade. Literatura empírica também não: os slides
-9, 10 e 11 trazem apenas trabalhos teóricos.
+nem o vocabulário de descontinuidade — e, desde 17/09/2026, tampouco o **termo de
+erro**: $V_{im}$ é escrito sem $\varepsilon_{im}$ no slide 15, por pedido
+explícito do autor. Literatura empírica também não: os slides 10 a 13 trazem
+apenas trabalhos teóricos, com a exceção de Costa, Nunes & Sanches (2024), citado
+no slide 12 como fato sobre a escolha de médicos brasileiros.
 
 A seção 1 é a exceção declarada. Ali, antes da pergunta, entra evidência sobre o
 que se pode esperar da política — inclusive de trabalhos empíricos de outros
 países — porque é o que justifica perguntar. Mesmo ali, o desenho de cada estudo
 é descrito em palavras comuns: "sorteou o salário anunciado", e não "RCT com
-randomização em dois estágios". O slide 6 mostra proporções brutas e diz que são
-descrição, não efeito. O diagrama de teoria da mudança do slide 5 nomeia elos e
+randomização em dois estágios". O slide 7 mostra proporções brutas e diz que são
+descrição, não efeito. O diagrama de teoria da mudança do slide 8 nomeia elos e
 suposições do programa; não nomeia desenho de identificação.
 
 A viabilidade empírica descreve **o que se consegue medir**, não como se
-estimaria. A dificuldade de separar bolsa de vulnerabilidade é apresentada como
-fato sobre os dados — há suporte comum, mas o tratamento é localmente constante
-nos cortes e a variação residual segue a remoticidade — sem nomear estimadores.
-O slide 16 nomeia o desenho de escore do candidato por seu objeto, não por seu
-estimador.
+estimaria — e, desde 17/09/2026, é só isso que ela descreve. O slide que tratava
+da dificuldade de separar bolsa de vulnerabilidade **saiu do deck** a pedido do
+autor (seção 4h); com ele saíram as últimas menções a suporte comum, cortes e
+desenho de identificação. A seção 3 termina no inventário de dados.
 
 ### 2.5 Vocabulário
 
@@ -329,20 +377,23 @@ afirmação do título continua uma só, e o build apenas controla em que ordem 
   equação num build, interpretação no seguinte. Build sem trabalho próprio é
   pausa decorativa, e não entra.
 
-São **32 builds em 16 slides**, com a contagem por slide na coluna **Builds** do
-mapa de [02_conteudo_slides.md](02_conteudo_slides.md) e a lista dos passos na
-seção 4g. Desde 17/09/2026 **nenhum slide passa de três builds**; eram 33, com
-cinco no slide 5.
+São **32 builds em 17 slides**, com a contagem por slide na coluna **Builds** do
+mapa de [02_conteudo_slides.md](02_conteudo_slides.md) e a lista dos passos nas
+seções 4g e 4h. **Nenhum slide passa de três builds** desde 17/09/2026; eram 33,
+com cinco no slide 5. Dois slides têm **um** build — a tabela das três tradições
+(10) e a hipótese (16) —, e nos dois casos é decisão de composição: o material
+não se reparte sem perder a afirmação.
 
 ---
 
 > [!NOTE]
-> **Numeração nas seções históricas.** Nas seções 3 a 4e, os números de slide
-> são os da estrutura vigente **na data do ajuste** — 11, 18, 19 ou 15 slides,
-> conforme o caso — e são preservados como registro. A numeração corrente é a do
-> mapa da seção 1 e do [documento de conteúdo](02_conteudo_slides.md); a
-> correspondência entre a última estrutura e a atual está na seção 4e. A seção
-> 4f já usa a numeração corrente, porque não mexeu na estrutura.
+> **Numeração nas seções históricas.** Nas seções 3 a 4g, os números de slide
+> são os da estrutura vigente **na data do ajuste** — 11, 18, 19, 15 ou 16
+> slides, conforme o caso — e são preservados como registro. A numeração corrente
+> é a de **17 slides**, do mapa da seção 1 e do [documento de
+> conteúdo](02_conteudo_slides.md); a correspondência entre a estrutura de 15 e a
+> de 16 está na seção 4e, e a de 16 para 17 está na seção 4h. Só a seção 4h usa a
+> numeração corrente.
 
 ## 3. Rastreio do feedback dos professores
 
@@ -352,16 +403,19 @@ cinco no slide 5.
 | 2 | **Motivação: dividir entre (i) dor, (ii) política, (iii) efeitos** | O painel 2×2 repetido em dois slides virou três blocos em sequência causal — problema (slides 3 e 4), política (5 e 6) e efeito incerto (7 a 10) — cada um com os slides que o argumento pede. |
 | 3 | **Pergunta: simplificar** | De *"Bolsas maiores conseguem compensar as desvantagens territoriais no preenchimento e na manutenção das vagas do PMM-E?"* para **"Maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas desvantagens territoriais na atração de médicos especialistas?"**, com a leitura em dois objetos logo abaixo. |
 | 4 | **Teoria: derivar a hipótese diretamente** | O bloco teórico termina em um slide que escreve a condição de aceitação e dela tira a hipótese como derivada parcial da remuneração real, com sinal positivo, e chega à condição de degrau. O custo locacional aparece como obstáculo de identificação, não como segunda hipótese. |
-| 5 | **Corta texto. Gráfico > texto; gráfico > tabela. Política: refatora tudo. Literatura: dois a favor e dois contra** (17/09/2026) | Slide 4: os três builds viraram figura e uma frase, com três figuras novas saindo do pipeline. Slide 5: de cinco builds para três, com o diagrama passando ao slide 7 e as correções D1 e F2 do PR de ajuste estrutural aplicadas. Slide 6: a tabela ficou em dois de cada lado, e saíram da tela os dois números que eram saída de estimação. Detalhe na seção 4g. |
+| 5 | **Corta texto. Gráfico > texto; gráfico > tabela. Política: refatora tudo. Literatura: dois a favor e dois contra** (17/09/2026) | Slide 4: os três builds viraram figura e uma frase, com três figuras novas saindo do pipeline. Slide 5: de cinco builds para três, com o diagrama passando ao slide da pergunta e as correções D1 e F2 do PR de ajuste estrutural aplicadas. Slide 6, hoje 7: a tabela ficou em dois de cada lado, e saíram da tela os dois números que eram saída de estimação. Detalhe na seção 4g. |
+| 6 | **Seções 2 e 3, na segunda rodada de 17/09/2026: linguagem simples nos rótulos; equações originais em slide próprio; a bolsa contida pela lei; sem termo de erro; o IVS explicado na motivação; hipótese sozinha; custo crescente no IVS; desafio metodológico fora** | O deck passou de 16 para **17 slides**. Nasceram dois — as três tradições com as **equações originais** (10) e o **IVS e suas dimensões** (6) — e saiu um, o **desafio metodológico**. O slide do custo ficou com as equações inferidas e a leitura termo a termo; o da remuneração passou a dizer que **remuneração $\geq$ bolsa**, com mercado privado menor e não nulo; o das implicações perdeu o termo de erro e ganhou a condição de aceitação; a hipótese ficou sozinha na tela; e o inventário de dados passou a declarar o IVS como a proxy única do custo do lugar. Detalhe na seção 4h. |
 
 **Onde cada ajuste está hoje.** O feedback 1 continua valendo, com a exceção
 registrada na seção 2.1: as três divisórias nomeiam a seção, e é a função delas.
-Os três blocos do feedback 2 ocupam hoje **um slide de conteúdo cada** —
-problema (4), política (5) e efeitos (6) — dentro da seção 1, que absorveu
-também a pergunta. A pergunta do feedback 3 está no slide 7, na versão de tela
-descrita na seção 4e; a formulação canônica continua em
+Os três blocos do feedback 2 ocupam hoje um slide de conteúdo cada — problema
+(4), política (5) e efeitos (7) —, com o IVS (6) entre a política e os efeitos,
+dentro da seção 1, que absorveu também a pergunta. A pergunta do feedback 3 está
+no slide 8, na versão de tela descrita na seção 4e; a formulação canônica
+continua em
 [`01_pergunta_escopo/15`](../../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
-A derivação do feedback 4 está no slide 14, ainda em quatro passos.
+A derivação do feedback 4 mudou de endereço em 17/09/2026: os passos que levam à
+hipótese ficaram no slide 15, e o **enunciado** ficou sozinho no 16.
 
 ## 4. Ajustes de conteúdo de 09/09/2026
 
@@ -835,7 +889,97 @@ na leitura, e continua chamado de gradiente.
 
 Aos quatro requisitos da seção 4f somam-se dois, e um deles muda de endereço: os
 **32 builds**, nenhum slide passando de três; e o diagrama de teoria da mudança
-no **slide 7**, não no 5.
+no slide da pergunta de pesquisa, não no da política — era o **slide 7** na
+estrutura de 16 slides desta seção, e é o **8** na estrutura vigente.
+
+## 4h. Segunda rodada de 17/09/2026 — as seções 2 e 3, e o deck em 17 slides
+
+A primeira rodada do dia (seção 4g) tratou da seção 1. Esta trata das **seções 2
+e 3**, e é a maior mudança de estrutura desde 16/09/2026: o deck passa de **16
+para 17 slides**, com **dois slides novos** e **um removido**. Os builds continuam
+**32**, e nenhum slide passa de três.
+
+### O pedido, item a item
+
+| Onde | Pedido do autor | O que foi feito |
+|---|---|---|
+| toda a apresentação | *"usa linguagem simples e sintética ao longo de toda a apresentação, e.g, 'Interpretação'"* | rótulo de build passou a ser nome curto e direto; onde o build só lê o que o anterior mostrou, o rótulo é **Interpretação** (slides 11 e 13) |
+| 11 · Modelo conjunto | *"ao invés de 'O que a conta faz, e o que ela esconde'"* | o rótulo virou **Interpretação**; o conteúdo do build não mudou |
+| 12 · Custo | *"'Mercado privado ausente' entra só no slide seguinte"* | a quarta desvantagem saiu da tabela e passou ao **slide 13**; ficaram **três** |
+| 12 · Custo | *"deixar só as equações que inferimos a partir das originais nesse slide … e remanejar as equações originais para um slide igual ao da imagem, mas com 'Equações originais' ao invés de 'Primitiva que fornece'"* | os dois primeiros builds ficaram com $c^{\text{geo}}$ e $c^{\text{laboral}}$ e a definição dos termos; as **três** equações originais foram para o **slide 10**, novo |
+| 13 · Remuneração | *"o objetivo central é explicar que a bolsa está contida pela legislação, i.e, remuneração >= bolsa"* | o slide passou a abrir por isso: a lei fixa a bolsa, e $\mathbb{E}(w \mid B_m) = B_m + w^{\text{priv}}_m \geq B_m$, com a desigualdade visível também na linha "Total" dos dois lados da tabela |
+| 13 · Remuneração | *"não necessariamente é nulo pro interior isolado, só é menor"* | o mercado privado do interior deixou de ser **ausente** e passou a **menor, não nulo**; a remissão à dupla prática do slide 4 diz por quê |
+| 13 · Remuneração | *"o custo de vida não necessariamente é baixo, podemos só assumir que é menor … vários artigos são mais caros pelo custo logístico"* | o deflator do interior virou **suposto menor**, com a ressalva do custo logístico na própria célula da tabela |
+| 15 · Implicações | *"JAMAIS coloque termo de erro nessa banca. Ela é ESTRITAMENTE teórica"* | $\varepsilon_{im}$ saiu de $V_{im}$, e a regra entrou na seção 2.4 como parte do que não vai à tela desta banca |
+| 15 · Implicações | *"deixa negrito B e w^priv"* | $\mathbf{B}_m$ e $\mathbf{w}^{\text{priv}}_m$ em negrito na equação, na tabela de termos, na condição de aceitação e na condição de degrau |
+| 15 · Implicações | *"pode tirar toda a questão do 'Por que o IVS organiza o custo' daqui, e coloca essa explicação cuidadosa do que é o IVS lá no slide 'Política' … podemos inclusive quebrar aquele slide em dois"* | o build saiu inteiro; a explicação virou o **slide 6**, na seção 1, logo depois da política, que ficou intacta em três builds |
+| 16 · Hipótese | *"deixa a parte de 'Condição de aceitação', e qualquer outra análise no slide anterior … estritamente para a enunciação da hipótese"* | o slide ficou com H1, a derivada e a margem; condição de aceitação e fronteira entre faixas foram para o **15** |
+| 17 · Dados | *"menciona o IVS como proxy pro q n temos de custos e etc"* | o IVS entrou como linha própria do que observamos, e a tabela do que falta ganhou a coluna **por onde entra** |
+| 17 · Dados | *"deixa os custos todos dentro do IVS, e remove nuances de ambiguidade, p dizer diretamente que o custo é crescente no IVS"* | a linha de custos geográficos saiu como proxy própria; tudo que é do lugar entra pelo índice, e a tela diz que o custo **cresce** com ele |
+| 16 da estrutura anterior · Desafio metodológico | *"pode remover. Não é abordado nessa apresentação, na verdade"* | slide **removido**; o deck termina na disponibilidade de dados |
+
+### Os dois slides novos
+
+**Slide 10 — Três tradições sustentam uma equação.** É a tabela que abria a
+seção 2 até 16/09/2026, quando saiu por redundância, com a terceira coluna
+trocada: onde dizia "Primitiva que fornece", diz **"Equações originais"**, e nela
+estão as três equações como os autores as escreveram. A advertência sobre o
+símbolo $B$ — amenidade, benefício ao paciente, bolsa — veio junto, porque é aqui
+que os três sentidos aparecem lado a lado pela primeira vez.
+
+**Slide 6 — Quanto maior o IVS, mais difícil é exercer ali.** É a explicação do
+índice, que estava no slide das implicações, na seção 3. Ela chega agora logo
+depois da cláusula que a usa: o primeiro build diz o que o IVS é e que ele é a
+parte **pública** da regra do valor; o segundo abre as três dimensões, com os
+indicadores de cada uma e o que cada uma significa para quem vai morar e atender
+ali. O autor autorizou quebrar o slide da política em dois; o que se fez foi
+**não** mexer nele — ele já estava em três builds desde a rodada da manhã — e dar
+slide próprio ao índice.
+
+### O slide que saiu
+
+O **desafio metodológico** era o slide 16 e não existe mais. Ele carregava os três
+achados do portão R1 — suporte comum, ausência de descontinuidade nos cortes
+`0,400` e `0,500`, e a variação residual correlacionada com remoticidade — e a
+conclusão de que o efeito causal do valor da bolsa não é identificável com fonte
+pública. Nada disso foi desmentido: continua em
+[`05_identificacao/16`](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
+§3.5, e serve para responder à banca. Sai da tela porque esta apresentação, como
+o autor registrou, não trata do assunto.
+
+Com ele saem do deck: os números do R1 (37, 94, `0,372`, 83, 41, 42, 7.933,
+32.179), o contraste de R$ 10 mil entre extremos, a figura que faltava — IVS
+contra faixa publicada, a **pendência 7**, agora fechada por remoção — e a única
+menção do deck ao desenho de escore do candidato.
+
+### A monotonicidade do custo no IVS
+
+O pedido de *"remover nuances de ambiguidade, p dizer diretamente que o custo é
+crescente no IVS"* foi aplicado na tela, e **só** na tela. O documento canônico
+continua dizendo o contrário: em
+[`modelo_micro.md`](../../02_teoria/modelo_micro.md), §3.1, e na hipótese H4 de
+[`hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md),
+§4, o sinal de $c_0'(IVS)$ é ambíguo porque o sub-índice de capital humano opera
+nos dois sentidos — carência sanitária eleva o benefício de atender e sinaliza
+falta de insumo ao mesmo tempo.
+
+A simplificação está declarada nas notas de produção dos slides 6, 15 e 17, e
+registrada como **pendência 9**. Fechá-la é decisão do autor: ou a teoria fixa o
+sinal, com justificativa, ou a tela volta a declarar a ambiguidade. Enquanto isso,
+vale a regra da seção 2.3 — o que a tela simplifica, o documento registra.
+
+### Uma correção de referência
+
+O deck citava **Choné & Ma (2011)** como *IJHCFE* 11. A referência canônica, em
+[`modelo_micro.md`](../../02_teoria/modelo_micro.md), §5, é *Annals of Economics
+and Statistics* 101/102, 229–256 — e é ela que contém a p. 232 da equação
+exibida. Corrigido no slide 10, único lugar do deck em que o periódico aparece.
+
+### O que a próxima reconstrução dos decks precisa contemplar
+
+Aos requisitos das seções 4f e 4g somam-se: **17 slides**, com dois novos e um
+removido; a numeração de tudo o que vem depois do slide 5 deslocada em um; e os
+rótulos de build em linguagem simples.
 
 ## 5. Defeitos do material anterior
 
@@ -860,31 +1004,36 @@ densidade de cada slide, com as divisórias custando segundos.
 
 **O critério, agora que há builds.** O tempo é do **material**, não do número de
 telas: um build não acrescenta conteúdo, apenas reparte o que já estava no
-slide. A compressão da seção 4f, por si, não mudou a conta — quem a mudou foram
-as **duas remoções** do mesmo dia, a tabela das três tradições no slide 9 e a
-equação de decomposição do custo no slide 13. O corte da seção 4g mexe de novo,
-e só na seção 1: saíram quatro marcadores do slide 4, duas células da tabela da
-literatura e dois números da leitura do slide 6; o diagrama apenas trocou de
-slide, e por isso não sai da conta. Os builds entram na tabela como verificação
-de densidade, não como unidade de tempo.
+slide. Material que **muda de slide** não mexe na conta; material que **sai** do
+deck, sim. É o que decide esta revisão: a segunda rodada de 17/09/2026 (seção 4h)
+moveu três blocos — a explicação do IVS, as equações originais e a condição de
+aceitação — e **removeu** um slide inteiro, o desafio metodológico, que era o mais
+denso da seção 3. Em troca, a seção 2 recuperou a tabela das três tradições, que
+havia saído em 16/09/2026. Os builds entram na tabela como verificação de
+densidade, não como unidade de tempo.
 
 | Seção | Slides | Builds | Minutos |
 |---|:---:|:---:|:---:|
 | Capa e sumário | 2 | 2 | 1 |
-| 1. Motivação e Pergunta | 5 | 12 | 9 |
-| 2. Literatura Teórica e Modelo Microeconômico | 4 | 8 | 5 |
-| 3. Hipótese e Viabilidade Empírica | 5 | 10 | 9 |
-| **Total** | **16** | **32** | **24** |
+| 1. Motivação e Pergunta | 6 | 14 | 10 |
+| 2. Literatura Teórica e Modelo Microeconômico | 5 | 9 | 5 |
+| 3. Hipótese e Viabilidade Empírica | 4 | 7 | 5 |
+| **Total** | **17** | **32** | **21** |
 
-São os mesmos **24 minutos** da estrutura de 15 slides, por caminho diferente:
-a estrutura de 16 slides tinha subido para 25, e o corte da seção 4g devolveu o
-minuto — não pelas telas, que não mudaram de número, mas pelo material que saiu
-da seção 1. As três divisórias seguem somando menos de um minuto.
+São **21 minutos**, contra os 24 da estrutura de 16 slides. A diferença é quase
+toda a saída do desafio metodológico, que valia cerca de três minutos e meio: a
+seção 3 cai de 9 para 5, a seção 1 sobe um minuto com o slide do IVS — que veio
+de lá — e a seção 2 fica onde estava, porque a tabela que voltou compensa as
+equações que apenas trocaram de slide. As três divisórias seguem somando menos de
+um minuto.
 
-**Verificação por build.** 24 minutos para 32 builds dão cerca de **45 segundos
+**Verificação por build.** 21 minutos para 32 builds dão cerca de **40 segundos
 por build**, com as quatro telas de capa e divisória custando segundos e os
 builds de conteúdo, um pouco mais. Como nenhum slide passa de **três** builds, o
-teto por slide caiu de cerca de quatro minutos para pouco mais de dois. Nenhum
-build previsto passa de um minuto e meio. Se algum passar no ensaio, o problema
-é de material no build, e a saída é a da seção 2.6: repartir em dois, não
-acelerar a fala.
+teto por slide é de pouco mais de dois minutos. Nenhum build previsto passa de um
+minuto e meio. Se algum passar no ensaio, o problema é de material no build, e a
+saída é a da seção 2.6: repartir em dois, não acelerar a fala.
+
+**Folga.** A entrega ficou com três minutos de margem em relação ao ensaio
+anterior. Se a banca quiser o desafio metodológico de volta, ele cabe — mas isso
+é decisão do autor, e hoje ele está fora por pedido dele.

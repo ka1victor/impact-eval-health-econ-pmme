@@ -2,8 +2,8 @@
 
 > **Classificação:** transposição empírica do modelo — especificação candidata, mapeamento de variáveis e hipóteses operacionais<br>
 > **Derivação das hipóteses:** [modelo_micro.md](modelo_micro.md), seção 4<br>
-> **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 17 e 18<br>
-> **Atualização:** 9 de setembro de 2026
+> **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 13, 15, 16 e 17 da estrutura de 17 slides<br>
+> **Atualização:** 17 de setembro de 2026
 
 > *[Nota metodológica: Este documento funciona como um esboço preliminar (sketch) de transposição empírica para guiar a econometria aplicada do projeto. Como a estratégia final de identificação causal, o poder estatístico dos estimandos e a disponibilidade de microdados estão sendo investigados e refinados na execução empírica (ver `docs/06_execucao/` e `docs/auditorias/`), as formulações operacionais e as hipóteses abaixo são tratadas como uma agenda de trabalho em aberto, e não como escolhas axiomáticas congeladas.]*
 
@@ -40,6 +40,15 @@ A teoria microeconômica sugere que a atratividade do município depende critica
 - **Interior isolado:** Não há demanda privada adjacente; o médico fica subalocado nas 20h e sua remuneração nominal colapsa no piso da bolsa ($w = B$).
 
 Essa hipótese ajuda a explicar por que bolsas nominais maiores no interior vulnerável ($B_{\text{interior}} = \text{R\$} 20\text{k} > B_{\text{capital}} = \text{R\$} 10\text{k}$) podem resultar em uma remuneração real total substancialmente inferior ($w_{\text{interior}} < w_{\text{capital}}$).
+
+> [!NOTE]
+> **O caso $w = B$ é o limite, não a regra — e a banca 1 exibe a forma fraca.**
+> A pedido do autor, em 17/09/2026, o slide 13 da apresentação diz que o mercado
+> privado do interior isolado é **menor, não nulo**: o dado disponível é o de
+> dupla prática (72,4% dos cirurgiões), e ele não sustenta $w^{\text{priv}} = 0$.
+> O que a tela carrega é a desigualdade que vale sempre, $w \geq B$, que é o
+> título desta seção. O limite $w \to B$ continua sendo o caso extremo que
+> organiza a intuição, e é dele que sai a leitura territorial de H3.
 
 ---
 
@@ -116,17 +125,27 @@ documento, apenas o que a apresentação enuncia como hipótese a testar.
 | — | custo locacional, $\partial\Pr/\partial c_m < 0$ | apresentado como **obstáculo de identificação**, não como hipótese: o custo não varia livremente, porque a regra do edital o amarra à bolsa. Operacionaliza-se por H3 (mercado privado), H4 (sub-índices do IVS) e 4.1 (infraestrutura), todas leituras do mesmo $c_m$ |
 | — | persistência da oferta | H2 canônica; fora da banca 1, permanece no escopo do projeto |
 
-Desde a reestruturação de 16/09/2026, a apresentação separa as duas coisas em
-dois slides. Em **disponibilidade de dados** declara como cada objeto aparece:
-o preenchimento por célula estabelecimento–curso; a bolsa como faixa anunciada,
-cujo piso é a categoria de IVS por construção da regra; o custo como IVS,
-sub-índices, tipologia territorial e estoque prévio; e as duas ausências —
-remuneração de mercado local e distância da família. Em **desafio
-metodológico** declara o limite: a reconstrução da regra (R1, 14/09/2026)
-mostrou que o IVS público é piso da bolsa, não critério, e que o tratamento é
-localmente constante nos dois cortes. Isolar o efeito da bolsa do efeito do
-custo exige o **Anexo IV** e os critérios de localização da cláusula 11.1.3 do
-edital — até lá, o que se estima é gradiente.
+Desde 17/09/2026 a apresentação trata **só a primeira** das duas coisas. Em
+**disponibilidade de dados**, hoje o último slide, declara como cada objeto
+aparece: o preenchimento por célula estabelecimento–curso; a bolsa como faixa
+anunciada, cujo piso é a categoria de IVS por construção da regra; o custo do
+lugar **pelo IVS**, declarado como a proxy do que não se observa; e as ausências,
+com a dimensão do índice por onde cada uma entra — a distância da família é a
+exceção, e fica no desvio individual $\eta_i$.
+
+O slide de **desafio metodológico** foi **removido do deck** a pedido do autor: a
+apresentação não trata da separação entre efeito da bolsa e efeito da
+vulnerabilidade. O limite continua valendo para o projeto, e é este — a
+reconstrução da regra (R1, 14/09/2026) mostrou que o IVS público é piso da bolsa,
+não critério, e que o tratamento é localmente constante nos dois cortes. Isolar o
+efeito da bolsa do efeito do custo exige o **Anexo IV** e os critérios de
+localização da cláusula 11.1.3 do edital; até lá, o que se estima é gradiente.
+
+Duas simplificações da tela, ambas de 17/09/2026 e ambas decisão do autor, não
+valem para este documento: a apresentação escreve $V_{im}$ **sem termo de erro** e
+afirma que o custo **cresce** com o IVS. Aqui, a §3 acima continua dizendo que
+**não se pode assumir $c_0'(IVS) > 0$ a priori**, e H4 continua sendo o
+diagnóstico desse sinal.
 
 ### 4.3 Linguagem permitida
 

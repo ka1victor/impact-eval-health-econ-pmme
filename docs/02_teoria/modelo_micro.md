@@ -2,8 +2,8 @@
 
 > **Classificação:** fundamentação teórica canônica — primitivos, derivações, adaptação ao PMM-E e derivação das hipóteses<br>
 > **Transposição empírica:** [hipoteses_e_viabilidade_empirica.md](hipoteses_e_viabilidade_empirica.md)<br>
-> **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 12 a 17<br>
-> **Atualização:** 9 de setembro de 2026
+> **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 10 a 13, 15 e 16 da estrutura de 17 slides<br>
+> **Atualização:** 17 de setembro de 2026
 
 > [!NOTE]
 > Este documento absorveu, em 09/09/2026, o antigo `18_modelo_teorico_slides_apresentacao.md`.
@@ -178,6 +178,13 @@ mais um desvio individual:
 c_{im}^{(s)} = c_0^{(s)}(IVS_m) + \eta_i .
 ```
 
+> [!NOTE]
+> **Na banca 1 esta equação aparece sem $\varepsilon_{im}$.** Decisão do autor,
+> de 17/09/2026: a apresentação é estritamente teórica e não exibe termo de erro.
+> A supressão é de tela; a forma canônica é a de cima, com o erro. Ver
+> [`07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md),
+> slide 15.
+
 ### 3.1 Por que o IVS é a variável que organiza o custo latente
 
 O IVS do IPEA agrega 16 indicadores censitários em três sub-índices, e cada um
@@ -200,6 +207,16 @@ c_0'(IVS) \; \gtrless \; 0 ,
 
 e o sinal é questão empírica, não postulado. Essa é a razão teórica para
 estudar o **degrau** da bolsa na fronteira de faixa, e não o gradiente do IVS.
+
+> [!NOTE]
+> **O que a banca 1 exibe, desde 17/09/2026.** Por decisão do autor, os slides 6,
+> 15 e 17 da apresentação dizem que o custo **cresce** com o IVS, sem a ressalva
+> do sub-índice de capital humano. É simplificação de exposição, e **não** muda
+> esta seção: aqui e em H4 o sinal continua ambíguo, e a decomposição em
+> sub-índices continua sendo o diagnóstico previsto. A divergência está
+> registrada como `P11` em
+> [`07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md`](../07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md),
+> com as duas saídas possíveis de fechamento.
 
 ### 3.2 Equações originais dos complementos
 

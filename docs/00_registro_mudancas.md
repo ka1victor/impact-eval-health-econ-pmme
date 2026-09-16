@@ -8,6 +8,64 @@
 
 ---
 
+## 17/09/2026 — Banca 1: seções 2 e 3 revistas, e o deck passa a 17 slides
+
+Segunda rodada do dia, a pedido do autor, sobre as **seções 2 e 3**. A primeira
+rodada está na entrada seguinte. O deck passa de **16 para 17 slides**, com dois
+slides criados e um removido; os builds continuam **32**, e nenhum slide passa de
+três. Detalhe item a item em
+[`07_apresentacoes/banca1/01_roteiro_narrativo.md`](07_apresentacoes/banca1/01_roteiro_narrativo.md),
+seção 4h.
+
+### Slides criados
+
+- **Slide 10 — "Três tradições sustentam uma equação".** As **equações
+  originais** de Moehling et al., Redding & Rossi-Hansberg e Choné & Ma saem do
+  slide do custo e ganham slide próprio, no formato da tabela que existia no
+  slide 9 até 16/09/2026, com a coluna "Primitiva que fornece" trocada por
+  **"Equações originais"**. O slide do custo ficou com as equações **inferidas** e
+  com a leitura termo a termo das desvantagens.
+- **Slide 6 — "Quanto maior o IVS, mais difícil é exercer ali".** A explicação do
+  índice e das suas três dimensões sai do slide das implicações, na seção 3, e
+  passa à seção 1, logo depois da cláusula do edital que usa o IVS. O slide da
+  política ficou intacto, em três builds.
+
+### Slide removido
+
+- **Desafio metodológico**, o slide 16 da estrutura anterior. A separação entre
+  efeito da bolsa e efeito da vulnerabilidade deixa de ser tratada na
+  apresentação. Nada foi desmentido: os três achados do portão R1 continuam em
+  [`05_identificacao/16_sintese_achados_e_novo_plano_causal.md`](05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
+  §3.5, e a seção correspondente da proveniência foi **mantida**, marcada como
+  fora da tela, pela regra 7 daquele documento.
+
+### Informação que mudou de lugar
+
+- A **condição de aceitação** e a **fronteira entre faixas** saem do slide da
+  hipótese e vão para o das implicações; o slide da hipótese fica só com o
+  enunciado de H1.
+- A quarta desvantagem do médico, **mercado privado ausente**, sai do slide do
+  custo e passa ao da remuneração, onde é de remuneração e não de custo.
+- A advertência sobre o símbolo $B$ — amenidade, benefício ao paciente, bolsa —
+  passa ao slide 10, onde os três usos aparecem juntos.
+
+### Uma divergência declarada com o documento canônico
+
+A pedido do autor, a tela passou a dizer que o **custo cresce com o IVS**. O
+documento canônico diz o contrário: em
+[`02_teoria/modelo_micro.md`](02_teoria/modelo_micro.md), §3.1, e na hipótese H4
+de [`02_teoria/hipoteses_e_viabilidade_empirica.md`](02_teoria/hipoteses_e_viabilidade_empirica.md),
+§4, o sinal de $c_0'(IVS)$ é ambíguo. **A teoria não foi mudada para acompanhar a
+tela.** A simplificação está declarada nas notas de produção dos slides 6, 15 e
+17, registrada como pendência 9 no documento de conteúdo e como `P11` na
+proveniência, com as duas saídas possíveis de fechamento.
+
+Na mesma rodada corrigiu-se uma referência: **Choné & Ma (2011)** era citado no
+deck como *IJHCFE* 11 e passou a *Annals of Economics and Statistics* 101/102,
+229–256, que é a referência canônica e a que contém a p. 232 da equação exibida.
+
+---
+
 ## 17/09/2026 — Banca 1: corte de texto na seção 1, e as figuras do slide 4 entram no pipeline
 
 A pedido do autor, sobre a seção 1 da apresentação, com um pedido geral acima de

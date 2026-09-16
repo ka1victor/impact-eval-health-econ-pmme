@@ -5,14 +5,16 @@
 > **Atualização:** 17 de setembro de 2026
 
 > [!IMPORTANT]
-> **A numeração mudou em 16/09/2026.** O deck passou a ter **16 slides em 3
-> seções** (mapa no topo de [02](02_conteudo_slides.md)). Toda referência a
+> **A numeração mudou de novo em 17/09/2026.** O deck passou a ter **17 slides em
+> 3 seções** (mapa no topo de [02](02_conteudo_slides.md)). Toda referência a
 > slide neste arquivo usa a **numeração nova**: 1 capa, 2 sumário, 3 divisória,
-> 4 Problema, 5 Política, 6 Efeitos, 7 Pergunta, 8 divisória, 9 Visão geral,
-> 10 Custo da localidade, 11 Remuneração da localidade, 12 divisória,
-> 13 Implicações, 14 Hipótese, 15 Disponibilidade de dados, 16 Desafio
-> metodológico. Referências a slides em versões anteriores deste arquivo, ou em
-> commits antigos, não são comparáveis.
+> 4 Problema, 5 Política, **6 IVS e suas dimensões**, 7 Efeitos, 8 Pergunta,
+> 9 divisória, **10 Literatura teórica usada**, 11 Modelo microeconômico
+> conjunto, 12 Custo da localidade, 13 Remuneração da localidade, 14 divisória,
+> 15 Implicações, 16 Hipótese, 17 Disponibilidade de dados. O slide de **desafio
+> metodológico** foi **removido** do deck; a sua seção continua aqui, marcada
+> como fora da tela, pela regra 7 da seção 4. Referências a slides em versões
+> anteriores deste arquivo, ou em commits antigos, não são comparáveis.
 
 > [!IMPORTANT]
 > **O que conta como "na tela", desde 16/09/2026.** A compressão de
@@ -52,7 +54,7 @@
 | `F3` | Bolsa mensal por faixa de atração | 5 | `output/apresentacao_banca1/bolsa_por_faixa.png` | Edital SGTES/MS nº 3/2025, gerada por script |
 | `F1` | Especialistas por 100 mil habitantes em jun/2025, por faixa publicada | 5 | `output/apresentacao_banca1/oferta_pre_por_faixa.png` | CNES + Censo 2022, gerada por script |
 | `F2` | Colegas da mesma especialidade no município, jun/2025, por faixa publicada | 5 | `output/apresentacao_banca1/retaguarda_por_faixa.png` | CNES, gerada por script |
-| `F6` | Preenchimento do ciclo 1 por faixa publicada e por estrato territorial | 6 | `output/apresentacao_banca1/preenchimento_ciclo1.png` | tabelas descritivas do módulo A4, gerada por script |
+| `F6` | Preenchimento do ciclo 1 por faixa publicada e por estrato territorial | 7 | `output/apresentacao_banca1/preenchimento_ciclo1.png` | tabelas descritivas do módulo A4, gerada por script |
 
 `F4` (curva de custo laboral) e `F5` (vagas por região) saíram do deck no corte
 de 16/09/2026 e estão listadas abaixo entre as figuras não usadas.
@@ -102,7 +104,7 @@ homologação, lida de `output/tema_trabalho/A4_tabela_01b_amostra_faixa.csv` (p
 faixa **publicada na vaga**) e `A4_tabela_01_amostra_construcao.csv` (por
 estrato da tipologia territorial, amostra primária). São proporções brutas; o
 módulo A4 é a única saída de estimação do projeto que a apresentação toca, e
-dela só se usam as contagens descritivas e, no slide 6, o contraste ajustado de
+dela só se usam as contagens descritivas e, no slide 7, o contraste ajustado de
 estrato, declarado como **associativo**.
 
 ### Figuras geradas e não usadas
@@ -193,8 +195,8 @@ tela o total de **597 mil** médicos. As linhas abaixo estão marcadas uma a uma
 | **adicional** para Amazônia Legal, territórios indígenas e áreas de alta vulnerabilidade, *"conforme regulamentação do Ministério da Saúde e disponibilidade orçamentária"* | Lei nº 15.233/2025, **art. 22-D, §4º** — conferido no HTML preservado |
 | o adicional do §4º **não foi regulamentado no ciclo 1** | verificado no PDF do edital em 16/09/2026: a palavra **"adicional"** aparece **uma única vez** no edital, e no **barema de titulação** (Tabela 4, item 5.2 — "ano adicional" de residência), nunca como acréscimo à bolsa. O quadro de vagas tem um único campo de remuneração, a faixa de atração |
 | **nenhum município e nenhuma célula município–curso** do ciclo 1 aparece com mais de uma faixa | `output/aquisicao/quadro_vagas_tratamento.parquet`, verificado em 16/09/2026: 0 municípios com mais de uma `faixa_atracao_anunciada` e 0 células município–curso com mais de uma. É o que sustenta a afirmação de que o valor depende **só do município** |
-| 16 indicadores, 3 dimensões do IVS 2010 | Ipea, *Atlas da Vulnerabilidade Social nos Municípios Brasileiros* (2015). Na tela **no slide 13** — *"o IVS 2010 do Ipea resume, de 0 a 1, dezesseis indicadores do Censo 2010 em três dimensões"* —, não mais no slide 5: desde 16/09/2026 a cláusula 11.1.4 do slide 5 diz só "categoria de **IVS 2010** do Ipea" |
-| Cortes 0,200 / 0,300 / 0,400 / 0,500 | mesma fonte; reproduzidos em `docs/auditorias/01_regra_institucional.md`, §6.3. Na tela aparecem só `0,400` e `0,500`, no slide 16; a grade completa nunca foi exibida |
+| 16 indicadores, 3 dimensões do IVS 2010 | Ipea, *Atlas da Vulnerabilidade Social nos Municípios Brasileiros* (2015). Na tela **no slide 6** desde 17/09/2026, e antes disso no slide 13 — *"o IVS 2010 do Ipea resume, de 0 a 1, dezesseis indicadores do Censo 2010 em três dimensões"* —, não mais no slide 5: desde 16/09/2026 a cláusula 11.1.4 do slide 5 diz só "categoria de **IVS 2010** do Ipea" |
+| Cortes 0,200 / 0,300 / 0,400 / 0,500 | mesma fonte; reproduzidos em `docs/auditorias/01_regra_institucional.md`, §6.3. Na tela aparecem só **0,400** e **0,500**, no **slide 6**, como as fronteiras das categorias do item 11.1.4; até 17/09/2026 apareciam no slide do desafio metodológico, como cortes candidatos. A grade completa nunca foi exibida |
 | R$ 20.000 / R$ 15.000 / R$ 10.000 | Edital SGTES/MS nº 3/2025, item 11.1.3, e retificação; auditoria, §6.1 — é a série de `F3` |
 | Cláusulas 11.1.3 (localização + Anexo IV) e 11.1.4 (categorias de IVS) | Edital SGTES/MS nº 3/2025, PDF do DOU preservado em `data/raw/aquisicao/ivs_regra/`, com SHA-256 registrado acima |
 | Anexo IV não reproduzido no edital (constam I a III) | mesmo PDF, índice de anexos |
@@ -206,14 +208,29 @@ tela o total de **597 mil** médicos. As linhas abaixo estão marcadas uma a uma
 | Mediana de 2,5 colegas na Faixa 1, 5,0 na Faixa 2 e 6,5 na Faixa 3; 31% contra 12% sozinho ou com um único colega | `F2`, agrupado pela faixa publicada. Faixa 1 tem 150 pares município–especialidade em 85 municípios |
 | Agrupamento por faixa publicada, e não por categoria de IVS recalculada | corrigido em 14/09/2026 em `scripts/apresentacao/gerar_figuras_banca1.py`; a versão anterior rotulava errado 177 dos 368 municípios e invertia o sinal de `F1` — ver `P4` |
 
-### Slide 6 — Efeitos: o ciclo 1 e a literatura
+### Slide 6 — IVS e suas dimensões
+
+Slide novo em 17/09/2026. **Nenhum número é novo:** é o build "Por que o IVS
+organiza o custo", que estava no slide das implicações, mais a definição do
+índice, que já estava registrada na seção do slide 5.
+
+| Número ou afirmação | Fonte |
+|---|---|
+| **16 indicadores** do **Censo 2010**, resumidos de **0 a 1** em **três** sub-índices, para todos os municípios | Ipea, *Atlas da Vulnerabilidade Social nos Municípios Brasileiros* (2015) — mesma linha registrada no slide 5 |
+| **muito alta** acima de `0,500`, **alta** entre `0,400` e `0,500`, **demais** abaixo | mesma fonte, faixas de classificação do Atlas, reproduzidas em `docs/auditorias/01_regra_institucional.md`, §6.3 (alta de 0,401 a 0,500; muito alta de 0,501 a 1); o item 11.1.4 do Edital SGTES/MS nº 3/2025 usa essas categorias |
+| os indicadores de cada dimensão — saneamento, lixo e tempo de deslocamento; mortalidade infantil, analfabetismo e mães adolescentes; extrema pobreza, desemprego e informalidade | Ipea (2015). Estão na tela desde 16/09/2026, antes no slide 13 |
+| o IVS como **parte pública** da regra do valor | Edital SGTES/MS nº 3/2025: o item 11.1.4 é público e o Anexo IV do item 11.1.3 não consta do edital — as duas linhas estão na seção do slide 5 |
+| a coluna *"o que significa para quem vai atender ali"* | **leitura do projeto**, não classificação do Ipea: é a tradução, em linguagem comum, do mapeamento dimensão → bloco do custo de [`modelo_micro.md`](../../02_teoria/modelo_micro.md), §3.1 |
+| *"as três apontam para o mesmo lado"* | **decisão do autor, 17/09/2026.** O documento canônico afirma o contrário para a dimensão de capital humano. Ver `P11` |
+
+### Slide 7 — Efeitos: o ciclo 1 e a literatura
 
 > **Classificação de rigor:** todos os números do ciclo 1 neste slide são
 > **associativos/descritivos**. Nenhum é efeito causal do PMM-E. O destaque em
-> citação do slide declara isso na tela — *"Isto é descrição, não efeito"* — e o
-> slide 16 explica por quê. Desde 16/09/2026 esse bloco deixou de ser um
-> `CAUTION` e passou a **citação de tela**, com a remissão ao slide 16 e as duas
-> palavras permitidas, **gradiente** e **associação**.
+> citação do slide declara isso na tela — *"Isto é descrição, não efeito"* —, e
+> desde 17/09/2026 ele **se basta**: o slide que explicava por quê saiu do deck.
+> Desde 16/09/2026 esse bloco deixou de ser um `CAUTION` e passou a **citação de
+> tela**, com as duas palavras permitidas, **gradiente** e **associação**.
 
 > [!IMPORTANT]
 > **O corte de 17/09/2026.** **Saíram da tela dois números que são saída de
@@ -247,7 +264,7 @@ tela o total de **597 mil** médicos. As linhas abaixo estão marcadas uma a uma
 | Ressalva na tela: os percentuais da literatura são sobre a **renda total**; a bolsa remunera **20 horas semanais** | `P2` |
 | Degrau de **R$ 5 mil** no fecho do slide — *"a evidência não decide se um degrau de R$ 5 mil basta"* | Edital SGTES/MS nº 3/2025, item 11.1.3. Retomada do mesmo degrau dos slides 7, 11 e 14; linha acrescentada em 16/09/2026 para cobrir a frase de fecho |
 
-### Slide 7 — Pergunta de pesquisa
+### Slide 8 — Pergunta de pesquisa
 
 O diagrama de teoria da mudança veio do slide 5 em 17/09/2026; a linha abaixo
 veio com ele, sem alteração de conteúdo.
@@ -258,64 +275,98 @@ veio com ele, sem alteração de conteúdo.
 | Degrau de **R$ 5 mil** entre faixas | Edital SGTES/MS nº 3/2025, item 11.1.3 (R$ 10 / 15 / 20 mil) |
 | "maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas desvantagens territoriais na atração de médicos especialistas?" | [`01_pergunta_escopo/15`](../../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md) — formulação canônica. **Saiu da tela em 16/09/2026, mantida por rastreio:** a citação literal passou à nota de produção do slide 7. Na tela está a versão de manchete do deck, *"O incentivo financeiro oferecido pelo PMM-E funciona para atrair especialistas para regiões mais vulneráveis?"*, que é a mesma pergunta em linguagem de tela |
 
-### Slide 9 — Visão geral: a equação de escolha
+### Slide 10 — Literatura teórica usada: as equações originais
+
+Slide novo em 17/09/2026. Restaura a tabela das três tradições que saíra do
+slide 9 em 16/09/2026, com a coluna **"Equações originais"** no lugar de
+"Primitiva que fornece".
 
 | Número | Fonte |
 |---|---|
-| Moehling, Niemesh, Thomasson & Treber (2020), eq. 1, p. 184, e a definição de $c$ | `docs/02_teoria/modelo_micro.md`, §1 |
+| Moehling et al. (2020), eq. 1, p. 184, como no original | `docs/02_teoria/modelo_micro.md`, §1 |
+| Redding & Rossi-Hansberg (2017), eq. 24, p. 28, como no original | idem, §3.2, que a transcreve |
+| Choné & Ma (2011), eq. 1, p. 232, com Reinhardt (1972, 1975) | idem, §3.2 e §2.3. **Correção de referência, 17/09/2026:** a linha de fontes do deck citava *IJHCFE* 11; o periódico correto, conforme §5 do documento canônico, é *Annals of Economics and Statistics* 101/102, 229–256, que contém a p. 232 |
+| a leitura do numerador e do denominador de R&RH — o que atrai e o que repele | idem, §2.1. Estava no slide do custo até 16/09/2026 |
+| a advertência sobre o símbolo $B$ — amenidade, benefício ao paciente, bolsa | convenção de notação do próprio deck; os três usos vêm de `modelo_micro.md`, §2.1 e §2.2, e do item 11.1.3 do edital |
+| Redding & Rossi-Hansberg (2017) e Choné & Ma (2011) como as duas primitivas do custo | `modelo_micro.md`, §2.1 e §2.2. **Voltou à tela em 17/09/2026:** a tabela "Três tradições sustentam uma equação" saíra do slide 9 em 16/09/2026 por redundância e é hoje este slide, com as equações originais na terceira coluna. Os três nomes aparecem juntos de novo no **slide 15** |
+
+### Slide 11 — Modelo microeconômico conjunto
+
+| Número | Fonte |
+|---|---|
+| a equação de escolha na **notação do projeto**, com $m \in M$ e $c^{(s)}_{im}$, e a definição de $c$ | `docs/02_teoria/modelo_micro.md`, §2.4 e §1. É a forma integrada; a original está no slide 10 |
+| a troca de índice — $i$ é localidade no original, e passa a ser o médico, com $m$ o município | idem, §2.4 e §3; convenção do deck desde 16/09/2026, dita na tela |
 | "preferences over rural or urban living, or other location-specific attributes, such as proximity to family" | Moehling et al. (2020), *Cliometrica* 14, p. 184 — transcrita em `modelo_micro.md`, §1. Na tela, desde 16/09/2026, a citação aparece **elidida**: *"preferences over rural or urban living … such as proximity to family"*. A elisão é de tela; a transcrição íntegra fica no `modelo_micro.md` |
-| Redding & Rossi-Hansberg (2017) e Choné & Ma (2011) como as duas primitivas do custo | idem, §2.1 e §2.2. **Saiu da tela em 16/09/2026, mantida por rastreio:** a tabela "Três tradições sustentam uma equação" deixou o slide 9 por redundância, e cada tradição passou a ser apresentada onde faz trabalho — Moehling no **slide 9**, Redding & Rossi-Hansberg e Choné & Ma no **slide 10**, os três nomes juntos no **slide 13**. No slide 9 restou a remissão "os dois slides seguintes", sem nomes |
 
-### Slide 10 — Custo da localidade: o lugar e o trabalho
+### Slide 12 — Custo da localidade: o lugar e o trabalho
 
 | Número | Fonte |
 |---|---|
-| Redding & Rossi-Hansberg (2017), eq. 24, p. 28, e a redução a $c^{\text{geo}}$ | `docs/02_teoria/modelo_micro.md`, §2.1 e §3.2 |
-| Choné & Ma (2011), eq. 1, p. 232; formato em U e as três zonas | idem, §2.2 |
-| $\partial B/\partial K > 0$ como **extensão do projeto**, motivada por Reinhardt (1972, 1975) | idem, §2.3 — ver a nota sobre Reinhardt na seção 3. Com a saída da tabela das três tradições do slide 9, em 16/09/2026, esta é a **única menção a Reinhardt na tela**, e só como motivação da extensão |
-| Tabela das **quatro desvantagens do médico** (retaguarda, infraestrutura, distância da família, mercado privado ausente) e o bloco do custo de cada uma | idem, §2.1 a §2.3; a coluna "Medimos?" segue o inventário de dados do slide 15. Movida do slide de teoria para o **slide 10** em 16/09/2026, quando a coluna "O que significa para o médico" foi fundida ao nome de cada desvantagem |
+| $c^{\text{geo}}_{im} = \phi(\text{dist}) - \gamma A_m + \theta^{\text{rural}}_i$, a equação **inferida** de Redding & Rossi-Hansberg | `docs/02_teoria/modelo_micro.md`, §2.1 e §3.2. **A equação original saiu deste slide em 17/09/2026** e está no slide 10; aqui ficou só a inferida e a definição dos seus termos |
+| $c^{\text{laboral}}_{im} = C(q; L, K) - \alpha_i B(q; L, K)$, a equação **inferida** de Choné & Ma; formato em U | idem, §2.2 e §3.2. Mesma observação: a original está no slide 10. As **três zonas** da curva saíram da tela em 16/09/2026; o formato em U continua descrito em texto |
+| $\partial B/\partial K > 0$ como **extensão do projeto**, motivada por Reinhardt (1972, 1975) | idem, §2.3 — ver a nota sobre Reinhardt na seção 3. Reinhardt aparece na tela em dois lugares desde 17/09/2026: aqui, como motivação da extensão, e na tabela do slide 10, ao lado de Choné & Ma. Em nenhum dos dois é fonte de número |
+| Tabela das **três desvantagens do médico** (retaguarda em $L$, infraestrutura em $K$, distância da família em $\phi$) e o porquê de cada uma | idem, §2.1 a §2.3; a coluna "Medimos?" segue o inventário de dados do slide 17. Movida do slide do problema para cá em 16/09/2026. **Eram quatro até 17/09/2026:** a quarta, *mercado privado ausente*, passou ao **slide 13**, por ser de remuneração e não de custo |
 | proximidade do lugar de nascimento ou formação é o principal fator; salário e infraestrutura importam em escala menor; ~50 mil generalistas formados de 2001 a 2013 | Costa, Nunes & Sanches (2024), *REStat* 106(1) — conferido no PDF e na cobertura do estudo (Gazeta do Povo, 2019, sobre a versão *working paper* do Ieps, 49.989 médicos) |
 | Limitação de commuting: CNES e edital não informam residência | `modelo_micro.md`, §2.1 |
 
-### Slide 11 — Remuneração da localidade
+### Slide 13 — Remuneração da localidade
 
 | Número | Fonte |
 |---|---|
-| $w = B + w^{\text{priv}}$, o deflator e a correspondência dimensão do IVS – bloco do custo | `docs/02_teoria/modelo_micro.md`, §3 e §3.1 |
+| $\mathbb{E}(w \mid B_m) = B_m + w^{\text{priv}}_m \geq B_m$, com $w^{\text{priv}}_m \geq 0$ | [`hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), §2, cujo título é literalmente $w \mid B \ge B$, e `modelo_micro.md`, §3. **A desigualdade entrou na tela em 17/09/2026**, a pedido do autor: a lei fixa a bolsa, não a remuneração |
+| mercado privado do interior isolado **menor, não nulo** | mesma §2, que descreve o interior isolado como sem demanda privada **adjacente**. **Mudança de 17/09/2026:** a tela dizia *ausente* e passou a dizer *menor*; o dado que sustenta a afirmação é o de dupla prática do slide 4, e ele não sustenta zero |
+| deflator do interior **suposto menor**, com a ressalva do custo logístico | `modelo_micro.md`, §3, trata $p_m$ como nível de preços local, sem afirmar ordenação entre territórios. **Mudança de 17/09/2026:** a tela dizia *custo de vida baixo* e passou a declarar a suposição e o seu limite. O projeto não tem fonte municipal de nível de preços — ver a linha de custo de moradia no slide 17 |
+| *"esta é a quarta desvantagem do lugar"* | a quarta linha da tabela de desvantagens do slide 12 até 17/09/2026, movida para cá no mesmo dia |
 | R$ 10 mil (Faixa 3) e R$ 20 mil (Faixa 1) na tabela de contraste | Edital SGTES/MS nº 3/2025, item 11.1.3. Desde 16/09/2026 a tela mostra os dois valores **sem os rótulos de faixa**: o contraste é "Capital ou metrópole" contra "Interior isolado" |
 | **20 horas semanais** | Edital SGTES/MS nº 3/2025, item 11.3.b |
 | Retomada de **7,7%** exclusivos do setor público e **72,4%** em dupla prática | mesma linha do slide 4 — Scheffer et al. (2025), cap. 13, Figura 1, p. 254. **É retomada da mesma medição, não número novo:** há uma fonte, uma linha de proveniência e uma única medição por trás, e o slide 11 a usa como razão de $w^{\text{priv}} > 0$. **Os dois percentuais saíram da tela do slide 11 em 16/09/2026, mantidos por rastreio:** a compressão os repetiu no destaque em citação e a revisão do mesmo dia trocou a repetição por **remissão** — *"Pela dupla prática do slide 4, $w^{\text{priv}} > 0$ é a regra, não a exceção"*. Repetidos ou não, vale a mesma ressalva de cobertura: é **amostra de cirurgiões**, não o conjunto dos especialistas |
-| Degrau de **R$ 5 mil** — *"a política aposta que R$ 5 mil compensam o lugar"* | Edital SGTES/MS nº 3/2025, item 11.1.3. Retomada do mesmo degrau dos slides 6, 7 e 14; linha acrescentada em 16/09/2026 |
+| Degrau de **R$ 5 mil** — *"a política aposta que R$ 5 mil compensam o lugar"* | Edital SGTES/MS nº 3/2025, item 11.1.3. Retomada do mesmo degrau dos slides 7, 8 e 15; linha acrescentada em 16/09/2026 |
 
-### Slide 13 — Implicações para o PMM-E
+### Slide 15 — Implicações para o PMM-E
 
 | Número | Fonte |
 |---|---|
-| $V_{im}$ integrado e a abertura de $c_{im}$ em dois blocos | `docs/02_teoria/modelo_micro.md`, §2.4 |
+| $V_{im}$ integrado, **sem termo de erro**, e a abertura de $c_{im}$ em dois blocos | `docs/02_teoria/modelo_micro.md`, §2.4 e §3. **Mudança de 17/09/2026:** o documento canônico escreve $V_{im}$ com $+\,\varepsilon_{im}$; a tela não o exibe, por pedido do autor — esta banca é estritamente teórica. A supressão é de tela, não de teoria |
+| $\mathbf{B}_m$ e $\mathbf{w}^{\text{priv}}_m$ em negrito | decisão de composição de 17/09/2026, a pedido do autor; não altera nenhum valor |
+| $c_{im} = c_0(IVS_m) + \eta_i$, a forma reduzida do custo | idem, §3 |
+| condição de aceitação $\frac{B_m + w^{\text{priv}}_m}{p_m} - c_0(IVS_m) \geq \bar{v}_i$, e a vaga preenchida com ao menos um candidato | idem, §4.1. **Veio do slide da hipótese em 17/09/2026** |
+| $\Delta B_m / p_m > \Delta c_0$, com $\Delta B_m = \text{R\$ } 5.000$ | idem, §4.1, e Edital SGTES/MS nº 3/2025, item 11.1.3. **Veio do slide da hipótese em 17/09/2026** |
 | *"O que **Moehling, Redding & Rossi-Hansberg e Choné & Ma** não têm: remuneração fixada por **regra pública sobre um índice territorial**"* | idem, §3. Desde 16/09/2026 a frase **nomeia os três** na tela, no lugar de "nenhuma das três tradições": a mudança é de enunciado, não de conteúdo, e recupera os nomes que saíram do slide 9 com a tabela das três tradições |
-| Tabela de derivadas ($\partial V/\partial B_m > 0$; $\partial^2 V/\partial B_m \partial w^{\text{priv}} < 0$; $\partial V/\partial p_m < 0$; $c_0'(IVS) \gtrless 0$) | idem, §3 e §3.1 |
-| As três dimensões do IVS 2010 e seus indicadores, mapeadas nos blocos do custo | Ipea, *Atlas da Vulnerabilidade Social* (2015); mapeamento em `modelo_micro.md`, §3.1 — o mapeamento é **leitura do projeto**, não classificação do Ipea. Os **nomes dos indicadores** estão na tela, na coluna própria da tabela do slide 13 — saneamento, lixo e tempo de deslocamento; pobreza, desemprego e informalidade; mortalidade infantil, analfabetismo e mães adolescentes. A compressão de 16/09/2026 chegou a suprimi-los e a revisão do mesmo dia os devolveu |
+| Tabela de derivadas ($\partial V/\partial B_m > 0$; $\partial^2 V/\partial B_m \partial w^{\text{priv}} < 0$; $\partial V/\partial p_m < 0$) | idem, §3 e §3.1 |
+| $c_0'(IVS) > 0$ — *"o custo cresce com o índice"* | **divergência declarada com o documento canônico**, que escreve $c_0'(IVS) \gtrless 0$ em `modelo_micro.md`, §3.1. Decisão do autor de 17/09/2026; ver `P11` |
+| As três dimensões do IVS 2010 e seus indicadores | **Saíram deste slide em 17/09/2026 e estão no slide 6**, com a linha de proveniência lá. Aqui restou a remissão "IVS e suas dimensões, do slide 6" |
 
-### Slide 14 — Hipótese do trabalho
-
-| Número | Fonte |
-|---|---|
-| Condição de aceitação $V_{im} \geq \bar{v}_i$ e a passagem do médico à vaga | `docs/02_teoria/modelo_micro.md`, §4.1 e §4.2 |
-| H1 e $\partial \Pr(\text{preenchimento})/\partial (B_m/p_m) > 0$ | [`hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), §4.2 |
-| $\Delta B_m = \text{R\$ } 5.000$ | Edital SGTES/MS nº 3/2025, item 11.1.3 |
-
-### Slide 15 — Disponibilidade de dados
+### Slide 16 — Hipótese do trabalho
 
 | Número | Fonte |
 |---|---|
-| 1.295 células estabelecimento–curso, 368 municípios (desfecho) | quadro de vagas do ciclo 1, chamada 1. **Saíram da tela do slide 15 em 16/09/2026, mantidos por rastreio:** a linha de preenchimento passou a dizer só "quadros do edital", com a coluna **Grau** no lugar das contagens. Os dois números seguem na tela nos slides 5 e 6 |
-| **2.815 municípios**, ciclos 1 a 3 (cobertura do instrumento) | `output/aquisicao/quadro_vagas_consolidado.parquet`, 47.475 linhas, `ciclo` ∈ {1, 2, 3}; contagem verificada em 16/09/2026. **Os 2.815 municípios saíram da tela em 16/09/2026, mantidos por rastreio:** a tabela do slide 15 diz só "edital e quadro de vagas, ciclos 1 a 3". A contagem segue sendo a cobertura do instrumento |
+| H1 e $\partial \Pr(\text{preenchimento})/\partial (\mathbf{B}_m/p_m) > 0$ | [`hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), §4.2, e `modelo_micro.md`, §4.2 |
+| a margem é o **preenchimento**, não a permanência | mesma §4.2, que registra a redução a uma hipótese como decisão da banca, de 14/09/2026 |
+| Condição de aceitação, leitura do lado esquerdo e $\Delta B_m = \text{R\$ } 5.000$ | **Saíram deste slide em 17/09/2026 e estão no slide 15**, a pedido do autor: aqui ficou só a enunciação da hipótese |
+
+### Slide 17 — Disponibilidade de dados
+
+| Número | Fonte |
+|---|---|
+| 1.295 células estabelecimento–curso, 368 municípios (desfecho) | quadro de vagas do ciclo 1, chamada 1. **Saíram da tela deste slide em 16/09/2026, mantidos por rastreio:** a linha de preenchimento passou a dizer só "quadros do edital", com a coluna **Grau** no lugar das contagens. Os dois números seguem na tela nos slides 5 e 7 |
+| **2.815 municípios**, ciclos 1 a 3 (cobertura do instrumento) | `output/aquisicao/quadro_vagas_consolidado.parquet`, 47.475 linhas, `ciclo` ∈ {1, 2, 3}; contagem verificada em 16/09/2026. **Os 2.815 municípios saíram da tela em 16/09/2026, mantidos por rastreio:** a tabela deste slide diz só "edital e quadro de vagas, ciclos 1 a 3". A contagem segue sendo a cobertura do instrumento |
 | CNES mensal, jun/2024 a jul/2026 | `output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet`; competências `202406` a `202607` no `manifesto_figuras.json`. A janela de **12 meses prévios** que a tela exibe na linha de equipe $L$ é a do estoque `estoque_pre_por_10k`, definido em [`hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), §3; as competências do painel nunca foram à tela |
 | RAIS nunca adquirida; CNES sem carga horária nem renda; residência do profissional é sigilo fiscal; sem fonte municipal de custo de moradia | [`04_dados/02_inventario_dados_por_outcome.md`](../../04_dados/02_inventario_dados_por_outcome.md) |
-| Tipologia territorial em 4 estratos; REGIC 2018 e RMs/RIDEs 2022 (IBGE) | `docs/auditorias/09_tipologia_territorial.md` |
+| Tipologia territorial em 4 estratos; REGIC 2018 e RMs/RIDEs 2022 (IBGE) | `docs/auditorias/09_tipologia_territorial.md`. **Saiu da tela em 17/09/2026, mantida por rastreio:** a linha de custos geográficos deixou de ser proxy própria na tabela, porque o autor pediu que todo o custo do lugar entrasse pelo IVS. A tipologia continua no repositório e no inventário |
+| **IVS 2010** como proxy do custo do lugar, e a coluna *"por onde entra"* de cada ausência | [`hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), §3, e `modelo_micro.md`, §3 e §3.1 — a correspondência ausência → dimensão do IVS é a mesma do mapeamento canônico. **Entrou na tela em 17/09/2026.** A distância da família não entra pelo índice: fica em $\eta_i$, o desvio individual da forma reduzida |
+| *"quanto maior o índice, maior o custo"* | **divergência declarada com o documento canônico** — ver `P11` |
 | CNES físico (leitos e equipamentos) mapeado, competências não baixadas; SIH bloqueado | inventário de dados, e `docs/06_execucao/06_backlog_wp3_wp4_wp5.md` |
 
-### Slide 16 — Desafio metodológico
+### Slide 16 da estrutura anterior — Desafio metodológico
+
+> [!IMPORTANT]
+> **Slide removido do deck em 17/09/2026, seção mantida por rastreio.** A pedido
+> do autor, a apresentação deixou de tratar a separação entre efeito da bolsa e
+> efeito da vulnerabilidade. **Todos** os números abaixo saíram da tela na mesma
+> data; nenhum foi alterado ou desmentido, e todos continuam registrados em
+> [`05_identificacao/16`](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
+> §3.5. A seção fica aqui pela regra 7 da seção 4 — número que já foi exibido à
+> banca continua rastreável.
 
 | Número | Fonte |
 |---|---|
@@ -324,7 +375,7 @@ veio com ele, sem alteração de conteúdo.
 | Em ±0,050 de **0,500**, os dois lados são **100% Faixa 1** (20 municípios de um lado, 11 do outro) | idem; `14_plano_implementacao_rdd_bolsa.md`, tabela de janelas |
 | Maior IVS da Faixa 3 é **0,372**; em ±0,010 de **0,400** não há Faixa 3 de nenhum lado | idem. Na tela, só o **0,372**; a janela de ±0,010 sustenta a frase e nunca foi exibida |
 | 83 municípios fora da melhor regra de limiar; **41 promovidos** com mediana de população **7.933** contra **32.179** dos **42 rebaixados**, e muito mais interior remoto | idem, §"a variação que sobra não é exógena". Os cinco números e o "muito mais interior remoto" estão na tela, no terceiro achado do slide 16 |
-| **R$ 10 mil a mais** entre Faixa 1 e Faixa 3 | diferença entre os R$ 20 mil e os R$ 10 mil do item 11.1.3 do Edital SGTES/MS nº 3/2025 — é o contraste entre extremos, não o degrau de **R$ 5 mil** entre faixas vizinhas dos slides 6, 7, 11 e 14. Linha acrescentada em 16/09/2026 |
+| **R$ 10 mil a mais** entre Faixa 1 e Faixa 3 | diferença entre os R$ 20 mil e os R$ 10 mil do item 11.1.3 do Edital SGTES/MS nº 3/2025 — é o contraste entre extremos, não o degrau de **R$ 5 mil** entre faixas vizinhas dos slides 7, 8, 13 e 15. Linha acrescentada em 16/09/2026 |
 | Faixa 1 começa em IVS 0,303 | idem — em texto de apoio, fora da tela desde 16/09/2026 |
 | Remoticidade como previsor mais forte do desfecho | `A4_tabela_02_modelo_principal_LPM.csv` e `A4_tabela_02b_logit_AME.csv` |
 | Anexo IV e critérios de localização como o que destrava o efeito da bolsa; desenho do escore do candidato responde a outra pergunta | `docs/06_execucao/36_backlog_pos_auditoria.md`, item D-3, e `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md` — citados sem número, por escopo da banca 1 |
@@ -382,7 +433,7 @@ atender como $C(q; L, K)$, de modo que equipe e capital já estão no modelo por
 essa via. O que Reinhardt acrescentaria é que esses insumos também **elevam o
 benefício produzido** — mas escrever $B(q; L, K)$ em vez de $B(q)$ é extensão
 deste projeto, não dele. A citação foi retirada do slide de literatura e a
-extensão passou a ser creditada ao projeto no **slide 10**. Reinhardt permanece
+extensão passou a ser creditada ao projeto no **slide 12**. Reinhardt permanece
 como referência secundária em
 [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), seção 2.3.
 
@@ -396,8 +447,8 @@ Nenhum artigo compara o PMM-E a nada. Dizer que +50% "cai dentro da faixa" de
 Os prêmios compensatórios da literatura são sobre a **renda total** do médico. A
 bolsa do PMM-E remunera **20 horas semanais**. Traduzir R$ 5 mil em "+50%" e
 comparar com a régua australiana pressupõe que a bolsa seja a fração dominante
-do rendimento — hipótese sobre composição de vínculos, não dado. O **slide 6**
-declara essa ressalva na tela, e o slide 11 mostra por que a hipótese é frágil.
+do rendimento — hipótese sobre composição de vínculos, não dado. O **slide 7**
+declara essa ressalva na tela, e o slide 13 mostra por que a hipótese é frágil.
 
 ### `P3` — `populacao_2010` não é população residente
 
@@ -426,7 +477,7 @@ Situação em 16/09/2026, por número:
 
 | Número | Estado |
 |---|---|
-| **72,4% / 19,9% / 7,7%** de atuação dos cirurgiões — na tela no slide 4; o slide 11 os retoma por remissão | ✅ **conferido na fonte primária**, cap. 13, Figura 1, p. 254, com a frase transcrita acima |
+| **72,4% / 19,9% / 7,7%** de atuação dos cirurgiões — na tela no slide 4; o slide 13 os retoma por remissão | ✅ **conferido na fonte primária**, cap. 13, Figura 1, p. 254, com a frase transcrita acima |
 | 597 mil médicos; 353.287 especialistas (59,1%); 453 no DF, 244 em SP, 68 no MA, 70 no PA | conferido em **cobertura** (Agência Brasil, abril de 2025; portal Afya) |
 | **Sudeste 55,4%**, Sul 16,7%, Nordeste 14,5%, Norte 5,9% | ⚠️ **ressalva de fonte.** Uma leitura do **PDF integral não localizou** esses percentuais. Estão conferidos **apenas em cobertura**, no portal Afya: *"A região Sudeste concentra 55,4% dos especialistas, seguida pelo Sul (16,7%) e Nordeste (14,5%). Já o Norte responde por apenas 5,9%"*. Os números **não são removidos** do slide; a citação é atribuída ao estudo e a checagem no original fica pendente |
 
@@ -530,7 +581,7 @@ menos 3 pontos, e exigindo que as **três faixas** batam simultaneamente,
 **nenhuma janela pré e nenhuma janela pós** reproduz o trio alegado a uma
 tolerância de 0,01. O trio não vem desta série sob nenhum recorte.
 
-**Impedimento de uso.** A tabela fica **fora do slide 6** e fora de qualquer
+**Impedimento de uso.** A tabela fica **fora do slide 7** e fora de qualquer
 slide. Números sem origem em `output/` e que não se reproduzem não entram em
 apresentação — e, ainda que se reproduzissem, seriam inclinações **sem grupo de
 comparação**, que não se leem como efeito do programa (é a mesma razão que tirou
@@ -540,21 +591,19 @@ de `output/`.
 
 ---
 
-### `P9` — o slide 16 pede uma figura que ainda não existe
+### `P9` — a figura que faltava ao desafio metodológico · **fechada em 17/09/2026**
 
-O slide do desafio metodológico sustenta-se num achado visual que **nenhuma
-figura do repositório mostra**: a ausência de descontinuidade nos dois cortes da
-regra. A figura pedida é a dispersão do **IVS 2010** contra a **faixa
-publicada** de cada município, com `0,400` e `0,500` marcados, tornando visíveis
-a sobreposição das três faixas e o salto nulo de tratamento em torno dos cortes.
+**Fechada por remoção do slide, não por produção da figura.** O slide do desafio
+metodológico saiu do deck a pedido do autor, e com ele a necessidade da figura
+que lhe faltava: a dispersão do **IVS 2010** contra a **faixa publicada**, com
+`0,400` e `0,500` marcados.
 
-**Insumo disponível.** `output/rdd_bolsa/matriz_municipio_regra_ivs.csv`, que já
-tem IVS, categoria recalculada e `valor_anunciado_mensal_brl` por município.
-
-**Fechamento.** Acrescentar a figura a `scripts/apresentacao/gerar_figuras_banca1.py`,
-lendo de `output/`, e registrá-la na seção 1 deste documento. Enquanto não
-existir, o slide 16 fica só em texto — o que é aceitável, mas desperdiça o
-argumento mais forte da seção.
+O insumo continua disponível —
+`output/rdd_bolsa/matriz_municipio_regra_ivs.csv`, com IVS, categoria recalculada
+e `valor_anunciado_mensal_brl` por município —, e a receita de produção continua
+valendo: acrescentar a figura a `scripts/apresentacao/gerar_figuras_banca1.py`,
+lendo de `output/`, e registrá-la na seção 1 deste documento. **A pendência
+reabre** se a apresentação voltar a tratar da identificação.
 
 ### `P10` — a retaguarda é municipal, e o serviço é em parte regional
 
@@ -576,6 +625,33 @@ linha de limitação no terceiro build do slide 5, ou o descasamento como argume
 próprio da motivação. O teste de deslocamento intrarregional que verificaria o
 ponto depende da malha territorial versionada, item F4 do mesmo PR, e está
 bloqueado. Nada entrou na tela sem essa decisão.
+
+### `P11` — a tela diz que o custo cresce com o IVS; o documento canônico diz que o sinal é ambíguo
+
+Aberta em 17/09/2026, por decisão do autor. O pedido foi *"deixa os custos todos
+dentro do IVS, e remove nuances de ambiguidade, p dizer diretamente que o custo é
+crescente no IVS"*. Foi aplicado nos slides **6**, **15** e **17**.
+
+**O que o documento canônico diz.** Em
+[`modelo_micro.md`](../../02_teoria/modelo_micro.md), §3.1, o sub-índice de
+**capital humano** opera nos dois sentidos: carência sanitária eleva o benefício
+marginal de atender — o que **reduz** o custo laboral líquido de um médico
+altruísta — e ao mesmo tempo sinaliza falta de insumo, o que **eleva** o cansaço.
+Daí $c_0'(IVS) \gtrless 0$, com o sinal declarado como questão empírica. A
+hipótese **H4** de
+[`hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md),
+§4, é exatamente o teste desse sinal, e a §3 do mesmo documento diz, na letra,
+que **não se pode assumir $c_0'(IVS) > 0$ a priori**.
+
+**O que está na tela.** Que as três dimensões apontam para o mesmo lado, e que o
+custo cresce com o índice. É simplificação de exposição, declarada nas notas de
+produção dos três slides e registrada como **pendência 9** no documento de
+conteúdo.
+
+**O que fecha.** Decisão do autor, em uma de duas direções: (a) fixar o sinal no
+documento canônico, com justificativa econométrica, o que muda a teoria do
+projeto e a hipótese H4; ou (b) devolver à tela uma ressalva de uma linha. Nada
+foi mudado na teoria por conta da tela.
 
 ## 4. Regra permanente
 
