@@ -8,6 +8,35 @@
 
 ---
 
+## 16/09/2026 — Proposta de ajuste estrutural: novo `06_execucao/37`
+
+Criado [`06_execucao/37_proposta_ajuste_estrutural.md`](06_execucao/37_proposta_ajuste_estrutural.md).
+
+**Motivo.** O autor levantou duas suspeitas — que o repositório descrevia mal a
+finalidade do programa (formação × atração) e mal a unidade territorial
+(município × grupo de municípios). As duas se confirmaram na verificação, e a
+verificação abriu outras seis. O material não cabia em nenhum documento
+existente: `35` é plano de correções já decidido, `36` é backlog de itens
+auditados, e nenhum dos dois é o lugar de uma revisão de premissas ainda não
+aprovada.
+
+**O que o documento é.** Proposta, não execução. Nove itens classificados em
+fundamentais, de descrição e de proveniência, cada um com evidência, consequência
+e correção proposta, mais a sequência em quatro ondas e as três decisões que
+dependem do autor. Nenhum número foi reestimado e nenhuma especificação foi
+trocada.
+
+**O que ele não substitui.** O backlog pós-auditoria continua valendo; os itens
+`A-1` e `A-2` são citados e permanecem onde estão. O documento `36` segue sendo a
+fila auditada; o `37` é a revisão de premissas que corre por fora dela.
+
+**Nota de proveniência.** As conferências citadas no `37` foram feitas por leitura
+direta dos arquivos brutos e dos scripts, e estão rotuladas como tal. Nenhuma
+delas é saída de pipeline, e nenhuma pode entrar em slide, artigo ou relatório
+antes de ser produzida por script versionado com saída em `output/`.
+
+---
+
 ## 16/09/2026 — Banca 1: corte de 19 para 15 slides, para o arco narrativo
 
 A pedido do autor: **cortar além de comprimir**, para facilitar a narrativa. A
