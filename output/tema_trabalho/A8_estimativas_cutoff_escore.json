@@ -41,7 +41,7 @@
     "n_pares": 11,
     "ativo_mesma_celula_diferenca": 0.36363636363636365,
     "ic95_convencional": [
-      0.024691870722828912,
+      0.024691870722828968,
       0.7025808565498983
     ],
     "p_exato": 0.125,
@@ -67,13 +67,13 @@
   "interpretacao_proibida": "Os resultados nao identificam o efeito da bolsa, do IVS, do PMM-E sobre o estoque geral nem a decisao de se candidatar.",
   "privacidade": "Nomes e CPFs sao processados somente em memoria; nenhum identificador individual ou par reidentificavel e persistido.",
   "arquivos": {
-    "protocolo": "output\\tema_trabalho\\A8_protocolo_cutoff_escore.json",
-    "suporte": "output\\tema_trabalho\\A8_tabela_01_suporte_escore_estrito.csv",
-    "estimativas": "output\\tema_trabalho\\A8_tabela_02_estimativas_escore_estrito.csv",
-    "placebos": "output\\tema_trabalho\\A8_tabela_03_placebos_escore_estrito.csv",
-    "sensibilidade": "output\\tema_trabalho\\A8_tabela_04_sensibilidade_gap.csv",
-    "leave_one_out": "output\\tema_trabalho\\A8_tabela_05_leave_one_out.csv",
-    "figura": "output\\tema_trabalho\\A8_figura_01_efeitos_cutoff_escore.png",
-    "relatorio": "output\\tema_trabalho\\A8_relatorio_cutoff_escore.md"
+    "protocolo": "output/tema_trabalho/A8_protocolo_cutoff_escore.json",
+    "suporte": "output/tema_trabalho/A8_tabela_01_suporte_escore_estrito.csv",
+    "estimativas": "output/tema_trabalho/A8_tabela_02_estimativas_escore_estrito.csv",
+    "placebos": "output/tema_trabalho/A8_tabela_03_placebos_escore_estrito.csv",
+    "sensibilidade": "output/tema_trabalho/A8_tabela_04_sensibilidade_gap.csv",
+    "leave_one_out": "output/tema_trabalho/A8_tabela_05_leave_one_out.csv",
+    "figura": "output/tema_trabalho/A8_figura_01_efeitos_cutoff_escore.png",
+    "relatorio": "output/tema_trabalho/A8_relatorio_cutoff_escore.md"
   }
 }

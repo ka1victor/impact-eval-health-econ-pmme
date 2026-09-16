@@ -186,6 +186,91 @@ fila é errata, e a decisão delegada pelo autor em 16/09/2026 a adotou.
 
 ---
 
+## E-5 · Nota aritmética errada no manifesto da tipologia
+
+**Item de origem:** B-4. **Decisão:** delegada pelo autor em 16/09/2026 e
+tomada como a fila recomendava — errata, não reexecução.
+**Artefato:** `output/tema_trabalho/manifesto_tipologia_territorial.json`,
+campo `rm_detalhe.nota`.
+
+**O que o artefato publica.** *"Strict corrige para 1331 únicos (1316 nacionais
+após remover 27 capitais duplas)"*.
+
+**O que está errado.** Apenas **25** das 27 capitais pertencem a RM/RIDE
+strict; Rio Branco e Campo Grande não pertencem. Reproduzido em 16/09/2026 sobre
+`matriz_tipologia_territorial.parquet`: 27 capitais, 25 com `flag_rm_ride_2022`,
+as duas fora são exatamente essas; 1.331 municípios em RM/RIDE strict.
+
+**A leitura correta.** `1331 − 25 = 1306`, que é o que o parquet publica. A
+frase deve ser lida como "1.306 nacionais após remover 25 capitais duplas".
+
+**Por que errata.** A tipologia é congelada (A2). Reexecutar
+`03_construir_tipologia_territorial.py` regrava manifesto e matriz, cujos
+hashes estão fixados em A3, A4, A5 e A6, para trocar uma frase de nota.
+
+---
+
+## E-6 · `sg_uf` de tipo misto na tipologia
+
+**Item de origem:** B-7. **Decisão:** delegada pelo autor em 16/09/2026 e
+tomada como a fila recomendava — errata, não reexecução.
+**Artefato:** `output/tema_trabalho/matriz_tipologia_territorial.parquet`,
+coluna `sg_uf`; e `manifesto_tipologia_territorial.json`,
+`concentracao.por_uf_top10_populacao_A1`.
+
+**O que o artefato publica.** 31 valores distintos de `sg_uf` para 27 UFs: os
+27 códigos numéricos da malha (`11`…`53`) mais as siglas `MS`, `PA`, `RS` e
+`SC`, preenchidas do REGIC para os cinco municípios criados após o Censo 2010
+— Mojuí dos Campos/PA, Pinto Bandeira/RS, Balneário Rincão/SC, Pescaria
+Brava/SC e Paraíso das Águas/MS —, que também ficam com `nome_uf` nulo. O
+manifesto publica `{"31": 150, "52": 44, "21": 35, "35": 35, …}`: códigos
+apresentados como se fossem siglas.
+
+**Consequência substantiva: nenhuma.** Nenhum dos cinco municípios está na
+população A1, e todos os módulos a jusante usam `co_ibge_6d` como chave; a UF
+dos modelos vem do painel, não desta coluna.
+
+**A leitura correta.** `sg_uf` é código IBGE de UF em 5.565 linhas e sigla em
+5; `por_uf_top10_populacao_A1` é indexado por código IBGE (31 = MG, 52 = GO,
+21 = MA, 35 = SP, 33 = RJ, 23 = CE, 43 = RS, 11 = RO, 15 = PA, 51 = MT).
+
+**Por que errata.** Mesma restrição de congelamento da E-5.
+
+---
+
+## Decisão de 16/09/2026 — A8 regravado sob o ambiente documentado
+
+**Delegada pelo autor em 16/09/2026** (decisão 4 da lista consolidada no
+backlog) e tomada nos termos do complemento acima: regravar conserta um
+registro de proveniência objetivamente errado e não muda nenhum número.
+
+**O que foi verificado antes de aceitar a regravação.** Reexecução de
+`09_estimar_cutoff_escore_estrito.py` e `09b_intervalos_exatos_escore.py` no
+ambiente documentado (Python 3.13, numpy 2.5.2, pandas 3.0.5, scipy 1.18.1,
+statsmodels 0.15.0, matplotlib 3.11.1):
+
+- `A8_tabela_02`, `A8_tabela_03`, `A8_tabela_04`: **só** as colunas
+  `ic95_convencional_inferior`/`superior` diferem, e a maior diferença absoluta
+  é **1,1 × 10⁻¹⁶**. Diferenças, erros-padrão, contagens, discordantes e `p`
+  exatos são idênticos byte a byte.
+- `A8_estimativas_cutoff_escore.json` e `A8_protocolo_cutoff_escore.json`: os
+  14 caminhos com barra invertida do Windows passam a POSIX relativos à raiz;
+  o restante das diferenças é o mesmo ruído do 15º dígito.
+- `A8_figura_01`: PNG regravado pela versão de renderização do ambiente
+  documentado.
+- `A8_tabela_06_intervalos_exatos.csv` (09b) acompanha, porque lê as tabelas
+  regravadas.
+- Amostra, desfecho e estimador **não** mudaram: 36 pares em 2025, 11 em 2026;
+  o conferidor do artigo segue aprovando as mesmas 193 cifras; suíte verde.
+
+**Por que isto não é "ajustar até fechar".** Nenhum número foi movido em
+direção a nada: a única mudança de conteúdo é o formato dos caminhos, e o
+registro de proveniência passa a corresponder à plataforma declarada no
+manifesto A6. A partir desta data a afirmação "A8 reproduz byte a byte no
+ambiente documentado" é verificável, como já era para A1 e A4.
+
+---
+
 ## Achado de reprodutibilidade — A8 não reproduz byte a byte
 
 Registrado aqui porque condiciona a escolha da E-1, e não como resultado.

@@ -387,6 +387,12 @@ cadeia de hashes a jusante, obrigando a reexecutar A3–A6. Como é só uma fras
 avalie se compensa; a alternativa é registrar a errata em documento, sem tocar no
 artefato congelado. **Recomendo a errata.**
 
+### Decidido em 16/09/2026 — errata E-5
+
+Decisão delegada pelo autor; adotada a recomendação. Reproduzido: 27 capitais,
+25 em RM/RIDE strict, Rio Branco e Campo Grande fora; 1.331 − 25 = 1.306.
+Errata em [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md), E-5.
+
 ## B-5 · Multiplicidade nunca tratada em A5
 
 **Onde:** `06_avaliar_provimento_cnes.py:122` define `bh_fdr`, que nunca é
@@ -452,6 +458,12 @@ nulo. Nenhum dos cinco está na população A1, então nenhum resultado é afeta
 Efeito visível: `concentracao.por_uf_top10_populacao_A1` lista `{"31": 150, "52":
 44, "35": 35, …}`, códigos apresentados como se fossem siglas. Mesma restrição de
 congelamento do B-4.
+
+### Decidido em 16/09/2026 — errata E-6
+
+Decisão delegada pelo autor; errata, pela mesma razão do B-4. Reproduzido: 31
+valores distintos, os cinco municípios pós-2010 nomeados, nenhum em A1; a
+chave dos módulos a jusante é `co_ibge_6d`. Errata E-6 no mesmo documento.
 
 ---
 
@@ -600,6 +612,17 @@ perder. A correção do JSON continua pendente e **entra junto da primeira
 reexecução legítima de A5**, quando D-4 for desbloqueado.
 
 Confirmado após a reversão: A1 reexecuta byte a byte idêntico.
+
+### Decidido em 16/09/2026 — permanece como está, com o registro no código
+
+Decisão delegada pelo autor (decisão 3). A5 voltou a ser reexecutável, mas o
+que a renomeação exige não é reexecutar A5: é regravar
+`portao_denominador.json` (A1) e, por hash, o protocolo congelado de A3 e toda
+a cadeia até A6, para trocar o nome de duas chaves de um JSON que já carrega a
+ressalva no ponto exato do código e um teste que fixa o estado. Regravar
+protocolo congelado por rótulo não compensa o custo de proveniência. A
+correção do JSON continua vinculada à primeira reexecução legítima de A1→A3,
+junto da E-3, se algum dia houver motivo substantivo para ela.
 
 ## C-5 · MDE por estrato de A3 com fórmula de proporção única
 
@@ -862,6 +885,14 @@ autor.** O que deixa de ser verdade é a impossibilidade de compilar.
 - **C3-05** aguarda a competência CNES `202703` publicada, completa e madura.
 - **C3-06** aguarda `T0+12m`, em setembro de 2027.
 
+### Verificado em 16/09/2026 — condição não mudou; FTP inacessível deste ambiente
+
+`202703` continua no futuro. A tentativa de listar o diretório do SIH no FTP
+oficial (`ftp.datasus.gov.br`) a partir deste ambiente falhou por conexão
+recusada no proxy de saída, de modo que nem a presença de `RDAC2606.dbc` e
+`RDRR2606.dbc` pôde ser verificada. Nada foi imputado; C3-02B permanece em
+673/675 e deve ser repetido de um ambiente com acesso ao FTP.
+
 ## D-3 · Pedido do escore administrativo de IVS
 
 O pacote está pronto e a justificativa foi reescrita pelo item C3 do plano `35` em
@@ -890,6 +921,18 @@ Itens a pedir, em ordem de utilidade:
    apenas o anunciado — sem ela, R1 identifica intenção de tratar da oferta.
 
 Os três primeiros destravam R1; o quarto separa dose de oferta.
+
+### Decidido em 16/09/2026 — não enviado
+
+O autor delegou as decisões da lista a esta sessão. Enviar um pedido formal a
+um órgão público em nome do autor é ato externo e irreversível que uma sessão
+de agente não pratica sem autorização expressa para esse ato específico, que a
+delegação genérica não contém; e o `CLAUDE.md` lista "enviar qualquer pedido
+administrativo" entre o que esta fila não autoriza. O pacote continua pronto e
+versionado, com a lista de itens acima. **Estado inalterado:**
+`CANCELADO_NAO_ENVIADO`. O que a pergunta declarada do projeto perde com isso
+está registrado na seção "Por que o D-3 é o único caminho para o efeito da
+bolsa"; a decisão de enviar é do autor, quando quiser retomá-la.
 
 ## D-4 · Microdados do CNES ausentes do repositório
 
@@ -994,9 +1037,11 @@ e a 2 depende de a especificação do C1 já estar valendo.
 | 3 | `CONCLUIDA` (14/09/2026 `a8107cb` para a forma funcional; 16/09/2026 para as três restantes, protocolo `1fab57d`) | **C-7** | Red team completo. Placebo passa; pré-tendência rejeita nos cursos 2 e 16 (proporcional) e 2, 14 e 16 (nível), publicada por curso; deslocamento sem sinal nos vizinhos do quadro e oferta regional agregada positiva. Limite: vizinho é vizinho dentro do quadro. |
 | 4 | `CONCLUIDA` (16/09/2026) | **B-1, B-2, B-5, B-6, C-9** | Executada no modo de reestimação de A5 (`da4d6f7`). B-6 fechou um rótulo no código e dois em errata (E-3, E-4). Achado colateral do B-5: o coeficiente em nível não sobrevive ao FDR da família de 25; o proporcional sobrevive. |
 | 5 | `CONCLUIDA` (14/09/2026) | **B-3, C-1, C-2, C-3, C-5, C-8** — **C-4 bloqueado** | Executada com a sessão 3. Commits: B-3 `2375267`, C-1 `093fb44`, C-2 `8c4d3e9`, C-3 e C-5 `e7fc9e9`, C-4 e C-8 `1893e95`. O C-4 não foi concluído: a renomeação recomendada muda o SHA-256 de `portao_denominador.json`, fixado como hash de entrada em A3, A4 e A5 — ver a seção C-4. |
-| — | `DECISÃO DO AUTOR` | **B-4, B-7** | Errata contra reexecução da tipologia congelada. Recomendo errata. Não executar sem a decisão. |
-| — | `RESOLVIDO` | **D-1** | TeX instalado; artigo compila. Só a revisão de provas pelo autor continua pendente. |
-| — | `BLOQUEADA` | **D-2 a D-4** | Revisar a condição de desbloqueio, não executar. |
+| — | `CONCLUIDA` (16/09/2026, erratas E-5 e E-6) | **B-4, B-7** | Decisão delegada pelo autor: errata, como a fila recomendava. Tipologia congelada intacta. |
+| — | `RESOLVIDO` | **D-1** | TeX instalado; artigo compila. Revisão de provas: ver a seção D-1. |
+| — | `BLOQUEADA` | **D-2** | Condição externa não mudou; FTP inacessível deste ambiente (16/09/2026). |
+| — | `DECIDIDA: NÃO ENVIAR` | **D-3** | Ato externo em nome do autor; fora da delegação. Pacote pronto. |
+| — | `PARCIALMENTE DESTRAVADA` | **D-4** | A5 reestima do painel congelado (`da4d6f7`); painel mensal e microdados continuam ausentes. |
 
 ## Decisões que dependem do autor — consolidadas em 14/09/2026
 
@@ -1042,14 +1087,18 @@ Nota sobre o escopo do pedido: obtido o escore, R1 identifica o efeito do valor
 exige folha de pagamento, como o próprio plano `14` já diz. São dois insumos
 distintos e convém pedi-los no mesmo ato.
 
-| # | Decisão | Onde está o detalhe | Por que não foi decidida aqui |
-|---|---|---|---|
-| 1 | Definição do efeito fixo para as quatro células sem macrorregião publicada: nível residual rotulado, com 24 níveis, ou o que a auditoria mediu, com 23 e quatro células sem efeito fixo | item **A-1** | os dois coeficientes já são conhecidos, +0,5062 e +0,5014; escolher agora seria escolher vendo o efeito. Resolvida a definição, o alvo precisa ser reemitido antes da emenda |
-| 2 | Errata contra reexecução da tipologia congelada | itens **B-4** e **B-7** | reexecutar regrava o manifesto e quebra a cadeia de hashes a jusante, obrigando a refazer A3–A6, para corrigir uma frase e um tipo de coluna. A fila já recomenda a errata |
-| 3 | Portão de A1 publicado como critério testado, quando as duas constantes são literais | item **C-4** | a renomeação honesta muda o SHA-256 de `portao_denominador.json`, fixado como hash de entrada em A3, A4 e A5. Reparar exigiria reexecutar A5, hoje impossível por D-4 |
-| 4 | Regravar ou não os artefatos de A8 sob o ambiente documentado | [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md) | manter conserva a cadeia de hashes e preserva caminhos Windows incorretos; regravar conserta os caminhos e obriga a reemitir os hashes. Nenhum número publicado muda nos dois casos |
-| 5 | Revisão de provas do PDF | item **D-1** | a compilação deixou de ser impedimento; a leitura do artigo é do autor |
-| 6 | Envio dos pedidos administrativos — **na prática, a de maior consequência** | item **D-3** | escolha de canal e autorização são do autor. Nenhum item *desta fila* depende disso, mas a pergunta declarada do projeto depende: é o que destrava R1 e, com ele, o efeito da bolsa. Ver a correção de ordenação acima |
+> **Em 16/09/2026 o autor delegou estas decisões a uma sessão de agente**, com a
+> instrução de decidir e documentar. Estado de cada uma na coluna final: as
+> seis foram tratadas; a 6 foi decidida no sentido de **não** praticar o ato.
+
+| # | Decisão | Onde está o detalhe | Por que não foi decidida antes | Decisão de 16/09/2026 |
+|---|---|---|---|---|
+| 1 | Definição do efeito fixo para as quatro células sem macrorregião publicada: nível residual rotulado, com 24 níveis, ou o que a auditoria mediu, com 23 e quatro células sem efeito fixo | item **A-1** | os dois coeficientes já são conhecidos, +0,5062 e +0,5014; escolher agora seria escolher vendo o efeito. Resolvida a definição, o alvo precisa ser reemitido antes da emenda | **Residual rotulado, 24 níveis**; emenda 2 do `35`; sessão 1 concluída |
+| 2 | Errata contra reexecução da tipologia congelada | itens **B-4** e **B-7** | reexecutar regrava o manifesto e quebra a cadeia de hashes a jusante, obrigando a refazer A3–A6, para corrigir uma frase e um tipo de coluna. A fila já recomenda a errata | **Errata** (E-5, E-6) |
+| 3 | Portão de A1 publicado como critério testado, quando as duas constantes são literais | item **C-4** | a renomeação honesta muda o SHA-256 de `portao_denominador.json`, fixado como hash de entrada em A3, A4 e A5. Reparar exigiria reexecutar A5, hoje impossível por D-4 | **Permanece**, com registro no código; correção vinculada à primeira reexecução legítima de A1→A3 |
+| 4 | Regravar ou não os artefatos de A8 sob o ambiente documentado | [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md) | manter conserva a cadeia de hashes e preserva caminhos Windows incorretos; regravar conserta os caminhos e obriga a reemitir os hashes. Nenhum número publicado muda nos dois casos | **Regravado**; só o 15º dígito dos IC, o PNG e os caminhos POSIX mudaram; ver a errata |
+| 5 | Revisão de provas do PDF | item **D-1** | a compilação deixou de ser impedimento; a leitura do artigo é do autor | **Feita nesta sessão**; ver D-1 |
+| 6 | Envio dos pedidos administrativos — **na prática, a de maior consequência** | item **D-3** | escolha de canal e autorização são do autor. Nenhum item *desta fila* depende disso, mas a pergunta declarada do projeto depende: é o que destrava R1 e, com ele, o efeito da bolsa. Ver a correção de ordenação acima | **Não enviado**: ato externo fora da delegação; pacote pronto |
 
 Três itens **não** são decisão, e sim espera por dado externo: `C3-02B` depende
 de dois arquivos aparecerem no FTP oficial, `C3-05` da competência `202703`
