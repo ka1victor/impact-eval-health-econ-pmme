@@ -14,6 +14,22 @@
 > metodológico. Referências a slides em versões anteriores deste arquivo, ou em
 > commits antigos, não são comparáveis.
 
+> [!IMPORTANT]
+> **O que conta como "na tela", desde 16/09/2026.** A compressão de
+> [02](02_conteudo_slides.md) passou a declarar o que é conteúdo de tela e o que
+> não é. Vai à tela **o corpo do slide**: texto, listas, tabelas, figuras,
+> equações e os destaques em citação. **Não vão** a linha `**Fontes:**`, que
+> desce a nota de rodapé pequena, nem qualquer bloco marcado
+> `**Nota de produção.**`, que é instrução para quem monta o deck. Isso fixa o
+> alcance da regra 4 da seção 4: **número no corpo de um slide precisa de linha
+> na seção 2**. Número que só aparece em nota de produção ou em linha de fontes
+> continua registrado aqui, marcado como fora da tela — sai do alcance da regra,
+> nunca do rastreio. Na mesma revisão os `###` viraram **builds** (33 builds em
+> 16 slides), não slides novos: a numeração desta seção continua a de slides.
+> Linha cuja saída da tela é de 16/09/2026 leva a marca **"saiu da tela em
+> 16/09/2026, mantida por rastreio"**; número que nunca foi exibido é declarado
+> como tal.
+
 ---
 
 ## 1. Figuras
@@ -65,10 +81,10 @@ estrato, declarado como **associativo**.
 
 | Arquivo | Situação |
 |---|---|
-| `output/apresentacao_banca1/vagas_ciclo1_por_regiao.png` (`F5`) | células e vagas imediatas do ciclo 1 por região. Saiu do slide da Política no corte de 16/09/2026: descrevia sem argumentar, e os totais que importam (1.295 / 460 / 368 / 39% / 18 capitais) ficaram em texto no slide 5. O script continua gerando |
+| `output/apresentacao_banca1/vagas_ciclo1_por_regiao.png` (`F5`) | células e vagas imediatas do ciclo 1 por região. Saiu do slide da Política no corte de 16/09/2026: descrevia sem argumentar. Os totais que ficaram em texto no slide 5 são **1.295 / 460 / 368**; o Nordeste (505 células, 39%) e as 18 capitais saíram da tela junto com a figura. O script continua gerando |
 | `docs/02_teoria/figuras/curva_custo_laboral_burnout.png` (`F4`) | ilustração conceitual do custo laboral em U. Saiu do deck em 16/09/2026 com a fusão dos dois slides de custo; o formato em U é descrito em texto no **slide 10**. Permanece como figura canônica de `modelo_micro.md`, §2.2. A ressalva de legibilidade em projeção deixa de afetar a apresentação |
 | `output/apresentacao_banca1/oferta_antes_depois_por_faixa.png` | série mensal de especialistas por 100 mil habitantes, 2024–2026. Saiu do deck na segunda rodada de revisão: sem grupo de comparação, não se lê como efeito do programa. O script continua gerando; a série está no `manifesto_figuras.json` e é a única parte reprodutível da tabela do deck do grupo — ver `P8` |
-| `docs/07_apresentacoes/banca1/figuras/motivacao_manchetes.png` | recortes de imprensa com cabeçalho do deck anterior. As manchetes entraram no slide do Problema como citação textual em 09/09/2026 e saíram no corte de 16/09/2026; a portaria de urgência continua citada em texto e a manchete dos 10% passou a **advertência** no slide 4 |
+| `docs/07_apresentacoes/banca1/figuras/motivacao_manchetes.png` | recortes de imprensa com cabeçalho do deck anterior. As manchetes entraram no slide do Problema como citação textual em 09/09/2026 e saíram no corte de 16/09/2026; a portaria de urgência continua citada em texto no slide 4, e a manchete dos 10% deixou a tela: depois da compressão de 16/09/2026 ela só aparece em **nota de produção**, como advertência a quem monta o deck |
 
 `especialistas_por_uf.png` e `deslocamento_por_regiao.png` saíram desta lista em
 16/09/2026: a reescrita do slide 4 as **recolocou na tela** e elas passaram a
@@ -82,22 +98,25 @@ estrato, declarado como **associativo**.
 
 Fontes externas, conferidas em 09/09/2026 e revistas em 16/09/2026. A revisão de
 16/09/2026 corrigiu um erro factual (ver `Correção factual` na seção 3) e
-rebaixou a manchete dos 10%.
+rebaixou a manchete dos 10%. A compressão do mesmo dia tirou do corpo do slide a
+manchete, o tamanho do inquérito e a citação do item 1.2.1 do edital, e manteve
+na tela a portaria de urgência; as linhas abaixo estão marcadas uma a uma.
 
 | Número | Fonte | Verificação |
 |---|---|---|
-| 597 mil médicos em 2024; 353.287 especialistas (59,1%) | Scheffer, M. et al., *Demografia Médica no Brasil 2025*, FMUSP/AMB, dados de dez/2024 | conferido na cobertura da Agência Brasil (abril de 2025) e do portal Afya |
-| Sudeste 55,4% dos especialistas; Sul 16,7%; Nordeste 14,5%; Norte 5,9% | idem | ⚠️ **conferido apenas em cobertura.** Uma leitura do PDF integral **não localizou** esses percentuais. O portal Afya reporta: *"A região Sudeste concentra 55,4% dos especialistas, seguida pelo Sul (16,7%) e Nordeste (14,5%). Já o Norte responde por apenas 5,9%"*. Ver `P5` |
-| 453 especialistas por 100 mil habitantes no DF; 244 em SP; 68 no MA; 70 no PA | idem | Agência Brasil: "Distrito Federal e São Paulo respondem pelas maiores razões de especialistas por 100 mil habitantes (453 e 244, especificamente), enquanto Maranhão e Pará respondem pelas menores taxas no país (68 e 70, respectivamente)". É a série de `E1` |
-| **72,4%** dos cirurgiões em **dupla prática** (público **e** privado); **19,9%** exclusivamente no setor privado; **7,7%** exclusivamente no setor público ou no atendimento a pacientes do SUS | Scheffer, M. et al., *Demografia Médica no Brasil 2025*, FMUSP/AMB, **cap. 13, Figura 1, p. 254** | conferido na fonte primária, que diz literalmente: *"predomina a dupla prática (72,4%). Apenas 7,7% dos cirurgiões atuam, exclusivamente, no setor público ou no atendimento a pacientes do SUS; enquanto 19,9% atuam somente no setor privado"*. Somando dupla prática e exclusivos do público, **80,1%** atendem SUS |
-| Cobertura do recorte setorial: **inquérito por amostra** de associados do **Colégio Brasileiro de Cirurgiões** — **1.544 respondentes** de **6.869 elegíveis** | idem, cap. 13 | **não é censo** dos **42.426** cirurgiões do país. E **não existe o mesmo recorte para outras especialidades** em fonte pública: qualquer generalização de "especialistas" a partir desses três números é extrapolação do leitor, não resultado do estudo |
-| "apenas 10% dos especialistas atendem no SUS. Além disso, há concentração desses profissionais nas capitais e regiões mais ricas do país" | Senado Notícias, **24/09/2025** | 🚫 **não citável em slide.** É **fala do ministro da Saúde em debate de medida provisória**, sem metodologia publicada, e **conflita com a fonte primária**: pela Demografia Médica 2025, **80,1%** dos cirurgiões atendem SUS (72,4% + 7,7%). O slide 4 a exibe **como advertência do que não se pode dizer**, não como estatística |
-| Deslocamento médio para serviços de alta complexidade: Norte **276 km**, Centro-Oeste **256**, Nordeste **179**, Sudeste **107**, Sul **101** | atribuídos à REGIC 2018 (IBGE), deslocamentos para serviços de saúde | 🚫 **fonte primária não confirmada.** Série de `E2`; ver `P7` |
+| 597 mil médicos em 2024; 353.287 especialistas (59,1%) | Scheffer, M. et al., *Demografia Médica no Brasil 2025*, FMUSP/AMB, dados de dez/2024 | conferido na cobertura da Agência Brasil (abril de 2025) e do portal Afya. Na tela, desde 16/09/2026, só **353 mil** e **59%**, arredondados; **597 mil** saiu da tela em 16/09/2026, mantido por rastreio — é o denominador do percentual exibido |
+| Sudeste 55,4% dos especialistas; Sul 16,7%; Nordeste 14,5%; Norte 5,9% | idem | ⚠️ **conferido apenas em cobertura.** Uma leitura do PDF integral **não localizou** esses percentuais. O portal Afya reporta: *"A região Sudeste concentra 55,4% dos especialistas, seguida pelo Sul (16,7%) e Nordeste (14,5%). Já o Norte responde por apenas 5,9%"*. Na tela, só **55,4%** e **5,9%**; Sul e Nordeste nunca foram exibidos e constam por integridade da citação. Ver `P5` |
+| 453 especialistas por 100 mil habitantes no DF; 244 em SP; 68 no MA; 70 no PA | idem | Agência Brasil: "Distrito Federal e São Paulo respondem pelas maiores razões de especialistas por 100 mil habitantes (453 e 244, especificamente), enquanto Maranhão e Pará respondem pelas menores taxas no país (68 e 70, respectivamente)". É a série de `E1`. Na tela, só **453** e **68**; 244 e 70 nunca foram exibidos e sustentam a figura |
+| **72,4%** dos cirurgiões em **dupla prática** (público **e** privado); **19,9%** exclusivamente no setor privado; **7,7%** exclusivamente no setor público ou no atendimento a pacientes do SUS | Scheffer, M. et al., *Demografia Médica no Brasil 2025*, FMUSP/AMB, **cap. 13, Figura 1, p. 254** | conferido na fonte primária, que diz literalmente: *"predomina a dupla prática (72,4%). Apenas 7,7% dos cirurgiões atuam, exclusivamente, no setor público ou no atendimento a pacientes do SUS; enquanto 19,9% atuam somente no setor privado"*. Somando dupla prática e exclusivos do público, **80,1%** atendem SUS — número que **não vai à tela**, ver a linha do Senado Notícias abaixo. Os três percentuais estão na tela no slide 4, e **7,7%** e **72,4%** voltam à tela no **slide 11**: é retomada deliberada da mesma medição, não número novo |
+| Cobertura do recorte setorial: **inquérito por amostra** de associados do **Colégio Brasileiro de Cirurgiões** — **1.544 respondentes** de **6.869 elegíveis** | idem, cap. 13 | **não é censo** dos **42.426** cirurgiões do país. E **não existe o mesmo recorte para outras especialidades** em fonte pública: qualquer generalização de "especialistas" a partir desses três números é extrapolação do leitor, não resultado do estudo. **Saiu da tela em 16/09/2026, mantida por rastreio:** o slide 4 exibia "um inquérito com **1.544 cirurgiões**"; a compressão levou a ressalva de cobertura para a nota de produção. 6.869 e 42.426 nunca foram exibidos |
+| A bolsa do PMM-E compra **20 horas** dessa fração | Edital SGTES/MS nº 3/2025, **item 11.3.b** | linha acrescentada em 16/09/2026: a carga já estava na tela do slide 4 e só tinha registro nos slides 5 e 11. É o mesmo item, antecipado aqui para amarrar a dupla prática à fração que o programa compra |
+| "apenas 10% dos especialistas atendem no SUS. Além disso, há concentração desses profissionais nas capitais e regiões mais ricas do país" | Senado Notícias, **24/09/2025** | 🚫 **não citável em slide.** É **fala do ministro da Saúde em debate de medida provisória**, sem metodologia publicada, e **conflita com a fonte primária**: pela Demografia Médica 2025, **80,1%** dos cirurgiões atendem SUS (72,4% + 7,7%). **Saiu da tela em 16/09/2026, mantida por rastreio:** a frase e os **80,1%** que a contradizem passaram ao bloco `**Nota de produção — o que não dá para dizer**` do slide 4. Nenhum dos dois vai à tela; a advertência virou instrução a quem monta o deck e a quem responde à banca |
+| Deslocamento médio para serviços de alta complexidade: Norte **276 km**, Centro-Oeste **256**, Nordeste **179**, Sudeste **107**, Sul **101** | atribuídos à REGIC 2018 (IBGE), deslocamentos para serviços de saúde | 🚫 **fonte primária não confirmada.** Série de `E2`; ver `P7`. Na tela, só **276 km** e **101 km**; os outros três sustentam a figura. A compressão de 16/09/2026 tirou do corpo do slide a ressalva "fonte primária ainda não confirmada", que passou a constar apenas da linha de fontes |
 | 16 cursos: 6 cirúrgicos e 10 ambulatoriais | Edital SGTES/MS nº 3/2025, Tabela 3 | conferido em 16/09/2026 também nos códigos 1–16 do quadro de vagas (cursos 7 a 16 são ambulatoriais: colonoscopia, colposcopia, ecocardiografia, duas endoscopias digestivas, oncologia clínica, radioterapia, ultrassonografia mamária, videolaringoscopia, anatomia patológica) |
-| Três maiores cursos em oferta no ciclo 1: **endoscopia digestiva alta, 188 células**; **colonoscopia, 164**; **anestesiologia perioperatória, 147** | `output/aquisicao/quadro_vagas_tratamento.parquet` e Tabela 3 do Edital SGTES/MS nº 3/2025 | recontagem em 16/09/2026 sobre as 1.295 células estabelecimento–curso da chamada 1; unidade é **célula**, não vaga |
+| Três maiores cursos em oferta no ciclo 1: **endoscopia digestiva alta, 188 células**; **colonoscopia, 164**; **anestesiologia perioperatória, 147** | `output/aquisicao/quadro_vagas_tratamento.parquet` e Tabela 3 do Edital SGTES/MS nº 3/2025 | recontagem em 16/09/2026 sobre as 1.295 células estabelecimento–curso da chamada 1; unidade é **célula**, não vaga. Na tela, desde 16/09/2026, os três aparecem como "maiores ofertas", sem a palavra *célula*, e **anestesiologia** sem o qualificador *perioperatória* |
 | **6 dos 16** títulos citam oncologia, tumores ou câncer | idem | cursos 3, 4, 5, 6, 12 e 16 (cirurgia oncológica avançada; coloproctológica com foco em tumores colorretais; aparelho digestivo com foco em tumores digestivos; ginecológica com foco em tumores ginecológicos; oncologia clínica; anatomia patológica com ênfase em oncologia) |
-| "na redução do tempo de espera, na ampliação do diagnóstico precoce e no fortalecimento das redes de atenção especializada" | Edital SGTES/MS nº 3/2025, item 1.2.1 | conferido no PDF do DOU preservado em `data/raw/aquisicao/ivs_regra/` |
-| Situação de urgência em saúde pública por 24 meses, em razão do tempo de espera na atenção especializada | Portaria GM/MS nº 7.061, de 6 de junho de 2025 | conferido em reprodução do DOU; **fora da tela** desde 16/09/2026, mantido aqui por continuar na documentação de origem |
+| "na redução do tempo de espera, na ampliação do diagnóstico precoce e no fortalecimento das redes de atenção especializada" | Edital SGTES/MS nº 3/2025, item 1.2.1 | conferido no PDF do DOU preservado em `data/raw/aquisicao/ivs_regra/`. **Saiu da tela em 16/09/2026, mantida por rastreio:** a citação literal deixou o corpo do slide 4; o item 1.2.1 permanece na linha de fontes do slide 5 |
+| Situação de urgência em saúde pública por 24 meses, em razão do tempo de espera na atenção especializada | Portaria GM/MS nº 7.061, de 6 de junho de 2025 | conferido em reprodução do DOU. **Está na tela**, no terceiro build do slide 4: *"Em 2025 o Ministério declarou **urgência em saúde pública por 24 meses**, pelo tempo de espera na atenção especializada"*. O registro anterior, de que estaria fora da tela, foi corrigido em 16/09/2026 |
 
 ### Slide 5 — Política: o que é o PMM-E e o que fixa a bolsa
 
@@ -106,31 +125,34 @@ rebaixou a manchete dos 10%.
 | finalidade: provimento para reduzir o tempo de espera em regiões prioritárias; exclusivo a médicos com diploma brasileiro ou revalidado e certificação de especialista; bolsa-formação | Lei nº 15.233/2025, art. 21, que acrescenta o art. 22-D à Lei nº 12.871/2013 — `data/raw/aquisicao/ivs_regra/lei_15233_2025.html` |
 | aprimoramento em serviço por integração ensino-serviço; objetivos de equilíbrio regional e redução de desigualdades | Portaria GM/MS nº 7.177/2025, arts. 1 e 2 — conferida em reprodução do Conass |
 | objeto (item 1.1); até 12 meses (1.1.4); itinerários formativos com imersões, EAD e supervisão/mentoria (1.2.3, 1.2.7); não é concurso, sem vínculo (1.2.8, 11.1.2); diploma e RQE (3.1); até dois locais (4.1.3); vedada substituição de profissional já vinculado (4.1.6); barema de titulação e tempo de formação, 10 pontos (5.2, Tabela 4); 16 cursos, 6 cirúrgicos e 10 ambulatoriais, 20 horas semanais (Tabela 3, 11.3); bolsa por faixa (11.1.3) | Edital SGTES/MS nº 3/2025, DOU de 24/07/2025 — `data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf`, SHA-256 `417c82d903ab6cf26ca17a5b50705175de40ccc539f0fd2f1e66a3ad9daf6fb2` |
-| 1.295 células, 460 estabelecimentos, 368 municípios, 27 UFs; Nordeste 505 células (39%) | `output/aquisicao/quadro_vagas_tratamento.parquet` e `manifesto_figuras.json`; 678 imediatas, 1.145 reserva e MG 252 saíram do slide em 16/09/2026 |
+| 1.295 células, 460 estabelecimentos, 368 municípios, 27 UFs; Nordeste 505 células (39%) | `output/aquisicao/quadro_vagas_tratamento.parquet` e `manifesto_figuras.json`. Na tela: 1.295, 460, 368 e "todas as UFs". Saíram da tela em 16/09/2026, mantidos por rastreio: **Nordeste 505 células (39%)**, 678 imediatas, 1.145 reserva e MG 252 |
 | dois terços dos municípios com menos de 100 mil habitantes (66,0%); 18 capitais | quadro de vagas × Censo 2022; tipologia A2 (`docs/auditorias/09_tipologia_territorial.md`) — em texto de apoio, fora da tela desde 16/09/2026 |
 | **incidência de contribuição previdenciária**: o participante é segurado obrigatório do RGPS, como **contribuinte individual**, e o valor devido é descontado da bolsa-formação | Edital SGTES/MS nº 3/2025, **item 11.2**, conferido no PDF do DOU em 16/09/2026 |
 | **adicional** para Amazônia Legal, territórios indígenas e áreas de alta vulnerabilidade, *"conforme regulamentação do Ministério da Saúde e disponibilidade orçamentária"* | Lei nº 15.233/2025, **art. 22-D, §4º** — conferido no HTML preservado |
 | o adicional do §4º **não foi regulamentado no ciclo 1** | verificado no PDF do edital em 16/09/2026: a palavra **"adicional"** aparece **uma única vez** no edital, e no **barema de titulação** (Tabela 4, item 5.2 — "ano adicional" de residência), nunca como acréscimo à bolsa. O quadro de vagas tem um único campo de remuneração, a faixa de atração |
 | **nenhum município e nenhuma célula município–curso** do ciclo 1 aparece com mais de uma faixa | `output/aquisicao/quadro_vagas_tratamento.parquet`, verificado em 16/09/2026: 0 municípios com mais de uma `faixa_atracao_anunciada` e 0 células município–curso com mais de uma. É o que sustenta a afirmação de que o valor depende **só do município** |
-| 16 indicadores, 3 dimensões do IVS 2010 | Ipea, *Atlas da Vulnerabilidade Social nos Municípios Brasileiros* (2015) |
-| Cortes 0,200 / 0,300 / 0,400 / 0,500 | mesma fonte; reproduzidos em `docs/auditorias/01_regra_institucional.md`, §6.3 |
+| 16 indicadores, 3 dimensões do IVS 2010 | Ipea, *Atlas da Vulnerabilidade Social nos Municípios Brasileiros* (2015). **"16 indicadores" saiu da tela em 16/09/2026, mantido por rastreio:** a cláusula 11.1.4 do slide 5 passou a dizer só "categoria de **IVS 2010** do Ipea". As **três dimensões** continuam na tela, no slide 13 |
+| Cortes 0,200 / 0,300 / 0,400 / 0,500 | mesma fonte; reproduzidos em `docs/auditorias/01_regra_institucional.md`, §6.3. Na tela aparecem só `0,400` e `0,500`, no slide 16; a grade completa nunca foi exibida |
 | R$ 20.000 / R$ 15.000 / R$ 10.000 | Edital SGTES/MS nº 3/2025, item 11.1.3, e retificação; auditoria, §6.1 — é a série de `F3` |
 | Cláusulas 11.1.3 (localização + Anexo IV) e 11.1.4 (categorias de IVS) | Edital SGTES/MS nº 3/2025, PDF do DOU preservado em `data/raw/aquisicao/ivs_regra/`, com SHA-256 registrado acima |
 | Anexo IV não reproduzido no edital (constam I a III) | mesmo PDF, índice de anexos |
-| 177 dos 368 municípios com faixa publicada diferente da recalculada; 0 abaixo do piso de IVS, 177 acima; 48% promovidos | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py`; portão R1, `docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md`, §3.5 |
+| 177 dos 368 municípios com faixa publicada diferente da recalculada; 0 abaixo do piso de IVS, 177 acima; 48% promovidos | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py`; portão R1, `docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md`, §3.5. Os três estão na tela, no terceiro build do slide 5. **48% é o mesmo 177/368 dito como proporção** (48,1%), não um segundo achado: é a forma que a tela usa em *"o critério de localização promove **48%** dos municípios acima dele"* |
 | 102 / 107 / 159 municípios por faixa publicada | quadro de vagas do ciclo 1 — em texto de apoio, fora da tela desde 16/09/2026 |
 | Grade mudou em 2026: *alta* passou à Faixa 1 | Chamamento SGTES/MS nº 1/2026; auditoria §6.4 — fora da tela, escopo do ciclo 1 |
 | Regra de 2026 aplicada ao ciclo 1 acerta 224/368; união das duas regras, 237/368 | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json` — fora da tela, mantido como registro do portão R1 |
 | 18,3 / 14,4 / 15,0 especialistas por 100 mil hab. (Faixas 1, 2 e 3 publicadas), jun/2025 | `F1`, agrupado pela faixa publicada no quadro de vagas |
 | Mediana de 2,5 colegas na Faixa 1, 5,0 na Faixa 2 e 6,5 na Faixa 3; 31% contra 12% sozinho ou com um único colega | `F2`, agrupado pela faixa publicada. Faixa 1 tem 150 pares município–especialidade em 85 municípios |
 | Agrupamento por faixa publicada, e não por categoria de IVS recalculada | corrigido em 14/09/2026 em `scripts/apresentacao/gerar_figuras_banca1.py`; a versão anterior rotulava errado 177 dos 368 municípios e invertia o sinal de `F1` — ver `P4` |
-| Teoria da mudança: regra de valor (11.1.3 e 11.1.4), provimento como finalidade (art. 22-D e item 1.1.2), redução da espera como objetivo (art. 22-D e itens 1.2.1 e 1.2.5.V) | Lei nº 15.233/2025 e Edital SGTES/MS nº 3/2025. O que está em **amarelo** no diagrama é o que **nenhum ato afirma** — é leitura do projeto sobre o que os atos deixam de dizer, não citação |
+| Teoria da mudança: regra de valor (11.1.3 e 11.1.4), provimento como finalidade (art. 22-D e item 1.1.2), redução da espera como objetivo (art. 22-D e itens 1.2.1 e 1.2.5.V) | Lei nº 15.233/2025 e Edital SGTES/MS nº 3/2025. O que está em **laranja e tracejado** no diagrama — assim nomeado na tela desde 16/09/2026 — é o que **nenhum ato afirma**: é leitura do projeto sobre o que os atos deixam de dizer, não citação |
 
 ### Slide 6 — Efeitos: o ciclo 1 e a literatura
 
 > **Classificação de rigor:** todos os números do ciclo 1 neste slide são
-> **associativos/descritivos**. Nenhum é efeito causal do PMM-E; a `CAUTION` do
-> slide declara isso na tela e o slide 16 explica por quê.
+> **associativos/descritivos**. Nenhum é efeito causal do PMM-E. O destaque em
+> citação do slide declara isso na tela — *"Isto é descrição, não efeito"* — e o
+> slide 16 explica por quê. Desde 16/09/2026 esse bloco deixou de ser um
+> `CAUTION` e passou a citação de tela; a remissão ao slide 16, que era parte
+> dele, saiu da tela.
 
 | Número | Fonte |
 |---|---|
@@ -138,31 +160,32 @@ rebaixou a manchete dos 10%.
 | 23,6% / 37,4% / 31,6% por faixa publicada (n = 539 / 465 / 291) | `F6`, `A4_tabela_01b_amostra_faixa.csv` |
 | 35,6% / 44,9% / 26,9% / 20,5% por estrato (n = 73 / 265 / 811 / 146) | `F6`, `A4_tabela_01_amostra_construcao.csv`, amostra primária |
 | **Metropolitano +20,9 p.p.** sobre interior remoto no **modelo ajustado** | `output/tema_trabalho/A4_tabela_03b_ajuste_completo.csv`, termo `estrato_metropolitano` = 0,2085 (EP cluster 0,078; p = 0,008), especificação `LPM_full_estrato_ivs_logpop_estoque_faixa_FE`, n = 1.295, 368 clusters. Na especificação mínima o mesmo contraste é 0,279 — o slide cita o **ajustado**, que é o menor |
-| **A5: +0,500** especialista cadastrado em **mar/2026** contra **jun/2025**, **erro padrão 0,234** | `output/tema_trabalho/A5_relatorio_diagnostico.md`, módulo A5. O EP 0,234 é o da convenção anterior (p = 0,033); na convenção `reghdfe`/`fixest`, que conta os efeitos fixos absorvidos, o EP é 0,2469 e p = 0,044. O slide arredonda para "+0,50" |
-| **Pré-tendências: F = 1,031, p = 0,420** (teste conjunto pré-referência) | idem — é ausência de pré-tendência **detectável**, não prova de paralelismo |
+| **A5: +0,500** especialista cadastrado em **mar/2026** contra **jun/2025**, **erro padrão 0,234** | `output/tema_trabalho/A5_relatorio_diagnostico.md`, módulo A5. O EP 0,234 é o da convenção anterior (p = 0,033); na convenção `reghdfe`/`fixest`, que conta os efeitos fixos absorvidos, o EP é 0,2469 e p = 0,044. O slide arredonda para "+0,50". **O erro padrão saiu da tela em 16/09/2026, mantido por rastreio:** a tela mostra só "+0,50 ... sem pré-tendência detectável" |
+| **Pré-tendências: F = 1,031, p = 0,420** (teste conjunto pré-referência) | idem — é ausência de pré-tendência **detectável**, não prova de paralelismo. O teste nunca foi à tela: sustenta a expressão "sem pré-tendência detectável" |
 | Salário +33% eleva aceitação em 15,1 p.p.; 106 postos; a >200 km, de ~25% a ~80%; sem seleção adversa | Dal Bó, Finan & Rossi (2013), *QJE* 128(3) — RCT com salário sorteado |
 | **+15,1 médicos do programa** por 100 mil habitantes, contra expansão **líquida** de apenas **+5,7** | Hone, T.; Powell-Jackson, T.; Santos, L. M. P. et al. (2020), *BMC Health Services Research* **20:873**. DiD em 5.565 municípios, 2008–2017; o restante substituiu profissionais preexistentes. Catalogado em [`03_literatura_empirica/19_...md`](../../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md), §7 |
 | 3.727 clínicos; 65% não mudariam por nenhum pacote; 37% da renda anual para cidade de 5 a 20 mil hab.; 64% para menos de 5 mil; 130% para o pior pacote | Scott et al. (2013), *Soc Sci Med* 96 — **conferido no resumo** (Europe PMC, PMID 24034949) |
-| Elasticidade-salário ~0,4 nas metrópoles e ~0,7 no interior | Costa, Nunes & Sanches (2024), *REStat* 106(1) — **conferido no PDF** |
+| Elasticidade-salário ~0,4 nas metrópoles e ~0,7 no interior | Costa, Nunes & Sanches (2024), *REStat* 106(1) — **conferido no PDF**. Na tela, só o **0,7** do interior; o 0,4 nunca foi exibido |
 | +50% no salário público corrige 12,4% do desequilíbrio a US$ 15,7 mi/p.p.; cotas corrigem 63,8% a US$ 2,2–5,1 mi/p.p. | idem — **conferido na Tabela 6 do PDF** |
 | 12% contra 39% de permanência após oito anos | Pathman, Konrad & Ricketts (1992), *JAMA* 268(12) — coorte de 9 anos, 412 médicos |
 | Degrau de +50% "cai dentro da faixa" de 37% a 64% | leitura do projeto sobre Scott et al. (2013); é comparação do projeto, não número de um paper — ver `P1` e `P2` |
 | Ressalva na tela: os percentuais da literatura são sobre a **renda total**; a bolsa remunera **20 horas semanais** | `P2` |
+| Degrau de **R$ 5 mil** no fecho do slide — *"a evidência não decide se um degrau de R$ 5 mil basta"* | Edital SGTES/MS nº 3/2025, item 11.1.3. Retomada do mesmo degrau dos slides 7, 11 e 14; linha acrescentada em 16/09/2026 para cobrir a frase de fecho |
 
 ### Slide 7 — Pergunta de pesquisa
 
 | Número | Fonte |
 |---|---|
 | Degrau de **R$ 5 mil** entre faixas | Edital SGTES/MS nº 3/2025, item 11.1.3 (R$ 10 / 15 / 20 mil) |
-| "maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas desvantagens territoriais na atração de médicos especialistas?" | [`01_pergunta_escopo/15`](../../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md) — formulação canônica, citada textualmente |
+| "maiores bolsas do PMM-E para municípios mais vulneráveis compensam suas desvantagens territoriais na atração de médicos especialistas?" | [`01_pergunta_escopo/15`](../../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md) — formulação canônica. **Saiu da tela em 16/09/2026, mantida por rastreio:** a citação literal passou à nota de produção do slide 7. Na tela está a versão de manchete do deck, *"O incentivo financeiro oferecido pelo PMM-E funciona para atrair especialistas para regiões mais vulneráveis?"*, que é a mesma pergunta em linguagem de tela |
 
 ### Slide 9 — Visão geral: a equação de escolha
 
 | Número | Fonte |
 |---|---|
 | Moehling, Niemesh, Thomasson & Treber (2020), eq. 1, p. 184, e a definição de $c$ | `docs/02_teoria/modelo_micro.md`, §1 |
-| "preferences over rural or urban living, or other location-specific attributes, such as proximity to family" | Moehling et al. (2020), *Cliometrica* 14, p. 184 — transcrita em `modelo_micro.md`, §1 |
-| Redding & Rossi-Hansberg (2017) e Choné & Ma (2011) como as duas primitivas do custo | idem, §2.1 e §2.2 |
+| "preferences over rural or urban living, or other location-specific attributes, such as proximity to family" | Moehling et al. (2020), *Cliometrica* 14, p. 184 — transcrita em `modelo_micro.md`, §1. Na tela, desde 16/09/2026, a citação aparece **elidida**: *"preferences over rural or urban living … such as proximity to family"*. A elisão é de tela; a transcrição íntegra fica no `modelo_micro.md` |
+| Redding & Rossi-Hansberg (2017) e Choné & Ma (2011) como as duas primitivas do custo | idem, §2.1 e §2.2. **Saiu da tela em 16/09/2026, mantida por rastreio:** a tabela "Três tradições sustentam uma equação" deixou o slide 9 por redundância, e cada tradição passou a ser apresentada onde faz trabalho — Moehling no **slide 9**, Redding & Rossi-Hansberg e Choné & Ma no **slide 10**, os três nomes juntos no **slide 13**. No slide 9 restou a remissão "os dois slides seguintes", sem nomes |
 
 ### Slide 10 — Custo da localidade: o lugar e o trabalho
 
@@ -170,8 +193,8 @@ rebaixou a manchete dos 10%.
 |---|---|
 | Redding & Rossi-Hansberg (2017), eq. 24, p. 28, e a redução a $c^{\text{geo}}$ | `docs/02_teoria/modelo_micro.md`, §2.1 e §3.2 |
 | Choné & Ma (2011), eq. 1, p. 232; formato em U e as três zonas | idem, §2.2 |
-| $\partial B/\partial K > 0$ como **extensão do projeto**, motivada por Reinhardt (1972, 1975) | idem, §2.3 — ver a nota sobre Reinhardt na seção 3 |
-| Tabela das **quatro desvantagens do médico** (retaguarda, infraestrutura, distância da família, mercado privado ausente) e o bloco do custo de cada uma | idem, §2.1 a §2.3; a coluna "Medimos?" segue o inventário de dados do slide 15. Movida do slide de teoria para o **slide 10** em 16/09/2026 |
+| $\partial B/\partial K > 0$ como **extensão do projeto**, motivada por Reinhardt (1972, 1975) | idem, §2.3 — ver a nota sobre Reinhardt na seção 3. Com a saída da tabela das três tradições do slide 9, em 16/09/2026, esta é a **única menção a Reinhardt na tela**, e só como motivação da extensão |
+| Tabela das **quatro desvantagens do médico** (retaguarda, infraestrutura, distância da família, mercado privado ausente) e o bloco do custo de cada uma | idem, §2.1 a §2.3; a coluna "Medimos?" segue o inventário de dados do slide 15. Movida do slide de teoria para o **slide 10** em 16/09/2026, quando a coluna "O que significa para o médico" foi fundida ao nome de cada desvantagem |
 | proximidade do lugar de nascimento ou formação é o principal fator; salário e infraestrutura importam em escala menor; ~50 mil generalistas formados de 2001 a 2013 | Costa, Nunes & Sanches (2024), *REStat* 106(1) — conferido no PDF e na cobertura do estudo (Gazeta do Povo, 2019, sobre a versão *working paper* do Ieps, 49.989 médicos) |
 | Limitação de commuting: CNES e edital não informam residência | `modelo_micro.md`, §2.1 |
 
@@ -180,18 +203,19 @@ rebaixou a manchete dos 10%.
 | Número | Fonte |
 |---|---|
 | $w = B + w^{\text{priv}}$, o deflator e a correspondência dimensão do IVS – bloco do custo | `docs/02_teoria/modelo_micro.md`, §3 e §3.1 |
-| R$ 10 mil (Faixa 3) e R$ 20 mil (Faixa 1) na tabela de contraste | Edital SGTES/MS nº 3/2025, item 11.1.3 |
+| R$ 10 mil (Faixa 3) e R$ 20 mil (Faixa 1) na tabela de contraste | Edital SGTES/MS nº 3/2025, item 11.1.3. Desde 16/09/2026 a tela mostra os dois valores **sem os rótulos de faixa**: o contraste é "Capital ou metrópole" contra "Interior isolado" |
 | **20 horas semanais** | Edital SGTES/MS nº 3/2025, item 11.3.b |
-| Retomada de **7,7%** exclusivos do setor público e **72,4%** em dupla prática | mesma linha do slide 4 — Scheffer et al. (2025), cap. 13, Figura 1, p. 254. Vale aqui a mesma ressalva de cobertura: é **amostra de cirurgiões**, não o conjunto dos especialistas |
+| Retomada de **7,7%** exclusivos do setor público e **72,4%** em dupla prática | mesma linha do slide 4 — Scheffer et al. (2025), cap. 13, Figura 1, p. 254. **É retomada deliberada da mesma medição, não número novo:** desde 16/09/2026 os dois percentuais aparecem na tela em **dois slides** — no 4 como retrato do setor, no 11 como razão de $w^{\text{priv}} > 0$ —, com uma fonte, uma linha de proveniência e uma única medição por trás. Vale aqui a mesma ressalva de cobertura: é **amostra de cirurgiões**, não o conjunto dos especialistas |
+| Degrau de **R$ 5 mil** — *"a política aposta que R$ 5 mil compensam o lugar"* | Edital SGTES/MS nº 3/2025, item 11.1.3. Retomada do mesmo degrau dos slides 6, 7 e 14; linha acrescentada em 16/09/2026 |
 
 ### Slide 13 — Implicações para o PMM-E
 
 | Número | Fonte |
 |---|---|
 | $V_{im}$ integrado e a abertura de $c_{im}$ em dois blocos | `docs/02_teoria/modelo_micro.md`, §2.4 |
-| Nenhuma das três tradições trata de remuneração fixada por regra sobre índice territorial | idem, §3 |
+| *"O que **Moehling, Redding & Rossi-Hansberg e Choné & Ma** não têm: remuneração fixada por **regra pública sobre um índice territorial**"* | idem, §3. Desde 16/09/2026 a frase **nomeia os três** na tela, no lugar de "nenhuma das três tradições": a mudança é de enunciado, não de conteúdo, e recupera os nomes que saíram do slide 9 com a tabela das três tradições |
 | Tabela de derivadas ($\partial V/\partial B_m > 0$; $\partial^2 V/\partial B_m \partial w^{\text{priv}} < 0$; $\partial V/\partial p_m < 0$; $c_0'(IVS) \gtrless 0$) | idem, §3 e §3.1 |
-| As três dimensões do IVS 2010 e seus indicadores, mapeadas nos blocos do custo | Ipea, *Atlas da Vulnerabilidade Social* (2015); mapeamento em `modelo_micro.md`, §3.1 — o mapeamento é **leitura do projeto**, não classificação do Ipea |
+| As três dimensões do IVS 2010 e seus indicadores, mapeadas nos blocos do custo | Ipea, *Atlas da Vulnerabilidade Social* (2015); mapeamento em `modelo_micro.md`, §3.1 — o mapeamento é **leitura do projeto**, não classificação do Ipea. **Os nomes dos indicadores saíram da tela em 16/09/2026, mantidos por rastreio:** a tabela do slide 13 ficou com dimensão, bloco do custo e sinal; saneamento, lixo, mortalidade infantil, analfabetismo e os demais só constam do `modelo_micro.md` |
 
 ### Slide 14 — Hipótese do trabalho
 
@@ -206,8 +230,8 @@ rebaixou a manchete dos 10%.
 | Número | Fonte |
 |---|---|
 | 1.295 células estabelecimento–curso, 368 municípios (desfecho) | quadro de vagas do ciclo 1, chamada 1 |
-| **2.815 municípios**, ciclos 1 a 3 (cobertura do instrumento) | `output/aquisicao/quadro_vagas_consolidado.parquet`, 47.475 linhas, `ciclo` ∈ {1, 2, 3}; contagem verificada em 16/09/2026 |
-| CNES mensal, jun/2024 a jul/2026 | `output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet`; competências `202406` a `202607` no `manifesto_figuras.json` |
+| **2.815 municípios**, ciclos 1 a 3 (cobertura do instrumento) | `output/aquisicao/quadro_vagas_consolidado.parquet`, 47.475 linhas, `ciclo` ∈ {1, 2, 3}; contagem verificada em 16/09/2026. **Os 2.815 municípios saíram da tela em 16/09/2026, mantidos por rastreio:** a tabela do slide 15 diz só "edital e quadro de vagas, ciclos 1 a 3". A contagem segue sendo a cobertura do instrumento |
+| CNES mensal, jun/2024 a jul/2026 | `output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet`; competências `202406` a `202607` no `manifesto_figuras.json`. A janela de **12 meses prévios** que a tela exibe na linha de equipe $L$ é a do estoque `estoque_pre_por_10k`, definido em [`hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), §3; as competências do painel nunca foram à tela |
 | RAIS nunca adquirida; CNES sem carga horária nem renda; residência do profissional é sigilo fiscal; sem fonte municipal de custo de moradia | [`04_dados/02_inventario_dados_por_outcome.md`](../../04_dados/02_inventario_dados_por_outcome.md) |
 | Tipologia territorial em 4 estratos; REGIC 2018 e RMs/RIDEs 2022 (IBGE) | `docs/auditorias/09_tipologia_territorial.md` |
 | CNES físico (leitos e equipamentos) mapeado, competências não baixadas; SIH bloqueado | inventário de dados, e `docs/06_execucao/06_backlog_wp3_wp4_wp5.md` |
@@ -219,8 +243,9 @@ rebaixou a manchete dos 10%.
 | 177 dos 368 municípios com faixa publicada diferente da recalculada | portão R1, `docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`, §"Correção de 14/09/2026", e `a01b_reconstrucao_regra_faixa.json` |
 | 37 municípios com IVS ≤ 0,400 na Faixa 1; 94 na Faixa 2; os intervalos das três faixas se sobrepõem | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py` |
 | Em ±0,050 de **0,500**, os dois lados são **100% Faixa 1** (20 municípios de um lado, 11 do outro) | idem; `14_plano_implementacao_rdd_bolsa.md`, tabela de janelas |
-| Maior IVS da Faixa 3 é **0,372**; em ±0,010 de **0,400** não há Faixa 3 de nenhum lado | idem |
-| 83 municípios fora da melhor regra de limiar; **41 promovidos** com mediana de população **7.933** contra **32.179** dos **42 rebaixados**, e muito mais interior remoto | idem, §"a variação que sobra não é exógena" |
+| Maior IVS da Faixa 3 é **0,372**; em ±0,010 de **0,400** não há Faixa 3 de nenhum lado | idem. Na tela, só o **0,372**; a janela de ±0,010 sustenta a frase e nunca foi exibida |
+| 83 municípios fora da melhor regra de limiar; **41 promovidos** com mediana de população **7.933** contra **32.179** dos **42 rebaixados**, e muito mais interior remoto | idem, §"a variação que sobra não é exógena". Os cinco números estão na tela; "muito mais interior remoto" saiu da célula em 16/09/2026 e reaparece no texto do slide como a remoticidade sendo o previsor mais forte |
+| **R$ 10 mil a mais** entre Faixa 1 e Faixa 3 | diferença entre os R$ 20 mil e os R$ 10 mil do item 11.1.3 do Edital SGTES/MS nº 3/2025 — é o contraste entre extremos, não o degrau de **R$ 5 mil** entre faixas vizinhas dos slides 6, 7, 11 e 14. Linha acrescentada em 16/09/2026 |
 | Faixa 1 começa em IVS 0,303 | idem — em texto de apoio, fora da tela desde 16/09/2026 |
 | Remoticidade como previsor mais forte do desfecho | `A4_tabela_02_modelo_principal_LPM.csv` e `A4_tabela_02b_logit_AME.csv` |
 | Anexo IV e critérios de localização como o que destrava o efeito da bolsa; desenho do escore do candidato responde a outra pergunta | `docs/06_execucao/36_backlog_pos_auditoria.md`, item D-3, e `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md` — citados sem número, por escopo da banca 1 |
@@ -260,8 +285,10 @@ SUS" está **rebaixada a não citável em slide**: é fala do **ministro da Saú
 debate de medida provisória**, noticiada pelo Senado Notícias em **24/09/2025**
 (não 25/09, como este arquivo registrava), sem metodologia publicada, e
 **conflita com a fonte primária** — somando dupla prática e exclusivos do setor
-público, **80,1%** dos cirurgiões atendem SUS. O slide 4 a exibe apenas como
-**advertência** do que não se pode afirmar. O defensável é o inverso: o que é
+público, **80,1%** dos cirurgiões atendem SUS. Desde a compressão de 16/09/2026 a
+frase **não vai à tela**: ela e os 80,1% que a contradizem ficaram no bloco
+`**Nota de produção — o que não dá para dizer**` do slide 4, como advertência a
+quem monta o deck e a quem responde à banca. O defensável é o inverso: o que é
 raro é a **exclusividade** ao SUS.
 
 ### Reinhardt: retirado do slide
@@ -308,7 +335,7 @@ seção 4.0.
 Até 14/09/2026, `F1` e `F2` agrupavam municípios pela categoria de IVS do Ipea
 traduzida na grade de 2025, enquanto `F6` usava a faixa publicada na vaga, e o
 texto do slide falava em "municípios com bolsa de R$ 10 mil" — 48% dos rótulos
-estavam errados e o sinal de `F1` invertia. Desde então as três figuras usam a
+estavam errados (os mesmos 177 de 368 da seção 2) e o sinal de `F1` invertia. Desde então as três figuras usam a
 **faixa publicada**. A categoria recalculada só aparece no
 `manifesto_figuras.json`, como detalhe descritivo, e no slide 5, para mostrar
 que é piso e não critério. Não comparar valores das figuras atuais com os da
@@ -320,7 +347,7 @@ Situação em 16/09/2026, por número:
 
 | Número | Estado |
 |---|---|
-| **72,4% / 19,9% / 7,7%** de atuação dos cirurgiões | ✅ **conferido na fonte primária**, cap. 13, Figura 1, p. 254, com a frase transcrita acima |
+| **72,4% / 19,9% / 7,7%** de atuação dos cirurgiões — na tela no slide 4, e 72,4% e 7,7% de novo no slide 11 | ✅ **conferido na fonte primária**, cap. 13, Figura 1, p. 254, com a frase transcrita acima |
 | 597 mil médicos; 353.287 especialistas (59,1%); 453 no DF, 244 em SP, 68 no MA, 70 no PA | conferido em **cobertura** (Agência Brasil, abril de 2025; portal Afya) |
 | **Sudeste 55,4%**, Sul 16,7%, Nordeste 14,5%, Norte 5,9% | ⚠️ **ressalva de fonte.** Uma leitura do **PDF integral não localizou** esses percentuais. Estão conferidos **apenas em cobertura**, no portal Afya: *"A região Sudeste concentra 55,4% dos especialistas, seguida pelo Sul (16,7%) e Nordeste (14,5%). Já o Norte responde por apenas 5,9%"*. Os números **não são removidos** do slide; a citação é atribuída ao estudo e a checagem no original fica pendente |
 
@@ -342,6 +369,11 @@ tirá-las — deixaria o slide sem a evidência territorial. A pendência é de
 **forma, não de conteúdo** no caso de `E1`, cuja série está conferida em
 cobertura (453 no DF, 68 no MA); em `E2` é de forma **e** de fonte, ver `P7`.
 
+A compressão de 16/09/2026 tirou da tabela de figuras do slide 4 a coluna
+**Estado**, que declarava na tela "falta gerar por script". A pendência deixou de
+ser visível para a banca: continua aberta aqui e na lista de pendências de
+[02](02_conteudo_slides.md), mas nada na tela a anuncia.
+
 **O que fecha:** acrescentar as duas séries a
 `scripts/apresentacao/gerar_figuras_banca1.py`, lendo de `output/`, com a fonte
 registrada no `manifesto_figuras.json`. Enquanto isso não acontecer, as duas
@@ -357,8 +389,10 @@ verificação, e nenhuma tabela publicada foi localizada com esses cinco valores
 
 Consequência prática: **276 km** e **101 km** aparecem no texto do slide 4 e no
 gráfico, e são hoje os dois únicos números da apresentação sem rastreio até uma
-fonte checada. Enquanto a checagem não se fizer, tratá-los como **ilustrativos**
-e não como estatística do trabalho.
+fonte checada. Desde 16/09/2026 eles aparecem **sem ressalva na tela**: o corpo
+do slide perdeu a frase "fonte primária ainda não confirmada", e o "a confirmar"
+ficou só na linha de fontes, que desce a nota de rodapé. Enquanto a checagem não
+se fizer, tratá-los como **ilustrativos** e não como estatística do trabalho.
 
 **O que fecha:** localizar a tabela da REGIC 2018 sobre deslocamentos para
 serviços de saúde, registrar o arquivo em `data/raw/` com hash e gerar `E2` por
@@ -430,8 +464,14 @@ argumento mais forte da seção.
 2. Figura de fonte externa é preservada em `figuras/`, com a fonte na legenda e
    uma linha na seção 1.
 3. Figura conceitual recebe rótulo de ilustração do modelo.
-4. Número exibido sem linha na seção 2 é erro, não detalhe editorial.
+4. Número exibido sem linha na seção 2 é erro, não detalhe editorial. "Exibido"
+   é o **corpo do slide**: desde 16/09/2026 a linha `**Fontes:**` e o bloco
+   `**Nota de produção.**` não vão à tela, e o que só aparece neles fica
+   registrado aqui como fora da tela (ver a nota no topo).
 5. Documento oficial citado em slide tem cópia em `data/raw/aquisicao/`, com
    hash registrado aqui.
 6. Número que não se reproduz a partir de `output/` não vai à tela, ainda que
    venha de material do grupo.
+7. Número que sai da tela não é apagado daqui. A linha fica, com a data da saída
+   e a marca **"mantida por rastreio"**: deck e documento mudam de versão, e o
+   que já foi exibido à banca precisa continuar rastreável.
