@@ -23,10 +23,26 @@ pelo lado certo: o `.pptx` entra no pipeline, em vez de ficar fora dele.
 | `docs/07_apresentacoes/banca1/deck_pptx/README.md` | como o template é usado e por que não se edita conteúdo nele à mão |
 | `scripts/apresentacao/montar_deck_banca1_pptx.py` | aplica o conteúdo sobre o template e grava o deck |
 | `scripts/apresentacao/gerar_figura_custo_laboral_deck.py` | versão de projeção da curva de custo laboral |
+| `scripts/apresentacao/gerar_figura_especialistas_extremos.py` | razão de especialistas por UF, só os valores conferidos |
 | `output/apresentacao_banca1/deck_banca1_modelo_economico.pptx` | o deck vigente, derivado |
 | `output/apresentacao_banca1/custo_laboral_deck.png` | a figura de projeção |
+| `output/apresentacao_banca1/especialistas_extremos_uf.png` | a figura de UF que substituiu o gráfico nativo do template |
+| `tests/test_deck_banca1_pptx.py` | guardas do deck: contagem de slides, ausência de gráfico com dado embutido, sincronia do manifesto |
 | `output/apresentacao_banca1/equacoes/` | as equações novas, renderizadas em LaTeX |
 | `output/apresentacao_banca1/manifesto_deck_banca1.json` | proveniência: hash da base, hash da saída, roteiro dos 21 slides, hash de cada figura e de cada equação |
+
+### A correção que a montagem obrigou
+
+Os três gráficos que o template trazia eram objetos nativos, com a série dentro
+do próprio `.pptx`. O de especialistas por unidade da federação tinha **catorze
+das dezesseis barras interpoladas** em números redondos, e duas delas
+contradiziam a fonte que este repositório já havia conferido: São Paulo
+aparecia em 414 contra **244**, e Pará em 145 contra **70**.
+
+Os três saíram do deck. Entraram figuras de script versionado, lidas de
+`output/`, e a de unidade da federação passou a mostrar **apenas os quatro
+valores que a fonte reporta**. O detalhe está em `F9`, na seção 1-A de
+[`07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md`](07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md).
 
 ### O que mudou de estatuto
 

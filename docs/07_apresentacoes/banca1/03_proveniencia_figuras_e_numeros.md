@@ -65,6 +65,7 @@ declarada, script versionado, saída em `output/` e hash no manifesto.
 |---|---|---|---|
 | `F7` | Custo laboral líquido — versão de projeção | `output/apresentacao_banca1/custo_laboral_deck.png` | **ilustração conceitual do modelo**, gerada por script |
 | `F8` | Especialistas por 100 mil habitantes, série mensal por faixa | `output/apresentacao_banca1/oferta_antes_depois_por_faixa.png` | CNES + Censo 2022, gerada por script (mesma figura da seção 1) |
+| `F9` | Razão de especialistas por 100 mil habitantes — só os extremos reportados | `output/apresentacao_banca1/especialistas_extremos_uf.png` | Demografia Médica 2025, **apenas as quatro unidades da federação que a fonte reporta**, gerada por script |
 | `D1` | Deck da banca 1 | `output/apresentacao_banca1/deck_banca1_modelo_economico.pptx` | template do autor, com conteúdo aplicado por script |
 | `E1` | Equações do modelo renderizadas em LaTeX | `output/apresentacao_banca1/equacoes/*.png` | expressões de `docs/02_teoria/modelo_micro.md`, geradas pelo script do deck |
 
@@ -88,6 +89,38 @@ curvas são formas funcionais escolhidas para exibir os sinais das derivadas; os
 ordenada. Não é simulação de dados do programa, não é projeção de resultado e
 não pode ser lida como magnitude. O slide que a exibe deve rotulá-la como
 ilustração do modelo — regra permanente 3, na seção 4 deste documento.
+
+**Definição de `F9` — quatro unidades da federação, e não vinte e sete.** Gerada
+por
+[`scripts/apresentacao/gerar_figura_especialistas_extremos.py`](../../../scripts/apresentacao/gerar_figura_especialistas_extremos.py).
+Mostra **Distrito Federal 453, São Paulo 244, Pará 70 e Maranhão 68**
+especialistas por 100 mil habitantes — os quatro valores conferidos na seção 2
+deste documento, a partir da cobertura da Demografia Médica 2025. O PDF integral
+da Demografia Médica **não foi baixado** por este projeto, e é por isso que a
+figura não traz as demais unidades: o que não está conferido não entra.
+
+**Por que esta figura existe.** O template do autor trazia um gráfico de barras
+com as dezesseis unidades ordenadas. Catorze dessas barras eram números redondos
+interpolados — 414, 390, 375, 355, 345, 325, 310, 275, 260, 240, 215, 195, 165,
+145 — e apenas as duas extremas, 453,5 e 68,2, correspondiam à fonte. Duas das
+interpoladas **contradiziam** a fonte registrada aqui: São Paulo aparecia em 414
+contra 244 conferidos, e Pará em 145 contra 70. O gráfico era objeto nativo do
+`.pptx`, com a série embutida no arquivo, fora de qualquer script.
+
+Isso viola duas regras do projeto ao mesmo tempo — "não grave dados simulados,
+parâmetros assumidos ou cenários como se fossem observações" e "gráfico
+produzido fora do pipeline não entra em apresentação". O gráfico saiu do deck em
+16/09/2026 e `F9` ocupou seu lugar. Os outros dois gráficos nativos do template
+saíram junto: o de deslocamento passou a ler
+`docs/07_apresentacoes/banca1/figuras/deslocamento_por_regiao.png`, e o de valor
+da bolsa, `output/apresentacao_banca1/bolsa_por_faixa.png` (`F2`). **Nenhum
+gráfico do deck vigente tem dado embutido no arquivo**, e
+`tests/test_deck_banca1_pptx.py` trava isso: o teste falha se qualquer slide
+voltar a referenciar objeto de gráfico do PowerPoint.
+
+**O que destrava a figura completa.** Obter a tabela integral da *Demografia
+Médica no Brasil 2025*. Registrado como **D-5.2** em
+[`../../06_execucao/36_backlog_pos_auditoria.md`](../../06_execucao/36_backlog_pos_auditoria.md).
 
 **Definição de `D1` — o deck.** Entrada:
 `docs/07_apresentacoes/banca1/deck_pptx/base_modelo_economico.pptx`, o template
