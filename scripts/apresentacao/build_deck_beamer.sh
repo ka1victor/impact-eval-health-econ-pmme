@@ -3,8 +3,7 @@
 # Build determinístico do deck Beamer (tema Warsaw) da banca 1.
 #
 # Entrada : docs/07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex
-# Figuras : output/apresentacao_banca1/*.png
-#           docs/02_teoria/figuras/curva_custo_laboral_burnout.png
+# Figuras : output/apresentacao_banca1/*.png (as quatro usadas pelo deck)
 # Saída   : output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf
 #
 # Todos os caminhos são relativos à raiz do repositório; o script se posiciona
@@ -30,10 +29,8 @@ fi
 for fig in \
   output/apresentacao_banca1/oferta_pre_por_faixa.png \
   output/apresentacao_banca1/retaguarda_por_faixa.png \
-  output/apresentacao_banca1/vagas_ciclo1_por_regiao.png \
   output/apresentacao_banca1/bolsa_por_faixa.png \
-  output/apresentacao_banca1/preenchimento_ciclo1.png \
-  docs/02_teoria/figuras/curva_custo_laboral_burnout.png
+  output/apresentacao_banca1/preenchimento_ciclo1.png
 do
   if [[ ! -f "${fig}" ]]; then
     echo "ERRO: figura ausente: ${fig}" >&2
@@ -45,7 +42,7 @@ done
 mkdir -p "${OUT_REL}"
 
 # Reprodutibilidade: congela a data embutida no PDF.
-export SOURCE_DATE_EPOCH=1789344000   # 2026-09-14T00:00:00Z
+export SOURCE_DATE_EPOCH=1789516800   # 2026-09-16T00:00:00Z
 export FORCE_SOURCE_DATE=1
 
 # Duas passadas: a segunda resolve \inserttotalframenumber.

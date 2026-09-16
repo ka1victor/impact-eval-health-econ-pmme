@@ -2,7 +2,7 @@
 
 > **Classificação:** decisão de comunicação, não de método<br>
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
-> **Atualização:** 9 de setembro de 2026
+> **Atualização:** 16 de setembro de 2026
 
 ---
 
@@ -13,17 +13,17 @@ territorial, e ainda não se sabe se esse preço compra o preenchimento das vaga
 que pretendia comprar.**
 
 A banca 1 tem seis seções fixas. Cada seção ocupa quantos slides o argumento
-pedir — a motivação, que tem mais a dizer, ocupa oito; as demais, um a quatro.
+pedir — a motivação, que tem mais a dizer, ocupa seis; as demais, um ou dois.
 
 | Seção | Papel narrativo | Slides |
 |---|---|:---:|
 | — Capa e sumário | contrato com a banca | 1–2 |
-| **1. Motivação** | em três blocos. **Problema:** especialistas existem, mas não no interior; nos municípios do programa já havia menos especialistas e menos colegas onde a bolsa seria maior; para o médico, "vulnerável" são quatro desvantagens concretas. **Política:** o que é o PMM-E — lei, quem participa, aprimoramento em serviço, 16 cursos, como a vaga chega, onde está — e a regra que faz o IVS virar bolsa. **Efeito incerto:** a evidência a favor de pagar mais, a evidência contra, e o que o primeiro ciclo mostrou | 3–10 |
-| **2. Pergunta** | a pergunta, e a leitura em dois objetos: o preço e a desvantagem | 11 |
-| **3. Literatura teórica** | uma tradição por slide: a estrutura da decisão, o custo geográfico, o custo laboral | 12–14 |
-| **4. Modelo microeconômico** | como juntamos as três; o que a bolsa paga e o que não paga; por que o IVS organiza o custo | 15–17 |
-| **5. Hipótese** | da condição de aceitação à hipótese única e à condição de degrau, em quatro passos | 17 |
-| **6. Viabilidade empírica** | o que se consegue medir de cada peça, o que fica de fora, e por que separar bolsa de vulnerabilidade é difícil | 18 |
+| **1. Motivação** | em três blocos. **Problema:** especialistas existem, mas não no interior; para o médico, "vulnerável" são quatro desvantagens concretas. **Política:** o que é o PMM-E e a regra que faz o IVS virar bolsa. **Efeito incerto:** onde a bolsa é maior o médico fica sozinho; a evidência a favor e contra não decide; o primeiro ciclo tampouco | 3–8 |
+| **2. Pergunta** | a pergunta, e a leitura em dois objetos: o preço e a desvantagem | 9 |
+| **3. Literatura teórica** | a estrutura da decisão; depois o custo aberto em dois blocos, geográfico e laboral | 10–11 |
+| **4. Modelo microeconômico** | como juntamos as três; o que a bolsa paga e por que o IVS organiza o custo | 12–13 |
+| **5. Hipótese** | da condição de aceitação à hipótese única e à condição de degrau, em quatro passos | 14 |
+| **6. Viabilidade empírica** | o que se consegue medir, o que a reconstrução da regra mostrou, e o que fica de pé | 15 |
 
 A seção 6 encerra a entrega: não há slide de perguntas. A margem tratada é o
 **preenchimento** das vagas; permanência da oferta fica fora desta
@@ -31,36 +31,47 @@ apresentação, embora continue no escopo do projeto.
 
 ### 1.1 A lógica de cada bloco da motivação
 
-O bloco **problema** mostra a dor pelos dois lados. O retrato nacional (slide
-3) diz que a escassez é territorial, não numérica. O slide 4 vira a câmera para
-quem decide: para o médico, "município vulnerável" não é um índice, são quatro
-desvantagens concretas — retaguarda, infraestrutura, distância da família,
-mercado privado — e o slide diz quais delas medimos. São essas quatro que
-reaparecem, formalizadas, nos slides 14 e 15. O bloco fecha dizendo que nenhuma
-se resolve sozinha, o que abre espaço para a política.
+O bloco **problema** cabe num slide (3) e mostra a dor pelos dois lados. Abre
+com o retrato nacional — a escassez é territorial, não numérica — e vira a
+câmera para quem decide: para o médico, "município vulnerável" não é um índice,
+são quatro desvantagens concretas — retaguarda, infraestrutura, distância da
+família, mercado privado — e o slide diz quais delas medimos. São essas quatro
+que reaparecem, formalizadas, nos slides 11 e 13. O bloco fecha dizendo que
+nenhuma se resolve sozinha e que o Ministério reconheceu a urgência, o que abre
+espaço para a política.
 
 O bloco **política** responde à pergunta que qualquer banca faz — "o que é
-exatamente esse programa?". O slide 5 resume o edital: quem, o quê, como, onde,
-e termina apontando que cada vaga sai publicada com uma faixa de bolsa. O slide
-6 isola essa peça, a única que o trabalho estuda: a regra que transforma o
-índice em valor, e por que o IVS é piso e não critério.
+exatamente esse programa?". O slide 4 resume o edital em quatro blocos — lei,
+quem, o quê, onde — e termina apontando que cada vaga sai publicada com uma
+faixa de bolsa. O slide 5 isola essa peça, a única que o trabalho estuda: a
+regra que transforma o índice em valor, e por que o IVS é piso e não critério.
 
 O bloco **efeito incerto** é a exceção declarada ao escopo teórico (seção 2.4).
 Ele existe para justificar a pergunta, e por isso precisa mostrar que a resposta
-não é óbvia. Abre com a discordância das duas medidas de oferta (slide 7): por
+não é óbvia. Abre com a discordância das duas medidas de oferta (slide 6): por
 habitante a bolsa maior não vai para onde falta mais, mas em número de colegas
 vai — o programa põe R$ 5 mil a mais onde o médico trabalharia sozinho. Segue
-com a evidência internacional, que diz que pagar mais funciona (slide 8), mas
-que é caro, não move todo mundo e não segura ninguém (slide 9). Fecha com o
-primeiro ciclo do próprio PMM-E (slide 10). Sem esse bloco a pergunta pareceria
-retórica.
+com a evidência internacional num só slide, a favor e contra lado a lado
+(slide 7): pagar mais funciona, mas é caro, não move todo mundo e não segura
+ninguém. Fecha com o primeiro ciclo do próprio PMM-E (slide 8). Sem esse bloco a
+pergunta pareceria retórica.
 
-**Por que esta ordem, e não outra.** O slide 7 fala em "faixa publicada",
+**Por que esta ordem, e não outra.** O slide 6 fala em "faixa publicada",
 "Faixa 1" e "categoria de IVS" como vocabulário corrente, e remete à divergência
-entre faixa publicada e categoria recalculada. Enquanto ele vinha antes do bloco
-da política, a plateia encontrava esses termos duas telas antes de saber o que
-significavam, e o slide precisava remeter para a frente. A política vem antes
-porque é ela que dá o vocabulário e o objeto.
+entre faixa publicada e categoria recalculada. A política vem antes porque é ela
+que dá o vocabulário e o objeto.
+
+### 1.2 O fecho da apresentação
+
+O deck constrói, do slide 3 ao 14, uma hipótese sobre o **valor da bolsa**. O
+slide 15 precisa então dizer duas coisas na ordem certa: primeiro, que a
+conclusão de viabilidade é sobre esse objeto — e ela é negativa com fonte
+pública, pela ausência do Anexo IV; segundo, o que fica de pé — a pergunta
+continua a do trabalho, a relação faixa–preenchimento é reportada como
+gradiente, e o desenho causal já disponível responde a outra pergunta, o efeito
+de ganhar a vaga. Sem a primeira frase, a banca ouve 14 slides sobre a bolsa e
+um fecho sobre outra coisa. É a razão de o slide 15 ter sido reescrito, e não
+cortado, em 16/09/2026.
 
 ---
 
@@ -73,32 +84,34 @@ sustenta**. A posição na apresentação fica em um elemento separado — no
 markdown, a linha em `código` logo abaixo do título; no slide, uma faixa fina
 fora do título.
 
-Títulos dos slides 3 a 18 — curtos, declarativos e sem palavra difícil:
+Títulos dos slides 3 a 15 — curtos, declarativos e sem palavra difícil:
 
-3. Especialistas não faltam; faltam no interior
-4. Onde a bolsa é maior, já havia menos especialistas
-5. O que o médico vê ao decidir
-6. O que é o PMM-E
-7. A bolsa remunera o lugar
-8. Pagar mais funciona: a evidência a favor
-9. Mas é caro, e não segura: a evidência contra
-10. No primeiro ciclo, a bolsa maior não ordenou o preenchimento
-11. Pergunta
-12. De onde vem o modelo
-13. Como o médico escolhe onde trabalhar
-14. O que a bolsa paga — e o que não paga
-15. O custo de estar ali
-16. O IVS organiza o custo
-17. A hipótese
-18. Viabilidade empírica
+3. Especialistas faltam no interior, e o médico sabe por quê
+4. O que é o PMM-E
+5. A bolsa remunera o lugar
+6. Onde a bolsa é maior, o médico fica sozinho
+7. A evidência não decide se R$ 5 mil bastam
+8. No primeiro ciclo, a bolsa maior não ordenou o preenchimento
+9. Pergunta
+10. A decisão: onde vale a pena estar
+11. Abrindo o custo: o lugar e o trabalho
+12. Como juntamos os três
+13. O IVS organiza o custo
+14. A hipótese
+15. Viabilidade empírica
 
 ### 2.2 Uma afirmação por slide
 
 Slide com mais de uma figura só quando todas sustentam **a mesma** afirmação. O
-slide 7 tem duas figuras — oferta por habitante e colegas por município —
-porque as duas dizem que, onde a bolsa seria maior, já havia menos
-especialistas. O slide 10 tem uma figura em dois painéis porque o contraste
-entre faixa e território é a afirmação.
+slide 6 tem duas figuras — oferta por habitante e colegas por município —
+porque a discordância entre as duas é a afirmação: por habitante a bolsa maior
+não vai para onde falta mais, em número de colegas vai. O slide 8 tem uma figura
+em dois painéis porque o contraste entre faixa e território é a afirmação.
+
+Slide fundido em 16/09/2026 obedece à mesma regra por afirmação, não por tema:
+o slide 7 junta a evidência a favor e contra porque a afirmação é uma só — a
+evidência não decide; o slide 11 junta os dois blocos do custo porque a
+afirmação é que o custo de Moehling et al. se abre em lugar e trabalho.
 
 ### 2.3 Fontes, não notas
 
@@ -112,19 +125,21 @@ não como imagem de recorte.
 Fora da motivação, **nada de econometria**. Não entram estimador,
 especificação, regressão, coeficiente, elasticidade, colinearidade, desenho de
 identificação nem o vocabulário de descontinuidade. Literatura empírica também
-não: os slides 12 a 14 trazem apenas trabalhos teóricos.
+não: os slides 10 e 11 trazem apenas trabalhos teóricos.
 
 A motivação é a exceção declarada. Ali, antes da pergunta, entra evidência sobre
 o que se pode esperar da política — inclusive de trabalhos empíricos de outros
 países — porque é o que justifica perguntar. Mesmo ali, o desenho de cada estudo
 é descrito em palavras comuns: "sorteou o salário anunciado", e não "RCT com
-randomização em dois estágios". O slide 10 mostra proporções brutas e diz que
+randomização em dois estágios". O slide 8 mostra proporções brutas e diz que
 são descrição, não efeito.
 
 A viabilidade empírica descreve **o que se consegue medir**, não como se
 estimaria. A dificuldade de separar bolsa de vulnerabilidade é apresentada como
-fato sobre os dados — não existe município com bolsa alta e vulnerabilidade
-baixa — sem nomear estimadores.
+fato sobre os dados — há suporte comum, mas o tratamento é localmente constante
+nos cortes e a variação residual segue a remoticidade — sem nomear estimadores.
+O slide 15 nomeia o desenho de escore do candidato por seu objeto, não por seu
+estimador.
 
 ### 2.5 Vocabulário
 
@@ -262,6 +277,41 @@ Nada de conteúdo novo: tudo sai de
 §2.3, §2.4 e §3.2, que já separava assim. A apresentação vai de **18 para 19
 slides**; os dois decks foram reconstruídos, o Beamer sem nenhum Overfull.
 
+## 4d. Corte de 16/09/2026 — de 19 para 15 slides
+
+A pedido do autor, para facilitar a narrativa: **cortar além de comprimir**. Os
+decks tinham ido de 36 para 22 frames comprimindo, mas o documento canônico
+continuava com 19 slides. O critério do corte foi o da seção 2.2 — um slide por
+afirmação — aplicado ao contrário: onde dois slides sustentavam a mesma
+afirmação, virou um; onde um slide descrevia sem argumentar, encolheu.
+
+| Antes | Depois | O que saiu |
+|---|---|---|
+| 3 — retrato nacional; 4 — o que o médico vê | **3** — Especialistas faltam no interior, e o médico sabe por quê | as manchetes de imprensa e os 10% do SUS (contexto que a banca já tem); a linha sobre os EUA no peso das desvantagens; Pará entre os extremos (fica o Maranhão) |
+| 5 — O que é o PMM-E | **4** | a enumeração dos 16 cursos (fica a contagem: 6 cirúrgicos e 10 ambulatoriais); o fluxo em três passos (fica uma frase: o Ministério publica o quadro); a vedação de substituição; a figura regional `F5`; 678/1.145, MG 252 |
+| 6 — A bolsa remunera o lugar | **5** | nada |
+| 7 — Onde a bolsa é maior, o médico fica sozinho | **6** | nada; a referência cruzada passa a apontar para o slide 5 |
+| 8 — a favor; 9 — contra | **7** — A evidência não decide se R$ 5 mil bastam | a redundância entre os dois fechos. A favor e contra ficam lado a lado, com os mesmos números; a ressalva das 20 horas e o fecho "dinheiro move alocação, mas…" permanecem |
+| 10 — o ciclo 1 | **8** | nada |
+| 11 — Pergunta | **9** | nada |
+| 12 — a decisão (Moehling et al.) | **10** | nada |
+| 13 — o lugar; 14 — o trabalho | **11** — Abrindo o custo: o lugar e o trabalho | a figura `F4` da curva de custo laboral, cujo formato em U passa a ser descrito em texto; as tabelas de componentes ficam |
+| 15 — Como juntamos os três | **12** | nada; "os dois slides seguintes" vira "o slide seguinte" |
+| 16 — o que a bolsa paga; 17 — o IVS organiza o custo | **13** — O IVS organiza o custo | a tabela capital/interior do antigo 16, que vira duas frases antes da equação $w = B + w^{\text{priv}}$; a tabela dimensão–bloco e a ambiguidade do sinal ficam |
+| 18 — A hipótese | **14** | nada |
+| 19 — Viabilidade empírica | **15** | nada saiu; **entrou** uma frase de enquadramento antes dos três resultados e um bloco final "o que fica de pé" — ver seção 1.2 |
+
+Dois problemas registrados como ressalva ficaram resolvidos pelo corte, e o
+documento canônico registra como: a contagem de 10 cursos ambulatoriais foi
+conferida no edital e no quadro de vagas (a enumeração antiga colapsava três
+cursos num item), e a figura do custo laboral, ilegível em projeção, saiu do
+deck.
+
+Nenhum número novo entrou. Os decks foram reconstruídos a partir do documento
+cortado: o Beamer em **15 frames** e 27 páginas, sem `Overfull`; o Slidev em
+26 páginas. As figuras `F4` e `F5` continuam sendo geradas e passam à lista de
+figuras não usadas em [03 — Proveniência](03_proveniencia_figuras_e_numeros.md#figuras-geradas-e-não-usadas).
+
 ## 5. Defeitos do material anterior
 
 Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.
@@ -283,10 +333,10 @@ Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.
 | Seção | Slides | Minutos |
 |---|:---:|:---:|
 | Capa e sumário | 2 | 1 |
-| 1. Motivação | 8 | 11 |
+| 1. Motivação | 6 | 8 |
 | 2. Pergunta | 1 | 1 |
-| 3. Literatura teórica | 3 | 5 |
-| 4. Modelo microeconômico | 3 | 6 |
+| 3. Literatura teórica | 2 | 4 |
+| 4. Modelo microeconômico | 2 | 4 |
 | 5. Hipótese | 1 | 3 |
-| 6. Viabilidade empírica | 1 | 2 |
-| **Total** | **19** | **29** |
+| 6. Viabilidade empírica | 1 | 3 |
+| **Total** | **15** | **24** |

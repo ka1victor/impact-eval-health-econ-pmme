@@ -11,8 +11,8 @@
 #   output/apresentacao_banca1/deck_slidev/png/   (apenas com o argumento png)
 #
 # Proveniência das figuras: nenhuma imagem é gerada, editada ou copiada para
-# dentro do versionamento. As figuras vivem em `output/apresentacao_banca1/` e
-# em `docs/02_teoria/figuras/`; este script apenas materializa links simbólicos
+# dentro do versionamento. As figuras vivem em `output/apresentacao_banca1/`;
+# este script apenas materializa links simbólicos
 # para elas em `<deck>/public/fig/`, diretório de trabalho ignorado pelo Git.
 # ---------------------------------------------------------------------------
 
@@ -60,10 +60,8 @@ link_figura() {
 
 link_figura output/apresentacao_banca1/oferta_pre_por_faixa.png
 link_figura output/apresentacao_banca1/retaguarda_por_faixa.png
-link_figura output/apresentacao_banca1/vagas_ciclo1_por_regiao.png
 link_figura output/apresentacao_banca1/bolsa_por_faixa.png
 link_figura output/apresentacao_banca1/preenchimento_ciclo1.png
-link_figura docs/02_teoria/figuras/curva_custo_laboral_burnout.png
 
 # --- 3. exportação ---------------------------------------------------------
 # `slidev export` sobe um servidor Vite próprio. Na primeira execução depois de

@@ -8,6 +8,60 @@
 
 ---
 
+## 16/09/2026 — Banca 1: corte de 19 para 15 slides, para o arco narrativo
+
+A pedido do autor: **cortar além de comprimir**, para facilitar a narrativa. A
+compressão de 14/09 tinha reduzido os decks de 36 para 22 frames, mas o
+documento canônico continuava com 19 slides e o tempo estimado em 29 minutos.
+Além disso, o deck construía do slide 3 ao 18 uma hipótese sobre o valor da
+bolsa e fechava dizendo que o desenho causal do trabalho usava outra coisa, sem
+enquadrar a passagem.
+
+### O corte
+
+Critério: um slide por afirmação (roteiro, §2.2), aplicado ao contrário — dois
+slides com a mesma afirmação viram um; slide que descreve sem argumentar
+encolhe. Detalhe slide a slide em
+[`07_apresentacoes/banca1/01_roteiro_narrativo.md`](07_apresentacoes/banca1/01_roteiro_narrativo.md), §4d.
+
+| Fusão ou corte | Antes | Depois |
+|---|:---:|:---:|
+| retrato nacional + o que o médico vê | 3, 4 | **3** |
+| o que é o PMM-E, sem a lista de cursos, o fluxo em passos e a figura regional | 5 | **4** |
+| evidência a favor + contra | 8, 9 | **7** |
+| custo geográfico + custo laboral, sem a figura do U | 13, 14 | **11** |
+| o que a bolsa paga + o IVS organiza o custo | 16, 17 | **13** |
+| viabilidade, reescrita com enquadramento e "o que fica de pé" | 19 | **15** |
+
+Os demais slides só mudaram de número. Tempo estimado: de 29 para 24 minutos.
+
+### Consequências
+
+- `F4` (`curva_custo_laboral_burnout.png`) e `F5` (`vagas_ciclo1_por_regiao.png`)
+  saem do deck e passam à lista de figuras geradas e não usadas em
+  `03_proveniencia_figuras_e_numeros.md`. O script de figuras continua gerando
+  `F5`; os scripts de build dos decks deixam de exigir as duas.
+- As duas ressalvas de conteúdo abertas ficam **encerradas**: a contagem de 10
+  cursos ambulatoriais foi conferida na Tabela 3 do edital e nos cursos 7 a 16
+  do quadro de vagas (a lista antiga colapsava três cursos num item), e a
+  legibilidade de `F4` deixa de afetar a apresentação.
+- Os decks foram reconstruídos a partir do documento cortado: Beamer com **15
+  frames** (um por slide) e 27 páginas, sem `Overfull`; Slidev com **26
+  páginas**. `SOURCE_DATE_EPOCH` do Beamer passou a 16/09/2026.
+- `02_teoria/hipoteses_e_viabilidade_empirica.md`, §4.2, ainda dizia que isolar
+  o efeito da bolsa exigia "o escore administrativo"; passou a refletir a leitura
+  do edital de 14/09: o que falta é o **Anexo IV** e os critérios de localização
+  da cláusula 11.1.3.
+
+### O que não mudou
+
+Nenhum número novo entrou. Os cinco pontos de proveniência `P1`–`P5` continuam
+registrados; `P4` foi reescrito para dizer o estado atual — as três figuras
+usam a faixa publicada desde 14/09 — em vez da escolha anterior, que ele ainda
+descrevia como deliberada.
+
+---
+
 ## 14/09/2026 — Banca 1: a motivação reordenada para seguir o argumento
 
 A motivação estava fragmentada porque estava fora de ordem lógica, e a correção

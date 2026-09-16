@@ -116,12 +116,15 @@ documento, apenas o que a apresentação enuncia como hipótese a testar.
 | — | custo locacional, $\partial\Pr/\partial c_m < 0$ | apresentado como **obstáculo de identificação**, não como hipótese: o custo não varia livremente, porque a regra do edital o amarra à bolsa. Operacionaliza-se por H3 (mercado privado), H4 (sub-índices do IVS) e 4.1 (infraestrutura), todas leituras do mesmo $c_m$ |
 | — | persistência da oferta | H2 canônica; fora da banca 1, permanece no escopo do projeto |
 
-A apresentação declara, no mesmo slide, como cada objeto aparece nos dados: o
-preenchimento por célula CNES–curso; a bolsa como faixa anunciada, colinear
-com a categoria de IVS por construção da regra; o custo como IVS, sub-índices,
-tipologia territorial e estoque prévio. E declara o limite: isolar o efeito da
-bolsa do efeito do custo exige a fronteira entre faixas com o escore
-administrativo, que não está recuperado — até lá, o que se estima é gradiente.
+A apresentação declara, no slide de viabilidade, como cada objeto aparece nos
+dados: o preenchimento por célula CNES–curso; a bolsa como faixa anunciada, cujo
+piso é a categoria de IVS por construção da regra; o custo como IVS,
+sub-índices, tipologia territorial e estoque prévio. E declara o limite: a
+reconstrução da regra (R1, 14/09/2026) mostrou que o IVS público é piso da
+bolsa, não critério, e que o tratamento é localmente constante nos dois cortes.
+Isolar o efeito da bolsa do efeito do custo exige o **Anexo IV** e os critérios
+de localização da cláusula 11.1.3 do edital — até lá, o que se estima é
+gradiente.
 
 ### 4.3 Linguagem permitida
 

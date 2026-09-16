@@ -328,6 +328,13 @@ body,
   color: #ffffff;
 }
 
+/* Itálico dentro da caixa verde herdava a cor escura da regra geral de `em`
+   e desaparecia sobre o fundo. Herda a cor clara da caixa. */
+.callout em,
+.callout strong em {
+  color: inherit;
+}
+
 .callout-soft {
   background: var(--pmme-sage-wash);
   border-left: 3px solid var(--pmme-green);

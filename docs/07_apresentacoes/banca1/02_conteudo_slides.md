@@ -6,7 +6,8 @@
 > **derivados**: divergência entre deck e este documento é erro do deck.<br>
 > **Escopo:** a banca 1 é teórica e termina na viabilidade empírica; não
 > apresenta resultado de estimação.<br>
-> **Atualização:** 14 de setembro de 2026.
+> **Atualização:** 16 de setembro de 2026 — corte de 19 para 15 slides, ver
+> [roteiro, seção 4d](01_roteiro_narrativo.md#4d-corte-de-16092026--de-19-para-15-slides).
 
 ---
 
@@ -37,36 +38,16 @@ Autoria · instituição · data da banca
 
 # 1. Motivação
 
-## 3 — Especialistas não faltam; faltam no interior
+## 3 — Especialistas faltam no interior, e o médico sabe por quê
 
-`1. Motivação · O problema · 1 de 2`
+`1. Motivação · O problema`
 
 O Brasil tinha, em 2024, **353 mil médicos especialistas** — 59% dos 597 mil
-médicos do país. O problema não é o número. É onde eles estão.
+médicos do país. **55%** estão no **Sudeste** e **6%** no **Norte**; são **453**
+por 100 mil habitantes no **Distrito Federal** e **68** no **Maranhão**. O
+problema não é o número. É onde eles estão.
 
-| | |
-|---|---|
-| **55%** dos especialistas estão no **Sudeste**; **6%** no **Norte** | **453** por 100 mil habitantes no **Distrito Federal**; **68** no **Maranhão** e **70** no **Pará** |
-
-Quem sente a falta é o paciente do SUS fora dos grandes centros: apenas **10%**
-dos especialistas atendem no SUS.
-
-Em 2025 o Ministério da Saúde reconheceu **situação de urgência em saúde
-pública** no país, por **24 meses**, em razão do tempo de espera na atenção
-especializada — e lançou o **Agora Tem Especialistas**, do qual o **PMM-E** é o
-braço de provimento.
-
-**Fontes:** Scheffer et al., *Demografia Médica no Brasil 2025* (FMUSP/AMB),
-dez/2024; Portaria GM/MS nº 7.061/2025; Senado Notícias, 25/09/2025, referindo
-dados do Ministério da Saúde.
-
----
-
-## 4 — O que o médico vê ao decidir
-
-`1. Motivação · O problema · 2 de 2`
-
-**O problema tem outro lado: a decisão do médico.** Para ele, "município
+**E o problema tem outro lado: a decisão do médico.** Para ele, "município
 vulnerável" não é um índice — é um conjunto de desvantagens concretas, e
 **duas delas nós conseguimos medir**.
 
@@ -77,20 +58,23 @@ vulnerável" não é um índice — é um conjunto de desvantagens concretas, e
 | **Distância da família** | viver longe de onde a família está e onde se formou | não |
 | **Mercado privado ausente** | a remuneração se reduz ao que o programa paga | não |
 
-**O peso de cada uma, na literatura.** **EUA**, século XX: a escolha já dependia
-da proximidade da família. **Brasil**, 50 mil generalistas de 2001 a 2013: **a
-proximidade do lugar de nascimento ou de formação é o principal fator**;
-salário e infraestrutura pesam menos. **Austrália**, 3.727 clínicos: **65% não
-mudariam por pacote nenhum**.
+**O peso de cada uma, na literatura.** **Brasil**, 50 mil generalistas de 2001
+a 2013: **a proximidade do lugar de nascimento ou de formação é o principal
+fator**; salário e infraestrutura pesam menos. **Austrália**, 3.727 clínicos:
+**65% não mudariam por pacote nenhum**.
 
-Nenhuma dessas desvantagens se resolve sozinha. É aí que entra a política.
+Nenhuma dessas desvantagens se resolve sozinha. Em 2025 o Ministério da Saúde
+reconheceu **situação de urgência em saúde pública**, por **24 meses**, em razão
+do tempo de espera na atenção especializada — e lançou o **Agora Tem
+Especialistas**, do qual o **PMM-E** é o braço de provimento.
 
-**Fontes:** Moehling et al. (2020), *Cliometrica*, p. 184; Costa, Nunes &
-Sanches (2024), *REStat*; Scott et al. (2013), *Social Science & Medicine*.
+**Fontes:** Scheffer et al., *Demografia Médica no Brasil 2025* (FMUSP/AMB),
+dez/2024; Portaria GM/MS nº 7.061/2025; Costa, Nunes & Sanches (2024),
+*REStat*; Scott et al. (2013), *Social Science & Medicine*.
 
 ---
 
-## 5 — O que é o PMM-E
+## 4 — O que é o PMM-E
 
 `1. Motivação · A política · 1 de 2`
 
@@ -103,46 +87,26 @@ vaga. Não é concurso nem emprego: recebem **bolsa-formação** mensal do
 Ministério, **sem vínculo**.
 
 **O quê.** **Aprimoramento em serviço** de **12 meses**, **20 horas semanais**
-em estabelecimento do SUS, com supervisão e mentoria de instituição formadora e
-imersões em serviços de referência.
+em estabelecimento do SUS, com supervisão e mentoria de instituição formadora.
+São **16 cursos** — 6 cirúrgicos e 10 ambulatoriais — com foco no câncer e no
+diagnóstico que o SUS mais espera.
 
-**São 16 cursos** — o foco é o câncer e o diagnóstico que o SUS mais espera:
+**Onde, no primeiro ciclo (julho de 2025).** **1.295 vagas**
+estabelecimento–curso em **460 estabelecimentos** e **368 municípios**, em
+todas as UFs. O **Nordeste** concentra 39% das vagas; dois terços dos municípios
+têm menos de 100 mil habitantes; **18 são capitais**.
 
-| 6 cirúrgicos | 10 ambulatoriais |
-|---|---|
-| anestesiologia; cirurgia geral, oncológica, colorretal, digestiva, ginecológica | endoscopia e colonoscopia, oncologia clínica, radioterapia, ecocardiografia, ultrassonografia mamária, colposcopia, videolaringoscopia, anatomia patológica |
-
-**Como a vaga chega ao médico.**
-
-1. **Estado ou município** indica serviço e especialidade; a **comissão
-   bipartite** prioriza.
-2. O **Ministério** analisa a capacidade instalada e publica o quadro de vagas:
-   município, estabelecimento, curso e **faixa de bolsa**.
-3. O **médico** escolhe **até dois locais**, em ordem de preferência, e é
-   classificado por titulação e tempo de formação.
-
-O serviço **não pode substituir** profissional já contratado.
-
-**Onde, no primeiro ciclo (julho de 2025).**
-
-![Células e vagas imediatas do ciclo 1 por região](../../../output/apresentacao_banca1/vagas_ciclo1_por_regiao.png)
-
-**1.295 vagas** estabelecimento–curso em **460 estabelecimentos** e **368
-municípios**, em todas as UFs — 678 para preenchimento imediato e 1.145 em
-cadastro de reserva. O **Nordeste** concentra 39% das vagas; **Minas Gerais** é
-o estado com mais vagas (252). Dois terços dos municípios têm menos de 100 mil
-habitantes; **18 são capitais**.
-
-Cada vaga do quadro sai publicada com uma **faixa de bolsa**. É essa regra —
-e só ela — que o trabalho estuda.
+O Ministério publica o quadro de vagas — município, estabelecimento e curso — e
+cada vaga sai com uma **faixa de bolsa**. É essa regra — e só ela — que o
+trabalho estuda.
 
 **Fontes:** Lei nº 15.233/2025, art. 22-D; Portaria GM/MS nº 7.177/2025; Edital
-SGTES/MS nº 3/2025 (DOU 24/07/2025), itens 1, 3–5, 10 e 11; quadro de vagas do
-ciclo 1, chamada 1; Censo 2022 (IBGE).
+SGTES/MS nº 3/2025 (DOU 24/07/2025), itens 1, 3–5, 10 e 11 e Tabela 3; quadro
+de vagas do ciclo 1, chamada 1; Censo 2022 (IBGE).
 
 ---
 
-## 6 — A bolsa remunera o lugar
+## 5 — A bolsa remunera o lugar
 
 `1. Motivação · A política · 2 de 2`
 
@@ -192,9 +156,9 @@ Brasileiros* (2015); quadro de vagas do ciclo 1.
 
 ---
 
-## 7 — Onde a bolsa é maior, o médico fica sozinho
+## 6 — Onde a bolsa é maior, o médico fica sozinho
 
-`1. Motivação · O efeito é incerto · 1 de 4`
+`1. Motivação · O efeito é incerto · 1 de 3`
 
 **Onde a regra manda o dinheiro?** Nos **295 municípios** com vaga no ciclo 1,
 um mês antes da oferta e agrupados pela **faixa efetivamente publicada**, as
@@ -216,69 +180,38 @@ compensa?
 correspondência unívoca curso–CBO, nos 295 municípios com vaga no ciclo 1;
 população do Censo 2022 (IBGE); **faixa pela bolsa publicada em cada vaga**, não
 pela categoria de IVS recalculada — as duas divergem em 177 dos 368 municípios
-(slide 6). A Faixa 1 tem 150 pares município–especialidade em 85 municípios.
+(slide 5). A Faixa 1 tem 150 pares município–especialidade em 85 municípios.
 
 ---
 
-## 8 — Pagar mais funciona: a evidência a favor
+## 7 — A evidência não decide se R$ 5 mil bastam
 
-`1. Motivação · O efeito é incerto · 2 de 4`
+`1. Motivação · O efeito é incerto · 2 de 3`
 
-O programa aposta que dinheiro compensa lugar ruim. A aposta tem precedente.
+O programa aposta que dinheiro compensa lugar ruim. A literatura diz que a
+aposta tem precedente — e tem limites.
 
-**No México, o salário foi sorteado.** Um concurso público real distribuiu
-**106 postos** em municípios pobres e anunciou, **ao acaso**, dois salários.
-
-- Onde o salário era **33% maior**, a aceitação subiu **15 pontos percentuais**.
-- O efeito foi maior onde o lugar era pior: a mais de **200 km** da cidade
-  natal, a aceitação foi de **25% para cerca de 80%**.
-- O aumento **anulou** a rejeição aos municípios de menor desenvolvimento
-  humano, **sem** atrair candidatos menos qualificados ou motivados.
-
-**O degrau do PMM-E tem o tamanho que a literatura pede.** O que um médico
-exige para ir a um posto pior vai de **37% a 64%** da renda anual em cidades
-pequenas (Austrália), e a oferta de médicos no interior brasileiro responde a
-salário com elasticidade de **0,7**. O degrau do programa — R$ 5 mil sobre
-R$ 10 mil, ou **+50%** — cai dentro dessa faixa.
+| A favor: pagar mais funciona | Contra: é caro, e não segura |
+|---|---|
+| **No México, o salário foi sorteado.** Um concurso público real distribuiu **106 postos** em municípios pobres e anunciou, **ao acaso**, dois salários. Onde o salário era **33% maior**, a aceitação subiu **15 pontos percentuais**; a mais de **200 km** da cidade natal, foi de **25% para cerca de 80%** — **sem** atrair candidatos menos qualificados ou motivados. | **Muitos não vão por preço nenhum.** Dos **3.727 clínicos australianos**, **65%** escolheram ficar onde estavam em todos os cenários oferecidos. Para o pior posto, quem mudaria pedia **130%** da renda anual. |
+| **O degrau do PMM-E tem o tamanho que a literatura pede.** O que um médico exige para ir a um posto pior vai de **37% a 64%** da renda anual em cidades pequenas (Austrália), e a oferta de médicos no interior brasileiro responde a salário com elasticidade de **0,7**. O degrau do programa — R$ 5 mil sobre R$ 10 mil, ou **+50%** — cai dentro dessa faixa. | **No Brasil, salário compra pouco e custa muito.** Aumentar em **50%** o salário público no interior do Norte e do Nordeste corrigiria **12,4%** do desequilíbrio na distribuição de médicos, a **US$ 15,7 milhões por ponto percentual**. Reservar vagas nas faculdades de medicina para quem nasceu nessas regiões corrigiria **63,8%**, por **US$ 2,2 a 5,1 milhões** o ponto. |
+| | **E o médico vai embora quando a obrigação acaba.** Nos Estados Unidos, oito anos depois, **12%** dos médicos que foram para clínicas rurais com bolsa e **obrigação de permanência** ainda estavam lá — contra **39%** dos que foram **sem obrigação nenhuma**. |
 
 **Ressalva:** os percentuais da literatura são sobre a **renda total** do
 médico; a bolsa do PMM-E remunera **20 horas semanais**.
 
-**Fontes:** Dal Bó, Finan & Rossi (2013), *QJE*; Scott et al. (2013), *Social
-Science & Medicine*; Costa, Nunes & Sanches (2024), *REStat*.
-
----
-
-## 9 — Mas é caro, e não segura: a evidência contra
-
-`1. Motivação · O efeito é incerto · 3 de 4`
-
-**Muitos não vão por preço nenhum.** Dos **3.727 clínicos australianos**, **65%**
-escolheram ficar onde estavam em todos os cenários oferecidos. Para o pior
-posto, quem mudaria pedia **130%** da renda anual.
-
-**No Brasil, salário compra pouco e custa muito.** Aumentar em **50%** o salário
-público no interior do Norte e do Nordeste corrigiria **12,4%** do
-desequilíbrio na distribuição de médicos, a **US$ 15,7 milhões por ponto
-percentual**. Reservar vagas nas faculdades de medicina para quem nasceu nessas
-regiões corrigiria **63,8%**, por **US$ 2,2 a 5,1 milhões** o ponto.
-
-**E o médico vai embora quando a obrigação acaba.** Nos Estados Unidos, oito
-anos depois, **12%** dos médicos que foram para clínicas rurais com bolsa e
-**obrigação de permanência** ainda estavam lá — contra **39%** dos que foram
-**sem obrigação nenhuma**.
-
 Dinheiro move alocação, mas é caro, não move todo mundo e não garante que quem
-foi fique. A evidência **não decide** se um degrau de R$ 5 mil basta.
+foi fique. **A evidência não decide se um degrau de R$ 5 mil basta.**
 
-**Fontes:** Scott et al. (2013), *Social Science & Medicine*; Costa, Nunes &
-Sanches (2024), *REStat*; Pathman, Konrad & Ricketts (1992), *JAMA*.
+**Fontes:** Dal Bó, Finan & Rossi (2013), *QJE*; Scott et al. (2013), *Social
+Science & Medicine*; Costa, Nunes & Sanches (2024), *REStat*; Pathman, Konrad &
+Ricketts (1992), *JAMA*.
 
 ---
 
-## 10 — No primeiro ciclo, a bolsa maior não ordenou o preenchimento
+## 8 — No primeiro ciclo, a bolsa maior não ordenou o preenchimento
 
-`1. Motivação · O efeito é incerto · 4 de 4`
+`1. Motivação · O efeito é incerto · 3 de 3`
 
 Das **1.295 vagas** da primeira chamada, **30%** tiveram alguém confirmado ou
 homologado.
@@ -302,7 +235,7 @@ Saúde, 2025); estratos pela REGIC 2018 e pelas RMs e RIDEs de 2022 (IBGE).
 
 # 2. Pergunta
 
-## 11 — Pergunta
+## 9 — Pergunta
 
 `2. Pergunta`
 
@@ -320,9 +253,9 @@ apareceu alguém disposto a ocupá-la.
 
 # 3. Literatura teórica
 
-## 12 — A decisão: onde vale a pena estar
+## 10 — A decisão: onde vale a pena estar
 
-`3. Literatura teórica · 1 de 3`
+`3. Literatura teórica · 1 de 2`
 
 **Moehling, Niemesh, Thomasson & Treber (2020)**, eq. 1, p. 184, dão a
 **estrutura da decisão**: o médico escolhe a localidade que maximiza o valor
@@ -346,55 +279,33 @@ uma **caixa-preta**. As duas referências seguintes a abrem.
 
 ---
 
-## 13 — Abrindo o custo, parte 1: o lugar
+## 11 — Abrindo o custo: o lugar e o trabalho
 
-`3. Literatura teórica · 2 de 3`
+`3. Literatura teórica · 2 de 2`
 
-**Redding & Rossi-Hansberg (2017)**, eq. 24, p. 28, dão o **custo geográfico**:
-a utilidade de trabalhar num lugar depende do salário, das **amenidades** e do
-**custo de moradia** locais.
+**O lugar. Redding & Rossi-Hansberg (2017)**, eq. 24, p. 28, dão o **custo
+geográfico**: a utilidade de trabalhar num lugar depende do salário, das
+**amenidades** e do **custo de moradia** locais.
 
 $$u_{nio} = \frac{z_{nio}\, B_n\, w_i}{\kappa_{ni}\, Q_n^{\,1-\beta}} \quad\Longrightarrow\quad c^{\text{espacial}}_m = (1-\beta)\ln Q_m - \ln A_m$$
 
-Somado à proximidade da família de Moehling et al., o bloco fica:
+Somado à proximidade da família de Moehling et al., o bloco fica
+$c^{\text{geo}}_{im} = \phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}$:
+afastar-se da família custa, e custa mais a cada quilômetro ($\phi' > 0$); a
+amenidade urbana — saneamento, segurança, escola — compensa ($-\gamma A_m$); o
+gosto por cidade pequena ou grande não tem sinal universal ($\theta_i^{\text{rural}} \gtrless 0$).
 
-$$c^{\text{geo}}_{im} = \phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}$$
-
-| Componente | Sinal | Significado |
-|---|:---:|---|
-| $\phi(\text{dist}_{im})$ | $\phi' > 0$ | afastar-se da família custa, e custa mais a cada quilômetro |
-| $-\gamma A_m$ | $< 0$ | amenidade urbana — saneamento, segurança, escola — compensa |
-| $\theta_i^{\text{rural}}$ | $\gtrless 0$ | gosto pessoal por cidade pequena ou grande, sem sinal universal |
-
-**Uma limitação assumida.** CNES e edital não informam a residência do
-profissional, por sigilo fiscal. A unidade de análise é o **município do
-estabelecimento**, não o de moradia: $\text{dist}$ entra como latente.
-
-**Fontes:** Redding & Rossi-Hansberg (2017), *Annual Review of Economics* 9,
-p. 28, eq. 24; [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), §2.1 e §3.2.
-
----
-
-## 14 — Abrindo o custo, parte 2: o trabalho
-
-`3. Literatura teórica · 3 de 3`
-
-**Choné & Ma (2011)**, eq. 1, p. 232, dão o **custo laboral**: o médico soma a
-renda, subtrai o custo de atender e soma o benefício ao paciente, ponderado
-pelo **altruísmo**.
+**O trabalho. Choné & Ma (2011)**, eq. 1, p. 232, dão o **custo laboral**: o
+médico soma a renda, subtrai o custo de atender e soma o benefício ao paciente,
+ponderado pelo **altruísmo**.
 
 $$U = R - C(q; L, K) + \alpha B(q) \quad\Longrightarrow\quad c^{\text{laboral}}_{im} = C(q; L_m, K_m) - \alpha_i B(q; L_m, K_m)$$
 
-| Componente | Derivadas | Significado |
-|---|:---:|---|
-| $C(q)$ | $C' > 0,\ C'' > 0$ | atender cansa, e cansa de forma **crescente** |
-| $\alpha_i B(q)$ | $B' > 0,\ B'' < 0$ | curar dá satisfação, decrescente porque a triagem prioriza o caso grave |
-
-O custo marginal $c'(q) = C' - \alpha B'$ tem **sinal incerto**, mas
-$c'' \gg 0$: a curva é um **U**. Há uma zona em que atender mais *reduz* o custo
+Atender cansa, e cansa de forma **crescente** ($C' > 0$, $C'' > 0$); curar dá
+satisfação, **decrescente** porque a triagem prioriza o caso grave ($B' > 0$,
+$B'' < 0$). O custo marginal $c'(q) = C' - \alpha B'$ tem **sinal incerto**, mas
+$c'' \gg 0$: a curva é um **U** — uma zona em que atender mais *reduz* o custo
 líquido, um mínimo, e uma zona de exaustão.
-
-![Custo laboral líquido em função do volume de atendimentos](../../02_teoria/figuras/curva_custo_laboral_burnout.png)
 
 **Equipe ($L$) e capital ($K$) atuam duas vezes.** Reduzem o cansaço,
 $\partial C/\partial K < 0$ — canal que já está em Choné & Ma. E **ampliam o
@@ -403,17 +314,22 @@ maquinário em funcionamento, o atendimento perde resolutividade. Esse segundo
 canal é **extensão deste projeto**, motivada pela função de produção médica de
 Reinhardt (1972, 1975). Por dois caminhos, $\partial c^{\text{laboral}}/\partial K < 0$.
 
-**Fontes:** Choné & Ma (2011), *International Journal of Health Care Finance
+**Uma limitação assumida.** CNES e edital não informam a residência do
+profissional, por sigilo fiscal. A unidade de análise é o **município do
+estabelecimento**, não o de moradia: $\text{dist}$ entra como latente.
+
+**Fontes:** Redding & Rossi-Hansberg (2017), *Annual Review of Economics* 9,
+p. 28, eq. 24; Choné & Ma (2011), *International Journal of Health Care Finance
 and Economics* 11, p. 232, eq. 1; Reinhardt (1972, 1975);
-[`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), §2.2 e §2.3.
+[`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), §2.1 a §2.3 e §3.2.
 
 ---
 
 # 4. Modelo microeconômico
 
-## 15 — Como juntamos os três
+## 12 — Como juntamos os três
 
-`4. Modelo microeconômico · 1 de 3`
+`4. Modelo microeconômico · 1 de 2`
 
 A estrutura vem de Moehling et al.; o custo, que neles era caixa-preta, é
 aberto pelas outras duas. O médico $i$ escolhe o município $m$ que maximiza o
@@ -435,44 +351,31 @@ termo $\varepsilon_{im}$ recolhe os gostos que não observamos.
 
 **O que nenhuma das três tem.** Nenhuma trata de um componente da remuneração
 **fixado por regra pública sobre um índice territorial**. É isso, e só isso, que
-a adaptação ao PMM-E acrescenta — e é o que os dois slides seguintes
-desenvolvem.
+a adaptação ao PMM-E acrescenta — e é o que o slide seguinte desenvolve.
 
 **Fontes:** [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), §2.4 e §3.
 
 ---
 
-## 16 — O que a bolsa paga — e o que não paga
+## 13 — O IVS organiza o custo
 
-`4. Modelo microeconômico · 2 de 3`
+`4. Modelo microeconômico · 2 de 2`
 
-A remuneração tem duas partes: a **bolsa**, que a regra fixa, e o que o médico
-obtém no **mercado local** fora das 20 horas do programa:
+**O que a bolsa paga — e o que não paga.** A remuneração tem duas partes: a
+**bolsa**, que a regra fixa, e o que o médico obtém no **mercado local** fora
+das 20 horas do programa:
 
 $$\mathbb{E}(w_{imt} \mid B_m) = B_m + w^{\text{priv}}_m$$
 
-| Onde | Mercado privado | Remuneração |
-|---|---|---|
-| Capital ou região metropolitana | consultório, planos de saúde, hospitais privados | $w = B + w^{\text{priv}}$, com $w^{\text{priv}}$ alto |
-| Interior isolado | sem demanda privada que sustente a especialidade | $w \to B$ |
+Na capital, $w^{\text{priv}}$ é alto: R$ 10 mil mais o consultório pode superar
+R$ 20 mil sem complemento. No interior isolado, $w \to B$ — a bolsa é **toda** a
+remuneração, e é ali que a política mais aposta nela. O deflator $p_{mt}$
+trabalha no sentido oposto: o custo de vida **menor** valoriza a mesma bolsa em
+termos reais.
 
-**Duas consequências.** A bolsa maior do interior pode significar **remuneração
-total menor**: R$ 20 mil sem complemento contra R$ 10 mil mais o consultório da
-capital. E onde $w^{\text{priv}} \approx 0$ a bolsa é **toda** a remuneração —
-e é ali que a política mais aposta nela.
-
-O deflator $p_{mt}$ trabalha no sentido oposto: o custo de vida é **menor** no
-interior, o que valoriza a mesma bolsa em termos reais.
-
----
-
-## 17 — O IVS organiza o custo
-
-`4. Modelo microeconômico · 3 de 3`
-
-Distância da família, aluguel e esforço clínico **não são observados**. O que se
-observa, para todo município, é o **IVS**. Escrevemos o custo como função do
-índice mais um desvio individual:
+**O que se observa.** Distância da família, aluguel, mercado privado e esforço
+clínico **não são observados**. O que se observa, para todo município, é o
+**IVS**. Escrevemos o custo como função do índice mais um desvio individual:
 
 $$c_{im} = c_0(IVS_m) + \eta_i$$
 
@@ -480,9 +383,9 @@ Isso não é atalho: **cada dimensão do IVS corresponde a um bloco do custo.**
 
 | Dimensão do IVS | Indicadores | Bloco do custo | Efeito sobre $c$ |
 |---|---|---|:---:|
-| Infraestrutura urbana | saneamento, lixo, tempo de deslocamento | amenidades $A_m$ — slide 13 | $\uparrow$ |
-| Renda e trabalho | pobreza, desemprego, informalidade | mercado privado ausente, $w \to B$ — slide 16 | $\uparrow$ |
-| Capital humano | mortalidade infantil, analfabetismo, mães adolescentes | gravidade do caso, $B'(q)\uparrow$; escassez de $L$ e $K$ — slide 14 | **ambíguo** |
+| Infraestrutura urbana | saneamento, lixo, tempo de deslocamento | amenidades $A_m$ — slide 11 | $\uparrow$ |
+| Renda e trabalho | pobreza, desemprego, informalidade | mercado privado ausente, $w \to B$ — acima | $\uparrow$ |
+| Capital humano | mortalidade infantil, analfabetismo, mães adolescentes | gravidade do caso, $B'(q)\uparrow$; escassez de $L$ e $K$ — slide 11 | **ambíguo** |
 
 A terceira linha é o que impede assumir que o custo cresce com o índice.
 Carência sanitária **eleva o benefício** de atender — o que **reduz** o custo
@@ -493,11 +396,13 @@ empírica.
 É por isso que o objeto do trabalho é o **degrau** da bolsa entre faixas, e não
 a inclinação do índice.
 
+**Fontes:** [`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), §3 e §3.1.
+
 ---
 
 # 5. Hipótese
 
-## 18 — A hipótese
+## 14 — A hipótese
 
 `5. Hipótese`
 
@@ -532,7 +437,7 @@ A pergunta da apresentação é se essa desigualdade vale.
 
 # 6. Viabilidade empírica
 
-## 19 — Viabilidade empírica
+## 15 — Viabilidade empírica
 
 `6. Viabilidade empírica`
 
@@ -551,9 +456,10 @@ A pergunta da apresentação é se essa desigualdade vale.
 privado local e a distância da família — entram no modelo como parte do custo
 que o IVS e a tipologia territorial resumem.
 
-**A dificuldade, e o que já sabemos dela.** Recuperar a regra que o Ministério
-aplicou era o primeiro passo do trabalho empírico. **Ele foi dado**, e tem três
-resultados.
+**A dificuldade, e o que já sabemos dela.** O que segue é sobre **o efeito do
+valor da bolsa** — o objeto de H1 —, não sobre o trabalho inteiro. Recuperar a
+regra que o Ministério aplicou era o primeiro passo do trabalho empírico. **Ele
+foi dado**, e tem três resultados.
 
 1. **Há suporte comum.** Existe sim município com bolsa alta e vulnerabilidade
    baixa: **37** municípios com IVS ≤ 0,400 estão na Faixa 1 e **94** na Faixa 2.
@@ -571,16 +477,27 @@ resultados.
 **Conclusão de viabilidade.** O efeito causal do *valor da bolsa* não é
 identificável com as fontes públicas; a razão não é potência amostral.
 Destravá-lo exige o **Anexo IV** e os critérios de localização da cláusula
-11.1.3. O desenho causal do trabalho não depende disso — ele usa a
-descontinuidade no **escore de seleção do candidato**, não no IVS.
+11.1.3, que só o Ministério pode fornecer.
+
+**O que fica de pé.** A pergunta do slide 9 continua sendo a pergunta do
+trabalho. Até que a regra seja recuperada, a relação entre faixa e
+preenchimento é reportada como **gradiente**, não como efeito. O trabalho tem um
+desenho causal que não depende disso — a descontinuidade no **escore de seleção
+do candidato** —, mas ele responde a outra pergunta: o efeito de **ganhar a
+vaga**, não o do valor da bolsa.
 
 ---
 
-## Ressalvas abertas
+## Ressalvas encerradas em 16/09/2026
 
-1. **Cursos ambulatoriais.** O slide 5 anuncia **10** e enumera **oito**. A
-   contagem do edital não foi reconferida; os decks transcrevem como está.
-2. **Figura do custo laboral.** Em projeção, legenda e anotações de zona de
-   `curva_custo_laboral_burnout.png` ficam em torno de 5 pt e não são legíveis
-   do fundo da sala. Regerar com tipografia maior é decisão do autor, no script
-   que a produz.
+1. **Cursos ambulatoriais.** A versão anterior do slide 4 anunciava **10** e
+   enumerava oito, porque juntava num só item os três cursos de endoscopia
+   digestiva alta, endoscopia digestiva avançada e colonoscopia. A contagem de
+   10 foi conferida na Tabela 3 do edital e nos cursos 7 a 16 de
+   `output/aquisicao/quadro_vagas_tratamento.parquet`. O slide passou a dar
+   apenas a contagem.
+2. **Figura do custo laboral.** `curva_custo_laboral_burnout.png` saiu do deck
+   com a fusão dos dois slides de custo; o formato em U passou a ser descrito em
+   texto no slide 11. A ilegibilidade da legenda em projeção deixa de afetar a
+   apresentação. A figura permanece como ilustração canônica em
+   `docs/02_teoria/figuras/`.
