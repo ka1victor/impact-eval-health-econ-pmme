@@ -2,7 +2,9 @@
 
 > **Regra aplicada:** todo número exibido declara fonte, data de referência, cobertura, unidade e reprodutibilidade<br>
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
-> **Atualização:** 9 de setembro de 2026
+> **Deck vigente:** `.pptx` montado por script — ver seção 1-A e
+> [`deck_pptx/README.md`](deck_pptx/README.md)<br>
+> **Atualização:** 14 de setembro de 2026
 
 ---
 
@@ -46,14 +48,130 @@ dela só se usam as contagens descritivas.
 
 | Arquivo | Situação |
 |---|---|
-| `output/apresentacao_banca1/oferta_antes_depois_por_faixa.png` | série mensal de especialistas por 100 mil habitantes, 2024–2026. Saiu do deck na segunda rodada de revisão: sem grupo de comparação, não se lê como efeito do programa. O script continua gerando; pode servir ao artigo |
+| `output/apresentacao_banca1/oferta_antes_depois_por_faixa.png` | série mensal de especialistas por 100 mil habitantes, 2024–2026. Saiu do deck na segunda rodada de revisão: sem grupo de comparação, não se lê como efeito do programa. **Voltou ao deck `.pptx` vigente** no slide "O efeito", com rodapé declarando a leitura como descritiva e registrando que não há município fora do programa para comparar — ver `F8` na seção 1-A |
 | `docs/07_apresentacoes/banca1/figuras/especialistas_por_uf.png` | Demografia Médica 2025, 16 UFs, montada à mão no deck anterior. Substituída pelos dois extremos citados em texto no slide 3, com fonte, e por `F1` |
 | `docs/07_apresentacoes/banca1/figuras/deslocamento_por_regiao.png` | REGIC 2018. Retirada: mede custo do paciente, e reduzir deslocamento não é objetivo declarado do edital |
 | `docs/07_apresentacoes/banca1/figuras/motivacao_manchetes.png` | recortes de imprensa com cabeçalho do deck anterior. As manchetes voltaram ao slide 3 como citação textual, com veículo e data, conferidas nas páginas originais |
 
 ---
 
+## 1-A. Deck `.pptx` — figuras, equações e o arquivo montado
+
+O deck vigente da banca 1 é o `.pptx` montado sobre o template desenhado pelo
+autor. As entradas abaixo seguem a mesma regra das figuras da seção 1: entrada
+declarada, script versionado, saída em `output/` e hash no manifesto.
+
+| Código | Artefato | Arquivo | Origem |
+|---|---|---|---|
+| `F7` | Custo laboral líquido — versão de projeção | `output/apresentacao_banca1/custo_laboral_deck.png` | **ilustração conceitual do modelo**, gerada por script |
+| `F8` | Especialistas por 100 mil habitantes, série mensal por faixa | `output/apresentacao_banca1/oferta_antes_depois_por_faixa.png` | CNES + Censo 2022, gerada por script (mesma figura da seção 1) |
+| `F9` | Razão de especialistas por 100 mil habitantes — só os extremos reportados | `output/apresentacao_banca1/especialistas_extremos_uf.png` | Demografia Médica 2025, **apenas as quatro unidades da federação que a fonte reporta**, gerada por script |
+| `D1` | Deck da banca 1 | `output/apresentacao_banca1/deck_banca1_modelo_economico.pptx` | template do autor, com conteúdo aplicado por script |
+| `E1` | Equações do modelo renderizadas em LaTeX | `output/apresentacao_banca1/equacoes/*.png` | expressões de `docs/02_teoria/modelo_micro.md`, geradas pelo script do deck |
+
+**Definição de `F7` — ilustração conceitual, sem dado observado.** Gerada por
+[`scripts/apresentacao/gerar_figura_custo_laboral_deck.py`](../../../scripts/apresentacao/gerar_figura_custo_laboral_deck.py).
+É a mesma construção conceitual de
+[`scripts/utils/gerar_grafico_custo_laboral.py`](../../../scripts/utils/gerar_grafico_custo_laboral.py),
+que produz `docs/02_teoria/figuras/curva_custo_laboral_burnout.png` (`F4`, do
+documento de teoria, não alterada); muda só o que a projeção exige — proporção
+larga e baixa, paleta do deck e tipografia legível do fundo da sala.
+
+A construção teórica é Choné & Ma (2011), eq. 1, p. 232, transcrita em
+[`docs/02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md), §2.2:
+$C(q)$ é o cansaço ($C' > 0$, $C'' > 0$), $\alpha B(q)$ a satisfação
+($B' > 0$, $B'' < 0$) e $c^{\text{laboral}}(q) = C(q) - \alpha B(q)$ o custo
+laboral líquido, em U, com as três zonas.
+
+**Nenhum dado observado entra em `F7`, e a figura não tem escala cardinal.** As
+curvas são formas funcionais escolhidas para exibir os sinais das derivadas; os
+únicos rótulos de eixo são o $q$ de custo mínimo, o ponto $c = 0$ e o zero da
+ordenada. Não é simulação de dados do programa, não é projeção de resultado e
+não pode ser lida como magnitude. O slide que a exibe deve rotulá-la como
+ilustração do modelo — regra permanente 3, na seção 4 deste documento.
+
+**Definição de `F9` — quatro unidades da federação, e não vinte e sete.** Gerada
+por
+[`scripts/apresentacao/gerar_figura_especialistas_extremos.py`](../../../scripts/apresentacao/gerar_figura_especialistas_extremos.py).
+Mostra **Distrito Federal 453, São Paulo 244, Pará 70 e Maranhão 68**
+especialistas por 100 mil habitantes — os quatro valores conferidos na seção 2
+deste documento, a partir da cobertura da Demografia Médica 2025. O PDF integral
+da Demografia Médica **não foi baixado** por este projeto, e é por isso que a
+figura não traz as demais unidades: o que não está conferido não entra.
+
+**Por que esta figura existe.** O template do autor trazia um gráfico de barras
+com as dezesseis unidades ordenadas. Catorze dessas barras eram números redondos
+interpolados — 414, 390, 375, 355, 345, 325, 310, 275, 260, 240, 215, 195, 165,
+145 — e apenas as duas extremas, 453,5 e 68,2, correspondiam à fonte. Duas das
+interpoladas **contradiziam** a fonte registrada aqui: São Paulo aparecia em 414
+contra 244 conferidos, e Pará em 145 contra 70. O gráfico era objeto nativo do
+`.pptx`, com a série embutida no arquivo, fora de qualquer script.
+
+Isso viola duas regras do projeto ao mesmo tempo — "não grave dados simulados,
+parâmetros assumidos ou cenários como se fossem observações" e "gráfico
+produzido fora do pipeline não entra em apresentação". O gráfico saiu do deck em
+16/09/2026 e `F9` ocupou seu lugar. Os outros dois gráficos nativos do template
+saíram junto: o de deslocamento passou a ler
+`docs/07_apresentacoes/banca1/figuras/deslocamento_por_regiao.png`, e o de valor
+da bolsa, `output/apresentacao_banca1/bolsa_por_faixa.png` (`F2`). **Nenhum
+gráfico do deck vigente tem dado embutido no arquivo**, e
+`tests/test_deck_banca1_pptx.py` trava isso: o teste falha se qualquer slide
+voltar a referenciar objeto de gráfico do PowerPoint.
+
+**O que destrava a figura completa.** Obter a tabela integral da *Demografia
+Médica no Brasil 2025*. Registrado como **D-5.2** em
+[`../../06_execucao/36_backlog_pos_auditoria.md`](../../06_execucao/36_backlog_pos_auditoria.md).
+
+**Definição de `D1` — o deck.** Entrada:
+`docs/07_apresentacoes/banca1/deck_pptx/base_modelo_economico.pptx`, o template
+desenhado pelo autor (identidade visual, slides de sumário, equações da
+literatura e gabaritos de modelo). Script:
+[`scripts/apresentacao/montar_deck_banca1_pptx.py`](../../../scripts/apresentacao/montar_deck_banca1_pptx.py),
+que preserva o desenho e substitui o conteúdo. Saída:
+`output/apresentacao_banca1/deck_banca1_modelo_economico.pptx`. Manifesto:
+`output/apresentacao_banca1/manifesto_deck_banca1.json`, gravado pelo mesmo
+script, com o SHA-256 da base e da saída, o hash de cada figura e de cada
+equação usadas, o roteiro numerado dos slides, as correções de digitação feitas
+nos sumários do template e a nota de escopo da banca. **Os hashes não são
+transcritos aqui: leia-os no manifesto**, que é gravado a cada execução.
+
+As únicas figuras que o deck insere são `F7` e `F8`, ambas lidas de `output/` e
+produzidas por script versionado; nenhuma imagem é desenhada fora do pipeline.
+Reprodução: `python3 scripts/apresentacao/montar_deck_banca1_pptx.py`, a partir
+da raiz do repositório, depois de gerar as figuras. Detalhe de execução e
+dependências em [`deck_pptx/README.md`](deck_pptx/README.md).
+
+**Definição de `E1` — as equações renderizadas.** O mesmo script grava em
+`output/apresentacao_banca1/equacoes/` um PNG transparente por equação nova,
+renderizado em LaTeX de verdade (`amsmath`, `amssymb`), na cor `#114719` do
+template. São sete arquivos:
+
+| Arquivo | Expressão | Origem |
+|---|---|---|
+| `derivadas_lk.png` | sinais de $\partial C/\partial K$, $\partial B/\partial K$ e do custo líquido | `modelo_micro.md`, §2.2 e §2.3 — a extensão em $B$ é do projeto, não de Choné & Ma nem de Reinhardt |
+| `decomposicao_custo.png` | abertura de $c_{im}$ nos blocos de Redding & Rossi-Hansberg e de Choné & Ma | `modelo_micro.md`, §2.4 |
+| `remuneracao_total.png` | $\mathbb{E}(w_{imt} \mid B_m) = B_m + w^{\mathrm{priv}}_m$ | `modelo_micro.md`, §3, que escreve a esperança $\mathbb{E}(w_{imt}^{(s)} \mid B_m(IVS_m))$ e o colapso de $w$ no piso da bolsa onde não há mercado privado pagador. **A escrita como soma explícita de dois termos é do deck**, não uma equação transcrita do documento |
+| `custo_por_ivs.png` | $c_{im} = c_0(IVS_m) + \eta_i$ | `modelo_micro.md`, §3 (a forma do documento traz o índice de especialidade, $c_{im}^{(s)} = c_0^{(s)}(IVS_m) + \eta_i$) |
+| `condicao_aceitacao.png` | condição de aceitação da vaga | `modelo_micro.md`, §4.1, onde ela aparece como $B_m/p_m - c_0(IVS_m) \geq \bar{v}_i$; **o deck acrescenta $w^{\mathrm{priv}}_m$ ao numerador**, coerente com §3 e com o slide da remuneração |
+| `derivada_hipotese.png` | derivada do preenchimento em relação a $B_m/p_m$ | `docs/02_teoria/hipoteses_e_viabilidade_empirica.md`, §4 |
+| `degrau_fronteira.png` | $\Delta B_m / p_m > \Delta c_0$, com $\Delta B_m = \mathrm{R\$}\,5.000$ | mesma fonte; o degrau de R$ 5 mil é a diferença entre faixas adjacentes do Edital SGTES/MS nº 3/2025, item 11.1.3 (seção 2, slide 6) |
+
+As equações são **imagens**, não OMML editável no PowerPoint. A razão está
+registrada no script e em [`deck_pptx/README.md`](deck_pptx/README.md): o OMML
+nativo não é verificável neste ambiente, de modo que só o que o script escreve
+pode ser conferido no render. Alterar uma equação é alterar o LaTeX no script e
+rodá-lo de novo, nunca editar a imagem ou o `.pptx` de saída.
+
+---
+
 ## 2. Números exibidos
+
+> **Numeração.** Os títulos desta seção usam a numeração da estrutura
+> anterior, de 19 slides, que é a de `02_conteudo_slides.md`, de
+> `deck_beamer/` e de `deck_slidev/`. O deck `.pptx` vigente reordena e
+> renomeia slides; a correspondência entre os dois está no roteiro
+> numerado de `manifesto_deck_banca1.json`. As fontes e as ressalvas
+> abaixo valem igual nos dois — o que muda é o número do slide.
 
 ### Slide 3 — o retrato nacional
 
@@ -163,6 +281,20 @@ seção 7.
 | Remoticidade como previsor mais forte do desfecho | `A4_tabela_02_modelo_principal_LPM.csv` e `A4_tabela_02b_logit_AME.csv` |
 | CNES mensal, jun/2024 a jul/2026 | `output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet` |
 
+### Deck `.pptx` — slide "O efeito"
+
+O slide que exibe `F8` só existe no deck `.pptx`. Os números lidos nele:
+
+| Número | Fonte |
+|---|---|
+| Faixa 1 vai de 17,4 a 22,0 especialistas por 100 mil habitantes | `F8`; série em `output/apresentacao_banca1/manifesto_figuras.json`, chave `serie_por_100k` — 17,40 na competência 202406 e 21,96 na 202607, arredondado no slide |
+| Faixa 1 é a de R$ 20 mil | Edital SGTES/MS nº 3/2025, item 11.1.3; faixa publicada na vaga |
+| Não há município fora do programa: todos os 368 receberam vaga | quadro de vagas do ciclo 1, chamada 1 |
+
+Que a distância entre a Faixa 1 e as outras duas aumenta depois da homologação é
+**leitura descritiva da própria figura**, e o rodapé do slide declara que, sem
+município de comparação, ela não identifica efeito. Não promover a efeito causal.
+
 ---
 
 ## 3. Pendências e ressalvas
@@ -232,3 +364,6 @@ conferência no original é pendência não bloqueante.
 4. Número exibido sem linha na seção 2 é erro, não detalhe editorial.
 5. Documento oficial citado em slide tem cópia em `data/raw/aquisicao/`, com
    hash registrado aqui.
+6. Deck é artefato derivado: template de entrada versionado em `docs/`, saída em
+   `output/`, e hash de entrada e saída no manifesto do deck. Conteúdo não se
+   corrige editando o `.pptx` de saída.

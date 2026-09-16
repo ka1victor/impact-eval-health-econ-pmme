@@ -1,0 +1,55 @@
+{
+  "gerado_por": "scripts/apresentacao/montar_deck_banca1_pptx.py",
+  "base": {
+    "caminho": "docs/07_apresentacoes/banca1/deck_pptx/base_modelo_economico.pptx",
+    "sha256": "1e2d7b52cfc9d3086dc61cbb40d4e0bb559b3b2691563c13a2d8558a62d45dcd"
+  },
+  "saida": {
+    "caminho": "output/apresentacao_banca1/deck_banca1_modelo_economico.pptx",
+    "sha256": "5018979e01029cc06f0d341efb7f4eeb92a9d2defbef04fe1930fd2fc5a09d3c",
+    "slides": 21
+  },
+  "correcoes_de_digitacao_nos_sumarios": 13,
+  "roteiro": {
+    "1": "Capa",
+    "2": "Sumário · Motivação",
+    "3": "O problema",
+    "4": "A política",
+    "5": "O efeito",
+    "6": "Sumário · Pergunta",
+    "7": "A pergunta",
+    "8": "Sumário · Literatura",
+    "9": "As três primitivas",
+    "10": "Moehling et al. (2020)",
+    "11": "Redding & Rossi-Hansberg (2017)",
+    "12": "Choné & Ma (2011)",
+    "13": "Equipe e capital",
+    "14": "Sumário · Modelo",
+    "15": "Como juntamos os três",
+    "16": "A remuneração além da bolsa",
+    "17": "O IVS no custo",
+    "18": "Sumário · Hipótese",
+    "19": "A hipótese",
+    "20": "Sumário · Viabilidade",
+    "21": "Viabilidade empírica"
+  },
+  "figuras": {
+    "especialistas_extremos_uf.png": "3d68de60abf562282b2d1490cd7e1ef6751f6110883ebeee71f329cf64eef518",
+    "bolsa_por_faixa.png": "f5dc09d7585d4df1aac4eae1cccd65aad31f602f720ea742682b16cc70350620",
+    "oferta_antes_depois_por_faixa.png": "937bb1e446932ee849a9f0a2c00bc52cd0ecba3efa66e7eab0ce1e096a2b20a6",
+    "custo_laboral_deck.png": "a9f6f29c8717116ee828191b4d585fa5d17f3fa86dba5770879128b2fde5e0c7"
+  },
+  "equacoes": {
+    "condicao_aceitacao": "fc6c3d10c3d58926fa68902f769dcec85f74b99e5c3f52446c8fe37182a0cf7f",
+    "custo_por_ivs": "522d7e0cbd3ccd7783d751377847aaf337e8e9eefb8b022cc43f2abb06edac8c",
+    "decomposicao_custo": "45ea901ec1ca61f8a93d6b58da5f316a992f3e0c7db81415e0a62349fc0c19d9",
+    "degrau_fronteira": "9d7fd150f39b0e982fad3951349ef11bec877aa1cb69a465dd8c0882dae2840c",
+    "derivada_hipotese": "0022bc9c55f4bb5034e0f5bfcdc72ef81ee3fd11ea7a73ddf56a4c07fa4eb7b6",
+    "derivadas_lk": "44463082f59fb5781258b6f0fea9276c9f4e30608f6edc5e4b9f70760b2ce9cf",
+    "remuneracao_total": "d02d3076409ffddb3577155b0b4be60ae5d72b51cee74b03455e4b940d3b5984"
+  },
+  "figuras_de_docs": {
+    "deslocamento_por_regiao.png": "d5f91d14aff79a59eb4f30d4b74d9d031219a3d1e02cac3ce21a6c88191a3c1f"
+  },
+  "escopo": "Banca 1: termina na viabilidade empírica e não apresenta resultado de estimação. As leituras das figuras de oferta são descritivas."
+}

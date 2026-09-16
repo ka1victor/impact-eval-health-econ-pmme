@@ -804,6 +804,34 @@ e a 2 depende de a especificação do C1 já estar valendo.
 | — | `RESOLVIDO` | **D-1** | TeX instalado; artigo compila. Só a revisão de provas pelo autor continua pendente. |
 | — | `BLOQUEADA` | **D-2 a D-4** | Revisar a condição de desbloqueio, não executar. |
 
+## D-5 · Deck da banca 1 — quatro decisões de apresentação
+
+Abertas em 16/09/2026, quando o deck passou a ser o `.pptx` montado por
+`scripts/apresentacao/montar_deck_banca1_pptx.py`. Nenhuma bloqueia a fila
+analítica; todas são do autor porque escolhem entre alternativas defensáveis.
+
+| # | Decisão | Estado |
+|:---:|---|---|
+| D-5.1 | **Painel de deslocamento no slide 3.** Foi retirado em revisão anterior por medir o custo do paciente, e não o do médico. Voltou ao deck porque estava no template do autor. Fica ou sai? | pendente |
+| D-5.2 | **Fonte primária da Demografia Médica 2025.** A tabela integral nunca foi baixada; só a cobertura que reporta os extremos. Por isso a figura de UF mostra quatro unidades da federação, não 27. Obter o PDF destrava o gráfico completo. | pendente |
+| D-5.3 | **Contagem de cursos ambulatoriais.** O slide afirma 16 cursos e não os enumera; o roteiro enumera oito ambulatoriais onde o edital diz dez. A contagem do edital segue sem reconferência. | pendente desde 09/09/2026 |
+| D-5.4 | **Destino de `deck_beamer/` e `deck_slidev/`.** Descrevem a estrutura anterior, de 19 slides, e não são mais o que se apresenta. Ficam como registro, são atualizados, ou saem? | pendente |
+
+**O que uma sessão futura pode fazer sem decisão do autor:** remontar o deck
+(`python scripts/apresentacao/montar_deck_banca1_pptx.py`), corrigir texto no
+documento canônico e no script, e conferir o resultado. **O que não pode:**
+mudar o desenho do template, alterar quais figuras entram, ou reescrever o
+enunciado da hipótese — que foi ditado pelo autor palavra por palavra.
+
+**Material que saiu do deck e não se perdeu.** A motivação encolheu de oito
+slides para três. Os quatro slides de argumento que saíram — as duas medidas de
+oferta que discordam, a evidência internacional a favor, a evidência contra, e o
+preenchimento do ciclo 1 — continuam no histórico do Git de
+`docs/07_apresentacoes/banca1/02_conteudo_slides.md`, e são resposta de
+viva-voz, não material descartado.
+
+---
+
 ## Decisões que dependem do autor — consolidadas em 14/09/2026
 
 Estão espalhadas pelos itens; esta lista existe para que não se perca nenhuma.

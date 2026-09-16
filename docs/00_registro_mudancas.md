@@ -8,6 +8,73 @@
 
 ---
 
+## 14/09/2026 — Banca 1: o deck passa a ser o `.pptx`, montado por script
+
+O autor passou a usar um `.pptx` no template da instituição como apresentação
+real da banca 1. Até aqui o repositório produzia dois decks — Beamer e Slidev —
+e nenhum deles era o arquivo levado à banca. A mudança resolve essa divergência
+pelo lado certo: o `.pptx` entra no pipeline, em vez de ficar fora dele.
+
+### O que foi criado
+
+| Caminho | Papel |
+|---|---|
+| `docs/07_apresentacoes/banca1/deck_pptx/base_modelo_economico.pptx` | **entrada**, não saída: o template desenhado pelo autor, com a identidade visual, os slides de sumário, os três slides de equação da literatura e dois gabaritos de modelo ainda preenchidos com `X` |
+| `docs/07_apresentacoes/banca1/deck_pptx/README.md` | como o template é usado e por que não se edita conteúdo nele à mão |
+| `scripts/apresentacao/montar_deck_banca1_pptx.py` | aplica o conteúdo sobre o template e grava o deck |
+| `scripts/apresentacao/gerar_figura_custo_laboral_deck.py` | versão de projeção da curva de custo laboral |
+| `scripts/apresentacao/gerar_figura_especialistas_extremos.py` | razão de especialistas por UF, só os valores conferidos |
+| `output/apresentacao_banca1/deck_banca1_modelo_economico.pptx` | o deck vigente, derivado |
+| `output/apresentacao_banca1/custo_laboral_deck.png` | a figura de projeção |
+| `output/apresentacao_banca1/especialistas_extremos_uf.png` | a figura de UF que substituiu o gráfico nativo do template |
+| `tests/test_deck_banca1_pptx.py` | guardas do deck: contagem de slides, ausência de gráfico com dado embutido, sincronia do manifesto |
+| `output/apresentacao_banca1/equacoes/` | as equações novas, renderizadas em LaTeX |
+| `output/apresentacao_banca1/manifesto_deck_banca1.json` | proveniência: hash da base, hash da saída, roteiro dos 21 slides, hash de cada figura e de cada equação |
+
+### A correção que a montagem obrigou
+
+Os três gráficos que o template trazia eram objetos nativos, com a série dentro
+do próprio `.pptx`. O de especialistas por unidade da federação tinha **catorze
+das dezesseis barras interpoladas** em números redondos, e duas delas
+contradiziam a fonte que este repositório já havia conferido: São Paulo
+aparecia em 414 contra **244**, e Pará em 145 contra **70**.
+
+Os três saíram do deck. Entraram figuras de script versionado, lidas de
+`output/`, e a de unidade da federação passou a mostrar **apenas os quatro
+valores que a fonte reporta**. O detalhe está em `F9`, na seção 1-A de
+[`07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md`](07_apresentacoes/banca1/03_proveniencia_figuras_e_numeros.md).
+
+### O que mudou de estatuto
+
+`deck_beamer/` e `deck_slidev/` **deixam de ser o que se apresenta**. Eles
+descrevem a estrutura anterior, de 19 slides, e ficam como registro dela. Não
+foram removidos nem atualizados; a divergência está anotada no `README.md` da
+pasta da banca 1 e no cabeçalho do documento de conteúdo. Retirá-los ou
+reconstruí-los é decisão do autor.
+
+`02_conteudo_slides.md` continua sendo a fonte de verdade e foi reescrito para
+os 21 slides do deck vigente — a regra de que divergência entre deck e documento
+é erro do deck vale agora contra o `.pptx`.
+
+### Por que as equações novas são imagem, e não OMML
+
+O template guarda suas equações em OMML nativo, dentro de blocos
+`mc:AlternateContent`. Nenhum renderizador disponível neste ambiente desenha
+esse OMML: o que aparece nas conferências é a imagem de reserva que o PowerPoint
+gravou junto. Uma equação nova escrita em OMML seria, portanto, **impossível de
+conferir** antes da banca. As equações que este projeto acrescenta são
+renderizadas em LaTeX para PNG, que é exatamente o que a plateia vê. As
+equações que já vinham no template permanecem OMML e editáveis.
+
+### O que não mudou
+
+Nenhum número novo entrou. As figuras de oferta continuam com leitura
+**descritiva** e assim rotuladas; não há grupo de comparação fora do programa.
+A banca 1 continua terminando na viabilidade empírica e não apresenta resultado
+de estimação.
+
+---
+
 ## 14/09/2026 — Banca 1: a motivação reordenada para seguir o argumento
 
 A motivação estava fragmentada porque estava fora de ordem lógica, e a correção
