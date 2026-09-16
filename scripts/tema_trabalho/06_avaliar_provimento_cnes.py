@@ -104,6 +104,19 @@ JSON_ESTIMATIVAS = OUT_DIR / f"{PREFIX}_estimativas_provimento.json"
 RELATORIO_MD = OUT_DIR / f"{PREFIX}_relatorio_diagnostico.md"
 PAINEL_T0_PARQUET = OUT_DIR / f"{PREFIX}_painel_T0.parquet"
 CROSS_SECTION_CSV = OUT_DIR / f"{PREFIX}_cross_section_6m.csv"
+# Manifesto de A6: registra o SHA-256 de `A5_painel_T0.parquet` a jusante, e e
+# contra ele que o modo de reestimacao confere o painel congelado.
+MANIFESTO_A6 = OUT_DIR / "A6_manifesto_reproducao.json"
+PAINEL_T0_REL = "output/tema_trabalho/A5_painel_T0.parquet"
+
+# Motivo registrado quando o painel mensal nao esta no disco (item D-4 do
+# backlog): os ZIPs mensais do CNES somam mais de 16 GB e nao estao no
+# repositorio; o painel integrado e regeravel apenas com eles.
+MOTIVO_PAINEL_MENSAL_AUSENTE = (
+    "painel mensal municipio-curso nao versionado e regeravel apenas a partir "
+    "dos ZIPs mensais do CNES (>16 GB, item D-4); A5 foi reestimado a partir de "
+    "A5_painel_T0.parquet, cujo SHA-256 foi conferido contra o manifesto de A6"
+)
 
 ALPHA = 0.05
 
@@ -153,11 +166,120 @@ def brier(y_true, y_prob):
     return float(np.mean((np.asarray(y_true,float)-np.asarray(y_prob,float))**2))
 
 
+def hash_registrado_painel_t0() -> str | None:
+    """SHA-256 de `A5_painel_T0.parquet` registrado a jusante, no manifesto A6."""
+    if not MANIFESTO_A6.exists():
+        return None
+    manifesto = json.loads(MANIFESTO_A6.read_text(encoding="utf-8"))
+    entrada = manifesto.get("hashes_entradas_e_artefatos", {}).get(PAINEL_T0_REL, {})
+    return entrada.get("sha256")
+
+
+def carregar_painel_t0_congelado() -> pd.DataFrame:
+    """Modo de reestimacao: le o painel em T0 ja versionado, sem reconstrui-lo.
+
+    So e legitimo quando o painel mensal do CNES nao esta no disco (D-4). O
+    painel congelado e conferido contra o SHA-256 registrado no manifesto A6;
+    divergencia aborta, porque reestimar sobre um painel diferente do que a
+    cadeia de proveniencia registra produziria artefato sem ancora. Neste modo
+    `A5_painel_T0.parquet` nunca e regravado.
+    """
+    if not PAINEL_T0_PARQUET.exists():
+        raise FileNotFoundError(
+            f"{PAINEL_MUNI} ausente e {PAINEL_T0_PARQUET} tambem: A5 nao tem insumo"
+        )
+    registrado = hash_registrado_painel_t0()
+    observado = sha256(PAINEL_T0_PARQUET)
+    if registrado is None:
+        raise RuntimeError(
+            f"{MANIFESTO_A6} nao registra o hash de {PAINEL_T0_REL}; sem ancora, "
+            "o modo de reestimacao nao e permitido"
+        )
+    if registrado != observado:
+        raise RuntimeError(
+            f"{PAINEL_T0_REL} diverge do manifesto A6: registrado {registrado[:12]}…, "
+            f"observado {observado[:12]}…; reestimacao abortada"
+        )
+    panel = pd.read_parquet(PAINEL_T0_PARQUET)
+    panel["competencia"] = panel["competencia"].astype(str)
+    panel["estrato"] = pd.Categorical(
+        panel["estrato"].astype(str),
+        categories=["interior_remoto", "capital", "metropolitano", "interior_proximo_polo"],
+        ordered=False,
+    )
+    return panel
+
+
+def hashes_anteriores() -> dict[str, dict[str, Any]]:
+    """Bloco `hashes_entradas` da execucao anterior de A5, se houver artefato."""
+    if not JSON_ESTIMATIVAS.exists():
+        return {}
+    try:
+        return json.loads(JSON_ESTIMATIVAS.read_text(encoding="utf-8")).get("hashes_entradas", {})
+    except (OSError, ValueError):
+        return {}
+
+
+def hashes_de_entradas(caminhos, extras: dict[Path, str] | None = None, anteriores: dict[str, dict[str, Any]] | None = None) -> dict[str, dict[str, Any]]:
+    """Hasheia cada insumo; insumo do desenho ausente do disco fica registrado.
+
+    Segue o padrao adotado em A6 (item B-3): insumo ausente nao e omitido em
+    silencio, e sim gravado com `sha256` nulo, `presente=false` e o motivo. O
+    hash que a execucao anterior registrou para o insumo ausente e carregado
+    adiante, para a cadeia de proveniencia nao perder a ancora do painel que
+    gerou `A5_painel_T0.parquet`. Insumos presentes mantem o formato
+    historico `{"sha256": ...}`.
+    """
+    hashes: dict[str, dict[str, Any]] = {}
+    anteriores = anteriores or {}
+    for p in caminhos:
+        rel = str(p.relative_to(ROOT)).replace("\\", "/")
+        if p.exists():
+            hashes[rel] = {"sha256": sha256(p)}
+        else:
+            ant = anteriores.get(rel, {})
+            hashes[rel] = {
+                "sha256": None,
+                "presente": False,
+                "motivo_ausencia": MOTIVO_PAINEL_MENSAL_AUSENTE,
+                "sha256_registrado_em_execucao_anterior": ant.get("sha256") or ant.get("sha256_registrado_em_execucao_anterior"),
+            }
+    for p, papel in (extras or {}).items():
+        rel = str(p.relative_to(ROOT)).replace("\\", "/")
+        hashes[rel] = {"sha256": sha256(p), "papel": papel}
+    return hashes
+
+
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    for p in [PAINEL_MUNI, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE]:
+    for p in [MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE]:
         if not p.exists():
             raise FileNotFoundError(p)
+    modo_painel = "construido_do_painel_mensal" if PAINEL_MUNI.exists() else "reestimado_do_painel_T0_congelado"
+    if modo_painel == "reestimado_do_painel_T0_congelado":
+        panel = carregar_painel_t0_congelado()
+        print(f"[A5] {PAINEL_MUNI.relative_to(ROOT)} ausente; modo {modo_painel}, hash conferido contra A6")
+    else:
+        panel = construir_painel_t0()
+    # Extras hasheados no modo de reestimacao: o painel congelado e o proprio
+    # insumo, e sua ancora fica registrada junto das demais entradas.
+    extras_hash = {PAINEL_T0_PARQUET: "painel em T0 congelado, insumo da reestimacao (hash conferido contra A6)"} if modo_painel == "reestimado_do_painel_T0_congelado" else {}
+    comp_index = {c:i for i,c in enumerate(COMPETENCIAS)}
+    t0_idx = comp_index[T0_ADMIN_COMP]
+    # Validacao de completude
+    assert panel["competencia"].nunique()==26
+    assert len(panel)==1184*26 == 30784
+    assert not panel.duplicated(["co_ibge_6d","cod_curso","competencia"]).any()
+    # UFs pequenas (<5 municipios) na referencia; usadas nos rotulos do relatorio
+    _baseline_tmp = panel[panel["competencia"]==BASELINE_COMP].copy()
+    clust = _baseline_tmp.groupby("sg_uf")["co_ibge_6d"].nunique()
+    small_ufs = set(clust[clust<5].index.tolist())
+    baseline_df = panel[panel["competencia"]==BASELINE_COMP].copy()
+    _continuar(panel, modo_painel, extras_hash, comp_index, t0_idx, small_ufs, baseline_df)
+
+
+def construir_painel_t0() -> pd.DataFrame:
+    """Modo integral: constroi o painel em T0 a partir do painel mensal do CNES."""
     # Load panel 1184*26
     panel = pd.read_parquet(PAINEL_MUNI)
     # Load tipologia estrato (panel ja contem ivs/populacao; so adiciona estrato e estoque_pre)
@@ -196,14 +318,20 @@ def main() -> None:
     clust = _baseline_tmp.groupby("sg_uf")["co_ibge_6d"].nunique()
     small_ufs = set(clust[clust<5].index.tolist())
     panel["uf_fe"] = panel["sg_uf"].where(~panel["sg_uf"].isin(small_ufs), "RESTO")
-    baseline_df = panel[panel["competencia"]==BASELINE_COMP].copy()
     # For consistency, use same small_ufs for all times
 
     # Save painel T0
     tmp = PAINEL_T0_PARQUET.with_suffix(".parquet.tmp")
     panel.to_parquet(tmp, index=False)
     tmp.replace(PAINEL_T0_PARQUET)
+    return panel
 
+
+def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, str], comp_index: dict[str, int], t0_idx: int, small_ufs: set, baseline_df: pd.DataFrame) -> None:
+    """Estimacao e artefatos de A5, comuns aos dois modos de obtencao do painel."""
+    # Lido antes de qualquer gravacao, para carregar adiante o hash do painel
+    # mensal registrado pela execucao que construiu o painel congelado.
+    anteriores_hash = hashes_anteriores()
     # === Maturity / censura stats and T0 validation ===
     nominal_stats = {}
     if NOMINAL_CSV.exists():
@@ -1231,9 +1359,12 @@ def main() -> None:
             "contrastes_vs_remoto": {k: v["mde_80_pp_p30"] for k,v in pot["contrastes_vs_interior_remoto"].items()},
             "nota": "Potencia A3 refere-se ao outcome binario de atracao e nao deve ser transportada para o estoque continuo do A5.",
         },
-        "hashes_entradas": {
-            str(p.relative_to(ROOT)).replace("\\","/"): {"sha256": sha256(p)} for p in [PAINEL_MUNI, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE, MANIFESTO_CNES if MANIFESTO_CNES.exists() else PAINEL_MUNI]
-        },
+        "modo_painel": modo_painel,
+        "hashes_entradas": hashes_de_entradas(
+            [PAINEL_MUNI, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE] + ([MANIFESTO_CNES] if MANIFESTO_CNES.exists() else []),
+            extras_hash,
+            anteriores_hash,
+        ),
         "arquivos": {
             "painel_T0": str(PAINEL_T0_PARQUET.relative_to(ROOT)).replace("\\","/"),
             "cross_section": str(CROSS_SECTION_CSV.relative_to(ROOT)).replace("\\","/"),
@@ -1423,9 +1554,12 @@ def main() -> None:
             "benchmark_global_proporcao_p30": pot["mde_global"]["mde_80_pp_p30"],
             "nota": "nao se aplica diretamente ao outcome continuo A5",
         },
-        "hashes_entradas": {
-            str(p.relative_to(ROOT)).replace("\\","/"): {"sha256": sha256(p)} for p in [PAINEL_MUNI, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE]
-        },
+        "modo_painel": modo_painel,
+        "hashes_entradas": hashes_de_entradas(
+            [PAINEL_MUNI, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE],
+            extras_hash,
+            anteriores_hash,
+        ),
         "arquivos": {
             "painel_T0": str(PAINEL_T0_PARQUET.relative_to(ROOT)).replace("\\","/"),
             "cross_section": str(CROSS_SECTION_CSV.relative_to(ROOT)).replace("\\","/"),

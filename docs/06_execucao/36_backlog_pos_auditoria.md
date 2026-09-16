@@ -776,6 +776,36 @@ em outra plataforma, como mostram os caminhos com barra invertida do Windows que
 ele ainda carrega. Detalhe e decisão pendente em
 [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md).
 
+### Destravado parcialmente em 16/09/2026 — A5 reestima a partir do painel congelado
+
+O bloqueio de D-4 sobre a fila era mais estreito do que estava registrado.
+`A5_painel_T0.parquet` — versionado, 30.784 linhas, hash `bcdb9848…` fixado no
+manifesto A6 — é exatamente o objeto `panel` que `06_avaliar_provimento_cnes.py`
+constrói do painel mensal antes de qualquer estimação. Tudo o que o script faz
+depois desse ponto lê apenas `panel` e artefatos versionados.
+
+`06_avaliar_provimento_cnes.py` ganhou um **modo de reestimação**: quando
+`output/painel_municipio_curso_mensal.parquet` não está no disco, o script lê o
+painel congelado, **confere o SHA-256 contra o manifesto A6** e aborta se não
+bater ou se não houver âncora; nesse modo `A5_painel_T0.parquet` nunca é
+regravado. A ausência do painel mensal fica registrada no bloco de hashes com
+`sha256: null`, `presente: false`, o motivo e o hash que a execução anterior
+havia registrado (`285db221…`), no padrão do B-3.
+
+**Validação antes de qualquer mudança de conteúdo:** executado no ambiente
+documentado, o modo de reestimação reproduziu **byte a byte** todas as tabelas
+CSV e figuras PNG de A5 versionadas; só mudaram `data_referencia`, o novo campo
+`modo_painel` e o bloco de hashes dos dois JSONs, mais a data do relatório. Os
+11 alvos congelados do C2 seguem conferidos pelo próprio script. Dois testes
+novos em `tests/test_provimento_cnes_a5.py`.
+
+**Consequência para a fila:** as sessões **1** e **4** e a parte medida da
+**3** deixam de estar bloqueadas por D-4. O que D-4 continua bloqueando é o que
+exige o painel mensal ou os microdados brutos: reconstruir o painel com outra
+definição, auditar `co_municipio_gestor`, a expansão CBO→curso e a chave
+`CO_PROFISSIONAL_SUS`, e qualquer análise no grão CNES. O `run_all.py` num
+clone limpo continua falhando em `05_integrar_painel_analitico.py`.
+
 ---
 
 # Fila de execução — normativa

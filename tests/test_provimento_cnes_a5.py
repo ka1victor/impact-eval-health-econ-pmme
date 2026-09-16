@@ -234,6 +234,65 @@ class ProvimentoCnesA5Test(unittest.TestCase):
         self.assertNotIn("persistencia da oferta medica local no cnes", low)
         self.assertIn("retenção individual", low)
 
+    # ------------------------------------------------------------------
+    # Modo de reestimacao a partir do painel congelado (D-4 parcial)
+    # ------------------------------------------------------------------
+    def test_modo_painel_registrado_e_ancorado(self) -> None:
+        # O painel mensal do CNES nao esta no repositorio (D-4). A5 passa a
+        # aceitar reestimar a partir de `A5_painel_T0.parquet`, mas so com o
+        # hash conferido contra o manifesto A6 e com a ausencia registrada, e
+        # nunca omitida, no bloco de hashes.
+        for artefato, doc in [("estimativas", self.est), ("manifesto", self.manifest)]:
+            self.assertIn(doc["modo_painel"], {"construido_do_painel_mensal", "reestimado_do_painel_T0_congelado"}, artefato)
+            hashes = doc["hashes_entradas"]
+            painel = "output/painel_municipio_curso_mensal.parquet"
+            self.assertIn(painel, hashes, artefato)
+            if doc["modo_painel"] == "construido_do_painel_mensal":
+                self.assertEqual(len(hashes[painel]["sha256"]), 64, artefato)
+                continue
+            entrada = hashes[painel]
+            self.assertIsNone(entrada["sha256"], artefato)
+            self.assertFalse(entrada["presente"], artefato)
+            self.assertIn("D-4", entrada["motivo_ausencia"], artefato)
+            # A ancora do painel que construiu o congelado nao pode se perder.
+            self.assertEqual(len(entrada["sha256_registrado_em_execucao_anterior"]), 64, artefato)
+            t0 = "output/tema_trabalho/A5_painel_T0.parquet"
+            self.assertIn(t0, hashes, artefato)
+            self.assertEqual(hashes[t0]["sha256"], sha(ROOT / t0), artefato)
+            a6 = json.loads((OUT / "A6_manifesto_reproducao.json").read_text(encoding="utf-8"))
+            self.assertEqual(hashes[t0]["sha256"], a6["hashes_entradas_e_artefatos"][t0]["sha256"], artefato)
+
+    def test_reestimacao_aborta_sem_ancora_ou_com_hash_divergente(self) -> None:
+        import importlib.util
+        import tempfile
+
+        spec = importlib.util.spec_from_file_location(
+            "a5_provimento", ROOT / "scripts" / "tema_trabalho" / "06_avaliar_provimento_cnes.py"
+        )
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        original = mod.MANIFESTO_A6
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                # Sem manifesto A6: sem ancora, o modo nao e permitido.
+                mod.MANIFESTO_A6 = Path(tmp) / "inexistente.json"
+                with self.assertRaises(RuntimeError):
+                    mod.carregar_painel_t0_congelado()
+                # Manifesto com hash diferente do arquivo em disco: aborta.
+                falso = Path(tmp) / "a6.json"
+                falso.write_text(json.dumps({"hashes_entradas_e_artefatos": {mod.PAINEL_T0_REL: {"sha256": "0" * 64}}}), encoding="utf-8")
+                mod.MANIFESTO_A6 = falso
+                with self.assertRaises(RuntimeError):
+                    mod.carregar_painel_t0_congelado()
+        finally:
+            mod.MANIFESTO_A6 = original
+        # Com o manifesto real, o painel carrega balanceado e com a mesma
+        # tipagem que a construcao integral produz.
+        painel = mod.carregar_painel_t0_congelado()
+        self.assertEqual(len(painel), 1184 * 26)
+        self.assertTrue(pd.api.types.is_string_dtype(painel["competencia"]))
+        self.assertTrue(isinstance(painel["estrato"].dtype, pd.CategoricalDtype))
+
 
 if __name__ == "__main__":
     unittest.main()

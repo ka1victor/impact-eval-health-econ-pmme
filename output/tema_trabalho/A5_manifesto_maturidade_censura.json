@@ -1,6 +1,6 @@
 {
   "protocolo": "A5_MANISFESTO_MATURIDADE_CENSURA",
-  "data_referencia": "2026-09-09",
+  "data_referencia": "2026-09-16",
   "efeitos_estimados": false,
   "t0": {
     "homologacao_data": "2025-09-29",
@@ -303,9 +303,13 @@
     },
     "nota": "Potencia A3 refere-se ao outcome binario de atracao e nao deve ser transportada para o estoque continuo do A5."
   },
+  "modo_painel": "reestimado_do_painel_T0_congelado",
   "hashes_entradas": {
     "output/painel_municipio_curso_mensal.parquet": {
-      "sha256": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059"
+      "sha256": null,
+      "presente": false,
+      "motivo_ausencia": "painel mensal municipio-curso nao versionado e regeravel apenas a partir dos ZIPs mensais do CNES (>16 GB, item D-4); A5 foi reestimado a partir de A5_painel_T0.parquet, cujo SHA-256 foi conferido contra o manifesto de A6",
+      "sha256_registrado_em_execucao_anterior": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059"
     },
     "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
       "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
@@ -330,6 +334,10 @@
     },
     "output/aquisicao/manifesto_cnes_26_competencias.json": {
       "sha256": "a85f52e39430badc7c837c6c7649097dae97f00e79c90a505ab0def02da04ea4"
+    },
+    "output/tema_trabalho/A5_painel_T0.parquet": {
+      "sha256": "bcdb9848bd546ec7b716dda1715d2c835a8bc22c4c63e06602d4c2facc2138eb",
+      "papel": "painel em T0 congelado, insumo da reestimacao (hash conferido contra A6)"
     }
   },
   "arquivos": {
