@@ -15,15 +15,24 @@ argumento pedir — e, desde a reorganização de 16/09/2026, nenhum a mais.
 |---|:---:|---|
 | **Capa e sumário** | 1–2 | a capa e o sumário, que aparece **uma vez** |
 | **1. Motivação e Pergunta** | 3–7 | divisória (3); problema (4): o retrato territorial e a dupla prática; política (5): o que é o PMM-E, o que determina a bolsa e onde a regra manda o dinheiro; efeitos (6): o ciclo 1 e a literatura dos dois lados; pergunta de pesquisa (7) |
-| **2. Literatura Teórica e Modelo Microeconômico** | 8–11 | divisória (8); visão geral (9): as três tradições e a equação de escolha; custo da localidade (10): o lugar e o trabalho; remuneração da localidade (11): a bolsa é parte, não todo |
+| **2. Literatura Teórica e Modelo Microeconômico** | 8–11 | divisória (8); visão geral (9): a equação de escolha de Moehling et al. e a caixa-preta do custo; custo da localidade (10): o lugar, com Redding & Rossi-Hansberg, e o trabalho, com Choné & Ma; remuneração da localidade (11): a bolsa é parte, não todo |
 | **3. Hipótese e Viabilidade Empírica** | 12–16 | divisória (12); implicações para o PMM-E (13); hipótese do trabalho (14); disponibilidade de dados (15); desafio metodológico (16) |
 
 **Convenção do documento de conteúdo.** Entre os comentários `deck:inicio` e
-`deck:fim` de [02 — Conteúdo](02_conteudo_slides.md), **cada cabeçalho é um
-slide**: `#` é layout de capa — a capa e as três divisórias de seção — e `##` é
-layout de conteúdo, os doze slides restantes. A tabela "Mapa da apresentação",
-no topo daquele arquivo, dá a correspondência completa entre número, layout,
-seção, rótulo do roteiro e título de tela; é dela que este README deriva.
+`deck:fim` de [02 — Conteúdo](02_conteudo_slides.md), **cada cabeçalho de
+primeiro ou segundo nível é um slide**: `#` é layout de capa — a capa e as três
+divisórias de seção — e `##` é layout de conteúdo, os doze slides restantes. O
+terceiro nível, `###`, **não abre slide**: marca um **build** dentro do slide,
+um `\only<n>` no Beamer e um clique no Slidev. São **33 builds nos 16 slides**,
+o mais denso sendo o slide 5, com cinco. A tabela "Mapa da apresentação", no
+topo daquele arquivo, dá a correspondência completa entre número, layout,
+builds, seção, rótulo do roteiro e título de tela; é dela que este README
+deriva.
+
+**O que não vai à tela.** Duas coisas no corpo do slide são de produção, não de
+projeção: a linha `**Fontes:**`, que vira nota de rodapé pequena, e todo bloco
+marcado `**Nota de produção.**`, instrução para quem monta o deck. Tudo o mais é
+conteúdo de tela.
 
 **A banca 1 é teórica.** Fora da seção 1, nada de estimação, e os slides de
 literatura trazem apenas trabalhos teóricos. A seção 1 é a exceção declarada: no
@@ -48,8 +57,8 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 
 | Documento | Função |
 |---|---|
-| [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — os 16 slides com título, corpo, figuras, fontes e ressalvas. Diz exatamente o que vai à tela, e nada além; os decks derivam dele |
-| [Roteiro narrativo](01_roteiro_narrativo.md) | arco das seções, lógica de cada bloco, regras de composição, rastreio do feedback e histórico das revisões, inclusive a reorganização de 16/09/2026 |
+| [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — os **16 slides** e **33 builds**, com título, corpo, figuras, fontes e ressalvas. `###` marca build, não slide; a linha de fontes e os blocos de **nota de produção** não vão à tela, e todo o resto do corpo vai. Os decks derivam dele |
+| [Roteiro narrativo](01_roteiro_narrativo.md) | arco das seções, lógica de cada bloco, regras de composição — inclusive a do build, na seção 2.6 —, rastreio do feedback e histórico das revisões, inclusive a reorganização de 16/09/2026 e a compressão do mesmo dia (seção 4f) |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | origem e reprodutibilidade de cada número exibido |
 | [Deck Beamer](deck_beamer/) · [Deck Slidev](deck_slidev/) | artefatos derivados, com script de build cada um; PDFs em `output/apresentacao_banca1/`. Em 16/09/2026 os dois ainda estão na **estrutura anterior, de 15 slides** — divergência conhecida e datada, a resolver na próxima reconstrução |
 

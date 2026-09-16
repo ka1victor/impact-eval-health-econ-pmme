@@ -65,6 +65,28 @@ privados e 72,4% em dupla prática. A manchete corrente de que "apenas 10% dos
 especialistas atendem no SUS" foi rebaixada a não citável: é fala em debate
 parlamentar, sem metodologia, e conflita com a própria fonte primária.
 
+### Segunda rodada: o texto cabe no frame
+
+Ainda em 16/09/2026, a pedido do autor: **texto mais sintético** e **redundância
+fora**. Duas consequências estruturais.
+
+**`###` passa a marcar build.** Dentro de um slide, cada `###` é um `\only<n>` no
+Beamer e um clique no Slidev. Um slide com três `###` é **um** frame com três
+builds, não três frames. São **33 builds em 16 slides**, e o mapa no topo de
+`02_conteudo_slides.md` ganhou a coluna correspondente. Cada build foi
+dimensionado para caber em cerca de 14 linhas de tela.
+
+**O que não vai à tela ficou declarado.** A linha `**Fontes:**` vira nota de
+rodapé; todo bloco marcado `**Nota de produção.**` é instrução para quem monta o
+deck. Antes disso, nota editorial e conteúdo de tela se misturavam no mesmo
+corpo.
+
+**Duas remoções por redundância.** A tabela das três tradições, que abria o slide
+9, saiu: o conteúdo dela é coberto integralmente depois, e cada tradição passa a
+ser apresentada no momento em que faz trabalho. No slide 13, a equação que
+decompunha o custo saiu, porque repetia o slide 10 inteiro; ficou uma referência
+cruzada.
+
 ### Divergência assumida
 
 Os decks Beamer e Slidev permanecem na estrutura de **15 slides** até a próxima

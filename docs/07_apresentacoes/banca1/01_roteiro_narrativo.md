@@ -12,16 +12,18 @@ Um único fio condutor: **um preço foi colocado sobre a vulnerabilidade
 territorial, e ainda não se sabe se esse preço compra o preenchimento das vagas
 que pretendia comprar.**
 
-A banca 1 tem **três seções** e **16 slides**. Cada seção abre com uma divisória
-e ocupa quantos slides o argumento pedir — a motivação, que tem mais a dizer, e
-o fecho empírico ocupam quatro slides de conteúdo cada; o bloco teórico, três.
+A banca 1 tem **três seções**, **16 slides** e **33 builds**. Cada seção abre com
+uma divisória e ocupa quantos slides o argumento pedir — a motivação, que tem
+mais a dizer, e o fecho empírico ocupam quatro slides de conteúdo cada; o bloco
+teórico, três.
 
 **A convenção de cabeçalhos.** No documento de conteúdo, entre os comentários
-`deck:inicio` e `deck:fim`, **cada cabeçalho é um slide, e só os cabeçalhos são
-slides**: `#` é layout de capa — a capa da apresentação e as três divisórias de
-seção — e `##` é layout de conteúdo. Nada abaixo de um cabeçalho vira slide por
-conta própria. O mapa completo, com título de tela e rastreio de cada slide,
-está no topo de [02_conteudo_slides.md](02_conteudo_slides.md).
+`deck:inicio` e `deck:fim`, **cada cabeçalho de primeiro ou segundo nível é um
+slide**: `#` é layout de capa — a capa da apresentação e as três divisórias de
+seção — e `##` é layout de conteúdo. O terceiro nível, `###`, **não abre slide**:
+marca um **build** dentro do slide, regra registrada na seção 2.6. O mapa
+completo, com título de tela, rastreio e número de builds de cada slide, está no
+topo de [02_conteudo_slides.md](02_conteudo_slides.md).
 
 | Seção | Papel narrativo | Slides |
 |---|---|:---:|
@@ -105,11 +107,17 @@ ela deixa de ser retórica.
 
 ### 1.2 A lógica da seção 2 — Literatura Teórica e Modelo Microeconômico
 
-O slide 9 monta a **equação de escolha** a partir das três tradições e diz o que
-ela faz em português: divide o salário pelos preços locais, subtrai o custo não
-pecuniário, desconta e soma a carreira, compara as localidades. Fecha declarando
-o buraco: na definição dos próprios autores, o custo $c$ é uma **caixa-preta** de
-preferências por viver no interior e proximidade da família.
+O slide 9 apresenta a **equação de escolha** de Moehling et al. e diz o que ela
+faz em português: divide o salário pelos preços locais, subtrai o custo não
+pecuniário, desconta e soma a carreira, compara as localidades. São dois builds,
+a equação e a leitura. Fecha declarando o buraco: na definição dos próprios
+autores, o custo $c$ é uma **caixa-preta** de preferências por viver no interior
+e proximidade da família.
+
+A tabela que catalogava as **três tradições** lado a lado, e que abria este
+slide, **saiu** em 16/09/2026 (seção 4f): Moehling é o próprio slide 9, e
+Redding & Rossi-Hansberg e Choné & Ma são o slide 10. Cada tradição passa a ser
+apresentada no momento em que faz trabalho, e não antes.
 
 O slide 10 abre a caixa em duas metades — o **lugar**, com Redding &
 Rossi-Hansberg, e o **trabalho**, com Choné & Ma e a extensão em $B(q; L, K)$
@@ -132,14 +140,17 @@ uma desvantagem do lugar que a bolsa precisa compensar.
 
 ### 1.3 A lógica da seção 3 — Hipótese e Viabilidade Empírica
 
-O slide 13 faz a junção: escreve $V_{im}$ com o custo decomposto, declara o que
-**nenhuma** das três tradições tem — um componente da remuneração fixado por
-regra pública sobre um índice territorial — e mapeia cada termo do modelo sobre
-uma variável do programa. Daí sai o argumento que justifica o objeto do
-trabalho: como a dimensão de capital humano do IVS **eleva o benefício** de
-atender e ao mesmo tempo **sinaliza falta de insumo**, o sinal de $c_0'(IVS)$ é
-ambíguo. Por isso o objeto é o **degrau** da bolsa entre faixas, e não a
-inclinação do índice.
+O slide 13 faz a junção: escreve $V_{im}$ e remete cada metade ao slide que a
+construiu — a remuneração ao 11, o custo ao 10 —, declara o que **nenhuma** das
+três tradições tem, um componente da remuneração fixado por regra pública sobre
+um índice territorial, e mapeia cada termo do modelo sobre uma variável do
+programa. A equação que reescrevia a decomposição de $c_{im}$ saiu em 16/09/2026
+(seção 4f), por repetir o slide 10; ficou a referência cruzada.
+
+Daí sai o argumento que justifica o objeto do trabalho: como a dimensão de
+capital humano do IVS **eleva o benefício** de atender e ao mesmo tempo
+**sinaliza falta de insumo**, o sinal de $c_0'(IVS)$ é ambíguo. Por isso o
+objeto é o **degrau** da bolsa entre faixas, e não a inclinação do índice.
 
 O slide 14 deriva **H1** em quatro passos, da condição de aceitação individual à
 probabilidade de a vaga ser preenchida, e termina na condição de degrau —
@@ -224,12 +235,13 @@ remuneração enquanto o índice organiza o custo.
 e duas cláusulas de edital — o material de três slides da estrutura anterior. A
 afirmação continua única, "a bolsa é do município", e cada peça a sustenta: a
 grade mostra o valor que a regra fixa, as duas medidas de oferta mostram para
-onde ela manda o dinheiro, o diagrama mostra o que ela supõe sem escrever. Ainda
-assim é o slide mais denso do deck e o primeiro candidato a divisão se a
-projeção ficar apertada, separando "o que determina a remuneração" de "o que o
-desenho supõe".
+onde ela manda o dinheiro, o diagrama mostra o que ela supõe sem escrever. É o
+slide mais denso do deck — **cinco builds**, contra dois ou três dos demais — e
+segue sendo o primeiro candidato a divisão se a projeção ficar apertada. O corte
+natural é o que o próprio slide registra em nota de produção: "Onde a regra
+manda o dinheiro" vira slide próprio, por ser o único build com duas figuras.
 
-### 2.3 Fontes, não notas
+### 2.3 Fontes, não notas — e o que não vai à tela
 
 Todo número exibido traz a fonte no próprio slide. Não há notas de apresentador
 nem justificativas no documento de conteúdo: o que precisa ser dito está no
@@ -237,6 +249,15 @@ slide ou não está. Manchetes entram como citação textual com veículo e data
 não como imagem de recorte. Número sem fonte primária confirmada fica registrado
 como pendência no documento de conteúdo, não é dito em voz alta como se
 estivesse fechado.
+
+**O que não vai à tela, desde 16/09/2026.** São duas coisas, e só duas: a linha
+`**Fontes:**`, que vira **nota de rodapé pequena** no frame, e todo bloco
+marcado `**Nota de produção.**`, que é instrução para quem monta o deck —
+decisão pendente de título, escolha de layout, número rejeitado e por quê. Tudo
+o mais no corpo do slide é conteúdo de tela, inclusive as citações destacadas.
+Isso não reabre a porta da nota de apresentador: a nota de produção não é texto
+a ser falado, é instrução de montagem, e a advertência que a banca precisa ouvir
+continua escrita no slide.
 
 ### 2.4 A banca 1 é teórica
 
@@ -270,6 +291,27 @@ estimador.
 | especialistas do município | presença cadastral no CNES nos CBOs do programa |
 | 10% dos especialistas atendem no SUS | exclusividade ao SUS é rara: 7,7% dos cirurgiões atuam só no público |
 
+### 2.6 O build é o passo; o slide continua sendo a afirmação
+
+Desde 16/09/2026 (seção 4f), `###` no documento de conteúdo marca um **build**:
+um `\only<n>` no Beamer, um clique no Slidev. O slide não se divide — a
+afirmação do título continua uma só, e o build apenas controla em que ordem ela
+é construída na tela.
+
+- **Build não é slide.** Um slide com três `###` é um frame com três passos: a
+  contagem de slides não muda, o título não muda e o rastreio de rodapé é o
+  mesmo nos três.
+- **Cada build cabe sozinho.** A medida é de cerca de **14 linhas de tela** por
+  build, que é o que entra no frame do Beamer sem `Overfull`. Build que não cabe
+  vira dois, ou o slide perde material — não se resolve diminuindo a fonte.
+- **O build é um passo do argumento.** Figura num build, leitura no seguinte;
+  equação num build, interpretação no seguinte. Build sem trabalho próprio é
+  pausa decorativa, e não entra.
+
+São **33 builds em 16 slides**, com a contagem por slide na coluna **Builds** do
+mapa de [02_conteudo_slides.md](02_conteudo_slides.md) e a lista dos passos na
+seção 4f. O slide 5 é o mais denso, com cinco.
+
 ---
 
 > [!NOTE]
@@ -277,7 +319,8 @@ estimador.
 > são os da estrutura vigente **na data do ajuste** — 11, 18, 19 ou 15 slides,
 > conforme o caso — e são preservados como registro. A numeração corrente é a do
 > mapa da seção 1 e do [documento de conteúdo](02_conteudo_slides.md); a
-> correspondência entre a última estrutura e a atual está na seção 4e.
+> correspondência entre a última estrutura e a atual está na seção 4e. A seção
+> 4f já usa a numeração corrente, porque não mexeu na estrutura.
 
 ## 3. Rastreio do feedback dos professores
 
@@ -562,6 +605,117 @@ registrada como pendência 6 no documento de conteúdo e é, pela regra da seç�
 reconstrução, que precisa contemplar os dois layouts da convenção nova, capa e
 conteúdo, e o diagrama de teoria da mudança do slide 5.
 
+## 4f. Compressão de 16/09/2026 — o texto cabe no frame
+
+A pedido do autor, no mesmo dia da reestruturação da seção 4e e depois dela. A
+4e resolveu a **arquitetura**; sobrava o **texto**. Os slides ainda estavam
+escritos como documento — parágrafo corrido, tabela de quatro e cinco colunas,
+blocos `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]` e `[!CAUTION]`
+alternando conteúdo de tela e nota editorial —, e nada disso cabe num frame de
+Beamer. Esta rodada **não mexeu em estrutura**: os 16 slides, as três seções e
+todos os títulos são os mesmos. Mudou o que ocupa a tela, e em que ordem.
+
+### A convenção de build
+
+O terceiro nível de cabeçalho ganhou função: `###` dentro de um slide marca um
+**build** — um `\only<n>` no Beamer, um clique no Slidev —, e não um slide novo.
+Um slide com três `###` é **um** frame com três passos, e o rastreio de rodapé é
+o mesmo nos três. A regra de composição está na seção 2.6; o mapa do documento
+de conteúdo ganhou a coluna **Builds**. São **33 builds em 16 slides**:
+
+| Slide | Builds | Os passos |
+|---|:---:|---|
+| 1 · capa | 1 | — |
+| 2 · sumário | 1 | — |
+| 3 · divisória | 1 | — |
+| 4 · problema | 3 | Onde eles estão · De quem é o tempo desse especialista · E quais especialistas faltam |
+| 5 · política | **5** | O que é o PMM-E · O que determina o valor oferecido · O IVS é o piso, não o critério · Onde a regra manda o dinheiro · A teoria da mudança que o desenho supõe |
+| 6 · efeitos | 3 | O que o ciclo 1 mostra · A leitura · A literatura aponta para os dois lados |
+| 7 · pergunta de pesquisa | 1 | — |
+| 8 · divisória | 1 | — |
+| 9 · visão geral | 2 | A equação de escolha · O que a conta faz, e o que ela esconde |
+| 10 · custo da localidade | 3 | O lugar · O trabalho · As quatro desvantagens, na visão do médico |
+| 11 · remuneração da localidade | 2 | A bolsa compra 20 horas; o resto é mercado local · A consequência é contraintuitiva |
+| 12 · divisória | 1 | — |
+| 13 · implicações para o PMM-E | 2 | O modelo integrado · Por que o IVS organiza o custo |
+| 14 · hipótese do trabalho | 2 | A condição de aceitação · A hipótese |
+| 15 · disponibilidade de dados | 2 | O que observamos · O que falta |
+| 16 · desafio metodológico | 3 | O problema, e a resposta natural · Ele foi dado, em 14/09/2026, e tem três resultados · Conclusão, e o que fica de pé |
+| **Total** | **33** | |
+
+O slide 5 é o mais denso, com **cinco** builds contra dois ou três dos demais. A
+nota de produção do próprio slide registra o que fazer se ele pesar na banca: o
+candidato natural a virar slide próprio é "Onde a regra manda o dinheiro", único
+build com duas figuras.
+
+### O que não vai à tela, agora declarado
+
+Antes, nota editorial e conteúdo de tela dividiam o mesmo corpo, e o tipo do
+bloco `[!...]` não dizia qual era qual. Agora a regra está no cabeçalho do
+documento de conteúdo e na seção 2.3: saem da tela a linha `**Fontes:**`, que
+vira nota de rodapé pequena, e todo bloco marcado `**Nota de produção.**`, que é
+instrução para quem monta o deck. Tudo o mais no corpo do slide é conteúdo.
+
+A reclassificação moveu material nos dois sentidos. O que era advertência **de
+conteúdo** — "isto é descrição, não efeito" e a conclusão de viabilidade do
+slide 16, ambas em `[!CAUTION]`, ou a linha solta "a evidência não decide se um
+degrau de R$ 5 mil basta" — virou **citação destacada dentro do slide**, porque
+é o que a banca precisa ler. O que era instrução de montagem — a decisão
+pendente sobre o título, a série mensal que pode entrar e a tabela de
+inclinações que não pode, a frase dos 10% que não se sustenta — virou **nota de
+produção** e saiu da tela.
+Nada disso reabre a nota de apresentador: o que precisa ser dito continua no
+slide.
+
+### A compressão propriamente dita
+
+Parágrafo virou lista ou tabela; tabela de cinco colunas virou de três; o número
+ficou em negrito e a frase em volta encolheu. A medida é de cerca de **14 linhas
+de tela por build**, que é o que entra no frame do Beamer sem `Overfull`.
+
+| Slide | Antes | Depois |
+|---|---|---|
+| 4 · problema | três blocos de parágrafo, tabela de figuras com coluna "Estado", advertência em `[!WARNING]` | três builds em lista curta; o estado das figuras fica nas pendências e a advertência vira nota de produção |
+| 5 · política | as duas cláusulas em parágrafo e quatro linhas de leitura do diagrama | as cláusulas em tabela de uma linha cada; o diagrama lido em uma frase — verde e cheia é ato oficial, laranja e tracejada é suposição |
+| 6 · efeitos | células da literatura com o desenho de cada estudo por extenso | mesma tabela, manchete em negrito e desenho em meia linha |
+| 15 · disponibilidade de dados | uma tabela de onze linhas e quatro colunas, com semáforo | duas tabelas — o que observamos, o que falta — sem a coluna de grau |
+| 16 · desafio metodológico | conclusão em `[!CAUTION]` e "o que fica de pé" em seção separada | um build só, com a conclusão em citação destacada acima dos três pontos que ficam de pé |
+
+**Nenhum número exibido mudou de valor, e nenhuma fonte, ressalva ou pendência
+saiu.** O que encolheu foi a moldura em volta deles: tamanho de amostra (os
+1.544 cirurgiões respondentes), precisão secundária (o erro padrão 0,234 do
+movimento de estoque), cobertura do instrumento (os 2.815 municípios dos ciclos
+1 a 3) e qualificação de segunda ordem (a vedação de substituição do item 4.1.6,
+que matizava o elo "preenchimento → oferta"). Todos seguem registrados em
+[03 — Proveniência](03_proveniencia_figuras_e_numeros.md), que é onde o rastreio
+mora: o que saiu foi da tela, não do projeto.
+
+### Duas redundâncias removidas
+
+A pedido do autor, e são as únicas remoções de conteúdo da rodada.
+
+| Onde | O que saiu | Por que era redundante |
+|---|---|---|
+| **Slide 9**, primeiro build | a tabela "Três tradições sustentam uma equação", com Moehling, Redding & Rossi-Hansberg e Choné & Ma lado a lado | as três aparecem inteiras logo adiante: Moehling **é** o slide 9, e Redding & Rossi-Hansberg e Choné & Ma **são** o slide 10. A tabela anunciava em três linhas o que os dois slides seguintes fazem com equação e leitura |
+| **Slide 13**, primeiro build | a equação que decompunha $c_{im}$ em bloco geográfico e bloco laboral, com os autores anotados sob as chaves | repetia o slide 10 inteiro, quatro telas depois |
+
+O slide 9 passa a ter **dois** builds — "A equação de escolha" e "O que a conta
+faz, e o que ela esconde" — e cada tradição passa a ser apresentada no momento
+em que faz trabalho, em vez de ser catalogada antes. No slide 13, no lugar da
+equação ficou uma **linha de referência cruzada**: a remuneração vem do slide 11
+e o custo, do slide 10. A junção continua sendo trabalho dele — o que nenhuma
+das três tradições tem é remuneração fixada por regra pública sobre um índice
+territorial —, e agora aparece sem reintroduzir as peças.
+
+### O que a próxima reconstrução dos decks precisa contemplar
+
+Os decks continuam na estrutura de 15 slides, pendência 6, e a divergência segue
+datada como na seção 4e. A reconstrução passa a ter quatro requisitos, e não
+dois: os dois layouts da convenção de cabeçalhos; o diagrama de teoria da
+mudança do slide 5; os **33 builds**, como `\only<n>` no Beamer e cliques no
+Slidev; e a regra do que não vai à tela — `**Fontes:**` em rodapé pequeno, nota
+de produção em lugar nenhum.
+
 ## 5. Defeitos do material anterior
 
 Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.
@@ -583,18 +737,33 @@ Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.
 Mesmo método das versões anteriores: minutos por seção, ponderados pela
 densidade de cada slide, com as divisórias custando segundos.
 
-| Seção | Slides | Minutos |
-|---|:---:|:---:|
-| Capa e sumário | 2 | 1 |
-| 1. Motivação e Pergunta | 5 | 10 |
-| 2. Literatura Teórica e Modelo Microeconômico | 4 | 6 |
-| 3. Hipótese e Viabilidade Empírica | 5 | 9 |
-| **Total** | **16** | **26** |
+**O critério, agora que há builds.** O tempo é do **material**, não do número de
+telas: um build não acrescenta conteúdo, apenas reparte o que já estava no
+slide. A compressão da seção 4f, por si, não muda a conta — quem a muda são as
+**duas remoções** do mesmo dia, a tabela das três tradições no slide 9 e a
+equação de decomposição do custo no slide 13, que eram material dito duas vezes.
+Sai cerca de um minuto do bloco teórico. Os builds entram na tabela como
+verificação de densidade, não como unidade de tempo.
 
-São **dois minutos a mais** que os 24 da estrutura de 15 slides, com um slide a
-mais e dois slides de conteúdo a menos. A conta não é do número de slides, é do
+| Seção | Slides | Builds | Minutos |
+|---|:---:|:---:|:---:|
+| Capa e sumário | 2 | 2 | 1 |
+| 1. Motivação e Pergunta | 5 | 13 | 10 |
+| 2. Literatura Teórica e Modelo Microeconômico | 4 | 8 | 5 |
+| 3. Hipótese e Viabilidade Empírica | 5 | 10 | 9 |
+| **Total** | **16** | **33** | **25** |
+
+São **um minuto a mais** que os 24 da estrutura de 15 slides, e um a menos que
+os 26 estimados antes da compressão. A conta não é do número de slides, é do
 material: as três divisórias somam menos de um minuto, mas o slide 5 concentra o
 que eram três slides e o slide 6 o que eram dois, e a viabilidade, agora em dois
 slides, ganhou espaço para separar "há dado" de "o dado identifica". O
 acréscimo de conteúdo de 16/09/2026 — dupla prática, cursos críticos, teoria da
 mudança e Hone et al. — cabe nesse mesmo delta.
+
+**Verificação por build.** 25 minutos para 33 builds dão cerca de **45 segundos
+por build**, com as quatro telas de capa e divisória custando segundos e os
+builds de conteúdo, um pouco mais; o slide 5, com cinco, fica em torno de quatro
+minutos. Nenhum build previsto passa de um minuto e meio. Se algum passar no
+ensaio, o problema é de material no build, e a saída é a da seção 2.6: repartir
+em dois, não acelerar a fala.
