@@ -764,6 +764,31 @@ limitação (a) fica registrada nela. O achado colateral do B-5 — o nível nã
 sobrevive ao FDR da família de 25 e o proporcional sobrevive — entra na seção
 de forma funcional.
 
+### Executado em 16/09/2026 — sessão 3 concluída. Protocolo `1fab57d`, código depois
+
+Script `06b_ameacas_a5_placebo_pretendencia_deslocamento.py`, no `run_all.py`
+entre A5 e A6; artefatos `A5_tabela_12` a `A5_tabela_14` e `A5_ameacas_c7.json`,
+hash do painel conferido contra o A6. Inferência na convenção `_gl_fe`.
+
+| Ameaça | Resultado (março/2026) | Leitura pré-especificada |
+|---|---|---|
+| **Placebo** — 372 células sem atração: 198 em município com atração, 174 em município sem | nível `+0,063` (EP `0,309`; `p = 0,837`; pré-F `1,57`, `p = 0,102`); proporcional `+0,0007` (`p = 0,980`) | **passa** nas duas escalas; a reauditoria medira `0,092` (`0,303`; `0,761`) em nível — mesma ordem e mesma leitura |
+| **Pré-tendência por curso** — dez cursos | rejeita a 5% na proporcional nos cursos **2 e 16**; em nível, **2, 14 e 16** (os mesmos da reauditoria). Posto incompleto da covariância das restrições nos cursos 3, 5, 12, 13, 15 e 16: F não confiável ali. Regra fixada: excluindo 2 e 16, proporcional `+0,0810` (EP `0,0236`; `p = 0,0007`), nível `+0,579` (`p = 0,058`), 488 células | heterogeneidade existe e fica publicada; não desfaz a proporcional; o nível é o que depende de composição |
+| **Deslocamento (a)** — transbordo sobre 372 células sem atração, 70 expostas a vizinho do quadro com atração no mesmo curso | nível `+0,276` (`p = 0,542`); proporcional `−0,0105` (`p = 0,741`) | sem sinal de deslocamento a partir dos vizinhos observados |
+| **Deslocamento (b)** — oferta líquida por região–curso, 173 regiões, 449 região–curso (64 com mais de um município do painel), cluster por região | nível `+0,773` (EP `0,238`; `p = 0,001`); proporcional `+0,0502` (EP `0,0179`; `p = 0,006`); pré-F `0,79` (`p = 0,663`) | a oferta regional agregada também sobe: não é pura realocação dentro do quadro |
+
+**Limite declarado e mantido:** o painel só contém os 368 municípios do quadro;
+"vizinho" é vizinho dentro do quadro, e deslocamento a partir de municípios
+fora da oferta não é observável. A leitura de tudo continua associativa.
+
+O red team troca a seção "Ameaças que este red team não testou" pela seção
+"Placebo, pré-tendência por curso e deslocamento (C-7)", com os números lidos
+do JSON, e a seção de forma funcional passa a citar o FDR (`q = 0,0034` na
+proporcional, `0,364` em nível). Veredito geral e conclusão da síntese
+atualizados pelo gerador. Dois testes novos, mais o teste do red team
+reescrito para exigir os resultados em vez da ausência. O C-7 está
+**concluído**.
+
 ## C-8 · Assinatura de CPF não comparável entre máscaras
 
 Os homologados mascaram as posições 4–7 do CPF (`711XXX14162`); a classificação
@@ -966,7 +991,7 @@ e a 2 depende de a especificação do C1 já estar valendo.
 |---|---|---|---|
 | 1 | `CONCLUIDA` (emenda `03ccc1c`, execução na seção A-1) | **A-1** | Executada em 16/09/2026 depois de D-4 ser parcialmente destravado (`da4d6f7`). Decisão delegada pelo autor: residual rotulado, 24 níveis. Os três alvos reemitidos reproduzem. |
 | 2 | `CONCLUIDA` (emenda `9e5de6d`, execução `fbc5f58`) | **A-2 + A-3 + C-6** | Executada em 14/09/2026 na especificação vigente. Emenda 1 do `35` commitada antes do código. Resultado e achado colateral na seção A-2 e no `35`. |
-| 3 | `PARCIAL_EXECUTADA` (14/09/2026, `a8107cb`) | **C-7** | Red team. A quarta ameaça — forma funcional — foi executada junto da sessão 5, porque a sessão 4 está bloqueada e as duas dividem o gerador `07_red_team_sintese.py`. Placebo, heterogeneidade de pré-tendência e deslocamento **continuam bloqueados por D-4**: exigem regravar artefato de A5. |
+| 3 | `CONCLUIDA` (14/09/2026 `a8107cb` para a forma funcional; 16/09/2026 para as três restantes, protocolo `1fab57d`) | **C-7** | Red team completo. Placebo passa; pré-tendência rejeita nos cursos 2 e 16 (proporcional) e 2, 14 e 16 (nível), publicada por curso; deslocamento sem sinal nos vizinhos do quadro e oferta regional agregada positiva. Limite: vizinho é vizinho dentro do quadro. |
 | 4 | `CONCLUIDA` (16/09/2026) | **B-1, B-2, B-5, B-6, C-9** | Executada no modo de reestimação de A5 (`da4d6f7`). B-6 fechou um rótulo no código e dois em errata (E-3, E-4). Achado colateral do B-5: o coeficiente em nível não sobrevive ao FDR da família de 25; o proporcional sobrevive. |
 | 5 | `CONCLUIDA` (14/09/2026) | **B-3, C-1, C-2, C-3, C-5, C-8** — **C-4 bloqueado** | Executada com a sessão 3. Commits: B-3 `2375267`, C-1 `093fb44`, C-2 `8c4d3e9`, C-3 e C-5 `e7fc9e9`, C-4 e C-8 `1893e95`. O C-4 não foi concluído: a renomeação recomendada muda o SHA-256 de `portao_denominador.json`, fixado como hash de entrada em A3, A4 e A5 — ver a seção C-4. |
 | — | `DECISÃO DO AUTOR` | **B-4, B-7** | Errata contra reexecução da tipologia congelada. Recomendo errata. Não executar sem a decisão. |

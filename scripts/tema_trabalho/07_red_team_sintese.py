@@ -22,6 +22,7 @@ EXEC = ROOT / "docs" / "06_execucao"
 
 A4 = OUT / "A4_estimativas_atracao.json"
 A5 = OUT / "A5_estimativas_provimento.json"
+A5_AMEACAS = OUT / "A5_ameacas_c7.json"
 REDTEAM = AUD / "09_red_team_atracao_provimento.md"
 MATRIX_DOC_CSV = AUD / "09_matriz_afirmacao_evidencia_limite.csv"
 MATRIX_OUT_CSV = OUT / "A6_matriz_afirmacao_evidencia_limite.csv"
@@ -164,6 +165,7 @@ def insumos_declarados() -> list[tuple[Path, str, str | None]]:
         (A4, "estimativas de A4", None),
         (A5, "estimativas de A5", None),
         (OUT / "A5_manifesto_maturidade_censura.json", "maturidade e censura declaradas em A5", None),
+        (A5_AMEACAS, "placebo, pré-tendência por curso e deslocamento regional de A5 (C-7)", None),
         (OUT / "A4_tabela_02_modelo_principal_LPM.csv", "modelo principal de A4", None),
         (OUT / "A4_tabela_02c_confirmacao_homologacao.csv", "estágios do funil em A4", None),
         (OUT / "A4_tabela_02d_municipio_curso.csv", "colapso município–curso em A4", None),
@@ -208,6 +210,7 @@ def main() -> None:
     EXEC.mkdir(parents=True, exist_ok=True)
     a4 = json.loads(A4.read_text(encoding="utf-8"))
     a5 = json.loads(A5.read_text(encoding="utf-8"))
+    c7 = json.loads(A5_AMEACAS.read_text(encoding="utf-8"))
     m4 = a4["modelos"]
     m5 = a5["modelos"]
 
@@ -230,6 +233,22 @@ def main() -> None:
     dist0 = m5["distribuicao_delta_confirmatoria"]["0"]
     dist1 = m5["distribuicao_delta_confirmatoria"]["1"]
     prev = prevalencia_atracao()
+    # C-7: as três ameaças, lidas do artefato gerado sob protocolo congelado.
+    q_prop = a5["multiplicidade"]["mar2026_q_fdr_bh_gl_fe_proporcional_confirmatoria"]
+    q_nivel = a5["multiplicidade"]["mar2026_q_fdr_bh_gl_fe_nivel_confirmatoria"]
+    pl_n = c7["placebo"]["resultado"]["nivel"]
+    pl_p = c7["placebo"]["resultado"]["proporcional"]
+    pre = c7["pretendencia_por_curso"]
+    cursos_rej = pre["cursos_pre_p_lt_0_05_proporcional"]
+    cursos_rej_nivel = pre["cursos_pre_p_lt_0_05_nivel"]
+    posto_baixo = sorted(int(c) for c, esc in pre["por_curso"].items() if not esc["proporcional"]["pre_F_confiavel"])
+    sens_p = pre["sensibilidade_excluindo_cursos_rejeitados"]["proporcional"]
+    sens_n = pre["sensibilidade_excluindo_cursos_rejeitados"]["nivel"]
+    tr_n = c7["deslocamento"]["transbordo"]["nivel"]
+    tr_p = c7["deslocamento"]["transbordo"]["proporcional"]
+    rg_n = c7["deslocamento"]["oferta_liquida_regional"]["nivel"]
+    rg_p = c7["deslocamento"]["oferta_liquida_regional"]["proporcional"]
+    lista = lambda xs: ", ".join(str(x) for x in xs) if xs else "nenhum"
     celulas_fmt = f"{prev['celulas']:,}".replace(",", ".")
     date = dt.date.today().isoformat()
 
@@ -310,15 +329,21 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 **Refutação tentada:** atribuir o resultado secundário à escala de medida, testando se ele sobrevive à troca de nível por proporção e à retirada de cada curso.
 **Veredito:** a fragilidade é **do nível**, e é específica dele. Em nível, o coeficiente de março/2026 cai de {num(event['mar2026_beta'])} para {num(nivel_sem14['beta'])} sem o curso 14 (p={num(nivel_sem14['p_valor'], 3)}) e para {num(nivel_estritos['beta'])} nos oito cursos com CBO estritamente 1:1 (p={num(nivel_estritos['p_valor'], 3)}) — deixa de ser distinguível de zero. Somar profissionais de municípios com estoques de ordens de grandeza diferentes faz um curso de estoque grande dominar o coeficiente mecanicamente.
 
-Na escala proporcional, que é a primária, o mesmo exercício não desfaz o resultado: {num(prop['mar2026_beta'], 3)} (EP {num(prop['mar2026_se'], 3)}; p={num(prop['mar2026_p'], 4)}) na amostra completa, entre {num(prop_min['beta'], 3)} e {num(prop_max['beta'], 3)} ao retirar um curso por vez, e {num(prop_estritos['beta'], 3)} (p={num(prop_estritos['p_valor'], 3)}) nos oito cursos estritos. O enunciado correto, portanto, não é o de vulnerabilidade genérica a caudas que este documento trazia antes do item C2 do plano `35`: é que **o nível é frágil à composição de cursos e a proporção não é**. A escolha da escala proporcional é substantiva — mede variação relativa da oferta local, que é a pergunta pretendida — e vale nas duas direções do resultado.
+Na escala proporcional, que é a primária, o mesmo exercício não desfaz o resultado: {num(prop['mar2026_beta'], 3)} (EP {num(prop['mar2026_se'], 3)}; p={num(prop['mar2026_p'], 4)}) na amostra completa, entre {num(prop_min['beta'], 3)} e {num(prop_max['beta'], 3)} ao retirar um curso por vez, e {num(prop_estritos['beta'], 3)} (p={num(prop_estritos['p_valor'], 3)}) nos oito cursos estritos. O enunciado correto, portanto, não é o de vulnerabilidade genérica a caudas que este documento trazia antes do item C2 do plano `35`: é que **o nível é frágil à composição de cursos e a proporção não é**. A escolha da escala proporcional é substantiva — mede variação relativa da oferta local, que é a pergunta pretendida — e vale nas duas direções do resultado. A multiplicidade aponta na mesma direção (item B-5): na família dos 25 coeficientes de evento da amostra confirmatória, o coeficiente de março/2026 tem q de Benjamini–Hochberg de {num(q_prop, 4)} na escala proporcional e de {num(q_nivel, 3)} em nível — só a proporção sobrevive.
 
-### Ameaças que este red team não testou
+### Placebo, pré-tendência por curso e deslocamento (C-7)
 
-Honestidade de escopo: três ameaças levantadas pela reauditoria independente **não** são testadas aqui, e a ausência não deve ser lida como aprovação. São elas o **placebo** sobre células sem atração em municípios com atração, a **heterogeneidade de pré-tendência** por curso, e o **deslocamento** entre municípios da mesma região de saúde, que o `CLAUDE.md` exige separar de expansão líquida. Todas exigiriam regravar artefato de A5, hoje impossível neste ambiente: o painel do CNES não está versionado. Condição de desbloqueio e o que a reauditoria mediu por conta própria estão em `docs/06_execucao/36_backlog_pos_auditoria.md`, itens C-7 e D-4.
+As três ameaças que a reauditoria independente levantou foram testadas em 16/09/2026 sob protocolo congelado antes da execução (`docs/06_execucao/36_backlog_pos_auditoria.md`, item C-7), a partir do painel congelado de A5 com hash conferido contra este manifesto. Resultados em `A5_ameacas_c7.json` e nas tabelas `A5_tabela_12` a `A5_tabela_14`; inferência na convenção que conta os efeitos fixos absorvidos.
+
+**Placebo — células sem atração em municípios com atração.** Refutação tentada: o resultado principal seria choque municipal correlacionado com atrair, e não a atração da própria célula. Entre as células confirmatórias sem atração ({pl_n['n_tratadas']} em municípios com atração em alguma célula, {pl_n['n_controle']} em municípios sem nenhuma), o coeficiente de março/2026 é {num(pl_n['mar2026_beta'], 3)} em nível (EP {num(pl_n['mar2026_se_gl_fe'], 3)}; p={num(pl_n['mar2026_p_gl_fe'], 3)}; pré-F {num(pl_n['pre_F_gl_fe'])}, p={num(pl_n['pre_p_gl_fe'], 3)}) e {num(pl_p['mar2026_beta'], 4)} na escala proporcional (p={num(pl_p['mar2026_p_gl_fe'], 3)}). **Veredito:** o placebo passa nas duas escalas; a reauditoria havia medido 0,092 (EP 0,303; p=0,761) em nível, mesma ordem e mesma leitura. O resultado principal é da célula, não do município.
+
+**Heterogeneidade de pré-tendência por curso.** Refutação tentada: o p agregado do teste pré esconderia cursos com caminhos pré divergentes. Dentro de cada um dos dez cursos, o teste conjunto dos doze coeficientes pré rejeita a 5% na escala proporcional nos cursos {lista(cursos_rej)} e, em nível, nos cursos {lista(cursos_rej_nivel)} — os mesmos que a reauditoria apontara (2, 14 e 16 em nível). Nos cursos {lista(posto_baixo)} a covariância das restrições não tem posto completo (poucos municípios), e o F conjunto não é confiável; o curso 16 está entre eles. Pela regra fixada no protocolo, excluindo os cursos rejeitados na escala proporcional o coeficiente de março/2026 vai a {num(sens_p['mar2026_beta'], 4)} (EP {num(sens_p['mar2026_se_gl_fe'], 4)}; p={num(sens_p['mar2026_p_gl_fe'], 4)}) na proporção e a {num(sens_n['mar2026_beta'], 3)} (p={num(sens_n['mar2026_p_gl_fe'], 3)}) em nível, sobre {sens_p['n_unidades']} células. **Veredito:** a heterogeneidade existe e fica publicada por curso; ela não desfaz a escala proporcional e reforça que o nível é o que depende de composição.
+
+**Deslocamento dentro da região de saúde.** Refutação tentada: o ganho do município com atração sairia de vizinhos da mesma região, sem expansão líquida — a separação que o `CLAUDE.md` exige. (a) Entre células sem atração, as expostas a outro município do painel na mesma região com atração no mesmo curso ({tr_n['n_tratadas']} contra {tr_n['n_controle']}) não perdem estoque: {num(tr_n['mar2026_beta'], 3)} em nível (p={num(tr_n['mar2026_p_gl_fe'], 3)}) e {num(tr_p['mar2026_beta'], 4)} na proporção (p={num(tr_p['mar2026_p_gl_fe'], 3)}). (b) Somando o estoque por região–curso sobre os municípios do painel ({rg_n['n_clusters']} regiões; {rg_n['n_tratadas']} região–curso com atração contra {rg_n['n_controle']} sem), a diferença de março/2026 é {num(rg_n['mar2026_beta'], 3)} em nível (EP {num(rg_n['mar2026_se_gl_fe'], 3)}; p={num(rg_n['mar2026_p_gl_fe'], 3)}) e {num(rg_p['mar2026_beta'], 4)} na proporção (p={num(rg_p['mar2026_p_gl_fe'], 3)}), com pré-F de {num(rg_p['pre_F_gl_fe'])} (p={num(rg_p['pre_p_gl_fe'], 3)}). **Veredito:** não há sinal de deslocamento a partir dos vizinhos observados, e a oferta regional agregada também sobe. **Limite declarado:** o painel só contém os 368 municípios do quadro, de modo que "vizinho" é vizinho dentro do quadro; deslocamento a partir de municípios fora da oferta não é observável aqui, e a leitura continua associativa.
 
 ## Veredito geral
 
-O núcleo útil é a desigualdade territorial na atração administrativa, robusta ao estágio do funil e à unidade analítica. A evolução do estoque cadastral após a oferta é compatível com uma diferença positiva modesta: na escala proporcional ela sobrevive à retirada de qualquer curso e à restrição aos CBOs estritos; na escala de nível, não. O que limita a leitura é a composição de cursos no nível, o tempo de exposição física heterogêneo e três ameaças ainda não testadas. Não há base para reivindicar efeito causal, provimento atribuível ao programa ou retenção individual.
+O núcleo útil é a desigualdade territorial na atração administrativa, robusta ao estágio do funil e à unidade analítica. A evolução do estoque cadastral após a oferta é compatível com uma diferença positiva modesta: na escala proporcional ela sobrevive à retirada de qualquer curso e à restrição aos CBOs estritos; na escala de nível, não. O que limita a leitura é a composição de cursos no nível, a pré-tendência divergente em dois cursos, o tempo de exposição física heterogêneo e o fato de que o teste de deslocamento só vê vizinhos dentro do quadro. O placebo passa, e a oferta regional agregada também sobe. Não há base para reivindicar efeito causal, provimento atribuível ao programa ou retenção individual.
 
 *Gerado por `scripts/tema_trabalho/07_red_team_sintese.py`.*
 """
@@ -373,7 +398,7 @@ A análise secundária usa 26 competências CNES e, como amostra principal, 587 
 
 ## Conclusão
 
-O resultado publicável é um gradiente territorial de atração: municípios metropolitanos apresentam maior probabilidade de atração administrativa que o interior remoto, e o padrão resiste à separação entre confirmação e homologação e ao colapso da unidade. A dinâmica do CNES sugere diferença positiva posterior, com pré-tendências não rejeitadas, e a escala proporcional — a primária — resiste à retirada de qualquer curso e à restrição aos CBOs estritos, enquanto a escala de nível não resiste: é o nível que é frágil à composição de cursos. O tempo de exposição física heterogêneo e três ameaças ainda não testadas — placebo, heterogeneidade de pré-tendência e deslocamento entre municípios — continuam limitando a interpretação. Sem base para efeito causal do adicional da bolsa, retenção individual, resolutividade, fila, SIH/SIA ou custo-benefício, esses objetos exigem novos dados e novo protocolo antes de qualquer estimação.
+O resultado publicável é um gradiente territorial de atração: municípios metropolitanos apresentam maior probabilidade de atração administrativa que o interior remoto, e o padrão resiste à separação entre confirmação e homologação e ao colapso da unidade. A dinâmica do CNES sugere diferença positiva posterior, com pré-tendências não rejeitadas, e a escala proporcional — a primária — resiste à retirada de qualquer curso e à restrição aos CBOs estritos, enquanto a escala de nível não resiste: é o nível que é frágil à composição de cursos. O placebo sobre células sem atração em municípios com atração é nulo, o teste de deslocamento não encontra perda nos vizinhos observados e a oferta regional agregada sobe; o tempo de exposição física heterogêneo, a pré-tendência divergente em dois cursos e o alcance do teste de deslocamento, restrito ao quadro, continuam limitando a interpretação. Sem base para efeito causal do adicional da bolsa, retenção individual, resolutividade, fila, SIH/SIA ou custo-benefício, esses objetos exigem novos dados e novo protocolo antes de qualquer estimação.
 """
     atomic_text(SYNTHESIS, synthesis)
 

@@ -401,6 +401,41 @@ class ProvimentoCnesA5Test(unittest.TestCase):
         nota = t03b.loc[(t03b["espec"] == "OLS_delta_full") & (t03b["termo"] == "atracao_muni"), "nota"].iloc[0]
         self.assertIn("Frisch-Waugh-Lovell", str(nota))
 
+    # ------------------------------------------------------------------
+    # C-7: placebo, pre-tendencia por curso e deslocamento (protocolo congelado)
+    # ------------------------------------------------------------------
+    def test_c7_artefato_segue_o_protocolo_congelado(self) -> None:
+        c7 = json.loads((OUT / "A5_ameacas_c7.json").read_text(encoding="utf-8"))
+        self.assertIn("antes da execucao", c7["protocolo_congelado_em"])
+        # Ancora no painel congelado e no A6.
+        self.assertEqual(c7["hashes_entradas"]["output/tema_trabalho/A5_painel_T0.parquet"]["sha256"], sha(OUT / "A5_painel_T0.parquet"))
+        self.assertEqual(c7["amostra"]["celulas_confirmatorias"], 587)
+        # Placebo: 372 celulas sem atracao, divididas por municipio com/sem atracao.
+        pl = c7["placebo"]["resultado"]
+        for esc in ("nivel", "proporcional"):
+            self.assertEqual(pl[esc]["n_tratadas"] + pl[esc]["n_controle"], 372, esc)
+            self.assertEqual(pl[esc]["n_coef_pre"], 12)
+        # Pre-tendencia: dez cursos, regra de exclusao aplicada como declarada.
+        pre = c7["pretendencia_por_curso"]
+        self.assertEqual(len(pre["por_curso"]), 10)
+        rej = pre["cursos_pre_p_lt_0_05_proporcional"]
+        for c, esc in pre["por_curso"].items():
+            self.assertEqual(int(c) in rej, esc["proporcional"]["pre_p_gl_fe"] < 0.05, c)
+            self.assertIn("pre_F_confiavel", esc["proporcional"])
+        if rej:
+            sens = pre["sensibilidade_excluindo_cursos_rejeitados"]["proporcional"]
+            self.assertLess(sens["n_unidades"], 587)
+        # Amostra completa reproduz a manchete de A5 nas duas escalas.
+        self.assertAlmostEqual(pre["amostra_completa"]["proporcional"]["mar2026_beta"], self.est["modelos"]["principal_proporcional_confirmatorio"]["mar2026_beta"], places=10)
+        self.assertAlmostEqual(pre["amostra_completa"]["nivel"]["mar2026_beta"], self.est["modelos"]["principal_dinamico_confirmatorio"]["mar2026_beta"], places=10)
+        # Deslocamento: duas definicoes, limite declarado, cluster por regiao em (b).
+        ds = c7["deslocamento"]
+        self.assertIn("dentro do quadro", ds["limite"])
+        self.assertEqual(ds["oferta_liquida_regional"]["nivel"]["n_clusters"], ds["n_regioes"])
+        self.assertEqual(ds["transbordo"]["nivel"]["n_tratadas"] + ds["transbordo"]["nivel"]["n_controle"], 372)
+        for tabela in ["A5_tabela_12_placebo_municipio_com_atracao.csv", "A5_tabela_13_pretendencia_por_curso.csv", "A5_tabela_14_deslocamento_regional.csv"]:
+            self.assertTrue((OUT / tabela).exists(), tabela)
+
 
 if __name__ == "__main__":
     unittest.main()
