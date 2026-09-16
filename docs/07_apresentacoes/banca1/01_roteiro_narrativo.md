@@ -117,7 +117,8 @@ e proximidade da família.
 A tabela que catalogava as **três tradições** lado a lado, e que abria este
 slide, **saiu** em 16/09/2026 (seção 4f): Moehling é o próprio slide 9, e
 Redding & Rossi-Hansberg e Choné & Ma são o slide 10. Cada tradição passa a ser
-apresentada no momento em que faz trabalho, e não antes.
+apresentada no momento em que faz trabalho, e não antes; a única síntese das
+três é a do slide 13, que agora as nomeia.
 
 O slide 10 abre a caixa em duas metades — o **lugar**, com Redding &
 Rossi-Hansberg, e o **trabalho**, com Choné & Ma e a extensão em $B(q; L, K)$
@@ -141,11 +142,11 @@ uma desvantagem do lugar que a bolsa precisa compensar.
 ### 1.3 A lógica da seção 3 — Hipótese e Viabilidade Empírica
 
 O slide 13 faz a junção: escreve $V_{im}$ e remete cada metade ao slide que a
-construiu — a remuneração ao 11, o custo ao 10 —, declara o que **nenhuma** das
-três tradições tem, um componente da remuneração fixado por regra pública sobre
-um índice territorial, e mapeia cada termo do modelo sobre uma variável do
-programa. A equação que reescrevia a decomposição de $c_{im}$ saiu em 16/09/2026
-(seção 4f), por repetir o slide 10; ficou a referência cruzada.
+construiu — a remuneração ao 11, o custo ao 10 —, declara o que Moehling,
+Redding & Rossi-Hansberg e Choné & Ma **não têm**, remuneração fixada por regra
+pública sobre um índice territorial, e mapeia cada termo do modelo sobre uma
+variável do programa. A equação que reescrevia a decomposição de $c_{im}$ saiu
+em 16/09/2026 (seção 4f), por repetir o slide 10; ficou a referência cruzada.
 
 Daí sai o argumento que justifica o objeto do trabalho: como a dimensão de
 capital humano do IVS **eleva o benefício** de atender e ao mesmo tempo
@@ -703,9 +704,11 @@ O slide 9 passa a ter **dois** builds — "A equação de escolha" e "O que a co
 faz, e o que ela esconde" — e cada tradição passa a ser apresentada no momento
 em que faz trabalho, em vez de ser catalogada antes. No slide 13, no lugar da
 equação ficou uma **linha de referência cruzada**: a remuneração vem do slide 11
-e o custo, do slide 10. A junção continua sendo trabalho dele — o que nenhuma
-das três tradições tem é remuneração fixada por regra pública sobre um índice
-territorial —, e agora aparece sem reintroduzir as peças.
+e o custo, do slide 10. A junção continua sendo trabalho dele, e a síntese das
+três tradições também: a linha que diz o que Moehling, Redding & Rossi-Hansberg
+e Choné & Ma **não têm** — remuneração fixada por regra pública sobre um índice
+territorial — passou a nomeá-los, e é o único lugar em que as três aparecem
+juntas.
 
 ### O que a próxima reconstrução dos decks precisa contemplar
 
