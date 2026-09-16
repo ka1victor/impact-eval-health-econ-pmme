@@ -8,6 +8,48 @@
 
 ---
 
+## 16/09/2026 — Fila pós-auditoria exaurida por delegação; artigo curto e scripts novos
+
+Motivo: o autor delegou à sessão as decisões pendentes da fila de
+[`06_execucao/36_backlog_pos_auditoria.md`](06_execucao/36_backlog_pos_auditoria.md)
+e pediu um artigo curto. Toda a documentação de estado foi atualizada no mesmo
+conjunto de commits.
+
+### Arquivos criados
+
+| Arquivo | Papel |
+|---|---|
+| `paper_pmme_curto.tex` | artigo curto em três camadas (causal A8, descritiva A4, associativa A5), sete páginas |
+| `scripts/tema_trabalho/06b_ameacas_a5_placebo_pretendencia_deslocamento.py` | as três ameaças do C-7, sob protocolo congelado; no `run_all.py` entre A5 e A6 |
+| `scripts/tema_trabalho/11_conferir_numeros_artigo_curto.py` | conferidor do artigo curto, com cobertura de todos os decimais do corpo; no `run_all.py` depois do `10` |
+| `tests/test_conferencia_artigos.py` | os dois conferidores aprovam e o artigo curto reutiliza o núcleo do principal |
+| `output/tema_trabalho/A5_tabela_11_sensibilidade_colapso_uf.csv` | três variantes de efeito fixo de UF nos modelos secundários de A5 (A-1) |
+| `output/tema_trabalho/A5_tabela_12` a `A5_tabela_14`, `A5_ameacas_c7.json` | placebo, pré-tendência por curso e deslocamento regional (C-7) |
+| `output/tema_trabalho/A8_conferencia_numeros_artigo_curto.csv` | mapeamento cifra → artefato do artigo curto |
+
+### Documentos alterados sem mudar de lugar
+
+- `35_plano_correcoes_pos_auditoria.md`: emenda 2 (A-1), congelada antes do
+  código e com o resultado da execução.
+- `36_backlog_pos_auditoria.md`: estados das sessões 1, 3 e 4; decisões
+  delegadas; D-4 parcialmente destravado; revisão de provas em D-1.
+- `auditorias/14_erratas_artefatos_congelados.md`: erratas E-3 a E-6 e a
+  decisão de regravar A8.
+- `auditorias/09_red_team_atracao_provimento.md` e
+  `06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md`: regenerados
+  pelo `07_red_team_sintese.py`; a seção "Ameaças que este red team não testou"
+  foi substituída por "Placebo, pré-tendência por curso e deslocamento (C-7)".
+- `TODO.md`, `README.md`, `06_execucao/05_roadmap_execucao.md`: estado da fila
+  e dos artigos.
+
+### Não foi feito, e por quê
+
+O pedido administrativo do escore de IVS (D-3) **não foi enviado**: é ato
+externo em nome do autor, fora da delegação genérica. O FTP do DATASUS não é
+acessível deste ambiente, então C3-02B continua em 673/675 (D-2).
+
+---
+
 ## 17/09/2026 — Banca 1: seções 2 e 3 revistas, e o deck passa a 17 slides
 
 Segunda rodada do dia, a pedido do autor, sobre as **seções 2 e 3**. A primeira

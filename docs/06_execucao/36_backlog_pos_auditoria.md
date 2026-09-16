@@ -877,6 +877,17 @@ com `\tabcolsep` de 4 pt; a compilação passa a sair sem nenhum `Overfull \hbox
 **A revisão de provas — leitura do PDF pelo autor — continua pendente e é do
 autor.** O que deixa de ser verdade é a impossibilidade de compilar.
 
+### Revisão de provas feita em 16/09/2026, por delegação
+
+Os dois artigos foram compilados no ambiente (TeX Live, `pdflatex` duas
+passagens) e lidos página a página em imagem: `paper_pmme_submission.tex` em
+**13 páginas** depois do parágrafo novo do apêndice B, e `paper_pmme_curto.tex`
+em **7 páginas**; nenhum `Overfull \hbox`, nenhuma referência ou citação
+indefinida, as figuras nos caminhos declarados, tabelas dentro da margem. Os
+conferidores `10` e `11` aprovam todas as cifras; o `11` exige ainda que todo
+decimal do corpo do artigo curto esteja em trecho conferido. A leitura pelo
+autor continua sendo dele; o que esta sessão fez foi a revisão técnica.
+
 ## D-2 · Ciclo 3
 
 - **C3-02B** parou em 673 de 675 manifestos porque `RDAC2606.dbc` e `RDRR2606.dbc`
@@ -1029,6 +1040,12 @@ e a 2 depende de a especificação do C1 já estar valendo.
 > abaixo permanece, mas três sessões passam a depender de decisão ou de dado
 > ausente. Pular uma sessão bloqueada para executar a seguinte **não** é furar a
 > fila: é o tratamento previsto para bloqueio, e o motivo fica registrado aqui.
+>
+> **Estado revisto em 16/09/2026 — fila exaurida no que o ambiente permite.**
+> Com a delegação do autor e o destravamento parcial de D-4, as sessões 1, 3 e
+> 4 foram concluídas e as seis decisões pendentes foram tratadas (tabela ao fim
+> do documento). Nenhuma sessão está `ABERTA`. O que resta é dado externo (D-2,
+> D-4) ou ato do autor (D-3).
 
 | Sessão | Estado | Itens | Por quê nesta ordem |
 |---|---|---|---|

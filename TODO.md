@@ -80,9 +80,8 @@
 - [x] Instrumentar a conferência automática do artigo: 184 cifras mapeadas para
   arquivo-fonte e localizador em `A8_conferencia_numeros_artigo.csv`, com
   `10_conferir_numeros_artigo.py` integrado ao `run_all.py`.
-- [ ] Compilar o `.tex` e revisar as provas. Não há compilador LaTeX no ambiente
-  de execução; a validação feita foi estrutural (ambientes balanceados, colunas
-  das tabelas, `\label`/`\ref` e existência das figuras).
+- [x] Compilar o `.tex` e revisar as provas: compilado em 14/09/2026 e revisto
+  em 16/09/2026, junto do artigo curto.
 
 ## Fila imediata — correções pós-auditoria (plano congelado em 09/09/2026)
 
@@ -104,54 +103,59 @@ A implementação que divergir dos alvos é erro de implementação, não result
 
 Agrupados por consequência, com alvo numérico medido antes de qualquer alteração.
 A ordem de execução do backlog é **normativa**, com estado por sessão e protocolo
-de início e encerramento. Comece pela primeira sessão `ABERTA` e não pule adiante.
+de início e encerramento.
 
-> **Sessão 2 concluída em 14/09/2026** (A-2, A-3, C-6). A Tabela A1 do artigo
-> passou a publicar o AME por bloco (`27,8 / 6,2` → `25,1 / 5,2`) e o MDE ex-post
-> de `16,4` p.p. ao lado do ex-ante de `13,7`. O LPM primário não mudou. O
-> conferidor foi de 190 para 193 cifras.
+> **Fila exaurida em 16/09/2026, no que este ambiente permite.** O autor delegou
+> à sessão as seis decisões pendentes, com a instrução de decidir e documentar.
 >
-> **Sessões 3 e 5 executadas em 14/09/2026, juntas**, porque a 4 está bloqueada e
-> as duas dividem o gerador `07_red_team_sintese.py`. Da sessão 3 só a quarta
-> ameaça do C-7 era executável: o red team passa a dizer que **o nível é frágil à
-> composição de cursos e a proporção não é**, em vez de "vulnerável a caudas".
-> Placebo, heterogeneidade de pré-tendência e deslocamento **continuam bloqueados
-> por D-4**. A sessão 5 fechou B-3, C-1, C-2, C-3, C-5 e C-8; **o C-4 ficou
-> bloqueado por D-4**, porque a renomeação recomendada muda o hash de
-> `portao_denominador.json`, fixado como entrada em A3, A4 e A5. Nenhuma cifra do
-> artigo mudou: o conferidor segue em 193. A suíte foi de 144 para 156 testes.
+> **D-4 parcialmente destravado** (`da4d6f7`): A5 passa a reestimar a partir de
+> `A5_painel_T0.parquet`, com o hash conferido contra o A6, e o modo foi validado
+> byte a byte antes de qualquer mudança de conteúdo. Isso destravou as sessões 1,
+> 3 e 4. O painel mensal e os microdados do CNES continuam ausentes.
 >
-> **Achado a decidir:** A8 **não reproduz byte a byte** no ambiente documentado —
-> só as colunas de IC, do 15º dígito em diante, mais o PNG. Não foi regravado;
-> ver o item C-3 do backlog.
+> **Sessão 1 concluída** (A-1; emenda 2 do `35` em `03ccc1c`, execução em
+> `62bb4ed`): efeito fixo de UF colapsado em macrorregião com residual rotulado,
+> 24 níveis, a mesma definição do C1; os três alvos reemitidos reproduzem
+> (`RESTO` +1,2949; macrorregião **+0,5062**; sem colapso +0,5002) e
+> `A5_tabela_11` publica as três variantes. **Sessão 4 concluída** (`3a89233`):
+> censura de `presentes_6m` gravada como NaN, relatório de A5 promovido, FDR
+> declarado — o nível **não** sobrevive à família de 25 (`q = 0,364`), o
+> proporcional sobrevive (`q = 0,0034`) —, rótulo de `03f` corrigido, E-3 e E-4
+> em errata, C-9 declarado. **Sessão 3 concluída** (protocolo `1fab57d`, execução
+> `fcb94b4`): placebo nulo, pré-tendência rejeita nos cursos 2 e 16, sem sinal de
+> deslocamento nos vizinhos do quadro e oferta região–curso positiva.
 >
-> **Próxima sessão: nenhuma `ABERTA`.** As sessões **1, 4** e o restante da **3**
-> seguem bloqueadas: a 1 por achado sobre o alvo de A-1 mais D-4; a 4 e a parte
-> medida da 3 inteiramente por D-4. O que destrava a fila é a decisão do autor
-> sobre A-1 e o acesso aos microdados do CNES.
+> **Decisões delegadas** (`648f21e`): B-4 e B-7 em errata (E-5, E-6); C-4
+> permanece com registro no código; **A8 regravado** sob o ambiente documentado
+> (só o 15º dígito dos IC, o PNG e os caminhos POSIX mudaram); D-2 verificado e
+> FTP inacessível deste ambiente; **D-3 não enviado**, por ser ato externo fora da
+> delegação. Revisão de provas dos dois PDFs feita nesta sessão (D-1).
+>
+> **Próxima sessão: nenhuma.** O que resta depende de dado externo (`202703`,
+> `RDAC2606`/`RDRR2606`, microdados do CNES) ou do autor (envio do pedido D-3).
 
-- [ ] Grupo A — muda número publicado (3 itens): balde `RESTO` nos modelos
-  secundários de A5 (`+1,2949` → `+0,5014`), **bloqueado** por achado e por D-4;
-  **wild cluster bootstrap concluído em 14/09/2026** (metro `0,0005`, capital
-  `0,0015`, próximo `0,0115`); **efeito marginal médio do logit corrigido para o
-  contraste de bloco em 14/09/2026**. Cada um exige emenda escrita e commitada
-  antes de implementar.
-- [ ] Grupo B — muda artefato, não muda número publicado (7 itens): censura gravada
-  como zero em `presentes_6m`; relatório de A5 que é código morto; manifesto de
-  reprodução de A6 que não reproduz; nota aritmética errada na tipologia;
-  multiplicidade nunca tratada; rótulos enganosos; `sg_uf` de tipo misto.
-- [ ] Grupo C — documentação e linguagem (9 itens): o 30,3% é da primeira chamada
-  e não do ciclo; afirmação falsa sobre sub judice; IC fora do espaço de
-  parâmetros; portão de A1 apresentado como teste; MDE por estrato com fórmula de
-  proporção única; **MDE ex-ante otimista, concluído em 14/09/2026** (ex-post de
-  `16,4` p.p. publicado ao lado do ex-ante de `13,7`); quatro ameaças ausentes do red team;
-  assinatura de CPF não comparável; dois estimadores idênticos apresentados como
-  duas evidências.
-- [ ] Grupo D — bloqueado (4 itens): compilação do artigo, **desbloqueada**, o
-  artigo compila em 12 páginas sem transbordo de caixa nem referência indefinida;
-  ciclo 3 aguardando `RDAC2606`/`RDRR2606`, competência `202703` e `T0+12m`; envio
-  do pedido do escore de IVS, que é decisão do autor; microdados do CNES ausentes
-  do repositório.
+- [x] Grupo A — muda número publicado (3 itens): A-1 concluído em 16/09/2026 sob a
+  emenda 2; A-2 e A-3 concluídos em 14/09/2026 sob a emenda 1.
+- [x] Grupo B — muda artefato, não muda número publicado (7 itens): B-1, B-2, B-5 e
+  o rótulo de B-6 corrigidos em 16/09/2026; B-3 em 14/09/2026; B-4, B-7 e os dois
+  itens congelados de B-6 em errata (E-3 a E-6).
+- [x] Grupo C — documentação e linguagem (9 itens): C-7 concluído em 16/09/2026
+  com as três ameaças testadas sob protocolo congelado; C-9 declarado; C-4
+  permanece com registro no código e correção vinculada à primeira reexecução
+  legítima de A1→A3; os demais concluídos em 14/09/2026.
+- [ ] Grupo D — bloqueado por dado externo ou pelo autor: D-2 (`RDAC2606`,
+  `RDRR2606`, `202703`, `T0+12m`); D-3 (envio do pedido, decisão do autor; pacote
+  pronto); D-4 (painel mensal e microdados do CNES). D-1 resolvido.
+
+## Artigos
+
+- [x] Artigo principal `paper_pmme_submission.tex` compilado (13 páginas, sem
+  transbordo) e com as provas revistas em 16/09/2026; o apêndice B passa a
+  reportar FDR, placebo municipal e deslocamento. Conferidor `10` aprovando.
+- [x] **Artigo curto** `paper_pmme_curto.tex`: sete páginas em três camadas
+  (causal A8, descritiva A4, associativa A5), com conferidor próprio
+  `11_conferir_numeros_artigo_curto.py` — 183 cifras e todos os 96 decimais do
+  corpo cobertos por trecho conferido — integrado ao `run_all.py`.
 
 ## Decisões concluídas
 
