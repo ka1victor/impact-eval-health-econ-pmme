@@ -4,7 +4,7 @@
 > **Fonte de verdade do conteúdo:** [`../02_conteudo_slides.md`](../02_conteudo_slides.md)<br>
 > **Regras de composição:** [`../01_roteiro_narrativo.md`](../01_roteiro_narrativo.md), seção 2<br>
 > **Proveniência:** [`../03_proveniencia_figuras_e_numeros.md`](../03_proveniencia_figuras_e_numeros.md)<br>
-> **Atualização:** 16 de setembro de 2026 — identidade visual PMME
+> **Atualização:** 16 de setembro de 2026 — identidade visual PMME; paleta e fonte da peça oficial, LuaLaTeX, fundo por frame e layouts em partes
 
 Regra do projeto: *divergência entre deck e documento de conteúdo é erro do
 deck*. Nenhuma afirmação, número, citação ou referência deste `.tex` foi criada
@@ -29,8 +29,8 @@ O script:
 
 1. posiciona-se na raiz do repositório (todos os caminhos são relativos a ela);
 2. confere que as quatro figuras existem antes de chamar o LaTeX;
-3. roda `pdflatex` duas vezes (a segunda resolve a contagem total do rodapé),
-   com `-halt-on-error`;
+3. roda **`lualatex`** duas vezes (a segunda resolve a contagem total do
+   rodapé e as posições da capa e do sumário), com `-halt-on-error`;
 4. relata da última passada qualquer `Overfull \hbox` — texto vazando pela
    lateral — **e qualquer `Overfull \vbox`**, que é conteúdo estourando a altura
    do frame e invadindo o rodapé;
@@ -41,13 +41,18 @@ O script:
 são fixados no script, de modo que duas execuções sobre a mesma entrada
 produzam byte a byte o mesmo PDF.
 
-**Requisitos:** `pdflatex` com `beamer`, `tikz` (`texlive-pictures`),
-`texlive-latex-extra`, `texlive-fonts-recommended`, `lmodern`,
-`texlive-lang-portuguese` e **`tex-gyre`** (a família Heros Condensed, `qhvc`,
-que compõe títulos, capa, sumário e barra de navegação).
+**Requisitos:** **`lualatex`** (`texlive-luatex`) com `beamer`, `fontspec`,
+`tikz` (`texlive-pictures`), `texlive-latex-extra`, `texlive-fonts-recommended`,
+`lmodern`, `texlive-lang-portuguese` e `tex-gyre`. A fonte de destaque
+(Oswald) vem com o repositório, em `fontes/`.
+
+O deck também compila em `pdflatex` (mesmas 27 páginas, sem overfull, conferido
+em 16/09/2026): o preâmbulo escolhe `inputenc`/`fontenc`/`lmodern` ou
+`fontspec` conforme o motor, e o tema usa TeX Gyre Heros Condensed como fonte de
+destaque quando não há `fontspec`. O PDF oficial é o do LuaLaTeX.
 
 O tema não precisa ser instalado: o script exporta `TEXINPUTS` para o diretório
-do deck, onde moram os quatro arquivos.
+do deck, onde moram os arquivos abaixo.
 
 | Arquivo | O que é |
 |---|---|
@@ -56,6 +61,7 @@ do deck, onde moram os quatro arquivos.
 | `pmmecapa.sty` | capa em TikZ |
 | `pmmesumario.sty` | sumário em TikZ |
 | `assets/` | logo, foto da capa e fundo do sumário; não versionados, com substituto desenhado — ver [`assets/README.md`](assets/README.md) |
+| `fontes/` | a família Oswald (OFL), fonte de destaque da identidade — ver [`fontes/README.md`](fontes/README.md) |
 
 **Figuras.** O deck lê apenas figuras já versionadas em
 `output/apresentacao_banca1/`, por `\graphicspath` relativo à raiz:
@@ -105,18 +111,70 @@ mesmo título e o mesmo número.
 
 Até 16/09/2026 o deck usava o tema Warsaw repintado de verde. Agora usa o tema
 **PMME**, que reproduz a identidade da peça oficial do Projeto Mais Médicos
-Especialistas: azul-royal `#1D2DB3`, amarelo `#F6C500`, verde `#1E9C49` e
-vermelho `#E0231C`. Títulos e elementos de identidade são compostos em TeX Gyre
-Heros Condensed; **o corpo do texto continua em lmodern sans**, de propósito —
-trocar a fonte do corpo mudaria as quebras de linha de todos os frames e, com
-elas, a paginação já verificada.
+Especialistas.
+
+**Paleta.** Amostrada pixel a pixel do banner oficial (bloco azul, título
+amarelo, chevrons e tira de quatro cores). Os quatro tons principais são
+exatos; os azuis auxiliares são derivados do azul principal.
+
+| Nome no tema | Hex | Origem | Onde aparece |
+|---|---|---|---|
+| `pmmeAzul` | `#0D28A9` | bloco azul do banner | capa, sumário, navbar (linha 2), estrutura, `\num` |
+| `pmmeAmarelo` | `#EDB601` | título do banner | título da capa, chevrons, barra do frametitle, losangos |
+| `pmmeAmareloFaixa` | `#F1BB00` | tira inferior do banner | tira de quatro cores (capa e rodapé) |
+| `pmmeVerde` | `#00B300` | tira inferior | blocos *example*, tira |
+| `pmmeVermelho` | `#C40000` | tira inferior e filete da diagonal | blocos *alert*, filete da capa, tira |
+| `pmmeAzulEscuro` | `#081A72` | derivado | navbar (linha 1), `\lead` |
+| `pmmeAzulClaro` / `pmmeAzulPalido` | `#E4E8F7` / `#F2F4FB` | derivados | filetes, anel do sumário, fundo de blocos e rodapé |
+
+Para trocar um tom, edite só o `\definecolor` correspondente em
+`beamerthemePMME.sty`; capa e sumário herdam.
+
+**Fonte de destaque.** Títulos, capa, sumário e barra de navegação são
+compostos em **Oswald** (LuaLaTeX, arquivos em `fontes/`), a grotesca
+condensada que corresponde ao título da peça oficial; em pdflatex, TeX Gyre
+Heros Condensed. **O corpo do texto continua em Latin Modern Sans**, de
+propósito — trocar a fonte do corpo mudaria as quebras de linha de todos os
+frames e, com elas, a paginação já verificada. A troca de motor foi conferida:
+nenhuma quebra de linha do corpo mudou entre o PDF do pdflatex e o do LuaLaTeX.
+
+**Imagem de fundo em um frame.** `\pmmefundo[opacidade]{arquivo}` antes do
+`\begin{frame}` cobre a página inteira com a imagem, recortada e centrada,
+esmaecida (padrão 0,18) para o texto continuar legível; navbar, título e
+rodapé ficam por cima. Vale até `\pmmesemfundo`, ou até o fim do grupo se
+usado entre chaves. Com opacidade 1 e frame `[plain]`, é uma página de foto
+plena.
+
+```latex
+{\pmmefundo[0.15]{docs/07_apresentacoes/banca1/deck_beamer/assets/fundo.jpg}
+\begin{frame}{Título} ... \end{frame}}
+```
+
+**Layouts em partes.** `pmmeduas` põe duas partes lado a lado; `pmmequatro`,
+uma grade 2×2. Cada `pmmeparte{Título}` tem o título na fonte de destaque, um
+traço amarelo e o corpo; as partes alinham pelo topo. `pmmequatro` fixa a
+altura de cada parte em 0,36 `\textheight` e usa `\small`; ambos aceitam
+`[altura]` opcional.
+
+```latex
+\begin{pmmequatro}
+  \begin{pmmeparte}{Implementação} ... \end{pmmeparte}
+  \begin{pmmeparte}{Força de trabalho} ... \end{pmmeparte}
+  \begin{pmmeparte}{Capacidade} ... \end{pmmeparte}
+  \begin{pmmeparte}{Acesso} ... \end{pmmeparte}
+\end{pmmequatro}
+```
+
+Nenhum frame da banca 1 usa fundo ou layout em partes: o conteúdo canônico não
+os pede. Estão no tema para os próximos decks.
 
 **Capa.** Bloco azul na metade esquerda com a borda direita em diagonal,
 filetes amarelo e vermelho correndo ao longo dela, chevrons amarelo sobre verde
 junto ao rótulo, título em amarelo condensado e, abaixo do subtítulo, os slots
 de **autoria** e de **orientação**. A faixa branca inferior traz o logo do
-Insper à esquerda, instituição e data à direita, e a tira de quatro cores na
-borda. A foto ocupa a metade direita, recortada. Sem os arquivos de imagem, o
+Insper à esquerda, instituição e data à direita, e a tira de quatro cores nas
+proporções do banner (vão branco à esquerda; amarelo, vermelho, verde, azul;
+margem branca abaixo). A foto ocupa a metade direita, recortada. Sem os arquivos de imagem, o
 logo vira a palavra *Insper* composta e a foto vira um painel com chevrons.
 
 **Sumário.** Página inteira em azul, com um anel claro semitransparente à
@@ -140,7 +198,10 @@ da página.
 
 A barra de navegação custa altura que antes era do corpo. O único frame que
 não coube foi o 7, resolvido com espaçamento menor: entrelinha a 0,95 nos dois
-blocos e recuo de 1 em antes das colunas. Nenhuma palavra mudou.
+blocos e recuo de 1 em antes das colunas. As maiúsculas da Oswald são mais
+altas que as da Heros; os struts e os `\vskip` do frametitle foram
+recalibrados para ela (cinco frames densos estouravam por 1–3 pt) e o frame 10
+perdeu 0,1 em antes da nota final. Nenhuma palavra mudou.
 
 ### 3.2 Um slide, um frame
 
@@ -233,9 +294,12 @@ enumeração de cursos foi substituída pela contagem conferida.
 
 ## 5. Verificação feita nesta versão
 
-- `bash scripts/apresentacao/build_deck_beamer.sh` termina sem erro de LaTeX e
-  sem nenhum `Overfull \hbox` **ou `\vbox`**. O único `\vbox` após a troca de
-  tema foi o do frame 7, overlay 1, resolvido com espaçamento menor.
+- `bash scripts/apresentacao/build_deck_beamer.sh` (LuaLaTeX) termina sem erro
+  de LaTeX e sem nenhum `Overfull \hbox` **ou `\vbox`**; duas execuções
+  seguidas produzem o mesmo SHA-256. O deck também compila em pdflatex, com
+  27 páginas e sem overfull.
+- Quebras de linha do corpo comparadas página a página (`pdftotext`) entre o
+  PDF em pdflatex e o PDF em LuaLaTeX: idênticas nas 27 páginas.
 - As 27 páginas foram convertidas em PNG (`pdftoppm -png -r 70`) e revistas:
   nenhuma com texto vazando do frame, tabela cortada, bloco de fonte sobreposto
   ao rodapé ou figura deformada. Conferidos em detalhe a capa, o sumário, um

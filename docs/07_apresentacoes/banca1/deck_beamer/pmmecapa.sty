@@ -11,7 +11,7 @@
 % Contrato com o tema principal (beamerthemePMME.sty), que DEFINE:
 %   cores  pmmeAzul pmmeAzulEscuro pmmeAzulClaro pmmeAzulPalido pmmeAmarelo
 %          pmmeVerde pmmeVermelho pmmeCinzaTexto pmmeCinzaFonte
-%   fonte  \pmmeDisplay  (= \fontfamily{qhvc}\selectfont, Heros Condensed)
+%   fonte  \pmmeDisplay  (Oswald no LuaLaTeX; Heros Condensed no pdflatex)
 % Este pacote NAO redefine nada disso; so oferece fallbacks com \providecommand
 % e \providecolor para compilar isolado.
 %
@@ -34,16 +34,17 @@
 \usetikzlibrary{calc,positioning}
 
 % --- fallbacks (o tema principal e a fonte de verdade) ----------------------
-\providecolor{pmmeAzul}{HTML}{1D2DB3}
-\providecolor{pmmeAzulEscuro}{HTML}{121D7A}
-\providecolor{pmmeAzulClaro}{HTML}{E9ECF9}
-\providecolor{pmmeAzulPalido}{HTML}{F4F5FC}
-\providecolor{pmmeAmarelo}{HTML}{F6C500}
-\providecolor{pmmeVerde}{HTML}{1E9C49}
-\providecolor{pmmeVermelho}{HTML}{E0231C}
+\providecolor{pmmeAzul}{HTML}{0D28A9}
+\providecolor{pmmeAzulEscuro}{HTML}{081A72}
+\providecolor{pmmeAzulClaro}{HTML}{E4E8F7}
+\providecolor{pmmeAzulPalido}{HTML}{F2F4FB}
+\providecolor{pmmeAmarelo}{HTML}{EDB601}
+\providecolor{pmmeAmareloFaixa}{HTML}{F1BB00}
+\providecolor{pmmeVerde}{HTML}{00B300}
+\providecolor{pmmeVermelho}{HTML}{C40000}
 \providecolor{pmmeCinzaTexto}{HTML}{2E2E2E}
 \providecolor{pmmeCinzaFonte}{HTML}{6B6B6B}
-\providecommand{\pmmeDisplay}{\fontfamily{qhvc}\selectfont}
+\providecommand{\pmmeDisplay}{\fontfamily{qhvc}\selectfont}% fallback sem o tema
 
 % --- metadados --------------------------------------------------------------
 \def\pmme@orientacao{}
@@ -60,12 +61,14 @@
 \newcommand{\pmmecapatitulo}{\inserttitle}
 
 % --- geometria (em cm; pagina 16 x 9) ---------------------------------------
-\newcommand{\pmme@faixa}{1.05}      % altura da faixa branca inferior
+\newcommand{\pmme@faixa}{1.15}      % altura da faixa branca inferior
 \newcommand{\pmme@diagtopo}{10.15}   % x da diagonal no topo da pagina
 \newcommand{\pmme@diagbase}{8.05}   % x da diagonal na base do bloco azul
 \newcommand{\pmme@raio}{0.55}       % raio dos cantos arredondados
 \newcommand{\pmme@filete}{0.11}     % espessura do filete (deslocamento em x)
 \newcommand{\pmme@margem}{0.8}     % margem esquerda do texto
+\newcommand{\pmme@tiray}{0.22}      % y da tira de quatro cores
+\newcommand{\pmme@tiraalt}{0.12}    % altura da tira
 
 % Bloco azul: mesmo caminho para bloco e filetes, deslocado em x por #1.
 % Comeca fora da pagina (esquerda e topo), de modo que so os cantos da
@@ -143,15 +146,17 @@
     \fill[pmmeAzul,rounded corners=\pmme@raio cm] \pmme@bloco{0};
     % faixa branca inferior (cobre a base dos filetes)
     \fill[white] (0,0) rectangle (16,\pmme@faixa);
-    % segmentos coloridos na borda inferior da faixa
-    \fill[pmmeAmarelo]  (\pmme@margem,0)      rectangle ({\pmme@margem+1.5},0.07);
-    \fill[pmmeVermelho] ({\pmme@margem+1.62},0) rectangle ({\pmme@margem+3.12},0.07);
-    \fill[pmmeVerde]    ({\pmme@margem+3.24},0) rectangle ({\pmme@margem+4.74},0.07);
-    \fill[pmmeAzul]     ({\pmme@margem+4.86},0) rectangle ({\pmme@margem+6.36},0.07);
+    % tira de quatro cores, nas proporcoes da peca oficial: comeca depois de
+    % um vao branco a esquerda; amarelo, vermelho, verde e azul; margem
+    % branca abaixo, como no original.
+    \fill[pmmeAmareloFaixa] (3.10,\pmme@tiray) rectangle (5.45,{\pmme@tiray+\pmme@tiraalt});
+    \fill[pmmeVermelho]     (5.45,\pmme@tiray) rectangle (7.80,{\pmme@tiray+\pmme@tiraalt});
+    \fill[pmmeVerde]        (7.80,\pmme@tiray) rectangle (9.60,{\pmme@tiray+\pmme@tiraalt});
+    \fill[pmmeAzul]         (9.60,\pmme@tiray) rectangle (13.80,{\pmme@tiray+\pmme@tiraalt});
     % logo e instituicao/data
-    \node[anchor=west,inner sep=0pt] at (\pmme@margem,{\pmme@faixa/2+0.03}) {\pmme@logoconteudo};
+    \node[anchor=west,inner sep=0pt] at (\pmme@margem,{\pmme@faixa/2+0.12}) {\pmme@logoconteudo};
     \node[anchor=east,inner sep=0pt,text=pmmeCinzaFonte,font=\small]
-      at (15.4,{\pmme@faixa/2+0.03}) {\insertinstitute\ $\cdot$ \insertdate};
+      at (15.4,{\pmme@faixa/2+0.12}) {\insertinstitute\ $\cdot$ \insertdate};
     % texto do bloco azul
     \node[anchor=west,inner sep=0pt,text width=7.1cm,align=left,text=white]
       at (\pmme@margem,{(9+\pmme@faixa)/2}) {%

@@ -6,7 +6,7 @@ nunca sai com um buraco no lugar da imagem.
 
 | Arquivo esperado | Onde aparece | Sem o arquivo |
 |---|---|---|
-| `logo_insper.png` | faixa branca inferior da capa, à esquerda | a palavra *Insper* composta em Heros Condensed |
+| `logo_insper.png` | faixa branca inferior da capa, à esquerda | a palavra *Insper* composta na fonte de destaque (Oswald) |
 | `capa_foto.jpg` | metade direita da capa, recortada | painel com degradê e chevrons da paleta |
 | `sumario_fundo.jpg` | canto superior direito do sumário, esmaecido | padrão de chevrons a 12% de opacidade |
 
@@ -17,6 +17,11 @@ edite lá — não há caminho embutido nos `.sty`.
 
 **Requisitos da foto da capa:** paisagem ou quadrada, com o motivo à direita ou
 ao centro, altura ≥ 1000 px. A porção esquerda fica atrás do bloco azul.
+
+**Imagem de fundo em qualquer frame.** Além dos três arquivos acima, qualquer
+PNG/JPG/PDF pode servir de fundo esmaecido a um frame com `\pmmefundo` (ver
+[`../README.md`](../README.md), seção 3.1). Coloque o arquivo aqui e passe o
+caminho relativo à raiz.
 
 **Proveniência.** Estas imagens são elementos de identidade visual, não saída de
 análise: não representam dado do repositório e por isso não passam pelo

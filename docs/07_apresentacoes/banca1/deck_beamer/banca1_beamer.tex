@@ -8,15 +8,23 @@
 % Artefato DERIVADO de docs/07_apresentacoes/banca1/02_conteudo_slides.md.
 % Divergencia entre este deck e o documento de conteudo e erro do deck.
 %
-% Compilar SEMPRE a partir da raiz do repositorio:
+% Compilar SEMPRE a partir da raiz do repositorio (LuaLaTeX):
 %     bash scripts/apresentacao/build_deck_beamer.sh
 % ---------------------------------------------------------------------------
 \documentclass[aspectratio=169,11pt]{beamer}
 
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
+% Motor: o build oficial usa LuaLaTeX (fontspec carrega a Oswald da identidade
+% e Latin Modern no corpo). Em pdflatex o deck tambem compila, com Latin
+% Modern no corpo e TeX Gyre Heros Condensed como fonte de destaque.
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\else
+  \usepackage{fontspec}   % padrao: Latin Modern, mesma familia do pdflatex
+\fi
 \usepackage[brazil]{babel}
-\usepackage{lmodern}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{booktabs}
@@ -44,8 +52,10 @@ Mais Médicos Especialistas}
 \orientacao{Orientador(a) \textperiodcentered\ coorientador(a)}
 \institute{Insper}
 \date{Banca 1 \textperiodcentered\ data da banca}
-% Logo e foto da capa: caminhos relativos a raiz do repositorio (o build
-% compila a partir dela). Ausentes, a capa usa os substitutos do pacote.
+% Fonte de destaque (Oswald, .ttf em fontes/), logo e foto da capa: caminhos
+% relativos a raiz do repositorio (o build compila a partir dela). Ausentes,
+% o tema cai em Heros Condensed e a capa usa os substitutos do pacote.
+\pmmefontes{docs/07_apresentacoes/banca1/deck_beamer/fontes/}
 \pmmelogo{docs/07_apresentacoes/banca1/deck_beamer/assets/logo_insper.png}
 \pmmefoto{docs/07_apresentacoes/banca1/deck_beamer/assets/capa_foto.jpg}
 
@@ -504,7 +514,7 @@ Mais Médicos Especialistas}
     \bottomrule
   \end{tabularx}}
 
-  \vspace{0.3em}
+  \vspace{0.2em}
   {\footnotesize Na definição dos próprios autores, $c$ reúne
   \textit{``preferences over rural or urban living, or other location-specific
   attributes, such as proximity to family''} --- uma \lead{caixa-preta}. As

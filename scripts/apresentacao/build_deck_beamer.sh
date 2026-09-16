@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
-# Build determinístico do deck Beamer (tema PMME) da banca 1.
+# Build determinístico do deck Beamer (tema PMME) da banca 1, em LuaLaTeX.
 #
 # Entrada : docs/07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex
 # Figuras : output/apresentacao_banca1/*.png (as quatro usadas pelo deck)
@@ -18,7 +18,14 @@ RAIZ="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 cd "${RAIZ}"
 
 # O tema PMME (beamertheme*.sty e pacotes auxiliares) mora ao lado do .tex.
+# A fonte de destaque (fontes/Oswald-*.ttf) é resolvida pelo caminho declarado
+# no .tex (\pmmefontes), relativo à raiz — por isso o cd acima é obrigatório.
 export TEXINPUTS="docs/07_apresentacoes/banca1/deck_beamer//:${TEXINPUTS:-}"
+
+if ! command -v lualatex >/dev/null 2>&1; then
+  echo "ERRO: lualatex não encontrado (pacote texlive-luatex)." >&2
+  exit 1
+fi
 
 TEX_REL="docs/07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex"
 OUT_REL="output/apresentacao_banca1/deck_beamer"
@@ -48,10 +55,11 @@ mkdir -p "${OUT_REL}"
 export SOURCE_DATE_EPOCH=1789516800   # 2026-09-16T00:00:00Z
 export FORCE_SOURCE_DATE=1
 
-# Duas passadas: a segunda resolve \inserttotalframenumber.
+# Duas passadas: a segunda resolve \inserttotalframenumber e as posições
+# 'remember picture' da capa e do sumário.
 for passada in 1 2; do
-  echo "== pdflatex, passada ${passada}/2 =="
-  if ! pdflatex \
+  echo "== lualatex, passada ${passada}/2 =="
+  if ! lualatex \
     -interaction=nonstopmode \
     -halt-on-error \
     -file-line-error \

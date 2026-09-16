@@ -8,6 +8,25 @@
 
 ---
 
+## 16/09/2026 — Banca 1: fonte Oswald embarcada, build em LuaLaTeX
+
+A pedido do autor, para aproximar o deck da peça oficial do PMM-E: paleta
+amostrada do banner, fonte de destaque igual à do título (Oswald, OFL),
+imagem de fundo por frame e layouts em duas e quatro partes no tema.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca1/deck_beamer/fontes/`](07_apresentacoes/banca1/deck_beamer/fontes/README.md) | `Oswald-{Regular,Medium,SemiBold,Bold}.ttf`, `OFL.txt` e `README.md`: a fonte de destaque da identidade, versionada porque a licença permite e porque o build precisa dela |
+
+`scripts/apresentacao/build_deck_beamer.sh` passou de `pdflatex` para
+`lualatex` (o `fontspec` carrega a Oswald); o `.tex` compila nos dois motores.
+Sem mudança no documento canônico: as macros novas (`\pmmefundo`, `pmmeduas`,
+`pmmequatro`) não são usadas na banca 1.
+
+---
+
 ## 16/09/2026 — Banca 1: tema Beamer próprio (PMME) no lugar do Warsaw
 
 A pedido do autor: identidade visual do deck alinhada à peça oficial do Projeto
