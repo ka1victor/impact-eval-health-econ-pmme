@@ -121,6 +121,71 @@ alteram nenhuma saída; os artefatos seguem intactos, com hashes
 
 ---
 
+## E-3 · `celulas_confirmacao_acima_vagas_imediatas` não é a contagem literal
+
+**Item de origem:** B-6, segundo ponto. **Sessão:** 4, em 16/09/2026.
+**Artefato:** `output/tema_trabalho/portao_denominador.json`, campo
+`chamada_1.celulas_confirmacao_acima_vagas_imediatas`.
+**Gerador:** `scripts/tema_trabalho/02_reconciliar_funil_ciclo1.py`.
+
+**O que o artefato publica.** `10`.
+
+**O que está errado.** O nome promete a contagem de células cujas confirmações
+excedem as vagas imediatas publicadas, mas o código filtra `immediate > 0`
+antes de contar, ou seja, só conta células que **tinham** vaga imediata. As
+células que eram só de reserva e receberam confirmação ficam de fora, embora
+sejam o caso mais numeroso.
+
+**A leitura correta**, reproduzida em 16/09/2026 sobre
+`matriz_funil_ciclo1.parquet`, chamada 1: **185 células** com confirmações
+acima das vagas imediatas publicadas, somando **221 confirmações excedentes**;
+das 185, apenas **10** tinham vaga imediata maior que zero, que é o número
+publicado. O rótulo correto do `10` é "células com vaga imediata e confirmações
+acima dela".
+
+**Consequência substantiva: nenhuma.** Nenhum documento publica o `10`, e a
+decisão de A1 (`APROVADO_CELULA`, outcome binário por célula) já nasceu
+justamente porque confirmações em reserva impedem denominador por vaga.
+
+**Por que errata e não reexecução.** O SHA-256 de `portao_denominador.json`
+está fixado como entrada em `registro_pre_analise_atracao.json` (A3),
+`A4_estimativas_atracao.json`, `A5_estimativas_provimento.json` e
+`A5_manifesto_maturidade_censura.json`. Regravá-lo exige reexecutar A3, que é
+protocolo congelado, e toda a cadeia até A6, para corrigir um rótulo que nenhum
+documento cita — o mesmo custo que bloqueou o C-4. A correção do campo entra
+junto da primeira reexecução legítima de A1→A3, se houver, com o C-4.
+
+---
+
+## E-4 · `n_celulas_funil_A1` conta linhas, não células
+
+**Item de origem:** B-6, terceiro ponto. **Sessão:** 4, em 16/09/2026.
+**Artefato:** `output/tema_trabalho/manifesto_tipologia_territorial.json`,
+campos `estratos.<estrato>.n_celulas_funil_A1`.
+**Gerador:** `scripts/tema_trabalho/03_construir_tipologia_territorial.py`.
+
+**O que o artefato publica.** Capital 250, metropolitano 591, interior próximo
+1.711, interior remoto 505 — total **3.057**.
+
+**O que está errado.** São linhas de `matriz_funil_ciclo1.parquet` na população
+A1, não células distintas. A matriz tem uma linha por célula **e chamada**, e
+**929** células aparecem nas duas chamadas.
+
+**A leitura correta**, reproduzida em 16/09/2026: **2.128 células CNES–curso
+distintas** na população A1 (3.057 − 929). Os campos devem ser lidos como
+"linhas célula–chamada do funil".
+
+**Consequência substantiva: nenhuma.** O campo é descritivo do manifesto e não
+alimenta amostra, estimando ou artigo; A4 usa as 1.295 células do quadro da
+primeira chamada, contadas no próprio A4.
+
+**Por que errata e não reexecução.** A tipologia é congelada (A2); reexecutar
+`03_construir_tipologia_territorial.py` regrava o manifesto e a matriz e quebra
+a cadeia de hashes até A6, pela mesma razão do B-4 e do B-7. A recomendação da
+fila é errata, e a decisão delegada pelo autor em 16/09/2026 a adotou.
+
+---
+
 ## Achado de reprodutibilidade — A8 não reproduz byte a byte
 
 Registrado aqui porque condiciona a escolha da E-1, e não como resultado.

@@ -340,6 +340,67 @@ class ProvimentoCnesA5Test(unittest.TestCase):
         nivel = self.est["modelos"]["principal_dinamico_confirmatorio"]
         self.assertEqual(round(nivel["mar2026_beta"], 3), 0.5)
 
+    # ------------------------------------------------------------------
+    # Sessao 4 do backlog: B-1, B-2, B-5, B-6 e C-9
+    # ------------------------------------------------------------------
+    def test_b1_censura_de_presentes_6m_nao_e_zero(self) -> None:
+        # A coorte do follow (202603) nao tem seis meses observados; a coluna
+        # tem de ser NaN com marcador, nunca zero.
+        self.assertFalse(self.cross["coorte_6m_madura"].astype(bool).any())
+        self.assertTrue(self.cross["presentes_6m"].isna().all())
+        self.assertTrue(self.cross["presentes_6m_censurado"].astype(bool).all())
+        self.assertTrue(self.manifest["checks"]["presentes_6m_censura_gravada_como_nan_nao_zero"])
+        # A presenca modelada vem da coorte madura da referencia.
+        self.assertTrue(self.cross["coorte_madura_baseline"].astype(bool).all())
+        self.assertFalse(self.cross["presentes_baseline_6m"].isna().any())
+
+    def test_b2_relatorio_promovido_sem_texto_obsoleto(self) -> None:
+        for secao in ["Construção, maturidade e censura", "Trajetória agregada", "Influência e robustez", "Multiplicidade", "Limites"]:
+            self.assertIn(secao, self.report, secao)
+        # Texto obsoleto do bloco morto nao pode ter sido promovido.
+        self.assertNotIn("202509 baseline", self.report)
+        self.assertNotIn("FE curso (16)", self.report)
+        self.assertNotIn("G=368", self.report)
+        self.assertIn("587 células", self.report)
+
+    def test_b5_multiplicidade_declarada_e_publicada(self) -> None:
+        mult = self.est["multiplicidade"]
+        self.assertEqual(len(mult["familias_corte_transversal"]), 10)
+        for fam in ["minimal_5_desfechos", "full_5_desfechos"]:
+            self.assertEqual(sum(f["familia"] == fam for f in mult["familias_corte_transversal"]), 5)
+        for tabela in ["A5_tabela_07_estudo_evento_atracao.csv", "A5_tabela_08_estudo_evento_proporcional.csv"]:
+            ev = pd.read_csv(OUT / tabela, dtype={"competencia": str})
+            for col in ["q_fdr_bh", "q_fdr_bh_gl_fe", "familia_fdr"]:
+                self.assertIn(col, ev.columns, tabela)
+            est = ev[~ev["referencia"].astype(bool)]
+            self.assertFalse(est["q_fdr_bh_gl_fe"].isna().any(), tabela)
+            self.assertTrue((est["q_fdr_bh_gl_fe"] >= est["p_valor_gl_fe"] - 1e-12).all(), tabela)
+            self.assertTrue(ev.loc[ev["referencia"].astype(bool), "q_fdr_bh"].isna().all(), tabela)
+        # q de manchete: a escala proporcional sobrevive a familia de 25; a de nivel nao.
+        self.assertLess(mult["mar2026_q_fdr_bh_gl_fe_proporcional_confirmatoria"], 0.01)
+        self.assertGreater(mult["mar2026_q_fdr_bh_gl_fe_nivel_confirmatoria"], 0.05)
+        # q_fdr_atracao deixou de sair NaN nas tabelas de corte transversal.
+        t03b = pd.read_csv(OUT / "A5_tabela_03b_modelo_delta_estoque.csv")
+        atr = t03b[t03b["termo"] == "atracao_muni"]
+        self.assertFalse(atr["q_fdr_atracao"].isna().any())
+        self.assertTrue((atr["q_fdr_atracao"] >= atr["p_valor"] - 1e-12).all())
+
+    def test_b6_rotulo_da_janela_antiga_descreve_a_janela_real(self) -> None:
+        t03f = pd.read_csv(OUT / "A5_tabela_03f_sensibilidade_T0_alternativo.csv")
+        self.assertEqual(set(t03f["espec"]), {"OLS_delta_T0alt_202509_202603_minimal"})
+        timing = self.manifest["t0"]
+        self.assertEqual((timing["alt_baseline"], timing["alt_follow"]), ("202509", "202603"))
+
+    def test_c9_delta_full_e_estoque_full_sao_um_estimador(self) -> None:
+        d = self.est["modelos"]["delta_full"]
+        e = self.est["modelos"]["estoque_6m_full"]
+        self.assertEqual(d["equivalente_a"], "estoque_6m_full")
+        self.assertEqual(e["equivalente_a"], "delta_full")
+        self.assertAlmostEqual(d["coef_atracao"], e["coef_atracao"], places=10)
+        t03b = pd.read_csv(OUT / "A5_tabela_03b_modelo_delta_estoque.csv")
+        nota = t03b.loc[(t03b["espec"] == "OLS_delta_full") & (t03b["termo"] == "atracao_muni"), "nota"].iloc[0]
+        self.assertIn("Frisch-Waugh-Lovell", str(nota))
+
 
 if __name__ == "__main__":
     unittest.main()

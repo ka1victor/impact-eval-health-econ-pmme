@@ -128,14 +128,14 @@
       "presente": true
     },
     "output/tema_trabalho/A5_estimativas_provimento.json": {
-      "sha256": "73b9362916d92091eb486c49ca71de17a14dfad4f3afca3802a8f935ed8e85f4",
-      "bytes": 66589,
+      "sha256": "5bd9ab1379527e158a584bcf5b52a9f84ca646d8a7ef5fad73edf58eeca090f9",
+      "bytes": 70631,
       "papel": "estimativas de A5",
       "presente": true
     },
     "output/tema_trabalho/A5_manifesto_maturidade_censura.json": {
-      "sha256": "36aa7b5193d8c4166ec7915ac9e4ae646f511dc7aaf120fa5674e2ed7796e260",
-      "bytes": 15035,
+      "sha256": "3c9643d2eafcefa5c33c7ee07ad533c2485f2a7f82b4d4d071c2bed55cfa7317",
+      "bytes": 15095,
       "papel": "maturidade e censura declaradas em A5",
       "presente": true
     },
@@ -158,8 +158,8 @@
       "presente": true
     },
     "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv": {
-      "sha256": "199bbb20f94e2b70656bbbd40ee701e94b2d109dadb7102afaabbc3f92c3497b",
-      "bytes": 12361,
+      "sha256": "b21797f18a15f71d7ed54fe33c3a673f9d3b659b7dd0323a48f22a3d7bb01680",
+      "bytes": 16834,
       "papel": "estudo de evento de A5",
       "presente": true
     },
@@ -176,7 +176,7 @@
       "presente": true
     },
     "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": {
-      "sha256": "45d60f2003544ee8ca90e51ffa7475ec6d85406335f7262b27bc3f1dbe4e8b2d",
+      "sha256": "15cfc1fff5cf40abc384432a4256138d856e884ccdd492858c8f431230902659",
       "bytes": 4422,
       "papel": "síntese gerada aqui",
       "presente": true
@@ -190,7 +190,7 @@
     "docs/auditorias/09_red_team_atracao_provimento.md": "cf01503e",
     "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "4b0077df",
     "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "f82efdb9",
-    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "45d60f20"
+    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "15cfc1ff"
   },
   "portoes": {
     "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",

@@ -121,7 +121,8 @@
     "presenca_observavel_ate_202601": true,
     "referencia_202506_madura_para_6m": true,
     "follow_202603_observavel": true,
-    "t0_admin_202510_primeira_apos_homolog": true
+    "t0_admin_202510_primeira_apos_homolog": true,
+    "presentes_6m_censura_gravada_como_nan_nao_zero": true
   },
   "diagnostico_identificador_longitudinal": {
     "campo": "CO_PROFISSIONAL_SUS",

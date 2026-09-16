@@ -280,6 +280,14 @@ usar. Nenhum modelo consome a coluna — eles usam `presentes_baseline_6m`, que 
 madura. Nenhum dos 13 `checks` do manifesto testa isso; acrescentar o teste faz
 parte do item.
 
+### Executado em 16/09/2026 — sessão 4
+
+`presentes_6m` fica **NaN** nas 1.184 linhas em que `coorte_6m_madura` é `False`,
+com a coluna nova `presentes_6m_censurado`; o script aborta se a coorte da
+referência não for madura ou se censura for gravada como valor. O manifesto
+ganha o 14º check, `presentes_6m_censura_gravada_como_nan_nao_zero`. Nenhum
+modelo mudou, porque nenhum consumia a coluna. Um teste novo.
+
 ## B-2 · Relatório de A5 é código morto
 
 **Onde:** `scripts/tema_trabalho/06_avaliar_provimento_cnes.py`, linhas ~1145–1229
@@ -295,6 +303,17 @@ influência nem de robustez. O bloco morto ainda carrega texto obsoleto — cita
 **Decisão:** ou remover o bloco morto, ou promovê-lo. Recomendo promovê-lo, agora
 que o LOO e a sensibilidade de referência existem como artefato — o relatório é
 justamente onde um leitor procura essa fragilidade.
+
+### Executado em 16/09/2026 — sessão 4. Promovido, com o texto obsoleto corrigido
+
+O bloco morto (11.250 caracteres) foi removido e suas seções foram promovidas
+ao relatório publicado com os números lidos das tabelas gravadas, não do texto
+antigo: construção, maturidade e censura; trajetória agregada; influência e
+robustez (LOO de UF e curso, leave-one-município, validação preditiva);
+multiplicidade; limites. O que o bloco morto dizia de errado não foi promovido
+— `13.92 (202509 baseline)`, `FE curso (16)`, `G=368` —, e o relatório passa a
+declarar referência 202506, 10 cursos e 295 municípios na amostra
+confirmatória. Um teste garante que o texto obsoleto não reaparece.
 
 ## B-3 · Manifesto de reprodução de A6 não reproduz
 
@@ -376,6 +395,24 @@ chamada; `q_fdr_atracao` sai `NaN` em todas as tabelas.
 São 25 coeficientes de evento mais cerca de 12 modelos secundários sem qualquer
 discussão de multiplicidade. A4 aplica FDR entre estratos; A5 não aplica nada.
 
+### Executado em 16/09/2026 — sessão 4. Famílias declaradas antes de ver os q
+
+Famílias: (i) os 25 coeficientes de evento de cada par amostra–escala, com
+Benjamini–Hochberg nas colunas `q_fdr_bh` e `q_fdr_bh_gl_fe` das tabelas 07 e
+08; (ii) o coeficiente de atração nos cinco desfechos de corte transversal,
+separadamente para `minimal` e `full`, na coluna `q_fdr_atracao` das tabelas 03
+a 03e, que antes saía `NaN`. Registro em `A5_estimativas_provimento.json`,
+bloco `multiplicidade`.
+
+Resultado, lido dos artefatos: na amostra confirmatória, o coeficiente de
+março/2026 na **escala proporcional** tem `q = 0,0034` e sobrevive à família de
+25; o coeficiente em **nível** tem `q = 0,364` e **não sobrevive** — mais uma
+razão, independente da composição de cursos, para o nível ser sensibilidade e
+não forma primária, como o C2 do plano `35` já decidira. No corte transversal
+`minimal`, cobertura (`q = 0,024`) e estoque (`q = 0,047`) ficam abaixo de 0,05;
+`delta` (`q = 0,067`) e entradas (`q = 0,067`) não. Nenhum desses coeficientes
+entra no artigo. Um teste novo.
+
 ## B-6 · Rótulos e artefatos enganosos
 
 Três itens pequenos, do mesmo tipo, que podem ir num commit só:
@@ -390,6 +427,20 @@ Três itens pequenos, do mesmo tipo, que podem ir num commit só:
 - `manifesto_tipologia_territorial.json`, `n_celulas_funil_A1` conta linhas
   (3.057), não células distintas (**2.128**; 929 aparecem nas duas chamadas).
   Mesma restrição de congelamento do B-4.
+
+### Executado em 16/09/2026 — sessão 4. Um rótulo corrigido, dois em errata
+
+- `A5_tabela_03f`: o rótulo passa a ser derivado das constantes,
+  `OLS_delta_T0alt_202509_202603_minimal`, e o comentário do código que dizia
+  `202507 -> 202601` foi corrigido. Valor inalterado.
+- `portao_denominador.json`: **errata E-3** em
+  [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md).
+  Reproduzido: 185 células e 221 confirmações excedentes; o `10` publicado é o
+  subconjunto com vaga imediata maior que zero. Regravar exigiria reexecutar
+  A3–A6 pelo hash, o mesmo bloqueio do C-4.
+- `manifesto_tipologia_territorial.json`: **errata E-4**. Reproduzido: 3.057
+  linhas célula–chamada, 2.128 células distintas, 929 nas duas chamadas.
+  Tipologia congelada; decisão delegada pelo autor: errata.
 
 ## B-7 · `sg_uf` de tipo misto na tipologia
 
@@ -703,6 +754,13 @@ Ambos reportam `0,091608 / 0,345622 / 0,790969` porque a especificação `full`
 inclui `estoque_baseline`; por Frisch–Waugh–Lovell são idênticos. O JSON os
 apresenta como duas evidências.
 
+### Executado em 16/09/2026 — sessão 4
+
+O JSON passa a declarar `equivalente_a` nos dois modelos e uma
+`nota_equivalencia`; as tabelas `03` e `03b` ganham a coluna `nota` com a mesma
+explicação; o script aborta se os dois coeficientes deixarem de ser idênticos; o
+relatório os conta como uma evidência. Os valores não mudaram. Um teste novo.
+
 ---
 
 # Grupo D — bloqueado
@@ -859,7 +917,7 @@ e a 2 depende de a especificação do C1 já estar valendo.
 | 1 | `CONCLUIDA` (emenda `03ccc1c`, execução na seção A-1) | **A-1** | Executada em 16/09/2026 depois de D-4 ser parcialmente destravado (`da4d6f7`). Decisão delegada pelo autor: residual rotulado, 24 níveis. Os três alvos reemitidos reproduzem. |
 | 2 | `CONCLUIDA` (emenda `9e5de6d`, execução `fbc5f58`) | **A-2 + A-3 + C-6** | Executada em 14/09/2026 na especificação vigente. Emenda 1 do `35` commitada antes do código. Resultado e achado colateral na seção A-2 e no `35`. |
 | 3 | `PARCIAL_EXECUTADA` (14/09/2026, `a8107cb`) | **C-7** | Red team. A quarta ameaça — forma funcional — foi executada junto da sessão 5, porque a sessão 4 está bloqueada e as duas dividem o gerador `07_red_team_sintese.py`. Placebo, heterogeneidade de pré-tendência e deslocamento **continuam bloqueados por D-4**: exigem regravar artefato de A5. |
-| 4 | `BLOQUEADA_D4` | **B-1, B-2, B-5, B-6, C-9** | Higiene de A5. Toda ela regrava tabela ou relatório de A5; nenhum caminho legítimo sem o painel do CNES. |
+| 4 | `CONCLUIDA` (16/09/2026) | **B-1, B-2, B-5, B-6, C-9** | Executada no modo de reestimação de A5 (`da4d6f7`). B-6 fechou um rótulo no código e dois em errata (E-3, E-4). Achado colateral do B-5: o coeficiente em nível não sobrevive ao FDR da família de 25; o proporcional sobrevive. |
 | 5 | `CONCLUIDA` (14/09/2026) | **B-3, C-1, C-2, C-3, C-5, C-8** — **C-4 bloqueado** | Executada com a sessão 3. Commits: B-3 `2375267`, C-1 `093fb44`, C-2 `8c4d3e9`, C-3 e C-5 `e7fc9e9`, C-4 e C-8 `1893e95`. O C-4 não foi concluído: a renomeação recomendada muda o SHA-256 de `portao_denominador.json`, fixado como hash de entrada em A3, A4 e A5 — ver a seção C-4. |
 | — | `DECISÃO DO AUTOR` | **B-4, B-7** | Errata contra reexecução da tipologia congelada. Recomendo errata. Não executar sem a decisão. |
 | — | `RESOLVIDO` | **D-1** | TeX instalado; artigo compila. Só a revisão de provas pelo autor continua pendente. |
