@@ -19,7 +19,10 @@
 
 ### Um modelo microeconômico para o preenchimento de vagas do Programa Mais Médicos Especialistas
 
-Autoria · instituição · data da banca
+Autoria · orientação · instituição · data da banca
+
+*Slots da capa: nome do(s) autor(es); "Orientação:" e nome dos professores;
+instituição e logo do Insper; data da banca.*
 
 ---
 
@@ -27,12 +30,14 @@ Autoria · instituição · data da banca
 
 `sem rastreio`
 
-1. Motivação
-2. Pergunta
-3. Literatura teórica
-4. Modelo microeconômico
-5. Hipótese
-6. Viabilidade empírica
+| # | Seção | Descrição curta (linha auxiliar do sumário) |
+|:---:|---|---|
+| 1 | Motivação | Por que a pergunta importa |
+| 2 | Pergunta | A pergunta de pesquisa |
+| 3 | Literatura teórica | As três referências que fundamentam o modelo |
+| 4 | Modelo microeconômico | A decisão do médico e o custo do lugar |
+| 5 | Hipótese | O que o modelo prevê |
+| 6 | Viabilidade empírica | O que os dados permitem testar |
 
 ---
 

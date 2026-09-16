@@ -1,0 +1,178 @@
+% ---------------------------------------------------------------------------
+% pmmecapa.sty -- capa do deck Beamer da banca 1 (identidade PMM-E)
+%
+% Reproduz, em TikZ, a peca oficial do Projeto Mais Medicos Especialistas:
+% bloco azul-royal com borda diagonal e cantos arredondados, filetes amarelo
+% e vermelho ao longo da diagonal, marcador de chevrons amarelo/verde, titulo
+% em amarelo condensado, foto a direita e faixa branca inferior com quatro
+% segmentos coloridos. Adaptacoes para a banca: autoria, orientacao,
+% instituicao/data e logo do Insper.
+%
+% Contrato com o tema principal (beamerthemePMME.sty), que DEFINE:
+%   cores  pmmeAzul pmmeAzulEscuro pmmeAzulClaro pmmeAzulPalido pmmeAmarelo
+%          pmmeVerde pmmeVermelho pmmeCinzaTexto pmmeCinzaFonte
+%   fonte  \pmmeDisplay  (= \fontfamily{qhvc}\selectfont, Heros Condensed)
+% Este pacote NAO redefine nada disso; so oferece fallbacks com \providecommand
+% e \providecolor para compilar isolado.
+%
+% API publica
+%   \orientacao{Prof. A . Prof. B}   professores (\insertorientacao)
+%   \pmmelogo{caminho}               logo da faixa inferior (fallback: wordmark)
+%   \pmmefoto{caminho}               foto a direita (fallback: painel decorativo)
+%   \pmmecapa                        desenha a capa; usar em \begin{frame}[plain]
+% Ajustes opcionais (\renewcommand antes de \pmmecapa):
+%   \pmmecapatitulofonte  \pmmecapasubtitulofonte  \pmmecapatitulo
+%   (padrao: \pmmecapatitulo = \inserttitle em Title Case, 4 linhas; para caixa-alta
+%    como na peca oficial: \renewcommand{\pmmecapatitulo}{\MakeUppercase{\inserttitle}}
+%    e reduza \pmmecapatitulofonte para ~17pt)
+% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pmmecapa}[2026/09/16 v1.0 Capa PMM-E para o deck Beamer da banca 1]
+
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+\usetikzlibrary{calc,positioning}
+
+% --- fallbacks (o tema principal e a fonte de verdade) ----------------------
+\providecolor{pmmeAzul}{HTML}{1D2DB3}
+\providecolor{pmmeAzulEscuro}{HTML}{121D7A}
+\providecolor{pmmeAzulClaro}{HTML}{E9ECF9}
+\providecolor{pmmeAzulPalido}{HTML}{F4F5FC}
+\providecolor{pmmeAmarelo}{HTML}{F6C500}
+\providecolor{pmmeVerde}{HTML}{1E9C49}
+\providecolor{pmmeVermelho}{HTML}{E0231C}
+\providecolor{pmmeCinzaTexto}{HTML}{2E2E2E}
+\providecolor{pmmeCinzaFonte}{HTML}{6B6B6B}
+\providecommand{\pmmeDisplay}{\fontfamily{qhvc}\selectfont}
+
+% --- metadados --------------------------------------------------------------
+\def\pmme@orientacao{}
+\def\pmme@logo{}
+\def\pmme@foto{}
+\newcommand{\orientacao}[1]{\def\pmme@orientacao{#1}}
+\newcommand{\insertorientacao}{\pmme@orientacao}
+\newcommand{\pmmelogo}[1]{\def\pmme@logo{#1}}
+\newcommand{\pmmefoto}[1]{\def\pmme@foto{#1}}
+
+% --- tipografia da capa (ajustavel) -----------------------------------------
+\newcommand{\pmmecapatitulofonte}{\fontsize{22}{24}\pmmeDisplay\bfseries}
+\newcommand{\pmmecapasubtitulofonte}{\fontsize{9.5}{12}\selectfont}
+\newcommand{\pmmecapatitulo}{\inserttitle}
+
+% --- geometria (em cm; pagina 16 x 9) ---------------------------------------
+\newcommand{\pmme@faixa}{1.05}      % altura da faixa branca inferior
+\newcommand{\pmme@diagtopo}{10.15}   % x da diagonal no topo da pagina
+\newcommand{\pmme@diagbase}{8.05}   % x da diagonal na base do bloco azul
+\newcommand{\pmme@raio}{0.55}       % raio dos cantos arredondados
+\newcommand{\pmme@filete}{0.11}     % espessura do filete (deslocamento em x)
+\newcommand{\pmme@margem}{0.8}     % margem esquerda do texto
+
+% Bloco azul: mesmo caminho para bloco e filetes, deslocado em x por #1.
+% Comeca fora da pagina (esquerda e topo), de modo que so os cantos da
+% diagonal aparecem arredondados.
+\newcommand{\pmme@bloco}[1]{%
+  (-1,-1) -- (-1,10) -- ({\pmme@diagtopo+#1},10)
+  -- ({\pmme@diagbase+#1},\pmme@faixa) -- (-1,\pmme@faixa) -- cycle}
+
+% Chevron apontando para a esquerda: \pmme@chevron{cor}{x}{y}{largura}{altura}
+% (x,y) = ponta esquerda; usado no marcador e no painel decorativo.
+\newcommand{\pmme@chevron}[5]{%
+  \fill[#1] (#2,#3)
+    -- ({#2+0.58*#4},{#3+0.5*#5}) -- ({#2+#4},{#3+0.5*#5})
+    -- ({#2+0.42*#4},#3) -- ({#2+#4},{#3-0.5*#5})
+    -- ({#2+0.58*#4},{#3-0.5*#5}) -- cycle;}
+
+% Marcador de duas setas: verde atras, amarela sobreposta a frente.
+\newcommand{\pmme@marcador}[3]{% x y altura
+  \pmme@chevron{pmmeVerde}{#1+0.22*#3}{#2}{0.9*#3}{#3}%
+  \pmme@chevron{pmmeAmarelo}{#1}{#2}{0.9*#3}{#3}}
+
+% --- foto ou painel decorativo -----------------------------------------------
+\newsavebox{\pmme@fotobox}
+\newlength{\pmme@fotoalt}
+\newlength{\pmme@fotolarg}
+\newcommand{\pmme@painelfoto}{%
+  % regiao: x in [7,16], y in [faixa, 9]; o bloco azul cobre a esquerda
+  \begin{scope}
+    \clip (7,\pmme@faixa) rectangle (16,9);
+    \ifx\pmme@foto\@empty
+      \pmme@painelfallback
+    \else
+      \IfFileExists{\pmme@foto}{%
+        \setlength{\pmme@fotoalt}{\dimexpr 9cm-\pmme@faixa cm\relax}%
+        \setlength{\pmme@fotolarg}{\dimexpr 16cm-\pmme@diagbase cm+0.6cm\relax}%
+        \sbox{\pmme@fotobox}{\includegraphics[height=\pmme@fotoalt]{\pmme@foto}}%
+        \ifdim\wd\pmme@fotobox<\pmme@fotolarg
+          \sbox{\pmme@fotobox}{\includegraphics[width=\pmme@fotolarg]{\pmme@foto}}%
+        \fi
+        \node[anchor=east,inner sep=0pt] at (16,{(9+\pmme@faixa)/2}) {\usebox{\pmme@fotobox}};
+      }{\pmme@painelfallback}%
+    \fi
+  \end{scope}}
+\newcommand{\pmme@painelfallback}{%
+  \shade[top color=white,bottom color=pmmeAzulPalido,middle color=pmmeAzulClaro,shading angle=20]
+    (7,\pmme@faixa) rectangle (16,9);
+  \begin{scope}[opacity=0.32]
+    \pmme@chevron{pmmeVerde}{11.9}{5.05}{3.6}{5.4}
+    \pmme@chevron{pmmeAmarelo}{10.9}{5.05}{3.6}{5.4}
+  \end{scope}}
+
+% --- logo ou wordmark ---------------------------------------------------------
+\newcommand{\pmme@logoconteudo}{%
+  \ifx\pmme@logo\@empty
+    \pmme@wordmark
+  \else
+    \IfFileExists{\pmme@logo}{\includegraphics[height=0.55cm]{\pmme@logo}}{\pmme@wordmark}%
+  \fi}
+\newcommand{\pmme@wordmark}{%
+  {\fontsize{15}{15}\pmmeDisplay\bfseries\color{pmmeCinzaTexto}Insper}}
+
+% --- a capa -------------------------------------------------------------------
+\newcommand{\pmmecapa}{%
+  \begin{tikzpicture}[remember picture,overlay,shift={(current page.south west)},x=1cm,y=1cm]
+    % fundo
+    \fill[white] (0,0) rectangle (16,9);
+    % foto / painel a direita
+    \pmme@painelfoto
+    % filetes: vermelho (trecho) por fora, amarelo por dentro, bloco azul por cima
+    \begin{scope}
+      \clip (0,\pmme@faixa) rectangle (16,4.4);
+      \fill[pmmeVermelho,rounded corners=\pmme@raio cm] \pmme@bloco{2*\pmme@filete};
+    \end{scope}
+    \fill[pmmeAmarelo,rounded corners=\pmme@raio cm] \pmme@bloco{\pmme@filete};
+    \fill[pmmeAzul,rounded corners=\pmme@raio cm] \pmme@bloco{0};
+    % faixa branca inferior (cobre a base dos filetes)
+    \fill[white] (0,0) rectangle (16,\pmme@faixa);
+    % segmentos coloridos na borda inferior da faixa
+    \fill[pmmeAmarelo]  (\pmme@margem,0)      rectangle ({\pmme@margem+1.5},0.07);
+    \fill[pmmeVermelho] ({\pmme@margem+1.62},0) rectangle ({\pmme@margem+3.12},0.07);
+    \fill[pmmeVerde]    ({\pmme@margem+3.24},0) rectangle ({\pmme@margem+4.74},0.07);
+    \fill[pmmeAzul]     ({\pmme@margem+4.86},0) rectangle ({\pmme@margem+6.36},0.07);
+    % logo e instituicao/data
+    \node[anchor=west,inner sep=0pt] at (\pmme@margem,{\pmme@faixa/2+0.03}) {\pmme@logoconteudo};
+    \node[anchor=east,inner sep=0pt,text=pmmeCinzaFonte,font=\small]
+      at (15.4,{\pmme@faixa/2+0.03}) {\insertinstitute\ $\cdot$ \insertdate};
+    % texto do bloco azul
+    \node[anchor=west,inner sep=0pt,text width=7.1cm,align=left,text=white]
+      at (\pmme@margem,{(9+\pmme@faixa)/2}) {%
+      \raggedright\hyphenpenalty=10000 \exhyphenpenalty=10000
+      \setlength{\parskip}{0pt}%
+      % rotulo com marcador
+      \begin{tikzpicture}[baseline=(rot.base)]
+        \pmme@marcador{0}{0.14}{0.36}
+        \node[anchor=west,inner sep=0pt,text=white,
+              font=\fontsize{8.5}{10}\pmmeDisplay\bfseries] (rot) at (0.62,0.14)
+          {PROJETO DE PESQUISA \,$\cdot$\, BANCA 1};
+      \end{tikzpicture}\par
+      \vspace{0.45cm}
+      {\pmmecapatitulofonte\color{pmmeAmarelo}\pmmecapatitulo\par}
+      \vspace{0.35cm}
+      {\pmmecapasubtitulofonte\color{white}\insertsubtitle\par}
+      \vspace{0.6cm}
+      {\small\bfseries\color{white}\insertauthor\par}
+      \vspace{0.12cm}
+      {\small\color{white}Orientação: \insertorientacao\par}
+    };
+  \end{tikzpicture}}
+
+\endinput

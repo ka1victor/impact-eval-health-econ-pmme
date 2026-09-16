@@ -1,0 +1,177 @@
+% ---------------------------------------------------------------------------
+% pmmesumario.sty — slide de sumário do deck Beamer da banca 1 (16:9, 16 x 9 cm)
+%
+% Uso (dentro de um frame [plain]):
+%
+%   \pmmesumarioitem{Motivação}{Por que a pergunta importa}   % até 6 itens
+%   ...
+%   \pmmesumariofundo{caminho/da/imagem}                       % opcional
+%   \begin{frame}[plain]\pmmesumario[3]\end{frame}             % destaca o 3
+%   \begin{frame}[plain]\pmmesumario\end{frame}                % todos plenos
+%
+% O pacote NÃO define as cores pmme* nem \pmmeDisplay: isso é do tema
+% beamerthemePMME.sty. Há \providecommand de fallback para \pmmeDisplay e
+% \providecolor para as cores, de modo que o pacote compila sozinho.
+% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pmmesumario}[2026/09/16 v1.0 slide de sumario PMME]
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+
+% --- fallbacks (o tema principal tem precedência) --------------------------
+\providecommand{\pmmeDisplay}{\fontfamily{qhvc}\selectfont}
+\providecolor{pmmeAzul}{HTML}{1D2DB3}
+\providecolor{pmmeAzulEscuro}{HTML}{121D7A}
+\providecolor{pmmeAzulClaro}{HTML}{E9ECF9}
+\providecolor{pmmeAzulPalido}{HTML}{F4F5FC}
+\providecolor{pmmeAmarelo}{HTML}{F6C500}
+\providecolor{pmmeVerde}{HTML}{1E9C49}
+\providecolor{pmmeVermelho}{HTML}{E0231C}
+\providecolor{pmmeCinzaTexto}{HTML}{2E2E2E}
+\providecolor{pmmeCinzaFonte}{HTML}{6B6B6B}
+
+% --- parâmetros de composição (cm, salvo indicação) -------------------------
+% Página: 16 x 9. Eixo x para a direita, y para cima, origem no canto
+% inferior esquerdo da página.
+\newcommand{\pmmesumario@titulo}{Sumário}
+\newcommand{\pmmesumario@ytop}{7.02}      % y do primeiro item
+\newcommand{\pmmesumario@dy}{1.10}        % passo vertical entre itens
+\newcommand{\pmmesumario@cx}{-1.00}       % centro do arco dos losangos (x)
+\newcommand{\pmmesumario@cy}{4.27}        % centro do arco dos losangos (y)
+\newcommand{\pmmesumario@R}{9.15}         % raio do arco dos losangos
+\newcommand{\pmmesumario@anelR}{6.55}     % raio do anel decorativo
+\newcommand{\pmmesumario@anelW}{1.55cm}   % espessura do anel decorativo
+\newcommand{\pmmesumario@lin}{1.35}       % comprimento da linha fina
+\newcommand{\pmmesumario@los}{0.27}       % meia-diagonal do losango
+\newcommand{\pmmesumario@opdim}{0.55}     % opacidade dos itens não correntes
+
+% fontes
+\newcommand{\pmmesumario@fonteTitulo}{%
+  \pmmeDisplay\fontseries{b}\fontsize{30}{33}\selectfont}
+\newcommand{\pmmesumario@fonteNome}{%
+  \pmmeDisplay\fontseries{b}\fontshape{it}\fontsize{17}{19}\selectfont}
+\newcommand{\pmmesumario@fonteDesc}{\sffamily\fontsize{7.5}{8.5}\selectfont}
+\newcommand{\pmmesumario@fonteNum}{\sffamily\bfseries\fontsize{6}{6.5}\selectfont}
+
+% --- registro dos itens -----------------------------------------------------
+\newcount\pmmesumario@n
+\pmmesumario@n=0
+
+\newcommand{\pmmesumarioitem}[2]{%
+  \ifnum\pmmesumario@n<6
+    \global\advance\pmmesumario@n by 1
+    \expandafter\gdef\csname pmmesumario@nome\the\pmmesumario@n\endcsname{#1}%
+    \expandafter\gdef\csname pmmesumario@desc\the\pmmesumario@n\endcsname{#2}%
+  \else
+    \PackageError{pmmesumario}{Mais de 6 itens de sumario registrados}%
+      {O slide de sumario aceita no maximo seis secoes.}%
+  \fi}
+
+\newcommand{\pmmesumario@nome}[1]{\csname pmmesumario@nome#1\endcsname}
+\newcommand{\pmmesumario@desc}[1]{\csname pmmesumario@desc#1\endcsname}
+
+% --- imagem de fundo --------------------------------------------------------
+\newcommand{\pmmesumario@fundo}{}
+\newcommand{\pmmesumariofundo}[1]{\renewcommand{\pmmesumario@fundo}{#1}}
+
+% Procura o arquivo com e sem extensões usuais; devolve em \pmmesumario@fundoOK
+% o caminho encontrado (vazio se nada existe).
+\newcommand{\pmmesumario@fundoOK}{}
+\newcommand{\pmmesumario@acharfundo}{%
+  \gdef\pmmesumario@fundoOK{}%
+  \ifx\pmmesumario@fundo\@empty\else
+    \IfFileExists{\pmmesumario@fundo}{\xdef\pmmesumario@fundoOK{\pmmesumario@fundo}}{%
+    \IfFileExists{\pmmesumario@fundo.png}{\xdef\pmmesumario@fundoOK{\pmmesumario@fundo.png}}{%
+    \IfFileExists{\pmmesumario@fundo.pdf}{\xdef\pmmesumario@fundoOK{\pmmesumario@fundo.pdf}}{%
+    \IfFileExists{\pmmesumario@fundo.jpg}{\xdef\pmmesumario@fundoOK{\pmmesumario@fundo.jpg}}{}}}}%
+  \fi}
+
+% Padrão geométrico de reserva para o canto superior direito
+\newcommand{\pmmesumario@chevrons}{%
+  \begin{scope}
+    \clip (9.2,4.6) rectangle (16,9);
+    \begin{scope}[line width=0.55cm, line join=miter, opacity=0.12]
+      \draw[pmmeAmarelo] (10.6,9.6) -- (12.55,7.25) -- (14.5,9.6);
+      \draw[pmmeVerde]   (12.1,9.6) -- (14.05,7.25) -- (16.0,9.6);
+      \draw[pmmeAmarelo] (13.6,9.6) -- (15.55,7.25) -- (17.5,9.6);
+      \draw[pmmeVerde]   (11.35,7.95)-- (13.30,5.60) -- (15.25,7.95);
+      \draw[pmmeAmarelo] (12.85,7.95)-- (14.80,5.60) -- (16.75,7.95);
+    \end{scope}
+  \end{scope}}
+
+% --- o slide ----------------------------------------------------------------
+\newcommand{\pmmesumario}[1][0]{%
+  \def\pmmesumario@k{#1}%
+  \pmmesumario@acharfundo
+  \begin{tikzpicture}[remember picture, overlay,
+                      shift={(current page.south west)}]
+    % fundo sólido
+    \fill[pmmeAzul] (0,0) rectangle (16,9);
+    % anel decorativo, largo e semitransparente, centro fora da página
+    \begin{scope}
+      \clip (0,0) rectangle (16,9);
+      \draw[pmmeAzulClaro, opacity=0.17, line width=\pmmesumario@anelW]
+        (\pmmesumario@cx,\pmmesumario@cy) circle (\pmmesumario@anelR);
+      \draw[white, opacity=0.10, line width=0.4pt]
+        (\pmmesumario@cx,\pmmesumario@cy) circle (\pmmesumario@anelR+0.95);
+    \end{scope}
+    % canto superior direito: imagem esmaecida ou padrão de reserva
+    \ifx\pmmesumario@fundoOK\@empty
+      \pmmesumario@chevrons
+    \else
+      \begin{scope}
+        \clip (0,0) rectangle (16,9);
+        \node[anchor=north east, inner sep=0, opacity=0.14] at (16,9)
+          {\includegraphics[width=7.2cm]{\pmmesumario@fundoOK}};
+      \end{scope}
+    \fi
+    % título
+    \node[anchor=north west, inner sep=0, text=white] at (0.85,8.45)
+      {\pmmesumario@fonteTitulo\pmmesumario@titulo};
+    \fill[pmmeAmarelo] (0.88,7.18) rectangle (2.45,7.26);
+    % arco fino que liga os losangos
+    \pgfmathsetmacro{\pmmesumario@ybot}{\pmmesumario@ytop-(\pmmesumario@n-1)*\pmmesumario@dy}
+    \pgfmathsetmacro{\pmmesumario@atop}{asin((\pmmesumario@ytop-\pmmesumario@cy)/\pmmesumario@R)}
+    \pgfmathsetmacro{\pmmesumario@abot}{asin((\pmmesumario@ybot-\pmmesumario@cy)/\pmmesumario@R)}
+    \draw[white, opacity=0.28, line width=0.4pt]
+      ([shift={(\pmmesumario@atop:\pmmesumario@R)}] \pmmesumario@cx,\pmmesumario@cy)
+      arc[start angle=\pmmesumario@atop, end angle=\pmmesumario@abot,
+          radius=\pmmesumario@R];
+    % itens
+    \foreach \i in {1,...,\the\pmmesumario@n}{%
+      \pgfmathsetmacro{\yy}{\pmmesumario@ytop-(\i-1)*\pmmesumario@dy}
+      \pgfmathsetmacro{\xx}{\pmmesumario@cx+sqrt(\pmmesumario@R*\pmmesumario@R-(\yy-\pmmesumario@cy)*(\yy-\pmmesumario@cy))}
+      \ifnum\pmmesumario@k=0
+        \def\pmmesumario@op{1}\def\pmmesumario@fill{pmmeAmarelo}%
+        \def\pmmesumario@numcor{pmmeAzulEscuro}%
+      \else
+        \ifnum\i=\pmmesumario@k
+          \def\pmmesumario@op{1}\def\pmmesumario@fill{pmmeAmarelo}%
+          \def\pmmesumario@numcor{pmmeAzulEscuro}%
+        \else
+          \def\pmmesumario@op{\pmmesumario@opdim}\def\pmmesumario@fill{pmmeAzulClaro}%
+          \def\pmmesumario@numcor{pmmeAzul}%
+        \fi
+      \fi
+      \begin{scope}[opacity=\pmmesumario@op]
+        % descrição curta, alinhada à direita, terminando na linha fina
+        \node[anchor=east, inner sep=0, text=white] at (\xx-\pmmesumario@lin-\pmmesumario@los-0.18,\yy)
+          {\pmmesumario@fonteDesc\pmmesumario@desc{\i}};
+        % linha fina até o losango
+        \draw[white, line width=0.45pt]
+          (\xx-\pmmesumario@lin-\pmmesumario@los,\yy) -- (\xx-\pmmesumario@los,\yy);
+        % losango com o número
+        \fill[\pmmesumario@fill]
+          (\xx,\yy+\pmmesumario@los) -- (\xx+\pmmesumario@los,\yy) --
+          (\xx,\yy-\pmmesumario@los) -- (\xx-\pmmesumario@los,\yy) -- cycle;
+        \node[inner sep=0, text=\pmmesumario@numcor] at (\xx,\yy)
+          {\pmmesumario@fonteNum\i};
+        % nome da seção
+        \node[anchor=west, inner sep=0, text=white] at (\xx+\pmmesumario@los+0.22,\yy-0.02)
+          {\pmmesumario@fonteNome\pmmesumario@nome{\i}};
+      \end{scope}
+    }
+  \end{tikzpicture}}
+
+\endinput

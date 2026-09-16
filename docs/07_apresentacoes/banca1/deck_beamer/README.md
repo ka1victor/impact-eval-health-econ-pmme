@@ -1,10 +1,10 @@
-# Deck Beamer da banca 1 — tema Warsaw
+# Deck Beamer da banca 1 — tema PMME
 
 > **Classificação:** artefato **derivado**<br>
 > **Fonte de verdade do conteúdo:** [`../02_conteudo_slides.md`](../02_conteudo_slides.md)<br>
 > **Regras de composição:** [`../01_roteiro_narrativo.md`](../01_roteiro_narrativo.md), seção 2<br>
 > **Proveniência:** [`../03_proveniencia_figuras_e_numeros.md`](../03_proveniencia_figuras_e_numeros.md)<br>
-> **Atualização:** 16 de setembro de 2026
+> **Atualização:** 16 de setembro de 2026 — identidade visual PMME
 
 Regra do projeto: *divergência entre deck e documento de conteúdo é erro do
 deck*. Nenhuma afirmação, número, citação ou referência deste `.tex` foi criada
@@ -34,16 +34,28 @@ O script:
 4. relata da última passada qualquer `Overfull \hbox` — texto vazando pela
    lateral — **e qualquer `Overfull \vbox`**, que é conteúdo estourando a altura
    do frame e invadindo o rodapé;
-5. grava `output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf` e remove os
+5. grava `output/apresentacao_banca1/deck_beamer/banca1_beamer.pdf` e remove os
    auxiliares.
 
 `SOURCE_DATE_EPOCH=1789516800` (16/09/2026, 00:00 UTC) e `FORCE_SOURCE_DATE`
 são fixados no script, de modo que duas execuções sobre a mesma entrada
 produzam byte a byte o mesmo PDF.
 
-**Requisitos:** `pdflatex` com `beamer`, `beamerthemeWarsaw.sty`,
-`texlive-latex-extra`, `texlive-fonts-recommended`, `lmodern` e
-`texlive-lang-portuguese`.
+**Requisitos:** `pdflatex` com `beamer`, `tikz` (`texlive-pictures`),
+`texlive-latex-extra`, `texlive-fonts-recommended`, `lmodern`,
+`texlive-lang-portuguese` e **`tex-gyre`** (a família Heros Condensed, `qhvc`,
+que compõe títulos, capa, sumário e barra de navegação).
+
+O tema não precisa ser instalado: o script exporta `TEXINPUTS` para o diretório
+do deck, onde moram os quatro arquivos.
+
+| Arquivo | O que é |
+|---|---|
+| `banca1_beamer.tex` | o deck: metadados, seções e os quinze frames |
+| `beamerthemePMME.sty` | tema-base: paleta, fontes, barra de navegação, título de frame, rodapé, blocos e utilitários (`\fonte`, `\lead`, `\num`, `destaque`) |
+| `pmmecapa.sty` | capa em TikZ |
+| `pmmesumario.sty` | sumário em TikZ |
+| `assets/` | logo, foto da capa e fundo do sumário; não versionados, com substituto desenhado — ver [`assets/README.md`](assets/README.md) |
 
 **Figuras.** O deck lê apenas figuras já versionadas em
 `output/apresentacao_banca1/`, por `\graphicspath` relativo à raiz:
@@ -89,22 +101,46 @@ mesmo título e o mesmo número.
 
 ## 3. Decisões de composição
 
-### 3.1 Uma barra só, embaixo
+### 3.1 Identidade visual própria, no lugar do Warsaw
 
-O Warsaw original gasta duas faixas: a barra de navegação de seções no topo e
-três caixas com autor, título e data no rodapé. As duas juntas comem cerca de
-0,7 cm dos 9 cm de altura, e o título do trabalho repetido em todas as páginas
-não diz nada a quem já leu a capa.
+Até 16/09/2026 o deck usava o tema Warsaw repintado de verde. Agora usa o tema
+**PMME**, que reproduz a identidade da peça oficial do Projeto Mais Médicos
+Especialistas: azul-royal `#1D2DB3`, amarelo `#F6C500`, verde `#1E9C49` e
+vermelho `#E0231C`. Títulos e elementos de identidade são compostos em TeX Gyre
+Heros Condensed; **o corpo do texto continua em lmodern sans**, de propósito —
+trocar a fonte do corpo mudaria as quebras de linha de todos os frames e, com
+elas, a paginação já verificada.
 
-Nesta versão a `headline` foi esvaziada e o **rastreio de seção desceu para o
-rodapé**, no lugar antes ocupado pelo título: faixa fina única, em verde muito
-claro, com a linha de rastreio do slide à esquerda e `frame / total` à direita.
-A faixa de `frametitle` do Warsaw — degradê e sombra, o que torna o tema
-reconhecível — ficou, encostada no corpo por
-`\addtobeamertemplate{frametitle}{}{\vspace*{-0.55em}}`.
+**Capa.** Bloco azul na metade esquerda com a borda direita em diagonal,
+filetes amarelo e vermelho correndo ao longo dela, chevrons amarelo sobre verde
+junto ao rótulo, título em amarelo condensado e, abaixo do subtítulo, os slots
+de **autoria** e de **orientação**. A faixa branca inferior traz o logo do
+Insper à esquerda, instituição e data à direita, e a tira de quatro cores na
+borda. A foto ocupa a metade direita, recortada. Sem os arquivos de imagem, o
+logo vira a palavra *Insper* composta e a foto vira um painel com chevrons.
 
-Também saíram as sombras das caixas de destaque (`shadow=true`). Os blocos
-arredondados do tema interno `rounded` continuam.
+**Sumário.** Página inteira em azul, com um anel claro semitransparente à
+esquerda, as seis seções à direita e, em cada linha, a descrição curta, um
+filete e o losango numerado. `\pmmesumario[k]` destaca a seção `k` e esmaece as
+demais — útil se um dia quisermos repetir o sumário entre partes.
+
+**Barra de navegação, no topo.** Duas faixas finas, **0,60 cm somadas**: em
+cima, fundo azul-escuro com as seis seções numeradas, a corrente em branco
+negrito precedida de um losango amarelo e as demais a meio-tom; embaixo, fundo
+azul com as subseções da seção corrente. A segunda faixa **mantém a altura
+mesmo vazia**, para que o título do frame não mude de posição entre seções com
+e sem subseções. As seções e subseções do `.tex` foram derivadas do rastreio de
+cada slide, que continua literal.
+
+**Título do frame e rodapé.** O título é azul sobre branco, com uma barra
+amarela curta à esquerda e um filete claro abaixo — sem o degradê e a sombra do
+Warsaw. O rodapé continua sendo uma faixa fina com o rastreio à esquerda e
+`frame / total` à direita, agora com a tira de quatro cores na borda inferior
+da página.
+
+A barra de navegação custa altura que antes era do corpo. O único frame que
+não coube foi o 7, resolvido com espaçamento menor: entrelinha a 0,95 nos dois
+blocos e recuo de 1 em antes das colunas. Nenhuma palavra mudou.
 
 ### 3.2 Um slide, um frame
 
@@ -198,11 +234,12 @@ enumeração de cursos foi substituída pela contagem conferida.
 ## 5. Verificação feita nesta versão
 
 - `bash scripts/apresentacao/build_deck_beamer.sh` termina sem erro de LaTeX e
-  sem nenhum `Overfull \hbox` **ou `\vbox`**. Os três `\vbox` da primeira
-  compilação (frame 4 com quatro blocos numa tela; frame 7 nos dois overlays)
-  foram resolvidos com um overlay a mais no frame 4 e espaçamento menor no 7.
-- As 27 páginas foram convertidas em PNG (`pdftoppm -png -r 60`) e revistas em
-  folha de contato: nenhuma com texto vazando do frame, tabela cortada, bloco de
-  fonte sobreposto ao rodapé ou figura deformada.
+  sem nenhum `Overfull \hbox` **ou `\vbox`**. O único `\vbox` após a troca de
+  tema foi o do frame 7, overlay 1, resolvido com espaçamento menor.
+- As 27 páginas foram convertidas em PNG (`pdftoppm -png -r 70`) e revistas:
+  nenhuma com texto vazando do frame, tabela cortada, bloco de fonte sobreposto
+  ao rodapé ou figura deformada. Conferidos em detalhe a capa, o sumário, um
+  frame de cada seção e as páginas de seção sem subseção, onde a segunda faixa
+  da barra de navegação fica vazia sem deslocar o título.
 - Os 15 slides do documento estão representados, na ordem, com os 13 títulos
   literais dos slides 3 a 15.

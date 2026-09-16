@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
-# Build determinístico do deck Beamer (tema Warsaw) da banca 1.
+# Build determinístico do deck Beamer (tema PMME) da banca 1.
 #
-# Entrada : docs/07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex
+# Entrada : docs/07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex
 # Figuras : output/apresentacao_banca1/*.png (as quatro usadas pelo deck)
-# Saída   : output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf
+# Saída   : output/apresentacao_banca1/deck_beamer/banca1_beamer.pdf
 #
 # Todos os caminhos são relativos à raiz do repositório; o script se posiciona
 # nela antes de compilar, de modo que \graphicspath resolva as figuras.
@@ -17,9 +17,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RAIZ="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 cd "${RAIZ}"
 
-TEX_REL="docs/07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex"
+# O tema PMME (beamertheme*.sty e pacotes auxiliares) mora ao lado do .tex.
+export TEXINPUTS="docs/07_apresentacoes/banca1/deck_beamer//:${TEXINPUTS:-}"
+
+TEX_REL="docs/07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex"
 OUT_REL="output/apresentacao_banca1/deck_beamer"
-BASE="banca1_warsaw"
+BASE="banca1_beamer"
 
 if [[ ! -f "${TEX_REL}" ]]; then
   echo "ERRO: fonte não encontrada: ${TEX_REL}" >&2

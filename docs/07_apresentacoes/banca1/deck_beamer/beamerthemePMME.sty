@@ -1,0 +1,268 @@
+% ---------------------------------------------------------------------------
+% beamerthemePMME.sty — identidade visual "PMME" para os decks do projeto
+%
+% Tema-base: paleta, fontes de destaque, navbar de duas linhas no topo,
+% frametitle com barra amarela, rodape com rastreio e tira de quatro cores,
+% e os utilitarios de composicao usados no corpo dos frames (\fonte, \lead,
+% \num, destaque, colunas L/Z).
+%
+% A capa (\pmmecapa, em pmmecapa.sty) e o sumario (\pmmesumario, em
+% pmmesumario.sty) sao pacotes auxiliares carregados ao final, se existirem.
+%
+% Uso:  \usetheme{PMME}   (o diretorio deste arquivo deve estar em TEXINPUTS;
+%       scripts/apresentacao/build_deck_beamer.sh ja faz isso).
+% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemePMME}[2026/09/16 v1.0 Tema PMME para Beamer]
+
+\mode<presentation>
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+\RequirePackage{amssymb}
+\RequirePackage{array}
+\RequirePackage{tabularx}
+
+% --- paleta (nomes sao contrato com pmmecapa.sty e pmmesumario.sty) ---------
+\definecolor{pmmeAzul}{HTML}{1D2DB3}
+\definecolor{pmmeAzulEscuro}{HTML}{121D7A}
+\definecolor{pmmeAzulClaro}{HTML}{E9ECF9}
+\definecolor{pmmeAzulPalido}{HTML}{F4F5FC}
+\definecolor{pmmeAmarelo}{HTML}{F6C500}
+\definecolor{pmmeVerde}{HTML}{1E9C49}
+\definecolor{pmmeVermelho}{HTML}{E0231C}
+\definecolor{pmmeCinzaTexto}{HTML}{2E2E2E}
+\definecolor{pmmeCinzaFonte}{HTML}{6B6B6B}
+
+% aliases usados no corpo dos frames
+\colorlet{cinzaFonte}{pmmeCinzaFonte}
+\colorlet{cinzaTexto}{pmmeCinzaTexto}
+
+% --- fonte de destaque: TeX Gyre Heros Condensed ----------------------------
+% Somente titulos e elementos de identidade. O corpo continua em lmodern sans:
+% trocar a fonte do corpo mudaria as quebras de linha de todos os frames.
+\newcommand{\pmmeDisplay}{\fontfamily{qhvc}\selectfont}
+
+% --- estrutura beamer ------------------------------------------------------
+\useinnertheme[shadow=false]{rounded}
+\setbeamertemplate{navigation symbols}{}
+
+% --- cores beamer ----------------------------------------------------------
+\setbeamercolor{normal text}{fg=pmmeCinzaTexto,bg=white}
+\setbeamercolor{structure}{fg=pmmeAzul}
+\setbeamercolor{alerted text}{fg=pmmeAzul}
+\setbeamercolor{itemize item}{fg=pmmeAzul}
+\setbeamercolor{itemize subitem}{fg=pmmeAzul}
+\setbeamercolor{enumerate item}{fg=pmmeAzul}
+\setbeamercolor{enumerate subitem}{fg=pmmeAzul}
+
+\setbeamercolor{title}{bg=pmmeAzulEscuro,fg=white}
+\setbeamercolor{subtitle}{parent=title,fg=pmmeAzulClaro}
+\setbeamercolor{author}{fg=pmmeCinzaFonte}
+\setbeamercolor{institute}{fg=pmmeCinzaFonte}
+\setbeamercolor{date}{fg=pmmeCinzaFonte}
+
+\setbeamercolor{frametitle}{fg=pmmeAzul,bg=white}
+\setbeamercolor{framesubtitle}{fg=pmmeCinzaFonte,bg=white}
+
+\setbeamercolor{block title}{bg=pmmeAzul,fg=white}
+\setbeamercolor{block body}{bg=pmmeAzulPalido,fg=pmmeCinzaTexto}
+\setbeamercolor{block title alerted}{bg=pmmeVermelho,fg=white}
+\setbeamercolor{block body alerted}{bg=pmmeAzulPalido,fg=pmmeCinzaTexto}
+\setbeamercolor{block title example}{bg=pmmeVerde,fg=white}
+\setbeamercolor{block body example}{bg=pmmeAzulPalido,fg=pmmeCinzaTexto}
+
+\setbeamercolor{section in head/foot}{bg=pmmeAzulEscuro,fg=white}
+\setbeamercolor{subsection in head/foot}{bg=pmmeAzul,fg=white}
+\setbeamercolor{rodape}{bg=pmmeAzulPalido,fg=pmmeAzulEscuro}
+
+\setbeamercolor{section in toc}{fg=pmmeAzulEscuro}
+\setbeamercolor{subsection in toc}{fg=pmmeCinzaTexto}
+\setbeamercolor{caption name}{fg=pmmeAzul}
+
+% --- fontes beamer ---------------------------------------------------------
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small,series=\mdseries}
+\setbeamerfont{title}{size=\Large,series=\bfseries,family=\pmmeDisplay}
+\setbeamerfont{subtitle}{size=\small,series=\mdseries}
+\setbeamerfont{block title}{size=\normalsize,series=\bfseries}
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subbody}{size=\small}
+% Navbar em Heros Condensed: seis secoes numeradas em \scriptsize nao cabem
+% nos 16 cm com lmodern sans; condensadas, cabem com folga.
+\setbeamerfont{section in head/foot}{size=\scriptsize,family=\pmmeDisplay}
+\setbeamerfont{subsection in head/foot}{size=\tiny,family=\pmmeDisplay}
+
+% --- blocos: espacamento compacto ------------------------------------------
+% Igual ao template 'rounded' do beamer, mas com \smallskipamount (e nao
+% \medskipamount) antes do bloco: a navbar consome altura e os frames sao
+% densos. Sem sombra.
+\setbeamertemplate{block begin}{%
+  \par\vskip\smallskipamount%
+  \begin{beamerboxesrounded}[upper=block title,lower=block body,shadow=false]%
+    {\raggedright\usebeamerfont*{block title}\insertblocktitle}%
+    \raggedright%
+    \usebeamerfont{block body}%
+}
+\setbeamertemplate{block end}{\end{beamerboxesrounded}\vskip\smallskipamount}
+\setbeamertemplate{block alerted begin}{%
+  \par\vskip\smallskipamount%
+  \begin{beamerboxesrounded}[upper=block title alerted,lower=block body alerted,shadow=false]%
+    {\raggedright\usebeamerfont*{block title alerted}\insertblocktitle}%
+    \raggedright%
+    \usebeamerfont{block body alerted}%
+}
+\setbeamertemplate{block alerted end}{\end{beamerboxesrounded}\vskip\smallskipamount}
+\setbeamertemplate{block example begin}{%
+  \par\vskip\smallskipamount%
+  \begin{beamerboxesrounded}[upper=block title example,lower=block body example,shadow=false]%
+    {\raggedright\usebeamerfont*{block title example}\insertblocktitle}%
+    \raggedright%
+    \usebeamerfont{block body example}%
+}
+\setbeamertemplate{block example end}{\end{beamerboxesrounded}\vskip\smallskipamount}
+
+% --- marcadores ------------------------------------------------------------
+\setbeamertemplate{itemize item}{\raisebox{0.15ex}{\scriptsize$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\raisebox{0.15ex}{\scriptsize$\bullet$}}
+\setlength{\leftmargini}{1.4em}
+\setlength{\leftmarginii}{1.2em}
+
+% --- dimensoes da identidade -----------------------------------------------
+% Margem lateral dos elementos de moldura (navbar, frametitle, rodape).
+\newlength{\pmmeMargem}
+\setlength{\pmmeMargem}{0.43cm}          % ~1.1em do corpo em 11pt
+% Navbar: duas linhas finas. Altura total = 0.33 + 0.27 = 0.60 cm.
+\newlength{\pmmeNavAltA}\setlength{\pmmeNavAltA}{0.24cm}   % linha 1, ht
+\newlength{\pmmeNavProfA}\setlength{\pmmeNavProfA}{0.09cm} % linha 1, dp
+\newlength{\pmmeNavAltB}\setlength{\pmmeNavAltB}{0.19cm}   % linha 2, ht
+\newlength{\pmmeNavProfB}\setlength{\pmmeNavProfB}{0.08cm} % linha 2, dp
+% Tira de quatro cores na borda inferior.
+\newlength{\pmmeTiraAlt}\setlength{\pmmeTiraAlt}{2pt}
+
+% Losango amarelo que marca a secao/subsecao corrente na navbar.
+\newcommand{\pmmeLosango}{%
+  \tikz[baseline=-0.5ex]{\fill[pmmeAmarelo,rotate=45]
+    (-0.3ex,-0.3ex) rectangle (0.3ex,0.3ex);}%
+}
+
+% --- navbar: entradas de secao e subsecao ----------------------------------
+% O \hskip final soma-se ao espaco fixo (1.875ex) que o beamer poe entre
+% entradas; o preenchimento da direita vai para o fim da linha.
+\setbeamertemplate{section in head/foot}{%
+  \pmmeLosango\hskip0.45em{\bfseries\insertsectionheadnumber.~\insertsectionhead}%
+  \hskip0.7em}
+\setbeamertemplate{section in head/foot shaded}{%
+  {\color{white!50!pmmeAzulEscuro}\insertsectionheadnumber.~\insertsectionhead}%
+  \hskip0.7em}
+\setbeamertemplate{subsection in head/foot}{%
+  \pmmeLosango\hskip0.45em{\bfseries\insertsubsectionhead}\hskip0.7em}
+\setbeamertemplate{subsection in head/foot shaded}{%
+  {\color{white!50!pmmeAzul}\insertsubsectionhead}\hskip0.7em}
+
+% --- headline: linha 1 (secoes) e linha 2 (subsecoes da secao corrente) -----
+% As alturas sao fixas: a linha 2 mantem a altura mesmo vazia, para que o
+% frametitle nao mude de posicao entre secoes com e sem subsecoes.
+% \insertsectionnavigationhorizontal insere \hskip.3cm em cada lado; o
+% \hskip inicial corrige para a margem da identidade.
+\setbeamertemplate{headline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=\pmmeNavAltA,dp=\pmmeNavProfA]{section in head/foot}%
+    \usebeamerfont{section in head/foot}%
+    \insertsectionnavigationhorizontal{\paperwidth}%
+      {\hskip\dimexpr\pmmeMargem-0.3cm\relax}{\hskip0pt plus1filll}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=\pmmeNavAltB,dp=\pmmeNavProfB]{subsection in head/foot}%
+    \usebeamerfont{subsection in head/foot}%
+    \insertsubsectionnavigationhorizontal{\paperwidth}%
+      {\hskip\dimexpr\pmmeMargem-0.3cm\relax}{\hskip0pt plus1filll}%
+  \end{beamercolorbox}%
+}
+
+% --- frametitle: texto azul sobre branco, barra amarela, filete abaixo -----
+% Compacto: a navbar ja consome altura. O titulo e um paragrafo em \vtop ao
+% lado da barra; se quebrar em duas linhas, a segunda alinha com a primeira.
+% A caixa tem a largura do papel e e deslocada para a borda esquerda do
+% mesmo modo que o beamercolorbox faz (glue negativa nas margens).
+\newlength{\pmmeBarraLarg}\setlength{\pmmeBarraLarg}{0.11cm}
+\newlength{\pmmeBarraGap}\setlength{\pmmeBarraGap}{0.30cm}
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \setbox\@tempboxa=\vbox{%
+    \hsize=\paperwidth%
+    \vskip0.06cm%
+    \hbox{%
+      \hskip\pmmeMargem%
+      {\color{pmmeAmarelo}\usebeamerfont{frametitle}%
+       \vrule width\pmmeBarraLarg height0.72em depth0.16em}%
+      \hskip\pmmeBarraGap%
+      % cor e fonte fora do \vtop: um whatsit como primeiro item zeraria a
+      % altura do \vtop e jogaria a linha inteira para a profundidade.
+      {\usebeamerfont{frametitle}\pmmeDisplay\usebeamercolor[fg]{frametitle}%
+      \vtop{%
+        \hsize=\dimexpr\paperwidth-2\pmmeMargem-\pmmeBarraLarg-\pmmeBarraGap\relax%
+        \@arrayparboxrestore\raggedright\parindent\z@\parskip\z@%
+        \usebeamerfont{frametitle}\pmmeDisplay%
+        \vrule width\z@ height0.75em depth0.20em\insertframetitle%
+        \vrule width\z@ height0.75em depth0.20em\par%
+        \ifx\insertframesubtitle\@empty\else%
+          \vskip0.05em%
+          {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
+           \strut\insertframesubtitle\strut\par}%
+        \fi}}%
+    }%
+    \nointerlineskip%
+    \vskip0.05cm%
+    \hbox{\color{pmmeAzulClaro}\vrule width\paperwidth height0.6pt}%
+  }%
+  \hbox to\textwidth{\hskip0pt minus\beamer@leftmargin\relax%
+    \box\@tempboxa\hskip0pt minus\beamer@rightmargin\relax}%
+}
+
+% --- rodape: rastreio + contador, e a tira de quatro cores ------------------
+\def\rastreiotexto{}
+\newcommand{\rastreio}[1]{\gdef\rastreiotexto{#1}}
+
+\setbeamertemplate{footline}{%
+  % Alturas absolutas: o 'ex' aqui e avaliado numa fonte minuscula.
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.21cm,dp=0.10cm,%
+    leftskip=\pmmeMargem,rightskip=\pmmeMargem]{rodape}%
+    \scriptsize\rastreiotexto%
+    \hfill\insertframenumber\,/\,\inserttotalframenumber%
+  \end{beamercolorbox}%
+  \hbox to\paperwidth{%
+    {\color{pmmeAmarelo}\vrule width.25\paperwidth height\pmmeTiraAlt}%
+    {\color{pmmeVermelho}\vrule width.25\paperwidth height\pmmeTiraAlt}%
+    {\color{pmmeVerde}\vrule width.25\paperwidth height\pmmeTiraAlt}%
+    {\color{pmmeAzul}\vrule width.25\paperwidth height\pmmeTiraAlt}\hss}%
+}
+
+% --- utilitarios de composicao ---------------------------------------------
+% Unico formato de fonte no deck: filete fino, rotulo em negrito, alinhado a
+% esquerda, corpo reduzido. Vale tambem para os frames com figura.
+\newcommand{\fonte}[1]{%
+  \vfill
+  {\color{pmmeAzulClaro}\rule{\textwidth}{0.6pt}}\par
+  \vspace{0.15em}
+  {\color{pmmeCinzaFonte}\scriptsize #1\par}%
+}
+
+\newcommand{\lead}[1]{{\color{pmmeAzulEscuro}\bfseries #1}}
+\newcommand{\num}[1]{{\color{pmmeAzul}\bfseries #1}}
+
+% caixa de destaque: fundo azul, texto branco, sem sombra
+\newenvironment{destaque}[1][0.95\textwidth]%
+  {\begin{center}\begin{beamercolorbox}[wd=#1,sep=0.55em,rounded=true]{block title}\centering}%
+  {\end{beamercolorbox}\end{center}}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash}X}
+
+\renewcommand{\arraystretch}{1.18}
+
+\setbeamertemplate{caption}{\insertcaption}
+
+% --- pacotes auxiliares da identidade (capa e sumario), se presentes -------
+\IfFileExists{pmmecapa.sty}{\RequirePackage{pmmecapa}}{}
+\IfFileExists{pmmesumario.sty}{\RequirePackage{pmmesumario}}{}
+
+\mode<all>

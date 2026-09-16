@@ -8,6 +8,40 @@
 
 ---
 
+## 16/09/2026 — Banca 1: tema Beamer próprio (PMME) no lugar do Warsaw
+
+A pedido do autor: identidade visual do deck alinhada à peça oficial do Projeto
+Mais Médicos Especialistas (azul-royal, amarelo, verde e vermelho), capa com
+espaço para autores, professores e logo do Insper, sumário com composição
+gráfica própria e barra de navegação de seção/subseção no topo.
+
+### Renomeado
+
+| De | Para | Motivo |
+|---|---|---|
+| `07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex` | [`07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex`](07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex) | o deck deixou de usar o tema Warsaw |
+| `output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf` | `output/apresentacao_banca1/deck_beamer/banca1_beamer.pdf` | artefato derivado, acompanha o nome do `.tex` |
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca1/deck_beamer/beamerthemePMME.sty`](07_apresentacoes/banca1/deck_beamer/beamerthemePMME.sty) | tema Beamer do projeto: paleta, fontes, navbar de seção/subseção, frametitle, rodapé, blocos e utilitários (`\fonte`, `\lead`, `\num`, `destaque`) que antes viviam no preâmbulo do `.tex` |
+| [`07_apresentacoes/banca1/deck_beamer/pmmecapa.sty`](07_apresentacoes/banca1/deck_beamer/pmmecapa.sty) | capa em TikZ com slots para autoria, orientação, instituição, data, logo e foto |
+| [`07_apresentacoes/banca1/deck_beamer/pmmesumario.sty`](07_apresentacoes/banca1/deck_beamer/pmmesumario.sty) | sumário em TikZ com seis seções e descrição curta |
+
+`scripts/apresentacao/build_deck_beamer.sh` passou a exportar `TEXINPUTS` para
+o diretório do deck, de modo que `\usetheme{PMME}` resolva sem instalação.
+
+### Documento canônico
+
+`02_conteudo_slides.md`, slide 1: a linha de autoria ganhou o slot
+"orientação" e a lista dos elementos da capa. Slide 2: cada seção ganhou a
+descrição curta que o sumário exibe como linha auxiliar. Conteúdo primeiro no
+documento canônico, depois no deck, conforme a regra do projeto.
+
+---
+
 ## 16/09/2026 — Banca 1: corte de 19 para 15 slides, para o arco narrativo
 
 A pedido do autor: **cortar além de comprimir**, para facilitar a narrativa. A
