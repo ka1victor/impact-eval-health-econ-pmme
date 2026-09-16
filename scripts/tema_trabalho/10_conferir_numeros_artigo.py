@@ -1091,6 +1091,48 @@ def conferir_estrutura(tex: str) -> list[str]:
     return problemas
 
 
+# ------------------------------------------------- A5: multiplicidade e C-7
+
+A5_C7 = "output/tema_trabalho/A5_ameacas_c7.json"
+
+q_prop, loc_qp = json_valor(A5_JSON, "multiplicidade/mar2026_q_fdr_bh_gl_fe_proporcional_confirmatoria")
+q_nivel, loc_qn = json_valor(A5_JSON, "multiplicidade/mar2026_q_fdr_bh_gl_fe_nivel_confirmatoria")
+trecho_q = (f"o valor $q$ de Benjamini--Hochberg do coeficiente de março de 2026 é {decimal_br(q_prop, 4)} na "
+            f"escala proporcional e {decimal_br(q_nivel, 3)} em nível")
+registrar("A5_TXT_Q_PROP", "Apendice B", "q FDR proporcional (B-5)", decimal_br(q_prop, 4), A5_JSON, loc_qp, q_prop, "4 casas", trecho_q)
+registrar("A5_TXT_Q_NIVEL", "Apendice B", "q FDR nivel (B-5)", decimal_br(q_nivel, 3), A5_JSON, loc_qn, q_nivel, "3 casas", trecho_q)
+
+c7_pl_n_b, loc_c1 = json_valor(A5_C7, "placebo/resultado/nivel/mar2026_beta")
+c7_pl_p_b, loc_c2 = json_valor(A5_C7, "placebo/resultado/proporcional/mar2026_beta")
+c7_pl_n_p, loc_c3 = json_valor(A5_C7, "placebo/resultado/nivel/mar2026_p_gl_fe")
+c7_pl_p_p, loc_c4 = json_valor(A5_C7, "placebo/resultado/proporcional/mar2026_p_gl_fe")
+c7_n_trat, loc_c5 = json_valor(A5_C7, "placebo/resultado/nivel/n_tratadas")
+c7_n_ctrl, loc_c6 = json_valor(A5_C7, "placebo/resultado/nivel/n_controle")
+trecho_c7_pl = (f"Entre as {inteiro(c7_n_trat + c7_n_ctrl)} células sem atração, estar em um município que atraiu em alguma outra "
+                f"célula não muda o estoque: {decimal_br(c7_pl_n_b, 3)} em nível e {decimal_br(c7_pl_p_b, 4)} na escala proporcional, "
+                f"com $p$ de {decimal_br(c7_pl_n_p, 3)} e {decimal_br(c7_pl_p_p, 3)}")
+for chave, bruto, loc, fmt, tr in [("N", c7_n_trat + c7_n_ctrl, loc_c5, inteiro(c7_n_trat + c7_n_ctrl), "inteiro"),
+                                   ("NIVEL", c7_pl_n_b, loc_c1, decimal_br(c7_pl_n_b, 3), "3 casas"),
+                                   ("PROP", c7_pl_p_b, loc_c2, decimal_br(c7_pl_p_b, 4), "4 casas"),
+                                   ("NIVEL_P", c7_pl_n_p, loc_c3, decimal_br(c7_pl_n_p, 3), "3 casas"),
+                                   ("PROP_P", c7_pl_p_p, loc_c4, decimal_br(c7_pl_p_p, 3), "3 casas")]:
+    registrar(f"A5_TXT_C7_PLACEBO_{chave}", "Apendice B", f"placebo C-7: {chave}", fmt, A5_C7, loc, bruto, tr, trecho_c7_pl)
+
+c7_tb_b, loc_c7 = json_valor(A5_C7, "deslocamento/transbordo/proporcional/mar2026_beta")
+c7_tb_p, loc_c8 = json_valor(A5_C7, "deslocamento/transbordo/proporcional/mar2026_p_gl_fe")
+c7_rg_b, loc_c9 = json_valor(A5_C7, "deslocamento/oferta_liquida_regional/proporcional/mar2026_beta")
+c7_rg_p, loc_c10 = json_valor(A5_C7, "deslocamento/oferta_liquida_regional/proporcional/mar2026_p_gl_fe")
+c7_n_reg, loc_c11 = json_valor(A5_C7, "deslocamento/n_regioes")
+trecho_c7_ds = (f"não perdem estoque, com {decimal_br(c7_tb_b, 3)} log-ponto e $p$ de {decimal_br(c7_tb_p, 3)}, e a soma do estoque por "
+                f"região--curso sobe {decimal_br(c7_rg_b, 3)} log-ponto, com $p$ de {decimal_br(c7_rg_p, 3)}, em {inteiro(c7_n_reg)} regiões")
+for chave, bruto, loc, fmt, tr in [("TRANSBORDO", c7_tb_b, loc_c7, decimal_br(c7_tb_b, 3), "3 casas"),
+                                   ("TRANSBORDO_P", c7_tb_p, loc_c8, decimal_br(c7_tb_p, 3), "3 casas"),
+                                   ("REGIONAL", c7_rg_b, loc_c9, decimal_br(c7_rg_b, 3), "3 casas"),
+                                   ("REGIONAL_P", c7_rg_p, loc_c10, decimal_br(c7_rg_p, 3), "3 casas"),
+                                   ("N_REGIOES", c7_n_reg, loc_c11, inteiro(c7_n_reg), "inteiro")]:
+    registrar(f"A5_TXT_C7_DESLOC_{chave}", "Apendice B", f"deslocamento C-7: {chave}", fmt, A5_C7, loc, bruto, tr, trecho_c7_ds)
+
+
 # ------------------------------------------------------------------ execucao
 
 

@@ -38,6 +38,7 @@
     ".venv/bin/python scripts/rdd_bolsa/03_triagem_resposta_administrativa.py",
     ".venv/bin/python scripts/rdd_bolsa/02_controlar_execucao_plano_causal.py",
     ".venv/bin/python scripts/tema_trabalho/10_conferir_numeros_artigo.py",
+    ".venv/bin/python scripts/tema_trabalho/11_conferir_numeros_artigo_curto.py",
     ".venv/bin/python run_tests.py"
   ],
   "comandos_derivados_de": "run_all.py (lista STEPS)",
