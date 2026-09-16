@@ -714,6 +714,56 @@ publicado em artefato, e nenhum teste novo foi inventado para substituí-los.
 Dois testes novos, um deles amarrado ao próprio `A5_estimativas_provimento.json`,
 para que a afirmação caia se o artefato mudar.
 
+### Protocolo congelado em 16/09/2026, antes da execução — as três ameaças restantes
+
+Com D-4 parcialmente destravado (`da4d6f7`), as três ameaças passam a ser
+executáveis a partir de `A5_painel_T0.parquet`. O que segue foi escrito
+**antes** de rodar qualquer modelo; o script novo
+`scripts/tema_trabalho/06b_ameacas_a5_placebo_pretendencia_deslocamento.py`
+implementa exatamente isto, confere o hash do painel contra o A6 e grava
+`A5_tabela_12`, `A5_tabela_13`, `A5_tabela_14` e `A5_ameacas_c7.json`.
+
+Comum aos três: amostra confirmatória de 587 células; as duas escalas (nível e
+`log1p`); efeitos fixos de célula, curso–mês e UF–mês; erros agrupados por
+município; referência 202506; inferência citada na convenção `_gl_fe`. Nenhuma
+subamostra, janela ou estimador será reescolhido depois de ver os resultados.
+
+1. **Placebo — células sem atração em municípios com atração.** Amostra: células
+   confirmatórias com `atracao_muni = 0`. "Tratamento" placebo: o município
+   tem atração em **alguma** das suas 1.184 células (qualquer curso). Se o
+   coeficiente pós for distinguível de zero, choques municipais correlacionados
+   com atrair — e não a atração da própria célula — explicam parte do resultado
+   principal; se for indistinguível de zero, o resultado principal é da célula.
+   Comparação declarada: a reauditoria mediu `0,092` (EP `0,303`; `p = 0,761`)
+   e pré-`F` `0,81` em nível.
+2. **Heterogeneidade de pré-tendência por curso.** Para cada um dos dez cursos
+   confirmatórios, o mesmo estudo de evento dentro do curso (curso–mês colapsa
+   em mês), com o teste conjunto dos doze coeficientes pré e o coeficiente de
+   202603. Regra fixada agora: os cursos com pré-`p < 0,05` na escala
+   proporcional são listados, e o coeficiente de 202603 é reportado, como
+   sensibilidade, **excluindo-os** — nas duas escalas. Comparação declarada: a
+   reauditoria mediu curso 14 `F = 2,46` (`p = 0,007`), curso 16 `F = 11,90`,
+   curso 2 `F = 6,85`, em subamostras pequenas e com VCE instável.
+3. **Deslocamento dentro da região de saúde.** Dois testes. (a) *Transbordo
+   sobre células sem atração:* amostra de células confirmatórias com
+   `atracao_muni = 0`; exposição = existe **outro** município da mesma
+   `region_id`, dentro dos 368 do painel, com atração no **mesmo curso**;
+   coeficiente pós negativo indica deslocamento a partir de vizinhos, zero não
+   o indica. (b) *Oferta líquida regional:* estoque somado por região–curso–mês
+   sobre os municípios do painel; tratamento = a região–curso tem ao menos uma
+   célula com atração; efeitos fixos região–curso, curso–mês e UF–mês; cluster
+   por região. Se o ganho municipal fosse só realocação dentro da região, o
+   coeficiente regional seria zero; se houver expansão líquida, positivo.
+   Limite declarado: o painel só contém os municípios do quadro, então
+   "vizinho" é vizinho **dentro do quadro**; o teste é obrigatório pelo
+   `CLAUDE.md`, mas não vê municípios fora da oferta.
+
+Depois de rodar, o red team (`07_red_team_sintese.py`) troca a seção "Ameaças
+que este red team não testou" por uma seção com os resultados lidos do JSON, e a
+limitação (a) fica registrada nela. O achado colateral do B-5 — o nível não
+sobrevive ao FDR da família de 25 e o proporcional sobrevive — entra na seção
+de forma funcional.
+
 ## C-8 · Assinatura de CPF não comparável entre máscaras
 
 Os homologados mascaram as posições 4–7 do CPF (`711XXX14162`); a classificação
