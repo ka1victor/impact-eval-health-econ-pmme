@@ -25,6 +25,7 @@ STEPS = [
     ROOT / "scripts" / "tema_trabalho" / "04_congelar_pre_analise.py",
     ROOT / "scripts" / "tema_trabalho" / "05_estimar_atracao.py",
     ROOT / "scripts" / "tema_trabalho" / "06_avaliar_provimento_cnes.py",
+    ROOT / "scripts" / "tema_trabalho" / "06b_ameacas_a5_placebo_pretendencia_deslocamento.py",
     ROOT / "scripts" / "tema_trabalho" / "07_red_team_sintese.py",
     ROOT / "scripts" / "tema_trabalho" / "08_auditar_cutoff_selecao.py",
     ROOT / "scripts" / "tema_trabalho" / "09_estimar_cutoff_escore_estrito.py",
@@ -34,6 +35,7 @@ STEPS = [
     ROOT / "scripts" / "rdd_bolsa" / "03_triagem_resposta_administrativa.py",
     ROOT / "scripts" / "rdd_bolsa" / "02_controlar_execucao_plano_causal.py",
     ROOT / "scripts" / "tema_trabalho" / "10_conferir_numeros_artigo.py",
+    ROOT / "scripts" / "tema_trabalho" / "11_conferir_numeros_artigo_curto.py",
 ]
 
 

@@ -104,8 +104,54 @@ JSON_ESTIMATIVAS = OUT_DIR / f"{PREFIX}_estimativas_provimento.json"
 RELATORIO_MD = OUT_DIR / f"{PREFIX}_relatorio_diagnostico.md"
 PAINEL_T0_PARQUET = OUT_DIR / f"{PREFIX}_painel_T0.parquet"
 CROSS_SECTION_CSV = OUT_DIR / f"{PREFIX}_cross_section_6m.csv"
+# Manifesto de A6: registra o SHA-256 de `A5_painel_T0.parquet` a jusante, e e
+# contra ele que o modo de reestimacao confere o painel congelado.
+MANIFESTO_A6 = OUT_DIR / "A6_manifesto_reproducao.json"
+PAINEL_T0_REL = "output/tema_trabalho/A5_painel_T0.parquet"
+
+# Motivo registrado quando o painel mensal nao esta no disco (item D-4 do
+# backlog): os ZIPs mensais do CNES somam mais de 16 GB e nao estao no
+# repositorio; o painel integrado e regeravel apenas com eles.
+MOTIVO_PAINEL_MENSAL_AUSENTE = (
+    "painel mensal municipio-curso nao versionado e regeravel apenas a partir "
+    "dos ZIPs mensais do CNES (>16 GB, item D-4); A5 foi reestimado a partir de "
+    "A5_painel_T0.parquet, cujo SHA-256 foi conferido contra o manifesto de A6"
+)
 
 ALPHA = 0.05
+
+# Efeito fixo de UF (item A-1, emenda 2 do plano 35). O protocolo A3 manda
+# colapsar UF com menos de cinco municipios "em regiao"; A5 implementava um
+# balde unico `RESTO`, que mistura macrorregioes. A variante primaria passa a
+# ser a mesma do C1 em A4: UF pequena -> `MACRO_<macrorregiao de saude>`, e
+# municipio sem macrorregiao publicada forma nivel proprio rotulado.
+MACRO_SEM_REGIAO = "SEM_REGIAO_SAUDE"
+VARIANTE_UF_FE_PRIMARIA = "macro_regiao"
+VARIANTES_UF_FE = ("balde_unico", "macro_regiao", "sem_colapso")
+TABELA_SENS_UF_FE = OUT_DIR / f"{PREFIX}_tabela_11_sensibilidade_colapso_uf.csv"
+
+
+def colapsar_uf_fe(df: pd.DataFrame, small_ufs: set, variante: str) -> pd.Series:
+    """Constroi o efeito fixo de UF sob uma das tres variantes de colapso.
+
+    Copia fiel de `colapsar_uf_fe` em `05_estimar_atracao.py` (C1), para que A4
+    e A5 usem a mesma definicao:
+
+    - `macro_regiao` (primaria, protocolo A3): UF pequena -> `MACRO_<macrorregiao>`;
+      municipio sem macrorregiao publicada -> `MACRO_SEM_REGIAO_SAUDE`.
+    - `balde_unico`: UF pequena -> `RESTO` (implementacao anterior a A-1).
+    - `sem_colapso`: nenhuma UF colapsada (27 niveis).
+    """
+    uf = df["sg_uf"].astype("string")
+    if variante == "sem_colapso":
+        return uf.astype(object)
+    if variante == "balde_unico":
+        return uf.where(~uf.isin(small_ufs), "RESTO").astype(object)
+    if variante != "macro_regiao":
+        raise ValueError(f"variante de colapso desconhecida: {variante}")
+    macro = df["macro_regiao_saude"].astype("string").fillna("").str.strip()
+    macro = macro.where(macro.ne(""), MACRO_SEM_REGIAO)
+    return uf.where(~uf.isin(small_ufs), "MACRO_" + macro).astype(object)
 
 
 def sha256(path: Path) -> str:
@@ -153,11 +199,124 @@ def brier(y_true, y_prob):
     return float(np.mean((np.asarray(y_true,float)-np.asarray(y_prob,float))**2))
 
 
+def hash_registrado_painel_t0() -> str | None:
+    """SHA-256 de `A5_painel_T0.parquet` registrado a jusante, no manifesto A6."""
+    if not MANIFESTO_A6.exists():
+        return None
+    manifesto = json.loads(MANIFESTO_A6.read_text(encoding="utf-8"))
+    entrada = manifesto.get("hashes_entradas_e_artefatos", {}).get(PAINEL_T0_REL, {})
+    return entrada.get("sha256")
+
+
+def carregar_painel_t0_congelado() -> pd.DataFrame:
+    """Modo de reestimacao: le o painel em T0 ja versionado, sem reconstrui-lo.
+
+    So e legitimo quando o painel mensal do CNES nao esta no disco (D-4). O
+    painel congelado e conferido contra o SHA-256 registrado no manifesto A6;
+    divergencia aborta, porque reestimar sobre um painel diferente do que a
+    cadeia de proveniencia registra produziria artefato sem ancora. Neste modo
+    `A5_painel_T0.parquet` nunca e regravado.
+    """
+    if not PAINEL_T0_PARQUET.exists():
+        raise FileNotFoundError(
+            f"{PAINEL_MUNI} ausente e {PAINEL_T0_PARQUET} tambem: A5 nao tem insumo"
+        )
+    registrado = hash_registrado_painel_t0()
+    observado = sha256(PAINEL_T0_PARQUET)
+    if registrado is None:
+        raise RuntimeError(
+            f"{MANIFESTO_A6} nao registra o hash de {PAINEL_T0_REL}; sem ancora, "
+            "o modo de reestimacao nao e permitido"
+        )
+    if registrado != observado:
+        raise RuntimeError(
+            f"{PAINEL_T0_REL} diverge do manifesto A6: registrado {registrado[:12]}…, "
+            f"observado {observado[:12]}…; reestimacao abortada"
+        )
+    panel = pd.read_parquet(PAINEL_T0_PARQUET)
+    panel["competencia"] = panel["competencia"].astype(str)
+    panel["estrato"] = pd.Categorical(
+        panel["estrato"].astype(str),
+        categories=["interior_remoto", "capital", "metropolitano", "interior_proximo_polo"],
+        ordered=False,
+    )
+    return panel
+
+
+def hashes_anteriores() -> dict[str, dict[str, Any]]:
+    """Bloco `hashes_entradas` da execucao anterior de A5, se houver artefato."""
+    if not JSON_ESTIMATIVAS.exists():
+        return {}
+    try:
+        return json.loads(JSON_ESTIMATIVAS.read_text(encoding="utf-8")).get("hashes_entradas", {})
+    except (OSError, ValueError):
+        return {}
+
+
+def hashes_de_entradas(caminhos, extras: dict[Path, str] | None = None, anteriores: dict[str, dict[str, Any]] | None = None) -> dict[str, dict[str, Any]]:
+    """Hasheia cada insumo; insumo do desenho ausente do disco fica registrado.
+
+    Segue o padrao adotado em A6 (item B-3): insumo ausente nao e omitido em
+    silencio, e sim gravado com `sha256` nulo, `presente=false` e o motivo. O
+    hash que a execucao anterior registrou para o insumo ausente e carregado
+    adiante, para a cadeia de proveniencia nao perder a ancora do painel que
+    gerou `A5_painel_T0.parquet`. Insumos presentes mantem o formato
+    historico `{"sha256": ...}`.
+    """
+    hashes: dict[str, dict[str, Any]] = {}
+    anteriores = anteriores or {}
+    for p in caminhos:
+        rel = str(p.relative_to(ROOT)).replace("\\", "/")
+        if p.exists():
+            hashes[rel] = {"sha256": sha256(p)}
+        else:
+            ant = anteriores.get(rel, {})
+            hashes[rel] = {
+                "sha256": None,
+                "presente": False,
+                "motivo_ausencia": MOTIVO_PAINEL_MENSAL_AUSENTE,
+                "sha256_registrado_em_execucao_anterior": ant.get("sha256") or ant.get("sha256_registrado_em_execucao_anterior"),
+            }
+    for p, papel in (extras or {}).items():
+        rel = str(p.relative_to(ROOT)).replace("\\", "/")
+        hashes[rel] = {"sha256": sha256(p), "papel": papel}
+    return hashes
+
+
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    for p in [PAINEL_MUNI, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE]:
+    for p in [MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE]:
         if not p.exists():
             raise FileNotFoundError(p)
+    modo_painel = "construido_do_painel_mensal" if PAINEL_MUNI.exists() else "reestimado_do_painel_T0_congelado"
+    if modo_painel == "reestimado_do_painel_T0_congelado":
+        panel = carregar_painel_t0_congelado()
+        print(f"[A5] {PAINEL_MUNI.relative_to(ROOT)} ausente; modo {modo_painel}, hash conferido contra A6")
+    else:
+        panel = construir_painel_t0()
+    # Extras hasheados no modo de reestimacao: o painel congelado e o proprio
+    # insumo, e sua ancora fica registrada junto das demais entradas.
+    extras_hash = {PAINEL_T0_PARQUET: "painel em T0 congelado, insumo da reestimacao (hash conferido contra A6)"} if modo_painel == "reestimado_do_painel_T0_congelado" else {}
+    comp_index = {c:i for i,c in enumerate(COMPETENCIAS)}
+    t0_idx = comp_index[T0_ADMIN_COMP]
+    # Validacao de completude
+    assert panel["competencia"].nunique()==26
+    assert len(panel)==1184*26 == 30784
+    assert not panel.duplicated(["co_ibge_6d","cod_curso","competencia"]).any()
+    # UFs pequenas (<5 municipios) na referencia; usadas nos rotulos do relatorio
+    _baseline_tmp = panel[panel["competencia"]==BASELINE_COMP].copy()
+    clust = _baseline_tmp.groupby("sg_uf")["co_ibge_6d"].nunique()
+    small_ufs = set(clust[clust<5].index.tolist())
+    # A coluna `uf_fe` gravada em `A5_painel_T0.parquet` antes da emenda 2 traz
+    # a definicao superada (balde `RESTO`). Ela e recomputada aqui em memoria,
+    # nos dois modos; no modo de reestimacao o parquet nao e regravado.
+    panel["uf_fe"] = colapsar_uf_fe(panel, small_ufs, VARIANTE_UF_FE_PRIMARIA)
+    baseline_df = panel[panel["competencia"]==BASELINE_COMP].copy()
+    _continuar(panel, modo_painel, extras_hash, comp_index, t0_idx, small_ufs, baseline_df)
+
+
+def construir_painel_t0() -> pd.DataFrame:
+    """Modo integral: constroi o painel em T0 a partir do painel mensal do CNES."""
     # Load panel 1184*26
     panel = pd.read_parquet(PAINEL_MUNI)
     # Load tipologia estrato (panel ja contem ivs/populacao; so adiciona estrato e estoque_pre)
@@ -195,15 +354,21 @@ def main() -> None:
     _baseline_tmp = panel[panel["competencia"]==BASELINE_COMP].copy()
     clust = _baseline_tmp.groupby("sg_uf")["co_ibge_6d"].nunique()
     small_ufs = set(clust[clust<5].index.tolist())
-    panel["uf_fe"] = panel["sg_uf"].where(~panel["sg_uf"].isin(small_ufs), "RESTO")
-    baseline_df = panel[panel["competencia"]==BASELINE_COMP].copy()
+    panel["uf_fe"] = colapsar_uf_fe(panel, small_ufs, VARIANTE_UF_FE_PRIMARIA)
     # For consistency, use same small_ufs for all times
 
     # Save painel T0
     tmp = PAINEL_T0_PARQUET.with_suffix(".parquet.tmp")
     panel.to_parquet(tmp, index=False)
     tmp.replace(PAINEL_T0_PARQUET)
+    return panel
 
+
+def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, str], comp_index: dict[str, int], t0_idx: int, small_ufs: set, baseline_df: pd.DataFrame) -> None:
+    """Estimacao e artefatos de A5, comuns aos dois modos de obtencao do painel."""
+    # Lido antes de qualquer gravacao, para carregar adiante o hash do painel
+    # mensal registrado pela execucao que construiu o painel congelado.
+    anteriores_hash = hashes_anteriores()
     # === Maturity / censura stats and T0 validation ===
     nominal_stats = {}
     if NOMINAL_CSV.exists():
@@ -346,7 +511,13 @@ def main() -> None:
     uf_tab = baseline_df.groupby("sg_uf")["co_ibge_6d"].nunique().reset_index().rename(columns={"co_ibge_6d":"n_municipios"})
     uf_cells = baseline_df.groupby("sg_uf")["especialistas_mst"].agg(["count","mean"]).reset_index()
     uf_tab = uf_tab.merge(uf_cells, on="sg_uf")
-    uf_tab["uf_fe"] = np.where(uf_tab["n_municipios"]<5,"RESTO", uf_tab["sg_uf"])
+    # Niveis de efeito fixo que cada UF ocupa na variante primaria; uma UF
+    # pequena pode ocupar dois niveis quando parte dos municipios nao tem
+    # macrorregiao de saude publicada.
+    niveis_uf = baseline_df.groupby("sg_uf")["uf_fe"].agg(lambda v: ";".join(sorted(set(map(str, v)))))
+    uf_tab["uf_fe"] = uf_tab["sg_uf"].map(niveis_uf)
+    uf_tab["colapsada"] = uf_tab["n_municipios"] < 5
+    uf_tab["variante_uf_fe"] = VARIANTE_UF_FE_PRIMARIA
     tmp = TABELA_UF.with_suffix(".csv.tmp")
     uf_tab.to_csv(tmp,index=False); tmp.replace(TABELA_UF)
 
@@ -362,10 +533,21 @@ def main() -> None:
     cross["delta_estoque_jun25_mar26"] = cross["delta_estoque_6m"]
     cross["delta_cobertura_6m"] = cross["cobertura_6m"] - cross["cobertura_baseline"]
     # presence outcome in levels (as per permit) plus ratio for sensitivity (not principal)
-    cross["presentes_6m"] = cross["presentes_6m"].fillna(0)  # actually for follow, presentes_6m corresponds to coorte at follow (202603) which is not madura (False) hence NA; but we should use baseline presente, not follow. Keep baseline presente as primary presence outcome
-    # So primary presence = presentes_baseline_6m (entrantes at baseline still present 6m later)
-    # Keep both
+    # B-1: a coorte de entrantes do follow (202603) nao tem seis meses de
+    # seguimento observado (coorte_6m_madura = False), entao `presentes_6m` e
+    # censura, e censura nao vira zero. A coluna fica NaN onde a coorte nao e
+    # madura e ganha marcador explicito. Nenhum modelo a consome: a presenca
+    # modelada e `presentes_baseline_6m`, da coorte de 202506, que e madura.
+    cross["presentes_6m_censurado"] = ~cross["coorte_6m_madura"].astype(bool)
+    cross.loc[cross["presentes_6m_censurado"], "presentes_6m"] = np.nan
+    if not cross["coorte_madura_baseline"].astype(bool).all():
+        raise RuntimeError("coorte de presenca da referencia 202506 nao e madura; presentes_baseline_6m seria censura")
     cross["presentes_baseline_6m"] = cross["presentes_baseline_6m"].fillna(0)
+    checks["presentes_6m_censura_gravada_como_nan_nao_zero"] = bool(
+        cross.loc[cross["presentes_6m_censurado"], "presentes_6m"].isna().all()
+    )
+    if not checks["presentes_6m_censura_gravada_como_nan_nao_zero"]:
+        raise RuntimeError("presentes_6m censurado gravado como valor; violaria a regra zero != censura")
     assert len(cross)==1184
     assert cross["co_ibge_6d"].nunique()==368
     # Save cross-section
@@ -496,8 +678,6 @@ def main() -> None:
     tab_full = summarize_res(res_estoque_full, X_full, y_estoque_6m, groups, "OLS_estoque_6m_full_estrato_ivs_logpop_FE_cluster")
     # combine for estoque table (keep minimal primary)
     tab_estoque = pd.concat([tab_min, tab_full], ignore_index=True)
-    tmp = TABELA_MODELO_ESTOQUE.with_suffix(".csv.tmp")
-    tab_estoque.to_csv(tmp,index=False); tmp.replace(TABELA_MODELO_ESTOQUE)
 
     # Delta
     res_delta_min = fit_ols(y_delta, X_min, groups)
@@ -505,8 +685,6 @@ def main() -> None:
     res_delta_full = fit_ols(y_delta, X_full, groups)
     tab_delta_full = summarize_res(res_delta_full, X_full, y_delta, groups, "OLS_delta_full")
     tab_delta = pd.concat([tab_delta_min, tab_delta_full], ignore_index=True)
-    tmp = TABELA_MODELO_DELTA.with_suffix(".csv.tmp")
-    tab_delta.to_csv(tmp,index=False); tmp.replace(TABELA_MODELO_DELTA)
 
     # Cobertura (LPM)
     X_min_cob = X_min
@@ -515,8 +693,6 @@ def main() -> None:
     res_cob_full = fit_ols(y_cobertura_6m, X_full, groups)
     tab_cob_full = summarize_res(res_cob_full, X_full, y_cobertura_6m, groups, "LPM_cobertura_full")
     tab_cob = pd.concat([tab_cob_min, tab_cob_full], ignore_index=True)
-    tmp = TABELA_MODELO_COBERTURA.with_suffix(".csv.tmp")
-    tab_cob.to_csv(tmp,index=False); tmp.replace(TABELA_MODELO_COBERTURA)
 
     # Entradas
     res_ent_min = fit_ols(y_entradas, X_min, groups)
@@ -524,8 +700,6 @@ def main() -> None:
     res_ent_full = fit_ols(y_entradas, X_full, groups)
     tab_ent_full = summarize_res(res_ent_full, X_full, y_entradas, groups, "OLS_entradas_full")
     tab_ent = pd.concat([tab_ent_min, tab_ent_full], ignore_index=True)
-    tmp = TABELA_MODELO_ENTRADAS.with_suffix(".csv.tmp")
-    tab_ent.to_csv(tmp,index=False); tmp.replace(TABELA_MODELO_ENTRADAS)
 
     # Presentes (nivel)
     res_pres_min = fit_ols(y_presentes, X_min, groups)
@@ -533,10 +707,88 @@ def main() -> None:
     res_pres_full = fit_ols(y_presentes, X_full, groups)
     tab_pres_full = summarize_res(res_pres_full, X_full, y_presentes, groups, "OLS_presentes_full_nivel")
     tab_pres = pd.concat([tab_pres_min, tab_pres_full], ignore_index=True)
-    tmp = TABELA_MODELO_PRESENCA.with_suffix(".csv.tmp")
-    tab_pres.to_csv(tmp,index=False); tmp.replace(TABELA_MODELO_PRESENCA)
 
-    # Sensibilidade T0 alternativo (baseline 202507 -> follow 202601)
+    # === B-5: multiplicidade nos modelos secundarios de corte transversal ===
+    # `bh_fdr` existia e nunca era chamada; `q_fdr_atracao` saia NaN em todas
+    # as tabelas. Familias declaradas: o coeficiente de `atracao_muni` nos
+    # cinco desfechos pre-especificados, separadamente para a especificacao
+    # `minimal` e para a `full`. O q e Benjamini-Hochberg dentro da familia.
+    familias_fdr = {
+        "minimal_5_desfechos": [(tab_min, "estoque_6m"), (tab_delta_min, "delta_estoque_6m"), (tab_cob_min, "cobertura_6m"), (tab_ent_min, "entradas_6m"), (tab_pres_min, "presentes_baseline_6m")],
+        "full_5_desfechos": [(tab_full, "estoque_6m"), (tab_delta_full, "delta_estoque_6m"), (tab_cob_full, "cobertura_6m"), (tab_ent_full, "entradas_6m"), (tab_pres_full, "presentes_baseline_6m")],
+    }
+    multiplicidade_cross = []
+    for familia, membros in familias_fdr.items():
+        pvals = np.array([float(t.loc[t["termo"]=="atracao_muni","p_valor"].iloc[0]) for t,_ in membros])
+        qvals = bh_fdr(pvals)
+        for (t, desfecho), pv, qv in zip(membros, pvals, qvals):
+            t.loc[t["termo"]=="atracao_muni","q_fdr_atracao"] = float(qv)
+            t.loc[t["termo"]=="atracao_muni","familia_fdr"] = familia
+            multiplicidade_cross.append({"familia": familia, "desfecho": desfecho, "espec": str(t["espec"].iloc[0]), "p_valor": float(pv), "q_fdr_bh": float(qv)})
+    # C-9: `delta_full` e `estoque_6m_full` sao o mesmo estimador. A
+    # especificacao `full` inclui `estoque_baseline` como regressor; por
+    # Frisch-Waugh-Lovell, regredir estoque_6m ou (estoque_6m - estoque_baseline)
+    # sobre um X que contem estoque_baseline devolve o mesmo coeficiente de
+    # atracao. As duas linhas ficam publicadas, rotuladas como uma evidencia.
+    NOTA_C9 = "identico a OLS_estoque_6m_full por Frisch-Waugh-Lovell: a especificacao full inclui estoque_baseline; nao contar como evidencia separada"
+    tab_delta_full["nota"] = NOTA_C9
+    tab_full["nota"] = "identico a OLS_delta_full por Frisch-Waugh-Lovell; ver nota em A5_tabela_03b"
+    if round(float(tab_delta_full.loc[tab_delta_full["termo"]=="atracao_muni","coef"].iloc[0]), 10) != round(float(tab_full.loc[tab_full["termo"]=="atracao_muni","coef"].iloc[0]), 10):
+        raise AssertionError("C-9: delta_full e estoque_6m_full deveriam ser identicos por FWL e nao sao")
+    tab_estoque = pd.concat([tab_min, tab_full], ignore_index=True)
+    tab_delta = pd.concat([tab_delta_min, tab_delta_full], ignore_index=True)
+    tab_cob = pd.concat([tab_cob_min, tab_cob_full], ignore_index=True)
+    tab_ent = pd.concat([tab_ent_min, tab_ent_full], ignore_index=True)
+    tab_pres = pd.concat([tab_pres_min, tab_pres_full], ignore_index=True)
+    for tabela, caminho in [(tab_estoque, TABELA_MODELO_ESTOQUE), (tab_delta, TABELA_MODELO_DELTA), (tab_cob, TABELA_MODELO_COBERTURA), (tab_ent, TABELA_MODELO_ENTRADAS), (tab_pres, TABELA_MODELO_PRESENCA)]:
+        tmp = caminho.with_suffix(".csv.tmp")
+        tabela.to_csv(tmp,index=False); tmp.replace(caminho)
+
+    # === Sensibilidade do colapso de UF (A-1, emenda 2): tres variantes ===
+    # Portao numerico da emenda: delta_minimal por variante. As demais linhas
+    # tornam auditavel a consequencia mecanica da definicao de FE nos outros
+    # modelos secundarios de corte transversal; nenhuma entra no artigo.
+    modelos_sens_uf = [
+        ("delta_estoque_6m_minimal", y_delta),
+        ("estoque_6m_minimal", y_estoque_6m),
+        ("cobertura_6m_minimal", y_cobertura_6m),
+        ("entradas_6m_minimal", y_entradas),
+        ("presentes_baseline_6m_minimal", y_presentes),
+    ]
+    sens_uf_rows = []
+    for variante in VARIANTES_UF_FE:
+        df_var = analysis.copy()
+        df_var["uf_fe"] = colapsar_uf_fe(df_var, small_ufs, variante)
+        X_var = build_X(df_var, "minimal")
+        n_niveis = int(df_var["uf_fe"].nunique())
+        for modelo, y_var in modelos_sens_uf:
+            res_var = fit_ols(y_var, X_var, groups)
+            sens_uf_rows.append({
+                "modelo": modelo,
+                "variante_uf_fe": variante,
+                "primaria": variante == VARIANTE_UF_FE_PRIMARIA,
+                "termo": "atracao_muni",
+                "coef": float(res_var.params["atracao_muni"]),
+                "se_cluster": float(res_var.bse["atracao_muni"]),
+                "p_valor": float(res_var.pvalues["atracao_muni"]),
+                "n": int(len(y_var)),
+                "n_clusters": int(groups.nunique()),
+                "n_niveis_uf_fe": n_niveis,
+                "ufs_colapsadas": ";".join(sorted(small_ufs)),
+                "nota": {
+                    "balde_unico": "implementacao anterior a A-1: UFs pequenas num unico nivel RESTO",
+                    "macro_regiao": "protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado",
+                    "sem_colapso": "27 UFs, sem colapso",
+                }[variante],
+            })
+    tab_sens_uf = pd.DataFrame(sens_uf_rows)
+    _sel = tab_sens_uf[tab_sens_uf["modelo"] == "delta_estoque_6m_minimal"].set_index("variante_uf_fe")
+    tmp = TABELA_SENS_UF_FE.with_suffix(".csv.tmp")
+    tab_sens_uf.to_csv(tmp,index=False); tmp.replace(TABELA_SENS_UF_FE)
+
+    # Sensibilidade de janela antiga (ALT_BASELINE -> ALT_FOLLOW): a janela
+    # setembro/2025 -> marco/2026 e parcialmente tratada e fica so como
+    # diagnostico historico. O rotulo e derivado das constantes (B-6).
     alt_base = panel[panel["competencia"]==ALT_BASELINE].copy()
     alt_follow = panel[panel["competencia"]==ALT_FOLLOW].copy()
     alt_base_small = alt_base[["co_ibge_6d","cod_curso","especialistas_mst"]].rename(columns={"especialistas_mst":"estoque_baseline_alt"})
@@ -549,7 +801,7 @@ def main() -> None:
     y_alt = alt_cross["delta_alt"]
     g_alt = alt_cross["co_ibge_6d"]
     res_alt = fit_ols(y_alt, X_alt, g_alt)
-    tab_alt = summarize_res(res_alt, X_alt, y_alt, g_alt, "OLS_delta_T0alt_202507_202601_minimal")
+    tab_alt = summarize_res(res_alt, X_alt, y_alt, g_alt, f"OLS_delta_T0alt_{ALT_BASELINE}_{ALT_FOLLOW}_minimal")
     tmp = TABELA_SENS_T0ALT.with_suffix(".csv.tmp")
     tab_alt.to_csv(tmp,index=False); tmp.replace(TABELA_SENS_T0ALT)
 
@@ -872,6 +1124,18 @@ def main() -> None:
                 "n_clusters": ctx["n_clusters"],
                 "n_parametros_fe_absorvidos": ctx["n_fe"],
             })
+        # B-5: multiplicidade. A familia e o conjunto dos 25 coeficientes de
+        # evento estimados desta amostra e escala; a referencia fica NaN. O q
+        # e Benjamini-Hochberg, nas duas convencoes de graus de liberdade.
+        tabela_rows = pd.DataFrame(rows)
+        estimados = ~tabela_rows["referencia"]
+        for col_p, col_q in [("p_valor", "q_fdr_bh"), ("p_valor_gl_fe", "q_fdr_bh_gl_fe")]:
+            tabela_rows[col_q] = np.nan
+            tabela_rows.loc[estimados, col_q] = bh_fdr(tabela_rows.loc[estimados, col_p].to_numpy(dtype=float))
+        tabela_rows["familia_fdr"] = f"{len(terms)}_coeficientes_de_evento_{label}_{escala}"
+        rows = tabela_rows.to_dict(orient="records")
+        q_mar_k = float(tabela_rows.loc[tabela_rows["competencia"] == FOLLOW_6M_COMP, "q_fdr_bh"].iloc[0])
+        q_mar_fe = float(tabela_rows.loc[tabela_rows["competencia"] == FOLLOW_6M_COMP, "q_fdr_bh_gl_fe"].iloc[0])
         pre_terms = [f"event_{c}" for c in COMPETENCIAS if c < BASELINE_COMP]
         restriction = np.zeros((len(pre_terms), len(terms)))
         for i, term in enumerate(pre_terms):
@@ -903,6 +1167,9 @@ def main() -> None:
             "mar2026_p": float(modelo_k.pvalues["event_202603"]),
             "mar2026_se_gl_fe": float(modelo_fe.bse["event_202603"]),
             "mar2026_p_gl_fe": float(modelo_fe.pvalues["event_202603"]),
+            "mar2026_q_fdr_bh": q_mar_k,
+            "mar2026_q_fdr_bh_gl_fe": q_mar_fe,
+            "familia_fdr": f"{len(terms)} coeficientes de evento desta amostra e escala (Benjamini-Hochberg)",
             "mar2026_vs_media_pre_beta": media_pre_k["beta"],
             "mar2026_vs_media_pre_se": media_pre_k["se"],
             "mar2026_vs_media_pre_p": media_pre_k["p"],
@@ -1231,9 +1498,12 @@ def main() -> None:
             "contrastes_vs_remoto": {k: v["mde_80_pp_p30"] for k,v in pot["contrastes_vs_interior_remoto"].items()},
             "nota": "Potencia A3 refere-se ao outcome binario de atracao e nao deve ser transportada para o estoque continuo do A5.",
         },
-        "hashes_entradas": {
-            str(p.relative_to(ROOT)).replace("\\","/"): {"sha256": sha256(p)} for p in [PAINEL_MUNI, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE, MANIFESTO_CNES if MANIFESTO_CNES.exists() else PAINEL_MUNI]
-        },
+        "modo_painel": modo_painel,
+        "hashes_entradas": hashes_de_entradas(
+            [PAINEL_MUNI, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE] + ([MANIFESTO_CNES] if MANIFESTO_CNES.exists() else []),
+            extras_hash,
+            anteriores_hash,
+        ),
         "arquivos": {
             "painel_T0": str(PAINEL_T0_PARQUET.relative_to(ROOT)).replace("\\","/"),
             "cross_section": str(CROSS_SECTION_CSV.relative_to(ROOT)).replace("\\","/"),
@@ -1410,6 +1680,20 @@ def main() -> None:
                 "se_atracao": float(res_het.bse.get("atracao_muni", np.nan)),
             },
         },
+        "efeito_fixo_uf": {
+            "variante_primaria": VARIANTE_UF_FE_PRIMARIA,
+            "n_niveis_amostra_confirmatoria": int(analysis["uf_fe"].nunique()),
+            "ufs_colapsadas": sorted(small_ufs),
+            "nivel_residual": f"MACRO_{MACRO_SEM_REGIAO}",
+            "sensibilidade": tab_sens_uf.to_dict(orient="records"),
+            "nota": (
+                "Item A-1 / emenda 2 do plano 35: UF com menos de cinco municipios e "
+                "colapsada na macrorregiao de saude, como o protocolo A3 declara e "
+                "como o C1 fez em A4; municipio sem macrorregiao publicada forma nivel "
+                "proprio rotulado. O estudo de evento nao usa uf_fe (absorve UF-mes com "
+                "as 27 UFs) e nao e afetado."
+            ),
+        },
         "leave_one_curso_evento": loo_evento.to_dict(orient="records"),
         "sensibilidade_mes_referencia": sens_referencia.to_dict(orient="records"),
         "influencia": {
@@ -1423,9 +1707,12 @@ def main() -> None:
             "benchmark_global_proporcao_p30": pot["mde_global"]["mde_80_pp_p30"],
             "nota": "nao se aplica diretamente ao outcome continuo A5",
         },
-        "hashes_entradas": {
-            str(p.relative_to(ROOT)).replace("\\","/"): {"sha256": sha256(p)} for p in [PAINEL_MUNI, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE]
-        },
+        "modo_painel": modo_painel,
+        "hashes_entradas": hashes_de_entradas(
+            [PAINEL_MUNI, MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE],
+            extras_hash,
+            anteriores_hash,
+        ),
         "arquivos": {
             "painel_T0": str(PAINEL_T0_PARQUET.relative_to(ROOT)).replace("\\","/"),
             "cross_section": str(CROSS_SECTION_CSV.relative_to(ROOT)).replace("\\","/"),
@@ -1452,6 +1739,7 @@ def main() -> None:
             "tabela_estudo_evento_proporcional": str(TABELA_EVENTO_PROP.relative_to(ROOT)).replace("\\","/"),
             "tabela_leave_one_curso_evento": str(TABELA_LOO_EVENTO.relative_to(ROOT)).replace("\\","/"),
             "tabela_sensibilidade_referencia": str(TABELA_SENS_REF.relative_to(ROOT)).replace("\\","/"),
+            "tabela_sensibilidade_colapso_uf": str(TABELA_SENS_UF_FE.relative_to(ROOT)).replace("\\","/"),
             "figura_estudo_evento_proporcional": str(FIG_EVENTO_PROP.relative_to(ROOT)).replace("\\","/"),
             "figura_traj_estrato": str(FIG_TRAJ_ESTRATO.relative_to(ROOT)).replace("\\","/"),
             "figura_traj_atracao": str(FIG_TRAJ_ATRACAO.relative_to(ROOT)).replace("\\","/"),
@@ -1468,6 +1756,25 @@ def main() -> None:
             "Oferta cadastrada local; nao participar PMM-E nem retencao individual.",
             "Junho de 2025 e referencia limpa; setembro de 2025 fica apenas como janela antiga parcialmente tratada.",
         ],
+    }
+    # C-9: os dois modelos `full` sao um so estimador; o JSON deixa de os
+    # apresentar como duas evidencias.
+    estimativas["modelos"]["delta_full"]["equivalente_a"] = "estoque_6m_full"
+    estimativas["modelos"]["delta_full"]["nota_equivalencia"] = NOTA_C9
+    estimativas["modelos"]["estoque_6m_full"]["equivalente_a"] = "delta_full"
+    # B-5: familias de multiplicidade declaradas e q de manchete.
+    estimativas["multiplicidade"] = {
+        "metodo": "Benjamini-Hochberg dentro de cada familia declarada",
+        "familias_estudo_de_evento": "25 coeficientes de evento por (amostra, escala); q publicado nas tabelas 07 e 08, colunas q_fdr_bh e q_fdr_bh_gl_fe",
+        "mar2026_q_fdr_bh_gl_fe_proporcional_confirmatoria": event_prop_primary_summary["mar2026_q_fdr_bh_gl_fe"],
+        "mar2026_q_fdr_bh_gl_fe_nivel_confirmatoria": event_primary_summary["mar2026_q_fdr_bh_gl_fe"],
+        "familias_corte_transversal": multiplicidade_cross,
+        "nota": (
+            "Antes de 16/09/2026 (item B-5), bh_fdr existia no script e nunca era chamada; "
+            "q_fdr_atracao saia NaN. As familias sao declaradas aqui e nao foram escolhidas "
+            "depois de ver quais q ficariam abaixo de 0,05. A escala primaria de A5 continua "
+            "sendo a proporcional e o coeficiente de manchete continua sendo o de marco/2026."
+        ),
     }
     tmp = JSON_ESTIMATIVAS.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(estimativas, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
@@ -1489,90 +1796,10 @@ def main() -> None:
     # loom summary
     loo_minmax = df_loo[df_loo["termo"]=="atracao_muni"]["coef"]
     loo_range = f"{loo_minmax.min():.3f} a {loo_minmax.max():.3f} sd {loo_minmax.std():.3f}" if not df_loo.empty else "NA"
-    relatorio = f"""# A5 — Persistencia da oferta medica local no CNES (associativo)
-
-> Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash {sha256(REGISTRO_A3)[:8]})
-> Potencia A3: MDE global 3.8% p30; estrato capital 16.1% metro 8.4% proximo 4.8% remoto 10.9%
-> Tipologia A2 strict 540/540 (25/101/238/176) painel 368 mun 1184 celulas municipio-curso
-> Amostra A5: **1184 celulas municipio-curso (368 municipios) x26 competencias =30784 linhas**; confirmatoria 587 (295 mun) sem sobreposicao
-> T0_admin: **{T0_ADMIN_COMP}** (primeira competencia apos homologacao 2025-09-29); baseline {BASELINE_COMP} -> follow 6m {FOLLOW_6M_COMP}; horizonte comum 6 meses maduro
-> Ponte: 10 cursos com CBO nao compartilhado entre cursos (1,2,3,5,9,12,13,14,15,16) como primario, dos quais 8 com CBO estritamente 1:1; 6 cursos com CBO compartilhado (4,6,7,8,10,11) como sensibilidade
-
-## 1. Construcao, painel alinhado ao T0 e maturidade/censura
-
-Painel analitico `A5_painel_T0.parquet` (30784 linhas) alinha `t_rel_T0 = competencia - {T0_ADMIN_COMP}` com definicoes:
-- estoque_mst: CO_PROFISSIONAL_SUS distinto por municipio-curso-mes (CBOs operacionais do curso; deduplicacao intramunicipal)
-- cobertura_binaria_mst: 1[estoque>0]
-- n_entradas_6m: presente em t e ausente nos 6 meses anteriores (censurado se <202412)
-- n_saidas_confirmadas_3m: presente em t e ausente nos 3 meses posteriores (censurado se >202604)
-- presentes_6m (nivel): entrantes elegiveis em t ainda presentes em t+6 (nivel, nao taxa; madura se idx+6<26 ate 202601)
-- saldo_liquido: entradas - saidas
-
-Censura documentada: 26 competencias 202406-202607 completas; estoque nunca censurado (0 se sem profissional); entradas indisponiveis 202406-202411 (primeiros 6m), saidas indisponiveis 202605-202607 (ultimos 3m), presenca madura ate baseline 202601 (inclui {BASELINE_COMP}). Ver `A5_manifesto_maturidade_censura.json` e `A5_tabela_00_construcao_steps.csv`.
-
-T0 fisico validado: nominal ciclo1 n=521, dt_inicio de {nominal_stats.get("ciclo1_dt_min")} a {nominal_stats.get("ciclo1_dt_max")}, mediano {nominal_stats.get("ciclo1_dt_median")} (p25 {nominal_stats.get("ciclo1_dt_p25")} p75 {nominal_stats.get("ciclo1_dt_p75")}), {nominal_stats.get("ciclo1_antes_homolog")} antes vs {nominal_stats.get("ciclo1_apos_homolog")} apos homologacao {T0_HOMOLOG_DATE}. Snapshot de sobreviventes ativos em 2026-08-12, nao log completo, por isso T0_admin {T0_ADMIN_COMP} e usado como referencia agregada e baseline {BASELINE_COMP} como ultima pre-T0 madura. Ponte restrita ao nucleo sem CBO compartilhado (587 celulas) como primario: FTE cadastral por CNES nao contamina cursos compartilhados.
-
-## 2. Trajetoria agregada (antes dos coeficientes)
-
-Media geral estoque: 13.05 (202406) -> 13.92 (202509 baseline) -> 14.65 (202603 follow) -> 15.20 (202607). Incremento 6m baseline->follow medio **{cross["delta_estoque_6m"].mean():.2f}** sd {cross["delta_estoque_6m"].std():.2f} (mediana {cross["delta_estoque_6m"].median():.1f}). Por estrato baseline: capital  {tab_baseline[tab_baseline["estrato"]=="capital"]["estoque_medio_baseline"].values[0]:.1f}  metropolitano {tab_baseline[tab_baseline["estrato"]=="metropolitano"]["estoque_medio_baseline"].values[0]:.1f}  interior_proximo {tab_baseline[tab_baseline["estrato"]=="interior_proximo_polo"]["estoque_medio_baseline"].values[0]:.1f}  remoto {tab_baseline[tab_baseline["estrato"]=="interior_remoto"]["estoque_medio_baseline"].values[0]:.1f} . Ver `A5_tabela_01b_trajetoria_mensal.csv` e figuras `A5_figura_01/02`.
-
-Por atracao administrativa A1 (agregada ao municipio-curso, max sobre CNES): com atracao N=378 media baseline {desc_atr1.get("estoque_baseline_medio",0):.1f} estoque_6m {desc_atr1.get("estoque_6m_medio",0):.1f} delta {desc_atr1.get("delta_medio",0):.2f}; sem atracao N=806 baseline {desc_atr0.get("estoque_baseline_medio",0):.1f} delta {desc_atr0.get("delta_medio",0):.2f}. Cobertura baseline: com atracao {desc_atr1.get("cobertura_baseline",0):.1%} vs sem {desc_atr0.get("cobertura_baseline",0):.1%}; 6m: {desc_atr1.get("cobertura_6m",0):.1%} vs {desc_atr0.get("cobertura_6m",0):.1%}. Entradas 6m media: {desc_atr1.get("entradas_6m_media",0):.2f} vs {desc_atr0.get("entradas_6m_media",0):.2f}; presentes nivel: {desc_atr1.get("presentes_baseline_6m_media",0):.2f} vs {desc_atr0.get("presentes_baseline_6m_media",0):.2f}. Ver `A5_tabela_02_descritiva_outcomes_6m.csv`.
-
-## 3. Modelos primarios (associativos, sem causalidade)
-
-Especificacao minimal exatamente como A3 adaptada: `outcome ~ atracao_muni (0/1) + FE curso (16) + FE UF(colapsada RESTO {sorted(small_ufs)}) + cluster municipio (G=368)`. Atracao preditor binario municipal (max sobre CNES). Full adiciona estrato + ivs_2010 + log_pop + estoque_por_10k.
-
-| Outcome 6m | coef atracao (SE) minimal | IC95% | p | N | G | R2 | coef full |
-|---|---|---|---|---|---|---|---|
-| estoque_6m | {ce["coef_atracao"]:.3f} ({ce["se_atracao"]:.3f}) | {ce["coef_atracao"]-1.96*ce["se_atracao"]:.3f} a {ce["coef_atracao"]+1.96*ce["se_atracao"]:.3f} | {ce["p_atracao"]:.3f} | {ce["n"]} | {ce["n_clusters"]} | {ce["r2"]:.3f} | {ce_full["coef_atracao"]:.3f} |
-| delta_estoque_6m | {cd["coef_atracao"]:.3f} ({cd["se_atracao"]:.3f}) | {cd["coef_atracao"]-1.96*cd["se_atracao"]:.3f} a {cd["coef_atracao"]+1.96*cd["se_atracao"]:.3f} | {cd["p_atracao"]:.3f} | {ce["n"]} | {ce["n_clusters"]} | {cd["r2"]:.3f} | {cd_full["coef_atracao"]:.3f} |
-| cobertura_6m (LPM) | {cc["coef_atracao"]:.3f} ({cc["se_atracao"]:.3f}) | {cc["coef_atracao"]-1.96*cc["se_atracao"]:.3f} a {cc["coef_atracao"]+1.96*cc["se_atracao"]:.3f} | {cc["p_atracao"]:.3f} | {ce["n"]} | {ce["n_clusters"]} | - | - |
-| entradas_6m follow | {cen["coef_atracao"]:.3f} ({cen["se_atracao"]:.3f}) | {cen["coef_atracao"]-1.96*cen["se_atracao"]:.3f} a {cen["coef_atracao"]+1.96*cen["se_atracao"]:.3f} | {cen["p_atracao"]:.3f} | | | | |
-| presentes_baseline_6m (nivel) | {cp["coef_atracao"]:.3f} ({cp["se_atracao"]:.3f}) | {cp["coef_atracao"]-1.96*cp["se_atracao"]:.3f} a {cp["coef_atracao"]+1.96*cp["se_atracao"]:.3f} | {cp["p_atracao"]:.3f} | | | | |
-
-Linguagem: **associado a** maior estoque/cobertura em 6m quando houve atracao na celula; delta pequeno e IC largo; nenhuma inferencia causal nem dose bolsa. Faixa nao entra como covariada principal por colinearidade com IVS (regra anunciada). Ver `A5_tabela_03*.csv`.
-
-Sensibilidade horizonte alternativo {ALT_BASELINE}->{ALT_FOLLOW}: coef delta {estimativas["modelos"]["T0_alternativo_delta"]["coef_atracao"]:.3f} (SE {estimativas["modelos"]["T0_alternativo_delta"]["se_atracao"]:.3f}) p {estimativas["modelos"]["T0_alternativo_delta"]["p_atracao"]:.3f} - magnitude similar, preserva conclusao.
-Sensibilidades adicionais: winsorizado p99 delta {estimativas["modelos"]["delta_winsorizado_p99"]["coef_atracao"]:.3f} (p {estimativas["modelos"]["delta_winsorizado_p99"]["p_atracao"]:.3f}); confirmatoria 587 vs ampliada 597: confirmatoria {estimativas["modelos"]["delta_strat_confirmatoria"]["coef_atracao"]:.3f} (ampliada em tabela `A5_tabela_03h`); heterogeneidade atracao x estrato nao significativa (ver `A5_tabela_03i`). Ver `A5_tabela_03g/03h/03i`.
-
-## 4. Influencia e robustez
-
-Leave-one-UF (27) e leave-one-curso (16) para delta minimal: range coef atracao {loo_range}. Nenhuma UF/curso inverte sinal de forma relevante. Ver `A5_tabela_04_leave_one_out.csv`.
-
-Leave-one-municipio (368) DFBETA para atracao em delta: base {infl_summary.get("base",0):.3f} range {infl_summary.get("atracao_delta_min",0):.3f} a {infl_summary.get("max",0):.3f} sd {infl_summary.get("sd",0):.3f}; top influentes: {", ".join([f"{r['co_ibge_6d']} Δ{r['delta']:.2f} DFBETA{r['dfbeta']:.2f}" for r in estimativas["influencia"]["top_influentes"][:3]] ) } . Nenhum |DFBETA|>1.5. Ver `A5_tabela_05_influencia_municipal.csv`.
-
-Curso como exploracao: 10 cursos confirmatorios contribuem; cursos com CBO compartilhado, estratificados, mostram sensibilidade sem mudar primario.
-
-## 5. Validacao preditiva por municipio (GroupKFold 5)
-
-Delta estoque minimal: R2 out {pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["r2_media_out"].values[0]:.3f} sd {pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["r2_sd_out"].values[0]:.3f} vs in {pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["r2_insample"].values[0]:.3f}; RMSE out {pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["rmse_media_out"].values[0]:.2f} vs in {pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["rmse_insample"].values[0]:.2f}.
-Estoque 6m: R2 out {pred_df[pred_df["modelo"]=="OLS_estoque_6m_minimal"]["r2_media_out"].values[0]:.3f} vs in {pred_df[pred_df["modelo"]=="OLS_estoque_6m_minimal"]["r2_insample"].values[0]:.3f}. Gap pequeno indica overfit FE limitado. Ver `A5_tabela_06_validacao_preditiva.csv`.
-
-## 6. Figuras
-
-- `A5_figura_01_trajetoria_estoque_estrato.png`: trajetoria medias por estrato com T0.
-- `A5_figura_02_trajetoria_estoque_atracao.png`: com vs sem atracao.
-- `A5_figura_03_delta_estoque_atracao.png`: delta 6m por atracao.
-
-## 7. Linguagem autorizada e decisao sobre ligacao com atracao
-
-Permitido: oferta cadastrada local, persistencia da oferta local (estoque/cobertura/entradas/saldo/presentes em nivel), gradiente territorial, associado a. **Proibido:** retenção individual do bolsista, atividade fisica confirmada, efeito causal do PMM-E/bolsa/IVS, WTA, taxa por vaga, dose recebida.
-
-Decisao explicita: **Pode** ligar descriptiva e associativamente o outcome A1 binario por celula (atracao administrativa max ao municipio-curso) ao painel CNES agregado no horizonte 6m comum {BASELINE_COMP}->{FOLLOW_6M_COMP} usando especificacoes pre-definidas, FE curso/UF e cluster municipio, com ponte restrita ao nucleo sem CBO compartilhado como primario e estratificacao ampliada como sensibilidade. A ligacao e **somente associativa** (persistencia da oferta local onde houve atracao vs onde nao houve), reportada em nivel e diferenca bruta/ajustada, sem taxa condicional a entrantes.
-
-**Nao pode:** chamar delta ou presenca de efeito do PMM-E/bolsa adicional; nao chamar presenca no CNES de participacao confirmada no programa; nao usar presenca condicionada so nos entrantes como retencao; nao interpretar entradas tardias 202605+ sem censura; nao converter faixa anunciada em dose causal (colinearidade IVS-faixa).
-
-## 8. Limites e proximos passos
-
-- Amostra 1184 municipio-curso tem municipios com múltiplos CNES; unidade inferencia municipio correta, mas potencia heterogeneidade por estrato limitada (capital 18 clusters) como em A3.
-- Entradas/saidas dependem de definicao 6m/3m e da estabilidade do identificador CO_PROFISSIONAL_SUS (continuidade mediana 99.2% mes a mes, mas sem documentacao externa; ver manifesto painel).
-- Presenca em nivel e pequeno (media <0.3); ruidos cadastrais podem confundir mudanca real.
-- Sem log de eventos PMM-E (A07-02) e sem ponte individual (A07-03), nao vincular individuo bolsista a CNES.
-- Sem regra administrativa validada (R1), nao estimar salto causal em cutoff IVS para CNES; manter A6 red team antes de artigo.
-
-*Gerado por `scripts/tema_trabalho/06_avaliar_provimento_cnes.py` em {dt.date.today().isoformat()}. Hashes verificados em `A5_estimativas_provimento.json` e `A5_manifesto_maturidade_censura.json`.*
-"""
-
+    # B-2: o bloco que montava um relatorio rico e era sobrescrito antes de
+    # qualquer escrita foi removido em 16/09/2026; suas secoes de construcao,
+    # trajetoria, influencia, validacao preditiva e limites foram promovidas ao
+    # relatorio publicado abaixo, com os numeros lidos das tabelas gravadas.
     # Recortes citados no relatório publicado, lidos das próprias tabelas
     # gravadas acima para que texto e artefato não possam divergir.
     def _linha_loo(escala: str, subamostra: str) -> dict:
@@ -1643,13 +1870,33 @@ O ajuste roda OLS sobre variáveis já residualizadas, e a correção de pequena
 
 As duas convenções são publicadas lado a lado: colunas sem sufixo preservam os números já divulgados; colunas com sufixo `_gl_fe` usam a convenção correta e são as que devem ser citadas. O parâmetro correspondente em `model_utils.fit_absorbed_ols` é opt-in, de modo que os scripts da versão agregada do ciclo 1 permanecem inalterados.
 
-## 5. Distribuição e diagnósticos secundários
+## 5. Construção, maturidade e censura
+
+O painel `A5_painel_T0.parquet` tem 1.184 células município–curso em 368 municípios e 26 competências (junho/2024 a julho/2026), 30.784 linhas; a amostra confirmatória tem {int(confirmatoria_cells)} células em {int(panel[panel["amostra_confirmatoria"] & (panel["competencia"]==BASELINE_COMP)]["co_ibge_6d"].nunique())} municípios. O estoque nunca é censurado; `n_entradas_6m` é indisponível nas seis primeiras competências, `n_saidas_confirmadas_3m` nas três últimas, e a presença da coorte de entrantes é madura até janeiro/2026. A coorte de 202603 não tem seis meses de seguimento, por isso `presentes_6m` fica **NaN**, e não zero, em `A5_cross_section_6m.csv`, com o marcador `presentes_6m_censurado` (item B-1). Modo de obtenção do painel nesta execução: `{modo_painel}`. Ver `A5_manifesto_maturidade_censura.json` e `A5_tabela_00_construcao_steps.csv`.
+
+## 6. Trajetória agregada
+
+Estoque médio por célula: {float(traj.loc[traj["competencia"]=="202406","especialistas_mst_mean"].iloc[0]):.2f} em junho/2024, {float(traj.loc[traj["competencia"]==BASELINE_COMP,"especialistas_mst_mean"].iloc[0]):.2f} na referência de junho/2025, {float(traj.loc[traj["competencia"]==FOLLOW_6M_COMP,"especialistas_mst_mean"].iloc[0]):.2f} em março/2026 e {float(traj.loc[traj["competencia"]=="202607","especialistas_mst_mean"].iloc[0]):.2f} em julho/2026. Entre junho/2025 e março/2026, a variação média nas 1.184 células é {cross["delta_estoque_6m"].mean():.2f} (mediana {cross["delta_estoque_6m"].median():.1f}). Com atração (N={int(desc_atr1.get("n_celulas",0))}), o estoque médio vai de {desc_atr1.get("estoque_baseline_medio",0):.1f} para {desc_atr1.get("estoque_6m_medio",0):.1f}; sem atração (N={int(desc_atr0.get("n_celulas",0))}), de {desc_atr0.get("estoque_baseline_medio",0):.1f} para {desc_atr0.get("estoque_6m_medio",0):.1f}. Os grupos diferem muito em nível antes da oferta, o que é seleção, não efeito. Ver `A5_tabela_01b`, `A5_tabela_01c`, `A5_tabela_02` e `A5_figura_01/02`.
+
+## 7. Influência e robustez dos modelos secundários
+
+No `delta_minimal` (variante primária de efeito fixo), a exclusão sucessiva de cada UF e de cada curso move o coeficiente de atração dentro de {loo_range}; leave-one-município: base {infl_summary.get("base",0):.3f}, faixa {infl_summary.get("atracao_delta_min",0):.3f} a {infl_summary.get("max",0):.3f}, com os três municípios mais influentes {", ".join([f"{r['co_ibge_6d']} (Δ {r['delta']:.2f}, DFBETA {r['dfbeta']:.2f})" for r in estimativas["influencia"]["top_influentes"][:3]])}. Ver `A5_tabela_04_leave_one_out.csv` e `A5_tabela_05_influencia_municipal.csv`. Validação preditiva por município (GroupKFold, 5 dobras): `delta_minimal` com R² fora da amostra {pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["r2_media_out"].values[0]:.3f} contra {pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["r2_insample"].values[0]:.3f} dentro; `estoque_6m_minimal` {pred_df[pred_df["modelo"]=="OLS_estoque_6m_minimal"]["r2_media_out"].values[0]:.3f} contra {pred_df[pred_df["modelo"]=="OLS_estoque_6m_minimal"]["r2_insample"].values[0]:.3f}. Ver `A5_tabela_06_validacao_preditiva.csv`.
+
+## 8. Multiplicidade
+
+Nenhuma correção de multiplicidade existia em A5 até 16/09/2026 (item B-5). As famílias agora declaradas são: os 25 coeficientes de evento de cada par amostra–escala, com q de Benjamini–Hochberg nas colunas `q_fdr_bh` e `q_fdr_bh_gl_fe` das tabelas 07 e 08; e o coeficiente de atração nos cinco desfechos de corte transversal, separadamente para `minimal` e `full`, na coluna `q_fdr_atracao` das tabelas 03 a 03e. Para março/2026 na escala proporcional da amostra confirmatória, q = {event_prop_primary_summary['mar2026_q_fdr_bh_gl_fe']:.4f}; em nível, q = {event_primary_summary['mar2026_q_fdr_bh_gl_fe']:.4f}. Os dois modelos `full` de estoque e de variação são o mesmo estimador por Frisch–Waugh–Lovell, porque a especificação inclui o estoque de referência, e são contados como uma evidência (item C-9).
+
+## 9. Distribuição e diagnósticos secundários
 
 Na amostra confirmatória, a variação junho/2025–março/2026 tem mediana {analysis['delta_estoque_6m'].median():.1f} e máximo {analysis['delta_estoque_6m'].max():.0f}. Entre células com atração, a média é {distribution_summary['1']['media']:.2f}, a mediana {distribution_summary['1']['mediana']:.1f} e {distribution_summary['1']['proporcao_aumento']:.1%} apresentam aumento; sem atração, os valores são {distribution_summary['0']['media']:.2f}, {distribution_summary['0']['mediana']:.1f} e {distribution_summary['0']['proporcao_aumento']:.1%}.
 
-As regressões de nível, cobertura, novos vínculos mensais após washout, presença da coorte e validação preditiva são diagnósticos secundários. `n_entradas_6m` significa novo vínculo observado no mês após seis meses de ausência, e não entradas acumuladas ao longo de seis meses.
+As regressões de nível, cobertura, novos vínculos mensais após washout, presença da coorte e validação preditiva são diagnósticos secundários. Nelas, o efeito fixo de UF colapsa as unidades com menos de cinco municípios ({", ".join(sorted(small_ufs))}) na macrorregião de saúde, com nível residual rotulado para município sem macrorregião publicada — {int(analysis["uf_fe"].nunique())} níveis na amostra confirmatória, a mesma definição do C1 em A4 (item A-1). O balde único `RESTO` anterior inflava o coeficiente de `delta_minimal` de {float(_sel.loc["macro_regiao", "coef"]):.4f} para {float(_sel.loc["balde_unico", "coef"]):.4f}; as três variantes estão em `A5_tabela_11_sensibilidade_colapso_uf.csv`. O estudo de evento absorve UF–mês com as 27 unidades e não passa por esse colapso. `n_entradas_6m` significa novo vínculo observado no mês após seis meses de ausência, e não entradas acumuladas ao longo de seis meses.
 
-## 6. Linguagem autorizada
+## 10. Limites
+
+A unidade de inferência é o município, e a heterogeneidade por estrato tem pouca potência (capital com 18 clusters), como em A3. Entradas e saídas dependem das janelas de seis e três meses e da estabilidade de `CO_PROFISSIONAL_SUS`, sem documentação externa da chave (D-4). A presença da coorte em nível é pequena e sensível a ruído cadastral. Sem log de eventos do programa nem ponte individual, nenhum indivíduo bolsista é vinculado ao CNES. Sem regra administrativa validada (R1), nenhum salto no IVS é atribuído à bolsa.
+
+## 11. Linguagem autorizada
 
 Permitido: **evolução do estoque cadastral**, **trajetória diferencial associada à atração**, cobertura e novos vínculos mensais após washout. Proibido: provimento causal, retenção individual do bolsista, atividade física confirmada, efeito causal do PMM-E/bolsa/IVS, taxa por vaga ou dose recebida.
 
@@ -1677,6 +1924,19 @@ O CNES não identifica participantes do programa. Sem log completo, ponte indivi
         ("nivel 202603, EP com GL de FE absorvidos", event_primary_summary["mar2026_se_gl_fe"], 0.2469, 4),
         ("nivel 202603, p com GL de FE absorvidos", event_primary_summary["mar2026_p_gl_fe"], 0.0437, 4),
     ]
+    # Emenda 2 do plano 35 (A-1): delta_minimal por variante de colapso de UF.
+    for variante, alvo_coef, alvo_se, alvo_p, alvo_niveis in [
+        ("balde_unico", 1.2949, 0.7749, 0.0947, 20),
+        ("macro_regiao", 0.5062, 0.2506, 0.0434, 24),
+        ("sem_colapso", 0.5002, 0.2414, 0.0382, 27),
+    ]:
+        linha = _sel.loc[variante]
+        alvos += [
+            (f"A-1 delta_minimal {variante}, coef", float(linha["coef"]), alvo_coef, 4),
+            (f"A-1 delta_minimal {variante}, EP", float(linha["se_cluster"]), alvo_se, 4),
+            (f"A-1 delta_minimal {variante}, p", float(linha["p_valor"]), alvo_p, 4),
+            (f"A-1 delta_minimal {variante}, niveis", float(linha["n_niveis_uf_fe"]), float(alvo_niveis), 0),
+        ]
     divergencias = [
         f"{nome}: obtido {round(obtido, casas)} contra alvo {alvo}"
         for nome, obtido, alvo, casas in alvos
@@ -1684,7 +1944,7 @@ O CNES não identifica participantes do programa. Sem log completo, ponte indivi
     ]
     if divergencias:
         raise AssertionError(
-            "Alvos congelados do plano C2 nao reproduzidos: " + "; ".join(divergencias)
+            "Alvos congelados do plano 35 (C2 e emenda 2) nao reproduzidos: " + "; ".join(divergencias)
         )
 
     print(

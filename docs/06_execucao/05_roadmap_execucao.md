@@ -47,6 +47,19 @@
 > **Nenhuma sessão da fila está `ABERTA`.** As sessões **1 e 4**, o restante da
 > **3** e o item **C-4** dependem de decisão do autor sobre A-1 ou do acesso aos
 > microdados do CNES (D-4).
+>
+> **Atualização em 16/09/2026: fila exaurida no que o ambiente permite.** O autor
+> delegou as decisões pendentes à sessão. D-4 foi parcialmente destravado — A5
+> reestima a partir de `A5_painel_T0.parquet` com hash conferido contra o A6,
+> validado byte a byte (`da4d6f7`) —, o que permitiu concluir as sessões **1**
+> (A-1, emenda 2 do `35`), **4** (B-1, B-2, B-5, B-6, C-9) e **3** (as três
+> ameaças do C-7, sob protocolo congelado antes de rodar). B-4 e B-7 ficaram em
+> errata; C-4 permanece com registro no código; **A8 foi regravado** sob o
+> ambiente documentado; o pedido administrativo **não** foi enviado, por ser ato
+> externo fora da delegação. O `paper_pmme_curto.tex` passa a existir, com
+> conferidor próprio no `run_all.py`. Detalhe por item em
+> `36_backlog_pos_auditoria.md`; erratas E-3 a E-6 em
+> `../auditorias/14_erratas_artefatos_congelados.md`.
 
 ## Fila imediata autorizada
 
