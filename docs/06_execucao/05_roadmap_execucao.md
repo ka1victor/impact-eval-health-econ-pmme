@@ -82,6 +82,15 @@ O estado executado e verificável dos portões está em
 [`33_status_execucao_plano_causal.md`](33_status_execucao_plano_causal.md). O
 A8 está concluído, e a trilha administrativa foi encerrada sem envio.
 
+**Estado em 19/09/2026.** A fila pós-auditoria de
+[`36_backlog_pos_auditoria.md`](36_backlog_pos_auditoria.md) foi exaurida no
+que o ambiente permite e integrada na `main` pelo PR #3, com autorização do
+autor. Nenhuma sessão está aberta. O que resta é dado externo (D-2, D-4) ou
+decisão do autor (D-3); a lista ordenada de sugestões está na seção
+"Encerramento" daquele documento. A `main` carrega os dois artigos
+(`paper_pmme_submission.tex`, 13 páginas; `paper_pmme_curto.tex`, 7 páginas) e
+os dois conferidores de cifras no `run_all.py`.
+
 ## Entrega de banca 1
 
 Paralela à fila analítica e independente dela. A banca 1 apresenta o desenho

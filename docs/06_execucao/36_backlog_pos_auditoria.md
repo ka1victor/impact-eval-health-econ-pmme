@@ -1121,6 +1121,49 @@ Três itens **não** são decisão, e sim espera por dado externo: `C3-02B` depe
 de dois arquivos aparecerem no FTP oficial, `C3-05` da competência `202703`
 madura e `C3-06` de setembro de 2027. Ver **D-2**.
 
+## Encerramento — integrado na `main` em 19/09/2026
+
+Em 19/09/2026 o autor leu o estado acima e autorizou o merge. O PR
+[#3](https://github.com/ka1victor/impact-eval-health-econ-pmme/pull/3) — 10
+commits de trabalho mais este de encerramento — foi integrado na `main` pela
+sessão, com merge prévio da `main` (tema Beamer da banca 1, sem interseção com a
+fila analítica) e suíte verde no resultado. A partir daqui a `main` carrega:
+
+- o modo de reestimação de A5 a partir do painel congelado, com hash conferido
+  contra o A6 (D-4 parcial);
+- as sessões 1, 3 e 4 concluídas (A-1, C-7 completo, B-1, B-2, B-5, B-6, C-9);
+- as decisões delegadas: erratas E-3 a E-6, C-4 mantido com registro no código,
+  A8 regravado sob o ambiente documentado, D-2 verificado, D-3 não enviado;
+- o artigo curto `paper_pmme_curto.tex` e o apêndice B do artigo principal, com
+  os dois conferidores no `run_all.py`.
+
+### O que continua com o autor
+
+| Decisão | Estado | O que a destrava |
+|---|---|---|
+| **D-3** — enviar o pedido do escore administrativo de IVS | pacote pronto em `output/rdd_bolsa/`; **não enviado** | só o autor. É o único caminho para o efeito da bolsa; sem ele a pergunta declarada do projeto segue bloqueada |
+| **D-2** — ciclo 3 | `RDAC2606`/`RDRR2606` ausentes do FTP; `202703` no futuro | dado externo; repetir C3-02B de um ambiente com acesso ao FTP |
+| **D-4** — painel mensal e microdados do CNES | A5 reestima do painel congelado; reconstruir o painel continua impossível | dado externo |
+| **C-4 + E-3** | mantidos, com registro no código e errata | a primeira reexecução legítima de A1→A3, que quebra a mesma cadeia de hashes; corrigir os dois no mesmo ato |
+
+### Sugestões para a próxima rodada, em ordem de consequência
+
+1. Decidir sobre o D-3. Nada mais nesta fila depende disso, mas a pergunta da
+   bolsa depende inteiramente.
+2. Na próxima reexecução legítima de A5 com o painel mensal, retirar a coluna
+   `uf_fe` de `A5_painel_T0.parquet`: ela carrega a definição superada (`RESTO`)
+   e hoje é recomputada em memória.
+3. Diagnosticar os cursos 2 e 16, únicos que rejeitam a pré-tendência, no CNES
+   de 2024–2025 — mudança cadastral ou de oferta? — **sem reescolher amostra**.
+4. Estender o teste de deslocamento região–curso a todos os municípios da região
+   de saúde, o que exige o painel mensal (D-4).
+5. Ciclo 3 sem redesenho: C3-05 só com `202703` madura; C3-06 em setembro/2027.
+6. Ambiente: um `SessionStart` hook que monte o `.venv` com as versões fixadas
+   pouparia o diagnóstico de versão a cada sessão.
+
+Nenhuma sessão desta fila está `ABERTA`. O protocolo abaixo continua valendo
+para qualquer item que venha a ser reaberto.
+
 ## Protocolo de sessão
 
 Ao **iniciar** uma sessão desta fila:

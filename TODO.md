@@ -133,6 +133,10 @@ de início e encerramento.
 >
 > **Próxima sessão: nenhuma.** O que resta depende de dado externo (`202703`,
 > `RDAC2606`/`RDRR2606`, microdados do CNES) ou do autor (envio do pedido D-3).
+>
+> **Integrado na `main` em 19/09/2026** (PR #3), com autorização do autor.
+> Encerramento, decisões que continuam com o autor e sugestões ordenadas em
+> `docs/06_execucao/36_backlog_pos_auditoria.md`, seção "Encerramento".
 
 - [x] Grupo A — muda número publicado (3 itens): A-1 concluído em 16/09/2026 sob a
   emenda 2; A-2 e A-3 concluídos em 14/09/2026 sob a emenda 1.
@@ -146,6 +150,17 @@ de início e encerramento.
 - [ ] Grupo D — bloqueado por dado externo ou pelo autor: D-2 (`RDAC2606`,
   `RDRR2606`, `202703`, `T0+12m`); D-3 (envio do pedido, decisão do autor; pacote
   pronto); D-4 (painel mensal e microdados do CNES). D-1 resolvido.
+
+## O que continua com o autor (19/09/2026)
+
+- [ ] **D-3** — decidir se envia o pedido do escore administrativo de IVS. Pacote
+  pronto em `output/rdd_bolsa/`; é o único caminho para o efeito da bolsa.
+- [ ] **D-2** — repetir C3-02B de um ambiente com acesso ao FTP do DATASUS;
+  C3-05 só com `202703` madura; C3-06 em setembro/2027.
+- [ ] **D-4** — painel mensal e microdados do CNES; ao reexecutar A5, retirar a
+  coluna `uf_fe` do painel congelado.
+- [ ] **C-4 + E-3** — corrigir juntos na primeira reexecução legítima de A1→A3.
+- [ ] Diagnóstico dos cursos 2 e 16 na pré-tendência, sem reescolher amostra.
 
 ## Artigos
 
