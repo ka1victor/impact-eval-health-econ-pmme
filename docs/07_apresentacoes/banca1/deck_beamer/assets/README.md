@@ -1,17 +1,18 @@
-# Imagens da identidade visual do deck
+# Imagens opcionais do deck
 
-Arquivos **não versionados** de imagem que a capa e o sumário usam. O deck
-compila sem eles: cada um tem substituto desenhado em TikZ, de modo que o PDF
-nunca sai com um buraco no lugar da imagem.
+Arquivos **não versionados** de imagem que a capa alternativa (`\pmmecapa`, no
+visual do banner do PMM-E) e o sumário podem usar. O deck compila sem eles: cada
+um tem substituto desenhado em TikZ, de modo que o PDF nunca sai com um buraco
+no lugar da imagem. O logo e o gráfico institucional do Insper **estão**
+versionados, em [`../insper/`](../insper/README.md).
 
 | Arquivo esperado | Onde aparece | Sem o arquivo |
 |---|---|---|
-| `logo_insper.png` | faixa branca inferior da capa, à esquerda | a palavra *Insper* composta na fonte de destaque (Oswald) |
-| `capa_foto.jpg` | metade direita da capa, recortada | painel com degradê e chevrons da paleta |
-| `sumario_fundo.jpg` | canto superior direito do sumário, esmaecido | padrão de chevrons a 12% de opacidade |
+| `capa_foto.jpg` | metade direita da capa alternativa `\pmmecapa`, recortada | painel com degradê e chevrons da paleta |
+| `sumario_fundo.jpg` | canto superior direito do sumário, esmaecido | listras diagonais do gráfico institucional do Insper |
 
 Os caminhos estão declarados no preâmbulo de
-[`../banca1_beamer.tex`](../banca1_beamer.tex) (`\pmmelogo`, `\pmmefoto`,
+[`../banca1_beamer.tex`](../banca1_beamer.tex) (`\pmmefoto`,
 `\pmmesumariofundo`), relativos à raiz do repositório. Para trocar de arquivo,
 edite lá — não há caminho embutido nos `.sty`.
 
