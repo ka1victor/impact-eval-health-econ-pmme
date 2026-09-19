@@ -8,6 +8,24 @@
 
 ---
 
+## 19/09/2026 — Banca 1: deck Beamer reconstruído na estrutura de 17 slides
+
+A pedido do autor, os frames de
+[`07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex`](07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex)
+deixaram a estrutura de 15 slides em 6 seções e passaram à vigente de
+[`02_conteudo_slides.md`](07_apresentacoes/banca1/02_conteudo_slides.md): 17
+slides em 3 seções, um build (`\only<n>`) por `###`, três divisórias
+(`\pmmedivisoria`), sumário único e as sete figuras de
+`output/apresentacao_banca1/`. Nenhum arquivo criado, movido ou removido; o
+tema ganhou `\pmmebuild` (título de build) e `\pmmesumariopasso` (passo do
+sumário), e a linha de orientação da capa passou a ser opcional. A pendência 6
+fecha para o Beamer e segue aberta para o Slidev. Documentação atualizada no
+mesmo commit: README do deck (mapeamento, decisões e verificação), README da
+banca, nota de abertura e pendência 6 do documento de conteúdo, seção 4i do
+roteiro.
+
+---
+
 ## 19/09/2026 — Banca 1: identidade institucional do Insper no tema Beamer
 
 A pedido do autor, o tema Beamer passa a reproduzir a identidade do Insper
@@ -31,7 +49,8 @@ seção. A paleta do PMM-E fica como acento e na capa alternativa `\pmmecapa`.
 | `07_apresentacoes/banca1/deck_beamer/fontes/OFL.txt` | `07_apresentacoes/banca1/deck_beamer/fontes/OFL-Oswald.txt` | passou a haver mais de uma licença OFL no diretório |
 
 O deck compila a 10pt (antes 11pt) por causa da Inter. Sem mudança no documento
-canônico; os frames seguem na estrutura de 15 slides (pendência já registrada).
+canônico; os frames seguiam na estrutura de 15 slides até a reconstrução do
+mesmo dia (entrada acima).
 ## 16/09/2026 — Fila pós-auditoria exaurida por delegação; artigo curto e scripts novos
 
 Motivo: o autor delegou à sessão as decisões pendentes da fila de

@@ -30,7 +30,8 @@
 \providecolor{insperCinza}{HTML}{6B6B6B}
 \providecolor{insperCinzaClaro}{HTML}{E6E6E6}
 \providecommand{\pmmeDisplay}{\rmfamily}
-\providecommand{\insertorientacao}{}
+\providecommand{\pmme@orientacao}{}
+\providecommand{\insertorientacao}{\pmme@orientacao}
 
 \def\pmme@insperfundo{}
 \def\pmme@insperlogo{}
@@ -87,8 +88,11 @@
       \vspace{0.6cm}
       {\small\bfseries\color{insperPreto}\insertauthor\par}
       \vspace{0.1cm}
-      {\footnotesize\color{insperCinza}Orientação: \insertorientacao\par}
-      \vspace{0.1cm}
+      % a linha de orientação só aparece quando \orientacao{} foi preenchido
+      \ifx\pmme@orientacao\@empty\else
+        {\footnotesize\color{insperCinza}Orientação: \insertorientacao\par}
+        \vspace{0.1cm}
+      \fi
       {\footnotesize\color{insperCinza}\insertinstitute\ $\cdot$ \insertdate\par}
     };
   \end{tikzpicture}}

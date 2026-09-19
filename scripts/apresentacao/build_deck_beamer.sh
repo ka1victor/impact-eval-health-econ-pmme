@@ -3,7 +3,7 @@
 # Build determinístico do deck Beamer (tema PMME) da banca 1, em LuaLaTeX.
 #
 # Entrada : docs/07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex
-# Figuras : output/apresentacao_banca1/*.png (as quatro usadas pelo deck)
+# Figuras : output/apresentacao_banca1/*.png (as sete usadas pelo deck)
 # Saída   : output/apresentacao_banca1/deck_beamer/banca1_beamer.pdf
 #
 # Todos os caminhos são relativos à raiz do repositório; o script se posiciona
@@ -36,10 +36,14 @@ if [[ ! -f "${TEX_REL}" ]]; then
   exit 1
 fi
 
+# As sete figuras que o deck inclui (documento canônico, slides 4, 5 e 7).
 for fig in \
+  output/apresentacao_banca1/especialistas_por_uf_extremos.png \
+  output/apresentacao_banca1/deslocamento_por_regiao.png \
+  output/apresentacao_banca1/dupla_pratica_cirurgioes.png \
+  output/apresentacao_banca1/bolsa_por_faixa.png \
   output/apresentacao_banca1/oferta_pre_por_faixa.png \
   output/apresentacao_banca1/retaguarda_por_faixa.png \
-  output/apresentacao_banca1/bolsa_por_faixa.png \
   output/apresentacao_banca1/preenchimento_ciclo1.png
 do
   if [[ ! -f "${fig}" ]]; then

@@ -3,7 +3,7 @@
 > **Formato:** markdown com imagens, para ler no GitHub ou no Obsidian<br>
 > **Escopo:** três seções, terminando na viabilidade empírica<br>
 > **Fora do escopo:** estratégia de identificação executada, estimadores, resultados e robustez<br>
-> **Atualização:** 17 de setembro de 2026
+> **Atualização:** 19 de setembro de 2026
 
 ## 1. O que esta entrega é
 
@@ -64,7 +64,7 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 | [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — os **17 slides** e **32 builds**, com título, corpo, figuras, fontes e ressalvas. `###` marca build, não slide; a linha de fontes e os blocos de **nota de produção** não vão à tela, e todo o resto do corpo vai. Os decks derivam dele |
 | [Roteiro narrativo](01_roteiro_narrativo.md) | arco das seções, lógica de cada bloco, regras de composição — inclusive a do build, na seção 2.6 —, rastreio do feedback e histórico das revisões, inclusive a reorganização de 16/09/2026, a compressão do mesmo dia (4f) e as duas rodadas de 17/09/2026 (4g e 4h) |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | origem e reprodutibilidade de cada número exibido |
-| [Deck Beamer](deck_beamer/) · [Deck Slidev](deck_slidev/) | artefatos derivados, com script de build cada um; PDFs em `output/apresentacao_banca1/`. Em 17/09/2026 os dois ainda estão na **estrutura de 15 slides**, duas estruturas atrás — divergência conhecida e datada, a resolver na próxima reconstrução |
+| [Deck Beamer](deck_beamer/) · [Deck Slidev](deck_slidev/) | artefatos derivados, com script de build cada um; PDFs em `output/apresentacao_banca1/`. O **Beamer** foi reconstruído em 19/09/2026 sobre a estrutura vigente: 17 frames, 32 builds, identidade Insper. O **Slidev** continua na estrutura de 15 slides — divergência conhecida e datada, pendência 6 |
 
 ## 3. Figuras
 
@@ -108,11 +108,11 @@ oferta, que **não são usadas** no deck; a curva de custo laboral de
 `figuras/` são material do deck anterior, preservado mas não usado. Ver
 [03 — Proveniência](03_proveniencia_figuras_e_numeros.md#figuras-geradas-e-não-usadas).
 
-Para reconstruir os decks — que continuam produzindo a versão de 15 slides, duas
-estruturas atrás:
+Para reconstruir os decks — o Beamer na estrutura vigente de 17 slides; o
+Slidev ainda na de 15:
 
 ```bash
-bash scripts/apresentacao/build_deck_beamer.sh        # pdflatex, 15 frames
+bash scripts/apresentacao/build_deck_beamer.sh        # LuaLaTeX, 17 frames, 32 páginas
 bash scripts/apresentacao/build_deck_slidev.sh        # Node 22, Chromium local
 ```
 

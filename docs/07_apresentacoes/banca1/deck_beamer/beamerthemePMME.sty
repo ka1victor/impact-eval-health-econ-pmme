@@ -425,6 +425,14 @@
     \hskip0pt plus1fill\relax
   \fi
   \ignorespacesafterend}
+% Título de build (\only<n>) dentro de um frame: o mesmo formato do título de
+% pmmeparte — Playfair negrito, traço vermelho — para que o `###` do documento
+% canônico tenha uma marca visual constante no deck.
+\newcommand{\pmmebuild}[1]{%
+  {\pmmepartetitulofonte\color{insperPreto}#1\par}%
+  \nointerlineskip\vskip0.18em
+  {\color{insperVermelho}\rule{1.6em}{0.09cm}\par}%
+  \vskip0.25em}
 \newenvironment{pmmeduas}[1][0pt]{%
   \global\pmme@parten=0 \def\pmme@partecol{2}\def\pmme@partefonte{}%
   \setlength{\pmme@partealt}{#1}%

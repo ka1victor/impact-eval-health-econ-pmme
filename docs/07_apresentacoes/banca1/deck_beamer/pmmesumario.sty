@@ -14,7 +14,7 @@
 % \providecolor para as cores, de modo que o pacote compila sozinho.
 % ---------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{pmmesumario}[2026/09/16 v1.0 slide de sumario PMME]
+\ProvidesPackage{pmmesumario}[2026/09/19 v1.1 slide de sumario PMME]
 
 \RequirePackage{tikz}
 \usetikzlibrary{calc}
@@ -52,12 +52,22 @@
 \newcommand{\pmmesumario@lin}{1.35}       % comprimento da linha fina
 \newcommand{\pmmesumario@los}{0.27}       % meia-diagonal do losango
 \newcommand{\pmmesumario@opdim}{0.55}     % opacidade dos itens não correntes
+\newcommand{\pmmesumario@nomelarg}{7.0cm}  % largura do nome da seção (quebra em 2 linhas)
+\newcommand{\pmmesumario@desclarg}{4.9cm}  % largura da descrição curta
+% \pmmesumariopasso{1.6} muda o passo vertical: com três itens, 1.6 distribui
+% melhor a coluna do que o padrão de 1.10, pensado para seis.
+\newcommand{\pmmesumariopasso}[1]{\renewcommand{\pmmesumario@dy}{#1}}
+
+% sem hifenização nos nomes e descrições (poucas palavras, quebra limpa)
+\newcommand{\pmmesumario@semhifen}{%
+  \ifdefined\l@nohyphenation\language=\l@nohyphenation\fi
+  \hyphenpenalty=10000 \exhyphenpenalty=10000 \relax}
 
 % fontes
 \newcommand{\pmmesumario@fonteTitulo}{%
   \pmmeDisplay\fontseries{b}\fontsize{30}{33}\selectfont}
 \newcommand{\pmmesumario@fonteNome}{%
-  \pmmeDisplay\fontseries{b}\fontshape{it}\fontsize{17}{19}\selectfont}
+  \pmmeDisplay\fontseries{b}\fontshape{it}\fontsize{16}{18}\selectfont}
 \newcommand{\pmmesumario@fonteDesc}{\sffamily\fontsize{7.5}{8.5}\selectfont}
 \newcommand{\pmmesumario@fonteNum}{\sffamily\bfseries\fontsize{6}{6.5}\selectfont}
 
@@ -162,8 +172,10 @@
       \fi
       \begin{scope}[opacity=\pmmesumario@op]
         % descrição curta, alinhada à direita, terminando na linha fina
-        \node[anchor=east, inner sep=0, text=insperCinza] at (\xx-\pmmesumario@lin-\pmmesumario@los-0.18,\yy)
-          {\pmmesumario@fonteDesc\pmmesumario@desc{\i}};
+        \node[anchor=east, inner sep=0, text=insperCinza,
+              text width=\pmmesumario@desclarg, align=right]
+          at (\xx-\pmmesumario@lin-\pmmesumario@los-0.18,\yy)
+          {\pmmesumario@fonteDesc\pmmesumario@semhifen\pmmesumario@desc{\i}};
         % linha fina até o losango
         \draw[insperCinza, line width=0.45pt]
           (\xx-\pmmesumario@lin-\pmmesumario@los,\yy) -- (\xx-\pmmesumario@los,\yy);
@@ -174,8 +186,10 @@
         \node[inner sep=0, text=\pmmesumario@numcor] at (\xx,\yy)
           {\pmmesumario@fonteNum\i};
         % nome da seção
-        \node[anchor=west, inner sep=0, text=insperPreto] at (\xx+\pmmesumario@los+0.22,\yy-0.02)
-          {\pmmesumario@fonteNome\pmmesumario@nome{\i}};
+        \node[anchor=west, inner sep=0, text=insperPreto,
+              text width=\pmmesumario@nomelarg, align=left]
+          at (\xx+\pmmesumario@los+0.22,\yy-0.02)
+          {\pmmesumario@fonteNome\pmmesumario@semhifen\pmmesumario@nome{\i}};
       \end{scope}
     }
   \end{tikzpicture}}

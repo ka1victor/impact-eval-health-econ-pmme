@@ -981,6 +981,27 @@ Aos requisitos das seções 4f e 4g somam-se: **17 slides**, com dois novos e um
 removido; a numeração de tudo o que vem depois do slide 5 deslocada em um; e os
 rótulos de build em linguagem simples.
 
+## 4i. Reconstrução do deck Beamer, 19/09/2026
+
+O deck Beamer deixou a estrutura de 15 slides e passou à vigente, de 17 slides
+em 3 seções, atendendo aos requisitos acumulados nas seções 4f, 4g e 4h: os
+dois layouts da convenção de cabeçalhos — as três divisórias são
+`\pmmedivisoria`, com número, título e subtítulo do documento —; o diagrama de
+teoria da mudança, no slide 8, em TikZ; um build por `###`, como `\only<n>` do
+mesmo frame, 32 ao todo; e a regra do que não vai à tela — `**Fontes:**` em
+rodapé pequeno, nota de produção em lugar nenhum. As sete figuras vêm de
+`output/apresentacao_banca1/`, inclusive as três de 17/09/2026. O deck compila
+em LuaLaTeX sem nenhum `Overfull`, em 32 páginas, e é determinístico.
+
+Nada de conteúdo mudou neste ato: o deck é derivado, e a regra do projeto
+continua — divergência entre deck e documento é erro do deck. O que o deck
+acrescenta ao texto do documento são marcas de composição, não palavras: o
+título de cada build no topo do overlay, as legendas "direto"/"proxy" que
+traduzem os círculos do slide 17 e o rótulo "suposição" das setas tracejadas,
+que o diagrama canônico já traz. A pendência 6 fecha para o Beamer; o Slidev
+continua na estrutura de 15 slides. Detalhe do mapeamento e das decisões de
+composição em [`deck_beamer/README.md`](deck_beamer/README.md).
+
 ## 5. Defeitos do material anterior
 
 Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.

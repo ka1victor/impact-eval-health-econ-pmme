@@ -177,8 +177,10 @@
       {\pmmecapasubtitulofonte\color{white}\insertsubtitle\par}
       \vspace{0.6cm}
       {\small\bfseries\color{white}\insertauthor\par}
-      \vspace{0.12cm}
-      {\small\color{white}Orientação: \insertorientacao\par}
+      \ifx\pmme@orientacao\@empty\else
+        \vspace{0.12cm}
+        {\small\color{white}Orientação: \insertorientacao\par}
+      \fi
     };
   \end{tikzpicture}}
 
