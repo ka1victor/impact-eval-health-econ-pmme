@@ -20,7 +20,7 @@
 \usetikzlibrary{calc}
 
 % --- fallbacks (o tema principal tem precedência) --------------------------
-\providecommand{\pmmeDisplay}{\fontfamily{qhvc}\selectfont}% fallback sem o tema
+\providecommand{\pmmeDisplay}{\fontfamily{qpl}\selectfont}% fallback sem o tema
 \providecolor{pmmeAzul}{HTML}{0D28A9}
 \providecolor{pmmeAzulEscuro}{HTML}{081A72}
 \providecolor{pmmeAzulClaro}{HTML}{E4E8F7}
@@ -31,6 +31,12 @@
 \providecolor{pmmeVermelho}{HTML}{C40000}
 \providecolor{pmmeCinzaTexto}{HTML}{2E2E2E}
 \providecolor{pmmeCinzaFonte}{HTML}{6B6B6B}
+\providecolor{insperPreto}{HTML}{1D1D1B}
+\providecolor{insperVermelho}{HTML}{E50505}
+\providecolor{insperListra}{HTML}{7F8F85}
+\providecolor{insperCreme}{HTML}{F2E8DC}
+\providecolor{insperCinza}{HTML}{6B6B6B}
+\providecolor{insperCinzaClaro}{HTML}{E6E6E6}
 
 % --- parâmetros de composição (cm, salvo indicação) -------------------------
 % Página: 16 x 9. Eixo x para a direita, y para cima, origem no canto
@@ -88,17 +94,14 @@
     \IfFileExists{\pmmesumario@fundo.jpg}{\xdef\pmmesumario@fundoOK{\pmmesumario@fundo.jpg}}{}}}}%
   \fi}
 
-% Padrão geométrico de reserva para o canto superior direito
+% Padrão de reserva para o canto superior direito: listras diagonais do
+% gráfico institucional do Insper, esmaecidas
 \newcommand{\pmmesumario@chevrons}{%
   \begin{scope}
-    \clip (9.2,4.6) rectangle (16,9);
-    \begin{scope}[line width=0.55cm, line join=miter, opacity=0.12]
-      \draw[pmmeAmarelo] (10.6,9.6) -- (12.55,7.25) -- (14.5,9.6);
-      \draw[pmmeVerde]   (12.1,9.6) -- (14.05,7.25) -- (16.0,9.6);
-      \draw[pmmeAmarelo] (13.6,9.6) -- (15.55,7.25) -- (17.5,9.6);
-      \draw[pmmeVerde]   (11.35,7.95)-- (13.30,5.60) -- (15.25,7.95);
-      \draw[pmmeAmarelo] (12.85,7.95)-- (14.80,5.60) -- (16.75,7.95);
-    \end{scope}
+    \clip (11.6,5.4) rectangle (16,9);
+    \fill[insperCreme] (11.6,5.4) rectangle (16,9);
+    \foreach \d in {-4.5,-4.2,...,4.5}{%
+      \draw[insperListra,line width=0.07cm] (11.6+\d,5.4) -- (11.6+\d+3.6,9);}
   \end{scope}}
 
 % --- o slide ----------------------------------------------------------------
@@ -107,15 +110,17 @@
   \pmmesumario@acharfundo
   \begin{tikzpicture}[remember picture, overlay,
                       shift={(current page.south west)}]
-    % fundo sólido
-    \fill[pmmeAzul] (0,0) rectangle (16,9);
-    % anel decorativo, largo e semitransparente, centro fora da página
+    % fundo branco
+    \fill[white] (0,0) rectangle (16,9);
+    % motivo decorativo no canto inferior esquerdo: arcos de listras (as
+    % listras do gráfico institucional do Insper, em curva), centro fora da
+    % página; não alcança as descrições dos itens
     \begin{scope}
       \clip (0,0) rectangle (16,9);
-      \draw[pmmeAzulClaro, opacity=0.17, line width=\pmmesumario@anelW]
-        (\pmmesumario@cx,\pmmesumario@cy) circle (\pmmesumario@anelR);
-      \draw[white, opacity=0.10, line width=0.4pt]
-        (\pmmesumario@cx,\pmmesumario@cy) circle (\pmmesumario@anelR+0.95);
+      \fill[insperCreme] (-1.5,-1.5) circle (4.7);
+      \fill[white] (-1.5,-1.5) circle (1.9);
+      \foreach \r in {2.2,2.5,...,4.4}{%
+        \draw[insperListra, line width=0.09cm] (-1.5,-1.5) circle (\r);}
     \end{scope}
     % canto superior direito: imagem esmaecida ou padrão de reserva
     \ifx\pmmesumario@fundoOK\@empty
@@ -123,19 +128,19 @@
     \else
       \begin{scope}
         \clip (0,0) rectangle (16,9);
-        \node[anchor=north east, inner sep=0, opacity=0.14] at (16,9)
+        \node[anchor=north east, inner sep=0, opacity=0.22] at (16,9)
           {\includegraphics[width=7.2cm]{\pmmesumario@fundoOK}};
       \end{scope}
     \fi
     % título
-    \node[anchor=north west, inner sep=0, text=white] at (0.85,8.45)
+    \node[anchor=north west, inner sep=0, text=insperPreto] at (0.85,8.45)
       {\pmmesumario@fonteTitulo\pmmesumario@titulo};
-    \fill[pmmeAmarelo] (0.88,7.18) rectangle (2.45,7.26);
+    \fill[insperVermelho] (0.88,7.18) rectangle (2.45,7.26);
     % arco fino que liga os losangos
     \pgfmathsetmacro{\pmmesumario@ybot}{\pmmesumario@ytop-(\pmmesumario@n-1)*\pmmesumario@dy}
     \pgfmathsetmacro{\pmmesumario@atop}{asin((\pmmesumario@ytop-\pmmesumario@cy)/\pmmesumario@R)}
     \pgfmathsetmacro{\pmmesumario@abot}{asin((\pmmesumario@ybot-\pmmesumario@cy)/\pmmesumario@R)}
-    \draw[white, opacity=0.28, line width=0.4pt]
+    \draw[insperCinzaClaro, line width=0.5pt]
       ([shift={(\pmmesumario@atop:\pmmesumario@R)}] \pmmesumario@cx,\pmmesumario@cy)
       arc[start angle=\pmmesumario@atop, end angle=\pmmesumario@abot,
           radius=\pmmesumario@R];
@@ -144,23 +149,23 @@
       \pgfmathsetmacro{\yy}{\pmmesumario@ytop-(\i-1)*\pmmesumario@dy}
       \pgfmathsetmacro{\xx}{\pmmesumario@cx+sqrt(\pmmesumario@R*\pmmesumario@R-(\yy-\pmmesumario@cy)*(\yy-\pmmesumario@cy))}
       \ifnum\pmmesumario@k=0
-        \def\pmmesumario@op{1}\def\pmmesumario@fill{pmmeAmarelo}%
-        \def\pmmesumario@numcor{pmmeAzulEscuro}%
+        \def\pmmesumario@op{1}\def\pmmesumario@fill{insperVermelho}%
+        \def\pmmesumario@numcor{white}%
       \else
         \ifnum\i=\pmmesumario@k
-          \def\pmmesumario@op{1}\def\pmmesumario@fill{pmmeAmarelo}%
-          \def\pmmesumario@numcor{pmmeAzulEscuro}%
+          \def\pmmesumario@op{1}\def\pmmesumario@fill{insperVermelho}%
+          \def\pmmesumario@numcor{white}%
         \else
-          \def\pmmesumario@op{\pmmesumario@opdim}\def\pmmesumario@fill{pmmeAzulClaro}%
-          \def\pmmesumario@numcor{pmmeAzul}%
+          \def\pmmesumario@op{\pmmesumario@opdim}\def\pmmesumario@fill{insperCinzaClaro}%
+          \def\pmmesumario@numcor{insperCinza}%
         \fi
       \fi
       \begin{scope}[opacity=\pmmesumario@op]
         % descrição curta, alinhada à direita, terminando na linha fina
-        \node[anchor=east, inner sep=0, text=white] at (\xx-\pmmesumario@lin-\pmmesumario@los-0.18,\yy)
+        \node[anchor=east, inner sep=0, text=insperCinza] at (\xx-\pmmesumario@lin-\pmmesumario@los-0.18,\yy)
           {\pmmesumario@fonteDesc\pmmesumario@desc{\i}};
         % linha fina até o losango
-        \draw[white, line width=0.45pt]
+        \draw[insperCinza, line width=0.45pt]
           (\xx-\pmmesumario@lin-\pmmesumario@los,\yy) -- (\xx-\pmmesumario@los,\yy);
         % losango com o número
         \fill[\pmmesumario@fill]
@@ -169,7 +174,7 @@
         \node[inner sep=0, text=\pmmesumario@numcor] at (\xx,\yy)
           {\pmmesumario@fonteNum\i};
         % nome da seção
-        \node[anchor=west, inner sep=0, text=white] at (\xx+\pmmesumario@los+0.22,\yy-0.02)
+        \node[anchor=west, inner sep=0, text=insperPreto] at (\xx+\pmmesumario@los+0.22,\yy-0.02)
           {\pmmesumario@fonteNome\pmmesumario@nome{\i}};
       \end{scope}
     }

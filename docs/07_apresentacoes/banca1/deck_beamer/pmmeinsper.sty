@@ -1,0 +1,118 @@
+% ---------------------------------------------------------------------------
+% pmmeinsper.sty — capa institucional e divisória de seção no estilo do Insper
+%
+% Composição derivada do tema oficial do Insper para Quarto/reveal.js
+% (github.com/padsInsper/quarto-insper-theme, MIT): página branca, título em
+% serifa preta à esquerda, gráfico institucional (quadrados preto e vermelho
+% sobre listras) à direita, autoria abaixo do título.
+%
+% Depende do tema beamerthemePMME.sty (cores insper*, \pmmeDisplay, \orientacao,
+% \insertorientacao). Há \providecolor/\providecommand para compilar isolado.
+%
+% API:
+%   \pmmeinsperfundo{caminho}   gráfico institucional (insper/insper-bg.png)
+%   \pmmeinsperlogo{caminho}    logo (insper/logo.png), usado no rodapé do tema
+%   \inspercapa                 a capa (em frame [plain])
+%   \pmmedivisoria{Título}{Subtítulo}   divisória de seção (em frame [plain]);
+%                               numera com \thesection
+%   \pmmecaparotulo             rótulo pequeno acima do título (redefinível)
+% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pmmeinsper}[2026/09/19 v1.0 Capa e divisoria Insper]
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+
+\providecolor{insperPreto}{HTML}{1D1D1B}
+\providecolor{insperVermelho}{HTML}{E50505}
+\providecolor{insperVerde}{HTML}{3ACC9F}
+\providecolor{insperListra}{HTML}{7F8F85}
+\providecolor{insperCreme}{HTML}{F2E8DC}
+\providecolor{insperCinza}{HTML}{6B6B6B}
+\providecolor{insperCinzaClaro}{HTML}{E6E6E6}
+\providecommand{\pmmeDisplay}{\rmfamily}
+\providecommand{\insertorientacao}{}
+
+\def\pmme@insperfundo{}
+\def\pmme@insperlogo{}
+\newcommand{\pmmeinsperfundo}[1]{\def\pmme@insperfundo{#1}}
+\newcommand{\pmmeinsperlogo}[1]{\def\pmme@insperlogo{#1}}
+\newcommand{\pmmecaparotulo}{Projeto Mais Médicos Especialistas \,$\cdot$\, Banca 1}
+
+% tipografia da capa (ajustável)
+\newcommand{\inspercapatitulofonte}{\fontsize{22}{26}\pmmeDisplay\bfseries}
+\newcommand{\inspercapasubtitulofonte}{\fontsize{10.5}{13}\selectfont}
+\newcommand{\inspercapatitulo}{\inserttitle}
+
+% --- gráfico institucional: imagem ou reserva desenhada ----------------------
+% Quadrado preto e quadrado vermelho sobre um campo de listras diagonais,
+% como no insper-bg.png do tema oficial. #1 #2 = canto inferior esquerdo;
+% ocupa cerca de 4,2 x 4,2 cm.
+\newcommand{\pmme@insperlistras}[2]{%
+  \begin{scope}
+    \clip (#1+0.55,#2+0.55) rectangle (#1+3.55,#2+3.55);
+    \fill[insperCreme] (#1+0.55,#2+0.55) rectangle (#1+3.55,#2+3.55);
+    \foreach \d in {-4,-3.8,...,4.2}{%
+      \draw[insperListra,line width=0.055cm]
+        (#1+0.55+\d,#2+0.55) -- (#1+0.55+\d+3.0,#2+3.55);}
+  \end{scope}
+  \fill[insperPreto] (#1,#2+1.0) rectangle (#1+2.4,#2+3.2);
+  \fill[insperVermelho] (#1+1.25,#2) rectangle (#1+4.2,#2+2.35);
+  \node[anchor=south east,text=white,font=\fontsize{7}{8}\selectfont]
+    at (#1+4.05,#2+0.15) {Insper.edu.br};}
+
+\newcommand{\pmme@inspergrafico}[3]{% x y altura
+  \IfFileExists{\pmme@insperfundo}{%
+    \node[anchor=center,inner sep=0] at (#1,#2)
+      {\includegraphics[height=#3cm]{\pmme@insperfundo}};}{%
+    \pmme@insperlistras{#1-2.1}{#2-2.3}}}
+
+% --- a capa ------------------------------------------------------------------
+\newcommand{\inspercapa}{%
+  \begin{tikzpicture}[remember picture,overlay,shift={(current page.south west)},x=1cm,y=1cm]
+    \fill[white] (0,0) rectangle (16,9);
+    \pmme@inspergrafico{12.9}{4.9}{5.8}
+    % rótulo
+    \node[anchor=west,inner sep=0,text=insperCinza,
+          font=\fontsize{7.5}{9}\selectfont]
+      at (1.2,8.05) {\pmmecaparotulo};
+    \fill[insperVermelho] (1.2,7.68) rectangle (2.0,7.74);
+    % título, subtítulo, autoria (bloco ancorado no topo; cabe título de
+    % até quatro linhas)
+    \node[anchor=north west,inner sep=0,text width=8.6cm,align=left]
+      at (1.2,7.3) {%
+      \raggedright\setlength{\parskip}{0pt}%
+      {\inspercapatitulofonte\color{insperPreto}\inspercapatitulo\par}
+      \vspace{0.3cm}
+      {\inspercapasubtitulofonte\color{insperCinza}\insertsubtitle\par}
+      \vspace{0.6cm}
+      {\small\bfseries\color{insperPreto}\insertauthor\par}
+      \vspace{0.1cm}
+      {\footnotesize\color{insperCinza}Orientação: \insertorientacao\par}
+      \vspace{0.1cm}
+      {\footnotesize\color{insperCinza}\insertinstitute\ $\cdot$ \insertdate\par}
+    };
+  \end{tikzpicture}}
+
+% --- divisória de seção -------------------------------------------------------
+% Número grande em vermelho, título em serifa, subtítulo em cinza; à direita,
+% arcos de listras (o motivo das listras do gráfico oficial, em curva).
+\newcommand{\pmmedivisoria}[2]{%
+  \begin{tikzpicture}[remember picture,overlay,shift={(current page.south west)},x=1cm,y=1cm]
+    \fill[white] (0,0) rectangle (16,9);
+    \begin{scope}
+      \clip (10.2,0) rectangle (16,9);
+      \fill[insperCreme] (17.2,4.5) circle (5.6);
+      \foreach \r in {1.2,1.55,...,5.6}{%
+        \draw[insperListra,line width=0.09cm] (17.2,4.5) circle (\r);}
+    \end{scope}
+    \fill[insperVermelho] (10.2,0) rectangle (10.32,9);
+    \node[anchor=north west,inner sep=0,text=insperVermelho,
+          font=\fontsize{54}{54}\pmmeDisplay\bfseries] at (1.2,7.2) {\thesection};
+    \node[anchor=north west,inner sep=0,text width=8.2cm,align=left] at (1.2,4.55) {%
+      \raggedright\setlength{\parskip}{0pt}%
+      {\fontsize{22}{26}\pmmeDisplay\bfseries\color{insperPreto}#1\par}
+      \vspace{0.3cm}
+      {\fontsize{10.5}{13}\selectfont\color{insperCinza}#2\par}};
+  \end{tikzpicture}}
+
+\endinput

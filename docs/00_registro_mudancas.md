@@ -8,6 +8,30 @@
 
 ---
 
+## 19/09/2026 — Banca 1: identidade institucional do Insper no tema Beamer
+
+A pedido do autor, o tema Beamer passa a reproduzir a identidade do Insper
+(tema oficial para Quarto, [padsInsper/quarto-insper-theme](https://github.com/padsInsper/quarto-insper-theme),
+MIT): Inter no corpo, Playfair Display nos títulos (no lugar da GT Ultra Fine,
+comercial), preto e vermelho, capa com o gráfico institucional, divisória de
+seção. A paleta do PMM-E fica como acento e na capa alternativa `\pmmecapa`.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca1/deck_beamer/pmmeinsper.sty`](07_apresentacoes/banca1/deck_beamer/pmmeinsper.sty) | capa institucional `\inspercapa` e divisória de seção `\pmmedivisoria` |
+| [`07_apresentacoes/banca1/deck_beamer/insper/`](07_apresentacoes/banca1/deck_beamer/insper/README.md) | `logo.png`, `insper-bg.png`, licença MIT do tema oficial e `README.md` |
+| `07_apresentacoes/banca1/deck_beamer/fontes/Inter-*.otf`, `PlayfairDisplay-*.ttf`, `LICENSE-Inter.txt`, `OFL-Playfair.txt` | fontes de corpo e de exibição (OFL); a Playfair é instância estática gerada da fonte variável |
+
+### Renomeado
+
+| De | Para | Motivo |
+|---|---|---|
+| `07_apresentacoes/banca1/deck_beamer/fontes/OFL.txt` | `07_apresentacoes/banca1/deck_beamer/fontes/OFL-Oswald.txt` | passou a haver mais de uma licença OFL no diretório |
+
+O deck compila a 10pt (antes 11pt) por causa da Inter. Sem mudança no documento
+canônico; os frames seguem na estrutura de 15 slides (pendência já registrada).
 ## 16/09/2026 — Fila pós-auditoria exaurida por delegação; artigo curto e scripts novos
 
 Motivo: o autor delegou à sessão as decisões pendentes da fila de

@@ -11,7 +11,10 @@
 % Compilar SEMPRE a partir da raiz do repositorio (LuaLaTeX):
 %     bash scripts/apresentacao/build_deck_beamer.sh
 % ---------------------------------------------------------------------------
-\documentclass[aspectratio=169,11pt]{beamer}
+% 10pt: a Inter tem altura-x maior e e mais larga que a Latin Modern; a 10pt
+% ocupa na tela o mesmo que a Latin Modern a 11pt, e os frames compostos para
+% ela continuam cabendo.
+\documentclass[aspectratio=169,10pt]{beamer}
 
 % Motor: o build oficial usa LuaLaTeX (fontspec carrega a Oswald da identidade
 % e Latin Modern no corpo). Em pdflatex o deck tambem compila, com Latin
@@ -56,7 +59,9 @@ Mais Médicos Especialistas}
 % relativos a raiz do repositorio (o build compila a partir dela). Ausentes,
 % o tema cai em Heros Condensed e a capa usa os substitutos do pacote.
 \pmmefontes{docs/07_apresentacoes/banca1/deck_beamer/fontes/}
-\pmmelogo{docs/07_apresentacoes/banca1/deck_beamer/assets/logo_insper.png}
+\pmmeinsperlogo{docs/07_apresentacoes/banca1/deck_beamer/insper/logo.png}
+\pmmeinsperfundo{docs/07_apresentacoes/banca1/deck_beamer/insper/insper-bg.png}
+\pmmelogo{docs/07_apresentacoes/banca1/deck_beamer/insper/logo.png}
 \pmmefoto{docs/07_apresentacoes/banca1/deck_beamer/assets/capa_foto.jpg}
 
 % --- sumario: as seis secoes e a descricao curta de cada uma ---------------
@@ -76,7 +81,7 @@ Mais Médicos Especialistas}
 % ===========================================================================
 \rastreio{}
 \begin{frame}[plain]
-  \pmmecapa
+  \inspercapa   % capa institucional Insper; \pmmecapa e a alternativa no visual do PMM-E
 \end{frame}
 
 % ===========================================================================

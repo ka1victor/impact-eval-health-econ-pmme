@@ -1,30 +1,32 @@
-# Fonte de destaque do tema PMME: Oswald
+# Fontes do tema PMME
 
-Arquivos **versionados** da família [Oswald](https://github.com/googlefonts/OswaldFont)
-(Vernon Adams e colaboradores), licença **SIL Open Font License 1.1**
-([`OFL.txt`](OFL.txt)). A OFL permite redistribuir os arquivos com o projeto e
-embuti-los no PDF.
+Arquivos **versionados**, todos sob a **SIL Open Font License 1.1**, que permite
+redistribuí-los com o projeto e embuti-los no PDF. O `.tex` declara o diretório
+com `\pmmefontes{docs/07_apresentacoes/banca1/deck_beamer/fontes/}` (caminho
+relativo à raiz, como os demais assets); `beamerthemePMME.sty` carrega as
+famílias com `fontspec` em `\AtBeginDocument`. Em **pdflatex** o `fontspec` não
+existe e o tema usa os equivalentes Type 1 indicados.
 
-| Arquivo | Uso no deck |
-|---|---|
-| `Oswald-Regular.ttf` | peso base da família (subseções não correntes da navbar) |
-| `Oswald-Bold.ttf` | títulos de frame, capa, sumário, seção corrente da navbar |
-| `Oswald-Medium.ttf`, `Oswald-SemiBold.ttf` | pesos intermediários, disponíveis para ajustes (`\fontseries{sb}` não é mapeado por padrão) |
+| Família | Arquivos | Licença | Uso no deck | Em pdflatex |
+|---|---|---|---|---|
+| **Inter** (rsms) | `Inter-{Regular,Italic,SemiBold,Bold,BoldItalic}.otf` | [`LICENSE-Inter.txt`](LICENSE-Inter.txt) | corpo do texto, navbar, rodapé — a fonte de corpo do tema oficial do Insper | Latin Modern Sans |
+| **Playfair Display** (Claus Eggers Sørensen) | `PlayfairDisplay-{Regular,Bold,Italic,BoldItalic}.ttf` | [`OFL-Playfair.txt`](OFL-Playfair.txt) | `\pmmeDisplay`: títulos de frame, capa, sumário, divisórias, títulos de `pmmeparte`; substitui a GT Ultra Fine (comercial) do tema oficial | TeX Gyre Pagella |
+| **Oswald** (Vernon Adams e col.) | `Oswald-{Regular,Medium,SemiBold,Bold}.ttf` | [`OFL-Oswald.txt`](OFL-Oswald.txt) | `\pmmeCondensada`: só a capa alternativa `\pmmecapa`, que reproduz o banner do PMM-E | TeX Gyre Heros Condensed |
 
-**Por quê.** O título da peça oficial do Projeto Mais Médicos Especialistas é
-composto numa grotesca condensada em caixa alta; a Oswald é a fonte livre que
-reproduz esse desenho (comparação lado a lado em 16/09/2026: a TeX Gyre Heros
-Condensed, alternativa em Type 1, é visivelmente mais larga e mais baixa).
+**Playfair Display: como foi gerada.** O repositório da fonte
+([clauseggers/Playfair](https://github.com/clauseggers/Playfair), v2.2) publica
+só fontes variáveis (eixos `opsz`, `wdth`, `wght`). Os quatro arquivos aqui são
+instâncias estáticas geradas com `fontTools.varLib.instancer` em
+`opsz=48, wdth=100` e `wght=400/700`, nome interno *Playfair Display PMME*. A
+OFL permite a derivação; o nome reservado *Playfair* não é usado como nome de
+família da instância.
 
-**Como o tema a encontra.** O `.tex` declara
-`\pmmefontes{docs/07_apresentacoes/banca1/deck_beamer/fontes/}` (caminho
-relativo à raiz, como os demais assets). `beamerthemePMME.sty` carrega a família
-com `fontspec` em `\AtBeginDocument`; se o diretório não existir, cai em
-TeX Gyre Heros Cn com um aviso no log. Em **pdflatex** o `fontspec` não existe
-e o tema usa sempre a Heros Condensed (`qhvc`).
-
-A Oswald não tem itálico: onde o sumário pede negrito-itálico, o tema aplica
+**Oswald sem itálico.** Onde a capa alternativa pede itálico, o tema aplica
 `FakeSlant=0.14` sobre o Bold.
+
+**Tamanho de corpo.** A Inter tem altura-x maior e é mais larga que a Latin
+Modern; o deck compila a **10pt** (antes 11pt) para ocupar na tela o mesmo que
+antes e manter os frames compostos cabendo.
 
 **Proveniência.** Fonte é elemento de identidade visual, não saída de análise;
 não passa pelo pipeline de `output/`.

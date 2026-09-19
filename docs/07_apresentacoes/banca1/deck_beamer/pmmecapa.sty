@@ -11,7 +11,9 @@
 % Contrato com o tema principal (beamerthemePMME.sty), que DEFINE:
 %   cores  pmmeAzul pmmeAzulEscuro pmmeAzulClaro pmmeAzulPalido pmmeAmarelo
 %          pmmeVerde pmmeVermelho pmmeCinzaTexto pmmeCinzaFonte
-%   fonte  \pmmeDisplay  (Oswald no LuaLaTeX; Heros Condensed no pdflatex)
+%   fonte  \pmmeCondensada  (Oswald no LuaLaTeX; Heros Condensed no pdflatex)
+%   Esta e a capa ALTERNATIVA, no visual do banner do PMM-E; a capa padrao do
+%   deck e \inspercapa (pmmeinsper.sty).
 % Este pacote NAO redefine nada disso; so oferece fallbacks com \providecommand
 % e \providecolor para compilar isolado.
 %
@@ -44,7 +46,7 @@
 \providecolor{pmmeVermelho}{HTML}{C40000}
 \providecolor{pmmeCinzaTexto}{HTML}{2E2E2E}
 \providecolor{pmmeCinzaFonte}{HTML}{6B6B6B}
-\providecommand{\pmmeDisplay}{\fontfamily{qhvc}\selectfont}% fallback sem o tema
+\providecommand{\pmmeCondensada}{\fontfamily{qhvc}\selectfont}% fallback sem o tema
 
 % --- metadados --------------------------------------------------------------
 \def\pmme@orientacao{}
@@ -56,7 +58,7 @@
 \newcommand{\pmmefoto}[1]{\def\pmme@foto{#1}}
 
 % --- tipografia da capa (ajustavel) -----------------------------------------
-\newcommand{\pmmecapatitulofonte}{\fontsize{22}{24}\pmmeDisplay\bfseries}
+\newcommand{\pmmecapatitulofonte}{\fontsize{22}{24}\pmmeCondensada\bfseries}
 \newcommand{\pmmecapasubtitulofonte}{\fontsize{9.5}{12}\selectfont}
 \newcommand{\pmmecapatitulo}{\inserttitle}
 
@@ -128,7 +130,7 @@
     \IfFileExists{\pmme@logo}{\includegraphics[height=0.55cm]{\pmme@logo}}{\pmme@wordmark}%
   \fi}
 \newcommand{\pmme@wordmark}{%
-  {\fontsize{15}{15}\pmmeDisplay\bfseries\color{pmmeCinzaTexto}Insper}}
+  {\fontsize{15}{15}\pmmeCondensada\bfseries\color{pmmeCinzaTexto}Insper}}
 
 % --- a capa -------------------------------------------------------------------
 \newcommand{\pmmecapa}{%
@@ -166,7 +168,7 @@
       \begin{tikzpicture}[baseline=(rot.base)]
         \pmme@marcador{0}{0.14}{0.36}
         \node[anchor=west,inner sep=0pt,text=white,
-              font=\fontsize{8.5}{10}\pmmeDisplay\bfseries] (rot) at (0.62,0.14)
+              font=\fontsize{8.5}{10}\pmmeCondensada\bfseries] (rot) at (0.62,0.14)
           {PROJETO DE PESQUISA \,$\cdot$\, BANCA 1};
       \end{tikzpicture}\par
       \vspace{0.45cm}
