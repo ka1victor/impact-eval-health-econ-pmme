@@ -1,0 +1,16 @@
+modelo,variante_uf_fe,primaria,termo,coef,se_cluster,p_valor,n,n_clusters,n_niveis_uf_fe,ufs_colapsadas,nota
+delta_estoque_6m_minimal,balde_unico,False,atracao_muni,1.2948856220641427,0.7749055146839917,0.09471696052854772,587,295,20,14;16;25;26;27;28;32;53,implementacao anterior a A-1: UFs pequenas num unico nivel RESTO
+estoque_6m_minimal,balde_unico,False,atracao_muni,7.13226114718227,3.6401629765523458,0.05007477561505063,587,295,20,14;16;25;26;27;28;32;53,implementacao anterior a A-1: UFs pequenas num unico nivel RESTO
+cobertura_6m_minimal,balde_unico,False,atracao_muni,0.0541104927648534,0.02003483115309504,0.006916855326986844,587,295,20,14;16;25;26;27;28;32;53,implementacao anterior a A-1: UFs pequenas num unico nivel RESTO
+entradas_6m_minimal,balde_unico,False,atracao_muni,0.39018323634972435,0.24293021620017263,0.10824016987419287,587,295,20,14;16;25;26;27;28;32;53,implementacao anterior a A-1: UFs pequenas num unico nivel RESTO
+presentes_baseline_6m_minimal,balde_unico,False,atracao_muni,0.03792257443044008,0.043844299211712366,0.3870731453059031,587,295,20,14;16;25;26;27;28;32;53,implementacao anterior a A-1: UFs pequenas num unico nivel RESTO
+delta_estoque_6m_minimal,macro_regiao,True,atracao_muni,0.5061830532385464,0.2505699008766636,0.0433702030094719,587,295,24,14;16;25;26;27;28;32;53,protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado
+estoque_6m_minimal,macro_regiao,True,atracao_muni,3.5970238307416453,1.5322569870990033,0.018898199379428,587,295,24,14;16;25;26;27;28;32;53,protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado
+cobertura_6m_minimal,macro_regiao,True,atracao_muni,0.05745877475483417,0.020407626263407256,0.004869320552452375,587,295,24,14;16;25;26;27;28;32;53,protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado
+entradas_6m_minimal,macro_regiao,True,atracao_muni,0.1492908589494175,0.07744198372508528,0.053882895612455475,587,295,24,14;16;25;26;27;28;32;53,protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado
+presentes_baseline_6m_minimal,macro_regiao,True,atracao_muni,0.029452931891427527,0.039446042809583345,0.45526653133293704,587,295,24,14;16;25;26;27;28;32;53,protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado
+delta_estoque_6m_minimal,sem_colapso,False,atracao_muni,0.5001997255486642,0.2413596328616781,0.03822582838237121,587,295,27,14;16;25;26;27;28;32;53,"27 UFs, sem colapso"
+estoque_6m_minimal,sem_colapso,False,atracao_muni,2.8749822364780337,1.2207091978766271,0.018514047540183296,587,295,27,14;16;25;26;27;28;32;53,"27 UFs, sem colapso"
+cobertura_6m_minimal,sem_colapso,False,atracao_muni,0.05899443128009838,0.02046829744372223,0.003948658550985454,587,295,27,14;16;25;26;27;28;32;53,"27 UFs, sem colapso"
+entradas_6m_minimal,sem_colapso,False,atracao_muni,0.15330037514282743,0.07657007576884448,0.045274782998605205,587,295,27,14;16;25;26;27;28;32;53,"27 UFs, sem colapso"
+presentes_baseline_6m_minimal,sem_colapso,False,atracao_muni,0.03533060364049445,0.03914403519530396,0.3667491116162743,587,295,27,14;16;25;26;27;28;32;53,"27 UFs, sem colapso"

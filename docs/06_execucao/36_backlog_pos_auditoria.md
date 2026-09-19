@@ -118,6 +118,37 @@ modelos com `uf_fe`. E `A5_tabela_11` está livre: as tabelas de A5 vão hoje at
 **Bloqueio adicional, independente da decisão acima:** ver D-4. A5 não é
 reexecutável neste ambiente.
 
+### Executado em 16/09/2026 — sessão 1. Reproduz os três alvos reemitidos
+
+**Decisão (delegada pelo autor em 16/09/2026): nível residual rotulado, 24
+níveis**, a mesma definição de `colapsar_uf_fe` do C1 em A4. Fundamento e alvos
+reemitidos na **emenda 2** do `35_plano_correcoes_pos_auditoria.md`, commitada
+antes do código (`03ccc1c`): o princípio "município sem macrorregião forma nível
+próprio, em vez de herdar uma região" foi fixado pelo C1 em 09/09/2026, antes de
+qualquer coeficiente de A5 ser medido; a alternativa de 23 níveis deixa quatro
+células sem efeito fixo de UF, que é a classe de defeito que este item corrige;
+e as duas variantes levam à mesma conclusão. O alvo de +0,5014 / 23 níveis do
+quadro acima deixou de ser alvo e ficou como medição.
+
+Execução no modo de reestimação (D-4 parcialmente destravado), com
+`colapsar_uf_fe` copiada de A4 para A5 e aplicada nas **duas** implementações
+— coluna do painel e `A5_tabela_01e_amostra_uf.csv`:
+
+| Variante | coef | EP | p | níveis | alvo da emenda 2 |
+|---|---:|---:|---:|---:|---|
+| Balde único `RESTO` | +1,2949 | 0,7749 | 0,0947 | 20 | reproduz |
+| **Colapso em macrorregião, residual rotulado (primária)** | **+0,5062** | **0,2506** | **0,0434** | **24** | **reproduz** |
+| Sem colapso | +0,5002 | 0,2414 | 0,0382 | 27 | reproduz |
+
+As três variantes, para os cinco modelos `minimal` de corte transversal, estão
+em `A5_tabela_11_sensibilidade_colapso_uf.csv`; o próprio script confere os 12
+valores de `delta_minimal` como alvo congelado, ao lado dos 11 do C2. As tabelas
+`03`–`03i`, `04`, `05` e `06` mudaram por consequência mecânica da definição de
+efeito fixo, como a emenda previa e sem alvo prévio. O estudo de evento não
+mudou: `0,0684` e `0,50` idênticos. `A5_painel_T0.parquet` não foi regravado;
+sua coluna `uf_fe` traz a definição superada e é recomputada em memória.
+Nenhuma cifra do artigo mudou. Três testes novos.
+
 ## A-2 · Wild cluster bootstrap que o A3 exige e nunca foi computado
 
 **Onde:** `scripts/tema_trabalho/05_estimar_atracao.py`; o A3 exige o
@@ -249,6 +280,14 @@ usar. Nenhum modelo consome a coluna — eles usam `presentes_baseline_6m`, que 
 madura. Nenhum dos 13 `checks` do manifesto testa isso; acrescentar o teste faz
 parte do item.
 
+### Executado em 16/09/2026 — sessão 4
+
+`presentes_6m` fica **NaN** nas 1.184 linhas em que `coorte_6m_madura` é `False`,
+com a coluna nova `presentes_6m_censurado`; o script aborta se a coorte da
+referência não for madura ou se censura for gravada como valor. O manifesto
+ganha o 14º check, `presentes_6m_censura_gravada_como_nan_nao_zero`. Nenhum
+modelo mudou, porque nenhum consumia a coluna. Um teste novo.
+
 ## B-2 · Relatório de A5 é código morto
 
 **Onde:** `scripts/tema_trabalho/06_avaliar_provimento_cnes.py`, linhas ~1145–1229
@@ -264,6 +303,17 @@ influência nem de robustez. O bloco morto ainda carrega texto obsoleto — cita
 **Decisão:** ou remover o bloco morto, ou promovê-lo. Recomendo promovê-lo, agora
 que o LOO e a sensibilidade de referência existem como artefato — o relatório é
 justamente onde um leitor procura essa fragilidade.
+
+### Executado em 16/09/2026 — sessão 4. Promovido, com o texto obsoleto corrigido
+
+O bloco morto (11.250 caracteres) foi removido e suas seções foram promovidas
+ao relatório publicado com os números lidos das tabelas gravadas, não do texto
+antigo: construção, maturidade e censura; trajetória agregada; influência e
+robustez (LOO de UF e curso, leave-one-município, validação preditiva);
+multiplicidade; limites. O que o bloco morto dizia de errado não foi promovido
+— `13.92 (202509 baseline)`, `FE curso (16)`, `G=368` —, e o relatório passa a
+declarar referência 202506, 10 cursos e 295 municípios na amostra
+confirmatória. Um teste garante que o texto obsoleto não reaparece.
 
 ## B-3 · Manifesto de reprodução de A6 não reproduz
 
@@ -337,6 +387,12 @@ cadeia de hashes a jusante, obrigando a reexecutar A3–A6. Como é só uma fras
 avalie se compensa; a alternativa é registrar a errata em documento, sem tocar no
 artefato congelado. **Recomendo a errata.**
 
+### Decidido em 16/09/2026 — errata E-5
+
+Decisão delegada pelo autor; adotada a recomendação. Reproduzido: 27 capitais,
+25 em RM/RIDE strict, Rio Branco e Campo Grande fora; 1.331 − 25 = 1.306.
+Errata em [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md), E-5.
+
 ## B-5 · Multiplicidade nunca tratada em A5
 
 **Onde:** `06_avaliar_provimento_cnes.py:122` define `bh_fdr`, que nunca é
@@ -344,6 +400,24 @@ chamada; `q_fdr_atracao` sai `NaN` em todas as tabelas.
 
 São 25 coeficientes de evento mais cerca de 12 modelos secundários sem qualquer
 discussão de multiplicidade. A4 aplica FDR entre estratos; A5 não aplica nada.
+
+### Executado em 16/09/2026 — sessão 4. Famílias declaradas antes de ver os q
+
+Famílias: (i) os 25 coeficientes de evento de cada par amostra–escala, com
+Benjamini–Hochberg nas colunas `q_fdr_bh` e `q_fdr_bh_gl_fe` das tabelas 07 e
+08; (ii) o coeficiente de atração nos cinco desfechos de corte transversal,
+separadamente para `minimal` e `full`, na coluna `q_fdr_atracao` das tabelas 03
+a 03e, que antes saía `NaN`. Registro em `A5_estimativas_provimento.json`,
+bloco `multiplicidade`.
+
+Resultado, lido dos artefatos: na amostra confirmatória, o coeficiente de
+março/2026 na **escala proporcional** tem `q = 0,0034` e sobrevive à família de
+25; o coeficiente em **nível** tem `q = 0,364` e **não sobrevive** — mais uma
+razão, independente da composição de cursos, para o nível ser sensibilidade e
+não forma primária, como o C2 do plano `35` já decidira. No corte transversal
+`minimal`, cobertura (`q = 0,024`) e estoque (`q = 0,047`) ficam abaixo de 0,05;
+`delta` (`q = 0,067`) e entradas (`q = 0,067`) não. Nenhum desses coeficientes
+entra no artigo. Um teste novo.
 
 ## B-6 · Rótulos e artefatos enganosos
 
@@ -360,6 +434,20 @@ Três itens pequenos, do mesmo tipo, que podem ir num commit só:
   (3.057), não células distintas (**2.128**; 929 aparecem nas duas chamadas).
   Mesma restrição de congelamento do B-4.
 
+### Executado em 16/09/2026 — sessão 4. Um rótulo corrigido, dois em errata
+
+- `A5_tabela_03f`: o rótulo passa a ser derivado das constantes,
+  `OLS_delta_T0alt_202509_202603_minimal`, e o comentário do código que dizia
+  `202507 -> 202601` foi corrigido. Valor inalterado.
+- `portao_denominador.json`: **errata E-3** em
+  [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md).
+  Reproduzido: 185 células e 221 confirmações excedentes; o `10` publicado é o
+  subconjunto com vaga imediata maior que zero. Regravar exigiria reexecutar
+  A3–A6 pelo hash, o mesmo bloqueio do C-4.
+- `manifesto_tipologia_territorial.json`: **errata E-4**. Reproduzido: 3.057
+  linhas célula–chamada, 2.128 células distintas, 929 nas duas chamadas.
+  Tipologia congelada; decisão delegada pelo autor: errata.
+
 ## B-7 · `sg_uf` de tipo misto na tipologia
 
 `matriz_tipologia_territorial.parquet` tem 31 valores distintos de `sg_uf` para 27
@@ -370,6 +458,12 @@ nulo. Nenhum dos cinco está na população A1, então nenhum resultado é afeta
 Efeito visível: `concentracao.por_uf_top10_populacao_A1` lista `{"31": 150, "52":
 44, "35": 35, …}`, códigos apresentados como se fossem siglas. Mesma restrição de
 congelamento do B-4.
+
+### Decidido em 16/09/2026 — errata E-6
+
+Decisão delegada pelo autor; errata, pela mesma razão do B-4. Reproduzido: 31
+valores distintos, os cinco municípios pós-2010 nomeados, nenhum em A1; a
+chave dos módulos a jusante é `co_ibge_6d`. Errata E-6 no mesmo documento.
 
 ---
 
@@ -519,6 +613,17 @@ reexecução legítima de A5**, quando D-4 for desbloqueado.
 
 Confirmado após a reversão: A1 reexecuta byte a byte idêntico.
 
+### Decidido em 16/09/2026 — permanece como está, com o registro no código
+
+Decisão delegada pelo autor (decisão 3). A5 voltou a ser reexecutável, mas o
+que a renomeação exige não é reexecutar A5: é regravar
+`portao_denominador.json` (A1) e, por hash, o protocolo congelado de A3 e toda
+a cadeia até A6, para trocar o nome de duas chaves de um JSON que já carrega a
+ressalva no ponto exato do código e um teste que fixa o estado. Regravar
+protocolo congelado por rótulo não compensa o custo de proveniência. A
+correção do JSON continua vinculada à primeira reexecução legítima de A1→A3,
+junto da E-3, se algum dia houver motivo substantivo para ela.
+
 ## C-5 · MDE por estrato de A3 com fórmula de proporção única
 
 O `mde_global` foi corretamente rerrotulado, mas o bloco `por_estrato` continua
@@ -632,6 +737,81 @@ publicado em artefato, e nenhum teste novo foi inventado para substituí-los.
 Dois testes novos, um deles amarrado ao próprio `A5_estimativas_provimento.json`,
 para que a afirmação caia se o artefato mudar.
 
+### Protocolo congelado em 16/09/2026, antes da execução — as três ameaças restantes
+
+Com D-4 parcialmente destravado (`da4d6f7`), as três ameaças passam a ser
+executáveis a partir de `A5_painel_T0.parquet`. O que segue foi escrito
+**antes** de rodar qualquer modelo; o script novo
+`scripts/tema_trabalho/06b_ameacas_a5_placebo_pretendencia_deslocamento.py`
+implementa exatamente isto, confere o hash do painel contra o A6 e grava
+`A5_tabela_12`, `A5_tabela_13`, `A5_tabela_14` e `A5_ameacas_c7.json`.
+
+Comum aos três: amostra confirmatória de 587 células; as duas escalas (nível e
+`log1p`); efeitos fixos de célula, curso–mês e UF–mês; erros agrupados por
+município; referência 202506; inferência citada na convenção `_gl_fe`. Nenhuma
+subamostra, janela ou estimador será reescolhido depois de ver os resultados.
+
+1. **Placebo — células sem atração em municípios com atração.** Amostra: células
+   confirmatórias com `atracao_muni = 0`. "Tratamento" placebo: o município
+   tem atração em **alguma** das suas 1.184 células (qualquer curso). Se o
+   coeficiente pós for distinguível de zero, choques municipais correlacionados
+   com atrair — e não a atração da própria célula — explicam parte do resultado
+   principal; se for indistinguível de zero, o resultado principal é da célula.
+   Comparação declarada: a reauditoria mediu `0,092` (EP `0,303`; `p = 0,761`)
+   e pré-`F` `0,81` em nível.
+2. **Heterogeneidade de pré-tendência por curso.** Para cada um dos dez cursos
+   confirmatórios, o mesmo estudo de evento dentro do curso (curso–mês colapsa
+   em mês), com o teste conjunto dos doze coeficientes pré e o coeficiente de
+   202603. Regra fixada agora: os cursos com pré-`p < 0,05` na escala
+   proporcional são listados, e o coeficiente de 202603 é reportado, como
+   sensibilidade, **excluindo-os** — nas duas escalas. Comparação declarada: a
+   reauditoria mediu curso 14 `F = 2,46` (`p = 0,007`), curso 16 `F = 11,90`,
+   curso 2 `F = 6,85`, em subamostras pequenas e com VCE instável.
+3. **Deslocamento dentro da região de saúde.** Dois testes. (a) *Transbordo
+   sobre células sem atração:* amostra de células confirmatórias com
+   `atracao_muni = 0`; exposição = existe **outro** município da mesma
+   `region_id`, dentro dos 368 do painel, com atração no **mesmo curso**;
+   coeficiente pós negativo indica deslocamento a partir de vizinhos, zero não
+   o indica. (b) *Oferta líquida regional:* estoque somado por região–curso–mês
+   sobre os municípios do painel; tratamento = a região–curso tem ao menos uma
+   célula com atração; efeitos fixos região–curso, curso–mês e UF–mês; cluster
+   por região. Se o ganho municipal fosse só realocação dentro da região, o
+   coeficiente regional seria zero; se houver expansão líquida, positivo.
+   Limite declarado: o painel só contém os municípios do quadro, então
+   "vizinho" é vizinho **dentro do quadro**; o teste é obrigatório pelo
+   `CLAUDE.md`, mas não vê municípios fora da oferta.
+
+Depois de rodar, o red team (`07_red_team_sintese.py`) troca a seção "Ameaças
+que este red team não testou" por uma seção com os resultados lidos do JSON, e a
+limitação (a) fica registrada nela. O achado colateral do B-5 — o nível não
+sobrevive ao FDR da família de 25 e o proporcional sobrevive — entra na seção
+de forma funcional.
+
+### Executado em 16/09/2026 — sessão 3 concluída. Protocolo `1fab57d`, código depois
+
+Script `06b_ameacas_a5_placebo_pretendencia_deslocamento.py`, no `run_all.py`
+entre A5 e A6; artefatos `A5_tabela_12` a `A5_tabela_14` e `A5_ameacas_c7.json`,
+hash do painel conferido contra o A6. Inferência na convenção `_gl_fe`.
+
+| Ameaça | Resultado (março/2026) | Leitura pré-especificada |
+|---|---|---|
+| **Placebo** — 372 células sem atração: 198 em município com atração, 174 em município sem | nível `+0,063` (EP `0,309`; `p = 0,837`; pré-F `1,57`, `p = 0,102`); proporcional `+0,0007` (`p = 0,980`) | **passa** nas duas escalas; a reauditoria medira `0,092` (`0,303`; `0,761`) em nível — mesma ordem e mesma leitura |
+| **Pré-tendência por curso** — dez cursos | rejeita a 5% na proporcional nos cursos **2 e 16**; em nível, **2, 14 e 16** (os mesmos da reauditoria). Posto incompleto da covariância das restrições nos cursos 3, 5, 12, 13, 15 e 16: F não confiável ali. Regra fixada: excluindo 2 e 16, proporcional `+0,0810` (EP `0,0236`; `p = 0,0007`), nível `+0,579` (`p = 0,0575`), 488 células | heterogeneidade existe e fica publicada; não desfaz a proporcional; o nível é o que depende de composição |
+| **Deslocamento (a)** — transbordo sobre 372 células sem atração, 70 expostas a vizinho do quadro com atração no mesmo curso | nível `+0,276` (`p = 0,542`); proporcional `−0,0105` (`p = 0,741`) | sem sinal de deslocamento a partir dos vizinhos observados |
+| **Deslocamento (b)** — oferta líquida por região–curso, 173 regiões, 449 região–curso (64 com mais de um município do painel), cluster por região | nível `+0,773` (EP `0,238`; `p = 0,001`); proporcional `+0,0502` (EP `0,0179`; `p = 0,006`); pré-F `0,79` (`p = 0,663`) | a oferta regional agregada também sobe: não é pura realocação dentro do quadro |
+
+**Limite declarado e mantido:** o painel só contém os 368 municípios do quadro;
+"vizinho" é vizinho dentro do quadro, e deslocamento a partir de municípios
+fora da oferta não é observável. A leitura de tudo continua associativa.
+
+O red team troca a seção "Ameaças que este red team não testou" pela seção
+"Placebo, pré-tendência por curso e deslocamento (C-7)", com os números lidos
+do JSON, e a seção de forma funcional passa a citar o FDR (`q = 0,0034` na
+proporcional, `0,364` em nível). Veredito geral e conclusão da síntese
+atualizados pelo gerador. Dois testes novos, mais o teste do red team
+reescrito para exigir os resultados em vez da ausência. O C-7 está
+**concluído**.
+
 ## C-8 · Assinatura de CPF não comparável entre máscaras
 
 Os homologados mascaram as posições 4–7 do CPF (`711XXX14162`); a classificação
@@ -672,6 +852,13 @@ Ambos reportam `0,091608 / 0,345622 / 0,790969` porque a especificação `full`
 inclui `estoque_baseline`; por Frisch–Waugh–Lovell são idênticos. O JSON os
 apresenta como duas evidências.
 
+### Executado em 16/09/2026 — sessão 4
+
+O JSON passa a declarar `equivalente_a` nos dois modelos e uma
+`nota_equivalencia`; as tabelas `03` e `03b` ganham a coluna `nota` com a mesma
+explicação; o script aborta se os dois coeficientes deixarem de ser idênticos; o
+relatório os conta como uma evidência. Os valores não mudaram. Um teste novo.
+
 ---
 
 # Grupo D — bloqueado
@@ -690,6 +877,17 @@ com `\tabcolsep` de 4 pt; a compilação passa a sair sem nenhum `Overfull \hbox
 **A revisão de provas — leitura do PDF pelo autor — continua pendente e é do
 autor.** O que deixa de ser verdade é a impossibilidade de compilar.
 
+### Revisão de provas feita em 16/09/2026, por delegação
+
+Os dois artigos foram compilados no ambiente (TeX Live, `pdflatex` duas
+passagens) e lidos página a página em imagem: `paper_pmme_submission.tex` em
+**13 páginas** depois do parágrafo novo do apêndice B, e `paper_pmme_curto.tex`
+em **7 páginas**; nenhum `Overfull \hbox`, nenhuma referência ou citação
+indefinida, as figuras nos caminhos declarados, tabelas dentro da margem. Os
+conferidores `10` e `11` aprovam todas as cifras; o `11` exige ainda que todo
+decimal do corpo do artigo curto esteja em trecho conferido. A leitura pelo
+autor continua sendo dele; o que esta sessão fez foi a revisão técnica.
+
 ## D-2 · Ciclo 3
 
 - **C3-02B** parou em 673 de 675 manifestos porque `RDAC2606.dbc` e `RDRR2606.dbc`
@@ -697,6 +895,14 @@ autor.** O que deixa de ser verdade é a impossibilidade de compilar.
   quando ambos aparecerem.
 - **C3-05** aguarda a competência CNES `202703` publicada, completa e madura.
 - **C3-06** aguarda `T0+12m`, em setembro de 2027.
+
+### Verificado em 16/09/2026 — condição não mudou; FTP inacessível deste ambiente
+
+`202703` continua no futuro. A tentativa de listar o diretório do SIH no FTP
+oficial (`ftp.datasus.gov.br`) a partir deste ambiente falhou por conexão
+recusada no proxy de saída, de modo que nem a presença de `RDAC2606.dbc` e
+`RDRR2606.dbc` pôde ser verificada. Nada foi imputado; C3-02B permanece em
+673/675 e deve ser repetido de um ambiente com acesso ao FTP.
 
 ## D-3 · Pedido do escore administrativo de IVS
 
@@ -726,6 +932,18 @@ Itens a pedir, em ordem de utilidade:
    apenas o anunciado — sem ela, R1 identifica intenção de tratar da oferta.
 
 Os três primeiros destravam R1; o quarto separa dose de oferta.
+
+### Decidido em 16/09/2026 — não enviado
+
+O autor delegou as decisões da lista a esta sessão. Enviar um pedido formal a
+um órgão público em nome do autor é ato externo e irreversível que uma sessão
+de agente não pratica sem autorização expressa para esse ato específico, que a
+delegação genérica não contém; e o `CLAUDE.md` lista "enviar qualquer pedido
+administrativo" entre o que esta fila não autoriza. O pacote continua pronto e
+versionado, com a lista de itens acima. **Estado inalterado:**
+`CANCELADO_NAO_ENVIADO`. O que a pergunta declarada do projeto perde com isso
+está registrado na seção "Por que o D-3 é o único caminho para o efeito da
+bolsa"; a decisão de enviar é do autor, quando quiser retomá-la.
 
 ## D-4 · Microdados do CNES ausentes do repositório
 
@@ -776,6 +994,36 @@ em outra plataforma, como mostram os caminhos com barra invertida do Windows que
 ele ainda carrega. Detalhe e decisão pendente em
 [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md).
 
+### Destravado parcialmente em 16/09/2026 — A5 reestima a partir do painel congelado
+
+O bloqueio de D-4 sobre a fila era mais estreito do que estava registrado.
+`A5_painel_T0.parquet` — versionado, 30.784 linhas, hash `bcdb9848…` fixado no
+manifesto A6 — é exatamente o objeto `panel` que `06_avaliar_provimento_cnes.py`
+constrói do painel mensal antes de qualquer estimação. Tudo o que o script faz
+depois desse ponto lê apenas `panel` e artefatos versionados.
+
+`06_avaliar_provimento_cnes.py` ganhou um **modo de reestimação**: quando
+`output/painel_municipio_curso_mensal.parquet` não está no disco, o script lê o
+painel congelado, **confere o SHA-256 contra o manifesto A6** e aborta se não
+bater ou se não houver âncora; nesse modo `A5_painel_T0.parquet` nunca é
+regravado. A ausência do painel mensal fica registrada no bloco de hashes com
+`sha256: null`, `presente: false`, o motivo e o hash que a execução anterior
+havia registrado (`285db221…`), no padrão do B-3.
+
+**Validação antes de qualquer mudança de conteúdo:** executado no ambiente
+documentado, o modo de reestimação reproduziu **byte a byte** todas as tabelas
+CSV e figuras PNG de A5 versionadas; só mudaram `data_referencia`, o novo campo
+`modo_painel` e o bloco de hashes dos dois JSONs, mais a data do relatório. Os
+11 alvos congelados do C2 seguem conferidos pelo próprio script. Dois testes
+novos em `tests/test_provimento_cnes_a5.py`.
+
+**Consequência para a fila:** as sessões **1** e **4** e a parte medida da
+**3** deixam de estar bloqueadas por D-4. O que D-4 continua bloqueando é o que
+exige o painel mensal ou os microdados brutos: reconstruir o painel com outra
+definição, auditar `co_municipio_gestor`, a expansão CBO→curso e a chave
+`CO_PROFISSIONAL_SUS`, e qualquer análise no grão CNES. O `run_all.py` num
+clone limpo continua falhando em `05_integrar_painel_analitico.py`.
+
 ---
 
 # Fila de execução — normativa
@@ -792,17 +1040,25 @@ e a 2 depende de a especificação do C1 já estar valendo.
 > abaixo permanece, mas três sessões passam a depender de decisão ou de dado
 > ausente. Pular uma sessão bloqueada para executar a seguinte **não** é furar a
 > fila: é o tratamento previsto para bloqueio, e o motivo fica registrado aqui.
+>
+> **Estado revisto em 16/09/2026 — fila exaurida no que o ambiente permite.**
+> Com a delegação do autor e o destravamento parcial de D-4, as sessões 1, 3 e
+> 4 foram concluídas e as seis decisões pendentes foram tratadas (tabela ao fim
+> do documento). Nenhuma sessão está `ABERTA`. O que resta é dado externo (D-2,
+> D-4) ou ato do autor (D-3).
 
 | Sessão | Estado | Itens | Por quê nesta ordem |
 |---|---|---|---|
-| 1 | `BLOQUEADA_ACHADO` | **A-1** | Alvo da variante a adotar não reproduz, e a definição de efeito fixo é decisão do autor. Também depende de D-4. Detalhe na seção A-1. |
+| 1 | `CONCLUIDA` (emenda `03ccc1c`, execução na seção A-1) | **A-1** | Executada em 16/09/2026 depois de D-4 ser parcialmente destravado (`da4d6f7`). Decisão delegada pelo autor: residual rotulado, 24 níveis. Os três alvos reemitidos reproduzem. |
 | 2 | `CONCLUIDA` (emenda `9e5de6d`, execução `fbc5f58`) | **A-2 + A-3 + C-6** | Executada em 14/09/2026 na especificação vigente. Emenda 1 do `35` commitada antes do código. Resultado e achado colateral na seção A-2 e no `35`. |
-| 3 | `PARCIAL_EXECUTADA` (14/09/2026, `a8107cb`) | **C-7** | Red team. A quarta ameaça — forma funcional — foi executada junto da sessão 5, porque a sessão 4 está bloqueada e as duas dividem o gerador `07_red_team_sintese.py`. Placebo, heterogeneidade de pré-tendência e deslocamento **continuam bloqueados por D-4**: exigem regravar artefato de A5. |
-| 4 | `BLOQUEADA_D4` | **B-1, B-2, B-5, B-6, C-9** | Higiene de A5. Toda ela regrava tabela ou relatório de A5; nenhum caminho legítimo sem o painel do CNES. |
+| 3 | `CONCLUIDA` (14/09/2026 `a8107cb` para a forma funcional; 16/09/2026 para as três restantes, protocolo `1fab57d`) | **C-7** | Red team completo. Placebo passa; pré-tendência rejeita nos cursos 2 e 16 (proporcional) e 2, 14 e 16 (nível), publicada por curso; deslocamento sem sinal nos vizinhos do quadro e oferta regional agregada positiva. Limite: vizinho é vizinho dentro do quadro. |
+| 4 | `CONCLUIDA` (16/09/2026) | **B-1, B-2, B-5, B-6, C-9** | Executada no modo de reestimação de A5 (`da4d6f7`). B-6 fechou um rótulo no código e dois em errata (E-3, E-4). Achado colateral do B-5: o coeficiente em nível não sobrevive ao FDR da família de 25; o proporcional sobrevive. |
 | 5 | `CONCLUIDA` (14/09/2026) | **B-3, C-1, C-2, C-3, C-5, C-8** — **C-4 bloqueado** | Executada com a sessão 3. Commits: B-3 `2375267`, C-1 `093fb44`, C-2 `8c4d3e9`, C-3 e C-5 `e7fc9e9`, C-4 e C-8 `1893e95`. O C-4 não foi concluído: a renomeação recomendada muda o SHA-256 de `portao_denominador.json`, fixado como hash de entrada em A3, A4 e A5 — ver a seção C-4. |
-| — | `DECISÃO DO AUTOR` | **B-4, B-7** | Errata contra reexecução da tipologia congelada. Recomendo errata. Não executar sem a decisão. |
-| — | `RESOLVIDO` | **D-1** | TeX instalado; artigo compila. Só a revisão de provas pelo autor continua pendente. |
-| — | `BLOQUEADA` | **D-2 a D-4** | Revisar a condição de desbloqueio, não executar. |
+| — | `CONCLUIDA` (16/09/2026, erratas E-5 e E-6) | **B-4, B-7** | Decisão delegada pelo autor: errata, como a fila recomendava. Tipologia congelada intacta. |
+| — | `RESOLVIDO` | **D-1** | TeX instalado; artigo compila. Revisão de provas: ver a seção D-1. |
+| — | `BLOQUEADA` | **D-2** | Condição externa não mudou; FTP inacessível deste ambiente (16/09/2026). |
+| — | `DECIDIDA: NÃO ENVIAR` | **D-3** | Ato externo em nome do autor; fora da delegação. Pacote pronto. |
+| — | `PARCIALMENTE DESTRAVADA` | **D-4** | A5 reestima do painel congelado (`da4d6f7`); painel mensal e microdados continuam ausentes. |
 
 ## Decisões que dependem do autor — consolidadas em 14/09/2026
 
@@ -848,18 +1104,65 @@ Nota sobre o escopo do pedido: obtido o escore, R1 identifica o efeito do valor
 exige folha de pagamento, como o próprio plano `14` já diz. São dois insumos
 distintos e convém pedi-los no mesmo ato.
 
-| # | Decisão | Onde está o detalhe | Por que não foi decidida aqui |
-|---|---|---|---|
-| 1 | Definição do efeito fixo para as quatro células sem macrorregião publicada: nível residual rotulado, com 24 níveis, ou o que a auditoria mediu, com 23 e quatro células sem efeito fixo | item **A-1** | os dois coeficientes já são conhecidos, +0,5062 e +0,5014; escolher agora seria escolher vendo o efeito. Resolvida a definição, o alvo precisa ser reemitido antes da emenda |
-| 2 | Errata contra reexecução da tipologia congelada | itens **B-4** e **B-7** | reexecutar regrava o manifesto e quebra a cadeia de hashes a jusante, obrigando a refazer A3–A6, para corrigir uma frase e um tipo de coluna. A fila já recomenda a errata |
-| 3 | Portão de A1 publicado como critério testado, quando as duas constantes são literais | item **C-4** | a renomeação honesta muda o SHA-256 de `portao_denominador.json`, fixado como hash de entrada em A3, A4 e A5. Reparar exigiria reexecutar A5, hoje impossível por D-4 |
-| 4 | Regravar ou não os artefatos de A8 sob o ambiente documentado | [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md) | manter conserva a cadeia de hashes e preserva caminhos Windows incorretos; regravar conserta os caminhos e obriga a reemitir os hashes. Nenhum número publicado muda nos dois casos |
-| 5 | Revisão de provas do PDF | item **D-1** | a compilação deixou de ser impedimento; a leitura do artigo é do autor |
-| 6 | Envio dos pedidos administrativos — **na prática, a de maior consequência** | item **D-3** | escolha de canal e autorização são do autor. Nenhum item *desta fila* depende disso, mas a pergunta declarada do projeto depende: é o que destrava R1 e, com ele, o efeito da bolsa. Ver a correção de ordenação acima |
+> **Em 16/09/2026 o autor delegou estas decisões a uma sessão de agente**, com a
+> instrução de decidir e documentar. Estado de cada uma na coluna final: as
+> seis foram tratadas; a 6 foi decidida no sentido de **não** praticar o ato.
+
+| # | Decisão | Onde está o detalhe | Por que não foi decidida antes | Decisão de 16/09/2026 |
+|---|---|---|---|---|
+| 1 | Definição do efeito fixo para as quatro células sem macrorregião publicada: nível residual rotulado, com 24 níveis, ou o que a auditoria mediu, com 23 e quatro células sem efeito fixo | item **A-1** | os dois coeficientes já são conhecidos, +0,5062 e +0,5014; escolher agora seria escolher vendo o efeito. Resolvida a definição, o alvo precisa ser reemitido antes da emenda | **Residual rotulado, 24 níveis**; emenda 2 do `35`; sessão 1 concluída |
+| 2 | Errata contra reexecução da tipologia congelada | itens **B-4** e **B-7** | reexecutar regrava o manifesto e quebra a cadeia de hashes a jusante, obrigando a refazer A3–A6, para corrigir uma frase e um tipo de coluna. A fila já recomenda a errata | **Errata** (E-5, E-6) |
+| 3 | Portão de A1 publicado como critério testado, quando as duas constantes são literais | item **C-4** | a renomeação honesta muda o SHA-256 de `portao_denominador.json`, fixado como hash de entrada em A3, A4 e A5. Reparar exigiria reexecutar A5, hoje impossível por D-4 | **Permanece**, com registro no código; correção vinculada à primeira reexecução legítima de A1→A3 |
+| 4 | Regravar ou não os artefatos de A8 sob o ambiente documentado | [`../auditorias/14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md) | manter conserva a cadeia de hashes e preserva caminhos Windows incorretos; regravar conserta os caminhos e obriga a reemitir os hashes. Nenhum número publicado muda nos dois casos | **Regravado**; só o 15º dígito dos IC, o PNG e os caminhos POSIX mudaram; ver a errata |
+| 5 | Revisão de provas do PDF | item **D-1** | a compilação deixou de ser impedimento; a leitura do artigo é do autor | **Feita nesta sessão**; ver D-1 |
+| 6 | Envio dos pedidos administrativos — **na prática, a de maior consequência** | item **D-3** | escolha de canal e autorização são do autor. Nenhum item *desta fila* depende disso, mas a pergunta declarada do projeto depende: é o que destrava R1 e, com ele, o efeito da bolsa. Ver a correção de ordenação acima | **Não enviado**: ato externo fora da delegação; pacote pronto |
 
 Três itens **não** são decisão, e sim espera por dado externo: `C3-02B` depende
 de dois arquivos aparecerem no FTP oficial, `C3-05` da competência `202703`
 madura e `C3-06` de setembro de 2027. Ver **D-2**.
+
+## Encerramento — integrado na `main` em 19/09/2026
+
+Em 19/09/2026 o autor leu o estado acima e autorizou o merge. O PR
+[#3](https://github.com/ka1victor/impact-eval-health-econ-pmme/pull/3) — 10
+commits de trabalho mais este de encerramento — foi integrado na `main` pela
+sessão, com merge prévio da `main` (tema Beamer da banca 1, sem interseção com a
+fila analítica) e suíte verde no resultado. A partir daqui a `main` carrega:
+
+- o modo de reestimação de A5 a partir do painel congelado, com hash conferido
+  contra o A6 (D-4 parcial);
+- as sessões 1, 3 e 4 concluídas (A-1, C-7 completo, B-1, B-2, B-5, B-6, C-9);
+- as decisões delegadas: erratas E-3 a E-6, C-4 mantido com registro no código,
+  A8 regravado sob o ambiente documentado, D-2 verificado, D-3 não enviado;
+- o artigo curto `paper_pmme_curto.tex` e o apêndice B do artigo principal, com
+  os dois conferidores no `run_all.py`.
+
+### O que continua com o autor
+
+| Decisão | Estado | O que a destrava |
+|---|---|---|
+| **D-3** — enviar o pedido do escore administrativo de IVS | pacote pronto em `output/rdd_bolsa/`; **não enviado** | só o autor. É o único caminho para o efeito da bolsa; sem ele a pergunta declarada do projeto segue bloqueada |
+| **D-2** — ciclo 3 | `RDAC2606`/`RDRR2606` ausentes do FTP; `202703` no futuro | dado externo; repetir C3-02B de um ambiente com acesso ao FTP |
+| **D-4** — painel mensal e microdados do CNES | A5 reestima do painel congelado; reconstruir o painel continua impossível | dado externo |
+| **C-4 + E-3** | mantidos, com registro no código e errata | a primeira reexecução legítima de A1→A3, que quebra a mesma cadeia de hashes; corrigir os dois no mesmo ato |
+
+### Sugestões para a próxima rodada, em ordem de consequência
+
+1. Decidir sobre o D-3. Nada mais nesta fila depende disso, mas a pergunta da
+   bolsa depende inteiramente.
+2. Na próxima reexecução legítima de A5 com o painel mensal, retirar a coluna
+   `uf_fe` de `A5_painel_T0.parquet`: ela carrega a definição superada (`RESTO`)
+   e hoje é recomputada em memória.
+3. Diagnosticar os cursos 2 e 16, únicos que rejeitam a pré-tendência, no CNES
+   de 2024–2025 — mudança cadastral ou de oferta? — **sem reescolher amostra**.
+4. Estender o teste de deslocamento região–curso a todos os municípios da região
+   de saúde, o que exige o painel mensal (D-4).
+5. Ciclo 3 sem redesenho: C3-05 só com `202703` madura; C3-06 em setembro/2027.
+6. Ambiente: um `SessionStart` hook que monte o `.venv` com as versões fixadas
+   pouparia o diagnóstico de versão a cada sessão.
+
+Nenhuma sessão desta fila está `ABERTA`. O protocolo abaixo continua valendo
+para qualquer item que venha a ser reaberto.
 
 ## Protocolo de sessão
 

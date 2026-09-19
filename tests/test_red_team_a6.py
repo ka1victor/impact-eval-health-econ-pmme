@@ -169,13 +169,22 @@ class RedTeamA6Test(unittest.TestCase):
         self.assertGreater(estritos["nivel"]["p_valor"], 0.05, "nível deixou de ser frágil")
         self.assertLess(estritos["proporcional"]["p_valor"], 0.05, "proporção deixou de resistir")
 
-    def test_red_team_declara_as_ameacas_nao_testadas(self):
-        """C-7: as três ameaças bloqueadas por D-4 não podem ficar implícitas."""
-        low = DOCS_REDTEAM.read_text(encoding="utf-8").lower()
-        self.assertIn("ameaças que este red team não testou", low)
-        for ameaca in ["placebo", "heterogeneidade de pré-tendência", "deslocamento"]:
-            self.assertIn(ameaca, low, f"ameaça não declarada: {ameaca}")
+    def test_red_team_publica_as_tres_ameacas_do_c7(self):
+        """C-7: as três ameaças passaram a ser testadas; o red team publica o resultado, não a ausência."""
+        txt = DOCS_REDTEAM.read_text(encoding="utf-8")
+        low = txt.lower()
+        self.assertNotIn("ameaças que este red team não testou", low)
+        self.assertIn("placebo, pré-tendência por curso e deslocamento (c-7)", low)
         self.assertIn("36_backlog_pos_auditoria.md", low)
+        self.assertIn("vizinho dentro do quadro", low)
+        c7 = json.loads((ROOT / "output" / "tema_trabalho" / "A5_ameacas_c7.json").read_text(encoding="utf-8"))
+        # As afirmacoes do texto tem de continuar verdadeiras nos artefatos.
+        self.assertGreater(c7["placebo"]["resultado"]["nivel"]["mar2026_p_gl_fe"], 0.10, "placebo deixou de passar")
+        self.assertGreater(c7["placebo"]["resultado"]["proporcional"]["mar2026_p_gl_fe"], 0.10)
+        self.assertGreater(c7["deslocamento"]["transbordo"]["proporcional"]["mar2026_p_gl_fe"], 0.10, "transbordo passou a indicar deslocamento")
+        self.assertGreater(c7["deslocamento"]["oferta_liquida_regional"]["proporcional"]["mar2026_beta"], 0)
+        self.assertIn("multiplicidade", low)
+        self.assertIn("só a proporção sobrevive", low)
 
     def test_manifesto_reproducao_completo(self):
         man = json.loads(MANIFESTO.read_text(encoding="utf-8"))

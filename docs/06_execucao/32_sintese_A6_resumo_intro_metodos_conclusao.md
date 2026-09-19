@@ -2,7 +2,7 @@
 
 > **Título recomendado:** Atração administrativa de médicos especialistas e gradientes territoriais: evidências de implementação do PMM-E.  
 > **Nível de identificação:** associativo. RDD encerrado em R1; retenção individual não identificada.  
-> **Hashes:** A4 `7e9176a8`; A5 `fd7c2f9e`.
+> **Hashes:** A4 `7e9176a8`; A5 `5bd9ab13`.
 
 ## Resumo
 
@@ -20,4 +20,4 @@ A análise secundária usa 26 competências CNES e, como amostra principal, 587 
 
 ## Conclusão
 
-O resultado publicável é um gradiente territorial de atração: municípios metropolitanos apresentam maior probabilidade de atração administrativa que o interior remoto, e o padrão resiste à separação entre confirmação e homologação e ao colapso da unidade. A dinâmica do CNES sugere diferença positiva posterior, com pré-tendências não rejeitadas, e a escala proporcional — a primária — resiste à retirada de qualquer curso e à restrição aos CBOs estritos, enquanto a escala de nível não resiste: é o nível que é frágil à composição de cursos. O tempo de exposição física heterogêneo e três ameaças ainda não testadas — placebo, heterogeneidade de pré-tendência e deslocamento entre municípios — continuam limitando a interpretação. Sem base para efeito causal do adicional da bolsa, retenção individual, resolutividade, fila, SIH/SIA ou custo-benefício, esses objetos exigem novos dados e novo protocolo antes de qualquer estimação.
+O resultado publicável é um gradiente territorial de atração: municípios metropolitanos apresentam maior probabilidade de atração administrativa que o interior remoto, e o padrão resiste à separação entre confirmação e homologação e ao colapso da unidade. A dinâmica do CNES sugere diferença positiva posterior, com pré-tendências não rejeitadas, e a escala proporcional — a primária — resiste à retirada de qualquer curso e à restrição aos CBOs estritos, enquanto a escala de nível não resiste: é o nível que é frágil à composição de cursos. O placebo sobre células sem atração em municípios com atração é nulo, o teste de deslocamento não encontra perda nos vizinhos observados e a oferta regional agregada sobe; o tempo de exposição física heterogêneo, a pré-tendência divergente em dois cursos e o alcance do teste de deslocamento, restrito ao quadro, continuam limitando a interpretação. Sem base para efeito causal do adicional da bolsa, retenção individual, resolutividade, fila, SIH/SIA ou custo-benefício, esses objetos exigem novos dados e novo protocolo antes de qualquer estimação.

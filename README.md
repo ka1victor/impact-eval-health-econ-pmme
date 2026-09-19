@@ -25,6 +25,13 @@ Há quatro camadas separadas no repositório:
 > em **33,3 p.p.** A interpretação é causal local sob comparabilidade dos pares,
 > com rigor moderado. A4 e A5 permanecem associativos.
 
+Há dois textos. O artigo de trabalho, `paper_pmme_submission.tex`, com o A8
+no corpo e A4 e A5 em apêndice; e o **artigo curto**, `paper_pmme_curto.tex`,
+que organiza a mesma evidência em três camadas — causal, descritiva e
+associativa — em sete páginas. Cada cifra dos dois é conferida contra `output/`
+por `scripts/tema_trabalho/10_conferir_numeros_artigo.py` e
+`11_conferir_numeros_artigo_curto.py`, que fazem parte do `run_all.py`.
+
 A decisão consolidada, todos os achados e a sequência de avanço estão em
 [`docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`](docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md).
 O estado efetivamente executado dos portões está em
@@ -99,9 +106,17 @@ produção, redução de espera ou melhora de saúde.
   [`35_plano_correcoes_pos_auditoria.md`](docs/06_execucao/35_plano_correcoes_pos_auditoria.md).
   A série anterior, de +29,4pp, vinha do balde único e não é mais a primária.
 - A5 usa como principal 587 células município–curso em 295 municípios, referência
-  limpa 202506 e follow-up 202603. O estudo dinâmico encontra +0,50 profissional
-  cadastrado em março de 2026 (EP 0,23), em linguagem estritamente associativa;
-  a mediana é 1 e o máximo 211 no grupo com atração.
+  limpa 202506 e follow-up 202603. O estudo dinâmico, na escala proporcional que
+  é a primária, encontra +0,068 log-ponto em março de 2026 (EP 0,018), com
+  `q = 0,0034` na família de 25 coeficientes; a escala em nível dá +0,50
+  profissional (EP 0,23), mas é frágil à composição de cursos e não sobrevive
+  ao FDR (`q = 0,364`). Linguagem estritamente associativa; a mediana é 1 e o
+  máximo 211 no grupo com atração. Em 16/09/2026 foram acrescentados, sob
+  protocolo congelado, um placebo (células sem atração em municípios com
+  atração: nulo), a pré-tendência por curso (rejeita nos cursos 2 e 16) e dois
+  testes de deslocamento dentro da região de saúde (sem perda nos vizinhos do
+  quadro; oferta região–curso positiva). A5 é reestimável a partir de
+  `A5_painel_T0.parquet` com hash conferido contra o A6, sem o painel mensal.
 - A7 identifica 423 pares adjacentes de seleção em quatro publicações. O A8
   restringe o núcleo a 36 pares de 2025 em ampla concorrência, primeira opção,
   sem empate e com gap exato de um ponto. O efeito local condicional é +63,9
@@ -198,23 +213,21 @@ Por isso os dois pontos de entrada verificam o ambiente antes de rodar, via
 grava artefato, **aborta** diante de divergência. O `run_tests.py`, que apenas
 lê, **avisa** e segue.
 
-**Uma ressalva, para não prometer demais.** O ambiente correto é condição
-necessária, não suficiente para reprodução byte a byte de tudo. A4 reproduz byte
-a byte. **A8 não**: seus artefatos versionados foram gravados em outra
-plataforma — ainda carregam caminhos com barra invertida do Windows — e
-reexecutá-los aqui muda as colunas de intervalo de confiança a partir do 15º
-dígito. Nenhum número publicado é afetado, porque o artigo reporta precisão
-muito acima disso, e o conferidor segue aprovando. Regravar A8 é decisão
-pendente do autor, com os dois lados pesados em
+**Reprodução byte a byte.** Sob o ambiente documentado, A1, A4, A5 (no modo de
+reestimação) e, desde 16/09/2026, A8 reexecutam sem alterar um byte. Os
+artefatos de A8 tinham sido gravados em outra plataforma, com caminhos do
+Windows, e foram regravados aqui por decisão delegada pelo autor; só o 15º
+dígito dos intervalos convencionais, o PNG e os caminhos mudaram, e o conferidor
+segue aprovando. O registro está em
 [`docs/auditorias/14_erratas_artefatos_congelados.md`](docs/auditorias/14_erratas_artefatos_congelados.md).
 
 ### Pipeline completo de replicação
 ```bash
 python run_all.py
 ```
-O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A8, incluindo tabelas, figuras, red team, cutoff estrito e manifestos.
+O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A8, incluindo tabelas, figuras, red team, cutoff estrito, manifestos e os dois conferidores de artigo. Sem o painel mensal do CNES, `06_avaliar_provimento_cnes.py` e `06b_ameacas_a5_placebo_pretendencia_deslocamento.py` rodam sozinhos a partir de `A5_painel_T0.parquet`, com o hash conferido contra o A6.
 
-### Suíte de testes automatizados (156 testes)
+### Suíte de testes automatizados (183 testes)
 ```bash
 python run_tests.py
 ```
@@ -233,4 +246,4 @@ Cada diretório principal possui documentação autônoma orientando seu conteú
 | [`output/`](output/README.md) | [Guia de Artefatos](output/README.md) | Painéis analíticos, estimativas, tabelas, figuras e manifestos reproduzíveis |
 | [`prompts/`](prompts/README.md) | [Fila e Histórico](prompts/README.md) | Sessões executadas, cadernos de prompts e especificações de pesquisa |
 | [`scripts/`](scripts/README.md) | [Guia de Scripts](scripts/README.md) | Rotinas modulares de aquisição, estimação, avaliação de impacto e utilitários |
-| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 132 testes automatizados garantindo integridade econométrica e invariantes |
+| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 183 testes automatizados garantindo integridade econométrica e invariantes |

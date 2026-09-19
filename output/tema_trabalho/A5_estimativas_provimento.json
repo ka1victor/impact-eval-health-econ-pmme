@@ -1,6 +1,6 @@
 {
   "protocolo": "A5_ESTIMATIVAS_PROVIMENTO",
-  "data_referencia": "2026-09-09",
+  "data_referencia": "2026-09-16",
   "efeitos_estimados": true,
   "linguagem": "associativa (trajetoria diferencial e evolucao do estoque cadastral); proibido efeito causal do PMM-E/bolsa/IVS, provimento causal e retencao individual",
   "populacao": {
@@ -77,6 +77,9 @@
       "mar2026_p": 0.0001959861319669278,
       "mar2026_se_gl_fe": 0.019132471045788524,
       "mar2026_p_gl_fe": 0.0004090124505838251,
+      "mar2026_q_fdr_bh": 0.0016332177663910652,
+      "mar2026_q_fdr_bh_gl_fe": 0.0034084370881985425,
+      "familia_fdr": "25 coeficientes de evento desta amostra e escala (Benjamini-Hochberg)",
       "mar2026_vs_media_pre_beta": 0.06330782808097489,
       "mar2026_vs_media_pre_se": 0.023189595027493997,
       "mar2026_vs_media_pre_p": 0.006715329343600087,
@@ -120,6 +123,9 @@
       "mar2026_p": 0.00019987766777911114,
       "mar2026_se_gl_fe": 0.017681582044535314,
       "mar2026_p_gl_fe": 0.0003437058016708404,
+      "mar2026_q_fdr_bh": 0.002146352215955206,
+      "mar2026_q_fdr_bh_gl_fe": 0.003627556116878971,
+      "familia_fdr": "25 coeficientes de evento desta amostra e escala (Benjamini-Hochberg)",
       "mar2026_vs_media_pre_beta": 0.06319209777863619,
       "mar2026_vs_media_pre_se": 0.019239960187514612,
       "mar2026_vs_media_pre_p": 0.001120241861152836,
@@ -163,6 +169,9 @@
       "mar2026_p": 0.03338276089566149,
       "mar2026_se_gl_fe": 0.24688058931295864,
       "mar2026_p_gl_fe": 0.04365940826130594,
+      "mar2026_q_fdr_bh": 0.2781896741305124,
+      "mar2026_q_fdr_bh_gl_fe": 0.3638284021775495,
+      "familia_fdr": "25 coeficientes de evento desta amostra e escala (Benjamini-Hochberg)",
       "mar2026_vs_media_pre_beta": 0.4050517894516139,
       "mar2026_vs_media_pre_se": 0.29714835331161227,
       "mar2026_vs_media_pre_p": 0.17388461350161621,
@@ -206,6 +215,9 @@
       "mar2026_p": 0.005972037094673833,
       "mar2026_se_gl_fe": 0.2261785713140215,
       "mar2026_p_gl_fe": 0.008156080695423609,
+      "mar2026_q_fdr_bh": 0.03401946391403527,
+      "mar2026_q_fdr_bh_gl_fe": 0.045497449755410584,
+      "familia_fdr": "25 coeficientes de evento desta amostra e escala (Benjamini-Hochberg)",
       "mar2026_vs_media_pre_beta": 0.8339349571703627,
       "mar2026_vs_media_pre_se": 0.3094152835194807,
       "mar2026_vs_media_pre_p": 0.007358312220417217,
@@ -257,66 +269,297 @@
       "formula": "estoque_follow ~ atracao_muni + FE curso(10) + FE UF(colapsada) cluster mun; diagnostico de nivel, nao resultado principal",
       "n": 587,
       "n_clusters": 295,
-      "coef_atracao": 7.13226114718227,
-      "se_atracao": 3.6401629765523458,
-      "p_atracao": 0.05007477561505063,
-      "r2": 0.10264268611637117
+      "coef_atracao": 3.5970238307416453,
+      "se_atracao": 1.5322569870990033,
+      "p_atracao": 0.018898199379428,
+      "r2": 0.8761431077475491
     },
     "estoque_6m_full": {
-      "coef_atracao": 0.09160797720133895,
-      "se": 0.34562233375914303,
-      "p": 0.7909692110719165
+      "coef_atracao": 0.3766827483445507,
+      "se": 0.2251999049934315,
+      "p": 0.09439435702613579,
+      "equivalente_a": "delta_full"
     },
     "delta_minimal": {
-      "coef_atracao": 1.2948856220641427,
-      "se_atracao": 0.7749055146839917,
-      "p_atracao": 0.09471696052854772,
-      "r2": 0.05988821118692855
+      "coef_atracao": 0.5061830532385464,
+      "se_atracao": 0.2505699008766636,
+      "p_atracao": 0.0433702030094719,
+      "r2": 0.9326166097959141
     },
     "delta_full": {
-      "coef_atracao": 0.09160797720134117,
-      "se_atracao": 0.345622333759143,
-      "p_atracao": 0.7909692110719115
+      "coef_atracao": 0.37668274834454224,
+      "se_atracao": 0.22519990499343118,
+      "p_atracao": 0.09439435702614268,
+      "equivalente_a": "estoque_6m_full",
+      "nota_equivalencia": "identico a OLS_estoque_6m_full por Frisch-Waugh-Lovell: a especificacao full inclui estoque_baseline; nao contar como evidencia separada"
     },
     "cobertura_6m_minimal": {
-      "coef_atracao": 0.0541104927648534,
-      "se_atracao": 0.02003483115309504,
-      "p_atracao": 0.006916855326986844
+      "coef_atracao": 0.05745877475483417,
+      "se_atracao": 0.020407626263407256,
+      "p_atracao": 0.004869320552452375
     },
     "entradas_minimal": {
-      "coef_atracao": 0.39018323634972435,
-      "se_atracao": 0.24293021620017263,
-      "p_atracao": 0.10824016987419287
+      "coef_atracao": 0.1492908589494175,
+      "se_atracao": 0.07744198372508528,
+      "p_atracao": 0.053882895612455475
     },
     "presentes_minimal_nivel": {
-      "coef_atracao": 0.03792257443044008,
-      "se_atracao": 0.043844299211712366,
-      "p_atracao": 0.3870731453059031
+      "coef_atracao": 0.029452931891427527,
+      "se_atracao": 0.039446042809583345,
+      "p_atracao": 0.45526653133293704
     },
     "T0_alternativo_delta": {
-      "coef_atracao": 0.6408563639029232,
-      "se_atracao": 0.4009054751931333,
-      "p_atracao": 0.10992677456153097
+      "coef_atracao": 0.19583569762475495,
+      "se_atracao": 0.14182809452521186,
+      "p_atracao": 0.16734162431574162
     },
     "delta_winsorizado_p99": {
-      "coef_atracao": 0.6047577536675127,
-      "se_atracao": 0.2147581292509317,
-      "p_atracao": 0.004862646892043954
+      "coef_atracao": 0.5054397638534179,
+      "se_atracao": 0.19464851534914587,
+      "p_atracao": 0.009412977311095597
     },
     "delta_strat_confirmatoria": {
-      "coef_atracao": 1.2948856220641427,
-      "se_atracao": 0.7749055146839917,
-      "p_atracao": 0.09471696052854772
+      "coef_atracao": 0.5061830532385464,
+      "se_atracao": 0.2505699008766636,
+      "p_atracao": 0.0433702030094719
     },
     "delta_strat_ampliada": {
-      "coef_atracao": 0.9264857742125132,
-      "se_atracao": 0.3851634618290531,
-      "p_atracao": 0.016153213497954726
+      "coef_atracao": 0.8400675082999602,
+      "se_atracao": 0.39306503999306774,
+      "p_atracao": 0.032579886241995606
     },
     "delta_heterogeneidade_estrato": {
-      "coef_atracao": 0.4812744047211621,
-      "se_atracao": 0.5452863170853027
+      "coef_atracao": 0.6226752490995352,
+      "se_atracao": 0.3312630929562838
     }
+  },
+  "efeito_fixo_uf": {
+    "variante_primaria": "macro_regiao",
+    "n_niveis_amostra_confirmatoria": 24,
+    "ufs_colapsadas": [
+      "14",
+      "16",
+      "25",
+      "26",
+      "27",
+      "28",
+      "32",
+      "53"
+    ],
+    "nivel_residual": "MACRO_SEM_REGIAO_SAUDE",
+    "sensibilidade": [
+      {
+        "modelo": "delta_estoque_6m_minimal",
+        "variante_uf_fe": "balde_unico",
+        "primaria": false,
+        "termo": "atracao_muni",
+        "coef": 1.2948856220641427,
+        "se_cluster": 0.7749055146839917,
+        "p_valor": 0.09471696052854772,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 20,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "implementacao anterior a A-1: UFs pequenas num unico nivel RESTO"
+      },
+      {
+        "modelo": "estoque_6m_minimal",
+        "variante_uf_fe": "balde_unico",
+        "primaria": false,
+        "termo": "atracao_muni",
+        "coef": 7.13226114718227,
+        "se_cluster": 3.6401629765523458,
+        "p_valor": 0.05007477561505063,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 20,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "implementacao anterior a A-1: UFs pequenas num unico nivel RESTO"
+      },
+      {
+        "modelo": "cobertura_6m_minimal",
+        "variante_uf_fe": "balde_unico",
+        "primaria": false,
+        "termo": "atracao_muni",
+        "coef": 0.0541104927648534,
+        "se_cluster": 0.02003483115309504,
+        "p_valor": 0.006916855326986844,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 20,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "implementacao anterior a A-1: UFs pequenas num unico nivel RESTO"
+      },
+      {
+        "modelo": "entradas_6m_minimal",
+        "variante_uf_fe": "balde_unico",
+        "primaria": false,
+        "termo": "atracao_muni",
+        "coef": 0.39018323634972435,
+        "se_cluster": 0.24293021620017263,
+        "p_valor": 0.10824016987419287,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 20,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "implementacao anterior a A-1: UFs pequenas num unico nivel RESTO"
+      },
+      {
+        "modelo": "presentes_baseline_6m_minimal",
+        "variante_uf_fe": "balde_unico",
+        "primaria": false,
+        "termo": "atracao_muni",
+        "coef": 0.03792257443044008,
+        "se_cluster": 0.043844299211712366,
+        "p_valor": 0.3870731453059031,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 20,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "implementacao anterior a A-1: UFs pequenas num unico nivel RESTO"
+      },
+      {
+        "modelo": "delta_estoque_6m_minimal",
+        "variante_uf_fe": "macro_regiao",
+        "primaria": true,
+        "termo": "atracao_muni",
+        "coef": 0.5061830532385464,
+        "se_cluster": 0.2505699008766636,
+        "p_valor": 0.0433702030094719,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 24,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado"
+      },
+      {
+        "modelo": "estoque_6m_minimal",
+        "variante_uf_fe": "macro_regiao",
+        "primaria": true,
+        "termo": "atracao_muni",
+        "coef": 3.5970238307416453,
+        "se_cluster": 1.5322569870990033,
+        "p_valor": 0.018898199379428,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 24,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado"
+      },
+      {
+        "modelo": "cobertura_6m_minimal",
+        "variante_uf_fe": "macro_regiao",
+        "primaria": true,
+        "termo": "atracao_muni",
+        "coef": 0.05745877475483417,
+        "se_cluster": 0.020407626263407256,
+        "p_valor": 0.004869320552452375,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 24,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado"
+      },
+      {
+        "modelo": "entradas_6m_minimal",
+        "variante_uf_fe": "macro_regiao",
+        "primaria": true,
+        "termo": "atracao_muni",
+        "coef": 0.1492908589494175,
+        "se_cluster": 0.07744198372508528,
+        "p_valor": 0.053882895612455475,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 24,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado"
+      },
+      {
+        "modelo": "presentes_baseline_6m_minimal",
+        "variante_uf_fe": "macro_regiao",
+        "primaria": true,
+        "termo": "atracao_muni",
+        "coef": 0.029452931891427527,
+        "se_cluster": 0.039446042809583345,
+        "p_valor": 0.45526653133293704,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 24,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado"
+      },
+      {
+        "modelo": "delta_estoque_6m_minimal",
+        "variante_uf_fe": "sem_colapso",
+        "primaria": false,
+        "termo": "atracao_muni",
+        "coef": 0.5001997255486642,
+        "se_cluster": 0.2413596328616781,
+        "p_valor": 0.03822582838237121,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 27,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "27 UFs, sem colapso"
+      },
+      {
+        "modelo": "estoque_6m_minimal",
+        "variante_uf_fe": "sem_colapso",
+        "primaria": false,
+        "termo": "atracao_muni",
+        "coef": 2.8749822364780337,
+        "se_cluster": 1.2207091978766271,
+        "p_valor": 0.018514047540183296,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 27,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "27 UFs, sem colapso"
+      },
+      {
+        "modelo": "cobertura_6m_minimal",
+        "variante_uf_fe": "sem_colapso",
+        "primaria": false,
+        "termo": "atracao_muni",
+        "coef": 0.05899443128009838,
+        "se_cluster": 0.02046829744372223,
+        "p_valor": 0.003948658550985454,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 27,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "27 UFs, sem colapso"
+      },
+      {
+        "modelo": "entradas_6m_minimal",
+        "variante_uf_fe": "sem_colapso",
+        "primaria": false,
+        "termo": "atracao_muni",
+        "coef": 0.15330037514282743,
+        "se_cluster": 0.07657007576884448,
+        "p_valor": 0.045274782998605205,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 27,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "27 UFs, sem colapso"
+      },
+      {
+        "modelo": "presentes_baseline_6m_minimal",
+        "variante_uf_fe": "sem_colapso",
+        "primaria": false,
+        "termo": "atracao_muni",
+        "coef": 0.03533060364049445,
+        "se_cluster": 0.03914403519530396,
+        "p_valor": 0.3667491116162743,
+        "n": 587,
+        "n_clusters": 295,
+        "n_niveis_uf_fe": 27,
+        "ufs_colapsadas": "14;16;25;26;27;28;32;53",
+        "nota": "27 UFs, sem colapso"
+      }
+    ],
+    "nota": "Item A-1 / emenda 2 do plano 35: UF com menos de cinco municipios e colapsada na macrorregiao de saude, como o protocolo A3 declara e como o C1 fez em A4; municipio sem macrorregiao publicada forma nivel proprio rotulado. O estudo de evento nao usa uf_fe (absorve UF-mes com as 27 UFs) e nao e afetado."
   },
   "leave_one_curso_evento": [
     {
@@ -1398,85 +1641,85 @@
   ],
   "influencia": {
     "leave_one_UF_range": {
-      "min": 0.580928027535149,
-      "max": 1.602985451093748,
-      "std": 0.1731633594732959
+      "min": 0.3611883535763777,
+      "max": 0.7419020583107887,
+      "std": 0.06953635481627317
     },
     "leave_one_curso_range": {
-      "min": 0.3447148993493306,
-      "max": 1.9450610422283678,
-      "std": 0.3995417158505985
+      "min": 0.2346727582933007,
+      "max": 0.9395788604285364,
+      "std": 0.18757078592999646
     },
     "leave_one_municipio": {
-      "atracao_delta_min": 0.580928027535149,
-      "max": 1.468319718558047,
-      "sd": 0.045805057372902316,
-      "base": 1.2948856220641427
+      "atracao_delta_min": 0.391353233641565,
+      "max": 0.6229002010315317,
+      "sd": 0.01526555969970142,
+      "base": 0.5061830532385464
     },
     "top_influentes": [
       {
-        "co_ibge_6d": "530010",
-        "termo": "atracao_muni",
-        "coef_excluido": 0.580928027535149,
-        "delta": -0.7139575945289937,
-        "dfbeta": -0.921347933393076,
-        "n_excluido": 1
-      },
-      {
-        "co_ibge_6d": "251080",
-        "termo": "atracao_muni",
-        "coef_excluido": 1.468319718558047,
-        "delta": 0.1734340964939043,
-        "dfbeta": 0.22381321749223984,
-        "n_excluido": 5
-      },
-      {
         "co_ibge_6d": "355710",
         "termo": "atracao_muni",
-        "coef_excluido": 1.411579475688839,
-        "delta": 0.1166938536246962,
-        "dfbeta": 0.15059107389664692,
+        "coef_excluido": 0.6229002010315317,
+        "delta": 0.11671714779298525,
+        "dfbeta": 0.46580673650198784,
         "n_excluido": 2
       },
       {
         "co_ibge_6d": "522045",
         "termo": "atracao_muni",
-        "coef_excluido": 1.195329980246151,
-        "delta": -0.0995556418179917,
-        "dfbeta": -0.12847455584128953,
+        "coef_excluido": 0.391353233641565,
+        "delta": -0.11482981959698141,
+        "dfbeta": -0.45827459401639525,
         "n_excluido": 1
       },
       {
         "co_ibge_6d": "355370",
         "termo": "atracao_muni",
-        "coef_excluido": 1.3637719302670472,
-        "delta": 0.06888630820290453,
-        "dfbeta": 0.08889639691233393,
+        "coef_excluido": 0.5758426064846517,
+        "delta": 0.06965955324610529,
+        "dfbeta": 0.2780044730128754,
         "n_excluido": 2
+      },
+      {
+        "co_ibge_6d": "430930",
+        "termo": "atracao_muni",
+        "coef_excluido": 0.4441434862394195,
+        "delta": -0.06203956699912688,
+        "dfbeta": -0.24759385218284546,
+        "n_excluido": 2
+      },
+      {
+        "co_ibge_6d": "160030",
+        "termo": "atracao_muni",
+        "coef_excluido": 0.564795633111699,
+        "delta": 0.058612579873152604,
+        "dfbeta": 0.23391708129382666,
+        "n_excluido": 3
       }
     ]
   },
   "validacao_preditiva": [
     {
       "modelo": "OLS_delta_minimal_atracao_FE",
-      "r2_media_out": -1.2683765456576575,
-      "r2_sd_out": 1.3373837650500133,
-      "r2_insample": 0.05988821118692855,
-      "rmse_media_out": 6.495867472980538,
-      "rmse_sd_out": 6.257912874369804,
-      "rmse_insample": 8.74593634784099,
+      "r2_media_out": -0.31525763643059146,
+      "r2_sd_out": 0.40336529506069524,
+      "r2_insample": 0.9326166097959141,
+      "rmse_media_out": 5.915477555716879,
+      "rmse_sd_out": 6.623496294158046,
+      "rmse_insample": 2.3414936895149707,
       "n_splits": 5,
       "grupos": "municipio",
       "nota": "apendice preditivo; variacao do estoque 202506->202603 na amostra confirmatoria"
     },
     {
       "modelo": "OLS_estoque_6m_minimal",
-      "r2_media_out": -0.43401674913930083,
-      "r2_sd_out": 0.4697450848290272,
-      "r2_insample": 0.10264268611637117,
-      "rmse_media_out": 31.423561309983562,
-      "rmse_sd_out": 25.29659593734449,
-      "rmse_insample": 38.91461108006598,
+      "r2_media_out": -0.07757186702854409,
+      "r2_sd_out": 0.11451053864291845,
+      "r2_insample": 0.8761431077475491,
+      "rmse_media_out": 30.10318921130272,
+      "rmse_sd_out": 27.102760492367874,
+      "rmse_insample": 14.457396114956689,
       "n_splits": 5,
       "grupos": "municipio",
       "nota": "estoque_6m 202603"
@@ -1486,9 +1729,13 @@
     "benchmark_global_proporcao_p30": 0.0379,
     "nota": "nao se aplica diretamente ao outcome continuo A5"
   },
+  "modo_painel": "reestimado_do_painel_T0_congelado",
   "hashes_entradas": {
     "output/painel_municipio_curso_mensal.parquet": {
-      "sha256": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059"
+      "sha256": null,
+      "presente": false,
+      "motivo_ausencia": "painel mensal municipio-curso nao versionado e regeravel apenas a partir dos ZIPs mensais do CNES (>16 GB, item D-4); A5 foi reestimado a partir de A5_painel_T0.parquet, cujo SHA-256 foi conferido contra o manifesto de A6",
+      "sha256_registrado_em_execucao_anterior": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059"
     },
     "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
       "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
@@ -1510,6 +1757,10 @@
     },
     "output/aquisicao/ponte_curso_cbo_oficial.json": {
       "sha256": "ed8c2a9a3fcda4f0f261b5321da7750da389cc0f574f2e5ac5140e5ebd8f2d9e"
+    },
+    "output/tema_trabalho/A5_painel_T0.parquet": {
+      "sha256": "bcdb9848bd546ec7b716dda1715d2c835a8bc22c4c63e06602d4c2facc2138eb",
+      "papel": "painel em T0 congelado, insumo da reestimacao (hash conferido contra A6)"
     }
   },
   "arquivos": {
@@ -1538,6 +1789,7 @@
     "tabela_estudo_evento_proporcional": "output/tema_trabalho/A5_tabela_08_estudo_evento_proporcional.csv",
     "tabela_leave_one_curso_evento": "output/tema_trabalho/A5_tabela_09_leave_one_curso_evento.csv",
     "tabela_sensibilidade_referencia": "output/tema_trabalho/A5_tabela_10_sensibilidade_referencia.csv",
+    "tabela_sensibilidade_colapso_uf": "output/tema_trabalho/A5_tabela_11_sensibilidade_colapso_uf.csv",
     "figura_estudo_evento_proporcional": "output/tema_trabalho/A5_figura_05_estudo_evento_proporcional.png",
     "figura_traj_estrato": "output/tema_trabalho/A5_figura_01_trajetoria_estoque_estrato.png",
     "figura_traj_atracao": "output/tema_trabalho/A5_figura_02_trajetoria_estoque_atracao.png",
@@ -1553,5 +1805,84 @@
     "Ponte confirmatoria 587 celulas primaria; ampliada 597 como sensibilidade nao primaria.",
     "Oferta cadastrada local; nao participar PMM-E nem retencao individual.",
     "Junho de 2025 e referencia limpa; setembro de 2025 fica apenas como janela antiga parcialmente tratada."
-  ]
+  ],
+  "multiplicidade": {
+    "metodo": "Benjamini-Hochberg dentro de cada familia declarada",
+    "familias_estudo_de_evento": "25 coeficientes de evento por (amostra, escala); q publicado nas tabelas 07 e 08, colunas q_fdr_bh e q_fdr_bh_gl_fe",
+    "mar2026_q_fdr_bh_gl_fe_proporcional_confirmatoria": 0.0034084370881985425,
+    "mar2026_q_fdr_bh_gl_fe_nivel_confirmatoria": 0.3638284021775495,
+    "familias_corte_transversal": [
+      {
+        "familia": "minimal_5_desfechos",
+        "desfecho": "estoque_6m",
+        "espec": "OLS_estoque_6m_minimal_atracao_FEcurso_FEuf_cluster",
+        "p_valor": 0.018898199379428,
+        "q_fdr_bh": 0.04724549844857
+      },
+      {
+        "familia": "minimal_5_desfechos",
+        "desfecho": "delta_estoque_6m",
+        "espec": "OLS_delta_estoque_minimal",
+        "p_valor": 0.0433702030094719,
+        "q_fdr_bh": 0.06735361951556934
+      },
+      {
+        "familia": "minimal_5_desfechos",
+        "desfecho": "cobertura_6m",
+        "espec": "LPM_cobertura_6m_minimal",
+        "p_valor": 0.004869320552452375,
+        "q_fdr_bh": 0.024346602762261877
+      },
+      {
+        "familia": "minimal_5_desfechos",
+        "desfecho": "entradas_6m",
+        "espec": "OLS_entradas_6m_minimal",
+        "p_valor": 0.053882895612455475,
+        "q_fdr_bh": 0.06735361951556934
+      },
+      {
+        "familia": "minimal_5_desfechos",
+        "desfecho": "presentes_baseline_6m",
+        "espec": "OLS_presentes_baseline_6m_minimal_nivel",
+        "p_valor": 0.45526653133293704,
+        "q_fdr_bh": 0.45526653133293704
+      },
+      {
+        "familia": "full_5_desfechos",
+        "desfecho": "estoque_6m",
+        "espec": "OLS_estoque_6m_full_estrato_ivs_logpop_FE_cluster",
+        "p_valor": 0.09439435702613579,
+        "q_fdr_bh": 0.13299223571434235
+      },
+      {
+        "familia": "full_5_desfechos",
+        "desfecho": "delta_estoque_6m",
+        "espec": "OLS_delta_full",
+        "p_valor": 0.09439435702614268,
+        "q_fdr_bh": 0.13299223571434235
+      },
+      {
+        "familia": "full_5_desfechos",
+        "desfecho": "cobertura_6m",
+        "espec": "LPM_cobertura_full",
+        "p_valor": 0.0766582909901799,
+        "q_fdr_bh": 0.13299223571434235
+      },
+      {
+        "familia": "full_5_desfechos",
+        "desfecho": "entradas_6m",
+        "espec": "OLS_entradas_full",
+        "p_valor": 0.10639378857147389,
+        "q_fdr_bh": 0.13299223571434235
+      },
+      {
+        "familia": "full_5_desfechos",
+        "desfecho": "presentes_baseline_6m",
+        "espec": "OLS_presentes_full_nivel",
+        "p_valor": 0.6788554699186142,
+        "q_fdr_bh": 0.6788554699186142
+      }
+    ],
+    "nota": "Antes de 16/09/2026 (item B-5), bh_fdr existia no script e nunca era chamada; q_fdr_atracao saia NaN. As familias sao declaradas aqui e nao foram escolhidas depois de ver quais q ficariam abaixo de 0,05. A escala primaria de A5 continua sendo a proporcional e o coeficiente de manchete continua sendo o de marco/2026."
+  }
 }

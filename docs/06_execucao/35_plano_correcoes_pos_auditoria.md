@@ -518,3 +518,124 @@ de quem escreveu a auditoria, não desta sessão.
 - A linha "Modelo linear pré-especificado" (27,9 / 5,9), que é o primário, **não
   muda**, e nenhum outro número do artigo muda.
 - O conferidor passa de 190 para **193** cifras, todas aprovadas.
+
+---
+
+# Emenda 2 — 16/09/2026 — colapso de UF em macrorregião nos modelos secundários de A5
+
+> **Estado:** `EMENDA_CONGELADA_PRE_IMPLEMENTACAO`.
+> **Origem:** sessão 1 da fila normativa de `36_backlog_pos_auditoria.md`, item
+> **A-1**, bloqueada em 14/09/2026 por achado e por D-4.
+> **Regra desta emenda:** a mesma do documento — o que muda, por quê e qual
+> número deve sair ficam registrados **antes** de qualquer alteração de código.
+> **Autorização:** o autor delegou a esta sessão, em 16/09/2026, as decisões
+> listadas em "Decisões que dependem do autor" do backlog, com a instrução de
+> decidir e documentar. A decisão abaixo foi tomada nesses termos.
+
+## O que destravou a sessão
+
+O bloqueio de D-4 era mais estreito do que estava registrado: A5 pode ser
+reestimado a partir de `A5_painel_T0.parquet`, com o hash conferido contra o
+manifesto A6, e isso foi validado byte a byte antes desta emenda (commit
+`da4d6f7`; detalhe na seção D-4 do backlog). O achado sobre o alvo continua e é
+resolvido aqui.
+
+## Decisão 1 — definição do efeito fixo para células sem macrorregião publicada
+
+**Adotada: nível residual rotulado**, `MACRO_SEM_REGIAO_SAUDE`, o que dá **24
+níveis** de efeito fixo de UF — a mesma implementação de `colapsar_uf_fe` do C1
+em A4.
+
+Por quê, e por que isto não é escolher depois de ver o efeito:
+
+1. O princípio é anterior aos dois coeficientes. O C1 fixou, em 09/09/2026, que
+   município sem macrorregião publicada forma nível próprio rotulado "em vez de
+   herdar uma região" (`05_estimar_atracao.py`, `colapsar_uf_fe`). A-1 existe
+   para dar a A5 a mesma correção que A4 recebeu; aplicar em A5 uma definição
+   diferente da de A4 seria a assimetria, não a simetria.
+2. A alternativa carrega a classe de defeito que o item corrige. Com 23 níveis,
+   as quatro células (Oiapoque/AP, Cachoeiro de Itapemirim/ES, Linhares/ES e a
+   quarta do mesmo conjunto `MACRO_SEM_REGIAO_SAUDE`) ficam **sem efeito fixo de
+   UF nenhum**, descartadas em silêncio por `pd.get_dummies`. A-1 nasceu de
+   células sem efeito fixo próprio; adotar uma medição que reproduz isso seria
+   corrigir o defeito em 21 municípios e mantê-lo em três.
+3. A escolha não muda a conclusão em nenhuma direção: +0,5062 contra +0,5014,
+   `p` 0,0434 contra 0,0456, mesmo sinal, mesma ordem, mesma leitura
+   associativa. Nenhuma das duas favorece a narrativa; a decisão é
+   definicional, e as duas variantes ficam publicadas lado a lado.
+
+## Alvos reemitidos
+
+Medidos em 14/09/2026 em conferência somente-leitura sobre `A5_painel_T0.parquet`,
+replicando `build_X("minimal")`/`fit_ols` de A5 — modelo `delta_minimal`,
+variação do estoque 202506→202603, amostra confirmatória de 587 células:
+
+| Variante | coef | EP | p | níveis UF | papel |
+|---|---:|---:|---:|---:|---|
+| Balde único `RESTO` (implementação atual) | **+1,2949** | 0,7749 | 0,0947 | 20 | sensibilidade publicada |
+| **Colapso em macrorregião, residual rotulado** | **+0,5062** | **0,2506** | **0,0434** | **24** | **nova primária dos modelos secundários** |
+| Sem colapso (27 UFs) | **+0,5002** | 0,2414 | 0,0382 | 27 | sensibilidade publicada |
+
+O alvo de +0,5014 / 23 níveis do backlog **não** é mais alvo: ele descreve a
+variante "ausente → referência", que a Decisão 1 rejeita. Fica registrado como
+medição, não como alvo.
+
+## Decisão 2 — cobertura do alvo
+
+`uf_fe` alimenta as tabelas `03`, `03b`–`03i`, `04`, `05` e `06` de A5. O
+backlog congela alvo para um único coeficiente e alerta que adotar macrorregião
+move todos os outros sem alvo declarado. Tratamento adotado:
+
+- o **portão numérico** é o `delta_minimal` da tabela acima, nas três variantes;
+- as demais tabelas mudam **por consequência mecânica** da mesma definição de
+  efeito fixo, sem alvo prévio, e o que se exige delas é a coerência
+  documentada: a tabela nova de sensibilidade publica as três variantes também
+  para `estoque_6m_minimal`, `cobertura_6m_minimal`, `entradas_6m_minimal` e
+  `presentes_baseline_6m_minimal`, para que a mudança de cada coeficiente
+  secundário fique auditável;
+- **nenhum deles entra no artigo**, e nenhuma das seis cifras de A5 que o
+  conferidor confere vem de modelo com `uf_fe`.
+
+## O que muda
+
+- `06_avaliar_provimento_cnes.py`: `uf_fe` passa a ser construído por
+  colapso em macrorregião com residual rotulado, nas **duas** implementações
+  hoje existentes — a coluna do painel e a de `A5_tabela_01e_amostra_uf.csv`.
+  No modo de reestimação, a coluna `uf_fe` lida do painel congelado, que traz a
+  definição superada, é recomputada em memória; o parquet não é regravado.
+- Nova tabela `A5_tabela_11_sensibilidade_colapso_uf.csv`, com as três variantes
+  para os cinco modelos `minimal` de corte transversal, no formato de
+  `A4_tabela_07_sensibilidade_colapso_uf.csv`.
+- `A5_estimativas_provimento.json` passa a registrar a variante primária e o
+  número de níveis de efeito fixo.
+
+## O que explicitamente NÃO muda
+
+- O estudo de evento, manchete de A5, nas duas escalas: `uf_month` vem de
+  `sg_uf` direto, com as 27 unidades. `0,0684` e `0,50` não mudam.
+- A amostra confirmatória, a referência 202506, o follow 202603, a ponte.
+- Os 11 alvos congelados do C2 que o próprio script confere.
+- Qualquer cifra do artigo: o conferidor deve seguir aprovando as mesmas
+  **193** cifras.
+
+## Portão de aceitação desta emenda
+
+1. `delta_minimal` reproduz as três linhas da tabela acima em quatro casas de
+   coeficiente, EP e `p`, com o número de níveis declarado.
+2. O script continua conferindo os 11 alvos do C2.
+3. Suíte verde e conferidor do artigo inalterado em 193 cifras.
+4. Divergência em qualquer dos três: **parar** — é achado, não resultado novo.
+
+# Emenda 2 — resultado da execução (16/09/2026)
+
+> **Estado:** `EXECUTADA`. Commit da emenda: `03ccc1c`, anterior ao código.
+> Nenhuma implementação foi ajustada para bater alvo.
+
+Os três alvos reemitidos reproduzem em quatro casas, com o número de níveis
+declarado: `RESTO` +1,2949 / 0,7749 / 0,0947 / 20; macrorregião com residual
+rotulado **+0,5062 / 0,2506 / 0,0434 / 24**; sem colapso +0,5002 / 0,2414 /
+0,0382 / 27. O script confere os 12 valores como alvo congelado, ao lado dos 11
+do C2 (23 alvos). Os cinco modelos `minimal` nas três variantes estão em
+`A5_tabela_11_sensibilidade_colapso_uf.csv`. O estudo de evento não mudou;
+`A5_painel_T0.parquet` não foi regravado; nenhuma cifra do artigo mudou e o
+conferidor segue aprovando 193. Suíte: 174 testes verdes.
