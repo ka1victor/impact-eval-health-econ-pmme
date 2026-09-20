@@ -270,6 +270,34 @@
       "202607": 21.96
     }
   },
+  "serie_total_por_100k": {
+    "202406": 14.45,
+    "202407": 14.55,
+    "202408": 14.57,
+    "202409": 14.63,
+    "202410": 14.66,
+    "202411": 14.68,
+    "202412": 14.7,
+    "202501": 14.66,
+    "202502": 14.66,
+    "202503": 14.71,
+    "202504": 14.86,
+    "202505": 14.96,
+    "202506": 15.09,
+    "202507": 15.26,
+    "202508": 15.4,
+    "202509": 15.57,
+    "202510": 15.8,
+    "202511": 15.99,
+    "202512": 16.13,
+    "202601": 16.3,
+    "202602": 16.46,
+    "202603": 16.77,
+    "202604": 17.01,
+    "202605": 17.18,
+    "202606": 17.38,
+    "202607": 17.71
+  },
   "leitura": "descritiva; sem grupo de comparação; presença cadastral, não participação",
   "figuras": [
     "output/apresentacao_banca1/especialistas_por_uf_extremos.png",
@@ -279,6 +307,7 @@
     "output/apresentacao_banca1/oferta_pre_por_faixa.png",
     "output/apresentacao_banca1/retaguarda_por_faixa.png",
     "output/apresentacao_banca1/oferta_antes_depois_por_faixa.png",
+    "output/apresentacao_banca1/oferta_total_mensal.png",
     "output/apresentacao_banca1/vagas_ciclo1_por_regiao.png",
     "output/apresentacao_banca1/preenchimento_ciclo1.png"
   ]
