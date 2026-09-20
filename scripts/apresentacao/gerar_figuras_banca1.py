@@ -14,13 +14,17 @@ Figuras:
 3. `oferta_antes_depois_por_faixa.png` — a mesma taxa, mensal, de junho de
    2024 a julho de 2026, com marcos da oferta e da homologação.
 
-4. `retaguarda_por_faixa.png` — colegas da mesma especialidade que o médico
+4. `oferta_total_mensal.png` — a mesma série mensal, agregada, sem quebra por
+   faixa: uma única linha, razão dos totais (especialistas sobre população) em
+   cada competência, e não a média das taxas das faixas.
+
+5. `retaguarda_por_faixa.png` — colegas da mesma especialidade que o médico
    encontraria no município, por faixa de 2025.
 
-5. `vagas_ciclo1_por_regiao.png` — células estabelecimento–curso e vagas
+6. `vagas_ciclo1_por_regiao.png` — células estabelecimento–curso e vagas
    imediatas do ciclo 1 (chamada 1) por grande região, do quadro de vagas.
 
-6. `preenchimento_ciclo1.png` — proporção de células com alguma confirmação ou
+7. `preenchimento_ciclo1.png` — proporção de células com alguma confirmação ou
    homologação, por faixa anunciada e por estrato territorial, lida das tabelas
    descritivas do módulo A4 (`output/tema_trabalho/`). Leitura descritiva.
 
@@ -28,14 +32,14 @@ As três figuras do slide 4 não derivam de base do repositório: os valores sã
 estatísticas publicadas, declaradas abaixo como constantes com fonte, página e
 cobertura, e repetidas no manifesto. Nenhuma é estimativa nossa.
 
-7. `especialistas_por_uf_extremos.png` — razão de especialistas por 100 mil
+8. `especialistas_por_uf_extremos.png` — razão de especialistas por 100 mil
    habitantes nas duas maiores e nas duas menores UFs, 2024.
 
-8. `deslocamento_por_regiao.png` — distância média percorrida para serviços de
+9. `deslocamento_por_regiao.png` — distância média percorrida para serviços de
    alta complexidade, por grande região. Fonte primária **não confirmada**.
 
-9. `dupla_pratica_cirurgioes.png` — setor de atuação dos cirurgiões: dupla
-   prática, exclusivamente privado, exclusivamente público ou SUS.
+10. `dupla_pratica_cirurgioes.png` — setor de atuação dos cirurgiões: dupla
+    prática, exclusivamente privado, exclusivamente público ou SUS.
 
 Numerador: `especialistas_mst` do painel município–curso–mês, restrito aos
 cursos com correspondência unívoca curso–CBO (evita contar a mesma pessoa em
@@ -114,6 +118,13 @@ COR_BARRA = {"Faixa 3": VERDE_CLARO, "Faixa 2": VERDE_MEDIO, "Faixa 1": VERDE_ES
 
 ULTIMA_PRE = "202506"      # última competência anterior à publicação da oferta
 PRIMEIRA_POS = "202510"    # primeira competência integralmente pós-homologação
+
+# Banda fixa do eixo vertical de `oferta_total_mensal.png`. A série agregada varia
+# pouco em relação ao nível, e um eixo a partir de zero achata a variação. O
+# truncamento é declarado no rodapé da figura; a função aborta se a série sair da
+# banda, para que uma competência nova não seja cortada em silêncio.
+PISO_Y = 14.0
+TETO_Y = 18.0
 
 BOLSA_POR_FAIXA = [
     ("Faixa 3\nmédia, baixa\nou muito baixa", 10_000),
@@ -467,6 +478,75 @@ def figura_oferta_antes_depois(agregado: pd.DataFrame) -> Path:
     return destino
 
 
+def figura_oferta_total(agregado: pd.DataFrame) -> Path:
+    """Mesma taxa das demais figuras, agregada: uma única linha, sem quebra por faixa.
+
+    A série é a razão dos totais (soma de especialistas sobre soma da população,
+    por competência), não a média das taxas das faixas.
+
+    O eixo vertical é truncado na banda `PISO_Y`–`TETO_Y` para tornar legível uma
+    variação pequena em relação ao nível. Truncar amplia a inclinação aparente, e
+    é por isso que o truncamento vai declarado no rodapé: a série não tem grupo de
+    comparação e não se lê como efeito do programa. A banda é fixa e a função
+    aborta se a série sair dela, para que uma competência nova nunca seja cortada
+    em silêncio.
+    """
+    municipios_por_comp = agregado.groupby("competencia")["municipios"].sum()
+    if municipios_por_comp.nunique() != 1:
+        raise SystemExit(
+            "número de municípios varia entre competências "
+            f"({municipios_por_comp.min()}–{municipios_por_comp.max()}): "
+            "denominador variável invalidaria a série agregada")
+
+    total = (
+        agregado.groupby("competencia")[["especialistas", "populacao"]].sum().sort_index()
+    )
+    total["por_100k"] = total["especialistas"] / total["populacao"] * 1e5
+    serie = total["por_100k"]
+    x = list(range(len(serie.index)))
+
+    if serie.min() < PISO_Y or serie.max() > TETO_Y:
+        raise SystemExit(
+            f"série agregada ({serie.min():.2f}–{serie.max():.2f}) sai da banda "
+            f"fixa do eixo ({PISO_Y}–{TETO_Y}): reveja a banda antes de plotar, "
+            "a figura cortaria a série")
+
+    fig, ax = plt.subplots(figsize=(10.4, 4.6), dpi=200)
+    ax.plot(x, serie.values, color=TINTA, linewidth=2.2)
+    ax.annotate(_fmt(serie.iloc[-1]), (x[-1], serie.iloc[-1]),
+                textcoords="offset points", xytext=(6, 0), va="center",
+                fontsize=9.5, color=TINTA)
+    ax.annotate(_fmt(serie.iloc[0]), (x[0], serie.iloc[0]),
+                textcoords="offset points", xytext=(-6, 0), va="center", ha="right",
+                fontsize=9, color=TINTA_SUAVE)
+
+    idx = {c: i for i, c in enumerate(serie.index)}
+    for comp, texto, lado in ((ULTIMA_PRE, "última competência\npré-oferta (jun/25)", "right"),
+                              (PRIMEIRA_POS, "primeira competência\npós-homologação (out/25)", "left")):
+        ax.axvline(idx[comp], color=TINTA_SUAVE, linewidth=0.9, linestyle=(0, (3, 3)))
+        deslocamento = -5 if lado == "right" else 5
+        ax.annotate(texto, (idx[comp], TETO_Y - 0.06), textcoords="offset points",
+                    xytext=(deslocamento, 0), ha=lado, va="top", fontsize=8.5, color=TINTA_SUAVE)
+
+    rotulos = [c[4:] + "/" + c[2:4] if c.endswith(("01", "07")) else "" for c in serie.index]
+    ax.set_xticks(x)
+    ax.set_xticklabels(rotulos, fontsize=9)
+    ax.set_xlim(-1.5, len(x) + 3.5)
+    ax.set_ylim(PISO_Y, TETO_Y)
+    ax.set_yticks([14, 15, 16, 17, 18])
+    ax.set_ylabel("Especialistas por 100 mil habitantes", fontsize=10.5, color=TINTA_SUAVE)
+    _limpar_moldura(ax)
+    _rodape(fig, "Mensal, junho de 2024 a julho de 2026. 295 municípios com vaga no ciclo 1, nos cursos "
+                 "de correspondência unívoca curso–CBO. Presença cadastral no CNES, não participação no "
+                 "PMM-E. Eixo vertical truncado: começa em 14, não em zero. Sem grupo de comparação: "
+                 "todos os municípios receberam vaga. Leitura descritiva.",
+            y=-0.06)
+    destino = SAIDA / "oferta_total_mensal.png"
+    fig.savefig(destino, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    return destino
+
+
 def figura_vagas_por_regiao() -> tuple[Path, dict]:
     """Células e vagas imediatas do ciclo 1 por grande região."""
     quadro = pd.read_parquet(QUADRO)
@@ -582,11 +662,14 @@ def main() -> None:
         figura_oferta_pre(agregado),
         figura_retaguarda_por_faixa(),
         figura_oferta_antes_depois(agregado),
+        figura_oferta_total(agregado),
         fig_regiao,
         fig_preench,
     ]
 
     serie = agregado.pivot(index="competencia", columns="faixa", values="por_100k").round(2)
+    total = agregado.groupby("competencia")[["especialistas", "populacao"]].sum().sort_index()
+    serie_total = (total["especialistas"] / total["populacao"] * 1e5).round(2)
     manifesto = {
         "entradas": {
             "painel": {"caminho": str(PAINEL.relative_to(RAIZ)), "sha256": _hash(PAINEL),
@@ -632,6 +715,7 @@ def main() -> None:
         "marcos": {"ultima_pre": ULTIMA_PRE, "primeira_pos": PRIMEIRA_POS},
         "cobertura": meta,
         "serie_por_100k": {faixa: serie[faixa].to_dict() for faixa in ORDEM_FAIXAS},
+        "serie_total_por_100k": serie_total.to_dict(),
         "leitura": "descritiva; sem grupo de comparação; presença cadastral, não participação",
         "figuras": [str(c.relative_to(RAIZ)) for c in gerados],
     }
