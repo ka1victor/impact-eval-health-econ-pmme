@@ -70,6 +70,7 @@ proveniência do projeto. Por isso o passo 2 do script cria
 | `oferta_pre_por_faixa.png` | `output/apresentacao_banca1/oferta_pre_por_faixa.png` |
 | `retaguarda_por_faixa.png` | `output/apresentacao_banca1/retaguarda_por_faixa.png` |
 | `preenchimento_ciclo1.png` | `output/apresentacao_banca1/preenchimento_ciclo1.png` |
+| `oferta_total_mensal.png` | `output/apresentacao_banca1/oferta_total_mensal.png` |
 
 `vagas_ciclo1_por_regiao.png` e `curva_custo_laboral_burnout.png` saíram do
 deck em 16/09/2026 e não são mais vinculadas. Se algum arquivo faltar, o build

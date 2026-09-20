@@ -55,11 +55,12 @@
 | `F1` | Especialistas por 100 mil habitantes em jun/2025, por faixa publicada | 5 | `output/apresentacao_banca1/oferta_pre_por_faixa.png` | CNES + Censo 2022, gerada por script |
 | `F2` | Colegas da mesma especialidade no município, jun/2025, por faixa publicada | 5 | `output/apresentacao_banca1/retaguarda_por_faixa.png` | CNES, gerada por script |
 | `F6` | Preenchimento do ciclo 1 por faixa publicada e por estrato territorial | 7 | `output/apresentacao_banca1/preenchimento_ciclo1.png` | tabelas descritivas do módulo A4, gerada por script |
+| `F7` | Especialistas por 100 mil habitantes nos 295 municípios do ciclo 1, série mensal agregada de jun/2024 a jul/2026 | 7 | `output/apresentacao_banca1/oferta_total_mensal.png` | CNES + Censo 2022, gerada por script; **eixo truncado em 14–18** — ver a definição abaixo |
 
 `F4` (curva de custo laboral) e `F5` (vagas por região) saíram do deck no corte
 de 16/09/2026 e estão listadas abaixo entre as figuras não usadas.
 
-**As sete são produzidas** por
+**As oito são produzidas** por
 [`scripts/apresentacao/gerar_figuras_banca1.py`](../../../scripts/apresentacao/gerar_figuras_banca1.py),
 que grava `output/apresentacao_banca1/manifesto_figuras.json` com o hash das
 entradas, o filtro aplicado e as séries por faixa, região e estrato. Desde
@@ -107,6 +108,35 @@ módulo A4 é a única saída de estimação do projeto que a apresentação toc
 dela só se usam as contagens descritivas e, no slide 7, o contraste ajustado de
 estrato, declarado como **associativo**.
 
+**Definição de `F7`** (na tela desde 20/09/2026, no **primeiro build** do slide
+7, ao lado de `F6`). A **mesma taxa** de `F1`, mês a mês e **sem quebra por
+faixa**: razão dos **totais** — soma de especialistas sobre soma da população —
+nos mesmos **295 municípios** com curso de correspondência unívoca, em **26
+competências**, de `202406` a `202607`. A série está no `manifesto_figuras.json`
+sob **`serie_total_por_100k`**; as entradas são o painel
+`output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet` (filtro
+`curso_sem_sobreposicao == 1`) e a população do Censo 2022, ambas com hash no
+manifesto. Município e denominador são **constantes** nas 26 competências, e o
+script aborta se qualquer um dos dois variar. É presença cadastral no CNES, não
+participação no PMM-E.
+
+**O eixo de `F7` é truncado em 14–18**, a pedido do autor, para tornar legível
+uma variação pequena em relação ao nível. Isso **amplia a inclinação aparente**:
+num eixo a partir de zero a mesma série pareceria quase plana. O truncamento vai
+**declarado no rodapé da figura**, que é conteúdo de tela — *"Eixo vertical
+truncado: começa em 14, não em zero. Sem grupo de comparação: todos os municípios
+receberam vaga. Leitura descritiva."* A banda é fixa em `PISO_Y`/`TETO_Y` no
+script, que aborta se a série sair dela, para que uma competência nova não seja
+cortada em silêncio. Truncar muda a leitura visual, não os dados: os valores do
+manifesto são os mesmos. A ressalva de que **não há grupo de comparação** está na
+tela em dois lugares, e é ela que impede ler a subida como efeito do programa: o
+**terceiro item da leitura** — *"o estoque sobe desde antes da oferta"*, com a
+observação de que nenhum município da série está fora do programa — e o
+**destaque do build 2**, que diz que a série não tem grupo de comparação. `F7`
+entra como **contexto descritivo**. A versão **por faixa**,
+`oferta_antes_depois_por_faixa.png`, continua fora do deck, e com ela a tabela de
+inclinações pré/pós do deck do grupo — ver `P8`.
+
 ### Figuras geradas e não usadas
 
 | Arquivo | Situação |
@@ -114,7 +144,6 @@ estrato, declarado como **associativo**.
 | `output/apresentacao_banca1/vagas_ciclo1_por_regiao.png` (`F5`) | células e vagas imediatas do ciclo 1 por região. Saiu do slide da Política no corte de 16/09/2026: descrevia sem argumentar. Os totais que ficaram em texto no slide 5 são **1.295 / 460 / 368**; o Nordeste (505 células, 39%) e as 18 capitais saíram da tela junto com a figura. O script continua gerando |
 | `docs/02_teoria/figuras/curva_custo_laboral_burnout.png` (`F4`) | ilustração conceitual do custo laboral em U. Saiu do deck em 16/09/2026 com a fusão dos dois slides de custo; o formato em U é descrito em texto no **slide 10**. Permanece como figura canônica de `modelo_micro.md`, §2.2. A ressalva de legibilidade em projeção deixa de afetar a apresentação |
 | `output/apresentacao_banca1/oferta_antes_depois_por_faixa.png` | série mensal de especialistas por 100 mil habitantes, 2024–2026. Saiu do deck na segunda rodada de revisão: sem grupo de comparação, não se lê como efeito do programa. O script continua gerando; a série está no `manifesto_figuras.json` e é a única parte reprodutível da tabela do deck do grupo — ver `P8` |
-| `output/apresentacao_banca1/oferta_total_mensal.png` | a mesma série mensal, agregada, sem quebra por faixa: uma única linha, razão dos totais nos 295 municípios. Gerada em 20/09/2026. Carrega a limitação da figura por faixa e de `P8`: **sem grupo de comparação**, a subida não se lê como efeito do programa — a série cresce desde junho de 2024, antes de qualquer oferta. Entra apenas como contexto descritivo; a série está no `manifesto_figuras.json` sob `serie_total_por_100k`. **Eixo vertical truncado em 14–18 desde 20/09/2026**, a pedido do autor, para tornar legível uma variação pequena em relação ao nível: a inclinação aparente é maior que num eixo a partir de zero, e o truncamento vai declarado no rodapé da figura. A banda é fixa em `PISO_Y`/`TETO_Y` e o script aborta se a série sair dela, para que uma competência nova não seja cortada em silêncio. Truncar muda a leitura visual, não os dados: os valores do manifesto são os mesmos |
 | `docs/07_apresentacoes/banca1/figuras/motivacao_manchetes.png` | recortes de imprensa com cabeçalho do deck anterior. As manchetes entraram no slide do Problema como citação textual em 09/09/2026 e saíram no corte de 16/09/2026; a portaria de urgência continua citada em texto no slide 4, e a manchete dos 10% deixou a tela: depois da compressão de 16/09/2026 ela só aparece em **nota de produção**, como advertência a quem monta o deck |
 
 `docs/07_apresentacoes/banca1/figuras/especialistas_por_uf.png` e
@@ -252,6 +281,8 @@ organiza o custo", que estava no slide das implicações, mais a definição do
 | **393 de 1.295** células com confirmação ou homologação — **30,3%** | `output/tema_trabalho/A4_relatorio_diagnostico.md`, §1 |
 | 23,6% / 37,4% / 31,6% por faixa publicada (n = 539 / 465 / 291) | `F6`, `A4_tabela_01b_amostra_faixa.csv` |
 | 35,6% / 44,9% / 26,9% / 20,5% por estrato (n = 73 / 265 / 811 / 146) | `F6`, `A4_tabela_01_amostra_construcao.csv`, amostra primária |
+| **14,5** em jun/2024 e **17,7** em jul/2026 especialistas por 100 mil habitantes nos **295 municípios** — na tela no **build 1**, no corpo do slide e dentro de `F7` | `F7`; `manifesto_figuras.json`, chave `serie_total_por_100k`, 26 competências de `202406` a `202607`. Valores cheios **14,45** e **17,71**, arredondados na tela. É a razão dos totais: **6.068** e **7.436** especialistas sobre população do Censo 2022 **constante** de **41.991.553** — os três **nunca foram exibidos** e sustentam a série. Presença cadastral no CNES, não participação no PMM-E; **sem grupo de comparação**, ver a definição de `F7` e `P8` |
+| **Alta de 22,5%** no estoque entre jun/2024 e jul/2026, *"desde antes da oferta"* — na tela no **build 2**, terceiro item da leitura | `F7`, mesma chave `serie_total_por_100k`. Vem da **razão dos totais**, 7.436 / 6.068 = 1,2254; com os dois valores arredondados do manifesto (17,71 / 14,45) daria 22,6%, e é por isso que o percentual é dos totais, não da série arredondada. **Descritivo:** a subida começa mais de um ano antes da publicação das vagas e **nenhum município da série está fora do programa** |
 | **Metropolitano +20,9 p.p.** sobre interior remoto no **modelo ajustado** | `output/tema_trabalho/A4_tabela_03b_ajuste_completo.csv`, termo `estrato_metropolitano` = 0,2085 (EP cluster 0,078; p = 0,008), especificação `LPM_full_estrato_ivs_logpop_estoque_faixa_FE`, n = 1.295, 368 clusters. Na especificação mínima o mesmo contraste é 0,279 — o slide cita o **ajustado**, que é o menor |
 | **A5: +0,500** especialista cadastrado em **mar/2026** contra **jun/2025**, **erro padrão 0,234** | `output/tema_trabalho/A5_relatorio_diagnostico.md`, módulo A5. O EP 0,234 é o da convenção anterior (p = 0,033); na convenção `reghdfe`/`fixest`, que conta os efeitos fixos absorvidos, o EP é 0,2469 e p = 0,044. O slide arredonda para "+0,50". **O erro padrão está na tela**: a compressão de 16/09/2026 chegou a retirá-lo e a revisão do mesmo dia devolveu o "(erro padrão **0,234**)" ao corpo do slide — é o EP da convenção anterior, não o da `reghdfe`/`fixest` |
 | **Pré-tendências: F = 1,031, p = 0,420** (teste conjunto pré-referência) | idem — é ausência de pré-tendência **detectável**, não prova de paralelismo. O teste nunca foi à tela: sustenta a expressão "sem pré-tendência detectável" |

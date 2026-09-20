@@ -29,7 +29,7 @@ bash scripts/apresentacao/build_deck_beamer.sh
 O script:
 
 1. posiciona-se na raiz do repositório (todos os caminhos são relativos a ela);
-2. confere que as sete figuras existem antes de chamar o LaTeX;
+2. confere que as oito figuras existem antes de chamar o LaTeX;
 3. roda **`lualatex`** duas vezes (a segunda resolve a contagem total do
    rodapé e as posições da capa e do sumário), com `-halt-on-error`;
 4. relata da última passada qualquer `Overfull \hbox` — texto vazando pela
@@ -78,9 +78,10 @@ do deck, onde moram os arquivos abaixo.
 | `F1` | `oferta_pre_por_faixa.png` | 5, build 3 |
 | `F2` | `retaguarda_por_faixa.png` | 5, build 3 |
 | `F6` | `preenchimento_ciclo1.png` | 7, build 1 |
+| `F7` | `oferta_total_mensal.png` | 7, build 1 |
 
 Os códigos são os de [`../03_proveniencia_figuras_e_numeros.md`](../03_proveniencia_figuras_e_numeros.md),
-seção 1. As sete são as figuras do documento canônico, nos mesmos slides.
+seção 1. As oito são as figuras do documento canônico, nos mesmos slides.
 
 Nenhuma figura é gerada, editada ou recortada por este deck. `F4` (curva de
 custo laboral) e `F5` (vagas por região) saíram do deck em 16/09/2026 e
@@ -256,6 +257,7 @@ texto ao lado fica só com a afirmação**. A figura prova, a frase interpreta.
 | 5, 1 | R$ 10 / 15 / 20 mil por faixa | o pacote igual em toda vaga; "o valor é a única coisa que varia" |
 | 5, 3 | 15,0 / 14,4 / 18,3 por 100 mil | "por habitante, a bolsa maior não vai para onde falta mais" |
 | 7, 1 | 23,6% / 37,4% / 31,6%; 44,9% / 35,6% / 26,9% / 20,5% | "das 1.295 células, 393 (30,3%) tiveram alguém confirmado ou homologado" |
+| 7, 1 | 14,5 e 17,7 por 100 mil, rotulados nos extremos de `F7` | **exceção declarada:** o texto os repete, porque o documento canônico os enuncia no corpo do slide |
 
 Números que a figura **não** rotula continuam em texto, como no documento: as
 medianas 6,5 e 2,5 de colegas (frame 5, build 3), 1.295 / 368 / 678 (frame 5,
@@ -307,8 +309,12 @@ frame.
 
 As figuras que dividem frame com texto são limitadas pela **altura**, não pela
 largura. Onde o documento põe duas figuras no mesmo build (frame 4, build 1;
-frame 5, build 3), elas ficam lado a lado em `columns`, com a mesma altura
-máxima.
+frame 5, build 3; frame 7, build 1 desde 20/09/2026), elas ficam lado a lado em
+`columns`, com a mesma altura máxima. No frame 7 o par é a exceção: as duas são
+largas o bastante para que, em meia largura, **a largura limite antes da
+altura** — `preenchimento_ciclo1` fica em cerca de 0,32 `\textheight` e
+`oferta_total_mensal` em 0,36, sob o teto de 0,42 —, de modo que o build usa
+menos altura com duas figuras do que usava com uma.
 
 Caixas de destaque mais estreitas que o bloco de texto são centradas pelo
 ambiente `destaque` ou por `minipage`. `booktabs` em todas as tabelas;

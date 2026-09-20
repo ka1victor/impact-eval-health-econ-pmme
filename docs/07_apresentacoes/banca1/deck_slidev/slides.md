@@ -344,17 +344,20 @@ Dinheiro move alocação, mas é caro, não move todo mundo, e não garante que 
 
 # No primeiro ciclo, a bolsa maior não ordenou o preenchimento
 
-<p class="sm tight">Das <strong>1.295 vagas</strong> da primeira chamada, <strong>30%</strong> tiveram alguém confirmado ou homologado. A bolsa maior não veio acompanhada de mais preenchimento — e o território, sim, ordenou o resultado:</p>
+<p class="sm tight">Das <strong>1.295 células</strong> da primeira chamada, <strong>393 (30,3%)</strong> tiveram alguém confirmado ou homologado. Nos <strong>295 municípios</strong> com curso de correspondência unívoca, o estoque de especialistas passou de <strong>14,5</strong> para <strong>17,7</strong> por 100 mil habitantes entre jun/2024 e jul/2026.</p>
 
-<Fig src="/fig/preenchimento_ciclo1.png" alt="Preenchimento do ciclo 1 por faixa de bolsa e por estrato territorial" h="fill" class="fill gap-s" />
+<div class="cols cols-2 fill gap-s">
+  <Fig src="/fig/preenchimento_ciclo1.png" alt="Preenchimento do ciclo 1 por faixa de bolsa e por estrato territorial" h="fill" />
+  <Fig src="/fig/oferta_total_mensal.png" alt="Especialistas por 100 mil habitantes nos 295 municípios do ciclo 1, de junho de 2024 a julho de 2026, com eixo truncado em 14–18" h="fill" />
+</div>
 
 <div class="callout gap-s">
 
-**Pagar o dobro não preencheu mais que pagar uma vez e meia**, e o preenchimento cai da capital e da região metropolitana para o interior remoto. Isso é **descrição, não efeito**: as faixas diferem em muito mais do que no valor da bolsa. Mas é o suficiente para colocar a pergunta.
+**Por faixa, não há ordem.** Pagar o dobro (31,6%) não preencheu mais que pagar uma vez e meia (37,4%). **Por território, há.** De **44,9%** no metropolitano a **20,5%** no interior remoto. **O estoque sobe desde antes da oferta.** A alta de **22,5%** começa em jun/2024, mais de um ano antes da publicação das vagas, e nenhum município da série está fora do programa. **Isto é descrição, não efeito.** As faixas diferem em muito mais que na bolsa, território prevê melhor que ela, e a série não tem grupo de comparação. Linguagem correta: **gradiente** e **associação**.
 
 </div>
 
-<Fonte>Quadro de vagas e resultados do ciclo 1, chamada 1 (Ministério da Saúde, 2025); estratos pela REGIC 2018 e pela composição de regiões metropolitanas e RIDEs de 2022 (IBGE).</Fonte>
+<Fonte>Quadro de vagas e resultados do ciclo 1, chamada 1 (Ministério da Saúde, 2025); estratos pela REGIC 2018 e pela composição de regiões metropolitanas e RIDEs de 2022 (IBGE). Série agregada: CNES, competências 06/2024 a 07/2026, e Censo 2022 (IBGE); figuras por scripts/apresentacao/gerar_figuras_banca1.py.</Fonte>
 
 ---
 

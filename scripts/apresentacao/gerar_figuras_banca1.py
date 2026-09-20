@@ -501,6 +501,12 @@ def figura_oferta_total(agregado: pd.DataFrame) -> Path:
     total = (
         agregado.groupby("competencia")[["especialistas", "populacao"]].sum().sort_index()
     )
+    if total["populacao"].nunique() != 1:
+        raise SystemExit(
+            "população somada varia entre competências "
+            f"({total['populacao'].min()}–{total['populacao'].max()}): o painel "
+            "mudou de composição e a série misturaria variação de cobertura "
+            "com variação de estoque")
     total["por_100k"] = total["especialistas"] / total["populacao"] * 1e5
     serie = total["por_100k"]
     x = list(range(len(serie.index)))

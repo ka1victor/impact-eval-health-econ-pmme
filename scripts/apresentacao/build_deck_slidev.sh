@@ -62,6 +62,7 @@ link_figura output/apresentacao_banca1/oferta_pre_por_faixa.png
 link_figura output/apresentacao_banca1/retaguarda_por_faixa.png
 link_figura output/apresentacao_banca1/bolsa_por_faixa.png
 link_figura output/apresentacao_banca1/preenchimento_ciclo1.png
+link_figura output/apresentacao_banca1/oferta_total_mensal.png
 
 # --- 3. exportação ---------------------------------------------------------
 # `slidev export` sobe um servidor Vite próprio. Na primeira execução depois de

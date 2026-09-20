@@ -113,7 +113,14 @@ Ele existe para justificar a pergunta, e por isso precisa mostrar que a resposta
 não é óbvia. Abre pelo que o próprio programa já disse: 30,3% das células com
 alguma confirmação ou homologação no ciclo 1, **sem ordem por faixa** de bolsa e
 **com ordem por território**, de 44,9% no metropolitano a 20,5% no interior
-remoto. Segue com a literatura, **dois de cada lado** desde 17/09/2026: a favor,
+remoto. Ao lado dele entra, desde 20/09/2026, a **série mensal agregada** dos
+mesmos 295 municípios: o estoque de especialistas por 100 mil habitantes vai de
+**14,5** em jun/2024 a **17,7** em jul/2026, uma alta de **22,5%**. Ela é dita
+na tela pelo que é, **descrição**: a subida começa mais de um ano antes de
+qualquer vaga publicada, todo município da série recebeu vaga e portanto **não
+há grupo de comparação** — e o eixo, truncado em 14–18 para deixar a variação
+legível, amplia a inclinação aparente, razão a mais para a ressalva ficar na
+tela. Segue com a literatura, **dois de cada lado** desde 17/09/2026: a favor,
 o salário sorteado no México e a régua do prêmio compensatório, que põe o degrau
 do PMM-E dentro da faixa que a literatura pede; contra, a expansão do Mais
 Médicos que Hone et al. (2020) mostram ser **bruta e não líquida** — +15,1

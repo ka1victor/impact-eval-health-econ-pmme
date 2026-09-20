@@ -294,9 +294,12 @@ classificação; Edital SGTES/MS nº 3/2025, item 11.1.4;
 ### O que o ciclo 1 mostra
 
 ![Preenchimento do ciclo 1 — por faixa: 23,6% na Faixa 3, 37,4% na Faixa 2, 31,6% na Faixa 1; por território: 44,9% metropolitano, 35,6% capitais, 26,9% interior conectado, 20,5% interior remoto](../../../output/apresentacao_banca1/preenchimento_ciclo1.png)
+![Especialistas por 100 mil habitantes nos 295 municípios do ciclo 1 com curso de correspondência unívoca — de 14,5 em jun/2024 a 17,7 em jul/2026, eixo truncado em 14–18](../../../output/apresentacao_banca1/oferta_total_mensal.png)
 
 Das **1.295 células** da primeira chamada, **393 (30,3%)** tiveram alguém
-confirmado ou homologado.
+confirmado ou homologado. Nos **295 municípios** com curso de correspondência
+unívoca, o estoque de especialistas passou de **14,5** para **17,7** por 100 mil
+habitantes entre jun/2024 e jul/2026.
 
 ### A leitura
 
@@ -304,10 +307,13 @@ confirmado ou homologado.
   pagar uma vez e meia (37,4%).
 - **Por território, há.** De **44,9%** no metropolitano a **20,5%** no interior
   remoto.
+- **O estoque sobe desde antes da oferta.** A alta de **22,5%** começa em
+  jun/2024, mais de um ano antes da publicação das vagas, e nenhum município da
+  série está fora do programa.
 
 > **Isto é descrição, não efeito.** As faixas diferem em muito mais que na
-> bolsa, e território prevê melhor que ela. Linguagem correta: **gradiente** e
-> **associação**.
+> bolsa, território prevê melhor que ela, e a série não tem grupo de
+> comparação. Linguagem correta: **gradiente** e **associação**.
 
 ### A literatura aponta para os dois lados
 
@@ -323,7 +329,8 @@ remunera **20 horas**.
 
 **Fontes:** Dal Bó, Finan & Rossi (2013), *QJE*; Scott et al. (2013), *Soc Sci
 Med* 96; Hone et al. (2020), *BMC HSR* 20:873. Ciclo 1:
-`output/tema_trabalho/`, módulos A4 e A5.
+`output/tema_trabalho/`, módulos A4 e A5. Série agregada: CNES 06/2024 a 07/2026
+e Censo 2022 (IBGE); figuras por `scripts/apresentacao/gerar_figuras_banca1.py`.
 
 > [!NOTE]
 > **Nota de produção — dois de cada lado, e o que saiu.** A tabela tinha dois a
@@ -336,6 +343,17 @@ Med* 96; Hone et al. (2020), *BMC HSR* 20:873. Ciclo 1:
 > ali; e **Pathman, Konrad & Ricketts (1992)**, *JAMA* — oito anos depois,
 > **12%** dos que foram por obrigação seguiam lá, contra **39%** dos que foram
 > sem. Costa et al. continua citado no slide 12.
+
+> [!NOTE]
+> **Nota de produção — a série agregada entrou em 20/09/2026.** A pedido do
+> autor, `oferta_total_mensal.png` passou a dividir o primeiro build com a
+> figura de preenchimento. É a série **sem quebra por faixa**, com eixo
+> **truncado em 14–18** e o truncamento declarado no rodapé da própria figura.
+> Truncar amplia a inclinação aparente, então a ressalva de que a série não tem
+> grupo de comparação está no terceiro item da leitura e no destaque do build 2,
+> e precisa continuar na tela se o build for remexido. A versão **por faixa**
+> continua fora do deck, pelo motivo da **pendência 4**, e com ela a tabela de
+> inclinações pré/pós do deck do grupo.
 
 > [!NOTE]
 > **Nota de produção — o que saiu da leitura.** Saíram dois números que são

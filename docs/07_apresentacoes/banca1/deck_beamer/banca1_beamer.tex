@@ -326,13 +326,22 @@
 \begin{frame}{O programa já deu sinais; a literatura aponta para os dois lados}
   \only<1>{%
     \pmmebuild{O que o ciclo 1 mostra}
-    \centerline{%
-      \includegraphics[width=\textwidth,height=0.46\textheight,keepaspectratio]%
-        {preenchimento_ciclo1}}
+    \begin{columns}[T]
+      \begin{column}{0.495\textwidth}
+        \includegraphics[width=\textwidth,height=0.42\textheight,keepaspectratio]%
+          {preenchimento_ciclo1}
+      \end{column}
+      \begin{column}{0.495\textwidth}
+        \includegraphics[width=\textwidth,height=0.42\textheight,keepaspectratio]%
+          {oferta_total_mensal}
+      \end{column}
+    \end{columns}
 
     \vspace{0.6em}
     {\small Das \num{1.295 células} da primeira chamada, \num{393 (30,3\%)}
-    tiveram alguém confirmado ou homologado.}
+    tiveram alguém confirmado ou homologado. Nos \num{295 municípios} com curso
+    de correspondência unívoca, o estoque de especialistas passou de \num{14,5}
+    para \num{17,7} por 100 mil habitantes entre jun/2024 e jul/2026.}
   }%
   \only<2>{%
     \pmmebuild{A leitura}
@@ -343,13 +352,17 @@
         preencheu mais que pagar uma vez e meia (37,4\%).
       \item \lead{Por território, há.} De \num{44,9\%} no metropolitano a
         \num{20,5\%} no interior remoto.
+      \item \lead{O estoque sobe desde antes da oferta.} A alta de
+        \num{22,5\%} começa em jun/2024, mais de um ano antes da publicação
+        das vagas, e nenhum município da série está fora do programa.
     \end{itemize}}
 
     \vspace{0.9em}
     \begin{destaque}[0.93\textwidth]
       \textbf{Isto é descrição, não efeito.} As faixas diferem em muito mais
-      que na bolsa, e território prevê melhor que ela. Linguagem correta:
-      \textbf{gradiente} e \textbf{associação}.
+      que na bolsa, território prevê melhor que ela, e a série não tem grupo
+      de comparação. Linguagem correta: \textbf{gradiente} e
+      \textbf{associação}.
     \end{destaque}
   }%
   \only<3>{%
@@ -393,7 +406,9 @@
 
   \fonte{\textbf{Fontes:} Dal Bó, Finan \& Rossi (2013), \textit{QJE}; Scott
   et al. (2013), \textit{Soc Sci Med} 96; Hone et al. (2020), \textit{BMC HSR}
-  20:873. Ciclo 1: \texttt{output/tema\_trabalho/}, módulos A4 e A5.}
+  20:873. Ciclo 1: \texttt{output/tema\_trabalho/}, módulos A4 e A5. Série
+  agregada: CNES 06/2024 a 07/2026 e Censo 2022 (IBGE); figuras por
+  \texttt{scripts/apresentacao/gerar\_figuras\_banca1.py}.}
 \end{frame}
 
 % ===========================================================================

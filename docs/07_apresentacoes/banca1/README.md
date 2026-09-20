@@ -14,7 +14,7 @@ argumento pedir — e, desde a reorganização de 16/09/2026, nenhum a mais.
 | Seção | Slides | Conteúdo |
 |---|:---:|---|
 | **Capa e sumário** | 1–2 | a capa e o sumário, que aparece **uma vez** |
-| **1. Motivação e Pergunta** | 3–8 | divisória (3); problema (4): o retrato territorial e a dupla prática, **em figura**; política (5): o pacote que é igual em toda vaga, quem fixa o valor e para onde a regra manda o dinheiro; IVS e suas dimensões (6): o que o índice mede; efeitos (7): o ciclo 1 e a literatura, dois de cada lado; pergunta de pesquisa (8): a cadeia que a política supõe, e a pergunta |
+| **1. Motivação e Pergunta** | 3–8 | divisória (3); problema (4): o retrato territorial e a dupla prática, **em figura**; política (5): o pacote que é igual em toda vaga, quem fixa o valor e para onde a regra manda o dinheiro; IVS e suas dimensões (6): o que o índice mede; efeitos (7): o ciclo 1 — o preenchimento e a **série mensal agregada** de especialistas por 100 mil habitantes — e a literatura, dois de cada lado; pergunta de pesquisa (8): a cadeia que a política supõe, e a pergunta |
 | **2. Literatura Teórica e Modelo Microeconômico** | 9–13 | divisória (9); literatura teórica usada (10): as três tradições e as **equações originais** de cada uma; modelo microeconômico conjunto (11): a equação de escolha e a caixa-preta do custo; custo da localidade (12): as equações inferidas e as três desvantagens, termo a termo; remuneração da localidade (13): a bolsa é o **piso**, não o total |
 | **3. Hipótese e Viabilidade Empírica** | 14–17 | divisória (14); implicações para o PMM-E (15), com a condição de aceitação e a fronteira entre faixas; hipótese do trabalho (16), sozinha na tela; disponibilidade de dados (17) |
 
@@ -68,10 +68,11 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 
 ## 3. Figuras
 
-Desde 17/09/2026 **todas as figuras do deck saem do pipeline**. São sete, e as
-três do slide 4 são novas: o corte daquele dia trocou lista de números por
-figura, e pôr mais peso numa figura montada à mão agravaria a violação da regra
-de proveniência em vez de tolerá-la.
+Desde 17/09/2026 **todas as figuras do deck saem do pipeline**. São **oito**
+desde 20/09/2026, quando a série mensal agregada entrou no slide 7. As três do
+slide 4 são novas: o corte de 17/09 trocou lista de números por figura, e pôr
+mais peso numa figura montada à mão agravaria a violação da regra de proveniência
+em vez de tolerá-la.
 
 | Figura | Slide | Origem |
 |---|:---:|---|
@@ -82,6 +83,7 @@ de proveniência em vez de tolerá-la.
 | Especialistas por 100 mil habitantes por faixa publicada | 5 | CNES + Censo 2022 |
 | Colegas da mesma especialidade por faixa publicada | 5 | CNES |
 | Preenchimento do ciclo 1 por faixa e por estrato | 7 | tabelas descritivas do módulo A4 |
+| Especialistas por 100 mil habitantes, série mensal agregada nos 295 municípios | 7 | CNES + Censo 2022 |
 
 As três do slide 4 **não derivam de base do repositório**: os valores são
 estatísticas publicadas, declaradas no script como constantes com fonte, página
@@ -102,8 +104,14 @@ python3 scripts/aquisicao/06_adquirir_populacao_censo2022.py   # denominador, um
 python3 scripts/apresentacao/gerar_figuras_banca1.py
 ```
 
-O script continua gerando a figura regional das vagas e a série mensal de
-oferta, que **não são usadas** no deck; a curva de custo laboral de
+A série agregada do slide 7 vai com o **eixo truncado em 14–18**, declarado no
+rodapé da própria figura: o truncamento amplia a inclinação aparente, e a leitura
+é descritiva, sem grupo de comparação. O rastreio está em
+[03 — Proveniência](03_proveniencia_figuras_e_numeros.md), figura `F7`.
+
+O script continua gerando a figura regional das vagas e a série mensal **por
+faixa**, que **não são usadas** no deck — a que entrou no slide 7 é a agregada,
+sem quebra por faixa; a curva de custo laboral de
 `docs/02_teoria/figuras/` também saiu do deck em 16/09/2026. As imagens em
 `figuras/` são material do deck anterior, preservado mas não usado. Ver
 [03 — Proveniência](03_proveniencia_figuras_e_numeros.md#figuras-geradas-e-não-usadas).
@@ -125,7 +133,7 @@ bash scripts/apresentacao/build_deck_slidev.sh        # Node 22, Chromium local
 | 2. Literatura Teórica e Modelo Microeconômico | 9–13 | ✅ | — | ✅ |
 | 3. Hipótese e Viabilidade Empírica | 14–17 | ✅ | — | ⚠️ |
 
-**Figuras** está ✅ desde 17/09/2026: as sete saem do pipeline. **Proveniência**
+**Figuras** está ✅ desde 17/09/2026: as oito saem do pipeline. **Proveniência**
 está ⚠️ em duas seções, por razões diferentes. Na **motivação**, duas séries do
 slide 4 seguem sem fonte primária conferida — gerar por script não confirma
 fonte. Na **hipótese e viabilidade**, a tela passou a afirmar que o custo cresce
