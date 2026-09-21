@@ -4,7 +4,8 @@
 > permanece como análise associativa de implementação: A4 é motivação
 > descritiva do gradiente territorial e A5 é evidência associativa de apêndice.
 > A RDD da bolsa pelo IVS está arquivada por ausência de primeiro estágio e o
-> pedido administrativo foi cancelado sem envio. O ciclo 3 continua congelado
+> pedido administrativo foi autorizado em 21/09/2026 e aguarda o ato de envio do
+> autor. O ciclo 3 continua congelado
 > até maturidade. Decisão canônica em
 > `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`; portões
 > executados em `docs/06_execucao/33_status_execucao_plano_causal.md`.
@@ -50,7 +51,8 @@
   for aprovado e registra o estado executado do plano causal.
 - [x] Antes de R3, reconciliar as 678 vagas imediatas com alocações e
   homologações no grão município–CNES–curso–chamada por meio de A1.
-- [x] **Encerrar a trilha.** O pedido administrativo foi `CANCELADO_NAO_ENVIADO`
+- [x] **Encerrar a trilha.** Encerrada em 14/09/2026: o pedido ficou
+  `CANCELADO_NAO_ENVIADO`
   e a RDD-IVS ficou `ARQUIVADO_SEM_PRIMEIRO_ESTAGIO`. R1 a R6 e a submissão dos
   pedidos deixam de ser fila: nenhum resultado do trabalho depende de resposta
   do Ministério. O pacote de solicitação e a triagem permanecem versionados,
@@ -153,8 +155,14 @@ de início e encerramento.
 
 ## O que continua com o autor (19/09/2026)
 
-- [ ] **D-3** — decidir se envia o pedido do escore administrativo de IVS. Pacote
-  pronto em `output/rdd_bolsa/`; é o único caminho para o efeito da bolsa.
+- [ ] **D-3 — AUTORIZADO EM 21/09/2026, envio pendente do autor.** A petição foi
+  corrigida para pedir o **Anexo IV** e os critérios de localização da cláusula
+  11.1.3, não o escore de IVS, que a cláusula 11.1.4 já publica. Texto pronto
+  para colar em `docs/pedidos_dados/solicitacao_focal_rdd_bolsa.md`, com roteiro
+  de envio; índice do pacote em `output/rdd_bolsa/README.md`. O ato é pessoal:
+  o Fala.BR exige autenticação gov.br. Registrar data e protocolo ao enviar.
+- [ ] **B-8** — `33_status_execucao_plano_causal.md` diverge do gerador; não
+  rodar o `run_all.py` completo antes de decidir se é gerado ou mantido à mão.
 - [ ] **D-2** — repetir C3-02B de um ambiente com acesso ao FTP do DATASUS;
   C3-05 só com `202703` madura; C3-06 em setembro/2027.
 - [ ] **D-4** — painel mensal e microdados do CNES; ao reexecutar A5, retirar a

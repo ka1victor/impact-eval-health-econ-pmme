@@ -74,13 +74,16 @@
 5. Redigir limites antes de heterogeneidades: causalidade local condicional,
    score discreto, protocolo retrospectivo e ausência de retenção contínua.
 
-Nenhum pedido de dados será submetido. A RDD em `0,300`, `0,400` ou `0,500`
+O pedido focal de dados foi autorizado pelo autor em 21/09/2026 e aguarda o ato
+de envio, que é pessoal. Nenhum resultado vigente depende da resposta. A RDD em
+`0,300`, `0,400` ou `0,500`
 não deve ser restaurada com o IVS público atual. A antiga fila R1–R6 permanece
 arquivada nas seções posteriores apenas para documentar decisões já tomadas.
 
 O estado executado e verificável dos portões está em
 [`33_status_execucao_plano_causal.md`](33_status_execucao_plano_causal.md). O
-A8 está concluído, e a trilha administrativa foi encerrada sem envio.
+A8 está concluído. A trilha administrativa deixou de estar encerrada: o pedido
+foi autorizado em 21/09/2026 e o envio está pendente do autor.
 
 **Estado em 19/09/2026.** A fila pós-auditoria de
 [`36_backlog_pos_auditoria.md`](36_backlog_pos_auditoria.md) foi exaurida no

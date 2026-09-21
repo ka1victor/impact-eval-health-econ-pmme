@@ -36,7 +36,8 @@ A decisão consolidada, todos os achados e a sequência de avanço estão em
 [`docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`](docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md).
 O estado efetivamente executado dos portões está em
 [`docs/06_execucao/33_status_execucao_plano_causal.md`](docs/06_execucao/33_status_execucao_plano_causal.md):
-A8 concluído, RDD-IVS arquivada e pedido administrativo cancelado sem envio.
+A8 concluído, RDD-IVS arquivada e pedido administrativo autorizado em
+21/09/2026, com envio pendente do ato do autor.
 
 O plano anterior do cutoff está preservado em
 [`docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md`](docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md).

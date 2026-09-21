@@ -105,6 +105,47 @@ seção. A paleta do PMM-E fica como acento e na capa alternativa `\pmmecapa`.
 O deck compila a 10pt (antes 11pt) por causa da Inter. Sem mudança no documento
 canônico; os frames seguiam na estrutura de 15 slides até a reconstrução do
 mesmo dia (entrada acima).
+## 21/09/2026 — Pedido administrativo autorizado; petição corrigida e pacote indexado
+
+Motivo: o autor autorizou o envio do pedido focal (D-3). Ao preparar o ato,
+verificou-se que a petição versionada era de 09/09/2026 e pedia como item
+indispensável o escore de IVS, contrariando o achado de 14/09/2026 de que o
+documento operativo é o **Anexo IV**, pela cláusula 11.1.3 do edital. A petição
+foi reescrita antes de qualquer envio.
+
+### Arquivos criados
+
+| Arquivo | Papel |
+|---|---|
+| `output/rdd_bolsa/README.md` | índice do pacote da trilha da bolsa: o que é cada artefato, qual script o gera e a ordem de uso quando a resposta chegar |
+
+### Documentos alterados sem mudar de lugar
+
+- `pedidos_dados/solicitacao_focal_rdd_bolsa.md`: itens indispensáveis
+  reordenados para Anexo IV, critérios de localização da cláusula 11.1.3, escore
+  com vintagem e folha de pagamento agregada; acrescentados roteiro de envio,
+  prazo legal e o comando exato da triagem. Estado passa a
+  `AUTORIZADA PELO AUTOR — ENVIO PENDENTE DO ATO DO AUTOR`.
+- `06_execucao/36_backlog_pos_auditoria.md`: seção D-3 registra a autorização e
+  a correção da petição; novo item **B-8**.
+- `06_execucao/33_status_execucao_plano_causal.md`, `06_execucao/05_roadmap_execucao.md`,
+  `TODO.md`, `README.md`: estado do pedido deixa de ser "cancelado sem envio".
+
+### Achado aberto como item
+
+**B-8**: `33_status_execucao_plano_causal.md` é alvo de escrita de
+`scripts/rdd_bolsa/02_controlar_execucao_plano_causal.py`, que está no
+`run_all.py`, mas o conteúdo versionado foi escrito à mão em `5c00f7e` e diverge
+do gerador. Uma execução completa do pipeline apagaria o texto manual.
+
+### Não foi feito, e por quê
+
+**O pedido não foi enviado.** O Fala.BR exige autenticação pessoal pelo gov.br,
+que uma sessão de agente não pratica, e o `CLAUDE.md` mantém a vedação a enviar
+pedido administrativo. Tudo o que antecede o botão de enviar está pronto.
+
+---
+
 ## 16/09/2026 — Fila pós-auditoria exaurida por delegação; artigo curto e scripts novos
 
 Motivo: o autor delegou à sessão as decisões pendentes da fila de

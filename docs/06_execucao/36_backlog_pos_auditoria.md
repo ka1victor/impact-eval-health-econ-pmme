@@ -945,6 +945,34 @@ versionado, com a lista de itens acima. **Estado inalterado:**
 está registrado na seção "Por que o D-3 é o único caminho para o efeito da
 bolsa"; a decisão de enviar é do autor, quando quiser retomá-la.
 
+### Autorizado pelo autor em 21/09/2026 — e o texto pronto estava errado
+
+O autor autorizou o envio. O estado passa de `CANCELADO_NAO_ENVIADO` para
+`AUTORIZADO_ENVIO_PENDENTE_DO_AUTOR`. **O ato continua sendo do autor**: o
+Fala.BR exige autenticação pessoal pelo gov.br, que uma sessão de agente não
+pratica, e o `CLAUDE.md` mantém a vedação a enviar pedido administrativo.
+
+Ao preparar o envio apareceu um defeito material. A petição em
+[`../pedidos_dados/solicitacao_focal_rdd_bolsa.md`](../pedidos_dados/solicitacao_focal_rdd_bolsa.md)
+era de 09/09/2026 e elegia como **item indispensável** o escore administrativo
+de IVS. O achado de 14/09/2026 inverteu isso: a cláusula 11.1.4 já publica a
+regra do piso, de modo que o escore traz em boa parte algo que já se tem, e o
+documento operativo é o **Anexo IV**, pela cláusula 11.1.3. A petição não citava
+nem o Anexo IV nem a cláusula 11.1.3. Enviada como estava, teria gastado o ciclo
+de 30 dias pedindo o item errado.
+
+A petição foi reescrita: os itens indispensáveis passam a ser, nesta ordem, o
+Anexo IV com suas versões e vigências, os critérios de localização da cláusula
+11.1.3, o escore de vulnerabilidade com vintagem e arredondamento, e a folha de
+pagamento agregada por município e competência, que separa valor anunciado de
+valor recebido. As garantias de não solicitar identificador civil foram
+mantidas. Foram acrescentados um roteiro de envio e o comando exato da triagem.
+O pacote ganhou índice próprio em `output/rdd_bolsa/README.md`.
+
+**Pendências do ato, para registrar aqui quando ocorrer:** data de envio,
+protocolo e eventuais termos apresentados pelo canal. O prazo legal é de 20 dias
+corridos, prorrogável por 10.
+
 ## D-4 · Microdados do CNES ausentes do repositório
 
 `output/aquisicao/cnes_mensal/` não existe, e `data/raw/cnes/` é gitignored. A
@@ -1120,6 +1148,30 @@ distintos e convém pedi-los no mesmo ato.
 Três itens **não** são decisão, e sim espera por dado externo: `C3-02B` depende
 de dois arquivos aparecerem no FTP oficial, `C3-05` da competência `202703`
 madura e `C3-06` de setembro de 2027. Ver **D-2**.
+
+## B-8 · `33_status_execucao_plano_causal.md` diverge do seu gerador
+
+Aberto em 21/09/2026, ao atualizar o estado do pedido. O arquivo
+`33_status_execucao_plano_causal.md` é alvo de escrita de
+`scripts/rdd_bolsa/02_controlar_execucao_plano_causal.py`, que está no
+`run_all.py`, mas o conteúdo versionado não é a saída desse script: o arquivo
+começa com "Estado executado do plano causal público" e o gerador emite "Estado
+executado do novo plano causal". O arquivo foi reescrito à mão em `5c00f7e` e
+nunca foi reconciliado.
+
+**Consequência:** uma execução completa do `run_all.py` sobrescreve o documento
+e apaga o texto escrito à mão. Grupo B, porque muda artefato versionado sem
+tocar número publicado.
+
+**Caminho recomendado:** decidir se o documento é gerado ou mantido à mão. Se
+for gerado, mover o conteúdo manual para outro arquivo e deixar o gerador
+escrever. Se for mantido à mão, retirar a escrita de `OUT_MD` do script. Não
+executar o `run_all.py` completo antes dessa decisão, sob risco de perder o
+texto.
+
+**Estado:** `ABERTO`. A linha do pedido administrativo neste arquivo foi
+atualizada à mão em 21/09/2026, no mesmo regime em que o arquivo já vinha sendo
+mantido.
 
 ## Encerramento — integrado na `main` em 19/09/2026
 

@@ -6,7 +6,8 @@
 
 ## Decisão vigente
 
-O pedido administrativo não foi enviado. A RDD da bolsa pelo IVS público
+O pedido administrativo foi autorizado pelo autor em 21/09/2026 e ainda não foi
+enviado. A RDD da bolsa pelo IVS público
 permanece bloqueada, mas o diagnóstico foi corrigido em 09/09/2026: a regra
 administrativa **é** determinística — o rótulo de IVS determina a faixa em 527 de
 527 municípios — e o que falta é o **escore contínuo** que gera essa categoria.
@@ -31,7 +32,7 @@ ponto.
 | A8-P5 | `REPLICACAO_DIRECIONAL` | 11 pares em 2026; +36,4 p.p. em presença ativa, teste exato `p=0,125` |
 | A8-P6 | `AUDITADO` | outputs agregados sem PII, hashes de entrada e testes automatizados |
 | RDD-IVS | `ARQUIVADO_ESCORE_NAO_OBSERVADO` | a regra é determinística (527/527), mas nenhuma regra de corte sobre o IVS 2010 público a recupera: teto de 78,0% para qualquer regra de dois cortes |
-| Pedido administrativo | `CANCELADO_NAO_ENVIADO` | nenhum recebimento ou espera integra o plano atual |
+| Pedido administrativo | `AUTORIZADO_ENVIO_PENDENTE_DO_AUTOR` (21/09/2026) | autorizado pelo autor; o envio é ato pessoal dele. Nenhum resultado vigente espera a resposta |
 
 ## Resultado e alcance
 
