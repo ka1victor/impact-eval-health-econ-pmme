@@ -1,0 +1,242 @@
+% ---------------------------------------------------------------------------
+% exemplos_tema.tex — galeria de componentes do tema PMME/Insper
+%
+% NAO e uma apresentacao: e a referencia visual do tema, para quem for montar
+% um deck novo (a banca 2, por exemplo) sem ter de garimpar exemplos dentro de
+% banca1_beamer.tex. Cada frame mostra um componente com o codigo ao lado.
+%
+% Nao tem conteudo do projeto: todo texto aqui e placeholder. Por isso nao se
+% sujeita as regras de proveniencia de figura e numero -- nao ha nenhum numero
+% observado nem nenhuma figura de base do repositorio.
+%
+% Compilar SEMPRE a partir da raiz do repositorio:
+%     bash scripts/apresentacao/build_exemplos_tema.sh
+% ---------------------------------------------------------------------------
+\documentclass[aspectratio=169,10pt]{beamer}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}\usepackage{lmodern}
+\else
+  \usepackage{fontspec}
+\fi
+\usepackage[brazil]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{tikz}
+
+\usetheme{PMME}
+
+\title{Galeria de componentes}
+\subtitle{Referência visual do tema PMME/Insper, para montar um deck novo}
+\author{Projeto Mais Médicos Especialistas}
+\orientacao{}
+\institute{Insper}
+\date{2026}
+\pmmefontes{docs/07_apresentacoes/banca1/deck_beamer/fontes/}
+\pmmeinsperlogo{docs/07_apresentacoes/banca1/deck_beamer/insper/logo.png}
+\pmmeinsperfundo{docs/07_apresentacoes/banca1/deck_beamer/insper/insper-bg.png}
+\pmmelogo{docs/07_apresentacoes/banca1/deck_beamer/insper/logo.png}
+\pmmefoto{docs/07_apresentacoes/banca1/deck_beamer/assets/capa_foto.jpg}
+
+\pmmeselecaoitem{Molduras}
+\pmmeselecaoitem{Componentes}
+
+\pmmesumariofundo{docs/07_apresentacoes/banca1/deck_beamer/assets/sumario_fundo.jpg}
+\pmmesumariopasso{1.6}
+\pmmesumarioitem{Molduras}{Capa, sumário, divisória e o rodapé com a trilha}
+\pmmesumarioitem{Componentes}{O que entra no corpo de um frame}
+
+% Fonte monoespacada miuda para as amostras de codigo desta galeria.
+\newcommand{\cod}[1]{{\ttfamily\fontsize{6.4}{7.6}\selectfont\color{insperCinza}#1}}
+
+\begin{document}
+
+\begin{frame}[plain]\inspercapa\end{frame}
+\begin{frame}[plain]\pmmesumario\end{frame}
+
+% ===========================================================================
+\section{Molduras}
+\begin{frame}[plain]
+  \pmmedivisoria{Molduras}{Capa, sumário, divisória e o rodapé com a trilha}
+\end{frame}
+
+\subsection{Moldura do frame}
+\begin{frame}{A moldura: título, corpo, fontes e rodapé}
+  \pmmebuild[o que a linha métrica faz aqui embaixo]{Título de build, com linha métrica}
+  {\small A moldura não tem barra de navegação no topo. A trilha de seções
+  mora no rodapé, onde não custa altura de corpo: são \num{0,60 cm} de
+  página, perto de uma linha e meia de texto a 10\,pt, que voltaram para o
+  conteúdo. A seção corrente sai em negrito com o losango vermelho, seguida
+  da subseção; as outras, em cinza.}
+
+  \vspace{0.7em}
+  {\small \lead{Registre a trilha no preâmbulo}, na ordem das seções, com os
+  nomes curtos que o documento de conteúdo usa na linha de rastreio:}
+
+  \vspace{0.4em}
+  \cod{\textbackslash pmmeselecaoitem\{Motivação e Pergunta\}}\\
+  \cod{\textbackslash pmmeselecaoitem\{Literatura e Modelo\}}\\
+  \cod{\textbackslash pmmeselecaoitem\{Hipótese e Viabilidade\}}
+
+  \vspace{0.7em}
+  {\small Sem nenhum item registrado, o rodapé cai no \cod{\textbackslash
+  rastreio\{...\}} manual, como antes.}
+
+  \fonte{\textbf{Fontes:} este é o bloco \cod{\textbackslash fonte\{...\}},
+  o único formato de fonte do deck.}
+\end{frame}
+
+% ===========================================================================
+\section{Componentes}
+\begin{frame}[plain]
+  \pmmedivisoria{Componentes}{O que entra no corpo de um frame}
+\end{frame}
+
+\subsection{Equação em cartão}
+\begin{frame}{Equação em cartão, com a referência na etiqueta}
+  \pmmebuild{O componente}
+  \vspace{-0.3em}
+  \pmmeequacao[Autor et al. (2020), eq.~1, p.~184]{%
+    \arg\max_{m \in M} \left\{ \sum_t \delta^t
+    \left[ \frac{\mathbb{E}(w_{mt})}{p_{mt}} - c_{im} \right] \right\}}
+
+  \vspace{-0.1em}
+  \cod{\textbackslash pmmeequacao[Autor et al. (2020), eq.~1, p.~184]\{\textbackslash arg\textbackslash max ...\}}
+
+  \vspace{0.7em}
+  {\small Sem o argumento opcional sai só o quadro. A largura padrão é
+  \num{0,94} da largura de texto e muda com \cod{\textbackslash
+  pmmeequacaolargura\{...\}}; o respiro interno, com \cod{\textbackslash
+  pmmeequacaofolga\{...\}}. A etiqueta põe a referência onde o olho já está,
+  em vez de mandá-la para a linha de fontes.}
+\end{frame}
+
+\subsection{Fichas de termos}
+\begin{frame}{Fichas de termos, no lugar da tabela de glossário}
+  \pmmebuild{O componente}
+  \pmmefichaaltura{2.4em}
+  \begin{pmmefichas}[3]
+    \pmmeficha{$m \in M$}{\textbf{municípios} candidatos}
+    \pmmeficha{$\mathbb{E}(w_{mt})$}{remuneração esperada em $m$, no ano $t$}
+    \pmmeficha{$p_{mt}$}{nível de preços local, o deflator}
+    \pmmeficha{$c_{im}$}{custo \textbf{não pecuniário} de viver ali}
+    \pmmeficha{$\sum_t \delta^t$}{a escolha é de \textbf{carreira}}
+    \pmmeficha{$\bar{v}_i$}{a melhor alternativa do médico}
+  \end{pmmefichas}
+  \pmmefichaaltura{0pt}
+
+  \vspace{0.5em}
+  \cod{\textbackslash pmmefichaaltura\{2.4em\}}\\
+  \cod{\textbackslash begin\{pmmefichas\}[3] \ \textbackslash pmmeficha\{\$m \textbackslash in M\$\}\{municípios candidatos\} ... \textbackslash end\{pmmefichas\}}
+
+  \vspace{0.7em}
+  {\small Duas ou três colunas. A altura fixa iguala os fundos quando as
+  definições têm números de linhas diferentes; \num{0pt} volta à altura
+  natural. Mesma informação que uma tabela de duas colunas, em menos altura.}
+\end{frame}
+
+\subsection{Selos e caixa de saída}
+\begin{frame}{Selos de sinal e caixa de saída}
+  \pmmebuild{Selos}
+  {\small O selo dá o sinal sem obrigar a ler a expressão:
+  \pmmeselov{eleva}\ \ \pmmeselor{reduz}\ \ \pmmeselo{obstáculo}}
+
+  \vspace{0.4em}
+  \cod{\textbackslash pmmeselov\{eleva\} \ \textbackslash pmmeselor\{reduz\} \ \textbackslash pmmeselo\{obstáculo\}}
+
+  \vspace{1.0em}
+  \pmmebuild{Caixa de saída}
+  \pmmesaida{Gera $i^*$:}{a localidade que maximiza a renda real líquida
+  esperada ao longo da carreira}
+
+  \vspace{0.5em}
+  \cod{\textbackslash pmmesaida\{Gera \$i\^{}*\$:\}\{a localidade que ...\}}
+
+  \vspace{0.7em}
+  {\small A caixa de saída nomeia o que a equação ou o bloco acima produz.
+  Distingue-se de \cod{destaque}, que é a citação em destaque do documento de
+  conteúdo, por ser alinhada à esquerda e trazer um rótulo.}
+\end{frame}
+
+\subsection{Layouts em partes}
+\begin{frame}{Layouts em duas e em quatro partes}
+  \begin{pmmeduas}
+    \begin{pmmeparte}[a linha métrica também serve aqui]{Duas partes}
+      \footnotesize \cod{pmmeduas} põe duas partes lado a lado, com o título
+      em Playfair e o traço vermelho. As partes alinham pelo topo e a largura
+      é calculada a partir da largura de texto.
+    \end{pmmeparte}
+    \begin{pmmeparte}{Quatro partes}
+      \footnotesize \cod{pmmequatro} faz a grade 2$\times$2, com altura fixa
+      de \num{0,36} da altura de texto e corpo em \cod{\textbackslash small}.
+      Ambos aceitam \cod{[altura]}.
+    \end{pmmeparte}
+  \end{pmmeduas}
+
+  \vspace{1.0em}
+  \begin{pmmequatro}[0.2\textheight]
+    \begin{pmmeparte}{Implementação}\footnotesize texto de exemplo\end{pmmeparte}
+    \begin{pmmeparte}{Força de trabalho}\footnotesize texto de exemplo\end{pmmeparte}
+    \begin{pmmeparte}{Capacidade}\footnotesize texto de exemplo\end{pmmeparte}
+    \begin{pmmeparte}{Acesso}\footnotesize texto de exemplo\end{pmmeparte}
+  \end{pmmequatro}
+\end{frame}
+
+\subsection{Véu com faixa}
+\begin{frame}{Véu com faixa: a conclusão nasce da evidência}
+  \pmmebuild{A evidência}
+  {\small Este é o conteúdo do primeiro build. No segundo, ele continua na
+  tela, desbotado, e a conclusão aparece numa faixa de sangria total por
+  cima. É o recurso que o deck entregue na banca 1 usava para a pergunta e
+  para a hipótese.}
+
+  \vspace{0.6em}
+  \begin{pmmeduas}
+    \begin{pmmeparte}{Um lado}
+      \footnotesize Texto de exemplo, para haver o que desbotar quando a
+      faixa entrar no segundo build.
+    \end{pmmeparte}
+    \begin{pmmeparte}{O outro}
+      \footnotesize Texto de exemplo, para haver o que desbotar quando a
+      faixa entrar no segundo build.
+    \end{pmmeparte}
+  \end{pmmeduas}
+
+  \vspace{0.7em}
+  \cod{\textbackslash only<2>\{\textbackslash pmmeveuy\{6.5\}\textbackslash pmmeveu[0.93]\{A pergunta ...\}\textbackslash pmmeveubloco[5.25]\{...\}\}}
+
+  \only<2>{%
+    \pmmeveuy{6.2}%
+    \pmmeveu[0.93]{A frase que fecha o argumento, em faixa de sangria total}%
+    \pmmeveubloco[4.9]{%
+      {\small O que mais entra no segundo build vai em \cod{\textbackslash
+      pmmeveubloco}, porque o fluxo normal do frame continuaria abaixo do
+      conteúdo do primeiro.}}%
+  }
+\end{frame}
+
+\subsection{Imagem de fundo}
+{\pmmefundo{docs/07_apresentacoes/banca1/deck_beamer/insper/insper-bg.png}
+\begin{frame}{Imagem de fundo no frame}
+  \pmmebuild{O componente}
+  {\small A macro antes do \cod{\textbackslash begin\{frame\}} cobre a página
+  inteira com a imagem, recortada e centrada. Vale até \cod{\textbackslash
+  pmmesemfundo} ou até o fim do grupo, como aqui.}
+
+  \vspace{0.6em}
+  \cod{\{\textbackslash pmmefundo[0.18]\{caminho/da/imagem.png\}}\\
+  \cod{\ \textbackslash begin\{frame\}\{Título\} ... \textbackslash end\{frame\}\}}
+
+  \vspace{0.8em}
+  {\small A opacidade padrão é \num{0,18}, que é a desta página: calibrada
+  para o texto continuar legível por cima. Com opacidade \num{1} e frame
+  \cod{[plain]}, é uma página de foto plena. A moldura fica sempre por cima
+  do fundo.}
+\end{frame}}
+
+\end{document}

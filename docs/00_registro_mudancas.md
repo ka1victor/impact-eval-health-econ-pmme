@@ -8,6 +8,39 @@
 
 ---
 
+## 21/09/2026 — Banca 1: moldura sem navbar e galeria de componentes do tema
+
+Motivo: o autor pediu a leitura do deck em PowerPoint que o grupo de fato
+apresentou na banca 1 e a implementação do que valesse a pena. O conteúdo não
+muda; o tema ganha componentes e perde a barra de navegação do topo.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca1/deck_beamer/exemplos_tema.tex`](07_apresentacoes/banca1/deck_beamer/exemplos_tema.tex) | galeria de componentes do tema: a referência visual para montar um deck novo. Não é apresentação e não usa figura nem número do repositório |
+| `scripts/apresentacao/build_exemplos_tema.sh` | build determinístico da galeria, para `output/apresentacao_banca1/deck_beamer/exemplos_tema.pdf` |
+
+### Mudança de moldura
+
+A barra de navegação de duas linhas saiu do topo e a trilha de seções passou
+ao rodapé, registrada com `\pmmeselecaoitem` na ordem das seções. São 0,60 cm
+de página devolvidos ao corpo, e o rodapé continua exibindo a linha de
+rastreio do documento de conteúdo, agora com as outras seções em cinza ao
+lado. Três tabelas voltaram de `\scriptsize` para `\footnotesize`.
+
+### Componentes novos no tema
+
+Linha métrica no título de build (`\pmmebuild[...]`, `\pmmemetrica`), equação
+em cartão com a referência em etiqueta (`\pmmeequacao`), fichas de termos
+(`pmmefichas`), selos de sinal (`\pmmeselo`, `\pmmeselov`, `\pmmeselor`),
+caixa de saída (`\pmmesaida`) e véu com faixa (`\pmmeveu`). Nenhum cria
+palavra: a métrica é a descrição da figura no documento e o selo é o sinal da
+derivada ao lado. O deck não ganhou Q&A nem apêndice, que o deck entregue
+tinha, porque seriam conteúdo fora do documento canônico.
+
+---
+
 ## 19/09/2026 — Banca 1: deck Beamer reconstruído na estrutura de 17 slides
 
 A pedido do autor, os frames de
