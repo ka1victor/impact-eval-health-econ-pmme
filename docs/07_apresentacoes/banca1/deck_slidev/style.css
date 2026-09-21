@@ -61,8 +61,11 @@ body,
   overflow: hidden;
 }
 
+/* 1.70rem, e não 1.78: com a estrutura de 17 slides o título mais longo
+   — "O especialista está longe do interior — e quase nunca é só do SUS" —
+   cabe numa linha só, em vez de deixar "SUS" órfão na segunda.          */
 .slidev-layout h1 {
-  font-size: 1.78rem;
+  font-size: 1.70rem;
   line-height: 1.16;
   font-weight: 600;
   letter-spacing: -0.012em;
@@ -934,4 +937,118 @@ div.xs > p {
 
 .eq-tall .katex-display {
   font-size: 1.42em;
+}
+
+/* ------------------- divisória de seção e apêndice -------------------- */
+/* Layout de capa (`#` no documento de conteúdo): as três divisórias de
+   seção, o Q&A e a abertura do apêndice. Espelha o que o deck Beamer faz
+   com \pmmedivisoria, na identidade própria deste deck.                  */
+
+.slidev-layout.divisoria {
+  padding: 3rem 3.4rem;
+  background: var(--pmme-paper);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.div-num {
+  font-size: 4.6rem;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--pmme-sage);
+  letter-spacing: -0.03em;
+  margin-bottom: 1.1rem;
+}
+
+.div-titulo {
+  font-size: 2.15rem;
+  line-height: 1.14;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--pmme-green);
+  margin: 0 0 0.7rem 0;
+  max-width: 24ch;
+}
+
+.div-sub {
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: var(--pmme-muted);
+  margin: 0;
+  max-width: 44ch;
+}
+
+.div-rule {
+  width: 4.5rem;
+  height: 4px;
+  background: var(--pmme-sage);
+  margin-bottom: 1.15rem;
+}
+
+/* Descrição curta de cada seção no sumário, ao lado do título. */
+.sumario-d {
+  color: var(--pmme-muted);
+  font-size: 0.86rem;
+  display: block;
+  margin-top: 0.1rem;
+}
+
+/* ---------------- cadeia da teoria da mudança (slide 8) --------------- */
+/* Verde e cheia: elo escrito em ato oficial. Laranja e tracejada:
+   suposição do programa. As cores são as do diagrama canônico.          */
+
+.cadeia-escrito {
+  background: #e6f4ea;
+  border: 1.5px solid #1e7e34;
+  color: #14532d;
+  border-radius: 4px;
+  padding: 0.45rem 0.4rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.cadeia-suposto {
+  background: #fff4e5;
+  border: 1.5px dashed #c77700;
+  color: #7a4b00;
+  border-radius: 4px;
+  padding: 0.45rem 0.4rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.cadeia-sup {
+  color: #c77700;
+}
+
+.fluxo > .cadeia-escrito,
+.fluxo > .cadeia-suposto {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ---------------- título de build, dentro de um slide ----------------- */
+/* Equivale ao \pmmebuild do deck Beamer: nomeia o `###` do documento de
+   conteúdo, com o traço curto por baixo, e mantém distância do h1 mesmo
+   quando o título do frame quebra em duas linhas.                        */
+
+.build-lbl {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--pmme-green-mid);
+  line-height: 1.25;
+  margin: 0.8rem 0 0 0;
+  padding-bottom: 0.3rem;
+  position: relative;
+}
+
+.build-lbl::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 2.1rem;
+  height: 3px;
+  background: var(--pmme-sage);
 }

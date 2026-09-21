@@ -58,9 +58,13 @@ link_figura() {
   ln -sfn "${ROOT}/${origem}" "${DECK}/public/fig/${nome}"
 }
 
+# As sete figuras do documento canônico (slides 4, 5 e 7).
+link_figura output/apresentacao_banca1/especialistas_por_uf_extremos.png
+link_figura output/apresentacao_banca1/deslocamento_por_regiao.png
+link_figura output/apresentacao_banca1/dupla_pratica_cirurgioes.png
+link_figura output/apresentacao_banca1/bolsa_por_faixa.png
 link_figura output/apresentacao_banca1/oferta_pre_por_faixa.png
 link_figura output/apresentacao_banca1/retaguarda_por_faixa.png
-link_figura output/apresentacao_banca1/bolsa_por_faixa.png
 link_figura output/apresentacao_banca1/preenchimento_ciclo1.png
 
 # --- 3. exportação ---------------------------------------------------------

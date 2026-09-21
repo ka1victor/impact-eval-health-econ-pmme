@@ -66,7 +66,7 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 | [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — os **17 slides** e **32 builds**, com título, corpo, figuras, fontes e ressalvas. `###` marca build, não slide; a linha de fontes e os blocos de **nota de produção** não vão à tela, e todo o resto do corpo vai. Os decks derivam dele |
 | [Roteiro narrativo](01_roteiro_narrativo.md) | arco das seções, lógica de cada bloco, regras de composição — inclusive a do build, na seção 2.6 —, rastreio do feedback e histórico das revisões, inclusive a reorganização de 16/09/2026, a compressão do mesmo dia (4f) e as duas rodadas de 17/09/2026 (4g e 4h) |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | origem e reprodutibilidade de cada número exibido |
-| [Deck Beamer](deck_beamer/) · [Deck Slidev](deck_slidev/) | artefatos derivados, com script de build cada um; PDFs em `output/apresentacao_banca1/`. O **Beamer** foi reconstruído em 19/09/2026 sobre a estrutura vigente: 17 frames, 32 builds, identidade Insper; em 21/09 a moldura perdeu a barra de navegação, ganhou cinco componentes de composição e, depois de `\appendix`, o Q&A e quatro slides de apêndice, com uma [galeria](deck_beamer/exemplos_tema.tex) que serve de ponto de partida para um deck novo. O **Slidev** continua na estrutura de 15 slides — divergência conhecida e datada, pendência 6 |
+| [Deck Beamer](deck_beamer/) · [Deck Slidev](deck_slidev/) | artefatos derivados, com script de build cada um; PDFs em `output/apresentacao_banca1/`. O **Beamer** foi reconstruído em 19/09/2026 sobre a estrutura vigente: 17 frames, 32 builds, identidade Insper; em 21/09 a moldura perdeu a barra de navegação, ganhou cinco componentes de composição e, depois de `\appendix`, o Q&A e quatro slides de apêndice, com uma [galeria](deck_beamer/exemplos_tema.tex) que serve de ponto de partida para um deck novo. O **Slidev** foi reconstruído em 21/09 sobre a mesma estrutura, com um build por página, 40 no total. A pendência 6 fechou |
 
 ## 3. Figuras
 
@@ -116,7 +116,7 @@ Slidev ainda na de 15:
 ```bash
 bash scripts/apresentacao/build_deck_beamer.sh        # LuaLaTeX, 17 frames + apêndice, 40 páginas
 bash scripts/apresentacao/build_exemplos_tema.sh      # galeria de componentes do tema
-bash scripts/apresentacao/build_deck_slidev.sh        # Node 22, Chromium local
+bash scripts/apresentacao/build_deck_slidev.sh        # Node 22, Chromium local, 40 páginas
 ```
 
 ## 4. Estado
