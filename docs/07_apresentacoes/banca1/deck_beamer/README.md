@@ -4,7 +4,7 @@
 > **Fonte de verdade do conteúdo:** [`../02_conteudo_slides.md`](../02_conteudo_slides.md)<br>
 > **Regras de composição:** [`../01_roteiro_narrativo.md`](../01_roteiro_narrativo.md), seção 2<br>
 > **Proveniência:** [`../03_proveniencia_figuras_e_numeros.md`](../03_proveniencia_figuras_e_numeros.md)<br>
-> **Atualização:** 19 de setembro de 2026 — frames reconstruídos na estrutura vigente de **17 slides em 3 seções** (revisão de 17/09), sobre a identidade institucional do Insper
+> **Atualização:** 21 de setembro de 2026 — moldura sem barra de navegação, com a trilha de seções no rodapé, e cinco componentes novos de composição vindos da leitura do deck entregue na banca 1
 
 Regra do projeto: *divergência entre deck e documento de conteúdo é erro do
 deck*. Nenhuma afirmação, número, citação ou referência deste `.tex` foi criada
@@ -23,7 +23,8 @@ builds em 17 slides, exatamente os do "Mapa da apresentação" do documento.
 
 ```bash
 # sempre a partir da raiz do repositório
-bash scripts/apresentacao/build_deck_beamer.sh
+bash scripts/apresentacao/build_deck_beamer.sh     # o deck: 17 frames, 32 páginas
+bash scripts/apresentacao/build_exemplos_tema.sh   # a galeria de componentes
 ```
 
 O script:
@@ -58,7 +59,8 @@ do deck, onde moram os arquivos abaixo.
 | Arquivo | O que é |
 |---|---|
 | `banca1_beamer.tex` | o deck: metadados, as três seções, as três divisórias e os treze frames de conteúdo |
-| `beamerthemePMME.sty` | tema-base: paleta, fontes, barra de navegação, título de frame, rodapé, blocos e utilitários (`\fonte`, `\lead`, `\num`, `destaque`, `\pmmebuild`, `pmmeduas`/`pmmequatro`, `\pmmefundo`) |
+| `exemplos_tema.tex` | **galeria de componentes**: a referência visual do tema, para montar um deck novo sem garimpar exemplos aqui dentro. Não é apresentação e não usa nenhuma figura nem número do repositório |
+| `beamerthemePMME.sty` | tema-base: paleta, fontes, título de frame, rodapé com a trilha de seções, blocos e utilitários (`\fonte`, `\lead`, `\num`, `destaque`, `\pmmebuild`, `\pmmemetrica`, `\pmmeequacao`, `pmmefichas`, `\pmmeselo`, `\pmmesaida`, `\pmmeveu`, `pmmeduas`/`pmmequatro`, `\pmmefundo`) |
 | `pmmeinsper.sty` | capa institucional `\inspercapa` e divisória de seção `\pmmedivisoria`, em TikZ |
 | `pmmecapa.sty` | capa **alternativa** `\pmmecapa`, no visual do banner do PMM-E |
 | `pmmesumario.sty` | sumário em TikZ |
@@ -177,18 +179,35 @@ vertical para três itens (o padrão, 1,10 cm, foi pensado para seis).
 `\pmmesumario[k]` destaca a seção `k` e esmaece as demais; o deck usa a forma
 sem argumento, porque o sumário aparece uma vez.
 
-**Barra de navegação, no topo.** Duas faixas finas, **0,60 cm somadas**, em
-Inter miúda: em cima, fundo preto com as seções numeradas, a corrente em
-branco negrito precedida de um losango vermelho e as demais a meio-tom;
-embaixo, fundo cinza-claro com as subseções da seção corrente, a atual em
-preto negrito com losango. A segunda faixa **mantém a altura mesmo vazia**,
-para que o título do frame não mude de posição entre seções com e sem
-subseções.
+**Trilha de seções, no rodapé — não há barra de navegação no topo.** Até
+19/09/2026 a moldura tinha duas faixas no topo, seções e subseções, que
+custavam **0,60 cm** dos 9 cm de página e repetiam o que o rastreio do rodapé
+já dizia. Desde 21/09/2026 a mesma informação — onde estamos, o que falta —
+está numa linha do rodapé, que existiria de qualquer modo: a seção corrente em
+preto negrito, precedida do losango vermelho e seguida da subseção; as outras
+duas em cinza. São **0,60 cm devolvidos ao corpo**, perto de uma linha e meia
+de texto a 10 pt, e foi com essa folga que três tabelas voltaram de
+`\scriptsize` para `\footnotesize`.
+
+A trilha se registra no preâmbulo, na ordem das seções, com os **nomes curtos**
+— os mesmos que o documento de conteúdo usa na linha de rastreio de cada
+slide, de modo que o rodapé reproduz `1. Motivação e Pergunta · Problema`
+literalmente:
+
+```latex
+\pmmeselecaoitem{Motivação e Pergunta}
+\pmmeselecaoitem{Literatura e Modelo}
+\pmmeselecaoitem{Hipótese e Viabilidade}
+```
+
+Sem nenhum item registrado o rodapé cai no `\rastreio{...}` manual, como
+antes; o deck não usa mais essa forma. O espaço que era da navbar virou
+`\pmmeTituloTopo`, o respiro acima do título do frame.
 
 **Título do frame e rodapé.** O título é Playfair preta sobre branco, com uma
 barra vermelha curta à esquerda e um filete cinza abaixo. O rodapé tem um
-filete cinza acima, o rastreio à esquerda, `frame / total` e o **logo do
-Insper** à direita, e um filete vermelho de 1,2 pt na borda inferior da
+filete cinza acima, a trilha de seções à esquerda, `frame / total` e o **logo
+do Insper** à direita, e um filete vermelho de 1,2 pt na borda inferior da
 página — o acento do tema oficial.
 
 **Imagem de fundo em um frame.** `\pmmefundo[opacidade]{arquivo}` antes do
@@ -238,6 +257,14 @@ tempo de fala além do que o conteúdo já custa; frame novo, sim.
 
 Frames de tela única: 1, 2, 3, 9, 10, 14, 16. Com dois builds: 6, 8, 11, 13,
 17. Com três: 4, 5, 7, 12, 15. Total: 32 builds, os do mapa do documento.
+
+O título de cada build aceita uma **linha métrica** opcional — o que está
+medido, em que unidade e em que data —, em cinza miúdo sob o título:
+`\pmmebuild[Setor de atuação dos cirurgiões]{De quem é o tempo desse
+especialista}`. Quando um build traz **duas** figuras de métricas diferentes,
+cada coluna leva a sua com `\pmmemetrica{...}`. Em todos os casos o texto é o
+do próprio documento: a métrica é o trecho da descrição da figura antes do
+travessão.
 
 O corpo de um frame **não pode começar por `{`**: com `\begin{frame}{Título}`,
 o Beamer toma o grupo seguinte como `framesubtitle` — a tabela some do corpo
@@ -322,7 +349,42 @@ do slide 10 são inline, em `\scriptsize`, como no documento (célula de tabela)
 `\mathbf{B}_m` e `\mathbf{w}^{\text{priv}}` seguem em negrito na seção 3, como
 o documento pede.
 
-### 3.7 Vocabulário
+### 3.7 Componentes de composição, e de onde vieram
+
+Cinco componentes entraram em **21/09/2026**, lidos do deck em PowerPoint que
+o grupo de fato apresentou na banca 1. Nenhum deles muda uma palavra do
+documento de conteúdo: são formas de pôr na tela o que ele já diz. A galeria
+em [`exemplos_tema.tex`](exemplos_tema.tex) mostra cada um com o código ao
+lado, e é o ponto de partida para um deck novo.
+
+| Componente | O que faz | Onde o deck usa |
+|---|---|:---:|
+| `\pmmebuild[métrica]{título}` · `\pmmemetrica{...}` | a linha métrica em cinza sob o título do build, ou solta ao lado de cada figura | 4, 5, 7 |
+| `\pmmeequacao[fonte]{...}` | a equação num quadro branco de borda fina, com a referência numa etiqueta acima em vez de na linha de fontes | 11, 12, 13, 15, 16 |
+| `pmmefichas` · `\pmmeficha{símbolo}{definição}` | o glossário de termos como fichas numa grade de 2 ou 3 colunas, no lugar de uma tabela: mesma informação, menos altura | 11 |
+| `\pmmeselov{}` · `\pmmeselor{}` · `\pmmeselo{}` | pastilha curta que dá o sinal sem obrigar a ler a expressão | 15 |
+| `\pmmesaida[larg]{rótulo}{texto}` | caixa preta alinhada à esquerda que **nomeia** o que a equação produz; distingue-se de `destaque`, que é a citação do documento | só a galeria |
+| `\pmmeveu` · `\pmmeveuy` · `\pmmeveubloco` | desbota o que já está na tela e põe a frase numa faixa de sangria total, num build posterior | 8 |
+
+Duas observações sobre a aplicação:
+
+- **Os selos só entram onde o sinal é do próprio $V$.** Na tabela do slide 15,
+  as duas linhas de efeito de nível recebem `eleva` e `reduz`; a derivada
+  cruzada e a linha do custo, não — nelas o sinal não é a direção de $V$.
+  Selo é auxílio de leitura do que a tabela já diz, nunca palavra nova.
+- **O véu substitui o título do build 2 no slide 8.** A cadeia do build 1 fica
+  na tela, desbotada, e a pergunta nasce dela na faixa. A faixa faz as vezes
+  do título `A pergunta`, e o resto do build vai em `\pmmeveubloco`, porque o
+  fluxo normal do frame continuaria abaixo do conteúdo do build 1. É o único
+  build do deck sem `\pmmebuild`.
+
+`\pmmesaida` não tem uso no conteúdo da banca 1 — o documento não traz linhas
+do tipo "gera X" — e fica definida, documentada e demonstrada na galeria, para
+a banca 2. Pelo mesmo motivo o deck **não ganhou slide de Q&A nem apêndice**,
+que o deck entregue tinha: seriam conteúdo que o documento canônico não tem, e
+o deck é derivado. Entram quando entrarem no documento.
+
+### 3.8 Vocabulário
 
 Nenhuma palavra escrita fora do documento de conteúdo introduz econometria ou
 estimação. As substituições da seção 2.5 do roteiro já vêm resolvidas do
@@ -349,7 +411,7 @@ a linha. A data (`\date{2026}`) não está no documento e é metadado do deck.
 - `bash scripts/apresentacao/build_deck_beamer.sh` (LuaLaTeX) termina sem erro
   de LaTeX e sem nenhum `Overfull \hbox` **ou `\vbox`**; duas execuções
   seguidas produzem o mesmo SHA-256. O deck também compila em pdflatex, com
-  32 páginas e sem overfull.
+  32 páginas e sem overfull. O mesmo vale para a galeria, em 12 páginas.
 - As 32 páginas foram convertidas em PNG (`pdftoppm -png -r 75`) e revistas
   uma a uma: nenhuma com texto vazando do frame, tabela cortada, bloco de
   fontes sobreposto ao rodapé ou figura deformada. Conferidos em detalhe a
@@ -361,4 +423,10 @@ a linha. A data (`\date{2026}`) não está no documento e é metadado do deck.
 - Nenhuma palavra do corpo dos slides foi criada pelo deck; as únicas
   inserções são as legendas "direto"/"proxy" ao lado dos círculos do frame 17,
   que traduzem os emojis do documento, e os rótulos "suposição" da cadeia, que
-  o diagrama canônico já traz.
+  o diagrama canônico já traz. As linhas métricas e os selos de 21/09/2026
+  também não são palavra nova: a métrica é a descrição da figura no documento,
+  cortada no travessão, e o selo é o sinal que a coluna de derivada ao lado
+  já exibe.
+- Com a navbar fora, a página ganhou 0,60 cm. Três tabelas que estavam em
+  `\scriptsize` voltaram a `\footnotesize` e o deck continua sem nenhum
+  overfull nos dois motores.

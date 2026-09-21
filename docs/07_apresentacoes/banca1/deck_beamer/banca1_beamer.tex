@@ -70,6 +70,15 @@
 \pmmelogo{docs/07_apresentacoes/banca1/deck_beamer/insper/logo.png}
 \pmmefoto{docs/07_apresentacoes/banca1/deck_beamer/assets/capa_foto.jpg}
 
+% --- trilha de secoes do rodape (substitui a navbar do topo) ---------------
+% Nomes curtos, na ordem das \section: sao os mesmos que o documento canonico
+% usa no rastreio de cada slide, de modo que o rodape reproduz a linha
+% "1. Motivacao e Pergunta . Problema" literalmente, com a secao corrente em
+% negrito e as outras duas em cinza. Nao ha mais \rastreio{...} por frame.
+\pmmeselecaoitem{Motivação e Pergunta}
+\pmmeselecaoitem{Literatura e Modelo}
+\pmmeselecaoitem{Hipótese e Viabilidade}
+
 % --- sumario: as tres secoes; a descricao curta e o subtitulo da divisoria --
 % Conteudo canonico: 02_conteudo_slides.md, slides 2, 3, 9 e 14.
 \pmmesumariofundo{docs/07_apresentacoes/banca1/deck_beamer/assets/sumario_fundo.jpg}
@@ -95,7 +104,6 @@
 % ===========================================================================
 % 1 — Capa
 % ===========================================================================
-\rastreio{}
 \begin{frame}[plain]
   \inspercapa   % capa institucional Insper; \pmmecapa e a alternativa no visual do PMM-E
 \end{frame}
@@ -103,7 +111,6 @@
 % ===========================================================================
 % 2 — Sumário
 % ===========================================================================
-\rastreio{}
 \begin{frame}[plain]
   \pmmesumario
 \end{frame}
@@ -112,7 +119,6 @@
 % 3 — Divisória: 1. Motivação e Pergunta
 % ===========================================================================
 \section{Motivação e Pergunta}
-\rastreio{}
 \begin{frame}[plain]
   \pmmedivisoria{Motivação e Pergunta}{O problema, a política, o índice, os efeitos e a pergunta}
 \end{frame}
@@ -121,18 +127,19 @@
 % 4 — Problema                                                (3 builds)
 % ===========================================================================
 \subsection{Problema}
-\rastreio{1. Motivação e Pergunta \textperiodcentered\ Problema}
 
 \begin{frame}{O especialista está longe do interior --- e quase nunca é só do SUS}
   \only<1>{%
     \pmmebuild{Onde eles estão}
     \begin{columns}[T]
       \begin{column}{0.495\textwidth}
-        \includegraphics[width=\textwidth,height=0.36\textheight,keepaspectratio]%
+        \pmmemetrica{Especialistas por 100 mil habitantes, dez/2024}
+        \includegraphics[width=\textwidth,height=0.335\textheight,keepaspectratio]%
           {especialistas_por_uf_extremos}
       \end{column}
       \begin{column}{0.495\textwidth}
-        \includegraphics[width=\textwidth,height=0.36\textheight,keepaspectratio]%
+        \pmmemetrica{Distância média para serviços de alta complexidade, em km}
+        \includegraphics[width=\textwidth,height=0.335\textheight,keepaspectratio]%
           {deslocamento_por_regiao}
       \end{column}
     \end{columns}
@@ -143,7 +150,7 @@
     \end{destaque}
   }%
   \only<2>{%
-    \pmmebuild{De quem é o tempo desse especialista}
+    \pmmebuild[Setor de atuação dos cirurgiões]{De quem é o tempo desse especialista}
     \centerline{%
       \includegraphics[width=\textwidth,height=0.36\textheight,keepaspectratio]%
         {dupla_pratica_cirurgioes}}
@@ -179,15 +186,15 @@
 % 5 — Política                                                (3 builds)
 % ===========================================================================
 \subsection{Política}
-\rastreio{1. Motivação e Pergunta \textperiodcentered\ Política}
 
 \begin{frame}{A bolsa é do município, não do médico nem da especialidade}
   \only<1>{%
-    \pmmebuild{O que o programa oferece}
+    \pmmebuild[Valor mensal da bolsa-formação por faixa de atração]%
+      {O que o programa oferece}
     \vspace{-0.2em}
     \begin{columns}[T]
       \begin{column}{0.36\textwidth}
-        \includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]%
+        \includegraphics[width=\textwidth,height=0.30\textheight,keepaspectratio]%
           {bolsa_por_faixa}
       \end{column}
       \begin{column}{0.62\textwidth}
@@ -241,11 +248,13 @@
     \pmmebuild{Para onde a regra manda o dinheiro}
     \begin{columns}[T]
       \begin{column}{0.495\textwidth}
-        \includegraphics[width=\textwidth,height=0.27\textheight,keepaspectratio]%
+        \pmmemetrica{Especialistas por 100 mil habitantes, jun/2025}
+        \includegraphics[width=\textwidth,height=0.263\textheight,keepaspectratio]%
           {oferta_pre_por_faixa}
       \end{column}
       \begin{column}{0.495\textwidth}
-        \includegraphics[width=\textwidth,height=0.27\textheight,keepaspectratio]%
+        \pmmemetrica{Colegas da mesma especialidade no município, jun/2025}
+        \includegraphics[width=\textwidth,height=0.263\textheight,keepaspectratio]%
           {retaguarda_por_faixa}
       \end{column}
     \end{columns}
@@ -271,7 +280,6 @@
 % 6 — IVS e suas dimensões                                    (2 builds)
 % ===========================================================================
 \subsection{IVS e suas dimensões}
-\rastreio{1. Motivação e Pergunta \textperiodcentered\ IVS e suas dimensões}
 
 \begin{frame}{Quanto maior o IVS, mais difícil é exercer ali}
   \only<1>{%
@@ -321,11 +329,11 @@
 % 7 — Efeitos                                                 (3 builds)
 % ===========================================================================
 \subsection{Efeitos}
-\rastreio{1. Motivação e Pergunta \textperiodcentered\ Efeitos}
 
 \begin{frame}{O programa já deu sinais; a literatura aponta para os dois lados}
   \only<1>{%
-    \pmmebuild{O que o ciclo 1 mostra}
+    \pmmebuild[Preenchimento do ciclo 1, por faixa e por estrato territorial]%
+      {O que o ciclo 1 mostra}
     \centerline{%
       \includegraphics[width=\textwidth,height=0.46\textheight,keepaspectratio]%
         {preenchimento_ciclo1}}
@@ -400,10 +408,10 @@
 % 8 — Pergunta de Pesquisa                                    (2 builds)
 % ===========================================================================
 \subsection{Pergunta de Pesquisa}
-\rastreio{1. Motivação e Pergunta \textperiodcentered\ Pergunta de Pesquisa}
 
 \begin{frame}{A pergunta que organiza o trabalho}
-  \only<1>{%
+  % Sem \only: a cadeia fica visivel nos dois builds; no segundo, sob o veu.
+  {%
     \pmmebuild{A cadeia que a política supõe}
     \vspace{0.3em}
     \begin{center}
@@ -436,29 +444,31 @@
     tracejada:} suposição. Nem o elo cheio seguinte assegura \lead{oferta
     líquida}: o edital só veda substituição de quem já está lá.}
   }%
+  % Build 2: o veu desbota a cadeia do build 1 e a pergunta nasce dela, numa
+  % faixa de sangria total. E por isso que a cadeia fica fora do \only<1>: ela
+  % tem de continuar na tela, esmaecida, sob a pergunta. A faixa faz as vezes
+  % do titulo do build "A pergunta"; o resto do build vai em \pmmeveubloco,
+  % porque o fluxo normal do frame continuaria abaixo do conteudo do build 1.
   \only<2>{%
-    \pmmebuild{A pergunta}
-    \begin{destaque}
-      \large O incentivo financeiro oferecido pelo PMM-E funciona para atrair
-      especialistas para regiões mais vulneráveis?
-    \end{destaque}
+    \pmmeveuy{6.5}%
+    \pmmeveu[0.93]{O incentivo financeiro oferecido pelo PMM-E funciona para
+      atrair especialistas para regiões mais vulneráveis?}%
+    \pmmeveubloco[5.25]{%
+      {\small Dois objetos, um contra o outro:}
 
-    \vspace{0.5em}
-    {\small Dois objetos, um contra o outro:}
+      \vspace{0.35em}
+      {\small
+      \begin{itemize}
+        \setlength{\itemsep}{0.25em}
+        \item o \lead{preço} que a política pôs sobre a vulnerabilidade, o
+          degrau de \num{R\$ 5 mil};
+        \item a \lead{desvantagem} que esse preço pretende compensar.
+      \end{itemize}}
 
-    \vspace{0.2em}
-    {\small
-    \begin{itemize}
-      \setlength{\itemsep}{0.25em}
-      \item o \lead{preço} que a política pôs sobre a vulnerabilidade, o
-        degrau de \num{R\$ 5 mil};
-      \item a \lead{desvantagem} que esse preço pretende compensar.
-    \end{itemize}}
-
-    \vspace{0.5em}
-    {\small A margem observada é o \lead{preenchimento da vaga} --- o terceiro
-    elo da cadeia, e o primeiro elo suposto é a hipótese do trabalho.
-    Permanência fica fora desta banca.}
+      \vspace{0.6em}
+      {\small A margem observada é o \lead{preenchimento da vaga} --- o
+      terceiro elo da cadeia, e o primeiro elo suposto é a hipótese do
+      trabalho. Permanência fica fora desta banca.}}%
   }%
 
   \fonte{\textbf{Fontes:} Lei nº~15.233/2025; Edital SGTES/MS nº~3/2025, item
@@ -469,7 +479,6 @@
 % 9 — Divisória: 2. Literatura Teórica e Modelo Microeconômico
 % ===========================================================================
 \section{Literatura Teórica e Modelo Microeconômico}
-\rastreio{}
 \begin{frame}[plain]
   \pmmedivisoria{Literatura Teórica e Modelo Microeconômico}{De onde vem a equação de escolha, e o que há dentro do custo}
 \end{frame}
@@ -478,7 +487,6 @@
 % 10 — Literatura teórica usada                               (1 build)
 % ===========================================================================
 \subsection{Literatura teórica usada}
-\rastreio{2. Literatura e Modelo \textperiodcentered\ Literatura teórica usada}
 
 \begin{frame}{Três tradições sustentam uma equação}
   \vspace{-0.6em}% (o corpo nao pode comecar por "{": beamer tomaria o grupo como subtitulo)
@@ -510,13 +518,13 @@
   \end{tabularx}}
 
   \vspace{0.15em}
-  {\footnotesize Em Redding \& Rossi-Hansberg, o numerador é o que \lead{atrai}
-  --- salário $w_i$, amenidades $B_n$, gosto pessoal $z_{nio}$ --- e o
-  denominador é o que \lead{repele}: deslocamento $\kappa_{ni}$ e moradia
-  $Q_n$.}
+  {\footnotesize Em Redding \& Rossi-Hansberg, o numerador é o que
+  \lead{atrai} --- salário $w_i$, amenidades $B_n$, gosto pessoal $z_{nio}$
+  --- e o denominador é o que \lead{repele}: deslocamento $\kappa_{ni}$ e
+  moradia $Q_n$.}
 
   \vspace{0em}
-  \begin{destaque}[0.97\textwidth]
+  \begin{destaque}[0.96\textwidth]
     \scriptsize \textbf{Atenção ao símbolo $B$.} Aqui $B_n$ é \textbf{amenidade} e $B(q)$
     é \textbf{benefício ao paciente}. A \textbf{bolsa} é $B_m$, e só aparece
     no slide 13.
@@ -533,7 +541,6 @@
 % 11 — Modelo microeconômico conjunto                         (2 builds)
 % ===========================================================================
 \subsection{Modelo microeconômico conjunto}
-\rastreio{2. Literatura e Modelo \textperiodcentered\ Modelo microeconômico conjunto}
 
 \begin{frame}{A escolha locacional maximiza a renda real líquida}
   \only<1>{%
@@ -542,26 +549,24 @@
     do rendimento \lead{real}, líquido do custo não pecuniário de viver e
     atender ali:}
 
-    \vspace{-0.5em}
-    \[
+    \vspace{-0.2em}
+    \pmmeequacao[Moehling et al. (2020), eq.~1, p.~184]{%
       \arg\max_{m \in M} \left\{ \sum_t \delta^t
-      \left[ \frac{\mathbb{E}(w_{mt}^{(s)})}{p_{mt}} - c_{im}^{(s)} \right] \right\}
-    \]
-    \vspace{-1.1em}
+      \left[ \frac{\mathbb{E}(w_{mt}^{(s)})}{p_{mt}} - c_{im}^{(s)} \right] \right\}}
 
-    {\footnotesize\renewcommand{\arraystretch}{1.05}
-    \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{0.17\textwidth} L@{}}
-      \toprule
-      \bfseries Termo & \bfseries O que é \\
-      \midrule
-      $m \in M$ & \textbf{municípios} candidatos \\
-      $\mathbb{E}(w^{(s)}_{mt})$ & remuneração esperada em $m$, no ano $t$, na
-        especialidade $s$ \\
-      $p_{mt}$ & nível de preços local, o deflator \\
-      $c^{(s)}_{im}$ & custo \textbf{não pecuniário} de viver e atender ali \\
-      $\sum_t \delta^t$ & a escolha é de \textbf{carreira}, não de um mês \\
-      \bottomrule
-    \end{tabularx}}
+    \vspace{-0.1em}
+    \pmmefichaaltura{2.35em}
+    \begin{pmmefichas}[3]
+      \pmmeficha{$m \in M$}{\textbf{municípios} candidatos}
+      \pmmeficha{$\mathbb{E}(w^{(s)}_{mt})$}{remuneração esperada em $m$, no
+        ano $t$, na especialidade $s$}
+      \pmmeficha{$p_{mt}$}{nível de preços local, o deflator}
+      \pmmeficha{$c^{(s)}_{im}$}{custo \textbf{não pecuniário} de viver e
+        atender ali}
+      \pmmeficha{$\sum_t \delta^t$}{a escolha é de \textbf{carreira}, não de
+        um mês}
+    \end{pmmefichas}
+    \pmmefichaaltura{0pt}
   }%
   \only<2>{%
     \pmmebuild{Interpretação}
@@ -594,16 +599,14 @@
 % 12 — Custo da localidade                                    (3 builds)
 % ===========================================================================
 \subsection{Custo da localidade}
-\rastreio{2. Literatura e Modelo \textperiodcentered\ Custo da localidade}
 
 \begin{frame}{O custo da localidade tem duas metades: o lugar e o trabalho}
   \only<1>{%
     \pmmebuild{O lugar}
     {\small De Redding \& Rossi-Hansberg, o custo do \lead{lugar}:}
 
-    \vspace{-0.3em}
-    \[ c^{\text{geo}}_{im} = \phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}} \]
-    \vspace{-0.7em}
+    \pmmeequacao{c^{\text{geo}}_{im} = \phi(\text{dist}_{im}) - \gamma A_m
+      + \theta_i^{\text{rural}}}
 
     {\small $\phi(\text{dist}_{im})$ é o afastamento da família, $A_m$ são as
     amenidades urbanas e $\theta_i^{\text{rural}}$ é o gosto pessoal por
@@ -613,9 +616,8 @@
     \pmmebuild{O trabalho}
     {\small De Choné \& Ma, com Reinhardt, o custo do \lead{trabalho}:}
 
-    \vspace{-0.3em}
-    \[ c^{\text{laboral}}_{im} = C(q; L_m, K_m) - \alpha_i B(q; L_m, K_m) \]
-    \vspace{-0.7em}
+    \pmmeequacao{c^{\text{laboral}}_{im} = C(q; L_m, K_m)
+      - \alpha_i B(q; L_m, K_m)}
 
     {\small $C$ é o cansaço de atender $q$ pacientes, $B$ é o benefício gerado
     a eles e $\alpha_i$ é o altruísmo do médico. Atender cansa de forma
@@ -666,7 +668,6 @@
 % 13 — Remuneração da localidade                              (2 builds)
 % ===========================================================================
 \subsection{Remuneração da localidade}
-\rastreio{2. Literatura e Modelo \textperiodcentered\ Remuneração da localidade}
 
 \begin{frame}{A bolsa é o piso da remuneração, não o total}
   \only<1>{%
@@ -675,14 +676,11 @@
     \textbf{20 horas}; o que o médico ganha além delas é mercado local. Por
     construção, a remuneração é maior ou igual à bolsa:}
 
-    \vspace{-0.6em}
-    \[
+    \pmmeequacao{%
       \mathbb{E}(w_{imt} \mid B_m)
       = \underbrace{B_m}_{\text{fixado pela regra}}
       + \underbrace{w^{\text{priv}}_m}_{\text{mercado local}}
-      \;\geq\; B_m, \qquad w^{\text{priv}}_m \geq 0
-    \]
-    \vspace{-1.25em}
+      \;\geq\; B_m, \qquad w^{\text{priv}}_m \geq 0}
 
     {\footnotesize\renewcommand{\arraystretch}{1.0}
     \begin{tabularx}{\textwidth}{@{}>{\bfseries\raggedright\arraybackslash}p{0.17\textwidth} L L@{}}
@@ -730,7 +728,6 @@
 % 14 — Divisória: 3. Hipótese e Viabilidade Empírica
 % ===========================================================================
 \section{Hipótese e Viabilidade Empírica}
-\rastreio{}
 \begin{frame}[plain]
   \pmmedivisoria{Hipótese e Viabilidade Empírica}{O que o modelo implica, o que se testa e o que os dados permitem}
 \end{frame}
@@ -739,42 +736,43 @@
 % 15 — Implicações para o PMM-E                               (3 builds)
 % ===========================================================================
 \subsection{Implicações para o PMM-E}
-\rastreio{3. Hipótese e Viabilidade \textperiodcentered\ Implicações para o PMM-E}
 
 \begin{frame}{No PMM-E, a regra fixa a remuneração e o IVS organiza o custo}
   \only<1>{%
     \pmmebuild{O modelo integrado}
-    \vspace{-1.3em}
-    \[
-      V_{im} = \sum\nolimits_t \delta^t \Bigl[
-        \frac{\mathbb{E}(w_{imt} \mid \mathbf{B}_m)}{p_{mt}} - c_{im} \Bigr]
-    \]
-    \vspace{-1.1em}
+    \vspace{-0.55em}
+    \pmmeequacao{V_{im} = \sum\nolimits_t \delta^t \Bigl[
+        \frac{\mathbb{E}(w_{imt} \mid \mathbf{B}_m)}{p_{mt}} - c_{im} \Bigr]}
+    \vspace{-0.45em}
 
     {\scriptsize para o médico $i$ no município $m$, com
     $\mathbb{E}(w \mid \mathbf{B}_m) = \mathbf{B}_m + \mathbf{w}^{\text{priv}}_m$
     do slide 13 e $c_{im} = c^{\text{geo}}_{im} + c^{\text{laboral}}_{im}$ do
     slide 12.}
 
-    \vspace{0em}
-    {\scriptsize\renewcommand{\arraystretch}{1.0}
-    \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{0.06\textwidth} >{\raggedright\arraybackslash}p{0.24\textwidth} >{\centering\arraybackslash}p{0.25\textwidth} L@{}}
+    \vspace{-0.15em}
+    % Os selos dao o sinal sem obrigar a ler a expressao. So as duas linhas de
+    % efeito de nivel sobre V os recebem: a terceira e uma derivada cruzada e a
+    % quarta e sobre o custo, nao sobre V.
+    {\scriptsize\renewcommand{\arraystretch}{1.05}
+    \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{0.06\textwidth} >{\raggedright\arraybackslash}p{0.23\textwidth} >{\centering\arraybackslash}p{0.235\textwidth} L@{}}
       \toprule
       \bfseries Termo & \bfseries Variável do programa & \bfseries Derivada & \bfseries Leitura \\
       \midrule
       $\mathbf{B}_m$ & valor da bolsa & $\partial V/\partial \mathbf{B}_m > 0$ &
-        é o instrumento \\
+        \pmmeselov{eleva}\, é o instrumento \\
       $\mathbf{w}^{\text{priv}}_m$ & mercado local, não observado &
         $\partial^2 V/\partial \mathbf{B}_m\, \partial \mathbf{w}^{\text{priv}} < 0$ &
         a bolsa vale mais onde há menos mercado \\
-      $p_m$ & custo de vida, por UF & $\partial V/\partial p_m < 0$ & opera
-        contra a vulnerabilidade \\
+      $p_m$ & custo de vida, por UF & $\partial V/\partial p_m < 0$ &
+        \pmmeselor{reduz}\, opera contra a vulnerabilidade \\
       $c_{im}$ & \textbf{IVS} e suas dimensões, do slide 6 & $c_0'(IVS) > 0$ &
         o custo \textbf{cresce} com o índice \\
       \bottomrule
     \end{tabularx}}
 
     \vspace{0em}
+    \vspace{-0.15em}
     \begin{destaque}[0.97\textwidth]
       \scriptsize \textbf{O que Moehling, Redding \& Rossi-Hansberg e Choné
       \& Ma não têm:} remuneração fixada por \textbf{regra pública sobre um
@@ -791,12 +789,8 @@
     {\small O médico $i$ aceita a vaga em $m$ quando ela supera sua melhor
     alternativa $\bar{v}_i$:}
 
-    \vspace{-0.3em}
-    \[
-      \frac{\mathbf{B}_m + \mathbf{w}^{\text{priv}}_m}{p_m} - c_0(IVS_m)
-      \;\geq\; \bar{v}_i
-    \]
-    \vspace{-0.6em}
+    \pmmeequacao{\frac{\mathbf{B}_m + \mathbf{w}^{\text{priv}}_m}{p_m}
+      - c_0(IVS_m) \;\geq\; \bar{v}_i}
 
     {\small A vaga é preenchida se existir \lead{ao menos um} candidato para
     quem isso vale. Tudo que aumenta o lado esquerdo aumenta essa
@@ -808,12 +802,8 @@
     a regra do edital o amarra à bolsa, e os dois sobem juntos. Preencher a
     vaga do lado mais vulnerável da fronteira exige}
 
-    \vspace{-0.2em}
-    \[
-      \frac{\Delta \mathbf{B}_m}{p_m} > \Delta c_0,
-      \qquad \Delta \mathbf{B}_m = \text{R\$ } 5.000
-    \]
-    \vspace{-0.2em}
+    \pmmeequacao{\frac{\Delta \mathbf{B}_m}{p_m} > \Delta c_0,
+      \qquad \Delta \mathbf{B}_m = \text{R\$ } 5.000}
 
     \begin{destaque}[0.93\textwidth]
       A pergunta da apresentação é se essa desigualdade vale.
@@ -829,7 +819,6 @@
 % 16 — Hipótese do trabalho                                   (1 build)
 % ===========================================================================
 \subsection{Hipótese do trabalho}
-\rastreio{3. Hipótese e Viabilidade \textperiodcentered\ Hipótese do trabalho}
 
 \begin{frame}{Mais remuneração real, mais vagas preenchidas}
   \vspace{1.2em}
@@ -838,12 +827,11 @@
     eleva a taxa de preenchimento das vagas ofertadas
   \end{destaque}
 
-  \vspace{0.6em}
-  \[
-    \frac{\partial \Pr(\text{preenchimento}_m)}{\partial (\mathbf{B}_m / p_m)} > 0
-  \]
+  \vspace{0.5em}
+  \pmmeequacao{\frac{\partial \Pr(\text{preenchimento}_m)}%
+    {\partial (\mathbf{B}_m / p_m)} > 0}
 
-  \vspace{0.6em}
+  \vspace{0.5em}
   {\small\centering A margem é o \lead{preenchimento} da vaga ofertada;
   permanência está fora desta apresentação.\par}
 
@@ -855,7 +843,6 @@
 % 17 — Disponibilidade de dados                               (2 builds)
 % ===========================================================================
 \subsection{Disponibilidade de dados}
-\rastreio{3. Hipótese e Viabilidade \textperiodcentered\ Disponibilidade de dados}
 
 \begin{frame}{Há dado para quase todo termo --- e sabemos quais faltam}
   \only<1>{%
@@ -882,8 +869,8 @@
   }%
   \only<2>{%
     \pmmebuild{O que falta}
-    \vspace{-0.3em}
-    {\scriptsize\renewcommand{\arraystretch}{1.05}
+    \vspace{-0.25em}
+    {\scriptsize\renewcommand{\arraystretch}{1.1}
     \begin{tabularx}{\textwidth}{@{}>{\bfseries\raggedright\arraybackslash}p{0.17\textwidth} L >{\raggedright\arraybackslash}p{0.3\textwidth}@{}}
       \toprule
       \normalfont\bfseries Termo & \bfseries Por que não observamos &
@@ -906,7 +893,7 @@
     maior o índice, maior o custo.}
 
     \vspace{0.05em}
-    \begin{destaque}[0.97\textwidth]
+    \begin{destaque}[0.96\textwidth]
       \footnotesize O IVS é a proxy declarada do que não se mede. Isso é uma
       escolha, não uma solução.
     \end{destaque}

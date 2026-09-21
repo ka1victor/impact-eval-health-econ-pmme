@@ -3,11 +3,15 @@
 % Insper (github.com/padsInsper/quarto-insper-theme) com a paleta do PMM-E
 % como acento
 %
-% Tema-base: paleta, fonte de destaque, navbar de duas linhas no topo,
-% frametitle com barra amarela, rodape com rastreio e tira de quatro cores,
-% imagem de fundo por frame (\pmmefundo), layouts em 2 e 4 partes (pmmeduas,
-% pmmequatro, pmmeparte) e os utilitarios de composicao usados no corpo dos
-% frames (\fonte, \lead, \num, destaque, colunas L/Z).
+% Tema-base: paleta, fonte de destaque, frametitle com barra vermelha, rodape
+% com trilha de secoes e tira vermelha, imagem de fundo por frame
+% (\pmmefundo), layouts em 2 e 4 partes (pmmeduas, pmmequatro, pmmeparte) e os
+% utilitarios de composicao usados no corpo dos frames (\fonte, \lead, \num,
+% destaque, \pmmebuild, \pmmeequacao, pmmefichas, \pmmeselo, \pmmesaida,
+% \pmmeveu, colunas L/Z).
+%
+% A moldura nao tem barra de navegacao no topo: a trilha de secoes mora no
+% rodape, onde nao custa altura de corpo. Ver secao 3.1 do README do deck.
 %
 % A capa (\pmmecapa, em pmmecapa.sty) e o sumario (\pmmesumario, em
 % pmmesumario.sty) sao pacotes auxiliares carregados ao final, se existirem.
@@ -16,12 +20,16 @@
 %       scripts/apresentacao/build_deck_beamer.sh ja faz isso).
 % ---------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemePMME}[2026/09/19 v2.0 Tema PMME/Insper para Beamer]
+\ProvidesPackage{beamerthemePMME}[2026/09/21 v2.1 Tema PMME/Insper para Beamer]
 
 \mode<presentation>
 
 \RequirePackage{tikz}
 \usetikzlibrary{calc}
+% letterspace (subconjunto do microtype) da o espacejamento das etiquetas em
+% caixa alta; funciona em LuaLaTeX e em pdflatex.
+\IfFileExists{letterspace.sty}{\RequirePackage{letterspace}}{%
+  \providecommand{\textls}[2][]{#2}}
 \RequirePackage{amssymb}
 \RequirePackage{array}
 \RequirePackage{tabularx}
@@ -157,9 +165,8 @@
 \setbeamercolor{block title example}{bg=insperVerde,fg=insperPreto}
 \setbeamercolor{block body example}{bg=insperCinzaFundo,fg=insperPreto}
 
-\setbeamercolor{section in head/foot}{bg=insperPreto,fg=white}
-\setbeamercolor{subsection in head/foot}{bg=insperCinzaFundo,fg=insperPreto}
 \setbeamercolor{rodape}{bg=white,fg=insperCinza}
+\setbeamercolor{ficha}{bg=insperCinzaFundo,fg=insperPreto}
 
 \setbeamercolor{section in toc}{fg=insperPreto}
 \setbeamercolor{subsection in toc}{fg=insperCinza}
@@ -175,8 +182,6 @@
 \setbeamerfont{itemize/enumerate body}{size=\normalsize}
 \setbeamerfont{itemize/enumerate subbody}{size=\small}
 % Navbar em Inter, miuda: seis secoes numeradas cabem nos 16 cm a 6.5 pt.
-\setbeamerfont{section in head/foot}{size={\fontsize{6.5}{7.5}\selectfont}}
-\setbeamerfont{subsection in head/foot}{size={\fontsize{6}{7}\selectfont}}
 
 % --- blocos: espacamento compacto ------------------------------------------
 % Igual ao template 'rounded' do beamer, mas com \smallskipamount (e nao
@@ -217,11 +222,8 @@
 % Margem lateral dos elementos de moldura (navbar, frametitle, rodape).
 \newlength{\pmmeMargem}
 \setlength{\pmmeMargem}{0.43cm}          % ~1.1em do corpo em 11pt
-% Navbar: duas linhas finas. Altura total = 0.33 + 0.27 = 0.60 cm.
-\newlength{\pmmeNavAltA}\setlength{\pmmeNavAltA}{0.24cm}   % linha 1, ht
-\newlength{\pmmeNavProfA}\setlength{\pmmeNavProfA}{0.09cm} % linha 1, dp
-\newlength{\pmmeNavAltB}\setlength{\pmmeNavAltB}{0.19cm}   % linha 2, ht
-\newlength{\pmmeNavProfB}\setlength{\pmmeNavProfB}{0.08cm} % linha 2, dp
+% Respiro acima do titulo do frame (substitui a altura que era da navbar).
+\newlength{\pmmeTituloTopo}\setlength{\pmmeTituloTopo}{0.26cm}
 % Filete vermelho na borda inferior.
 \newlength{\pmmeTiraAlt}\setlength{\pmmeTiraAlt}{1.2pt}
 
@@ -231,40 +233,55 @@
     (-0.3ex,-0.3ex) rectangle (0.3ex,0.3ex);}%
 }
 
-% --- navbar: entradas de secao e subsecao ----------------------------------
-% O \hskip final soma-se ao espaco fixo (1.875ex) que o beamer poe entre
-% entradas; o preenchimento da direita vai para o fim da linha.
-\setbeamertemplate{section in head/foot}{%
-  \pmmeLosango\hskip0.45em{\bfseries\insertsectionheadnumber.~\insertsectionhead}%
-  \hskip0.7em}
-\setbeamertemplate{section in head/foot shaded}{%
-  {\color{white!55!insperPreto}\insertsectionheadnumber.~\insertsectionhead}%
-  \hskip0.7em}
-\setbeamertemplate{subsection in head/foot}{%
-  \pmmeLosango\hskip0.45em{\bfseries\insertsubsectionhead}\hskip0.7em}
-\setbeamertemplate{subsection in head/foot shaded}{%
-  {\color{insperCinza}\insertsubsectionhead}\hskip0.7em}
+% --- trilha de secoes, no rodape -------------------------------------------
+% Ate 19/09/2026 a moldura tinha uma navbar de duas linhas no topo, que
+% custava 0.60 cm dos 9 cm de pagina e repetia o que o rastreio do rodape ja
+% dizia. A trilha abaixo da a mesma informacao -- onde estamos e quanto falta
+% -- numa linha do rodape, que existiria de qualquer modo.
+%
+% Uso, no preambulo do deck, na ordem das \section:
+%   \pmmeselecaoitem{Motivacao e Pergunta}
+%   \pmmeselecaoitem{Literatura e Modelo}
+%   \pmmeselecaoitem{Hipotese e Viabilidade}
+%
+% Os nomes sao os curtos, os mesmos que o documento canonico usa na linha de
+% rastreio de cada slide. A secao corrente sai em negrito preto, precedida do
+% losango vermelho e seguida da subsecao; as demais, em cinza. Sem nenhum
+% item registrado, o rodape cai no \rastreio{...} manual.
+\newcount\pmme@selecaon  \pmme@selecaon=0
+\newcount\pmme@selecaoi
+\newcommand{\pmmeselecaoitem}[1]{%
+  \global\advance\pmme@selecaon by 1
+  \expandafter\gdef\csname pmme@selecao\the\pmme@selecaon\endcsname{#1}}
 
-% --- headline: linha 1 (secoes) e linha 2 (subsecoes da secao corrente) -----
-% As alturas sao fixas: a linha 2 mantem a altura mesmo vazia, para que o
-% frametitle nao mude de posicao entre secoes com e sem subsecoes.
-% \insertsectionnavigationhorizontal insere \hskip.3cm em cada lado; o
-% \hskip inicial corrige para a margem da identidade.
-\setbeamertemplate{headline}{%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=\pmmeNavAltA,dp=\pmmeNavProfA]{section in head/foot}%
-    \usebeamerfont{section in head/foot}%
-    \insertsectionnavigationhorizontal{\paperwidth}%
-      {\hskip\dimexpr\pmmeMargem-0.3cm\relax}{\hskip0pt plus1filll}%
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=\pmmeNavAltB,dp=\pmmeNavProfB]{subsection in head/foot}%
-    \usebeamerfont{subsection in head/foot}%
-    \insertsubsectionnavigationhorizontal{\paperwidth}%
-      {\hskip\dimexpr\pmmeMargem-0.3cm\relax}{\hskip0pt plus1filll}%
-  \end{beamercolorbox}%
-}
+\newcommand{\pmme@selecaosep}{%
+  \hskip0.5em\raisebox{-0.04em}{\color{insperCinzaClaro}%
+    \vrule width0.5pt height0.62em depth0.1em}\hskip0.5em}
 
-% --- frametitle: texto azul sobre branco, barra amarela, filete abaixo -----
-% Compacto: a navbar ja consome altura. O titulo e um paragrafo em \vtop ao
+\newcommand{\pmme@trilha}{%
+  \pmme@selecaoi=0
+  \loop\ifnum\pmme@selecaoi<\pmme@selecaon
+    \advance\pmme@selecaoi by 1
+    \ifnum\pmme@selecaoi=\insertsectionnumber\relax
+      \pmmeLosango\hskip0.34em
+      {\bfseries\color{insperPreto}\the\pmme@selecaoi.~%
+       \csname pmme@selecao\the\pmme@selecaoi\endcsname}%
+      \ifx\insertsubsectionhead\@empty\else
+        {\color{insperPreto}\,$\cdot$\,\insertsubsectionhead}%
+      \fi
+    \else
+      {\color{insperCinza}\the\pmme@selecaoi.~%
+       \csname pmme@selecao\the\pmme@selecaoi\endcsname}%
+    \fi
+    \ifnum\pmme@selecaoi<\pmme@selecaon\pmme@selecaosep\fi
+  \repeat}
+
+% Sem navbar no topo.
+\setbeamertemplate{headline}{}
+
+% --- frametitle: texto preto sobre branco, barra vermelha, filete abaixo ---
+% Sem navbar acima, o titulo precisa de um respiro no topo da pagina
+% (\pmmeTituloTopo). O titulo e um paragrafo em \vtop ao
 % lado da barra; se quebrar em duas linhas, a segunda alinha com a primeira.
 % A caixa tem a largura do papel e e deslocada para a borda esquerda do
 % mesmo modo que o beamercolorbox faz (glue negativa nas margens).
@@ -276,7 +293,7 @@
   \nointerlineskip%
   \setbox\@tempboxa=\vbox{%
     \hsize=\paperwidth%
-    \vskip0.01cm%
+    \vskip\pmmeTituloTopo%
     \hbox{%
       \hskip\pmmeMargem%
       {\color{insperVermelho}\usebeamerfont{frametitle}%
@@ -319,10 +336,12 @@
   \hbox{\color{insperCinzaClaro}\vrule width\paperwidth height0.6pt}%
   \nointerlineskip
   % Alturas absolutas: o 'ex' aqui e avaliado numa fonte minuscula.
-  \begin{beamercolorbox}[wd=\paperwidth,ht=0.26cm,dp=0.12cm,%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.30cm,dp=0.14cm,%
     leftskip=\pmmeMargem,rightskip=\pmmeMargem]{rodape}%
-    \fontsize{6.5}{7}\selectfont\rastreiotexto%
-    \hfill\insertframenumber\,/\,\inserttotalframenumber%
+    \fontsize{6.5}{7}\selectfont
+    \ifnum\pmme@selecaon>0 \pmme@trilha\else\rastreiotexto\fi
+    \hfill{\fontsize{8}{8}\selectfont\color{insperCinza}%
+      \insertframenumber\,/\,\inserttotalframenumber}%
     \hskip0.5cm\pmme@rodapelogo%
   \end{beamercolorbox}%
   \hbox{\color{insperVermelho}\vrule width\paperwidth height\pmmeTiraAlt}%
@@ -345,6 +364,145 @@
 \newenvironment{destaque}[1][0.95\textwidth]%
   {\begin{center}\begin{beamercolorbox}[wd=#1,sep=0.55em,rounded=true]{block title}\centering}%
   {\end{beamercolorbox}\end{center}}
+
+% --- etiquetas em caixa alta espacada --------------------------------------
+% \pmmeRotulo{...}      rotulo solto, cinza, sobre o conteudo que ele nomeia
+% \pmmeEtiqueta{...}    o mesmo, dentro de uma pastilha cinza-clara
+\newcommand{\pmmeRotulo}[1]{%
+  {\color{insperCinza}\fontsize{6}{7.5}\selectfont\bfseries
+   \textls[60]{\MakeUppercase{#1}}}}
+\newcommand{\pmmeEtiqueta}[1]{%
+  \tikz[baseline=0pt]{\node[fill=insperCinzaFundo, rounded corners=1.5pt,
+    inner xsep=0.6em, inner ysep=0.34em, inner ysep=0.34em]{\pmmeRotulo{#1}};}}
+
+% --- equacao em cartao ------------------------------------------------------
+% \pmmeequacao[<fonte da equacao>]{<corpo em modo matematico>}
+%
+% A equacao vira o ancoradouro visual do frame: quadro branco de borda fina,
+% corpo em \displaystyle, e a referencia numa etiqueta acima, no lugar de
+% descer para a linha de fontes do rodape. Sem o argumento opcional, sai so o
+% quadro. A largura padrao e ajustavel com \pmmeequacaolargura.
+\newlength{\pmme@eqlarg}\setlength{\pmme@eqlarg}{0.94\textwidth}
+\newlength{\pmme@eqfolga}\setlength{\pmme@eqfolga}{0.45em}  % respiro interno
+\newcommand{\pmmeequacaolargura}[1]{\setlength{\pmme@eqlarg}{#1}}
+\newcommand{\pmmeequacaofolga}[1]{\setlength{\pmme@eqfolga}{#1}}
+\newcommand{\pmmeequacao}[2][]{%
+  \par\vskip0.2em
+  \noindent\hfill
+  \begin{minipage}{\pmme@eqlarg}%
+    \if\relax\detokenize{#1}\relax\else
+      \noindent\pmmeEtiqueta{#1}\par\vskip0.22em
+    \fi
+    \noindent
+    \begin{tikzpicture}
+      \node[draw=insperCinzaClaro, line width=0.6pt, fill=white,
+            rounded corners=2pt, inner xsep=0.8em, inner ysep=\pmme@eqfolga,
+            text width=\dimexpr\pmme@eqlarg-1.6em-1.2pt\relax, align=center]
+        {$\displaystyle #2$};
+    \end{tikzpicture}%
+  \end{minipage}%
+  \hfill\null\par\vskip0.2em}
+
+% --- fichas de termos -------------------------------------------------------
+% Glossario de simbolos como fichas numa grade, no lugar de uma tabela de duas
+% colunas: mesma informacao, menos altura.
+%
+%   \begin{pmmefichas}[3]          % 2 (padrao) ou 3 colunas
+%     \pmmeficha{$B_n$}{amenidades}
+%     \pmmeficha{$w_i$}{salario}
+%   \end{pmmefichas}
+%
+% \pmmefichaaltura{2.6em} antes do ambiente fixa a altura de todas as fichas,
+% para que os fundos cinzentos fiquem iguais quando as definicoes tem numeros
+% de linhas diferentes; 0pt volta a altura natural.
+\newcount\pmme@fichan
+\newlength{\pmme@fichalarg}
+\newlength{\pmme@fichah}\setlength{\pmme@fichah}{0.02\textwidth}  % vao horizontal
+\newlength{\pmme@fichav}\setlength{\pmme@fichav}{0.4em}           % vao vertical
+\newlength{\pmme@fichaalt}\setlength{\pmme@fichaalt}{0pt}        % 0pt = natural
+\newcommand{\pmmefichaaltura}[1]{\setlength{\pmme@fichaalt}{#1}}
+\def\pmme@fichacol{2}
+\newcommand{\pmmefichafonte}{\fontsize{7.5}{9}\selectfont}
+\newenvironment{pmmefichas}[1][2]{%
+  \global\pmme@fichan=0 \def\pmme@fichacol{#1}%
+  \setlength{\pmme@fichalarg}%
+    {\dimexpr(\textwidth-\numexpr#1-1\relax\pmme@fichah)/#1\relax}%
+  \par\noindent\ignorespaces}{\par}
+\newcommand{\pmmeficha}[2]{%
+  \global\advance\pmme@fichan by 1
+  \begin{minipage}[t]{\pmme@fichalarg}%
+    \begin{beamercolorbox}[wd=\pmme@fichalarg,sep=0.38em,rounded=true]{ficha}%
+      \pmmefichafonte\raggedright
+      \ifdim\pmme@fichaalt>0pt
+        \begin{minipage}[t][\pmme@fichaalt][t]%
+          {\dimexpr\pmme@fichalarg-0.76em\relax}%
+          \pmmefichafonte\raggedright
+          {\bfseries\color{insperPreto}#1}\,\ {\color{insperCinza}#2}%
+        \end{minipage}%
+      \else
+        {\bfseries\color{insperPreto}#1}\,\ {\color{insperCinza}#2}%
+      \fi
+    \end{beamercolorbox}%
+  \end{minipage}%
+  \ifnum\pmme@fichan=\pmme@fichacol\relax
+    \par\vskip\pmme@fichav\global\pmme@fichan=0
+  \else
+    \hskip\pmme@fichah
+  \fi
+  \ignorespaces}
+
+% --- selos ------------------------------------------------------------------
+% Pastilha curta que da o sinal de um termo sem obrigar a ler a expressao.
+% \pmmeselo{NEUTRO}  \pmmeselov{ELEVA}  \pmmeselor{REDUZ}
+\newcommand{\pmme@selo}[3]{%
+  \tikz[baseline=-0.32ex]{\node[fill=#1, rounded corners=1.5pt,
+    inner xsep=0.45em, inner ysep=0.2em, text=#2,
+    font=\fontsize{6}{6}\bfseries]{\textls[50]{\MakeUppercase{#3}}};}}
+\newcommand{\pmmeselo}[1]{\pmme@selo{insperPreto}{white}{#1}}
+\newcommand{\pmmeselov}[1]{\pmme@selo{insperVerde}{insperPreto}{#1}}
+\newcommand{\pmmeselor}[1]{\pmme@selo{insperVermelho}{white}{#1}}
+
+% --- caixa de saida ---------------------------------------------------------
+% \pmmesaida[<largura>]{<rotulo>}{<texto>}
+% Fundo preto, rotulo em negrito branco: o que a equacao ou o bloco produz.
+% Distingue-se de `destaque`, que e a citacao em destaque do documento
+% canonico, por ser alinhada a esquerda e nomear a saida.
+\newcommand{\pmmesaida}[3][\textwidth]{%
+  \begin{beamercolorbox}[wd=#1,sep=0.5em,rounded=true]{block title}%
+    \raggedright\small\textbf{#2}\ #3%
+  \end{beamercolorbox}}
+
+% --- veu com faixa ----------------------------------------------------------
+% O recurso do deck entregue na banca 1: a conclusao nasce da evidencia. Num
+% build posterior, desbota tudo o que ja esta na tela e poe a frase numa
+% faixa preta de sangria total.
+%
+%   \only<2>{\pmmeveuy{6.15}\pmmeveu{A pergunta ...}%
+%            \pmmeveubloco[4.9]{... o que mais entra no build 2 ...}}
+%
+% Tem de vir DEPOIS do conteudo que desbota, porque as duas camadas sao
+% desenhadas na ordem em que aparecem no frame. \pmmeveubloco posiciona o
+% resto do build por cima do veu, ja que o fluxo normal do frame continuaria
+% abaixo do conteudo anterior.
+\def\pmme@veuy{4.5}
+\newcommand{\pmmeveuy}[1]{\def\pmme@veuy{#1}}
+\newcommand{\pmmeveufaixafonte}{\fontsize{15}{19}\pmmeDisplay\bfseries}
+\newcommand{\pmmeveu}[2][0.88]{%
+  \begin{tikzpicture}[remember picture,overlay,
+                      shift={(current page.south west)},x=1cm,y=1cm]
+    \fill[white,opacity=#1] (0,0) rectangle (16,9);
+    \node[name=pmmefaixa, fill=insperPreto, minimum width=16cm,
+          text width=13.4cm, align=center, text=white, inner ysep=0.45cm,
+          font=\pmmeveufaixafonte] at (8,\pmme@veuy) {#2};
+    \fill[insperVermelho]
+      (pmmefaixa.north west) rectangle ([yshift=-0.05cm]pmmefaixa.north east);
+  \end{tikzpicture}}
+\newcommand{\pmmeveubloco}[2][3.1]{%
+  \begin{tikzpicture}[remember picture,overlay,
+                      shift={(current page.south west)},x=1cm,y=1cm]
+    \node[anchor=north west, inner sep=0, text width=14.4cm, align=left]
+      at (0.8,#1) {\raggedright #2};
+  \end{tikzpicture}}
 
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \newcolumntype{Z}{>{\centering\arraybackslash}X}
@@ -394,7 +552,8 @@
 %
 % Opcional: pmmeduas[altura] e pmmequatro[altura] fixam a altura de cada parte
 % (padrao: natural em duas; 0.36\textheight em quatro). Parte sem titulo:
-% \begin{pmmeparte}{} .
+% \begin{pmmeparte}{} . Com linha metrica, como em \pmmebuild:
+% \begin{pmmeparte}[R$ por mes, ciclo 1]{Valor da bolsa} .
 \newlength{\pmme@partelarg}
 \newlength{\pmme@partealt}
 \newlength{\pmme@parteh}\setlength{\pmme@parteh}{0.03\textwidth}   % vao horizontal
@@ -403,7 +562,7 @@
 \def\pmme@partecol{2}
 \def\pmme@partefonte{}
 \newcommand{\pmmepartetitulofonte}{\pmmeDisplay\bfseries\small}
-\newenvironment{pmmeparte}[1]{%
+\newenvironment{pmmeparte}[2][]{%
   \global\advance\pmme@parten by 1
   \ifdim\pmme@partealt>0pt
     \begin{minipage}[t][\pmme@partealt][t]{\pmme@partelarg}%
@@ -411,11 +570,8 @@
     \begin{minipage}[t]{\pmme@partelarg}%
   \fi
   \raggedright\pmme@partefonte
-  \if\relax\detokenize{#1}\relax\else
-    {\pmmepartetitulofonte\color{insperPreto}#1\par}
-    \nointerlineskip\vskip0.18em
-    {\color{insperVermelho}\rule{1.6em}{0.09cm}\par}
-    \vskip0.35em
+  \if\relax\detokenize{#2}\relax\else
+    \pmme@titulobloco{#1}{#2}\vskip0.35em
   \fi
   \ignorespaces}{%
   \end{minipage}%
@@ -425,14 +581,32 @@
     \hskip0pt plus1fill\relax
   \fi
   \ignorespacesafterend}
-% Título de build (\only<n>) dentro de um frame: o mesmo formato do título de
-% pmmeparte — Playfair negrito, traço vermelho — para que o `###` do documento
-% canônico tenha uma marca visual constante no deck.
-\newcommand{\pmmebuild}[1]{%
-  {\pmmepartetitulofonte\color{insperPreto}#1\par}%
+% Titulo de build (\only<n>) dentro de um frame: o mesmo formato do titulo de
+% pmmeparte -- Playfair negrito, traco vermelho -- para que o `###` do
+% documento canonico tenha uma marca visual constante no deck.
+%
+%   \pmmebuild[Medicos por 100 mil habitantes, por UF, 2024]{Onde eles estao}
+%
+% O argumento opcional e a LINHA METRICA: o que esta medido, em que unidade e
+% em que data. Vai em cinza miudo sob o titulo, antes do traco. Serve sobretudo
+% aos builds com figura, cuja legenda impressa no PNG e pequena demais para
+% projecao.
+\newcommand{\pmmebuildmetricafonte}{\fontsize{6.8}{8}\selectfont}
+\newcommand{\pmme@titulobloco}[2]{%
+  {\pmmepartetitulofonte\color{insperPreto}#2\par}%
+  \if\relax\detokenize{#1}\relax\else
+    \nointerlineskip\vskip0.14em
+    {\color{insperCinza}\pmmebuildmetricafonte#1\par}%
+  \fi
   \nointerlineskip\vskip0.18em
-  {\color{insperVermelho}\rule{1.6em}{0.09cm}\par}%
-  \vskip0.25em}
+  {\color{insperVermelho}\rule{1.6em}{0.09cm}\par}}
+\newcommand{\pmmebuild}[2][]{%
+  \pmme@titulobloco{#1}{#2}\vskip0.25em}
+
+% A mesma linha metrica, solta: para o build que traz duas figuras de metricas
+% diferentes, em que uma linha so no titulo nao daria conta.
+\newcommand{\pmmemetrica}[1]{%
+  {\color{insperCinza}\pmmebuildmetricafonte\raggedright #1\par}\vskip0.15em}
 \newenvironment{pmmeduas}[1][0pt]{%
   \global\pmme@parten=0 \def\pmme@partecol{2}\def\pmme@partefonte{}%
   \setlength{\pmme@partealt}{#1}%
