@@ -258,7 +258,29 @@
   \hskip0.5em\raisebox{-0.04em}{\color{insperCinzaClaro}%
     \vrule width0.5pt height0.62em depth0.1em}\hskip0.5em}
 
+% Depois de \appendix o número de seção recomeça e a trilha deixa de fazer
+% sentido: \pmmeapendice troca a trilha pelo rótulo do apêndice mais a
+% subseção corrente. O contador do rodapé para no total da parte principal,
+% porque é isso que o \appendix do beamer faz.
+% \insertmainframenumber e o total da parte principal; o beamer so o define
+% quando ha \appendix, e pela .nav, portanto na segunda passada.
+\providecommand{\insertmainframenumber}{\inserttotalframenumber}
+\newif\ifpmme@apendice \pmme@apendicefalse
+\newcommand{\pmmeapendicerotulo}{Apêndice}
+\newcommand{\pmmeapendice}{\global\pmme@apendicetrue}
+
 \newcommand{\pmme@trilha}{%
+  \ifpmme@apendice
+    \pmmeLosango\hskip0.34em
+    {\bfseries\color{insperPreto}\pmmeapendicerotulo}%
+    \ifx\insertsubsectionhead\@empty\else
+      {\color{insperPreto}\,$\cdot$\,\insertsubsectionhead}%
+    \fi
+  \else
+    \pmme@trilha@secoes
+  \fi}
+
+\newcommand{\pmme@trilha@secoes}{%
   \pmme@selecaoi=0
   \loop\ifnum\pmme@selecaoi<\pmme@selecaon
     \advance\pmme@selecaoi by 1
@@ -340,8 +362,14 @@
     leftskip=\pmmeMargem,rightskip=\pmmeMargem]{rodape}%
     \fontsize{6.5}{7}\selectfont
     \ifnum\pmme@selecaon>0 \pmme@trilha\else\rastreiotexto\fi
-    \hfill{\fontsize{8}{8}\selectfont\color{insperCinza}%
-      \insertframenumber\,/\,\inserttotalframenumber}%
+    % No apendice nao ha contador: o rotulo da subsecao a esquerda ja diz
+    % onde se esta, e numerar continuaria a contagem dos 17, que termina no
+    % ultimo slide de conteudo.
+    \hfill
+    \ifpmme@apendice\else
+      {\fontsize{8}{8}\selectfont\color{insperCinza}%
+       \insertframenumber\,/\,\insertmainframenumber}%
+    \fi
     \hskip0.5cm\pmme@rodapelogo%
   \end{beamercolorbox}%
   \hbox{\color{insperVermelho}\vrule width\paperwidth height\pmmeTiraAlt}%

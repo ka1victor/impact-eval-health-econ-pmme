@@ -1002,6 +1002,33 @@ que o diagrama canônico já traz. A pendência 6 fecha para o Beamer; o Slidev
 continua na estrutura de 15 slides. Detalhe do mapeamento e das decisões de
 composição em [`deck_beamer/README.md`](deck_beamer/README.md).
 
+## 4j. Q&A e apêndice, 21/09/2026
+
+A pedido do autor, depois da leitura do deck em PowerPoint que o grupo de fato
+apresentou na banca 1, a apresentação ganhou um **Q&A** e um **apêndice de
+quatro slides**. Eles vêm depois do `deck:fim`, entre `apendice:inicio` e
+`apendice:fim`, e **não entram na contagem de 17**: são material de resposta,
+não de exposição. Nada ali é apresentado por iniciativa nossa.
+
+O que entrou já estava mandado guardar pelas próprias notas de produção:
+
+| # | Slide | Vinha de |
+|:---:|---|---|
+| `A1` | Por que o desafio metodológico não está na apresentação | o slide removido em 17/09 (seção 4h), cujo conteúdo "serve para responder à banca, sem slide" |
+| `A2` | A literatura que ficou de reserva | os dois trabalhos cortados da tabela do slide 7, "de reserva para pergunta da banca" |
+| `A3` | Duas notas sobre a regra que não vão à tela | as duas notas de bolso do slide 5, que "servem para responder à banca" |
+| `A4` | O que ainda não fechamos | a tabela de pendências do fim do documento de conteúdo |
+
+Nenhum número é novo. `A1` ficou com quatro builds porque o diagnóstico tem
+quatro passos: a regra existe e é determinística; nenhum corte no IVS público
+a reproduz; nos dois cortes não há o que saltar; e a variação que sobra está
+alinhada com remoticidade.
+
+**O que ficou de fora mesmo do apêndice.** A tabela do primeiro estágio da RDD
+*fuzzy* pública é saída de regressão, e o escopo da banca 1 não apresenta
+resultado de estimação — nem em apêndice. Se a pergunta chegar a esse ponto, a
+resposta é oral e a tabela está no documento de identificação.
+
 ## 5. Defeitos do material anterior
 
 Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.

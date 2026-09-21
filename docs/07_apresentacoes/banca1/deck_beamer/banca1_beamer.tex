@@ -905,4 +905,243 @@
   \texttt{output/aquisicao/}.}
 \end{frame}
 
+% ===========================================================================
+% Depois do deck: Q&A e apêndice
+%
+% \appendix faz o contador do rodapé parar no total da parte principal, de modo
+% que o último slide de conteúdo continua sendo 17/17. Nada aqui entra na
+% contagem de 17 do documento canônico: é material de resposta, exibido só se
+% perguntarem. Conteúdo canônico: 02_conteudo_slides.md, entre os comentários
+% apendice:inicio e apendice:fim.
+% ===========================================================================
+\appendix
+\pmmeapendice   % o rodapé troca a trilha de seções pelo rótulo do apêndice
+
+% --- Q&A -------------------------------------------------------------------
+\begin{frame}[plain]
+  \pmmedivisoria[]{Perguntas}{O material de apoio está no apêndice, a seguir}
+\end{frame}
+
+% ===========================================================================
+% A1 — Por que o desafio metodológico não está na apresentação   (3 builds)
+% ===========================================================================
+\subsection{A1}
+
+\begin{frame}{Por que o desafio metodológico não está na apresentação}
+  \only<1>{%
+    \pmmebuild{A regra existe e é determinística}
+    {\small Na janela estável de fev a ago/2026, o rótulo administrativo de
+    IVS determina a faixa de bolsa em \num{527 de 527} municípios, sem uma
+    única ambiguidade.}
+
+    \vspace{0.6em}
+    {\small O que não se recupera é o \lead{escore}. A regra de facto não é a
+    publicada: em oito das nove competências, muito alta e alta vão para a
+    \textbf{Faixa 1}, média para a \textbf{Faixa 2}, baixa e muito baixa para
+    a \textbf{Faixa 3}. Só jan/2026 segue o texto do FAQ.}
+
+    \vspace{0.9em}
+    \begin{destaque}[0.95\textwidth]
+      O problema nunca foi a regra não existir. É que o escore que a alimenta
+      não é o IVS 2010 público.
+    \end{destaque}
+  }%
+  \only<2>{%
+    \pmmebuild{Nenhum corte sobre o IVS público reproduz a atribuição}
+    \vspace{0.2em}
+    {\footnotesize\renewcommand{\arraystretch}{1.15}
+    \begin{tabularx}{\textwidth}{@{}L >{\raggedleft\arraybackslash}p{0.3\textwidth}@{}}
+      \toprule
+      \bfseries Regra testada sobre o IVS 2010 público & \bfseries Acerto \\
+      \midrule
+      Cortes do Ipea supostos, \textbf{0,400} e \textbf{0,500} &
+        191 de 368 --- \textbf{51,9\%} \\
+      Melhor par de cortes, por busca exaustiva, em 0,323 e 0,377 &
+        285 de 368 --- \textbf{77,4\%} \\
+      \bottomrule
+    \end{tabularx}}
+
+    \vspace{0.8em}
+    {\small Em 44.073 pares comparáveis há \num{2.763 inversões (6,3\%)}:
+    municípios com IVS \emph{maior} que recebem bolsa \emph{menor}. Uma
+    inversão já basta para provar que nenhuma regra monótona de limiar
+    reproduz o anúncio, qualquer que seja o corte.}
+  }%
+  \only<3>{%
+    \pmmebuild{Nos dois cortes, não há o que saltar}
+    {\small
+    \begin{itemize}
+      \setlength{\itemsep}{0.6em}
+      \item \lead{Em 0,500 não há o que saltar.} Na janela de $\pm$0,050 há
+        31 municípios e \textbf{todos são Faixa 1}, dos dois lados.
+      \item \lead{Em 0,400 não há Faixa 3 por perto.} O maior IVS da Faixa 3
+        é \num{0,372}.
+    \end{itemize}}
+
+    \vspace{0.9em}
+    \begin{destaque}[0.95\textwidth]
+      Onde a bolsa de fato varia, a variação é governada pelo critério de
+      localização, que não observamos.
+    \end{destaque}
+  }%
+  \only<4>{%
+    \pmmebuild{E a variação que sobra não é ruído}
+    {\small Dos 83 municípios fora da melhor regra, os \num{41} que recebem
+    mais do que o IVS preveria têm mediana de população de \num{7.933} contra
+    \num{32.179} dos \num{42} que recebem menos, e \num{12 de 41} estão em
+    interior remoto contra \num{2 de 42}.}
+
+    \vspace{0.6em}
+    \begin{destaque}[0.95\textwidth]
+      O tratamento é localmente constante nos dois cortes, e o que sobra está
+      alinhado com remoticidade --- o previsor mais forte do próprio desfecho.
+    \end{destaque}
+
+    \vspace{0.6em}
+    {\small \lead{O que destrava:} um único campo, o \textbf{escore
+    administrativo de IVS por município}, com safra, precisão e
+    arredondamento. Com ele o primeiro estágio é \emph{sharp} por construção,
+    porque a categoria já determina a faixa em 527/527.}
+  }%
+
+  \fonte{\textbf{Fontes:} \texttt{05\_identificacao/14}, seções de suporte
+  comum e de reprodução da faixa; \texttt{05\_identificacao/16}, §3.5 e §3.5.1.}
+\end{frame}
+
+% ===========================================================================
+% A2 — A literatura que ficou de reserva                         (1 build)
+% ===========================================================================
+\subsection{A2}
+
+\begin{frame}{A literatura que ficou de reserva}
+  \vspace{0.1em}
+  {\footnotesize Os dois trabalhos que saíram da tabela do slide 7 quando ela
+  foi reduzida a dois de cada lado. Ambos continuam registrados no
+  repositório.}
+
+  \vspace{0.3em}
+  {\scriptsize\renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.2\textwidth} >{\raggedright\arraybackslash}p{0.23\textwidth} L@{}}
+    \toprule
+    \bfseries Trabalho & \bfseries O que mede & \bfseries O que encontra \\
+    \midrule
+    \textbf{Costa, Nunes \& Sanches (2024)}, \textit{REStat} 106(1) &
+      escolha locacional de generalistas formados no Brasil, escolha discreta
+      com coeficientes aleatórios &
+      elevar em \num{50\%} o salário público no interior do Norte e Nordeste
+      corrige \num{12,4\%} do desequilíbrio geográfico, a \num{US\$ 15,7
+      milhões} por ponto percentual. Cotas em escolas médicas para nascidos em
+      áreas desassistidas corrigem \num{63,8\%}, a \num{US\$ 2,2 a 5,1
+      milhões} por ponto \\
+    \addlinespace[0.3em]
+    \textbf{Pathman, Konrad \& Ricketts (1992)}, \textit{JAMA} 268(12) &
+      coorte de nove anos, 412 médicos nos Estados Unidos &
+      oito anos depois, \num{12\%} dos que foram com bolsa e \textbf{obrigação
+      de serviço} seguiam na prática original, contra \num{39\%} dos que foram
+      \textbf{sem} obrigação \\
+    \bottomrule
+  \end{tabularx}}
+
+  \vspace{0.6em}
+  {\small \lead{Um mede o preço de mover; o outro, o preço de fazer ficar.}
+  Nenhum dos dois foi para a tela, e os dois respondem perguntas prováveis.}
+
+  \vspace{0.6em}
+  {\footnotesize Os próprios autores do primeiro escrevem que \textit{``as
+  baixas elasticidades-salário podem explicar por que incentivos financeiros
+  no Brasil não foram suficientes para atrair mais médicos para áreas
+  desassistidas''}.}
+
+  \fonte{\textbf{Fontes:} \texttt{03\_literatura\_empirica/19}, seções 3 e de
+  evidência empírica.}
+\end{frame}
+
+% ===========================================================================
+% A3 — Duas notas sobre a regra que não vão à tela               (1 build)
+% ===========================================================================
+\subsection{A3}
+
+\begin{frame}{Duas notas sobre a regra que não vão à tela}
+  \vspace{0.2em}
+  {\scriptsize\renewcommand{\arraystretch}{1.15}
+  \begin{tabularx}{\textwidth}{@{}>{\bfseries\raggedright\arraybackslash}p{0.19\textwidth} L >{\raggedright\arraybackslash}p{0.21\textwidth}@{}}
+    \toprule
+    \normalfont\bfseries Nota & \bfseries O que diz & \bfseries Onde está \\
+    \midrule
+    Contribuição previdenciária & o participante é segurado obrigatório do
+      RGPS, como \textbf{contribuinte individual}, e o valor devido é
+      \textbf{descontado da bolsa-formação} &
+      Edital SGTES/MS nº~3/2025, \textbf{item 11.2} \\
+    \addlinespace[0.25em]
+    Adicional territorial & a Lei prevê acréscimo para \textbf{Amazônia
+      Legal}, territórios indígenas e áreas de alta vulnerabilidade,
+      \textit{``conforme regulamentação do Ministério da Saúde e
+      disponibilidade orçamentária''}. \textbf{Não foi regulamentado no ciclo
+      1}: a palavra ``adicional'' aparece uma única vez no edital, e no barema
+      de titulação &
+      Lei nº~15.233/2025, \textbf{art.~22-D, §4º} \\
+    \bottomrule
+  \end{tabularx}}
+
+  \vspace{0.35em}
+  \begin{destaque}[0.96\textwidth]
+    \scriptsize Nenhuma das duas vira afirmação sobre o tamanho líquido do
+    degrau de R\$ 5 mil: isso depende do teto de contribuição, e não foi
+    calculado.
+  \end{destaque}
+
+  \vspace{0.25em}
+  {\scriptsize É essa a razão de estarem aqui e não no slide 5. O degrau que a
+  apresentação discute é o \lead{anunciado}, bruto, que é o que a regra fixa e
+  o que o candidato lê no quadro de vagas.}
+
+  \fonte{\textbf{Fontes:} \texttt{auditorias/01\_regra\_institucional.md};
+  \texttt{03\_proveniencia}, seção da regra institucional, onde as duas estão
+  conferidas no PDF do DOU.}
+\end{frame}
+
+% ===========================================================================
+% A4 — O que ainda não fechamos                                  (1 build)
+% ===========================================================================
+\subsection{A4}
+
+\begin{frame}{O que ainda não fechamos}
+  \vspace{0.1em}
+  {\small As pendências abertas, com o efeito de cada uma sobre o que foi
+  dito.}
+
+  \vspace{0.3em}
+  {\scriptsize\renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}p{0.04\textwidth} L >{\raggedright\arraybackslash}p{0.36\textwidth}@{}}
+    \toprule
+    \bfseries \# & \bfseries Pendência & \bfseries Efeito sobre a tela \\
+    \midrule
+    \textbf{1} & a figura por UF é dos \textbf{quatro} valores com fonte
+      registrada, não das 27 unidades & a tela perde o panorama completo por
+      UF \\
+    \textbf{2} & os valores de deslocamento não tiveram a \textbf{fonte
+      primária confirmada} & número em tela atribuído à REGIC 2018, a
+      confirmar \\
+    \textbf{5} & ``Sudeste 55,4\% dos especialistas'' está conferido em
+      cobertura, não localizado no PDF & ressalva de fonte; fora da tela \\
+    \textbf{8} & a retaguarda é medida no \textbf{município}, mas 42,6\% das
+      células estão em estabelecimento de gestão estadual & ou o slide 5 ganha
+      uma linha de limitação, ou o descasamento vira argumento próprio \\
+    \textbf{9} & os slides 6, 15 e 17 dizem que o \textbf{custo cresce com o
+      IVS}; o documento canônico trata o sinal como \textbf{ambíguo} &
+      divergência declarada entre a tela e a teoria do projeto, por decisão do
+      autor \\
+    \bottomrule
+  \end{tabularx}}
+
+  \vspace{0.25em}
+  \begin{destaque}[0.96\textwidth]
+    \scriptsize Nenhuma delas muda a pergunta nem a hipótese. Todas são de
+    rastreio ou de simplificação declarada.
+  \end{destaque}
+
+  \fonte{\textbf{Fontes:} a seção \textit{Pendências abertas} no fim de
+  \texttt{02\_conteudo\_slides.md}; \texttt{03\_proveniencia}, seção 3.}
+\end{frame}
+
 \end{document}

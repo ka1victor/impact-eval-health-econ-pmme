@@ -8,7 +8,8 @@
 ## 1. O que esta entrega é
 
 A banca 1 apresenta a **fundamentação teórica** do trabalho, em **17 slides** e
-**três seções**. Cada seção abre com uma divisória e ocupa quantos slides o
+**três seções**, seguidos de um **Q&A** e de um **apêndice de quatro slides**
+que ficam fora da contagem e só entram se alguém perguntar. Cada seção abre com uma divisória e ocupa quantos slides o
 argumento pedir — e, desde a reorganização de 16/09/2026, nenhum a mais.
 
 | Seção | Slides | Conteúdo |
@@ -17,6 +18,7 @@ argumento pedir — e, desde a reorganização de 16/09/2026, nenhum a mais.
 | **1. Motivação e Pergunta** | 3–8 | divisória (3); problema (4): o retrato territorial e a dupla prática, **em figura**; política (5): o pacote que é igual em toda vaga, quem fixa o valor e para onde a regra manda o dinheiro; IVS e suas dimensões (6): o que o índice mede; efeitos (7): o ciclo 1 e a literatura, dois de cada lado; pergunta de pesquisa (8): a cadeia que a política supõe, e a pergunta |
 | **2. Literatura Teórica e Modelo Microeconômico** | 9–13 | divisória (9); literatura teórica usada (10): as três tradições e as **equações originais** de cada uma; modelo microeconômico conjunto (11): a equação de escolha e a caixa-preta do custo; custo da localidade (12): as equações inferidas e as três desvantagens, termo a termo; remuneração da localidade (13): a bolsa é o **piso**, não o total |
 | **3. Hipótese e Viabilidade Empírica** | 14–17 | divisória (14); implicações para o PMM-E (15), com a condição de aceitação e a fronteira entre faixas; hipótese do trabalho (16), sozinha na tela; disponibilidade de dados (17) |
+| **Q&A e apêndice** | fora da contagem | Perguntas; e quatro slides de resposta: o diagnóstico da regra que saiu da tela em 17/09 (`A1`), a literatura de reserva (`A2`), as duas notas sobre a regra (`A3`) e as pendências abertas (`A4`) |
 
 **Convenção do documento de conteúdo.** Entre os comentários `deck:inicio` e
 `deck:fim` de [02 — Conteúdo](02_conteudo_slides.md), **cada cabeçalho de
@@ -64,7 +66,7 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 | [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — os **17 slides** e **32 builds**, com título, corpo, figuras, fontes e ressalvas. `###` marca build, não slide; a linha de fontes e os blocos de **nota de produção** não vão à tela, e todo o resto do corpo vai. Os decks derivam dele |
 | [Roteiro narrativo](01_roteiro_narrativo.md) | arco das seções, lógica de cada bloco, regras de composição — inclusive a do build, na seção 2.6 —, rastreio do feedback e histórico das revisões, inclusive a reorganização de 16/09/2026, a compressão do mesmo dia (4f) e as duas rodadas de 17/09/2026 (4g e 4h) |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | origem e reprodutibilidade de cada número exibido |
-| [Deck Beamer](deck_beamer/) · [Deck Slidev](deck_slidev/) | artefatos derivados, com script de build cada um; PDFs em `output/apresentacao_banca1/`. O **Beamer** foi reconstruído em 19/09/2026 sobre a estrutura vigente: 17 frames, 32 builds, identidade Insper; em 21/09 a moldura perdeu a barra de navegação e ganhou cinco componentes de composição, com uma [galeria](deck_beamer/exemplos_tema.tex) que serve de ponto de partida para um deck novo. O **Slidev** continua na estrutura de 15 slides — divergência conhecida e datada, pendência 6 |
+| [Deck Beamer](deck_beamer/) · [Deck Slidev](deck_slidev/) | artefatos derivados, com script de build cada um; PDFs em `output/apresentacao_banca1/`. O **Beamer** foi reconstruído em 19/09/2026 sobre a estrutura vigente: 17 frames, 32 builds, identidade Insper; em 21/09 a moldura perdeu a barra de navegação, ganhou cinco componentes de composição e, depois de `\appendix`, o Q&A e quatro slides de apêndice, com uma [galeria](deck_beamer/exemplos_tema.tex) que serve de ponto de partida para um deck novo. O **Slidev** continua na estrutura de 15 slides — divergência conhecida e datada, pendência 6 |
 
 ## 3. Figuras
 
@@ -112,7 +114,7 @@ Para reconstruir os decks — o Beamer na estrutura vigente de 17 slides; o
 Slidev ainda na de 15:
 
 ```bash
-bash scripts/apresentacao/build_deck_beamer.sh        # LuaLaTeX, 17 frames, 32 páginas
+bash scripts/apresentacao/build_deck_beamer.sh        # LuaLaTeX, 17 frames + apêndice, 40 páginas
 bash scripts/apresentacao/build_exemplos_tema.sh      # galeria de componentes do tema
 bash scripts/apresentacao/build_deck_slidev.sh        # Node 22, Chromium local
 ```

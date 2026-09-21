@@ -68,27 +68,36 @@
 \subsection{Moldura do frame}
 \begin{frame}{A moldura: título, corpo, fontes e rodapé}
   \pmmebuild[o que a linha métrica faz aqui embaixo]{Título de build, com linha métrica}
-  {\small A moldura não tem barra de navegação no topo. A trilha de seções
-  mora no rodapé, onde não custa altura de corpo: são \num{0,60 cm} de
+  \vspace{-0.2em}
+  {\footnotesize A moldura não tem barra de navegação no topo. A trilha de
+  seções mora no rodapé, onde não custa altura de corpo: são \num{0,60 cm} de
   página, perto de uma linha e meia de texto a 10\,pt, que voltaram para o
   conteúdo. A seção corrente sai em negrito com o losango vermelho, seguida
   da subseção; as outras, em cinza.}
 
-  \vspace{0.7em}
-  {\small \lead{Registre a trilha no preâmbulo}, na ordem das seções, com os
-  nomes curtos que o documento de conteúdo usa na linha de rastreio:}
+  \vspace{0.5em}
+  {\footnotesize \lead{Registre a trilha no preâmbulo}, na ordem das seções,
+  com os nomes curtos que o documento de conteúdo usa na linha de rastreio:}
 
-  \vspace{0.4em}
-  \cod{\textbackslash pmmeselecaoitem\{Motivação e Pergunta\}}\\
-  \cod{\textbackslash pmmeselecaoitem\{Literatura e Modelo\}}\\
+  \vspace{0.35em}
+  \cod{\textbackslash pmmeselecaoitem\{Motivação e Pergunta\}} \quad
+  \cod{\textbackslash pmmeselecaoitem\{Literatura e Modelo\}} \quad
   \cod{\textbackslash pmmeselecaoitem\{Hipótese e Viabilidade\}}
 
-  \vspace{0.7em}
-  {\small Sem nenhum item registrado, o rodapé cai no \cod{\textbackslash
-  rastreio\{...\}} manual, como antes.}
+  \vspace{0.5em}
+  {\footnotesize Sem nenhum item registrado, o rodapé cai no
+  \cod{\textbackslash rastreio\{...\}} manual, como antes.}
 
-  \fonte{\textbf{Fontes:} este é o bloco \cod{\textbackslash fonte\{...\}},
-  o único formato de fonte do deck.}
+  \vspace{0.5em}
+  {\footnotesize \lead{Depois de \cod{\textbackslash appendix}},
+  \cod{\textbackslash pmmeapendice} troca a trilha pelo rótulo do apêndice e
+  tira o contador, e o contador da parte principal para no total dela. A
+  divisória aceita rótulo: \cod{\textbackslash
+  pmmedivisoria[]\{Perguntas\}\{...\}} não põe número nenhum, \cod{[A]} põe a
+  letra.}
+
+  \fonte{\textbf{Fontes:} este é o bloco \cod{\textbackslash fonte\{...\}}, o
+  único formato de fonte do deck.}
 \end{frame}
 
 % ===========================================================================

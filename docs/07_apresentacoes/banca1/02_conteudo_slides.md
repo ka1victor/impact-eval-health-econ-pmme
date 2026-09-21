@@ -2,8 +2,8 @@
 documento: Conteúdo da apresentação — banca 1
 papel: fonte de verdade do que vai à tela
 escopo: teórico, termina na viabilidade empírica; sem resultado de estimação
-slides: 17
-atualizacao: 17 de setembro de 2026
+slides: 17, mais Q&A e 4 de apêndice fora da contagem
+atualizacao: 21 de setembro de 2026
 ---
 
 > [!IMPORTANT]
@@ -35,6 +35,12 @@ atualizacao: 17 de setembro de 2026
 > teoria da mudança como cadeia TikZ — que em 17/09/2026 passou ao slide 8 — e a
 > tabela do que falta no slide 17.
 >
+> Depois do `deck:fim` vêm o **Q&A** e o **apêndice**, entre `apendice:inicio`
+> e `apendice:fim`. A mesma convenção de cabeçalhos vale ali, mas eles **não
+> entram na contagem de 17**: são material de resposta, exibidos só se alguém
+> perguntar. No Beamer ficam depois de `\appendix`, de modo que o contador do
+> rodapé para em `17 / 17`.
+>
 > Os decks em [`deck_beamer/`](deck_beamer/) e [`deck_slidev/`](deck_slidev/)
 > são **derivados** deste arquivo: divergência entre deck e documento é erro do
 > deck. O Beamer foi **reconstruído em 19/09/2026** sobre esta estrutura: 17
@@ -62,6 +68,16 @@ atualizacao: 17 de setembro de 2026
 | 15 | conteúdo | 3 | 3 | Implicações para o PMM-E | No PMM-E, a regra fixa a remuneração e o IVS organiza o custo |
 | 16 | conteúdo | 1 | 3 | Hipótese do trabalho | Mais remuneração real, mais vagas preenchidas |
 | 17 | conteúdo | 2 | 3 | Disponibilidade de dados | Há dado para quase todo termo — e sabemos quais faltam |
+
+### Depois do deck, fora da contagem
+
+| # | Layout | Builds | Título na tela | Para que serve |
+|:---:|:---:|:---:|---|---|
+| — | capa | 1 | **Perguntas** | fecha a fala e abre o Q&A |
+| A1 | conteúdo | 4 | Por que o desafio metodológico não está na apresentação | o diagnóstico da regra, que saiu da tela em 17/09/2026 |
+| A2 | conteúdo | 1 | A literatura que ficou de reserva | os dois trabalhos cortados do slide 7 |
+| A3 | conteúdo | 1 | Duas notas sobre a regra que não vão à tela | contribuição previdenciária e adicional não regulamentado |
+| A4 | conteúdo | 1 | O que ainda não fechamos | as pendências abertas, com o efeito de cada uma |
 
 ---
 
@@ -734,7 +750,8 @@ Ipea, *Atlas da Vulnerabilidade Social* (2015);
 > conteúdo dele — suporte comum, ausência de descontinuidade nos cortes e a
 > variação residual que segue a remoticidade — continua em
 > [`05_identificacao/16_sintese_achados_e_novo_plano_causal.md`](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md)
-> e serve para responder à banca, sem slide.
+> e serve para responder à banca. Desde **21/09/2026** está no **apêndice**,
+> como `A1`, fora da contagem de 17 e fora da fala: entra só se perguntarem.
 
 > [!NOTE]
 > **Nota de produção — duas simplificações desta tela.** Ambas são decisão do
@@ -749,6 +766,154 @@ Ipea, *Atlas da Vulnerabilidade Social* (2015);
 ---
 
 <!-- deck:fim -->
+
+<!-- apendice:inicio -->
+
+# Perguntas
+
+### O material de apoio está no apêndice, a seguir
+
+`sem rastreio`
+
+> [!NOTE]
+> **Nota de produção.** Layout de capa, sem número de seção. Fecha a fala e
+> abre o Q&A. Nada depois deste slide é apresentado por iniciativa nossa.
+
+---
+
+## Por que o desafio metodológico não está na apresentação
+
+`Apêndice · A1`
+
+### A regra existe e é determinística
+
+Na janela estável de fev a ago/2026, o rótulo administrativo de IVS determina
+a faixa de bolsa em **527 de 527** municípios, sem uma única ambiguidade.
+
+O que não se recupera é o **escore**. A regra de facto não é a publicada: em
+oito das nove competências, muito alta e alta vão para a **Faixa 1**, média
+para a **Faixa 2**, baixa e muito baixa para a **Faixa 3**. Só jan/2026 segue
+o texto do FAQ.
+
+> **O problema nunca foi a regra não existir. É que o escore que a alimenta
+> não é o IVS 2010 público.**
+
+### Nenhum corte sobre o IVS público reproduz a atribuição
+
+| Regra testada sobre o IVS 2010 público | Acerto |
+|---|---:|
+| Cortes do Ipea supostos, **0,400** e **0,500** | 191 de 368 — **51,9%** |
+| Melhor par de cortes, por busca exaustiva, em 0,323 e 0,377 | 285 de 368 — **77,4%** |
+
+Em 44.073 pares comparáveis há **2.763 inversões (6,3%)**: municípios com IVS
+*maior* que recebem bolsa *menor*. Uma inversão já basta para provar que
+nenhuma regra monótona de limiar reproduz o anúncio, qualquer que seja o corte.
+
+### Nos dois cortes, não há o que saltar
+
+- **Em 0,500 não há o que saltar.** Na janela de $\pm$0,050 há 31 municípios e
+  **todos são Faixa 1**, dos dois lados.
+- **Em 0,400 não há Faixa 3 por perto.** O maior IVS da Faixa 3 é **0,372**.
+
+> **Onde a bolsa de fato varia, a variação é governada pelo critério de
+> localização, que não observamos.**
+
+### E a variação que sobra não é ruído
+
+Dos 83 municípios fora da melhor regra, os **41** que recebem mais do que o
+IVS preveria têm mediana de população de **7.933** contra **32.179** dos **42**
+que recebem menos, e **12 de 41** estão em interior remoto contra **2 de 42**.
+
+> **O tratamento é localmente constante nos dois cortes, e o que sobra está
+> alinhado com remoticidade — o previsor mais forte do próprio desfecho.**
+
+**O que destrava:** um único campo, o **escore administrativo de IVS por
+município**, com safra, precisão e arredondamento. Com ele o primeiro estágio
+é *sharp* por construção, porque a categoria já determina a faixa em 527/527.
+
+**Fontes:** [`05_identificacao/14_plano_implementacao_rdd_bolsa.md`](../../05_identificacao/14_plano_implementacao_rdd_bolsa.md),
+seções de suporte comum e de reprodução da faixa;
+[`05_identificacao/16_sintese_achados_e_novo_plano_causal.md`](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md), §3.5 e §3.5.1.
+
+> [!NOTE]
+> **Nota de produção — o que fica fora mesmo do apêndice.** A tabela do
+> primeiro estágio da RDD *fuzzy* pública, em §3.6 do documento 16, **não**
+> entra: é saída de regressão, e a banca 1 não apresenta resultado de
+> estimação, nem no apêndice. Se a pergunta chegar a esse ponto, a resposta é
+> oral e a tabela está no documento.
+
+---
+
+## A literatura que ficou de reserva
+
+`Apêndice · A2`
+
+Os dois trabalhos que saíram da tabela do slide 7 quando ela foi reduzida a
+dois de cada lado. Ambos continuam registrados no repositório.
+
+| Trabalho | O que mede | O que encontra |
+|---|---|---|
+| **Costa, Nunes & Sanches (2024)**, *REStat* 106(1) | escolha locacional de generalistas formados no Brasil, escolha discreta com coeficientes aleatórios | elevar em **50%** o salário público no interior do Norte e Nordeste corrige **12,4%** do desequilíbrio geográfico, a **US$ 15,7 milhões** por ponto percentual. Cotas em escolas médicas para nascidos em áreas desassistidas corrigem **63,8%**, a **US$ 2,2 a 5,1 milhões** por ponto |
+| **Pathman, Konrad & Ricketts (1992)**, *JAMA* 268(12) | coorte de nove anos, 412 médicos nos Estados Unidos | oito anos depois, **12%** dos que foram com bolsa e **obrigação de serviço** seguiam na prática original, contra **39%** dos que foram **sem** obrigação |
+
+**Um mede o preço de mover; o outro, o preço de fazer ficar.** Nenhum dos
+dois foi para a tela, e os dois respondem perguntas prováveis.
+
+Os próprios autores do primeiro escrevem que *"as baixas elasticidades-salário
+podem explicar por que incentivos financeiros no Brasil não foram suficientes
+para atrair mais médicos para áreas desassistidas"*.
+
+**Fontes:** [`03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md`](../../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md),
+seções 3 e de evidência empírica.
+
+---
+
+## Duas notas sobre a regra que não vão à tela
+
+`Apêndice · A3`
+
+| Nota | O que diz | Onde está |
+|---|---|---|
+| **Contribuição previdenciária** | o participante é segurado obrigatório do RGPS, como **contribuinte individual**, e o valor devido é **descontado da bolsa-formação** | Edital SGTES/MS nº 3/2025, **item 11.2** |
+| **Adicional territorial** | a Lei prevê acréscimo para **Amazônia Legal**, territórios indígenas e áreas de alta vulnerabilidade, *"conforme regulamentação do Ministério da Saúde e disponibilidade orçamentária"*. **Não foi regulamentado no ciclo 1**: a palavra "adicional" aparece uma única vez no edital, e no barema de titulação | Lei nº 15.233/2025, **art. 22-D, §4º** |
+
+> **Nenhuma das duas vira afirmação sobre o tamanho líquido do degrau de
+> R$ 5 mil: isso depende do teto de contribuição, e não foi calculado.**
+
+É essa a razão de estarem aqui e não no slide 5. O degrau que a apresentação
+discute é o **anunciado**, bruto, que é o que a regra fixa e o que o candidato
+lê no quadro de vagas.
+
+**Fontes:** [`auditorias/01_regra_institucional.md`](../../auditorias/01_regra_institucional.md);
+[`03 — Proveniência`](03_proveniencia_figuras_e_numeros.md), seção da regra
+institucional, onde as duas estão conferidas no PDF do DOU.
+
+---
+
+## O que ainda não fechamos
+
+`Apêndice · A4`
+
+As pendências abertas, com o efeito de cada uma sobre o que foi dito. A tabela
+completa, com o critério de fechamento, está no fim deste documento.
+
+| # | Pendência | Efeito sobre a tela |
+|:---:|---|---|
+| **1** | a figura por UF é dos **quatro** valores com fonte registrada, não das 27 unidades | a tela perde o panorama completo por UF |
+| **2** | os valores de deslocamento não tiveram a **fonte primária confirmada** | número em tela atribuído à REGIC 2018, a confirmar |
+| **5** | "Sudeste 55,4% dos especialistas" está conferido em cobertura, não localizado no PDF | ressalva de fonte; fora da tela |
+| **8** | a retaguarda é medida no **município**, mas 42,6% das células estão em estabelecimento de gestão estadual | ou o slide 5 ganha uma linha de limitação, ou o descasamento vira argumento próprio |
+| **9** | os slides 6, 15 e 17 dizem que o **custo cresce com o IVS**; o documento canônico trata o sinal como **ambíguo** | divergência declarada entre a tela e a teoria do projeto, por decisão do autor |
+
+> **Nenhuma delas muda a pergunta nem a hipótese. Todas são de rastreio ou de
+> simplificação declarada.**
+
+**Fontes:** a seção *Pendências abertas* no fim deste documento;
+[`03 — Proveniência`](03_proveniencia_figuras_e_numeros.md), seção 3.
+
+<!-- apendice:fim -->
+
+---
 
 ## Pendências abertas em 17/09/2026
 

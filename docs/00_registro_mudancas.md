@@ -8,7 +8,7 @@
 
 ---
 
-## 21/09/2026 — Banca 1: moldura sem navbar e galeria de componentes do tema
+## 21/09/2026 — Banca 1: Q&A e apêndice, moldura sem navbar e galeria do tema
 
 Motivo: o autor pediu a leitura do deck em PowerPoint que o grupo de fato
 apresentou na banca 1 e a implementação do que valesse a pena. O conteúdo não
@@ -29,6 +29,26 @@ de página devolvidos ao corpo, e o rodapé continua exibindo a linha de
 rastreio do documento de conteúdo, agora com as outras seções em cinza ao
 lado. Três tabelas voltaram de `\scriptsize` para `\footnotesize`.
 
+### Q&A e apêndice
+
+O documento de conteúdo ganhou, **depois** do `deck:fim` e entre
+`apendice:inicio` e `apendice:fim`, um Q&A e quatro slides de apêndice: o
+diagnóstico da reconstrução da regra, que saiu da tela em 17/09 (`A1`, quatro
+builds); os dois trabalhos cortados da tabela do slide 7 (`A2`); a contribuição
+previdenciária e o adicional não regulamentado (`A3`); e as pendências abertas
+(`A4`). Nenhum número é novo: todos vêm de
+[`05_identificacao/14`](05_identificacao/14_plano_implementacao_rdd_bolsa.md),
+[`05_identificacao/16`](05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
+[`03_literatura_empirica/19`](03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md)
+e [`auditorias/01`](auditorias/01_regra_institucional.md).
+
+Esses slides **não entram na contagem de 17**: no Beamer ficam depois de
+`\appendix`, o contador do rodapé para em `17 / 17` no último slide de
+conteúdo e o apêndice exibe `Apêndice · A1` sem número. A tabela do primeiro
+estágio da RDD *fuzzy* pública ficou de fora mesmo do apêndice, por ser saída
+de regressão. A pendência 6 segue fechada para o Beamer e aberta para o
+Slidev, que não tem apêndice.
+
 ### Componentes novos no tema
 
 Linha métrica no título de build (`\pmmebuild[...]`, `\pmmemetrica`), equação
@@ -36,8 +56,9 @@ em cartão com a referência em etiqueta (`\pmmeequacao`), fichas de termos
 (`pmmefichas`), selos de sinal (`\pmmeselo`, `\pmmeselov`, `\pmmeselor`),
 caixa de saída (`\pmmesaida`) e véu com faixa (`\pmmeveu`). Nenhum cria
 palavra: a métrica é a descrição da figura no documento e o selo é o sinal da
-derivada ao lado. O deck não ganhou Q&A nem apêndice, que o deck entregue
-tinha, porque seriam conteúdo fora do documento canônico.
+derivada ao lado. A divisória passou a aceitar rótulo opcional
+(`\pmmedivisoria[]`, usada no Q&A) e o rodapé, o modo de apêndice
+(`\pmmeapendice`).
 
 ---
 

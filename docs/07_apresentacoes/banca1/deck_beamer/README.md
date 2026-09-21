@@ -4,18 +4,21 @@
 > **Fonte de verdade do conteúdo:** [`../02_conteudo_slides.md`](../02_conteudo_slides.md)<br>
 > **Regras de composição:** [`../01_roteiro_narrativo.md`](../01_roteiro_narrativo.md), seção 2<br>
 > **Proveniência:** [`../03_proveniencia_figuras_e_numeros.md`](../03_proveniencia_figuras_e_numeros.md)<br>
-> **Atualização:** 21 de setembro de 2026 — moldura sem barra de navegação, com a trilha de seções no rodapé, e cinco componentes novos de composição vindos da leitura do deck entregue na banca 1
+> **Atualização:** 21 de setembro de 2026 — moldura sem barra de navegação, cinco componentes novos de composição e, depois do deck, o **Q&A** e um **apêndice de quatro slides**
 
 Regra do projeto: *divergência entre deck e documento de conteúdo é erro do
 deck*. Nenhuma afirmação, número, citação ou referência deste `.tex` foi criada
 aqui; tudo vem de `02_conteudo_slides.md`. Correção de conteúdo se faz primeiro
 no documento canônico e só depois no deck.
 
-**Tamanho:** 17 slides do documento, **17 frames**, **32 páginas de PDF**. As
-quinze páginas a mais são **builds**: cada `###` do documento é um `\only<n>`
+**Tamanho:** 17 slides do documento, **17 frames**, **32 páginas de PDF**, mais
+**6 páginas** de Q&A e apêndice depois de `\appendix`, fora da contagem — 40 no
+total. As quinze páginas a mais da parte principal são **builds**: cada `###` do documento é um `\only<n>`
 do mesmo frame, com o mesmo título, o mesmo rastreio e o mesmo número no
 rodapé — para a banca, um slide que se completa, não um slide novo. São 32
-builds em 17 slides, exatamente os do "Mapa da apresentação" do documento.
+builds em 17 slides, exatamente os do "Mapa da apresentação" do documento. O
+contador do rodapé usa `\insertmainframenumber`, e por isso para em `17 / 17`
+no último slide de conteúdo; no apêndice não há contador.
 
 ---
 
@@ -120,6 +123,17 @@ divisórias `\pmmedivisoria`, com o número da seção.
 | 16 | conteúdo | Mais remuneração real, mais vagas preenchidas | 30 | tela única: H1 sozinha |
 | 17 | conteúdo | Há dado para quase todo termo — e sabemos quais faltam | 31–32 | **1** o que observamos. **2** o que falta |
 
+Depois de `\appendix`, fora da contagem de 17 e fora da fala. Conteúdo
+canônico entre `apendice:inicio` e `apendice:fim`:
+
+| Slide = frame | Layout | Título | Páginas | Builds |
+|:---:|:---:|---|:---:|---|
+| — | capa | *Perguntas* | 33 | divisória sem número, `\pmmedivisoria[]` |
+| A1 | conteúdo | Por que o desafio metodológico não está na apresentação | 34–37 | **1** a regra existe e é determinística. **2** nenhum corte no IVS público a reproduz. **3** nos dois cortes não há o que saltar. **4** e a variação que sobra não é ruído |
+| A2 | conteúdo | A literatura que ficou de reserva | 38 | tela única: Costa et al. e Pathman et al. |
+| A3 | conteúdo | Duas notas sobre a regra que não vão à tela | 39 | tela única: contribuição previdenciária e adicional |
+| A4 | conteúdo | O que ainda não fechamos | 40 | tela única: as cinco pendências abertas |
+
 ---
 
 ## 3. Decisões de composição
@@ -165,11 +179,13 @@ direita, o gráfico institucional (wordmark *Insper*, quadrados preto e vermelho
 sobre listras). Sem o `insper-bg.png`, o gráfico é desenhado em TikZ. A capa no
 visual do banner do PMM-E continua disponível como `\pmmecapa`.
 
-**Divisória de seção (`\pmmedivisoria{Título}{Subtítulo}`).** Página branca,
+**Divisória de seção (`\pmmedivisoria[rótulo]{Título}{Subtítulo}`).** Página branca,
 número da seção grande em vermelho, título em Playfair, subtítulo em cinza;
 à direita, arcos de listras (o motivo do gráfico institucional, em curva) e
 um filete vermelho vertical. É o layout de capa (`#`) do documento canônico:
-os frames 3, 9 e 14. O título e o subtítulo são os do documento, literais.
+os frames 3, 9 e 14. O título e o subtítulo são os do documento, literais. O
+rótulo é o número da seção por padrão; `\pmmedivisoria[]{...}{...}` o suprime
+e sobe o bloco de texto, que é como o Q&A é montado.
 
 **Sumário.** Página branca, título em Playfair com traço vermelho, as três
 seções à direita e, em cada linha, a descrição curta em cinza — o subtítulo da
@@ -380,11 +396,37 @@ Duas observações sobre a aplicação:
 
 `\pmmesaida` não tem uso no conteúdo da banca 1 — o documento não traz linhas
 do tipo "gera X" — e fica definida, documentada e demonstrada na galeria, para
-a banca 2. Pelo mesmo motivo o deck **não ganhou slide de Q&A nem apêndice**,
-que o deck entregue tinha: seriam conteúdo que o documento canônico não tem, e
-o deck é derivado. Entram quando entrarem no documento.
+a banca 2.
 
-### 3.8 Vocabulário
+### 3.8 Q&A e apêndice, depois de `\appendix`
+
+O deck entregue na banca 1 terminava em Q&A e apêndice, e o deck não tinha
+nenhum dos dois. Em **21/09/2026** os dois entraram, mas pela ordem certa:
+primeiro no documento de conteúdo, entre `apendice:inicio` e `apendice:fim`,
+depois aqui. O deck continua derivado.
+
+Três decisões de moldura:
+
+- **Ficam depois de `\appendix`.** Assim `\insertmainframenumber` guarda o
+  total da parte principal e o rodapé para em `17 / 17` no último slide de
+  conteúdo. A contagem de 17 do documento não muda.
+- **No apêndice o rodapé troca a trilha pelo rótulo `Apêndice · A1`** e
+  **não mostra contador** — continuar a numeração dos 17 seria enganoso, e o
+  rótulo da subseção já diz onde se está. `\pmmeapendice`, logo após
+  `\appendix`, é o que faz a troca.
+- **O Q&A é uma divisória sem número**, `\pmmedivisoria[]`.
+
+O que entrou no apêndice é material que o próprio documento já mandava guardar
+para responder à banca: o diagnóstico da regra, que saiu da tela em 17/09
+(`A1`); os dois trabalhos cortados da tabela do slide 7 (`A2`); a contribuição
+previdenciária e o adicional não regulamentado (`A3`); e as pendências
+abertas (`A4`). Nada foi criado aqui.
+
+**O que ficou de fora mesmo do apêndice:** a tabela do primeiro estágio da RDD
+*fuzzy* pública. É saída de regressão, e a banca 1 não apresenta resultado de
+estimação — nem no apêndice. Se a pergunta chegar lá, a resposta é oral.
+
+### 3.9 Vocabulário
 
 Nenhuma palavra escrita fora do documento de conteúdo introduz econometria ou
 estimação. As substituições da seção 2.5 do roteiro já vêm resolvidas do
@@ -419,7 +461,12 @@ a linha. A data (`\date{2026}`) não está no documento e é metadado do deck.
   densos (7.3, 10, 15.1, 17.2).
 - Os 17 slides do documento estão representados, na ordem, com os 13 títulos
   literais dos slides de conteúdo, os 3 títulos e subtítulos das divisórias, os
-  32 builds e os 12 rastreios literais.
+  32 builds e os 12 rastreios literais. O Q&A e os 4 slides de apêndice
+  seguem o mesmo documento, entre `apendice:inicio` e `apendice:fim`, e somam
+  7 builds em 6 páginas.
+- O contador do rodapé foi conferido página a página: chega a `17 / 17` no
+  último slide de conteúdo e desaparece no apêndice, onde o rodapé mostra
+  `Apêndice · A1` a `A4`.
 - Nenhuma palavra do corpo dos slides foi criada pelo deck; as únicas
   inserções são as legendas "direto"/"proxy" ao lado dos círculos do frame 17,
   que traduzem os emojis do documento, e os rótulos "suposição" da cadeia, que

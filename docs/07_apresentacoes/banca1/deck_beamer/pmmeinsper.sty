@@ -18,7 +18,7 @@
 %   \pmmecaparotulo             rótulo pequeno acima do título (redefinível)
 % ---------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{pmmeinsper}[2026/09/19 v1.0 Capa e divisoria Insper]
+\ProvidesPackage{pmmeinsper}[2026/09/21 v1.0 Capa e divisoria Insper]
 \RequirePackage{tikz}
 \RequirePackage{graphicx}
 
@@ -100,7 +100,15 @@
 % --- divisória de seção -------------------------------------------------------
 % Número grande em vermelho, título em serifa, subtítulo em cinza; à direita,
 % arcos de listras (o motivo das listras do gráfico oficial, em curva).
-\newcommand{\pmmedivisoria}[2]{%
+%
+%   \pmmedivisoria{Título}{Subtítulo}       % rótulo = número da seção
+%   \pmmedivisoria[A]{Título}{Subtítulo}    % rótulo à escolha, p. ex. o apêndice
+%   \pmmedivisoria[]{Título}{Subtítulo}     % sem rótulo, p. ex. o Q&A
+%
+% Sem rótulo, o bloco de texto sobe para ocupar o lugar do número.
+\newcommand{\pmmedivisoria}[3][\thesection]{%
+  \pmme@divisoria{#1}{#2}{#3}}
+\newcommand{\pmme@divisoria}[3]{%
   \begin{tikzpicture}[remember picture,overlay,shift={(current page.south west)},x=1cm,y=1cm]
     \fill[white] (0,0) rectangle (16,9);
     \begin{scope}
@@ -110,13 +118,19 @@
         \draw[insperListra,line width=0.09cm] (17.2,4.5) circle (\r);}
     \end{scope}
     \fill[insperVermelho] (10.2,0) rectangle (10.32,9);
-    \node[anchor=north west,inner sep=0,text=insperVermelho,
-          font=\fontsize{54}{54}\pmmeDisplay\bfseries] at (1.2,7.2) {\thesection};
-    \node[anchor=north west,inner sep=0,text width=8.2cm,align=left] at (1.2,4.55) {%
+    \if\relax\detokenize{#1}\relax
+      \def\pmme@divy{5.6}%
+    \else
+      \def\pmme@divy{4.55}%
+      \node[anchor=north west,inner sep=0,text=insperVermelho,
+            font=\fontsize{54}{54}\pmmeDisplay\bfseries] at (1.2,7.2) {#1};
+    \fi
+    \node[anchor=north west,inner sep=0,text width=8.2cm,align=left]
+      at (1.2,\pmme@divy) {%
       \raggedright\setlength{\parskip}{0pt}%
-      {\fontsize{22}{26}\pmmeDisplay\bfseries\color{insperPreto}#1\par}
+      {\fontsize{22}{26}\pmmeDisplay\bfseries\color{insperPreto}#2\par}
       \vspace{0.3cm}
-      {\fontsize{10.5}{13}\selectfont\color{insperCinza}#2\par}};
+      {\fontsize{10.5}{13}\selectfont\color{insperCinza}#3\par}};
   \end{tikzpicture}}
 
 \endinput
