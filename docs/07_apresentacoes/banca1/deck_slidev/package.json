@@ -10,7 +10,9 @@
     "export": "slidev export slides.md"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.3.0",
     "@fontsource/montserrat": "5.3.0",
+    "@fontsource/playfair-display": "^5.3.0",
     "@fontsource/source-sans-3": "5.3.0",
     "@fontsource/source-serif-4": "5.3.0",
     "@slidev/cli": "52.19.1",

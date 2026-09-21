@@ -1033,8 +1033,11 @@ resposta é oral e a tabela está no documento de identificação.
 inteiro: os dois decks passam a produzir a estrutura vigente, cada um na sua
 convenção — no Beamer um build é um `\only<n>` do mesmo frame, no Slidev é uma
 página com o título repetido e o "n de N" no rastreio. As duas somam 40
-páginas. As identidades visuais continuam diferentes de propósito: o Beamer na
-institucional do Insper, o Slidev no tema acadêmico verde que sempre teve.
+páginas. A pedido do autor, no mesmo dia o Slidev foi **repintado na
+identidade institucional do Insper**, a mesma do Beamer: o que ele queria
+adaptado do deck entregue na banca era o layout, não a identidade. Os dois
+decks passam a ser irmãos na aparência, e a única diferença que resta é a
+numeração — o Beamer para em `17 / 17`, porque lá um build não é uma página.
 
 ## 5. Defeitos do material anterior
 

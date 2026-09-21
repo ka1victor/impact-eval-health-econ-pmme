@@ -1,55 +1,95 @@
 /* ------------------------------------------------------------------ *
  * Deck da banca 1 — estilo sobre o slidev-theme-academic
- * Paleta alinhada às figuras do repositório (verde do matplotlib).
+ *
+ * IDENTIDADE INSPER, a mesma do deck Beamer: página branca, texto preto,
+ * serifa de exibição nos títulos, vermelho como acento e o gráfico
+ * institucional na capa. Reproduzida do tema oficial para Quarto,
+ * github.com/padsInsper/quarto-insper-theme (MIT). Ver a seção 3.1 do
+ * README do deck Beamer, que descreve a identidade em detalhe.
+ *
+ * GT Ultra Fine, a serifa oficial, é comercial e não pode ser
+ * redistribuída: no lugar dela, Playfair Display, como no Beamer.
  *
  * Fontes empacotadas localmente (@fontsource): o build não depende de
  * rede, e o Chromium do Playwright não alcança fonts.googleapis.com.
+ *
+ * Os nomes de variável `--pmme-*` são anteriores à identidade Insper e
+ * ficaram: são contrato com as mil linhas de regra abaixo. O que mudou
+ * foram os valores. `--pmme-sage` é o acento, hoje o vermelho.
  * ------------------------------------------------------------------ */
 
-@import '@fontsource/source-sans-3/latin-400.css';
-@import '@fontsource/source-sans-3/latin-400-italic.css';
-@import '@fontsource/source-sans-3/latin-600.css';
-@import '@fontsource/source-sans-3/latin-600-italic.css';
-@import '@fontsource/source-sans-3/latin-700.css';
-@import '@fontsource/montserrat/latin-600.css';
-@import '@fontsource/montserrat/latin-700.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-400-italic.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-600-italic.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/playfair-display/latin-700.css';
+@import '@fontsource/playfair-display/latin-700-italic.css';
 
 :root {
-  --pmme-green: #1f3d28;
-  --pmme-green-mid: #4a7359;
-  --pmme-sage: #8fb39b;
-  --pmme-sage-soft: #cfdfd4;
-  --pmme-sage-wash: #eef4ef;
-  --pmme-ink: #1b1f1c;
-  --pmme-body: #2c322e;
-  --pmme-muted: #66736a;
-  --pmme-faint: #7d887f;
-  --pmme-rule: #d9e1db;
+  --pmme-green: #1d1d1b;        /* insperPreto: títulos, texto, destaques */
+  --pmme-green-mid: #1d1d1b;    /* rótulos de cartão e de build */
+  --pmme-sage: #e50505;         /* insperVermelho: o acento */
+  --pmme-sage-soft: #e6e6e6;    /* insperCinzaClaro: bordas */
+  --pmme-sage-wash: #f5f5f5;    /* insperCinzaFundo: fundo de cartão */
+  --pmme-ink: #1d1d1b;
+  --pmme-body: #1d1d1b;
+  --pmme-muted: #6b6b6b;        /* insperCinza: texto secundário */
+  --pmme-faint: #8a8a8a;
+  --pmme-rule: #e6e6e6;
+  --pmme-creme: #f2e8dc;        /* insperCreme: campo das listras */
+  --pmme-listra: #7f8f85;       /* insperListra */
+  --pmme-verde: #3acc9f;        /* insperVerde, para blocos de exemplo */
   --pmme-paper: #ffffff;
-  --slidev-theme-primary: #1f3d28;
+  --slidev-theme-primary: #1d1d1b;
+  --font-corpo: Inter, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
 }
 
 html,
 body,
 #slide-content {
   background: var(--pmme-paper);
-  font-family: 'Source Sans 3', 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-family: var(--font-corpo);
   font-feature-settings: 'kern' 1, 'liga' 1;
 }
 
+/* Serifa de exibição: títulos e rótulos que nomeiam blocos. */
 .slidev-layout h1,
 .capa-titulo,
-.card-lbl,
+.div-titulo,
+.sumario-t,
+.build-lbl,
+.stat-num,
+.hip-tag {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+/* Inter nos rótulos miúdos em caixa alta, onde a serifa não lê bem: a
+   Playfair tem numerais de altura variável, que numa caixa alta de 0,6rem
+   deixam "0,500" desalinhado com as letras ao lado. */
 .chip,
 .passo-lbl,
 .fonte-lbl,
-.sumario-t,
-.stat-num,
-.hip-tag {
-  font-family: Montserrat, 'Source Sans 3', Helvetica, Arial, sans-serif;
+.card-lbl,
+.rastreio-band {
+  font-family: var(--font-corpo);
 }
 
 /* ---------------------------- base ---------------------------------- */
+
+/* O acento do tema oficial: filete vermelho na borda inferior da página. */
+.slidev-layout::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--pmme-sage);
+  z-index: 6;
+}
 
 .slidev-layout {
   position: relative;
@@ -64,15 +104,29 @@ body,
 /* 1.70rem, e não 1.78: com a estrutura de 17 slides o título mais longo
    — "O especialista está longe do interior — e quase nunca é só do SUS" —
    cabe numa linha só, em vez de deixar "SUS" órfão na segunda.          */
+/* Como o frametitle do Beamer: serifa preta, barra vermelha curta à
+   esquerda e filete cinza-claro abaixo. 1,52rem porque a Playfair é mais
+   larga que a Montserrat e o título mais longo tem de caber numa linha. */
 .slidev-layout h1 {
-  font-size: 1.70rem;
-  line-height: 1.16;
-  font-weight: 600;
-  letter-spacing: -0.012em;
+  font-size: 1.52rem;
+  line-height: 1.18;
+  font-weight: 700;
+  letter-spacing: -0.005em;
   color: var(--pmme-green);
   margin: 0 0 0.7rem 0;
-  padding-bottom: 0.45rem;
-  border-bottom: 2px solid var(--pmme-sage);
+  padding: 0 0 0.45rem 0.8rem;
+  border-bottom: 1px solid var(--pmme-rule);
+  position: relative;
+}
+
+.slidev-layout h1::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.17em;
+  width: 0.2rem;
+  height: 0.88em;
+  background: var(--pmme-sage);
 }
 
 .slidev-layout p {
@@ -130,12 +184,36 @@ body,
   align-items: center;
   justify-content: space-between;
   padding: 0 2.9rem;
-  background: var(--pmme-sage-wash);
+  background: var(--pmme-paper);
   border-bottom: 1px solid var(--pmme-rule);
   font-size: 0.6rem;
-  letter-spacing: 0.055em;
+  letter-spacing: 0.04em;
   color: var(--pmme-muted);
   z-index: 5;
+}
+
+/* A seção corrente em preto, precedida do losango vermelho, como a trilha
+   do rodapé do deck Beamer. */
+.rastreio-txt {
+  color: var(--pmme-green);
+  font-weight: 600;
+}
+
+.rastreio-txt::before {
+  content: '';
+  display: inline-block;
+  width: 0.3rem;
+  height: 0.3rem;
+  background: var(--pmme-sage);
+  transform: rotate(45deg);
+  margin-right: 0.4rem;
+  vertical-align: 0.02rem;
+}
+
+.rastreio-logo {
+  height: 0.62rem;
+  width: auto;
+  display: block;
 }
 
 .rastreio-right {
@@ -537,25 +615,66 @@ body,
 /* ------------------------ capa e sumário ---------------------------- */
 
 .slidev-layout.cover {
-  padding: 3rem 3.4rem;
+  padding: 2.6rem 3.4rem;
   background: var(--pmme-paper);
 }
 
+/* Como o \inspercapa do Beamer: texto à esquerda, gráfico institucional
+   à direita. */
+.capa-grade {
+  display: grid;
+  grid-template-columns: 1fr 0.68fr;
+  gap: 2rem;
+  align-items: center;
+  height: 100%;
+}
+
+.capa-texto {
+  min-width: 0;
+}
+
+.capa-grafico {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.capa-grafico img {
+  max-width: 100%;
+  max-height: 20rem;
+  width: auto;
+  height: auto;
+}
+
+.capa-rotulo {
+  font-size: 0.68rem;
+  color: var(--pmme-muted);
+  margin: 0 0 0.6rem 0;
+  letter-spacing: 0.02em;
+}
+
+.capa-inst {
+  font-size: 0.72rem;
+  color: var(--pmme-muted);
+  margin: 0.5rem 0 0 0;
+}
+
 .capa-rule {
-  width: 4.5rem;
+  width: 2.6rem;
   height: 4px;
   background: var(--pmme-sage);
-  margin-bottom: 1.15rem;
+  margin-bottom: 0.9rem;
 }
 
 .capa-titulo {
-  font-size: 2.35rem;
-  line-height: 1.13;
+  font-size: 2.0rem;
+  line-height: 1.14;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.005em;
   color: var(--pmme-green);
-  margin: 0 0 0.85rem 0;
-  max-width: 27ch;
+  margin: 0 0 0.7rem 0;
+  max-width: 24ch;
 }
 
 .capa-sub {
@@ -950,37 +1069,68 @@ div.xs > p {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
+}
+
+/* Arcos de listras à direita: o motivo do gráfico institucional, em curva,
+   como o \pmmedivisoria do Beamer desenha em TikZ. */
+.slidev-layout.divisoria::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -17rem;
+  width: 27rem;
+  height: 27rem;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  /* Passo largo: no Beamer os arcos vão de 1,2 a 5,6 cm de raio com traço
+     de 0,09 cm. Um período curto aqui produziria moiré na projeção. */
+  background:
+    repeating-radial-gradient(
+      circle at center,
+      var(--pmme-listra) 0 0.16rem,
+      var(--pmme-creme) 0.16rem 1.15rem
+    );
+  z-index: 0;
+}
+
+.slidev-layout.divisoria > * {
+  position: relative;
+  z-index: 1;
 }
 
 .div-num {
+  font-family: var(--font-display);
   font-size: 4.6rem;
   line-height: 1;
   font-weight: 700;
   color: var(--pmme-sage);
-  letter-spacing: -0.03em;
-  margin-bottom: 1.1rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.9rem;
 }
 
 .div-titulo {
-  font-size: 2.15rem;
+  font-size: 1.9rem;
   line-height: 1.14;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.005em;
   color: var(--pmme-green);
   margin: 0 0 0.7rem 0;
-  max-width: 24ch;
+  /* Largura contida: os arcos ocupam o terço direito da página. */
+  max-width: 21ch;
 }
 
 .div-sub {
-  font-size: 1.05rem;
+  font-family: var(--font-corpo);
+  font-size: 1.0rem;
   line-height: 1.4;
   color: var(--pmme-muted);
   margin: 0;
-  max-width: 44ch;
+  max-width: 38ch;
 }
 
 .div-rule {
-  width: 4.5rem;
+  width: 2.6rem;
   height: 4px;
   background: var(--pmme-sage);
   margin-bottom: 1.15rem;
@@ -988,6 +1138,8 @@ div.xs > p {
 
 /* Descrição curta de cada seção no sumário, ao lado do título. */
 .sumario-d {
+  font-family: var(--font-corpo);
+  font-weight: 400;
   color: var(--pmme-muted);
   font-size: 0.86rem;
   display: block;
@@ -1034,9 +1186,9 @@ div.xs > p {
    quando o título do frame quebra em duas linhas.                        */
 
 .build-lbl {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--pmme-green-mid);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--pmme-green);
   line-height: 1.25;
   margin: 0.8rem 0 0 0;
   padding-bottom: 0.3rem;

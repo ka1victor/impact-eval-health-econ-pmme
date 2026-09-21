@@ -53,7 +53,15 @@ Slidev, que não tem apêndice.
 
 O deck Slidev deixou a estrutura de 15 slides em 6 seções, duas atrás do
 documento, e passou à vigente: 40 páginas, uma por build, com as três
-divisórias, o Q&A e os quatro slides de apêndice. A convenção do deck foi
+divisórias, o Q&A e os quatro slides de apêndice. No mesmo dia, a pedido do
+autor, foi **repintado na identidade institucional do Insper**, a mesma do
+Beamer, no lugar do verde do `slidev-theme-academic`: Inter no corpo, Playfair
+Display nos títulos, preto e vermelho, capa com o gráfico institucional,
+divisórias com arcos de listra e o filete vermelho na borda inferior. As
+fontes entraram como `@fontsource/inter` e `@fontsource/playfair-display`
+5.3.0; o logo e o gráfico são os mesmos arquivos de `deck_beamer/insper/`,
+publicados por link simbólico. As figuras seguem na paleta verde do pipeline,
+como no Beamer. A convenção do deck foi
 mantida — um build é uma página, com o título repetido e o `n de N` no
 rastreio —, e no apêndice o rastreio perde o contador. `style.css` ganhou o
 layout `divisoria`, o rótulo de build e as cores da cadeia da teoria da

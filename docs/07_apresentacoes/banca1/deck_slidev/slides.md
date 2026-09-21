@@ -17,8 +17,8 @@ themeConfig:
   paginationY: ''
 fonts:
   provider: none
-  sans: Source Sans 3
-  serif: Source Serif 4
+  sans: Inter
+  serif: Playfair Display
   mono: ui-monospace
 defaults:
   class: centrado
@@ -28,13 +28,19 @@ class: centrado
 ---
 
 
-<div class="capa-rule"></div>
-
-<h1 class="capa-titulo">Remuneração como incentivo limitado</h1>
-
-<p class="capa-sub">Um modelo de escolha racional para o Programa Mais Médicos Especialistas</p>
-
-<p class="capa-meta"><strong>Grupo 2</strong> &middot; Bernardo Gomes &middot; Bruno Manta &middot; Felipe Barros &middot; Felipe Marques &middot; Gabriel Benegra &middot; Kauã Santos &middot; Vinicius Sbruzzi</p>
+<div class="capa-grade">
+  <div class="capa-texto">
+    <p class="capa-rotulo">Projeto Mais Médicos Especialistas &middot; Banca 1</p>
+    <div class="capa-rule"></div>
+    <h1 class="capa-titulo">Remuneração como incentivo limitado</h1>
+    <p class="capa-sub">Um modelo de escolha racional para o Programa Mais Médicos Especialistas</p>
+    <p class="capa-meta"><strong>Grupo 2</strong> &middot; Bernardo Gomes &middot; Bruno Manta &middot; Felipe Barros &middot; Felipe Marques &middot; Gabriel Benegra &middot; Kauã Santos &middot; Vinicius Sbruzzi</p>
+    <p class="capa-inst">Insper &middot; 2026</p>
+  </div>
+  <div class="capa-grafico">
+    <img :src="'/insper/insper-bg.png'" alt="" />
+  </div>
+</div>
 
 ---
 
@@ -273,7 +279,7 @@ As três apontam para o mesmo lado: quanto maior o índice, mais caro é viver a
 
 <p class="xs mut tight mt-s">Preenchimento do ciclo 1, por faixa e por estrato territorial</p>
 
-<Fig src="/fig/preenchimento_ciclo1.png" h="fill" alt="Preenchimento do ciclo 1 — por faixa: 23,6% na Faixa 3, 37,4% na Faixa 2, 31,6% na Faixa 1; por território: 44,9% metropolitano, 35,6% capitais, 26,9% interior conectado, 20,5% interior remoto" />
+<Fig src="/fig/preenchimento_ciclo1.png" h="16rem" alt="Preenchimento do ciclo 1 — por faixa: 23,6% na Faixa 3, 37,4% na Faixa 2, 31,6% na Faixa 1; por território: 44,9% metropolitano, 35,6% capitais, 26,9% interior conectado, 20,5% interior remoto" />
 
 <p class="sm mt-s">Das <strong>1.295 células</strong> da primeira chamada, <strong>393 (30,3%)</strong> tiveram alguém confirmado ou homologado.</p>
 

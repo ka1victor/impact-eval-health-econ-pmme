@@ -67,6 +67,21 @@ link_figura output/apresentacao_banca1/oferta_pre_por_faixa.png
 link_figura output/apresentacao_banca1/retaguarda_por_faixa.png
 link_figura output/apresentacao_banca1/preenchimento_ciclo1.png
 
+# Identidade Insper: logo e gráfico institucional, os mesmos arquivos que o
+# deck Beamer usa. Também por link simbólico, para não duplicar binário no
+# versionamento.
+echo "      publicando a identidade Insper em ${DECK}/public/insper"
+rm -rf "${DECK}/public/insper"
+mkdir -p "${DECK}/public/insper"
+for arquivo in logo.png insper-bg.png; do
+  origem="docs/07_apresentacoes/banca1/deck_beamer/insper/${arquivo}"
+  if [ ! -f "${ROOT}/${origem}" ]; then
+    echo "ERRO: arquivo da identidade ausente: ${origem}" >&2
+    exit 1
+  fi
+  ln -sfn "${ROOT}/${origem}" "${DECK}/public/insper/${arquivo}"
+done
+
 # --- 3. exportação ---------------------------------------------------------
 # `slidev export` sobe um servidor Vite próprio. Na primeira execução depois de
 # qualquer mudança de dependência, o Vite reotimiza o bundle e recarrega a

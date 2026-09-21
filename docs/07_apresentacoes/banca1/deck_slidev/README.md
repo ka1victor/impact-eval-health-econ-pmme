@@ -3,7 +3,7 @@
 > **Fonte de verdade do conteúdo:** [`../02_conteudo_slides.md`](../02_conteudo_slides.md)<br>
 > **Regras de composição:** [`../01_roteiro_narrativo.md`](../01_roteiro_narrativo.md), seção 2<br>
 > **Proveniência:** [`../03_proveniencia_figuras_e_numeros.md`](../03_proveniencia_figuras_e_numeros.md)<br>
-> **Atualização:** 21 de setembro de 2026 — reconstruído na estrutura vigente de **17 slides em 3 seções**, com Q&A e apêndice
+> **Atualização:** 21 de setembro de 2026 — reconstruído na estrutura vigente de **17 slides em 3 seções**, com Q&A e apêndice, e repintado na **identidade institucional do Insper**, a mesma do deck Beamer
 
 Este diretório é **artefato derivado**. Regra do projeto: divergência entre deck
 e documento de conteúdo é erro do deck, nunca do documento. Nenhuma afirmação,
@@ -86,6 +86,32 @@ Três particularidades do ambiente que o script já contorna:
    qualquer mudança de dependência, o Vite reotimiza o bundle e recarrega a
    página no meio de uma espera do Playwright que tem limite fixo de 30 s.
 
+### Identidade visual: a mesma do deck Beamer
+
+Desde **21/09/2026** este deck usa a **identidade institucional do Insper**, a
+mesma do Beamer, no lugar do verde do `slidev-theme-academic` que tinha antes:
+página branca, texto preto, serifa de exibição nos títulos, vermelho como
+acento e o gráfico institucional na capa. A descrição completa da identidade
+está na seção 3.1 do [README do deck Beamer](../deck_beamer/README.md); aqui
+ficam só as equivalências.
+
+| Elemento | No Beamer | Aqui |
+|---|---|---|
+| título de frame | serifa preta, barra vermelha curta, filete cinza | `.slidev-layout h1`, com a barra em `::before` |
+| título de build | `\pmmebuild`, serifa com traço vermelho | `.build-lbl`, traço em `::after` |
+| linha métrica | `\pmmemetrica`, cinza miúdo | `.xs.mut` sob o título do build |
+| capa | `\inspercapa`: texto à esquerda, gráfico à direita | `.capa-grade`, duas colunas |
+| divisória | `\pmmedivisoria`: número vermelho, arcos de listra | `.divisoria`, arcos em `repeating-radial-gradient` |
+| destaque | `destaque`: caixa preta, texto branco | `.callout` |
+| trilha e filete | rodapé com losango vermelho, logo e filete | faixa de rastreio no topo, filete em `.slidev-layout::after` |
+
+Os nomes de variável CSS continuam `--pmme-*`: são contrato com as mil linhas
+de regra do arquivo, e o que mudou foram os valores. `--pmme-sage` é o acento,
+hoje o vermelho `#E50505`.
+
+**As figuras seguem na paleta verde** do `gerar_figuras_banca1.py`, como no
+deck Beamer: elas vêm do pipeline e não são repintadas por deck nenhum.
+
 ### Fontes tipográficas
 
 O Chromium do Playwright não alcança `fonts.googleapis.com`. As fontes são
@@ -93,10 +119,12 @@ empacotadas localmente via `@fontsource` e importadas em `style.css`
 (`fonts.provider: none` no cabeçalho do `slides.md`), de modo que o build não
 depende de rede e o resultado é sempre o mesmo:
 
-- **Montserrat** — títulos, rótulos e números em destaque (é a fonte do tema
-  `slidev-theme-academic`, preservada onde ela define a identidade)
-- **Source Sans 3** — corpo de texto, tabelas e legendas; mais econômica em
-  largura que a Montserrat, o que importa nos slides mais densos
+- **Playfair Display** — títulos de frame, capa, sumário, divisórias e rótulos
+  de build. Substitui a GT Ultra Fine do tema oficial do Insper, que é
+  comercial e não pode ser redistribuída — a mesma escolha do deck Beamer
+- **Inter** — corpo de texto, tabelas, legendas e os rótulos miúdos em caixa
+  alta, onde a serifa não lê bem: a Playfair tem numerais de altura variável,
+  que a 0,6 rem deixam "0,500" desalinhado com as letras ao lado
 
 ---
 
@@ -160,11 +188,16 @@ aqui em 21/09/2026, depois de ter fechado para o Beamer em 19/09. As
 pendências de conteúdo (1, 2, 5, 8, 9) são do documento canônico e aparecem
 na tela como ele as escreve, inclusive no slide `A4` do apêndice.
 
-**Duas diferenças deliberadas em relação ao deck Beamer**, que não são
-divergência com o documento: a identidade visual, que aqui é a do
-`slidev-theme-academic` com a paleta verde própria e lá é a institucional do
-Insper; e a numeração do rodapé, que aqui conta páginas de ponta a ponta e lá
-para em `17 / 17`, porque lá um build não é uma página.
+**Uma diferença deliberada em relação ao deck Beamer**, que não é divergência
+com o documento: a numeração, que aqui conta páginas de ponta a ponta e lá
+para em `17 / 17`, porque lá um build não é uma página. A identidade visual é
+a mesma desde 21/09/2026.
+
+**Uma armadilha do componente `Fig`, registrada:** `h="fill"` só funciona
+dentro de uma linha `.cols.fill`, que estica o pai. Solta num slide, o pai
+fica com altura zero e a imagem, posicionada em `inset: 0`, **desaparece sem
+erro** — foi o que aconteceu com a figura do slide 7 na primeira reconstrução.
+Fora de `.cols.fill`, passe uma altura explícita.
 
 A ressalva de conteúdo da versão anterior — a divergência entre "10
 ambulatoriais" e a lista de oito, transcrita por fidelidade — foi encerrada no
@@ -178,8 +211,8 @@ no edital e no quadro de vagas.
 | Arquivo | Função |
 |---|---|
 | `slides.md` | o deck |
-| `style.css` | estilo sobre o `slidev-theme-academic`: paleta, tipografia, cartões, tabelas, faixas |
+| `style.css` | estilo sobre o `slidev-theme-academic`: identidade Insper, tipografia, cartões, tabelas, faixas, capa e divisórias |
 | `components/Rastreio.vue` | faixa de rastreio de seção, no topo; `cont` marca o build e `semnum` tira o contador, no apêndice |
 | `components/Fonte.vue` | faixa de fontes, no rodapé |
 | `components/Fig.vue` | figura com altura máxima controlada, sem distorção de proporção |
-| `package.json`, `package-lock.json` | versões exatas: `@slidev/cli` 52.19.1, `slidev-theme-academic` 3.0.1 |
+| `package.json`, `package-lock.json` | versões exatas: `@slidev/cli` 52.19.1, `slidev-theme-academic` 3.0.1, `@fontsource/inter` e `@fontsource/playfair-display` 5.3.0 |
