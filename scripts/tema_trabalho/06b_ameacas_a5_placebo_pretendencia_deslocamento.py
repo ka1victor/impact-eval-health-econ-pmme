@@ -25,6 +25,19 @@ inferência citada é a da convenção que conta os efeitos fixos absorvidos
    curso; (b) oferta líquida por região–curso–mês, com tratamento = região–curso
    tem ao menos uma célula com atração, cluster por região.
 
+Adições posteriores ao protocolo congelado, feitas em 21/09/2026 na revisão da
+PR 3 e rotuladas como tais (itens C-7b e C-7c). Nenhuma delas muda amostra,
+desfecho, estimador ou regra de exclusão já congelados; as duas apenas
+qualificam a leitura do que já estava publicado:
+
+- C-7b: q de Benjamini–Hochberg sobre a família dos dez testes de pré-tendência
+  por curso, reportado ao lado do p. A regra de exclusão continua a
+  pré-registrada, sobre o p cru; o q entra como leitura, não como critério.
+- C-7c: decomposição do teste (3b) de oferta líquida entre as região–curso que
+  de fato agregam mais de um município do painel e as que contêm um só. Onde a
+  região tem um único município, o agregado regional é a própria célula, e o
+  teste não pode distinguir oferta líquida de oferta da célula.
+
 Linguagem: tudo aqui é associativo. Atração é resultado administrativo
 realizado, não tratamento atribuído.
 """
@@ -70,6 +83,17 @@ REAUDITORIA = {
     "placebo_nivel": {"beta": 0.092, "se": 0.303, "p": 0.761, "pre_F": 0.81},
     "pretendencia_por_curso_nivel": {"14": {"F": 2.46, "p": 0.007}, "16": {"F": 11.90}, "2": {"F": 6.85}},
 }
+
+
+def bh_fdr(pvals: np.ndarray) -> np.ndarray:
+    """Benjamini-Hochberg. Copia fiel de `bh_fdr` em 05 e 06."""
+    m = len(pvals)
+    order = np.argsort(pvals)
+    adj = pvals[order] * m / np.arange(1, m + 1)
+    cummin = np.clip(np.minimum.accumulate(adj[::-1])[::-1], 0, 1)
+    q = np.empty(m, float)
+    q[order] = cummin
+    return q
 
 
 def sha256(path: Path) -> str:
@@ -220,9 +244,30 @@ def main() -> None:
         por_curso[str(int(curso))] = {r["escala"]: r for r in res}
         for r in res:
             linhas_curso.append(linha(r, cod_curso=int(curso), pre_rejeita_5pct=bool(r["pre_p_gl_fe"] < ALPHA_PRE)))
+    # C-7b: a familia dos dez testes de pre-tendencia por curso nao recebia a
+    # correcao de multiplicidade que o item B-5 introduziu para as demais
+    # familias de A5. O q entra como leitura ao lado do p; a regra de exclusao
+    # continua sendo a pre-registrada, sobre o p cru.
+    q_pre: dict[str, dict[int, float]] = {}
+    for escala in ESCALAS:
+        cursos_ord = sorted(por_curso, key=lambda c: int(c))
+        pvals = np.array([por_curso[c][escala]["pre_p_gl_fe"] for c in cursos_ord])
+        q_pre[escala] = {int(c): float(q) for c, q in zip(cursos_ord, bh_fdr(pvals))}
+    for linha_curso in linhas_curso:
+        curso_i = linha_curso.get("cod_curso")
+        escala_i = linha_curso.get("escala")
+        if curso_i is not None and curso_i >= 0 and escala_i in q_pre and curso_i in q_pre[escala_i]:
+            linha_curso["q_fdr_bh_pre"] = q_pre[escala_i][curso_i]
+            linha_curso["pre_rejeita_5pct_q"] = bool(q_pre[escala_i][curso_i] < ALPHA_PRE)
+            linha_curso["familia_fdr_pre"] = f"pretendencia_por_curso_{escala_i}_10_cursos"
     tab_pre = pd.DataFrame(linhas_curso)
     cursos_rejeitam_prop = sorted(int(c) for c, esc in por_curso.items() if esc["proporcional"]["pre_p_gl_fe"] < ALPHA_PRE)
     cursos_rejeitam_nivel = sorted(int(c) for c, esc in por_curso.items() if esc["nivel"]["pre_p_gl_fe"] < ALPHA_PRE)
+    cursos_q_prop = sorted(c for c, q in q_pre["proporcional"].items() if q < ALPHA_PRE)
+    cursos_q_nivel = sorted(c for c, q in q_pre["nivel"].items() if q < ALPHA_PRE)
+    # Posto da covariancia do F conjunto: um curso pode sobreviver ao q e ainda
+    # assim ter F pouco confiavel, e a leitura precisa dizer qual e qual.
+    posto_ok = {int(c): {esc: bool(r["pre_F_confiavel"]) for esc, r in escs.items()} for c, escs in por_curso.items()}
     # Regra fixada no protocolo: excluir os cursos com pre-p < 0,05 na escala
     # proporcional e reportar 202603 nas duas escalas.
     restante = conf[~conf["cod_curso"].isin(cursos_rejeitam_prop)]
@@ -272,9 +317,52 @@ def main() -> None:
         r["tratamento"] = "regiao_com_atracao"
         regional.append(r)
     n_reg_multi = int((reg[reg["competencia"] == BASELINE_COMP]["n_municipios_painel"] > 1).sum())
+
+    # C-7c: o teste (b) so distingue oferta liquida de oferta da celula onde a
+    # regiao-curso agrega mais de um municipio do painel. Onde agrega um so, a
+    # observacao "regional" E a celula, com outro rotulo e outro cluster. A
+    # decomposicao abaixo separa as duas partes para que a leitura nao atribua
+    # ao agregado uma informacao que ele nao tem.
+    base_reg = reg[reg["competencia"] == BASELINE_COMP].copy()
+    n_atr_reg = (
+        conf[conf["competencia"] == BASELINE_COMP]
+        .groupby(["region_id", "cod_curso"])["atracao_muni"].sum().rename("n_municipios_com_atracao")
+    )
+    base_reg = base_reg.merge(n_atr_reg, on=["region_id", "cod_curso"], how="left")
+    chaves_multi = set(map(tuple, base_reg.loc[base_reg["n_municipios_painel"] > 1, ["region_id", "cod_curso"]].to_numpy()))
+    chaves_uni = set(map(tuple, base_reg.loc[base_reg["n_municipios_painel"] == 1, ["region_id", "cod_curso"]].to_numpy()))
+    mistas = base_reg[(base_reg["n_municipios_painel"] > 1)
+                      & (base_reg["n_municipios_com_atracao"] > 0)
+                      & (base_reg["n_municipios_com_atracao"] < base_reg["n_municipios_painel"])]
+    n_reg_mistas = int(len(mistas))
+    reg_chave = list(map(tuple, reg[["region_id", "cod_curso"]].to_numpy()))
+    reg_multi = reg[[k in chaves_multi for k in reg_chave]]
+    reg_uni = reg[[k in chaves_uni for k in reg_chave]]
+
+    def regional_em(frame: pd.DataFrame, rotulo: str) -> list[dict[str, Any]]:
+        ev_x, terms_x = preparar(frame, "regiao_com_atracao", ["region_id", "cod_curso"], fe_unidade="cell_id")
+        ev_x["_trat"] = ev_x["regiao_com_atracao"].astype(float)
+        saidas_x = []
+        for escala in ESCALAS:
+            rx = ajustar(ev_x, terms_x, escala, ["cell_id", "course_month", "uf_month"], "region_id")
+            rx["teste"] = rotulo
+            rx["tratamento"] = "regiao_com_atracao"
+            saidas_x.append(rx)
+        return saidas_x
+
+    regional_multi = regional_em(reg_multi, "oferta_liquida_regiao_curso_multi_municipio")
+    regional_uni = regional_em(reg_uni, "oferta_liquida_regiao_curso_um_municipio")
+
+    LIMITE_REG = (f"estoque somado apenas sobre municipios do painel; {n_reg_multi} de "
+                  f"{len(base_reg)} regiao-curso com mais de um municipio na referencia e "
+                  f"{n_reg_mistas} com municipio que atraiu e municipio que nao atraiu ao mesmo tempo")
     tab_desl = pd.DataFrame(
         [linha(r, nivel_agregacao="celula_municipio_curso", limite="vizinho = outro municipio do quadro na mesma regiao de saude; municipios fora do quadro nao sao observados") for r in transbordo]
-        + [linha(r, nivel_agregacao="regiao_curso", limite=f"estoque somado apenas sobre municipios do painel; {n_reg_multi} regiao-curso com mais de um municipio na referencia") for r in regional]
+        + [linha(r, nivel_agregacao="regiao_curso", subamostra="todas", limite=LIMITE_REG) for r in regional]
+        + [linha(r, nivel_agregacao="regiao_curso", subamostra="agregam_mais_de_um_municipio",
+                 limite="unica parte do teste (b) em que o agregado regional difere da celula") for r in regional_multi]
+        + [linha(r, nivel_agregacao="regiao_curso", subamostra="um_unico_municipio",
+                 limite="o agregado regional E a celula; nao testa oferta liquida") for r in regional_uni]
     )
     tmp = TABELA_DESLOCAMENTO.with_suffix(".csv.tmp")
     tab_desl.to_csv(tmp, index=False)
@@ -312,6 +400,23 @@ def main() -> None:
             "comparacao_reauditoria_nivel": REAUDITORIA["pretendencia_por_curso_nivel"],
             "cursos_pre_p_lt_0_05_proporcional": cursos_rejeitam_prop,
             "cursos_pre_p_lt_0_05_nivel": cursos_rejeitam_nivel,
+            "multiplicidade": {
+                "item": "C-7b, posterior ao protocolo congelado",
+                "familia": "os dez testes conjuntos de pre-tendencia por curso, separadamente por escala",
+                "metodo": "Benjamini-Hochberg, a mesma funcao usada em 05 e 06",
+                "alpha": ALPHA_PRE,
+                "papel": "leitura ao lado do p; a regra de exclusao continua sendo a pre-registrada, sobre o p cru",
+                "q_por_curso": {escala: {str(c): q for c, q in sorted(d.items())} for escala, d in q_pre.items()},
+                "cursos_q_lt_0_05_proporcional": cursos_q_prop,
+                "cursos_q_lt_0_05_nivel": cursos_q_nivel,
+                "posto_da_covariancia_completo": {str(c): d for c, d in sorted(posto_ok.items())},
+                "leitura": (
+                    "sob o nulo global, duas rejeicoes a 5% em dez testes acontecem com "
+                    "probabilidade proxima de 9%; na escala proporcional, que governa a regra "
+                    "de exclusao, so o curso 16 sobrevive ao q, e e justamente o curso cujo F "
+                    "conjunto o proprio script marca como pouco confiavel por posto incompleto"
+                ),
+            },
             "por_curso": {c: {esc: {k: v for k, v in r.items() if k != "coeficientes"} for esc, r in escs.items()} for c, escs in por_curso.items()},
             "amostra_completa": resumo(completo),
             "sensibilidade_excluindo_cursos_rejeitados": resumo(sens_excl),
@@ -324,8 +429,27 @@ def main() -> None:
             "n_regioes": int(reg["region_id"].nunique()),
             "n_regiao_curso": int(reg[["region_id", "cod_curso"]].drop_duplicates().shape[0]),
             "n_regiao_curso_com_mais_de_um_municipio": n_reg_multi,
+            "n_regiao_curso_com_municipio_atraido_e_nao_atraido": n_reg_mistas,
             "transbordo": resumo(transbordo),
             "oferta_liquida_regional": resumo(regional),
+            "decomposicao_oferta_liquida": {
+                "item": "C-7c, posterior ao protocolo congelado",
+                "motivo": (
+                    "o teste (b) so distingue oferta liquida de oferta da celula onde a "
+                    "regiao-curso agrega mais de um municipio do painel; onde agrega um so, a "
+                    "observacao regional e a propria celula com outro rotulo e outro cluster"
+                ),
+                "n_regiao_curso_multi_municipio": int(len(chaves_multi)),
+                "n_regiao_curso_um_municipio": int(len(chaves_uni)),
+                "multi_municipio": resumo(regional_multi),
+                "um_unico_municipio": resumo(regional_uni),
+                "leitura": (
+                    "a significancia publicada do teste (b) vem da parte em que nao ha "
+                    "agregacao nenhuma; na parte informativa o coeficiente nao e distinguivel "
+                    "de zero, de modo que o teste nao sustenta afirmar que a oferta regional "
+                    "agregada sobe, nem exclui realocacao dentro da regiao"
+                ),
+            },
         },
         "hashes_entradas": {
             PAINEL_T0_REL: {"sha256": hash_painel, "conferido_contra": "output/tema_trabalho/A6_manifesto_reproducao.json"},
@@ -341,6 +465,7 @@ def main() -> None:
     tmp.write_text(json.dumps(saida, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     tmp.replace(JSON_AMEACAS)
 
+    rgm = {r["escala"]: r for r in regional_multi}
     pl = {r["escala"]: r for r in placebo}
     tr = {r["escala"]: r for r in transbordo}
     rg = {r["escala"]: r for r in regional}
@@ -348,12 +473,16 @@ def main() -> None:
         "[OK] C-7: placebo nivel {:.3f} (EP {:.3f}; p {:.3f}; pre-F {:.2f}), proporcional {:.4f} (p {:.3f}); "
         "cursos com pre-p<0,05 (proporcional): {}; (nivel): {}; "
         "transbordo nivel {:.3f} (p {:.3f}) proporcional {:.4f} (p {:.3f}); "
-        "oferta liquida regional nivel {:.3f} (p {:.3f}) proporcional {:.4f} (p {:.3f})".format(
+        "oferta liquida regional nivel {:.3f} (p {:.3f}) proporcional {:.4f} (p {:.3f}); "
+        "so as {} regiao-curso que agregam >1 municipio: proporcional {:.4f} (p {:.3f}); "
+        "q de BH da pre-tendencia (proporcional) rejeita: {}".format(
             pl["nivel"]["mar2026_beta"], pl["nivel"]["mar2026_se_gl_fe"], pl["nivel"]["mar2026_p_gl_fe"], pl["nivel"]["pre_F_gl_fe"],
             pl["proporcional"]["mar2026_beta"], pl["proporcional"]["mar2026_p_gl_fe"],
             cursos_rejeitam_prop, cursos_rejeitam_nivel,
             tr["nivel"]["mar2026_beta"], tr["nivel"]["mar2026_p_gl_fe"], tr["proporcional"]["mar2026_beta"], tr["proporcional"]["mar2026_p_gl_fe"],
             rg["nivel"]["mar2026_beta"], rg["nivel"]["mar2026_p_gl_fe"], rg["proporcional"]["mar2026_beta"], rg["proporcional"]["mar2026_p_gl_fe"],
+            len(chaves_multi), rgm["proporcional"]["mar2026_beta"], rgm["proporcional"]["mar2026_p_gl_fe"],
+            cursos_q_prop,
         )
     )
 

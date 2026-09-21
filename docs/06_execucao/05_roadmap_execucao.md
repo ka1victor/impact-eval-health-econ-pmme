@@ -91,6 +91,18 @@ decisão do autor (D-3); a lista ordenada de sugestões está na seção
 (`paper_pmme_submission.tex`, 13 páginas; `paper_pmme_curto.tex`, 7 páginas) e
 os dois conferidores de cifras no `run_all.py`.
 
+**Estado em 21/09/2026.** A revisão do PR #3 já integrado, pedida pelo autor,
+abriu três itens de leitura em
+[`36_backlog_pos_auditoria.md`](36_backlog_pos_auditoria.md), seção "Revisão da
+PR 3 depois do merge": **A-1b** (a emenda 2 não cobriu a especificação `full`;
+níveis singleton de `uf_fe` inflam o R² sem mudar coeficiente), **C-7b** (a
+família de pré-tendência por curso não recebia a correção de multiplicidade do
+B-5) e **C-7c** (o teste de oferta líquida regional não distingue expansão
+líquida de realocação, porque 385 das 449 região–curso têm um único município do
+quadro). Erratas E-7 e E-8. Amostra, desfecho, estimador e a manchete de A5 não
+mudam; o que muda é o que se pode afirmar sobre deslocamento, que volta a
+**não testado**. A fila continua sem sessão aberta.
+
 ## Entrega de banca 1
 
 Paralela à fila analítica e independente dela. A banca 1 apresenta o desenho

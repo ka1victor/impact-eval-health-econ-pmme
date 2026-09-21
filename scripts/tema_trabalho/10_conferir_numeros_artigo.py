@@ -1123,7 +1123,7 @@ c7_tb_p, loc_c8 = json_valor(A5_C7, "deslocamento/transbordo/proporcional/mar202
 c7_rg_b, loc_c9 = json_valor(A5_C7, "deslocamento/oferta_liquida_regional/proporcional/mar2026_beta")
 c7_rg_p, loc_c10 = json_valor(A5_C7, "deslocamento/oferta_liquida_regional/proporcional/mar2026_p_gl_fe")
 c7_n_reg, loc_c11 = json_valor(A5_C7, "deslocamento/n_regioes")
-trecho_c7_ds = (f"não perdem estoque, com {decimal_br(c7_tb_b, 3)} log-ponto e $p$ de {decimal_br(c7_tb_p, 3)}, e a soma do estoque por "
+trecho_c7_ds = (f"não perdem estoque, com {decimal_br(c7_tb_b, 3)} log-ponto e $p$ de {decimal_br(c7_tb_p, 3)}. A soma do estoque por "
                 f"região--curso sobe {decimal_br(c7_rg_b, 3)} log-ponto, com $p$ de {decimal_br(c7_rg_p, 3)}, em {inteiro(c7_n_reg)} regiões")
 for chave, bruto, loc, fmt, tr in [("TRANSBORDO", c7_tb_b, loc_c7, decimal_br(c7_tb_b, 3), "3 casas"),
                                    ("TRANSBORDO_P", c7_tb_p, loc_c8, decimal_br(c7_tb_p, 3), "3 casas"),
@@ -1131,6 +1131,37 @@ for chave, bruto, loc, fmt, tr in [("TRANSBORDO", c7_tb_b, loc_c7, decimal_br(c7
                                    ("REGIONAL_P", c7_rg_p, loc_c10, decimal_br(c7_rg_p, 3), "3 casas"),
                                    ("N_REGIOES", c7_n_reg, loc_c11, inteiro(c7_n_reg), "inteiro")]:
     registrar(f"A5_TXT_C7_DESLOC_{chave}", "Apendice B", f"deslocamento C-7: {chave}", fmt, A5_C7, loc, bruto, tr, trecho_c7_ds)
+# C-7c: a decomposicao que diz o que o agregado regional consegue e nao consegue medir.
+c7_rgm_b, loc_c12 = json_valor(A5_C7, "deslocamento/decomposicao_oferta_liquida/multi_municipio/proporcional/mar2026_beta")
+c7_rgm_p, loc_c13 = json_valor(A5_C7, "deslocamento/decomposicao_oferta_liquida/multi_municipio/proporcional/mar2026_p_gl_fe")
+c7_n_multi, loc_c14 = json_valor(A5_C7, "deslocamento/decomposicao_oferta_liquida/n_regiao_curso_multi_municipio")
+c7_n_uni, loc_c15 = json_valor(A5_C7, "deslocamento/decomposicao_oferta_liquida/n_regiao_curso_um_municipio")
+c7_n_rc, loc_c16 = json_valor(A5_C7, "deslocamento/n_regiao_curso")
+if int(c7_n_multi) + int(c7_n_uni) != int(c7_n_rc):
+    raise SystemExit("C-7c: as duas subamostras deveriam somar o total de regiao-curso")
+trecho_c7_dec = (f"das {inteiro(c7_n_rc)} região--curso, {inteiro(c7_n_uni)} contêm um único município do quadro e nelas o agregado é a "
+                 f"própria célula, e restrito às {inteiro(c7_n_multi)} que de fato agregam mais de um município o coeficiente é "
+                 f"{decimal_br(c7_rgm_b, 3)}, com $p$ de {decimal_br(c7_rgm_p, 3)}")
+for chave, bruto, loc, fmt, tr in [("MULTI_BETA", c7_rgm_b, loc_c12, decimal_br(c7_rgm_b, 3), "3 casas"),
+                                   ("MULTI_P", c7_rgm_p, loc_c13, decimal_br(c7_rgm_p, 3), "3 casas"),
+                                   ("N_MULTI", c7_n_multi, loc_c14, inteiro(c7_n_multi), "inteiro"),
+                                   ("N_UNI", c7_n_uni, loc_c15, inteiro(c7_n_uni), "inteiro"),
+                                   ("N_RC", c7_n_rc, loc_c16, inteiro(c7_n_rc), "inteiro")]:
+    registrar(f"A5_TXT_C7_DECOMP_{chave}", "Apendice B", f"decomposicao C-7c: {chave}", fmt, A5_C7, loc, bruto, tr, trecho_c7_dec)
+# C-7b: multiplicidade na triagem de pre-tendencia por curso.
+c7_q16, loc_c17 = json_valor(A5_C7, "pretendencia_por_curso/multiplicidade/q_por_curso/proporcional/16")
+c7_q2, loc_c18 = json_valor(A5_C7, "pretendencia_por_curso/multiplicidade/q_por_curso/proporcional/2")
+c7_alpha, loc_c19 = json_valor(A5_C7, "pretendencia_por_curso/multiplicidade/alpha")
+c7_cursos_q, loc_c20 = json_valor(A5_C7, "pretendencia_por_curso/multiplicidade/cursos_q_lt_0_05_proporcional")
+if c7_cursos_q != [16]:
+    raise SystemExit(f"C-7b: o apendice B cita so o curso 16 sobrevivendo ao q; o artefato traz {c7_cursos_q}")
+trecho_c7_q = (f"deixa apenas o curso {c7_cursos_q[0]} com $q$ abaixo de {decimal_br(c7_alpha, 2)} na escala "
+               f"proporcional, com {decimal_br(c7_q16, 4)}, contra {decimal_br(c7_q2, 3)} do curso 2")
+for chave, bruto, loc, fmt, tr in [("Q16", c7_q16, loc_c17, decimal_br(c7_q16, 4), "4 casas"),
+                                   ("Q2", c7_q2, loc_c18, decimal_br(c7_q2, 3), "3 casas"),
+                                   ("ALPHA", c7_alpha, loc_c19, decimal_br(c7_alpha, 2), "2 casas"),
+                                   ("CURSOS", c7_cursos_q, loc_c20, str(c7_cursos_q[0]), "lista")]:
+    registrar(f"A5_TXT_C7_MULT_{chave}", "Apendice B", f"multiplicidade C-7b: {chave}", fmt, A5_C7, loc, bruto, tr, trecho_c7_q)
 
 
 # ------------------------------------------------------------------ execucao

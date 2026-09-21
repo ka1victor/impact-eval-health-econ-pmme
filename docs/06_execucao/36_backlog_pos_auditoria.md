@@ -852,6 +852,13 @@ Ambos reportam `0,091608 / 0,345622 / 0,790969` porque a especificação `full`
 inclui `estoque_baseline`; por Frisch–Waugh–Lovell são idênticos. O JSON os
 apresenta como duas evidências.
 
+> **Cifra vencida (21/09/2026).** Os três valores acima são anteriores ao item
+> A-1, cujo commit precede o desta sessão na mesma PR. Depois de A-1 o par
+> reporta `0,376737 / 0,225207 / 0,094364`. A identidade por FWL, que é o objeto
+> do item, continua válida. Ver
+> [`14_erratas_artefatos_congelados.md`](../auditorias/14_erratas_artefatos_congelados.md),
+> entrada E-7.
+
 ### Executado em 16/09/2026 — sessão 4
 
 O JSON passa a declarar `equivalente_a` nos dois modelos e uma
@@ -1163,6 +1170,85 @@ fila analítica) e suíte verde no resultado. A partir daqui a `main` carrega:
 
 Nenhuma sessão desta fila está `ABERTA`. O protocolo abaixo continua valendo
 para qualquer item que venha a ser reaberto.
+
+## Revisão da PR 3 depois do merge — 21/09/2026
+
+Revisão do diff `198d401..79b6a6f` já integrado, feita a pedido do autor. Três
+achados abriram item; nenhum muda amostra, desfecho, estimador ou regra de
+exclusão já congelados, e nenhuma cifra do corpo dos artigos que dependa deles
+sobreviveu sem qualificação.
+
+### A-1b · A emenda 2 não cobriu o `full`, e a variante primária deixa singletons
+
+Dois defeitos no mesmo lugar, ambos de **leitura**, não de estimativa.
+
+1. A `A5_tabela_11` publicou só os cinco modelos `minimal`, mas a definição de
+   `uf_fe` move também a `full`, que passou de `p = 0,791` a `p = 0,094` no
+   estoque. A tabela passa a trazer as duas especificações por variante, 30
+   linhas. Ver errata **E-7**.
+2. Sob a variante primária, três níveis de `uf_fe` têm uma única célula (`41`,
+   `MACRO_CENTRO-OESTE`, `MACRO_SUDESTE`), porque o limiar de colapso conta
+   municípios no painel de 1.184 e não células na amostra de 587. O dummy
+   ajusta a célula exatamente: Brasília, com 83,8% da soma de quadrados de
+   `estoque_6m`, é absorvida e o R² dentro da amostra vai a `0,876` sem ganho
+   de ajuste. Removendo os singletons, **os coeficientes são idênticos em
+   quatro casas** e o R² cai para `0,209`. Diagnóstico e sensibilidade em
+   `A5_tabela_15_singletons_efeito_fixo.csv`. Ver errata **E-8**.
+
+**A especificação primária não muda.** A remoção fica como sensibilidade
+declarada, para não reescolher estimador depois de observar resultado.
+
+### C-7b · A família de pré-tendência por curso não recebia a correção do B-5
+
+O item B-5 declarou duas famílias de FDR e deixou de fora a triagem dos dez
+testes conjuntos de pré-tendência por curso, que decide a regra de exclusão.
+Aplicando o mesmo Benjamini–Hochberg, na escala proporcional — a que governa a
+regra — só o curso 16 mantém `q < 0,05`, com `0,0036`; o curso 2 vai de
+`p = 0,0380` a `q = 0,190`. E o curso 16 é justamente aquele cujo `F` conjunto o
+próprio script marca como pouco confiável por posto incompleto de covariância.
+Sob o nulo global, duas rejeições a 5% em dez testes ocorrem com probabilidade
+próxima de 9%.
+
+**A regra de exclusão continua a pré-registrada, sobre o `p` cru.** O `q` entra
+como leitura, ao lado do `p`, em `A5_tabela_13` e no bloco `multiplicidade` de
+`A5_ameacas_c7.json`. O red team e os dois artigos passam a dizer que, na escala
+que governa a regra, nenhum dos dois cursos passa ao mesmo tempo pela correção
+de multiplicidade e pelo posto da covariância.
+
+### C-7c · O teste de oferta líquida regional não testava deslocamento
+
+O teste (3b) somava o estoque por região–curso para separar expansão líquida de
+realocação. Mas das 449 região–curso, **385 contêm um único município do
+quadro** — nelas o agregado regional *é* a célula, com outro rótulo e outro
+agrupamento —, e só **31** contêm ao mesmo tempo município que atraiu e
+município que não atraiu, que é a única configuração em que realocação é
+observável.
+
+Decompondo:
+
+| subamostra | proporcional | nível |
+|---|---|---|
+| 449 região–curso (publicado) | `+0,0502` (`p = 0,006`) | `+0,773` (`p = 0,001`) |
+| 64 que agregam mais de um município | `+0,0442` (`p = 0,547`) | `+3,755` (`p = 0,153`) |
+| 385 de um único município (= a célula) | `+0,0635` (`p = 0,003`) | `+0,573` (`p = 0,001`) |
+
+A significância publicada vem inteira de onde não há agregação nenhuma. O
+veredito «a oferta regional agregada também sobe» e a afirmação do artigo curto
+de que isso é «incompatível com pura realocação dentro do quadro» não se
+sustentam: **deslocamento dentro da região permanece não testado, e não
+refutado.** O teste (3a), de transbordo sobre vizinhos, não muda e continua
+passando.
+
+### O que fica em aberto
+
+- Estender o agregado região–curso a **todos** os municípios da região de
+  saúde, e não só aos 368 do quadro, é a versão que o `CLAUDE.md` pede e a
+  única que testaria deslocamento de fato. Depende do painel mensal (D-4).
+- Diagnóstico cadastral dos cursos 2 e 16 em 2024–2025, antes de qualquer
+  heterogeneidade por curso.
+- Recalibrar o limiar de colapso de `uf_fe` na amostra estimada, na próxima
+  reexecução legítima com o painel mensal, junto com a retirada da coluna
+  `uf_fe` vencida de `A5_painel_T0.parquet`.
 
 ## Protocolo de sessão
 

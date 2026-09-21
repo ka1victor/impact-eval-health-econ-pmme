@@ -1,3 +1,3 @@
-modelo,r2_media_out,r2_sd_out,r2_insample,rmse_media_out,rmse_sd_out,rmse_insample,n_splits,grupos,nota
-OLS_delta_minimal_atracao_FE,-0.31525763643059146,0.40336529506069524,0.9326166097959141,5.915477555716879,6.623496294158046,2.3414936895149707,5,municipio,apendice preditivo; variacao do estoque 202506->202603 na amostra confirmatoria
-OLS_estoque_6m_minimal,-0.07757186702854409,0.11451053864291845,0.8761431077475491,30.10318921130272,27.102760492367874,14.457396114956689,5,municipio,estoque_6m 202603
+modelo,r2_media_out,r2_sd_out,r2_insample,rmse_media_out,rmse_sd_out,rmse_insample,n_splits,grupos,n_efetivo,n_celulas_singleton,peso_singleton_na_soma_de_quadrados,r2_insample_sem_singletons,rmse_insample_sem_singletons,nota
+OLS_delta_minimal_atracao_FE,-0.31525763643058924,0.4033652950606965,0.9326166097959141,5.915477555716877,6.6234962941580475,2.3414936895149707,5,municipio,584,3,0.9218864966240841,0.11911864950040196,2.347500096192596,apendice preditivo; variacao do estoque 202506->202603 na amostra confirmatoria
+OLS_estoque_6m_minimal,-0.07757186702854373,0.11451053864292073,0.8761431077475491,30.10318921130272,27.102760492367878,14.457396114956689,5,municipio,584,3,0.8417981628752597,0.20856337711620143,14.494482271094876,estoque_6m 202603

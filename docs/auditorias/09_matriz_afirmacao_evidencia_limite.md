@@ -1,6 +1,6 @@
 # Matriz afirmação–evidência–limite (A6)
 
-> Data: 2026-09-16
+> Data: 2026-09-21
 
 | Afirmação | Evidência | Limite | Linguagem máxima |
 |---|---|---|---|
