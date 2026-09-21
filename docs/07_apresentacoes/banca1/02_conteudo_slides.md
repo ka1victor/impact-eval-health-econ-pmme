@@ -43,9 +43,9 @@ atualizacao: 21 de setembro de 2026
 >
 > Os decks em [`deck_beamer/`](deck_beamer/) e [`deck_slidev/`](deck_slidev/)
 > são **derivados** deste arquivo: divergência entre deck e documento é erro do
-> deck. O Beamer foi **reconstruído em 19/09/2026** sobre esta estrutura: 17
-> frames, um build por `###`, divisórias e sumário único. O Slidev ainda está na
-> estrutura de **15 slides** — divergência conhecida e datada, pendência 6.
+> deck. Os dois foram **reconstruídos** sobre esta estrutura: o Beamer em
+> 19/09/2026, o Slidev em 21/09. Não há mais divergência de estrutura entre
+> documento e deck; a pendência 6 está fechada.
 
 ## Mapa da apresentação
 
@@ -927,7 +927,7 @@ Registradas aqui porque afetam o que vai à tela. Detalhe e rastreio em
 | **3** | A proveniência registrava "10% dos cirurgiões atuando exclusivamente no SUS"; a fonte primária diz **7,7%** | número errado, agora corrigido no slide 4 | ✅ corrigido em 16/09/2026; PDF da *Demografia Médica 2025* a registrar em `data/raw/` com hash |
 | **4** | A tabela de inclinações pré/pós por faixa do deck do grupo (0,012 / 0,271 …) **não é reproduzível** a partir do repositório e não tem grupo de comparação | seria resultado sem rastreio | mantida **fora** do slide 7; a série mensal por faixa é reprodutível e pode entrar como contexto descritivo |
 | **5** | "Sudeste 55,4% dos especialistas" está conferido em **cobertura**, não localizado no PDF integral | ressalva de fonte | conferir na *Demografia Médica 2025* ao registrar o PDF |
-| **6** | ✅ **Fechada para o Beamer em 19/09/2026**, aberta para o Slidev. O deck Beamer foi reconstruído sobre esta estrutura — 17 frames, 32 builds como `\only<n>`, três divisórias, sumário único, as sete figuras — e compila sem `Overfull`. O Slidev continua na estrutura de **15 slides** | divergência deck × documento, só no Slidev | reconstruir o Slidev sobre esta estrutura |
+| **6** | ✅ **Fechada em 21/09/2026.** O Beamer foi reconstruído em 19/09 — 17 frames, 32 builds como `\only<n>`, três divisórias, sumário único, as sete figuras, sem `Overfull` — e o Slidev em 21/09, com um build por página, 40 no total. Os dois trazem também o Q&A e os quatro slides de apêndice | nenhum: deck e documento têm a mesma estrutura | — |
 | **7** | ✅ **Fechada em 17/09/2026 por remoção do slide.** A figura que faltava — IVS contra faixa publicada, com os cortes marcados — era do slide de **desafio metodológico**, que saiu do deck a pedido do autor | nenhum: não há mais slide que a peça | reaberta se o desafio metodológico voltar à apresentação; o achado que ela ilustraria continua em [`05_identificacao/16`](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md), §3.5 |
 | **9** | **Divergência declarada entre a tela e o documento canônico, decisão do autor de 17/09/2026.** Os slides 6, 15 e 17 dizem que o **custo cresce com o IVS**; [`modelo_micro.md`](../../02_teoria/modelo_micro.md), §3.1, e a hipótese H4 de [`hipoteses_e_viabilidade_empirica.md`](../../02_teoria/hipoteses_e_viabilidade_empirica.md), §4, tratam $c_0'(IVS)$ como **ambíguo**, porque o sub-índice de capital humano opera nos dois sentidos | a tela afirma uma monotonicidade que a teoria do projeto não postula | ou o autor autoriza fixar o sinal no documento canônico, com a justificativa, ou a tela volta a declarar a ambiguidade. Enquanto isso, a simplificação é da apresentação e está registrada nas notas de produção dos três slides |
 | **8** | **Decisão do autor, do PR de ajuste estrutural (F5).** A retaguarda do slide 5 é medida no **município**, mas 42,6% das células estão em estabelecimento de gestão estadual e 93 dos 460 CNES têm "REGIONAL" no nome: o incentivo é fixado pelo IVS do município-sede e a clientela é regional | ou o slide ganha uma linha de limitação, ou o descasamento vira argumento próprio da motivação | decisão do autor; o teste de deslocamento intrarregional depende da malha territorial versionada (F4 do mesmo PR) |

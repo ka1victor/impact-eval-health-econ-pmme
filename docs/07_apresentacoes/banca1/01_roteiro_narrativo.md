@@ -1029,6 +1029,13 @@ alinhada com remoticidade.
 resultado de estimação — nem em apêndice. Se a pergunta chegar a esse ponto, a
 resposta é oral e a tabela está no documento de identificação.
 
+**O Slidev foi reconstruído no mesmo dia.** Com ele, a pendência 6 fecha por
+inteiro: os dois decks passam a produzir a estrutura vigente, cada um na sua
+convenção — no Beamer um build é um `\only<n>` do mesmo frame, no Slidev é uma
+página com o título repetido e o "n de N" no rastreio. As duas somam 40
+páginas. As identidades visuais continuam diferentes de propósito: o Beamer na
+institucional do Insper, o Slidev no tema acadêmico verde que sempre teve.
+
 ## 5. Defeitos do material anterior
 
 Encontrados no `PEE__Modelo_econômico.pptx` recebido em 09/09/2026.

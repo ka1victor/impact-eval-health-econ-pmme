@@ -8,7 +8,7 @@
 
 ---
 
-## 21/09/2026 — Banca 1: Q&A e apêndice, moldura sem navbar e galeria do tema
+## 21/09/2026 — Banca 1: Q&A e apêndice, moldura sem navbar, galeria e Slidev reconstruído
 
 Motivo: o autor pediu a leitura do deck em PowerPoint que o grupo de fato
 apresentou na banca 1 e a implementação do que valesse a pena. O conteúdo não
@@ -48,6 +48,27 @@ conteúdo e o apêndice exibe `Apêndice · A1` sem número. A tabela do primeir
 estágio da RDD *fuzzy* pública ficou de fora mesmo do apêndice, por ser saída
 de regressão. A pendência 6 segue fechada para o Beamer e aberta para o
 Slidev, que não tem apêndice.
+
+### Slidev reconstruído; pendência 6 fechada
+
+O deck Slidev deixou a estrutura de 15 slides em 6 seções, duas atrás do
+documento, e passou à vigente: 40 páginas, uma por build, com as três
+divisórias, o Q&A e os quatro slides de apêndice. A convenção do deck foi
+mantida — um build é uma página, com o título repetido e o `n de N` no
+rastreio —, e no apêndice o rastreio perde o contador. `style.css` ganhou o
+layout `divisoria`, o rótulo de build e as cores da cadeia da teoria da
+mudança; `Rastreio.vue` ganhou a propriedade `semnum`. O script de build passa
+a vincular as sete figuras.
+
+Ficou registrado também que o PDF do Slidev **não é reprodutível byte a
+byte**: quem o escreve é o Chromium, que carimba identificadores próprios a
+cada exportação. O README do deck afirmava o contrário e foi corrigido; o
+conteúdo continua fixo pelas versões de `package-lock.json`.
+
+Com isso a **pendência 6 fecha por inteiro**: nenhum dos dois decks diverge
+mais do documento em estrutura. As identidades visuais seguem diferentes de
+propósito, e a numeração de rodapé também: o Beamer para em `17 / 17` porque
+lá um build não é uma página.
 
 ### Componentes novos no tema
 

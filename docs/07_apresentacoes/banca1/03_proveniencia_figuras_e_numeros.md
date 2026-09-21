@@ -2,7 +2,7 @@
 
 > **Regra aplicada:** todo número exibido declara fonte, data de referência, cobertura, unidade e reprodutibilidade<br>
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
-> **Atualização:** 17 de setembro de 2026
+> **Atualização:** 21 de setembro de 2026
 
 > [!IMPORTANT]
 > **A numeração mudou de novo em 17/09/2026.** O deck passou a ter **17 slides em
@@ -12,9 +12,19 @@
 > 9 divisória, **10 Literatura teórica usada**, 11 Modelo microeconômico
 > conjunto, 12 Custo da localidade, 13 Remuneração da localidade, 14 divisória,
 > 15 Implicações, 16 Hipótese, 17 Disponibilidade de dados. O slide de **desafio
-> metodológico** foi **removido** do deck; a sua seção continua aqui, marcada
-> como fora da tela, pela regra 7 da seção 4. Referências a slides em versões
-> anteriores deste arquivo, ou em commits antigos, não são comparáveis.
+> metodológico** foi **removido** do deck; a sua seção continua aqui, agora
+> como a do slide `A1` do apêndice. Referências a slides em versões anteriores
+> deste arquivo, ou em commits antigos, não são comparáveis.
+
+> [!IMPORTANT]
+> **O apêndice, de 21/09/2026.** Depois dos 17 slides o deck ganhou um **Q&A**
+> e **quatro slides de apêndice**, `A1` a `A4`, fora da contagem e fora da
+> fala: entram só se alguém perguntar. Eles **estão na tela** para efeito da
+> regra 4 da seção 4 — são corpo de slide —, e por isso cada número deles tem
+> linha aqui. Três seções desta parte 2 mudaram de estado por causa disso: a do
+> desafio metodológico voltou à tela como `A1`; as duas notas de bolso do slide
+> 5 voltaram como `A3`; e Costa et al. e Pathman et al. voltaram como `A2`. A
+> regra 7 continua valendo para o que saiu e não voltou.
 
 > [!IMPORTANT]
 > **O que conta como "na tela", desde 16/09/2026.** A compressão de
@@ -176,9 +186,10 @@ tela o total de **597 mil** médicos. As linhas abaixo estão marcadas uma a uma
 > vagas imediatas, que estavam fora da tela desde 16/09/2026. **Entrou na tela**,
 > correção F2 do mesmo PR: o pacote formativo dito como o que **não** varia —
 > bolsa-formação sem vínculo, 12 meses, 20 horas, RQE e supervisão de instituição
-> formadora. **Saíram da tela, mantidas por rastreio:** a contribuição
-> previdenciária do item 11.2; o adicional do art. 22-D, §4º, e o registro de que
-> não foi regulamentado no ciclo 1; a afirmação de que nenhuma célula
+> formadora. **Voltaram à tela em 21/09/2026, no slide `A3` do apêndice:** a
+> contribuição previdenciária do item 11.2 e o adicional do art. 22-D, §4º, com
+> o registro de que não foi regulamentado no ciclo 1. **Saíram da tela,
+> mantidas por rastreio:** a afirmação de que nenhuma célula
 > município–curso aparece com mais de uma faixa; os **48%** promovidos, que eram
 > a forma proporcional dos mesmos 177/368, hoje só em contagem; e os **31%**
 > contra **12%** de médicos sozinhos ou com um único colega. **Mudou de slide:**
@@ -239,12 +250,13 @@ organiza o custo", que estava no slide das implicações, mais a definição do
 > do estrato metropolitano no modelo ajustado e o **+0,50** especialista
 > cadastrado do módulo A5, com o erro padrão **0,234** e a expressão "sem
 > pré-tendência detectável". O gradiente **bruto** por território — 44,9% a
-> 20,5% — continua na tela, na figura e na leitura. **Saíram da tela, e ficam de
-> reserva para pergunta da banca**, duas das quatro células do lado "não basta":
-> Costa, Nunes & Sanches (2024), com os 12,4% a US$ 15,7 mi por ponto e os 63,8%
-> por US$ 2,2 a 5,1 mi — o autor pediu dois a favor e dois contra —, e Pathman,
-> Konrad & Ricketts (1992), com os 12% contra 39% após oito anos. Costa et al.
-> continua na tela **no slide 10**. **Mudou de rótulo:** "1.295 vagas" virou
+> 20,5% — continua na tela, na figura e na leitura. **Saíram deste slide**, por
+> o autor ter pedido dois a favor e dois contra, duas das quatro células do lado
+> "não basta": Costa, Nunes & Sanches (2024), com os 12,4% a US$ 15,7 mi por
+> ponto e os 63,8% por US$ 2,2 a 5,1 mi, e Pathman, Konrad & Ricketts (1992),
+> com os 12% contra 39% após oito anos. **Desde 21/09/2026 os dois estão na
+> tela de novo, no slide `A2` do apêndice**, que é o lugar da reserva que esta
+> nota previa. Costa et al. continua também **no slide 10**. **Mudou de rótulo:** "1.295 vagas" virou
 > "1.295 **células**", correção D1. Nenhum valor foi alterado.
 
 | Número | Fonte |
@@ -358,28 +370,80 @@ slide 9 em 16/09/2026, com a coluna **"Equações originais"** no lugar de
 | *"quanto maior o índice, maior o custo"* | **divergência declarada com o documento canônico** — ver `P11` |
 | CNES físico (leitos e equipamentos) mapeado, competências não baixadas; SIH bloqueado | inventário de dados, e `docs/06_execucao/06_backlog_wp3_wp4_wp5.md` |
 
-### Slide 16 da estrutura anterior — Desafio metodológico
+### Apêndice `A1` — Por que o desafio metodológico não está na apresentação
 
 > [!IMPORTANT]
-> **Slide removido do deck em 17/09/2026, seção mantida por rastreio.** A pedido
-> do autor, a apresentação deixou de tratar a separação entre efeito da bolsa e
-> efeito da vulnerabilidade. **Todos** os números abaixo saíram da tela na mesma
-> data; nenhum foi alterado ou desmentido, e todos continuam registrados em
+> **Removido do deck em 17/09/2026; de volta à tela em 21/09/2026, no
+> apêndice.** A apresentação continua sem tratar a separação entre efeito da
+> bolsa e efeito da vulnerabilidade: `A1` fica depois de `\appendix`, fora da
+> contagem de 17, e só entra se perguntarem. Nenhum número foi alterado ou
+> desmentido no caminho. **Quatro linhas abaixo são novas na tela em
+> 21/09/2026** — o determinismo de 527/527, a regra de facto, os dois acertos
+> de regra de corte e as inversões —, e as demais voltaram como estavam.
+>
+> **O que continua fora da tela, mesmo no apêndice:** a tabela do primeiro
+> estágio da RDD *fuzzy* pública, de
 > [`05_identificacao/16`](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
-> §3.5. A seção fica aqui pela regra 7 da seção 4 — número que já foi exibido à
-> banca continua rastreável.
+> §3.6. É saída de regressão, e a banca 1 não apresenta resultado de estimação.
 
 | Número | Fonte |
 |---|---|
+| **527 de 527** municípios: o rótulo administrativo de IVS determina a faixa, sem ambiguidade, na janela de fev a ago/2026 — **na tela desde 21/09/2026** | [`05_identificacao/16`](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md), §3.5.1, fato 1 |
+| A regra de facto não é a publicada: muito alta e alta → **Faixa 1**, média → **Faixa 2**, baixa e muito baixa → **Faixa 3**, em oito das nove competências; só jan/2026 segue o FAQ SGTES 03/2025 — **na tela desde 21/09/2026** | idem, fato 2 |
+| Cortes supostos **0,400 / 0,500** acertam **191 de 368 (51,9%)**; melhor par de cortes, por busca exaustiva, acerta **285 de 368 (77,4%)** em **0,323** e **0,377** — **na tela desde 21/09/2026** | [`05_identificacao/14`](../../05_identificacao/14_plano_implementacao_rdd_bolsa.md), §"Quanto falta" |
+| **44.073** pares comparáveis, **2.763 inversões (6,3%)**: IVS maior com bolsa menor — **na tela desde 21/09/2026** | idem, §"Nenhum limiar reproduz a faixa" |
 | 177 dos 368 municípios com faixa publicada diferente da recalculada | portão R1, `docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`, §"Correção de 14/09/2026", e `a01b_reconstrucao_regra_faixa.json` |
 | 37 municípios com IVS ≤ 0,400 na Faixa 1; 94 na Faixa 2; os intervalos das três faixas se sobrepõem | `output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json`, gerado por `scripts/rdd_bolsa/01b_reconstruir_regra_faixa.py` |
-| Em ±0,050 de **0,500**, os dois lados são **100% Faixa 1** (20 municípios de um lado, 11 do outro) | idem; `14_plano_implementacao_rdd_bolsa.md`, tabela de janelas |
+| Em ±0,050 de **0,500**, os dois lados são **100% Faixa 1** (20 municípios de um lado, 11 do outro) | idem; `14_plano_implementacao_rdd_bolsa.md`, tabela de janelas. Na tela de `A1` a soma, **31 municípios**, no lugar dos dois parciais |
 | Maior IVS da Faixa 3 é **0,372**; em ±0,010 de **0,400** não há Faixa 3 de nenhum lado | idem. Na tela, só o **0,372**; a janela de ±0,010 sustenta a frase e nunca foi exibida |
-| 83 municípios fora da melhor regra de limiar; **41 promovidos** com mediana de população **7.933** contra **32.179** dos **42 rebaixados**, e muito mais interior remoto | idem, §"a variação que sobra não é exógena". Os cinco números e o "muito mais interior remoto" estão na tela, no terceiro achado do slide 16 |
+| 83 municípios fora da melhor regra de limiar; **41 promovidos** com mediana de população **7.933** contra **32.179** dos **42 rebaixados**; **12 de 41** em interior remoto contra **2 de 42** | idem, §"Por que comparar municípios parecidos também não resolve". Em 21/09/2026 os dois últimos contornaram o antigo "muito mais interior remoto": a tela passou a dar as contagens, que já estavam na fonte |
 | **R$ 10 mil a mais** entre Faixa 1 e Faixa 3 | diferença entre os R$ 20 mil e os R$ 10 mil do item 11.1.3 do Edital SGTES/MS nº 3/2025 — é o contraste entre extremos, não o degrau de **R$ 5 mil** entre faixas vizinhas dos slides 7, 8, 13 e 15. Linha acrescentada em 16/09/2026 |
 | Faixa 1 começa em IVS 0,303 | idem — em texto de apoio, fora da tela desde 16/09/2026 |
 | Remoticidade como previsor mais forte do desfecho | `A4_tabela_02_modelo_principal_LPM.csv` e `A4_tabela_02b_logit_AME.csv` |
 | Anexo IV e critérios de localização como o que destrava o efeito da bolsa; desenho do escore do candidato responde a outra pergunta | `docs/06_execucao/36_backlog_pos_auditoria.md`, item D-3, e `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md` — citados sem número, por escopo da banca 1 |
+
+### Apêndice `A2` — A literatura que ficou de reserva
+
+> [!IMPORTANT]
+> **Nenhum número novo.** Os quatro valores de Costa et al. e os dois de
+> Pathman et al. já estavam registrados na seção do slide 7, onde entraram em
+> 16/09/2026 e de onde saíram em 17/09. `A2` é o lugar de reserva que a nota
+> daquele slide previa. As linhas de origem ficam lá, e esta seção só aponta
+> para elas.
+
+| Número | Fonte |
+|---|---|
+| +50% no salário público corrige **12,4%** do desequilíbrio a **US$ 15,7 mi** por ponto; cotas corrigem **63,8%** a **US$ 2,2 a 5,1 mi** por ponto | Costa, Nunes & Sanches (2024), *REStat* 106(1) — **conferido na Tabela 6 do PDF**; linha de origem na seção do slide 7 |
+| Citação na tela: *"as baixas elasticidades-salário podem explicar por que incentivos financeiros no Brasil não foram suficientes para atrair mais médicos para áreas desassistidas"* | idem, reproduzida em [`03_literatura_empirica/19`](../../03_literatura_empirica/19_literatura_empirica_escolha_locacional_medicos.md) |
+| Coorte de **nove anos**, **412 médicos**; após oito anos **12%** com obrigação contra **39%** sem | Pathman, Konrad & Ricketts (1992), *JAMA* 268(12); linha de origem na seção do slide 7 |
+
+### Apêndice `A3` — Duas notas sobre a regra que não vão à tela do deck
+
+> [!IMPORTANT]
+> **Nenhum número novo.** As duas notas estavam registradas na seção do slide 5
+> como fora da tela desde 17/09/2026. Voltaram à tela em 21/09, no apêndice. O
+> título do slide diz "não vão à tela" no sentido da **parte principal**: o
+> apêndice é onde elas vão.
+
+| Afirmação | Fonte |
+|---|---|
+| O participante é segurado obrigatório do RGPS, como **contribuinte individual**, e o valor devido é descontado da bolsa-formação | Edital SGTES/MS nº 3/2025, **item 11.2**, conferido no PDF do DOU em 16/09/2026; linha de origem na seção do slide 5 |
+| **Adicional** para Amazônia Legal, territórios indígenas e áreas de alta vulnerabilidade, *"conforme regulamentação do Ministério da Saúde e disponibilidade orçamentária"*, **não regulamentado no ciclo 1** | Lei nº 15.233/2025, **art. 22-D, §4º**; a não regulamentação verificada no PDF do edital em 16/09/2026; linhas de origem na seção do slide 5 |
+| Na tela: nenhuma das duas vira afirmação sobre o **tamanho líquido** do degrau de R$ 5 mil, que depende do teto de contribuição e **não foi calculado** | é a razão declarada de as duas estarem no apêndice e não no slide 5; nenhum cálculo foi feito, e nenhum número líquido é exibido |
+
+### Apêndice `A4` — O que ainda não fechamos
+
+> [!IMPORTANT]
+> **Nenhum número novo.** O slide reproduz cinco linhas da tabela de
+> *Pendências abertas* do fim de [`02`](02_conteudo_slides.md), com a coluna de
+> efeito resumida. Os números que aparecem no texto das pendências — **55,4%**
+> do Sudeste e **42,6%** das células em gestão estadual — já estão registrados,
+> respectivamente em `P5` e `P10`.
+
+| Afirmação | Fonte |
+|---|---|
+| As cinco pendências e o efeito de cada uma sobre a tela | tabela *Pendências abertas* no fim de [`02_conteudo_slides.md`](02_conteudo_slides.md); detalhe e critério de fechamento em `P5`, `P7`, `P10` e `P11` desta seção 3 |
+| Na tela: *"nenhuma delas muda a pergunta nem a hipótese"* | leitura do projeto sobre as próprias pendências: nenhuma delas toca a formulação da pergunta do slide 8 nem a de H1 no slide 16 |
 
 ---
 

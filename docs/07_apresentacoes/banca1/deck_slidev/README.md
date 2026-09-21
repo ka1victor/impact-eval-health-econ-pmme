@@ -1,23 +1,9 @@
 # Deck Slidev da banca 1
 
-> [!WARNING]
-> **Este deck está desatualizado em relação ao documento canônico.** Desde
-> **16/09/2026**, [`../02_conteudo_slides.md`](../02_conteudo_slides.md) tem
-> **16 slides em 3 seções**, com divisórias de seção e convenção nova de
-> cabeçalhos; este deck continua na **estrutura anterior, de 15 slides em 6
-> seções**, exportada em 26 páginas. A reconstrução ficou para depois, por
-> decisão do autor.
->
-> A divergência é **conhecida e datada** — é a pendência 6 do fim do documento
-> de conteúdo — e não altera a regra do projeto: **o documento canônico vence**.
-> Enquanto os dois não forem reconciliados, os números de slide, os títulos e os
-> mapeamentos deste README descrevem o **estado anterior**, não o que vai à tela.
-
 > **Fonte de verdade do conteúdo:** [`../02_conteudo_slides.md`](../02_conteudo_slides.md)<br>
 > **Regras de composição:** [`../01_roteiro_narrativo.md`](../01_roteiro_narrativo.md), seção 2<br>
 > **Proveniência:** [`../03_proveniencia_figuras_e_numeros.md`](../03_proveniencia_figuras_e_numeros.md)<br>
-> **Atualização:** 16 de setembro de 2026 (corte de 19 para 15 slides; deck
-> parado nessa estrutura)
+> **Atualização:** 21 de setembro de 2026 — reconstruído na estrutura vigente de **17 slides em 3 seções**, com Q&A e apêndice
 
 Este diretório é **artefato derivado**. Regra do projeto: divergência entre deck
 e documento de conteúdo é erro do deck, nunca do documento. Nenhuma afirmação,
@@ -54,7 +40,15 @@ Saídas:
 | `output/apresentacao_banca1/deck_slidev/png/NN.png` | não — material de revisão, derivado do mesmo deck |
 
 O script instala as dependências apenas se `node_modules/` não existir, cria os
-links das figuras e exporta. É determinístico e usa caminhos relativos à raiz.
+links das figuras e exporta. Usa caminhos relativos à raiz.
+
+**O PDF não é reprodutível byte a byte**, ao contrário do que este README
+afirmava até 21/09/2026. Duas execuções sobre a mesma entrada produzem SHA-256
+diferentes: quem escreve o PDF é o Chromium, que carimba identificadores
+próprios a cada exportação. O **conteúdo** é o mesmo — mesmas 40 páginas, mesmo
+texto —, e é isso que as versões fixadas em `package-lock.json` garantem. Quem
+precisa de build byte a byte idêntico tem o deck Beamer, que é
+determinístico de verdade por `SOURCE_DATE_EPOCH`.
 
 ### Figuras: nenhuma cópia entra no versionamento
 
@@ -64,12 +58,11 @@ proveniência do projeto. Por isso o passo 2 do script cria
 `deck_slidev/public/fig/` como **diretório de trabalho não versionado**
 (`.gitignore`) com **links simbólicos** para os arquivos originais:
 
-| Link em `public/fig/` | Arquivo original |
-|---|---|
-| `bolsa_por_faixa.png` | `output/apresentacao_banca1/bolsa_por_faixa.png` |
-| `oferta_pre_por_faixa.png` | `output/apresentacao_banca1/oferta_pre_por_faixa.png` |
-| `retaguarda_por_faixa.png` | `output/apresentacao_banca1/retaguarda_por_faixa.png` |
-| `preenchimento_ciclo1.png` | `output/apresentacao_banca1/preenchimento_ciclo1.png` |
+São **sete**, as mesmas do documento canônico e as mesmas do deck Beamer:
+`especialistas_por_uf_extremos`, `deslocamento_por_regiao` e
+`dupla_pratica_cirurgioes` no slide 4; `bolsa_por_faixa`, `oferta_pre_por_faixa`
+e `retaguarda_por_faixa` no slide 5; `preenchimento_ciclo1` no slide 7. Todas
+em `output/apresentacao_banca1/`.
 
 `vagas_ciclo1_por_regiao.png` e `curva_custo_laboral_burnout.png` saíram do
 deck em 16/09/2026 e não são mais vinculadas. Se algum arquivo faltar, o build
@@ -109,140 +102,69 @@ depende de rede e o resultado é sempre o mesmo:
 
 ## 3. Decisões de composição
 
-### 3.1 Um slide do documento pode virar mais de uma página
+### 3.1 Um build do documento é uma página
 
-Na estrutura anterior, à qual este deck corresponde, o documento tinha **15
-slides** e o deck tem **26 páginas**. O critério foi sempre o mesmo: **uma
-afirmação por página** (roteiro, seção 2.2), sem página sobrecarregada e sem
-página curta demais para existir sozinha. Quando um slide do documento carrega
-dois movimentos distintos do argumento, ele é partido; quando a divisão deixaria
-duas metades magras, elas ficam juntas. Nenhuma informação é acrescentada,
-removida ou alterada nesse processo.
+O documento canônico tem **17 slides** e **32 builds**, mais o Q&A e **4
+slides de apêndice** com 7 builds. Aqui cada **build** é uma página: são
+**40 páginas**, exatamente as do deck Beamer.
 
-O título literal da seção 2.1 do roteiro é **repetido** em todas as páginas do
-mesmo slide; a faixa de rastreio distingue "1 de 2", "2 de 2" e assim por diante.
+A convenção é a mesma desde a origem deste deck, e difere da do Beamer de
+propósito. No Beamer um `###` é um `\only<n>` do mesmo frame, e o rodapé
+repete o número do slide. No Slidev não há overlay que substitua conteúdo, e
+o deck sempre resolveu isso repetindo o título e marcando o build no rastreio:
+`1 de 3`, `2 de 3`, `3 de 3`. Para quem assiste, o efeito é o mesmo — o slide
+se completa —, e a numeração de página do rastreio conta páginas, não slides.
 
-O orçamento de fala registrado para aquela estrutura era o da seção 6 do
-roteiro: **24 minutos para os 15 slides**. Ele é um dos itens a rever na
-reconstrução sobre os 16 slides atuais.
+| Documento | Páginas aqui |
+|---|:---:|
+| capa, sumário | 1–2 |
+| divisória 1 e slides 4 a 8 | 3–16 |
+| divisória 2 e slides 10 a 13 | 17–25 |
+| divisória 3 e slides 15 a 17 | 26–32 |
+| Q&A e apêndice `A1` a `A4` | 33–40 |
 
-### 3.2 Mapeamento documento → páginas (estado anterior, 15 slides)
+### 3.2 Divisórias, Q&A e apêndice
 
-> [!NOTE]
-> A tabela abaixo descreve o deck **como ele está**: mapeia os **15 slides da
-> estrutura anterior** do documento de conteúdo. A coluna "Slide do documento" e
-> os títulos **não correspondem** ao documento canônico vigente, de 16 slides em
-> 3 seções. Serve para operar e revisar o PDF existente e como ponto de partida
-> da reconstrução, não como descrição do que vai à tela.
+As três divisórias de seção e o Q&A usam a classe `divisoria`, definida em
+`style.css`: número grande em sage, título e subtítulo, os mesmos do
+documento. O Q&A não tem número. É o equivalente do `\pmmedivisoria` do deck
+Beamer, na identidade própria deste deck.
 
-| Slide do documento | Título | Páginas | O que ficou em cada página |
-|:---:|---|:---:|---|
-| 1 | *Capa* | 1 | — |
-| 2 | *Sumário* | 2 | — |
-| 3 | Especialistas faltam no interior, e o médico sabe por quê | 3–4 | 3: o retrato nacional e a tabela das quatro desvantagens. 4: o peso de cada uma na literatura e o fecho — urgência em saúde pública e o PMM-E |
-| 4 | O que é o PMM-E | **5** | lei, quem, o quê e onde, em quatro cartões, e a faixa de bolsa em cada vaga |
-| 5 | A bolsa remunera o lugar | 6–7 | 6: os três passos. 7: a grade (F3), as contagens e as cláusulas |
-| 6 | Onde a bolsa é maior, o médico fica sozinho | 8–9 | 8: oferta por habitante (F1). 9: retaguarda de colegas (F2) |
-| 7 | A evidência não decide se R$ 5 mil bastam | 10–11 | 10: a favor e contra lado a lado — México e o degrau; Austrália e Brasil. 11: Estados Unidos, a ressalva das 20 horas e o fecho |
-| 8 | No primeiro ciclo, a bolsa maior não ordenou o preenchimento | **12** | a figura em dois painéis (F6), que já rotula os sete números, mais a leitura e a ressalva descritiva |
-| 9 | Pergunta | 13 | — |
-| 10 | A decisão: onde vale a pena estar | 14 | Moehling et al.: equação, glossário e a caixa-preta |
-| 11 | Abrindo o custo: o lugar e o trabalho | 15–16 | 15: Redding & Rossi-Hansberg, o bloco geográfico e a limitação de residência. 16: Choné & Ma, o U e o papel duplo de equipe e capital |
-| 12 | Como juntamos os três | 17–18 | 17: a função-valor, a abertura de `c` e a tabela de origem. 18: a decisão e o que nenhuma das três tem |
-| 13 | O IVS organiza o custo | 19–21 | 19: `w = B + w^priv`, capital contra interior e o deflator. 20: a redução ao índice e a correspondência dimensão–bloco. 21: a ambiguidade do sinal e o degrau como objeto |
-| 14 | A hipótese | 22–23 | 22: passos 1 e 2. 23: passos 3 e 4 — H1 e a condição de degrau |
-| 15 | Viabilidade empírica | 24–26 | 24: o que se mede de cada peça. 25: o enquadramento e os três resultados da reconstrução da regra. 26: a conclusão de viabilidade e "o que fica de pé" |
+No apêndice o rastreio recebe a propriedade `semnum`, que **tira o contador de
+página**: continuar a numeração da parte principal sugeriria que o apêndice é
+parte da fala, e ele não é. O rastreio passa a dizer `Apêndice · A1`.
 
-### 3.3 A figura prova, a frase interpreta
+### 3.3 Matemática em prosa
 
-Onde a figura **já traz o número rotulado na barra**, o texto ao lado fica só
-com a afirmação. Repetir em texto um número que a barra já mostra faz a plateia
-ler duas vezes e não saber onde olhar. Números que a figura **não** mostra —
-295 municípios, 1.295 vagas, 30%, 102/107/159 — seguem em texto normalmente,
-com a fonte no rodapé.
+Inline math **não renderiza dentro de um `<p>` solto**: um bloco HTML de nível
+de bloco é passado adiante sem processamento de Markdown, e o KaTeX não chega
+nele. Onde a prosa tem `$...$`, o parágrafo é escrito como
 
-### 3.4 Rastreio de seção
+```html
+<div class="sm">
 
-A linha em `código` de cada slide do documento aparece **fora do título**, em
-faixa fina no topo da página, em corpo pequeno e cor esmaecida — componente
-`components/Rastreio.vue`. À direita da mesma faixa ficam o marcador de
-continuação ("2 de 3") e o número da página. A paginação nativa do tema foi
-desativada (`themeConfig.paginationX/Y` vazios) para não duplicar o contador.
+texto com $\delta$ e $c_{im}$
 
-### 3.5 Fontes dos números
+</div>
+```
 
-Toda página que exibe número traz a fonte em faixa fina no rodapé — componente
-`components/Fonte.vue`. Fonte nunca compete com o conteúdo. As figuras trazem
-ainda a própria legenda embutida, gerada pelo script de figuras; a faixa de
-rodapé complementa com cobertura, unidade e recorte.
-
-### 3.6 Hierarquia visual
-
-- **Título** em Montserrat, verde escuro, com filete esverdeado embaixo.
-- **Afirmação central** em caixa verde sólida (`.callout`) — é o que a banca lê
-  primeiro se olhar a página por dois segundos.
-- **Números exibidos** em cartões (`.stat`), com o valor grande e a leitura em
-  corpo menor logo abaixo.
-- **Ressalvas** em caixa neutra de contorno fino, em corpo menor.
-- **Equações** em faixa clara com filete verde à esquerda, sempre isoladas do
-  texto corrido.
-- **Tabelas** sem grade vertical, só filetes horizontais, com cabeçalho em
-  versalete. Nenhuma tabela excede seis linhas.
-
-A paleta foi tirada das próprias figuras do repositório (o verde escuro e o
-sálvia do matplotlib), para que figura e slide pareçam a mesma peça.
-
-### 3.7 Equilíbrio vertical
-
-Todas as páginas usam a classe `centrado`: o título fica ancorado no alto, fora
-do fluxo, e o corpo começa logo abaixo do filete. O espaço que sobra é ocupado
-por quem ganha com isso: `<Fig h="fill">` consome toda a altura livre até a
-barra de fontes (páginas 8, 9 e 12); `fill fill-tbl` estica as tabelas de
-quatro linhas ou mais (páginas 3, 14, 15, 17, 20 e 24). Cartões e listas não
-são esticados: cartão alto com o texto no topo vira caixa oca.
-
-### 3.8 Matemática
-
-As equações dos slides 10 a 14 do documento (numeração anterior) são
-renderizadas por KaTeX, sem alteração de notação. O cabeçalho de tabela é em
-caixa alta, e `text-transform` transformaria o símbolo `c` em `C`; a regra é
-anulada dentro de `.katex`.
-
-### 3.9 O que não foi feito
-
-- **Sem páginas de divisão de seção.** A faixa de rastreio já nomeia a seção em
-  toda página. **Decisão superada** pelo documento canônico de 16/09/2026, que
-  passou a abrir cada seção com uma divisória própria (slides 3, 8 e 12): a
-  reconstrução terá de acomodá-las.
-- **Sem slide de perguntas.** A apresentação termina na viabilidade empírica.
-- **Sem notas de apresentador.** Regra 2.3 do roteiro.
-- **Sem animação ou transição.** `transition: none`.
-
-### 3.10 O que o corte de 16/09/2026 mudou no deck
-
-De 33 para 26 páginas. Saíram as páginas das manchetes, do fluxo "como a vaga
-chega", da figura regional e da curva de custo laboral; a favor e contra
-passaram a dividir uma página; a remuneração e o IVS passaram a ser um slide de
-três páginas; a viabilidade ganhou uma página para o enquadramento e "o que fica
-de pé". Nenhum número do documento cortado ficou fora do deck.
-
-Dois defeitos de renderização herdados foram corrigidos na mesma passagem, ao
-revisar as 26 páginas em PNG: o itálico dentro da caixa verde (`.callout em`)
-herdava a cor escura do corpo e ficava invisível sobre o fundo — sumiam a
-citação de Moehling et al., o *reduz* do custo marginal e *valor da bolsa* na
-conclusão; e a matemática dentro do componente `Fonte` não passa pelo KaTeX, de
-modo que `$\text{dist}$` e a derivada final apareciam como código. Os dois
-trechos de rodapé passaram a texto corrido.
-
----
+com as linhas em branco, que devolvem o conteúdo ao parser de Markdown. Vale
+também a regra do `markdown-it`: `$...$` seguido imediatamente de dígito não é
+tratado como matemática, e por isso se escreve `$\pm 0{,}050$`, e não
+`$\pm$0,050`.
 
 ## 4. Ressalvas
 
-**Uma aberta:** a divergência com o documento canônico descrita no aviso do topo
-— 26 páginas para 15 slides em 6 seções, contra 16 slides em 3 seções —,
-registrada como pendência 6 no fim de
-[`../02_conteudo_slides.md`](../02_conteudo_slides.md). Fecha com a reconstrução
-do deck sobre a estrutura vigente.
+**Nenhuma aberta.** A pendência 6 — decks na estrutura de 15 slides — fecha
+aqui em 21/09/2026, depois de ter fechado para o Beamer em 19/09. As
+pendências de conteúdo (1, 2, 5, 8, 9) são do documento canônico e aparecem
+na tela como ele as escreve, inclusive no slide `A4` do apêndice.
+
+**Duas diferenças deliberadas em relação ao deck Beamer**, que não são
+divergência com o documento: a identidade visual, que aqui é a do
+`slidev-theme-academic` com a paleta verde própria e lá é a institucional do
+Insper; e a numeração do rodapé, que aqui conta páginas de ponta a ponta e lá
+para em `17 / 17`, porque lá um build não é uma página.
 
 A ressalva de conteúdo da versão anterior — a divergência entre "10
 ambulatoriais" e a lista de oito, transcrita por fidelidade — foi encerrada no
@@ -257,7 +179,7 @@ no edital e no quadro de vagas.
 |---|---|
 | `slides.md` | o deck |
 | `style.css` | estilo sobre o `slidev-theme-academic`: paleta, tipografia, cartões, tabelas, faixas |
-| `components/Rastreio.vue` | faixa de rastreio de seção, no topo |
+| `components/Rastreio.vue` | faixa de rastreio de seção, no topo; `cont` marca o build e `semnum` tira o contador, no apêndice |
 | `components/Fonte.vue` | faixa de fontes, no rodapé |
 | `components/Fig.vue` | figura com altura máxima controlada, sem distorção de proporção |
 | `package.json`, `package-lock.json` | versões exatas: `@slidev/cli` 52.19.1, `slidev-theme-academic` 3.0.1 |
