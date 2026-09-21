@@ -33,8 +33,10 @@ percentuais maior em células metropolitanas do que no interior remoto. A camada
 associativa mostra que, nas células município--curso com atração, o estoque de
 especialistas cadastrados no CNES em março de 2026 é 0,068 log-ponto maior do
 que a trajetória de junho de 2025 previa, resultado que sobrevive à correção de
-multiplicidade, a um placebo municipal e a dois testes de deslocamento dentro
-da região de saúde. O desenho causal identifica o efeito da alocação marginal
+multiplicidade e a um placebo municipal; o teste de deslocamento dentro da
+região de saúde não encontra perda nos vizinhos observados, mas não tem
+capacidade de distinguir expansão líquida de realocação, e essa ameaça fica
+declarada como não testada. O desenho causal identifica o efeito da alocação marginal
 sobre adesão e presença; não identifica o efeito da bolsa, do IVS, do programa
 sobre o estoque municipal, a decisão de se inscrever, a retenção contínua nem
 desfechos assistenciais.
@@ -60,7 +62,8 @@ a vaga de primeira opção sobre adesão administrativa e presença posterior. A
 territorial da atração realizada, que motiva a pergunta. A \textbf{camada
 associativa} (Seção~\ref{sec:cnes}) acompanha o estoque de especialistas
 cadastrados no Cadastro Nacional de Estabelecimentos de Saúde (CNES) e testa se
-o padrão observado sobrevive a placebo, multiplicidade e deslocamento. A
+o padrão observado sobrevive a placebo e multiplicidade, e o que o teste de
+deslocamento consegue e não consegue dizer. A
 Seção~\ref{sec:rotas} registra dois desenhos avaliados e descartados antes do
 adotado, e a Seção~\ref{sec:conclusao} fecha com alcance e limites.
 
@@ -338,6 +341,7 @@ Placebo: município com atração, célula sem & proporcional & 0,0007 & 0,027 &
 Placebo: município com atração, célula sem & nível & 0,063 & 0,309 & 0,837 \\
 Transbordo: vizinho da região com atração & proporcional & $-$0,011 & 0,032 & 0,741 \\
 Oferta líquida por região--curso & proporcional & 0,050 & 0,018 & 0,006 \\
+\quad só as que agregam $>$1 município & proporcional & 0,044 & 0,073 & 0,547 \\
 \bottomrule
 \end{tabular}
 
@@ -350,7 +354,10 @@ placebo e de transbordo, a amostra são as 372 células sem atração; no placeb
 estão em municípios com atração em alguma célula e 174 em municípios sem nenhuma;
 no transbordo, 70 têm outro município do quadro na mesma região de saúde com
 atração no mesmo curso. A oferta líquida soma o estoque por região--curso sobre
-os municípios do quadro, com erros agrupados por região. Erros-padrão e valores
+os municípios do quadro, com erros agrupados por região; das 449 região--curso,
+385 contêm um único município do quadro, e nelas o agregado regional é a
+própria célula, de modo que só as 64 restantes distinguem oferta líquida de
+oferta da célula. Erros-padrão e valores
 $p$ das linhas de placebo, transbordo e oferta líquida usam graus de liberdade
 que contam os efeitos fixos absorvidos. Leitura associativa.
 \end{minipage}
@@ -379,11 +386,19 @@ nível e 0,0007 na escala proporcional; o padrão principal é da célula, não 
 município. \emph{Pré-tendência por curso}: o teste conjunto pré rejeita a 5\%
 nos cursos 2 e 16 na escala proporcional; excluindo-os, como a regra fixada de
 antemão manda, o coeficiente de março de 2026 é 0,081, com $p$ de 0,0007, sobre
-488 células. \emph{Deslocamento}: células sem atração expostas a outro
+488 células. Corrigida a multiplicidade dos dez testes por curso pelo mesmo
+procedimento usado nas demais famílias, só o curso 16 mantém $q$ abaixo de
+0,05 na escala proporcional, com 0,0036, enquanto o curso 2 vai a 0,190; o
+curso 16 é justamente aquele cujo teste conjunto tem posto de covariância
+incompleto. \emph{Deslocamento}: células sem atração expostas a outro
 município da mesma região de saúde com atração no mesmo curso não perdem
-estoque, e a soma do estoque por região--curso também sobe, 0,050 log-ponto com
-$p$ de 0,006 em 173 regiões, o que é incompatível com pura realocação dentro do
-quadro. O limite é declarado: o painel contém apenas os 368 municípios do
+estoque, e a soma do estoque por região--curso sobe 0,050 log-ponto com
+$p$ de 0,006 em 173 regiões. Esse segundo teste, porém, não sustenta
+conclusão sobre realocação: das 449 região--curso, 385 contêm um único
+município do quadro, e nelas o agregado regional é a própria célula; restrito
+às 64 que de fato agregam mais de um município, o coeficiente é 0,044, com $p$
+de 0,547. Deslocamento dentro da região permanece não testado, e não refutado.
+O limite adicional é declarado: o painel contém apenas os 368 municípios do
 quadro, de modo que ``vizinho'' é vizinho dentro do quadro.
 
 Nada nesta seção confirma ou reforça o resultado causal da
@@ -426,8 +441,11 @@ subsequentes afeta onde o especialista de fato aparece.
 O gradiente territorial mostra que a atração realizada é sistematicamente menor
 no interior remoto, e a evidência do CNES é compatível com uma diferença
 proporcional modesta de oferta cadastrada nas células com atração, robusta a
-multiplicidade, placebo municipal e deslocamento dentro do quadro. Essas duas
-camadas são descritiva e associativa, e assim devem ser lidas.
+multiplicidade e a placebo municipal. O deslocamento dentro da região não foi
+refutado: o teste agregado disponível não separa expansão líquida de
+realocação, porque quase toda região--curso do quadro contém um único
+município. Essas duas camadas são descritiva e associativa, e assim devem ser
+lidas.
 
 O desenho causal \textbf{não} identifica o efeito da bolsa nem do adicional
 associado ao IVS, o efeito do programa sobre o estoque municipal, o efeito

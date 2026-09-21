@@ -245,10 +245,49 @@ n_reg, l17 = c7("deslocamento/n_regioes")
 trecho_rg = f"Oferta líquida por região--curso & proporcional & {decimal_br(rg_b, 3)} & {decimal_br(rg_se, 3)} & {p_texto(rg_p)} \\\\"
 for chave, bruto, loc, fmt in [("beta", rg_b, l14, decimal_br(rg_b, 3)), ("se", rg_se, l15, decimal_br(rg_se, 3)), ("p", rg_p, l16, p_texto(rg_p))]:
     registrar(f"CURTO_C7_REGIONAL_{chave}", "Tabela 4 (CNES)", f"oferta liquida regional {chave}", fmt, A5_C7, loc, bruto, "3 casas", trecho_rg)
-trecho_rg_txt = f"também sobe, {decimal_br(rg_b, 3)} log-ponto com $p$ de {p_texto(rg_p)} em {inteiro(n_reg)} regiões"
+trecho_rg_txt = f"sobe {decimal_br(rg_b, 3)} log-ponto com $p$ de {p_texto(rg_p)} em {inteiro(n_reg)} regiões"
 registrar("CURTO_C7_REGIONAL_TXT_beta", "Secao 4", "oferta liquida regional no texto", decimal_br(rg_b, 3), A5_C7, l14, rg_b, "3 casas", trecho_rg_txt)
 registrar("CURTO_C7_REGIONAL_TXT_p", "Secao 4", "p regional no texto", p_texto(rg_p), A5_C7, l16, rg_p, "3 casas", trecho_rg_txt)
 registrar("CURTO_C7_REGIONAL_TXT_n", "Secao 4", "regioes", inteiro(n_reg), A5_C7, l17, n_reg, "inteiro", trecho_rg_txt)
+# C-7c: a subamostra informativa do teste de oferta liquida e as contagens que
+# dizem por que as demais regiao-curso nao informam nada sobre realocacao.
+rgm_b, l22 = c7("deslocamento/decomposicao_oferta_liquida/multi_municipio/proporcional/mar2026_beta")
+rgm_se, l23 = c7("deslocamento/decomposicao_oferta_liquida/multi_municipio/proporcional/mar2026_se_gl_fe")
+rgm_p_, l24 = c7("deslocamento/decomposicao_oferta_liquida/multi_municipio/proporcional/mar2026_p_gl_fe")
+n_multi, l25 = c7("deslocamento/decomposicao_oferta_liquida/n_regiao_curso_multi_municipio")
+n_uni, l26 = c7("deslocamento/decomposicao_oferta_liquida/n_regiao_curso_um_municipio")
+n_rc, l27 = c7("deslocamento/n_regiao_curso")
+if int(n_multi) + int(n_uni) != int(n_rc):
+    raise SystemExit("C-7c: as duas subamostras deveriam somar o total de regiao-curso")
+trecho_rgm = (f"\\quad só as que agregam $>$1 município & proporcional & {decimal_br(rgm_b, 3)} & "
+              f"{decimal_br(rgm_se, 3)} & {p_texto(rgm_p_)} \\\\")
+for chave, bruto, loc, fmt in [("beta", rgm_b, l22, decimal_br(rgm_b, 3)), ("se", rgm_se, l23, decimal_br(rgm_se, 3)), ("p", rgm_p_, l24, p_texto(rgm_p_))]:
+    registrar(f"CURTO_C7_REGIONAL_MULTI_{chave}", "Tabela 4 (CNES)", f"oferta liquida, so multi-municipio: {chave}", fmt, A5_C7, loc, bruto, "3 casas", trecho_rgm)
+trecho_rgm_nota = (f"das {inteiro(n_rc)} região--curso, {inteiro(n_uni)} contêm um único município do quadro, e nelas o agregado "
+                   f"regional é a própria célula, de modo que só as {inteiro(n_multi)} restantes distinguem oferta líquida de oferta da célula")
+for chave, bruto, loc in [("TOTAL", n_rc, l27), ("UNI", n_uni, l26), ("MULTI", n_multi, l25)]:
+    registrar(f"CURTO_C7_REGIONAL_NOTA_{chave}", "Tabela 4 (nota)", f"regiao-curso {chave}", inteiro(bruto), A5_C7, loc, bruto, "inteiro", trecho_rgm_nota)
+trecho_rgm_txt = (f"das {inteiro(n_rc)} região--curso, {inteiro(n_uni)} contêm um único município do quadro, e nelas o agregado regional "
+                  f"é a própria célula; restrito às {inteiro(n_multi)} que de fato agregam mais de um município, o coeficiente é "
+                  f"{decimal_br(rgm_b, 3)}, com $p$ de {p_texto(rgm_p_)}")
+registrar("CURTO_C7_REGIONAL_MULTI_TXT_beta", "Secao 4", "oferta liquida multi-municipio no texto", decimal_br(rgm_b, 3), A5_C7, l22, rgm_b, "3 casas", trecho_rgm_txt)
+registrar("CURTO_C7_REGIONAL_MULTI_TXT_p", "Secao 4", "p multi-municipio no texto", p_texto(rgm_p_), A5_C7, l24, rgm_p_, "3 casas", trecho_rgm_txt)
+registrar("CURTO_C7_REGIONAL_MULTI_TXT_n", "Secao 4", "regiao-curso que agregam", inteiro(n_multi), A5_C7, l25, n_multi, "inteiro", trecho_rgm_txt)
+
+# C-7b: multiplicidade na triagem de pre-tendencia por curso.
+q16, l28 = c7("pretendencia_por_curso/multiplicidade/q_por_curso/proporcional/16")
+q2, l29 = c7("pretendencia_por_curso/multiplicidade/q_por_curso/proporcional/2")
+alpha_pre, l30 = c7("pretendencia_por_curso/multiplicidade/alpha")
+cursos_q, l31 = c7("pretendencia_por_curso/multiplicidade/cursos_q_lt_0_05_proporcional")
+if cursos_q != [16]:
+    raise SystemExit(f"C-7b: o artigo curto cita so o curso 16 sobrevivendo ao q; o artefato traz {cursos_q}")
+trecho_q = (f"só o curso {cursos_q[0]} mantém $q$ abaixo de {decimal_br(alpha_pre, 2)} na escala proporcional, com "
+            f"{decimal_br(q16, 4)}, enquanto o curso 2 vai a {decimal_br(q2, 3)}")
+registrar("CURTO_C7_Q_CURSO16", "Secao 4", "q BH do curso 16", decimal_br(q16, 4), A5_C7, l28, q16, "4 casas", trecho_q)
+registrar("CURTO_C7_Q_CURSO2", "Secao 4", "q BH do curso 2", decimal_br(q2, 3), A5_C7, l29, q2, "3 casas", trecho_q)
+registrar("CURTO_C7_Q_ALPHA", "Secao 4", "alfa do protocolo", decimal_br(alpha_pre, 2), A5_C7, l30, alpha_pre, "2 casas", trecho_q)
+registrar("CURTO_C7_Q_CURSOS", "Secao 4", "cursos com q<alfa", str(cursos_q[0]), A5_C7, l31, cursos_q, "lista", trecho_q)
+
 cursos_rej, l18 = c7("pretendencia_por_curso/cursos_pre_p_lt_0_05_proporcional")
 if len(cursos_rej) != 2:
     raise SystemExit(f"C-7: o texto do artigo curto cita dois cursos rejeitados; o artefato traz {cursos_rej}")

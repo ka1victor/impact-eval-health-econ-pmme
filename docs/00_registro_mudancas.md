@@ -8,6 +8,29 @@
 
 ---
 
+## 21/09/2026 — Revisão da PR 3 depois do merge: itens A-1b, C-7b e C-7c
+
+Nenhum arquivo de documentação criado, movido ou removido. Entrada aberta porque
+um artefato de saída novo passa a ser referenciado pela documentação corrente:
+`output/tema_trabalho/A5_tabela_15_singletons_efeito_fixo.csv`.
+
+Revisão do diff já integrado `198d401..79b6a6f`, a pedido do autor. Seções
+acrescentadas dentro de documentos que permaneceram no mesmo lugar:
+[`36_backlog_pos_auditoria.md`](06_execucao/36_backlog_pos_auditoria.md) ganha
+«Revisão da PR 3 depois do merge» com os itens A-1b, C-7b e C-7c, e a seção C-9
+ganha aviso de cifra vencida;
+[`14_erratas_artefatos_congelados.md`](auditorias/14_erratas_artefatos_congelados.md)
+ganha E-7 (a emenda 2 moveu também a especificação `full`), E-8 (níveis
+singleton inflam o R² e não estão no `n`) e nota de ambiente da reexecução.
+O red team [`09_red_team_atracao_provimento.md`](auditorias/09_red_team_atracao_provimento.md)
+é regerado por `07_red_team_sintese.py` e passa a dizer que o teste de oferta
+líquida regional não sustenta o veredito anterior. Os dois artigos perdem a
+afirmação de que o resultado é «incompatível com pura realocação».
+
+Amostra, desfecho, estimador e a manchete de A5 (`0,0684`; `0,50`) não mudam.
+
+---
+
 ## 19/09/2026 — Banca 1: deck Beamer reconstruído na estrutura de 17 slides
 
 A pedido do autor, os frames de

@@ -129,6 +129,10 @@ MACRO_SEM_REGIAO = "SEM_REGIAO_SAUDE"
 VARIANTE_UF_FE_PRIMARIA = "macro_regiao"
 VARIANTES_UF_FE = ("balde_unico", "macro_regiao", "sem_colapso")
 TABELA_SENS_UF_FE = OUT_DIR / f"{PREFIX}_tabela_11_sensibilidade_colapso_uf.csv"
+TABELA_SINGLETONS = OUT_DIR / f"{PREFIX}_tabela_15_singletons_efeito_fixo.csv"
+# Desfechos de corte transversal cobertos pelas sensibilidades A-1 e A-1b.
+DESFECHOS_CROSS = ("delta_estoque_6m", "estoque_6m", "cobertura_6m", "entradas_6m", "presentes_baseline_6m")
+FE_CROSS = ("uf_fe", "cod_curso")
 
 
 def colapsar_uf_fe(df: pd.DataFrame, small_ufs: set, variante: str) -> pd.Series:
@@ -152,6 +156,39 @@ def colapsar_uf_fe(df: pd.DataFrame, small_ufs: set, variante: str) -> pd.Series
     macro = df["macro_regiao_saude"].astype("string").fillna("").str.strip()
     macro = macro.where(macro.ne(""), MACRO_SEM_REGIAO)
     return uf.where(~uf.isin(small_ufs), "MACRO_" + macro).astype(object)
+
+
+def niveis_singleton(df: pd.DataFrame, colunas: tuple[str, ...] = FE_CROSS) -> dict[str, list[str]]:
+    """Niveis de efeito fixo com uma unica celula na amostra estimada (A-1b).
+
+    Um nivel singleton e ajustado exatamente pelo proprio dummy: a celula nao
+    contribui variacao identificadora, mas continua contada em `n` e no R2
+    dentro da amostra. O limiar de colapso de `colapsar_uf_fe` conta municipios
+    no painel de 1.184 celulas, nao celulas na amostra estimada, de modo que
+    uma UF pode sobreviver ao colapso e ainda assim ficar singleton aqui.
+    """
+    return {c: sorted(str(v) for v, n in df[c].astype(str).value_counts().items() if n == 1) for c in colunas}
+
+
+def remover_singletons(df: pd.DataFrame, colunas: tuple[str, ...] = FE_CROSS) -> tuple[pd.DataFrame, dict[str, list[str]]]:
+    """Remove as celulas em nivel singleton, iterando ate o ponto fixo.
+
+    Convencao de `reghdfe`/`fixest`. Aqui a remocao e sensibilidade declarada
+    (`A5_tabela_15`), nao a especificacao primaria: o alvo congelado de A-1
+    permanece com os singletons mantidos.
+    """
+    atual = df
+    removidos: dict[str, list[str]] = {c: [] for c in colunas}
+    while True:
+        sing = niveis_singleton(atual, colunas)
+        if not any(sing.values()):
+            return atual, {c: sorted(set(v)) for c, v in removidos.items()}
+        mascara = pd.Series(False, index=atual.index)
+        for c, niveis in sing.items():
+            if niveis:
+                removidos[c].extend(niveis)
+                mascara |= atual[c].astype(str).isin(niveis)
+        atual = atual[~mascara]
 
 
 def sha256(path: Path) -> str:
@@ -748,43 +785,107 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
     # Portao numerico da emenda: delta_minimal por variante. As demais linhas
     # tornam auditavel a consequencia mecanica da definicao de FE nos outros
     # modelos secundarios de corte transversal; nenhuma entra no artigo.
-    modelos_sens_uf = [
-        ("delta_estoque_6m_minimal", y_delta),
-        ("estoque_6m_minimal", y_estoque_6m),
-        ("cobertura_6m_minimal", y_cobertura_6m),
-        ("entradas_6m_minimal", y_entradas),
-        ("presentes_baseline_6m_minimal", y_presentes),
-    ]
+    # A-1b: a emenda 2 publicou so os cinco `minimal`, mas a definicao de UF
+    # move tambem a especificacao `full`. As linhas `full` tornam isso
+    # auditavel; nenhuma delas entra no artigo.
+    def y_de(frame: pd.DataFrame, desfecho: str) -> pd.Series:
+        serie = frame[desfecho]
+        return serie.fillna(0) if desfecho in ("entradas_6m", "presentes_baseline_6m") else serie
+
+    NOTA_VARIANTE = {
+        "balde_unico": "implementacao anterior a A-1: UFs pequenas num unico nivel RESTO",
+        "macro_regiao": "protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado",
+        "sem_colapso": "27 UFs, sem colapso",
+    }
     sens_uf_rows = []
     for variante in VARIANTES_UF_FE:
         df_var = analysis.copy()
         df_var["uf_fe"] = colapsar_uf_fe(df_var, small_ufs, variante)
-        X_var = build_X(df_var, "minimal")
         n_niveis = int(df_var["uf_fe"].nunique())
-        for modelo, y_var in modelos_sens_uf:
-            res_var = fit_ols(y_var, X_var, groups)
-            sens_uf_rows.append({
-                "modelo": modelo,
-                "variante_uf_fe": variante,
-                "primaria": variante == VARIANTE_UF_FE_PRIMARIA,
-                "termo": "atracao_muni",
-                "coef": float(res_var.params["atracao_muni"]),
-                "se_cluster": float(res_var.bse["atracao_muni"]),
-                "p_valor": float(res_var.pvalues["atracao_muni"]),
-                "n": int(len(y_var)),
-                "n_clusters": int(groups.nunique()),
-                "n_niveis_uf_fe": n_niveis,
-                "ufs_colapsadas": ";".join(sorted(small_ufs)),
-                "nota": {
-                    "balde_unico": "implementacao anterior a A-1: UFs pequenas num unico nivel RESTO",
-                    "macro_regiao": "protocolo A3 e C1: UF pequena -> MACRO_<macrorregiao>; sem macrorregiao -> nivel residual rotulado",
-                    "sem_colapso": "27 UFs, sem colapso",
-                }[variante],
-            })
+        sing_var = niveis_singleton(df_var, ("uf_fe",))["uf_fe"]
+        for espec in ("minimal", "full"):
+            X_var = build_X(df_var, espec)
+            for desfecho in DESFECHOS_CROSS:
+                res_var = fit_ols(y_de(df_var, desfecho), X_var, groups)
+                sens_uf_rows.append({
+                    "modelo": f"{desfecho}_{espec}",
+                    "espec": espec,
+                    "variante_uf_fe": variante,
+                    "primaria": variante == VARIANTE_UF_FE_PRIMARIA,
+                    "termo": "atracao_muni",
+                    "coef": float(res_var.params["atracao_muni"]),
+                    "se_cluster": float(res_var.bse["atracao_muni"]),
+                    "p_valor": float(res_var.pvalues["atracao_muni"]),
+                    "n": int(len(df_var)),
+                    "n_clusters": int(groups.nunique()),
+                    "n_niveis_uf_fe": n_niveis,
+                    "n_niveis_singleton_uf_fe": len(sing_var),
+                    "niveis_singleton_uf_fe": ";".join(sing_var),
+                    "ufs_colapsadas": ";".join(sorted(small_ufs)),
+                    "nota": NOTA_VARIANTE[variante],
+                })
     tab_sens_uf = pd.DataFrame(sens_uf_rows)
     _sel = tab_sens_uf[tab_sens_uf["modelo"] == "delta_estoque_6m_minimal"].set_index("variante_uf_fe")
     tmp = TABELA_SENS_UF_FE.with_suffix(".csv.tmp")
     tab_sens_uf.to_csv(tmp,index=False); tmp.replace(TABELA_SENS_UF_FE)
+
+    # === A-1b: efeitos fixos singleton na amostra estimada ===
+    # Sob a variante primaria, `uf_fe` tem niveis com uma unica celula. O dummy
+    # do nivel ajusta essa celula exatamente: ela nao identifica nada, mas
+    # continua contada em `n` e no R2 dentro da amostra. A remocao entra aqui
+    # como sensibilidade declarada; a especificacao primaria nao muda.
+    singleton_niveis = niveis_singleton(analysis, FE_CROSS)
+
+    def _plural_sing(n: int) -> str:
+        return f"{n} células" if n != 1 else "1 célula"
+
+    analysis_sem_sing, singleton_removidos = remover_singletons(analysis, FE_CROSS)
+    n_removidas = int(len(analysis) - len(analysis_sem_sing))
+    # Peso das celulas singleton na soma de quadrados de cada desfecho: e o que
+    # explica o salto do R2 dentro da amostra sem ganho de ajuste real.
+    peso_ss = {}
+    for desfecho in DESFECHOS_CROSS:
+        serie = y_de(analysis, desfecho).astype(float)
+        sstot = float(((serie - serie.mean()) ** 2).sum())
+        mask_sing = ~analysis.index.isin(analysis_sem_sing.index)
+        ss_sing = float(((serie[mask_sing] - serie.mean()) ** 2).sum())
+        peso_ss[desfecho] = float(ss_sing / sstot) if sstot > 0 else float("nan")
+    sing_rows = []
+    res_sem_sing = {}
+    for espec in ("minimal", "full"):
+        for rotulo, frame in (("mantidos", analysis), ("removidos", analysis_sem_sing)):
+            X_s = build_X(frame, espec)
+            g_s = frame["co_ibge_6d"]
+            for desfecho in DESFECHOS_CROSS:
+                y_s = y_de(frame, desfecho)
+                res_s = fit_ols(y_s, X_s, g_s)
+                if rotulo == "removidos":
+                    res_sem_sing[(espec, desfecho)] = (res_s, X_s, y_s)
+                sing_rows.append({
+                    "modelo": f"{desfecho}_{espec}",
+                    "espec": espec,
+                    "variante_uf_fe": VARIANTE_UF_FE_PRIMARIA,
+                    "singletons": rotulo,
+                    "primaria": rotulo == "mantidos",
+                    "termo": "atracao_muni",
+                    "coef": float(res_s.params["atracao_muni"]),
+                    "se_cluster": float(res_s.bse["atracao_muni"]),
+                    "p_valor": float(res_s.pvalues["atracao_muni"]),
+                    "r2": float(res_s.rsquared),
+                    "n": int(len(frame)),
+                    "n_clusters": int(g_s.nunique()),
+                    "n_niveis_uf_fe": int(frame["uf_fe"].nunique()),
+                    "n_celulas_removidas": 0 if rotulo == "mantidos" else n_removidas,
+                    "niveis_singleton_uf_fe": ";".join(singleton_niveis["uf_fe"]),
+                    "niveis_singleton_cod_curso": ";".join(singleton_niveis["cod_curso"]),
+                    "peso_singleton_na_soma_de_quadrados": peso_ss[desfecho],
+                    "nota": ("especificacao primaria de A-1: niveis singleton mantidos, n nominal"
+                             if rotulo == "mantidos" else
+                             "sensibilidade A-1b: niveis singleton removidos ate o ponto fixo (convencao reghdfe/fixest), n efetivo"),
+                })
+    tab_sing = pd.DataFrame(sing_rows)
+    tmp = TABELA_SINGLETONS.with_suffix(".csv.tmp")
+    tab_sing.to_csv(tmp,index=False); tmp.replace(TABELA_SINGLETONS)
 
     # Sensibilidade de janela antiga (ALT_BASELINE -> ALT_FOLLOW): a janela
     # setembro/2025 -> marco/2026 e parcialmente tratada e fica so como
@@ -937,6 +1038,21 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
             rmse = np.sqrt(np.mean((y_test - pred)**2))
             r2s.append(r2); rmses.append(rmse)
         except: pass
+    # A-1b: o R2 dentro da amostra e inflado pelos niveis singleton, que sao
+    # ajustados exatamente. As colunas `*_sem_singletons` dao a leitura sem
+    # eles, com o `n` efetivo, para que o contraste dentro/fora da amostra nao
+    # seja lido como ganho de ajuste.
+    def ajuste_sem_singletons(desfecho: str) -> dict[str, float]:
+        res_s, X_s, y_s = res_sem_sing[("minimal", desfecho)]
+        resid = y_s.astype(float).to_numpy() - res_s.predict(X_s)
+        return {
+            "n_efetivo": int(len(y_s)),
+            "n_celulas_singleton": n_removidas,
+            "peso_singleton_na_soma_de_quadrados": peso_ss[desfecho],
+            "r2_insample_sem_singletons": float(res_s.rsquared),
+            "rmse_insample_sem_singletons": float(np.sqrt(np.mean(resid**2))),
+        }
+
     pred_df = pd.DataFrame([{
         "modelo":"OLS_delta_minimal_atracao_FE",
         "r2_media_out": float(np.mean(r2s)) if r2s else np.nan,
@@ -947,6 +1063,7 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
         "rmse_insample": float(rmse_in),
         "n_splits":5,
         "grupos":"municipio",
+        **ajuste_sem_singletons("delta_estoque_6m"),
         "nota":"apendice preditivo; variacao do estoque 202506->202603 na amostra confirmatoria",
     }])
     # add segunda linha para estoque_6m
@@ -985,6 +1102,7 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
         "rmse_insample": float(rmse_in_stock),
         "n_splits":5,
         "grupos":"municipio",
+        **ajuste_sem_singletons("estoque_6m"),
         "nota":"estoque_6m 202603",
     }])], ignore_index=True)
     tmp = TABELA_PRED.with_suffix(".csv.tmp")
@@ -1693,6 +1811,34 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
                 "proprio rotulado. O estudo de evento nao usa uf_fe (absorve UF-mes com "
                 "as 27 UFs) e nao e afetado."
             ),
+            "nota_espec_full": (
+                "A emenda 2 publicou apenas os cinco modelos minimal. A definicao de "
+                "uf_fe move tambem a especificacao full: A5_tabela_11 passa a trazer as "
+                "duas especificacoes por variante (item A-1b)."
+            ),
+        },
+        "singletons_efeito_fixo": {
+            "item": "A-1b",
+            "definicao": "nivel de efeito fixo com uma unica celula na amostra estimada; o dummy do nivel ajusta a celula exatamente",
+            "colunas_verificadas": list(FE_CROSS),
+            "niveis_singleton": singleton_niveis,
+            "niveis_removidos_ate_ponto_fixo": singleton_removidos,
+            "n_celulas_removidas": n_removidas,
+            "n_nominal": int(len(analysis)),
+            "n_efetivo": int(len(analysis_sem_sing)),
+            "peso_na_soma_de_quadrados_por_desfecho": peso_ss,
+            "causa": (
+                "o limiar de colapso de colapsar_uf_fe conta municipios no painel de "
+                "1.184 celulas, nao celulas na amostra confirmatoria de 587; uma UF pode "
+                "sobreviver ao colapso e ainda assim ficar singleton na amostra estimada, "
+                "e o colapso pode mapear uma UF para um nivel que nenhuma outra UF ocupa"
+            ),
+            "tratamento": (
+                "diagnostico publicado e sensibilidade declarada em A5_tabela_15; a "
+                "especificacao primaria de A-1 continua com os singletons mantidos, para "
+                "nao reescolher estimador depois de observar resultado"
+            ),
+            "sensibilidade": tab_sing.to_dict(orient="records"),
         },
         "leave_one_curso_evento": loo_evento.to_dict(orient="records"),
         "sensibilidade_mes_referencia": sens_referencia.to_dict(orient="records"),
@@ -1880,7 +2026,7 @@ Estoque médio por célula: {float(traj.loc[traj["competencia"]=="202406","espec
 
 ## 7. Influência e robustez dos modelos secundários
 
-No `delta_minimal` (variante primária de efeito fixo), a exclusão sucessiva de cada UF e de cada curso move o coeficiente de atração dentro de {loo_range}; leave-one-município: base {infl_summary.get("base",0):.3f}, faixa {infl_summary.get("atracao_delta_min",0):.3f} a {infl_summary.get("max",0):.3f}, com os três municípios mais influentes {", ".join([f"{r['co_ibge_6d']} (Δ {r['delta']:.2f}, DFBETA {r['dfbeta']:.2f})" for r in estimativas["influencia"]["top_influentes"][:3]])}. Ver `A5_tabela_04_leave_one_out.csv` e `A5_tabela_05_influencia_municipal.csv`. Validação preditiva por município (GroupKFold, 5 dobras): `delta_minimal` com R² fora da amostra {pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["r2_media_out"].values[0]:.3f} contra {pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["r2_insample"].values[0]:.3f} dentro; `estoque_6m_minimal` {pred_df[pred_df["modelo"]=="OLS_estoque_6m_minimal"]["r2_media_out"].values[0]:.3f} contra {pred_df[pred_df["modelo"]=="OLS_estoque_6m_minimal"]["r2_insample"].values[0]:.3f}. Ver `A5_tabela_06_validacao_preditiva.csv`.
+No `delta_minimal` (variante primária de efeito fixo), a exclusão sucessiva de cada UF e de cada curso move o coeficiente de atração dentro de {loo_range}; leave-one-município: base {infl_summary.get("base",0):.3f}, faixa {infl_summary.get("atracao_delta_min",0):.3f} a {infl_summary.get("max",0):.3f}, com os três municípios mais influentes {", ".join([f"{r['co_ibge_6d']} (Δ {r['delta']:.2f}, DFBETA {r['dfbeta']:.2f})" for r in estimativas["influencia"]["top_influentes"][:3]])}. Ver `A5_tabela_04_leave_one_out.csv` e `A5_tabela_05_influencia_municipal.csv`. Validação preditiva por município (GroupKFold, 5 dobras): `delta_minimal` com R² fora da amostra {pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["r2_media_out"].values[0]:.3f} contra {pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["r2_insample"].values[0]:.3f} dentro; `estoque_6m_minimal` {pred_df[pred_df["modelo"]=="OLS_estoque_6m_minimal"]["r2_media_out"].values[0]:.3f} contra {pred_df[pred_df["modelo"]=="OLS_estoque_6m_minimal"]["r2_insample"].values[0]:.3f}. O R² dentro da amostra não deve ser lido como ajuste: {_plural_sing(n_removidas)} ocupam níveis singleton de efeito fixo ({"; ".join(singleton_niveis["uf_fe"]) or "nenhum"}), que o próprio dummy ajusta exatamente e que respondem por {peso_ss["estoque_6m"]*100:.1f}% da soma de quadrados de `estoque_6m`. Sem elas, o R² dentro da amostra é {float(pred_df[pred_df["modelo"]=="OLS_estoque_6m_minimal"]["r2_insample_sem_singletons"].values[0]):.3f} para `estoque_6m_minimal` e {float(pred_df[pred_df["modelo"]=="OLS_delta_minimal_atracao_FE"]["r2_insample_sem_singletons"].values[0]):.3f} para `delta_minimal`, sobre n efetivo {int(len(analysis_sem_sing))} (item A-1b). Ver `A5_tabela_06_validacao_preditiva.csv` e `A5_tabela_15_singletons_efeito_fixo.csv`.
 
 ## 8. Multiplicidade
 
@@ -1890,7 +2036,7 @@ Nenhuma correção de multiplicidade existia em A5 até 16/09/2026 (item B-5). A
 
 Na amostra confirmatória, a variação junho/2025–março/2026 tem mediana {analysis['delta_estoque_6m'].median():.1f} e máximo {analysis['delta_estoque_6m'].max():.0f}. Entre células com atração, a média é {distribution_summary['1']['media']:.2f}, a mediana {distribution_summary['1']['mediana']:.1f} e {distribution_summary['1']['proporcao_aumento']:.1%} apresentam aumento; sem atração, os valores são {distribution_summary['0']['media']:.2f}, {distribution_summary['0']['mediana']:.1f} e {distribution_summary['0']['proporcao_aumento']:.1%}.
 
-As regressões de nível, cobertura, novos vínculos mensais após washout, presença da coorte e validação preditiva são diagnósticos secundários. Nelas, o efeito fixo de UF colapsa as unidades com menos de cinco municípios ({", ".join(sorted(small_ufs))}) na macrorregião de saúde, com nível residual rotulado para município sem macrorregião publicada — {int(analysis["uf_fe"].nunique())} níveis na amostra confirmatória, a mesma definição do C1 em A4 (item A-1). O balde único `RESTO` anterior inflava o coeficiente de `delta_minimal` de {float(_sel.loc["macro_regiao", "coef"]):.4f} para {float(_sel.loc["balde_unico", "coef"]):.4f}; as três variantes estão em `A5_tabela_11_sensibilidade_colapso_uf.csv`. O estudo de evento absorve UF–mês com as 27 unidades e não passa por esse colapso. `n_entradas_6m` significa novo vínculo observado no mês após seis meses de ausência, e não entradas acumuladas ao longo de seis meses.
+As regressões de nível, cobertura, novos vínculos mensais após washout, presença da coorte e validação preditiva são diagnósticos secundários. Nelas, o efeito fixo de UF colapsa as unidades com menos de cinco municípios ({", ".join(sorted(small_ufs))}) na macrorregião de saúde, com nível residual rotulado para município sem macrorregião publicada — {int(analysis["uf_fe"].nunique())} níveis na amostra confirmatória, a mesma definição do C1 em A4 (item A-1). O balde único `RESTO` anterior inflava o coeficiente de `delta_minimal` de {float(_sel.loc["macro_regiao", "coef"]):.4f} para {float(_sel.loc["balde_unico", "coef"]):.4f}; as três variantes estão em `A5_tabela_11_sensibilidade_colapso_uf.csv`, agora também para a especificação `full`, que a emenda 2 não havia publicado e que a definição de UF move junto (item A-1b). O limiar do colapso conta municípios no painel de 1.184 células, não células na amostra estimada de {int(len(analysis))}: por isso sobram {_plural_sing(n_removidas)} em nível singleton, que não identificam nada e cuja remoção está publicada como sensibilidade em `A5_tabela_15_singletons_efeito_fixo.csv`; a especificação primária mantém os singletons, sem reescolha de estimador depois do resultado. O estudo de evento absorve UF–mês com as 27 unidades e não passa por esse colapso. `n_entradas_6m` significa novo vínculo observado no mês após seis meses de ausência, e não entradas acumuladas ao longo de seis meses.
 
 ## 10. Limites
 

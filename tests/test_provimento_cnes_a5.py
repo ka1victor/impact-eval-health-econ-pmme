@@ -436,6 +436,96 @@ class ProvimentoCnesA5Test(unittest.TestCase):
         for tabela in ["A5_tabela_12_placebo_municipio_com_atracao.csv", "A5_tabela_13_pretendencia_por_curso.csv", "A5_tabela_14_deslocamento_regional.csv"]:
             self.assertTrue((OUT / tabela).exists(), tabela)
 
+    # ---- Revisao da PR 3 depois do merge (21/09/2026) ----
+
+    def test_a1b_tabela_11_cobre_as_duas_especificacoes(self) -> None:
+        # A emenda 2 publicou so os cinco `minimal`, mas a definicao de uf_fe
+        # move tambem a `full`: sem as linhas `full` a consequencia da decisao
+        # de A-1 nao fica auditavel no artefato. Ver errata E-7.
+        tab = pd.read_csv(OUT / "A5_tabela_11_sensibilidade_colapso_uf.csv")
+        self.assertEqual(sorted(tab["espec"].unique()), ["full", "minimal"])
+        self.assertEqual(len(tab), 30, "3 variantes x 2 especificacoes x 5 desfechos")
+        for espec in ("minimal", "full"):
+            for variante in ("balde_unico", "macro_regiao", "sem_colapso"):
+                sel = tab[(tab["espec"] == espec) & (tab["variante_uf_fe"] == variante)]
+                self.assertEqual(len(sel), 5, f"{espec}/{variante}")
+        # A cifra que a errata E-7 declara: o `full` saiu de p=0,791 para p=0,094.
+        full = tab[(tab["modelo"] == "estoque_6m_full")].set_index("variante_uf_fe")
+        self.assertEqual(round(float(full.loc["balde_unico", "p_valor"]), 3), 0.791)
+        self.assertEqual(round(float(full.loc["macro_regiao", "p_valor"]), 3), 0.094)
+
+    def test_a1b_singletons_nao_movem_coeficiente_mas_inflam_r2(self) -> None:
+        # Nivel de efeito fixo com uma unica celula e ajustado exatamente: nao
+        # identifica nada, mas conta em `n` e no R2. Ver errata E-8.
+        tab = pd.read_csv(OUT / "A5_tabela_15_singletons_efeito_fixo.csv")
+        self.assertEqual(sorted(tab["singletons"].unique()), ["mantidos", "removidos"])
+        mant = tab[tab["singletons"] == "mantidos"].set_index(["modelo"])
+        remo = tab[tab["singletons"] == "removidos"].set_index(["modelo"])
+        self.assertEqual(sorted(mant.index), sorted(remo.index))
+        for modelo in mant.index:
+            self.assertAlmostEqual(float(mant.loc[modelo, "coef"]), float(remo.loc[modelo, "coef"]), places=4,
+                                   msg=f"{modelo}: remover singleton nao pode mover o coeficiente")
+        # O que muda e o ajuste, nao a estimativa.
+        self.assertGreater(float(mant.loc["estoque_6m_minimal", "r2"]), 0.8)
+        self.assertLess(float(remo.loc["estoque_6m_minimal", "r2"]), 0.3)
+        self.assertEqual(int(mant.loc["estoque_6m_minimal", "n"]) - int(remo.loc["estoque_6m_minimal", "n"]),
+                         int(remo.loc["estoque_6m_minimal", "n_celulas_removidas"]))
+        # A especificacao primaria continua sendo a que mantem os singletons.
+        self.assertTrue(bool(mant.loc["estoque_6m_minimal", "primaria"]))
+        self.assertFalse(bool(remo.loc["estoque_6m_minimal", "primaria"]))
+
+    def test_a1b_json_e_tabela_06_declaram_o_n_efetivo(self) -> None:
+        bloco = self.est["singletons_efeito_fixo"]
+        self.assertEqual(bloco["n_nominal"] - bloco["n_efetivo"], bloco["n_celulas_removidas"])
+        self.assertGreater(bloco["n_celulas_removidas"], 0)
+        # Brasilia domina a soma de quadrados do estoque; e por isso que o R2 salta.
+        self.assertGreater(bloco["peso_na_soma_de_quadrados_por_desfecho"]["estoque_6m"], 0.8)
+        pred = pd.read_csv(OUT / "A5_tabela_06_validacao_preditiva.csv").set_index("modelo")
+        for col in ("n_efetivo", "r2_insample_sem_singletons", "rmse_insample_sem_singletons"):
+            self.assertIn(col, pred.columns)
+        self.assertLess(float(pred.loc["OLS_estoque_6m_minimal", "r2_insample_sem_singletons"]),
+                        float(pred.loc["OLS_estoque_6m_minimal", "r2_insample"]))
+        self.assertIn("singleton", self.report)
+
+    def test_c7b_multiplicidade_na_triagem_de_pretendencia(self) -> None:
+        # O item B-5 declarou duas familias de FDR e deixou de fora a triagem
+        # por curso, que e justamente a que governa a regra de exclusao.
+        c7 = json.loads((OUT / "A5_ameacas_c7.json").read_text(encoding="utf-8"))
+        mult = c7["pretendencia_por_curso"]["multiplicidade"]
+        self.assertEqual(mult["alpha"], 0.05)
+        q_prop = mult["q_por_curso"]["proporcional"]
+        self.assertEqual(len(q_prop), 10)
+        # O q nunca pode ser menor que o p do mesmo curso.
+        por_curso = c7["pretendencia_por_curso"]["por_curso"]
+        for curso, q in q_prop.items():
+            self.assertGreaterEqual(q + 1e-12, por_curso[curso]["proporcional"]["pre_p_gl_fe"], curso)
+        # A regra de exclusao continua sobre o p cru, e o q e apenas leitura.
+        self.assertEqual(c7["pretendencia_por_curso"]["cursos_pre_p_lt_0_05_proporcional"], [2, 16])
+        self.assertEqual(mult["cursos_q_lt_0_05_proporcional"], [16])
+        tab = pd.read_csv(OUT / "A5_tabela_13_pretendencia_por_curso.csv")
+        self.assertIn("q_fdr_bh_pre", tab.columns)
+
+    def test_c7c_oferta_liquida_regional_decomposta(self) -> None:
+        # O teste (b) so distingue oferta liquida de oferta da celula onde a
+        # regiao-curso agrega mais de um municipio do painel.
+        c7 = json.loads((OUT / "A5_ameacas_c7.json").read_text(encoding="utf-8"))
+        ds = c7["deslocamento"]
+        dec = ds["decomposicao_oferta_liquida"]
+        self.assertEqual(dec["n_regiao_curso_multi_municipio"] + dec["n_regiao_curso_um_municipio"],
+                         ds["n_regiao_curso"])
+        self.assertEqual(dec["multi_municipio"]["proporcional"]["n_unidades"],
+                         dec["n_regiao_curso_multi_municipio"])
+        # A maior parte das regiao-curso nao agrega nada, e e de la que vem o p.
+        self.assertGreater(dec["n_regiao_curso_um_municipio"], dec["n_regiao_curso_multi_municipio"])
+        self.assertLess(ds["oferta_liquida_regional"]["proporcional"]["mar2026_p_gl_fe"], 0.05)
+        self.assertGreater(dec["multi_municipio"]["proporcional"]["mar2026_p_gl_fe"], 0.05)
+        # A configuracao em que realocacao e observavel e ainda mais rara.
+        self.assertLessEqual(ds["n_regiao_curso_com_municipio_atraido_e_nao_atraido"],
+                             dec["n_regiao_curso_multi_municipio"])
+        tab = pd.read_csv(OUT / "A5_tabela_14_deslocamento_regional.csv")
+        self.assertEqual(sorted(tab["subamostra"].dropna().unique()),
+                         ["agregam_mais_de_um_municipio", "todas", "um_unico_municipio"])
+
 
 if __name__ == "__main__":
     unittest.main()

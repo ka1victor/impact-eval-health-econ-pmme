@@ -1,6 +1,6 @@
 {
   "protocolo": "A6_MANIFESTO_REPRODUCAO",
-  "data_referencia": "2026-09-16",
+  "data_referencia": "2026-09-21",
   "gerador": "scripts/tema_trabalho/07_red_team_sintese.py",
   "fila": "A1->A6: núcleo associativo; upgrade causal bloqueado",
   "ambiente_exigido": {
@@ -43,10 +43,10 @@
   ],
   "comandos_derivados_de": "run_all.py (lista STEPS)",
   "versoes": {
-    "python": "3.13.12 (main, Feb  4 2026, 09:25:39) [GCC 13.3.0]",
-    "platform": "Linux-6.18.44-fc-v33-x86_64-with-glibc2.39",
-    "pandas": "3.0.5",
-    "numpy": "2.5.2",
+    "python": "3.11.15 (main, Mar  3 2026, 09:26:23) [GCC 13.3.0]",
+    "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39",
+    "pandas": "3.0.6",
+    "numpy": "2.4.6",
     "statsmodels": "0.15.0"
   },
   "hashes_entradas_e_artefatos": {
@@ -130,20 +130,20 @@
       "presente": true
     },
     "output/tema_trabalho/A5_estimativas_provimento.json": {
-      "sha256": "5bd9ab1379527e158a584bcf5b52a9f84ca646d8a7ef5fad73edf58eeca090f9",
-      "bytes": 70631,
+      "sha256": "62cb645ec9e124e8340613ae9a304517579eac83cf0a69e8420295f28575ab07",
+      "bytes": 99006,
       "papel": "estimativas de A5",
       "presente": true
     },
     "output/tema_trabalho/A5_manifesto_maturidade_censura.json": {
-      "sha256": "3c9643d2eafcefa5c33c7ee07ad533c2485f2a7f82b4d4d071c2bed55cfa7317",
+      "sha256": "7e5daa7df7cf27f420565acb9bf430304fdaf8953d649d0c186ac38d8157b182",
       "bytes": 15095,
       "papel": "maturidade e censura declaradas em A5",
       "presente": true
     },
     "output/tema_trabalho/A5_ameacas_c7.json": {
-      "sha256": "168986dcb036fa11ff22e86d92cbf157313d0e4c97990443d62f3498fd28d5f0",
-      "bytes": 76679,
+      "sha256": "0a2260136f6f657a9fa2f0d8fad821b61dda3a6215927f0cbd308e1a65c1aeeb",
+      "bytes": 103869,
       "papel": "placebo, pré-tendência por curso e deslocamento regional de A5 (C-7)",
       "presente": true
     },
@@ -166,14 +166,14 @@
       "presente": true
     },
     "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv": {
-      "sha256": "b21797f18a15f71d7ed54fe33c3a673f9d3b659b7dd0323a48f22a3d7bb01680",
-      "bytes": 16834,
+      "sha256": "be0180e8d586ec2763a469db5cd085fd62b5baf755931985e07cbc121085a3e6",
+      "bytes": 16852,
       "papel": "estudo de evento de A5",
       "presente": true
     },
     "docs/auditorias/09_red_team_atracao_provimento.md": {
-      "sha256": "a1bb59d283a048ef61902ee45c0018f4403b2c320c8ee639f33f3156b066504a",
-      "bytes": 10660,
+      "sha256": "0bd60968e1449e46acf41041141626badcbc43614c2a217b96a5c1962812e474",
+      "bytes": 12436,
       "papel": "red team gerado aqui",
       "presente": true
     },
@@ -184,8 +184,8 @@
       "presente": true
     },
     "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": {
-      "sha256": "b44b899aced3026916ed2d3890e36ec0bb93a0280ce1b9606e087e7dbfc27a22",
-      "bytes": 4583,
+      "sha256": "128164ef6433282a234e49ad24b246afc0dab05e9cb8f18390e4b8e53c528d5a",
+      "bytes": 4832,
       "papel": "síntese gerada aqui",
       "presente": true
     }
@@ -195,10 +195,10 @@
   ],
   "nota_insumos_ausentes": "Insumo declarado no desenho e ausente do disco aparece acima com sha256 nulo, presente=false e motivo_ausencia. Entrada omitida significaria que o insumo não faz parte do desenho.",
   "docs_hash8": {
-    "docs/auditorias/09_red_team_atracao_provimento.md": "a1bb59d2",
+    "docs/auditorias/09_red_team_atracao_provimento.md": "0bd60968",
     "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "4b0077df",
-    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "f82efdb9",
-    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "b44b899a"
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "97b709df",
+    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "128164ef"
   },
   "portoes": {
     "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",

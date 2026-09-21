@@ -331,3 +331,95 @@ ponderação explícita: **manter os artefatos como estão preserva a cadeia de
 hashes e conserva caminhos Windows incorretos; regravá-los conserta os caminhos
 e obriga a reemitir os hashes de A8 onde eles estiverem fixados.** Amostra,
 desfecho e estimador de A8 não mudam em nenhum dos dois caminhos.
+
+---
+
+## E-7 · A emenda 2 (A-1) moveu também a especificação `full`, e a documentação de C-9 não acompanhou
+
+**O que a documentação publica.** A seção C-9 de
+[`36_backlog_pos_auditoria.md`](../06_execucao/36_backlog_pos_auditoria.md)
+abre com «Ambos reportam `0,091608 / 0,345622 / 0,790969`», e o corpo da PR 3
+declara, em «O que NÃO mudou», que a emenda 2 reemitiu «os cinco modelos
+`minimal`».
+
+**O que está errado.** Os três valores citados em C-9 são anteriores ao item
+A-1, cujo commit (`62bb4ed`) precede o da sessão 4 (`3a89233`) na mesma PR.
+Depois de A-1 a especificação `full` passou a reportar
+`0,376737 / 0,225207 / 0,094364`. A definição de efeito fixo de UF move as duas
+especificações, não só a `minimal`:
+
+| modelo `full` | antes de A-1 | depois de A-1 |
+|---|---|---|
+| `estoque_6m` (= `delta` por FWL) | `+0,0916` (EP `0,3456`; `p = 0,791`) | `+0,3767` (EP `0,2252`; `p = 0,094`) |
+| `entradas_6m` | `+0,0158` (`p = 0,892`) | `+0,1190` (`p = 0,106`) |
+| `cobertura_6m` | `+0,0293` (`p = 0,102`) | `+0,0321` (`p = 0,077`) |
+| `presentes_baseline_6m` | `+0,0013` (`p = 0,975`) | `+0,0161` (`p = 0,679`) |
+
+**Leitura correta.** A frase de C-9 permanece verdadeira no que afirma — os
+dois modelos `full` são o mesmo estimador por Frisch–Waugh–Lovell —, mas os
+números que ela cita são de uma execução superada. A leitura de que «no `full`
+o efeito desaparece» era apoiada por `p = 0,79`; hoje o artefato traz
+`p = 0,094`. Nenhuma das duas sustenta afirmação causal, e nenhuma cifra do
+artigo depende do `full`.
+
+**O que foi feito.** Não é errata de valor: a
+`A5_tabela_11_sensibilidade_colapso_uf.csv` passa a emitir as três variantes de
+colapso para as duas especificações (30 linhas, contra 15), de modo que a
+consequência da definição de UF sobre o `full` fica auditável no artefato, e
+não só no histórico. A frase de C-9 fica como registro histórico do estado em
+que o item foi aberto.
+
+---
+
+## E-8 · Níveis singleton de efeito fixo inflam o R² dentro da amostra e não estão no `n`
+
+**O que o artefato publica.** `A5_tabela_06_validacao_preditiva.csv` reporta,
+para `estoque_6m_minimal`, `r2_insample = 0,876` contra `r2_media_out = -0,078`,
+sobre `n = 587` e 295 clusters; para `delta_minimal`, `0,933` contra `-0,315`.
+
+**O que está errado.** Sob a variante primária de A-1, três níveis de `uf_fe`
+têm uma única célula na amostra confirmatória: `41`, `MACRO_CENTRO-OESTE` e
+`MACRO_SUDESTE`. O dummy do nível ajusta essa célula exatamente, de modo que ela
+não contribui variação identificadora, mas continua contada em `n` e no R².
+Uma delas é Brasília (`530010`, curso 14, estoque 923), que sozinha responde por
+**83,8%** da soma de quadrados de `estoque_6m` e por **92,2%** da de
+`delta_estoque_6m`. O salto do R² de `0,103` para `0,876` entre a variante
+`balde_unico` e a primária não é ganho de ajuste: é o dummy de Brasília.
+
+A causa é o denominador da regra de colapso. `colapsar_uf_fe` conta **municípios
+no painel de 1.184 células**, não **células na amostra estimada de 587**: a UF 41
+tem cinco municípios no painel e por isso não colapsa, mas tem uma única célula
+na confirmatória; e a UF 53 colapsa para `MACRO_CENTRO-OESTE`, nível que nenhuma
+outra UF ocupa, de modo que o colapso não a acompanha.
+
+**Leitura correta.** Os coeficientes **não** dependem disso. Removendo os três
+níveis singleton até o ponto fixo (`n` efetivo 584, 292 clusters, 21 níveis), o
+coeficiente de atração é idêntico em quatro casas em todos os dez modelos —
+`delta_minimal` `0,5062`, `estoque_6m_minimal` `3,5970`, `full` `0,3767` —,
+exatamente o que se espera de níveis que não identificam nada. O que muda é o
+ajuste: `r2` de `estoque_6m_minimal` vai de `0,876` para `0,209`, e o de
+`delta_minimal` de `0,933` para `0,119`. Consequência prática: o contraste
+dentro/fora da amostra da validação preditiva era muito menor do que parecia, e
+a linha de Brasília em `A5_tabela_05_influencia_municipal.csv` (`delta` de
+`-3,2e-14`) é zero por construção, não por ausência de influência.
+
+**O que foi feito.** Diagnóstico e sensibilidade publicados em
+`A5_tabela_15_singletons_efeito_fixo.csv` e no bloco `singletons_efeito_fixo` de
+`A5_estimativas_provimento.json`; `A5_tabela_06` ganha `n_efetivo`,
+`r2_insample_sem_singletons` e `rmse_insample_sem_singletons`. **A especificação
+primária não muda**: os singletons continuam mantidos, para não reescolher
+estimador depois de observar resultado. A remoção fica declarada como
+sensibilidade.
+
+---
+
+## Nota de ambiente — reexecução de 21/09/2026
+
+A reexecução de `06`, `06b` e `07` que produziu as entradas E-7 e E-8 rodou em
+Python 3.11.15 com `numpy` 2.4.6, `pandas` 3.0.6 e `statsmodels` 0.15.0, e não
+nas versões fixadas em `requirements.txt` (`numpy==2.5.2`, `pandas==3.0.5`), que
+não resolvem no índice disponível a este ambiente. Conferido antes de aceitar: em
+todas as tabelas de A5 já versionadas, a maior divergência numérica é
+**1,5e-11**, em colunas de intervalo de confiança e de valor `p`; nenhum
+coeficiente, contagem, amostra ou desfecho muda, e os 23 alvos congelados de A5
+continuam conferindo. As figuras PNG foram regravadas pela própria reexecução.
