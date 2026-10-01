@@ -113,10 +113,16 @@ produção, redução de espera ou melhora de saúde.
   ao FDR (`q = 0,364`). Linguagem estritamente associativa; a mediana é 1 e o
   máximo 211 no grupo com atração. Em 16/09/2026 foram acrescentados, sob
   protocolo congelado, um placebo (células sem atração em municípios com
-  atração: nulo), a pré-tendência por curso (rejeita nos cursos 2 e 16) e dois
-  testes de deslocamento dentro da região de saúde (sem perda nos vizinhos do
-  quadro; oferta região–curso positiva). A5 é reestimável a partir de
-  `A5_painel_T0.parquet` com hash conferido contra o A6, sem o painel mensal.
+  atração: nulo), a pré-tendência por curso (rejeita nos cursos 2 e 16 pelo `p`
+  cru; com a correção de multiplicidade, só o 16 mantém `q < 0,05`) e dois
+  testes de deslocamento dentro da região de saúde. O de transbordo não mostra
+  perda nos vizinhos do quadro; o de oferta região–curso **não** testa
+  deslocamento, porque 385 das 449 região–curso têm um único município do
+  quadro, e por isso deslocamento dentro da região permanece não testado
+  (itens C-7b e C-7c da revisão de 21/09/2026 em
+  [`36_backlog_pos_auditoria.md`](docs/06_execucao/36_backlog_pos_auditoria.md)).
+  A5 é reestimável a partir de `A5_painel_T0.parquet` com hash conferido contra
+  o A6, sem o painel mensal.
 - A7 identifica 423 pares adjacentes de seleção em quatro publicações. O A8
   restringe o núcleo a 36 pares de 2025 em ampla concorrência, primeira opção,
   sem empate e com gap exato de um ponto. O efeito local condicional é +63,9
@@ -146,8 +152,8 @@ congelado prevê:
 - generalização secundária: oncologia clínica e medicina intensiva, com efeitos
   separados; cirurgia geral/CBO 225225 apenas como sensibilidade;
 - alternativa somente se o pré-período justificar: ecocardiografia no SIA;
-- RDD do IVS preservado como estudo do adicional de bolsa, ainda bloqueado pela
-  regra administrativa não reconstruída.
+- RDD do IVS fora do plano: arquivada porque o escore administrativo que gera a
+  faixa não é observado; só volta se esse escore for obtido.
 
 A Nota Técnica nº 59/2026 criou uma assinatura cadastral potencialmente
 observável dos participantes no CNES. O C3-01 já corrigiu a ponte do Anexo I: os
@@ -227,7 +233,7 @@ python run_all.py
 ```
 O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A8, incluindo tabelas, figuras, red team, cutoff estrito, manifestos e os dois conferidores de artigo. Sem o painel mensal do CNES, `06_avaliar_provimento_cnes.py` e `06b_ameacas_a5_placebo_pretendencia_deslocamento.py` rodam sozinhos a partir de `A5_painel_T0.parquet`, com o hash conferido contra o A6.
 
-### Suíte de testes automatizados (183 testes)
+### Suíte de testes automatizados (188 testes)
 ```bash
 python run_tests.py
 ```
@@ -246,4 +252,4 @@ Cada diretório principal possui documentação autônoma orientando seu conteú
 | [`output/`](output/README.md) | [Guia de Artefatos](output/README.md) | Painéis analíticos, estimativas, tabelas, figuras e manifestos reproduzíveis |
 | [`prompts/`](prompts/README.md) | [Fila e Histórico](prompts/README.md) | Sessões executadas, cadernos de prompts e especificações de pesquisa |
 | [`scripts/`](scripts/README.md) | [Guia de Scripts](scripts/README.md) | Rotinas modulares de aquisição, estimação, avaliação de impacto e utilitários |
-| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 183 testes automatizados garantindo integridade econométrica e invariantes |
+| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 188 testes automatizados garantindo integridade econométrica e invariantes |

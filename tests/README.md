@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **156 testes em 19 módulos**, garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **188 testes em 21 módulos**, garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -36,7 +36,7 @@ python -m unittest tests/test_pipeline_invariants.py
 | Módulo | Testes | Foco e Garantias Econométricas |
 |---|:---:|---|
 | [`test_pipeline_invariants.py`](test_pipeline_invariants.py) | Invariantes | Balanceamento do painel (26 meses), não imputação de FTE/horas, censura de margens longitudinais, ponte CBO operacional, convergência numérica dos modelos e validade de todos os links de documentação. |
-| [`test_estimativas_atracao_a4.py`](test_estimativas_atracao_a4.py) | A4 Atração | Estimação LPM e Logit de atração (+29,4pp metropolitano vs remoto), erros clusterizados por município, invariância da amostra N=1.295 células em 368 municípios. |
+| [`test_estimativas_atracao_a4.py`](test_estimativas_atracao_a4.py) | A4 Atração | Estimação LPM e Logit de atração (metropolitano vs remoto: +27,9pp na especificação primária vigente, com o colapso em macrorregião da correção C1), erros clusterizados por município, invariância da amostra N=1.295 células em 368 municípios. |
 | [`test_provimento_cnes_a5.py`](test_provimento_cnes_a5.py) | A5 Dinâmica CNES | Avaliação da oferta médica local cadastrada no CNES (amostra confirmatória de 587 células em 295 municípios, referência 202506 e follow-up 202603, tom estritamente associativo). Inclui a conferência de proveniência dos hashes de entrada, ausente até 09/09/2026. |
 | [`test_red_team_a6.py`](test_red_team_a6.py) | A6 Red Team | Auditoria das 11 afirmações substantivas na matriz afirmação–evidência–limite e validação do manifesto de hashes reproduzíveis. |
 | [`test_cutoff_selecao_a7.py`](test_cutoff_selecao_a7.py) | A7 Corte de seleção | Suporte dos pares adjacentes, resultados de homologação/presença ativa, proteção de dados pessoais e bloqueio explícito de linguagem causal sem os desempates. |
@@ -53,6 +53,9 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_sih_pre_c3.py`](test_sih_pre_c3.py) | Ciclo 3 SIH Pré | Auditoria dos dados hospitalares do SIH, dicionário SIGTAP e regra *fail-closed* ante ausência de arquivos no FTP. |
 | [`test_pre_analysis_c3.py`](test_pre_analysis_c3.py) | Ciclo 3 Pré-Análise | Torneio pré-tratamento de anestesiologia e congelamento de protocolo antes da maturidade de 202703. |
 | [`test_datasus_parser.py`](test_datasus_parser.py) | Utilitário DBC | Validação funcional da rotina de descompressão e conversão de arquivos `.dbc` do DATASUS. |
+| [`test_reconstrucao_regra_faixa.py`](test_reconstrucao_regra_faixa.py) | RDD Bolsa — reconstrução da regra | Garante que o diagnóstico `a01b_reconstrucao_regra_faixa.json` continue dizendo que o IVS público não determina a faixa anunciada e que não autoriza estimação. |
+| [`test_conferencia_artigos.py`](test_conferencia_artigos.py) | Conferência dos artigos | Toda cifra dos dois artigos aprovada pelos conferidores `10` e `11`, sem identificador repetido, e o mesmo núcleo (A8, A4, A5, RDD e DDD) citado nos dois. |
+| [`test_verificacao_ambiente.py`](test_verificacao_ambiente.py) | Ambiente | Pacotes que mudam resultado numérico fixados com `==` e interrupção do modo estrito diante de versão divergente. |
 
 ---
 
