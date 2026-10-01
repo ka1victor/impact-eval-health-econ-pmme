@@ -1356,6 +1356,100 @@ heterogeneidade nenhuma. Linguagem descritiva; nada aqui é causal. O script nã
 entra no `run_all.py`: nada a jusante o consome, e acrescentá-lo a `STEPS`
 mudaria os comandos de reprodução que o A6 deriva dessa lista.
 
+### Executado em 01/10/2026 — leitura descritiva
+
+Protocolo `b57eb4e`, código depois. Duas execuções seguidas gravam os mesmos
+bytes. Nenhum artefato de A5 ou A6 mudou.
+
+**Portões.** A soma dos componentes fecha os coeficientes do estoque com erro
+máximo de `1,4e-15` (tolerância `1e-6`); o T0 é igual ao painel mensal em estoque, entradas e
+saídas em todas as 30.784 célula–mês; `ΔS = D + N` vale em toda a janela. O
+estoque reproduz `pre_F` e `pre_p` da `A5_tabela_13` com diferença relativa
+abaixo de `1e-11` em oito cursos, **inclusive 2 e 16**. Nos cursos 3 e 13, cuja
+covariância pré tem posto 4 e 3, o F difere a partir da 4ª casa (`0,47726`
+contra `0,47741`; `0,35142` contra `0,35107`), sem mudar a decisão a 5%. Não é
+erro desta implementação: o próprio `06b`, rodado em memória neste ambiente,
+devolve os mesmos valores daqui. O F com posto baixo passa por pseudo-inversa
+de matriz singular, e o A6 registra que a tabela foi gravada sob Python 3.11 e
+numpy 2.4.6, não sob o ambiente documentado. O protocolo não fixava tolerância
+para o portão; a primeira execução abortou em 1e-9 no curso 3 e o portão
+passou a ser estrito nos cursos de foco e nos de posto ≥ 8, e "mesma decisão a
+5% e diferença relativa < 1e-2" nos de posto baixo, com a discrepância
+publicada no JSON. Isso toca só a conferência de cursos fora do foco, não
+leitura nenhuma. A `A5_tabela_13` **não foi regravada**.
+
+| | curso 2 | curso 16 |
+|---|---|---|
+| pré-F do estoque (nível) | `4,71` (`p = 2,1e-5`), posto 12 | `7,23` (`p = 4,7e-6`), posto 10 |
+| pré-F dos CNES ofertantes | `2,31` (`p = 0,016`), posto 12 | `0,85` (`p = 0,51`), posto 4 |
+| pré-F do restante do município | `1,74` (`p = 0,084`), posto 11 | `3,36` (`p = 0,004`), posto 10 |
+| `φ_of` / `φ_resto` (D1) | `1,84` / `−0,84` | `1,79` / `−0,79` |
+| leitura D1 fixada | carregada pelos CNES ofertantes | carregada pelos CNES ofertantes |
+| dif. `ΣD` / `ΣN`, 202412–202506 (D2) | `+0,47` / `−0,04` | `+0,32` / `+0,05` |
+| taxa de intermitência `Σ\|N\|/ΣS` | `0,15%` | `0,09%` |
+| intervalo dos outros oito cursos | `0%` a `0,89%` | idem |
+| D3 (um CNES ofertante acima do município) | 0 célula–mês | 0 célula–mês |
+| **leitura combinada fixada** | **compatível com oferta** | **compatível com oferta** |
+
+Pela regra fixada, nenhuma das duas assinaturas cadastrais observáveis
+aparece. A intermitência de registro é baixa e está dentro do intervalo dos
+outros oito cursos. Nenhuma célula com um único CNES ofertante mostra estoque
+do estabelecimento acima do municipal, nem nesses dois cursos nem nos outros
+oito. O diferencial da janela D2 vem de entradas e saídas duradouras.
+
+**O que o protocolo não previa ler, publicado como fato e sem leitura nova.**
+Nos dois cursos, o componente dos CNES ofertantes e o restante do município se
+movem em **sentidos opostos**: `φ_resto` é `−0,84` e `−0,79`. Nos outros oito,
+o componente contrário pesa no máximo `−0,14` (curso 3). Uma parte grande do
+movimento pré é, portanto, troca entre estabelecimentos do mesmo município, e
+não variação do estoque municipal. No curso 2, isso se vê num único mês: de
+202504 para 202505, o coeficiente dos ofertantes cai `1,28` e o do restante
+sobe `1,11`. No curso 16, a trajetória dos ofertantes anda em degraus, e o F
+conjunto só rejeita no restante do município. Com posto incompleto nos dois
+componentes, onde a rejeição do 16 está fica, na prática, indeterminado.
+
+Esse padrão é compatível com duas explicações que os agregados não separam. A
+primeira é transferência real de profissionais entre hospitais do município. A
+segunda é cadastral: um profissional que já está no município ganha ou perde o
+vínculo no CNES ofertante. Há ainda uma ressalva sobre o D2 no curso 2: o
+diferencial bruto da janela (`+0,42`) tem sinal oposto ao ajustado pelo
+estimador (`−0,18`, de `−β_202411`), porque o efeito fixo UF–mês pesa muito
+em 63 células. A leitura "fluxo duradouro" do curso 2, portanto, não descreve
+o mesmo objeto que os coeficientes.
+
+**Conclusão descritiva.** Os dados locais não mostram assinatura cadastral nos
+cursos 2 e 16. O que mostram é que a pré-tendência mora nos CNES ofertantes e é
+compensada em boa parte pelo restante do mesmo município. A pergunta
+"cadastral ou oferta" **continua em aberto** e agora tem alvo preciso: a
+transição de profissionais entre o CNES ofertante e os demais CNES do município
+em 2024–2025. Nada muda na regra de exclusão, na amostra ou na especificação
+primária.
+
+**Desenho a rodar quando os microdados chegarem (D-4).** Mesmas células e
+janela 202406–202506, no grão profissional × CNES × CBO × mês, com
+`IND_VINCULACAO` e carga horária. Cada entrada ou saída de `y_of` e `y_resto`
+se classifica em uma de seis categorias:
+
+1. vínculo acrescentado ou retirado no ofertante por quem continua em outro
+   CNES do município;
+2. transferência entre CNES do mesmo município;
+3. profissional novo no CNES nacional;
+4. vindo de outro município;
+5. reclassificação de CBO — no 16, entre `225148`, `225305` e `225325`, ou de
+   fora para dentro;
+6. retorno após ausência de até três meses.
+
+Leitura a fixar antes de rodar: as categorias 1, 5 e 6, e qualquer vínculo sem
+carga horária, contam como cadastral; as categorias 2 a 4, com carga horária
+positiva, contam como oferta. O D1 é refeito com esses componentes, de novo
+como decomposição exata por linearidade, e a regra de exclusão continua a
+mesma.
+
+Artefatos: `A5_tabela_16_decomposicao_estabelecimento_pre.csv`,
+`A5_tabela_17_fluxos_intermitencia_pre.csv`,
+`A5_diagnostico_cadastral_cursos_2_16.json`. Um teste novo em
+`tests/test_provimento_cnes_a5.py`.
+
 ## Protocolo de sessão
 
 Ao **iniciar** uma sessão desta fila:
