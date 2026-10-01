@@ -437,8 +437,8 @@ documento e foram preservadas.
 ## 4. Ressalvas
 
 Nenhuma ressalva própria do deck. A pendência 6 do documento canônico —
-decks na estrutura de 15 slides — fecha para o Beamer com esta versão e
-continua aberta para o Slidev. As pendências de conteúdo (1, 2, 5, 8, 9) são do
+decks na estrutura de 15 slides — fechou para o Beamer em 19/09/2026 e para
+o Slidev em 21/09/2026. As pendências de conteúdo (1, 2, 5, 8, 9) são do
 documento e aparecem na tela exatamente como ele as escreve: por exemplo, o
 rodapé do frame 4 diz "REGIC 2018 (IBGE), a confirmar", e os frames 6, 15 e 17
 afirmam que o custo cresce com o IVS, a simplificação declarada da pendência 9.
@@ -462,8 +462,8 @@ a linha. A data (`\date{2026}`) não está no documento e é metadado do deck.
 - Os 17 slides do documento estão representados, na ordem, com os 13 títulos
   literais dos slides de conteúdo, os 3 títulos e subtítulos das divisórias, os
   32 builds e os 12 rastreios literais. O Q&A e os 4 slides de apêndice
-  seguem o mesmo documento, entre `apendice:inicio` e `apendice:fim`, e somam
-  7 builds em 6 páginas.
+  seguem o mesmo documento, entre `apendice:inicio` e `apendice:fim`: o Q&A e
+  os 7 builds do apêndice ocupam 8 páginas, da 33 à 40.
 - O contador do rodapé foi conferido página a página: chega a `17 / 17` no
   último slide de conteúdo e desaparece no apêndice, onde o rodapé mostra
   `Apêndice · A1` a `A4`.
