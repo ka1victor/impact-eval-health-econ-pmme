@@ -4,6 +4,14 @@
 > **Status:** catálogo canônico para motivação empírica e comparação de resultados<br>
 > **Atualização:** 9 de setembro de 2026
 
+> [!NOTE]
+> **Aprofundamento de 05/10/2026.** A evidência que responde à hipótese
+> apresentada à banca — *"municípios com maior remuneração oferecida pelo PMM-E
+> têm maior preenchimento de vagas"* — está organizada, termo a termo do modelo,
+> em [`20_evidencia_empirica_hipotese_remuneracao_preenchimento.md`](20_evidencia_empirica_hipotese_remuneracao_preenchimento.md):
+> prêmios fixados por regra com RDD e RCT, médicos em escolha declarada e em
+> modelos estruturais, Brasil, salário real e atração contra permanência.
+
 ## 1. Regra de uso
 
 Os estudos deste documento podem documentar fatos estilizados, sugerir heterogeneidades e variáveis observáveis, orientar comparações e informar a discussão dos resultados.
@@ -132,7 +140,7 @@ participação no programa. Ver
 ## 9. Referências
 
 - Bärnighausen, T.; Bloom, D. E. (2009). [*Financial incentives for return of service in underserved areas: a systematic review*](https://doi.org/10.1186/1472-6963-9-86). **BMC Health Services Research**, 9, 86.
-- Costa, F.; Nunes, L.; Miessi Sanches, F. (2024). [*How to Attract Physicians to Underserved Areas? Policy Recommendations from a Structural Model*](https://doi.org/10.1162/rest_a_01166). **The Review of Economics and Statistics**, 106(1), 36--52.
+- Costa, F.; Nunes, L.; Miessi Sanches, F. (2024). [*How to Attract Physicians to Underserved Areas? Policy Recommendations from a Structural Model*](https://doi.org/10.1162/rest_a_01155). **The Review of Economics and Statistics**, 106(1), 36--52.
 - Dal Bó, E.; Finan, F.; Rossi, M. A. (2013). [*Strengthening State Capabilities: The Role of Financial Incentives in the Call to Public Service*](https://doi.org/10.1093/qje/qjt008). **The Quarterly Journal of Economics**, 128(3), 1169--1218.
 - Hone, T.; Powell-Jackson, T.; Santos, L. M. P. et al. (2020). [*Impact of the Programa Mais Médicos on primary care doctor supply and health outcomes*](https://doi.org/10.1186/s12913-020-05716-2). **BMC Health Services Research**, 20, 873.
 - Matsumoto, M.; Inoue, K.; Kajii, E. (2010). [*Long-term effect of the home prefecture return program on the geographic distribution of physicians*](https://doi.org/10.1016/j.socscimed.2010.05.006). **Social Science & Medicine**, 71(4), 667--671.

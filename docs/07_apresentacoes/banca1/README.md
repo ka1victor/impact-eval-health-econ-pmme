@@ -3,7 +3,21 @@
 > **Formato:** markdown com imagens, para ler no GitHub ou no Obsidian<br>
 > **Escopo:** três seções, terminando na viabilidade empírica<br>
 > **Fora do escopo:** estratégia de identificação executada, estimadores, resultados e robustez<br>
-> **Atualização:** 21 de setembro de 2026
+> **Atualização:** 5 de outubro de 2026
+
+> [!IMPORTANT]
+> **A banca viu outra versão.** O deck efetivamente apresentado está em
+> [`apresentada/banca1_apresentada.pdf`](apresentada/banca1_apresentada.pdf) e
+> transcrito, com errata e proveniência número a número, em
+> [04 — Versão apresentada](04_versao_apresentada.md): **21 páginas**, 17
+> numeradas, em **cinco seções** — Motivação, Pergunta, Literatura, Hipótese e
+> Viabilidade Empírica —, com a hipótese *"municípios com maior remuneração
+> oferecida pelo PMM-E têm maior preenchimento de vagas"*. É a ela que o
+> feedback da banca se refere. O que segue nesta página descreve a **versão de
+> preparação** de 21/09/2026, em [02](02_conteudo_slides.md), da qual derivam os
+> decks Beamer e Slidev. A literatura empírica que embasa a hipótese
+> apresentada está em
+> [`03_literatura_empirica/20`](../../03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md).
 
 ## 1. O que esta entrega é
 
@@ -63,6 +77,7 @@ implementação → força de trabalho → capacidade → acesso → saúde → 
 
 | Documento | Função |
 |---|---|
+| [**Versão apresentada**](04_versao_apresentada.md) · [PDF](apresentada/banca1_apresentada.pdf) | **o que a banca viu** — 21 páginas em cinco seções, transcritas slide a slide, com errata (E1–E9), proveniência de cada número e o que mudou em relação à versão de preparação. Abriu as pendências `P12` e `P13` |
 | [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — os **17 slides** e **32 builds**, com título, corpo, figuras, fontes e ressalvas. `###` marca build, não slide; a linha de fontes e os blocos de **nota de produção** não vão à tela, e todo o resto do corpo vai. Os decks derivam dele |
 | [Roteiro narrativo](01_roteiro_narrativo.md) | arco das seções, lógica de cada bloco, regras de composição — inclusive a do build, na seção 2.6 —, rastreio do feedback e histórico das revisões, inclusive a reorganização de 16/09/2026, a compressão do mesmo dia (4f) e as duas rodadas de 17/09/2026 (4g e 4h) |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | origem e reprodutibilidade de cada número exibido |

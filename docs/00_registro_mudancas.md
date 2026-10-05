@@ -8,6 +8,42 @@
 
 ---
 
+## 05/10/2026 — Banca 1: versão apresentada registrada e literatura empírica da hipótese
+
+Motivo: o autor enviou o PDF do deck que o grupo de fato apresentou à banca e
+pediu (i) que o repositório correspondesse à apresentação e (ii) uma pesquisa
+mais funda da literatura empírica que responde à hipótese econômica
+apresentada.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca1/apresentada/banca1_apresentada.pdf`](07_apresentacoes/banca1/apresentada/banca1_apresentada.pdf) | o PDF exibido à banca, 21 páginas, SHA-256 `2d7a6bf5…36cdd`. Registro, não deck derivado: não é corrigido |
+| [`07_apresentacoes/banca1/04_versao_apresentada.md`](07_apresentacoes/banca1/04_versao_apresentada.md) | transcrição slide a slide da versão apresentada, com errata E1–E9, proveniência de cada número e o que mudou em relação à versão de preparação. Abre `P12` (taxas de crescimento por faixa do slide 6, que não se reproduzem) e `P13` (distribuição regional dos ativos, diferença de até 0,2 p.p.) |
+| [`03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md`](03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md) | a evidência empírica externa sobre a hipótese "maior remuneração oferecida, maior preenchimento", organizada pelos termos do modelo apresentado, com grau de verificação por estudo |
+
+### Mudança de papel
+
+[`07_apresentacoes/banca1/02_conteudo_slides.md`](07_apresentacoes/banca1/02_conteudo_slides.md)
+deixa de ser "o que foi à tela": passa a ser a **versão de preparação** de
+21/09/2026, da qual continuam derivando os decks Beamer e Slidev. O que a banca
+viu é o `04`. Os decks **não** foram reconstruídos sobre a versão apresentada,
+porque ela traz números que a regra 6 da proveniência mantém fora de qualquer
+deck do repositório.
+
+### Atualizado no mesmo commit
+
+README da banca 1, roteiro (seção 4k), proveniência (nota de topo e `P12`/`P13`),
+README de `07_apresentacoes/`, este índice, e
+[`02_teoria/hipoteses_e_viabilidade_empirica.md`](02_teoria/hipoteses_e_viabilidade_empirica.md),
+que ganhou a seção 4.4 — correspondência entre H1 e a redação apresentada — e
+teve a referência de Costa, Nunes & Sanches corrigida para a versão publicada.
+No catálogo `19`, o DOI da mesma referência na lista final foi unificado em
+`10.1162/rest_a_01155`.
+
+---
+
 ## 21/09/2026 — Banca 1: Q&A e apêndice, moldura sem navbar, galeria e Slidev reconstruído
 
 Motivo: o autor pediu a leitura do deck em PowerPoint que o grupo de fato
