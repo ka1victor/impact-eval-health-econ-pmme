@@ -1,5 +1,17 @@
 # R1–R2 — regra, running variable, suporte e cointervenções
 
+> **Executado em 05/10/2026.** R1 `APROVADO_SHARP` com o IVS administrativo do
+> quadro do PMMB 2026; R2 `VIAVEL_CONTINUIDADE_COM_RESSALVAS`. Os entregáveis
+> efetivos são `scripts/aquisicao/a07_adquirir_ivs_administrativo.py`,
+> `scripts/rdd_bolsa/01c_reconstruir_regra_ivs_administrativo.py`,
+> `scripts/rdd_bolsa/04_auditar_r2_suporte_selecao_balanco.py`,
+> `output/rdd_bolsa/a01c_regra_ivs_administrativo.json`,
+> `output/rdd_bolsa/r2_portao.json` e
+> [`docs/auditorias/15_portao_r1_r2_ivs_administrativo.md`](../../docs/auditorias/15_portao_r1_r2_ivs_administrativo.md).
+> O texto abaixo é o prompt original, preservado. Os cortes reais são `0,300` e
+> `0,400` do IVS administrativo, e não `0,400` e `0,500` do IVS 2010. Não
+> reexecute este prompt; para reproduzir, rode os dois scripts.
+
 Execute somente os portões R1 e R2 de
 `docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`.
 Leia também integralmente

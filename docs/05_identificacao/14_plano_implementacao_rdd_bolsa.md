@@ -19,7 +19,11 @@
 > Ver [`../auditorias/15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md)
 > e o rascunho [`18_protocolo_r3_rdd_bolsa_rascunho.md`](18_protocolo_r3_rdd_bolsa_rascunho.md).
 > O diagnóstico abaixo continua verdadeiro para o IVS 2010 do Atlas, que não é
-> a running variable administrativa.
+> a running variable administrativa. Fica refutada, porém, a leitura de 14/09
+> de que o IVS seria só o "piso" da bolsa, promovido por um critério de
+> localização do Anexo IV: a categoria do IVS administrativo determina a faixa
+> sozinha em todos os casos, sem promoção. A "promoção" medida contra o IVS
+> 2010 vinha da safra diferente e do mapeamento de 2026, já aplicado em 2025.
 
 A formulação substantiva, os outcomes e o diagnóstico de viabilidade deste
 plano estão em

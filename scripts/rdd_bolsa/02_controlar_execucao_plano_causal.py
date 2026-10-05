@@ -242,9 +242,11 @@ def main() -> None:
             "estimacao_liberada": triage["estimacao_liberada"],
         },
         "proxima_acao": (
-            "O autor revisar o rascunho do protocolo R3 "
-            "(docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md), decidir unidade, "
-            "banda, outcomes e linguagem, e autorizar o congelamento. Só então R4 pode ser executado."
+            "Revisar as rodadas de 01/10 e 05/10 e integrar os branches, na ordem de "
+            "prompts/integracao_rodadas_outubro_2026/README.md. Depois, o autor decide unidade, "
+            "banda, outcomes e linguagem do R3 "
+            "(docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md) e autoriza o congelamento, "
+            "pelo prompt prompts/avaliacao_rdd_bolsa/02_congelar_protocolo_r3.md. Só então R4 pode ser executado."
             if r1_aprovado and r2_viavel and not r3_congelado
             else "Seguir a ordem dos portões."
         ),

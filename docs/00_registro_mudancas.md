@@ -21,6 +21,14 @@ PMM-E em todos os casos. O R1 anterior reprovou por usar o IVS 2010 do Atlas.
 | [`auditorias/15_portao_r1_r2_ivs_administrativo.md`](auditorias/15_portao_r1_r2_ivs_administrativo.md) | auditoria dos portões R1 (`APROVADO_SHARP`) e R2 (`VIAVEL_CONTINUIDADE_COM_RESSALVAS`) com o IVS administrativo; nenhum outcome aberto |
 | [`05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md`](05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md) | rascunho, não congelado, do protocolo R3; lista as decisões que cabem ao autor |
 | `data/raw/aquisicao/ivs_regra/pmmb_2026_quadro_de_vagas.xlsx` e `pmmb_2026_edital_22_2026.pdf` | fonte bruta do IVS administrativo, preservada por `scripts/aquisicao/a07_adquirir_ivs_administrativo.py` |
+| [`../prompts/integracao_rodadas_outubro_2026/`](../prompts/integracao_rodadas_outubro_2026/README.md) | ordem das próximas sessões: revisão das rodadas de 01/10 e 05/10, integração dos dois branches, adendo que corrige o prompt de pendências de 01/10 |
+| [`../prompts/avaliacao_rdd_bolsa/03_estimar_r4_atracao.md`](../prompts/avaliacao_rdd_bolsa/03_estimar_r4_atracao.md) | prompt do R4, separado do R3 |
+
+### Renomeado
+
+| De | Para | Por quê |
+|---|---|---|
+| `prompts/avaliacao_rdd_bolsa/02_congelar_e_estimar_administrativo.md` | [`../prompts/avaliacao_rdd_bolsa/02_congelar_protocolo_r3.md`](../prompts/avaliacao_rdd_bolsa/02_congelar_protocolo_r3.md) | R3 e R4 passam a ser sessões separadas, para que o registro seja commitado antes de qualquer estimação; o conteúdo foi reescrito para o IVS administrativo |
 
 ### Notas de atualização
 

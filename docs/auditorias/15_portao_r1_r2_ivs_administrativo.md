@@ -60,7 +60,7 @@ categorias do Atlas aplicados ao IVS administrativo:
   a correlação é 0,851 e a categoria coincide em 2.999 municípios. A safra não é
   publicada nem pelo quadro nem pelo edital do PMMB.
 
-### Duas consequências para documentos anteriores
+### Três consequências para documentos anteriores
 
 1. **Não há variação temporal da bolsa.** Nenhum município mudou de faixa entre
    qualquer par de ondas (dez pares, até 369 municípios em comum) nem entre
@@ -71,6 +71,13 @@ categorias do Atlas aplicados ao IVS administrativo:
 2. **O campo de faixa da série histórica diverge da regra em dez/2025 e
    jan/2026** (40 e 88 linhas), e coincide em todas as demais competências. Sem
    pagamento observado, isso não pode ser lido como mudança de valor recebido.
+3. **A leitura de "piso" de 14/09 fica refutada.** O plano 14 leu a divergência
+   unidirecional contra o IVS 2010 como um critério de localização do Anexo IV
+   que promoveria municípios acima da categoria. Com o IVS administrativo, a
+   categoria determina a faixa sozinha, sem nenhuma promoção. A divergência vinha
+   da safra diferente e do mapeamento de 2026, já aplicado em 2025. O adicional
+   da Lei 15.233 para Amazônia Legal e territórios indígenas não aparece nas
+   faixas.
 
 ## 3. R2 — viável pelo desenho de continuidade, com ressalvas
 

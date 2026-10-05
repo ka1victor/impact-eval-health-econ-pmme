@@ -118,6 +118,14 @@ decisão do autor aberta:** revisar e autorizar o congelamento do protocolo R3
 Nenhum efeito foi estimado. Auditoria em
 [`15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md).
 
+**Próximas sessões.** A ordem está em
+[`prompts/integracao_rodadas_outubro_2026/README.md`](../../prompts/integracao_rodadas_outubro_2026/README.md):
+S1a e S1b revisam as rodadas de 01/10 (branch `claude/admiring-tesla-bduu1t`) e
+de 05/10 (este branch); S2 integra os dois branches, com dois conflitos já
+mapeados; S3 resolve as pendências de 01/10 com o adendo que corrige o estado
+da RDD; S4 congela o R3; S5 estima o R4. A fila do RDD foi reescrita em
+[`prompts/avaliacao_rdd_bolsa/`](../../prompts/avaliacao_rdd_bolsa/README.md).
+
 ## Entrega de banca 1
 
 Paralela à fila analítica e independente dela. A banca 1 apresenta o desenho

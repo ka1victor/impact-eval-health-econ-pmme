@@ -33,7 +33,7 @@
 | 1 | Outcome primário | célula com ao menos um candidato **alocado** na onda | existe em todas as ondas e mede a margem de entrada da pergunta |
 | 2 | Outcomes secundários | candidaturas de 1ª opção por célula; célula com alguma candidatura; confirmação ou homologação (só 2025, outcome aprovado em A1) | procura é o desfecho preferido do plano 16 e as listas publicam as candidaturas |
 | 3 | Unidade | município–onda, proporção de células com alocação, peso igual por município–onda; célula com agrupamento municipal em robustez | o tratamento é municipal (plano 14, seção 6) |
-| 4 | Ondas | 2025 c1 ch1, 2025 c1 ch2, 2026 c2 ch1, 2026 c2 ch2, 2026 c3 ch1 | todas seguem a mesma regra e nenhuma faixa muda entre elas |
+| 4 | Ondas | 2025 c1 ch1, 2025 c1 ch2, 2026 c2 ch1 e 2026 c2 ch2 no principal; 2026 c3 ch1 só com autorização expressa | todas seguem a mesma regra e nenhuma faixa muda entre elas; o ciclo 3 está congelado no `CLAUDE.md` e o resultado dele é *sub judice*. O protocolo do ciclo 3 usa o CNES e não a alocação, mas a inclusão é decisão do autor |
 | 5 | Estimador principal | local-linear, inclinações separadas, kernel triangular, banda fixa 0,050 | a randomização local não balanceia com suporte útil (R2) |
 | 6 | Robustez de banda | 0,030; 0,075; 0,100 | grade do R2, sem escolha pelo resultado |
 | 7 | Estimativa conjunta | cortes empilhados, intercepto e inclinações por corte, salto comum de R$ 5 mil | mesma dose; é o que dá potência |
@@ -95,6 +95,12 @@ texto diz que efeitos menores não seriam detectados.
   ondas como atribuições independentes.
 
 ## 6. Ordem após a autorização
+
+O prompt operacional é
+[`prompts/avaliacao_rdd_bolsa/02_congelar_protocolo_r3.md`](../../prompts/avaliacao_rdd_bolsa/02_congelar_protocolo_r3.md),
+precedido da revisão de
+[`prompts/integracao_rodadas_outubro_2026/`](../../prompts/integracao_rodadas_outubro_2026/README.md).
+
 
 1. adquirir o resultado da 1ª chamada do ciclo 2 e preservar com hash;
 2. escrever o construtor de desfechos e testá-lo só na estrutura;
