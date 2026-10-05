@@ -8,6 +8,25 @@
 
 ---
 
+## 05/10/2026 — Fila de fechamento da sessão remota de 01/10/2026
+
+Motivo: a rodada remota de 01/10/2026 integrou cinco commits de quatro
+subagentes no branch `claude/admiring-tesla-bduu1t` e deixou achados sem ação.
+A fila de seguimento passa a viver no repositório, para ser entregue a um agente
+revisor e a um agente executor.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`../prompts/fechamento_sessao_remota/README.md`](../prompts/fechamento_sessao_remota/README.md) | índice da fila, commits da rodada e achados sem ação |
+| [`../prompts/fechamento_sessao_remota/01_revisar_trabalho_sessao_remota.md`](../prompts/fechamento_sessao_remota/01_revisar_trabalho_sessao_remota.md) | revisão adversarial, commit a commit, antes de a `main` receber a rodada |
+| [`../prompts/fechamento_sessao_remota/02_resolver_pendencias.md`](../prompts/fechamento_sessao_remota/02_resolver_pendencias.md) | decisões do autor, pendências executáveis e passos condicionados a dado externo |
+
+A fila não reabre A1–A8 nem descongela o ciclo 3.
+
+---
+
 ## 01/10/2026 — Diagnóstico cadastral dos cursos 2 e 16 em A5
 
 Motivo: item aberto do

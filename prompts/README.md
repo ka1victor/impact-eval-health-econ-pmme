@@ -1,5 +1,9 @@
 # Prompts operacionais dos agentes
 
+> **Fila de seguimento vigente (05/10/2026):**
+> [`fechamento_sessao_remota/`](fechamento_sessao_remota/README.md) — revisão e
+> pendências da rodada remota de 01/10/2026. As demais pastas são históricas.
+
 > **Fila histórica congelada.** Estes prompts pertencem ao desenho individual
 > anterior. A comparação agregada descrita em
 > [`docs/06_execucao/05_roadmap_execucao.md`](../docs/06_execucao/05_roadmap_execucao.md) também já foi
