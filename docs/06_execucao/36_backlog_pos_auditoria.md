@@ -1250,6 +1250,206 @@ passando.
   reexecução legítima com o painel mensal, junto com a retirada da coluna
   `uf_fe` vencida de `A5_painel_T0.parquet`.
 
+## Diagnóstico cadastral dos cursos 2 e 16 — 01/10/2026
+
+Item aberto pela sugestão 3 do encerramento, pelo C-7b e por "O que fica em
+aberto": a rejeição da pré-tendência nos cursos 2 (cirurgia geral, CBO
+`225225`) e 16 (anatomia patológica, CBOs `225148`, `225305`, `225325`) em
+`A5_tabela_13` reflete mudança cadastral ou de oferta no CNES pré-tratamento?
+
+### Viabilidade verificada antes de qualquer cálculo do diagnóstico
+
+Foram lidos só esquema, chaves e cobertura; nenhuma trajetória dos cursos 2 e
+16 foi calculada antes do protocolo abaixo.
+
+| Insumo local | O que tem | Serve? |
+|---|---|---|
+| `A5_painel_T0.parquet` (`bcdb9848…`, ancorado no A6) | célula município–curso × 26 competências 202406–202607: estoque, entradas após seis meses de ausência (a partir de 202412), saídas confirmadas por três meses (até 202604), presença dos entrantes em seis meses | sim: estoque e fluxos por célula |
+| `output/painel_cnes_especialidade_mensal.parquet` (`364d6148…`, ancorado em `manifesto_tipologia_territorial.json`; mesma execução de `05_integrar_painel_analitico.py` que o painel mensal, commit `2666bb5`) | estoque de `CO_PROFISSIONAL_SUS` distinto por **CNES ofertante** × curso × mês | sim: as 587 células confirmatórias têm todos os seus CNES ofertantes no painel (`n_cnes_ofertantes` reproduz em 587/587) |
+| `output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet` | SHA-256 `285db221…`, **o mesmo** que A5 registra para o painel mensal dado como ausente | sim, como conferência; não acrescenta coluna ao T0 |
+| `output/avaliacao_ciclo3/cnes_pre/painel_forca_trabalho_pre.parquet` | CBO `225225` com `IND_VINCULACAO = 070102` por município | **não usado**: cobre 20 das 63 células do curso 2, selecionadas por participarem do ciclo 3, e nenhuma do curso 16. O estoque reproduz o de A5 nas 520 célula–mês em comum |
+
+**Achado colateral sobre D-4.** O painel mensal que o D-4 dava como ausente
+existe no repositório, byte a byte, em
+`output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet`: o hash
+coincide com o `sha256_registrado_em_execucao_anterior` de A5. O bloqueio real
+de D-4 são os **microdados** do CNES, não o painel. Nada foi regravado por
+causa disso.
+
+**O que falta e depende de D-4.** Sem os microdados não se observa: a
+reclassificação de CBO de um mesmo profissional (para o curso 16, entre os três
+CBOs do curso ou de fora para dentro); se quem entra é novo no CNES ou vem de
+outro município; o tipo de vínculo e a carga horária; o CNES de cada vínculo
+fora dos ofertantes; e a divergência entre `co_municipio_gestor` e a
+localização do estabelecimento, salvo no caso-limite do D3 abaixo. Por isso o
+diagnóstico abaixo produz **assinaturas** compatíveis com uma ou outra
+explicação, e não uma classificação conclusiva.
+
+### Protocolo congelado em 01/10/2026, antes do código
+
+Script novo `scripts/tema_trabalho/06c_diagnostico_cadastral_cursos_pretendencia.py`,
+somente leitura sobre artefatos versionados com hash conferido; grava
+`A5_tabela_16_decomposicao_estabelecimento_pre.csv`,
+`A5_tabela_17_fluxos_intermitencia_pre.csv` e
+`A5_diagnostico_cadastral_cursos_2_16.json`, todos rotulados **diagnóstico
+descritivo**. Calcula para os dez cursos confirmatórios, para que 2 e 16
+tenham com o que ser comparados; a leitura é sobre 2 e 16.
+
+**D1 — onde está a pré-tendência: CNES ofertante ou restante do município
+(nível, decomposição exata).** Mesma especificação da `A5_tabela_13` por curso:
+efeitos fixos de célula, curso–mês e UF–mês, cluster por município, referência
+202506, convenção `_gl_fe`, as 26 competências. Três desfechos: o estoque
+municipal `especialistas_mst`; `y_of`, a soma do estoque dos CNES ofertantes da
+célula; e `y_resto = especialistas_mst − y_of`. Como o estimador é linear em
+`y`, os 12 coeficientes pré de `y_of` e `y_resto` somam exatamente os do
+estoque. Portão: o estoque reproduz `pre_F_gl_fe` e `pre_p_gl_fe` da
+`A5_tabela_13` nos dez cursos, e a soma fecha com erro menor que `1e-6`.
+Publica-se, por curso e componente, os 12 coeficientes pré, o F conjunto com o
+posto da covariância, e a parcela de projeção
+`φ_of = Σ b_of·b / Σ b²` (`φ_resto = 1 − φ_of`). Os coeficientes pós dos
+componentes entram no cálculo porque o estimador usa as 26 competências, mas
+**não são gravados nem impressos**. Leitura fixada: `φ_of ≥ 2/3`, pré-tendência
+carregada pelos CNES ofertantes; `φ_resto ≥ 2/3`, pelo restante do município;
+entre os dois, repartida. Isto diz **onde**, não **por quê**. Limite:
+`y_of` soma estabelecimentos, então conta duas vezes quem trabalha em dois
+CNES ofertantes do mesmo município, e `y_resto` pode ser negativo; as
+célula–mês com `y_resto < 0` são contadas e publicadas.
+
+**D2 — fluxos duradouros contra intermitência (bruto, sem regressão).** Janela
+202412–202506, a única do pré em que entrada e saída confirmada são ambas
+observáveis. Por célula–mês: `ΔS_t = S_t − S_{t−1}`;
+`D_t = entradas_t − saídas_confirmadas_{t−1}`, o saldo de quem chega após seis
+meses de ausência menos quem sai por três meses ou mais; e `N_t = ΔS_t − D_t`,
+o saldo de retornos após ausência curta menos afastamentos curtos — a
+intermitência de registro. A identidade `ΔS_t = D_t + N_t` é conferida. Por
+curso e grupo (`atracao_muni` 1 e 0): média por célula de `ΣD`, `ΣN` e `Σ|N|`,
+e a taxa de intermitência `Σ|N| / ΣS`. Diferencial atração − sem atração de
+`ΣD` e `ΣN`, que somam o diferencial de `S_202506 − S_202411`. Leitura fixada:
+`|dif ΣN| > |dif ΣD|`, assinatura **intermitente**, compatível com cadastro;
+caso contrário, assinatura de **fluxo duradouro**, compatível com oferta mas
+sem excluir cadastro em lote. A taxa de intermitência dos cursos 2 e 16 é
+comparada com o intervalo dos outros oito. Limites: a janela cobre só 7 dos 12
+coeficientes pré (202412–202505), não os de 202406–202411; a saída confirmada
+de 202505 usa presença até 202508, antes do T0 administrativo de 202510; `N_t`
+é saldo, não volume bruto.
+
+**D3 — inconsistência de atribuição municipal.** Em célula com **um único**
+CNES ofertante, `y_of > especialistas_mst` só é possível se o
+`co_municipio_gestor` dos vínculos desse CNES não for o município da célula.
+Contam-se as célula–mês 202406–202506 em que isso ocorre, por curso e grupo.
+Em células com mais de um CNES ofertante o mesmo sinal é ambíguo (dupla
+contagem) e vai em coluna separada. Leitura fixada: ocorrência nas células do
+curso é evidência de artefato de atribuição cadastral ali; zero não é prova de
+ausência.
+
+**Leitura combinada, fixada agora.** Para 2 e 16: "assinatura cadastral" se D3
+ocorrer nas células do curso ou se D2 for intermitente; "compatível com
+oferta" se D2 for de fluxo duradouro e D3 for zero; em qualquer caso, com a
+ressalva de que só os microdados (D-4) classificam.
+
+**O que NÃO muda.** A amostra confirmatória de 587 células; a regra de
+exclusão pré-registrada sobre o `p` cru da escala proporcional, que continua
+excluindo 2 e 16 na sensibilidade; o `q` do C-7b como leitura; a especificação
+primária (proporcional, `0,0684`) e todas as tabelas de A5; nenhum artefato de
+A5 ou A6 é regravado. O resultado não alimenta estimativa, regra, filtro ou
+heterogeneidade nenhuma. Linguagem descritiva; nada aqui é causal. O script não
+entra no `run_all.py`: nada a jusante o consome, e acrescentá-lo a `STEPS`
+mudaria os comandos de reprodução que o A6 deriva dessa lista.
+
+### Executado em 01/10/2026 — leitura descritiva
+
+Protocolo `b57eb4e`, código depois. Duas execuções seguidas gravam os mesmos
+bytes. Nenhum artefato de A5 ou A6 mudou.
+
+**Portões.** A soma dos componentes fecha os coeficientes do estoque com erro
+máximo de `1,4e-15` (tolerância `1e-6`); o T0 é igual ao painel mensal em estoque, entradas e
+saídas em todas as 30.784 célula–mês; `ΔS = D + N` vale em toda a janela. O
+estoque reproduz `pre_F` e `pre_p` da `A5_tabela_13` com diferença relativa
+abaixo de `1e-11` em oito cursos, **inclusive 2 e 16**. Nos cursos 3 e 13, cuja
+covariância pré tem posto 4 e 3, o F difere a partir da 4ª casa (`0,47726`
+contra `0,47741`; `0,35142` contra `0,35107`), sem mudar a decisão a 5%. Não é
+erro desta implementação: o próprio `06b`, rodado em memória neste ambiente,
+devolve os mesmos valores daqui. O F com posto baixo passa por pseudo-inversa
+de matriz singular, e o A6 registra que a tabela foi gravada sob Python 3.11 e
+numpy 2.4.6, não sob o ambiente documentado. O protocolo não fixava tolerância
+para o portão; a primeira execução abortou em 1e-9 no curso 3 e o portão
+passou a ser estrito nos cursos de foco e nos de posto ≥ 8, e "mesma decisão a
+5% e diferença relativa < 1e-2" nos de posto baixo, com a discrepância
+publicada no JSON. Isso toca só a conferência de cursos fora do foco, não
+leitura nenhuma. A `A5_tabela_13` **não foi regravada**.
+
+| | curso 2 | curso 16 |
+|---|---|---|
+| pré-F do estoque (nível) | `4,71` (`p = 2,1e-5`), posto 12 | `7,23` (`p = 4,7e-6`), posto 10 |
+| pré-F dos CNES ofertantes | `2,31` (`p = 0,016`), posto 12 | `0,85` (`p = 0,51`), posto 4 |
+| pré-F do restante do município | `1,74` (`p = 0,084`), posto 11 | `3,36` (`p = 0,004`), posto 10 |
+| `φ_of` / `φ_resto` (D1) | `1,84` / `−0,84` | `1,79` / `−0,79` |
+| leitura D1 fixada | carregada pelos CNES ofertantes | carregada pelos CNES ofertantes |
+| dif. `ΣD` / `ΣN`, 202412–202506 (D2) | `+0,47` / `−0,04` | `+0,32` / `+0,05` |
+| taxa de intermitência `Σ\|N\|/ΣS` | `0,15%` | `0,09%` |
+| intervalo dos outros oito cursos | `0%` a `0,89%` | idem |
+| D3 (um CNES ofertante acima do município) | 0 célula–mês | 0 célula–mês |
+| **leitura combinada fixada** | **compatível com oferta** | **compatível com oferta** |
+
+Pela regra fixada, nenhuma das duas assinaturas cadastrais observáveis
+aparece. A intermitência de registro é baixa e está dentro do intervalo dos
+outros oito cursos. Nenhuma célula com um único CNES ofertante mostra estoque
+do estabelecimento acima do municipal, nem nesses dois cursos nem nos outros
+oito. O diferencial da janela D2 vem de entradas e saídas duradouras.
+
+**O que o protocolo não previa ler, publicado como fato e sem leitura nova.**
+Nos dois cursos, o componente dos CNES ofertantes e o restante do município se
+movem em **sentidos opostos**: `φ_resto` é `−0,84` e `−0,79`. Nos outros oito,
+o componente contrário pesa no máximo `−0,14` (curso 3). Uma parte grande do
+movimento pré é, portanto, troca entre estabelecimentos do mesmo município, e
+não variação do estoque municipal. No curso 2, isso se vê num único mês: de
+202504 para 202505, o coeficiente dos ofertantes cai `1,28` e o do restante
+sobe `1,11`. No curso 16, a trajetória dos ofertantes anda em degraus, e o F
+conjunto só rejeita no restante do município. Com posto incompleto nos dois
+componentes, onde a rejeição do 16 está fica, na prática, indeterminado.
+
+Esse padrão é compatível com duas explicações que os agregados não separam. A
+primeira é transferência real de profissionais entre hospitais do município. A
+segunda é cadastral: um profissional que já está no município ganha ou perde o
+vínculo no CNES ofertante. Há ainda uma ressalva sobre o D2 no curso 2: o
+diferencial bruto da janela (`+0,42`) tem sinal oposto ao ajustado pelo
+estimador (`−0,18`, de `−β_202411`), porque o efeito fixo UF–mês pesa muito
+em 63 células. A leitura "fluxo duradouro" do curso 2, portanto, não descreve
+o mesmo objeto que os coeficientes.
+
+**Conclusão descritiva.** Os dados locais não mostram assinatura cadastral nos
+cursos 2 e 16. O que mostram é que a pré-tendência mora nos CNES ofertantes e é
+compensada em boa parte pelo restante do mesmo município. A pergunta
+"cadastral ou oferta" **continua em aberto** e agora tem alvo preciso: a
+transição de profissionais entre o CNES ofertante e os demais CNES do município
+em 2024–2025. Nada muda na regra de exclusão, na amostra ou na especificação
+primária.
+
+**Desenho a rodar quando os microdados chegarem (D-4).** Mesmas células e
+janela 202406–202506, no grão profissional × CNES × CBO × mês, com
+`IND_VINCULACAO` e carga horária. Cada entrada ou saída de `y_of` e `y_resto`
+se classifica em uma de seis categorias:
+
+1. vínculo acrescentado ou retirado no ofertante por quem continua em outro
+   CNES do município;
+2. transferência entre CNES do mesmo município;
+3. profissional novo no CNES nacional;
+4. vindo de outro município;
+5. reclassificação de CBO — no 16, entre `225148`, `225305` e `225325`, ou de
+   fora para dentro;
+6. retorno após ausência de até três meses.
+
+Leitura a fixar antes de rodar: as categorias 1, 5 e 6, e qualquer vínculo sem
+carga horária, contam como cadastral; as categorias 2 a 4, com carga horária
+positiva, contam como oferta. O D1 é refeito com esses componentes, de novo
+como decomposição exata por linearidade, e a regra de exclusão continua a
+mesma.
+
+Artefatos: `A5_tabela_16_decomposicao_estabelecimento_pre.csv`,
+`A5_tabela_17_fluxos_intermitencia_pre.csv`,
+`A5_diagnostico_cadastral_cursos_2_16.json`. Um teste novo em
+`tests/test_provimento_cnes_a5.py`.
+
 ## Protocolo de sessão
 
 Ao **iniciar** uma sessão desta fila:

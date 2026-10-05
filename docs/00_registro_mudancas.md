@@ -8,6 +8,27 @@
 
 ---
 
+## 01/10/2026 — Diagnóstico cadastral dos cursos 2 e 16 em A5
+
+Motivo: item aberto do
+[`06_execucao/36_backlog_pos_auditoria.md`](06_execucao/36_backlog_pos_auditoria.md)
+(sugestão 3 do encerramento, C-7b e "O que fica em aberto"). Protocolo e
+resultado na seção "Diagnóstico cadastral dos cursos 2 e 16 — 01/10/2026" do
+mesmo documento, que permaneceu no lugar.
+
+### Arquivos criados
+
+| Arquivo | Papel |
+|---|---|
+| `scripts/tema_trabalho/06c_diagnostico_cadastral_cursos_pretendencia.py` | diagnóstico descritivo sob protocolo congelado; somente leitura sobre artefatos versionados com hash conferido; **fora** do `run_all.py`, porque nada a jusante o consome e a lista `STEPS` alimenta os comandos de reprodução do A6 |
+| `output/tema_trabalho/A5_tabela_16_decomposicao_estabelecimento_pre.csv` | D1: coeficientes pré por curso decompostos entre CNES ofertantes e restante do município |
+| `output/tema_trabalho/A5_tabela_17_fluxos_intermitencia_pre.csv` | D2 e D3: fluxos duradouros, intermitência e inconsistência de atribuição municipal |
+| `output/tema_trabalho/A5_diagnostico_cadastral_cursos_2_16.json` | protocolo, portões, leituras fixadas, hashes de entrada e resultado dos cursos 2 e 16 |
+
+Nenhum artefato de A5 ou A6 foi regravado.
+
+---
+
 ## 21/09/2026 — Banca 1: Q&A e apêndice, moldura sem navbar, galeria e Slidev reconstruído
 
 Motivo: o autor pediu a leitura do deck em PowerPoint que o grupo de fato
