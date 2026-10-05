@@ -1,7 +1,7 @@
 # Síntese empírica A6
 
 > **Título recomendado:** Atração administrativa de médicos especialistas e gradientes territoriais: evidências de implementação do PMM-E.  
-> **Nível de identificação:** associativo. RDD encerrado em R1; retenção individual não identificada.  
+> **Nível de identificação:** associativo. RDD da bolsa: R1 aprovado com o IVS administrativo em 05/10/2026, sem estimativa; retenção individual não identificada.  
 > **Hashes:** A4 `7e9176a8`; A5 `62cb645e`.
 
 ## Resumo
@@ -10,7 +10,7 @@ Analisamos o **quadro da primeira chamada** do primeiro ciclo do PMM-E, 1.295 c�
 
 ## Introdução
 
-O problema empiricamente identificável hoje não é o retorno causal de cada faixa de bolsa, mas onde a oferta administrativa atraiu ao menos uma confirmação ou homologação. IVS 2010 permanece a variável canônica do desenho previsto, porém faixa e IVS não fornecem variação independente, e a regra administrativa não foi reproduzida em 177 dos 368 municípios. Por isso o RDD foi encerrado no primeiro portão. A contribuição atual é medir desigualdades territoriais na implementação e documentar, separadamente, a evolução da oferta médica cadastrada no CNES.
+O problema empiricamente identificável hoje não é o retorno causal de cada faixa de bolsa, mas onde a oferta administrativa atraiu ao menos uma confirmação ou homologação. Faixa e IVS não fornecem variação independente, e o IVS 2010 não reproduz a regra administrativa em 177 dos 368 municípios. Em 05/10/2026, o IVS administrativo publicado pela SGTES passou a reproduzi-la em todos os casos e o RDD da bolsa voltou à fila, sem efeito estimado. A contribuição atual é medir desigualdades territoriais na implementação e documentar, separadamente, a evolução da oferta médica cadastrada no CNES.
 
 ## Métodos
 

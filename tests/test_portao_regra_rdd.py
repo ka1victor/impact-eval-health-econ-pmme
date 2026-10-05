@@ -60,13 +60,19 @@ class PortaoRegraRddTest(unittest.TestCase):
         )
 
     def test_controlador_mantem_execucao_fail_closed(self) -> None:
+        # Desde 05/10/2026 o R1 vigente e o do IVS administrativo; sem protocolo
+        # R3 congelado, a estimacao continua proibida.
         self.assertEqual(
             self.status["status_geral"],
-            "PARCIAL_EXECUTADO_AGUARDANDO_DADOS_ADMINISTRATIVOS",
+            "R1_R2_EXECUTADOS_AGUARDANDO_R3",
         )
+        self.assertEqual(self.status["etapas"]["R1"]["status"], "APROVADO_SHARP")
+        self.assertEqual(self.status["etapas"]["R3"]["status"], "PENDENTE_AUTORIZACAO_DO_AUTOR")
+        self.assertEqual(self.status["etapas"]["R4"]["status"], "BLOQUEADO_ATE_R3")
         self.assertFalse(self.status["estimacao_rdd_atracao_autorizada"])
         self.assertTrue(self.status["fail_closed_verificado"])
         self.assertEqual(self.status["artefatos_proibidos_encontrados"], [])
+        self.assertEqual(self.status["r1_publico"]["decisao"], "REPROVADO_PENDENTE_DE_RECONSTRUCAO")
 
     def test_pacote_esta_pronto_mas_nao_foi_enviado(self) -> None:
         request = self.status["pacote_solicitacao"]
@@ -74,6 +80,7 @@ class PortaoRegraRddTest(unittest.TestCase):
         self.assertIsNone(request["canal_submissao"])
         self.assertIsNone(request["protocolo"])
         self.assertEqual(len(request["arquivos_sha256"]), 4)
+        self.assertFalse(request["precondicao_do_r1"])
 
     def test_alternativa_a7_continua_preliminar(self) -> None:
         a7 = self.status["alternativa_a7"]

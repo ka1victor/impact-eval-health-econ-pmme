@@ -15,6 +15,12 @@
 > correto. Todos os resultados e o novo plano estão em
 > [16_sintese_achados_e_novo_plano_causal.md](../05_identificacao/16_sintese_achados_e_novo_plano_causal.md).
 
+> **Atualização em 05/10/2026:** o escore administrativo foi encontrado em fonte
+> pública (quadro de vagas do PMMB 2026) e reproduz a faixa em 100% dos casos. O
+> upgrade causal da seção 3.2 voltou a ser executável, com os cortes 0,300 e
+> 0,400 do IVS administrativo, e não 0,400 e 0,500 do IVS 2010. Ver
+> [`../auditorias/15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md).
+
 ## 1. Tema e pergunta
 
 Título de trabalho recomendado:

@@ -8,6 +8,20 @@
 > um efeito local condicional de ganhar a primeira opção usando 36 pares sem
 > empate e separados por um ponto.
 
+> **Atualização em 05/10/2026: R1 aprovado sharp com o IVS administrativo.**
+> A SGTES publica o próprio IVS, com três casas decimais, no quadro de vagas do
+> PMMB 2026. Com ele, a regra do item 11.2 do Edital SGTES/MS nº 28/2026 (cortes
+> 0,300 e 0,400) reproduz a faixa anunciada em 4.103 de 4.103 combinações
+> município–onda–versão de 2025 e 2026. O R2, sem outcomes, foi aprovado pelo
+> desenho de continuidade com ressalvas, sendo a principal a potência. O R3 aguarda decisão do autor.
+> Ver [`../auditorias/15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md)
+> e o rascunho [`18_protocolo_r3_rdd_bolsa_rascunho.md`](18_protocolo_r3_rdd_bolsa_rascunho.md).
+> O diagnóstico abaixo continua verdadeiro para o IVS 2010 do Atlas, que não é
+> a running variable administrativa.
+> Duas leituras deste documento ficam corrigidas: a regra aplicada em 2025 é a
+> que o edital de 2026 escreve (seção 3.5.1), e a Alternativa B (seção 6) não tem
+> tratamento a explorar, porque nenhum município mudou de faixa entre 2025 e 2026.
+
 ## 1. Decisão executiva — registro anterior e atualização
 
 **Decisão vigente:** o trabalho curto passa a ter o A8 como núcleo causal.
@@ -423,6 +437,11 @@ IVS morrer e os dados de desempate forem obtidos.
 Plano específico: [15_cutoff_selecao_atracao_retencao.md](15_cutoff_selecao_atracao_retencao.md).
 
 ### Alternativa B — mudança da grade entre 2025 e 2026
+
+> **Encerrada em 05/10/2026.** Com o IVS administrativo, a faixa de cada município
+> é a mesma em todas as ondas de 2025 e 2026 (zero mudanças em dez pares de
+> ondas). O que mudou entre o FAQ de 2025 e o edital de 2026 foi o texto, não a
+> atribuição. Não há diferença-em-diferenças de bolsa a estimar.
 
 Em 2026, alta e muito alta passaram a R$ 20 mil, média a R$ 15 mil e baixa ou
 muito baixa permaneceram em R$ 10 mil. Assim, o salto em `0,300/0,301` aparece

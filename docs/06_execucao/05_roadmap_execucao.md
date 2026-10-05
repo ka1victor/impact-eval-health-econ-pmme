@@ -103,6 +103,21 @@ quadro). Erratas E-7 e E-8. Amostra, desfecho, estimador e a manchete de A5 não
 mudam; o que muda é o que se pode afirmar sobre deslocamento, que volta a
 **não testado**. A fila continua sem sessão aberta.
 
+**Estado em 05/10/2026.** A pedido do autor, a identificação do efeito da bolsa
+foi reexplorada só com o lado do tratamento. **R1 passou sharp:** o IVS que a
+própria SGTES publica no quadro de vagas do PMMB 2026 reproduz a faixa anunciada
+em 4.103 de 4.103 combinações município–onda–versão de 2025 e 2026, com os cortes
+0,300 e 0,400 do item 11.2 do Edital nº 28/2026. O R1 anterior reprovou porque
+usou o IVS 2010 do Atlas, que não é a running variable administrativa. **R2 foi
+aprovado sem outcomes** pelo desenho de continuidade (suporte, seleção na oferta,
+balanço e PMMB), com ressalvas: a randomização local não balanceia com suporte
+útil e a potência é limitada (MDE de 22,8 p.p. no salto comum, banda 0,050,
+município como unidade). D-3 deixou de ser pré-condição. **A fila tem uma
+decisão do autor aberta:** revisar e autorizar o congelamento do protocolo R3
+([`18_protocolo_r3_rdd_bolsa_rascunho.md`](../05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md)).
+Nenhum efeito foi estimado. Auditoria em
+[`15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md).
+
 ## Entrega de banca 1
 
 Paralela à fila analítica e independente dela. A banca 1 apresenta o desenho

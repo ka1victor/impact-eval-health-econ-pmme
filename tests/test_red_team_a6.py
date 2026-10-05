@@ -1,4 +1,4 @@
-"""Invariantes A6 — red team e síntese (associativo, RDD encerrado)."""
+"""Invariantes A6 — red team e síntese (associativo; RDD da bolsa sem estimativa)."""
 
 from __future__ import annotations
 
@@ -103,7 +103,7 @@ class RedTeamA6Test(unittest.TestCase):
         self.assertNotIn("efeito causal do adicional da bolsa foi estimado", low)
         self.assertNotIn("efeito causal do adicional da bolsa é", low)
         self.assertIn("sem base para efeito causal", low)
-        # must mention rdd encerrado
+        # o estado do RDD tem de ser dito em termos do portao R1
         self.assertTrue("rdd" in low and "r1" in low)
         # hashes mentioned
         self.assertIn("hash", low)
@@ -202,7 +202,9 @@ class RedTeamA6Test(unittest.TestCase):
         self.assertIn("python", man["versoes"])
         self.assertIn("limites_reafirmados", man)
         self.assertIn("portoes", man)
-        self.assertIn("R1_RDD_ENCERRADO", " ".join(man["portoes"].keys()))
+        portoes = " ".join(man["portoes"].keys())
+        self.assertIn("R1_RDD_IVS2010_REPROVADO", portoes)
+        self.assertIn("R1_RDD_IVS_ADMINISTRATIVO_APROVADO", portoes)
 
     def test_manifesto_cobre_a_aquisicao_e_o_ambiente_real(self):
         """B-3: a sequência publicada tem de ser a que reproduz, na plataforma certa.

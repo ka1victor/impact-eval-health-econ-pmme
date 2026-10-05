@@ -1,6 +1,6 @@
 # A6 — Red team da evidência empírica
 
-> Data: 2026-09-21  
+> Data: 2026-10-05  
 > Escopo máximo: evidência associativa de implementação e evolução da oferta médica cadastrada.  
 > Resultado principal: atração administrativa (A4). Resultado secundário: dinâmica agregada do CNES (A5).
 
@@ -38,7 +38,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ### 6. IVS e faixa de bolsa
 
 **Refutação tentada:** interpretar IVS, faixa e valor anunciado como fontes independentes de variação.  
-**Veredito:** a grade administrativa é colinear e a regra não foi reproduzida para 177/368 municípios. IVS 2010 continua a running variable canônica, mas o RDD foi encerrado no portão R1.
+**Veredito:** a grade administrativa é colinear com a vulnerabilidade, e o IVS 2010 não reproduz a regra em 177/368 municípios. A regra é reproduzida pelo IVS administrativo da SGTES (R1 sharp em 05/10/2026); neste módulo, faixa e IVS continuam sem leitura causal.
 
 ### 7. CNES e retenção individual
 
@@ -47,8 +47,8 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 
 ### 8. RDD
 
-**Refutação tentada:** forçar descontinuidade em IVS=0,4 apesar da falha na reconstrução da regra e do suporte discreto.  
-**Veredito:** RDD encerrado em R1; nenhuma afirmação causal do adicional da bolsa.
+**Refutação tentada:** forçar descontinuidade no IVS 2010 apesar da falha na reconstrução da regra e do suporte discreto.  
+**Veredito:** com o IVS 2010, o RDD não passa do R1. Com o IVS administrativo da SGTES, R1 passou e R2 foi aprovado sem outcomes em 05/10/2026; até o R4, nenhuma afirmação causal do adicional da bolsa.
 
 ### 9. SIH/SIA, fila, saúde e custo-benefício
 

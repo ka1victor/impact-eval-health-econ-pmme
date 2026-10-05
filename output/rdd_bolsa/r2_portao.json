@@ -1,0 +1,453 @@
+{
+  "portao": "R2",
+  "data_execucao": "2026-10-05",
+  "outcomes_abertos": false,
+  "decisao_r2": "VIAVEL_CONTINUIDADE_COM_RESSALVAS",
+  "cortes_viaveis": [
+    "0.300",
+    "0.400"
+  ],
+  "primeiro_estagio": {
+    "tipo": "sharp por construcao",
+    "leitura": "o valor anunciado salta exatamente R$ 5 mil em 0,300/0,301 e em 0,400/0,401 para 100% dos municipios ofertados (R1: 4.103 de 4.103 municipio-onda-versao), e nao salta em 0,200 e 0,500",
+    "estimando": "intencao de tratar da oferta anunciada; valor recebido nao e observado"
+  },
+  "regras_pre_especificadas": {
+    "unidade": "municipio",
+    "populacao_balanco_e_composicao": "municipios ofertados em ao menos uma onda de 2025 ou 2026",
+    "populacao_selecao_e_cointervencao": "todos os municipios com IVS administrativo",
+    "janelas_randomizacao_local": [
+      0.005,
+      0.01,
+      0.015,
+      0.02,
+      0.025,
+      0.03,
+      0.04,
+      0.05
+    ],
+    "bandas_local_linear": [
+      0.03,
+      0.05,
+      0.075,
+      0.1
+    ],
+    "banda_referencia_do_portao": 0.05,
+    "permutacoes": 5000,
+    "semente": 20261005,
+    "limiar_balanco_randomizacao_local": 0.15,
+    "alfa": 0.05,
+    "criterios_essenciais": [
+      "suporte",
+      "selecao_na_oferta",
+      "cointervencao_pmmb",
+      "balanco_local_linear_holm"
+    ],
+    "suporte_minimo": {
+      "municipios_por_lado": 20,
+      "pontos_de_massa_por_lado": 5
+    },
+    "mde": "proporcao municipal, alfa 5% bilateral, poder 80%, variancia p(1-p) com p hipotetico 0,2/0,3/0,4"
+  },
+  "covariaveis": {
+    "ivs_2010": "IVS 2010 do Atlas",
+    "ivs_infra_2010": "IVS infraestrutura urbana 2010",
+    "ivs_ch_2010": "IVS capital humano 2010",
+    "ivs_rt_2010": "IVS renda e trabalho 2010",
+    "idhm_2010": "IDHM 2010",
+    "log_rdpc_2010": "log da renda per capita 2010",
+    "log_pop_2022": "log da populacao 2022",
+    "capital": "capital estadual",
+    "rm_ride_2022": "em RM ou RIDE (2022)",
+    "interior_remoto": "interior remoto (tipologia A2)",
+    "amazonia_legal": "Amazonia Legal",
+    "faixa_fronteira": "faixa de fronteira",
+    "norte_nordeste": "regiao Norte ou Nordeste"
+  },
+  "cortes": {
+    "0.300": {
+      "tipo": "tratamento",
+      "salto_da_bolsa_anunciada": 5000,
+      "suporte_banda_referencia": {
+        "banda": 0.05,
+        "ofertados_esq": 179,
+        "ofertados_dir": 139,
+        "pontos_massa_esq": 50,
+        "pontos_massa_dir": 49
+      },
+      "randomizacao_local": {
+        "min_p_por_covariavel": {
+          "0.005": 0.0136,
+          "0.010": 0.1164,
+          "0.015": 0.0192,
+          "0.020": 0.0014,
+          "0.025": 0.0022,
+          "0.030": 0.0014,
+          "0.040": 0.0002,
+          "0.050": 0.0002
+        },
+        "janela_regra_estrita": null,
+        "p_teste_conjunto": {
+          "0.005": 0.0834,
+          "0.010": 0.4235,
+          "0.015": 0.095,
+          "0.020": 0.0094,
+          "0.025": 0.0274,
+          "0.030": 0.008,
+          "0.040": 0.0002,
+          "0.050": 0.0002
+        },
+        "janela_teste_conjunto": null
+      },
+      "local_linear": {
+        "holm_min_p_covariaveis": {
+          "0.030": 0.1286,
+          "0.050": 0.26,
+          "0.075": 0.6325,
+          "0.100": 0.8376
+        },
+        "covariaveis_com_p_menor_que_5pct_na_banda_referencia": [
+          "capital"
+        ],
+        "p_selecao_na_oferta": 0.3359,
+        "p_composicao": {
+          "n_ondas_ofertado": 0.7298,
+          "n_celulas": 0.9213,
+          "n_vagas": 0.6642,
+          "n_cursos": 0.4538
+        },
+        "p_cointervencao_pmmb": {
+          "pmmb_elegivel": 0.4721,
+          "pmmb_com_vagas": 0.5937,
+          "pmmb_vagas_esf": 0.2519
+        },
+        "mde_proporcao_municipal_pp": {
+          "0.030": {
+            "0.2": 35.8,
+            "0.3": 41.0,
+            "0.4": 43.8
+          },
+          "0.050": {
+            "0.2": 27.5,
+            "0.3": 31.5,
+            "0.4": 33.7
+          },
+          "0.075": {
+            "0.2": 22.9,
+            "0.3": 26.2,
+            "0.4": 28.0
+          },
+          "0.100": {
+            "0.2": 19.8,
+            "0.3": 22.7,
+            "0.4": 24.3
+          }
+        }
+      },
+      "criterios": {
+        "suporte": true,
+        "selecao_na_oferta": true,
+        "cointervencao_pmmb": true,
+        "balanco_local_linear_holm": true,
+        "composicao_da_oferta": true,
+        "randomizacao_local_viavel": false
+      },
+      "status": "VIAVEL_CONTINUIDADE"
+    },
+    "0.400": {
+      "tipo": "tratamento",
+      "salto_da_bolsa_anunciada": 5000,
+      "suporte_banda_referencia": {
+        "banda": 0.05,
+        "ofertados_esq": 129,
+        "ofertados_dir": 153,
+        "pontos_massa_esq": 46,
+        "pontos_massa_dir": 46
+      },
+      "randomizacao_local": {
+        "min_p_por_covariavel": {
+          "0.005": 0.0264,
+          "0.010": 0.0106,
+          "0.015": 0.017,
+          "0.020": 0.0014,
+          "0.025": 0.0006,
+          "0.030": 0.0002,
+          "0.040": 0.0002,
+          "0.050": 0.0002
+        },
+        "janela_regra_estrita": null,
+        "p_teste_conjunto": {
+          "0.005": 0.1824,
+          "0.010": 0.1008,
+          "0.015": 0.1518,
+          "0.020": 0.0164,
+          "0.025": 0.0028,
+          "0.030": 0.0012,
+          "0.040": 0.0002,
+          "0.050": 0.0002
+        },
+        "janela_teste_conjunto": 0.005
+      },
+      "local_linear": {
+        "holm_min_p_covariaveis": {
+          "0.030": 0.8162,
+          "0.050": 0.2332,
+          "0.075": 0.3322,
+          "0.100": 0.5546
+        },
+        "covariaveis_com_p_menor_que_5pct_na_banda_referencia": [
+          "ivs_ch_2010"
+        ],
+        "p_selecao_na_oferta": 0.7642,
+        "p_composicao": {
+          "n_ondas_ofertado": 0.457,
+          "n_celulas": 0.1429,
+          "n_vagas": 0.2078,
+          "n_cursos": 0.2352
+        },
+        "p_cointervencao_pmmb": {
+          "pmmb_elegivel": 0.2426,
+          "pmmb_com_vagas": 0.7763,
+          "pmmb_vagas_esf": 0.4714
+        },
+        "mde_proporcao_municipal_pp": {
+          "0.030": {
+            "0.2": 36.6,
+            "0.3": 41.9,
+            "0.4": 44.8
+          },
+          "0.050": {
+            "0.2": 28.7,
+            "0.3": 32.9,
+            "0.4": 35.1
+          },
+          "0.075": {
+            "0.2": 24.2,
+            "0.3": 27.7,
+            "0.4": 29.6
+          },
+          "0.100": {
+            "0.2": 20.9,
+            "0.3": 24.0,
+            "0.4": 25.6
+          }
+        }
+      },
+      "criterios": {
+        "suporte": true,
+        "selecao_na_oferta": true,
+        "cointervencao_pmmb": true,
+        "balanco_local_linear_holm": true,
+        "composicao_da_oferta": true,
+        "randomizacao_local_viavel": false
+      },
+      "status": "VIAVEL_CONTINUIDADE"
+    },
+    "0.200": {
+      "tipo": "placebo",
+      "salto_da_bolsa_anunciada": 0,
+      "suporte_banda_referencia": {
+        "banda": 0.05,
+        "ofertados_esq": 95,
+        "ofertados_dir": 167,
+        "pontos_massa_esq": 40,
+        "pontos_massa_dir": 48
+      },
+      "randomizacao_local": {
+        "min_p_por_covariavel": {
+          "0.005": 0.0222,
+          "0.010": 0.0324,
+          "0.015": 0.235,
+          "0.020": 0.1348,
+          "0.025": 0.0194,
+          "0.030": 0.0028,
+          "0.040": 0.0002,
+          "0.050": 0.0002
+        },
+        "janela_regra_estrita": null,
+        "p_teste_conjunto": {
+          "0.005": 0.1076,
+          "0.010": 0.1476,
+          "0.015": 0.7682,
+          "0.020": 0.5231,
+          "0.025": 0.1916,
+          "0.030": 0.0282,
+          "0.040": 0.0002,
+          "0.050": 0.0002
+        },
+        "janela_teste_conjunto": null
+      },
+      "local_linear": {
+        "holm_min_p_covariaveis": {
+          "0.030": 0.0204,
+          "0.050": 0.083,
+          "0.075": 0.4388,
+          "0.100": 0.7368
+        },
+        "covariaveis_com_p_menor_que_5pct_na_banda_referencia": [
+          "ivs_2010"
+        ],
+        "p_selecao_na_oferta": 0.6271,
+        "p_composicao": {
+          "n_ondas_ofertado": 0.2988,
+          "n_celulas": 0.526,
+          "n_vagas": 0.4676,
+          "n_cursos": 0.9411
+        },
+        "p_cointervencao_pmmb": {
+          "pmmb_elegivel": 0.7245,
+          "pmmb_com_vagas": 0.9124,
+          "pmmb_vagas_esf": 0.6469
+        },
+        "mde_proporcao_municipal_pp": {
+          "0.030": {
+            "0.2": 36.3,
+            "0.3": 41.6,
+            "0.4": 44.5
+          },
+          "0.050": {
+            "0.2": 28.9,
+            "0.3": 33.1,
+            "0.4": 35.4
+          },
+          "0.075": {
+            "0.2": 24.1,
+            "0.3": 27.6,
+            "0.4": 29.5
+          },
+          "0.100": {
+            "0.2": 22.1,
+            "0.3": 25.3,
+            "0.4": 27.0
+          }
+        }
+      }
+    },
+    "0.500": {
+      "tipo": "placebo",
+      "salto_da_bolsa_anunciada": 0,
+      "suporte_banda_referencia": {
+        "banda": 0.05,
+        "ofertados_esq": 88,
+        "ofertados_dir": 80,
+        "pontos_massa_esq": 41,
+        "pontos_massa_dir": 39
+      },
+      "randomizacao_local": {
+        "min_p_por_covariavel": {
+          "0.005": 0.166,
+          "0.010": 0.1808,
+          "0.015": 0.0776,
+          "0.020": 0.025,
+          "0.025": 0.0072,
+          "0.030": 0.0022,
+          "0.040": 0.0002,
+          "0.050": 0.0002
+        },
+        "janela_regra_estrita": 0.01,
+        "p_teste_conjunto": {
+          "0.005": 0.7393,
+          "0.010": 0.8418,
+          "0.015": 0.5495,
+          "0.020": 0.2136,
+          "0.025": 0.0736,
+          "0.030": 0.0092,
+          "0.040": 0.0008,
+          "0.050": 0.0002
+        },
+        "janela_teste_conjunto": 0.02
+      },
+      "local_linear": {
+        "holm_min_p_covariaveis": {
+          "0.030": 0.429,
+          "0.050": 0.6528,
+          "0.075": 1.0,
+          "0.100": 1.0
+        },
+        "covariaveis_com_p_menor_que_5pct_na_banda_referencia": [],
+        "p_selecao_na_oferta": 0.8268,
+        "p_composicao": {
+          "n_ondas_ofertado": 0.6566,
+          "n_celulas": 0.9635,
+          "n_vagas": 0.6337,
+          "n_cursos": 0.9582
+        },
+        "p_cointervencao_pmmb": {
+          "pmmb_elegivel": 0.213,
+          "pmmb_com_vagas": 0.042,
+          "pmmb_vagas_esf": 0.0834
+        },
+        "mde_proporcao_municipal_pp": {
+          "0.030": {
+            "0.2": 47.6,
+            "0.3": 54.6,
+            "0.4": 58.4
+          },
+          "0.050": {
+            "0.2": 35.6,
+            "0.3": 40.7,
+            "0.4": 43.6
+          },
+          "0.075": {
+            "0.2": 29.2,
+            "0.3": 33.5,
+            "0.4": 35.8
+          },
+          "0.100": {
+            "0.2": 26.0,
+            "0.3": 29.8,
+            "0.4": 31.9
+          }
+        }
+      }
+    }
+  },
+  "placebos_covariaveis_sinalizadas": {
+    "0.200": [
+      "ivs_2010"
+    ],
+    "0.500": []
+  },
+  "mde_conjunto_dois_cortes_pp": {
+    "0.030": {
+      "0.2": 25.6,
+      "0.3": 29.3,
+      "0.4": 31.3
+    },
+    "0.050": {
+      "0.2": 19.9,
+      "0.3": 22.8,
+      "0.4": 24.3
+    },
+    "0.075": {
+      "0.2": 16.6,
+      "0.3": 19.0,
+      "0.4": 20.4
+    },
+    "0.100": {
+      "0.2": 14.4,
+      "0.3": 16.5,
+      "0.4": 17.6
+    }
+  },
+  "ressalvas": [
+    "0.300: randomizacao local so balanceia em janela com menos de 20 municipios por lado; nao serve de estimador principal",
+    "0.300: capital com p < 0,05 isoladamente; ajustar ou estratificar no R3",
+    "0.400: randomizacao local so balanceia em janela com menos de 20 municipios por lado; nao serve de estimador principal",
+    "0.400: ivs_ch_2010 com p < 0,05 isoladamente; ajustar ou estratificar no R3"
+  ],
+  "limites": [
+    "A regra estrita de randomizacao local, primeira a ser executada, reprova os dois cortes; o registro fica no artefato e o estimador principal passa a ser local-linear, decisao tomada sem outcome.",
+    "Estoque previo de especialistas no CNES nao entrou no balanco: o bruto do CNES nao esta neste ambiente e precisa ser readquirido antes do R3.",
+    "A safra do IVS administrativo nao e publicada; a regra e reproduzida, mas sua origem precisa ser documentada.",
+    "Ser ofertado em 2026 e decisao posterior a 2025; a continuidade da probabilidade de oferta testa selecao, nao a exclui em outras margens."
+  ],
+  "fontes": {
+    "output/rdd_bolsa/matriz_municipio_ivs_administrativo.csv": "a724e5759d8664a7d726724888caec56af8def3914877b885e88c910718b1498",
+    "output/rdd_bolsa/a01c_regra_ivs_administrativo.json": "bb2d39201ca969c5b80c29ac89416942fc7e7f854e717b1deb4a9cbb1be4200e",
+    "output/tema_trabalho/matriz_tipologia_territorial.parquet": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+    "output/aquisicao/populacao_censo2022_municipios.csv": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+    "output/aquisicao/quadro_vagas_consolidado.parquet": "47cf61e4018b17759a088b320757b0269557c808721089a2490a3ce830b642db"
+  },
+  "o_que_nao_autoriza": "Nao abre outcomes. A estimacao (R4) depende de protocolo R3 congelado e autorizacao do autor."
+}

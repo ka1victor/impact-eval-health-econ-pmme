@@ -8,6 +8,34 @@
 
 ---
 
+## 05/10/2026 — RDD da bolsa reaberta: R1 e R2 com o IVS administrativo
+
+Motivo: o autor pediu para explorar como identificar o efeito da bolsa. A SGTES
+publica o próprio IVS no quadro de vagas do PMMB 2026, e ele reproduz a faixa do
+PMM-E em todos os casos. O R1 anterior reprovou por usar o IVS 2010 do Atlas.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/15_portao_r1_r2_ivs_administrativo.md`](auditorias/15_portao_r1_r2_ivs_administrativo.md) | auditoria dos portões R1 (`APROVADO_SHARP`) e R2 (`VIAVEL_CONTINUIDADE_COM_RESSALVAS`) com o IVS administrativo; nenhum outcome aberto |
+| [`05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md`](05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md) | rascunho, não congelado, do protocolo R3; lista as decisões que cabem ao autor |
+| `data/raw/aquisicao/ivs_regra/pmmb_2026_quadro_de_vagas.xlsx` e `pmmb_2026_edital_22_2026.pdf` | fonte bruta do IVS administrativo, preservada por `scripts/aquisicao/a07_adquirir_ivs_administrativo.py` |
+
+### Notas de atualização
+
+Os documentos [`05_identificacao/14`](05_identificacao/14_plano_implementacao_rdd_bolsa.md),
+[`05_identificacao/16`](05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
+[`05_identificacao/17`](05_identificacao/17_plano_causal_publico_cutoff_escore.md),
+[`01_pergunta_escopo/15`](01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md)
+e [`06_execucao/05`](06_execucao/05_roadmap_execucao.md) ganharam nota datada. Em 16,
+a Alternativa B (diferença-em-diferenças pela grade de 2026) fica encerrada: nenhum
+município mudou de faixa entre 2025 e 2026. O documento gerado
+[`auditorias/07_portao_rdd_bolsa.md`](auditorias/07_portao_rdd_bolsa.md) não foi
+regerado; ele segue correto para o IVS 2010.
+
+---
+
 ## 21/09/2026 — Banca 1: Q&A e apêndice, moldura sem navbar, galeria e Slidev reconstruído
 
 Motivo: o autor pediu a leitura do deck em PowerPoint que o grupo de fato

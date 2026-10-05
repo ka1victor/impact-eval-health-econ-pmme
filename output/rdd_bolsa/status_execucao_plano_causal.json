@@ -1,6 +1,6 @@
 {
-  "data_execucao": "2026-09-04",
-  "status_geral": "PARCIAL_EXECUTADO_AGUARDANDO_DADOS_ADMINISTRATIVOS",
+  "data_execucao": "2026-10-05",
+  "status_geral": "R1_R2_EXECUTADOS_AGUARDANDO_R3",
   "estimacao_rdd_atracao_autorizada": false,
   "fail_closed_verificado": true,
   "artefatos_proibidos_encontrados": [],
@@ -11,22 +11,22 @@
     },
     "P1": {
       "status": "PRONTO_NAO_ENVIADO",
-      "evidencia": "texto focal, layouts e pedidos técnicos completos; falta canal autorizado"
+      "evidencia": "pacote completo e não enviado; deixou de ser pré-condição do R1, pois o IVS administrativo é público"
     },
     "R1": {
-      "status": "REPROVADO_PENDENTE_DE_RECONSTRUCAO",
-      "evidencia": "matriz municipal e portão público reproduzíveis"
+      "status": "APROVADO_SHARP",
+      "evidencia": "IVS administrativo reproduz 4103/4103 município-onda-versão; IVS 2010 público segue reprovado"
     },
     "R2": {
-      "status": "BLOQUEADO_POR_R1",
-      "evidencia": "não abrir outcomes; escore administrativo ainda ausente"
+      "status": "VIAVEL_CONTINUIDADE_COM_RESSALVAS",
+      "evidencia": "suporte, seleção na oferta, balanço e PMMB sem outcomes; potência limitada"
     },
     "R3": {
-      "status": "BLOQUEADO_ATE_R1_R2",
-      "evidencia": "pré-análise prospectiva não criada prematuramente"
+      "status": "PENDENTE_AUTORIZACAO_DO_AUTOR",
+      "evidencia": "rascunho do protocolo em docs/05_identificacao/18; nenhum registro congelado"
     },
     "R4": {
-      "status": "BLOQUEADO_ATE_R1_R3",
+      "status": "BLOQUEADO_ATE_R3",
       "evidencia": "nenhum efeito RDD de atração estimado"
     },
     "R5": {
@@ -35,9 +35,51 @@
     }
   },
   "r1": {
+    "running_variable": "IVS administrativo publicado pela SGTES no quadro do PMMB 2026",
+    "decisao": "APROVADO_SHARP",
+    "acertos": 4103,
+    "total": 4103
+  },
+  "r1_publico": {
+    "decisao": "REPROVADO_PENDENTE_DE_RECONSTRUCAO",
     "n_municipios": 368,
     "n_divergentes": 177,
     "pct_divergentes": 48.09782608695652
+  },
+  "r2": {
+    "decisao": "VIAVEL_CONTINUIDADE_COM_RESSALVAS",
+    "cortes_viaveis": [
+      "0.300",
+      "0.400"
+    ],
+    "ressalvas": [
+      "0.300: randomizacao local so balanceia em janela com menos de 20 municipios por lado; nao serve de estimador principal",
+      "0.300: capital com p < 0,05 isoladamente; ajustar ou estratificar no R3",
+      "0.400: randomizacao local so balanceia em janela com menos de 20 municipios por lado; nao serve de estimador principal",
+      "0.400: ivs_ch_2010 com p < 0,05 isoladamente; ajustar ou estratificar no R3"
+    ],
+    "mde_conjunto_dois_cortes_pp": {
+      "0.030": {
+        "0.2": 25.6,
+        "0.3": 29.3,
+        "0.4": 31.3
+      },
+      "0.050": {
+        "0.2": 19.9,
+        "0.3": 22.8,
+        "0.4": 24.3
+      },
+      "0.075": {
+        "0.2": 16.6,
+        "0.3": 19.0,
+        "0.4": 20.4
+      },
+      "0.100": {
+        "0.2": 14.4,
+        "0.3": 16.5,
+        "0.4": 17.6
+      }
+    }
   },
   "primeiro_estagio_publico": "REPROVADO_SEM_SALTO_ESTAVEL",
   "alternativa_a7": {
@@ -49,13 +91,14 @@
   "pacote_solicitacao": {
     "status": "PRONTO_NAO_ENVIADO",
     "arquivos_sha256": {
-      "docs/pedidos_dados/solicitacao_focal_rdd_bolsa.md": "3bc9c59c5bc9846930c65da7c00341ee105184cdf5899a0eb437afa82e8566c5",
-      "docs/pedidos_dados/vagas_e_regra_ivs.md": "b55dbe3fa9aafc769b5b034e784d5ccc2ae71aa2c8eb5198207de97fdfd1d51c",
+      "docs/pedidos_dados/solicitacao_focal_rdd_bolsa.md": "fb15fec4750483c890b05e1450301a2186018cc40ac55159d2660c3fbff9f15b",
+      "docs/pedidos_dados/vagas_e_regra_ivs.md": "1475c032de17275a248c376ba57818ec2741fe90a064130dda4e890c2c237d78",
       "docs/pedidos_dados/eventos_e_ponte_cnes.md": "056ee717c4affbb71bc3b2e8e7155fd6a657b4108db1d2818cf8c2c8d8983684",
       "docs/pedidos_dados/cutoff_selecao_causal.md": "3800285bef8e0fd831a3810620c33359e4511889d7c74dda8ad3632cc1e958c8"
     },
     "canal_submissao": null,
-    "protocolo": null
+    "protocolo": null,
+    "precondicao_do_r1": false
   },
   "triagem_resposta": {
     "status": "AGUARDANDO_RECEBIMENTO",
@@ -64,5 +107,5 @@
     "r1_pronto_para_reexecucao": false,
     "estimacao_liberada": false
   },
-  "proxima_acao": "Autor escolher e autorizar o canal; submeter conjuntamente regra/vagas e inscrições/eventos; ao receber, preservar bruto e repetir R1."
+  "proxima_acao": "O autor revisar o rascunho do protocolo R3 (docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md), decidir unidade, banda, outcomes e linguagem, e autorizar o congelamento. Só então R4 pode ser executado."
 }
