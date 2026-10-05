@@ -193,4 +193,4 @@ Ela não impõe sinal nem magnitude ao coeficiente do desenho brasileiro.
 
 - Costa, F.; Nunes, L.; Sanches, F. M. (2024). [*How to Attract Physicians to Underserved Areas? Policy Recommendations from a Structural Model*](https://doi.org/10.1162/rest_a_01155). **The Review of Economics and Statistics**, 106(1), 36--52.
 - IPEA (2015). [*Atlas da Vulnerabilidade Social nos Municípios Brasileiros*](https://ivs.ipea.gov.br). **IPEA**, Brasília.
-- Sivey, P.; Scott, A.; Witt, J.; Joyce, C.; Humphreys, J. (2012). [*Junior Doctors' Preferences for Specialty and Location: A Discrete Choice Experiment*](https://doi.org/10.1016/j.jhealeco.2012.06.002). **Journal of Health Economics**, 31(6), 813--823.
+- Sivey, P.; Scott, A.; Witt, J.; Joyce, C.; Humphreys, J. (2012). [*Junior Doctors' Preferences for Specialty Choice*](https://doi.org/10.1016/j.jhealeco.2012.07.001). **Journal of Health Economics**, 31(6), 813--823.

@@ -9,8 +9,8 @@
 > apresentada à banca — *"municípios com maior remuneração oferecida pelo PMM-E
 > têm maior preenchimento de vagas"* — está organizada, termo a termo do modelo,
 > em [`20_evidencia_empirica_hipotese_remuneracao_preenchimento.md`](20_evidencia_empirica_hipotese_remuneracao_preenchimento.md):
-> prêmios fixados por regra com RDD e RCT, médicos em escolha declarada e em
-> modelos estruturais, Brasil, salário real e atração contra permanência.
+> 60 fichas com pergunta, dados, método, resultado e conclusão de cada estudo,
+> conferidos na fonte, e um quadro-resumo de uma linha por estudo.
 
 ## 1. Regra de uso
 
@@ -25,7 +25,7 @@ Resultados estimados, calibrações e sinais encontrados nesses estudos pertence
 | Diamond (2016) | equilíbrio espacial estimado com dados de cidades dos EUA | mostrar como uma aplicação empírica trata renda, moradia, amenidades e heterogeneidade | fundamentar a função de utilidade ou os sinais teóricos |
 | Moehling et al. (2020) | estudo histórico sobre educação médica e escassez rural, com modelo simples de escolha | motivar formação, origem e infraestrutura produtiva; a equação de escolha fundamenta o [modelo microeconômico](../02_teoria/modelo_micro.md) | transportar suas magnitudes históricas para o PMM-E |
 | Costa, Nunes e Sanches (2019/2024) | escolha discreta com coeficientes aleatórios estimada para médicos generalistas formados no Brasil | motivar vínculos de nascimento/formação, salários reais, amenidades e infraestrutura | fornecer primitivas teóricas ou ser extrapolado automaticamente para especialistas |
-| Sivey et al. (2012) | experimento de escolha discreta com médicos em formação na Austrália | mostrar que a disposição a aceitar posto remoto responde a incentivo monetário e quantificar a ordem de grandeza do trade-off | tratar preferência declarada como comportamento observado, ou transportar valores australianos para o Brasil |
+| Sivey et al. (2012) | experimento de escolha discreta com médicos em formação na Austrália, sobre **escolha de especialidade** | mostrar que escolhas de carreira médica respondem a renda — elasticidade-renda de 0,95 — ao lado de atributos não pecuniários. **Não** é estudo de localização; a leitura anterior, de disposição a aceitar posto remoto, estava errada (corrigida em 05/10/2026; ver a ficha B11 de [`20`](20_evidencia_empirica_hipotese_remuneracao_preenchimento.md)) | tratar preferência declarada como comportamento observado, ou transportar valores australianos para o Brasil |
 
 ## 3. Costa, Nunes e Sanches
 
@@ -151,4 +151,4 @@ participação no programa. Ver
 - Yong, J.; Scott, A.; Gravelle, H.; Sivey, P.; McGrail, M. (2018). [*Do rural incentives payments affect entries and exits of general practitioners?*](https://doi.org/10.1016/j.socscimed.2018.08.014). **Social Science & Medicine**, 214, 197--205.
 - Diamond, R. (2016). [*The Determinants and Welfare Implications of US Workers' Diverging Location Choices by Skill: 1980–2000*](https://doi.org/10.1257/aer.20131706). **American Economic Review**, 106(3), 479–524.
 - Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14, 181–225.
-- Sivey, P.; Scott, A.; Witt, J.; Joyce, C.; Humphreys, J. (2012). [*Junior Doctors' Preferences for Specialty and Location: A Discrete Choice Experiment*](https://doi.org/10.1016/j.jhealeco.2012.06.002). **Journal of Health Economics**, 31(6), 813–823.
+- Sivey, P.; Scott, A.; Witt, J.; Joyce, C.; Humphreys, J. (2012). [*Junior Doctors' Preferences for Specialty Choice*](https://doi.org/10.1016/j.jhealeco.2012.07.001). **Journal of Health Economics**, 31(6), 813–823.
