@@ -303,8 +303,8 @@ hash. A pendência 1 mudou de conteúdo por isso: era de forma, virou de cobertu
 
 ### O que veio do PR de ajuste estrutural
 
-Dos nove itens de
-[`06_execucao/37_proposta_ajuste_estrutural.md`](06_execucao/37_proposta_ajuste_estrutural.md),
+Dos nove itens de `06_execucao/37_proposta_ajuste_estrutural.md` — documento do
+próprio PR, que não foi incorporado à árvore e por isso não tem link —,
 entram só os de **rótulo e texto**, que é a onda 1 da sequência que o próprio PR
 propõe. **D1**: "1.295 vagas" vira "1.295 **células** estabelecimento–curso", com
 as 678 vagas imediatas ditas na tela, nos slides 5 e 6. **F2**: o pacote
@@ -676,7 +676,7 @@ foi então limpo e comprimido.
 
 | Arquivo | O que mudou |
 |---|---|
-| [`07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex`](07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex) | reescrito: de **36 frames em 37 páginas** para **22 frames em 29 páginas** |
+| `07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex`, hoje [`banca1_beamer.tex`](07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex) (renomeado em 16/09/2026) | reescrito: de **36 frames em 37 páginas** para **22 frames em 29 páginas** |
 | [`scripts/apresentacao/build_deck_beamer.sh`](../scripts/apresentacao/build_deck_beamer.sh) | passou a relatar também `Overfull \vbox` |
 | [`07_apresentacoes/banca1/deck_beamer/README.md`](07_apresentacoes/banca1/deck_beamer/README.md) | mapa de frames refeito; seções 3.1, 3.3, 3.4 e 5 reescritas |
 | `output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf` | recompilado, 29 páginas |
@@ -768,7 +768,7 @@ conteúdo continua sendo a fonte de verdade, e divergência entre deck e documen
 
 | Arquivo | Conteúdo | Por que existe |
 |---|---|---|
-| [`07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex`](07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex) | deck em Beamer, tema Warsaw, 16:9, 36 frames em 37 páginas | a banca 1 tinha conteúdo canônico em markdown e nenhum artefato de projeção versionado |
+| `07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex`, hoje [`banca1_beamer.tex`](07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex) (renomeado em 16/09/2026) | deck em Beamer, tema Warsaw, 16:9, 36 frames em 37 páginas | a banca 1 tinha conteúdo canônico em markdown e nenhum artefato de projeção versionado |
 | [`07_apresentacoes/banca1/deck_beamer/README.md`](07_apresentacoes/banca1/deck_beamer/README.md) | como compilar, mapeamento slide do documento → frames e decisões de composição | o corte de um slide do documento em vários frames precisa ser rastreável |
 | `scripts/apresentacao/build_deck_beamer.sh` | build determinístico: confere as figuras, roda `pdflatex` duas vezes, relata `Overfull \hbox`, grava o PDF em `output/` e limpa auxiliares | regra do projeto: saída de apresentação é produzida por script versionado |
 | `output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf` | PDF compilado, 37 páginas | artefato derivado, regerável pelo script |
