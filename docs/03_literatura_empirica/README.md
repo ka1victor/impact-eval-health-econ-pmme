@@ -46,6 +46,11 @@ o confirmam ou o completam.
 | Pugatch & Schroeder (2014), *EER* | Gâmbia | RDD | adicional de 30–40% para escola remota → professores qualificados +10 p.p. |
 | Chan et al. (2025), *BJGP Open* | Escócia | Descritivo | bolsa de £ 20 mil para residência em medicina de família → vagas preenchidas de 57% para 88% |
 
+> [!NOTE]
+> **Obs.** O degrau do PMM-E é do tamanho dos que funcionaram: de R$ 10 para
+> R$ 15 mil é +50%, de R$ 15 para R$ 20 mil é +33%, o mesmo do sorteio
+> mexicano. Mas a evidência causal mais limpa vem de fora da medicina.
+
 ---
 
 ## 2. Quanto médicos respondem?
@@ -70,6 +75,11 @@ o confirmam ou o completam.
 | Falcettoni (2018), working paper | EUA | Estrutural | médicos preferem ficar perto de onde fizeram residência; incentivos movem só +1,2% para o rural |
 | Scott et al. (2013), *Soc Sci Med* | Austrália | Declarada | 65% não se mudam por nenhum pacote; os outros pedem de 37% a 130% da renda |
 
+> [!NOTE]
+> **Obs.** O PMM-E exige RQE: recruta especialistas já formados, o grupo que
+> menos responde a salário. O esperado é um efeito modesto, de algumas dezenas
+> por cento sobre a base, e não dobrar o preenchimento.
+
 ---
 
 ## 3. Onde o dinheiro não basta?
@@ -93,6 +103,12 @@ o confirmam ou o completam.
 | Chomitz et al. (1998), Banco Mundial | Indonésia | Declarada | dinheiro modesto basta no remoto moderado, não no extremo |
 | Kruk et al. (2010), *Bull WHO* | Gana | Declarada | melhorar equipamento ou gestão vale tanto quanto dobrar o salário |
 
+> [!NOTE]
+> **Obs.** A Faixa 1 paga mais justamente onde o custo do lugar é maior. No
+> ciclo 1, ela preencheu 31,6% das células na primeira chamada, contra 37,4% na
+> Faixa 2 — dado descritivo, que não separa o efeito da bolsa do efeito do
+> lugar. É o desafio que a banca viu no slide de viabilidade.
+
 ---
 
 ## 4. O que a vaga preenchida não garante?
@@ -113,6 +129,12 @@ o confirmam ou o completam.
 | Bobba et al. (2021), NBER | Peru | RDD | **o caso mais parecido com o PMM-E:** adicional de 13% definido por corte do Censo; preenchimento igual, professor recrutado melhor (+0,42 dp) |
 | Carrillo & Feres (2019), *AEJ: Policy* | 🇧🇷 Brasil | DiD | Mais Médicos: mais consultas, nenhuma melhora em saúde infantil |
 | Glazerman et al. (2013), IES | EUA | Experimento | 88% das vagas preenchidas; a retenção só durou enquanto o pagamento durou |
+
+> [!NOTE]
+> **Obs.** Por isso o projeto mede a oferta líquida no município, e não só o
+> vínculo de quem chegou, e não trata cadastro no CNES como permanência. E vale
+> olhar **quem** preencheu a vaga e **em que chamada**, não só **se** ela foi
+> preenchida.
 
 ---
 
