@@ -3,7 +3,7 @@
 > **Classificação:** transposição empírica do modelo — especificação candidata, mapeamento de variáveis e hipóteses operacionais<br>
 > **Derivação das hipóteses:** [modelo_micro.md](modelo_micro.md), seção 4<br>
 > **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 13, 15, 16 e 17 da estrutura de 17 slides<br>
-> **Atualização:** 17 de setembro de 2026
+> **Atualização:** 7 de outubro de 2026 — remissão à agregação em nível de célula
 
 > *[Nota metodológica: Este documento funciona como um esboço preliminar (sketch) de transposição empírica para guiar a econometria aplicada do projeto. Como a estratégia final de identificação causal, o poder estatístico dos estimandos e a disponibilidade de microdados estão sendo investigados e refinados na execução empírica (ver `docs/06_execucao/` e `docs/auditorias/`), as formulações operacionais e as hipóteses abaixo são tratadas como uma agenda de trabalho em aberto, e não como escolhas axiomáticas congeladas.]*
 
@@ -16,6 +16,14 @@ Para conectar a utilidade teórica aos microdados disponíveis no repositório s
 ```math
 V_{ims} = \alpha + \beta_B B_m(IVS_m) - c_{ms} + \varepsilon_{ims},
 ```
+
+> [!NOTE]
+> **Nível individual × nível de célula (07/10/2026).** A equação acima é a
+> decisão de um médico, e $\varepsilon_{ims}$ é preferência individual, não
+> erro econométrico. O dado observado é a célula estabelecimento–curso. A
+> passagem de um nível ao outro, a equação estimável em cloglog e o termo de
+> erro $u_j$ estão em [modelo_micro.md](modelo_micro.md), seções 4.3 a 4.5. A
+> parametrização do custo abaixo entra nela como $\mathbf{x}_j'\gamma$.
 
 com uma formulação candidata para o custo operacional:
 
@@ -92,7 +100,7 @@ seção apenas diz, para cada uma, o que seria observado nos dados do projeto.
 
 | # | Hipótese derivada | Forma testável com as bases do projeto | Margem |
 |:---:|---|---|---|
-| **H1** | Compensação financeira: $\partial\Pr(\text{aceitar})/\partial B_m > 0$ | salto no preenchimento administrativo da célula CNES–curso na fronteira de faixa. Vacância persistente na Faixa 1 indica $\Delta c_0 > \Delta B/p$ | entrar |
+| **H1** | Compensação financeira: $\partial\Pr(\text{aceitar})/\partial B_m > 0$ | salto no preenchimento administrativo da célula CNES–curso na fronteira de faixa, medido na escala cloglog derivada em [modelo_micro.md](modelo_micro.md), §4.3–4.4. Vacância persistente na Faixa 1 indica $\Delta c_0 > \Delta B/p$ | entrar |
 | **H2** | Persistência: $\partial\Pr(\text{permanecer})/\partial B_m > 0$ | salto no estoque e na cobertura municipal do CBO em horizonte fixo de 6 e 12 meses, com data-base explícita | ficar |
 | **H3** | Renda alternativa: $\partial^2\Pr/\partial B_m\partial w^{\text{alt}} < 0$ | **leitura territorial** — interação entre faixa e ausência de mercado privado local, onde $w = B$; **leitura individual** — exigiria microdado de renda que o projeto não possui | heterogeneidade |
 | **H4** | Decomposição do IVS: sinal de $c_0'(IVS)$ indefinido | infraestrutura urbana com efeito negativo sobre fixação e capital humano com efeito atenuado ou positivo, em modelos com sub-índices desagregados | diagnóstico |
