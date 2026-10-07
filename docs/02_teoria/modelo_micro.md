@@ -186,12 +186,9 @@ c_{im}^{(s)} = c_0^{(s)}(IVS_m) + \eta_i .
 > slide 15.
 
 > [!NOTE]
-> **Notação a partir da seção 4.3.** $\varepsilon_{im}$ e $\eta_i$ são
-> heterogeneidade do médico, não erro de medida do pesquisador. Na agregação
-> eles são reunidos em uma única preferência idiossincrática $\eta_{ij}$, que
-> varia por médico e por célula, e o termo de erro econométrico passa a ser
-> $u_j$, comum a todos os médicos. A forma acima fica preservada como foi
-> apresentada na banca 1.
+> **Leitura na agregação (seção 4.3).** $\varepsilon_{im}$ já carrega o que é
+> do médico, e é dele que saem as parcelas de candidatos por célula. Ele não é
+> o erro da equação estimada: esse é $u_j$, comum a todos os médicos.
 
 ### 3.1 Por que o IVS é a variável que organiza o custo latente
 
@@ -322,30 +319,23 @@ Duas variáveis aleatórias aparecem e **não se confundem**:
 
 | Símbolo | O que é | Varia entre | Papel |
 |---|---|---|---|
-| $\eta_{ij}$ | preferência idiossincrática do médico $i$ pela célula $j$: distância da família, origem, gosto por cidade pequena | médicos e células | parte do **modelo de escolha**; some na agregação, porque é ela que gera a fração de médicos que escolhe cada célula |
+| $\varepsilon_{ij}$ | o erro da utilidade da seção 3: o que é do médico $i$ e não está na parte comum (distância da família, origem, gosto por cidade pequena) | médicos e células | parte do **modelo de escolha**; some na agregação, porque é ele que gera a fração de médicos que escolhe cada célula |
 | $u_j$ | atratividade da célula não observada pelo pesquisador e comum a todos os médicos | células | **termo de erro econométrico** da equação estimada |
-
-$\eta_{ij}$ reúne o que nas seções anteriores aparece espalhado como
-heterogeneidade individual: o choque $\varepsilon_{im}$ e o desvio $\eta_i$ da
-seção 3, $\theta_i^{\text{rural}}$ e $\phi(\text{dist}_{im})$ da seção 2.1.
-Ele precisa variar entre células, e não só entre médicos: um desvio que fosse
-igual em todos os municípios não mudaria qual deles o médico escolhe. A
-distância da família, por exemplo, depende de $m$.
 
 #### Passo 1: agregar os médicos
 
-O valor da célula para o médico $i$ é o valor médio de Moehling mais a
-preferência individual:
+A utilidade da seção 3 já vem escrita com a parte individual no erro. Na
+célula $j$, ela é a parte comum a todos os médicos mais $\varepsilon_{ij}$:
 
 ```math
-U_{ij} = \bar V_j + \eta_{ij},
+V_{ij} = \bar V_j + \varepsilon_{ij},
 \qquad
 \bar V_j = \sum_{t}\delta^t\left[\frac{\mathbb{E}\!\left(w_{jt}\mid B_j\right)}{p_{m}} - c_0^{(s)}(IVS_m)\right] + u_j,
 \qquad
 \bar V_0 = 0 .
 ```
 
-Com $\eta_{ij}$ i.i.d. de valor extremo tipo I (o logit padrão; McFadden,
+Com $\varepsilon_{ij}$ i.i.d. de valor extremo tipo I (o logit padrão; McFadden,
 1974), a fração de candidatos de $s$ que escolhe a célula $j$ é:
 
 ```math
@@ -420,7 +410,7 @@ especialidade (e de chamada, porque $N_s$ muda entre chamadas). Pela medida
 
 1. **O $\beta$ estimado com dado de célula é o parâmetro individual.** É o peso
    da bolsa no valor de Moehling, medido em unidades da dispersão de
-   $\eta_{ij}$, que é a normalização usual do logit. O efeito fixo
+   $\varepsilon_{ij}$, que é a normalização usual do logit. O efeito fixo
    $\alpha_s$ absorve o tamanho do mercado e a competição entre células
    (Berry, 1994).
 2. **H1 em nível de célula.** Com tudo o mais contínuo no corte, a forma
@@ -447,7 +437,7 @@ especialidade (e de chamada, porque $N_s$ muda entre chamadas). Pela medida
 
 ### 4.5 Hipóteses de manutenção e limites
 
-- **Independência de alternativas irrelevantes.** O logit supõe $\eta_{ij}$
+- **Independência de alternativas irrelevantes.** O logit supõe $\varepsilon_{ij}$
   independente entre células. Se médicos preferem regiões inteiras (origem,
   família), células próximas são substitutas mais fortes do que o logit
   admite, e o deslocamento do item 4 fica subestimado.
