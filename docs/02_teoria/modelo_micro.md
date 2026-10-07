@@ -342,6 +342,37 @@ Com $\varepsilon_{ij}$ i.i.d. de valor extremo tipo I (o logit padrão; McFadden
 s_j = \frac{e^{\bar V_j}}{1 + \sum_{k \in s} e^{\bar V_k}} .
 ```
 
+**O desvio de custo $\eta_i$ não se comporta como $\varepsilon_{ij}$.** Na
+seção 3, $c_{im} = c_0(IVS_m) + \eta_i$. Substituindo na utilidade:
+
+```math
+V_{ij} = \bar V_j - \Big(\textstyle\sum_t \delta^t\Big)\,\eta_i + \varepsilon_{ij}.
+```
+
+Há duas diferenças. $\eta_i$ é descontado período a período, porque está
+dentro do colchete, e $\varepsilon_{ij}$ não é. Além disso, $\eta_i$ é igual em
+todos os municípios. Por isso ele não muda **qual** célula o médico escolhe,
+apenas **se** ele entra no programa em vez de ficar fora ($j = 0$). Com
+$\eta_i$ heterogêneo entre médicos, a parcela vira uma média sobre a
+distribuição $F$ de $\eta$:
+
+```math
+s_j
+= \int \frac{e^{\bar V_j - D\eta}}{1 + \sum_{k\in s} e^{\bar V_k - D\eta}}\, dF(\eta)
+= e^{\bar V_j}\, G_s,
+\qquad
+D = \textstyle\sum_t \delta^t ,
+```
+
+em que $G_s$ é o mesmo para todas as células da especialidade. Logo
+$\ln s_j = \bar V_j + \ln G_s$: o termo $\ln G_s$ entra em $\alpha_s$, e as
+equações abaixo não mudam. O que $\eta_i$ altera é o tamanho do programa (a
+fração de candidatos que entra), não a divisão entre células.
+
+A parte do custo individual que **varia entre municípios**, como a distância
+da família, não pode ficar em $\eta_i$, que não tem índice $m$. Ela se comporta
+como $\varepsilon_{ij}$ e fica nele.
+
 O argmax individual vira uma **parcela**: em vez de todos os médicos irem para
 a mesma célula de maior valor, cada célula recebe uma fração que cresce com
 $\bar V_j$. O número de candidatos que escolhe $j$ é
@@ -363,8 +394,8 @@ preenchimento não passa do número de vagas:
 \quad\text{quando } \lambda_j \ll Q_j .
 ```
 
-$\alpha_s = \ln N_s - \ln\!\left(1 + \sum_{k\in s} e^{\bar V_k}\right)$ é comum à
-especialidade e vira efeito fixo. A aproximação pela média vale longe do
+$\alpha_s = \ln N_s + \ln G_s$ é comum à especialidade e vira efeito fixo;
+sem heterogeneidade em $\eta_i$, $\ln G_s = -\ln\!\left(1 + \sum_{k\in s} e^{\bar V_k}\right)$. A aproximação pela média vale longe do
 teto; perto dele, $\mathbb{E}[\min(D,Q)] < \min(\mathbb{E}[D],Q)$.
 **Esta medida não pode ser construída no ciclo 1.** O portão A1
 ([`auditorias/08_portao_denominador_atracao.md`](../auditorias/08_portao_denominador_atracao.md))
