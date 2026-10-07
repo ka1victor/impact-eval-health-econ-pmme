@@ -8,6 +8,23 @@
 
 ---
 
+## 07/10/2026 — Literatura empírica: resumo apresentável
+
+Motivo: o autor pediu um resumo apresentável da literatura que embasa a
+hipótese da banca, publicado no GitHub.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`03_literatura_empirica/README.md`](03_literatura_empirica/README.md) | resumo de uma página dos 60 estudos do fichamento `20`: a hipótese, cinco achados com números, o veredito por termo do modelo, os doze estudos centrais e o que muda no trabalho. Abre automaticamente ao navegar a pasta no GitHub. Não traz número novo: tudo vem das fichas de `20` |
+
+O fichamento `20` passou, em 05/10/2026, de documento temático a uma ficha por
+estudo, com método e conclusão conferidos na fonte; a mudança foi de conteúdo,
+sem mover arquivo.
+
+---
+
 ## 05/10/2026 — Banca 1: versão apresentada registrada e literatura empírica da hipótese
 
 Motivo: o autor enviou o PDF do deck que o grupo de fato apresentou à banca e

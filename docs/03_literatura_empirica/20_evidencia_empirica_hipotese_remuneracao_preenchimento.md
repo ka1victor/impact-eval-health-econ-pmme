@@ -9,6 +9,7 @@
 > **Modelo de referência:** $\max_m \sum_t \delta^t \left[\mathbb{E}(w_{mt}\mid B)/p_{mt} - c_{im}\right]$,
 > com $c$ = custo geográfico + custo laboral ([`modelo_micro.md`](../02_teoria/modelo_micro.md))<br>
 > **Complementa:** [`19_literatura_empirica_escolha_locacional_medicos.md`](19_literatura_empirica_escolha_locacional_medicos.md)<br>
+> **Versão resumida, para apresentar:** [`README.md`](README.md)<br>
 > **Atualização:** 5 de outubro de 2026 — 60 estudos com método e conclusão
 > conferidos na fonte
 
