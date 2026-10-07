@@ -1,175 +1,133 @@
-# Pagar mais preenche vagas? O que diz a literatura empírica
+# Pagar mais preenche vagas?
 
-> **Resumo de 60 estudos**, com método e conclusão conferidos na fonte, sobre a
-> hipótese que o grupo apresentou à banca.<br>
-> **Fichamento completo:** [20 — uma ficha por estudo](20_evidencia_empirica_hipotese_remuneracao_preenchimento.md) ·
-> **Catálogo de base:** [19 — escolha locacional de médicos](19_literatura_empirica_escolha_locacional_medicos.md)<br>
-> **Atualização:** 7 de outubro de 2026
+**Literatura empírica · PMM-E · Grupo 2**
 
----
+> **Hipótese apresentada à banca:** municípios com maior remuneração oferecida
+> pelo PMM-E têm maior preenchimento de vagas.
 
-## A hipótese
+O que 60 estudos empíricos dizem sobre ela, em quatro perguntas. Em cada uma há
+**um estudo principal**, com prioridade para o Brasil, e os **secundários** que
+o confirmam ou o completam.
 
-> **Municípios com maior remuneração oferecida pelo PMM-E têm maior
-> preenchimento de vagas.**
+> [!IMPORTANT]
+> **Pagar mais atrai. Mas, entre médicos, atrai pouco, menos ainda nos lugares
+> mais difíceis, e o efeito pode aparecer em *quem* ocupa a vaga, não em *se*
+> ela é ocupada.**
+>
+> Remuneração é incentivo, e é limitado.
 
-Ela sai do modelo de escolha apresentado na banca. O médico aceita o município
-de maior valor:
-
-$$\max_{m} \sum_t \delta^t \left[ \frac{\mathbb{E}(w_{m} \mid B)}{p_{m}} - c_{m} \right]$$
-
-A bolsa $B$ eleva a remuneração esperada. Mas os preços locais $p$ e o custo
-de viver e trabalhar ali, $c$, continuam contra. **É a soma dos três que decide.**
-
-## Em uma frase
-
-> **Pagar mais atrai — mas menos do que se imagina, menos ainda nos lugares mais
-> difíceis, e o efeito pode aparecer em *quem* ocupa a vaga, não em *se* ela é
-> ocupada.**
-
-É o título da apresentação, agora com evidência: **remuneração é incentivo, e é
-limitado.**
-
-```mermaid
-flowchart LR
-    B["Bolsa maior<br/>R$ 10 → 15 → 20 mil"] --> W["Remuneração<br/>esperada ↑"]
-    W --> V{"Valor da vaga"}
-    P["Preços locais"] --> V
-    C["Custo do lugar<br/>distância, família,<br/>equipe, equipamento"] --> V
-    V --> A["Aceita a vaga"]
-
-    classDef forte fill:#e6f4ea,stroke:#1e7e34,stroke-width:2px,color:#14532d
-    classDef contra fill:#fdecea,stroke:#b42318,stroke-width:2px,color:#7a1d14
-    classDef neutro fill:#f2f4f7,stroke:#475467,stroke-width:1px,color:#1d2939
-    class B,W forte
-    class P,C contra
-    class V,A neutro
-```
-
-<sub>Verde: o que a política move, e a literatura confirma que move. Vermelho: o que pesa contra, e a literatura mostra que pesa muito.</sub>
+**Métodos:**
+![Experimento](https://img.shields.io/badge/Experimento-sorteio-1f5a37)
+![RDD](https://img.shields.io/badge/RDD-descontinuidade_na_regra-2f6f9f)
+![DiD](https://img.shields.io/badge/DiD-diferen%C3%A7as_em_diferen%C3%A7as-6b4fa3)
+![Estrutural](https://img.shields.io/badge/Estrutural-modelo_de_escolha-9a5b00)
+![Declarada](https://img.shields.io/badge/Declarada-escolha_hipot%C3%A9tica-8a3b55)
+![Descritivo](https://img.shields.io/badge/Descritivo-sem_contrafactual-5b6472)
 
 ---
 
-## Cinco achados
+## 1. Remuneração maior atrai?
 
-### 1. Quando o salário muda por sorteio ou por regra, mais gente aceita a vaga
+![Reforça](https://img.shields.io/badge/hip%C3%B3tese-refor%C3%A7a-1e7e34)
 
-| Onde | O que mudou | O que aconteceu |
-|---|---|---|
-| México | salário anunciado **+33%**, por sorteio | aceitação **+15 p.p.**; acima de 200 km de casa, de **25% para ~80%** |
-| Noruega | prêmio de **~10%** por regra de escassez | elasticidade da oferta **≈ 1,4** |
-| Gâmbia | adicional de **30–40%** para escola remota | professores qualificados **+10 p.p.** |
-| Escócia | bolsa única de **£ 20 mil** para residência em medicina de família | vagas preenchidas de **57% para 88%** (associação, não causal) |
+**Sim, quando o salário muda por sorteio ou por regra.**
 
-**A direção da hipótese se sustenta.**
+> ### Dal Bó, Finan & Rossi (2013) · *QJE* · México
+> ![Experimento](https://img.shields.io/badge/Experimento-1f5a37)
+>
+> O salário anunciado foi **sorteado** entre os locais de recrutamento.
+> Salário **33% maior** elevou a aceitação da vaga em **15 p.p.** A mais de
+> 200 km de casa, a aceitação foi de **25% para cerca de 80%**: o salário maior
+> anulou o peso da distância.
 
-### 2. O custo do lugar decide quanto o dinheiro rende
-
-- Na **Austrália**, **65%** dos médicos de família não se mudariam por nenhum
-  pacote. Os outros pedem de **37% a 130%** da renda anual, conforme o posto.
-- Na **Indonésia**, dinheiro modesto basta no remoto moderado, **não** no
-  extremo.
-- Em **Gana**, melhorar equipamento ou gestão vale **tanto quanto dobrar o
-  salário**. Na **Indonésia** — a única amostra de **especialistas** —,
-  segurança e formação pesam **mais que a renda**.
-
-**O custo $c$ do modelo é grande e cresce rápido nos lugares mais difíceis.**
-
-### 3. O caso mais parecido com o PMM-E pesa contra a margem que escolhemos
-
-No **Peru**, um adicional para professores definido por um corte do Censo — a
-mesma lógica do IVS — elevou o salário em **13%**. Um RDD no corte mostra:
-
-| | Efeito |
-|---|---|
-| Probabilidade de a vaga ser preenchida | **0,063** (EP 0,048) — **não significativo** |
-| Qualidade do professor que preencheu | **+0,42 desvio-padrão** |
-| Aprendizagem dos alunos | **+0,2 a +0,5 desvio-padrão** |
-
-**O dinheiro mudou *quem* ocupou a vaga, não *se* ela foi ocupada.**
-
-### 4. Médicos respondem pouco a salário
-
-- No **Brasil**, a elasticidade da escolha de local de médicos generalistas é
-  **0,4** nas metrópoles e **0,7** no interior. Salário **+50%** no interior do
-  Norte e do Nordeste traria **~25%** mais médicos. Cotas em medicina para
-  nascidos em áreas carentes corrigiriam **5 vezes mais** o desequilíbrio, e a
-  custo menor.
-- Nos **EUA**, médicos preferem fortemente ficar perto de onde se formaram, e a
-  resposta a incentivos aparece quase só **em início de carreira**.
-
-**O PMM-E recruta especialistas já formados — o grupo que menos responde.**
-
-### 5. Atrair não é reter, e médico cadastrado não é acesso
-
-| Achado | Onde |
-|---|---|
-| retenção sobe **só enquanto o pagamento dura** (93% contra 70%; depois, 60% contra 51%) | EUA |
-| com obrigação de serviço, **12%** ficam após oito anos, contra **39%** sem | EUA |
-| mais médicos, mas **mesma espera** para quem já era paciente | Austrália |
-| Mais Médicos: **+15,1** médicos do programa por 100 mil, só **+5,7** líquidos | Brasil |
-| mais consultas, **nenhuma** melhora em saúde infantil ou mortalidade | Brasil |
-
-**Preenchimento é o primeiro elo da cadeia, não o último.**
-
----
-
-## O veredito, termo a termo
-
-| Termo do modelo | O que a literatura diz | Para a hipótese |
-|---|---|:---:|
-| **Remuneração esperada** $\mathbb{E}(w \mid B)$ | move a escolha; elasticidade de 1 a 2 fora da medicina, de 0,4 a 0,7 entre médicos | ✅ |
-| **Renda alternativa** | o que atrai é o salário **relativo** ao mercado local; a bolsa pesa mais onde o mercado privado é menor | ✅ |
-| **Preços locais** $p$ | uma bolsa nominal igual vale mais onde tudo é mais barato; não há índice de preços municipal no Brasil | ⚠️ |
-| **Custo do lugar** $c$ | distância, família, equipe e equipamento pesam tanto quanto ou mais que o salário | ⚠️ |
-| **Altruísmo** $\alpha$ | pagar mais pode afastar os mais motivados (Uganda) — ou não (México, Zâmbia) | ⚠️ |
-| **Horizonte** $\sum \delta^t$ | o efeito vem na entrada; a permanência responde pouco | ➖ |
-
-<sub>✅ reforça · ⚠️ qualifica · ➖ delimita o que o preenchimento consegue afirmar</sub>
-
----
-
-## Os estudos que mais importam
-
-| Estudo | País | Método | Conclusão |
+| Secundários | País | Método | Achado |
 |---|---|---|---|
-| [Dal Bó, Finan & Rossi (2013)](https://doi.org/10.1093/qje/qjt008), *QJE* | México | salário sorteado | pagar mais atrai mais e melhores candidatos e compensa a distância |
-| [Bobba et al. (2021, rev. 2026)](https://www.nber.org/papers/w29068), NBER | Peru | RDD em corte censitário | o adicional melhora quem é recrutado, não o preenchimento |
-| [Pugatch & Schroeder (2014)](https://doi.org/10.1016/j.econedurev.2014.04.003), *EER* | Gâmbia | RD e DiD em regra de distância | mais professores qualificados, menos nos lugares mais remotos |
-| [Falch (2010)](https://doi.org/10.1086/649905), *JOLE* | Noruega | prêmio por regra, efeitos fixos | elasticidade da oferta ≈ 1,4 |
-| [Costa, Nunes & Sanches (2024)](https://doi.org/10.1162/rest_a_01155), *REStat* | Brasil | modelo estrutural | salário é a alavanca menos custo-efetiva; origem pesa mais |
-| [Scott et al. (2013)](https://doi.org/10.1016/j.socscimed.2013.07.002), *SSM* | Austrália | experimento de escolha | 65% não se mudam; os demais pedem de 37% a 130% da renda |
-| [Yong et al. (2018)](https://doi.org/10.1016/j.socscimed.2018.08.014), *SSM* | Austrália | DiD em mudança de elegibilidade | só recém-formados respondem; o estoque não muda |
-| [Kurniati et al. (2024)](https://doi.org/10.1371/journal.pone.0308225), *PLoS ONE* | Indonésia | experimento de escolha com especialistas | segurança e formação pesam mais que renda |
-| [Hone et al. (2020)](https://doi.org/10.1186/s12913-020-05716-2), *BMC HSR* | Brasil | DiD | Mais Médicos: grande parte da oferta substituiu a que já existia |
-| [Propper & Van Reenen (2010)](https://doi.org/10.1086/653137), *JPE* | Inglaterra | painel com salário regulado | salário nacional igual recruta pior onde o mercado local paga mais |
-| [Glazerman et al. (2013)](https://ies.ed.gov/ncee/pubs/20144003/pdf/20144003.pdf), IES | EUA | experimento | 88% das vagas preenchidas; retenção só enquanto pagou |
-| [Grobler et al. (2015)](https://doi.org/10.1002/14651858.CD005314.pub3), Cochrane | revisão | revisão sistemática | evidência causal confiável sobre incentivos a profissionais de saúde é quase inexistente |
-
-Os outros 48, com ficha completa, estão no [fichamento](20_evidencia_empirica_hipotese_remuneracao_preenchimento.md#2-quadro-resumo).
+| Falch (2010), *JOLE* | Noruega | DiD | prêmio de ~10% por regra de escassez → elasticidade da oferta ≈ 1,4 |
+| Pugatch & Schroeder (2014), *EER* | Gâmbia | RDD | adicional de 30–40% para escola remota → professores qualificados +10 p.p. |
+| Chan et al. (2025), *BJGP Open* | Escócia | Descritivo | bolsa de £ 20 mil para residência em medicina de família → vagas preenchidas de 57% para 88% |
 
 ---
 
-## O que isso muda no nosso trabalho
+## 2. Quanto médicos respondem?
 
-1. **A contribuição é clara.** Todos os RDDs em adicionais salariais por regra
-   territorial são com **professores**. Um RDD no degrau de R$ 5 mil da bolsa do
-   PMM-E seria o primeiro com **médicos especialistas**.
-2. **O preenchimento sozinho pode não mostrar nada.** Vale declarar, **antes** de
-   olhar os dados, desfechos de **rapidez** — em qual chamada a vaga foi
-   preenchida — e de **perfil** de quem a preencheu.
-3. **A expectativa é de efeito modesto.** Com elasticidades de 0,4 a 0,7 e um
-   degrau de +33% a +50%, uma resposta de algumas dezenas por cento é plausível;
-   dobrar o preenchimento, não. Isso serve para calcular poder estatístico, não
-   para julgar o resultado.
-4. **A distância importa.** Vale fixar, com dados de antes do programa, a
-   heterogeneidade por distância até a capital ou o polo regional.
+![Qualifica](https://img.shields.io/badge/hip%C3%B3tese-qualifica-9a5b00)
+
+**Pouco. A origem e o local de formação pesam mais que o salário.**
+
+> ### 🇧🇷 Costa, Nunes & Sanches (2024) · *REStat* · Brasil
+> ![Estrutural](https://img.shields.io/badge/Estrutural-9a5b00)
+>
+> Modelo de escolha de local de trabalho estimado com 46.989 médicos
+> generalistas formados entre 2001 e 2013. A elasticidade ao salário é **0,4**
+> nas metrópoles e **0,7** no interior. Salário público **+50%** no interior do
+> Norte e do Nordeste traria **cerca de 25%** mais médicos. Cotas em medicina
+> para quem nasceu nessas regiões corrigiriam **5 vezes mais** o desequilíbrio,
+> a custo menor.
+
+| Secundários | País | Método | Achado |
+|---|---|---|---|
+| Yong et al. (2018), *Soc Sci Med* | Austrália | DiD | só recém-formados respondem ao incentivo rural (+50% de entrada); o estoque de médicos não muda |
+| Falcettoni (2018), working paper | EUA | Estrutural | médicos preferem ficar perto de onde fizeram residência; incentivos movem só +1,2% para o rural |
+| Scott et al. (2013), *Soc Sci Med* | Austrália | Declarada | 65% não se mudam por nenhum pacote; os outros pedem de 37% a 130% da renda |
 
 ---
 
-<sub>**Como ler os números.** Nada aqui é estimativa do PMM-E: são resultados
-de outros programas, países e profissões, que servem de referência e não de
-prova. Números ainda não conferidos na versão publicada estão marcados no
-[fichamento](20_evidencia_empirica_hipotese_remuneracao_preenchimento.md#6-pendências-de-verificação)
-e não entram em slide sem conferência. Regra de uso completa no
-[catálogo 19](19_literatura_empirica_escolha_locacional_medicos.md#1-regra-de-uso).</sub>
+## 3. Onde o dinheiro não basta?
+
+![Qualifica](https://img.shields.io/badge/hip%C3%B3tese-qualifica-9a5b00)
+
+**Onde o custo do lugar é alto: distância, segurança, equipe, equipamento.**
+
+> ### 🇧🇷 Oliveira et al. (2015) · *Interface* · Brasil
+> ![Descritivo](https://img.shields.io/badge/Descritivo-5b6472)
+>
+> O Programa Mais Médicos ofereceu bolsa de **R$ 10 mil** em 2013. Em menos de
+> um ano, alocou 14.462 médicos em 3.785 municípios, mas só **1.846 eram
+> brasileiros**. Os outros **12.616 eram estrangeiros**, 11.429 deles cubanos.
+> A bolsa alta não bastou para levar médicos brasileiros, na escala
+> necessária, aos municípios que o programa precisava cobrir.
+
+| Secundários | País | Método | Achado |
+|---|---|---|---|
+| Kurniati et al. (2024), *PLoS ONE* | Indonésia | Declarada | com **especialistas**: segurança (OR 6,1) e formação pesam mais que a renda |
+| Chomitz et al. (1998), Banco Mundial | Indonésia | Declarada | dinheiro modesto basta no remoto moderado, não no extremo |
+| Kruk et al. (2010), *Bull WHO* | Gana | Declarada | melhorar equipamento ou gestão vale tanto quanto dobrar o salário |
+
+---
+
+## 4. O que a vaga preenchida não garante?
+
+![Delimita](https://img.shields.io/badge/hip%C3%B3tese-delimita-5b6472)
+
+**Que entrou gente nova, que ela fica, que atende mais.**
+
+> ### 🇧🇷 Hone et al. (2020) · *BMC Health Services Research* · Brasil
+> ![DiD](https://img.shields.io/badge/DiD-6b4fa3)
+>
+> Painel de 5.565 municípios entre 2008 e 2017. O Mais Médicos levou **+15,1**
+> médicos do programa por 100 mil habitantes, mas a oferta total cresceu só
+> **+5,7**: o resto **substituiu** médicos que já estavam lá.
+
+| Secundários | País | Método | Achado |
+|---|---|---|---|
+| Bobba et al. (2021), NBER | Peru | RDD | **o caso mais parecido com o PMM-E:** adicional de 13% definido por corte do Censo; preenchimento igual, professor recrutado melhor (+0,42 dp) |
+| Carrillo & Feres (2019), *AEJ: Policy* | 🇧🇷 Brasil | DiD | Mais Médicos: mais consultas, nenhuma melhora em saúde infantil |
+| Glazerman et al. (2013), IES | EUA | Experimento | 88% das vagas preenchidas; a retenção só durou enquanto o pagamento durou |
+
+---
+
+## A lacuna
+
+> [!TIP]
+> Todos os RDDs em adicional salarial fixado por regra territorial são com
+> **professores**, e a revisão Cochrane encontra evidência causal quase nula
+> para profissionais de saúde. Um RDD no degrau de R$ 5 mil da bolsa do PMM-E
+> seria o **primeiro com médicos especialistas**.
+
+---
+
+<sub>Fichamento completo dos 60 estudos, com método e conclusão conferidos na
+fonte: [20 — uma ficha por estudo](20_evidencia_empirica_hipotese_remuneracao_preenchimento.md).
+Catálogo de base: [19](19_literatura_empirica_escolha_locacional_medicos.md).
+Os números são de outros programas e países: servem de referência, não de
+estimativa do PMM-E.</sub>

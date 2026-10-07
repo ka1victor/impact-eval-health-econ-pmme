@@ -17,7 +17,7 @@ hipótese da banca, publicado no GitHub.
 
 | Arquivo | O que é |
 |---|---|
-| [`03_literatura_empirica/README.md`](03_literatura_empirica/README.md) | resumo de uma página dos 60 estudos do fichamento `20`: a hipótese, cinco achados com números, o veredito por termo do modelo, os doze estudos centrais e o que muda no trabalho. Abre automaticamente ao navegar a pasta no GitHub. Não traz número novo: tudo vem das fichas de `20` |
+| [`03_literatura_empirica/README.md`](03_literatura_empirica/README.md) | visão geral de uma página dos 60 estudos do fichamento `20`: a hipótese, o veredito e quatro perguntas da literatura, cada uma com um estudo principal — o brasileiro, quando há — e três secundários, e a lacuna que o trabalho ocupa. Abre automaticamente ao navegar a pasta no GitHub. Não traz número novo: tudo vem das fichas de `20` |
 
 O fichamento `20` passou, em 05/10/2026, de documento temático a uma ficha por
 estudo, com método e conclusão conferidos na fonte; a mudança foi de conteúdo,
