@@ -18,12 +18,11 @@ V_{ims} = \alpha + \beta_B B_m(IVS_m) - c_{ms} + \varepsilon_{ims},
 ```
 
 > [!NOTE]
-> **Nível individual × nível de célula (07/10/2026).** A equação acima é a
-> decisão de um médico, e $\varepsilon_{ims}$ é preferência individual, não
-> erro econométrico. O dado observado é a célula estabelecimento–curso. A
-> passagem de um nível ao outro, a equação estimável em cloglog e o termo de
-> erro $u_j$ estão em [modelo_micro.md](modelo_micro.md), seções 4.3 a 4.5. A
-> parametrização do custo abaixo entra nela como $\mathbf{x}_j'\gamma$.
+> **Nível individual × nível municipal (07/10/2026).** A equação acima é a
+> decisão de um médico. A passagem para o preenchimento de vagas no município,
+> e a equação estimável correspondente, estão em
+> [modelo_micro.md](modelo_micro.md), seção 4.3. A parametrização do custo
+> abaixo é a forma de medir a parte comum $c_m$ daquela equação.
 
 com uma formulação candidata para o custo operacional:
 
@@ -100,7 +99,7 @@ seção apenas diz, para cada uma, o que seria observado nos dados do projeto.
 
 | # | Hipótese derivada | Forma testável com as bases do projeto | Margem |
 |:---:|---|---|---|
-| **H1** | Compensação financeira: $\partial\Pr(\text{aceitar})/\partial B_m > 0$ | salto no preenchimento administrativo da célula CNES–curso na fronteira de faixa, medido na escala cloglog derivada em [modelo_micro.md](modelo_micro.md), §4.3–4.4. Vacância persistente na Faixa 1 indica $\Delta c_0 > \Delta B/p$ | entrar |
+| **H1** | Compensação financeira: $\partial\Pr(\text{aceitar})/\partial B_m > 0$ | salto no preenchimento administrativo da célula CNES–curso na fronteira de faixa, com o número de vagas controlado ([modelo_micro.md](modelo_micro.md), §4.3). Vacância persistente na Faixa 1 indica $\Delta c_0 > \Delta B/p$ | entrar |
 | **H2** | Persistência: $\partial\Pr(\text{permanecer})/\partial B_m > 0$ | salto no estoque e na cobertura municipal do CBO em horizonte fixo de 6 e 12 meses, com data-base explícita | ficar |
 | **H3** | Renda alternativa: $\partial^2\Pr/\partial B_m\partial w^{\text{alt}} < 0$ | **leitura territorial** — interação entre faixa e ausência de mercado privado local, onde $w = B$; **leitura individual** — exigiria microdado de renda que o projeto não possui | heterogeneidade |
 | **H4** | Decomposição do IVS: sinal de $c_0'(IVS)$ indefinido | infraestrutura urbana com efeito negativo sobre fixação e capital humano com efeito atenuado ou positivo, em modelos com sub-índices desagregados | diagnóstico |

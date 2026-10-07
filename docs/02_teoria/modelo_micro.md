@@ -3,7 +3,7 @@
 > **Classificação:** fundamentação teórica canônica — primitivos, derivações, adaptação ao PMM-E e derivação das hipóteses<br>
 > **Transposição empírica:** [hipoteses_e_viabilidade_empirica.md](hipoteses_e_viabilidade_empirica.md)<br>
 > **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 10 a 13, 15 e 16 da estrutura de 17 slides<br>
-> **Atualização:** 7 de outubro de 2026 — seções 4.3 a 4.5, agregação da escolha individual ao preenchimento da célula
+> **Atualização:** 7 de outubro de 2026 — seção 4.3, agregação do médico ao município
 
 > [!NOTE]
 > Este documento absorveu, em 09/09/2026, o antigo `18_modelo_teorico_slides_apresentacao.md`.
@@ -186,9 +186,9 @@ c_{im}^{(s)} = c_0^{(s)}(IVS_m) + \eta_i .
 > slide 15.
 
 > [!NOTE]
-> **Leitura na agregação (seção 4.3).** $\varepsilon_{im}$ já carrega o que é
-> do médico, e é dele que saem as parcelas de candidatos por célula. Ele não é
-> o erro da equação estimada: esse é $u_j$, comum a todos os médicos.
+> **Leitura na agregação (seção 4.3).** O que é pessoal do médico está no
+> custo $c_{im}$, que varia por médico e por município. O erro da equação
+> estimada é a parte do custo comum do município que não observamos.
 
 ### 3.1 Por que o IVS é a variável que organiza o custo latente
 
@@ -297,207 +297,80 @@ $w = B$, e a bolsa é a totalidade do incentivo.
 A transposição dessas hipóteses para especificações, variáveis e bases está em
 [hipoteses_e_viabilidade_empirica.md](hipoteses_e_viabilidade_empirica.md).
 
-### 4.3 Da escolha individual ao preenchimento da célula
+### 4.3 Do médico ao município: agregação
 
 > [!NOTE]
-> **Melhoria de 07/10/2026.** As seções 1 a 4.2 descrevem a decisão de **um**
-> médico. O dado do projeto é agregado: preenchimento por célula
-> estabelecimento–curso, com bolsa e IVS do município. Esta seção faz a
-> passagem de um nível ao outro sem trocar a teoria: o Moehling continua sendo
-> o modelo individual, e o que se acrescenta é a agregação e a regra de
-> preenchimento. A condição de aceitação da seção 4.1 vale para cada médico; o
-> que muda é o objeto observado.
+> **Melhoria de 07/10/2026.** O Moehling modela a escolha de **um** médico. O
+> dado do projeto é agregado: a proporção das vagas ofertadas que foi
+> preenchida. Esta seção faz a ponte entre os dois sem trocar a teoria.
 
-#### Notação
-
-A célula $j$ é um par estabelecimento–curso, no município $m = m(j)$ e na
-especialidade $s = s(j)$. O mercado relevante é a especialidade: os
-$N_s$ candidatos de $s$ escolhem entre as células de $s$ ou ficam fora do
-programa ($j = 0$).
-
-Duas variáveis aleatórias aparecem e **não se confundem**:
-
-| Símbolo | O que é | Varia entre | Papel |
-|---|---|---|---|
-| $\varepsilon_{ij}$ | o erro da utilidade da seção 3: o que é do médico $i$ e não está na parte comum (distância da família, origem, gosto por cidade pequena) | médicos e células | parte do **modelo de escolha**; some na agregação, porque é ele que gera a fração de médicos que escolhe cada célula |
-| $u_j$ | atratividade da célula não observada pelo pesquisador e comum a todos os médicos | células | **termo de erro econométrico** da equação estimada |
-
-#### Passo 1: agregar os médicos
-
-A utilidade da seção 3 já vem escrita com a parte individual no erro. Na
-célula $j$, ela é a parte comum a todos os médicos mais $\varepsilon_{ij}$:
+**Ponto de partida.** O médico $i$ escolhe o município de maior utilidade:
 
 ```math
-V_{ij} = \bar V_j + \varepsilon_{ij},
-\qquad
-\bar V_j = \sum_{t}\delta^t\left[\frac{\mathbb{E}\!\left(w_{jt}\mid B_j\right)}{p_{m}} - c_0^{(s)}(IVS_m)\right] + u_j,
-\qquad
-\bar V_0 = 0 .
+\max_m\ U_{im} = \sum_t \delta^t\left[\frac{\mathbb{E}(w_m \mid B_m)}{p_m} - c_{im}\right]
 ```
 
-Com $\varepsilon_{ij}$ i.i.d. de valor extremo tipo I (o logit padrão; McFadden,
-1974), a fração de candidatos de $s$ que escolhe a célula $j$ é:
+O custo $c_{im}$ já é pessoal: varia entre médicos e entre municípios
+(distância da família, gosto por cidade pequena; seção 2.1). Por isso não é
+preciso acrescentar um termo individual separado.
+
+**Passo 1: agregar os médicos.** O custo se separa em uma parte comum do
+município, $c_m$, e um desvio pessoal, $c_{im} - c_m$. Como o desvio muda de
+médico para médico, eles não escolhem todos o mesmo município. Supondo que o
+desvio segue a distribuição de valor extremo (o logit padrão; McFadden, 1974),
+a fração de médicos que escolhe $m$ é:
 
 ```math
-s_j = \frac{e^{\bar V_j}}{1 + \sum_{k \in s} e^{\bar V_k}} .
+s_m = \frac{e^{\bar U_m}}{\sum_k e^{\bar U_k}}
 ```
 
-**O desvio de custo $\eta_i$ não se comporta como $\varepsilon_{ij}$.** Na
-seção 3, $c_{im} = c_0(IVS_m) + \eta_i$. Substituindo na utilidade:
+em que $\bar U_m$ é a utilidade calculada com o custo comum $c_m$.
+
+**Passo 2: dividir pelas vagas.** Com $N$ candidatos da especialidade e $Q_m$
+vagas ofertadas:
 
 ```math
-V_{ij} = \bar V_j - \Big(\textstyle\sum_t \delta^t\Big)\,\eta_i + \varepsilon_{ij}.
+\rho_m = \min\left(1,\ \frac{N\, s_m}{Q_m}\right)
 ```
 
-Há duas diferenças. $\eta_i$ é descontado período a período, porque está
-dentro do colchete, e $\varepsilon_{ij}$ não é. Além disso, $\eta_i$ é igual em
-todos os municípios. Por isso ele não muda **qual** célula o médico escolhe,
-apenas **se** ele entra no programa em vez de ficar fora ($j = 0$). Com
-$\eta_i$ heterogêneo entre médicos, a parcela vira uma média sobre a
-distribuição $F$ de $\eta$:
+Como sobram vagas (no ciclo 1, 834 das 1.295 células ficaram sem confirmação
+nem homologação), quase nenhum município bate no teto. Tirando o log:
 
 ```math
-s_j
-= \int \frac{e^{\bar V_j - D\eta}}{1 + \sum_{k\in s} e^{\bar V_k - D\eta}}\, dF(\eta)
-= e^{\bar V_j}\, G_s,
-\qquad
-D = \textstyle\sum_t \delta^t ,
+\ln \rho_m = \alpha_s + \beta\,\frac{B_m}{p_m} - c_m - \ln Q_m
 ```
 
-em que $G_s$ é o mesmo para todas as células da especialidade. Logo
-$\ln s_j = \bar V_j + \ln G_s$: o termo $\ln G_s$ entra em $\alpha_s$, e as
-equações abaixo não mudam. O que $\eta_i$ altera é o tamanho do programa (a
-fração de candidatos que entra), não a divisão entre células.
+- $\alpha_s$: efeito fixo de especialidade, que absorve $N$ e o denominador da
+  fração (Berry, 1994).
+- A parte de $c_m$ que não observamos é o **termo de erro da regressão**.
 
-A parte do custo individual que **varia entre municípios**, como a distância
-da família, não pode ficar em $\eta_i$, que não tem índice $m$. Ela se comporta
-como $\varepsilon_{ij}$ e fica nele.
+**O que isso nos dá:**
 
-O argmax individual vira uma **parcela**: em vez de todos os médicos irem para
-a mesma célula de maior valor, cada célula recebe uma fração que cresce com
-$\bar V_j$. O número de candidatos que escolhe $j$ é
-$D_j \sim \text{Binomial}(N_s, s_j)$, aproximadamente Poisson com média
-$\lambda_j = N_s\, s_j$ quando $s_j$ é pequeno.
+- O $\beta$ estimado com dado municipal é **o mesmo parâmetro do médico
+  individual**.
+- **Hipótese (H1 em nível municipal):** com o mesmo número de vagas, municípios
+  com bolsa maior têm preenchimento maior.
+- É preciso **controlar pelo número de vagas**: 8 médicos preenchem 80% de 10
+  vagas, mas só 27% de 30 (Petrongolo e Pissarides, 2001, tratam a
+  probabilidade de preenchimento da vaga como objeto próprio).
 
-#### Passo 2: regra de preenchimento
+**Na estimação:** Poisson sobre o número de vagas preenchidas, com efeito fixo
+de especialidade e $\ln Q_m$ como controle. O log não funciona nas células com
+zero.
 
-Há duas medidas possíveis, e só uma é sustentada pelo dado do ciclo 1.
-
-**(a) Taxa de preenchimento por vaga.** Com $Q_j$ vagas abertas, o
-preenchimento não passa do número de vagas:
-
-```math
-\rho_j = \frac{\mathbb{E}\left[\min(D_j, Q_j)\right]}{Q_j}
-\;\approx\; \min\!\left(1, \frac{N_s\, s_j}{Q_j}\right)
-\;\Rightarrow\;
-\ln \rho_j = \alpha_s + \bar V_j - \ln Q_j
-\quad\text{quando } \lambda_j \ll Q_j .
-```
-
-$\alpha_s = \ln N_s + \ln G_s$ é comum à especialidade e vira efeito fixo;
-sem heterogeneidade em $\eta_i$, $\ln G_s = -\ln\!\left(1 + \sum_{k\in s} e^{\bar V_k}\right)$. A aproximação pela média vale longe do
-teto; perto dele, $\mathbb{E}[\min(D,Q)] < \min(\mathbb{E}[D],Q)$.
-**Esta medida não pode ser construída no ciclo 1.** O portão A1
-([`auditorias/08_portao_denominador_atracao.md`](../auditorias/08_portao_denominador_atracao.md))
-reprovou o denominador por vaga: não há identificador persistente de vaga, a
-segunda chamada não publica vagas imediatas por célula, e 15 células têm mais
-confirmações que a capacidade publicada.
-
-**(b) Célula com alguma confirmação ou homologação.** É o outcome aprovado pelo
-portão A1. A célula é preenchida se ao menos um candidato a escolhe:
-
-```math
-\pi_j = \Pr(D_j \ge 1) = 1 - e^{-\lambda_j}
-\;\Rightarrow\;
-\ln\!\left[-\ln(1 - \pi_j)\right] = \ln \lambda_j = \alpha_s + \bar V_j .
-```
-
-A transformação é o *complementary log-log* (cloglog). Ela sai do modelo, não é
-escolha de conveniência, e dispensa $Q_j$. A forma $1 - e^{-\lambda}$ é a mesma
-da função de matching *urn-ball* resenhada por Petrongolo e Pissarides (2001).
-
-#### Equação estimável
-
-Escrevendo a remuneração esperada como parte de mercado mais bolsa,
-$\mathbb{E}(w_{jt}\mid B_j) = \bar w_{j} + B_j$, e substituindo $\bar V_j$:
-
-```math
-\boxed{\;
-\ln\!\left[-\ln(1 - \pi_j)\right]
-=
-\alpha_s + \beta\,\frac{B_j}{p_m} - c_0^{(s)}(IVS_m) + \mathbf{x}_j'\gamma + u_j
-\;}
-```
-
-com $\beta = \sum_{t \in \mathcal{T}_B} \delta^t$ somado sobre os períodos em que
-a bolsa é paga, e $\mathbf{x}_j$ as proxies observadas de $\bar w_j$ e do custo
-(estrato territorial, estoque prévio, população; ver
-[hipoteses_e_viabilidade_empirica.md](hipoteses_e_viabilidade_empirica.md), §1).
-Estima-se como modelo binário com link cloglog na célula, com efeito fixo de
-especialidade (e de chamada, porque $N_s$ muda entre chamadas). Pela medida
-(a), a mesma equação vale para $\ln\rho_j$ com $-\ln Q_j$ como offset.
-
-### 4.4 O que a agregação acrescenta
-
-1. **O $\beta$ estimado com dado de célula é o parâmetro individual.** É o peso
-   da bolsa no valor de Moehling, medido em unidades da dispersão de
-   $\varepsilon_{ij}$, que é a normalização usual do logit. O efeito fixo
-   $\alpha_s$ absorve o tamanho do mercado e a competição entre células
-   (Berry, 1994).
-2. **H1 em nível de célula.** Com tudo o mais contínuo no corte, a forma
-   testável de H1 é um salto de $\beta\,\Delta B/p_m$ no cloglog de $\pi_j$,
-   com $\Delta B = \text{R\$ }5.000$.
-3. **Saltos em $\pi$ não são comparáveis entre cortes.** No nível de
-   probabilidade,
-   $\partial \pi_j/\partial B_j = (1-\pi_j)\left[-\ln(1-\pi_j)\right]\beta/p_m$.
-   O fator multiplicativo é máximo, $1/e \approx 0{,}37$, em
-   $\pi \approx 63\%$, e vale cerca de $0{,}25$ em $\pi = 30\%$. O mesmo
-   $\beta$ produz saltos diferentes em cortes com preenchimento-base diferente.
-   A comparação entre os cortes do IVS se faz na escala cloglog.
-4. **A bolsa desloca médicos entre células da mesma especialidade.** No logit,
-   $\partial s_k/\partial B_j = -\beta\, s_j s_k/p_m < 0$ para $k \ne j$. O
-   salto na célula mede atração relativa. Se células dos dois lados do corte
-   disputam os mesmos candidatos, o lado de controle perde médicos para o
-   tratado e o salto superestima a expansão líquida. Isso reforça a regra do
-   projeto: a célula mede o efeito direto e o município–mês é o teste de
-   oferta líquida local.
-5. **O número de vagas tem previsão própria.** Na medida (b), $Q_j$ não entra.
-   Se entrar como controle, a previsão é coeficiente nulo, salvo se o tamanho
-   da célula sinalizar atratividade. Na medida (a), o coeficiente de
-   $\ln Q_j$ é $-1$.
-
-### 4.5 Hipóteses de manutenção e limites
-
-- **Independência de alternativas irrelevantes.** O logit supõe $\varepsilon_{ij}$
-  independente entre células. Se médicos preferem regiões inteiras (origem,
-  família), células próximas são substitutas mais fortes do que o logit
-  admite, e o deslocamento do item 4 fica subestimado.
-- **Alocação centralizada.** O candidato indica até dois locais e é classificado
-  por barema, cotas e desempates
-  ([`auditorias/01_regra_institucional.md`](../auditorias/01_regra_institucional.md)).
-  Com sobra de vagas, a ordem de classificação raramente decide quem fica sem
-  célula, e $D_j$ aproxima a demanda efetiva. Onde a especialidade tem mais
-  candidatos que vagas, a classificação passa a importar e a aproximação piora.
-- **Escolhas independentes entre médicos.** A passagem Binomial → Poisson supõe
-  que um médico não escolhe por causa de outro. Duplas ou equipes que se
-  candidatam juntas violam isso.
-- **Aceitação e homologação.** Desistência depois da alocação entra em $s_j$
-  como parte da decisão de aceitar. Indeferimento administrativo não é escolha
-  do médico e entra em $u_j$.
-- **Identificação.** A agregação não resolve endogeneidade. $u_j$ continua
-  correlacionado com $B_j$ por meio do IVS, e a separação entre bolsa e custo
-  do lugar continua dependendo do degrau na fronteira de faixa, nos termos do
-  [plano do RDD](../05_identificacao/14_plano_implementacao_rdd_bolsa.md).
-- **Protocolo.** A escolha entre as medidas (a) e (b), o link cloglog e o
-  tratamento de $Q_j$ fazem parte da especificação e devem ser congelados no
-  protocolo do RDD antes de qualquer outcome ser consultado. Esta seção não
-  reabre os resultados agregados do ciclo 1.
+> [!WARNING]
+> **Denominador.** O portão A1
+> ([`auditorias/08_portao_denominador_atracao.md`](../auditorias/08_portao_denominador_atracao.md))
+> reprovou o número de vagas por célula no ciclo 1 e aprovou apenas o indicador
+> binário "alguma confirmação ou homologação". Enquanto $Q_m$ não for confiável,
+> o outcome observável é esse indicador. A escolha entre as duas medidas faz
+> parte do protocolo do RDD e é fixada antes de consultar outcomes.
 
 ---
 
 ## 5. Referências teóricas
 
-- Berry, S. T. (1994). [*Estimating Discrete-Choice Models of Product Differentiation*](https://doi.org/10.2307/2555829). **The RAND Journal of Economics**, 25(2), 242--262. [inversão das parcelas de mercado; efeito fixo de mercado absorve o denominador do logit — seção 4.4].
+- Berry, S. T. (1994). [*Estimating Discrete-Choice Models of Product Differentiation*](https://doi.org/10.2307/2555829). **The RAND Journal of Economics**, 25(2), 242--262. [inversão das parcelas de mercado; efeito fixo de mercado absorve o denominador do logit — seção 4.3].
 - Choné, P.; Ma, C.-T. A. (2011). [*Optimal Health Care Contract under Physician Agency*](https://people.bu.edu/ma/CHONE-MA_Annals2011.pdf). **Annals of Economics and Statistics**, 101/102, 229--256. [p. 232, eq. 1].
 - McFadden, D. (1974). *Conditional Logit Analysis of Qualitative Choice Behavior*. In: Zarembka, P. (org.), **Frontiers in Econometrics**. Nova York: Academic Press, 105--142. [agregação da escolha individual em parcelas — seção 4.3].
 - Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14, 181--225. [p. 184, eq. 1].
