@@ -4,6 +4,14 @@
 > **Status:** catálogo canônico para motivação empírica e comparação de resultados<br>
 > **Atualização:** 9 de setembro de 2026
 
+> [!NOTE]
+> **Aprofundamento de 05/10/2026.** A evidência que responde à hipótese
+> apresentada à banca — *"municípios com maior remuneração oferecida pelo PMM-E
+> têm maior preenchimento de vagas"* — está organizada, termo a termo do modelo,
+> em [`20_evidencia_empirica_hipotese_remuneracao_preenchimento.md`](20_evidencia_empirica_hipotese_remuneracao_preenchimento.md):
+> 60 fichas com pergunta, dados, método, resultado e conclusão de cada estudo,
+> conferidos na fonte, e um quadro-resumo de uma linha por estudo.
+
 ## 1. Regra de uso
 
 Os estudos deste documento podem documentar fatos estilizados, sugerir heterogeneidades e variáveis observáveis, orientar comparações e informar a discussão dos resultados.
@@ -17,7 +25,7 @@ Resultados estimados, calibrações e sinais encontrados nesses estudos pertence
 | Diamond (2016) | equilíbrio espacial estimado com dados de cidades dos EUA | mostrar como uma aplicação empírica trata renda, moradia, amenidades e heterogeneidade | fundamentar a função de utilidade ou os sinais teóricos |
 | Moehling et al. (2020) | estudo histórico sobre educação médica e escassez rural, com modelo simples de escolha | motivar formação, origem e infraestrutura produtiva; a equação de escolha fundamenta o [modelo microeconômico](../02_teoria/modelo_micro.md) | transportar suas magnitudes históricas para o PMM-E |
 | Costa, Nunes e Sanches (2019/2024) | escolha discreta com coeficientes aleatórios estimada para médicos generalistas formados no Brasil | motivar vínculos de nascimento/formação, salários reais, amenidades e infraestrutura | fornecer primitivas teóricas ou ser extrapolado automaticamente para especialistas |
-| Sivey et al. (2012) | experimento de escolha discreta com médicos em formação na Austrália | mostrar que a disposição a aceitar posto remoto responde a incentivo monetário e quantificar a ordem de grandeza do trade-off | tratar preferência declarada como comportamento observado, ou transportar valores australianos para o Brasil |
+| Sivey et al. (2012) | experimento de escolha discreta com médicos em formação na Austrália, sobre **escolha de especialidade** | mostrar que escolhas de carreira médica respondem a renda — elasticidade-renda de 0,95 — ao lado de atributos não pecuniários. **Não** é estudo de localização; a leitura anterior, de disposição a aceitar posto remoto, estava errada (corrigida em 05/10/2026; ver a ficha B11 de [`20`](20_evidencia_empirica_hipotese_remuneracao_preenchimento.md)) | tratar preferência declarada como comportamento observado, ou transportar valores australianos para o Brasil |
 
 ## 3. Costa, Nunes e Sanches
 
@@ -132,7 +140,7 @@ participação no programa. Ver
 ## 9. Referências
 
 - Bärnighausen, T.; Bloom, D. E. (2009). [*Financial incentives for return of service in underserved areas: a systematic review*](https://doi.org/10.1186/1472-6963-9-86). **BMC Health Services Research**, 9, 86.
-- Costa, F.; Nunes, L.; Miessi Sanches, F. (2024). [*How to Attract Physicians to Underserved Areas? Policy Recommendations from a Structural Model*](https://doi.org/10.1162/rest_a_01166). **The Review of Economics and Statistics**, 106(1), 36--52.
+- Costa, F.; Nunes, L.; Miessi Sanches, F. (2024). [*How to Attract Physicians to Underserved Areas? Policy Recommendations from a Structural Model*](https://doi.org/10.1162/rest_a_01155). **The Review of Economics and Statistics**, 106(1), 36--52.
 - Dal Bó, E.; Finan, F.; Rossi, M. A. (2013). [*Strengthening State Capabilities: The Role of Financial Incentives in the Call to Public Service*](https://doi.org/10.1093/qje/qjt008). **The Quarterly Journal of Economics**, 128(3), 1169--1218.
 - Hone, T.; Powell-Jackson, T.; Santos, L. M. P. et al. (2020). [*Impact of the Programa Mais Médicos on primary care doctor supply and health outcomes*](https://doi.org/10.1186/s12913-020-05716-2). **BMC Health Services Research**, 20, 873.
 - Matsumoto, M.; Inoue, K.; Kajii, E. (2010). [*Long-term effect of the home prefecture return program on the geographic distribution of physicians*](https://doi.org/10.1016/j.socscimed.2010.05.006). **Social Science & Medicine**, 71(4), 667--671.
@@ -143,4 +151,4 @@ participação no programa. Ver
 - Yong, J.; Scott, A.; Gravelle, H.; Sivey, P.; McGrail, M. (2018). [*Do rural incentives payments affect entries and exits of general practitioners?*](https://doi.org/10.1016/j.socscimed.2018.08.014). **Social Science & Medicine**, 214, 197--205.
 - Diamond, R. (2016). [*The Determinants and Welfare Implications of US Workers' Diverging Location Choices by Skill: 1980–2000*](https://doi.org/10.1257/aer.20131706). **American Economic Review**, 106(3), 479–524.
 - Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14, 181–225.
-- Sivey, P.; Scott, A.; Witt, J.; Joyce, C.; Humphreys, J. (2012). [*Junior Doctors' Preferences for Specialty and Location: A Discrete Choice Experiment*](https://doi.org/10.1016/j.jhealeco.2012.06.002). **Journal of Health Economics**, 31(6), 813–823.
+- Sivey, P.; Scott, A.; Witt, J.; Joyce, C.; Humphreys, J. (2012). [*Junior Doctors' Preferences for Specialty Choice*](https://doi.org/10.1016/j.jhealeco.2012.07.001). **Journal of Health Economics**, 31(6), 813–823.
