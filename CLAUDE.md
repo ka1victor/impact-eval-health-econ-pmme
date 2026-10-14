@@ -36,7 +36,7 @@
 
 ## Identificação causal
 
-- O IVS 2010 do IPEA é a running variable canônica; não o substitua por IDHM ou PIB per capita sem justificativa econométrica explícita e autorização do autor.
+- Desde 14/10/2026, por autorização do autor, a running variable canônica da RDD da bolsa é o **escore administrativo de IVS** publicado pelo Ministério da Saúde (`output/aquisicao/a07_ivs_administrativo_municipio.csv`), que reproduz a faixa em 100% dos municípios cobertos; o IVS 2010 do IPEA passa a covariável. Não o substitua por IDHM ou PIB per capita sem justificativa econométrica explícita e autorização do autor. Protocolo em `output/rdd_bolsa/protocolo_escore_administrativo.json`.
 - O uso de RDD depende de demonstrar a regra efetiva de elegibilidade/alocação, o cutoff, o primeiro estágio e a ausência de manipulação relevante.
 - Se a implantação não gerar uma descontinuidade válida, escolha outro desenho coerente com a variação observada e registre a mudança de escopo.
 - Reporte estimando, população, período, unidade, contraste, incerteza, diagnósticos e limitações.
