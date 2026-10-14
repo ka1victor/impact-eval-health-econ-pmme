@@ -173,8 +173,9 @@ de início e encerramento.
 > pré-tendência por curso, só o curso 16 mantém `q < 0,05`; a regra de exclusão
 > continua sobre o `p` cru. **C-7c**: 385 das 449 região–curso têm um único
 > município do quadro, então o teste de oferta regional não distingue expansão
-> de realocação — deslocamento dentro da região volta a **não testado**. Os dois
-> artigos perdem a afirmação «incompatível com pura realocação». Nenhuma sessão
+> de realocação — deslocamento dentro da região volta a **não testado**. O artigo
+> curto perde a afirmação «incompatível com pura realocação» (só ele a tinha); o
+> principal deixa de tratar o agregado regional como prova. Nenhuma sessão
 > aberta.
 
 - [x] Grupo A — muda número publicado (3 itens): A-1 concluído em 16/09/2026 sob a

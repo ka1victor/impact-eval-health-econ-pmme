@@ -6,9 +6,11 @@
 > foi estimado no módulo A8. A RDD da bolsa pelo IVS fica arquivada como uma
 > pergunta distinta, bloqueada pela ausência de primeiro estágio público.
 
-> **Atualização em 05/10/2026:** a RDD da bolsa deixou de estar bloqueada. O
-> IVS administrativo publicado pela SGTES reproduz a faixa em 100% dos casos
-> (R1 sharp) e o R2 foi aprovado sem outcomes; ver
+> **Atualização em 05/10/2026:** a RDD da bolsa deixou de estar bloqueada pelo
+> primeiro estágio. O IVS administrativo publicado pela SGTES reproduz a faixa em
+> 100% dos casos (R1 sharp) e o R2 ficou viável com ressalvas, sem outcomes. A
+> estimação ainda depende da troca da running variable e do protocolo R3, ambos
+> decisão do autor; ver
 > [`../auditorias/15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md).
 > O A8 continua respondendo a outra pergunta: o efeito de ganhar a alocação.
 

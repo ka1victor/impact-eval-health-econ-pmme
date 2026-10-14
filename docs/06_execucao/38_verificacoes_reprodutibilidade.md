@@ -122,3 +122,18 @@ que é numericamente instável.
    `diagnostico_viabilidade_salario_ivs.json`;
 3. impedir que o `02_controlar` sobrescreva este documento;
 4. tratar o aborto do `run_all.py` sem CNES (D-4).
+
+## Notas posteriores — revisão S1a de 14/10/2026
+
+Acrescentadas na integração, sem alterar o texto acima.
+
+- **PNG dependem da fonte do host.** Num container cujo
+  `/etc/matplotlib/matplotlibrc` fixa a fonte Inter, 45 arquivos mudam em vez de
+  41: os PNG de A4, A5 e A8 diferem em 5–7% dos pixels, com o mesmo conteúdo. O
+  ambiente fixado de `requirements.txt` não fixa fonte; a classificação acima vale
+  para o host de 01/10/2026.
+- **Acoplamento do teste de A5.** `test_diagnostico_cadastral_cursos_2_16_segue_o_protocolo`
+  (`tests/test_provimento_cnes_a5.py`) fixa o hash da `A5_tabela_13`. Regravar A5
+  sob o ambiente fixado (pendência 1 acima) exige reexecutar
+  `scripts/tema_trabalho/06c_diagnostico_cadastral_cursos_pretendencia.py` no
+  mesmo ato; o `06c` está fora do `run_all.py`.

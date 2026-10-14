@@ -20,6 +20,12 @@ builds em 17 slides, exatamente os do "Mapa da apresentação" do documento. O
 contador do rodapé usa `\insertmainframenumber`, e por isso para em `17 / 17`
 no último slide de conteúdo; no apêndice não há contador.
 
+> **PDF desatualizado (registrado em 14/10/2026).** O `banca1_beamer.pdf`
+> versionado é anterior ao commit `1951d70` e não traz a frase do slide A4 que
+> entrou no `.tex` (linha da "tabela completa"). Recompile com
+> `scripts/apresentacao/build_deck_beamer.sh` num ambiente com LuaLaTeX; os
+> containers da nuvem usados em 01/10 e 14/10/2026 não tinham LaTeX.
+
 ---
 
 ## 1. Como compilar
