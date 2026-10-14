@@ -84,8 +84,14 @@ def validar_registro_r3(cortes_viaveis: list[str]) -> list[str]:
     autorizacao = registro.get("autorizacao_autor") or {}
     if not (isinstance(autorizacao, dict) and autorizacao.get("data") and autorizacao.get("autorizado_por")):
         problemas.append("autorizacao_autor precisa de data e autorizado_por")
+    def normalizar(corte: Any) -> str:
+        try:
+            return f"{float(corte):.3f}"
+        except (TypeError, ValueError):
+            return str(corte)
+
     cortes = registro.get("cortes") or []
-    fora = sorted(set(map(str, cortes)) - set(cortes_viaveis))
+    fora = sorted({normalizar(c) for c in cortes} - {normalizar(c) for c in cortes_viaveis})
     if fora:
         problemas.append(f"cortes fora dos viáveis no R2: {fora}")
     hashes = registro.get("hashes_entradas") or {}

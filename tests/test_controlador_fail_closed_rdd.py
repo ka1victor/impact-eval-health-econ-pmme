@@ -91,6 +91,13 @@ class TestControladorFailClosed(unittest.TestCase):
         self.assertEqual(processo.returncode, 0, processo.stderr)
         self.assertEqual(self.status(), "R3_CONGELADO_R4_AUTORIZAVEL")
 
+    def test_cortes_numericos_valem_como_os_textuais(self) -> None:
+        registro = self.registro_valido()
+        registro["cortes"] = [0.3, 0.4]
+        self.gravar_r3(registro)
+        processo = self.rodar()
+        self.assertEqual(processo.returncode, 0, processo.stderr)
+
     def test_registro_vazio_nao_congela(self) -> None:
         self.gravar_r3("")
         processo = self.rodar()

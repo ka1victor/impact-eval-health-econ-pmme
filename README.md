@@ -244,7 +244,7 @@ python run_all.py
 ```
 O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A8, incluindo tabelas, figuras, red team, cutoff estrito, manifestos e os dois conferidores de artigo. Sem o painel mensal do CNES, `06_avaliar_provimento_cnes.py` e `06b_ameacas_a5_placebo_pretendencia_deslocamento.py` rodam sozinhos a partir de `A5_painel_T0.parquet`, com o hash conferido contra o A6.
 
-### Suíte de testes automatizados (213 testes)
+### Suíte de testes automatizados (214 testes)
 ```bash
 python run_tests.py
 ```
@@ -263,4 +263,4 @@ Cada diretório principal possui documentação autônoma orientando seu conteú
 | [`output/`](output/README.md) | [Guia de Artefatos](output/README.md) | Painéis analíticos, estimativas, tabelas, figuras e manifestos reproduzíveis |
 | [`prompts/`](prompts/README.md) | [Fila e Histórico](prompts/README.md) | Sessões executadas, cadernos de prompts e especificações de pesquisa |
 | [`scripts/`](scripts/README.md) | [Guia de Scripts](scripts/README.md) | Rotinas modulares de aquisição, estimação, avaliação de impacto e utilitários |
-| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 213 testes automatizados garantindo integridade econométrica e invariantes |
+| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 214 testes automatizados garantindo integridade econométrica e invariantes |
