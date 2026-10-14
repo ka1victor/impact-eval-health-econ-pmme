@@ -963,6 +963,17 @@ bolsa"; a decisão de enviar é do autor, quando quiser retomá-la.
 
 ## D-4 · Microdados do CNES ausentes do repositório
 
+> **Nota de 14/10/2026 (item B4 do `02_resolver_pendencias.md`):** o D-4 é mais
+> estreito do que o registrado abaixo. O painel mensal município–curso–mês está
+> versionado em `output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet`
+> (`285db221…`, o hash que A5 registra; ver o achado colateral da seção
+> "Diagnóstico cadastral dos cursos 2 e 16 — 01/10/2026"). Falta o **microdado**.
+> O painel cobre só os 368 municípios da 1ª chamada de 2025 (30.784 linhas,
+> competências 202406–202607), e não todos os municípios das regiões de saúde.
+> Por isso o teste de deslocamento região–curso com todos os municípios da região
+> (C-7c) **continua inviável** com ele, e nenhum protocolo foi escrito. O mesmo
+> painel também não serve ao balanço do RDD da bolsa nos municípios ofertados.
+
 `output/aquisicao/cnes_mensal/` não existe, e `data/raw/cnes/` é gitignored. A
 cadeia auditável de A5 começa no painel já integrado, e `run_all.py` falharia em
 `05_integrar_painel_analitico.py` num clone limpo. Consequências não verificáveis

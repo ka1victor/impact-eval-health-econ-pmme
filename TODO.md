@@ -208,9 +208,15 @@ de início e encerramento.
 - [x] Diagnóstico dos cursos 2 e 16 na pré-tendência, sem reescolher amostra
   (após C-7b, só o 16 mantém `q < 0,05`, e com posto incompleto). Executado em
   01/10/2026 sob protocolo prévio (`b57eb4e`, `e5a1872`); leitura descritiva no
-  backlog 36, seção "Diagnóstico cadastral dos cursos 2 e 16 — 01/10/2026".
+  backlog 36, seção "Diagnóstico cadastral dos cursos 2 e 16 — 01/10/2026":
+  "compatível com oferta" nos dois. Ressalva: a pré-tendência fica nos CNES
+  ofertantes e é compensada pelo resto do município (−0,84 e −0,79); os
+  agregados não separam transferência de reatribuição cadastral.
+- [ ] Classificar transições profissional × CNES × CBO com os microdados do CNES
+  (D-4), para separar transferência de reatribuição cadastral nos cursos 2 e 16.
 - [ ] Estender o agregado região–curso a todos os municípios da região de saúde,
-  único teste que distingue deslocamento (C-7c); depende do painel mensal (D-4).
+  único teste que distingue deslocamento (C-7c); depende dos microdados do CNES
+  (D-4): o painel mensal versionado cobre só os 368 municípios do quadro.
 - [ ] Recalibrar o limiar de colapso de `uf_fe` na amostra estimada (A-1b), na
   mesma reexecução que retira a coluna `uf_fe` do painel congelado.
 
