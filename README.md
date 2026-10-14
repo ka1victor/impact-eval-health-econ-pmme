@@ -57,8 +57,8 @@ A RDD da bolsa foi **reaberta e estimada em 14/10/2026**. A faixa é atribuída
 pelo IVS 2010 oficial do Ipea com cortes em `0,300` e `0,400`, que reproduzem
 100% das faixas dos ciclos 1 e 2. A RDD sharp não detecta efeito do anúncio de
 +R$ 5 mil, com intervalos largos. O arquivo `data/ivs_ipea_2010_municipios.csv`,
-usado antes como IVS 2010, é a linha errada da base do Ipea (IVS de mulheres
-negras em área urbana, e não o do município): foi ele que fez a regra parecer
+usado antes como IVS 2010, é a linha errada da base do Ipea (uma linha de
+subgrupo, sobretudo mulheres negras em área urbana, e não a do município): foi ele que fez a regra parecer
 irreproduzível. Ver
 [`docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md`](docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md)
 e [`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`](docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md).

@@ -5,9 +5,10 @@
 > Ipea**, que é o próprio escore administrativo do MS. R1 =
 > `APROVADO_SHARP`.<br>
 > **Achado colateral:** o arquivo local usado desde o início do projeto como
-> "IVS 2010" é a base oficial do Ipea, mas **a linha errada**: em 5.554
-> municípios ele traz o IVS 2010 de **mulheres negras em área urbana**, e não o
-> IVS do município.<br>
+> "IVS 2010" é a base oficial do Ipea, mas **a linha errada**: em cada
+> município, a última linha de subgrupo com IVS preenchido. Em 4.362 municípios
+> (78%) é a de **mulheres negras em área urbana**; nos demais, outro recorte de
+> mulheres. Não é o IVS do município.<br>
 > **Supera:** [`15`](15_portao_r1_escore_administrativo.md) na parte em que
 > dizia que o escore estava incompleto, e o diagnóstico de
 > [`07`](07_portao_rdd_bolsa.md) e de
@@ -63,7 +64,7 @@ aplicada é a de cima. Aplicada ao IVS oficial, a grade do FAQ acerta 202 de 368
 municípios, põe 166 "acima" e nenhum "abaixo": é daí que vinha a aparência de
 "IVS como piso".
 
-## 3. O arquivo local é o IVS de um subgrupo, não o do município
+## 3. O arquivo local é uma linha de subgrupo, não o IVS do município
 
 `data/ivs_ipea_2010_municipios.csv` (SHA-256 `84d23a…818c`) entrou no commit
 inicial do repositório (`3027942`, 02/09/2026), sem script de aquisição nem
@@ -77,27 +78,52 @@ fonte registrada.
 | População 2010 | São Paulo 2,1 milhões contra 11,25 milhões; Recife 468 mil contra 1,54 milhão; Florianópolis 29 mil contra 421 mil |
 
 **De onde ele vem.** A base completa do Ipea tem, para cada município e ano,
-uma linha por combinação de cor (Total, Branco, Negro), sexo (Total, Homem,
-Mulher) e situação de domicílio (Total, Urbano, Rural). O IVS do município é a
-linha "Total/Total/Total". O script
-`scripts/rdd_bolsa/04c_identificar_recorte_arquivo_local.py` compara o arquivo
-local com todas essas linhas e grava o resultado em
-`output/rdd_bolsa/identificacao_arquivo_local_ivs.json`.
+até 27 linhas, uma por combinação de cor (Total, Branco, Negro), sexo (Total,
+Homem, Mulher) e situação de domicílio (Total, Urbano, Rural). O IVS do
+município é a linha "Total / Total / Total". Linhas de subgrupos pequenos podem
+vir sem valor.
 
-| Arquivo local contra a linha… | IVS igual | IDHM igual | População igual |
-|---|---:|---:|---:|
-| **Negro / Mulher / Urbano** (5.554 municípios) | **100%** | **100%** | **98,8%** |
-| Total / Total / Total (o IVS do município) | 0,7% | 0,9% | 0% |
+O script `scripts/rdd_bolsa/04c_identificar_recorte_arquivo_local.py` testa
+mecanismos de extração contra todas as colunas e todos os municípios, contando
+valor vazio como divergência. Ele grava o resultado em
+`output/rdd_bolsa/identificacao_arquivo_local_ivs.json`. Um mecanismo
+reproduz o arquivo **inteiro**: IVS, três subíndices, IDHM, população e renda,
+em 5.565 de 5.565 municípios.
 
-Nos 11 municípios que não têm a linha "Negro / Mulher / Urbano", todos no RS e
-em SC, o arquivo traz outra linha parcial, quase sempre "Total / Mulher /
-Total". O arquivo não é inventado: é um **erro de extração**. Para cada
-município, pegou-se uma linha de subgrupo em vez da linha total.
+> Para cada município, pegar **a última linha de 2010, na ordem da planilha,
+> cujo IVS está preenchido**, sem filtrar cor, sexo e situação = Total.
 
-Isso também explica a população: os 41,9 milhões que a coluna soma, contra 190,8
-milhões no Censo 2010, são a população desse subgrupo. Florianópolis tem 29 mil
-mulheres negras em área urbana, num total de 421 mil habitantes. A hipótese
-"alguma subpopulação do Atlas", registrada em
+Na ordem da planilha, a última linha de cada município é "Negro / Mulher /
+Urbano". Ela vem vazia em 1.192 municípios e não existe em 11. Nesses casos a
+extração recuou para a linha preenchida anterior. Linha que acabou no arquivo:
+
+| Linha da base | Municípios |
+|---|---:|
+| Negro / Mulher / Urbano | 4.362 |
+| Negro / Mulher / Total | 576 |
+| Total / Mulher / Urbano | 484 |
+| Total / Mulher / Total | 142 |
+| Total / Total / Total (o IVS do município, por acaso) | 1 |
+
+Os dois mecanismos alternativos não reproduzem o arquivo:
+- **última linha sem descartar as vazias:** acerta 4.362 municípios;
+- **linha total:** acerta só 38.
+
+O arquivo não é inventado: todos os valores estão na base oficial. É um
+**erro de extração**: faltou o filtro da linha total, e ficou a última linha
+preenchida de cada município, como fazem um `drop_duplicates(keep="last")` após
+descartar vazios ou um laço que sobrescreve o valor a cada linha.
+
+*Correção de 14/10/2026:* uma versão anterior desta seção dizia que o arquivo
+era "exatamente o IVS de mulheres negras urbanas em 5.554 municípios", com IVS
+"100% igual". A comparação contava só os municípios em que essa linha tinha
+valor. O correto são os 4.362 acima.
+
+Isso também explica a população: os 41,9 milhões que a coluna soma são a
+população desses subgrupos. A linha total da base soma exatamente 190.755.799,
+a população do Censo 2010. Florianópolis tem 29.095 mulheres negras em área
+urbana, num total de 421.240 habitantes. A hipótese "alguma subpopulação do
+Atlas", registrada em
 [`04_dados/02`](../04_dados/02_inventario_dados_por_outcome.md), §4.0, fica
 confirmada.
 
@@ -108,8 +134,8 @@ citados em 14/10/2026 antes deste achado, vinham do arquivo local.
 
 Pela regra do projeto, o arquivo não é alterado. Ele é **rebaixado**: deixa de
 ser *running variable* e covariável do município. Se alguma análise precisar
-do IVS de mulheres negras urbanas, deve ler esse recorte direto da base
-oficial, com o rótulo correto.
+do IVS de um subgrupo, deve ler a linha correspondente direto da base oficial,
+com o rótulo correto.
 
 ## 4. O que muda nas conclusões anteriores
 
@@ -120,6 +146,7 @@ oficial, com o rótulo correto.
 | teto de 78% de qualquer regra de dois cortes | arquivo local | **artefato** |
 | RDD-IVS arquivada; pedido do escore ao MS | anterior | **superado**: o escore é público |
 | gradiente de IVS no A4 e covariáveis de IVS, IDHM e população do arquivo local | arquivo local | **a rever**: os coeficientes de estrato do A4 não dependem do arquivo, mas os de IVS sim |
+| `log_pop` e `estoque_pre_por_10k` (especialistas por 10 mil habitantes) da tipologia A2 e do ajuste completo do A4 | `populacao_2010` do arquivo local, que é a população do subgrupo | **a rever**: denominador errado. A classificação dos estratos (capital, metropolitano, interior próximo de polo, interior remoto) usa só capitais, RM/RIDE e REGIC e **não depende** do arquivo |
 
 Scripts que leem o arquivo local, para revisão:
 - `scripts/00_inventario_dados.py`;

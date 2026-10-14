@@ -8,8 +8,11 @@
 1. **(A)** O IVS que o Ministério da Saúde publica para o PMM-E é o IVS 2010
    oficial do Ipea.
 2. **(B)** O arquivo do repositório `data/ivs_ipea_2010_municipios.csv` não é o
-   IVS do município. É o IVS 2010 de **mulheres negras em área urbana**, uma
-   outra linha da mesma base do Ipea.
+   IVS do município. Em cada município ele traz a **última linha de subgrupo
+   com IVS preenchido** da mesma base do Ipea:
+   - em 4.362 municípios (78%), a de **mulheres negras em área urbana**;
+   - quando essa linha vem vazia ou não existe, a linha preenchida anterior:
+     mulheres negras (576), mulheres urbanas (484) ou mulheres (142).
 3. **(C)** A bolsa segue: IVS até 0,300 → Faixa 3 (R$ 10 mil); de 0,301 a 0,400
    → Faixa 2 (R$ 15 mil); acima de 0,400 → Faixa 1 (R$ 20 mil).
 
@@ -57,7 +60,9 @@ operar essa tela daqui; se ela funcionar para você, é o caminho mais rápido.
   `Total Cor` / `Total Sexo` / `Total Situação de Domicílio`. Anote a coluna
   `ivs`.
 - [ ] Na mesma lista, ache a linha `Negro` / `Mulher` / `Urbano`: é ela que o
-  arquivo do repositório copiou.
+  arquivo do repositório copiou nos municípios da tabela abaixo. Ela é a
+  última do município na planilha. Quando vem vazia, o arquivo traz a anterior
+  preenchida.
 
 ## 3. Arquivo do repositório
 
@@ -84,8 +89,9 @@ menos de 0,006 de um corte.
 | Quixadá (CE) | 231130 | 4010,0 → 0,401 | 0,401 | 0,381 | FAIXA 1 | Faixa 1 | **Faixa 2** ✗ |
 
 - [ ] **(A)** A coluna do MS é igual à linha Total do Ipea em todos.
-- [ ] **(B)** O arquivo do repositório é igual à linha Negro / Mulher / Urbano,
-  e não à Total.
+- [ ] **(B)** Nesses nove municípios, o arquivo do repositório é igual à
+  linha Negro / Mulher / Urbano, e não à Total. Os nove estão entre os 4.362 em
+  que essa linha tem valor.
 - [ ] **(C)** Com o IVS oficial, a faixa do MS sai sempre da regra. Com o
   arquivo do repositório, erra em vários casos, marcados com ✗. Foi isso que
   fez a regra parecer impossível de reproduzir.
@@ -109,7 +115,10 @@ Para ver o degrau da regra em mais municípios:
 - [ ] **No IBGE:** SIDRA, tabela 1378 (Censo 2010, população residente),
   município, total. É a população do município inteiro.
 - [ ] **No arquivo do repositório:** é a população de mulheres negras em área
-  urbana.
+  urbana. Nos municípios em que essa linha vem vazia, é a do recorte usado no
+  lugar.
+- [ ] **Opcional:** a coluna `populacao` da linha Total da base do Ipea, somada
+  nos 5.565 municípios, dá 190.755.799, que é exatamente o Censo 2010.
 
 ## 6. Se der diferente
 

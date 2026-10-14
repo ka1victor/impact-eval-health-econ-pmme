@@ -12,9 +12,10 @@ Historia que o relatorio conta
    que e o proprio escore administrativo do MS, com cortes 0,300 e 0,400
    (+R$ 5 mil em cada). O arquivo `data/ivs_ipea_2010_municipios.csv`, usado ate
    14/10/2026 como "IVS 2010", vem da mesma base oficial do Ipea, mas da linha
-   errada: e o IVS 2010 de um subgrupo (mulheres negras urbanas, segundo
-   `identificacao_arquivo_local_ivs.json`), nao o do municipio. O rotulo do
-   arquivo local e montado a partir desse JSON.
+   errada: em cada municipio, a ultima linha de subgrupo com IVS preenchido
+   (mulheres negras urbanas em 78% dos municipios; outros recortes de mulheres
+   no resto, segundo `identificacao_arquivo_local_ivs.json`), nao o IVS do
+   municipio. O rotulo do arquivo local e montado a partir desse JSON.
 2. E3, a RDD sharp com o escore completo, e a analise principal.
 3. E1, E2 e E4, feitos quando o escore era parcial, sao exploratorios e ficam
    como historico, superados pelo E3.
@@ -661,30 +662,44 @@ def frase_recorte(rec: dict) -> str | None:
     return " ".join(x for x in (sujeito, adj_cor, adj_sit) if x)
 
 
+FRASE_LINHA = {
+    "Negro / Mulher / Urbano": "mulheres negras urbanas",
+    "Negro / Mulher / Total Situação de Domicílio": "mulheres negras",
+    "Total Cor / Mulher / Urbano": "mulheres urbanas",
+    "Total Cor / Mulher / Total Situação de Domicílio": "mulheres",
+    "Total Cor / Total Sexo / Total Situação de Domicílio": "o município (linha total)",
+}
+
+
 def recorte_local(ident: dict | None) -> dict:
     """Rotulos e numeros do arquivo local, lidos de identificacao_arquivo_local_ivs.json."""
-    rec = (ident or {}).get("recorte_reproduzido") or {}
-    frase = frase_recorte(rec) if rec else None
-    if not frase:
+    mec = (ident or {}).get("mecanismo") or {}
+    esc_ = mec.get("linha_escolhida_por_municipio") or {}
+    if not mec.get("reproduz_o_arquivo_inteiro") or not esc_:
         return {"ok": False, "curto": "arquivo local (recorte não identificado)",
                 "longo": "arquivo local (recorte da base do Ipea não identificado)", "eixo": "Arquivo local"}
-    comp = ident.get("comparacao_com_recorte_reproduzido") or {}
-    tot = ident.get("comparacao_com_total_do_municipio") or {}
-    g = lambda d, k, c: (d.get(k) or {}).get(c)  # noqa: E731
+    n_mun = int((mec.get("conferencia_por_coluna") or {}).get("municipios") or sum(esc_.values()))
+    principal, n_princ = max(esc_.items(), key=lambda kv: kv[1])
+    frase = FRASE_LINHA.get(principal, principal)
+    share = 100 * n_princ / n_mun
+    nmu = (ident or {}).get("linha_negro_mulher_urbano") or {}
+    pop = (ident or {}).get("populacao") or {}
+    dist = "; ".join(f"{FRASE_LINHA.get(k, k)}: {br_int(v)}" for k, v in
+                     sorted(esc_.items(), key=lambda kv: -kv[1]))
     return {
         "ok": True,
         "frase": frase,
-        "recorte": " / ".join(str(rec.get(k, "?")) for k in ("cor", "sexo", "situacao")),
-        "total": " / ".join(str(tot.get(k, "?")) for k in ("cor", "sexo", "situacao")),
-        "curto": f"arquivo local (IVS de {frase})",
-        "longo": f"arquivo local = IVS 2010 de {frase} (recorte errado da base do Ipea)",
-        "eixo": f"Arquivo local: IVS 2010 de {frase}",
-        "n_rec": comp.get("municipios_pareados"), "n_tot": tot.get("municipios_pareados"),
-        "pct_ivs": g(comp, "ivs_2010", "pct_iguais"), "corr_ivs": g(comp, "ivs_2010", "correlacao"),
-        "pct_idhm": g(comp, "idhm_2010", "pct_iguais"), "pct_pop": g(comp, "populacao_2010", "pct_iguais"),
-        "pct_tot": g(tot, "ivs_2010", "pct_iguais"), "corr_tot": g(tot, "ivs_2010", "correlacao"),
-        "pct_pop_tot": g(tot, "populacao_2010", "pct_iguais"),
-        "soma_pop": ident.get("soma_populacao_arquivo_local"), "pop_br": ident.get("populacao_brasil_censo_2010"),
+        "recorte": principal,
+        "total": "Total Cor / Total Sexo / Total Situação de Domicílio",
+        "n_mun": n_mun, "n_princ": n_princ, "share": share, "dist": dist,
+        "n_vazio": nmu.get("municipios_com_ivs_vazio_nessa_linha"), "n_sem": nmu.get("municipios_sem_a_linha"),
+        "mecanismo": mec.get("descricao", ""),
+        "curto": f"arquivo local (linha de subgrupo; {br(share, 0)}% {frase})",
+        "longo": (f"arquivo local = última linha preenchida de cada município na base do Ipea ({frase} em "
+                  f"{br_int(n_princ)} municípios; outros recortes de mulheres no resto)"),
+        "eixo": f"Arquivo local: IVS 2010 de subgrupo ({br(share, 0)}% {frase})",
+        "soma_pop": pop.get("soma_arquivo_local"), "pop_br": pop.get("censo_2010_brasil"),
+        "pop_total_ok": pop.get("linha_total_igual_ao_censo"),
     }
 
 
@@ -1300,10 +1315,12 @@ def secao_resumo(ctx) -> str:
     rl, cz = ctx["rl"], ctx["cruz"]
     piso = (a01b.get("ivs_e_piso_e_nunca_teto") or {}).get("municipios_acima_da_categoria_do_edital")
     mp = (a01b.get("regra_de_limiar") or {}).get("melhor_possivel") or {}
-    quem = (f"traz, em {br_int(rl['n_rec'])} municípios, exatamente o IVS 2010 de <strong>{esc(rl['frase'])}</strong> "
-            f"({br_pct(rl['pct_ivs'])} dos valores iguais), não o do município" if rl["ok"] else
-            "não reproduz o IVS do município")
-    pop = (f"; sua população ({br_milhoes(rl['soma_pop'])} no total) é a desse subgrupo" if rl["ok"] else "")
+    quem = (f"é, em cada município, a última linha de subgrupo com IVS preenchido da mesma base — "
+            f"<strong>{esc(rl['frase'])}</strong> em {br_int(rl['n_princ'])} de {br_int(rl['n_mun'])} municípios "
+            f"({br(rl['share'], 1)}%), outros recortes de mulheres no resto —, e não o IVS do município (a regra "
+            f"reproduz as 7 colunas do arquivo em {br_int(rl['n_mun'])}/{br_int(rl['n_mun'])} municípios)"
+            if rl["ok"] else "não reproduz o IVS do município")
+    pop = (f"; sua população ({br_milhoes(rl['soma_pop'])} no total) é a desses subgrupos" if rl["ok"] else "")
     grade = ""
     if cz:
         lf, of_ = cz[("local", "faq")], cz[("oficial", "faq")]
@@ -1401,10 +1418,10 @@ def secao_regra(ctx) -> str:
     ]
     if rl["ok"]:
         lin += [
-            [f"Arquivo local igual ao IVS 2010 de {esc(rl['frase'])} (linha <em>{esc(rl['recorte'])}</em> da mesma "
-             "base), a 3 casas", f"{br_pct(rl['pct_ivs'])} em {br_int(rl['n_rec'])} municípios", "—"],
-            [f"Arquivo local: IDHM e população iguais aos da linha <em>{esc(rl['recorte'])}</em>",
-             f"{br_pct(rl['pct_idhm'])} e {br_pct(rl['pct_pop'])}", "—"],
+            ["Arquivo local reproduzido pela regra “última linha com IVS preenchido de cada município” "
+             "(7 colunas)", f"{br_int(rl['n_mun'])}/{br_int(rl['n_mun'])} municípios", "—"],
+            [f"Municípios em que a linha escolhida é <em>{esc(rl['recorte'])}</em>",
+             f"{br_int(rl['n_princ'])}/{br_int(rl['n_mun'])} ({br(rl['share'], 1)}%)", "—"],
         ]
     lin += [
         [f"Arquivo local igual ao IVS do município (linha <em>{esc(rl.get('total', 'Total'))}</em>), a 3 casas",
@@ -1417,24 +1434,25 @@ def secao_regra(ctx) -> str:
     ]
     o.append(tabela(
         [("Comparação", "txt"), ("Registrado (R1 e identificação)", "num"), ("Conferido aqui", "num")], lin,
-        titulo=(f"O escore administrativo é o IVS 2010 do município; o arquivo local é o IVS de {esc(rl['frase'])}"
+        titulo=("O escore administrativo é o IVS 2010 do município; o arquivo local é uma linha de subgrupo"
                 if rl["ok"] else "O escore administrativo é o IVS 2010 do município; o arquivo local não é"),
         rodape=fonte_html(R1_OFICIAL, IDENT_LOCAL, ESCORE_ADMIN, CATEGORIA, IVS_OFICIAL, IVS_LOCAL, grafico=False,
                           extra=("“Conferido aqui” recalcula a partir dos arquivos; as linhas por recorte exigem a base "
                                  "completa do Ipea e ficam como registradas pela identificação")),
     ))
     if rl["ok"]:
-        n_outros = (rl["n_tot"] - rl["n_rec"]) if finito(rl["n_tot"]) and finito(rl["n_rec"]) else None
         o.append(
             "<p><strong>O que é o arquivo local.</strong> Não é um arquivo inventado nem de outra fonte: é a base "
             "oficial do Ipea, mas a linha errada de cada município. A base traz uma linha por combinação de cor, sexo e "
-            f"situação de domicílio, e o IVS do município é a linha <em>{esc(rl['total'])}</em>. O arquivo local traz, "
-            f"em {br_int(rl['n_rec'])} municípios, a linha <em>{esc(rl['recorte'])}</em> — o IVS 2010 de "
-            f"<strong>{esc(rl['frase'])}</strong> (correlação {br(rl['corr_ivs'], 3)} com essa linha)"
-            + (f"; nos {br_int(n_outros)} municípios sem essa linha, traz outra linha parcial" if n_outros else "")
-            + f". É também por isso que a população do arquivo é baixa: a coluna soma {br_milhoes(rl['soma_pop'])}, "
-              f"contra {br_milhoes(rl['pop_br'])} no Censo 2010 — é a população desse subgrupo, não a do município. "
-              f"Neste relatório ele aparece como “{esc(rl['longo'])}”.</p>")
+            f"situação de domicílio, e o IVS do município é a linha <em>{esc(rl['total'])}</em>. O arquivo é "
+            f"reproduzido exatamente — nas 7 colunas e nos {br_int(rl['n_mun'])} municípios — pela regra: "
+            f"{esc(rl['mecanismo'])}. A última linha da planilha é <em>{esc(rl['recorte'])}</em>; quando ela vem "
+            f"vazia na base ({br_int(rl['n_vazio'])} municípios) ou não existe ({br_int(rl['n_sem'])}), a regra recua "
+            f"para a linha anterior preenchida. Resultado: {esc(rl['dist'])}. "
+            f"É também por isso que a população do arquivo é baixa: a coluna soma {br_milhoes(rl['soma_pop'])}, "
+            f"contra {br_milhoes(rl['pop_br'])} no Censo 2010"
+            + (", que é exatamente a soma da linha total da base" if rl.get("pop_total_ok") else "")
+            + f". Neste relatório ele aparece como “{esc(rl['longo'])}”.</p>")
 
     cz = ctx["cruz"]
     if cz:
@@ -1484,7 +1502,7 @@ def secao_regra(ctx) -> str:
     o.append(tabela(
         [("Quadro", "txt nowrap"), ("Referência", "txt"), ("Municípios", "num"), ("Com IVS oficial", "num"),
          ("Reproduzidos pelo IVS oficial", "num"),
-         (f"Reproduzidos pelo arquivo local<br><span class=\"muted\">IVS de {esc(rl.get('frase', '?'))}; mesmos "
+         (f"Reproduzidos pelo arquivo local<br><span class=\"muted\">IVS de subgrupo, sobretudo {esc(rl.get('frase', '?'))}; mesmos "
           "cortes</span>", "num")],
         linhas,
         titulo="Reprodução da faixa anunciada, por quadro de vagas",
@@ -1574,7 +1592,7 @@ def secao_regra(ctx) -> str:
         fonte_html(MATRIZ, IVS_OFICIAL, IVS_LOCAL, extra=f"Quadro {QUADRO_PRIMEIRO_ESTAGIO}"),
         sub=(f"{nome_quadro(QUADRO_PRIMEIRO_ESTAGIO)}: {br_int(n_q)} municípios, todos com IVS oficial e com valor no "
              "arquivo local. Pelo IVS oficial do município, o salto é de 0% a 100% nos dois cortes; pelo arquivo local "
-             f"(IVS de {esc(rl.get('frase', '?'))}), é gradual — por isso a regra parecia não existir."),
+             f"(IVS de subgrupo, sobretudo {esc(rl.get('frase', '?'))}), é gradual — por isso a regra parecia não existir."),
     ))
     tl = []
     for (c_m, lo, hi), g in pe.groupby(["corte_mil", "lo", "hi"], sort=True):
@@ -1588,7 +1606,7 @@ def secao_regra(ctx) -> str:
         tl, classe="compacta",
         titulo="Primeiro estágio em números (municípios com a bolsa maior / municípios no bin)",
         rodape=fonte_html(MATRIZ, IVS_OFICIAL, IVS_LOCAL, grafico=False,
-                          extra=(f"Mesmos dados da figura anterior; arquivo local = IVS de {esc(rl.get('frase', '?'))}; "
+                          extra=(f"Mesmos dados da figura anterior; arquivo local = IVS de subgrupo, sobretudo {esc(rl.get('frase', '?'))}; "
                                  "bolsa maior = acima do valor do lado de baixo do corte")),
     ))
     o.append("</section>")

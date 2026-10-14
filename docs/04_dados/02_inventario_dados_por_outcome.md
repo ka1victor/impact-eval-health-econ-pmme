@@ -113,9 +113,11 @@ não para tendências demográficas.
 
 ### 4.0 `populacao_2010` não é população residente
 
-> **Confirmado em 14/10/2026.** O arquivo inteiro é o recorte "Negro / Mulher /
-> Urbano" da base oficial do Ipea, e não o total do município: IVS igual em
-> 100%, população em 98,8%. Ver
+> **Confirmado em 14/10/2026.** O arquivo é, em cada município, a última linha
+> de subgrupo com IVS preenchido da base oficial do Ipea (mulheres negras
+> urbanas em 4.362 municípios; outros recortes de mulheres no resto). Essa regra
+> reproduz as 7 colunas em 5.565 de 5.565 municípios. A coluna de população é a
+> desses subgrupos. Ver
 > [`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md), §3.
 
 Registro aberto em 09/09/2026. A coluna `populacao_2010` de

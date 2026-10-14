@@ -34,7 +34,7 @@
     "arquivo": "data/ivs_ipea_2010_municipios.csv",
     "correlacao_com_oficial": 0.851,
     "pct_iguais_3_casas": 0.7,
-    "leitura": "não é o IVS do município: é o recorte de mulheres negras urbanas da mesma base (output/rdd_bolsa/identificacao_arquivo_local_ivs.json); ver docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md"
+    "leitura": "não é o IVS do município: é, em cada município, a última linha de subgrupo com IVS preenchido da mesma base (sobretudo mulheres negras urbanas) (output/rdd_bolsa/identificacao_arquivo_local_ivs.json); ver docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md"
   },
   "running_variable": "IVS 2010 oficial do Ipea (= escore administrativo do MS); cortes 0,300 e 0,400",
   "saida_escore_completo": "output/rdd_bolsa/escore_completo_ivs2010_oficial.csv",
