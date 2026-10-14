@@ -5,6 +5,24 @@
 > aceita termos, não autoriza transferência de dados e não contém dados pessoais.
 
 
+## Prioridade revista em 14/10/2026
+
+O Ministério já publica o campo `ivs`, o escore numérico, na Relação Nominal
+Ativos – PMM-E dos dados abertos, mas só para municípios com especialista
+ativo. A regra foi reconstruída com ele
+([`auditorias/15`](../auditorias/15_portao_r1_escore_administrativo.md)). O
+pedido mínimo passa a ser **o mesmo campo `ivs` para todos os municípios**, ou
+para os que tiveram vaga ofertada em qualquer chamada, com a data de referência
+do cálculo. Os demais itens deste pacote continuam desejáveis, mas não são
+condição para R2.
+
+Texto curto sugerido: *"Solicito, em formato aberto, o valor numérico do campo
+`ivs` (Índice de Vulnerabilidade Social) e o campo `categoria_ivs`, por código
+IBGE, para todos os municípios brasileiros, conforme a base usada na Relação
+Nominal Ativos – PMM-E e no Consolidado do Programa Mais Médicos dos dados
+abertos (dicionário de dados de 13/07/2026), com a safra e a data de referência
+do índice."*
+
 ## Prioridade revista em 09/09/2026
 
 O item indispensável deste pacote é **um único campo**: o escore administrativo

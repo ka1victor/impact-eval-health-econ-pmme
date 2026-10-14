@@ -1,0 +1,73 @@
+{
+  "data_execucao": "2026-10-14",
+  "outcomes_abertos": false,
+  "colunas_lidas": {
+    "pmme_relacao_nominal_ativos": [
+      "co_ibge",
+      "uf",
+      "municipio",
+      "faixa_atracao",
+      "ivs",
+      "categoria_ivs"
+    ],
+    "pmmb_consolidado": [
+      "nivel",
+      "co_ibge",
+      "categoria_ivs"
+    ]
+  },
+  "unidade_escore": "o campo `ivs` vem multiplicado por 10.000 (ex.: 3930,0 = 0,393); dividido na extracao",
+  "fontes": [
+    {
+      "id": "pmme_relacao_nominal_ativos",
+      "arquivo": "tb_profissionais_ativos_pmme_csv.zip",
+      "url": "https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/MaisMedicos/csv/tb_profissionais_ativos_pmme_csv.zip",
+      "descricao": "Relacao Nominal Ativos - PMM-E (dados abertos MS), versao de 09/10/2026",
+      "papel": "escore administrativo continuo `ivs`, `categoria_ivs` e `faixa_atracao` por municipio com ativo",
+      "caminho": "data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip",
+      "pagina_dataset": "https://dadosabertos.saude.gov.br/dataset/provimento-federal-programa-mais-medicos",
+      "data_captura": "2026-10-14",
+      "status": "ja_preservado",
+      "tamanho_bytes": 117155,
+      "sha256": "e57edeb50946395fa90fe510f4a658501f9b0e92069fcc53aa41b9e893e89c1c"
+    },
+    {
+      "id": "pmmb_consolidado",
+      "arquivo": "ppf_mais_medicos_csv.zip",
+      "url": "https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/MaisMedicos/csv/ppf_mais_medicos.csv.zip",
+      "descricao": "Programa Mais Medicos - Consolidado (dados abertos MS), versao de 09/10/2026",
+      "papel": "`categoria_ivs` administrativa para todos os municipios do pais",
+      "caminho": "data/raw/aquisicao/ivs_administrativo/ppf_mais_medicos_csv.zip",
+      "pagina_dataset": "https://dadosabertos.saude.gov.br/dataset/provimento-federal-programa-mais-medicos",
+      "data_captura": "2026-10-14",
+      "status": "ja_preservado",
+      "tamanho_bytes": 150344,
+      "sha256": "15083f8127917e5279be01d372c1250a467ee77d289a030e1229932d0013cb3a"
+    },
+    {
+      "id": "dicionario_dados_ppf",
+      "arquivo": "Dicionario_de_dados_PPF_Mais_Medicos.pdf",
+      "url": "https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/MaisMedicos/Dicionario_de_dados_PPF_Mais_Medicos.pdf",
+      "descricao": "Dicionario de dados - PPF - PMMB e PMpB (inclui PMM-E), versao de 13/07/2026",
+      "papel": "define `ivs` como valor numerico do IVS e `categoria_ivs` como classe do IVS/Ipea",
+      "caminho": "data/raw/aquisicao/ivs_administrativo/Dicionario_de_dados_PPF_Mais_Medicos.pdf",
+      "pagina_dataset": "https://dadosabertos.saude.gov.br/dataset/provimento-federal-programa-mais-medicos",
+      "data_captura": "2026-10-14",
+      "status": "ja_preservado",
+      "tamanho_bytes": 200860,
+      "sha256": "363ba1852c64be14e08471f65b2705166cc4017801548a569c51ef6f69f941b5"
+    }
+  ],
+  "saidas": {
+    "output/aquisicao/a07_ivs_administrativo_municipio.csv": {
+      "linhas": 404,
+      "escore_ausente": 0,
+      "categoria_nao_reconhecida": 0
+    },
+    "output/aquisicao/a07_categoria_ivs_pmmb_municipio.csv": {
+      "linhas": 5571,
+      "categoria_ausente": 1
+    }
+  },
+  "selecao_da_cobertura": "a relacao nominal so contem municipios com especialista ativo na data de referencia; a ausencia de escore e funcao do desfecho"
+}

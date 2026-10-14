@@ -1,0 +1,394 @@
+{
+  "status": "PORTAO_CAUSAL",
+  "portao": "R1",
+  "data_execucao": "2026-10-14",
+  "outcomes_abertos": false,
+  "decisao_r1": "REGRA_RECONSTRUIDA_ESCORE_INCOMPLETO",
+  "leitura": "O escore administrativo e a regra de dois cortes reproduzem a faixa anunciada em todos os municipios em que o escore e observado, nos quatro quadros, e a categoria administrativa a reproduz em todos os municipios. O escore continuo, porem, so e publicado para municipios com especialista ativo: a cobertura e selecionada pelo desfecho. A RDD nao pode ser estimada na subamostra coberta.",
+  "running_variable": {
+    "nome": "ivs (escore administrativo publicado pelo MS, 'calculado pelo IPEA')",
+    "safra": "nao declarada; difere do IVS 2010 publico",
+    "precisao": "3 casas decimais",
+    "cutoffs": {
+      "inferior": {
+        "valor": 0.3,
+        "salto": "Faixa 3 -> Faixa 2, +R$ 5.000"
+      },
+      "superior": {
+        "valor": 0.4,
+        "salto": "Faixa 2 -> Faixa 1, +R$ 5.000"
+      }
+    },
+    "lado_do_corte_observado": {
+      "faixa_3_max": 0.299,
+      "faixa_2_min": 0.302,
+      "faixa_2_max": 0.4,
+      "faixa_1_min": 0.401,
+      "nota": "0,400 pertence a Faixa 2 (observado). O lado de 0,300 exato nao e observado; pela classe do Atlas, 0,300 e 'baixa' e cai na Faixa 3."
+    },
+    "limites_por_categoria": {
+      "ALTA VULNERABILIDADE": {
+        "min": 0.401,
+        "max": 0.495,
+        "n": 101
+      },
+      "BAIXA VULNERABILIDADE": {
+        "min": 0.201,
+        "max": 0.299,
+        "n": 100
+      },
+      "MEDIA VULNERABILIDADE": {
+        "min": 0.302,
+        "max": 0.4,
+        "n": 130
+      },
+      "MUITO ALTA VULNERABILIDADE": {
+        "min": 0.504,
+        "max": 0.712,
+        "n": 45
+      },
+      "MUITO BAIXA VULNERABILIDADE": {
+        "min": 0.121,
+        "max": 0.2,
+        "n": 28
+      }
+    }
+  },
+  "relacao_nominal": {
+    "municipios": 404,
+    "escore_reproduz_faixa": 404,
+    "categoria_reproduz_faixa": 404,
+    "categoria_igual_a_do_consolidado_pmmb": 404
+  },
+  "comparacao_ivs_2010_publico": {
+    "correlacao": 0.892,
+    "diferenca_media": 0.0053,
+    "diferenca_dp": 0.0515,
+    "diferenca_min": -0.114,
+    "diferenca_max": 0.189,
+    "pct_identicos": 0.5,
+    "leitura": "outra safra ou outro calculo; explica o teto de 78% das regras de corte sobre o IVS 2010"
+  },
+  "quadros": {
+    "c1_ch1": {
+      "arquivo": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx",
+      "sha256": "51c6807f6bc2efa252b5236d89c5384ae484c4d47c8b65d4161c3facbfebe304",
+      "referencia": "24/07/2025",
+      "municipios": 368,
+      "municipios_com_mais_de_uma_faixa": 0,
+      "regra_pelo_escore": {
+        "municipios_com_escore": 209,
+        "reproduzidos": 209
+      },
+      "regra_pela_categoria_administrativa": {
+        "municipios_com_categoria": 368,
+        "reproduzidos": 368
+      },
+      "cobertura_do_escore": {
+        "pct_municipios": 56.8,
+        "pct_por_faixa_anunciada": {
+          "FAIXA 1": 60.8,
+          "FAIXA 2": 72.0,
+          "FAIXA 3": 44.0
+        }
+      },
+      "suporte_municipios_com_escore": {
+        "0.300_h0.010": {
+          "abaixo_ou_no_corte": 5,
+          "acima": 8,
+          "mass_points_abaixo": 3,
+          "mass_points_acima": 5
+        },
+        "0.300_h0.020": {
+          "abaixo_ou_no_corte": 15,
+          "acima": 14,
+          "mass_points_abaixo": 9,
+          "mass_points_acima": 10
+        },
+        "0.300_h0.030": {
+          "abaixo_ou_no_corte": 20,
+          "acima": 19,
+          "mass_points_abaixo": 14,
+          "mass_points_acima": 13
+        },
+        "0.300_h0.050": {
+          "abaixo_ou_no_corte": 33,
+          "acima": 38,
+          "mass_points_abaixo": 26,
+          "mass_points_acima": 26
+        },
+        "0.400_h0.010": {
+          "abaixo_ou_no_corte": 10,
+          "acima": 8,
+          "mass_points_abaixo": 7,
+          "mass_points_acima": 4
+        },
+        "0.400_h0.020": {
+          "abaixo_ou_no_corte": 20,
+          "acima": 14,
+          "mass_points_abaixo": 15,
+          "mass_points_acima": 10
+        },
+        "0.400_h0.030": {
+          "abaixo_ou_no_corte": 27,
+          "acima": 21,
+          "mass_points_abaixo": 21,
+          "mass_points_acima": 15
+        },
+        "0.400_h0.050": {
+          "abaixo_ou_no_corte": 39,
+          "acima": 33,
+          "mass_points_abaixo": 31,
+          "mass_points_acima": 24
+        }
+      }
+    },
+    "c2_ch1": {
+      "arquivo": "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+      "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+      "referencia": "2026, retificado",
+      "municipios": 454,
+      "municipios_com_mais_de_uma_faixa": 0,
+      "regra_pelo_escore": {
+        "municipios_com_escore": 275,
+        "reproduzidos": 275
+      },
+      "regra_pela_categoria_administrativa": {
+        "municipios_com_categoria": 454,
+        "reproduzidos": 454
+      },
+      "cobertura_do_escore": {
+        "pct_municipios": 60.6,
+        "pct_por_faixa_anunciada": {
+          "FAIXA 1": 69.0,
+          "FAIXA 2": 73.9,
+          "FAIXA 3": 48.1
+        }
+      },
+      "suporte_municipios_com_escore": {
+        "0.300_h0.010": {
+          "abaixo_ou_no_corte": 9,
+          "acima": 9,
+          "mass_points_abaixo": 5,
+          "mass_points_acima": 6
+        },
+        "0.300_h0.020": {
+          "abaixo_ou_no_corte": 20,
+          "acima": 19,
+          "mass_points_abaixo": 11,
+          "mass_points_acima": 13
+        },
+        "0.300_h0.030": {
+          "abaixo_ou_no_corte": 27,
+          "acima": 23,
+          "mass_points_abaixo": 15,
+          "mass_points_acima": 16
+        },
+        "0.300_h0.050": {
+          "abaixo_ou_no_corte": 46,
+          "acima": 46,
+          "mass_points_abaixo": 27,
+          "mass_points_acima": 31
+        },
+        "0.400_h0.010": {
+          "abaixo_ou_no_corte": 9,
+          "acima": 11,
+          "mass_points_abaixo": 6,
+          "mass_points_acima": 5
+        },
+        "0.400_h0.020": {
+          "abaixo_ou_no_corte": 18,
+          "acima": 22,
+          "mass_points_abaixo": 12,
+          "mass_points_acima": 11
+        },
+        "0.400_h0.030": {
+          "abaixo_ou_no_corte": 26,
+          "acima": 29,
+          "mass_points_abaixo": 17,
+          "mass_points_acima": 15
+        },
+        "0.400_h0.050": {
+          "abaixo_ou_no_corte": 39,
+          "acima": 48,
+          "mass_points_abaixo": 27,
+          "mass_points_acima": 28
+        }
+      }
+    },
+    "c2_ch2": {
+      "arquivo": "data/raw/pmm_e/2026_ciclo2_chamada2_vagas.xlsx",
+      "sha256": "4815e1558b515d4cdabf245b45e24062ab2e9531abd657b4f24f68bb45b3d3a4",
+      "referencia": "16/04/2026",
+      "municipios": 369,
+      "municipios_com_mais_de_uma_faixa": 0,
+      "regra_pelo_escore": {
+        "municipios_com_escore": 203,
+        "reproduzidos": 203
+      },
+      "regra_pela_categoria_administrativa": {
+        "municipios_com_categoria": 369,
+        "reproduzidos": 369
+      },
+      "cobertura_do_escore": {
+        "pct_municipios": 55.0,
+        "pct_por_faixa_anunciada": {
+          "FAIXA 1": 54.9,
+          "FAIXA 2": 70.0,
+          "FAIXA 3": 48.2
+        }
+      },
+      "suporte_municipios_com_escore": {
+        "0.300_h0.010": {
+          "abaixo_ou_no_corte": 8,
+          "acima": 5,
+          "mass_points_abaixo": 4,
+          "mass_points_acima": 4
+        },
+        "0.300_h0.020": {
+          "abaixo_ou_no_corte": 19,
+          "acima": 15,
+          "mass_points_abaixo": 10,
+          "mass_points_acima": 11
+        },
+        "0.300_h0.030": {
+          "abaixo_ou_no_corte": 25,
+          "acima": 19,
+          "mass_points_abaixo": 14,
+          "mass_points_acima": 14
+        },
+        "0.300_h0.050": {
+          "abaixo_ou_no_corte": 44,
+          "acima": 35,
+          "mass_points_abaixo": 26,
+          "mass_points_acima": 25
+        },
+        "0.400_h0.010": {
+          "abaixo_ou_no_corte": 6,
+          "acima": 6,
+          "mass_points_abaixo": 6,
+          "mass_points_acima": 4
+        },
+        "0.400_h0.020": {
+          "abaixo_ou_no_corte": 13,
+          "acima": 11,
+          "mass_points_abaixo": 11,
+          "mass_points_acima": 9
+        },
+        "0.400_h0.030": {
+          "abaixo_ou_no_corte": 20,
+          "acima": 14,
+          "mass_points_abaixo": 16,
+          "mass_points_acima": 12
+        },
+        "0.400_h0.050": {
+          "abaixo_ou_no_corte": 28,
+          "acima": 24,
+          "mass_points_abaixo": 22,
+          "mass_points_acima": 20
+        }
+      }
+    },
+    "c3_ch1": {
+      "arquivo": "data/raw/pmm_e/2026_ciclo3_chamada1_vagas_retificadas.xlsx",
+      "sha256": "6bc07f48d0eaac37936fc827ebdefd12fb7bf2be86dc26f64a08e1f5b57f5371",
+      "referencia": "2026, retificado",
+      "municipios": 748,
+      "municipios_com_mais_de_uma_faixa": 0,
+      "regra_pelo_escore": {
+        "municipios_com_escore": 285,
+        "reproduzidos": 285
+      },
+      "regra_pela_categoria_administrativa": {
+        "municipios_com_categoria": 748,
+        "reproduzidos": 748
+      },
+      "cobertura_do_escore": {
+        "pct_municipios": 38.1,
+        "pct_por_faixa_anunciada": {
+          "FAIXA 1": 32.3,
+          "FAIXA 2": 53.3,
+          "FAIXA 3": 34.3
+        }
+      },
+      "suporte_municipios_com_escore": {
+        "0.300_h0.010": {
+          "abaixo_ou_no_corte": 8,
+          "acima": 10,
+          "mass_points_abaixo": 4,
+          "mass_points_acima": 5
+        },
+        "0.300_h0.020": {
+          "abaixo_ou_no_corte": 20,
+          "acima": 16,
+          "mass_points_abaixo": 10,
+          "mass_points_acima": 10
+        },
+        "0.300_h0.030": {
+          "abaixo_ou_no_corte": 27,
+          "acima": 24,
+          "mass_points_abaixo": 15,
+          "mass_points_acima": 15
+        },
+        "0.300_h0.050": {
+          "abaixo_ou_no_corte": 42,
+          "acima": 48,
+          "mass_points_abaixo": 27,
+          "mass_points_acima": 31
+        },
+        "0.400_h0.010": {
+          "abaixo_ou_no_corte": 12,
+          "acima": 13,
+          "mass_points_abaixo": 7,
+          "mass_points_acima": 5
+        },
+        "0.400_h0.020": {
+          "abaixo_ou_no_corte": 25,
+          "acima": 23,
+          "mass_points_abaixo": 14,
+          "mass_points_acima": 11
+        },
+        "0.400_h0.030": {
+          "abaixo_ou_no_corte": 33,
+          "acima": 30,
+          "mass_points_abaixo": 19,
+          "mass_points_acima": 15
+        },
+        "0.400_h0.050": {
+          "abaixo_ou_no_corte": 48,
+          "acima": 55,
+          "mass_points_abaixo": 30,
+          "mass_points_acima": 31
+        }
+      }
+    }
+  },
+  "requisitos_r1": {
+    "municipio_escore_faixa_valor_completos": false,
+    "escore_unico_por_municipio": true,
+    "regra_reproduz_100_pct": true,
+    "lado_do_cutoff_localizavel": "sim em 0,400; 0,300 exato nao observado",
+    "fontes_e_hashes_preservados": true
+  },
+  "bloqueio": {
+    "motivo": "escore continuo ausente para os municipios sem especialista ativo; ausencia funcao do desfecho",
+    "o_que_destrava": "o campo `ivs` para todos os municipios com vaga ofertada (ou para os 5.570), da mesma base que alimenta a relacao nominal"
+  },
+  "fontes": {
+    "output/aquisicao/a07_ivs_administrativo_municipio.csv": {
+      "sha256": "1a117291f730fa048c6280000296400ebf0c156eb580d446c98930924fb81757"
+    },
+    "output/aquisicao/a07_categoria_ivs_pmmb_municipio.csv": {
+      "sha256": "f9556bd46b20b5e4c7e1b3f782cc0c87be69558c865c995a890e00c0ce269025"
+    },
+    "data/ivs_ipea_2010_municipios.csv": {
+      "sha256": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c"
+    }
+  },
+  "bloqueios_resultantes": {
+    "r2": "BLOQUEADO_POR_R1_COBERTURA",
+    "r3": "BLOQUEADO",
+    "r4": "BLOQUEADO",
+    "r5": "BLOQUEADO"
+  }
+}

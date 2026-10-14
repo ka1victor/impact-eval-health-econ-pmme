@@ -6,6 +6,13 @@
 
 ## Decisão vigente
 
+> **Atualização de 14/10/2026.** O autor priorizou o teste causal da hipótese
+> da banca 1. O escore administrativo de IVS foi encontrado nos dados abertos do
+> Ministério da Saúde, e a regra da bolsa foi reconstruída: dois cortes, 0,300 e
+> 0,400, cada um com +R$ 5 mil. O que falta é o escore dos municípios sem
+> especialista ativo. Nenhum efeito foi estimado. Detalhe em
+> [`auditorias/15`](../auditorias/15_portao_r1_escore_administrativo.md).
+
 O pedido administrativo não foi enviado. A RDD da bolsa pelo IVS público
 permanece bloqueada, mas o diagnóstico foi corrigido em 09/09/2026: a regra
 administrativa **é** determinística — o rótulo de IVS determina a faixa em 527 de
@@ -30,7 +37,7 @@ ponto.
 | A8-P4 | `APROVADO_DIAGNOSTICOS` | placebo abaixo nulo; gaps alternativos e leave-one-out sem inversão de sinal |
 | A8-P5 | `REPLICACAO_DIRECIONAL` | 11 pares em 2026; +36,4 p.p. em presença ativa, teste exato `p=0,125` |
 | A8-P6 | `AUDITADO` | outputs agregados sem PII, hashes de entrada e testes automatizados |
-| RDD-IVS | `ARQUIVADO_ESCORE_NAO_OBSERVADO` | a regra é determinística (527/527), mas nenhuma regra de corte sobre o IVS 2010 público a recupera: teto de 78,0% para qualquer regra de dois cortes |
+| RDD-IVS | `REGRA_RECONSTRUIDA_ESCORE_INCOMPLETO` (14/10/2026) | o escore administrativo `ivs` dos dados abertos reproduz a faixa em 100% dos municípios cobertos, com cortes em 0,300 e 0,400; a categoria administrativa reproduz 100% dos quatro quadros. O escore contínuo só é publicado onde há especialista ativo, e a cobertura é selecionada pelo desfecho: R2 continua bloqueado — [`auditorias/15`](../auditorias/15_portao_r1_escore_administrativo.md) |
 | Pedido administrativo | `CANCELADO_NAO_ENVIADO` | nenhum recebimento ou espera integra o plano atual |
 
 ## Resultado e alcance

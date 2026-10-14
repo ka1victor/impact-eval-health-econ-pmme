@@ -8,6 +8,30 @@
 
 ---
 
+## 14/10/2026 — Portão R1 refeito com o escore administrativo de IVS
+
+Motivo: o autor priorizou o teste causal da hipótese da banca 1. O escore
+administrativo, cuja ausência tinha arquivado a RDD da bolsa, foi encontrado
+nos dados abertos do Ministério da Saúde.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/15_portao_r1_escore_administrativo.md`](auditorias/15_portao_r1_escore_administrativo.md) | R1 refeito: a regra da bolsa é de dois cortes, 0,300 e 0,400, no escore `ivs` publicado pelo MS; reproduz 100% das faixas nos quatro quadros. O escore só é publicado onde há especialista ativo, então R2 continua bloqueado |
+| `data/raw/aquisicao/ivs_administrativo/` | brutos dos dados abertos (relação nominal PMM-E, consolidado PMMB e dicionário), capturados em 14/10/2026 |
+
+### Atualizado no mesmo commit
+
+[`06_execucao/33`](06_execucao/33_status_execucao_plano_causal.md), na linha
+RDD-IVS e na nota de topo, e
+[`pedidos_dados/solicitacao_focal_rdd_bolsa.md`](pedidos_dados/solicitacao_focal_rdd_bolsa.md),
+com o pedido reduzido ao campo `ivs` de todos os municípios. O diagnóstico de
+[`05_identificacao/16`](05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
+§3.5.1, fica superado na parte em que dizia que o escore não era observado.
+
+---
+
 ## 07/10/2026 — Literatura empírica: resumo apresentável
 
 Motivo: o autor pediu um resumo apresentável da literatura que embasa a
