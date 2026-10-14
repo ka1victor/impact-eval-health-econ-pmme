@@ -46,6 +46,28 @@ corrige isso e precisa ser lido junto com aquele prompt.
 | S4 | as treze decisões do rascunho 18, a começar pela troca da running variable |
 | S5 | nenhuma nova: só executa o registro |
 
+## Estado em 14/10/2026
+
+| Sessão | Estado |
+|---|---|
+| S1a | feita: `APROVADO` ou `APROVADO COM AJUSTE` nos cinco commits, nada `BLOQUEADO`; correção mecânica da contagem da suíte integrada |
+| S1b | feita: `1faf0f4` e `62d9e11` `APROVADO COM AJUSTE`, `be12956` `APROVADO`, nada `BLOQUEADO`, sem commit de correção; achados para o R3 na nota de 14/10 do rascunho [`18`](../../docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md) |
+| S2 | feita no branch de integração `claude/gallant-carson-11uzic`, sem tocar a `main`; a `main` até `40a8c98` também entrou; 204 testes verdes |
+| S3 | seção B executada no que o ambiente permite (B3, B4, B5); B1, B2 e C bloqueados por falta de LaTeX e de acesso ao FTP do DATASUS; seção A aguarda o autor |
+| S4 | aguarda as decisões do autor (passo 1) |
+| S5 | aguarda S4 |
+
+**Rodada não prevista.** Em 14/10/2026, o commit `7156c78` (branch
+`claude/vigilant-mccarthy-dd92mc`, a partir da `main`) refez o R1 com a coluna
+`ivs` da Relação Nominal Ativos – PMM-E e concluiu
+`REGRA_RECONSTRUIDA_ESCORE_INCOMPLETO`, porque o escore só aparece em 404
+municípios. Os 404 valores são idênticos ao IVS do quadro do PMMB 2026, que cobre
+5.571 municípios; o bloqueio de cobertura não vale para a fonte de 05/10. O branch
+ainda não foi integrado: `scripts/aquisicao/a07_adquirir_ivs_administrativo.py`,
+`output/aquisicao/a07_manifesto_ivs_administrativo.json` e as numerações
+`docs/auditorias/15_*` e `scripts/rdd_bolsa/04_*` colidem com as de 05/10 e
+precisam ser renomeadas na integração.
+
 ## O que mudou desde 01/10, em uma linha cada
 
 - A RDD do IVS foi **reaberta**, não arquivada: R1 sharp com o IVS

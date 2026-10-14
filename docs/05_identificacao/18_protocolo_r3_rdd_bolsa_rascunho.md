@@ -8,6 +8,52 @@
 > `02_controlar_execucao_plano_causal.py` recusa resultado R4 sem esse registro.
 >
 > Base: [`../auditorias/15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md).
+>
+> **Revisão S1b, 14/10/2026 — o que o autor precisa ter diante de si ao decidir.**
+> A revisão adversarial
+> ([`prompts/integracao_rodadas_outubro_2026/01_revisar_rdd_ivs_administrativo.md`](../../prompts/integracao_rodadas_outubro_2026/01_revisar_rdd_ivs_administrativo.md))
+> não bloqueou nada: reproduziu o R1 com código próprio a partir dos brutos
+> (4.103 de 4.103) e o R2 byte a byte. Nenhuma proposta abaixo foi alterada; estes
+> pontos mudam número, protocolo ou leitura e por isso ficam com o autor:
+>
+> 1. **`capital` em 0,300.** Um Wald conjunto local-linear das 13 covariadas
+>    rejeita o balanço em 0,300 na banda 0,050 (p = 0,009); sem `capital`,
+>    p = 0,55. Há 13 capitais em (0,250; 0,300] e 7 em (0,300; 0,350]. A decisão 9
+>    deixa `capital` só em robustez; o revisor sugere tratá-la no principal desse
+>    corte (exclusão ou ajuste). Holm a 5% equivale a exigir p mínimo ≥ 0,0038 e
+>    não é comparável ao limiar de 0,15 da regra estrita.
+> 2. **População da potência.** O §4 usa os 1.144 municípios ofertados, inclusive
+>    432 só do ciclo 3, que a decisão 4 exclui do principal. Sem eles, o MDE na
+>    banda 0,050 é 37,4 (0,300), 43,1 (0,400) e **28,2 p.p.** no salto comum, e o
+>    balanço não foi testado nessa população. O R2 e o MDE precisam ser refeitos,
+>    sem outcome, na população escolhida.
+> 3. **MDE conjunto na banda 0,100:** as amostras dos dois cortes se sobrepõem em
+>    263 municípios (correlação dos saltos 0,123); o valor é 17,5 p.p., não 16,5.
+> 4. **Entregáveis do plano 14, §4, ainda ausentes:** matriz de cointervenções do
+>    Agora Tem Especialistas, concentração por UF e curso, estoque CNES prévio e
+>    teste de densidade formal (a conferência própria do revisor não achou
+>    acúmulo nos cortes, p de 0,51 a 0,93). Completar ou dispensar formalmente.
+> 5. **Composição por reoferta:** número de ondas ofertadas e somas de células e
+>    vagas entre ondas dependem em parte do não preenchimento anterior. Restringir
+>    a composição à primeira onda ou declarar.
+> 6. **Conhecimento prévio:** o JSON do R1 traz a contagem de municípios com
+>    bolsista ativo por competência (agregado, sem corte por faixa). Declarar no
+>    registro.
+> 7. **"O IVS 2010 erra 48%"** (decisão 0) usa a grade do FAQ (177/368). Sob a
+>    regra efetiva, o erro é 101/368 (27%), ou 1.154/4.101 combinações (28%).
+> 8. **Safra.** O Anexo II do Edital SAPS nº 3/2024 do PMMB (15/05/2024) publica a
+>    categoria de IVS de 1.277 municípios, igual à administrativa de 2026 em 1.277
+>    de 1.277, inclusive nos 600 em que ela diverge do IVS 2010. O escore já
+>    existia antes de julho de 2025; o valor contínuo de 2024 não é observado. Para
+>    o revisor, a safra não bloqueia o R3. A fonte não está preservada em `data/raw/`.
+> 9. **Controlador:** aceita como congelado um registro de 0 bytes, não detecta
+>    resultado R4 com outro nome, deixa `VIAVEL_PARCIAL` autorizar o R3 e não
+>    vincula o R3 aos hashes de R1 e R2. Endurecer antes do congelamento.
+> 10. **Segunda fonte da running variable:** a coluna `ivs` da Relação Nominal
+>     Ativos – PMM-E (branch `claude/vigilant-mccarthy-dd92mc`, commit `7156c78`,
+>     ainda não integrado) é idêntica ao IVS daqui nos 404 municípios em que
+>     existe. Não é independente na origem, mas confirma o escore no registro do
+>     próprio PMM-E.
 
 ## 1. Pergunta e estimando
 
