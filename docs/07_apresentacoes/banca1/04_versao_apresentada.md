@@ -257,6 +257,7 @@ viu —; a correção vale para qualquer versão futura.
 | E7 | 3 | 16 UFs, de 453,5 a 68,2 | só DF 453, SP 244, PA 70 e MA 68 têm fonte registrada | figura do grupo; as barras intermediárias não correspondem à fonte citada (`P6`) |
 | E8 | 21 | "trasnporte" | "transporte" | grafia |
 | E9 | 6 | "PMEE" | "PMM-E" | sigla |
+| E10 | 4 | *"O IVS é o piso, não o critério: em 177 dos 368 municípios do ciclo 1, a faixa publicada está acima da categoria de IVS"* | **O IVS 2010 é o critério.** Com o IVS 2010 oficial do Ipea e cortes em 0,300 e 0,400, a faixa é reproduzida em 368 de 368 municípios. Os 177 vinham de duas fontes: (i) o arquivo local `data/ivs_ipea_2010_municipios.csv`, que não é a base oficial; (ii) a grade descrita no FAQ e na cláusula 11.1.4, um degrau menos generosa que a aplicada. Só a grade, aplicada ao IVS oficial, já põe 166 municípios "acima" | invalida a leitura "piso" do slide e a ponte para o slide 17; registrada em 14/10/2026, [`auditorias/16`](../../auditorias/16_ivs_2010_oficial_e_arquivo_local.md) |
 
 ## 4. Proveniência dos números exibidos
 
@@ -268,7 +269,7 @@ não confirmada.
 |:---:|---|---|
 | 3 | 16 UFs, 453,5 a 68,2 por 100 mil | ⚠️ figura do grupo; só os dois extremos batem com a cobertura da *Demografia Médica 2025*; SP medido em ≈ 419 contra 244 citados — `P6` |
 | 3 | 276 / 256 / 179 / 107 / 101 km | ⚠️ atribuído à REGIC 2018; tabela de origem não localizada — `P7` |
-| 4 | 177 de 368 acima; nenhum abaixo | ✅ R1, [`auditorias/07`](../../auditorias/07_portao_rdd_bolsa.md); `output/rdd_bolsa/matriz_municipio_regra_ivs.csv` |
+| 4 | 177 de 368 acima; nenhum abaixo | ⚠️ reproduz o script de 04/09/2026, mas o insumo era o arquivo local de IVS, que não é a base oficial: **artefato** (errata E10). Com o IVS oficial: 368/368 reproduzidos, nenhum acima ou abaixo — `output/rdd_bolsa/portao_r1_ivs_oficial.json` |
 | 4, 21 | classes do IVS, 16 indicadores, média simples | 📄 Ipea, *Atlas da Vulnerabilidade Social* (2015) |
 | 4, 5, 17 | R$ 10 / 15 / 20 mil | 📄 Edital SGTES/MS nº 3/2025, item 11.1.4 |
 | 5 | Nordeste 14,5 · Norte 5,9 · Centro-Oeste 7,5 · Sudeste 55,4 · Sul 16,7 | 📄 *Demografia Médica 2025*, conferido **só em cobertura** — `P5`. O Centro-Oeste, 7,5%, não estava entre os percentuais conferidos |
@@ -334,7 +335,7 @@ recorte declarado.
 **O desafio metodológico voltou à tela, pelo título.** Ele tinha saído em
 17/09/2026. A tela não mostra a reconstrução da regra, mas afirma o problema —
 separar o efeito da bolsa do efeito da vulnerabilidade —, que é exatamente o que
-R1 encontrou: o IVS público é piso, não critério, e o tratamento é localmente
+R1 encontrou *(leitura de 05/10/2026, corrigida em 14/10/2026 pela errata E10: com o IVS 2010 oficial, a regra é reproduzida integralmente e o salto nos cortes é exato)*: o IVS público é piso, não critério, e o tratamento é localmente
 constante nos dois cortes. A resposta à pergunta da banca sobre *como* separar
 continua em [`05_identificacao/16`](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
 §3.5, e o mapa de literatura que mostra quem já separou isso em outros contextos

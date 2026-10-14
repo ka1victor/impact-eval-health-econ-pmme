@@ -1,5 +1,17 @@
 # Portão R1 refeito — escore administrativo de IVS nos dados abertos
 
+> [!WARNING]
+> **Corrigido no mesmo dia por [`16`](16_ivs_2010_oficial_e_arquivo_local.md).**
+> O escore administrativo **é** o IVS 2010 oficial do Ipea: 404/404 valores e
+> 5.565/5.565 categorias iguais. A base oficial é pública para todos os
+> municípios. Ficam erradas:
+> - a §2.2, que dizia "outra safra ou outro cálculo". Quem diverge da base
+>   oficial é o arquivo local `data/ivs_ipea_2010_municipios.csv`;
+> - a §2.3 e a §4, sobre o bloqueio por cobertura: o escore está completo para
+>   os ciclos 1 e 2.
+>
+> A reconstrução da regra (§2.1) continua válida.
+
 > **Execução:** 2026-10-14.<br>
 > **Decisão:** `REGRA_RECONSTRUIDA_ESCORE_INCOMPLETO`.<br>
 > **Outcomes abertos:** nenhum. O módulo lê faixa anunciada, escore, categoria e

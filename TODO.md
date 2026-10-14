@@ -95,7 +95,7 @@ A implementação que divergir dos alvos é erro de implementação, não result
   forma primária, publicar leave-one-curso-out do coeficiente de evento e a
   sensibilidade de mês de referência, e corrigir os graus de liberdade que
   ignoram os FE absorvidos (`p` de 0,033 para 0,044).
-- [x] C3 — refazer a justificativa do pedido do escore administrativo de IVS em
+- [x] C3 — *(superado em 14/10/2026: o escore é o IVS 2010 oficial, público; ver `docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`)* refazer a justificativa do pedido do escore administrativo de IVS em
   torno da impossibilidade demonstrada (teto de 78,0% para qualquer regra de dois
   cortes) e do primeiro estágio sharp (527/527). Sem envio.
 

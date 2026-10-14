@@ -8,6 +8,33 @@
 
 ---
 
+## 14/10/2026 — IVS 2010 oficial, RDD da bolsa estimada
+
+Motivo: a busca pedida pelo autor mostrou que o escore administrativo do MS é o
+IVS 2010 oficial do Ipea, público para todos os municípios, e que o arquivo
+local usado como IVS 2010 não é a base oficial. Com o escore completo, a RDD
+sharp foi estimada pelo protocolo congelado.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/16_ivs_2010_oficial_e_arquivo_local.md`](auditorias/16_ivs_2010_oficial_e_arquivo_local.md) | fonte oficial do IVS 2010, validação contra o escore do MS (404/404; 5.565/5.565), R1 `APROVADO_SHARP`, diagnóstico do arquivo local e lista do que precisa ser revisto |
+| [`06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md`](06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md) | resultados da RDD da bolsa: E3 principal, diagnósticos e E1/E2/E4 como exploratórios superados |
+| `data/raw/aquisicao/ivs_oficial/` (fora do Git, 201 MB) | base completa da Plataforma IVS, reprodutível por URL e SHA-256 |
+
+### Atualizado no mesmo commit
+
+`CLAUDE.md` e `AGENTS.md`, na regra da running variable;
+[`auditorias/15`](auditorias/15_portao_r1_escore_administrativo.md), com caixa
+de correção; [`06_execucao/33`](06_execucao/33_status_execucao_plano_causal.md);
+[`05_identificacao/16`](05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
+§3.5.1, marcada como superada;
+[`pedidos_dados/solicitacao_focal_rdd_bolsa.md`](pedidos_dados/solicitacao_focal_rdd_bolsa.md),
+**cancelado e não enviado**;
+[`07_apresentacoes/banca1/04_versao_apresentada.md`](07_apresentacoes/banca1/04_versao_apresentada.md),
+com a errata E10 ("o IVS é o piso" era artefato); `README.md`; `TODO.md`.
+
 ## 14/10/2026 — Portão R1 refeito com o escore administrativo de IVS
 
 Motivo: o autor priorizou o teste causal da hipótese da banca 1. O escore

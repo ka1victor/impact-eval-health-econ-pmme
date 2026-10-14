@@ -15,4 +15,4 @@
 ## 2. Escopo do Projeto
 
 * O escopo do projeto é a **avaliação causal de impacto do Programa Mais Médicos Especialistas (PMM-E / Lei 15.233/2025)** sobre a atração de força de trabalho médica, retenção municipal de pacientes (resolutividade local), desfechos de saúde (exames diagnósticos e internações) e custo-benefício logístico.
-* Desde 14/10/2026, por autorização do autor, a running variable canônica da RDD da bolsa é o **escore administrativo de IVS** do Ministério da Saúde; o IVS 2010 do IPEA passa a covariável. Não substitua por IDHM ou PIB per capita sem justificativa econométrica explícita e autorização do autor.
+* A running variable canônica é o **IVS 2010 oficial do IPEA** (`output/aquisicao/a08_ivs_2010_oficial_municipio.csv`), igual ao escore administrativo do MS. **`data/ivs_ipea_2010_municipios.csv` não é o IVS 2010 oficial** e não deve ser usado. Não substitua por IDHM ou PIB per capita sem justificativa econométrica explícita e autorização do autor.

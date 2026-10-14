@@ -53,10 +53,14 @@ A2 concluiu a tipologia como `APROVADO_4_ESTRATOS` (540/540 municípios A1 em
 capital/metropolitano/interior próximo/remoto via REGIC 2018 + RM/RIDE 2022).
 As sessões do núcleo estão organizadas em
 [`prompts/avaliacao_atracao_interior/`](prompts/avaliacao_atracao_interior/README.md).
-A RDD da bolsa foi avaliada e arquivada: o IVS público não reproduz a faixa
-administrativa nem gera primeiro estágio estável em `0,400` ou `0,500`. O
-arquivo público não será usado como running variable por conveniência, e o
-trabalho atual não depende de obter outro escore.
+A RDD da bolsa foi **reaberta e estimada em 14/10/2026**. A faixa é atribuída
+pelo IVS 2010 oficial do Ipea com cortes em `0,300` e `0,400`, que reproduzem
+100% das faixas dos ciclos 1 e 2. A RDD sharp não detecta efeito do anúncio de
++R$ 5 mil, com intervalos largos. O arquivo `data/ivs_ipea_2010_municipios.csv`,
+usado antes como IVS 2010, não é a base oficial: foi ele que fez a regra parecer
+irreproduzível. Ver
+[`docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md`](docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md)
+e [`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`](docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md).
 
 O diagnóstico histórico imediata versus reserva usa `município–curso–mês` no ciclo 1 e o CNES mensal de
 junho de 2024 a julho de 2026:

@@ -209,6 +209,14 @@ aplicar a taxonomia externa ao IVS 2010 local. Os outros **177 municípios
 
 ### 3.5.1 Diagnóstico corrigido em 09/09/2026 — a regra existe; o escore é que falta
 
+> [!WARNING]
+> **Superado em 14/10/2026** por
+> [`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md). O
+> escore administrativo é o IVS 2010 oficial do Ipea. O "teto de 78%" e a
+> "safra diferente" vinham de `data/ivs_ipea_2010_municipios.csv`, que não é a
+> base oficial. Com a base oficial, a regra de cortes 0,300/0,400 reproduz 100%
+> das faixas.
+
 A reauditoria independente (`docs/auditorias/13_reauditoria_independente_A1_A8.md`)
 mostrou que a leitura acima está formulada de modo enganoso. Não é verdade que "a
 regra não é reproduzível". Três fatos, todos verificáveis nos dados observados:

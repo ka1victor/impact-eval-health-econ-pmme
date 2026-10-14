@@ -1,42 +1,22 @@
 # Solicitação focal — regra do IVS, vagas, inscrições e eventos do PMM-E
 
-> **Estado:** `PRONTO PARA SUBMISSÃO — NÃO ENVIADO`.
+> **Estado:** `CANCELADO — NÃO ENVIAR` (14/10/2026). O escore que este pedido
+> buscava é o IVS 2010 oficial do Ipea, público para todos os municípios
+> ([`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md)). As
+> mensagens da "via rápida" foram retiradas: além de desnecessárias, a do Ipea
+> afirmava que o índice do MS não coincide com o IVS 2010, o que é falso. O
+> erro estava no arquivo local.
+>
+> Estado anterior: `PRONTO PARA SUBMISSÃO — NÃO ENVIADO`.
 > O envio depende da escolha e autorização do canal pelo autor. Este texto não
 > aceita termos, não autoriza transferência de dados e não contém dados pessoais.
 
 
-## Via rápida — contato direto (14/10/2026)
+## Via rápida — contato direto (14/10/2026): retirada
 
-O prazo da Lei de Acesso, 20 dias prorrogáveis por mais 10, não cabe na
-entrega de 28/10/2026. Em paralelo ao pedido formal, e sem depender dele, o
-autor envia as mensagens abaixo. Se o escore completo chegar a tempo, roda-se
-`scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py --escore <arquivo>`.
-
-**1. Mantenedor do conjunto de dados abertos**: CGPLAD/DEGEPS/SGTES,
-`cgplad@saude.gov.br`, conforme os metadados do conjunto
-[Provimento Federal — Programa Mais Médicos](https://dadosabertos.saude.gov.br/dataset/provimento-federal-programa-mais-medicos).
-
-> **Assunto:** Dados abertos PMM-E — campo `ivs` para todos os municípios
->
-> Prezados, somos um grupo de pesquisa do Insper avaliando o Projeto Mais
-> Médicos Especialistas. A Relação Nominal Ativos – PMM-E publicada nos dados
-> abertos (versão de 09/10/2026) traz o campo numérico `ivs`, e o Consolidado
-> do Programa Mais Médicos traz `categoria_ivs` para todos os municípios. Seria
-> possível nos enviar, ou publicar, o valor numérico de `ivs` por código IBGE
-> para todos os municípios — ou ao menos para os que tiveram vagas ofertadas
-> nos ciclos 1 e 2 do PMM-E —, com a safra e a data de referência do índice?
-> Não precisamos de nenhum dado pessoal. O prazo da nossa entrega é
-> 28/10/2026; qualquer retorno até lá nos ajuda muito. Obrigado.
-
-**2. Ipea**, pelo [Fale com o Ipea](https://www.ipea.gov.br/portal/fale-com-ipea),
-dirigido à equipe do Atlas da Vulnerabilidade Social:
-
-> Prezados, o Ministério da Saúde usa no Projeto Mais Médicos Especialistas um
-> IVS municipal "calculado pelo IPEA" que não coincide com o IVS 2010 do Atlas
-> (correlação de 0,89 nos 404 municípios em que ele é publicado). Vocês poderiam
-> indicar a safra e a metodologia desse índice e, se possível, compartilhar os
-> valores municipais usados? É para pesquisa acadêmica no Insper, com entrega em
-> 28/10/2026. Obrigado.
+Os textos para o mantenedor dos dados abertos e para o Ipea foram retirados no
+mesmo dia: o escore está publicado na Plataforma IVS do Ipea. Ver o histórico
+do Git se for preciso consultá-los.
 
 ## Prioridade revista em 14/10/2026
 

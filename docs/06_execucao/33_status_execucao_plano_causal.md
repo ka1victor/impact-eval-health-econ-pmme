@@ -7,11 +7,18 @@
 ## Decisão vigente
 
 > **Atualização de 14/10/2026.** O autor priorizou o teste causal da hipótese
-> da banca 1. O escore administrativo de IVS foi encontrado nos dados abertos do
-> Ministério da Saúde, e a regra da bolsa foi reconstruída: dois cortes, 0,300 e
-> 0,400, cada um com +R$ 5 mil. O que falta é o escore dos municípios sem
-> especialista ativo. Nenhum efeito foi estimado. Detalhe em
-> [`auditorias/15`](../auditorias/15_portao_r1_escore_administrativo.md).
+> da banca 1.
+> - **A regra:** o escore administrativo de IVS do MS é o **IVS 2010 oficial do
+>   Ipea**, público para os 5.565 municípios. Com cortes em 0,300 e 0,400, de
+>   +R$ 5 mil cada, ele reproduz 100% das faixas: R1 = `APROVADO_SHARP`.
+> - **O arquivo local estava errado:** `data/ivs_ipea_2010_municipios.csv` não é
+>   a base oficial, e era isso que fazia a regra parecer irreproduzível
+>   ([`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md)).
+> - **O resultado:** a RDD sharp completa (E3) não detecta efeito sobre
+>   preenchimento nem sobre presença, com ICs de cerca de ±40 p.p.
+>   ([`37`](37_resultados_rdd_bolsa_ivs_oficial.md)).
+>
+> O parágrafo abaixo, de 09/09/2026, fica **superado**.
 
 O pedido administrativo não foi enviado. A RDD da bolsa pelo IVS público
 permanece bloqueada, mas o diagnóstico foi corrigido em 09/09/2026: a regra
@@ -37,7 +44,7 @@ ponto.
 | A8-P4 | `APROVADO_DIAGNOSTICOS` | placebo abaixo nulo; gaps alternativos e leave-one-out sem inversão de sinal |
 | A8-P5 | `REPLICACAO_DIRECIONAL` | 11 pares em 2026; +36,4 p.p. em presença ativa, teste exato `p=0,125` |
 | A8-P6 | `AUDITADO` | outputs agregados sem PII, hashes de entrada e testes automatizados |
-| RDD-IVS | `REGRA_RECONSTRUIDA_ESCORE_INCOMPLETO` (14/10/2026) | o escore administrativo `ivs` dos dados abertos reproduz a faixa em 100% dos municípios cobertos, com cortes em 0,300 e 0,400; a categoria administrativa reproduz 100% dos quatro quadros. O escore contínuo só é publicado onde há especialista ativo, e a cobertura é selecionada pelo desfecho: R2 continua bloqueado — [`auditorias/15`](../auditorias/15_portao_r1_escore_administrativo.md) |
+| RDD-IVS | `E3_CONCLUIDO_SEM_EFEITO_DETECTAVEL` (14/10/2026): IVS 2010 oficial completo, R1 sharp, E3 estimado — [`37`](37_resultados_rdd_bolsa_ivs_oficial.md). Antes, no mesmo dia: `REGRA_RECONSTRUIDA_ESCORE_INCOMPLETO` | o escore administrativo `ivs` dos dados abertos reproduz a faixa em 100% dos municípios cobertos, com cortes em 0,300 e 0,400; a categoria administrativa reproduz 100% dos quatro quadros. O escore contínuo só é publicado onde há especialista ativo, e a cobertura é selecionada pelo desfecho: R2 continua bloqueado — [`auditorias/15`](../auditorias/15_portao_r1_escore_administrativo.md) |
 | Pedido administrativo | `CANCELADO_NAO_ENVIADO` | nenhum recebimento ou espera integra o plano atual |
 
 ## Resultado e alcance
