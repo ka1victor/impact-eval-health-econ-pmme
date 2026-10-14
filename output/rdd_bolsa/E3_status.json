@@ -8,9 +8,9 @@
     "condicao": "somente com o escore para 100% dos municipios de P_k; sem isso o script falha fechado"
   },
   "escore": {
-    "arquivo": "output/aquisicao/a07_ivs_administrativo_municipio.csv",
-    "sha256": "1a117291f730fa048c6280000296400ebf0c156eb580d446c98930924fb81757",
-    "municipios_com_escore": 404
+    "arquivo": "output/rdd_bolsa/escore_completo_ivs2010_oficial.csv",
+    "sha256": "c2e31c989db0e4f2d7879428b4861aa7c290fcf98092a733cf76c926904689bd",
+    "municipios_com_escore": 5565
   },
   "populacoes": {
     "P1": {
@@ -29,7 +29,7 @@
       }
     }
   },
-  "outcomes_abertos": false,
+  "outcomes_abertos": true,
   "cortes": [
     0.3,
     0.4
@@ -47,58 +47,201 @@
     "P1": {
       "papel": "principal",
       "municipios": 368,
-      "com_escore": 209,
-      "sem_escore": 159,
-      "pct": 56.8,
+      "com_escore": 368,
+      "sem_escore": 0,
+      "pct": 100.0,
       "por_faixa_anunciada": {
         "FAIXA 1": {
           "municipios": 102,
-          "com_escore": 62,
-          "pct": 60.8
+          "com_escore": 102,
+          "pct": 100.0
         },
         "FAIXA 2": {
           "municipios": 107,
-          "com_escore": 77,
-          "pct": 72.0
+          "com_escore": 107,
+          "pct": 100.0
         },
         "FAIXA 3": {
           "municipios": 159,
-          "com_escore": 70,
-          "pct": 44.0
+          "com_escore": 159,
+          "pct": 100.0
         }
       },
-      "completa": false
+      "completa": true
     },
     "P2": {
       "papel": "replicacao",
       "municipios": 454,
-      "com_escore": 275,
-      "sem_escore": 179,
-      "pct": 60.6,
+      "com_escore": 454,
+      "sem_escore": 0,
+      "pct": 100.0,
       "por_faixa_anunciada": {
         "FAIXA 1": {
           "municipios": 129,
-          "com_escore": 89,
-          "pct": 69.0
+          "com_escore": 129,
+          "pct": 100.0
         },
         "FAIXA 2": {
           "municipios": 115,
-          "com_escore": 85,
-          "pct": 73.9
+          "com_escore": 115,
+          "pct": 100.0
         },
         "FAIXA 3": {
           "municipios": 210,
-          "com_escore": 101,
-          "pct": 48.1
+          "com_escore": 210,
+          "pct": 100.0
         }
       },
-      "completa": false
+      "completa": true
     }
   },
-  "status": "AGUARDANDO_ESCORE_COMPLETO",
-  "motivo": "falta escore para municipios de P1 e/ou P2; o escore publicado so cobre municipios com especialista ativo, entao a falta e funcao do desfecho e a RDD na subamostra coberta condicionaria no proprio desfecho",
-  "outcomes_lidos": [],
-  "o_que_destrava": "escore `ivs` administrativo para 100% dos municipios de P1 e de P2 (ou para os 5.570)",
-  "como_rodar": "python3 scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py --escore <CSV com co_ibge, ivs_admin>",
-  "saidas_anteriores_removidas": []
+  "primeiro_estagio": {
+    "P1": {
+      "municipios": 368,
+      "reproduzidos": 368,
+      "municipios_com_mais_de_uma_faixa": 0,
+      "sharp": true
+    },
+    "P2": {
+      "municipios": 454,
+      "reproduzidos": 454,
+      "municipios_com_mais_de_uma_faixa": 0,
+      "sharp": true
+    }
+  },
+  "covariaveis_pre": {
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": {
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "colunas": [
+        "co_ibge",
+        "ivs",
+        "ivs_infraestrutura_urbana",
+        "ivs_capital_humano",
+        "ivs_renda_e_trabalho",
+        "populacao",
+        "renda_per_capita"
+      ],
+      "nota": "base oficial do Ipea; substitui data/ivs_ipea_2010_municipios.csv (auditoria 16)"
+    },
+    "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
+      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+      "status": "lido",
+      "estratos": [
+        "capital",
+        "interior_proximo_polo",
+        "interior_remoto",
+        "metropolitano"
+      ]
+    }
+  },
+  "status": "CONCLUIDO",
+  "outcomes_lidos": [
+    {
+      "populacao": "P1",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "ciclo": 1,
+      "estimado": true,
+      "fonte": "data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip",
+      "n_municipios": 368
+    },
+    {
+      "populacao": "P1",
+      "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+      "ciclo": 1,
+      "estimado": true,
+      "fonte": "output/tema_trabalho/matriz_funil_ciclo1.parquet",
+      "n_municipios": 368
+    },
+    {
+      "populacao": "P2",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "ciclo": 2,
+      "estimado": true,
+      "fonte": "data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip",
+      "n_municipios": 454
+    }
+  ],
+  "diagnosticos": "E3_diagnosticos.csv",
+  "estimativas": "E3_estimativas.csv",
+  "resumo_principal": [
+    {
+      "populacao": "P1",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.3,
+      "h": 0.05,
+      "n_abaixo": 61,
+      "n_acima": 53,
+      "tau": -0.03221123982069851,
+      "ep": 0.2260424298163977,
+      "ic95_inf": -0.47524626123876085,
+      "ic95_sup": 0.4108237815973638,
+      "p_valor": 0.8866844030032983
+    },
+    {
+      "populacao": "P1",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.4,
+      "h": 0.05,
+      "n_abaixo": 53,
+      "n_acima": 41,
+      "tau": -0.12017377186725564,
+      "ep": 0.2094625785562995,
+      "ic95_inf": -0.5307128819464945,
+      "ic95_sup": 0.2903653382119832,
+      "p_valor": 0.5661543798622063
+    },
+    {
+      "populacao": "P1",
+      "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+      "corte": 0.3,
+      "h": 0.05,
+      "n_abaixo": 61,
+      "n_acima": 53,
+      "tau": -0.12838355447528177,
+      "ep": 0.1664459393297835,
+      "ic95_inf": -0.4546116009345963,
+      "ic95_sup": 0.19784449198403276,
+      "p_valor": 0.440515598158781
+    },
+    {
+      "populacao": "P1",
+      "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+      "corte": 0.4,
+      "h": 0.05,
+      "n_abaixo": 53,
+      "n_acima": 41,
+      "tau": -0.051492177707707656,
+      "ep": 0.1601431223850135,
+      "ic95_inf": -0.36536692995412423,
+      "ic95_sup": 0.26238257453870895,
+      "p_valor": 0.7478023489312183
+    },
+    {
+      "populacao": "P2",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.3,
+      "h": 0.05,
+      "n_abaixo": 82,
+      "n_acima": 61,
+      "tau": -0.15243086347351864,
+      "ep": 0.1853192771026545,
+      "ic95_inf": -0.5156499722357197,
+      "ic95_sup": 0.21078824528868245,
+      "p_valor": 0.4107747104966395
+    },
+    {
+      "populacao": "P2",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.4,
+      "h": 0.05,
+      "n_abaixo": 53,
+      "n_acima": 53,
+      "tau": 0.11489391427905024,
+      "ep": 0.12975077029769563,
+      "ic95_inf": -0.13941292247076256,
+      "ic95_sup": 0.3692007510288631,
+      "p_valor": 0.37588865174733577
+    }
+  ],
+  "regra_de_relato": "todas as especificacoes sao relatadas; nenhuma janela, corte, outcome ou amostra reescolhido"
 }
