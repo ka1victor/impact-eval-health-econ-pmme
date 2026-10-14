@@ -143,6 +143,12 @@ o deck sempre resolveu isso repetindo o título e marcando o build no rastreio:
 `1 de 3`, `2 de 3`, `3 de 3`. Para quem assiste, o efeito é o mesmo — o slide
 se completa —, e a numeração de página do rastreio conta páginas, não slides.
 
+A linha `**Fontes:**` do documento é **uma por slide**, e por isso se repete
+**inteira** em todas as páginas dos builds daquele slide, como no rodapé do
+Beamer. Desde 01/10/2026 nenhuma página traz recorte próprio da linha: os
+recortes por build que havia antes omitiam fontes do slide e, no `A1`, citavam
+seções que o documento não cita.
+
 | Documento | Páginas aqui |
 |---|:---:|
 | capa, sumário | 1–2 |

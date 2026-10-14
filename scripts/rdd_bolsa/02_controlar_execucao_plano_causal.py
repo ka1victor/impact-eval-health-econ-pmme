@@ -109,6 +109,12 @@ def _markdown(report: dict[str, Any]) -> str:
             "pode existir com protocolo R3 congelado. Até aqui nenhum efeito RDD de atração "
             "foi estimado, e a ordem foi verificada nesta execução.",
             "",
+            "## Verificações de reprodutibilidade",
+            "",
+            "Este documento é gerado por `scripts/rdd_bolsa/02_controlar_execucao_plano_causal.py`. "
+            "As verificações curadas de reprodutibilidade do estado validado ficam em "
+            "[`38_verificacoes_reprodutibilidade.md`](38_verificacoes_reprodutibilidade.md).",
+            "",
         ]
     )
 
@@ -242,8 +248,8 @@ def main() -> None:
             "estimacao_liberada": triage["estimacao_liberada"],
         },
         "proxima_acao": (
-            "Revisar as rodadas de 01/10 e 05/10 e integrar os branches, na ordem de "
-            "prompts/integracao_rodadas_outubro_2026/README.md. Depois, o autor decide unidade, "
+            "As rodadas de 01/10 e 05/10 foram revisadas e integradas (S1a, S1b e S2 de "
+            "prompts/integracao_rodadas_outubro_2026/README.md). Agora o autor decide unidade, "
             "banda, outcomes e linguagem do R3 "
             "(docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md) e autoriza o congelamento, "
             "pelo prompt prompts/avaliacao_rdd_bolsa/02_congelar_protocolo_r3.md. Só então R4 pode ser executado."

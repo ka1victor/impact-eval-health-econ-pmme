@@ -46,8 +46,9 @@ desapareceu — ele continua em
 [`05_identificacao/16`](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
 §3.5, como material de resposta à banca.
 
-A margem tratada é o **preenchimento** das vagas; permanência fica fora. Não
-há slide de perguntas: a apresentação termina na viabilidade. Nenhum resultado
+A margem tratada é o **preenchimento** das vagas; permanência fica fora. A
+fala termina na viabilidade: o slide **Perguntas** e o apêndice vêm depois do
+slide 17, fora da contagem, e só entram se alguém perguntar. Nenhum resultado
 é apresentado, porque nenhum está autorizado a ser promovido a evidência causal
 no estado atual do projeto — ver
 [`docs/06_execucao/05_roadmap_execucao.md`](../../06_execucao/05_roadmap_execucao.md).
@@ -110,8 +111,8 @@ oferta, que **não são usadas** no deck; a curva de custo laboral de
 `figuras/` são material do deck anterior, preservado mas não usado. Ver
 [03 — Proveniência](03_proveniencia_figuras_e_numeros.md#figuras-geradas-e-não-usadas).
 
-Para reconstruir os decks — o Beamer na estrutura vigente de 17 slides; o
-Slidev ainda na de 15:
+Para reconstruir os decks — os dois na estrutura vigente de 17 slides, com Q&A
+e apêndice:
 
 ```bash
 bash scripts/apresentacao/build_deck_beamer.sh        # LuaLaTeX, 17 frames + apêndice, 40 páginas
@@ -137,7 +138,7 @@ declarada, não erro de rastreio, e está registrada como pendência 9.
 
 As **três ressalvas de conteúdo** continuam encerradas desde 16/09/2026 — a
 contagem de cursos ambulatoriais, a figura do custo laboral e a citação direta
-da Portaria GM/MS nº 7.177/2025. Abertas há **oito pendências**, listadas com
+da Portaria GM/MS nº 7.177/2025. Abertas há **sete pendências**, listadas com
 efeito e critério de fechamento no fim de
 [02 — Conteúdo](02_conteudo_slides.md): a cobertura da figura por UF, que hoje é
 dos quatro valores com fonte e não das 27 unidades (1), e a fonte primária do
@@ -145,12 +146,13 @@ deslocamento por região (2), que são as que tocam a regra de proveniência; o 
 da *Demografia Médica 2025* a registrar em `data/raw/` com hash, depois de
 corrigido o número da dupla prática (3); a tabela de inclinações pré/pós do deck
 do grupo, não reproduzível e por isso mantida fora do slide 7 (4); o percentual
-do Sudeste conferido em cobertura e não no PDF integral (5); os dois decks, agora
-duas estruturas atrás (6); a decisão do autor sobre a fronteira municipal da
-medida de retaguarda, vinda do PR de ajuste estrutural (8); e a monotonicidade do
-custo no IVS, que a tela afirma e a teoria do projeto não postula (9). A
-pendência **7** — a figura que faltava ao desafio metodológico — **fechou** em
-17/09/2026, por remoção do slide que a pedia.
+do Sudeste conferido em cobertura e não no PDF integral (5); a decisão do autor
+sobre a fronteira municipal da medida de retaguarda, vinda do PR de ajuste
+estrutural (8); e a monotonicidade do custo no IVS, que a tela afirma e a teoria
+do projeto não postula (9). A pendência **7** — a figura que faltava ao desafio
+metodológico — **fechou** em 17/09/2026, por remoção do slide que a pedia; a
+**6** — os decks na estrutura antiga — fechou em 21/09/2026, com os dois decks
+reconstruídos.
 O rastreio número a número segue em
 [03 — Proveniência](03_proveniencia_figuras_e_numeros.md#3-pendências-e-ressalvas).
 
