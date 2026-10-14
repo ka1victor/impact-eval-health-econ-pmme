@@ -1,0 +1,49 @@
+{
+  "documento": "Adendo E4 ao protocolo da RDD da bolsa: proporção de células preenchidas",
+  "data_congelamento": "2026-10-14",
+  "protocolo_base": {
+    "arquivo": "output/rdd_bolsa/protocolo_escore_administrativo.json",
+    "sha256": "7785d58ee1a001a4b61ac677eb3d2f71e56519ec78823f29accc1b0755bc90a4"
+  },
+  "autorizacao_autor": "2026-10-14: o autor pediu a proporção preenchida como forma operacional da hipótese da banca (maior bolsa, maior preenchimento) e autorizou a reconstrução a partir dos brutos",
+  "pre_registro": false,
+  "exposicao_previa_a_outcomes": [
+    "A4: preenchimento por faixa da 1a chamada do ciclo 1 (23,6% F3; 37,4% F2; 31,6% F1) e por estrato",
+    "E1 e E2 (14/10/2026): contagens de municípios com especialista ativo do ciclo 1 em torno dos cortes, razão de densidades e limites para D_1",
+    "nenhuma proporção de preenchimento por escore administrativo foi calculada antes deste adendo"
+  ],
+  "hipotese": "H1 da banca 1 na forma local: no corte do escore administrativo, onde a bolsa anunciada sobe R$ 5 mil e o custo do lugar varia continuamente, a proporção de células preenchidas é maior do lado de cima",
+  "populacao": "P1: 368 municípios e 1.295 células CNES–curso do quadro da 1a chamada do ciclo 1 (população primária do A4)",
+  "outcomes": {
+    "Y1_principal": "por município: fração das suas células com outcome_alguma_confirmacao_ou_homologacao = 1 (alguma confirmação ou homologação na 1a chamada), definição do A4",
+    "Y2_secundario": "por município: fração das suas células com alguma confirmação ou homologação na 1a chamada OU homologação nova na 2a chamada (ciclo 1 inteiro)",
+    "fonte_canonica": "output/tema_trabalho/matriz_funil_ciclo1.parquet, filtrada para a população primária como em scripts/tema_trabalho/05_estimar_atracao.py",
+    "reconstrucao_independente": "Y1 e Y2 recalculados a partir dos brutos (quadro, confirmações/alocação e homologados do ciclo 1 em data/raw) por script próprio; deve reproduzir a fonte canônica célula a célula; divergências são relatadas e a fonte canônica prevalece",
+    "ponderacao": "principal: média simples entre municípios; sensibilidade: ponderada pelo número de células"
+  },
+  "selecao": "S = 1 se o município tem escore observado (especialista ativo de qualquer ciclo na relação nominal de 09/10/2026). O ciclo 3 entra só como mecanismo de observação do escore, nunca como outcome",
+  "E4a_ingenuo": {
+    "descricao": "diferença local de Y1 entre os lados do corte só entre municípios com S = 1; constante local h = 0,050 e local linear triangular h = 0,050",
+    "rotulo": "viesado por seleção; apenas referência"
+  },
+  "E4b_limites_pior_caso": {
+    "estimando": "Delta_Y(c,h) = E[Y | s em (c, c+h]] - E[Y | s em (c-h, c]] entre os municípios de P1",
+    "dados": "Y é conhecido para todos os 368 municípios; só a posição no escore falta para os que têm S = 0",
+    "cenarios": "pior_caso (intervalo da faixa anunciada) e informado (intervalo da faixa ∩ [ivs_2010 + dmin, ivs_2010 + dmax]), como no E2",
+    "metodo": "limites exatos: escolher, em cada lado, o subconjunto dos municípios sem escore que podem estar na janela que minimiza ou maximiza a média de Y (ótimo por ordenação de Y)",
+    "janelas": ["h = 0,050 (principal)", "h = 0,030", "h = 0,080"],
+    "outcomes": ["Y1", "Y2"]
+  },
+  "E4c_limites_de_Lee": {
+    "estimando": "efeito local sobre Y1 entre os municípios que teriam especialista ativo com ou sem os R$ 5 mil (sempre-selecionados)",
+    "premissa": "monotonicidade: a bolsa maior não reduz S para nenhum município; e A1 do protocolo base para estimar a razão de seleção",
+    "razao_de_selecao": "rho_S estimado pelo estimador principal do E1 (Poisson log-linear, h = 0,050) aplicado às contagens de municípios de P1 com S = 1",
+    "corte_do_excesso": "se rho_S > 1, apara-se a fração 1 - 1/rho_S dos selecionados do lado de cima (do topo de Y para o limite inferior, da base para o superior); se rho_S < 1, apara-se a fração 1 - rho_S do lado de baixo",
+    "janela": "constante local, h = 0,050",
+    "inferencia": "bootstrap de municípios dentro da janela, 999 réplicas, semente 20261014, reestimando rho_S em cada réplica; IC 95% percentil do limite inferior (2,5%) e do superior (97,5%)",
+    "sensibilidade": "limites com rho_S nos extremos do IC 95% do E1"
+  },
+  "ciclo_2": "fora do E4: o funil do ciclo 2 não foi reconciliado nem auditado",
+  "linguagem": "exploratório; E4b sem premissa de continuidade, E4c sob monotonicidade e A1; não chamar de efeito causal estabelecido; o contraste é o incentivo marginal anunciado de R$ 5 mil",
+  "regra_de_relato": "todas as especificações acima são relatadas, independentemente do resultado"
+}
