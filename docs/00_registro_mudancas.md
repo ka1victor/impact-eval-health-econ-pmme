@@ -8,6 +8,17 @@
 
 ---
 
+## 14/10/2026 — Guia de conferência manual do IVS
+
+Motivo: o autor pediu um caminho para conferir à mão, sem depender de agentes,
+de onde vem o IVS da bolsa e por que o arquivo local não servia.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/17_guia_conferencia_manual_ivs.md`](auditorias/17_guia_conferencia_manual_ivs.md) | passo a passo com navegador e planilha: dados abertos do MS, base completa do Ipea, arquivo do repositório e IBGE, com tabela de valores esperados para nove municípios, seis deles perto dos cortes |
+
 ## 14/10/2026 — IVS 2010 oficial, RDD da bolsa estimada
 
 Motivo: a busca pedida pelo autor mostrou que o escore administrativo do MS é o
