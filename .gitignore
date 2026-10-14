@@ -63,3 +63,4 @@ node_modules/
 
 # PNG de revisao por pagina do deck Slidev (derivado do mesmo PDF)
 output/apresentacao_banca1/deck_slidev/png/
+data/raw/aquisicao/ivs_oficial/

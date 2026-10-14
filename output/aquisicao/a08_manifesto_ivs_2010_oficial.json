@@ -1,0 +1,24 @@
+{
+  "data_execucao": "2026-10-14",
+  "fonte": {
+    "url": "https://ivs.ipea.gov.br/api/cockpit/storage/uploads/databases/basecompletamunicipal.zip",
+    "pagina": "https://ivs.ipea.gov.br/ (Base de Dados e Shapefiles -> Base Completa)",
+    "orgao": "Instituto de Pesquisa Econômica Aplicada (Ipea)",
+    "descricao": "Atlas da Vulnerabilidade Social — base completa (dados brutos v2, arquivo de 28/02/2024)",
+    "caminho_zip": "data/raw/aquisicao/ivs_oficial/basecompletamunicipal.zip",
+    "status": "ja_preservado",
+    "tamanho_bytes": 201366481,
+    "sha256_zip": "56f8a133cb60dc97ff1efdfcaccbb433768cc44e3c2aad366917cf8782e1ebbe",
+    "arquivo_extraido": "data/raw/aquisicao/ivs_oficial/atlasivs_dadosbrutos_pt_v2.xlsx",
+    "sha256_xlsx": "a06616fe6cbdcd8c2a1851da2c4e7b17d47c1237c45b5cad32c44da27a1903eb",
+    "no_git": false,
+    "motivo_fora_do_git": "201 MB; reprodutível por URL e SHA-256"
+  },
+  "recorte": "nivel = 'regiao,uf,rm,municipio', ano = 2010, cor/sexo/situação de domicílio = Total",
+  "saida": {
+    "arquivo": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+    "municipios": 5565,
+    "ivs_ausente": 0
+  },
+  "observacao": "data/ivs_ipea_2010_municipios.csv, usado até 14/10/2026 como IVS 2010, não reproduz esta base; ver docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md"
+}

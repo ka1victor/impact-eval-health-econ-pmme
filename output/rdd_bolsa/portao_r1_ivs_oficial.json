@@ -1,0 +1,48 @@
+{
+  "status": "PORTAO_CAUSAL",
+  "portao": "R1",
+  "data_execucao": "2026-10-14",
+  "outcomes_abertos": false,
+  "decisao_r1": "APROVADO_SHARP",
+  "escore_administrativo_e_ivs_2010_oficial": {
+    "valores_iguais_3_casas": "404/404",
+    "categorias_iguais": "5565/5565"
+  },
+  "populacoes": {
+    "P1": {
+      "municipios": 368,
+      "com_ivs_oficial": 368,
+      "sem_ivs_oficial": [],
+      "regra_reproduz": 368
+    },
+    "P2": {
+      "municipios": 454,
+      "com_ivs_oficial": 454,
+      "sem_ivs_oficial": [],
+      "regra_reproduz": 454
+    },
+    "ciclo_3_congelado": {
+      "municipios": 748,
+      "com_ivs_oficial": 747,
+      "sem_ivs_oficial": [
+        "422000"
+      ],
+      "regra_reproduz": 747
+    }
+  },
+  "arquivo_local_ivs_2010": {
+    "arquivo": "data/ivs_ipea_2010_municipios.csv",
+    "correlacao_com_oficial": 0.851,
+    "pct_iguais_3_casas": 0.7,
+    "leitura": "não é o IVS 2010 oficial; ver docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md"
+  },
+  "running_variable": "IVS 2010 oficial do Ipea (= escore administrativo do MS); cortes 0,300 e 0,400",
+  "saida_escore_completo": "output/rdd_bolsa/escore_completo_ivs2010_oficial.csv",
+  "fontes": {
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+    "output/aquisicao/a07_ivs_administrativo_municipio.csv": "1a117291f730fa048c6280000296400ebf0c156eb580d446c98930924fb81757",
+    "output/aquisicao/a07_categoria_ivs_pmmb_municipio.csv": "f9556bd46b20b5e4c7e1b3f782cc0c87be69558c865c995a890e00c0ce269025",
+    "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv": "9e5d18274034ba944874345924bb16826c67b4311adc8fbd31907231916b56e9",
+    "data/ivs_ipea_2010_municipios.csv": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c"
+  }
+}

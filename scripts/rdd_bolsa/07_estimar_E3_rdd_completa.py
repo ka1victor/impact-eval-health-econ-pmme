@@ -430,16 +430,28 @@ def densidade_poisson(s_mil, corte_mil: int, h_mil: int, max_iter: int = 200, to
 # ---------------------------------------------------------------------------
 
 def carregar_covariaveis(root: Path = ROOT) -> tuple[pd.DataFrame, dict]:
+    # As covariaveis do protocolo vem da base oficial do Ipea (a08). O arquivo
+    # data/ivs_ipea_2010_municipios.csv, que o protocolo supunha ser o IVS 2010,
+    # nao reproduz a base oficial (auditoria 16) e deixou de ser usado aqui.
     notas: dict = {}
-    ivs = pd.read_csv(root / "data" / "ivs_ipea_2010_municipios.csv", dtype={"cod_ibge6": str})
-    ivs["co_ibge"] = normalizar_ibge(ivs["cod_ibge6"]).str.zfill(6)
-    pop = pd.to_numeric(ivs["populacao_2010"], errors="coerce")
+    oficial_path = root / "output" / "aquisicao" / "a08_ivs_2010_oficial_municipio.csv"
+    ivs = pd.read_csv(oficial_path, dtype={"co_ibge": str})
+    ivs["co_ibge"] = normalizar_ibge(ivs["co_ibge"]).str.zfill(6)
+    ivs = ivs.rename(columns={
+        "ivs": "ivs_2010",
+        "ivs_infraestrutura_urbana": "ivs_infra_2010",
+        "ivs_capital_humano": "ivs_ch_2010",
+        "ivs_renda_e_trabalho": "ivs_rt_2010",
+        "renda_per_capita": "rdpc_2010",
+    })
+    pop = pd.to_numeric(ivs["populacao"], errors="coerce")
     ivs["log_populacao_2010"] = np.where(pop > 0, np.log(pop.where(pop > 0)), np.nan)
     cov = ivs[["co_ibge"] + [c for c in COVARIAVEIS_IVS]].copy()
-    notas[rotulo(root / "data" / "ivs_ipea_2010_municipios.csv")] = {
-        "sha256": sha256(root / "data" / "ivs_ipea_2010_municipios.csv"),
-        "colunas": ["cod_ibge6", "ivs_2010", "ivs_infra_2010", "ivs_ch_2010", "ivs_rt_2010",
-                    "populacao_2010", "rdpc_2010"],
+    notas[rotulo(oficial_path)] = {
+        "sha256": sha256(oficial_path),
+        "colunas": ["co_ibge", "ivs", "ivs_infraestrutura_urbana", "ivs_capital_humano",
+                    "ivs_renda_e_trabalho", "populacao", "renda_per_capita"],
+        "nota": "base oficial do Ipea; substitui data/ivs_ipea_2010_municipios.csv (auditoria 16)",
     }
     tip_path = root / "output" / "tema_trabalho" / "matriz_tipologia_territorial.parquet"
     try:
