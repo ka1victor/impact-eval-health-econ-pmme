@@ -1111,7 +1111,7 @@ def secao_regra(r1, mat, ivs, c_inf, c_sup, faixas, valor_faixa) -> str:
         svg2, n2, nc2 = fig_ivs2010_vs_admin(mat, ivs, c_inf, c_sup, faixas)
         cmp_ = r1.get("comparacao_ivs_2010_publico", {})
         sub2 = (f"{br_int(n2)} municípios com escore e IVS 2010; {br_pct(100 * nc2 / n2)} cairiam na mesma faixa "
-                f"pelo IVS 2010. Linhas cinza: cortes {br(c_inf)} e {br(c_sup)} nos dois eixos.")
+                f"pelo IVS 2010. Linhas escuras: cortes {br(c_inf)} e {br(c_sup)} nos dois eixos; diagonal: 45°.")
         nota2 = ""
         if cmp_:
             nota2 = (f"Comparação registrada no R1 (404 municípios da relação nominal): correlação "
@@ -1270,7 +1270,7 @@ def secao_e1(prot) -> str:
         o.append("<h3>Resultado principal (ciclo 1)</h3><ul class=\"leitura\">" + "".join(itens) + "</ul>")
         o.append(f"<p>Em {br_int(n_tot)} especificações com intervalo, {br_int(n_exc)} excluem ρ = 1. "
                  "Leitura: exploratória e condicional a A1; um intervalo que inclui 1 não demonstra ausência de "
-                 "diferença, apenas que a amostra não a distingue de zero com essa precisão.</p>")
+                 "diferença, apenas que a amostra não distingue ρ de 1 com essa precisão.</p>")
 
     forest = fig_e1_forest(est)
     if forest:
@@ -1301,7 +1301,8 @@ def secao_e1(prot) -> str:
         letras, leg = notas_rodape(notas)
         linhas = []
         for r, nota in zip(g.itertuples(), notas):
-            linhas.append([esc(r.ciclo), fmt_corte(r.corte), esc(espec_legivel(r.especificacao)),
+            espec = re.sub(r",? ?h = 0,\d{3}", "", espec_legivel(r.especificacao)).strip(" ,")
+            linhas.append([esc(r.ciclo), fmt_corte(r.corte), esc(espec),
                            fmt_corte(r.h), br_int(r.n_esq), br_int(r.n_dir), br(r.rho, 3),
                            f"{br(r.ic_inf, 3)} – {br(r.ic_sup, 3)}", br_p(r.p_valor), br_p(r.p_holm),
                            f"<sup>{letras[nota]}</sup>" if nota else ""])
@@ -1384,8 +1385,11 @@ def secao_e2(prot) -> str:
         if so_informado:
             razoes.append("dependem da premissa do cenário informado")
         if razoes:
-            txt += (" Esses casos " + " e ".join(razoes) + "; ficam relatados, mas não substituem a especificação "
-                    "principal fixada no protocolo.")
+            um = len(excl) == 1
+            razoes = [r.replace("estão", "está").replace("dependem", "depende") if um else r for r in razoes]
+            txt += ((" Esse caso " if um else " Esses casos ") + " e ".join(razoes)
+                    + ("; fica relatado, mas não substitui" if um else "; ficam relatados, mas não substituem")
+                    + " a especificação principal fixada no protocolo.")
     txt += (" Os limites são de identificação na amostra observada e não incorporam incerteza amostral. "
             "A estimativa ingênua usa só municípios com escore e é viesada pela seleção; serve apenas de referência.</p>")
     o.append(txt)
@@ -1548,15 +1552,21 @@ def secao_leitura(prot, r1) -> str:
         o.append("</section>")
         return "".join(o)
     ling = prot.get("linguagem", {})
+    cortes_r1 = ((r1 or {}).get("running_variable") or {}).get("cutoffs") or {}
+    saltos = "; ".join(
+        f"{br(v.get('valor'))}: {esc(v.get('salto', ''))}" for v in cortes_r1.values() if isinstance(v, dict)
+    )
     pop = prot.get("populacoes", {})
     out = prot.get("outcome", {})
     rv = prot.get("running_variable", {})
     aut = prot.get("autorizacao_autor", {})
     blocos = [
         ("Estimando / contraste",
-         f"{esc(ling.get('contraste', ''))}. Diferença de <strong>+R$ 5 mil anunciados</strong> em cada corte; "
-         "pode ser um <strong>pacote</strong> se outra regra mudar no mesmo corte. Não identifica participação no "
-         "PMM-E nem o efeito total do Agora Tem Especialistas."),
+         "Diferença de <strong>+R$ 5 mil anunciados</strong> por mês em cada corte"
+         + (f" ({saltos})" if saltos else "")
+         + ". Pode ser um <strong>pacote</strong> se outra regra mudar no mesmo corte. Não identifica participação "
+         f"no PMM-E nem o efeito total do Agora Tem Especialistas. <span class=\"muted\">Protocolo:</span> "
+         f"“{esc(ling.get('contraste', ''))}”."),
         ("População", "<ul>" + "".join(f"<li><strong>{esc(k)}</strong>: {esc(v)}</li>" for k, v in pop.items()) + "</ul>"),
         ("Desfecho",
          f"{esc(out.get('D_k', ''))}<br><span class=\"muted\">Leitura:</span> {esc(out.get('leitura', ''))}<br>"
@@ -1702,7 +1712,8 @@ dl.kv dd { margin: 0; }
 dl.kv dl.kv { grid-template-columns: 30mm 1fr; font-size: 8.2pt; }
 dl.protocolo { background: var(--wash); padding: 6pt 8pt; border-radius: 4px; }
 ul.leitura li { margin-bottom: 3pt; }
-dl.leitura-dl dt { font-weight: 650; margin-top: 8pt; }
+dl.leitura-dl dt { font-weight: 650; margin-top: 8pt; break-after: avoid; }
+dl.leitura-dl dd { break-inside: avoid; }
 dl.leitura-dl dd { margin: 2pt 0 0; }
 """
 
