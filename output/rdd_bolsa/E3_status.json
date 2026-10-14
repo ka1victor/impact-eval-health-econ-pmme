@@ -1,0 +1,104 @@
+{
+  "etapa": "E3_rdd_completa",
+  "natureza_dos_dados": "EMPIRICO",
+  "protocolo": {
+    "arquivo": "output/rdd_bolsa/protocolo_escore_administrativo.json",
+    "sha256": "7785d58ee1a001a4b61ac677eb3d2f71e56519ec78823f29accc1b0755bc90a4",
+    "data_congelamento": "2026-10-14",
+    "condicao": "somente com o escore para 100% dos municipios de P_k; sem isso o script falha fechado"
+  },
+  "escore": {
+    "arquivo": "output/aquisicao/a07_ivs_administrativo_municipio.csv",
+    "sha256": "1a117291f730fa048c6280000296400ebf0c156eb580d446c98930924fb81757",
+    "municipios_com_escore": 404
+  },
+  "populacoes": {
+    "P1": {
+      "papel": "principal",
+      "ciclo_do_outcome": 1,
+      "quadros": {
+        "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx": "51c6807f6bc2efa252b5236d89c5384ae484c4d47c8b65d4161c3facbfebe304"
+      }
+    },
+    "P2": {
+      "papel": "replicacao",
+      "ciclo_do_outcome": 2,
+      "quadros": {
+        "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+        "data/raw/pmm_e/2026_ciclo2_chamada2_vagas.xlsx": "4815e1558b515d4cdabf245b45e24062ab2e9531abd657b4f24f68bb45b3d3a4"
+      }
+    }
+  },
+  "outcomes_abertos": false,
+  "cortes": [
+    0.3,
+    0.4
+  ],
+  "lado_do_corte": "o proprio corte pertence ao lado inferior; T = 1[s > c]",
+  "janelas": {
+    "principal": 0.05,
+    "sensibilidade": [
+      0.03,
+      0.08
+    ]
+  },
+  "contraste": "incentivo marginal anunciado de R$ 5 mil (Faixa 3->2 em 0,300; Faixa 2->1 em 0,400), possivelmente pacote se outra politica mudar no mesmo corte; nao e efeito do PMM-E nem do Agora Tem Especialistas",
+  "cobertura_do_escore": {
+    "P1": {
+      "papel": "principal",
+      "municipios": 368,
+      "com_escore": 209,
+      "sem_escore": 159,
+      "pct": 56.8,
+      "por_faixa_anunciada": {
+        "FAIXA 1": {
+          "municipios": 102,
+          "com_escore": 62,
+          "pct": 60.8
+        },
+        "FAIXA 2": {
+          "municipios": 107,
+          "com_escore": 77,
+          "pct": 72.0
+        },
+        "FAIXA 3": {
+          "municipios": 159,
+          "com_escore": 70,
+          "pct": 44.0
+        }
+      },
+      "completa": false
+    },
+    "P2": {
+      "papel": "replicacao",
+      "municipios": 454,
+      "com_escore": 275,
+      "sem_escore": 179,
+      "pct": 60.6,
+      "por_faixa_anunciada": {
+        "FAIXA 1": {
+          "municipios": 129,
+          "com_escore": 89,
+          "pct": 69.0
+        },
+        "FAIXA 2": {
+          "municipios": 115,
+          "com_escore": 85,
+          "pct": 73.9
+        },
+        "FAIXA 3": {
+          "municipios": 210,
+          "com_escore": 101,
+          "pct": 48.1
+        }
+      },
+      "completa": false
+    }
+  },
+  "status": "AGUARDANDO_ESCORE_COMPLETO",
+  "motivo": "falta escore para municipios de P1 e/ou P2; o escore publicado so cobre municipios com especialista ativo, entao a falta e funcao do desfecho e a RDD na subamostra coberta condicionaria no proprio desfecho",
+  "outcomes_lidos": [],
+  "o_que_destrava": "escore `ivs` administrativo para 100% dos municipios de P1 e de P2 (ou para os 5.570)",
+  "como_rodar": "python3 scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py --escore <CSV com co_ibge, ivs_admin>",
+  "saidas_anteriores_removidas": []
+}
