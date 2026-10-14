@@ -143,7 +143,10 @@ def br(x, nd: int = 3) -> str:
     """Numero no formato brasileiro (virgula decimal, ponto de milhar)."""
     if not finito(x):
         return "—"
-    s = f"{float(x):,.{nd}f}"
+    x = float(x)
+    if abs(x) < 0.5 * 10 ** (-nd):
+        x = 0.0  # evita "-0,0" vindo de ponto flutuante
+    s = f"{x:,.{nd}f}"
     s = s.replace(",", "\x00").replace(".", ",").replace("\x00", ".")
     if s.startswith("-"):
         s = "−" + s[1:]
@@ -437,6 +440,9 @@ def render_generico(obj, nivel: int = 0) -> str:
         if not obj:
             return '<span class="muted">nenhum</span>'
         if all(not isinstance(x, (dict, list)) for x in obj):
+            curtos = [render_generico(x, nivel + 1) for x in obj]
+            if len(obj) <= 6 and sum(len(str(x)) for x in obj) <= 60:
+                return "; ".join(curtos)
             lis = "".join(f"<li>{render_generico(x, nivel + 1)}</li>" for x in obj[:20])
             mais = f'<li class="muted">… mais {len(obj) - 20}</li>' if len(obj) > 20 else ""
             return f"<ul>{lis}{mais}</ul>"
