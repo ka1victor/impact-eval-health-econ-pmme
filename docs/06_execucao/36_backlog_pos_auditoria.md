@@ -913,6 +913,15 @@ recusada no proxy de saída, de modo que nem a presença de `RDAC2606.dbc` e
 
 ## D-3 · Pedido do escore administrativo de IVS
 
+> **Nota de 05/10/2026, registrada na integração de 14/10/2026:** esta seção
+> lê o IVS como piso da bolsa e o D-3 como pré-condição do efeito da bolsa. As
+> duas leituras foram superadas. O IVS administrativo que a SGTES publica no
+> quadro de vagas do PMMB 2026 reproduz a faixa anunciada em 4.103 de 4.103
+> combinações município–onda–versão, com cortes em 0,300 e 0,400; o R1 foi
+> aprovado como sharp sem pedido ao Ministério. Ver
+> [`../auditorias/15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md).
+> O texto abaixo fica como registro histórico.
+
 O pacote está pronto e a justificativa foi reescrita pelo item C3 do plano `35` em
 torno da impossibilidade demonstrada. **O envio é decisão do autor** — escolha de
 canal e autorização. Nenhum item desta fila depende disso, mas a pergunta
@@ -1083,6 +1092,15 @@ diagnóstico abaixo. Quem for priorizar pelo que o projeto se propõe a medir, e
 não pelo que a fila consegue executar, começa pelo D-3.
 
 ### Por que o D-3 é o único caminho para o efeito da bolsa
+
+> **Nota de 05/10/2026, registrada na integração de 14/10/2026:** esta seção
+> lê o IVS como piso da bolsa e o D-3 como pré-condição do efeito da bolsa. As
+> duas leituras foram superadas. O IVS administrativo que a SGTES publica no
+> quadro de vagas do PMMB 2026 reproduz a faixa anunciada em 4.103 de 4.103
+> combinações município–onda–versão, com cortes em 0,300 e 0,400; o R1 foi
+> aprovado como sharp sem pedido ao Ministério. Ver
+> [`../auditorias/15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md).
+> O texto abaixo fica como registro histórico.
 
 Três fatos, todos já registrados em artefato, fecham as alternativas públicas:
 

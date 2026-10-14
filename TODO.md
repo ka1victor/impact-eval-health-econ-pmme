@@ -3,8 +3,10 @@
 > **Núcleo causal vigente: A8 — cutoff de escore de seleção.** O ciclo 1
 > permanece como análise associativa de implementação: A4 é motivação
 > descritiva do gradiente territorial e A5 é evidência associativa de apêndice.
-> A RDD da bolsa pelo IVS está arquivada por ausência de primeiro estágio e o
-> pedido administrativo foi cancelado sem envio. O ciclo 3 continua congelado
+> A RDD da bolsa pelo IVS foi **reaberta em 05/10/2026**: o IVS administrativo
+> da SGTES reproduz a faixa (R1 sharp), R2 é viável sem outcomes e R3 aguarda o
+> autor; nenhum efeito foi estimado. O pedido administrativo D-3 não foi enviado
+> e deixou de ser pré-condição do R1. O ciclo 3 continua congelado
 > até maturidade. Decisão canônica em
 > `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`; portões
 > executados em `docs/06_execucao/33_status_execucao_plano_causal.md`.
@@ -32,7 +34,12 @@
 - [x] A5 — estimar a evolução do estoque cadastrado com referência limpa em 202506, follow-up 202603 e amostra confirmatória de 587 células/295 municípios. Estudo dinâmico com FE célula, curso–mês e UF–mês; resultado secundário associativo, sem linguagem de provimento causal ou retenção.
 - [x] A6 — executar red team, matriz afirmação–evidência–limite, síntese e manifesto reproduzível.
 
-## Trilha encerrada — RDD do adicional de bolsa
+## Trilha reaberta — RDD do adicional de bolsa
+
+> **05/10/2026:** a trilha foi encerrada em setembro com o IVS 2010 do Atlas e
+> reaberta com o IVS administrativo que a SGTES publica no quadro de vagas do
+> PMMB 2026 (`docs/auditorias/15_portao_r1_r2_ivs_administrativo.md`). Os itens
+> marcados abaixo ficam como histórico; a fila vigente está no fim da seção.
 
 - [x] Retirar da camada editorial a linguagem causal não sustentada pela DDD.
 - [x] Auditar a viabilidade de salário, IVS, preenchimento e provimento
@@ -55,6 +62,23 @@
   pedidos deixam de ser fila: nenhum resultado do trabalho depende de resposta
   do Ministério. O pacote de solicitação e a triagem permanecem versionados,
   prontos, caso o autor decida retomar a pergunta da bolsa no futuro.
+  *Superado em 05/10/2026: a trilha foi reaberta (abaixo).*
+- [x] R1 com o IVS administrativo da SGTES: `APROVADO_SHARP`, 4.103 de 4.103
+  combinações município–onda–versão, cortes `0,300` e `0,400` (05/10/2026).
+- [x] R2 sem outcomes: `VIAVEL_CONTINUIDADE_COM_RESSALVAS`; local-linear como
+  estimador candidato, potência limitada (05/10/2026).
+- [ ] **R3** — decisões do autor no rascunho
+  `docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md`, a começar pela
+  troca da running variable, e congelamento do registro
+  (`prompts/avaliacao_rdd_bolsa/02_congelar_protocolo_r3.md`, sessão S4).
+- [ ] **R4** — estimação só com o registro R3 commitado
+  (`prompts/avaliacao_rdd_bolsa/03_estimar_r4_atracao.md`, sessão S5).
+- [ ] Safra do IVS administrativo: a regra é reproduzida em 2025 e 2026, mas a
+  safra e a base de cálculo não estão documentadas.
+- [ ] Estoque prévio do CNES como covariada do R2/R3 em todos os municípios
+  ofertados; depende dos microdados (D-4), só competências pré-oferta.
+- [ ] Artigos e banca: os dois artigos e o apêndice da banca 1 dizem que a rota
+  da RDD foi encerrada no R1. Reescrever só com decisão do autor.
 
 ## Fila imediata — núcleo causal A8 (cutoff de escore)
 
@@ -166,20 +190,25 @@ de início e encerramento.
   permanece com registro no código e correção vinculada à primeira reexecução
   legítima de A1→A3; os demais concluídos em 14/09/2026.
 - [ ] Grupo D — bloqueado por dado externo ou pelo autor: D-2 (`RDAC2606`,
-  `RDRR2606`, `202703`, `T0+12m`); D-3 (envio do pedido, decisão do autor; pacote
+  `RDRR2606`, `202703`, `T0+12m`); D-3 (opcional desde 05/10/2026; pacote
   pronto); D-4 (painel mensal e microdados do CNES). D-1 resolvido.
 
 ## O que continua com o autor (19/09/2026; itens de 21/09/2026 acrescentados)
 
-- [ ] **D-3** — decidir se envia o pedido do escore administrativo de IVS. Pacote
-  pronto em `output/rdd_bolsa/`; é o único caminho para o efeito da bolsa.
+- [ ] **D-3** — não enviado. Desde 05/10/2026 deixou de ser pré-condição do R1,
+  porque o IVS administrativo é público no quadro de vagas do PMMB 2026. Um
+  pedido estreito, só sobre a safra e a base de cálculo desse IVS, é opcional.
 - [ ] **D-2** — repetir C3-02B de um ambiente com acesso ao FTP do DATASUS;
   C3-05 só com `202703` madura; C3-06 em setembro/2027.
-- [ ] **D-4** — painel mensal e microdados do CNES; ao reexecutar A5, retirar a
-  coluna `uf_fe` do painel congelado.
+- [ ] **D-4** — microdados do CNES; ao reexecutar A5, retirar a coluna `uf_fe`
+  do painel congelado. O painel mensal versionado em
+  `output/avaliacao_impacto/dados/` cobre só os 368 municípios da 1ª chamada de
+  2025 e não serve ao balanço do RDD nos municípios ofertados.
 - [ ] **C-4 + E-3** — corrigir juntos na primeira reexecução legítima de A1→A3.
-- [ ] Diagnóstico dos cursos 2 e 16 na pré-tendência, sem reescolher amostra
-  (após C-7b, só o 16 mantém `q < 0,05`, e com posto incompleto).
+- [x] Diagnóstico dos cursos 2 e 16 na pré-tendência, sem reescolher amostra
+  (após C-7b, só o 16 mantém `q < 0,05`, e com posto incompleto). Executado em
+  01/10/2026 sob protocolo prévio (`b57eb4e`, `e5a1872`); leitura descritiva no
+  backlog 36, seção "Diagnóstico cadastral dos cursos 2 e 16 — 01/10/2026".
 - [ ] Estender o agregado região–curso a todos os municípios da região de saúde,
   único teste que distingue deslocamento (C-7c); depende do painel mensal (D-4).
 - [ ] Recalibrar o limiar de colapso de `uf_fe` na amostra estimada (A-1b), na

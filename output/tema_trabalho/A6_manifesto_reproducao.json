@@ -1,6 +1,6 @@
 {
   "protocolo": "A6_MANIFESTO_REPRODUCAO",
-  "data_referencia": "2026-10-05",
+  "data_referencia": "2026-10-14",
   "gerador": "scripts/tema_trabalho/07_red_team_sintese.py",
   "fila": "A1->A6: núcleo associativo; upgrade causal da bolsa aguardando R3",
   "ambiente_exigido": {
@@ -45,8 +45,8 @@
   ],
   "comandos_derivados_de": "run_all.py (lista STEPS)",
   "versoes": {
-    "python": "3.12.3 (main, Mar  3 2026, 12:15:18) [GCC 13.3.0]",
-    "platform": "Linux-6.18.44-fc-v70-x86_64-with-glibc2.39",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "platform": "Linux-6.18.44-fc-v114-x86_64-with-glibc2.39",
     "pandas": "3.0.5",
     "numpy": "2.5.2",
     "statsmodels": "0.15.0"
@@ -174,7 +174,7 @@
       "presente": true
     },
     "docs/auditorias/09_red_team_atracao_provimento.md": {
-      "sha256": "ce11535dc8996b1ba8a48b9f2e94f73101b1045e814c596a9e53a816c18bee7e",
+      "sha256": "12c2982ccf63817a3725480053d9aeace4739a4ad01a413a8740e32c3ce8228b",
       "bytes": 12635,
       "papel": "red team gerado aqui",
       "presente": true
@@ -197,9 +197,9 @@
   ],
   "nota_insumos_ausentes": "Insumo declarado no desenho e ausente do disco aparece acima com sha256 nulo, presente=false e motivo_ausencia. Entrada omitida significaria que o insumo não faz parte do desenho.",
   "docs_hash8": {
-    "docs/auditorias/09_red_team_atracao_provimento.md": "ce11535d",
+    "docs/auditorias/09_red_team_atracao_provimento.md": "12c2982c",
     "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "913b050b",
-    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "f015d420",
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "17a914ce",
     "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "5f4a65c9"
   },
   "portoes": {

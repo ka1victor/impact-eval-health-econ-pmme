@@ -7,6 +7,11 @@
 > **Não autoriza:** reabrir A1–A8, reestimar fora dos portões, enviar pedido
 > administrativo nem descongelar o ciclo 3. As regras do [`CLAUDE.md`](../../CLAUDE.md) valem
 > sobre tudo o que está aqui.
+>
+> **Antes do prompt 02 (nota de 14/10/2026):** leia
+> [`../integracao_rodadas_outubro_2026/03_adendo_pendencias_fechamento.md`](../integracao_rodadas_outubro_2026/03_adendo_pendencias_fechamento.md).
+> Ele incorpora o R1 de 05/10/2026, posterior a esta fila, e prevalece sobre o 02
+> onde os dois divergirem: a RDD do IVS foi reaberta, não arquivada.
 
 ## Ordem
 

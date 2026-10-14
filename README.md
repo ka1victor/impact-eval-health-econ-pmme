@@ -11,8 +11,9 @@ Há quatro camadas separadas no repositório:
 2. **Resultado causal principal:** ganhar marginalmente a vaga de primeira
    opção aumenta a homologação e a presença posterior do especialista naquele
    curso–CNES?
-3. **Pergunta causal arquivada:** R$ 5 mil adicionais de bolsa aumentam a
-   procura e o preenchimento junto aos limiares administrativos do IVS?
+3. **Pergunta causal reaberta, sem estimativa:** R$ 5 mil adicionais de bolsa
+   aumentam a procura e o preenchimento junto aos limiares administrativos do
+   IVS? R1 e R2 passaram em 05/10/2026; R3 aguarda o autor.
 4. **Resultado secundário:** células município–curso com atração administrativa
    apresentaram evolução distinta da oferta médica cadastrada no CNES?
 
@@ -36,7 +37,9 @@ A decisão consolidada, todos os achados e a sequência de avanço estão em
 [`docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`](docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md).
 O estado efetivamente executado dos portões está em
 [`docs/06_execucao/33_status_execucao_plano_causal.md`](docs/06_execucao/33_status_execucao_plano_causal.md):
-A8 concluído, RDD-IVS arquivada e pedido administrativo cancelado sem envio.
+A8 concluído; RDD-IVS reaberta em 05/10/2026 (R1 `APROVADO_SHARP`, R2
+`VIAVEL_CONTINUIDADE_COM_RESSALVAS`, R3 `PENDENTE_AUTORIZACAO_DO_AUTOR`); pedido
+administrativo D-3 não enviado e não mais pré-condição do R1.
 
 O plano anterior do cutoff está preservado em
 [`docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md`](docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md).
@@ -53,10 +56,16 @@ A2 concluiu a tipologia como `APROVADO_4_ESTRATOS` (540/540 municípios A1 em
 capital/metropolitano/interior próximo/remoto via REGIC 2018 + RM/RIDE 2022).
 As sessões do núcleo estão organizadas em
 [`prompts/avaliacao_atracao_interior/`](prompts/avaliacao_atracao_interior/README.md).
-A RDD da bolsa foi avaliada e arquivada: o IVS público não reproduz a faixa
-administrativa nem gera primeiro estágio estável em `0,400` ou `0,500`. O
-arquivo público não será usado como running variable por conveniência, e o
-trabalho atual não depende de obter outro escore.
+A RDD da bolsa foi **reaberta em 05/10/2026**. O IVS 2010 do Atlas não
+reproduz a faixa administrativa nem gera primeiro estágio estável em `0,400` ou
+`0,500`, e o R1 com ele segue reprovado. O IVS administrativo que a SGTES publica
+no quadro de vagas do PMMB 2026 reproduz a faixa anunciada em 4.103 de 4.103
+combinações município–onda–versão, com cortes em `0,300` e `0,400` (R1 sharp).
+O R2, sem abrir outcome, ficou viável com ressalvas e potência limitada. Nenhum
+efeito foi estimado: o protocolo R3 depende de decisões do autor, inclusive a
+troca da running variable
+([`docs/auditorias/15_portao_r1_r2_ivs_administrativo.md`](docs/auditorias/15_portao_r1_r2_ivs_administrativo.md),
+[`docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md`](docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md)).
 
 O diagnóstico histórico imediata versus reserva usa `município–curso–mês` no ciclo 1 e o CNES mensal de
 junho de 2024 a julho de 2026:
@@ -152,8 +161,9 @@ congelado prevê:
 - generalização secundária: oncologia clínica e medicina intensiva, com efeitos
   separados; cirurgia geral/CBO 225225 apenas como sensibilidade;
 - alternativa somente se o pré-período justificar: ecocardiografia no SIA;
-- RDD do IVS fora do plano: arquivada porque o escore administrativo que gera a
-  faixa não é observado; só volta se esse escore for obtido.
+- RDD do IVS fora deste plano: é trilha própria, reaberta em 05/10/2026 com o
+  IVS administrativo da SGTES (R1 sharp, R2 viável sem outcomes; R3 aguarda o
+  autor).
 
 A Nota Técnica nº 59/2026 criou uma assinatura cadastral potencialmente
 observável dos participantes no CNES. O C3-01 já corrigiu a ponte do Anexo I: os
@@ -180,8 +190,9 @@ madura e seguirá a especificação congelada, sem redesenho pelo resultado.
 ## Escopo e bloqueios
 
 O portão A1 foi concluído como `APROVADO_CELULA`; A2–A8 foram executados e
-auditados. O A8 é o resultado causal principal. R1 não reproduziu a regra da
-bolsa, portanto a RDD-IVS está arquivada. A DDD imediata versus reserva
+auditados. O A8 é o resultado causal principal. O R1 com o IVS 2010 não reproduziu a
+regra da bolsa; com o IVS administrativo da SGTES, reproduziu (05/10/2026), e a
+RDD-IVS segue sem estimativa até o R3. A DDD imediata versus reserva
 permanece como diagnóstico histórico, separado da A4, da A5 e do A8.
 
 Permanecem fora do núcleo: estimação do ciclo 3 antes da maturidade; efeito da
@@ -233,7 +244,7 @@ python run_all.py
 ```
 O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A8, incluindo tabelas, figuras, red team, cutoff estrito, manifestos e os dois conferidores de artigo. Sem o painel mensal do CNES, `06_avaliar_provimento_cnes.py` e `06b_ameacas_a5_placebo_pretendencia_deslocamento.py` rodam sozinhos a partir de `A5_painel_T0.parquet`, com o hash conferido contra o A6.
 
-### Suíte de testes automatizados (189 testes)
+### Suíte de testes automatizados (204 testes)
 ```bash
 python run_tests.py
 ```
@@ -252,4 +263,4 @@ Cada diretório principal possui documentação autônoma orientando seu conteú
 | [`output/`](output/README.md) | [Guia de Artefatos](output/README.md) | Painéis analíticos, estimativas, tabelas, figuras e manifestos reproduzíveis |
 | [`prompts/`](prompts/README.md) | [Fila e Histórico](prompts/README.md) | Sessões executadas, cadernos de prompts e especificações de pesquisa |
 | [`scripts/`](scripts/README.md) | [Guia de Scripts](scripts/README.md) | Rotinas modulares de aquisição, estimação, avaliação de impacto e utilitários |
-| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 189 testes automatizados garantindo integridade econométrica e invariantes |
+| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 204 testes automatizados garantindo integridade econométrica e invariantes |
