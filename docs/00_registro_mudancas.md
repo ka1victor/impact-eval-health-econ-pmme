@@ -13,8 +13,9 @@
 Motivo: sessão S2 de
 [`../prompts/integracao_rodadas_outubro_2026/`](../prompts/integracao_rodadas_outubro_2026/README.md).
 O branch `claude/admiring-tesla-bduu1t` (01/10) entra sobre
-`claude/compassionate-feynman-d70ipe` (05/10), com as correções mecânicas das
-revisões S1a e S1b. O doc 33 é gerado pelo controlador do RDD; a seção curada
+`claude/compassionate-feynman-d70ipe` (05/10), com a correção mecânica da
+revisão S1a (a S1b não fez correção; seus achados estão no doc 18). A `main` até
+`40a8c98` também entrou. O doc 33 é gerado pelo controlador do RDD; a seção curada
 que a rodada de 01/10 escreveu nele mudou de arquivo para não ser apagada na
 próxima execução.
 
