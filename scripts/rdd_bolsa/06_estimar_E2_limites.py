@@ -291,14 +291,16 @@ def main() -> None:
         dk = com["D"].to_numpy(dtype=int)
         assert (sem["D"] == 0).all()
 
-        for cenario in CENARIOS:
-            lo, hi, n_vazio = conjuntos_possiveis(sem, cenario, dmin, dmax)
-            meta.setdefault("informado_intersecao_vazia_volta_a_faixa", 0)
-            if cenario == "informado":
-                meta["informado_intersecao_vazia_volta_a_faixa"] = n_vazio
-                meta["informado_largura_media_conjunto_mil"] = round(float((hi - lo + 1).mean()), 1) if len(lo) else None
-            for c in CORTES_MIL:
-                for h in JANELAS_MIL:
+        conjuntos = {cen: conjuntos_possiveis(sem, cen, dmin, dmax) for cen in CENARIOS}
+        meta["informado_intersecao_vazia_volta_a_faixa"] = conjuntos["informado"][2]
+        meta["largura_media_conjunto_possivel_milesimos"] = {
+            cen: round(float((hi_c - lo_c + 1).mean()), 1) if len(lo_c) else None
+            for cen, (lo_c, hi_c, _) in conjuntos.items()
+        }
+        for c in CORTES_MIL:
+            for h in JANELAS_MIL:
+                for cenario in CENARIOS:
+                    lo, hi, _ = conjuntos[cenario]
                     l0, l1 = c - h + 1, c      # (c-h, c]
                     u0, u1 = c + 1, c + h      # (c, c+h]
                     in_l = (s >= l0) & (s <= l1)
@@ -334,7 +336,7 @@ def main() -> None:
                                      and np.isclose(dmax_ex, dmax_marg, rtol=0, atol=1e-12, equal_nan=True))
 
                     linhas.append({
-                        "ciclo": k, "corte": c / 1000, "h": h / 1000, "cenario": cenario,
+                        "ciclo": k, "corte": f"{c / 1000:.3f}", "h": f"{h / 1000:.3f}", "cenario": cenario,
                         "n_conhecidos_inf": n_kl, "n_conhecidos_sup": n_ku,
                         "nD_inf": nd_l, "nD_sup": nd_u,
                         "n_sem_escore_certos_inf": int(cert_l.sum()), "n_sem_escore_possiveis_inf": np_l,
@@ -352,12 +354,8 @@ def main() -> None:
                         "exclusividade_restringe_extremos": bool(restringe),
                     })
 
+    # Ordem das linhas: ciclo, corte, janela na ordem do protocolo (principal primeiro), cenario.
     tabela = pd.DataFrame(linhas, columns=COLUNAS)
-    ordem_h = {h / 1000: i for i, h in enumerate(JANELAS_MIL)}
-    tabela = tabela.sort_values(
-        ["ciclo", "corte", "h", "cenario"],
-        key=lambda col: col.map(ordem_h) if col.name == "h" else (col.map({c: i for i, c in enumerate(CENARIOS)}) if col.name == "cenario" else col),
-    ).reset_index(drop=True)
     for col in ["p_inf_min", "p_inf_max", "p_sup_min", "p_sup_max", "delta_min", "delta_max", "delta_ingenuo_viesado"]:
         tabela[col] = tabela[col].round(6)
     tabela.to_csv(OUT_CSV, index=False, float_format="%.6f")

@@ -81,8 +81,28 @@
       {
         "ciclo": 1,
         "corte": "0.300",
+        "h": "0.050",
+        "cenario": "informado",
+        "n_sem_escore_cruzam_ambas_janelas": 0,
+        "delta_min_marginal": -0.20042,
+        "delta_max_marginal": 0.6717,
+        "exclusividade_restringe_extremos": false
+      },
+      {
+        "ciclo": 1,
+        "corte": "0.300",
         "h": "0.030",
         "cenario": "pior_caso",
+        "n_sem_escore_cruzam_ambas_janelas": 0,
+        "delta_min_marginal": -0.493878,
+        "delta_max_marginal": 0.642685,
+        "exclusividade_restringe_extremos": false
+      },
+      {
+        "ciclo": 1,
+        "corte": "0.300",
+        "h": "0.030",
+        "cenario": "informado",
         "n_sem_escore_cruzam_ambas_janelas": 0,
         "delta_min_marginal": -0.493878,
         "delta_max_marginal": 0.642685,
@@ -100,62 +120,22 @@
       },
       {
         "ciclo": 1,
-        "corte": "0.400",
-        "h": "0.050",
-        "cenario": "pior_caso",
-        "n_sem_escore_cruzam_ambas_janelas": 0,
-        "delta_min_marginal": -0.527573,
-        "delta_max_marginal": 0.310935,
-        "exclusividade_restringe_extremos": false
-      },
-      {
-        "ciclo": 1,
-        "corte": "0.400",
-        "h": "0.030",
-        "cenario": "pior_caso",
-        "n_sem_escore_cruzam_ambas_janelas": 0,
-        "delta_min_marginal": -0.60595,
-        "delta_max_marginal": 0.310777,
-        "exclusividade_restringe_extremos": false
-      },
-      {
-        "ciclo": 1,
-        "corte": "0.400",
-        "h": "0.080",
-        "cenario": "pior_caso",
-        "n_sem_escore_cruzam_ambas_janelas": 0,
-        "delta_min_marginal": -0.497354,
-        "delta_max_marginal": 0.191975,
-        "exclusividade_restringe_extremos": false
-      },
-      {
-        "ciclo": 1,
-        "corte": "0.300",
-        "h": "0.050",
-        "cenario": "informado",
-        "n_sem_escore_cruzam_ambas_janelas": 0,
-        "delta_min_marginal": -0.20042,
-        "delta_max_marginal": 0.6717,
-        "exclusividade_restringe_extremos": false
-      },
-      {
-        "ciclo": 1,
-        "corte": "0.300",
-        "h": "0.030",
-        "cenario": "informado",
-        "n_sem_escore_cruzam_ambas_janelas": 0,
-        "delta_min_marginal": -0.493878,
-        "delta_max_marginal": 0.642685,
-        "exclusividade_restringe_extremos": false
-      },
-      {
-        "ciclo": 1,
         "corte": "0.300",
         "h": "0.080",
         "cenario": "informado",
         "n_sem_escore_cruzam_ambas_janelas": 0,
         "delta_min_marginal": 0.030651,
         "delta_max_marginal": 0.675759,
+        "exclusividade_restringe_extremos": false
+      },
+      {
+        "ciclo": 1,
+        "corte": "0.400",
+        "h": "0.050",
+        "cenario": "pior_caso",
+        "n_sem_escore_cruzam_ambas_janelas": 0,
+        "delta_min_marginal": -0.527573,
+        "delta_max_marginal": 0.310935,
         "exclusividade_restringe_extremos": false
       },
       {
@@ -172,10 +152,30 @@
         "ciclo": 1,
         "corte": "0.400",
         "h": "0.030",
+        "cenario": "pior_caso",
+        "n_sem_escore_cruzam_ambas_janelas": 0,
+        "delta_min_marginal": -0.60595,
+        "delta_max_marginal": 0.310777,
+        "exclusividade_restringe_extremos": false
+      },
+      {
+        "ciclo": 1,
+        "corte": "0.400",
+        "h": "0.030",
         "cenario": "informado",
         "n_sem_escore_cruzam_ambas_janelas": 0,
         "delta_min_marginal": -0.579125,
         "delta_max_marginal": 0.310777,
+        "exclusividade_restringe_extremos": false
+      },
+      {
+        "ciclo": 1,
+        "corte": "0.400",
+        "h": "0.080",
+        "cenario": "pior_caso",
+        "n_sem_escore_cruzam_ambas_janelas": 0,
+        "delta_min_marginal": -0.497354,
+        "delta_max_marginal": 0.191975,
         "exclusividade_restringe_extremos": false
       },
       {
@@ -201,8 +201,28 @@
       {
         "ciclo": 2,
         "corte": "0.300",
+        "h": "0.050",
+        "cenario": "informado",
+        "n_sem_escore_cruzam_ambas_janelas": 0,
+        "delta_min_marginal": -0.35636,
+        "delta_max_marginal": 0.613885,
+        "exclusividade_restringe_extremos": false
+      },
+      {
+        "ciclo": 2,
+        "corte": "0.300",
         "h": "0.030",
         "cenario": "pior_caso",
+        "n_sem_escore_cruzam_ambas_janelas": 0,
+        "delta_min_marginal": -0.581145,
+        "delta_max_marginal": 0.648824,
+        "exclusividade_restringe_extremos": false
+      },
+      {
+        "ciclo": 2,
+        "corte": "0.300",
+        "h": "0.030",
+        "cenario": "informado",
         "n_sem_escore_cruzam_ambas_janelas": 0,
         "delta_min_marginal": -0.581145,
         "delta_max_marginal": 0.648824,
@@ -220,62 +240,22 @@
       },
       {
         "ciclo": 2,
-        "corte": "0.400",
-        "h": "0.050",
-        "cenario": "pior_caso",
-        "n_sem_escore_cruzam_ambas_janelas": 0,
-        "delta_min_marginal": -0.477273,
-        "delta_max_marginal": 0.393116,
-        "exclusividade_restringe_extremos": false
-      },
-      {
-        "ciclo": 2,
-        "corte": "0.400",
-        "h": "0.030",
-        "cenario": "pior_caso",
-        "n_sem_escore_cruzam_ambas_janelas": 0,
-        "delta_min_marginal": -0.57971,
-        "delta_max_marginal": 0.535714,
-        "exclusividade_restringe_extremos": false
-      },
-      {
-        "ciclo": 2,
-        "corte": "0.400",
-        "h": "0.080",
-        "cenario": "pior_caso",
-        "n_sem_escore_cruzam_ambas_janelas": 0,
-        "delta_min_marginal": -0.423624,
-        "delta_max_marginal": 0.271193,
-        "exclusividade_restringe_extremos": false
-      },
-      {
-        "ciclo": 2,
-        "corte": "0.300",
-        "h": "0.050",
-        "cenario": "informado",
-        "n_sem_escore_cruzam_ambas_janelas": 0,
-        "delta_min_marginal": -0.35636,
-        "delta_max_marginal": 0.613885,
-        "exclusividade_restringe_extremos": false
-      },
-      {
-        "ciclo": 2,
-        "corte": "0.300",
-        "h": "0.030",
-        "cenario": "informado",
-        "n_sem_escore_cruzam_ambas_janelas": 0,
-        "delta_min_marginal": -0.581145,
-        "delta_max_marginal": 0.648824,
-        "exclusividade_restringe_extremos": false
-      },
-      {
-        "ciclo": 2,
         "corte": "0.300",
         "h": "0.080",
         "cenario": "informado",
         "n_sem_escore_cruzam_ambas_janelas": 0,
         "delta_min_marginal": -0.144609,
         "delta_max_marginal": 0.593945,
+        "exclusividade_restringe_extremos": false
+      },
+      {
+        "ciclo": 2,
+        "corte": "0.400",
+        "h": "0.050",
+        "cenario": "pior_caso",
+        "n_sem_escore_cruzam_ambas_janelas": 0,
+        "delta_min_marginal": -0.477273,
+        "delta_max_marginal": 0.393116,
         "exclusividade_restringe_extremos": false
       },
       {
@@ -292,10 +272,30 @@
         "ciclo": 2,
         "corte": "0.400",
         "h": "0.030",
+        "cenario": "pior_caso",
+        "n_sem_escore_cruzam_ambas_janelas": 0,
+        "delta_min_marginal": -0.57971,
+        "delta_max_marginal": 0.535714,
+        "exclusividade_restringe_extremos": false
+      },
+      {
+        "ciclo": 2,
+        "corte": "0.400",
+        "h": "0.030",
         "cenario": "informado",
         "n_sem_escore_cruzam_ambas_janelas": 0,
         "delta_min_marginal": -0.45283,
         "delta_max_marginal": 0.535714,
+        "exclusividade_restringe_extremos": false
+      },
+      {
+        "ciclo": 2,
+        "corte": "0.400",
+        "h": "0.080",
+        "cenario": "pior_caso",
+        "n_sem_escore_cruzam_ambas_janelas": 0,
+        "delta_min_marginal": -0.423624,
+        "delta_max_marginal": 0.271193,
         "exclusividade_restringe_extremos": false
       },
       {
@@ -339,7 +339,10 @@
         }
       },
       "informado_intersecao_vazia_volta_a_faixa": 0,
-      "informado_largura_media_conjunto_mil": 165.9
+      "largura_media_conjunto_possivel_milesimos": {
+        "pior_caso": 338.3,
+        "informado": 165.9
+      }
     },
     "ciclo_2": {
       "rotulo": "P2",
@@ -369,7 +372,10 @@
         }
       },
       "informado_intersecao_vazia_volta_a_faixa": 0,
-      "informado_largura_media_conjunto_mil": 166.9
+      "largura_media_conjunto_possivel_milesimos": {
+        "pior_caso": 334.1,
+        "informado": 166.9
+      }
     }
   },
   "fontes_sha256": {
