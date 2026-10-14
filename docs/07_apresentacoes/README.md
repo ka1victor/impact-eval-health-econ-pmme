@@ -21,7 +21,7 @@
 
 | Apresentação | Escopo | Estado | Documentos |
 |---|---|---|---|
-| [Banca 1](banca1/) | três seções: motivação e pergunta; literatura teórica e modelo microeconômico; hipótese e viabilidade empírica — **17 slides** desde 17/09/2026, cada seção aberta por uma divisória | conteúdo completo em markdown, com figuras; decks Beamer e Slidev derivados, ainda na estrutura de 15 slides — duas estruturas atrás | [README](banca1/README.md), [roteiro](banca1/01_roteiro_narrativo.md), [conteúdo dos slides](banca1/02_conteudo_slides.md), [proveniência](banca1/03_proveniencia_figuras_e_numeros.md) |
+| [Banca 1](banca1/) | **apresentada** em cinco seções — motivação, pergunta, literatura, hipótese e viabilidade empírica —, 21 páginas, 17 numeradas; a versão de preparação de 21/09/2026 tinha 17 slides em três seções | versão apresentada transcrita, com errata e proveniência, e o PDF exibido; a versão de preparação segue em markdown, com figuras, e é dela que derivam os decks Beamer e Slidev, que **não** reproduzem a versão apresentada | [README](banca1/README.md), [**versão apresentada**](banca1/04_versao_apresentada.md), [PDF exibido](banca1/apresentada/banca1_apresentada.pdf), [roteiro](banca1/01_roteiro_narrativo.md), [conteúdo de preparação](banca1/02_conteudo_slides.md), [proveniência](banca1/03_proveniencia_figuras_e_numeros.md) |
 
 ## 3. O que não entra em apresentação
 

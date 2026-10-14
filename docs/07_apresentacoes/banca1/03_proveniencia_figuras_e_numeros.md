@@ -2,7 +2,17 @@
 
 > **Regra aplicada:** todo número exibido declara fonte, data de referência, cobertura, unidade e reprodutibilidade<br>
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
-> **Atualização:** 21 de setembro de 2026
+> **Atualização:** 5 de outubro de 2026
+
+> [!IMPORTANT]
+> **A versão apresentada, de 05/10/2026.** O deck que a banca viu não é o de
+> [02](02_conteudo_slides.md): tem 21 páginas em cinco seções e trouxe à tela
+> números que a regra 6 mantinha fora — a figura de UF do grupo (`P6`), a
+> tabela de inclinações (`P8`) e taxas de crescimento por faixa que também não
+> se reproduzem. A proveniência dessa versão, número a número, está em
+> [04 — Versão apresentada](04_versao_apresentada.md#4-proveniência-dos-números-exibidos),
+> que abre `P12` e `P13`. As seções abaixo continuam auditando a versão de
+> preparação, com a numeração de 17 slides.
 
 > [!IMPORTANT]
 > **A numeração mudou de novo em 17/09/2026.** O deck passou a ter **17 slides em
@@ -717,6 +727,17 @@ conteúdo.
 documento canônico, com justificativa econométrica, o que muda a teoria do
 projeto e a hipótese H4; ou (b) devolver à tela uma ressalva de uma linha. Nada
 foi mudado na teoria por conta da tela.
+
+### `P12` e `P13` — abertas pela versão apresentada
+
+Registradas em [04 — Versão apresentada](04_versao_apresentada.md), seção 4:
+`P12`, as taxas de crescimento por faixa do slide 6 da versão apresentada, que
+não se reproduzem a partir de `serie_por_100k`; e `P13`, a distribuição regional
+dos ativos do PMM-E, que difere em até 0,2 p.p. do ciclo 1 de
+`data/pmm_especialistas_nominal.csv`. Pela regra 7, `P6` e `P8` ganham uma
+linha a mais de histórico: **foram exibidas à banca** na versão apresentada, a
+figura de UF no slide 3 e a tabela de inclinações, esmaecida, ao fundo do
+slide 8.
 
 ## 4. Regra permanente
 

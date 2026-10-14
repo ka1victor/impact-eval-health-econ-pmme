@@ -2,8 +2,10 @@
 
 > **Classificação:** transposição empírica do modelo — especificação candidata, mapeamento de variáveis e hipóteses operacionais<br>
 > **Derivação das hipóteses:** [modelo_micro.md](modelo_micro.md), seção 4<br>
-> **Versão apresentada:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 13, 15, 16 e 17 da estrutura de 17 slides<br>
-> **Atualização:** 17 de setembro de 2026
+> **Versão de preparação da banca 1:** [`docs/07_apresentacoes/banca1/02_conteudo_slides.md`](../07_apresentacoes/banca1/02_conteudo_slides.md), slides 13, 15, 16 e 17 da estrutura de 17 slides<br>
+> **Versão apresentada à banca:** [`docs/07_apresentacoes/banca1/04_versao_apresentada.md`](../07_apresentacoes/banca1/04_versao_apresentada.md), slides 13, 15 e 17; correspondência na seção 4.4<br>
+> **Evidência empírica externa sobre H1:** [`03_literatura_empirica/20`](../03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md)<br>
+> **Atualização:** 5 de outubro de 2026
 
 > *[Nota metodológica: Este documento funciona como um esboço preliminar (sketch) de transposição empírica para guiar a econometria aplicada do projeto. Como a estratégia final de identificação causal, o poder estatístico dos estimandos e a disponibilidade de microdados estão sendo investigados e refinados na execução empírica (ver `docs/06_execucao/` e `docs/auditorias/`), as formulações operacionais e as hipóteses abaixo são tratadas como uma agenda de trabalho em aberto, e não como escolhas axiomáticas congeladas.]*
 
@@ -112,7 +114,7 @@ clínicos:
 Ela decorre da mesma estática comparativa, pela via de $\partial c/\partial K < 0$,
 e é tratada como heterogeneidade pré-declarada, não como hipótese principal.
 
-### 4.2 Correspondência com as hipóteses apresentadas na banca 1
+### 4.2 Correspondência com a versão de preparação da banca 1
 
 A banca 1 trata apenas da margem **preenchimento** e leva **uma** hipótese, a
 derivada direta da condição de aceitação. A redução a uma só é decisão da banca,
@@ -156,10 +158,39 @@ as demais condições do desenho passarem pelos portões registrados em
 Enquanto isso, "gradiente", "associação" e "preenchimento administrativo" são os
 termos corretos.
 
+### 4.4 Correspondência com a versão apresentada
+
+A banca viu a hipótese em outra redação, no slide 15 de
+[`04_versao_apresentada.md`](../07_apresentacoes/banca1/04_versao_apresentada.md):
+*"municípios com maior remuneração oferecida pelo PMM-E têm maior preenchimento
+de vagas"*. É **H1**, com duas diferenças que este documento não absorve.
+
+1. **A redação é entre municípios, não condicional ao custo.** Ao pé da letra,
+   afirma um gradiente entre faixas. H1 é a derivada **com $c_m$ e $p_m$
+   constantes**, e é o que o slide 13 da mesma versão diz em palavras: a
+   política mexe só em $\mathbb{E}(w \mid B)$, e "é a soma dos três que decide".
+   O gradiente descritivo da primeira chamada não é monotônico — 23,6%, 37,4% e
+   31,6% da Faixa 3 à Faixa 1 —, o que é compatível com H1 e com $c_m$ crescendo
+   entre faixas, e não a testa.
+2. **Remuneração nominal, não real.** O slide 13 deflaciona por $p_{it}$, e a
+   hipótese fala em "remuneração oferecida". Com bolsa nominal uniforme por
+   faixa, $B/p_m$ é maior onde os preços são menores; num contraste local na
+   fronteira de faixa, $p_m$ é contínuo e o salto é o da bolsa nominal.
+
+O slide 13 exibiu $\partial U/\partial p = \mathbb{E}(w)/p^2 < 0$, sem o sinal
+negativo; a derivada correta é $-\mathbb{E}(w)/p^2$ (errata E1 da versão
+apresentada).
+
+A literatura empírica que embasa, qualifica ou desafia H1 — prêmios fixados por
+regra em postos difíceis de prover, experimentos de escolha discreta e modelos
+estruturais com médicos — está em
+[`03_literatura_empirica/20`](../03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md).
+Ela não impõe sinal nem magnitude ao coeficiente do desenho brasileiro.
+
 ---
 
 ## 5. Referências
 
-- Costa, F.; Nunes, J.; Sanches, F. (2024). *Physician Allocation and Health Care Delivery: Evidence from Brazil*. Working Paper.
+- Costa, F.; Nunes, L.; Sanches, F. M. (2024). [*How to Attract Physicians to Underserved Areas? Policy Recommendations from a Structural Model*](https://doi.org/10.1162/rest_a_01155). **The Review of Economics and Statistics**, 106(1), 36--52.
 - IPEA (2015). [*Atlas da Vulnerabilidade Social nos Municípios Brasileiros*](https://ivs.ipea.gov.br). **IPEA**, Brasília.
-- Sivey, P.; Scott, A.; Witt, J.; Joyce, C.; Humphreys, J. (2012). [*Junior Doctors' Preferences for Specialty and Location: A Discrete Choice Experiment*](https://doi.org/10.1016/j.jhealeco.2012.06.002). **Journal of Health Economics**, 31(6), 813--823.
+- Sivey, P.; Scott, A.; Witt, J.; Joyce, C.; Humphreys, J. (2012). [*Junior Doctors' Preferences for Specialty Choice*](https://doi.org/10.1016/j.jhealeco.2012.07.001). **Journal of Health Economics**, 31(6), 813--823.

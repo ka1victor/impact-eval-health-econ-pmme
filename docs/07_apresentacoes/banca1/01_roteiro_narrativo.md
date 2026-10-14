@@ -2,7 +2,7 @@
 
 > **Classificação:** decisão de comunicação, não de método<br>
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
-> **Atualização:** 17 de setembro de 2026
+> **Atualização:** 5 de outubro de 2026
 
 ---
 
@@ -1038,6 +1038,53 @@ identidade institucional do Insper**, a mesma do Beamer: o que ele queria
 adaptado do deck entregue na banca era o layout, não a identidade. Os dois
 decks passam a ser irmãos na aparência, e a única diferença que resta é a
 numeração — o Beamer para em `17 / 17`, porque lá um build não é uma página.
+
+## 4k. Versão apresentada à banca, registrada em 05/10/2026
+
+O grupo apresentou à banca um deck próprio, em PowerPoint, e não os decks
+derivados deste roteiro. O PDF exibido está em
+[`apresentada/banca1_apresentada.pdf`](apresentada/banca1_apresentada.pdf), e a
+transcrição, com errata e proveniência, em
+[04 — Versão apresentada](04_versao_apresentada.md). A data da banca não está no
+arquivo: o PDF foi exportado em 05/10/2026, e é essa a data do registro.
+
+**O arco mudou de três para cinco seções.** Motivação, Pergunta, Literatura,
+Hipótese e Viabilidade Empírica, cada uma aberta pelo sumário com a seção
+corrente em destaque. A pergunta e a hipótese ganharam seção e tela próprias, em
+faixa sobreposta ao slide anterior esmaecido.
+
+**O que o grupo manteve deste roteiro.** O título; o *"IVS é o piso, não o
+critério"*, com 177 de 368; as três tradições, com Moehling, Choné & Ma com
+Reinhardt e Redding & Rossi-Hansberg, e a coluna "primitiva que fornece"; a
+equação de escolha com a leitura *"salário nominal alto não compensa preços e
+custos locais altos"*; o custo em duas metades; a margem preenchimento; e o
+apêndice do IVS.
+
+**O que o grupo trocou.** A motivação passou a se apoiar em manchetes de
+imprensa e em um antes/depois do estoque por faixa, com o título *"há indícios
+de efetividade"*; a literatura empírica dos dois lados e o preenchimento por
+faixa saíram da tela. O modelo ganhou um **resumo com derivadas** e perdeu as
+equações inferidas e o slide da remuneração como piso. A hipótese passou de
+*"mais remuneração real, mais vagas preenchidas"* a *"municípios com maior
+remuneração oferecida pelo PMM-E têm maior preenchimento de vagas"*. E o
+**desafio metodológico voltou**, no título do slide de viabilidade: *"o desafio
+é separar o efeito da bolsa do efeito da vulnerabilidade"*.
+
+**O que isso cobra deste roteiro.** Três coisas, nenhuma aplicada ao PDF, que é
+registro. (1) As nove erratas de [04](04_versao_apresentada.md#3-errata-da-tela)
+valem para qualquer versão futura — a mais visível é o sinal omitido em
+$\partial U/\partial p$. (2) Os números ⚠️ da versão apresentada — a figura de
+UF, a tabela de inclinações e as taxas de crescimento por faixa — continuam fora
+de qualquer deck do repositório. (3) Se a banca perguntar como separar bolsa e
+vulnerabilidade, a resposta tem dois apoios: a reconstrução da regra, em
+[`05_identificacao/16`](../../05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
+§3.5; e a literatura de prêmios fixados por regra para postos difíceis, em
+[`03_literatura_empirica/20`](../../03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md),
+que mostra como outros desenhos separaram as duas coisas.
+
+**Feedback da banca.** Ainda não registrado. Pela regra 4 de
+[`07_apresentacoes/README.md`](../README.md), entra na seção 3 deste roteiro com
+o ajuste que produzir.
 
 ## 5. Defeitos do material anterior
 
