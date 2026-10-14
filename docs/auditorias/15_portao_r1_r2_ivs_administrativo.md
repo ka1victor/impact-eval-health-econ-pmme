@@ -1,4 +1,4 @@
-# Portões R1 e R2 com o IVS administrativo — a RDD da bolsa é identificável
+# Portões R1 e R2 com o IVS administrativo — primeiro estágio sharp, sem estimativa
 
 > **Execução:** 05/10/2026.
 > **Decisões:** R1 `APROVADO_SHARP`; R2 `VIAVEL_CONTINUIDADE_COM_RESSALVAS`.
@@ -128,7 +128,10 @@ resultado da regra estrita permanece no artefato.
   capitais em robustez.
 - **Potência.** O MDE para uma proporção municipal com linha de base de 30% é de
   31,5 p.p. em 0,300 e 32,9 p.p. em 0,400 na banda 0,050; combinando os dois cortes
-  (mesma dose de R$ 5 mil), 22,8 p.p. na banda 0,050 e 16,5 p.p. na 0,100. Com
+  (mesma dose de R$ 5 mil), 22,8 p.p. na banda 0,050 e 17,5 p.p. na 0,100 (era
+  16,5 até 14/10/2026, quando o cálculo supunha saltos independentes; na banda
+  0,100 as janelas dos dois cortes se sobrepõem e a covariância passou a entrar,
+  conforme a revisão S1b). Com
   município como unidade, só efeitos grandes são detectáveis. Município–onda ou
   célula como unidade, com agrupamento municipal, é a forma de reduzir o MDE, e é
   decisão do protocolo.

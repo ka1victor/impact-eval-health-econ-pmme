@@ -1,6 +1,6 @@
 {
   "portao": "R2",
-  "data_execucao": "2026-10-05",
+  "data_execucao": "2026-10-14",
   "outcomes_abertos": false,
   "decisao_r2": "VIAVEL_CONTINUIDADE_COM_RESSALVAS",
   "cortes_viaveis": [
@@ -47,7 +47,8 @@
       "municipios_por_lado": 20,
       "pontos_de_massa_por_lado": 5
     },
-    "mde": "proporcao municipal, alfa 5% bilateral, poder 80%, variancia p(1-p) com p hipotetico 0,2/0,3/0,4"
+    "mde": "proporcao municipal, alfa 5% bilateral, poder 80%, variancia p(1-p) com p hipotetico 0,2/0,3/0,4",
+    "mde_conjunto": "combinacao por inverso da variancia dos saltos; covariancia entre cortes incluida quando as bandas se sobrepoem"
   },
   "covariaveis": {
     "ivs_2010": "IVS 2010 do Atlas",
@@ -422,12 +423,12 @@
     "0.075": {
       "0.2": 16.6,
       "0.3": 19.0,
-      "0.4": 20.4
+      "0.4": 20.3
     },
     "0.100": {
-      "0.2": 14.4,
-      "0.3": 16.5,
-      "0.4": 17.6
+      "0.2": 15.3,
+      "0.3": 17.5,
+      "0.4": 18.7
     }
   },
   "ressalvas": [

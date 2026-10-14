@@ -62,6 +62,21 @@ class TestR1IvsAdministrativo(unittest.TestCase):
         self.assertTrue(m.categoria_publicada.eq(m.categoria_recalculada).all())
         self.assertEqual(self.r1["regra"]["cortes"], {"faixa3_para_faixa2": 0.3, "faixa2_para_faixa1": 0.4})
 
+    def test_faixa_anunciada_segue_a_regra_em_cada_onda_inclusive_nos_empates(self) -> None:
+        # Recalcula a partir das colunas da matriz, sem confiar no JSON do R1: a
+        # faixa anunciada de cada onda tem de ser a da regra, e o valor igual ao
+        # corte (0,300 e 0,400 exatos) fica do lado inferior.
+        m = self.matriz
+        for onda in ("2025_c1_ch1", "2025_c1_ch2", "2026_c2_ch1", "2026_c2_ch2", "2026_c3_ch1"):
+            ofertados = m[m[f"ofertado_{onda}"]]
+            with self.subTest(onda=onda):
+                self.assertGreater(len(ofertados), 300)
+                self.assertTrue(ofertados[f"faixa_anunciada_{onda}"].eq(ofertados.faixa_regra).all())
+        ofertados = m[m.ofertado_alguma_onda]
+        self.assertTrue(ofertados.loc[ofertados.ivs_adm.round(3).eq(0.300), "faixa_regra"].eq("FAIXA 3").all())
+        self.assertTrue(ofertados.loc[ofertados.ivs_adm.round(3).eq(0.400), "faixa_regra"].eq("FAIXA 2").all())
+        self.assertGreater(int(ofertados.ivs_adm.round(3).isin([0.300, 0.400]).sum()), 0)
+
     def test_texto_do_faq_de_2025_nao_e_a_regra_aplicada(self) -> None:
         c1 = self.r1["reproducao_da_faixa_anunciada"]["por_onda_versao"]["2025_c1_ch1/original"]
         self.assertLess(c1["reproduzidos_texto_faq_2025"], c1["municipios"])
@@ -136,6 +151,23 @@ class TestR2SemOutcome(unittest.TestCase):
         for corte in ("0.300", "0.400"):
             por_banda = self.r2["cortes"][corte]["local_linear"]["mde_proporcao_municipal_pp"]
             self.assertGreater(por_banda["0.030"]["0.3"], por_banda["0.100"]["0.3"])
+
+    def test_mde_conjunto_inclui_covariancia_quando_as_bandas_se_sobrepoem(self) -> None:
+        # Sem sobreposicao (0,030 e 0,050), a combinacao por inverso da variancia
+        # reproduz a formula de saltos independentes; na banda 0,100 as janelas dos
+        # dois cortes compartilham municipios e o MDE conjunto tem de ser maior.
+        conjunto = self.r2["mde_conjunto_dois_cortes_pp"]
+        for banda, sobrepoe in (("0.030", False), ("0.050", False), ("0.100", True)):
+            m1, m2 = (
+                self.r2["cortes"][c]["local_linear"]["mde_proporcao_municipal_pp"][banda]["0.3"]
+                for c in ("0.300", "0.400")
+            )
+            independente = (1 / m1**2 + 1 / m2**2) ** -0.5
+            with self.subTest(banda=banda):
+                if sobrepoe:
+                    self.assertGreater(conjunto[banda]["0.3"], independente + 0.5)
+                else:
+                    self.assertAlmostEqual(conjunto[banda]["0.3"], independente, delta=0.15)
 
     def test_testes_cobrem_os_dois_metodos_e_os_quatro_cortes(self) -> None:
         self.assertEqual(set(self.testes.metodo), {"randomizacao_local", "local_linear"})

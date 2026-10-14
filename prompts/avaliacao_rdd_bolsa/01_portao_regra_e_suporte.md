@@ -11,6 +11,15 @@
 > O texto abaixo é o prompt original, preservado. Os cortes reais são `0,300` e
 > `0,400` do IVS administrativo, e não `0,400` e `0,500` do IVS 2010. Não
 > reexecute este prompt; para reproduzir, rode os dois scripts.
+>
+> **Entregáveis do R2 que ficaram faltando (revisão S1b, 14/10/2026).** O R2 de
+> 05/10 cobriu suporte, seleção na oferta, balanço, composição e o PMMB como
+> cointervenção. Do plano 14, §4, não foram produzidos: concentração por UF, curso
+> e mass point; MDE para `+0,5` especialista; sensibilidade ao município mais
+> influente; `output/rdd_bolsa/matriz_cointervencoes_municipio_curso.csv` (Agora
+> Tem Especialistas e demais componentes, além do PMMB); estoque CNES prévio; e
+> teste formal de densidade. O R3 (`02_congelar_protocolo_r3.md`) completa esses
+> itens sem outcome ou registra a dispensa de cada um, com o motivo.
 
 Execute somente os portões R1 e R2 de
 `docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`.

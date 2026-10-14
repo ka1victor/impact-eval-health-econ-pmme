@@ -29,6 +29,8 @@
 >    sem outcome, na população escolhida.
 > 3. **MDE conjunto na banda 0,100:** as amostras dos dois cortes se sobrepõem em
 >    263 municípios (correlação dos saltos 0,123); o valor é 17,5 p.p., não 16,5.
+>    *Corrigido em 14/10/2026 no `04_auditar_r2_suporte_selecao_balanco.py`, sem
+>    outcome; só o MDE conjunto nas bandas com sobreposição mudou.*
 > 4. **Entregáveis do plano 14, §4, ainda ausentes:** matriz de cointervenções do
 >    Agora Tem Especialistas, concentração por UF e curso, estoque CNES prévio e
 >    teste de densidade formal (a conferência própria do revisor não achou
@@ -41,6 +43,7 @@
 >    registro.
 > 7. **"O IVS 2010 erra 48%"** (decisão 0) usa a grade do FAQ (177/368). Sob a
 >    regra efetiva, o erro é 101/368 (27%), ou 1.154/4.101 combinações (28%).
+>    *Texto da decisão 0 corrigido em 14/10/2026.*
 > 8. **Safra.** O Anexo II do Edital SAPS nº 3/2024 do PMMB (15/05/2024) publica a
 >    categoria de IVS de 1.277 municípios, igual à administrativa de 2026 em 1.277
 >    de 1.277, inclusive nos 600 em que ela diverge do IVS 2010. O escore já
@@ -75,7 +78,7 @@
 
 | # | Decisão | Proposta deste rascunho | Por quê |
 |---|---|---|---|
-| 0 | Running variable | trocar o IVS 2010 do Atlas pelo IVS administrativo da SGTES | o `CLAUDE.md` fixa o IVS 2010 como canônico e exige justificativa e autorização do autor para trocá-lo; a justificativa é o R1: o IVS administrativo reproduz 100% da atribuição e o IVS 2010 erra 48% |
+| 0 | Running variable | trocar o IVS 2010 do Atlas pelo IVS administrativo da SGTES | o `CLAUDE.md` fixa o IVS 2010 como canônico e exige justificativa e autorização do autor para trocá-lo; a justificativa é o R1: o IVS administrativo reproduz 100% da atribuição e o IVS 2010 erra 27% dos municípios de 2025 sob a regra efetiva (101/368; 48% sob a grade do FAQ, 177/368) |
 | 1 | Outcome primário | célula com ao menos um candidato **alocado** na onda | existe em todas as ondas e mede a margem de entrada da pergunta |
 | 2 | Outcomes secundários | candidaturas de 1ª opção por célula; célula com alguma candidatura; confirmação ou homologação (só 2025, outcome aprovado em A1) | procura é o desfecho preferido do plano 16 e as listas publicam as candidaturas |
 | 3 | Unidade | município–onda, proporção de células com alocação, peso igual por município–onda; célula com agrupamento municipal em robustez | o tratamento é municipal (plano 14, seção 6) |
@@ -117,7 +120,10 @@ Pendências de construção:
 
 Do R2, com município como unidade e linha de base hipotética de 30%: MDE de
 31,5 p.p. (0,300) e 32,9 p.p. (0,400) na banda 0,050; 22,8 p.p. no salto comum
-na banda 0,050 e 16,5 p.p. na 0,100. O registro R3 deve recalcular o MDE para a
+na banda 0,050 e 17,5 p.p. na 0,100 (com a covariância entre os cortes, corrigida
+em 14/10/2026). Esses valores usam os 1.144 municípios ofertados em alguma onda,
+inclusive o ciclo 3; sem ele, a revisão S1b obteve 28,2 p.p. no salto comum na
+banda 0,050 (nota no topo). O registro R3 deve recalcular o MDE para a
 unidade escolhida (município–onda), com a correlação entre ondas do mesmo
 município tratada de forma conservadora, **antes** de abrir o desfecho. Se o MDE
 do salto comum ficar acima de 15 p.p., a manchete é rebaixada a exploratória e o

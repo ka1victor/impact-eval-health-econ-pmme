@@ -19,7 +19,9 @@ Pare se qualquer uma faltar:
    está em `R1_R2_EXECUTADOS_AGUARDANDO_R3`;
 5. `output/rdd_bolsa/registro_pre_analise.json` **não** existe.
 
-Leia antes: `CLAUDE.md`, o plano 14, a auditoria 15 e o rascunho 18
+Leia antes: `CLAUDE.md`, o plano 14, a auditoria 15, o rascunho 18 (inclusive
+a nota da revisão S1b de 14/10/2026 no topo) e a nota de entregáveis faltantes
+em [`01_portao_regra_e_suporte.md`](01_portao_regra_e_suporte.md)
 ([`docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md`](../../docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md)).
 
 ## Ambiente
@@ -84,7 +86,24 @@ Escreva `scripts/rdd_bolsa/05_congelar_registro_r3.py`, que:
   listas de resultado; a matriz sem outcomes; o estimador, a inferência, a
   multiplicidade, os placebos, o MDE e a linguagem; e a declaração de
   conhecimento prévio (comparações por faixa de A4 e das conversas de 21/09 a
-  05/10/2026).
+  05/10/2026, a contagem de municípios com bolsista ativo no JSON do R1 e
+  qualquer estimativa por escore feita no branch `claude/vigilant-mccarthy-dd92mc`
+  que tenha sido vista antes do congelamento).
+
+Desde 14/10/2026 o controlador só aceita o registro com, no mínimo, estes campos
+não vazios (`validar_registro_r3` em
+`scripts/rdd_bolsa/02_controlar_execucao_plano_causal.py`):
+
+| Campo | Conteúdo |
+|---|---|
+| `autorizacao_autor` | objeto com `data` e `autorizado_por` |
+| `decisoes` | as decisões do passo 1 |
+| `cortes` | cortes estimados, todos em `cortes_viaveis` do `r2_portao.json` |
+| `hashes_entradas` | caminho → SHA-256; inclui obrigatoriamente `output/rdd_bolsa/matriz_municipio_ivs_administrativo.csv` e `output/rdd_bolsa/r2_testes_continuidade.csv`, com os hashes vigentes |
+| `conhecimento_previo` | lista do que já foi visto de outcome antes do congelamento |
+
+Se o R2 for refeito na população escolhida (achado 2 da revisão S1b), faça isso
+antes de gravar o registro, para que os hashes vinculem o R2 final.
 
 ## Passo 4 — portões e commit
 

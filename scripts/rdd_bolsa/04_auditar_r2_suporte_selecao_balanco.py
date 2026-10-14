@@ -225,14 +225,31 @@ def testar_ll(dados: pd.DataFrame, variavel: str, corte: float, h: float) -> dic
     }
 
 
-def variancia_desenho_ll(dados: pd.DataFrame, corte: float, h: float) -> float:
-    """Var(salto)/sigma^2 do estimador local-linear, sem outcome."""
+def pesos_salto_ll(dados: pd.DataFrame, corte: float, h: float) -> pd.Series:
+    """Pesos lineares a_i do salto local-linear (salto = soma a_i y_i), sem outcome."""
     regressores, pesos = desenho_ll(dados, corte, h)
     x = regressores.to_numpy()
     w = pesos.to_numpy()
     pao = np.linalg.inv(x.T @ (w[:, None] * x))
-    recheio = x.T @ ((w**2)[:, None] * x)
-    return float((pao @ recheio @ pao)[1, 1])
+    return pd.Series((pao @ (x * w[:, None]).T)[1], index=regressores.index)
+
+
+def variancia_desenho_ll(dados: pd.DataFrame, corte: float, h: float) -> float:
+    """Var(salto)/sigma^2 do estimador local-linear, sem outcome."""
+    return float((pesos_salto_ll(dados, corte, h) ** 2).sum())
+
+
+def variancia_combinada_ll(dados: pd.DataFrame, cortes: list[float], h: float) -> float:
+    """Var/sigma^2 da combinacao por inverso da variancia dos saltos de varios cortes.
+
+    Quando as bandas se sobrepoem, o mesmo municipio entra nos dois saltos e a
+    covariancia entre eles e soma_i a_1i a_2i; ignora-la subestima o MDE.
+    """
+    pesos = pd.DataFrame({c: pesos_salto_ll(dados, c, h) for c in cortes}).fillna(0.0)
+    covariancia = pesos.T.to_numpy() @ pesos.to_numpy()
+    inverso = 1 / np.diag(covariancia)
+    w = inverso / inverso.sum()
+    return float(w @ covariancia @ w)
 
 
 def mde(variancia_por_sigma2: float, p: float) -> float:
@@ -377,10 +394,12 @@ def main() -> None:
     tratados = {k: v for k, v in cortes.items() if v["tipo"] == "tratamento"}
     viaveis = [k for k, v in tratados.items() if v["status"] == "VIAVEL_CONTINUIDADE"]
     # Os dois cortes tem a mesma dose (R$ 5 mil); a combinacao por inverso da
-    # variancia e a referencia de potencia de uma estimativa conjunta.
+    # variancia e a referencia de potencia de uma estimativa conjunta. Nas bandas
+    # em que as janelas se sobrepoem, a covariancia entre os saltos entra no MDE
+    # (correcao de 14/10/2026, revisao S1b; antes supunha independencia).
     mde_conjunto = {
         f"{h:.3f}": {
-            f"{p:.1f}": round(100 * mde(1 / sum(1 / variancias[float(k)][h] for k in viaveis), p), 1)
+            f"{p:.1f}": round(100 * mde(variancia_combinada_ll(ofertados, [float(k) for k in viaveis], h), p), 1)
             for p in LINHAS_BASE_MDE
         }
         for h in BANDAS_LL
@@ -432,6 +451,7 @@ def main() -> None:
             "criterios_essenciais": ["suporte", "selecao_na_oferta", "cointervencao_pmmb", "balanco_local_linear_holm"],
             "suporte_minimo": {"municipios_por_lado": MIN_MUNICIPIOS_LADO, "pontos_de_massa_por_lado": MIN_PONTOS_MASSA_LADO},
             "mde": "proporcao municipal, alfa 5% bilateral, poder 80%, variancia p(1-p) com p hipotetico 0,2/0,3/0,4",
+            "mde_conjunto": "combinacao por inverso da variancia dos saltos; covariancia entre cortes incluida quando as bandas se sobrepoem",
         },
         "covariaveis": COVARIAVEIS,
         "cortes": cortes,

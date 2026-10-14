@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **204 testes em 22 módulos**, garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **213 testes em 23 módulos**, garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -48,7 +48,8 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_viabilidade_salario_ivs.py`](test_viabilidade_salario_ivs.py) | RDD Bolsa | Verificação da falha de replicação das faixas salariais em 177 municípios e encerramento preventivo do portão R1 do RDD. |
 | [`test_primeiro_estagio_publico_rdd.py`](test_primeiro_estagio_publico_rdd.py) | RDD Bolsa — primeiro estágio | Confirma que o IVS 2010 público não produz salto estável na bolsa anunciada em 0,400 ou 0,500 e impede uma RDD fuzzy improvisada. |
 | [`test_portao_regra_rdd.py`](test_portao_regra_rdd.py) | RDD Bolsa — R1 e execução | Valida a matriz municipal, as 177 divergências, a não promoção do IVS público a escore administrativo, o pacote não enviado e o bloqueio fail-closed de R2–R5. |
-| [`test_r1_r2_ivs_administrativo.py`](test_r1_r2_ivs_administrativo.py) | RDD Bolsa — R1 e R2 com o IVS administrativo | Reproduz a regra em todas as ondas com o IVS da SGTES, confere a fonte pelo hash do manifesto, verifica que `01c` e `04` não abrem outcome, registra a reprovação da regra estrita de randomização local e impede protocolo R3 sem autorização. |
+| [`test_r1_r2_ivs_administrativo.py`](test_r1_r2_ivs_administrativo.py) | RDD Bolsa — R1 e R2 com o IVS administrativo | Reproduz a regra em todas as ondas com o IVS da SGTES, confere a fonte pelo hash do manifesto, verifica que `01c` e `04` não abrem outcome, recalcula a faixa anunciada de cada onda pela regra (inclusive empates em 0,300 e 0,400), registra a reprovação da regra estrita de randomização local, confere que o MDE conjunto inclui a covariância entre cortes e impede protocolo R3 sem autorização. |
+| [`test_controlador_fail_closed_rdd.py`](test_controlador_fail_closed_rdd.py) | RDD Bolsa — controlador fail-closed | Roda o controlador numa cópia descartável: registro R3 vazio, sem autorização, com corte fora dos viáveis ou desvinculado dos hashes de R1/R2 não congela; resultado R4 com qualquer nome `resultados_*` ou `r4_*` sem R3 falha. |
 | [`test_triagem_admin_rdd.py`](test_triagem_admin_rdd.py) | RDD Bolsa — resposta administrativa | Testa ausência sem imputação, interrupção diante de identificadores pessoais não solicitados e liberação restrita à reexecução de R1 após uma entrega estruturalmente completa. |
 | [`test_coorte_c3.py`](test_coorte_c3.py) | Ciclo 3 Coorte | Congelamento dos cursos 1, 12 e 24 com suporte integral e verificação da assinatura cadastral (Nota Técnica nº 59/2026). |
 | [`test_sih_pre_c3.py`](test_sih_pre_c3.py) | Ciclo 3 SIH Pré | Auditoria dos dados hospitalares do SIH, dicionário SIGTAP e regra *fail-closed* ante ausência de arquivos no FTP. |

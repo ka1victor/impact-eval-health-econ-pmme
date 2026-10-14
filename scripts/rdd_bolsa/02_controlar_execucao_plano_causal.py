@@ -8,6 +8,11 @@ Desde 05/10/2026 o R1 vigente é o do IVS administrativo da SGTES
 (`a01c_regra_ivs_administrativo.json`). O R1 público com o IVS 2010 do Atlas
 (`portao_regra_ivs.json`) continua lido como diagnóstico: ele segue reprovado
 para aquela running variable.
+
+Desde 14/10/2026 (revisão S1b) o registro R3 só conta como congelado se tiver o
+conteúdo mínimo de `validar_registro_r3` e estiver vinculado, por SHA-256, às
+saídas determinísticas de R1 e R2. Qualquer `resultados_*` ou `r4_*` em
+`output/rdd_bolsa/` conta como resultado R4.
 """
 
 from __future__ import annotations
@@ -36,10 +41,14 @@ REQUESTS = (
 OUT_JSON = ROOT / "output" / "rdd_bolsa" / "status_execucao_plano_causal.json"
 OUT_MD = ROOT / "docs" / "06_execucao" / "33_status_execucao_plano_causal.md"
 
-RESULTADOS_R4 = (
-    ROOT / "output" / "rdd_bolsa" / "resultados_rdd_atracao.csv",
-    ROOT / "output" / "rdd_bolsa" / "resultados_rdd_atracao.json",
+PADROES_RESULTADOS_R4 = ("resultados_*", "r4_*")
+# Saídas de R1 e R2 sem carimbo de data: o registro R3 guarda o SHA-256 delas e
+# fica inválido se forem regravadas com outro conteúdo.
+VINCULOS_R3 = (
+    ROOT / "output" / "rdd_bolsa" / "matriz_municipio_ivs_administrativo.csv",
+    ROOT / "output" / "rdd_bolsa" / "r2_testes_continuidade.csv",
 )
+CAMPOS_R3 = ("autorizacao_autor", "decisoes", "cortes", "hashes_entradas", "conhecimento_previo")
 
 
 def sha256(path: Path) -> str:
@@ -52,6 +61,38 @@ def sha256(path: Path) -> str:
 
 def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def rel(path: Path) -> str:
+    return str(path.relative_to(ROOT)).replace("\\", "/")
+
+
+def resultados_r4() -> list[str]:
+    pasta = ROOT / "output" / "rdd_bolsa"
+    return sorted({rel(p) for padrao in PADROES_RESULTADOS_R4 for p in pasta.glob(padrao) if p.is_file()})
+
+
+def validar_registro_r3(cortes_viaveis: list[str]) -> list[str]:
+    """Problemas do registro R3; lista vazia quando ele vale como congelado."""
+    try:
+        registro = load_json(R3)
+    except (json.JSONDecodeError, UnicodeDecodeError) as erro:
+        return [f"registro R3 ilegível: {erro}"]
+    if not isinstance(registro, dict):
+        return ["registro R3 não é um objeto JSON"]
+    problemas = [f"campo ausente ou vazio: {campo}" for campo in CAMPOS_R3 if not registro.get(campo)]
+    autorizacao = registro.get("autorizacao_autor") or {}
+    if not (isinstance(autorizacao, dict) and autorizacao.get("data") and autorizacao.get("autorizado_por")):
+        problemas.append("autorizacao_autor precisa de data e autorizado_por")
+    cortes = registro.get("cortes") or []
+    fora = sorted(set(map(str, cortes)) - set(cortes_viaveis))
+    if fora:
+        problemas.append(f"cortes fora dos viáveis no R2: {fora}")
+    hashes = registro.get("hashes_entradas") or {}
+    for path in VINCULOS_R3:
+        if hashes.get(rel(path)) != sha256(path):
+            problemas.append(f"hash ausente ou divergente de {rel(path)}")
+    return problemas
 
 
 def atomic_text(path: Path, value: str) -> None:
@@ -134,11 +175,13 @@ def main() -> None:
     r1_aprovado = r1["decisao_r1"] in {"APROVADO_SHARP", "APROVADO_FUZZY"}
     r2_viavel = r2["decisao_r2"].startswith("VIAVEL")
     r3_congelado = R3.exists()
-    resultados = [
-        str(path.relative_to(ROOT)).replace("\\", "/") for path in RESULTADOS_R4 if path.exists()
-    ]
+    resultados = resultados_r4()
     if r3_congelado and not (r1_aprovado and r2_viavel):
         raise RuntimeError("Violação fail-closed: protocolo R3 existe sem R1 aprovado e R2 viável.")
+    if r3_congelado:
+        problemas = validar_registro_r3(r2["cortes_viaveis"])
+        if problemas:
+            raise RuntimeError("Violação fail-closed: registro R3 inválido: " + "; ".join(problemas))
     if resultados and not r3_congelado:
         raise RuntimeError(
             "Violação fail-closed: há resultados R4 sem protocolo R3 congelado: " + ", ".join(resultados)
