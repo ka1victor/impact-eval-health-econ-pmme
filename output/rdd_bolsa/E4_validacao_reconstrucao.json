@@ -1,0 +1,335 @@
+{
+  "documento": "E4 (adendo): validação célula a célula da reconstrução independente de Y1 e Y2",
+  "data_execucao": "2026-10-14",
+  "script": "scripts/rdd_bolsa/08a_reconstruir_proporcao_preenchida.py",
+  "protocolo": {
+    "arquivo": "output/rdd_bolsa/protocolo_E4_adendo_proporcao.json",
+    "sha256": "57eb6ae6dfb0ba96100daa693d2f0345fc4c3d1c752959aa805a6571019728c6"
+  },
+  "escopo": {
+    "populacao": "P1: 368 municípios e 1.295 células CNES–curso do quadro da 1a chamada do ciclo 1 (população primária do A4)",
+    "unidade": "célula CNES–curso (validação) e município (CSV gravado)",
+    "Y1": "por município: fração das suas células com outcome_alguma_confirmacao_ou_homologacao = 1 (alguma confirmação ou homologação na 1a chamada), definição do A4",
+    "Y2": "por município: fração das suas células com alguma confirmação ou homologação na 1a chamada OU homologação nova na 2a chamada (ciclo 1 inteiro)",
+    "contraste": "nenhum: esta etapa só constrói o outcome; não estima efeito",
+    "nao_feito": [
+      "cruzamento do outcome com o escore administrativo",
+      "cruzamento do outcome com o IVS",
+      "proporções por faixa além das já relatadas no A4"
+    ]
+  },
+  "saida_municipio": {
+    "arquivo": "output/rdd_bolsa/E4_proporcao_municipio.csv",
+    "fonte_dos_valores": "fonte canônica (matriz do funil filtrada como no A4)",
+    "linhas": 368,
+    "colunas": [
+      "co_ibge",
+      "faixa_anunciada",
+      "n_celulas",
+      "n_celulas_y1",
+      "n_celulas_y2",
+      "y1",
+      "y2"
+    ],
+    "soma_n_celulas": 1295,
+    "soma_n_celulas_y1": 393,
+    "soma_n_celulas_y2": 461,
+    "sha256": "897e9529dd0bd226a5ca3398971d894c79400cad7aaf46fd9ae84ebfb4022f79"
+  },
+  "reconstrucao_completa": true,
+  "pendencias": [],
+  "totais": {
+    "y1_canonica": 393,
+    "y2_canonica": 461,
+    "celulas": 1295,
+    "municipios": 368,
+    "esperado_adendo": {
+      "y1": 393,
+      "y2": 461,
+      "celulas": 1295,
+      "municipios": 368
+    },
+    "y1_reconstruida": 393,
+    "y2_reconstruida": 461,
+    "celulas_reconstruidas": 1295,
+    "municipios_reconstruidos": 368,
+    "confere_esperado": true
+  },
+  "validacao_celula_a_celula": {
+    "celulas_canonicas": 1295,
+    "celulas_reconstruidas": 1295,
+    "celulas_em_ambas": 1295,
+    "celulas_batidas_y1": 1295,
+    "celulas_batidas_y2": 1295,
+    "celulas_batidas_y1_y2_contagens_e_atributos": 1295,
+    "celulas_divergentes_y1": 0,
+    "celulas_divergentes_y2": 0,
+    "celulas_divergentes_contagens": 0,
+    "celulas_divergentes_atributos": 0,
+    "ordem_contagens": [
+      "n_confirmacoes_ch1",
+      "n_homologacoes_ch1",
+      "n_homologacoes_novas_ch2"
+    ],
+    "divergencias": []
+  },
+  "regras_da_reconstrucao": [
+    "colunas localizadas pelo nome normalizado do cabeçalho, não pela posição",
+    "CNES: dígitos do valor (inteiro do Excel ou texto) completados com zeros à esquerda até 7; mais de 7 dígitos é rejeitado",
+    "curso: número inicial do rótulo ('01 - ...' ou '01. ...'), válido de 1 a 16",
+    "população: as 1.295 linhas do quadro bruto da 1a chamada; eventos fora do quadro não contam",
+    "confirmação Ch1: versão sub judice da alocação retificada, status 'LOCAL DE ATUAÇÃO CONFIRMADO'; a versão retificada anterior só é comparada",
+    "homologação Ch1: lista da 1a chamada com RESULTADO = HOMOLOGADO",
+    "homologação nova Ch2: registro da lista da 2a chamada cuja pessoa não está na lista Ch1 (nome normalizado ou CPF nas posições 1-3 e 8-11)",
+    "proposta de realocação, desconsideração de local, alocação final e quadro de reserva da 2a chamada não entram em Y1/Y2",
+    "Y1 = confirmação Ch1 ou homologação Ch1 > 0; Y2 = Y1 ou homologação nova Ch2 > 0"
+  ],
+  "detalhes_reconstrucao": {
+    "quadro_bruto": {
+      "celulas": 1295,
+      "municipios": 368
+    },
+    "alocacao_subjudice_canonica": {
+      "registros": 1671,
+      "confirmacoes": 468,
+      "locais_desconsiderados": 59,
+      "status_alocacao": {
+        "LOCAL DE ATUACAO CONFIRMADO PARA INICIO ": 468,
+        "LOCAL DE ATUACAO DESCONSIDERADO A PEDIDO": 59,
+        "VAZIO": 1144
+      },
+      "registros_marcados_sub_judice": [
+        {
+          "co_cnes_7d": "2605473",
+          "cod_curso": 7,
+          "status_alocacao": ""
+        }
+      ],
+      "confirmacoes_fora_do_quadro": {
+        "eventos": 0,
+        "celulas": 0
+      }
+    },
+    "alocacao_retificada_anterior": {
+      "registros": 1671,
+      "confirmacoes": 468,
+      "celulas_com_contagem_de_confirmacoes_diferente_da_subjudice": 0,
+      "papel": "comparação; nunca somada à versão sub judice"
+    },
+    "homologados_ch1": {
+      "registros_validos": 316,
+      "fora_do_quadro": {
+        "eventos": 20,
+        "celulas": 18
+      }
+    },
+    "homologados_ch2": {
+      "registros_validos": 581,
+      "pareamento_com_ch1": {
+        "nenhum": 282,
+        "nome_e_cpf": 299
+      },
+      "novos": 282,
+      "repetidos": 299,
+      "repetidos_em_celula_diferente_da_ch1": 6,
+      "novos_fora_do_quadro_ch1": {
+        "eventos": 143,
+        "celulas": 108
+      },
+      "regra_novo": "pessoa da lista Ch2 sem correspondência na lista Ch1 pelo nome normalizado nem pela chave de CPF nas posições 1-3 e 8-11 (comuns às duas máscaras)"
+    },
+    "realocacao_ch1": {
+      "propostas": 59,
+      "papel": "diagnóstico; proposta de realocação não é confirmação nem homologação e não entra em Y1"
+    },
+    "ch2_auxiliares": {
+      "alocados_finais_ch2": 374,
+      "celulas_quadro_reserva_ch2": 1762,
+      "papel": "diagnóstico; o adendo define Y2 só por homologação nova na 2a chamada"
+    },
+    "celulas_ch1_que_receberam_homologado_repetido_de_outra_celula": 3
+  },
+  "anomalias_de_leitura": {
+    "cnes_completado_com_zeros": 246
+  },
+  "sensibilidades_de_definicao": {
+    "nota": "diagnósticos de definição; não alteram Y1/Y2 do adendo, que seguem a fonte canônica",
+    "y1_com_alocacao_retificada_anterior_no_lugar_da_subjudice": 393,
+    "y2_contando_qualquer_homologacao_ch2_na_celula_mesmo_repetida": 463,
+    "celulas_com_proposta_de_realocacao_ch1_e_y1_zero": 13,
+    "celulas_com_alocado_final_ch2_e_y2_zero": 31
+  },
+  "entradas": [
+    {
+      "caminho": "output/rdd_bolsa/protocolo_E4_adendo_proporcao.json",
+      "sha256": "57eb6ae6dfb0ba96100daa693d2f0345fc4c3d1c752959aa805a6571019728c6",
+      "bytes": 4793,
+      "papel": "protocolo congelado do E4 (somente lido)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "2026-10-14",
+      "cobertura": "ciclo 1 do PMM-E",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/tema_trabalho/matriz_funil_ciclo1.parquet",
+      "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15",
+      "bytes": 71157,
+      "papel": "fonte canônica de Y1 e Y2 (A1)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "2026-09-01 (data de referência do A1)",
+      "cobertura": "ciclo 1 do PMM-E",
+      "unidade": "célula CNES–curso × chamada",
+      "chaves": "co_cnes_7d, cod_curso, chamada",
+      "filtros": "chamada 1 (Y1); chamada 2, n_homologacoes_novas_ch2 > 0 (componente de Y2)"
+    },
+    {
+      "caminho": "output/aquisicao/quadro_vagas_tratamento.parquet",
+      "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f",
+      "bytes": 40440,
+      "papel": "população primária do A4 (1.295 células)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "quadro original publicado em 24/07/2025",
+      "cobertura": "ciclo 1 do PMM-E",
+      "unidade": "célula CNES–curso",
+      "chaves": "co_cnes_7d, cod_curso",
+      "filtros": "nenhum (quadro completo da 1a chamada)"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx",
+      "sha256": "51c6807f6bc2efa252b5236d89c5384ae484c4d47c8b65d4161c3facbfebe304",
+      "bytes": 129157,
+      "papel": "reconstrução: quadro de vagas da 1a chamada",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "quadro original publicado em 24/07/2025",
+      "cobertura": "ciclo 1, chamada 1, quadro original publicado em 24/07/2025",
+      "unidade": "célula CNES–curso",
+      "chaves": "CNES (7 dígitos), código do curso",
+      "filtros": "linhas com CNES e curso válidos",
+      "manifesto": {
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-projeto-mais-medicos-especialistas/quadro-de-vagas-pmm-e.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": null,
+        "sha256_confere": null
+      }
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+      "sha256": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec",
+      "bytes": 165250,
+      "papel": "reconstrução: confirmações Ch1 (versão canônica)",
+      "fonte": "Ministério da Saúde (publicação do PMM-E)",
+      "data_referencia": "não declarada no arquivo; versão sub judice da alocação retificada",
+      "cobertura": "ciclo 1 do PMM-E",
+      "unidade": "registro candidato–local",
+      "chaves": "CNES, curso",
+      "filtros": "ALOCAÇÃO começa com 'LOCAL DE ATUAÇÃO CONFIRMADO'"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada.xlsx",
+      "sha256": "0acfba2a89e0c269b754c0ca0fd5a2426be511f88a3c1a934a41345f8c9ffd0c",
+      "bytes": 165047,
+      "papel": "reconstrução: versão anterior da alocação (só comparação)",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "não declarada no arquivo",
+      "cobertura": "ciclo 1, chamada 1, alocacao retificada",
+      "unidade": "registro candidato–local",
+      "chaves": "CNES, curso",
+      "filtros": "ALOCAÇÃO começa com 'LOCAL DE ATUAÇÃO CONFIRMADO'; nunca somada",
+      "manifesto": {
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-projeto-mais-medicos-especialistas/quadro-1-profissionais-alocados-conforme-escolha-inicial-1a-ou-2a-opcao-retificado.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": null,
+        "sha256_confere": null
+      }
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_realocacao_retificado.xlsx",
+      "sha256": "7c31cb441b8668eca0c06a6c6a648c731e26d1f14162fe071fd9695ebfe89b86",
+      "bytes": 15559,
+      "papel": "diagnóstico: propostas de realocação Ch1",
+      "fonte": "Ministério da Saúde (publicação do PMM-E)",
+      "data_referencia": "não declarada no arquivo",
+      "cobertura": "ciclo 1 do PMM-E",
+      "unidade": "registro candidato–local",
+      "chaves": "CNES, curso",
+      "filtros": "nenhum; não entra em Y1"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2025_ciclo1_chamada1_homologados.xlsx",
+      "sha256": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b",
+      "bytes": 40259,
+      "papel": "reconstrução: homologados Ch1",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "não declarada no arquivo",
+      "cobertura": "ciclo 1, chamada 1, lista retificada em 29/09/2025",
+      "unidade": "registro pessoa–local",
+      "chaves": "CNES, curso; pessoa por nome e CPF (posições 1-3, 8-11) só para parear com Ch2",
+      "filtros": "RESULTADO = HOMOLOGADO",
+      "manifesto": {
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/lista-de-homologados-medicos-especialistas-1a-chamada.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/pmm_e/2025_ciclo1_chamada2_homologados.xlsx",
+      "sha256": "4e85cfe45b2e5e1f7ebef78aa5dc90ba61b7adc5f7046f43a5066803f603e147",
+      "bytes": 55034,
+      "papel": "reconstrução: homologados Ch2 (novos entram em Y2)",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "não declarada no arquivo",
+      "cobertura": "ciclo 1, chamada 2, homologados",
+      "unidade": "registro pessoa–local",
+      "chaves": "CNES, curso; pessoa por nome e CPF (posições 1-3, 8-11)",
+      "filtros": "novo = sem correspondência na lista Ch1",
+      "manifesto": {
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/lista-de-homologados-medicos-especialistas-2a-chamada.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "4e85cfe45b2e5e1f7ebef78aa5dc90ba61b7adc5f7046f43a5066803f603e147",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/pmm_e/2025_ciclo1_chamada2_vagas_e_alocados.xlsx",
+      "sha256": "f1b8f7533cb13d8aba21d1100ab957e6accac52532fb8235e1b4231343a0588c",
+      "bytes": 155827,
+      "papel": "diagnóstico: quadro de reserva da 2a chamada",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "cadastro de reserva oficial de 29/09/2025",
+      "cobertura": "ciclo 1, chamada 2, vagas e alocacao imediata",
+      "unidade": "célula CNES–curso",
+      "chaves": "CNES, curso",
+      "filtros": "aba 'VAGAS - CADASTRO RESERVA'; não entra em Y2",
+      "manifesto": {
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/quadro-de-vagas-da-2a-chamada-e-a-relacao-de-profissionais-alocados-imediatos.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "f1b8f7533cb13d8aba21d1100ab957e6accac52532fb8235e1b4231343a0588c",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/pmm_e/2025_ciclo1_chamada2_classificacao_final.xlsx",
+      "sha256": "5c73a99847708b2749019c634f661771b28c88cb5421e9672e44704e62103e85",
+      "bytes": 86076,
+      "papel": "diagnóstico: alocados finais da 2a chamada",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "não declarada no arquivo",
+      "cobertura": "ciclo 1, chamada 2, classificacao final",
+      "unidade": "registro candidato–local",
+      "chaves": "CNES, curso",
+      "filtros": "SITUAÇÃO começa com 'ALOCADO'; não entra em Y2",
+      "manifesto": {
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/resultado-final-com-a-lista-de-classificacao-2a-chamada.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "5c73a99847708b2749019c634f661771b28c88cb5421e9672e44704e62103e85",
+        "sha256_confere": true
+      }
+    }
+  ],
+  "dados_pessoais_gravados": false,
+  "linguagem": "construção de outcome descritiva; nenhuma estimativa causal",
+  "conclusao": "a reconstrução independente reproduz a fonte canônica em todas as células para Y1 e Y2"
+}
