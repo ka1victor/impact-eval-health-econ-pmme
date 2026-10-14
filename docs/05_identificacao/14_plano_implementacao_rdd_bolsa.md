@@ -10,6 +10,21 @@
 > ordem operacional estão em
 > [`16_sintese_achados_e_novo_plano_causal.md`](16_sintese_achados_e_novo_plano_causal.md).
 
+> **Atualização em 05/10/2026: R1 aprovado sharp com o IVS administrativo.**
+> A SGTES publica o próprio IVS, com três casas decimais, no quadro de vagas do
+> PMMB 2026. Com ele, a regra do item 11.2 do Edital SGTES/MS nº 28/2026 (cortes
+> 0,300 e 0,400) reproduz a faixa anunciada em 4.103 de 4.103 combinações
+> município–onda–versão de 2025 e 2026. O R2, sem outcomes, foi aprovado pelo
+> desenho de continuidade com ressalvas, sendo a principal a potência. O R3 aguarda decisão do autor.
+> Ver [`../auditorias/15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md)
+> e o rascunho [`18_protocolo_r3_rdd_bolsa_rascunho.md`](18_protocolo_r3_rdd_bolsa_rascunho.md).
+> O diagnóstico abaixo continua verdadeiro para o IVS 2010 do Atlas, que não é
+> a running variable administrativa. Fica refutada, porém, a leitura de 14/09
+> de que o IVS seria só o "piso" da bolsa, promovido por um critério de
+> localização do Anexo IV: a categoria do IVS administrativo determina a faixa
+> sozinha em todos os casos, sem promoção. A "promoção" medida contra o IVS
+> 2010 vinha da safra diferente e do mapeamento de 2026, já aplicado em 2025.
+
 A formulação substantiva, os outcomes e o diagnóstico de viabilidade deste
 plano estão em
 [`15_incentivos_ivs_provimento_duradouro.md`](../01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).

@@ -1,0 +1,31 @@
+{
+  "manifesto": "A07 - IVS administrativo da SGTES/MS",
+  "natureza": "bruto oficial preservado sem transformacao; hashes do arquivo em disco",
+  "fontes": [
+    {
+      "id": "pmmb_2026_quadro_de_vagas",
+      "arquivo_local": "data/raw/aquisicao/ivs_regra/pmmb_2026_quadro_de_vagas.xlsx",
+      "url_oficial": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-2-2026-pmmb/quadro-de-vagas.xlsx",
+      "descricao": "Quadro de vagas do Chamamento Publico SGTES/MS n. 2/2026 (PMMB). A aba 'Lista de Municipios-Tipo Equipe' traz, para cada municipio, o IVS usado pela SGTES (tres casas decimais) e a 'CATEGORIA IVS' derivada dele.",
+      "uso": "running variable administrativa do RDD da bolsa (portao R1)",
+      "status_aquisicao": "BAIXADO_AGORA",
+      "data_verificacao": "2026-10-05",
+      "tamanho_bytes": 1216860,
+      "sha256": "36f4ef2674baaba37b9bfb140b2f2a1e4aa52465e6a79a4f810e17fe2309d853",
+      "data_aquisicao": "2026-10-05"
+    },
+    {
+      "id": "pmmb_2026_edital",
+      "arquivo_local": "data/raw/aquisicao/ivs_regra/pmmb_2026_edital_22_2026.pdf",
+      "url_oficial": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-2-2026-pmmb/edital",
+      "descricao": "Edital SGTES/MS n. 22/2026 do PMMB. Cita o IVS/IPEA como criterio de priorizacao de vagas novas de eSF; nao publica safra nem algoritmo.",
+      "uso": "contexto normativo e cointervencao candidata no R2",
+      "status_aquisicao": "BAIXADO_AGORA",
+      "data_verificacao": "2026-10-05",
+      "tamanho_bytes": 154406,
+      "sha256": "4e5f7760d99ed5a0a85ac5de8f41764be4332aa675b948727b2a0c566177b34c",
+      "data_aquisicao": "2026-10-05"
+    }
+  ],
+  "limite": "O quadro publica o valor e a categoria do IVS, mas nem ele nem o edital informam a safra ou a base de calculo. Os valores diferem do IVS 2010 do Atlas; a origem precisa ser documentada antes de qualquer afirmacao sobre a safra."
+}

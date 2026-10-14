@@ -526,6 +526,44 @@ class ProvimentoCnesA5Test(unittest.TestCase):
         self.assertEqual(sorted(tab["subamostra"].dropna().unique()),
                          ["agregam_mais_de_um_municipio", "todas", "um_unico_municipio"])
 
+    # ---- Diagnostico cadastral dos cursos 2 e 16 (01/10/2026) ----
+
+    def test_diagnostico_cadastral_cursos_2_16_segue_o_protocolo(self) -> None:
+        dg = json.loads((OUT / "A5_diagnostico_cadastral_cursos_2_16.json").read_text(encoding="utf-8"))
+        self.assertEqual(dg["rotulo"], "diagnostico_descritivo")
+        self.assertIn("antes do codigo", dg["protocolo_congelado_em"])
+        # Insumos ancorados e ainda iguais aos do disco.
+        for rel, info in dg["hashes_entradas"].items():
+            self.assertEqual(info["sha256"], sha(ROOT / rel), rel)
+        self.assertTrue(all(v for k, v in dg["portoes"].items() if isinstance(v, bool)))
+        # Cursos de foco reproduzem a A5_tabela_13 pelo portao estrito.
+        for c in ("2", "16"):
+            rep = dg["portoes"]["reproducao_por_curso"][c]
+            self.assertEqual(rep["portao"], "estrito", c)
+            self.assertLess(rep["pre_F_gl_fe"]["diferenca_relativa"], 1e-9, c)
+        tab = pd.read_csv(OUT / "A5_tabela_16_decomposicao_estabelecimento_pre.csv")
+        self.assertTrue((tab["rotulo"] == "diagnostico_descritivo").all())
+        betas = [c for c in tab.columns if c.startswith("beta_")]
+        # So os 12 coeficientes pre; nenhum coeficiente pos de componente gravado.
+        self.assertEqual(len(betas), 12)
+        self.assertTrue(all(c.replace("beta_", "") < "202506" for c in betas))
+        for curso, g in tab.groupby("cod_curso"):
+            g = g.set_index("componente")
+            soma = g.loc["cnes_ofertantes", betas].to_numpy(float) + g.loc["restante_municipio", betas].to_numpy(float)
+            np.testing.assert_allclose(soma, g.loc["estoque_municipal", betas].to_numpy(float), atol=1e-6)
+            self.assertAlmostEqual(g.loc["cnes_ofertantes", "parcela_projecao_phi"] + g.loc["restante_municipio", "parcela_projecao_phi"], 1.0, places=9)
+        # A regra de exclusao e a amostra nao mudam: a A5_tabela_13 continua excluindo 2 e 16.
+        t13 = pd.read_csv(OUT / "A5_tabela_13_pretendencia_por_curso.csv")
+        sens = t13[t13["teste"] == "sensibilidade_excluindo_cursos_pre_p_lt_0_05_proporcional"]
+        self.assertEqual(set(sens["cursos_excluidos"]), {"2;16"})
+        fl = pd.read_csv(OUT / "A5_tabela_17_fluxos_intermitencia_pre.csv")
+        dif = fl[fl["grupo"] == "diferencial_com_menos_sem"]
+        self.assertEqual(int(dif["n_celulas"].sum()), 587)
+        self.assertTrue(dif["leitura_d2"].isin(["intermitente", "fluxo_duradouro"]).all())
+        for c in ("2", "16"):
+            self.assertIn("D-4", dg["cursos_foco"][c]["ressalva"])
+        self.assertNotIn("causal", json.dumps(dg["cursos_foco"], ensure_ascii=False).replace("nenhum efeito causal", ""))
+
 
 if __name__ == "__main__":
     unittest.main()

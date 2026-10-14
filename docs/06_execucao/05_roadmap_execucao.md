@@ -103,6 +103,37 @@ quadro). Erratas E-7 e E-8. Amostra, desfecho, estimador e a manchete de A5 não
 mudam; o que muda é o que se pode afirmar sobre deslocamento, que volta a
 **não testado**. A fila continua sem sessão aberta.
 
+**Estado em 05/10/2026.** A pedido do autor, a identificação do efeito da bolsa
+foi reexplorada só com o lado do tratamento. **R1 passou sharp:** o IVS que a
+própria SGTES publica no quadro de vagas do PMMB 2026 reproduz a faixa anunciada
+em 4.103 de 4.103 combinações município–onda–versão de 2025 e 2026, com os cortes
+0,300 e 0,400 do item 11.2 do Edital nº 28/2026. O R1 anterior reprovou porque
+usou o IVS 2010 do Atlas, que não é a running variable administrativa. **R2 foi
+aprovado sem outcomes** pelo desenho de continuidade (suporte, seleção na oferta,
+balanço e PMMB), com ressalvas: a randomização local não balanceia com suporte
+útil e a potência é limitada (MDE de 22,8 p.p. no salto comum, banda 0,050,
+município como unidade). D-3 deixou de ser pré-condição. **A fila tem uma
+decisão do autor aberta:** revisar e autorizar o congelamento do protocolo R3
+([`18_protocolo_r3_rdd_bolsa_rascunho.md`](../05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md)).
+Nenhum efeito foi estimado. Auditoria em
+[`15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md).
+
+**Próximas sessões.** A ordem está em
+[`prompts/integracao_rodadas_outubro_2026/README.md`](../../prompts/integracao_rodadas_outubro_2026/README.md):
+S1a e S1b revisam as rodadas de 01/10 (branch `claude/admiring-tesla-bduu1t`) e
+de 05/10 (este branch); S2 integra os dois branches, com dois conflitos já
+mapeados; S3 resolve as pendências de 01/10 com o adendo que corrige o estado
+da RDD; S4 congela o R3; S5 estima o R4. A fila do RDD foi reescrita em
+[`prompts/avaliacao_rdd_bolsa/`](../../prompts/avaliacao_rdd_bolsa/README.md).
+
+**Estado em 14/10/2026.** S1a, S1b e S2 feitas no PR 4 (branch
+`claude/gallant-carson-11uzic`). Uma rodada paralela de 14/10
+(`claude/vigilant-mccarthy-dd92mc`) mostrou que o IVS administrativo é o IVS
+2010 oficial do Ipea e que `data/ivs_ipea_2010_municipios.csv` não é o IVS
+municipal, e já estimou a RDD (E3) por protocolo próprio. A fila vigente é a
+conciliação e as decisões do autor em
+[`prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md`](../../prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md).
+
 ## Entrega de banca 1
 
 Paralela à fila analítica e independente dela. A banca 1 apresenta o desenho

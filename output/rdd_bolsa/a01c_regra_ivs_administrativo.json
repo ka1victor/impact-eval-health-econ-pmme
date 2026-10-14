@@ -1,0 +1,224 @@
+{
+  "portao": "R1",
+  "running_variable": "IVS administrativo publicado pela SGTES no quadro do PMMB 2026",
+  "data_execucao": "2026-10-05",
+  "outcomes_abertos": false,
+  "decisao_r1": "APROVADO_SHARP",
+  "regra": {
+    "cortes": {
+      "faixa3_para_faixa2": 0.3,
+      "faixa2_para_faixa1": 0.4
+    },
+    "lado_do_corte": "o valor igual ao corte fica abaixo: 0,300 e Faixa 3; 0,301 e Faixa 2",
+    "precisao": "tres casas decimais",
+    "clausula": "11.2. Para fins de alocacao dos medicos especialistas no ambito do PMM-E, foi estabelecido o criterio de faixa de atracao com base na categorizacao municipal do indice de Vulnerabilidade Social - IVS, com os seguintes valores liquidos: a) Municipios classificados como de muito alta ou alta vulnerabilidade social serao enquadrados na Faixa 1: bolsa mensal no valor de R$ 20.000,00; b) Municipios classificados como de media vulnerabilidade social serao enquadrados na Faixa 2: bolsa mensal no valor de R$ 15.000,00; e, c) Municipios classificados como de baixa ou muito baixa vulnerabilidade social na Faixa 3: bolsa mensal no valor de R$ 10.000,00, mantendo o valor fixo da bolsa.",
+    "cortes_sem_mudanca_de_bolsa": [
+      0.2,
+      0.5
+    ]
+  },
+  "ivs_administrativo": {
+    "municipios": 5571,
+    "minimo": 0.09,
+    "maximo": 0.784,
+    "categoria_publicada_igual_a_recalculada": 5571,
+    "municipios_por_categoria": {
+      "MUITO BAIXA VULNERABILIDADE": 630,
+      "BAIXA VULNERABILIDADE": 1701,
+      "MEDIA VULNERABILIDADE": 1259,
+      "ALTA VULNERABILIDADE": 1178,
+      "MUITO ALTA VULNERABILIDADE": 803
+    }
+  },
+  "reproducao_da_faixa_anunciada": {
+    "total_municipio_onda_versao": 4103,
+    "acertos": 4103,
+    "por_onda_versao": {
+      "2025_c1_ch1/original": {
+        "municipios": 368,
+        "com_mais_de_uma_faixa": 0,
+        "reproduzidos_regra_edital_28_2026": 368,
+        "reproduzidos_texto_faq_2025": 202
+      },
+      "2025_c1_ch2/oficial": {
+        "municipios": 507,
+        "com_mais_de_uma_faixa": 0,
+        "reproduzidos_regra_edital_28_2026": 507,
+        "reproduzidos_texto_faq_2025": 310
+      },
+      "2026_c2_ch1/original": {
+        "municipios": 455,
+        "com_mais_de_uma_faixa": 0,
+        "reproduzidos_regra_edital_28_2026": 455,
+        "reproduzidos_texto_faq_2025": 267
+      },
+      "2026_c2_ch1/retificada_servicos": {
+        "municipios": 454,
+        "com_mais_de_uma_faixa": 0,
+        "reproduzidos_regra_edital_28_2026": 454,
+        "reproduzidos_texto_faq_2025": 266
+      },
+      "2026_c2_ch1/retificada_final": {
+        "municipios": 454,
+        "com_mais_de_uma_faixa": 0,
+        "reproduzidos_regra_edital_28_2026": 454,
+        "reproduzidos_texto_faq_2025": 266
+      },
+      "2026_c2_ch2/oficial": {
+        "municipios": 369,
+        "com_mais_de_uma_faixa": 0,
+        "reproduzidos_regra_edital_28_2026": 369,
+        "reproduzidos_texto_faq_2025": 236
+      },
+      "2026_c3_ch1/original": {
+        "municipios": 748,
+        "com_mais_de_uma_faixa": 0,
+        "reproduzidos_regra_edital_28_2026": 748,
+        "reproduzidos_texto_faq_2025": 380
+      },
+      "2026_c3_ch1/retificada": {
+        "municipios": 748,
+        "com_mais_de_uma_faixa": 0,
+        "reproduzidos_regra_edital_28_2026": 748,
+        "reproduzidos_texto_faq_2025": 380
+      }
+    },
+    "leitura_faq_2025": "O texto do FAQ de 2025 aplicado ao mesmo IVS acerta so os municipios de faixa 3 e muito alta; a regra efetiva ja em 2025 e a que o edital de 2026 escreve."
+  },
+  "faixa_entre_ondas": {
+    "pares": {
+      "2025_c1_ch1|2025_c1_ch2": {
+        "municipios_em_ambas": 335,
+        "faixa_muda": 0
+      },
+      "2025_c1_ch1|2026_c2_ch1": {
+        "municipios_em_ambas": 224,
+        "faixa_muda": 0
+      },
+      "2025_c1_ch1|2026_c2_ch2": {
+        "municipios_em_ambas": 189,
+        "faixa_muda": 0
+      },
+      "2025_c1_ch1|2026_c3_ch1": {
+        "municipios_em_ambas": 195,
+        "faixa_muda": 0
+      },
+      "2025_c1_ch2|2026_c2_ch1": {
+        "municipios_em_ambas": 272,
+        "faixa_muda": 0
+      },
+      "2025_c1_ch2|2026_c2_ch2": {
+        "municipios_em_ambas": 240,
+        "faixa_muda": 0
+      },
+      "2025_c1_ch2|2026_c3_ch1": {
+        "municipios_em_ambas": 225,
+        "faixa_muda": 0
+      },
+      "2026_c2_ch1|2026_c2_ch2": {
+        "municipios_em_ambas": 369,
+        "faixa_muda": 0
+      },
+      "2026_c2_ch1|2026_c3_ch1": {
+        "municipios_em_ambas": 263,
+        "faixa_muda": 0
+      },
+      "2026_c2_ch2|2026_c3_ch1": {
+        "municipios_em_ambas": 219,
+        "faixa_muda": 0
+      }
+    },
+    "leitura": "nenhum municipio mudou de faixa entre 2025 e 2026; nao ha variacao temporal da bolsa"
+  },
+  "rotulo_da_serie_historica": {
+    "municipios_com_rotulo": 531,
+    "rotulo_igual_categoria_administrativa": 531,
+    "limite": "o rotulo so existe para municipios que tiveram bolsista ativo; serve de conferencia, nao de base",
+    "consistencia_do_campo_faixa": {
+      "nota": "Campo de faixa da serie historica de bolsistas ativos, usado so para checar consistencia. Em dez/2025 e jan/2026 ele diverge da regra e do quadro anunciado; nas demais competencias coincide. Nao ha pagamento observado que permita ler a divergencia como mudanca de valor recebido.",
+      "por_competencia": {
+        "abr/26": {
+          "municipios": 318,
+          "linhas_divergentes": 0
+        },
+        "ago/26": {
+          "municipios": 325,
+          "linhas_divergentes": 0
+        },
+        "dez/25": {
+          "municipios": 186,
+          "linhas_divergentes": 40
+        },
+        "fev/26": {
+          "municipios": 188,
+          "linhas_divergentes": 0
+        },
+        "jan/26": {
+          "municipios": 151,
+          "linhas_divergentes": 88
+        },
+        "jul/26": {
+          "municipios": 513,
+          "linhas_divergentes": 0
+        },
+        "jun/26": {
+          "municipios": 257,
+          "linhas_divergentes": 0
+        },
+        "mai/26": {
+          "municipios": 245,
+          "linhas_divergentes": 0
+        },
+        "mar/26": {
+          "municipios": 181,
+          "linhas_divergentes": 0
+        }
+      }
+    }
+  },
+  "comparacao_ivs_2010_atlas": {
+    "municipios": 5565,
+    "valor_identico": 38,
+    "correlacao": 0.8511,
+    "diferenca_media": 0.0102,
+    "diferenca_dp": 0.0684,
+    "mesma_categoria": 2999,
+    "deslocamento_de_categoria_adm_menos_2010": {
+      "-3": 2,
+      "-2": 85,
+      "-1": 1021,
+      "0": 2999,
+      "1": 1314,
+      "2": 138,
+      "3": 6
+    },
+    "leitura": "o IVS administrativo nao e o IVS 2010 do Atlas; e por isso que o R1 publico reprovou. A safra do IVS administrativo nao e publicada."
+  },
+  "fontes": {
+    "ivs_administrativo": {
+      "arquivo": "data/raw/aquisicao/ivs_regra/pmmb_2026_quadro_de_vagas.xlsx",
+      "sha256": "36f4ef2674baaba37b9bfb140b2f2a1e4aa52465e6a79a4f810e17fe2309d853"
+    },
+    "edital_28_2026": {
+      "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_06_2026_edital_28_2026_ciclo3.html",
+      "sha256": "eb1e07b44465edc8226efe0743ed1fd8fca97de0f88d5886e249478052c84306"
+    },
+    "faq_2025": {
+      "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_faq_bolsa.html",
+      "sha256": "c71af42f6abaff464e99c37ce60fc22676f1482f92e6780be7de9e6de8dcbffb"
+    },
+    "quadro_vagas_consolidado": {
+      "arquivo": "output/aquisicao/quadro_vagas_consolidado.parquet",
+      "sha256": "47cf61e4018b17759a088b320757b0269557c808721089a2490a3ce830b642db"
+    },
+    "serie_historica": {
+      "arquivo": "data/pmm_especialistas_serie_historica.csv",
+      "sha256": "3ebc624a7446a017940f00f131085e9bf7199482b7315a5b75d632e2397eb7a0"
+    },
+    "ivs_2010_atlas": {
+      "arquivo": "data/ivs_ipea_2010_municipios.csv",
+      "sha256": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c"
+    }
+  },
+  "o_que_nao_autoriza": "Nao abre outcomes nem escolhe janela. Autoriza executar o R2 (suporte, selecao na oferta, balanco e cointervencoes) sem outcomes."
+}

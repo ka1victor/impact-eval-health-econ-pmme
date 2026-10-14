@@ -8,6 +8,27 @@
 
 ---
 
+## 14/10/2026 — Integração das rodadas de 01/10 e 05/10/2026
+
+Motivo: sessão S2 de
+[`../prompts/integracao_rodadas_outubro_2026/`](../prompts/integracao_rodadas_outubro_2026/README.md).
+O branch `claude/admiring-tesla-bduu1t` (01/10) entra sobre
+`claude/compassionate-feynman-d70ipe` (05/10), com a correção mecânica da
+revisão S1a (a S1b não fez correção; seus achados estão no doc 18). A `main` até
+`40a8c98` também entrou. O doc 33 é gerado pelo controlador do RDD; a seção curada
+que a rodada de 01/10 escreveu nele mudou de arquivo para não ser apagada na
+próxima execução.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/38_verificacoes_reprodutibilidade.md`](06_execucao/38_verificacoes_reprodutibilidade.md) | seção "Reprodutibilidade do estado validado — verificação de 01/10/2026", movida sem alteração de texto do doc 33 (commit `6fd3a82`); o modelo do controlador passou a apontar para ela |
+| [`../prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md`](../prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md) | passagem para o agente do PR 4: conciliação com `claude/vigilant-mccarthy-dd92mc`, fatos verificados (IVS administrativo = IVS 2010 oficial; arquivo local errado) e todas as decisões do autor pendentes |
+| `tests/test_controlador_fail_closed_rdd.py` | testes do controlador fail-closed em cópia descartável |
+
+---
+
 ## 07/10/2026 — Literatura empírica: resumo apresentável
 
 Motivo: o autor pediu um resumo apresentável da literatura que embasa a
@@ -22,6 +43,42 @@ hipótese da banca, publicado no GitHub.
 O fichamento `20` passou, em 05/10/2026, de documento temático a uma ficha por
 estudo, com método e conclusão conferidos na fonte; a mudança foi de conteúdo,
 sem mover arquivo.
+
+---
+
+## 05/10/2026 — RDD da bolsa reaberta: R1 e R2 com o IVS administrativo
+
+Motivo: o autor pediu para explorar como identificar o efeito da bolsa. A SGTES
+publica o próprio IVS no quadro de vagas do PMMB 2026, e ele reproduz a faixa do
+PMM-E em todos os casos. O R1 anterior reprovou por usar o IVS 2010 do Atlas.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/15_portao_r1_r2_ivs_administrativo.md`](auditorias/15_portao_r1_r2_ivs_administrativo.md) | auditoria dos portões R1 (`APROVADO_SHARP`) e R2 (`VIAVEL_CONTINUIDADE_COM_RESSALVAS`) com o IVS administrativo; nenhum outcome aberto |
+| [`05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md`](05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md) | rascunho, não congelado, do protocolo R3; lista as decisões que cabem ao autor |
+| `data/raw/aquisicao/ivs_regra/pmmb_2026_quadro_de_vagas.xlsx` e `pmmb_2026_edital_22_2026.pdf` | fonte bruta do IVS administrativo, preservada por `scripts/aquisicao/a07_adquirir_ivs_administrativo.py` |
+| [`../prompts/integracao_rodadas_outubro_2026/`](../prompts/integracao_rodadas_outubro_2026/README.md) | ordem das próximas sessões: revisão das rodadas de 01/10 e 05/10, integração dos dois branches, adendo que corrige o prompt de pendências de 01/10 |
+| [`../prompts/avaliacao_rdd_bolsa/03_estimar_r4_atracao.md`](../prompts/avaliacao_rdd_bolsa/03_estimar_r4_atracao.md) | prompt do R4, separado do R3 |
+
+### Renomeado
+
+| De | Para | Por quê |
+|---|---|---|
+| `prompts/avaliacao_rdd_bolsa/02_congelar_e_estimar_administrativo.md` | [`../prompts/avaliacao_rdd_bolsa/02_congelar_protocolo_r3.md`](../prompts/avaliacao_rdd_bolsa/02_congelar_protocolo_r3.md) | R3 e R4 passam a ser sessões separadas, para que o registro seja commitado antes de qualquer estimação; o conteúdo foi reescrito para o IVS administrativo |
+
+### Notas de atualização
+
+Os documentos [`05_identificacao/14`](05_identificacao/14_plano_implementacao_rdd_bolsa.md),
+[`05_identificacao/16`](05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
+[`05_identificacao/17`](05_identificacao/17_plano_causal_publico_cutoff_escore.md),
+[`01_pergunta_escopo/15`](01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md)
+e [`06_execucao/05`](06_execucao/05_roadmap_execucao.md) ganharam nota datada. Em 16,
+a Alternativa B (diferença-em-diferenças pela grade de 2026) fica encerrada: nenhum
+município mudou de faixa entre 2025 e 2026. O documento gerado
+[`auditorias/07_portao_rdd_bolsa.md`](auditorias/07_portao_rdd_bolsa.md) não foi
+regerado; ele segue correto para o IVS 2010.
 
 ---
 
@@ -58,6 +115,46 @@ que ganhou a seção 4.4 — correspondência entre H1 e a redação apresentada
 teve a referência de Costa, Nunes & Sanches corrigida para a versão publicada.
 No catálogo `19`, o DOI da mesma referência na lista final foi unificado em
 `10.1162/rest_a_01155`.
+
+---
+
+## 05/10/2026 — Fila de fechamento da sessão remota de 01/10/2026
+
+Motivo: a rodada remota de 01/10/2026 integrou cinco commits de quatro
+subagentes no branch `claude/admiring-tesla-bduu1t` e deixou achados sem ação.
+A fila de seguimento passa a viver no repositório, para ser entregue a um agente
+revisor e a um agente executor.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`../prompts/fechamento_sessao_remota/README.md`](../prompts/fechamento_sessao_remota/README.md) | índice da fila, commits da rodada e achados sem ação |
+| [`../prompts/fechamento_sessao_remota/01_revisar_trabalho_sessao_remota.md`](../prompts/fechamento_sessao_remota/01_revisar_trabalho_sessao_remota.md) | revisão adversarial, commit a commit, antes de a `main` receber a rodada |
+| [`../prompts/fechamento_sessao_remota/02_resolver_pendencias.md`](../prompts/fechamento_sessao_remota/02_resolver_pendencias.md) | decisões do autor, pendências executáveis e passos condicionados a dado externo |
+
+A fila não reabre A1–A8 nem descongela o ciclo 3.
+
+---
+
+## 01/10/2026 — Diagnóstico cadastral dos cursos 2 e 16 em A5
+
+Motivo: item aberto do
+[`06_execucao/36_backlog_pos_auditoria.md`](06_execucao/36_backlog_pos_auditoria.md)
+(sugestão 3 do encerramento, C-7b e "O que fica em aberto"). Protocolo e
+resultado na seção "Diagnóstico cadastral dos cursos 2 e 16 — 01/10/2026" do
+mesmo documento, que permaneceu no lugar.
+
+### Arquivos criados
+
+| Arquivo | Papel |
+|---|---|
+| `scripts/tema_trabalho/06c_diagnostico_cadastral_cursos_pretendencia.py` | diagnóstico descritivo sob protocolo congelado; somente leitura sobre artefatos versionados com hash conferido; **fora** do `run_all.py`, porque nada a jusante o consome e a lista `STEPS` alimenta os comandos de reprodução do A6 |
+| `output/tema_trabalho/A5_tabela_16_decomposicao_estabelecimento_pre.csv` | D1: coeficientes pré por curso decompostos entre CNES ofertantes e restante do município |
+| `output/tema_trabalho/A5_tabela_17_fluxos_intermitencia_pre.csv` | D2 e D3: fluxos duradouros, intermitência e inconsistência de atribuição municipal |
+| `output/tema_trabalho/A5_diagnostico_cadastral_cursos_2_16.json` | protocolo, portões, leituras fixadas, hashes de entrada e resultado dos cursos 2 e 16 |
+
+Nenhum artefato de A5 ou A6 foi regravado.
 
 ---
 
@@ -356,8 +453,8 @@ hash. A pendência 1 mudou de conteúdo por isso: era de forma, virou de cobertu
 
 ### O que veio do PR de ajuste estrutural
 
-Dos nove itens de
-[`06_execucao/37_proposta_ajuste_estrutural.md`](06_execucao/37_proposta_ajuste_estrutural.md),
+Dos nove itens de `06_execucao/37_proposta_ajuste_estrutural.md` — documento do
+próprio PR, que não foi incorporado à árvore e por isso não tem link —,
 entram só os de **rótulo e texto**, que é a onda 1 da sequência que o próprio PR
 propõe. **D1**: "1.295 vagas" vira "1.295 **células** estabelecimento–curso", com
 as 678 vagas imediatas ditas na tela, nos slides 5 e 6. **F2**: o pacote
@@ -729,7 +826,7 @@ foi então limpo e comprimido.
 
 | Arquivo | O que mudou |
 |---|---|
-| [`07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex`](07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex) | reescrito: de **36 frames em 37 páginas** para **22 frames em 29 páginas** |
+| `07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex`, hoje [`banca1_beamer.tex`](07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex) (renomeado em 16/09/2026) | reescrito: de **36 frames em 37 páginas** para **22 frames em 29 páginas** |
 | [`scripts/apresentacao/build_deck_beamer.sh`](../scripts/apresentacao/build_deck_beamer.sh) | passou a relatar também `Overfull \vbox` |
 | [`07_apresentacoes/banca1/deck_beamer/README.md`](07_apresentacoes/banca1/deck_beamer/README.md) | mapa de frames refeito; seções 3.1, 3.3, 3.4 e 5 reescritas |
 | `output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf` | recompilado, 29 páginas |
@@ -821,7 +918,7 @@ conteúdo continua sendo a fonte de verdade, e divergência entre deck e documen
 
 | Arquivo | Conteúdo | Por que existe |
 |---|---|---|
-| [`07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex`](07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex) | deck em Beamer, tema Warsaw, 16:9, 36 frames em 37 páginas | a banca 1 tinha conteúdo canônico em markdown e nenhum artefato de projeção versionado |
+| `07_apresentacoes/banca1/deck_beamer/banca1_warsaw.tex`, hoje [`banca1_beamer.tex`](07_apresentacoes/banca1/deck_beamer/banca1_beamer.tex) (renomeado em 16/09/2026) | deck em Beamer, tema Warsaw, 16:9, 36 frames em 37 páginas | a banca 1 tinha conteúdo canônico em markdown e nenhum artefato de projeção versionado |
 | [`07_apresentacoes/banca1/deck_beamer/README.md`](07_apresentacoes/banca1/deck_beamer/README.md) | como compilar, mapeamento slide do documento → frames e decisões de composição | o corte de um slide do documento em vários frames precisa ser rastreável |
 | `scripts/apresentacao/build_deck_beamer.sh` | build determinístico: confere as figuras, roda `pdflatex` duas vezes, relata `Overfull \hbox`, grava o PDF em `output/` e limpa auxiliares | regra do projeto: saída de apresentação é produzida por script versionado |
 | `output/apresentacao_banca1/deck_beamer/banca1_warsaw.pdf` | PDF compilado, 37 páginas | artefato derivado, regerável pelo script |

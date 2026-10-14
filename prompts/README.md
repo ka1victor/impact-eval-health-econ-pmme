@@ -1,5 +1,15 @@
 # Prompts operacionais dos agentes
 
+> **Fila de seguimento vigente (14/10/2026):**
+> - [`integracao_rodadas_outubro_2026/`](integracao_rodadas_outubro_2026/README.md) —
+>   ordem das sessões que revisam e integram as rodadas de 01/10 e 05/10/2026 e
+>   levam ao R3 e ao R4 do RDD da bolsa. É o ponto de entrada.
+> - [`fechamento_sessao_remota/`](fechamento_sessao_remota/README.md) — revisão e
+>   pendências da rodada remota de 01/10/2026; o prompt 02 só com o adendo
+>   `integracao_rodadas_outubro_2026/03_adendo_pendencias_fechamento.md`.
+>
+> Fora `avaliacao_rdd_bolsa/` (fila do RDD) e essas duas, as pastas são históricas.
+
 > **Fila histórica congelada.** Estes prompts pertencem ao desenho individual
 > anterior. A comparação agregada descrita em
 > [`docs/06_execucao/05_roadmap_execucao.md`](../docs/06_execucao/05_roadmap_execucao.md) também já foi

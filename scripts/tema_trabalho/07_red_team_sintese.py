@@ -303,7 +303,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ### 6. IVS e faixa de bolsa
 
 **Refutação tentada:** interpretar IVS, faixa e valor anunciado como fontes independentes de variação.  
-**Veredito:** a grade administrativa é colinear e a regra não foi reproduzida para 177/368 municípios. IVS 2010 continua a running variable canônica, mas o RDD foi encerrado no portão R1.
+**Veredito:** a grade administrativa é colinear com a vulnerabilidade, e o IVS 2010 não reproduz a regra em 177/368 municípios. A regra é reproduzida pelo IVS administrativo da SGTES (R1 sharp em 05/10/2026); neste módulo, faixa e IVS continuam sem leitura causal.
 
 ### 7. CNES e retenção individual
 
@@ -312,8 +312,8 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 
 ### 8. RDD
 
-**Refutação tentada:** forçar descontinuidade em IVS=0,4 apesar da falha na reconstrução da regra e do suporte discreto.  
-**Veredito:** RDD encerrado em R1; nenhuma afirmação causal do adicional da bolsa.
+**Refutação tentada:** forçar descontinuidade no IVS 2010 apesar da falha na reconstrução da regra e do suporte discreto.  
+**Veredito:** com o IVS 2010, o RDD não passa do R1. Com o IVS administrativo da SGTES, R1 passou e R2 foi aprovado sem outcomes em 05/10/2026; até o R4, nenhuma afirmação causal do adicional da bolsa.
 
 ### 9. SIH/SIA, fila, saúde e custo-benefício
 
@@ -369,12 +369,12 @@ O núcleo útil é a desigualdade territorial na atração administrativa, robus
         ("Resultado preservado em confirmação", f"Contraste metropolitano +{pct(confirm)} pp", "Confirmação não é entrada física", "associação no estágio de confirmação"),
         ("Resultado preservado em homologação", f"Contraste metropolitano +{pct(homolog)} pp", "Homologação não é exercício", "associação no estágio de homologação"),
         ("Resultado preservado ao colapsar CNES", f"Município–curso: +{pct(collapsed)} pp", "Muda o peso analítico", "robustez à unidade"),
-        ("IVS/faixa não identificam efeito marginal", "Coeficientes conjuntos instáveis e R1 falhou", "Regra administrativa não reproduzida", "gradiente descritivo"),
+        ("IVS/faixa não identificam efeito marginal", "Coeficientes conjuntos instáveis; R1 só passa com o IVS administrativo", "Regra não reproduzida pelo IVS 2010", "gradiente descritivo"),
         (f"Dinâmica CNES em março/2026: +{num(event['mar2026_beta'])}", f"FE célula, curso–mês, UF–mês; p={num(event['mar2026_p'], 3)}", "Atração é resultado realizado; sem grupo causal", "associado a trajetória diferencial"),
         ("Pré-tendências não rejeitadas", f"Teste conjunto p={num(event['pre_p'], 3)}", "Não rejeitar não prova paralelismo", "diagnóstico favorável, não validação causal"),
         ("Distribuição da mudança é assimétrica", f"Medianas {num(dist0['mediana'], 0)} e {num(dist1['mediana'], 0)}; máximo com atração {num(dist1['max'], 0)}", "Cauda extrema influencia a média", "descrever média, mediana e caudas"),
         ("CNES não mede retenção individual", "Agregação município–curso", "Sem ponte nominal de bolsistas", "oferta médica cadastrada local"),
-        ("RDD, SIH/SIA e custo-benefício fora do núcleo", "RDD encerrado em R1; bases/portões ausentes", "Sem identificação ou linkage", "não afirmar sem novo desenho"),
+        ("RDD, SIH/SIA e custo-benefício fora do núcleo", "RDD da bolsa sem R3 congelado; bases/portões ausentes", "Sem estimativa ou linkage", "não afirmar sem novo desenho"),
     ]
     columns = ["afirmacao", "evidencia", "limite", "linguagem_maxima"]
     matrix = pd.DataFrame(matrix_rows, columns=columns)
@@ -390,7 +390,7 @@ O núcleo útil é a desigualdade territorial na atração administrativa, robus
     synthesis = f"""# Síntese empírica A6
 
 > **Título recomendado:** Atração administrativa de médicos especialistas e gradientes territoriais: evidências de implementação do PMM-E.  
-> **Nível de identificação:** associativo. RDD encerrado em R1; retenção individual não identificada.  
+> **Nível de identificação:** associativo. RDD da bolsa: R1 aprovado com o IVS administrativo em 05/10/2026, sem estimativa; retenção individual não identificada.  
 > **Hashes:** A4 `{sha256(A4)[:8]}`; A5 `{sha256(A5)[:8]}`.
 
 ## Resumo
@@ -399,7 +399,7 @@ Analisamos o **quadro da primeira chamada** do primeiro ciclo do PMM-E, {celulas
 
 ## Introdução
 
-O problema empiricamente identificável hoje não é o retorno causal de cada faixa de bolsa, mas onde a oferta administrativa atraiu ao menos uma confirmação ou homologação. IVS 2010 permanece a variável canônica do desenho previsto, porém faixa e IVS não fornecem variação independente, e a regra administrativa não foi reproduzida em 177 dos 368 municípios. Por isso o RDD foi encerrado no primeiro portão. A contribuição atual é medir desigualdades territoriais na implementação e documentar, separadamente, a evolução da oferta médica cadastrada no CNES.
+O problema empiricamente identificável hoje não é o retorno causal de cada faixa de bolsa, mas onde a oferta administrativa atraiu ao menos uma confirmação ou homologação. Faixa e IVS não fornecem variação independente, e o IVS 2010 não reproduz a regra administrativa em 177 dos 368 municípios. Em 05/10/2026, o IVS administrativo publicado pela SGTES passou a reproduzi-la em todos os casos e o RDD da bolsa voltou à fila, sem efeito estimado. A contribuição atual é medir desigualdades territoriais na implementação e documentar, separadamente, a evolução da oferta médica cadastrada no CNES.
 
 ## Métodos
 
@@ -424,7 +424,7 @@ O resultado publicável é um gradiente territorial de atração: municípios me
         "protocolo": "A6_MANIFESTO_REPRODUCAO",
         "data_referencia": date,
         "gerador": "scripts/tema_trabalho/07_red_team_sintese.py",
-        "fila": "A1->A6: núcleo associativo; upgrade causal bloqueado",
+        "fila": "A1->A6: núcleo associativo; upgrade causal da bolsa aguardando R3",
         "ambiente_exigido": {
             "python_minimo": PYTHON_MINIMO,
             "interpretador": PYTHON_REPRO,
@@ -462,7 +462,9 @@ O resultado publicável é um gradiente territorial de atração: municípios me
             "A3_CONGELADO": "output/tema_trabalho/registro_pre_analise_atracao.json",
             "A4_ASSOCIATIVO": "output/tema_trabalho/A4_estimativas_atracao.json",
             "A5_DINAMICA_ASSOCIATIVA": "output/tema_trabalho/A5_estimativas_provimento.json",
-            "R1_RDD_ENCERRADO": "output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json",
+            "R1_RDD_IVS2010_REPROVADO": "output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json",
+            "R1_RDD_IVS_ADMINISTRATIVO_APROVADO": "output/rdd_bolsa/a01c_regra_ivs_administrativo.json",
+            "R2_RDD_VIAVEL_SEM_OUTCOME": "output/rdd_bolsa/r2_portao.json",
         },
         "limites_reafirmados": [
             "Sem taxa por vaga física",

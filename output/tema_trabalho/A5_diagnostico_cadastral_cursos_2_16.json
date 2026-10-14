@@ -1,0 +1,494 @@
+{
+  "protocolo": "A5_DIAGNOSTICO_CADASTRAL_CURSOS_2_16",
+  "rotulo": "diagnostico_descritivo",
+  "protocolo_congelado_em": "2026-10-01, docs/06_execucao/36_backlog_pos_auditoria.md, secao 'Diagnostico cadastral dos cursos 2 e 16', antes do codigo",
+  "linguagem": "descritiva; nenhuma estimativa de efeito; nada alimenta regra, amostra ou estimador de A5",
+  "o_que_nao_muda": [
+    "amostra confirmatoria de 587 celulas",
+    "regra de exclusao pre-registrada sobre o p cru da escala proporcional (cursos 2 e 16)",
+    "q do C-7b como leitura, nao criterio",
+    "especificacao primaria proporcional e todas as tabelas de A5; nenhum artefato de A5 ou A6 regravado"
+  ],
+  "janelas": {
+    "d1_coeficientes_pre": [
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202411",
+      "202412",
+      "202501",
+      "202502",
+      "202503",
+      "202504",
+      "202505"
+    ],
+    "d1_referencia": "202506",
+    "d1_nota": "o estimador usa as 26 competencias; coeficientes pos dos componentes nao sao gravados",
+    "d2": [
+      "202412",
+      "202501",
+      "202502",
+      "202503",
+      "202504",
+      "202505",
+      "202506"
+    ],
+    "d3": [
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202411",
+      "202412",
+      "202501",
+      "202502",
+      "202503",
+      "202504",
+      "202505",
+      "202506"
+    ]
+  },
+  "definicoes": {
+    "y_of": "soma, sobre os CNES ofertantes da celula, de CO_PROFISSIONAL_SUS distinto no CNES (painel CNES-curso-mes)",
+    "y_resto": "especialistas_mst - y_of; pode ser negativo por dupla contagem entre CNES ofertantes ou por co_municipio_gestor",
+    "phi": "parcela de projecao sum(b_comp * b) / sum(b^2) sobre os 12 coeficientes pre em nivel; phi_of + phi_resto = 1",
+    "D": "entradas apos 6 meses de ausencia em t menos saidas confirmadas por 3 meses em t-1",
+    "N": "variacao do estoque menos D: retornos apos ausencia curta menos afastamentos curtos (saldo)",
+    "d3": "celula com um unico CNES ofertante e y_of > especialistas_mst: so possivel se o co_municipio_gestor dos vinculos nao for o municipio da celula"
+  },
+  "leituras_fixadas": {
+    "d1": "phi_of >= 0.6667: carregada pelos CNES ofertantes; phi_resto >= 0.6667: pelo restante do municipio; senao repartida. Diz onde, nao por que",
+    "d2": "|dif soma N| > |dif soma D|: intermitente (compativel com cadastro); senao fluxo duradouro (compativel com oferta, sem excluir cadastro em lote)",
+    "d3": "ocorrencia e evidencia de artefato de atribuicao cadastral; zero nao prova ausencia",
+    "combinada": "assinatura cadastral se d3 > 0 ou d2 intermitente; compativel com oferta se d2 duradouro e d3 = 0"
+  },
+  "portoes": {
+    "estoque_reproduz_tabela_13_pre_F_e_pre_p": true,
+    "tolerancia_reproducao_relativa": 1e-09,
+    "tolerancia_reproducao_posto_baixo": 0.01,
+    "posto_minimo_para_portao_estrito": 8,
+    "reproducao_por_curso": {
+      "1": {
+        "pre_F_gl_fe": {
+          "publicado": 1.338277451222164,
+          "reproduzido": 1.3382774512223659,
+          "diferenca_relativa": 1.5081965678531542e-13
+        },
+        "pre_p_gl_fe": {
+          "publicado": 0.2040127122104879,
+          "reproduzido": 0.20401271221038042,
+          "diferenca_relativa": 5.267788836258133e-13
+        },
+        "portao": "estrito"
+      },
+      "2": {
+        "pre_F_gl_fe": {
+          "publicado": 4.714963215520105,
+          "reproduzido": 4.714963215521355,
+          "diferenca_relativa": 2.652311710134579e-13
+        },
+        "pre_p_gl_fe": {
+          "publicado": 2.0761524300911805e-05,
+          "reproduzido": 2.0761524300843724e-05,
+          "diferenca_relativa": 3.2791966130117744e-12
+        },
+        "portao": "estrito"
+      },
+      "3": {
+        "pre_F_gl_fe": {
+          "publicado": 0.4774123527990475,
+          "reproduzido": 0.47726169162326343,
+          "diferenca_relativa": 0.00031557871282703634
+        },
+        "pre_p_gl_fe": {
+          "publicado": 0.7519364066294753,
+          "reproduzido": 0.7520431190943478,
+          "diferenca_relativa": 0.00014191687479387787
+        },
+        "portao": "posto_baixo_mesma_decisao_e_dif_relativa_lt_1e-2"
+      },
+      "5": {
+        "pre_F_gl_fe": {
+          "publicado": 1.9302759537725356,
+          "reproduzido": 1.9302759537724339,
+          "diferenca_relativa": 5.268491733366341e-14
+        },
+        "pre_p_gl_fe": {
+          "publicado": 0.0649672552502522,
+          "reproduzido": 0.06496725525026747,
+          "diferenca_relativa": 2.351868540166533e-13
+        },
+        "portao": "estrito"
+      },
+      "9": {
+        "pre_F_gl_fe": {
+          "publicado": 0.7712199264428504,
+          "reproduzido": 0.771219926442849,
+          "diferenca_relativa": 1.871437553059199e-15
+        },
+        "pre_p_gl_fe": {
+          "publicado": 0.6775686120971389,
+          "reproduzido": 0.6775686120971404,
+          "diferenca_relativa": 2.1301015221847197e-15
+        },
+        "portao": "estrito"
+      },
+      "12": {
+        "pre_F_gl_fe": {
+          "publicado": 1.7686765693055564,
+          "reproduzido": 1.7686765693078705,
+          "diferenca_relativa": 1.3084070387370435e-12
+        },
+        "pre_p_gl_fe": {
+          "publicado": 0.115094239344214,
+          "reproduzido": 0.11509423934370672,
+          "diferenca_relativa": 4.407593798067462e-12
+        },
+        "portao": "estrito"
+      },
+      "13": {
+        "pre_F_gl_fe": {
+          "publicado": 0.3510698590959822,
+          "reproduzido": 0.3514229910714286,
+          "diferenca_relativa": 0.0010058738063009017
+        },
+        "pre_p_gl_fe": {
+          "publicado": 0.7887824896449673,
+          "reproduzido": 0.7885329067558943,
+          "diferenca_relativa": 0.0003164153519500682
+        },
+        "portao": "posto_baixo_mesma_decisao_e_dif_relativa_lt_1e-2"
+      },
+      "14": {
+        "pre_F_gl_fe": {
+          "publicado": 1.921793298081954,
+          "reproduzido": 1.9217932980814745,
+          "diferenca_relativa": 2.495670825352283e-13
+        },
+        "pre_p_gl_fe": {
+          "publicado": 0.0404414462233591,
+          "reproduzido": 0.0404414462234179,
+          "diferenca_relativa": 1.453958560654705e-12
+        },
+        "portao": "estrito"
+      },
+      "15": {
+        "pre_F_gl_fe": {
+          "publicado": 0.84402580314066,
+          "reproduzido": 0.8440258031407712,
+          "diferenca_relativa": 1.3180206891009162e-13
+        },
+        "pre_p_gl_fe": {
+          "publicado": 0.5986804826480091,
+          "reproduzido": 0.5986804826479077,
+          "diferenca_relativa": 1.6931128554573713e-13
+        },
+        "portao": "estrito"
+      },
+      "16": {
+        "pre_F_gl_fe": {
+          "publicado": 7.225767572209546,
+          "reproduzido": 7.225767572203734,
+          "diferenca_relativa": 8.043767697250068e-13
+        },
+        "pre_p_gl_fe": {
+          "publicado": 4.679125776563973e-06,
+          "reproduzido": 4.679125776603836e-06,
+          "diferenca_relativa": 8.519340250125646e-12
+        },
+        "portao": "estrito"
+      }
+    },
+    "decomposicao_fecha_tolerancia": 1e-06,
+    "erro_maximo_decomposicao_observado": 1.4432899320127035e-15,
+    "t0_igual_ao_painel_mensal_em_estoque_entradas_saidas": true,
+    "cnes_ofertantes_cobrem_587_celulas": true,
+    "identidade_dS_igual_D_mais_N": true
+  },
+  "cursos_foco": {
+    "2": {
+      "d1": {
+        "phi_cnes_ofertantes": 1.836652725709804,
+        "phi_restante_municipio": -0.836652725709804,
+        "leitura_d1": "carregada_pelos_cnes_ofertantes",
+        "soma_quadrados_beta_pre_estoque": 2.023394506956548,
+        "erro_maximo_decomposicao": 1.4432899320127035e-15,
+        "reproducao_tabela_13": {
+          "pre_F_gl_fe": {
+            "publicado": 4.714963215520105,
+            "reproduzido": 4.714963215521355,
+            "diferenca_relativa": 2.652311710134579e-13
+          },
+          "pre_p_gl_fe": {
+            "publicado": 2.0761524300911805e-05,
+            "reproduzido": 2.0761524300843724e-05,
+            "diferenca_relativa": 3.2791966130117744e-12
+          },
+          "portao": "estrito"
+        },
+        "celula_mes_pre_com_resto_negativo": 0
+      },
+      "d1_por_componente_pre_F": {
+        "estoque_municipal": {
+          "pre_F_gl_fe": 4.714963215521355,
+          "pre_p_gl_fe": 2.0761524300843724e-05,
+          "pre_F_posto_covariancia": 12,
+          "pre_F_confiavel": true
+        },
+        "cnes_ofertantes": {
+          "pre_F_gl_fe": 2.31477847182406,
+          "pre_p_gl_fe": 0.0162378639839073,
+          "pre_F_posto_covariancia": 12,
+          "pre_F_confiavel": true
+        },
+        "restante_municipio": {
+          "pre_F_gl_fe": 1.743727843802426,
+          "pre_p_gl_fe": 0.08445822408597481,
+          "pre_F_posto_covariancia": 11,
+          "pre_F_confiavel": false
+        }
+      },
+      "d2": {
+        "diferencial_media_soma_D": 0.4656964656964657,
+        "diferencial_media_soma_N": -0.04261954261954262,
+        "diferencial_media_soma_dS": 0.4230769230769231,
+        "taxa_intermitencia_curso": 0.0014609203798392988,
+        "leitura_d2": "fluxo_duradouro",
+        "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0
+      },
+      "d2_d3_por_grupo": {
+        "com_atracao": {
+          "n_celulas": 26,
+          "media_soma_D": 0.38461538461538464,
+          "media_soma_N": 0.038461538461538464,
+          "media_soma_absN": 0.038461538461538464,
+          "media_soma_dS": 0.4230769230769231,
+          "taxa_intermitencia_absN_sobre_S": 0.0003736920777279522,
+          "d3_celulas_um_cnes": 26,
+          "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0,
+          "d3_celulas_um_cnes_com_excesso": 0,
+          "d3_celula_mes_multi_cnes_excede_ambiguo": 0
+        },
+        "sem_atracao": {
+          "n_celulas": 37,
+          "media_soma_D": -0.08108108108108109,
+          "media_soma_N": 0.08108108108108109,
+          "media_soma_absN": 0.1891891891891892,
+          "media_soma_dS": 0.0,
+          "taxa_intermitencia_absN_sobre_S": 0.0025,
+          "d3_celulas_um_cnes": 36,
+          "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0,
+          "d3_celulas_um_cnes_com_excesso": 0,
+          "d3_celula_mes_multi_cnes_excede_ambiguo": 0
+        }
+      },
+      "taxa_intermitencia_vs_outros_oito": {
+        "curso": 0.0014609203798392988,
+        "min_outros": 0.0,
+        "max_outros": 0.008893280632411068,
+        "acima_do_maximo_dos_outros": false
+      },
+      "leitura_combinada": "compativel_com_oferta",
+      "observacoes_posteriores_ao_protocolo": {
+        "componentes_em_sentidos_opostos": true,
+        "cursos_com_componentes_em_sentidos_opostos": [
+          2,
+          3,
+          9,
+          16
+        ],
+        "janela_d2_diferencial_bruto_dS": 0.4230769230769231,
+        "janela_d2_diferencial_ajustado_menos_beta_202411": -0.17984003893934664,
+        "janela_d2_bruto_e_ajustado_mesmo_sinal": false
+      },
+      "ressalva": "assinatura, nao classificacao: so os microdados do CNES (D-4) distinguem cadastro de oferta"
+    },
+    "16": {
+      "d1": {
+        "phi_cnes_ofertantes": 1.7902809858536075,
+        "phi_restante_municipio": -0.7902809858536075,
+        "leitura_d1": "carregada_pelos_cnes_ofertantes",
+        "soma_quadrados_beta_pre_estoque": 3.085102145669909,
+        "erro_maximo_decomposicao": 8.881784197001252e-16,
+        "reproducao_tabela_13": {
+          "pre_F_gl_fe": {
+            "publicado": 7.225767572209546,
+            "reproduzido": 7.225767572203734,
+            "diferenca_relativa": 8.043767697250068e-13
+          },
+          "pre_p_gl_fe": {
+            "publicado": 4.679125776563973e-06,
+            "reproduzido": 4.679125776603836e-06,
+            "diferenca_relativa": 8.519340250125646e-12
+          },
+          "portao": "estrito"
+        },
+        "celula_mes_pre_com_resto_negativo": 0
+      },
+      "d1_por_componente_pre_F": {
+        "estoque_municipal": {
+          "pre_F_gl_fe": 7.225767572203734,
+          "pre_p_gl_fe": 4.679125776603836e-06,
+          "pre_F_posto_covariancia": 10,
+          "pre_F_confiavel": false
+        },
+        "cnes_ofertantes": {
+          "pre_F_gl_fe": 0.845543391003269,
+          "pre_p_gl_fe": 0.505954039714799,
+          "pre_F_posto_covariancia": 4,
+          "pre_F_confiavel": false
+        },
+        "restante_municipio": {
+          "pre_F_gl_fe": 3.359721086244022,
+          "pre_p_gl_fe": 0.0037081574024828896,
+          "pre_F_posto_covariancia": 10,
+          "pre_F_confiavel": false
+        }
+      },
+      "d2": {
+        "diferencial_media_soma_D": 0.32363636363636367,
+        "diferencial_media_soma_N": 0.05090909090909091,
+        "diferencial_media_soma_dS": 0.3745454545454545,
+        "taxa_intermitencia_curso": 0.000869376222560313,
+        "leitura_d2": "fluxo_duradouro",
+        "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0
+      },
+      "d2_d3_por_grupo": {
+        "com_atracao": {
+          "n_celulas": 11,
+          "media_soma_D": 0.36363636363636365,
+          "media_soma_N": 0.09090909090909091,
+          "media_soma_absN": 0.2727272727272727,
+          "media_soma_dS": 0.45454545454545453,
+          "taxa_intermitencia_absN_sobre_S": 0.0014829461196243204,
+          "d3_celulas_um_cnes": 8,
+          "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0,
+          "d3_celulas_um_cnes_com_excesso": 0,
+          "d3_celula_mes_multi_cnes_excede_ambiguo": 0
+        },
+        "sem_atracao": {
+          "n_celulas": 25,
+          "media_soma_D": 0.04,
+          "media_soma_N": 0.04,
+          "media_soma_absN": 0.04,
+          "media_soma_dS": 0.08,
+          "taxa_intermitencia_absN_sobre_S": 0.0003878975950349108,
+          "d3_celulas_um_cnes": 24,
+          "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0,
+          "d3_celulas_um_cnes_com_excesso": 0,
+          "d3_celula_mes_multi_cnes_excede_ambiguo": 0
+        }
+      },
+      "taxa_intermitencia_vs_outros_oito": {
+        "curso": 0.000869376222560313,
+        "min_outros": 0.0,
+        "max_outros": 0.008893280632411068,
+        "acima_do_maximo_dos_outros": false
+      },
+      "leitura_combinada": "compativel_com_oferta",
+      "observacoes_posteriores_ao_protocolo": {
+        "componentes_em_sentidos_opostos": true,
+        "cursos_com_componentes_em_sentidos_opostos": [
+          2,
+          3,
+          9,
+          16
+        ],
+        "janela_d2_diferencial_bruto_dS": 0.3745454545454545,
+        "janela_d2_diferencial_ajustado_menos_beta_202411": 0.16429495472186145,
+        "janela_d2_bruto_e_ajustado_mesmo_sinal": true
+      },
+      "ressalva": "assinatura, nao classificacao: so os microdados do CNES (D-4) distinguem cadastro de oferta"
+    }
+  },
+  "comparacao_outros_oito": {
+    "1": {
+      "phi_cnes_ofertantes": 0.80398191142294,
+      "leitura_d1": "carregada_pelos_cnes_ofertantes",
+      "leitura_d2": "fluxo_duradouro",
+      "taxa_intermitencia_curso": 0.0009707391485230897,
+      "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0
+    },
+    "3": {
+      "phi_cnes_ofertantes": -0.1433224755700342,
+      "leitura_d1": "carregada_pelo_restante_do_municipio",
+      "leitura_d2": "fluxo_duradouro",
+      "taxa_intermitencia_curso": 0.0,
+      "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0
+    },
+    "5": {
+      "phi_cnes_ofertantes": 0.47047960298570257,
+      "leitura_d1": "repartida",
+      "leitura_d2": "fluxo_duradouro",
+      "taxa_intermitencia_curso": 0.0030372057706909645,
+      "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0
+    },
+    "9": {
+      "phi_cnes_ofertantes": 1.000375315329789,
+      "leitura_d1": "carregada_pelos_cnes_ofertantes",
+      "leitura_d2": "fluxo_duradouro",
+      "taxa_intermitencia_curso": 0.0009587727708533077,
+      "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0
+    },
+    "12": {
+      "phi_cnes_ofertantes": 0.6059798697454073,
+      "leitura_d1": "repartida",
+      "leitura_d2": "fluxo_duradouro",
+      "taxa_intermitencia_curso": 0.008893280632411068,
+      "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0
+    },
+    "13": {
+      "phi_cnes_ofertantes": 0.4999999999999999,
+      "leitura_d1": "repartida",
+      "leitura_d2": "fluxo_duradouro",
+      "taxa_intermitencia_curso": 0.0019342359767891683,
+      "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0
+    },
+    "14": {
+      "phi_cnes_ofertantes": 0.4135512481737063,
+      "leitura_d1": "repartida",
+      "leitura_d2": "fluxo_duradouro",
+      "taxa_intermitencia_curso": 0.0007879656160458453,
+      "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0
+    },
+    "15": {
+      "phi_cnes_ofertantes": 0.41552706838482245,
+      "leitura_d1": "repartida",
+      "leitura_d2": "fluxo_duradouro",
+      "taxa_intermitencia_curso": 0.0026109660574412533,
+      "d3_celula_mes_um_cnes_ofertante_excede_municipal": 0
+    }
+  },
+  "limites": [
+    "sem microdados (D-4): reclassificacao de CBO, origem de quem entra, tipo de vinculo, carga horaria e CNES fora dos ofertantes nao sao observaveis",
+    "D2 cobre 7 dos 12 coeficientes pre (202412-202505); 202406-202411 ficam sem decomposicao de fluxo",
+    "a saida confirmada de 202505 usa presenca ate 202508, antes do T0 administrativo de 202510",
+    "N e saldo, nao volume bruto de intermitencia",
+    "curso 16: posto incompleto da covariancia das restricoes pre; F pouco confiavel em qualquer componente"
+  ],
+  "hashes_entradas": {
+    "output/tema_trabalho/A5_painel_T0.parquet": {
+      "sha256": "bcdb9848bd546ec7b716dda1715d2c835a8bc22c4c63e06602d4c2facc2138eb",
+      "conferido_contra": "output/tema_trabalho/A6_manifesto_reproducao.json"
+    },
+    "output/painel_cnes_especialidade_mensal.parquet": {
+      "sha256": "364d6148e0b594bd68b8efe8945f51c4553e62f2e889b2b85c79f09213368417",
+      "conferido_contra": "output/tema_trabalho/manifesto_tipologia_territorial.json"
+    },
+    "output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet": {
+      "sha256": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059",
+      "conferido_contra": "output/tema_trabalho/A5_estimativas_provimento.json (output/painel_municipio_curso_mensal.parquet, sha256_registrado_em_execucao_anterior)"
+    },
+    "output/tema_trabalho/A5_tabela_13_pretendencia_por_curso.csv": {
+      "sha256": "936196dba4b1da597e67ba1bf637bb294ff1a5ceedbd764b599d4eb0bdfa2c6c",
+      "papel": "alvo de reproducao do estoque (D1)"
+    }
+  },
+  "arquivos": {
+    "tabela_16": "output/tema_trabalho/A5_tabela_16_decomposicao_estabelecimento_pre.csv",
+    "tabela_17": "output/tema_trabalho/A5_tabela_17_fluxos_intermitencia_pre.csv"
+  }
+}

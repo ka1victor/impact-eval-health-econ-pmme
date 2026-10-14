@@ -129,7 +129,7 @@ Em 2025 o Ministério declarou **urgência em saúde pública por 24 meses** pel
 
 </div>
 
-<Fonte>Scheffer et al., <em>Demografia Médica no Brasil 2025</em> (FMUSP/AMB), cap. 11 e cap. 13, Fig. 1, p. 254; Portaria GM/MS nº 7.061/2025; Edital SGTES/MS nº 3/2025, Tabela 3; <code>output/aquisicao/quadro_vagas_tratamento.parquet</code>; figuras por <code>scripts/apresentacao/gerar_figuras_banca1.py</code>.</Fonte>
+<Fonte>Scheffer et al., <em>Demografia Médica no Brasil 2025</em> (FMUSP/AMB), cap. 11 e cap. 13, Fig. 1, p. 254; deslocamento: origem provável na REGIC 2018 (IBGE), <strong>a confirmar</strong>; Portaria GM/MS nº 7.061/2025; Edital SGTES/MS nº 3/2025, Tabela 3; <code>output/aquisicao/quadro_vagas_tratamento.parquet</code>; figuras por <code>scripts/apresentacao/gerar_figuras_banca1.py</code>.</Fonte>
 
 ---
 
@@ -157,7 +157,7 @@ O programa não forma especialista: exige RQE e compra 20 horas de quem já é.
 
 </div>
 
-<Fonte>Lei nº 15.233/2025, art. 21; Edital SGTES/MS nº 3/2025, itens 1.1, 1.2.1, 1.2.5, 11.1 a 11.4; Ipea, <em>Atlas da Vulnerabilidade Social</em> (2015); CNES 06/2025 e Censo 2022 (IBGE); <code>output/aquisicao/quadro_vagas_tratamento.parquet</code>.</Fonte>
+<Fonte>Lei nº 15.233/2025, art. 21; Edital SGTES/MS nº 3/2025, itens 1.1, 1.2.1, 1.2.5, 11.1 a 11.4; Ipea, <em>Atlas da Vulnerabilidade Social</em> (2015); CNES 06/2025 e Censo 2022 (IBGE); <code>output/aquisicao/quadro_vagas_tratamento.parquet</code>; figuras por <code>scripts/apresentacao/gerar_figuras_banca1.py</code>.</Fonte>
 
 ---
 
@@ -186,7 +186,7 @@ O IVS é o piso da bolsa, não o critério dela.
 
 </div>
 
-<Fonte>Lei nº 15.233/2025, art. 21; Edital SGTES/MS nº 3/2025, itens 1.1, 1.2.1, 1.2.5, 11.1 a 11.4; Ipea, <em>Atlas da Vulnerabilidade Social</em> (2015); <code>output/aquisicao/quadro_vagas_tratamento.parquet</code>.</Fonte>
+<Fonte>Lei nº 15.233/2025, art. 21; Edital SGTES/MS nº 3/2025, itens 1.1, 1.2.1, 1.2.5, 11.1 a 11.4; Ipea, <em>Atlas da Vulnerabilidade Social</em> (2015); CNES 06/2025 e Censo 2022 (IBGE); <code>output/aquisicao/quadro_vagas_tratamento.parquet</code>; figuras por <code>scripts/apresentacao/gerar_figuras_banca1.py</code>.</Fonte>
 
 ---
 
@@ -215,7 +215,7 @@ A Faixa 1 compensa isolamento, não cobertura.
 
 </div>
 
-<Fonte>Edital SGTES/MS nº 3/2025, itens 11.1 a 11.4; CNES 06/2025 e Censo 2022 (IBGE); <code>output/aquisicao/quadro_vagas_tratamento.parquet</code>; figuras por <code>scripts/apresentacao/gerar_figuras_banca1.py</code>.</Fonte>
+<Fonte>Lei nº 15.233/2025, art. 21; Edital SGTES/MS nº 3/2025, itens 1.1, 1.2.1, 1.2.5, 11.1 a 11.4; Ipea, <em>Atlas da Vulnerabilidade Social</em> (2015); CNES 06/2025 e Censo 2022 (IBGE); <code>output/aquisicao/quadro_vagas_tratamento.parquet</code>; figuras por <code>scripts/apresentacao/gerar_figuras_banca1.py</code>.</Fonte>
 
 ---
 
@@ -267,7 +267,7 @@ As três apontam para o mesmo lado: quanto maior o índice, mais caro é viver a
 
 </div>
 
-<Fonte>Ipea, <em>Atlas da Vulnerabilidade Social nos Municípios Brasileiros</em> (2015); Edital SGTES/MS nº 3/2025, item 11.1.4; <code>modelo_micro.md</code>, §3.1.</Fonte>
+<Fonte>Ipea, <em>Atlas da Vulnerabilidade Social nos Municípios Brasileiros</em> (2015) — 16 indicadores do Censo 2010 em três sub-índices, e as faixas de classificação; Edital SGTES/MS nº 3/2025, item 11.1.4; <code>modelo_micro.md</code>, §3.1.</Fonte>
 
 ---
 
@@ -317,7 +317,7 @@ De **44,9%** no metropolitano a **20,5%** no interior remoto.
 
 </div>
 
-<Fonte>Ciclo 1: <code>output/tema_trabalho/</code>, módulos A4 e A5.</Fonte>
+<Fonte>Dal Bó, Finan &amp; Rossi (2013), <em>QJE</em>; Scott et al. (2013), <em>Soc Sci Med</em> 96; Hone et al. (2020), <em>BMC HSR</em> 20:873. Ciclo 1: <code>output/tema_trabalho/</code>, módulos A4 e A5.</Fonte>
 
 ---
 
@@ -357,7 +357,7 @@ A evidência não decide se um degrau de R$ 5 mil basta.
 
 </div>
 
-<Fonte>Dal Bó, Finan &amp; Rossi (2013), <em>QJE</em>; Scott et al. (2013), <em>Soc Sci Med</em> 96; Hone et al. (2020), <em>BMC HSR</em> 20:873.</Fonte>
+<Fonte>Dal Bó, Finan &amp; Rossi (2013), <em>QJE</em>; Scott et al. (2013), <em>Soc Sci Med</em> 96; Hone et al. (2020), <em>BMC HSR</em> 20:873. Ciclo 1: <code>output/tema_trabalho/</code>, módulos A4 e A5.</Fonte>
 
 ---
 
@@ -369,13 +369,13 @@ A evidência não decide se um degrau de R$ 5 mil basta.
 
 <div class="fluxo mt-m">
   <div class="card-plain cadeia-escrito"><span class="xs">Regra de valor<br/>faixa de atração<br/>R$ 10 / 15 / 20 mil</span></div>
-  <div class="fluxo-seta cadeia-sup">⇢</div>
+  <div class="fluxo-seta cadeia-sup"><span class="seta-rot">suposição</span>⇢</div>
   <div class="card-plain cadeia-suposto"><span class="xs">Decisão<br/>do médico</span></div>
-  <div class="fluxo-seta cadeia-sup">⇢</div>
+  <div class="fluxo-seta cadeia-sup"><span class="seta-rot">suposição</span>⇢</div>
   <div class="card-plain cadeia-suposto"><span class="xs">Preenchimento<br/>da vaga</span></div>
   <div class="fluxo-seta">→</div>
   <div class="card-plain cadeia-escrito"><span class="xs">Oferta de especialista<br/>no município</span></div>
-  <div class="fluxo-seta cadeia-sup">⇢</div>
+  <div class="fluxo-seta cadeia-sup"><span class="seta-rot">suposição</span>⇢</div>
   <div class="card-plain cadeia-suposto"><span class="xs">Produção<br/>assistencial</span></div>
   <div class="fluxo-seta">→</div>
   <div class="card-plain cadeia-escrito"><span class="xs">Redução do tempo<br/>de espera</span></div>
@@ -391,7 +391,9 @@ A evidência não decide se um degrau de R$ 5 mil basta.
 
 # A pergunta que organiza o trabalho
 
-<div class="pergunta" style="margin-top:0.3rem">O incentivo financeiro oferecido pelo PMM-E funciona para atrair especialistas para regiões mais vulneráveis?</div>
+<div class="build-lbl">A pergunta</div>
+
+<div class="pergunta" style="margin-top:0.6rem">O incentivo financeiro oferecido pelo PMM-E funciona para atrair especialistas para regiões mais vulneráveis?</div>
 
 <p class="sm tight" style="margin-top:1.3rem">Dois objetos, um contra o outro:</p>
 
@@ -562,13 +564,13 @@ $C$ é o cansaço de atender $q$ pacientes, $B$ é o benefício gerado a eles e 
 
 </div>
 
-<div class="callout mt-s">
+<div class="sm mt-m">
 
 **Extensão deste projeto**, motivada por Reinhardt: escrever $B(q; L, K)$, e não $B(q)$ — equipe e capital não só poupam esforço como ampliam o que o atendimento produz.
 
 </div>
 
-<Fonte><code>modelo_micro.md</code>, §2.1 a §2.3 e §3.2; as equações originais estão no slide 10.</Fonte>
+<Fonte><code>modelo_micro.md</code>, §2.1 a §2.3 e §3.2, de onde vêm as duas equações inferidas; Costa, Nunes &amp; Sanches (2024), <em>REStat</em>; as equações originais estão no slide 10.</Fonte>
 
 ---
 
@@ -592,7 +594,7 @@ $C$ é o cansaço de atender $q$ pacientes, $B$ é o benefício gerado a eles e 
 
 <p class="ressalva mt-s"><strong>Limitação assumida:</strong> CNES e edital não informam a residência do profissional, por sigilo fiscal. A unidade é o <strong>município do estabelecimento</strong>; a distância entra como latente.</p>
 
-<Fonte><code>modelo_micro.md</code>, §2.1 a §2.3 e §3.2; Costa, Nunes &amp; Sanches (2024), <em>REStat</em>.</Fonte>
+<Fonte><code>modelo_micro.md</code>, §2.1 a §2.3 e §3.2, de onde vêm as duas equações inferidas; Costa, Nunes &amp; Sanches (2024), <em>REStat</em>; as equações originais estão no slide 10.</Fonte>
 
 ---
 
@@ -651,7 +653,7 @@ A política aposta que R$ 5 mil compensam o lugar. O modelo diz que eles compete
 
 </div>
 
-<Fonte><code>modelo_micro.md</code>, §3; <code>hipoteses_e_viabilidade_empirica.md</code>, §2.</Fonte>
+<Fonte><code>modelo_micro.md</code>, §3; <code>hipoteses_e_viabilidade_empirica.md</code>, §2; Lei nº 15.233/2025, art. 21; Edital SGTES/MS nº 3/2025, itens 11.1.3 e 11.3.b.</Fonte>
 
 ---
 layout: default
@@ -730,7 +732,7 @@ $$\frac{\mathbf{B}_m + \mathbf{w}^{\text{priv}}_m}{p_m} - c_0(IVS_m) \;\geq\; \b
 
 <p class="sm mt-s">A vaga é preenchida se existir <strong>ao menos um</strong> candidato para quem isso vale. Tudo que aumenta o lado esquerdo aumenta essa probabilidade.</p>
 
-<Fonte><code>modelo_micro.md</code>, §2.4, §3, §3.1 e §4.1; <code>hipoteses_e_viabilidade_empirica.md</code>, §3.</Fonte>
+<Fonte><code>modelo_micro.md</code>, §2.4, §3, §3.1 e §4.1; <code>hipoteses_e_viabilidade_empirica.md</code>, §3; Edital SGTES/MS nº 3/2025, item 11.1.3.</Fonte>
 
 ---
 
@@ -766,7 +768,7 @@ A pergunta da apresentação é se essa desigualdade vale.
   <span class="hip-tag">H1</span>
   <div class="hip-txt">
 
-Uma elevação na remuneração oferecida pelo PMM-E eleva a taxa de preenchimento das vagas ofertadas.
+Uma elevação na remuneração oferecida pelo PMM-E eleva a taxa de preenchimento das vagas ofertadas
 
   </div>
   <div class="hip-eq">
@@ -829,7 +831,7 @@ O IVS é a proxy declarada do que não se mede. Isso é uma escolha, não uma so
 
 </div>
 
-<Fonte><code>04_dados/02_inventario_dados_por_outcome.md</code>; <code>hipoteses_e_viabilidade_empirica.md</code>, §3; <code>output/tema_trabalho/</code> e <code>output/aquisicao/</code>.</Fonte>
+<Fonte><code>04_dados/02_inventario_dados_por_outcome.md</code>; <code>hipoteses_e_viabilidade_empirica.md</code>, §3; Ipea, <em>Atlas da Vulnerabilidade Social</em> (2015); <code>output/tema_trabalho/</code> e <code>output/aquisicao/</code>.</Fonte>
 
 ---
 layout: default
@@ -879,7 +881,7 @@ O problema nunca foi a regra não existir. É que o escore que a alimenta não �
 
 <p class="sm mt-m">Em 44.073 pares comparáveis há <strong>2.763 inversões (6,3%)</strong>: municípios com IVS <em>maior</em> que recebem bolsa <em>menor</em>. Uma inversão já basta para provar que nenhuma regra monótona de limiar reproduz o anúncio, qualquer que seja o corte.</p>
 
-<Fonte><code>05_identificacao/14</code>, §"Quanto falta" e §"Nenhum limiar reproduz a faixa".</Fonte>
+<Fonte><code>05_identificacao/14</code>, seções de suporte comum e de reprodução da faixa; <code>05_identificacao/16</code>, §3.5 e §3.5.1.</Fonte>
 
 ---
 
@@ -913,7 +915,7 @@ Onde a bolsa de fato varia, a variação é governada pelo critério de localiza
 
 </div>
 
-<Fonte><code>05_identificacao/14</code>, tabela de janelas; <code>05_identificacao/16</code>, §3.5.</Fonte>
+<Fonte><code>05_identificacao/14</code>, seções de suporte comum e de reprodução da faixa; <code>05_identificacao/16</code>, §3.5 e §3.5.1.</Fonte>
 
 ---
 
@@ -933,7 +935,7 @@ O tratamento é localmente constante nos dois cortes, e o que sobra está alinha
 
 <p class="sm mt-m"><strong>O que destrava:</strong> um único campo, o <strong>escore administrativo de IVS por município</strong>, com safra, precisão e arredondamento. Com ele o primeiro estágio é <em>sharp</em> por construção, porque a categoria já determina a faixa em 527/527.</p>
 
-<Fonte><code>05_identificacao/14</code>, §"Por que comparar municípios parecidos também não resolve"; <code>05_identificacao/16</code>, §3.5.1.</Fonte>
+<Fonte><code>05_identificacao/14</code>, seções de suporte comum e de reprodução da faixa; <code>05_identificacao/16</code>, §3.5 e §3.5.1.</Fonte>
 
 ---
 
@@ -989,7 +991,7 @@ Nenhuma das duas vira afirmação sobre o tamanho líquido do degrau de R$ 5 mil
 
 # O que ainda não fechamos
 
-<p class="sm mt-s">As pendências abertas, com o efeito de cada uma sobre o que foi dito.</p>
+<p class="sm mt-s">As pendências abertas, com o efeito de cada uma sobre o que foi dito. A tabela completa, com o critério de fechamento, está no fim de <code>02_conteudo_slides.md</code>.</p>
 
 <div class="tbl-center tbl-tight mt-s">
 

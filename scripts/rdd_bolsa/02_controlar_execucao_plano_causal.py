@@ -1,8 +1,18 @@
 """Consolida o estado executado do plano causal e aplica bloqueios fail-closed.
 
-Este controlador não estima efeitos. Ele lê os portões já produzidos, verifica
-se o pacote de solicitação está pronto e impede que artefatos de R3/R4 existam
-quando R1 não foi aprovado.
+Este controlador não estima efeitos. Ele lê os portões já produzidos e impede
+que artefatos de R3/R4 existam fora de ordem: protocolo R3 só depois de R1 e
+R2 aprovados, e resultado R4 só depois de protocolo R3 congelado.
+
+Desde 05/10/2026 o R1 vigente é o do IVS administrativo da SGTES
+(`a01c_regra_ivs_administrativo.json`). O R1 público com o IVS 2010 do Atlas
+(`portao_regra_ivs.json`) continua lido como diagnóstico: ele segue reprovado
+para aquela running variable.
+
+Desde 14/10/2026 (revisão S1b) o registro R3 só conta como congelado se tiver o
+conteúdo mínimo de `validar_registro_r3` e estiver vinculado, por SHA-256, às
+saídas determinísticas de R1 e R2. Qualquer `resultados_*` ou `r4_*` em
+`output/rdd_bolsa/` conta como resultado R4.
 """
 
 from __future__ import annotations
@@ -16,6 +26,9 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 R1 = ROOT / "output" / "rdd_bolsa" / "portao_regra_ivs.json"
+R1_ADM = ROOT / "output" / "rdd_bolsa" / "a01c_regra_ivs_administrativo.json"
+R2 = ROOT / "output" / "rdd_bolsa" / "r2_portao.json"
+R3 = ROOT / "output" / "rdd_bolsa" / "registro_pre_analise.json"
 FIRST_STAGE = ROOT / "output" / "rdd_bolsa" / "a01_primeiro_estagio_publico.json"
 A7 = ROOT / "output" / "tema_trabalho" / "A7_cutoff_selecao_resumo.json"
 TRIAGE = ROOT / "output" / "rdd_bolsa" / "triagem_resposta_administrativa.json"
@@ -28,11 +41,14 @@ REQUESTS = (
 OUT_JSON = ROOT / "output" / "rdd_bolsa" / "status_execucao_plano_causal.json"
 OUT_MD = ROOT / "docs" / "06_execucao" / "33_status_execucao_plano_causal.md"
 
-PROHIBITED_WHILE_R1_FAILS = (
-    ROOT / "output" / "rdd_bolsa" / "registro_pre_analise.json",
-    ROOT / "output" / "rdd_bolsa" / "resultados_rdd_atracao.csv",
-    ROOT / "output" / "rdd_bolsa" / "resultados_rdd_atracao.json",
+PADROES_RESULTADOS_R4 = ("resultados_*", "r4_*")
+# Saídas de R1 e R2 sem carimbo de data: o registro R3 guarda o SHA-256 delas e
+# fica inválido se forem regravadas com outro conteúdo.
+VINCULOS_R3 = (
+    ROOT / "output" / "rdd_bolsa" / "matriz_municipio_ivs_administrativo.csv",
+    ROOT / "output" / "rdd_bolsa" / "r2_testes_continuidade.csv",
 )
+CAMPOS_R3 = ("autorizacao_autor", "decisoes", "cortes", "hashes_entradas", "conhecimento_previo")
 
 
 def sha256(path: Path) -> str:
@@ -47,6 +63,44 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def rel(path: Path) -> str:
+    return str(path.relative_to(ROOT)).replace("\\", "/")
+
+
+def resultados_r4() -> list[str]:
+    pasta = ROOT / "output" / "rdd_bolsa"
+    return sorted({rel(p) for padrao in PADROES_RESULTADOS_R4 for p in pasta.glob(padrao) if p.is_file()})
+
+
+def validar_registro_r3(cortes_viaveis: list[str]) -> list[str]:
+    """Problemas do registro R3; lista vazia quando ele vale como congelado."""
+    try:
+        registro = load_json(R3)
+    except (json.JSONDecodeError, UnicodeDecodeError) as erro:
+        return [f"registro R3 ilegível: {erro}"]
+    if not isinstance(registro, dict):
+        return ["registro R3 não é um objeto JSON"]
+    problemas = [f"campo ausente ou vazio: {campo}" for campo in CAMPOS_R3 if not registro.get(campo)]
+    autorizacao = registro.get("autorizacao_autor") or {}
+    if not (isinstance(autorizacao, dict) and autorizacao.get("data") and autorizacao.get("autorizado_por")):
+        problemas.append("autorizacao_autor precisa de data e autorizado_por")
+    def normalizar(corte: Any) -> str:
+        try:
+            return f"{float(corte):.3f}"
+        except (TypeError, ValueError):
+            return str(corte)
+
+    cortes = registro.get("cortes") or []
+    fora = sorted({normalizar(c) for c in cortes} - {normalizar(c) for c in cortes_viaveis})
+    if fora:
+        problemas.append(f"cortes fora dos viáveis no R2: {fora}")
+    hashes = registro.get("hashes_entradas") or {}
+    for path in VINCULOS_R3:
+        if hashes.get(rel(path)) != sha256(path):
+            problemas.append(f"hash ausente ou divergente de {rel(path)}")
+    return problemas
+
+
 def atomic_text(path: Path, value: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
@@ -59,6 +113,8 @@ def _markdown(report: dict[str, Any]) -> str:
     for key in ("P0", "P1", "R1", "R2", "R3", "R4", "R5"):
         item = report["etapas"][key]
         rows.append(f"| {key} | `{item['status']}` | {item['evidencia']} |")
+    r1 = report["r1"]
+    r2 = report["r2"]
     return "\n".join(
         [
             "# Estado executado do novo plano causal",
@@ -74,71 +130,91 @@ def _markdown(report: dict[str, Any]) -> str:
             "",
             "## O que já está estabelecido",
             "",
-            f"- R1 público auditou {report['r1']['n_municipios']} municípios: "
-            f"{report['r1']['n_divergentes']} faixas ({report['r1']['pct_divergentes']:.1f}%) "
-            "não são reproduzidas pela taxonomia externa.",
-            "- A fuzzy pública também está reprovada: o valor anunciado não salta de "
-            "forma estável no IVS disponível.",
+            f"- R1 com o IVS administrativo da SGTES reproduz a faixa anunciada em "
+            f"{r1['acertos']} de {r1['total']} combinações município–onda–versão, de 2025 e 2026. "
+            "A regra é a do item 11.2 do Edital SGTES/MS nº 28/2026, com os cortes "
+            "0,300 e 0,400.",
+            f"- O R1 público com o IVS 2010 do Atlas continua reprovado: "
+            f"{report['r1_publico']['n_divergentes']} de {report['r1_publico']['n_municipios']} "
+            f"municípios ({report['r1_publico']['pct_divergentes']:.1f}%) divergem. "
+            "O IVS 2010 não é a running variable administrativa.",
+            f"- R2 sem outcomes: `{r2['decisao']}`. Cortes viáveis: {', '.join(r2['cortes_viaveis']) or 'nenhum'}. "
+            "O estimador principal candidato é local-linear; a randomização local não balanceia "
+            "em janela com suporte suficiente.",
             f"- A alternativa A7 contém {report['alternativa_a7']['pares_adjacentes']} "
             "pares, mas continua preliminar até a observação dos desempates e das chaves estáveis.",
-            "- O pacote focal de solicitação está completo no repositório, mas nenhum "
-            "pedido foi enviado.",
-            f"- A triagem administrativa está em `{report['triagem_resposta']['status']}`; "
-            f"foram recebidos {report['triagem_resposta']['arquivos_recebidos']} arquivos.",
+            "- O pacote focal de solicitação continua no repositório e nenhum pedido foi "
+            "enviado; ele deixou de ser pré-condição do R1.",
             "",
-            "## Próxima ação externa necessária",
+            "## Próxima ação",
             "",
-            "O autor precisa escolher e autorizar o canal de submissão ao Ministério da "
-            "Saúde. Após o recebimento, os bytes devem ser preservados fora do controle "
-            "de versão em `data/raw/administrativo_rdd_bolsa/`; R1 será repetido antes "
-            "de qualquer outcome.",
+            report["proxima_acao"],
             "",
             "## Regra de parada",
             "",
-            "Enquanto R1 não for `APROVADO_SHARP` ou `APROVADO_FUZZY`, não criar "
-            "pré-análise R3 nem resultados R4. A ausência desses artefatos foi verificada "
-            "nesta execução.",
+            "Protocolo R3 só pode existir com R1 aprovado e R2 viável; resultado R4 só "
+            "pode existir com protocolo R3 congelado. Até aqui nenhum efeito RDD de atração "
+            "foi estimado, e a ordem foi verificada nesta execução.",
+            "",
+            "## Verificações de reprodutibilidade",
+            "",
+            "Este documento é gerado por `scripts/rdd_bolsa/02_controlar_execucao_plano_causal.py`. "
+            "As verificações curadas de reprodutibilidade do estado validado ficam em "
+            "[`38_verificacoes_reprodutibilidade.md`](38_verificacoes_reprodutibilidade.md).",
             "",
         ]
     )
 
 
 def main() -> None:
-    required = (R1, FIRST_STAGE, A7, TRIAGE, *REQUESTS)
+    required = (R1, R1_ADM, R2, FIRST_STAGE, A7, TRIAGE, *REQUESTS)
     missing = [str(path.relative_to(ROOT)) for path in required if not path.exists()]
     if missing:
         raise FileNotFoundError(f"Artefatos necessários ausentes: {missing}")
 
-    r1 = load_json(R1)
+    r1_publico = load_json(R1)
+    r1 = load_json(R1_ADM)
+    r2 = load_json(R2)
     first_stage = load_json(FIRST_STAGE)
     a7 = load_json(A7)
     triage = load_json(TRIAGE)
-    approved = r1["decisao_r1"] in {"APROVADO_SHARP", "APROVADO_FUZZY"}
-    prohibited_present = [
-        str(path.relative_to(ROOT)).replace("\\", "/")
-        for path in PROHIBITED_WHILE_R1_FAILS
-        if path.exists()
-    ]
-    if not approved and prohibited_present:
+    r1_aprovado = r1["decisao_r1"] in {"APROVADO_SHARP", "APROVADO_FUZZY"}
+    r2_viavel = r2["decisao_r2"].startswith("VIAVEL")
+    r3_congelado = R3.exists()
+    resultados = resultados_r4()
+    if r3_congelado and not (r1_aprovado and r2_viavel):
+        raise RuntimeError("Violação fail-closed: protocolo R3 existe sem R1 aprovado e R2 viável.")
+    if r3_congelado:
+        problemas = validar_registro_r3(r2["cortes_viaveis"])
+        if problemas:
+            raise RuntimeError("Violação fail-closed: registro R3 inválido: " + "; ".join(problemas))
+    if resultados and not r3_congelado:
         raise RuntimeError(
-            "Violação fail-closed: R1 não passou, mas há artefatos de R3/R4: "
-            + ", ".join(prohibited_present)
+            "Violação fail-closed: há resultados R4 sem protocolo R3 congelado: " + ", ".join(resultados)
         )
+    autorizada = r1_aprovado and r2_viavel and r3_congelado
+    if not r1_aprovado:
+        status_geral = "PARCIAL_EXECUTADO_AGUARDANDO_DADOS_ADMINISTRATIVOS"
+    elif not r2_viavel:
+        status_geral = "R2_REPROVADO_SEM_ESTIMACAO"
+    elif not r3_congelado:
+        status_geral = "R1_R2_EXECUTADOS_AGUARDANDO_R3"
+    else:
+        status_geral = "R3_CONGELADO_R4_AUTORIZAVEL"
 
     request_hashes = {
         str(path.relative_to(ROOT)).replace("\\", "/"): sha256(path)
         for path in REQUESTS
     }
-    diagnostic = r1["diagnostico_publico"]
+    diagnostic = r1_publico["diagnostico_publico"]
+    reproducao = r1["reproducao_da_faixa_anunciada"]
     support = a7["suporte"]
     report: dict[str, Any] = {
         "data_execucao": date.today().isoformat(),
-        "status_geral": (
-            "PRONTO_PARA_R2" if approved else "PARCIAL_EXECUTADO_AGUARDANDO_DADOS_ADMINISTRATIVOS"
-        ),
-        "estimacao_rdd_atracao_autorizada": approved,
-        "fail_closed_verificado": not prohibited_present,
-        "artefatos_proibidos_encontrados": prohibited_present,
+        "status_geral": status_geral,
+        "estimacao_rdd_atracao_autorizada": autorizada,
+        "fail_closed_verificado": True,
+        "artefatos_proibidos_encontrados": [] if r3_congelado else resultados,
         "etapas": {
             "P0": {
                 "status": "CONCLUIDO",
@@ -146,23 +222,31 @@ def main() -> None:
             },
             "P1": {
                 "status": "PRONTO_NAO_ENVIADO",
-                "evidencia": "texto focal, layouts e pedidos técnicos completos; falta canal autorizado",
+                "evidencia": "pacote completo e não enviado; deixou de ser pré-condição do R1, pois o IVS administrativo é público",
             },
             "R1": {
                 "status": r1["decisao_r1"],
-                "evidencia": "matriz municipal e portão público reproduzíveis",
+                "evidencia": (
+                    f"IVS administrativo reproduz {reproducao['acertos']}/{reproducao['total_municipio_onda_versao']} "
+                    "município-onda-versão; IVS 2010 público segue reprovado"
+                ),
             },
             "R2": {
-                "status": "PENDENTE" if approved else "BLOQUEADO_POR_R1",
-                "evidencia": "não abrir outcomes; escore administrativo ainda ausente",
+                "status": r2["decisao_r2"],
+                "evidencia": "suporte, seleção na oferta, balanço e PMMB sem outcomes; potência limitada",
             },
             "R3": {
-                "status": "BLOQUEADO_ATE_R1_R2",
-                "evidencia": "pré-análise prospectiva não criada prematuramente",
+                "status": "CONGELADO" if r3_congelado else (
+                    "PENDENTE_AUTORIZACAO_DO_AUTOR" if r1_aprovado and r2_viavel else "BLOQUEADO_ATE_R1_R2"
+                ),
+                "evidencia": (
+                    "registro de pré-análise congelado" if r3_congelado
+                    else "rascunho do protocolo em docs/05_identificacao/18; nenhum registro congelado"
+                ),
             },
             "R4": {
-                "status": "BLOQUEADO_ATE_R1_R3",
-                "evidencia": "nenhum efeito RDD de atração estimado",
+                "status": "AUTORIZAVEL" if autorizada else "BLOQUEADO_ATE_R3",
+                "evidencia": "nenhum efeito RDD de atração estimado" if not resultados else "resultados R4 presentes",
             },
             "R5": {
                 "status": "FORA_DO_NUCLEO_CURTO",
@@ -170,9 +254,22 @@ def main() -> None:
             },
         },
         "r1": {
+            "running_variable": r1["running_variable"],
+            "decisao": r1["decisao_r1"],
+            "acertos": reproducao["acertos"],
+            "total": reproducao["total_municipio_onda_versao"],
+        },
+        "r1_publico": {
+            "decisao": r1_publico["decisao_r1"],
             "n_municipios": diagnostic["n_municipios"],
             "n_divergentes": diagnostic["n_divergentes"],
             "pct_divergentes": diagnostic["pct_divergentes"],
+        },
+        "r2": {
+            "decisao": r2["decisao_r2"],
+            "cortes_viaveis": r2["cortes_viaveis"],
+            "ressalvas": r2["ressalvas"],
+            "mde_conjunto_dois_cortes_pp": r2["mde_conjunto_dois_cortes_pp"],
         },
         "primeiro_estagio_publico": first_stage["portao_fuzzy_com_ivs_publico"],
         "alternativa_a7": {
@@ -188,6 +285,7 @@ def main() -> None:
             "arquivos_sha256": request_hashes,
             "canal_submissao": None,
             "protocolo": None,
+            "precondicao_do_r1": False,
         },
         "triagem_resposta": {
             "status": triage["status"],
@@ -199,8 +297,14 @@ def main() -> None:
             "estimacao_liberada": triage["estimacao_liberada"],
         },
         "proxima_acao": (
-            "Autor escolher e autorizar o canal; submeter conjuntamente regra/vagas e "
-            "inscrições/eventos; ao receber, preservar bruto e repetir R1."
+            "As rodadas de 01/10 e 05/10 foram revisadas e integradas (S1a, S1b e S2 de "
+            "prompts/integracao_rodadas_outubro_2026/README.md). A próxima sessão é a S6 "
+            "(prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md): conciliar com a "
+            "rodada de 14/10, que mostrou que o IVS administrativo é o IVS 2010 oficial e já estimou "
+            "a RDD por protocolo próprio, e levar ao autor as decisões sobre running variable, papel "
+            "do R3 (docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md) e pendências de 01/10."
+            if r1_aprovado and r2_viavel and not r3_congelado
+            else "Seguir a ordem dos portões."
         ),
     }
 

@@ -1174,6 +1174,24 @@ div.xs > p {
   color: #c77700;
 }
 
+/* rótulo "suposição" sobre a seta tracejada, como no diagrama canônico */
+.fluxo-seta.cadeia-sup {
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1;
+}
+
+.seta-rot {
+  font-size: 0.42rem;
+  margin-bottom: 0.15rem;
+}
+
+/* com o rótulo, as setas ficam mais largas: o espaçamento da cadeia encolhe
+   para que o primeiro nó continue em três linhas */
+.fluxo:has(.seta-rot) {
+  gap: 0.3rem;
+}
+
 .fluxo > .cadeia-escrito,
 .fluxo > .cadeia-suposto {
   flex: 1 1 0;
