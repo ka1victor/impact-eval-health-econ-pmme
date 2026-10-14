@@ -1,0 +1,591 @@
+{
+  "data_execucao": "2026-10-14",
+  "pergunta": "de que recorte da base oficial do Ipea vem data/ivs_ipea_2010_municipios.csv?",
+  "recorte_reproduzido": {
+    "cor": "Negro",
+    "sexo": "Mulher",
+    "situacao": "Urbano"
+  },
+  "comparacao_com_recorte_reproduzido": {
+    "cor": "Negro",
+    "sexo": "Mulher",
+    "situacao": "Urbano",
+    "municipios_pareados": 5554,
+    "ivs_2010": {
+      "pct_iguais": 100.0,
+      "dif_abs_max": 0.0,
+      "correlacao": 1.0
+    },
+    "ivs_infra_2010": {
+      "pct_iguais": 99.8,
+      "dif_abs_max": 0.443,
+      "correlacao": 0.9992
+    },
+    "ivs_ch_2010": {
+      "pct_iguais": 100.0,
+      "dif_abs_max": 0.005,
+      "correlacao": 1.0
+    },
+    "ivs_rt_2010": {
+      "pct_iguais": 99.9,
+      "dif_abs_max": 0.065,
+      "correlacao": 0.9999
+    },
+    "idhm_2010": {
+      "pct_iguais": 100.0,
+      "dif_abs_max": 0.004,
+      "correlacao": 1.0
+    },
+    "populacao_2010": {
+      "pct_iguais": 98.8,
+      "dif_abs_max": 5440.0,
+      "correlacao": 1.0
+    },
+    "rdpc_2010": {
+      "pct_iguais": 98.8,
+      "dif_abs_max": 1651.33,
+      "correlacao": 0.9488
+    }
+  },
+  "comparacao_com_total_do_municipio": {
+    "cor": "Total Cor",
+    "sexo": "Total Sexo",
+    "situacao": "Total Situação de Domicílio",
+    "municipios_pareados": 5565,
+    "ivs_2010": {
+      "pct_iguais": 0.7,
+      "dif_abs_max": 0.349,
+      "correlacao": 0.8511
+    },
+    "ivs_infra_2010": {
+      "pct_iguais": 2.1,
+      "dif_abs_max": 0.519,
+      "correlacao": 0.7748
+    },
+    "ivs_ch_2010": {
+      "pct_iguais": 0.5,
+      "dif_abs_max": 0.391,
+      "correlacao": 0.7961
+    },
+    "ivs_rt_2010": {
+      "pct_iguais": 0.4,
+      "dif_abs_max": 0.439,
+      "correlacao": 0.8254
+    },
+    "idhm_2010": {
+      "pct_iguais": 0.9,
+      "dif_abs_max": 0.191,
+      "correlacao": 0.7714
+    },
+    "populacao_2010": {
+      "pct_iguais": 0.0,
+      "dif_abs_max": 9147952.0,
+      "correlacao": 0.9587
+    },
+    "rdpc_2010": {
+      "pct_iguais": 0.7,
+      "dif_abs_max": 2128.36,
+      "correlacao": 0.8245
+    }
+  },
+  "soma_populacao_arquivo_local": 41852890,
+  "populacao_brasil_censo_2010": 190755799,
+  "todos_os_recortes": [
+    {
+      "cor": "Negro",
+      "sexo": "Mulher",
+      "situacao": "Urbano",
+      "municipios_pareados": 5554,
+      "ivs_2010": {
+        "pct_iguais": 100.0,
+        "dif_abs_max": 0.0,
+        "correlacao": 1.0
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 99.8,
+        "dif_abs_max": 0.443,
+        "correlacao": 0.9992
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 100.0,
+        "dif_abs_max": 0.005,
+        "correlacao": 1.0
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 99.9,
+        "dif_abs_max": 0.065,
+        "correlacao": 0.9999
+      },
+      "idhm_2010": {
+        "pct_iguais": 100.0,
+        "dif_abs_max": 0.004,
+        "correlacao": 1.0
+      },
+      "populacao_2010": {
+        "pct_iguais": 98.8,
+        "dif_abs_max": 5440.0,
+        "correlacao": 1.0
+      },
+      "rdpc_2010": {
+        "pct_iguais": 98.8,
+        "dif_abs_max": 1651.33,
+        "correlacao": 0.9488
+      }
+    },
+    {
+      "cor": "Negro",
+      "sexo": "Mulher",
+      "situacao": "Total Situação de Domicílio",
+      "municipios_pareados": 5565,
+      "ivs_2010": {
+        "pct_iguais": 15.7,
+        "dif_abs_max": 0.254,
+        "correlacao": 0.9231
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 23.7,
+        "dif_abs_max": 0.562,
+        "correlacao": 0.9099
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 15.1,
+        "dif_abs_max": 0.363,
+        "correlacao": 0.8941
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 15.3,
+        "dif_abs_max": 0.328,
+        "correlacao": 0.9241
+      },
+      "idhm_2010": {
+        "pct_iguais": 15.7,
+        "dif_abs_max": 0.181,
+        "correlacao": 0.8951
+      },
+      "populacao_2010": {
+        "pct_iguais": 13.1,
+        "dif_abs_max": 48351.0,
+        "correlacao": 0.9988
+      },
+      "rdpc_2010": {
+        "pct_iguais": 14.4,
+        "dif_abs_max": 1859.78,
+        "correlacao": 0.9356
+      }
+    },
+    {
+      "cor": "Total Cor",
+      "sexo": "Mulher",
+      "situacao": "Urbano",
+      "municipios_pareados": 5565,
+      "ivs_2010": {
+        "pct_iguais": 9.9,
+        "dif_abs_max": 0.307,
+        "correlacao": 0.9271
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 14.1,
+        "dif_abs_max": 0.543,
+        "correlacao": 0.9284
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 9.6,
+        "dif_abs_max": 0.404,
+        "correlacao": 0.8756
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 9.8,
+        "dif_abs_max": 0.428,
+        "correlacao": 0.9171
+      },
+      "idhm_2010": {
+        "pct_iguais": 10.1,
+        "dif_abs_max": 0.215,
+        "correlacao": 0.8235
+      },
+      "populacao_2010": {
+        "pct_iguais": 9.0,
+        "dif_abs_max": 3768983.0,
+        "correlacao": 0.9593
+      },
+      "rdpc_2010": {
+        "pct_iguais": 9.4,
+        "dif_abs_max": 1289.83,
+        "correlacao": 0.851
+      }
+    },
+    {
+      "cor": "Total Cor",
+      "sexo": "Mulher",
+      "situacao": "Total Situação de Domicílio",
+      "municipios_pareados": 5565,
+      "ivs_2010": {
+        "pct_iguais": 3.4,
+        "dif_abs_max": 0.326,
+        "correlacao": 0.8791
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 7.8,
+        "dif_abs_max": 0.555,
+        "correlacao": 0.8581
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 3.3,
+        "dif_abs_max": 0.422,
+        "correlacao": 0.8129
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 3.4,
+        "dif_abs_max": 0.447,
+        "correlacao": 0.8697
+      },
+      "idhm_2010": {
+        "pct_iguais": 3.5,
+        "dif_abs_max": 0.201,
+        "correlacao": 0.7855
+      },
+      "populacao_2010": {
+        "pct_iguais": 2.6,
+        "dif_abs_max": 3819320.0,
+        "correlacao": 0.9592
+      },
+      "rdpc_2010": {
+        "pct_iguais": 3.0,
+        "dif_abs_max": 1912.78,
+        "correlacao": 0.8297
+      }
+    },
+    {
+      "cor": "Negro",
+      "sexo": "Total Sexo",
+      "situacao": "Urbano",
+      "municipios_pareados": 5557,
+      "ivs_2010": {
+        "pct_iguais": 1.2,
+        "dif_abs_max": 0.152,
+        "correlacao": 0.9458
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 4.7,
+        "dif_abs_max": 0.673,
+        "correlacao": 0.871
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 1.5,
+        "dif_abs_max": 0.188,
+        "correlacao": 0.9737
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 0.6,
+        "dif_abs_max": 0.398,
+        "correlacao": 0.9404
+      },
+      "idhm_2010": {
+        "pct_iguais": 1.5,
+        "dif_abs_max": 0.218,
+        "correlacao": 0.9626
+      },
+      "populacao_2010": {
+        "pct_iguais": 0.0,
+        "dif_abs_max": 2006185.0,
+        "correlacao": 0.9999
+      },
+      "rdpc_2010": {
+        "pct_iguais": 2.2,
+        "dif_abs_max": 2694.7,
+        "correlacao": 0.894
+      }
+    },
+    {
+      "cor": "Total Cor",
+      "sexo": "Total Sexo",
+      "situacao": "Urbano",
+      "municipios_pareados": 5565,
+      "ivs_2010": {
+        "pct_iguais": 1.0,
+        "dif_abs_max": 0.322,
+        "correlacao": 0.894
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 3.6,
+        "dif_abs_max": 0.545,
+        "correlacao": 0.8286
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 0.7,
+        "dif_abs_max": 0.411,
+        "correlacao": 0.8621
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 0.5,
+        "dif_abs_max": 0.427,
+        "correlacao": 0.8848
+      },
+      "idhm_2010": {
+        "pct_iguais": 1.8,
+        "dif_abs_max": 0.213,
+        "correlacao": 0.8062
+      },
+      "populacao_2010": {
+        "pct_iguais": 0.0,
+        "dif_abs_max": 9047417.0,
+        "correlacao": 0.9588
+      },
+      "rdpc_2010": {
+        "pct_iguais": 0.5,
+        "dif_abs_max": 1304.71,
+        "correlacao": 0.842
+      }
+    },
+    {
+      "cor": "Negro",
+      "sexo": "Total Sexo",
+      "situacao": "Total Situação de Domicílio",
+      "municipios_pareados": 5565,
+      "ivs_2010": {
+        "pct_iguais": 0.8,
+        "dif_abs_max": 0.289,
+        "correlacao": 0.8754
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 2.9,
+        "dif_abs_max": 0.673,
+        "correlacao": 0.7996
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 1.1,
+        "dif_abs_max": 0.364,
+        "correlacao": 0.8697
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 0.6,
+        "dif_abs_max": 0.342,
+        "correlacao": 0.8625
+      },
+      "idhm_2010": {
+        "pct_iguais": 0.9,
+        "dif_abs_max": 0.201,
+        "correlacao": 0.8628
+      },
+      "populacao_2010": {
+        "pct_iguais": 0.0,
+        "dif_abs_max": 2058953.0,
+        "correlacao": 0.9984
+      },
+      "rdpc_2010": {
+        "pct_iguais": 1.2,
+        "dif_abs_max": 2098.36,
+        "correlacao": 0.9115
+      }
+    },
+    {
+      "cor": "Branco",
+      "sexo": "Mulher",
+      "situacao": "Total Situação de Domicílio",
+      "municipios_pareados": 5565,
+      "ivs_2010": {
+        "pct_iguais": 0.7,
+        "dif_abs_max": 0.427,
+        "correlacao": 0.7869
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 5.2,
+        "dif_abs_max": 0.673,
+        "correlacao": 0.6412
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 0.5,
+        "dif_abs_max": 0.488,
+        "correlacao": 0.7055
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 0.5,
+        "dif_abs_max": 0.384,
+        "correlacao": 0.7747
+      },
+      "idhm_2010": {
+        "pct_iguais": 0.8,
+        "dif_abs_max": 0.223,
+        "correlacao": 0.7279
+      },
+      "populacao_2010": {
+        "pct_iguais": 0.0,
+        "dif_abs_max": 1547937.0,
+        "correlacao": 0.8744
+      },
+      "rdpc_2010": {
+        "pct_iguais": 0.4,
+        "dif_abs_max": 2532.67,
+        "correlacao": 0.751
+      }
+    },
+    {
+      "cor": "Total Cor",
+      "sexo": "Total Sexo",
+      "situacao": "Total Situação de Domicílio",
+      "municipios_pareados": 5565,
+      "ivs_2010": {
+        "pct_iguais": 0.7,
+        "dif_abs_max": 0.349,
+        "correlacao": 0.8511
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 2.1,
+        "dif_abs_max": 0.519,
+        "correlacao": 0.7748
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 0.5,
+        "dif_abs_max": 0.391,
+        "correlacao": 0.7961
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 0.4,
+        "dif_abs_max": 0.439,
+        "correlacao": 0.8254
+      },
+      "idhm_2010": {
+        "pct_iguais": 0.9,
+        "dif_abs_max": 0.191,
+        "correlacao": 0.7714
+      },
+      "populacao_2010": {
+        "pct_iguais": 0.0,
+        "dif_abs_max": 9147952.0,
+        "correlacao": 0.9587
+      },
+      "rdpc_2010": {
+        "pct_iguais": 0.7,
+        "dif_abs_max": 2128.36,
+        "correlacao": 0.8245
+      }
+    },
+    {
+      "cor": "Branco",
+      "sexo": "Total Sexo",
+      "situacao": "Total Situação de Domicílio",
+      "municipios_pareados": 5565,
+      "ivs_2010": {
+        "pct_iguais": 0.6,
+        "dif_abs_max": 0.316,
+        "correlacao": 0.7963
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 2.7,
+        "dif_abs_max": 0.593,
+        "correlacao": 0.6682
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 0.4,
+        "dif_abs_max": 0.483,
+        "correlacao": 0.7102
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 0.3,
+        "dif_abs_max": 0.419,
+        "correlacao": 0.7647
+      },
+      "idhm_2010": {
+        "pct_iguais": 0.7,
+        "dif_abs_max": 0.225,
+        "correlacao": 0.735
+      },
+      "populacao_2010": {
+        "pct_iguais": 0.0,
+        "dif_abs_max": 4717453.0,
+        "correlacao": 0.8721
+      },
+      "rdpc_2010": {
+        "pct_iguais": 0.3,
+        "dif_abs_max": 2699.88,
+        "correlacao": 0.7514
+      }
+    },
+    {
+      "cor": "Branco",
+      "sexo": "Mulher",
+      "situacao": "Urbano",
+      "municipios_pareados": 5565,
+      "ivs_2010": {
+        "pct_iguais": 0.5,
+        "dif_abs_max": 0.355,
+        "correlacao": 0.7869
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 8.2,
+        "dif_abs_max": 0.558,
+        "correlacao": 0.6252
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 0.4,
+        "dif_abs_max": 0.47,
+        "correlacao": 0.7178
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 0.5,
+        "dif_abs_max": 0.45,
+        "correlacao": 0.7925
+      },
+      "idhm_2010": {
+        "pct_iguais": 0.4,
+        "dif_abs_max": 0.212,
+        "correlacao": 0.7304
+      },
+      "populacao_2010": {
+        "pct_iguais": 0.1,
+        "dif_abs_max": 1523799.0,
+        "correlacao": 0.8747
+      },
+      "rdpc_2010": {
+        "pct_iguais": 0.2,
+        "dif_abs_max": 2589.56,
+        "correlacao": 0.7231
+      }
+    },
+    {
+      "cor": "Branco",
+      "sexo": "Total Sexo",
+      "situacao": "Urbano",
+      "municipios_pareados": 5565,
+      "ivs_2010": {
+        "pct_iguais": 0.4,
+        "dif_abs_max": 0.361,
+        "correlacao": 0.803
+      },
+      "ivs_infra_2010": {
+        "pct_iguais": 4.8,
+        "dif_abs_max": 0.556,
+        "correlacao": 0.6473
+      },
+      "ivs_ch_2010": {
+        "pct_iguais": 0.1,
+        "dif_abs_max": 0.499,
+        "correlacao": 0.7257
+      },
+      "ivs_rt_2010": {
+        "pct_iguais": 0.4,
+        "dif_abs_max": 0.464,
+        "correlacao": 0.8027
+      },
+      "idhm_2010": {
+        "pct_iguais": 0.9,
+        "dif_abs_max": 0.212,
+        "correlacao": 0.7378
+      },
+      "populacao_2010": {
+        "pct_iguais": 0.0,
+        "dif_abs_max": 4671081.0,
+        "correlacao": 0.8725
+      },
+      "rdpc_2010": {
+        "pct_iguais": 0.1,
+        "dif_abs_max": 2755.39,
+        "correlacao": 0.7213
+      }
+    }
+  ],
+  "fontes": {
+    "data/raw/aquisicao/ivs_oficial/atlasivs_dadosbrutos_pt_v2.xlsx": "a06616fe6cbdcd8c2a1851da2c4e7b17d47c1237c45b5cad32c44da27a1903eb",
+    "data/ivs_ipea_2010_municipios.csv": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c"
+  }
+}

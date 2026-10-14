@@ -5,7 +5,9 @@
 > Ipea**, que é o próprio escore administrativo do MS. R1 =
 > `APROVADO_SHARP`.<br>
 > **Achado colateral:** o arquivo local usado desde o início do projeto como
-> "IVS 2010" **não é o IVS 2010 oficial**.<br>
+> "IVS 2010" é a base oficial do Ipea, mas **a linha errada**: em 5.554
+> municípios ele traz o IVS 2010 de **mulheres negras em área urbana**, e não o
+> IVS do município.<br>
 > **Supera:** [`15`](15_portao_r1_escore_administrativo.md) na parte em que
 > dizia que o escore estava incompleto, e o diagnóstico de
 > [`07`](07_portao_rdd_bolsa.md) e de
@@ -61,7 +63,7 @@ aplicada é a de cima. Aplicada ao IVS oficial, a grade do FAQ acerta 202 de 368
 municípios, põe 166 "acima" e nenhum "abaixo": é daí que vinha a aparência de
 "IVS como piso".
 
-## 3. O arquivo local não é o IVS 2010 oficial
+## 3. O arquivo local é o IVS de um subgrupo, não o do município
 
 `data/ivs_ipea_2010_municipios.csv` (SHA-256 `84d23a…818c`) entrou no commit
 inicial do repositório (`3027942`, 02/09/2026), sem script de aquisição nem
@@ -74,8 +76,30 @@ fonte registrada.
 | IDHM: valores iguais | cerca de 0,9% (Recife 0,733 contra 0,772 oficial) |
 | População 2010 | São Paulo 2,1 milhões contra 11,25 milhões; Recife 468 mil contra 1,54 milhão; Florianópolis 29 mil contra 421 mil |
 
-Os valores de população são implausíveis. O arquivo não corresponde a nenhuma
-base oficial encontrada, e a origem precisa ser investigada.
+**De onde ele vem.** A base completa do Ipea tem, para cada município e ano,
+uma linha por combinação de cor (Total, Branco, Negro), sexo (Total, Homem,
+Mulher) e situação de domicílio (Total, Urbano, Rural). O IVS do município é a
+linha "Total/Total/Total". O script
+`scripts/rdd_bolsa/04c_identificar_recorte_arquivo_local.py` compara o arquivo
+local com todas essas linhas e grava o resultado em
+`output/rdd_bolsa/identificacao_arquivo_local_ivs.json`.
+
+| Arquivo local contra a linha… | IVS igual | IDHM igual | População igual |
+|---|---:|---:|---:|
+| **Negro / Mulher / Urbano** (5.554 municípios) | **100%** | **100%** | **98,8%** |
+| Total / Total / Total (o IVS do município) | 0,7% | 0,9% | 0% |
+
+Nos 11 municípios que não têm a linha "Negro / Mulher / Urbano", todos no RS e
+em SC, o arquivo traz outra linha parcial, quase sempre "Total / Mulher /
+Total". O arquivo não é inventado: é um **erro de extração**. Para cada
+município, pegou-se uma linha de subgrupo em vez da linha total.
+
+Isso também explica a população: os 41,9 milhões que a coluna soma, contra 190,8
+milhões no Censo 2010, são a população desse subgrupo. Florianópolis tem 29 mil
+mulheres negras em área urbana, num total de 421 mil habitantes. A hipótese
+"alguma subpopulação do Atlas", registrada em
+[`04_dados/02`](../04_dados/02_inventario_dados_por_outcome.md), §4.0, fica
+confirmada.
 
 Com a base oficial, as correlações do IVS 2010 nos 5.565 municípios são: 0,83
 com o subíndice de infraestrutura urbana, 0,91 com capital humano, 0,89 com
@@ -83,8 +107,9 @@ renda e trabalho e −0,88 com o IDHM. Os números 0,48, 0,77, 0,80 e −0,74,
 citados em 14/10/2026 antes deste achado, vinham do arquivo local.
 
 Pela regra do projeto, o arquivo não é alterado. Ele é **rebaixado**: deixa de
-ser *running variable* e covariável. Seu uso futuro exige nova verificação de
-proveniência.
+ser *running variable* e covariável do município. Se alguma análise precisar
+do IVS de mulheres negras urbanas, deve ler esse recorte direto da base
+oficial, com o rótulo correto.
 
 ## 4. O que muda nas conclusões anteriores
 

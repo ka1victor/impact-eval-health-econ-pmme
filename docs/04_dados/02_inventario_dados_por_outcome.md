@@ -113,6 +113,11 @@ não para tendências demográficas.
 
 ### 4.0 `populacao_2010` não é população residente
 
+> **Confirmado em 14/10/2026.** O arquivo inteiro é o recorte "Negro / Mulher /
+> Urbano" da base oficial do Ipea, e não o total do município: IVS igual em
+> 100%, população em 98,8%. Ver
+> [`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md), §3.
+
 Registro aberto em 09/09/2026. A coluna `populacao_2010` de
 `data/ivs_ipea_2010_municipios.csv` soma **41.852.890** habitantes contra
 **190.755.799** do Censo 2010. A razão para o valor censitário varia de 0,10

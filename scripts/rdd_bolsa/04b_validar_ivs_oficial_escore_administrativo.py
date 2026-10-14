@@ -106,7 +106,7 @@ def main() -> None:
             "arquivo": str(LOCAL.relative_to(ROOT)),
             "correlacao_com_oficial": round(float(lj[["ivs_2010", "ivs"]].corr().iloc[0, 1]), 3),
             "pct_iguais_3_casas": round(100 * float((lj["local_mil"] == lj["s_mil"]).mean()), 1),
-            "leitura": "não é o IVS 2010 oficial; ver docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md",
+            "leitura": "não é o IVS do município: é o recorte de mulheres negras urbanas da mesma base (output/rdd_bolsa/identificacao_arquivo_local_ivs.json); ver docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md",
         },
         "running_variable": "IVS 2010 oficial do Ipea (= escore administrativo do MS); cortes 0,300 e 0,400",
         "saida_escore_completo": str(OUT_ESCORE.relative_to(ROOT)) if valido else None,
