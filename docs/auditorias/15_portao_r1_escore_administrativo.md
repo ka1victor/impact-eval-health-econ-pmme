@@ -112,6 +112,15 @@ justificativa está acima: a atribuição efetiva da bolsa é função
 determinística do escore administrativo, e não do IVS 2010. **A troca depende
 de autorização expressa do autor**, registrada antes de R2.
 
+**Autorizada em 14/10/2026.** O `CLAUDE.md` e o `AGENTS.md` foram atualizados.
+O protocolo de estimação foi congelado em commit próprio, antes de qualquer
+contagem por ciclo de ingresso:
+`output/rdd_bolsa/protocolo_escore_administrativo.json`. Ele define três
+estimandos:
+- **E1:** razão de densidades sob continuidade da densidade do escore;
+- **E2:** limites parciais com o escore ausente;
+- **E3:** RDD sharp, quando o escore estiver completo.
+
 ## 6. Artefatos
 
 - `scripts/aquisicao/a07_adquirir_ivs_administrativo.py`;
