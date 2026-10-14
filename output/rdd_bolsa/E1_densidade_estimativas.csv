@@ -1,0 +1,31 @@
+ciclo,corte,papel,especificacao,h,n_esq,n_dir,rho,ic_inf,ic_sup,p_valor,p_holm,nota
+1,0.300,principal,poisson_linear_h050,0.050,24,33,0.812402,0.275426,2.39628,0.706579,0.706579,IRLS convergiu em 4 iteracoes
+1,0.400,principal,poisson_linear_h050,0.050,35,27,0.575027,0.189245,1.74724,0.329145,0.658291,IRLS convergiu em 4 iteracoes
+1,0.300,exato,binomial_exata_constante_h020,0.020,11,11,1,0.393166,2.54345,1,,"binomial exata n_dir | n ~ Bin(n, 1/2) sob H0; rho = n_dir/n_esq (lados com 20 mass points); IC = Clopper-Pearson para pi = rho/(1+rho), transformado"
+1,0.400,exato,binomial_exata_constante_h020,0.020,17,9,0.529412,0.20794,1.25567,0.168638,,"binomial exata n_dir | n ~ Bin(n, 1/2) sob H0; rho = n_dir/n_esq (lados com 20 mass points); IC = Clopper-Pearson para pi = rho/(1+rho), transformado"
+1,0.300,sensibilidade,poisson_linear_h030,0.030,16,15,1.06982,0.262048,4.36757,0.925083,,IRLS convergiu em 4 iteracoes
+1,0.400,sensibilidade,poisson_linear_h030,0.030,23,15,0.454536,0.0902782,2.28852,0.339032,,IRLS convergiu em 5 iteracoes
+1,0.300,sensibilidade,poisson_linear_h080,0.080,30,51,0.850884,0.371435,1.9492,0.702592,,IRLS convergiu em 5 iteracoes
+1,0.400,sensibilidade,poisson_linear_h080,0.080,57,33,0.914725,0.393769,2.12491,0.835804,,IRLS convergiu em 5 iteracoes
+1,0.300,sensibilidade,poisson_constante_h050,0.050,24,33,1.375,0.824473,2.29313,0.222338,,IRLS convergiu em 4 iteracoes
+1,0.400,sensibilidade,poisson_constante_h050,0.050,35,27,0.771429,0.466063,1.27687,0.312808,,IRLS convergiu em 4 iteracoes
+1,0.300,sensibilidade,poisson_linear_h050_sem_mass_point_do_corte,0.050,24,33,0.740234,0.249949,2.19224,0.587133,,IRLS convergiu em 4 iteracoes
+1,0.400,sensibilidade,poisson_linear_h050_sem_mass_point_do_corte,0.050,33,27,0.645113,0.209768,1.98395,0.444435,,IRLS convergiu em 4 iteracoes
+1,0.250,placebo,poisson_linear_h050,0.050,10,24,1.38051,0.372474,5.11665,0.629502,,IRLS convergiu em 5 iteracoes
+1,0.350,placebo,poisson_linear_h050,0.050,33,35,0.585549,0.253875,1.35054,0.209405,,IRLS convergiu em 4 iteracoes
+1,0.450,placebo,poisson_linear_h050,0.050,27,7,0.567609,0.146656,2.19684,0.412119,,IRLS convergiu em 6 iteracoes
+2,0.300,replicacao,poisson_linear_h050,0.050,43,41,0.843408,0.356775,1.9938,0.698036,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 4 iteracoes"
+2,0.400,replicacao,poisson_linear_h050,0.050,39,46,1.09243,0.444041,2.68759,0.847378,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 4 iteracoes"
+2,0.300,exato,binomial_exata_constante_h020,0.020,17,15,0.882353,0.410318,1.87822,0.86005,,"replicacao ciclo 2 (P2, D_2), sem Holm; binomial exata n_dir | n ~ Bin(n, 1/2) sob H0; rho = n_dir/n_esq (lados com 20 mass points); IC = Clopper-Pearson para pi = rho/(1+rho), transformado"
+2,0.400,exato,binomial_exata_constante_h020,0.020,18,22,1.22222,0.62577,2.41777,0.635828,,"replicacao ciclo 2 (P2, D_2), sem Holm; binomial exata n_dir | n ~ Bin(n, 1/2) sob H0; rho = n_dir/n_esq (lados com 20 mass points); IC = Clopper-Pearson para pi = rho/(1+rho), transformado"
+2,0.300,sensibilidade,poisson_linear_h030,0.030,26,21,0.761319,0.241399,2.40104,0.64169,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 4 iteracoes"
+2,0.400,sensibilidade,poisson_linear_h030,0.030,26,29,1.29975,0.403712,4.18451,0.660319,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 4 iteracoes"
+2,0.300,sensibilidade,poisson_linear_h080,0.080,58,62,0.794727,0.405975,1.55574,0.5026,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 4 iteracoes"
+2,0.400,sensibilidade,poisson_linear_h080,0.080,65,55,1.60691,0.7754,3.3301,0.202038,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 5 iteracoes"
+2,0.300,sensibilidade,poisson_constante_h050,0.050,43,41,0.953488,0.633064,1.4361,0.819702,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 3 iteracoes"
+2,0.400,sensibilidade,poisson_constante_h050,0.050,39,46,1.17949,0.747012,1.86234,0.478716,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 4 iteracoes"
+2,0.300,sensibilidade,poisson_linear_h050_sem_mass_point_do_corte,0.050,43,41,0.77787,0.328545,1.84171,0.567845,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 4 iteracoes"
+2,0.400,sensibilidade,poisson_linear_h050_sem_mass_point_do_corte,0.050,36,46,1.33999,0.550597,3.26114,0.518974,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 4 iteracoes"
+2,0.250,placebo,poisson_linear_h050,0.050,26,43,1.56538,0.558986,4.38368,0.393696,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 4 iteracoes"
+2,0.350,placebo,poisson_linear_h050,0.050,41,39,0.622809,0.27966,1.38701,0.246404,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 4 iteracoes"
+2,0.450,placebo,poisson_linear_h050,0.050,46,13,0.496594,0.160617,1.53537,0.224194,,"replicacao ciclo 2 (P2, D_2), sem Holm; IRLS convergiu em 5 iteracoes"
