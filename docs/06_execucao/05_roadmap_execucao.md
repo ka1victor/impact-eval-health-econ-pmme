@@ -126,6 +126,14 @@ mapeados; S3 resolve as pendências de 01/10 com o adendo que corrige o estado
 da RDD; S4 congela o R3; S5 estima o R4. A fila do RDD foi reescrita em
 [`prompts/avaliacao_rdd_bolsa/`](../../prompts/avaliacao_rdd_bolsa/README.md).
 
+**Estado em 14/10/2026.** S1a, S1b e S2 feitas no PR 4 (branch
+`claude/gallant-carson-11uzic`). Uma rodada paralela de 14/10
+(`claude/vigilant-mccarthy-dd92mc`) mostrou que o IVS administrativo é o IVS
+2010 oficial do Ipea e que `data/ivs_ipea_2010_municipios.csv` não é o IVS
+municipal, e já estimou a RDD (E3) por protocolo próprio. A fila vigente é a
+conciliação e as decisões do autor em
+[`prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md`](../../prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md).
+
 ## Entrega de banca 1
 
 Paralela à fila analítica e independente dela. A banca 1 apresenta o desenho

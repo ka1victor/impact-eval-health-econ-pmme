@@ -48,6 +48,12 @@ corrige isso e precisa ser lido junto com aquele prompt.
 
 ## Estado em 14/10/2026
 
+> **Próximo passo: [`04_conciliar_e_decidir.md`](04_conciliar_e_decidir.md) (S6).**
+> Ele concilia o PR 4 com o branch `claude/vigilant-mccarthy-dd92mc`, registra
+> que o IVS administrativo é o IVS 2010 oficial do Ipea (e que o arquivo local de
+> IVS 2010 está errado) e reúne todas as decisões do autor. Vem antes de S3
+> (seção A) e de S4.
+
 | Sessão | Estado |
 |---|---|
 | S1a | feita: `APROVADO` ou `APROVADO COM AJUSTE` nos cinco commits, nada `BLOQUEADO`; correção mecânica da contagem da suíte integrada |
@@ -55,7 +61,8 @@ corrige isso e precisa ser lido junto com aquele prompt.
 | S2 | feita no branch de integração `claude/gallant-carson-11uzic`, sem tocar a `main`; a `main` até `40a8c98` também entrou; 204 testes verdes |
 | S3 | seção B executada no que o ambiente permite (B3, B4, B5); B1, B2 e C bloqueados por falta de LaTeX e de acesso ao FTP do DATASUS; seção A aguarda o autor |
 | S4 | aguarda as decisões do autor (passo 1) |
-| S5 | aguarda S4 |
+| S5 | aguarda S4; pode ser substituída pelo E3 de 14/10, conforme a decisão D2 do S6 |
+| S6 | [`04_conciliar_e_decidir.md`](04_conciliar_e_decidir.md): conciliação com a rodada de 14/10 e decisões do autor |
 
 **Rodada não prevista.** Em 14/10/2026, o commit `7156c78` (branch
 `claude/vigilant-mccarthy-dd92mc`, a partir da `main`) refez o R1 com a coluna

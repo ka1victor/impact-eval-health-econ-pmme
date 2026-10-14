@@ -9,6 +9,13 @@
 >
 > Base: [`../auditorias/15_portao_r1_r2_ivs_administrativo.md`](../auditorias/15_portao_r1_r2_ivs_administrativo.md).
 >
+> **Atenção, 14/10/2026, depois da revisão S1b:** o IVS administrativo é o IVS
+> 2010 oficial do Ipea (5.565/5.565), e a RDD já foi estimada por outro protocolo
+> no branch `claude/vigilant-mccarthy-dd92mc`. A decisão 0 e o papel deste
+> rascunho estão em revisão: leia
+> [`prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md`](../../prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md)
+> (decisões D1 e D2) antes de usar este documento.
+>
 > **Revisão S1b, 14/10/2026 — o que o autor precisa ter diante de si ao decidir.**
 > A revisão adversarial
 > ([`prompts/integracao_rodadas_outubro_2026/01_revisar_rdd_ivs_administrativo.md`](../../prompts/integracao_rodadas_outubro_2026/01_revisar_rdd_ivs_administrativo.md))

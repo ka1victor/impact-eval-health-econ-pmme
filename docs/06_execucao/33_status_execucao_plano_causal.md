@@ -25,7 +25,7 @@
 
 ## Próxima ação
 
-As rodadas de 01/10 e 05/10 foram revisadas e integradas (S1a, S1b e S2 de prompts/integracao_rodadas_outubro_2026/README.md). Agora o autor decide unidade, banda, outcomes e linguagem do R3 (docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md) e autoriza o congelamento, pelo prompt prompts/avaliacao_rdd_bolsa/02_congelar_protocolo_r3.md. Só então R4 pode ser executado.
+As rodadas de 01/10 e 05/10 foram revisadas e integradas (S1a, S1b e S2 de prompts/integracao_rodadas_outubro_2026/README.md). A próxima sessão é a S6 (prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md): conciliar com a rodada de 14/10, que mostrou que o IVS administrativo é o IVS 2010 oficial e já estimou a RDD por protocolo próprio, e levar ao autor as decisões sobre running variable, papel do R3 (docs/05_identificacao/18_protocolo_r3_rdd_bolsa_rascunho.md) e pendências de 01/10.
 
 ## Regra de parada
 

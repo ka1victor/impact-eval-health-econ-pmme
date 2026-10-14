@@ -24,6 +24,8 @@ próxima execução.
 | Arquivo | O que é |
 |---|---|
 | [`06_execucao/38_verificacoes_reprodutibilidade.md`](06_execucao/38_verificacoes_reprodutibilidade.md) | seção "Reprodutibilidade do estado validado — verificação de 01/10/2026", movida sem alteração de texto do doc 33 (commit `6fd3a82`); o modelo do controlador passou a apontar para ela |
+| [`../prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md`](../prompts/integracao_rodadas_outubro_2026/04_conciliar_e_decidir.md) | passagem para o agente do PR 4: conciliação com `claude/vigilant-mccarthy-dd92mc`, fatos verificados (IVS administrativo = IVS 2010 oficial; arquivo local errado) e todas as decisões do autor pendentes |
+| `tests/test_controlador_fail_closed_rdd.py` | testes do controlador fail-closed em cópia descartável |
 
 ---
 
