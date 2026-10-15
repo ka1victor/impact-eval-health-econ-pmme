@@ -867,6 +867,55 @@ def fig_regra_degraus(d: pd.DataFrame, cortes, faixas, valor_faixa) -> str:
     return "".join(o)
 
 
+def fig_regra_empilhado(s, faixa_anunciada, errado, eixo_x: str, cortes, faixas, valor_faixa,
+                        x0: float, x1: float) -> str:
+    """Um ponto por municipio, no valor da bolsa; pontos do mesmo intervalo de 0,005 do IVS se empilham.
+
+    Sem deslocamento aleatorio. Pontos laranja: a faixa anunciada nao e a que a regra de dois cortes daria.
+    """
+    largura = 0.005
+    s = np.asarray(s, float)
+    nivel = np.array([faixas.index(f) for f in faixa_anunciada])
+    bins = np.floor((s - x0) / largura + 1e-9).astype(int)
+    ordem = np.lexsort((s, bins, nivel))
+    pos = np.zeros(len(s), int)
+    vistos: dict = {}
+    for k in ordem:
+        chave = (int(nivel[k]), int(bins[k]))
+        pos[k] = vistos.get(chave, 0)
+        vistos[chave] = pos[k] + 1
+    pmax = max(vistos.values())
+    passo = 5.2
+    faixa_px = max(60, pmax * passo + 14)
+    W = 680
+    mt, mb, ml, mr = 26, 44, 74, 24
+    H = int(mt + mb + 3 * faixa_px)
+    base = {i: H - mb - i * faixa_px - 6 for i in range(3)}
+    X = Linear(x0, x1, ml, W - mr)
+    o = [svg_abrir(W, H, "Valor anunciado da bolsa contra o IVS, um ponto por município")]
+    for tx in nice_ticks(x0, x1, 7):
+        o.append(l_svg(X(tx), H - mb, X(tx), H - mb + 4, COR["axis"]))
+        o.append(t_svg(X(tx), H - mb + 16, br(tx, 2), anchor="middle"))
+    o.append(l_svg(ml, H - mb, W - mr, H - mb, COR["axis"]))
+    o.append(t_svg((ml + W - mr) / 2, H - 6, eixo_x, anchor="middle"))
+    for c in cortes:
+        o.append(l_svg(X(c), mt - 4, X(c), H - mb, COR["ink2"], w=1.2, extra='stroke-dasharray="4 3"'))
+        o.append(t_svg(X(c), mt - 9, br(c, 3), anchor="middle", cor=COR["ink"], peso=600))
+    for i, f in enumerate(faixas):
+        o.append(l_svg(ml, base[i] + 3, W - mr, base[i] + 3, COR["grid"]))
+        o.append(t_svg(ml - 8, base[i], br_mil(valor_faixa[f]), anchor="end", cor=COR["ink"]))
+    for k in range(len(s)):
+        cx = X(x0 + (bins[k] + 0.5) * largura)
+        cy = base[int(nivel[k])] - pos[k] * passo
+        cor = COR["s2"] if errado[k] else COR["s1"]
+        o.append(f'<circle cx="{f2(cx)}" cy="{f2(cy)}" r="2.3" fill="{cor}"><title>IVS {br(s[k])}</title></circle>')
+    if np.any(errado):
+        o.append(legenda_svg([("ponto", COR["s1"], "faixa coerente com os cortes 0,300 e 0,400"),
+                              ("ponto", COR["s2"], "faixa do lado errado do corte")], ml + 4, mt + 8, size=9.5))
+    o.append("</svg>")
+    return "".join(o)
+
+
 def fig_local_vs_oficial(d: pd.DataFrame, cortes, rl: dict) -> str:
     """d: P1, com ivs (oficial), ivs_local e concorda (mesma faixa pelos dois)."""
     n, n_conc = len(d), int(d["concorda"].sum())
@@ -969,15 +1018,17 @@ def fig_primeiro_estagio(pe: pd.DataFrame, cortes, rot_local: str) -> str:
     return "".join(o)
 
 
-def fig_rd_p1(ctx, paineis: list[dict]) -> str:
+def fig_rd_p1(ctx, paineis: list[dict], outcomes=None) -> str:
     W = 680
     ml, mr, gapx = 46, 12, 44
     pw = (W - ml - mr - gapx) / 2
     ph = 150
     top0 = 30
     row_h = 36 + ph + 22 + 18
-    H = int(top0 + 2 * row_h + 4)
+    linhas_outcome = outcomes or [OUTCOME_FRAC, OUTCOME_D]
+    H = int(top0 + len(linhas_outcome) * row_h + 4)
     ymin, ymax = 0.0, 1.0
+    paineis = [q for q in paineis if q["outcome"] in linhas_outcome]
     for p in paineis:  # o dominio cobre as retas, se sairem de [0, 1]
         a, b, tau, dd = p["beta"]
         hh = p["h_mil"] / 1000
@@ -989,7 +1040,6 @@ def fig_rd_p1(ctx, paineis: list[dict]) -> str:
                           ("ponto", COR["muted"], "média no bin (fora da janela)"),
                           ("linha", COR["s1"], f"reta local linear (h = {br(ctx['h_principal'], 3)})")],
                          ml, 14, size=10))
-    linhas_outcome = [OUTCOME_FRAC, OUTCOME_D]
     for ri, outcome in enumerate(linhas_outcome):
         top = top0 + ri * row_h
         o.append(t_svg(ml - 40, top + 13, maiuscula(rotulo_outcome(ctx, outcome)) + " (ciclo 1)",
@@ -1267,8 +1317,10 @@ def lista_covs_sig(sig: pd.DataFrame) -> str:
                      for r in sig.itertuples())
 
 
-def tabela_principais(ctx, nums, compacta: bool = False, titulo: str = "") -> str:
+def tabela_principais(ctx, nums, compacta: bool = False, titulo: str = "", outcomes=None) -> str:
     pr = nums["pr"]
+    if outcomes is not None:
+        pr = pr[pr["outcome"].isin(outcomes)]
     linhas = []
     for r in pr.itertuples():
         lin = [f"{esc(rotulo_pop(ctx, r.populacao, curto=True))} · {esc(rotulo_outcome(ctx, r.outcome, True))}",
@@ -1342,16 +1394,16 @@ def secao_resumo(ctx) -> str:
         g = pr[(pr["populacao"] == pop) & (pr["outcome"] == outcome)].sort_values("corte")
         return " e ".join(f"{pp(r.tau)} p.p. em {br(r.corte)}" for r in g.itertuples())
 
-    c = (f"<li><strong>RDD sharp com o escore completo (E3): nenhum salto distinguível de zero.</strong> Na "
-         f"especificação principal (local linear, h = {br(ctx['h_principal'], 3)}), "
-         f"{'nenhuma' if not (pr['p_valor'] < ALFA).any() else 'nem todas'} das {len(pr)} estimativas tem p &lt; "
-         f"0,05: proporção de células preenchidas na 1ª chamada do ciclo 1, {tau_de('P1', OUTCOME_FRAC)}; "
-         f"presença de especialista do ciclo 1, {tau_de('P1', OUTCOME_D)}; replicação no ciclo 2, "
-         f"{tau_de('P2', OUTCOME_D)}. Os IC 95% têm de {br(ne['larg_min'], 0)} a {br(ne['larg_max'], 0)} p.p. de "
-         f"largura e o efeito mínimo detectável (2,8 × EP) vai de {br(ne['mde_min'], 0)} a {br(ne['mde_max'], 0)} "
-         f"p.p. Nas {ne['n_espec']} especificações, com as janelas de sensibilidade, o menor p é "
-         f"{br_p(ne['p_min'])}. <strong>Leitura: inconclusivo.</strong> Não detectamos efeito; com poder baixo, os "
-         "intervalos não excluem efeitos grandes em nenhuma direção.</li>")
+    fr = pr[(pr["populacao"] == "P1") & (pr["outcome"] == OUTCOME_FRAC)]
+    c = (f"<li><strong>A hipótese (maior bolsa, maior preenchimento): nenhum salto distinguível de zero.</strong> "
+         f"Proporção de células preenchidas na 1ª chamada do ciclo 1: {tau_de('P1', OUTCOME_FRAC)} "
+         f"(local linear, h = {br(ctx['h_principal'], 3)}; IC 95% com "
+         f"{br((fr['ic95_sup'] - fr['ic95_inf']).min() * 100, 0)} a {br((fr['ic95_sup'] - fr['ic95_inf']).max() * 100, 0)}"
+         f" p.p. de largura; efeito mínimo detectável de cerca de {br(MDE_FATOR * fr['ep'].min() * 100, 0)} p.p.). "
+         "<strong>Leitura: inconclusivo.</strong> Não detectamos efeito, mas os intervalos não excluem efeitos "
+         "grandes em nenhuma direção.</li>"
+         f"<li><strong>Secundário:</strong> a presença de especialista do ciclo no município também não salta: "
+         f"{tau_de('P1', OUTCOME_D)} no ciclo 1; {tau_de('P2', OUTCOME_D)} no ciclo 2.</li>")
 
     sig = ne["bal_sig"]
     focos = sig.groupby(["populacao", "corte"]).size().sort_values(ascending=False)
@@ -1383,7 +1435,7 @@ def secao_resumo(ctx) -> str:
     )
     return ('<section class="resumo"><h2>Resumo em 1 página</h2>'
             f'<ul class="resumo-lista">{a}{b}{c}{d}</ul>'
-            + tabela_principais(ctx, ne, compacta=True, titulo="Estimativas principais do E3")
+            + tabela_principais(ctx, ne, compacta=True, titulo="A hipótese: proporção de células preenchidas, ciclo 1", outcomes=[OUTCOME_FRAC])
             + dizer + "</section>")
 
 
@@ -1454,30 +1506,6 @@ def secao_regra(ctx) -> str:
             + (", que é exatamente a soma da linha total da base" if rl.get("pop_total_ok") else "")
             + f". Neste relatório ele aparece como “{esc(rl['longo'])}”.</p>")
 
-    cz = ctx["cruz"]
-    if cz:
-        def cel(k):
-            v = cz[k]
-            return (f"<strong>{br_int(v['rep'])}</strong>/{br_int(v['n'])} "
-                    f"<span class=\"muted\">({br_int(v['acima'])} acima; {br_int(v['abaixo'])} abaixo)</span>")
-        cab_faq = f"Grade do FAQ do edital<br><span class=\"muted\">cortes {br(cz['c_faq'][0] / 1000)} e {br(cz['c_faq'][1] / 1000)}</span>"
-        cab_apl = f"Grade aplicada<br><span class=\"muted\">cortes {br(cortes[0])} e {br(cortes[1])}</span>"
-        o.append(tabela(
-            [("Variável", "txt"), (cab_faq, "num"), (cab_apl, "num")],
-            [[esc(maiuscula(rl["curto"])), cel(("local", "faq")), cel(("local", "aplicada"))],
-             ["IVS 2010 oficial do município", cel(("oficial", "faq")), cel(("oficial", "aplicada"))]],
-            titulo=f"Dois erros no diagnóstico antigo: faixas reproduzidas no {nome_quadro(QUADRO_PRIMEIRO_ESTAGIO).lower()}",
-            rodape=(f'<p class="nota">“acima” = a faixa anunciada paga mais do que a grade manda; “abaixo” = paga menos. '
-                    "O diagnóstico antigo usava a linha de cima com a grade do FAQ"
-                    + (" (os números coincidem com <code>" + esc(rel(A01B)) + "</code>)" if cz["confere_a01b"] else
-                       " (<span class=\"alerta\">não coincide com " + esc(rel(A01B)) + "</span>)")
-                    + ". A grade errada, sozinha, produz o padrão “IVS é piso” (só erros para cima). O arquivo local, "
-                      "sozinho, erra nos dois sentidos e esconde a regra. Só o IVS oficial com a grade aplicada reproduz "
-                      "todas as faixas.</p>"
-                    + fonte_html(MATRIZ, IVS_OFICIAL, IVS_LOCAL, A01B, grafico=False,
-                                 extra="Cortes da grade do FAQ lidos do diagnóstico antigo")),
-        ))
-
     # Tabela: reproducao por quadro
     refs = r1_adm.get("quadros") or {}
     linhas = []
@@ -1513,101 +1541,32 @@ def secao_regra(ctx) -> str:
                             extra="Referência dos quadros registrada no R1 com escore parcial"),
     ))
 
-    # Tabela: categoria administrativa x IVS oficial
-    g, info = ctx["categorias"]
-    if g is not None:
-        lc = [[esc(str(r.categoria_ivs_admin).capitalize()), br_int(r.n), br(r.s_min / 1000),
-               br(r.s_max / 1000)] for r in g.itertuples()]
-        nota_cat = (f"As {len(g)} categorias não se sobrepõem no IVS oficial e mudam exatamente em "
-                    + ", ".join(f"{br(a / 1000)}/{br(b / 1000)}" for a, b in info["fronteiras"])
-                    + (f". Os dois cortes da bolsa ({br(cortes[0])} e {br(cortes[1])}) são fronteiras de categoria: "
-                       "qualquer benefício que dependa da categoria de IVS muda nos mesmos pontos (ver seção 4, "
-                       "“pacote”)." if info["nos_cortes"] else "."))
-        o.append(tabela(
-            [("Categoria de IVS (MS)", "txt"), ("Municípios", "num"), ("IVS oficial mín.", "num"),
-             ("IVS oficial máx.", "num")], lc, classe="estreita",
-            titulo="Categoria de IVS do MS contra o IVS 2010 oficial",
-            rodape=f'<p class="nota">{nota_cat}</p>' + fonte_html(CATEGORIA, IVS_OFICIAL, grafico=False),
-        ))
-
-    # Lado do corte observado (todos os quadros)
-    todos = base.drop_duplicates("co_ibge")
-    todos = todos[todos["s_mil"].notna()]
-    lados = []
-    for f in faixas:
-        sf = todos[todos["faixa_anunciada"] == f]["s_mil"]
-        lados.append([esc(f.title()), br_int(len(sf)), br(sf.min() / 1000), br(sf.max() / 1000)])
-    no_corte = []
-    for c_m in c_mil:
-        g_c = todos[todos["s_mil"] == c_m]
-        cont = g_c["faixa_anunciada"].value_counts().sort_index()
-        if not len(g_c):
-            no_corte.append(f"nenhum município com IVS exatamente {br(c_m / 1000)}")
-        elif len(cont) == 1:
-            no_corte.append(f"os {br_int(len(g_c))} municípios com IVS exatamente {br(c_m / 1000)} estão na "
-                            f"{esc(cont.index[0].title())}")
-        else:
-            no_corte.append(f"municípios com IVS exatamente {br(c_m / 1000)}: "
-                            + ", ".join(f"{br_int(v)} na {esc(k.title())}" for k, v in cont.items()))
-    o.append(tabela(
-        [("Faixa anunciada", "txt"), ("Municípios", "num"), ("IVS oficial mín.", "num"), ("IVS oficial máx.", "num")],
-        lados, classe="estreita", titulo="Lado do corte observado nos quatro quadros",
-        rodape=f'<p class="nota">{maiuscula("; ".join(no_corte))}. Leitura: o corte pertence ao lado inferior.</p>'
-               + fonte_html(MATRIZ, IVS_OFICIAL, grafico=False),
-    ))
-
-    # Figura: degraus
-    d_all = todos.sort_values("co_ibge")
-    fora = int((d_all["faixa_oficial"] != d_all["faixa_anunciada"]).sum())
-    o.append(figura(
-        "Valor mensal anunciado da bolsa contra o IVS 2010 oficial do município",
-        fig_regra_degraus(d_all, cortes, faixas, vf),
-        fonte_html(MATRIZ, IVS_OFICIAL, extra="Um ponto por município com IVS oficial em algum dos quatro quadros"),
-        sub=f"{br_int(len(d_all))} municípios dos quatro quadros (ciclos 1 a 3); {br_int(fora)} fora da regra. Linha = "
-            "regra de dois cortes. Deslocamento vertical aleatório (semente fixa) só para separar pontos sobrepostos.",
-    ))
-
-    # Figura: arquivo local x oficial (P1)
+    # Figuras: bolsa contra o IVS, um ponto por municipio (ciclo 1)
     p1 = populacao(base, "P1")
-    p1 = p1[p1["s_mil_local"].notna()].copy()
-    p1["concorda"] = p1["faixa_local"] == p1["faixa_oficial"]
-    corr_p1 = float(p1[["ivs", "ivs_local"]].corr().iloc[0, 1])
+    p1 = p1[p1["s_mil"].notna() & p1["s_mil_local"].notna()].copy()
+    err_of = (p1["faixa_oficial"] != p1["faixa_anunciada"]).to_numpy()
+    err_lo = (p1["faixa_local"] != p1["faixa_anunciada"]).to_numpy()
+    tudo = np.concatenate([p1["ivs"].to_numpy(float), p1["ivs_local"].to_numpy(float)])
+    x0, x1 = math.floor(tudo.min() / 0.05) * 0.05, math.ceil(tudo.max() / 0.05) * 0.05
     o.append(figura(
-        f"{esc(maiuscula(rl['curto']))} contra o IVS 2010 oficial do município, ciclo 1",
-        fig_local_vs_oficial(p1, cortes, rl),
-        fonte_html(MATRIZ, IVS_OFICIAL, IVS_LOCAL),
-        sub=(f"{br_int(len(p1))} municípios do quadro {esc(QUADRO_PRIMEIRO_ESTAGIO)} (P1). Correlação {br(corr_p1, 3)} "
-             f"nesses municípios; {br_int(int((~p1['concorda']).sum()))} cairiam em outra faixa pelo arquivo local. "
-             f"Na base inteira ({br_int(nr['loc_n'])} municípios): correlação {br(loc.get('correlacao_com_oficial'), 3)} "
-             f"e {br_pct(loc.get('pct_iguais_3_casas'))} de valores iguais (R1). Os dois são o mesmo índice do Ipea "
-             "para populações diferentes: o município inteiro e um subgrupo dele. Linhas escuras: cortes nos dois eixos; "
-             "diagonal: 45°."),
+        "Valor mensal anunciado da bolsa contra o IVS 2010 oficial do município, ciclo 1",
+        fig_regra_empilhado(p1["ivs"], p1["faixa_anunciada"], err_of, "IVS 2010 oficial do município (Ipea)",
+                            cortes, faixas, vf, x0, x1),
+        fonte_html(MATRIZ, IVS_OFICIAL, extra=f"Quadro {QUADRO_PRIMEIRO_ESTAGIO}"),
+        sub=(f"{br_int(len(p1))} municípios do quadro da 1ª chamada do ciclo 1; {br_int(int(err_of.sum()))} fora da "
+             "regra. Cada ponto é um município, na altura da bolsa que ele oferece. Municípios com IVS no mesmo "
+             "intervalo de 0,005 se empilham, então a altura da pilha mostra quantos há ali; não há deslocamento "
+             "aleatório. Forma provisória: as alternativas estão em "
+             "<code>output/rdd_bolsa/galeria_figura_regra.pdf</code>."),
     ))
-
-    # Figura e tabela: primeiro estagio
-    pe, n_q = dados_primeiro_estagio(ctx)
     o.append(figura(
-        "Primeiro estágio: % de municípios com a bolsa maior, por bin, nos dois cortes",
-        fig_primeiro_estagio(pe, cortes, rl["curto"]),
-        fonte_html(MATRIZ, IVS_OFICIAL, IVS_LOCAL, extra=f"Quadro {QUADRO_PRIMEIRO_ESTAGIO}"),
-        sub=(f"{nome_quadro(QUADRO_PRIMEIRO_ESTAGIO)}: {br_int(n_q)} municípios, todos com IVS oficial e com valor no "
-             "arquivo local. Pelo IVS oficial do município, o salto é de 0% a 100% nos dois cortes; pelo arquivo local "
-             f"(IVS de subgrupo, sobretudo {esc(rl.get('frase', '?'))}), é gradual — por isso a regra parecia não existir."),
-    ))
-    tl = []
-    for (c_m, lo, hi), g in pe.groupby(["corte_mil", "lo", "hi"], sort=True):
-        a_ = g[g["var"] == "oficial"].iloc[0]
-        b_ = g[g["var"] == "local"].iloc[0]
-        tl.append([br(c_m / 1000), f"({br(lo)}; {br(hi)}]", f"{br_int(a_.k)} / {br_int(a_.n)}", br_pct(a_.pct),
-                   f"{br_int(b_.k)} / {br_int(b_.n)}", br_pct(b_.pct)])
-    o.append(tabela(
-        [("Corte", "num"), ("Bin", "txt"), ("IVS oficial: n", "num"), ("IVS oficial: %", "num"),
-         ("Arquivo local: n", "num"), ("Arquivo local: %", "num")],
-        tl, classe="compacta",
-        titulo="Primeiro estágio em números (municípios com a bolsa maior / municípios no bin)",
-        rodape=fonte_html(MATRIZ, IVS_OFICIAL, IVS_LOCAL, grafico=False,
-                          extra=(f"Mesmos dados da figura anterior; arquivo local = IVS de subgrupo, sobretudo {esc(rl.get('frase', '?'))}; "
-                                 "bolsa maior = acima do valor do lado de baixo do corte")),
+        "A mesma figura com o arquivo antigo do repositório no lugar do IVS oficial",
+        fig_regra_empilhado(p1["ivs_local"], p1["faixa_anunciada"], err_lo,
+                            "IVS do arquivo antigo (data/ivs_ipea_2010_municipios.csv)", cortes, faixas, vf, x0, x1),
+        fonte_html(MATRIZ, IVS_LOCAL, extra=f"Quadro {QUADRO_PRIMEIRO_ESTAGIO}"),
+        sub=(f"Mesmos {br_int(len(p1))} municípios e mesma bolsa: muda só a posição no eixo. Com o arquivo antigo, "
+             f"{br_int(int(err_lo.sum()))} municípios ficam do lado errado de um corte (em laranja) e as faixas se "
+             "sobrepõem. Era isso que fazia a regra parecer inexistente."),
     ))
     o.append("</section>")
     return "".join(o)
@@ -1640,50 +1599,46 @@ def secao_e3(ctx) -> str:
              f"(<code>{esc(rel(E3_STATUS))}</code>). O escore usado é <code>{esc((st.get('escore') or {}).get('arquivo', ''))}"
              "</code>, o IVS 2010 oficial completo.</p>")
 
-    o.append("<h3>Resultado principal</h3>")
-    o.append(tabela_principais(ctx, ne, titulo="E3 — estimativas principais"))
+    pr = ne["pr"]
+    fr = pr[pr["outcome"] == OUTCOME_FRAC]
+    o.append("<h3>A hipótese: proporção de células preenchidas (ciclo 1)</h3>")
     o.append(
-        f"<p>Nenhuma das {len(ne['pr'])} estimativas principais é distinguível de zero, e o menor p entre as "
-        f"{ne['n_espec']} especificações é {br_p(ne['p_min'])}. Os intervalos de 95% têm de "
-        f"{br(ne['larg_min'], 0)} a {br(ne['larg_max'], 0)} p.p. de largura: são compatíveis com nenhum efeito e "
-        "também com efeitos grandes, positivos ou negativos. A diferença das médias brutas mistura o salto com a "
-        "inclinação do outcome no IVS dentro da janela; o local linear separa as duas coisas, e por isso médias "
-        "brutas maiores do lado de cima convivem com saltos negativos.</p>")
-
+        "<p>A hipótese da banca é <em>maior remuneração, maior preenchimento</em>. A forma operacional é a proporção "
+        "de células estabelecimento–curso do município com alguém confirmado ou homologado na 1ª chamada do ciclo 1. "
+        "No corte, a bolsa anunciada sobe R$ 5 mil e o IVS, que mede o custo do lugar, varia continuamente.</p>")
+    o.append(tabela_principais(ctx, ne, titulo="Resultado principal: proporção de células preenchidas, ciclo 1",
+                               outcomes=[OUTCOME_FRAC]))
+    o.append(
+        "<p>" + maiuscula("; ".join(f"em {br(r.corte)}, {pp(r.tau)} p.p. (IC 95% {ic_pp(r.ic95_inf, r.ic95_sup)}; "
+                          f"p = {br_p(r.p_valor)})" for r in fr.itertuples()))
+        + ". Nenhum dos dois saltos é distinguível de zero, e os intervalos também comportam efeitos grandes, "
+          "positivos ou negativos. A diferença das médias brutas mistura o salto com a inclinação do outcome no IVS "
+          "dentro da janela; a reta local linear separa as duas coisas.</p>")
     paineis = ctx["paineis_rd"]
-    o.append(figura(
-        "Gráfico RD do ciclo 1 (P1): média do outcome por bin de 0,010 do IVS, com as retas locais lineares",
-        fig_rd_p1(ctx, paineis),
-        fonte_html(ESCORE, E4_PROP, ATIVOS_ZIP, E3_EST,
-                   extra=(f"D<sub>1</sub> lido só nas colunas <code>co_ibge</code> e <code>ciclo</code>, com as funções "
-                          f"de <code>{esc(rel(E3_SCRIPT))}</code>; o salto de cada reta foi conferido contra "
-                          f"<code>{esc(rel(E3_EST))}</code>")),
-        sub=(f"Faixa clara: janela principal (±{br(ctx['h_principal'], 3)}), a única usada nas retas. Pontos cinza: "
-             f"bins até ±{br(ALCANCE_RD_MIL / 1000, 3)}, fora da janela, só para contexto. Traço preto no corte: salto "
-             "estimado. Bins (a; b], o corte fica no bin à esquerda; contagens por bin no Apêndice A."),
-    ))
-    o.append(figura(
-        "Saltos estimados com IC 95%, todas as especificações do E3",
-        fig_forest_e3(ctx),
-        fonte_html(E3_EST, extra="Em azul, a janela principal; em cinza, as janelas de sensibilidade"),
-        sub=f"{ne['n_espec']} especificações do protocolo, relatadas independentemente do resultado.",
-    ))
+    fonte_rd = fonte_html(ESCORE, E4_PROP, ATIVOS_ZIP, E3_EST,
+                          extra=(f"Salto de cada reta conferido contra <code>{esc(rel(E3_EST))}</code>; "
+                                 "contagens por bin no Apêndice A"))
+    sub_rd = (f"Cada ponto é a média dos municípios num intervalo de 0,010 do IVS. Faixa clara: janela da estimação "
+              f"(±{br(ctx['h_principal'], 3)}), a única usada nas retas; pontos cinza ficam fora dela e aparecem só "
+              "como contexto. Traço preto no corte: salto estimado.")
+    o.append(figura("Proporção de células preenchidas na 1ª chamada do ciclo 1, em torno dos dois cortes",
+                    fig_rd_p1(ctx, paineis, [OUTCOME_FRAC]), fonte_rd, sub=sub_rd))
 
-    d = ordenar_est(ctx["est"], ctx["h_principal"])
-    linhas = [[esc(rotulo_pop(ctx, r.populacao, curto=True)), esc(rotulo_outcome(ctx, r.outcome, curto=True)),
-               br(r.corte), br(r.h) + (" *" if r.especificacao == "principal" else ""),
-               f"{br_int(r.n_abaixo)} / {br_int(r.n_acima)}",
-               f"{pct(r.media_bruta_abaixo)} → {pct(r.media_bruta_acima)}",
-               pp(r.tau), ic_pp(r.ic95_inf, r.ic95_sup), br(r.ep * 100, 1), br_p(r.p_valor)]
-              for r in d.itertuples()]
-    o.append(tabela(
-        [("Ciclo", "txt"), ("Outcome", "txt"), ("Corte", "num"), ("h", "num"), ("n abaixo / acima", "num"),
-         ("Média bruta abaixo → acima", "num"), ("Salto (p.p.)", "num"), ("IC 95% (p.p.)", "num"),
-         ("EP (p.p.)", "num"), ("p", "num")],
-        linhas, classe="compacta", titulo="E3 — todas as especificações", inteiro=True,
-        rodape=fonte_html(E3_EST, grafico=False, extra="* janela principal. n = municípios com peso positivo no "
-                                                        "kernel triangular"),
-    ))
+    o.append("<h3>Resultado secundário: presença de especialista</h3>")
+    o.append(
+        "<p>A presença mede outra coisa: se o município tem especialista do ciclo ativo na relação nominal de "
+        f"{esc(data_relacao_nominal(prot))}, isto é, se a atração se manteve meses depois. É o único outcome "
+        "disponível para o ciclo 2, porque o funil de confirmações e homologações por célula só foi reconciliado e "
+        "auditado para o ciclo 1. Por isso o ciclo 2 entra como replicação desse outcome secundário, e não da "
+        "hipótese.</p>")
+    o.append(figura("Presença de especialista do ciclo 1 no município, em torno dos dois cortes",
+                    fig_rd_p1(ctx, paineis, [OUTCOME_D]), fonte_rd, sub=sub_rd))
+    o.append(tabela_principais(ctx, ne, titulo="Resultado secundário: presença de especialista, ciclos 1 e 2",
+                               outcomes=[OUTCOME_D]))
+    o.append(
+        f'<p class="nota">O protocolo também previu duas janelas de sensibilidade (h = 0,030 e 0,080). Elas não '
+        f"mudam a leitura (menor p entre as {ne['n_espec']} estimações: {br_p(ne['p_min'])}) e estão em "
+        f"<code>{esc(rel(E3_EST))}</code>.</p>")
 
     o.append("<h3>Diagnósticos sem outcome</h3>")
     o.append(f"<p>{esc(' / '.join(p3.get('diagnosticos_sem_outcome', [])))}. Foram gravados antes da leitura dos "
