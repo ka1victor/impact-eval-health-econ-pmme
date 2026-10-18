@@ -292,3 +292,24 @@ células com vaga imediata descartaria essas escolhas reais. Fica fixado:
   "tem vaga imediata" (e o log de vagas imediatas + 1).
 - **Sensibilidade:** só células com vaga imediata e só candidatos cuja 1ª
   opção está nelas (a definição original do §12).
+
+## 15. Esclarecimento de 18/10/2026 (antes de estimar o E9): forma funcional
+
+"Polinômio por faixa" (§12), com intercepto próprio em cada faixa, deixaria a
+bolsa colinear com as faixas, e ela não seria identificada. A forma fica fixada
+assim, para que a bolsa seja identificada só pelos degraus nos cortes:
+
+- **IVS como spline contínuo,** com nós em 0,300 e 0,400: inclinações livres
+  por faixa e sem salto de nível. Variante: termos quadráticos por segmento,
+  também contínuos nos nós.
+- **Principal:** bolsa em R$ mil, linear (um coeficiente para os dois degraus de
+  R$ 5 mil).
+- **Sensibilidade:** um indicador de degrau por corte, para testar se os dois
+  efeitos são iguais.
+- **Demais atributos** (§12 e §14): tem vaga imediata, log(vagas imediatas + 1),
+  log da população (Censo 2022), macrorregião e estrato.
+- **Erros-padrão:** sanduíche com cluster por conjunto de escolha (curso ×
+  ciclo); também o EP de máxima verossimilhança e o cluster por candidato.
+- **Relato:** o coeficiente da bolsa, a razão de chances por +R$ 5 mil e a
+  variação média da probabilidade de escolha de uma célula quando a bolsa sobe
+  R$ 5 mil, mantido o resto.
