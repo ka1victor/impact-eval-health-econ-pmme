@@ -12,7 +12,15 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import statsmodels
+
+try:
+    # Só registra a versão no manifesto: nenhuma estimação deste gerador usa
+    # statsmodels, e a ausência dele não pode impedir a regeração dos documentos.
+    import statsmodels
+
+    VERSAO_STATSMODELS = statsmodels.__version__
+except ModuleNotFoundError:
+    VERSAO_STATSMODELS = "ausente no ambiente de geração"
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -23,6 +31,18 @@ EXEC = ROOT / "docs" / "06_execucao"
 A4 = OUT / "A4_estimativas_atracao.json"
 A5 = OUT / "A5_estimativas_provimento.json"
 A5_AMEACAS = OUT / "A5_ameacas_c7.json"
+# RDD da bolsa no IVS 2010 oficial (auditoria 16): portão R1, E3 e E5.
+RDD = ROOT / "output" / "rdd_bolsa"
+R1_OFICIAL = RDD / "portao_r1_ivs_oficial.json"
+E3_STATUS = RDD / "E3_status.json"
+E3_ESTIMATIVAS = RDD / "E3_estimativas.csv"
+E5_ESPECIFICACOES = RDD / "E5_especificacoes.csv"
+IVS_OFICIAL = ROOT / "output" / "aquisicao" / "a08_ivs_2010_oficial_municipio.csv"
+IVS_LOCAL = ROOT / "data" / "ivs_ipea_2010_municipios.csv"
+DESFECHO_PREENCHIMENTO = "fracao_celulas_ch1_com_confirmacao_ou_homologacao"
+# Fator do efeito mínimo detectável a 80% de poder e 5% bilateral (1,96 + 0,84),
+# o mesmo de docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md.
+FATOR_MDE = 2.8
 REDTEAM = AUD / "09_red_team_atracao_provimento.md"
 MATRIX_DOC_CSV = AUD / "09_matriz_afirmacao_evidencia_limite.csv"
 MATRIX_OUT_CSV = OUT / "A6_matriz_afirmacao_evidencia_limite.csv"
@@ -107,6 +127,77 @@ def prevalencia_atracao() -> dict[str, float]:
     }
 
 
+def estado_rdd_bolsa() -> dict[str, object]:
+    """Lê dos artefatos o estado vigente da RDD da bolsa e confere o que o texto afirma.
+
+    Este gerador publicava que a regra da faixa não se reproduzia (177/368) e
+    que a RDD fora encerrada em R1. Isso vinha de
+    `data/ivs_ipea_2010_municipios.csv`, que é, em cada município, a linha de um
+    subgrupo populacional da base do Ipea e não o IVS do município (auditoria
+    16). Com o IVS 2010 oficial, R1 é APROVADO_SHARP e o E3 não encontra salto
+    distinguível de zero. Os números saem dos artefatos; se eles deixarem de
+    sustentar "aprovado sharp" ou "inconclusivo", o gerador para em vez de
+    publicar texto falso.
+    """
+    r1 = json.loads(R1_OFICIAL.read_text(encoding="utf-8"))
+    if r1["decisao_r1"] != "APROVADO_SHARP":
+        raise SystemExit(f"R1: o texto afirma APROVADO_SHARP; o artefato traz {r1['decisao_r1']}")
+    populacoes = r1["populacoes"]
+    for pop in ("P1", "P2"):
+        if populacoes[pop]["regra_reproduz"] != populacoes[pop]["municipios"]:
+            raise SystemExit(f"R1: o texto afirma a regra reproduzida em todo {pop}; o artefato diverge")
+    escore_iguais = str(r1["escore_administrativo_e_ivs_2010_oficial"]["valores_iguais_3_casas"])
+    iguais, total = (int(x) for x in escore_iguais.split("/"))
+    if iguais != total:
+        raise SystemExit(f"R1: o texto afirma escore do MS igual ao IVS oficial; o artefato traz {escore_iguais}")
+
+    status = json.loads(E3_STATUS.read_text(encoding="utf-8"))
+    if status["status"] != "CONCLUIDO":
+        raise SystemExit(f"E3: o texto cita estimativas concluídas; o status é {status['status']}")
+    cortes = [float(c) for c in status["cortes"]]
+    h = float(status["janelas"]["principal"])
+
+    e3 = pd.read_csv(E3_ESTIMATIVAS)
+    principal = e3[e3["especificacao"].eq("principal") & e3["h"].round(3).eq(round(h, 3))]
+    if len(principal) != 3 * len(cortes):
+        raise SystemExit(f"E3: esperava {3 * len(cortes)} saltos principais; o artefato traz {len(principal)}")
+    if (e3["p_valor"] < 0.05).any():
+        raise SystemExit("E3: o texto afirma nenhum salto distinguível de zero; há p < 0,05 no artefato")
+    saltos_brl = set(e3["salto_anunciado_brl"].astype(int))
+    if len(saltos_brl) != 1 or next(iter(saltos_brl)) % 1000:
+        raise SystemExit(f"E3: o texto cita um único salto anunciado em mil reais; o artefato traz {sorted(saltos_brl)}")
+    preenchimento = {}
+    for corte in cortes:
+        linha = principal[
+            principal["populacao"].eq("P1")
+            & principal["outcome"].eq(DESFECHO_PREENCHIMENTO)
+            & principal["corte"].round(3).eq(round(corte, 3))
+        ]
+        if len(linha) != 1:
+            raise SystemExit(f"E3: esperava uma linha principal do preenchimento em {corte}; há {len(linha)}")
+        preenchimento[corte] = linha.iloc[0]
+
+    # E5 é exploratório e posterior ao resultado; o texto só diz que ele não muda
+    # a leitura, e isso tem de continuar verdadeiro no artefato.
+    e5 = pd.read_csv(E5_ESPECIFICACOES)
+    y1 = e5[e5["outcome"].eq("Y1")]
+    if (e5["p_valor"] < 0.05).any() or y1["descarta_tau_ge_010"].astype(bool).any():
+        raise SystemExit("E5: o texto afirma que a inferência alternativa não muda a leitura; o artefato diverge")
+
+    return {
+        "p1": int(populacoes["P1"]["municipios"]),
+        "p2": int(populacoes["P2"]["municipios"]),
+        "escore_iguais": iguais,
+        "cortes": cortes,
+        "h": h,
+        "salto_mil": next(iter(saltos_brl)) // 1000,
+        "preenchimento": preenchimento,
+        "n_saltos": int(len(e3)),
+        "janelas": sorted(float(j) for j in e3["h"].unique()),
+        "p_min": float(e3["p_valor"].min()),
+    }
+
+
 def _caminho_de_step(no: ast.expr) -> str:
     """Reduz a expressão `ROOT / "a" / "b.py"` de `run_all.py` a um caminho POSIX."""
     partes: list[str] = []
@@ -154,7 +245,9 @@ def insumos_declarados() -> list[tuple[Path, str, str | None]]:
         (ROOT / "output/aquisicao/ponte_curso_cbo_oficial.json", "ponte curso–CBO congelada", None),
         (ROOT / "output/aquisicao/manifesto_cnes_26_competencias.json", "manifesto das 26 competências mensais do CNES", None),
         (ROOT / "data/pmm_especialistas_nominal.csv", "retrato nominal observado, insumo de A7/A8", None),
-        (ROOT / "data/ivs_ipea_2010_municipios.csv", "IVS 2010 do IPEA, running variable canônica", None),
+        (IVS_LOCAL, "arquivo local rebaixado (auditoria 16): linha de subgrupo populacional da base do Ipea, "
+         "não o IVS do município; não é running variable; o ajuste completo de A4 ainda usa IVS e população dele", None),
+        (IVS_OFICIAL, "IVS 2010 oficial do Ipea (= escore administrativo do MS), running variable canônica da RDD da bolsa", None),
         (FUNIL, "matriz do funil do ciclo 1, saída de A1", None),
         (OUT / "matriz_tipologia_territorial.parquet", "tipologia territorial congelada, saída de A2", None),
         (OUT / "portao_denominador.json", "portão do denominador, A1", None),
@@ -166,6 +259,10 @@ def insumos_declarados() -> list[tuple[Path, str, str | None]]:
         (A5, "estimativas de A5", None),
         (OUT / "A5_manifesto_maturidade_censura.json", "maturidade e censura declaradas em A5", None),
         (A5_AMEACAS, "placebo, pré-tendência por curso e deslocamento regional de A5 (C-7)", None),
+        (R1_OFICIAL, "portão R1 da RDD da bolsa com o IVS 2010 oficial (APROVADO_SHARP)", None),
+        (E3_STATUS, "status, protocolo e cobertura do E3, RDD sharp da bolsa", None),
+        (E3_ESTIMATIVAS, "estimativas do E3, RDD sharp da bolsa", None),
+        (E5_ESPECIFICACOES, "inferência alternativa da RDD da bolsa (E5, exploratória e pós-resultado)", None),
         (OUT / "A4_tabela_02_modelo_principal_LPM.csv", "modelo principal de A4", None),
         (OUT / "A4_tabela_02c_confirmacao_homologacao.csv", "estágios do funil em A4", None),
         (OUT / "A4_tabela_02d_municipio_curso.csv", "colapso município–curso em A4", None),
@@ -263,6 +360,24 @@ def main() -> None:
     celulas_fmt = f"{prev['celulas']:,}".replace(",", ".")
     date = dt.date.today().isoformat()
 
+    # RDD da bolsa: estado vigente lido de R1, E3 e E5 (auditoria 16).
+    rdd = estado_rdd_bolsa()
+    c1, c2 = (num(c, 3) for c in rdd["cortes"])
+    p1, p2 = rdd["p1"], rdd["p2"]
+    salto = f"R$ {rdd['salto_mil']} mil"
+    y_c1, y_c2 = (rdd["preenchimento"][c] for c in rdd["cortes"])
+    tau_c1, tau_c2 = pct(y_c1["tau"]), pct(y_c2["tau"])
+    ic_c1 = f"[{pct(y_c1['ic95_inf'])}; {pct(y_c1['ic95_sup'])}]"
+    ic_c2 = f"[{pct(y_c2['ic95_inf'])}; {pct(y_c2['ic95_sup'])}]"
+    mde_c1, mde_c2 = pct(FATOR_MDE * y_c1["ep"]), pct(FATOR_MDE * y_c2["ep"])
+    p_min_e3 = num(rdd["p_min"], 3)
+    janelas_txt = [num(j, 3) for j in rdd["janelas"]]
+    janelas_e3 = ", ".join(janelas_txt[:-1]) + f" e {janelas_txt[-1]}" if len(janelas_txt) > 1 else janelas_txt[0]
+    # Ajuste completo de A4: usou IVS, log da população e estoque por 10 mil
+    # habitantes do arquivo local errado (auditoria 16, §4). Os coeficientes de
+    # estrato do LPM pré-especificado não dependem dele.
+    ressalva_full = "usou IVS e população do arquivo local errado e será reestimado com a base oficial (auditoria 16, §4)"
+
     redteam = f"""# A6 — Red team da evidência empírica
 
 > Data: {date}  
@@ -303,7 +418,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ### 6. IVS e faixa de bolsa
 
 **Refutação tentada:** interpretar IVS, faixa e valor anunciado como fontes independentes de variação.  
-**Veredito:** a grade administrativa é colinear e a regra não foi reproduzida para 177/368 municípios. IVS 2010 continua a running variable canônica, mas o RDD foi encerrado no portão R1.
+**Veredito:** não são independentes. A faixa é função determinística do IVS 2010 oficial do Ipea, com cortes em {c1} e {c2} (regra reproduzida em {p1}/{p1} municípios do ciclo 1 e {p2}/{p2} do ciclo 2), e o valor anunciado é função da faixa. Fora dos cortes, IVS e faixa descrevem o território e só sustentam gradiente descritivo; nos cortes, a descontinuidade isola o incentivo marginal anunciado (item 8). O IVS 2010 oficial (`output/aquisicao/a08_ivs_2010_oficial_municipio.csv`) é a running variable canônica. A divergência de regra registrada antes vinha de `data/ivs_ipea_2010_municipios.csv`, que é, em cada município, a linha de um subgrupo populacional da base do Ipea e não o IVS do município (`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`); o arquivo foi rebaixado.
 
 ### 7. CNES e retenção individual
 
@@ -312,8 +427,8 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 
 ### 8. RDD
 
-**Refutação tentada:** forçar descontinuidade em IVS=0,4 apesar da falha na reconstrução da regra e do suporte discreto.  
-**Veredito:** RDD encerrado em R1; nenhuma afirmação causal do adicional da bolsa.
+**Refutação tentada:** ler a RDD do adicional de bolsa como efeito do PMM-E, ler a ausência de salto como prova de que a bolsa não funciona, ou trocar a especificação depois de ver o resultado.  
+**Veredito:** com o IVS 2010 oficial, R1 é APROVADO_SHARP: a regra se reproduz em {p1}/{p1} municípios do ciclo 1 e {p2}/{p2} do ciclo 2, e o escore do MS coincide com o IVS oficial nos {rdd['escore_iguais']} municípios em que é publicado. O E3 (local linear, kernel triangular, h = {num(rdd['h'], 3)}, EP HC1 por município, protocolo congelado e retrospectivo) não encontra salto distinguível de zero: na fração de células preenchidas na primeira chamada do ciclo 1, {tau_c1} pp {ic_c1} em {c1} e {tau_c2} pp {ic_c2} em {c2}; nenhum dos {rdd['n_saltos']} saltos estimados, com as janelas de {janelas_e3}, tem p < 0,05 (menor p = {p_min_e3}). Com efeito mínimo detectável ({num(FATOR_MDE, 1)} × EP) de {mde_c1} e {mde_c2} pp na fração preenchida, o resultado é inconclusivo, e não evidência de ineficácia. O contraste identificável é só o incentivo marginal anunciado de {salto}, local aos cortes e possivelmente somado a outros benefícios ligados às mesmas categorias de IVS; não é efeito do PMM-E, do programa nem da faixa como nível. A inferência alternativa (E5, `docs/06_execucao/39_inferencia_alternativa_rdd_bolsa.md`), exploratória e posterior ao resultado, não muda essa leitura.
 
 ### 9. SIH/SIA, fila, saúde e custo-benefício
 
@@ -322,7 +437,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 
 ## Ataques ao resultado principal (A4)
 
-- O contraste metropolitano versus interior remoto é {pct(metro)} pp no LPM pré-especificado e {pct(metro_full)} pp no ajuste completo.
+- O contraste metropolitano versus interior remoto é {pct(metro)} pp no LPM pré-especificado e {pct(metro_full)} pp no ajuste completo. **Ressalva:** o ajuste completo usou IVS, log da população e estoque por 10 mil habitantes de `data/ivs_ipea_2010_municipios.csv`, que é a linha de um subgrupo populacional e não o município, e será reestimado com a base oficial (auditoria 16, §4); a variante winsorizada parte do mesmo ajuste e herda a ressalva. Os coeficientes de estrato do LPM pré-especificado não dependem desse arquivo.
 - Separar o funil preserva o sinal: {pct(confirm)} pp em confirmação e {pct(homolog)} pp em homologação.
 - Colapsar múltiplos CNES para município–curso aumenta o contraste para {pct(collapsed)} pp; logo, o resultado não decorre do peso implícito de estabelecimentos múltiplos.
 - Winsorizar covariadas e executar leave-one-out não inverte o gradiente. O resultado é robusto como associação territorial, não como efeito da bolsa.
@@ -365,16 +480,23 @@ O núcleo útil é a desigualdade territorial na atração administrativa, robus
          f"{prev['ch1_celulas']} de {celulas_fmt} células; pelo ciclo 1 inteiro, {prev['ciclo_celulas']} ({pct(prev['ciclo_prop'])}%)",
          "Célula não é vaga física; primeira chamada não é o ciclo inteiro",
          "prevalência administrativa observada"),
-        (f"Metropolitano associado a +{pct(metro)} pp versus remoto", "LPM com FE curso e UF; cluster município", f"Ajuste completo: +{pct(metro_full)} pp", "associado a maior atração"),
+        (f"Metropolitano associado a +{pct(metro)} pp versus remoto", "LPM com FE curso e UF; cluster município",
+         f"Ajuste completo: +{pct(metro_full)} pp; {ressalva_full}", "associado a maior atração"),
         ("Resultado preservado em confirmação", f"Contraste metropolitano +{pct(confirm)} pp", "Confirmação não é entrada física", "associação no estágio de confirmação"),
         ("Resultado preservado em homologação", f"Contraste metropolitano +{pct(homolog)} pp", "Homologação não é exercício", "associação no estágio de homologação"),
         ("Resultado preservado ao colapsar CNES", f"Município–curso: +{pct(collapsed)} pp", "Muda o peso analítico", "robustez à unidade"),
-        ("IVS/faixa não identificam efeito marginal", "Coeficientes conjuntos instáveis e R1 falhou", "Regra administrativa não reproduzida", "gradiente descritivo"),
+        ("IVS/faixa, como níveis, não identificam efeito marginal",
+         f"Faixa é função determinística do IVS 2010 oficial: regra reproduzida em {p1}/{p1} (ciclo 1) e {p2}/{p2} (ciclo 2); R1 aprovado sharp",
+         "Fora dos cortes, colineares com o território; coeficientes de IVS do A4 usaram o arquivo local errado e serão reestimados (auditoria 16, §4)",
+         "gradiente descritivo"),
         (f"Dinâmica CNES em março/2026: +{num(event['mar2026_beta'])}", f"FE célula, curso–mês, UF–mês; p={num(event['mar2026_p'], 3)}", "Atração é resultado realizado; sem grupo causal", "associado a trajetória diferencial"),
         ("Pré-tendências não rejeitadas", f"Teste conjunto p={num(event['pre_p'], 3)}", "Não rejeitar não prova paralelismo", "diagnóstico favorável, não validação causal"),
         ("Distribuição da mudança é assimétrica", f"Medianas {num(dist0['mediana'], 0)} e {num(dist1['mediana'], 0)}; máximo com atração {num(dist1['max'], 0)}", "Cauda extrema influencia a média", "descrever média, mediana e caudas"),
         ("CNES não mede retenção individual", "Agregação município–curso", "Sem ponte nominal de bolsistas", "oferta médica cadastrada local"),
-        ("RDD, SIH/SIA e custo-benefício fora do núcleo", "RDD encerrado em R1; bases/portões ausentes", "Sem identificação ou linkage", "não afirmar sem novo desenho"),
+        ("RDD da bolsa sem salto detectável; SIH/SIA e custo-benefício fora do núcleo",
+         f"E3 na fração preenchida: {tau_c1} pp {ic_c1} em {c1} e {tau_c2} pp {ic_c2} em {c2}; menor p {p_min_e3}; bases/portões de SIH/SIA ausentes",
+         f"RDD: só o incentivo marginal anunciado de {salto}, local aos cortes; MDE de {mde_c1} e {mde_c2} pp. SIH/SIA: sem identificação ou linkage",
+         "RDD inconclusiva, não evidência de ineficácia; SIH/SIA: não afirmar sem novo desenho"),
     ]
     columns = ["afirmacao", "evidencia", "limite", "linguagem_maxima"]
     matrix = pd.DataFrame(matrix_rows, columns=columns)
@@ -390,26 +512,26 @@ O núcleo útil é a desigualdade territorial na atração administrativa, robus
     synthesis = f"""# Síntese empírica A6
 
 > **Título recomendado:** Atração administrativa de médicos especialistas e gradientes territoriais: evidências de implementação do PMM-E.  
-> **Nível de identificação:** associativo. RDD encerrado em R1; retenção individual não identificada.  
-> **Hashes:** A4 `{sha256(A4)[:8]}`; A5 `{sha256(A5)[:8]}`.
+> **Nível de identificação:** associativo no núcleo A1–A5. RDD da bolsa em camada separada: R1 aprovado sharp com o IVS 2010 oficial; E3 inconclusivo. Retenção individual não identificada.  
+> **Hashes:** A4 `{sha256(A4)[:8]}`; A5 `{sha256(A5)[:8]}`; R1 `{sha256(R1_OFICIAL)[:8]}`; E3 `{sha256(E3_ESTIMATIVAS)[:8]}`.
 
 ## Resumo
 
-Analisamos o **quadro da primeira chamada** do primeiro ciclo do PMM-E, {celulas_fmt} células CNES–curso em 368 municípios. Alguma confirmação ou homologação **na própria primeira chamada** ocorreu em {prev['ch1_celulas']} células, {pct(prev['ch1_prop'])}% do quadro — é essa a prevalência da população primária de A4. Somando as homologações novas da segunda chamada, o **ciclo 1 inteiro** alcança {prev['ciclo_celulas']} das mesmas {celulas_fmt} células, {pct(prev['ciclo_prop'])}%: {prev['celulas_novas_ch2']} células sem desfecho na primeira chamada receberam homologado novo na segunda, somando {prev['pessoas_novas_ch2']} pessoas. Os dois números medem coisas diferentes e não são intercambiáveis. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade {pct(metro)} pontos percentuais maior que as do interior remoto; o contraste foi {pct(metro_full)} pontos no ajuste completo, {pct(confirm)} na confirmação, {pct(homolog)} na homologação e {pct(collapsed)} ao colapsar para município–curso. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO não compartilhado entre cursos encontrou diferença associada à atração de {num(event['mar2026_beta'])} médico cadastrado em março/2026 (EP {num(event['mar2026_se'])}), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
+Analisamos o **quadro da primeira chamada** do primeiro ciclo do PMM-E, {celulas_fmt} células CNES–curso em 368 municípios. Alguma confirmação ou homologação **na própria primeira chamada** ocorreu em {prev['ch1_celulas']} células, {pct(prev['ch1_prop'])}% do quadro — é essa a prevalência da população primária de A4. Somando as homologações novas da segunda chamada, o **ciclo 1 inteiro** alcança {prev['ciclo_celulas']} das mesmas {celulas_fmt} células, {pct(prev['ciclo_prop'])}%: {prev['celulas_novas_ch2']} células sem desfecho na primeira chamada receberam homologado novo na segunda, somando {prev['pessoas_novas_ch2']} pessoas. Os dois números medem coisas diferentes e não são intercambiáveis. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade {pct(metro)} pontos percentuais maior que as do interior remoto; o contraste foi {pct(metro_full)} pontos no ajuste completo, {pct(confirm)} na confirmação, {pct(homolog)} na homologação e {pct(collapsed)} ao colapsar para município–curso; o ajuste completo {ressalva_full}. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO não compartilhado entre cursos encontrou diferença associada à atração de {num(event['mar2026_beta'])} médico cadastrado em março/2026 (EP {num(event['mar2026_se'])}), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Em camada separada, a RDD do adicional de bolsa nos cortes de {c1} e {c2} do IVS 2010 oficial do Ipea, que reproduz a faixa anunciada em {p1} de {p1} municípios do ciclo 1 (R1 aprovado sharp), não encontra salto distinguível de zero na fração de células preenchidas na primeira chamada: {tau_c1} pontos percentuais em {c1} (IC 95% {ic_c1}) e {tau_c2} em {c2} (IC 95% {ic_c2}). O contraste é só o incentivo marginal anunciado de {salto}, local aos cortes; o resultado é inconclusivo, e não evidência de ineficácia. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
 
 ## Introdução
 
-O problema empiricamente identificável hoje não é o retorno causal de cada faixa de bolsa, mas onde a oferta administrativa atraiu ao menos uma confirmação ou homologação. IVS 2010 permanece a variável canônica do desenho previsto, porém faixa e IVS não fornecem variação independente, e a regra administrativa não foi reproduzida em 177 dos 368 municípios. Por isso o RDD foi encerrado no primeiro portão. A contribuição atual é medir desigualdades territoriais na implementação e documentar, separadamente, a evolução da oferta médica cadastrada no CNES.
+O núcleo A1–A5 não estima o retorno causal de cada faixa de bolsa: mede onde a oferta administrativa atraiu ao menos uma confirmação ou homologação. Faixa e IVS não fornecem variação independente, porque a faixa é função determinística do IVS 2010 oficial do Ipea, com cortes em {c1} e {c2}; a regra se reproduz em {p1} de {p1} municípios do ciclo 1 e em {p2} de {p2} do ciclo 2, e o portão R1 da RDD foi aprovado como sharp. A conclusão anterior, de que a regra não se reproduzia e a RDD não passava do primeiro portão, vinha de `data/ivs_ipea_2010_municipios.csv`, que é a linha de um subgrupo populacional da base do Ipea e não o IVS do município (auditoria 16). Fora dos cortes, IVS e faixa descrevem o território; nos cortes, a descontinuidade isola apenas o incentivo marginal anunciado de {salto}, e a estimação (E3) é inconclusiva. A contribuição do núcleo é medir desigualdades territoriais na implementação e documentar, separadamente, a evolução da oferta médica cadastrada no CNES.
 
 ## Métodos
 
-A análise principal usa células CNES–curso da chamada 1, tipologia territorial REGIC/RM-RIDE congelada antes da estimação e LPM pré-especificado com efeitos fixos de curso e UF e cluster municipal; Logit, ajuste completo, estágios do funil, colapso município–curso, winsorização e leave-one-out são robustez. O benchmark global de 3,8 pp é precisão de uma proporção, não MDE do contraste territorial; para metropolitano versus interior remoto, o MDE prévio é 13,7 pp sob p=0,30.
+A análise principal usa células CNES–curso da chamada 1, tipologia territorial REGIC/RM-RIDE congelada antes da estimação e LPM pré-especificado com efeitos fixos de curso e UF e cluster municipal; Logit, ajuste completo, estágios do funil, colapso município–curso, winsorização e leave-one-out são robustez. O ajuste completo e sua variante winsorizada usaram IVS e população do arquivo local errado e serão reestimados com a base oficial (auditoria 16, §4). O benchmark global de 3,8 pp é precisão de uma proporção, não MDE do contraste territorial; para metropolitano versus interior remoto, o MDE prévio é 13,7 pp sob p=0,30.
 
 A análise secundária usa 26 competências CNES e, como amostra principal, 587 células município–curso em 295 municípios. Junho/2025 é a última referência limpa antes da oferta; setembro/2025 já pode estar tratado. O estudo dinâmico absorve efeitos fixos de célula, curso–mês e UF–mês, com erros agrupados por município. Atração administrativa é um resultado realizado, não tratamento exógeno. Estoque e entradas referem-se a vínculos cadastrados; não identificam médicos do programa.
 
 ## Conclusão
 
-O resultado publicável é um gradiente territorial de atração: municípios metropolitanos apresentam maior probabilidade de atração administrativa que o interior remoto, e o padrão resiste à separação entre confirmação e homologação e ao colapso da unidade. A dinâmica do CNES sugere diferença positiva posterior, com pré-tendências não rejeitadas, e a escala proporcional — a primária — resiste à retirada de qualquer curso e à restrição aos CBOs estritos, enquanto a escala de nível não resiste: é o nível que é frágil à composição de cursos. O placebo sobre células sem atração em municípios com atração é nulo e o teste de deslocamento não encontra perda nos vizinhos observados; já o agregado região–curso não sustenta a leitura de expansão líquida, porque {n_uni} das {n_multi + n_uni} região–curso têm um único município e, restrito às {n_multi} que agregam, o coeficiente não é distinguível de zero. O tempo de exposição física heterogêneo, a pré-tendência divergente em dois cursos — um só deles sobrevivendo à correção de multiplicidade — e o alcance do teste de deslocamento, restrito ao quadro, continuam limitando a interpretação. Sem base para efeito causal do adicional da bolsa, retenção individual, resolutividade, fila, SIH/SIA ou custo-benefício, esses objetos exigem novos dados e novo protocolo antes de qualquer estimação.
+O resultado publicável é um gradiente territorial de atração: municípios metropolitanos apresentam maior probabilidade de atração administrativa que o interior remoto, e o padrão resiste à separação entre confirmação e homologação e ao colapso da unidade. A dinâmica do CNES sugere diferença positiva posterior, com pré-tendências não rejeitadas, e a escala proporcional — a primária — resiste à retirada de qualquer curso e à restrição aos CBOs estritos, enquanto a escala de nível não resiste: é o nível que é frágil à composição de cursos. O placebo sobre células sem atração em municípios com atração é nulo e o teste de deslocamento não encontra perda nos vizinhos observados; já o agregado região–curso não sustenta a leitura de expansão líquida, porque {n_uni} das {n_multi + n_uni} região–curso têm um único município e, restrito às {n_multi} que agregam, o coeficiente não é distinguível de zero. O tempo de exposição física heterogêneo, a pré-tendência divergente em dois cursos — um só deles sobrevivendo à correção de multiplicidade — e o alcance do teste de deslocamento, restrito ao quadro, continuam limitando a interpretação. A RDD do adicional de bolsa, camada separada deste núcleo, não encontra salto distinguível de zero nos cortes de {c1} e {c2} do IVS 2010 oficial: identifica só o incentivo marginal anunciado de {salto}, local aos cortes; o resultado é inconclusivo, e não evidência de ineficácia. Sem base para efeito causal sobre retenção individual, resolutividade, fila, SIH/SIA ou custo-benefício, esses objetos exigem novos dados e novo protocolo antes de qualquer estimação.
 """
     atomic_text(SYNTHESIS, synthesis)
 
@@ -424,7 +546,7 @@ O resultado publicável é um gradiente territorial de atração: municípios me
         "protocolo": "A6_MANIFESTO_REPRODUCAO",
         "data_referencia": date,
         "gerador": "scripts/tema_trabalho/07_red_team_sintese.py",
-        "fila": "A1->A6: núcleo associativo; upgrade causal bloqueado",
+        "fila": "A1->A6: núcleo associativo; RDD da bolsa em camada separada (R1 aprovado sharp; E3 inconclusivo)",
         "ambiente_exigido": {
             "python_minimo": PYTHON_MINIMO,
             "interpretador": PYTHON_REPRO,
@@ -446,7 +568,7 @@ O resultado publicável é um gradiente territorial de atração: municípios me
             "platform": platform.platform(),
             "pandas": pd.__version__,
             "numpy": np.__version__,
-            "statsmodels": statsmodels.__version__,
+            "statsmodels": VERSAO_STATSMODELS,
         },
         "hashes_entradas_e_artefatos": hashes,
         "insumos_ausentes": insumos_ausentes,
@@ -462,11 +584,15 @@ O resultado publicável é um gradiente territorial de atração: municípios me
             "A3_CONGELADO": "output/tema_trabalho/registro_pre_analise_atracao.json",
             "A4_ASSOCIATIVO": "output/tema_trabalho/A4_estimativas_atracao.json",
             "A5_DINAMICA_ASSOCIATIVA": "output/tema_trabalho/A5_estimativas_provimento.json",
-            "R1_RDD_ENCERRADO": "output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json",
+            "R1_RDD_APROVADO_SHARP": R1_OFICIAL.relative_to(ROOT).as_posix(),
+            "E3_RDD_INCONCLUSIVO": E3_STATUS.relative_to(ROOT).as_posix(),
         },
         "limites_reafirmados": [
             "Sem taxa por vaga física",
-            "Sem efeito causal da faixa ou do IVS",
+            (f"Bolsa: o contraste identificável é só o incentivo marginal anunciado de {salto}, local aos cortes "
+             f"{c1} e {c2} do IVS 2010 oficial e possivelmente somado a outros benefícios das mesmas categorias; "
+             "IVS e faixa como níveis não identificam efeito"),
+            "RDD da bolsa inconclusiva: nenhum salto distinguível de zero, o que não é evidência de ineficácia",
             "Sem retenção individual no CNES agregado",
             "Sem SIH/SIA, fila, saúde ou custo-benefício sem novo portão",
             "A5 sensível a composição, caudas e tempo de exposição",
@@ -479,7 +605,7 @@ O resultado publicável é um gradiente territorial de atração: municípios me
             "distincao_confirmacao_homologacao_entrada_permanencia",
             "ivs_faixa_nao_independentes",
             "cnes_nao_retencao",
-            "rdd_encerrado_R1",
+            "rdd_R1_aprovado_sharp_E3_inconclusivo",
             "sem_sih_sia_fila",
         ],
         "entregaveis_A6": {

@@ -11,7 +11,7 @@
 \title{Ganhar a vaga preferida atrai o especialista?\\
 Efeito local no cutoff de seleção do Programa Mais Médicos Especialistas}
 \author{Versão de trabalho}
-\date{16 de setembro de 2026}
+\date{18 de outubro de 2026}
 
 \begin{document}
 \maketitle
@@ -39,7 +39,13 @@ candidatos separados por um ponto, com grau de rigor moderado. O desenho informa
 a conversão de uma alocação em ingresso e presença; não identifica o efeito da
 bolsa, do Índice de Vulnerabilidade Social (IVS), do PMM-E sobre o estoque
 municipal, a decisão de se inscrever, a retenção contínua, a produção
-assistencial ou desfechos de saúde.
+assistencial ou desfechos de saúde. Em apêndice, um segundo desenho testa se
+bolsa maior aumenta o preenchimento de vagas, na descontinuidade do adicional
+de R\$ 5 mil nos cortes do IVS de 2010 do Ipea, que reproduzem a faixa
+anunciada em todos os municípios do ciclo 1; o salto na fração de células
+preenchidas na primeira chamada é de $-$12,8 pontos percentuais no corte de
+0,300 e de $-$5,1 no de 0,400, sem distinção de zero e com intervalos largos,
+de modo que o resultado é inconclusivo, e não evidência de ineficácia.
 \end{abstract}
 
 \section{Introdução}
@@ -61,11 +67,12 @@ presença posterior naquele estabelecimento.
 
 A contribuição é deliberadamente estreita. Não estimamos preferências
 estruturais, produção assistencial, internações, exames nem o estoque geral de
-médicos do município. Também não identificamos o efeito da remuneração adicional
-associada ao IVS: o IVS público não reproduz a faixa administrativa anunciada
-nem gera primeiro estágio estável, e essa rota foi arquivada (Apêndice
-\ref{sec:rotas}). Examinamos apenas o ponto em que a regra muda a alocação entre
-dois candidatos quase idênticos do ponto de vista do processo seletivo.
+médicos do município. O desenho principal também não identifica o efeito da
+remuneração adicional associada ao IVS; esse incentivo é examinado à parte, por
+regressão descontínua nos cortes do IVS que definem a faixa de bolsa, com
+resultado inconclusivo (Apêndice \ref{sec:bolsa}). No desenho principal,
+examinamos apenas o ponto em que a regra muda a alocação entre dois candidatos
+quase idênticos do ponto de vista do processo seletivo.
 
 Duas palavras precisam de definição imediata, porque organizam toda a leitura.
 \textbf{Atração} significa aqui atração realizada, isto é, a conversão de uma
@@ -460,13 +467,18 @@ apenas o registro formal da seleção. Em políticas de base territorial, o
 desenho da alocação é parte do instrumento, e não um detalhe operacional
 \citep{kline2014}.
 
-O alcance do resultado é limitado de forma deliberada. O desenho \textbf{não}
-identifica: o efeito da bolsa ou do adicional associado ao IVS; o efeito do
-IVS; o efeito do PMM-E sobre o estoque municipal de especialistas; o efeito
-sobre a decisão de se inscrever, pois todos os comparados já são candidatos;
-retenção contínua ou duração até a saída; produção assistencial, filas ou
-desfechos de saúde. Nenhuma dessas quantidades pode ser inferida das estimativas
-aqui reportadas.
+O alcance do resultado é limitado de forma deliberada. O desenho do limite de
+seleção \textbf{não} identifica: o efeito da bolsa ou do adicional associado ao
+IVS; o efeito do IVS; o efeito do PMM-E sobre o estoque municipal de
+especialistas; o efeito sobre a decisão de se inscrever, pois todos os
+comparados já são candidatos; retenção contínua ou duração até a saída;
+produção assistencial, filas ou desfechos de saúde. Nenhuma dessas quantidades
+pode ser inferida das estimativas da Seção \ref{sec:resultados}. O adicional de
+bolsa é examinado em desenho próprio no Apêndice \ref{sec:bolsa}, que
+identifica apenas o incentivo marginal anunciado perto dos cortes do IVS,
+possivelmente somado a outros benefícios ligados às mesmas categorias de IVS;
+suas limitações são o poder baixo, o protocolo retrospectivo e o desequilíbrio
+de covariáveis no corte de 0,400.
 
 Cinco limitações organizam a leitura. Primeiro, a pontuação é discreta, com
 apenas um ponto de massa de cada lado do cutoff, e um ponto de barema pode
@@ -522,9 +534,13 @@ Para um trabalho curto, a conclusão deve permanecer nesse nível. O estudo ofer
 evidência causal local sobre alocação, adesão e presença, com grau de rigor
 moderado, \emph{running variable} discreta e protocolo retrospectivo. A análise
 territorial descritiva explica a relevância do problema, mas não integra o
-estimando causal. A avaliação do adicional de bolsa pelo IVS e os desfechos de
-produção assistencial permanecem fora do escopo e exigiriam, respectivamente, a
-reconstrução da regra administrativa e portões próprios de dados.
+estimando causal. O adicional de bolsa, que é o instrumento de preço do
+programa, não mostra efeito distinguível de zero sobre o preenchimento nos
+cortes do IVS (Apêndice \ref{sec:bolsa}). A descontinuidade é nítida e a regra
+se reproduz por inteiro, mas a amostra local é pequena e o desfecho é disperso:
+os dados descartam apenas efeitos positivos grandes e deixam em aberto efeitos
+moderados. Os desfechos de produção assistencial permanecem fora do escopo e
+exigem portões próprios de dados.
 
 \begin{thebibliography}{99}
 
@@ -537,10 +553,26 @@ Bärnighausen, T.; Bloom, D. E. (2009). Financial Incentives for Return of
 Service in Underserved Areas: A Systematic Review.
 \textit{BMC Health Services Research}, 9, 86.
 
+\bibitem[Calonico et al.(2019)]{calonico2019}
+Calonico, S.; Cattaneo, M. D.; Farrell, M. H.; Titiunik, R. (2019).
+Regression Discontinuity Designs Using Covariates.
+\textit{The Review of Economics and Statistics}, 101(3), 442--451.
+
 \bibitem[Carrillo e Feres(2019)]{carrillo2019}
 Carrillo, P.; Feres, P. (2019). Provider Supply, Utilization, and Infant
 Health: Evidence from a Physician Distribution Policy.
 \textit{American Economic Journal: Economic Policy}, 11(3), 156--196.
+
+\bibitem[Cattaneo et al.(2015)]{cattaneo2015}
+Cattaneo, M. D.; Frandsen, B. R.; Titiunik, R. (2015). Randomization
+Inference in the Regression Discontinuity Design: An Application to Party
+Advantages in the U.S. Senate. \textit{Journal of Causal Inference}, 3(1),
+1--24.
+
+\bibitem[Cattaneo et al.(2016)]{cattaneo2016}
+Cattaneo, M. D.; Keele, L.; Titiunik, R.; Vazquez-Bare, G. (2016).
+Interpreting Regression Discontinuity Designs with Multiple Cutoffs.
+\textit{The Journal of Politics}, 78(4), 1229--1248.
 
 \bibitem[Costa et al.(2024)]{costa2024}
 Costa, F.; Nunes, L.; Sanches, F. M. (2024). How to Attract Physicians to
@@ -566,6 +598,10 @@ Payments Affect Entries and Exits of General Practitioners?
 Kline, P.; Moretti, E. (2014). People, Places, and Public Policy: Some Simple
 Analytics of Local Economic Development Programs.
 \textit{Annual Review of Economics}, 6(1), 629--662.
+
+\bibitem[Lee e Lemieux(2010)]{leelemieux2010}
+Lee, D. S.; Lemieux, T. (2010). Regression Discontinuity Designs in
+Economics. \textit{Journal of Economic Literature}, 48(2), 281--355.
 
 \bibitem[Moehling et al.(2020)]{moehling2020}
 Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). Medical
@@ -645,7 +681,6 @@ Especificação ou desfecho & Diferença (p.p.) & Erro-padrão (p.p.) \\
 \midrule
 Modelo linear pré-especificado & 27,9 & 5,9 \\
 Logit, efeito marginal médio & 25,1 & 5,2 \\
-Ajuste completo & 20,9 & 7,8 \\
 Apenas confirmação & 27,0 & 5,7 \\
 Apenas homologação & 23,8 & 4,8 \\
 Unidade município--curso & 31,6 & 5,8 \\
@@ -661,25 +696,18 @@ protocolo congelado antes dos desfechos. No logit, o efeito marginal médio troc
 o bloco inteiro de indicadoras de estrato contra o interior remoto, e não uma
 indicadora isolada, de modo que o contraste não passa por células
 simultaneamente metropolitanas e capitais; o erro-padrão vem do método delta
-sobre a mesma matriz de covariância agrupada. O ajuste completo acrescenta IVS 2010,
-logaritmo da população, estoque médico prévio e faixa anunciada; como população e
-faixa são fortemente determinadas pelo próprio estrato, ele responde a uma
-pergunta distinta da do modelo mínimo, e não é o mesmo contraste melhor ajustado.
-Todas as diferenças são associativas.
+sobre a mesma matriz de covariância agrupada. Todas as diferenças são
+associativas.
 \end{minipage}
 \end{table}
 
 No modelo principal, capital e interior próximo a polos também apresentam
 diferenças positivas em relação ao interior remoto, de 32,6 e 12,1 pontos
-percentuais. No ajuste completo, esses dois contrastes atenuam e perdem precisão,
-enquanto o contraste metropolitano permanece em 20,9 pontos percentuais, com $p$
-de 0,008 e valor $q$ de 0,023 após correção FDR entre estratos. A atenuação do
-ajuste completo vem quase inteiramente do logaritmo da população, que tem $R^2$ de
-0,49 contra as próprias variáveis indicadoras de estrato; não se trata de curso e
-unidade da federação absorverem variação territorial, pois ambos já estão no
-modelo mínimo. IVS e faixa anunciada não fornecem evidência separável de um mecanismo
-monetário, o que é coerente com a colinearidade entre faixa e regra
-administrativa discutida no Apêndice \ref{sec:rotas}.
+percentuais. Uma especificação de ajuste completo, que acrescentava IVS,
+população e estoque prévio por habitante, usou o arquivo que se revelou ser a
+linha de um subgrupo populacional (Apêndice \ref{sec:bolsa}); ela será
+reestimada com a base oficial e não é reportada aqui. A classificação dos
+estratos não usa esse arquivo.
 
 A Figura \ref{fig:a4} mostra as probabilidades ajustadas por estrato.
 
@@ -795,21 +823,132 @@ administrativa realizada. Junho de 2025 é a referência. Leitura associativa.}
 \label{fig:a5}
 \end{figure}
 
+\section{Evidência causal complementar: o adicional de bolsa nos cortes do IVS}
+\label{sec:bolsa}
+
+Este apêndice testa, com outro desenho e outro estimando, a hipótese de que
+remuneração maior aumenta o preenchimento das vagas. Ele não integra o estimando
+da Seção \ref{sec:resultados} e não deve ser fundido a ele.
+
+\subsection{Regra, contraste e hipótese identificadora}
+
+A hipótese é que municípios com maior remuneração oferecida pelo PMM-E têm
+maior preenchimento de vagas. A bolsa anunciada é de R\$ 10 mil, R\$ 15 mil ou
+R\$ 20 mil, conforme a faixa de atração do município, e a faixa segue o IVS de
+2010 do Ipea: até 0,300, Faixa 3; de 0,301 a 0,400, Faixa 2; acima de 0,400,
+Faixa 1. O IVS que o Ministério da Saúde publica para o programa coincide com o
+IVS 2010 oficial nos 404 municípios em que aparece, e a regra reproduz a faixa
+anunciada nos 368 municípios do quadro da primeira chamada do ciclo 1 e nos 454
+do ciclo 2. Em cada corte, a bolsa sobe R\$ 5 mil de forma determinística,
+enquanto as condições do lugar que o IVS resume variam continuamente.
+
+Uma versão anterior deste artigo descartou essa rota porque o IVS disponível no
+repositório não reproduzia a regra. Esse arquivo se revelou ser, em cada
+município, a linha de um subgrupo populacional da base do Ipea (mulheres negras
+em área urbana, na maioria dos municípios), e não a linha do município; com a
+base oficial, a regra se reproduz integralmente.
+
+O contraste é o incentivo marginal anunciado de R\$ 5 mil: Faixa 3 contra
+Faixa 2 no corte de 0,300 e Faixa 2 contra Faixa 1 no de 0,400. Se outros
+benefícios mudarem nos mesmos cortes do IVS, o contraste mede o pacote; o
+efeito do programa como um todo não é identificado. A hipótese identificadora é
+a continuidade dos resultados potenciais no corte \citep{leelemieux2010}. Ela é
+plausível porque o IVS foi calculado com dados do Censo de 2010 e publicado
+anos antes do programa, de modo que nenhum município pôde escolher seu lado do
+corte. A densidade dos municípios com vaga não salta nos cortes, com razões de
+0,93 [0,40; 2,16] em 0,300 e de 0,61 [0,29; 1,30] em 0,400. No balanço de nove
+covariáveis anteriores ao programa, nenhuma difere a 5\% no corte de 0,300; no
+de 0,400, três diferem, todas no sentido de municípios menos metropolitanos
+acima do corte, o que pede cautela na leitura desse corte.
+
+\subsection{Desfechos e estimação}
+
+O desfecho da hipótese é a fração das células CNES--curso do município, na
+primeira chamada do ciclo 1, com alguma confirmação ou homologação, a mesma
+definição de célula do Apêndice \ref{sec:territorio}. Como desfecho secundário,
+medimos se o município tinha algum especialista do ciclo ativo na relação
+nominal de 9 de outubro de 2026, nos ciclos 1 e 2. A estimação é local linear,
+com kernel triangular, janela de 0,050 de IVS de cada lado do corte e
+erro-padrão robusto por município. O protocolo foi congelado antes das
+estimativas, mas depois de exposições parciais aos desfechos, listadas nele; é,
+portanto, retrospectivo.
+
+\subsection{Resultados}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{Salto nos cortes do IVS: adicional de bolsa de R\$ 5 mil}
+\label{tab:bolsa}
+\begin{tabular}{llcrrrcr}
+\toprule
+Desfecho & Corte & Municípios & Abaixo & Acima & Salto & IC95\% & $p$ \\
+ & & (abaixo/acima) & (\%) & (\%) & (p.p.) & (p.p.) & \\
+\midrule
+Células preenchidas, ciclo 1 & 0,300 & 61/53 & 24,3 & 37,2 & $-$12,8 & [$-$45,5; 19,8] & 0,441 \\
+Células preenchidas, ciclo 1 & 0,400 & 53/41 & 36,9 & 37,6 & $-$5,1 & [$-$36,5; 26,2] & 0,748 \\
+Presença, ciclo 1 & 0,300 & 61/53 & 39,3 & 60,4 & $-$3,2 & [$-$47,5; 41,1] & 0,887 \\
+Presença, ciclo 1 & 0,400 & 53/41 & 66,0 & 65,9 & $-$12,0 & [$-$53,1; 29,0] & 0,566 \\
+Presença, ciclo 2 & 0,300 & 82/61 & 52,4 & 67,2 & $-$15,2 & [$-$51,6; 21,1] & 0,411 \\
+Presença, ciclo 2 & 0,400 & 53/53 & 73,6 & 86,8 & 11,5 & [$-$13,9; 36,9] & 0,376 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\begin{minipage}{0.94\textwidth}
+\footnotesize \textit{Nota:} o salto é o valor estimado no corte do lado com
+bolsa maior (IVS acima do corte) menos o do lado com bolsa menor; positivo
+indica mais preenchimento ou presença onde a bolsa é R\$ 5 mil maior, de
+R\$ 10 mil para R\$ 15 mil em 0,300 e de R\$ 15 mil para R\$ 20 mil em 0,400.
+``Abaixo'' e ``Acima'' são médias brutas na janela. Local linear, kernel
+triangular, janela de 0,050 de IVS, erro-padrão robusto por município.
+Presença: algum especialista do ciclo ativo em 9 de outubro de 2026.
+\end{minipage}
+\end{table}
+
+Nenhum salto é distinguível de zero (Tabela \ref{tab:bolsa}). No desfecho da
+hipótese, o salto é de $-$12,8 pontos percentuais no corte de 0,300, com
+intervalo de [$-$45,5; 19,8], e de $-$5,1 no de 0,400, com intervalo de
+[$-$36,5; 26,2]. O efeito mínimo detectável, a 80\% de poder e 5\% de
+significância, é de 46,6 e 44,8 pontos percentuais. Os intervalos são largos
+por três razões que se multiplicam: há entre 41 e 61 municípios de cada lado de
+cada corte; a fração é calculada sobre poucas células por município, e muitos
+têm uma só, de modo que o desfecho é muito disperso; e a reta local linear, ao
+extrapolar até o corte, multiplica o erro-padrão por 2,6 e por 2,2 em relação a
+uma diferença de médias simples na mesma janela.
+
+O sinal do salto pode diferir da comparação bruta. No corte de 0,300, a fração
+média é de 24,3\% abaixo e 37,2\% acima, mas o preenchimento cresce com o IVS
+dentro da janela, dos dois lados do corte. A média de cada lado reflete esse
+gradiente, enquanto o salto compara as duas retas no próprio corte.
+
+Em análises exploratórias desenhadas depois desse resultado e reportadas
+integralmente no repositório, nenhuma das 15 especificações alternativas do
+desfecho da hipótese produz salto distinguível de zero; o menor $p$ é 0,44.
+Elas incluem a estimação local constante, os dois cortes empilhados
+\citep{cattaneo2016}, o ajuste por covariáveis anteriores ao programa
+\citep{calonico2019}, a inferência por randomização local em janela escolhida
+apenas pelo balanço de covariáveis \citep{cattaneo2015} e a estimação no nível
+da célula. Nenhuma estreita o intervalo o bastante para mudar a leitura sem
+trocar o estimando ou acrescentar premissas. O que os dados permitem é
+descartar efeitos positivos grandes: o limite superior unilateral de 95\% do
+principal é de 14,5 pontos percentuais no corte de 0,300 e de 21,2 no de
+0,400; com os cortes empilhados, é de 10,3 para a média dos dois saltos.
+Nenhuma especificação descarta efeitos de 10 pontos percentuais.
+
+Não encontramos, portanto, evidência de que o adicional de R\$ 5 mil aumente o
+preenchimento das vagas perto dos cortes, mas a amostra também não permite
+descartar efeitos positivos moderados: o resultado é inconclusivo, e não
+evidência de que a bolsa seja ineficaz. O alcance é local, restrito a
+municípios com IVS próximo dos cortes, à bolsa anunciada e à primeira chamada
+do ciclo 1.
+
 \section{Rotas avaliadas e descartadas}
 \label{sec:rotas}
 
-Duas rotas alternativas foram avaliadas antes do desenho adotado e são
-registradas aqui como decisões de escopo, e não como resultados.
-
-\textbf{Regressão descontínua do adicional de bolsa pelo IVS.} A faixa de bolsa
-anunciada e o IVS 2010 são ligados por regra administrativa, o que sugeriria um
-desenho de descontinuidade nos limiares publicados. A auditoria da regra, porém,
-não reproduziu a faixa anunciada: aplicando a taxonomia externa ao IVS público,
-191 dos 368 municípios são reproduzidos e 177 divergem, ou 48,1\% do total.
-Sem regra reproduzível, não há primeiro estágio estável e o desenho foi encerrado
-no primeiro portão. O IVS 2010 permanece a \emph{running variable} canônica para
-eventual retomada, condicionada à obtenção do escore, da vintagem e da regra
-administrativa exatos. Nenhum efeito da bolsa foi estimado neste trabalho.
+Uma rota alternativa foi avaliada antes do desenho adotado e é registrada aqui
+como decisão de escopo, e não como resultado.
 
 \textbf{Tripla diferença entre vaga imediata e cadastro de reserva.} Uma
 comparação entre células ofertadas para preenchimento imediato e células mantidas
@@ -822,9 +961,11 @@ de relevância não foi aprovado e a rota foi encerrada como comparação ajusta
 sem leitura causal. Cadastro de reserva também não é ausência permanente do
 programa e pode receber exposição posterior.
 
-Nenhuma dessas duas rotas contribui com resultados para este artigo. Elas são
-reportadas para deixar explícito o conjunto de desenhos considerados e a razão de
-cada descarte, evitando a impressão de que o desenho final foi escolhido depois
-de comparar estimativas.
+Essa rota não contribui com resultados para este artigo. Ela é reportada para
+deixar explícito o conjunto de desenhos considerados e a razão do descarte,
+evitando a impressão de que o desenho final foi escolhido depois de comparar
+estimativas. A regressão descontínua do adicional de bolsa, que constava deste
+apêndice em versões anteriores como rota descartada, foi reaberta com o IVS 2010
+oficial e é apresentada no Apêndice \ref{sec:bolsa}.
 
 \end{document}

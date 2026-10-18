@@ -1,4 +1,4 @@
-"""Invariantes A6 — red team e síntese (associativo, RDD encerrado)."""
+"""Invariantes A6 — red team e síntese (núcleo associativo; RDD da bolsa com R1 aprovado sharp e E3 inconclusivo)."""
 
 from __future__ import annotations
 
@@ -75,8 +75,12 @@ class RedTeamA6Test(unittest.TestCase):
         self.assertEqual(len(man["checklist_A6_passou"]), 9)
         # case-insensitive check for rdd
         checklist_low = [x.lower() for x in man["checklist_A6_passou"]]
-        for item in ["denominador_versionamento","populacao_territorial_previa","inferencia_municipal_concentracao","rdd_encerrado_r1","sem_sih_sia_fila"]:
+        # O item da RDD seguia o estado antigo ("rdd_encerrado_R1"), que vinha do
+        # arquivo de IVS errado (auditoria 16): com o IVS 2010 oficial, R1 é
+        # aprovado sharp e o E3 é inconclusivo.
+        for item in ["denominador_versionamento","populacao_territorial_previa","inferencia_municipal_concentracao","rdd_r1_aprovado_sharp_e3_inconclusivo","sem_sih_sia_fila"]:
             self.assertIn(item.lower(), checklist_low)
+        self.assertNotIn("rdd_encerrado_r1", checklist_low)
 
     def test_matriz_afirmacao_evidencia_limite(self):
         df = pd.read_csv(OUT_MATRIZ_CSV)
@@ -103,7 +107,7 @@ class RedTeamA6Test(unittest.TestCase):
         self.assertNotIn("efeito causal do adicional da bolsa foi estimado", low)
         self.assertNotIn("efeito causal do adicional da bolsa é", low)
         self.assertIn("sem base para efeito causal", low)
-        # must mention rdd encerrado
+        # must mention the RDD and its R1 gate
         self.assertTrue("rdd" in low and "r1" in low)
         # hashes mentioned
         self.assertIn("hash", low)
@@ -186,6 +190,50 @@ class RedTeamA6Test(unittest.TestCase):
         self.assertIn("multiplicidade", low)
         self.assertIn("só a proporção sobrevive", low)
 
+    def test_rdd_e_ivs_seguem_o_ivs_oficial(self):
+        """Auditoria 16: RDD, IVS e faixa descritos com o IVS 2010 oficial.
+
+        O A6 publicava "regra não reproduzida em 177/368" e "RDD encerrado em
+        R1", conclusões que vinham de `data/ivs_ipea_2010_municipios.csv`, a linha
+        de um subgrupo populacional e não o IVS do município. Os números citados
+        têm de bater com R1 e E3, e o ajuste completo de A4, estimado com o
+        arquivo errado, só aparece com a ressalva de reestimação.
+        """
+        r1 = json.loads((ROOT / "output" / "rdd_bolsa" / "portao_r1_ivs_oficial.json").read_text(encoding="utf-8"))
+        n1 = r1["populacoes"]["P1"]["municipios"]
+        n2 = r1["populacoes"]["P2"]["municipios"]
+        e3 = pd.read_csv(ROOT / "output" / "rdd_bolsa" / "E3_estimativas.csv")
+        linha = e3[e3["especificacao"].eq("principal") & e3["populacao"].eq("P1")
+                   & e3["outcome"].eq("fracao_celulas_ch1_com_confirmacao_ou_homologacao")
+                   & e3["corte"].round(3).eq(0.3)]
+        self.assertEqual(len(linha), 1)
+        salto = f"{100 * linha['tau'].iloc[0]:.1f}".replace(".", ",")
+
+        redteam = DOCS_REDTEAM.read_text(encoding="utf-8")
+        sintese = DOCS_SINTESE.read_text(encoding="utf-8")
+        matriz = OUT_MATRIZ_CSV.read_text(encoding="utf-8")
+        for nome, txt in [("red team", redteam), ("síntese", sintese), ("matriz", matriz)]:
+            low = txt.lower()
+            for falso in ["177/368", "177 dos 368", "rdd encerrado", "encerrado em r1", "r1 falhou", "regra administrativa não reproduzida"]:
+                self.assertNotIn(falso, low, f"{nome} repete o estado antigo: {falso}")
+            self.assertIn("inconclusiv", low, nome)
+            self.assertIn("auditoria 16", low, nome)
+        for nome, txt in [("red team", redteam), ("síntese", sintese)]:
+            self.assertIn(salto, txt, f"{nome} não cita o salto do E3 em 0,300")
+            self.assertIn("R$ 5 mil", txt, nome)
+            self.assertIn("reestimado", txt.lower(), f"{nome} cita o ajuste completo sem a ressalva")
+        self.assertIn(f"{n1}/{n1}", redteam)
+        self.assertIn(f"{n2}/{n2}", redteam)
+        self.assertIn(f"{n1} de {n1}", sintese)
+
+        man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+        limites = " ".join(man["limites_reafirmados"]).lower()
+        self.assertIn("incentivo marginal anunciado", limites)
+        self.assertIn("inconclusiva", limites)
+        hashes = man["hashes_entradas_e_artefatos"]
+        self.assertNotIn("running variable canônica", hashes["data/ivs_ipea_2010_municipios.csv"]["papel"])
+        self.assertIn("running variable canônica", hashes["output/aquisicao/a08_ivs_2010_oficial_municipio.csv"]["papel"])
+
     def test_manifesto_reproducao_completo(self):
         man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
         self.assertIn("comandos_reproducao", man)
@@ -202,7 +250,20 @@ class RedTeamA6Test(unittest.TestCase):
         self.assertIn("python", man["versoes"])
         self.assertIn("limites_reafirmados", man)
         self.assertIn("portoes", man)
-        self.assertIn("R1_RDD_ENCERRADO", " ".join(man["portoes"].keys()))
+        # R1 foi "encerrado" só enquanto a running variable era o arquivo local
+        # errado (auditoria 16). Com o IVS 2010 oficial, R1 é APROVADO_SHARP e o
+        # E3 não tem salto distinguível de zero; os dois portões apontam para os
+        # artefatos que sustentam esses nomes.
+        portoes = man["portoes"]
+        self.assertNotIn("R1_RDD_ENCERRADO", portoes)
+        self.assertEqual(portoes["R1_RDD_APROVADO_SHARP"], "output/rdd_bolsa/portao_r1_ivs_oficial.json")
+        self.assertEqual(portoes["E3_RDD_INCONCLUSIVO"], "output/rdd_bolsa/E3_status.json")
+        for caminho in portoes.values():
+            self.assertTrue((ROOT / caminho).exists(), f"portão sem artefato: {caminho}")
+        r1 = json.loads((ROOT / portoes["R1_RDD_APROVADO_SHARP"]).read_text(encoding="utf-8"))
+        self.assertEqual(r1["decisao_r1"], "APROVADO_SHARP")
+        e3 = pd.read_csv(ROOT / "output" / "rdd_bolsa" / "E3_estimativas.csv")
+        self.assertFalse((e3["p_valor"] < 0.05).any(), "E3 deixou de ser inconclusivo")
 
     def test_manifesto_cobre_a_aquisicao_e_o_ambiente_real(self):
         """B-3: a sequência publicada tem de ser a que reproduz, na plataforma certa.

@@ -1,10 +1,10 @@
 """Confere cada numero citado em paper_pmme_submission.tex contra os artefatos.
 
-O script releia os artefatos versionados de A4, A5, A7, A8, do portao da regra
-do IVS e do portao de relevancia, reformata cada valor no padrao usado no
-artigo e exige que o trecho correspondente exista no arquivo LaTeX. Nenhuma
-cifra do artigo pode existir sem uma origem rastreavel; qualquer divergencia
-interrompe a execucao com codigo de saida diferente de zero.
+O script releia os artefatos versionados de A4, A5, A7, A8, da RDD da bolsa no
+IVS 2010 oficial (R1, E3 e E5) e do portao de relevancia, reformata cada valor
+no padrao usado no artigo e exige que o trecho correspondente exista no arquivo
+LaTeX. Nenhuma cifra do artigo pode existir sem uma origem rastreavel; qualquer
+divergencia interrompe a execucao com codigo de saida diferente de zero.
 
 O mapeamento completo e gravado em
 `output/tema_trabalho/A8_conferencia_numeros_artigo.csv`, com arquivo-fonte e
@@ -42,11 +42,18 @@ A4_LPM = "output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv"
 A4_LOGIT = "output/tema_trabalho/A4_tabela_02b_logit_AME.csv"
 A4_ESTAGIO = "output/tema_trabalho/A4_tabela_02c_confirmacao_homologacao.csv"
 A4_MUNCURSO = "output/tema_trabalho/A4_tabela_02d_municipio_curso.csv"
-A4_FULL = "output/tema_trabalho/A4_tabela_03b_ajuste_completo.csv"
 A4_JSON = "output/tema_trabalho/A4_estimativas_atracao.json"
 A5_JSON = "output/tema_trabalho/A5_estimativas_provimento.json"
 A5_EVENTO = "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv"
-RDD_PORTAO = "output/rdd_bolsa/portao_regra_ivs.json"
+# RDD da bolsa no IVS 2010 oficial (docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md).
+RDD_R1 = "output/rdd_bolsa/portao_r1_ivs_oficial.json"
+RDD_PROTOCOLO = "output/rdd_bolsa/protocolo_escore_administrativo.json"
+RDD_E3_STATUS = "output/rdd_bolsa/E3_status.json"
+RDD_E3_ESTIM = "output/rdd_bolsa/E3_estimativas.csv"
+RDD_E3_DIAG = "output/rdd_bolsa/E3_diagnosticos.csv"
+RDD_E5_ESPEC = "output/rdd_bolsa/E5_especificacoes.csv"
+RDD_E5_DECOMP = "output/rdd_bolsa/E5_decomposicao_ic.csv"
+RDD_GRADE = "output/aquisicao/a04_grade_anunciada_2025.csv"
 DDD_PORTAO = "output/avaliacao_impacto/relatorios/01_relatorio_portao_relevancia.json"
 
 CABECALHO = [
@@ -738,7 +745,9 @@ for chave, amostra, modelo in [
 A4_LINHAS = [
     ("LPM", A4_LPM, {"termo": "estrato_metropolitano"}, "Modelo linear pré-especificado"),
     ("LOGIT", A4_LOGIT, {"termo": "estrato_metropolitano"}, "Logit, efeito marginal médio"),
-    ("FULL", A4_FULL, {"termo": "estrato_metropolitano"}, "Ajuste completo"),
+    # O ajuste completo saiu da tabela: usou IVS e populacao de
+    # data/ivs_ipea_2010_municipios.csv, que e a linha de um subgrupo populacional
+    # (auditoria 16, secao 4), e sera reestimado com a base oficial.
     ("CONFIRMACAO", A4_ESTAGIO,
      {"termo": "estrato_metropolitano", "outcome_estagio": "alguma_confirmacao"},
      "Apenas confirmação"),
@@ -795,22 +804,6 @@ registrar("A4_TXT_CAPITAL", "Apendice A", "Contraste capital x interior remoto",
 registrar("A4_TXT_INTERIOR", "Apendice A", "Contraste interior proximo x interior remoto",
           pontos(a4_interior), A4_LPM, loc_int, a4_interior, "proporcao x100, 1 casa",
           trecho_a4_outros)
-
-a4_full_coef, loc_fc = csv_valor(A4_FULL, {"termo": "estrato_metropolitano"}, "coef")
-a4_full_p, loc_fp = csv_valor(A4_FULL, {"termo": "estrato_metropolitano"}, "p_valor")
-a4_full_q, loc_fq = csv_valor(A4_FULL, {"termo": "estrato_metropolitano"}, "q_fdr_estrato")
-trecho_a4_full = (
-    f"o contraste metropolitano permanece em {pontos(a4_full_coef)} pontos percentuais, "
-    f"com $p$ de {decimal_br(a4_full_p, 3)} e valor $q$ de {decimal_br(a4_full_q, 3)} "
-    f"após correção FDR entre estratos"
-)
-registrar("A4_TXT_FULL_COEF", "Apendice A", "Contraste metropolitano no ajuste completo",
-          pontos(a4_full_coef), A4_FULL, loc_fc, a4_full_coef, "proporcao x100, 1 casa",
-          trecho_a4_full)
-registrar("A4_TXT_FULL_P", "Apendice A", "p-valor do contraste metropolitano ajustado",
-          decimal_br(a4_full_p, 3), A4_FULL, loc_fp, a4_full_p, "3 casas", trecho_a4_full)
-registrar("A4_TXT_FULL_Q", "Apendice A", "q FDR do contraste metropolitano ajustado",
-          decimal_br(a4_full_q, 3), A4_FULL, loc_fq, a4_full_q, "3 casas", trecho_a4_full)
 
 bench, loc_bench = json_valor(A4_JSON, "potencia_referencia/benchmark_global_proporcao_p30")
 mde, loc_mde = json_valor(
@@ -972,27 +965,246 @@ for chave, bruto, local, formatado, descricao in [
               trecho_delta)
 
 
-# --------------------------------------- Apendice C: rotas avaliadas e descartadas
+# --------------------------- Apendice C: RDD do adicional de bolsa (R1, E3, E5)
+#
+# Este bloco conferia o descarte da RDD (191 dos 368 municipios reproduzidos,
+# portao_regra_ivs.json). Aquele diagnostico lia como IVS 2010 o arquivo
+# data/ivs_ipea_2010_municipios.csv, que e a linha de um subgrupo populacional e
+# nao o IVS do municipio (docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md).
+# Com o IVS 2010 oficial a regra se reproduz por inteiro e o artigo reporta a RDD,
+# com a mesma formulacao do artigo curto: os trechos abaixo valem para os dois.
 
-rdd_n, loc_rdd_n = json_valor(RDD_PORTAO, "diagnostico_publico/n_municipios")
-rdd_ok, loc_rdd_ok = json_valor(RDD_PORTAO, "diagnostico_publico/n_reproduzidos")
-rdd_div, loc_rdd_div = json_valor(RDD_PORTAO, "diagnostico_publico/n_divergentes")
-rdd_pct, loc_rdd_pct = json_valor(RDD_PORTAO, "diagnostico_publico/pct_divergentes")
-trecho_rdd = (
-    f"{inteiro(rdd_ok)} dos {inteiro(rdd_n)} municípios são reproduzidos e "
-    f"{inteiro(rdd_div)} divergem, ou {decimal_br(rdd_pct, 1)}\\% do total"
+RDD_FRACAO = "fracao_celulas_ch1_com_confirmacao_ou_homologacao"
+RDD_PRESENCA = "D_k_especialista_ativo_do_ciclo"
+
+
+def rdd_corte_id(corte: float) -> str:
+    """Corte no identificador do registro, sem virgula: 0,300 vira C0300."""
+    return f"C{int(round(float(corte) * 1000)):04d}"
+
+
+def mil_reais(valor: Any) -> str:
+    """Valor de bolsa em reais escrito como no artigo: 15000 vira 'R\\$ 15 mil'."""
+    bruto = float(valor)
+    if bruto % 1000:
+        raise SystemExit(f"Valor de bolsa {valor} nao e multiplo de mil reais")
+    return f"R\\$ {int(bruto // 1000)} mil"
+
+
+rdd_cortes, loc_rdd_cortes = json_valor(RDD_E3_STATUS, "cortes")
+if [round(float(c), 3) for c in rdd_cortes] != [0.3, 0.4]:
+    raise SystemExit(f"E3: o artigo cita os cortes 0,300 e 0,400; o artefato traz {rdd_cortes}")
+rdd_c1, rdd_c2 = (float(c) for c in rdd_cortes)
+rdd_lado, loc_rdd_lado = json_valor(RDD_E3_STATUS, "lado_do_corte")
+if "lado inferior" not in str(rdd_lado):
+    raise SystemExit("E3: o artigo poe o proprio corte na faixa de baixo; o artefato diverge")
+registrar("RDD_REGRA_CORTES", "Apendice C", "Cortes do IVS que definem a faixa de bolsa",
+          f"{decimal_br(rdd_c1, 3)} e {decimal_br(rdd_c2, 3)}", RDD_E3_STATUS,
+          f"{loc_rdd_cortes} e {loc_rdd_lado}", rdd_cortes,
+          "3 casas; o corte pertence a faixa de baixo e a seguinte comeca no milesimo seguinte",
+          f"até {decimal_br(rdd_c1, 3)}, Faixa 3; de {decimal_br(rdd_c1 + 0.001, 3)} a "
+          f"{decimal_br(rdd_c2, 3)}, Faixa 2; acima de {decimal_br(rdd_c2, 3)}, Faixa 1")
+
+# Bolsa anunciada por faixa e salto em cada corte.
+rdd_grade = {
+    faixa: csv_valor(RDD_GRADE, {"faixa_atracao": faixa, "tipo_valor": "valor_anunciado_mensal"},
+                     "valor_anunciado_mensal_brl")
+    for faixa in (1, 2, 3)
+}
+rdd_saltos = set(csv_frame(RDD_E3_ESTIM)["salto_anunciado_brl"].astype(int))
+if rdd_saltos != {int(rdd_grade[2][0] - rdd_grade[3][0])} or rdd_saltos != {int(rdd_grade[1][0] - rdd_grade[2][0])}:
+    raise SystemExit(f"E3: o salto anunciado {rdd_saltos} nao corresponde a grade de bolsas")
+rdd_salto = next(iter(rdd_saltos))
+trecho_grade = (f"A bolsa anunciada é de {mil_reais(rdd_grade[3][0])}, {mil_reais(rdd_grade[2][0])} ou "
+                f"{mil_reais(rdd_grade[1][0])}")
+trecho_grade_nota = (f"de {mil_reais(rdd_grade[3][0])} para {mil_reais(rdd_grade[2][0])} em {decimal_br(rdd_c1, 3)} "
+                     f"e de {mil_reais(rdd_grade[2][0])} para {mil_reais(rdd_grade[1][0])} em {decimal_br(rdd_c2, 3)}")
+for faixa in (3, 2, 1):
+    bruto, local = rdd_grade[faixa]
+    registrar(f"RDD_BOLSA_FAIXA{faixa}", "Apendice C", f"Bolsa mensal anunciada na Faixa {faixa}",
+              mil_reais(bruto), RDD_GRADE, local, bruto, "reais em mil", trecho_grade)
+    registrar(f"RDD_BOLSA_NOTA_FAIXA{faixa}", "Tabela C1 (nota)", f"Bolsa da Faixa {faixa} na nota da tabela",
+              mil_reais(bruto), RDD_GRADE, local, bruto, "reais em mil", trecho_grade_nota)
+registrar("RDD_SALTO_BRL", "Apendice C", "Salto anunciado da bolsa em cada corte", mil_reais(rdd_salto),
+          RDD_E3_ESTIM, "coluna salto_anunciado_brl, todas as linhas", rdd_salto, "reais em mil",
+          f"Em cada corte, a bolsa sobe {mil_reais(rdd_salto)} de forma determinística")
+
+# Primeiro estagio: escore do MS = IVS oficial; regra reproduzida por inteiro.
+rdd_decisao, loc_rdd_decisao = json_valor(RDD_R1, "decisao_r1")
+rdd_iguais, loc_rdd_iguais = json_valor(RDD_R1, "escore_administrativo_e_ivs_2010_oficial/valores_iguais_3_casas")
+rdd_n_iguais, rdd_d_iguais = (int(x) for x in str(rdd_iguais).split("/"))
+rdd_p1, loc_rdd_p1 = json_valor(RDD_R1, "populacoes/P1/municipios")
+rdd_p1_regra, _ = json_valor(RDD_R1, "populacoes/P1/regra_reproduz")
+rdd_p2, loc_rdd_p2 = json_valor(RDD_R1, "populacoes/P2/municipios")
+rdd_p2_regra, _ = json_valor(RDD_R1, "populacoes/P2/regra_reproduz")
+if (rdd_decisao != "APROVADO_SHARP" or rdd_n_iguais != rdd_d_iguais
+        or rdd_p1_regra != rdd_p1 or rdd_p2_regra != rdd_p2):
+    raise SystemExit("R1: o artigo afirma reproducao integral da regra e do escore; o artefato diverge")
+registrar("RDD_R1_ESCORE_MS", "Apendice C", "Municipios com escore do MS igual ao IVS 2010 oficial",
+          inteiro(rdd_n_iguais), RDD_R1, loc_rdd_iguais, rdd_iguais, "inteiro",
+          f"coincide com o IVS 2010 oficial nos {inteiro(rdd_n_iguais)} municípios em que aparece")
+trecho_rdd_regra = (f"a regra reproduz a faixa anunciada nos {inteiro(rdd_p1)} municípios do quadro da primeira "
+                    f"chamada do ciclo 1 e nos {inteiro(rdd_p2)} do ciclo 2")
+registrar("RDD_R1_REGRA_P1", "Apendice C", "Municipios do ciclo 1 com a faixa reproduzida", inteiro(rdd_p1),
+          RDD_R1, loc_rdd_p1, rdd_p1, "inteiro; decisao_r1 = APROVADO_SHARP", trecho_rdd_regra)
+registrar("RDD_R1_REGRA_P2", "Apendice C", "Municipios do ciclo 2 com a faixa reproduzida", inteiro(rdd_p2),
+          RDD_R1, loc_rdd_p2, rdd_p2, "inteiro; decisao_r1 = APROVADO_SHARP", trecho_rdd_regra)
+
+# Desfecho secundario e janela.
+rdd_dk, loc_rdd_dk = json_valor(RDD_PROTOCOLO, "outcome/D_k")
+if "09/10/2026" not in str(rdd_dk):
+    raise SystemExit("Protocolo da RDD: a data da relacao nominal de ativos mudou")
+registrar("RDD_DATA_RELACAO", "Apendice C", "Data da relacao nominal usada na presenca", "9 de outubro de 2026",
+          RDD_PROTOCOLO, loc_rdd_dk, "09/10/2026", "data escrita por extenso",
+          "relação nominal de 9 de outubro de 2026")
+rdd_h, loc_rdd_h = json_valor(RDD_E3_STATUS, "janelas/principal")
+registrar("RDD_JANELA", "Apendice C", "Janela principal da estimacao local linear", decimal_br(rdd_h, 3),
+          RDD_E3_STATUS, loc_rdd_h, rdd_h, "3 casas",
+          f"janela de {decimal_br(rdd_h, 3)} de IVS de cada lado do corte")
+
+# Densidade e balanco no ciclo 1; o IVS 2010 oficial e a propria running
+# variable e nao entra na contagem do balanco.
+rdd_dens = {}
+for corte in (rdd_c1, rdd_c2):
+    filtro = {"populacao": "P1", "diagnostico": "densidade_poisson_mass_points", "h": str(rdd_h), "corte": str(corte)}
+    rdd_dens[corte] = {campo: csv_valor(RDD_E3_DIAG, filtro, campo) for campo in ("rho", "rho_ic95_inf", "rho_ic95_sup")}
+trecho_rdd_dens = (
+    f"com razões de {decimal_br(rdd_dens[rdd_c1]['rho'][0], 2)} [{decimal_br(rdd_dens[rdd_c1]['rho_ic95_inf'][0], 2)}; "
+    f"{decimal_br(rdd_dens[rdd_c1]['rho_ic95_sup'][0], 2)}] em {decimal_br(rdd_c1, 3)} e de "
+    f"{decimal_br(rdd_dens[rdd_c2]['rho'][0], 2)} [{decimal_br(rdd_dens[rdd_c2]['rho_ic95_inf'][0], 2)}; "
+    f"{decimal_br(rdd_dens[rdd_c2]['rho_ic95_sup'][0], 2)}] em {decimal_br(rdd_c2, 3)}"
 )
-for chave, bruto, local, formatado, transformacao, descricao in [
-    ("REPRODUZIDOS", rdd_ok, loc_rdd_ok, inteiro(rdd_ok), "inteiro",
-     "Municipios com faixa reproduzida"),
-    ("TOTAL", rdd_n, loc_rdd_n, inteiro(rdd_n), "inteiro", "Municipios do quadro"),
-    ("DIVERGENTES", rdd_div, loc_rdd_div, inteiro(rdd_div), "inteiro",
-     "Municipios com faixa divergente"),
-    ("PCT", rdd_pct, loc_rdd_pct, decimal_br(rdd_pct, 1), "1 casa",
-     "Percentual de divergencia"),
-]:
-    registrar(f"RDD_TXT_{chave}", "Apendice C", descricao, formatado, RDD_PORTAO, local,
-              bruto, transformacao, trecho_rdd)
+for corte in (rdd_c1, rdd_c2):
+    for campo, (bruto, local) in rdd_dens[corte].items():
+        registrar(f"RDD_DENS_{rdd_corte_id(corte)}_{campo}", "Apendice C", f"Densidade: {campo} em {corte}",
+                  decimal_br(bruto, 2), RDD_E3_DIAG, local, bruto, "2 casas", trecho_rdd_dens)
+
+rdd_diag = csv_frame(RDD_E3_DIAG)
+rdd_bal = rdd_diag[rdd_diag["diagnostico"].eq("balanco_covariavel_pre") & rdd_diag["populacao"].eq("P1")
+                   & rdd_diag["h"].round(3).eq(round(float(rdd_h), 3)) & rdd_diag["variavel"].ne("ivs_2010")]
+rdd_n_cov = {c: int(rdd_bal["corte"].round(3).eq(round(c, 3)).sum()) for c in (rdd_c1, rdd_c2)}
+rdd_n_rej = {c: int((rdd_bal["corte"].round(3).eq(round(c, 3)) & rdd_bal["p_valor"].lt(0.05)).sum())
+             for c in (rdd_c1, rdd_c2)}
+if rdd_n_cov != {rdd_c1: 9, rdd_c2: 9} or rdd_n_rej != {rdd_c1: 0, rdd_c2: 3}:
+    raise SystemExit(f"E3: o artigo cita 9 covariaveis, 0 e 3 com p<0,05; o artefato traz {rdd_n_cov} e {rdd_n_rej}")
+registrar("RDD_BALANCO", "Apendice C", "Covariaveis pre com p<0,05 por corte (ciclo 1)", "nove; nenhuma; três",
+          RDD_E3_DIAG, "diagnostico balanco_covariavel_pre, P1, sem ivs_2010", f"{rdd_n_cov}; {rdd_n_rej}",
+          "contagem por extenso",
+          f"No balanço de nove covariáveis anteriores ao programa, nenhuma difere a 5\\% no corte de "
+          f"{decimal_br(rdd_c1, 3)}; no de {decimal_br(rdd_c2, 3)}, três diferem")
+
+
+# Tabela C1: desfecho da hipotese e presenca, janela principal. Os
+# identificadores RDD_TAB_* sao o nucleo que o artigo curto reutiliza.
+def rdd_valor(populacao: str, outcome: str, corte: float, campo: str) -> tuple[Any, str]:
+    return csv_valor(RDD_E3_ESTIM, {"populacao": populacao, "outcome": outcome, "corte": str(corte),
+                                    "h": str(rdd_h), "especificacao": "principal"}, campo)
+
+
+for rotulo, chave, outcome, populacao in [("Células preenchidas, ciclo 1", "PREENCH", RDD_FRACAO, "P1"),
+                                          ("Presença, ciclo 1", "PRESENCA", RDD_PRESENCA, "P1"),
+                                          ("Presença, ciclo 2", "PRESENCA", RDD_PRESENCA, "P2")]:
+    for corte in (rdd_c1, rdd_c2):
+        registrar_linha_csv(
+            f"RDD_TAB_{populacao}_{chave}_{rdd_corte_id(corte)}",
+            "Tabela C1 (bolsa)",
+            RDD_E3_ESTIM,
+            {"populacao": populacao, "outcome": outcome, "corte": str(corte), "h": str(rdd_h),
+             "especificacao": "principal"},
+            [
+                ("n_abaixo", "n_abaixo", "inteiro", inteiro),
+                ("n_acima", "n_acima", "inteiro", inteiro),
+                ("media_abaixo", "media_bruta_abaixo", "proporcao x100, 1 casa", pontos),
+                ("media_acima", "media_bruta_acima", "proporcao x100, 1 casa", pontos),
+                ("tau", "tau", "proporcao x100, 1 casa", pontos),
+                ("lo", "ic95_inf", "proporcao x100, 1 casa", pontos),
+                ("hi", "ic95_sup", "proporcao x100, 1 casa", pontos),
+                ("p", "p_valor", "3 casas", lambda valor: decimal_br(valor, 3)),
+            ],
+            f"{rotulo} & {decimal_br(corte, 3)} & {{n_abaixo}}/{{n_acima}} & {{media_abaixo}} & {{media_acima}}"
+            " & {tau} & [{lo}; {hi}] & {p} \\\\",
+        )
+
+# Texto, resumo e conclusao do apendice: o desfecho da hipotese.
+rdd_y = {corte: {campo: rdd_valor("P1", RDD_FRACAO, corte, campo)
+                 for campo in ("tau", "ic95_inf", "ic95_sup", "media_bruta_abaixo", "media_bruta_acima",
+                               "n_abaixo", "n_acima")}
+         for corte in (rdd_c1, rdd_c2)}
+rdd_y1, rdd_y2 = rdd_y[rdd_c1], rdd_y[rdd_c2]
+trecho_rdd_resumo = (f"primeira chamada é de {pontos(rdd_y1['tau'][0])} pontos percentuais no corte de "
+                     f"{decimal_br(rdd_c1, 3)} e de {pontos(rdd_y2['tau'][0])} no de {decimal_br(rdd_c2, 3)}")
+trecho_rdd_txt = (f"o salto é de {pontos(rdd_y1['tau'][0])} pontos percentuais no corte de {decimal_br(rdd_c1, 3)}, com "
+                  f"intervalo de [{pontos(rdd_y1['ic95_inf'][0])}; {pontos(rdd_y1['ic95_sup'][0])}], e de {pontos(rdd_y2['tau'][0])} "
+                  f"no de {decimal_br(rdd_c2, 3)}, com intervalo de [{pontos(rdd_y2['ic95_inf'][0])}; "
+                  f"{pontos(rdd_y2['ic95_sup'][0])}]")
+for corte, v in ((rdd_c1, rdd_y1), (rdd_c2, rdd_y2)):
+    registrar(f"RDD_RESUMO_{rdd_corte_id(corte)}", "Resumo", f"Salto no preenchimento em {corte}",
+              pontos(v["tau"][0]), RDD_E3_ESTIM, v["tau"][1], v["tau"][0], "proporcao x100, 1 casa",
+              trecho_rdd_resumo)
+    for campo in ("tau", "ic95_inf", "ic95_sup"):
+        registrar(f"RDD_TXT_{rdd_corte_id(corte)}_{campo}", "Apendice C", f"{campo} do preenchimento em {corte}",
+                  pontos(v[campo][0]), RDD_E3_ESTIM, v[campo][1], v[campo][0], "proporcao x100, 1 casa",
+                  trecho_rdd_txt)
+trecho_rdd_medias = (f"a fração média é de {pontos(rdd_y1['media_bruta_abaixo'][0])}\\% abaixo e "
+                     f"{pontos(rdd_y1['media_bruta_acima'][0])}\\% acima")
+for campo in ("media_bruta_abaixo", "media_bruta_acima"):
+    registrar(f"RDD_TXT_MEDIA_{campo}", "Apendice C", f"{campo} do preenchimento em {rdd_c1}",
+              pontos(rdd_y1[campo][0]), RDD_E3_ESTIM, rdd_y1[campo][1], rdd_y1[campo][0], "proporcao x100, 1 casa",
+              trecho_rdd_medias)
+rdd_ns = [int(v[k][0]) for v in (rdd_y1, rdd_y2) for k in ("n_abaixo", "n_acima")]
+registrar("RDD_TXT_N_FAIXA", "Apendice C", "Municipios por lado de cada corte na janela",
+          f"{min(rdd_ns)} e {max(rdd_ns)}", RDD_E3_ESTIM, "n_abaixo e n_acima do preenchimento", rdd_ns,
+          "minimo e maximo", f"há entre {min(rdd_ns)} e {max(rdd_ns)} municípios de cada lado")
+
+# E5 (exploratorio, pos-resultado): MDE do principal, fator do EP,
+# especificacoes alternativas e limites superiores.
+rdd_s0 = {corte: {campo: csv_valor(RDD_E5_ESPEC, {"outcome": "Y1", "especificacao": "S0", "corte": str(corte)}, campo)
+                  for campo in ("mde_80", "lim_sup_unilateral_95")}
+          for corte in (rdd_c1, rdd_c2)}
+trecho_rdd_mde = (f"é de {pontos(rdd_s0[rdd_c1]['mde_80'][0])} e {pontos(rdd_s0[rdd_c2]['mde_80'][0])} "
+                  f"pontos percentuais")
+for corte in (rdd_c1, rdd_c2):
+    bruto, local = rdd_s0[corte]["mde_80"]
+    registrar(f"RDD_MDE_{rdd_corte_id(corte)}", "Apendice C", f"MDE do principal em {corte}", pontos(bruto),
+              RDD_E5_ESPEC, local, bruto, "proporcao x100, 1 casa", trecho_rdd_mde)
+rdd_razao = {corte: csv_valor(RDD_E5_DECOMP, {"componente": "LL_triangular_principal", "corte": str(corte)},
+                              "razao_ep_vs_dm_simples")
+             for corte in (rdd_c1, rdd_c2)}
+trecho_rdd_razao = (f"multiplica o erro-padrão por {decimal_br(rdd_razao[rdd_c1][0], 1)} e por "
+                    f"{decimal_br(rdd_razao[rdd_c2][0], 1)} em relação a uma diferença de médias simples")
+for corte in (rdd_c1, rdd_c2):
+    bruto, local = rdd_razao[corte]
+    registrar(f"RDD_RAZAO_EP_{rdd_corte_id(corte)}", "Apendice C",
+              f"EP local linear sobre EP da diferenca de medias em {corte}", decimal_br(bruto, 1),
+              RDD_E5_DECOMP, local, bruto, "1 casa", trecho_rdd_razao)
+rdd_e5 = csv_frame(RDD_E5_ESPEC)
+rdd_e5_y1 = rdd_e5[rdd_e5["outcome"].eq("Y1")]
+rdd_e5_expl = rdd_e5_y1[rdd_e5_y1["rotulo"].eq("EXPLORATORIO_POS_RESULTADO")]
+if (rdd_e5_y1["p_valor"] < 0.05).any() or rdd_e5_y1["descarta_tau_ge_010"].astype(bool).any():
+    raise SystemExit("E5: o artigo afirma nenhum p<0,05 e nenhum descarte de +10 p.p.; o artefato diverge")
+trecho_rdd_expl = (f"nenhuma das {len(rdd_e5_expl)} especificações alternativas do desfecho da hipótese produz "
+                   f"salto distinguível de zero; o menor $p$ é {decimal_br(rdd_e5_expl['p_valor'].min(), 2)}")
+registrar("RDD_E5_N", "Apendice C", "Especificacoes exploratorias do preenchimento", inteiro(len(rdd_e5_expl)),
+          RDD_E5_ESPEC, "outcome=Y1, rotulo=EXPLORATORIO_POS_RESULTADO", len(rdd_e5_expl), "contagem",
+          trecho_rdd_expl)
+registrar("RDD_E5_PMIN", "Apendice C", "Menor p das especificacoes exploratorias",
+          decimal_br(rdd_e5_expl["p_valor"].min(), 2), RDD_E5_ESPEC, "minimo de p_valor nas exploratorias de Y1",
+          float(rdd_e5_expl["p_valor"].min()), "2 casas", trecho_rdd_expl)
+rdd_lim_b, loc_rdd_lim_b = csv_valor(RDD_E5_ESPEC, {"outcome": "Y1", "especificacao": "B"}, "lim_sup_unilateral_95")
+trecho_rdd_lim = (f"o limite superior unilateral de 95\\% do principal é de "
+                  f"{pontos(rdd_s0[rdd_c1]['lim_sup_unilateral_95'][0])} pontos percentuais no corte de "
+                  f"{decimal_br(rdd_c1, 3)} e de {pontos(rdd_s0[rdd_c2]['lim_sup_unilateral_95'][0])} no de "
+                  f"{decimal_br(rdd_c2, 3)}; com os cortes empilhados, é de {pontos(rdd_lim_b)} para a média "
+                  f"dos dois saltos")
+for corte in (rdd_c1, rdd_c2):
+    bruto, local = rdd_s0[corte]["lim_sup_unilateral_95"]
+    registrar(f"RDD_LIMSUP_{rdd_corte_id(corte)}", "Apendice C", f"Limite superior unilateral do principal em {corte}",
+              pontos(bruto), RDD_E5_ESPEC, local, bruto, "proporcao x100, 1 casa", trecho_rdd_lim)
+registrar("RDD_LIMSUP_EMPILHADO", "Apendice C", "Limite superior unilateral com os cortes empilhados",
+          pontos(rdd_lim_b), RDD_E5_ESPEC, loc_rdd_lim_b, rdd_lim_b, "proporcao x100, 1 casa", trecho_rdd_lim)
+
+
+# --------------------------------------- Apendice D: rotas avaliadas e descartadas
 
 ddd_cel, loc_dc = json_valor(DDD_PORTAO, "amostra_ddd_municipio_curso/n_celulas")
 ddd_mun, loc_dm = json_valor(DDD_PORTAO, "amostra_ddd_municipio_curso/n_municipios")
@@ -1014,7 +1226,7 @@ for chave, bruto, local, formatado, transformacao, descricao in [
      "Erro-padrao do portao de relevancia"),
     ("P", ddd_p, loc_dp, decimal_br(ddd_p, 4), "4 casas", "p-valor do portao de relevancia"),
 ]:
-    registrar(f"DDD_TXT_{chave}", "Apendice C", descricao, formatado, DDD_PORTAO, local,
+    registrar(f"DDD_TXT_{chave}", "Apendice D", descricao, formatado, DDD_PORTAO, local,
               bruto, transformacao, trecho_ddd)
 
 

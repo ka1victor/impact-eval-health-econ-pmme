@@ -26,6 +26,13 @@ class ConferenciaArtigosTest(unittest.TestCase):
         # As evidências novas de A5 (B-5 e C-7) entraram no apêndice B e são conferidas.
         for prefixo in ["A5_TXT_Q_PROP", "A5_TXT_Q_NIVEL", "A5_TXT_C7_PLACEBO_NIVEL", "A5_TXT_C7_DESLOC_REGIONAL"]:
             self.assertIn(prefixo, set(q["id"]), prefixo)
+        # A RDD da bolsa no IVS 2010 oficial (R1 e E3) substituiu o descarte da
+        # regra (191/177 de 368), que vinha do arquivo de IVS errado (auditoria
+        # 16); o ajuste completo de A4, estimado com o mesmo arquivo, saiu.
+        for identificador in ["RDD_R1_REGRA_P1", "RDD_TAB_P1_PREENCH_C0300_tau"]:
+            self.assertIn(identificador, set(q["id"]), identificador)
+        for antigo in ["RDD_TXT_REPRODUZIDOS", "RDD_TXT_DIVERGENTES", "A4_TAB_FULL_dif", "A4_TXT_FULL_COEF"]:
+            self.assertNotIn(antigo, set(q["id"]), antigo)
 
     def test_artigo_curto_toda_cifra_aprovada_e_coberta(self) -> None:
         q = self._quadro("A8_conferencia_numeros_artigo_curto.csv")
@@ -44,7 +51,10 @@ class ConferenciaArtigosTest(unittest.TestCase):
         # teste denuncia a divergência.
         q = self._quadro("A8_conferencia_numeros_artigo_curto.csv")
         reusados = set(q.loc[q["origem_registro"] == "conferidor_principal", "id"].str.replace("REUSO_", "", regex=False))
-        for nucleo in ["A8_PRINCIPAL_HOMOLOG_LOCAL_dif", "A8_PRINCIPAL_ATIVO_LOCAL_dif", "A4_TAB_LPM_dif", "A5_TXT_PROP", "RDD_TXT_reproduzidos", "DDD_TXT_dif"]:
+        # O núcleo da RDD é a regra reproduzida com o IVS 2010 oficial (R1) e o
+        # salto do E3 na tabela da bolsa; o antigo "RDD_TXT_reproduzidos" citava
+        # o descarte que vinha do arquivo de IVS errado (auditoria 16).
+        for nucleo in ["A8_PRINCIPAL_HOMOLOG_LOCAL_dif", "A8_PRINCIPAL_ATIVO_LOCAL_dif", "A4_TAB_LPM_dif", "A5_TXT_PROP", "RDD_R1_REGRA_P1", "RDD_TAB_P1_PREENCH_C0300_tau", "DDD_TXT_dif"]:
             candidatos = [r for r in reusados if r.startswith(nucleo.rsplit("_", 1)[0])]
             self.assertTrue(candidatos, f"núcleo não reutilizado pelo artigo curto: {nucleo}")
 

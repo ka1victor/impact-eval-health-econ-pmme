@@ -1,6 +1,6 @@
 # A6 — Red team da evidência empírica
 
-> Data: 2026-09-21  
+> Data: 2026-10-18  
 > Escopo máximo: evidência associativa de implementação e evolução da oferta médica cadastrada.  
 > Resultado principal: atração administrativa (A4). Resultado secundário: dinâmica agregada do CNES (A5).
 
@@ -38,7 +38,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ### 6. IVS e faixa de bolsa
 
 **Refutação tentada:** interpretar IVS, faixa e valor anunciado como fontes independentes de variação.  
-**Veredito:** a grade administrativa é colinear e a regra não foi reproduzida para 177/368 municípios. IVS 2010 continua a running variable canônica, mas o RDD foi encerrado no portão R1.
+**Veredito:** não são independentes. A faixa é função determinística do IVS 2010 oficial do Ipea, com cortes em 0,300 e 0,400 (regra reproduzida em 368/368 municípios do ciclo 1 e 454/454 do ciclo 2), e o valor anunciado é função da faixa. Fora dos cortes, IVS e faixa descrevem o território e só sustentam gradiente descritivo; nos cortes, a descontinuidade isola o incentivo marginal anunciado (item 8). O IVS 2010 oficial (`output/aquisicao/a08_ivs_2010_oficial_municipio.csv`) é a running variable canônica. A divergência de regra registrada antes vinha de `data/ivs_ipea_2010_municipios.csv`, que é, em cada município, a linha de um subgrupo populacional da base do Ipea e não o IVS do município (`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`); o arquivo foi rebaixado.
 
 ### 7. CNES e retenção individual
 
@@ -47,8 +47,8 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 
 ### 8. RDD
 
-**Refutação tentada:** forçar descontinuidade em IVS=0,4 apesar da falha na reconstrução da regra e do suporte discreto.  
-**Veredito:** RDD encerrado em R1; nenhuma afirmação causal do adicional da bolsa.
+**Refutação tentada:** ler a RDD do adicional de bolsa como efeito do PMM-E, ler a ausência de salto como prova de que a bolsa não funciona, ou trocar a especificação depois de ver o resultado.  
+**Veredito:** com o IVS 2010 oficial, R1 é APROVADO_SHARP: a regra se reproduz em 368/368 municípios do ciclo 1 e 454/454 do ciclo 2, e o escore do MS coincide com o IVS oficial nos 404 municípios em que é publicado. O E3 (local linear, kernel triangular, h = 0,050, EP HC1 por município, protocolo congelado e retrospectivo) não encontra salto distinguível de zero: na fração de células preenchidas na primeira chamada do ciclo 1, -12,8 pp [-45,5; 19,8] em 0,300 e -5,1 pp [-36,5; 26,2] em 0,400; nenhum dos 18 saltos estimados, com as janelas de 0,030, 0,050 e 0,080, tem p < 0,05 (menor p = 0,155). Com efeito mínimo detectável (2,8 × EP) de 46,6 e 44,8 pp na fração preenchida, o resultado é inconclusivo, e não evidência de ineficácia. O contraste identificável é só o incentivo marginal anunciado de R$ 5 mil, local aos cortes e possivelmente somado a outros benefícios ligados às mesmas categorias de IVS; não é efeito do PMM-E, do programa nem da faixa como nível. A inferência alternativa (E5, `docs/06_execucao/39_inferencia_alternativa_rdd_bolsa.md`), exploratória e posterior ao resultado, não muda essa leitura.
 
 ### 9. SIH/SIA, fila, saúde e custo-benefício
 
@@ -57,7 +57,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 
 ## Ataques ao resultado principal (A4)
 
-- O contraste metropolitano versus interior remoto é 27,9 pp no LPM pré-especificado e 20,9 pp no ajuste completo.
+- O contraste metropolitano versus interior remoto é 27,9 pp no LPM pré-especificado e 20,9 pp no ajuste completo. **Ressalva:** o ajuste completo usou IVS, log da população e estoque por 10 mil habitantes de `data/ivs_ipea_2010_municipios.csv`, que é a linha de um subgrupo populacional e não o município, e será reestimado com a base oficial (auditoria 16, §4); a variante winsorizada parte do mesmo ajuste e herda a ressalva. Os coeficientes de estrato do LPM pré-especificado não dependem desse arquivo.
 - Separar o funil preserva o sinal: 27,0 pp em confirmação e 23,8 pp em homologação.
 - Colapsar múltiplos CNES para município–curso aumenta o contraste para 31,6 pp; logo, o resultado não decorre do peso implícito de estabelecimentos múltiplos.
 - Winsorizar covariadas e executar leave-one-out não inverte o gradiente. O resultado é robusto como associação territorial, não como efeito da bolsa.
