@@ -1,0 +1,2292 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "documento": "Tarefa B do protocolo E6: outcomes F0, F1, F2 e F4 do funil do PMM-E (ciclos 1-3)",
+  "data_execucao": "2026-10-18",
+  "script": "scripts/rdd_bolsa/12_construir_outcomes_funil.py",
+  "protocolo": {
+    "arquivo": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
+    "sha256": "7847c3b96577ca579daa46f59c41afcbbfde8b819d228f0b2f0d4f7cda6dcb2c",
+    "texto_canonico": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
+    "sha256_texto_canonico_declarado": "f80223ea07774b9fc2fa1a1c6ac7c2b9707a45173dc5a023194e32fafc983ccf"
+  },
+  "cegamento": {
+    "regra": "nenhum outcome por lado de corte, por faixa ou contra o IVS; IVS oficial só como coluna de chave",
+    "arquivo_proibido_lido": false,
+    "resumos": "distribuições globais (n, ausentes, média, mínimo, máximo)"
+  },
+  "contraste": "nenhum: esta etapa só constrói outcomes; não estima efeito",
+  "saidas": {
+    "U": {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_U_municipio.parquet",
+      "sha256": "5d4bf05a24e1b5f704aa50bbff4325b3997f1505f57c80f14f822e08e1c3db14",
+      "linhas": 5565,
+      "chave": [
+        "co_ibge"
+      ],
+      "chave_unica": true,
+      "populacao": "U: municípios com IVS 2010 oficial",
+      "unidade": "município",
+      "colunas": [
+        "co_ibge",
+        "ivs_2010_oficial",
+        "populacao_2022",
+        "f0_1_tem_celula_c1",
+        "n_celulas_c1",
+        "vagas_imediatas_c1",
+        "vagas_cr_c1",
+        "f0_2_celulas_por_10k_c1",
+        "f0_2_vagas_imediatas_por_10k_c1",
+        "f0_1_tem_celula_c2",
+        "n_celulas_c2",
+        "vagas_imediatas_c2",
+        "vagas_cr_c2",
+        "f0_2_celulas_por_10k_c2",
+        "f0_2_vagas_imediatas_por_10k_c2",
+        "f0_1_tem_celula_c3",
+        "n_celulas_c3",
+        "vagas_imediatas_c3",
+        "vagas_cr_c3",
+        "f0_2_celulas_por_10k_c3",
+        "f0_2_vagas_imediatas_por_10k_c3",
+        "f0_1s_tem_celula_c1_ch1_ou_ch2",
+        "pmmb_vagas_ativas",
+        "pmmb_medicos_ativos",
+        "f0_4_pmmb_vagas_por_10k",
+        "f0_4_pmmb_medicos_por_10k",
+        "n_ativos_pmme_c1",
+        "f2_2_ativos_pmme_por_10k_c1",
+        "n_ativos_pmme_c2",
+        "f2_2_ativos_pmme_por_10k_c2",
+        "motivos_ausencia",
+        "natureza_dos_dados"
+      ]
+    },
+    "G3": {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_G3_municipio.parquet",
+      "sha256": "b2133fbd60b3189f162ebe35b6e3650eb1d97fda0a5e267b965802e684866948",
+      "linhas": 2699,
+      "chave": [
+        "co_ibge"
+      ],
+      "chave_unica": true,
+      "populacao": "G3: municípios do cardápio de gestores do ciclo 3",
+      "unidade": "município",
+      "colunas": [
+        "co_ibge",
+        "ivs_2010_oficial",
+        "tem_ivs_oficial",
+        "populacao_2022",
+        "n_celulas_cardapio",
+        "vagas_cardapio",
+        "n_linhas_adesao",
+        "vagas_pedidas",
+        "vagas_priorizadas",
+        "vagas_priorizadas_imediatas",
+        "vagas_priorizadas_cr",
+        "vagas_nao_priorizadas",
+        "f0_3a_consta_do_resultado_final_adesao",
+        "f0_3_vagas_pedidas",
+        "f0_3_fracao_priorizada",
+        "f0_3_vagas_imediatas_priorizadas",
+        "f0_3s_vagas_pedidas_por_10k",
+        "motivos_ausencia",
+        "natureza_dos_dados"
+      ]
+    },
+    "V_municipio": {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "linhas": 1570,
+      "chave": [
+        "ciclo",
+        "co_ibge"
+      ],
+      "chave_unica": true,
+      "populacao": "V1, V2, V3 empilhados",
+      "unidade": "município × ciclo",
+      "colunas": [
+        "ciclo",
+        "co_ibge",
+        "faixa_anunciada",
+        "ivs_2010_oficial",
+        "tem_ivs_oficial",
+        "populacao_2022",
+        "n_celulas",
+        "n_celulas_com_imediatas",
+        "vagas_imediatas",
+        "vagas_cr",
+        "n_cand_1a_opcao",
+        "n_cand_1a_opcao_com_pre_requisito",
+        "n_candidaturas",
+        "n_celulas_com_candidato",
+        "n_alocados_ch1",
+        "n_celulas_preenchidas_ch1",
+        "n_celulas_preenchidas_ate_ch2",
+        "n_ativos_em_celula_do_quadro",
+        "soma_pontuacao_alocados",
+        "n_alocados_com_pontuacao",
+        "soma_pontuacao_cand_1a_opcao",
+        "n_cand_1a_opcao_com_pontuacao",
+        "n_celulas_imediatas_preenchidas_ch1",
+        "f1_1_cand_1a_opcao_por_celula",
+        "f1_1s_cand_1a_opcao_com_pre_requisito_por_celula",
+        "f1_2_fracao_celulas_com_candidato",
+        "f1_3_fracao_celulas_preenchidas_ch1",
+        "f1_3s_fracao_celulas_imediatas_preenchidas_ch1",
+        "f1_4_fracao_celulas_preenchidas_ate_ch2",
+        "n_ativos_ciclo",
+        "f2_1_ativos_por_celula",
+        "f2_3_d_k_algum_ativo_do_ciclo",
+        "f4_1_pontuacao_media_alocados",
+        "f4_2_pontuacao_media_cand_1a_opcao",
+        "n_celulas_preenchida_ch1_com_remanescentes",
+        "f1_3s_fracao_celulas_preenchidas_ch1_com_remanescentes",
+        "n_celulas_preenchida_ch1_com_sub_judice",
+        "f1_3s_fracao_celulas_preenchidas_ch1_com_sub_judice",
+        "motivos_ausencia",
+        "natureza_dos_dados"
+      ]
+    },
+    "V_celula": {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "linhas": 5135,
+      "chave": [
+        "ciclo",
+        "co_cnes_7d",
+        "cod_curso"
+      ],
+      "chave_unica": true,
+      "populacao": "células do quadro da 1a chamada de cada ciclo",
+      "unidade": "célula CNES × curso × ciclo",
+      "colunas": [
+        "ciclo",
+        "co_ibge",
+        "co_cnes_7d",
+        "cod_curso",
+        "faixa_anunciada",
+        "ivs_2010_oficial",
+        "vagas_imediatas",
+        "vagas_cr",
+        "situacao_vagas",
+        "regiao",
+        "com_vagas_imediatas",
+        "n_cand_1a_opcao",
+        "n_cand_2a_opcao",
+        "n_cand_1a_opcao_com_pre_requisito",
+        "n_candidaturas",
+        "f1_1_cand_1a_opcao",
+        "f1_2_tem_candidato",
+        "n_alocados_ch1",
+        "n_confirmacoes_ch1",
+        "n_homologacoes_ch1",
+        "n_homologacoes_novas_ch2",
+        "f1_3_preenchida_ch1",
+        "f1_4_preenchida_ate_ch2",
+        "f2_1_ativos_na_celula",
+        "soma_pontuacao_alocados",
+        "n_alocados_com_pontuacao",
+        "f4_1_pontuacao_media_alocados",
+        "soma_pontuacao_cand_1a_opcao",
+        "n_cand_1a_opcao_com_pontuacao",
+        "f4_2_pontuacao_media_cand_1a_opcao",
+        "n_alocados_ch2",
+        "n_remanescentes",
+        "f1_3s_preenchida_ch1_com_remanescentes",
+        "n_sub_judice",
+        "f1_3s_preenchida_ch1_com_sub_judice",
+        "motivos_ausencia",
+        "natureza_dos_dados"
+      ]
+    },
+    "escolhas_candidatos": {
+      "arquivo": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "linhas": 9849,
+      "chave": [
+        "ciclo",
+        "id_candidato",
+        "opcao_rank",
+        "co_cnes_7d",
+        "cod_curso"
+      ],
+      "chave_unica": true,
+      "populacao": "candidatos da 1a chamada de cada ciclo (E9, adendo §12)",
+      "unidade": "candidato × opção ranqueada",
+      "colunas": [
+        "ciclo",
+        "id_candidato",
+        "cod_curso",
+        "opcao_rank",
+        "id_conjunto_escolha",
+        "co_cnes_7d",
+        "co_ibge",
+        "faixa_anunciada",
+        "celula_no_quadro",
+        "celula_com_vaga_imediata",
+        "curso_da_1a_opcao",
+        "opcoes_em_cursos_diferentes",
+        "classificado",
+        "alocado",
+        "situacao_publicada",
+        "pontuacao",
+        "sem_pre_requisito",
+        "motivos_ausencia",
+        "natureza_dos_dados"
+      ]
+    },
+    "escolhas_conjunto_principal": {
+      "arquivo": "output/rdd_bolsa/outcomes/escolhas_conjunto_principal.parquet",
+      "sha256": "ad655dbce17753a996594213f6f9b9dff18e42af6556e48d0ee20df858bfca22",
+      "linhas": 5135,
+      "chave": [
+        "ciclo",
+        "co_cnes_7d",
+        "cod_curso"
+      ],
+      "chave_unica": true,
+      "populacao": "E9 principal (§14): todas as células do quadro da 1a chamada, por curso e ciclo, com ou sem vaga imediata",
+      "unidade": "célula CNES × curso × ciclo",
+      "colunas": [
+        "ciclo",
+        "id_conjunto_escolha",
+        "cod_curso",
+        "co_cnes_7d",
+        "co_ibge",
+        "faixa_anunciada",
+        "vagas_imediatas",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "populacao_2022",
+        "macrorregiao",
+        "estrato_territorial",
+        "motivos_ausencia",
+        "natureza_dos_dados"
+      ]
+    },
+    "escolhas_conjunto_sensibilidade_vaga_imediata": {
+      "arquivo": "output/rdd_bolsa/outcomes/escolhas_conjunto_sensibilidade_vaga_imediata.parquet",
+      "sha256": "dc807275900e761092aeb260f06872efb2bd342ea5caf1ba08ec296b2ad06808",
+      "linhas": 2222,
+      "chave": [
+        "ciclo",
+        "co_cnes_7d",
+        "cod_curso"
+      ],
+      "chave_unica": true,
+      "populacao": "E9 sensibilidade (§12): só células com vaga imediata",
+      "unidade": "célula CNES × curso × ciclo",
+      "colunas": [
+        "ciclo",
+        "id_conjunto_escolha",
+        "cod_curso",
+        "co_cnes_7d",
+        "co_ibge",
+        "faixa_anunciada",
+        "vagas_imediatas",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "populacao_2022",
+        "macrorregiao",
+        "estrato_territorial",
+        "motivos_ausencia",
+        "natureza_dos_dados"
+      ]
+    }
+  },
+  "n_por_populacao": {
+    "U": 5565,
+    "G3": 2699,
+    "V1": 368,
+    "V2": 454,
+    "V3": 748,
+    "celulas_V1": 1295,
+    "celulas_V2": 1547,
+    "celulas_V3": 2293,
+    "V3_sem_ivs_oficial": [
+      "422000"
+    ],
+    "G3_sem_ivs_oficial": [
+      "422000"
+    ]
+  },
+  "variaveis": {
+    "U": [
+      {
+        "coluna": "co_ibge",
+        "descricao": "código IBGE (6 dígitos)"
+      },
+      {
+        "coluna": "ivs_2010_oficial",
+        "descricao": "IVS 2010 oficial do Ipea, só coluna de chave"
+      },
+      {
+        "coluna": "populacao_2022",
+        "descricao": "população residente do Censo 2022"
+      },
+      {
+        "coluna": "f0_1_tem_celula_c1",
+        "descricao": "F0.1: município tem ≥1 célula no quadro do ciclo 1 (1a chamada)"
+      },
+      {
+        "coluna": "n_celulas_c1",
+        "descricao": "células no quadro da 1a chamada do ciclo 1 (0 fora do quadro)"
+      },
+      {
+        "coluna": "vagas_imediatas_c1",
+        "descricao": "vagas imediatas no quadro da 1a chamada do ciclo 1"
+      },
+      {
+        "coluna": "vagas_cr_c1",
+        "descricao": "vagas de cadastro reserva no quadro da 1a chamada do ciclo 1"
+      },
+      {
+        "coluna": "f0_2_celulas_por_10k_c1",
+        "descricao": "F0.2: células do ciclo 1 por 10 mil habitantes"
+      },
+      {
+        "coluna": "f0_2_vagas_imediatas_por_10k_c1",
+        "descricao": "F0.2: vagas imediatas do ciclo 1 por 10 mil habitantes"
+      },
+      {
+        "coluna": "f0_1_tem_celula_c2",
+        "descricao": "F0.1: município tem ≥1 célula no quadro do ciclo 2 (1a ou 2a chamada)"
+      },
+      {
+        "coluna": "n_celulas_c2",
+        "descricao": "células no quadro da 1a chamada do ciclo 2 (0 fora do quadro)"
+      },
+      {
+        "coluna": "vagas_imediatas_c2",
+        "descricao": "vagas imediatas no quadro da 1a chamada do ciclo 2"
+      },
+      {
+        "coluna": "vagas_cr_c2",
+        "descricao": "vagas de cadastro reserva no quadro da 1a chamada do ciclo 2"
+      },
+      {
+        "coluna": "f0_2_celulas_por_10k_c2",
+        "descricao": "F0.2: células do ciclo 2 por 10 mil habitantes"
+      },
+      {
+        "coluna": "f0_2_vagas_imediatas_por_10k_c2",
+        "descricao": "F0.2: vagas imediatas do ciclo 2 por 10 mil habitantes"
+      },
+      {
+        "coluna": "f0_1_tem_celula_c3",
+        "descricao": "F0.1: município tem ≥1 célula no quadro do ciclo 3 (1a chamada)"
+      },
+      {
+        "coluna": "n_celulas_c3",
+        "descricao": "células no quadro da 1a chamada do ciclo 3 (0 fora do quadro)"
+      },
+      {
+        "coluna": "vagas_imediatas_c3",
+        "descricao": "vagas imediatas no quadro da 1a chamada do ciclo 3"
+      },
+      {
+        "coluna": "vagas_cr_c3",
+        "descricao": "vagas de cadastro reserva no quadro da 1a chamada do ciclo 3"
+      },
+      {
+        "coluna": "f0_2_celulas_por_10k_c3",
+        "descricao": "F0.2: células do ciclo 3 por 10 mil habitantes"
+      },
+      {
+        "coluna": "f0_2_vagas_imediatas_por_10k_c3",
+        "descricao": "F0.2: vagas imediatas do ciclo 3 por 10 mil habitantes"
+      },
+      {
+        "coluna": "f0_1s_tem_celula_c1_ch1_ou_ch2",
+        "descricao": "diagnóstico: célula no quadro da 1a ou da 2a chamada (reserva) do ciclo 1"
+      },
+      {
+        "coluna": "pmmb_vagas_ativas",
+        "descricao": "PMMB: total_vagas_ativas (vagas aderidas, confirmadas e disponíveis)"
+      },
+      {
+        "coluna": "pmmb_medicos_ativos",
+        "descricao": "PMMB: total_ocupadas (vagas ocupadas por profissionais em atividade)"
+      },
+      {
+        "coluna": "f0_4_pmmb_vagas_por_10k",
+        "descricao": "F0.4: vagas ativas do PMMB por 10 mil habitantes"
+      },
+      {
+        "coluna": "f0_4_pmmb_medicos_por_10k",
+        "descricao": "F0.4: médicos ativos do PMMB por 10 mil habitantes"
+      },
+      {
+        "coluna": "n_ativos_pmme_c1",
+        "descricao": "ativos do PMM-E do ciclo 1 no município (0 fora do quadro)"
+      },
+      {
+        "coluna": "f2_2_ativos_pmme_por_10k_c1",
+        "descricao": "F2.2: ativos do PMM-E do ciclo 1 por 10 mil habitantes"
+      },
+      {
+        "coluna": "n_ativos_pmme_c2",
+        "descricao": "ativos do PMM-E do ciclo 2 no município (0 fora do quadro)"
+      },
+      {
+        "coluna": "f2_2_ativos_pmme_por_10k_c2",
+        "descricao": "F2.2: ativos do PMM-E do ciclo 2 por 10 mil habitantes"
+      },
+      {
+        "coluna": "motivos_ausencia",
+        "descricao": "para cada coluna NaN da linha, 'coluna: motivo' (NaN nunca é preenchido)"
+      },
+      {
+        "coluna": "natureza_dos_dados",
+        "descricao": "EMPIRICO: construído só de arquivos observados; nada simulado, imputado ou assumido"
+      }
+    ],
+    "G3": [
+      {
+        "coluna": "co_ibge",
+        "descricao": "código IBGE (6 dígitos)"
+      },
+      {
+        "coluna": "ivs_2010_oficial",
+        "descricao": "IVS 2010 oficial, só chave"
+      },
+      {
+        "coluna": "tem_ivs_oficial",
+        "descricao": "1 se tem IVS 2010 oficial"
+      },
+      {
+        "coluna": "populacao_2022",
+        "descricao": "população do Censo 2022"
+      },
+      {
+        "coluna": "n_celulas_cardapio",
+        "descricao": "células CNES × curso do cardápio"
+      },
+      {
+        "coluna": "vagas_cardapio",
+        "descricao": "vagas oferecidas no cardápio"
+      },
+      {
+        "coluna": "n_linhas_adesao",
+        "descricao": "linhas do resultado final da adesão"
+      },
+      {
+        "coluna": "vagas_pedidas",
+        "descricao": "priorizadas + não priorizadas"
+      },
+      {
+        "coluna": "vagas_priorizadas",
+        "descricao": "PRIORIZADAS (= imediatas + cadastro reserva)"
+      },
+      {
+        "coluna": "vagas_priorizadas_imediatas",
+        "descricao": "VAGAS IMEDIATAS priorizadas"
+      },
+      {
+        "coluna": "vagas_priorizadas_cr",
+        "descricao": "CADASTRO DE RESERVA priorizado"
+      },
+      {
+        "coluna": "vagas_nao_priorizadas",
+        "descricao": "NÃO PRIORIZADAS"
+      },
+      {
+        "coluna": "f0_3a_consta_do_resultado_final_adesao",
+        "descricao": "F0.3a: 1 = consta do resultado final da adesão; 0 = não consta (não equivale a 'não pediu')"
+      },
+      {
+        "coluna": "f0_3_vagas_pedidas",
+        "descricao": "F0.3: vagas pedidas"
+      },
+      {
+        "coluna": "f0_3_fracao_priorizada",
+        "descricao": "F0.3: priorizadas / pedidas (NaN se 0 pedidas)"
+      },
+      {
+        "coluna": "f0_3_vagas_imediatas_priorizadas",
+        "descricao": "F0.3: vagas imediatas priorizadas"
+      },
+      {
+        "coluna": "f0_3s_vagas_pedidas_por_10k",
+        "descricao": "vagas pedidas por 10 mil habitantes (complementar)"
+      },
+      {
+        "coluna": "motivos_ausencia",
+        "descricao": "para cada coluna NaN da linha, 'coluna: motivo' (NaN nunca é preenchido)"
+      },
+      {
+        "coluna": "natureza_dos_dados",
+        "descricao": "EMPIRICO: construído só de arquivos observados; nada simulado, imputado ou assumido"
+      }
+    ],
+    "V_municipio": [
+      {
+        "coluna": "ciclo",
+        "descricao": "ciclo do PMM-E (1, 2 ou 3); a população é V_ciclo"
+      },
+      {
+        "coluna": "co_ibge",
+        "descricao": "código IBGE do município (6 dígitos)"
+      },
+      {
+        "coluna": "faixa_anunciada",
+        "descricao": "faixa de atração impressa no quadro da 1a chamada (atributo; nunca cruzada com outcome)"
+      },
+      {
+        "coluna": "ivs_2010_oficial",
+        "descricao": "IVS 2010 oficial do Ipea (a08), só coluna de chave; NaN para município criado depois de 2010"
+      },
+      {
+        "coluna": "tem_ivs_oficial",
+        "descricao": "1 se o município tem IVS 2010 oficial"
+      },
+      {
+        "coluna": "populacao_2022",
+        "descricao": "população residente do Censo 2022"
+      },
+      {
+        "coluna": "n_celulas",
+        "descricao": "células CNES × curso no quadro da 1a chamada do ciclo"
+      },
+      {
+        "coluna": "n_celulas_com_imediatas",
+        "descricao": "células com vaga imediata"
+      },
+      {
+        "coluna": "vagas_imediatas",
+        "descricao": "vagas imediatas publicadas no quadro da 1a chamada"
+      },
+      {
+        "coluna": "vagas_cr",
+        "descricao": "vagas de cadastro reserva publicadas no quadro da 1a chamada"
+      },
+      {
+        "coluna": "n_cand_1a_opcao",
+        "descricao": "linhas candidato × opção com a célula como 1a opção no resultado da 1a chamada"
+      },
+      {
+        "coluna": "n_cand_1a_opcao_com_pre_requisito",
+        "descricao": "1a opção, excluindo 'SEM PRÉ-REQUISITO' (só existe no ciclo 1)"
+      },
+      {
+        "coluna": "n_candidaturas",
+        "descricao": "linhas candidato × opção na célula (qualquer opção)"
+      },
+      {
+        "coluna": "n_celulas_com_candidato",
+        "descricao": "células com ≥1 candidatura"
+      },
+      {
+        "coluna": "n_alocados_ch1",
+        "descricao": "alocados na 1a chamada (ciclo 1: confirmações na alocação sub judice; ciclos 2-3: SITUAÇÃO ALOCADO)"
+      },
+      {
+        "coluna": "n_celulas_preenchidas_ch1",
+        "descricao": "células preenchidas na 1a chamada"
+      },
+      {
+        "coluna": "n_celulas_preenchidas_ate_ch2",
+        "descricao": "células preenchidas até a 2a chamada"
+      },
+      {
+        "coluna": "n_ativos_em_celula_do_quadro",
+        "descricao": "ativos do ciclo em células do quadro do município; ciclo 3 NaN"
+      },
+      {
+        "coluna": "soma_pontuacao_alocados",
+        "descricao": "soma da pontuação dos alocados (para médias ponderadas por pessoa)"
+      },
+      {
+        "coluna": "n_alocados_com_pontuacao",
+        "descricao": "alocados com pontuação numérica"
+      },
+      {
+        "coluna": "soma_pontuacao_cand_1a_opcao",
+        "descricao": "soma da pontuação dos candidatos de 1a opção"
+      },
+      {
+        "coluna": "n_cand_1a_opcao_com_pontuacao",
+        "descricao": "candidatos de 1a opção com pontuação numérica"
+      },
+      {
+        "coluna": "n_celulas_imediatas_preenchidas_ch1",
+        "descricao": "células com vaga imediata e preenchidas na 1a chamada"
+      },
+      {
+        "coluna": "f1_1_cand_1a_opcao_por_celula",
+        "descricao": "F1.1: candidatos de 1a opção / células oferecidas"
+      },
+      {
+        "coluna": "f1_1s_cand_1a_opcao_com_pre_requisito_por_celula",
+        "descricao": "sensibilidade de F1.1 sem os 'SEM PRÉ-REQUISITO' do ciclo 1"
+      },
+      {
+        "coluna": "f1_2_fracao_celulas_com_candidato",
+        "descricao": "F1.2: fração de células com ≥1 candidatura"
+      },
+      {
+        "coluna": "f1_3_fracao_celulas_preenchidas_ch1",
+        "descricao": "F1.3: fração de células preenchidas na 1a chamada"
+      },
+      {
+        "coluna": "f1_3s_fracao_celulas_imediatas_preenchidas_ch1",
+        "descricao": "sensibilidade de F1.3 só sobre células com vaga imediata"
+      },
+      {
+        "coluna": "f1_4_fracao_celulas_preenchidas_ate_ch2",
+        "descricao": "F1.4: fração de células preenchidas até a 2a chamada"
+      },
+      {
+        "coluna": "n_ativos_ciclo",
+        "descricao": "ativos do ciclo no município, em qualquer estabelecimento; ciclo 3 NaN"
+      },
+      {
+        "coluna": "f2_1_ativos_por_celula",
+        "descricao": "F2.1: ativos do ciclo no município / células oferecidas; ciclo 3 NaN"
+      },
+      {
+        "coluna": "f2_3_d_k_algum_ativo_do_ciclo",
+        "descricao": "F2.3: D_k do E3 (≥1 ativo do ciclo no município); ciclo 3 NaN"
+      },
+      {
+        "coluna": "f4_1_pontuacao_media_alocados",
+        "descricao": "F4.1: pontuação média dos alocados na 1a chamada (média por pessoa)"
+      },
+      {
+        "coluna": "f4_2_pontuacao_media_cand_1a_opcao",
+        "descricao": "F4.2: pontuação média dos candidatos de 1a opção (média por pessoa)"
+      },
+      {
+        "coluna": "n_celulas_preenchida_ch1_com_remanescentes",
+        "descricao": "células preenchidas contando os remanescentes (ciclo 2)"
+      },
+      {
+        "coluna": "f1_3s_fracao_celulas_preenchidas_ch1_com_remanescentes",
+        "descricao": "sensibilidade de F1.3 (ciclo 2) com remanescentes"
+      },
+      {
+        "coluna": "n_celulas_preenchida_ch1_com_sub_judice",
+        "descricao": "células preenchidas contando 'SUB JUDICE' (ciclo 3)"
+      },
+      {
+        "coluna": "f1_3s_fracao_celulas_preenchidas_ch1_com_sub_judice",
+        "descricao": "sensibilidade de F1.3 (ciclo 3) com 'SUB JUDICE'"
+      },
+      {
+        "coluna": "motivos_ausencia",
+        "descricao": "para cada coluna NaN da linha, 'coluna: motivo' (NaN nunca é preenchido)"
+      },
+      {
+        "coluna": "natureza_dos_dados",
+        "descricao": "EMPIRICO: construído só de arquivos observados; nada simulado, imputado ou assumido"
+      }
+    ],
+    "V_celula": [
+      {
+        "coluna": "ciclo",
+        "descricao": "ciclo do PMM-E (1, 2 ou 3); a população é V_ciclo"
+      },
+      {
+        "coluna": "co_ibge",
+        "descricao": "código IBGE do município (6 dígitos)"
+      },
+      {
+        "coluna": "co_cnes_7d",
+        "descricao": "CNES do estabelecimento (7 dígitos)"
+      },
+      {
+        "coluna": "cod_curso",
+        "descricao": "código do curso de aprimoramento (número inicial do rótulo)"
+      },
+      {
+        "coluna": "faixa_anunciada",
+        "descricao": "faixa de atração impressa no quadro da 1a chamada (atributo; nunca cruzada com outcome)"
+      },
+      {
+        "coluna": "ivs_2010_oficial",
+        "descricao": "IVS 2010 oficial do Ipea (a08), só coluna de chave; NaN para município criado depois de 2010"
+      },
+      {
+        "coluna": "vagas_imediatas",
+        "descricao": "vagas imediatas publicadas no quadro da 1a chamada"
+      },
+      {
+        "coluna": "vagas_cr",
+        "descricao": "vagas de cadastro reserva publicadas no quadro da 1a chamada"
+      },
+      {
+        "coluna": "situacao_vagas",
+        "descricao": "situação da célula no quadro ('COM VAGAS IMEDIATAS' ou 'APENAS CADASTRO DE RESERVA')"
+      },
+      {
+        "coluna": "regiao",
+        "descricao": "macrorregião impressa no quadro (conferida com o 1o dígito do IBGE)"
+      },
+      {
+        "coluna": "com_vagas_imediatas",
+        "descricao": "1 se a célula tem vaga imediata"
+      },
+      {
+        "coluna": "n_cand_1a_opcao",
+        "descricao": "linhas candidato × opção com a célula como 1a opção no resultado da 1a chamada"
+      },
+      {
+        "coluna": "n_cand_2a_opcao",
+        "descricao": "idem, 2a opção"
+      },
+      {
+        "coluna": "n_cand_1a_opcao_com_pre_requisito",
+        "descricao": "1a opção, excluindo 'SEM PRÉ-REQUISITO' (só existe no ciclo 1)"
+      },
+      {
+        "coluna": "n_candidaturas",
+        "descricao": "linhas candidato × opção na célula (qualquer opção)"
+      },
+      {
+        "coluna": "f1_1_cand_1a_opcao",
+        "descricao": "F1.1 na célula: candidatos de 1a opção"
+      },
+      {
+        "coluna": "f1_2_tem_candidato",
+        "descricao": "F1.2 na célula: 1 se há ≥1 candidatura (qualquer opção)"
+      },
+      {
+        "coluna": "n_alocados_ch1",
+        "descricao": "alocados na 1a chamada (ciclo 1: confirmações na alocação sub judice; ciclos 2-3: SITUAÇÃO ALOCADO)"
+      },
+      {
+        "coluna": "n_confirmacoes_ch1",
+        "descricao": "ciclo 1: confirmações de local na alocação sub judice (fonte canônica A1)"
+      },
+      {
+        "coluna": "n_homologacoes_ch1",
+        "descricao": "ciclo 1: homologações da lista da 1a chamada (fonte canônica A1)"
+      },
+      {
+        "coluna": "n_homologacoes_novas_ch2",
+        "descricao": "ciclo 1: homologações novas da lista da 2a chamada (fonte canônica A1)"
+      },
+      {
+        "coluna": "f1_3_preenchida_ch1",
+        "descricao": "F1.3 na célula: ciclo 1 = Y1 do E3/E4; ciclos 2-3 = ≥1 alocado na 1a chamada"
+      },
+      {
+        "coluna": "f1_4_preenchida_ate_ch2",
+        "descricao": "F1.4 na célula: ciclo 1 = Y2 do E4; ciclo 2 = F1.3 ou ≥1 alocado na 2a chamada; ciclo 3 NaN"
+      },
+      {
+        "coluna": "f2_1_ativos_na_celula",
+        "descricao": "ativos do ciclo na célula (relação nominal); ciclo 3 NaN"
+      },
+      {
+        "coluna": "soma_pontuacao_alocados",
+        "descricao": "soma da pontuação dos alocados (para médias ponderadas por pessoa)"
+      },
+      {
+        "coluna": "n_alocados_com_pontuacao",
+        "descricao": "alocados com pontuação numérica"
+      },
+      {
+        "coluna": "f4_1_pontuacao_media_alocados",
+        "descricao": "F4.1: pontuação média dos alocados na 1a chamada (média por pessoa)"
+      },
+      {
+        "coluna": "soma_pontuacao_cand_1a_opcao",
+        "descricao": "soma da pontuação dos candidatos de 1a opção"
+      },
+      {
+        "coluna": "n_cand_1a_opcao_com_pontuacao",
+        "descricao": "candidatos de 1a opção com pontuação numérica"
+      },
+      {
+        "coluna": "f4_2_pontuacao_media_cand_1a_opcao",
+        "descricao": "F4.2: pontuação média dos candidatos de 1a opção (média por pessoa)"
+      },
+      {
+        "coluna": "n_alocados_ch2",
+        "descricao": "ciclo 2: alocados no resultado final da 2a chamada"
+      },
+      {
+        "coluna": "n_remanescentes",
+        "descricao": "ciclo 2: atendidos nas duas listas de vagas remanescentes da 1a chamada"
+      },
+      {
+        "coluna": "f1_3s_preenchida_ch1_com_remanescentes",
+        "descricao": "sensibilidade de F1.3 (ciclo 2) contando os remanescentes"
+      },
+      {
+        "coluna": "n_sub_judice",
+        "descricao": "ciclo 3: linhas com SITUAÇÃO 'SUB JUDICE'"
+      },
+      {
+        "coluna": "f1_3s_preenchida_ch1_com_sub_judice",
+        "descricao": "sensibilidade de F1.3 (ciclo 3) contando 'SUB JUDICE' como alocado"
+      },
+      {
+        "coluna": "motivos_ausencia",
+        "descricao": "para cada coluna NaN da linha, 'coluna: motivo' (NaN nunca é preenchido)"
+      },
+      {
+        "coluna": "natureza_dos_dados",
+        "descricao": "EMPIRICO: construído só de arquivos observados; nada simulado, imputado ou assumido"
+      }
+    ],
+    "escolhas_candidatos": [
+      {
+        "coluna": "ciclo",
+        "descricao": "ciclo do PMM-E (1, 2 ou 3); a população é V_ciclo"
+      },
+      {
+        "coluna": "id_candidato",
+        "descricao": "pseudônimo determinístico do candidato no ciclo (c<k>_<n>); nome e CPF não são gravados"
+      },
+      {
+        "coluna": "cod_curso",
+        "descricao": "código do curso de aprimoramento (número inicial do rótulo)"
+      },
+      {
+        "coluna": "opcao_rank",
+        "descricao": "ordem de prioridade publicada (1 = 1a opção, 2 = 2a opção)"
+      },
+      {
+        "coluna": "id_conjunto_escolha",
+        "descricao": "conjunto de escolha da linha: c<ciclo>_curso<curso> (o curso da própria opção)"
+      },
+      {
+        "coluna": "co_cnes_7d",
+        "descricao": "CNES do estabelecimento (7 dígitos)"
+      },
+      {
+        "coluna": "co_ibge",
+        "descricao": "código IBGE do município (6 dígitos)"
+      },
+      {
+        "coluna": "faixa_anunciada",
+        "descricao": "faixa de atração impressa no quadro da 1a chamada (atributo; nunca cruzada com outcome)"
+      },
+      {
+        "coluna": "celula_no_quadro",
+        "descricao": "1 se a célula escolhida está no quadro da 1a chamada do ciclo"
+      },
+      {
+        "coluna": "celula_com_vaga_imediata",
+        "descricao": "1 se a célula escolhida tem vaga imediata (está no conjunto de sensibilidade do E9)"
+      },
+      {
+        "coluna": "curso_da_1a_opcao",
+        "descricao": "curso da 1a opção do candidato"
+      },
+      {
+        "coluna": "opcoes_em_cursos_diferentes",
+        "descricao": "1 se a 1a e a 2a opção do candidato são de cursos diferentes"
+      },
+      {
+        "coluna": "classificado",
+        "descricao": "ciclo 1: RESULTADO começa com 'CLASSIFICAÇÃO'; ciclos 2-3: linha da aba 'Classificados' (=1)"
+      },
+      {
+        "coluna": "alocado",
+        "descricao": "alocado na 1a chamada (ciclo 1: local confirmado; ciclos 2-3: SITUAÇÃO 'ALOCADO*')"
+      },
+      {
+        "coluna": "situacao_publicada",
+        "descricao": "status publicado, normalizado (ALOCAÇÃO no ciclo 1; SITUAÇÃO nos ciclos 2-3)"
+      },
+      {
+        "coluna": "pontuacao",
+        "descricao": "pontuação usada na classificação (ciclos 1 e 3: barema geral; ciclo 2: pontuação final)"
+      },
+      {
+        "coluna": "sem_pre_requisito",
+        "descricao": "1 se a pontuação publicada é 'SEM PRÉ-REQUISITO' (só ciclo 1)"
+      },
+      {
+        "coluna": "motivos_ausencia",
+        "descricao": "para cada coluna NaN da linha, 'coluna: motivo' (NaN nunca é preenchido)"
+      },
+      {
+        "coluna": "natureza_dos_dados",
+        "descricao": "EMPIRICO: construído só de arquivos observados; nada simulado, imputado ou assumido"
+      }
+    ],
+    "escolhas_conjunto_principal": [
+      {
+        "coluna": "ciclo",
+        "descricao": "ciclo do PMM-E (1, 2 ou 3); a população é V_ciclo"
+      },
+      {
+        "coluna": "id_conjunto_escolha",
+        "descricao": "conjunto de escolha da linha: c<ciclo>_curso<curso> (o curso da própria opção)"
+      },
+      {
+        "coluna": "cod_curso",
+        "descricao": "código do curso de aprimoramento (número inicial do rótulo)"
+      },
+      {
+        "coluna": "co_cnes_7d",
+        "descricao": "CNES do estabelecimento (7 dígitos)"
+      },
+      {
+        "coluna": "co_ibge",
+        "descricao": "código IBGE do município (6 dígitos)"
+      },
+      {
+        "coluna": "faixa_anunciada",
+        "descricao": "faixa de atração impressa no quadro da 1a chamada (atributo; nunca cruzada com outcome)"
+      },
+      {
+        "coluna": "vagas_imediatas",
+        "descricao": "vagas imediatas publicadas no quadro da 1a chamada"
+      },
+      {
+        "coluna": "tem_vaga_imediata",
+        "descricao": "1 se a célula tem vaga imediata no quadro da 1a chamada"
+      },
+      {
+        "coluna": "log_vagas_imediatas_mais_1",
+        "descricao": "log(vagas imediatas + 1)"
+      },
+      {
+        "coluna": "populacao_2022",
+        "descricao": "população residente do Censo 2022"
+      },
+      {
+        "coluna": "macrorregiao",
+        "descricao": "macrorregião impressa no quadro (conferida com o 1o dígito do IBGE)"
+      },
+      {
+        "coluna": "estrato_territorial",
+        "descricao": "estrato da tipologia territorial A2 (matriz_tipologia_territorial, coluna estrato)"
+      },
+      {
+        "coluna": "motivos_ausencia",
+        "descricao": "para cada coluna NaN da linha, 'coluna: motivo' (NaN nunca é preenchido)"
+      },
+      {
+        "coluna": "natureza_dos_dados",
+        "descricao": "EMPIRICO: construído só de arquivos observados; nada simulado, imputado ou assumido"
+      }
+    ],
+    "escolhas_conjunto_sensibilidade_vaga_imediata": [
+      {
+        "coluna": "ciclo",
+        "descricao": "ciclo do PMM-E (1, 2 ou 3); a população é V_ciclo"
+      },
+      {
+        "coluna": "id_conjunto_escolha",
+        "descricao": "conjunto de escolha da linha: c<ciclo>_curso<curso> (o curso da própria opção)"
+      },
+      {
+        "coluna": "cod_curso",
+        "descricao": "código do curso de aprimoramento (número inicial do rótulo)"
+      },
+      {
+        "coluna": "co_cnes_7d",
+        "descricao": "CNES do estabelecimento (7 dígitos)"
+      },
+      {
+        "coluna": "co_ibge",
+        "descricao": "código IBGE do município (6 dígitos)"
+      },
+      {
+        "coluna": "faixa_anunciada",
+        "descricao": "faixa de atração impressa no quadro da 1a chamada (atributo; nunca cruzada com outcome)"
+      },
+      {
+        "coluna": "vagas_imediatas",
+        "descricao": "vagas imediatas publicadas no quadro da 1a chamada"
+      },
+      {
+        "coluna": "tem_vaga_imediata",
+        "descricao": "1 se a célula tem vaga imediata no quadro da 1a chamada"
+      },
+      {
+        "coluna": "log_vagas_imediatas_mais_1",
+        "descricao": "log(vagas imediatas + 1)"
+      },
+      {
+        "coluna": "populacao_2022",
+        "descricao": "população residente do Censo 2022"
+      },
+      {
+        "coluna": "macrorregiao",
+        "descricao": "macrorregião impressa no quadro (conferida com o 1o dígito do IBGE)"
+      },
+      {
+        "coluna": "estrato_territorial",
+        "descricao": "estrato da tipologia territorial A2 (matriz_tipologia_territorial, coluna estrato)"
+      },
+      {
+        "coluna": "motivos_ausencia",
+        "descricao": "para cada coluna NaN da linha, 'coluna: motivo' (NaN nunca é preenchido)"
+      },
+      {
+        "coluna": "natureza_dos_dados",
+        "descricao": "EMPIRICO: construído só de arquivos observados; nada simulado, imputado ou assumido"
+      }
+    ]
+  },
+  "decisoes_de_construcao": [
+    "Célula = CNES (7 dígitos) × código do curso (número inicial do rótulo). Não há identificador persistente de vaga (auditoria A1/08); por isso todos os outcomes de candidatura e preenchimento são por célula oferecida, nunca por vaga. Arquivos são casados só pela chave da célula; colunas são localizadas pelo nome do cabeçalho.",
+    "V_k e as células de V_k vêm do quadro da 1a chamada do ciclo k: ciclo 1 = quadro original (1295 células, a população do E3/E4); ciclo 2 = retificação de 19/03/2026, a mesma versão do P2 do E3; ciclo 3 = retificação de 24/07/2026. O protocolo define V2 como a união dos quadros da 1a e da 2a chamada; o script usa as células da 1a chamada e falha se a 2a chamada acrescentar célula ou município (células da 2a fora da 1a: 0; municípios: 0), de modo que a união e o quadro da 1a chamada coincidem.",
+    "Ciclo 2: versões do quadro da 1a chamada (células, municípios, vagas imediatas, vagas de reserva): original_2026-02-03: 1550, 455, 899, 1998; retificado_servicos: 1547, 454, 1206, 1686; retificado_2026-03-19 (usado): 1547, 454, 1836, 1053. Células comuns às três versões: 1547. Usa-se a versão de 19/03/2026 (a do E3 e a vigente na alocação final de 24/03/2026). A escolha só afeta vagas_imediatas, vagas_cr e com_vagas_imediatas (F0.2 e as sensibilidades por célula imediata).",
+    "Denominador de F1.1–F1.4 e F2.1: todas as células do quadro da 1a chamada, inclusive as só de cadastro reserva, como no E3/E4. A sensibilidade f1_3s_fracao_celulas_imediatas_preenchidas_ch1 restringe às células com vaga imediata.",
+    "F1.1 conta linhas candidato × opção com a célula como 1a opção no resultado da 1a chamada. No ciclo 1 isso inclui os 'SEM PRÉ-REQUISITO' (não classificados) que o arquivo lista com opção; nos ciclos 2 e 3 os desclassificados ficam numa aba sem célula e não entram. A sensibilidade f1_1s_..._com_pre_requisito exclui os 'SEM PRÉ-REQUISITO' do ciclo 1 e é igual ao principal nos ciclos 2 e 3.",
+    "F1.2 conta a célula com ≥1 linha candidato × opção (1a ou 2a opção).",
+    "F1.3 do ciclo 1 é o Y1 do E3/E4, lido da fonte canônica do A1 (matriz do funil): confirmação de local na alocação sub judice ou homologação na lista da 1a chamada. O script falha se não reproduzir E4_proporcao_municipio.csv. Ciclos 2 e 3: ≥1 linha com SITUAÇÃO 'ALOCADO*' no resultado final da 1a chamada.",
+    "Ciclo 2: as duas listas de vagas remanescentes da 1a chamada ('ATENDIDO', 81 linhas; 'ALOCADO' de 05/05/2026, 9 linhas) entram só na sensibilidade f1_3s_..._com_remanescentes. Ciclo 3: as linhas 'SUB JUDICE' (2) entram só em f1_3s_..._com_sub_judice.",
+    "F1.4 do ciclo 1 é o Y2 do E4 (Y1 ou homologação nova na 2a chamada). Ciclo 2: F1.3 ou ≥1 alocado no resultado final da 2a chamada na mesma célula. Ciclo 3: não definido (NaN).",
+    "F2 (ativos) só para os ciclos 1 e 2: o protocolo define F2.1 e F2.3 em V1 e V2 e usa do ciclo 3 só o funil administrativo (§3); o ciclo 3 segue congelado. Ativos = relação nominal do PMM-E, mesma versão e mesma leitura de co_ibge e ciclo do E3.",
+    "F2.1 no município conta todos os ativos do ciclo no município (em qualquer estabelecimento) e divide pelas células oferecidas; a contagem só em células do quadro fica em n_ativos_em_celula_do_quadro e, por célula, em f2_1_ativos_na_celula. F2.3 = 1[≥1 ativo do ciclo no município] (D_k do E3).",
+    "F2.2 em U: ativos do ciclo k no município por 10 mil habitantes do Censo 2022, com zero onde não há ativo (inclusive fora do quadro).",
+    "F4 usa a pontuação que cada resultado final usa para classificar: ciclo 1 'PONTUAÇÃO NO BAREMA (GERAL)'; ciclo 2 'PONTUAÇÃO FINAL'; ciclo 3 'PONTUAÇÃO NO BAREMA (GERAL)'. No ciclo 2 a pontuação final não é o barema do resultado preliminar (ver escala_pontuacao_ciclo2) e, na 2a chamada do mesmo ciclo, é barema + tempo; a escala dos ciclos não é idêntica e o empilhamento deve usar efeito fixo de ciclo. 'SEM PRÉ-REQUISITO' (ciclo 1) não tem pontuação e fica fora das médias.",
+    "F4.1: média por pessoa da pontuação dos alocados na 1a chamada (ciclo 1: confirmações na alocação sub judice; homologados sem confirmação não têm pontuação no arquivo). F4.2: média por pessoa dos candidatos de 1a opção. No município, as médias somam as pessoas de todas as células.",
+    "F0.1: ciclo 1 = quadro da 1a chamada (= V1); ciclo 2 = união dos quadros da 1a e 2a chamada (= V2); ciclo 3 = quadro da 1a chamada (= V3). F0.2 usa células e vagas imediatas do quadro da 1a chamada de cada ciclo (somar quadros de chamadas diferentes contaria vagas duas vezes, inventário A1). O diagnóstico f0_1s_tem_celula_c1_ch1_ou_ch2 inclui o quadro de reserva da 2a chamada do ciclo 1, que tem 172 municípios fora do quadro da 1a chamada.",
+    "F0.3 (G3 = municípios do cardápio de gestores): F0.3a = f0_3a_consta_do_resultado_final_adesao, 1 se o município consta do resultado final da adesão e 0 se não consta. Não constar NÃO é codificado como 'não pediu': nenhum documento examinado diz que o resultado final lista todas as propostas enviadas (ver regra_publicacao_resultado_adesao). Vagas pedidas (priorizadas + não priorizadas), fração priorizada (priorizadas / pedidas, com priorizadas = imediatas + cadastro reserva, identidade conferida) e imediatas priorizadas só existem para quem consta; os demais ficam NaN com o motivo 'não consta do resultado final de adesão'. A aba de gestão dupla repete linhas da aba principal e não é somada.",
+    "Zeros e ausentes: zero só onde o arquivo completo observa zero (célula oferecida sem candidatura no resultado; município fora do quadro; sem ativo na relação nominal nacional). Valor indefinido ou fora do protocolo fica NaN e a coluna motivos_ausencia diz por quê; o script falha se algum NaN não tiver motivo registrado. Linhas de candidatura cuja célula não casa com o quadro não são atribuídas a célula nenhuma e são contadas em casamento_entre_arquivos.",
+    "F0.4: PMMB consolidado, nível MUNICIPAL; vagas = total_vagas_ativas; médicos ativos = total_ocupadas (= soma dos ativos por equipe e por sexo, conferido).",
+    "E9 (adendo §12; conjunto fixado no §14): escolhas_candidatos tem uma linha por candidato × opção ranqueada do resultado da 1a chamada de cada ciclo (ciclo 1: alocação sub judice; ciclo 2: resultado final de 24/03/2026; ciclo 3: resultado final sub judice), com a célula escolhida e o município e a faixa impressa vindos do quadro pela célula. Conjunto de escolha PRINCIPAL (escolhas_conjunto_principal): todas as células do curso e ciclo no quadro da 1a chamada, com ou sem vaga imediata, com tem_vaga_imediata, log(vagas_imediatas + 1), faixa impressa, co_ibge, população do Censo 2022, macrorregião (impressa no quadro e conferida com o 1o dígito do IBGE) e estrato territorial (A2, só a coluna estrato). SENSIBILIDADE (escolhas_conjunto_sensibilidade_vaga_imediata): só as células com vaga imediata, e só candidatos cuja 1a opção está nelas (celula_com_vaga_imediata = 1 na linha de 1a opção). O conjunto de cada linha é o do curso da PRÓPRIA opção (id_conjunto_escolha): a 2a opção pode ser de outro curso que a 1a (contagens em candidatos_com_1a_e_2a_opcao_em_cursos_diferentes), e então o conjunto do posto 2 é o do curso da 2a opção. O tipo de inscrição (cota) não é lido nem gravado (não é necessário ao E9).",
+    "U = os 5565 municípios do IVS 2010 oficial; municípios do Censo 2022 fora de U (criados depois de 2010): 5. Municípios de V ou G3 sem IVS 2010 ficam com ivs_2010_oficial NaN e tem_ivs_oficial = 0 (lista em n_por_populacao)."
+  ],
+  "casamento_entre_arquivos": {
+    "candidaturas_contra_quadro_da_1a_chamada": {
+      "c1_ch1": {
+        "linhas": 1671,
+        "linhas_casadas": 1671,
+        "taxa_casamento": 1.0,
+        "linhas_fora_do_quadro": 0,
+        "linhas_fora_com_cnes_no_quadro_e_curso_diferente": 0,
+        "celulas_distintas_casadas": 636,
+        "linhas_casadas_com_ibge_do_arquivo_igual_ao_do_quadro": 1671,
+        "linhas_casadas_com_ibge_no_arquivo": 1671,
+        "linhas_sem_chave_no_arquivo": 0,
+        "pessoas_distintas": 993,
+        "linhas_pessoa_celula_duplicadas": 0,
+        "linhas_por_opcao": {
+          "1": 993,
+          "2": 678
+        },
+        "pessoas_sem_linha_de_1a_opcao": 0,
+        "situacoes": {
+          "": 1144,
+          "LOCAL DE ATUACAO CONFIRMADO PARA INICIO DAS ATIVIDADES": 468,
+          "LOCAL DE ATUACAO DESCONSIDERADO A PEDIDO DA GESTAO LOCAL OU ": 59
+        },
+        "linhas_alocadas": 468,
+        "linhas_sem_pontuacao_numerica": 194,
+        "linhas_sem_pre_requisito": 194,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_arquivo": 0,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_quadro": 0
+      },
+      "c2_ch1": {
+        "linhas": 3646,
+        "linhas_casadas": 3646,
+        "taxa_casamento": 1.0,
+        "linhas_fora_do_quadro": 0,
+        "linhas_fora_com_cnes_no_quadro_e_curso_diferente": 0,
+        "celulas_distintas_casadas": 968,
+        "linhas_sem_chave_no_arquivo": 0,
+        "pessoas_distintas": 2179,
+        "linhas_pessoa_celula_duplicadas": 0,
+        "linhas_por_opcao": {
+          "1": 2140,
+          "2": 1506
+        },
+        "pessoas_sem_linha_de_1a_opcao": 39,
+        "situacoes": {
+          "ALOCADO AC": 1043,
+          "ALOCADO ER": 10,
+          "ALOCADO PCD": 4,
+          "CADASTRO RESERVA": 2589
+        },
+        "linhas_alocadas": 1057,
+        "linhas_sem_pontuacao_numerica": 0,
+        "linhas_sem_pre_requisito": 0,
+        "linhas_alocadas_em_celula_so_cadastro_reserva": 0
+      },
+      "c2_ch1_preliminar": {
+        "linhas": 3442,
+        "linhas_casadas": 3442,
+        "taxa_casamento": 1.0,
+        "linhas_fora_do_quadro": 0,
+        "linhas_fora_com_cnes_no_quadro_e_curso_diferente": 0,
+        "celulas_distintas_casadas": 968,
+        "linhas_casadas_com_ibge_do_arquivo_igual_ao_do_quadro": 3442,
+        "linhas_casadas_com_ibge_no_arquivo": 3442,
+        "linhas_sem_chave_no_arquivo": 0,
+        "pessoas_distintas": 2185,
+        "linhas_pessoa_celula_duplicadas": 0,
+        "linhas_por_opcao": {
+          "1": 2103,
+          "2": 1339
+        },
+        "pessoas_sem_linha_de_1a_opcao": 82,
+        "situacoes": {
+          "ALOCADO AC": 896,
+          "ALOCADO ER": 10,
+          "ALOCADO PCD": 5,
+          "CADASTRO DE RESERVA": 2531
+        },
+        "linhas_alocadas": 911,
+        "linhas_sem_pontuacao_numerica": 0,
+        "linhas_sem_pre_requisito": 0,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_arquivo": 0,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_quadro": 0
+      },
+      "c2_ch1_remanescentes": {
+        "linhas": 81,
+        "linhas_casadas": 81,
+        "taxa_casamento": 1.0,
+        "linhas_fora_do_quadro": 0,
+        "linhas_fora_com_cnes_no_quadro_e_curso_diferente": 0,
+        "celulas_distintas_casadas": 78,
+        "linhas_casadas_com_ibge_do_arquivo_igual_ao_do_quadro": 81,
+        "linhas_casadas_com_ibge_no_arquivo": 81,
+        "linhas_sem_chave_no_arquivo": 0,
+        "pessoas_distintas": 79,
+        "linhas_pessoa_celula_duplicadas": 0,
+        "linhas_por_opcao": {
+          "1": 48,
+          "2": 33
+        },
+        "pessoas_sem_linha_de_1a_opcao": 31,
+        "situacoes": {
+          "ATENDIDO": 81
+        },
+        "linhas_alocadas": 81,
+        "linhas_sem_pontuacao_numerica": 0,
+        "linhas_sem_pre_requisito": 0,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_arquivo": 0,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_quadro": 0,
+        "linhas_alocadas_em_celula_so_cadastro_reserva": 0
+      },
+      "c2_ch1_remanescentes_0505": {
+        "linhas": 9,
+        "linhas_casadas": 9,
+        "taxa_casamento": 1.0,
+        "linhas_fora_do_quadro": 0,
+        "linhas_fora_com_cnes_no_quadro_e_curso_diferente": 0,
+        "celulas_distintas_casadas": 7,
+        "linhas_casadas_com_ibge_do_arquivo_igual_ao_do_quadro": 9,
+        "linhas_casadas_com_ibge_no_arquivo": 9,
+        "linhas_sem_chave_no_arquivo": 0,
+        "pessoas_distintas": 9,
+        "linhas_pessoa_celula_duplicadas": 0,
+        "linhas_por_opcao": {
+          "1": 6,
+          "2": 3
+        },
+        "pessoas_sem_linha_de_1a_opcao": 3,
+        "situacoes": {
+          "ALOCADO": 9
+        },
+        "linhas_alocadas": 9,
+        "linhas_sem_pontuacao_numerica": 0,
+        "linhas_sem_pre_requisito": 0,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_arquivo": 0,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_quadro": 0
+      },
+      "c2_ch2": {
+        "linhas": 1053,
+        "linhas_casadas": 1053,
+        "taxa_casamento": 1.0,
+        "linhas_fora_do_quadro": 0,
+        "linhas_fora_com_cnes_no_quadro_e_curso_diferente": 0,
+        "celulas_distintas_casadas": 376,
+        "linhas_casadas_com_ibge_do_arquivo_igual_ao_do_quadro": 966,
+        "linhas_casadas_com_ibge_no_arquivo": 1053,
+        "linhas_sem_chave_no_arquivo": 0,
+        "pessoas_distintas": 609,
+        "linhas_pessoa_celula_duplicadas": 0,
+        "linhas_por_opcao": {
+          "1": 609,
+          "2": 444
+        },
+        "pessoas_sem_linha_de_1a_opcao": 0,
+        "situacoes": {
+          "ALOCADO": 303,
+          "CADASTRO RESERVA": 750
+        },
+        "linhas_alocadas": 303,
+        "linhas_sem_pontuacao_numerica": 0,
+        "linhas_sem_pre_requisito": 0,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_arquivo": 0,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_quadro": 87,
+        "linhas_alocadas_em_celula_so_cadastro_reserva": 139
+      },
+      "c3_ch1": {
+        "linhas": 4532,
+        "linhas_casadas": 4532,
+        "taxa_casamento": 1.0,
+        "linhas_fora_do_quadro": 0,
+        "linhas_fora_com_cnes_no_quadro_e_curso_diferente": 0,
+        "celulas_distintas_casadas": 1355,
+        "linhas_casadas_com_ibge_do_arquivo_igual_ao_do_quadro": 4532,
+        "linhas_casadas_com_ibge_no_arquivo": 4532,
+        "linhas_sem_chave_no_arquivo": 0,
+        "pessoas_distintas": 2604,
+        "linhas_pessoa_celula_duplicadas": 0,
+        "linhas_por_opcao": {
+          "1": 2581,
+          "2": 1951
+        },
+        "pessoas_sem_linha_de_1a_opcao": 23,
+        "situacoes": {
+          "ALOCADO AC": 677,
+          "ALOCADO ER": 17,
+          "ALOCADO PCD": 10,
+          "CADASTRO RESERVA": 3826,
+          "SUB JUDICE": 2
+        },
+        "linhas_alocadas": 704,
+        "linhas_sem_pontuacao_numerica": 0,
+        "linhas_sem_pre_requisito": 0,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_arquivo": 0,
+        "linhas_ibge_divergente_nome_bate_com_ibge_do_quadro": 0,
+        "linhas_alocadas_em_celula_so_cadastro_reserva": 131
+      },
+      "c2_ch2_contra_quadro_ch2": {
+        "linhas": 1053,
+        "linhas_casadas": 1053,
+        "taxa_casamento": 1.0,
+        "linhas_fora_do_quadro": 0,
+        "linhas_fora_com_cnes_no_quadro_e_curso_diferente": 0,
+        "celulas_distintas_casadas": 376,
+        "linhas_casadas_com_ibge_do_arquivo_igual_ao_do_quadro": 966,
+        "linhas_casadas_com_ibge_no_arquivo": 1053
+      }
+    },
+    "versoes_do_quadro_ciclo2_chamada1": {
+      "original_2026-02-03": {
+        "celulas": 1550,
+        "municipios": 455,
+        "vagas_imediatas": 899.0,
+        "vagas_cr": 1998.0,
+        "linhas_do_resultado_final_casadas": 3646
+      },
+      "retificado_servicos": {
+        "celulas": 1547,
+        "municipios": 454,
+        "vagas_imediatas": 1206.0,
+        "vagas_cr": 1686.0,
+        "linhas_do_resultado_final_casadas": 3646
+      },
+      "retificado_2026-03-19 (usado)": {
+        "celulas": 1547,
+        "municipios": 454,
+        "vagas_imediatas": 1836.0,
+        "vagas_cr": 1053.0,
+        "linhas_do_resultado_final_casadas": 3646
+      }
+    },
+    "ativos": {
+      "ciclo_1": {
+        "ativos": 519,
+        "em_municipio_de_V": 483,
+        "em_celula_do_quadro_ch1": 368,
+        "municipios_com_ativo": 178,
+        "em_celula_do_quadro_ch1_ou_ch2": 479
+      },
+      "ciclo_2": {
+        "ativos": 941,
+        "em_municipio_de_V": 940,
+        "em_celula_do_quadro_ch1": 908,
+        "municipios_com_ativo": 252
+      },
+      "ciclo_3": {
+        "ativos": 497,
+        "uso": "não usado: F2 do ciclo 3 fora do protocolo (ciclo 3 congelado)"
+      }
+    },
+    "escolhas_E9_celula_escolhida_contra_quadro": {
+      "ciclo_1": {
+        "linhas_candidato_opcao": 1671,
+        "candidatos": 993,
+        "linhas_com_celula_no_quadro_conjunto_principal": 1671,
+        "taxa_casamento_celula_quadro": 1.0,
+        "linhas_1a_opcao": 993,
+        "linhas_1a_opcao_no_conjunto_principal": 993,
+        "linhas_1a_opcao_no_conjunto_sensibilidade_vaga_imediata": 563,
+        "linhas_2a_opcao_no_conjunto_principal": 678,
+        "linhas_2a_opcao_no_conjunto_sensibilidade_vaga_imediata": 339,
+        "candidatos_com_1a_e_2a_opcao": 678,
+        "candidatos_com_1a_e_2a_opcao_em_cursos_diferentes": 225,
+        "celulas_no_conjunto_principal": 1295,
+        "celulas_no_conjunto_sensibilidade_vaga_imediata": 513,
+        "cursos_no_conjunto_principal": 16,
+        "cursos_escolhidos_sem_celula_no_conjunto_principal": 0,
+        "cursos_escolhidos_sem_celula_com_vaga_imediata": 0,
+        "linhas_por_situacao_publicada": {
+          "": 1144,
+          "LOCAL DE ATUACAO CONFIRMADO PARA INICIO DAS ATIVIDADES": 468,
+          "LOCAL DE ATUACAO DESCONSIDERADO A PEDIDO DA GESTAO LOCAL OU ": 59
+        }
+      },
+      "ciclo_2": {
+        "linhas_candidato_opcao": 3646,
+        "candidatos": 2179,
+        "linhas_com_celula_no_quadro_conjunto_principal": 3646,
+        "taxa_casamento_celula_quadro": 1.0,
+        "linhas_1a_opcao": 2140,
+        "linhas_1a_opcao_no_conjunto_principal": 2140,
+        "linhas_1a_opcao_no_conjunto_sensibilidade_vaga_imediata": 1798,
+        "linhas_2a_opcao_no_conjunto_principal": 1506,
+        "linhas_2a_opcao_no_conjunto_sensibilidade_vaga_imediata": 1144,
+        "candidatos_com_1a_e_2a_opcao": 1467,
+        "candidatos_com_1a_e_2a_opcao_em_cursos_diferentes": 6,
+        "celulas_no_conjunto_principal": 1547,
+        "celulas_no_conjunto_sensibilidade_vaga_imediata": 1015,
+        "cursos_no_conjunto_principal": 16,
+        "cursos_escolhidos_sem_celula_no_conjunto_principal": 0,
+        "cursos_escolhidos_sem_celula_com_vaga_imediata": 0,
+        "linhas_por_situacao_publicada": {
+          "ALOCADO AC": 1043,
+          "ALOCADO ER": 10,
+          "ALOCADO PCD": 4,
+          "CADASTRO RESERVA": 2589
+        }
+      },
+      "ciclo_3": {
+        "linhas_candidato_opcao": 4532,
+        "candidatos": 2604,
+        "linhas_com_celula_no_quadro_conjunto_principal": 4532,
+        "taxa_casamento_celula_quadro": 1.0,
+        "linhas_1a_opcao": 2581,
+        "linhas_1a_opcao_no_conjunto_principal": 2581,
+        "linhas_1a_opcao_no_conjunto_sensibilidade_vaga_imediata": 1004,
+        "linhas_2a_opcao_no_conjunto_principal": 1951,
+        "linhas_2a_opcao_no_conjunto_sensibilidade_vaga_imediata": 578,
+        "candidatos_com_1a_e_2a_opcao": 1928,
+        "candidatos_com_1a_e_2a_opcao_em_cursos_diferentes": 2,
+        "celulas_no_conjunto_principal": 2293,
+        "celulas_no_conjunto_sensibilidade_vaga_imediata": 694,
+        "cursos_no_conjunto_principal": 24,
+        "cursos_escolhidos_sem_celula_no_conjunto_principal": 0,
+        "cursos_escolhidos_sem_celula_com_vaga_imediata": 0,
+        "linhas_por_situacao_publicada": {
+          "ALOCADO AC": 677,
+          "ALOCADO ER": 17,
+          "ALOCADO PCD": 10,
+          "CADASTRO RESERVA": 3826,
+          "SUB JUDICE": 2
+        }
+      }
+    },
+    "ativos_fora_de_U": {
+      "ciclo_1": 0,
+      "ciclo_2": 0
+    },
+    "adesao_ciclo3": {
+      "linhas_aba_principal": 5534,
+      "linhas_aba_gestao_dupla": 325,
+      "linhas_gestao_dupla_presentes_na_principal": 325,
+      "linhas_gestao_dupla_com_mesmas_priorizadas": 325,
+      "identidade_priorizadas_igual_imediatas_mais_cr": 1.0,
+      "municipios_cardapio": 2699,
+      "municipios_com_adesao_no_arquivo": 1179,
+      "municipios_com_adesao_fora_do_cardapio": 16,
+      "linhas_adesao_de_municipios_fora_do_cardapio": 29,
+      "linhas_adesao_em_municipios_g3_com_celula_fora_do_cardapio": 217,
+      "regra": "linhas de adesão de municípios fora do cardápio não entram em G3; linhas de municípios de G3 com célula fora do cardápio entram (o pedido é do município)"
+    },
+    "pmmb": {
+      "municipios_nivel_municipal": 5571,
+      "identidade_vagas_igual_ocupadas_mais_processo_mais_desocupadas": 1.0,
+      "municipios_de_U_sem_linha_pmmb": 0
+    }
+  },
+  "escala_pontuacao_ciclo2": {
+    "linhas_pareadas_final_preliminar": 3321,
+    "pontuacao_final_igual_barema_preliminar": 0,
+    "valores_barema_preliminar": [
+      2,
+      4,
+      6,
+      8,
+      12
+    ],
+    "valores_pontuacao_final": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      15
+    ],
+    "ch2_linhas_final_igual_barema_mais_tempo": 1015,
+    "ch2_linhas": 1053
+  },
+  "regra_publicacao_resultado_adesao": {
+    "pergunta": "o resultado final da adesão de gestores lista todas as propostas enviadas?",
+    "resposta": "não há texto que o afirme; F0.3 não codifica 'não consta' como 'não pediu'",
+    "texto_examinado": [
+      "Edital SGTES/MS nº 2/2025 (adesão de gestores, ciclo 1), itens 2.2.1, 2.3.1, 3.6 e 4.4: a SGTES publica a lista preliminar e o resultado final 'com base nas informações enviadas' / 'incluídas no sistema', depois de analisar recursos; nada diz que toda proposta enviada aparece no resultado.",
+      "Mesmo edital, item 3.5: a SGTES 'se reserva ao direito de excluir do presente chamamento público o ente federativo que não atender integralmente aos critérios', isto é, propostas podem não constar.",
+      "Ciclo 3 (Edital nº 25/2026): a cópia no repositório (data/raw/aquisicao/ivs_regra/edital_sgtes_05_2026_adesao_ciclo3.html) é só a página de anexos; o texto do edital não foi examinado. A cópia da página do Edital 2/2025 no repositório também não traz os itens acima, que foram lidos num extrato de texto fora do repositório."
+    ]
+  },
+  "conferencias": {
+    "ciclo1_F1_3_e_F1_4_reproduzem_E4": true,
+    "ciclo1_celulas_do_quadro_bruto_iguais_a_populacao_canonica": true,
+    "relacao_nominal_de_ativos_sha256_do_protocolo": true,
+    "V1_igual_P1_e_F2_3_igual_D_1": true,
+    "V2_igual_P2_e_F2_3_igual_D_2": true,
+    "V2_2a_chamada_nao_acrescenta_celula_nem_municipio": true,
+    "macrorregiao_do_quadro_igual_ao_1o_digito_do_ibge": true
+  },
+  "ressalvas_dos_arquivos_de_candidatura": [
+    "A auditoria do A1 (gate 08) bloqueou 'candidaturas por vaga' porque não há ID persistente de vaga; aqui a unidade é a célula CNES × curso, que existe em todos os arquivos.",
+    "O resultado da 1a chamada lista candidatos classificados e em cadastro reserva por opção; candidatos desclassificados por pré-requisito (ciclos 2 e 3) ficam numa aba sem célula e não entram em F1.",
+    "Algumas pessoas aparecem só com linha de 2a opção (ver pessoas_sem_linha_de_1a_opcao): contam em F1.2, não em F1.1.",
+    "Ciclo 2: o resultado final da 1a chamada não tem IBGE; o município vem do quadro pela célula.",
+    "Em todos os arquivos o município vem do quadro pela célula, nunca do IBGE do arquivo de resultado. No resultado da 2a chamada do ciclo 2, há linhas em que o IBGE impresso difere do IBGE do quadro; nelas o nome do município impresso no próprio arquivo bate com o IBGE do quadro, não com o do arquivo (ver linhas_ibge_divergente_nome_bate_com_ibge_do_* em casamento_entre_arquivos).",
+    "O ciclo 1 usa a alocação retificada sub judice (versão canônica do A1/E4)."
+  ],
+  "desvios": [
+    {
+      "data": "2026-10-18",
+      "item": "resultado final da 1a chamada do ciclo 2",
+      "situacao": "ausente do repositório no inventário de 18/10/2026",
+      "resolucao": "obtido na página pública do Chamamento SGTES/MS nº 1/2026 e preservado por scripts/aquisicao/a11_adquirir_resultado_ciclo2_chamada1.py (output/aquisicao/a11_manifesto_ciclo2_chamada1.json)"
+    },
+    {
+      "data": "2026-10-18",
+      "item": "data da relação nominal de ativos",
+      "situacao": "o protocolo chama de 'retrato de 09/10/2026' a versão publicada nessa data; a coluna dt_referencia do arquivo diz 11/09/2026",
+      "resolucao": "mesmo arquivo do E3 (SHA-256 conferido); as duas datas ficam registradas"
+    },
+    {
+      "data": "2026-10-18",
+      "item": "F0.3 (adesão do ciclo 3)",
+      "situacao": "a primeira versão codificava como 'não aderiu' (zero pedido) o município do cardápio ausente do resultado final, sem documento que dissesse que o resultado lista todos os pedidos (auditoria independente de 18/10/2026)",
+      "resolucao": "F0.3a = consta (1) / não consta (0) do resultado final; pedidos e fração priorizada só para quem consta, NaN com motivo para os demais"
+    },
+    {
+      "data": "2026-10-18",
+      "item": "identificador do candidato na tabela de escolhas do E9",
+      "situacao": "o pedido era o CPF mascarado como publicado",
+      "resolucao": "gravado pseudônimo determinístico por ciclo (id_candidato), que agrupa as opções da mesma pessoa; regra do repositório (08a): nenhum nome, CPF ou assinatura de CPF em output/"
+    },
+    {
+      "data": "2026-10-18",
+      "item": "F2 do ciclo 3",
+      "situacao": "a relação nominal tem ativos do ciclo 3",
+      "resolucao": "não construído: fora do protocolo (§3 e §5) e ciclo 3 congelado"
+    }
+  ],
+  "resumo_global": {
+    "U": {
+      "f0_1_tem_celula_c1": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.066128,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f0_2_celulas_por_10k_c1": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.041766,
+        "min": 0.0,
+        "max": 4.878578
+      },
+      "f0_2_vagas_imediatas_por_10k_c1": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.019973,
+        "min": 0.0,
+        "max": 4.50635
+      },
+      "f0_1_tem_celula_c2": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.081581,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f0_2_celulas_por_10k_c2": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.0463,
+        "min": 0.0,
+        "max": 8.534244
+      },
+      "f0_2_vagas_imediatas_por_10k_c2": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.052596,
+        "min": 0.0,
+        "max": 19.202048
+      },
+      "f0_1_tem_celula_c3": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.134232,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f0_2_celulas_por_10k_c3": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.088575,
+        "min": 0.0,
+        "max": 9.487666
+      },
+      "f0_2_vagas_imediatas_por_10k_c3": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.032977,
+        "min": 0.0,
+        "max": 9.487666
+      },
+      "f0_1s_tem_celula_c1_ch1_ou_ch2": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.097035,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f0_4_pmmb_vagas_por_10k": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 2.198758,
+        "min": 0.0,
+        "max": 12.614317
+      },
+      "f0_4_pmmb_medicos_por_10k": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 2.041868,
+        "min": 0.0,
+        "max": 12.614317
+      },
+      "f2_2_ativos_pmme_por_10k_c1": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.015771,
+        "min": 0.0,
+        "max": 7.331378
+      },
+      "f2_2_ativos_pmme_por_10k_c2": {
+        "n": 5565,
+        "ausentes": 0,
+        "media": 0.024124,
+        "min": 0.0,
+        "max": 19.202048
+      }
+    },
+    "G3": {
+      "f0_3a_consta_do_resultado_final_adesao": {
+        "n": 2699,
+        "ausentes": 0,
+        "media": 0.4309,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f0_3_vagas_pedidas": {
+        "n": 1163,
+        "ausentes": 1536,
+        "media": 10.705073,
+        "min": 1.0,
+        "max": 380.0
+      },
+      "f0_3_fracao_priorizada": {
+        "n": 1163,
+        "ausentes": 1536,
+        "media": 0.389757,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f0_3_vagas_imediatas_priorizadas": {
+        "n": 1163,
+        "ausentes": 1536,
+        "media": 0.975064,
+        "min": 0.0,
+        "max": 53.0
+      },
+      "f0_3s_vagas_pedidas_por_10k": {
+        "n": 1163,
+        "ausentes": 1536,
+        "media": 2.179991,
+        "min": 0.020887,
+        "max": 28.462998
+      }
+    },
+    "V1": {
+      "f1_1_cand_1a_opcao_por_celula": {
+        "n": 368,
+        "ausentes": 0,
+        "media": 0.766352,
+        "min": 0.0,
+        "max": 11.5
+      },
+      "f1_1s_cand_1a_opcao_com_pre_requisito_por_celula": {
+        "n": 368,
+        "ausentes": 0,
+        "media": 0.661841,
+        "min": 0.0,
+        "max": 10.0
+      },
+      "f1_2_fracao_celulas_com_candidato": {
+        "n": 368,
+        "ausentes": 0,
+        "media": 0.498158,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f1_3_fracao_celulas_preenchidas_ch1": {
+        "n": 368,
+        "ausentes": 0,
+        "media": 0.295487,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f1_3s_fracao_celulas_imediatas_preenchidas_ch1": {
+        "n": 215,
+        "ausentes": 153,
+        "media": 0.430242,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f1_4_fracao_celulas_preenchidas_ate_ch2": {
+        "n": 368,
+        "ausentes": 0,
+        "media": 0.333516,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f2_1_ativos_por_celula": {
+        "n": 368,
+        "ausentes": 0,
+        "media": 0.359479,
+        "min": 0.0,
+        "max": 8.0
+      },
+      "f2_3_d_k_algum_ativo_do_ciclo": {
+        "n": 368,
+        "ausentes": 0,
+        "media": 0.418478,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f4_1_pontuacao_media_alocados": {
+        "n": 198,
+        "ausentes": 170,
+        "media": 5.302177,
+        "min": 2.0,
+        "max": 9.0
+      },
+      "f4_2_pontuacao_media_cand_1a_opcao": {
+        "n": 219,
+        "ausentes": 149,
+        "media": 5.013141,
+        "min": 2.0,
+        "max": 9.0
+      },
+      "f1_3s_fracao_celulas_preenchidas_ch1_com_remanescentes": {
+        "n": 0,
+        "ausentes": 368,
+        "media": null,
+        "min": null,
+        "max": null
+      },
+      "f1_3s_fracao_celulas_preenchidas_ch1_com_sub_judice": {
+        "n": 0,
+        "ausentes": 368,
+        "media": null,
+        "min": null,
+        "max": null
+      }
+    },
+    "V2": {
+      "f1_1_cand_1a_opcao_por_celula": {
+        "n": 454,
+        "ausentes": 0,
+        "media": 1.209458,
+        "min": 0.0,
+        "max": 33.0
+      },
+      "f1_1s_cand_1a_opcao_com_pre_requisito_por_celula": {
+        "n": 454,
+        "ausentes": 0,
+        "media": 1.209458,
+        "min": 0.0,
+        "max": 33.0
+      },
+      "f1_2_fracao_celulas_com_candidato": {
+        "n": 454,
+        "ausentes": 0,
+        "media": 0.569947,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f1_3_fracao_celulas_preenchidas_ch1": {
+        "n": 454,
+        "ausentes": 0,
+        "media": 0.44633,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f1_3s_fracao_celulas_imediatas_preenchidas_ch1": {
+        "n": 392,
+        "ausentes": 62,
+        "media": 0.658861,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f1_4_fracao_celulas_preenchidas_ate_ch2": {
+        "n": 454,
+        "ausentes": 0,
+        "media": 0.529341,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f2_1_ativos_por_celula": {
+        "n": 454,
+        "ausentes": 0,
+        "media": 0.507926,
+        "min": 0.0,
+        "max": 5.0
+      },
+      "f2_3_d_k_algum_ativo_do_ciclo": {
+        "n": 454,
+        "ausentes": 0,
+        "media": 0.552863,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f4_1_pontuacao_media_alocados": {
+        "n": 298,
+        "ausentes": 156,
+        "media": 5.745552,
+        "min": 3.0,
+        "max": 11.0
+      },
+      "f4_2_pontuacao_media_cand_1a_opcao": {
+        "n": 302,
+        "ausentes": 152,
+        "media": 5.438043,
+        "min": 3.0,
+        "max": 11.0
+      },
+      "f1_3s_fracao_celulas_preenchidas_ch1_com_remanescentes": {
+        "n": 454,
+        "ausentes": 0,
+        "media": 0.44633,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f1_3s_fracao_celulas_preenchidas_ch1_com_sub_judice": {
+        "n": 0,
+        "ausentes": 454,
+        "media": null,
+        "min": null,
+        "max": null
+      }
+    },
+    "V3": {
+      "f1_1_cand_1a_opcao_por_celula": {
+        "n": 748,
+        "ausentes": 0,
+        "media": 0.860154,
+        "min": 0.0,
+        "max": 36.0
+      },
+      "f1_1s_cand_1a_opcao_com_pre_requisito_por_celula": {
+        "n": 748,
+        "ausentes": 0,
+        "media": 0.860154,
+        "min": 0.0,
+        "max": 36.0
+      },
+      "f1_2_fracao_celulas_com_candidato": {
+        "n": 748,
+        "ausentes": 0,
+        "media": 0.532114,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f1_3_fracao_celulas_preenchidas_ch1": {
+        "n": 748,
+        "ausentes": 0,
+        "media": 0.180338,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f1_3s_fracao_celulas_imediatas_preenchidas_ch1": {
+        "n": 307,
+        "ausentes": 441,
+        "media": 0.546986,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "f1_4_fracao_celulas_preenchidas_ate_ch2": {
+        "n": 0,
+        "ausentes": 748,
+        "media": null,
+        "min": null,
+        "max": null
+      },
+      "f2_1_ativos_por_celula": {
+        "n": 0,
+        "ausentes": 748,
+        "media": null,
+        "min": null,
+        "max": null
+      },
+      "f2_3_d_k_algum_ativo_do_ciclo": {
+        "n": 0,
+        "ausentes": 748,
+        "media": null,
+        "min": null,
+        "max": null
+      },
+      "f4_1_pontuacao_media_alocados": {
+        "n": 237,
+        "ausentes": 511,
+        "media": 5.914772,
+        "min": 3.0,
+        "max": 13.0
+      },
+      "f4_2_pontuacao_media_cand_1a_opcao": {
+        "n": 394,
+        "ausentes": 354,
+        "media": 5.527524,
+        "min": 2.0,
+        "max": 13.0
+      },
+      "f1_3s_fracao_celulas_preenchidas_ch1_com_remanescentes": {
+        "n": 0,
+        "ausentes": 748,
+        "media": null,
+        "min": null,
+        "max": null
+      },
+      "f1_3s_fracao_celulas_preenchidas_ch1_com_sub_judice": {
+        "n": 748,
+        "ausentes": 0,
+        "media": 0.180389,
+        "min": 0.0,
+        "max": 1.0
+      }
+    }
+  },
+  "entradas": [
+    {
+      "caminho": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
+      "sha256": "7847c3b96577ca579daa46f59c41afcbbfde8b819d228f0b2f0d4f7cda6dcb2c",
+      "bytes": 6949,
+      "papel": "protocolo congelado E6 (somente lido)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "IVS 2010 oficial: define U e entra só como coluna de chave",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "IVS 2010 (manifesto a08)",
+      "cobertura": "5565 municípios (malha de 2010)",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "colunas co_ibge e ivs apenas"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "população para as taxas por 10 mil habitantes",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "Censo 2022",
+      "cobertura": "5570 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge_6d",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/aquisicao/quadro_vagas_consolidado.parquet",
+      "sha256": "47cf61e4018b17759a088b320757b0269557c808721089a2490a3ce830b642db",
+      "bytes": 535176,
+      "papel": "datas de publicação dos arquivos do PMM-E (só metadado)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "A1",
+      "cobertura": "47475 linhas",
+      "unidade": "linha de documento",
+      "chaves": "arquivo_origem",
+      "filtros": "colunas arquivo_origem e dt_publicacao"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx",
+      "sha256": "51c6807f6bc2efa252b5236d89c5384ae484c4d47c8b65d4161c3facbfebe304",
+      "bytes": 129157,
+      "papel": "células de V1 (quadro da 1a chamada do ciclo 1)",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "publicação 2025-07-24 (quadro_vagas_consolidado, A1)",
+      "cobertura": "1295 células, 368 municípios",
+      "unidade": "célula CNES × curso",
+      "chaves": "CNES, curso",
+      "filtros": "linhas com CNES e curso válidos",
+      "manifesto": {
+        "arquivo": "output/manifesto_fontes_pmme.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-projeto-mais-medicos-especialistas/quadro-de-vagas-pmm-e.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": null,
+        "sha256_confere": null
+      }
+    },
+    {
+      "caminho": "output/aquisicao/quadro_vagas_tratamento.parquet",
+      "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f",
+      "bytes": 40440,
+      "papel": "população canônica do A4 (conferência das células do ciclo 1)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "publicação 2025-07-24 (quadro_vagas_consolidado, A1)",
+      "cobertura": "1295 células",
+      "unidade": "célula CNES × curso",
+      "chaves": "co_cnes_7d, cod_curso",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/tema_trabalho/matriz_funil_ciclo1.parquet",
+      "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15",
+      "bytes": 71157,
+      "papel": "fonte canônica de F1.3 (Y1) e F1.4 (Y2) do ciclo 1, como no E3/E4",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "data de referência do A1",
+      "cobertura": "ciclo 1, chamadas 1 e 2",
+      "unidade": "célula × chamada",
+      "chaves": "co_cnes_7d, cod_curso, chamada",
+      "filtros": "chamada 1 (Y1); chamada 2, n_homologacoes_novas_ch2 (Y2)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E4_proporcao_municipio.csv",
+      "sha256": "897e9529dd0bd226a5ca3398971d894c79400cad7aaf46fd9ae84ebfb4022f79",
+      "bytes": 17379,
+      "papel": "conferência: F1.3 e F1.4 do ciclo 1 têm de reproduzir Y1 e Y2 do E4",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "saída do 08a",
+      "cobertura": "368 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+      "sha256": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec",
+      "bytes": 165250,
+      "papel": "candidaturas e alocação da 1a chamada do ciclo 1 (F1.1, F1.2, F4)",
+      "fonte": "Ministério da Saúde (publicação do PMM-E)",
+      "data_referencia": "publicação 2025-09-19 (quadro_vagas_consolidado, A1); versão sub judice da alocação retificada",
+      "cobertura": "1671 linhas candidato × opção, ciclo 1, chamada 1",
+      "unidade": "candidato × opção",
+      "chaves": "CNES, curso",
+      "filtros": "ALOCAÇÃO começa com 'LOCAL DE ATUAÇÃO CONFIRMADO'"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2025_ciclo1_chamada2_vagas_e_alocados.xlsx",
+      "sha256": "f1b8f7533cb13d8aba21d1100ab957e6accac52532fb8235e1b4231343a0588c",
+      "bytes": 155827,
+      "papel": "diagnóstico de F0.1 (ciclo 1 com o quadro de reserva da 2a chamada)",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "publicação 2025-09-29 (quadro_vagas_consolidado, A1)",
+      "cobertura": "1762 células, 507 municípios",
+      "unidade": "célula CNES × curso",
+      "chaves": "CNES, curso",
+      "filtros": "aba 'VAGAS - CADASTRO RESERVA'",
+      "manifesto": {
+        "arquivo": "output/manifesto_fontes_pmme.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2025/chamamento-publico-sgtes-ms-no-3-2025-pmm-e/quadro-de-vagas-da-2a-chamada-e-a-relacao-de-profissionais-alocados-imediatos.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "f1b8f7533cb13d8aba21d1100ab957e6accac52532fb8235e1b4231343a0588c",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+      "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+      "bytes": 153185,
+      "papel": "células de V2 (quadro da 1a chamada do ciclo 2, versão do E3/P2)",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "publicação 2026-03-19 (quadro_vagas_consolidado, A1)",
+      "cobertura": "1547 células, 454 municípios",
+      "unidade": "célula CNES × curso",
+      "chaves": "CNES, curso",
+      "filtros": "linhas com CNES e curso válidos",
+      "manifesto": {
+        "arquivo": "output/manifesto_fontes_pmme.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/pmm-e-vagas-edital-2o-ciclo-19-de-marco-de-2026.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo2_chamada2_vagas.xlsx",
+      "sha256": "4815e1558b515d4cdabf245b45e24062ab2e9531abd657b4f24f68bb45b3d3a4",
+      "bytes": 111673,
+      "papel": "municípios de V2 (união) e conferência das células da 2a chamada",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "publicação 2026-04-16 (quadro_vagas_consolidado, A1)",
+      "cobertura": "1039 células, 369 municípios",
+      "unidade": "célula CNES × curso",
+      "chaves": "CNES, curso",
+      "filtros": "nenhum",
+      "manifesto": {
+        "arquivo": "output/manifesto_fontes_pmme.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/quadro-de-vagas-2a-chamada-de-16-abril-de-2026.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "4815e1558b515d4cdabf245b45e24062ab2e9531abd657b4f24f68bb45b3d3a4",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_original.xlsx",
+      "sha256": "cddad12d958963e29d3b9912814990c90a9220ba724f4657d9181cc1b9e3e049",
+      "bytes": 337149,
+      "papel": "diagnóstico da escolha de versão do quadro do ciclo 2",
+      "fonte": "Ministério da Saúde (publicação do PMM-E)",
+      "data_referencia": "publicação 2026-02-03 (quadro_vagas_consolidado, A1)",
+      "cobertura": "1550 células, 455 municípios",
+      "unidade": "célula CNES × curso",
+      "chaves": "CNES, curso",
+      "filtros": "não entra em outcome; colunas TOTAL identificadas pela posição (arquivo sem linha de rótulos)"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",
+      "sha256": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8",
+      "bytes": 157862,
+      "papel": "diagnóstico da escolha de versão do quadro do ciclo 2",
+      "fonte": "Ministério da Saúde (publicação do PMM-E)",
+      "data_referencia": "publicação 2026-02-13 (quadro_vagas_consolidado, A1)",
+      "cobertura": "1547 células, 454 municípios",
+      "unidade": "célula CNES × curso",
+      "chaves": "CNES, curso",
+      "filtros": "não entra em outcome"
+    },
+    {
+      "caminho": "data/raw/pmm_e/resultado-final-pmme-2o-ciclo-25-05.xlsx",
+      "sha256": "8e85a28a57db1283cd3103065b04909b637cb76aab73482889e6b5fe50182e3c",
+      "bytes": 320107,
+      "papel": "candidaturas e alocação final da 1a chamada do ciclo 2 (F1.1, F1.2, F1.3, F4)",
+      "fonte": "Ministério da Saúde, SGTES (publicação do PMM-E, Chamamento Público SGTES/MS nº 1/2026)",
+      "data_referencia": "não declarada no conteúdo; publicado com o comunicado oficial de 24/03/2026 (homologação de 25/03 a 02/04/2026). A criação registrada na planilha coincide com a data do comunicado e o sufixo '25-05' do nome corresponde à última modificação registrada (ver metadados_da_planilha) (manifesto a11)",
+      "cobertura": "3646 linhas candidato × opção, ciclo 2, chamada 1",
+      "unidade": "candidato × opção",
+      "chaves": "CNES, curso (sem IBGE)",
+      "filtros": "SITUAÇÃO começa com 'ALOCADO' (AC, ER, PCD)",
+      "manifesto": {
+        "arquivo": "output/aquisicao/a11_manifesto_ciclo2_chamada1.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/resultado-final-pmme-2o-ciclo-25-05.xlsx",
+        "data_extracao": "2026-10-18",
+        "sha256_no_manifesto": "8e85a28a57db1283cd3103065b04909b637cb76aab73482889e6b5fe50182e3c",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/pmm_e/resultado-preliminar-pmme.xlsx",
+      "sha256": "90b4c863f6e07e3eb98dc221dfe1622a7a69041e31b54e95d036e44782144803",
+      "bytes": 292768,
+      "papel": "diagnóstico da escala da pontuação do ciclo 2",
+      "fonte": "Ministério da Saúde, SGTES (publicação do PMM-E, Chamamento Público SGTES/MS nº 1/2026)",
+      "data_referencia": "recurso de 12/03 a 13/03/2026 (ComunicadoResultado.pdf da mesma página) (manifesto a11)",
+      "cobertura": "3442 linhas candidato × opção, ciclo 2, chamada 1",
+      "unidade": "candidato × opção",
+      "chaves": "CNES, curso",
+      "filtros": "não entra em outcome",
+      "manifesto": {
+        "arquivo": "output/aquisicao/a11_manifesto_ciclo2_chamada1.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/resultado-preliminar-pmme.xlsx",
+        "data_extracao": "2026-10-18",
+        "sha256_no_manifesto": "90b4c863f6e07e3eb98dc221dfe1622a7a69041e31b54e95d036e44782144803",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/pmm_e/resultado-final-vagas-remanescentes.xlsx",
+      "sha256": "70d67659cbfb7a3ec78452f76c70e9b9d0fce66ab5bb1b0b15934438edb83ad1",
+      "bytes": 33477,
+      "papel": "sensibilidade de F1.3 do ciclo 2 (vagas remanescentes)",
+      "fonte": "Ministério da Saúde, SGTES (publicação do PMM-E, Chamamento Público SGTES/MS nº 1/2026)",
+      "data_referencia": "não declarada no arquivo nem na página (manifesto a11)",
+      "cobertura": "81 linhas candidato × opção, ciclo 2, chamada 1",
+      "unidade": "candidato × opção",
+      "chaves": "CNES, curso",
+      "filtros": "SITUAÇÃO = 'ATENDIDO'",
+      "manifesto": {
+        "arquivo": "output/aquisicao/a11_manifesto_ciclo2_chamada1.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/resultado-final-vagas-remanescentes.xlsx",
+        "data_extracao": "2026-10-18",
+        "sha256_no_manifesto": "70d67659cbfb7a3ec78452f76c70e9b9d0fce66ab5bb1b0b15934438edb83ad1",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo2_chamada1_resultado_final_remanescentes.xlsx",
+      "sha256": "db39d51f9163fd8deedc8727ced37bf3fcdf19b4a6966d91a396e09f5f2a26e6",
+      "bytes": 17548,
+      "papel": "sensibilidade de F1.3 do ciclo 2 (remanescentes)",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "publicação 2026-05-05 (quadro_vagas_consolidado, A1)",
+      "cobertura": "9 linhas candidato × opção, ciclo 2, chamada 1",
+      "unidade": "candidato × opção",
+      "chaves": "CNES, curso",
+      "filtros": "SITUAÇÃO = 'ALOCADO'",
+      "manifesto": {
+        "arquivo": "output/manifesto_fontes_pmme.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/resultado-final-com-vagas-remanescentes.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "db39d51f9163fd8deedc8727ced37bf3fcdf19b4a6966d91a396e09f5f2a26e6",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo2_chamada2_resultado_final.xlsx",
+      "sha256": "8690d6fc381692fc20c59ae077ac8b80ca1ce27dd03d27fd8e1ef17c75abc85f",
+      "bytes": 111857,
+      "papel": "F1.4 do ciclo 2 (alocados da 2a chamada)",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "publicação 2026-05-28 (quadro_vagas_consolidado, A1)",
+      "cobertura": "1053 linhas candidato × opção, ciclo 2, chamada 2",
+      "unidade": "candidato × opção",
+      "chaves": "CNES, curso",
+      "filtros": "SITUAÇÃO começa com 'ALOCADO'",
+      "manifesto": {
+        "arquivo": "output/manifesto_fontes_pmme.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/resultado-final-pmme-2o-ciclo-2a-chamada.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "8690d6fc381692fc20c59ae077ac8b80ca1ce27dd03d27fd8e1ef17c75abc85f",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo3_chamada1_vagas_retificadas.xlsx",
+      "sha256": "6bc07f48d0eaac37936fc827ebdefd12fb7bf2be86dc26f64a08e1f5b57f5371",
+      "bytes": 244948,
+      "papel": "células de V3 (quadro da 1a chamada do ciclo 3)",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "publicação 2026-07-24 (quadro_vagas_consolidado, A1)",
+      "cobertura": "2293 células, 748 municípios",
+      "unidade": "célula CNES × curso",
+      "chaves": "CNES, curso",
+      "filtros": "linhas com CNES e curso válidos",
+      "manifesto": {
+        "arquivo": "output/manifesto_fontes_pmme.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-6-2026-pmm-e/quadro-de-vagas-retificado-24-07-2026.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "6bc07f48d0eaac37936fc827ebdefd12fb7bf2be86dc26f64a08e1f5b57f5371",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx",
+      "sha256": "d74f268bb7192c80a02c94e54eb4407e60a0923ad7d0310c2c6b432b3dbbb6ee",
+      "bytes": 393041,
+      "papel": "candidaturas e alocação da 1a chamada do ciclo 3 (F1.1–F1.3, F4)",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "publicação 2026-08-25 (quadro_vagas_consolidado, A1); sub judice",
+      "cobertura": "4532 linhas candidato × opção, ciclo 3, chamada 1",
+      "unidade": "candidato × opção",
+      "chaves": "CNES, curso",
+      "filtros": "SITUAÇÃO começa com 'ALOCADO' (AC, ER, PCD); 'SUB JUDICE' só na sensibilidade",
+      "manifesto": {
+        "arquivo": "output/manifesto_fontes_pmme.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-6-2026-pmm-e/resultado-final-3o-ciclo-sub-judice.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "d74f268bb7192c80a02c94e54eb4407e60a0923ad7d0310c2c6b432b3dbbb6ee",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2026_ciclo3_gestores_quadro_vagas_original.xlsx",
+      "sha256": "3c77f7dc86f02267b9db0df0ccb97ffe84fcdc756c300f95b355e73d65cbe6f1",
+      "bytes": 986492,
+      "papel": "G3: cardápio de gestores do ciclo 3",
+      "fonte": "Ministério da Saúde (publicação do PMM-E)",
+      "data_referencia": "publicação 2026-05-15 (quadro_vagas_consolidado, A1)",
+      "cobertura": "17543 células, 2699 municípios",
+      "unidade": "célula CNES × curso",
+      "chaves": "CNES, aprimoramento",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo3_adesao_gestores_resultado_final.xlsx",
+      "sha256": "0c07d4c972d14bac8ae9b8c99d5edac32f9ea76996ec82e92198065ac63b1f74",
+      "bytes": 495019,
+      "papel": "F0.3: adesão de gestores do ciclo 3",
+      "fonte": "Ministerio da Saude",
+      "data_referencia": "publicação 2026-07-15 (quadro_vagas_consolidado, A1)",
+      "cobertura": "5534 células, 1179 municípios",
+      "unidade": "célula CNES × curso",
+      "chaves": "CNES, aprimoramento",
+      "filtros": "aba 'RESULTADO FINAL'; aba de gestão dupla só conferida",
+      "manifesto": {
+        "arquivo": "output/manifesto_fontes_pmme.json",
+        "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-5-2026-pmm-e/resultado-final.xlsx",
+        "data_extracao": "2026-08-27",
+        "sha256_no_manifesto": "0c07d4c972d14bac8ae9b8c99d5edac32f9ea76996ec82e92198065ac63b1f74",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip",
+      "sha256": "e57edeb50946395fa90fe510f4a658501f9b0e92069fcc53aa41b9e893e89c1c",
+      "bytes": 117155,
+      "papel": "F2.1, F2.2 e F2.3: relação nominal de ativos do PMM-E (versão do E3)",
+      "fonte": "Ministério da Saúde (publicação do PMM-E)",
+      "data_referencia": "dt_referencia no arquivo: 11/09/2026; versão do manifesto a07 (SHA-256 do protocolo E3)",
+      "cobertura": "1957 ativos, ciclos [1, 2, 3]",
+      "unidade": "pessoa ativa",
+      "chaves": "co_ibge, co_cnes, curso, ciclo",
+      "filtros": "ciclos 1 e 2; só as colunas co_ibge, co_cnes, curso, ciclo, dt_referencia são lidas",
+      "manifesto": {
+        "arquivo": "output/aquisicao/a07_manifesto_ivs_administrativo.json",
+        "url": "https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/MaisMedicos/csv/tb_profissionais_ativos_pmme_csv.zip",
+        "data_extracao": "2026-10-14",
+        "sha256_no_manifesto": "e57edeb50946395fa90fe510f4a658501f9b0e92069fcc53aa41b9e893e89c1c",
+        "sha256_confere": true
+      }
+    },
+    {
+      "caminho": "output/tema_trabalho/matriz_tipologia_territorial.parquet",
+      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+      "bytes": 280913,
+      "papel": "E9: estrato territorial das células do conjunto de escolha (só a coluna estrato)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "tipologia A2",
+      "cobertura": "5570 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge_6d",
+      "filtros": "coluna estrato apenas"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_administrativo/ppf_mais_medicos_csv.zip",
+      "sha256": "15083f8127917e5279be01d372c1250a467ee77d289a030e1229932d0013cb3a",
+      "bytes": 150344,
+      "papel": "F0.4: PMMB consolidado (vagas ativas e ocupadas)",
+      "fonte": "Ministério da Saúde (publicação do PMM-E)",
+      "data_referencia": "dt_referencia no arquivo: 2026-10-09",
+      "cobertura": "5571 municípios no nível MUNICIPAL",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "nivel == 'MUNICIPAL'",
+      "manifesto": {
+        "arquivo": "output/aquisicao/a07_manifesto_ivs_administrativo.json",
+        "url": "https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/MaisMedicos/csv/ppf_mais_medicos.csv.zip",
+        "data_extracao": "2026-10-14",
+        "sha256_no_manifesto": "15083f8127917e5279be01d372c1250a467ee77d289a030e1229932d0013cb3a",
+        "sha256_confere": true
+      }
+    }
+  ],
+  "dados_pessoais_gravados": false,
+  "linguagem": "construção de outcome descritiva; nenhuma estimativa causal"
+}

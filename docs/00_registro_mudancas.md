@@ -8,6 +8,17 @@
 
 ---
 
+## 18/10/2026 — Construção dos outcomes do funil (tarefa B do protocolo 40)
+
+Motivo: a tarefa B do protocolo multi-outcome constrói, às cegas quanto ao
+corte, os outcomes F0, F1, F2 e F4 e as tabelas de escolha do E9 (adendo §12).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/41a_construcao_outcomes_funil.md`](06_execucao/41a_construcao_outcomes_funil.md) | fontes, definições, casamento entre arquivos e desvios da construção dos outcomes do funil e das tabelas de escolha do E9; sem resultado por lado de corte. Aquisição do resultado da 1ª chamada do ciclo 2 em `scripts/aquisicao/a11_adquirir_resultado_ciclo2_chamada1.py` (numerado a11 para não colidir com outra tarefa) |
+
 ## 18/10/2026 — Protocolo multi-outcome da bolsa
 
 Motivo: o autor autorizou rodar tudo com dados do repositório ou públicos, com
