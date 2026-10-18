@@ -11,9 +11,12 @@
   o E5 é exploratório (`docs/06_execucao/37` a `39`). Estado e decisões em
   aberto do autor: `docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md`. O
   efeito candidato é o incentivo marginal de R$ 5 mil, não participação no
-  PMM-E nem o efeito total do Agora Tem Especialistas. Estimação nova
-  (preenchimento do ciclo 2, reestimação do A4, diferença em descontinuidades)
-  exige autorização do autor e protocolo congelado antes de abrir outcomes.
+  PMM-E nem o efeito total do Agora Tem Especialistas. Em 18/10/2026 o autor
+  autorizou a rodada multi-outcome (vários outcomes do edital, ciclos 1–3,
+  DiRD no CNES nacional, reestimação do A4 com a base oficial), sob o
+  protocolo congelado `docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md`;
+  só pedidos externos de dados continuam fora. Números do arquivo de IVS errado
+  só entram como registro de failure mode.
 - `docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md` define a pergunta do artigo:
   salário anunciado é o instrumento candidato, IVS é gradiente territorial e
   oferta persistente no CNES não equivale a retenção individual.

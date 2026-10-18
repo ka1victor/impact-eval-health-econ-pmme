@@ -8,6 +8,17 @@
 
 ---
 
+## 18/10/2026 — Protocolo multi-outcome da bolsa
+
+Motivo: o autor autorizou rodar tudo com dados do repositório ou públicos, com
+vários outcomes derivados do edital, e reestimar tudo com a base oficial.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/40_protocolo_multioutcome_rdd_bolsa.md`](06_execucao/40_protocolo_multioutcome_rdd_bolsa.md) | protocolo congelado antes de abrir os outcomes novos: famílias F0–F4, populações, métodos (cortes e ciclos empilhados, IC honesto, Poisson local, DiRD no CNES), testes múltiplos e tarefas |
+
 ## 18/10/2026 — Inferência alternativa da RDD da bolsa
 
 Motivo: o autor perguntou por que os ICs da RDD são tão largos, se outro método
