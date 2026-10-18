@@ -1,5 +1,10 @@
 # RDD da bolsa — estado, pendências e decisões em aberto
 
+> **Atualização de 18/10/2026, noite:** o autor decidiu D2 e D3(b) — rodar
+> tudo, sem esperar o dia 28 — e pediu vários outcomes simultâneos. A rodada
+> segue o protocolo congelado
+> [`40_protocolo_multioutcome_rdd_bolsa.md`](40_protocolo_multioutcome_rdd_bolsa.md).
+
 > **Data:** 18/10/2026, revisto no fim do dia, depois da rodada de inferência,
 > figuras, pipeline e artigos.<br>
 > **Para quê:** ponto de retomada do trabalho de 14 a 18/10/2026 sobre o teste

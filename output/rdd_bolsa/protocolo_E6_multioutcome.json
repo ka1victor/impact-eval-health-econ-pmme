@@ -1,0 +1,140 @@
+{
+  "documento": "Protocolo multi-outcome da bolsa do PMM-E (E6-E9)",
+  "texto_canonico": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
+  "sha256_texto_canonico": "f80223ea07774b9fc2fa1a1c6ac7c2b9707a45173dc5a023194e32fafc983ccf",
+  "data_congelamento": "2026-10-18",
+  "autorizacao_autor": {
+    "data": "2026-10-18",
+    "escopo": "rodar tudo com dados do repositorio ou publicos (DiRD, preenchimento do ciclo 2, outros metodos), reestimar tudo com a base oficial, varios outcomes simultaneos derivados do edital; limite: pedidos externos de dados"
+  },
+  "pre_registro": false,
+  "running_variable": {
+    "fonte": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+    "cortes": [
+      0.3,
+      0.4
+    ],
+    "lado": "T = 1[s > c]; o corte pertence ao lado inferior",
+    "proibido": "data/ivs_ipea_2010_municipios.csv (auditoria 16), inclusive como covariavel"
+  },
+  "salto": "lado com bolsa maior (s > c) menos lado com bolsa menor",
+  "populacoes": {
+    "U": "todos os municipios com IVS oficial",
+    "V1": "municipios do quadro do ciclo 1",
+    "V2": "municipios dos quadros do ciclo 2 (chamadas 1 e 2)",
+    "V3": "municipios do quadro do ciclo 3, chamada 1",
+    "G3": "municipios do cardapio de gestores do ciclo 3"
+  },
+  "ciclo3_cnes": "nenhum mes CNES >= 202609 e lido (plano de pre-analise do ciclo 3 intacto)",
+  "familias": {
+    "F0": {
+      "papel": "diagnostico de selecao e co-intervencao",
+      "outcomes": {
+        "F0.1": "tem >=1 celula no quadro do ciclo k (U)",
+        "F0.2": "celulas e vagas imediatas por 10 mil hab (U)",
+        "F0.3": "ciclo 3: aderiu; vagas pedidas; fracao priorizada (G3)",
+        "F0.4": "PMMB: vagas e medicos ativos por 10 mil hab, retrato 09/10/2026 (U)"
+      }
+    },
+    "F1": {
+      "papel": "atracao (primaria via indice)",
+      "outcomes": {
+        "F1.1": "candidatos de 1a opcao por celula oferecida (V1-V3)",
+        "F1.2": "fracao de celulas com >=1 candidato, qualquer opcao (V1-V3)",
+        "F1.3": "fracao de celulas preenchidas na 1a chamada (ciclo 1 = definicao E3; ciclos 2-3 = >=1 alocado)",
+        "F1.4": "fracao de celulas preenchidas ate a 2a chamada (V1, V2)"
+      }
+    },
+    "F2": {
+      "papel": "presenca e fixacao",
+      "outcomes": {
+        "F2.1": "ativos do ciclo k em 09/10/2026 por celula oferecida (V1, V2)",
+        "F2.2": "ativos do ciclo k por 10 mil hab, zeros fora do quadro (U)",
+        "F2.3": "D_k (ancora do E3)"
+      }
+    },
+    "F3": {
+      "papel": "oferta liquida CNES (primaria via DiRD)",
+      "cbo_alvo": "CBOs dos cursos do PMM-E pela ponte oficial output/aquisicao/ponte_curso_cbo_oficial.json",
+      "outcomes": {
+        "F3.1": "vinculos nas CBO-alvo por 10 mil hab",
+        "F3.2": ">=1 especialista nas CBO-alvo",
+        "F3.3": "horas SUS semanais nas CBO-alvo por 10 mil hab",
+        "F3.P1": "placebo/confundidor: generalistas CBO 225125, 225142, 225170 por 10 mil",
+        "F3.P2": "placebo: especialistas fora das CBO-alvo por 10 mil"
+      },
+      "janelas": {
+        "pre_principal": "202406-202506",
+        "pos": "202510-202608",
+        "evento": "RDD mes a mes relativo a 202506, desde 202201 (trimestral antes de 202406)",
+        "placebo_pre": "202406-202411 vs 202412-202505"
+      }
+    },
+    "F4": {
+      "papel": "selecao (secundaria, sinal ambiguo, fora do indice)",
+      "outcomes": {
+        "F4.1": "nota media do barema dos alocados (limites de Lee)",
+        "F4.2": "nota media do barema dos candidatos de 1a opcao"
+      }
+    }
+  },
+  "metodos": {
+    "principal": "local linear, kernel triangular, h = 0,050, EP HC1 por municipio; cada corte e cortes empilhados (r = s - c, intercepto e inclinacoes por corte e lado, tratamento comum, cluster por municipio)",
+    "ciclos": "V1-V3 empilhados com EF de ciclo, cluster por municipio; cada ciclo tambem separado",
+    "honesto": "Armstrong-Kolesar, M pela regra de bolso (quartica global por lado), sensibilidade 0,5M e 2M; reportado ao lado do HC1",
+    "sensibilidade": [
+      "h = 0,030",
+      "h = 0,080",
+      "local randomization na janela do E5, Fisher"
+    ],
+    "contagens": "Poisson local com kernel (IRLS), offset log(celulas) ou log(populacao)",
+    "proporcoes": "ponderado por celulas e nivel celula com cluster (sensibilidade)",
+    "condicional": "limites de Lee para F4.1",
+    "painel": "DiRD em delta_Y = media(pos) - media(pre); estudo de evento; placebo no pre; alternativa Y_pos com Y_pre como covariavel"
+  },
+  "testes_multiplos": {
+    "indice": "Kling-Liebman-Katz de F1.1, F1.2, F1.3, F2.1; z pelo lado abaixo dentro da janela, por ciclo",
+    "primarias_holm": [
+      "P1: indice de atracao-presenca, cortes e ciclos empilhados",
+      "P2: F3.1 por DiRD em U, cortes empilhados"
+    ],
+    "secundarias": "q-valores BKY (2006) dentro de cada familia",
+    "referencias_magnitude": {
+      "preenchimento": "+10 p.p.",
+      "candidaturas": "+25%"
+    }
+  },
+  "regra_de_relato": "todas as especificacoes sao relatadas; nada e reescolhido depois de ver resultados; desvios registrados com data e motivo; construcao de outcome nao olha outcome por lado de corte",
+  "exposicao_previa_a_outcomes": [
+    "E3: F1.3 ciclo 1 e F2.3 ciclos 1-2 nos cortes",
+    "E4/E5: F1.4 ciclo 1 e 15 especificacoes",
+    "A4: preenchimento por faixa",
+    "A5: trajetorias CNES por estrato nos 368 municipios do ciclo 1, sem corte de IVS",
+    "inventario 18/10/2026: contagens agregadas por arquivo, sem quebra por corte"
+  ],
+  "adendos": [
+    {
+      "data": "2026-10-18",
+      "antes_de_abrir_outcomes_novos": true,
+      "E9": "logit condicional da 1a opcao do candidato entre celulas do mesmo curso e ciclo; atributos: bolsa anunciada, IVS continuo (grau 1 e 2 por faixa), log pop Censo 2022, macrorregiao, estrato; exploded logit com a 2a opcao como sensibilidade; estimando = efeito sobre a escolha entre vagas (realocacao), nao sobre o total de candidatos"
+    },
+    {
+      "data": "2026-10-18",
+      "antes_de_abrir_outcomes_novos": true,
+      "politicas_mesmos_cortes": "auditoria 18: Portaria 752/2023, Portaria 3.493/2024, emendas/incrementos +20% IVS>0,3 (2024-2027), PI 604/2023 em 0,400; RDD em nivel = pacote",
+      "suplementares": {
+        "S1": "RDD em ativas_coparticipacao PMMB",
+        "S2": "donut sem IVS == 0,300 e 0,400",
+        "S3": "heterogeneidade por classe de porte onde o estrato APS muda vs nao muda",
+        "S4": "0,400 dentro vs fora da Amazonia Legal/fronteira",
+        "S5": "estudo de evento com datas das politicas; pre extra 2022-01..2023-03",
+        "S6": "placebo generalistas com CBO 225130 em separado"
+      }
+    },
+    {
+      "data": "2026-10-18",
+      "antes_de_estimar_E9": true,
+      "E9_conjunto_de_escolha": "principal: todas as celulas do curso e ciclo no quadro da 1a chamada (com ou sem vaga imediata), com atributo tem_vaga_imediata e log(vagas imediatas+1); sensibilidade: so celulas com vaga imediata"
+    }
+  ]
+}
