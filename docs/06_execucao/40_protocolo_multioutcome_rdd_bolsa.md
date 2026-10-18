@@ -223,3 +223,28 @@ corte. F1.3 dos ciclos 2 e 3 também não.
 | E6 | estimação de F0, F1, F2 e F4 | `scripts/rdd_bolsa/13_*`, `output/rdd_bolsa/E6_*` |
 | E7 | DiRD no CNES (F3) | `scripts/rdd_bolsa/14_*`, `output/rdd_bolsa/E7_*` |
 | E8 | índice, testes múltiplos, síntese e relatório | `scripts/rdd_bolsa/15_*`, `output/rdd_bolsa/E8_*`, doc 41 |
+
+## 12. Adendo de 18/10/2026 (antes de abrir os outcomes novos): escolha dos candidatos
+
+Revisão do plano contra o pedido do autor ("outro método potencialmente mais
+apropriado na literatura") encontrou uma lacuna. O arquivo de alocação traz,
+para cada candidato, a 1ª e a 2ª opção entre todas as células do mesmo curso.
+Isso dá variação **dentro do candidato**: a mesma pessoa vê municípios com
+bolsas diferentes. Um modelo de escolha discreta usa essa variação e é muito
+mais potente que a RDD entre municípios (Dal Bó, Finan e Rossi, 2013, usam
+candidaturas; McFadden, 1974, para o logit condicional).
+
+- **E9, escolha revelada (secundária, exploratória):** logit condicional da
+  1ª opção do candidato no conjunto de células do seu curso e ciclo com vaga
+  imediata. Atributos: bolsa anunciada (R$ mil); função contínua do IVS
+  (polinômio de grau 1 e 2 por faixa, para que a bolsa seja identificada pelo
+  degrau nos cortes e não pelo gradiente do IVS); log da população (Censo
+  2022); macrorregião; estrato territorial. A 2ª opção entra como sensibilidade
+  (logit ordenado por ranking, "exploded logit").
+- **Leitura:** efeito da bolsa sobre a **escolha** entre vagas, ou seja,
+  realocação entre municípios. Não é efeito líquido sobre o total de
+  candidatos. Sem a residência do candidato, a distância não entra; essa
+  limitação é declarada.
+- **Ciclos:** 1, 2 (se a 1ª chamada for obtida de fonte oficial) e 3, em
+  separado e empilhados.
+- **Saídas:** `scripts/rdd_bolsa/16_*`, `output/rdd_bolsa/E9_*`.

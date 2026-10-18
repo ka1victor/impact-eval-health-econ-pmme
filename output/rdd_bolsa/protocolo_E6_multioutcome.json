@@ -1,7 +1,7 @@
 {
   "documento": "Protocolo multi-outcome da bolsa do PMM-E (E6-E9)",
   "texto_canonico": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
-  "sha256_texto_canonico": "d66aa8c772aa48e1d5f49c8954fe18d1bf5f243b50b30be8b22a864486b41cfa",
+  "sha256_texto_canonico": "502884e043d041617d42cce1d3f5b0f2939ad2af67011d4af6f2e4f971e960b9",
   "data_congelamento": "2026-10-18",
   "autorizacao_autor": {
     "data": "2026-10-18",
@@ -111,5 +111,12 @@
     "A4: preenchimento por faixa",
     "A5: trajetorias CNES por estrato nos 368 municipios do ciclo 1, sem corte de IVS",
     "inventario 18/10/2026: contagens agregadas por arquivo, sem quebra por corte"
+  ],
+  "adendos": [
+    {
+      "data": "2026-10-18",
+      "antes_de_abrir_outcomes_novos": true,
+      "E9": "logit condicional da 1a opcao do candidato entre celulas do mesmo curso e ciclo; atributos: bolsa anunciada, IVS continuo (grau 1 e 2 por faixa), log pop Censo 2022, macrorregiao, estrato; exploded logit com a 2a opcao como sensibilidade; estimando = efeito sobre a escolha entre vagas (realocacao), nao sobre o total de candidatos"
+    }
   ]
 }
