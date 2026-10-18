@@ -1,0 +1,1748 @@
+{
+  "etapa": "E3_conferencia_sinal",
+  "script": "scripts/rdd_bolsa/09b_conferir_sinal.py",
+  "data_execucao": "2026-10-18",
+  "natureza_dos_dados": "EMPIRICO",
+  "outcomes_abertos": true,
+  "nota_outcomes": "lê os mesmos outcomes já abertos pelo E3; não escolhe amostra, janela nem estimador",
+  "pergunta": "O salto do E3 é o efeito de passar da bolsa MENOR para a MAIOR?",
+  "status": "CONFERIDO",
+  "resposta": "Sim. O salto é o valor no corte do lado com bolsa R$ 5 mil maior (IVS acima do corte) menos o valor do lado com bolsa menor (IVS até o corte, inclusive): R$ 15 mil menos R$ 10 mil em 0,300; R$ 20 mil menos R$ 15 mil em 0,400. Positivo = bolsa maior associada a mais preenchimento (ou presença).",
+  "convencao": {
+    "running_variable": "IVS 2010 oficial do Ipea (= escore administrativo do MS), em milésimos",
+    "lado_do_corte": "o proprio corte pertence ao lado inferior; T = 1[s > c]",
+    "salto": "tau = lim s->c+ E[y|s] - lim s->c- E[y|s] = (lado da bolsa maior) - (lado da bolsa menor)",
+    "estimador": "local linear, kernel triangular max(0, 1 - |s - c| / h), EP HC1 por município"
+  },
+  "leitura_do_caso_0300": "Corte 0,300, preenchimento do ciclo 1: média bruta de 24,3% do lado de R$ 10 mil e 37,2% do lado de R$ 15 mil (diferença de +12,9 p.p.). No próprio corte, a reta do lado de R$ 10 mil vale 40,7% e a do lado de R$ 15 mil, 27,9%: salto de −12,8 p.p. As médias brutas são tomadas no meio de cada lado (IVS médio 0,273 e 0,327); a reta do lado de R$ 10 mil sobe 6,7 p.p. a cada 0,010 de IVS até o corte. Decomposição: +12,9 = −12,8 (salto) +26,5 (inclinação dentro da janela) −0,7 (resíduo).",
+  "conferencias": [
+    {
+      "id": "C0_insumos",
+      "ok": true,
+      "descricao": "escore do E3 = IVS 2010 oficial (a08); valores por faixa do edital = matriz; população e faixa da matriz = quadros brutos lidos pelo E3",
+      "detalhe": {
+        "escore_do_E3_igual_ao_IVS_oficial": true,
+        "valor_por_faixa_edital": {
+          "FAIXA 1": 20000.0,
+          "FAIXA 2": 15000.0,
+          "FAIXA 3": 10000.0
+        },
+        "valor_por_faixa_matriz": {
+          "FAIXA 1": 20000.0,
+          "FAIXA 2": 15000.0,
+          "FAIXA 3": 10000.0
+        },
+        "edital_igual_matriz": true,
+        "quadros": {
+          "P1": {
+            "municipios_matriz": 368,
+            "municipios_quadros_brutos": 368,
+            "mesmos_pares_municipio_faixa": true,
+            "quadros_brutos": [
+              "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx"
+            ]
+          },
+          "P2": {
+            "municipios_matriz": 454,
+            "municipios_quadros_brutos": 454,
+            "mesmos_pares_municipio_faixa": true,
+            "quadros_brutos": [
+              "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+              "data/raw/pmm_e/2026_ciclo2_chamada2_vagas.xlsx"
+            ]
+          }
+        },
+        "relacao_nominal_e_a_versao_do_protocolo": true
+      }
+    },
+    {
+      "id": "C1_regra_e_lado",
+      "ok": true,
+      "descricao": "todo município com s > c tem a faixa de bolsa maior no quadro e todo município com s <= c, a menor (população inteira e janela principal); a diferença é de R$ 5 mil",
+      "detalhe": [
+        {
+          "populacao": "P1",
+          "corte": 0.3,
+          "bolsa_lado_menor_ivs_ate_o_corte": 10000.0,
+          "bolsa_lado_maior_ivs_acima_do_corte": 15000.0,
+          "diferenca_brl": 5000.0,
+          "populacao_inteira": {
+            "municipios_com_s_maior_que_c": 209,
+            "todos_com_bolsa_maior_ou_igual_a_do_lado_maior": true,
+            "municipios_com_s_ate_c": 159,
+            "todos_com_bolsa_menor_ou_igual_a_do_lado_menor": true
+          },
+          "janela_principal": {
+            "h": 0.05,
+            "n_lado_menor": 61,
+            "n_lado_maior": 53,
+            "bolsas_no_lado_menor": [
+              10000.0
+            ],
+            "bolsas_no_lado_maior": [
+              15000.0
+            ],
+            "municipios_em_c_mais_h_peso_zero": 1
+          },
+          "ok": true
+        },
+        {
+          "populacao": "P1",
+          "corte": 0.4,
+          "bolsa_lado_menor_ivs_ate_o_corte": 15000.0,
+          "bolsa_lado_maior_ivs_acima_do_corte": 20000.0,
+          "diferenca_brl": 5000.0,
+          "populacao_inteira": {
+            "municipios_com_s_maior_que_c": 102,
+            "todos_com_bolsa_maior_ou_igual_a_do_lado_maior": true,
+            "municipios_com_s_ate_c": 266,
+            "todos_com_bolsa_menor_ou_igual_a_do_lado_menor": true
+          },
+          "janela_principal": {
+            "h": 0.05,
+            "n_lado_menor": 53,
+            "n_lado_maior": 41,
+            "bolsas_no_lado_menor": [
+              15000.0
+            ],
+            "bolsas_no_lado_maior": [
+              20000.0
+            ],
+            "municipios_em_c_mais_h_peso_zero": 0
+          },
+          "ok": true
+        },
+        {
+          "populacao": "P2",
+          "corte": 0.3,
+          "bolsa_lado_menor_ivs_ate_o_corte": 10000.0,
+          "bolsa_lado_maior_ivs_acima_do_corte": 15000.0,
+          "diferenca_brl": 5000.0,
+          "populacao_inteira": {
+            "municipios_com_s_maior_que_c": 244,
+            "todos_com_bolsa_maior_ou_igual_a_do_lado_maior": true,
+            "municipios_com_s_ate_c": 210,
+            "todos_com_bolsa_menor_ou_igual_a_do_lado_menor": true
+          },
+          "janela_principal": {
+            "h": 0.05,
+            "n_lado_menor": 82,
+            "n_lado_maior": 61,
+            "bolsas_no_lado_menor": [
+              10000.0
+            ],
+            "bolsas_no_lado_maior": [
+              15000.0
+            ],
+            "municipios_em_c_mais_h_peso_zero": 1
+          },
+          "ok": true
+        },
+        {
+          "populacao": "P2",
+          "corte": 0.4,
+          "bolsa_lado_menor_ivs_ate_o_corte": 15000.0,
+          "bolsa_lado_maior_ivs_acima_do_corte": 20000.0,
+          "diferenca_brl": 5000.0,
+          "populacao_inteira": {
+            "municipios_com_s_maior_que_c": 129,
+            "todos_com_bolsa_maior_ou_igual_a_do_lado_maior": true,
+            "municipios_com_s_ate_c": 325,
+            "todos_com_bolsa_menor_ou_igual_a_do_lado_menor": true
+          },
+          "janela_principal": {
+            "h": 0.05,
+            "n_lado_menor": 53,
+            "n_lado_maior": 53,
+            "bolsas_no_lado_menor": [
+              15000.0
+            ],
+            "bolsas_no_lado_maior": [
+              20000.0
+            ],
+            "municipios_em_c_mais_h_peso_zero": 0
+          },
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "C2_convencao_no_codigo",
+      "ok": true,
+      "descricao": "no E3, x = s - c, T = 1[s > c], X = [1, x, T, T*x] e tau = coeficiente de T: o limite pela direita (bolsa maior) menos o limite pela esquerda (bolsa menor)",
+      "detalhe": {
+        "arquivo": "scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py",
+        "trechos": {
+          "tratamento": {
+            "linha": 332,
+            "texto": "t = (x_mil[usa] > 0).astype(float)"
+          },
+          "desenho": {
+            "linha": 333,
+            "texto": "X = np.column_stack([np.ones_like(xs), xs, t, t * xs])"
+          },
+          "salto": {
+            "linha": 346,
+            "texto": "tau = float(beta[2])"
+          },
+          "x_centrado": {
+            "linha": 309,
+            "texto": "x_mil = s - corte_mil"
+          }
+        }
+      }
+    },
+    {
+      "id": "C3_reestimacao_independente",
+      "ok": true,
+      "descricao": "duas retas ponderadas separadas (fórmula fechada): o intercepto do lado da bolsa maior menos o do lado da bolsa menor reproduz o tau do E3 em todas as especificações",
+      "detalhe": {
+        "especificacoes": 18,
+        "max_abs_diferenca": 2.0035244296945365e-11,
+        "tolerancia": 1e-09
+      }
+    },
+    {
+      "id": "C4_tratamento_lido_do_quadro",
+      "ok": true,
+      "descricao": "com (bolsa do quadro - bolsa do lado menor) / R$ 5 mil no lugar de T, o coeficiente é o mesmo: o salto é por +R$ 5 mil, com o sinal da bolsa maior",
+      "detalhe": {
+        "max_abs_diferenca": 2.003353949744935e-11,
+        "tolerancia": 1e-09
+      }
+    },
+    {
+      "id": "C5_erro_padrao",
+      "ok": true,
+      "descricao": "EP HC1 recalculado (lstsq e sanduíche explícito) igual ao do E3",
+      "detalhe": {
+        "max_abs_diferenca": 1.1994572002294035e-12,
+        "tolerancia": 1e-09
+      }
+    },
+    {
+      "id": "C6_medias_brutas_e_salto",
+      "ok": true,
+      "descricao": "médias brutas iguais às do E3; diferença de médias brutas = salto + inclinação + resíduo (identidade exata)",
+      "detalhe": {
+        "especificacoes_com_sinal_oposto": [
+          {
+            "populacao": "P1",
+            "outcome": "D_k_especialista_ativo_do_ciclo",
+            "corte": 0.3,
+            "h": 0.05,
+            "salto": -0.03221123982069962,
+            "diferenca_medias_brutas": 0.2103309619548407
+          },
+          {
+            "populacao": "P1",
+            "outcome": "D_k_especialista_ativo_do_ciclo",
+            "corte": 0.3,
+            "h": 0.08,
+            "salto": -0.041022220420785405,
+            "diferenca_medias_brutas": 0.32041139240506333
+          },
+          {
+            "populacao": "P1",
+            "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+            "corte": 0.3,
+            "h": 0.05,
+            "salto": -0.12838355446174915,
+            "diferenca_medias_brutas": 0.12947165565827407
+          },
+          {
+            "populacao": "P1",
+            "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+            "corte": 0.3,
+            "h": 0.03,
+            "salto": 0.003653600180478944,
+            "diferenca_medias_brutas": -0.008385854337946419
+          },
+          {
+            "populacao": "P1",
+            "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+            "corte": 0.3,
+            "h": 0.08,
+            "salto": -0.08874448994203821,
+            "diferenca_medias_brutas": 0.1858166838292458
+          },
+          {
+            "populacao": "P1",
+            "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+            "corte": 0.4,
+            "h": 0.05,
+            "salto": -0.051492177704909325,
+            "diferenca_medias_brutas": 0.007254295276115985
+          },
+          {
+            "populacao": "P1",
+            "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+            "corte": 0.4,
+            "h": 0.08,
+            "salto": 0.006888705513024174,
+            "diferenca_medias_brutas": -0.0449463730727272
+          },
+          {
+            "populacao": "P2",
+            "outcome": "D_k_especialista_ativo_do_ciclo",
+            "corte": 0.3,
+            "h": 0.05,
+            "salto": -0.15243086347351753,
+            "diferenca_medias_brutas": 0.14774090363854453
+          },
+          {
+            "populacao": "P2",
+            "outcome": "D_k_especialista_ativo_do_ciclo",
+            "corte": 0.3,
+            "h": 0.03,
+            "salto": 0.052956565436002134,
+            "diferenca_medias_brutas": -0.07532281205164992
+          },
+          {
+            "populacao": "P2",
+            "outcome": "D_k_especialista_ativo_do_ciclo",
+            "corte": 0.3,
+            "h": 0.08,
+            "salto": -0.10000286390864233,
+            "diferenca_medias_brutas": 0.1912568306010929
+          }
+        ]
+      }
+    }
+  ],
+  "por_especificacao": [
+    {
+      "populacao": "P1",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.3,
+      "h": 0.05,
+      "especificacao": "principal",
+      "bolsa_lado_menor": 10000.0,
+      "bolsa_lado_maior": 15000.0,
+      "E3": {
+        "tau": -0.0322112398206985,
+        "ep": 0.2260424298163977,
+        "ic95_inf": -0.4752462612387608,
+        "ic95_sup": 0.4108237815973638,
+        "p_valor": 0.8866844030032983,
+        "n_abaixo": 61,
+        "n_acima": 53,
+        "media_bruta_abaixo": 0.3934426229508196,
+        "media_bruta_acima": 0.6037735849056604
+      },
+      "independente": {
+        "tau_duas_retas": -0.03221123982069962,
+        "tau_bolsa_do_quadro": -0.032211239820700455,
+        "ep_hc1": 0.22604242981639733,
+        "ic95_inf": -0.47524626123876207,
+        "ic95_sup": 0.41082378159736116,
+        "p_valor": 0.8866844030032914,
+        "bolsa_lado_menor": [
+          10000.0
+        ],
+        "bolsa_lado_maior": [
+          15000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 61,
+          "media_bruta": 0.39344262295081966,
+          "media_ponderada_kernel": 0.4669014084507042,
+          "x_medio": -0.026721311475409838,
+          "ivs_medio": 0.27327868852459014,
+          "residuo_medio": -0.017145265328466913,
+          "valor_da_reta_no_corte": 0.5813350669590396,
+          "inclinacao_por_0_010_de_ivs": 0.06389925091696277
+        },
+        "lado_bolsa_maior": {
+          "n": 53,
+          "media_bruta": 0.6037735849056604,
+          "media_ponderada_kernel": 0.5980471928397071,
+          "x_medio": 0.026811320754716976,
+          "ivs_medio": 0.32681132075471697,
+          "residuo_medio": -0.01546198762127526,
+          "valor_da_reta_no_corte": 0.54912382713834,
+          "inclinacao_por_0_010_de_ivs": 0.02615005281911028
+        },
+        "diferenca_medias_brutas": 0.2103309619548407,
+        "decomposicao": {
+          "salto": -0.03221123982069962,
+          "inclinacao_dentro_da_janela": 0.24085892406834866,
+          "residuo": 0.0016832777071916528,
+          "soma": 0.2103309619548407
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": -1.124100812432971e-15,
+        "tau_bolsa_do_quadro_menos_E3": -1.9567680809018384e-15,
+        "ep_menos_E3": -3.608224830031759e-16
+      },
+      "sinal_salto_difere_da_diferenca_bruta": true,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P1",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.3,
+      "h": 0.03,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 10000.0,
+      "bolsa_lado_maior": 15000.0,
+      "E3": {
+        "tau": 0.0362081647238274,
+        "ep": 0.3263049351204659,
+        "ic95_inf": -0.6033377560899649,
+        "ic95_sup": 0.6757540855376196,
+        "p_valor": 0.9116447389271218,
+        "n_abaixo": 32,
+        "n_acima": 28,
+        "media_bruta_abaixo": 0.5,
+        "media_bruta_acima": 0.5357142857142857
+      },
+      "independente": {
+        "tau_duas_retas": 0.036208164723828484,
+        "tau_bolsa_do_quadro": 0.03620816472382834,
+        "ep_hc1": 0.3263049351204658,
+        "ic95_inf": -0.6033377560899637,
+        "ic95_sup": 0.6757540855376204,
+        "p_valor": 0.9116447389271196,
+        "bolsa_lado_menor": [
+          10000.0
+        ],
+        "bolsa_lado_maior": [
+          15000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 32,
+          "media_bruta": 0.5,
+          "media_ponderada_kernel": 0.5080971659919028,
+          "x_medio": -0.014562499999999999,
+          "ivs_medio": 0.2854375,
+          "residuo_medio": -0.004934966637770176,
+          "valor_da_reta_no_corte": 0.5199616147287358,
+          "inclinacao_por_0_010_de_ivs": 0.010318728302809015
+        },
+        "lado_bolsa_maior": {
+          "n": 28,
+          "media_bruta": 0.5357142857142857,
+          "media_ponderada_kernel": 0.579345088161209,
+          "x_medio": 0.015821428571428573,
+          "ivs_medio": 0.31582142857142853,
+          "residuo_medio": -0.054876538209261735,
+          "valor_da_reta_no_corte": 0.5561697794525643,
+          "inclinacao_por_0_010_de_ivs": 0.02175596490265302
+        },
+        "diferenca_medias_brutas": 0.0357142857142857,
+        "decomposicao": {
+          "salto": 0.036208164723828484,
+          "inclinacao_dentro_da_janela": 0.04944769256194881,
+          "residuo": -0.04994157157149156,
+          "soma": 0.03571428571428573
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 1.0824674490095276e-15,
+        "tau_bolsa_do_quadro_menos_E3": 9.367506770274758e-16,
+        "ep_menos_E3": -5.551115123125783e-17
+      },
+      "sinal_salto_difere_da_diferenca_bruta": false,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P1",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.3,
+      "h": 0.08,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 10000.0,
+      "bolsa_lado_maior": 15000.0,
+      "E3": {
+        "tau": -0.0410222204207856,
+        "ep": 0.174969043163659,
+        "ic95_inf": -0.3839552434309915,
+        "ic95_sup": 0.3019108025894202,
+        "p_valor": 0.8146324147867783,
+        "n_abaixo": 96,
+        "n_acima": 79,
+        "media_bruta_abaixo": 0.3125,
+        "media_bruta_acima": 0.6329113924050633
+      },
+      "independente": {
+        "tau_duas_retas": -0.041022220420785405,
+        "tau_bolsa_do_quadro": -0.04102222042078667,
+        "ep_hc1": 0.17496904316365894,
+        "ic95_inf": -0.38395524343099235,
+        "ic95_sup": 0.301910802589419,
+        "p_valor": 0.8146324147867736,
+        "bolsa_lado_menor": [
+          10000.0
+        ],
+        "bolsa_lado_maior": [
+          15000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 96,
+          "media_bruta": 0.3125,
+          "media_ponderada_kernel": 0.39773326304691614,
+          "x_medio": -0.04047916666666667,
+          "ivs_medio": 0.2595208333333333,
+          "residuo_medio": -0.0016290183816959902,
+          "valor_da_reta_no_corte": 0.5892593146756732,
+          "inclinacao_por_0_010_de_ivs": 0.06796836964544985
+        },
+        "lado_bolsa_maior": {
+          "n": 79,
+          "media_bruta": 0.6329113924050633,
+          "media_ponderada_kernel": 0.621916952856697,
+          "x_medio": 0.03945569620253165,
+          "ivs_medio": 0.3394556962025317,
+          "residuo_medio": -0.020509657178995198,
+          "valor_da_reta_no_corte": 0.5482370942548878,
+          "inclinacao_por_0_010_de_ivs": 0.026658750308002847
+        },
+        "diferenca_medias_brutas": 0.32041139240506333,
+        "decomposicao": {
+          "salto": -0.041022220420785405,
+          "inclinacao_dentro_da_janela": 0.3803142516231479,
+          "residuo": -0.018880638797299207,
+          "soma": 0.3204113924050633
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 1.942890293094024e-16,
+        "tau_bolsa_do_quadro_menos_E3": -1.0685896612017132e-15,
+        "ep_menos_E3": -5.551115123125783e-17
+      },
+      "sinal_salto_difere_da_diferenca_bruta": true,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P1",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.4,
+      "h": 0.05,
+      "especificacao": "principal",
+      "bolsa_lado_menor": 15000.0,
+      "bolsa_lado_maior": 20000.0,
+      "E3": {
+        "tau": -0.1201737718672556,
+        "ep": 0.2094625785562995,
+        "ic95_inf": -0.5307128819464945,
+        "ic95_sup": 0.2903653382119832,
+        "p_valor": 0.5661543798622063,
+        "n_abaixo": 53,
+        "n_acima": 41,
+        "media_bruta_abaixo": 0.660377358490566,
+        "media_bruta_acima": 0.6585365853658537
+      },
+      "independente": {
+        "tau_duas_retas": -0.1201737718672562,
+        "tau_bolsa_do_quadro": -0.12017377186725624,
+        "ep_hc1": 0.2094625785562995,
+        "ic95_inf": -0.530712881946495,
+        "ic95_sup": 0.29036533821198257,
+        "p_valor": 0.5661543798622044,
+        "bolsa_lado_menor": [
+          15000.0
+        ],
+        "bolsa_lado_maior": [
+          20000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 53,
+          "media_bruta": 0.660377358490566,
+          "media_ponderada_kernel": 0.6416938110749186,
+          "x_medio": -0.021037735849056598,
+          "ivs_medio": 0.37896226415094336,
+          "residuo_medio": 0.024674653748460045,
+          "valor_da_reta_no_corte": 0.6532304876283254,
+          "inclinacao_por_0_010_de_ivs": 0.008331591865198449
+        },
+        "lado_bolsa_maior": {
+          "n": 41,
+          "media_bruta": 0.6585365853658537,
+          "media_ponderada_kernel": 0.6268939393939393,
+          "x_medio": 0.02424390243902439,
+          "ivs_medio": 0.4242439024390244,
+          "residuo_medio": -0.012381911791913135,
+          "valor_da_reta_no_corte": 0.5330567157610692,
+          "inclinacao_por_0_010_de_ivs": 0.056864517477511096
+        },
+        "diferenca_medias_brutas": -0.0018407731247123138,
+        "decomposicao": {
+          "salto": -0.1201737718672562,
+          "inclinacao_dentro_da_janela": 0.155389564282917,
+          "residuo": -0.037056565540373176,
+          "soma": -0.0018407731247123693
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": -5.967448757360216e-16,
+        "tau_bolsa_do_quadro_menos_E3": -6.38378239159465e-16,
+        "ep_menos_E3": 0.0
+      },
+      "sinal_salto_difere_da_diferenca_bruta": false,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P1",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.4,
+      "h": 0.03,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 15000.0,
+      "bolsa_lado_maior": 20000.0,
+      "E3": {
+        "tau": -0.1780867683805648,
+        "ep": 0.2577423348048415,
+        "ic95_inf": -0.6832524618893188,
+        "ic95_sup": 0.327078925128189,
+        "p_valor": 0.4895976893041023,
+        "n_abaixo": 38,
+        "n_acima": 25,
+        "media_bruta_abaixo": 0.6052631578947368,
+        "media_bruta_acima": 0.6
+      },
+      "independente": {
+        "tau_duas_retas": -0.17808676838056492,
+        "tau_bolsa_do_quadro": -0.17808676838056656,
+        "ep_hc1": 0.2577423348048416,
+        "ic95_inf": -0.6832524618893205,
+        "ic95_sup": 0.32707892512818737,
+        "p_valor": 0.4895976893040983,
+        "bolsa_lado_menor": [
+          15000.0
+        ],
+        "bolsa_lado_maior": [
+          20000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 38,
+          "media_bruta": 0.6052631578947368,
+          "media_ponderada_kernel": 0.6406995230524642,
+          "x_medio": -0.013447368421052635,
+          "ivs_medio": 0.3865526315789473,
+          "residuo_medio": 0.008708891648457924,
+          "valor_da_reta_no_corte": 0.7282459855593539,
+          "inclinacao_por_0_010_de_ivs": 0.09793121984142564
+        },
+        "lado_bolsa_maior": {
+          "n": 25,
+          "media_bruta": 0.6,
+          "media_ponderada_kernel": 0.5876010781671158,
+          "x_medio": 0.015160000000000002,
+          "ivs_medio": 0.41516000000000003,
+          "residuo_medio": -0.0154573583472559,
+          "valor_da_reta_no_corte": 0.550159217178789,
+          "inclinacao_por_0_010_de_ivs": 0.04307265248579611
+        },
+        "diferenca_medias_brutas": -0.0052631578947368585,
+        "decomposicao": {
+          "salto": -0.17808676838056492,
+          "inclinacao_dentro_da_janela": 0.19698986048154193,
+          "residuo": -0.024166249995713825,
+          "soma": -0.00526315789473681
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": -1.1102230246251565e-16,
+        "tau_bolsa_do_quadro_menos_E3": -1.7486012637846216e-15,
+        "ep_menos_E3": 1.1102230246251565e-16
+      },
+      "sinal_salto_difere_da_diferenca_bruta": false,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P1",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.4,
+      "h": 0.08,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 15000.0,
+      "bolsa_lado_maior": 20000.0,
+      "E3": {
+        "tau": -0.0481445201655236,
+        "ep": 0.17500567557647,
+        "ic95_inf": -0.3911493413855058,
+        "ic95_sup": 0.2948603010544585,
+        "p_valor": 0.7832373974337568,
+        "n_abaixo": 88,
+        "n_acima": 52,
+        "media_bruta_abaixo": 0.6477272727272727,
+        "media_bruta_acima": 0.6346153846153846
+      },
+      "independente": {
+        "tau_duas_retas": -0.0481445201655234,
+        "tau_bolsa_do_quadro": -0.04814452016552346,
+        "ep_hc1": 0.17500567557647007,
+        "ic95_inf": -0.3911493413855057,
+        "ic95_sup": 0.2948603010544588,
+        "p_valor": 0.7832373974337575,
+        "bolsa_lado_menor": [
+          15000.0
+        ],
+        "bolsa_lado_maior": [
+          20000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 88,
+          "media_bruta": 0.6477272727272727,
+          "media_ponderada_kernel": 0.6478720520466251,
+          "x_medio": -0.038079545454545456,
+          "ivs_medio": 0.3619204545454546,
+          "residuo_medio": -0.0045646318887106185,
+          "valor_da_reta_no_corte": 0.6403146786352336,
+          "inclinacao_por_0_010_de_ivs": -0.003145317476293574
+        },
+        "lado_bolsa_maior": {
+          "n": 52,
+          "media_bruta": 0.6346153846153846,
+          "media_ponderada_kernel": 0.6312399355877617,
+          "x_medio": 0.03223076923076922,
+          "ivs_medio": 0.43223076923076925,
+          "residuo_medio": -0.010907684442282453,
+          "valor_da_reta_no_corte": 0.5921701584697102,
+          "inclinacao_por_0_010_de_ivs": 0.016553409012969904
+        },
+        "diferenca_medias_brutas": -0.013111888111888126,
+        "decomposicao": {
+          "salto": -0.0481445201655234,
+          "inclinacao_dentro_da_janela": 0.0413756846072071,
+          "residuo": -0.006343052553571834,
+          "soma": -0.013111888111888131
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 2.0122792321330962e-16,
+        "tau_bolsa_do_quadro_menos_E3": 1.3877787807814457e-16,
+        "ep_menos_E3": 5.551115123125783e-17
+      },
+      "sinal_salto_difere_da_diferenca_bruta": false,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P1",
+      "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+      "corte": 0.3,
+      "h": 0.05,
+      "especificacao": "principal",
+      "bolsa_lado_menor": 10000.0,
+      "bolsa_lado_maior": 15000.0,
+      "E3": {
+        "tau": -0.1283835544752817,
+        "ep": 0.1664459393297835,
+        "ic95_inf": -0.4546116009345963,
+        "ic95_sup": 0.1978444919840327,
+        "p_valor": 0.440515598158781,
+        "n_abaixo": 61,
+        "n_acima": 53,
+        "media_bruta_abaixo": 0.2425215441367804,
+        "media_bruta_acima": 0.3719931997956416
+      },
+      "independente": {
+        "tau_duas_retas": -0.12838355446174915,
+        "tau_bolsa_do_quadro": -0.12838355446175023,
+        "ep_hc1": 0.16644593933098295,
+        "ic95_inf": -0.4546116009234157,
+        "ic95_sup": 0.1978444919999152,
+        "p_valor": 0.44051559821025016,
+        "bolsa_lado_menor": [
+          10000.0
+        ],
+        "bolsa_lado_maior": [
+          15000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 61,
+          "media_bruta": 0.24252154413606558,
+          "media_ponderada_kernel": 0.28696367748753515,
+          "x_medio": -0.026721311475409838,
+          "ivs_medio": 0.27327868852459014,
+          "residuo_medio": 0.014669546407545595,
+          "valor_da_reta_no_corte": 0.40708342412753545,
+          "inclinacao_por_0_010_de_ivs": 0.06707433748674813
+        },
+        "lado_bolsa_maior": {
+          "n": 53,
+          "media_bruta": 0.37199319979433965,
+          "media_ponderada_kernel": 0.33856721967282344,
+          "x_medio": 0.026811320754716976,
+          "ivs_medio": 0.32681132075471697,
+          "residuo_medio": 0.007497834650897896,
+          "valor_da_reta_no_corte": 0.2786998696657863,
+          "inclinacao_por_0_010_de_ivs": 0.031999727377309904
+        },
+        "diferenca_medias_brutas": 0.12947165565827407,
+        "decomposicao": {
+          "salto": -0.12838355446174915,
+          "inclinacao_dentro_da_janela": 0.2650269218766709,
+          "residuo": -0.007171711756647699,
+          "soma": 0.12947165565827404
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 1.3532563958307264e-11,
+        "tau_bolsa_do_quadro_menos_E3": 1.3531481490858255e-11,
+        "ep_menos_E3": 1.1994572002294035e-12
+      },
+      "sinal_salto_difere_da_diferenca_bruta": true,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P1",
+      "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+      "corte": 0.3,
+      "h": 0.03,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 10000.0,
+      "bolsa_lado_maior": 15000.0,
+      "E3": {
+        "tau": 0.0036536001604437,
+        "ep": 0.243537136294603,
+        "ic95_inf": -0.4736704158750005,
+        "ic95_sup": 0.480977616195888,
+        "p_valor": 0.988030401208078,
+        "n_abaixo": 32,
+        "n_acima": 28,
+        "media_bruta_abaixo": 0.3047210550887022,
+        "media_bruta_acima": 0.2963352007469654
+      },
+      "independente": {
+        "tau_duas_retas": 0.003653600180478944,
+        "tau_bolsa_do_quadro": 0.0036536001804772394,
+        "ep_hc1": 0.2435371362953072,
+        "ic95_inf": -0.47367041585634734,
+        "ic95_sup": 0.4809776162173018,
+        "p_valor": 0.9880304011424856,
+        "bolsa_lado_menor": [
+          10000.0
+        ],
+        "bolsa_lado_maior": [
+          15000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 32,
+          "media_bruta": 0.30472105508437497,
+          "media_ponderada_kernel": 0.3297746628967611,
+          "x_medio": -0.014562499999999999,
+          "ivs_medio": 0.2854375,
+          "residuo_medio": -4.893792943876443e-05,
+          "valor_da_reta_no_corte": 0.4235912097947156,
+          "inclinacao_por_0_010_de_ivs": 0.08159396860491114
+        },
+        "lado_bolsa_maior": {
+          "n": 28,
+          "media_bruta": 0.29633520074642855,
+          "media_ponderada_kernel": 0.30927544821637276,
+          "x_medio": 0.015821428571428573,
+          "ivs_medio": 0.31582142857142853,
+          "residuo_medio": 0.04430396390474874,
+          "valor_da_reta_no_corte": 0.42724480997519454,
+          "inclinacao_por_0_010_de_ivs": -0.11074447060357588
+        },
+        "diferenca_medias_brutas": -0.008385854337946419,
+        "decomposicao": {
+          "salto": 0.003653600180478944,
+          "inclinacao_dentro_da_janela": -0.056392356352612874,
+          "residuo": 0.04435290183418751,
+          "soma": -0.008385854337946419
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 2.0035244296945365e-11,
+        "tau_bolsa_do_quadro_menos_E3": 2.003353949744935e-11,
+        "ep_menos_E3": 7.042144645197368e-13
+      },
+      "sinal_salto_difere_da_diferenca_bruta": true,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P1",
+      "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+      "corte": 0.3,
+      "h": 0.08,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 10000.0,
+      "bolsa_lado_maior": 15000.0,
+      "E3": {
+        "tau": -0.0887444899471155,
+        "ep": 0.1236015390144027,
+        "ic95_inf": -0.3309990548490672,
+        "ic95_sup": 0.153510074954836,
+        "p_valor": 0.4727643459236877,
+        "n_abaixo": 96,
+        "n_acima": 79,
+        "media_bruta_abaixo": 0.2036971385776533,
+        "media_bruta_acima": 0.3895138224065998
+      },
+      "independente": {
+        "tau_duas_retas": -0.08874448994203821,
+        "tau_bolsa_do_quadro": -0.08874448994203826,
+        "ep_hc1": 0.12360153901529651,
+        "ic95_inf": -0.33099905484574177,
+        "ic95_sup": 0.15351007496166524,
+        "p_valor": 0.4727643459522178,
+        "bolsa_lado_menor": [
+          10000.0
+        ],
+        "bolsa_lado_maior": [
+          15000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 96,
+          "media_bruta": 0.20369713857708335,
+          "media_ponderada_kernel": 0.24049597698732214,
+          "x_medio": -0.04047916666666667,
+          "ivs_medio": 0.2595208333333333,
+          "residuo_medio": 0.020608989440931178,
+          "valor_da_reta_no_corte": 0.37200956992684436,
+          "inclinacao_por_0_010_de_ivs": 0.0466712722488586
+        },
+        "lado_bolsa_maior": {
+          "n": 79,
+          "media_bruta": 0.38951382240632915,
+          "media_ponderada_kernel": 0.37003864403487363,
+          "x_medio": 0.03945569620253165,
+          "ivs_medio": 0.3394556962025317,
+          "residuo_medio": -0.01762753608929251,
+          "valor_da_reta_no_corte": 0.28326507998480616,
+          "inclinacao_por_0_010_de_ivs": 0.03139629772972224
+        },
+        "diferenca_medias_brutas": 0.1858166838292458,
+        "decomposicao": {
+          "salto": -0.08874448994203821,
+          "inclinacao_dentro_da_janela": 0.3127976993015077,
+          "residuo": -0.03823652553022369,
+          "soma": 0.1858166838292458
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 5.0772996917913815e-12,
+        "tau_bolsa_do_quadro_menos_E3": 5.07724418064015e-12,
+        "ep_menos_E3": 8.938128015500979e-13
+      },
+      "sinal_salto_difere_da_diferenca_bruta": true,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P1",
+      "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+      "corte": 0.4,
+      "h": 0.05,
+      "especificacao": "principal",
+      "bolsa_lado_menor": 15000.0,
+      "bolsa_lado_maior": 20000.0,
+      "E3": {
+        "tau": -0.0514921777077076,
+        "ep": 0.1601431223850135,
+        "ic95_inf": -0.3653669299541242,
+        "ic95_sup": 0.2623825745387089,
+        "p_valor": 0.7478023489312183,
+        "n_abaixo": 53,
+        "n_acima": 41,
+        "media_bruta_abaixo": 0.3691103969405856,
+        "media_bruta_acima": 0.3763646922183507
+      },
+      "independente": {
+        "tau_duas_retas": -0.051492177704909325,
+        "tau_bolsa_do_quadro": -0.05149217770490938,
+        "ep_hc1": 0.16014312238517653,
+        "ic95_inf": -0.3653669299516455,
+        "ic95_sup": 0.26238257454182673,
+        "p_valor": 0.7478023489447059,
+        "bolsa_lado_menor": [
+          15000.0
+        ],
+        "bolsa_lado_maior": [
+          20000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 53,
+          "media_bruta": 0.3691103969433962,
+          "media_ponderada_kernel": 0.3609626222510098,
+          "x_medio": -0.021037735849056598,
+          "ivs_medio": 0.37896226415094336,
+          "residuo_medio": 0.01495328831269386,
+          "valor_da_reta_no_corte": 0.3740675489633405,
+          "inclinacao_por_0_010_de_ivs": 0.00946415549443785
+        },
+        "lado_bolsa_maior": {
+          "n": 41,
+          "media_bruta": 0.3763646922195122,
+          "media_ponderada_kernel": 0.3516425414884469,
+          "x_medio": 0.02424390243902439,
+          "ivs_medio": 0.4242439024390244,
+          "residuo_medio": 0.011085032482246151,
+          "valor_da_reta_no_corte": 0.32257537125843116,
+          "inclinacao_por_0_010_de_ivs": 0.017614444945998294
+        },
+        "diferenca_medias_brutas": 0.007254295276115985,
+        "decomposicao": {
+          "salto": -0.051492177704909325,
+          "inclinacao_dentro_da_janela": 0.062614728811473,
+          "residuo": -0.00386825583044771,
+          "soma": 0.007254295276115959
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 2.7982755002042836e-12,
+        "tau_bolsa_do_quadro_menos_E3": 2.7982199890530524e-12,
+        "ep_menos_E3": 1.6303625116620424e-13
+      },
+      "sinal_salto_difere_da_diferenca_bruta": true,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P1",
+      "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+      "corte": 0.4,
+      "h": 0.03,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 15000.0,
+      "bolsa_lado_maior": 20000.0,
+      "E3": {
+        "tau": -0.0477718054641905,
+        "ep": 0.2021306362521442,
+        "ic95_inf": -0.4439405726905594,
+        "ic95_sup": 0.3483969617621784,
+        "p_valor": 0.813167887330484,
+        "n_abaixo": 38,
+        "n_acima": 25,
+        "media_bruta_abaixo": 0.3572617441038493,
+        "media_bruta_acima": 0.3098095238095238
+      },
+      "independente": {
+        "tau_duas_retas": -0.04777180546060117,
+        "tau_bolsa_do_quadro": -0.047771805460601495,
+        "ep_hc1": 0.20213063625231908,
+        "ic95_inf": -0.44394057268731313,
+        "ic95_sup": 0.3483969617661101,
+        "p_valor": 0.8131678873444197,
+        "bolsa_lado_menor": [
+          15000.0
+        ],
+        "bolsa_lado_maior": [
+          20000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 38,
+          "media_bruta": 0.3572617441052632,
+          "media_ponderada_kernel": 0.3588695353421304,
+          "x_medio": -0.013447368421052635,
+          "ivs_medio": 0.3865526315789473,
+          "residuo_medio": 0.034659628846154686,
+          "valor_da_reta_no_corte": 0.4307931022716364,
+          "inclinacao_por_0_010_de_ivs": 0.08045513711303448
+        },
+        "lado_bolsa_maior": {
+          "n": 25,
+          "media_bruta": 0.309809523812,
+          "media_ponderada_kernel": 0.3398857656301887,
+          "x_medio": 0.015160000000000002,
+          "ivs_medio": 0.41516000000000003,
+          "residuo_medio": 0.0020160583660209144,
+          "valor_da_reta_no_corte": 0.38302129681103525,
+          "inclinacao_por_0_010_de_ivs": -0.04962258005610565
+        },
+        "diferenca_medias_brutas": -0.04745222029326318,
+        "decomposicao": {
+          "salto": -0.04777180546060117,
+          "inclinacao_dentro_da_janela": 0.03296315564747179,
+          "residuo": -0.03264357048013377,
+          "soma": -0.047452220293263146
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 3.5893302219314194e-12,
+        "tau_bolsa_do_quadro_menos_E3": 3.5890040939179357e-12,
+        "ep_menos_E3": 1.7488788195407778e-13
+      },
+      "sinal_salto_difere_da_diferenca_bruta": false,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P1",
+      "outcome": "fracao_celulas_ch1_com_confirmacao_ou_homologacao",
+      "corte": 0.4,
+      "h": 0.08,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 15000.0,
+      "bolsa_lado_maior": 20000.0,
+      "E3": {
+        "tau": 0.0068887055103105,
+        "ep": 0.1294317225460707,
+        "ic95_inf": -0.2467928091369691,
+        "ic95_sup": 0.2605702201575901,
+        "p_valor": 0.9575544706720528,
+        "n_abaixo": 88,
+        "n_acima": 52,
+        "media_bruta_abaixo": 0.3946716477966479,
+        "media_bruta_acima": 0.3497252747252747
+      },
+      "independente": {
+        "tau_duas_retas": 0.006888705513024174,
+        "tau_bolsa_do_quadro": 0.006888705513023893,
+        "ep_hc1": 0.12943172254628443,
+        "ic95_inf": -0.2467928091346745,
+        "ic95_sup": 0.2605702201607223,
+        "p_valor": 0.9575544706554197,
+        "bolsa_lado_menor": [
+          15000.0
+        ],
+        "bolsa_lado_maior": [
+          20000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 88,
+          "media_bruta": 0.39467164779772723,
+          "media_ponderada_kernel": 0.38092754885424224,
+          "x_medio": -0.038079545454545456,
+          "ivs_medio": 0.3619204545454546,
+          "residuo_medio": -0.008038281310592393,
+          "valor_da_reta_no_corte": 0.3436825098431585,
+          "inclinacao_por_0_010_de_ivs": -0.015501082946386696
+        },
+        "lado_bolsa_maior": {
+          "n": 52,
+          "media_bruta": 0.34972527472500003,
+          "media_ponderada_kernel": 0.3490352541993156,
+          "x_medio": 0.03223076923076922,
+          "ivs_medio": 0.43223076923076925,
+          "residuo_medio": 0.001251537376467458,
+          "valor_da_reta_no_corte": 0.3505712153561827,
+          "inclinacao_por_0_010_de_ivs": -0.0006507688329224796
+        },
+        "diferenca_medias_brutas": -0.0449463730727272,
+        "decomposicao": {
+          "salto": 0.006888705513024174,
+          "inclinacao_dentro_da_janela": -0.0611248972728113,
+          "residuo": 0.009289818687059852,
+          "soma": -0.04494637307272727
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 2.7136739036426327e-12,
+        "tau_bolsa_do_quadro_menos_E3": 2.7133928784395245e-12,
+        "ep_menos_E3": 2.1374568781595826e-13
+      },
+      "sinal_salto_difere_da_diferenca_bruta": true,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P2",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.3,
+      "h": 0.05,
+      "especificacao": "principal",
+      "bolsa_lado_menor": 10000.0,
+      "bolsa_lado_maior": 15000.0,
+      "E3": {
+        "tau": -0.1524308634735186,
+        "ep": 0.1853192771026545,
+        "ic95_inf": -0.5156499722357197,
+        "ic95_sup": 0.2107882452886824,
+        "p_valor": 0.4107747104966395,
+        "n_abaixo": 82,
+        "n_acima": 61,
+        "media_bruta_abaixo": 0.524390243902439,
+        "media_bruta_acima": 0.6721311475409836
+      },
+      "independente": {
+        "tau_duas_retas": -0.15243086347351753,
+        "tau_bolsa_do_quadro": -0.15243086347351817,
+        "ep_hc1": 0.18531927710265442,
+        "ic95_inf": -0.5156499722357192,
+        "ic95_sup": 0.2107882452886828,
+        "p_valor": 0.4107747104966408,
+        "bolsa_lado_menor": [
+          10000.0
+        ],
+        "bolsa_lado_maior": [
+          15000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 82,
+          "media_bruta": 0.524390243902439,
+          "media_ponderada_kernel": 0.5632780082987551,
+          "x_medio": -0.026487804878048776,
+          "ivs_medio": 0.2735121951219512,
+          "residuo_medio": -0.012186293052798634,
+          "valor_da_reta_no_corte": 0.611080275365886,
+          "inclinacao_por_0_010_de_ivs": 0.028127562383393957
+        },
+        "lado_bolsa_maior": {
+          "n": 61,
+          "media_bruta": 0.6721311475409836,
+          "media_ponderada_kernel": 0.6036662452591656,
+          "x_medio": 0.024065573770491806,
+          "ivs_medio": 0.32406557377049183,
+          "residuo_medio": -0.0027583882248967385,
+          "valor_da_reta_no_corte": 0.4586494118923685,
+          "inclinacao_por_0_010_de_ivs": 0.08985454738613229
+        },
+        "diferenca_medias_brutas": 0.14774090363854453,
+        "decomposicao": {
+          "salto": -0.15243086347351753,
+          "inclinacao_dentro_da_janela": 0.29074386228416016,
+          "residuo": 0.009427904827901895,
+          "soma": 0.14774090363854453
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 1.0824674490095276e-15,
+        "tau_bolsa_do_quadro_menos_E3": 4.440892098500626e-16,
+        "ep_menos_E3": -8.326672684688674e-17
+      },
+      "sinal_salto_difere_da_diferenca_bruta": true,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P2",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.3,
+      "h": 0.03,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 10000.0,
+      "bolsa_lado_maior": 15000.0,
+      "E3": {
+        "tau": 0.0529565654360022,
+        "ep": 0.2462739412966249,
+        "ic95_inf": -0.4297314898361141,
+        "ic95_sup": 0.5356446207081187,
+        "p_valor": 0.8297430430776395,
+        "n_abaixo": 41,
+        "n_acima": 34,
+        "media_bruta_abaixo": 0.6341463414634146,
+        "media_bruta_acima": 0.5588235294117647
+      },
+      "independente": {
+        "tau_duas_retas": 0.052956565436002134,
+        "tau_bolsa_do_quadro": 0.05295656543600029,
+        "ep_hc1": 0.2462739412966249,
+        "ic95_inf": -0.429731489836116,
+        "ic95_sup": 0.5356446207081166,
+        "p_valor": 0.8297430430776456,
+        "bolsa_lado_menor": [
+          10000.0
+        ],
+        "bolsa_lado_maior": [
+          15000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 41,
+          "media_bruta": 0.6341463414634146,
+          "media_ponderada_kernel": 0.5893371757925072,
+          "x_medio": -0.013073170731707318,
+          "ivs_medio": 0.2869268292682927,
+          "residuo_medio": 0.00544123107330039,
+          "valor_da_reta_no_corte": 0.45835984490346504,
+          "inclinacao_por_0_010_de_ivs": -0.13030141576404136
+        },
+        "lado_bolsa_maior": {
+          "n": 34,
+          "media_bruta": 0.5588235294117647,
+          "media_ponderada_kernel": 0.530647985989492,
+          "x_medio": 0.013205882352941177,
+          "ivs_medio": 0.31320588235294117,
+          "residuo_medio": 0.018555603016583277,
+          "valor_da_reta_no_corte": 0.5113164103394672,
+          "inclinacao_por_0_010_de_ivs": 0.021923197013235748
+        },
+        "diferenca_medias_brutas": -0.07532281205164992,
+        "decomposicao": {
+          "salto": 0.052956565436002134,
+          "inclinacao_dentro_da_janela": -0.14139374943093494,
+          "residuo": 0.013114371943282885,
+          "soma": -0.07532281205164992
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": -6.245004513516506e-17,
+        "tau_bolsa_do_quadro_menos_E3": -1.908195823574488e-15,
+        "ep_menos_E3": 0.0
+      },
+      "sinal_salto_difere_da_diferenca_bruta": true,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P2",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.3,
+      "h": 0.08,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 10000.0,
+      "bolsa_lado_maior": 15000.0,
+      "E3": {
+        "tau": -0.1000028639086408,
+        "ep": 0.1490323978910085,
+        "ic95_inf": -0.3921009963046607,
+        "ic95_sup": 0.1920952684873789,
+        "p_valor": 0.502211446468644,
+        "n_abaixo": 122,
+        "n_acima": 93,
+        "media_bruta_abaixo": 0.4754098360655737,
+        "media_bruta_acima": 0.6666666666666666
+      },
+      "independente": {
+        "tau_duas_retas": -0.10000286390864233,
+        "tau_bolsa_do_quadro": -0.10000286390864281,
+        "ep_hc1": 0.14903239789100856,
+        "ic95_inf": -0.3921009963046627,
+        "ic95_sup": 0.19209526848737707,
+        "p_valor": 0.5022114464686358,
+        "bolsa_lado_menor": [
+          10000.0
+        ],
+        "bolsa_lado_maior": [
+          15000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 122,
+          "media_bruta": 0.47540983606557374,
+          "media_ponderada_kernel": 0.5236668663870582,
+          "x_medio": -0.038959016393442625,
+          "ivs_medio": 0.2610409836065574,
+          "residuo_medio": -0.0009984634668913303,
+          "valor_da_reta_no_corte": 0.6303013594880986,
+          "inclinacao_por_0_010_de_ivs": 0.03950126933428843
+        },
+        "lado_bolsa_maior": {
+          "n": 93,
+          "media_bruta": 0.6666666666666666,
+          "media_ponderada_kernel": 0.6374163664436437,
+          "x_medio": 0.03821505376344085,
+          "ivs_medio": 0.33821505376344085,
+          "residuo_medio": -0.025631544213862243,
+          "valor_da_reta_no_corte": 0.5302984955794563,
+          "inclinacao_por_0_010_de_ivs": 0.04239159685706177
+        },
+        "diferenca_medias_brutas": 0.1912568306010929,
+        "decomposicao": {
+          "salto": -0.10000286390864233,
+          "inclinacao_dentro_da_janela": 0.3158927752567061,
+          "residuo": -0.024633080746970914,
+          "soma": 0.1912568306010929
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": -1.5265566588595902e-15,
+        "tau_bolsa_do_quadro_menos_E3": -2.0122792321330962e-15,
+        "ep_menos_E3": 5.551115123125783e-17
+      },
+      "sinal_salto_difere_da_diferenca_bruta": true,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P2",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.4,
+      "h": 0.05,
+      "especificacao": "principal",
+      "bolsa_lado_menor": 15000.0,
+      "bolsa_lado_maior": 20000.0,
+      "E3": {
+        "tau": 0.1148939142790502,
+        "ep": 0.1297507702976956,
+        "ic95_inf": -0.1394129224707625,
+        "ic95_sup": 0.3692007510288631,
+        "p_valor": 0.3758886517473357,
+        "n_abaixo": 53,
+        "n_acima": 53,
+        "media_bruta_abaixo": 0.7358490566037735,
+        "media_bruta_acima": 0.8679245283018868
+      },
+      "independente": {
+        "tau_duas_retas": 0.11489391427904838,
+        "tau_bolsa_do_quadro": 0.11489391427904781,
+        "ep_hc1": 0.12975077029769563,
+        "ic95_inf": -0.13941292247076498,
+        "ic95_sup": 0.36920075102886063,
+        "p_valor": 0.375888651747346,
+        "bolsa_lado_menor": [
+          15000.0
+        ],
+        "bolsa_lado_maior": [
+          20000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 53,
+          "media_bruta": 0.7358490566037735,
+          "media_ponderada_kernel": 0.773801002147459,
+          "x_medio": -0.023641509433962263,
+          "ivs_medio": 0.37635849056603776,
+          "residuo_medio": -0.002459766253412965,
+          "valor_da_reta_no_corte": 0.8425588435119544,
+          "inclinacao_por_0_010_de_ivs": 0.04409617793058816
+        },
+        "lado_bolsa_maior": {
+          "n": 53,
+          "media_bruta": 0.8679245283018868,
+          "media_ponderada_kernel": 0.9004524886877828,
+          "x_medio": 0.024981132075471695,
+          "ivs_medio": 0.42498113207547167,
+          "residuo_medio": 0.00025459688118285205,
+          "valor_da_reta_no_corte": 0.9574527577910028,
+          "inclinacao_por_0_010_de_ivs": -0.03594025526907734
+        },
+        "diferenca_medias_brutas": 0.1320754716981133,
+        "decomposicao": {
+          "salto": 0.11489391427904838,
+          "inclinacao_dentro_da_janela": 0.014467194284469007,
+          "residuo": 0.002714363134595817,
+          "soma": 0.1320754716981132
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": -1.817990202823694e-15,
+        "tau_bolsa_do_quadro_menos_E3": -2.3869795029440866e-15,
+        "ep_menos_E3": 2.7755575615628914e-17
+      },
+      "sinal_salto_difere_da_diferenca_bruta": false,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P2",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.4,
+      "h": 0.03,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 15000.0,
+      "bolsa_lado_maior": 20000.0,
+      "E3": {
+        "tau": 0.0746138926453246,
+        "ep": 0.1463427122855303,
+        "ic95_inf": -0.2122125528342221,
+        "ic95_sup": 0.3614403381248714,
+        "p_valor": 0.6101514747150644,
+        "n_abaixo": 33,
+        "n_acima": 32,
+        "media_bruta_abaixo": 0.7878787878787878,
+        "media_bruta_acima": 0.90625
+      },
+      "independente": {
+        "tau_duas_retas": 0.07461389264532747,
+        "tau_bolsa_do_quadro": 0.07461389264532738,
+        "ep_hc1": 0.14634271228553056,
+        "ic95_inf": -0.2122125528342198,
+        "ic95_sup": 0.3614403381248745,
+        "p_valor": 0.6101514747150518,
+        "bolsa_lado_menor": [
+          15000.0
+        ],
+        "bolsa_lado_maior": [
+          20000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 33,
+          "media_bruta": 0.7878787878787878,
+          "media_ponderada_kernel": 0.7988614800759012,
+          "x_medio": -0.014030303030303032,
+          "ivs_medio": 0.385969696969697,
+          "residuo_medio": 0.019329315704283347,
+          "valor_da_reta_no_corte": 0.8521483536279438,
+          "inclinacao_por_0_010_de_ivs": 0.059584515938736426
+        },
+        "lado_bolsa_maior": {
+          "n": 32,
+          "media_bruta": 0.90625,
+          "media_ponderada_kernel": 0.9314516129032259,
+          "x_medio": 0.014500000000000002,
+          "ivs_medio": 0.4145,
+          "residuo_medio": -0.02804708202006163,
+          "valor_da_reta_no_corte": 0.9267622462732713,
+          "inclinacao_por_0_010_de_ivs": 0.0051964384460622915
+        },
+        "diferenca_medias_brutas": 0.11837121212121215,
+        "decomposicao": {
+          "salto": 0.07461389264532747,
+          "inclinacao_dentro_da_janela": 0.09113371720022963,
+          "residuo": -0.047376397724344974,
+          "soma": 0.11837121212121211
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 2.8727020762175925e-15,
+        "tau_bolsa_do_quadro_menos_E3": 2.7755575615628914e-15,
+        "ep_menos_E3": 2.498001805406602e-16
+      },
+      "sinal_salto_difere_da_diferenca_bruta": false,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    },
+    {
+      "populacao": "P2",
+      "outcome": "D_k_especialista_ativo_do_ciclo",
+      "corte": 0.4,
+      "h": 0.08,
+      "especificacao": "sensibilidade",
+      "bolsa_lado_menor": 15000.0,
+      "bolsa_lado_maior": 20000.0,
+      "E3": {
+        "tau": 0.1584328533275752,
+        "ep": 0.1114343161830886,
+        "ic95_inf": -0.0599743930331274,
+        "ic95_sup": 0.376840099688278,
+        "p_valor": 0.1550959354509672,
+        "n_abaixo": 88,
+        "n_acima": 67,
+        "media_bruta_abaixo": 0.7386363636363636,
+        "media_bruta_acima": 0.8208955223880597
+      },
+      "independente": {
+        "tau_duas_retas": 0.15843285332757706,
+        "tau_bolsa_do_quadro": 0.15843285332757706,
+        "ep_hc1": 0.11143431618308876,
+        "ic95_inf": -0.059974393033125795,
+        "ic95_sup": 0.3768400996882799,
+        "p_valor": 0.1550959354509629,
+        "bolsa_lado_menor": [
+          15000.0
+        ],
+        "bolsa_lado_maior": [
+          20000.0
+        ],
+        "lado_bolsa_menor": {
+          "n": 88,
+          "media_bruta": 0.7386363636363636,
+          "media_ponderada_kernel": 0.7540288379983038,
+          "x_medio": -0.039806818181818186,
+          "ivs_medio": 0.36019318181818183,
+          "residuo_medio": 0.00887421478405691,
+          "valor_da_reta_no_corte": 0.8008070278539583,
+          "inclinacao_por_0_010_de_ivs": 0.01784741465071464
+        },
+        "lado_bolsa_maior": {
+          "n": 67,
+          "media_bruta": 0.8208955223880597,
+          "media_ponderada_kernel": 0.8701506893235011,
+          "x_medio": 0.03344776119402986,
+          "ivs_medio": 0.43344776119402983,
+          "residuo_medio": -0.010865484468594967,
+          "valor_da_reta_no_corte": 0.9592398811815354,
+          "inclinacao_por_0_010_de_ivs": -0.03811282721895139
+        },
+        "diferenca_medias_brutas": 0.0822591587516961,
+        "decomposicao": {
+          "salto": 0.15843285332757706,
+          "inclinacao_dentro_da_janela": -0.05643399532322914,
+          "residuo": -0.019739699252651878,
+          "soma": 0.08225915875169604
+        }
+      },
+      "diferencas": {
+        "tau_duas_retas_menos_E3": 1.8596235662471372e-15,
+        "tau_bolsa_do_quadro_menos_E3": 1.8596235662471372e-15,
+        "ep_menos_E3": 1.5265566588595902e-16
+      },
+      "sinal_salto_difere_da_diferenca_bruta": false,
+      "checks": {
+        "C3_tau_duas_retas_igual_E3": true,
+        "C3_dados_lidos_aqui_reproduzem_E3": true,
+        "C4_tau_bolsa_do_quadro_igual_E3": true,
+        "C5_ep_hc1_igual_E3": true,
+        "C1_n_por_lado_igual_E3": true,
+        "C1_bolsa_menor_abaixo_maior_acima": true,
+        "C6_medias_brutas_iguais_E3": true,
+        "C6_decomposicao_fecha": true
+      },
+      "ok": true
+    }
+  ],
+  "entradas": {
+    "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv": {
+      "sha256": "9e5d18274034ba944874345924bb16826c67b4311adc8fbd31907231916b56e9"
+    },
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": {
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe"
+    },
+    "output/rdd_bolsa/escore_completo_ivs2010_oficial.csv": {
+      "sha256": "c2e31c989db0e4f2d7879428b4861aa7c290fcf98092a733cf76c926904689bd"
+    },
+    "output/rdd_bolsa/E3_estimativas.csv": {
+      "sha256": "b38a2d0ea11aaa1be802a8dfe7875547dda23951ee19e0731f5a7398c9e87982"
+    },
+    "output/rdd_bolsa/E3_status.json": {
+      "sha256": "1bdda808efa70a3c1066872a5631fa4cf4dc0b1ce483e7db79c10161e391dd0a"
+    },
+    "output/rdd_bolsa/E4_proporcao_municipio.csv": {
+      "sha256": "897e9529dd0bd226a5ca3398971d894c79400cad7aaf46fd9ae84ebfb4022f79"
+    },
+    "output/rdd_bolsa/a01b_reconstrucao_regra_faixa.json": {
+      "sha256": "5b7b0c3f046f231fd31537421ca25df47e5e67d04d5638ec86106815e151ab37"
+    },
+    "data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip": {
+      "sha256": "e57edeb50946395fa90fe510f4a658501f9b0e92069fcc53aa41b9e893e89c1c"
+    },
+    "scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py": {
+      "sha256": "a6d2034887a6e566d6be3d7eed23bcb7f68c24b09171709bce5345f1884edeeb"
+    }
+  }
+}

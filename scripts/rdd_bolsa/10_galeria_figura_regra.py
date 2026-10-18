@@ -6,6 +6,12 @@ com o IVS 2010 oficial (a variável que define a bolsa) e com o arquivo local
 arquivo local, os municípios cuja faixa a regra erraria aparecem em destaque.
 Serve para o autor escolher a forma da figura. Não abre outcome.
 
+Em 18/10/2026 o autor escolheu a variante A. A galeria passou a trazer também a
+"A colorida" (cor do ponto = IVS do eixo, verde -> amarelo -> vermelho; contorno
+preto nos municípios do lado errado do corte), desenhada pela mesma função que
+o relatório usa (`fig_regra_pontos` de `09_gerar_relatorio_pdf.py`). As
+variantes anteriores ficam como registro da escolha.
+
 Saídas: `output/rdd_bolsa/galeria_figura_regra.html` e `.pdf`.
 """
 
@@ -177,10 +183,24 @@ def var_barras(s, nivel, errado, eixo_x) -> str:
     return "".join(o)
 
 
+def var_pontos_cor(s, nivel, errado, eixo_x) -> str:
+    """A colorida (escolhida pelo autor): a mesma funcao da figura do relatorio, cor = IVS do eixo."""
+    errado = np.asarray(errado, bool)
+    return R.fig_regra_pontos(
+        s, [FAIXAS[int(i)] for i in nivel], errado, eixo_x, list(CORTES), FAIXAS, VALOR, X0, X1,
+        destacar=bool(errado.any()),
+        rotulo_errado=f"contorno preto: faixa do lado errado do corte ({int(errado.sum())} municípios)")
+
+
 VARIANTES = [
     ("A", "Pontos sobre o degrau, sem deslocamento",
      "Cada município é um ponto no valor exato da bolsa. Onde há muitos municípios, a cor fica mais forte.",
      var_pontos),
+    ("A colorida", "Pontos sobre o degrau, coloridos pelo IVS (escolhida em 18/10/2026)",
+     "A variante A com a cor de cada ponto dada pelo IVS do eixo horizontal, numa escala contínua verde → amarelo "
+     "→ vermelho (vermelho = IVS maior). Os municípios do lado errado do corte ganham contorno preto, porque o "
+     "laranja colidiria com a escala. É a forma usada no relatório.",
+     var_pontos_cor),
     ("B", "Pontos empilhados (dot plot)",
      "Cada município é um ponto. Municípios com IVS no mesmo intervalo de 0,005 se empilham para cima, então "
      "a altura mostra quantos há ali, sem nenhuma aleatoriedade.",
@@ -235,7 +255,8 @@ def montar() -> str:
         "<h1>Bolsa anunciada contra o IVS: formas possíveis</h1>"
         f"<p>Ciclo 1, chamada 1: {n} municípios do quadro de vagas. Nenhuma variante usa deslocamento aleatório. "
         "Em cada uma, o painel de cima usa o IVS 2010 oficial e o de baixo usa o arquivo antigo do repositório, "
-        "com os mesmos municípios e a mesma bolsa anunciada: muda só a posição no eixo do IVS.</p>"
+        "com os mesmos municípios e a mesma bolsa anunciada: muda só a posição no eixo do IVS. Escolha do autor "
+        "(18/10/2026): variante A, na versão colorida que vem logo depois dela.</p>"
         + leg + "".join(blocos)
         + f'<p class="fonte">Fontes: {esc(R.rel(MATRIZ))}; {esc(R.rel(OFICIAL))}; {esc(R.rel(LOCAL))}. '
           f"Gerado por scripts/rdd_bolsa/10_galeria_figura_regra.py, commit {commit}, "
