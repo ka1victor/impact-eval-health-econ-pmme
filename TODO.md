@@ -3,11 +3,36 @@
 > **Núcleo causal vigente: A8 — cutoff de escore de seleção.** O ciclo 1
 > permanece como análise associativa de implementação: A4 é motivação
 > descritiva do gradiente territorial e A5 é evidência associativa de apêndice.
-> A RDD da bolsa pelo IVS está arquivada por ausência de primeiro estágio e o
-> pedido administrativo foi cancelado sem envio. O ciclo 3 continua congelado
-> até maturidade. Decisão canônica em
+> ~~A RDD da bolsa pelo IVS está arquivada por ausência de primeiro estágio~~
+> **A RDD da bolsa foi reaberta em 14/10/2026.** Com o IVS 2010 oficial, a
+> regra é sharp, e o E3 é inconclusivo
+> (`docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md`). O pedido
+> administrativo foi cancelado sem envio, porque o escore é público. O ciclo 3
+> continua congelado até maturidade. Decisão canônica em
 > `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`; portões
 > executados em `docs/06_execucao/33_status_execucao_plano_causal.md`.
+
+## Fila imediata — RDD da bolsa (estado em 18/10/2026)
+
+Detalhe em `docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md`.
+
+- [x] **R1 com o IVS 2010 oficial:** `APROVADO_SHARP` (368/368 no ciclo 1;
+  454/454 no ciclo 2).
+- [x] **E3 sob protocolo congelado:** inconclusivo.
+- [x] **E5 exploratório:** não muda a leitura.
+- [x] **Sinal do salto conferido.**
+- [x] **Relatório em PDF com os gráficos de RDD.**
+- [x] **Pipeline:** cadeia no `run_all.py`, com `--rdd-bolsa`.
+- [x] **Testes da cadeia.**
+- [x] **Artigos e A6 atualizados.**
+- [ ] **Conteúdo canônico da apresentação de 28/10/2026** em
+  `docs/07_apresentacoes/`, a partir do relatório e da figura da regra
+  (variante A colorida).
+- [ ] **D2:** preenchimento do ciclo 2. Decisão do autor; não antes do dia 28.
+- [ ] **D3(b):** reestimar o gradiente de IVS e o ajuste completo do A4 com a
+  base oficial. Depois do dia 28.
+- [ ] **Ambiente:** instalar `scipy`, `statsmodels` e `matplotlib`, que estão no
+  `requirements.txt`, para os três testes antigos que dependem deles.
 
 ## Fila imediata — tema de atração e provimento fora das capitais
 
@@ -44,14 +69,17 @@
   `docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md`.
 - [x] Materializar R1 público em matriz municipal, relatório e JSON de decisão:
   191/368 faixas reproduzidas, 177 divergentes; R1 permanece reprovado.
+  *(Superado em 14/10/2026: as divergências vinham de um arquivo de IVS
+  errado; com o IVS oficial, 368/368. Ver a fila da RDD acima.)*
 - [x] Preparar a solicitação focal conjunta e a triagem automática de resposta,
   sem enviar pedido nem versionar futuros microdados administrativos.
 - [x] Implementar o controlador fail-closed que bloqueia R2–R4 enquanto R1 não
   for aprovado e registra o estado executado do plano causal.
 - [x] Antes de R3, reconciliar as 678 vagas imediatas com alocações e
   homologações no grão município–CNES–curso–chamada por meio de A1.
-- [x] **Encerrar a trilha.** O pedido administrativo foi `CANCELADO_NAO_ENVIADO`
-  e a RDD-IVS ficou `ARQUIVADO_SEM_PRIMEIRO_ESTAGIO`. R1 a R6 e a submissão dos
+- [x] **Encerrar a trilha.** *(Superado em 14/10/2026: a RDD foi reaberta com o
+  IVS oficial; ver a fila da RDD acima.)* O pedido administrativo foi
+  `CANCELADO_NAO_ENVIADO` e a RDD-IVS ficou `ARQUIVADO_SEM_PRIMEIRO_ESTAGIO`. R1 a R6 e a submissão dos
   pedidos deixam de ser fila: nenhum resultado do trabalho depende de resposta
   do Ministério. O pacote de solicitação e a triagem permanecem versionados,
   prontos, caso o autor decida retomar a pergunta da bolsa no futuro.

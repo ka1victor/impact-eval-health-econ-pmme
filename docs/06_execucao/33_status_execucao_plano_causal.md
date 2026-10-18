@@ -20,6 +20,12 @@
 >
 > Pendências e decisões em aberto: [`38`](38_estado_e_pendencias_rdd_bolsa.md).
 >
+> **Em 18/10/2026:**
+> - a inferência alternativa, exploratória, está em
+>   [`39`](39_inferencia_alternativa_rdd_bolsa.md) e não muda a leitura;
+> - o estado, as decisões do autor e o próximo passo estão em
+>   [`38`](38_estado_e_pendencias_rdd_bolsa.md).
+>
 > O parágrafo abaixo, de 09/09/2026, fica **superado**.
 
 O pedido administrativo não foi enviado. A RDD da bolsa pelo IVS público

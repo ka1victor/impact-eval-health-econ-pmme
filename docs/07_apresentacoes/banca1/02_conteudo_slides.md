@@ -6,6 +6,13 @@ slides: 17, mais Q&A e 4 de apêndice fora da contagem
 atualizacao: 21 de setembro de 2026
 ---
 
+> **Errata E10 (14/10/2026), registrada em
+> [`04_versao_apresentada.md`](04_versao_apresentada.md).** A leitura "o IVS é o
+> piso: 177 dos 368 municípios acima da faixa" é artefato de um arquivo de IVS
+> errado. Com o IVS 2010 oficial, a faixa segue a regra em 368 de 368
+> municípios, com cortes em 0,300 e 0,400. Este documento é o registro do que
+> foi apresentado à banca 1 e não foi reescrito.
+
 > [!IMPORTANT]
 > **Como ler este arquivo.** O deck começa e termina nos comentários
 > `deck:inicio` e `deck:fim`, invisíveis na renderização. Entre eles, **cada

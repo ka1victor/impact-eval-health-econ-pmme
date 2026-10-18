@@ -4,11 +4,16 @@
 
 - Organize toda análise pela cadeia: implementação → força de trabalho → capacidade → acesso → saúde → custos/bem-estar → equidade e spillovers.
 - Comece pelo outcome e pelo estimando; só depois escolha método e base.
-- A fila imediata é o portão de viabilidade do RDD do adicional de bolsa,
-  documentado em `docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`. O efeito candidato
-  é o incentivo marginal de R$ 5 mil, não participação no PMM-E nem o efeito
-  total do Agora Tem Especialistas. Não consulte outcomes antes de reconstruir
-  a regra e congelar o protocolo.
+- A RDD do adicional de bolsa (plano em
+  `docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`) passou o portão R1
+  com o IVS 2010 oficial: a regra é sharp, com cortes em 0,300 e 0,400. Ela foi
+  estimada sob protocolo congelado. O E3 não detecta efeito e é inconclusivo;
+  o E5 é exploratório (`docs/06_execucao/37` a `39`). Estado e decisões em
+  aberto do autor: `docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md`. O
+  efeito candidato é o incentivo marginal de R$ 5 mil, não participação no
+  PMM-E nem o efeito total do Agora Tem Especialistas. Estimação nova
+  (preenchimento do ciclo 2, reestimação do A4, diferença em descontinuidades)
+  exige autorização do autor e protocolo congelado antes de abrir outcomes.
 - `docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md` define a pergunta do artigo:
   salário anunciado é o instrumento candidato, IVS é gradiente territorial e
   oferta persistente no CNES não equivale a retenção individual.
@@ -47,7 +52,9 @@
 
 - `docs/06_execucao/05_roadmap_execucao.md` preserva a execução validada do ciclo 1.
   `docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md` e
-  `prompts/avaliacao_rdd_bolsa/README.md` são a fila imediata. A fila do ciclo
+  `prompts/avaliacao_rdd_bolsa/README.md` registram o plano da RDD da bolsa,
+  executado até o E3; a fila vigente dela está em
+  `docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md`. A fila do ciclo
   3 em `prompts/avaliacao_ciclo3/README.md` continua congelada até maturidade.
   `docs/05_identificacao/03_plano_avaliacao_outcomes.md` é agenda ampla e não deve ser
   interpretado como fila imediata.
@@ -60,8 +67,9 @@
   validar a fonte de exogeneidade.
 - A primeira versão agregada do ciclo 1 já foi executada. Não a reexecute nem
   redesenhe: relevância, ponte curso–CBO, painel CNES, estoque, mecanismos, DDD
-  e estudo de evento permanecem como registro encerrado. A única execução
-  imediata autorizada é R1 e, condicionalmente, R2 da fila RDD.
+  e estudo de evento permanecem como registro encerrado. R1 e o E3 da RDD da
+  bolsa já foram executados; o próximo passo autorizado está em
+  `docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md`.
 - A execução agregada de 30/08/2026 terminou como comparação ajustada: o
   portão de relevância falhou na amostra município–curso da DDD. Não promover
   esses resultados a efeito causal nem escolher filtros, janelas ou estimadores

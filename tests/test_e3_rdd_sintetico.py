@@ -115,6 +115,11 @@ class TestEstimadorLocalLinearSintetico(unittest.TestCase):
         self.assertTrue(np.isnan(r["tau"]))
         self.assertIn("suporte insuficiente", r["nota"])
 
+    def test_escore_padrao_e_o_ivs_oficial(self) -> None:
+        # Com o escore parcial do a07 como padrao, rodar o 07 sem argumento
+        # parava em AGUARDANDO_ESCORE_COMPLETO e apagava as saidas E3.
+        self.assertEqual(E3.ESCORE_PADRAO, E3.ROOT / "output" / "rdd_bolsa" / "escore_completo_ivs2010_oficial.csv")
+
     def test_covariavel_igual_a_running_variable_nao_e_testada(self) -> None:
         # Com ivs_2010 = escore, o "salto" e zero por construcao e o EP e ruido
         # numerico; o p-valor desse ruido nao pode aparecer como desequilibrio.

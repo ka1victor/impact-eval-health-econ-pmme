@@ -6,6 +6,16 @@
 > foi estimado no módulo A8. A RDD da bolsa pelo IVS fica arquivada como uma
 > pergunta distinta, bloqueada pela ausência de primeiro estágio público.
 
+> **Atualização em 14/10/2026.** A RDD da bolsa foi reaberta. O "IVS público"
+> que bloqueava o primeiro estágio era um arquivo errado, a linha de um
+> subgrupo populacional da base do Ipea. Com o IVS 2010 oficial, a regra é
+> sharp, com cortes em 0,300 e 0,400, e o E3 foi estimado, com resultado
+> inconclusivo
+> ([`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md);
+> [`06_execucao/37`](../06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md)).
+> Os dois artigos trazem a RDD como segunda camada causal. O A8 continua sendo
+> o núcleo causal com efeito detectado.
+
 ## 1. Resposta executiva
 
 O trabalho **não perdeu a causalidade**. Há um resultado causal local
@@ -216,7 +226,7 @@ Uma formulação enxuta para o artigo é:
 | A5 — dinâmica CNES | apêndice ou evidência contextual | trajetória associada; não identifica o participante nem causalidade |
 | A7 — pares adjacentes amplos | diagnóstico que levou ao A8 | diferenças grandes, mas mistura empates e gaps |
 | **A8 — gap de um ponto sem empate** | **núcleo causal** | efeito local condicional de ganhar a primeira opção |
-| RDD da bolsa pelo IVS | pergunta arquivada | IVS público não reproduz a faixa nem gera primeiro estágio estável |
+| RDD da bolsa pelo IVS | ~~pergunta arquivada~~ **reaberta em 14/10/2026: segunda camada causal** | ~~IVS público não reproduz a faixa~~ com o IVS 2010 oficial, a regra é sharp (0,300 e 0,400); E3 inconclusivo |
 | DDD imediata versus reserva | diagnóstico histórico | falhou o portão de relevância |
 
 O A4 ajuda a explicar por que alocação territorial importa. O A8 responde à

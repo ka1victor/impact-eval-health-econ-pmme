@@ -50,6 +50,42 @@ def posicao(p: Path) -> int:
     return RA.STEPS.index(p)
 
 
+class TestDocumentosVigentesApontamACorrecao(unittest.TestCase):
+    """Documento vigente que fala da RDD da bolsa tem de apontar para a auditoria 16.
+
+    Até 14/10/2026 esses documentos davam a RDD por bloqueada ("177/368",
+    "não usar 0,300"), com base no arquivo de IVS errado. Uma afirmação antiga
+    sem a correção ao lado orientaria um agente a desfazer o trabalho.
+    """
+
+    VIGENTES = [
+        "CLAUDE.md",
+        "README.md",
+        "TODO.md",
+        "prompts/avaliacao_rdd_bolsa/README.md",
+        "docs/06_execucao/05_roadmap_execucao.md",
+        "docs/01_pergunta_escopo/13_dossie_executivo_avaliacao_impacto_pmme.md",
+        "docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md",
+        "docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md",
+        "docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md",
+        "docs/05_identificacao/16_sintese_achados_e_novo_plano_causal.md",
+        "docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md",
+        "docs/auditorias/07_portao_rdd_bolsa.md",
+    ]
+
+    def test_cada_documento_aponta_a_auditoria_16(self) -> None:
+        for rel in self.VIGENTES:
+            texto = (ROOT / rel).read_text(encoding="utf-8")
+            self.assertIn("16_ivs_2010_oficial_e_arquivo_local", texto, rel)
+
+    def test_regras_revogadas_nao_voltam(self) -> None:
+        claude = " ".join((ROOT / "CLAUDE.md").read_text(encoding="utf-8").split())
+        self.assertNotIn("única execução imediata autorizada é R1", claude)
+        self.assertNotIn("A fila imediata é o portão de viabilidade", claude)
+        fila = (ROOT / "prompts/avaliacao_rdd_bolsa/README.md").read_text(encoding="utf-8")
+        self.assertIn("~~não usar `0,300` como cutoff da grade de 2025~~", fila)
+
+
 class TestCadeiaRddBolsa(unittest.TestCase):
     def test_cadeia_na_ordem_de_dependencia(self) -> None:
         posicoes = [posicao(p) for p in CADEIA]

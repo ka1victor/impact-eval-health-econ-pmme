@@ -1,5 +1,14 @@
 # Portão R1 — regra administrativa da bolsa pelo IVS
 
+> **Superado em 14/10/2026 por
+> [`16_ivs_2010_oficial_e_arquivo_local.md`](16_ivs_2010_oficial_e_arquivo_local.md).**
+> Esta auditoria usou como IVS o arquivo `data/ivs_ipea_2010_municipios.csv`.
+> Ele é a linha de um subgrupo populacional da base do Ipea, não o IVS do
+> município, e usou a grade do FAQ, um degrau menos generosa que a aplicada.
+> Com o IVS 2010 oficial e a grade aplicada, com cortes em 0,300 e 0,400, a
+> regra se reproduz em 368 de 368 municípios: R1 = `APROVADO_SHARP`. O texto
+> abaixo é registro histórico.
+
 > **Execução:** 2026-09-04.
 > **Decisão:** `REPROVADO_PENDENTE_DE_RECONSTRUCAO`.
 > Este portão usa o IVS público apenas como candidato e não abre outcomes de atração.

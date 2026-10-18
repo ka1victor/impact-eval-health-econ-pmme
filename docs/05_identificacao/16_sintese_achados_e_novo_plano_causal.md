@@ -1,5 +1,17 @@
 # Síntese dos achados e novo plano causal — atração de especialistas, bolsa e IVS
 
+> **Superado em 14/10/2026 quanto à RDD da bolsa.** O diagnóstico de
+> inviabilidade abaixo vinha de um arquivo de IVS errado:
+> `data/ivs_ipea_2010_municipios.csv` é uma linha de subgrupo da base do Ipea,
+> não o IVS do município. Isso vale para "bloqueada com o IVS público", para as
+> 177 divergências e para a ausência de primeiro estágio. Com o IVS 2010
+> oficial, a regra é sharp, com cortes em 0,300 e 0,400, e a RDD foi estimada:
+> o resultado é inconclusivo
+> ([`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md);
+> [`06_execucao/37`](../06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md) a
+> [`39`](../06_execucao/39_inferencia_alternativa_rdd_bolsa.md)). O A8 continua
+> como está.
+
 > **Atualização em 04/09/2026:** este diagnóstico permanece canônico para a
 > inviabilidade pública da RDD da bolsa, mas sua prioridade de execução foi
 > substituída pelo

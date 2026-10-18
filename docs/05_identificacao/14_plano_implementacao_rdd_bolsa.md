@@ -1,5 +1,23 @@
 # Plano rápido de implementação — RDD do adicional de bolsa
 
+> **Atualização em 14/10 e 18/10/2026 — plano executado até o E3.** O
+> diagnóstico de 177 divergências, citado abaixo, vinha de um arquivo de IVS
+> errado: `data/ivs_ipea_2010_municipios.csv` é uma linha de subgrupo da base do
+> Ipea, não o IVS do município
+> ([`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md)).
+> - **R1 aprovado.** Com o IVS 2010 oficial, a regra é sharp, com cortes em
+>   0,300 e 0,400; R1 = `APROVADO_SHARP` (368/368 no ciclo 1; 454/454 no
+>   ciclo 2).
+> - **E3 inconclusivo.** Foi estimado sob o protocolo congelado: nenhum salto é
+>   distinguível de zero
+>   ([`06_execucao/37`](../06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md)).
+> - **E5 exploratório.** Não muda a leitura
+>   ([`39`](../06_execucao/39_inferencia_alternativa_rdd_bolsa.md)).
+>
+> O estado vigente e as decisões do autor estão em
+> [`38`](../06_execucao/38_estado_e_pendencias_rdd_bolsa.md). O texto abaixo é
+> o plano original.
+
 > **Decisão em 31/08/2026:** este é o primeiro desenho a ser testado para uma
 > nova afirmação causal. A comparação do ciclo 1 entre vaga imediata e cadastro
 > de reserva permanece encerrada como associação ajustada. Nenhum resultado de

@@ -190,6 +190,12 @@ análise territorial descritiva explica a relevância do problema, mas não deve
 ser fundida ao estimando causal. A RDD da bolsa pelo IVS e os outcomes de
 produção permanecem fora da conclusão.
 
+*Atualização em 18/10/2026:* a RDD da bolsa foi reaberta com o IVS 2010
+oficial e entrou em `paper_pmme_curto.tex` como segunda camada causal, com
+resultado inconclusivo
+([`37`](37_resultados_rdd_bolsa_ivs_oficial.md)). Esta minuta é a redação-base
+do A8 e não foi reescrita.
+
 ## Materiais de replicação
 
 O plano completo está em

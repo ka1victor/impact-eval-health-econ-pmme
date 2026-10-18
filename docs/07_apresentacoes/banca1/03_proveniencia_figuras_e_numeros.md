@@ -2,7 +2,10 @@
 
 > **Regra aplicada:** todo número exibido declara fonte, data de referência, cobertura, unidade e reprodutibilidade<br>
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
-> **Atualização:** 5 de outubro de 2026
+> **Atualização:** 5 de outubro de 2026<br>
+> **Errata E10 (14/10/2026):** o "177 de 368 acima da faixa" é artefato de um
+> arquivo de IVS errado. Com o IVS 2010 oficial, são 368 de 368 reproduzidos.
+> Ver [`04_versao_apresentada.md`](04_versao_apresentada.md).
 
 > [!IMPORTANT]
 > **A versão apresentada, de 05/10/2026.** O deck que a banca viu não é o de

@@ -62,6 +62,13 @@ subgrupo, sobretudo mulheres negras em área urbana, e não a do município): fo
 irreproduzível. Ver
 [`docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md`](docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md)
 e [`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`](docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md).
+A inferência alternativa, exploratória
+([`39`](docs/06_execucao/39_inferencia_alternativa_rdd_bolsa.md)), não muda a
+leitura: o resultado é inconclusivo, e não evidência de ineficácia. O estado e
+as decisões em aberto estão em
+[`38`](docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md); o relatório com
+as figuras é `output/rdd_bolsa/relatorio_resultados_rdd_bolsa.pdf`
+(`python run_all.py --rdd-bolsa`).
 
 O diagnóstico histórico imediata versus reserva usa `município–curso–mês` no ciclo 1 e o CNES mensal de
 junho de 2024 a julho de 2026:
@@ -151,8 +158,10 @@ congelado prevê:
 - generalização secundária: oncologia clínica e medicina intensiva, com efeitos
   separados; cirurgia geral/CBO 225225 apenas como sensibilidade;
 - alternativa somente se o pré-período justificar: ecocardiografia no SIA;
-- RDD do IVS preservado como estudo do adicional de bolsa, ainda bloqueado pela
-  regra administrativa não reconstruída.
+- RDD do IVS: reaberta e estimada nos ciclos 1 e 2 em 14/10/2026, com o IVS
+  2010 oficial
+  ([`docs/06_execucao/37`](docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md)).
+  No ciclo 3, ela só entra depois da maturidade, como os demais desenhos.
 
 A Nota Técnica nº 59/2026 criou uma assinatura cadastral potencialmente
 observável dos participantes no CNES. O C3-01 já corrigiu a ponte do Anexo I: os

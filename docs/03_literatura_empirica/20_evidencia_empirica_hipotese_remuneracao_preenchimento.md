@@ -1019,9 +1019,13 @@ Sugestões, não decisões. Entram pela fila RDD
 3. **Teste de deslocamento entre lados do limiar**, no painel município–mês,
    como em A1 e A5.
 4. **Densidade da *running variable*.** Em A1, o cutoff censitário não foi
-   manipulado e o administrativo foi. O IVS 2010 é censitário; o risco do PMM-E
-   está na faixa publicada acima da categoria de IVS em 177 de 368 municípios
-   ([`auditorias/07`](../auditorias/07_portao_rdd_bolsa.md)).
+   manipulado e o administrativo foi. O IVS 2010 é censitário. ~~O risco do
+   PMM-E está na faixa publicada acima da categoria de IVS em 177 de 368
+   municípios ([`auditorias/07`](../auditorias/07_portao_rdd_bolsa.md)).~~
+   **Corrigido em 14/10/2026:** com o IVS 2010 oficial, a faixa publicada segue
+   a regra em 368 de 368 municípios, e a densidade não salta nos cortes. As
+   177 divergências vinham de um arquivo de IVS errado
+   ([`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md)).
 5. **Expectativa de magnitude**, para cálculo de poder e não para julgar
    resultado: com elasticidades de 0,4 a 0,7 para médicos no Brasil e um degrau
    de +33% a +50%, a literatura torna plausível uma resposta de algumas dezenas

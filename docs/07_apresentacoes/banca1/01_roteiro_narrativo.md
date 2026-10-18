@@ -4,6 +4,13 @@
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
 > **Atualização:** 5 de outubro de 2026
 
+> **Errata E10 (14/10/2026), registrada em
+> [`04_versao_apresentada.md`](04_versao_apresentada.md).** A leitura "o IVS é o
+> piso: 177 dos 368 municípios acima da faixa" é artefato de um arquivo de IVS
+> errado (`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`). Com o IVS
+> 2010 oficial, a faixa segue a regra em 368 de 368 municípios, com cortes em
+> 0,300 e 0,400. Este roteiro é registro da banca 1 e não foi reescrito.
+
 ---
 
 ## 1. Arco da apresentação
@@ -1071,7 +1078,7 @@ remuneração oferecida pelo PMM-E têm maior preenchimento de vagas"*. E o
 é separar o efeito da bolsa do efeito da vulnerabilidade"*.
 
 **O que isso cobra deste roteiro.** Três coisas, nenhuma aplicada ao PDF, que é
-registro. (1) As nove erratas de [04](04_versao_apresentada.md#3-errata-da-tela)
+registro. (1) As dez erratas (E1–E10) de [04](04_versao_apresentada.md#3-errata-da-tela)
 valem para qualquer versão futura — a mais visível é o sinal omitido em
 $\partial U/\partial p$. (2) Os números ⚠️ da versão apresentada — a figura de
 UF, a tabela de inclinações e as taxas de crescimento por faixa — continuam fora

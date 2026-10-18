@@ -196,9 +196,10 @@ def _rodape(fig, texto: str, y: float = -0.06) -> None:
 def faixa_publicada() -> pd.DataFrame:
     """Faixa efetivamente publicada em cada município, do quadro de vagas.
 
-    Agrupar pela categoria de IVS recalculada rotularia errado 177 dos 368
-    municípios: a categoria é o piso da bolsa, não o valor pago. Quem aparece
-    num gráfico "por faixa de bolsa" tem de ser quem recebeu aquela bolsa.
+    Quem aparece num gráfico "por faixa de bolsa" tem de ser quem recebeu
+    aquela bolsa. (A justificativa original, "a categoria de IVS rotularia
+    errado 177 dos 368", vinha do arquivo de IVS errado; com o IVS 2010 oficial
+    a faixa segue a regra em 368/368. Ver auditoria 16.)
     """
     quadro = pd.read_parquet(QUADRO)
     faixas = (

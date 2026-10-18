@@ -1,5 +1,24 @@
 # 05. Roadmap de execução
 
+> **Atualização em 18/10/2026 — RDD da bolsa reaberta e estimada.** O
+> encerramento da RDD pública da bolsa, registrado abaixo em 04/09/2026, vinha
+> de um arquivo de IVS errado. `data/ivs_ipea_2010_municipios.csv` é uma linha
+> de subgrupo da base do Ipea, não o IVS do município
+> ([`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md)).
+> - **Regra:** com o IVS 2010 oficial, a faixa da bolsa é sharp, com cortes em
+>   0,300 e 0,400; R1 = `APROVADO_SHARP`.
+> - **Estimação:** o E3 sob protocolo congelado não detecta efeito do anúncio de
+>   +R$ 5 mil, e a leitura é inconclusiva
+>   ([`37`](37_resultados_rdd_bolsa_ivs_oficial.md)). O E5 exploratório não
+>   muda a leitura ([`39`](39_inferencia_alternativa_rdd_bolsa.md)).
+> - **Artigos e pipeline:** os dois artigos, o A6 e o `run_all.py` já trazem a
+>   RDD.
+> - **Fila desta trilha:** estado, decisões do autor e próximo passo, que é o
+>   conteúdo da apresentação de 28/10/2026, em
+>   [`38`](38_estado_e_pendencias_rdd_bolsa.md).
+>
+> A fila do A8, abaixo, continua concluída.
+
 > **Atualização em 04/09/2026:** a comparação agregada e a RDD pública da bolsa
 > estão encerradas. O A8 por cutoff de escore foi executado com fontes já
 > locais e passa a ser o núcleo causal do trabalho curto. A decisão vigente
@@ -74,9 +93,12 @@
 5. Redigir limites antes de heterogeneidades: causalidade local condicional,
    score discreto, protocolo retrospectivo e ausência de retenção contínua.
 
-Nenhum pedido de dados será submetido. A RDD em `0,300`, `0,400` ou `0,500`
-não deve ser restaurada com o IVS público atual. A antiga fila R1–R6 permanece
-arquivada nas seções posteriores apenas para documentar decisões já tomadas.
+Nenhum pedido de dados será submetido. ~~A RDD em `0,300`, `0,400` ou `0,500`
+não deve ser restaurada com o IVS público atual.~~ **Superado em 14/10/2026:**
+com o IVS 2010 oficial, a RDD em 0,300 e 0,400 é sharp e foi estimada (ver a
+atualização de 18/10/2026 no topo). O corte 0,500 não existe na grade aplicada.
+A antiga fila R1–R6 permanece arquivada nas seções posteriores apenas para
+documentar decisões já tomadas.
 
 O estado executado e verificável dos portões está em
 [`33_status_execucao_plano_causal.md`](33_status_execucao_plano_causal.md). O

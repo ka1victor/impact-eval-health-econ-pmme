@@ -1,5 +1,19 @@
 # Fila operacional — RDD do adicional de bolsa
 
+> **Estado em 18/10/2026: fila executada até o E3.** Com o IVS 2010 oficial do
+> Ipea, a regra é sharp, com cortes em **0,300 e 0,400**, e R1 foi aprovado. O
+> E3 foi estimado sob o protocolo congelado: nenhum salto é distinguível de
+> zero, e o resultado é inconclusivo. O E5 é exploratório. A regra antiga "não
+> usar `0,300`" vinha da grade do FAQ e de um arquivo de IVS errado, e está
+> **revogada**: 0,300 é um dos dois cortes reais. Ver
+> [`auditorias/16`](../../docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md)
+> e [`06_execucao/37`](../../docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md)
+> a [`39`](../../docs/06_execucao/39_inferencia_alternativa_rdd_bolsa.md).
+> A fila vigente está em
+> [`06_execucao/38`](../../docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md).
+> A tabela e as regras abaixo são o plano original; continuam valendo, exceto a
+> do `0,300`.
+
 Esta fila implementa
 [`docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`](../../docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md).
 A pergunta substantiva, os outcomes permitidos e os limites de retenção estão
@@ -16,7 +30,8 @@ em
 Regras:
 
 - não restaurar os scripts RDD removidos do histórico;
-- não usar `0,300` como cutoff da grade de 2025;
+- ~~não usar `0,300` como cutoff da grade de 2025~~ — **revogada em
+  14/10/2026**: a grade aplicada tem cortes em 0,300 e 0,400 (auditoria 16);
 - não consultar outcomes durante R1–R2;
 - não escolher janela, cutoff ou especificação por p-valor;
 - não chamar faixa anunciada de valor pago;

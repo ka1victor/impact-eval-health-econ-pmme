@@ -10,6 +10,21 @@
 > retenção individual dos bolsistas. O portão A1 foi concluído em 01/09/2026
 > como `APROVADO_CELULA`: há população por célula, mas não denominador por vaga.
 
+> **Correção em 14/10/2026, atualizada em 18/10/2026.** As afirmações abaixo
+> sobre a regra da bolsa e sobre o suporte vinham de um arquivo de IVS errado:
+> - "177/368 divergem";
+> - "RDD bloqueada em R1";
+> - suporte em 0,400 e 0,500.
+>
+> `data/ivs_ipea_2010_municipios.csv` é uma linha de subgrupo da base do Ipea,
+> não o IVS do município
+> ([`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md)).
+> Com o IVS 2010 oficial, a regra é sharp, com cortes em 0,300 e 0,400, e a
+> RDD foi estimada: o resultado é inconclusivo
+> ([`06_execucao/37`](../06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md) a
+> [`39`](../06_execucao/39_inferencia_alternativa_rdd_bolsa.md)). A pergunta e
+> os estimandos definidos aqui continuam valendo.
+
 > **Atualização em 04/09/2026:** a sharp RDD e a fuzzy RDD com o IVS público
 > foram reprovadas; o desenho permanece recuperável com o escore administrativo
 > correto. Todos os resultados e o novo plano estão em
@@ -270,10 +285,10 @@ O diagnóstico reproduzível está em
 | Recorte territorial | 350 municípios fora das capitais; 593/678 vagas imediatas | tema territorial tem massa, mas “remoto” ainda não está medido |
 | Valor anunciado | 100% das células com faixa; grade R$ 10/15/20 mil | suficiente como incentivo anunciado |
 | Valor pago | não vinculável a vaga/profissional/mês | não estimar dose recebida |
-| IVS local | cobertura de 100% dos municípios | suficiente para gradiente associativo |
-| Regra administrativa | 177/368 municípios divergem da reconstrução local | RDD bloqueada em R1 |
-| Suporte 0,400 | 12/8 municípios em ±0,010; 30/18 em ±0,020 | promissor, não aprovado |
-| Suporte 0,500 | 5/5 em ±0,010; 8/6 em ±0,020 | fraco; somente replicação potencial |
+| IVS local | cobertura de 100% dos municípios | ~~suficiente para gradiente associativo~~ **superado em 14/10/2026:** não é o IVS do município (auditoria 16); use o IVS 2010 oficial (a08) |
+| Regra administrativa | ~~177/368 municípios divergem da reconstrução local~~ **com o IVS 2010 oficial, 368/368 reproduzidos (cortes 0,300 e 0,400)** | ~~RDD bloqueada em R1~~ **R1 aprovado (sharp); E3 estimado, inconclusivo** |
+| Suporte 0,400 | ~~12/8 municípios em ±0,010; 30/18 em ±0,020~~ (arquivo errado) | **superado:** com o IVS oficial, 53/41 municípios em ±0,050 (ciclo 1) |
+| Suporte 0,500 | ~~5/5 em ±0,010; 8/6 em ±0,020~~ (arquivo errado) | **superado:** 0,500 não é corte da grade aplicada; o outro corte é 0,300 (61/53 em ±0,050) |
 | Alocação | 468 confirmações; 211 em células originalmente de reserva; 15 células acima da capacidade total original | A1 aprovou outcome binário por célula e reprovou taxa por vaga |
 | Homologação | 316 na primeira lista; 581 na segunda, com 299 reaparições, 282 novos e 17 anteriores ausentes | versões e realocações reconciliadas; não interpretar como log de permanência |
 | CNES | 26 competências, 2024-06 a 2026-07, 368 municípios | oferta local agregada e horizonte de seis meses tecnicamente viáveis |

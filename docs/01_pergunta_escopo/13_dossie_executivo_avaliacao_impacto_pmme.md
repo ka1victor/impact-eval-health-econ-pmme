@@ -69,11 +69,17 @@ secundário e só será examinado depois de demonstrado o primeiro estágio
 administrativo. SIH/SIA entram depois, com outcomes clínicos pré-especificados e
 auditoria de cointervenções do Agora Tem Especialistas.
 
-Esse desenho está **bloqueado na reconstrução da regra**: a faixa publicada
+~~Esse desenho está **bloqueado na reconstrução da regra**: a faixa publicada
 diverge da faixa obtida com o IVS local disponível em 177 dos 368 municípios do
-ciclo 1. Antes de estimar qualquer efeito é necessário validar versão, casas
-decimais, arredondamento, data de corte e eventuais exceções do escore usado pelo
-controlador.
+ciclo 1.~~ **Corrigido em 14/10/2026.** O IVS local era a linha de um subgrupo
+populacional da base do Ipea, não o IVS do município. Com o IVS 2010 oficial, a
+regra é sharp, com cortes em 0,300 e 0,400, e reproduz 368 de 368 municípios
+([`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md)). A
+RDD foi estimada: nenhum salto é distinguível de zero, e o resultado é
+inconclusivo
+([`06_execucao/37`](../06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md);
+estado em
+[`38`](../06_execucao/38_estado_e_pendencias_rdd_bolsa.md)).
 
 Plano e prompts executáveis:
 
