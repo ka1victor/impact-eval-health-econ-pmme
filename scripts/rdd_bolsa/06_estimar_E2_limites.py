@@ -204,6 +204,63 @@ def extremos_exatos(nd_l, k_l, nd_u, k_u, n_a, n_b, n_c, n_c_fora) -> tuple[floa
     return dmin, dmax
 
 
+def limites_janela(s: np.ndarray, dk: np.ndarray, lo: np.ndarray, hi: np.ndarray, c: int, h: int) -> dict:
+    """Limites de Delta numa especificacao (corte c, janela h, em milesimos).
+
+    `s` e `dk`: escore e D_k dos municipios com escore. `lo` e `hi`: conjunto
+    possivel do escore de cada municipio sem escore (todos com D_k = 0).
+    Devolve as colunas de COLUNAS a partir de `n_conhecidos_inf` e a comparacao
+    entre os extremos marginais e os exatos.
+    """
+    l0, l1 = c - h + 1, c      # (c-h, c]
+    u0, u1 = c + 1, c + h      # (c, c+h]
+    in_l = (s >= l0) & (s <= l1)
+    in_u = (s >= u0) & (s <= u1)
+    n_kl, n_ku = int(in_l.sum()), int(in_u.sum())
+    nd_l, nd_u = int(dk[in_l].sum()), int(dk[in_u].sum())
+
+    cert_l = (lo >= l0) & (hi <= l1)
+    cert_u = (lo >= u0) & (hi <= u1)
+    cruza_l = (lo <= l1) & (hi >= l0)
+    cruza_u = (lo <= u1) & (hi >= u0)
+    poss_l = cruza_l & ~cert_l
+    poss_u = cruza_u & ~cert_u
+    assert not (cert_l & cruza_u).any() and not (cert_u & cruza_l).any()
+    grupo_c = poss_l & poss_u
+    grupo_a = poss_l & ~poss_u
+    grupo_b = poss_u & ~poss_l
+    # C pode ficar fora das duas janelas se o conjunto nao couber em [l0, u1].
+    c_fora = grupo_c & ~((lo >= l0) & (hi <= u1))
+
+    k_l = n_kl + int(cert_l.sum())
+    k_u = n_ku + int(cert_u.sum())
+    np_l, np_u = int(poss_l.sum()), int(poss_u.sum())
+    p_inf_min, p_inf_max = limites_marginais(nd_l, k_l, np_l)
+    p_sup_min, p_sup_max = limites_marginais(nd_u, k_u, np_u)
+    dmin_marg = p_sup_min - p_inf_max
+    dmax_marg = p_sup_max - p_inf_min
+    dmin_ex, dmax_ex = extremos_exatos(
+        nd_l, k_l, nd_u, k_u,
+        int(grupo_a.sum()), int(grupo_b.sum()), int(grupo_c.sum()), int(c_fora.sum()),
+    )
+    restringe = not (np.isclose(dmin_ex, dmin_marg, rtol=0, atol=1e-12, equal_nan=True)
+                     and np.isclose(dmax_ex, dmax_marg, rtol=0, atol=1e-12, equal_nan=True))
+    return {
+        "n_conhecidos_inf": n_kl, "n_conhecidos_sup": n_ku,
+        "nD_inf": nd_l, "nD_sup": nd_u,
+        "n_sem_escore_certos_inf": int(cert_l.sum()), "n_sem_escore_possiveis_inf": np_l,
+        "n_sem_escore_certos_sup": int(cert_u.sum()), "n_sem_escore_possiveis_sup": np_u,
+        "p_inf_min": p_inf_min, "p_inf_max": p_inf_max,
+        "p_sup_min": p_sup_min, "p_sup_max": p_sup_max,
+        "delta_min": dmin_ex, "delta_max": dmax_ex,
+        "delta_ingenuo_viesado": proporcao(nd_u, n_ku) - proporcao(nd_l, n_kl),
+        "n_sem_escore_cruzam_ambas_janelas": int(grupo_c.sum()),
+        "delta_min_marginal": dmin_marg,
+        "delta_max_marginal": dmax_marg,
+        "exclusividade_restringe_extremos": bool(restringe),
+    }
+
+
 def montar_populacao(k: int, escore: pd.DataFrame, publico: pd.DataFrame, ativos: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     rotulo, quadros = POPULACOES[k]
     q = pd.concat([ler_quadro(c) for _, c in quadros], ignore_index=True).drop_duplicates()
@@ -301,57 +358,15 @@ def main() -> None:
             for h in JANELAS_MIL:
                 for cenario in CENARIOS:
                     lo, hi, _ = conjuntos[cenario]
-                    l0, l1 = c - h + 1, c      # (c-h, c]
-                    u0, u1 = c + 1, c + h      # (c, c+h]
-                    in_l = (s >= l0) & (s <= l1)
-                    in_u = (s >= u0) & (s <= u1)
-                    n_kl, n_ku = int(in_l.sum()), int(in_u.sum())
-                    nd_l, nd_u = int(dk[in_l].sum()), int(dk[in_u].sum())
-
-                    cert_l = (lo >= l0) & (hi <= l1)
-                    cert_u = (lo >= u0) & (hi <= u1)
-                    cruza_l = (lo <= l1) & (hi >= l0)
-                    cruza_u = (lo <= u1) & (hi >= u0)
-                    poss_l = cruza_l & ~cert_l
-                    poss_u = cruza_u & ~cert_u
-                    assert not (cert_l & cruza_u).any() and not (cert_u & cruza_l).any()
-                    grupo_c = poss_l & poss_u
-                    grupo_a = poss_l & ~poss_u
-                    grupo_b = poss_u & ~poss_l
-                    # C pode ficar fora das duas janelas se o conjunto nao couber em [l0, u1].
-                    c_fora = grupo_c & ~((lo >= l0) & (hi <= u1))
-
-                    k_l = n_kl + int(cert_l.sum())
-                    k_u = n_ku + int(cert_u.sum())
-                    np_l, np_u = int(poss_l.sum()), int(poss_u.sum())
-                    p_inf_min, p_inf_max = limites_marginais(nd_l, k_l, np_l)
-                    p_sup_min, p_sup_max = limites_marginais(nd_u, k_u, np_u)
-                    dmin_marg = p_sup_min - p_inf_max
-                    dmax_marg = p_sup_max - p_inf_min
-                    dmin_ex, dmax_ex = extremos_exatos(
-                        nd_l, k_l, nd_u, k_u,
-                        int(grupo_a.sum()), int(grupo_b.sum()), int(grupo_c.sum()), int(c_fora.sum()),
-                    )
-                    restringe = not (np.isclose(dmin_ex, dmin_marg, rtol=0, atol=1e-12, equal_nan=True)
-                                     and np.isclose(dmax_ex, dmax_marg, rtol=0, atol=1e-12, equal_nan=True))
-
-                    linhas.append({
-                        "ciclo": k, "corte": f"{c / 1000:.3f}", "h": f"{h / 1000:.3f}", "cenario": cenario,
-                        "n_conhecidos_inf": n_kl, "n_conhecidos_sup": n_ku,
-                        "nD_inf": nd_l, "nD_sup": nd_u,
-                        "n_sem_escore_certos_inf": int(cert_l.sum()), "n_sem_escore_possiveis_inf": np_l,
-                        "n_sem_escore_certos_sup": int(cert_u.sum()), "n_sem_escore_possiveis_sup": np_u,
-                        "p_inf_min": p_inf_min, "p_inf_max": p_inf_max,
-                        "p_sup_min": p_sup_min, "p_sup_max": p_sup_max,
-                        "delta_min": dmin_ex, "delta_max": dmax_ex,
-                        "delta_ingenuo_viesado": proporcao(nd_u, n_ku) - proporcao(nd_l, n_kl),
-                    })
+                    r = limites_janela(s, dk, lo, hi, c, h)
+                    espec = {"ciclo": k, "corte": f"{c / 1000:.3f}", "h": f"{h / 1000:.3f}", "cenario": cenario}
+                    linhas.append({**espec, **{col: r[col] for col in COLUNAS[4:]}})
                     detalhes.append({
-                        "ciclo": k, "corte": f"{c / 1000:.3f}", "h": f"{h / 1000:.3f}", "cenario": cenario,
-                        "n_sem_escore_cruzam_ambas_janelas": int(grupo_c.sum()),
-                        "delta_min_marginal": round(dmin_marg, 6),
-                        "delta_max_marginal": round(dmax_marg, 6),
-                        "exclusividade_restringe_extremos": bool(restringe),
+                        **espec,
+                        "n_sem_escore_cruzam_ambas_janelas": r["n_sem_escore_cruzam_ambas_janelas"],
+                        "delta_min_marginal": round(r["delta_min_marginal"], 6),
+                        "delta_max_marginal": round(r["delta_max_marginal"], 6),
+                        "exclusividade_restringe_extremos": r["exclusividade_restringe_extremos"],
                     })
 
     # Ordem das linhas: ciclo, corte, janela na ordem do protocolo (principal primeiro), cenario.

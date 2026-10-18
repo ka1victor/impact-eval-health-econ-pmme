@@ -51,25 +51,42 @@ def faixa(s_mil: int) -> str:
     return "FAIXA 3" if s_mil <= 300 else ("FAIXA 2" if s_mil <= 400 else "FAIXA 1")
 
 
-def main() -> None:
-    of = pd.read_csv(OFICIAL, dtype={"co_ibge": str})
-    of["s_mil"] = np.round(of["ivs"] * 1000).astype(int)
-    adm = pd.read_csv(ADMIN, dtype={"co_ibge": str})
-    adm["s_mil_adm"] = np.round(adm["ivs_admin"] * 1000).astype(int)
-    cat = pd.read_csv(CATEGORIA, dtype={"co_ibge": str})
+def milesimos(valores: pd.Series) -> pd.Series:
+    """IVS em milésimos inteiros (três casas decimais)."""
+    return np.round(valores * 1000).astype(int)
 
+
+def conferir_escore_administrativo(of: pd.DataFrame, adm: pd.DataFrame, cat: pd.DataFrame) -> dict:
+    """Confere o IVS oficial contra o escore e a categoria administrativos.
+
+    `of` traz `co_ibge` e `s_mil` (IVS oficial em milésimos); `adm`, `co_ibge` e
+    `s_mil_adm`; `cat`, `co_ibge` e `categoria_ivs_admin`. Município do escore
+    administrativo sem IVS oficial conta como divergência. A categoria é
+    conferida nos municípios presentes nas duas bases.
+    """
     j = adm.merge(of[["co_ibge", "s_mil"]], on="co_ibge", how="left")
-    iguais = int((j["s_mil"] == j["s_mil_adm"]).sum())
     k = cat.merge(of[["co_ibge", "s_mil"]], on="co_ibge", how="inner")
-    cat_ok = int((k["s_mil"].map(categoria) == k["categoria_ivs_admin"]).sum())
+    return {
+        "valores_iguais": int((j["s_mil"] == j["s_mil_adm"]).sum()),
+        "valores_comparados": int(len(adm)),
+        "categorias_iguais": int((k["s_mil"].map(categoria) == k["categoria_ivs_admin"]).sum()),
+        "categorias_comparadas": int(len(k)),
+    }
 
-    local = pd.read_csv(LOCAL, dtype={"cod_ibge6": str})
-    lj = local.merge(of[["co_ibge", "ivs", "s_mil"]], left_on="cod_ibge6", right_on="co_ibge")
-    lj["local_mil"] = np.round(lj["ivs_2010"] * 1000).astype(int)
 
-    matriz = pd.read_csv(MATRIZ, dtype={"co_ibge": str})
+def escore_confere(conferencia: dict) -> bool:
+    return (conferencia["valores_iguais"] == conferencia["valores_comparados"]
+            and conferencia["categorias_iguais"] == conferencia["categorias_comparadas"])
+
+
+def reproduzir_regra(matriz: pd.DataFrame, of: pd.DataFrame, populacoes: dict = POPULACOES) -> dict:
+    """Cobertura do IVS oficial e reprodução da faixa anunciada em cada população.
+
+    `matriz` traz `quadro`, `co_ibge` e `faixa_anunciada`; município sem IVS
+    oficial entra em `sem_ivs_oficial` e não em `regra_reproduz`.
+    """
     pops = {}
-    for nome, quadros in POPULACOES.items():
+    for nome, quadros in populacoes.items():
         q = matriz[matriz["quadro"].isin(quadros)].drop_duplicates("co_ibge")[["co_ibge", "faixa_anunciada"]]
         q = q.merge(of[["co_ibge", "s_mil"]], on="co_ibge", how="left")
         com = q[q["s_mil"].notna()].copy()
@@ -80,11 +97,37 @@ def main() -> None:
             "sem_ivs_oficial": sorted(q.loc[q["s_mil"].isna(), "co_ibge"].tolist()),
             "regra_reproduz": int((com["s_mil"].map(faixa) == com["faixa_anunciada"]).sum()),
         }
+    return pops
 
-    valido = iguais == len(adm) and cat_ok == len(k)
+
+def decidir_r1(conferencia: dict, pops: dict) -> str:
+    """APROVADO_SHARP só com escore conferido e P1 e P2 completas e reproduzidas.
+
+    O ciclo 3, prospectivo e congelado, é relatado e não entra na decisão.
+    """
     completo = all(pops[p]["com_ivs_oficial"] == pops[p]["municipios"] for p in ("P1", "P2"))
     sharp = all(pops[p]["regra_reproduz"] == pops[p]["com_ivs_oficial"] for p in ("P1", "P2"))
-    decisao = "APROVADO_SHARP" if (valido and completo and sharp) else "REPROVADO"
+    return "APROVADO_SHARP" if (escore_confere(conferencia) and completo and sharp) else "REPROVADO"
+
+
+def main() -> None:
+    of = pd.read_csv(OFICIAL, dtype={"co_ibge": str})
+    of["s_mil"] = milesimos(of["ivs"])
+    adm = pd.read_csv(ADMIN, dtype={"co_ibge": str})
+    adm["s_mil_adm"] = milesimos(adm["ivs_admin"])
+    cat = pd.read_csv(CATEGORIA, dtype={"co_ibge": str})
+
+    conferencia = conferir_escore_administrativo(of, adm, cat)
+
+    local = pd.read_csv(LOCAL, dtype={"cod_ibge6": str})
+    lj = local.merge(of[["co_ibge", "ivs", "s_mil"]], left_on="cod_ibge6", right_on="co_ibge")
+    lj["local_mil"] = milesimos(lj["ivs_2010"])
+
+    matriz = pd.read_csv(MATRIZ, dtype={"co_ibge": str})
+    pops = reproduzir_regra(matriz, of)
+
+    valido = escore_confere(conferencia)
+    decisao = decidir_r1(conferencia, pops)
 
     if valido:
         saida = of[["co_ibge"]].copy()
@@ -98,8 +141,8 @@ def main() -> None:
         "outcomes_abertos": False,
         "decisao_r1": decisao,
         "escore_administrativo_e_ivs_2010_oficial": {
-            "valores_iguais_3_casas": f"{iguais}/{len(adm)}",
-            "categorias_iguais": f"{cat_ok}/{len(k)}",
+            "valores_iguais_3_casas": f"{conferencia['valores_iguais']}/{conferencia['valores_comparados']}",
+            "categorias_iguais": f"{conferencia['categorias_iguais']}/{conferencia['categorias_comparadas']}",
         },
         "populacoes": pops,
         "arquivo_local_ivs_2010": {

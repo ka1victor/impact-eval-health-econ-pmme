@@ -84,6 +84,25 @@ def ler_linhas_municipais_2010() -> pd.DataFrame:
     return base
 
 
+def ultima_linha_preenchida(base: pd.DataFrame) -> pd.DataFrame:
+    """Mecanismo testado: por município, a última linha com IVS preenchido.
+
+    `base` vem na ordem da planilha (coluna `id`), como em
+    `ler_linhas_municipais_2010`. Não filtra cor, sexo nem situação = Total.
+    """
+    return base.dropna(subset=["ivs"]).drop_duplicates("co_ibge", keep="last")
+
+
+def ultima_linha(base: pd.DataFrame) -> pd.DataFrame:
+    """Alternativa: por município, a última linha, mesmo com IVS vazio."""
+    return base.drop_duplicates("co_ibge", keep="last")
+
+
+def linha_total(base: pd.DataFrame) -> pd.DataFrame:
+    """Alternativa: a linha Total / Total / Total, que é o IVS do município."""
+    return base[base["linha"].str.count("Total") == 3]
+
+
 def conferir(local: pd.DataFrame, candidato: pd.DataFrame) -> dict:
     """Compara coluna a coluna em todos os municípios do arquivo local; vazio conta como divergência."""
     j = local.merge(candidato, left_on="cod_ibge6", right_on="co_ibge", how="left")
@@ -99,20 +118,19 @@ def conferir(local: pd.DataFrame, candidato: pd.DataFrame) -> dict:
 def main() -> None:
     local = pd.read_csv(LOCAL, dtype={"cod_ibge6": str})
     base = ler_linhas_municipais_2010()
-    total = base["linha"].str.count("Total") == 3
 
     # Mecanismo testado: para cada município, a última linha (na ordem da planilha) com IVS preenchido.
-    ultima_preenchida = base.dropna(subset=["ivs"]).drop_duplicates("co_ibge", keep="last")
+    ultima_preenchida = ultima_linha_preenchida(base)
     mecanismo = conferir(local, ultima_preenchida)
     reproduz_tudo = all(mecanismo[c]["iguais"] == len(local) for c in PARES)
     escolhidas = ultima_preenchida.set_index("co_ibge").loc[local["cod_ibge6"], "linha"]
 
     # Alternativas, para registro: última linha sem filtrar vazios; linha Total do município.
-    ultima_qualquer = base.drop_duplicates("co_ibge", keep="last")
-    linha_total = base[total]
+    ultima_qualquer = ultima_linha(base)
+    total = linha_total(base)
 
     nmu = base[base["linha"] == "Negro / Mulher / Urbano"]
-    soma_total = float(linha_total["populacao"].sum())
+    soma_total = float(total["populacao"].sum())
 
     resultado = {
         "data_execucao": "2026-10-14",
@@ -126,7 +144,7 @@ def main() -> None:
         },
         "alternativas": {
             "ultima_linha_sem_filtrar_vazios": conferir(local, ultima_qualquer),
-            "linha_total_do_municipio": conferir(local, linha_total),
+            "linha_total_do_municipio": conferir(local, total),
         },
         "linha_negro_mulher_urbano": {
             "municipios_com_a_linha": int(nmu["co_ibge"].nunique()),
