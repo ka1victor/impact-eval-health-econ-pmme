@@ -49,13 +49,31 @@ categoria, o contraste mede o pacote.
     - estrato metropolitano: −0,24 (p = 0,043).
   - **Ciclo 2, corte 0,300:** capital −0,22 (p = 0,025).
 
-  Com cerca de dez covariáveis por corte, parte disso é esperado por acaso. O
-  corte de 0,400 do ciclo 1 merece cautela.
+  São nove covariáveis por corte, e parte disso é esperada por acaso. O corte
+  de 0,400 do ciclo 1 merece cautela. O `ivs_2010` não conta: com a base
+  oficial, ele é a própria running variable, e o "salto" dele é zero por
+  construção. Até 18/10/2026, o `E3_diagnosticos.csv` trazia p-valores desse
+  ruído numérico (0,026 a 0,00006). Agora a linha sai sem teste, com nota. Os
+  três subíndices são componentes do IVS, cuja média é contínua no corte; os
+  saltos deles não são testes independentes.
 
 ## 3. Resultado principal (E3)
 
 RDD sharp local linear, kernel triangular, h = 0,050, EP HC1 por município
-([`E3_estimativas.csv`](../../output/rdd_bolsa/E3_estimativas.csv)):
+([`E3_estimativas.csv`](../../output/rdd_bolsa/E3_estimativas.csv)).
+
+**Como ler o salto:** valor estimado no corte do lado com bolsa maior (IVS
+acima do corte) menos o do lado com bolsa menor:
+- em 0,300, de R$ 10 mil para R$ 15 mil;
+- em 0,400, de R$ 15 mil para R$ 20 mil.
+
+Positivo significa mais preenchimento ou presença onde a bolsa é maior. O
+sinal foi conferido no código e nos dados por
+`scripts/rdd_bolsa/09b_conferir_sinal.py`, com resultado em
+[`E3_conferencia_sinal.json`](../../output/rdd_bolsa/E3_conferencia_sinal.json):
+- o lado de cima do corte tem bolsa maior em todos os municípios dos ciclos 1
+  e 2;
+- uma reestimação independente reproduz o salto nas 18 especificações.
 
 | População | Outcome | Corte | n abaixo / acima | Salto | IC 95% | p |
 |---|---|---:|---:|---:|---|---:|
@@ -78,7 +96,24 @@ evidência de efeito, com baixa precisão", e não "a bolsa não funciona".
 
 As médias brutas são maiores do lado de cima em alguns cortes (0,24 → 0,37 na
 fração de células em 0,300). Isso reflete a inclinação em relação ao IVS
-dentro da janela, que o modelo local linear absorve. Não é salto.
+dentro da janela, que o modelo local linear absorve. Não é salto. Em 0,300, a
+reta do lado de R$ 10 mil chega ao corte em 40,7%, e a do lado de R$ 15 mil
+parte de 27,9%; a diferença bruta de +12,9 p.p. se decompõe em −12,8 de salto,
++26,5 de inclinação e −0,7 de resíduo (`E3_conferencia_sinal.json`).
+
+**Inferência alternativa (exploratória, pós-resultado).** Ver
+[`39`](39_inferencia_alternativa_rdd_bolsa.md). São 15 especificações
+alternativas: local constante, cortes empilhados, covariáveis, local
+randomization e nível célula.
+- **Nenhuma é distinguível de zero;** o menor p é 0,44.
+- **O que fica descartado:** a 5% unilateral, saltos de +15 p.p. ou mais no
+  corte de 0,300 (limite superior de 14,5 p.p.) e saltos médios de +15 p.p.
+  com os cortes empilhados.
+- **O que não fica descartado:** efeitos de +10 p.p., em nenhuma
+  especificação.
+- **O IC é largo** pelo outcome ruidoso, por 41 a 61 municípios por lado e
+  pela extrapolação local linear, que multiplica o EP por 2,2 a 2,6 em relação
+  à diferença de médias.
 
 ## 4. Antes do escore completo (exploratórios, superados pelo E3)
 
@@ -113,7 +148,13 @@ Em ordem:
 4. `scripts/rdd_bolsa/04b_validar_ivs_oficial_escore_administrativo.py`;
 5. `scripts/rdd_bolsa/05_estimar_E1_densidade.py`;
 6. `scripts/rdd_bolsa/06_estimar_E2_limites.py`;
-7. `scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py --escore output/rdd_bolsa/escore_completo_ivs2010_oficial.csv`;
+7. `scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py` (o escore padrão é o IVS
+   oficial; equivale a `--escore output/rdd_bolsa/escore_completo_ivs2010_oficial.csv`);
 8. `scripts/rdd_bolsa/08a_reconstruir_proporcao_preenchida.py`;
 9. `scripts/rdd_bolsa/08_estimar_E4_proporcao.py`;
-10. `scripts/rdd_bolsa/09_gerar_relatorio_pdf.py`.
+10. `scripts/rdd_bolsa/11_inferencia_alternativa.py` (E5, exploratório);
+11. `scripts/rdd_bolsa/09b_conferir_sinal.py`;
+12. `scripts/rdd_bolsa/09_gerar_relatorio_pdf.py`;
+13. `scripts/rdd_bolsa/10_galeria_figura_regra.py`.
+
+Ou, de uma vez: `python run_all.py --rdd-bolsa` (inclui também `04c`).

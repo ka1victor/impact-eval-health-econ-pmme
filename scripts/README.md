@@ -9,31 +9,39 @@ Este diretório contém todas as rotinas executáveis, pipelines de processament
 O script mestre na raiz do repositório ([`run_all.py`](../run_all.py)) orquestra e executa ponta a ponta o estado validado da pesquisa:
 
 ```bash
-python run_all.py
+python run_all.py              # pipeline inteiro
+python run_all.py --rdd-bolsa  # só a cadeia da RDD da bolsa
 ```
 
+A lista `STEPS` do `run_all.py` é a fonte da ordem; o manifesto A6 a copia.
 Ele executa sequencialmente:
 1. `scripts/00_inventario_dados.py` — inventário determinístico das bases observadas.
 2. `scripts/02_auditar_fontes_pmme.py` — auditoria e integridade de fontes oficiais.
 3. `scripts/aquisicao/01_congelar_ponte_cbo.py` — congelamento da ponte operacional curso–CBO.
 4. `scripts/aquisicao/02_consolidar_quadro_vagas.py` — consolidação da matriz de vagas e tratamento.
-5. `scripts/rdd_bolsa/01_auditar_regra_e_suporte.py` — executa R1 público, produz a matriz municipal e bloqueia outcomes quando a regra não é reproduzida.
-6. `scripts/rdd_bolsa/01_auditar_primeiro_estagio_publico.py` — auditoria municipal do salto da bolsa anunciada nos cutoffs candidatos do IVS público.
-7. `scripts/aquisicao/04_harmonizar_territorio_ibge.py` — harmonização territorial e malha do IVS 2010.
-8. `scripts/aquisicao/05_integrar_painel_analitico.py` — construção do painel analítico CNES mensal.
-9. `scripts/avaliacao_impacto/run_pipeline_avaliacao.py` — pipeline completo do diagnóstico histórico DDD (etapas 01 a 09).
-10. `scripts/tema_trabalho/01_auditar_atracao_provimento_interior.py` — diagnóstico de atração e provimento.
-11. `scripts/tema_trabalho/02_reconciliar_funil_ciclo1.py` — reconciliação do funil administrativo (A1).
-12. `scripts/tema_trabalho/03_construir_tipologia_territorial.py` — estratificação territorial em 4 níveis (A2).
-13. `scripts/tema_trabalho/04_congelar_pre_analise.py` — pré-análise e cálculo de potência econométrica (A3).
-14. `scripts/tema_trabalho/05_estimar_atracao.py` — estimação dos modelos LPM e Logit de atração (A4).
-15. `scripts/tema_trabalho/06_avaliar_provimento_cnes.py` — avaliação da evolução do estoque médico cadastrado no CNES (A5).
-16. `scripts/tema_trabalho/07_red_team_sintese.py` — síntese red team, matriz de evidências e manifesto reproduzível (A6).
-17. `scripts/tema_trabalho/08_auditar_cutoff_selecao.py` — auditoria do último selecionado versus primeiro não selecionado, ligação agregada a homologação/presença ativa e portão causal (A7).
-18. `scripts/tema_trabalho/09_estimar_cutoff_escore_estrito.py` — estima o efeito local condicional no corte, excluindo empates e exigindo gap de um ponto; gera placebos, sensibilidades e replicação (A8).
-19. `scripts/tema_trabalho/10_conferir_numeros_artigo.py` — relê os artefatos de A4, A5, A7, A8 e dos portões descartados, reformata cada valor no padrão do artigo e exige que o trecho exista em `paper_pmme_submission.tex`; grava o mapeamento número–fonte em `A8_conferencia_numeros_artigo.csv` e falha se alguma cifra do artigo não tiver origem rastreável.
-19. `scripts/rdd_bolsa/03_triagem_resposta_administrativa.py` — registra ausência/estrutura/hashes de eventual resposta, sem persistir linhas nem converter ausência em zero.
-20. `scripts/rdd_bolsa/02_controlar_execucao_plano_causal.py` — consolida o estado dos portões e aplica o bloqueio fail-closed de R3/R4.
+5. `scripts/aquisicao/04_harmonizar_territorio_ibge.py` — harmonização territorial.
+6. `scripts/aquisicao/05_integrar_painel_analitico.py` — construção do painel analítico CNES mensal.
+7. `scripts/avaliacao_impacto/run_pipeline_avaliacao.py` — pipeline completo do diagnóstico histórico DDD (etapas 01 a 09).
+8. `scripts/tema_trabalho/01_auditar_atracao_provimento_interior.py` — diagnóstico de atração e provimento.
+9. `scripts/tema_trabalho/02_reconciliar_funil_ciclo1.py` — reconciliação do funil administrativo (A1).
+10. `scripts/tema_trabalho/03_construir_tipologia_territorial.py` — estratificação territorial em 4 níveis (A2).
+11. `scripts/tema_trabalho/04_congelar_pre_analise.py` — pré-análise e cálculo de potência econométrica (A3).
+12. `scripts/tema_trabalho/05_estimar_atracao.py` — estimação dos modelos LPM e Logit de atração (A4).
+13. `scripts/tema_trabalho/06_avaliar_provimento_cnes.py` e `06b_ameacas_a5_placebo_pretendencia_deslocamento.py` — evolução do estoque médico cadastrado no CNES e as três ameaças testadas (A5).
+14. `scripts/tema_trabalho/07_red_team_sintese.py` — síntese red team, matriz de evidências e manifesto reproduzível (A6).
+15. `scripts/tema_trabalho/08_auditar_cutoff_selecao.py` — auditoria do último selecionado versus primeiro não selecionado, ligação agregada a homologação/presença ativa e portão causal (A7).
+16. `scripts/tema_trabalho/09_estimar_cutoff_escore_estrito.py` e `09b_intervalos_exatos_escore.py` — efeito local condicional no corte de seleção, placebos, sensibilidades, replicação e intervalos exatos (A8).
+17. **RDD da bolsa** (IVS 2010 oficial do Ipea como running variable; `docs/06_execucao/37`, `38` e `39`):
+    - `scripts/aquisicao/a07_adquirir_ivs_administrativo.py` e `a08_adquirir_ivs_2010_oficial.py` — escore publicado pelo MS e base completa do Ipea (zip de 201 MB fora do Git, conferido por SHA-256);
+    - `scripts/rdd_bolsa/04_*`, `04b_*` e `04c_*` — portão R1 (`APROVADO_SHARP`), escore completo e identificação do arquivo de IVS errado;
+    - `05_*` (E1), `06_*` (E2), `07_*` (E3, principal), `08a_*` e `08_*` (E4) e `11_*` (E5, exploratório);
+    - `09b_conferir_sinal.py`, `09_gerar_relatorio_pdf.py` e `10_galeria_figura_regra.py` — conferência do sinal, relatório em PDF e galeria da figura da regra.
+18. `scripts/tema_trabalho/10_conferir_numeros_artigo.py` e `11_conferir_numeros_artigo_curto.py` — relêem os artefatos, reformatam cada valor no padrão dos artigos e exigem que o trecho exista em `paper_pmme_submission.tex` e `paper_pmme_curto.tex`; falham se alguma cifra não tiver origem rastreável.
+
+Saíram do pipeline em 18/10/2026, sem apagar os scripts: `scripts/rdd_bolsa/01_*`,
+`01b_*`, `02_*` e `03_*`. Eles usavam `data/ivs_ipea_2010_municipios.csv`, que não
+é o IVS do município (`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`),
+ou dependiam do pedido do escore ao MS, cancelado porque o escore é público.
 
 ---
 
@@ -49,7 +57,7 @@ scripts/
 ├── aquisicao/                          # Tratamento de vagas, ponte CBO, malha, painel e população
 ├── avaliacao_ciclo3/                   # Protocolo prospectivo e piloto do ciclo 3
 ├── avaliacao_impacto/                  # Pipeline do diagnóstico histórico DDD agregada
-├── rdd_bolsa/                          # Diagnóstico de viabilidade do RDD do IVS / adicional
+├── rdd_bolsa/                          # RDD do adicional de bolsa nos cortes do IVS 2010 oficial
 ├── revisao_literatura/                 # Mineração bibliográfica e geradores históricos
 ├── tema_trabalho/                      # Núcleo principal de atração e cutoff causal local (A1–A8)
 └── utils/                              # Utilitários compartilhados (DBC parser, gráficos, tema)
@@ -61,7 +69,7 @@ scripts/
 - **`apresentacao/`:** `gerar_figuras_banca1.py` produz as figuras da banca 1 em `output/apresentacao_banca1/`, com manifesto de entradas e hashes. Lê o painel município–curso–mês e a população do Censo 2022; não recalcula nada do pipeline analítico.
 - **`tema_trabalho/`:** Contém a cadeia empírica central do artigo (A1 a A8), desde a auditoria inicial, tipologia territorial e resultados associativos até o cutoff estrito de seleção, seus placebos e a replicação pública.
 - **`avaliacao_impacto/`:** Reúne o pipeline do diagnóstico histórico DDD (imediatas vs reserva). Avalia portão de relevância, constrói painéis analíticos, estima modelos estáticos e dinâmicos (estudo de evento), testa mecanismos, gera figuras, nota técnica e infográfico.
-- **`rdd_bolsa/`:** Rotinas de R1, primeiro estágio público, triagem administrativa e controle fail-closed para o desenho baseado no adicional de R$ 5 mil e limiares do IVS 2010.
+- **`rdd_bolsa/`:** RDD sharp do adicional de R$ 5 mil nos cortes 0,300 e 0,400 do IVS 2010 oficial do Ipea: portão R1, escore completo, estimações E1 a E5, conferência do sinal, relatório e galeria. Os scripts `00_` a `03_` são registro superado: usavam o arquivo de IVS errado ou o pedido de dados cancelado.
 - **`avaliacao_ciclo3/`:** Pipeline prospectivo do ciclo 3 (congelamento de coorte, ingestão de dados de procedimentos hospitalares SIH/SUS pré-tratamento e auditoria de potência).
 - **`revisao_literatura/`:** Mineração de referências (`01_minerar_literatura.py`) e subpasta `historico/` com os scripts de apoio que geraram tabelas de rúbrica e documentação teórica em estágios anteriores.
 - **`utils/`:** Módulos utilitários reutilizáveis:
