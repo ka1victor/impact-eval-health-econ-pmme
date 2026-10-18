@@ -27,8 +27,9 @@ escore (especialista ativo de qualquer ciclo na relacao nominal de 09/10/2026).
   EP HC1 por municipio, IC 95% normal.
 - E4b (limites sem premissa de continuidade): Y e conhecido para os 368; para
   os municipios sem escore so a posicao falta. Posicao possivel = intervalo da
-  faixa anunciada (`pior_caso`) ou esse intervalo intersectado com
-  [ivs_2010 + dmin, ivs_2010 + dmax] (`informado`, PREMISSA). Em cada lado, a
+  faixa anunciada (`pior_caso`). O cenario `informado` do adendo, que estreitava
+  esse intervalo com o arquivo de IVS errado, saiu em 18/10/2026 (auditoria 19;
+  ver CENARIO_RETIRADO). Em cada lado, a
   media extrema de Y sai do subconjunto dos "possivelmente dentro" que a
   minimiza/maximiza, somado aos conhecidos e aos "certamente dentro". Para media
   simples ou ponderada, o otimo inclui exatamente os possiveis com Y abaixo
@@ -77,7 +78,6 @@ PROTOCOLO = ROOT / "output" / "rdd_bolsa" / "protocolo_escore_administrativo.jso
 PROPORCAO = ROOT / "output" / "rdd_bolsa" / "E4_proporcao_municipio.csv"
 FUNIL = ROOT / "output" / "tema_trabalho" / "matriz_funil_ciclo1.parquet"
 ESCORE = ROOT / "output" / "aquisicao" / "a07_ivs_administrativo_municipio.csv"
-IVS_PUBLICO = ROOT / "data" / "ivs_ipea_2010_municipios.csv"
 QUADRO_C1 = ROOT / "data" / "raw" / "aquisicao" / "vagas" / "2025_ciclo1_chamada1_vagas.xlsx"
 SCRIPT_E1 = ROOT / "scripts" / "rdd_bolsa" / "05_estimar_E1_densidade.py"
 OUT_CSV = ROOT / "output" / "rdd_bolsa" / "E4_estimativas.csv"
@@ -95,7 +95,20 @@ CORTES_MIL = (300, 400)
 JANELAS_MIL = (50, 30, 80)  # 0,050 principal; 0,030 e 0,080 sensibilidade (ordem do adendo)
 H_PRINCIPAL_MIL = 50
 INTERVALO_FAIXA_MIL = {"FAIXA 3": (0, 300), "FAIXA 2": (301, 400), "FAIXA 1": (401, 1000)}
-CENARIOS = ("pior_caso", "informado")
+# Desvio de 18/10/2026: o cenario `informado` usava como banda
+# data/ivs_ipea_2010_municipios.csv, linha de subgrupo populacional e nao o IVS do
+# municipio (auditorias 16 e 19). Numeros desse arquivo nao entram em saida ativa.
+CENARIOS = ("pior_caso",)
+CENARIO_RETIRADO = {
+    "cenario": "informado",
+    "data": "2026-10-18",
+    "motivo": (
+        "a banda [ivs_2010 + dmin, ivs_2010 + dmax] usava data/ivs_ipea_2010_municipios.csv, linha de subgrupo "
+        "populacional e nao o IVS do municipio; numeros desse arquivo so valem como failure mode"
+    ),
+    "efeito_em_E4a_E4b_pior_caso_e_E4c": "nenhum: nao leem o arquivo",
+    "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md",
+}
 OUTCOMES = ("Y1", "Y2")
 PONDERACOES = ("simples", "celulas")  # simples = principal; celulas = sensibilidade
 N_MUNICIPIOS_P1 = 368
@@ -174,6 +187,7 @@ def conferir_protocolos() -> tuple[dict, dict]:
     assert "principal" in ad["E4b_limites_pior_caso"]["janelas"][0]
     assert ad["E4b_limites_pior_caso"]["outcomes"] == list(OUTCOMES)
     assert "pior_caso" in ad["E4b_limites_pior_caso"]["cenarios"]
+    # O adendo congelado lista tambem o `informado`, retirado em 18/10/2026 (CENARIO_RETIRADO).
     assert "informado" in ad["E4b_limites_pior_caso"]["cenarios"]
     assert "h = 0,050" in ad["E4a_ingenuo"]["descricao"]
     assert "constante local" in ad["E4a_ingenuo"]["descricao"]
@@ -296,21 +310,9 @@ def montar_p1() -> tuple[pd.DataFrame, dict]:
     escore = pd.read_csv(ESCORE, dtype={"co_ibge": str})[["co_ibge", "ivs_admin"]]
     assert escore["co_ibge"].is_unique and escore["ivs_admin"].notna().all()
     escore["s_mil"] = escore["ivs_admin"].map(mil)
-    publico = pd.read_csv(IVS_PUBLICO, dtype={"cod_ibge6": str})[["cod_ibge6", "ivs_2010"]]
-    publico = publico.rename(columns={"cod_ibge6": "co_ibge"})
-    assert publico["co_ibge"].is_unique
-    publico["ivs10_mil"] = publico["ivs_2010"].map(mil)
-
-    # dmin/dmax: menor e maior (s - ivs_2010) nos municipios com escore (404).
-    dif = escore.merge(publico[["co_ibge", "ivs10_mil"]], on="co_ibge", how="left")
-    assert len(dif) == 404, len(dif)
-    assert dif["ivs10_mil"].notna().all(), "municipio com escore sem IVS 2010"
-    dif_mil = (dif["s_mil"] - dif["ivs10_mil"]).astype(int)
-    dmin, dmax = int(dif_mil.min()), int(dif_mil.max())
+    assert len(escore) == 404, len(escore)
 
     p = d.merge(escore[["co_ibge", "s_mil"]], on="co_ibge", how="left")
-    p = p.merge(publico[["co_ibge", "ivs10_mil"]], on="co_ibge", how="left")
-    assert p["ivs10_mil"].notna().all(), "municipio de P1 sem IVS 2010"
     p["S"] = p["s_mil"].notna().astype(int)
     com = p[p["S"] == 1]
     faixa_escore = com["s_mil"].astype(int).map(
@@ -324,9 +326,6 @@ def montar_p1() -> tuple[pd.DataFrame, dict]:
         "municipios": int(len(p)),
         "com_escore_S1": int(p["S"].sum()),
         "sem_escore_S0": int((p["S"] == 0).sum()),
-        "dmin": dmin / 1000,
-        "dmax": dmax / 1000,
-        "dmin_dmax_base": "404 municipios com escore administrativo; s - ivs_2010 (IVS 2010 do Ipea, cod_ibge6)",
         "por_faixa_anunciada": {
             f: {
                 "municipios": int(len(g)),
@@ -412,18 +411,11 @@ def media_extrema(y_fix: np.ndarray, w_fix: np.ndarray, y_poss: np.ndarray, w_po
     return float(medias[i]), i
 
 
-def conjuntos_possiveis(sem: pd.DataFrame, cenario: str, dmin: int, dmax: int) -> tuple[np.ndarray, np.ndarray, int]:
-    """Intervalo possivel do escore de cada municipio sem escore (como no E2)."""
-    lo = sem["faixa_lo"].to_numpy(dtype=int)
-    hi = sem["faixa_hi"].to_numpy(dtype=int)
-    if cenario == "pior_caso":
-        return lo, hi, 0
-    ivs = sem["ivs10_mil"].to_numpy(dtype=int)
-    lo_i = np.maximum(lo, ivs + dmin)
-    hi_i = np.minimum(hi, ivs + dmax)
-    vazio = lo_i > hi_i
-    # Premissa contrariada pela faixa observada: volta ao intervalo da faixa (conservador, como no E2).
-    return np.where(vazio, lo, lo_i), np.where(vazio, hi, hi_i), int(vazio.sum())
+def conjuntos_possiveis(sem: pd.DataFrame, cenario: str) -> tuple[np.ndarray, np.ndarray, int]:
+    """Intervalo possivel do escore de cada municipio sem escore: o intervalo da faixa (como no E2)."""
+    if cenario != "pior_caso":
+        raise ValueError(f"cenario {cenario!r} fora do E4 (o `informado` saiu em 18/10/2026; auditoria 19)")
+    return sem["faixa_lo"].to_numpy(dtype=int), sem["faixa_hi"].to_numpy(dtype=int), 0
 
 
 def e4b(p: pd.DataFrame, conj: tuple[np.ndarray, np.ndarray], outcome: str, ponderacao: str,
@@ -608,7 +600,6 @@ def linha(componente, outcome, c, h, espec, ponderacao, n_inf, n_sup, estimativa
 def main() -> None:
     base, adendo = conferir_protocolos()
     p, meta = montar_p1()
-    dmin, dmax = mil(meta["dmin"]), mil(meta["dmax"])
 
     linhas: list[dict] = []
     detalhes_e4b: list[dict] = []
@@ -629,8 +620,7 @@ def main() -> None:
 
     # E4b ---------------------------------------------------------------
     sem = p[p["S"] == 0]
-    conjuntos = {cen: conjuntos_possiveis(sem, cen, dmin, dmax) for cen in CENARIOS}
-    meta["informado_intersecao_vazia_volta_a_faixa"] = conjuntos["informado"][2]
+    conjuntos = {cen: conjuntos_possiveis(sem, cen) for cen in CENARIOS}
     for outcome in OUTCOMES:
         for c in CORTES_MIL:
             for h in JANELAS_MIL:
@@ -639,8 +629,7 @@ def main() -> None:
                         lo, hi, _ = conjuntos[cenario]
                         r = e4b(p, (lo, hi), outcome, ponderacao, c, h)
                         nota = (
-                            ("PREMISSA informado; " if cenario == "informado" else "")
-                            + f"inf: {r['n_conhecidos_inf']} com escore + {r['n_certos_inf']} certos + "
+                            f"inf: {r['n_conhecidos_inf']} com escore + {r['n_certos_inf']} certos + "
                               f"{r['n_possiveis_inf']} possiveis, media em [{r['media_inf_min']:.6f}, "
                               f"{r['media_inf_max']:.6f}]; sup: {r['n_conhecidos_sup']} com escore + "
                               f"{r['n_certos_sup']} certos + {r['n_possiveis_sup']} possiveis, media em "
@@ -680,13 +669,14 @@ def main() -> None:
         rel(PROPORCAO): sha256(PROPORCAO),
         rel(FUNIL): sha256(FUNIL),
         rel(ESCORE): sha256(ESCORE),
-        rel(IVS_PUBLICO): sha256(IVS_PUBLICO),
         rel(QUADRO_C1): sha256(QUADRO_C1),
         rel(SCRIPT_E1): sha256(SCRIPT_E1),
     }
     resumo = {
         "documento": "E4 - proporcao de celulas preenchidas no corte do escore administrativo de IVS",
         "status": "ESTIMACAO_EXPLORATORIA_E4",
+        "natureza_dos_dados": "EMPIRICO",
+        "desvio_do_adendo": CENARIO_RETIRADO,
         "data_execucao": DATA_EXECUCAO,
         "script": rel(Path(__file__).resolve()),
         "adendo": {"arquivo": rel(ADENDO), "sha256": sha256(ADENDO),
@@ -698,7 +688,6 @@ def main() -> None:
             rel(PROPORCAO): "outcomes Y1/Y2 por municipio (insumo lido)",
             rel(FUNIL): "fonte canonica; usada so para conferir o insumo, municipio a municipio",
             rel(ESCORE): "running variable s (ivs_admin) e S = 1[tem escore]",
-            rel(IVS_PUBLICO): "IVS 2010 para o cenario informado (dmin/dmax)",
             rel(QUADRO_C1): "P1 e faixa anunciada do quadro bruto (conferencia)",
             rel(SCRIPT_E1): "biblioteca: estimador Poisson do E1 (ajustar_poisson) e leitura do quadro",
         },
@@ -736,9 +725,7 @@ def main() -> None:
             "estimando": adendo["E4b_limites_pior_caso"]["estimando"],
             "cenarios": {
                 "pior_caso": "municipio sem escore em qualquer ponto do intervalo da sua faixa anunciada",
-                "informado": "PREMISSA: intervalo da faixa intersectado com [ivs_2010 + dmin, ivs_2010 + dmax]; "
-                             "intersecao vazia volta ao intervalo da faixa (contagem em "
-                             "populacao.informado_intersecao_vazia_volta_a_faixa)",
+                "informado": "retirado em 18/10/2026 (ver desvio_do_adendo)",
             },
             "metodo": "em cada lado, fixos = municipios com escore na janela + sem escore cujo intervalo "
                       "possivel cabe na janela; possiveis = sem escore cujo intervalo cruza a janela sem caber. "

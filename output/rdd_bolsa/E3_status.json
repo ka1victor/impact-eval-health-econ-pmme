@@ -124,7 +124,7 @@
       "nota": "base oficial do Ipea; substitui data/ivs_ipea_2010_municipios.csv (auditoria 16)"
     },
     "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
-      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+      "sha256": "10af8712eef95cc8ab3e5d7f70d9da1319229494ae2b774cb3ca15a8a2095552",
       "status": "lido",
       "estratos": [
         "capital",

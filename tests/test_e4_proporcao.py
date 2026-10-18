@@ -174,7 +174,7 @@ class TestE4bSintetico(unittest.TestCase):
         for _ in range(120):
             p, verdade = self._mundo(rng, int(rng.integers(20, 100)), int(rng.integers(0, 60)))
             sem = p[p["S"] == 0]
-            conj = E4.conjuntos_possiveis(sem, "pior_caso", 0, 0)[:2]
+            conj = E4.conjuntos_possiveis(sem, "pior_caso")[:2]
             for c in E4.CORTES_MIL:
                 for h in E4.JANELAS_MIL:
                     inf = (verdade > c - h) & (verdade <= c)

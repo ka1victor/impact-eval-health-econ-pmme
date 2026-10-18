@@ -9,7 +9,7 @@
     "sha256": "9c838ad9e7f49b9a797d097641568f53174ca1d3dfd31e40a480ba4bdb6b3c32"
   },
   "funcoes_importadas": {
-    "scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py": "a6d2034887a6e566d6be3d7eed23bcb7f68c24b09171709bce5345f1884edeeb",
+    "scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py": "018104e122dde94d9b7d89614556c884c471d2fe934430f6e32e7771922d9124",
     "scripts/rdd_bolsa/08a_reconstruir_proporcao_preenchida.py": "863596d321d52f0aa7200f540f6b3528d394f095e5545d482ad956f34a92a89b"
   },
   "protocolos": {
@@ -84,7 +84,7 @@
       "filtros": "nenhum"
     },
     "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
-      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+      "sha256": "10af8712eef95cc8ab3e5d7f70d9da1319229494ae2b774cb3ca15a8a2095552",
       "fonte": "tipologia territorial A2 (capitais, RM/RIDE 2022, REGIC 2018)",
       "data_referencia": "REGIC 2018; RM/RIDE 2022",
       "cobertura": "5570 municipios",

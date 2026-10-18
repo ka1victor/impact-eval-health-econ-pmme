@@ -1730,7 +1730,7 @@
       "sha256": "b38a2d0ea11aaa1be802a8dfe7875547dda23951ee19e0731f5a7398c9e87982"
     },
     "output/rdd_bolsa/E3_status.json": {
-      "sha256": "1bdda808efa70a3c1066872a5631fa4cf4dc0b1ce483e7db79c10161e391dd0a"
+      "sha256": "d9db202cd00449686dad4d94947d19ba822e11aedb545f0b2158ab72e3623195"
     },
     "output/rdd_bolsa/E4_proporcao_municipio.csv": {
       "sha256": "897e9529dd0bd226a5ca3398971d894c79400cad7aaf46fd9ae84ebfb4022f79"
