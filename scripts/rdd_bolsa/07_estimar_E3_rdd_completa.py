@@ -630,6 +630,15 @@ def diagnosticos_sem_outcome(pop_s: pd.DataFrame, covariaveis: pd.DataFrame | No
         if covariaveis is not None else None
     )
     colunas_cov = [c for c in (covariaveis.columns if covariaveis is not None else []) if c != "co_ibge"]
+    # Com as covariaveis da base oficial (a08), ivs_2010 e a propria running
+    # variable: o "salto" dela e zero por construcao e o EP, ruido numerico.
+    # A linha continua relatada, mas sem teste.
+    mecanicas = set()
+    for c in colunas_cov:
+        v = cov[c].to_numpy(dtype=float)
+        ok = np.isfinite(v)
+        if ok.any() and np.abs(v[ok] - cov["s_mil"].to_numpy()[ok] / 1000).max() < 5e-4:
+            mecanicas.add(c)
     for corte in CORTES_MIL:
         for h in JANELAS_MIL:
             esp = "principal" if h == H_PRINCIPAL_MIL else "sensibilidade"
@@ -641,6 +650,10 @@ def diagnosticos_sem_outcome(pop_s: pd.DataFrame, covariaveis: pd.DataFrame | No
                            "metrica": "tau = log(rho); rho = razao das densidades lateral superior/inferior", **d})
             for c in colunas_cov:
                 r = rdd_local_linear(cov["s_mil"].to_numpy(), cov[c].to_numpy(dtype=float), corte, h)
+                if c in mecanicas:
+                    r.update({"ep": np.nan, "ic95_inf": np.nan, "ic95_sup": np.nan, "p_valor": np.nan,
+                              "nota": "identica a running variable (IVS 2010 oficial = escore): "
+                                      "balanco mecanico, sem teste"})
                 linhas.append({**base, "diagnostico": "balanco_covariavel_pre", "variavel": c,
                                "metrica": "salto local linear (kernel triangular, HC1)", **r})
     return pd.DataFrame(linhas)

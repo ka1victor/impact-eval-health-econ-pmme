@@ -115,6 +115,22 @@ class TestEstimadorLocalLinearSintetico(unittest.TestCase):
         self.assertTrue(np.isnan(r["tau"]))
         self.assertIn("suporte insuficiente", r["nota"])
 
+    def test_covariavel_igual_a_running_variable_nao_e_testada(self) -> None:
+        # Com ivs_2010 = escore, o "salto" e zero por construcao e o EP e ruido
+        # numerico; o p-valor desse ruido nao pode aparecer como desequilibrio.
+        rng = np.random.default_rng(SEMENTE + 2)
+        s_mil = rng.integers(200, 501, size=600)
+        pop_s = pd.DataFrame({"co_ibge": [f"{i:06d}" for i in range(600)], "s_mil": s_mil})
+        cov = pd.DataFrame({"co_ibge": pop_s["co_ibge"], "ivs_2010": s_mil / 1000,
+                            "outra": rng.normal(size=600)})
+        d = E3.diagnosticos_sem_outcome(pop_s, cov, "SINTETICO")
+        bal = d[d["diagnostico"].eq("balanco_covariavel_pre")]
+        mec = bal[bal["variavel"].eq("ivs_2010")]
+        self.assertEqual(len(mec), len(E3.CORTES_MIL) * len(E3.JANELAS_MIL))
+        self.assertTrue(mec["p_valor"].isna().all())
+        self.assertTrue(mec["nota"].str.contains("running variable").all())
+        self.assertTrue(bal.loc[bal["variavel"].eq("outra"), "p_valor"].notna().all())
+
 
 class TestDensidadeSintetica(unittest.TestCase):
     def test_densidade_continua_nao_acusa_salto(self) -> None:
