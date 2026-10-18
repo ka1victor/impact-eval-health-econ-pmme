@@ -73,4 +73,4 @@ Permitido: **evolução do estoque cadastral**, **trajetória diferencial associ
 
 O CNES não identifica participantes do programa. Sem log completo, ponte individual e pagamentos, o A5 permanece uma análise descritiva longitudinal complementar ao resultado de implementação A4.
 
-*Gerado em 2026-09-21 por `scripts/tema_trabalho/06_avaliar_provimento_cnes.py`.*
+*Gerado em 2026-10-18 por `scripts/tema_trabalho/06_avaliar_provimento_cnes.py`.*

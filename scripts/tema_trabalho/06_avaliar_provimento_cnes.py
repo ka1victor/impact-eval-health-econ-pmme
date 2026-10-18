@@ -320,6 +320,35 @@ def hashes_de_entradas(caminhos, extras: dict[Path, str] | None = None, anterior
     return hashes
 
 
+# Covariadas territoriais pré-oferta substituídas a partir da tipologia A2 corrigida
+# (18/10/2026). O painel em T0 congelado (`A5_painel_T0.parquet`) e o painel mensal
+# herdaram `ivs_2010`, `ivs_categoria`, `populacao_2010` e o `estoque_pre_por_10k` de
+# `data/ivs_ipea_2010_municipios.csv` (via malha), que é uma linha de subgrupo
+# populacional e não o município (auditorias 16 e 19). O painel congelado não é
+# regravado (é a âncora de hash da reestimação); as colunas são trocadas em memória.
+COVARIADAS_TERRITORIAIS = ["ivs_2010", "ivs_categoria", "populacao_2010", "estoque_especialistas_pre_12m_media", "estoque_pre_por_10k"]
+
+
+def corrigir_covariaveis_territoriais(panel: pd.DataFrame, tipologia_path: Path = MATRIZ_TIPOLOGIA) -> pd.DataFrame:
+    """Repõe as covariadas territoriais com os valores da tipologia A2 corrigida.
+
+    Fonte: base oficial do Ipea (a08) para IVS, categoria e população 2010; Censo 2022
+    no denominador do estoque por 10 mil. `log_pop` e `estoque_por_10k` são recalculados
+    com a definição congelada. Município do painel sem linha na tipologia aborta.
+    """
+    tip = pd.read_parquet(tipologia_path, columns=["co_ibge_6d"] + COVARIADAS_TERRITORIAIS).copy()
+    tip["co_ibge_6d"] = tip["co_ibge_6d"].astype(str).str.replace(r"\D", "", regex=True).str.zfill(6)
+    out = panel.drop(columns=[c for c in COVARIADAS_TERRITORIAIS + ["log_pop", "estoque_por_10k"] if c in panel.columns])
+    out["co_ibge_6d"] = out["co_ibge_6d"].astype(str).str.replace(r"\D", "", regex=True).str.zfill(6)
+    out = out.merge(tip, on="co_ibge_6d", how="left", validate="many_to_one")
+    if out["ivs_2010"].isna().any():
+        faltam = sorted(out.loc[out["ivs_2010"].isna(), "co_ibge_6d"].unique())[:10]
+        raise AssertionError(f"municípios do painel sem IVS oficial na tipologia: {faltam}")
+    out["log_pop"] = np.log1p(out["populacao_2010"].astype(float))
+    out["estoque_por_10k"] = out["estoque_pre_por_10k"].astype(float)
+    return out
+
+
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for p in [MATRIZ_FUNIL, MATRIZ_TIPOLOGIA, MANIFESTO_TIP, PORTAO_A1, REGISTRO_A3, POTENCIA_A3, PONTE_FILE]:
@@ -331,6 +360,7 @@ def main() -> None:
         print(f"[A5] {PAINEL_MUNI.relative_to(ROOT)} ausente; modo {modo_painel}, hash conferido contra A6")
     else:
         panel = construir_painel_t0()
+    panel = corrigir_covariaveis_territoriais(panel)
     # Extras hasheados no modo de reestimacao: o painel congelado e o proprio
     # insumo, e sua ancora fica registrada junto das demais entradas.
     extras_hash = {PAINEL_T0_PARQUET: "painel em T0 congelado, insumo da reestimacao (hash conferido contra A6)"} if modo_painel == "reestimado_do_painel_T0_congelado" else {}
@@ -1655,6 +1685,17 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
         "protocolo":"A5_ESTIMATIVAS_PROVIMENTO",
         "data_referencia": dt.date.today().isoformat(),
         "efeitos_estimados": True,
+        "correcao_2026_10_18": {
+            "o_que_mudou": (
+                "covariadas territoriais (ivs_2010, populacao_2010, log_pop, estoque_por_10k) repostas em memoria "
+                "a partir da tipologia A2 corrigida (base oficial do Ipea, a08; Censo 2022 no denominador do "
+                "estoque por 10 mil); afetam so as especificacoes 'full' e de heterogeneidade"
+            ),
+            "antes": "data/ivs_ipea_2010_municipios.csv via malha e painel mensal: linha de subgrupo populacional, nao o municipio (auditoria 16)",
+            "nao_muda": "estudo de evento, desfechos, amostras, T0, referencia e modelos sem covariadas territoriais continuas",
+            "painel_T0_congelado": "nao regravado; suas colunas ivs_2010/populacao_2010/estoque_* sao o registro do failure mode e nao entram em nenhum modelo",
+            "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md",
+        },
         "linguagem":"associativa (trajetoria diferencial e evolucao do estoque cadastral); proibido efeito causal do PMM-E/bolsa/IVS, provimento causal e retencao individual",
         "populacao": {
             "painel_municipio_curso": "1184 celulas municipio-curso (368 municipios) x26 competencias 202406-202607 =30784 linhas",

@@ -1254,6 +1254,15 @@ def main() -> None:
         "protocolo": "A4_ESTIMATIVAS_ATRACAO",
         "data_referencia": "2026-09-02",
         "efeitos_estimados": True,
+        "correcao_2026_10_18": {
+            "o_que_mudou": (
+                "covariadas contínuas (ivs_2010, subíndices, log_pop, estoque_por_10k) da tipologia A2 corrigida: "
+                "base oficial do Ipea (a08) e Censo 2022; especificações, amostras e desfechos inalterados"
+            ),
+            "antes": "data/ivs_ipea_2010_municipios.csv, linha de subgrupo populacional e não o município (auditoria 16)",
+            "nao_muda": "modelo principal (estrato + FE curso e UF), logit, estágios, município-curso, potência, wild bootstrap",
+            "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md",
+        },
         "linguagem": "associativa (associado a, gradiente territorial); proibido efeito causal do PMM-E/bolsa/IVS e retenção individual",
         "populacao": {
             "primaria": "1295 células CNES–curso quadro Ch1 (368 municípios)",
@@ -1307,6 +1316,15 @@ def main() -> None:
                 "coef_ivs": float(res_lpm_full.params.get("ivs_2010", np.nan)),
                 "coef_log_pop": float(res_lpm_full.params.get("log_pop", np.nan)),
                 "coef_faixa": {k: float(v) for k, v in res_lpm_full.params.filter(like="faixa_").items()},
+                "se_estrato_full": {k: float(v) for k, v in res_lpm_full.bse.filter(like="estrato_").items()},
+                "p_estrato_full": {k: float(v) for k, v in res_lpm_full.pvalues.filter(like="estrato_").items()},
+                "p_ivs": float(res_lpm_full.pvalues.get("ivs_2010", np.nan)),
+                "p_log_pop": float(res_lpm_full.pvalues.get("log_pop", np.nan)),
+                "coef_estoque_por_10k": float(res_lpm_full.params.get("estoque_por_10k", np.nan)),
+                "fonte_covariaveis": (
+                    "ivs_2010 e log1p(populacao_2010) da base oficial do Ipea (a08); estoque_por_10k com "
+                    "populacao do Censo 2022 no denominador (tipologia A2 corrigida em 18/10/2026)"
+                ),
             },
             "sensibilidade_winsorizado_p99": {
                 "coef_estrato": {k: float(v) for k, v in res_wins.params.filter(like="estrato_").items()},
@@ -1502,6 +1520,25 @@ def main() -> None:
         for _, r in top.iterrows():
             infl_md += f"- `co_ibge_6d {r['co_ibge_6d']}` em `{r['termo']}`: Δ {r['delta']:.3f} (DFBETA {r['dfbeta']:.2f})\n"
 
+    # Texto do ajuste completo e da interação lido dos resultados, sem rótulo fixo de
+    # significância (o "(ns)" e o "interação não significativa" eram texto fixo).
+    q_full_metro = float(tab_full.loc[tab_full["termo"] == "estrato_metropolitano", "q_fdr_estrato"].iloc[0])
+    termos_inter = [t for t in res_inter.params.index if t.endswith("_x_ivs")]
+    p_inter = {t: float(res_inter.pvalues[t]) for t in termos_inter}
+    sig_inter = [t for t, pv in p_inter.items() if pv < ALPHA]
+    texto_interacao = "; ".join(
+        f"{t.removeprefix('estrato_').removesuffix('_x_ivs')}×IVS {float(res_inter.params[t]):.3f} (p={pv:.3f})"
+        for t, pv in p_inter.items()
+    ) + (
+        f" — interação distinta de zero a 5% em {', '.join(t.removeprefix('estrato_').removesuffix('_x_ivs') for t in sig_inter)}; "
+        "leitura descritiva, sem correção de multiplicidade nem hipótese pré-especificada de sinal"
+        if sig_inter else " — nenhuma interação distinta de zero a 5%"
+    )
+    _faixa = pd.read_csv(TABELA_AMOSTRA_FAIXA)
+    _faixa = _faixa[_faixa["amostra"] == "primaria_1295_Ch1"].sort_values("faixa")
+    texto_faixa = ", ".join(
+        f"{str(r.faixa).replace(' ', '')} {r.outcome_medio:.1%} (n={int(r.n_celulas)})" for r in _faixa.itertuples()
+    )
     relatorio = f"""# A4 — Atração e implementação: diagnóstico e linguagem autorizada (02/09/2026)
 
 > Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash {sha256(REGISTRO_A3)[:8]})
@@ -1513,7 +1550,7 @@ def main() -> None:
 
 Primária 1295: outcome médio **{y_prim.mean():.1%}** (393/1295). Por estrato: capital {df_prim[df_prim['estrato']=='capital']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (73), metropolitano {df_prim[df_prim['estrato']=='metropolitano']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (265), interior próximo {df_prim[df_prim['estrato']=='interior_proximo_polo']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (811), remoto {df_prim[df_prim['estrato']=='interior_remoto']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (146). Ver `A4_tabela_01_amostra_construcao.csv` (por estrato) + `A4_tabela_00_construcao_steps.csv` (3323→3057→1295, 266 sem municipio, 29 fora quadro Ch1 com municipio).
 
-Faixa anunciada (descritiva, não causal): FAIXA1 31.6% (n=291), FAIXA2 37.4% (465), FAIXA3 23.6% (539) — ver `A4_tabela_01b_amostra_faixa.csv`. IVS 2010 mediano {df_prim['ivs_2010'].median():.3f}; Q1–Q4 prevalência ver figura 02; correlação IVS–outcome {df_prim['ivs_2010'].corr(df_prim['outcome_alguma_confirmacao_ou_homologacao']):.2f} (associativa). Estoque pré médio {df_prim['estoque_especialistas_pre_12m_media'].mean():.1f} por município; log(pop) mediano {df_prim['log_pop'].median():.2f}. Curso distribuição ver `A4_tabela_01c_amostra_curso.csv` (16 cursos, min 22 max 188), UF ver `A4_tabela_01d_amostra_uf.csv` (27 UFs, 8 com <5 clusters colapsadas na macrorregião de saúde conforme A3 — {', '.join(sorted(small_ufs))} —, resultando em {pd.Series(df_prim['uf_fe']).nunique()} níveis de FE) para FE.
+Faixa anunciada (descritiva, não causal): {texto_faixa} — ver `A4_tabela_01b_amostra_faixa.csv`. IVS 2010 mediano {df_prim['ivs_2010'].median():.3f}; Q1–Q4 prevalência ver figura 02; correlação IVS–outcome {df_prim['ivs_2010'].corr(df_prim['outcome_alguma_confirmacao_ou_homologacao']):.2f} (associativa). Estoque pré médio {df_prim['estoque_especialistas_pre_12m_media'].mean():.1f} por município; log(pop) mediano {df_prim['log_pop'].median():.2f}. Curso distribuição ver `A4_tabela_01c_amostra_curso.csv` (16 cursos, min 22 max 188), UF ver `A4_tabela_01d_amostra_uf.csv` (27 UFs, 8 com <5 clusters colapsadas na macrorregião de saúde conforme A3 — {', '.join(sorted(small_ufs))} —, resultando em {pd.Series(df_prim['uf_fe']).nunique()} níveis de FE) para FE.
 
 População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, reforçando que Ch2 é cadastro reserva sem capacidade imediata numérica; análise conjunta mantém FE de chamada. Construção sem escolher amostra por resultado; 266 sem municipio e 29 fora quadro mantidos fora da primária por definição prévia.
 
@@ -1526,7 +1563,7 @@ População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, refor
 | Estrato | coef (SE) cluster | IC95% | q FDR (3 testes) |
 |---|---|---|---|
 {lpm_rows_md}
-N=1295, G=368, R²={res_lpm_min.rsquared:.3f}, outcome médio {y_prim.mean():.1%}. O benchmark global de 3,8% mede precisão de uma proporção, não potência do coeficiente. Para os contrastes efetivos contra remoto, os MDEs **ex-ante** aproximados são {pot['contrastes_vs_interior_remoto']['capital']['mde_80_pp_p30']:.1%} (capital), {pot['contrastes_vs_interior_remoto']['metropolitano']['mde_80_pp_p30']:.1%} (metro) e {pot['contrastes_vs_interior_remoto']['interior_proximo_polo']['mde_80_pp_p30']:.1%} (próximo).
+N=1295, G=368, R²={res_lpm_min.rsquared:.3f}, outcome médio {y_prim.mean():.1%}. O benchmark global de {pot['mde_global']['mde_80_pp_p30']:.1%} mede precisão de uma proporção, não potência do coeficiente. Para os contrastes efetivos contra remoto, os MDEs **ex-ante** aproximados são {pot['contrastes_vs_interior_remoto']['capital']['mde_80_pp_p30']:.1%} (capital), {pot['contrastes_vs_interior_remoto']['metropolitano']['mde_80_pp_p30']:.1%} (metro) e {pot['contrastes_vs_interior_remoto']['interior_proximo_polo']['mde_80_pp_p30']:.1%} (próximo).
 
 **Logit AME (mesma spec):** o contraste de estrato troca o **bloco inteiro** de indicadoras contra `interior_remoto`, e não uma indicadora isolada. A última coluna traz, só para auditoria, o valor que `get_margeff(dummy=True)` devolvia: ele altera apenas a coluna do estrato avaliado e mantém as demais no valor observado, o que constrói células simultaneamente capital e metropolitana — um contrafactual que não existe na população — e superestima o contraste.
 
@@ -1561,7 +1598,7 @@ O `p` wild é **coluna adicional**, não substituto: o `p` principal continua se
 {colapso_md}
 A escolha da primária é a do protocolo, não uma seleção posterior ao resultado; as três ficam publicadas em `A4_tabela_07_sensibilidade_colapso_uf.csv` com EP cluster, p-valor, níveis de FE e N. O balde único `RESTO`, usado antes da auditoria, punha num único nível de FE quatro macrorregiões, com {int(celulas_uf_pequena.get('capital', 0))} células de capital contra {int(celulas_uf_pequena.get('interior_remoto', 0))} de interior remoto — exatamente a comparação entre estados que o FE de UF deveria impedir. O contraste metropolitano é estável entre as três variantes; o de capital é o que se move. {limite_sem_macro}
 
-- **Ajuste completo** (+ IVS linear, log pop, estoque/10k, faixa): estrato metro {res_lpm_full.params['estrato_metropolitano']:.3f} (p={res_lpm_full.pvalues['estrato_metropolitano']:.3f}), capital {res_lpm_full.params['estrato_capital']:.3f} (ns), próximo {res_lpm_full.params['estrato_interior_proximo_polo']:.3f} (ns); IVS {res_lpm_full.params['ivs_2010']:.3f} (p={res_lpm_full.pvalues['ivs_2010']:.3f}, ns); log pop {res_lpm_full.params['log_pop']:.3f} (p={res_lpm_full.pvalues['log_pop']:.3f}); faixa FAIXA2 vs FAIXA1 {res_lpm_full.params.get('faixa_FAIXA 2', 0):.3f} (ns), FAIXA3 vs FAIXA1 {res_lpm_full.params.get('faixa_FAIXA 3', 0):.3f} (ns). Com ajuste, gradiente atenua — UF e curso capturam parte da variação territorial. Ver `A4_tabela_03b_ajuste_completo.csv`.
+- **Ajuste completo** (+ IVS linear, log pop, estoque/10k, faixa): estrato metro {res_lpm_full.params['estrato_metropolitano']:.3f} (p={res_lpm_full.pvalues['estrato_metropolitano']:.3f}; q FDR={q_full_metro:.3f}), capital {res_lpm_full.params['estrato_capital']:.3f} (p={res_lpm_full.pvalues['estrato_capital']:.3f}), próximo {res_lpm_full.params['estrato_interior_proximo_polo']:.3f} (p={res_lpm_full.pvalues['estrato_interior_proximo_polo']:.3f}); IVS {res_lpm_full.params['ivs_2010']:.3f} (p={res_lpm_full.pvalues['ivs_2010']:.3f}); log pop {res_lpm_full.params['log_pop']:.3f} (p={res_lpm_full.pvalues['log_pop']:.3f}); estoque/10k {res_lpm_full.params['estoque_por_10k']:.4f} (p={res_lpm_full.pvalues['estoque_por_10k']:.3f}); faixa FAIXA2 vs FAIXA1 {res_lpm_full.params.get('faixa_FAIXA 2', 0):.3f} (p={res_lpm_full.pvalues.get('faixa_FAIXA 2', float('nan')):.3f}), FAIXA3 vs FAIXA1 {res_lpm_full.params.get('faixa_FAIXA 3', 0):.3f} (p={res_lpm_full.pvalues.get('faixa_FAIXA 3', float('nan')):.3f}). Com ajuste, gradiente atenua — UF e curso capturam parte da variação territorial. Covariadas contínuas da base oficial do Ipea (a08): IVS 2010 e log(1 + população 2010); estoque/10k com a população do Censo 2022 no denominador. Até 18/10/2026 vinham de `data/ivs_ipea_2010_municipios.csv`, que é uma linha de subgrupo populacional e não o município; os números daquela versão só valem como registro de failure mode (`docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`). Ver `A4_tabela_03b_ajuste_completo.csv`.
 
 - **Winsorizado p99** (pop e estoque clipados p01-p99): metro {res_wins.params['estrato_metropolitano']:.3f}, capital {res_wins.params['estrato_capital']:.3f}, próximo {res_wins.params['estrato_interior_proximo_polo']:.3f} — gradiente preservado, outliers não dirigem resultado. Ver `A4_tabela_03c_winsorizado.csv`.
 
@@ -1571,7 +1608,7 @@ A escolha da primária é a do protocolo, não uma seleção posterior ao result
 
 - **IVS só (FE)**: coef {res_ivs.params['ivs_2010']:.3f} (p={res_ivs.pvalues['ivs_2010']:.3f}, ns) — gradiente vulnerabilidade não significativo condicional a FE; figura Q1–Q4 mostra variação modesta.
 
-- **Estrato×IVS**: interação não significativa global; heterogeneidade IVS dentro de cada estrato limitada (ver `A4_tabela_03_separacao_*.csv`).
+- **Estrato×IVS**: {texto_interacao} (ver `A4_tabela_03_separacao_*.csv`).
 
 Interpretação: **associado a** maior atração em metropolitano/capital vs remoto, mas ajustado perde significância para capital/próximo; nenhuma evidência de gradiente causal de bolsa ou IVS.
 

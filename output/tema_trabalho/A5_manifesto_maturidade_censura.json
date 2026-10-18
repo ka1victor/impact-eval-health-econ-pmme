@@ -1,6 +1,6 @@
 {
   "protocolo": "A5_MANISFESTO_MATURIDADE_CENSURA",
-  "data_referencia": "2026-09-21",
+  "data_referencia": "2026-10-18",
   "efeitos_estimados": false,
   "t0": {
     "homologacao_data": "2025-09-29",
@@ -316,16 +316,16 @@
       "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
     },
     "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
-      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
+      "sha256": "63707c3c235ad099bb88542c4428d5a2091cab28c2b5b5c033afaf7482d9a8da"
     },
     "output/tema_trabalho/manifesto_tipologia_territorial.json": {
-      "sha256": "eb3839b5438d620933db8a74a04110798f919cf2153bda4e4df486c8146437be"
+      "sha256": "c594346a8aa92575da7e8f193e7f6a2785967ff2d458505896653b56ab159700"
     },
     "output/tema_trabalho/portao_denominador.json": {
       "sha256": "0055baf7ebc110cc7143395a3f2090893a1888b718fd0645db318cf06850489a"
     },
     "output/tema_trabalho/registro_pre_analise_atracao.json": {
-      "sha256": "eb2bf81284d9ecb9b13f14e0cce8d4c45bf69d0d7b74edb5e1ab4d6252444b5f"
+      "sha256": "a397d4fd4c6dd2049c027b7eba682f641406f27a50bae263be4be17efb78bdd4"
     },
     "output/tema_trabalho/potencia_atracao.json": {
       "sha256": "91fa905537be55cc39b727eed66bedce24c283699088966bc693c77ea2b9079f"

@@ -2,6 +2,12 @@
   "protocolo": "A4_ESTIMATIVAS_ATRACAO",
   "data_referencia": "2026-09-02",
   "efeitos_estimados": true,
+  "correcao_2026_10_18": {
+    "o_que_mudou": "covariadas contínuas (ivs_2010, subíndices, log_pop, estoque_por_10k) da tipologia A2 corrigida: base oficial do Ipea (a08) e Censo 2022; especificações, amostras e desfechos inalterados",
+    "antes": "data/ivs_ipea_2010_municipios.csv, linha de subgrupo populacional e não o município (auditoria 16)",
+    "nao_muda": "modelo principal (estrato + FE curso e UF), logit, estágios, município-curso, potência, wild bootstrap",
+    "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md"
+  },
   "linguagem": "associativa (associado a, gradiente territorial); proibido efeito causal do PMM-E/bolsa/IVS e retenção individual",
   "populacao": {
     "primaria": "1295 células CNES–curso quadro Ch1 (368 municípios)",
@@ -114,24 +120,38 @@
     },
     "sensibilidade_full": {
       "coef_estrato_full": {
-        "estrato_capital": 0.19813836508812943,
-        "estrato_interior_proximo_polo": 0.08245836781655516,
-        "estrato_metropolitano": 0.2085285439175969
+        "estrato_capital": 0.15413180402388882,
+        "estrato_interior_proximo_polo": 0.07123322483230748,
+        "estrato_metropolitano": 0.18462593917357298
       },
-      "coef_ivs": -0.24486226212600726,
-      "coef_log_pop": 0.035815525076022,
+      "coef_ivs": -0.3099449078845617,
+      "coef_log_pop": 0.0505639257774683,
       "coef_faixa": {
-        "faixa_FAIXA 2": -0.010989007926539096,
-        "faixa_FAIXA 3": -0.09993296505602194
-      }
+        "faixa_FAIXA 2": -0.027633460780281872,
+        "faixa_FAIXA 3": -0.1314827959901074
+      },
+      "se_estrato_full": {
+        "estrato_capital": 0.12140711899570428,
+        "estrato_interior_proximo_polo": 0.0523129878962713,
+        "estrato_metropolitano": 0.07824899516180557
+      },
+      "p_estrato_full": {
+        "estrato_capital": 0.2042467422603712,
+        "estrato_interior_proximo_polo": 0.17330085436247256,
+        "estrato_metropolitano": 0.018301197604962748
+      },
+      "p_ivs": 0.3398007530374264,
+      "p_log_pop": 0.04155402828234172,
+      "coef_estoque_por_10k": 0.004482360802213813,
+      "fonte_covariaveis": "ivs_2010 e log1p(populacao_2010) da base oficial do Ipea (a08); estoque_por_10k com populacao do Censo 2022 no denominador (tipologia A2 corrigida em 18/10/2026)"
     },
     "sensibilidade_winsorizado_p99": {
       "coef_estrato": {
-        "estrato_capital": 0.2051837480993767,
-        "estrato_interior_proximo_polo": 0.08554480804238852,
-        "estrato_metropolitano": 0.2117372805222849
+        "estrato_capital": 0.1616704636812948,
+        "estrato_interior_proximo_polo": 0.07308163170054219,
+        "estrato_metropolitano": 0.18728657689110673
       },
-      "coef_ivs": -0.2432238906936755,
+      "coef_ivs": -0.3079627032672225,
       "nota": "log_pop e estoque winsorizados p01-p99 como sensibilidade pre-especificada"
     },
     "sensibilidade_colapso_uf": {
@@ -243,13 +263,13 @@
     },
     "sensibilidade_ivs_quadratico": {
       "coef_estrato": {
-        "estrato_capital": 0.19840981019965623,
-        "estrato_interior_proximo_polo": 0.0839202402115133,
-        "estrato_metropolitano": 0.21088195653212782
+        "estrato_capital": 0.16415566188832661,
+        "estrato_interior_proximo_polo": 0.07645232453187514,
+        "estrato_metropolitano": 0.19436324303651434
       },
-      "coef_ivs_linear": -0.9568383515654444,
-      "coef_ivs_sq": 0.9523862853136568,
-      "p_ivs_sq": 0.5299122492234005,
+      "coef_ivs_linear": -1.5870483487084441,
+      "coef_ivs_sq": 1.5502953110302229,
+      "p_ivs_sq": 0.20466179537641116,
       "nota": "IVS linear + quadrático como proxy de spline; p não significativo mantém linear"
     }
   },
@@ -453,16 +473,16 @@
       "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
     },
     "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
-      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
+      "sha256": "63707c3c235ad099bb88542c4428d5a2091cab28c2b5b5c033afaf7482d9a8da"
     },
     "output/tema_trabalho/manifesto_tipologia_territorial.json": {
-      "sha256": "eb3839b5438d620933db8a74a04110798f919cf2153bda4e4df486c8146437be"
+      "sha256": "c594346a8aa92575da7e8f193e7f6a2785967ff2d458505896653b56ab159700"
     },
     "output/tema_trabalho/portao_denominador.json": {
       "sha256": "0055baf7ebc110cc7143395a3f2090893a1888b718fd0645db318cf06850489a"
     },
     "output/tema_trabalho/registro_pre_analise_atracao.json": {
-      "sha256": "eb2bf81284d9ecb9b13f14e0cce8d4c45bf69d0d7b74edb5e1ab4d6252444b5f"
+      "sha256": "a397d4fd4c6dd2049c027b7eba682f641406f27a50bae263be4be17efb78bdd4"
     },
     "output/tema_trabalho/potencia_atracao.json": {
       "sha256": "91fa905537be55cc39b727eed66bedce24c283699088966bc693c77ea2b9079f"
