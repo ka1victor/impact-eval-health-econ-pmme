@@ -79,8 +79,10 @@ STEPS = [
 ]
 
 # Argumentos de linha de comando por passo. Ficam fora de STEPS porque os leitores
-# por AST só aceitam caminhos; o manifesto A6 não os registra. Sem `--escore`, o E3
-# lê o escore parcial do a07, para em AGUARDANDO_ESCORE_COMPLETO e apaga as saídas E3.
+# por AST só aceitam caminhos; o manifesto A6 não os registra. O `--escore` do E3
+# repete o padrão do script (IVS 2010 oficial, gravado pelo 04b) para deixar a
+# running variable explícita; com o escore parcial do a07, o E3 para em
+# AGUARDANDO_ESCORE_COMPLETO e apaga as saídas E3.
 ARGUMENTOS = {
     ROOT / "scripts" / "rdd_bolsa" / "07_estimar_E3_rdd_completa.py": [
         "--escore", "output/rdd_bolsa/escore_completo_ivs2010_oficial.csv",

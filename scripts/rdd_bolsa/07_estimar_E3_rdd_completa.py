@@ -7,14 +7,17 @@ no status de cada execucao.
 
 Condicao de execucao (falha fechada)
 ------------------------------------
-A RDD so roda com o escore para 100% dos municipios de P1 **e** de P2. Hoje o
-escore administrativo so existe para os municipios com especialista ativo
-(`output/aquisicao/a07_ivs_administrativo_municipio.csv`), ou seja, a cobertura
-e funcao do desfecho. Enquanto faltar escore para qualquer municipio de qualquer
-populacao, o script grava `E3_status.json` com status
-`AGUARDANDO_ESCORE_COMPLETO` e a cobertura por populacao, remove saidas E3
-anteriores e sai **sem ler nenhum outcome**. P1 (principal) e P2 (replicacao)
-sao exigidas juntas para que a replicacao nao seja decidida depois de ver P1.
+A RDD so roda com o escore para 100% dos municipios de P1 **e** de P2. O escore
+padrao e o IVS 2010 oficial do Ipea, que e o proprio escore administrativo do MS
+(`output/rdd_bolsa/escore_completo_ivs2010_oficial.csv`, gravado pelo 04b;
+auditoria 16). O escore publicado na relacao nominal
+(`output/aquisicao/a07_ivs_administrativo_municipio.csv`) so cobre municipios
+com especialista ativo, ou seja, a cobertura dele e funcao do desfecho. Se o
+escore passado faltar para qualquer municipio de qualquer populacao, o script
+grava `E3_status.json` com status `AGUARDANDO_ESCORE_COMPLETO` e a cobertura por
+populacao, remove saidas E3 anteriores e sai **sem ler nenhum outcome**. P1
+(principal) e P2 (replicacao) sao exigidas juntas para que a replicacao nao
+seja decidida depois de ver P1.
 
 Ordem quando o escore esta completo
 -----------------------------------
@@ -71,8 +74,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 
 PROTOCOLO = ROOT / "output" / "rdd_bolsa" / "protocolo_escore_administrativo.json"
-ESCORE_PADRAO = ROOT / "output" / "aquisicao" / "a07_ivs_administrativo_municipio.csv"
-IVS_PUBLICO = ROOT / "data" / "ivs_ipea_2010_municipios.csv"
+ESCORE_PADRAO = ROOT / "output" / "rdd_bolsa" / "escore_completo_ivs2010_oficial.csv"
 TIPOLOGIA = ROOT / "output" / "tema_trabalho" / "matriz_tipologia_territorial.parquet"
 ATIVOS_ZIP = ROOT / "data" / "raw" / "aquisicao" / "ivs_administrativo" / "tb_profissionais_ativos_pmme_csv.zip"
 FUNIL = ROOT / "output" / "tema_trabalho" / "matriz_funil_ciclo1.parquet"
@@ -796,7 +798,7 @@ def executar(
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0])
     ap.add_argument("--escore", type=Path, default=ESCORE_PADRAO,
-                    help="CSV com co_ibge e ivs_admin (padrao: saida do a07, escore parcial)")
+                    help="CSV com co_ibge e ivs_admin (padrao: IVS 2010 oficial, saida do 04b)")
     args = ap.parse_args(argv)
 
     protocolo = json.loads(PROTOCOLO.read_text(encoding="utf-8"))
