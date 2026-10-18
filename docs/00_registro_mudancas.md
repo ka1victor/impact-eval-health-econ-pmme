@@ -8,6 +8,36 @@
 
 ---
 
+## 18/10/2026 — Inferência alternativa da RDD da bolsa
+
+Motivo: o autor perguntou por que os ICs da RDD são tão largos, se outro método
+(controle sintético, por exemplo) daria inferência melhor e o que se pode
+afirmar.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/39_inferencia_alternativa_rdd_bolsa.md`](06_execucao/39_inferencia_alternativa_rdd_bolsa.md) | E5, exploratório e pós-resultado: decomposição da largura do IC, 15 especificações alternativas, o que os dados descartam e avaliação de controle sintético, DiD e outros desenhos |
+
+### Atualizado no mesmo dia
+
+- **RDD e relatório:**
+  - [`06_execucao/37`](06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md),
+    com a convenção do sinal, o resumo do E5 e a nota do balanço;
+  - [`06_execucao/38`](06_execucao/38_estado_e_pendencias_rdd_bolsa.md),
+    com o estado e a decisão D1, variante A colorida.
+- **Pipeline:** [`scripts/README.md`](../scripts/README.md) e
+  [`tests/README.md`](../tests/README.md), com a cadeia nova da RDD no
+  `run_all.py`.
+- **Documentos regerados pelo A6:**
+  [`auditorias/09_red_team_atracao_provimento.md`](auditorias/09_red_team_atracao_provimento.md),
+  [`auditorias/09_matriz_afirmacao_evidencia_limite.md`](auditorias/09_matriz_afirmacao_evidencia_limite.md)
+  e [`06_execucao/32`](06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md).
+  Deixam de dizer "RDD encerrado em R1" e passam a ressalvar o ajuste
+  completo.
+- **Artigos:** `paper_pmme_curto.tex` e `paper_pmme_submission.tex`.
+
 ## 18/10/2026 — Estado e pendências da RDD da bolsa
 
 Motivo: o autor pediu um ponto de retomada organizado antes de compactar a
