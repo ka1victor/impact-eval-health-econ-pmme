@@ -51,6 +51,12 @@ A8_TAB06 = "output/tema_trabalho/A8_tabela_06_intervalos_exatos.csv"
 A4_WILD = "output/tema_trabalho/A4_tabela_08_wild_cluster_bootstrap.csv"
 A4_MDE = "output/tema_trabalho/A4_tabela_09_mde_ex_ante_ex_post.csv"
 A5_C7 = "output/tema_trabalho/A5_ameacas_c7.json"
+RDD_R1 = "output/rdd_bolsa/portao_r1_ivs_oficial.json"
+RDD_E3_STATUS = "output/rdd_bolsa/E3_status.json"
+RDD_E3_ESTIM = "output/rdd_bolsa/E3_estimativas.csv"
+RDD_E3_DIAG = "output/rdd_bolsa/E3_diagnosticos.csv"
+RDD_E5_ESPEC = "output/rdd_bolsa/E5_especificacoes.csv"
+RDD_E5_DECOMP = "output/rdd_bolsa/E5_decomposicao_ic.csv"
 
 REGISTROS: list[dict[str, Any]] = []
 
@@ -300,6 +306,138 @@ trecho_sx = f"é {decimal_br(sx_b, 3)}, com $p$ de {decimal_br(sx_p, 4)}, sobre 
 registrar("CURTO_C7_EXCL_beta", "Secao 4", "beta excluindo cursos rejeitados", decimal_br(sx_b, 3), A5_C7, l19, sx_b, "3 casas", trecho_sx)
 registrar("CURTO_C7_EXCL_p", "Secao 4", "p excluindo cursos rejeitados", decimal_br(sx_p, 4), A5_C7, l20, sx_p, "4 casas", trecho_sx)
 registrar("CURTO_C7_EXCL_n", "Secao 4", "celulas excluindo cursos rejeitados", inteiro(sx_n), A5_C7, l21, sx_n, "inteiro", trecho_sx)
+
+
+# ------------------------------------------------------- RDD da bolsa (E3, E5)
+
+# Regra: cortes do protocolo; o lado inferior inclui o corte, de modo que a
+# Faixa 2 comeca no milesimo seguinte.
+cortes, loc_cortes = json_valor(RDD_E3_STATUS, "cortes")
+if [round(float(c), 3) for c in cortes] != [0.3, 0.4]:
+    raise SystemExit(f"E3: o artigo curto cita os cortes 0,300 e 0,400; o artefato traz {cortes}")
+c1, c2 = (float(c) for c in cortes)
+trecho_regra = (f"até {decimal_br(c1, 3)}, Faixa 3; de {decimal_br(c1 + 0.001, 3)} a {decimal_br(c2, 3)}, Faixa 2; "
+                f"acima de {decimal_br(c2, 3)}, Faixa 1")
+registrar("CURTO_RDD_REGRA_CORTES", "Secao 3.1", "cortes da regra", f"{decimal_br(c1, 3)} e {decimal_br(c2, 3)}", RDD_E3_STATUS,
+          loc_cortes, cortes, "3 casas; Faixa 2 comeca no milesimo seguinte ao corte", trecho_regra)
+h_princ, loc_h = json_valor(RDD_E3_STATUS, "janelas/principal")
+registrar("CURTO_RDD_JANELA", "Secao 3.2", "janela principal", decimal_br(h_princ, 3), RDD_E3_STATUS, loc_h, h_princ, "3 casas",
+          f"janela de {decimal_br(h_princ, 3)} de IVS de cada lado do corte")
+
+# Primeiro estagio: escore do MS = IVS oficial; regra reproduzida por inteiro.
+iguais, loc_ig = json_valor(RDD_R1, "escore_administrativo_e_ivs_2010_oficial/valores_iguais_3_casas")
+n_ig, d_ig = (int(x) for x in str(iguais).split("/"))
+p1_n, loc_p1 = json_valor(RDD_R1, "populacoes/P1/municipios")
+p1_r, _ = json_valor(RDD_R1, "populacoes/P1/regra_reproduz")
+p2_n, loc_p2 = json_valor(RDD_R1, "populacoes/P2/municipios")
+p2_r, _ = json_valor(RDD_R1, "populacoes/P2/regra_reproduz")
+if n_ig != d_ig or p1_r != p1_n or p2_r != p2_n:
+    raise SystemExit("R1: o artigo curto afirma reproducao integral da regra e do escore; o artefato diverge")
+registrar("CURTO_RDD_ESCORE_MS", "Secao 3.1", "escore do MS igual ao IVS oficial", inteiro(n_ig), RDD_R1, loc_ig, iguais, "inteiro",
+          f"coincide com o IVS 2010 oficial nos {inteiro(n_ig)} municípios em que aparece")
+trecho_regra_n = (f"a regra reproduz a faixa anunciada nos {inteiro(p1_n)} municípios do quadro da primeira chamada do ciclo 1 "
+                  f"e nos {inteiro(p2_n)} do ciclo 2")
+registrar("CURTO_RDD_REGRA_P1", "Secao 3.1", "municipios do ciclo 1 com regra reproduzida", inteiro(p1_n), RDD_R1, loc_p1, p1_n, "inteiro", trecho_regra_n)
+registrar("CURTO_RDD_REGRA_P2", "Secao 3.1", "municipios do ciclo 2 com regra reproduzida", inteiro(p2_n), RDD_R1, loc_p2, p2_n, "inteiro", trecho_regra_n)
+
+# Densidade no ciclo 1.
+dens = {}
+for c in (c1, c2):
+    filtro = {"populacao": "P1", "diagnostico": "densidade_poisson_mass_points", "h": str(h_princ), "corte": str(c)}
+    dens[c] = {campo: csv_valor(RDD_E3_DIAG, filtro, campo) for campo in ("rho", "rho_ic95_inf", "rho_ic95_sup")}
+trecho_dens = (f"com razões de {decimal_br(dens[c1]['rho'][0], 2)} [{decimal_br(dens[c1]['rho_ic95_inf'][0], 2)}; "
+               f"{decimal_br(dens[c1]['rho_ic95_sup'][0], 2)}] em {decimal_br(c1, 3)} e de {decimal_br(dens[c2]['rho'][0], 2)} "
+               f"[{decimal_br(dens[c2]['rho_ic95_inf'][0], 2)}; {decimal_br(dens[c2]['rho_ic95_sup'][0], 2)}] em {decimal_br(c2, 3)}")
+for c in (c1, c2):
+    for campo, (bruto, loc) in dens[c].items():
+        registrar(f"CURTO_RDD_DENS_{decimal_br(c, 3)}_{campo}", "Secao 3.1", f"densidade {campo} em {c}", decimal_br(bruto, 2),
+                  RDD_E3_DIAG, loc, bruto, "2 casas", trecho_dens)
+
+# Balanco: o IVS 2010 oficial e a propria running variable e nao entra na contagem.
+diag = pd.read_csv(ROOT / RDD_E3_DIAG)
+bal = diag[diag["diagnostico"].eq("balanco_covariavel_pre") & diag["populacao"].eq("P1")
+           & diag["h"].round(3).eq(round(float(h_princ), 3)) & diag["variavel"].ne("ivs_2010")]
+n_cov = {c: int(bal["corte"].round(3).eq(round(c, 3)).sum()) for c in (c1, c2)}
+n_rej = {c: int((bal["corte"].round(3).eq(round(c, 3)) & bal["p_valor"].lt(0.05)).sum()) for c in (c1, c2)}
+if n_cov != {c1: 9, c2: 9} or n_rej != {c1: 0, c2: 3}:
+    raise SystemExit(f"E3: o artigo curto cita 9 covariaveis, 0 e 3 com p<0,05; o artefato traz {n_cov} e {n_rej}")
+registrar("CURTO_RDD_BALANCO", "Secao 3.1", "covariaveis com p<0,05 por corte (ciclo 1)", "nove; nenhuma; três", RDD_E3_DIAG,
+          "balanco_covariavel_pre, P1, sem ivs_2010", f"{n_cov}; {n_rej}", "contagem por extenso",
+          "No balanço de nove covariáveis anteriores ao programa, nenhuma difere a 5\\% no corte de 0,300; no de 0,400, três diferem")
+
+# Tabela do E3: desfecho da hipotese e presenca, janela principal.
+FRACAO = "fracao_celulas_ch1_com_confirmacao_ou_homologacao"
+PRESENCA = "D_k_especialista_ativo_do_ciclo"
+e3 = {}
+for rotulo, outcome, pop in [("Células preenchidas, ciclo 1", FRACAO, "P1"), ("Presença, ciclo 1", PRESENCA, "P1"),
+                             ("Presença, ciclo 2", PRESENCA, "P2")]:
+    for c in (c1, c2):
+        filtro = {"populacao": pop, "outcome": outcome, "corte": str(c), "h": str(h_princ), "especificacao": "principal"}
+        v = {campo: csv_valor(RDD_E3_ESTIM, filtro, campo) for campo in
+             ("n_abaixo", "n_acima", "media_bruta_abaixo", "media_bruta_acima", "tau", "ic95_inf", "ic95_sup", "p_valor")}
+        e3[(outcome, pop, c)] = v
+        trecho = (f"{rotulo} & {decimal_br(c, 3)} & {inteiro(v['n_abaixo'][0])}/{inteiro(v['n_acima'][0])} & "
+                  f"{pontos(v['media_bruta_abaixo'][0])} & {pontos(v['media_bruta_acima'][0])} & {pontos(v['tau'][0])} & "
+                  f"[{pontos(v['ic95_inf'][0])}; {pontos(v['ic95_sup'][0])}] & {p_texto(v['p_valor'][0])} \\\\")
+        for campo, (bruto, loc) in v.items():
+            fmt = (inteiro(bruto) if campo.startswith("n_") else p_texto(bruto) if campo == "p_valor" else pontos(bruto))
+            registrar(f"CURTO_RDD_TAB_{pop}_{outcome[:8]}_{decimal_br(c, 3)}_{campo}", "Tabela da bolsa", f"{campo} {outcome} {pop} {c}",
+                      fmt, RDD_E3_ESTIM, loc, bruto, "proporcao x100, 1 casa; p com 3 casas; n inteiro", trecho)
+
+y03, y04 = e3[(FRACAO, "P1", c1)], e3[(FRACAO, "P1", c2)]
+trecho_resumo = (f"primeira chamada é de {pontos(y03['tau'][0])} pontos percentuais no corte de {decimal_br(c1, 3)} e de "
+                 f"{pontos(y04['tau'][0])} no de {decimal_br(c2, 3)}")
+trecho_txt = (f"o salto é de {pontos(y03['tau'][0])} pontos percentuais no corte de {decimal_br(c1, 3)}, com intervalo de "
+              f"[{pontos(y03['ic95_inf'][0])}; {pontos(y03['ic95_sup'][0])}], e de {pontos(y04['tau'][0])} no de {decimal_br(c2, 3)}, "
+              f"com intervalo de [{pontos(y04['ic95_inf'][0])}; {pontos(y04['ic95_sup'][0])}]")
+for c, v in ((c1, y03), (c2, y04)):
+    registrar(f"CURTO_RDD_RESUMO_{decimal_br(c, 3)}", "Resumo", f"salto no preenchimento em {c}", pontos(v["tau"][0]), RDD_E3_ESTIM,
+              v["tau"][1], v["tau"][0], "proporcao x100, 1 casa", trecho_resumo)
+    for campo in ("tau", "ic95_inf", "ic95_sup"):
+        registrar(f"CURTO_RDD_TXT_{decimal_br(c, 3)}_{campo}", "Secao 3.3", f"{campo} do preenchimento em {c}", pontos(v[campo][0]),
+                  RDD_E3_ESTIM, v[campo][1], v[campo][0], "proporcao x100, 1 casa", trecho_txt)
+trecho_medias = (f"a fração média é de {pontos(y03['media_bruta_abaixo'][0])}\\% abaixo e {pontos(y03['media_bruta_acima'][0])}\\% acima")
+for campo in ("media_bruta_abaixo", "media_bruta_acima"):
+    registrar(f"CURTO_RDD_TXT_MEDIA_{campo}", "Secao 3.3", f"{campo} do preenchimento em {c1}", pontos(y03[campo][0]), RDD_E3_ESTIM,
+              y03[campo][1], y03[campo][0], "proporcao x100, 1 casa", trecho_medias)
+ns = [int(y[k][0]) for y in (y03, y04) for k in ("n_abaixo", "n_acima")]
+registrar("CURTO_RDD_TXT_N_FAIXA", "Secao 3.3", "municipios por lado na janela", f"{min(ns)} e {max(ns)}", RDD_E3_ESTIM,
+          "n_abaixo e n_acima do preenchimento", ns, "minimo e maximo", f"há entre {min(ns)} e {max(ns)} municípios de cada lado")
+
+# E5 (exploratorio): MDE do principal, fator de inflacao do EP, alternativas e limites.
+s0 = {c: {campo: csv_valor(RDD_E5_ESPEC, {"outcome": "Y1", "especificacao": "S0", "corte": str(c)}, campo)
+          for campo in ("mde_80", "lim_sup_unilateral_95")} for c in (c1, c2)}
+trecho_mde = f"é de {pontos(s0[c1]['mde_80'][0])} e {pontos(s0[c2]['mde_80'][0])} pontos percentuais"
+for c in (c1, c2):
+    registrar(f"CURTO_RDD_MDE_{decimal_br(c, 3)}", "Secao 3.3", f"MDE do principal em {c}", pontos(s0[c]["mde_80"][0]), RDD_E5_ESPEC,
+              s0[c]["mde_80"][1], s0[c]["mde_80"][0], "proporcao x100, 1 casa", trecho_mde)
+razao = {c: csv_valor(RDD_E5_DECOMP, {"componente": "LL_triangular_principal", "corte": str(c)}, "razao_ep_vs_dm_simples") for c in (c1, c2)}
+trecho_razao = (f"multiplica o erro-padrão por {decimal_br(razao[c1][0], 1)} e por {decimal_br(razao[c2][0], 1)} em relação a uma "
+                f"diferença de médias simples")
+for c in (c1, c2):
+    registrar(f"CURTO_RDD_RAZAO_EP_{decimal_br(c, 3)}", "Secao 3.3", f"EP local linear / EP diferenca de medias em {c}",
+              decimal_br(razao[c][0], 1), RDD_E5_DECOMP, razao[c][1], razao[c][0], "1 casa", trecho_razao)
+e5 = pd.read_csv(ROOT / RDD_E5_ESPEC)
+y1 = e5[e5["outcome"].eq("Y1")]
+expl = y1[y1["rotulo"].eq("EXPLORATORIO_POS_RESULTADO")]
+if (y1["p_valor"] < 0.05).any() or y1["descarta_tau_ge_010"].astype(bool).any():
+    raise SystemExit("E5: o artigo curto afirma nenhum p<0,05 e nenhum descarte de +10 p.p.; o artefato diverge")
+trecho_expl = (f"nenhuma das {len(expl)} especificações alternativas do desfecho da hipótese produz salto distinguível de zero; "
+               f"o menor $p$ é {decimal_br(expl['p_valor'].min(), 2)}")
+registrar("CURTO_RDD_E5_N", "Secao 3.3", "especificacoes exploratorias do preenchimento", inteiro(len(expl)), RDD_E5_ESPEC,
+          "outcome=Y1, rotulo=EXPLORATORIO_POS_RESULTADO", len(expl), "contagem", trecho_expl)
+registrar("CURTO_RDD_E5_PMIN", "Secao 3.3", "menor p das exploratorias", decimal_br(expl["p_valor"].min(), 2), RDD_E5_ESPEC,
+          "min de p_valor nas exploratorias de Y1", float(expl["p_valor"].min()), "2 casas", trecho_expl)
+lim_b, loc_lb = csv_valor(RDD_E5_ESPEC, {"outcome": "Y1", "especificacao": "B"}, "lim_sup_unilateral_95")
+trecho_lim = (f"o limite superior unilateral de 95\\% do principal é de {pontos(s0[c1]['lim_sup_unilateral_95'][0])} pontos percentuais "
+              f"no corte de {decimal_br(c1, 3)} e de {pontos(s0[c2]['lim_sup_unilateral_95'][0])} no de {decimal_br(c2, 3)}; com os cortes "
+              f"empilhados, é de {pontos(lim_b)} para a média dos dois saltos")
+for c in (c1, c2):
+    registrar(f"CURTO_RDD_LIMSUP_{decimal_br(c, 3)}", "Secao 3.3", f"limite superior unilateral do principal em {c}",
+              pontos(s0[c]["lim_sup_unilateral_95"][0]), RDD_E5_ESPEC, s0[c]["lim_sup_unilateral_95"][1],
+              s0[c]["lim_sup_unilateral_95"][0], "proporcao x100, 1 casa", trecho_lim)
+registrar("CURTO_RDD_LIMSUP_EMPILHADO", "Secao 3.3", "limite superior unilateral com cortes empilhados", pontos(lim_b), RDD_E5_ESPEC,
+          loc_lb, lim_b, "proporcao x100, 1 casa", trecho_lim)
 
 
 # ------------------------------------------------------------------ execucao

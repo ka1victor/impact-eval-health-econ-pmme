@@ -12,15 +12,15 @@
 efeitos locais da alocação no Programa Mais Médicos Especialistas sobre adesão,
 presença e oferta cadastrada}
 \author{Versão curta de trabalho}
-\date{16 de setembro de 2026}
+\date{18 de outubro de 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
 Este artigo curto organiza a evidência empírica do projeto sobre o Programa Mais
-Médicos Especialistas (PMM-E) em três camadas com estatutos distintos. A camada
-causal explora o limite de seleção de cada vaga: dentro do mesmo curso,
+Médicos Especialistas (PMM-E) em camadas com estatutos distintos. A primeira
+camada causal explora o limite de seleção de cada vaga: dentro do mesmo curso,
 estabelecimento, chamada e modalidade de ampla concorrência, compara o último
 candidato selecionado e o primeiro não selecionado quando as pontuações diferem
 em exatamente um ponto. Em 36 pares de 2025, ganhar a vaga elevou a homologação
@@ -28,6 +28,13 @@ no mesmo curso--CNES em 63,9 pontos percentuais e a presença ativa nesse mesmo
 curso--CNES, em 12 de agosto de 2026, em 33,3 pontos percentuais; o placebo
 imediatamente abaixo do cutoff é nulo, janelas de gap e exclusões sucessivas
 preservam o resultado, e 11 pares de 2026 replicam a direção sem precisão. A
+segunda camada causal testa se bolsa maior aumenta o preenchimento de vagas, na
+descontinuidade do adicional de R\$ 5 mil nos cortes do Índice de
+Vulnerabilidade Social (IVS) de 2010 do Ipea, que reproduzem a faixa anunciada
+em todos os municípios do ciclo 1; o salto na fração de células preenchidas na
+primeira chamada é de $-$12,8 pontos percentuais no corte de 0,300 e de
+$-$5,1 no de 0,400, sem distinção de zero e com intervalos largos, de modo que
+o resultado é inconclusivo, e não evidência de ineficácia. A
 camada descritiva mostra que a atração administrativa realizada é 27,9 pontos
 percentuais maior em células metropolitanas do que no interior remoto. A camada
 associativa mostra que, nas células município--curso com atração, o estoque de
@@ -36,10 +43,12 @@ que a trajetória de junho de 2025 previa, resultado que sobrevive à correção
 multiplicidade e a um placebo municipal; o teste de deslocamento dentro da
 região de saúde não encontra perda nos vizinhos observados, mas não tem
 capacidade de distinguir expansão líquida de realocação, e essa ameaça fica
-declarada como não testada. O desenho causal identifica o efeito da alocação marginal
-sobre adesão e presença; não identifica o efeito da bolsa, do IVS, do programa
-sobre o estoque municipal, a decisão de se inscrever, a retenção contínua nem
-desfechos assistenciais.
+declarada como não testada. O primeiro desenho identifica o efeito da alocação
+marginal sobre adesão e presença; o segundo mira o incentivo marginal de bolsa
+perto dos cortes, mas não tem precisão para distinguir efeitos moderados de
+zero. Nenhum dos dois identifica o efeito do programa sobre o estoque
+municipal, a decisão de se inscrever, a retenção contínua nem desfechos
+assistenciais.
 \end{abstract}
 
 \section{Pergunta e hierarquia da evidência}
@@ -55,17 +64,20 @@ cada célula curso--CNES, a última posição contemplada recebe a alocação e 
 seguinte não a recebe naquela chamada. Estudamos o que essa fronteira
 administrativa muda.
 
-Organizamos a evidência em três camadas e não as fundimos. A \textbf{camada
+Organizamos a evidência em camadas e não as fundimos. A \textbf{primeira camada
 causal} (Seção~\ref{sec:causal}) estima o efeito local de ganhar marginalmente
 a vaga de primeira opção sobre adesão administrativa e presença posterior. A
+\textbf{segunda camada causal} (Seção~\ref{sec:bolsa}) testa a hipótese de que
+remuneração maior aumenta o preenchimento das vagas, na descontinuidade da
+bolsa anunciada nos cortes do IVS. A
 \textbf{camada descritiva} (Seção~\ref{sec:territorio}) documenta o gradiente
 territorial da atração realizada, que motiva a pergunta. A \textbf{camada
 associativa} (Seção~\ref{sec:cnes}) acompanha o estoque de especialistas
 cadastrados no Cadastro Nacional de Estabelecimentos de Saúde (CNES) e testa se
 o padrão observado sobrevive a placebo e multiplicidade, e o que o teste de
 deslocamento consegue e não consegue dizer. A
-Seção~\ref{sec:rotas} registra dois desenhos avaliados e descartados antes do
-adotado, e a Seção~\ref{sec:conclusao} fecha com alcance e limites.
+Seção~\ref{sec:rotas} registra o desenho avaliado e descartado, e a
+Seção~\ref{sec:conclusao} fecha com alcance e limites.
 
 Duas palavras têm sentido estrito no texto. \textbf{Atração} é atração
 realizada: conversão de uma preferência declarada em ingresso e presença, não
@@ -253,6 +265,124 @@ inferência principal usa o teste exato entre pares discordantes.}
 \label{fig:a8}
 \end{figure}
 
+\section{Camada causal: o adicional de bolsa nos cortes do IVS}
+\label{sec:bolsa}
+
+\subsection{Regra, contraste e hipótese identificadora}
+
+A hipótese apresentada na qualificação é que municípios com maior remuneração
+oferecida pelo PMM-E têm maior preenchimento de vagas. A bolsa anunciada é de
+R\$ 10 mil, R\$ 15 mil ou R\$ 20 mil, conforme a faixa de atração do município,
+e a faixa segue o IVS de 2010 do Ipea: até 0,300, Faixa 3; de 0,301 a 0,400,
+Faixa 2; acima de 0,400, Faixa 1. O IVS que o Ministério da Saúde publica para
+o programa coincide com o IVS 2010 oficial nos 404 municípios em que aparece, e
+a regra reproduz a faixa anunciada nos 368 municípios do quadro da primeira
+chamada do ciclo 1 e nos 454 do ciclo 2. Em cada corte, a bolsa sobe R\$ 5 mil
+de forma determinística, enquanto as condições do lugar que o IVS resume
+variam continuamente.
+
+Uma versão anterior deste artigo descartou essa rota porque o IVS disponível no
+repositório não reproduzia a regra. Esse arquivo se revelou ser, em cada
+município, a linha de um subgrupo populacional da base do Ipea (mulheres negras
+em área urbana, na maioria dos municípios), e não a linha do município; com a
+base oficial, a regra se reproduz integralmente.
+
+O contraste é o incentivo marginal anunciado de R\$ 5 mil: Faixa 3 contra
+Faixa 2 no corte de 0,300 e Faixa 2 contra Faixa 1 no de 0,400. Se outros
+benefícios mudarem nos mesmos cortes do IVS, o contraste mede o pacote; o
+efeito do programa como um todo não é identificado. A hipótese identificadora é
+a continuidade dos resultados potenciais no corte \citep{leelemieux2010}. Ela é
+plausível porque o IVS foi calculado com dados do Censo de 2010 e publicado
+anos antes do programa, de modo que nenhum município pôde escolher seu lado do
+corte. A densidade dos municípios com vaga não salta nos cortes, com razões de
+0,93 [0,40; 2,16] em 0,300 e de 0,61 [0,29; 1,30] em 0,400. No balanço de nove
+covariáveis anteriores ao programa, nenhuma difere a 5\% no corte de 0,300; no
+de 0,400, três diferem, todas no sentido de municípios menos metropolitanos
+acima do corte, o que pede cautela na leitura desse corte.
+
+\subsection{Desfechos e estimação}
+
+O desfecho da hipótese é a fração das células CNES--curso do município, na
+primeira chamada do ciclo 1, com alguma confirmação ou homologação, a mesma
+definição de célula da Seção~\ref{sec:territorio}. Como desfecho secundário,
+medimos se o município tinha algum especialista do ciclo ativo na relação
+nominal de 9 de outubro de 2026, nos ciclos 1 e 2. A estimação é local linear,
+com kernel triangular, janela de 0,050 de IVS de cada lado do corte e
+erro-padrão robusto por município. O protocolo foi congelado antes das
+estimativas, mas depois de exposições parciais aos desfechos, listadas nele; é,
+portanto, retrospectivo.
+
+\subsection{Resultados}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{Salto nos cortes do IVS: adicional de bolsa de R\$ 5 mil}
+\label{tab:bolsa}
+\begin{tabular}{llcrrrcr}
+\toprule
+Desfecho & Corte & Municípios & Abaixo & Acima & Salto & IC95\% & $p$ \\
+ & & (abaixo/acima) & (\%) & (\%) & (p.p.) & (p.p.) & \\
+\midrule
+Células preenchidas, ciclo 1 & 0,300 & 61/53 & 24,3 & 37,2 & $-$12,8 & [$-$45,5; 19,8] & 0,441 \\
+Células preenchidas, ciclo 1 & 0,400 & 53/41 & 36,9 & 37,6 & $-$5,1 & [$-$36,5; 26,2] & 0,748 \\
+Presença, ciclo 1 & 0,300 & 61/53 & 39,3 & 60,4 & $-$3,2 & [$-$47,5; 41,1] & 0,887 \\
+Presença, ciclo 1 & 0,400 & 53/41 & 66,0 & 65,9 & $-$12,0 & [$-$53,1; 29,0] & 0,566 \\
+Presença, ciclo 2 & 0,300 & 82/61 & 52,4 & 67,2 & $-$15,2 & [$-$51,6; 21,1] & 0,411 \\
+Presença, ciclo 2 & 0,400 & 53/53 & 73,6 & 86,8 & 11,5 & [$-$13,9; 36,9] & 0,376 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\begin{minipage}{0.94\textwidth}
+\footnotesize \textit{Nota:} o salto é o valor estimado no corte do lado com
+bolsa maior (IVS acima do corte) menos o do lado com bolsa menor; positivo
+indica mais preenchimento ou presença onde a bolsa é R\$ 5 mil maior, de
+R\$ 10 mil para R\$ 15 mil em 0,300 e de R\$ 15 mil para R\$ 20 mil em 0,400.
+``Abaixo'' e ``Acima'' são médias brutas na janela. Local linear, kernel
+triangular, janela de 0,050 de IVS, erro-padrão robusto por município.
+Presença: algum especialista do ciclo ativo em 9 de outubro de 2026.
+\end{minipage}
+\end{table}
+
+Nenhum salto é distinguível de zero (Tabela~\ref{tab:bolsa}). No desfecho da
+hipótese, o salto é de $-$12,8 pontos percentuais no corte de 0,300, com
+intervalo de [$-$45,5; 19,8], e de $-$5,1 no de 0,400, com intervalo de
+[$-$36,5; 26,2]. O efeito mínimo detectável, a 80\% de poder e 5\% de
+significância, é de 46,6 e 44,8 pontos percentuais. Os intervalos são largos
+por três razões que se multiplicam: há entre 41 e 61 municípios de cada lado de
+cada corte; a fração é calculada sobre poucas células por município, e muitos
+têm uma só, de modo que o desfecho é muito disperso; e a reta local linear, ao
+extrapolar até o corte, multiplica o erro-padrão por 2,6 e por 2,2 em relação a
+uma diferença de médias simples na mesma janela.
+
+O sinal do salto pode diferir da comparação bruta. No corte de 0,300, a fração
+média é de 24,3\% abaixo e 37,2\% acima, mas o preenchimento cresce com o IVS
+dentro da janela, dos dois lados do corte. A média de cada lado reflete esse
+gradiente, enquanto o salto compara as duas retas no próprio corte.
+
+Em análises exploratórias desenhadas depois desse resultado e reportadas
+integralmente no repositório, nenhuma das 15 especificações alternativas do
+desfecho da hipótese produz salto distinguível de zero; o menor $p$ é 0,44.
+Elas incluem a estimação local constante, os dois cortes empilhados
+\citep{cattaneo2016}, o ajuste por covariáveis anteriores ao programa
+\citep{calonico2019}, a inferência por randomização local em janela escolhida
+apenas pelo balanço de covariáveis \citep{cattaneo2015} e a estimação no nível
+da célula. Nenhuma estreita o intervalo o bastante para mudar a leitura sem
+trocar o estimando ou acrescentar premissas. O que os dados permitem é
+descartar efeitos positivos grandes: o limite superior unilateral de 95\% do
+principal é de 14,5 pontos percentuais no corte de 0,300 e de 21,2 no de
+0,400; com os cortes empilhados, é de 10,3 para a média dos dois saltos.
+Nenhuma especificação descarta efeitos de 10 pontos percentuais.
+
+Não encontramos, portanto, evidência de que o adicional de R\$ 5 mil aumente o
+preenchimento das vagas perto dos cortes, mas a amostra também não permite
+descartar efeitos positivos moderados: o resultado é inconclusivo, e não
+evidência de que a bolsa seja ineficaz. O alcance é local, restrito a
+municípios com IVS próximo dos cortes, à bolsa anunciada e à primeira chamada
+do ciclo 1.
+
 \section{Camada descritiva: onde a atração acontece}
 \label{sec:territorio}
 
@@ -270,11 +400,11 @@ federação, as oito unidades de menos de cinco municípios colapsadas em
 macrorregião de saúde conforme o protocolo, e erros agrupados por município. A
 Tabela~\ref{tab:a4} reporta o contraste metropolitano; capital e interior
 próximo a polos apresentam diferenças positivas em relação ao interior remoto,
-de 32,6 e 12,1 pontos percentuais. No ajuste completo, que acrescenta IVS,
-população, estoque prévio e faixa anunciada, o contraste metropolitano
-permanece em 20,9 pontos percentuais, com $p$ de 0,008 e valor $q$ de 0,023
-após correção FDR entre estratos; a atenuação vem quase inteiramente do
-logaritmo da população, fortemente determinado pelo próprio estrato.
+de 32,6 e 12,1 pontos percentuais. Uma especificação de ajuste completo, que
+acrescentava IVS, população e estoque prévio por habitante, usou o arquivo que
+se revelou ser a linha de um subgrupo populacional
+(Seção~\ref{sec:bolsa}); ela será reestimada com a base oficial e não é
+reportada aqui. A classificação dos estratos não usa esse arquivo.
 
 \begin{table}[htbp]
 \centering
@@ -287,7 +417,6 @@ Especificação ou desfecho & Diferença (p.p.) & Erro-padrão (p.p.) \\
 \midrule
 Modelo linear pré-especificado & 27,9 & 5,9 \\
 Logit, efeito marginal médio & 25,1 & 5,2 \\
-Ajuste completo & 20,9 & 7,8 \\
 Apenas confirmação & 27,0 & 5,7 \\
 Apenas homologação & 23,8 & 4,8 \\
 Unidade município--curso & 31,6 & 5,8 \\
@@ -408,12 +537,6 @@ distintos.
 \section{Rotas avaliadas e descartadas}
 \label{sec:rotas}
 
-\textbf{Regressão descontínua do adicional de bolsa pelo IVS.} A faixa de bolsa
-anunciada e o Índice de Vulnerabilidade Social (IVS) são ligados por regra
-administrativa. Aplicando a taxonomia externa ao IVS público, porém, 191 dos
-368 municípios são reproduzidos e 177 divergem, ou 48,1\% do total; sem regra
-reproduzível não há primeiro estágio, e nenhum efeito da bolsa foi estimado.
-
 \textbf{Tripla diferença entre vaga imediata e cadastro de reserva.} No grão
 município--curso e na amostra que identificaria o desenho
 \citep{olden2022}, com 319 células em 93 municípios, a modalidade imediata não
@@ -422,8 +545,10 @@ percentuais, com erro-padrão de 6,89 pontos percentuais e $p$ de 0,6871. O
 portão de relevância não foi aprovado e a rota foi encerrada como comparação
 ajustada.
 
-Os dois descartes são anteriores ao desenho adotado e estão registrados para
-que o leitor veja o conjunto de desenhos considerados.
+O descarte é anterior ao desenho adotado e está registrado para que o leitor
+veja o conjunto de desenhos considerados. A regressão descontínua do adicional
+de bolsa, que constava desta seção em versões anteriores, foi reaberta e é
+apresentada na Seção~\ref{sec:bolsa}.
 
 \section{Conclusão, alcance e limites}
 \label{sec:conclusao}
@@ -438,6 +563,14 @@ políticas de base territorial, o desenho da alocação é parte do instrumento
 \citep{kline2014}: quantas vagas abrir por célula e como tratar chamadas
 subsequentes afeta onde o especialista de fato aparece.
 
+O adicional de bolsa, que é o instrumento de preço do programa, não mostra
+efeito distinguível de zero sobre o preenchimento nos cortes do IVS. A
+descontinuidade é nítida e a regra se reproduz por inteiro, mas a amostra
+local é pequena e o desfecho é disperso: os dados descartam apenas efeitos
+positivos grandes e deixam em aberto efeitos moderados. A pergunta sobre a
+bolsa continua de pé, e a resposta depende de mais coortes com o mesmo
+desfecho, não de outra especificação para as mesmas.
+
 O gradiente territorial mostra que a atração realizada é sistematicamente menor
 no interior remoto, e a evidência do CNES é compatível com uma diferença
 proporcional modesta de oferta cadastrada nas células com atração, robusta a
@@ -447,16 +580,17 @@ realocação, porque quase toda região--curso do quadro contém um único
 município. Essas duas camadas são descritiva e associativa, e assim devem ser
 lidas.
 
-O desenho causal \textbf{não} identifica o efeito da bolsa nem do adicional
-associado ao IVS, o efeito do programa sobre o estoque municipal, o efeito
-sobre a decisão de se inscrever, retenção contínua ou duração até a saída,
-produção assistencial, filas ou desfechos de saúde. Suas limitações são a
-pontuação discreta com um ponto de massa de cada lado, a amostra de 36 pares, a
-ligação por nome normalizado, o protocolo retrospectivo e o desfecho de
-presença medido como retrato em uma data. A avaliação do adicional de bolsa
-exige a regra administrativa que o IVS público não reproduz; os desfechos
-assistenciais exigem portões próprios de dados. Ambos permanecem fora do
-escopo.
+O desenho do limite de seleção \textbf{não} identifica o efeito da bolsa, o
+efeito do programa sobre o estoque municipal, o efeito sobre a decisão de se
+inscrever, retenção contínua ou duração até a saída, produção assistencial,
+filas ou desfechos de saúde. Suas limitações são a pontuação discreta com um
+ponto de massa de cada lado, a amostra de 36 pares, a ligação por nome
+normalizado, o protocolo retrospectivo e o desfecho de presença medido como
+retrato em uma data. O desenho da bolsa identifica apenas o incentivo marginal
+anunciado perto dos cortes, possivelmente somado a outros benefícios ligados
+às mesmas categorias de IVS; suas limitações são o poder baixo, o protocolo
+retrospectivo e o desequilíbrio de covariáveis no corte de 0,400. Os desfechos
+assistenciais exigem portões próprios de dados e permanecem fora do escopo.
 
 \begin{thebibliography}{99}
 
@@ -469,10 +603,26 @@ Bärnighausen, T.; Bloom, D. E. (2009). Financial Incentives for Return of
 Service in Underserved Areas: A Systematic Review.
 \textit{BMC Health Services Research}, 9, 86.
 
+\bibitem[Calonico et al.(2019)]{calonico2019}
+Calonico, S.; Cattaneo, M. D.; Farrell, M. H.; Titiunik, R. (2019).
+Regression Discontinuity Designs Using Covariates.
+\textit{The Review of Economics and Statistics}, 101(3), 442--451.
+
 \bibitem[Carrillo e Feres(2019)]{carrillo2019}
 Carrillo, P.; Feres, P. (2019). Provider Supply, Utilization, and Infant
 Health: Evidence from a Physician Distribution Policy.
 \textit{American Economic Journal: Economic Policy}, 11(3), 156--196.
+
+\bibitem[Cattaneo et al.(2015)]{cattaneo2015}
+Cattaneo, M. D.; Frandsen, B. R.; Titiunik, R. (2015). Randomization
+Inference in the Regression Discontinuity Design: An Application to Party
+Advantages in the U.S. Senate. \textit{Journal of Causal Inference}, 3(1),
+1--24.
+
+\bibitem[Cattaneo et al.(2016)]{cattaneo2016}
+Cattaneo, M. D.; Keele, L.; Titiunik, R.; Vazquez-Bare, G. (2016).
+Interpreting Regression Discontinuity Designs with Multiple Cutoffs.
+\textit{The Journal of Politics}, 78(4), 1229--1248.
 
 \bibitem[Costa et al.(2024)]{costa2024}
 Costa, F.; Nunes, L.; Sanches, F. M. (2024). How to Attract Physicians to
@@ -493,6 +643,10 @@ Payments Affect Entries and Exits of General Practitioners?
 Kline, P.; Moretti, E. (2014). People, Places, and Public Policy: Some Simple
 Analytics of Local Economic Development Programs.
 \textit{Annual Review of Economics}, 6(1), 629--662.
+
+\bibitem[Lee e Lemieux(2010)]{leelemieux2010}
+Lee, D. S.; Lemieux, T. (2010). Regression Discontinuity Designs in
+Economics. \textit{Journal of Economic Literature}, 48(2), 281--355.
 
 \bibitem[Olden e Møen(2022)]{olden2022}
 Olden, A.; Møen, J. (2022). The Triple Difference Estimator.
