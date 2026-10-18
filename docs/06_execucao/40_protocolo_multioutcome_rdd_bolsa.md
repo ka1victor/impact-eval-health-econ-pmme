@@ -280,3 +280,15 @@ suplementares, fixadas agora:
 (candidaturas, escolha, E9). As outras políticas não mudam a remuneração do
 especialista do PMM-E. A exceção é o +20% da MAC em 0,3, que pode mudar a
 estrutura do serviço; isso é declarado como limite.
+
+## 14. Esclarecimento de 18/10/2026 (antes de estimar o E9): conjunto de escolha
+
+A construção dos dados (tarefa B, doc 41a) mostrou que muitas 1ªs opções caem
+em células só com cadastro de reserva, sem vaga imediata. Isso é contagem de
+arquivo, sem quebra por corte ou faixa. Restringir o conjunto de escolha às
+células com vaga imediata descartaria essas escolhas reais. Fica fixado:
+- **E9 principal:** o conjunto de escolha são todas as células do curso e
+  ciclo no quadro da 1ª chamada, com ou sem vaga imediata. Entra o atributo
+  "tem vaga imediata" (e o log de vagas imediatas + 1).
+- **Sensibilidade:** só células com vaga imediata e só candidatos cuja 1ª
+  opção está nelas (a definição original do §12).

@@ -1,7 +1,7 @@
 {
   "documento": "Protocolo multi-outcome da bolsa do PMM-E (E6-E9)",
   "texto_canonico": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
-  "sha256_texto_canonico": "47e8227384424ac8989249b5a96a2524be07d5099071bd88fbe2bda2f9c2cabe",
+  "sha256_texto_canonico": "f80223ea07774b9fc2fa1a1c6ac7c2b9707a45173dc5a023194e32fafc983ccf",
   "data_congelamento": "2026-10-18",
   "autorizacao_autor": {
     "data": "2026-10-18",
@@ -130,6 +130,11 @@
         "S5": "estudo de evento com datas das politicas; pre extra 2022-01..2023-03",
         "S6": "placebo generalistas com CBO 225130 em separado"
       }
+    },
+    {
+      "data": "2026-10-18",
+      "antes_de_estimar_E9": true,
+      "E9_conjunto_de_escolha": "principal: todas as celulas do curso e ciclo no quadro da 1a chamada (com ou sem vaga imediata), com atributo tem_vaga_imediata e log(vagas imediatas+1); sensibilidade: so celulas com vaga imediata"
     }
   ]
 }
