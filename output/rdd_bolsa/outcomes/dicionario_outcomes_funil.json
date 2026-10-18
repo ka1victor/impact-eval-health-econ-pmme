@@ -5,9 +5,9 @@
   "script": "scripts/rdd_bolsa/12_construir_outcomes_funil.py",
   "protocolo": {
     "arquivo": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
-    "sha256": "7847c3b96577ca579daa46f59c41afcbbfde8b819d228f0b2f0d4f7cda6dcb2c",
+    "sha256": "cc54d12a8d00184cf83fd0acb54b1fe42b414b6bd2838861814655a26197cc67",
     "texto_canonico": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
-    "sha256_texto_canonico_declarado": "f80223ea07774b9fc2fa1a1c6ac7c2b9707a45173dc5a023194e32fafc983ccf"
+    "sha256_texto_canonico_declarado": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065"
   },
   "cegamento": {
     "regra": "nenhum outcome por lado de corte, por faixa ou contra o IVS; IVS oficial só como coluna de chave",
@@ -1878,8 +1878,8 @@
   "entradas": [
     {
       "caminho": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
-      "sha256": "7847c3b96577ca579daa46f59c41afcbbfde8b819d228f0b2f0d4f7cda6dcb2c",
-      "bytes": 6949,
+      "sha256": "cc54d12a8d00184cf83fd0acb54b1fe42b414b6bd2838861814655a26197cc67",
+      "bytes": 7443,
       "papel": "protocolo congelado E6 (somente lido)",
       "fonte": "pipeline do repositório",
       "data_referencia": "2026-10-18",

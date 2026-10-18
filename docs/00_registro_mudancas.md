@@ -19,6 +19,20 @@ corte, os outcomes F0, F1, F2 e F4 e as tabelas de escolha do E9 (adendo §12).
 |---|---|
 | [`06_execucao/41a_construcao_outcomes_funil.md`](06_execucao/41a_construcao_outcomes_funil.md) | fontes, definições, casamento entre arquivos e desvios da construção dos outcomes do funil e das tabelas de escolha do E9; sem resultado por lado de corte. Aquisição do resultado da 1ª chamada do ciclo 2 em `scripts/aquisicao/a11_adquirir_resultado_ciclo2_chamada1.py` (numerado a11 para não colidir com outra tarefa) |
 
+## 18/10/2026 — Políticas nos mesmos cortes de IVS (tarefa D do protocolo 40)
+
+Motivo: o protocolo 40 (§4) pediu conferir, na fonte primária, se outra
+política federal muda nos cortes 0,300 e 0,400 da bolsa.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/18_politicas_nos_mesmos_cortes_ivs.md`](auditorias/18_politicas_nos_mesmos_cortes_ivs.md) | auditoria das regras federais com faixas de IVS (752/2023, 485/2023, ajuda de custo do PMMB, IED da APS, teto de emendas "IVS maior que 0,3", outras), alcance sobre o PMM-E, implicações para RDD e DiRD e recomendações para E6/E7 |
+
+Insumos novos fora de `docs/`: `scripts/aquisicao/a10_normas_mesmos_cortes_ivs.py`,
+cache `data/raw/aquisicao/normas_ivs/` e saídas `output/aquisicao/a10_*`.
+
 ## 18/10/2026 — Protocolo multi-outcome da bolsa
 
 Motivo: o autor autorizou rodar tudo com dados do repositório ou públicos, com
