@@ -8,6 +8,19 @@
 
 ---
 
+## 18/10/2026 — CNES nacional para a DiRD (tarefa C do protocolo 40)
+
+Motivo: a família F3 do protocolo multi-outcome
+([`06_execucao/40`](06_execucao/40_protocolo_multioutcome_rdd_bolsa.md)) pede
+o painel CNES de todos os municípios, com pré-período desde 2022, para a
+diferença em descontinuidades (E7).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/aquisicao/A09_cnes_nacional.md`](auditorias/aquisicao/A09_cnes_nacional.md) | fonte, competências, chave municipal, esquema e validação do painel município × grupo de CBO × mês (`scripts/aquisicao/a09_adquirir_cnes_nacional.py`) |
+
 ## 18/10/2026 — Construção dos outcomes do funil (tarefa B do protocolo 40)
 
 Motivo: a tarefa B do protocolo multi-outcome constrói, às cegas quanto ao

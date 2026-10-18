@@ -47,6 +47,7 @@ tmp/
 data/raw/cnes/
 data/raw/administrativo_rdd_bolsa/
 output/aquisicao/cnes_mensal/
+output/aquisicao/cnes_nacional/mensal/
 output/aquisicao/cnes_vinculos_medicos_2024_2026.parquet
 output/painel_municipio_curso_mensal.parquet
 output/painel_regiao_curso_mensal.parquet
