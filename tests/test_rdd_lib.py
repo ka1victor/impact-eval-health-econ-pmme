@@ -177,6 +177,63 @@ class TestLocalLinearEEmpilhado(unittest.TestCase):
         self.assertTrue(math.isnan(g["tau"]) and math.isnan(g["ep"]))
         self.assertIn("graus de liberdade", g["nota"])
 
+    def test_rotulo_ou_escore_ausente_levanta_erro(self) -> None:
+        rng = np.random.default_rng(SEMENTE + 23)
+        s = escore_sintetico(500, rng)
+        y = rng.normal(size=len(s))
+        for ausente in (None, np.nan, pd.NA):
+            cl = np.arange(len(s)).astype(object)
+            cl[3] = ausente
+            with self.assertRaises(ValueError):
+                L.rd_local_linear(s, y, 300, cluster=cl)
+            with self.assertRaises(ValueError):
+                L.rd_empilhado(s, y, 300, cluster=cl)
+            with self.assertRaises(ValueError):
+                L.rd_poisson_local(s, np.abs(np.round(y)), 300, cluster=cl)
+            with self.assertRaises(ValueError):
+                L.rd_dird_painel(s, y, np.zeros(len(s)), 300, cl)
+        with self.assertRaises(ValueError):
+            L.rd_empilhado(s, y, 300, efeitos_fixos=pd.Series([1.0] * (len(s) - 1) + [np.nan]))
+        s_nan = s.astype(float)
+        s_nan[0] = np.nan
+        with self.assertRaises(ValueError):
+            L.rd_local_linear(s_nan, y, 300)
+
+    def test_descartes_contados_e_na_nota(self) -> None:
+        rng = np.random.default_rng(SEMENTE + 24)
+        s = escore_sintetico(3_000, rng)
+        y = s / 1000 + 0.1 * (s > 300) + rng.normal(0, 0.3, len(s))
+        janela = np.flatnonzero(np.abs(s - 300) < 50)
+        fora = np.flatnonzero(np.abs(s - 300) >= 50)
+        z = rng.normal(size=len(s))
+        z[janela[:4]] = np.nan
+        z[fora[:9]] = np.nan
+        peso = np.ones(len(s))
+        peso[janela[4:7]] = np.nan
+        peso[janela[7:9]] = 0.0
+        yy = y.copy()
+        yy[janela[9:11]] = np.nan
+        r = L.rd_local_linear(s, yy, 300, Z=z, nomes_z=["z"], peso=peso)
+        self.assertEqual((r["n_descartadas_y_ausente"], r["n_descartadas_covariavel_ausente"],
+                          r["n_descartadas_peso_ausente"], r["n_peso_zero"]), (2, 4, 3, 2))
+        self.assertIn("4 linhas na janela descartadas por covariavel ausente", r["nota"])
+        self.assertIn("3 linhas na janela descartadas por peso ausente", r["nota"])
+        self.assertIn("2 linhas na janela descartadas por y ausente", r["nota"])
+        self.assertEqual(r["n_obs"], len(janela) - 11)
+        self.assertTrue(math.isfinite(r["tau"]))
+        limpo = L.rd_local_linear(s, y, 300)
+        self.assertEqual((limpo["n_descartadas_y_ausente"], limpo["nota"]), (0, ""))
+        e = L.rd_empilhado(s, yy, 300, Z=z)
+        self.assertEqual((e["n_descartadas_y_ausente"], e["n_descartadas_covariavel_ausente"]), (2, 4))
+        self.assertIn("descartadas", e["nota"])
+        po = L.rd_poisson_local(s, np.where(np.isfinite(yy), np.abs(np.round(yy * 3)), np.nan), 300,
+                                offset=np.where(np.isfinite(z), 0.0, np.nan))
+        self.assertEqual((po["n_descartadas_y_ausente"], po["n_descartadas_offset_ausente"]), (2, 4))
+        neg = np.ones(len(s))
+        neg[0] = -1.0
+        with self.assertRaises(ValueError):
+            L.rd_local_linear(s, y, 300, peso=neg)
+
 
 class TestHonesto(unittest.TestCase):
     """Sintético: IC com viés limitado (Armstrong e Kolesár)."""
@@ -211,7 +268,7 @@ class TestHonesto(unittest.TestCase):
         s = np.arange(150, 501)
         r = (s - 300) / 1000
         y = np.where(s <= 300, 1 + 2 * r + 30 * r ** 2 + 100 * r ** 3 + 500 * r ** 4, 2 - r + 10 * r ** 2)
-        m = L.m_regra_de_bolso(s, y, 300)
+        m = L.m_regra_de_bolso(s, y, 300, cortes_vizinhos=())
         # Abaixo: f'' = 60 + 600 r + 6000 r^2 em [-0,150; 0]: máximo 105 em r = -0,150.
         self.assertAlmostEqual(m["M_abaixo"], 105.0, places=5)
         self.assertAlmostEqual(m["M_acima"], 20.0, places=5)
@@ -256,6 +313,37 @@ class TestHonesto(unittest.TestCase):
         self.assertEqual(sorted(tab["fator_M"].unique().tolist()), [0.5, 1.0, 2.0])
         fixo = tab[tab["especificacao"] == "h_fixo"].sort_values("fator_M")
         self.assertTrue((np.diff(fixo["semi_amplitude"].to_numpy()) > 0).all())
+        # h ótimo sai rotulado como especificação adicional ao protocolo.
+        self.assertEqual(out["h_otimo"]["rotulo"], L.ROTULO_H_OTIMO)
+        self.assertIn("ADICIONAL", out["h_otimo"]["rotulo"])
+        self.assertEqual(out["h_fixo"]["rotulo"], "h fixo do protocolo")
+        self.assertEqual(tab["no_protocolo"].tolist(), [True, False] * 3)
+        self.assertTrue(tab["nota"].str.contains(r"suporte \[150; 400\]").all())
+
+    def test_suporte_explicito_da_regra_de_bolso(self) -> None:
+        rng = np.random.default_rng(SEMENTE + 34)
+        s = escore_sintetico(3_000, rng)
+        y = s / 1000 + 0.1 * (s > 300) + rng.normal(0, 0.3, len(s))
+        for f in (lambda: L.m_regra_de_bolso(s, y, 300), lambda: L.rd_honesto(s, y, 300),
+                  lambda: L.rd_honesto_h_otimo(s, y, 300), lambda: L.rd_honesto_relato(s, y, 300),
+                  lambda: L.m_regra_de_bolso(s, y, 300, suporte_mil=(150, 350), cortes_vizinhos=(300, 400))):
+            with self.assertRaises(ValueError):
+                f()
+        self.assertEqual(L.suporte_regra_de_bolso(300, cortes_vizinhos=(300, 400)), (-math.inf, 350.0))
+        self.assertEqual(L.suporte_regra_de_bolso(400, cortes_vizinhos=(300, 400)), (350.0, math.inf))
+        self.assertEqual(L.suporte_regra_de_bolso(300, cortes_vizinhos=()), (-math.inf, math.inf))
+        r = L.rd_honesto(s, y, 300, cortes_vizinhos=(300, 400))
+        self.assertEqual(r["suporte_M_mil"], (-math.inf, 350.0))
+        self.assertIn("suporte [-inf; 350]", r["nota"])
+        m = L.m_regra_de_bolso(s, y, 300, suporte_mil=(None, 350))
+        self.assertEqual(r["M"], m["M"])
+        self.assertLessEqual(m["n_acima"], int(((s > 300) & (s <= 350)).sum()))
+        # Com M informado, nenhum suporte é exigido e a nota diz a origem.
+        self.assertIn("M informado pelo chamador", L.rd_honesto(s, y, 300, M=5.0)["nota"])
+        # O peso da regra de bolso só entra se for passado a ela.
+        pw = L.m_regra_de_bolso(s, y, 300, cortes_vizinhos=(300, 400), peso=rng.integers(1, 5, len(s)))
+        self.assertTrue(pw["ponderada"])
+        self.assertFalse(m["ponderada"])
 
     def test_empilhado_honesto(self) -> None:
         rng = np.random.default_rng(SEMENTE + 33)
@@ -268,8 +356,17 @@ class TestHonesto(unittest.TestCase):
         self.assertAlmostEqual(r0["ep"], base["ep"], places=12)
         self.assertAlmostEqual(r0["ic95_inf"], base["ic95_inf"], places=10)
         sup = (np.abs(ss - cortes) <= 100)
-        r = L.rd_empilhado_honesto(ss[sup], yy[sup], cortes[sup], h_mil=50, cluster=ids[sup])
+        with self.assertRaises(ValueError):
+            L.rd_empilhado_honesto(ss[sup], yy[sup], cortes[sup], h_mil=50, cluster=ids[sup])
+        r = L.rd_empilhado_honesto(ss[sup], yy[sup], cortes[sup], h_mil=50, cluster=ids[sup],
+                                   cortes_vizinhos=(300, 400))
         self.assertEqual(set(r["M_por_grupo"]), {"300", "400"})
+        self.assertEqual(r["suporte_M_por_grupo"], {"300": (-math.inf, 350.0), "400": (350.0, math.inf)})
+        self.assertIn("grupo 300: M pela regra de bolso: quartica por lado no suporte [-inf; 350]", r["nota"])
+        rd = L.rd_empilhado_honesto(ss[sup], yy[sup], cortes[sup], h_mil=50, cluster=ids[sup],
+                                    suporte_mil={"300": (200, 350), "400": (350, 500)})
+        self.assertEqual(rd["suporte_M_por_grupo"], {"300": (200.0, 350.0), "400": (350.0, 500.0)})
+        self.assertEqual(rd["M_por_grupo"], r["M_por_grupo"])
         self.assertGreater(r["semi_amplitude"], Z * r["ep"])
         self.assertLessEqual(r["ic95_inf"], r["tau"])
         nn = L.rd_empilhado_honesto(np.concatenate([s[s <= 350], s[s > 350]]),
@@ -313,6 +410,56 @@ class TestPoissonLocal(unittest.TestCase):
         X = np.column_stack([np.ones(u.sum()), x, t, t * x])
         glm = sm.GLM(y[u], X, family=sm.families.Poisson(), offset=off[u], var_weights=w[u]).fit(tol=1e-12)
         self.assertAlmostEqual(r["tau"], glm.params[2], places=7)
+
+    def test_ep_sanduiche_igual_ao_glm_do_statsmodels(self) -> None:
+        import warnings
+
+        import statsmodels.api as sm
+
+        rng = np.random.default_rng(SEMENTE + 43)
+        s = escore_sintetico(3_000, rng)
+        off = np.log(rng.integers(1, 4, len(s)))
+        cl = rng.integers(0, 300, len(s))
+        y = rng.poisson(np.exp(off + 0.1 + 0.2 * (s > 400)))
+        xm = s - 400
+        w = np.clip(1 - np.abs(xm) / 50, 0, None)
+        u = w > 0
+        x = xm[u] / 1000
+        t = (xm[u] > 0).astype(float)
+        X = np.column_stack([np.ones(u.sum()), x, t, t * x])
+
+        def glm(**kw):
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                return sm.GLM(y[u], X, family=sm.families.Poisson(), offset=off[u],
+                              var_weights=w[u]).fit(tol=1e-13, **kw)
+
+        hc0 = glm(cov_type="HC0").bse[2]
+        self.assertAlmostEqual(L.rd_poisson_local(s, y, 400, offset=off, pequena_amostra=False)["ep"], hc0, places=10)
+        # O "HC1" do GLM do statsmodels não aplica n/(n-k); aqui HC1 = HC0 x raiz(n/(n-4)).
+        n = int(u.sum())
+        self.assertAlmostEqual(L.rd_poisson_local(s, y, 400, offset=off)["ep"], hc0 * math.sqrt(n / (n - 4)), places=10)
+        cr1 = glm(cov_type="cluster", cov_kwds={"groups": cl[u]}).bse[2]
+        self.assertAlmostEqual(L.rd_poisson_local(s, y, 400, offset=off, cluster=cl)["ep"], cr1, places=10)
+
+    def test_separacao_graus_de_liberdade_e_convergencia(self) -> None:
+        s = np.repeat(np.arange(260, 341), 5)
+        y = np.where(s == 300, 2, 0) + np.where(s > 300, 1, 0)
+        r = L.rd_poisson_local(s, y, 300)
+        self.assertTrue(math.isnan(r["tau"]) and math.isnan(r["ep"]))
+        self.assertIn("separacao (abaixo)", r["nota"])
+        g = L.rd_poisson_local([299, 300, 301, 302], [1, 2, 3, 4], 300, h_mil=10)
+        self.assertTrue(math.isnan(g["tau"]))
+        self.assertIn("graus de liberdade", g["nota"])
+        rng = np.random.default_rng(SEMENTE + 44)
+        s2 = escore_sintetico(3_000, rng)
+        y2 = rng.poisson(np.exp(1 + 0.3 * (s2 > 300)))
+        curto = L.rd_poisson_local(s2, y2, 300, max_iter=1)
+        self.assertFalse(curto["convergiu"])
+        self.assertTrue(math.isnan(curto["tau"]))
+        self.assertIn("nao convergiu", curto["nota"])
+        ok = L.rd_poisson_local(s2, y2, 300)
+        self.assertTrue(ok["convergiu"] and math.isfinite(ok["tau"]))
 
     def test_lado_sem_eventos(self) -> None:
         rng = np.random.default_rng(SEMENTE + 42)
@@ -368,6 +515,34 @@ class TestDiRD(unittest.TestCase):
                                 periodos_pre=[0, 1], periodos_pos=[2, 3])
         self.assertTrue(math.isnan(d.loc[d["unidade"] == 0, "delta"].iloc[0]))
         self.assertEqual(int(d["delta"].isna().sum()), 1)
+        self.assertEqual(d.attrs["n_unidades_incompletas_pre"], 1)
+        self.assertEqual(d.attrs["n_unidades_incompletas_pos"], 0)
+        self.assertIn("painel desbalanceado: 1 unidades", d.attrs["nota"])
+        self.assertFalse(bool(d.loc[d["unidade"] == 0, "completo_pre"].iloc[0]))
+        livre = L.diferenca_pos_pre(p, col_unidade="unidade", col_periodo="periodo", col_y="y",
+                                    periodos_pre=[0, 1], periodos_pos=[2, 3], exigir_completo=False)
+        self.assertEqual(int(livre["delta"].isna().sum()), 0)
+        self.assertIn("medias com os periodos presentes", livre.attrs["nota"])
+        completo = L.diferenca_pos_pre(_painel_sintetico(rng, 20, 2, 2, 0.0, 0.0), col_unidade="unidade",
+                                       col_periodo="periodo", col_y="y", periodos_pre=[0, 1], periodos_pos=[2, 3])
+        self.assertEqual(completo.attrs["nota"], "")
+
+    def test_painel_desbalanceado_nao_e_silencioso(self) -> None:
+        rng = np.random.default_rng(SEMENTE + 53)
+        p = _painel_sintetico(rng, 2_000, 3, 3, 0.5, 0.3)
+        b = L.rd_dird_painel(p["s"], p["y"], p["pos"], 300, p["unidade"])
+        self.assertTrue(b["painel_balanceado"])
+        self.assertEqual(b["nota"], "")
+        na_janela = p.loc[np.abs(p["s"] - 300) < 50, "unidade"].unique()
+        sem_pos = na_janela[:7]
+        sem_um_pre = na_janela[7:12]
+        q = p[~(p["unidade"].isin(sem_pos) & (p["pos"] == 1))]
+        q = q[~(q["unidade"].isin(sem_um_pre) & (q["periodo"] == 0))]
+        r = L.rd_dird_painel(q["s"], q["y"], q["pos"], 300, q["unidade"])
+        self.assertFalse(r["painel_balanceado"])
+        self.assertEqual((r["n_unidades_sem_pre"], r["n_unidades_sem_pos"]), (0, 7))
+        self.assertIn("painel desbalanceado na janela: 0 unidades sem pre, 7 sem pos", r["nota"])
+        self.assertTrue(math.isfinite(r["tau"]))
 
     def test_estudo_de_evento(self) -> None:
         rng = np.random.default_rng(SEMENTE + 52)
@@ -462,15 +637,22 @@ class TestTestesMultiplos(unittest.TestCase):
         self.assertTrue(math.isnan(q[1]))
         self.assertEqual(q[0], 1.0)
 
-    def test_bky_nao_maior_que_bh(self) -> None:
+    def test_bky_decisoes_iguais_ao_statsmodels_e_monotonas(self) -> None:
+        """Rejeitar se q <= alfa equivale ao BKY de dois estágios do statsmodels (maxiter=1)."""
+        from statsmodels.stats.multitest import fdrcorrection_twostage
+
         rng = np.random.default_rng(SEMENTE + 70)
-        p = np.concatenate([rng.uniform(0, 0.01, 10), rng.uniform(0, 1, 20)])
-        m = len(p)
-        o = np.argsort(p)
-        bh = np.empty(m)
-        bh[o] = np.minimum.accumulate((p[o] * m / np.arange(1, m + 1))[::-1])[::-1]
-        q = L.qvalores_bky(p)
-        self.assertTrue((q <= np.minimum(1, bh) + 0.0011).all())
+        for _ in range(100):
+            p = np.concatenate([rng.uniform(0, 0.02, rng.integers(1, 8)), rng.uniform(0, 1, rng.integers(1, 20))])
+            q = L.qvalores_bky(p)
+            for alfa in (0.01, 0.05, 0.10, 0.20):
+                rej = fdrcorrection_twostage(p, alpha=alfa, method="bky", maxiter=1)[0]
+                np.testing.assert_array_equal(rej, q <= alfa)
+            o = np.argsort(p, kind="stable")
+            self.assertTrue((np.diff(q[o]) >= 0).all())
+            self.assertTrue(((q > 0) & (q <= 1)).all())
+        # Uma única hipótese: q = menor q da grade com q/(1+q) >= p (0,04 -> 0,042; maior que p).
+        self.assertAlmostEqual(L.qvalores_bky([0.04])[0], 0.042)
 
 
 class TestLee(unittest.TestCase):
@@ -504,6 +686,29 @@ class TestLee(unittest.TestCase):
         self.assertAlmostEqual(r["tau_inf"], r["tau_sup"], places=12)
         self.assertAlmostEqual(r["tau_inf"], L.rd_local_linear(s, y, 300)["tau"], places=12)
 
+    def test_selecionado_sem_y_invalida_os_limites(self) -> None:
+        rng = np.random.default_rng(SEMENTE + 82)
+        s = escore_sintetico(5_000, rng)
+        sel = (rng.random(len(s)) < 0.7).astype(float)
+        y = np.where(sel == 1, s / 1000 + rng.normal(0, 0.3, len(s)), np.nan)
+        janela_sel = np.flatnonzero((np.abs(s - 300) < 50) & (sel == 1))
+        y_ruim = y.copy()
+        y_ruim[janela_sel[:3]] = np.nan
+        r = L.limites_lee_rd(s, y_ruim, sel, 300)
+        self.assertTrue(math.isnan(r["tau_inf"]) and math.isnan(r["tau_sup"]))
+        self.assertEqual(r["n_selecionados_sem_y"], 3)
+        self.assertIn("3 selecionados sem y", r["nota"])
+        sel_ruim = sel.copy()
+        sel_ruim[np.flatnonzero(np.abs(s - 300) < 50)[0]] = np.nan
+        r2 = L.limites_lee_rd(s, y, sel_ruim, 300)
+        self.assertTrue(math.isnan(r2["tau_inf"]))
+        self.assertEqual(r2["n_selecao_ausente"], 1)
+        # Fora da janela, y ausente em selecionado não entra em nada e não invalida.
+        fora = np.flatnonzero((np.abs(s - 300) >= 50) & (sel == 1))
+        y_fora = y.copy()
+        y_fora[fora[:5]] = np.nan
+        self.assertTrue(math.isfinite(L.limites_lee_rd(s, y_fora, sel, 300)["tau_inf"]))
+
     def test_aparo_fracionario_retira_exatamente_q(self) -> None:
         y = np.array([5.0, 1.0, 3.0, 2.0])
         w = np.array([1.0, 1.0, 1.0, 1.0])
@@ -530,7 +735,7 @@ class TestLocalRandomizationEDeterminismo(unittest.TestCase):
         rng = np.random.default_rng(SEMENTE + 91)
         s = escore_sintetico(2_000, rng)
         y = rng.normal(size=len(s)) + 0.1 * (s > 300)
-        for f in (lambda: L.rd_local_linear(s, y, 300), lambda: L.rd_honesto(s, y, 300),
+        for f in (lambda: L.rd_local_linear(s, y, 300), lambda: L.rd_honesto(s, y, 300, cortes_vizinhos=(300, 400)),
                   lambda: L.rl_janela(s, y, 300, 10, n_perm=500),
                   lambda: L.rd_poisson_local(s, np.abs(np.round(y * 3)), 300)):
             a, b = f(), f()

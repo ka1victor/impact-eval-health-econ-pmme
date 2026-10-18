@@ -31,6 +31,12 @@ Convenções comuns
   para gravar.
 - Determinística: não há aleatoriedade fora da permutação de Fisher, cuja
   semente é argumento.
+- Nada é descartado em silêncio. Escore ausente e rótulo de cluster, unidade,
+  grupo ou efeito fixo ausente levantam ValueError (o rótulo ausente não vira
+  o texto "nan", que juntaria as ausências num cluster). Peso negativo
+  levanta ValueError; peso zero exclui a linha (contado em `n_peso_zero`).
+  Linhas na janela descartadas por y, covariável, offset ou peso ausentes são
+  contadas em `n_descartadas_<motivo>` e escritas na `nota`.
 - Integridade: a biblioteca não contém dado, não lê nem grava arquivo e não
   devolve valor de reserva. Estimação que falha (suporte insuficiente, lado
   sem eventos, IRLS sem convergência, M indefinido, taxa de seleção não
@@ -47,9 +53,13 @@ Funções (ver docstrings)
 2. `rd_empilhado`: cortes (e ciclos) empilhados com intercepto e inclinações
    por grupo x lado, tau comum, efeitos fixos opcionais e cluster. Com
    grupo = corte, reproduz `rd_empilhado` do E5 (11).
-3. `cv_honesto`, `p_honesto`, `m_regra_de_bolso`, `variancia_vizinhos`,
-   `rd_honesto`, `rd_honesto_h_otimo`, `rd_empilhado_honesto`,
-   `rd_honesto_relato`: IC com viés limitado (Armstrong e Kolesár, 2018, 2020).
+3. `cv_honesto`, `p_honesto`, `suporte_regra_de_bolso`, `m_regra_de_bolso`,
+   `variancia_vizinhos`, `rd_honesto`, `rd_honesto_h_otimo`,
+   `rd_empilhado_honesto`, `rd_honesto_relato`: IC com viés limitado
+   (Armstrong e Kolesár, 2018, 2020) na classe de Taylor, mais larga que a de
+   Hölder padrão do RDHonest. A regra de bolso de M exige suporte explícito
+   (`suporte_mil` ou `cortes_vizinhos`). O h ótimo é especificação adicional
+   ao protocolo (que fixa h = 0,050) e sai rotulado como tal.
 4. `rd_poisson_local`: Poisson local com kernel (IRLS, ligação log, offset).
 5. `diferenca_pos_pre`, `rd_dird_delta`, `rd_dird_painel`,
    `rd_estudo_evento`: diferença em descontinuidades e estudo de evento.
@@ -90,7 +100,7 @@ __all__ = [
     "CORTES_MIL", "H_PRINCIPAL_MIL", "H_SENSIBILIDADE_MIL", "GRADE_H_MIL", "Z_975",
     "normalizar_s_mil", "pesos_kernel", "p_normal", "mqp_sanduiche",
     "rd_local_linear", "rd_empilhado",
-    "cv_honesto", "p_honesto", "m_regra_de_bolso", "variancia_vizinhos", "rd_honesto",
+    "cv_honesto", "p_honesto", "suporte_regra_de_bolso", "m_regra_de_bolso", "ROTULO_H_OTIMO", "variancia_vizinhos", "rd_honesto",
     "rd_honesto_h_otimo", "rd_empilhado_honesto", "rd_honesto_relato",
     "rd_poisson_local",
     "diferenca_pos_pre", "rd_dird_delta", "rd_dird_painel", "rd_estudo_evento",
@@ -106,8 +116,14 @@ __all__ = [
 # ---------------------------------------------------------------------------
 
 def normalizar_s_mil(s_mil) -> np.ndarray:
-    """Running variable em milésimos como float; quase-inteiros viram inteiros exatos."""
+    """Running variable em milésimos como float; quase-inteiros viram inteiros exatos.
+
+    Escore ausente levanta ValueError: sem escore não se sabe se a unidade
+    está na janela, e o protocolo exige escore completo (falha fechada do E3).
+    """
     s = np.asarray(s_mil, dtype=float)
+    if not np.isfinite(s).all():
+        raise ValueError(f"running variable com {int((~np.isfinite(s)).sum())} valores ausentes ou infinitos")
     r = np.round(s)
     return np.where(np.abs(s - r) < 1e-6, r, s)
 
@@ -137,16 +153,50 @@ def _vetor(v, n: int, nome: str) -> np.ndarray:
     return a
 
 
-def _rotulos(v, n: int) -> np.ndarray | None:
+def _rotulos(v, n: int, nome: str = "rotulos") -> np.ndarray | None:
+    """Rótulos (cluster, unidade, grupo, efeito fixo) como texto.
+
+    Rótulo ausente (None, NaN, pd.NA) levanta ValueError: virar o texto "nan"
+    juntaria todas as ausências num único cluster sem aviso.
+    """
     if v is None:
         return None
-    a = np.asarray(v)
+    a = np.asarray(v, dtype=object)
     if a.ndim == 0:
-        a = np.full(n, a)
-    a = a.astype(str)
+        a = np.full(n, a.item(), dtype=object)
     if a.shape != (n,):
-        raise ValueError(f"rotulos com tamanho {a.shape}, esperado ({n},)")
-    return a
+        raise ValueError(f"{nome} com tamanho {a.shape}, esperado ({n},)")
+    ausentes = pd.isna(a)
+    if ausentes.any():
+        raise ValueError(f"{nome} com {int(ausentes.sum())} valores ausentes: rotulo ausente nao pode virar cluster")
+    return a.astype(str)
+
+
+def _peso_valido(peso, n: int) -> np.ndarray | None:
+    """Peso extra (por exemplo, número de células): negativo é erro; NaN é descarte contado; zero exclui a linha."""
+    if peso is None:
+        return None
+    pv = _vetor(peso, n, "peso")
+    if (pv[np.isfinite(pv)] < 0).any() or np.isinf(pv).any():
+        raise ValueError("peso negativo ou infinito")
+    return pv
+
+
+def _descartes(dentro: np.ndarray, **invalidos: np.ndarray) -> tuple[dict, str]:
+    """Conta, entre as linhas com peso de kernel positivo, as descartadas por motivo.
+
+    Cada linha conta no primeiro motivo da ordem dada. Devolve
+    ({"n_descartadas_<motivo>": k}, nota); a nota é vazia sem descarte.
+    """
+    contagens, ja = {}, np.zeros(len(dentro), dtype=bool)
+    partes = []
+    for motivo, ruim in invalidos.items():
+        m = dentro & ruim & ~ja
+        contagens[f"n_descartadas_{motivo}"] = int(m.sum())
+        ja |= m
+        if m.any():
+            partes.append(f"{int(m.sum())} linhas na janela descartadas por {motivo.replace('_', ' ')}")
+    return contagens, "; ".join(partes)
 
 
 def _contar(ids: np.ndarray | None, mascara: np.ndarray) -> int:
@@ -268,9 +318,9 @@ def rd_local_linear(s_mil, y, corte_mil: float, h_mil: float = H_PRINCIPAL_MIL, 
     n = len(s)
     yv = _vetor(y, n, "y")
     x_mil = s - corte_mil
-    w = pesos_kernel(x_mil, h_mil, kernel)
-    if peso is not None:
-        w = w * _vetor(peso, n, "peso")
+    kern = pesos_kernel(x_mil, h_mil, kernel)
+    pv = _peso_valido(peso, n)
+    w = kern * pv if pv is not None else kern
     x = x_mil / 1000.0
     t = (x_mil > 0).astype(float)
     cols, nomes = [np.ones_like(x)], ["const"]
@@ -295,12 +345,13 @@ def rd_local_linear(s_mil, y, corte_mil: float, h_mil: float = H_PRINCIPAL_MIL, 
         cols.extend(Zm[:, j] for j in range(Zm.shape[1]))
         nomes.extend(nomes_z)
     X = np.column_stack(cols)
+    desc, nota_desc = _descartes(kern > 0, y_ausente=~np.isfinite(yv),
+                                 covariavel_ausente=~np.isfinite(X).all(axis=1),
+                                 peso_ausente=~np.isfinite(pv) if pv is not None else np.zeros(n, dtype=bool))
     usa = (w > 0) & np.isfinite(yv) & np.isfinite(X).all(axis=1)
-    if peso is not None:
-        usa &= np.isfinite(w)
     ab, ac = usa & (x_mil <= 0), usa & (x_mil > 0)
-    cl = _rotulos(cluster, n)
-    ids = _rotulos(ids_unidade, n) if ids_unidade is not None else cl
+    cl = _rotulos(cluster, n, "cluster")
+    ids = _rotulos(ids_unidade, n, "ids_unidade") if ids_unidade is not None else cl
     res = _resultado_vazio(h_mil)
     res.update({
         "corte_mil": corte_mil, "kernel": kernel, "grau": grau,
@@ -308,16 +359,19 @@ def rd_local_linear(s_mil, y, corte_mil: float, h_mil: float = H_PRINCIPAL_MIL, 
         "mass_points_abaixo": int(np.unique(s[ab]).size), "mass_points_acima": int(np.unique(s[ac]).size),
         "media_bruta_abaixo": float(yv[ab].mean()) if ab.any() else float("nan"),
         "media_bruta_acima": float(yv[ac].mean()) if ac.any() else float("nan"),
-        "covariaveis_descartadas": "",
+        "covariaveis_descartadas": "", **desc,
+        "n_peso_zero": int(((kern > 0) & (pv == 0)).sum()) if pv is not None else 0,
+        "nota": nota_desc,
     })
     minimo = 2 if grau == 1 else 1
     if res["mass_points_abaixo"] < minimo or res["mass_points_acima"] < minimo:
-        res["nota"] = f"suporte insuficiente: menos de {minimo} mass points com peso positivo em algum lado"
+        res["nota"] = _juntar_notas(
+            nota_desc, f"suporte insuficiente: menos de {minimo} mass points com peso positivo em algum lado")
         return res
     fit = mqp_sanduiche(X[usa], yv[usa], w[usa], nomes=nomes, protegidas=protegidas,
                         cluster=cl[usa] if cl is not None else None, pequena_amostra=pequena_amostra)
     if "erro" in fit:
-        res["nota"] = fit["erro"]
+        res["nota"] = _juntar_notas(nota_desc, fit["erro"])
         return res
     i = fit["nomes"].index("T")
     _inferencia_normal(res, float(fit["beta"][i]), float(math.sqrt(max(fit["V"][i, i], 0.0))))
@@ -353,11 +407,13 @@ def rd_empilhado(s_mil, y, corte_mil, *, grupo=None, h_mil: float = H_PRINCIPAL_
     n = len(s)
     c = _vetor(corte_mil, n, "corte_mil")
     yv = _vetor(y, n, "y")
-    g = _rotulos(grupo, n) if grupo is not None else np.array([f"{v:g}" for v in c])
+    if not np.isfinite(c).all():
+        raise ValueError("corte_mil ausente em alguma linha")
+    g = _rotulos(grupo, n, "grupo") if grupo is not None else np.array([f"{v:g}" for v in c])
     x_mil = s - c
-    w = pesos_kernel(x_mil, h_mil, kernel)
-    if peso is not None:
-        w = w * _vetor(peso, n, "peso")
+    kern = pesos_kernel(x_mil, h_mil, kernel)
+    pv = _peso_valido(peso, n)
+    w = kern * pv if pv is not None else kern
     x = x_mil / 1000.0
     t = (x_mil > 0).astype(float)
     cols, nomes = [], []
@@ -370,7 +426,7 @@ def rd_empilhado(s_mil, y, corte_mil, *, grupo=None, h_mil: float = H_PRINCIPAL_
     nomes.append("T")
     protegidas = set(nomes)
     if efeitos_fixos is not None:
-        ef = _rotulos(efeitos_fixos, n)
+        ef = _rotulos(efeitos_fixos, n, "efeitos_fixos")
         for nivel in sorted(np.unique(ef).tolist())[1:]:
             cols.append((ef == nivel).astype(float))
             nomes.append(f"ef[{nivel}]")
@@ -382,15 +438,19 @@ def rd_empilhado(s_mil, y, corte_mil, *, grupo=None, h_mil: float = H_PRINCIPAL_
         cols.extend(Zm[:, j] for j in range(Zm.shape[1]))
         nomes.extend(nomes_z)
     X = np.column_stack(cols)
+    desc, nota_desc = _descartes(kern > 0, y_ausente=~np.isfinite(yv),
+                                 covariavel_ausente=~np.isfinite(X).all(axis=1),
+                                 peso_ausente=~np.isfinite(pv) if pv is not None else np.zeros(n, dtype=bool))
     usa = (w > 0) & np.isfinite(yv) & np.isfinite(X).all(axis=1)
     ab, ac = usa & (x_mil <= 0), usa & (x_mil > 0)
-    cl = _rotulos(cluster, n)
-    ids = _rotulos(ids_unidade, n) if ids_unidade is not None else cl
+    cl = _rotulos(cluster, n, "cluster")
+    ids = _rotulos(ids_unidade, n, "ids_unidade") if ids_unidade is not None else cl
     res = _resultado_vazio(h_mil)
     res.update({"kernel": kernel, "n_abaixo": _contar(ids, ab), "n_acima": _contar(ids, ac),
                 "n_obs": int(usa.sum()), "grupos": ";".join(grupos), "covariaveis_descartadas": "",
-                "pesos_grupos": {}})
-    notas = []
+                "pesos_grupos": {}, **desc,
+                "n_peso_zero": int(((kern > 0) & (pv == 0)).sum()) if pv is not None else 0})
+    notas = [nota_desc] if nota_desc else []
     if ids_unidade is not None and cl is None and np.unique(ids[usa]).size < int(usa.sum()):
         notas.append("unidade repetida sem cluster: EP HC1 trata linhas repetidas como independentes")
     for grp in grupos:
@@ -448,34 +508,66 @@ def p_honesto(tau: float, ep: float, vies_max: float) -> float:
     return float(stats.norm.sf(z - t) + stats.norm.cdf(-z - t))
 
 
+def _fmt_suporte(sup: tuple[float, float]) -> str:
+    return "[" + "; ".join("-inf" if v == -math.inf else "+inf" if v == math.inf else f"{v:g}" for v in sup) + "]"
+
+
+def suporte_regra_de_bolso(corte_mil: float, *, suporte_mil: tuple[float, float] | None = None,
+                           cortes_vizinhos: Sequence[float] | None = None) -> tuple[float, float]:
+    """Suporte (lo, hi), em milésimos e inclusivo, da quártica da regra de bolso. Tem de ser explícito.
+
+    - `suporte_mil = (lo, hi)` (None numa ponta = sem limite) fixa o suporte;
+    - `cortes_vizinhos` = os cortes da regra (o próprio corte, se listado, é
+      ignorado): o suporte vai até o ponto médio entre o corte e o vizinho mais
+      próximo de cada lado. Com (300, 400): 0,300 usa s <= 350 e 0,400 usa
+      s >= 350, de modo que a quártica de um corte nunca atravessa o outro.
+      `cortes_vizinhos = ()` declara explicitamente o suporte inteiro.
+    Sem nenhum dos dois (ou com os dois), ValueError.
+    """
+    if (suporte_mil is None) == (cortes_vizinhos is None):
+        raise ValueError(
+            "a regra de bolso exige suporte explicito: informe suporte_mil=(lo, hi) ou cortes_vizinhos "
+            "(por exemplo, (300, 400)), e so um dos dois; sem isso a quartica de 0,300 atravessaria 0,400")
+    if suporte_mil is not None:
+        lo, hi = suporte_mil
+        return (-math.inf if lo is None else float(lo), math.inf if hi is None else float(hi))
+    outros = [float(v) for v in cortes_vizinhos if float(v) != float(corte_mil)]
+    abaixo = [v for v in outros if v < corte_mil]
+    acima = [v for v in outros if v > corte_mil]
+    lo = (max(abaixo) + corte_mil) / 2.0 if abaixo else -math.inf
+    hi = (min(acima) + corte_mil) / 2.0 if acima else math.inf
+    return (lo, hi)
+
+
 def m_regra_de_bolso(s_mil, y, corte_mil: float, *, suporte_mil: tuple[float, float] | None = None,
-                     peso=None) -> dict:
+                     cortes_vizinhos: Sequence[float] | None = None, peso=None) -> dict:
     """Limite M de |f''| pela regra de bolso de Armstrong e Kolesár (2020) / RDHonest.
 
     Em cada lado (o corte no inferior), quártica global de y em r = (s - c)/1000
-    por MQO (ou MQP com `peso`); M_lado = máx |f''(r)| no suporte do lado, com
-    f''(r) = 2 b2 + 6 b3 r + 12 b4 r^2 (máximo nas pontas ou no extremo
-    r* = -b3/(4 b4)). M = máx(M_abaixo, M_acima). `suporte_mil = (lo, hi)`
-    restringe os dados (inclusive); com dois cortes, use-o para que a quártica
-    de um corte não atravesse o outro (por exemplo, (150, 400) em 0,300).
-    M está em unidades de y por IVS^2.
+    por MQO (ou MQP com `peso`, que só entra se for passado aqui); M_lado =
+    máx |f''(r)| no suporte do lado, com f''(r) = 2 b2 + 6 b3 r + 12 b4 r^2
+    (máximo nas pontas ou no extremo r* = -b3/(4 b4)). M = máx(M_abaixo,
+    M_acima). O suporte da quártica é obrigatório e explícito
+    (`suporte_regra_de_bolso`: `suporte_mil` ou `cortes_vizinhos`) e vai para
+    `suporte_mil` e para a `nota`. M está em unidades de y por IVS^2.
     """
+    sup = suporte_regra_de_bolso(corte_mil, suporte_mil=suporte_mil, cortes_vizinhos=cortes_vizinhos)
     s = normalizar_s_mil(s_mil)
     n = len(s)
     yv = _vetor(y, n, "y")
-    pv = _vetor(peso, n, "peso") if peso is not None else np.ones(n)
-    ok = np.isfinite(yv) & np.isfinite(pv) & (pv > 0)
-    if suporte_mil is not None:
-        ok &= (s >= suporte_mil[0]) & (s <= suporte_mil[1])
+    pv = _peso_valido(peso, n)
+    pv = pv if pv is not None else np.ones(n)
+    ok = np.isfinite(yv) & np.isfinite(pv) & (pv > 0) & (s >= sup[0]) & (s <= sup[1])
     r = (s - corte_mil) / 1000.0
-    out: dict = {"corte_mil": corte_mil, "suporte_mil": suporte_mil, "nota": ""}
-    notas = []
+    out: dict = {"corte_mil": corte_mil, "suporte_mil": sup, "ponderada": peso is not None, "nota": ""}
+    notas = [f"M pela regra de bolso: quartica por lado no suporte {_fmt_suporte(sup)} (milesimos)"]
     for lado, m in (("abaixo", ok & (r <= 0)), ("acima", ok & (r > 0))):
         rr, yy, ww = r[m], yv[m], np.sqrt(pv[m])
+        out[f"n_{lado}"] = int(m.sum())
         if np.unique(rr).size < 5:
             out[f"M_{lado}"] = float("nan")
             out[f"coef_{lado}"] = []
-            notas.append(f"lado {lado} com menos de 5 mass points: quartica nao identificada")
+            notas.append(f"lado {lado} com menos de 5 mass points no suporte: quartica nao identificada")
             continue
         P = np.column_stack([rr ** p for p in range(5)])
         b = np.linalg.lstsq(P * ww[:, None], yy * ww, rcond=None)[0]
@@ -491,7 +583,6 @@ def m_regra_de_bolso(s_mil, y, corte_mil: float, *, suporte_mil: tuple[float, fl
                 cand.append(f2(ext))
         out[f"M_{lado}"] = float(max(cand))
         out[f"coef_{lado}"] = b.tolist()
-        out[f"n_{lado}"] = int(m.sum())
     out["M"] = float(max(out["M_abaixo"], out["M_acima"])) if all(
         math.isfinite(out[f"M_{l}"]) for l in ("abaixo", "acima")) else float("nan")
     out["nota"] = _juntar_notas(*notas)
@@ -569,41 +660,49 @@ def _honesto_de_pesos(res: dict, a: np.ndarray, r: np.ndarray, M: float, var: fl
 def rd_honesto(s_mil, y, corte_mil: float, h_mil: float = H_PRINCIPAL_MIL, *, M: float | None = None,
                kernel: str = "triangular", peso=None, cluster=None, ids_unidade=None,
                variancia: str | None = None, J: int = J_VIZINHOS,
-               suporte_mil: tuple[float, float] | None = None) -> dict:
+               suporte_mil: tuple[float, float] | None = None,
+               cortes_vizinhos: Sequence[float] | None = None) -> dict:
     """IC honesto (viés limitado) do local linear, Armstrong e Kolesár (2018, 2020).
 
     O estimador é o mesmo de `rd_local_linear` (tau = sum a_i y_i). Classe de
-    Taylor com |f''| <= M de cada lado: viés máximo
-    B = (M/2) sum_i |a_i| r_i^2 (r em IVS). É mais conservador que a classe de
-    Hölder padrão do RDHonest. IC: tau +- cv_0,05(B/ep) ep. ep: vizinhos
-    (J = 3, mesmo lado; padrão sem cluster), "ehw" (resíduos com fator HC1:
-    com M = 0 reproduz o IC HC1) ou "cluster" (CR1; padrão com cluster).
-    M = None usa `m_regra_de_bolso` (com `suporte_mil`). Covariáveis não são
-    aceitas aqui.
+    TAYLOR com |f''| <= M de cada lado: viés máximo
+    B = (M/2) sum_i |a_i| r_i^2 (r em IVS). Esse limite é mais largo
+    (conservador) que o da classe de Hölder, padrão do RDHonest: para o mesmo
+    M, o IC daqui é pelo menos tão largo quanto o do RDHonest. IC:
+    tau +- cv_0,05(B/ep) ep. ep: vizinhos (J = 3, mesmo lado; padrão sem
+    cluster), "ehw" (resíduos com fator HC1: com M = 0 reproduz o IC HC1) ou
+    "cluster" (CR1; padrão com cluster).
+    M = None usa `m_regra_de_bolso`, que exige suporte explícito
+    (`suporte_mil` ou `cortes_vizinhos`); o suporte usado vai para
+    `suporte_M_mil` e para a `nota`. A regra de bolso não usa o `peso` do
+    estimador (MQO, como o RDHonest). Covariáveis não são aceitas aqui.
     """
     if variancia is None:
         variancia = "cluster" if cluster is not None else "nn"
     if variancia == "nn" and cluster is not None:
         raise ValueError("variancia por vizinhos supoe observacoes independentes; use 'cluster'")
-    base = rd_local_linear(s_mil, y, corte_mil, h_mil, kernel=kernel, peso=peso, cluster=cluster,
-                           ids_unidade=ids_unidade, detalhes=True)
     regra = None
     if M is None:
-        regra = m_regra_de_bolso(s_mil, y, corte_mil, suporte_mil=suporte_mil)
+        regra = m_regra_de_bolso(s_mil, y, corte_mil, suporte_mil=suporte_mil, cortes_vizinhos=cortes_vizinhos)
         M = regra["M"]
+    base = rd_local_linear(s_mil, y, corte_mil, h_mil, kernel=kernel, peso=peso, cluster=cluster,
+                           ids_unidade=ids_unidade, detalhes=True)
     res = {k: v for k, v in base.items() if k != "_detalhes"}
     res.update({"M": M, "M_origem": "regra_de_bolso" if regra is not None else "informado",
-                "variancia": variancia, "classe": "Taylor (|f''| <= M por lado)",
+                "suporte_M_mil": regra["suporte_mil"] if regra is not None else None,
+                "variancia": variancia, "classe": "Taylor (|f''| <= M por lado; mais larga que Holder)",
                 "ep_convencional": base["ep"], "vies_max": float("nan"), "razao_vies_ep": float("nan"),
                 "cv": float("nan"), "semi_amplitude": float("nan")})
     if regra is not None:
         res["M_abaixo"], res["M_acima"] = regra["M_abaixo"], regra["M_acima"]
         res["nota"] = _juntar_notas(res["nota"], regra["nota"])
+    else:
+        res["nota"] = _juntar_notas(res["nota"], "M informado pelo chamador")
     if "_detalhes" not in base or not math.isfinite(M):
         res.update({"tau": base["tau"], "ep": float("nan"), "ic95_inf": float("nan"), "ic95_sup": float("nan"),
                     "p_valor": float("nan")})
         if not math.isfinite(M):
-            res["nota"] = _juntar_notas(res["nota"], "M indefinido")
+            res["nota"] = _juntar_notas(res["nota"], "M indefinido: IC honesto nao calculado")
         return res
     d = base["_detalhes"]
     usa = d["usa"]
@@ -615,20 +714,30 @@ def rd_honesto(s_mil, y, corte_mil: float, h_mil: float = H_PRINCIPAL_MIL, *, M:
     return res
 
 
+ROTULO_H_OTIMO = "ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO (h que minimiza o IC honesto; o protocolo fixa h = 0,050)"
+
+
 def rd_honesto_h_otimo(s_mil, y, corte_mil: float, *, M: float | None = None,
                        grade_h_mil: Sequence[float] = GRADE_H_MIL, h_fixo_mil: float = H_PRINCIPAL_MIL,
-                       suporte_mil: tuple[float, float] | None = None, **kw) -> dict:
+                       suporte_mil: tuple[float, float] | None = None,
+                       cortes_vizinhos: Sequence[float] | None = None, **kw) -> dict:
     """h que minimiza a semi-amplitude do IC honesto numa grade (Armstrong e Kolesár, 2020).
 
-    M é fixado uma vez (regra de bolso se None), antes da grade. Empate: o
-    menor h. Devolve {"h_fixo": resultado em h_fixo, "h_otimo": resultado no
-    h escolhido, "grade": DataFrame com h e semi-amplitude}.
+    ATENÇÃO: o h ótimo é especificação ADICIONAL ao protocolo E6–E9, que fixa
+    h = 0,050 (sensibilidade 0,030 e 0,080). O resultado em `h_otimo` vem com
+    `rotulo = ROTULO_H_OTIMO` e o chamador tem de relatá-lo como tal, nunca no
+    lugar do h fixo. M é fixado uma vez (regra de bolso com suporte explícito,
+    se None), antes da grade. Empate: o menor h. Devolve {"h_fixo",
+    "h_otimo", "grade" (DataFrame com h e semi-amplitude), "M"}.
     """
+    nota_m = "M informado pelo chamador"
     if M is None:
-        M = m_regra_de_bolso(s_mil, y, corte_mil, suporte_mil=suporte_mil)["M"]
+        regra = m_regra_de_bolso(s_mil, y, corte_mil, suporte_mil=suporte_mil, cortes_vizinhos=cortes_vizinhos)
+        M, nota_m = regra["M"], regra["nota"]
     linhas, resultados = [], {}
     for h in sorted(set(grade_h_mil) | {h_fixo_mil}):
         r = rd_honesto(s_mil, y, corte_mil, h, M=M, **kw)
+        r["nota"] = _juntar_notas(r["nota"].replace("M informado pelo chamador", nota_m))
         resultados[h] = r
         linhas.append({"h_mil": h, "h": h / 1000.0, "tau": r["tau"], "ep": r["ep"], "vies_max": r["vies_max"],
                        "semi_amplitude": r["semi_amplitude"], "nota": r["nota"]})
@@ -638,50 +747,71 @@ def rd_honesto_h_otimo(s_mil, y, corte_mil: float, *, M: float | None = None,
     if len(validas):
         h_ot = float(validas.sort_values(["semi_amplitude", "h_mil"], kind="stable").iloc[0]["h_mil"])
         h_ot = next(h for h in resultados if float(h) == h_ot)
-        otimo = resultados[h_ot]
+        otimo = dict(resultados[h_ot])
     else:
         otimo = {**_resultado_vazio(float("nan")), "nota": "nenhum h da grade com IC honesto definido"}
-    return {"h_fixo": resultados[h_fixo_mil], "h_otimo": otimo, "grade": grade, "M": M}
+    otimo["rotulo"] = ROTULO_H_OTIMO
+    fixo = dict(resultados[h_fixo_mil])
+    fixo["rotulo"] = "h fixo do protocolo" if h_fixo_mil == H_PRINCIPAL_MIL else "h fixo informado pelo chamador"
+    return {"h_fixo": fixo, "h_otimo": otimo, "grade": grade, "M": M}
 
 
 def rd_empilhado_honesto(s_mil, y, corte_mil, *, grupo=None, h_mil: float = H_PRINCIPAL_MIL,
                          M: float | None = None, kernel: str = "triangular", peso=None, cluster=None,
                          ids_unidade=None, efeitos_fixos=None, variancia: str | None = None,
-                         J: int = J_VIZINHOS) -> dict:
+                         J: int = J_VIZINHOS, suporte_mil=None,
+                         cortes_vizinhos: Sequence[float] | None = None) -> dict:
     """IC honesto do estimador empilhado, com os pesos a_i da regressão empilhada.
 
-    Estimando: sum_g omega_g tau_g (`pesos_grupos`). Viés máximo
+    Estimando: sum_g omega_g tau_g (`pesos_grupos`). Classe de Taylor (mais
+    larga que a de Hölder do RDHonest): viés máximo
     B = (M/2) sum_i |a_i| r_i^2 sob |f_g''| <= M em cada grupo e lado; o resto
     do modelo (EF aditivos, inclinações comuns dentro do grupo) é suposto
-    correto. M = None: máximo da regra de bolso por grupo, calculada com as
-    linhas daquele grupo (o chamador restringe o suporte pelas linhas que
-    passa). Variância: "cluster" (padrão com cluster; obrigatória quando há
-    unidade repetida), "ehw" ou "nn" (vizinhos na célula grupo x lado).
+    correto. M = None: máximo da regra de bolso por grupo, com as linhas do
+    grupo e suporte explícito: `cortes_vizinhos` (por exemplo, (300, 400): cada
+    corte até o ponto médio 350) ou `suporte_mil`, uma tupla para todos os
+    grupos ou um dict {grupo: (lo, hi)}. O suporte de cada grupo vai para
+    `suporte_M_por_grupo` e para a `nota`. Variância: "cluster" (padrão com
+    cluster; obrigatória quando há unidade repetida), "ehw" ou "nn" (vizinhos
+    na célula grupo x lado).
     """
     if variancia is None:
         variancia = "cluster" if cluster is not None else "nn"
     if variancia == "nn" and cluster is not None:
         raise ValueError("variancia por vizinhos supoe observacoes independentes; use 'cluster'")
+    if M is None and suporte_mil is None and cortes_vizinhos is None:
+        suporte_regra_de_bolso(0.0)  # levanta o erro de suporte nao explicito
     base = rd_empilhado(s_mil, y, corte_mil, grupo=grupo, h_mil=h_mil, kernel=kernel, peso=peso, cluster=cluster,
                         ids_unidade=ids_unidade, efeitos_fixos=efeitos_fixos, detalhes=True)
     res = {k: v for k, v in base.items() if k != "_detalhes"}
     origem = "informado"
+    notas_m = ["M informado pelo chamador"] if M is not None else []
     if M is None and "_detalhes" in base:
         d = base["_detalhes"]
-        ms = {}
+        ms, sups = {}, {}
         for grp in sorted(np.unique(d["grupo"]).tolist()):
             em = d["grupo"] == grp
             cortes = np.unique(d["corte"][em])
             if cortes.size != 1:
                 raise ValueError(f"grupo {grp} com mais de um corte: M por grupo indefinido")
-            ms[grp] = m_regra_de_bolso(d["s"][em], d["y"][em], float(cortes[0]))["M"]
+            sup_g = suporte_mil.get(grp) if isinstance(suporte_mil, dict) else suporte_mil
+            if isinstance(suporte_mil, dict) and sup_g is None:
+                raise ValueError(f"suporte_mil sem entrada para o grupo {grp}")
+            regra = m_regra_de_bolso(d["s"][em], d["y"][em], float(cortes[0]), suporte_mil=sup_g,
+                                     cortes_vizinhos=None if sup_g is not None else cortes_vizinhos)
+            ms[grp], sups[grp] = regra["M"], regra["suporte_mil"]
+            notas_m.append(f"grupo {grp}: {regra['nota']}")
         res["M_por_grupo"] = ms
+        res["suporte_M_por_grupo"] = sups
         M = float(max(ms.values())) if all(math.isfinite(v) for v in ms.values()) else float("nan")
         origem = "regra_de_bolso (maximo entre grupos)"
-    res.update({"M": M, "M_origem": origem, "variancia": variancia, "classe": "Taylor (|f''| <= M por grupo e lado)",
-                "ep_convencional": base["ep"]})
+    res.update({"M": M, "M_origem": origem, "variancia": variancia,
+                "classe": "Taylor (|f''| <= M por grupo e lado; mais larga que Holder)",
+                "ep_convencional": base["ep"], "nota": _juntar_notas(res["nota"], *notas_m)})
     if "_detalhes" not in base or M is None or not math.isfinite(M):
         res.update({"ep": float("nan"), "ic95_inf": float("nan"), "ic95_sup": float("nan"), "p_valor": float("nan")})
+        if M is not None and not math.isfinite(M):
+            res["nota"] = _juntar_notas(res["nota"], "M indefinido: IC honesto nao calculado")
         return res
     d = base["_detalhes"]
     usa = d["usa"]
@@ -694,29 +824,37 @@ def rd_empilhado_honesto(s_mil, y, corte_mil, *, grupo=None, h_mil: float = H_PR
 
 def rd_honesto_relato(s_mil, y, corte_mil: float, *, M: float | None = None, fatores_M: Sequence[float] = (0.5, 1.0, 2.0),
                       h_fixo_mil: float = H_PRINCIPAL_MIL, grade_h_mil: Sequence[float] = GRADE_H_MIL,
-                      suporte_mil: tuple[float, float] | None = None, **kw) -> pd.DataFrame:
+                      suporte_mil: tuple[float, float] | None = None,
+                      cortes_vizinhos: Sequence[float] | None = None, **kw) -> pd.DataFrame:
     """Tabela do protocolo: IC honesto em h fixo e em h ótimo, para M x {0,5; 1; 2}.
 
-    M base = regra de bolso (se None). Para cada fator, o h ótimo é escolhido
-    de novo na grade com aquele M.
+    M base = regra de bolso com suporte explícito (se None). Para cada fator,
+    o h ótimo é escolhido de novo na grade com aquele M. A coluna
+    `no_protocolo` separa o h fixo (True) do h ótimo (False, especificação
+    adicional; ver `rd_honesto_h_otimo`).
     """
     regra = None
     if M is None:
-        regra = m_regra_de_bolso(s_mil, y, corte_mil, suporte_mil=suporte_mil)
+        regra = m_regra_de_bolso(s_mil, y, corte_mil, suporte_mil=suporte_mil, cortes_vizinhos=cortes_vizinhos)
         M = regra["M"]
     linhas = []
     for f in fatores_M:
         r = rd_honesto_h_otimo(s_mil, y, corte_mil, M=f * M, grade_h_mil=grade_h_mil, h_fixo_mil=h_fixo_mil, **kw)
         for esp in ("h_fixo", "h_otimo"):
             x = r[esp]
+            nota = x.get("nota", "")
+            if regra is not None:
+                nota = nota.replace("M informado pelo chamador", f"{regra['nota']}; fator {f:g}")
             linhas.append({
-                "especificacao": esp, "fator_M": f, "M": f * M, "M_base": M,
+                "especificacao": esp, "no_protocolo": esp == "h_fixo", "rotulo": x.get("rotulo"),
+                "fator_M": f, "M": f * M, "M_base": M,
                 "M_origem": "regra_de_bolso" if regra is not None else "informado",
+                "suporte_M_mil": regra["suporte_mil"] if regra is not None else None,
                 "h": x.get("h"), "h_mil": x.get("h_mil"), "tau": x.get("tau"), "ep": x.get("ep"),
                 "ep_convencional": x.get("ep_convencional"), "vies_max": x.get("vies_max"), "cv": x.get("cv"),
                 "ic95_inf": x.get("ic95_inf"), "ic95_sup": x.get("ic95_sup"), "semi_amplitude": x.get("semi_amplitude"),
                 "p_valor": x.get("p_valor"), "n_abaixo": x.get("n_abaixo"), "n_acima": x.get("n_acima"),
-                "variancia": x.get("variancia"), "nota": x.get("nota", ""),
+                "variancia": x.get("variancia"), "nota": nota,
             })
     return pd.DataFrame(linhas)
 
@@ -734,77 +872,112 @@ def rd_poisson_local(s_mil, y, corte_mil: float, h_mil: float = H_PRINCIPAL_MIL,
     pseudo-verossimilhança cai. `offset` = log(células) ou log(população).
     tau é o salto em log (exp(tau) - 1 é comparável aos +26% de Dal Bó, Finan
     e Rossi, 2013). EP sanduíche com o mesmo fator do MQP (HC1/CR1; HC0/CR0
-    se `pequena_amostra=False`). Lado sem eventos (soma ponderada de y nula):
-    o MLE do intercepto daquele lado é -infinito; devolve NaN com nota.
+    se `pequena_amostra=False`). Devolve NaN com nota, sem estimativa de
+    reserva, quando: lado sem eventos (MLE do intercepto em -infinito);
+    separação (eventos com peso positivo em um único mass point de um lado:
+    a inclinação daquele lado diverge); graus de liberdade insuficientes
+    (n <= 4); hessiana singular; ou não convergência. Convergência exige passo
+    < `tol` E gradiente relativo max|g| / max(1, sum w y) < 1e-8; busca em
+    linha que não melhora a pseudo-verossimilhança encerra sem convergência.
+    Linhas na janela com y, offset ou peso ausentes são contadas
+    (`n_descartadas_*`) e registradas na nota.
     """
     s = normalizar_s_mil(s_mil)
     n = len(s)
     yv = _vetor(y, n, "y")
     off = _vetor(offset, n, "offset") if offset is not None else np.zeros(n)
     x_mil = s - corte_mil
-    w = pesos_kernel(x_mil, h_mil, kernel)
-    if peso is not None:
-        w = w * _vetor(peso, n, "peso")
+    kern = pesos_kernel(x_mil, h_mil, kernel)
+    pv = _peso_valido(peso, n)
+    w = kern * pv if pv is not None else kern
     x = x_mil / 1000.0
     t = (x_mil > 0).astype(float)
-    usa = (w > 0) & np.isfinite(yv) & np.isfinite(off) & np.isfinite(w)
+    desc, nota_desc = _descartes(kern > 0, y_ausente=~np.isfinite(yv), offset_ausente=~np.isfinite(off),
+                                 peso_ausente=~np.isfinite(pv) if pv is not None else np.zeros(n, dtype=bool))
+    usa = (w > 0) & np.isfinite(yv) & np.isfinite(off)
     if (yv[usa] < 0).any():
         raise ValueError("Poisson local exige y >= 0")
     ab, ac = usa & (x_mil <= 0), usa & (x_mil > 0)
-    cl = _rotulos(cluster, n)
-    ids = _rotulos(ids_unidade, n) if ids_unidade is not None else cl
+    cl = _rotulos(cluster, n, "cluster")
+    ids = _rotulos(ids_unidade, n, "ids_unidade") if ids_unidade is not None else cl
     res = _resultado_vazio(h_mil)
     res.update({"corte_mil": corte_mil, "kernel": kernel, "n_abaixo": _contar(ids, ab), "n_acima": _contar(ids, ac),
                 "n_obs": int(usa.sum()), "mass_points_abaixo": int(np.unique(s[ab]).size),
                 "mass_points_acima": int(np.unique(s[ac]).size), "eventos_abaixo": float(np.sum(yv[ab])),
                 "eventos_acima": float(np.sum(yv[ac])), "efeito_relativo": float("nan"),
                 "efeito_relativo_ic95_inf": float("nan"), "efeito_relativo_ic95_sup": float("nan"),
-                "convergiu": False, "iteracoes": 0})
-    if res["mass_points_abaixo"] < 2 or res["mass_points_acima"] < 2:
-        res["nota"] = "suporte insuficiente: menos de 2 mass points com peso positivo em algum lado"
+                "convergiu": False, "iteracoes": 0, **desc, "nota": nota_desc})
+
+    def falha(motivo: str) -> dict:
+        res["nota"] = _juntar_notas(nota_desc, motivo)
         return res
+
+    if res["mass_points_abaixo"] < 2 or res["mass_points_acima"] < 2:
+        return falha("suporte insuficiente: menos de 2 mass points com peso positivo em algum lado")
+    k = 4
+    if int(usa.sum()) <= k:
+        return falha("graus de liberdade insuficientes: n <= 4 parametros")
     sem = [lado for lado, m in (("abaixo", ab), ("acima", ac)) if np.sum(w[m] * yv[m]) <= 0]
     if sem:
-        res["nota"] = f"lado sem eventos ({', '.join(sem)}): salto em log nao identificado (MLE em -infinito)"
-        return res
+        return falha(f"lado sem eventos ({', '.join(sem)}): salto em log nao identificado (MLE em -infinito)")
+    separados = [lado for lado, m in (("abaixo", ab), ("acima", ac))
+                 if np.unique(s[m & (w * np.where(np.isfinite(yv), yv, 0.0) > 0)]).size < 2]
+    if separados:
+        return falha(f"separacao ({', '.join(separados)}): eventos em um unico mass point do lado; "
+                     f"a inclinacao diverge e o MLE nao existe")
     X = np.column_stack([np.ones(n), x, t, t * x])[usa]
     yy, ww, oo = yv[usa], w[usa], off[usa]
+    escala = max(1.0, float(np.sum(ww * yy)))
 
     def pseudo_ll(b: np.ndarray) -> float:
-        with np.errstate(over="ignore"):
+        with np.errstate(over="ignore", invalid="ignore"):
             eta = oo + X @ b
             return float(np.sum(ww * (yy * eta - np.exp(eta))))
 
-    beta = np.zeros(4)
+    beta = np.zeros(k)
     beta[0] = math.log(np.sum(ww * yy) / np.sum(ww * np.exp(oo)))
     ll = pseudo_ll(beta)
     convergiu = False
+    motivo = "IRLS nao convergiu em max_iter iteracoes"
     it = 0
     for it in range(1, max_iter + 1):
         mu = np.exp(oo + X @ beta)
         grad = X.T @ (ww * (yy - mu))
         H = X.T @ (X * (ww * mu)[:, None])
-        passo = np.linalg.solve(H, grad)
+        try:
+            passo = np.linalg.solve(H, grad)
+        except np.linalg.LinAlgError:
+            motivo = "hessiana singular no IRLS (possivel separacao)"
+            break
         fator = 1.0
-        while True:
+        melhorou = False
+        while fator >= 1e-8:
             novo = beta + fator * passo
             ll_novo = pseudo_ll(novo)
-            if (math.isfinite(ll_novo) and ll_novo >= ll - 1e-12 * abs(ll)) or fator < 1e-8:
+            if math.isfinite(ll_novo) and ll_novo >= ll - 1e-12 * abs(ll):
+                melhorou = True
                 break
             fator /= 2.0
+        if not melhorou:
+            motivo = "busca em linha parou sem melhorar a pseudo-verossimilhanca"
+            break
         beta, ll = novo, ll_novo
-        if np.max(np.abs(fator * passo)) < tol:
+        mu = np.exp(oo + X @ beta)
+        grad = X.T @ (ww * (yy - mu))
+        if np.max(np.abs(fator * passo)) < tol and np.max(np.abs(grad)) / escala < 1e-8:
             convergiu = True
             break
     res["iteracoes"] = it
     res["convergiu"] = convergiu
     if not convergiu or not np.isfinite(beta).all():
-        res["nota"] = "IRLS nao convergiu (possivel separacao: eventos concentrados em poucos mass points)"
-        return res
+        return falha(motivo)
     mu = np.exp(oo + X @ beta)
-    bread = np.linalg.inv(X.T @ (X * (ww * mu)[:, None]))
+    try:
+        bread = np.linalg.inv(X.T @ (X * (ww * mu)[:, None]))
+    except np.linalg.LinAlgError:
+        return falha("hessiana singular na solucao (possivel separacao)")
     score = X * (ww * (yy - mu))[:, None]
-    m_obs, k = len(yy), 4
+    m_obs = len(yy)
     if cl is None:
         meat = score.T @ score
         fator = m_obs / (m_obs - k) if pequena_amostra else 1.0
@@ -812,8 +985,7 @@ def rd_poisson_local(s_mil, y, corte_mil: float, h_mil: float = H_PRINCIPAL_MIL,
         _, idx = np.unique(cl[usa], return_inverse=True)
         G = int(idx.max()) + 1
         if G < 2:
-            res["nota"] = "menos de 2 clusters"
-            return res
+            return falha("menos de 2 clusters")
         S = np.zeros((G, k))
         np.add.at(S, idx, score)
         meat = S.T @ S
@@ -836,8 +1008,13 @@ def diferenca_pos_pre(painel: pd.DataFrame, *, col_unidade: str, col_periodo: st
                       periodos_pre: Sequence, periodos_pos: Sequence, exigir_completo: bool = True) -> pd.DataFrame:
     """Por unidade: y_pre = média(pré), y_pos = média(pós), delta = y_pos - y_pre.
 
-    Com `exigir_completo`, unidade sem todos os períodos de pré ou de pós (ou
-    com y ausente) fica com delta NaN (ausência não vira zero).
+    `exigir_completo=True` (padrão): unidade sem todos os períodos de pré ou
+    de pós (ou com y ausente em algum deles) fica com y_pre/y_pos e delta NaN;
+    ausência nunca vira zero, e a RDD sobre delta conta essas unidades em
+    `n_descartadas_y_ausente`. `exigir_completo=False`: a média usa os períodos
+    presentes (painel desbalanceado; as unidades pesam médias de tamanhos
+    diferentes). Em ambos os casos `completo_pre`/`completo_pos` marcam cada
+    unidade e `attrs["nota"]` conta as unidades incompletas.
     """
     p = painel[[col_unidade, col_periodo, col_y]]
     if p.duplicated([col_unidade, col_periodo]).any():
@@ -848,10 +1025,21 @@ def diferenca_pos_pre(painel: pd.DataFrame, *, col_unidade: str, col_periodo: st
         agg = sub.groupby(col_unidade)[col_y].agg(["mean", "count"])
         out[f"y_{nome}"] = agg["mean"].reindex(out.index)
         out[f"n_{nome}"] = agg["count"].reindex(out.index).fillna(0).astype(int)
+        out[f"completo_{nome}"] = out[f"n_{nome}"] == len(periodos)
         if exigir_completo:
-            out.loc[out[f"n_{nome}"] < len(periodos), f"y_{nome}"] = np.nan
+            out.loc[~out[f"completo_{nome}"], f"y_{nome}"] = np.nan
     out["delta"] = out["y_pos"] - out["y_pre"]
-    return out.reset_index()
+    inc_pre, inc_pos = int((~out["completo_pre"]).sum()), int((~out["completo_pos"]).sum())
+    notas = []
+    if inc_pre or inc_pos:
+        notas.append(f"painel desbalanceado: {inc_pre} unidades sem todos os periodos de pre e {inc_pos} sem "
+                     f"todos os de pos" + ("; delta NaN nessas unidades" if exigir_completo
+                                           else "; medias com os periodos presentes"))
+    out = out.reset_index()
+    out.attrs["nota"] = "; ".join(notas)
+    out.attrs["n_unidades_incompletas_pre"] = inc_pre
+    out.attrs["n_unidades_incompletas_pos"] = inc_pos
+    return out
 
 
 def rd_dird_delta(s_mil, y_pos, y_pre, corte_mil: float, h_mil: float = H_PRINCIPAL_MIL, **kw) -> dict:
@@ -876,7 +1064,12 @@ def rd_dird_painel(s_mil, y, pos, corte_mil: float, unidade, h_mil: float = H_PR
     y_it = a + b x + g T + d T x + pos (a' + b' x + tau T + d' T x) + e, com
     peso de kernel da unidade (x `peso`), cluster por unidade (CR1). Com painel
     balanceado e os mesmos pesos, o ponto é idêntico ao de `rd_dird_delta`, e
-    o EP CR0 (`pequena_amostra=False`) é idêntico ao HC0 de (a).
+    o EP CR0 (`pequena_amostra=False`) é idêntico ao HC0 de (a). Painel
+    desbalanceado roda, mas não em silêncio: a nota e os campos
+    `n_unidades_sem_pre`, `n_unidades_sem_pos` e `painel_balanceado` contam,
+    entre as unidades na janela, as que não têm linha de pré ou de pós e se o
+    número de períodos varia entre unidades (aí cada unidade pesa pelo seu
+    número de períodos e a identidade com (a) deixa de valer).
     """
     s = normalizar_s_mil(s_mil)
     n = len(s)
@@ -884,29 +1077,44 @@ def rd_dird_painel(s_mil, y, pos, corte_mil: float, unidade, h_mil: float = H_PR
     pv = _vetor(pos, n, "pos")
     if not np.isin(pv, (0.0, 1.0)).all():
         raise ValueError("pos deve ser 0/1")
-    uni = _rotulos(unidade, n)
+    uni = _rotulos(unidade, n, "unidade")
     x_mil = s - corte_mil
-    w = pesos_kernel(x_mil, h_mil, kernel)
-    if peso is not None:
-        w = w * _vetor(peso, n, "peso")
+    kern = pesos_kernel(x_mil, h_mil, kernel)
+    pe = _peso_valido(peso, n)
+    w = kern * pe if pe is not None else kern
     x = x_mil / 1000.0
     t = (x_mil > 0).astype(float)
     X = np.column_stack([np.ones(n), x, t, t * x, pv, pv * x, t * pv, t * pv * x])
     nomes = ["const", "x", "T", "T_x", "pos", "pos_x", "T_pos", "T_pos_x"]
+    desc, nota_desc = _descartes(kern > 0, y_ausente=~np.isfinite(yv),
+                                 peso_ausente=~np.isfinite(pe) if pe is not None else np.zeros(n, dtype=bool))
     usa = (w > 0) & np.isfinite(yv)
     ab, ac = usa & (x_mil <= 0), usa & (x_mil > 0)
+    # Balanceamento entre as unidades da janela (linhas usadas).
+    cont = pd.DataFrame({"u": uni[usa], "pos": pv[usa]}).groupby("u")["pos"].agg(["size", "sum"])
+    n_pos_u = cont["sum"].to_numpy()
+    n_pre_u = cont["size"].to_numpy() - n_pos_u
+    sem_pre, sem_pos = int((n_pre_u == 0).sum()), int((n_pos_u == 0).sum())
+    balanceado = bool(len(cont) > 0 and np.unique(n_pre_u).size == 1 and np.unique(n_pos_u).size == 1)
+    notas = [nota_desc] if nota_desc else []
+    if not balanceado:
+        notas.append(f"painel desbalanceado na janela: {sem_pre} unidades sem pre, {sem_pos} sem pos, "
+                     f"periodos por unidade de {int(cont['size'].min()) if len(cont) else 0} a "
+                     f"{int(cont['size'].max()) if len(cont) else 0}; cada unidade pesa pelo numero de periodos")
     res = _resultado_vazio(h_mil)
     res.update({"corte_mil": corte_mil, "kernel": kernel, "n_abaixo": _contar(uni, ab), "n_acima": _contar(uni, ac),
-                "n_obs": int(usa.sum()), "tau_pre": float("nan"),
-                "estimador": "DiRD em painel: coeficiente de T x pos, CR1 por unidade"})
+                "n_obs": int(usa.sum()), "tau_pre": float("nan"), **desc,
+                "n_unidades_sem_pre": sem_pre, "n_unidades_sem_pos": sem_pos, "painel_balanceado": balanceado,
+                "estimador": "DiRD em painel: coeficiente de T x pos, CR1 por unidade",
+                "nota": _juntar_notas(*notas)})
     for per in (0.0, 1.0):
         em = usa & (pv == per)
         if np.unique(s[em & (x_mil <= 0)]).size < 2 or np.unique(s[em & (x_mil > 0)]).size < 2:
-            res["nota"] = "suporte insuficiente: menos de 2 mass points por lado em pre ou pos"
+            res["nota"] = _juntar_notas(*notas, "suporte insuficiente: menos de 2 mass points por lado em pre ou pos")
             return res
     fit = mqp_sanduiche(X[usa], yv[usa], w[usa], nomes=nomes, cluster=uni[usa], pequena_amostra=pequena_amostra)
     if "erro" in fit:
-        res["nota"] = fit["erro"]
+        res["nota"] = _juntar_notas(*notas, fit["erro"])
         return res
     i = fit["nomes"].index("T_pos")
     _inferencia_normal(res, float(fit["beta"][i]), float(math.sqrt(max(fit["V"][i, i], 0.0))))
@@ -980,6 +1188,10 @@ def indice_klk(dados: pd.DataFrame, componentes: Sequence[str], *, referencia, s
       covariância dos z no grupo de referência (Anderson, 2008), calculada com
       pares completos; com ausência, sum w_k z_k / sum w_k sobre os
       componentes presentes.
+    Ausência: componente ausente numa linha NÃO é imputado (nem pela média do
+    grupo, como em algumas implementações do KLK): o índice da linha é a média
+    (ou média ponderada, em "anderson") dos componentes presentes, e
+    `n_componentes` diz quantos entraram; linha sem nenhum fica NaN.
     Componente sem variação na referência (ou com menos de 2 valores) fica
     ausente naquele grupo e é registrado. Devolve (saída alinhada a `dados`
     com z_<k>, indice e n_componentes; parâmetros por grupo x componente).
@@ -994,7 +1206,7 @@ def indice_klk(dados: pd.DataFrame, componentes: Sequence[str], *, referencia, s
     ref = np.asarray(referencia, dtype=bool)
     if ref.shape != (n,):
         raise ValueError("referencia com tamanho errado")
-    g = _rotulos(grupo, n) if grupo is not None else np.full(n, "todos")
+    g = _rotulos(grupo, n, "grupo") if grupo is not None else np.full(n, "todos")
     K = len(componentes)
     Zs = np.full((n, K), np.nan)
     W = np.full((n, K), np.nan)
@@ -1139,14 +1351,30 @@ def limites_lee_rd(s_mil, y, selecionado, corte_mil: float, h_mil: float = H_PRI
     sel = _vetor(selecionado, n, "selecionado")
     if not np.isin(sel[np.isfinite(sel)], (0.0, 1.0)).all():
         raise ValueError("selecionado deve ser 0/1")
-    pv = _vetor(peso, n, "peso") if peso is not None else np.ones(n)
-    comuns = dict(kernel=kernel, cluster=cluster, ids_unidade=ids_unidade)
-    rs = rd_local_linear(s, sel, corte_mil, h_mil, peso=pv, detalhes=True, **comuns)
+    pv = _peso_valido(peso, n)
+    pv = pv if pv is not None else np.ones(n)
     res = {"tau_inf": float("nan"), "tau_sup": float("nan"), "ep_inf": float("nan"), "ep_sup": float("nan"),
            "ic95_inf": float("nan"), "ic95_sup": float("nan"), "p0_selecao": float("nan"),
-           "p1_selecao": float("nan"), "salto_selecao": rs["tau"], "q_aparo": float("nan"), "lado_aparado": None,
+           "p1_selecao": float("nan"), "salto_selecao": float("nan"), "q_aparo": float("nan"), "lado_aparado": None,
            "tau_selecionados": float("nan"), "ep_selecionados": float("nan"), "n_abaixo": None, "n_acima": None,
            "h": h_mil / 1000.0, "h_mil": h_mil, "nota": ""}
+    # Lee exige y observado exatamente quando selecionado: na janela, selecionado
+    # sem y, selecao ausente ou peso ausente invalidam os limites (sem descarte silencioso).
+    janela = pesos_kernel(s - corte_mil, h_mil, kernel) > 0
+    falhas = {
+        "n_selecionados_sem_y": int((janela & (sel == 1) & ~np.isfinite(yv)).sum()),
+        "n_selecao_ausente": int((janela & ~np.isfinite(sel)).sum()),
+        "n_peso_ausente": int((janela & ~np.isfinite(pv)).sum()),
+    }
+    res.update(falhas)
+    if any(falhas.values()):
+        res["nota"] = ("limites de Lee nao calculados: na janela, " + ", ".join(
+            f"{v} {k.removeprefix('n_').replace('_', ' ')}" for k, v in falhas.items() if v)
+            + "; Lee exige y observado exatamente quando selecionado")
+        return res
+    comuns = dict(kernel=kernel, cluster=cluster, ids_unidade=ids_unidade)
+    rs = rd_local_linear(s, sel, corte_mil, h_mil, peso=pv, detalhes=True, **comuns)
+    res["salto_selecao"] = rs["tau"]
     if "_detalhes" not in rs:
         res["nota"] = f"taxa de selecao nao estimada: {rs['nota']}"
         return res
