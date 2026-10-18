@@ -1,7 +1,7 @@
 {
   "documento": "Protocolo multi-outcome da bolsa do PMM-E (E6-E9)",
   "texto_canonico": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
-  "sha256_texto_canonico": "502884e043d041617d42cce1d3f5b0f2939ad2af67011d4af6f2e4f971e960b9",
+  "sha256_texto_canonico": "f80223ea07774b9fc2fa1a1c6ac7c2b9707a45173dc5a023194e32fafc983ccf",
   "data_congelamento": "2026-10-18",
   "autorizacao_autor": {
     "data": "2026-10-18",
@@ -117,6 +117,24 @@
       "data": "2026-10-18",
       "antes_de_abrir_outcomes_novos": true,
       "E9": "logit condicional da 1a opcao do candidato entre celulas do mesmo curso e ciclo; atributos: bolsa anunciada, IVS continuo (grau 1 e 2 por faixa), log pop Censo 2022, macrorregiao, estrato; exploded logit com a 2a opcao como sensibilidade; estimando = efeito sobre a escolha entre vagas (realocacao), nao sobre o total de candidatos"
+    },
+    {
+      "data": "2026-10-18",
+      "antes_de_abrir_outcomes_novos": true,
+      "politicas_mesmos_cortes": "auditoria 18: Portaria 752/2023, Portaria 3.493/2024, emendas/incrementos +20% IVS>0,3 (2024-2027), PI 604/2023 em 0,400; RDD em nivel = pacote",
+      "suplementares": {
+        "S1": "RDD em ativas_coparticipacao PMMB",
+        "S2": "donut sem IVS == 0,300 e 0,400",
+        "S3": "heterogeneidade por classe de porte onde o estrato APS muda vs nao muda",
+        "S4": "0,400 dentro vs fora da Amazonia Legal/fronteira",
+        "S5": "estudo de evento com datas das politicas; pre extra 2022-01..2023-03",
+        "S6": "placebo generalistas com CBO 225130 em separado"
+      }
+    },
+    {
+      "data": "2026-10-18",
+      "antes_de_estimar_E9": true,
+      "E9_conjunto_de_escolha": "principal: todas as celulas do curso e ciclo no quadro da 1a chamada (com ou sem vaga imediata), com atributo tem_vaga_imediata e log(vagas imediatas+1); sensibilidade: so celulas com vaga imediata"
     }
   ]
 }

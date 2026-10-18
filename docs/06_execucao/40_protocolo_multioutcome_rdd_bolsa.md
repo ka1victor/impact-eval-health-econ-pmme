@@ -248,3 +248,47 @@ candidaturas; McFadden, 1974, para o logit condicional).
 - **Ciclos:** 1, 2 (se a 1ª chamada for obtida de fonte oficial) e 3, em
   separado e empilhados.
 - **Saídas:** `scripts/rdd_bolsa/16_*`, `output/rdd_bolsa/E9_*`.
+
+## 13. Adendo de 18/10/2026 (antes de abrir os outcomes novos): políticas nos mesmos cortes
+
+A tarefa D ([`auditorias/18`](../auditorias/18_politicas_nos_mesmos_cortes_ivs.md))
+verificou em fonte primária que outras regras federais mudam nos mesmos cortes:
+- **Portaria 752/2023 (PMMB):** teto de vagas por faixa de IVS, em 0,3 e 0,4,
+  com o limite no lado de cima;
+- **Portaria 3.493/2024 (financiamento da APS):** estrato = IVS × porte. Muda
+  em 0,300 só nas classes de porte 2 e 3, e em 0,400 só nas classes 1, 2 e 4;
+- **emendas e incrementos de APS e MAC, 2024–2027:** +20% de teto com "IVS
+  maior que 0,3";
+- **ajuda de custo do PMMB (Portaria Interministerial 604/2023):** muda em
+  0,400, fora da Amazônia Legal e da faixa de fronteira;
+- regras menores (lista na auditoria 18).
+
+**Consequência:** a RDD em nível mede um **pacote**. A DiRD só remove a parte
+dessas políticas que é constante entre pré e pós. Especificações
+suplementares, fixadas agora:
+
+| Id | Especificação | Para quê |
+|---|---|---|
+| S1 | RDD em `ativas_coparticipacao` do PMMB (retrato a07) | ver se a 752 aparece no corte |
+| S2 | donut: excluir os municípios com IVS exatamente 0,300 e 0,400 | regra de limite oposta (752 e bolsa) |
+| S3 | heterogeneidade por classe de porte: o estrato da APS muda × não muda no corte | isolar o canal da APS |
+| S4 | em 0,400: dentro × fora da Amazônia Legal e faixa de fronteira | isolar a ajuda de custo do PMMB |
+| S5 | estudo de evento da DiRD com as datas de cada política marcadas; pré extra de 2022-01 a 2023-03, antes de todas | a descontinuidade das CBO-alvo deve ser plana antes do PMM-E |
+| S6 | placebo de generalistas com a CBO 225130 (medicina de família) em separado | desvio do §5, registrado antes de abrir |
+
+**O que é mais robusto a esse pacote:** outcomes do funil do candidato
+(candidaturas, escolha, E9). As outras políticas não mudam a remuneração do
+especialista do PMM-E. A exceção é o +20% da MAC em 0,3, que pode mudar a
+estrutura do serviço; isso é declarado como limite.
+
+## 14. Esclarecimento de 18/10/2026 (antes de estimar o E9): conjunto de escolha
+
+A construção dos dados (tarefa B, doc 41a) mostrou que muitas 1ªs opções caem
+em células só com cadastro de reserva, sem vaga imediata. Isso é contagem de
+arquivo, sem quebra por corte ou faixa. Restringir o conjunto de escolha às
+células com vaga imediata descartaria essas escolhas reais. Fica fixado:
+- **E9 principal:** o conjunto de escolha são todas as células do curso e
+  ciclo no quadro da 1ª chamada, com ou sem vaga imediata. Entra o atributo
+  "tem vaga imediata" (e o log de vagas imediatas + 1).
+- **Sensibilidade:** só células com vaga imediata e só candidatos cuja 1ª
+  opção está nelas (a definição original do §12).
