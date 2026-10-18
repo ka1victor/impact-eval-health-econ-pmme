@@ -83,10 +83,20 @@ class PreAnalysisC3Test(unittest.TestCase):
         self.assertFalse(self.registry["efeitos_pos_tratamento_estimados"])
 
     def test_registry_hashes(self) -> None:
+        # Hashes congelados em 31/08/2026; a emenda de 18/10/2026 (covariadas da
+        # propensão corrigidas: arquivo de IVS errado, auditoria 19) traz os hashes em
+        # vigor dos artefatos que ela regravou. Painéis pré-T0 continuam os congelados.
+        emendas = {e["data"]: e for e in self.registry.get("emendas", [])}
+        em_vigor = emendas["2026-10-18"]["hashes_artefatos_em_vigor"]
+        self.assertFalse(emendas["2026-10-18"]["leitura_pos_t0"])
+        self.assertLess(emendas["2026-10-18"]["competencia_maxima_lida"], "202609")
         for relative, expected in self.registry["hashes_artefatos_congelados"].items():
             path = ROOT / relative
             self.assertTrue(path.exists(), relative)
-            self.assertEqual(sha256(path), expected, relative)
+            self.assertEqual(sha256(path), em_vigor.get(relative, expected), relative)
+        for relative in ("output/avaliacao_ciclo3/cnes_pre/painel_forca_trabalho_pre.parquet",
+                         "output/avaliacao_ciclo3/cnes_pre/painel_forca_trabalho_cnes_pre.parquet"):
+            self.assertNotIn(relative, em_vigor, "painel pré-T0 não pode ser regravado pela emenda")
 
     def test_independent_estimator_audit(self) -> None:
         path = ROOT / "scripts" / "avaliacao_ciclo3" / "03_auditar_pre_e_potencia.py"

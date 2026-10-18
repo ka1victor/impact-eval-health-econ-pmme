@@ -67,5 +67,27 @@
     "exclusoes": "qualquer reserva, mista ou combinação local",
     "inferência_futura": "FE de unidade e mês; cluster município; wild cluster bootstrap-t restrito e reestudantizado",
     "synthetic_did": "somente robustez, nunca reparo de pré-tendência"
-  }
+  },
+  "emendas": [
+    {
+      "data": "2026-10-18",
+      "tipo": "correcao_de_dado_de_entrada",
+      "motivo": "ivs_2010 e log_pop_2010 da propensão vinham, pela malha, de data/ivs_ipea_2010_municipios.csv, linha de subgrupo populacional e não o município (docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md)",
+      "correcao": "malha com IVS 2010 e população 2010 oficiais do Ipea (output/aquisicao/a08_ivs_2010_oficial_municipio.csv); log_pop_2010 continua log1p(populacao_2010), como congelado",
+      "inalterado": "coorte, braços, painéis CNES pré-T0, janela, outcome, estimadores, regras e limiares",
+      "leitura_pos_t0": false,
+      "competencia_maxima_lida": "202607",
+      "insumo_corrigido": {
+        "output/aquisicao/painel_municipios_regioes.parquet": "beed0d11a1d367c97261aa20b798dd050473677a879fb3d6f69a3d8dfead9728"
+      },
+      "hashes_artefatos_em_vigor": {
+        "output/avaliacao_ciclo3/pesos_sobreposicao_pre.csv": "19b271a6dcad5ac4c6c3499c80275c009406a4c92e99e7d1bc26bb670d40d81e",
+        "output/avaliacao_ciclo3/diagnosticos_pre.csv": "e39070f21305202fa9578045448850380ac0f94585bd72254e26e8f6f292caee",
+        "output/avaliacao_ciclo3/potencia_pre.json": "e212c1f168f381a83c6c3306e88878c038afebf60d4635e3c7fdbb1ccc49e8df",
+        "output/avaliacao_ciclo3/decisao_torneio_pre.json": "0989979eec406d29efb9e95fd47ac3c16650aa90755be125575edb6d07ead23e",
+        "docs/05_identificacao/13_plano_pre_analise_ciclo3.md": "855c70891cf608728aa50deefb8e32634f2abd8b362fa3382f5f9a059f31da3b"
+      },
+      "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md"
+    }
+  ]
 }

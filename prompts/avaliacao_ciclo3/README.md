@@ -47,7 +47,14 @@
 - assinatura pública da Nota Técnica nº 59/2026: ainda não validada nas
   competências CNES futuras;
 - protocolo prospectivo: congelado em `docs/05_identificacao/13_plano_pre_analise_ciclo3.md`;
-- efeitos pós-tratamento: não estimados.
+- efeitos pós-tratamento: não estimados;
+- errata de 18/10/2026: os diagnósticos C3-03 (propensão, suporte, pesos e
+  potência) foram reestimados com o IVS 2010 e a população 2010 oficiais do Ipea,
+  por emenda datada em `output/avaliacao_ciclo3/registro_pre_analise.json`
+  (`scripts/avaliacao_ciclo3/03_auditar_pre_e_potencia.py --reestimar-covariaveis-oficiais`);
+  a versão anterior usava o arquivo de IVS errado e só vale como failure mode
+  (`docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`). Nenhum mês pós-T0
+  foi lido.
 
 O “C3-03” desta fila é um torneio exclusivamente pré-tratamento e não é o
 prompt 03 histórico do desenho individual. Este último continua bloqueado.

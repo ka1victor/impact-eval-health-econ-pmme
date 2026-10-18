@@ -15,7 +15,7 @@
       "suporte_aprovado": true,
       "equivalencia_tendencia": false,
       "equivalencia_leads": false,
-      "mde_80_especialistas": 2.22,
+      "mde_80_especialistas": 2.12,
       "decisao": "associacao_ajustada",
       "razao": "falhou: equivalência_pré_tendências, potência"
     },
@@ -27,10 +27,10 @@
       "papel": "generalizacao",
       "n_tratados": 12,
       "n_controles": 39,
-      "suporte_aprovado": true,
+      "suporte_aprovado": false,
       "equivalencia_tendencia": false,
       "equivalencia_leads": false,
-      "mde_80_especialistas": 1.22,
+      "mde_80_especialistas": 1.14,
       "decisao": "inviavel",
       "razao": "braço tratado tem menos de 20 unidades e ainda menos clusters municipais; generalização apenas descritiva"
     },
@@ -45,7 +45,7 @@
       "suporte_aprovado": false,
       "equivalencia_tendencia": false,
       "equivalencia_leads": false,
-      "mde_80_especialistas": null,
+      "mde_80_especialistas": 3.36,
       "decisao": "inviavel",
       "razao": "braço tratado tem menos de 20 unidades e ainda menos clusters municipais; generalização apenas descritiva"
     },
@@ -75,7 +75,7 @@
       "suporte_aprovado": true,
       "equivalencia_tendencia": false,
       "equivalencia_leads": false,
-      "mde_80_especialistas": 4.44,
+      "mde_80_especialistas": 4.62,
       "decisao": "associacao_ajustada",
       "razao": "falhou: equivalência_pré_tendências, potência"
     },
@@ -90,7 +90,7 @@
       "suporte_aprovado": false,
       "equivalencia_tendencia": false,
       "equivalencia_leads": false,
-      "mde_80_especialistas": 3.96,
+      "mde_80_especialistas": 3.84,
       "decisao": "inviavel",
       "razao": "braço tratado tem menos de 20 unidades e ainda menos clusters municipais; generalização apenas descritiva"
     },
@@ -120,7 +120,7 @@
       "suporte_aprovado": false,
       "equivalencia_tendencia": false,
       "equivalencia_leads": false,
-      "mde_80_especialistas": 2.74,
+      "mde_80_especialistas": 2.8,
       "decisao": "associacao_ajustada",
       "razao": "falhou: suporte, equivalência_pré_tendências, potência"
     }

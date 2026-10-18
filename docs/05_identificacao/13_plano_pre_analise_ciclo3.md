@@ -153,6 +153,18 @@ direta de 2,22 é próxima das 2,44 vagas oferecidas por CNES tratado, mas maior
 que as 1,12 alocações publicadas por CNES. Isso permite detectar uma resposta
 forte do pacote ofertado, não garante precisão para um acréscimo unitário.
 
+> **Errata de 18/10/2026 — failure mode.** A propensão que gera o suporte comum e
+> os pesos de sobreposição usou `ivs_2010` e `log_pop_2010` da malha antiga, feita
+> com `data/ivs_ipea_2010_municipios.csv`, que é uma linha de subgrupo populacional e
+> não o município. Os números desta seção (MDE, suporte retido, potência) são dessa
+> versão e só valem como registro do erro. A emenda datada no
+> `output/avaliacao_ciclo3/registro_pre_analise.json` reestimou os diagnósticos com o
+> IVS 2010 e a população 2010 oficiais do Ipea, mesma coorte, mesmos braços, mesmos
+> painéis CNES pré-T0 (conferidos por hash) e nenhuma competência a partir de 202609.
+> Valores em vigor: `output/avaliacao_ciclo3/diagnosticos_pre.csv` e `potencia_pre.json`;
+> antes e depois, e se alguma decisão do torneio mudou, em
+> [`auditorias/19`](../auditorias/19_reestimacao_base_oficial_failure_mode.md).
+
 Foram usados três placebos temporais, teste conjunto de 13 leads e equivalência
 contra limites substantivos. Os resultados integrais, sem seleção pelo menor
 `p`, estão em `output/avaliacao_ciclo3/diagnosticos_pre.csv`.
