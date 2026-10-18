@@ -18,6 +18,8 @@
 >   preenchimento nem sobre presença, com ICs de cerca de ±40 p.p.
 >   ([`37`](37_resultados_rdd_bolsa_ivs_oficial.md)).
 >
+> Pendências e decisões em aberto: [`38`](38_estado_e_pendencias_rdd_bolsa.md).
+>
 > O parágrafo abaixo, de 09/09/2026, fica **superado**.
 
 O pedido administrativo não foi enviado. A RDD da bolsa pelo IVS público

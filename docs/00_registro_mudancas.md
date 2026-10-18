@@ -8,6 +8,17 @@
 
 ---
 
+## 18/10/2026 — Estado e pendências da RDD da bolsa
+
+Motivo: o autor pediu um ponto de retomada organizado antes de compactar a
+conversa.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/38_estado_e_pendencias_rdd_bolsa.md`](06_execucao/38_estado_e_pendencias_rdd_bolsa.md) | o que está feito e onde, as decisões em aberto do autor (forma da figura, preenchimento do ciclo 2, análises antigas afetadas) e os próximos passos autorizados |
+
 ## 14/10/2026 — Guia de conferência manual do IVS
 
 Motivo: o autor pediu um caminho para conferir à mão, sem depender de agentes,
