@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **337 testes em 31 módulos** (contagem de 18/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **343 testes em 32 módulos** (contagem de 18/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -55,6 +55,7 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_e5_inferencia_sintetico.py`](test_e5_inferencia_sintetico.py) | RDD Bolsa — E5 (exploratório) | Especificações alternativas, permutação de Fisher, limites unilaterais e TOST, seleção da janela de local randomization só por balanço. Sintético. |
 | [`test_conferencia_sinal_rdd.py`](test_conferencia_sinal_rdd.py) | RDD Bolsa — sinal do salto | O salto é o lado com bolsa maior menos o lado com bolsa menor; reestimação independente e decomposição da diferença bruta em salto e inclinação. Sintético. |
 | [`test_pipeline_rdd_bolsa.py`](test_pipeline_rdd_bolsa.py) | RDD Bolsa — pipeline | Ordem da cadeia da RDD no `run_all.py`, argumento do E3 e retirada dos scripts que liam o arquivo de IVS errado. |
+| [`test_integridade_dados.py`](test_integridade_dados.py) | Integridade | Nenhum arquivo em `data/` ou `output/` com nome de dado simulado; toda saída rotulada com `natureza_dos_dados` é `EMPIRICO`. |
 | [`test_viabilidade_salario_ivs.py`](test_viabilidade_salario_ivs.py) | RDD Bolsa — **registro superado** | Falha de replicação das faixas em 177 municípios e encerramento do R1. Testa saídas feitas com o arquivo de IVS errado (auditoria 16); mantido como histórico. |
 | [`test_primeiro_estagio_publico_rdd.py`](test_primeiro_estagio_publico_rdd.py) | RDD Bolsa — **registro superado** | Ausência de salto estável no "IVS 2010 público", que era o arquivo errado (auditoria 16); mantido como histórico. |
 | [`test_portao_regra_rdd.py`](test_portao_regra_rdd.py) | RDD Bolsa — **registro superado** | Matriz municipal com 177 divergências e bloqueio de R2–R5, feitos com o arquivo errado; mantido como histórico. |
