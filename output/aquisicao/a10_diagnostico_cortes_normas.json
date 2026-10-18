@@ -2,6 +2,14 @@
   "data_execucao": "2026-10-18",
   "outcomes_abertos": false,
   "natureza_dos_dados": "EMPIRICO",
+  "totais": {
+    "sobre_os_cortes_da_bolsa": 31,
+    "sobre_os_quatro_limites": 51,
+    "diferenca_convencoes_ied": 51,
+    "diferenca_convencoes_pmmb": 51,
+    "fontes_no_manifesto": 44,
+    "fontes_em_normas_ivs": 43
+  },
   "entradas": {
     "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
     "output/aquisicao/a07_categoria_ivs_pmmb_municipio.csv": "f9556bd46b20b5e4c7e1b3f782cc0c87be69558c865c995a890e00c0ce269025",
