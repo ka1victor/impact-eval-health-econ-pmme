@@ -32,6 +32,13 @@ STEPS = [
     # rdd_bolsa/01_auditar_primeiro_estagio_publico.py usam como running variable
     # data/ivs_ipea_2010_municipios.csv, que não é o IVS do município
     # (docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md). Ver o bloco da RDD abaixo.
+    #
+    # a07 e a08 vêm antes da malha territorial desde 18/10/2026: 04_harmonizar e
+    # tema_trabalho/01 leem o IVS 2010 oficial gravado pelo a08, e não mais o arquivo
+    # local (docs/auditorias/19_reestimacao_base_oficial_failure_mode.md). Os dois só leem
+    # insumos brutos; a ordem relativa da cadeia da RDD (a07 < a08 < 04 < ... < 10) fica igual.
+    ROOT / "scripts" / "aquisicao" / "a07_adquirir_ivs_administrativo.py",
+    ROOT / "scripts" / "aquisicao" / "a08_adquirir_ivs_2010_oficial.py",
     ROOT / "scripts" / "aquisicao" / "04_harmonizar_territorio_ibge.py",
     ROOT / "scripts" / "aquisicao" / "05_integrar_painel_analitico.py",
     ROOT / "scripts" / "avaliacao_impacto" / "run_pipeline_avaliacao.py",
@@ -58,8 +65,7 @@ STEPS = [
     # consolida os portões feitos com esse arquivo (01, 01_primeiro_estagio) e regrava
     # docs/06_execucao/33; rdd_bolsa/03_triagem_resposta_administrativa.py faz a triagem da
     # resposta ao pedido do escore ao MS, cancelado porque o escore é público (auditoria 16, §4).
-    ROOT / "scripts" / "aquisicao" / "a07_adquirir_ivs_administrativo.py",
-    ROOT / "scripts" / "aquisicao" / "a08_adquirir_ivs_2010_oficial.py",
+    # a07 e a08, as aquisições desta cadeia, rodam no início (ver acima).
     ROOT / "scripts" / "rdd_bolsa" / "04_portao_r1_escore_administrativo.py",
     ROOT / "scripts" / "rdd_bolsa" / "04b_validar_ivs_oficial_escore_administrativo.py",
     ROOT / "scripts" / "rdd_bolsa" / "04c_identificar_recorte_arquivo_local.py",

@@ -6,11 +6,21 @@ Fontes oficiais usadas para classificação, todas anteriores ao PMM-E:
 - REGIC 2018 — Hierarquia e região de influência (IBGE, 2018 — centralidade).
 
 Medidas contínuas prévias preservadas (sem consultar outcomes):
-- IVS 2010 (canônico) + subíndices, IDHM 2010, população 2010, RDPC 2010
+- IVS 2010 oficial do Ipea + subíndices, IDHM 2010, população 2010, RDPC 2010
+  (base completa do Atlas, linha Total/Total/Total; `output/aquisicao/a08_*`, via a
+  malha de 04_harmonizar_territorio_ibge.py)
+- População residente do Censo 2022 (SIDRA 4709), denominador de `estoque_pre_por_10k`
 - Região / macrorregião de saúde (painel de 04_harmonizar_territorio_ibge.py)
 - Estoque médico pré-oferta (CNES 202407–202506, painel_cnes_especialidade_mensal)
 
 A classificação é congelada sem consultar alocação, homologação ou CNES pós.
+
+Correção de 18/10/2026 (`docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`):
+até então IVS, subíndices, IDHM, população e renda vinham, pela malha, de
+`data/ivs_ipea_2010_municipios.csv`, que é uma linha de subgrupo populacional e não o
+município (auditoria 16), e `estoque_pre_por_10k` dividia pelo tamanho desse subgrupo.
+A classificação dos estratos (capitais, RM/RIDE, REGIC) não dependia do arquivo e não
+muda.
 """
 
 from __future__ import annotations
@@ -31,6 +41,8 @@ MALHA = ROOT / "output" / "aquisicao" / "malha_municipios_regioes_saude.parquet"
 MATRIZ_FUNIL = ROOT / "output" / "tema_trabalho" / "matriz_funil_ciclo1.parquet"
 PAINEL_CNES = ROOT / "output" / "painel_cnes_especialidade_mensal.parquet"
 QUADRO = ROOT / "output" / "aquisicao" / "quadro_vagas_tratamento.parquet"
+IVS_OFICIAL = ROOT / "output" / "aquisicao" / "a08_ivs_2010_oficial_municipio.csv"
+CENSO2022 = ROOT / "output" / "aquisicao" / "populacao_censo2022_municipios.csv"
 
 REGIC_XLSX = DATA_TERRITORIO / "REGIC2018_Municipios_Hierarquia_e_regiao.xlsx"
 RM_XLSX = DATA_TERRITORIO / "Composicao_RMs_RIDEs_AglomUrbanas_2022_v2.xlsx"
@@ -126,7 +138,7 @@ def main() -> None:
     download_if_missing(REGIC_URL, REGIC_XLSX)
     download_if_missing(RM_URL, RM_XLSX)
 
-    for path in [MALHA, MATRIZ_FUNIL, PAINEL_CNES, QUADRO, REGIC_XLSX, RM_XLSX]:
+    for path in [MALHA, MATRIZ_FUNIL, PAINEL_CNES, QUADRO, REGIC_XLSX, RM_XLSX, IVS_OFICIAL, CENSO2022]:
         if not path.exists():
             raise FileNotFoundError(path)
 
@@ -134,7 +146,7 @@ def main() -> None:
     forbidden_cols = {"n_confirmacoes_ch1", "n_homologacoes_ch1", "outcome_alguma_confirmacao_ou_homologacao"}
     # (leitura da matriz será restrita a co_ibge_6d)
 
-    # 2. Malha base (IVS 2010 canônico, população 2010, região de saúde)
+    # 2. Malha base (IVS 2010 oficial, população 2010, região de saúde)
     malha = pd.read_parquet(MALHA).copy()
     malha["co_ibge_6d"] = malha["co_ibge_6d"].astype(str).str.replace(r"\D", "", regex=True).str.zfill(6)
     malha["co_ibge_7d"] = malha["co_ibge_7d"].astype(str).str.replace(r"\D", "", regex=True).str.zfill(7)
@@ -259,6 +271,11 @@ def main() -> None:
     for col, m in [("sg_uf", uf_map), ("no_municipio", nome_map)]:
         nacional[col] = nacional[col].fillna(nacional["co_ibge_6d"].map(m))
 
+    # População residente do Censo 2022 (malha 2022: cobre também os 5 municípios novos)
+    censo = pd.read_csv(CENSO2022, dtype={"co_ibge_6d": str})
+    censo["co_ibge_6d"] = censo["co_ibge_6d"].str.zfill(6)
+    nacional = nacional.merge(censo[["co_ibge_6d", "populacao_2022"]], on="co_ibge_6d", how="left", validate="one_to_one")
+
     # Join estoque pré-oferta
     nacional = nacional.merge(estoque_pre, on="co_ibge_6d", how="left")
 
@@ -288,10 +305,13 @@ def main() -> None:
     nacional["flag_ivs_missing"] = nacional["ivs_2010"].isna()
     nacional["flag_estoque_pre_missing"] = nacional["estoque_especialistas_pre_12m_media"].isna()
     nacional["in_populacao_A1"] = nacional["co_ibge_6d"].isin(municipios_a1_6)
-    # Estoque per 10k
-    nacional["estoque_pre_por_10k"] = nacional["estoque_especialistas_pre_12m_media"] / (nacional["populacao_2010"] / 10000)
+    # Estoque por 10 mil habitantes. Denominador: população residente do Censo 2022, a
+    # contagem mais próxima da janela do estoque (202407–202506) e a que substitui
+    # `populacao_2010` como denominador desde 09/09/2026 (manifesto_populacao_censo2022.json).
+    # Até 18/10/2026 o denominador era a população do subgrupo do arquivo local (auditoria 19).
+    nacional["estoque_pre_por_10k"] = nacional["estoque_especialistas_pre_12m_media"] / (nacional["populacao_2022"] / 10000)
     # Substitui inf por NaN onde população 0/NaN
-    nacional.loc[nacional["populacao_2010"].isna() | (nacional["populacao_2010"] == 0), "estoque_pre_por_10k"] = pd.NA
+    nacional.loc[nacional["populacao_2022"].isna() | (nacional["populacao_2022"] == 0), "estoque_pre_por_10k"] = pd.NA
 
     # Ordenação estável: estrato_ordem + UF + município
     nacional = nacional.sort_values(["estrato_ordem", "sg_uf", "no_municipio"]).reset_index(drop=True)
@@ -321,6 +341,7 @@ def main() -> None:
         "idhm_2010",
         "populacao_2010",
         "rdpc_2010",
+        "populacao_2022",
         "estoque_especialistas_pre_12m_media",
         "estoque_pre_por_10k",
         "flag_ivs_missing",
@@ -428,7 +449,8 @@ def main() -> None:
             "usa_fonte_oficial_versionada": True,
             "fonte_metropolitano": "IBGE Composicao RMs/RIDEs 2022 (31/12/2022) — strict RM/RIDE (Regiao Metropolitana/Regiao Integrada), exclui Colar/Area/Entorno; Aglomeracoes Urbanas (44 mun.) nao sao RM/RIDE e permanecem fora",
             "fonte_remoticidade": "IBGE REGIC 2018 Hierarquia e regiao de influencia",
-            "ivs_canonico": "IVS 2010 IPEA (nao substituir por IDHM/RDPC sem justificativa)",
+            "ivs_canonico": "IVS 2010 oficial do Ipea, linha Total/Total/Total (output/aquisicao/a08_ivs_2010_oficial_municipio.csv; nao substituir por IDHM/RDPC sem justificativa)",
+            "fonte_covariaveis_continuas": "a08 (IVS, subindices, IDHM, populacao 2010, renda 2010) e Censo 2022 (populacao_2022, denominador do estoque por 10 mil)",
             "fallback_se_remoticidade_impossivel": "manter apenas fora_das_capitais e retirar interior_remoto das hipoteses (requer decisao manual; nao aprovado automaticamente)",
             "consultou_outcomes": False,
             "colunas_outcome_bloqueadas": sorted(forbidden_cols),
@@ -441,7 +463,17 @@ def main() -> None:
         },
         "fontes": {
             str(p.relative_to(ROOT)).replace("\\", "/"): {"sha256": sha256(p)}
-            for p in [MALHA, QUADRO, MATRIZ_FUNIL, PAINEL_CNES, REGIC_XLSX, RM_XLSX]
+            for p in [MALHA, QUADRO, MATRIZ_FUNIL, PAINEL_CNES, REGIC_XLSX, RM_XLSX, IVS_OFICIAL, CENSO2022]
+        },
+        "correcao_2026_10_18": {
+            "o_que_mudou": (
+                "ivs_2010, subindices, ivs_categoria, idhm_2010, populacao_2010 e rdpc_2010 passam a ser os "
+                "da base oficial do Ipea (a08); populacao_2022 (Censo 2022) entra como coluna e como "
+                "denominador de estoque_pre_por_10k"
+            ),
+            "o_que_nao_mudou": "estrato, flags, REGIC, RM/RIDE, regiao de saude, estoque_especialistas_pre_12m_media e populacao A1",
+            "antes": "data/ivs_ipea_2010_municipios.csv via malha: linha de subgrupo populacional, nao o municipio (auditoria 16)",
+            "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md",
         },
         "urls_oficiais": {"regic_2018": REGIC_URL, "rm_2022": RM_URL},
         "populacao": {
@@ -473,11 +505,11 @@ def main() -> None:
             "interior_proximo_polo": "nao capital, nao RM/RIDE strict, REGIC hierarquia_grupo 1-4 (Metropole/Capital Regional/Centro Sub-Regional/Centro de Zona, com ou sem integrante de AP)",
             "interior_remoto": "nao capital, nao RM/RIDE strict, REGIC hierarquia_grupo 5 (Centro Local, com ou sem integrante de AP) — nao inferido apenas por ser nao capital",
             "medidas_continuas_preservadas": [
-                "ivs_2010 (+ subindices infra/ch/rt, categoria)",
-                "populacao_2010",
+                "ivs_2010 (+ subindices infra/ch/rt, categoria), da base oficial do Ipea (a08)",
+                "populacao_2010 (a08) e populacao_2022 (Censo 2022)",
                 "idhm_2010, rdpc_2010 (descritivo)",
                 "macro_regiao_saude, no_regiao_saude",
-                "estoque_especialistas_pre_12m_media (CNES 202407-202506, media mensal por municipio, soma sobre CNES/curso do quadro) e estoque_pre_por_10k",
+                "estoque_especialistas_pre_12m_media (CNES 202407-202506, media mensal por municipio, soma sobre CNES/curso do quadro) e estoque_pre_por_10k (denominador: populacao_2022)",
             ],
             "regra_missing": "municipios novos pos-2010 mantem estrato via REGIC/RM; IVS e estoque ficam NA e reportados; NAO_CLASSIFICADO exigiria fallback para capital vs fora",
         },

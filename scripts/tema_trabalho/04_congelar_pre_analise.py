@@ -315,6 +315,37 @@ def main() -> None:
             str((OUT_DIR / "suporte_estratos_territoriais.csv").relative_to(ROOT)).replace("\\", "/"): {"sha256": sha256(OUT_DIR / "suporte_estratos_territoriais.csv")},
         },
         "portao_para_A4": "Não executar A4 sem este registro assinado por hash e sem MDE reportado; qualquer desvio deve ser emendado e datado.",
+        # Emendas datadas (regra do `portao_para_A4`). O texto congelado acima não é
+        # reescrito; os hashes de entrada passam a ser os dos insumos corrigidos.
+        "emendas": [
+            {
+                "data": "2026-10-18",
+                "tipo": "correcao_de_insumo_sem_mudanca_de_especificacao",
+                "motivo": (
+                    "as covariadas contínuas da tipologia A2 (ivs_2010, subíndices, ivs_categoria, idhm_2010, "
+                    "populacao_2010, rdpc_2010) vinham de data/ivs_ipea_2010_municipios.csv, que é, em cada "
+                    "município, a última linha de subgrupo com IVS preenchido da base do Ipea (mulheres negras "
+                    "em área urbana em 78% dos municípios), e não o IVS do município "
+                    "(docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md)"
+                ),
+                "correcao": (
+                    "IVS, subíndices, IDHM, população 2010 e renda 2010 passam a vir da base oficial do Ipea "
+                    "(output/aquisicao/a08_ivs_2010_oficial_municipio.csv, linha Total/Total/Total); o "
+                    "denominador do estoque pré por 10 mil passa a ser a população residente do Censo 2022 "
+                    "(output/aquisicao/populacao_censo2022_municipios.csv); log(pop) continua sendo "
+                    "log1p(populacao_2010), agora com a população oficial"
+                ),
+                "inalterado": (
+                    "pergunta, população (1.295 células, 368 municípios), outcome, estratos, covariadas "
+                    "permitidas, modelos, efeitos fixos, cluster, potência e linguagem"
+                ),
+                "consequencia_nos_hashes": (
+                    "hashes_entradas registram a malha e a tipologia corrigidas; os hashes da versão de "
+                    "02/09/2026 ficam no histórico do Git e na auditoria 19"
+                ),
+                "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md",
+            }
+        ],
     }
 
     # Escrita atômica

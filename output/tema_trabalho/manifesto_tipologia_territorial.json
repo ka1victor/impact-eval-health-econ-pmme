@@ -13,7 +13,8 @@
     "usa_fonte_oficial_versionada": true,
     "fonte_metropolitano": "IBGE Composicao RMs/RIDEs 2022 (31/12/2022) — strict RM/RIDE (Regiao Metropolitana/Regiao Integrada), exclui Colar/Area/Entorno; Aglomeracoes Urbanas (44 mun.) nao sao RM/RIDE e permanecem fora",
     "fonte_remoticidade": "IBGE REGIC 2018 Hierarquia e regiao de influencia",
-    "ivs_canonico": "IVS 2010 IPEA (nao substituir por IDHM/RDPC sem justificativa)",
+    "ivs_canonico": "IVS 2010 oficial do Ipea, linha Total/Total/Total (output/aquisicao/a08_ivs_2010_oficial_municipio.csv; nao substituir por IDHM/RDPC sem justificativa)",
+    "fonte_covariaveis_continuas": "a08 (IVS, subindices, IDHM, populacao 2010, renda 2010) e Censo 2022 (populacao_2022, denominador do estoque por 10 mil)",
     "fallback_se_remoticidade_impossivel": "manter apenas fora_das_capitais e retirar interior_remoto das hipoteses (requer decisao manual; nao aprovado automaticamente)",
     "consultou_outcomes": false,
     "colunas_outcome_bloqueadas": [
@@ -30,7 +31,7 @@
   },
   "fontes": {
     "output/aquisicao/malha_municipios_regioes_saude.parquet": {
-      "sha256": "5c188c3de49e985e858eb4b156bcb3fed890ace7173fe8eb7ba160da2e643e03"
+      "sha256": "a7f855e33b72c8da57661e066643fed5d6caf5f99d19f264154583c1de53f186"
     },
     "output/aquisicao/quadro_vagas_tratamento.parquet": {
       "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f"
@@ -46,7 +47,19 @@
     },
     "data/raw/aquisicao/territorio/Composicao_RMs_RIDEs_AglomUrbanas_2022_v2.xlsx": {
       "sha256": "ac12c746ea9d337ea3982b7a591c15cb2da6231410738218abb947933ba64cfa"
+    },
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": {
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe"
+    },
+    "output/aquisicao/populacao_censo2022_municipios.csv": {
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b"
     }
+  },
+  "correcao_2026_10_18": {
+    "o_que_mudou": "ivs_2010, subindices, ivs_categoria, idhm_2010, populacao_2010 e rdpc_2010 passam a ser os da base oficial do Ipea (a08); populacao_2022 (Censo 2022) entra como coluna e como denominador de estoque_pre_por_10k",
+    "o_que_nao_mudou": "estrato, flags, REGIC, RM/RIDE, regiao de saude, estoque_especialistas_pre_12m_media e populacao A1",
+    "antes": "data/ivs_ipea_2010_municipios.csv via malha: linha de subgrupo populacional, nao o municipio (auditoria 16)",
+    "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md"
   },
   "urls_oficiais": {
     "regic_2018": "https://geoftp.ibge.gov.br/organizacao_do_territorio/divisao_regional/regioes_de_influencia_das_cidades/Regioes_de_influencia_das_cidades_2018_Resultados_definitivos/base_tabular/REGIC2018_Municipios_Hierarquia_e_regiao.xlsx",
@@ -77,8 +90,8 @@
       "vagas_imediatas_publicadas": 85,
       "vagas_reserva_publicadas": 83,
       "municipios_com_estoque_pre_disponivel": 18,
-      "ivs_medio_nacional": 0.32566666666666666,
-      "populacao_2010_media_nacional": 438440.0
+      "ivs_medio_nacional": 0.2952592592592592,
+      "populacao_2010_media_nacional": 1683927.5925925926
     },
     "metropolitano": {
       "ordem": 2,
@@ -89,8 +102,8 @@
       "vagas_imediatas_publicadas": 137,
       "vagas_reserva_publicadas": 210,
       "municipios_com_estoque_pre_disponivel": 72,
-      "ivs_medio_nacional": 0.3202480798771121,
-      "populacao_2010_media_nacional": 10457.363287250384
+      "ivs_medio_nacional": 0.31273655913978493,
+      "populacao_2010_media_nacional": 48864.917818740396
     },
     "interior_proximo_polo": {
       "ordem": 3,
@@ -101,8 +114,8 @@
       "vagas_imediatas_publicadas": 395,
       "vagas_reserva_publicadas": 717,
       "municipios_com_estoque_pre_disponivel": 203,
-      "ivs_medio_nacional": 0.31112866817155754,
-      "populacao_2010_media_nacional": 10116.942437923251
+      "ivs_medio_nacional": 0.3004424379232506,
+      "populacao_2010_media_nacional": 48001.686230248306
     },
     "interior_remoto": {
       "ordem": 4,
@@ -113,8 +126,8 @@
       "vagas_imediatas_publicadas": 61,
       "vagas_reserva_publicadas": 135,
       "municipios_com_estoque_pre_disponivel": 75,
-      "ivs_medio_nacional": 0.35796776119402984,
-      "populacao_2010_media_nacional": 2219.675223880597
+      "ivs_medio_nacional": 0.3808214925373134,
+      "populacao_2010_media_nacional": 11683.025970149254
     }
   },
   "suporte_resumo": [
@@ -128,8 +141,8 @@
       "vagas_imediatas_publicadas": 85,
       "vagas_reserva_publicadas": 83,
       "municipios_com_estoque_pre_disponivel": 18,
-      "ivs_medio_nacional": 0.32566666666666666,
-      "populacao_2010_media_nacional": 438440.0
+      "ivs_medio_nacional": 0.2952592592592592,
+      "populacao_2010_media_nacional": 1683927.5925925926
     },
     {
       "estrato": "metropolitano",
@@ -141,8 +154,8 @@
       "vagas_imediatas_publicadas": 137,
       "vagas_reserva_publicadas": 210,
       "municipios_com_estoque_pre_disponivel": 72,
-      "ivs_medio_nacional": 0.3202480798771121,
-      "populacao_2010_media_nacional": 10457.363287250384
+      "ivs_medio_nacional": 0.31273655913978493,
+      "populacao_2010_media_nacional": 48864.917818740396
     },
     {
       "estrato": "interior_proximo_polo",
@@ -154,8 +167,8 @@
       "vagas_imediatas_publicadas": 395,
       "vagas_reserva_publicadas": 717,
       "municipios_com_estoque_pre_disponivel": 203,
-      "ivs_medio_nacional": 0.31112866817155754,
-      "populacao_2010_media_nacional": 10116.942437923251
+      "ivs_medio_nacional": 0.3004424379232506,
+      "populacao_2010_media_nacional": 48001.686230248306
     },
     {
       "estrato": "interior_remoto",
@@ -167,8 +180,8 @@
       "vagas_imediatas_publicadas": 61,
       "vagas_reserva_publicadas": 135,
       "municipios_com_estoque_pre_disponivel": 75,
-      "ivs_medio_nacional": 0.35796776119402984,
-      "populacao_2010_media_nacional": 2219.675223880597
+      "ivs_medio_nacional": 0.3808214925373134,
+      "populacao_2010_media_nacional": 11683.025970149254
     },
     {
       "estrato": "total",
@@ -180,8 +193,8 @@
       "vagas_imediatas_publicadas": 678,
       "vagas_reserva_publicadas": 1145,
       "municipios_com_estoque_pre_disponivel": 368,
-      "ivs_medio_nacional": 0.3415288409703504,
-      "populacao_2010_media_nacional": 7520.7349505840075
+      "ivs_medio_nacional": 0.3516799640610961,
+      "populacao_2010_media_nacional": 34277.771608265946
     }
   ],
   "concentracao": {
@@ -308,11 +321,11 @@
     "interior_proximo_polo": "nao capital, nao RM/RIDE strict, REGIC hierarquia_grupo 1-4 (Metropole/Capital Regional/Centro Sub-Regional/Centro de Zona, com ou sem integrante de AP)",
     "interior_remoto": "nao capital, nao RM/RIDE strict, REGIC hierarquia_grupo 5 (Centro Local, com ou sem integrante de AP) — nao inferido apenas por ser nao capital",
     "medidas_continuas_preservadas": [
-      "ivs_2010 (+ subindices infra/ch/rt, categoria)",
-      "populacao_2010",
+      "ivs_2010 (+ subindices infra/ch/rt, categoria), da base oficial do Ipea (a08)",
+      "populacao_2010 (a08) e populacao_2022 (Censo 2022)",
       "idhm_2010, rdpc_2010 (descritivo)",
       "macro_regiao_saude, no_regiao_saude",
-      "estoque_especialistas_pre_12m_media (CNES 202407-202506, media mensal por municipio, soma sobre CNES/curso do quadro) e estoque_pre_por_10k"
+      "estoque_especialistas_pre_12m_media (CNES 202407-202506, media mensal por municipio, soma sobre CNES/curso do quadro) e estoque_pre_por_10k (denominador: populacao_2022)"
     ],
     "regra_missing": "municipios novos pos-2010 mantem estrato via REGIC/RM; IVS e estoque ficam NA e reportados; NAO_CLASSIFICADO exigiria fallback para capital vs fora"
   },

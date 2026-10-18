@@ -104,13 +104,13 @@
       "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f"
     },
     "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
-      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69"
+      "sha256": "63707c3c235ad099bb88542c4428d5a2091cab28c2b5b5c033afaf7482d9a8da"
     },
     "output/aquisicao/malha_municipios_regioes_saude.parquet": {
-      "sha256": "5c188c3de49e985e858eb4b156bcb3fed890ace7173fe8eb7ba160da2e643e03"
+      "sha256": "a7f855e33b72c8da57661e066643fed5d6caf5f99d19f264154583c1de53f186"
     },
     "output/tema_trabalho/manifesto_tipologia_territorial.json": {
-      "sha256": "eb3839b5438d620933db8a74a04110798f919cf2153bda4e4df486c8146437be"
+      "sha256": "c594346a8aa92575da7e8f193e7f6a2785967ff2d458505896653b56ab159700"
     },
     "output/tema_trabalho/portao_denominador.json": {
       "sha256": "0055baf7ebc110cc7143395a3f2090893a1888b718fd0645db318cf06850489a"
@@ -127,8 +127,19 @@
       "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
     },
     "output/tema_trabalho/suporte_estratos_territoriais.csv": {
-      "sha256": "4fc642a5299de9157b8dd9a1a5a691bd276994f2688f235b7eff535a653a18cd"
+      "sha256": "be4668fd43a27c4dc6bfa996ff266dcf6a18dc7affe3690537b2ada41de49e6f"
     }
   },
-  "portao_para_A4": "Não executar A4 sem este registro assinado por hash e sem MDE reportado; qualquer desvio deve ser emendado e datado."
+  "portao_para_A4": "Não executar A4 sem este registro assinado por hash e sem MDE reportado; qualquer desvio deve ser emendado e datado.",
+  "emendas": [
+    {
+      "data": "2026-10-18",
+      "tipo": "correcao_de_insumo_sem_mudanca_de_especificacao",
+      "motivo": "as covariadas contínuas da tipologia A2 (ivs_2010, subíndices, ivs_categoria, idhm_2010, populacao_2010, rdpc_2010) vinham de data/ivs_ipea_2010_municipios.csv, que é, em cada município, a última linha de subgrupo com IVS preenchido da base do Ipea (mulheres negras em área urbana em 78% dos municípios), e não o IVS do município (docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md)",
+      "correcao": "IVS, subíndices, IDHM, população 2010 e renda 2010 passam a vir da base oficial do Ipea (output/aquisicao/a08_ivs_2010_oficial_municipio.csv, linha Total/Total/Total); o denominador do estoque pré por 10 mil passa a ser a população residente do Censo 2022 (output/aquisicao/populacao_censo2022_municipios.csv); log(pop) continua sendo log1p(populacao_2010), agora com a população oficial",
+      "inalterado": "pergunta, população (1.295 células, 368 municípios), outcome, estratos, covariadas permitidas, modelos, efeitos fixos, cluster, potência e linguagem",
+      "consequencia_nos_hashes": "hashes_entradas registram a malha e a tipologia corrigidas; os hashes da versão de 02/09/2026 ficam no histórico do Git e na auditoria 19",
+      "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md"
+    }
+  ]
 }
