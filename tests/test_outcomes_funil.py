@@ -70,6 +70,7 @@ def quadro_sintetico() -> pd.DataFrame:
             "vagas_imediatas": [2.0, 0.0, 1.0, 1.0],
             "vagas_cr": [0.0, 1.0, 0.0, 2.0],
             "situacao_vagas": ["", "", "", ""],
+            "regiao": ["NORTE", "NORTE", "NORTE", "NORDESTE"],
         }
     )
 
@@ -88,7 +89,6 @@ def candidaturas_sinteticas() -> pd.DataFrame:
     df["status"] = np.where(df["alocado"], "ALOCADO AC", "CADASTRO RESERVA")
     df["sub_judice"] = False
     df["classificado"] = True
-    df["tipo_inscricao"] = "AC"
     df["co_ibge_arquivo"] = None
     return df
 
@@ -191,23 +191,42 @@ class TestConstrucaoSintetico(unittest.TestCase):
         g3, diag = B.outcomes_g3(card, ades, pop)
         g3 = g3.set_index("co_ibge")
         self.assertEqual(list(g3.index), ["100001", "200002"])
-        self.assertEqual(g3.loc["100001", "f0_3_aderiu"], 1)
+        self.assertEqual(g3.loc["100001", "f0_3a_consta_do_resultado_final_adesao"], 1)
         self.assertEqual(g3.loc["100001", "f0_3_vagas_pedidas"], 5.0)  # inclui célula fora do cardápio
         self.assertAlmostEqual(g3.loc["100001", "f0_3_fracao_priorizada"], 2 / 5)
-        self.assertEqual(g3.loc["200002", "f0_3_aderiu"], 0)
-        self.assertTrue(np.isnan(g3.loc["200002", "f0_3_fracao_priorizada"]))
+        # Não consta do resultado: 0 em F0.3a, mas pedidos NaN (não é "não pediu").
+        self.assertEqual(g3.loc["200002", "f0_3a_consta_do_resultado_final_adesao"], 0)
+        self.assertEqual(g3.loc["200002", "n_linhas_adesao"], 0)
+        for c in ("f0_3_vagas_pedidas", "f0_3_fracao_priorizada", "f0_3_vagas_imediatas_priorizadas"):
+            self.assertTrue(np.isnan(g3.loc["200002", c]), c)
+        mot = json.loads(B.anotar_ausencias(g3.reset_index(), B.MOTIVOS_G3).iloc[1])
+        self.assertEqual(mot["f0_3_vagas_pedidas"], "não consta do resultado final de adesão")
         self.assertEqual(diag["municipios_com_adesao_fora_do_cardapio"], 1)
         self.assertEqual(diag["linhas_adesao_em_municipios_g3_com_celula_fora_do_cardapio"], 1)
 
     def test_motivos_falham_fechado(self) -> None:
         df = pd.DataFrame({"ciclo": [1, 3], "f1_4_preenchida_ate_ch2": [1.0, np.nan], "x": [1.0, 2.0]})
         mot = B.anotar_ausencias(df, B.MOTIVOS_V)
-        self.assertEqual(mot.iloc[0], "")
-        self.assertIn("F1.4", mot.iloc[1])
+        self.assertEqual(json.loads(mot.iloc[0]), {})
+        self.assertIn("F1.4", json.loads(mot.iloc[1])["f1_4_preenchida_ate_ch2"])
         with self.assertRaises(AssertionError):  # NaN sem motivo registrado
             B.anotar_ausencias(df.assign(x=[np.nan, 1.0]), B.MOTIVOS_V)
         with self.assertRaises(AssertionError):  # NaN num ciclo em que o motivo não vale
             B.anotar_ausencias(pd.DataFrame({"ciclo": [1], "f1_4_preenchida_ate_ch2": [np.nan]}), B.MOTIVOS_V)
+
+    def test_motivos_em_json_sem_separador_ambiguo(self) -> None:
+        motivos = {"a": ("motivo com ; e | e : dentro", None), "b": ("outro; motivo", {3})}
+        df = pd.DataFrame({"ciclo": [3, 3, 1], "a": [np.nan, 1.0, np.nan], "b": [np.nan, np.nan, 2.0]})
+        lidos = [json.loads(x) for x in B.anotar_ausencias(df, motivos)]
+        self.assertEqual(lidos[0], {"a": "motivo com ; e | e : dentro", "b": "outro; motivo"})
+        self.assertEqual(lidos[1], {"b": "outro; motivo"})
+        self.assertEqual(lidos[2], {"a": "motivo com ; e | e : dentro"})
+        # Condição por coluna: NaN só onde a coluna de condição tem o valor dado.
+        cond = {"x": ("não consta", ("consta", 0))}
+        ok = pd.DataFrame({"consta": [0, 1], "x": [np.nan, 1.0]})
+        self.assertEqual(json.loads(B.anotar_ausencias(ok, cond).iloc[0]), {"x": "não consta"})
+        with self.assertRaises(AssertionError):
+            B.anotar_ausencias(pd.DataFrame({"consta": [1], "x": [np.nan]}), cond)
 
     def test_escolhas_e_conjunto(self) -> None:
         c = pd.concat([self.c, self.c.iloc[[0]].assign(_pessoa="p5", cod_curso=7)], ignore_index=True)
@@ -222,9 +241,22 @@ class TestConstrucaoSintetico(unittest.TestCase):
         self.assertIn("fora do quadro", B.anotar_ausencias(esc, B.MOTIVOS_ESCOLHAS)[fora.index[0]])
         # Determinismo do pseudônimo: mesma entrada, mesmos ids.
         pd.testing.assert_frame_equal(esc, B.tabela_escolhas(c.sample(frac=1, random_state=7), self.q, 2))
-        conj = B.conjunto_escolha(self.q, 2)
-        self.assertEqual(len(conj), 3)  # só células com vaga imediata
-        self.assertTrue((conj["vagas_imediatas"] > 0).all())
+        self.assertNotIn("tipo_inscricao", esc.columns)
+        # 2a opção em outro curso: o conjunto da linha é o do curso da própria opção.
+        c2 = pd.concat([self.c, self.c.iloc[[0]].assign(opcao=2, cod_curso=2, co_cnes_7d="0000001")], ignore_index=True)
+        esc2 = B.tabela_escolhas(c2, self.q, 2)
+        p1 = esc2[esc2["opcao_rank"] == 2].query("cod_curso == 2").iloc[0]
+        self.assertEqual(p1["id_conjunto_escolha"], "c2_curso02")
+        self.assertEqual(p1["curso_da_1a_opcao"], 1.0)
+        self.assertEqual(p1["opcoes_em_cursos_diferentes"], 1.0)
+        pop = pd.Series({"100001": 20000.0, "200002": 5000.0})
+        estr = pd.Series({"100001": "capital", "200002": "interior_remoto"})
+        conj = B.conjunto_escolha(self.q, 2, pop, estr)
+        self.assertEqual(len(conj), len(self.q))  # principal: todas as células, com ou sem vaga imediata
+        self.assertEqual(int(conj["tem_vaga_imediata"].sum()), 3)
+        self.assertTrue(np.allclose(conj["log_vagas_imediatas_mais_1"], np.log(conj["vagas_imediatas"] + 1)))
+        self.assertEqual(set(conj["id_conjunto_escolha"]), {"c2_curso01", "c2_curso02"})
+        self.assertEqual(conj.set_index("co_ibge")["estrato_territorial"].to_dict()["200002"], "interior_remoto")
 
 
 # --------------------------------------------------------------------------
@@ -242,13 +274,15 @@ class TestSaidasReais(unittest.TestCase):
         cls.vm = pd.read_parquet(OUT / "outcomes_V_municipio.parquet")
         cls.vc = pd.read_parquet(OUT / "outcomes_V_celula.parquet")
         cls.esc = pd.read_parquet(OUT / "escolhas_candidatos.parquet")
-        cls.conj = pd.read_parquet(OUT / "escolhas_conjunto_celulas.parquet")
+        cls.conj = pd.read_parquet(OUT / "escolhas_conjunto_principal.parquet")
+        cls.conj_sens = pd.read_parquet(OUT / "escolhas_conjunto_sensibilidade_vaga_imediata.parquet")
         cls.dic = json.loads(DICIONARIO.read_text(encoding="utf-8"))
         cls.e4 = pd.read_csv(ROOT / "output" / "rdd_bolsa" / "E4_proporcao_municipio.csv", dtype={"co_ibge": str})
 
     def test_chaves_unicas(self) -> None:
         for df, chave in ((self.u, ["co_ibge"]), (self.g3, ["co_ibge"]), (self.vm, ["ciclo", "co_ibge"]),
                           (self.vc, ["ciclo"] + CHAVE), (self.conj, ["ciclo"] + CHAVE),
+                          (self.conj_sens, ["ciclo"] + CHAVE),
                           (self.esc, ["ciclo", "id_candidato", "opcao_rank", "co_cnes_7d", "cod_curso"])):
             self.assertFalse(df.duplicated(chave).any(), chave)
 
@@ -291,16 +325,33 @@ class TestSaidasReais(unittest.TestCase):
         self.assertTrue((cel.reindex(um.index) == um).all())
         self.assertEqual(int(cel.sum()), int(um.sum()))
 
-    def test_conjunto_de_escolha_e_o_quadro_com_vaga_imediata(self) -> None:
+    def test_conjuntos_de_escolha(self) -> None:
+        # Principal (§14): todas as células do quadro; sensibilidade (§12): só as com vaga imediata.
+        self.assertEqual(sorted(self.vc.set_index(["ciclo"] + CHAVE).index),
+                         sorted(self.conj.set_index(["ciclo"] + CHAVE).index))
         imed = self.vc[self.vc["vagas_imediatas"] > 0].set_index(["ciclo"] + CHAVE)
-        self.assertEqual(sorted(imed.index), sorted(self.conj.set_index(["ciclo"] + CHAVE).index))
+        self.assertEqual(sorted(imed.index), sorted(self.conj_sens.set_index(["ciclo"] + CHAVE).index))
+        self.assertFalse(self.conj[["estrato_territorial", "macrorregiao", "populacao_2022"]].isna().any().any())
+        # Toda escolha cai no conjunto do curso da própria opção.
+        chaves = set(zip(self.conj["id_conjunto_escolha"], self.conj["co_cnes_7d"], self.conj["cod_curso"]))
+        esc = zip(self.esc["id_conjunto_escolha"], self.esc["co_cnes_7d"], self.esc["cod_curso"])
+        self.assertTrue(all(x in chaves for x in esc))
+        self.assertNotIn("tipo_inscricao", self.esc.columns)
+
+    def test_g3_nao_codifica_ausencia_como_zero_pedido(self) -> None:
+        nao = self.g3[self.g3["f0_3a_consta_do_resultado_final_adesao"] == 0]
+        self.assertTrue(nao[["f0_3_vagas_pedidas", "f0_3_fracao_priorizada"]].isna().all().all())
+        sim = self.g3[self.g3["f0_3a_consta_do_resultado_final_adesao"] == 1]
+        self.assertTrue((sim["f0_3_vagas_pedidas"] >= 1).all())
 
     def test_integridade(self) -> None:
-        for df in (self.u, self.g3, self.vm, self.vc, self.esc, self.conj):
+        for df in (self.u, self.g3, self.vm, self.vc, self.esc, self.conj, self.conj_sens):
             self.assertEqual(set(df["natureza_dos_dados"]), {"EMPIRICO"})
             outcome = [c for c in df.columns if c not in ("motivos_ausencia", "natureza_dos_dados")]
-            tem_nan = df[outcome].isna().any(axis=1)
-            self.assertTrue((df.loc[tem_nan, "motivos_ausencia"].str.len() > 0).all())
+            nulos = df[outcome].isna()
+            # motivos_ausencia é JSON: as chaves são exatamente as colunas NaN da linha.
+            for i, texto in enumerate(df["motivos_ausencia"]):
+                self.assertEqual(set(json.loads(texto)), set(nulos.columns[nulos.iloc[i].to_numpy()]))
             self.assertFalse(any(c.lower() in ("nome", "cpf", "cpf_masc", "_pessoa") for c in df.columns))
         self.assertEqual(self.dic["natureza_dos_dados"], "EMPIRICO")
         self.assertNotIn("ivs_ipea_2010_municipios", SCRIPT.read_text(encoding="utf-8"))

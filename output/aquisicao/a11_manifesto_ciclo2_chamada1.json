@@ -1,6 +1,6 @@
 {
   "documento": "Aquisição do resultado da 1a chamada do ciclo 2 do PMM-E",
-  "script": "scripts/aquisicao/a10_adquirir_resultado_ciclo2_chamada1.py",
+  "script": "scripts/aquisicao/a11_adquirir_resultado_ciclo2_chamada1.py",
   "data_captura": "2026-10-18",
   "motivo": "lacuna do inventário de 18/10/2026: o resultado final da alocação da 1a chamada do ciclo 2 não estava no repositório; necessário para F1.3, F1.1, F1.2 e F4 do ciclo 2 (protocolo E6)",
   "natureza": "publicação pública do Ministério da Saúde; não é pedido de dados",
@@ -16,10 +16,15 @@
       "rotulo_na_pagina": "Resultado final PMME - 2º Ciclo (bloco 1ª chamada)",
       "fonte": "Ministério da Saúde, SGTES (publicação do PMM-E, Chamamento Público SGTES/MS nº 1/2026)",
       "papel": "resultado final da alocação da 1a chamada do ciclo 2 (candidato × opção, CNES e curso, sem IBGE)",
-      "data_referencia": "não declarada no arquivo; publicado com o comunicado oficial de 24/03/2026 (homologação de 25/03 a 02/04/2026); o sufixo '25-05' do nome não é explicado na página",
+      "data_referencia": "não declarada no conteúdo; publicado com o comunicado oficial de 24/03/2026 (homologação de 25/03 a 02/04/2026). A criação registrada na planilha coincide com a data do comunicado e o sufixo '25-05' do nome corresponde à última modificação registrada (ver metadados_da_planilha)",
       "data_captura": "2026-10-18",
       "sha256": "8e85a28a57db1283cd3103065b04909b637cb76aab73482889e6b5fe50182e3c",
-      "tamanho_bytes": 320107
+      "tamanho_bytes": 320107,
+      "metadados_da_planilha": {
+        "criado": "2026-03-24T12:42:19Z",
+        "modificado": "2026-05-25T19:19:33Z",
+        "fonte": "docProps/core.xml"
+      }
     },
     {
       "arquivo": "resultado-final-vagas-remanescentes.xlsx",
@@ -32,7 +37,12 @@
       "data_referencia": "não declarada no arquivo nem na página",
       "data_captura": "2026-10-18",
       "sha256": "70d67659cbfb7a3ec78452f76c70e9b9d0fce66ab5bb1b0b15934438edb83ad1",
-      "tamanho_bytes": 33477
+      "tamanho_bytes": 33477,
+      "metadados_da_planilha": {
+        "criado": "2026-04-13T23:33:16Z",
+        "modificado": "2026-04-22T18:06:14Z",
+        "fonte": "docProps/core.xml"
+      }
     },
     {
       "arquivo": "resultado-preliminar-pmme.xlsx",
@@ -45,7 +55,12 @@
       "data_referencia": "recurso de 12/03 a 13/03/2026 (ComunicadoResultado.pdf da mesma página)",
       "data_captura": "2026-10-18",
       "sha256": "90b4c863f6e07e3eb98dc221dfe1622a7a69041e31b54e95d036e44782144803",
-      "tamanho_bytes": 292768
+      "tamanho_bytes": 292768,
+      "metadados_da_planilha": {
+        "criado": "2026-03-10T19:56:02Z",
+        "modificado": "2026-03-12T12:38:00Z",
+        "fonte": "docProps/core.xml"
+      }
     },
     {
       "arquivo": "comunicado-oficial-alocados-24-03-2026.pdf",
@@ -58,7 +73,8 @@
       "data_referencia": "2026-03-24",
       "data_captura": "2026-10-18",
       "sha256": "e48f31882c5a0b182fc7fe9353ef049e3db35ecb0f0b2b38669fb69289fb36c2",
-      "tamanho_bytes": 490737
+      "tamanho_bytes": 490737,
+      "metadados_da_planilha": null
     }
   ]
 }

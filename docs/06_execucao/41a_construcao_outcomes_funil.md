@@ -2,9 +2,9 @@
 
 > **Execução:** 18/10/2026, antes de qualquer estimação do E6 e do E9.<br>
 > **Protocolo:** [`40_protocolo_multioutcome_rdd_bolsa.md`](40_protocolo_multioutcome_rdd_bolsa.md)
-> (famílias F0, F1, F2 e F4; adendo §12, E9).<br>
+> (famílias F0, F1, F2 e F4; E9 no §12, com o conjunto de escolha fixado no §14).<br>
 > **Script:** `scripts/rdd_bolsa/12_construir_outcomes_funil.py`. Aquisição do
-> resultado da 1ª chamada do ciclo 2: `scripts/aquisicao/a10_adquirir_resultado_ciclo2_chamada1.py`.<br>
+> resultado da 1ª chamada do ciclo 2: `scripts/aquisicao/a11_adquirir_resultado_ciclo2_chamada1.py`.<br>
 > **Saídas:** `output/rdd_bolsa/outcomes/`.<br>
 > **Testes:** `tests/test_outcomes_funil.py`.<br>
 > **Natureza:** construção descritiva de outcomes. Não há contraste, nem
@@ -37,15 +37,21 @@ do JSON estão citadas abaixo.
 | `outcomes_V_municipio.parquet` | V1, V2 e V3 empilhados | município × ciclo |
 | `outcomes_V_celula.parquet` | células do quadro da 1ª chamada de cada ciclo | célula CNES × curso × ciclo |
 | `escolhas_candidatos.parquet` | E9: candidatos da 1ª chamada de cada ciclo | candidato × opção ranqueada |
-| `escolhas_conjunto_celulas.parquet` | E9: células com vaga imediata, por curso e ciclo | célula CNES × curso × ciclo |
-| `dicionario_outcomes_funil.json` | fontes, colunas, decisões, casamento, desvios | — |
+| `escolhas_conjunto_principal.parquet` | E9 principal (§14): todas as células do curso e ciclo no quadro da 1ª chamada | célula CNES × curso × ciclo |
+| `escolhas_conjunto_sensibilidade_vaga_imediata.parquet` | E9 sensibilidade (§12): só células com vaga imediata | célula CNES × curso × ciclo |
+| `dicionario_outcomes_funil.json` | fontes, colunas, decisões, casamento, conferências, desvios | — |
 
-O número de linhas por população está em `n_por_populacao`. Cada saída tem
-`natureza_dos_dados = "EMPIRICO"` e uma coluna `motivos_ausencia`. Essa coluna
-diz, para cada valor ausente da linha, por que ele está ausente. O script para
-se algum NaN não tiver motivo registrado. Os hashes das saídas estão em
-`saidas`, e os das entradas, com data de referência, cobertura, unidade, chaves
-e filtros, em `entradas`.
+O número de linhas por população está em `n_por_populacao`. Toda saída tem
+`natureza_dos_dados = "EMPIRICO"` e a coluna `motivos_ausencia`.
+
+`motivos_ausencia` é um objeto JSON `{coluna: motivo}` com as colunas NaN da
+linha, ou `{}` se não há nenhuma. JSON evita ambiguidade de separador, porque
+um motivo pode conter qualquer caractere. O script para se algum NaN não tiver
+motivo registrado ou aparecer fora de onde o motivo se aplica (ciclo ou
+condição).
+
+Os hashes das saídas estão em `saidas`. Os das entradas, com data de
+referência, cobertura, unidade, chaves e filtros, estão em `entradas`.
 
 ## 3. A célula como unidade
 
@@ -83,11 +89,16 @@ uma razão para tirar o município do quadro.
 - **V1:** quadro original da 1ª chamada do ciclo 1, a mesma população de
   células do E3/E4. A conferência contra `quadro_vagas_tratamento.parquet`
   falha fechada.
-- **V2:** quadro retificado de 19/03/2026, a versão do P2 do E3 e a vigente na
-  alocação final, mais o quadro da 2ª chamada (união, como no protocolo). As
-  três versões do quadro da 1ª chamada têm as mesmas células e diferem nas
-  vagas imediatas e de reserva (`versoes_do_quadro_ciclo2_chamada1`). A
-  escolha só afeta `vagas_imediatas`, `vagas_cr` e `com_vagas_imediatas`.
+- **V2:** o protocolo define V2 como a união dos quadros da 1ª e da 2ª
+  chamada. O script usa as células do quadro retificado de 19/03/2026 (a versão
+  do P2 do E3 e a vigente na alocação final). Ele **para** se o quadro da 2ª
+  chamada acrescentar célula ou município (conferência
+  `V2_2a_chamada_nao_acrescenta_celula_nem_municipio`). Como não acrescenta, a
+  união coincide com a 1ª chamada.
+  - As três versões do quadro da 1ª chamada têm as mesmas células e diferem
+    nas vagas imediatas e de reserva (`versoes_do_quadro_ciclo2_chamada1`).
+  - A escolha de versão só afeta `vagas_imediatas`, `vagas_cr` e
+    `com_vagas_imediatas`.
 - **V3:** quadro retificado de 24/07/2026.
 - **Candidaturas:**
   - ciclo 1: alocação retificada sub judice, a versão canônica do A1/E4;
@@ -97,7 +108,18 @@ uma razão para tirar o município do quadro.
   conferido) e a mesma leitura de `co_ibge` e `ciclo`.
 - **PMMB:** consolidado, nível MUNICIPAL.
 - **População:** Censo 2022.
+- **Estrato territorial:** tipologia A2, só a coluna `estrato`.
 - **G3:** cardápio de gestores do ciclo 3 e resultado final da adesão.
+
+**Conferências que o script faz e que o fazem parar** (bloco `conferencias`):
+- F1.3 e F1.4 do ciclo 1 iguais a Y1 e Y2 do E4;
+- V1 e V2 iguais às populações P1 e P2 do E3;
+- F2.3 igual a D_k, calculado pelas próprias funções do E3;
+- as células do ciclo 1 iguais à população canônica;
+- a 2ª chamada do ciclo 2 não acrescenta célula nem município;
+- a macrorregião impressa no quadro igual ao 1º dígito do IBGE.
+
+Os testes repetem as conferências com o E3 e o E4, lendo os alvos de `output/`.
 
 ## 5. Definições
 
@@ -108,7 +130,8 @@ inclusive as que só têm cadastro reserva, como no E3/E4.
 |---|---|---|
 | F0.1 | ciclo 1: célula no quadro da 1ª chamada; ciclo 2: na 1ª ou na 2ª; ciclo 3: na 1ª | `f0_1_tem_celula_c{k}`; diagnóstico com a reserva da 2ª chamada do ciclo 1: `f0_1s_tem_celula_c1_ch1_ou_ch2` |
 | F0.2 | células e vagas imediatas do quadro da 1ª chamada por 10 mil habitantes (somar chamadas contaria vagas duas vezes) | `f0_2_*_c{k}` |
-| F0.3 | aderiu = pediu ≥ 1 vaga; pedidas = priorizadas + não priorizadas; fração priorizada = priorizadas / pedidas; imediatas priorizadas | `f0_3_*` |
+| F0.3a | 1 se o município **consta** do resultado final da adesão, 0 se **não consta**. Não constar não é "não pediu" (ver abaixo) | `f0_3a_consta_do_resultado_final_adesao` |
+| F0.3 | só para quem consta: vagas pedidas = priorizadas + não priorizadas; fração priorizada = priorizadas / pedidas; imediatas priorizadas. Quem não consta fica NaN, com o motivo "não consta do resultado final de adesão" | `f0_3_*` |
 | F0.4 | PMMB: `total_vagas_ativas` e `total_ocupadas` por 10 mil habitantes | `f0_4_*` |
 | F1.1 | linhas candidato × opção com a célula como 1ª opção, por célula | `f1_1_*`; sensibilidade sem "SEM PRÉ-REQUISITO" (só existe no ciclo 1): `f1_1s_*` |
 | F1.2 | célula com ≥ 1 candidatura em qualquer opção | `f1_2_*` |
@@ -119,6 +142,16 @@ inclusive as que só têm cadastro reserva, como no E3/E4.
 | F2.3 | D_k do E3: ≥ 1 ativo do ciclo no município | `f2_3_d_k_algum_ativo_do_ciclo` |
 | F4.1 | média, por pessoa, da pontuação dos alocados na 1ª chamada | `f4_1_*` |
 | F4.2 | média, por pessoa, da pontuação dos candidatos de 1ª opção | `f4_2_*` |
+
+**Regra de publicação do resultado da adesão** (`regra_publicacao_resultado_adesao`).
+- No Edital SGTES/MS nº 2/2025 (adesão de gestores):
+  - os itens 2.2.1, 2.3.1, 3.6 e 4.4 dizem que a lista preliminar e o
+    resultado final são publicados "com base nas informações enviadas";
+  - o item 3.5 permite à SGTES excluir o ente que não atender aos critérios;
+  - nenhum item diz que toda proposta enviada aparece no resultado.
+- Do ciclo 3 (Edital nº 25/2026), o repositório só tem a página de anexos; o
+  texto do edital não foi examinado.
+- Por isso a ausência no resultado não é codificada como pedido zero.
 
 **Pontuação (F4).** Cada ciclo usa a pontuação com que o seu resultado final
 classifica:
@@ -133,25 +166,36 @@ Como as escalas não são idênticas, o empilhamento usa efeito fixo de ciclo.
 - Zero aparece só onde o arquivo completo observa zero:
   - célula oferecida sem candidatura;
   - município fora do quadro;
-  - município sem ativo na relação nominal nacional;
-  - município do cardápio sem linha na adesão, porque o resultado final é a
-    lista completa de pedidos.
-- Fica NaN, com motivo, o que é indefinido ou está fora do protocolo:
+  - município sem ativo na relação nominal nacional.
+- Fica NaN, com motivo, o que é indefinido, não observado ou está fora do
+  protocolo:
   - F1.4 e F2 do ciclo 3;
   - média de pontuação sem ninguém para pontuar;
-  - fração priorizada sem vaga pedida;
+  - pedidos de adesão de município que não consta do resultado;
   - IVS de município criado depois de 2010.
 
-**E9 (adendo §12).**
-- `escolhas_candidatos`: uma linha por candidato × opção, com:
-  - curso, posto da opção, célula escolhida;
+**E9 (§12 e §14).**
+- `escolhas_candidatos`: uma linha por candidato × opção ranqueada, com:
+  - curso, posto da opção e célula escolhida;
   - município e faixa impressa, ambos do quadro;
-  - classificado, alocado, situação publicada, tipo de inscrição e pontuação.
-- `escolhas_conjunto_celulas`: as células do quadro da 1ª chamada com vaga
-  imediata, por curso e ciclo.
-- Opção em célula que só tem cadastro reserva fica marcada
-  (`celula_com_vaga_imediata = 0`) e não é descartada aqui. As contagens estão
-  em `escolhas_E9_celula_escolhida_contra_quadro`.
+  - classificado, alocado, situação publicada e pontuação.
+- O tipo de inscrição (cota) não é lido nem gravado, porque o E9 não precisa
+  dele.
+- **Conjunto principal (§14):** todas as células do curso e ciclo no quadro da
+  1ª chamada, com ou sem vaga imediata. Os atributos são:
+  - `tem_vaga_imediata` e `log_vagas_imediatas_mais_1`;
+  - faixa impressa e município;
+  - população do Censo 2022;
+  - macrorregião (impressa no quadro e conferida com o IBGE);
+  - estrato territorial.
+- **Sensibilidade (§12):** só as células com vaga imediata, e só os candidatos
+  cuja 1ª opção está nelas (`celula_com_vaga_imediata = 1` na linha de 1ª
+  opção).
+- **Conjunto por posto:** o conjunto de cada linha é o do curso da **própria
+  opção** (`id_conjunto_escolha`). Alguns candidatos escolhem a 1ª e a 2ª
+  opção em cursos diferentes. Para eles, o conjunto do posto 2 é o do curso da
+  2ª opção. As contagens por ciclo estão em
+  `candidatos_com_1a_e_2a_opcao_em_cursos_diferentes`.
 
 ## 6. Ressalvas dos arquivos de candidatura
 
@@ -173,20 +217,31 @@ Como as escalas não são idênticas, o empilhamento usa efeito fixo de ciclo.
    - *Resolução:* foi obtido da página pública do Chamamento Público SGTES/MS
      nº 1/2026, bloco "1ª chamada", "Resultado final PMME - 2º Ciclo", e
      preservado com URL, data de captura e SHA-256 em
-     `output/aquisicao/a10_manifesto_ciclo2_chamada1.json`.
+     `output/aquisicao/a11_manifesto_ciclo2_chamada1.json`.
+   - *Metadados da planilha:* o manifesto também registra as datas de criação e
+     de última modificação gravadas na planilha (`metadados_da_planilha`). A
+     criação coincide com a data do comunicado oficial do resultado. O sufixo
+     "25-05" do nome do arquivo corresponde à última modificação.
    - *Conferência cruzada:* o arquivo de remanescentes da mesma página tem o
      mesmo SHA-256 do que já estava no repositório.
-   - *Consequência:* F1.1–F1.3 e F4 do ciclo 2 vêm do arquivo oficial, sem
-     proxy.
 2. **Data dos ativos.** O protocolo chama de "retrato de 09/10/2026" a versão
    publicada nessa data. A coluna `dt_referencia` do arquivo traz outra data.
    As duas ficam registradas, e o arquivo é o mesmo do E3.
 3. **F2 do ciclo 3.** A relação nominal tem ativos do ciclo 3, mas F2 do ciclo
    3 não é construído. Ele está fora do protocolo (§3 e §5), e o ciclo 3 segue
    congelado.
-4. **Identificador do candidato (E9).**
+4. **F0.3.**
+   - *Primeira versão:* codificava como "não aderiu", com pedido zero, o
+     município do cardápio ausente do resultado final.
+   - *Auditoria:* a auditoria independente de 18/10/2026 apontou que nenhum
+     documento sustenta isso.
+   - *Versão atual:* F0.3a registra só se o município consta ou não consta do
+     resultado; os pedidos ficam NaN para quem não consta.
+5. **Identificador do candidato (E9).**
    - *Pedido:* o CPF mascarado como publicado.
    - *O que foi gravado:* um pseudônimo determinístico por ciclo
      (`id_candidato`), que agrupa as opções da mesma pessoa.
    - *Motivo:* regra do repositório (08a): nome, CPF e assinatura de CPF não
      vão para `output/`.
+6. **Numeração.** O script de aquisição e o manifesto passaram de `a10` para
+   `a11`, para não colidir com outra tarefa.

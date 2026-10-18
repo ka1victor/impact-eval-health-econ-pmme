@@ -15,9 +15,11 @@ bases de outcome do protocolo congelado
 - `outcomes_V_celula.parquet`: as mesmas medidas por célula CNES × curso do
   quadro da 1a chamada de cada ciclo, com o município, a faixa impressa no
   quadro e o código do curso;
-- `escolhas_candidatos.parquet` e `escolhas_conjunto_celulas.parquet`: adendo
-  §12 (E9), uma linha por candidato × opção ranqueada e o conjunto de escolha
-  (células com vaga imediata por curso e ciclo);
+- `escolhas_candidatos.parquet`, `escolhas_conjunto_principal.parquet` e
+  `escolhas_conjunto_sensibilidade_vaga_imediata.parquet`: E9 (adendo §12,
+  conjunto fixado no §14), uma linha por candidato × opção ranqueada; o
+  conjunto principal (todas as células do curso e ciclo no quadro da 1a
+  chamada, com atributos) e o de sensibilidade (só células com vaga imediata);
 - `dicionario_outcomes_funil.json`: fontes (caminho, SHA-256, data de
   referência, cobertura, unidade, chaves, filtros), definição de cada coluna,
   decisões de construção, taxas de casamento entre arquivos e desvios.
@@ -61,7 +63,7 @@ E4_MUNICIPIO = ROOT / "output" / "rdd_bolsa" / "E4_proporcao_municipio.csv"
 MANIFESTO_FONTES = ROOT / "output" / "manifesto_fontes_pmme.json"
 QUADRO_CONSOLIDADO = ROOT / "output" / "aquisicao" / "quadro_vagas_consolidado.parquet"
 MANIFESTO_A07 = ROOT / "output" / "aquisicao" / "a07_manifesto_ivs_administrativo.json"
-MANIFESTO_A10 = ROOT / "output" / "aquisicao" / "a10_manifesto_ciclo2_chamada1.json"
+MANIFESTO_A11 = ROOT / "output" / "aquisicao" / "a11_manifesto_ciclo2_chamada1.json"
 
 RAW_VAGAS = ROOT / "data" / "raw" / "aquisicao" / "vagas"
 RAW_PMME = ROOT / "data" / "raw" / "pmm_e"
@@ -105,10 +107,16 @@ OUT_V_MUN = OUT_DIR / "outcomes_V_municipio.parquet"
 OUT_V_CEL = OUT_DIR / "outcomes_V_celula.parquet"
 OUT_DICIONARIO = OUT_DIR / "dicionario_outcomes_funil.json"
 OUT_ESCOLHAS = OUT_DIR / "escolhas_candidatos.parquet"
-OUT_CONJUNTO = OUT_DIR / "escolhas_conjunto_celulas.parquet"
+OUT_CONJUNTO = OUT_DIR / "escolhas_conjunto_principal.parquet"
+OUT_CONJUNTO_SENS = OUT_DIR / "escolhas_conjunto_sensibilidade_vaga_imediata.parquet"
+OUT_CONJUNTO_ANTIGO = OUT_DIR / "escolhas_conjunto_celulas.parquet"
+TIPOLOGIA = ROOT / "output" / "tema_trabalho" / "matriz_tipologia_territorial.parquet"
 
 CHAVE = ["co_cnes_7d", "cod_curso"]
 CICLOS = (1, 2, 3)
+# Codificação oficial do IBGE: 1o dígito do código do município = grande região.
+REGIAO_POR_DIGITO_IBGE = {"1": "NORTE", "2": "NORDESTE", "3": "SUDESTE", "4": "SUL", "5": "CENTRO OESTE"}
+SCRIPT_E3 = ROOT / "scripts" / "rdd_bolsa" / "07_estimar_E3_rdd_completa.py"
 CICLOS_PRESENCA = (1, 2)  # F2 só para ciclos 1 e 2 (protocolo §3 e §5; ciclo 3 congelado)
 POR_HAB = 10_000
 
@@ -268,6 +276,10 @@ def ler_quadro(caminho: Path, aba: str | int = 0) -> pd.DataFrame:
         i_sit = coluna(cab, "SITUACAO DAS VAGAS")
     except KeyError:
         i_sit = None
+    try:
+        i_reg = coluna(cab, "REGIAO")
+    except KeyError:
+        i_reg = None
     registros, sem_chave = [], 0
     for r in linhas:
         cnes, curso = chave_cnes(valor(r, i_cnes)), chave_curso(valor(r, i_curso))
@@ -283,6 +295,7 @@ def ler_quadro(caminho: Path, aba: str | int = 0) -> pd.DataFrame:
                 "vagas_imediatas": numero(valor(r, i_imed)) if i_imed is not None else float("nan"),
                 "vagas_cr": numero(valor(r, i_cr)),
                 "situacao_vagas": texto_norm(valor(r, i_sit)) if i_sit is not None else "",
+                "regiao": texto_norm(valor(r, i_reg)) if i_reg is not None else "",
             }
         )
     q = pd.DataFrame(registros)
@@ -373,7 +386,6 @@ def ler_candidaturas(espec: dict[str, Any]) -> pd.DataFrame:
     except KeyError:
         i_ibge = None
     i_class = coluna(cab, *espec["classificacao"]) if "classificacao" in espec else None
-    i_tipo = coluna(cab, "TIPO DE INSCRICAO")
     i_mun = coluna(cab, "MUNICIPIO")
     registros, sem_chave = [], 0
     for r in linhas:
@@ -402,7 +414,6 @@ def ler_candidaturas(espec: dict[str, Any]) -> pd.DataFrame:
                 # classificados (desclassificados ficam em outra aba, sem célula).
                 "classificado": (texto_norm(valor(r, i_class)).startswith("CLASSIFICACAO")
                                  if i_class is not None else True),
-                "tipo_inscricao": texto_norm(valor(r, i_tipo)),
                 "_municipio_nome": texto_norm(valor(r, i_mun)),
                 "_pessoa": pessoa,
             }
@@ -728,8 +739,12 @@ def outcomes_g3(cardapio: pd.DataFrame, adesao: pd.DataFrame, populacao: pd.Seri
         vagas_priorizadas_cr=("priorizadas_cr", "sum"),
         vagas_nao_priorizadas=("nao_priorizadas", "sum"),
     )
-    out = card.join(soma, how="left").fillna(0.0)
-    out["f0_3_aderiu"] = (out["vagas_pedidas"] >= 1).astype(int)
+    out = card.join(soma, how="left")
+    # Observado: o município consta (1) ou não consta (0) do resultado final da adesão.
+    # Não consta não é "não pediu": nenhum documento diz que o resultado lista todas as
+    # propostas enviadas. Pedidos e frações só existem para quem consta; os demais ficam NaN.
+    out["f0_3a_consta_do_resultado_final_adesao"] = out["n_linhas_adesao"].notna().astype(int)
+    out["n_linhas_adesao"] = out["n_linhas_adesao"].fillna(0).astype(int)  # linhas no arquivo: contagem observada
     out["f0_3_vagas_pedidas"] = out["vagas_pedidas"]
     out["f0_3_fracao_priorizada"] = np.where(
         out["vagas_pedidas"] > 0, out["vagas_priorizadas"] / out["vagas_pedidas"].clip(lower=1), np.nan)
@@ -757,29 +772,38 @@ def por_10k(contagem: pd.Series, populacao: pd.Series) -> pd.Series:
 NATUREZA = "EMPIRICO"
 
 
-def anotar_ausencias(df: pd.DataFrame, motivos: dict[str, tuple[str, set[int] | None]]) -> pd.Series:
-    """Coluna `motivos_ausencia`: para cada célula NaN, o motivo registrado.
+def _nan_admitido(df: pd.DataFrame, condicao: Any) -> pd.Series:
+    """Onde o NaN é admitido: None = qualquer linha; set = ciclos; (coluna, valor) = df[coluna] == valor."""
+    if condicao is None:
+        return pd.Series(True, index=df.index)
+    if isinstance(condicao, set):
+        return df["ciclo"].isin(condicao)
+    coluna_cond, valor_cond = condicao
+    return df[coluna_cond] == valor_cond
 
-    `motivos` mapeia coluna -> (motivo, ciclos em que o NaN é admitido; None =
-    qualquer linha). Falha fechada se alguma coluna tem NaN sem motivo
-    registrado ou NaN num ciclo em que o motivo não se aplica: nenhum valor
-    ausente fica sem explicação e nenhum é preenchido.
+
+def anotar_ausencias(df: pd.DataFrame, motivos: dict[str, tuple[str, Any]]) -> pd.Series:
+    """Coluna `motivos_ausencia`: objeto JSON {coluna: motivo} das colunas NaN da linha ("{}" se nenhuma).
+
+    JSON evita separador ambíguo: o motivo pode conter qualquer caractere.
+    `motivos` mapeia coluna -> (motivo, onde o NaN é admitido; ver
+    `_nan_admitido`). Falha fechada se alguma coluna tem NaN sem motivo
+    registrado ou NaN fora de onde o motivo se aplica: nenhum valor ausente fica
+    sem explicação e nenhum é preenchido.
     """
     sem_motivo = [c for c in df.columns if df[c].isna().any() and c not in motivos]
     if sem_motivo:
         raise AssertionError(f"colunas com NaN sem motivo registrado: {sem_motivo}")
-    partes = []
-    for c, (motivo, ciclos) in motivos.items():
+    por_linha: list[dict[str, str]] = [{} for _ in range(len(df))]
+    for c, (motivo, condicao) in motivos.items():
         if c not in df.columns:
             continue
         nulo = df[c].isna()
-        if ciclos is not None and (nulo & ~df["ciclo"].isin(ciclos)).any():
-            raise AssertionError(f"{c}: NaN fora dos ciclos {sorted(ciclos)} admitidos para '{motivo}'")
-        partes.append(np.where(nulo, f"{c}: {motivo}", ""))
-    if not partes:
-        return pd.Series([""] * len(df), index=df.index)
-    texto = ["; ".join(p for p in linha if p) for linha in zip(*partes)]
-    return pd.Series(texto, index=df.index)
+        if (nulo & ~_nan_admitido(df, condicao)).any():
+            raise AssertionError(f"{c}: NaN fora de onde se admite '{motivo}' ({condicao})")
+        for i in np.flatnonzero(nulo.to_numpy()):
+            por_linha[i][c] = motivo
+    return pd.Series([json.dumps(d, ensure_ascii=False, sort_keys=True) for d in por_linha], index=df.index)
 
 
 _SO_C3 = "F2 não construído para o ciclo 3 (protocolo §3 e §5; ciclo 3 congelado)"
@@ -809,9 +833,13 @@ MOTIVOS_V: dict[str, tuple[str, set[int] | None]] = {
     "f4_2_pontuacao_media_cand_1a_opcao": ("nenhum candidato de 1a opção com pontuação numérica: média indefinida", None),
     "f1_3s_fracao_celulas_imediatas_preenchidas_ch1": ("município sem célula com vaga imediata", None),
 }
-MOTIVOS_G3: dict[str, tuple[str, set[int] | None]] = {
+_NAO_CONSTA = ("não consta do resultado final de adesão", ("f0_3a_consta_do_resultado_final_adesao", 0))
+MOTIVOS_G3: dict[str, tuple[str, Any]] = {
     "ivs_2010_oficial": ("município criado depois de 2010, sem IVS 2010 oficial", None),
-    "f0_3_fracao_priorizada": ("nenhuma vaga pedida: fração indefinida", None),
+    **{c: _NAO_CONSTA for c in ("vagas_pedidas", "vagas_priorizadas", "vagas_priorizadas_imediatas",
+                                "vagas_priorizadas_cr", "vagas_nao_priorizadas", "f0_3_vagas_pedidas",
+                                "f0_3_fracao_priorizada", "f0_3_vagas_imediatas_priorizadas",
+                                "f0_3s_vagas_pedidas_por_10k")},
 }
 MOTIVOS_U: dict[str, tuple[str, set[int] | None]] = {
     "pmmb_vagas_ativas": ("município sem linha no PMMB consolidado (nível MUNICIPAL)", None),
@@ -845,24 +873,49 @@ def tabela_escolhas(cand: pd.DataFrame, quadro: pd.DataFrame, ciclo: int) -> pd.
     esc["alocado"] = esc["alocado"].astype(int)
     esc["sem_pre_requisito"] = esc["sem_pre_requisito"].astype(int)
     esc = esc.rename(columns={"opcao": "opcao_rank", "status": "situacao_publicada"})
-    cols = ["ciclo", "id_candidato", "cod_curso", "opcao_rank", "co_cnes_7d", "co_ibge", "faixa_anunciada",
-            "celula_no_quadro", "celula_com_vaga_imediata", "classificado", "alocado", "situacao_publicada",
-            "tipo_inscricao", "pontuacao", "sem_pre_requisito"]
+    # O conjunto de escolha de cada linha é o do curso da própria opção (a 2a opção pode
+    # ser de outro curso que a 1a).
+    esc["id_conjunto_escolha"] = [f"c{ciclo}_curso{int(c):02d}" for c in esc["cod_curso"]]
+    curso1 = esc[esc["opcao_rank"] == 1].groupby("id_candidato")["cod_curso"].first()
+    curso2 = esc[esc["opcao_rank"] == 2].groupby("id_candidato")["cod_curso"].first()
+    esc["curso_da_1a_opcao"] = esc["id_candidato"].map(curso1).astype(float)
+    ambos = curso1.index.intersection(curso2.index)
+    difere = (curso1.loc[ambos] != curso2.loc[ambos]).astype(float)
+    esc["opcoes_em_cursos_diferentes"] = esc["id_candidato"].map(difere)
+    cols = ["ciclo", "id_candidato", "cod_curso", "opcao_rank", "id_conjunto_escolha", "co_cnes_7d", "co_ibge",
+            "faixa_anunciada", "celula_no_quadro", "celula_com_vaga_imediata", "curso_da_1a_opcao",
+            "opcoes_em_cursos_diferentes", "classificado", "alocado", "situacao_publicada", "pontuacao",
+            "sem_pre_requisito"]
     return esc[cols].sort_values(["ciclo", "id_candidato", "opcao_rank", "co_cnes_7d", "cod_curso"]).reset_index(drop=True)
 
 
-def conjunto_escolha(quadro: pd.DataFrame, ciclo: int) -> pd.DataFrame:
-    """Células do quadro da 1a chamada com vaga imediata, por curso (conjunto de escolha do E9)."""
-    c = quadro.loc[quadro["vagas_imediatas"].fillna(0) > 0,
-                   ["cod_curso"] + ["co_cnes_7d", "co_ibge", "faixa_anunciada", "vagas_imediatas"]].copy()
+def conjunto_escolha(quadro: pd.DataFrame, ciclo: int, populacao: pd.Series, estrato: pd.Series) -> pd.DataFrame:
+    """Conjunto de escolha PRINCIPAL do E9 (protocolo §14): todas as células do curso e ciclo
+    no quadro da 1a chamada, com ou sem vaga imediata, e os atributos da célula.
+
+    A sensibilidade (§12) é o subconjunto `tem_vaga_imediata == 1`.
+    """
+    c = quadro[["cod_curso", "co_cnes_7d", "co_ibge", "faixa_anunciada", "vagas_imediatas", "regiao"]].copy()
     c.insert(0, "ciclo", ciclo)
+    c.insert(1, "id_conjunto_escolha", [f"c{ciclo}_curso{int(k):02d}" for k in c["cod_curso"]])
+    c["tem_vaga_imediata"] = (c["vagas_imediatas"].fillna(0) > 0).astype(int)
+    c["log_vagas_imediatas_mais_1"] = np.log(c["vagas_imediatas"] + 1.0)
+    c["populacao_2022"] = c["co_ibge"].map(populacao)
+    c["macrorregiao"] = c.pop("regiao")
+    c["estrato_territorial"] = c["co_ibge"].map(estrato)
     return c.sort_values(["ciclo", "cod_curso", "co_cnes_7d"]).reset_index(drop=True)
 
 
-MOTIVOS_ESCOLHAS: dict[str, tuple[str, set[int] | None]] = {
-    "co_ibge": ("célula escolhida fora do quadro da 1a chamada", None),
-    "faixa_anunciada": ("célula escolhida fora do quadro da 1a chamada", None),
-    "celula_com_vaga_imediata": ("célula escolhida fora do quadro da 1a chamada", None),
+MOTIVOS_CONJUNTO: dict[str, tuple[str, Any]] = {
+    "estrato_territorial": ("município sem estrato na tipologia territorial (A2)", None),
+    "populacao_2022": ("município sem população do Censo 2022", None),
+}
+MOTIVOS_ESCOLHAS: dict[str, tuple[str, Any]] = {
+    "co_ibge": ("célula escolhida fora do quadro da 1a chamada", ("celula_no_quadro", 0)),
+    "faixa_anunciada": ("célula escolhida fora do quadro da 1a chamada", ("celula_no_quadro", 0)),
+    "celula_com_vaga_imediata": ("célula escolhida fora do quadro da 1a chamada", ("celula_no_quadro", 0)),
+    "curso_da_1a_opcao": ("candidato sem linha de 1a opção no arquivo publicado", None),
+    "opcoes_em_cursos_diferentes": ("candidato com uma só opção no arquivo publicado", None),
     "pontuacao": ("pontuação não numérica no arquivo publicado (ex.: 'SEM PRÉ-REQUISITO')", None),
     "opcao_rank": ("ordem de prioridade ilegível no arquivo publicado", None),
 }
@@ -872,13 +925,38 @@ MOTIVOS_ESCOLHAS: dict[str, tuple[str, set[int] | None]] = {
 # Proveniência e dicionário
 # --------------------------------------------------------------------------
 
+def conferir_contra_e3(municipios: dict[int, pd.DataFrame]) -> dict[str, Any]:
+    """Compara V1/V2 e D_k com `carregar_populacoes`, `ler_ativos` e `construir_d_k` do E3."""
+    import importlib.util
+    import sys
+
+    bytecode = sys.dont_write_bytecode
+    spec = importlib.util.spec_from_file_location("e3_rdd_completa", SCRIPT_E3)
+    e3 = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(e3)
+    sys.dont_write_bytecode = bytecode
+    pops = e3.carregar_populacoes(ROOT)
+    ativos_e3 = e3.ler_ativos(ATIVOS_ZIP)
+    out = {}
+    for nome, k in (("P1", 1), ("P2", 2)):
+        vk = municipios[k].set_index("co_ibge")
+        if sorted(vk.index) != sorted(set(pops[nome]["co_ibge"])):
+            raise AssertionError(f"V{k} difere da população {nome} do E3")
+        d = e3.construir_d_k(pops[nome]["co_ibge"], ativos_e3, k)
+        iguais = int((vk.loc[d.index, "f2_3_d_k_algum_ativo_do_ciclo"] == d).sum())
+        if iguais != len(d):
+            raise AssertionError(f"F2.3 do ciclo {k} não reproduz D_{k} do E3")
+        out[f"V{k}_igual_{nome}_e_F2_3_igual_D_{k}"] = True
+    return out
+
+
 def _manifestos() -> dict[str, dict]:
     por_arquivo: dict[str, dict] = {}
     if MANIFESTO_FONTES.exists():
         for f in json.loads(MANIFESTO_FONTES.read_text(encoding="utf-8")).get("fontes", []):
             if f.get("arquivo"):
                 por_arquivo.setdefault(f["arquivo"], f)
-    for mpath in (MANIFESTO_A07, MANIFESTO_A10):
+    for mpath in (MANIFESTO_A07, MANIFESTO_A11):
         if mpath.exists():
             for f in json.loads(mpath.read_text(encoding="utf-8")).get("fontes", []):
                 if f.get("arquivo"):
@@ -938,6 +1016,7 @@ DESCRICOES_V = {
     "vagas_imediatas": "vagas imediatas publicadas no quadro da 1a chamada",
     "vagas_cr": "vagas de cadastro reserva publicadas no quadro da 1a chamada",
     "situacao_vagas": "situação da célula no quadro ('COM VAGAS IMEDIATAS' ou 'APENAS CADASTRO DE RESERVA')",
+    "regiao": "macrorregião impressa no quadro (conferida com o 1o dígito do IBGE)",
     "com_vagas_imediatas": "1 se a célula tem vaga imediata",
     "n_celulas": "células CNES × curso no quadro da 1a chamada do ciclo",
     "n_celulas_com_imediatas": "células com vaga imediata",
@@ -993,11 +1072,17 @@ DESCRICOES_ESCOLHAS = {
     "id_candidato": "pseudônimo determinístico do candidato no ciclo (c<k>_<n>); nome e CPF não são gravados",
     "opcao_rank": "ordem de prioridade publicada (1 = 1a opção, 2 = 2a opção)",
     "celula_no_quadro": "1 se a célula escolhida está no quadro da 1a chamada do ciclo",
-    "celula_com_vaga_imediata": "1 se a célula escolhida tem vaga imediata (está no conjunto de escolha do E9)",
+    "celula_com_vaga_imediata": "1 se a célula escolhida tem vaga imediata (está no conjunto de sensibilidade do E9)",
+    "id_conjunto_escolha": "conjunto de escolha da linha: c<ciclo>_curso<curso> (o curso da própria opção)",
+    "curso_da_1a_opcao": "curso da 1a opção do candidato",
+    "opcoes_em_cursos_diferentes": "1 se a 1a e a 2a opção do candidato são de cursos diferentes",
+    "tem_vaga_imediata": "1 se a célula tem vaga imediata no quadro da 1a chamada",
+    "log_vagas_imediatas_mais_1": "log(vagas imediatas + 1)",
+    "macrorregiao": "macrorregião impressa no quadro (conferida com o 1o dígito do IBGE)",
+    "estrato_territorial": "estrato da tipologia territorial A2 (matriz_tipologia_territorial, coluna estrato)",
     "classificado": "ciclo 1: RESULTADO começa com 'CLASSIFICAÇÃO'; ciclos 2-3: linha da aba 'Classificados' (=1)",
     "alocado": "alocado na 1a chamada (ciclo 1: local confirmado; ciclos 2-3: SITUAÇÃO 'ALOCADO*')",
     "situacao_publicada": "status publicado, normalizado (ALOCAÇÃO no ciclo 1; SITUAÇÃO nos ciclos 2-3)",
-    "tipo_inscricao": "tipo de inscrição publicado (AC, ER, PCD; '-' no ciclo 1 para não classificados)",
     "pontuacao": "pontuação usada na classificação (ciclos 1 e 3: barema geral; ciclo 2: pontuação final)",
     "sem_pre_requisito": "1 se a pontuação publicada é 'SEM PRÉ-REQUISITO' (só ciclo 1)",
 }
@@ -1026,6 +1111,19 @@ def main() -> int:
     quadros = {1: ler_quadro(QUADRO_C1), 2: ler_quadro(QUADRO_C2), 3: ler_quadro(QUADRO_C3)}
     q_c1_ch2 = ler_quadro(QUADRO_C1_CH2_CR, "VAGAS - CADASTRO RESERVA")
     q_c2_ch2 = ler_quadro(QUADRO_C2_CH2)
+    # V2 é a união dos quadros da 1a e da 2a chamada (protocolo). As células de V2 são as do
+    # quadro da 1a chamada; isso só vale se a 2a chamada não acrescenta célula nem município.
+    chaves_c2_ch1 = set(zip(quadros[2]["co_cnes_7d"], quadros[2]["cod_curso"]))
+    n_c2_ch2_fora = sum(1 for x in zip(q_c2_ch2["co_cnes_7d"], q_c2_ch2["cod_curso"]) if x not in chaves_c2_ch1)
+    n_mun_c2_ch2_fora = len(set(q_c2_ch2["co_ibge"]) - set(quadros[2]["co_ibge"]))
+    if n_c2_ch2_fora or n_mun_c2_ch2_fora:
+        raise AssertionError("a 2a chamada do ciclo 2 acrescenta células ou municípios ao quadro da 1a: "
+                             "V2 teria de ser construído pela união")
+    # Macrorregião impressa no quadro confere com o 1o dígito do código IBGE.
+    for k in CICLOS:
+        reg = quadros[k]["co_ibge"].str[0].map(REGIAO_POR_DIGITO_IBGE)
+        if (quadros[k]["regiao"] != reg).any():
+            raise AssertionError(f"ciclo {k}: macrorregião do quadro difere do 1o dígito do IBGE")
     versoes_c2 = {nome: ler_quadro(p) for nome, p in QUADROS_C2_VERSOES.items()}
 
     # Ciclo 1 canônico (E3/E4) e conferência com o quadro bruto.
@@ -1125,6 +1223,9 @@ def main() -> int:
     }
     municipios = {k: outcomes_municipio(celulas[k], ativos_k.get(k)) for k in CICLOS}
 
+    # F2.3 e as populações V1/V2 têm de reproduzir o E3 (funções do próprio E3; falha fechada).
+    conferencia_e3 = conferir_contra_e3(municipios)
+
     # Ciclo 1: F1.3 e F1.4 têm de reproduzir o E4 (falha fechada).
     e4 = pd.read_csv(E4_MUNICIPIO, dtype={"co_ibge": str})
     m1 = municipios[1].merge(e4, on="co_ibge", how="outer", indicator=True, suffixes=("", "_e4"))
@@ -1196,33 +1297,40 @@ def main() -> int:
     primeiras_g = ["co_ibge", "ivs_2010_oficial", "tem_ivs_oficial", "populacao_2022"]
     g3 = g3[primeiras_g + [c for c in g3.columns if c not in primeiras_g]].sort_values("co_ibge").reset_index(drop=True)
 
-    # E9 (adendo §12): escolhas e conjunto de escolha, ciclos 1-3.
+    # E9 (adendo §12, conjunto de escolha fixado no §14): escolhas e conjuntos, ciclos 1-3.
+    estrato = pd.read_parquet(TIPOLOGIA, columns=["co_ibge_6d", "estrato"]).set_index("co_ibge_6d")["estrato"]
     fontes_escolha = {1: "c1_ch1", 2: "c2_ch1", 3: "c3_ch1"}
     escolhas = pd.concat([tabela_escolhas(cand_bruto[fontes_escolha[k]], quadros[k], k) for k in CICLOS],
                          ignore_index=True)
-    conjunto = pd.concat([conjunto_escolha(quadros[k], k) for k in CICLOS], ignore_index=True)
+    conjunto = pd.concat([conjunto_escolha(quadros[k], k, pop_map, estrato) for k in CICLOS], ignore_index=True)
+    conjunto_sens = conjunto[conjunto["tem_vaga_imediata"] == 1].reset_index(drop=True)
     escolhas["motivos_ausencia"] = anotar_ausencias(escolhas, MOTIVOS_ESCOLHAS)
-    conjunto["motivos_ausencia"] = anotar_ausencias(conjunto, {})
-    chaves_conj = set(zip(conjunto["ciclo"], conjunto["co_cnes_7d"], conjunto["cod_curso"]))
+    conjunto["motivos_ausencia"] = anotar_ausencias(conjunto, MOTIVOS_CONJUNTO)
+    conjunto_sens = conjunto_sens.assign(motivos_ausencia=anotar_ausencias(conjunto_sens, MOTIVOS_CONJUNTO))
     diag_escolhas = {}
     for k in CICLOS:
         e = escolhas[escolhas["ciclo"] == k]
-        no_conj = np.array([x in chaves_conj for x in zip(e["ciclo"], e["co_cnes_7d"], e["cod_curso"])])
-        um = (e["opcao_rank"] == 1).to_numpy()
+        um = e["opcao_rank"] == 1
+        cj = conjunto[conjunto["ciclo"] == k]
+        por_cand = e.drop_duplicates("id_candidato")
         diag_escolhas[f"ciclo_{k}"] = {
             "linhas_candidato_opcao": int(len(e)),
             "candidatos": int(e["id_candidato"].nunique()),
-            "linhas_com_celula_no_quadro": int(e["celula_no_quadro"].sum()),
+            "linhas_com_celula_no_quadro_conjunto_principal": int(e["celula_no_quadro"].sum()),
             "taxa_casamento_celula_quadro": float(e["celula_no_quadro"].mean()) if len(e) else None,
             "linhas_1a_opcao": int(um.sum()),
-            "linhas_1a_opcao_no_conjunto_com_vaga_imediata": int((no_conj & um).sum()),
-            "linhas_2a_opcao_no_conjunto_com_vaga_imediata": int((no_conj & ~um).sum()),
-            "linhas_fora_do_conjunto_por_celula_so_cadastro_reserva": int(
-                ((e["celula_no_quadro"] == 1) & (e["celula_com_vaga_imediata"] == 0)).sum()),
-            "celulas_no_conjunto_de_escolha": int((conjunto["ciclo"] == k).sum()),
-            "cursos_no_conjunto": int(conjunto.loc[conjunto["ciclo"] == k, "cod_curso"].nunique()),
-            "cursos_escolhidos_sem_celula_com_vaga_imediata": int(len(
-                set(e["cod_curso"]) - set(conjunto.loc[conjunto["ciclo"] == k, "cod_curso"]))),
+            "linhas_1a_opcao_no_conjunto_principal": int((um & (e["celula_no_quadro"] == 1)).sum()),
+            "linhas_1a_opcao_no_conjunto_sensibilidade_vaga_imediata": int((um & (e["celula_com_vaga_imediata"] == 1)).sum()),
+            "linhas_2a_opcao_no_conjunto_principal": int((~um & (e["celula_no_quadro"] == 1)).sum()),
+            "linhas_2a_opcao_no_conjunto_sensibilidade_vaga_imediata": int((~um & (e["celula_com_vaga_imediata"] == 1)).sum()),
+            "candidatos_com_1a_e_2a_opcao": int(por_cand["opcoes_em_cursos_diferentes"].notna().sum()),
+            "candidatos_com_1a_e_2a_opcao_em_cursos_diferentes": int((por_cand["opcoes_em_cursos_diferentes"] == 1).sum()),
+            "celulas_no_conjunto_principal": int(len(cj)),
+            "celulas_no_conjunto_sensibilidade_vaga_imediata": int(cj["tem_vaga_imediata"].sum()),
+            "cursos_no_conjunto_principal": int(cj["cod_curso"].nunique()),
+            "cursos_escolhidos_sem_celula_no_conjunto_principal": int(len(set(e["cod_curso"]) - set(cj["cod_curso"]))),
+            "cursos_escolhidos_sem_celula_com_vaga_imediata": int(
+                len(set(e["cod_curso"]) - set(cj.loc[cj["tem_vaga_imediata"] == 1, "cod_curso"]))),
             "linhas_por_situacao_publicada": {kk: int(v) for kk, v in sorted(Counter(e["situacao_publicada"].str[:60]).items())},
         }
 
@@ -1231,13 +1339,14 @@ def main() -> int:
     v_mun["motivos_ausencia"] = anotar_ausencias(v_mun, MOTIVOS_V)
     g3["motivos_ausencia"] = anotar_ausencias(g3, MOTIVOS_G3)
     u["motivos_ausencia"] = anotar_ausencias(u, MOTIVOS_U)
-    for df in (u, g3, v_mun, v_cel, escolhas, conjunto):
+    for df in (u, g3, v_mun, v_cel, escolhas, conjunto, conjunto_sens):
         df["natureza_dos_dados"] = NATUREZA
     colunas_cel = list(v_cel.columns)
     for nome, df, chave in (("U", u, ["co_ibge"]), ("G3", g3, ["co_ibge"]), ("V_municipio", v_mun, ["ciclo", "co_ibge"]),
                             ("V_celula", v_cel, ["ciclo"] + CHAVE),
                             ("escolhas", escolhas, ["ciclo", "id_candidato", "opcao_rank", "co_cnes_7d", "cod_curso"]),
-                            ("conjunto", conjunto, ["ciclo"] + CHAVE)):
+                            ("conjunto", conjunto, ["ciclo"] + CHAVE),
+                            ("conjunto_sensibilidade", conjunto_sens, ["ciclo"] + CHAVE)):
         if df.duplicated(chave).any():
             raise AssertionError(f"{nome}: chave {chave} duplicada")
 
@@ -1249,6 +1358,9 @@ def main() -> int:
     gravar_parquet(v_cel, OUT_V_CEL)
     gravar_parquet(escolhas, OUT_ESCOLHAS)
     gravar_parquet(conjunto, OUT_CONJUNTO)
+    gravar_parquet(conjunto_sens, OUT_CONJUNTO_SENS)
+    if OUT_CONJUNTO_ANTIGO.exists():  # nome anterior (só vagas imediatas), substituído pelo §14
+        OUT_CONJUNTO_ANTIGO.unlink()
 
     # Dicionário.
     manifestos = _manifestos()
@@ -1256,13 +1368,13 @@ def main() -> int:
     ativos_ref = ", ".join(sorted(ativos["dt_referencia"].dropna().unique()))
     consolidado = pd.read_parquet(QUADRO_CONSOLIDADO, columns=["arquivo_origem", "dt_publicacao"])
     datas_pub = consolidado.groupby("arquivo_origem")["dt_publicacao"].agg(lambda s: ", ".join(sorted(s.unique())))
-    a10 = {f["arquivo"]: f for f in json.loads(MANIFESTO_A10.read_text(encoding="utf-8"))["fontes"]}
+    a11 = {f["arquivo"]: f for f in json.loads(MANIFESTO_A11.read_text(encoding="utf-8"))["fontes"]}
 
     def data_pub(caminho: Path) -> str:
         if caminho.name in datas_pub.index:
             return f"publicação {datas_pub[caminho.name]} (quadro_vagas_consolidado, A1)"
-        if caminho.name in a10:
-            return a10[caminho.name]["data_referencia"] + " (manifesto a10)"
+        if caminho.name in a11:
+            return a11[caminho.name]["data_referencia"] + " (manifesto a11)"
         return "não registrada"
 
     def cob_q(q: pd.DataFrame) -> str:
@@ -1345,6 +1457,9 @@ def main() -> int:
                       f"{len(ativos)} ativos, ciclos {sorted(ativos['ciclo_k'].unique().tolist())}", "pessoa ativa",
                       "co_ibge, co_cnes, curso, ciclo",
                       "ciclos 1 e 2; só as colunas co_ibge, co_cnes, curso, ciclo, dt_referencia são lidas", manifestos),
+        bloco_entrada(TIPOLOGIA, "E9: estrato territorial das células do conjunto de escolha (só a coluna estrato)",
+                      "tipologia A2", f"{len(estrato)} municípios", "município", "co_ibge_6d", "coluna estrato apenas",
+                      manifestos),
         bloco_entrada(PPF_ZIP, "F0.4: PMMB consolidado (vagas ativas e ocupadas)", f"dt_referencia no arquivo: {pmmb_ref}",
                       f"{len(pmmb)} municípios no nível MUNICIPAL", "município", "co_ibge", "nivel == 'MUNICIPAL'",
                       manifestos),
@@ -1386,7 +1501,8 @@ def main() -> int:
         "vagas_priorizadas": "PRIORIZADAS (= imediatas + cadastro reserva)",
         "vagas_priorizadas_imediatas": "VAGAS IMEDIATAS priorizadas", "vagas_priorizadas_cr": "CADASTRO DE RESERVA priorizado",
         "vagas_nao_priorizadas": "NÃO PRIORIZADAS",
-        "f0_3_aderiu": "F0.3: aderiu (pediu ≥1 vaga no resultado final da adesão)",
+        "f0_3a_consta_do_resultado_final_adesao": "F0.3a: 1 = consta do resultado final da adesão; 0 = não consta "
+                                                  "(não equivale a 'não pediu')",
         "f0_3_vagas_pedidas": "F0.3: vagas pedidas", "f0_3_fracao_priorizada": "F0.3: priorizadas / pedidas (NaN se 0 pedidas)",
         "f0_3_vagas_imediatas_priorizadas": "F0.3: vagas imediatas priorizadas",
         "f0_3s_vagas_pedidas_por_10k": "vagas pedidas por 10 mil habitantes (complementar)",
@@ -1405,9 +1521,6 @@ def main() -> int:
             "linhas_do_resultado_final_casadas": dg["linhas_casadas"],
         }
 
-    chaves_c2_ch1 = set(zip(quadros[2]["co_cnes_7d"], quadros[2]["cod_curso"]))
-    n_c2_ch2_fora = sum(1 for x in zip(q_c2_ch2["co_cnes_7d"], q_c2_ch2["cod_curso"]) if x not in chaves_c2_ch1)
-    n_mun_c2_ch2_fora = len(set(q_c2_ch2["co_ibge"]) - set(quadros[2]["co_ibge"]))
     n_mun_c1_ch2_novos = len(set(q_c1_ch2["co_ibge"]) - set(quadros[1]["co_ibge"]))
     n_c2_celulas_comuns = len(set.intersection(*[set(zip(q["co_cnes_7d"], q["cod_curso"])) for q in versoes_c2.values()]))
     n_pop_fora_u = len(set(pop["co_ibge_6d"]) - set(u["co_ibge"]))
@@ -1435,10 +1548,13 @@ def main() -> int:
             "escolhas_candidatos": bloco_saida(
                 OUT_ESCOLHAS, escolhas, ["ciclo", "id_candidato", "opcao_rank", "co_cnes_7d", "cod_curso"],
                 "candidatos da 1a chamada de cada ciclo (E9, adendo §12)", "candidato × opção ranqueada"),
-            "escolhas_conjunto_celulas": bloco_saida(
+            "escolhas_conjunto_principal": bloco_saida(
                 OUT_CONJUNTO, conjunto, ["ciclo", "co_cnes_7d", "cod_curso"],
-                "células com vaga imediata do quadro da 1a chamada, por curso e ciclo (conjunto de escolha do E9)",
-                "célula CNES × curso × ciclo"),
+                "E9 principal (§14): todas as células do quadro da 1a chamada, por curso e ciclo, com ou sem "
+                "vaga imediata", "célula CNES × curso × ciclo"),
+            "escolhas_conjunto_sensibilidade_vaga_imediata": bloco_saida(
+                OUT_CONJUNTO_SENS, conjunto_sens, ["ciclo", "co_cnes_7d", "cod_curso"],
+                "E9 sensibilidade (§12): só células com vaga imediata", "célula CNES × curso × ciclo"),
         },
         "n_por_populacao": {
             "U": int(len(u)), "G3": int(len(g3)),
@@ -1454,8 +1570,10 @@ def main() -> int:
             "V_municipio": {c: DESCRICOES_V.get(c, "") for c in v_mun.columns},
             "V_celula": {c: DESCRICOES_V.get(c, "") for c in colunas_cel},
             "escolhas_candidatos": {c: DESCRICOES_ESCOLHAS.get(c) or DESCRICOES_V.get(c, "") for c in escolhas.columns},
-            "escolhas_conjunto_celulas": {c: DESCRICOES_ESCOLHAS.get(c) or DESCRICOES_V.get(c, "")
-                                          for c in conjunto.columns},
+            "escolhas_conjunto_principal": {c: DESCRICOES_ESCOLHAS.get(c) or DESCRICOES_V.get(c, "")
+                                            for c in conjunto.columns},
+            "escolhas_conjunto_sensibilidade_vaga_imediata": {c: DESCRICOES_ESCOLHAS.get(c) or DESCRICOES_V.get(c, "")
+                                                              for c in conjunto_sens.columns},
         }.items()},
         "decisoes_de_construcao": [
             "Célula = CNES (7 dígitos) × código do curso (número inicial do rótulo). Não há identificador "
@@ -1464,9 +1582,10 @@ def main() -> int:
             "localizadas pelo nome do cabeçalho.",
             "V_k e as células de V_k vêm do quadro da 1a chamada do ciclo k: ciclo 1 = quadro original "
             f"({len(quadros[1])} células, a população do E3/E4); ciclo 2 = retificação de 19/03/2026, a mesma "
-            "versão do P2 do E3; ciclo 3 = retificação de 24/07/2026. V2 é a união dos quadros da 1a e da 2a "
-            f"chamada (protocolo); células da 2a chamada do ciclo 2 fora do quadro da 1a: {n_c2_ch2_fora}; "
-            f"municípios da 2a chamada fora da 1a: {n_mun_c2_ch2_fora}.",
+            "versão do P2 do E3; ciclo 3 = retificação de 24/07/2026. O protocolo define V2 como a união dos "
+            "quadros da 1a e da 2a chamada; o script usa as células da 1a chamada e falha se a 2a chamada "
+            f"acrescentar célula ou município (células da 2a fora da 1a: {n_c2_ch2_fora}; municípios: "
+            f"{n_mun_c2_ch2_fora}), de modo que a união e o quadro da 1a chamada coincidem.",
             "Ciclo 2: versões do quadro da 1a chamada (células, municípios, vagas imediatas, vagas de reserva): "
             + "; ".join(f"{nome}: {v['celulas']}, {v['municipios']}, {v['vagas_imediatas']:.0f}, {v['vagas_cr']:.0f}"
                         for nome, v in versoes.items())
@@ -1514,25 +1633,34 @@ def main() -> int:
             "de cada ciclo (somar quadros de chamadas diferentes contaria vagas duas vezes, inventário A1). "
             "O diagnóstico f0_1s_tem_celula_c1_ch1_ou_ch2 inclui o quadro de reserva da 2a chamada do ciclo 1, "
             f"que tem {n_mun_c1_ch2_novos} municípios fora do quadro da 1a chamada.",
-            "F0.3 (G3 = municípios do cardápio de gestores): aderiu = pediu ≥1 vaga no resultado final da "
-            "adesão; vagas pedidas = priorizadas + não priorizadas; fração priorizada = priorizadas / pedidas, "
-            "com priorizadas = imediatas + cadastro reserva (identidade conferida). O resultado final da adesão "
-            "é a lista completa de pedidos; município do cardápio sem linha nele não pediu vaga, e o zero de "
-            "vagas_pedidas é o valor observado (fração priorizada fica NaN, com motivo). A aba de gestão dupla "
-            "repete linhas da aba principal e não é somada.",
+            "F0.3 (G3 = municípios do cardápio de gestores): F0.3a = f0_3a_consta_do_resultado_final_adesao, "
+            "1 se o município consta do resultado final da adesão e 0 se não consta. Não constar NÃO é codificado "
+            "como 'não pediu': nenhum documento examinado diz que o resultado final lista todas as propostas "
+            "enviadas (ver regra_publicacao_resultado_adesao). Vagas pedidas (priorizadas + não priorizadas), "
+            "fração priorizada (priorizadas / pedidas, com priorizadas = imediatas + cadastro reserva, identidade "
+            "conferida) e imediatas priorizadas só existem para quem consta; os demais ficam NaN com o motivo "
+            "'não consta do resultado final de adesão'. A aba de gestão dupla repete linhas da aba principal e "
+            "não é somada.",
             "Zeros e ausentes: zero só onde o arquivo completo observa zero (célula oferecida sem candidatura no "
-            "resultado; município fora do quadro, sem ativo na relação nominal nacional ou sem pedido na adesão). "
+            "resultado; município fora do quadro; sem ativo na relação nominal nacional). "
             "Valor indefinido ou fora do protocolo fica NaN e a coluna motivos_ausencia diz por quê; o script "
             "falha se algum NaN não tiver motivo registrado. Linhas de candidatura cuja célula não casa com o "
             "quadro não são atribuídas a célula nenhuma e são contadas em casamento_entre_arquivos.",
             "F0.4: PMMB consolidado, nível MUNICIPAL; vagas = total_vagas_ativas; médicos ativos = "
             "total_ocupadas (= soma dos ativos por equipe e por sexo, conferido).",
-            "E9 (adendo §12): escolhas_candidatos tem uma linha por candidato × opção ranqueada do resultado da "
-            "1a chamada de cada ciclo (ciclo 1: alocação sub judice; ciclo 2: resultado final de 24/03/2026; "
-            "ciclo 3: resultado final sub judice), com a célula escolhida, o município e a faixa impressa vindos "
-            "do quadro pela célula. O conjunto de escolha (escolhas_conjunto_celulas) são as células do quadro da "
-            "1a chamada com vaga imediata, por curso e ciclo, como no adendo; opções em célula só de cadastro "
-            "reserva ficam marcadas (celula_com_vaga_imediata = 0) e não são descartadas aqui.",
+            "E9 (adendo §12; conjunto fixado no §14): escolhas_candidatos tem uma linha por candidato × opção "
+            "ranqueada do resultado da 1a chamada de cada ciclo (ciclo 1: alocação sub judice; ciclo 2: "
+            "resultado final de 24/03/2026; ciclo 3: resultado final sub judice), com a célula escolhida e o "
+            "município e a faixa impressa vindos do quadro pela célula. Conjunto de escolha PRINCIPAL "
+            "(escolhas_conjunto_principal): todas as células do curso e ciclo no quadro da 1a chamada, com ou sem "
+            "vaga imediata, com tem_vaga_imediata, log(vagas_imediatas + 1), faixa impressa, co_ibge, população "
+            "do Censo 2022, macrorregião (impressa no quadro e conferida com o 1o dígito do IBGE) e estrato "
+            "territorial (A2, só a coluna estrato). SENSIBILIDADE (escolhas_conjunto_sensibilidade_vaga_imediata): "
+            "só as células com vaga imediata, e só candidatos cuja 1a opção está nelas (celula_com_vaga_imediata "
+            "= 1 na linha de 1a opção). O conjunto de cada linha é o do curso da PRÓPRIA opção "
+            "(id_conjunto_escolha): a 2a opção pode ser de outro curso que a 1a (contagens em "
+            "candidatos_com_1a_e_2a_opcao_em_cursos_diferentes), e então o conjunto do posto 2 é o do curso da "
+            "2a opção. O tipo de inscrição (cota) não é lido nem gravado (não é necessário ao E9).",
             f"U = os {len(u)} municípios do IVS 2010 oficial; municípios do Censo 2022 fora de U (criados depois "
             f"de 2010): {n_pop_fora_u}. Municípios de V ou G3 sem IVS 2010 ficam com ivs_2010_oficial NaN e "
             "tem_ivs_oficial = 0 (lista em n_por_populacao).",
@@ -1549,10 +1677,28 @@ def main() -> int:
                      "municipios_de_U_sem_linha_pmmb": int(u["pmmb_vagas_ativas"].isna().sum())},
         },
         "escala_pontuacao_ciclo2": escala_c2,
+        "regra_publicacao_resultado_adesao": {
+            "pergunta": "o resultado final da adesão de gestores lista todas as propostas enviadas?",
+            "resposta": "não há texto que o afirme; F0.3 não codifica 'não consta' como 'não pediu'",
+            "texto_examinado": [
+                "Edital SGTES/MS nº 2/2025 (adesão de gestores, ciclo 1), itens 2.2.1, 2.3.1, 3.6 e 4.4: a SGTES "
+                "publica a lista preliminar e o resultado final 'com base nas informações enviadas' / 'incluídas "
+                "no sistema', depois de analisar recursos; nada diz que toda proposta enviada aparece no resultado.",
+                "Mesmo edital, item 3.5: a SGTES 'se reserva ao direito de excluir do presente chamamento público o "
+                "ente federativo que não atender integralmente aos critérios', isto é, propostas podem não constar.",
+                "Ciclo 3 (Edital nº 25/2026): a cópia no repositório "
+                "(data/raw/aquisicao/ivs_regra/edital_sgtes_05_2026_adesao_ciclo3.html) é só a página de anexos; "
+                "o texto do edital não foi examinado. A cópia da página do Edital 2/2025 no repositório também não "
+                "traz os itens acima, que foram lidos num extrato de texto fora do repositório.",
+            ],
+        },
         "conferencias": {
             "ciclo1_F1_3_e_F1_4_reproduzem_E4": True,
             "ciclo1_celulas_do_quadro_bruto_iguais_a_populacao_canonica": True,
             "relacao_nominal_de_ativos_sha256_do_protocolo": True,
+            **conferencia_e3,
+            "V2_2a_chamada_nao_acrescenta_celula_nem_municipio": True,
+            "macrorregiao_do_quadro_igual_ao_1o_digito_do_ibge": True,
         },
         "ressalvas_dos_arquivos_de_candidatura": [
             "A auditoria do A1 (gate 08) bloqueou 'candidaturas por vaga' porque não há ID persistente de vaga; "
@@ -1574,8 +1720,8 @@ def main() -> int:
                 "item": "resultado final da 1a chamada do ciclo 2",
                 "situacao": "ausente do repositório no inventário de 18/10/2026",
                 "resolucao": "obtido na página pública do Chamamento SGTES/MS nº 1/2026 e preservado por "
-                             "scripts/aquisicao/a10_adquirir_resultado_ciclo2_chamada1.py "
-                             "(output/aquisicao/a10_manifesto_ciclo2_chamada1.json)",
+                             "scripts/aquisicao/a11_adquirir_resultado_ciclo2_chamada1.py "
+                             "(output/aquisicao/a11_manifesto_ciclo2_chamada1.json)",
             },
             {
                 "data": DATA_EXECUCAO,
@@ -1583,6 +1729,15 @@ def main() -> int:
                 "situacao": f"o protocolo chama de 'retrato de 09/10/2026' a versão publicada nessa data; "
                             f"a coluna dt_referencia do arquivo diz {ativos_ref}",
                 "resolucao": "mesmo arquivo do E3 (SHA-256 conferido); as duas datas ficam registradas",
+            },
+            {
+                "data": DATA_EXECUCAO,
+                "item": "F0.3 (adesão do ciclo 3)",
+                "situacao": "a primeira versão codificava como 'não aderiu' (zero pedido) o município do cardápio "
+                            "ausente do resultado final, sem documento que dissesse que o resultado lista todos os "
+                            "pedidos (auditoria independente de 18/10/2026)",
+                "resolucao": "F0.3a = consta (1) / não consta (0) do resultado final; pedidos e fração priorizada "
+                             "só para quem consta, NaN com motivo para os demais",
             },
             {
                 "data": DATA_EXECUCAO,

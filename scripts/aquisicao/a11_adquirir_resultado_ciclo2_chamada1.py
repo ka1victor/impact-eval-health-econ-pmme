@@ -24,21 +24,23 @@ hash, o script para sem tocar nele. O download vai para `<arquivo>.part` e só
 recebe o nome final depois de conferido. Não lê nenhum outcome e não cruza nada
 com o IVS: só grava o manifesto.
 
-Saída: `output/aquisicao/a10_manifesto_ciclo2_chamada1.json`.
+Saída: `output/aquisicao/a11_manifesto_ciclo2_chamada1.json`.
 """
 
 from __future__ import annotations
 
 import hashlib
 import json
+import re
 import time
 import urllib.error
 import urllib.request
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW = ROOT / "data" / "raw" / "pmm_e"
-MANIFESTO = ROOT / "output" / "aquisicao" / "a10_manifesto_ciclo2_chamada1.json"
+MANIFESTO = ROOT / "output" / "aquisicao" / "a11_manifesto_ciclo2_chamada1.json"
 
 DATA_CAPTURA = "2026-10-18"
 PAGINA = (
@@ -53,8 +55,9 @@ ARQUIVOS = [
         "sha256": "8e85a28a57db1283cd3103065b04909b637cb76aab73482889e6b5fe50182e3c",
         "papel": "resultado final da alocação da 1a chamada do ciclo 2 (candidato × opção, CNES e curso, sem IBGE)",
         "data_referencia": (
-            "não declarada no arquivo; publicado com o comunicado oficial de 24/03/2026 (homologação de 25/03 a "
-            "02/04/2026); o sufixo '25-05' do nome não é explicado na página"
+            "não declarada no conteúdo; publicado com o comunicado oficial de 24/03/2026 (homologação de 25/03 a "
+            "02/04/2026). A criação registrada na planilha coincide com a data do comunicado e o sufixo '25-05' "
+            "do nome corresponde à última modificação registrada (ver metadados_da_planilha)"
         ),
     },
     {
@@ -87,6 +90,19 @@ def sha256(path: Path) -> str:
         while bloco := f.read(1 << 20):
             h.update(bloco)
     return h.hexdigest()
+
+
+def metadados_planilha(caminho: Path) -> dict | None:
+    """Datas de criação e de última modificação gravadas em `docProps/core.xml` do .xlsx.
+
+    Só as datas; nomes de autor e de quem modificou não são copiados.
+    """
+    if caminho.suffix.lower() != ".xlsx":
+        return None
+    with zipfile.ZipFile(caminho) as z:
+        xml = z.read("docProps/core.xml").decode("utf-8")
+    achar = lambda tag: (re.search(rf"<dcterms:{tag}[^>]*>([^<]+)</dcterms:{tag}>", xml) or [None, None])[1]  # noqa: E731
+    return {"criado": achar("created"), "modificado": achar("modified"), "fonte": "docProps/core.xml"}
 
 
 def obter(item: dict, raw: Path = RAW) -> tuple[str, str, int]:
@@ -140,12 +156,13 @@ def main() -> int:
                 "data_captura": DATA_CAPTURA,
                 "sha256": h,
                 "tamanho_bytes": n,
+                "metadados_da_planilha": metadados_planilha(RAW / item["arquivo"]),
             }
         )
         print(f"[{status}] {item['arquivo']} {h[:12]}… {n} bytes")
     manifesto = {
         "documento": "Aquisição do resultado da 1a chamada do ciclo 2 do PMM-E",
-        "script": "scripts/aquisicao/a10_adquirir_resultado_ciclo2_chamada1.py",
+        "script": "scripts/aquisicao/a11_adquirir_resultado_ciclo2_chamada1.py",
         "data_captura": DATA_CAPTURA,
         "motivo": (
             "lacuna do inventário de 18/10/2026: o resultado final da alocação da 1a chamada do ciclo 2 não "
