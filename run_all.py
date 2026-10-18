@@ -42,7 +42,7 @@ STEPS = [
     ROOT / "scripts" / "tema_trabalho" / "05_estimar_atracao.py",
     ROOT / "scripts" / "tema_trabalho" / "06_avaliar_provimento_cnes.py",
     ROOT / "scripts" / "tema_trabalho" / "06b_ameacas_a5_placebo_pretendencia_deslocamento.py",
-    ROOT / "scripts" / "tema_trabalho" / "07_red_team_sintese.py",
+    # A síntese A6 (07_red_team_sintese.py) roda depois da cadeia da RDD, cujas saídas lê.
     ROOT / "scripts" / "tema_trabalho" / "08_auditar_cutoff_selecao.py",
     ROOT / "scripts" / "tema_trabalho" / "09_estimar_cutoff_escore_estrito.py",
     ROOT / "scripts" / "tema_trabalho" / "09b_intervalos_exatos_escore.py",
@@ -74,6 +74,8 @@ STEPS = [
     ROOT / "scripts" / "rdd_bolsa" / "09b_conferir_sinal.py",
     ROOT / "scripts" / "rdd_bolsa" / "09_gerar_relatorio_pdf.py",
     ROOT / "scripts" / "rdd_bolsa" / "10_galeria_figura_regra.py",
+    # A6 lê R1, E3 e E5 e registra os hashes deles no manifesto.
+    ROOT / "scripts" / "tema_trabalho" / "07_red_team_sintese.py",
     ROOT / "scripts" / "tema_trabalho" / "10_conferir_numeros_artigo.py",
     ROOT / "scripts" / "tema_trabalho" / "11_conferir_numeros_artigo_curto.py",
 ]

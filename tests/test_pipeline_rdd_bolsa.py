@@ -62,6 +62,13 @@ class TestCadeiaRddBolsa(unittest.TestCase):
         self.assertLess(posicao(AQ / "02_consolidar_quadro_vagas.py"),
                         posicao(RDD / "08a_reconstruir_proporcao_preenchida.py"))
 
+    def test_sintese_a6_depois_da_cadeia_da_rdd(self) -> None:
+        # A6 lê R1 (04b), E3 e E5 e registra os hashes deles no manifesto.
+        a6 = posicao(TT / "07_red_team_sintese.py")
+        for etapa in ("04b_validar_ivs_oficial_escore_administrativo.py", "07_estimar_E3_rdd_completa.py",
+                      "11_inferencia_alternativa.py"):
+            self.assertLess(posicao(RDD / etapa), a6, etapa)
+
     def test_e3_roda_com_o_escore_completo(self) -> None:
         self.assertEqual(RA.ARGUMENTOS, {RDD / "07_estimar_E3_rdd_completa.py": ["--escore", ESCORE_COMPLETO]})
         self.assertTrue((ROOT / ESCORE_COMPLETO).exists())
