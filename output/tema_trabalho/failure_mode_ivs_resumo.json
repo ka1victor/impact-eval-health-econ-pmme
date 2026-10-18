@@ -1,0 +1,122 @@
+{
+  "natureza_dos_dados": "EMPIRICO (coluna 'depois'); FAILURE_MODE (coluna 'antes', só documentação)",
+  "ref_git_antes": "22eddb528c37aa0bf8721275999423900959070b",
+  "data_referencia": "2026-10-18",
+  "arquivo_errado": {
+    "municipios": 5565,
+    "ivs_igual_3_casas": 38,
+    "correlacao_ivs": 0.8510764657215389,
+    "populacao_2010_soma_arquivo_errado": 41852890,
+    "populacao_2010_soma_oficial": 190755799,
+    "linha_escolhida_por_municipio": {
+      "Negro / Mulher / Urbano": 4362,
+      "Negro / Mulher / Total Situação de Domicílio": 576,
+      "Total Cor / Mulher / Urbano": 484,
+      "Total Cor / Mulher / Total Situação de Domicílio": 142,
+      "Total Cor / Total Sexo / Total Situação de Domicílio": 1
+    },
+    "fonte_mecanismo": "output/rdd_bolsa/identificacao_arquivo_local_ivs.json"
+  },
+  "tipologia": {
+    "municipios": 5570,
+    "estrato_identico": true,
+    "estoque_pre_identico": true,
+    "ivs_igual_ao_oficial_depois": 5565,
+    "ivs_comparados_com_oficial": 5565,
+    "ivs_igual_antes_e_depois_3_casas": 38,
+    "ivs_categoria_igual_antes_e_depois": 2999,
+    "a1_municipios": 540,
+    "a1_ivs_medio": {
+      "antes_failure_mode": 0.32894999999999996,
+      "depois": 0.32660925925925927
+    },
+    "a1_populacao_2010_mediana": {
+      "antes_failure_mode": 9092.5,
+      "depois": 45185.0
+    },
+    "quadro_municipios_com_estoque": 368,
+    "quadro_estoque_pre_por_10k_mediana": {
+      "antes_failure_mode": 4.429705141558268,
+      "depois": 0.8117692716778433
+    },
+    "sha256_antes": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+    "sha256_depois": "63707c3c235ad099bb88542c4428d5a2091cab28c2b5b5c033afaf7482d9a8da"
+  },
+  "cadeia_rdd": {
+    "e3_registra_tipologia_antiga": true,
+    "e5_registra_tipologia_antiga": true,
+    "estrato_identico": true,
+    "leitura": "E3 e E5 leem da tipologia só a coluna estrato, idêntica antes e depois; estimativas inalteradas"
+  },
+  "tabela1_ciclo1": [
+    {
+      "variavel": "População municipal 2010",
+      "coluna": "Imediata média",
+      "antes_failure_mode": 40625.54945054945,
+      "depois": 139186.87362637362
+    },
+    {
+      "variavel": "População municipal 2010",
+      "coluna": "Reserva média",
+      "antes_failure_mode": 30713.394160583943,
+      "depois": 112082.70802919708
+    },
+    {
+      "variavel": "População municipal 2010",
+      "coluna": "Diferença padronizada",
+      "antes_failure_mode": 0.1401559281659603,
+      "depois": 0.1371855265696076
+    },
+    {
+      "variavel": "IVS 2010",
+      "coluna": "Imediata média",
+      "antes_failure_mode": 0.3411978021978022,
+      "depois": 0.3430714285714286
+    },
+    {
+      "variavel": "IVS 2010",
+      "coluna": "Reserva média",
+      "antes_failure_mode": 0.3461605839416058,
+      "depois": 0.3465547445255474
+    },
+    {
+      "variavel": "IVS 2010",
+      "coluna": "Diferença padronizada",
+      "antes_failure_mode": -0.0733849017404515,
+      "depois": -0.0363707668661878
+    }
+  ],
+  "diagnostico_tema_01": {
+    "antes_failure_mode": "177 de 368 municípios divergem da regra candidata",
+    "depois": "368 de 368 municípios com a faixa anunciada reproduzida pelo IVS 2010 oficial (a08), cortes 0,300 e 0,400; 0 sem IVS oficial"
+  },
+  "mudancas_de_conclusao": [
+    "- **A4 ajuste completo, `estrato_metropolitano`:** 0,209 → 0,185; o q de FDR cruza 5% (0,023 → 0,055).",
+    "- **A4 ajuste completo, `log_pop`:** 0,036 → 0,051; o p cruza 5% (0,117 → 0,042).",
+    "- **A4 ajuste completo winsorizado p99, `log_pop`:** 0,034 → 0,050; o p cruza 5% (0,139 → 0,048).",
+    "- **A5 estoque em 6 meses, completo, `estrato_capital`:** −1,685 → −1,341; o p cruza 5% (0,043 → 0,109)."
+  ],
+  "hashes_entradas": {
+    "data/ivs_ipea_2010_municipios.csv": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c",
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+    "output/aquisicao/populacao_censo2022_municipios.csv": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+    "output/rdd_bolsa/identificacao_arquivo_local_ivs.json": "674e8f36243ad433f0925bcd554df05d028b2523f29a4965e85a4343846e8eff",
+    "output/tema_trabalho/matriz_tipologia_territorial.parquet": "63707c3c235ad099bb88542c4428d5a2091cab28c2b5b5c033afaf7482d9a8da",
+    "output/rdd_bolsa/E3_status.json": "1bdda808efa70a3c1066872a5631fa4cf4dc0b1ce483e7db79c10161e391dd0a",
+    "output/rdd_bolsa/E5_resumo.json": "eff1cf2e33a236b8fb674571fe40d85a30eb1352c8e605cab678557c38db05b4",
+    "output/avaliacao_impacto/tabelas/tabela1_estatisticas_descritivas_baseline.csv": "ff48ffe42de3e050c56b5fae733bf6fe4362195213771a316f0f8c1e1db4e949",
+    "output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv": "3e7cf00700b2990967c83ffddc05fd58163e2890fd547e7bd1194e3d59b8ee0e",
+    "output/tema_trabalho/A4_tabela_03_separacao_faixa_ivs_remoticidade.csv": "4731e7caac1dc11b88cdc883e8f8ebffc09c3d92e7d740fc42f8930c87fa081b",
+    "output/tema_trabalho/A4_tabela_03b_ajuste_completo.csv": "fa2d4c960145ace687f92313926d0860defbe617db7223724710ec14c99efa42",
+    "output/tema_trabalho/A4_tabela_03c_winsorizado.csv": "fb21b8a6fa1161e901bff7187f80c44c46ddb790aab0e0e331fd7e91211085f8",
+    "output/tema_trabalho/A4_tabela_03d_ivs_spline.csv": "7c8c968be21a1c159cc0a7f7d7a65f8085a06e5d6eb9cea9516383f25758cf39",
+    "output/tema_trabalho/A5_tabela_03_modelo_estoque_6m.csv": "27ea0b675238d450e3d653aefaa6d38936d94e9f245866e5783081d22158e488",
+    "output/tema_trabalho/A5_tabela_03c_modelo_cobertura.csv": "4bc3305c1f1cfc18c0a9cfc70022093aef2e4685ee8d900ac41820e5dbba8065",
+    "output/tema_trabalho/A5_tabela_03d_modelo_entradas.csv": "1b1845c0e31cf14c2de22417a48ca996dce0620ebc7e8f0914e22955e042754b",
+    "output/tema_trabalho/A5_tabela_03e_modelo_presenca.csv": "fd185c8b3a184bdc857c609d0368843d76b5f82047fe0f34ac0b2f9d49e7fb05",
+    "output/tema_trabalho/A5_tabela_03i_heterogeneidade_estrato.csv": "b37ae8fe90f73ea1227bcfc52c9444e78a96903f802c5a626e7d2d9cb4bb22c2",
+    "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv": "b21797f18a15f71d7ed54fe33c3a673f9d3b659b7dd0323a48f22a3d7bb01680",
+    "output/tema_trabalho/A5_tabela_08_estudo_evento_proporcional.csv": "fd342fac1e479502320ab1d9b00e4c685d4280ba13fa81ff216002c780393ea2",
+    "output/tema_trabalho/diagnostico_atracao_provimento_interior.json": "27f01389dfb2bb4e436b9198544c4902dcc881949ccf2ca6bf76fc847e7dabb8"
+  }
+}

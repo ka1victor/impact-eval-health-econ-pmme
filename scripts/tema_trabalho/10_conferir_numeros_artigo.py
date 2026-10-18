@@ -42,6 +42,7 @@ A4_LPM = "output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv"
 A4_LOGIT = "output/tema_trabalho/A4_tabela_02b_logit_AME.csv"
 A4_ESTAGIO = "output/tema_trabalho/A4_tabela_02c_confirmacao_homologacao.csv"
 A4_MUNCURSO = "output/tema_trabalho/A4_tabela_02d_municipio_curso.csv"
+A4_AJUSTE = "output/tema_trabalho/A4_tabela_03b_ajuste_completo.csv"
 A4_JSON = "output/tema_trabalho/A4_estimativas_atracao.json"
 A5_JSON = "output/tema_trabalho/A5_estimativas_provimento.json"
 A5_EVENTO = "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv"
@@ -745,9 +746,11 @@ for chave, amostra, modelo in [
 A4_LINHAS = [
     ("LPM", A4_LPM, {"termo": "estrato_metropolitano"}, "Modelo linear pré-especificado"),
     ("LOGIT", A4_LOGIT, {"termo": "estrato_metropolitano"}, "Logit, efeito marginal médio"),
-    # O ajuste completo saiu da tabela: usou IVS e populacao de
-    # data/ivs_ipea_2010_municipios.csv, que e a linha de um subgrupo populacional
-    # (auditoria 16, secao 4), e sera reestimado com a base oficial.
+    # Ajuste completo reestimado em 18/10/2026 com a base oficial (IVS e populacao
+    # 2010 do Ipea, a08; Censo 2022 no denominador do estoque). A versao anterior
+    # usava data/ivs_ipea_2010_municipios.csv, linha de subgrupo populacional
+    # (auditorias 16 e 19); seus numeros nao sao citados nos artigos.
+    ("AJUSTE", A4_AJUSTE, {"termo": "estrato_metropolitano"}, "Ajuste completo, base oficial"),
     ("CONFIRMACAO", A4_ESTAGIO,
      {"termo": "estrato_metropolitano", "outcome_estagio": "alguma_confirmacao"},
      "Apenas confirmação"),
@@ -804,6 +807,25 @@ registrar("A4_TXT_CAPITAL", "Apendice A", "Contraste capital x interior remoto",
 registrar("A4_TXT_INTERIOR", "Apendice A", "Contraste interior proximo x interior remoto",
           pontos(a4_interior), A4_LPM, loc_int, a4_interior, "proporcao x100, 1 casa",
           trecho_a4_outros)
+
+# Ajuste completo no texto (Apendice A do principal; Secao 3 do curto: mesma redacao)
+aj_b, loc_ajb = csv_valor(A4_AJUSTE, {"termo": "estrato_metropolitano"}, "coef")
+aj_se, loc_ajse = csv_valor(A4_AJUSTE, {"termo": "estrato_metropolitano"}, "se_cluster")
+aj_p, loc_ajp = csv_valor(A4_AJUSTE, {"termo": "estrato_metropolitano"}, "p_valor")
+aj_q, loc_ajq = csv_valor(A4_AJUSTE, {"termo": "estrato_metropolitano"}, "q_fdr_estrato")
+trecho_ajuste = (
+    f"reduz o contraste metropolitano para {pontos(aj_b)} pontos percentuais (erro-padrão "
+    f"{pontos(aj_se)}; $p$ = {decimal_br(aj_p, 3)}; $q$ de Benjamini--Hochberg na família dos "
+    f"três estratos = {decimal_br(aj_q, 3)})"
+)
+for chave, bruto, loc, fmt, tr in [
+    ("COEF", aj_b, loc_ajb, pontos(aj_b), "proporcao x100, 1 casa"),
+    ("EP", aj_se, loc_ajse, pontos(aj_se), "proporcao x100, 1 casa"),
+    ("P", aj_p, loc_ajp, decimal_br(aj_p, 3), "3 casas"),
+    ("Q", aj_q, loc_ajq, decimal_br(aj_q, 3), "3 casas"),
+]:
+    registrar(f"A4_TXT_AJUSTE_{chave}", "Apendice A", f"ajuste completo, base oficial: {chave}",
+              fmt, A4_AJUSTE, loc, bruto, tr, trecho_ajuste)
 
 bench, loc_bench = json_valor(A4_JSON, "potencia_referencia/benchmark_global_proporcao_p30")
 mde, loc_mde = json_valor(

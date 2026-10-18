@@ -100,6 +100,9 @@ Contra a média dos doze meses pré, o efeito é +0,405 (EP 0,297, `p = 0,174`).
 - **A4 — sobrecontrole no ajuste completo.** `log_pop` tem `R² = 0,493` contra as
   dummies de estrato e a faixa de bolsa cobre 61,0% do interior remoto e 0,0% das
   capitais. O "+19,8" não é o mesmo estimando melhor ajustado; é outro estimando.
+  *Failure mode (18/10/2026): o `R²` de `log_pop` e o "+19,8" usavam a população
+  de `data/ivs_ipea_2010_municipios.csv`, linha de subgrupo; ver
+  [`19`](19_reestimacao_base_oficial_failure_mode.md).*
 - **A5 — correção de pequenas amostras ignora os FE absorvidos.** `k = 25` em vez
   de incluir os ~1.547 parâmetros absorvidos: `p` de 0,033 para 0,044.
 - **A8 — insumo oficial inventariado nunca lido.** A planilha de alocados da

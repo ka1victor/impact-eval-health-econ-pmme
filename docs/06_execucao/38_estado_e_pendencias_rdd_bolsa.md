@@ -100,15 +100,24 @@ reconciliado para o ciclo 1.
   a conclusão.
 - **Recomendação:** não fazer antes do dia 28.
 
-### D3. Análises antigas afetadas pelo arquivo errado — (a) aplicada, (b) em aberto
+### D3. Análises antigas afetadas pelo arquivo errado — (a) e (b) aplicadas
 
-- **O que vem do arquivo errado:**
+- **O que vinha do arquivo errado:**
   - o gradiente de IVS do A4;
-  - `log_pop` e `estoque_pre_por_10k`, incluindo os 20,9 p.p. do "ajuste
-    completo" do A4.
-- **(a) Aplicada:** os dois artigos deixaram de citar o ajuste completo. A
-  síntese do A6 cita esses números com a ressalva.
-- **(b) Reestimar com a base oficial:** fica para depois do dia 28.
+  - `log_pop` e `estoque_pre_por_10k`, incluindo o contraste do "ajuste
+    completo" do A4 (o valor antigo só consta como failure mode na
+    [auditoria 19](../auditorias/19_reestimacao_base_oficial_failure_mode.md));
+  - as especificações completas de A5 e a Tabela 1 do ciclo 1.
+- **(a) Aplicada:** os dois artigos deixaram de citar o ajuste completo antigo.
+- **(b) Aplicada em 18/10/2026** (tarefa E do protocolo
+  [`40`](40_protocolo_multioutcome_rdd_bolsa.md)): malha, tipologia A2, A4, A5 e a
+  Tabela 1 do ciclo 1 reestimadas com a base oficial do Ipea (a08) e o Censo
+  2022, mesma especificação e mesmas amostras; emenda datada no registro A3. Os
+  artigos e a síntese do A6 citam o ajuste completo corrigido, conferido contra
+  `output/`. Antes e depois, conclusões que mudam e onde os números antigos
+  ainda aparecem: [auditoria 19](../auditorias/19_reestimacao_base_oficial_failure_mode.md).
+  Pendente: o C3-03 do ciclo 3 (congelado) usou `ivs_2010` e `log_pop_2010` da
+  malha antiga e não foi reexecutado.
 
 ## 4. O que falta
 
@@ -125,7 +134,7 @@ reconciliado para o ciclo 1.
 
 ## 5. Depois do dia 28
 
-- D2 e D3(b), se decididos.
+- D2, se decidido. D3(b) foi aplicada em 18/10/2026.
 - Diferença em descontinuidades com a oferta no CNES, o único desenho
   alternativo candidato ([`39`](39_inferencia_alternativa_rdd_bolsa.md), §5).
   Muda o outcome e exige protocolo próprio congelado antes de olhar os dados.

@@ -369,6 +369,8 @@ Med* 96; Hone et al. (2020), *BMC HSR* 20:873. Ciclo 1:
 > na leitura. A série mensal por faixa é reprodutível e pode entrar como
 > contexto descritivo; a tabela de inclinações pré/pós do deck do grupo, não —
 > motivo e critério de fechamento na **pendência 4**.
+>
+> **Nota de 18/10/2026 — failure mode.** O contraste ajustado citado nesta nota veio de uma especificação cujas covariadas de IVS e população saíam de `data/ivs_ipea_2010_municipios.csv`, linha de subgrupo populacional e não o município. O número só vale como registro do erro; o valor reestimado com a base oficial está em `output/tema_trabalho/A4_tabela_03b_ajuste_completo.csv` e a comparação em [`auditorias/19`](../../auditorias/19_reestimacao_base_oficial_failure_mode.md).
 
 ---
 

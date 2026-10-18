@@ -5,7 +5,7 @@
 | Afirmação | Evidência | Limite | Linguagem máxima |
 |---|---|---|---|
 | Atração administrativa de 30,3% no quadro da primeira chamada | 393 de 1.295 células; pelo ciclo 1 inteiro, 461 (35,6%) | Célula não é vaga física; primeira chamada não é o ciclo inteiro | prevalência administrativa observada |
-| Metropolitano associado a +27,9 pp versus remoto | LPM com FE curso e UF; cluster município | Ajuste completo: +20,9 pp; usou IVS e população do arquivo local errado e será reestimado com a base oficial (auditoria 16, §4) | associado a maior atração |
+| Metropolitano associado a +27,9 pp versus remoto | LPM com FE curso e UF; cluster município | Ajuste completo: +18,5 pp; usa IVS e população 2010 da base oficial do Ipea e o estoque por 10 mil habitantes do Censo 2022 (p=0,018; q de FDR nos três estratos=0,055); a versão com o arquivo local errado (auditoria 16) só consta como failure mode (auditoria 19) | associado a maior atração |
 | Resultado preservado em confirmação | Contraste metropolitano +27,0 pp | Confirmação não é entrada física | associação no estágio de confirmação |
 | Resultado preservado em homologação | Contraste metropolitano +23,8 pp | Homologação não é exercício | associação no estágio de homologação |
 | Resultado preservado ao colapsar CNES | Município–curso: +31,6 pp | Muda o peso analítico | robustez à unidade |

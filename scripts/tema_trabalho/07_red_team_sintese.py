@@ -246,7 +246,8 @@ def insumos_declarados() -> list[tuple[Path, str, str | None]]:
         (ROOT / "output/aquisicao/manifesto_cnes_26_competencias.json", "manifesto das 26 competências mensais do CNES", None),
         (ROOT / "data/pmm_especialistas_nominal.csv", "retrato nominal observado, insumo de A7/A8", None),
         (IVS_LOCAL, "arquivo local rebaixado (auditoria 16): linha de subgrupo populacional da base do Ipea, "
-         "não o IVS do município; não é running variable; o ajuste completo de A4 ainda usa IVS e população dele", None),
+         "não o IVS do município; não é running variable nem covariável; nenhuma etapa de A2 a A5 o lê desde "
+         "18/10/2026 (auditoria 19); hasheado só como registro do failure mode", None),
         (IVS_OFICIAL, "IVS 2010 oficial do Ipea (= escore administrativo do MS), running variable canônica da RDD da bolsa", None),
         (FUNIL, "matriz do funil do ciclo 1, saída de A1", None),
         (OUT / "matriz_tipologia_territorial.parquet", "tipologia territorial congelada, saída de A2", None),
@@ -373,10 +374,19 @@ def main() -> None:
     p_min_e3 = num(rdd["p_min"], 3)
     janelas_txt = [num(j, 3) for j in rdd["janelas"]]
     janelas_e3 = ", ".join(janelas_txt[:-1]) + f" e {janelas_txt[-1]}" if len(janelas_txt) > 1 else janelas_txt[0]
-    # Ajuste completo de A4: usou IVS, log da população e estoque por 10 mil
-    # habitantes do arquivo local errado (auditoria 16, §4). Os coeficientes de
-    # estrato do LPM pré-especificado não dependem dele.
-    ressalva_full = "usou IVS e população do arquivo local errado e será reestimado com a base oficial (auditoria 16, §4)"
+    # Ajuste completo de A4, reestimado em 18/10/2026 com a base oficial (IVS e
+    # população 2010 do Ipea; Censo 2022 no denominador do estoque). A versão
+    # anterior usava o arquivo local errado; seus números ficam só na auditoria 19.
+    aj = pd.read_csv(OUT / "A4_tabela_03b_ajuste_completo.csv").set_index("termo").loc["estrato_metropolitano"]
+    p_full, q_full = float(aj["p_valor"]), float(aj["q_fdr_estrato"])
+    ressalva_full = (
+        f"usa IVS e população 2010 da base oficial do Ipea e o estoque por 10 mil habitantes do Censo 2022 "
+        f"(p={num(p_full, 3)}; q de FDR nos três estratos={num(q_full, 3)}); a versão com o arquivo local "
+        "errado (auditoria 16) só consta como failure mode (auditoria 19)"
+    )
+    pot = json.loads((OUT / "potencia_atracao.json").read_text(encoding="utf-8"))
+    bench_global = pct(pot["mde_global"]["mde_80_pp_p30"])
+    mde_metro = pct(pot["contrastes_vs_interior_remoto"]["metropolitano"]["mde_80_pp_p30"])
 
     redteam = f"""# A6 — Red team da evidência empírica
 
@@ -437,7 +447,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 
 ## Ataques ao resultado principal (A4)
 
-- O contraste metropolitano versus interior remoto é {pct(metro)} pp no LPM pré-especificado e {pct(metro_full)} pp no ajuste completo. **Ressalva:** o ajuste completo usou IVS, log da população e estoque por 10 mil habitantes de `data/ivs_ipea_2010_municipios.csv`, que é a linha de um subgrupo populacional e não o município, e será reestimado com a base oficial (auditoria 16, §4); a variante winsorizada parte do mesmo ajuste e herda a ressalva. Os coeficientes de estrato do LPM pré-especificado não dependem desse arquivo.
+- O contraste metropolitano versus interior remoto é {pct(metro)} pp no LPM pré-especificado e {pct(metro_full)} pp no ajuste completo, que {ressalva_full}. Os coeficientes de estrato do LPM pré-especificado nunca dependeram do arquivo local.
 - Separar o funil preserva o sinal: {pct(confirm)} pp em confirmação e {pct(homolog)} pp em homologação.
 - Colapsar múltiplos CNES para município–curso aumenta o contraste para {pct(collapsed)} pp; logo, o resultado não decorre do peso implícito de estabelecimentos múltiplos.
 - Winsorizar covariadas e executar leave-one-out não inverte o gradiente. O resultado é robusto como associação territorial, não como efeito da bolsa.
@@ -525,7 +535,7 @@ O núcleo A1–A5 não estima o retorno causal de cada faixa de bolsa: mede onde
 
 ## Métodos
 
-A análise principal usa células CNES–curso da chamada 1, tipologia territorial REGIC/RM-RIDE congelada antes da estimação e LPM pré-especificado com efeitos fixos de curso e UF e cluster municipal; Logit, ajuste completo, estágios do funil, colapso município–curso, winsorização e leave-one-out são robustez. O ajuste completo e sua variante winsorizada usaram IVS e população do arquivo local errado e serão reestimados com a base oficial (auditoria 16, §4). O benchmark global de 3,8 pp é precisão de uma proporção, não MDE do contraste territorial; para metropolitano versus interior remoto, o MDE prévio é 13,7 pp sob p=0,30.
+A análise principal usa células CNES–curso da chamada 1, tipologia territorial REGIC/RM-RIDE congelada antes da estimação e LPM pré-especificado com efeitos fixos de curso e UF e cluster municipal; Logit, ajuste completo, estágios do funil, colapso município–curso, winsorização e leave-one-out são robustez. O ajuste completo e sua variante winsorizada usam IVS e população 2010 da base oficial do Ipea e o estoque por 10 mil habitantes do Censo 2022 (auditoria 19). O benchmark global de {bench_global} pp é precisão de uma proporção, não MDE do contraste territorial; para metropolitano versus interior remoto, o MDE prévio é {mde_metro} pp sob p=0,30.
 
 A análise secundária usa 26 competências CNES e, como amostra principal, 587 células município–curso em 295 municípios. Junho/2025 é a última referência limpa antes da oferta; setembro/2025 já pode estar tratado. O estudo dinâmico absorve efeitos fixos de célula, curso–mês e UF–mês, com erros agrupados por município. Atração administrativa é um resultado realizado, não tratamento exógeno. Estoque e entradas referem-se a vínculos cadastrados; não identificam médicos do programa.
 

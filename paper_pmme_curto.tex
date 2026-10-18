@@ -400,11 +400,14 @@ federação, as oito unidades de menos de cinco municípios colapsadas em
 macrorregião de saúde conforme o protocolo, e erros agrupados por município. A
 Tabela~\ref{tab:a4} reporta o contraste metropolitano; capital e interior
 próximo a polos apresentam diferenças positivas em relação ao interior remoto,
-de 32,6 e 12,1 pontos percentuais. Uma especificação de ajuste completo, que
-acrescentava IVS, população e estoque prévio por habitante, usou o arquivo que
-se revelou ser a linha de um subgrupo populacional
-(Seção~\ref{sec:bolsa}); ela será reestimada com a base oficial e não é
-reportada aqui. A classificação dos estratos não usa esse arquivo.
+de 32,6 e 12,1 pontos percentuais. Uma especificação de ajuste completo, que acrescenta o IVS 2010 e o logaritmo
+da população de 2010 da base oficial do Ipea, o estoque prévio de especialistas
+por 10 mil habitantes do Censo 2022 e a faixa anunciada, reduz o contraste
+metropolitano para 18,5 pontos percentuais (erro-padrão 7,8; $p$ = 0,018; $q$ de
+Benjamini--Hochberg na família dos três estratos = 0,055). Uma versão anterior
+dessa especificação usou o arquivo que se revelou ser a linha de um subgrupo
+populacional (Seção~\ref{sec:bolsa}); só a versão com a base oficial é reportada. A
+classificação dos estratos não usa esse arquivo.
 
 \begin{table}[htbp]
 \centering
@@ -417,6 +420,7 @@ Especificação ou desfecho & Diferença (p.p.) & Erro-padrão (p.p.) \\
 \midrule
 Modelo linear pré-especificado & 27,9 & 5,9 \\
 Logit, efeito marginal médio & 25,1 & 5,2 \\
+Ajuste completo, base oficial & 18,5 & 7,8 \\
 Apenas confirmação & 27,0 & 5,7 \\
 Apenas homologação & 23,8 & 4,8 \\
 Unidade município--curso & 31,6 & 5,8 \\
