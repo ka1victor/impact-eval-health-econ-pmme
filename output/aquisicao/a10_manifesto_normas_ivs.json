@@ -1,0 +1,621 @@
+{
+  "data_execucao": "2026-10-18",
+  "descricao": "atos normativos preservados para a auditoria 18 (políticas nos mesmos cortes de IVS)",
+  "diretorio": "data/raw/aquisicao/normas_ivs",
+  "fontes": [
+    {
+      "id": "portaria_gm_ms_485_2023",
+      "ato": "Portaria GM/MS nº 485, de 14/04/2023 (dimensionamento e priorização de vagas de provimento)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-485-de-14-de-abril-de-2023-477636719",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_485_2023_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 95206,
+      "sha256": "aed9712e20d902a49deb3bf3289a4f3c674584cd82532864dab90952d0b29786",
+      "data_publicacao_dou": "18/04/2023",
+      "edicao_dou": "74",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art2_I": "I - programas de provimento: o Programa Mais Médicos, instituído e regulado pela Lei nº 12.871, de 22 de outubro de 2013, e respectiva legislação superveniente e o Programa Médicos pelo Brasil, instituído e regulado pela Lei nº 13.958, de 18 de dezembro de 2019, e respectiva legislação superveniente;",
+        "art5_caput": "Art. 5º Para a priorização das vagas em municípios será adotado como parâmetro o Índice de Vulnerabilidade Social - IVS feito pelo Instituto de Pesquisa Econômica Aplicada - IPEA, publicado no Atlas da Vulnerabilidade Social (2015): http://ivs.ipea.gov.br/index.php/pt/.",
+        "art5_I": "I - vulnerabilidade social muito alta: IVS maior ou igual a 0,5 e menor ou igual a 1;",
+        "art5_II": "II - vulnerabilidade social alta: IVS maior ou igual a 0,4 e menor do que 0,5;",
+        "art5_III": "III - vulnerabilidade social média: IVS maior ou igual a 0,3 e menor do que 0,4;",
+        "art5_IV": "IV - vulnerabilidade social baixa: IVS maior ou igual a 0,2 e menor do que 0,3; e",
+        "art8_I": "I - definirá o enquadramento em áreas de vulnerabilidade, para fins dos arts. 19-A, caput, e 19-B, § 1º da Lei nº 12.871, de 2013; e"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_752_2023",
+      "ato": "Portaria GM/MS nº 752, de 15/06/2023 (expansão de vagas do PMMB na modalidade coparticipação)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-752-de-15-de-junho-de-2023-490729168",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_752_2023_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 87717,
+      "sha256": "d364fa6bb4053b16788160a04c5bc54ff60a693176d0cad2abb5523992a4c8cb",
+      "data_publicacao_dou": "19/06/2023",
+      "edicao_dou": "114-A",
+      "secao_dou": "Seção: 1 - Extra A",
+      "trechos": {
+        "ementa": "Dispõe sobre a expansão de novas vagas no Programa Mais Médicos para o Brasil na modalidade coparticipação e dá outras providências.",
+        "art3": "Art. 3º A coparticipação no financiamento consistirá no desconto do valor de custeio mensal da bolsa do profissional do repasse fundo a fundo, limitado ao teto federal do Piso de Atenção Primária do referido ente, ficando a cargo do Ministério da Saúde o custeio das demais despesas do programa, exceto o auxílio moradia e alimentação.",
+        "art5_caput": "Art. 5º Os critérios estabelecidos para delimitação de vagas e promoção da equidade entre municípios utilizarão como referência o Índice de Vulnerabilidade Social - IVS do Instituto de Pesquisa Econômica Aplicada - IPEA (2015), previsto na Portaria GM/MS Nº 485, de 14 de abril de 2023:",
+        "art5_I": "I - municípios com IVS maior ou igual a 0,4 e menor ou igual a 1: até 100% do total de equipes de ESF;",
+        "art5_II": "II - municípios com IVS maior ou igual a 0,3 e menor do que 0,4: até 40% do total de equipes de ESF; e",
+        "art5_III": "III - municípios com IVS menor do que 0,3: até 10% do total de equipes de ESF.",
+        "art5_p1": "§ 1º Serão equiparados aos municípios do inciso I deste artigo, os municípios onde:",
+        "art5_p1_I": "I - o valor do teto de remuneração do chefe do poder executivo municipal seja abaixo do valor da bolsa do programa; e",
+        "art5_p1_II": "II - os municípios do G100, conforme definição da Frente Nacional de Prefeitos.",
+        "art5_p2": "§ 2º O limite de vagas não se aplica nas hipóteses em que as novas vagas destinarem-se a:",
+        "art5_p2_I": "I - expansão da cobertura da estratégia da saúde da família dentro dos limites previstos na PNAB; e",
+        "art5_p2_II": "II - equipes de consultório na rua e equipes de saúde prisional.",
+        "art7": "Art. 7º Esta Portaria entra em vigor na data de sua publicação."
+      }
+    },
+    {
+      "id": "portaria_gm_ms_752_2023_ses_sp",
+      "ato": "Cópia em PDF da Portaria GM/MS nº 752/2023 (DOU nº 114-A, 19/06/2023, Seção 1, Ed. Extra, p. 5), hospedada pela SES-SP",
+      "url": "https://ses.sp.bvs.br/wp-content/uploads/2023/06/U_PT-MS-GM-752_150623.pdf",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_752_2023_ses_sp.pdf",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 98978,
+      "sha256": "ac29ccb10ad2df16e15794ac83eb4b6f2185a48c16de3b7b5504d6ab870d87bf",
+      "nota": "PDF preservado como cópia secundária; os trechos citados vêm da página do DOU"
+    },
+    {
+      "id": "edital_saps_11_2023",
+      "ato": "Edital SAPS/MS nº 11, de 16/06/2023 (adesão de municípios a vagas do PMMB na modalidade coparticipação)",
+      "url": "https://www.in.gov.br/web/dou/-/edital-n-11-de-16-de-junho-de-2023-490577086",
+      "caminho": "data/raw/aquisicao/normas_ivs/edital_saps_11_2023_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 115471,
+      "sha256": "1c1f8d8e442d587edf9f640b509c8dfa8bb9fe310242a5d373c1cca143a68a2c",
+      "data_publicacao_dou": "19/06/2023",
+      "edicao_dou": "114",
+      "secao_dou": "Seção: 3",
+      "trechos": {
+        "item_2_2": "2.2 As solicitações de novas vagas a este edital estão limitadas aos critérios da Portaria GM/MS nº 752, de 15 de junho de 2023, sendo o quadro de vagas por município disponibilizado no endereço eletrônico http://www.maismedicos.gov.br",
+        "item_2_7": "2.7 A autorização para preenchimento das vagas deste edital ocorrerá em ato específico de chamamento público de profissionais da Secretaria de Atenção Primária à Saúde, ficando vinculado a capacidade orçamentária da mesma, sendo priorizadas as vagas solicitadas por munícipios de maior grau de vulnerabilidade, de acordo a classificação do Índice de Vulnerabilidade Social adotado pelo IPEA.",
+        "termo_b": "b) manter, durante a execução do Projeto, o quantitativo de equipes de atenção primária atualmente constituídas conforme parâmetros definidos no Art. 5º da Portaria GM/MS nº 752, de 15 de junho de 2023 com profissionais médicos não participantes do Projeto;",
+        "termo_vigencia": "O presente Termo de Renovação e/ou Adesão e Compromisso terá vigência de 96 (noventa e seis) meses, contados da data da publicação no Diário Oficial da União, podendo ser prorrogado mediante celebração de termo aditivo."
+      }
+    },
+    {
+      "id": "portaria_interm_ms_mec_604_2023",
+      "ato": "Portaria Interministerial MS/MEC nº 604, de 16/05/2023 (execução do PMMB)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-ms/mec-n-604-de-16-de-maio-de-2023-483958798",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_interm_ms_mec_604_2023_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 140990,
+      "sha256": "42884aa67cab540afacc6410d7954134f14e7cecae0af2f0a1380f5ce5fea36c",
+      "data_publicacao_dou": "18/05/2023",
+      "edicao_dou": "94",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art24_caput": "Art. 24. O Ministério da Saúde concederá ajuda de custo destinada a compensar as despesas de instalação do médico participante que não residir na localidade para o qual foi selecionado, desde que comprove a mudança de domicílio, considerando, para tanto, o domicílio declarado quando da realização de sua inscrição na seleção.",
+        "art24_p1_I": "I - Faixa 1 - municípios situados na região da Amazônia Legal, em região de fronteira ou em áreas indígenas e aqueles classificados como \"vulnerabilidade social muito alta\", de acordo com o Índice de Vulnerabilidade Social - IVS do Instituto de Pesquisa Econômica Aplicada - Ipea, publicado no Atlas da Vulnerabilidade Social, 2015: concessão de ajuda de custo no valor de três bolsas-formação ao médico participante;",
+        "art24_p1_II": "II - Faixa 2 - municípios classificados como \"vulnerabilidade social alta\", de acordo com o IVS do Ipea, publicado no Atlas da Vulnerabilidade Social, 2015: concessão de ajuda de custo no valor de duas bolsas-formação ao médico participante; e",
+        "art24_p1_III": "III - Faixa 3 - municípios classificados como \"vulnerabilidade social média\", \"baixa vulnerabilidade social\" e \"muito baixa vulnerabilidade social\", de acordo com o IVS do Ipea, publicado no Atlas da Vulnerabilidade Social, 2015: concessão de ajuda de custo no valor de uma bolsa-formação ao médico participante.",
+        "art25_pu": "Parágrafo único. A definição das áreas de difícil fixação para percepção da indenização de que trata o caput ocorrerá previamente a qualquer edital de chamamento público de médicos participantes do Projeto, sob responsabilidade da Secretaria de Atenção Primária à Saúde do Ministério da Saúde, a fim de gerar transparência ao processo de concessão e expectativa ao direito desses profissionais, nos termos da lei."
+      }
+    },
+    {
+      "id": "portaria_interm_ms_mec_07_2026",
+      "ato": "Portaria Interministerial MS/MEC nº 7, de 02/10/2026 (nova execução do PMMB; revoga a 604/2023)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-ms/mec-n-7-de-2-de-outubro-de-2026-737206420",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_interm_ms_mec_07_2026_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 141289,
+      "sha256": "5436be051dbc04189b1a7be3bbc856046d0435dfbb3f0346d638988064a18869",
+      "data_publicacao_dou": "07/10/2026",
+      "edicao_dou": "190-B",
+      "secao_dou": "Seção: 1 - Extra B",
+      "trechos": {
+        "art7_p2": "§ 2º O valor da ajuda de custo corresponderá a uma, duas ou três bolsas-formação, de acordo com a localização e o grau de vulnerabilidade do município de alocação do médico participante, observado o limite previsto no art. 19, § 1º, da Lei nº 12.871, de 2013.",
+        "art7_p3_I": "I - Faixa 1: municípios situados na região da Amazônia Legal, em região de fronteira ou em áreas indígenas e aqueles classificados como de vulnerabilidade social muito alta, de acordo com o Índice de Vulnerabilidade Social - IVS do Instituto de Pesquisa Econômica Aplicada - Ipea: ajuda de custo correspondente ao valor de três bolsas-formação;",
+        "art7_p3_II": "II - Faixa 2: municípios classificados como de vulnerabilidade social alta, de acordo com o Índice de Vulnerabilidade Social - IVS do Instituto de Pesquisa Econômica Aplicada - Ipea: ajuda de custo correspondente ao valor de duas bolsas-formação; e",
+        "art7_p3_III": "III - Faixa 3: demais municípios participantes do PMMB: ajuda de custo correspondente ao valor de uma bolsa-formação.",
+        "art52": "Art. 52. Fica revogada a Portaria Interministerial MS/MEC nº 604, de 16 de maio de 2023."
+      }
+    },
+    {
+      "id": "portaria_interm_ms_mec_10032_2025",
+      "ato": "Portaria Interministerial MS/MEC nº 10.032, de 30/12/2025 (altera a 604/2023)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-ms/mec-n-10.032-de-30-de-dezembro-de-2025-679001777",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_interm_ms_mec_10032_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 94056,
+      "sha256": "0583d283b2eaa7497a55a2748675a5dca10e86342ab091169d1623b644938b39",
+      "data_publicacao_dou": "31/12/2025",
+      "edicao_dou": "249-A",
+      "secao_dou": "Seção: 1 - Extra A",
+      "trechos": {
+        "art25_pu": "Parágrafo único. As áreas de difícil fixação e de vulnerabilidade para percepção das indenizações de que trata o caput serão indicadas nos editais de chamamento público de médicos participantes do Projeto, sob responsabilidade da Secretaria de Gestão do Trabalho e da Educação na Saúde, a fim de gerar transparência ao processo de concessão e expectativa ao direito desses profissionais, nos termos da lei.\" (NR)"
+      }
+    },
+    {
+      "id": "lei_14621_2023",
+      "ato": "Lei nº 14.621, de 14/07/2023 (conversão da MP 1.165/2023; arts. 19-A e 19-B da Lei 12.871/2013)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14621.htm",
+      "caminho": "data/raw/aquisicao/normas_ivs/lei_14621_2023_planalto.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 107098,
+      "sha256": "4a731149c9e1b7814bd5518773b83cd8f2c9a02d3c5475fdc2672b1c1f625b8d",
+      "trechos": {
+        "art19A_caput": "“Art. 19-A . O médico participante que atuar no Projeto Mais Médicos para o Brasil de forma ininterrupta em área de difícil fixação, a ser definida em ato do Ministério da Saúde, fará jus a indenização equivalente a:",
+        "art19A_I": "I - 20% (vinte por cento) do valor total das bolsas percebidas pelo médico participante no período de 48 (quarenta e oito) meses, se atuar em área de vulnerabilidade indicada em ato do Ministério da Saúde; e",
+        "art19A_II": "II - 10% (dez por cento) do valor total das bolsas percebidas pelo médico participante no período de 48 (quarenta e oito) meses, se atuar nas demais áreas de difícil fixação."
+      }
+    },
+    {
+      "id": "portaria_sgtes_ms_169_2025",
+      "ato": "Portaria SGTES/MS nº 169, de 30/12/2025 (indenizações dos arts. 19-A e 19-B)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-sgtes/ms-n-169-de-30-de-dezembro-de-2025-678998263",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_sgtes_ms_169_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 99949,
+      "sha256": "dc38cd9e18aec8f81aaa836fdad0592a60ed97ed41e6924588062cfed10c5d29",
+      "data_publicacao_dou": "31/12/2025",
+      "edicao_dou": "249",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art4_I": "I - 20% (vinte por cento) do valor total das bolsas percebidas pelo médico participante no período de 48 (quarenta e oito) meses, se atuar em municípios classificados como muito alta vulnerabilidade com índice a partir de 0,512 (quinhentos e doze milésimos), e Distritos Sanitários Especiais Indígenas - DSEI pertencentes às regiões Nordeste, Centro-Oeste e Norte do país; e",
+        "art4_II": "II - 10% (dez por cento) do valor total das bolsas percebidas pelo médico participante no período de 48 (quarenta e oito) meses, se atuar nos demais municípios e DSEI pertencentes às regiões Sudeste e Sul do país.",
+        "art6_I": "I - 80% (oitenta por cento) da quantia a ser percebida pelo médico participante no período de 48 (quarenta e oito) meses, se atuar em municípios classificados como muito alta vulnerabilidade com Índice de Vulnerabilidade Social - IVS maior do que 0,638 (seiscentos e trinta e oito milésimos) e DSEI pertencentes à Amazônia Legal; ou",
+        "art6_II": "II - 40% (quarenta por cento) da quantia a ser percebida pelo médico participante no período de 48 (quarenta e oito) meses, se atuar em municípios classificados como muito alta vulnerabilidade com a classificação do IVS de 0,512 (quinhentos e doze milésimos) a 0,638 (seiscentos e trinta e oito milésimos) e DSEI das regiões Nordeste e Centro-Oeste fora da Amazônia Legal."
+      }
+    },
+    {
+      "id": "edital_saps_05_2023_medicos",
+      "ato": "Edital SAPS/MS nº 5, de 19/05/2023 (adesão de médicos ao PMMB)",
+      "url": "https://www.in.gov.br/web/dou/-/edital-n-5-de-19-de-maio-de-2023-484801096",
+      "caminho": "data/raw/aquisicao/normas_ivs/edital_saps_05_2023_medicos_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 165645,
+      "sha256": "c59d428f54535f3f3308281c20934db8eeb5b8fab91de06287cf939296e09509",
+      "data_publicacao_dou": "22/05/2023",
+      "edicao_dou": "96",
+      "secao_dou": "Seção: 3",
+      "trechos": {
+        "item_4_2_1": "4.2.1 A relação de municípios referida no subitem 4.2 possuirá as indicações das vagas elegíveis à indenização por atuação em área de difícil fixação e indenização diferenciada por atuação em área de difícil fixação, conforme previsão dos artigos 19-A e 19-B da Lei nº 12.871, de 22 de outubro de 2013, alterada pela Medida Provisória Nº 1.165, de 20 de março de 2023, para conhecimento dos candidatos.",
+        "item_4_3": "4.3. Para fins de escolha, os locais de atuação disponibilizados neste Edital estão distribuídos nos perfis de município abaixo descritos, conforme Portaria GM/MS nº 485, de 14 de abril de 2023 (Dimensionamento das vagas de Provimento):",
+        "item_4_3_2_a": "a) o médico que integrar eSF situada em município de determinado Perfil somente poderá indicar no presente edital opções de municípios classificados com maior grau de vulnerabilidade para a sua alocação;"
+      }
+    },
+    {
+      "id": "edital_saps_13_2023_medicos",
+      "ato": "Edital SAPS/MS nº 13, de 11/07/2023 (adesão de médicos ao PMMB)",
+      "url": "https://www.in.gov.br/web/dou/-/edital-n-13-de-11-de-julho-de-2023-496279927",
+      "caminho": "data/raw/aquisicao/normas_ivs/edital_saps_13_2023_medicos_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 167335,
+      "sha256": "7314c5289e100fbf5af6951b0215cb2aae8b194416643a5e09308bf2ecdf100e",
+      "data_publicacao_dou": "13/07/2023",
+      "edicao_dou": "132",
+      "secao_dou": "Seção: 3",
+      "trechos": {
+        "item_4_3": "4.3. Para fins de escolha, os locais de atuação disponibilizados neste Edital estão distribuídos nos perfis de municípios, conforme Faixas estabelecidas no Art. 24 da Portaria Interministerial MS/MEC nº 604, de 16 de maio de 2023, e discriminadas no Quadro de Vagas, a ser publicado no endereço eletrônico https://maismedicos.saude.gov.br no prazo previsto no Cronograma deste Edital.",
+        "item_10_9": "10.9 Somente no caso do médico comprovar necessidade de mudança de domicílio em razão do município em que tenha sido alocado, o Ministério da Saúde poderá conceder ajuda de custo, a qual não poderá exceder a importância correspondente ao valor de 3 (três) bolsas-formação, nos termos da Portaria Interministerial MS/MEC nº 604, de 16 de maio de 2023, para compensar as despesas de instalação do médico participante que não resida no Município para o qual foi selecionado, considerando seu domicílio declarado quando da realização de sua inscrição neste Edital.",
+        "item_10_10": "10.10 O direito à indenização por atuação em área de difícil fixação, introduzido na Lei nº 12.871/2013 pela Medida Provisória nº 1.165/2023 em seu Art.19-A obedecerá à definição prévia das áreas de difícil fixação, as quais estarão publicadas no site: http://maismedicos.gov.br, gerando a expectativa ao direito desses profissionais que, tendo atuado no PMMB de forma ininterrupta pelo prazo fixado no Termo de Adesão e Compromisso e eventual prorrogação, atendam plenamente aos requisitos previstos nos § 2º e 3º do mesmo artigo."
+      }
+    },
+    {
+      "id": "edital_saps_04_2024_medicos",
+      "ato": "Edital de Chamamento Público SAPS/MS nº 4/2024 (adesão de médicos ao PMMB, 38º ciclo)",
+      "url": "https://www.in.gov.br/web/dou/-/edital-de-chamamento-publico-n-4/2024-569054926",
+      "caminho": "data/raw/aquisicao/normas_ivs/edital_saps_04_2024_medicos_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 211300,
+      "sha256": "992893ea16490f3cffd8a4688b7b1ef6f93990788bdd39ea51b04813a3ea5442",
+      "data_publicacao_dou": "01/07/2024",
+      "edicao_dou": "124-A",
+      "secao_dou": "Seção: 3 - Extra A",
+      "trechos": {
+        "item_5_7": "5.7 Para fins de escolha, os locais de atuação disponibilizados neste Edital estão distribuídos nos perfis de municípios, conforme Faixas estabelecidas no art. 24 da Portaria Interministerial MS/MEC nº 604, de 2023, e discriminadas no Quadro de Vagas, a ser publicado no endereço eletrônico https://maismedicos.gov.br no prazo previsto no Cronograma deste Edital."
+      }
+    },
+    {
+      "id": "edital_conjunto_saps_sgtes_07_2025",
+      "ato": "Edital Conjunto SAPS/SGTES/MS nº 7/2025 (adesão de médicos ao PMMB)",
+      "url": "https://www.in.gov.br/web/dou/-/edital-conjunto-saps/sgtes/ms-n-7/2025-626985263",
+      "caminho": "data/raw/aquisicao/normas_ivs/edital_conjunto_saps_sgtes_07_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 218855,
+      "sha256": "c9db05db469491c5dd74f4eb3ca8779ce965c64f5e13228a14a0972aec140ba4",
+      "data_publicacao_dou": "02/05/2025",
+      "edicao_dou": "81-C",
+      "secao_dou": "Seção: 3 - Extra C",
+      "trechos": {
+        "item_6_7": "6.7 Para fins de escolha, os locais de atuação disponibilizados neste Edital estão distribuídos nos perfis de municípios, conforme Faixas estabelecidas no art. 24 da Portaria Interministerial MS/MEC nº 604, de 2023, e discriminadas no Quadro de Vagas, a ser publicado no endereço eletrônico conforme subitem 1.4 no prazo previsto no Cronograma deste Edital.",
+        "item_6_8_a": "a) o médico que integrar eSF situada em município de determinado Perfil somente poderá indicar como municípios de alocação no Projeto no presente processo seletivo opções de municípios classificados com maior grau de vulnerabilidade que o município da eSF a qual está vinculado;"
+      }
+    },
+    {
+      "id": "edital_saps_03_2024_municipios",
+      "ato": "Edital SAPS/MS nº 3/2024 (adesão/renovação de municípios ao PMMB, 38º ciclo)",
+      "url": "https://www.in.gov.br/web/dou/-/edital-n-3/2024-559732562",
+      "caminho": "data/raw/aquisicao/normas_ivs/edital_saps_03_2024_municipios_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 123281,
+      "sha256": "f7d0ddfd3b36c85529449689a78a418c4ba4226484bccb49c94d6a8178e223fe",
+      "data_publicacao_dou": "15/05/2024",
+      "edicao_dou": "93",
+      "secao_dou": "Seção: 3",
+      "trechos": {
+        "preambulo": "O MINISTÉRIO DA SAÚDE - MS, por intermédio da SECRETARIA DE ATENÇÃO PRIMÁRIA À SAÚDE - SAPS/MS, considerando a Estratégia Nacional para Formação de Especialistas para a Saúde, no âmbito do Projeto Mais Médicos para o Brasil - PMMB, nos termos da Lei nº 12.871, de 22 de outubro de 2013, alterada pela Lei nº 14.621, de 14 de julho de 2023, que dispõe sobre a Estratégia Nacional de Formação de Especialistas para a Saúde, no âmbito do PMMB e com observância à Portaria Interministerial MS/MEC nº 604, de 16 de maio de 2023, Portaria GM/MS nº 485, de 14 de abril de 2023, Portaria GM/MS nº 752, de 15 de junho de 2023, e considerando os demais normativos regulamentares do Projeto, torna pública a realização de chamamento público de Municípios e Distrito Federal para adesão e renovação da adesão ao Projeto bem como às vagas disponíveis e previamente autorizadas, com financiamento federal e de coparticipação, nos termos da legislação vigente para o estabelecimento do 38º ciclo do Projeto Mais Médicos para o Brasil, conforme critérios estabelecidos neste Edital, visando o provimento de médicos às vagas ofertadas pelo período de 48 (quarenta e oito) meses.",
+        "item_1_1": "1.1. Realizar chamamento público de Municípios e Distrito Federal considerados elegíveis para ADESÃO E/OU RENOVAÇÃO DA ADESÃO DE MUNICÍPIOS E DO DISTRITO FEDERAL AO PROGRAMA DE PROVISÃO DE MÉDICOS DO MINISTÉRIO DA SAÚDE - Projeto Mais Médicos para o Brasil e às vagas disponíveis e previamente autorizadas, sejam de financiamento federal ou de coparticipação, nos termos da Lei nº 12.871, de 22 de outubro de 2013, alterada pela Lei nº 14.621, de 14 de julho de 2023, com observância à Portaria Interministerial MS/MEC nº 604, de 16 de maio de 2023, e considerando os demais normativos regulamentares do Projeto, conforme critérios estabelecidos no presente Edital, observando-se a relação disponibilizada no endereço eletrônico http://maismedicos.gov.br."
+      }
+    },
+    {
+      "id": "edital_saps_02_2025_municipios",
+      "ato": "Edital SAPS/MS nº 2/2025 (adesão/renovação de municípios ao PMMB, 41º ciclo)",
+      "url": "https://www.in.gov.br/web/dou/-/edital-saps/ms-n-2/2025-618393420",
+      "caminho": "data/raw/aquisicao/normas_ivs/edital_saps_02_2025_municipios_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 126731,
+      "sha256": "a7d14f17a80bf782dd8892776009725d6ace4073b6b305f782fa33d3905f69f9",
+      "data_publicacao_dou": "18/03/2025",
+      "edicao_dou": "52",
+      "secao_dou": "Seção: 3",
+      "trechos": {
+        "preambulo": "O MINISTÉRIO DA SAÚDE, por intermédio da SECRETARIA DE ATENÇÃO PRIMÁRIA À SAÚDE, considerando a Estratégia Nacional para Formação de Especialistas para a Saúde, no âmbito do Projeto Mais Médicos para o Brasil - PMMB, nos termos da Lei nº 12.871, de 22 de outubro de 2013, alterada pela Lei nº 14.621, de 14 de julho de 2023, que dispõe sobre a Estratégia Nacional de Formação de Especialistas para a Saúde, no âmbito do PMMB e com observância à Portaria Interministerial MS/MEC nº 604, de 16 de maio de 2023, Portaria GM/MS nº 485, de 14 de abril de 2023, alterada pela Lei nº 5.422, de 02 de outubro de 2024, Portaria GM/MS nº 752, de 15 de junho de 2023, e considerando os demais normativos regulamentares do Projeto, torna pública a realização de chamamento público de municípios e Distrito Federal para adesão e renovação da adesão ao Projeto bem como às vagas disponíveis e previamente autorizadas, com financiamento federal e de coparticipação, nos termos da legislação vigente para o estabelecimento do 41º (quadragésimo primeiro) ciclo do Projeto Mais Médicos para o Brasil, conforme critérios estabelecidos neste Edital, visando o provimento de médicos pelo período de 48 (quarenta e oito) meses.",
+        "item_2_5_e": "e) vagas novas em equipe de Saúde da Família - eSF implantadas, sem médico, nos municípios com maior vulnerabilidade social (IVS/IPEA) até alcançar o limite estabelecido no orçamento."
+      }
+    },
+    {
+      "id": "portaria_gm_ms_4853_2024",
+      "ato": "Portaria GM/MS nº 4.853, de 10/07/2024 (apoio ao RS)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-4.853-de-10-de-julho-de-2024-574023155",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_4853_2024_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 87513,
+      "sha256": "f2bfa1fcdabee5a1d24fa9ac71301c1a1529a6e543da58fb6e30ba571777517b",
+      "data_publicacao_dou": "24/07/2024",
+      "edicao_dou": "141",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art2_I_c": "c) não-aplicação do desconto preconizado na Portaria GM/MS nº 752, de 15 de junho de 2023, relativo à dedução, do teto federal do Piso de Atenção Primária, do valor de custeio mensal da bolsa do profissional participante da modalidade coparticipação do Programa Mais Médicos para o Brasil, nas parcelas 05 e 06 de 2024; e"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_5422_2024",
+      "ato": "Portaria GM/MS nº 5.422, de 02/10/2024 (altera a 485/2023)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-5.422-de-2-de-outubro-de-2024-590809552",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_5422_2024_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 91281,
+      "sha256": "a5d569cb5942da23d947b1b74ea7601e0db5136c0133243c9fdaaea8e62f1211",
+      "data_publicacao_dou": "17/10/2024",
+      "edicao_dou": "202",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art2_p1_III": "III - os municípios de perfil de muito alta vulnerabilidade, de acordo com o índice de Vulnerabilidade Social -IVS do Instituto de Pesquisa Econômica Aplicada - IPEA; e",
+        "art5_caput": "\"Art. 5º Para priorização das vagas em municípios será adotado como parâmetro o Índice de Vulnerabilidade Social - IVS feito pelo Instituto de Pesquisa Econômica Aplicada - IPEA, publicado no Atlas de Vulnerabilidade Social (2015) e suas eventuais atualizações."
+      }
+    },
+    {
+      "id": "portaria_gm_ms_3493_2024",
+      "ato": "Portaria GM/MS nº 3.493, de 10/04/2024 (nova metodologia de cofinanciamento federal da APS)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-3.493-de-10-de-abril-de-2024-553573811",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_3493_2024_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 3214785,
+      "sha256": "9af9828420aae6dff060d7efe8e9a5cc47ccac7245150c6e43495cdd79874f91",
+      "data_publicacao_dou": "11/04/2024",
+      "edicao_dou": "70",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art9_p2": "§ 2º Os recursos de que tratam os componentes dos incisos II e III terão um valor mínimo e máximo mensal que considera os estratos e a classificação alcançada pelos municípios e Distrito Federal.",
+        "art12T": "\"Art. 12-T. A alteração do modelo de financiamento da APS, vigente a partir do ano de 2024, não acarretará redução dos valores financeiros recebidos pelos municípios e Distrito Federal no âmbito da APS, em comparação com os valores nominais recebidos nas últimas doze parcelas anteriores a vigência desta Portaria.",
+        "art9_p3": "§ 3º Para transferência dos recursos dos componentes previstos nos incisos I, II e III do caput, será utilizado o Indicador de Equidade e Dimensionamento - IED, classificado nos estratos de 1 a 4, considerando a classificação dos municípios e Distrito Federal de acordo com o Índice de Vulnerabilidade Social - IVS, definido e calculado pelo Instituto de Pesquisa Econômica Aplicada - Ipea e o porte populacional, definido a partir de dados disponibilizados pelo Instituto Brasileiro de Geografia e Estatística - IBGE.",
+        "art9B_caput": "\"Art. 9º-B. O cálculo do componente fixo para manutenção das eSF e eAP considerará o Indicador de Equidade e Dimensionamento dos municípios e Distrito Federal, classificado nos estratos de 1 a 4, e corresponderá aos seguintes valores mensais por equipe:",
+        "art9B_esf_e1": "a) estrato 1: RS 18.000,00 (dezoito mil reais);",
+        "art9B_esf_e2": "b) estrato 2: R$ 16.000,00 (dezesseis mil reais);",
+        "art9B_esf_e3": "c) estrato 3: R$ 14.000,00 (quatorze mil reais); e",
+        "art9B_esf_e4": "d) estrato 4: R$ 12.000,00 (doze mil reais).",
+        "art8": "Art. 8º Esta Portaria entra em vigor na data de sua publicação com efeitos financeiros a partir da parcela maio de 2024.",
+        "anexo_VI_titulo": "MUNICÍPIOS E DISTRITO FEDERAL CONFORME CLASSIFICAÇÃO NO ÍNDICE DE EQUIDADE E VULNERABILIDADE (IED)"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_7799_2025",
+      "ato": "Portaria GM/MS nº 7.799, de 20/08/2025 (altera o cofinanciamento da APS)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-7.799-de-20-de-agosto-de-2025-649872356",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_7799_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 118835,
+      "sha256": "284830fae3255317678a98b44e68910492fe6a17bfd0d9b7f25183d1d09afc81",
+      "data_publicacao_dou": "21/08/2025",
+      "edicao_dou": "158",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art9B": "\"Art. 9º-B. O cálculo do componente de equidade para manutenção das eSF e eAP considerará o Índice de Equidade e Dimensionamento - IED dos municípios e Distrito Federal, classificado nos estratos de 1 a 4, e corresponderá aos seguintes valores mensais por equipe:"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_5721_2024",
+      "ato": "Portaria GM/MS nº 5.721, de 11/11/2024 (incentivo de equidade em alimentação e nutrição na APS)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-5.721-de-11-de-novembro-de-2024-596289126",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_5721_2024_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 107365,
+      "sha256": "6ede41820f931b030fc6c89916dc8995417f96ab4a830d14b75fca2490f5f7ba",
+      "data_publicacao_dou": "18/11/2024",
+      "edicao_dou": "222",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art633_II_b": "b) o Índice de Vulnerabilidade Social (IVS) vigente do Instituto de Pesquisa Econômica Aplicada - IPEA (Valor Adicional 1); e",
+        "art634": "\"Art. 634. O incentivo será transferido diretamente ao respectivo Fundo Estadual, Distrital ou Municipal de Saúde, em parcela única anual, conforme valores previstos no art. 633.\" (NR)",
+        "quadro2": "Quadro 2 - Valor Adicional 1: Categoria do Índice de Vulnerabilidade Social - (IVS)"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_635_2023",
+      "ato": "Portaria GM/MS nº 635, de 22/05/2023 (equipes Multiprofissionais na APS - eMulti)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-635-de-22-de-maio-de-2023-484773799",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_635_2023_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 121422,
+      "sha256": "e45532b4f82d65d3787a4253fd850edd5ddfdbf7ac82a96b7440760114c65ba8",
+      "data_publicacao_dou": "22/05/2023",
+      "edicao_dou": "96-B",
+      "secao_dou": "Seção: 1 - Extra B",
+      "trechos": {
+        "art9_I": "I - o Índice de Vulnerabilidade Social - IVS do requerente, feito pelo Instituto de Pesquisa Econômica Aplicada - IPEA, na seguinte ordem de prioridade:",
+        "art9_I_c": "c) vulnerabilidade social média: IVS ³ 0,3 e < 0,4;",
+        "art9_I_d": "d) vulnerabilidade social alta: IVS ³ 0,4 e < 0,5; e"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_7954_2025",
+      "ato": "Portaria GM/MS nº 7.954, de 21/08/2025 (Unidades Odontológicas Móveis)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-7.954-de-21-de-agosto-de-2025-650486579",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_7954_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 120022,
+      "sha256": "e6c77ef7de865c95d495339dd399307ba44c61dcad01dbd0f2d372e40d5fe66f",
+      "data_publicacao_dou": "22/08/2025",
+      "edicao_dou": "159",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "criterio_ivs": "III - Índice de Vulnerabilidade Social - IVS, do Instituto de Pesquisa Econômica Aplicada - IPEA, alta ou muito alta; ou"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_9177_2025",
+      "ato": "Portaria GM/MS nº 9.177, de 08/12/2025 (Programa Médicos pelo Brasil / Mais Médicos Eixo Vínculo)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-9.177-de-8-de-dezembro-de-2025-673878058",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_9177_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 114232,
+      "sha256": "38ed660e78d67f92128e1fb526c734b04d55b4fddd10f94122e0ed75dcb17f3c",
+      "data_publicacao_dou": "09/12/2025",
+      "edicao_dou": "234",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art4_p1": "§ 1º O Programa Mais Médicos Eixo Vínculo é composto por médicos especialistas em MFC ou clínica médica, com RQE e registro ativo no CRM, contratados pela AgSUS, sob o regime da CLT, com incentivos adicionais para especialistas com título de Médico de Família e Comunidade, para atuação em locais de difícil fixação de profissionais.",
+        "art5_p1_I_a": "a) municípios de alta e muito alta vulnerabilidade social;"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_449_2023",
+      "ato": "Portaria GM/MS nº 449, de 05/04/2023 (emendas parlamentares ao SUS em 2023)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-449-de-5-de-abril-de-2023-475784517",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_449_2023_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 159500,
+      "sha256": "a51c2878cbb4120408dc922a75908f65a9015fd7e93798eb150087b60b65f07e",
+      "data_publicacao_dou": "05/04/2023",
+      "edicao_dou": "66-B",
+      "secao_dou": "Seção: 1 - Extra B",
+      "trechos": {},
+      "termos_ausentes_conferidos": {
+        "IVS": 0,
+        "[Vv]ulnerabilidade [Ss]ocial": 0
+      }
+    },
+    {
+      "id": "portaria_gm_ms_3283_2024",
+      "ato": "Portaria GM/MS nº 3.283, de 07/03/2024 (emendas parlamentares ao SUS em 2024)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-3.283-de-7-de-marco-de-2024-547028906",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_3283_2024_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 176755,
+      "sha256": "330ac893c050fa1e9c3173b92e12ab3074193aadfe98ea792ca0cb4a988fc823",
+      "data_publicacao_dou": "08/03/2024",
+      "edicao_dou": "47",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art6_caput": "Art. 6º A aplicação das emendas parlamentares para incremento temporário de custeio da Atenção Primária em Saúde observará o valor máximo, por Município e Distrito Federal, de até 100% (cem por cento) do valor total do somatório dos incentivos financeiros repassados aos referidos entes federados no ano de 2023, no âmbito das ações Orçamentárias relacionadas ao Piso da Atenção Primária em Saúde e Agentes Comunitários de Saúde.",
+        "art6_pu": "Parágrafo único. Os Municípios que possuem indicador de vulnerabilidade social (IVS) maior que 0,3, terão um acréscimo de 20% (vinte por cento) ao limite de que trata o caput.",
+        "art11_I_c": "c) os Estados e Municípios que possuem indicador de vulnerabilidade social (IVS) maior que 0,3, e que tiverem capacidade instalada na média e alta complexidade terão um acréscimo de 20% (vinte por cento) ao limite de que trata o inciso I; e"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_6870_2025",
+      "ato": "Portaria GM/MS nº 6.870, de 15/04/2025 (emendas parlamentares ao SUS em 2025)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-6.870-de-15-de-abril-de-2025-624302164",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_6870_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 188839,
+      "sha256": "d4bd08d1684318514318074050ae57385f274e0941c7844e92919507fdc20a3f",
+      "data_publicacao_dou": "16/04/2025",
+      "edicao_dou": "73",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "pu_pap": "Parágrafo único. Os municípios que possuem indicador de vulnerabilidade social - IVS maior que 0,3, terão um acréscimo de 20% (vinte por cento) ao limite de que trata o caput.",
+        "mac_c": "c) os Estados e Municípios que possuem indicador de vulnerabilidade social - IVS maior que 0,3, e que tiverem capacidade instalada na média e alta complexidade terão um acréscimo de 20% (vinte por cento) ao limite de que trata o inciso I;"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_6904_2025",
+      "ato": "Portaria GM/MS nº 6.904, de 28/04/2025 (emendas individuais ao SUS em 2025)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-6.904-de-28-de-abril-de-2025-626437097",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_6904_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 158869,
+      "sha256": "4bdeacc988bec9ccf4678cb40b9e8d33e21e6b4466489eeaada80478624acf5f",
+      "data_publicacao_dou": "29/04/2025",
+      "edicao_dou": "80",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "pu_pap": "Parágrafo único. Os municípios que possuem indicador de vulnerabilidade social - IVS maior que 0,3, terão um acréscimo de 20% (vinte por cento) ao limite de que trata o caput.",
+        "mac_c": "c) os Estados e Municípios que possuem indicador de vulnerabilidade social - IVS maior que 0,3, e que tiverem capacidade instalada na média e alta complexidade terão um acréscimo de 20% (vinte por cento) ao limite de que trata o inciso I;"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_6916_2025",
+      "ato": "Portaria GM/MS nº 6.916, de 06/05/2025 (parcelas únicas de custeio da APS e da Atenção Especializada)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-6.916-de-6-de-maio-de-2025-627663968",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_6916_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 91015,
+      "sha256": "8857c805d4e155cca16e80e49170e9af015dab5cfb5fc24e0294f024f9f46e54",
+      "data_publicacao_dou": "07/05/2025",
+      "edicao_dou": "84",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art6_V": "V - habilitação de Serviço da Atenção Especializada.",
+        "art7_caput": "Art. 7º Os recursos destinados às ações previstas no art. 6º, serão limitados, cumulativamente, até 100% do montante de recursos anuais de referência destinados ao cofinanciamento das ações e serviços públicos de saúde no grupo de atenção de média e alta complexidade ambulatorial e hospitalar no exercício vigente, com os seguintes aditivos:",
+        "art7_III": "III - os Estados e Municípios que possuem indicador de vulnerabilidade social - IVS maior que 0,3, e que tiverem capacidade instalada na média e alta complexidade terão um acréscimo de 20% (vinte por cento) ao teto de que trata o caput;"
+      }
+    },
+    {
+      "id": "portaria_gm_ms_8283_2025",
+      "ato": "Portaria GM/MS nº 8.283, de 30/09/2025 (emendas de bancada e comissão ao SUS em 2026)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-8.283-de-30-de-setembro-de-2025-659599892",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_8283_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 131417,
+      "sha256": "a4a9f840a8a4bd50fabc9361f2176319cf71c3943c9d637c6f6e7c2a5267ccec",
+      "data_publicacao_dou": "01/10/2025",
+      "edicao_dou": "187",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "III": "III - os Estados e Municípios que possuem Indicador de Vulnerabilidade Social - IVS maior que 0,3, e que tiverem capacidade instalada na média e alta complexidade terão um acréscimo de 20% (vinte por cento) ao teto de que trata o §1º."
+      }
+    },
+    {
+      "id": "portaria_gm_ms_10169_2026",
+      "ato": "Portaria GM/MS nº 10.169, de 19/01/2026 (parcelas suplementares de custeio da APS e da MAC)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-10.169-de-19-de-janeiro-de-2026-682018763",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_10169_2026_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 99933,
+      "sha256": "6c202039993cd6f369bf3d9d3c271f101f9913fa0f65bb72d4ebebc22576eeb2",
+      "data_publicacao_dou": "20/01/2026",
+      "edicao_dou": "13",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "art10_I": "I - ações do Programa Agora tem Especialistas - Componente Ambulatorial;",
+        "art10_II": "II - ações do Programa Agora tem Especialistas - Componente Cirúrgico;",
+        "art11_caput": "Art. 11. Os recursos destinados às ações previstas no art. 10º, serão limitados, cumulativamente, até 100% do montante de recursos anuais de referência destinados ao cofinanciamento das ações e serviços públicos de saúde no grupo de atenção de média e alta complexidade no exercício vigente, com os seguintes aditivos:",
+        "art11_III": "III - os Estados e Municípios que possuem indicador de vulnerabilidade social - IVS maior que 0,3, e que tiverem capacidade instalada na média e alta complexidade terão um acréscimo de 20% (vinte por cento) ao teto de que trata o caput."
+      }
+    },
+    {
+      "id": "portaria_gm_ms_10297_2026",
+      "ato": "Portaria GM/MS nº 10.297, de 27/02/2026 (emendas individuais ao SUS em 2026)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-10.297-de-27-de-fevereiro-de-2026-689565520",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_10297_2026_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 182866,
+      "sha256": "c69c0bd64685f5ccba4eee066af8482da4ad88f916de4698050e5b5e997b1a2d",
+      "data_publicacao_dou": "02/03/2026",
+      "edicao_dou": "40",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "pu_pap": "Parágrafo único. Os Municípios que apresentarem Indicador de Vulnerabilidade Social - IVS superior a 0,3 farão jus a acréscimo de 20% (vinte por cento) sobre o limite estabelecido no caput."
+      }
+    },
+    {
+      "id": "portaria_gm_ms_12252_2026",
+      "ato": "Portaria GM/MS nº 12.252, de 29/09/2026 (emendas ao SUS em 2027)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-12.252-de-29-de-setembro-de-2026-735410971",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_12252_2026_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 202745,
+      "sha256": "7053d8cfe80f264e2be6dfbcad696766c716653f5dcf1a8f741d33026d8e5338",
+      "data_publicacao_dou": "30/09/2026",
+      "edicao_dou": "185",
+      "secao_dou": "Seção: 1",
+      "trechos": {
+        "pu_pap": "Parágrafo único. Os Municípios que apresentarem Indicador de Vulnerabilidade Social - IVS superior a 0,3 farão jus a acréscimo de 20% (vinte por cento) sobre o limite estabelecido no caput."
+      }
+    },
+    {
+      "id": "portaria_gm_ms_7266_2025",
+      "ato": "Portaria GM/MS nº 7.266, de 18/06/2025 (Programa Agora Tem Especialistas)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-7.266-de-18-de-junho-de-2025-637187199",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_7266_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 106659,
+      "sha256": "327cd5a4a023dfa17bfb2f806ec15c38b78748019cedf6ef99309380414d05fb",
+      "data_publicacao_dou": "18/06/2025",
+      "edicao_dou": "114-A",
+      "secao_dou": "Seção: 1 - Extra A",
+      "trechos": {},
+      "termos_ausentes_conferidos": {
+        "IVS": 0,
+        "[Vv]ulnerabilidade [Ss]ocial": 0
+      }
+    },
+    {
+      "id": "portaria_gm_ms_7177_2025",
+      "ato": "Portaria GM/MS nº 7.177, de 10/06/2025 (Projeto Mais Médicos Especialistas)",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-7.177-de-10-de-junho-de-2025-635330489",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_7177_2025_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 99267,
+      "sha256": "df646c6b057935dbcaf1948365de4b729d593b7a9e80d6b765d268976f949ddf",
+      "data_publicacao_dou": "11/06/2025",
+      "edicao_dou": "109",
+      "secao_dou": "Seção: 1",
+      "trechos": {},
+      "termos_ausentes_conferidos": {
+        "IVS": 0,
+        "[Vv]ulnerabilidade [Ss]ocial": 0
+      }
+    },
+    {
+      "id": "edital_sgtes_03_2025_retificacao",
+      "ato": "Retificação do Edital SGTES/MS nº 3/2025 (PMM-E, ciclo 1), DOU de 28/10/2025",
+      "url": "https://www.in.gov.br/web/dou/-/edital-665051514",
+      "caminho": "data/raw/aquisicao/normas_ivs/edital_sgtes_03_2025_retificacao_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 89150,
+      "sha256": "c5f8a3979f7f82a91676915f2d9ad3db8ebc9f92d6c1ffcf0c38683c57bb67ba",
+      "data_publicacao_dou": "28/10/2025",
+      "edicao_dou": "205",
+      "secao_dou": "Seção: 3",
+      "trechos": {
+        "item_11_1_4": "11.1.4. Para fins de alocação dos médicos especialistas no âmbito do PMM-E, foi estabelecido o critério de faixa de atração com base na categorização municipal do índice de Vulnerabilidade Social - IVS, com os seguintes valores líquidos: (...)"
+      }
+    },
+    {
+      "id": "edital_sgtes_03_2024_pro_residencia",
+      "ato": "Edital SGTES/MS nº 3, de 06/11/2024 (Pró-Residência)",
+      "url": "https://www.in.gov.br/web/dou/-/edital-n-3-de-6-de-novembro-de-2024-594734463",
+      "caminho": "data/raw/aquisicao/normas_ivs/edital_sgtes_03_2024_pro_residencia_dou.html",
+      "data_captura": "2026-10-18",
+      "tamanho_bytes": 150514,
+      "sha256": "9241607257feae927d0c67ca3092bf734114511a827faec4b4ca444990ab5a3b",
+      "data_publicacao_dou": "07/11/2024",
+      "edicao_dou": "216",
+      "secao_dou": "Seção: 3",
+      "trechos": {
+        "criterio_uf": "b) A média entre o Índice de Vulnerabilidade Social - IVS e o Índice de Desenvolvimento Humano - IDH, por UF, do Instituto de Pesquisa Econômica Aplicada - IPEA.",
+        "desempate": "4.5.2. Persistindo o empate, será considerado o Índice de Vulnerabilidade Social - IVS do município da instituição proponente, do mais vulnerável para o menos vulnerável."
+      }
+    }
+  ],
+  "nao_preservados": [
+    {
+      "url": "https://bvsms.saude.gov.br/bvs/saudelegis/gm/2023/prt0752_19_06_2023.html",
+      "motivo": "HTTP 403 do servidor (F5) em 18/10/2026; usada a página do DOU"
+    },
+    {
+      "url": "https://www.saude.mt.gov.br/storage/old/files/485-[28953-170523-SES-MT].pdf",
+      "motivo": "conexão encerrada pelo servidor em 18/10/2026; usada a página do DOU"
+    }
+  ]
+}
