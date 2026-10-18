@@ -174,19 +174,19 @@
         "arquivo": "scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py",
         "trechos": {
           "tratamento": {
-            "linha": 332,
+            "linha": 334,
             "texto": "t = (x_mil[usa] > 0).astype(float)"
           },
           "desenho": {
-            "linha": 333,
+            "linha": 335,
             "texto": "X = np.column_stack([np.ones_like(xs), xs, t, t * xs])"
           },
           "salto": {
-            "linha": 346,
+            "linha": 348,
             "texto": "tau = float(beta[2])"
           },
           "x_centrado": {
-            "linha": 309,
+            "linha": 311,
             "texto": "x_mil = s - corte_mil"
           }
         }
@@ -1742,7 +1742,7 @@
       "sha256": "e57edeb50946395fa90fe510f4a658501f9b0e92069fcc53aa41b9e893e89c1c"
     },
     "scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py": {
-      "sha256": "a6d2034887a6e566d6be3d7eed23bcb7f68c24b09171709bce5345f1884edeeb"
+      "sha256": "018104e122dde94d9b7d89614556c884c471d2fe934430f6e32e7771922d9124"
     }
   }
 }

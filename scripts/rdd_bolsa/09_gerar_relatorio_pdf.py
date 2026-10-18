@@ -17,7 +17,10 @@ Historia que o relatorio conta
    no resto, segundo `identificacao_arquivo_local_ivs.json`), nao o IVS do
    municipio. O rotulo do arquivo local e montado a partir desse JSON.
 2. E3, a RDD sharp com o escore completo, e a analise principal.
-3. E1, E2 e E4, feitos quando o escore era parcial, sao exploratorios e ficam
+3. E5, a inferencia alternativa, e EXPLORATORIA e pos-resultado: a secao so le
+   `output/rdd_bolsa/E5_*` (gravados por `11_inferencia_alternativa.py`) e nao
+   recalcula nada; nenhuma especificacao do E5 substitui o principal.
+4. E1, E2 e E4, feitos quando o escore era parcial, sao exploratorios e ficam
    como historico, superados pelo E3.
 
 Calculos feitos aqui (so para exibicao)
@@ -119,6 +122,14 @@ ATIVOS_ZIP = ROOT / "data" / "raw" / "aquisicao" / "ivs_administrativo" / "tb_pr
 E4_PROP = OUT_DIR / "E4_proporcao_municipio.csv"
 CONF_SINAL = OUT_DIR / "E3_conferencia_sinal.json"  # gerado por 09b_conferir_sinal.py
 TIPOLOGIA = ROOT / "output" / "tema_trabalho" / "matriz_tipologia_territorial.parquet"  # estrato (balanco)
+# E5: inferencia alternativa, EXPLORATORIA e pos-resultado (11_inferencia_alternativa.py). A secao 3 do
+# relatorio le so estes arquivos; nada do E5 e recalculado aqui.
+E5_ESPEC = OUT_DIR / "E5_especificacoes.csv"
+E5_DECOMP = OUT_DIR / "E5_decomposicao_ic.csv"
+E5_LADOS = OUT_DIR / "E5_decomposicao_lados.csv"
+E5_LR_SENS = OUT_DIR / "E5_lr_sensibilidade_janelas.csv"
+E5_RESUMO = OUT_DIR / "E5_resumo.json"
+E5_ARQS = [E5_ESPEC, E5_DECOMP, E5_LADOS, E5_LR_SENS, E5_RESUMO]
 # Historico (escore parcial)
 E1_EST = OUT_DIR / "E1_densidade_estimativas.csv"
 E1_RES = OUT_DIR / "E1_densidade_resumo.json"
@@ -130,7 +141,7 @@ E4_RES = OUT_DIR / "E4_resumo.json"
 ENTRADAS = [
     R1_OFICIAL, R1_ADMIN, MATRIZ, ESCORE, IVS_OFICIAL, MANIF_OFICIAL, ESCORE_ADMIN, CATEGORIA, IVS_LOCAL,
     IDENT_LOCAL, A01B, PROTOCOLO, ADENDO_E4, E3_STATUS, E3_EST, E3_DIAG, E4_PROP, ATIVOS_ZIP, E3_SCRIPT,
-    CONF_SINAL, TIPOLOGIA, E1_EST, E1_RES, E2_LIM, E2_RES, E4_EST, E4_RES,
+    CONF_SINAL, TIPOLOGIA, *E5_ARQS, E1_EST, E1_RES, E2_LIM, E2_RES, E4_EST, E4_RES,
 ]
 OBRIGATORIAS = [R1_OFICIAL, MATRIZ, ESCORE, IVS_OFICIAL, IVS_LOCAL, IDENT_LOCAL, PROTOCOLO, E3_STATUS, E3_EST,
                 E3_DIAG, E4_PROP, ATIVOS_ZIP, E3_SCRIPT, CONF_SINAL]
@@ -208,6 +219,27 @@ CONTORNO_ERRADO = "#0b0b0b"  # municipios do lado errado do corte (arquivo antig
 
 # Combinacoes populacao x outcome dos graficos RD, na ordem do relatorio.
 COMBOS_RD = [("P1", OUTCOME_FRAC), ("P1", OUTCOME_D), ("P2", OUTCOME_D)]
+
+# E5: rotulo obrigatorio e rotulos curtos de apresentacao das especificacoes (os numeros vem do CSV).
+AVISO_E5 = "EXPLORATÓRIO, pós-resultado; o principal continua sendo o do protocolo"
+ESPEC_E5 = {
+    "S0": "S0 principal (protocolo)",
+    "A": "A local constante",
+    "B": "B cortes empilhados",
+    "C1": "C1 + estrato, região, log pop.",
+    "C2": "C2 = C1 + IDHM",
+    "D": "D local randomization",
+    "E0": "E0 município, peso × n.º de células",
+    "E1": "E1 célula, EP por município",
+    "E2": "E2 = E1 + efeitos fixos de curso",
+    "F1": "F1 ciclos empilhados",
+    "F2": "F2 ciclos e cortes empilhados",
+}
+VIES_A = "viesada: ignora as inclinações"
+ORDEM_E5 = ["S0", "A", "B", "C1", "C2", "D", "E0", "E1", "E2", "F1", "F2"]
+OUTCOME_E5 = {"Y1": "Y1 preenchimento, ciclo 1", "D1": "D1 presença, ciclo 1", "D2": "D2 presença, ciclo 2",
+              "D1+D2": "D1 + D2 presença, ciclos 1 e 2"}
+MARGENS_E5 = (10, 15, 20)  # p.p.: margens de E5_especificacoes.csv (p unilateral e TOST)
 
 
 # ---------------------------------------------------------------------------
@@ -510,7 +542,7 @@ def largura_texto(s: str, size: float) -> float:
 
 
 def legenda_svg(itens: list[tuple[str, str, str]], x: float, y: float, size=10.5) -> str:
-    """itens = [(tipo, cor, rotulo)], tipo em {'ponto','linha','faixa','anel','barra','area'}."""
+    """itens = [(tipo, cor, rotulo)], tipo em {'ponto','linha','faixa','anel','barra','area','tracejada','vazio'}."""
     out = []
     cx = x
     for tipo, cor, rot in itens:
@@ -530,6 +562,12 @@ def legenda_svg(itens: list[tuple[str, str, str]], x: float, y: float, size=10.5
         elif tipo == "anel":
             out.append(f'<circle cx="{f2(cx + 5)}" cy="{f2(y - 3.5)}" r="4.2" fill="{COR["surface"]}" '
                        f'stroke="{cor}" stroke-width="1.4"/>')
+        elif tipo == "tracejada":
+            out.append(l_svg(cx + 7, y - 10, cx + 7, y + 2, cor=cor, w=1.2, extra='stroke-dasharray="3 2.5"'))
+        elif tipo == "vazio":
+            out.append(l_svg(cx - 2, y - 3.5, cx + 12, y - 3.5, cor=cor, w=2, extra='stroke-dasharray="3 2"')
+                       + f'<circle cx="{f2(cx + 5)}" cy="{f2(y - 3.5)}" r="3.8" fill="{COR["surface"]}" '
+                         f'stroke="{cor}" stroke-width="1.6"/>')
         out.append(t_svg(cx + 19, y, rot, size=size, cor=COR["ink2"]))
         cx += 19 + largura_texto(rot, size) + 18
     return "".join(out)
@@ -626,13 +664,15 @@ def tabela(cabecalho: list[tuple[str, str]], linhas: list[list[str]], classe: st
     return f'<div class="bloco-tab{" inteiro" if inteiro else ""}">{tt}{legenda}{tab}{rodape}</div>'
 
 
-def figura(titulo: str, svg: str, fonte: str, sub: str = "", nota: str = "", chave: str | None = None) -> str:
+def figura(titulo: str, svg: str, fonte: str, sub: str = "", nota: str = "", chave: str | None = None,
+           legenda: str = "") -> str:
+    """`legenda` (HTML, ex.: "como ler") vem logo abaixo do titulo, antes do subtitulo e do grafico."""
     n = NUM.figura(chave)
     s = f'<div class="fig-sub">{sub}</div>' if sub else ""
     nt = f'<div class="fig-nota">{nota}</div>' if nota else ""
     return (
         f'<figure class="fig"><div class="fig-titulo"><span class="fig-num">Figura {n}.</span> {titulo}</div>'
-        f"{s}{svg}{nt}{fonte}</figure>"
+        f"{legenda}{s}{svg}{nt}{fonte}</figure>"
     )
 
 
@@ -1832,7 +1872,9 @@ def secao_capa(ctx) -> str:
          "análise principal"),
         ("Conferência do sinal do salto", "pill-ok", str(ctx["conf"].get("status", "—")).replace("_", " "),
          "salto = lado da bolsa maior menos lado da bolsa menor (<code>09b_conferir_sinal.py</code>)"),
-        ("Inferência alternativa (E5)", "pill-pend", "a preencher", "seção reservada; em produção separada"),
+        (("Inferência alternativa (E5)", "pill-hist", "exploratório", "pós-resultado; não substitui o E3")
+         if ctx.get("e5") else
+         ("Inferência alternativa (E5)", "pill-pend", "ausente", "saídas <code>output/rdd_bolsa/E5_*</code> ausentes")),
         ("E4 — limites para a proporção preenchida", "pill-hist", "histórico",
          "exploratório, com escore parcial; superado pelo E3" if E4_EST.exists() else "ausente"),
         ("E1 e E2 — densidade e limites para a presença", "pill-hist", "histórico",
@@ -1844,10 +1886,10 @@ def secao_capa(ctx) -> str:
     sumario = "".join(f"<li>{s}</li>" for s in [
         "Resumo em 1 página",
         "1. A regra: IVS 2010 oficial, cortes 0,300 e 0,400",
-        "2. RDD sharp com o escore completo (E3): resultado, conferência do sinal, gráficos RD, diagnósticos e "
-        "inferência alternativa (a preencher)",
-        "3. Antes do escore completo: E1, E2 e E4 (exploratórios)",
-        "4. Leitura e limites",
+        "2. RDD sharp com o escore completo (E3)",
+        "3. Inferência alternativa (E5; exploratória, pós-resultado)",
+        "4. Antes do escore completo: E1, E2 e E4 (exploratórios)",
+        "5. Leitura e limites",
         "Apêndice A — dados dos gráficos RD",
         "Apêndice B — proveniência das entradas",
     ])
@@ -1929,10 +1971,9 @@ def nota_sinal(ctx, pares, compacta: bool = False) -> str:
     if compacta:
         oc = rotulo_outcome(ctx, pares[0][1], curto=True)
         oc = ("a " if oc.endswith("a") else "o ") + oc
-        return (f'<p class="nota"><strong>Média bruta não é salto.</strong> As médias brutas são tomadas em toda a '
-                f"janela de ±{br(ctx['h_principal'], 3)}, longe do corte, e {esc(oc)} sobe com o IVS dentro dela; o "
-                "salto compara as duas retas no próprio corte. Diferença bruta = salto + inclinação + resíduo, em "
-                f"p.p.: {'; '.join(itens)}.</p>")
+        return (f'<p class="nota"><strong>Média bruta não é salto:</strong> as médias são tomadas em toda a janela de '
+                f"±{br(ctx['h_principal'], 3)}, e {esc(oc)} sobe com o IVS dentro dela; o salto compara as retas no "
+                f"próprio corte. Diferença bruta = salto + inclinação + resíduo (p.p.): {'; '.join(itens)}.</p>")
     return (f'<p class="nota"><strong>Por que o salto pode ter sinal diferente da diferença de médias brutas.</strong> '
             f"A média bruta de cada lado é tomada em toda a janela de ±{br(ctx['h_principal'], 3)}, cujo meio fica "
             f"longe do corte{meio}. Se o outcome muda com o IVS dentro da janela, as médias dos dois lados diferem "
@@ -2115,10 +2156,8 @@ def secao_resumo(ctx) -> str:
     fr = pr[(pr["populacao"] == "P1") & (pr["outcome"] == OUTCOME_FRAC)]
     hipotese = (f"A hipótese é <em>maior bolsa, maior preenchimento</em>. Na proporção de células preenchidas na 1ª "
                 f"chamada do ciclo 1, o salto (bolsa maior menos bolsa menor) é de {tau_de('P1', OUTCOME_FRAC)} "
-                f"(local linear, h = {br(ctx['h_principal'], 3)}; IC 95% com "
-                f"{br((fr['ic95_sup'] - fr['ic95_inf']).min() * 100, 0)} a "
-                f"{br((fr['ic95_sup'] - fr['ic95_inf']).max() * 100, 0)} p.p. de largura; efeito mínimo detectável de "
-                f"cerca de {br(MDE_FATOR * fr['ep'].min() * 100, 0)} p.p.; sinal conferido na seção 2).")
+                f"(local linear, h = {br(ctx['h_principal'], 3)}; efeito mínimo detectável de cerca de "
+                f"{br(MDE_FATOR * fr['ep'].min() * 100, 0)} p.p.; sinal conferido na seção 2).")
     c = (f"<li><strong>Secundário:</strong> a presença de especialista do ciclo no município também não salta: "
          f"{tau_de('P1', OUTCOME_D)} no ciclo 1; {tau_de('P2', OUTCOME_D)} no ciclo 2.</li>")
 
@@ -2147,21 +2186,20 @@ def secao_resumo(ctx) -> str:
     dizer = (
         '<div class="dizer"><strong>Como dizer nos slides.</strong><ul>'
         "<li>“Estimativa local do efeito do anúncio de +R$ 5 mil, sob as premissas da RDD, para municípios do "
-        "quadro com IVS perto dos cortes.”</li>"
-        f"<li>“{esc(frase_conclusao(ctx, curta=True))}”</li>"
+        "quadro com IVS perto dos cortes”; a conclusão acima, como está.</li>"
         "<li>Evitar: “a bolsa não funciona”, “efeito nulo”, “a bolsa não atrai”. Não é o efeito de participar do "
         "PMM-E nem do Agora Tem Especialistas.</li></ul></div>"
     )
     return ('<section class="resumo"><h2>Resumo em 1 página</h2>'
             f'<div class="conclusao"><strong>Conclusão.</strong> {hipotese} '
-            f"<strong>{esc(frase_conclusao(ctx))}</strong></div>"
+            f"<strong>{esc(frase_conclusao(ctx))}</strong> {esc(frase_e5_resumo(ctx))}</div>"
             f'<ul class="resumo-lista">{a}{b}{c}{d}</ul>'
             + tabela_resultados(ctx, [("P1", OUTCOME_FRAC)], compacta=True,
                                 titulo="A hipótese: proporção de células preenchidas, ciclo 1")
             + dizer + "</section>")
 
 
-def frase_conclusao(ctx, curta: bool = False) -> str:
+def frase_conclusao(ctx) -> str:
     """Enquadramento da conclusao pedido pelo autor (18/10/2026), com os numeros lidos do E3."""
     fr = principais(ctx)
     fr = fr[(fr["populacao"] == "P1") & (fr["outcome"] == OUTCOME_FRAC)].sort_values("corte")
@@ -2172,11 +2210,6 @@ def frase_conclusao(ctx, curta: bool = False) -> str:
                 f"(ver {rel(E3_EST)}).")
     lim = [f"{pp(r.ic95_sup, 0)} p.p. no corte {br(r.corte)}" if i == 0 else f"{pp(r.ic95_sup, 0)} p.p. no {br(r.corte)}"
            for i, r in enumerate(fr.itertuples())]
-    if curta:
-        sups = [pp(r.ic95_sup, 0) for r in fr.itertuples()]
-        faixa = f"{sups[0]} a {sups[-1]}" if len(sups) > 1 else sups[0]
-        return (f"Não encontramos evidência estatística de que +{passo} aumente o preenchimento perto dos cortes; não "
-                f"dá para descartar efeitos de até {faixa} p.p.")
     return (f"Não encontramos evidência estatística de que +{passo} aumente o preenchimento perto dos cortes. Os dados "
             f"também não permitem descartar efeitos grandes: até cerca de {' e '.join(lim)} (limites superiores do "
             "IC 95%). O resultado é inconclusivo, e não evidência de que a bolsa não funciona.")
@@ -2417,9 +2450,8 @@ def secao_e3(ctx) -> str:
     o.append(
         f'<p class="nota">O protocolo também previu duas janelas de sensibilidade (h = 0,030 e 0,080). Elas não '
         f"mudam a leitura (menor p entre as {ne['n_espec']} estimações: {br_p(ne['p_min'])}) e estão em "
-        f"<code>{esc(rel(E3_EST))}</code>.</p>")
-
-    o.append(secao_inferencia_alternativa())
+        f"<code>{esc(rel(E3_EST))}</code>. Especificações alternativas, exploratórias e pós-resultado, estão na "
+        "seção 3.</p>")
 
     o.append("<h3>Diagnósticos sem outcome</h3>")
     o.append(f"<p>{esc(' / '.join(p3.get('diagnosticos_sem_outcome', [])))}. Foram gravados antes da leitura dos "
@@ -2488,9 +2520,9 @@ def secao_e3(ctx) -> str:
                 f"HC1). Nas janelas de sensibilidade, p &lt; 0,05 em: {esc(sens_txt) or 'nenhum'}. "
                 f"<strong>Nota:</strong> {nota_running_balanco(ctx)} A linha <code>{COVARIAVEL_RUNNING}</code> do "
                 "arquivo de diagnósticos foi omitida desta tabela e da figura: seu “salto” é zero por construção "
-                f"(|salto| máximo registrado: {cientifico(run['tau'].abs().max()) if len(run) else '—'}), e os "
-                "p-valores dela são ruído numérico, "
-                "não desequilíbrio.</p>"
+                f"(|salto| máximo registrado: {cientifico(run['tau'].abs().max()) if len(run) else '—'})"
+                + (", e o E3 a registra sem teste (EP, IC e p vazios)." if len(run) and run["p_valor"].isna().all()
+                   else ", e os p-valores dela são ruído numérico, não desequilíbrio.") + "</p>"
                 + fonte_html(E3_DIAG, grafico=False,
                              extra="Covariáveis da base oficial do Ipea (a08) e da tipologia territorial, registradas em "
                                    f"<code>{esc(rel(E3_STATUS))}</code>")),
@@ -2518,12 +2550,656 @@ def secao_e3(ctx) -> str:
     return "".join(o)
 
 
-def secao_inferencia_alternativa() -> str:
-    """Marcador reservado: a inferencia alternativa (E5) e produzida por outro agente e entra depois."""
-    return ('<h3>Inferência alternativa (exploratória)</h3>'
-            '<div class="reservado"><p class="pend-tit"><span class="pill pill-pend">a preencher</span> '
-            "Seção reservada.</p><p class=\"nota\">A preencher com <code>output/rdd_bolsa/E5_*</code>, em produção "
-            "separada. Nada desta seção é resultado: a estimativa principal continua sendo a do E3 acima.</p></div>")
+# ---------------------------------------------------------------------------
+# Secao 3: inferencia alternativa (E5), EXPLORATORIA e pos-resultado. So le output/rdd_bolsa/E5_*.
+# ---------------------------------------------------------------------------
+
+
+def carregar_e5(ctx) -> dict | None:
+    """Le as saidas do E5 (nada e recalculado) e confere que o S0 do E5 e o E3 atual."""
+    if not all(p.exists() for p in E5_ARQS):
+        return None
+    esp = pd.read_csv(E5_ESPEC, dtype={"corte": str})
+    esp["corte_num"] = pd.to_numeric(esp["corte"], errors="coerce")
+    for col in [c for c in esp.columns if c.startswith(("descarta_", "equivalencia_"))]:
+        esp[col] = esp[col].astype(str).str.lower().eq("true")
+    res = ler_json(E5_RESUMO) or {}
+    mapa = {"Y1": OUTCOME_FRAC, "D1": OUTCOME_D, "D2": OUTCOME_D}
+    diverg = []
+    for r in esp[esp["especificacao"] == "S0"].itertuples():
+        if r.outcome in mapa and finito(r.corte_num):
+            e = linha_e3(ctx, r.populacao, mapa[r.outcome], float(r.corte_num))
+            if abs(r.tau - e["tau"]) > TOL_TAU or abs(r.ep - e["ep"]) > TOL_TAU:
+                diverg.append(f"{r.outcome} em {br(r.corte_num)}")
+    return {"esp": esp, "dec": pd.read_csv(E5_DECOMP), "lados": pd.read_csv(E5_LADOS),
+            "lr": pd.read_csv(E5_LR_SENS), "res": res, "diverg": diverg}
+
+
+def ordem_e5(df: pd.DataFrame) -> pd.DataFrame:
+    d = df.copy()
+    d["_o"] = [ORDEM_E5.index(e) if e in ORDEM_E5 else len(ORDEM_E5) for e in d["especificacao"]]
+    d["_c"] = d["corte_num"].fillna(9.0)
+    return d.sort_values(["_o", "_c"], kind="stable")
+
+
+def corte_e5(r) -> str:
+    """'0,300'; '0,300 (±0,020)' na local randomization; '0,300 + 0,400' com cortes empilhados."""
+    if not finito(r.corte_num):
+        return " + ".join(br(float(c.strip().replace(",", "."))) for c in str(r.corte).split("+"))
+    txt = br(float(r.corte_num))
+    m = re.match(r"\+-\s*([\d.]+)", str(r.janela or ""))
+    if r.especificacao == "D" and m:
+        txt += f" (±{br(float(m.group(1)))})"
+    return txt
+
+
+def n_e5(r) -> str:
+    n = f"{br_int(r.n_abaixo)} / {br_int(r.n_acima)}"
+    if str(r.unidade).startswith("celula") and finito(r.n_obs):
+        n += f' <span class="muted">({br_int(r.n_obs)} células)</span>'
+    elif str(r.outcome) == "D1+D2" and finito(r.n_obs):
+        n += f' <span class="muted">({br_int(r.n_obs)} linhas)</span>'
+    return n
+
+
+def rotulo_e5(codigo: str, vies: bool = True) -> str:
+    rot = esc(ESPEC_E5.get(codigo, codigo))
+    if codigo == "S0":
+        return f"<strong>{rot}</strong>"
+    if codigo == "A" and vies:
+        return f'{rot} <span class="muted">({VIES_A})</span>'
+    return rot
+
+
+def selo_e5() -> str:
+    return ' <span class="pill pill-hist">exploratório</span>'
+
+
+def margem(d: int) -> str:
+    return f"{d:03d}"
+
+
+def y1_e5(e5) -> pd.DataFrame:
+    return e5["esp"][e5["esp"]["outcome"] == "Y1"]
+
+
+def s0_e5(e5, corte: float) -> pd.Series:
+    y = y1_e5(e5)
+    return y[(y["especificacao"] == "S0") & np.isclose(y["corte_num"], corte)].iloc[0]
+
+
+def tabela_decomposicao_e5(ctx, e5) -> str:
+    dec, lados = e5["dec"], e5["lados"]
+    js = {round(float(d["corte"]), 3): d for d in (e5["res"].get("decomposicao_ic_y1") or [])}
+    cortes = sorted(float(c) for c in dec["corte"].unique())
+
+    def comp(c, nome):
+        return dec[np.isclose(dec["corte"], c) & (dec["componente"] == nome)].iloc[0]
+
+    def lado(c, nome):
+        return lados[np.isclose(lados["corte"], c) & (lados["lado"] == nome)].iloc[0]
+
+    def dp(c):
+        d = js.get(round(c, 3))
+        return br(d["dp_y_combinado"], 3) if d else "—"
+
+    ll, lc, dm = "LL_triangular_principal", "LC_triangular", "DM_simples"
+    linhas = [
+        ["Municípios abaixo / acima"] + [f"{br_int(comp(c, dm).n_abaixo)} / {br_int(comp(c, dm).n_acima)}" for c in cortes],
+        ["n efetivo com o kernel triangular (abaixo / acima)"]
+        + [f"{br_int(lado(c, 'abaixo').n_efetivo_kish_triangular)} / {br_int(lado(c, 'acima').n_efetivo_kish_triangular)}"
+           for c in cortes],
+        ["Desvio-padrão de Y1 (combinado)"] + [dp(c) for c in cortes],
+        ["Municípios com uma única célula (abaixo / acima)"]
+        + [f"{pct(lado(c, 'abaixo').share_municipios_1_celula, 0)} / {pct(lado(c, 'acima').share_municipios_1_celula, 0)}"
+           for c in cortes],
+        ["(1) EP da diferença de médias simples"] + [br(comp(c, dm).ep, 3) for c in cortes],
+        ["(2) × kernel triangular (local constante)"]
+        + [f"× {br(comp(c, lc).razao_ep_vs_dm_simples, 2)} → {br(comp(c, lc).ep, 3)}" for c in cortes],
+        ["(3) × inclinações (local linear)"]
+        + [f"× {br(comp(c, ll).ep / comp(c, lc).ep, 2)} → <strong>{br(comp(c, ll).ep, 3)}</strong>" for c in cortes],
+        ["Fator total (3) ÷ (1)"] + [f"<strong>× {br(comp(c, ll).razao_ep_vs_dm_simples, 2)}</strong>" for c in cortes],
+        ["Referência teórica, desenho uniforme"] + [f"× {br(comp(c, ll).razao_teorica_desenho_uniforme, 2)}"
+                                                    for c in cortes],
+        ["MDE do principal (2,8 × EP)"] + [f"<strong>{br(100 * comp(c, ll).mde_80, 1)} p.p.</strong>" for c in cortes],
+    ]
+    return tabela(
+        [("Preenchimento (Y1), janela h = 0,050, mesma amostra do principal", "txt")]
+        + [(f"Corte {br(c)}", "num") for c in cortes], linhas, classe="compacta",
+        titulo="Por que o IC é largo: decomposição do erro-padrão do salto" + selo_e5(), chave="tab_e5_decomp",
+        rodape=('<p class="nota">EP = erro-padrão (HC1, por município), em proporção. Cada linha multiplica a anterior: '
+                "(1) diferença de médias simples na janela; (2) com os pesos do kernel triangular, sem inclinação "
+                "(local constante); (3) com as inclinações de cada lado (local linear, o principal). A referência "
+                "teórica é o fator esperado se os municípios fossem uniformes na janela, com variância constante.</p>"
+                + fonte_html(E5_DECOMP, E5_LADOS, E5_RESUMO, grafico=False)))
+
+
+def itens_largura_e5(ctx, e5) -> str:
+    """Os tres fatores que multiplicam o EP (doc 39, secao 1), com os numeros lidos do E5."""
+    dec, lados = e5["dec"], e5["lados"]
+    y = y1_e5(e5)
+    c0 = ctx["cortes"][0]
+    ll = dec[dec["componente"] == "LL_triangular_principal"]
+    lc = dec[dec["componente"] == "LC_triangular"]
+    dm = dec[dec["componente"] == "DM_simples"]
+    e1 = y[(y["especificacao"] == "E1") & np.isclose(y["corte_num"], c0)]
+    cel = (f" ({br_int(e1['n_obs'].iloc[0])} células em {br_int(e1['n_clusters'].iloc[0])} municípios na janela de "
+           f"{br(c0)}, {br(e1['n_obs'].iloc[0] / e1['n_clusters'].iloc[0], 1)} por município)" if len(e1) else "")
+    sh = lados["share_municipios_1_celula"]
+    nef = lados["n_efetivo_kish_triangular"] / lados["n"]
+    fat_incl = (ll.set_index("corte")["ep"] / lc.set_index("corte")["ep"])
+    dm0 = dm[np.isclose(dm["corte"], c0)].iloc[0]
+    ll0 = ll[np.isclose(ll["corte"], c0)].iloc[0]
+    n_lado = (dm0["n_abaixo"] + dm0["n_acima"]) / 2
+    dp0 = next((d["dp_y_combinado"] for d in (e5["res"].get("decomposicao_ic_y1") or [])
+                if math.isclose(float(d["corte"]), c0)), np.nan)
+    return (
+        '<ol class="leitura">'
+        f"<li><strong>Ruído do outcome e n pequeno.</strong> Y1 é uma fração de poucas células{cel}. Entre "
+        f"{pct(sh.min(), 0)} e {pct(sh.max(), 0)} dos municípios de cada lado têm uma única célula, e para eles Y1 só "
+        f"pode ser 0 ou 1. Com desvio-padrão de {br(dp0, 2)} e cerca de {br_int(n_lado)} municípios por lado, até uma "
+        f"diferença de médias simples teria EP de {br(dm0['ep'], 3)}, isto é, IC de ±{br(100 * Z_975 * dm0['ep'], 0)} "
+        "p.p.</li>"
+        f"<li><strong>Kernel triangular.</strong> Dá menos peso aos municípios longe do corte: o n efetivo cai para "
+        f"{pct(nef.min(), 0)} a {pct(nef.max(), 0)} do n, o que multiplica o EP por {br(lc['razao_ep_vs_dm_simples'].min(), 2)}"
+        f" a {br(lc['razao_ep_vs_dm_simples'].max(), 2)}.</li>"
+        f"<li><strong>Extrapolação até o corte.</strong> O local linear estima o valor de cada reta exatamente na borda "
+        f"dos dados, onde a inclinação estimada pesa mais. É o fator dominante: × {br(fat_incl.min(), 1)} a "
+        f"× {br(fat_incl.max(), 1)}. Em {br(c0)} o fator total ({br(ll0['razao_ep_vs_dm_simples'], 2)}) supera a "
+        f"referência ({br(ll0['razao_teorica_desenho_uniforme'], 2)}), que supõe municípios uniformes na janela e "
+        "variância constante.</li></ol>")
+
+
+def tabela_estimadores_e5(ctx, e5) -> str:
+    dec = e5["dec"]
+    cortes = sorted(float(c) for c in dec["corte"].unique())
+    nomes = [("DM_simples", "Diferença de médias simples"), ("LC_triangular", "Local constante triangular (= A)"),
+             ("LL_uniforme", "Local linear, kernel uniforme"),
+             ("LL_triangular_principal", "<strong>Local linear triangular (= principal)</strong>")]
+    linhas = []
+    for comp, rot in nomes:
+        lin = [rot]
+        for c in cortes:
+            r = dec[np.isclose(dec["corte"], c) & (dec["componente"] == comp)]
+            if len(r) != 1:
+                lin.append("—")
+                continue
+            r = r.iloc[0]
+            lin.append(f"{pp(r.tau)} {ic_pp(r.ic95_inf, r.ic95_sup)} <span class=\"muted\">p = {br_p(r.p_valor)}</span>")
+        linhas.append(lin)
+    dm0 = dec[np.isclose(dec["corte"], cortes[0]) & (dec["componente"] == "DM_simples")].iloc[0]
+    return tabela(
+        [("Estimador (mesma amostra)", "txt")] + [(f"Corte {br(c)}: salto (p.p.) [IC 95%]", "num") for c in cortes],
+        linhas, classe="compacta", titulo="Quatro estimadores do salto na mesma amostra" + selo_e5(),
+        legenda=legenda_salto(ctx, OUTCOME_FRAC),
+        rodape=(f'<p class="nota">A diferença de médias simples em {br(cortes[0])} ({pp(dm0["tau"])} p.p.) é a '
+                "comparação bruta das médias. Não estima o salto, porque ignora o gradiente de Y1 no IVS dentro da "
+                f"janela (nota da {NUM.ref('tab_principal')}).</p>" + fonte_html(E5_DECOMP, grafico=False)))
+
+
+def fig_forest_e5(ctx, e5) -> str:
+    """Forest plot das especificacoes do preenchimento (Y1): um painel por corte e um para os cortes empilhados."""
+    y = y1_e5(e5)
+    cortes = ctx["cortes"]
+    vf, fx = ctx["valor_faixa"], ctx["faixas"]
+    por_corte = {c: ordem_e5(y[np.isclose(y["corte_num"], c)]) for c in cortes}
+    emp = ordem_e5(y[y["corte_num"].isna()])
+    codigos = [e for e in ORDEM_E5 if any(e in set(d["especificacao"]) for d in por_corte.values())]
+    vals = np.concatenate([y["ic95_inf"].to_numpy(float), y["ic95_sup"].to_numpy(float)]) * 100
+    lo = math.floor(np.nanmin(vals) / 10) * 10
+    hi = max(30, math.ceil(np.nanmax(vals) / 10) * 10)
+    W = 680
+    lab_w, gapx, mr = 206, 22, 12
+    pw = (W - lab_w - gapx - mr) / 2
+    RH = 21
+    leg_h = 26
+    cab_h = 30
+    top = leg_h + cab_h
+    base = top + len(codigos) * RH
+    emp_top = base + 46
+    emp_base = emp_top + 22 + max(len(emp), 1) * RH
+    H = int(emp_base + 46)
+    o = [svg_abrir(W, H, "Forest plot das especificações exploratórias do preenchimento, por corte")]
+    o.append(legenda_svg([("ponto", COR["s1"], "S0: principal do protocolo"),
+                          ("ponto", COR["ink2"], "alternativas exploratórias"),
+                          ("vazio", COR["muted"], f"A: {VIES_A}"),
+                          ("tracejada", COR["ink2"], "+10 e +20 p.p.")], 6, 14, size=9.5))
+
+    def painel(left: float, ptop: float, pbase: float, df: pd.DataFrame, linhas: list[str], rotulos: bool) -> None:
+        X = Linear(lo, hi, left, left + pw)
+        for t in range(lo, hi + 1, 10):
+            o.append(l_svg(X(t), ptop, X(t), pbase, COR["grid"]))
+        for t in (10, 20):
+            if lo < t < hi:
+                o.append(l_svg(X(t), ptop - 4, X(t), pbase, COR["ink2"], 1, extra='stroke-dasharray="4 3"'))
+                o.append(t_svg(X(t), ptop - 7, f"+{t}", anchor="middle", size=8.5, cor=COR["ink2"]))
+        o.append(l_svg(X(0), ptop - 4, X(0), pbase, COR["ink"], 1.2))
+        o.append(l_svg(left, pbase, left + pw, pbase, COR["axis"]))
+        for t in range(lo, hi + 1, 10):
+            if t % 20 == 0:
+                o.append(l_svg(X(t), pbase, X(t), pbase + 4, COR["axis"]))
+                o.append(t_svg(X(t), pbase + 15, sinal(t, 0), anchor="middle", size=9))
+        for i, cod in enumerate(linhas):
+            yy = ptop + (i + 0.5) * RH
+            r = df[df["especificacao"] == cod]
+            if not len(r):
+                continue
+            r = r.iloc[0]
+            a, z = X(max(r.ic95_inf * 100, lo)), X(min(r.ic95_sup * 100, hi))
+            tt = (f"{ESPEC_E5.get(cod, cod)}, corte {corte_e5(r)}: {pp(r.tau)} p.p. {ic_pp(r.ic95_inf, r.ic95_sup)}, "
+                  f"p = {br_p(r.p_valor)}")
+            if cod == "S0":
+                o.append(l_svg(a, yy, z, yy, COR["s1"], 2.6, extra='stroke-linecap="round"'))
+                o.append(ponto(X(r.tau * 100), yy, COR["s1"], r=4.8, titulo=tt, anel=1.5))
+            elif cod == "A":
+                o.append(l_svg(a, yy, z, yy, COR["muted"], 2, extra='stroke-dasharray="3 2"'))
+                o.append(f'<circle cx="{f2(X(r.tau * 100))}" cy="{f2(yy)}" r="3.9" fill="{COR["surface"]}" '
+                         f'stroke="{COR["muted"]}" stroke-width="1.7"><title>{esc(tt)}</title></circle>')
+            else:
+                o.append(l_svg(a, yy, z, yy, COR["ink2"], 2, extra='stroke-linecap="round"'))
+                o.append(ponto(X(r.tau * 100), yy, COR["ink2"], r=3.9, titulo=tt, anel=1.2))
+
+    def rotulos(ptop: float, linhas: list[str]) -> None:
+        for i, cod in enumerate(linhas):
+            yy = ptop + (i + 0.5) * RH
+            rot = ESPEC_E5.get(cod, cod)
+            if cod == "A":
+                o.append(t_svg(lab_w - 10, yy - 1.5, rot, anchor="end", size=9.3, cor=COR["ink2"]))
+                o.append(t_svg(lab_w - 10, yy + 8, VIES_A, anchor="end", size=8.2, cor=COR["ink2"],
+                               extra='font-style="italic"'))
+            else:
+                o.append(t_svg(lab_w - 10, yy + 3.5, rot, anchor="end", size=9.3,
+                               cor=COR["ink"] if cod == "S0" else COR["ink2"], peso=650 if cod == "S0" else None))
+
+    if "S0" in codigos:  # destaque da linha do principal
+        i = codigos.index("S0")
+        o.append(f'<rect x="4" y="{f2(top + i * RH)}" width="{f2(W - mr - 4)}" height="{RH}" fill="{COR["wash"]}"/>')
+    rotulos(top, codigos)
+    for ci, c in enumerate(cortes):
+        left = lab_w + ci * (pw + gapx)
+        o.append(t_svg(left + pw / 2, leg_h + 12, f"Corte {br(c)}: bolsa {br_mil(vf[fx[ci]])} → {br_mil(vf[fx[ci + 1]])}",
+                       anchor="middle", cor=COR["ink"], peso=600, size=10))
+        painel(left, top, base, por_corte[c], codigos, ci == 0)
+    if len(emp):
+        cods_emp = list(emp["especificacao"])
+        o.append(t_svg(6, emp_top - 8, f"Cortes empilhados ({' + '.join(br(c) for c in cortes)}): um salto comum",
+                       cor=COR["ink"], peso=600, size=10))
+        rotulos(emp_top + 14, cods_emp)
+        painel(lab_w, emp_top + 14, emp_top + 14 + len(cods_emp) * RH, emp, cods_emp, True)
+        nx = lab_w + pw + gapx
+        o.append(t_svg(nx, emp_top + 22, "Estimando: média ponderada dos dois saltos.", size=9, cor=COR["ink2"]))
+        o.append(t_svg(nx, emp_top + 35, "Se os dois forem diferentes, não descreve", size=9, cor=COR["ink2"]))
+        o.append(t_svg(nx, emp_top + 47, "nenhum deles.", size=9, cor=COR["ink2"]))
+    o.append(t_svg(lab_w + (W - lab_w - mr) / 2, H - 6, "Salto (p.p.) e IC 95%; D: IC por permutação", anchor="middle",
+                   size=9.5))
+    o.append("</svg>")
+    return "".join(o)
+
+
+def tabela_y1_e5(ctx, e5) -> str:
+    linhas = []
+    for r in ordem_e5(y1_e5(e5)).itertuples():
+        lin = [rotulo_e5(r.especificacao), corte_e5(r), f"<strong>{pp(r.tau)}</strong>" if r.especificacao == "S0"
+               else pp(r.tau), ic_pp(r.ic95_inf, r.ic95_sup), br_p(r.p_valor), n_e5(r), br(r.ep, 3),
+               br(100 * r.mde_80, 1)]
+        linhas.append(lin)
+    return tabela(
+        [("Especificação", "txt"), ("Corte", "txt nowrap"), ("Salto (p.p.)", "num"), ("IC 95% (p.p.)", "num"),
+         ("p", "num"), ("Municípios abaixo / acima", "num"), ("EP", "num"), ("MDE (p.p.)", "num")], linhas,
+        classe="compacta", titulo="Todas as especificações do preenchimento (Y1), ciclo 1" + selo_e5(),
+        legenda=legenda_salto(ctx, OUTCOME_FRAC), chave="tab_e5_y1",
+        rodape=('<p class="nota">IC 95% pela normal, com EP HC1 por município (E1 e E2: EP agrupado por município); em D, '
+                "p de Fisher com 10.000 permutações, IC por inversão sob efeito constante e EP = desvio-padrão da "
+                "distribuição de permutação. MDE = 2,8 × EP. S0 reproduz o E3. Todas as especificações calculadas estão "
+                "aqui, qualquer que seja o resultado.</p>" + fonte_html(E5_ESPEC, grafico=False)))
+
+
+def itens_especificacoes_e5(ctx, e5) -> str:
+    """O que cada especificacao e (doc 39, secao 2.1), com os numeros lidos do E5."""
+    y = y1_e5(e5)
+    cortes = ctx["cortes"]
+
+    def tau(cod, c):
+        r = y[(y["especificacao"] == cod) & np.isclose(y["corte_num"], c)]
+        return float(r["tau"].iloc[0]) if len(r) else np.nan
+
+    def ep(cod, c):
+        r = y[(y["especificacao"] == cod) & np.isclose(y["corte_num"], c)]
+        return float(r["ep"].iloc[0]) if len(r) else np.nan
+
+    incl = "; ".join(f"{pp(tau('A', c) - tau('S0', c))} p.p. em {br(c)}" for c in cortes)
+    queda = [1 - ep(cod, c) / ep("S0", c) for cod in ("C1", "C2") for c in cortes]
+    jan_d = "; ".join(
+        (f"±{br(float(m.group(1)))} em {br(r.corte_num)}" if (m := re.match(r"\+-\s*([\d.]+)", str(r.janela or "")))
+         else f"sem janela em {br(r.corte_num)}") for r in ordem_e5(y[y["especificacao"] == "D"]).itertuples())
+    lr = e5["lr"]
+    lr_y = lr[lr["outcome"] == "Y1"]
+    b = y[y["especificacao"] == "B"]
+    duas = b["municipios_em_duas_janelas"].iloc[0] if len(b) else np.nan
+    cel = (e5["res"].get("verificacoes") or {}).get("celulas_reproduzem_y1") or {}
+    itens = [
+        f"<strong>A, local constante.</strong> Diferença das médias ponderadas pelo kernel; não modela a inclinação. "
+        f"Difere do principal exatamente pela contribuição das inclinações ({incl}). Se as inclinações forem reais, esse "
+        "é o viés de A, e o IC de A não o inclui: <strong>o IC estreito de A não é ganho de precisão</strong>.",
+        "<strong>B, cortes empilhados.</strong> Running variable s − c, interceptos e inclinações por corte e lado, "
+        f"salto comum. As janelas dos dois cortes não se sobrepõem ({br_int(duas)} municípios nas duas). O estimando "
+        "vira uma média ponderada dos dois saltos.",
+        "<strong>C1 e C2, covariáveis pré.</strong> C1 usa estrato territorial, macrorregião e log da população 2010; "
+        "C2 soma o IDHM 2010. Não entram o IVS e seus subíndices nem nada do arquivo local. O EP cai "
+        f"{pct(min(queda), 0)} a {pct(max(queda), 0)}, e a estimativa em {br(cortes[0])} vai de {pp(tau('S0', cortes[0]))} "
+        f"para {pp(tau('C1', cortes[0]))} (C1), dentro do IC do principal.",
+        f"<strong>D, local randomization.</strong> Janela escolhida só pelo balanço de covariáveis, antes de ler "
+        f"outcomes ({jan_d}). Premissa mais forte: dentro da janela, o lado do corte é como sorteado e Y1 não depende "
+        f"do IVS. Na sensibilidade de janelas, nenhum p de Y1 abaixo de {br(lr_y['p_valor'].min(), 2)}.",
+        f"<strong>E0, E1 e E2, nível célula</strong> ({br_int(cel.get('celulas'))} células CNES–curso). E0 e E1 têm o "
+        "mesmo ponto e mudam o estimando para o salto médio por célula. E2 acrescenta efeitos fixos de curso, e a "
+        "estimativa muda bastante (" + "; ".join(f"{pp(tau('E1', c))} → {pp(tau('E2', c))} em {br(c)}" for c in cortes)
+        + "): a composição de cursos difere entre os lados da janela (não testado formalmente).",
+    ]
+    return '<ul class="leitura">' + "".join(f"<li>{x}</li>" for x in itens) + "</ul>"
+
+
+def tabela_presenca_e5(ctx, e5) -> str:
+    esp = e5["esp"]
+    p = esp[esp["outcome"] != "Y1"].copy()
+    ordem_oc = {k: i for i, k in enumerate(["D1", "D2", "D1+D2"])}
+    p["_oc"] = p["outcome"].map(ordem_oc).fillna(9)
+    linhas = []
+    sem = []
+    for oc, g in p.sort_values("_oc", kind="stable").groupby("_oc", sort=True):
+        for r in ordem_e5(g).itertuples():
+            rot = rotulo_e5(r.especificacao, vies=False) + (' <span class="muted">(viesada)</span>'
+                                                           if r.especificacao == "A" else "")
+            oc_txt = esc(str(r.outcome).replace("+", " + "))
+            if not finito(r.tau):
+                sem.append(f"{r.outcome} em {corte_e5(r)}")
+                linhas.append([oc_txt, rot, corte_e5(r), '<span class="muted">sem janela</span>', "—", "—", "—"])
+                continue
+            linhas.append([oc_txt, rot, corte_e5(r),
+                           f"<strong>{pp(r.tau)}</strong>" if r.especificacao == "S0" else pp(r.tau),
+                           ic_pp(r.ic95_inf, r.ic95_sup), br_p(r.p_valor), n_e5(r)])
+    val = p[p["p_valor"].notna()]
+    menor = val.loc[val["p_valor"].idxmin()] if len(val) else None
+    leitura = ""
+    if menor is not None:
+        s0 = val[(val["especificacao"] == "S0") & (val["outcome"] == menor["outcome"])
+                 & np.isclose(val["corte_num"], menor["corte_num"])]
+        oposto = len(s0) and np.sign(s0["tau"].iloc[0]) != np.sign(menor["tau"])
+        leitura = (f" {'Nenhum' if (val['p_valor'] >= ALFA).all() else 'Algum'} salto de presença é distinguível de zero a "
+                   f"5%. O mais próximo é {esc(menor['outcome'])} em {br(menor['corte_num'])}, na especificação "
+                   f"{esc(ESPEC_E5.get(menor['especificacao'], menor['especificacao']))}: {pp(menor['tau'])} p.p., "
+                   f"p = {br_p(menor['p_valor'])}"
+                   + (f", com sinal oposto ao do principal ({pp(s0['tau'].iloc[0])})" if oposto else "")
+                   + ": sintoma de baixa precisão e de sensibilidade à especificação, não evidência de efeito.")
+    return tabela(
+        [("Outcome", "txt"), ("Especificação", "txt"), ("Corte", "txt nowrap"), ("Salto (p.p.)", "num"),
+         ("IC 95% (p.p.)", "num"), ("p", "num"), ("Municípios abaixo / acima", "num")], linhas, classe="compacta",
+        titulo="Presença de especialista (secundário): todas as especificações" + selo_e5(),
+        legenda=legenda_salto(ctx, OUTCOME_D), chave="tab_e5_presenca",
+        rodape=(f'<p class="nota">D1 = especialista do ciclo 1 ativo no município; D2 = idem, ciclo 2; D1 + D2 = os '
+                "dois ciclos empilhados (F1 e F2), com EP agrupado por município, porque o mesmo município pode estar nos "
+                "dois. Sem janela de local randomization"
+                + (f" ({'; '.join(sem)})" if sem else "")
+                + ": nenhuma janela candidata passou no balanço e, pela regra fixada antes de rodar, não há "
+                  f"estimativa.{leitura}</p>"
+                + fonte_html(E5_ESPEC, grafico=False)))
+
+
+def tabela_descarte_e5(ctx, e5) -> str:
+    linhas = []
+    for r in ordem_e5(y1_e5(e5)).itertuples():
+        lin = [rotulo_e5(r.especificacao), corte_e5(r), pp(r.lim_sup_unilateral_95)]
+        for tipo in ("p_unilateral_tau_ge_", "p_tost_"):
+            for d in MARGENS_E5:
+                p = getattr(r, tipo + margem(d))
+                lin.append(f"<strong>{br_p(p)}</strong>" if finito(p) and p < ALFA else br_p(p))
+        linhas.append(lin)
+    cab = ([("Especificação", "txt"), ("Corte", "txt nowrap"), ("Limite sup. 95% (p.p.)", "num")]
+           + [(f"p(τ ≥ +{d})", "num") for d in MARGENS_E5] + [(f"TOST ±{d}", "num") for d in MARGENS_E5])
+    return tabela(
+        cab, linhas, classe="compacta", grupos=[("", 3), ("Descarta saltos de +Δ p.p. ou mais?", 3),
+                                                ("Equivalência em [−Δ; +Δ]?", 3)],
+        titulo="O que os dados permitem descartar no preenchimento (Y1)" + selo_e5(), chave="tab_e5_descarte",
+        legenda=('<p class="legenda-salto"><strong>Como ler.</strong> Salto = lado com bolsa R$ 5 mil maior menos lado com '
+                 "bolsa menor. Limite superior unilateral de 95% = τ̂ + 1,645 EP (em D, por inversão do teste de "
+                 "permutação unilateral): o maior salto compatível com os dados a 5% unilateral. p(τ ≥ +Δ) testa a "
+                 "hipótese de que o salto é de +Δ p.p. ou mais; em negrito, p &lt; 0,05, isto é, saltos de +Δ p.p. ou "
+                 "mais são incompatíveis com os dados. TOST: teste de equivalência em [−Δ; +Δ].</p>"),
+        rodape=fonte_html(E5_ESPEC, grafico=False))
+
+
+def lista_cod(cods: list[str]) -> str:
+    cods = list(cods)
+    if not cods:
+        return "nenhuma"
+    return cods[0] if len(cods) == 1 else ", ".join(cods[:-1]) + " e " + cods[-1]
+
+
+def itens_descarte_e5(ctx, e5) -> str:
+    """Leitura do que da para descartar (doc 39, secao 3), gerada a partir de E5_especificacoes.csv."""
+    y = y1_e5(e5)
+    cortes = ctx["cortes"]
+    pcol = {d: "p_unilateral_tau_ge_" + margem(d) for d in MARGENS_E5}
+    dcol = {d: "descarta_tau_ge_" + margem(d) for d in MARGENS_E5}
+    itens = []
+    partes = []
+    for c in cortes:
+        s0 = s0_e5(e5, c)
+        desc = [d for d in MARGENS_E5 if s0[dcol[d]]]
+        nao = [d for d in MARGENS_E5 if not s0[dcol[d]]]
+        txt = f"em {br(c)}, limite superior de {pp(s0['lim_sup_unilateral_95'])} p.p."
+        if desc:
+            txt += ("; descarta " + " e ".join(f"+{d} p.p. (p = {br_p(s0[pcol[d]])}"
+                                              + (", no limite" if s0[pcol[d]] > 0.04 else "") + ")" for d in desc))
+        if nao:
+            txt += ("; não descarta " + " nem ".join(f"+{d} p.p. (p = {br_p(s0[pcol[d]])})" for d in nao))
+        partes.append(txt)
+    itens.append("<strong>Principal (S0):</strong> " + "; ".join(partes) + ".")
+    d10 = y[y[dcol[10]]]
+    proximos = y.sort_values(pcol[10]).head(2)
+    itens.append("<strong>+10 p.p.:</strong> " + (
+        "nenhuma especificação descarta. As mais próximas são " + " e ".join(
+            f"{esc(r.especificacao)}{'' if not finito(r.corte_num) else ' em ' + br(r.corte_num)} "
+            f"(p = {br_p(getattr(r, pcol[10]))})" for r in proximos.itertuples()) + "." if not len(d10) else
+        "descartam " + lista_cod([f"{r.especificacao} em {corte_e5(r)}" for r in d10.itertuples()]) + "."))
+    txt20 = []
+    for c in cortes:
+        g = y[np.isclose(y["corte_num"], c)]
+        sim = list(g[g[dcol[20]]]["especificacao"])
+        nao = list(g[~g[dcol[20]]]["especificacao"])
+        txt20.append(f"em {br(c)}, {br_int(len(sim))} das {br_int(len(g))} especificações por corte descartam"
+                     + (f" (todas menos {lista_cod(nao)})" if 0 < len(nao) <= 2 else f" ({lista_cod(sim)})" if sim else ""))
+    b = y[y["corte_num"].isna()]
+    btxt = ""
+    if len(b):
+        rb = b.iloc[0]
+        desc_b = [d for d in MARGENS_E5 if rb[dcol[d]]]
+        if desc_b:
+            btxt = (f" Empilhando os cortes (B), saltos de +{min(desc_b)} p.p. ou mais ficam descartados: limite superior "
+                    f"de {pp(rb['lim_sup_unilateral_95'])} p.p. para a média dos dois saltos.")
+    itens.append("<strong>+20 p.p.:</strong> " + "; ".join(txt20) + "." + btxt)
+    eq = y[y[[c for c in y.columns if c.startswith("equivalencia_")]].any(axis=1)]
+    so_a = len(eq) and set(eq["especificacao"]) == {"A"}
+    itens.append("<strong>Equivalência:</strong> " + (
+        f"só A passa no TOST, e A ignora as inclinações. Fora de A, nenhuma especificação mostra que o salto está dentro "
+        f"de ±{max(MARGENS_E5)} p.p." if so_a else
+        ("passam no TOST: " + lista_cod(sorted(set(eq["especificacao"]))) + "." if len(eq) else
+         f"nenhuma especificação mostra que o salto está dentro de ±{max(MARGENS_E5)} p.p.")))
+    esp = e5["esp"]
+    pres = esp[(esp["outcome"] != "Y1") & esp["p_valor"].notna()]
+    s0p = pres[(pres["especificacao"] == "S0") & pres[dcol[20]]]
+    f2_ = pres[(pres["especificacao"] == "F2")]
+    ptxt = ("o principal descarta +20 p.p. só para " + lista_cod(
+        [f"{r.outcome} em {br(r.corte_num)} (p = {br_p(getattr(r, pcol[20]))})" for r in s0p.itertuples()])
+            if len(s0p) else "o principal não descarta +20 p.p. em nenhum ciclo ou corte")
+    if len(f2_):
+        rf = f2_.iloc[0]
+        desc_f = [d for d in MARGENS_E5 if rf[dcol[d]]]
+        if desc_f:
+            ptxt += (f". F2, com ciclos e cortes empilhados, descarta +{min(desc_f)} p.p. (limite superior de "
+                     f"{pp(rf['lim_sup_unilateral_95'])} p.p.)")
+    itens.append("<strong>Presença:</strong> " + ptxt + ".")
+    return '<ul class="leitura">' + "".join(f"<li>{x}</li>" for x in itens) + "</ul>"
+
+
+def caixa_afirmar_e5(ctx, e5) -> str:
+    """O que podemos e nao podemos afirmar (doc 39, secao 6), com os numeros lidos do E5."""
+    y = y1_e5(e5)
+    cortes = ctx["cortes"]
+    c0, c1 = cortes[0], cortes[-1]
+    lr = e5["lr"]
+    lr_min = lr[lr["outcome"] == "Y1"]["p_valor"].min()
+    s0 = s0_e5(e5, c0)
+    s1 = s0_e5(e5, c1)
+    dcol = {d: "descarta_tau_ge_" + margem(d) for d in MARGENS_E5}
+    pcol = {d: "p_unilateral_tau_ge_" + margem(d) for d in MARGENS_E5}
+    desc0 = [d for d in MARGENS_E5 if s0[dcol[d]]]
+    b = y[y["corte_num"].isna()]
+    desc_b = [d for d in MARGENS_E5 if len(b) and b.iloc[0][dcol[d]]]
+    ll = e5["dec"][e5["dec"]["componente"] == "LL_triangular_principal"]["razao_ep_vs_dm_simples"]
+    g0 = y[np.isclose(y["corte_num"], c0) & (y["especificacao"] != "A")]
+    nenhuma10 = not y[dcol[10]].any()
+    dm = e5["dec"][e5["dec"]["componente"] == "DM_simples"]
+    n_lado = int(round(float((dm["n_abaixo"] + dm["n_acima"]).max() / 2)))
+    podemos = [
+        f"<strong>Nenhuma estimativa distinguível de zero.</strong> Nenhuma das {br_int(len(y))} estimativas para Y1 dá "
+        f"p &lt; 0,05: o menor p é {br(y['p_valor'].min(), 2)}, e na sensibilidade de janelas da local randomization, "
+        f"{br(lr_min, 2)}. A leitura inconclusiva do E3 se mantém em todas as especificações.",
+        f"<strong>Saltos positivos grandes descartados em {br(c0)}.</strong> No principal, os dados são incompatíveis, a "
+        "5% unilateral, com saltos de " + " e ".join(
+            f"+{d} p.p. ou mais (p = {br_p(s0[pcol[d]])})" for d in sorted(desc0, reverse=True)) + " no preenchimento"
+        + (f". Empilhando os cortes, saltos médios de +{min(desc_b)} p.p. ou mais ficam descartados." if desc_b else "."),
+        f"<strong>Origem da largura do IC.</strong> Ruído de um outcome com poucas células, ~{br_int(n_lado)} municípios "
+        f"por lado e a extrapolação do local linear (× {br(ll.min(), 1)} a × {br(ll.max(), 1)} sobre a diferença de "
+        "médias). Não é defeito de especificação.",
+    ]
+    nao_podemos = [
+        "<strong>Afirmar ausência de efeito.</strong> Nenhuma especificação válida mostra que o salto está em "
+        f"±{max(MARGENS_E5)} p.p." + (" e nenhuma descarta +10 p.p." if nenhuma10 else "")
+        + " Inconclusivo não é ausência de efeito.",
+        f"<strong>Usar A.</strong> O IC estreito de A não é inferência válida para o salto ({VIES_A}).",
+        "<strong>Promover uma alternativa a principal.</strong> As alternativas mudam o estimando ou a premissa, e a "
+        f"estimativa pontual oscila entre {pp(g0['tau'].min())} e {pp(g0['tau'].max())} p.p. em {br(c0)} (sem contar A): "
+        "sintoma de baixa precisão, não informação sobre o sinal.",
+        f"<strong>Ler o descarte em {br(c1)}.</strong> Nesse corte o principal não descarta nada a partir de +10 p.p. "
+        f"(limite superior de {pp(s1['lim_sup_unilateral_95'])} p.p.), e o desequilíbrio de covariáveis do E3 limita "
+        "ainda mais a leitura." if not any(s1[dcol[d]] for d in MARGENS_E5) else
+        f"<strong>Ler o descarte em {br(c1)} sem cautela.</strong> O desequilíbrio de covariáveis do E3 limita a leitura.",
+        "<strong>Usar linguagem causal.</strong> Tudo aqui é exploratório e pós-resultado.",
+    ]
+    return ('<div class="afirmar"><div><p class="afirmar-tit">O que podemos afirmar</p><ul>'
+            + "".join(f"<li>{x}</li>" for x in podemos) + '</ul></div><div><p class="afirmar-tit">O que não podemos '
+            "afirmar</p><ul>" + "".join(f"<li>{x}</li>" for x in nao_podemos) + "</ul></div></div>")
+
+
+def paragrafo_desenhos_e5(ctx, e5) -> str:
+    """Controle sintetico, DiD e outros desenhos (doc 39, secao 5) e o que aumentaria a precisao."""
+    cen = [c for c in (e5["res"].get("cenarios_ilustrativos_rotulados") or [])
+           if math.isclose(float(c.get("corte", -1)), ctx["cortes"][0])]
+    prec = ""
+    if cen:
+        c = cen[0]
+        prec = (f" Num cenário ilustrativo do E5 (não é observação: supõe o mesmo desvio-padrão e o mesmo desenho), em "
+                f"{br(ctx['cortes'][0])} o MDE de {br(100 * c['mde_80_observado'], 1)} p.p. cairia para "
+                f"{br(100 * c['ciclos_1_e_2_independentes']['mde_80'], 1)} p.p. com o preenchimento dos ciclos 1 e 2 "
+                f"juntos (otimista) e para {br(100 * c['todos_municipios_do_brasil_na_janela']['mde_80'], 1)} p.p. com "
+                "todos os municípios do Brasil na janela; detectar 10 p.p. exigiria cerca de "
+                f"{br(c['n_para_mde_10pp']['fator_sobre_n_observado'], 0)} vezes o n atual.")
+    return (
+        "<p><strong>Controle sintético, DiD e outros desenhos.</strong> Controle sintético e DiD sintético exigem poucas "
+        "unidades tratadas e uma série longa do mesmo outcome antes do tratamento; aqui o preenchimento de vagas do PMM-E "
+        "não existe antes do programa, há centenas de municípios em cada faixa e os doadores disputariam os mesmos "
+        "candidatos. DiD e estudo de evento por faixa também exigem pré-período do outcome. RD com múltiplos cortes e "
+        "extrapolação pede grupos expostos a cortes diferentes; todos os municípios enfrentam os mesmos dois cortes, e o "
+        "que cabe é o empilhamento (B). RD geográfica não se aplica, porque a bolsa segue o IVS municipal, não uma "
+        "fronteira. <strong>Esses desenhos não se aplicam ao outcome da hipótese.</strong> Diferença em "
+        "descontinuidades com a oferta CNES é candidata, mas muda o outcome e exige protocolo próprio, fora da fila "
+        "autorizada. O que aumentaria a precisão, com o mesmo estimando, é <strong>mais coortes com o mesmo "
+        f"outcome</strong>.{prec}</p>")
+
+
+def frase_e5_resumo(ctx) -> str:
+    """Frase do resumo sobre o E5, com os numeros lidos de E5_especificacoes.csv."""
+    e5 = ctx.get("e5")
+    if not e5:
+        return ""
+    y = y1_e5(e5)
+    alt = y[y["rotulo"] != "PRINCIPAL_CONGELADO_REPRODUZIDO"]
+    c0 = ctx["cortes"][0]
+    s0 = s0_e5(e5, c0)
+    desc = [d for d in MARGENS_E5 if s0["descarta_tau_ge_" + margem(d)]]
+    nao = [d for d in MARGENS_E5 if not s0["descarta_tau_ge_" + margem(d)]]
+    zero = ("nenhuma é distinguível de zero" if (alt["p_valor"] >= ALFA).all()
+            else "alguma é distinguível de zero (ver seção 3)")
+    txt = (f"Análises exploratórias pós-resultado ({br_int(len(alt))} especificações alternativas) não mudam a leitura: "
+           f"{zero}")
+    if desc:
+        txt += (f"; os dados descartam, a 5% unilateral, saltos de +{min(desc)} p.p. ou mais no corte {br(c0)} "
+                f"(limite superior {br(100 * s0['lim_sup_unilateral_95'], 1)} p.p.)")
+        if nao and max(nao) < min(desc):
+            txt += f", mas não efeitos de +{max(nao)} p.p."
+        else:
+            txt += "."
+    else:
+        txt += "."
+    return txt
+
+
+def secao_e5(ctx) -> str:
+    e5 = ctx.get("e5")
+    o = ['<section class="quebra"><h2>3. Inferência alternativa (exploratória, pós-resultado)</h2>']
+    o.append(f'<div class="aviso"><strong>{esc(AVISO_E5)}.</strong> Esta seção foi escrita depois de o E3 ser lido. '
+             "Nenhuma especificação daqui substitui a estimativa principal (local linear, kernel triangular, h = 0,050, "
+             "EP HC1). A lista de especificações foi fixada no script antes da primeira execução com dados reais, e "
+             "todas são relatadas, qualquer que seja o resultado. O relatório só lê as saídas "
+             "<code>output/rdd_bolsa/E5_*</code>; nada é recalculado aqui.</div>")
+    if e5 is None:
+        o.append(caixa_ausente("Saídas do E5 ausentes", E5_ARQS))
+        o.append("</section>")
+        return "".join(o)
+    res = e5["res"]
+    if res.get("status") != "CONCLUIDO" or e5["diverg"]:
+        o.append('<p class="alerta">Atenção: E5 com status '
+                 f"{esc(res.get('status', '—'))}"
+                 + (f"; o S0 do E5 não reproduz o E3 atual em {esc(', '.join(e5['diverg']))}" if e5["diverg"] else "")
+                 + ". Rodar de novo <code>scripts/rdd_bolsa/11_inferencia_alternativa.py</code>.</p>")
+    o.append("<p>Pergunta do autor: por que os IC do E3 são tão largos, se dá para estreitá-los e se outro método daria "
+             "inferência melhor ou diferente. O contraste continua sendo o incentivo marginal anunciado de R$ 5 mil, "
+             "possivelmente um pacote. Outcome da hipótese: Y1, a fração de células preenchidas na 1ª chamada do ciclo 1; "
+             "secundários: presença de especialista (D1, ciclo 1; D2, ciclo 2).</p>")
+
+    o.append("<h3>Por que o IC é largo</h3>")
+    o.append(tabela_decomposicao_e5(ctx, e5))
+    o.append("<p>A largura vem de três fatores que se multiplicam:</p>" + itens_largura_e5(ctx, e5))
+    o.append(tabela_estimadores_e5(ctx, e5))
+
+    o.append("<h3>Todas as especificações</h3>")
+    o.append(figura(
+        "Forest plot das especificações do preenchimento (Y1), por corte" + selo_e5(), fig_forest_e5(ctx, e5),
+        fonte_html(E5_ESPEC, extra="Estimativas e IC lidos do CSV, sem recálculo"),
+        legenda=('<p class="legenda-salto"><strong>Como ler.</strong> Salto = lado com bolsa R$ 5 mil maior (IVS acima do '
+                 "corte) menos lado com bolsa menor. Positivo = bolsa maior associada a mais preenchimento. Cada linha é "
+                 "uma especificação: ponto = salto, traço = IC 95%. Tracejadas: saltos de +10 e +20 p.p.</p>"),
+        sub=(f"{esc(AVISO_E5)}. S0 é o principal do protocolo (o E3); as demais são alternativas que mudam o estimador, "
+             "o estimando ou a premissa. A, a local constante, aparece vazada e tracejada porque ignora as inclinações: "
+             "seu IC estreito não é inferência válida para o salto. B empilha os dois cortes num salto comum e por isso "
+             "fica num painel próprio."),
+        chave="fig_e5_forest"))
+    o.append(tabela_y1_e5(ctx, e5))
+    o.append("<p>O que cada uma é, e o que muda em relação ao principal:</p>" + itens_especificacoes_e5(ctx, e5))
+    o.append(tabela_presenca_e5(ctx, e5))
+
+    o.append("<h3>O que os dados permitem descartar</h3>")
+    o.append(tabela_descarte_e5(ctx, e5))
+    o.append(itens_descarte_e5(ctx, e5))
+    o.append(caixa_afirmar_e5(ctx, e5))
+    o.append(paragrafo_desenhos_e5(ctx, e5))
+    o.append(f'<div class="fonte">Situação registrada: <code>{esc(res.get("status", "—"))}</code>, '
+             f"<code>{esc(res.get('rotulo', '—'))}</code>; executado em {data_br(res.get('data_execucao'))} por "
+             f"<code>{esc((res.get('script') or {}).get('arquivo', '—'))}</code>. Texto de referência: "
+             "<code>docs/06_execucao/39_inferencia_alternativa_rdd_bolsa.md</code>.</div>")
+    o.append("</section>")
+    return "".join(o)
 
 
 def nota_suporte(ctx) -> str:
@@ -2552,7 +3228,7 @@ def nota_suporte(ctx) -> str:
 
 
 def secao_antes(ctx) -> str:
-    o = ['<section class="quebra"><h2>3. Antes do escore completo: E1, E2 e E4 (exploratórios)</h2>']
+    o = ['<section class="quebra"><h2>4. Antes do escore completo: E1, E2 e E4 (exploratórios)</h2>']
     o.append(
         "<p>Até se descobrir que o escore administrativo é o IVS 2010 oficial, o escore só estava publicado para os "
         "municípios com especialista ativo — a cobertura dependia do próprio outcome. O protocolo previu então três "
@@ -2677,7 +3353,7 @@ def varrer_citacoes_local() -> list[str]:
 
 def secao_leitura(ctx) -> str:
     prot, adendo, st, ne, r1 = ctx["prot"], ctx["adendo"], ctx["st"], ctx["n_e3"], ctx["r1"]
-    o = ['<section class="quebra"><h2>4. Leitura e limites</h2>']
+    o = ['<section class="quebra"><h2>5. Leitura e limites</h2>']
     g, info = ctx["categorias"]
     pacote = (f"A categoria de IVS do MS, usada no PMMB, muda exatamente nos dois cortes da bolsa "
               f"({NUM.ref('tab_escore', 'seção 1')}): qualquer "
@@ -2717,7 +3393,8 @@ def secao_leitura(ctx) -> str:
          f"(conferido na {NUM.ref('tab_sinal', 'seção 2')}). "
          + ("No outcome secundário, presença de especialista, também não há salto distinguível de zero, nos ciclos 1 "
             "e 2." if (pr[pr["outcome"] == OUTCOME_D]["p_valor"] >= ALFA).all() else
-            "No outcome secundário, presença de especialista, há salto com p &lt; 0,05 (ver seção 2).")),
+            "No outcome secundário, presença de especialista, há salto com p &lt; 0,05 (ver seção 2).")
+         + (f" {esc(frase_e5_resumo(ctx))} (seção 3; exploratório, pós-resultado.)" if ctx.get("e5") else "")),
         ("Estimando e contraste",
          f"Salto em E[Y | IVS] no corte, entre os municípios do quadro de vagas: <strong>estimativa local do efeito do "
          f"anúncio de +{br_mil(ctx['valor_faixa'][ctx['faixas'][1]] - ctx['valor_faixa'][ctx['faixas'][0]])} por "
@@ -2931,6 +3608,14 @@ table.resultados td { vertical-align: middle; }
 .conclusao { border-left: 3px solid var(--ink); background: var(--wash); padding: 6pt 10pt; margin: 2pt 0 8pt;
   font-size: 9.4pt; line-height: 1.42; break-inside: avoid; }
 .reservado { border: 1px dashed var(--axis); padding: 6pt 10pt 2pt; border-radius: 4px; margin: 4pt 0 10pt; }
+.afirmar { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; border: 1px solid var(--axis);
+  border-radius: 4px; padding: 7pt 10pt 4pt; margin: 8pt 0 10pt; font-size: 8.6pt; line-height: 1.38;
+  break-inside: avoid; }
+.afirmar ul { padding-left: 12pt; margin: 2pt 0 4pt; }
+.afirmar li { margin-bottom: 3pt; }
+.afirmar-tit { font-weight: 650; margin: 0 0 2pt; }
+ol.leitura { padding-left: 16pt; }
+ol.leitura li, ul.leitura li { margin-bottom: 3pt; }
 """
 
 
@@ -2949,11 +3634,13 @@ def montar_html(commit, sujo, agora) -> str:
     ctx["densidade"] = dados_densidade(ctx)
     ctx["balanco_dp"] = dados_balanco(ctx)
     ctx["nota_suporte"] = nota_suporte(ctx)
+    ctx["e5"] = carregar_e5(ctx)
     corpo = [
         secao_capa(ctx),
         secao_resumo(ctx),
         secao_regra(ctx),
         secao_e3(ctx),
+        secao_e5(ctx),
         secao_antes(ctx),
         secao_leitura(ctx),
         secao_apendice_rd(ctx),
