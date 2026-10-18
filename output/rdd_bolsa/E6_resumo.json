@@ -1,0 +1,1730 @@
+{
+  "etapa": "E6_funil",
+  "natureza_dos_dados": "EMPIRICO",
+  "data_execucao": "2026-10-18",
+  "script": "scripts/rdd_bolsa/13_estimar_E6_funil.py",
+  "protocolo": {
+    "arquivo": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
+    "sha256": "cc54d12a8d00184cf83fd0acb54b1fe42b414b6bd2838861814655a26197cc67",
+    "texto_canonico": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
+    "sha256_texto_canonico": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065",
+    "sha256_texto_canonico_declarado_no_json": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065",
+    "texto_igual_ao_declarado": true
+  },
+  "contraste": "pacote do corte: anúncio de +R$ 5 mil por mês na bolsa (0,300: R$ 10 mil -> 15 mil; 0,400: R$ 15 mil -> 20 mil) mais as outras regras federais que mudam nos mesmos cortes (protocolo §13, auditoria 18); não é efeito da participação no PMM-E nem do Agora Tem Especialistas",
+  "salto": "tau = lado com bolsa maior (s > c) menos lado com bolsa menor; o corte pertence ao lado inferior",
+  "entradas": [
+    {
+      "caminho": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
+      "sha256": "cc54d12a8d00184cf83fd0acb54b1fe42b414b6bd2838861814655a26197cc67",
+      "bytes": 7443,
+      "papel": "protocolo congelado (somente lido)",
+      "fonte": "pipeline do repositorio",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
+      "sha256": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065",
+      "bytes": 19222,
+      "papel": "texto canonico do protocolo (somente lido)",
+      "fonte": "pipeline do repositorio",
+      "data_referencia": "2026-10-18",
+      "cobertura": "§§1-15",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial) e covariaveis pre",
+      "fonte": "Ipea, Atlas da Vulnerabilidade Social (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "ivs; subindices, idhm, populacao e renda per capita para balanco"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "covariavel log populacao 2022 (balanco)",
+      "fonte": "IBGE, Censo 2022",
+      "data_referencia": "Censo 2022",
+      "cobertura": "5570 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/tema_trabalho/matriz_tipologia_territorial.parquet",
+      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+      "bytes": 280913,
+      "papel": "estrato territorial (so a coluna estrato)",
+      "fonte": "tipologia A2 (REGIC 2018, RM/RIDE 2022)",
+      "data_referencia": "REGIC 2018; RM/RIDE 2022",
+      "cobertura": "5570 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "filtros": "colunas co_ibge_6d e estrato"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_U_municipio.parquet",
+      "sha256": "5d4bf05a24e1b5f704aa50bbff4325b3997f1505f57c80f14f822e08e1c3db14",
+      "bytes": 246282,
+      "papel": "outcomes F0.1, F0.2, F0.4, F2.2 (U)",
+      "fonte": "tarefa B (12_construir_outcomes_funil.py)",
+      "data_referencia": "ver dicionario",
+      "cobertura": "5565 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_G3_municipio.parquet",
+      "sha256": "b2133fbd60b3189f162ebe35b6e3650eb1d97fda0a5e267b965802e684866948",
+      "bytes": 85002,
+      "papel": "outcomes F0.3 (G3)",
+      "fonte": "tarefa B",
+      "data_referencia": "ver dicionario",
+      "cobertura": "2698 municipios com IVS",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "municipios sem IVS oficial fora"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "outcomes F1, F2.1, F2.3, F4 (V1-V3)",
+      "fonte": "tarefa B",
+      "data_referencia": "ver dicionario",
+      "cobertura": "V1: 368, V2: 454, V3: 747",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "municipios sem IVS oficial fora"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "proporcoes no nivel celula",
+      "fonte": "tarefa B",
+      "data_referencia": "ver dicionario",
+      "cobertura": "V1: 1295, V2: 1547, V3: 2292",
+      "unidade": "celula CNES x curso x ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "celulas de municipios sem IVS oficial fora"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/dicionario_outcomes_funil.json",
+      "sha256": "d59ff622987effdcf53de3f90759aaa287bb53e7369c508f4d73645ce11d986a",
+      "bytes": 91512,
+      "papel": "dicionario dos outcomes (somente lido)",
+      "fonte": "tarefa B",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_administrativo/ppf_mais_medicos_csv.zip",
+      "sha256": "15083f8127917e5279be01d372c1250a467ee77d289a030e1229932d0013cb3a",
+      "bytes": 150344,
+      "papel": "S1 (ativas_coparticipacao) e atributo Amazonia Legal/fronteira do S4",
+      "fonte": "Ministerio da Saude, PMMB consolidado (dados abertos)",
+      "data_referencia": "2026-10-09",
+      "cobertura": "nivel MUNICIPAL",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "nivel == MUNICIPAL; colunas co_ibge, ativas_ff, ativas_coparticipacao, total_vagas_ativas, amazonia_legal, faixa_fronteira"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E3_estimativas.csv",
+      "sha256": "b38a2d0ea11aaa1be802a8dfe7875547dda23951ee19e0731f5a7398c9e87982",
+      "bytes": 5608,
+      "papel": "alvo de conferencia (E3)",
+      "fonte": "07_estimar_E3_rdd_completa.py",
+      "data_referencia": "2026-10-14",
+      "cobertura": "18 linhas",
+      "unidade": "linha de estimativa",
+      "chaves": "populacao, outcome, corte, h",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E4_proporcao_municipio.csv",
+      "sha256": "897e9529dd0bd226a5ca3398971d894c79400cad7aaf46fd9ae84ebfb4022f79",
+      "bytes": 17379,
+      "papel": "Y1 do E4 (entrada do E5), so para conferir a linha E0 do E5",
+      "fonte": "08_estimar_E4_proporcao.py",
+      "data_referencia": "2026-10-14",
+      "cobertura": "368 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "colunas co_ibge, y1, n_celulas"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E5_lr_selecao_janela.csv",
+      "sha256": "366d65f59a47921d2373cf8f329ab935817b128c93dc20263fa802949dd22d47",
+      "bytes": 13445,
+      "papel": "janela LR de V1 e V2 (regra do E5)",
+      "fonte": "11_inferencia_alternativa.py",
+      "data_referencia": "2026-10-18",
+      "cobertura": "P1, P2",
+      "unidade": "janela",
+      "chaves": "populacao, corte, w",
+      "filtros": "selecionada"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E5_especificacoes.csv",
+      "sha256": "64fe5d57ba6d34b316ed89d0c0e9078f781cd7359c297b1a325c081189d05742",
+      "bytes": 21971,
+      "papel": "alvo de conferencia (E5)",
+      "fonte": "11_inferencia_alternativa.py",
+      "data_referencia": "2026-10-18",
+      "cobertura": "42 linhas",
+      "unidade": "linha de estimativa",
+      "chaves": "especificacao, outcome, corte",
+      "filtros": "D, E0, E1, F1, F2"
+    },
+    {
+      "caminho": "output/aquisicao/a10_ied_aps_2024_municipio.csv",
+      "sha256": "2bd4aec48a14e610a13d6bc1bece7c7be6a0abbd31eca2cb9281f733964af887",
+      "bytes": 578407,
+      "papel": "S3: porte e estrato IED da Portaria 3.493/2024",
+      "fonte": "tarefa D (a10), Anexo VI",
+      "data_referencia": "Portaria GM/MS 3.493/2024",
+      "cobertura": "5570 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "colunas co_ibge, ivs_codigo_portaria, porte_codigo, estrato_ied"
+    },
+    {
+      "caminho": "output/aquisicao/a10_diagnostico_cortes_normas.json",
+      "sha256": "21c6773ce2b0362663c93412767bdbee2bc6fc016da37b9f19779e795e406e79",
+      "bytes": 10280,
+      "papel": "conferencia do mapa estrato x porte (somente lido)",
+      "fonte": "tarefa D (a10)",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    }
+  ],
+  "populacoes": {
+    "U": 5565,
+    "G3": 2698,
+    "V1": 368,
+    "V2": 454,
+    "V3": 747
+  },
+  "celulas": {
+    "celulas_V1": {
+      "celulas": 1295,
+      "celulas_fora_sem_ivs": 0
+    },
+    "celulas_V2": {
+      "celulas": 1547,
+      "celulas_fora_sem_ivs": 0
+    },
+    "celulas_V3": {
+      "celulas": 2292,
+      "celulas_fora_sem_ivs": 1
+    }
+  },
+  "pmmb": {
+    "identidade_total_igual_ff_mais_coparticipacao": 1.0,
+    "dt_referencia": [
+      "2026-10-09"
+    ]
+  },
+  "covariaveis_balanco": {
+    "colunas": [
+      "ivs_infra_2010",
+      "ivs_ch_2010",
+      "ivs_rt_2010",
+      "idhm_2010",
+      "log_populacao_2010",
+      "rdpc_2010",
+      "log_populacao_2022",
+      "estrato_capital",
+      "estrato_metropolitano",
+      "estrato_interior_proximo_polo",
+      "regiao_NE",
+      "regiao_SE",
+      "regiao_S",
+      "regiao_CO"
+    ],
+    "fora": "IVS 2010 (running variable) e colunas da tipologia que vem do arquivo local errado (auditoria 16)"
+  },
+  "janelas_lr": {
+    "U|0.300": null,
+    "U|0.400": 0.008,
+    "G3|0.300": 0.003,
+    "G3|0.400": 0.007,
+    "V1|0.300": 0.02,
+    "V1|0.400": 0.007,
+    "V2|0.300": null,
+    "V2|0.400": 0.006,
+    "V3|0.300": 0.002,
+    "V3|0.400": null
+  },
+  "S3": {
+    "status": "EXECUTADO",
+    "motivo": null,
+    "definicao": "classe de porte do Anexo VI da Portaria 3.493/2024 (a10); muda = estrato IED diferente dos dois lados do corte para aquele porte",
+    "portes_muda": {
+      "0.300": [
+        2,
+        3
+      ],
+      "0.400": [
+        1,
+        2,
+        4
+      ]
+    },
+    "mapa_estrato_codigo_porte": {
+      "1|1": 1,
+      "1|2": 1,
+      "1|3": 2,
+      "1|4": 3,
+      "2|1": 2,
+      "2|2": 2,
+      "2|3": 3,
+      "2|4": 3,
+      "3|1": 3,
+      "3|2": 3,
+      "3|3": 3,
+      "3|4": 4,
+      "4|1": 3,
+      "4|2": 4,
+      "4|3": 4,
+      "4|4": 4,
+      "5|1": 4,
+      "5|2": 4,
+      "5|3": 4,
+      "5|4": 4
+    }
+  },
+  "S4": {
+    "status": "EXECUTADO",
+    "motivo": null,
+    "definicao": "dentro = Amazonia Legal OU faixa de fronteira (atributo municipal do PMMB consolidado, MS); a ajuda de custo da PI 604/2023 e Faixa 1 ali em qualquer IVS",
+    "municipios_PMMB_sem_atributo": 1
+  },
+  "diagnostico_M_regra_de_bolso": [
+    {
+      "outcome_id": "F1.1",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 18880.910968018194,
+      "M_abaixo": 3707.364842231486,
+      "M_acima": 18880.910968018194,
+      "mass_points_abaixo": 97,
+      "mass_points_acima": 33
+    },
+    {
+      "outcome_id": "F1.1",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 5566.408968393303,
+      "M_abaixo": 5566.408968393303,
+      "M_acima": 326.93429945943694,
+      "mass_points_abaixo": 37,
+      "mass_points_acima": 83
+    },
+    {
+      "outcome_id": "F1.1",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 17904.628645000892,
+      "M_abaixo": 1098.9836192348394,
+      "M_acima": 17904.628645000892,
+      "mass_points_abaixo": 115,
+      "mass_points_acima": 37
+    },
+    {
+      "outcome_id": "F1.1",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 78826.42187023739,
+      "M_abaixo": 78826.42187023739,
+      "M_acima": 769.4439611427372,
+      "mass_points_abaixo": 34,
+      "mass_points_acima": 90
+    },
+    {
+      "outcome_id": "F1.1",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 46488.37124592031,
+      "M_abaixo": 1144.6121346867735,
+      "M_acima": 46488.37124592031,
+      "mass_points_abaixo": 139,
+      "mass_points_acima": 41
+    },
+    {
+      "outcome_id": "F1.1",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 26289.179079958307,
+      "M_abaixo": 26289.179079958307,
+      "M_acima": 309.0587819909631,
+      "mass_points_abaixo": 43,
+      "mass_points_acima": 153
+    },
+    {
+      "outcome_id": "F1.2",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 11846.032016107536,
+      "M_abaixo": 1022.3631748672883,
+      "M_acima": 11846.032016107536,
+      "mass_points_abaixo": 97,
+      "mass_points_acima": 33
+    },
+    {
+      "outcome_id": "F1.2",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 5218.027579083523,
+      "M_abaixo": 5218.027579083523,
+      "M_acima": 223.35230954450617,
+      "mass_points_abaixo": 37,
+      "mass_points_acima": 83
+    },
+    {
+      "outcome_id": "F1.2",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 18365.86433682972,
+      "M_abaixo": 640.0021388772276,
+      "M_acima": 18365.86433682972,
+      "mass_points_abaixo": 115,
+      "mass_points_acima": 37
+    },
+    {
+      "outcome_id": "F1.2",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 17975.901413766034,
+      "M_abaixo": 17975.901413766034,
+      "M_acima": 294.06133929890416,
+      "mass_points_abaixo": 34,
+      "mass_points_acima": 90
+    },
+    {
+      "outcome_id": "F1.2",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 11423.081189839977,
+      "M_abaixo": 1070.7862596837895,
+      "M_acima": 11423.081189839977,
+      "mass_points_abaixo": 139,
+      "mass_points_acima": 41
+    },
+    {
+      "outcome_id": "F1.2",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 9303.37026648494,
+      "M_abaixo": 9303.37026648494,
+      "M_acima": 426.6518569277504,
+      "mass_points_abaixo": 43,
+      "mass_points_acima": 153
+    },
+    {
+      "outcome_id": "F1.3",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 10719.798194991665,
+      "M_abaixo": 642.6173770520238,
+      "M_acima": 10719.798194991665,
+      "mass_points_abaixo": 97,
+      "mass_points_acima": 33
+    },
+    {
+      "outcome_id": "F1.3",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 5920.005803656968,
+      "M_abaixo": 5920.005803656968,
+      "M_acima": 385.93581254479295,
+      "mass_points_abaixo": 37,
+      "mass_points_acima": 83
+    },
+    {
+      "outcome_id": "F1.3",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 21015.329125058997,
+      "M_abaixo": 531.9744364317547,
+      "M_acima": 21015.329125058997,
+      "mass_points_abaixo": 115,
+      "mass_points_acima": 37
+    },
+    {
+      "outcome_id": "F1.3",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 11637.040734027072,
+      "M_abaixo": 11637.040734027072,
+      "M_acima": 276.37309232952816,
+      "mass_points_abaixo": 34,
+      "mass_points_acima": 90
+    },
+    {
+      "outcome_id": "F1.3",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 7760.016567980511,
+      "M_abaixo": 729.6141262544261,
+      "M_acima": 7760.016567980511,
+      "mass_points_abaixo": 139,
+      "mass_points_acima": 41
+    },
+    {
+      "outcome_id": "F1.3",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 21378.29387209934,
+      "M_abaixo": 21378.29387209934,
+      "M_acima": 157.19444779435545,
+      "mass_points_abaixo": 43,
+      "mass_points_acima": 153
+    },
+    {
+      "outcome_id": "F1.4",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 15416.739503713252,
+      "M_abaixo": 673.7351698192546,
+      "M_acima": 15416.739503713252,
+      "mass_points_abaixo": 97,
+      "mass_points_acima": 33
+    },
+    {
+      "outcome_id": "F1.4",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 2454.7524570939863,
+      "M_abaixo": 2454.7524570939863,
+      "M_acima": 406.88086106556466,
+      "mass_points_abaixo": 37,
+      "mass_points_acima": 83
+    },
+    {
+      "outcome_id": "F1.4",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 15277.696125473842,
+      "M_abaixo": 561.0142049712531,
+      "M_acima": 15277.696125473842,
+      "mass_points_abaixo": 115,
+      "mass_points_acima": 37
+    },
+    {
+      "outcome_id": "F1.4",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 6267.297895789296,
+      "M_abaixo": 6267.297895789296,
+      "M_acima": 410.7349830044641,
+      "mass_points_abaixo": 34,
+      "mass_points_acima": 90
+    },
+    {
+      "outcome_id": "F2.1",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 37868.138020528335,
+      "M_abaixo": 486.11874516314987,
+      "M_acima": 37868.138020528335,
+      "mass_points_abaixo": 97,
+      "mass_points_acima": 33
+    },
+    {
+      "outcome_id": "F2.1",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 15020.455173461509,
+      "M_abaixo": 15020.455173461509,
+      "M_acima": 273.2298262271223,
+      "mass_points_abaixo": 37,
+      "mass_points_acima": 83
+    },
+    {
+      "outcome_id": "F2.1",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 6471.644255718493,
+      "M_abaixo": 366.9680392173533,
+      "M_acima": 6471.644255718493,
+      "mass_points_abaixo": 115,
+      "mass_points_acima": 37
+    },
+    {
+      "outcome_id": "F2.1",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 63157.881712485636,
+      "M_abaixo": 63157.881712485636,
+      "M_acima": 33.973367068143695,
+      "mass_points_abaixo": 34,
+      "mass_points_acima": 90
+    },
+    {
+      "outcome_id": "F2.3",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 14341.375244178518,
+      "M_abaixo": 355.82038268437225,
+      "M_acima": 14341.375244178518,
+      "mass_points_abaixo": 97,
+      "mass_points_acima": 33
+    },
+    {
+      "outcome_id": "F2.3",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 11549.469853259085,
+      "M_abaixo": 11549.469853259085,
+      "M_acima": 103.19849808989724,
+      "mass_points_abaixo": 37,
+      "mass_points_acima": 83
+    },
+    {
+      "outcome_id": "F2.3",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 14142.767432076176,
+      "M_abaixo": 836.7251273219754,
+      "M_acima": 14142.767432076176,
+      "mass_points_abaixo": 115,
+      "mass_points_acima": 37
+    },
+    {
+      "outcome_id": "F2.3",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 11413.410260935163,
+      "M_abaixo": 11413.410260935163,
+      "M_acima": 185.50137551100468,
+      "mass_points_abaixo": 34,
+      "mass_points_acima": 90
+    },
+    {
+      "outcome_id": "F4.1",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 3025.289520186043,
+      "M_abaixo": 3025.289520186043,
+      "M_acima": 1149.0201986333839,
+      "mass_points_abaixo": 55,
+      "mass_points_acima": 25
+    },
+    {
+      "outcome_id": "F4.1",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 42967.94599299575,
+      "M_abaixo": 42967.94599299575,
+      "M_acima": 334.4762417594148,
+      "mass_points_abaixo": 32,
+      "mass_points_acima": 46
+    },
+    {
+      "outcome_id": "F4.1",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 41367.178444823105,
+      "M_abaixo": 2504.4300000600815,
+      "M_acima": 41367.178444823105,
+      "mass_points_abaixo": 82,
+      "mass_points_acima": 31
+    },
+    {
+      "outcome_id": "F4.1",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 33163.00615734312,
+      "M_abaixo": 33163.00615734312,
+      "M_acima": 228.51720126283516,
+      "mass_points_abaixo": 27,
+      "mass_points_acima": 62
+    },
+    {
+      "outcome_id": "F4.1",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 37302.832289420796,
+      "M_abaixo": 7863.124000674896,
+      "M_acima": 37302.832289420796,
+      "mass_points_abaixo": 81,
+      "mass_points_acima": 25
+    },
+    {
+      "outcome_id": "F4.1",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 75353.18241607529,
+      "M_abaixo": 75353.18241607529,
+      "M_acima": 946.7237925497557,
+      "mass_points_abaixo": 21,
+      "mass_points_acima": 47
+    },
+    {
+      "outcome_id": "F4.2",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 16674.281533224166,
+      "M_abaixo": 1359.3711865831474,
+      "M_acima": 16674.281533224166,
+      "mass_points_abaixo": 66,
+      "mass_points_acima": 26
+    },
+    {
+      "outcome_id": "F4.2",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 33731.26190135171,
+      "M_abaixo": 33731.26190135171,
+      "M_acima": 1253.5887792367091,
+      "mass_points_abaixo": 32,
+      "mass_points_acima": 46
+    },
+    {
+      "outcome_id": "F4.2",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 15064.553485835817,
+      "M_abaixo": 438.264897104616,
+      "M_acima": 15064.553485835817,
+      "mass_points_abaixo": 82,
+      "mass_points_acima": 30
+    },
+    {
+      "outcome_id": "F4.2",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 47353.06015414183,
+      "M_abaixo": 47353.06015414183,
+      "M_acima": 880.7499468147712,
+      "mass_points_abaixo": 27,
+      "mass_points_acima": 64
+    },
+    {
+      "outcome_id": "F4.2",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 17161.165579918117,
+      "M_abaixo": 8105.99300533126,
+      "M_acima": 17161.165579918117,
+      "mass_points_abaixo": 95,
+      "mass_points_acima": 30
+    },
+    {
+      "outcome_id": "F4.2",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 9246.299789027431,
+      "M_abaixo": 9246.299789027431,
+      "M_acima": 936.00120404851,
+      "mass_points_abaixo": 33,
+      "mass_points_acima": 85
+    },
+    {
+      "outcome_id": "P1",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 41176.49952367037,
+      "M_abaixo": 1984.390560098749,
+      "M_acima": 41176.49952367037,
+      "mass_points_abaixo": 97,
+      "mass_points_acima": 33
+    },
+    {
+      "outcome_id": "P1",
+      "populacao": "V1",
+      "ciclo": "1",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 4233.190664626194,
+      "M_abaixo": 4233.190664626194,
+      "M_acima": 497.1524868323389,
+      "mass_points_abaixo": 37,
+      "mass_points_acima": 83
+    },
+    {
+      "outcome_id": "P1",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 33219.77625814356,
+      "M_abaixo": 1183.492568008792,
+      "M_acima": 33219.77625814356,
+      "mass_points_abaixo": 115,
+      "mass_points_acima": 37
+    },
+    {
+      "outcome_id": "P1",
+      "populacao": "V2",
+      "ciclo": "2",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 49830.58925205041,
+      "M_abaixo": 49830.58925205041,
+      "M_acima": 408.14217642266783,
+      "mass_points_abaixo": 34,
+      "mass_points_acima": 90
+    },
+    {
+      "outcome_id": "P1",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.300",
+      "suporte_mil": [
+        null,
+        350
+      ],
+      "M": 17241.54396294663,
+      "M_abaixo": 2229.7273834537664,
+      "M_acima": 17241.54396294663,
+      "mass_points_abaixo": 139,
+      "mass_points_acima": 41
+    },
+    {
+      "outcome_id": "P1",
+      "populacao": "V3",
+      "ciclo": "3",
+      "corte": "0.400",
+      "suporte_mil": [
+        350,
+        null
+      ],
+      "M": 38084.72777058299,
+      "M_abaixo": 38084.72777058299,
+      "M_acima": 573.9259697846783,
+      "mass_points_abaixo": 43,
+      "mass_points_acima": 153
+    }
+  ],
+  "indice": {
+    "klk": {
+      "linhas_sem_indice": 0,
+      "parametros": [
+        {
+          "grupo": "c1_300",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 0.8177331588373055,
+          "dp_ref": 1.6559687757101766,
+          "n_ref": 61,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_300",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.4417451133458848,
+          "dp_ref": 0.3916971718181967,
+          "n_ref": 61,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_300",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.2425215441367804,
+          "dp_ref": 0.3346780479399641,
+          "n_ref": 61,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_300",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": 0.2353928456628553,
+          "dp_ref": 0.4159905129105412,
+          "n_ref": 61,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_400",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 0.8546225263206395,
+          "dp_ref": 1.03648566748815,
+          "n_ref": 53,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_400",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.5144596493653097,
+          "dp_ref": 0.357039421443565,
+          "n_ref": 53,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_400",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.36911039694058567,
+          "dp_ref": 0.31141423580212413,
+          "n_ref": 53,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_400",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": 0.5121472343170457,
+          "dp_ref": 0.6221538783328148,
+          "n_ref": 53,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_300",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 0.8022964692901066,
+          "dp_ref": 0.9266448393200671,
+          "n_ref": 82,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_300",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.5331324296064488,
+          "dp_ref": 0.3771719477636996,
+          "n_ref": 82,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_300",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.38127420476307006,
+          "dp_ref": 0.3509512446926099,
+          "n_ref": 82,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_300",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": 0.38862870662976706,
+          "dp_ref": 0.49146466833485447,
+          "n_ref": 82,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_400",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 1.5845876140995092,
+          "dp_ref": 1.678079453825981,
+          "n_ref": 53,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_400",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.6840960584397827,
+          "dp_ref": 0.38375468006334207,
+          "n_ref": 53,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_400",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.5662900243499095,
+          "dp_ref": 0.3849039631994156,
+          "n_ref": 53,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_400",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": 0.7776651431696551,
+          "dp_ref": 0.8390578810136399,
+          "n_ref": 53,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_300",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 0.8127607932273504,
+          "dp_ref": 0.9392383386064078,
+          "n_ref": 102,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_300",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.5868848739411318,
+          "dp_ref": 0.37634715480548725,
+          "n_ref": 102,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_300",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.18269167906521244,
+          "dp_ref": 0.2779150632253258,
+          "n_ref": 102,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_300",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": null,
+          "dp_ref": null,
+          "n_ref": 0,
+          "peso_anderson": null,
+          "nota": "componente sem variacao (ou < 2 valores) na referencia do grupo: ausente no indice"
+        },
+        {
+          "grupo": "c3_400",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 0.8780030664589158,
+          "dp_ref": 1.2128785553330417,
+          "n_ref": 97,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_400",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.5181689501792595,
+          "dp_ref": 0.42279251490227593,
+          "n_ref": 97,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_400",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.16175335347455472,
+          "dp_ref": 0.29010713813513567,
+          "n_ref": 97,
+          "peso_anderson": null,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_400",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": null,
+          "dp_ref": null,
+          "n_ref": 0,
+          "peso_anderson": null,
+          "nota": "componente sem variacao (ou < 2 valores) na referencia do grupo: ausente no indice"
+        }
+      ]
+    },
+    "anderson": {
+      "linhas_sem_indice": 0,
+      "parametros": [
+        {
+          "grupo": "c1_300",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 0.8177331588373055,
+          "dp_ref": 1.6559687757101766,
+          "n_ref": 61,
+          "peso_anderson": 0.5470190882880063,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_300",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.4417451133458848,
+          "dp_ref": 0.3916971718181967,
+          "n_ref": 61,
+          "peso_anderson": 0.47752975320932,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_300",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.2425215441367804,
+          "dp_ref": 0.3346780479399641,
+          "n_ref": 61,
+          "peso_anderson": -0.006505353199549924,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_300",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": 0.2353928456628553,
+          "dp_ref": 0.4159905129105412,
+          "n_ref": 61,
+          "peso_anderson": 0.6489677394178568,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_400",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 0.8546225263206395,
+          "dp_ref": 1.03648566748815,
+          "n_ref": 53,
+          "peso_anderson": 0.23860199643243163,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_400",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.5144596493653097,
+          "dp_ref": 0.357039421443565,
+          "n_ref": 53,
+          "peso_anderson": 0.35112039373447795,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_400",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.36911039694058567,
+          "dp_ref": 0.31141423580212413,
+          "n_ref": 53,
+          "peso_anderson": 0.3185273332591073,
+          "nota": ""
+        },
+        {
+          "grupo": "c1_400",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": 0.5121472343170457,
+          "dp_ref": 0.6221538783328148,
+          "n_ref": 53,
+          "peso_anderson": 0.6763312424619236,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_300",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 0.8022964692901066,
+          "dp_ref": 0.9266448393200671,
+          "n_ref": 82,
+          "peso_anderson": 0.34733079321015514,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_300",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.5331324296064488,
+          "dp_ref": 0.3771719477636996,
+          "n_ref": 82,
+          "peso_anderson": 0.37708447682279306,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_300",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.38127420476307006,
+          "dp_ref": 0.3509512446926099,
+          "n_ref": 82,
+          "peso_anderson": 0.2186062479245383,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_300",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": 0.38862870662976706,
+          "dp_ref": 0.49146466833485447,
+          "n_ref": 82,
+          "peso_anderson": 0.4785219894362771,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_400",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 1.5845876140995092,
+          "dp_ref": 1.678079453825981,
+          "n_ref": 53,
+          "peso_anderson": 0.3033288814989916,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_400",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.6840960584397827,
+          "dp_ref": 0.38375468006334207,
+          "n_ref": 53,
+          "peso_anderson": 0.5324251482842842,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_400",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.5662900243499095,
+          "dp_ref": 0.3849039631994156,
+          "n_ref": 53,
+          "peso_anderson": 0.05779359482759727,
+          "nota": ""
+        },
+        {
+          "grupo": "c2_400",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": 0.7776651431696551,
+          "dp_ref": 0.8390578810136399,
+          "n_ref": 53,
+          "peso_anderson": 0.5538482781038123,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_300",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 0.8127607932273504,
+          "dp_ref": 0.9392383386064078,
+          "n_ref": 102,
+          "peso_anderson": 0.2905851201424051,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_300",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.5868848739411318,
+          "dp_ref": 0.37634715480548725,
+          "n_ref": 102,
+          "peso_anderson": 0.6172448186275018,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_300",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.18269167906521244,
+          "dp_ref": 0.2779150632253258,
+          "n_ref": 102,
+          "peso_anderson": 0.6233547857142074,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_300",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": null,
+          "dp_ref": null,
+          "n_ref": 0,
+          "peso_anderson": null,
+          "nota": "componente sem variacao (ou < 2 valores) na referencia do grupo: ausente no indice"
+        },
+        {
+          "grupo": "c3_400",
+          "componente": "F1.1",
+          "sinal": 1.0,
+          "media_ref": 0.8780030664589158,
+          "dp_ref": 1.2128785553330417,
+          "n_ref": 97,
+          "peso_anderson": 0.5015665605587721,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_400",
+          "componente": "F1.2",
+          "sinal": 1.0,
+          "media_ref": 0.5181689501792595,
+          "dp_ref": 0.42279251490227593,
+          "n_ref": 97,
+          "peso_anderson": 0.4241923654264349,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_400",
+          "componente": "F1.3",
+          "sinal": 1.0,
+          "media_ref": 0.16175335347455472,
+          "dp_ref": 0.29010713813513567,
+          "n_ref": 97,
+          "peso_anderson": 0.5754665611432075,
+          "nota": ""
+        },
+        {
+          "grupo": "c3_400",
+          "componente": "F2.1",
+          "sinal": 1.0,
+          "media_ref": null,
+          "dp_ref": null,
+          "n_ref": 0,
+          "peso_anderson": null,
+          "nota": "componente sem variacao (ou < 2 valores) na referencia do grupo: ausente no indice"
+        }
+      ]
+    }
+  },
+  "validacoes": {
+    "populacoes": {
+      "U_ivs_igual_a08": true,
+      "G3_ivs_igual_a08": true,
+      "V1_ivs_igual_a08": true,
+      "V2_ivs_igual_a08": true,
+      "V3_ivs_igual_a08": true,
+      "primeiro_estagio": {
+        "V1": {
+          "municipios": 368,
+          "reproduzidos": 368,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        },
+        "V2": {
+          "municipios": 454,
+          "reproduzidos": 454,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        },
+        "V3": {
+          "municipios": 747,
+          "reproduzidos": 747,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        }
+      },
+      "municipios_sem_ivs_oficial_fora_da_rdd": {
+        "U": [],
+        "G3": [
+          "422000"
+        ],
+        "V1": [],
+        "V2": [],
+        "V3": [
+          "422000"
+        ]
+      }
+    },
+    "selecao_lr": {
+      "V1_selecao_lr_reproduz_E5": true,
+      "V2_selecao_lr_reproduz_E5": true
+    },
+    "E3": {
+      "linhas_E3_conferidas": 18,
+      "max_abs_dif": 1.1102230246251565e-16,
+      "tolerancia": 1e-12,
+      "reproduz": true
+    },
+    "E5": {
+      "linhas_E5_conferidas": 12,
+      "linhas_E5_sem_janela_confirmadas": 1,
+      "max_abs_dif": 5.021150162320964e-12,
+      "tolerancia": 1e-10,
+      "reproduz": true,
+      "max_abs_dif_entrada_F13_vs_y1_E4": 4.4444448121794267e-11,
+      "max_abs_dif_E0_linha_E6_vs_E5_por_arredondamento_do_y1": 1.2093581691630106e-10,
+      "nota": "E0 (ponderado) conferido com o Y1 do E4 como entrada; a linha do E6 usa o F1.3 da tarefa B, que difere do Y1 gravado no CSV do E4 so por arredondamento"
+    },
+    "linhas_com_nan_sem_nota": 0
+  },
+  "p1_para_holm": {
+    "tau": -0.12832355673023788,
+    "ep": 0.1611012350561971,
+    "ic95_inf": -0.4440761753053058,
+    "ic95_sup": 0.18742906184483005,
+    "p_valor": 0.4257183116050466,
+    "ic_honesto_inf": -22.49546410279072,
+    "ic_honesto_sup": 22.238816989330246,
+    "descricao": "P1: indice KLK, ciclos e cortes empilhados, h = 0,050, CR1 por municipio; o Holm com P2 e feito pelo coordenador (E8)"
+  },
+  "contagens": {
+    "linhas": 2022,
+    "linhas_no_protocolo": 1743,
+    "nao_executado": 35,
+    "sem_estimativa": 2,
+    "por_especificacao": {
+      "S2_donut": 153,
+      "S3_diferenca": 102,
+      "S3_porte_muda": 102,
+      "S3_porte_nao_muda": 102,
+      "S4_dentro": 51,
+      "S4_diferenca": 51,
+      "S4_fora": 51,
+      "ic_honesto": 459,
+      "ic_honesto_h_otimo": 252,
+      "indice_anderson": 12,
+      "limites_lee": 12,
+      "local_randomization": 84,
+      "nivel_celula": 33,
+      "poisson_local": 36,
+      "ponderado_celulas": 36,
+      "principal": 153,
+      "sensibilidade_construcao": 27,
+      "sensibilidade_h": 306
+    },
+    "por_familia": {
+      "F0": 596,
+      "F1": 634,
+      "F2": 296,
+      "F4": 300,
+      "P1": 156,
+      "S1": 40
+    },
+    "bky_por_familia": {
+      "F0": 45,
+      "F1": 45,
+      "F2": 24,
+      "F4": 24
+    }
+  },
+  "decisoes": [
+    "Ciclos empilhados: grupo = ciclo (ou ciclo x corte), com intercepto e inclinacoes por grupo x lado; o intercepto por ciclo contem o efeito fixo de ciclo do protocolo (§6). CR1 por municipio.",
+    "Cortes empilhados: sempre CR1 por municipio (o mesmo municipio pode estar nas duas janelas com h = 0,080).",
+    "q BKY: dentro de cada familia F0, F1, F2, F4, sobre todas as linhas 'principal' do protocolo (cada outcome x populacao x ciclo x corte, incluindo cortes empilhados e ciclos empilhados). Sensibilidades de construcao da tarefa B, S1 e o indice P1 ficam fora.",
+    "Indice P1: z-scores pelo lado abaixo do corte dentro da janela h = 0,050 (-50 < x <= 0) em cada ciclo x corte; a mesma padronizacao e usada nas sensibilidades h = 0,030 e 0,080. F2.1 nao existe no ciclo 3: o indice de V3 tem tres componentes. Componente ausente nao e imputado.",
+    "IC honesto: M pela regra de bolso com suporte ate o ponto medio entre os cortes (cortes_vizinhos = (300, 400)); h fixo = protocolo; h otimo = especificacao adicional rotulada. No empilhado, M = maximo da regra por grupo; nao ha h otimo empilhado.",
+    "F4.1: principal = local linear nos municipios com >= 1 celula preenchida (condicional); limites de Lee com selecionado = n_celulas_preenchidas_ch1 > 0 (identico a ter pontuacao de alocado, conferido na tarefa B).",
+    "F0.3 condicionais (vagas pedidas, fracao priorizada): so municipios que constam do resultado final; o ponderado da fracao priorizada usa as vagas pedidas como peso; nao ha tabela no nivel da celula para G3.",
+    "Local randomization: IC por inversao (grade do E5) so para outcomes em [0, 1]; para os demais so p de Fisher.",
+    "S2–S4 aplicados a especificacao principal de cada outcome por ciclo e corte, as amostras de ciclos empilhados por corte e ao indice; S2 tambem aos cortes empilhados. S4 so em 0,400.",
+    "S1 (ativas_coparticipacao por 10 mil hab.) recebe as mesmas especificacoes de uma outcome de U (familia S1, fora do BKY)."
+  ],
+  "desvios": [
+    {
+      "data": "2026-10-18",
+      "item": "local randomization em U, G3 e V3",
+      "situacao": "o E5 so selecionou janela para P1 (= V1) e P2 (= V2)",
+      "resolucao": "a mesma regra do E5 (so covariaveis, antes dos outcomes) foi aplicada a U, G3 e V3, com semente (20261018, id da populacao, corte, w); ids: {\"V1\": 1, \"V2\": 2, \"V3\": 3, \"U\": 4, \"G3\": 5}; tabela em E6_lr_selecao_janela.csv. V1 e V2 leem o E5 e a recomputacao o reproduz"
+    },
+    {
+      "data": "2026-10-18",
+      "item": "S4 (Amazonia Legal / faixa de fronteira em 0,400)",
+      "situacao": "nao ha no repositorio lista municipal do IBGE da faixa de fronteira nem da Amazonia Legal",
+      "resolucao": "usado o atributo municipal amazonia_legal e faixa_fronteira do PMMB consolidado (Ministerio da Saude, dados abertos, retrato de 09/10/2026, SHA-256 registrado), que a auditoria 18 (§4) indica para essa estratificacao; nada e aproximado. A faixa de fronteira e a classificacao atribuida pelo MS ao municipio, nao uma lista do IBGE conferida aqui"
+    },
+    {
+      "data": "2026-10-18",
+      "item": "conferencia da linha E0 do E5 (Y1 ponderado por celulas)",
+      "situacao": "na primeira execucao, a comparacao direta E6 x E5 com tolerancia 1e-10 falhou nessa linha (diferenca da ordem de 1e-10 no p); a causa e a entrada: o E5 le o Y1 do CSV do E4, gravado com menos digitos que o F1.3 da tarefa B (diferenca por municipio registrada em validacoes.E5)",
+      "resolucao": "a linha E0 passa a ser conferida rodando a mesma estimacao da rdd_lib com o Y1 do E4 como entrada (tolerancia 1e-10 mantida); a diferenca da linha do E6 para o E5 e a diferenca de entrada ficam registradas; nenhuma estimativa do E6 foi alterada"
+    },
+    {
+      "data": "2026-10-18",
+      "item": "Poisson local e limites de Lee empilhados",
+      "situacao": "a rdd_lib (tarefa A) so tem Poisson local e limites de Lee em um corte",
+      "resolucao": "relatados por ciclo e corte; as linhas empilhadas de Lee saem NAO_EXECUTADO com o motivo"
+    },
+    {
+      "data": "2026-10-18",
+      "item": "IVS dos municipios criados depois de 2010",
+      "situacao": "sem IVS 2010 oficial: {\"U\": [], \"G3\": [\"422000\"], \"V1\": [], \"V2\": [], \"V3\": [\"422000\"]}",
+      "resolucao": "fora da RDD (sem imputacao)"
+    }
+  ],
+  "saidas": {
+    "E6_estimativas.csv": {
+      "arquivo": "output/rdd_bolsa/E6_estimativas.csv",
+      "sha256": "3bee264ac661a4ad8d3ad9e59c7dd66e10353a620f8c2c8e83c479b04ff5f8eb"
+    },
+    "E6_diagnosticos.csv": {
+      "arquivo": "output/rdd_bolsa/E6_diagnosticos.csv",
+      "sha256": "4296c6120198664a34f2c4ac5fb846bffaccec1b42a284d3beb9b9e21c60cf2b"
+    },
+    "E6_lr_selecao_janela.csv": {
+      "arquivo": "output/rdd_bolsa/E6_lr_selecao_janela.csv",
+      "sha256": "aac0d0d9673d166fc8ce3a7f87062f0851808ad8e977446c87c55b652d6f6dda"
+    },
+    "figuras": [
+      "output/rdd_bolsa/E6_figuras/E6_F1_1_V1.png",
+      "output/rdd_bolsa/E6_figuras/E6_F1_1_V2.png",
+      "output/rdd_bolsa/E6_figuras/E6_F1_1_V3.png",
+      "output/rdd_bolsa/E6_figuras/E6_F1_2_V1.png",
+      "output/rdd_bolsa/E6_figuras/E6_F1_2_V2.png",
+      "output/rdd_bolsa/E6_figuras/E6_F1_2_V3.png",
+      "output/rdd_bolsa/E6_figuras/E6_F1_3_V1.png",
+      "output/rdd_bolsa/E6_figuras/E6_F1_3_V2.png",
+      "output/rdd_bolsa/E6_figuras/E6_F1_3_V3.png",
+      "output/rdd_bolsa/E6_figuras/E6_F2_1_V1.png",
+      "output/rdd_bolsa/E6_figuras/E6_F2_1_V2.png",
+      "output/rdd_bolsa/E6_figuras/E6_F2_3_V1.png",
+      "output/rdd_bolsa/E6_figuras/E6_F2_3_V2.png",
+      "output/rdd_bolsa/E6_figuras/E6_F0_1_U_c1.png",
+      "output/rdd_bolsa/E6_figuras/E6_F0_1_U_c2.png",
+      "output/rdd_bolsa/E6_figuras/E6_F0_1_U_c3.png",
+      "output/rdd_bolsa/E6_figuras/E6_indice_P1_V1.png",
+      "output/rdd_bolsa/E6_figuras/E6_indice_P1_V2.png",
+      "output/rdd_bolsa/E6_figuras/E6_indice_P1_V3.png",
+      "output/rdd_bolsa/E6_figuras/E6_indice_P1_agrupado.png"
+    ]
+  },
+  "linguagem": "RDD em nivel = pacote do corte; resultado nulo e falta de evidencia com a precisao relatada, nao ausencia de efeito"
+}

@@ -8,6 +8,18 @@
 
 ---
 
+## 18/10/2026 — Estimação do E6 (famílias F0, F1, F2 e F4 do protocolo 40)
+
+Motivo: a tarefa E6 do protocolo multi-outcome estima, sob o protocolo
+congelado, todas as especificações fixadas para F0, F1, F2, F4, o índice P1 e
+as suplementares S1–S4.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/41_resultados_E6_funil.md`](06_execucao/41_resultados_E6_funil.md) | resultados do E6 (índice P1, componentes, diagnósticos de seleção, co-políticas, suplementares), como ler o salto, o que cada contraste identifica e limites; as tabelas são geradas de `output/rdd_bolsa/E6_*` por `scripts/rdd_bolsa/13_estimar_E6_funil.py --atualizar-doc` |
+
 ## 18/10/2026 — Construção dos outcomes do funil (tarefa B do protocolo 40)
 
 Motivo: a tarefa B do protocolo multi-outcome constrói, às cegas quanto ao
