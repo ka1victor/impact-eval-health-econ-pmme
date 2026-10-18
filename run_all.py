@@ -33,12 +33,15 @@ STEPS = [
     # data/ivs_ipea_2010_municipios.csv, que não é o IVS do município
     # (docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md). Ver o bloco da RDD abaixo.
     #
-    # a07 e a08 vêm antes da malha territorial desde 18/10/2026: 04_harmonizar e
+    # a07, a08 e o Censo 2022 vêm antes da malha territorial desde 18/10/2026: 04_harmonizar e
     # tema_trabalho/01 leem o IVS 2010 oficial gravado pelo a08, e não mais o arquivo
     # local (docs/auditorias/19_reestimacao_base_oficial_failure_mode.md). Os dois só leem
     # insumos brutos; a ordem relativa da cadeia da RDD (a07 < a08 < 04 < ... < 10) fica igual.
     ROOT / "scripts" / "aquisicao" / "a07_adquirir_ivs_administrativo.py",
     ROOT / "scripts" / "aquisicao" / "a08_adquirir_ivs_2010_oficial.py",
+    # População residente do Censo 2022 (SIDRA 4709), denominador por habitante da
+    # malha e da tipologia; roda sem rede a partir de data/raw/aquisicao/populacao/.
+    ROOT / "scripts" / "aquisicao" / "06_adquirir_populacao_censo2022.py",
     ROOT / "scripts" / "aquisicao" / "04_harmonizar_territorio_ibge.py",
     ROOT / "scripts" / "aquisicao" / "05_integrar_painel_analitico.py",
     ROOT / "scripts" / "avaliacao_impacto" / "run_pipeline_avaliacao.py",

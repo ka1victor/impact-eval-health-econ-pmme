@@ -7,14 +7,15 @@ integrando o IVS 2010 oficial do Ipea e seus subíndices, o IDHM 2010, a popula�
 Fontes (correção de 18/10/2026, `docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`):
 - IVS 2010, subíndices, IDHM 2010, população 2010 e renda per capita 2010:
   `output/aquisicao/a08_ivs_2010_oficial_municipio.csv`, linha Total/Total/Total da
-  base completa do Atlas da Vulnerabilidade Social (Ipea), 5.565 municípios;
+  base completa do Atlas da Vulnerabilidade Social (Ipea), malha municipal de 2010;
 - código IBGE de 7 dígitos e população residente de 2022:
   `output/aquisicao/populacao_censo2022_municipios.csv` (Censo 2022, SIDRA 4709);
 - região e macrorregião de saúde: série histórica e lista nominal do PMM-E.
 
 Até 18/10/2026 este script lia `data/ivs_ipea_2010_municipios.csv`, que não é o IVS do
 município: é, em cada município, a última linha de subgrupo com IVS preenchido da mesma
-base (mulheres negras em área urbana em 78% dos municípios;
+base, quase sempre a de mulheres negras em área urbana (contagem por linha em
+`output/rdd_bolsa/identificacao_arquivo_local_ivs.json`;
 `docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`). IVS, IDHM, população e renda
 da malha, da tipologia A2 e dos painéis CNES herdavam esse erro. O arquivo não é mais lido
 aqui.
@@ -177,6 +178,7 @@ def main() -> None:
         "idhm_2010", "populacao_2010", "rdpc_2010", "populacao_2022",
     ]
     df_territorio = df_ivs[colunas].sort_values("co_ibge_6d").reset_index(drop=True)
+    df_territorio["natureza_dos_dados"] = "EMPIRICO"
 
     # Salvar parquets
     df_territorio.to_parquet(OUT_MALHA, index=False)
@@ -186,6 +188,7 @@ def main() -> None:
         return str(p.relative_to(ROOT)).replace("\\", "/")
 
     manifesto: dict[str, Any] = {
+        "natureza_dos_dados": "EMPIRICO",
         "etapa": "04_harmonizar_territorio_ibge",
         "correcao": {
             "data": "2026-10-18",

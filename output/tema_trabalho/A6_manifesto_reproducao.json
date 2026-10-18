@@ -20,6 +20,7 @@
     ".venv/bin/python scripts/aquisicao/02_consolidar_quadro_vagas.py",
     ".venv/bin/python scripts/aquisicao/a07_adquirir_ivs_administrativo.py",
     ".venv/bin/python scripts/aquisicao/a08_adquirir_ivs_2010_oficial.py",
+    ".venv/bin/python scripts/aquisicao/06_adquirir_populacao_censo2022.py",
     ".venv/bin/python scripts/aquisicao/04_harmonizar_territorio_ibge.py",
     ".venv/bin/python scripts/aquisicao/05_integrar_painel_analitico.py",
     ".venv/bin/python scripts/avaliacao_impacto/run_pipeline_avaliacao.py",
@@ -102,8 +103,8 @@
       "presente": true
     },
     "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
-      "sha256": "63707c3c235ad099bb88542c4428d5a2091cab28c2b5b5c033afaf7482d9a8da",
-      "bytes": 322179,
+      "sha256": "10af8712eef95cc8ab3e5d7f70d9da1319229494ae2b774cb3ca15a8a2095552",
+      "bytes": 322793,
       "papel": "tipologia territorial congelada, saída de A2",
       "presente": true
     },
@@ -114,8 +115,8 @@
       "presente": true
     },
     "output/tema_trabalho/registro_pre_analise_atracao.json": {
-      "sha256": "a397d4fd4c6dd2049c027b7eba682f641406f27a50bae263be4be17efb78bdd4",
-      "bytes": 9847,
+      "sha256": "cdaf71c47122dbf41494f064bd75ddd152330957a6755de586c271b48b18bb0d",
+      "bytes": 11896,
       "papel": "pré-análise congelada, A3",
       "presente": true
     },
@@ -139,26 +140,26 @@
       "presente": true
     },
     "output/tema_trabalho/A4_estimativas_atracao.json": {
-      "sha256": "7aaa4569b182cf8e64cf61d2937372c395b9e59f23ee5483133017edeeb8adf3",
-      "bytes": 23091,
+      "sha256": "e32220561c94f4a6a82dd001cf57c2616a7d85e4acc47eb800fa477443916903",
+      "bytes": 23127,
       "papel": "estimativas de A4",
       "presente": true
     },
     "output/tema_trabalho/A5_estimativas_provimento.json": {
-      "sha256": "025ec146096f5d70a0c08bc90586d69d62d2eeda237894a66665a83736947581",
-      "bytes": 99803,
+      "sha256": "8c7500a13e37454647fc87e5c38e370193f376b3ffaf6a6be535c58c18c9565a",
+      "bytes": 99832,
       "papel": "estimativas de A5",
       "presente": true
     },
     "output/tema_trabalho/A5_manifesto_maturidade_censura.json": {
-      "sha256": "509094c72cdced61d2d86a8bd5ccb4854a643c659c32ffb9df4b835663fded83",
-      "bytes": 15095,
+      "sha256": "02ddd123c9679f987d22542a591b025a01747426f62917bca4b438061b9e0df6",
+      "bytes": 15131,
       "papel": "maturidade e censura declaradas em A5",
       "presente": true
     },
     "output/tema_trabalho/A5_ameacas_c7.json": {
-      "sha256": "3bbe5fc46046bb27eb65858d26049a6e3b7a581b16eaa26d465f7fc3ab9dfbce",
-      "bytes": 103861,
+      "sha256": "0ee8b11d24bb1a7d1c532968320864bf44b2202a76f07956e0bb4dc7ec0f0ff4",
+      "bytes": 103897,
       "papel": "placebo, pré-tendência por curso e deslocamento regional de A5 (C-7)",
       "presente": true
     },
@@ -169,7 +170,7 @@
       "presente": true
     },
     "output/rdd_bolsa/E3_status.json": {
-      "sha256": "1bdda808efa70a3c1066872a5631fa4cf4dc0b1ce483e7db79c10161e391dd0a",
+      "sha256": "d9db202cd00449686dad4d94947d19ba822e11aedb545f0b2158ab72e3623195",
       "bytes": 7051,
       "papel": "status, protocolo e cobertura do E3, RDD sharp da bolsa",
       "presente": true
@@ -211,19 +212,19 @@
       "presente": true
     },
     "docs/auditorias/09_red_team_atracao_provimento.md": {
-      "sha256": "78e84a574d2b123a7be942fd6a9e03dd0501ea87b087ba774842faa220123701",
-      "bytes": 14525,
+      "sha256": "365e3ec05d9deee5e4766f0313c1846d007e2dd145def74a81590e8a5da07059",
+      "bytes": 14524,
       "papel": "red team gerado aqui",
       "presente": true
     },
     "output/tema_trabalho/A6_matriz_afirmacao_evidencia_limite.csv": {
-      "sha256": "152f7e98d191403f470520f01371bb09ff30f4bd8c6d7a72563a910c6bbf909f",
-      "bytes": 2499,
+      "sha256": "0f5ccf5189e0a22eed39471a8f44812d08a5de6d00262e3f994caed6c7b3ea41",
+      "bytes": 2569,
       "papel": "matriz afirmação–evidência–limite gerada aqui",
       "presente": true
     },
     "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": {
-      "sha256": "f70a85895c6c495ac868cceda2da5e61f11380ba01192dccca4ac42ef406c3ed",
+      "sha256": "cb0fba200c7049140b731afbd0edefc98420672cb6e53ca5bcd93befeb6d8683",
       "bytes": 6630,
       "papel": "síntese gerada aqui",
       "presente": true
@@ -234,10 +235,10 @@
   ],
   "nota_insumos_ausentes": "Insumo declarado no desenho e ausente do disco aparece acima com sha256 nulo, presente=false e motivo_ausencia. Entrada omitida significaria que o insumo não faz parte do desenho.",
   "docs_hash8": {
-    "docs/auditorias/09_red_team_atracao_provimento.md": "78e84a57",
-    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "152f7e98",
-    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "72509c5c",
-    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "f70a8589"
+    "docs/auditorias/09_red_team_atracao_provimento.md": "365e3ec0",
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.csv": "0f5ccf51",
+    "docs/auditorias/09_matriz_afirmacao_evidencia_limite.md": "d1415cbc",
+    "docs/06_execucao/32_sintese_A6_resumo_intro_metodos_conclusao.md": "cb0fba20"
   },
   "portoes": {
     "A1_APROVADO_CELULA": "output/tema_trabalho/portao_denominador.json",

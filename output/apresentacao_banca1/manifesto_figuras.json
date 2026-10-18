@@ -14,9 +14,14 @@
       "caminho": "output/aquisicao/quadro_vagas_tratamento.parquet",
       "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f"
     },
+    "malha_ivs_oficial": {
+      "caminho": "output/aquisicao/malha_municipios_regioes_saude.parquet",
+      "sha256": "beed0d11a1d367c97261aa20b798dd050473677a879fb3d6f69a3d8dfead9728",
+      "uso": "ivs_categoria (IVS 2010 oficial do Ipea); substitui a coluna do painel"
+    },
     "a4_estrato": {
       "caminho": "output/tema_trabalho/A4_tabela_01_amostra_construcao.csv",
-      "sha256": "f4b40892b52798a2f532a9146f27c6274f129b8283441a1d2a15642a5da56e45"
+      "sha256": "bfabaa78f9612233d6ef345dde9711716d5b7d5a1f9d1bb7eb213a0ee20ad1e9"
     },
     "a4_faixa": {
       "caminho": "output/tema_trabalho/A4_tabela_01b_amostra_faixa.csv",
@@ -163,24 +168,24 @@
     ],
     "detalhe_por_categoria_ivs_em_202506": {
       "ALTA": {
-        "municipios": 46,
-        "por_100k": 9.97
+        "municipios": 50,
+        "por_100k": 23.94
       },
       "BAIXA": {
-        "municipios": 89,
-        "por_100k": 12.46
+        "municipios": 95,
+        "por_100k": 14.39
       },
       "MEDIA": {
-        "municipios": 132,
-        "por_100k": 17.6
+        "municipios": 89,
+        "por_100k": 14.41
       },
       "MUITO_ALTA": {
-        "municipios": 15,
-        "por_100k": 7.33
+        "municipios": 35,
+        "por_100k": 8.76
       },
       "MUITO_BAIXA": {
-        "municipios": 13,
-        "por_100k": 25.82
+        "municipios": 26,
+        "por_100k": 18.43
       }
     }
   },

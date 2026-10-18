@@ -116,7 +116,9 @@ AUDITORIA: list[tuple[str, str, str, str, str]] = [
     ("scripts/avaliacao_impacto/07_gerar_tabelas_e_figuras.py", "indireto: painel município–curso", "(b) descritivo", "sim",
      "corrigido: IVS e população da a08; Tabela 1 regenerada"),
     ("scripts/avaliacao_ciclo3/03_auditar_pre_e_potencia.py", "indireto: painel_municipios_regioes (ivs_2010, log_pop_2010)", "(b)", "não",
-     "PENDENTE: ciclo 3 congelado; herda a malha corrigida na próxima execução, mas as saídas de 31/08/2026 usaram o arquivo errado"),
+     "corrigido por emenda datada (--reestimar-covariaveis-oficiais): painéis pré-T0 congelados, nenhum mês pós-T0 lido"),
+    ("scripts/apresentacao/gerar_figuras_banca1.py", "indireto: ivs_categoria do painel município–curso", "(b) descritivo", "não",
+     "corrigido: categoria da malha oficial; manifesto das figuras regenerado"),
     ("scripts/tema_trabalho/01_auditar_atracao_provimento_interior.py", "indireto: veredito de rdd_bolsa/00", "(a)", "sim",
      "corrigido: confere a regra com a a08"),
     ("scripts/tema_trabalho/03_construir_tipologia_territorial.py", "indireto: malha", "(b)", "sim",
@@ -133,7 +135,8 @@ AUDITORIA: list[tuple[str, str, str, str, str]] = [
     ("scripts/tema_trabalho/08_auditar_cutoff_selecao.py, 09_*, 09b_*", "não leem", "(—)", "sim", "inalterado"),
     ("scripts/tema_trabalho/10_conferir_numeros_artigo.py, 11_*", "comentários", "(c)", "sim", "conferem o ajuste completo corrigido"),
     ("scripts/tema_trabalho/12_registrar_failure_mode_ivs.py", "direto: documenta o erro", "(c)", "não", "este registro"),
-    ("scripts/aquisicao/06_adquirir_populacao_censo2022.py", "só docstring", "(—)", "não", "inalterado"),
+    ("scripts/aquisicao/06_adquirir_populacao_censo2022.py", "só docstring", "(—)", "sim",
+     "entra no run_all antes da malha; data de aquisição determinística; sem número do arquivo errado"),
     ("scripts/aquisicao/a03_adquirir_ivs_regra.py", "direto: diagnóstico da regra", "(a)", "não", "(d) histórico"),
     ("scripts/aquisicao/a06_integrar_portao.py", "texto da matriz variável–fonte", "(a)", "não", "(d) histórico"),
     ("scripts/aquisicao/a08_adquirir_ivs_2010_oficial.py", "só observação no manifesto", "(c)", "sim", "inalterado"),
@@ -142,9 +145,9 @@ AUDITORIA: list[tuple[str, str, str, str, str]] = [
     ("scripts/rdd_bolsa/04_portao_r1_escore_administrativo.py", "direto: correlação com o escore do MS", "(c)", "sim", "inalterado"),
     ("scripts/rdd_bolsa/04b_*, 04c_*", "direto: compara com a base oficial e reproduz o erro", "(c)", "sim", "inalterado"),
     ("scripts/rdd_bolsa/06_estimar_E2_limites.py, 08_estimar_E4_proporcao.py", "direto: banda do cenário \"informado\"", "(a)", "sim",
-     "protegidos e congelados; cenário rotulado \"sem valor\" no relatório; não alterados"),
+     "cenário \"informado\" retirado das saídas ativas; pior caso, E4a e E4c idênticos; arquivo não é mais lido"),
     ("scripts/rdd_bolsa/07_*, 08a_*, 09b_*, 11_*", "não leem o arquivo; E3 e E5 leem da tipologia só o estrato", "(—)", "sim",
-     "protegidos; não reexecutados"),
+     "07, 11, 09b reexecutados: estimativas idênticas; só o hash da tipologia muda"),
     ("scripts/rdd_bolsa/09_gerar_relatorio_pdf.py, 10_galeria_figura_regra.py", "direto: figura comparativa", "(c)", "sim", "inalterado"),
     ("scripts/revisao_literatura/historico/gerar_doc_modelagem_micro_comparada.py", "texto histórico", "(d)", "não", "histórico"),
 ]
@@ -184,7 +187,7 @@ def milhar(v: int) -> str:
     return f"{int(v):,}".replace(",", ".")
 
 
-def conferir_leitura(linhas: list[dict[str, Any]], inalterados: list[str]) -> None:
+def conferir_leitura(linhas: list[dict[str, Any]], inalterados: list[str], rdd_global: dict[str, Any]) -> None:
     """Cada frase fixa da seção 6 tem de valer nos dados; senão o script para.
 
     Fail closed: a leitura não é ajustada aos números; se um destes testes falhar,
@@ -204,6 +207,8 @@ def conferir_leitura(linhas: list[dict[str, Any]], inalterados: list[str]) -> No
         "capital × IVS: p < 5% antes e depois": (
             r("A4 estrato × IVS", "estrato_capital_x_ivs")["p_depois"] < ALFA
             and r("A4 estrato × IVS", "estrato_capital_x_ivs")["p_antes_failure_mode"] < ALFA),
+        "RDD: estimativas idênticas": all(rdd_global["estimativas_identicas_byte_a_byte"].values())
+        and rdd_global["e2_pior_caso_identico"] and rdd_global["e4_demais_identicas"],
         "A5 completo: nenhum termo de atração vira significante": all(
             x["p_depois"] >= ALFA or x["p_antes_failure_mode"] < ALFA
             for x in linhas if x["bloco"].startswith("A5") and x["termo"].startswith("atracao")),
@@ -309,18 +314,62 @@ def comparar_tipologia() -> dict[str, Any]:
     }
 
 
+RDD_ESTIMATIVAS = ["output/rdd_bolsa/E1_densidade_estimativas.csv", "output/rdd_bolsa/E3_estimativas.csv",
+                   "output/rdd_bolsa/E3_diagnosticos.csv", "output/rdd_bolsa/E4_proporcao_municipio.csv",
+                   "output/rdd_bolsa/E5_especificacoes.csv", "output/rdd_bolsa/E5_decomposicao_ic.csv",
+                   "output/rdd_bolsa/E5_decomposicao_lados.csv", "output/rdd_bolsa/E5_lr_selecao_janela.csv",
+                   "output/rdd_bolsa/E5_lr_sensibilidade_janelas.csv"]
+
+
 def cadeia_rdd(tip: dict[str, Any]) -> dict[str, Any]:
-    """E3 e E5 leem da tipologia só o estrato; o hash que gravaram é o da versão antiga."""
+    """E3/E5 reexecutados: registram a tipologia nova e as estimativas são idênticas.
+
+    E2 e E4: o cenário `informado` saiu; as demais linhas são idênticas às de antes.
+    """
     e3 = json.loads(E3_STATUS.read_text(encoding="utf-8"))
     e5 = json.loads(E5_RESUMO.read_text(encoding="utf-8"))
-    h_e3 = e3["covariaveis_pre"][TIPOLOGIA]["sha256"]
-    h_e5 = e5["entradas"][TIPOLOGIA]["sha256"]
+    identicos = {rel: sha256_bytes(git_antes(rel)) == sha256(ROOT / rel) for rel in RDD_ESTIMATIVAS}
+    e2a, e2d = ler_csv("output/rdd_bolsa/E2_limites.csv", True), ler_csv("output/rdd_bolsa/E2_limites.csv", False)
+    e4a, e4d = ler_csv("output/rdd_bolsa/E4_estimativas.csv", True), ler_csv("output/rdd_bolsa/E4_estimativas.csv", False)
+    e2_pior = e2a[e2a["cenario"] != "informado"].reset_index(drop=True).equals(e2d)
+    e4_resto = e4a[e4a["cenario_ou_espec"] != "informado"].reset_index(drop=True).equals(e4d)
     return {
-        "e3_registra_tipologia_antiga": h_e3 == tip["sha256_antes"],
-        "e5_registra_tipologia_antiga": h_e5 == tip["sha256_antes"],
+        "e3_registra_tipologia_nova": e3["covariaveis_pre"][TIPOLOGIA]["sha256"] == tip["sha256_depois"],
+        "e5_registra_tipologia_nova": e5["entradas"][TIPOLOGIA]["sha256"] == tip["sha256_depois"],
         "estrato_identico": tip["estrato_identico"],
-        "leitura": "E3 e E5 leem da tipologia só a coluna estrato, idêntica antes e depois; estimativas inalteradas",
+        "estimativas_identicas_byte_a_byte": identicos,
+        "e2_linhas_antes": int(len(e2a)), "e2_linhas_depois": int(len(e2d)),
+        "e2_linhas_informado_retiradas": int((e2a["cenario"] == "informado").sum()),
+        "e2_pior_caso_identico": bool(e2_pior),
+        "e4_linhas_antes": int(len(e4a)), "e4_linhas_depois": int(len(e4d)),
+        "e4_linhas_informado_retiradas": int((e4a["cenario_ou_espec"] == "informado").sum()),
+        "e4_demais_identicas": bool(e4_resto),
     }
+
+
+def comparar_c3() -> list[dict[str, Any]]:
+    rel_c3 = "output/avaliacao_ciclo3/diagnosticos_pre.csv"
+    a, d = ler_csv(rel_c3, True), ler_csv(rel_c3, False)
+    m = a.merge(d, on=["modulo", "nivel"], suffixes=("_a", "_d"), validate="one_to_one")
+    linhas = []
+    for r in m.itertuples(index=False):
+        g = r._asdict()
+        linhas.append({
+            "modulo": g["modulo"], "nivel": g["nivel"],
+            "mde_80_antes_failure_mode": g["mde_80_especialistas_a"], "mde_80_depois": g["mde_80_especialistas_d"],
+            "suporte_t_antes": g["suporte_retido_tratado_a"], "suporte_t_depois": g["suporte_retido_tratado_d"],
+            "suporte_c_antes": g["suporte_retido_controle_a"], "suporte_c_depois": g["suporte_retido_controle_d"],
+            "suporte_aprovado_antes": bool(g["suporte_aprovado_a"]), "suporte_aprovado_depois": bool(g["suporte_aprovado_d"]),
+            "decisao_antes": g["decisao_a"], "decisao_depois": g["decisao_d"],
+        })
+    return linhas
+
+
+def comparar_banca1() -> dict[str, Any]:
+    rel_m = "output/apresentacao_banca1/manifesto_figuras.json"
+    a = json.loads(git_antes(rel_m).decode("utf-8"))["cobertura"]["detalhe_por_categoria_ivs_em_202506"]
+    d = json.loads((ROOT / rel_m).read_text(encoding="utf-8"))["cobertura"]["detalhe_por_categoria_ivs_em_202506"]
+    return {"antes_failure_mode": a, "depois": d}
 
 
 def failure_mode_arquivo() -> dict[str, Any]:
@@ -381,7 +430,25 @@ def conclusoes(linhas: list[dict[str, Any]]) -> list[str]:
     return out
 
 
-def gerar_doc(linhas, tab1, tip, rdd, fm, d01, hashes) -> str:
+def gerar_doc(linhas, tab1, tip, rdd, fm, d01, hashes, c3, banca) -> str:
+    c3_md = "\n".join(
+        f"| {r['modulo']} | {r['nivel']} | {num(r['mde_80_antes_failure_mode'], 2)} | **{num(r['mde_80_depois'], 2)}** | "
+        f"{num(r['suporte_t_antes'])} / {num(r['suporte_c_antes'])} → {num(r['suporte_t_depois'])} / {num(r['suporte_c_depois'])} | "
+        f"{'sim' if r['suporte_aprovado_antes'] else 'não'} → {'sim' if r['suporte_aprovado_depois'] else 'não'} | "
+        f"{r['decisao_antes']} → **{r['decisao_depois']}** |" for r in c3)
+    c3_mudou = [r for r in c3 if r["decisao_antes"] != r["decisao_depois"]]
+    c3_texto = ("Nenhuma decisão do torneio muda." if not c3_mudou else
+                "Decisões que mudam: " + "; ".join(f"{r['modulo']}/{r['nivel']}: {r['decisao_antes']} → {r['decisao_depois']}" for r in c3_mudou) + ".")
+    c3_sup = [r for r in c3 if r["suporte_aprovado_antes"] != r["suporte_aprovado_depois"]]
+    c3_sup_texto = ("" if not c3_sup else
+                    " O suporte comum muda de aprovado para reprovado (ou o inverso) em " +
+                    ", ".join(f"{r['modulo']}/{r['nivel']}" for r in c3_sup) + ", sem mudar a decisão.")
+    cats = sorted(set(banca["antes_failure_mode"]) | set(banca["depois"]))
+    banca_md = "\n".join(
+        f"| {c} | {banca['antes_failure_mode'].get(c, {}).get('municipios', '—')} / {num(banca['antes_failure_mode'].get(c, {}).get('por_100k'), 2)} | "
+        f"**{banca['depois'].get(c, {}).get('municipios', '—')} / {num(banca['depois'].get(c, {}).get('por_100k'), 2)}** |" for c in cats)
+    e_ident = rdd["estimativas_identicas_byte_a_byte"]
+    e_ident_md = "\n".join(f"| `{k}` | {'idêntico' if v else 'DIFERENTE'} |" for k, v in e_ident.items())
     blocos = list(dict.fromkeys(r["bloco"] for r in linhas))
     inalterados = [b for b in blocos if all(
         r["coef_antes_failure_mode"] is not None and r["coef_depois"] is not None
@@ -392,7 +459,7 @@ def gerar_doc(linhas, tab1, tip, rdd, fm, d01, hashes) -> str:
     t1 = "\n".join(f"| {r['variavel']} | {r['coluna']} | {num(r['antes_failure_mode'])} | **{num(r['depois'])}** |"
                    for r in tab1)
     secoes = "\n\n".join(f"### {b}\n\n{tabela_md(linhas, b)}" for b in blocos)
-    conferir_leitura(linhas, inalterados)
+    conferir_leitura(linhas, inalterados, rdd)
     concl = conclusoes(linhas) or ["- Nenhuma estimativa muda de sinal nem cruza 5%."]
     auditoria_md = "\n".join(f"| `{a}` | {b} | {c} | {d} | {e} |" for a, b, c, d, e in AUDITORIA)
     hashes_md = "\n".join(f"| `{k}` | `{v}` |" for k, v in hashes.items())
@@ -473,12 +540,21 @@ continuaram a ler a malha antiga; a decisão D3(b) adiou a reestimação, aplica
   código de 7 dígitos e a população 2022 do Censo 2022; manifesto em
   `output/aquisicao/manifesto_territorio_ibge.json`.
 - A tipologia A2 ganha `populacao_2022`, denominador de `estoque_pre_por_10k`. O registro
-  A3 recebe a emenda datada de 18/10/2026: especificação, amostras e desfechos não mudam;
-  mudam os insumos e os hashes de entrada.
+  A3 mantém os hashes congelados em 02/09/2026 e recebe a emenda datada de 18/10/2026
+  (correção de dado de entrada e de denominador), com os hashes dos insumos em vigor;
+  especificação, amostras e desfechos não mudam.
 - A4 e A5 foram reexecutados. A5 troca em memória as covariadas do painel em T0 congelado,
   que não é regravado (é a âncora de hash da reestimação).
 - A Tabela 1 do ciclo 1 repõe IVS e população da a08.
 - `tema_trabalho/01` confere a regra com o IVS oficial.
+- O cenário "informado" de E2 e E4, cuja banda usava o arquivo errado, saiu das saídas
+  ativas. E3, E5, a conferência do sinal, o relatório e a galeria da RDD foram
+  reexecutados.
+- O C3-03 do ciclo 3 recebeu emenda datada: propensão, suporte, pesos e potência com as
+  covariadas oficiais, sobre os painéis CNES pré-T0 congelados (conferidos por hash),
+  sem ler mês a partir de 202609.
+- As figuras da banca 1 passam a usar a categoria de IVS da malha oficial.
+- O Censo 2022 (`aquisicao/06`) entra no `run_all.py` antes da malha.
 - Os artigos citam o ajuste completo corrigido, conferido contra `output/` pelos scripts
   `10` e `11`.
 
@@ -508,6 +584,37 @@ iguais a 1e-9): {', '.join(inalterados) if inalterados else 'nenhum'}.
 |---|---|---:|---:|
 {t1}
 
+### RDD da bolsa (E1–E5)
+
+Estimativas reexecutadas e comparadas byte a byte com as do commit `{REF_ANTES[:12]}`:
+
+| Arquivo | Antes × depois |
+|---|---|
+{e_ident_md}
+
+E2: {rdd['e2_linhas_antes']} → {rdd['e2_linhas_depois']} linhas ({rdd['e2_linhas_informado_retiradas']} do cenário
+"informado" retiradas); o pior caso é {'idêntico' if rdd['e2_pior_caso_identico'] else 'DIFERENTE'}.
+E4: {rdd['e4_linhas_antes']} → {rdd['e4_linhas_depois']} linhas ({rdd['e4_linhas_informado_retiradas']} do "informado"
+retiradas); as demais são {'idênticas' if rdd['e4_demais_identicas'] else 'DIFERENTES'}. E3 e E5 registram o hash da
+tipologia corrigida (E3: {'sim' if rdd['e3_registra_tipologia_nova'] else 'não'}; E5:
+{'sim' if rdd['e5_registra_tipologia_nova'] else 'não'}).
+
+### C3-03 do ciclo 3 (diagnósticos pré-tratamento)
+
+| Módulo | Nível | MDE 80% antes (failure mode) | MDE 80% depois | Suporte retido T / C, antes → depois | Suporte aprovado | Decisão |
+|---|---|---:|---:|---|---|---|
+{c3_md}
+
+{c3_texto}{c3_sup_texto}
+
+### Figuras da banca 1: especialistas por 100 mil em 202506, por categoria de IVS (manifesto)
+
+| Categoria de IVS | Antes (failure mode): municípios / por 100 mil | Depois |
+|---|---|---|
+{banca_md}
+
+As figuras não usam essa quebra; ela só consta do manifesto.
+
 ### Diagnóstico do tema (`tema_trabalho/01`), módulo da RDD
 
 - Antes (failure mode): "{d01['antes_failure_mode']}".
@@ -531,10 +638,9 @@ Leitura:
   ou sem estrato. A interação capital × IVS continua distinta de zero.
 - **A5:** o estudo de evento, que é o resultado secundário citado, não muda. As
   especificações completas mudam pouco e nenhuma vira significante.
-- **RDD da bolsa:** nada muda. E3 e E5 leem da tipologia só o estrato; o hash de tipologia
-  que gravaram é o da versão antiga (E3: {'sim' if rdd['e3_registra_tipologia_antiga'] else 'não'};
-  E5: {'sim' if rdd['e5_registra_tipologia_antiga'] else 'não'}), e o estrato é idêntico.
-  Por isso os artefatos protegidos da cadeia (07, 08, 08a, 11, 09b) não foram reexecutados.
+- **RDD da bolsa:** nenhuma estimativa muda (tabela da seção 5). O cenário "informado"
+  de E2 e E4 deixa de existir nas saídas ativas.
+- **C3-03 do ciclo 3:** {c3_texto[0].lower() + c3_texto[1:]}
 
 ## 7. Onde os números antigos ainda aparecem
 
@@ -548,7 +654,9 @@ Só como failure mode, rotulados:
   (A5 e a Tabela 1 as substituem em memória);
 - `output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json` e as saídas dos scripts
   retirados `rdd_bolsa/00`, `01`, `01b`, `02`, `03` e `aquisicao/a03`, `a06`;
-- o cenário "informado" de E2 e E4, já rotulado "sem valor" no relatório da RDD;
+- as linhas do cenário "informado" de E2 e E4, só no histórico do Git (saíram das saídas);
+- a seção 6 de [`05_identificacao/13`](../05_identificacao/13_plano_pre_analise_ciclo3.md)
+  (C3-03), com errata de failure mode;
 - a errata E-7 de [`14`](14_erratas_artefatos_congelados.md), com nota de failure mode;
 - [`16`](16_ivs_2010_oficial_e_arquivo_local.md), [`17`](17_guia_conferencia_manual_ivs.md)
   e a figura comparativa do relatório da RDD, que documentam o erro.
@@ -570,6 +678,8 @@ def main() -> None:
     rdd = cadeia_rdd(tip)
     fm = failure_mode_arquivo()
     d01 = diag01()
+    c3 = comparar_c3()
+    banca = comparar_banca1()
     hashes = {str(p.relative_to(ROOT)): sha256(p) for p in
               [ARQUIVO_ERRADO, IVS_OFICIAL, CENSO2022, IDENT_04C, ROOT / TIPOLOGIA, E3_STATUS, E5_RESUMO]}
     hashes.update({rel: sha256(ROOT / rel) for rel in sorted({t[1] for t in TABELAS} | {TABELA1, DIAG_01})})
@@ -578,7 +688,8 @@ def main() -> None:
     pd.DataFrame(linhas).to_csv(tmp, index=False)
     tmp.replace(OUT_CSV)
     resumo = {
-        "natureza_dos_dados": "EMPIRICO (coluna 'depois'); FAILURE_MODE (coluna 'antes', só documentação)",
+        "natureza_dos_dados": "EMPIRICO",
+        "natureza_coluna_antes": "FAILURE_MODE (só documentação; não é resultado)",
         "ref_git_antes": REF_ANTES,
         "data_referencia": "2026-10-18",
         "arquivo_errado": fm,
@@ -586,11 +697,13 @@ def main() -> None:
         "cadeia_rdd": rdd,
         "tabela1_ciclo1": tab1,
         "diagnostico_tema_01": d01,
+        "c3_03_ciclo3": c3,
+        "banca1_detalhe_por_categoria_ivs": banca,
         "mudancas_de_conclusao": conclusoes(linhas),
         "hashes_entradas": hashes,
     }
     OUT_JSON.write_text(json.dumps(resumo, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    DOC.write_text(gerar_doc(linhas, tab1, tip, rdd, fm, d01, hashes), encoding="utf-8")
+    DOC.write_text(gerar_doc(linhas, tab1, tip, rdd, fm, d01, hashes, c3, banca), encoding="utf-8")
     print(f"[OK] {len(linhas)} estimativas comparadas; {len(conclusoes(linhas))} mudanças de conclusão; "
           f"documento em {DOC.relative_to(ROOT)}")
 

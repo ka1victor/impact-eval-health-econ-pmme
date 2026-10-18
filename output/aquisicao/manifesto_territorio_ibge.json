@@ -1,4 +1,5 @@
 {
+  "natureza_dos_dados": "EMPIRICO",
   "etapa": "04_harmonizar_territorio_ibge",
   "correcao": {
     "data": "2026-10-18",
@@ -59,10 +60,10 @@
   },
   "saidas": {
     "output/aquisicao/malha_municipios_regioes_saude.parquet": {
-      "sha256": "a7f855e33b72c8da57661e066643fed5d6caf5f99d19f264154583c1de53f186"
+      "sha256": "beed0d11a1d367c97261aa20b798dd050473677a879fb3d6f69a3d8dfead9728"
     },
     "output/aquisicao/painel_municipios_regioes.parquet": {
-      "sha256": "a7f855e33b72c8da57661e066643fed5d6caf5f99d19f264154583c1de53f186"
+      "sha256": "beed0d11a1d367c97261aa20b798dd050473677a879fb3d6f69a3d8dfead9728"
     }
   }
 }

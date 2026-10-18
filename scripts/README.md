@@ -19,7 +19,7 @@ Ele executa sequencialmente:
 2. `scripts/02_auditar_fontes_pmme.py` — auditoria e integridade de fontes oficiais.
 3. `scripts/aquisicao/01_congelar_ponte_cbo.py` — congelamento da ponte operacional curso–CBO.
 4. `scripts/aquisicao/02_consolidar_quadro_vagas.py` — consolidação da matriz de vagas e tratamento.
-5. `scripts/aquisicao/a07_adquirir_ivs_administrativo.py` e `a08_adquirir_ivs_2010_oficial.py` — escore publicado pelo MS e base completa do Ipea (zip de 201 MB fora do Git, conferido por SHA-256). Rodam antes da malha desde 18/10/2026.
+5. `scripts/aquisicao/a07_adquirir_ivs_administrativo.py` e `a08_adquirir_ivs_2010_oficial.py` — escore publicado pelo MS e base completa do Ipea (zip fora do Git; tamanho e SHA-256 em `output/aquisicao/a08_manifesto_ivs_2010_oficial.json`). Rodam antes da malha desde 18/10/2026.
    Depois, `scripts/aquisicao/04_harmonizar_territorio_ibge.py` — harmonização territorial com o IVS 2010 oficial (a08) e o Censo 2022; até 18/10/2026 lia o arquivo de IVS errado (`docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`).
 6. `scripts/aquisicao/05_integrar_painel_analitico.py` — construção do painel analítico CNES mensal.
 7. `scripts/avaliacao_impacto/run_pipeline_avaliacao.py` — pipeline completo do diagnóstico histórico DDD (etapas 01 a 09).

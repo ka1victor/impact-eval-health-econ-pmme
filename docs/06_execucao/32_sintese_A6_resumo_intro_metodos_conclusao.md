@@ -2,7 +2,7 @@
 
 > **Título recomendado:** Atração administrativa de médicos especialistas e gradientes territoriais: evidências de implementação do PMM-E.  
 > **Nível de identificação:** associativo no núcleo A1–A5. RDD da bolsa em camada separada: R1 aprovado sharp com o IVS 2010 oficial; E3 inconclusivo. Retenção individual não identificada.  
-> **Hashes:** A4 `7aaa4569`; A5 `025ec146`; R1 `cdf4579f`; E3 `b38a2d0e`.
+> **Hashes:** A4 `e3222056`; A5 `8c7500a1`; R1 `cdf4579f`; E3 `b38a2d0e`.
 
 ## Resumo
 

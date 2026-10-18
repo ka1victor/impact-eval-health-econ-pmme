@@ -1,5 +1,6 @@
 {
   "protocolo": "A2_TIPOLOGIA_TERRITORIAL",
+  "natureza_dos_dados": "EMPIRICO",
   "data_referencia": "2026-09-02",
   "efeitos_estimados": false,
   "portao": "APROVADO_4_ESTRATOS",
@@ -31,7 +32,7 @@
   },
   "fontes": {
     "output/aquisicao/malha_municipios_regioes_saude.parquet": {
-      "sha256": "a7f855e33b72c8da57661e066643fed5d6caf5f99d19f264154583c1de53f186"
+      "sha256": "beed0d11a1d367c97261aa20b798dd050473677a879fb3d6f69a3d8dfead9728"
     },
     "output/aquisicao/quadro_vagas_tratamento.parquet": {
       "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f"

@@ -329,6 +329,15 @@ def hashes_de_entradas(caminhos, extras: dict[Path, str] | None = None, anterior
 COVARIADAS_TERRITORIAIS = ["ivs_2010", "ivs_categoria", "populacao_2010", "estoque_especialistas_pre_12m_media", "estoque_pre_por_10k"]
 
 
+def data_referencia_protocolo(registro_path: Path = REGISTRO_A3) -> str:
+    """Data de referência dos artefatos de A5: a do protocolo A3 ou a da sua última emenda.
+
+    Substitui a data do relógio, que tornava os artefatos não determinísticos.
+    """
+    reg = json.loads(registro_path.read_text(encoding="utf-8"))
+    return max([reg["data_referencia"]] + [e["data"] for e in reg.get("emendas", [])])
+
+
 def corrigir_covariaveis_territoriais(panel: pd.DataFrame, tipologia_path: Path = MATRIZ_TIPOLOGIA) -> pd.DataFrame:
     """Repõe as covariadas territoriais com os valores da tipologia A2 corrigida.
 
@@ -1574,7 +1583,8 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
     bridge_raw = ponte
     manifesto = {
         "protocolo":"A5_MANISFESTO_MATURIDADE_CENSURA",
-        "data_referencia": dt.date.today().isoformat(),
+        "data_referencia": data_referencia_protocolo(),
+        "natureza_dos_dados": "EMPIRICO",
         "efeitos_estimados": False,
         "t0": {
             "homologacao_data": T0_HOMOLOG_DATE,
@@ -1680,10 +1690,37 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
     tmp.write_text(json.dumps(manifesto, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
     tmp.replace(JSON_MANISFESTO)
 
+    # Recortes citados no relatório publicado, lidos das próprias tabelas
+    # gravadas acima para que texto e artefato não possam divergir.
+    def _linha_loo(escala: str, subamostra: str) -> dict:
+        sel = loo_evento[(loo_evento["escala"] == escala) & (loo_evento["subamostra"] == subamostra)]
+        if sel.empty:
+            raise AssertionError(f"leave-one-curso-out sem linha {escala}/{subamostra}")
+        return sel.iloc[0].to_dict()
+
+    def _linha_ref(escala: str, referencia: str) -> dict:
+        sel = sens_referencia[(sens_referencia["escala"] == escala) & (sens_referencia["referencia"] == referencia)]
+        if sel.empty:
+            raise AssertionError(f"sensibilidade de referencia sem linha {escala}/{referencia}")
+        return sel.iloc[0].to_dict()
+
+    loo_nivel_sem14 = _linha_loo("nivel", "sem_curso_14")
+    loo_nivel_8 = _linha_loo("nivel", "somente_8_cbo_1_para_1")
+    loo_prop_sem14 = _linha_loo("proporcional", "sem_curso_14")
+    loo_prop_8 = _linha_loo("proporcional", "somente_8_cbo_1_para_1")
+    ref_nivel_media = _linha_ref("nivel", "media_12_meses_pre")
+    ref_prop_media = _linha_ref("proporcional", "media_12_meses_pre")
+
+    def _br3(v) -> str:
+        return f"{float(v):.3f}".replace(".", ",")
+
+    _conf = baseline_df[baseline_df["amostra_confirmatoria"].astype(bool)]
+    _ampl = baseline_df[~baseline_df["amostra_confirmatoria"].astype(bool)]
     # Estimativas json
     estimativas = {
         "protocolo":"A5_ESTIMATIVAS_PROVIMENTO",
-        "data_referencia": dt.date.today().isoformat(),
+        "data_referencia": data_referencia_protocolo(),
+        "natureza_dos_dados": "EMPIRICO",
         "efeitos_estimados": True,
         "correcao_2026_10_18": {
             "o_que_mudou": (
@@ -1698,13 +1735,20 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
         },
         "linguagem":"associativa (trajetoria diferencial e evolucao do estoque cadastral); proibido efeito causal do PMM-E/bolsa/IVS, provimento causal e retencao individual",
         "populacao": {
-            "painel_municipio_curso": "1184 celulas municipio-curso (368 municipios) x26 competencias 202406-202607 =30784 linhas",
-            "confirmatoria_10_cursos": "587 celulas (295 mun) CBO sem sobreposicao",
-            "ampliada_6_cursos": "597 celulas (242 mun) sobrepostos",
-            "cross_section_janela": f"1184 celulas referencia pre-oferta {BASELINE_COMP} -> follow comum {FOLLOW_6M_COMP}",
-            "amostra_primaria_modelos": "587 celulas municipio-curso, 295 municipios, dez cursos com CBO nao compartilhado entre cursos (oito deles estritamente 1:1)",
+            "painel_municipio_curso": (
+                f"{len(baseline_df)} celulas municipio-curso ({baseline_df['co_ibge_6d'].nunique()} municipios) "
+                f"x{len(COMPETENCIAS)} competencias {COMPETENCIAS[0]}-{COMPETENCIAS[-1]} ={len(panel)} linhas"
+            ),
+            "confirmatoria_10_cursos": f"{len(_conf)} celulas ({_conf['co_ibge_6d'].nunique()} mun) CBO sem sobreposicao",
+            "ampliada_6_cursos": f"{len(_ampl)} celulas ({_ampl['co_ibge_6d'].nunique()} mun) sobrepostos",
+            "cross_section_janela": f"{len(baseline_df)} celulas referencia pre-oferta {BASELINE_COMP} -> follow comum {FOLLOW_6M_COMP}",
+            "amostra_primaria_modelos": (
+                f"{len(_conf)} celulas municipio-curso, {_conf['co_ibge_6d'].nunique()} municipios, "
+                f"{len(cursos_sem_sobre)} cursos com CBO nao compartilhado entre cursos "
+                f"({len(cursos_cbo_1_para_1)} deles estritamente 1:1)"
+            ),
             "unidade_analitica":"municipio-curso (agregacao de CNES dentro do municipio)",
-            "unidade_inferencia":"municipio (cluster-robusto; G=295 na amostra principal)",
+            "unidade_inferencia":f"municipio (cluster-robusto; G={_conf['co_ibge_6d'].nunique()} na amostra principal)",
         },
         "t0_e_horizonte": {
             "T0_admin": T0_ADMIN_COMP,
@@ -1733,9 +1777,10 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
                 "substantiva, nao estatistica, e vale para as duas direcoes do resultado."
             ),
             "fragilidade_do_nivel": (
-                "O coeficiente em nivel de 202603 cai de 0,500 para 0,200 sem o curso 14 "
-                "e para 0,121 nos oito cursos com CBO estritamente 1:1; contra a media "
-                "dos doze meses pre, e 0,405. Ver A5_tabela_09 e A5_tabela_10."
+                f"O coeficiente em nivel de 202603 cai de {_br3(event_primary_summary['mar2026_beta'])} para "
+                f"{_br3(loo_nivel_sem14['beta'])} sem o curso 14 e para {_br3(loo_nivel_8['beta'])} "
+                f"nos {len(cursos_cbo_1_para_1)} cursos com CBO estritamente 1:1; contra a media dos doze meses "
+                f"pre, e {_br3(ref_nivel_media['beta'])}. Ver A5_tabela_09 e A5_tabela_10."
             ),
             "linguagem": "associativa nas duas escalas; atracao e resultado realizado, nao tratamento atribuido",
         },
@@ -1987,26 +2032,6 @@ def _continuar(panel: pd.DataFrame, modo_painel: str, extras_hash: dict[Path, st
     # qualquer escrita foi removido em 16/09/2026; suas secoes de construcao,
     # trajetoria, influencia, validacao preditiva e limites foram promovidas ao
     # relatorio publicado abaixo, com os numeros lidos das tabelas gravadas.
-    # Recortes citados no relatório publicado, lidos das próprias tabelas
-    # gravadas acima para que texto e artefato não possam divergir.
-    def _linha_loo(escala: str, subamostra: str) -> dict:
-        sel = loo_evento[(loo_evento["escala"] == escala) & (loo_evento["subamostra"] == subamostra)]
-        if sel.empty:
-            raise AssertionError(f"leave-one-curso-out sem linha {escala}/{subamostra}")
-        return sel.iloc[0].to_dict()
-
-    def _linha_ref(escala: str, referencia: str) -> dict:
-        sel = sens_referencia[(sens_referencia["escala"] == escala) & (sens_referencia["referencia"] == referencia)]
-        if sel.empty:
-            raise AssertionError(f"sensibilidade de referencia sem linha {escala}/{referencia}")
-        return sel.iloc[0].to_dict()
-
-    loo_nivel_sem14 = _linha_loo("nivel", "sem_curso_14")
-    loo_nivel_8 = _linha_loo("nivel", "somente_8_cbo_1_para_1")
-    loo_prop_sem14 = _linha_loo("proporcional", "sem_curso_14")
-    loo_prop_8 = _linha_loo("proporcional", "somente_8_cbo_1_para_1")
-    ref_nivel_media = _linha_ref("nivel", "media_12_meses_pre")
-    ref_prop_media = _linha_ref("proporcional", "media_12_meses_pre")
     n_cursos_1_para_1 = len(cursos_cbo_1_para_1)
     cursos_multi_lista = " e ".join(
         f"{cod} ({grau})" for cod, grau in sorted(cursos_multi_cbo_sem_compartilhamento.items())
@@ -2089,7 +2114,7 @@ Permitido: **evolução do estoque cadastral**, **trajetória diferencial associ
 
 O CNES não identifica participantes do programa. Sem log completo, ponte individual e pagamentos, o A5 permanece uma análise descritiva longitudinal complementar ao resultado de implementação A4.
 
-*Gerado em {dt.date.today().isoformat()} por `scripts/tema_trabalho/06_avaliar_provimento_cnes.py`.*
+*Gerado com data de referência {data_referencia_protocolo()} (protocolo A3 e emendas) por `scripts/tema_trabalho/06_avaliar_provimento_cnes.py`.*
 """
     tmp = RELATORIO_MD.with_suffix(".md.tmp")
     tmp.write_text(relatorio, encoding="utf-8")

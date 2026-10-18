@@ -69,6 +69,11 @@ import matplotlib.pyplot as plt
 
 RAIZ = Path(__file__).resolve().parents[2]
 PAINEL = RAIZ / "output" / "avaliacao_impacto" / "dados" / "painel_municipio_curso_mes.parquet"
+# Categoria de IVS da malha corrigida (IVS 2010 oficial do Ipea, a08). A coluna
+# `ivs_categoria` gravada no painel versionado vem da malha antiga, feita com
+# data/ivs_ipea_2010_municipios.csv (linha de subgrupo; auditorias 16 e 19); o painel
+# não é regenerável sem o CNES mensal, e por isso a coluna é reposta aqui.
+MALHA = RAIZ / "output" / "aquisicao" / "malha_municipios_regioes_saude.parquet"
 POPULACAO = RAIZ / "output" / "aquisicao" / "populacao_censo2022_municipios.csv"
 SAIDA = RAIZ / "output" / "apresentacao_banca1"
 QUADRO = RAIZ / "output" / "aquisicao" / "quadro_vagas_tratamento.parquet"
@@ -221,6 +226,9 @@ def taxas_por_faixa() -> tuple[pd.DataFrame, dict]:
     """Especialistas por 100 mil habitantes, por competência e faixa de 2025."""
     painel = pd.read_parquet(PAINEL)
     painel = painel[painel["curso_sem_sobreposicao"] == 1]
+    malha = pd.read_parquet(MALHA, columns=["co_ibge_6d", "ivs_categoria"])
+    painel = painel.drop(columns=["ivs_categoria"]).merge(malha, on="co_ibge_6d", how="left", validate="many_to_one")
+    assert painel["ivs_categoria"].notna().all(), "município do painel sem categoria de IVS oficial"
     pop = pd.read_csv(POPULACAO, dtype={"co_ibge_7d": str})
 
     municipio_mes = (
@@ -678,6 +686,8 @@ def main() -> None:
             "populacao": {"caminho": str(POPULACAO.relative_to(RAIZ)), "sha256": _hash(POPULACAO),
                           "fonte": "IBGE, Censo 2022, SIDRA tabela 4709"},
             "quadro_vagas": {"caminho": str(QUADRO.relative_to(RAIZ)), "sha256": _hash(QUADRO)},
+            "malha_ivs_oficial": {"caminho": str(MALHA.relative_to(RAIZ)), "sha256": _hash(MALHA),
+                                  "uso": "ivs_categoria (IVS 2010 oficial do Ipea); substitui a coluna do painel"},
             "a4_estrato": {"caminho": str(A4_ESTRATO.relative_to(RAIZ)), "sha256": _hash(A4_ESTRATO)},
             "a4_faixa": {"caminho": str(A4_FAIXA.relative_to(RAIZ)), "sha256": _hash(A4_FAIXA)},
         },

@@ -1,17 +1,17 @@
 # A4 — Atração e implementação: diagnóstico e linguagem autorizada (02/09/2026)
 
-> Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash a397d4fd)
+> Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash cdaf71c4)
 > Potência: `output/tema_trabalho/potencia_atracao.json`; MDE **ex-ante** dos contrastes vs remoto: capital 19.5%, metro 13.7%, próximo 11.9%. O MDE **ex-post** do EP realizado está na seção 2 e em `A4_tabela_09_mde_ex_ante_ex_post.csv`
 > Tipologia A2 strict 540/540 (25/101/238/176) quadro 368 (18/72/203/75)
 > Amostra primária: **1295 células CNES–curso Ch1 em 368 municípios**; estendida 3057 (1762 Ch2)
 
 ## 1. Construção e suporte (antes dos coeficientes)
 
-Primária 1295: outcome médio **30.3%** (393/1295). Por estrato: capital 35.6% (73), metropolitano 44.9% (265), interior próximo 26.9% (811), remoto 20.5% (146). Ver `A4_tabela_01_amostra_construcao.csv` (por estrato) + `A4_tabela_00_construcao_steps.csv` (3323→3057→1295, 266 sem municipio, 29 fora quadro Ch1 com municipio).
+Primária 1295: outcome médio **30.3%** (393/1295). Por estrato: capital 35.6% (73), metropolitano 44.9% (265), interior próximo 26.9% (811), remoto 20.5% (146). Ver `A4_tabela_01_amostra_construcao.csv` (por estrato) + `A4_tabela_00_construcao_steps.csv` (3323 → 3057 → 1295, 266 sem municipio, 0 fora quadro Ch1 com municipio).
 
 Faixa anunciada (descritiva, não causal): FAIXA1 31.6% (n=291), FAIXA2 37.4% (n=465), FAIXA3 23.6% (n=539) — ver `A4_tabela_01b_amostra_faixa.csv`. IVS 2010 mediano 0.328; Q1–Q4 prevalência ver figura 02; correlação IVS–outcome 0.06 (associativa). Estoque pré médio 26.1 por município; log(pop) mediano 11.24. Curso distribuição ver `A4_tabela_01c_amostra_curso.csv` (16 cursos, min 22 max 188), UF ver `A4_tabela_01d_amostra_uf.csv` (27 UFs, 8 com <5 clusters colapsadas na macrorregião de saúde conforme A3 — AL, AP, DF, ES, PB, PE, RR, SE —, resultando em 24 níveis de FE) para FE.
 
-População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, reforçando que Ch2 é cadastro reserva sem capacidade imediata numérica; análise conjunta mantém FE de chamada. Construção sem escolher amostra por resultado; 266 sem municipio e 29 fora quadro mantidos fora da primária por definição prévia.
+População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, reforçando que Ch2 é cadastro reserva sem capacidade imediata numérica; análise conjunta mantém FE de chamada. Construção sem escolher amostra por resultado; 266 sem municipio e 0 fora quadro com municipio mantidos fora da primária por definição prévia.
 
 ## 2. Modelo primário exatamente como congelado em A3
 
@@ -84,7 +84,7 @@ A escolha da primária é a do protocolo, não uma seleção posterior ao result
 
 - **Estrato×IVS**: capital×IVS -3.210 (p=0.000); interior_proximo_polo×IVS -0.252 (p=0.454); metropolitano×IVS -0.248 (p=0.656) — interação distinta de zero a 5% em capital; leitura descritiva, sem correção de multiplicidade nem hipótese pré-especificada de sinal (ver `A4_tabela_03_separacao_*.csv`).
 
-Interpretação: **associado a** maior atração em metropolitano/capital vs remoto, mas ajustado perde significância para capital/próximo; nenhuma evidência de gradiente causal de bolsa ou IVS.
+Interpretação: **associado a** maior atração em metropolitano/capital vs remoto. No ajuste completo, metropolitano fica com p=0.018 e q FDR=0.055 (acima de 5% após a correção), capital p=0.204 e próximo p=0.173; nenhuma evidência de gradiente causal de bolsa ou IVS.
 
 ## 4. Influência e robustez
 

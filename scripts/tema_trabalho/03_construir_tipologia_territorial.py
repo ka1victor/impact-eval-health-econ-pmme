@@ -349,6 +349,7 @@ def main() -> None:
         "in_populacao_A1",
     ]
     matriz_tipologia = nacional[cols_out].copy()
+    matriz_tipologia["natureza_dos_dados"] = "EMPIRICO"
 
     # 9. Suporte por estrato (sem outcomes) — descreve a oferta e a população A1
     quadro = pd.read_parquet(QUADRO).copy()
@@ -441,6 +442,7 @@ def main() -> None:
     # 11. Manifesto
     manifesto: dict[str, Any] = {
         "protocolo": "A2_TIPOLOGIA_TERRITORIAL",
+        "natureza_dos_dados": "EMPIRICO",
         "data_referencia": "2026-09-02",
         "efeitos_estimados": False,
         "portao": gate,

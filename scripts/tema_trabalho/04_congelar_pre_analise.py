@@ -29,6 +29,24 @@ REGIC_XLSX = DATA_TERRITORIO / "REGIC2018_Municipios_Hierarquia_e_regiao.xlsx"
 RM_XLSX = DATA_TERRITORIO / "Composicao_RMs_RIDEs_AglomUrbanas_2022_v2.xlsx"
 
 OUT_REGISTRO = OUT_DIR / "registro_pre_analise_atracao.json"
+
+# Hashes congelados em 02/09/2026 (registro A3 do commit 22eddb5, último antes da
+# correção de 18/10/2026). São o campo `hashes_entradas` e `hashes_artefatos_A1_A2`
+# do protocolo e não são reescritos; os hashes dos insumos corrigidos vão para a
+# emenda datada. Para os insumos que não mudaram, coincidem com o arquivo em disco.
+HASHES_ENTRADAS_CONGELADOS = {
+    "output/aquisicao/quadro_vagas_tratamento.parquet": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f",
+    "output/tema_trabalho/matriz_tipologia_territorial.parquet": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+    "output/aquisicao/malha_municipios_regioes_saude.parquet": "5c188c3de49e985e858eb4b156bcb3fed890ace7173fe8eb7ba160da2e643e03",
+    "output/tema_trabalho/manifesto_tipologia_territorial.json": "eb3839b5438d620933db8a74a04110798f919cf2153bda4e4df486c8146437be",
+    "output/tema_trabalho/portao_denominador.json": "0055baf7ebc110cc7143395a3f2090893a1888b718fd0645db318cf06850489a",
+    "data/raw/aquisicao/territorio/REGIC2018_Municipios_Hierarquia_e_regiao.xlsx": "f1d29395964e4827d8294d27b57bcffb36fc47918f91b8ecee4efdbac1cda03e",
+    "data/raw/aquisicao/territorio/Composicao_RMs_RIDEs_AglomUrbanas_2022_v2.xlsx": "ac12c746ea9d337ea3982b7a591c15cb2da6231410738218abb947933ba64cfa",
+}
+HASHES_ARTEFATOS_A1_A2_CONGELADOS = {
+    "output/tema_trabalho/matriz_funil_ciclo1.parquet": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15",
+    "output/tema_trabalho/suporte_estratos_territoriais.csv": "4fc642a5299de9157b8dd9a1a5a691bd276994f2688f235b7eff535a653a18cd",
+}
 OUT_POTENCIA = OUT_DIR / "potencia_atracao.json"
 
 ALPHA = 0.05
@@ -219,6 +237,7 @@ def main() -> None:
     # Registro de pré-análise
     registro: dict[str, Any] = {
         "protocolo": "A3_REGISTRO_PRE_ANALISE_ATRACAO",
+        "natureza_dos_dados": "EMPIRICO",
         "data_referencia": "2026-09-02",
         "efeitos_estimados": False,
         "pergunta": "Quais características territoriais e das vagas estão associadas à dificuldade de preenchimento (alguma confirmação/homologação observada na célula) e, condicionalmente, à persistência da oferta médica local?",
@@ -306,27 +325,27 @@ def main() -> None:
             "permitido": "atração administrativa (alguma confirmação/homologação observada), preenchimento parcialmente observável, gradiente territorial, persistência da oferta local (quando CNES validado)",
             "proibido": "taxa de preenchimento por vaga, retenção individual do bolsista, efeito causal do PMM-E/bolsa/IVS, candidaturas por vaga",
         },
-        "hashes_entradas": {
-            str(p.relative_to(ROOT)).replace("\\", "/"): {"sha256": sha256(p)}
-            for p in [QUADRO, MATRIZ_TIPOLOGIA, MALHA, MANIFESTO_TIPOLOGIA, PORTAO_A1, REGIC_XLSX, RM_XLSX]
-        },
-        "hashes_artefatos_A1_A2": {
-            str((OUT_DIR / "matriz_funil_ciclo1.parquet").relative_to(ROOT)).replace("\\", "/"): {"sha256": sha256(MATRIZ_FUNIL)},
-            str((OUT_DIR / "suporte_estratos_territoriais.csv").relative_to(ROOT)).replace("\\", "/"): {"sha256": sha256(OUT_DIR / "suporte_estratos_territoriais.csv")},
-        },
+        "hashes_entradas": {rel: {"sha256": h} for rel, h in HASHES_ENTRADAS_CONGELADOS.items()},
+        "hashes_artefatos_A1_A2": {rel: {"sha256": h} for rel, h in HASHES_ARTEFATOS_A1_A2_CONGELADOS.items()},
         "portao_para_A4": "Não executar A4 sem este registro assinado por hash e sem MDE reportado; qualquer desvio deve ser emendado e datado.",
         # Emendas datadas (regra do `portao_para_A4`). O texto congelado acima não é
         # reescrito; os hashes de entrada passam a ser os dos insumos corrigidos.
         "emendas": [
             {
                 "data": "2026-10-18",
-                "tipo": "correcao_de_insumo_sem_mudanca_de_especificacao",
+                "tipo": "correcao_de_dado_de_entrada_e_de_denominador",
                 "motivo": (
                     "as covariadas contínuas da tipologia A2 (ivs_2010, subíndices, ivs_categoria, idhm_2010, "
                     "populacao_2010, rdpc_2010) vinham de data/ivs_ipea_2010_municipios.csv, que é, em cada "
-                    "município, a última linha de subgrupo com IVS preenchido da base do Ipea (mulheres negras "
-                    "em área urbana em 78% dos municípios), e não o IVS do município "
+                    "município, a última linha de subgrupo com IVS preenchido da base do Ipea (contagem por "
+                    "linha em output/rdd_bolsa/identificacao_arquivo_local_ivs.json), e não o IVS do município "
                     "(docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md)"
+                ),
+                "o_que_e": (
+                    "correção do dado de entrada: os valores congelados eram de um subgrupo populacional. Inclui "
+                    "uma troca de denominador: o estoque pré por 10 mil dividia pela população do subgrupo e passa "
+                    "a dividir pela população residente do Censo 2022, não pela população de 2010 oficial; é "
+                    "correção de dado, não ajuste de especificação escolhido depois dos resultados"
                 ),
                 "correcao": (
                     "IVS, subíndices, IDHM, população 2010 e renda 2010 passam a vir da base oficial do Ipea "
@@ -336,13 +355,21 @@ def main() -> None:
                     "log1p(populacao_2010), agora com a população oficial"
                 ),
                 "inalterado": (
-                    "pergunta, população (1.295 células, 368 municípios), outcome, estratos, covariadas "
+                    "pergunta, população (campo populacao.primaria), outcome, estratos, covariadas "
                     "permitidas, modelos, efeitos fixos, cluster, potência e linguagem"
                 ),
                 "consequencia_nos_hashes": (
-                    "hashes_entradas registram a malha e a tipologia corrigidas; os hashes da versão de "
-                    "02/09/2026 ficam no histórico do Git e na auditoria 19"
+                    "hashes_entradas e hashes_artefatos_A1_A2 ficam como congelados em 02/09/2026; os hashes "
+                    "dos insumos em vigor estão abaixo, nesta emenda"
                 ),
+                "hashes_entradas_em_vigor": {
+                    str(p.relative_to(ROOT)).replace("\\", "/"): {"sha256": sha256(p)}
+                    for p in [QUADRO, MATRIZ_TIPOLOGIA, MALHA, MANIFESTO_TIPOLOGIA, PORTAO_A1, REGIC_XLSX, RM_XLSX]
+                },
+                "hashes_artefatos_A1_A2_em_vigor": {
+                    str(p.relative_to(ROOT)).replace("\\", "/"): {"sha256": sha256(p)}
+                    for p in [MATRIZ_FUNIL, OUT_DIR / "suporte_estratos_territoriais.csv"]
+                },
                 "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md",
             }
         ],

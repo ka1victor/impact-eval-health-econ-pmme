@@ -1401,6 +1401,19 @@ for chave, bruto, loc, fmt, tr in [("Q16", c7_q16, loc_c17, decimal_br(c7_q16, 4
 # ------------------------------------------------------------------ execucao
 
 
+def decimais_sem_origem(tex: str, registros: list[dict[str, Any]]) -> tuple[list[str], list[str]]:
+    """Cobertura (como no conferidor do artigo curto): todo decimal com vírgula no corpo
+    do artigo tem de estar contido em algum trecho conferido com status OK."""
+    corpo = tex.split("\\begin{document}", 1)[1].split("\\begin{thebibliography}", 1)[0]
+    corpo = re.sub(r"\\(label|ref|includegraphics|cite[tp]?)\{[^}]*\}", " ", corpo)
+    corpo_norm = re.sub(r"\s+", " ", corpo)
+    trechos_ok = " || ".join(r["trecho_esperado_no_tex"] for r in registros if r.get("status") == "OK")
+    decimais = sorted(set(re.findall(r"(?<![\d,.])\d+,\d+(?![\d,])", corpo_norm)))
+    sem_origem = [d for d in decimais
+                  if not re.search(r"(?<![\d,.])" + re.escape(d) + r"(?![\d,])", trechos_ok)]
+    return decimais, sem_origem
+
+
 def main() -> None:
     if not TEX.exists():
         raise SystemExit(f"Arquivo do artigo ausente: {TEX}")
@@ -1424,8 +1437,10 @@ def main() -> None:
 
     divergentes = quadro[quadro["status"].ne("OK")]
     problemas = conferir_estrutura(tex)
+    decimais, sem_origem = decimais_sem_origem(tex, REGISTROS)
 
     print(f"Numeros conferidos: {len(quadro)}")
+    print(f"Decimais distintos no corpo: {len(decimais)}; sem origem: {len(sem_origem)}")
     print(f"Mapeamento gravado em: {CONFERENCIA_CSV.relative_to(ROOT)}")
     print(f"Problemas estruturais: {len(problemas)}")
     for problema in problemas:
@@ -1436,7 +1451,12 @@ def main() -> None:
         for _, linha in divergentes.iterrows():
             print(f"  - {linha['id']}: esperava '{linha['trecho_esperado_no_tex']}'")
 
-    if len(divergentes) or problemas:
+    if sem_origem:
+        print("\nDecimais no corpo sem trecho conferido que os contenha:")
+        for d in sem_origem:
+            print(f"  - {d}")
+
+    if len(divergentes) or problemas or sem_origem:
         raise SystemExit(1)
 
     print("\nCONFERENCIA APROVADA: toda cifra do artigo corresponde a um artefato.")

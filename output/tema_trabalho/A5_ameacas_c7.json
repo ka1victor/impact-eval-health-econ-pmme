@@ -1,6 +1,7 @@
 {
   "protocolo": "A5_AMEACAS_C7",
   "data_referencia": "2026-10-18",
+  "natureza_dos_dados": "EMPIRICO",
   "protocolo_congelado_em": "2026-09-16, docs/06_execucao/36_backlog_pos_auditoria.md, item C-7, antes da execucao",
   "linguagem": "associativa; atracao e resultado realizado; nenhum efeito causal",
   "amostra": {
@@ -3079,7 +3080,7 @@
       "conferido_contra": "output/tema_trabalho/A6_manifesto_reproducao.json"
     },
     "output/tema_trabalho/A5_estimativas_provimento.json": {
-      "sha256": "025ec146096f5d70a0c08bc90586d69d62d2eeda237894a66665a83736947581"
+      "sha256": "8c7500a13e37454647fc87e5c38e370193f376b3ffaf6a6be535c58c18c9565a"
     }
   },
   "arquivos": {

@@ -49,8 +49,6 @@ LEITORES_AUTORIZADOS = {
     S + "rdd_bolsa/04_portao_r1_escore_administrativo.py": "compara o escore do MS com o arquivo (documenta a divergência)",
     S + "rdd_bolsa/04b_validar_ivs_oficial_escore_administrativo.py": "compara o arquivo com a base oficial",
     S + "rdd_bolsa/04c_identificar_recorte_arquivo_local.py": "reproduz a extração errada",
-    S + "rdd_bolsa/06_estimar_E2_limites.py": "cenário 'informado' congelado, rotulado 'sem valor' no relatório",
-    S + "rdd_bolsa/08_estimar_E4_proporcao.py": "cenário 'informado' congelado, rotulado 'sem valor' no relatório",
     S + "rdd_bolsa/09_gerar_relatorio_pdf.py": "figura comparativa do arquivo errado",
     S + "rdd_bolsa/10_galeria_figura_regra.py": "figura comparativa do arquivo errado",
     S + "tema_trabalho/07_red_team_sintese.py": "hash no manifesto A6, rotulado como failure mode",
@@ -63,8 +61,21 @@ LEITORES_DERIVADOS_AUTORIZADOS = {
 }
 
 
+# Pastas varridas além do run_all: o ciclo 3 (C3-03 lê a malha) e as figuras da banca.
+PASTAS_EXTRAS = ("avaliacao_ciclo3", "apresentacao")
+# Painéis versionados que guardam colunas territoriais da malha antiga (não regeneráveis
+# sem o CNES mensal). Quem os lê e usa essas colunas tem de repô-las da fonte oficial.
+PAINEIS_COM_COLUNAS_ANTIGAS = {"painel_municipio_curso_mes.parquet", "A5_painel_T0.parquet",
+                               "painel_municipio_curso_mensal.parquet"}
+COLUNAS_TERRITORIAIS = {"ivs_2010", "ivs_categoria", "populacao_2010"}
+FONTES_OFICIAIS = {"a08_ivs_2010_oficial_municipio.csv", "malha_municipios_regioes_saude.parquet",
+                   "matriz_tipologia_territorial.parquet", "painel_municipios_regioes.parquet"}
+
+
 def scripts_do_pipeline() -> list[Path]:
     caminhos = list(RA.STEPS)
+    for pasta in PASTAS_EXTRAS:
+        caminhos += sorted((ROOT / S / pasta).glob("*.py"))
     # O pipeline de avaliação de impacto é um passo do run_all que roda outros scripts.
     arvore = ast.parse((ROOT / S / "avaliacao_impacto/run_pipeline_avaliacao.py").read_text(encoding="utf-8"))
     for no in ast.walk(arvore):
@@ -102,6 +113,27 @@ class TestPipelineNaoLeArquivoErrado(unittest.TestCase):
                        "tema_trabalho/01_auditar_atracao_provimento_interior.py",
                        "avaliacao_impacto/07_gerar_tabelas_e_figuras.py"):
             self.assertIn("a08_ivs_2010_oficial_municipio.csv", constantes(ROOT / S / script), script)
+
+    def test_quem_le_painel_com_colunas_antigas_repoe_da_fonte_oficial(self) -> None:
+        for p in scripts_do_pipeline():
+            c = constantes(p)
+            if c & PAINEIS_COM_COLUNAS_ANTIGAS and c & COLUNAS_TERRITORIAIS:
+                self.assertTrue(c & FONTES_OFICIAIS,
+                                f"{rel(p)} usa {sorted(c & COLUNAS_TERRITORIAIS)} de painel com colunas da malha antiga "
+                                "sem repô-las da fonte oficial")
+
+    def test_e2_e4_sem_o_cenario_informado(self) -> None:
+        e2 = pd.read_csv(ROOT / "output/rdd_bolsa/E2_limites.csv")
+        e4 = pd.read_csv(ROOT / "output/rdd_bolsa/E4_estimativas.csv")
+        self.assertNotIn("informado", set(e2["cenario"]))
+        self.assertNotIn("informado", set(e4["cenario_ou_espec"]))
+        for f in ("E2_limites_resumo.json", "E4_resumo.json"):
+            txt = (ROOT / "output/rdd_bolsa" / f).read_text(encoding="utf-8")
+            self.assertNotIn('"data/ivs_ipea_2010_municipios.csv"', txt, f)
+
+    def test_censo_2022_roda_antes_da_malha(self) -> None:
+        censo = RA.STEPS.index(ROOT / S / "aquisicao/06_adquirir_populacao_censo2022.py")
+        self.assertLess(censo, RA.STEPS.index(ROOT / S / "aquisicao/04_harmonizar_territorio_ibge.py"))
 
     def test_a08_roda_antes_de_quem_le_a_base_oficial(self) -> None:
         a08 = RA.STEPS.index(ROOT / S / "aquisicao/a08_adquirir_ivs_2010_oficial.py")
@@ -162,7 +194,8 @@ class TestColunasTerritoriaisOficiais(unittest.TestCase):
         reg = json.loads((ROOT / "output/tema_trabalho/registro_pre_analise_atracao.json").read_text(encoding="utf-8"))
         emendas = {e["data"]: e for e in reg["emendas"]}
         self.assertIn("2026-10-18", emendas)
-        self.assertIn("sem_mudanca_de_especificacao", emendas["2026-10-18"]["tipo"])
+        self.assertIn("correcao_de_dado_de_entrada", emendas["2026-10-18"]["tipo"])
+        self.assertIn("Censo 2022", emendas["2026-10-18"]["o_que_e"])
 
 
 class TestNumerosAntigosSoComoFailureMode(unittest.TestCase):

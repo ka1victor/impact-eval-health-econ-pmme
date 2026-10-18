@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **384 testes em 33 módulos** (contagem de 18/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **401 testes em 34 módulos** (contagem de 18/10/2026, depois da reestimação com a base oficial do IVS), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 

@@ -4,7 +4,7 @@ afirmacao,evidencia,limite,linguagem_maxima
 Resultado preservado em confirmação,"Contraste metropolitano +27,0 pp",Confirmação não é entrada física,associação no estágio de confirmação
 Resultado preservado em homologação,"Contraste metropolitano +23,8 pp",Homologação não é exercício,associação no estágio de homologação
 Resultado preservado ao colapsar CNES,"Município–curso: +31,6 pp",Muda o peso analítico,robustez à unidade
-"IVS/faixa, como níveis, não identificam efeito marginal",Faixa é função determinística do IVS 2010 oficial: regra reproduzida em 368/368 (ciclo 1) e 454/454 (ciclo 2); R1 aprovado sharp,"Fora dos cortes, colineares com o território; coeficientes de IVS do A4 usaram o arquivo local errado e serão reestimados (auditoria 16, §4)",gradiente descritivo
+"IVS/faixa, como níveis, não identificam efeito marginal",Faixa é função determinística do IVS 2010 oficial: regra reproduzida em 368/368 (ciclo 1) e 454/454 (ciclo 2); R1 aprovado sharp,"Fora dos cortes, colineares com o território; coeficientes de IVS do A4 reestimados com a base oficial do Ipea em 18/10/2026; a versão com o arquivo local errado só consta como failure mode (auditorias 16 e 19)",gradiente descritivo
 "Dinâmica CNES em março/2026: +0,50","FE célula, curso–mês, UF–mês; p=0,033",Atração é resultado realizado; sem grupo causal,associado a trajetória diferencial
 Pré-tendências não rejeitadas,"Teste conjunto p=0,420",Não rejeitar não prova paralelismo,"diagnóstico favorável, não validação causal"
 Distribuição da mudança é assimétrica,Medianas 0 e 1; máximo com atração 211,Cauda extrema influencia a média,"descrever média, mediana e caudas"

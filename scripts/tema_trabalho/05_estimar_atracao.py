@@ -20,6 +20,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import re
 import warnings
 from pathlib import Path
 from typing import Any
@@ -407,10 +408,14 @@ def prepare_df_primary() -> tuple[pd.DataFrame, pd.DataFrame]:
     # estrato categorical same levels (capitals etc)
     ext["estrato"] = pd.Categorical(ext["estrato"], categories=["interior_remoto", "capital", "metropolitano", "interior_proximo_polo"], ordered=False)
 
-    # Asserts primária exata
-    assert len(qm) == 1295, f"primária len {len(qm)} !=1295"
-    assert qm["co_ibge_6d"].nunique() == 368, f"clusters {qm['co_ibge_6d'].nunique()} !=368"
-    assert len(ext) == 3057, f"estendida {len(ext)} !=3057"
+    # Asserts da população congelada em A3: alvos lidos da potência (amostra_primaria) e do
+    # registro (populacao.estendida), não digitados aqui.
+    pot_a3 = json.loads(POTENCIA_A3.read_text(encoding="utf-8"))["amostra_primaria"]
+    reg_a3 = json.loads(REGISTRO_A3.read_text(encoding="utf-8"))["populacao"]
+    n_ext_a3 = int(re.search(r"(\d+) células", reg_a3["estendida"]).group(1))
+    assert len(qm) == pot_a3["n_celulas"], f"primária {len(qm)} != {pot_a3['n_celulas']} (A3)"
+    assert qm["co_ibge_6d"].nunique() == pot_a3["n_municipios_clusters"], "clusters divergem do A3"
+    assert len(ext) == n_ext_a3, f"estendida {len(ext)} != {n_ext_a3} (A3)"
     return qm, ext
 
 
@@ -596,13 +601,26 @@ def main() -> None:
     amostra_long.to_csv(tmp, index=False)
     tmp.replace(TABELA_AMOSTRA)
     # Tabelas suplementares de suporte (antes dos coefs) — faixa, curso, UF, construção steps
-    # Construção steps: 3323 funil -> 3057 extended -> 1295 primary
+    # Construção: funil A1 -> estendida -> primária. Contagens lidas do funil.
+    funil_c = pd.read_parquet(MATRIZ_FUNIL)
+    por_chamada = funil_c.groupby("chamada").size()
+    sem_mun = funil_c["co_ibge_6d"].isna()
+    sem_mun_ch = funil_c[sem_mun].groupby("chamada").size().reindex(por_chamada.index, fill_value=0)
+    ch1 = funil_c[funil_c["chamada"] == 1]
+    fora_quadro_com_mun_ch1 = int((ch1["co_ibge_6d"].notna() & ~ch1["in_quadro_ch1_original"].astype(bool)).sum())
     construcao = pd.DataFrame([
-        {"etapa": "01_funil_total_A1", "n_celulas": len(pd.read_parquet(MATRIZ_FUNIL)), "n_municipios": pd.read_parquet(MATRIZ_FUNIL)["co_ibge_6d"].nunique(), "nota": "3323 linhas Ch1 1324 + Ch2 1999"},
-        {"etapa": "02_exclui_sem_municipio", "n_celulas": 266, "n_municipios": 0, "nota": "fora do quadro sem municipio (29 Ch1 +237 Ch2)"},
-        {"etapa": "03_estendida_A1", "n_celulas": len(df_ext), "n_municipios": df_ext["co_ibge_6d"].nunique(), "nota": "3057 = 3323-266"},
-        {"etapa": "04_primaria_quadro_Ch1", "n_celulas": len(df_prim), "n_municipios": df_prim["co_ibge_6d"].nunique(), "nota": "1295 quadro Ch1 (368 mun) outcome 30.3%"},
-        {"etapa": "05_exclui_29_fora_quadro_Ch1_com_mun", "n_celulas": 29, "n_municipios": 29, "nota": "Ch1 fora do quadro com municipio, não primária"},
+        {"etapa": "01_funil_total_A1", "n_celulas": len(funil_c), "n_municipios": funil_c["co_ibge_6d"].nunique(),
+         "nota": f"{len(funil_c)} linhas: " + " + ".join(f"Ch{k} {n}" for k, n in por_chamada.items())},
+        {"etapa": "02_exclui_sem_municipio", "n_celulas": int(sem_mun.sum()), "n_municipios": 0,
+         "nota": "fora do quadro sem municipio (" + " + ".join(f"{n} Ch{k}" for k, n in sem_mun_ch.items()) + ")"},
+        {"etapa": "03_estendida_A1", "n_celulas": len(df_ext), "n_municipios": df_ext["co_ibge_6d"].nunique(),
+         "nota": f"{len(df_ext)} = {len(funil_c)} - {int(sem_mun.sum())}"},
+        {"etapa": "04_primaria_quadro_Ch1", "n_celulas": len(df_prim), "n_municipios": df_prim["co_ibge_6d"].nunique(),
+         "nota": f"{len(df_prim)} quadro Ch1 ({df_prim['co_ibge_6d'].nunique()} mun) outcome "
+                 f"{df_prim['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%}"},
+        {"etapa": "05_exclui_fora_quadro_Ch1_com_mun", "n_celulas": fora_quadro_com_mun_ch1,
+         "n_municipios": int(ch1.loc[ch1["co_ibge_6d"].notna() & ~ch1["in_quadro_ch1_original"].astype(bool), "co_ibge_6d"].nunique()),
+         "nota": "Ch1 fora do quadro com municipio, não primária"},
     ])
     tmp = TABELA_CONSTRUCAO.with_suffix(".csv.tmp")
     construcao.to_csv(tmp, index=False)
@@ -1254,6 +1272,7 @@ def main() -> None:
         "protocolo": "A4_ESTIMATIVAS_ATRACAO",
         "data_referencia": "2026-09-02",
         "efeitos_estimados": True,
+        "natureza_dos_dados": "EMPIRICO",
         "correcao_2026_10_18": {
             "o_que_mudou": (
                 "covariadas contínuas (ivs_2010, subíndices, log_pop, estoque_por_10k) da tipologia A2 corrigida: "
@@ -1265,8 +1284,9 @@ def main() -> None:
         },
         "linguagem": "associativa (associado a, gradiente territorial); proibido efeito causal do PMM-E/bolsa/IVS e retenção individual",
         "populacao": {
-            "primaria": "1295 células CNES–curso quadro Ch1 (368 municípios)",
-            "estendida": "3057 células funil A1 (1762 Ch2 +1295 Ch1) sem 266 sem município",
+            "primaria": f"{len(df_prim)} células CNES–curso quadro Ch1 ({df_prim['co_ibge_6d'].nunique()} municípios)",
+            "estendida": (f"{len(df_ext)} células funil A1 ({int((df_ext['chamada'] == 2).sum())} Ch2 +"
+                          f"{int((df_ext['chamada'] == 1).sum())} Ch1) sem {int(construcao['n_celulas'].iloc[1])} sem município"),
             "unidade_analitica": "célula CNES–curso (chamada como FE quando Ch1+Ch2)",
             "unidade_inferencia": "município (cluster-robusto; G=368 primária)",
         },
@@ -1539,20 +1559,33 @@ def main() -> None:
     texto_faixa = ", ".join(
         f"{str(r.faixa).replace(' ', '')} {r.outcome_medio:.1%} (n={int(r.n_celulas)})" for r in _faixa.itertuples()
     )
+    tip_rel = pd.read_parquet(MATRIZ_TIPOLOGIA, columns=["estrato", "in_populacao_A1"])
+    a1_cont = tip_rel[tip_rel["in_populacao_A1"]]["estrato"].value_counts()
+    q_cont = df_prim.drop_duplicates("co_ibge_6d")["estrato"].astype(str).value_counts()
+    ordem_e = ["capital", "metropolitano", "interior_proximo_polo", "interior_remoto"]
+    texto_tipologia = (
+        f"{int(a1_cont.sum())}/{int(a1_cont.sum())} ({'/'.join(str(int(a1_cont.get(e, 0))) for e in ordem_e)}) "
+        f"quadro {int(q_cont.sum())} ({'/'.join(str(int(q_cont.get(e, 0))) for e in ordem_e)})"
+    )
+    rotulos_e = {"capital": "capital", "metropolitano": "metropolitano", "interior_proximo_polo": "interior próximo",
+                 "interior_remoto": "remoto"}
+    texto_estratos = ", ".join(
+        f"{rotulos_e[e]} {df_prim.loc[df_prim['estrato'] == e, 'outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} "
+        f"({int((df_prim['estrato'] == e).sum())})" for e in ordem_e)
     relatorio = f"""# A4 — Atração e implementação: diagnóstico e linguagem autorizada (02/09/2026)
 
 > Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash {sha256(REGISTRO_A3)[:8]})
 > Potência: `output/tema_trabalho/potencia_atracao.json`; MDE **ex-ante** dos contrastes vs remoto: capital {pot['contrastes_vs_interior_remoto']['capital']['mde_80_pp_p30']:.1%}, metro {pot['contrastes_vs_interior_remoto']['metropolitano']['mde_80_pp_p30']:.1%}, próximo {pot['contrastes_vs_interior_remoto']['interior_proximo_polo']['mde_80_pp_p30']:.1%}. O MDE **ex-post** do EP realizado está na seção 2 e em `A4_tabela_09_mde_ex_ante_ex_post.csv`
-> Tipologia A2 strict 540/540 (25/101/238/176) quadro 368 (18/72/203/75)
-> Amostra primária: **1295 células CNES–curso Ch1 em 368 municípios**; estendida 3057 (1762 Ch2)
+> Tipologia A2 strict {texto_tipologia}
+> Amostra primária: **{len(df_prim)} células CNES–curso Ch1 em {df_prim['co_ibge_6d'].nunique()} municípios**; estendida {len(df_ext)} ({int((df_ext['chamada'] == 2).sum())} Ch2)
 
 ## 1. Construção e suporte (antes dos coeficientes)
 
-Primária 1295: outcome médio **{y_prim.mean():.1%}** (393/1295). Por estrato: capital {df_prim[df_prim['estrato']=='capital']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (73), metropolitano {df_prim[df_prim['estrato']=='metropolitano']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (265), interior próximo {df_prim[df_prim['estrato']=='interior_proximo_polo']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (811), remoto {df_prim[df_prim['estrato']=='interior_remoto']['outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} (146). Ver `A4_tabela_01_amostra_construcao.csv` (por estrato) + `A4_tabela_00_construcao_steps.csv` (3323→3057→1295, 266 sem municipio, 29 fora quadro Ch1 com municipio).
+Primária 1295: outcome médio **{y_prim.mean():.1%}** ({int(y_prim.sum())}/{len(y_prim)}). Por estrato: {texto_estratos}. Ver `A4_tabela_01_amostra_construcao.csv` (por estrato) + `A4_tabela_00_construcao_steps.csv` ({' → '.join(str(int(n)) for n in construcao['n_celulas'].iloc[[0, 2, 3]])}, {int(construcao['n_celulas'].iloc[1])} sem municipio, {int(construcao['n_celulas'].iloc[4])} fora quadro Ch1 com municipio).
 
 Faixa anunciada (descritiva, não causal): {texto_faixa} — ver `A4_tabela_01b_amostra_faixa.csv`. IVS 2010 mediano {df_prim['ivs_2010'].median():.3f}; Q1–Q4 prevalência ver figura 02; correlação IVS–outcome {df_prim['ivs_2010'].corr(df_prim['outcome_alguma_confirmacao_ou_homologacao']):.2f} (associativa). Estoque pré médio {df_prim['estoque_especialistas_pre_12m_media'].mean():.1f} por município; log(pop) mediano {df_prim['log_pop'].median():.2f}. Curso distribuição ver `A4_tabela_01c_amostra_curso.csv` (16 cursos, min 22 max 188), UF ver `A4_tabela_01d_amostra_uf.csv` (27 UFs, 8 com <5 clusters colapsadas na macrorregião de saúde conforme A3 — {', '.join(sorted(small_ufs))} —, resultando em {pd.Series(df_prim['uf_fe']).nunique()} níveis de FE) para FE.
 
-População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, reforçando que Ch2 é cadastro reserva sem capacidade imediata numérica; análise conjunta mantém FE de chamada. Construção sem escolher amostra por resultado; 266 sem municipio e 29 fora quadro mantidos fora da primária por definição prévia.
+População estendida Ch1+Ch2 ({len(df_ext)}): prevalência Ch1 {df_ext.loc[df_ext['chamada'] == 1, 'outcome_alguma_confirmacao_ou_homologacao'].mean():.1%} vs Ch2 {df_ext.loc[df_ext['chamada'] == 2, 'outcome_alguma_confirmacao_ou_homologacao'].mean():.1%}, reforçando que Ch2 é cadastro reserva sem capacidade imediata numérica; análise conjunta mantém FE de chamada. Construção sem escolher amostra por resultado; {int(construcao['n_celulas'].iloc[1])} sem municipio e {int(construcao['n_celulas'].iloc[4])} fora quadro com municipio mantidos fora da primária por definição prévia.
 
 ## 2. Modelo primário exatamente como congelado em A3
 
@@ -1610,7 +1643,7 @@ A escolha da primária é a do protocolo, não uma seleção posterior ao result
 
 - **Estrato×IVS**: {texto_interacao} (ver `A4_tabela_03_separacao_*.csv`).
 
-Interpretação: **associado a** maior atração em metropolitano/capital vs remoto, mas ajustado perde significância para capital/próximo; nenhuma evidência de gradiente causal de bolsa ou IVS.
+Interpretação: **associado a** maior atração em metropolitano/capital vs remoto. No ajuste completo, metropolitano fica com p={res_lpm_full.pvalues['estrato_metropolitano']:.3f} e q FDR={q_full_metro:.3f} ({'abaixo' if q_full_metro < ALPHA else 'acima'} de 5% após a correção), capital p={res_lpm_full.pvalues['estrato_capital']:.3f} e próximo p={res_lpm_full.pvalues['estrato_interior_proximo_polo']:.3f}; nenhuma evidência de gradiente causal de bolsa ou IVS.
 
 ## 4. Influência e robustez
 

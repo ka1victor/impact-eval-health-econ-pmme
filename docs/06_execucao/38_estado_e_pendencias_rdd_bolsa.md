@@ -121,8 +121,10 @@ reconciliado para o ciclo 1.
   artigos e a síntese do A6 citam o ajuste completo corrigido, conferido contra
   `output/`. Antes e depois, conclusões que mudam e onde os números antigos
   ainda aparecem: [auditoria 19](../auditorias/19_reestimacao_base_oficial_failure_mode.md).
-  Pendente: o C3-03 do ciclo 3 (congelado) usou `ivs_2010` e `log_pop_2010` da
-  malha antiga e não foi reexecutado.
+  Também corrigidos no mesmo dia: o C3-03 do ciclo 3 (diagnósticos pré-T0 com
+  covariadas oficiais, por emenda datada, sem ler mês pós-T0), o cenário
+  "informado" de E2 e E4 (retirado das saídas ativas), a categoria de IVS das
+  figuras da banca 1 e o diagnóstico `tema_trabalho/01`.
 
 ## 4. O que falta
 

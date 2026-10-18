@@ -64,7 +64,8 @@ inventaria o erro, com rótulo; (d) retirado, fora do pipeline; (—) não lê n
 | `scripts/aquisicao/04_harmonizar_territorio_ibge.py` | direto: IVS, subíndices, IDHM, população, renda da malha | (a) e (b) | sim | corrigido: a08 + Censo 2022; a07 e a08 sobem no run_all para antes dele |
 | `scripts/aquisicao/05_integrar_painel_analitico.py` | indireto: colunas da malha no painel mensal | (b) | sim | herda a malha corrigida; não roda sem o CNES mensal (>16 GB); consumidores repõem as colunas |
 | `scripts/avaliacao_impacto/07_gerar_tabelas_e_figuras.py` | indireto: painel município–curso | (b) descritivo | sim | corrigido: IVS e população da a08; Tabela 1 regenerada |
-| `scripts/avaliacao_ciclo3/03_auditar_pre_e_potencia.py` | indireto: painel_municipios_regioes (ivs_2010, log_pop_2010) | (b) | não | PENDENTE: ciclo 3 congelado; herda a malha corrigida na próxima execução, mas as saídas de 31/08/2026 usaram o arquivo errado |
+| `scripts/avaliacao_ciclo3/03_auditar_pre_e_potencia.py` | indireto: painel_municipios_regioes (ivs_2010, log_pop_2010) | (b) | não | corrigido por emenda datada (--reestimar-covariaveis-oficiais): painéis pré-T0 congelados, nenhum mês pós-T0 lido |
+| `scripts/apresentacao/gerar_figuras_banca1.py` | indireto: ivs_categoria do painel município–curso | (b) descritivo | não | corrigido: categoria da malha oficial; manifesto das figuras regenerado |
 | `scripts/tema_trabalho/01_auditar_atracao_provimento_interior.py` | indireto: veredito de rdd_bolsa/00 | (a) | sim | corrigido: confere a regra com a a08 |
 | `scripts/tema_trabalho/03_construir_tipologia_territorial.py` | indireto: malha | (b) | sim | corrigido: colunas da a08; estoque por 10 mil com Censo 2022 |
 | `scripts/tema_trabalho/04_congelar_pre_analise.py` | indireto: hash da malha e da tipologia | registro | sim | emenda datada no registro A3 |
@@ -75,7 +76,7 @@ inventaria o erro, com rótulo; (d) retirado, fora do pipeline; (—) não lê n
 | `scripts/tema_trabalho/08_auditar_cutoff_selecao.py, 09_*, 09b_*` | não leem | (—) | sim | inalterado |
 | `scripts/tema_trabalho/10_conferir_numeros_artigo.py, 11_*` | comentários | (c) | sim | conferem o ajuste completo corrigido |
 | `scripts/tema_trabalho/12_registrar_failure_mode_ivs.py` | direto: documenta o erro | (c) | não | este registro |
-| `scripts/aquisicao/06_adquirir_populacao_censo2022.py` | só docstring | (—) | não | inalterado |
+| `scripts/aquisicao/06_adquirir_populacao_censo2022.py` | só docstring | (—) | sim | entra no run_all antes da malha; data de aquisição determinística; sem número do arquivo errado |
 | `scripts/aquisicao/a03_adquirir_ivs_regra.py` | direto: diagnóstico da regra | (a) | não | (d) histórico |
 | `scripts/aquisicao/a06_integrar_portao.py` | texto da matriz variável–fonte | (a) | não | (d) histórico |
 | `scripts/aquisicao/a08_adquirir_ivs_2010_oficial.py` | só observação no manifesto | (c) | sim | inalterado |
@@ -83,8 +84,8 @@ inventaria o erro, com rótulo; (d) retirado, fora do pipeline; (—) não lê n
 | `scripts/rdd_bolsa/02_*, 03_*` | indireto: portões feitos com o arquivo | (a) | não | (d) retirados em 18/10/2026 |
 | `scripts/rdd_bolsa/04_portao_r1_escore_administrativo.py` | direto: correlação com o escore do MS | (c) | sim | inalterado |
 | `scripts/rdd_bolsa/04b_*, 04c_*` | direto: compara com a base oficial e reproduz o erro | (c) | sim | inalterado |
-| `scripts/rdd_bolsa/06_estimar_E2_limites.py, 08_estimar_E4_proporcao.py` | direto: banda do cenário "informado" | (a) | sim | protegidos e congelados; cenário rotulado "sem valor" no relatório; não alterados |
-| `scripts/rdd_bolsa/07_*, 08a_*, 09b_*, 11_*` | não leem o arquivo; E3 e E5 leem da tipologia só o estrato | (—) | sim | protegidos; não reexecutados |
+| `scripts/rdd_bolsa/06_estimar_E2_limites.py, 08_estimar_E4_proporcao.py` | direto: banda do cenário "informado" | (a) | sim | cenário "informado" retirado das saídas ativas; pior caso, E4a e E4c idênticos; arquivo não é mais lido |
+| `scripts/rdd_bolsa/07_*, 08a_*, 09b_*, 11_*` | não leem o arquivo; E3 e E5 leem da tipologia só o estrato | (—) | sim | 07, 11, 09b reexecutados: estimativas idênticas; só o hash da tipologia muda |
 | `scripts/rdd_bolsa/09_gerar_relatorio_pdf.py, 10_galeria_figura_regra.py` | direto: figura comparativa | (c) | sim | inalterado |
 | `scripts/revisao_literatura/historico/gerar_doc_modelagem_micro_comparada.py` | texto histórico | (d) | não | histórico |
 
@@ -106,12 +107,21 @@ continuaram a ler a malha antiga; a decisão D3(b) adiou a reestimação, aplica
   código de 7 dígitos e a população 2022 do Censo 2022; manifesto em
   `output/aquisicao/manifesto_territorio_ibge.json`.
 - A tipologia A2 ganha `populacao_2022`, denominador de `estoque_pre_por_10k`. O registro
-  A3 recebe a emenda datada de 18/10/2026: especificação, amostras e desfechos não mudam;
-  mudam os insumos e os hashes de entrada.
+  A3 mantém os hashes congelados em 02/09/2026 e recebe a emenda datada de 18/10/2026
+  (correção de dado de entrada e de denominador), com os hashes dos insumos em vigor;
+  especificação, amostras e desfechos não mudam.
 - A4 e A5 foram reexecutados. A5 troca em memória as covariadas do painel em T0 congelado,
   que não é regravado (é a âncora de hash da reestimação).
 - A Tabela 1 do ciclo 1 repõe IVS e população da a08.
 - `tema_trabalho/01` confere a regra com o IVS oficial.
+- O cenário "informado" de E2 e E4, cuja banda usava o arquivo errado, saiu das saídas
+  ativas. E3, E5, a conferência do sinal, o relatório e a galeria da RDD foram
+  reexecutados.
+- O C3-03 do ciclo 3 recebeu emenda datada: propensão, suporte, pesos e potência com as
+  covariadas oficiais, sobre os painéis CNES pré-T0 congelados (conferidos por hash),
+  sem ler mês a partir de 202609.
+- As figuras da banca 1 passam a usar a categoria de IVS da malha oficial.
+- O Censo 2022 (`aquisicao/06`) entra no `run_all.py` antes da malha.
 - Os artigos citam o ajuste completo corrigido, conferido contra `output/` pelos scripts
   `10` e `11`.
 
@@ -250,6 +260,56 @@ iguais a 1e-9): A4 modelo principal (sem covariadas contínuas), A5 estudo de ev
 | IVS 2010 | Reserva média | 0,346 | **0,347** |
 | IVS 2010 | Diferença padronizada | −0,073 | **−0,036** |
 
+### RDD da bolsa (E1–E5)
+
+Estimativas reexecutadas e comparadas byte a byte com as do commit `22eddb528c37`:
+
+| Arquivo | Antes × depois |
+|---|---|
+| `output/rdd_bolsa/E1_densidade_estimativas.csv` | idêntico |
+| `output/rdd_bolsa/E3_estimativas.csv` | idêntico |
+| `output/rdd_bolsa/E3_diagnosticos.csv` | idêntico |
+| `output/rdd_bolsa/E4_proporcao_municipio.csv` | idêntico |
+| `output/rdd_bolsa/E5_especificacoes.csv` | idêntico |
+| `output/rdd_bolsa/E5_decomposicao_ic.csv` | idêntico |
+| `output/rdd_bolsa/E5_decomposicao_lados.csv` | idêntico |
+| `output/rdd_bolsa/E5_lr_selecao_janela.csv` | idêntico |
+| `output/rdd_bolsa/E5_lr_sensibilidade_janelas.csv` | idêntico |
+
+E2: 24 → 12 linhas (12 do cenário
+"informado" retiradas); o pior caso é idêntico.
+E4: 70 → 46 linhas (24 do "informado"
+retiradas); as demais são idênticas. E3 e E5 registram o hash da
+tipologia corrigida (E3: sim; E5:
+sim).
+
+### C3-03 do ciclo 3 (diagnósticos pré-tratamento)
+
+| Módulo | Nível | MDE 80% antes (failure mode) | MDE 80% depois | Suporte retido T / C, antes → depois | Suporte aprovado | Decisão |
+|---|---|---:|---:|---|---|---|
+| anestesiologia | cnes_ofertante | 2,22 | **2,12** | 0,832 / 0,977 → 0,832 / 0,970 | sim → sim | associacao_ajustada → **associacao_ajustada** |
+| oncologia_clinica | cnes_ofertante | 1,22 | **1,14** | 0,917 / 0,872 → 0,917 / 0,769 | sim → não | inviavel → **inviavel** |
+| medicina_intensiva | cnes_ofertante | — | **3,36** | 0,167 / 0,313 → 0,333 / 0,361 | não → não | inviavel → **inviavel** |
+| cirurgia_geral_cbo_exclusivo | cnes_ofertante | 1,70 | **1,70** | 0,758 / 0,801 → 0,758 / 0,774 | não → não | associacao_ajustada → **associacao_ajustada** |
+| anestesiologia | municipio | 4,44 | **4,62** | 0,909 / 0,911 → 0,857 / 0,818 | sim → sim | associacao_ajustada → **associacao_ajustada** |
+| oncologia_clinica | municipio | 3,96 | **3,84** | 0,875 / 0,686 → 0,875 / 0,371 | não → não | inviavel → **inviavel** |
+| medicina_intensiva | municipio | — | **—** | 0,500 / 0,016 → 0,500 / 0,048 | não → não | inviavel → **inviavel** |
+| cirurgia_geral_cbo_exclusivo | municipio | 2,74 | **2,80** | 0,826 / 0,609 → 0,826 / 0,685 | não → não | associacao_ajustada → **associacao_ajustada** |
+
+Nenhuma decisão do torneio muda. O suporte comum muda de aprovado para reprovado (ou o inverso) em oncologia_clinica/cnes_ofertante, sem mudar a decisão.
+
+### Figuras da banca 1: especialistas por 100 mil em 202506, por categoria de IVS (manifesto)
+
+| Categoria de IVS | Antes (failure mode): municípios / por 100 mil | Depois |
+|---|---|---|
+| ALTA | 46 / 9,97 | **50 / 23,94** |
+| BAIXA | 89 / 12,46 | **95 / 14,39** |
+| MEDIA | 132 / 17,60 | **89 / 14,41** |
+| MUITO_ALTA | 15 / 7,33 | **35 / 8,76** |
+| MUITO_BAIXA | 13 / 25,82 | **26 / 18,43** |
+
+As figuras não usam essa quebra; ela só consta do manifesto.
+
 ### Diagnóstico do tema (`tema_trabalho/01`), módulo da RDD
 
 - Antes (failure mode): "177 de 368 municípios divergem da regra candidata".
@@ -276,10 +336,9 @@ Leitura:
   ou sem estrato. A interação capital × IVS continua distinta de zero.
 - **A5:** o estudo de evento, que é o resultado secundário citado, não muda. As
   especificações completas mudam pouco e nenhuma vira significante.
-- **RDD da bolsa:** nada muda. E3 e E5 leem da tipologia só o estrato; o hash de tipologia
-  que gravaram é o da versão antiga (E3: sim;
-  E5: sim), e o estrato é idêntico.
-  Por isso os artefatos protegidos da cadeia (07, 08, 08a, 11, 09b) não foram reexecutados.
+- **RDD da bolsa:** nenhuma estimativa muda (tabela da seção 5). O cenário "informado"
+  de E2 e E4 deixa de existir nas saídas ativas.
+- **C3-03 do ciclo 3:** nenhuma decisão do torneio muda.
 
 ## 7. Onde os números antigos ainda aparecem
 
@@ -293,7 +352,9 @@ Só como failure mode, rotulados:
   (A5 e a Tabela 1 as substituem em memória);
 - `output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json` e as saídas dos scripts
   retirados `rdd_bolsa/00`, `01`, `01b`, `02`, `03` e `aquisicao/a03`, `a06`;
-- o cenário "informado" de E2 e E4, já rotulado "sem valor" no relatório da RDD;
+- as linhas do cenário "informado" de E2 e E4, só no histórico do Git (saíram das saídas);
+- a seção 6 de [`05_identificacao/13`](../05_identificacao/13_plano_pre_analise_ciclo3.md)
+  (C3-03), com errata de failure mode;
 - a errata E-7 de [`14`](14_erratas_artefatos_congelados.md), com nota de failure mode;
 - [`16`](16_ivs_2010_oficial_e_arquivo_local.md), [`17`](17_guia_conferencia_manual_ivs.md)
   e a figura comparativa do relatório da RDD, que documentam o erro.
@@ -306,9 +367,9 @@ Só como failure mode, rotulados:
 | `output/aquisicao/a08_ivs_2010_oficial_municipio.csv` | `0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe` |
 | `output/aquisicao/populacao_censo2022_municipios.csv` | `b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b` |
 | `output/rdd_bolsa/identificacao_arquivo_local_ivs.json` | `674e8f36243ad433f0925bcd554df05d028b2523f29a4965e85a4343846e8eff` |
-| `output/tema_trabalho/matriz_tipologia_territorial.parquet` | `63707c3c235ad099bb88542c4428d5a2091cab28c2b5b5c033afaf7482d9a8da` |
-| `output/rdd_bolsa/E3_status.json` | `1bdda808efa70a3c1066872a5631fa4cf4dc0b1ce483e7db79c10161e391dd0a` |
-| `output/rdd_bolsa/E5_resumo.json` | `eff1cf2e33a236b8fb674571fe40d85a30eb1352c8e605cab678557c38db05b4` |
+| `output/tema_trabalho/matriz_tipologia_territorial.parquet` | `10af8712eef95cc8ab3e5d7f70d9da1319229494ae2b774cb3ca15a8a2095552` |
+| `output/rdd_bolsa/E3_status.json` | `d9db202cd00449686dad4d94947d19ba822e11aedb545f0b2158ab72e3623195` |
+| `output/rdd_bolsa/E5_resumo.json` | `35d7a1c25dfc0b026a249374e14610455ccae2eb9752ac8c447d15a0eab90c9a` |
 | `output/avaliacao_impacto/tabelas/tabela1_estatisticas_descritivas_baseline.csv` | `ff48ffe42de3e050c56b5fae733bf6fe4362195213771a316f0f8c1e1db4e949` |
 | `output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv` | `3e7cf00700b2990967c83ffddc05fd58163e2890fd547e7bd1194e3d59b8ee0e` |
 | `output/tema_trabalho/A4_tabela_03_separacao_faixa_ivs_remoticidade.csv` | `4731e7caac1dc11b88cdc883e8f8ebffc09c3d92e7d740fc42f8930c87fa081b` |

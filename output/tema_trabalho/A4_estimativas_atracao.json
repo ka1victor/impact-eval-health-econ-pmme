@@ -2,6 +2,7 @@
   "protocolo": "A4_ESTIMATIVAS_ATRACAO",
   "data_referencia": "2026-09-02",
   "efeitos_estimados": true,
+  "natureza_dos_dados": "EMPIRICO",
   "correcao_2026_10_18": {
     "o_que_mudou": "covariadas contínuas (ivs_2010, subíndices, log_pop, estoque_por_10k) da tipologia A2 corrigida: base oficial do Ipea (a08) e Censo 2022; especificações, amostras e desfechos inalterados",
     "antes": "data/ivs_ipea_2010_municipios.csv, linha de subgrupo populacional e não o município (auditoria 16)",
@@ -473,16 +474,16 @@
       "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15"
     },
     "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
-      "sha256": "63707c3c235ad099bb88542c4428d5a2091cab28c2b5b5c033afaf7482d9a8da"
+      "sha256": "10af8712eef95cc8ab3e5d7f70d9da1319229494ae2b774cb3ca15a8a2095552"
     },
     "output/tema_trabalho/manifesto_tipologia_territorial.json": {
-      "sha256": "c594346a8aa92575da7e8f193e7f6a2785967ff2d458505896653b56ab159700"
+      "sha256": "ba4e0745cfab0c298a294e4dd5307af6a843342709446b6dfc4585c6406afb17"
     },
     "output/tema_trabalho/portao_denominador.json": {
       "sha256": "0055baf7ebc110cc7143395a3f2090893a1888b718fd0645db318cf06850489a"
     },
     "output/tema_trabalho/registro_pre_analise_atracao.json": {
-      "sha256": "a397d4fd4c6dd2049c027b7eba682f641406f27a50bae263be4be17efb78bdd4"
+      "sha256": "cdaf71c47122dbf41494f064bd75ddd152330957a6755de586c271b48b18bb0d"
     },
     "output/tema_trabalho/potencia_atracao.json": {
       "sha256": "91fa905537be55cc39b727eed66bedce24c283699088966bc693c77ea2b9079f"
