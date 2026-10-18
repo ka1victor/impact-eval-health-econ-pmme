@@ -1,0 +1,943 @@
+{
+  "etapa": "E5_inferencia_alternativa",
+  "rotulo": "EXPLORATORIO_POS_RESULTADO",
+  "aviso": "EXPLORATORIO, pos-resultado: escrito depois de o E3 ser lido. O principal continua sendo o do protocolo congelado (local linear, triangular, h = 0,050, HC1). Nenhuma especificacao daqui substitui o principal; todas sao relatadas, qualquer que seja o resultado.",
+  "natureza_dos_dados": "EMPIRICO",
+  "data_execucao": "2026-10-18",
+  "script": {
+    "arquivo": "scripts/rdd_bolsa/11_inferencia_alternativa.py",
+    "sha256": "9c838ad9e7f49b9a797d097641568f53174ca1d3dfd31e40a480ba4bdb6b3c32"
+  },
+  "funcoes_importadas": {
+    "scripts/rdd_bolsa/07_estimar_E3_rdd_completa.py": "a6d2034887a6e566d6be3d7eed23bcb7f68c24b09171709bce5345f1884edeeb",
+    "scripts/rdd_bolsa/08a_reconstruir_proporcao_preenchida.py": "863596d321d52f0aa7200f540f6b3528d394f095e5545d482ad956f34a92a89b"
+  },
+  "protocolos": {
+    "output/rdd_bolsa/protocolo_escore_administrativo.json": "7785d58ee1a001a4b61ac677eb3d2f71e56519ec78823f29accc1b0755bc90a4",
+    "output/rdd_bolsa/protocolo_E4_adendo_proporcao.json": "57eb6ae6dfb0ba96100daa693d2f0345fc4c3d1c752959aa805a6571019728c6"
+  },
+  "entradas": {
+    "output/rdd_bolsa/escore_completo_ivs2010_oficial.csv": {
+      "sha256": "c2e31c989db0e4f2d7879428b4861aa7c290fcf98092a733cf76c926904689bd",
+      "fonte": "IVS 2010 oficial do Ipea (a08), gravado por 04b_validar_ivs_oficial_escore_administrativo.py",
+      "data_referencia": "Censo 2010 (Atlas IVS, base de 28/02/2024)",
+      "cobertura": "5565 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "colunas_usadas": [
+        "co_ibge",
+        "ivs_admin"
+      ],
+      "filtros": "nenhum"
+    },
+    "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx": {
+      "sha256": "51c6807f6bc2efa252b5236d89c5384ae484c4d47c8b65d4161c3facbfebe304",
+      "fonte": "quadro de vagas publicado pelo MS (PMM-E)",
+      "data_referencia": "edital do ciclo correspondente",
+      "cobertura": "populacao P1",
+      "unidade": "linha do quadro",
+      "chaves": "IBGE, FAIXA",
+      "colunas_usadas": [
+        "IBGE",
+        "FAIXA"
+      ],
+      "filtros": "municipios distintos"
+    },
+    "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx": {
+      "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+      "fonte": "quadro de vagas publicado pelo MS (PMM-E)",
+      "data_referencia": "edital do ciclo correspondente",
+      "cobertura": "populacao P2",
+      "unidade": "linha do quadro",
+      "chaves": "IBGE, FAIXA",
+      "colunas_usadas": [
+        "IBGE",
+        "FAIXA"
+      ],
+      "filtros": "municipios distintos"
+    },
+    "data/raw/pmm_e/2026_ciclo2_chamada2_vagas.xlsx": {
+      "sha256": "4815e1558b515d4cdabf245b45e24062ab2e9531abd657b4f24f68bb45b3d3a4",
+      "fonte": "quadro de vagas publicado pelo MS (PMM-E)",
+      "data_referencia": "edital do ciclo correspondente",
+      "cobertura": "populacao P2",
+      "unidade": "linha do quadro",
+      "chaves": "IBGE, FAIXA",
+      "colunas_usadas": [
+        "IBGE",
+        "FAIXA"
+      ],
+      "filtros": "municipios distintos"
+    },
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": {
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "fonte": "Atlas da Vulnerabilidade Social (Ipea), base completa, linha Total/Total/Total de 2010 (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municipios (malha 2010)",
+      "unidade": "municipio",
+      "chaves": "co_ibge (6 digitos)",
+      "colunas_usadas": [
+        "co_ibge",
+        "populacao (log)",
+        "idhm"
+      ],
+      "filtros": "nenhum"
+    },
+    "output/tema_trabalho/matriz_tipologia_territorial.parquet": {
+      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+      "fonte": "tipologia territorial A2 (capitais, RM/RIDE 2022, REGIC 2018)",
+      "data_referencia": "REGIC 2018; RM/RIDE 2022",
+      "cobertura": "5570 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "colunas_usadas": [
+        "co_ibge_6d",
+        "estrato"
+      ],
+      "filtros": "nenhum",
+      "nota": "so o estrato; as colunas de IVS, IDHM, populacao, renda e estoque da tipologia vem do arquivo local errado (auditoria 16) e nao sao lidas"
+    },
+    "macrorregiao": "1o digito do codigo IBGE (1=N, 2=NE, 3=SE, 4=S, 5=CO)",
+    "output/rdd_bolsa/E3_estimativas.csv": {
+      "sha256": "b38a2d0ea11aaa1be802a8dfe7875547dda23951ee19e0731f5a7398c9e87982",
+      "fonte": "E3 (07_estimar_E3_rdd_completa.py)",
+      "papel": "referencia para conferir a reproducao do principal (S0)",
+      "data_referencia": "2026-10-14",
+      "cobertura": "P1 e P2",
+      "unidade": "estimativa",
+      "chaves": "populacao, outcome, corte, h",
+      "filtros": "especificacao == principal"
+    }
+  },
+  "contraste": "incentivo marginal anunciado de R$ 5 mil (Faixa 3->2 em 0,300; Faixa 2->1 em 0,400), possivelmente pacote se outra politica mudar no mesmo corte; nao e efeito do PMM-E nem do Agora Tem Especialistas",
+  "especificacoes": [
+    {
+      "id": "S0",
+      "outcomes": [
+        "Y1",
+        "D1",
+        "D2"
+      ],
+      "unidade": "municipio",
+      "descricao": "principal congelado reproduzido: local linear, triangular, h=0,050, HC1"
+    },
+    {
+      "id": "A",
+      "outcomes": [
+        "Y1",
+        "D1",
+        "D2"
+      ],
+      "unidade": "municipio",
+      "descricao": "local constante: diferenca de medias ponderadas pelo kernel triangular, h=0,050, HC1"
+    },
+    {
+      "id": "B",
+      "outcomes": [
+        "Y1",
+        "D1",
+        "D2"
+      ],
+      "unidade": "municipio",
+      "descricao": "cortes empilhados: x=s-c, interceptos e inclinacoes por corte x lado, tau comum, triangular h=0,050"
+    },
+    {
+      "id": "C1",
+      "outcomes": [
+        "Y1",
+        "D1",
+        "D2"
+      ],
+      "unidade": "municipio",
+      "descricao": "local linear triangular h=0,050 + estrato, macrorregiao, log populacao 2010 (a08), HC1"
+    },
+    {
+      "id": "C2",
+      "outcomes": [
+        "Y1",
+        "D1",
+        "D2"
+      ],
+      "unidade": "municipio",
+      "descricao": "C1 + IDHM 2010 (a08), HC1"
+    },
+    {
+      "id": "D",
+      "outcomes": [
+        "Y1",
+        "D1",
+        "D2"
+      ],
+      "unidade": "municipio",
+      "descricao": "local randomization: janela por balanco de covariaveis; diferenca de medias; Fisher; IC por inversao"
+    },
+    {
+      "id": "E0",
+      "outcomes": [
+        "Y1"
+      ],
+      "unidade": "municipio",
+      "descricao": "local linear triangular h=0,050, peso kernel x n_celulas, HC1"
+    },
+    {
+      "id": "E1",
+      "outcomes": [
+        "Y1"
+      ],
+      "unidade": "celula CNES-curso",
+      "descricao": "celula CNES-curso, peso kernel do municipio, CR1 por municipio"
+    },
+    {
+      "id": "E2",
+      "outcomes": [
+        "Y1"
+      ],
+      "unidade": "celula CNES-curso",
+      "descricao": "E1 + efeitos fixos de curso, CR1 por municipio"
+    },
+    {
+      "id": "F1",
+      "outcomes": [
+        "D1+D2"
+      ],
+      "unidade": "municipio x ciclo",
+      "descricao": "presenca, ciclos 1 e 2 empilhados por corte; intercepto e inclinacoes por ciclo x lado; tau comum; CR1"
+    },
+    {
+      "id": "F2",
+      "outcomes": [
+        "D1+D2"
+      ],
+      "unidade": "municipio x ciclo",
+      "descricao": "presenca, ciclos e cortes empilhados; interceptos e inclinacoes por ciclo x corte x lado; tau comum; CR1"
+    }
+  ],
+  "outcomes": {
+    "Y1": {
+      "populacao": "P1",
+      "ciclo": 1,
+      "papel": "outcome da hipotese",
+      "descricao": "fracao das celulas CNES-curso do quadro da 1a chamada do ciclo 1 com alguma confirmacao ou homologacao (E4 y1)"
+    },
+    "D1": {
+      "populacao": "P1",
+      "ciclo": 1,
+      "papel": "secundario",
+      "descricao": "especialista ativo do ciclo 1 no municipio em 09/10/2026"
+    },
+    "D2": {
+      "populacao": "P2",
+      "ciclo": 2,
+      "papel": "secundario (replicacao)",
+      "descricao": "especialista ativo do ciclo 2 no municipio em 09/10/2026"
+    }
+  },
+  "regras": {
+    "cortes": [
+      0.3,
+      0.4
+    ],
+    "h": 0.05,
+    "lado_do_corte": "o proprio corte pertence ao lado inferior; T = 1[s > c]",
+    "kernel": "triangular, w = max(0, 1 - |x|/h); amostra -h < x < h",
+    "covariaveis_C1": [
+      "estrato_capital",
+      "estrato_metropolitano",
+      "estrato_interior_proximo_polo",
+      "regiao_NE",
+      "regiao_SE",
+      "regiao_S",
+      "regiao_CO",
+      "log_populacao_2010"
+    ],
+    "covariaveis_C2": [
+      "estrato_capital",
+      "estrato_metropolitano",
+      "estrato_interior_proximo_polo",
+      "regiao_NE",
+      "regiao_SE",
+      "regiao_S",
+      "regiao_CO",
+      "log_populacao_2010",
+      "idhm_2010"
+    ],
+    "local_randomization": {
+      "janelas_candidatas": [
+        0.002,
+        0.003,
+        0.004,
+        0.005,
+        0.006,
+        0.007,
+        0.008,
+        0.009,
+        0.01,
+        0.011,
+        0.012,
+        0.013,
+        0.014,
+        0.015,
+        0.016,
+        0.017,
+        0.018,
+        0.019,
+        0.02
+      ],
+      "forma": "(c - w, c] U (c, c + w]",
+      "viavel": "pelo menos 2 municipios de cada lado",
+      "covariaveis_balanco": [
+        "log_populacao_2010",
+        "idhm_2010",
+        "estrato",
+        "regiao"
+      ],
+      "estatisticas_balanco": "numerica: |diferenca de medias|; categorica: qui-quadrado de Pearson 2 x K",
+      "limiar_p_min": 0.15,
+      "regra": "maior janela viavel com p minimo >= limiar nela e em toda janela viavel menor",
+      "permutacoes": 10000,
+      "semente": 20261018,
+      "semente_por_janela": "default_rng((semente, k da populacao, corte em milesimos, w em milesimos))",
+      "p_valor": "(1 + #{T_perm >= T_obs}) / (R + 1)",
+      "ic": "inversao do teste de Fisher sob efeito aditivo constante; grade -1 a +1, passo 0,001"
+    },
+    "margens_equivalencia": [
+      0.1,
+      0.15,
+      0.2
+    ],
+    "mde": "2,8 x EP (80% de poder, 5% bicaudal)",
+    "ic_normal": "tau +- 1,96 EP; limites unilaterais tau +- 1,645 EP"
+  },
+  "primeiro_estagio": {
+    "P1": {
+      "municipios": 368,
+      "reproduzidos": 368,
+      "municipios_com_mais_de_uma_faixa": 0,
+      "sharp": true
+    },
+    "P2": {
+      "municipios": 454,
+      "reproduzidos": 454,
+      "municipios_com_mais_de_uma_faixa": 0,
+      "sharp": true
+    }
+  },
+  "cobertura_do_escore": {
+    "P1": {
+      "municipios": 368,
+      "com_escore": 368
+    },
+    "P2": {
+      "municipios": 454,
+      "com_escore": 454
+    }
+  },
+  "selecao_janela_lr": {
+    "arquivo": "E5_lr_selecao_janela.csv",
+    "sha256": "366d65f59a47921d2373cf8f329ab935817b128c93dc20263fa802949dd22d47",
+    "gravada_antes_de_ler_outcomes": true,
+    "selecionadas": [
+      {
+        "populacao": "P1",
+        "corte": 0.3,
+        "w": 0.02,
+        "n_abaixo": 20,
+        "n_acima": 19,
+        "p_min": 0.29727027297270275
+      },
+      {
+        "populacao": "P1",
+        "corte": 0.4,
+        "w": 0.007,
+        "n_abaixo": 10,
+        "n_acima": 9,
+        "p_min": 0.18088191180881913
+      },
+      {
+        "populacao": "P2",
+        "corte": 0.4,
+        "w": 0.006,
+        "n_abaixo": 7,
+        "n_acima": 11,
+        "p_min": 0.22557744225577442
+      }
+    ],
+    "cortes_sem_janela": [
+      {
+        "populacao": "P2",
+        "corte": 0.3
+      }
+    ]
+  },
+  "fontes_outcomes": {
+    "output/rdd_bolsa/E4_proporcao_municipio.csv": {
+      "sha256": "897e9529dd0bd226a5ca3398971d894c79400cad7aaf46fd9ae84ebfb4022f79",
+      "fonte": "08a_reconstruir_proporcao_preenchida.py (fonte canonica do A1/A4)",
+      "data_referencia": "1a chamada do ciclo 1 (quadro de 24/07/2025; alocacao e homologados publicados)",
+      "cobertura": "P1: 368 municipios, 1.295 celulas",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "colunas_usadas": [
+        "co_ibge",
+        "y1",
+        "n_celulas"
+      ],
+      "filtros": "nenhum"
+    },
+    "output/tema_trabalho/matriz_funil_ciclo1.parquet": {
+      "sha256": "57f63f4d36db69d0abd221eb7a5698cc401116faa1848666988238b1be70be15",
+      "fonte": "matriz do funil do ciclo 1 (A1)",
+      "data_referencia": "2026-09-01 (A1)",
+      "cobertura": "ciclo 1, chamadas 1 e 2",
+      "unidade": "celula CNES-curso x chamada",
+      "chaves": "co_cnes_7d, cod_curso, chamada",
+      "colunas_usadas": [
+        "chamada",
+        "in_quadro_ch1_original",
+        "co_ibge_6d",
+        "co_cnes_7d",
+        "cod_curso",
+        "outcome_alguma_confirmacao_ou_homologacao",
+        "n_confirmacoes_ch1",
+        "n_homologacoes_ch1",
+        "n_homologacoes_novas_ch2"
+      ],
+      "filtros": "chamada 1 (Y1); usada para conferir Y1 e para as celulas de E1/E2"
+    },
+    "output/aquisicao/quadro_vagas_tratamento.parquet": {
+      "sha256": "96281c149c7877af28508421c8088ff7c19084620aad940e10ea753baad3b79f",
+      "fonte": "quadro de vagas da 1a chamada do ciclo 1 (tratamento, A1/A4)",
+      "data_referencia": "quadro original publicado em 24/07/2025",
+      "cobertura": "1.295 celulas, 368 municipios",
+      "unidade": "celula CNES-curso",
+      "chaves": "co_cnes_7d, cod_curso",
+      "colunas_usadas": [
+        "co_cnes_7d",
+        "cod_curso",
+        "co_ibge_6d",
+        "faixa_atracao_anunciada"
+      ],
+      "filtros": "nenhum (quadro completo)"
+    },
+    "data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip": {
+      "sha256": "e57edeb50946395fa90fe510f4a658501f9b0e92069fcc53aa41b9e893e89c1c",
+      "fonte": "Relacao Nominal Ativos - PMM-E (dados abertos do MS)",
+      "data_referencia": "2026-10-09",
+      "cobertura": "profissionais ativos de todos os ciclos",
+      "unidade": "profissional ativo",
+      "chaves": "co_ibge, ciclo",
+      "colunas_usadas": [
+        "co_ibge",
+        "ciclo"
+      ],
+      "filtros": "ciclo == k; agregado a 1 se ha ao menos um ativo",
+      "sha256_confere_protocolo": true
+    }
+  },
+  "outcomes_lidos": [
+    "Y1",
+    "D1",
+    "D2"
+  ],
+  "verificacoes": {
+    "y1_e4_igual_outcome_e3": {
+      "municipios": 368,
+      "max_abs_dif": 4.4444448121794267e-11
+    },
+    "celulas_reproduzem_y1": {
+      "celulas": 1295,
+      "municipios": 368
+    },
+    "s0_reproduz_e3": {
+      "linhas": 6,
+      "max_abs_dif_tau_ep": 1.3532674980609727e-11
+    }
+  },
+  "status": "CONCLUIDO",
+  "saidas": {
+    "E5_lr_selecao_janela.csv": "366d65f59a47921d2373cf8f329ab935817b128c93dc20263fa802949dd22d47",
+    "E5_especificacoes.csv": "64fe5d57ba6d34b316ed89d0c0e9078f781cd7359c297b1a325c081189d05742",
+    "E5_lr_sensibilidade_janelas.csv": "f4b0f4308b0418d2e057c37122d35379687eb4c810bb4b2b2fc762f5c234d017",
+    "E5_decomposicao_ic.csv": "e2c131c1694e5795597283f59300a9ccfa265eaeb5a6d60eecc6b09a3046c501",
+    "E5_decomposicao_lados.csv": "9de7be2ad80a53a429d76ca1968b652bc1a8e7431baf626b27cb608417f8f325"
+  },
+  "decomposicao_ic_y1": [
+    {
+      "corte": 0.3,
+      "dp_y_combinado": 0.3432914474851741,
+      "ep_formula_dm": 0.06446330343045621,
+      "ep_dm_simples": 0.06469853644680715,
+      "ep_lc_triangular": 0.07613733154915621,
+      "ep_ll_uniforme": 0.1454392824064139,
+      "ep_ll_triangular_principal": 0.16644593933098312,
+      "fator_kernel_constante": 1.1768014507059774,
+      "fator_inclinacoes_triangular": 2.186127829073197,
+      "fator_inclinacoes_uniforme": 2.2479532056492335,
+      "fator_kernel_linear": 1.1444359225169198,
+      "fator_total": 2.572638400682048,
+      "fatores_teoricos_desenho_uniforme": {
+        "kernel_constante": 1.1547005383792515,
+        "inclinacoes_triangular": 1.8973665961010275,
+        "inclinacoes_uniforme": 2.0,
+        "kernel_linear": 1.0954451150103321,
+        "total": 2.1908902300206643
+      },
+      "mde_80_principal": 0.4660486301267527,
+      "media_ponderada_acima_menos_abaixo": 0.05160354218528829,
+      "identidade": {
+        "salto_tau": -0.12838355446174904,
+        "contribuicao_inclinacao_acima_(b+d)*x1": 0.05986735000703724,
+        "contribuicao_inclinacao_abaixo_-b*x0": 0.12011974664000025,
+        "soma": 0.051603542185288453
+      },
+      "media_bruta_acima_menos_abaixo": 0.12947165565827407
+    },
+    {
+      "corte": 0.4,
+      "dp_y_combinado": 0.3451940660509196,
+      "ep_formula_dm": 0.07179552657767159,
+      "ep_dm_simples": 0.07370479445725837,
+      "ep_lc_triangular": 0.08322215456459145,
+      "ep_ll_uniforme": 0.14487731399985643,
+      "ep_ll_triangular_principal": 0.16014312238517653,
+      "fator_kernel_constante": 1.1291281005179685,
+      "fator_inclinacoes_triangular": 1.9242847439245783,
+      "fator_inclinacoes_uniforme": 1.9656430096127764,
+      "fator_kernel_linear": 1.1053705922884187,
+      "fator_total": 2.172763977763265,
+      "fatores_teoricos_desenho_uniforme": {
+        "kernel_constante": 1.1547005383792515,
+        "inclinacoes_triangular": 1.8973665961010275,
+        "inclinacoes_uniforme": 2.0,
+        "kernel_linear": 1.0954451150103321,
+        "total": 2.1908902300206643
+      },
+      "mde_80_principal": 0.4484007426784942,
+      "media_ponderada_acima_menos_abaixo": -0.009320080762562855,
+      "identidade": {
+        "salto_tau": -0.051492177704908854,
+        "contribuicao_inclinacao_acima_(b+d)*x1": 0.029067170230015503,
+        "contribuicao_inclinacao_abaixo_-b*x0": 0.013104926712330517,
+        "soma": -0.009320080762562834
+      },
+      "media_bruta_acima_menos_abaixo": 0.007254295276115985
+    }
+  ],
+  "cenarios_ilustrativos_rotulados": [
+    {
+      "rotulo": "CENARIO_ILUSTRATIVO: nao e observacao; supoe mesmo desvio-padrao e mesmo desenho",
+      "corte": 0.3,
+      "n_observado": {
+        "abaixo": 61,
+        "acima": 53
+      },
+      "ep_observado": 0.16644593933098312,
+      "mde_80_observado": 0.4660486301267527,
+      "ciclos_1_e_2_independentes": {
+        "n_abaixo": 143,
+        "n_acima": 114,
+        "ep": 0.11129348663626125,
+        "mde_80": 0.31162176258153146
+      },
+      "todos_municipios_do_brasil_na_janela": {
+        "n_abaixo": 859,
+        "n_acima": 654,
+        "ep": 0.0459999795918621,
+        "mde_80": 0.12879994285721386
+      },
+      "n_para_mde_10pp": {
+        "fator_sobre_n_observado": 21.720132564302276,
+        "n_abaixo": 1324.9280864224388,
+        "n_acima": 1151.1670259080206
+      }
+    },
+    {
+      "rotulo": "CENARIO_ILUSTRATIVO: nao e observacao; supoe mesmo desvio-padrao e mesmo desenho",
+      "corte": 0.4,
+      "n_observado": {
+        "abaixo": 53,
+        "acima": 41
+      },
+      "ep_observado": 0.16014312238517653,
+      "mde_80_observado": 0.4484007426784942,
+      "ciclos_1_e_2_independentes": {
+        "n_abaixo": 106,
+        "n_acima": 94,
+        "ep": 0.10908684131943604,
+        "mde_80": 0.3054431556944209
+      },
+      "todos_municipios_do_brasil_na_janela": {
+        "n_abaixo": 587,
+        "n_acima": 603,
+        "ep": 0.044644709589698524,
+        "mde_80": 0.12500518685115586
+      },
+      "n_para_mde_10pp": {
+        "fator_sobre_n_observado": 20.106322603462523,
+        "n_abaixo": 1065.6350979835138,
+        "n_acima": 824.3592267419634
+      }
+    }
+  ],
+  "resumo_y1": [
+    {
+      "especificacao": "S0",
+      "corte": 0.3,
+      "janela": "h=0,050",
+      "n_abaixo": 61,
+      "n_acima": 53,
+      "n_obs": 114,
+      "tau": -0.12838355446174904,
+      "ep": 0.16644593933098312,
+      "ic95_inf": -0.4546116009234148,
+      "ic95_sup": 0.19784449199991672,
+      "p_valor": 0.4405155982102548,
+      "lim_sup_unilateral_95": 0.14539565253816322,
+      "p_unilateral_tau_ge_010": 0.08501327387183787,
+      "p_unilateral_tau_ge_015": 0.047211273539308235,
+      "p_unilateral_tau_ge_020": 0.024252670204496583,
+      "p_tost_010": 0.5677022143921391,
+      "p_tost_015": 0.4483343751264925,
+      "p_tost_020": 0.33350016718497144,
+      "nota": ""
+    },
+    {
+      "especificacao": "A",
+      "corte": 0.3,
+      "janela": "h=0,050",
+      "n_abaixo": 61,
+      "n_acima": 53,
+      "n_obs": 114,
+      "tau": 0.051603542185288176,
+      "ep": 0.07613733154915621,
+      "ic95_inf": -0.0976228855300432,
+      "ic95_sup": 0.20082996990061955,
+      "p_valor": 0.49791801013451104,
+      "lim_sup_unilateral_95": 0.17683830813032453,
+      "p_unilateral_tau_ge_010": 0.26250330081634404,
+      "p_unilateral_tau_ge_015": 0.09811712401464026,
+      "p_unilateral_tau_ge_020": 0.025643949250824475,
+      "p_tost_010": 0.26250330081634404,
+      "p_tost_015": 0.09811712401464026,
+      "p_tost_020": 0.025643949250824475,
+      "nota": ""
+    },
+    {
+      "especificacao": "C1",
+      "corte": 0.3,
+      "janela": "h=0,050",
+      "n_abaixo": 61,
+      "n_acima": 53,
+      "n_obs": 114,
+      "tau": -0.034693384590496645,
+      "ep": 0.12917358734592002,
+      "ic95_inf": -0.28786896354233876,
+      "ic95_sup": 0.21848219436134547,
+      "p_valor": 0.7882532472224337,
+      "lim_sup_unilateral_95": 0.1777782590617727,
+      "p_unilateral_tau_ge_010": 0.14853630339019044,
+      "p_unilateral_tau_ge_015": 0.07638611507179784,
+      "p_unilateral_tau_ge_020": 0.03461746195147714,
+      "p_tost_010": 0.3065783902168156,
+      "p_tost_015": 0.18602270553243724,
+      "p_tost_020": 0.1003210075792739,
+      "nota": ""
+    },
+    {
+      "especificacao": "C2",
+      "corte": 0.3,
+      "janela": "h=0,050",
+      "n_abaixo": 61,
+      "n_acima": 53,
+      "n_obs": 114,
+      "tau": -0.040876882502076134,
+      "ep": 0.12815589090418314,
+      "ic95_inf": -0.2920578130809194,
+      "ic95_sup": 0.21030404807676714,
+      "p_valor": 0.7497551910420789,
+      "lim_sup_unilateral_95": 0.1699207994668667,
+      "p_unilateral_tau_ge_010": 0.13582693249480182,
+      "p_unilateral_tau_ge_015": 0.06818949560442815,
+      "p_unilateral_tau_ge_020": 0.03008393012643035,
+      "p_tost_010": 0.3222782445644763,
+      "p_tost_015": 0.1972493489779505,
+      "p_tost_020": 0.10718523085521883,
+      "nota": ""
+    },
+    {
+      "especificacao": "S0",
+      "corte": 0.4,
+      "janela": "h=0,050",
+      "n_abaixo": 53,
+      "n_acima": 41,
+      "n_obs": 94,
+      "tau": -0.051492177704908854,
+      "ep": 0.16014312238517653,
+      "ic95_inf": -0.365366929951645,
+      "ic95_sup": 0.26238257454182723,
+      "p_valor": 0.7478023489447083,
+      "lim_sup_unilateral_95": 0.21191981798168227,
+      "p_unilateral_tau_ge_010": 0.17207941468282295,
+      "p_unilateral_tau_ge_015": 0.10415960334067331,
+      "p_unilateral_tau_ge_020": 0.05815855989103702,
+      "p_tost_010": 0.38098191608153065,
+      "p_tost_015": 0.26923653161934136,
+      "p_tost_020": 0.17687388308392343,
+      "nota": ""
+    },
+    {
+      "especificacao": "A",
+      "corte": 0.4,
+      "janela": "h=0,050",
+      "n_abaixo": 53,
+      "n_acima": 41,
+      "n_obs": 94,
+      "tau": -0.0093200807625628,
+      "ep": 0.08322215456459145,
+      "ic95_inf": -0.1724325064249877,
+      "ic95_sup": 0.1537923448998621,
+      "p_valor": 0.9108310337723782,
+      "lim_sup_unilateral_95": 0.12756818201572145,
+      "p_unilateral_tau_ge_010": 0.09449151971495527,
+      "p_unilateral_tau_ge_015": 0.027784848773825234,
+      "p_unilateral_tau_ge_020": 0.005948301040880576,
+      "p_tost_010": 0.1379418860047459,
+      "p_tost_015": 0.04547436163420812,
+      "p_tost_020": 0.010975466477896604,
+      "nota": ""
+    },
+    {
+      "especificacao": "C1",
+      "corte": 0.4,
+      "janela": "h=0,050",
+      "n_abaixo": 53,
+      "n_acima": 41,
+      "n_obs": 94,
+      "tau": 0.019110748396184762,
+      "ep": 0.13297485909488357,
+      "ic95_inf": -0.24151518627907548,
+      "ic95_sup": 0.279736683071445,
+      "p_valor": 0.8857239431092075,
+      "lim_sup_unilateral_95": 0.23783492767176498,
+      "p_unilateral_tau_ge_010": 0.2714926527432717,
+      "p_unilateral_tau_ge_015": 0.16248013755931062,
+      "p_unilateral_tau_ge_020": 0.08686328097672481,
+      "p_tost_010": 0.2714926527432717,
+      "p_tost_015": 0.16248013755931062,
+      "p_tost_020": 0.08686328097672481,
+      "nota": ""
+    },
+    {
+      "especificacao": "C2",
+      "corte": 0.4,
+      "janela": "h=0,050",
+      "n_abaixo": 53,
+      "n_acima": 41,
+      "n_obs": 94,
+      "tau": 0.02328367587375091,
+      "ep": 0.13319701615418714,
+      "ic95_inf": -0.23777767863665566,
+      "ic95_sup": 0.2843450303841575,
+      "p_valor": 0.8612318478561533,
+      "lim_sup_unilateral_95": 0.24237327099407946,
+      "p_unilateral_tau_ge_010": 0.2823206762367799,
+      "p_unilateral_tau_ge_015": 0.17071461844676128,
+      "p_unilateral_tau_ge_020": 0.09229919688435714,
+      "p_tost_010": 0.2823206762367799,
+      "p_tost_015": 0.17071461844676128,
+      "p_tost_020": 0.09229919688435714,
+      "nota": ""
+    },
+    {
+      "especificacao": "B",
+      "corte": "0,300+0,400",
+      "janela": "h=0,050",
+      "n_abaixo": 114,
+      "n_acima": 94,
+      "n_obs": 208,
+      "tau": -0.0862496370878103,
+      "ep": 0.1152511960853891,
+      "ic95_inf": -0.3121378305903366,
+      "ic95_sup": 0.13963855641471598,
+      "p_valor": 0.4542417243593029,
+      "lim_sup_unilateral_95": 0.10332171080373725,
+      "p_unilateral_tau_ge_010": 0.05304368220485523,
+      "p_unilateral_tau_ge_015": 0.020188699902813863,
+      "p_unilateral_tau_ge_020": 0.006501226601830266,
+      "p_tost_010": 0.4525157649217739,
+      "p_tost_015": 0.29008283458256595,
+      "p_tost_020": 0.16182678018025115,
+      "nota": ""
+    },
+    {
+      "especificacao": "D",
+      "corte": 0.3,
+      "janela": "+-0.020 (lado inferior inclui o corte)",
+      "n_abaixo": 20,
+      "n_acima": 19,
+      "n_obs": 39,
+      "tau": -0.0444749127671053,
+      "ep": 0.11240759050849182,
+      "ic95_inf": -0.274,
+      "ic95_sup": 0.187,
+      "p_valor": 0.6967303269673033,
+      "lim_sup_unilateral_95": 0.147,
+      "p_unilateral_tau_ge_010": 0.1065893410658934,
+      "p_unilateral_tau_ge_015": 0.04789521047895211,
+      "p_unilateral_tau_ge_020": 0.0187981201879812,
+      "p_tost_010": 0.31556844315568444,
+      "p_tost_015": 0.17578242175782421,
+      "p_tost_020": 0.08839116088391161,
+      "nota": ""
+    },
+    {
+      "especificacao": "D",
+      "corte": 0.4,
+      "janela": "+-0.007 (lado inferior inclui o corte)",
+      "n_abaixo": 10,
+      "n_acima": 9,
+      "n_obs": 19,
+      "tau": 0.025820105821111106,
+      "ep": 0.16437191659495917,
+      "ic95_inf": -0.333,
+      "ic95_sup": 0.383,
+      "p_valor": 0.8756124387561244,
+      "lim_sup_unilateral_95": 0.32,
+      "p_unilateral_tau_ge_010": 0.3327667233276672,
+      "p_unilateral_tau_ge_015": 0.24037596240375964,
+      "p_unilateral_tau_ge_020": 0.15948405159484053,
+      "p_tost_010": 0.3327667233276672,
+      "p_tost_015": 0.24037596240375964,
+      "p_tost_020": 0.15948405159484053,
+      "nota": ""
+    },
+    {
+      "especificacao": "E0",
+      "corte": 0.3,
+      "janela": "h=0,050",
+      "n_abaixo": 61,
+      "n_acima": 53,
+      "n_obs": 114,
+      "tau": -0.09300766158650864,
+      "ep": 0.12684244591679367,
+      "ic95_inf": -0.34161428729439386,
+      "ic95_sup": 0.15559896412137658,
+      "p_valor": 0.46340385836583015,
+      "lim_sup_unilateral_95": 0.11562959563112538,
+      "p_unilateral_tau_ge_010": 0.064050522069524,
+      "p_unilateral_tau_ge_015": 0.027693821424364145,
+      "p_unilateral_tau_ge_020": 0.010443725375978735,
+      "p_tost_010": 0.4780189730428259,
+      "p_tost_015": 0.32660186439876165,
+      "p_tost_020": 0.1994728125602042,
+      "nota": ""
+    },
+    {
+      "especificacao": "E1",
+      "corte": 0.3,
+      "janela": "h=0,050",
+      "n_abaixo": 61,
+      "n_acima": 53,
+      "n_obs": 503,
+      "tau": -0.09300766160974652,
+      "ep": 0.12552300122290155,
+      "ic95_inf": -0.33902822323801074,
+      "ic95_sup": 0.1530129000185177,
+      "p_valor": 0.45871702422127825,
+      "lim_sup_unilateral_95": 0.11345930221757719,
+      "p_unilateral_tau_ge_010": 0.06206981782535605,
+      "p_unilateral_tau_ge_015": 0.026436225860774973,
+      "p_unilateral_tau_ge_020": 0.009790151135402674,
+      "p_tost_010": 0.47778815551450377,
+      "p_tost_015": 0.32490037711265174,
+      "p_tost_020": 0.19700372444789474,
+      "nota": ""
+    },
+    {
+      "especificacao": "E2",
+      "corte": 0.3,
+      "janela": "h=0,050",
+      "n_abaixo": 61,
+      "n_acima": 53,
+      "n_obs": 503,
+      "tau": 0.03193495577401627,
+      "ep": 0.12187149903618144,
+      "ic95_inf": -0.20692879307880724,
+      "ic95_sup": 0.2707987046268398,
+      "p_valor": 0.7932921968754783,
+      "lim_sup_unilateral_95": 0.23239573298569216,
+      "p_unilateral_tau_ge_010": 0.2882520287608965,
+      "p_unilateral_tau_ge_015": 0.16633081408776182,
+      "p_unilateral_tau_ge_020": 0.08394200478512759,
+      "p_tost_010": 0.2882520287608965,
+      "p_tost_015": 0.16633081408776182,
+      "p_tost_020": 0.08394200478512759,
+      "nota": ""
+    },
+    {
+      "especificacao": "E0",
+      "corte": 0.4,
+      "janela": "h=0,050",
+      "n_abaixo": 53,
+      "n_acima": 41,
+      "n_obs": 94,
+      "tau": -0.009652782090485285,
+      "ep": 0.13828427217440464,
+      "ic95_inf": -0.2806849751806527,
+      "ic95_sup": 0.2613794109996822,
+      "p_valor": 0.9443497396394623,
+      "lim_sup_unilateral_95": 0.21780460454592873,
+      "p_unilateral_tau_ge_010": 0.21390291165774997,
+      "p_unilateral_tau_ge_015": 0.12414230089749467,
+      "p_unilateral_tau_ge_020": 0.06474703686165936,
+      "p_tost_010": 0.2567672233024064,
+      "p_tost_015": 0.15507242242973185,
+      "p_tost_020": 0.08433465487993368,
+      "nota": ""
+    },
+    {
+      "especificacao": "E1",
+      "corte": 0.4,
+      "janela": "h=0,050",
+      "n_abaixo": 53,
+      "n_acima": 41,
+      "n_obs": 386,
+      "tau": -0.009652782096706919,
+      "ep": 0.13656872409085366,
+      "ic95_inf": -0.2773225627293677,
+      "ic95_sup": 0.25801699853595395,
+      "p_valor": 0.9436518286677736,
+      "lim_sup_unilateral_95": 0.21498277905226862,
+      "p_unilateral_tau_ge_010": 0.21101255707847116,
+      "p_unilateral_tau_ge_015": 0.12119599863076319,
+      "p_unilateral_tau_ge_020": 0.062374118031610366,
+      "p_tost_010": 0.25412941137073125,
+      "p_tost_015": 0.15205316711447925,
+      "p_tost_020": 0.0816915141869621,
+      "nota": ""
+    },
+    {
+      "especificacao": "E2",
+      "corte": 0.4,
+      "janela": "h=0,050",
+      "n_abaixo": 53,
+      "n_acima": 41,
+      "n_obs": 386,
+      "tau": -0.10113318676932613,
+      "ep": 0.13155627903029518,
+      "ic95_inf": -0.35897875560880665,
+      "ic95_sup": 0.15671238207015437,
+      "p_valor": 0.44204490803503477,
+      "lim_sup_unilateral_95": 0.1152576359418948,
+      "p_unilateral_tau_ge_010": 0.06314764145031293,
+      "p_unilateral_tau_ge_015": 0.02813484574406803,
+      "p_unilateral_tau_ge_020": 0.011039485385180785,
+      "p_tost_010": 0.5034363279875766,
+      "p_tost_015": 0.35515053465029134,
+      "p_tost_020": 0.22617071120412427,
+      "nota": ""
+    }
+  ],
+  "linguagem": "exploratorio e pos-resultado; descritivo quando nao houver identificacao; intervalo que contem zero e nao exclui efeitos relevantes e inconclusivo, nao ausencia de efeito",
+  "regra_de_relato": "todas as especificacoes listadas no cabecalho do script sao relatadas; nenhuma substitui o principal; nenhuma foi escolhida pelo tamanho do IC"
+}
