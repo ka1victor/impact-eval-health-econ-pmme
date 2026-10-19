@@ -34,7 +34,19 @@
     "mde80_abaixo_ref_protocolo": "o desenho tem ao menos 80% de poder contra a referencia",
     "tost_dentro_ref_protocolo": "equivalencia a 5% dentro de +-referencia",
     "lit_posicao_ic95": "IC_ABAIXO_DA_REFERENCIA = o IC descarta a magnitude da literatura pelo lado de cima; IC_ACIMA = descarta pelo lado de baixo; IC_CONTEM = nao descarta",
+    "elasticidade_base_bolsa_menor": "variacao_relativa_media / [(B1 - B0) / B0]: base na bolsa menor e na probabilidade inicial; nao e elasticidade-arco",
+    "elasticidade_arco_ponto_medio": "[r / (1 + r/2)] / [(B1 - B0) / ((B0 + B1)/2)], r = variacao_relativa_media; IC pelos extremos, EP pelo metodo delta",
     "ic_honesto_informativo": "True se o IC honesto (M do protocolo, fator 1) exclui a referencia do protocolo, ou uma magnitude da literatura aplicavel, ou fica dentro de +-100% da base; False se nenhuma dessas; null se nao ha IC honesto (Poisson, E9) ou nada a comparar"
+  },
+  "adicionais_ao_doc45": {
+    "rotulo": "ESPECIFICACAO_ADICIONAL",
+    "coluna": "especificacao_adicional_doc45",
+    "itens": [
+      "equivalencia: ic90_inf, ic90_sup, delta_tost, delta_tost_rel (TOST a 5%)",
+      "criterio 'IC honesto informativo': ic_honesto_informativo, ic_honesto_criterios, ic_honesto_cobre_todo_salto_possivel",
+      "linhas de elasticidade do E9: elasticidade_base_bolsa_menor_degrau_* (base = bolsa menor e probabilidade inicial; nao e arco) e elasticidade_arco_ponto_medio_degrau_* (arco de ponto medio)"
+    ],
+    "previsto_no_doc45": "MDE de 80% (2,8 x EP), limites do IC 95% absolutos e relativos a media abaixo do corte, comparacao com +10 p.p., +25% e a literatura do doc 20"
   },
   "contraste": {
     "E6": "pacote do corte (RDD em nível): bolsa anunciada + outras regras federais nos mesmos cortes",
@@ -257,11 +269,11 @@
     }
   },
   "contagens": {
-    "linhas": 202,
+    "linhas": 210,
     "por_etapa": {
       "E6": 156,
       "E7": 18,
-      "E9": 28
+      "E9": 36
     },
     "com_referencia_do_protocolo": 39,
     "ic95_exclui_ref_protocolo": 11,
@@ -279,12 +291,12 @@
   "saidas": {
     "X6_poder_descartes.csv": {
       "caminho": "output/rdd_bolsa/X6_poder_descartes.csv",
-      "sha256": "b4b36d3566f6045ba69b9a92782d32298b3ea2eb45867a80f7b9ef1689a86917",
-      "linhas": 202
+      "sha256": "bce9ff07df5b2a0c6ec4657fe0c601877c0c09223ffb477cdf9807f673643e30",
+      "linhas": 210
     },
     "X6_descartes.png": {
       "caminho": "output/rdd_bolsa/X6_figuras/X6_descartes.png",
-      "sha256": "418ca90a614224b76bac9589862b126fe14b2d62fa170fbebfc5464a1afe22fa"
+      "sha256": "8444710b36d2e96ff1e1947e5785de93a54357da3c9f3cbf5eee4fcac6c0db8e"
     }
   }
 }

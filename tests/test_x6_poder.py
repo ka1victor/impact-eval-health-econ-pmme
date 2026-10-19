@@ -90,6 +90,15 @@ class TestFormulasSintetico(unittest.TestCase):
         with self.assertRaises(X6.FalhaFechada):
             X6.base_empilhada({"300": 0.5, "400": 0.6}, {"300": 1.0, "400": 1.0})
 
+    def test_arco_de_ponto_medio_sintetico(self) -> None:
+        """Elasticidade-arco de ponto médio com bolsas e probabilidades sintéticas."""
+        b0, b1, p0, p1 = 10.0, 15.0, 0.02, 0.03          # sintéticos
+        r = p1 / p0 - 1
+        arco = ((p1 - p0) / ((p0 + p1) / 2)) / ((b1 - b0) / ((b0 + b1) / 2))
+        self.assertAlmostEqual((r / (1 + r / 2)) / ((b1 - b0) / ((b0 + b1) / 2)), arco, places=12)
+        self.assertAlmostEqual(arco, 1.0, places=12)       # +50% em P e B: arco = 1 por construção
+        self.assertAlmostEqual(r / ((b1 - b0) / b0), 1.0, places=12)
+
     def test_posicao_da_referencia(self) -> None:
         self.assertEqual(X6.posicao(-0.2, 0.05, 0.10, 0.10), "IC_ABAIXO_DA_REFERENCIA")
         self.assertEqual(X6.posicao(0.8, 2.9, 0.4, 0.7), "IC_ACIMA_DA_REFERENCIA")
@@ -130,6 +139,15 @@ class TestX6SaidasReais(unittest.TestCase):
         cls.efm = pd.read_csv(OUT / "E9_efeitos_marginais.csv", dtype={"ciclo": str})
         cls.e8 = json.loads((OUT / "E8_resumo.json").read_text(encoding="utf-8"))
 
+    def test_adicionais_ao_doc45_rotulados(self) -> None:
+        self.assertTrue(self.tab["especificacao_adicional_doc45"].str.startswith("ESPECIFICACAO_ADICIONAL").all())
+        for c in ("delta_tost", "ic90_inf", "ic_honesto_informativo"):
+            self.assertTrue(self.tab["especificacao_adicional_doc45"].str.contains(c).all(), c)
+        el = self.tab[self.tab["quantidade"].astype(str).str.startswith("elasticidade_")]
+        self.assertEqual(len(el), 4 * 2 * 2)  # 4 ciclos x 2 cortes x 2 versões (estrutura)
+        self.assertTrue(el["especificacao_adicional_doc45"].str.contains("linha inteira").all())
+        self.assertEqual(self.resumo["adicionais_ao_doc45"]["rotulo"], "ESPECIFICACAO_ADICIONAL")
+
     def test_rotulos(self) -> None:
         self.assertEqual(set(self.tab["natureza_dos_dados"]), {"EMPIRICO"})
         self.assertEqual(set(self.tab["estatuto"]), {"EXPLORATORIO_POS_SINTESE"})
@@ -153,7 +171,7 @@ class TestX6SaidasReais(unittest.TestCase):
         cont = self.tab["etapa_origem"].value_counts()
         self.assertEqual(int(cont["E6"]), n6)
         self.assertEqual(int(cont["E7"]), n7)
-        self.assertEqual(int(cont["E9"]), 4 * 7)  # 4 ciclos x 7 quantidades (estrutura, não resultado)
+        self.assertEqual(int(cont["E9"]), 4 * 9)  # 4 ciclos x 9 quantidades (estrutura, não resultado)
         self.assertEqual(self.resumo["contagens"]["linhas"], len(self.tab))
 
     def test_copia_e_formulas_e6_e7(self) -> None:
@@ -219,10 +237,18 @@ class TestX6SaidasReais(unittest.TestCase):
             self.assertAlmostEqual(r["tau_rel"], vs["estimativa"], places=9)  # Δ prob. / prob. base = coluna do E9
             vr = q[(q["ciclo"] == cic) & (q["quantidade"] == "variacao_relativa_media")].iloc[0]
             for c in ("0.300", "0.400"):
-                g = float(self.e8["degrau_relativo_bolsa"][c]["relativo"])
-                r = t[(t["ciclo"] == cic) & (t["quantidade"] == f"elasticidade_implicita_degrau_{c}")].iloc[0]
-                self.assertAlmostEqual(r["tau"], vr["estimativa"] / g, places=12)
-                self.assertAlmostEqual(r["ic95_sup"], vr["ic95_sup"] / g, places=12)
+                d = self.e8["degrau_relativo_bolsa"][c]
+                b0, b1 = float(d["de_mil"]), float(d["para_mil"])
+                r = t[(t["ciclo"] == cic) & (t["quantidade"] == f"elasticidade_base_bolsa_menor_degrau_{c}")].iloc[0]
+                self.assertAlmostEqual(r["tau"], vr["estimativa"] / ((b1 - b0) / b0), places=12)
+                self.assertAlmostEqual(r["ic95_sup"], vr["ic95_sup"] / ((b1 - b0) / b0), places=12)
+                # arco de ponto médio, recalculado aqui: (ΔP / P_médio) / (ΔB / B_médio)
+                q_ = vr["estimativa"]
+                arco = (q_ / (1 + q_ / 2)) / ((b1 - b0) / ((b0 + b1) / 2))
+                r = t[(t["ciclo"] == cic) & (t["quantidade"] == f"elasticidade_arco_ponto_medio_degrau_{c}")].iloc[0]
+                self.assertAlmostEqual(r["tau"], arco, places=12)
+                self.assertTrue(r["ic95_inf"] < r["tau"] < r["ic95_sup"])
+                self.assertIn("linha inteira", r["especificacao_adicional_doc45"])
 
     def test_referencias_do_protocolo(self) -> None:
         t = self.tab

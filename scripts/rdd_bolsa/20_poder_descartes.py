@@ -39,9 +39,14 @@ Linhas cobertas:
 - E9: coeficiente da bolsa no modelo principal (logit condicional da 1ª opção,
   conjunto principal, spline linear + bolsa linear), ciclos 1, 2, 3 e
   empilhado, em coeficiente por R$ mil, log da razão de chances e razão de
-  chances por +R$ 5 mil, variação média da probabilidade (p.p. e relativa) e a
-  elasticidade-arco implícita da escolha em cada corte (variação relativa sobre
-  o degrau relativo da bolsa do E8).
+  chances por +R$ 5 mil, variação média da probabilidade (p.p. e relativa) e
+  duas elasticidades implícitas da escolha em cada corte: com base na bolsa
+  menor (variação relativa sobre (B1 − B0)/B0; não é arco) e a elasticidade-arco
+  de ponto médio ([r/(1 + r/2)] / [(B1 − B0)/((B0 + B1)/2)]).
+
+Adicionais ao doc 45 (rotulados `ESPECIFICACAO_ADICIONAL` na coluna
+`especificacao_adicional_doc45` e no resumo): a margem de equivalência (IC 90%
+e δ do TOST), o critério "IC honesto informativo" e as linhas de elasticidade.
 
 Contraste
 ---------
@@ -607,17 +612,47 @@ def linhas_e9(e9: pd.DataFrame, efm: pd.DataFrame, degrau: dict, lit: dict) -> l
                          f(vr["estimativa"]), f(vr["ep_cluster_conjunto"]), (f(vr["ic95_inf"]), f(vr["ic95_sup"])),
                          f(r["p"]), sem_hon, float("nan"), "NAO_SE_APLICA: ja relativa", "ja_relativa", None, [],
                          "abs", False))
+        # Duas elasticidades implícitas por corte (ADICIONAIS ao doc 45; aritmética, não estimação nova):
+        # (f1) base na bolsa menor: r / [(B1 - B0) / B0];
+        # (f2) arco de ponto médio: [r / (1 + r/2)] / [(B1 - B0) / ((B0 + B1)/2)], com r = variação relativa
+        #      média da probabilidade (logo ΔP / P_médio = 2r / (2 + r)); EP pelo delta, IC pelos extremos.
+        r_, ep_r, ic_r = f(vr["estimativa"]), f(vr["ep_cluster_conjunto"]), (f(vr["ic95_inf"]), f(vr["ic95_sup"]))
+        exigir(min(ic_r) > -2, f"E9 {cic}: variacao relativa <= -200%; arco de ponto medio indefinido")
+        g_pm = lambda x: 2 * x / (2 + x)  # noqa: E731
         for corte in ("0.300", "0.400"):
+            b0, b1 = float(degrau[corte]["de_mil"]), float(degrau[corte]["para_mil"])
             g = float(degrau[corte]["relativo"])
-            out.append(linha(_meta("E9", comum, escala="elasticidade", unidade="elasticidade-arco da escolha",
-                                   quantidade=f"elasticidade_implicita_degrau_{corte}"),
-                             f(vr["estimativa"]) / g, f(vr["ep_cluster_conjunto"]) / g,
-                             (f(vr["ic95_inf"]) / g, f(vr["ic95_sup"]) / g), f(r["p"]), sem_hon, float("nan"),
+            exigir(abs(g - (b1 - b0) / b0) < TOL, f"E8: degrau relativo do corte {corte} != (B1 - B0) / B0")
+            out.append(linha(_meta("E9", comum, escala="elasticidade",
+                                   unidade="elasticidade com base na bolsa menor (nao e arco)",
+                                   quantidade=f"elasticidade_base_bolsa_menor_degrau_{corte}"),
+                             r_ / g, ep_r / g, (ic_r[0] / g, ic_r[1] / g), f(r["p"]), sem_hon, float("nan"),
                              "NAO_SE_APLICA: elasticidade", "nenhuma", None,
                              lit_aplicaveis(lit, "elasticidade_escolha"), "abs", False))
-            out[-1]["nota"] = (f"variacao_relativa_media / degrau relativo da bolsa no corte {corte} "
-                               f"(E8_resumo.degrau_relativo_bolsa); aritmetica, nao estimacao nova")
-        for x in out[-7:]:
+            out[-1]["nota"] = (f"variacao_relativa_media / [(B1 - B0) / B0], B0 = {b0:g}, B1 = {b1:g} (R$ mil; "
+                               f"E8_resumo.degrau_relativo_bolsa, corte {corte}); base = bolsa menor e probabilidade "
+                               f"inicial, nao o ponto medio; aritmetica, nao estimacao nova")
+            m = (b1 - b0) / ((b0 + b1) / 2)
+            ep_pm = ep_r * 4 / (2 + r_) ** 2 / m
+            out.append(linha(_meta("E9", comum, escala="elasticidade", unidade="elasticidade-arco (ponto medio)",
+                                   quantidade=f"elasticidade_arco_ponto_medio_degrau_{corte}"),
+                             g_pm(r_) / m, ep_pm, (g_pm(ic_r[0]) / m, g_pm(ic_r[1]) / m), f(r["p"]), sem_hon,
+                             float("nan"), "NAO_SE_APLICA: elasticidade", "nenhuma", None,
+                             lit_aplicaveis(lit, "elasticidade_escolha"), "abs", False))
+            # IC 90% e δ do TOST também pelos extremos transformados (coerentes com o IC 95%); MDE pelo EP delta.
+            a90, b90 = ic90(r_, ep_r)
+            exigir(a90 > -2, f"E9 {cic}: IC 90% da variacao relativa <= -200%")
+            out[-1].update({"ic90_inf": g_pm(a90) / m, "ic90_sup": g_pm(b90) / m,
+                            "delta_tost": max(abs(g_pm(a90) / m), abs(g_pm(b90) / m))})
+            for k in (1, 2):  # a coluna do TOST contra a literatura segue o δ recalculado
+                if out[-1].get(f"lit{k}_id"):
+                    alvo = min(abs(out[-1][f"lit{k}_valor_inf"]), abs(out[-1][f"lit{k}_valor_sup"]))
+                    out[-1][f"lit{k}_tost_dentro"] = bool(out[-1]["delta_tost"] < alvo)
+            out[-1]["nota"] = (f"[r / (1 + r/2)] / [(B1 - B0) / ((B0 + B1)/2)], r = variacao_relativa_media, "
+                               f"B0 = {b0:g}, B1 = {b1:g} (R$ mil, corte {corte}); IC 95%, IC 90% e delta_tost pelos "
+                               f"extremos transformados (transformacao monotona); EP e MDE pelo metodo delta; "
+                               f"aritmetica, nao estimacao nova")
+        for x in out[-9:]:
             if not x.get("nota"):
                 x["nota"] = nota_e9
     for x in out:
@@ -666,8 +701,12 @@ def bloco_entradas() -> list[dict]:
     return out
 
 
+ADICIONAIS_COLUNAS = ("colunas ic90_inf, ic90_sup, delta_tost, delta_tost_rel (equivalencia por TOST a 5%) e "
+                      "ic_honesto_informativo, ic_honesto_criterios, ic_honesto_cobre_todo_salto_possivel (criterio "
+                      "do X6); nao previstas no doc 45, §3 X6")
+
 COLUNAS = [
-    "natureza_dos_dados", "estatuto", "etapa_origem", "contraste", "familia", "outcome_id", "outcome",
+    "natureza_dos_dados", "estatuto", "especificacao_adicional_doc45", "etapa_origem", "contraste", "familia", "outcome_id", "outcome",
     "descricao_outcome", "populacao", "ciclo", "corte", "especificacao", "estimador", "no_protocolo", "quantidade",
     "escala", "unidade", "h", "n_obs", "tau", "ep", "ic95_inf", "ic95_sup", "p_valor", "mde80", "ic90_inf",
     "ic90_sup", "delta_tost", "ic_honesto_inf", "ic_honesto_sup", "ic_honesto_contem_zero",
@@ -691,6 +730,10 @@ def construir() -> tuple[dict, pd.DataFrame]:
     lit = literatura()
     linhas = linhas_e6(e6, lit) + linhas_e7(e7, lit) + linhas_e9(e9, efm, degrau, lit)
     tab = pd.DataFrame(linhas)
+    tab["especificacao_adicional_doc45"] = [
+        ("ESPECIFICACAO_ADICIONAL: linha inteira (elasticidade implicita, nao prevista no doc 45); " if
+         str(q).startswith("elasticidade_") else "ESPECIFICACAO_ADICIONAL: ") + ADICIONAIS_COLUNAS
+        for q in tab["quantidade"]]
     for c in COLUNAS:
         if c not in tab.columns:
             tab[c] = None
@@ -730,10 +773,27 @@ def construir() -> tuple[dict, pd.DataFrame]:
             "tost_dentro_ref_protocolo": "equivalencia a 5% dentro de +-referencia",
             "lit_posicao_ic95": "IC_ABAIXO_DA_REFERENCIA = o IC descarta a magnitude da literatura pelo lado de cima; "
                                 "IC_ACIMA = descarta pelo lado de baixo; IC_CONTEM = nao descarta",
+            "elasticidade_base_bolsa_menor": "variacao_relativa_media / [(B1 - B0) / B0]: base na bolsa menor e na "
+                                             "probabilidade inicial; nao e elasticidade-arco",
+            "elasticidade_arco_ponto_medio": "[r / (1 + r/2)] / [(B1 - B0) / ((B0 + B1)/2)], r = variacao_relativa_media; "
+                                             "IC pelos extremos, EP pelo metodo delta",
             "ic_honesto_informativo": "True se o IC honesto (M do protocolo, fator 1) exclui a referencia do protocolo, "
                                       "ou uma magnitude da literatura aplicavel, ou fica dentro de +-100% da base; "
                                       "False se nenhuma dessas; null se nao ha IC honesto (Poisson, E9) ou nada a "
                                       "comparar",
+        },
+        "adicionais_ao_doc45": {
+            "rotulo": "ESPECIFICACAO_ADICIONAL",
+            "coluna": "especificacao_adicional_doc45",
+            "itens": [
+                "equivalencia: ic90_inf, ic90_sup, delta_tost, delta_tost_rel (TOST a 5%)",
+                "criterio 'IC honesto informativo': ic_honesto_informativo, ic_honesto_criterios, "
+                "ic_honesto_cobre_todo_salto_possivel",
+                "linhas de elasticidade do E9: elasticidade_base_bolsa_menor_degrau_* (base = bolsa menor e "
+                "probabilidade inicial; nao e arco) e elasticidade_arco_ponto_medio_degrau_* (arco de ponto medio)",
+            ],
+            "previsto_no_doc45": "MDE de 80% (2,8 x EP), limites do IC 95% absolutos e relativos a media abaixo do "
+                                 "corte, comparacao com +10 p.p., +25% e a literatura do doc 20",
         },
         "contraste": CONTRASTE,
         "selecao": {
@@ -850,7 +910,8 @@ def gravar_figura(tab: pd.DataFrame) -> Path:
     LIM = 1.5  # janela do eixo relativo (±150%), só exibição; o que sai dela recebe seta
     s = sel_principais(tab)
     s = s[s["escala_relativa"] == "base"].iloc[::-1]
-    e9e = tab[(tab["etapa_origem"] == "E9") & tab["quantidade"].str.startswith("elasticidade_implicita")]
+    e9e = tab[(tab["etapa_origem"] == "E9") & tab["quantidade"].str.startswith("elasticidade_arco_ponto_medio")]
+    e9b = tab[(tab["etapa_origem"] == "E9") & tab["quantidade"].str.startswith("elasticidade_base_bolsa_menor")]
 
     fig, (ax, bx) = plt.subplots(1, 2, figsize=(14, 7.8), gridspec_kw={"width_ratios": [1.6, 1]})
     y = np.arange(len(s))
@@ -885,7 +946,7 @@ def gravar_figura(tab: pd.DataFrame) -> Path:
     ax.plot([], [], "s", color=COR_LIT, mfc="none", mew=2, label="Hone et al. (doc 20): líquido do Mais Médicos / "
                                                                  "média do pré (F3.1; só ordem de grandeza)")
     ax.plot([], [], color=COR, lw=1.4, label="IC 95% convencional")
-    ax.plot([], [], color=COR, lw=3.2, alpha=0.55, label="IC 90% (TOST a 5%)")
+    ax.plot([], [], color=COR, lw=3.2, alpha=0.55, label="IC 90% (TOST a 5%; adicional ao doc 45)")
     ax.set_yticks(y)
     ax.set_yticklabels([f"{ROTULO_CURTO[r['outcome_id']]} ({r['populacao']}"
                         + (f", ciclo {r['ciclo']})" if r["etapa_origem"] == "E6" else ", DiRD)")
@@ -905,6 +966,11 @@ def gravar_figura(tab: pd.DataFrame) -> Path:
         bx.plot([r["ic95_inf"], r["ic95_sup"]], [yi, yi], color=COR, lw=1.4)
         bx.plot([r["ic90_inf"], r["ic90_sup"]], [yi, yi], color=COR, lw=3.2, alpha=0.55)
         bx.plot(r["tau"], yi, "o", color=COR, ms=5)
+        rb = e9b[(e9b["ciclo"] == r["ciclo"]) & e9b["quantidade"].str.endswith(r["quantidade"].rsplit("_", 1)[-1])]
+        exigir(len(rb) == 1, "figura: elasticidade com base na bolsa menor ausente")
+        rb = rb.iloc[0]
+        bx.plot([rb["ic95_inf"], rb["ic95_sup"]], [yi - 0.3, yi - 0.3], color=CINZA, lw=1.0, ls=":")
+        bx.plot(rb["tau"], yi - 0.3, "o", color=CINZA, mfc="none", ms=4.5)
         yb.append(yi)
         rot.append(f"{'empilhado' if r['ciclo'] == 'empilhado' else 'ciclo ' + r['ciclo']}, degrau de {corte}")
     lit = literatura()
@@ -913,9 +979,11 @@ def gravar_figura(tab: pd.DataFrame) -> Path:
                label="Costa, Nunes e Sanches (doc 20): escolha locacional, Brasil")
     bx.axvline(a2["valor_sup"], color=COR_REF, lw=1, ls="--", label="Dal Bó, Finan e Rossi (doc 20): pool")
     bx.axvline(0, color=CINZA, lw=0.8)
+    bx.plot([], [], "o-", color=COR, ms=5, lw=1.4, label="arco de ponto médio, IC 95% (adicional ao doc 45)")
+    bx.plot([], [], "o:", color=CINZA, mfc="none", ms=4.5, lw=1.0, label="base na bolsa menor, IC 95% (adicional)")
     bx.set_yticks(yb)
     bx.set_yticklabels(rot, fontsize=8.5)
-    bx.set_xlabel("elasticidade-arco implícita (1ª opção)")
+    bx.set_xlabel("elasticidade implícita da escolha da 1ª opção")
     bx.set_title("(b) E9: escolha entre células (realocação)", fontsize=10.5)
     bx.grid(True, axis="x", color=GRADE, lw=0.5)
     bx.spines[["top", "right"]].set_visible(False)
@@ -997,7 +1065,7 @@ def blocos_doc(resumo: dict, tab: pd.DataFrame) -> dict[str, str]:
     # 1. Tabela principal (linhas empilhadas que a síntese lê + E9)
     s = sel_principais(tab)
     L = ["| Outcome | Pop. | Ciclo | Contraste | Salto | EP | MDE 80% | IC 95% | Média abaixo | IC 95% relativo "
-         "| MDE relativo | δ TOST (abs.; rel.) | IC honesto informativo? |",
+         "| MDE relativo | δ TOST (abs.; rel.) [adicional] | IC honesto informativo? [adicional] |",
          "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for _, r in s.iterrows():
         fm = _fmt(r["unidade"])
@@ -1027,7 +1095,7 @@ def blocos_doc(resumo: dict, tab: pd.DataFrame) -> dict[str, str]:
 
     # 2. Referências do protocolo (+10 p.p. e +25%)
     L = ["| Outcome | Pop. | Ciclo | Corte | Escala | EP | MDE 80% | IC 95% (sup.) | δ TOST | Referência "
-         "| IC exclui? | MDE < ref.? | TOST dentro? | IC honesto exclui? |",
+         "| IC exclui? | MDE < ref.? | TOST dentro? [adicional] | IC honesto exclui? |",
          "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     ref = tab[tab["ref_protocolo"].astype(str).str.contains(r"\(protocolo 40", regex=True)].copy()
     ref = ref[(ref["corte"] == EMPILHADO) | (ref["especificacao"] == "poisson_local")]
@@ -1089,7 +1157,8 @@ def blocos_doc(resumo: dict, tab: pd.DataFrame) -> dict[str, str]:
             if r["etapa_origem"] == "E9":
                 cc = (("empilhado" if r["ciclo"] == "empilhado" else f"ciclo {r['ciclo']}") + ", degrau de "
                       + r["quantidade"].rsplit("_", 1)[-1].replace(".", ","))
-                nome = "E9 elasticidade implícita"
+                nome = ("E9 elasticidade-arco (ponto médio)" if "ponto_medio" in r["quantidade"]
+                        else "E9 elasticidade (base na bolsa menor)")
             else:
                 cc = f"{_ciclo_txt(r)} / {r['corte'].replace('.', ',')}"
                 nome = r["outcome_id"] + (" (Poisson)" if r["especificacao"] == "poisson_local" else "")
@@ -1140,8 +1209,9 @@ def blocos_doc(resumo: dict, tab: pd.DataFrame) -> dict[str, str]:
     p2 = um("E7", "F3.1", "U", None)
     p1 = um("E6", "P1", "V1+V2+V3", "1+2+3")
     rc = sel_e9(tab, "razao_chances_por_5mil").set_index("ciclo")
-    el = tab[(tab["etapa_origem"] == "E9") & tab["quantidade"].str.startswith("elasticidade_implicita")]
-    el2 = el[el["ciclo"] == "2"]
+    el = tab[(tab["etapa_origem"] == "E9") & tab["quantidade"].str.startswith("elasticidade_arco_ponto_medio")]
+    elb = tab[(tab["etapa_origem"] == "E9") & tab["quantidade"].str.startswith("elasticidade_base_bolsa_menor")]
+    el2, elb2 = el[el["ciclo"] == "2"], elb[elb["ciclo"] == "2"]
     c1, a2a = lit["C1_elasticidade"], lit["A2_aceitacao"]
     mde_ciclo = [x["mde80"] for x in f13c]
     princ = sel_principais(tab)
@@ -1189,10 +1259,12 @@ def blocos_doc(resumo: dict, tab: pd.DataFrame) -> dict[str, str]:
         f"- **E9 (escolha):** a menor razão de chances detectável com 80% de poder é "
         f"{_num(rc.loc['2', 'mde80'], 2, False)} no ciclo 2 (estimada {_num(rc.loc['2', 'tau'], 2, False)}) e "
         f"{_num(rc.loc['empilhado', 'mde80'], 2, False)} no empilhado (estimada "
-        f"{_num(rc.loc['empilhado', 'tau'], 2, False)}). A elasticidade-arco implícita do ciclo 2 vai de "
-        f"{_num(el2['tau'].min(), 2, False)} a {_num(el2['tau'].max(), 2, False)} conforme o degrau do corte, contra "
-        f"{_num(c1['valor_inf'], 1, False)} a {_num(c1['valor_sup'], 1, False)} em Costa, Nunes e Sanches. "
-        f"{int((el['lit2_mde80_abaixo'].map(_b) == True).sum())} de {len(el)} linhas de elasticidade "  # noqa: E712
+        f"{_num(rc.loc['empilhado', 'tau'], 2, False)}). A elasticidade-arco de ponto médio do ciclo 2 vai de "
+        f"{_num(el2['tau'].min(), 2, False)} a {_num(el2['tau'].max(), 2, False)} conforme o degrau do corte "
+        f"(com base na bolsa menor, de {_num(elb2['tau'].min(), 2, False)} a {_num(elb2['tau'].max(), 2, False)}), "
+        f"contra {_num(c1['valor_inf'], 1, False)} a {_num(c1['valor_sup'], 1, False)} em Costa, Nunes e Sanches. "
+        f"{int((el['lit2_mde80_abaixo'].map(_b) == True).sum())} de {len(el)} linhas de elasticidade-arco "  # noqa: E712
+        f"(e {int((elb['lit2_mde80_abaixo'].map(_b) == True).sum())} de {len(elb)} com base na bolsa menor) "  # noqa: E712
         f"têm MDE abaixo do limite inferior dessa faixa.",
     ]
     blocos["leitura"] = "\n".join(L)
@@ -1200,8 +1272,13 @@ def blocos_doc(resumo: dict, tab: pd.DataFrame) -> dict[str, str]:
     # 6. O que o X6 acrescenta às propostas do doc 44 (§7), com o sentido decidido pelos dados
     nref, nmde = c["com_referencia_do_protocolo"], c["mde80_abaixo_ref_protocolo"]
     nhon, ninf = c["com_ic_honesto"] - c["ic_honesto_nao_avaliavel"], c["ic_honesto_informativo"]
-    el_c1 = el.apply(lambda r: r["lit2_posicao_ic95"] if r["lit2_id"] == "C1_elasticidade" else r["lit1_posicao_ic95"],
-                     axis=1)
+    def pos_c1(d):
+        return d.apply(lambda r: r["lit2_posicao_ic95"] if r["lit2_id"] == "C1_elasticidade" else r["lit1_posicao_ic95"],
+                       axis=1)
+
+    el_c1, elb_c1 = pos_c1(el), pos_c1(elb)
+    sem_poder = int((el["lit2_mde80_abaixo"].map(_b) == True).sum()) == 0 and \
+        int((elb["lit2_mde80_abaixo"].map(_b) == True).sum()) == 0  # noqa: E712
     blocos["acrescenta"] = "\n".join([
         f"- **Proposta C (quanto e em que margem):** em {nmde} de {nref} linhas com referência do protocolo o MDE de "
         f"80% fica abaixo da referência. Os nulos de preenchimento e candidaturas não são efeito zero: o desenho "
@@ -1209,14 +1286,13 @@ def blocos_doc(resumo: dict, tab: pd.DataFrame) -> dict[str, str]:
         f"e o que se descarta vem do sinal das estimativas pontuais, sob o IC convencional.",
         f"- **IC honesto:** informativo em {ninf} de {nhon} linhas avaliáveis; a precisão relatada depende da "
         f"aproximação local linear.",
-        f"- **Propostas A e B:** a elasticidade implícita da escolha fica acima da faixa de Costa, Nunes e Sanches em "
-        f"{int((el_c1 == 'IC_ACIMA_DA_REFERENCIA').sum())} de {len(el)} linhas, abaixo em "
-        f"{int((el_c1 == 'IC_ABAIXO_DA_REFERENCIA').sum())} e a contém nas demais; nenhum ciclo tem MDE abaixo dessa "
-        f"faixa, de modo que um nulo da escolha também não descarta elasticidades da ordem da literatura brasileira."
-        if int((el['lit2_mde80_abaixo'].map(_b) == True).sum()) == 0 else  # noqa: E712
-        f"- **Propostas A e B:** a elasticidade implícita da escolha fica acima da faixa de Costa, Nunes e Sanches em "
-        f"{int((el_c1 == 'IC_ACIMA_DA_REFERENCIA').sum())} de {len(el)} linhas e abaixo em "
-        f"{int((el_c1 == 'IC_ABAIXO_DA_REFERENCIA').sum())}.",
+        f"- **Propostas A e B:** o IC 95% da elasticidade-arco de ponto médio fica acima da faixa de Costa, Nunes e "
+        f"Sanches em {int((el_c1 == 'IC_ACIMA_DA_REFERENCIA').sum())} de {len(el)} linhas, abaixo em "
+        f"{int((el_c1 == 'IC_ABAIXO_DA_REFERENCIA').sum())} e a contém nas demais (com base na bolsa menor: acima em "
+        f"{int((elb_c1 == 'IC_ACIMA_DA_REFERENCIA').sum())}, abaixo em "
+        f"{int((elb_c1 == 'IC_ABAIXO_DA_REFERENCIA').sum())}). "
+        + ("Nenhuma linha tem MDE abaixo dessa faixa: um nulo da escolha não descarta elasticidades da ordem da "
+           "literatura brasileira." if sem_poder else "Parte das linhas tem MDE abaixo dessa faixa."),
     ])
     return blocos
 
@@ -1250,12 +1326,17 @@ E6 (P1 e F0–F4, cada corte e empilhado, ciclos empilhados onde definidos, mais
 - **o que o IC 95% convencional descarta**, em termos absolutos e relativos à média abaixo do corte na janela. Nas
   linhas empilhadas, a base é a média das médias abaixo de cada grupo ponderada pelos mesmos pesos que definem o
   estimando empilhado. No E7, a base é a média do pré abaixo do corte, como no doc 44;
-- **equivalência:** a menor margem simétrica δ tal que o IC 90% fica dentro de [−δ, +δ]; para toda margem maior que
-  δ, o TOST a 5% declara o efeito equivalente a zero;
+- **equivalência (adicional ao doc 45):** a menor margem simétrica δ tal que o IC 90% fica dentro de [−δ, +δ]; para
+  toda margem maior que δ, o TOST a 5% declara o efeito equivalente a zero;
 - **comparação** com as referências do protocolo 40 (+10 p.p. de preenchimento, +25% de candidaturas) e com
   magnitudes da literatura lidas do doc 20 da seção 03;
-- **se o IC honesto é informativo:** se, com o M do protocolo, ele exclui a referência, uma magnitude da literatura
-  aplicável, ou fica dentro de ±100% da base.
+- **se o IC honesto é informativo (critério adicional ao doc 45):** se, com o M do protocolo, ele exclui a
+  referência, uma magnitude da literatura aplicável, ou fica dentro de ±100% da base;
+- **elasticidades implícitas da escolha (linhas adicionais ao doc 45):** no E9, a variação relativa média da
+  probabilidade dividida pelo degrau relativo da bolsa em cada corte, em duas versões: com base na bolsa menor e na
+  probabilidade inicial (não é arco) e a elasticidade-arco de ponto médio, com bolsa e probabilidade no ponto médio.
+
+As três adições levam `ESPECIFICACAO_ADICIONAL` na coluna `especificacao_adicional_doc45` do CSV e no resumo.
 
 **Contraste.** E6: pacote do corte (bolsa anunciada e outras regras federais nos mesmos cortes). E7: bolsa mais a
 variação das co-políticas. E9: degrau da bolsa na repartição da 1ª opção entre células, não no total de
@@ -1284,8 +1365,8 @@ Linhas empilhadas (cortes e ciclos) e o E9. A tabela completa, com cada corte e 
 A comparação é de ordem de grandeza. Outcome, população e degrau diferem (doc 44, §6): a aceitação de Dal Bó, Finan
 e Rossi é de servidores públicos sorteados para um salário maior; o número de Bobba et al. é uma estimativa não
 significativa; o líquido de Hone et al. é do Mais Médicos inteiro, sobre generalistas. A elasticidade do E9 é da
-repartição da 1ª opção entre células, calculada como a variação relativa média da probabilidade sobre o degrau
-relativo da bolsa em cada corte.
+repartição da 1ª opção entre células, não do tamanho do pool; as duas versões (base na bolsa menor e arco de ponto
+médio) são adicionais ao doc 45 e aparecem lado a lado.
 
 <!-- X6:literatura:inicio -->
 

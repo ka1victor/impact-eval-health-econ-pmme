@@ -25,12 +25,17 @@ E6 (P1 e F0–F4, cada corte e empilhado, ciclos empilhados onde definidos, mais
 - **o que o IC 95% convencional descarta**, em termos absolutos e relativos à média abaixo do corte na janela. Nas
   linhas empilhadas, a base é a média das médias abaixo de cada grupo ponderada pelos mesmos pesos que definem o
   estimando empilhado. No E7, a base é a média do pré abaixo do corte, como no doc 44;
-- **equivalência:** a menor margem simétrica δ tal que o IC 90% fica dentro de [−δ, +δ]; para toda margem maior que
-  δ, o TOST a 5% declara o efeito equivalente a zero;
+- **equivalência (adicional ao doc 45):** a menor margem simétrica δ tal que o IC 90% fica dentro de [−δ, +δ]; para
+  toda margem maior que δ, o TOST a 5% declara o efeito equivalente a zero;
 - **comparação** com as referências do protocolo 40 (+10 p.p. de preenchimento, +25% de candidaturas) e com
   magnitudes da literatura lidas do doc 20 da seção 03;
-- **se o IC honesto é informativo:** se, com o M do protocolo, ele exclui a referência, uma magnitude da literatura
-  aplicável, ou fica dentro de ±100% da base.
+- **se o IC honesto é informativo (critério adicional ao doc 45):** se, com o M do protocolo, ele exclui a
+  referência, uma magnitude da literatura aplicável, ou fica dentro de ±100% da base;
+- **elasticidades implícitas da escolha (linhas adicionais ao doc 45):** no E9, a variação relativa média da
+  probabilidade dividida pelo degrau relativo da bolsa em cada corte, em duas versões: com base na bolsa menor e na
+  probabilidade inicial (não é arco) e a elasticidade-arco de ponto médio, com bolsa e probabilidade no ponto médio.
+
+As três adições levam `ESPECIFICACAO_ADICIONAL` na coluna `especificacao_adicional_doc45` do CSV e no resumo.
 
 **Contraste.** E6: pacote do corte (bolsa anunciada e outras regras federais nos mesmos cortes). E7: bolsa mais a
 variação das co-políticas. E9: degrau da bolsa na repartição da 1ª opção entre células, não no total de
@@ -45,7 +50,7 @@ desenho com poder contra +10 p.p.: a coluna do MDE separa as duas coisas.
 Linhas empilhadas (cortes e ciclos) e o E9. A tabela completa, com cada corte e cada ciclo, está no CSV.
 
 <!-- X6:tabela_poder:inicio -->
-| Outcome | Pop. | Ciclo | Contraste | Salto | EP | MDE 80% | IC 95% | Média abaixo | IC 95% relativo | MDE relativo | δ TOST (abs.; rel.) | IC honesto informativo? |
+| Outcome | Pop. | Ciclo | Contraste | Salto | EP | MDE 80% | IC 95% | Média abaixo | IC 95% relativo | MDE relativo | δ TOST (abs.; rel.) [adicional] | IC honesto informativo? [adicional] |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | F1.1 candidatos de 1ª opção por célula | V1+V2+V3 | 1+2+3 | pacote (nível) | +0,063 | 0,293 | 0,819 | [−0,511; +0,636] | 0,940 | [−54 %; +68 %] | 87 % | 0,544; 58 % | não |
 | F1.2 células com candidato | V1+V2+V3 | 1+2+3 | pacote (nível) | −7,0 p.p. | 6,1 p.p. | 17,0 p.p. | [−18,9 p.p.; +4,9 p.p.] | 54,9 p.p. | [−34 %; +9 %] | 31 % | 17,0 p.p.; 31 % | não |
@@ -73,7 +78,7 @@ Linhas empilhadas (cortes e ciclos) e o E9. A tabela completa, com cada corte e 
 ### X6.3 Referências do protocolo
 
 <!-- X6:referencias_protocolo:inicio -->
-| Outcome | Pop. | Ciclo | Corte | Escala | EP | MDE 80% | IC 95% (sup.) | δ TOST | Referência | IC exclui? | MDE < ref.? | TOST dentro? | IC honesto exclui? |
+| Outcome | Pop. | Ciclo | Corte | Escala | EP | MDE 80% | IC 95% (sup.) | δ TOST | Referência | IC exclui? | MDE < ref.? | TOST dentro? [adicional] | IC honesto exclui? |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | F1.3 | V1+V2+V3 | 1+2+3 | empilhado | p.p. | 5,4 p.p. | 15,2 p.p. | +3,4 p.p. | 16,2 p.p. | +10 p.p. | sim | não | não | não |
 | F1.3 | V1 | 1 | empilhado | p.p. | 11,5 p.p. | 32,3 p.p. | +14,0 p.p. | 27,6 p.p. | +10 p.p. | não | não | não | não |
@@ -99,8 +104,8 @@ Linhas empilhadas (cortes e ciclos) e o E9. A tabela completa, com cada corte e 
 A comparação é de ordem de grandeza. Outcome, população e degrau diferem (doc 44, §6): a aceitação de Dal Bó, Finan
 e Rossi é de servidores públicos sorteados para um salário maior; o número de Bobba et al. é uma estimativa não
 significativa; o líquido de Hone et al. é do Mais Médicos inteiro, sobre generalistas. A elasticidade do E9 é da
-repartição da 1ª opção entre células, calculada como a variação relativa média da probabilidade sobre o degrau
-relativo da bolsa em cada corte.
+repartição da 1ª opção entre células, não do tamanho do pool; as duas versões (base na bolsa menor e arco de ponto
+médio) são adicionais ao doc 45 e aparecem lado a lado.
 
 <!-- X6:literatura:inicio -->
 | Outcome | Pop. | Ciclo / corte | Estimativa [IC 95%] | MDE 80% | Magnitude da literatura (doc 20) | IC 95% | MDE < magnitude? | IC honesto |
@@ -118,22 +123,38 @@ relativo da bolsa em cada corte.
 | F1.1 (Poisson) | V3 | 3 / 0,400 | −6 % [−51 %; +82 %] | 156 % | Dal Bó, Finan & Rossi (2013): +26 % | não descarta | não | — |
 | F3.1 | U | pós / empilhado | +0,083 [−0,309; +0,476] | 0,561 | Hone et al. (2020): +0,570 | descarta (IC abaixo) | sim | não descarta |
 | F3.1 | V1 | pós / empilhado | −1,234 [−2,907; +0,439] | 2,391 | Hone et al. (2020): +0,570 | descarta (IC abaixo) | não | não descarta |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 1, degrau de 0,300 | +0,76 [−0,41; +1,93] | 1,67 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 1, degrau de 0,300 | +0,76 [−0,41; +1,93] | 1,67 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 1, degrau de 0,400 | +1,14 [−0,62; +2,90] | 2,51 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | não descarta | não | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 1, degrau de 0,400 | +1,14 [−0,62; +2,90] | 2,51 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 2, degrau de 0,300 | +1,87 [+0,81; +2,93] | 1,51 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | não descarta | sim | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 2, degrau de 0,300 | +1,87 [+0,81; +2,93] | 1,51 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | descarta (IC acima) | não | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 2, degrau de 0,400 | +2,81 [+1,22; +4,40] | 2,27 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | não descarta | não | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 2, degrau de 0,400 | +2,81 [+1,22; +4,40] | 2,27 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | descarta (IC acima) | não | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 3, degrau de 0,300 | +0,10 [−0,55; +0,75] | 0,93 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 3, degrau de 0,300 | +0,10 [−0,55; +0,75] | 0,93 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 3, degrau de 0,400 | +0,15 [−0,83; +1,12] | 1,39 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | ciclo 3, degrau de 0,400 | +0,15 [−0,83; +1,12] | 1,39 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | empilhado, degrau de 0,300 | +0,78 [+0,18; +1,38] | 0,86 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | empilhado, degrau de 0,300 | +0,78 [+0,18; +1,38] | 0,86 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | empilhado, degrau de 0,400 | +1,17 [+0,27; +2,07] | 1,28 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | não descarta | sim | — |
-| E9 elasticidade implícita | candidatos de 1a opcao | empilhado, degrau de 0,400 | +1,17 [+0,27; +2,07] | 1,28 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 1, degrau de 0,300 | +0,76 [−0,41; +1,93] | 1,67 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 1, degrau de 0,300 | +0,76 [−0,41; +1,93] | 1,67 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 1, degrau de 0,300 | +0,80 [−0,57; +1,63] | 1,48 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 1, degrau de 0,300 | +0,80 [−0,57; +1,63] | 1,48 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 1, degrau de 0,400 | +1,14 [−0,62; +2,90] | 2,51 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | não descarta | não | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 1, degrau de 0,400 | +1,14 [−0,62; +2,90] | 2,51 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 1, degrau de 0,400 | +1,12 [−0,80; +2,28] | 2,07 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | não descarta | não | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 1, degrau de 0,400 | +1,12 [−0,80; +2,28] | 2,07 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 2, degrau de 0,300 | +1,87 [+0,81; +2,93] | 1,51 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | não descarta | sim | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 2, degrau de 0,300 | +1,87 [+0,81; +2,93] | 1,51 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | descarta (IC acima) | não | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 2, degrau de 0,300 | +1,59 [+0,84; +2,11] | 0,88 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | não descarta | sim | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 2, degrau de 0,300 | +1,59 [+0,84; +2,11] | 0,88 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | descarta (IC acima) | não | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 2, degrau de 0,400 | +2,81 [+1,22; +4,40] | 2,27 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | não descarta | não | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 2, degrau de 0,400 | +2,81 [+1,22; +4,40] | 2,27 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | descarta (IC acima) | não | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 2, degrau de 0,400 | +2,23 [+1,18; +2,96] | 1,23 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | não descarta | sim | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 2, degrau de 0,400 | +2,23 [+1,18; +2,96] | 1,23 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | descarta (IC acima) | não | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 3, degrau de 0,300 | +0,10 [−0,55; +0,75] | 0,93 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 3, degrau de 0,300 | +0,10 [−0,55; +0,75] | 0,93 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 3, degrau de 0,300 | +0,12 [−0,80; +0,79] | 1,11 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 3, degrau de 0,300 | +0,12 [−0,80; +0,79] | 1,11 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 3, degrau de 0,400 | +0,15 [−0,83; +1,12] | 1,39 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | ciclo 3, degrau de 0,400 | +0,15 [−0,83; +1,12] | 1,39 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 3, degrau de 0,400 | +0,17 [−1,12; +1,10] | 1,55 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | ciclo 3, degrau de 0,400 | +0,17 [−1,12; +1,10] | 1,55 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | empilhado, degrau de 0,300 | +0,78 [+0,18; +1,38] | 0,86 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | empilhado, degrau de 0,300 | +0,78 [+0,18; +1,38] | 0,86 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | empilhado, degrau de 0,300 | +0,81 [+0,21; +1,28] | 0,75 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | empilhado, degrau de 0,300 | +0,81 [+0,21; +1,28] | 0,75 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | empilhado, degrau de 0,400 | +1,17 [+0,27; +2,07] | 1,28 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | não descarta | sim | — |
+| E9 elasticidade (base na bolsa menor) | candidatos de 1a opcao | empilhado, degrau de 0,400 | +1,17 [+0,27; +2,07] | 1,28 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | empilhado, degrau de 0,400 | +1,14 [+0,30; +1,79] | 1,05 | Dal Bó, Finan & Rossi (2013): ≈ 2,00 | descarta (IC abaixo) | sim | — |
+| E9 elasticidade-arco (ponto médio) | candidatos de 1a opcao | empilhado, degrau de 0,400 | +1,14 [+0,30; +1,79] | 1,05 | Costa, Nunes & Sanches (2024): 0,40 a 0,70 | não descarta | não | — |
 
 Trechos copiados do doc 20 (o número de cada linha sai deste texto): Dal Bó, Finan & Rossi (2013): "aceitação +15,1 p.p."; Bobba et al. (NBER 2021, rev. 2026): "preenchimento (0,063, EP 0,048)"; Dal Bó, Finan & Rossi (2013): "candidaturas +26%"; Hone et al. (2020): "+15,1 médicos do programa por 100 mil habitantes, mas líquido de só +5,7"; Dal Bó, Finan & Rossi (2013): "elasticidade ≈ 2;"; Costa, Nunes & Sanches (2024): "elasticidade 0,4–0,7".
 <!-- X6:literatura:fim -->
@@ -141,7 +162,7 @@ Trechos copiados do doc 20 (o número de cada linha sai deste texto): Dal Bó, F
 ### X6.5 Contagens
 
 <!-- X6:contagens:inicio -->
-- Linhas no CSV: 202 (E6: 156; E7: 18; E9: 28).
+- Linhas no CSV: 210 (E6: 156; E7: 18; E9: 36).
 - Linhas com referência do protocolo (F1.1, F1.3 e F1.4, por ciclo, por corte e empilhadas, mais o Poisson local de F1.1): 39. O IC 95% convencional exclui a referência em 11; o MDE de 80% fica abaixo dela em 0; o TOST declara equivalência dentro de ± a referência em 0; o IC honesto a exclui em 0.
 - IC honesto: existe em 168 linhas. É informativo (critério na coluna `ic_honesto_criterios`) em 7, não informativo em 149 e não avaliável em 12 (índice P1: sem referência nem base). Entre as 60 linhas de fração com IC honesto, 56 cobrem todo salto logicamente possível ([−100 p.p.; +100 p.p.]).
 - Bases relativas indisponíveis: 0.
@@ -156,7 +177,7 @@ Trechos copiados do doc 20 (o número de cada linha sai deste texto): Dal Bó, F
 - **P1 (índice):** MDE de 0,45 DP; equivalência a 5% só com margem de ±0,39 DP ou mais.
 - **P2 (F3.1 por DiRD em U, empilhado):** MDE de 0,561 vínculo por 10 mil hab., 6,5 % da média do pré abaixo do corte (8,622); IC 95% relativo [−3,6 %; +5,5 %]; IC honesto informativo: não.
 - **Menor MDE relativo** entre as linhas empilhadas da tabela de X6.2: F3.2 tem especialista CBO-alvo (U, DiRD), 5,8 % da base.
-- **E9 (escolha):** a menor razão de chances detectável com 80% de poder é 1,48 no ciclo 2 (estimada 1,95) e 1,36 no empilhado (estimada 1,39). A elasticidade-arco implícita do ciclo 2 vai de 1,87 a 2,81 conforme o degrau do corte, contra 0,4 a 0,7 em Costa, Nunes e Sanches. 0 de 8 linhas de elasticidade têm MDE abaixo do limite inferior dessa faixa.
+- **E9 (escolha):** a menor razão de chances detectável com 80% de poder é 1,48 no ciclo 2 (estimada 1,95) e 1,36 no empilhado (estimada 1,39). A elasticidade-arco de ponto médio do ciclo 2 vai de 1,59 a 2,23 conforme o degrau do corte (com base na bolsa menor, de 1,87 a 2,81), contra 0,4 a 0,7 em Costa, Nunes e Sanches. 0 de 8 linhas de elasticidade-arco (e 0 de 8 com base na bolsa menor) têm MDE abaixo do limite inferior dessa faixa.
 <!-- X6:leitura:fim -->
 
 O que o X6 acrescenta à síntese, para as propostas A, B e C do doc 44 (§7):
@@ -164,7 +185,7 @@ O que o X6 acrescenta à síntese, para as propostas A, B e C do doc 44 (§7):
 <!-- X6:acrescenta:inicio -->
 - **Proposta C (quanto e em que margem):** em 0 de 39 linhas com referência do protocolo o MDE de 80% fica abaixo da referência. Os nulos de preenchimento e candidaturas não são efeito zero: o desenho entre municípios não tem poder contra as magnitudes do protocolo, e o que se descarta vem do sinal das estimativas pontuais, sob o IC convencional.
 - **IC honesto:** informativo em 7 de 156 linhas avaliáveis; a precisão relatada depende da aproximação local linear.
-- **Propostas A e B:** a elasticidade implícita da escolha fica acima da faixa de Costa, Nunes e Sanches em 2 de 8 linhas, abaixo em 0 e a contém nas demais; nenhum ciclo tem MDE abaixo dessa faixa, de modo que um nulo da escolha também não descarta elasticidades da ordem da literatura brasileira.
+- **Propostas A e B:** o IC 95% da elasticidade-arco de ponto médio fica acima da faixa de Costa, Nunes e Sanches em 2 de 8 linhas, abaixo em 0 e a contém nas demais (com base na bolsa menor: acima em 2, abaixo em 0). Nenhuma linha tem MDE abaixo dessa faixa: um nulo da escolha não descarta elasticidades da ordem da literatura brasileira.
 <!-- X6:acrescenta:fim -->
 
 ![X6: IC relativos à média abaixo do corte e elasticidades do E9](../../output/rdd_bolsa/X6_figuras/X6_descartes.png)
