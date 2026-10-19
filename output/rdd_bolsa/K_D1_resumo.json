@@ -5,7 +5,7 @@
   "data_execucao": "2026-10-19",
   "protocolo": {
     "texto": "docs/06_execucao/47_protocolo_producao_especializada.md",
-    "sha256_texto": "27b8f4535798dba2f245128da0b858e5819fa82c3d1e05f10ff58c6b69700bd8",
+    "sha256_texto": "e6b16cb0a4a47f4da2317088511bd4cadc21bda01da12d210c6d55dc1e71286a",
     "secoes": "§3, §4, §5 D1, §6, §7, adendos §10 e §11; protocolo 40 §5-§6 e §13"
   },
   "contraste": {
@@ -1190,8 +1190,8 @@
     },
     {
       "caminho": "docs/06_execucao/47_protocolo_producao_especializada.md",
-      "sha256": "27b8f4535798dba2f245128da0b858e5819fa82c3d1e05f10ff58c6b69700bd8",
-      "bytes": 14571,
+      "sha256": "e6b16cb0a4a47f4da2317088511bd4cadc21bda01da12d210c6d55dc1e71286a",
+      "bytes": 17696,
       "papel": "protocolo congelado (com adendos §10 e §11)",
       "fonte": "doc 47",
       "data_referencia": "2026-10-19",

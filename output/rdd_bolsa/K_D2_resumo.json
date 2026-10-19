@@ -5,7 +5,7 @@
   "data_execucao": "2026-10-19",
   "protocolo": {
     "texto": "docs/06_execucao/47_protocolo_producao_especializada.md",
-    "sha256_texto": "27b8f4535798dba2f245128da0b858e5819fa82c3d1e05f10ff58c6b69700bd8",
+    "sha256_texto": "e6b16cb0a4a47f4da2317088511bd4cadc21bda01da12d210c6d55dc1e71286a",
     "secao": "§5 D2"
   },
   "contraste": "ATT da chegada do 1º especialista do PMM-E (Callaway-Sant'Anna, controles ainda não tratados) sob tendências paralelas; não é efeito com fonte de exogeneidade validada nem efeito do incentivo marginal",

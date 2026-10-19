@@ -1196,6 +1196,6 @@ Todas com o bloco "COMO LER" dentro da imagem, no estilo de
 | `output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet` | `36ced6f6a4c41407…` | lista de V1 (quadro do ciclo 1) |
 | `output/aquisicao/a10_ied_aps_2024_municipio.csv` | `2bd4aec48a14e610…` | S3: porte e estrato IED |
 | `data/raw/aquisicao/ivs_administrativo/ppf_mais_medicos_csv.zip` | `15083f8127917e52…` | S4: Amazonia Legal / faixa de fronteira |
-| `docs/06_execucao/47_protocolo_producao_especializada.md` | `27b8f4535798dba2…` | protocolo congelado (com adendos §10 e §11) |
+| `docs/06_execucao/47_protocolo_producao_especializada.md` | `e6b16cb0a4a47f4d…` | protocolo congelado (com adendos §10 e §11) |
 | `docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md` | `9afe8cc10cc28edc…` | datas das politicas nos mesmos cortes |
 <!-- K:entradas:fim -->
