@@ -128,6 +128,12 @@ ID_SEMENTE_POP = {"V1": 1, "V2": 2, "V3": 3, "U": 4, "G3": 5}
 PORTES_MUDA_PROTOCOLO = {300: {2, 3}, 400: {1, 2, 4}}
 ESTRATO_IED_CODIGO = {300: (4, 3), 400: (3, 2)}   # código IVS da Portaria abaixo e acima do corte
 COMPONENTES_INDICE = ["F1.1", "F1.2", "F1.3", "F2.1"]
+# IC honesto POS_RESULTADO (pedido do coordenador em 18/10/2026, depois de ver os resultados): suporte da
+# quártica do lado interno vai até o outro corte (0,300: s <= 399; 0,400: s >= 301), lado externo inteiro.
+SUPORTE_POS_RESULTADO = {300: (None, 399), 400: (301, None)}
+ROTULO_POS = ("POS_RESULTADO (pedido do coordenador em 2026-10-18, depois de ver os resultados: com suporte ate o "
+              "ponto medio entre cortes o lado interno tem so 0,050 de IVS e o M explode; aqui a quartica do lado "
+              "interno vai ate o outro corte e a do lado externo usa o suporte inteiro; nao substitui o IC do protocolo)")
 # Referências de magnitude do protocolo §7 (parâmetros, não resultados).
 REFERENCIA_PREENCHIMENTO = 0.10      # +10 p.p.
 REFERENCIA_CANDIDATURAS = 0.25       # +25%
@@ -174,6 +180,7 @@ CATALOGO: list[dict] = [
      "peso": "f0_3_vagas_pedidas", "condicional": "consta do resultado final da adesão",
      "desc": "fração das vagas pedidas que foi priorizada (só quem consta)"},
     {"id": "F0.3", "familia": "F0", "col": "f0_3_vagas_imediatas_priorizadas", "pop": "G3", "ciclos": (3,),
+     "adicional": "nao listado no §5 do protocolo (F0.3 = aderiu, vagas pedidas, fracao priorizada)",
      "tipo": "contagem", "poisson": ("f0_3_vagas_imediatas_priorizadas", "populacao_2022", 1e4),
      "condicional": "consta do resultado final da adesão",
      "desc": "vagas imediatas priorizadas na adesão do ciclo 3 (só quem consta)"},
@@ -285,6 +292,11 @@ def _gravar_json(path: Path, obj: dict) -> None:
     path.write_text(json.dumps(_nan_none(obj), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def _n_linhas(path: Path) -> int:
+    """Número de linhas de um CSV ou parquet (metadado de cobertura calculado, não digitado)."""
+    return int(len(pd.read_parquet(path)) if str(path).endswith(".parquet") else len(pd.read_csv(path)))
+
+
 def bloco_entrada(path: Path, papel: str, fonte: str, data_ref: str, cobertura: str, unidade: str,
                   chaves: str, filtros: str) -> dict:
     return {"caminho": rotulo(path), "sha256": sha256(path), "bytes": Path(path).stat().st_size, "papel": papel,
@@ -314,7 +326,7 @@ COLUNAS_SAIDA = [
     "n_clusters", "tau", "ep", "ic95_inf", "ic95_sup", "p_valor", "ic_honesto_inf", "ic_honesto_sup", "M",
     "fator_M", "vies_max", "efeito_relativo", "efeito_relativo_ic95_inf", "efeito_relativo_ic95_sup",
     "lee_tau_inf", "lee_tau_sup", "lee_q_aparo", "w_lr", "media_bruta_abaixo", "media_bruta_acima",
-    "pesos_grupos", "entra_bky", "q_bky", "unidade", "nota",
+    "pesos_grupos", "entra_bky", "q_bky", "entra_bky_com_adicionais", "q_bky_com_adicionais", "unidade", "nota",
 ]
 
 
@@ -382,6 +394,20 @@ def linha_honesta(meta: dict, hon: dict, *, fator: float, h_otimo: bool, unidade
     if not np.isfinite(float(linha["ic95_inf"])):
         linha["status"] = "SEM_ESTIMATIVA"
     return linha
+
+
+def linha_pos_resultado(meta: dict, hon: dict, unidade: str, estimador: str) -> dict:
+    linha = linha_honesta(meta, hon, fator=1.0, h_otimo=False, unidade=unidade, estimador=estimador)
+    linha.update({"especificacao": "ic_honesto_pos_resultado", "no_protocolo": False, "rotulo": ROTULO_POS})
+    linha["nota"] = linha["nota"].replace("suporte ate o ponto medio entre cortes",
+                                          "suporte POS_RESULTADO: lado interno ate o outro corte, externo inteiro")
+    return linha
+
+
+def honesto_pos_resultado(meta: dict, s: np.ndarray, y: np.ndarray, corte: int, unidade: str) -> dict:
+    hon = L.rd_honesto(s, y, corte, H, suporte_mil=SUPORTE_POS_RESULTADO[corte])
+    return linha_pos_resultado(meta, {**hon, "h_mil": H}, unidade,
+                               "local linear triangular; IC honesto Armstrong-Kolesar (vizinhos, J=3)")
 
 
 # ---------------------------------------------------------------------------
@@ -477,6 +503,7 @@ def estimar_por_corte(spec: dict, meta_base: dict, d: pd.DataFrame, corte: int, 
                                         estimador=est_hon))
             if not otimo and rec["fator_M"] == 1.0:
                 anexar_honesto(lp, rec)
+        linhas.append(honesto_pos_resultado(meta, s, y, corte, unidade))
     # Local randomization na janela do E5 (regra de balanço).
     linhas.append(local_randomization(meta, d, col, corte, w_lr, id_pop, unidade, motivo_sem_janela))
     # Estimadores por tipo.
@@ -649,6 +676,10 @@ def estimar_empilhado(spec: dict, meta: dict, emp: pd.DataFrame, *, emp_cel: pd.
             linhas.append(linha_honesta(meta, hon, fator=f, h_otimo=False, unidade=unidade, estimador=est_hon))
             if f == 1.0:
                 anexar_honesto(lp, hon)
+        sup_pos = {grp: SUPORTE_POS_RESULTADO[int(cc)] for grp, cc in
+                   emp.groupby("grupo")["corte_mil"].first().items()}
+        hp = L.rd_empilhado_honesto(s, y, c, grupo=g, h_mil=H, cluster=cl, ids_unidade=cl, suporte_mil=sup_pos)
+        linhas.append(linha_pos_resultado(meta, {**hp, "h_mil": H}, unidade, est_hon))
     except ValueError as erro:
         lp["nota"] = "; ".join(x for x in (lp["nota"], f"IC honesto nao calculado: {erro}") if x)
     if "peso" in spec:
@@ -775,6 +806,7 @@ def estimar_tudo(dados: dict, *, sup: dict, lr: dict, motivos_lr: dict | None = 
     lin_ind, extras["indice"] = _estimar_indice(V, C, sup, lr, motivos_lr)
     linhas.extend(lin_ind)
     est = pd.DataFrame(linhas)[COLUNAS_SAIDA]
+    est = marcar_adicionais(est)
     est = aplicar_bky(est)
     return est, extras
 
@@ -832,7 +864,7 @@ def _estimar_indice(V: dict, C: dict, sup: dict, lr: dict, motivos_lr: dict) -> 
         spec = {"id": "P1" if metodo == "klk" else "P1.anderson", "familia": "P1", "col": "indice", "_col": "indice",
                 "tipo": "indice"}
         protocolo = metodo == "klk"
-        rot = "" if protocolo else "sensibilidade prevista (variante de Anderson, 2008)"
+        rot = "" if protocolo else f"{ADICIONAL} (variante de Anderson, 2008; o protocolo nao a nomeia)"
         desc = ("indice de atracao-presenca (KLK): z de F1.1, F1.2, F1.3 e F2.1, padronizados pelo lado abaixo "
                 "do corte na janela h = 0,050, por ciclo x corte; + = mais provimento")
         if not protocolo:
@@ -844,7 +876,7 @@ def _estimar_indice(V: dict, C: dict, sup: dict, lr: dict, motivos_lr: dict) -> 
         lin = estimar_empilhado(spec, meta, dados, protocolo=protocolo, bky=False, suplementares=sup)
         if not protocolo:
             lin[0]["especificacao"] = "indice_anderson"
-            lin[0]["no_protocolo"] = True
+            lin[0]["no_protocolo"] = False
             lin[0]["rotulo"] = rot
         linhas.extend(lin)
         # Por corte, ciclos empilhados.
@@ -855,7 +887,7 @@ def _estimar_indice(V: dict, C: dict, sup: dict, lr: dict, motivos_lr: dict) -> 
                                     corte_unico=corte)
             if not protocolo:
                 lin[0]["especificacao"] = "indice_anderson"
-                lin[0]["no_protocolo"] = True
+                lin[0]["no_protocolo"] = False
                 lin[0]["rotulo"] = rot
             linhas.extend(lin)
         # Por ciclo: cortes empilhados e cada corte.
@@ -866,7 +898,7 @@ def _estimar_indice(V: dict, C: dict, sup: dict, lr: dict, motivos_lr: dict) -> 
                                     suplementares=sup)
             if not protocolo:
                 lin[0]["especificacao"] = "indice_anderson"
-                lin[0]["no_protocolo"] = True
+                lin[0]["no_protocolo"] = False
                 lin[0]["rotulo"] = rot
             linhas.extend(lin)
             for corte in CORTES:
@@ -877,7 +909,7 @@ def _estimar_indice(V: dict, C: dict, sup: dict, lr: dict, motivos_lr: dict) -> 
                                         suplementares=sup)
                 if not protocolo:
                     lin[0]["especificacao"] = "indice_anderson"
-                    lin[0]["no_protocolo"] = True
+                    lin[0]["no_protocolo"] = False
                     lin[0]["rotulo"] = rot
                 linhas.extend(lin)
     for l in linhas:
@@ -886,13 +918,37 @@ def _estimar_indice(V: dict, C: dict, sup: dict, lr: dict, motivos_lr: dict) -> 
     return linhas, extras
 
 
-def aplicar_bky(est: pd.DataFrame) -> pd.DataFrame:
+def marcar_adicionais(est: pd.DataFrame) -> pd.DataFrame:
+    """Outcomes fora do §5 do protocolo: no_protocolo = False, rótulo de adição e fora do BKY do protocolo.
+
+    A linha principal deles entra só no BKY "com adicionais" (`entra_bky_com_adicionais`).
+    """
     est = est.copy()
-    est["q_bky"] = np.nan
-    for fam in FAMILIAS_BKY:
-        m = (est["familia"] == fam) & est["entra_bky"].astype(bool)
-        if m.any():
-            est.loc[m, "q_bky"] = L.qvalores_bky(est.loc[m, "p_valor"].to_numpy(dtype=float))
+    est["entra_bky_com_adicionais"] = est["entra_bky"].astype(bool)
+    for spec in CATALOGO:
+        if "adicional" not in spec:
+            continue
+        m = est["outcome"] == spec["col"]
+        est.loc[m, "no_protocolo"] = False
+        est.loc[m, "rotulo"] = [f"{ADICIONAL} ({spec['adicional']})" + (f"; {r}" if isinstance(r, str) and r else "")
+                                for r in est.loc[m, "rotulo"]]
+        est.loc[m, "entra_bky_com_adicionais"] = est.loc[m, "entra_bky"].astype(bool)
+        est.loc[m, "entra_bky"] = False
+    est["entra_bky"] = est["entra_bky"].astype(bool)
+    return est
+
+
+def aplicar_bky(est: pd.DataFrame) -> pd.DataFrame:
+    """q BKY por família: só linhas do protocolo (`q_bky`) e com as adições (`q_bky_com_adicionais`)."""
+    est = est.copy()
+    if "entra_bky_com_adicionais" not in est.columns:
+        est["entra_bky_com_adicionais"] = est["entra_bky"].astype(bool)
+    for col_m, col_q in (("entra_bky", "q_bky"), ("entra_bky_com_adicionais", "q_bky_com_adicionais")):
+        est[col_q] = np.nan
+        for fam in FAMILIAS_BKY:
+            m = (est["familia"] == fam) & est[col_m].astype(bool)
+            if m.any():
+                est.loc[m, col_q] = L.qvalores_bky(est.loc[m, "p_valor"].to_numpy(dtype=float))
     return est
 
 
@@ -1089,7 +1145,9 @@ def carregar_s4(pmmb: pd.DataFrame) -> dict:
     tab = pd.Series(flag, index=pmmb["co_ibge"].to_numpy()).dropna()
     return {"tabela": tab, "tabela_amazonia": pd.Series(am.to_numpy(), index=pmmb["co_ibge"].to_numpy()).dropna(),
             "definicao": "dentro = Amazonia Legal OU faixa de fronteira (atributo municipal do PMMB consolidado, MS); "
-                         "a ajuda de custo da PI 604/2023 e Faixa 1 ali em qualquer IVS",
+                         "a ajuda de custo da PI 604/2023 e Faixa 1 ali em qualquer IVS; as areas indigenas, que a "
+                         "PI 604 tambem poe na Faixa 1, NAO entram no 'dentro' (nao ha atributo municipal delas no "
+                         "repositorio)",
             "linhas_sem_atributo": int(np.isnan(flag).sum())}
 
 
@@ -1125,6 +1183,7 @@ def diagnostico_m(dados: dict, indice: pd.DataFrame) -> list[dict]:
     linhas = []
 
     def um(oid, pop, ciclo, s, y, corte):
+        rp = L.m_regra_de_bolso(s, y, corte, suporte_mil=SUPORTE_POS_RESULTADO[corte])
         r = L.m_regra_de_bolso(s, y, corte, cortes_vizinhos=CORTES)
         sup = [None if not np.isfinite(v) else int(v) for v in r["suporte_mil"]]
         ok = np.isfinite(y)
@@ -1133,6 +1192,8 @@ def diagnostico_m(dados: dict, indice: pd.DataFrame) -> list[dict]:
         dentro = ok & (s >= lo) & (s <= hi)
         linhas.append({"outcome_id": oid, "populacao": pop, "ciclo": ciclo, "corte": ROTULO_CORTE[corte],
                        "suporte_mil": sup, "M": r["M"], "M_abaixo": r["M_abaixo"], "M_acima": r["M_acima"],
+                       "M_pos_resultado": rp["M"], "M_pos_resultado_abaixo": rp["M_abaixo"],
+                       "M_pos_resultado_acima": rp["M_acima"],
                        "mass_points_abaixo": int(np.unique(s[dentro & (s <= corte)]).size),
                        "mass_points_acima": int(np.unique(s[dentro & (s > corte)]).size)})
 
@@ -1438,15 +1499,17 @@ def gerar_tabelas_doc(est: pd.DataFrame, diag: pd.DataFrame, resumo: dict) -> di
     t["indice_P1"] = _tab_linhas(est, f, ["População", "Corte", "n abaixo / acima", "Salto", "IC 95% (CR1/HC1)",
                                           "IC honesto", "p"],
                                  [lambda r: r["populacao"], corte, nab, tau, ic, ich, lambda r: _p(r["p_valor"])])
-    f = est["outcome_id"].eq("P1") & est["especificacao"].isin(["sensibilidade_h", "ic_honesto", "local_randomization",
-                                                                "S2_donut"]) & (est["populacao"] == "V1+V2+V3") \
+    f = est["outcome_id"].eq("P1") & est["especificacao"].isin(["sensibilidade_h", "ic_honesto", "ic_honesto_pos_resultado",
+                                                                "local_randomization", "S2_donut"]) & (est["populacao"] == "V1+V2+V3") \
         & est["corte"].eq(EMPILHADO)
     f2 = est["outcome_id"].eq("P1.anderson") & est["especificacao"].eq("indice_anderson") & \
         est["populacao"].eq("V1+V2+V3") & est["corte"].eq(EMPILHADO)
     t["indice_P1_sensibilidade"] = _tab_linhas(
         est, f | f2, ["Especificação", "h", "M", "Salto", "IC 95%", "p"],
         [lambda r: r["especificacao"] + (" (Anderson)" if r["outcome_id"] == "P1.anderson" else ""),
-         lambda r: _n(r["h"], 3, sinal=False), lambda r: _n(r["fator_M"], 1, sinal=False) + " × M" if pd.notna(r["fator_M"]) else "—",
+         lambda r: _n(r["h"], 3, sinal=False),
+         lambda r: ("M POS_RESULTADO = " + _n(r["M"], 1, sinal=False)) if r["especificacao"] == "ic_honesto_pos_resultado"
+         else (_n(r["fator_M"], 1, sinal=False) + " × M do protocolo" if pd.notna(r["fator_M"]) else "—"),
          tau, ic, lambda r: _p(r["p_valor"])])
     # 3. Componentes F1/F2 (principal), por ciclo e empilhados.
     for fam in ("F1", "F2", "F4"):
@@ -1485,11 +1548,14 @@ def gerar_tabelas_doc(est: pd.DataFrame, diag: pd.DataFrame, resumo: dict) -> di
         dm = dm[dm["outcome_id"].isin(COMPONENTES_INDICE + ["P1"])]
     t["diagnostico_M"] = _tab_linhas(
         dm, np.ones(len(dm), dtype=bool),
-        ["Outcome", "População", "Corte", "Suporte (milésimos)", "mass points abaixo / acima", "M abaixo", "M acima"],
+        ["Outcome", "População", "Corte", "Suporte (milésimos)", "mass points abaixo / acima", "M abaixo", "M acima",
+         "M POS_RESULTADO abaixo", "M POS_RESULTADO acima"],
         [lambda r: r["outcome_id"], lambda r: r["populacao"], lambda r: r["corte"].replace(".", ","),
          lambda r: "[" + ("−∞" if r["suporte_mil"][0] is None else str(r["suporte_mil"][0])) + "; "
                    + ("+∞" if r["suporte_mil"][1] is None else str(r["suporte_mil"][1])) + "]", lambda r: f"{_fmt_int(r['mass_points_abaixo'])} / {_fmt_int(r['mass_points_acima'])}",
-         lambda r: _n(r["M_abaixo"], 1, sinal=False), lambda r: _n(r["M_acima"], 1, sinal=False)]) if len(dm) else "—"
+         lambda r: _n(r["M_abaixo"], 1, sinal=False), lambda r: _n(r["M_acima"], 1, sinal=False),
+         lambda r: _n(r["M_pos_resultado_abaixo"], 1, sinal=False),
+         lambda r: _n(r["M_pos_resultado_acima"], 1, sinal=False)]) if len(dm) else "—"
     # 8. Diagnósticos: densidade e balanço (h = 0,050).
     dd = diag[(diag["diagnostico"] == "densidade_poisson_mass_points") & (diag["especificacao"] == "principal")]
     t["densidade"] = _tab_linhas(dd, np.ones(len(dd), dtype=bool), ["População", "Corte", "n abaixo / acima", "Razão de densidades", "IC 95%", "p"],
@@ -1505,15 +1571,18 @@ def gerar_tabelas_doc(est: pd.DataFrame, diag: pd.DataFrame, resumo: dict) -> di
         linhas.append(f"| {pop} | {c.replace('.', ',')} | {len(ok)} | {len(sig)} | {quais or '—'} |")
     t["balanco"] = "\n".join(linhas)
     # 8b. Resumo dos testes por família (linhas principais do protocolo que entram no BKY).
-    linhas = ["| Família | Linhas principais no BKY | p < 0,05 | q BKY < 0,05 | menor p | menor q |",
-              "|---|---|---|---|---|---|"]
+    linhas = ["| Família | Linhas principais no BKY | p < 0,05 | q BKY < 0,05 | menor p | menor q | "
+              "Linhas com adições | menor q com adições |",
+              "|---|---|---|---|---|---|---|---|"]
     for fam in FAMILIAS_BKY:
         g = est[(est["familia"] == fam) & est["entra_bky"].astype(bool)]
+        ga = est[(est["familia"] == fam) & est["entra_bky_com_adicionais"].astype(bool)]
         linhas.append(f"| {fam} | {len(g)} | {int((g['p_valor'] < 0.05).sum())} | {int((g['q_bky'] < 0.05).sum())} | "
-                      f"{_p(g['p_valor'].min())} | {_p(g['q_bky'].min())} |")
+                      f"{_p(g['p_valor'].min())} | {_p(g['q_bky'].min())} | {len(ga)} | "
+                      f"{_p(ga['q_bky_com_adicionais'].min())} |")
     sup = est[est["especificacao"].str.startswith(("S2", "S3", "S4")) & (est["status"] == "EXECUTADO")]
     linhas.append(f"| S2–S4, todos os outcomes (fora do BKY) | {len(sup)} | {int((sup['p_valor'] < 0.05).sum())} | — | "
-                  f"{_p(sup['p_valor'].min())} | — |")
+                  f"{_p(sup['p_valor'].min())} | — | — | — |")
     t["resumo_testes"] = "\n".join(linhas)
     sig = est[est["entra_bky"].astype(bool) & (est["p_valor"] < 0.05)]
     t["principais_p_menor_005"] = _tab_linhas(
@@ -1525,7 +1594,7 @@ def gerar_tabelas_doc(est: pd.DataFrame, diag: pd.DataFrame, resumo: dict) -> di
     linhas = ["| Outcome | População | Ciclo | Corte | Referência | Limite superior do IC 95% | IC 95% exclui a referência? |",
               "|---|---|---|---|---|---|---|"]
     ref_pp = REFERENCIA_PREENCHIMENTO
-    for r in est[princ & est["outcome_id"].isin(["F1.2", "F1.3", "F1.4"]) & est["no_protocolo"]].to_dict("records"):
+    for r in est[princ & est["outcome_id"].isin(["F1.3", "F1.4"]) & est["no_protocolo"]].to_dict("records"):
         linhas.append(f"| {r['outcome_id']} | {r['populacao']} | {r['ciclo']} | {corte(r)} | {_n(ref_pp, 0, pp=True)} p.p. | "
                       f"{_n(r['ic95_sup'], 1, pp=True)} p.p. | {'sim' if r['ic95_sup'] < ref_pp else 'não'} |")
     for r in est[(est["especificacao"] == "poisson_local") & (est["outcome_id"] == "F1.1")].to_dict("records"):
@@ -1539,6 +1608,50 @@ def gerar_tabelas_doc(est: pd.DataFrame, diag: pd.DataFrame, resumo: dict) -> di
         pop, c = chave.split("|")
         linhas.append(f"| {pop} | {c.replace('.', ',')} | {_n(w, 3, sinal=False) if w else 'nenhuma passou no balanço'} |")
     t["janelas_lr"] = "\n".join(linhas)
+    # 8d. IC honesto do protocolo x POS_RESULTADO (P1 e componentes, linhas com h = 0,050 e M x 1).
+    chave = ["outcome_id", "populacao", "ciclo", "corte"]
+    prot = est[(est["especificacao"] == "ic_honesto") & np.isclose(est["fator_M"].astype(float), 1.0)
+               & est["outcome_id"].isin(["P1"] + COMPONENTES_INDICE)]
+    pos = est[est["especificacao"] == "ic_honesto_pos_resultado"][chave + ["ic95_inf", "ic95_sup", "M", "p_valor"]]
+    cmp_ = prot.merge(pos, on=chave, how="left", suffixes=("", "_pos"))
+    cmp_ = cmp_[cmp_["populacao"].str.contains(r"\+") | (cmp_["outcome_id"] == "P1")]
+
+    def _ic_u(r, a, b):
+        c, pp, _ = _escala(r["unidade"])
+        return _ic(r[a], r[b], 1 if pp else c, pp)
+
+    t["honesto_pos_resultado"] = _tab_linhas(
+        cmp_, np.ones(len(cmp_), dtype=bool),
+        ["Outcome", "População", "Corte", "Salto", "IC honesto (protocolo)", "M (protocolo)",
+         "IC honesto POS_RESULTADO", "M POS_RESULTADO", "p POS_RESULTADO"],
+        [lambda r: r["outcome_id"], lambda r: r["populacao"], corte, tau,
+         lambda r: _ic_u(r, "ic95_inf", "ic95_sup"), lambda r: _n(r["M"], 1, sinal=False),
+         lambda r: _ic_u(r, "ic95_inf_pos", "ic95_sup_pos"), lambda r: _n(r["M_pos"], 1, sinal=False),
+         lambda r: _p(r["p_valor_pos"])])
+    # 8e. Sinal de seleção: vagas imediatas por 10 mil hab. do ciclo 1 em 0,400 e empilhado, por estimador.
+    f = (est["outcome"] == "f0_2_vagas_imediatas_por_10k_c1") & est["corte"].isin(["0.400", EMPILHADO]) & \
+        est["especificacao"].isin(["principal", "sensibilidade_h", "local_randomization", "poisson_local", "S2_donut",
+                                   "ic_honesto_pos_resultado"])
+    t["selecao_convergencia"] = _tab_linhas(
+        est, f, ["Corte", "Especificação", "h ou janela", "Salto", "IC 95%", "p"],
+        [corte, lambda r: r["especificacao"], lambda r: _n(r["h"], 3, sinal=False),
+         lambda r: f"{_n(r['tau'], 3)}" + (" (log)" if r["especificacao"] == "poisson_local" else ""),
+         lambda r: _ic(r["ic95_inf"], r["ic95_sup"], 3), lambda r: _p(r["p_valor"])])
+    v1 = diag[(diag["populacao"] == "V1") & (diag["corte"] == "0.400") & (diag["especificacao"] == "principal")]
+    dens = v1[v1["diagnostico"] == "densidade_poisson_mass_points"]
+    bal = v1[(v1["diagnostico"] == "balanco_covariavel_pre") & (v1["p_valor"] < 0.05)]
+    p1row = est[(est["outcome_id"] == "P1") & princ & (est["populacao"] == "V1+V2+V3") & (est["corte"] == EMPILHADO)]
+    pesos = json.loads(p1row["pesos_grupos"].iloc[0]) if len(p1row) and isinstance(p1row["pesos_grupos"].iloc[0], str) else {}
+    linhas = ["| Diagnóstico de V1 em 0,400 | Valor |", "|---|---|"]
+    for r in dens.to_dict("records"):
+        linhas.append(f"| razão de densidades (IC 95%; p) | {_n(r['rho'], 2, sinal=False)} "
+                      f"[{_n(r['rho_ic95_inf'], 2, sinal=False)}; {_n(r['rho_ic95_sup'], 2, sinal=False)}]; p = {_p(r['p_valor'])} |")
+    for r in bal.to_dict("records"):
+        linhas.append(f"| desequilíbrio: {r['variavel']} | {_n(r['tau'], 3)} (p = {_p(r['p_valor'])}) |")
+    linhas.append(f"| peso do grupo ciclo 1 × 0,400 no P1 empilhado | {_n(pesos.get('c1_400'), 1, pp=True, sinal=False)} % |")
+    linhas.append("| pesos de todos os grupos no P1 empilhado | " + "; ".join(
+        f"{g}: {_n(w, 1, pp=True, sinal=False)} %" for g, w in pesos.items()) + " |")
+    t["selecao_v1_0400"] = "\n".join(linhas)
     # 9. Contagens e validações.
     v = resumo.get("validacoes", {})
     e3v, e5v = v.get("E3", {}), v.get("E5", {})
@@ -1665,9 +1778,9 @@ def main(argv: list[str] | None = None) -> int:
                       "Censo 2010", f"{len(rv)} municipios", "municipio", "co_ibge",
                       "ivs; subindices, idhm, populacao e renda per capita para balanco"),
         bloco_entrada(POP22, "covariavel log populacao 2022 (balanco)", "IBGE, Censo 2022", "Censo 2022",
-                      "5570 municipios", "municipio", "co_ibge_6d", "nenhum"),
+                      f"{_n_linhas(POP22)} municipios", "municipio", "co_ibge_6d", "nenhum"),
         bloco_entrada(TIPOLOGIA, "estrato territorial (so a coluna estrato)", "tipologia A2 (REGIC 2018, RM/RIDE 2022)",
-                      "REGIC 2018; RM/RIDE 2022", "5570 municipios", "municipio", "co_ibge_6d", "colunas co_ibge_6d e estrato"),
+                      "REGIC 2018; RM/RIDE 2022", f"{_n_linhas(TIPOLOGIA)} municipios", "municipio", "co_ibge_6d", "colunas co_ibge_6d e estrato"),
         bloco_entrada(ARQ_U, "outcomes F0.1, F0.2, F0.4, F2.2 (U)", "tarefa B (12_construir_outcomes_funil.py)",
                       "ver dicionario", f"{len(dados['U'])} municipios", "municipio", "co_ibge", "nenhum"),
         bloco_entrada(ARQ_G3, "outcomes F0.3 (G3)", "tarefa B", "ver dicionario", f"{len(dados['G3'])} municipios com IVS",
@@ -1685,18 +1798,18 @@ def main(argv: list[str] | None = None) -> int:
                       ", ".join(info_pmmb["dt_referencia"]), "nivel MUNICIPAL", "municipio", "co_ibge",
                       "nivel == MUNICIPAL; colunas co_ibge, ativas_ff, ativas_coparticipacao, total_vagas_ativas, "
                       "amazonia_legal, faixa_fronteira"),
-        bloco_entrada(E3_EST, "alvo de conferencia (E3)", "07_estimar_E3_rdd_completa.py", "2026-10-14", "18 linhas",
+        bloco_entrada(E3_EST, "alvo de conferencia (E3)", "07_estimar_E3_rdd_completa.py", "2026-10-14", f"{_n_linhas(E3_EST)} linhas",
                       "linha de estimativa", "populacao, outcome, corte, h", "nenhum"),
         bloco_entrada(E4_MUN, "Y1 do E4 (entrada do E5), so para conferir a linha E0 do E5", "08_estimar_E4_proporcao.py",
-                      "2026-10-14", "368 municipios", "municipio", "co_ibge", "colunas co_ibge, y1, n_celulas"),
+                      "2026-10-14", f"{_n_linhas(E4_MUN)} municipios", "municipio", "co_ibge", "colunas co_ibge, y1, n_celulas"),
         bloco_entrada(E5_SEL, "janela LR de V1 e V2 (regra do E5)", "11_inferencia_alternativa.py", "2026-10-18",
-                      "P1, P2", "janela", "populacao, corte, w", "selecionada"),
+                      ", ".join(sorted(pd.read_csv(E5_SEL)["populacao"].unique())), "janela", "populacao, corte, w", "selecionada"),
         bloco_entrada(E5_ESP, "alvo de conferencia (E5)", "11_inferencia_alternativa.py", "2026-10-18",
-                      "42 linhas", "linha de estimativa", "especificacao, outcome, corte", "D, E0, E1, F1, F2"),
+                      f"{_n_linhas(E5_ESP)} linhas", "linha de estimativa", "especificacao, outcome, corte", "D, E0, E1, F1, F2"),
     ]
     if A10_IED.exists():
         entradas.append(bloco_entrada(A10_IED, "S3: porte e estrato IED da Portaria 3.493/2024", "tarefa D (a10), Anexo VI",
-                                      "Portaria GM/MS 3.493/2024", "5570 municipios", "municipio", "co_ibge",
+                                      "Portaria GM/MS 3.493/2024", f"{_n_linhas(A10_IED)} municipios", "municipio", "co_ibge",
                                       "colunas co_ibge, ivs_codigo_portaria, porte_codigo, estrato_ied"))
     if A10_DIAG.exists():
         entradas.append(bloco_entrada(A10_DIAG, "conferencia do mapa estrato x porte (somente lido)", "tarefa D (a10)",
@@ -1723,6 +1836,16 @@ def main(argv: list[str] | None = None) -> int:
          "resolucao": "a linha E0 passa a ser conferida rodando a mesma estimacao da rdd_lib com o Y1 do E4 como "
                       "entrada (tolerancia 1e-10 mantida); a diferenca da linha do E6 para o E5 e a diferenca de "
                       "entrada ficam registradas; nenhuma estimativa do E6 foi alterada"},
+        {"data": "2026-10-19", "item": "auditoria independente do E6 (pedido do coordenador)",
+         "situacao": "a variante de Anderson e F0.3 vagas imediatas priorizadas nao estao no protocolo; o M da regra "
+                     "de bolso com suporte ate o ponto medio deixa o lado interno com 0,050 de IVS e o M explode",
+         "resolucao": "Anderson e F0.3 imediatas rotuladas como adicao (fora do BKY do protocolo; BKY com e sem "
+                      "elas); IC honesto POS_RESULTADO com suporte interno ate o outro corte, ao lado do IC do "
+                      "protocolo, sem substitui-lo"},
+        {"data": "2026-10-19", "item": "S4: areas indigenas",
+         "situacao": "a PI 604/2023 poe na Faixa 1 da ajuda de custo tambem as areas indigenas",
+         "resolucao": "nao ha atributo municipal de area indigena no repositorio; o 'dentro' do S4 cobre so Amazonia "
+                      "Legal ou faixa de fronteira, e municipios com area indigena fora delas ficam no 'fora'"},
         {"data": DATA_EXECUCAO, "item": "Poisson local e limites de Lee empilhados",
          "situacao": "a rdd_lib (tarefa A) so tem Poisson local e limites de Lee em um corte",
          "resolucao": "relatados por ciclo e corte; as linhas empilhadas de Lee saem NAO_EXECUTADO com o motivo"},
@@ -1736,11 +1859,19 @@ def main(argv: list[str] | None = None) -> int:
         "Cortes empilhados: sempre CR1 por municipio (o mesmo municipio pode estar nas duas janelas com h = 0,080).",
         "q BKY: dentro de cada familia F0, F1, F2, F4, sobre todas as linhas 'principal' do protocolo (cada outcome x "
         "populacao x ciclo x corte, incluindo cortes empilhados e ciclos empilhados). Sensibilidades de construcao da "
-        "tarefa B, S1 e o indice P1 ficam fora.",
+        "tarefa B, S1, o indice P1 e outcomes fora do §5 ficam fora. As linhas de um corte e as empilhadas (e as de "
+        "um ciclo e as de ciclos empilhados) usam os mesmos municipios: sao hipoteses dependentes, e o BKY as junta "
+        "na mesma familia (o BKY vale sob dependencia positiva, PRDS; nao foi verificada aqui).",
+        "q_bky_com_adicionais: o mesmo BKY incluindo as linhas principais de outcomes adicionais ao protocolo "
+        "(F0.3 vagas imediatas priorizadas, que o §5 nao lista).",
+        "Variante de Anderson do indice: especificacao adicional ao protocolo (o protocolo nao a nomeia).",
         "Indice P1: z-scores pelo lado abaixo do corte dentro da janela h = 0,050 (-50 < x <= 0) em cada ciclo x corte; "
         "a mesma padronizacao e usada nas sensibilidades h = 0,030 e 0,080. F2.1 nao existe no ciclo 3: o indice de "
         "V3 tem tres componentes. Componente ausente nao e imputado.",
-        "IC honesto: M pela regra de bolso com suporte ate o ponto medio entre os cortes (cortes_vizinhos = (300, 400)); "
+        "IC honesto: o protocolo fixa a regra de bolso (quartica global por lado); o suporte ate o ponto medio entre "
+        "os cortes (cortes_vizinhos = (300, 400)) e escolha de implementacao da rdd_lib (tarefa A), nao texto do "
+        "protocolo. Sensibilidade POS_RESULTADO pedida pelo coordenador: lado interno ate o outro corte, externo "
+        "inteiro (ic_honesto_pos_resultado, no_protocolo = False). "
         "h fixo = protocolo; h otimo = especificacao adicional rotulada. No empilhado, M = maximo da regra por grupo; "
         "nao ha h otimo empilhado.",
         "F4.1: principal = local linear nos municipios com >= 1 celula preenchida (condicional); limites de Lee com "

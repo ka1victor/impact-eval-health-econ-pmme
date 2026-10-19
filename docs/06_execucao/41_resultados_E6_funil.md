@@ -107,8 +107,8 @@ F0.2 em U (todos os municípios com IVS oficial) é, por isso, lida primeiro.
 | F0.2 `f0_2_celulas_por_10k_c3` | 3 | 0,400 | 587 / 603 | −0,059 | [−0,200; +0,081] | 0,407 | 1,000 |
 | F0.2 `f0_2_celulas_por_10k_c3` | 3 | empilhado | 1446 / 1257 | −0,039 | [−0,107; +0,029] | 0,263 | 1,000 |
 | F0.2 `f0_2_vagas_imediatas_por_10k_c1` | 1 | 0,300 | 859 / 654 | −0,006 | [−0,028; +0,016] | 0,615 | 1,000 |
-| F0.2 `f0_2_vagas_imediatas_por_10k_c1` | 1 | 0,400 | 587 / 603 | −0,074 | [−0,134; −0,013] | 0,018 | 0,717 |
-| F0.2 `f0_2_vagas_imediatas_por_10k_c1` | 1 | empilhado | 1446 / 1257 | −0,035 | [−0,065; −0,006] | 0,019 | 0,717 |
+| F0.2 `f0_2_vagas_imediatas_por_10k_c1` | 1 | 0,400 | 587 / 603 | −0,074 | [−0,134; −0,013] | 0,018 | 0,639 |
+| F0.2 `f0_2_vagas_imediatas_por_10k_c1` | 1 | empilhado | 1446 / 1257 | −0,035 | [−0,065; −0,006] | 0,019 | 0,639 |
 | F0.2 `f0_2_vagas_imediatas_por_10k_c2` | 2 | 0,300 | 859 / 654 | −0,040 | [−0,081; +0,001] | 0,057 | 1,000 |
 | F0.2 `f0_2_vagas_imediatas_por_10k_c2` | 2 | 0,400 | 587 / 603 | −0,194 | [−0,568; +0,180] | 0,309 | 1,000 |
 | F0.2 `f0_2_vagas_imediatas_por_10k_c2` | 2 | empilhado | 1446 / 1257 | −0,107 | [−0,273; +0,058] | 0,204 | 1,000 |
@@ -140,9 +140,10 @@ estimador do E1/E3), h = 0,050.
 
 Balanço (h = 0,050): subíndices do IVS, IDHM, população e renda per capita de
 2010 (a08), população de 2022 (Censo), estrato territorial (A2) e
-macrorregião. O próprio IVS não entra, porque é a running variable. Com cerca
-de quinze covariáveis por população e corte, parte dos p < 0,05 é esperada por
-acaso; os subíndices do IVS não são testes independentes.
+macrorregião. O próprio IVS não entra, porque é a running variable. O número
+de covariáveis testadas em cada população e corte está na tabela; parte dos
+p < 0,05 é esperada por acaso, e os subíndices do IVS não são testes
+independentes.
 
 <!-- E6:balanco:inicio -->
 | População | Corte | Covariáveis testadas | p < 0,05 | Quais |
@@ -209,47 +210,93 @@ O Holm entre P1 e P2 (F3.1 por DiRD, E7) é feito pelo coordenador (E8).
 | V3 | 0,400 | 97 / 118 | −0,15 DP | [−0,70; +0,41] | [−16,30; +16,01] | 0,609 |
 <!-- E6:indice_P1:fim -->
 
-**IC honesto.** Com o M da regra de bolso do protocolo (quártica global por
-lado, com o suporte de cada corte indo até o ponto médio entre os cortes), o
-lado que fica entre os dois cortes tem só a faixa de 0,050 até o ponto médio, e
-a quártica ajustada nela tem curvatura muito grande. O M resultante torna os
-IC honestos muito largos, em geral sem informação. A tabela abaixo mostra o M
-de cada lado para os componentes do índice e para o índice (o mesmo M entra nas
-linhas do índice empilhado como máximo entre grupos). O protocolo fixa essa
-regra; nenhuma outra escolha de M é feita depois de ver os resultados.
+**IC honesto.** O protocolo (§6) fixa o M pela regra de bolso: quártica global
+por lado, máximo de |f''|. O protocolo não diz até onde vai o suporte da
+quártica. Parar o suporte de cada corte no ponto médio entre os cortes é escolha
+de implementação da `rdd_lib` (tarefa A, decidida pelo coordenador), para que a
+quártica de um corte não atravesse o outro. Com essa escolha, o lado que fica
+entre os dois cortes tem só a faixa de 0,050 até o ponto médio, a quártica
+ajustada nela tem curvatura muito grande, e o M resultante torna os IC honestos
+muito largos, em geral sem informação. A tabela abaixo mostra o M de cada lado
+para os componentes do índice e para o índice (no empilhado, o M é o máximo
+entre grupos).
+
+**Sensibilidade POS_RESULTADO.** Rótulo: pós-resultado, pedida pelo coordenador
+em 19/10/2026 depois de ver os resultados, porque o suporte até o ponto médio
+faz o M explodir. A quártica do lado interno vai até o outro corte (s ≤ 0,399
+no lado de cima de 0,300; s ≥ 0,301 no lado de baixo de 0,400), e a do lado
+externo usa o suporte inteiro. Ela fica ao lado do IC do protocolo e não o
+substitui (`ic_honesto_pos_resultado`, `no_protocolo = False`).
 
 <!-- E6:diagnostico_M:inicio -->
-| Outcome | População | Corte | Suporte (milésimos) | mass points abaixo / acima | M abaixo | M acima |
-|---|---|---|---|---|---|---|
-| F1.1 | V1 | 0,300 | [−∞; 350] | 97 / 33 | 3707,4 | 18880,9 |
-| F1.1 | V1 | 0,400 | [350; +∞] | 37 / 83 | 5566,4 | 326,9 |
-| F1.1 | V2 | 0,300 | [−∞; 350] | 115 / 37 | 1099,0 | 17904,6 |
-| F1.1 | V2 | 0,400 | [350; +∞] | 34 / 90 | 78826,4 | 769,4 |
-| F1.1 | V3 | 0,300 | [−∞; 350] | 139 / 41 | 1144,6 | 46488,4 |
-| F1.1 | V3 | 0,400 | [350; +∞] | 43 / 153 | 26289,2 | 309,1 |
-| F1.2 | V1 | 0,300 | [−∞; 350] | 97 / 33 | 1022,4 | 11846,0 |
-| F1.2 | V1 | 0,400 | [350; +∞] | 37 / 83 | 5218,0 | 223,4 |
-| F1.2 | V2 | 0,300 | [−∞; 350] | 115 / 37 | 640,0 | 18365,9 |
-| F1.2 | V2 | 0,400 | [350; +∞] | 34 / 90 | 17975,9 | 294,1 |
-| F1.2 | V3 | 0,300 | [−∞; 350] | 139 / 41 | 1070,8 | 11423,1 |
-| F1.2 | V3 | 0,400 | [350; +∞] | 43 / 153 | 9303,4 | 426,7 |
-| F1.3 | V1 | 0,300 | [−∞; 350] | 97 / 33 | 642,6 | 10719,8 |
-| F1.3 | V1 | 0,400 | [350; +∞] | 37 / 83 | 5920,0 | 385,9 |
-| F1.3 | V2 | 0,300 | [−∞; 350] | 115 / 37 | 532,0 | 21015,3 |
-| F1.3 | V2 | 0,400 | [350; +∞] | 34 / 90 | 11637,0 | 276,4 |
-| F1.3 | V3 | 0,300 | [−∞; 350] | 139 / 41 | 729,6 | 7760,0 |
-| F1.3 | V3 | 0,400 | [350; +∞] | 43 / 153 | 21378,3 | 157,2 |
-| F2.1 | V1 | 0,300 | [−∞; 350] | 97 / 33 | 486,1 | 37868,1 |
-| F2.1 | V1 | 0,400 | [350; +∞] | 37 / 83 | 15020,5 | 273,2 |
-| F2.1 | V2 | 0,300 | [−∞; 350] | 115 / 37 | 367,0 | 6471,6 |
-| F2.1 | V2 | 0,400 | [350; +∞] | 34 / 90 | 63157,9 | 34,0 |
-| P1 | V1 | 0,300 | [−∞; 350] | 97 / 33 | 1984,4 | 41176,5 |
-| P1 | V1 | 0,400 | [350; +∞] | 37 / 83 | 4233,2 | 497,2 |
-| P1 | V2 | 0,300 | [−∞; 350] | 115 / 37 | 1183,5 | 33219,8 |
-| P1 | V2 | 0,400 | [350; +∞] | 34 / 90 | 49830,6 | 408,1 |
-| P1 | V3 | 0,300 | [−∞; 350] | 139 / 41 | 2229,7 | 17241,5 |
-| P1 | V3 | 0,400 | [350; +∞] | 43 / 153 | 38084,7 | 573,9 |
+| Outcome | População | Corte | Suporte (milésimos) | mass points abaixo / acima | M abaixo | M acima | M POS_RESULTADO abaixo | M POS_RESULTADO acima |
+|---|---|---|---|---|---|---|---|---|
+| F1.1 | V1 | 0,300 | [−∞; 350] | 97 / 33 | 3707,4 | 18880,9 | 3707,4 | 4136,6 |
+| F1.1 | V1 | 0,400 | [350; +∞] | 37 / 83 | 5566,4 | 326,9 | 3900,4 | 326,9 |
+| F1.1 | V2 | 0,300 | [−∞; 350] | 115 / 37 | 1099,0 | 17904,6 | 1099,0 | 4863,4 |
+| F1.1 | V2 | 0,400 | [350; +∞] | 34 / 90 | 78826,4 | 769,4 | 7061,9 | 769,4 |
+| F1.1 | V3 | 0,300 | [−∞; 350] | 139 / 41 | 1144,6 | 46488,4 | 1144,6 | 3483,8 |
+| F1.1 | V3 | 0,400 | [350; +∞] | 43 / 153 | 26289,2 | 309,1 | 1401,3 | 309,1 |
+| F1.2 | V1 | 0,300 | [−∞; 350] | 97 / 33 | 1022,4 | 11846,0 | 1022,4 | 2590,3 |
+| F1.2 | V1 | 0,400 | [350; +∞] | 37 / 83 | 5218,0 | 223,4 | 1700,3 | 223,4 |
+| F1.2 | V2 | 0,300 | [−∞; 350] | 115 / 37 | 640,0 | 18365,9 | 640,0 | 3353,7 |
+| F1.2 | V2 | 0,400 | [350; +∞] | 34 / 90 | 17975,9 | 294,1 | 1298,3 | 294,1 |
+| F1.2 | V3 | 0,300 | [−∞; 350] | 139 / 41 | 1070,8 | 11423,1 | 1070,8 | 780,5 |
+| F1.2 | V3 | 0,400 | [350; +∞] | 43 / 153 | 9303,4 | 426,7 | 831,1 | 426,7 |
+| F1.3 | V1 | 0,300 | [−∞; 350] | 97 / 33 | 642,6 | 10719,8 | 642,6 | 3687,0 |
+| F1.3 | V1 | 0,400 | [350; +∞] | 37 / 83 | 5920,0 | 385,9 | 3621,5 | 385,9 |
+| F1.3 | V2 | 0,300 | [−∞; 350] | 115 / 37 | 532,0 | 21015,3 | 532,0 | 336,5 |
+| F1.3 | V2 | 0,400 | [350; +∞] | 34 / 90 | 11637,0 | 276,4 | 1646,5 | 276,4 |
+| F1.3 | V3 | 0,300 | [−∞; 350] | 139 / 41 | 729,6 | 7760,0 | 729,6 | 829,2 |
+| F1.3 | V3 | 0,400 | [350; +∞] | 43 / 153 | 21378,3 | 157,2 | 2005,6 | 157,2 |
+| F2.1 | V1 | 0,300 | [−∞; 350] | 97 / 33 | 486,1 | 37868,1 | 486,1 | 5345,7 |
+| F2.1 | V1 | 0,400 | [350; +∞] | 37 / 83 | 15020,5 | 273,2 | 4893,7 | 273,2 |
+| F2.1 | V2 | 0,300 | [−∞; 350] | 115 / 37 | 367,0 | 6471,6 | 367,0 | 1778,3 |
+| F2.1 | V2 | 0,400 | [350; +∞] | 34 / 90 | 63157,9 | 34,0 | 10040,7 | 34,0 |
+| P1 | V1 | 0,300 | [−∞; 350] | 97 / 33 | 1984,4 | 41176,5 | 1984,4 | 7626,2 |
+| P1 | V1 | 0,400 | [350; +∞] | 37 / 83 | 4233,2 | 497,2 | 6473,8 | 497,2 |
+| P1 | V2 | 0,300 | [−∞; 350] | 115 / 37 | 1183,5 | 33219,8 | 1183,5 | 4274,9 |
+| P1 | V2 | 0,400 | [350; +∞] | 34 / 90 | 49830,6 | 408,1 | 4532,5 | 408,1 |
+| P1 | V3 | 0,300 | [−∞; 350] | 139 / 41 | 2229,7 | 17241,5 | 2229,7 | 2922,2 |
+| P1 | V3 | 0,400 | [350; +∞] | 43 / 153 | 38084,7 | 573,9 | 3341,2 | 573,9 |
 <!-- E6:diagnostico_M:fim -->
+
+IC honesto do protocolo e POS_RESULTADO, lado a lado (h = 0,050, M × 1):
+
+<!-- E6:honesto_pos_resultado:inicio -->
+| Outcome | População | Corte | Salto | IC honesto (protocolo) | M (protocolo) | IC honesto POS_RESULTADO | M POS_RESULTADO | p POS_RESULTADO |
+|---|---|---|---|---|---|---|---|---|
+| F1.1 | V1+V2+V3 | 0,300 | −0,227 | [−23,833; +23,379] | 46488,4 | [−3,117; +2,663] | 4863,4 | 1,000 |
+| F1.1 | V1+V2+V3 | 0,400 | +0,316 | [−31,717; +32,349] | 78826,4 | [−3,282; +3,913] | 7061,9 | 1,000 |
+| F1.1 | V1+V2+V3 | empilhado | +0,063 | [−35,382; +35,507] | 78826,4 | [−3,551; +3,676] | 7061,9 | 1,000 |
+| F1.2 | V1+V2+V3 | 0,300 | −14,7 p.p. | [−943,3; +913,9] | 18365,9 | [−196,1; +166,8] | 3353,7 | 1,000 |
+| F1.2 | V1+V2+V3 | 0,400 | −0,3 p.p. | [−726,1; +725,5] | 17975,9 | [−81,3; +80,6] | 1700,3 | 1,000 |
+| F1.2 | V1+V2+V3 | empilhado | −7,0 p.p. | [−831,6; +817,6] | 18365,9 | [−165,7; +151,7] | 3353,7 | 1,000 |
+| F1.3 | V1+V2+V3 | 0,300 | −9,7 p.p. | [−1068,4; +1049,0] | 21015,3 | [−206,0; +186,6] | 3687,0 | 1,000 |
+| F1.3 | V1+V2+V3 | 0,400 | −5,1 p.p. | [−864,8; +854,5] | 21378,3 | [−161,2; +150,9] | 3621,5 | 1,000 |
+| F1.3 | V1+V2+V3 | empilhado | −7,3 p.p. | [−964,4; +949,9] | 21378,3 | [−179,7; +165,2] | 3687,0 | 1,000 |
+| F2.1 | V1+V2 | 0,300 | −0,109 | [−20,310; +20,092] | 37868,1 | [−3,214; +2,996] | 5345,7 | 1,000 |
+| F2.1 | V1+V2 | 0,400 | −0,164 | [−24,640; +24,312] | 63157,9 | [−4,492; +4,164] | 10040,7 | 1,000 |
+| F2.1 | V1+V2 | empilhado | −0,136 | [−29,036; +28,764] | 63157,9 | [−4,981; +4,708] | 10040,7 | 1,000 |
+| P1 | V1+V2+V3 | empilhado | −0,13 DP | [−22,50; +22,24] | 49830,6 | [−3,78; +3,52] | 7626,2 | 1,000 |
+| P1 | V1+V2+V3 | 0,300 | −0,25 DP | [−21,10; +20,60] | 41176,5 | [−4,40; +3,90] | 7626,2 | 1,000 |
+| P1 | V1+V2+V3 | 0,400 | −0,02 DP | [−20,15; +20,11] | 49830,6 | [−2,98; +2,93] | 6473,8 | 1,000 |
+| P1 | V1 | empilhado | −0,03 DP | [−19,97; +19,91] | 41176,5 | [−4,16; +4,10] | 7626,2 | 1,000 |
+| P1 | V1 | 0,300 | −0,25 DP | [−26,11; +25,61] | 41176,5 | [−5,62; +5,13] | 7626,2 | 1,000 |
+| P1 | V1 | 0,400 | +0,15 DP | [−2,21; +2,52] | 4233,2 | [−3,01; +3,32] | 6473,8 | 1,000 |
+| P1 | V2 | empilhado | −0,22 DP | [−22,52; +22,08] | 49830,6 | [−2,64; +2,19] | 4532,5 | 1,000 |
+| P1 | V2 | 0,300 | −0,47 DP | [−16,78; +15,84] | 33219,8 | [−3,12; +2,17] | 4274,9 | 1,000 |
+| P1 | V2 | 0,400 | +0,07 DP | [−20,43; +20,57] | 49830,6 | [−2,31; +2,45] | 4532,5 | 1,000 |
+| P1 | V3 | empilhado | −0,12 DP | [−16,95; +16,71] | 38084,7 | [−1,89; +1,66] | 3341,2 | 1,000 |
+| P1 | V3 | 0,300 | −0,08 DP | [−8,45; +8,30] | 17241,5 | [−1,84; +1,69] | 2922,2 | 1,000 |
+| P1 | V3 | 0,400 | −0,15 DP | [−16,30; +16,01] | 38084,7 | [−1,98; +1,69] | 3341,2 | 1,000 |
+<!-- E6:honesto_pos_resultado:fim -->
+
+Com o suporte maior, o M cai bastante e os IC honestos ficam mais estreitos,
+mas continuam largos demais para informar: dezenas a centenas de p.p. nas
+frações e vários desvios-padrão no índice. Nenhuma linha POS_RESULTADO exclui
+zero, nem a referência de +10 p.p. de preenchimento. A conclusão do protocolo
+(IC honesto sem informação) não muda; o que muda é só a ordem de grandeza.
 
 Sensibilidades de P1 (ciclos e cortes empilhados):
 
@@ -258,9 +305,10 @@ Sensibilidades de P1 (ciclos e cortes empilhados):
 |---|---|---|---|---|---|
 | sensibilidade_h | 0,030 | — | −0,17 DP | [−0,58; +0,25] | 0,438 |
 | sensibilidade_h | 0,080 | — | +0,02 DP | [−0,24; +0,28] | 0,856 |
-| ic_honesto | 0,050 | 0,5 × M | −0,13 DP | [−11,44; +11,19] | 1,000 |
-| ic_honesto | 0,050 | 1,0 × M | −0,13 DP | [−22,50; +22,24] | 1,000 |
-| ic_honesto | 0,050 | 2,0 × M | −0,13 DP | [−44,60; +44,34] | 1,000 |
+| ic_honesto | 0,050 | 0,5 × M do protocolo | −0,13 DP | [−11,44; +11,19] | 1,000 |
+| ic_honesto | 0,050 | 1,0 × M do protocolo | −0,13 DP | [−22,50; +22,24] | 1,000 |
+| ic_honesto | 0,050 | 2,0 × M do protocolo | −0,13 DP | [−44,60; +44,34] | 1,000 |
+| ic_honesto_pos_resultado | 0,050 | M POS_RESULTADO = 7626,2 | −0,13 DP | [−3,78; +3,52] | 1,000 |
 | S2_donut | 0,050 | — | −0,05 DP | [−0,36; +0,26] | 0,748 |
 | indice_anderson (Anderson) | 0,050 | — | −0,15 DP | [−0,47; +0,17] | 0,373 |
 <!-- E6:indice_P1_sensibilidade:fim -->
@@ -269,16 +317,22 @@ Sensibilidades de P1 (ciclos e cortes empilhados):
 
 Linhas principais (h = 0,050); o q é o BKY dentro da família, sobre todas as
 linhas principais do protocolo daquela família (cada outcome × população ×
-ciclo × corte, cortes e ciclos empilhados incluídos).
+ciclo × corte, cortes e ciclos empilhados incluídos). As linhas de um corte e as
+empilhadas, e as de um ciclo e as de ciclos empilhados, usam os mesmos
+municípios: são hipóteses dependentes juntadas na mesma família (o BKY supõe
+dependência positiva, que não foi verificada). Outcomes fora do §5 do protocolo
+(vagas imediatas priorizadas do F0.3) e a variante de Anderson do índice são
+adições rotuladas `ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO`; o BKY do protocolo não
+os inclui, e a coluna "com adições" mostra o BKY com eles.
 
 <!-- E6:resumo_testes:inicio -->
-| Família | Linhas principais no BKY | p < 0,05 | q BKY < 0,05 | menor p | menor q |
-|---|---|---|---|---|---|
-| F0 | 45 | 2 | 0 | 0,018 | 0,717 |
-| F1 | 45 | 0 | 0 | 0,057 | 1,000 |
-| F2 | 24 | 1 | 0 | 0,019 | 0,828 |
-| F4 | 24 | 2 | 0 | 0,035 | 0,830 |
-| S2–S4, todos os outcomes (fora do BKY) | 612 | 30 | — | 0,001 | — |
+| Família | Linhas principais no BKY | p < 0,05 | q BKY < 0,05 | menor p | menor q | Linhas com adições | menor q com adições |
+|---|---|---|---|---|---|---|---|
+| F0 | 42 | 2 | 0 | 0,018 | 0,639 | 45 | 0,717 |
+| F1 | 45 | 0 | 0 | 0,057 | 1,000 | 45 | 1,000 |
+| F2 | 24 | 1 | 0 | 0,019 | 0,828 | 24 | 0,828 |
+| F4 | 24 | 2 | 0 | 0,035 | 0,830 | 24 | 0,830 |
+| S2–S4, todos os outcomes (fora do BKY) | 612 | 30 | — | 0,001 | — | — | — |
 <!-- E6:resumo_testes:fim -->
 
 Linhas principais com p < 0,05 (antes da correção):
@@ -286,8 +340,8 @@ Linhas principais com p < 0,05 (antes da correção):
 <!-- E6:principais_p_menor_005:inicio -->
 | Família | Outcome | População | Ciclo | Corte | Salto | IC 95% | IC honesto | p | q BKY |
 |---|---|---|---|---|---|---|---|---|---|
-| F0 | F0.2 `f0_2_vagas_imediatas_por_10k_c1` | U | 1 | 0,400 | −0,074 | [−0,134; −0,013] | [−1,154; +1,007] | 0,018 | 0,717 |
-| F0 | F0.2 `f0_2_vagas_imediatas_por_10k_c1` | U | 1 | empilhado | −0,035 | [−0,065; −0,006] | [−1,076; +1,005] | 0,019 | 0,717 |
+| F0 | F0.2 `f0_2_vagas_imediatas_por_10k_c1` | U | 1 | 0,400 | −0,074 | [−0,134; −0,013] | [−1,154; +1,007] | 0,018 | 0,639 |
+| F0 | F0.2 `f0_2_vagas_imediatas_por_10k_c1` | U | 1 | empilhado | −0,035 | [−0,065; −0,006] | [−1,076; +1,005] | 0,019 | 0,639 |
 | F2 | F2.2 `f2_2_ativos_pmme_por_10k_c2` | U | 2 | 0,300 | −0,025 | [−0,046; −0,004] | [−0,785; +0,735] | 0,019 | 0,828 |
 | F4 | F4.2 `f4_2_pontuacao_media_cand_1a_opcao` | V3 | 3 | empilhado | −0,639 | [−1,259; −0,019] | [−8,805; +7,527] | 0,043 | 0,830 |
 | F4 | F4.2 `f4_2_pontuacao_media_cand_1a_opcao` | V1+V2+V3 | 1+2+3 | empilhado | −0,453 | [−0,873; −0,033] | [−21,982; +21,076] | 0,035 | 0,830 |
@@ -378,21 +432,13 @@ Linhas principais com p < 0,05 (antes da correção):
 
 ### 5.3 O que o IC ainda admite (referências do protocolo §7)
 
+A referência de +10 p.p. é de preenchimento (F1.3 e F1.4); a de +25% é de
+candidaturas (F1.1, em escala log pelo Poisson local). F1.2 (fração de células
+com candidato) não tem referência no protocolo e fica fora desta tabela.
+
 <!-- E6:referencias_magnitude:inicio -->
 | Outcome | População | Ciclo | Corte | Referência | Limite superior do IC 95% | IC 95% exclui a referência? |
 |---|---|---|---|---|---|---|
-| F1.2 | V1 | 1 | 0,300 | +10 p.p. | +21,1 p.p. | não |
-| F1.2 | V1 | 1 | 0,400 | +10 p.p. | +36,2 p.p. | não |
-| F1.2 | V1 | 1 | empilhado | +10 p.p. | +20,2 p.p. | não |
-| F1.2 | V2 | 2 | 0,300 | +10 p.p. | +4,0 p.p. | sim |
-| F1.2 | V2 | 2 | 0,400 | +10 p.p. | +38,2 p.p. | não |
-| F1.2 | V2 | 2 | empilhado | +10 p.p. | +12,8 p.p. | não |
-| F1.2 | V3 | 3 | 0,300 | +10 p.p. | +13,8 p.p. | não |
-| F1.2 | V3 | 3 | 0,400 | +10 p.p. | +15,8 p.p. | não |
-| F1.2 | V3 | 3 | empilhado | +10 p.p. | +7,8 p.p. | sim |
-| F1.2 | V1+V2+V3 | 1+2+3 | 0,300 | +10 p.p. | +2,7 p.p. | sim |
-| F1.2 | V1+V2+V3 | 1+2+3 | 0,400 | +10 p.p. | +15,8 p.p. | não |
-| F1.2 | V1+V2+V3 | 1+2+3 | empilhado | +10 p.p. | +4,9 p.p. | sim |
 | F1.3 | V1 | 1 | 0,300 | +10 p.p. | +19,8 p.p. | não |
 | F1.3 | V1 | 1 | 0,400 | +10 p.p. | +26,2 p.p. | não |
 | F1.3 | V1 | 1 | empilhado | +10 p.p. | +14,0 p.p. | não |
@@ -508,9 +554,6 @@ sinal de que o teto da Portaria 752/2023 operou no corte.
 | F0.3 `f0_3_fracao_priorizada` | G3 | 0,300 | 150 / 118 | −4,2 p.p. | [−22,7; +14,3] | 0,657 |
 | F0.3 `f0_3_fracao_priorizada` | G3 | 0,400 | 143 / 175 | −7,2 p.p. | [−23,0; +8,6] | 0,369 |
 | F0.3 `f0_3_fracao_priorizada` | G3 | empilhado | 293 / 293 | −5,9 p.p. | [−17,9; +6,1] | 0,337 |
-| F0.3 `f0_3_vagas_imediatas_priorizadas` | G3 | 0,300 | 150 / 118 | −0,249 | [−2,462; +1,964] | 0,826 |
-| F0.3 `f0_3_vagas_imediatas_priorizadas` | G3 | 0,400 | 143 / 175 | −0,036 | [−0,785; +0,713] | 0,925 |
-| F0.3 `f0_3_vagas_imediatas_priorizadas` | G3 | empilhado | 293 / 293 | −0,130 | [−1,191; +0,931] | 0,810 |
 | F0.4 `f0_4_pmmb_vagas_por_10k` | U | 0,300 | 859 / 654 | +0,001 | [−0,405; +0,407] | 0,998 |
 | F0.4 `f0_4_pmmb_vagas_por_10k` | U | 0,400 | 587 / 603 | +0,151 | [−0,267; +0,568] | 0,480 |
 | F0.4 `f0_4_pmmb_vagas_por_10k` | U | empilhado | 1446 / 1257 | +0,066 | [−0,226; +0,359] | 0,656 |
@@ -579,11 +622,48 @@ A leitura abaixo só resume as tabelas; os números estão nelas.
 1. **Seleção (§3.1).** Em U, ter célula no quadro e o número de células por
    10 mil habitantes não saltam de forma distinguível de zero em nenhum ciclo
    ou corte. A exceção são as vagas imediatas por 10 mil habitantes do ciclo 1
-   em 0,400 e com cortes empilhados (salto negativo, p < 0,05, q BKY alto).
-   Como o E3 já registrava desequilíbrio de covariáveis no ciclo 1 em 0,400,
-   as linhas de V1 nesse corte pedem cautela. A densidade de municípios não
-   salta em nenhuma população; os desequilíbrios de covariáveis são poucos e
-   compatíveis com o acaso, salvo o de V1 em 0,400, já conhecido.
+   em 0,400 e com cortes empilhados: salto negativo (menos vagas imediatas do
+   lado de bolsa maior), com q BKY alto na família, mas que aparece em vários
+   estimadores (tabela abaixo): local linear com h = 0,050 e 0,030, Poisson
+   local, local randomization e donut; com h = 0,080 ele enfraquece, e o IC
+   honesto POS_RESULTADO não o confirma. Em V1 no
+   mesmo corte, a razão de densidades fica abaixo de 1 (sem significância) e há
+   desequilíbrios de covariáveis (os mesmos que o E3 registrou). Juntos, esses
+   sinais tornam plausível que **V1 em 0,400 seja uma amostra selecionada**: a
+   oferta de vagas imediatas do ciclo 1 parece diferir dos dois lados do corte,
+   e as linhas de V1 nesse corte não devem ser lidas como contraste limpo. O
+   peso desse grupo (ciclo 1 × 0,400) no P1 empilhado está na tabela. Nos
+   outros ciclos e no outro corte, a densidade não salta e os desequilíbrios
+   são poucos e compatíveis com o acaso.
+
+<!-- E6:selecao_convergencia:inicio -->
+| Corte | Especificação | h ou janela | Salto | IC 95% | p |
+|---|---|---|---|---|---|
+| 0,400 | principal | 0,050 | −0,074 | [−0,134; −0,013] | 0,018 |
+| 0,400 | sensibilidade_h | 0,030 | −0,088 | [−0,162; −0,014] | 0,019 |
+| 0,400 | sensibilidade_h | 0,080 | −0,041 | [−0,087; +0,006] | 0,087 |
+| 0,400 | ic_honesto_pos_resultado | 0,050 | −0,074 | [−0,303; +0,156] | 1,000 |
+| 0,400 | local_randomization | 0,008 | −0,083 | [—; —] | 0,024 |
+| 0,400 | poisson_local | 0,050 | −2,110 (log) | [−3,303; −0,916] | 0,001 |
+| 0,400 | S2_donut | 0,050 | −0,079 | [−0,148; −0,011] | 0,024 |
+| empilhado | principal | 0,050 | −0,035 | [−0,065; −0,006] | 0,019 |
+| empilhado | sensibilidade_h | 0,030 | −0,036 | [−0,070; −0,001] | 0,042 |
+| empilhado | sensibilidade_h | 0,080 | −0,021 | [−0,045; +0,003] | 0,080 |
+| empilhado | ic_honesto_pos_resultado | 0,050 | −0,035 | [−0,301; +0,230] | 1,000 |
+| empilhado | S2_donut | 0,050 | −0,039 | [−0,072; −0,006] | 0,020 |
+<!-- E6:selecao_convergencia:fim -->
+
+<!-- E6:selecao_v1_0400:inicio -->
+| Diagnóstico de V1 em 0,400 | Valor |
+|---|---|
+| razão de densidades (IC 95%; p) | 0,61 [0,29; 1,30]; p = 0,201 |
+| desequilíbrio: ivs_ch_2010 | +0,036 (p = 0,020) |
+| desequilíbrio: estrato_metropolitano | −0,245 (p = 0,043) |
+| desequilíbrio: estrato_interior_proximo_polo | +0,388 (p = 0,018) |
+| peso do grupo ciclo 1 × 0,400 no P1 empilhado | 12,3 % |
+| pesos de todos os grupos no P1 empilhado | c1_300: 10,2 %; c1_400: 12,3 %; c2_300: 16,1 %; c2_400: 13,7 %; c3_300: 20,4 %; c3_400: 27,4 % |
+<!-- E6:selecao_v1_0400:fim -->
+
 2. **P1.** O índice de atração-presença, com ciclos e cortes empilhados, tem
    salto negativo e IC 95% que contém zero. O IC também contém zero por corte,
    por ciclo, com h = 0,030 e 0,080, no donut e na variante de Anderson. Não
@@ -593,13 +673,16 @@ A leitura abaixo só resume as tabelas; os números estão nelas.
    0,300; pontuação dos candidatos de 1ª opção no ciclo 3 e com ciclos
    empilhados), todas com salto negativo e nenhuma com q BKY < 0,05. O número de
    linhas com p < 0,05 em cada família é da ordem do esperado por acaso.
-4. **Magnitude (§5.3).** Com o IC convencional, os saltos de preenchimento com
-   ciclos e cortes empilhados (F1.2 e F1.3; F1.4 com V1 e V2) têm limite
-   superior abaixo da referência de +10 p.p. do protocolo: um salto dessa
-   ordem, a favor do lado de bolsa maior, não é compatível com esses dados.
-   Por ciclo e corte isolados, a maior parte dos IC ainda admite +10 p.p. Essa
-   leitura depende da aproximação local linear: o IC honesto, com o M da regra
-   de bolso do protocolo, não descarta nada (§4).
+4. **Magnitude (§5.3).** Com ciclos e cortes empilhados, o limite superior do
+   IC 95% convencional do preenchimento (F1.3; F1.4 com V1 e V2) fica abaixo da
+   referência de +10 p.p. do protocolo. **Se** a aproximação local linear for
+   adequada (sem viés de suavização relevante) e **com** o IC convencional, um
+   salto de preenchimento dessa ordem a favor do lado de bolsa maior fica fora
+   do intervalo. Essa condição não é verificada pelo IC honesto: com o M do
+   protocolo ele não descarta nada, e a sensibilidade POS_RESULTADO está no §4.
+   Por ciclo e corte isolados, a maior parte dos IC ainda admite +10 p.p. Para
+   candidaturas (F1.1, referência de +25%), só alguns ciclos em 0,300 têm
+   limite superior abaixo da referência.
 5. **Co-políticas.** As vagas do PMMB em coparticipação (S1), as vagas e os
    médicos ativos do PMMB (F0.4) e a adesão do ciclo 3 (F0.3) não saltam de
    forma distinguível de zero. O retrato do PMMB é estoque acumulado: isso
@@ -613,8 +696,9 @@ A leitura abaixo só resume as tabelas; os números estão nelas.
 **Em uma frase:** com o protocolo congelado, não detectamos efeito do pacote
 do corte de IVS (bolsa anunciada de +R$ 5 mil e as outras regras dos mesmos
 cortes) sobre atração, preenchimento ou presença dos especialistas do PMM-E;
-com ciclos e cortes empilhados e o IC convencional, saltos positivos de
-preenchimento da ordem de +10 p.p. ficam fora do intervalo. Isso é evidência
+com ciclos e cortes empilhados, e condicional à aproximação local linear e ao
+IC convencional, saltos positivos de preenchimento da ordem de +10 p.p. ficam
+fora do intervalo. Isso é evidência
 sobre o pacote no corte, não sobre a bolsa isolada, a participação no PMM-E ou
 a oferta líquida no CNES (E7).
 
@@ -631,19 +715,30 @@ a oferta líquida no CNES (E7).
 5. **Exposição prévia.** F1.3 do ciclo 1, F2.3 dos ciclos 1 e 2 e F1.4 do
    ciclo 1 já tinham sido vistos (protocolo §10).
 6. **Muitos testes.** Os q-valores BKY controlam a taxa de falsas descobertas
-   dentro de cada família; p < 0,05 isolado não é evidência.
+   dentro de cada família; p < 0,05 isolado não é evidência. A família junta
+   linhas dependentes (por corte e empilhadas) e o BKY supõe dependência
+   positiva.
 7. **Local randomization** depende da janela escolhida por balanço; em alguns
    cortes nenhuma janela passou e a linha sai sem estimativa.
 8. **S4** usa o atributo municipal de Amazônia Legal e faixa de fronteira do
-   PMMB consolidado (MS), não uma lista do IBGE conferida aqui.
+   PMMB consolidado (MS), não uma lista do IBGE conferida aqui. A PI 604/2023
+   também põe na Faixa 1 da ajuda de custo as áreas indígenas; não há atributo
+   municipal delas no repositório, e municípios com área indígena fora da
+   Amazônia Legal e da faixa de fronteira ficam no grupo "fora".
+9. **IC honesto.** Com o M do protocolo (suporte até o ponto médio, escolha da
+   `rdd_lib`), os IC honestos não informam; a sensibilidade com suporte maior
+   é pós-resultado e não muda o protocolo.
 
 ## 9. Desvios e decisões
 
 Registrados com data e motivo em `E6_resumo.json` (`desvios`, `decisoes`):
-local randomization em U, G3 e V3 com a regra do E5; fonte do atributo do S4;
-Poisson local e limites de Lee só por ciclo e corte (a biblioteca não tem
-versão empilhada); municípios criados depois de 2010 fora da RDD, sem
-imputação.
+local randomization em U, G3 e V3 com a regra do E5; fonte do atributo do S4 e
+ausência das áreas indígenas; Poisson local e limites de Lee só por ciclo e
+corte (a biblioteca não tem versão empilhada); municípios criados depois de
+2010 fora da RDD, sem imputação; conferência da linha E0 do E5 com o Y1 do E4
+como entrada; e, depois da auditoria independente de 19/10/2026, a variante de
+Anderson e as vagas imediatas priorizadas do F0.3 rotuladas como adição e o IC
+honesto POS_RESULTADO.
 
 ## 10. Validações
 
@@ -652,8 +747,8 @@ imputação.
 |---|---|
 | linhas do E3 reproduzidas (F1.3 ciclo 1, F2.3 ciclos 1 e 2) | 18; max abs dif = 1.1102230246251565e-16 |
 | linhas do E5 reproduzidas (LR, ponderado, célula, ciclos empilhados) | 12 (+ 1 sem janela); max abs dif = 5.021150162320964e-12 |
-| linhas em E6_estimativas.csv | 2022 |
-| linhas do protocolo (no_protocolo = True) | 1743 |
+| linhas em E6_estimativas.csv | 2175 |
+| linhas do protocolo (no_protocolo = True) | 1697 |
 | linhas NAO_EXECUTADO | 35 |
 | linhas SEM_ESTIMATIVA (biblioteca devolveu NaN com motivo) | 2 |
 <!-- E6:validacoes:fim -->

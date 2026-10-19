@@ -126,7 +126,8 @@ class TestPipelineSintetico(unittest.TestCase):
         sub = self.est[(self.est["outcome_id"] == "F1.3") & (self.est["populacao"] == "V1")
                        & (self.est["corte"] == "0.300")]
         esp = set(sub["especificacao"])
-        for e in ("principal", "sensibilidade_h", "ic_honesto", "ic_honesto_h_otimo", "local_randomization",
+        for e in ("principal", "sensibilidade_h", "ic_honesto", "ic_honesto_h_otimo", "ic_honesto_pos_resultado",
+                  "local_randomization",
                   "ponderado_celulas", "nivel_celula", "S2_donut", "S3_porte_muda", "S3_porte_nao_muda",
                   "S3_diferenca"):
             self.assertIn(e, esp)
@@ -258,7 +259,8 @@ class TestSaidasReais(unittest.TestCase):
                     for corte in ("0.300", "0.400", "empilhado"):
                         sub = self.est[base & (self.est["corte"] == corte)]
                         esp = sub["especificacao"].value_counts().to_dict()
-                        exig = {"principal": 1, "sensibilidade_h": 2, "ic_honesto": 3, "S2_donut": 1}
+                        exig = {"principal": 1, "sensibilidade_h": 2, "ic_honesto": 3, "S2_donut": 1,
+                                "ic_honesto_pos_resultado": 1}
                         if corte != "empilhado":
                             exig |= {"ic_honesto_h_otimo": 3, "local_randomization": 1, "S3_porte_muda": 1,
                                      "S3_porte_nao_muda": 1, "S3_diferenca": 1}
@@ -280,7 +282,8 @@ class TestSaidasReais(unittest.TestCase):
                 for corte in ("0.300", "0.400", "empilhado"):
                     sub = self.est[(self.est["outcome"] == spec["col"]) & (self.est["populacao"] == pop)
                                    & (self.est["corte"] == corte)]
-                    for e, n in {"principal": 1, "sensibilidade_h": 2, "ic_honesto": 3, "S2_donut": 1}.items():
+                    for e, n in {"principal": 1, "sensibilidade_h": 2, "ic_honesto": 3, "S2_donut": 1,
+                                 "ic_honesto_pos_resultado": 1}.items():
                         if int((sub["especificacao"] == e).sum()) != n:
                             faltam.append((spec["col"], pop, corte, e))
         self.assertEqual(faltam, [])
@@ -337,6 +340,28 @@ class TestSaidasReais(unittest.TestCase):
             x = self._uma(outcome=col, populacao=pop, ciclo=ciclo, corte=f"{corte / 1000:.3f}", especificacao="principal")
             self.assertAlmostEqual(float(x["tau"]), tau, places=10, msg=(col, pop, corte))
 
+    def test_adicoes_rotuladas_e_fora_do_bky_do_protocolo(self) -> None:
+        for spec in E6.CATALOGO:
+            if "adicional" in spec:
+                sub = self.est[self.est["outcome"] == spec["col"]]
+                self.assertTrue(len(sub))
+                self.assertFalse(sub["no_protocolo"].any())
+                self.assertTrue(sub["rotulo"].str.startswith(E6.ADICIONAL).all())
+                self.assertFalse(sub["entra_bky"].any())
+                self.assertTrue(sub.loc[sub["especificacao"] == "principal", "entra_bky_com_adicionais"].all())
+        an = self.est[self.est["outcome_id"] == "P1.anderson"]
+        self.assertTrue(len(an) and not an["no_protocolo"].any())
+        self.assertTrue(an["rotulo"].str.startswith(E6.ADICIONAL).all())
+        pos = self.est[self.est["especificacao"] == "ic_honesto_pos_resultado"]
+        self.assertTrue(len(pos) and not pos["no_protocolo"].any())
+        self.assertTrue(pos["rotulo"].str.contains("POS_RESULTADO").all())  # pode vir depois do rotulo de adicao
+
+    def test_q_bky_com_adicionais_recalculado(self) -> None:
+        for fam in E6.FAMILIAS_BKY:
+            m = (self.est["familia"] == fam) & self.est["entra_bky_com_adicionais"]
+            q = E6.L.qvalores_bky(self.est.loc[m, "p_valor"].to_numpy(dtype=float))
+            np.testing.assert_allclose(self.est.loc[m, "q_bky_com_adicionais"].to_numpy(dtype=float), q)
+
     def test_q_bky_recalculado(self) -> None:
         for fam in E6.FAMILIAS_BKY:
             m = (self.est["familia"] == fam) & self.est["entra_bky"]
@@ -378,18 +403,37 @@ class TestDoc41(unittest.TestCase):
         for nome, corpo in no_doc.items():
             self.assertEqual(corpo, geradas[nome], nome)
 
-    def test_prosa_sem_numero_de_resultado(self) -> None:
-        texto = E6.MARCA.sub("", DOC.read_text(encoding="utf-8"))
+    @staticmethod
+    def _prosa() -> str:
+        texto = E6.MARCA.sub("", DOC.read_text(encoding="utf-8"))   # tabelas geradas saem
         texto = re.sub(r"`[^`]*`", "", texto)                       # nomes de arquivo e coluna
         texto = re.sub(r"\]\([^)]*\)", "]", texto)                   # links
         texto = re.sub(r"(?m)^#+ .*$", "", texto)                      # títulos numerados das seções
-        texto = re.sub(r"§+\s?\d+(?:[.,]\d+)*", "", texto)             # referências a seções
+        texto = re.sub(r"§+\s?\d+(?:[.,–-]\d+)*", "", texto)          # referências a seções
+        texto = re.sub(r"\b\d{2}/\d{2}/\d{4}\b", "", texto)             # datas
+        texto = re.sub(r"\b\d+(?:\.\d+)?/\d{4}\b", "", texto)          # atos (752/2023, 3.493/2024)
+        texto = re.sub(r"\b[A-Za-z_]+\d+[a-z]?(?:\.\d+)*\b", "", texto)  # identificadores (F1.3, V1, E3, a08)
+        texto = re.sub(r"\d+ª", "", texto)                              # ordinais (1ª chamada)
+        texto = re.sub(r"(?m)^\s*\d+\. ", "", texto)                    # itens de lista numerada
+        for fixo in ("SHA-256", "IC 95%", "auditoria 18", "auditorias/18"):
+            texto = texto.replace(fixo, "")
+        return texto
+
+    def test_prosa_sem_numero_de_resultado(self) -> None:
+        texto = self._prosa()
         decimais = set(re.findall(r"(?<![\w.,])[−+-]?\d+[,.]\d+", texto))
-        # Só parâmetros do protocolo e referências de magnitude da literatura (protocolo §§1, 3, 6, 7).
+        # Só parâmetros do protocolo (cortes, h, resolução, suporte POS_RESULTADO) e atos normativos.
         permitidos = {"0,300", "0,400", "0,050", "0,030", "0,080", "0,5", "0,005", "0,001", "0,05", "0,3", "0,4",
-                      "3.493", "12.871", "15.233", "1,96"}
+                      "0,301", "0,399", "3.493", "12.871", "15.233", "1,96"}
         self.assertEqual(decimais - permitidos, set())
 
+    def test_prosa_sem_inteiro_de_resultado(self) -> None:
+        """Inteiros na prosa: só parâmetros (ciclos, portes, R$ mil, referências +10 p.p. e +25%) e anos."""
+        texto = re.sub(r"(?<![\w.,])[−+-]?\d+[,.]\d+", "", self._prosa())
+        inteiros = set(re.findall(r"(?<![\w.,])[−+-]?\d+(?![\w.,]\d)", texto))
+        permitidos = {"1", "2", "3", "4", "5", "10", "15", "20", "25", "+10", "+25"}
+        anos = {x for x in inteiros if x.isdigit() and 2000 <= int(x) <= 2030}
+        self.assertEqual(inteiros - permitidos - anos, set())
 
 if __name__ == "__main__":
     unittest.main()

@@ -318,7 +318,7 @@
   "S4": {
     "status": "EXECUTADO",
     "motivo": null,
-    "definicao": "dentro = Amazonia Legal OU faixa de fronteira (atributo municipal do PMMB consolidado, MS); a ajuda de custo da PI 604/2023 e Faixa 1 ali em qualquer IVS",
+    "definicao": "dentro = Amazonia Legal OU faixa de fronteira (atributo municipal do PMMB consolidado, MS); a ajuda de custo da PI 604/2023 e Faixa 1 ali em qualquer IVS; as areas indigenas, que a PI 604 tambem poe na Faixa 1, NAO entram no 'dentro' (nao ha atributo municipal delas no repositorio)",
     "municipios_PMMB_sem_atributo": 1
   },
   "diagnostico_M_regra_de_bolso": [
@@ -334,6 +334,9 @@
       "M": 18880.910968018194,
       "M_abaixo": 3707.364842231486,
       "M_acima": 18880.910968018194,
+      "M_pos_resultado": 4136.623922471427,
+      "M_pos_resultado_abaixo": 3707.364842231486,
+      "M_pos_resultado_acima": 4136.623922471427,
       "mass_points_abaixo": 97,
       "mass_points_acima": 33
     },
@@ -349,6 +352,9 @@
       "M": 5566.408968393303,
       "M_abaixo": 5566.408968393303,
       "M_acima": 326.93429945943694,
+      "M_pos_resultado": 3900.3542228538145,
+      "M_pos_resultado_abaixo": 3900.3542228538145,
+      "M_pos_resultado_acima": 326.93429945943694,
       "mass_points_abaixo": 37,
       "mass_points_acima": 83
     },
@@ -364,6 +370,9 @@
       "M": 17904.628645000892,
       "M_abaixo": 1098.9836192348394,
       "M_acima": 17904.628645000892,
+      "M_pos_resultado": 4863.388894762223,
+      "M_pos_resultado_abaixo": 1098.9836192348394,
+      "M_pos_resultado_acima": 4863.388894762223,
       "mass_points_abaixo": 115,
       "mass_points_acima": 37
     },
@@ -379,6 +388,9 @@
       "M": 78826.42187023739,
       "M_abaixo": 78826.42187023739,
       "M_acima": 769.4439611427372,
+      "M_pos_resultado": 7061.912737335639,
+      "M_pos_resultado_abaixo": 7061.912737335639,
+      "M_pos_resultado_acima": 769.4439611427372,
       "mass_points_abaixo": 34,
       "mass_points_acima": 90
     },
@@ -394,6 +406,9 @@
       "M": 46488.37124592031,
       "M_abaixo": 1144.6121346867735,
       "M_acima": 46488.37124592031,
+      "M_pos_resultado": 3483.84124659506,
+      "M_pos_resultado_abaixo": 1144.6121346867735,
+      "M_pos_resultado_acima": 3483.84124659506,
       "mass_points_abaixo": 139,
       "mass_points_acima": 41
     },
@@ -409,6 +424,9 @@
       "M": 26289.179079958307,
       "M_abaixo": 26289.179079958307,
       "M_acima": 309.0587819909631,
+      "M_pos_resultado": 1401.3437130050238,
+      "M_pos_resultado_abaixo": 1401.3437130050238,
+      "M_pos_resultado_acima": 309.0587819909631,
       "mass_points_abaixo": 43,
       "mass_points_acima": 153
     },
@@ -424,6 +442,9 @@
       "M": 11846.032016107536,
       "M_abaixo": 1022.3631748672883,
       "M_acima": 11846.032016107536,
+      "M_pos_resultado": 2590.295468112281,
+      "M_pos_resultado_abaixo": 1022.3631748672883,
+      "M_pos_resultado_acima": 2590.295468112281,
       "mass_points_abaixo": 97,
       "mass_points_acima": 33
     },
@@ -439,6 +460,9 @@
       "M": 5218.027579083523,
       "M_abaixo": 5218.027579083523,
       "M_acima": 223.35230954450617,
+      "M_pos_resultado": 1700.2967416608917,
+      "M_pos_resultado_abaixo": 1700.2967416608917,
+      "M_pos_resultado_acima": 223.35230954450617,
       "mass_points_abaixo": 37,
       "mass_points_acima": 83
     },
@@ -454,6 +478,9 @@
       "M": 18365.86433682972,
       "M_abaixo": 640.0021388772276,
       "M_acima": 18365.86433682972,
+      "M_pos_resultado": 3353.73918868703,
+      "M_pos_resultado_abaixo": 640.0021388772276,
+      "M_pos_resultado_acima": 3353.73918868703,
       "mass_points_abaixo": 115,
       "mass_points_acima": 37
     },
@@ -469,6 +496,9 @@
       "M": 17975.901413766034,
       "M_abaixo": 17975.901413766034,
       "M_acima": 294.06133929890416,
+      "M_pos_resultado": 1298.2599670172208,
+      "M_pos_resultado_abaixo": 1298.2599670172208,
+      "M_pos_resultado_acima": 294.06133929890416,
       "mass_points_abaixo": 34,
       "mass_points_acima": 90
     },
@@ -484,6 +514,9 @@
       "M": 11423.081189839977,
       "M_abaixo": 1070.7862596837895,
       "M_acima": 11423.081189839977,
+      "M_pos_resultado": 1070.7862596837895,
+      "M_pos_resultado_abaixo": 1070.7862596837895,
+      "M_pos_resultado_acima": 780.5058434385699,
       "mass_points_abaixo": 139,
       "mass_points_acima": 41
     },
@@ -499,6 +532,9 @@
       "M": 9303.37026648494,
       "M_abaixo": 9303.37026648494,
       "M_acima": 426.6518569277504,
+      "M_pos_resultado": 831.1219146466811,
+      "M_pos_resultado_abaixo": 831.1219146466811,
+      "M_pos_resultado_acima": 426.6518569277504,
       "mass_points_abaixo": 43,
       "mass_points_acima": 153
     },
@@ -514,6 +550,9 @@
       "M": 10719.798194991665,
       "M_abaixo": 642.6173770520238,
       "M_acima": 10719.798194991665,
+      "M_pos_resultado": 3687.009285025495,
+      "M_pos_resultado_abaixo": 642.6173770520238,
+      "M_pos_resultado_acima": 3687.009285025495,
       "mass_points_abaixo": 97,
       "mass_points_acima": 33
     },
@@ -529,6 +568,9 @@
       "M": 5920.005803656968,
       "M_abaixo": 5920.005803656968,
       "M_acima": 385.93581254479295,
+      "M_pos_resultado": 3621.497005480012,
+      "M_pos_resultado_abaixo": 3621.497005480012,
+      "M_pos_resultado_acima": 385.93581254479295,
       "mass_points_abaixo": 37,
       "mass_points_acima": 83
     },
@@ -544,6 +586,9 @@
       "M": 21015.329125058997,
       "M_abaixo": 531.9744364317547,
       "M_acima": 21015.329125058997,
+      "M_pos_resultado": 531.9744364317547,
+      "M_pos_resultado_abaixo": 531.9744364317547,
+      "M_pos_resultado_acima": 336.522586983667,
       "mass_points_abaixo": 115,
       "mass_points_acima": 37
     },
@@ -559,6 +604,9 @@
       "M": 11637.040734027072,
       "M_abaixo": 11637.040734027072,
       "M_acima": 276.37309232952816,
+      "M_pos_resultado": 1646.5350315360165,
+      "M_pos_resultado_abaixo": 1646.5350315360165,
+      "M_pos_resultado_acima": 276.37309232952816,
       "mass_points_abaixo": 34,
       "mass_points_acima": 90
     },
@@ -574,6 +622,9 @@
       "M": 7760.016567980511,
       "M_abaixo": 729.6141262544261,
       "M_acima": 7760.016567980511,
+      "M_pos_resultado": 829.1869376734643,
+      "M_pos_resultado_abaixo": 729.6141262544261,
+      "M_pos_resultado_acima": 829.1869376734643,
       "mass_points_abaixo": 139,
       "mass_points_acima": 41
     },
@@ -589,6 +640,9 @@
       "M": 21378.29387209934,
       "M_abaixo": 21378.29387209934,
       "M_acima": 157.19444779435545,
+      "M_pos_resultado": 2005.5525267979342,
+      "M_pos_resultado_abaixo": 2005.5525267979342,
+      "M_pos_resultado_acima": 157.19444779435545,
       "mass_points_abaixo": 43,
       "mass_points_acima": 153
     },
@@ -604,6 +658,9 @@
       "M": 15416.739503713252,
       "M_abaixo": 673.7351698192546,
       "M_acima": 15416.739503713252,
+      "M_pos_resultado": 2613.603753240932,
+      "M_pos_resultado_abaixo": 673.7351698192546,
+      "M_pos_resultado_acima": 2613.603753240932,
       "mass_points_abaixo": 97,
       "mass_points_acima": 33
     },
@@ -619,6 +676,9 @@
       "M": 2454.7524570939863,
       "M_abaixo": 2454.7524570939863,
       "M_acima": 406.88086106556466,
+      "M_pos_resultado": 2333.402487991622,
+      "M_pos_resultado_abaixo": 2333.402487991622,
+      "M_pos_resultado_acima": 406.88086106556466,
       "mass_points_abaixo": 37,
       "mass_points_acima": 83
     },
@@ -634,6 +694,9 @@
       "M": 15277.696125473842,
       "M_abaixo": 561.0142049712531,
       "M_acima": 15277.696125473842,
+      "M_pos_resultado": 1256.242483642393,
+      "M_pos_resultado_abaixo": 561.0142049712531,
+      "M_pos_resultado_acima": 1256.242483642393,
       "mass_points_abaixo": 115,
       "mass_points_acima": 37
     },
@@ -649,6 +712,9 @@
       "M": 6267.297895789296,
       "M_abaixo": 6267.297895789296,
       "M_acima": 410.7349830044641,
+      "M_pos_resultado": 580.3700205842406,
+      "M_pos_resultado_abaixo": 580.3700205842406,
+      "M_pos_resultado_acima": 410.7349830044641,
       "mass_points_abaixo": 34,
       "mass_points_acima": 90
     },
@@ -664,6 +730,9 @@
       "M": 37868.138020528335,
       "M_abaixo": 486.11874516314987,
       "M_acima": 37868.138020528335,
+      "M_pos_resultado": 5345.673413042463,
+      "M_pos_resultado_abaixo": 486.11874516314987,
+      "M_pos_resultado_acima": 5345.673413042463,
       "mass_points_abaixo": 97,
       "mass_points_acima": 33
     },
@@ -679,6 +748,9 @@
       "M": 15020.455173461509,
       "M_abaixo": 15020.455173461509,
       "M_acima": 273.2298262271223,
+      "M_pos_resultado": 4893.726182928438,
+      "M_pos_resultado_abaixo": 4893.726182928438,
+      "M_pos_resultado_acima": 273.2298262271223,
       "mass_points_abaixo": 37,
       "mass_points_acima": 83
     },
@@ -694,6 +766,9 @@
       "M": 6471.644255718493,
       "M_abaixo": 366.9680392173533,
       "M_acima": 6471.644255718493,
+      "M_pos_resultado": 1778.337832707176,
+      "M_pos_resultado_abaixo": 366.9680392173533,
+      "M_pos_resultado_acima": 1778.337832707176,
       "mass_points_abaixo": 115,
       "mass_points_acima": 37
     },
@@ -709,6 +784,9 @@
       "M": 63157.881712485636,
       "M_abaixo": 63157.881712485636,
       "M_acima": 33.973367068143695,
+      "M_pos_resultado": 10040.652331117046,
+      "M_pos_resultado_abaixo": 10040.652331117046,
+      "M_pos_resultado_acima": 33.973367068143695,
       "mass_points_abaixo": 34,
       "mass_points_acima": 90
     },
@@ -724,6 +802,9 @@
       "M": 14341.375244178518,
       "M_abaixo": 355.82038268437225,
       "M_acima": 14341.375244178518,
+      "M_pos_resultado": 1995.0161267953836,
+      "M_pos_resultado_abaixo": 355.82038268437225,
+      "M_pos_resultado_acima": 1995.0161267953836,
       "mass_points_abaixo": 97,
       "mass_points_acima": 33
     },
@@ -739,6 +820,9 @@
       "M": 11549.469853259085,
       "M_abaixo": 11549.469853259085,
       "M_acima": 103.19849808989724,
+      "M_pos_resultado": 1688.5748123185497,
+      "M_pos_resultado_abaixo": 1688.5748123185497,
+      "M_pos_resultado_acima": 103.19849808989724,
       "mass_points_abaixo": 37,
       "mass_points_acima": 83
     },
@@ -754,6 +838,9 @@
       "M": 14142.767432076176,
       "M_abaixo": 836.7251273219754,
       "M_acima": 14142.767432076176,
+      "M_pos_resultado": 836.7251273219754,
+      "M_pos_resultado_abaixo": 836.7251273219754,
+      "M_pos_resultado_acima": 560.6588178283682,
       "mass_points_abaixo": 115,
       "mass_points_acima": 37
     },
@@ -769,6 +856,9 @@
       "M": 11413.410260935163,
       "M_abaixo": 11413.410260935163,
       "M_acima": 185.50137551100468,
+      "M_pos_resultado": 1301.779071552858,
+      "M_pos_resultado_abaixo": 1301.779071552858,
+      "M_pos_resultado_acima": 185.50137551100468,
       "mass_points_abaixo": 34,
       "mass_points_acima": 90
     },
@@ -784,6 +874,9 @@
       "M": 3025.289520186043,
       "M_abaixo": 3025.289520186043,
       "M_acima": 1149.0201986333839,
+      "M_pos_resultado": 4668.151420221526,
+      "M_pos_resultado_abaixo": 3025.289520186043,
+      "M_pos_resultado_acima": 4668.151420221526,
       "mass_points_abaixo": 55,
       "mass_points_acima": 25
     },
@@ -799,6 +892,9 @@
       "M": 42967.94599299575,
       "M_abaixo": 42967.94599299575,
       "M_acima": 334.4762417594148,
+      "M_pos_resultado": 2069.1086189301136,
+      "M_pos_resultado_abaixo": 2069.1086189301136,
+      "M_pos_resultado_acima": 334.4762417594148,
       "mass_points_abaixo": 32,
       "mass_points_acima": 46
     },
@@ -814,6 +910,9 @@
       "M": 41367.178444823105,
       "M_abaixo": 2504.4300000600815,
       "M_acima": 41367.178444823105,
+      "M_pos_resultado": 3960.409835325352,
+      "M_pos_resultado_abaixo": 2504.4300000600815,
+      "M_pos_resultado_acima": 3960.409835325352,
       "mass_points_abaixo": 82,
       "mass_points_acima": 31
     },
@@ -829,6 +928,9 @@
       "M": 33163.00615734312,
       "M_abaixo": 33163.00615734312,
       "M_acima": 228.51720126283516,
+      "M_pos_resultado": 6868.211100963639,
+      "M_pos_resultado_abaixo": 6868.211100963639,
+      "M_pos_resultado_acima": 228.51720126283516,
       "mass_points_abaixo": 27,
       "mass_points_acima": 62
     },
@@ -844,6 +946,9 @@
       "M": 37302.832289420796,
       "M_abaixo": 7863.124000674896,
       "M_acima": 37302.832289420796,
+      "M_pos_resultado": 7863.124000674896,
+      "M_pos_resultado_abaixo": 7863.124000674896,
+      "M_pos_resultado_acima": 1373.668244282233,
       "mass_points_abaixo": 81,
       "mass_points_acima": 25
     },
@@ -859,6 +964,9 @@
       "M": 75353.18241607529,
       "M_abaixo": 75353.18241607529,
       "M_acima": 946.7237925497557,
+      "M_pos_resultado": 8549.510630081648,
+      "M_pos_resultado_abaixo": 8549.510630081648,
+      "M_pos_resultado_acima": 946.7237925497557,
       "mass_points_abaixo": 21,
       "mass_points_acima": 47
     },
@@ -874,6 +982,9 @@
       "M": 16674.281533224166,
       "M_abaixo": 1359.3711865831474,
       "M_acima": 16674.281533224166,
+      "M_pos_resultado": 2162.885732964066,
+      "M_pos_resultado_abaixo": 1359.3711865831474,
+      "M_pos_resultado_acima": 2162.885732964066,
       "mass_points_abaixo": 66,
       "mass_points_acima": 26
     },
@@ -889,6 +1000,9 @@
       "M": 33731.26190135171,
       "M_abaixo": 33731.26190135171,
       "M_acima": 1253.5887792367091,
+      "M_pos_resultado": 1679.3984080080463,
+      "M_pos_resultado_abaixo": 1679.3984080080463,
+      "M_pos_resultado_acima": 1253.5887792367091,
       "mass_points_abaixo": 32,
       "mass_points_acima": 46
     },
@@ -904,6 +1018,9 @@
       "M": 15064.553485835817,
       "M_abaixo": 438.264897104616,
       "M_acima": 15064.553485835817,
+      "M_pos_resultado": 2221.1597621382607,
+      "M_pos_resultado_abaixo": 438.264897104616,
+      "M_pos_resultado_acima": 2221.1597621382607,
       "mass_points_abaixo": 82,
       "mass_points_acima": 30
     },
@@ -919,6 +1036,9 @@
       "M": 47353.06015414183,
       "M_abaixo": 47353.06015414183,
       "M_acima": 880.7499468147712,
+      "M_pos_resultado": 5005.198387274139,
+      "M_pos_resultado_abaixo": 5005.198387274139,
+      "M_pos_resultado_acima": 880.7499468147712,
       "mass_points_abaixo": 27,
       "mass_points_acima": 64
     },
@@ -934,6 +1054,9 @@
       "M": 17161.165579918117,
       "M_abaixo": 8105.99300533126,
       "M_acima": 17161.165579918117,
+      "M_pos_resultado": 8105.99300533126,
+      "M_pos_resultado_abaixo": 8105.99300533126,
+      "M_pos_resultado_acima": 5595.953154609872,
       "mass_points_abaixo": 95,
       "mass_points_acima": 30
     },
@@ -949,6 +1072,9 @@
       "M": 9246.299789027431,
       "M_abaixo": 9246.299789027431,
       "M_acima": 936.00120404851,
+      "M_pos_resultado": 4369.682957840715,
+      "M_pos_resultado_abaixo": 4369.682957840715,
+      "M_pos_resultado_acima": 936.00120404851,
       "mass_points_abaixo": 33,
       "mass_points_acima": 85
     },
@@ -964,6 +1090,9 @@
       "M": 41176.49952367037,
       "M_abaixo": 1984.390560098749,
       "M_acima": 41176.49952367037,
+      "M_pos_resultado": 7626.174170219558,
+      "M_pos_resultado_abaixo": 1984.390560098749,
+      "M_pos_resultado_acima": 7626.174170219558,
       "mass_points_abaixo": 97,
       "mass_points_acima": 33
     },
@@ -979,6 +1108,9 @@
       "M": 4233.190664626194,
       "M_abaixo": 4233.190664626194,
       "M_acima": 497.1524868323389,
+      "M_pos_resultado": 6473.826996599248,
+      "M_pos_resultado_abaixo": 6473.826996599248,
+      "M_pos_resultado_acima": 497.1524868323389,
       "mass_points_abaixo": 37,
       "mass_points_acima": 83
     },
@@ -994,6 +1126,9 @@
       "M": 33219.77625814356,
       "M_abaixo": 1183.492568008792,
       "M_acima": 33219.77625814356,
+      "M_pos_resultado": 4274.850277038216,
+      "M_pos_resultado_abaixo": 1183.492568008792,
+      "M_pos_resultado_acima": 4274.850277038216,
       "mass_points_abaixo": 115,
       "mass_points_acima": 37
     },
@@ -1009,6 +1144,9 @@
       "M": 49830.58925205041,
       "M_abaixo": 49830.58925205041,
       "M_acima": 408.14217642266783,
+      "M_pos_resultado": 4532.488399951233,
+      "M_pos_resultado_abaixo": 4532.488399951233,
+      "M_pos_resultado_acima": 408.14217642266783,
       "mass_points_abaixo": 34,
       "mass_points_acima": 90
     },
@@ -1024,6 +1162,9 @@
       "M": 17241.54396294663,
       "M_abaixo": 2229.7273834537664,
       "M_acima": 17241.54396294663,
+      "M_pos_resultado": 2922.2388687440916,
+      "M_pos_resultado_abaixo": 2229.7273834537664,
+      "M_pos_resultado_acima": 2922.2388687440916,
       "mass_points_abaixo": 139,
       "mass_points_acima": 41
     },
@@ -1039,6 +1180,9 @@
       "M": 38084.72777058299,
       "M_abaixo": 38084.72777058299,
       "M_acima": 573.9259697846783,
+      "M_pos_resultado": 3341.2298303332605,
+      "M_pos_resultado_abaixo": 3341.2298303332605,
+      "M_pos_resultado_acima": 573.9259697846783,
       "mass_points_abaixo": 43,
       "mass_points_acima": 153
     }
@@ -1607,8 +1751,8 @@
     "descricao": "P1: indice KLK, ciclos e cortes empilhados, h = 0,050, CR1 por municipio; o Holm com P2 e feito pelo coordenador (E8)"
   },
   "contagens": {
-    "linhas": 2022,
-    "linhas_no_protocolo": 1743,
+    "linhas": 2175,
+    "linhas_no_protocolo": 1697,
     "nao_executado": 35,
     "sem_estimativa": 2,
     "por_especificacao": {
@@ -1621,6 +1765,7 @@
       "S4_fora": 51,
       "ic_honesto": 459,
       "ic_honesto_h_otimo": 252,
+      "ic_honesto_pos_resultado": 153,
       "indice_anderson": 12,
       "limites_lee": 12,
       "local_randomization": 84,
@@ -1632,15 +1777,15 @@
       "sensibilidade_h": 306
     },
     "por_familia": {
-      "F0": 596,
-      "F1": 634,
-      "F2": 296,
-      "F4": 300,
-      "P1": 156,
-      "S1": 40
+      "F0": 641,
+      "F1": 679,
+      "F2": 320,
+      "F4": 324,
+      "P1": 168,
+      "S1": 43
     },
     "bky_por_familia": {
-      "F0": 45,
+      "F0": 42,
       "F1": 45,
       "F2": 24,
       "F4": 24
@@ -1649,9 +1794,11 @@
   "decisoes": [
     "Ciclos empilhados: grupo = ciclo (ou ciclo x corte), com intercepto e inclinacoes por grupo x lado; o intercepto por ciclo contem o efeito fixo de ciclo do protocolo (§6). CR1 por municipio.",
     "Cortes empilhados: sempre CR1 por municipio (o mesmo municipio pode estar nas duas janelas com h = 0,080).",
-    "q BKY: dentro de cada familia F0, F1, F2, F4, sobre todas as linhas 'principal' do protocolo (cada outcome x populacao x ciclo x corte, incluindo cortes empilhados e ciclos empilhados). Sensibilidades de construcao da tarefa B, S1 e o indice P1 ficam fora.",
+    "q BKY: dentro de cada familia F0, F1, F2, F4, sobre todas as linhas 'principal' do protocolo (cada outcome x populacao x ciclo x corte, incluindo cortes empilhados e ciclos empilhados). Sensibilidades de construcao da tarefa B, S1, o indice P1 e outcomes fora do §5 ficam fora. As linhas de um corte e as empilhadas (e as de um ciclo e as de ciclos empilhados) usam os mesmos municipios: sao hipoteses dependentes, e o BKY as junta na mesma familia (o BKY vale sob dependencia positiva, PRDS; nao foi verificada aqui).",
+    "q_bky_com_adicionais: o mesmo BKY incluindo as linhas principais de outcomes adicionais ao protocolo (F0.3 vagas imediatas priorizadas, que o §5 nao lista).",
+    "Variante de Anderson do indice: especificacao adicional ao protocolo (o protocolo nao a nomeia).",
     "Indice P1: z-scores pelo lado abaixo do corte dentro da janela h = 0,050 (-50 < x <= 0) em cada ciclo x corte; a mesma padronizacao e usada nas sensibilidades h = 0,030 e 0,080. F2.1 nao existe no ciclo 3: o indice de V3 tem tres componentes. Componente ausente nao e imputado.",
-    "IC honesto: M pela regra de bolso com suporte ate o ponto medio entre os cortes (cortes_vizinhos = (300, 400)); h fixo = protocolo; h otimo = especificacao adicional rotulada. No empilhado, M = maximo da regra por grupo; nao ha h otimo empilhado.",
+    "IC honesto: o protocolo fixa a regra de bolso (quartica global por lado); o suporte ate o ponto medio entre os cortes (cortes_vizinhos = (300, 400)) e escolha de implementacao da rdd_lib (tarefa A), nao texto do protocolo. Sensibilidade POS_RESULTADO pedida pelo coordenador: lado interno ate o outro corte, externo inteiro (ic_honesto_pos_resultado, no_protocolo = False). h fixo = protocolo; h otimo = especificacao adicional rotulada. No empilhado, M = maximo da regra por grupo; nao ha h otimo empilhado.",
     "F4.1: principal = local linear nos municipios com >= 1 celula preenchida (condicional); limites de Lee com selecionado = n_celulas_preenchidas_ch1 > 0 (identico a ter pontuacao de alocado, conferido na tarefa B).",
     "F0.3 condicionais (vagas pedidas, fracao priorizada): so municipios que constam do resultado final; o ponderado da fracao priorizada usa as vagas pedidas como peso; nao ha tabela no nivel da celula para G3.",
     "Local randomization: IC por inversao (grade do E5) so para outcomes em [0, 1]; para os demais so p de Fisher.",
@@ -1678,6 +1825,18 @@
       "resolucao": "a linha E0 passa a ser conferida rodando a mesma estimacao da rdd_lib com o Y1 do E4 como entrada (tolerancia 1e-10 mantida); a diferenca da linha do E6 para o E5 e a diferenca de entrada ficam registradas; nenhuma estimativa do E6 foi alterada"
     },
     {
+      "data": "2026-10-19",
+      "item": "auditoria independente do E6 (pedido do coordenador)",
+      "situacao": "a variante de Anderson e F0.3 vagas imediatas priorizadas nao estao no protocolo; o M da regra de bolso com suporte ate o ponto medio deixa o lado interno com 0,050 de IVS e o M explode",
+      "resolucao": "Anderson e F0.3 imediatas rotuladas como adicao (fora do BKY do protocolo; BKY com e sem elas); IC honesto POS_RESULTADO com suporte interno ate o outro corte, ao lado do IC do protocolo, sem substitui-lo"
+    },
+    {
+      "data": "2026-10-19",
+      "item": "S4: areas indigenas",
+      "situacao": "a PI 604/2023 poe na Faixa 1 da ajuda de custo tambem as areas indigenas",
+      "resolucao": "nao ha atributo municipal de area indigena no repositorio; o 'dentro' do S4 cobre so Amazonia Legal ou faixa de fronteira, e municipios com area indigena fora delas ficam no 'fora'"
+    },
+    {
       "data": "2026-10-18",
       "item": "Poisson local e limites de Lee empilhados",
       "situacao": "a rdd_lib (tarefa A) so tem Poisson local e limites de Lee em um corte",
@@ -1693,7 +1852,7 @@
   "saidas": {
     "E6_estimativas.csv": {
       "arquivo": "output/rdd_bolsa/E6_estimativas.csv",
-      "sha256": "3bee264ac661a4ad8d3ad9e59c7dd66e10353a620f8c2c8e83c479b04ff5f8eb"
+      "sha256": "223b4c77326b8399d9d0e3308f585da97e4db9237d361515911b7fd1c27f0f30"
     },
     "E6_diagnosticos.csv": {
       "arquivo": "output/rdd_bolsa/E6_diagnosticos.csv",
