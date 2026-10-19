@@ -215,11 +215,45 @@ class TestE9SinteticoEquivalenciaStatsmodels(unittest.TestCase):
         np.testing.assert_allclose(V, G / (G - 1) * inv @ (s.T @ s) @ inv, rtol=1e-12)
 
 
+class TestE9SinteticoScoreBootstrap(unittest.TestCase):
+    """Dados sintéticos: enumeração do score bootstrap, pesos de Webb, inversão e grade de placebos."""
+
+    def test_rademacher_exato_igual_forca_bruta(self) -> None:
+        rng = np.random.default_rng(SEMENTE + 4)
+        for G in (5, 9, 12):
+            sc = rng.normal(size=G)
+            sinais = np.array([[1 - 2 * ((i >> c) & 1) for c in range(G)] for i in range(2 ** G)], dtype=float)
+            bruto = float(np.mean(np.abs(sinais @ sc) >= abs(sc.sum()) * (1 - 1e-12)))
+            self.assertAlmostEqual(E9.p_rademacher_exato(sc), bruto, places=12)
+
+    def test_pesos_webb_media_zero_variancia_um(self) -> None:
+        self.assertAlmostEqual(float(E9.PESOS_WEBB.mean()), 0.0, places=12)
+        self.assertAlmostEqual(float((E9.PESOS_WEBB ** 2).mean()), 1.0, places=12)
+
+    def test_score_nulo_no_otimo_e_ic_contem_estimativa(self) -> None:
+        rng = np.random.default_rng(SEMENTE + 5)
+        conj, cand = dgp_sintetico(rng, n_conj=12, n_cel=40, n_cand=3000)
+        r = E9.estimar(conj, cand, E9.MODELO_COND, "principal", "spline_linear__bolsa_linear",
+                       sorted(conj["macrorregiao"].unique()), sorted(conj["estrato_territorial"].unique()))
+        k = r["termos"].index("bolsa_mil")
+        cl = r["_grupos"]["cluster_conjunto"].to_numpy()
+        sc = E9.score_efetivo_por_cluster(r["_X"], r["_conj"], r["_esc"], r["_exc"], k, float(r["theta"][k]), cl)
+        self.assertLess(abs(sc.sum()), 1e-6)
+        lo, hi, _ = E9.ic_inversao_score(r, k, cl)
+        self.assertTrue(lo < r["theta"][k] < hi)
+
+    def test_grade_de_placebos(self) -> None:
+        self.assertEqual(min(E9.PLACEBOS_MIL), 190)
+        self.assertEqual(max(E9.PLACEBOS_MIL), 510)
+        for c in E9.PLACEBOS_MIL:
+            self.assertTrue(all(abs(c - k) > 10 for k in E9.CORTES_MIL))
+
+
 class TestE9SinteticoSplineEEfeito(unittest.TestCase):
     """Dados sintéticos: spline sem salto nos nós e efeito sobre a probabilidade."""
 
     def test_spline_continuo_nos_nos(self) -> None:
-        for grau in (1, 2):
+        for grau in (1, 2, 3):
             for c in E9.CORTES_MIL:
                 a = E9.base_spline(np.array([c - 1e-9]), grau).to_numpy()
                 b = E9.base_spline(np.array([c + 1e-9]), grau).to_numpy()
@@ -273,6 +307,7 @@ class TestE9SaidasEmpiricas(unittest.TestCase):
         cls.efe = pd.read_csv(E9.OUT_EFEITOS, dtype={"ciclo": str})
         cls.resumo = json.loads(E9.OUT_RESUMO.read_text(encoding="utf-8"))
         cls.dic = json.loads(E9.DICIONARIO.read_text(encoding="utf-8"))
+        cls.rob = pd.read_csv(E9.OUT_ROBUSTEZ, dtype={"ciclo": str})
 
     def test_natureza_empirica(self) -> None:
         self.assertEqual(set(self.est["natureza_dos_dados"]), {"EMPIRICO"})
@@ -372,7 +407,7 @@ class TestE9SaidasEmpiricas(unittest.TestCase):
     def test_tabelas_regeneradas_dos_csv(self) -> None:
         diag = self.resumo["diagnosticos_por_ciclo"]
         coli = self.resumo["colinearidade_principal"]
-        texto = E9.tabelas_relato(self.est, self.efe, diag, coli)
+        texto = E9.tabelas_relato(self.est, self.efe, diag, coli, self.rob)
         self.assertEqual(texto, E9.OUT_TABELAS.read_text(encoding="utf-8"))
 
     def test_doc_42_tem_as_tabelas_do_script(self) -> None:
@@ -386,10 +421,31 @@ class TestE9SaidasEmpiricas(unittest.TestCase):
         ini, fim = doc.index(MARCA_INI), doc.index(MARCA_FIM)
         fora = doc[:ini] + doc[fim:]
         bloco = doc[ini:fim]
-        permitidos = {"0,300", "0,400", "0,3", "0,4", "0,1", "0,050"}
+        # cortes e unidade do spline (protocolo), janelas da robustez, limiares de significância
+        permitidos = {"0,300", "0,400", "0,3", "0,4", "0,1", "0,050", "0,05", "0,10", "0,025", "0,01", "1,96"}
         no_bloco = set(re.findall(r"−?\d+,\d+", bloco))
         for n in re.findall(r"−?\d+,\d+", fora):
             self.assertTrue(n in permitidos or n in no_bloco, f"número fora das tabelas geradas: {n}")
+
+    def test_doc_42_sem_inteiro_de_resultado_fora_das_tabelas(self) -> None:
+        """Inteiros fora do bloco (contagens, G, N) só podem ser números de protocolo, edital, lei, data, seção,
+        tabela ou auditoria; qualquer outro tem de estar no bloco gerado."""
+        doc = DOC.read_text(encoding="utf-8")
+        ini, fim = doc.index(MARCA_INI), doc.index(MARCA_FIM)
+        fora = doc[:ini] + doc[fim:]
+        bloco = doc[ini:fim]
+        limpo = re.sub(r"`[^`]*`", " ", fora)  # nomes de arquivo, colunas e scripts
+        limpo = re.sub(r"\]\([^)]*\)", "]", limpo)  # destinos de links
+        for padrao in (r"\d{2}/\d{2}/\d{4}", r"\d+/\d{4}", r"§\s?\d+(\.\d+)?", r"[Tt]abelas? \d+( (a|e) \d+)?",
+                       r"[Aa]uditorias? \d+", r"[Ss]eç(ão|ões) \d+(\.\d+)?", r"doc \d+\w?", r"protocolo \d+",
+                       r"^#+ .*$", r"^\d+\. ", r"\b\d+º", r"\d+ª", r"\d+-D", r"−?\d+,\d+", r"\b[A-Z]\d+\b",
+                       r"12\.871", r"15\.233", r"SHA-256", r"IC 95%", r"G − 1", r"\d+·d\d+", r"\bd\d{3}\b",
+                       r"[Ff]aixa \d( → \d)?", r"→ \d+", r"exp\(\d"):
+            limpo = re.sub(padrao, " ", limpo, flags=re.MULTILINE)
+        permitidos = {"10", "15", "20", "5", "1", "2", "3", "2010", "2022", "2025", "2026"}
+        no_bloco = set(re.findall(r"(?<![\d,])\d+(?![\d,])", bloco))
+        for n in re.findall(r"(?<![\d,])\d+(?![\d,])", limpo):
+            self.assertTrue(n in permitidos or n in no_bloco, f"inteiro fora das tabelas geradas: {n}")
 
     def test_doc_42_afirmacoes_qualitativas(self) -> None:
         """As frases do doc 42 sobre sinal e significância são conferidas aqui contra o CSV."""
@@ -407,7 +463,8 @@ class TestE9SaidasEmpiricas(unittest.TestCase):
         self.assertTrue((e["ep_cluster_conjunto"] > e["ep_mle"]).all())
         self.assertTrue((e["ep_cluster_conjunto"] > e["ep_cluster_candidato"]).all())
         # "o coeficiente é positivo em todas as especificações de bolsa linear do empilhado"
-        emp = self.est[(self.est.ciclo == "empilhado") & (self.est.termo == "bolsa_mil")]
+        emp = self.est[(self.est.ciclo == "empilhado") & (self.est.termo == "bolsa_mil") &
+                       (self.est.no_protocolo == True)]  # noqa: E712  (só as especificações do protocolo)
         self.assertTrue((emp["ic95_inf"] > 0).all())
         # "com spline linear, a igualdade dos degraus é rejeitada no ciclo 3 e no empilhado; com spline quadrático,
         # não é rejeitada em nenhum ciclo nem conjunto"
@@ -435,6 +492,107 @@ class TestE9SaidasEmpiricas(unittest.TestCase):
         self.assertGreater(b[("sensibilidade", "spline_linear__bolsa_linear")], base3)
         self.assertGreater(b[("sensibilidade", "spline_quadratico__bolsa_linear")], base3)
         self.assertLess(e.loc["3", "coef"], min(e.loc["1", "coef"], e.loc["2", "coef"]))
+
+    def _rob(self, analise: str, ciclo: str, estatistica: str | None = None) -> pd.Series:
+        sel = self.rob[(self.rob.analise == analise) & (self.rob.ciclo == ciclo)]
+        if estatistica is not None:
+            sel = sel[sel.estatistica == estatistica]
+        self.assertEqual(len(sel), 1, (analise, ciclo, estatistica))
+        return sel.iloc[0]
+
+    def _rob_est(self, ciclo: str, nome: str) -> pd.Series:
+        sel = self.est[(self.est.ciclo == ciclo) & (self.est.especificacao == f"{E9.TAG_ROB}:{nome}") &
+                       (self.est.termo == "bolsa_mil")]
+        self.assertEqual(len(sel), 1, (ciclo, nome))
+        return sel.iloc[0]
+
+    def test_doc_42_afirmacoes_robustez(self) -> None:
+        """Frases da seção 5.2 do doc 42, conferidas contra as saídas da robustez pós-auditoria."""
+        # "Os ciclos 1 e 3 empilhados, sem o 2, têm IC 95% que inclui zero"
+        e13 = self._rob_est("1+3", "ciclos_1_e_3_empilhados__spline_linear__bolsa_linear")
+        self.assertTrue(e13.ic95_inf < 0 < e13.ic95_sup)
+        # "O Q de Cochran rejeita a igualdade dos três ciclos, e o z do ciclo 2 contra o 3 também"
+        self.assertLess(self._rob("heterogeneidade_ciclos", "1,2,3").p, 0.05)
+        self.assertLess(self._rob("heterogeneidade_ciclos", "2 vs 3").p, 0.05)
+        # "Com segmentos cúbicos, o IC 95% do empilhado inclui zero; nas janelas de ±0,10 e ±0,05, com cúbico, também"
+        for nome in ("spline_cubico__bolsa_linear", "janela_0100__spline_cubico__bolsa_linear",
+                     "janela_0050__spline_cubico__bolsa_linear"):
+            r = self._rob_est("empilhado", nome)
+            self.assertTrue(r.ic95_inf < 0 < r.ic95_sup, nome)
+        # "Com spline linear, sobrevive a nós a cada 0,05 e às janelas de ±0,10 e ±0,05, mas não à de ±0,025"
+        for nome in ("nos_cada_0050__spline_linear__bolsa_linear", "janela_0100__spline_linear__bolsa_linear",
+                     "janela_0050__spline_linear__bolsa_linear"):
+            self.assertGreater(self._rob_est("empilhado", nome).ic95_inf, 0, nome)
+        r = self._rob_est("empilhado", "janela_0025__spline_linear__bolsa_linear")
+        self.assertTrue(r.ic95_inf < 0 < r.ic95_sup)
+
+        # "Na janela de ±0,025 com spline cúbico, a bolsa fica muito mais colinear (VIF) do que com spline linear"
+        def vif(nota: str) -> float:
+            return float(re.search(r"VIF da bolsa contra spline e controles = ([\d.e+]+)", nota).group(1))
+
+        for c in E9.CICLOS:
+            vc = vif(self._rob_est(c, "janela_0025__spline_cubico__bolsa_linear").nota)
+            vl = vif(self._rob_est(c, "janela_0025__spline_linear__bolsa_linear").nota)
+            self.assertGreater(vc, 3 * vl, c)
+        # "Em todos os ciclos, a fração de cortes falsos com |t| > 1,96 fica bem acima de cinco por cento"
+        for c in E9.CICLOS:
+            self.assertGreater(self._rob("placebo_cortes", c, "fracao_abs_t_placebo_maior_que_1_96").valor, 0.10)
+        # "o p por posto do empilhado fica acima de 0,05"
+        self.assertGreater(self._rob("placebo_cortes", "empilhado", "p_posto").valor, 0.05)
+        # "Com cluster por conjunto, score bootstrap, CV3 e inversão confirmam o empilhado"
+        for a in ("score_bootstrap_rademacher_cluster_conjunto", "score_bootstrap_webb_cluster_conjunto",
+                  "cv3_cluster_conjunto"):
+            self.assertLess(self._rob(a, "empilhado").p, 0.05, a)
+        self.assertGreater(self._rob("ic_inversao_score_rademacher_cluster_conjunto", "empilhado").ic95_inf, 0)
+        # "Com cluster por curso, os p do score bootstrap ficam entre 0,01 e 0,05, e o IC por inversão quase toca o zero"
+        for a in ("score_bootstrap_rademacher_cluster_curso", "score_bootstrap_webb_cluster_curso"):
+            p = self._rob(a, "empilhado").p
+            self.assertTrue(0.01 < p < 0.05, (a, p))
+        inv = self._rob("ic_inversao_score_rademacher_cluster_curso", "empilhado")
+        self.assertTrue(0 < inv.ic95_inf < 0.1 * inv.valor)
+        # Ciclo 2: score bootstrap (Rademacher e Webb), CV3 e inversão excluem zero
+        for a in ("score_bootstrap_rademacher_cluster_conjunto", "score_bootstrap_webb_cluster_conjunto",
+                  "cv3_cluster_conjunto"):
+            self.assertLess(self._rob(a, "2").p, 0.05, a)
+        self.assertGreater(self._rob("ic_inversao_score_rademacher_cluster_conjunto", "2").ic95_inf, 0)
+        # "Nenhum corte placebo do ciclo 2 tem |t| >= real; o p por posto é o menor possível"
+        n = self._rob("placebo_cortes", "2", "n_placebos").valor
+        self.assertEqual(self._rob("placebo_cortes", "2", "n_abs_t_placebo_maior_ou_igual_ao_real").valor, 0)
+        self.assertAlmostEqual(self._rob("placebo_cortes", "2", "p_posto").valor, 1 / (1 + n))
+        # "sobrevive a nós a cada 0,05 e às três janelas com spline linear"
+        for nome in ["nos_cada_0050__spline_linear__bolsa_linear"] + [
+                f"janela_{h:04d}__spline_linear__bolsa_linear" for h in E9.JANELAS_MIL]:
+            self.assertGreater(self._rob_est("2", nome).ic95_inf, 0, nome)
+        # "com segmentos cúbicos na amostra toda, o IC 95% do ciclo 2 inclui zero"
+        r = self._rob_est("2", "spline_cubico__bolsa_linear")
+        self.assertTrue(r.ic95_inf < 0 < r.ic95_sup)
+
+    def test_robustez_rotulada_e_separada(self) -> None:
+        rob_est = self.est[self.est.especificacao.str.startswith(E9.TAG_ROB)]
+        self.assertGreater(len(rob_est), 0)
+        self.assertTrue((rob_est["no_protocolo"] == False).all())  # noqa: E712
+        prot = self.est[~self.est.especificacao.str.startswith(E9.TAG_ROB)]
+        self.assertTrue((prot["no_protocolo"] == True).all())  # noqa: E712
+        self.assertTrue((self.rob["no_protocolo"] == False).all())  # noqa: E712
+        self.assertTrue(self.rob["especificacao"].str.startswith(E9.TAG_ROB).all())
+        self.assertEqual(set(self.rob["natureza_dos_dados"]), {"EMPIRICO"})
+        self.assertTrue(self.rob[self.rob["valor"].isna()]["nota"].notna().all())
+        analises = set(self.rob["analise"])
+        for a in ("cluster_curso", "placebo_cortes", "heterogeneidade_ciclos",
+                  "score_bootstrap_rademacher_cluster_conjunto", "score_bootstrap_webb_cluster_conjunto",
+                  "cv3_cluster_conjunto", "score_bootstrap_rademacher_cluster_curso", "cv3_cluster_curso",
+                  "ic_inversao_score_rademacher_cluster_conjunto", "ic_inversao_score_rademacher_cluster_curso"):
+            self.assertIn(a, analises)
+        for c in E9.CICLOS:
+            for nome in ["spline_cubico__bolsa_linear", "nos_cada_0050__spline_linear__bolsa_linear"] + [
+                    f"janela_{h:04d}__spline_{g}__bolsa_linear" for h in E9.JANELAS_MIL for g in ("linear", "cubico")]:
+                self._rob_est(c, nome)
+            self.assertEqual(self._rob("placebo_cortes", c, "n_placebos").valor, len(E9.PLACEBOS_MIL))
+        g = self.rob[self.rob.analise == "cluster_curso"]["g"].unique()
+        n_cursos = len(self.resumo["robustez_pos_auditoria"]["rotulos_cursos"]["codigos"])
+        self.assertEqual(list(g), [n_cursos])
+        self.assertTrue(self.resumo["condicao_s12_ciclo2"]["cumprida"])
+        self.assertTrue(self.resumo["condicao_s12_ciclo2"]["evidencia"])
 
 
 if __name__ == "__main__":

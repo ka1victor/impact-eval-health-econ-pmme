@@ -91,12 +91,19 @@ CONJ_SENSIBILIDADE = DIR_OUTCOMES / "escolhas_conjunto_sensibilidade_vaga_imedia
 IVS_OFICIAL = ROOT / "output" / "aquisicao" / "a08_ivs_2010_oficial_municipio.csv"
 GRADES_EDITAIS = ROOT / "output" / "aquisicao" / "a03_matriz_regra_tratamento.json"
 GRADE_2025 = ROOT / "output" / "aquisicao" / "a04_grade_anunciada_2025.csv"
+MANIFESTO_A11 = ROOT / "output" / "aquisicao" / "a11_manifesto_ciclo2_chamada1.json"
+# Quadros da 1a chamada (os mesmos da tarefa B), lidos só para conferir que o código do curso tem o mesmo rótulo
+# nos três ciclos (condição do cluster por curso da robustez pós-auditoria).
+QUADROS_1A_CHAMADA = {1: ROOT / "data" / "raw" / "aquisicao" / "vagas" / "2025_ciclo1_chamada1_vagas.xlsx",
+                      2: ROOT / "data" / "raw" / "pmm_e" / "2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+                      3: ROOT / "data" / "raw" / "pmm_e" / "2026_ciclo3_chamada1_vagas_retificadas.xlsx"}
 
 OUT_DIR = ROOT / "output" / "rdd_bolsa"
 OUT_ESTIMATIVAS = OUT_DIR / "E9_estimativas.csv"
 OUT_EFEITOS = OUT_DIR / "E9_efeitos_marginais.csv"
 OUT_RESUMO = OUT_DIR / "E9_resumo.json"
 OUT_TABELAS = OUT_DIR / "E9_tabelas_relato.md"
+OUT_ROBUSTEZ = OUT_DIR / "E9_robustez_pos_auditoria.csv"
 OUT_FIG_DIR = OUT_DIR / "E9_figuras"
 OUT_FIGURA = OUT_FIG_DIR / "E9_utilidade_ivs.png"
 
@@ -113,7 +120,8 @@ BASE_MACRO = "SUDESTE"
 BASE_ESTRATO = "capital"
 # Numérica.
 TOL_PASSO = 1e-10
-TOL_GRAD = 1e-7
+TOL_DECREMENTO = 1e-14
+LIMITE_EP_SEPARACAO = 1e4  # EP de MV acima disso = termo divergente (separação); só gera nota
 MAX_ITER = 200
 Z95 = float(stats.norm.ppf(0.975))
 
@@ -130,8 +138,24 @@ ESPECIFICACOES = {
 # (modelo, conjunto) estimados; o explodido usa só o conjunto principal (§12 + §14).
 COMBINACOES = ((MODELO_COND, "principal"), (MODELO_COND, "sensibilidade"), (MODELO_EXPL, "principal"))
 
+# Robustez pós-auditoria (pós-resultado, fora do protocolo). Pedida pela auditoria independente do E9
+# (commit 9646b57), depois de ver os resultados; nenhuma destas linhas substitui as do protocolo.
+TAG_ROB = "ROBUSTEZ_POS_AUDITORIA"
+PAPEL_ROB = ("robustez pós-auditoria: pós-resultado, fora do protocolo, pedida pela auditoria independente "
+             "de 18/10/2026")
+ESPEC_PRINCIPAL = "spline_linear__bolsa_linear"
+SEMENTE_BOOT = 20261018
+N_REAMOSTRAS = 199_999
+G_MAX_ENUMERACAO = 24
+PESOS_WEBB = np.array([-math.sqrt(1.5), -1.0, -math.sqrt(0.5), math.sqrt(0.5), 1.0, math.sqrt(1.5)])
+JANELAS_MIL = (100, 50, 25)
+NOS_EXTRAS_MIL = tuple(n for n in range(150, 701, 50) if n not in CORTES_MIL)
+PLACEBOS_MIL = tuple(c for c in range(190, 511, 10) if all(abs(c - k) > 10 for k in CORTES_MIL))
+
 
 def papel_no_protocolo(modelo: str, conjunto: str, espec: str) -> str:
+    if espec.startswith(TAG_ROB):
+        return PAPEL_ROB
     grau, forma = ESPECIFICACOES[espec]
     if modelo == MODELO_COND and conjunto == "principal" and grau == 1 and forma == "linear":
         return "principal (§14, §15)"
@@ -186,14 +210,18 @@ def mapa_bolsa_por_faixa() -> tuple[dict[str, float], dict[str, Any]]:
     """Faixa impressa → bolsa em R$ mil, das grades dos editais; para se as fontes divergem."""
     grades = json.loads(GRADES_EDITAIS.read_text(encoding="utf-8"))["mapeamento_regras_por_edital"]
     por_grade: dict[str, dict[str, float]] = {}
+    rotulo_valor: dict[str, list[str]] = {}
     for nome, grade in grades.items():
         if not isinstance(grade, dict):
             continue
         m = {}
         for k, v in grade.items():
             if k.startswith("faixa_") and isinstance(v, dict):
-                valor = v.get("bolsa_mensal_anunciada", v.get("bolsa_mensal_liquida_anunciada"))
-                m[f"FAIXA {k.split('_')[1]}"] = float(valor) / 1000.0
+                chave = "bolsa_mensal_anunciada" if "bolsa_mensal_anunciada" in v else "bolsa_mensal_liquida_anunciada"
+                m[f"FAIXA {k.split('_')[1]}"] = float(v[chave]) / 1000.0
+                rotulo_valor.setdefault(nome, [])
+                if chave not in rotulo_valor[nome]:
+                    rotulo_valor[nome].append(chave)
         por_grade[nome] = m
     g25 = pd.read_csv(GRADE_2025)
     por_grade["a04_grade_anunciada_2025"] = {
@@ -205,7 +233,45 @@ def mapa_bolsa_por_faixa() -> tuple[dict[str, float], dict[str, Any]]:
     if sorted(mapa) != ["FAIXA 1", "FAIXA 2", "FAIXA 3"]:
         raise AssertionError(f"faixas inesperadas: {mapa}")
     return mapa, {"mapa_faixa_para_bolsa_mil": mapa, "grades_conferidas": por_grade,
-                  "conferencia": "as grades de 2025 e 2026 (a03) e a grade de 2025 da FAQ (a04) dão o mesmo valor por faixa"}
+                  "conferencia": "as grades de 2025 e 2026 (a03) e a grade de 2025 da FAQ (a04) dão o mesmo valor por faixa",
+                  "rotulo_do_valor_por_grade": rotulo_valor,
+                  "nota_bruto_liquido": ("o valor de 2025 vem rotulado como 'anunciado' (sem 'líquido'; a FAQ e o edital "
+                                         "3/2025 não dizem líquido) e o de 2026 como 'líquido anunciado'; a auditoria 01 "
+                                         "(§6.1) registra que a retificação do edital 3/2025 esclareceu que os valores eram "
+                                         "líquidos. Os números por faixa são iguais; a diferença de rótulo fica registrada "
+                                         "e não muda a codificação")}
+
+
+def rotulos_cursos() -> dict[str, Any]:
+    """Rótulo de cada código de curso nos quadros da 1a chamada; para se um código mudar de rótulo entre ciclos."""
+    import re
+    import unicodedata
+
+    def norm(x: object) -> str:
+        t = unicodedata.normalize("NFKD", str(x)).encode("ascii", "ignore").decode().upper()
+        return re.sub(r"\s+", " ", t).strip()
+
+    por_codigo: dict[int, dict[int, str]] = {}
+    for ciclo, caminho in QUADROS_1A_CHAMADA.items():
+        bruto = pd.read_excel(caminho, sheet_name=0, header=None, dtype=str)
+        pos = [(i, j) for i in range(min(10, len(bruto))) for j in range(bruto.shape[1])
+               if norm(bruto.iat[i, j]) == "CURSO"]
+        if len(pos) != 1:
+            raise AssertionError(f"{rel(caminho)}: cabeçalho CURSO não localizado de forma única")
+        i0, j0 = pos[0]
+        for v in bruto.iloc[i0 + 1:, j0].dropna().unique():
+            m = re.match(r"\s*(\d+)\s*[.\-–]\s*(.*)", str(v))
+            if m:
+                rot = norm(m.group(2))
+                anterior = por_codigo.setdefault(int(m.group(1)), {}).get(ciclo)
+                if anterior is not None and anterior != rot:
+                    raise AssertionError(f"curso {m.group(1)} com dois rótulos no ciclo {ciclo}")
+                por_codigo[int(m.group(1))][ciclo] = rot
+    divergentes = {k: v for k, v in por_codigo.items() if len(set(v.values())) > 1}
+    if divergentes:
+        raise AssertionError(f"código de curso com rótulos diferentes entre ciclos: {divergentes}")
+    return {"codigos": {str(k): {"ciclos": sorted(v), "rotulo": next(iter(v.values()))} for k, v in sorted(por_codigo.items())},
+            "conferencia": "cada código de curso tem o mesmo rótulo (normalizado) em todos os ciclos em que aparece"}
 
 
 def carregar_ivs() -> pd.Series:
@@ -251,15 +317,23 @@ def preparar_conjunto(conj: pd.DataFrame, ivs: pd.Series, mapa: dict[str, float]
     return c, diag
 
 
-def base_spline(s_mil: np.ndarray, grau: int) -> pd.DataFrame:
-    """Spline contínuo em IVS com nós em 0,300 e 0,400 (unidades de 0,1 de IVS); sem salto de nível."""
+def base_spline(s_mil: np.ndarray, grau: int, nos_extras_mil: tuple[int, ...] = ()) -> pd.DataFrame:
+    """Spline contínuo em IVS com nós em 0,300 e 0,400 (unidades de 0,1 de IVS); sem salto de nível.
+
+    Base de potências truncadas: grau 1 (principal), 2 (variante do §15) ou 3 (robustez pós-auditoria).
+    `nos_extras_mil` acrescenta nós lineares (robustez pós-auditoria); todos os termos são contínuos.
+    """
     s = np.asarray(s_mil, dtype=float)
     u = (s - CENTRO_IVS_MIL) / 1000.0 * ESCALA_IVS
     a = np.maximum(s - CORTES_MIL[0], 0.0) / 1000.0 * ESCALA_IVS
     b = np.maximum(s - CORTES_MIL[1], 0.0) / 1000.0 * ESCALA_IVS
     cols = {"ivs_inclinacao": u, "ivs_mudanca_inclinacao_0300": a, "ivs_mudanca_inclinacao_0400": b}
-    if grau == 2:
+    if grau >= 2:
         cols.update({"ivs_quadrado": u ** 2, "ivs_quadrado_apos_0300": a ** 2, "ivs_quadrado_apos_0400": b ** 2})
+    if grau >= 3:
+        cols.update({"ivs_cubo": u ** 3, "ivs_cubo_apos_0300": a ** 3, "ivs_cubo_apos_0400": b ** 3})
+    for n in nos_extras_mil:
+        cols[f"ivs_mudanca_inclinacao_{int(n):04d}"] = np.maximum(s - n, 0.0) / 1000.0 * ESCALA_IVS
     return pd.DataFrame(cols, index=getattr(s_mil, "index", None))
 
 
@@ -272,8 +346,12 @@ def termos_bolsa(c: pd.DataFrame, forma: str) -> pd.DataFrame:
                          "degrau_0400": (f == "FAIXA 1").astype(float).to_numpy()}, index=c.index)
 
 
-def matriz_atributos(c: pd.DataFrame, grau: int, forma: str, macros: list[str], estratos: list[str]) -> pd.DataFrame:
-    X = pd.concat([termos_bolsa(c, forma), base_spline(c["s_mil"], grau).set_index(c.index)], axis=1)
+def matriz_atributos(c: pd.DataFrame, grau: int, forma: str, macros: list[str], estratos: list[str],
+                     nos_extras_mil: tuple[int, ...] = (), placebo_mil: int | None = None) -> pd.DataFrame:
+    X = pd.concat([termos_bolsa(c, forma), base_spline(c["s_mil"], grau, nos_extras_mil).set_index(c.index)], axis=1)
+    if placebo_mil is not None:  # robustez pós-auditoria: degrau falso + nó no corte falso
+        X["degrau_placebo"] = (c["s_mil"] > placebo_mil).astype(float).to_numpy()
+        X["ivs_mudanca_inclinacao_placebo"] = np.maximum(c["s_mil"].to_numpy() - placebo_mil, 0.0) / 1000.0 * ESCALA_IVS
     X["tem_vaga_imediata"] = c["tem_vaga_imediata"].astype(float)
     X["log_vagas_imediatas_mais_1"] = c["log_vagas_imediatas_mais_1"].astype(float)
     X["log_populacao_2022"] = np.log(c["populacao_2022"].astype(float))
@@ -314,7 +392,8 @@ def montar_grupos(cand: pd.DataFrame, conj: pd.DataFrame, modelo: str, conjunto:
 
     g1 = pd.DataFrame({"idx_escolhida": localizar(r1), "idx_excluida": -1,
                        "cluster_conjunto": r1["id_conjunto_escolha"].to_numpy(),
-                       "cluster_candidato": r1["id_candidato"].to_numpy(), "posto": 1})
+                       "cluster_candidato": r1["id_candidato"].to_numpy(), "posto": 1,
+                       "cluster_curso": [f"curso{int(k):02d}" for k in r1["cod_curso"]]})
     if modelo == MODELO_COND:
         return g1.reset_index(drop=True), diag
     r2 = r2[r2["id_candidato"].isin(set(r1["id_candidato"]))]
@@ -327,7 +406,8 @@ def montar_grupos(cand: pd.DataFrame, conj: pd.DataFrame, modelo: str, conjunto:
         raise AssertionError("2a opção igual à 1a opção")
     g2 = pd.DataFrame({"idx_escolhida": idx2, "idx_excluida": excl.astype(int),
                        "cluster_conjunto": r2["id_conjunto_escolha"].to_numpy(),
-                       "cluster_candidato": r2["id_candidato"].to_numpy(), "posto": 2})
+                       "cluster_candidato": r2["id_candidato"].to_numpy(), "posto": 2,
+                       "cluster_curso": [f"curso{int(k):02d}" for k in r2["cod_curso"]]})
     diag["grupos_posto_2"] = int(len(g2))
     diag["grupos_posto_2_em_curso_diferente_da_1a"] = int((~mesmo_curso).sum())
     return pd.concat([g1, g2], ignore_index=True), diag
@@ -338,13 +418,13 @@ def montar_grupos(cand: pd.DataFrame, conj: pd.DataFrame, modelo: str, conjunto:
 # --------------------------------------------------------------------------
 
 def _estatisticas(theta: np.ndarray, X: np.ndarray, conj_cel: np.ndarray, esc: np.ndarray, exc: np.ndarray,
-                  com_hess: bool = True) -> dict:
+                  com_hess: bool = True, offset: np.ndarray | None = None) -> dict:
     """Log-verossimilhança, scores por grupo e informação, sem expandir o formato longo.
 
     Cada grupo escolhe `esc` entre as células do conjunto de `esc`, menos `exc` (se >= 0).
     """
     n_conj = int(conj_cel.max()) + 1
-    v = X @ theta
+    v = X @ theta if offset is None else X @ theta + offset
     vmax = np.full(n_conj, -np.inf)
     np.maximum.at(vmax, conj_cel, v)
     e = np.exp(v - vmax[conj_cel])
@@ -375,29 +455,38 @@ def _estatisticas(theta: np.ndarray, X: np.ndarray, conj_cel: np.ndarray, esc: n
     return out
 
 
-def ajustar_logit(X: np.ndarray, conj_cel: np.ndarray, esc: np.ndarray, exc: np.ndarray | None = None) -> dict:
-    """Newton–Raphson com meio-passo; a log-verossimilhança é côncava."""
+def ajustar_logit(X: np.ndarray, conj_cel: np.ndarray, esc: np.ndarray, exc: np.ndarray | None = None,
+                  offset: np.ndarray | None = None) -> dict:
+    """Newton–Raphson com meio-passo; a log-verossimilhança é côncava. `offset` entra na utilidade com
+    coeficiente fixo (usado no ajuste restrito do score bootstrap)."""
     exc = np.full(len(esc), -1) if exc is None else np.asarray(exc, dtype=int)
     theta = np.zeros(X.shape[1])
-    est = _estatisticas(theta, X, conj_cel, esc, exc)
+    est = _estatisticas(theta, X, conj_cel, esc, exc, offset=offset)
     convergiu, it = False, 0
     for it in range(1, MAX_ITER + 1):
         passo = np.linalg.solve(est["info"], est["grad"])
+        decremento = float(est["grad"] @ passo)  # decremento de Newton: invariante à escala de X
+        if decremento < TOL_DECREMENTO:
+            convergiu = True
+            break
+        # Tolerância relativa no teste de subida: abaixo dela a diferença de log-verossimilhança é arredondamento.
+        tol_ll = 1e-12 * max(1.0, abs(est["ll"]))
         t = 1.0
         while True:
-            novo = _estatisticas(theta + t * passo, X, conj_cel, esc, exc)
-            if novo["ll"] >= est["ll"] - 1e-12 or t < 1e-8:
+            novo = _estatisticas(theta + t * passo, X, conj_cel, esc, exc, offset=offset)
+            if novo["ll"] >= est["ll"] - tol_ll or t < 1e-8:
                 break
             t /= 2.0
         theta = theta + t * passo
         est = novo
-        if np.max(np.abs(t * passo)) < TOL_PASSO or (np.max(np.abs(est["grad"])) < TOL_GRAD and t == 1.0
-                                                    and np.max(np.abs(passo)) < 1e-6):
+        if np.max(np.abs(t * passo)) < TOL_PASSO:
             convergiu = True
             break
-    est = _estatisticas(theta, X, conj_cel, esc, exc)
+    est = _estatisticas(theta, X, conj_cel, esc, exc, offset=offset)
+    dec_final = float(est["grad"] @ np.linalg.solve(est["info"], est["grad"]))
     return {"theta": theta, "ll": est["ll"], "info": est["info"], "scores": est["scores"], "grad": est["grad"],
-            "iteracoes": it, "convergiu": bool(convergiu and np.max(np.abs(est["grad"])) < 1e-5)}
+            "iteracoes": it, "decremento_final": dec_final,
+            "convergiu": bool(convergiu and dec_final < 1e-8 and np.all(np.isfinite(theta)))}
 
 
 def covariancia_cluster(info_inv: np.ndarray, scores: np.ndarray, clusters: np.ndarray) -> tuple[np.ndarray, int]:
@@ -477,12 +566,14 @@ def diagnostico_colinearidade(X: pd.DataFrame, conj_cel: np.ndarray, termos_bols
 
 
 def estimar(conj: pd.DataFrame, cand: pd.DataFrame, modelo: str, conjunto: str, espec: str,
-            macros: list[str], estratos: list[str]) -> dict:
-    grau, forma = ESPECIFICACOES[espec]
+            macros: list[str], estratos: list[str], *, grau: int | None = None, forma: str | None = None,
+            nos_extras_mil: tuple[int, ...] = (), placebo_mil: int | None = None) -> dict:
+    if grau is None or forma is None:
+        grau, forma = ESPECIFICACOES[espec]
     grupos, diag = montar_grupos(cand, conj, modelo, conjunto)
     chave_conj = conj["id_conjunto_escolha"].to_numpy()
     codigos, conj_cel = np.unique(chave_conj, return_inverse=True)
-    X = matriz_atributos(conj, grau, forma, macros, estratos)
+    X = matriz_atributos(conj, grau, forma, macros, estratos, nos_extras_mil, placebo_mil)
     esc = grupos["idx_escolhida"].to_numpy()
     exc = grupos["idx_excluida"].to_numpy()
     conj_usados = np.unique(conj_cel[esc])
@@ -510,18 +601,29 @@ def estimar(conj: pd.DataFrame, cand: pd.DataFrame, modelo: str, conjunto: str, 
     if posto < Xa.shape[1]:
         base.update({"ok": False, "nota": "; ".join(notas + [f"X sem posto completo ({posto} < {Xa.shape[1]})"])})
         return base
-    fit = ajustar_logit(Xa, conj_u, esc_u, exc_u)
+    try:
+        fit = ajustar_logit(Xa, conj_u, esc_u, exc_u)
+    except (np.linalg.LinAlgError, FloatingPointError) as erro:
+        base.update({"ok": False, "nota": "; ".join(notas + [f"estimação falhou: informação singular ou denominador "
+                                                             f"degenerado ({type(erro).__name__}); provável separação "
+                                                             f"(atributo que nenhum candidato escolhe)"])})
+        return base
     if not fit["convergiu"]:
         base.update({"ok": False, "nota": "; ".join(notas + ["Newton–Raphson não convergiu"]),
                      "iteracoes": fit["iteracoes"]})
         return base
     info_inv = np.linalg.inv(fit["info"])
+    divergentes = [t for t, v in zip(Xu.columns, np.diag(info_inv)) if math.sqrt(max(v, 0.0)) > LIMITE_EP_SEPARACAO]
+    if divergentes:
+        notas.append("possível separação: EP de máxima verossimilhança explode em " + ", ".join(divergentes) +
+                     " (coef. divergente; o EP desse termo não tem sentido)")
     V_conj, G_conj = covariancia_cluster(info_inv, fit["scores"], grupos["cluster_conjunto"].to_numpy())
     V_cand, G_cand = covariancia_cluster(info_inv, fit["scores"], grupos["cluster_candidato"].to_numpy())
     base.update({"ok": True, "nota": "; ".join(notas), "theta": fit["theta"], "ll": fit["ll"],
                  "iteracoes": fit["iteracoes"], "grad_max": float(np.max(np.abs(fit["grad"]))),
                  "V_mle": info_inv, "V_conj": V_conj, "V_cand": V_cand, "G_conj": G_conj, "G_cand": G_cand,
                  "_X": Xa, "_conj": conj_u, "_esc_r1": esc_u[grupos["posto"].to_numpy() == 1],
+                 "_esc": esc_u, "_exc": exc_u, "_grupos": grupos, "_scores": fit["scores"], "_info_inv": info_inv,
                  "_s_mil_min": float(conj["s_mil"].iloc[usadas].min()),
                  "_s_mil_max": float(conj["s_mil"].iloc[usadas].max())})
     return base
@@ -533,7 +635,7 @@ def estimar(conj: pd.DataFrame, cand: pd.DataFrame, modelo: str, conjunto: str, 
 
 def linhas_estimativas(ciclo: str, r: dict) -> list[dict]:
     comuns = {"natureza_dos_dados": NATUREZA, "ciclo": ciclo, "conjunto": r["conjunto"], "modelo": r["modelo"],
-              "especificacao": r["especificacao"], "no_protocolo": True,
+              "especificacao": r["especificacao"], "no_protocolo": not r["especificacao"].startswith(TAG_ROB),
               "papel_no_protocolo": papel_no_protocolo(r["modelo"], r["conjunto"], r["especificacao"]),
               "n_candidatos": r["n_candidatos"], "n_grupos_escolha": r["n_grupos_escolha"],
               "n_conjuntos": r["n_conjuntos"], "n_alternativas": r["n_alternativas"]}
@@ -702,7 +804,8 @@ def gravar_figura(resultados: dict, mapa: dict[str, float]) -> None:
 # Tabelas de relato (fragmento Markdown copiado no doc 42 e conferido por teste)
 # --------------------------------------------------------------------------
 
-def tabelas_relato(est: pd.DataFrame, efe: pd.DataFrame, diag_ciclo: dict, coli: dict) -> str:
+def tabelas_relato(est: pd.DataFrame, efe: pd.DataFrame, diag_ciclo: dict, coli: dict,
+                   rob: pd.DataFrame | None = None) -> str:
     L = ["<!-- gerado por scripts/rdd_bolsa/16_estimar_E9_escolha.py; não editar à mão -->", ""]
     L += ["**Tabela 1. Amostra por ciclo (conjunto principal, logit condicional da 1ª opção).**", "",
           "| ciclo | candidatos | conjuntos | alternativas | alternativas por conjunto (mín.–mediana–máx.) |"
@@ -760,7 +863,419 @@ def tabelas_relato(est: pd.DataFrame, efe: pd.DataFrame, diag_ciclo: dict, coli:
         d = coli[c]
         L.append(f"| {c} | {fmt(d['bolsa_mil']['r2_contra_spline_e_controles'], 3)} | {fmt(d['bolsa_mil']['vif'], 2)} | "
                  f"{fmt(d['numero_condicao_X_centrado'], 1)} |")
+    if rob is not None:
+        L += tabelas_robustez(est, rob)
     return "\n".join(L) + "\n"
+
+
+def _rob(rob: pd.DataFrame, analise: str, ciclo: str, estatistica: str | None = None) -> pd.Series:
+    sel = rob[(rob.analise == analise) & (rob.ciclo == ciclo)]
+    if estatistica is not None:
+        sel = sel[sel.estatistica == estatistica]
+    if len(sel) != 1:
+        raise AssertionError(f"robustez: {analise} {ciclo} {estatistica}: {len(sel)} linhas")
+    return sel.iloc[0]
+
+
+def tabelas_robustez(est: pd.DataFrame, rob: pd.DataFrame) -> list[str]:
+    """Tabelas 6–10: robustez pós-auditoria (pós-resultado, fora do protocolo)."""
+    L = ["", "**Robustez pós-auditoria (tabelas 6 a 10).** Pós-resultado e fora do protocolo; linhas "
+             f"`{TAG_ROB}` com `no_protocolo = False`. Não substituem as tabelas 1 a 5.", ""]
+    principal = est[(est.modelo == MODELO_COND) & (est.conjunto == "principal") & (est.especificacao == ESPEC_PRINCIPAL)
+                    & (est.termo == "bolsa_mil")].set_index("ciclo")
+    L += ["**Tabela 6. Inferência com poucos clusters (principal: condicional, conjunto principal, spline linear, bolsa "
+          "linear).** p do score bootstrap de Kline–Santos sob H0: coef. = 0; Rademacher por enumeração completa "
+          f"quando G ≤ {G_MAX_ENUMERACAO}, senão {N_REAMOSTRAS} sorteios; Webb sempre por sorteio. CV3 com IC e p "
+          "pela t com G − 1 gl. IC por inversão do score bootstrap Rademacher.", "",
+          "| ciclo | cluster | G | coef. | EP CR1 | p CR1 | EP CV3 | p CV3 | p score (Rademacher) | p score (Webb) |"
+          " IC 95% por inversão |", "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|"]
+    for c in CICLOS:
+        for nome in (("conjunto", "curso") if c == "empilhado" else ("conjunto",)):
+            e = principal.loc[c]
+            if nome == "conjunto":
+                ep, pp, G = e.ep_cluster_conjunto, e.p, int(e.g_conjuntos)
+            else:
+                cc = rob[(rob.analise == "cluster_curso") & (rob.ciclo == c) & (rob.modelo == MODELO_COND) &
+                         (rob.conjunto == "principal") & (rob.especificacao_base == ESPEC_PRINCIPAL) &
+                         (rob.termo == "bolsa_mil")].iloc[0]
+                ep, pp, G = cc.ep, cc.p, int(cc.g)
+            cv3 = _rob(rob, f"cv3_cluster_{nome}", c)
+            rad = _rob(rob, f"score_bootstrap_rademacher_cluster_{nome}", c)
+            web = _rob(rob, f"score_bootstrap_webb_cluster_{nome}", c)
+            sel = rob[(rob.analise == f"ic_inversao_score_rademacher_cluster_{nome}") & (rob.ciclo == c)]
+            ic = f"[{fmt(sel.iloc[0].ic95_inf, 4)}; {fmt(sel.iloc[0].ic95_sup, 4)}]" if len(sel) else "—"
+            L.append(f"| {c} | {nome} | {G} | {fmt(e.coef, 4)} | {fmt(ep, 4)} | {fmt_p(pp)} | {fmt(cv3.ep, 4)} | "
+                     f"{fmt_p(cv3.p)} | {fmt_p(rad.p)} | {fmt_p(web.p)} | {ic} |")
+    L += ["", "**Tabela 7. Forma funcional e conjuntos restritos a janelas em torno dos cortes (condicional, bolsa "
+              "linear).** EP cluster por conjunto. Janela: só células com |IVS − corte| ≤ h e candidatos com a 1ª "
+              "opção nelas.", "",
+          "| ciclo | especificação | coef. | EP | IC 95% | p | candidatos | alternativas |",
+          "|---|---|---:|---:|---|---:|---:|---:|"]
+    rotulo = {"spline_cubico__bolsa_linear": "spline cúbico",
+              "nos_cada_0050__spline_linear__bolsa_linear": "spline linear, nós a cada 0,05"}
+    for h in JANELAS_MIL:
+        rotulo[f"janela_{h:04d}__spline_linear__bolsa_linear"] = f"janela ±{fmt(h / 1000, 3)}, spline linear"
+        rotulo[f"janela_{h:04d}__spline_cubico__bolsa_linear"] = f"janela ±{fmt(h / 1000, 3)}, spline cúbico"
+    for nome, rot in rotulo.items():
+        for c in CICLOS:
+            sel = est[(est.ciclo == c) & (est.especificacao == f"{TAG_ROB}:{nome}") & (est.termo == "bolsa_mil")]
+            if len(sel) != 1:
+                L.append(f"| {c} | {rot} | — | — | — | — | — | — |")
+                continue
+            e = sel.iloc[0]
+            L.append(f"| {c} | {rot} | {fmt(e.coef, 4)} | {fmt(e.ep_cluster_conjunto, 4)} | [{fmt(e.ic95_inf, 4)}; "
+                     f"{fmt(e.ic95_sup, 4)}] | {fmt_p(e.p)} | {int(e.n_candidatos)} | {int(e.n_alternativas)} |")
+    L += ["", "**Tabela 8. Cortes placebo** (degrau falso e nó no corte falso, com a bolsa verdadeira no modelo; cortes "
+              "de 0,190 a 0,510 a cada 0,010, sem 0,290–0,310 e 0,390–0,410). t com EP cluster por conjunto. "
+              "p por posto = (1 + nº de |t placebo| ≥ |t real|)/(1 + N).", "",
+          "| ciclo | N | média do t placebo | dp do t placebo | fração com |t| > 1,96 | máx. |t| placebo | t real |"
+          " nº |t placebo| ≥ |t real| | p por posto |", "|---|---:|---:|---:|---:|---:|---:|---:|---:|"]
+    for c in CICLOS:
+        g = lambda n: _rob(rob, "placebo_cortes", c, n).valor  # noqa: E731
+        L.append(f"| {c} | {int(g('n_placebos'))} | {fmt(g('t_placebo_media'), 2)} | {fmt(g('t_placebo_dp'), 2)} | "
+                 f"{fmt(g('fracao_abs_t_placebo_maior_que_1_96'), 3)} | {fmt(g('abs_t_placebo_max'), 2)} | "
+                 f"{fmt(g('t_real'), 2)} | {int(g('n_abs_t_placebo_maior_ou_igual_ao_real'))} | {fmt(g('p_posto'), 3)} |")
+    e13 = est[(est.ciclo == "1+3") & (est.termo == "bolsa_mil")].iloc[0]
+    q = _rob(rob, "heterogeneidade_ciclos", "1,2,3")
+    z = _rob(rob, "heterogeneidade_ciclos", "2 vs 3")
+    L += ["", "**Tabela 9. Heterogeneidade entre ciclos (principal).**", "",
+          "| teste | estimativa | EP | IC 95% | p |", "|---|---:|---:|---|---:|",
+          f"| ciclos 1 e 3 empilhados, coef. da bolsa (G = {int(e13.g_conjuntos)}) | {fmt(e13.coef, 4)} | "
+          f"{fmt(e13.ep_cluster_conjunto, 4)} | [{fmt(e13.ic95_inf, 4)}; {fmt(e13.ic95_sup, 4)}] | {fmt_p(e13.p)} |",
+          f"| Q de Cochran, ciclos 1, 2 e 3 ({int(q.g)} gl) | {fmt(q.valor, 2)} | — | — | {fmt_p(q.p)} |",
+          f"| z, ciclo 2 menos ciclo 3 | {fmt(z.valor, 2)} | {fmt(z.ep, 4)} | — | {fmt_p(z.p)} |"]
+    L += ["", "**Tabela 10. Empilhado: EP com cluster por conjunto (protocolo) e por curso (robustez).**", "",
+          "| modelo | conjunto | especificação | termo | coef. | EP conjunto (G) | p conjunto | EP curso (G) | p curso |",
+          "|---|---|---|---|---:|---:|---:|---:|---:|"]
+    nome_modelo = {MODELO_COND: "condicional", MODELO_EXPL: "explodido"}
+    cc = rob[(rob.analise == "cluster_curso") & (rob.ciclo == "empilhado")]
+    for x in cc.itertuples():
+        e = est[(est.ciclo == "empilhado") & (est.modelo == x.modelo) & (est.conjunto == x.conjunto) &
+                (est.especificacao == x.especificacao_base) & (est.termo == x.termo)].iloc[0]
+        L.append(f"| {nome_modelo[x.modelo]} | {x.conjunto} | {x.especificacao_base} | {x.termo} | {fmt(e.coef, 4)} | "
+                 f"{fmt(e.ep_cluster_conjunto, 4)} ({int(e.g_conjuntos)}) | {fmt_p(e.p)} | {fmt(x.ep, 4)} ({int(x.g)}) | "
+                 f"{fmt_p(x.p)} |")
+    return L
+
+
+# --------------------------------------------------------------------------
+# Robustez pós-auditoria (pós-resultado; fora do protocolo)
+# --------------------------------------------------------------------------
+
+def score_efetivo_por_cluster(X: np.ndarray, conj: np.ndarray, esc: np.ndarray, exc: np.ndarray, k: int,
+                              beta0: float, clusters: np.ndarray) -> np.ndarray:
+    """Score de Kline e Santos (2012) para H0: theta_k = beta0, somado por cluster.
+
+    Ajusta o modelo restrito (theta_k fixo em beta0, como offset), avalia scores e informação no ponto
+    restrito e projeta o score de theta_k fora dos parâmetros de incômodo: s~ = s_k − I_kη I_ηη⁻¹ s_η.
+    """
+    K = X.shape[1]
+    outros = [j for j in range(K) if j != k]
+    fit = ajustar_logit(X[:, outros], conj, esc, exc, offset=beta0 * X[:, k])
+    if not fit["convergiu"]:
+        raise FloatingPointError(f"ajuste restrito não convergiu em beta0 = {beta0}")
+    theta = np.empty(K)
+    theta[outros] = fit["theta"]
+    theta[k] = beta0
+    est = _estatisticas(theta, X, conj, esc, exc)
+    info, S = est["info"], est["scores"]
+    a = np.linalg.solve(info[np.ix_(outros, outros)], info[outros, k])
+    st = S[:, k] - S[:, outros] @ a
+    _, idx = np.unique(clusters, return_inverse=True)
+    return np.bincount(idx, weights=st)
+
+
+def p_rademacher_exato(sc: np.ndarray) -> float:
+    """p bicaudal do score bootstrap com Rademacher, enumerando os 2^G sinais (encontro no meio).
+
+    Com pesos ±1 o denominador studentizado é constante, e basta comparar |soma ponderada| com |soma|."""
+    G = len(sc)
+    alvo = abs(float(sc.sum())) * (1 - 1e-12)
+    if alvo == 0:
+        return 1.0
+
+    def somas(v: np.ndarray) -> np.ndarray:
+        out = np.zeros(1)
+        for x in v:
+            out = np.concatenate([out + x, out - x])
+        return out
+
+    h = G // 2
+    A = somas(sc[:h])
+    B = np.sort(somas(sc[h:]))
+    n_ge = len(B) - np.searchsorted(B, alvo - A, side="left")
+    n_le = np.searchsorted(B, -alvo - A, side="right")
+    return float((n_ge + n_le).sum()) / float(2 ** G)
+
+
+_PESOS_CACHE: dict[tuple[str, int], np.ndarray] = {}
+
+
+def matriz_pesos(tipo: str, G: int) -> np.ndarray:
+    """N_REAMOSTRAS sorteios fixos (semente SEMENTE_BOOT, G e tipo) de pesos Rademacher ou Webb."""
+    chave = (tipo, G)
+    if chave not in _PESOS_CACHE:
+        rng = np.random.default_rng([SEMENTE_BOOT, G, 1 if tipo == "rademacher" else 6])
+        if tipo == "rademacher":
+            W = rng.choice(np.array([-1.0, 1.0]), size=(N_REAMOSTRAS, G))
+        else:
+            W = rng.choice(PESOS_WEBB, size=(N_REAMOSTRAS, G))
+        _PESOS_CACHE[chave] = W
+    return _PESOS_CACHE[chave]
+
+
+def p_score_bootstrap(sc: np.ndarray, tipo: str) -> tuple[float, str, int]:
+    """p bicaudal studentizado; Rademacher exato se G <= G_MAX_ENUMERACAO, senão sorteios fixos."""
+    G = len(sc)
+    if tipo == "rademacher" and G <= G_MAX_ENUMERACAO:
+        return p_rademacher_exato(sc), "enumeração completa dos 2^G sinais", 2 ** G
+    W = matriz_pesos(tipo, G)
+    t_obs = abs(sc.sum()) / math.sqrt((sc ** 2).sum())
+    t_b = np.abs(W @ sc) / np.sqrt((W ** 2) @ (sc ** 2))
+    return float(np.mean(t_b >= t_obs * (1 - 1e-12))), f"{N_REAMOSTRAS} sorteios, semente {SEMENTE_BOOT}", N_REAMOSTRAS
+
+
+def ic_inversao_score(r: dict, k: int, clusters: np.ndarray, tipo: str = "rademacher",
+                      alfa: float = 0.05) -> tuple[float, float, str]:
+    """IC 95% por inversão do score bootstrap: {beta0 : p(beta0) >= alfa}, fronteiras por bissecção a partir
+    da estimativa (p = 1 no ótimo), com os mesmos pesos em todo beta0."""
+    b = float(r["theta"][k])
+    ep = math.sqrt(r["V_conj"][k, k])
+
+    def p(b0: float) -> float:
+        sc = score_efetivo_por_cluster(r["_X"], r["_conj"], r["_esc"], r["_exc"], k, b0, clusters)
+        return p_score_bootstrap(sc, tipo)[0]
+
+    lados = []
+    for sinal in (-1.0, 1.0):
+        dentro, passo = b, 2.0 * ep
+        fora = b + sinal * passo
+        n = 0
+        while p(fora) >= alfa:
+            dentro, passo = fora, 2.0 * passo
+            fora = b + sinal * passo
+            n += 1
+            if n > 12:
+                return float("nan"), float("nan"), "região de aceitação ilimitada na grade de busca"
+        for _ in range(40):
+            m = 0.5 * (dentro + fora)
+            if p(m) >= alfa:
+                dentro = m
+            else:
+                fora = m
+            if abs(fora - dentro) < 1e-6:
+                break
+        lados.append(dentro)
+    return lados[0], lados[1], "bissecção, tolerância 1e-6; supõe região de aceitação conexa"
+
+
+def ep_cv3(r: dict, k: int, clusters: np.ndarray) -> tuple[float, int, str]:
+    """CV3 (jackknife por cluster): ((G − 1)/G) Σ (b_(−g) − média)²."""
+    codigos = np.unique(clusters)
+    bs = []
+    for g in codigos:
+        m = clusters != g
+        try:
+            fit = ajustar_logit(r["_X"], r["_conj"], r["_esc"][m], r["_exc"][m])
+        except np.linalg.LinAlgError:
+            return float("nan"), len(codigos), f"informação singular sem o cluster {g}"
+        if not fit["convergiu"]:
+            return float("nan"), len(codigos), f"sem convergência sem o cluster {g}"
+        bs.append(fit["theta"][k])
+    bs = np.array(bs)
+    G = len(bs)
+    return float(math.sqrt((G - 1) / G * ((bs - bs.mean()) ** 2).sum())), G, ""
+
+
+def _linha_rob(analise: str, ciclo: str, estatistica: str, valor: float, *, modelo: str = MODELO_COND,
+               conjunto: str = "principal", especificacao_base: str = ESPEC_PRINCIPAL, termo: str = "bolsa_mil",
+               ep: float = float("nan"), ic95_inf: float = float("nan"), ic95_sup: float = float("nan"),
+               p: float = float("nan"), g: float = float("nan"), n_reamostras: float = float("nan"),
+               metodo: str = "", nota: str = "") -> dict:
+    return {"natureza_dos_dados": NATUREZA, "no_protocolo": False, "papel_no_protocolo": PAPEL_ROB,
+            "especificacao": f"{TAG_ROB}:{analise}", "analise": analise, "ciclo": ciclo, "modelo": modelo,
+            "conjunto": conjunto, "especificacao_base": especificacao_base, "termo": termo,
+            "estatistica": estatistica, "valor": valor, "ep": ep, "ic95_inf": ic95_inf, "ic95_sup": ic95_sup,
+            "p": p, "g": g, "n_reamostras": n_reamostras, "metodo": metodo, "nota": nota}
+
+
+def _ciclos_int(ciclo: str) -> list[int]:
+    return {"empilhado": [1, 2, 3], "1+3": [1, 3]}.get(ciclo, [int(ciclo)] if ciclo.isdigit() else [])
+
+
+def _rotular(r: dict, nome: str) -> dict:
+    r["especificacao"] = f"{TAG_ROB}:{nome}"
+    return r
+
+
+def robustez_pos_auditoria(conj_p: pd.DataFrame, cand: pd.DataFrame, macros: list[str], estratos: list[str],
+                           resultados: dict) -> tuple[list[dict], list[dict], dict]:
+    """Itens 1–5 da auditoria independente do E9. Devolve (linhas de estimativas, linhas de robustez, resumo)."""
+    est_rows: list[dict] = []
+    rob: list[dict] = []
+    resumo: dict[str, Any] = {}
+
+    def principal(ciclo: str) -> dict:
+        return resultados[(ciclo, MODELO_COND, "principal", ESPEC_PRINCIPAL)]
+
+    # 1. Empilhado com cluster por curso (a mesma célula CNES × curso aparece em mais de um ciclo).
+    for (ciclo, modelo, conjunto, espec), r in resultados.items():
+        if ciclo != "empilhado" or not r["ok"]:
+            continue
+        V, G = covariancia_cluster(r["_info_inv"], r["_scores"], r["_grupos"]["cluster_curso"].to_numpy())
+        for t in ("bolsa_mil", "degrau_0300", "degrau_0400"):
+            if t not in r["termos"]:
+                continue
+            k = r["termos"].index(t)
+            b, e = float(r["theta"][k]), math.sqrt(V[k, k])
+            rob.append(_linha_rob("cluster_curso", ciclo, "coef_ep_cluster_curso", b, modelo=modelo, conjunto=conjunto,
+                                  especificacao_base=espec, termo=t, ep=e, ic95_inf=b - Z95 * e, ic95_sup=b + Z95 * e,
+                                  p=float(2 * stats.norm.sf(abs(b / e))), g=G,
+                                  metodo="CR1 por curso (código do curso, mesmo rótulo nos três ciclos)",
+                                  nota=f"p pela t com G − 1 gl: {float(2 * stats.t.sf(abs(b / e), G - 1)):.6g}; "
+                                       f"EP cluster por conjunto no protocolo: {math.sqrt(r['V_conj'][k, k]):.6g}"))
+
+    # 2. Inferência com poucos clusters (especificação principal).
+    for ciclo in CICLOS:
+        r = principal(ciclo)
+        k = r["termos"].index("bolsa_mil")
+        variantes = [("conjunto", "cluster_conjunto")]
+        if ciclo == "empilhado":
+            variantes.append(("curso", "cluster_curso"))
+        for nome, col in variantes:
+            cl = r["_grupos"][col].to_numpy()
+            sc = score_efetivo_por_cluster(r["_X"], r["_conj"], r["_esc"], r["_exc"], k, 0.0, cl)
+            G = len(sc)
+            t_score = float(sc.sum() / math.sqrt((sc ** 2).sum()))
+            for tipo in ("rademacher", "webb"):
+                pb, metodo, n = p_score_bootstrap(sc, tipo)
+                rob.append(_linha_rob(f"score_bootstrap_{tipo}_cluster_{nome}", ciclo, "p_H0_beta_igual_0", pb,
+                                      p=pb, g=G, n_reamostras=n,
+                                      metodo=f"Kline–Santos, pesos {tipo}, studentizado; {metodo}",
+                                      nota=f"estatística de score observada (t) = {t_score:.6g}"))
+            e3, G3, nota3 = ep_cv3(r, k, cl)
+            b = float(r["theta"][k])
+            ok3 = nota3 == ""
+            rob.append(_linha_rob(f"cv3_cluster_{nome}", ciclo, "coef_ep_cv3", b, ep=e3, g=G3,
+                                  ic95_inf=b - stats.t.ppf(0.975, G3 - 1) * e3 if ok3 else float("nan"),
+                                  ic95_sup=b + stats.t.ppf(0.975, G3 - 1) * e3 if ok3 else float("nan"),
+                                  p=float(2 * stats.t.sf(abs(b / e3), G3 - 1)) if ok3 else float("nan"),
+                                  metodo="jackknife por cluster (CV3); IC e p pela t com G − 1 gl",
+                                  nota=nota3 or f"p pela normal: {float(2 * stats.norm.sf(abs(b / e3))):.6g}"))
+            if ciclo in ("2", "empilhado"):
+                lo, hi, nota_ic = ic_inversao_score(r, k, cl, "rademacher")
+                rob.append(_linha_rob(f"ic_inversao_score_rademacher_cluster_{nome}", ciclo, "coef_ic95_inversao", b,
+                                      ic95_inf=lo, ic95_sup=hi, g=G,
+                                      n_reamostras=2 ** G if G <= G_MAX_ENUMERACAO else N_REAMOSTRAS,
+                                      metodo="inversão do score bootstrap Rademacher (mesmos pesos em todo beta0)",
+                                      nota=nota_ic))
+
+    # 3. Forma funcional: segmentos cúbicos, nós a cada 0,05, conjuntos restritos a janelas em torno dos cortes.
+    variantes_ff = [("spline_cubico__bolsa_linear", 3, (), None),
+                    ("nos_cada_0050__spline_linear__bolsa_linear", 1, NOS_EXTRAS_MIL, None)]
+    for h in JANELAS_MIL:
+        variantes_ff += [(f"janela_{h:04d}__spline_linear__bolsa_linear", 1, (), h),
+                         (f"janela_{h:04d}__spline_cubico__bolsa_linear", 3, (), h)]
+    contagem_janelas: dict[str, dict] = {}
+    for ciclo in CICLOS:
+        conj_c = conj_p[conj_p["ciclo"].isin(_ciclos_int(ciclo))].reset_index(drop=True)
+        cand_c = cand[cand["ciclo"].isin(_ciclos_int(ciclo))]
+        for nome, grau, nos, h in variantes_ff:
+            if h is None:
+                cj, cd, nota_j = conj_c, cand_c, ""
+                if nos:
+                    ultimo = max(nos)
+                    r1 = cand_c[cand_c["opcao_rank"] == 1].merge(conj_c[["ciclo", "co_cnes_7d", "cod_curso", "s_mil"]],
+                                                                 on=["ciclo", "co_cnes_7d", "cod_curso"], how="left")
+                    nota_j = (f"acima do último nó ({ultimo / 1000:.3f}): {int((conj_c['s_mil'] > ultimo).sum())} células, "
+                              f"{int((r1['s_mil'] > ultimo).sum())} escolhidas como 1a opção")
+            else:
+                dentro = np.zeros(len(conj_c), dtype=bool)
+                for c in CORTES_MIL:
+                    dentro |= (conj_c["s_mil"] - c).abs().to_numpy() <= h
+                cj = conj_c[dentro].reset_index(drop=True)
+                chaves = set(zip(cj["ciclo"], cj["co_cnes_7d"], cj["cod_curso"]))
+                r1 = cand_c[cand_c["opcao_rank"] == 1]
+                no_jan = np.array([(a, b_, c_) in chaves
+                                   for a, b_, c_ in zip(r1["ciclo"], r1["co_cnes_7d"], r1["cod_curso"])], dtype=bool)
+                cd = r1[no_jan]
+                nota_j = (f"janela |IVS − corte| <= {h / 1000:.3f}: {int(dentro.sum())} de {len(conj_c)} células; "
+                          f"{int(no_jan.sum())} de {len(r1)} candidatos com a 1a opção na janela")
+                contagem_janelas[f"{ciclo}|{nome}"] = {"celulas": int(dentro.sum()), "candidatos": int(no_jan.sum())}
+            r = estimar(cj, cd, MODELO_COND, "principal", nome, macros, estratos, grau=grau, forma="linear",
+                        nos_extras_mil=nos)
+            r = _rotular(r, nome)
+            vif = r["colinearidade"].get("bolsa_mil", {}).get("vif", float("nan"))
+            nota_j = "; ".join(x for x in (nota_j, f"VIF da bolsa contra spline e controles = {vif:.4g}") if x)
+            r["nota"] = "; ".join(x for x in (r["nota"], nota_j) if x)
+            est_rows += linhas_estimativas(ciclo, r)
+    resumo["janelas"] = contagem_janelas
+
+    # 4. Cortes placebo: degrau falso + nó no corte falso, com a bolsa verdadeira no modelo.
+    placebo_resumo = {}
+    for ciclo in CICLOS:
+        conj_c = conj_p[conj_p["ciclo"].isin(_ciclos_int(ciclo))].reset_index(drop=True)
+        cand_c = cand[cand["ciclo"].isin(_ciclos_int(ciclo))]
+        ts = []
+        for c in PLACEBOS_MIL:
+            nome = f"placebo_{c:04d}__spline_linear__bolsa_linear"
+            r = _rotular(estimar(conj_c, cand_c, MODELO_COND, "principal", nome, macros, estratos, grau=1,
+                                 forma="linear", placebo_mil=c), nome)
+            linhas = [x for x in linhas_estimativas(ciclo, r) if x["termo"] in ("degrau_placebo", "bolsa_mil")]
+            est_rows += linhas
+            lp = [x for x in linhas if x["termo"] == "degrau_placebo"]
+            if lp and np.isfinite(lp[0]["coef"]):
+                ts.append(lp[0]["coef"] / lp[0]["ep_cluster_conjunto"])
+        rp = principal(ciclo)
+        kb = rp["termos"].index("bolsa_mil")
+        t_real = float(rp["theta"][kb] / math.sqrt(rp["V_conj"][kb, kb]))
+        ts = np.array(ts)
+        n_maior = int((np.abs(ts) >= abs(t_real)).sum())
+        p_posto = (1 + n_maior) / (1 + len(ts))
+        placebo_resumo[ciclo] = {"n_placebos": int(len(ts)), "t_real": t_real, "t_placebo_media": float(ts.mean()),
+                                 "t_placebo_dp": float(ts.std(ddof=1)),
+                                 "fracao_abs_t_placebo_maior_que_1_96": float(np.mean(np.abs(ts) > Z95)),
+                                 "n_abs_t_placebo_maior_ou_igual_ao_real": n_maior, "p_posto": p_posto,
+                                 "abs_t_placebo_max": float(np.abs(ts).max())}
+        for est_nome, v in placebo_resumo[ciclo].items():
+            rob.append(_linha_rob("placebo_cortes", ciclo, est_nome, v,
+                                  p=p_posto if est_nome == "p_posto" else float("nan"),
+                                  metodo=("cortes falsos de 0,190 a 0,510 a cada 0,010, sem 0,290–0,310 e 0,390–0,410; "
+                                          "t do degrau falso com EP cluster por conjunto; t real = t da bolsa no "
+                                          "principal; p por posto = (1 + #|t_placebo| >= |t_real|)/(1 + N)")))
+    resumo["placebos_mil"] = list(PLACEBOS_MIL)
+
+    # 5. Heterogeneidade entre ciclos.
+    nome13 = "ciclos_1_e_3_empilhados__spline_linear__bolsa_linear"
+    conj_13 = conj_p[conj_p["ciclo"].isin([1, 3])].reset_index(drop=True)
+    r13 = _rotular(estimar(conj_13, cand[cand["ciclo"].isin([1, 3])], MODELO_COND, "principal", nome13, macros,
+                           estratos, grau=1, forma="linear"), nome13)
+    est_rows += linhas_estimativas("1+3", r13)
+    bs, es = [], []
+    for ciclo in ("1", "2", "3"):
+        r = principal(ciclo)
+        k = r["termos"].index("bolsa_mil")
+        bs.append(float(r["theta"][k]))
+        es.append(math.sqrt(r["V_conj"][k, k]))
+    bs, es = np.array(bs), np.array(es)
+    w = 1 / es ** 2
+    bbar = float((w * bs).sum() / w.sum())
+    Q = float((w * (bs - bbar) ** 2).sum())
+    gl = len(bs) - 1
+    pQ = float(stats.chi2.sf(Q, gl))
+    I2 = max(0.0, (Q - gl) / Q) if Q > 0 else 0.0
+    rob.append(_linha_rob("heterogeneidade_ciclos", "1,2,3", "cochran_Q", Q, p=pQ, g=gl,
+                          metodo="Q de Cochran com pesos 1/EP² (EP cluster por conjunto); g = graus de liberdade",
+                          nota=f"média ponderada = {bbar:.6g}; I² = {I2:.6g}"))
+    z = float((bs[1] - bs[2]) / math.sqrt(es[1] ** 2 + es[2] ** 2))
+    rob.append(_linha_rob("heterogeneidade_ciclos", "2 vs 3", "z_ciclo2_menos_ciclo3", z,
+                          ep=float(math.sqrt(es[1] ** 2 + es[2] ** 2)), p=float(2 * stats.norm.sf(abs(z))),
+                          metodo="z = (b2 − b3)/sqrt(EP2² + EP3²), EP cluster por conjunto; trata os ciclos como "
+                                 "amostras independentes (candidatos distintos; células podem se repetir)",
+                          nota=f"b2 − b3 = {bs[1] - bs[2]:.6g}"))
+    resumo["placebo"] = placebo_resumo
+    resumo["cochran_Q"] = {"Q": Q, "gl": gl, "p": pQ, "I2": I2}
+    return est_rows, rob, resumo
 
 
 # --------------------------------------------------------------------------
@@ -806,6 +1321,10 @@ def main() -> int:
         raise AssertionError("conjunto de sensibilidade com célula sem vaga imediata")
     macros = sorted(conj_p["macrorregiao"].unique())
     estratos = sorted(conj_p["estrato_territorial"].unique())
+    cursos = rotulos_cursos()
+    faltam = sorted(set(map(str, conj_p["cod_curso"].unique())) - set(cursos["codigos"]))
+    if faltam:
+        raise AssertionError(f"códigos de curso do conjunto sem rótulo nos quadros: {faltam}")
     # Escolha de célula retirada (sem IVS) faz parar: não se descarta escolha observada em silêncio.
     for d in diag_p["alternativas_retiradas_sem_ivs"]:
         hit = cand[(cand.ciclo == d["ciclo"]) & (cand.co_cnes_7d == d["co_cnes_7d"]) & (cand.cod_curso == d["cod_curso"])]
@@ -831,6 +1350,15 @@ def main() -> int:
                 print(f"ciclo {ciclo:9s} {modelo:28s} {conjunto:13s} {espec:38s} ok={r['ok']} "
                       f"it={r.get('iteracoes')} n={r['n_candidatos']}", flush=True)
 
+    # Robustez pós-auditoria (pós-resultado, fora do protocolo): linhas próprias, rotuladas.
+    est_rob, rob_linhas, resumo_rob = robustez_pos_auditoria(conj_p, cand, macros, estratos, resultados)
+    est_linhas += est_rob
+    rob = pd.DataFrame(rob_linhas)
+    sem = rob[rob[["valor"]].isna().any(axis=1) & (rob["nota"].fillna("") == "")]
+    if len(sem):
+        raise AssertionError(f"robustez: {len(sem)} linhas com NaN sem nota")
+    print(f"robustez pós-auditoria: {len(est_rob)} linhas de estimativas, {len(rob)} linhas de inferência/resumo")
+
     est = pd.DataFrame(est_linhas)
     efe = pd.DataFrame(efe_linhas)
     # Nenhum NaN sem nota.
@@ -848,6 +1376,7 @@ def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     est.to_csv(OUT_ESTIMATIVAS, index=False, float_format="%.10g")
     efe.to_csv(OUT_EFEITOS, index=False, float_format="%.10g")
+    rob.to_csv(OUT_ROBUSTEZ, index=False, float_format="%.10g")
 
     # Diagnósticos por ciclo (principal).
     diag_ciclo, coli, convergencia = {}, {}, {}
@@ -871,11 +1400,15 @@ def main() -> int:
     # Continuidade do spline por construção: salto de nível nos nós é zero.
     eps = 1e-9
     continuidade = {}
-    for grau in (1, 2):
+    for grau in (1, 2, 3):
         for c in CORTES_MIL:
             esq = base_spline(np.array([c - eps]), grau).to_numpy()[0]
             dir_ = base_spline(np.array([c + eps]), grau).to_numpy()[0]
             continuidade[f"grau{grau}_no_{c}"] = float(np.max(np.abs(dir_ - esq)))
+    for c in NOS_EXTRAS_MIL:
+        esq = base_spline(np.array([c - eps]), 1, NOS_EXTRAS_MIL).to_numpy()[0]
+        dir_ = base_spline(np.array([c + eps]), 1, NOS_EXTRAS_MIL).to_numpy()[0]
+        continuidade[f"nos_extras_no_{c}"] = float(np.max(np.abs(dir_ - esq)))
     if max(continuidade.values()) > 1e-6:
         raise AssertionError(f"spline com salto de nível: {continuidade}")
 
@@ -892,7 +1425,7 @@ def main() -> int:
         raise AssertionError("bolsa não se recompõe pelos degraus")
 
     gravar_figura(resultados, mapa)
-    tabelas = tabelas_relato(est, efe, diag_ciclo, coli)
+    tabelas = tabelas_relato(est, efe, diag_ciclo, coli, rob)
     OUT_TABELAS.write_text(tabelas, encoding="utf-8")
 
     entradas = [
@@ -920,7 +1453,12 @@ def main() -> int:
         bloco_entrada(GRADE_2025, "grade 2025 da FAQ do edital 3/2025 (conferência do mapa faixa → bolsa)",
                       "FAQ do Chamamento SGTES/MS 3/2025", "3 faixas", "faixa", "faixa_atracao",
                       "valor_anunciado_mensal_brl"),
-    ]
+        bloco_entrada(MANIFESTO_A11, "manifesto da aquisição do resultado da 1a chamada do ciclo 2 (condição do §12 "
+                      "para o ciclo 2: fonte oficial)", "captura de 2026-10-18", "1 publicação", "documento", "-", "-"),
+    ] + [bloco_entrada(caminho, f"quadro da 1a chamada do ciclo {k}: só a coluna CURSO, para conferir que o código do "
+                       "curso tem o mesmo rótulo nos três ciclos (cluster por curso, robustez pós-auditoria)",
+                       f"quadro da 1a chamada do ciclo {k}", "todas as linhas", "linha do quadro", "CURSO",
+                       "coluna CURSO") for k, caminho in QUADROS_1A_CHAMADA.items()]
     prot = json.loads(PROTOCOLO_JSON.read_text(encoding="utf-8"))
     principal = {}
     for ciclo in CICLOS:
@@ -1001,9 +1539,39 @@ def main() -> int:
             {"data": "2026-10-18", "item": "p pela t com G − 1 gl",
              "situacao": "não previsto no §15",
              "resolucao": "relatado ao lado do p normal por causa do número pequeno de conjuntos; não substitui o principal"},
+            {"data": "2026-10-19", "item": "robustez pós-auditoria",
+             "situacao": "a auditoria independente do E9 (commit 9646b57) reproduziu os números e pediu, depois de ver "
+                         "os resultados, cluster por curso, score bootstrap, CV3, IC por inversão, forma funcional, "
+                         "janelas, cortes placebo e heterogeneidade entre ciclos",
+             "resolucao": f"estimado e gravado em linhas '{TAG_ROB}' com no_protocolo = False; não substitui o protocolo"},
+            {"data": "2026-10-19", "item": "critério de parada do Newton–Raphson",
+             "situacao": "o critério de gradiente absoluto declarava não convergência por arredondamento em dois "
+                         "placebos do empilhado",
+             "resolucao": "parada pelo decremento de Newton e teste de subida com tolerância relativa; as estimativas "
+                          "do protocolo não mudam além do arredondamento da gravação"},
+            {"data": "2026-10-19", "item": "spline com nós a cada 0,05, ciclo 3",
+             "situacao": "nenhuma célula acima do último nó (0,700) foi escolhida como 1a opção",
+             "resolucao": "o termo desse trecho diverge (separação); a linha é relatada com nota, sem retirar o nó"},
         ],
         "entradas": entradas,
-        "saidas": {rel(p): sha256_arquivo(p) for p in (OUT_ESTIMATIVAS, OUT_EFEITOS, OUT_TABELAS, OUT_FIGURA)},
+        "saidas": {rel(p): sha256_arquivo(p) for p in (OUT_ESTIMATIVAS, OUT_EFEITOS, OUT_ROBUSTEZ, OUT_TABELAS,
+                                                         OUT_FIGURA)},
+        "robustez_pos_auditoria": {
+            "estado": PAPEL_ROB,
+            "rotulo": f"linhas com especificacao começando por '{TAG_ROB}' e no_protocolo = False, em "
+                      f"{rel(OUT_ESTIMATIVAS)} (modelos) e {rel(OUT_ROBUSTEZ)} (inferência e resumos)",
+            "itens": ["1: empilhado com cluster por curso", "2: score bootstrap de Kline–Santos (Rademacher, Webb), "
+                      "CV3 e IC por inversão", "3: segmentos cúbicos, nós a cada 0,05 e janelas de ±0,10, ±0,05 e "
+                      "±0,025 em torno dos cortes", "4: cortes placebo", "5: ciclos 1 e 3 empilhados, Q de Cochran, "
+                      "z do ciclo 2 contra o 3"],
+            "semente": SEMENTE_BOOT, "reamostras_quando_nao_enumera": N_REAMOSTRAS,
+            "g_max_enumeracao_rademacher": G_MAX_ENUMERACAO,
+            "rotulos_cursos": cursos, **resumo_rob},
+        "condicao_s12_ciclo2": {"condicao": "§12: ciclo 2 entra se a 1a chamada for obtida de fonte oficial",
+                                "cumprida": True,
+                                "evidencia": [f["url"] for f in json.loads(MANIFESTO_A11.read_text(encoding="utf-8"))["fontes"]
+                                              if f.get("caminho") == "data/raw/pmm_e/resultado-final-pmme-2o-ciclo-25-05.xlsx"],
+                                "manifesto": rel(MANIFESTO_A11)},
         "linguagem": ("resultado do E9 é secundário e exploratório (§12); o coeficiente é efeito da bolsa anunciada "
                       "sobre a escolha condicional a candidatar-se, identificado pelos degraus da regra"),
     }

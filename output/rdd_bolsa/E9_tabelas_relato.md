@@ -84,3 +84,92 @@
 | 2 | 0,868 | 7,56 | 37,0 |
 | 3 | 0,859 | 7,09 | 37,7 |
 | empilhado | 0,860 | 7,15 | 36,4 |
+
+**Robustez pós-auditoria (tabelas 6 a 10).** Pós-resultado e fora do protocolo; linhas `ROBUSTEZ_POS_AUDITORIA` com `no_protocolo = False`. Não substituem as tabelas 1 a 5.
+
+**Tabela 6. Inferência com poucos clusters (principal: condicional, conjunto principal, spline linear, bolsa linear).** p do score bootstrap de Kline–Santos sob H0: coef. = 0; Rademacher por enumeração completa quando G ≤ 24, senão 199999 sorteios; Webb sempre por sorteio. CV3 com IC e p pela t com G − 1 gl. IC por inversão do score bootstrap Rademacher.
+
+| ciclo | cluster | G | coef. | EP CR1 | p CR1 | EP CV3 | p CV3 | p score (Rademacher) | p score (Webb) | IC 95% por inversão |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| 1 | conjunto | 16 | 0,0653 | 0,0440 | 0,137 | 0,0466 | 0,181 | 0,195 | 0,197 | — |
+| 2 | conjunto | 16 | 0,1331 | 0,0282 | < 0,001 | 0,0327 | < 0,001 | < 0,001 | 0,002 | [0,0682; 0,1882] |
+| 3 | conjunto | 24 | 0,0097 | 0,0318 | 0,761 | 0,0385 | 0,804 | 0,825 | 0,826 | — |
+| empilhado | conjunto | 56 | 0,0662 | 0,0222 | 0,003 | 0,0236 | 0,007 | 0,010 | 0,010 | [0,0159; 0,1064] |
+| empilhado | curso | 24 | 0,0662 | 0,0256 | 0,010 | 0,0300 | 0,037 | 0,042 | 0,047 | [0,0023; 0,1089] |
+
+**Tabela 7. Forma funcional e conjuntos restritos a janelas em torno dos cortes (condicional, bolsa linear).** EP cluster por conjunto. Janela: só células com |IVS − corte| ≤ h e candidatos com a 1ª opção nelas.
+
+| ciclo | especificação | coef. | EP | IC 95% | p | candidatos | alternativas |
+|---|---|---:|---:|---|---:|---:|---:|
+| 1 | spline cúbico | 0,0462 | 0,0340 | [−0,0204; 0,1129] | 0,174 | 993 | 1295 |
+| 2 | spline cúbico | 0,0642 | 0,0371 | [−0,0084; 0,1369] | 0,083 | 2140 | 1547 |
+| 3 | spline cúbico | −0,0175 | 0,0537 | [−0,1229; 0,0878] | 0,744 | 2581 | 2292 |
+| empilhado | spline cúbico | 0,0326 | 0,0266 | [−0,0194; 0,0847] | 0,220 | 5714 | 5134 |
+| 1 | spline linear, nós a cada 0,05 | 0,0629 | 0,0425 | [−0,0203; 0,1462] | 0,138 | 993 | 1295 |
+| 2 | spline linear, nós a cada 0,05 | 0,1071 | 0,0184 | [0,0711; 0,1431] | < 0,001 | 2140 | 1547 |
+| 3 | spline linear, nós a cada 0,05 | 0,0475 | 0,0363 | [−0,0237; 0,1186] | 0,191 | 2581 | 2292 |
+| empilhado | spline linear, nós a cada 0,05 | 0,0691 | 0,0178 | [0,0341; 0,1041] | < 0,001 | 5714 | 5134 |
+| 1 | janela ±0,100, spline linear | 0,0834 | 0,0460 | [−0,0068; 0,1736] | 0,070 | 894 | 1125 |
+| 2 | janela ±0,100, spline linear | 0,1265 | 0,0231 | [0,0812; 0,1718] | < 0,001 | 1986 | 1321 |
+| 3 | janela ±0,100, spline linear | 0,0235 | 0,0380 | [−0,0509; 0,0979] | 0,536 | 2443 | 1964 |
+| empilhado | janela ±0,100, spline linear | 0,0716 | 0,0207 | [0,0310; 0,1123] | < 0,001 | 5323 | 4410 |
+| 1 | janela ±0,100, spline cúbico | 0,0009 | 0,0420 | [−0,0814; 0,0832] | 0,983 | 894 | 1125 |
+| 2 | janela ±0,100, spline cúbico | 0,0567 | 0,0639 | [−0,0685; 0,1819] | 0,375 | 1986 | 1321 |
+| 3 | janela ±0,100, spline cúbico | −0,0438 | 0,0462 | [−0,1344; 0,0469] | 0,344 | 2443 | 1964 |
+| empilhado | janela ±0,100, spline cúbico | 0,0105 | 0,0307 | [−0,0497; 0,0708] | 0,732 | 5323 | 4410 |
+| 1 | janela ±0,050, spline linear | 0,0515 | 0,0483 | [−0,0432; 0,1461] | 0,286 | 736 | 892 |
+| 2 | janela ±0,050, spline linear | 0,0946 | 0,0282 | [0,0393; 0,1499] | < 0,001 | 1722 | 983 |
+| 3 | janela ±0,050, spline linear | 0,0045 | 0,0343 | [−0,0627; 0,0717] | 0,895 | 2095 | 1508 |
+| empilhado | janela ±0,050, spline linear | 0,0404 | 0,0186 | [0,0040; 0,0768] | 0,030 | 4553 | 3383 |
+| 1 | janela ±0,050, spline cúbico | −0,0089 | 0,1219 | [−0,2477; 0,2299] | 0,942 | 736 | 892 |
+| 2 | janela ±0,050, spline cúbico | 0,0943 | 0,0984 | [−0,0986; 0,2872] | 0,338 | 1722 | 983 |
+| 3 | janela ±0,050, spline cúbico | −0,0180 | 0,0618 | [−0,1390; 0,1031] | 0,771 | 2095 | 1508 |
+| empilhado | janela ±0,050, spline cúbico | 0,0370 | 0,0514 | [−0,0637; 0,1378] | 0,471 | 4553 | 3383 |
+| 1 | janela ±0,025, spline linear | 0,0439 | 0,0649 | [−0,0832; 0,1710] | 0,498 | 379 | 448 |
+| 2 | janela ±0,025, spline linear | 0,1325 | 0,0612 | [0,0127; 0,2524] | 0,030 | 982 | 539 |
+| 3 | janela ±0,025, spline linear | 0,0149 | 0,0284 | [−0,0408; 0,0705] | 0,601 | 1341 | 861 |
+| empilhado | janela ±0,025, spline linear | 0,0533 | 0,0304 | [−0,0062; 0,1128] | 0,079 | 2702 | 1848 |
+| 1 | janela ±0,025, spline cúbico | 0,3862 | 0,0787 | [0,2319; 0,5405] | < 0,001 | 379 | 448 |
+| 2 | janela ±0,025, spline cúbico | 0,1269 | 0,0603 | [0,0086; 0,2452] | 0,035 | 982 | 539 |
+| 3 | janela ±0,025, spline cúbico | 0,0715 | 0,1066 | [−0,1374; 0,2805] | 0,502 | 1341 | 861 |
+| empilhado | janela ±0,025, spline cúbico | 0,1653 | 0,0515 | [0,0644; 0,2663] | 0,001 | 2702 | 1848 |
+
+**Tabela 8. Cortes placebo** (degrau falso e nó no corte falso, com a bolsa verdadeira no modelo; cortes de 0,190 a 0,510 a cada 0,010, sem 0,290–0,310 e 0,390–0,410). t com EP cluster por conjunto. p por posto = (1 + nº de |t placebo| ≥ |t real|)/(1 + N).
+
+| ciclo | N | média do t placebo | dp do t placebo | fração com |t| > 1,96 | máx. |t| placebo | t real | nº |t placebo| ≥ |t real| | p por posto |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 27 | −0,38 | 1,44 | 0,185 | 3,18 | 1,49 | 9 | 0,357 |
+| 2 | 27 | −0,30 | 1,52 | 0,148 | 3,68 | 4,71 | 0 | 0,036 |
+| 3 | 27 | −0,23 | 1,86 | 0,296 | 4,05 | 0,30 | 23 | 0,857 |
+| empilhado | 27 | −0,50 | 1,41 | 0,148 | 3,65 | 2,98 | 2 | 0,107 |
+
+**Tabela 9. Heterogeneidade entre ciclos (principal).**
+
+| teste | estimativa | EP | IC 95% | p |
+|---|---:|---:|---|---:|
+| ciclos 1 e 3 empilhados, coef. da bolsa (G = 40) | 0,0266 | 0,0240 | [−0,0204; 0,0735] | 0,267 |
+| Q de Cochran, ciclos 1, 2 e 3 (2 gl) | 8,50 | — | — | 0,014 |
+| z, ciclo 2 menos ciclo 3 | 2,90 | 0,0425 | — | 0,004 |
+
+**Tabela 10. Empilhado: EP com cluster por conjunto (protocolo) e por curso (robustez).**
+
+| modelo | conjunto | especificação | termo | coef. | EP conjunto (G) | p conjunto | EP curso (G) | p curso |
+|---|---|---|---|---:|---:|---:|---:|---:|
+| condicional | principal | spline_linear__bolsa_linear | bolsa_mil | 0,0662 | 0,0222 (56) | 0,003 | 0,0256 (24) | 0,010 |
+| condicional | principal | spline_quadratico__bolsa_linear | bolsa_mil | 0,0868 | 0,0192 (56) | < 0,001 | 0,0269 (24) | 0,001 |
+| condicional | principal | spline_linear__degraus_por_corte | degrau_0300 | 0,1149 | 0,1269 (56) | 0,365 | 0,1114 (24) | 0,302 |
+| condicional | principal | spline_linear__degraus_por_corte | degrau_0400 | 0,6207 | 0,1386 (56) | < 0,001 | 0,1887 (24) | 0,001 |
+| condicional | principal | spline_quadratico__degraus_por_corte | degrau_0300 | 0,4360 | 0,1344 (56) | 0,001 | 0,1524 (24) | 0,004 |
+| condicional | principal | spline_quadratico__degraus_por_corte | degrau_0400 | 0,4320 | 0,1296 (56) | < 0,001 | 0,1505 (24) | 0,004 |
+| condicional | sensibilidade | spline_linear__bolsa_linear | bolsa_mil | 0,1101 | 0,0229 (55) | < 0,001 | 0,0247 (24) | < 0,001 |
+| condicional | sensibilidade | spline_quadratico__bolsa_linear | bolsa_mil | 0,1302 | 0,0175 (55) | < 0,001 | 0,0225 (24) | < 0,001 |
+| condicional | sensibilidade | spline_linear__degraus_por_corte | degrau_0300 | 0,3585 | 0,1250 (55) | 0,004 | 0,1047 (24) | < 0,001 |
+| condicional | sensibilidade | spline_linear__degraus_por_corte | degrau_0400 | 0,7688 | 0,1562 (55) | < 0,001 | 0,1975 (24) | < 0,001 |
+| condicional | sensibilidade | spline_quadratico__degraus_por_corte | degrau_0300 | 0,7164 | 0,1569 (55) | < 0,001 | 0,1252 (24) | < 0,001 |
+| condicional | sensibilidade | spline_quadratico__degraus_por_corte | degrau_0400 | 0,6036 | 0,1391 (55) | < 0,001 | 0,1724 (24) | < 0,001 |
+| explodido | principal | spline_linear__bolsa_linear | bolsa_mil | 0,0561 | 0,0231 (56) | 0,015 | 0,0258 (24) | 0,030 |
+| explodido | principal | spline_quadratico__bolsa_linear | bolsa_mil | 0,0712 | 0,0207 (56) | < 0,001 | 0,0278 (24) | 0,010 |
+| explodido | principal | spline_linear__degraus_por_corte | degrau_0300 | 0,0627 | 0,1307 (56) | 0,631 | 0,1075 (24) | 0,560 |
+| explodido | principal | spline_linear__degraus_por_corte | degrau_0400 | 0,5652 | 0,1458 (56) | < 0,001 | 0,2057 (24) | 0,006 |
+| explodido | principal | spline_quadratico__degraus_por_corte | degrau_0300 | 0,3179 | 0,1271 (56) | 0,012 | 0,1394 (24) | 0,023 |
+| explodido | principal | spline_quadratico__degraus_por_corte | degrau_0400 | 0,3872 | 0,1443 (56) | 0,007 | 0,1917 (24) | 0,043 |

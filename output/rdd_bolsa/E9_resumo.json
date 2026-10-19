@@ -33,7 +33,19 @@
       "grau1_no_300": 1.999978849198669e-11,
       "grau1_no_400": 1.9999668587900032e-11,
       "grau2_no_300": 1.999978849198669e-11,
-      "grau2_no_400": 3.9999337175800065e-11
+      "grau2_no_400": 3.9999337175800065e-11,
+      "grau3_no_300": 1.999978849198669e-11,
+      "grau3_no_400": 5.99990057637001e-11,
+      "nos_extras_no_150": 1.9999779610202495e-11,
+      "nos_extras_no_200": 1.9999779610202495e-11,
+      "nos_extras_no_250": 1.9999779610202495e-11,
+      "nos_extras_no_350": 2.000000165480742e-11,
+      "nos_extras_no_450": 2.000000165480742e-11,
+      "nos_extras_no_500": 2.000000165480742e-11,
+      "nos_extras_no_550": 2.000000165480742e-11,
+      "nos_extras_no_600": 2.000000165480742e-11,
+      "nos_extras_no_650": 2.000000165480742e-11,
+      "nos_extras_no_700": 2.000088983322712e-11
     },
     "bolsa_contra_faixa": {
       "bolsa_igual_faixa3_mais_5_d300_mais_5_d400": true,
@@ -72,7 +84,16 @@
         "FAIXA 3": 10.0
       }
     },
-    "conferencia": "as grades de 2025 e 2026 (a03) e a grade de 2025 da FAQ (a04) dão o mesmo valor por faixa"
+    "conferencia": "as grades de 2025 e 2026 (a03) e a grade de 2025 da FAQ (a04) dão o mesmo valor por faixa",
+    "rotulo_do_valor_por_grade": {
+      "grade_2025_edital_3_2025": [
+        "bolsa_mensal_anunciada"
+      ],
+      "grade_2026_edital_1_2026_e_edital_28_2026": [
+        "bolsa_mensal_liquida_anunciada"
+      ]
+    },
+    "nota_bruto_liquido": "o valor de 2025 vem rotulado como 'anunciado' (sem 'líquido'; a FAQ e o edital 3/2025 não dizem líquido) e o de 2026 como 'líquido anunciado'; a auditoria 01 (§6.1) registra que a retificação do edital 3/2025 esclareceu que os valores eram líquidos. Os números por faixa são iguais; a diferença de rótulo fica registrada e não muda a codificação"
   },
   "categorias_de_base": {
     "macrorregiao": "SUDESTE",
@@ -325,7 +346,7 @@
     "1|logit_condicional_1a_opcao|principal|spline_linear__bolsa_linear": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 7.354117315117037e-13,
+      "grad_max": 1.766628621169275e-07,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 0
@@ -334,7 +355,7 @@
     "1|logit_condicional_1a_opcao|principal|spline_quadratico__bolsa_linear": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 2.7178259642823832e-12,
+      "grad_max": 1.675914895749031e-07,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 0
@@ -343,7 +364,7 @@
     "1|logit_condicional_1a_opcao|principal|spline_linear__degraus_por_corte": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 4.600764214046649e-13,
+      "grad_max": 5.701547789449535e-08,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 0
@@ -352,7 +373,7 @@
     "1|logit_condicional_1a_opcao|principal|spline_quadratico__degraus_por_corte": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 2.0317081350640365e-13,
+      "grad_max": 1.1300736302288783e-07,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 0
@@ -360,7 +381,7 @@
     },
     "1|logit_condicional_1a_opcao|sensibilidade|spline_linear__bolsa_linear": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 3.2152058793144533e-13,
       "omitidas": [
         "tem_vaga_imediata"
@@ -372,7 +393,7 @@
     },
     "1|logit_condicional_1a_opcao|sensibilidade|spline_quadratico__bolsa_linear": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 1.5170087408478139e-12,
       "omitidas": [
         "tem_vaga_imediata"
@@ -384,7 +405,7 @@
     },
     "1|logit_condicional_1a_opcao|sensibilidade|spline_linear__degraus_por_corte": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 2.5224267119483557e-13,
       "omitidas": [
         "tem_vaga_imediata"
@@ -396,7 +417,7 @@
     },
     "1|logit_condicional_1a_opcao|sensibilidade|spline_quadratico__degraus_por_corte": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 1.9539925233402755e-13,
       "omitidas": [
         "tem_vaga_imediata"
@@ -409,7 +430,7 @@
     "1|logit_explodido_1a_2a_opcao|principal|spline_linear__bolsa_linear": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 7.883471653258312e-12,
+      "grad_max": 5.274872041383105e-07,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 0,
@@ -420,7 +441,7 @@
     "1|logit_explodido_1a_2a_opcao|principal|spline_quadratico__bolsa_linear": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 2.0765611452588928e-12,
+      "grad_max": 3.854970742622754e-07,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 0,
@@ -431,7 +452,7 @@
     "1|logit_explodido_1a_2a_opcao|principal|spline_linear__degraus_por_corte": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 2.2719603975929203e-12,
+      "grad_max": 2.629948149257544e-07,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 0,
@@ -442,7 +463,7 @@
     "1|logit_explodido_1a_2a_opcao|principal|spline_quadratico__degraus_por_corte": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 4.938272013532696e-13,
+      "grad_max": 2.0538274314585436e-07,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 0,
@@ -452,7 +473,7 @@
     },
     "2|logit_condicional_1a_opcao|principal|spline_linear__bolsa_linear": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 5.227818178354937e-12,
       "omitidas": [],
       "diag_grupos": {
@@ -462,7 +483,7 @@
     "2|logit_condicional_1a_opcao|principal|spline_quadratico__bolsa_linear": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 2.2044588376957108e-11,
+      "grad_max": 7.078385683145783e-08,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 39
@@ -470,7 +491,7 @@
     },
     "2|logit_condicional_1a_opcao|principal|spline_linear__degraus_por_corte": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 9.00435281891987e-12,
       "omitidas": [],
       "diag_grupos": {
@@ -480,7 +501,7 @@
     "2|logit_condicional_1a_opcao|principal|spline_quadratico__degraus_por_corte": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 4.552802579382842e-12,
+      "grad_max": 9.596867439620738e-08,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 39
@@ -488,7 +509,7 @@
     },
     "2|logit_condicional_1a_opcao|sensibilidade|spline_linear__bolsa_linear": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 2.2636115204477392e-11,
       "omitidas": [
         "tem_vaga_imediata"
@@ -501,7 +522,7 @@
     "2|logit_condicional_1a_opcao|sensibilidade|spline_quadratico__bolsa_linear": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 3.604228027143108e-12,
+      "grad_max": 2.798975178353036e-06,
       "omitidas": [
         "tem_vaga_imediata"
       ],
@@ -512,7 +533,7 @@
     },
     "2|logit_condicional_1a_opcao|sensibilidade|spline_linear__degraus_por_corte": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 5.233147248873138e-12,
       "omitidas": [
         "tem_vaga_imediata"
@@ -525,7 +546,7 @@
     "2|logit_condicional_1a_opcao|sensibilidade|spline_quadratico__degraus_por_corte": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 1.076527755827783e-12,
+      "grad_max": 3.3146124570060387e-06,
       "omitidas": [
         "tem_vaga_imediata"
       ],
@@ -536,7 +557,7 @@
     },
     "2|logit_explodido_1a_2a_opcao|principal|spline_linear__bolsa_linear": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 3.26298987829432e-11,
       "omitidas": [],
       "diag_grupos": {
@@ -548,7 +569,7 @@
     "2|logit_explodido_1a_2a_opcao|principal|spline_quadratico__bolsa_linear": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 2.1012525053265563e-11,
+      "grad_max": 3.651913240421134e-06,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 39,
@@ -558,7 +579,7 @@
     },
     "2|logit_explodido_1a_2a_opcao|principal|spline_linear__degraus_por_corte": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 2.4781954266472894e-11,
       "omitidas": [],
       "diag_grupos": {
@@ -570,7 +591,7 @@
     "2|logit_explodido_1a_2a_opcao|principal|spline_quadratico__degraus_por_corte": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 1.1677769862217247e-11,
+      "grad_max": 3.7957110397557337e-06,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 39,
@@ -580,7 +601,7 @@
     },
     "3|logit_condicional_1a_opcao|principal|spline_linear__bolsa_linear": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 1.4784617974328285e-11,
       "omitidas": [],
       "diag_grupos": {
@@ -590,7 +611,7 @@
     "3|logit_condicional_1a_opcao|principal|spline_quadratico__bolsa_linear": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 8.350653502020577e-12,
+      "grad_max": 2.0264501188194117e-10,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 23
@@ -598,7 +619,7 @@
     },
     "3|logit_condicional_1a_opcao|principal|spline_linear__degraus_por_corte": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 6.190603585309873e-12,
       "omitidas": [],
       "diag_grupos": {
@@ -608,7 +629,7 @@
     "3|logit_condicional_1a_opcao|principal|spline_quadratico__degraus_por_corte": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 1.2017054018542694e-11,
+      "grad_max": 4.2708458991569387e-10,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 23
@@ -616,7 +637,7 @@
     },
     "3|logit_condicional_1a_opcao|sensibilidade|spline_linear__bolsa_linear": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 1.7674750552032492e-12,
       "omitidas": [
         "tem_vaga_imediata"
@@ -629,7 +650,7 @@
     "3|logit_condicional_1a_opcao|sensibilidade|spline_quadratico__bolsa_linear": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 5.52979884105298e-12,
+      "grad_max": 8.06317235202414e-11,
       "omitidas": [
         "tem_vaga_imediata"
       ],
@@ -640,7 +661,7 @@
     },
     "3|logit_condicional_1a_opcao|sensibilidade|spline_linear__degraus_por_corte": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 1.8189894035458565e-12,
       "omitidas": [
         "tem_vaga_imediata"
@@ -653,7 +674,7 @@
     "3|logit_condicional_1a_opcao|sensibilidade|spline_quadratico__degraus_por_corte": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 2.8705926524708048e-12,
+      "grad_max": 2.1462615018563724e-09,
       "omitidas": [
         "tem_vaga_imediata"
       ],
@@ -664,7 +685,7 @@
     },
     "3|logit_explodido_1a_2a_opcao|principal|spline_linear__bolsa_linear": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 3.566569262147823e-11,
       "omitidas": [],
       "diag_grupos": {
@@ -675,7 +696,7 @@
     },
     "3|logit_explodido_1a_2a_opcao|principal|spline_quadratico__bolsa_linear": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 2.05613304160579e-11,
       "omitidas": [],
       "diag_grupos": {
@@ -686,7 +707,7 @@
     },
     "3|logit_explodido_1a_2a_opcao|principal|spline_linear__degraus_por_corte": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 9.514167231827741e-12,
       "omitidas": [],
       "diag_grupos": {
@@ -697,7 +718,7 @@
     },
     "3|logit_explodido_1a_2a_opcao|principal|spline_quadratico__degraus_por_corte": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 1.8010593016981602e-11,
       "omitidas": [],
       "diag_grupos": {
@@ -709,7 +730,7 @@
     "empilhado|logit_condicional_1a_opcao|principal|spline_linear__bolsa_linear": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 3.0395241878977686e-11,
+      "grad_max": 2.578184094659264e-06,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 62
@@ -718,7 +739,7 @@
     "empilhado|logit_condicional_1a_opcao|principal|spline_quadratico__bolsa_linear": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 1.7434942378713458e-11,
+      "grad_max": 2.2056185766672343e-09,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 62
@@ -727,7 +748,7 @@
     "empilhado|logit_condicional_1a_opcao|principal|spline_linear__degraus_por_corte": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 6.30961949354969e-12,
+      "grad_max": 1.069921328200607e-06,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 62
@@ -736,7 +757,7 @@
     "empilhado|logit_condicional_1a_opcao|principal|spline_quadratico__degraus_por_corte": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 1.7644570249331082e-09,
+      "grad_max": 2.3490627221178784e-09,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 62
@@ -744,7 +765,7 @@
     },
     "empilhado|logit_condicional_1a_opcao|sensibilidade|spline_linear__bolsa_linear": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 3.150368854676344e-11,
       "omitidas": [
         "tem_vaga_imediata"
@@ -757,7 +778,7 @@
     "empilhado|logit_condicional_1a_opcao|sensibilidade|spline_quadratico__bolsa_linear": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 2.240341245851596e-11,
+      "grad_max": 7.022768833131465e-08,
       "omitidas": [
         "tem_vaga_imediata"
       ],
@@ -768,7 +789,7 @@
     },
     "empilhado|logit_condicional_1a_opcao|sensibilidade|spline_linear__degraus_por_corte": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 7.51754214434186e-12,
       "omitidas": [
         "tem_vaga_imediata"
@@ -781,7 +802,7 @@
     "empilhado|logit_condicional_1a_opcao|sensibilidade|spline_quadratico__degraus_por_corte": {
       "ok": true,
       "iteracoes": 6,
-      "grad_max": 5.7696070143720135e-12,
+      "grad_max": 9.583042259730945e-08,
       "omitidas": [
         "tem_vaga_imediata"
       ],
@@ -793,7 +814,7 @@
     "empilhado|logit_explodido_1a_2a_opcao|principal|spline_linear__bolsa_linear": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 4.666311781420518e-11,
+      "grad_max": 3.0884411845732984e-06,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 62,
@@ -803,7 +824,7 @@
     },
     "empilhado|logit_explodido_1a_2a_opcao|principal|spline_quadratico__bolsa_linear": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 2.539364274412037e-10,
       "omitidas": [],
       "diag_grupos": {
@@ -815,7 +836,7 @@
     "empilhado|logit_explodido_1a_2a_opcao|principal|spline_linear__degraus_por_corte": {
       "ok": true,
       "iteracoes": 5,
-      "grad_max": 3.766587042264291e-11,
+      "grad_max": 1.414568361890467e-06,
       "omitidas": [],
       "diag_grupos": {
         "candidatos_sem_linha_de_1a_opcao_excluidos": 62,
@@ -825,7 +846,7 @@
     },
     "empilhado|logit_explodido_1a_2a_opcao|principal|spline_quadratico__degraus_por_corte": {
       "ok": true,
-      "iteracoes": 5,
+      "iteracoes": 6,
       "grad_max": 2.073450300343893e-10,
       "omitidas": [],
       "diag_grupos": {
@@ -837,15 +858,15 @@
   },
   "resultado_principal": {
     "1": {
-      "coef_bolsa_por_mil": 0.06534945133818652,
-      "ep_cluster_conjunto": 0.0439757316958319,
-      "p": 0.13727001454999035,
-      "p_t_g_menos_1": 0.1579840847935783,
-      "razao_chances_por_5mil": 1.3864510166760795,
-      "variacao_prob_media_pp": 0.42619185981989627,
+      "coef_bolsa_por_mil": 0.06534945131634178,
+      "ep_cluster_conjunto": 0.0439757316920881,
+      "p": 0.13727001464791472,
+      "p_t_g_menos_1": 0.15798408489040855,
+      "razao_chances_por_5mil": 1.386451016524646,
+      "variacao_prob_media_pp": 0.4261918596562068,
       "variacao_prob_media_pp_ic95": [
-        -0.22643745543678728,
-        1.07882117507658
+        -0.22643745549461697,
+        1.0788211748070307
       ]
     },
     "2": {
@@ -873,15 +894,15 @@
       ]
     },
     "empilhado": {
-      "coef_bolsa_por_mil": 0.06617135705102793,
-      "ep_cluster_conjunto": 0.022183297772325698,
-      "p": 0.0028549770710091416,
-      "p_t_g_menos_1": 0.004250113935823658,
-      "razao_chances_por_5mil": 1.3921604001340755,
-      "variacao_prob_media_pp": 0.22490299520398493,
+      "coef_bolsa_por_mil": 0.06617135704773298,
+      "ep_cluster_conjunto": 0.022183297772011924,
+      "p": 0.0028549770720010747,
+      "p_t_g_menos_1": 0.0042501139370918675,
+      "razao_chances_por_5mil": 1.39216040011114,
+      "variacao_prob_media_pp": 0.22490299519179752,
       "variacao_prob_media_pp_ic95": [
-        0.052435895171094954,
-        0.39737009523687494
+        0.05243589516307298,
+        0.397370095220522
       ]
     }
   },
@@ -917,6 +938,24 @@
       "item": "p pela t com G − 1 gl",
       "situacao": "não previsto no §15",
       "resolucao": "relatado ao lado do p normal por causa do número pequeno de conjuntos; não substitui o principal"
+    },
+    {
+      "data": "2026-10-19",
+      "item": "robustez pós-auditoria",
+      "situacao": "a auditoria independente do E9 (commit 9646b57) reproduziu os números e pediu, depois de ver os resultados, cluster por curso, score bootstrap, CV3, IC por inversão, forma funcional, janelas, cortes placebo e heterogeneidade entre ciclos",
+      "resolucao": "estimado e gravado em linhas 'ROBUSTEZ_POS_AUDITORIA' com no_protocolo = False; não substitui o protocolo"
+    },
+    {
+      "data": "2026-10-19",
+      "item": "critério de parada do Newton–Raphson",
+      "situacao": "o critério de gradiente absoluto declarava não convergência por arredondamento em dois placebos do empilhado",
+      "resolucao": "parada pelo decremento de Newton e teste de subida com tolerância relativa; as estimativas do protocolo não mudam além do arredondamento da gravação"
+    },
+    {
+      "data": "2026-10-19",
+      "item": "spline com nós a cada 0,05, ciclo 3",
+      "situacao": "nenhuma célula acima do último nó (0,700) foi escolhida como 1a opção",
+      "resolucao": "o termo desse trecho diverge (separação); a linha é relatada com nota, sem retirar o nó"
     }
   ],
   "entradas": [
@@ -1027,13 +1066,440 @@
       "unidade": "faixa",
       "chaves": "faixa_atracao",
       "filtros": "valor_anunciado_mensal_brl"
+    },
+    {
+      "caminho": "output/aquisicao/a11_manifesto_ciclo2_chamada1.json",
+      "sha256": "b3f2e92f918a9d98e393aa88fde353bcf3f4744c445439c52ec2a14fa53a3373",
+      "bytes": 5822,
+      "papel": "manifesto da aquisição do resultado da 1a chamada do ciclo 2 (condição do §12 para o ciclo 2: fonte oficial)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "captura de 2026-10-18",
+      "cobertura": "1 publicação",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx",
+      "sha256": "51c6807f6bc2efa252b5236d89c5384ae484c4d47c8b65d4161c3facbfebe304",
+      "bytes": 129157,
+      "papel": "quadro da 1a chamada do ciclo 1: só a coluna CURSO, para conferir que o código do curso tem o mesmo rótulo nos três ciclos (cluster por curso, robustez pós-auditoria)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "quadro da 1a chamada do ciclo 1",
+      "cobertura": "todas as linhas",
+      "unidade": "linha do quadro",
+      "chaves": "CURSO",
+      "filtros": "coluna CURSO"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+      "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+      "bytes": 153185,
+      "papel": "quadro da 1a chamada do ciclo 2: só a coluna CURSO, para conferir que o código do curso tem o mesmo rótulo nos três ciclos (cluster por curso, robustez pós-auditoria)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "quadro da 1a chamada do ciclo 2",
+      "cobertura": "todas as linhas",
+      "unidade": "linha do quadro",
+      "chaves": "CURSO",
+      "filtros": "coluna CURSO"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo3_chamada1_vagas_retificadas.xlsx",
+      "sha256": "6bc07f48d0eaac37936fc827ebdefd12fb7bf2be86dc26f64a08e1f5b57f5371",
+      "bytes": 244948,
+      "papel": "quadro da 1a chamada do ciclo 3: só a coluna CURSO, para conferir que o código do curso tem o mesmo rótulo nos três ciclos (cluster por curso, robustez pós-auditoria)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "quadro da 1a chamada do ciclo 3",
+      "cobertura": "todas as linhas",
+      "unidade": "linha do quadro",
+      "chaves": "CURSO",
+      "filtros": "coluna CURSO"
     }
   ],
   "saidas": {
-    "output/rdd_bolsa/E9_estimativas.csv": "cd21c0ecb55366baf44eda8ab0bde883eb20b48812c9c797f15d6e6767d017ca",
-    "output/rdd_bolsa/E9_efeitos_marginais.csv": "3fb9dc6f969b4315741b4bc4f5e34ebc7b111ef2519ab4ab1db93af626878fd7",
-    "output/rdd_bolsa/E9_tabelas_relato.md": "456ed3f2131397888a8b6e2a6211400d8925ce49a0b74bb06ffb61e7226e35ef",
-    "output/rdd_bolsa/E9_figuras/E9_utilidade_ivs.png": "d756faefa825f557c73588e5c9968dc037c3f29ab036ed1a5911d2e0da8e556d"
+    "output/rdd_bolsa/E9_estimativas.csv": "517e88d1488568c645b71707b63c5ffed985af53beae84f8f8684a124f604bd0",
+    "output/rdd_bolsa/E9_efeitos_marginais.csv": "812ac52a25cb2b8685c49f31e0ddbe27d829d5a5f57867e9281183eb57bf809f",
+    "output/rdd_bolsa/E9_robustez_pos_auditoria.csv": "63b474225e4c5e7ac5ce265e31fd17bb62c73148a1c3e2a4904ed2a97fe49d26",
+    "output/rdd_bolsa/E9_tabelas_relato.md": "a2df007d4798bc4f531230cd4eec363d90ef57bd15cccc526e33b4da39819d9c",
+    "output/rdd_bolsa/E9_figuras/E9_utilidade_ivs.png": "42fedc9268bbf1200af1e10a907dfdac2a243024be9a77d8065933b645319ebb"
+  },
+  "robustez_pos_auditoria": {
+    "estado": "robustez pós-auditoria: pós-resultado, fora do protocolo, pedida pela auditoria independente de 18/10/2026",
+    "rotulo": "linhas com especificacao começando por 'ROBUSTEZ_POS_AUDITORIA' e no_protocolo = False, em output/rdd_bolsa/E9_estimativas.csv (modelos) e output/rdd_bolsa/E9_robustez_pos_auditoria.csv (inferência e resumos)",
+    "itens": [
+      "1: empilhado com cluster por curso",
+      "2: score bootstrap de Kline–Santos (Rademacher, Webb), CV3 e IC por inversão",
+      "3: segmentos cúbicos, nós a cada 0,05 e janelas de ±0,10, ±0,05 e ±0,025 em torno dos cortes",
+      "4: cortes placebo",
+      "5: ciclos 1 e 3 empilhados, Q de Cochran, z do ciclo 2 contra o 3"
+    ],
+    "semente": 20261018,
+    "reamostras_quando_nao_enumera": 199999,
+    "g_max_enumeracao_rademacher": 24,
+    "rotulos_cursos": {
+      "codigos": {
+        "1": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA"
+        },
+        "2": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM CIRURGIA GERAL MINIMAMENTE INVASIVA"
+        },
+        "3": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM CIRURGIA ONCOLOGICA AVANCADA"
+        },
+        "4": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM CIRURGIA COLOPROCTOLOGICA COM FOCO EM TUMORES COLORRETAIS"
+        },
+        "5": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM CIRURGIA DO APARELHO DIGESTIVO COM FOCO EM TUMORES DIGESTIVOS"
+        },
+        "6": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM CIRURGIA GINECOLOGICA COM FOCO EM TUMORES GINECOLOGICOS"
+        },
+        "7": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM COLONOSCOPIA DIAGNOSTICA E TERAPEUTICA NO SUS"
+        },
+        "8": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM COLPOSCOPIA E DOENCAS DO TRATO GENITAL INFERIOR"
+        },
+        "9": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM ECOCARDIOGRAFIA TRANSTORACICA APLICADA AO SUS"
+        },
+        "10": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM ENDOSCOPIA DIGESTIVA AVANCADA E PROCEDIMENTOS TERAPEUTICOS"
+        },
+        "11": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM ENDOSCOPIA DIGESTIVA ALTA DIAGNOSTICA E TERAPEUTICA"
+        },
+        "12": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM ONCOLOGIA CLINICA: CANCERES PREVALENTES NO SUS"
+        },
+        "13": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM RADIOTERAPIA: PLANEJAMENTO E EXECUCAO NO SUS"
+        },
+        "14": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM ULTRASSONOGRAFIA MAMARIA DIAGNOSTICA E INTERVENCIONISTA"
+        },
+        "15": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM VIDEOLARINGOSCOPIA E ENDOSCOPIA NASOFARINGEA"
+        },
+        "16": {
+          "ciclos": [
+            1,
+            2,
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM ANATOMIA PATOLOGICA COM ENFASE EM ONCOLOGIA E DIAGNOSTICO INTEGRADO"
+        },
+        "17": {
+          "ciclos": [
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM PSIQUIATRIA CLINICA EM CENTROS DE ATENCAO PSICOSSOCIAL"
+        },
+        "18": {
+          "ciclos": [
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM CUIDADOS INTEGRADOS EM CARDIOLOGIA NO SUS"
+        },
+        "19": {
+          "ciclos": [
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM CIRURGIA ROBOTICA APLICADA AO TRATAMENTO DE TUMORES UROLOGICOS"
+        },
+        "20": {
+          "ciclos": [
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM CIRURGIA ROBOTICA APLICADA AO TRATAMENTO DE TUMORES COLORRETAIS"
+        },
+        "21": {
+          "ciclos": [
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM CIRURGIA MAMARIA ONCOLOGICA E RECONSTRUTIVA"
+        },
+        "22": {
+          "ciclos": [
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM CIRURGIA ORTOPEDICA COM FOCO EM CIRURGIAS DE JOELHO"
+        },
+        "23": {
+          "ciclos": [
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM CIRURGIA DO QUADRIL COM FOCO EM RECONSTRUCOES E ARTROPLASTIAS"
+        },
+        "24": {
+          "ciclos": [
+            3
+          ],
+          "rotulo": "APRIMORAMENTO EM ROTINAS ASSISTENCIAIS EM MEDICINA INTENSIVA NO SUS"
+        }
+      },
+      "conferencia": "cada código de curso tem o mesmo rótulo (normalizado) em todos os ciclos em que aparece"
+    },
+    "janelas": {
+      "1|janela_0100__spline_linear__bolsa_linear": {
+        "celulas": 1125,
+        "candidatos": 894
+      },
+      "1|janela_0100__spline_cubico__bolsa_linear": {
+        "celulas": 1125,
+        "candidatos": 894
+      },
+      "1|janela_0050__spline_linear__bolsa_linear": {
+        "celulas": 892,
+        "candidatos": 736
+      },
+      "1|janela_0050__spline_cubico__bolsa_linear": {
+        "celulas": 892,
+        "candidatos": 736
+      },
+      "1|janela_0025__spline_linear__bolsa_linear": {
+        "celulas": 448,
+        "candidatos": 379
+      },
+      "1|janela_0025__spline_cubico__bolsa_linear": {
+        "celulas": 448,
+        "candidatos": 379
+      },
+      "2|janela_0100__spline_linear__bolsa_linear": {
+        "celulas": 1321,
+        "candidatos": 1986
+      },
+      "2|janela_0100__spline_cubico__bolsa_linear": {
+        "celulas": 1321,
+        "candidatos": 1986
+      },
+      "2|janela_0050__spline_linear__bolsa_linear": {
+        "celulas": 983,
+        "candidatos": 1722
+      },
+      "2|janela_0050__spline_cubico__bolsa_linear": {
+        "celulas": 983,
+        "candidatos": 1722
+      },
+      "2|janela_0025__spline_linear__bolsa_linear": {
+        "celulas": 539,
+        "candidatos": 982
+      },
+      "2|janela_0025__spline_cubico__bolsa_linear": {
+        "celulas": 539,
+        "candidatos": 982
+      },
+      "3|janela_0100__spline_linear__bolsa_linear": {
+        "celulas": 1964,
+        "candidatos": 2443
+      },
+      "3|janela_0100__spline_cubico__bolsa_linear": {
+        "celulas": 1964,
+        "candidatos": 2443
+      },
+      "3|janela_0050__spline_linear__bolsa_linear": {
+        "celulas": 1508,
+        "candidatos": 2095
+      },
+      "3|janela_0050__spline_cubico__bolsa_linear": {
+        "celulas": 1508,
+        "candidatos": 2095
+      },
+      "3|janela_0025__spline_linear__bolsa_linear": {
+        "celulas": 861,
+        "candidatos": 1341
+      },
+      "3|janela_0025__spline_cubico__bolsa_linear": {
+        "celulas": 861,
+        "candidatos": 1341
+      },
+      "empilhado|janela_0100__spline_linear__bolsa_linear": {
+        "celulas": 4410,
+        "candidatos": 5323
+      },
+      "empilhado|janela_0100__spline_cubico__bolsa_linear": {
+        "celulas": 4410,
+        "candidatos": 5323
+      },
+      "empilhado|janela_0050__spline_linear__bolsa_linear": {
+        "celulas": 3383,
+        "candidatos": 4553
+      },
+      "empilhado|janela_0050__spline_cubico__bolsa_linear": {
+        "celulas": 3383,
+        "candidatos": 4553
+      },
+      "empilhado|janela_0025__spline_linear__bolsa_linear": {
+        "celulas": 1848,
+        "candidatos": 2702
+      },
+      "empilhado|janela_0025__spline_cubico__bolsa_linear": {
+        "celulas": 1848,
+        "candidatos": 2702
+      }
+    },
+    "placebos_mil": [
+      190,
+      200,
+      210,
+      220,
+      230,
+      240,
+      250,
+      260,
+      270,
+      280,
+      320,
+      330,
+      340,
+      350,
+      360,
+      370,
+      380,
+      420,
+      430,
+      440,
+      450,
+      460,
+      470,
+      480,
+      490,
+      500,
+      510
+    ],
+    "placebo": {
+      "1": {
+        "n_placebos": 27,
+        "t_real": 1.486034428577777,
+        "t_placebo_media": -0.3794987913161101,
+        "t_placebo_dp": 1.4383915945005745,
+        "fracao_abs_t_placebo_maior_que_1_96": 0.18518518518518517,
+        "n_abs_t_placebo_maior_ou_igual_ao_real": 9,
+        "p_posto": 0.35714285714285715,
+        "abs_t_placebo_max": 3.1750242242459707
+      },
+      "2": {
+        "n_placebos": 27,
+        "t_real": 4.713781696469631,
+        "t_placebo_media": -0.2972254311342667,
+        "t_placebo_dp": 1.5178477034926565,
+        "fracao_abs_t_placebo_maior_que_1_96": 0.14814814814814814,
+        "n_abs_t_placebo_maior_ou_igual_ao_real": 0,
+        "p_posto": 0.03571428571428571,
+        "abs_t_placebo_max": 3.684055226678429
+      },
+      "3": {
+        "n_placebos": 27,
+        "t_real": 0.30356949573747416,
+        "t_placebo_media": -0.23100211743814003,
+        "t_placebo_dp": 1.858722501146449,
+        "fracao_abs_t_placebo_maior_que_1_96": 0.2962962962962963,
+        "n_abs_t_placebo_maior_ou_igual_ao_real": 23,
+        "p_posto": 0.8571428571428571,
+        "abs_t_placebo_max": 4.050638057253595
+      },
+      "empilhado": {
+        "n_placebos": 27,
+        "t_real": 2.9829359785820313,
+        "t_placebo_media": -0.49935085210742297,
+        "t_placebo_dp": 1.4114040574760949,
+        "fracao_abs_t_placebo_maior_que_1_96": 0.14814814814814814,
+        "n_abs_t_placebo_maior_ou_igual_ao_real": 2,
+        "p_posto": 0.10714285714285714,
+        "abs_t_placebo_max": 3.651399989492178
+      }
+    },
+    "cochran_Q": {
+      "Q": 8.496368858453884,
+      "gl": 2,
+      "p": 0.0142901551589961,
+      "I2": 0.7646053233658752
+    }
+  },
+  "condicao_s12_ciclo2": {
+    "condicao": "§12: ciclo 2 entra se a 1a chamada for obtida de fonte oficial",
+    "cumprida": true,
+    "evidencia": [
+      "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/resultado-final-pmme-2o-ciclo-25-05.xlsx"
+    ],
+    "manifesto": "output/aquisicao/a11_manifesto_ciclo2_chamada1.json"
   },
   "linguagem": "resultado do E9 é secundário e exploratório (§12); o coeficiente é efeito da bolsa anunciada sobre a escolha condicional a candidatar-se, identificado pelos degraus da regra"
 }
