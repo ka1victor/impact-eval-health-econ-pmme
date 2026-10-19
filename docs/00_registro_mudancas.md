@@ -8,6 +8,27 @@
 
 ---
 
+## 19/10/2026 — Resultados da família K: produção especializada (doc 50)
+
+Motivo: execução do protocolo
+[`06_execucao/47`](06_execucao/47_protocolo_producao_especializada.md), com os
+adendos §10 e §11 (pedido do autor: produção de consultas, exames e cirurgias
+que exigem especialista, no SUS e no SUS + planos). Estatuto posterior à
+síntese E8; Holm próprio (K1–K3); nada altera o protocolo 40, o Holm de P1 e P2
+nem os docs 41–49.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/50_resultados_producao_especializada.md`](06_execucao/50_resultados_producao_especializada.md) | D1 (DiRD nos cortes da bolsa: K1–K3 com Holm, secundárias com BKY, placebos KP1–KP3, robustez dos §10–§11, IC honesto, Poisson, S2–S5, estudo de evento) e D2 exploratório (chegada do especialista, Callaway–Sant'Anna, pré-tendência, sensibilidade, dose), leitura de substituição do §5, figuras com guia de leitura; tabelas e frases geradas pelos scripts |
+
+Insumos novos fora de `docs/`: `scripts/rdd_bolsa/21_producao_dird.py` e
+`22_chegada_pmme_evento.py`, saídas `output/rdd_bolsa/K_D1_*` e `K_D2_*`
+(com `K_D1_figuras/` e `K_D2_figuras/`) e `tests/test_producao_K.py`. O
+`run_all.py` roda o 21 e o 22 logo depois do E7 (14); o manifesto A6 foi
+regerado pelo seu gerador.
+
 ## 19/10/2026 — Auditoria independente da família N (auditoria 20)
 
 Motivo: auditoria independente do commit `c47380e`, que tem o script 23, as

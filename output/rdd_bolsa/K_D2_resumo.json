@@ -1,0 +1,286 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "EXPLORATORIO_PARTICIPACAO",
+  "gerador": "scripts/rdd_bolsa/22_chegada_pmme_evento.py",
+  "data_execucao": "2026-10-19",
+  "protocolo": {
+    "texto": "docs/06_execucao/47_protocolo_producao_especializada.md",
+    "sha256_texto": "27b8f4535798dba2f245128da0b858e5819fa82c3d1e05f10ff58c6b69700bd8",
+    "secao": "§5 D2"
+  },
+  "contraste": "ATT da chegada do 1º especialista do PMM-E (Callaway-Sant'Anna, controles ainda não tratados) sob tendências paralelas; não é efeito com fonte de exogeneidade validada nem efeito do incentivo marginal",
+  "parametros": {
+    "e_min": -24,
+    "e_max": 9,
+    "bootstrap": {
+      "B": 9999,
+      "pesos": "Mammen",
+      "semente": 20261019,
+      "cluster": "municipio (unidade)"
+    },
+    "base": "universal, b = g - 1",
+    "controles": "nunca tratados + ainda nao tratados (G > max(t, b))",
+    "fim_da_serie": {
+      "SIA": "202605",
+      "SIH": "202605",
+      "CNES": "202605",
+      "K3": "202512"
+    },
+    "coorte_max_K3": "202512",
+    "inicio": "202201"
+  },
+  "amostra": {
+    "municipios_ciclos_1_2": 598,
+    "fora_de_U": [],
+    "linhas_lista_nominal": 1480,
+    "linhas_sem_data_fora": 0,
+    "dt_referencia": [
+      "2026-08-12"
+    ],
+    "municipios_com_ativo": 325,
+    "municipios_com_ativo_fora_da_amostra": 10,
+    "especialistas_em_municipios_fora_da_amostra": 13,
+    "colunas_lidas": [
+      "co_ibge",
+      "dt_inicio_atividade",
+      "ciclo",
+      "dt_referencia"
+    ],
+    "n_municipios": 598,
+    "n_tratados": 315,
+    "n_nunca_tratados": 283,
+    "n_alocado_sem_ativo": 100
+  },
+  "coortes": {
+    "202507": {
+      "municipios": 130,
+      "especialistas": 894
+    },
+    "202510": {
+      "municipios": 34,
+      "especialistas": 197
+    },
+    "202601": {
+      "municipios": 47,
+      "especialistas": 150
+    },
+    "202604": {
+      "municipios": 104,
+      "especialistas": 226
+    }
+  },
+  "variantes": {
+    "principal": "amostra do protocolo (ofereceu célula nos ciclos 1 ou 2)",
+    "sem_alocado_sem_ativo": "§5 D2: sem os municípios com alocado na 1ª chamada (X2, ciclos 1 e 2) e sem especialista ativo na lista nominal"
+  },
+  "entradas": [
+    {
+      "caminho": "data/pmm_especialistas_nominal.csv",
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
+      "bytes": 361832,
+      "papel": "tratamento: menor dt_inicio_atividade por municipio",
+      "fonte": "MS, lista nominal do PMM-E (retrato)",
+      "data_referencia": "2026-08-12",
+      "cobertura": "especialistas ativos no retrato",
+      "unidade": "especialista",
+      "chaves": "co_ibge",
+      "filtros": "so as colunas co_ibge, dt_inicio_atividade, ciclo, dt_referencia; nenhum nome lido ou gravado"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "amostra (celulas nos ciclos 1 ou 2)",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-2",
+      "cobertura": "V1, V2",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "ciclo in (1, 2)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/X2_municipios.csv",
+      "sha256": "a83775a39fc1e8280302df76833cada08df2cc31a397cb9b2e147117d2e06be0",
+      "bytes": 85409,
+      "papel": "sensibilidade: alocados na 1a chamada",
+      "fonte": "X2 (18)",
+      "data_referencia": "ciclos 1-2",
+      "cobertura": "municipios com celula",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "n_alocados > 0"
+    },
+    {
+      "caminho": "output/aquisicao/sia/painel_sia_municipio_mes_subgrupo_cbo.parquet",
+      "sha256": "2f0c8353deb58eeb95b30a35a7a36bbf752b8ca90b4c26395735ea6450d3eb0e",
+      "bytes": 29993902,
+      "papel": "SIA/SUS: K1, K1a-K1f, K3, K3b, K5, KP1, KP2",
+      "fonte": "DATASUS TabNet qabr.def (a12)",
+      "data_referencia": "processamento 202201-202607",
+      "cobertura": "municipios do formulario",
+      "unidade": "municipio x mes x subgrupo x conjunto CBO",
+      "chaves": "co_ibge, competencia_processamento, subgrupo, conjunto_cbo",
+      "filtros": "conjuntos alvo_pmme, especialistas_nao_alvo, generalistas, mfc_225130; subgrupos 0301, 02xx, 04xx, 09xx"
+    },
+    {
+      "caminho": "output/aquisicao/sih/painel_sih_municipio_mes_grupo.parquet",
+      "sha256": "3428600a111838d7f730d30b7474b86294f36a28a76576309ab87fc937f0b6b6",
+      "bytes": 2712877,
+      "papel": "SIH/SUS: K2",
+      "fonte": "DATASUS TabNet qibr.def (a13)",
+      "data_referencia": "processamento 202201-202607",
+      "cobertura": "municipios do formulario",
+      "unidade": "municipio x mes x grupo",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "grupo == 04; aih_aprovadas, status, uf_mes_atipico"
+    },
+    {
+      "caminho": "output/aquisicao/tiss/painel_tiss_municipio_mes_tipo_cbo.parquet",
+      "sha256": "5ebd922df41456c82b73f23ee1023df7ad534128555b156d63916c59c7432e8e",
+      "bytes": 23638834,
+      "papel": "TISS ambulatorial: K3, K3a, K5",
+      "fonte": "ANS dados abertos TISS (a14)",
+      "data_referencia": "realizacao 202201-202512",
+      "cobertura": "municipios do IBGE",
+      "unidade": "municipio x mes x tipo x grupo CBO",
+      "chaves": "co_ibge, competencia_realizacao, tipo, grupo_cbo",
+      "filtros": "grupo_cbo == alvo_pmme; tipos consultas, exames, cirurgicos, agrupados_tuss63; qt_itens"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+      "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
+      "bytes": 20167560,
+      "papel": "CNES: K4 (vinculos e horas nao SUS das CBO-alvo)",
+      "fonte": "CNES/DATASUS (a09)",
+      "data_referencia": "competencias < 202609",
+      "cobertura": "universo a08",
+      "unidade": "municipio x mes x grupo",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "grupo == alvo_pmme; n_vinculos - n_vinculos_sus; horas_totais_amb_hosp - horas_sus_semanais"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial) e universo U",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "co_ibge, ivs"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "denominador por 10 mil hab.",
+      "fonte": "IBGE Censo 2022",
+      "data_referencia": "2022",
+      "cobertura": "municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "filtros": "populacao_2022"
+    }
+  ],
+  "desvios": [
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "data da coorte",
+      "descricao": "coorte trimestral datada pelo primeiro mês do trimestre da chegada; tempo de evento em meses a partir desse mês; base universal b = g - 1 (o mês antes do trimestre), que é anterior à chegada de todos da coorte."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "fim da série",
+      "descricao": "SIA, SIH e CNES até 202605 (o pós principal do D1 pelo adendo §10.1, meses imaturos fora); K3 até 202512 (TISS). Nenhum mês CNES >= 202609 é lido."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "K4 no D2",
+      "descricao": "K4 entra como duas linhas, vínculos e horas não SUS; o CNES é trimestral antes de 202406, então tempos de evento sem competência ficam sem ATT (não são preenchidos)."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "inferência",
+      "descricao": "bootstrap multiplicador (Mammen) implementado no script, sem pacote externo; a unidade do bootstrap é o município, que é o cluster pedido. O IF de θ(e) inclui o termo da estimação dos pesos de coorte."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "tratado fora da amostra",
+      "descricao": "município da lista nominal que não ofereceu célula nos ciclos 1 ou 2 (ou sem IVS/população) fica fora e é contado no resumo."
+    }
+  ],
+  "contagens": {
+    "linhas_att_gt": 2450,
+    "linhas_evento": 748,
+    "linhas_estimativas": 88
+  },
+  "figuras": [
+    {
+      "arquivo": "output/rdd_bolsa/K_D2_figuras/K_D2_evento_K1.png",
+      "outcome_id": "K1",
+      "variante": "principal"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D2_figuras/K_D2_evento_K1a.png",
+      "outcome_id": "K1a",
+      "variante": "principal"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D2_figuras/K_D2_evento_K1b.png",
+      "outcome_id": "K1b",
+      "variante": "principal"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D2_figuras/K_D2_evento_K1c.png",
+      "outcome_id": "K1c",
+      "variante": "principal"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D2_figuras/K_D2_evento_K1d.png",
+      "outcome_id": "K1d",
+      "variante": "principal"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D2_figuras/K_D2_evento_K2.png",
+      "outcome_id": "K2",
+      "variante": "principal"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D2_figuras/K_D2_evento_KP1.png",
+      "outcome_id": "KP1",
+      "variante": "principal"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D2_figuras/K_D2_evento_KP2.png",
+      "outcome_id": "KP2",
+      "variante": "principal"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D2_figuras/K_D2_evento_K4_vinculos.png",
+      "outcome_id": "K4.vinculos",
+      "variante": "principal"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D2_figuras/K_D2_evento_K4_horas.png",
+      "outcome_id": "K4.horas",
+      "variante": "principal"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D2_figuras/K_D2_evento_K3.png",
+      "outcome_id": "K3",
+      "variante": "principal"
+    }
+  ],
+  "saidas": [
+    "output/rdd_bolsa/K_D2_att_gt.csv",
+    "output/rdd_bolsa/K_D2_estudo_evento.csv",
+    "output/rdd_bolsa/K_D2_estimativas.csv",
+    "output/rdd_bolsa/K_D2_resumo.json"
+  ]
+}

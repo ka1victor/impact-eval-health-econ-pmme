@@ -45,6 +45,8 @@ CADEIA = [
     RDD / "23_estimar_contagem_vagas.py",  # família N (protocolo 48): lê os outcomes e o E6
     RDD / "16_estimar_E9_escolha.py",
     RDD / "14_estimar_E7_dird_cnes.py",
+    RDD / "21_producao_dird.py",  # família K, D1 (protocolo 47): lê a12, a13, a14, a09 e funções do 14 e do 23
+    RDD / "22_chegada_pmme_evento.py",  # família K, D2: lê as séries do 21
     RDD / "15_sintese_E8.py",
     RDD / "09b_conferir_sinal.py",  # o 09 exige a conferência em dia com o E3
     RDD / "09_gerar_relatorio_pdf.py",  # lê E1 a E9 e a síntese E8
@@ -149,6 +151,14 @@ class TestCadeiaRddBolsa(unittest.TestCase):
             # E9 lê as tabelas de escolha do 12 e o manifesto do a11.
             RDD / "16_estimar_E9_escolha.py": [RDD / "12_construir_outcomes_funil.py",
                                               AQ / "a11_adquirir_resultado_ciclo2_chamada1.py"],
+            # Família K (protocolo 47): D1 lê SIA, SIH, TISS e CNES, o a08, a lista de V1 (12), o IED (a10) e
+            # importa funções do E7 (14) e das figuras da família N (23); D2 importa o D1.
+            RDD / "21_producao_dird.py": [
+                AQ / "a12_adquirir_sia_tabnet.py", AQ / "a13_adquirir_sih_tabnet.py", A14, A09,
+                AQ / "a08_adquirir_ivs_2010_oficial.py", AQ / "a10_normas_mesmos_cortes_ivs.py",
+                RDD / "12_construir_outcomes_funil.py", RDD / "14_estimar_E7_dird_cnes.py",
+                RDD / "23_estimar_contagem_vagas.py"],
+            RDD / "22_chegada_pmme_evento.py": [RDD / "21_producao_dird.py", RDD / "12_construir_outcomes_funil.py"],
             # E7 lê o painel do a09, o IED do a10, a janela LR do E5 e confere a de U com a do E6.
             RDD / "14_estimar_E7_dird_cnes.py": [
                 A09, AQ / "a10_normas_mesmos_cortes_ivs.py", RDD / "11_inferencia_alternativa.py",
