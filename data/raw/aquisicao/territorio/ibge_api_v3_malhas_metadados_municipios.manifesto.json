@@ -1,0 +1,8 @@
+{
+  "url": "https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR/metadados?intrarregiao=municipio",
+  "data_download": "2026-10-19",
+  "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+  "bytes": 1685039,
+  "fonte": "IBGE, API de malhas geográficas v3, metadados (centroide) por município",
+  "natureza_dos_dados": "EMPIRICO"
+}
