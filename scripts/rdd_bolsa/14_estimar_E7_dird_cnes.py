@@ -1,7 +1,7 @@
 """E7 do protocolo multi-outcome da bolsa: diferença em descontinuidades (DiRD) no CNES, família F3.
 
 Protocolo congelado: `docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md`
-(§3, §4, §5 F3, §6 linha "painel CNES", §7 P2, §13 S1–S6) e
+(§3, §4, §5 F3, §6 linha "painel CNES", §7 P2, §13 S1–S6, §16 horas SUS) e
 `output/rdd_bolsa/protocolo_E6_multioutcome.json`. Painel: tarefa C
 (`output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet`, auditoria
 A09). Políticas nos mesmos cortes e suas datas: auditoria 18. Estimadores:
@@ -30,7 +30,8 @@ extra 202201–202303 (competências disponíveis). Nenhuma competência >= 2026
 Ordem de execução (falha fechada)
 ---------------------------------
 1. Validação de esquema do painel, sem nada por lado de corte: SHA-256 igual ao
-   manifesto a09, chaves únicas, painel balanceado no universo a08, todas as
+   manifesto a09, definição de `horas_sus_semanais` com o filtro
+   TP_SUS_NAO_SUS (§16) e colunas de horas da sensibilidade presentes, chaves únicas, painel balanceado no universo a08, todas as
    competências do protocolo presentes e nenhuma >= 202609, coerência de
    contagens e da regra de horas ausentes. `--somente-validar` para aqui.
 2. Populações (U = a08; V1 = quadro do ciclo 1, IVS conferido contra a08) e
@@ -106,6 +107,7 @@ A10_IED = ROOT / "output" / "aquisicao" / "a10_ied_aps_2024_municipio.csv"
 PPF_ZIP = ROOT / "data" / "raw" / "aquisicao" / "ivs_administrativo" / "ppf_mais_medicos_csv.zip"
 TIPOLOGIA = ROOT / "output" / "tema_trabalho" / "matriz_tipologia_territorial.parquet"
 E5_SEL = OUT / "E5_lr_selecao_janela.csv"
+E6_SEL = OUT / "E6_lr_selecao_janela.csv"   # conferência opcional da janela LR de U (saída do E6, se existir)
 PROTOCOLO_JSON = OUT / "protocolo_E6_multioutcome.json"
 PROTOCOLO_MD = ROOT / "docs" / "06_execucao" / "40_protocolo_multioutcome_rdd_bolsa.md"
 AUD18 = ROOT / "docs" / "auditorias" / "18_politicas_nos_mesmos_cortes_ivs.md"
@@ -183,6 +185,18 @@ CONTRASTE_DIRD = (
 CONTRASTE_NIVEL = ("RDD em nível: pacote do corte (bolsa anunciada + todas as outras regras federais nos mesmos "
                    "cortes, auditoria 18)")
 
+# Horas no CNES (protocolo §16, 19/10/2026). Principal: `horas_sus_semanais` = horas ambulatoriais +
+# hospitalares dos vínculos com TP_SUS_NAO_SUS == 'S'; célula com hora em branco fica ausente. Sensibilidades
+# rotuladas: a soma sem o filtro TP_SUS_NAO_SUS e a soma parcial das horas observadas (com a contagem de
+# vínculos em branco ao lado). Os nomes das colunas de sensibilidade seguem o painel regenerado pela tarefa C;
+# coluna ausente faz a validação falhar (nada é substituído).
+COL_HORAS_SUS = "horas_sus_semanais"
+COL_HORAS_SEM_FILTRO = "horas_sus_semanais_sem_filtro_sus"
+COL_HORAS_PARCIAL = "horas_sus_semanais_soma_parcial"
+COLS_HORAS_SENSIBILIDADE = (COL_HORAS_SEM_FILTRO, COL_HORAS_PARCIAL)
+TERMO_FILTRO_SUS = "TP_SUS_NAO_SUS"
+ROTULO_SENS_HORAS = "SENSIBILIDADE_PROTOCOLO_§16"
+
 UNIDADES = {
     "taxa": "vinculos por 10 mil hab. (Censo 2022)",
     "horas": "horas SUS semanais por 10 mil hab. (Censo 2022)",
@@ -199,8 +213,18 @@ CATALOGO: list[dict] = [
      "desc": "vínculos nas CBO-alvo do PMM-E por 10 mil hab."},
     {"id": "F3.2", "grupo": "alvo_pmme", "col": "tem_profissional", "tipo": "binario", "pops": ("U",), "bky": True,
      "papel": "efeito (cobertura)", "desc": "município com >= 1 profissional nas CBO-alvo"},
-    {"id": "F3.3", "grupo": "alvo_pmme", "col": "horas_sus_semanais", "tipo": "horas", "pops": ("U",), "bky": True,
-     "papel": "efeito (horas)", "desc": "horas SUS semanais nas CBO-alvo por 10 mil hab."},
+    {"id": "F3.3", "grupo": "alvo_pmme", "col": COL_HORAS_SUS, "tipo": "horas", "pops": ("U",), "bky": True,
+     "papel": "efeito (horas)",
+     "desc": "horas SUS semanais (vínculos TP_SUS_NAO_SUS = 'S') nas CBO-alvo por 10 mil hab."},
+    {"id": "F3.3.sem_filtro_sus", "grupo": "alvo_pmme", "col": COL_HORAS_SEM_FILTRO, "tipo": "horas", "pops": ("U",),
+     "bky": False, "figura": False, "rotulo": f"{ROTULO_SENS_HORAS} (horas sem o filtro TP_SUS_NAO_SUS)",
+     "papel": "sensibilidade rotulada do F3.3 (§16; fora do BKY)",
+     "desc": "horas ambulatoriais + hospitalares SUS sem o filtro TP_SUS_NAO_SUS, nas CBO-alvo, por 10 mil hab."},
+    {"id": "F3.3.soma_parcial", "grupo": "alvo_pmme", "col": COL_HORAS_PARCIAL, "tipo": "horas", "pops": ("U",),
+     "bky": False, "figura": False, "horas_parcial": True,
+     "rotulo": f"{ROTULO_SENS_HORAS} (soma parcial das horas observadas; vinculos em branco contados)",
+     "papel": "sensibilidade rotulada do F3.3 (§16; fora do BKY)",
+     "desc": "horas SUS (TP_SUS_NAO_SUS = 'S') com soma parcial das horas observadas, nas CBO-alvo, por 10 mil hab."},
     {"id": "F3.P1", "grupo": "generalistas", "col": "n_vinculos", "tipo": "taxa", "pops": ("U",), "bky": True,
      "papel": "placebo/confundidor (Portaria 752, IED)",
      "desc": "vínculos de generalistas (225125, 225142, 225170) por 10 mil hab."},
@@ -212,7 +236,8 @@ CATALOGO: list[dict] = [
 ]
 GRUPOS_USADOS = sorted({c["grupo"] for c in CATALOGO})
 COLUNAS_PAINEL = ["co_ibge", "competencia", "grupo", "n_vinculos", "n_profissionais_distintos",
-                  "horas_sus_semanais", "n_vinculos_horas_ausentes", "tem_profissional", "natureza_dos_dados"]
+                  COL_HORAS_SUS, *COLS_HORAS_SENSIBILIDADE, "n_vinculos_horas_ausentes", "tem_profissional",
+                  "natureza_dos_dados"]
 
 # Especificações (protocolo §6 e §13; adições rotuladas).
 ESPECIFICACOES = {
@@ -252,11 +277,15 @@ DESVIOS = [
                   "analogo em log exigiria um modelo de painel (Poisson com efeito de periodo e interacao) que o "
                   "protocolo nao especifica, e o coordenador o deixou opcional. Nada foi estimado e descartado."},
     {"data": DATA_EXECUCAO, "tipo": "regra_de_dado",
-     "item": "F3.3 horas ausentes",
-     "descricao": "horas_sus_semanais nula (a09: algum vinculo da celula sem carga horaria) fica ausente, nunca "
-                  "zero; o municipio sem todos os meses de uma janela sai daquele outcome naquela especificacao "
-                  "(diferenca_pos_pre com exigir_completo=True); no estudo de evento sai so dos meses afetados. "
-                  "As contagens estao em nota e em validacoes.horas_ausentes."},
+     "item": "F3.3 horas (protocolo §16)",
+     "descricao": "principal: horas_sus_semanais = horas ambulatoriais + hospitalares dos vinculos com "
+                  "TP_SUS_NAO_SUS = 'S'; celula com hora em branco fica ausente, nunca zero; o municipio sem todos "
+                  "os meses de uma janela sai daquele outcome naquela especificacao (diferenca_pos_pre com "
+                  "exigir_completo=True); no estudo de evento sai so dos meses afetados. Sensibilidades rotuladas "
+                  "(fora do BKY): F3.3.sem_filtro_sus (sem o filtro TP_SUS_NAO_SUS) e F3.3.soma_parcial (soma das "
+                  "horas observadas, com a contagem de vinculos em branco na nota e em validacoes.horas_ausentes). "
+                  "O grupo todos_medicos_sem_residentes do painel nao e outcome do E7 (§16: nao primario; F3 nao "
+                  "o lista)."},
     {"data": DATA_EXECUCAO, "tipo": "esclarecimento",
      "item": "populacoes",
      "descricao": "protocolo §5: F3.1 em U e V1; F3.2, F3.3, F3.P1, F3.P2 e S6 em U. V1 = municipios do quadro "
@@ -399,23 +428,29 @@ def validar_painel(painel: pd.DataFrame, universo: set[str], *, competencias_esp
         raise FalhaValidacao("tem_profissional fora de {0, 1}")
     if ((sub["tem_profissional"] == 1) != (sub["n_profissionais_distintos"] > 0)).any():
         raise FalhaValidacao("tem_profissional incoerente com n_profissionais_distintos")
-    horas_nulas = sub["horas_sus_semanais"].isna()
-    if (horas_nulas != (sub["n_vinculos_horas_ausentes"] > 0)).any():
-        # a09: horas_sus_semanais ausente sse algum vínculo da célula tem ambulatorial ou hospitalar SUS ausente;
-        # n_vinculos_horas_ausentes conta vínculos com QUALQUER dos três campos ausente (inclui horas_totais).
-        so_totais = (~horas_nulas) & (sub["n_vinculos_horas_ausentes"] > 0)
-        if (horas_nulas & (sub["n_vinculos_horas_ausentes"] == 0)).any():
-            raise FalhaValidacao("horas_sus_semanais ausente sem vinculo com horas ausentes (regra a09)")
-        n_so_totais = int(so_totais.sum())
-    else:
-        n_so_totais = 0
+    # Horas (a09 e protocolo §16): principal e "sem filtro" ficam ausentes se algum vínculo da célula tem hora
+    # em branco (n_vinculos_horas_ausentes > 0 é condição necessária); a soma parcial nunca é ausente e coincide
+    # com o principal onde ele existe; célula sem vínculo tem horas 0 (observado).
+    for c in (COL_HORAS_SUS, COL_HORAS_SEM_FILTRO):
+        if (sub[c].isna() & (sub["n_vinculos_horas_ausentes"] == 0)).any():
+            raise FalhaValidacao(f"{c} ausente sem vinculo com horas em branco (regra a09)")
+    if sub[COL_HORAS_PARCIAL].isna().any():
+        raise FalhaValidacao(f"{COL_HORAS_PARCIAL} com valores ausentes (a soma parcial deveria existir sempre)")
+    ok_sus = sub[COL_HORAS_SUS].notna()
+    if (sub.loc[ok_sus, COL_HORAS_PARCIAL].astype(float) != sub.loc[ok_sus, COL_HORAS_SUS].astype(float)).any():
+        raise FalhaValidacao(f"{COL_HORAS_PARCIAL} difere de {COL_HORAS_SUS} em celula sem hora em branco")
     sem_vinc = sub["n_vinculos"] == 0
-    if (sub.loc[sem_vinc, "horas_sus_semanais"].fillna(-1) != 0).any():
-        raise FalhaValidacao("celula sem vinculo com horas diferentes de 0 (regra a09)")
-    if (sub["horas_sus_semanais"].dropna() < 0).any():
-        raise FalhaValidacao("horas negativas")
+    for c in (COL_HORAS_SUS, *COLS_HORAS_SENSIBILIDADE):
+        if (sub.loc[sem_vinc, c].astype(float).fillna(-1) != 0).any():
+            raise FalhaValidacao(f"celula sem vinculo com {c} diferente de 0 (regra a09)")
+        if (sub[c].dropna().astype(float) < 0).any():
+            raise FalhaValidacao(f"{c} negativa")
+    horas_nulas = sub[COL_HORAS_SUS].isna()
     nulas = (sub[horas_nulas].groupby(["grupo", "competencia"]).size().unstack(fill_value=0)
              if horas_nulas.any() else pd.DataFrame())
+    branco = sub[sub["n_vinculos_horas_ausentes"] > 0].groupby(["grupo", "competencia"])[
+        "n_vinculos_horas_ausentes"].sum().unstack(fill_value=0) if (sub["n_vinculos_horas_ausentes"] > 0).any() \
+        else pd.DataFrame()
     return {
         "linhas_grupos_usados": int(len(sub)),
         "municipios": len(munis),
@@ -424,9 +459,11 @@ def validar_painel(painel: pd.DataFrame, universo: set[str], *, competencias_esp
         "grupos": list(grupos),
         "chave_unica": True,
         "balanceado": True,
-        "horas_sus_nulas_por_grupo_e_competencia": {g: {c: int(v) for c, v in r.items() if v}
-                                                   for g, r in nulas.iterrows()} if len(nulas) else {},
-        "celulas_com_horas_totais_ausentes_e_horas_sus_presentes": n_so_totais,
+        "celulas_horas_sus_ausentes_por_grupo_e_competencia": {g: {c: int(v) for c, v in r.items() if v}
+                                                              for g, r in nulas.iterrows()} if len(nulas) else {},
+        "vinculos_horas_em_branco_por_grupo_e_competencia": {g: {c: int(v) for c, v in r.items() if v}
+                                                            for g, r in branco.iterrows()} if len(branco) else {},
+        "colunas_horas": {"principal": COL_HORAS_SUS, "sensibilidades": list(COLS_HORAS_SENSIBILIDADE)},
     }
 
 
@@ -438,8 +475,13 @@ def validar_manifesto(manifesto: dict, sha_painel: str) -> dict:
         raise FalhaValidacao(f"manifesto a09 com competencias nao obtidas: {manifesto['competencias_nao_obtidas']}")
     if str(manifesto.get("natureza_dos_dados", "")).upper() != "EMPIRICO":
         raise FalhaValidacao("manifesto a09 sem natureza EMPIRICO")
+    definicao = str((manifesto.get("definicoes") or {}).get(COL_HORAS_SUS, ""))
+    if TERMO_FILTRO_SUS not in definicao or "sem filtro de TP_SUS_NAO_SUS" in definicao:
+        raise FalhaValidacao(f"manifesto a09: {COL_HORAS_SUS} nao e definido com o filtro {TERMO_FILTRO_SUS} "
+                             f"(protocolo §16); definicao lida: {definicao[:200]!r}")
     return {"sha256_painel_igual_manifesto": True, "competencias_nao_obtidas": [],
-            "data_execucao_a09": manifesto.get("data_execucao")}
+            "data_execucao_a09": manifesto.get("data_execucao"),
+            "definicao_horas_sus_no_manifesto": definicao}
 
 
 # ---------------------------------------------------------------------------
@@ -872,7 +914,8 @@ def suplementares(meta: dict, d: pd.DataFrame, corte, unidade: str, sup: dict) -
 
 
 def estimar_outcome(spec: dict, pop_nome: str, serie: pd.DataFrame, *, sup: dict, lr: dict,
-                    motivos_lr: dict | None = None, conferir: bool = True) -> tuple[list[dict], dict, pd.DataFrame]:
+                    motivos_lr: dict | None = None, conferir: bool = True,
+                    nota_extra: str = "") -> tuple[list[dict], dict, pd.DataFrame]:
     """Todas as especificações de um outcome x população, nos dois cortes e empilhado.
 
     Devolve (linhas, informações de amostra, base por município com médias e deltas).
@@ -884,9 +927,13 @@ def estimar_outcome(spec: dict, pop_nome: str, serie: pd.DataFrame, *, sup: dict
              "descricao_outcome": spec["desc"], "papel": spec["papel"], "populacao": pop_nome}
     linhas = []
     nota_hor = ""
-    if spec["tipo"] == "horas":
-        nota_hor = ("horas ausentes ficam ausentes (nunca zero): municipio sem todos os meses da janela fica fora; "
-                    f"{notas_jan['principal'] or 'nenhum municipio incompleto nas janelas principais'}")
+    if spec.get("horas_parcial"):
+        nota_hor = _juntar("soma parcial das horas observadas (vinculos com hora em branco entram com as horas que "
+                           "tem; protocolo §16)", nota_extra)
+    elif spec["tipo"] == "horas":
+        nota_hor = _juntar("horas em branco ficam ausentes (nunca zero): municipio sem todos os meses da janela fica "
+                           f"fora; {notas_jan['principal'] or 'nenhum municipio incompleto nas janelas principais'}",
+                           nota_extra)
     for corte in (*CORTES, EMPILHADO):
         meta = {**meta0, "corte": ROTULO_CORTE[corte]}
         est_p = ("DiRD local linear triangular sobre delta, EP HC1" if corte != EMPILHADO else
@@ -931,9 +978,21 @@ def estimar_outcome(spec: dict, pop_nome: str, serie: pd.DataFrame, *, sup: dict
         l5b["nota"] = _juntar(notas_jan["S5_dird_pre_extra"], l5b["nota"])
         linhas.append(l5b)
         linhas.extend(suplementares(meta, d, corte, unidade, sup))
+    if spec.get("rotulo"):
+        for ln in linhas:
+            ln["rotulo"] = _juntar(spec["rotulo"], ln["rotulo"])
     info = {"notas_janelas": notas_jan, "n_municipios": int(len(d)),
             "n_delta_principal_completo": int(np.isfinite(d["delta_principal"].to_numpy(dtype=float)).sum())}
     return linhas, info, d
+
+
+def contar_horas_em_branco(painel: pd.DataFrame, grupo: str, municipios) -> dict:
+    """Contagem agregada (sem quebra por corte) de células e vínculos com hora em branco no grupo, nos meses do E7."""
+    sub = painel[(painel["grupo"] == grupo) & painel["co_ibge"].isin(set(municipios))
+                 & painel["competencia"].isin(COMP_EVENTO)]
+    b = sub[sub["n_vinculos_horas_ausentes"] > 0]
+    return {"celulas_municipio_mes": int(len(b)), "vinculos_em_branco_soma_nos_meses": int(b["n_vinculos_horas_ausentes"].sum()),
+            "municipios": int(b["co_ibge"].nunique())}
 
 
 def estudo_evento(spec: dict, pop_nome: str, serie: pd.DataFrame) -> list[dict]:
@@ -1020,6 +1079,22 @@ def selecao_janelas_lr(pops: dict[str, pd.DataFrame], n_perm: int = L.N_PERMUTAC
             if not iguais:
                 raise FalhaValidacao("V1: recomputacao da selecao LR nao reproduz E5_lr_selecao_janela.csv")
             conf["V1_selecao_lr_reproduz_E5"] = True
+        if nome == "U" and E6_SEL.exists():
+            e6 = pd.read_csv(E6_SEL, dtype={"corte": str})
+            ref = e6[e6["populacao"] == "U"].assign(corte=lambda x: x["corte"].astype(float)).reset_index(drop=True)
+            a = sel[["corte", "w", "n_abaixo", "n_acima", "p_min", "selecionada"]].reset_index(drop=True)
+            b = ref[["corte", "w", "n_abaixo", "n_acima", "p_min", "selecionada"]]
+            iguais = (len(a) == len(b)
+                      and np.allclose(a[["corte", "w", "n_abaixo", "n_acima"]].astype(float),
+                                      b[["corte", "w", "n_abaixo", "n_acima"]].astype(float))
+                      and np.allclose(a["p_min"].astype(float).fillna(-1), b["p_min"].astype(float).fillna(-1),
+                                      atol=1e-12)
+                      and (a["selecionada"].astype(bool) == b["selecionada"].astype(bool)).all())
+            if not iguais:
+                raise FalhaValidacao("U: selecao LR do E7 nao reproduz E6_lr_selecao_janela.csv")
+            conf["U_selecao_lr_reproduz_E6"] = True
+        elif nome == "U":
+            conf["U_selecao_lr_reproduz_E6"] = "E6_lr_selecao_janela.csv ausente: conferencia nao feita"
         for corte in CORTES:
             esc = sel[(sel["corte"] == corte / 1000) & sel["selecionada"]]
             if len(esc):
@@ -1172,6 +1247,8 @@ def gerar_figuras(bases: dict, eventos: pd.DataFrame, dir_fig: Path) -> list[str
     rod = ("EMPIRICO. Médias em faixas de 0,005 (área ~ n); reta local linear triangular h = 0,050 e IC 95% pontual "
            "HC1, por corte. Salto = lado de bolsa maior − lado de bolsa menor.")
     for (oid, pop), (spec, d) in bases.items():
+        if not spec.get("figura", True):
+            continue
         tag = f"{oid.replace('.', '_')}_{pop}"
         un = UNIDADES[spec["tipo"]]
         s = d["s_mil"].to_numpy(float)
@@ -1367,6 +1444,9 @@ def gerar_tabelas_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> dict
         f"| U sem população 2022 | {len(v.get('populacoes', {}).get('U_sem_populacao_2022', []))} |",
         f"| DiRD painel = DiRD delta (todas as combinações por corte) | {v.get('identidade_painel_delta')} |",
         f"| seleção LR de V1 reproduz o E5 | {v.get('local_randomization', {}).get('V1_selecao_lr_reproduz_E5')} |",
+        f"| seleção LR de U reproduz o E6 | {v.get('local_randomization', {}).get('U_selecao_lr_reproduz_E6')} |",
+        f"| definição de horas SUS no manifesto a09 contém {TERMO_FILTRO_SUS} (§16) | "
+        f"{TERMO_FILTRO_SUS in str(v.get('manifesto', {}).get('definicao_horas_sus_no_manifesto', ''))} |",
         "| janelas LR (± IVS) | " + "; ".join(f"{k}: {_n(w, 3, sinal=False) if w else 'nenhuma'}"
                                           for k, w in lr.items()) + " |",
         f"| linhas em E7_estimativas.csv / no protocolo | {q.get('linhas')} / {q.get('linhas_no_protocolo')} |",
@@ -1451,6 +1531,9 @@ def entradas(info_s4: dict | None) -> list[dict]:
                       "REGIC 2018; RM/RIDE 2022", "municipios", "municipio", "co_ibge_6d", "so a coluna estrato"),
         bloco_entrada(E5_SEL, "janela LR de V1 (E5, P1) para conferencia", "E5 (11_inferencia_alternativa)",
                       "2026-10-18", "P1/P2", "corte x janela", "populacao, corte, w", "populacao == P1"),
+        *([bloco_entrada(E6_SEL, "janela LR de U (E6) para conferencia", "E6 (13_estimar_E6_funil)", "2026-10-18",
+                         "U, G3, V1-V3", "corte x janela", "populacao, corte, w", "populacao == U")]
+          if E6_SEL.exists() else []),
         bloco_entrada(PROTOCOLO_MD, "protocolo congelado (texto canonico)", "doc 40", "2026-10-18", "-", "-", "-",
                       "-"),
         bloco_entrada(PROTOCOLO_JSON, "protocolo congelado (maquina)", "protocolo_E6_multioutcome.json",
@@ -1491,11 +1574,19 @@ def main(argv: list[str] | None = None) -> int:
         s4, info_s4 = carregar_s4()
         sup["S4"] = s4
         lr, motivos_lr, conf_lr = selecao_janelas_lr(pops, args.n_perm)
-        linhas, linhas_ev, info, bases = [], [], {}, {}
+        linhas, linhas_ev, info, bases, horas_branco = [], [], {}, {}, {}
         for spec in CATALOGO:
             for pop_nome in spec["pops"]:
                 serie = serie_outcome(painel, spec, pops[pop_nome])
-                ls, inf, base = estimar_outcome(spec, pop_nome, serie, sup=sup, lr=lr, motivos_lr=motivos_lr)
+                nota_extra = ""
+                if spec["tipo"] == "horas":
+                    br = contar_horas_em_branco(painel, spec["grupo"], pops[pop_nome]["co_ibge"])
+                    horas_branco[f"{spec['id']}|{pop_nome}"] = br
+                    nota_extra = (f"vinculos com hora em branco nos meses do E7: {br['vinculos_em_branco_soma_nos_meses']} "
+                                  f"(soma mes a mes), em {br['celulas_municipio_mes']} celulas municipio-mes de "
+                                  f"{br['municipios']} municipios")
+                ls, inf, base = estimar_outcome(spec, pop_nome, serie, sup=sup, lr=lr, motivos_lr=motivos_lr,
+                                                nota_extra=nota_extra)
                 linhas.extend(ls)
                 info[f"{spec['id']}|{pop_nome}"] = inf
                 linhas_ev.extend(estudo_evento(spec, pop_nome, serie))
@@ -1510,14 +1601,15 @@ def main(argv: list[str] | None = None) -> int:
     est.to_csv(OUT / NOME_EST, index=False)
     ev.to_csv(OUT / NOME_EVENTO, index=False)
     figuras = gerar_figuras(bases, ev.astype({"corte": str}), OUT / DIR_FIG)
-    horas = {k: v["notas_janelas"] for k, v in info.items() if k.startswith("F3.3")}
+    horas = {k: {"janelas": v["notas_janelas"], "em_branco": horas_branco.get(k)} for k, v in info.items()
+             if k.startswith("F3.3")}
     resumo = {
         "natureza_dos_dados": "EMPIRICO",
         "gerador": rotulo(Path(__file__)),
         "data_execucao": DATA_EXECUCAO,
         "protocolo": {"texto": rotulo(PROTOCOLO_MD), "sha256_texto": sha256(PROTOCOLO_MD),
                       "maquina": rotulo(PROTOCOLO_JSON), "sha256_maquina": sha256(PROTOCOLO_JSON),
-                      "secoes": "§3, §4, §5 F3, §6 (painel CNES), §7 (P2), §13 (S2-S6)"},
+                      "secoes": "§3, §4, §5 F3, §6 (painel CNES), §7 (P2), §13 (S2-S6), §16 (horas SUS)"},
         "contraste": {"dird": CONTRASTE_DIRD, "nivel": CONTRASTE_NIVEL},
         "parametros": {"cortes_mil": list(CORTES), "h_mil": H, "h_sensibilidade_mil": list(H_SENS),
                        "fatores_M": list(FATORES_M), "pre": list(COMP_PRE), "pos": list(COMP_POS), "ref": COMP_REF,

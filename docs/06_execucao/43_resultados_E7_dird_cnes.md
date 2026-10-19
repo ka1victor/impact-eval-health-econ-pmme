@@ -1,7 +1,8 @@
 # 43 — Resultados do E7: diferença em descontinuidades no CNES (família F3)
 
 > **Protocolo:** [`40_protocolo_multioutcome_rdd_bolsa.md`](40_protocolo_multioutcome_rdd_bolsa.md)
-> (§3, §4, §5 F3, §6 painel CNES, §7 P2, §13 S1–S6), congelado em 18/10/2026,
+> (§3, §4, §5 F3, §6 painel CNES, §7 P2, §13 S1–S6, §16 horas SUS), congelado em
+> 18/10/2026 (§16 acrescentado em 19/10/2026, antes de estimar o E7),
 > e [`output/rdd_bolsa/protocolo_E6_multioutcome.json`](../../output/rdd_bolsa/protocolo_E6_multioutcome.json).<br>
 > **Script:** [`scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py`](../../scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py),
 > com os estimadores de [`rdd_lib.py`](../../scripts/rdd_bolsa/rdd_lib.py).<br>
@@ -47,7 +48,9 @@ que 0,3" e, em 0,400, a ajuda de custo do PMMB.
 |---|---|---|
 | F3.1 | vínculos nas CBO-alvo do PMM-E (`alvo_pmme`) por 10 mil hab. | U e V1 |
 | F3.2 | município com ≥ 1 profissional nas CBO-alvo | U |
-| F3.3 | horas SUS semanais nas CBO-alvo por 10 mil hab. | U |
+| F3.3 | horas SUS semanais (vínculos com `TP_SUS_NAO_SUS = 'S'`) nas CBO-alvo por 10 mil hab. | U |
+| F3.3.sem_filtro_sus | sensibilidade rotulada (§16): as mesmas horas sem o filtro `TP_SUS_NAO_SUS` | U |
+| F3.3.soma_parcial | sensibilidade rotulada (§16): soma parcial das horas observadas, com a contagem de vínculos em branco | U |
 | F3.P1 | vínculos de generalistas (225125, 225142, 225170) por 10 mil hab. | U |
 | S6 | vínculos de médico de família e comunidade (225130) por 10 mil hab. | U |
 | F3.P2 | vínculos de especialistas fora das CBO-alvo por 10 mil hab. | U |
@@ -59,10 +62,14 @@ que 0,3" e, em 0,400, a ajuda de custo do PMMB.
   dentro do pré 2024-12..2025-05 contra 2024-06..2024-11; pré extra (S5)
   2022-01..2023-03, competências disponíveis. Nenhuma competência a partir de
   2026-09 é lida.
-- **Horas ausentes (F3.3):** horas nulas no painel ficam ausentes, nunca zero.
-  O município sem todos os meses de uma janela sai daquele outcome naquela
-  especificação; a contagem está na `nota` das linhas e em
-  `validacoes.horas_ausentes` do resumo.
+- **Horas (F3.3, protocolo §16):** o principal soma as horas ambulatoriais e
+  hospitalares só dos vínculos marcados como SUS (`TP_SUS_NAO_SUS = 'S'`). Célula
+  com hora em branco fica sem valor, nunca zero, e o município sem todos os
+  meses de uma janela sai daquele outcome naquela especificação; a contagem está
+  na `nota` das linhas e em `validacoes.horas_ausentes` do resumo. A soma sem o
+  filtro SUS e a soma parcial das horas observadas são sensibilidades rotuladas
+  (`SENSIBILIDADE_PROTOCOLO_§16`), fora do BKY. O grupo de todos os médicos sem
+  residentes não é outcome do E7.
 - **Estimadores:** local linear, kernel triangular, h = 0,050, HC1 por corte;
   empilhado com intercepto e inclinações por corte e lado, salto comum, CR1 por
   município. Sensibilidade h = 0,030 e 0,080; IC honesto com M da regra de bolso
@@ -81,7 +88,8 @@ P1 (E6), feito pelo coordenador.
 ## 4. Estimativas principais (DiRD, h = 0,050)
 
 q BKY: dentro da família F3, sobre as linhas principais de F3.1 (U e V1), F3.2,
-F3.3, F3.P1 e F3.P2, nos dois cortes e empilhado. S6 fica fora do BKY.
+F3.3, F3.P1 e F3.P2, nos dois cortes e empilhado. S6 e as sensibilidades de
+horas do §16 ficam fora do BKY.
 
 <!-- E7:principal:inicio -->
 (gerado pelo script)

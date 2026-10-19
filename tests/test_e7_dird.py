@@ -85,13 +85,17 @@ def painel_sintetico(semente: int = 11, n: int = 3000, horas_ausentes: int = 0) 
             nv = np.maximum(np.round(taxa * POP_SINTETICA / E7.ESCALA_HAB), 0).astype(int)
             linhas.append(pd.DataFrame({
                 "co_ibge": cod, "competencia": comp, "grupo": g, "n_vinculos": nv, "n_profissionais_distintos": nv,
-                "horas_sus_semanais": pd.array(nv * 20, dtype="Int32"), "n_vinculos_horas_ausentes": 0,
+                E7.COL_HORAS_SUS: pd.array(nv * 20, dtype="Int32"),
+                E7.COL_HORAS_SEM_FILTRO: pd.array(nv * 25, dtype="Int32"),
+                E7.COL_HORAS_PARCIAL: pd.array(nv * 20, dtype="Int32"), "n_vinculos_horas_ausentes": 0,
                 "tem_profissional": (nv > 0).astype("int8"), "natureza_dos_dados": "EMPIRICO"}))
     painel = pd.concat(linhas, ignore_index=True)
     if horas_ausentes:
         alvo = (painel["grupo"] == "alvo_pmme") & painel["co_ibge"].isin(cod[:horas_ausentes]) & \
                (painel["competencia"] == E7.COMP_PRE[0])
-        painel.loc[alvo, "horas_sus_semanais"] = pd.NA
+        painel.loc[alvo, E7.COL_HORAS_SUS] = pd.NA
+        painel.loc[alvo, E7.COL_HORAS_SEM_FILTRO] = pd.NA
+        painel.loc[alvo, E7.COL_HORAS_PARCIAL] = painel.loc[alvo, "n_vinculos"].to_numpy() * 10   # soma parcial
         painel.loc[alvo, "n_vinculos_horas_ausentes"] = 1
     return painel, pop
 
@@ -107,6 +111,8 @@ def sup_sintetico(cod: list[str]) -> dict:
 
 SPEC_F31 = next(c for c in E7.CATALOGO if c["id"] == "F3.1")
 SPEC_F33 = next(c for c in E7.CATALOGO if c["id"] == "F3.3")
+SPEC_F33_PARCIAL = next(c for c in E7.CATALOGO if c["id"] == "F3.3.soma_parcial")
+SPEC_F33_SEM_FILTRO = next(c for c in E7.CATALOGO if c["id"] == "F3.3.sem_filtro_sus")
 SPEC_P1 = next(c for c in E7.CATALOGO if c["id"] == "F3.P1")
 
 
@@ -250,6 +256,28 @@ class TestE7SinteticoHorasAusentes(unittest.TestCase):
         self.assertIn("5 unidades sem todos os periodos de pre", notas["principal"])
         self.assertEqual(notas["municipios_y_ausente_em_algum_mes_do_evento"], 5)
 
+    def test_sensibilidades_do_paragrafo_16(self) -> None:
+        painel, pop = painel_sintetico(n=600, horas_ausentes=5)
+        afetados = set(pop["co_ibge"].iloc[:5])
+        # Sem filtro: mesma regra de ausência do principal.
+        base_sf, _ = E7.janelas(E7.serie_outcome(painel, SPEC_F33_SEM_FILTRO, pop))
+        self.assertTrue(base_sf.loc[base_sf["co_ibge"].isin(afetados), "delta_principal"].isna().all())
+        # Soma parcial: nunca ausente; os afetados ficam na amostra.
+        serie = E7.serie_outcome(painel, SPEC_F33_PARCIAL, pop)
+        self.assertFalse(serie["y"].isna().any())
+        br = E7.contar_horas_em_branco(painel, "alvo_pmme", pop["co_ibge"])
+        self.assertEqual(br, {"celulas_municipio_mes": 5, "vinculos_em_branco_soma_nos_meses": 5, "municipios": 5})
+        linhas, _, base = E7.estimar_outcome(SPEC_F33_PARCIAL, "U", serie, sup={}, lr={}, nota_extra="X_BRANCO")
+        self.assertTrue(base.loc[base["co_ibge"].isin(afetados), "delta_principal"].notna().all())
+        est = pd.DataFrame(linhas)
+        self.assertTrue(est["rotulo"].str.contains(E7.ROTULO_SENS_HORAS).all())
+        self.assertFalse(est["entra_bky"].astype(bool).any())
+        princ = est[est["especificacao"] == "principal"]
+        self.assertTrue(princ["nota"].str.contains("soma parcial").all())
+        self.assertTrue(princ["nota"].str.contains("X_BRANCO").all())
+        self.assertFalse(SPEC_F33_PARCIAL["bky"] or SPEC_F33_SEM_FILTRO["bky"])
+        self.assertTrue(SPEC_F33["bky"])
+
     def test_taxa_sem_populacao_fica_ausente(self) -> None:
         painel, pop = painel_sintetico(n=50)
         pop.loc[0, "populacao_2022"] = np.nan
@@ -297,17 +325,35 @@ class TestE7SinteticoValidacoes(unittest.TestCase):
 
     def test_horas_nulas_sem_vinculo_ausente(self) -> None:
         p = self.painel.copy()
-        p["horas_sus_semanais"] = p["horas_sus_semanais"].astype("Int32")
-        p.loc[0, "horas_sus_semanais"] = pd.NA
+        p[E7.COL_HORAS_SUS] = p[E7.COL_HORAS_SUS].astype("Int32")
+        p.loc[0, E7.COL_HORAS_SUS] = pd.NA
+        with self.assertRaises(E7.FalhaValidacao):
+            E7.validar_painel(p, self.universo)
+
+    def test_sensibilidade_de_horas_ausente_ou_incoerente(self) -> None:
+        with self.assertRaises(E7.FalhaValidacao):
+            E7.validar_painel(self.painel.drop(columns=[E7.COL_HORAS_PARCIAL]), self.universo)
+        p = self.painel.copy()
+        p.loc[p["n_vinculos"] > 0, E7.COL_HORAS_PARCIAL] = p.loc[p["n_vinculos"] > 0, E7.COL_HORAS_PARCIAL] + 1
+        with self.assertRaises(E7.FalhaValidacao):
+            E7.validar_painel(p, self.universo)
+        p = self.painel.copy()
+        p[E7.COL_HORAS_PARCIAL] = p[E7.COL_HORAS_PARCIAL].astype("Int32")
+        p.loc[0, E7.COL_HORAS_PARCIAL] = pd.NA
         with self.assertRaises(E7.FalhaValidacao):
             E7.validar_painel(p, self.universo)
 
     def test_manifesto(self) -> None:
+        defs_ok = {E7.COL_HORAS_SUS: "soma das horas dos vinculos com TP_SUS_NAO_SUS == 'S'"}
+        base = {"painel": {"sha256": "a"}, "natureza_dos_dados": "EMPIRICO", "definicoes": defs_ok}
+        self.assertTrue(E7.validar_manifesto(base, "a")["sha256_painel_igual_manifesto"])
         with self.assertRaises(E7.FalhaValidacao):
-            E7.validar_manifesto({"painel": {"sha256": "a"}, "natureza_dos_dados": "EMPIRICO"}, "b")
+            E7.validar_manifesto(base, "b")
+        # Definição antiga (sem o filtro do §16) é recusada.
         with self.assertRaises(E7.FalhaValidacao):
-            E7.validar_manifesto({"painel": {"sha256": "a"}, "competencias_nao_obtidas": ["202501"],
-                                  "natureza_dos_dados": "EMPIRICO"}, "a")
+            E7.validar_manifesto({**base, "definicoes": {E7.COL_HORAS_SUS: "ambulatorial + hospitalar SUS"}}, "a")
+        with self.assertRaises(E7.FalhaValidacao):
+            E7.validar_manifesto({**base, "competencias_nao_obtidas": ["202501"]}, "a")
 
     def test_s3_portes_conferidos(self) -> None:
         # Tabela sintética que segue a regra do Anexo VI (estrato por código de IVS x porte).
