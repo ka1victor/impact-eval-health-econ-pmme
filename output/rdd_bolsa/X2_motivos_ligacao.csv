@@ -1,0 +1,23 @@
+ciclo,status_ligacao,motivo_ligacao,n,natureza_dos_dados,estatuto,x_id,retrato
+1,AMBIGUO,chave nome+curso+municipio repetida entre alocados,3,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,11/09/2026
+1,INCERTO,grafia proxima (similaridade >= 0.85 ou mesmo 1o nome e 2 partes em comum) no mesmo curso e municipio,15,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,11/09/2026
+1,LIGADO,nome+curso+municipio exato e unico,249,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,11/09/2026
+1,NAO_LIGADO,nome ativo em outro curso,19,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,11/09/2026
+1,NAO_LIGADO,nome e curso ativos em outro municipio,36,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,11/09/2026
+1,NAO_LIGADO,sem correspondente na lista de ativos,172,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,11/09/2026
+2,AMBIGUO,chave nome+curso+municipio repetida entre alocados,3,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,11/09/2026
+2,INCERTO,grafia proxima (similaridade >= 0.85 ou mesmo 1o nome e 2 partes em comum) no mesmo curso e municipio,42,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,11/09/2026
+2,LIGADO,nome+curso+municipio exato e unico,667,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,11/09/2026
+2,NAO_LIGADO,nome e curso ativos em outro municipio,29,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,11/09/2026
+2,NAO_LIGADO,sem correspondente na lista de ativos,316,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,11/09/2026
+1,AMBIGUO,chave nome+curso+municipio repetida entre alocados,3,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,12/08/2026
+1,INCERTO,grafia proxima (similaridade >= 0.85 ou mesmo 1o nome e 2 partes em comum) no mesmo curso e municipio,15,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,12/08/2026
+1,LIGADO,nome+curso+municipio exato e unico,249,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,12/08/2026
+1,NAO_LIGADO,nome ativo em outro curso,15,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,12/08/2026
+1,NAO_LIGADO,nome e curso ativos em outro municipio,27,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,12/08/2026
+1,NAO_LIGADO,sem correspondente na lista de ativos,185,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,12/08/2026
+2,AMBIGUO,chave nome+curso+municipio repetida entre alocados,3,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,12/08/2026
+2,INCERTO,grafia proxima (similaridade >= 0.85 ou mesmo 1o nome e 2 partes em comum) no mesmo curso e municipio,42,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,12/08/2026
+2,LIGADO,nome+curso+municipio exato e unico,680,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,12/08/2026
+2,NAO_LIGADO,nome e curso ativos em outro municipio,22,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,12/08/2026
+2,NAO_LIGADO,sem correspondente na lista de ativos,310,EMPIRICO,EXPLORATORIO_POS_SINTESE,X2,12/08/2026

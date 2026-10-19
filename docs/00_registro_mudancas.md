@@ -96,6 +96,20 @@ viáveis, congeladas antes de abrir os outcomes.
 |---|---|
 | [`06_execucao/45_protocolo_exploratorio_pos_sintese.md`](06_execucao/45_protocolo_exploratorio_pos_sintese.md) | protocolo exploratório: ponte PMM-E–CNES pelo registro profissional (origem e substituição), permanência dos alocados, dinâmica dos ativos, heterogeneidade e deslocamento na escolha, poder e descartes |
 
+## 19/10/2026 — X2 e X3 do protocolo exploratório (permanência e dinâmica dos ativos)
+
+Motivo: execução do X2 (permanência dos alocados da 1ª chamada) e do X3
+(série histórica de ativos) do doc 45, §3. O doc 46 recebe os resultados de
+todos os X; cada tarefa escreve a sua seção.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/46_resultados_exploratorios_pos_sintese.md`](06_execucao/46_resultados_exploratorios_pos_sintese.md) | resultados exploratórios pós-síntese; seções X2 e X3 com blocos gerados de `output/rdd_bolsa/X2_*` e `X3_*` |
+| `scripts/rdd_bolsa/18_permanencia_ativos.py` | ligação alocados → ativos (pseudônimos, sem nome, CPF ou CRM nas saídas), conferência de completude da série, RDD com limites de Lee e BKY dentro de cada X |
+| `tests/test_x2_x3_permanencia.py` | regra de ligação, completude e estimação com dados sintéticos; rótulos, hashes, ausência de dados pessoais e tabelas do doc 46 contra `output/` |
+
 ## 18/10/2026 — Estimação do E6 (famílias F0, F1, F2 e F4 do protocolo 40)
 
 Motivo: a tarefa E6 do protocolo multi-outcome estima, sob o protocolo
