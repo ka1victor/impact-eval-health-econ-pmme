@@ -1,0 +1,418 @@
+{
+  "etapa": "NA_abertura_vagas_selecao",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "PROTOCOLO_48_ADENDO_7_POS_RESULTADO",
+  "data_execucao": "2026-10-19",
+  "script": "scripts/rdd_bolsa/24_abertura_vagas_selecao.py",
+  "protocolo": {
+    "arquivo": "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md",
+    "sha256": "fd012a47da4f48e96638c128797d35b673f4952253822f669c6cb8d43fa41e50",
+    "secoes": [
+      "§7",
+      "§8"
+    ]
+  },
+  "contraste": "pacote do corte: anúncio de +R$ 5 mil por mês na bolsa (0,300: R$ 10 mil -> 15 mil; 0,400: R$ 15 mil -> 20 mil) mais as outras regras federais que mudam nos mesmos cortes (protocolo §13, auditoria 18); não é efeito da participação no PMM-E nem do Agora Tem Especialistas",
+  "salto": "tau = lado com bolsa maior (s > c) menos lado com bolsa menor; o corte pertence ao lado inferior",
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md",
+      "sha256": "fd012a47da4f48e96638c128797d35b673f4952253822f669c6cb8d43fa41e50",
+      "bytes": 12474,
+      "papel": "protocolo 48 com o adendo §7 e a correcao §8 (somente lido)",
+      "fonte": "pipeline do repositorio",
+      "data_referencia": "2026-10-19",
+      "cobertura": "§7, §8",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial)",
+      "fonte": "Ipea, Atlas da Vulnerabilidade Social (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "ivs"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_U_municipio.parquet",
+      "sha256": "5d4bf05a24e1b5f704aa50bbff4325b3997f1505f57c80f14f822e08e1c3db14",
+      "bytes": 246282,
+      "papel": "populacao U (A1, A2, A4), zero estrutural fora do quadro",
+      "fonte": "tarefa B",
+      "data_referencia": "ver dicionario",
+      "cobertura": "5565 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "V1-V3 (A2, A4)",
+      "fonte": "tarefa B",
+      "data_referencia": "ver dicionario",
+      "cobertura": "V1: 368, V2: 454, V3: 747",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "municipios sem IVS oficial fora"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "celulas do quadro (A2: alocados limitados as vagas; A3)",
+      "fonte": "tarefa B",
+      "data_referencia": "ver dicionario",
+      "cobertura": "5135 celulas",
+      "unidade": "celula CNES x curso x ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "celulas de municipio sem IVS oficial fora do A3"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "populacao do Censo 2022 (conferencia de populacao_2022)",
+      "fonte": "IBGE, Censo 2022 (a06)",
+      "data_referencia": "2022",
+      "cobertura": "municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+      "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
+      "bytes": 20167560,
+      "papel": "estoques CNES pre-programa (A4)",
+      "fonte": "CNES nacional (a09)",
+      "data_referencia": "202406-202506",
+      "cobertura": "13 competencias",
+      "unidade": "municipio x grupo de CBO x mes",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "competencia entre 202406 e 202506; grupos alvo_pmme, generalistas"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/dicionario_outcomes_funil.json",
+      "sha256": "912b80994f9fbefc3bbe1f5f978de16771a6c064f0044960887366a91bb88e8d",
+      "bytes": 91512,
+      "papel": "dicionario dos outcomes da tarefa B (somente lido)",
+      "fonte": "tarefa B",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/N_estimativas.csv",
+      "sha256": "3490d69c568ed13eb2b03612100a24aeefd72fc5f5f7cb3ac84e301d94f684ed",
+      "bytes": 1455159,
+      "papel": "S-a do ciclo 1 na leitura conjunta (somente lido)",
+      "fonte": "23_estimar_contagem_vagas.py",
+      "data_referencia": "2026-10-19",
+      "cobertura": "2221 linhas",
+      "unidade": "linha de estimativa",
+      "chaves": "outcome_id, populacao, corte",
+      "filtros": "S-a principal N1"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E9_resumo.json",
+      "sha256": "fff0ca8da645a4783df22d2a079cace3b46503571de616f6ad100132ef9e8d7e",
+      "bytes": 51190,
+      "papel": "ponte do A3 com o E9 (somente lido)",
+      "fonte": "16_estimar_E9_escolha.py",
+      "data_referencia": "2026-10-18",
+      "cobertura": "ciclos 1-3 e empilhado",
+      "unidade": "resumo",
+      "chaves": "resultado_principal",
+      "filtros": "-"
+    }
+  ],
+  "atributos_celula": {
+    "existem": {
+      "curso": "cod_curso",
+      "tipo_de_vaga": "com_vagas_imediatas (1 = tem vaga imediata; 0 = so cadastro reserva; igual a situacao_vagas)",
+      "regiao": "regiao (nao pedida pelo §7)"
+    },
+    "ausentes": {
+      "tipo_de_pratica": "efeito fixo de tipo de pratica nao executado: o quadro da 1a chamada (outcomes_V_celula.parquet) nao tem atributo de tipo de pratica (ele so existe na relacao nominal de ativos, depois da alocacao); lacuna registrada, nada imputado (protocolo 48, §7, A3)"
+    },
+    "usados_como_efeito_fixo": [
+      "curso x ciclo (fe_curso_ciclo)",
+      "tipo de vaga (tipo_vaga_imediata)"
+    ],
+    "conferencia_tipo_vaga": true
+  },
+  "cnes_pre": {
+    "competencias": [
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202411",
+      "202412",
+      "202501",
+      "202502",
+      "202503",
+      "202504",
+      "202505",
+      "202506"
+    ],
+    "n_competencias": 13,
+    "municipios_sem_estoque_completo": {
+      "estoque_alvo_pre": 0,
+      "estoque_gen_pre": 0
+    },
+    "medida": "media mensal de n_profissionais_distintos no municipio-grupo (a09)",
+    "estabelecimentos_hospitalares": "ausentes do painel: lacuna registrada"
+  },
+  "monotonicidade": "Monotonicidade de Lee (2009): no corte, a abertura muda num so sentido. Na margem intensiva, toda vaga que existiria do lado com menos vagas por habitante tambem existiria do lado com mais (as vagas a mais sao todas 'marginais'); na margem extensiva, todo municipio que abriria celula do lado de menor taxa de abertura tambem abriria do outro. Sob essa suposicao, aparar a fracao p do lado de maior abertura deixa so as vagas (ou municipios) 'sempre abertas', comparaveis dos dois lados. Os limites nao valem se a faixa fizer alguns gestores abrirem mais e outros menos.",
+  "bootstrap": {
+    "n_boot": 999,
+    "semente": [
+      20261018,
+      48,
+      7
+    ],
+    "unidade": "municipio (com reposicao; a multiplicidade entra como peso de frequencia em todas as regressoes da reamostra)",
+    "n_municipios": 5565,
+    "validos": {
+      "1|0.300": {
+        "int": 987,
+        "int_pop": 500,
+        "ext": 995
+      },
+      "1|0.400": {
+        "int": 947,
+        "int_pop": 944,
+        "ext": 999
+      },
+      "1|empilhado": {
+        "int": 990,
+        "int_pop": 975,
+        "ext": 999
+      },
+      "2|0.300": {
+        "int": 989,
+        "int_pop": 837,
+        "ext": 999
+      },
+      "2|0.400": {
+        "int": 999,
+        "int_pop": 999,
+        "ext": 999
+      },
+      "2|empilhado": {
+        "int": 999,
+        "int_pop": 996,
+        "ext": 999
+      },
+      "3|0.300": {
+        "int": 998,
+        "int_pop": 975,
+        "ext": 999
+      },
+      "3|0.400": {
+        "int": 999,
+        "int_pop": 999,
+        "ext": 999
+      },
+      "3|empilhado": {
+        "int": 999,
+        "int_pop": 999,
+        "ext": 999
+      },
+      "1+2+3|0.300": {
+        "int": 998,
+        "int_pop": 943,
+        "ext": 999
+      },
+      "1+2+3|0.400": {
+        "int": 999,
+        "int_pop": 999,
+        "ext": 999
+      },
+      "1+2+3|empilhado": {
+        "int": 999,
+        "int_pop": 999,
+        "ext": 999
+      }
+    },
+    "ic": "Imbens e Manski (2004): [inf - c ep_inf; sup + c ep_sup], c de Phi(c + Delta/max ep) - Phi(-c) = 0,95, ep = DP bootstrap de cada limite"
+  },
+  "ciclo_1": "protocolo 48, §8: no ciclo 1 a adesao dos gestores precedeu o anuncio da faixa; a oferta nao pode ter respondido a faixa em si; o doc 49 relata o ciclo 1 a parte na leitura conjunta",
+  "decisoes": [
+    "A1: vagas preenchidas = N1 (n_alocados_ch1, como no doc 49); vagas oferecidas = imediatas + cadastro reserva (forma principal do doc 49); por 10 mil habitantes do Censo 2022; zero estrutural fora do quadro. A versao com alocados limitados as vagas da celula (contagem do A2) e ponte, fora do adendo.",
+    "A2 intensiva: s = intercepto local linear (sem peso) das vagas oferecidas por 10 mil hab. em U de cada lado; f = intercepto local linear da fracao limitada do municipio com peso = vagas oferecidas (equivale ao outcome binario no nivel da vaga) em V; no empilhado, interceptos agregados com os pesos omega_g da regressao de s (os mesmos para s e f) e lado de cima = lado de baixo + salto comum. Variante com s ponderado pela populacao, fora do adendo.",
+    "A2 extensiva: rdd_lib.limites_lee_rd com um corte (selecao = ter >= 1 celula, que no quadro equivale a ter >= 1 vaga; outcome = fracao limitada); no empilhado, o mesmo algoritmo com a fracao de aparo comum e o aparo dentro de cada grupo ciclo x corte.",
+    "A2 extensiva: o aparo usa o quantil ponderado do meio-janela com reta local (aproximacao (i) da rdd_lib); por isso, ao contrario da margem intensiva, os limites podem nao conter o salto ingenuo, o que fica anotado na linha.",
+    "A2 bootstrap: municipios de U reamostrados com reposicao (o mesmo sorteio serve a todas as amostras e ciclos da reamostra, preservando o cluster); reamostra sem suporte (menos de 2 mass points num lado de algum grupo) ou com taxa de selecao nao positiva e descartada e contada.",
+    "A3: celula preenchida = >= 1 alocado na 1a chamada (n_alocados_ch1); alocados / vagas sem limite (como o §7 diz) e, fora do adendo, limitado; candidatos de 1a opcao e, como ponte com o E9, ter >= 1 candidato de 1a opcao; efeitos fixos de curso x ciclo (efeitos_fixos da rdd_lib) e tipo de vaga (covariavel linear nao interagida); variantes sem tipo de vaga (o tipo de vaga tambem e decisao de quem monta o quadro) e sem efeitos fixos.",
+    "A4: covariaveis centradas na media de kernel da janela, comuns aos dois lados, um coeficiente por grupo ciclo x corte no empilhado (como o controle do script 23) e, fora do adendo, um so coeficiente. Para contagens (S-b), estoques em nivel; para outcomes por habitante (A1), estoques por 10 mil habitantes; log da populacao nos dois. Estoque = media mensal de profissionais distintos (a09) de 202406 a 202506.",
+    "O adendo nao define Holm: nenhuma linha entra em Holm (entra_holm = False)."
+  ],
+  "desvios": [
+    {
+      "data": "2026-10-19",
+      "item": "tipo de pratica (A3)",
+      "situacao": "ausente do quadro da 1a chamada",
+      "resolucao": "linha NAO_EXECUTADO com o motivo; nada imputado"
+    },
+    {
+      "data": "2026-10-19",
+      "item": "estabelecimentos hospitalares (A4)",
+      "situacao": "o painel nacional do CNES (a09) nao traz estabelecimentos",
+      "resolucao": "linha NAO_EXECUTADO com o motivo; nada imputado"
+    },
+    {
+      "data": "2026-10-19",
+      "item": "Lee empilhado",
+      "situacao": "a rdd_lib so tem limites_lee_rd com um corte",
+      "resolucao": "algoritmo identico implementado aqui (conferido contra a rdd_lib em todo corte unico); no empilhado, aparo por grupo com fracao comum"
+    }
+  ],
+  "contagens": {
+    "linhas": 690,
+    "executado": 681,
+    "sem_estimativa": 0,
+    "nao_executado": 9,
+    "por_especificacao": {
+      "A1": 144,
+      "A2": 36,
+      "A3": 366,
+      "A4": 144
+    },
+    "celulas_sem_ivs_fora": 1,
+    "municipios_sem_estoque_cnes": {
+      "estoque_alvo_pre": 0,
+      "estoque_gen_pre": 0
+    }
+  },
+  "validacoes": {
+    "populacoes": {
+      "U_ivs_igual_a08": true,
+      "G3_ivs_igual_a08": true,
+      "V1_ivs_igual_a08": true,
+      "V2_ivs_igual_a08": true,
+      "V3_ivs_igual_a08": true,
+      "primeiro_estagio": {
+        "V1": {
+          "municipios": 368,
+          "reproduzidos": 368,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        },
+        "V2": {
+          "municipios": 454,
+          "reproduzidos": 454,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        },
+        "V3": {
+          "municipios": 747,
+          "reproduzidos": 747,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        }
+      },
+      "municipios_sem_ivs_oficial_fora_da_rdd": {
+        "U": [],
+        "G3": [
+          "422000"
+        ],
+        "V1": [],
+        "V2": [],
+        "V3": [
+          "422000"
+        ]
+      }
+    },
+    "desenho_rapido_igual_rdd_lib": true,
+    "lee_extensivo_igual_rdd_lib": 6,
+    "poisson_igual_rdd_lib": true,
+    "soma_celulas_igual_municipio": true,
+    "celulas": {
+      "V1": {
+        "soma_celulas_igual_municipio": true,
+        "celulas_com_alocados_acima_das_vagas": 15,
+        "alocados_cortados_pelo_limite": 20.0
+      },
+      "V2": {
+        "soma_celulas_igual_municipio": true,
+        "celulas_com_alocados_acima_das_vagas": 0,
+        "alocados_cortados_pelo_limite": 0.0
+      },
+      "V3": {
+        "soma_celulas_igual_municipio": true,
+        "celulas_com_alocados_acima_das_vagas": 0,
+        "alocados_cortados_pelo_limite": 0.0
+      }
+    },
+    "populacao_igual_censo2022": true,
+    "linhas_com_nan_sem_nota": 0
+  },
+  "saidas": {
+    "NA_estimativas.csv": {
+      "arquivo": "output/rdd_bolsa/NA_estimativas.csv",
+      "sha256": "e322328451ac4158979224a99f54aa3b984c9f3fd445e71786b01c51d539e7ea"
+    },
+    "figuras": [
+      {
+        "arquivo": "output/rdd_bolsa/NA_figuras/NA_A1_por_10k_empilhado.png",
+        "paineis": [
+          {
+            "outcome_id": "A1_PREENCH_10K",
+            "populacao": "U",
+            "ciclo": "1+2+3",
+            "corte": "empilhado",
+            "especificacao": "A1",
+            "variante": "principal",
+            "tau": -0.03850528245612897,
+            "ic95_inf": -0.09965537045722433,
+            "ic95_sup": 0.02264480554496639,
+            "p_valor": 0.21714344638893718
+          },
+          {
+            "outcome_id": "A1_OFERT_10K",
+            "populacao": "U",
+            "ciclo": "1+2+3",
+            "corte": "empilhado",
+            "especificacao": "A1",
+            "variante": "principal",
+            "tau": -0.06552644000359376,
+            "ic95_inf": -0.15923542624931641,
+            "ic95_sup": 0.028182546242128903,
+            "p_valor": 0.17052655857977359
+          }
+        ]
+      },
+      {
+        "arquivo": "output/rdd_bolsa/NA_figuras/NA_A3_celula_preenchida_empilhado.png",
+        "paineis": [
+          {
+            "outcome_id": "A3_PREENCHIDA",
+            "populacao": "V1+V2+V3 (celulas)",
+            "ciclo": "1+2+3",
+            "corte": "empilhado",
+            "especificacao": "A3",
+            "variante": "principal",
+            "tau": -0.04859047539104614,
+            "ic95_inf": -0.12907869229680702,
+            "ic95_sup": 0.03189774151471474,
+            "p_valor": 0.23672042409839184
+          }
+        ]
+      }
+    ]
+  },
+  "linguagem": "RDD em nivel = pacote do corte; A3 e condicional a abertura; os limites de Lee valem sob monotonicidade; resultado nulo e falta de evidencia com a precisao relatada, nao ausencia de efeito; nada aqui e efeito da participacao no PMM-E"
+}

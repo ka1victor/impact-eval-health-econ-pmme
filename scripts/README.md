@@ -46,6 +46,7 @@ Ele executa sequencialmente:
       - `scripts/rdd_bolsa/13_estimar_E6_funil.py` — E6, RDD dos outcomes do funil (lê a janela LR do E5);
       - `scripts/rdd_bolsa/23_estimar_contagem_vagas.py` — família N (protocolo 48, pós-resultado): número de vagas preenchidas com e sem controle pelas vagas oferecidas, decomposição, Poisson, placebos e figuras (`docs/06_execucao/49`);
       - `scripts/rdd_bolsa/16_estimar_E9_escolha.py` — E9, logit condicional da escolha dos candidatos;
+      - `scripts/rdd_bolsa/24_abertura_vagas_selecao.py` — adendo §7 do protocolo 48 (pós-resultado): abertura de vagas como seleção — A1 por habitante em U, A2 limites de Lee com IC de Imbens–Manski por bootstrap de municípios, A3 por célula com efeitos fixos, A4 com covariáveis pré-determinadas do CNES (seção 15 do `docs/06_execucao/49`);
       - `scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py` — E7, DiRD no CNES nacional (confere a janela LR de U com a do E6).
       - `scripts/rdd_bolsa/15_sintese_E8.py` — síntese E8: Holm das primárias P1 e P2 e tabela-síntese (`docs/06_execucao/44`);
     - `09b_conferir_sinal.py`, `09_gerar_relatorio_pdf.py` e `10_galeria_figura_regra.py` — conferência do sinal, relatório em PDF (E1 a E9 e síntese E8) e galeria da figura da regra;

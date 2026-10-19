@@ -621,6 +621,8 @@ class TestDoc49(unittest.TestCase):
     @staticmethod
     def _prosa() -> str:
         texto = N.MARCA.sub("", DOC.read_text(encoding="utf-8"))
+        # Blocos do adendo §7 (gerados pelo script 24; conferidos em tests/test_abertura_vagas.py).
+        texto = re.sub(r"<!-- NA:(\w+):inicio -->.*?<!-- NA:\1:fim -->", "", texto, flags=re.S)
         texto = re.sub(r"`[^`]*`", "", texto)
         texto = re.sub(r"\]\([^)]*\)", "]", texto)
         texto = re.sub(r"(?m)^#+ .*$", "", texto)

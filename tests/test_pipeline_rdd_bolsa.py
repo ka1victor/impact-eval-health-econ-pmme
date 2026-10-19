@@ -44,6 +44,7 @@ CADEIA = [
     RDD / "13_estimar_E6_funil.py",
     RDD / "23_estimar_contagem_vagas.py",  # família N (protocolo 48): lê os outcomes e o E6
     RDD / "16_estimar_E9_escolha.py",
+    RDD / "24_abertura_vagas_selecao.py",  # adendo §7 do protocolo 48: lê 12, a09, 23 e o E9 (16)
     RDD / "14_estimar_E7_dird_cnes.py",
     RDD / "15_sintese_E8.py",
     RDD / "09b_conferir_sinal.py",  # o 09 exige a conferência em dia com o E3
@@ -145,6 +146,12 @@ class TestCadeiaRddBolsa(unittest.TestCase):
             # Família N (protocolo 48) lê os outcomes (12), a janela LR e as estimativas do E6 (13).
             RDD / "23_estimar_contagem_vagas.py": [RDD / "12_construir_outcomes_funil.py",
                                                   RDD / "13_estimar_E6_funil.py",
+                                                  AQ / "a08_adquirir_ivs_2010_oficial.py"],
+            # Adendo §7 (24) lê os outcomes (12), o CNES (a09), o Censo (a06), N_estimativas (23) e o E9 (16).
+            RDD / "24_abertura_vagas_selecao.py": [RDD / "12_construir_outcomes_funil.py", A09,
+                                                  AQ / "06_adquirir_populacao_censo2022.py",
+                                                  RDD / "23_estimar_contagem_vagas.py",
+                                                  RDD / "16_estimar_E9_escolha.py",
                                                   AQ / "a08_adquirir_ivs_2010_oficial.py"],
             # E9 lê as tabelas de escolha do 12 e o manifesto do a11.
             RDD / "16_estimar_E9_escolha.py": [RDD / "12_construir_outcomes_funil.py",

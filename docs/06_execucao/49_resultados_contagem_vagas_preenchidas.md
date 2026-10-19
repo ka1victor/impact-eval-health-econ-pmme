@@ -40,8 +40,13 @@ o lado com bolsa menor; o próprio corte fica no lado de baixo.
 **Controlar pelas vagas oferecidas muda a pergunta.** Numa RDD o controle não
 é necessário para identificar; só reduz variância se for pré-determinado
 (Calonico, Cattaneo, Farrell e Titiunik, 2019). As vagas oferecidas são
-definidas pelo gestor depois de a faixa da bolsa ser conhecida e podem
-responder a ela. Por isso o documento relata as duas leituras:
+definidas pelo gestor e pela SGTES antes de os candidatos escolherem e podem
+responder ao corte. Quando a faixa ficou conhecida muda por ciclo (correção
+do protocolo 48, [§8](48_protocolo_contagem_vagas_preenchidas.md)):
+no ciclo 1 a adesão dos gestores precedeu o anúncio da faixa, e a oferta só
+pode ter respondido às outras regras do pacote do corte ou à montagem do
+quadro; no ciclo 3 a grade já era pública; no ciclo 2 não há etapa de
+gestores arquivada. Por isso o documento relata as duas leituras:
 
 - **sem controle (S-b):** efeito total da faixa sobre o número de vagas
   preenchidas, que inclui a resposta da oferta;
@@ -813,3 +818,427 @@ Estão em `decisoes` e `desvios` de `N_resumo.json`, com data e motivo:
 | municípios com vagas oferecidas ausentes (saem da linha, nunca viram zero) | 0 |
 | municípios do quadro sem IVS 2010 oficial (fora da RDD) | 1 |
 <!-- N:validacoes:fim -->
+
+## 15. Adendo §7 — abertura de vagas como seleção
+
+> **Protocolo:** [`48_protocolo_contagem_vagas_preenchidas.md`](48_protocolo_contagem_vagas_preenchidas.md),
+> §7 (congelado antes de estimar) e a correção do §8.<br>
+> **Estatuto:** pós-resultado. Toda linha de `NA_estimativas.csv` tem
+> `estatuto = PROTOCOLO_48_ADENDO_7_POS_RESULTADO` e
+> `natureza_dos_dados = EMPIRICO`. Nada aqui muda as linhas S-a a S-j nem o
+> Holm do §3; o adendo não define Holm próprio.<br>
+> **Script:** `scripts/rdd_bolsa/24_abertura_vagas_selecao.py`.<br>
+> **Saídas:** `output/rdd_bolsa/NA_estimativas.csv`, `NA_resumo.json` e
+> `NA_figuras/`.<br>
+> **Testes:** `tests/test_abertura_vagas.py`.<br>
+> **Números:** nenhum número de resultado é digitado aqui. Os blocos entre
+> marcadores `<!-- NA:... -->` são regravados das saídas por
+> `24_abertura_vagas_selecao.py --atualizar-doc`, e o teste confere que são
+> idênticos aos gerados.
+
+**Por que.** As vagas oferecidas e as preenchidas andam juntas e acompanham o
+porte do município, e a abertura de vagas é decisão do gestor e da SGTES, que
+pode responder ao corte. Se a abertura responde ao corte, comparar só os
+municípios (ou as células) que abriram vagas compara grupos selecionados. As
+quatro análises atacam isso de lados diferentes:
+
+- **A1** não condiciona na abertura: todos os municípios com IVS oficial, com
+  zero onde não houve célula no quadro (sem célula, nenhuma vaga oferecida e
+  nenhuma preenchida: é zero verdadeiro, não imputação), por 10 mil habitantes
+  do Censo 2022;
+- **A2** pergunta quanto a seleção na abertura poderia mover o salto no
+  preenchimento (limites de Lee);
+- **A3** mede o preenchimento condicional à abertura, célula a célula, com
+  efeitos fixos de curso × ciclo e de tipo de vaga;
+- **A4** pergunta se os saltos em contagens vêm de diferenças de porte e de
+  capacidade instalada que já existiam antes do programa.
+
+**Ciclo 1 à parte.** No ciclo 1, a adesão dos gestores precedeu o anúncio da
+faixa da bolsa (protocolo 48, §8). Ali a oferta não pode ter respondido à
+faixa em si, só às outras regras do pacote do corte ou à montagem do quadro,
+e condicionar nas vagas oferecidas é mais defensável que nos outros ciclos. A
+leitura conjunta relata o ciclo 1 separadamente.
+
+**Monotonicidade (suposição dos limites de Lee).** No corte, a abertura muda
+num só sentido: toda vaga que existiria do lado com menos vagas por habitante
+também existiria do lado com mais, e todo município que abriria célula do lado
+de menor abertura também abriria do outro. Sob essa suposição, aparar do lado
+de maior abertura a fração de vagas (ou de municípios) "a mais" deixa só as
+"sempre abertas", comparáveis dos dois lados. Os limites não valem se a faixa
+fizer alguns gestores abrirem mais vagas e outros menos.
+
+### Atributos das células e lacunas
+
+<!-- NA:atributos:inicio -->
+| Atributo da célula | Situação | Coluna ou motivo |
+|---|---|---|
+| curso | existe | cod_curso |
+| tipo de vaga | existe | com_vagas_imediatas (1 = tem vaga imediata; 0 = so cadastro reserva; igual a situacao_vagas) |
+| regiao | existe | regiao (nao pedida pelo §7) |
+| tipo de pratica | **ausente** | efeito fixo de tipo de pratica nao executado: o quadro da 1a chamada (outcomes_V_celula.parquet) nao tem atributo de tipo de pratica (ele so existe na relacao nominal de ativos, depois da alocacao); lacuna registrada, nada imputado (protocolo 48, §7, A3) |
+| estabelecimentos hospitalares (A4) | **ausente** | numero de estabelecimentos hospitalares no CNES pre nao executado: o painel nacional do a09 (painel_municipio_cbo_mes.parquet) e municipio x grupo de CBO x mes e nao traz estabelecimentos; lacuna registrada, nada imputado (protocolo 48, §7, A4) |
+<!-- NA:atributos:fim -->
+
+### A1 — efeito total por habitante
+
+Local linear, kernel triangular, h = 0,050, CR1 por município nos empilhados;
+a robustez é o Poisson local das contagens com offset log(população), cujo
+salto se lê como efeito relativo.
+
+<!-- NA:a1:inicio -->
+| Outcome | Variante | Ciclo | Corte | n abaixo / acima | Média abaixo | Salto | IC 95% | p | Salto / média abaixo | Efeito relativo (Poisson) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| A1_PREENCH_10K | principal | 1 | 0,300 | 859 / 654 | 0,011 | −0,011 | [−0,024; +0,002] | 0,090 | −104,8 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 1 | 0,300 | 859 / 654 | — | +0,774 (log) | [−0,929; +2,477] | 0,373 | — | +116,9 % |
+| A1_OFERT_10K | principal | 1 | 0,300 | 859 / 654 | 0,067 | +0,000 | [−0,057; +0,057] | 0,991 | +0,5 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 1 | 0,300 | 859 / 654 | — | +1,234 (log) | [−0,427; +2,895] | 0,145 | — | +243,6 % |
+| A1_PREENCH_10K | principal | 1 | 0,400 | 587 / 603 | 0,022 | −0,016 | [−0,055; +0,023] | 0,417 | −72,6 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 1 | 0,400 | 587 / 603 | — | −0,914 (log) | [−2,268; +0,441] | 0,186 | — | −59,9 % |
+| A1_OFERT_10K | principal | 1 | 0,400 | 587 / 603 | 0,093 | −0,135 | [−0,284; +0,014] | 0,076 | −145,2 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 1 | 0,400 | 587 / 603 | — | −1,043 (log) | [−2,045; −0,040] | 0,041 | — | −64,7 % |
+| A1_PREENCH_10K | principal | 1 | empilhado | 1446 / 1257 | 0,015 | −0,013 | [−0,032; +0,005] | 0,160 | −86,8 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 1 | empilhado | 1446 / 1257 | — | −0,073 (log) | [−1,183; +1,037] | 0,898 | — | −7,0 % |
+| A1_OFERT_10K | principal | 1 | empilhado | 1446 / 1257 | 0,077 | −0,059 | [−0,132; +0,014] | 0,113 | −76,2 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 1 | empilhado | 1446 / 1257 | — | +0,228 (log) | [−0,894; +1,350] | 0,690 | — | +25,6 % |
+| A1_PREENCH_10K | principal | 2 | 0,300 | 859 / 654 | 0,026 | −0,033 | [−0,058; −0,008] | 0,009 | −129,4 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 2 | 0,300 | 859 / 654 | — | +0,112 (log) | [−1,339; +1,564] | 0,879 | — | +11,9 % |
+| A1_OFERT_10K | principal | 2 | 0,300 | 859 / 654 | 0,097 | +0,005 | [−0,091; +0,101] | 0,918 | +5,2 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 2 | 0,300 | 859 / 654 | — | +0,797 (log) | [−0,575; +2,168] | 0,255 | — | +121,8 % |
+| A1_PREENCH_10K | principal | 2 | 0,400 | 587 / 603 | 0,077 | −0,142 | [−0,508; +0,224] | 0,446 | −184,0 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 2 | 0,400 | 587 / 603 | — | −0,670 (log) | [−1,930; +0,590] | 0,297 | — | −48,8 % |
+| A1_OFERT_10K | principal | 2 | 0,400 | 587 / 603 | 0,121 | −0,183 | [−0,562; +0,195] | 0,342 | −151,4 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 2 | 0,400 | 587 / 603 | — | −0,775 (log) | [−2,108; +0,557] | 0,254 | — | −53,9 % |
+| A1_PREENCH_10K | principal | 2 | empilhado | 1446 / 1257 | 0,047 | −0,081 | [−0,242; +0,080] | 0,323 | −173,6 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 2 | empilhado | 1446 / 1257 | — | −0,285 (log) | [−1,280; +0,710] | 0,575 | — | −24,8 % |
+| A1_OFERT_10K | principal | 2 | empilhado | 1446 / 1257 | 0,107 | −0,078 | [−0,252; +0,097] | 0,384 | −72,7 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 2 | empilhado | 1446 / 1257 | — | +0,167 (log) | [−0,921; +1,254] | 0,764 | — | +18,1 % |
+| A1_PREENCH_10K | principal | 3 | 0,300 | 859 / 654 | 0,012 | −0,003 | [−0,019; +0,012] | 0,664 | −27,2 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 3 | 0,300 | 859 / 654 | — | +0,214 (log) | [−1,250; +1,678] | 0,775 | — | +23,8 % |
+| A1_OFERT_10K | principal | 3 | 0,300 | 859 / 654 | 0,126 | −0,014 | [−0,102; +0,074] | 0,756 | −11,0 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 3 | 0,300 | 859 / 654 | — | +0,884 (log) | [−0,297; +2,065] | 0,142 | — | +142,1 % |
+| A1_PREENCH_10K | principal | 3 | 0,400 | 587 / 603 | 0,028 | −0,044 | [−0,114; +0,027] | 0,222 | −155,1 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 3 | 0,400 | 587 / 603 | — | −0,146 (log) | [−1,191; +0,899] | 0,784 | — | −13,6 % |
+| A1_OFERT_10K | principal | 3 | 0,400 | 587 / 603 | 0,240 | −0,119 | [−0,380; +0,141] | 0,370 | −49,8 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 3 | 0,400 | 587 / 603 | — | +0,031 (log) | [−0,655; +0,717] | 0,930 | — | +3,1 % |
+| A1_PREENCH_10K | principal | 3 | empilhado | 1446 / 1257 | 0,019 | −0,021 | [−0,053; +0,011] | 0,197 | −112,1 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 3 | empilhado | 1446 / 1257 | — | +0,079 (log) | [−0,918; +1,076] | 0,876 | — | +8,2 % |
+| A1_OFERT_10K | principal | 3 | empilhado | 1446 / 1257 | 0,172 | −0,060 | [−0,184; +0,064] | 0,344 | −34,8 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 3 | empilhado | 1446 / 1257 | — | +0,587 (log) | [−0,226; +1,401] | 0,157 | — | +79,9 % |
+| A1_PREENCH_10K | principal | 1+2+3 | 0,300 | 859 / 654 | 0,016 | −0,016 | [−0,029; −0,003] | 0,014 | −98,1 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 1+2+3 | 0,300 | 859 / 654 | — | +0,257 (log) | [−1,033; +1,548] | 0,696 | — | +29,4 % |
+| A1_OFERT_10K | principal | 1+2+3 | 0,300 | 859 / 654 | 0,097 | −0,003 | [−0,066; +0,060] | 0,930 | −2,9 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 1+2+3 | 0,300 | 859 / 654 | — | +0,911 (log) | [−0,249; +2,072] | 0,124 | — | +148,8 % |
+| A1_PREENCH_10K | principal | 1+2+3 | 0,400 | 587 / 603 | 0,043 | −0,068 | [−0,206; +0,071] | 0,339 | −158,2 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 1+2+3 | 0,400 | 587 / 603 | — | −0,580 (log) | [−1,457; +0,297] | 0,195 | — | −44,0 % |
+| A1_OFERT_10K | principal | 1+2+3 | 0,400 | 587 / 603 | 0,151 | −0,146 | [−0,343; +0,051] | 0,147 | −96,5 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 1+2+3 | 0,400 | 587 / 603 | — | −0,419 (log) | [−1,117; +0,279] | 0,240 | — | −34,2 % |
+| A1_PREENCH_10K | principal | 1+2+3 | empilhado | 1446 / 1257 | 0,027 | −0,039 | [−0,100; +0,023] | 0,217 | −142,8 % | — |
+| A1_PREENCH_10K | poisson_offset_log_populacao | 1+2+3 | empilhado | 1446 / 1257 | — | −0,132 (log) | [−0,947; +0,683] | 0,751 | — | −12,4 % |
+| A1_OFERT_10K | principal | 1+2+3 | empilhado | 1446 / 1257 | 0,119 | −0,066 | [−0,159; +0,028] | 0,171 | −55,2 % | — |
+| A1_OFERT_10K | poisson_offset_log_populacao | 1+2+3 | empilhado | 1446 / 1257 | — | +0,405 (log) | [−0,395; +1,206] | 0,321 | — | +50,0 % |
+<!-- NA:a1:fim -->
+
+![A1 por 10 mil habitantes, empilhado](../../output/rdd_bolsa/NA_figuras/NA_A1_por_10k_empilhado.png)
+
+### A2 — limites de Lee para a abertura
+
+Na margem intensiva, a taxa de seleção de cada lado é o número de vagas
+oferecidas por 10 mil habitantes no corte (intercepto local linear de cada
+lado); a fração aparada é p = (s maior − s menor) / s maior, no lado com mais
+vagas por habitante; o outcome é a vaga preenchida, com as vagas preenchidas
+de cada célula limitadas às vagas que ela oferecia. Com f a taxa de
+preenchimento do lado aparado, a taxa das vagas "sempre abertas" fica entre
+o maior valor entre zero e (f − p) / (1 − p) e o menor valor entre um e
+f / (1 − p), e o salto fica entre esses
+valores menos (ou, se o lado aparado é o de baixo, o lado de cima menos) a taxa
+do outro lado. Na margem extensiva, a seleção é ter pelo menos uma vaga no
+quadro e o outcome é a fração das vagas oferecidas que foi preenchida, com o
+aparo de Lee pelo topo e pela base; como o aparo usa a reta local, ali os
+limites podem não conter o salto sem aparo (fica anotado na linha). O IC é o de Imbens e Manski, com o erro
+padrão de cada limite tirado de um bootstrap de municípios com semente fixa
+(contagem de reamostras na tabela de validações). "Salto ingênuo" é a
+diferença entre os lados sem aparo.
+
+<!-- NA:a2:inicio -->
+| Margem | Variante | Ciclo | Corte | Seleção abaixo / acima | p aparado (lado) | Preench. abaixo / acima | Salto ingênuo [IC 95%] | Limites de Lee | IC Imbens–Manski | Reamostras válidas |
+|---|---|---|---|---|---|---|---|---|---|---|
+| intensiva (vaga) | principal | 1 | 0,300 | 0,044 / 0,045 por 10 mil | 0,8 % (acima) | 34,2 / 19,9 % | −14,3 p.p. [−35,0; +6,4] | [−14,9; −14,1] | [−53,2; +24,0] | 987 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1 | 0,300 | −0,003 / 0,086 por 10 mil | — | 34,2 / 19,9 % | −14,3 p.p. [−35,0; +6,4] | [—; —] | [—; —] | 500 / 999 |
+| extensiva (abertura) | principal | 1 | 0,300 | 0,061 / 0,049 (prob.) | 20,2 % (abaixo) | — | −16,1 p.p. [−48,6; +16,3] | [−23,6; +12,9] | [−62,9; +45,2] | 995 / 999 |
+| intensiva (vaga) | principal | 1 | 0,400 | 0,184 / 0,049 por 10 mil | 73,4 % (abaixo) | 30,6 / 30,9 % | +0,3 p.p. [−25,1; +25,7] | [−69,1; +30,9] | [−107,2; +52,4] | 947 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1 | 0,400 | 0,209 / 0,066 por 10 mil | 68,2 % (abaixo) | 30,6 / 30,9 % | +0,3 p.p. [−25,1; +25,7] | [−65,4; +30,9] | [−109,1; +51,6] | 944 / 999 |
+| extensiva (abertura) | principal | 1 | 0,400 | 0,131 / 0,078 (prob.) | 40,7 % (abaixo) | — | −3,3 p.p. [−30,1; +23,6] | [−18,2; +14,7] | [−46,7; +40,3] | 999 / 999 |
+| intensiva (vaga) | principal | 1 | empilhado | 0,105 / 0,046 por 10 mil | 56,4 % (abaixo) | 31,8 / 23,8 % | −8,0 p.p. [−24,5; +8,5] | [−49,1; +23,8] | [−87,1; +43,0] | 990 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1 | empilhado | 0,053 / 0,076 por 10 mil | 30,2 % (acima) | 31,5 / 23,5 % | −8,0 p.p. [−24,5; +8,5] | [−31,5; +2,1] | [−59,8; +37,4] | 975 / 999 |
+| extensiva (abertura) | principal | 1 | empilhado | 0,092 / 0,061 (prob.) | 33,1 % (abaixo) | — | −9,1 p.p. [−29,8; +11,7] | [−22,0; +15,4] | [−47,5; +36,3] | 999 / 999 |
+| intensiva (vaga) | principal | 2 | 0,300 | 0,069 / 0,074 por 10 mil | 6,8 % (acima) | 55,8 / 28,0 % | −27,8 p.p. [−49,0; −6,7] | [−33,1; −25,8] | [−60,4; +20,2] | 989 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 2 | 0,300 | 0,037 / 0,142 por 10 mil | 73,8 % (acima) | 55,8 / 28,0 % | −27,8 p.p. [−49,0; −6,7] | [−55,8; +44,2] | [−74,8; +93,2] | 837 / 999 |
+| extensiva (abertura) | principal | 2 | 0,300 | 0,093 / 0,091 (prob.) | 1,5 % (abaixo) | — | −19,3 p.p. [−47,4; +8,8] | [−19,1; −17,5] | [−49,1; +23,1] | 999 / 999 |
+| intensiva (vaga) | principal | 2 | 0,400 | 0,311 / 0,127 por 10 mil | 59,0 % (abaixo) | 55,5 / 65,0 % | +9,5 p.p. [−15,8; +34,8] | [−35,0; +65,0] | [−68,0; +101,7] | 999 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 2 | 0,400 | 0,404 / 0,203 por 10 mil | 49,6 % (abaixo) | 55,5 / 65,0 % | +9,5 p.p. [−15,8; +34,8] | [−35,0; +53,4] | [−64,7; +94,8] | 999 / 999 |
+| extensiva (abertura) | principal | 2 | 0,400 | 0,101 / 0,105 (prob.) | 3,7 % (acima) | — | +13,1 p.p. [−13,2; +39,5] | [+10,6; +11,2] | [−19,5; +45,9] | 999 / 999 |
+| intensiva (vaga) | principal | 2 | empilhado | 0,174 / 0,096 por 10 mil | 44,6 % (abaixo) | 54,5 / 41,7 % | −12,9 p.p. [−30,6; +4,9] | [−56,7; +23,7] | [−85,2; +61,5] | 999 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 2 | empilhado | 0,135 / 0,153 por 10 mil | 11,6 % (acima) | 52,6 / 39,7 % | −12,9 p.p. [−30,6; +4,9] | [−20,7; −7,7] | [−51,1; +32,0] | 996 / 999 |
+| extensiva (abertura) | principal | 2 | empilhado | 0,096 / 0,097 (prob.) | 0,9 % (acima) | — | −4,4 p.p. [−24,0; +15,2] | [−5,3; −4,7] | [−27,8; +24,2] | 999 / 999 |
+| intensiva (vaga) | principal | 3 | 0,300 | 0,113 / 0,099 por 10 mil | 12,3 % (abaixo) | 21,4 / 10,6 % | −10,7 p.p. [−24,1; +2,6] | [−13,7; +0,3] | [−36,6; +19,2] | 998 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 3 | 0,300 | 0,127 / 0,336 por 10 mil | 62,1 % (acima) | 21,4 / 10,6 % | −10,7 p.p. [−24,1; +2,6] | [−21,4; +6,7] | [−35,0; +51,7] | 975 / 999 |
+| extensiva (abertura) | principal | 3 | 0,300 | 0,142 / 0,099 (prob.) | 30,0 % (abaixo) | — | −2,4 p.p. [−17,1; +12,4] | [−7,1; +8,5] | [−30,4; +19,9] | 999 / 999 |
+| intensiva (vaga) | principal | 3 | 0,400 | 0,391 / 0,272 por 10 mil | 30,5 % (abaixo) | 18,4 / 16,5 % | −1,9 p.p. [−15,6; +11,8] | [−10,0; +16,5] | [−32,5; +31,2] | 999 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 3 | 0,400 | 0,405 / 0,420 por 10 mil | 3,5 % (acima) | 18,4 / 16,5 % | −1,9 p.p. [−15,6; +11,8] | [−4,9; −1,3] | [−23,3; +16,4] | 999 / 999 |
+| extensiva (abertura) | principal | 3 | 0,400 | 0,217 / 0,221 (prob.) | 1,8 % (acima) | — | −12,3 p.p. [−27,5; +2,9] | [−12,3; −11,3] | [−28,5; +7,3] | 999 / 999 |
+| intensiva (vaga) | principal | 3 | empilhado | 0,234 / 0,174 por 10 mil | 25,6 % (abaixo) | 20,2 / 12,8 % | −7,4 p.p. [−17,4; +2,5] | [−14,4; +12,8] | [−31,4; +27,1] | 999 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 3 | empilhado | 0,202 / 0,356 por 10 mil | 43,1 % (acima) | 20,1 / 12,7 % | −7,4 p.p. [−17,4; +2,5] | [−20,1; +2,2] | [−30,0; +21,1] | 999 / 999 |
+| extensiva (abertura) | principal | 3 | empilhado | 0,175 / 0,153 (prob.) | 12,7 % (abaixo) | — | −8,1 p.p. [−18,9; +2,8] | [−10,2; +3,0] | [−21,5; +14,5] | 999 / 999 |
+| intensiva (vaga) | principal | 1+2+3 | 0,300 | 0,076 / 0,073 por 10 mil | 3,8 % (abaixo) | 36,5 / 20,3 % | −16,3 p.p. [−28,1; −4,5] | [−17,7; −13,8] | [−44,7; +15,2] | 998 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1+2+3 | 0,300 | 0,054 / 0,188 por 10 mil | 71,3 % (acima) | 36,5 / 20,3 % | −16,3 p.p. [−28,1; −4,5] | [−36,5; +34,1] | [−50,0; +85,1] | 943 / 999 |
+| extensiva (abertura) | principal | 1+2+3 | 0,300 | 0,099 / 0,080 (prob.) | 19,1 % (abaixo) | — | −11,2 p.p. [−26,2; +3,8] | [−18,9; +6,8] | [−36,8; +24,9] | 999 / 999 |
+| intensiva (vaga) | principal | 1+2+3 | 0,400 | 0,295 / 0,149 por 10 mil | 49,4 % (abaixo) | 34,9 / 36,8 % | +1,9 p.p. [−10,4; +14,3] | [−32,1; +36,8] | [−68,5; +54,5] | 999 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1+2+3 | 0,400 | 0,339 / 0,230 por 10 mil | 32,3 % (abaixo) | 34,9 / 36,8 % | +1,9 p.p. [−10,4; +14,3] | [−14,7; +33,0] | [−41,3; +56,1] | 999 / 999 |
+| extensiva (abertura) | principal | 1+2+3 | 0,400 | 0,150 / 0,135 (prob.) | 10,1 % (abaixo) | — | −3,7 p.p. [−17,1; +9,7] | [−6,9; +5,1] | [−21,2; +19,9] | 999 / 999 |
+| intensiva (vaga) | principal | 1+2+3 | empilhado | 0,171 / 0,105 por 10 mil | 38,3 % (abaixo) | 35,4 / 26,3 % | −9,1 p.p. [−18,4; +0,1] | [−31,2; +26,3] | [−60,9; +47,3] | 999 / 999 |
+| intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1+2+3 | empilhado | 0,130 / 0,195 por 10 mil | 33,2 % (acima) | 34,6 / 25,5 % | −9,1 p.p. [−18,4; +0,1] | [−34,6; +3,5] | [−52,0; +31,2] | 999 / 999 |
+| extensiva (abertura) | principal | 1+2+3 | empilhado | 0,121 / 0,104 (prob.) | 14,2 % (abaixo) | — | −7,2 p.p. [−17,2; +2,8] | [−12,7; +5,3] | [−24,2; +18,6] | 999 / 999 |
+<!-- NA:a2:fim -->
+
+### A3 — unidade = célula aberta
+
+Só as células do quadro, isto é, condicional à abertura. A variante sem tipo
+de vaga existe porque o tipo de vaga (imediata ou só cadastro reserva) também
+é decisão de quem monta o quadro; a sem efeitos fixos mostra quanto eles
+mudam o salto.
+
+<!-- NA:a3:inicio -->
+| Outcome | Variante | População | Corte | Células | Municípios abaixo / acima | Média abaixo | Salto | IC 95% (CR1) | p |
+|---|---|---|---|---|---|---|---|---|---|
+| A3_PREENCHIDA | principal | V1 (celulas) | 0,300 | 503 | 61 / 53 | 26,0 % | +0,9 p.p. | [−23,5; +25,3] | 0,942 |
+| A3_ALOC_POR_VAGA | principal | V1 (celulas) | 0,300 | 503 | 61 / 53 | 0,25 | +0,01 | [−0,25; +0,28] | 0,935 |
+| A3_CAND_1A_OPCAO | principal | V1 (celulas) | 0,300 | 503 | 61 / 53 | 0,81 | −0,26 | [−1,36; +0,84] | 0,641 |
+| A3_TEM_CAND_1A_OPCAO | principal | V1 (celulas) | 0,300 | 503 | 61 / 53 | 36,5 % | −10,6 p.p. | [−31,6; +10,5] | 0,325 |
+| A3_PREENCHIDA | principal | V1 (celulas) | 0,400 | 386 | 53 / 41 | 37,2 % | −12,4 p.p. | [−37,5; +12,6] | 0,330 |
+| A3_ALOC_POR_VAGA | principal | V1 (celulas) | 0,400 | 386 | 53 / 41 | 0,37 | −0,07 | [−0,33; +0,18] | 0,575 |
+| A3_CAND_1A_OPCAO | principal | V1 (celulas) | 0,400 | 386 | 53 / 41 | 0,79 | +0,43 | [−1,10; +1,96] | 0,581 |
+| A3_TEM_CAND_1A_OPCAO | principal | V1 (celulas) | 0,400 | 386 | 53 / 41 | 38,5 % | −6,5 p.p. | [−32,4; +19,4] | 0,623 |
+| A3_PREENCHIDA | principal | V1 (celulas) | empilhado | 889 | 114 / 94 | 31,2 % | −3,3 p.p. | [−20,9; +14,2] | 0,712 |
+| A3_PREENCHIDA | so_curso_x_ciclo | V1 (celulas) | empilhado | 889 | 114 / 94 | 31,2 % | −3,4 p.p. | [−21,1; +14,3] | 0,709 |
+| A3_PREENCHIDA | sem_efeitos_fixos | V1 (celulas) | empilhado | 889 | 114 / 94 | 31,2 % | −6,7 p.p. | [−24,9; +11,5] | 0,469 |
+| A3_ALOC_POR_VAGA | principal | V1 (celulas) | empilhado | 889 | 114 / 94 | 0,31 | −0,01 | [−0,20; +0,18] | 0,915 |
+| A3_ALOC_POR_VAGA | so_curso_x_ciclo | V1 (celulas) | empilhado | 889 | 114 / 94 | 0,31 | −0,01 | [−0,20; +0,18] | 0,931 |
+| A3_ALOC_POR_VAGA | sem_efeitos_fixos | V1 (celulas) | empilhado | 889 | 114 / 94 | 0,31 | −0,04 | [−0,23; +0,16] | 0,696 |
+| A3_CAND_1A_OPCAO | principal | V1 (celulas) | empilhado | 889 | 114 / 94 | 0,80 | +0,09 | [−0,83; +1,01] | 0,846 |
+| A3_CAND_1A_OPCAO | so_curso_x_ciclo | V1 (celulas) | empilhado | 889 | 114 / 94 | 0,80 | +0,07 | [−0,87; +1,01] | 0,888 |
+| A3_CAND_1A_OPCAO | sem_efeitos_fixos | V1 (celulas) | empilhado | 889 | 114 / 94 | 0,80 | −0,03 | [−0,99; +0,94] | 0,958 |
+| A3_TEM_CAND_1A_OPCAO | principal | V1 (celulas) | empilhado | 889 | 114 / 94 | 37,4 % | −6,5 p.p. | [−22,7; +9,7] | 0,432 |
+| A3_TEM_CAND_1A_OPCAO | so_curso_x_ciclo | V1 (celulas) | empilhado | 889 | 114 / 94 | 37,4 % | −7,0 p.p. | [−23,3; +9,4] | 0,404 |
+| A3_TEM_CAND_1A_OPCAO | sem_efeitos_fixos | V1 (celulas) | empilhado | 889 | 114 / 94 | 37,4 % | −11,2 p.p. | [−28,4; +5,9] | 0,199 |
+| A3_PREENCHIDA | principal | V2 (celulas) | 0,300 | 647 | 82 / 61 | 48,7 % | −10,2 p.p. | [−23,4; +2,9] | 0,128 |
+| A3_ALOC_POR_VAGA | principal | V2 (celulas) | 0,300 | 647 | 82 / 61 | 0,42 | −0,13 | [−0,27; +0,01] | 0,075 |
+| A3_CAND_1A_OPCAO | principal | V2 (celulas) | 0,300 | 647 | 82 / 61 | 1,31 | −0,97 | [−2,21; +0,27] | 0,127 |
+| A3_TEM_CAND_1A_OPCAO | principal | V2 (celulas) | 0,300 | 647 | 82 / 61 | 52,3 % | −12,4 p.p. | [−39,0; +14,2] | 0,361 |
+| A3_PREENCHIDA | principal | V2 (celulas) | 0,400 | 332 | 53 / 53 | 57,3 % | +2,2 p.p. | [−24,7; +29,2] | 0,870 |
+| A3_ALOC_POR_VAGA | principal | V2 (celulas) | 0,400 | 332 | 53 / 53 | 0,52 | +0,04 | [−0,21; +0,28] | 0,769 |
+| A3_CAND_1A_OPCAO | principal | V2 (celulas) | 0,400 | 332 | 53 / 53 | 1,84 | −0,54 | [−2,10; +1,01] | 0,494 |
+| A3_TEM_CAND_1A_OPCAO | principal | V2 (celulas) | 0,400 | 332 | 53 / 53 | 63,4 % | −5,5 p.p. | [−38,3; +27,3] | 0,742 |
+| A3_PREENCHIDA | principal | V2 (celulas) | empilhado | 979 | 135 / 114 | 51,8 % | −4,6 p.p. | [−17,8; +8,6] | 0,493 |
+| A3_PREENCHIDA | so_curso_x_ciclo | V2 (celulas) | empilhado | 979 | 135 / 114 | 51,8 % | −14,8 p.p. | [−30,5; +0,9] | 0,064 |
+| A3_PREENCHIDA | sem_efeitos_fixos | V2 (celulas) | empilhado | 979 | 135 / 114 | 51,8 % | −13,4 p.p. | [−29,6; +2,7] | 0,103 |
+| A3_ALOC_POR_VAGA | principal | V2 (celulas) | empilhado | 979 | 135 / 114 | 0,46 | −0,05 | [−0,18; +0,07] | 0,412 |
+| A3_ALOC_POR_VAGA | so_curso_x_ciclo | V2 (celulas) | empilhado | 979 | 135 / 114 | 0,46 | −0,14 | [−0,30; +0,02] | 0,077 |
+| A3_ALOC_POR_VAGA | sem_efeitos_fixos | V2 (celulas) | empilhado | 979 | 135 / 114 | 0,46 | −0,13 | [−0,29; +0,04] | 0,129 |
+| A3_CAND_1A_OPCAO | principal | V2 (celulas) | empilhado | 979 | 135 / 114 | 1,50 | −0,81 | [−1,82; +0,19] | 0,111 |
+| A3_CAND_1A_OPCAO | so_curso_x_ciclo | V2 (celulas) | empilhado | 979 | 135 / 114 | 1,50 | −0,93 | [−1,95; +0,09] | 0,073 |
+| A3_CAND_1A_OPCAO | sem_efeitos_fixos | V2 (celulas) | empilhado | 979 | 135 / 114 | 1,50 | −0,65 | [−1,59; +0,29] | 0,178 |
+| A3_TEM_CAND_1A_OPCAO | principal | V2 (celulas) | empilhado | 979 | 135 / 114 | 56,3 % | −11,3 p.p. | [−32,1; +9,4] | 0,284 |
+| A3_TEM_CAND_1A_OPCAO | so_curso_x_ciclo | V2 (celulas) | empilhado | 979 | 135 / 114 | 56,3 % | −17,2 p.p. | [−38,0; +3,6] | 0,106 |
+| A3_TEM_CAND_1A_OPCAO | sem_efeitos_fixos | V2 (celulas) | empilhado | 979 | 135 / 114 | 56,3 % | −14,6 p.p. | [−34,4; +5,2] | 0,148 |
+| A3_PREENCHIDA | principal | V3 (celulas) | 0,300 | 965 | 102 / 82 | 25,7 % | −7,1 p.p. | [−18,6; +4,3] | 0,223 |
+| A3_ALOC_POR_VAGA | principal | V3 (celulas) | 0,300 | 965 | 102 / 82 | 0,17 | −0,09 | [−0,18; −0,00] | 0,048 |
+| A3_CAND_1A_OPCAO | principal | V3 (celulas) | 0,300 | 965 | 102 / 82 | 1,31 | −0,64 | [−1,47; +0,19] | 0,133 |
+| A3_TEM_CAND_1A_OPCAO | principal | V3 (celulas) | 0,300 | 965 | 102 / 82 | 52,0 % | −4,3 p.p. | [−25,3; +16,6] | 0,684 |
+| A3_PREENCHIDA | principal | V3 (celulas) | 0,400 | 525 | 97 / 118 | 22,4 % | −4,3 p.p. | [−12,8; +4,2] | 0,317 |
+| A3_ALOC_POR_VAGA | principal | V3 (celulas) | 0,400 | 525 | 97 / 118 | 0,17 | −0,08 | [−0,15; +0,00] | 0,056 |
+| A3_CAND_1A_OPCAO | principal | V3 (celulas) | 0,400 | 525 | 97 / 118 | 1,24 | −0,30 | [−1,34; +0,74] | 0,573 |
+| A3_TEM_CAND_1A_OPCAO | principal | V3 (celulas) | 0,400 | 525 | 97 / 118 | 49,0 % | +0,6 p.p. | [−16,2; +17,4] | 0,942 |
+| A3_PREENCHIDA | principal | V3 (celulas) | empilhado | 1490 | 199 / 200 | 24,4 % | −6,0 p.p. | [−13,8; +1,9] | 0,136 |
+| A3_PREENCHIDA | so_curso_x_ciclo | V3 (celulas) | empilhado | 1490 | 199 / 200 | 24,4 % | −6,2 p.p. | [−18,3; +6,0] | 0,320 |
+| A3_PREENCHIDA | sem_efeitos_fixos | V3 (celulas) | empilhado | 1490 | 199 / 200 | 24,4 % | −9,7 p.p. | [−22,2; +2,8] | 0,129 |
+| A3_ALOC_POR_VAGA | principal | V3 (celulas) | empilhado | 1490 | 199 / 200 | 0,17 | −0,09 | [−0,15; −0,02] | 0,009 |
+| A3_ALOC_POR_VAGA | so_curso_x_ciclo | V3 (celulas) | empilhado | 1490 | 199 / 200 | 0,17 | −0,09 | [−0,18; +0,00] | 0,051 |
+| A3_ALOC_POR_VAGA | sem_efeitos_fixos | V3 (celulas) | empilhado | 1490 | 199 / 200 | 0,17 | −0,11 | [−0,20; −0,02] | 0,019 |
+| A3_CAND_1A_OPCAO | principal | V3 (celulas) | empilhado | 1490 | 199 / 200 | 1,28 | −0,48 | [−1,13; +0,18] | 0,155 |
+| A3_CAND_1A_OPCAO | so_curso_x_ciclo | V3 (celulas) | empilhado | 1490 | 199 / 200 | 1,28 | −0,48 | [−1,13; +0,18] | 0,153 |
+| A3_CAND_1A_OPCAO | sem_efeitos_fixos | V3 (celulas) | empilhado | 1490 | 199 / 200 | 1,28 | −0,46 | [−1,16; +0,25] | 0,203 |
+| A3_TEM_CAND_1A_OPCAO | principal | V3 (celulas) | empilhado | 1490 | 199 / 200 | 50,9 % | −2,3 p.p. | [−16,7; +12,0] | 0,749 |
+| A3_TEM_CAND_1A_OPCAO | so_curso_x_ciclo | V3 (celulas) | empilhado | 1490 | 199 / 200 | 50,9 % | −2,4 p.p. | [−16,8; +12,1] | 0,749 |
+| A3_TEM_CAND_1A_OPCAO | sem_efeitos_fixos | V3 (celulas) | empilhado | 1490 | 199 / 200 | 50,9 % | −2,5 p.p. | [−18,1; +13,2] | 0,757 |
+| A3_PREENCHIDA | principal | V1+V2+V3 (celulas) | 0,300 | 2115 | 145 / 120 | 33,3 % | −8,4 p.p. | [−18,5; +1,7] | 0,104 |
+| A3_ALOC_POR_VAGA | principal | V1+V2+V3 (celulas) | 0,300 | 2115 | 145 / 120 | 0,27 | −0,10 | [−0,20; −0,00] | 0,042 |
+| A3_CAND_1A_OPCAO | principal | V1+V2+V3 (celulas) | 0,300 | 2115 | 145 / 120 | 1,19 | −0,69 | [−1,43; +0,04] | 0,063 |
+| A3_TEM_CAND_1A_OPCAO | principal | V1+V2+V3 (celulas) | 0,300 | 2115 | 145 / 120 | 48,3 % | −10,8 p.p. | [−28,2; +6,7] | 0,227 |
+| A3_PREENCHIDA | principal | V1+V2+V3 (celulas) | 0,400 | 1243 | 122 / 145 | 36,8 % | −1,3 p.p. | [−14,0; +11,3] | 0,838 |
+| A3_ALOC_POR_VAGA | principal | V1+V2+V3 (celulas) | 0,400 | 1243 | 122 / 145 | 0,33 | −0,01 | [−0,14; +0,12] | 0,859 |
+| A3_CAND_1A_OPCAO | principal | V1+V2+V3 (celulas) | 0,400 | 1243 | 122 / 145 | 1,26 | −0,14 | [−1,11; +0,82] | 0,770 |
+| A3_TEM_CAND_1A_OPCAO | principal | V1+V2+V3 (celulas) | 0,400 | 1243 | 122 / 145 | 49,6 % | −2,7 p.p. | [−19,7; +14,3] | 0,756 |
+| A3_PREENCHIDA | principal | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 34,7 % | −4,9 p.p. | [−12,9; +3,2] | 0,237 |
+| A3_PREENCHIDA | so_curso_x_ciclo | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 34,7 % | −8,2 p.p. | [−17,4; +1,0] | 0,080 |
+| A3_PREENCHIDA | sem_efeitos_fixos | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 34,7 % | −10,1 p.p. | [−19,4; −0,8] | 0,033 |
+| A3_ALOC_POR_VAGA | principal | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 0,29 | −0,06 | [−0,14; +0,02] | 0,147 |
+| A3_ALOC_POR_VAGA | so_curso_x_ciclo | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 0,29 | −0,09 | [−0,17; +0,00] | 0,058 |
+| A3_ALOC_POR_VAGA | sem_efeitos_fixos | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 0,29 | −0,10 | [−0,19; −0,01] | 0,031 |
+| A3_CAND_1A_OPCAO | principal | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 1,21 | −0,46 | [−1,06; +0,15] | 0,138 |
+| A3_CAND_1A_OPCAO | so_curso_x_ciclo | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 1,21 | −0,49 | [−1,09; +0,11] | 0,111 |
+| A3_CAND_1A_OPCAO | sem_efeitos_fixos | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 1,21 | −0,41 | [−1,00; +0,17] | 0,166 |
+| A3_TEM_CAND_1A_OPCAO | principal | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 48,8 % | −7,1 p.p. | [−19,6; +5,4] | 0,268 |
+| A3_TEM_CAND_1A_OPCAO | so_curso_x_ciclo | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 48,8 % | −8,1 p.p. | [−20,7; +4,5] | 0,208 |
+| A3_TEM_CAND_1A_OPCAO | sem_efeitos_fixos | V1+V2+V3 (celulas) | empilhado | 3358 | 267 / 265 | 48,8 % | −8,3 p.p. | [−20,6; +4,0] | 0,184 |
+<!-- NA:a3:fim -->
+
+Ponte com o E9 (escolha da 1ª opção entre células do mesmo curso e ciclo,
+lida de `E9_resumo.json`): atratividade da célula e preenchimento, lado a
+lado.
+
+<!-- NA:a3_ponte_e9:inicio -->
+| Ciclo | E9: razão de chances da 1ª opção por +R$ 5 mil (p) | E9: variação média da probabilidade, p.p. [IC 95%] | A3: célula com candidato de 1ª opção, salto [IC 95%] | A3: célula preenchida, salto [IC 95%] |
+|---|---|---|---|---|
+| 1 | 1,39 (0,137) | +0,43 [−0,23; +1,08] | −6,5 p.p. [−22,7; +9,7] | −3,3 p.p. [−20,9; +14,2] |
+| 2 | 1,95 (0,000) | +0,49 [+0,22; +0,77] | −11,3 p.p. [−32,1; +9,4] | −4,6 p.p. [−17,8; +8,6] |
+| 3 | 1,05 (0,761) | +0,03 [−0,14; +0,20] | −2,3 p.p. [−16,7; +12,0] | −6,0 p.p. [−13,8; +1,9] |
+| 1+2+3 | 1,39 (0,003) | +0,22 [+0,05; +0,40] | −7,1 p.p. [−19,6; +5,4] | −4,9 p.p. [−12,9; +3,2] |
+<!-- NA:a3_ponte_e9:fim -->
+
+![A3 célula preenchida, empilhado](../../output/rdd_bolsa/NA_figuras/NA_A3_celula_preenchida_empilhado.png)
+
+### A4 — covariáveis pré-determinadas
+
+S-b (N1 sem controle das vagas oferecidas) e A1 com o log da população de
+2022 e os estoques do CNES pré-programa (`202406`–`202506`) de especialistas
+das CBO-alvo e de generalistas, em nível nas contagens e por 10 mil
+habitantes no A1. Primeiro, as próprias covariáveis como outcome (balanço);
+depois, as linhas com e sem covariáveis na mesma amostra. Diferenças nascidas
+da resposta à faixa não são retiradas por covariáveis pré-determinadas.
+
+<!-- NA:a4_balanco:inicio -->
+| Covariável | População | Ciclo | Corte | n abaixo / acima | Média abaixo | Salto | IC 95% | p |
+|---|---|---|---|---|---|---|---|---|
+| log_pop22 | U | - | 0,300 | 859 / 654 | 9,38 | +0,07 | [−0,23; +0,37] | 0,636 |
+| estoque_alvo_pre | U | - | 0,300 | 859 / 654 | 114,20 | −163,45 | [−368,84; +41,93] | 0,119 |
+| estoque_gen_pre | U | - | 0,300 | 859 / 654 | 138,48 | −153,58 | [−362,83; +55,68] | 0,150 |
+| estoque_alvo_pre_10k | U | - | 0,300 | 859 / 654 | 7,36 | −1,07 | [−2,42; +0,28] | 0,119 |
+| estoque_gen_pre_10k | U | - | 0,300 | 859 / 654 | 18,04 | −1,05 | [−3,47; +1,36] | 0,392 |
+| log_pop22 | U | - | 0,400 | 587 / 603 | 9,38 | +0,04 | [−0,23; +0,31] | 0,768 |
+| estoque_alvo_pre | U | - | 0,400 | 587 / 603 | 29,00 | −7,75 | [−29,35; +13,86] | 0,482 |
+| estoque_gen_pre | U | - | 0,400 | 587 / 603 | 44,57 | −12,98 | [−40,13; +14,17] | 0,349 |
+| estoque_alvo_pre_10k | U | - | 0,400 | 587 / 603 | 4,60 | +0,38 | [−1,10; +1,87] | 0,614 |
+| estoque_gen_pre_10k | U | - | 0,400 | 587 / 603 | 12,62 | −0,50 | [−1,94; +0,94] | 0,497 |
+| log_pop22 | U | - | empilhado | 1446 / 1257 | 9,38 | +0,06 | [−0,15; +0,26] | 0,577 |
+| estoque_alvo_pre | U | - | empilhado | 1446 / 1257 | 79,61 | −95,25 | [−211,12; +20,61] | 0,107 |
+| estoque_gen_pre | U | - | empilhado | 1446 / 1257 | 100,35 | −92,00 | [−210,23; +26,24] | 0,127 |
+| estoque_alvo_pre_10k | U | - | empilhado | 1446 / 1257 | 6,24 | −0,43 | [−1,43; +0,56] | 0,393 |
+| estoque_gen_pre_10k | U | - | empilhado | 1446 / 1257 | 15,84 | −0,81 | [−2,31; +0,68] | 0,288 |
+| log_pop22 | V1 | 1 | empilhado | 114 / 94 | 11,39 | −0,18 | [−0,87; +0,50] | 0,600 |
+| estoque_alvo_pre | V1 | 1 | empilhado | 114 / 94 | 375,29 | −393,63 | [−1038,38; +251,12] | 0,231 |
+| estoque_gen_pre | V1 | 1 | empilhado | 114 / 94 | 457,72 | −375,50 | [−1043,89; +292,90] | 0,271 |
+| log_pop22 | V2 | 2 | empilhado | 135 / 114 | 11,40 | −0,04 | [−0,72; +0,65] | 0,916 |
+| estoque_alvo_pre | V2 | 2 | empilhado | 135 / 114 | 623,65 | −907,81 | [−2085,86; +270,25] | 0,131 |
+| estoque_gen_pre | V2 | 2 | empilhado | 135 / 114 | 704,66 | −882,23 | [−2080,94; +316,48] | 0,149 |
+| log_pop22 | V3 | 3 | empilhado | 199 / 200 | 10,97 | +0,04 | [−0,51; +0,60] | 0,877 |
+| estoque_alvo_pre | V3 | 3 | empilhado | 199 / 200 | 334,11 | −233,01 | [−526,55; +60,52] | 0,120 |
+| estoque_gen_pre | V3 | 3 | empilhado | 199 / 200 | 389,10 | −237,73 | [−544,18; +68,72] | 0,128 |
+| log_pop22 | V1+V2+V3 | 1+2+3 | empilhado | 267 / 265 | 11,21 | −0,03 | [−0,54; +0,48] | 0,905 |
+| estoque_alvo_pre | V1+V2+V3 | 1+2+3 | empilhado | 267 / 265 | 431,84 | −469,82 | [−992,83; +53,20] | 0,078 |
+| estoque_gen_pre | V1+V2+V3 | 1+2+3 | empilhado | 267 / 265 | 501,65 | −460,39 | [−999,40; +78,62] | 0,094 |
+<!-- NA:a4_balanco:fim -->
+
+<!-- NA:a4:inicio -->
+| Outcome | Variante | População | Ciclo | n abaixo / acima | Salto | IC 95% | p | Salto / média abaixo |
+|---|---|---|---|---|---|---|---|---|
+| N1 | sem_covariaveis_mesma_amostra | V1 | 1 | 114 / 94 | −0,54 | [−1,65; +0,57] | 0,342 | −30,5 % |
+| N1 | com_covariaveis | V1 | 1 | 114 / 94 | −0,75 | [−1,81; +0,31] | 0,168 | −42,5 % |
+| N1 | com_covariaveis_coeficiente_unico | V1 | 1 | 114 / 94 | −0,62 | [−1,68; +0,44] | 0,251 | −35,2 % |
+| N1 | sem_covariaveis_mesma_amostra | V2 | 2 | 135 / 114 | −3,45 | [−7,02; +0,12] | 0,058 | −97,2 % |
+| N1 | com_covariaveis | V2 | 2 | 135 / 114 | −2,39 | [−4,72; −0,07] | 0,044 | −67,5 % |
+| N1 | com_covariaveis_coeficiente_unico | V2 | 2 | 135 / 114 | −3,68 | [−7,20; −0,16] | 0,040 | −103,8 % |
+| N1 | sem_covariaveis_mesma_amostra | V3 | 3 | 199 / 200 | −0,64 | [−1,88; +0,60] | 0,309 | −44,7 % |
+| N1 | com_covariaveis | V3 | 3 | 199 / 200 | −0,23 | [−1,25; +0,78] | 0,652 | −16,3 % |
+| N1 | com_covariaveis_coeficiente_unico | V3 | 3 | 199 / 200 | −0,39 | [−1,39; +0,62] | 0,451 | −26,8 % |
+| N1 | sem_covariaveis_mesma_amostra | V1+V2+V3 | 1+2+3 | 267 / 265 | −1,45 | [−2,90; −0,01] | 0,048 | −67,4 % |
+| N1 | com_covariaveis | V1+V2+V3 | 1+2+3 | 267 / 265 | −0,98 | [−2,00; +0,03] | 0,057 | −45,6 % |
+| N1 | com_covariaveis_coeficiente_unico | V1+V2+V3 | 1+2+3 | 267 / 265 | −1,39 | [−2,69; −0,08] | 0,037 | −64,3 % |
+| A1_PREENCH_10K | sem_covariaveis_mesma_amostra | U | 1 | 1446 / 1257 | −0,013 | [−0,032; +0,005] | 0,160 | −86,8 % |
+| A1_PREENCH_10K | com_covariaveis | U | 1 | 1446 / 1257 | −0,016 | [−0,032; +0,001] | 0,064 | −102,8 % |
+| A1_PREENCH_10K | com_covariaveis_coeficiente_unico | U | 1 | 1446 / 1257 | −0,014 | [−0,032; +0,005] | 0,154 | −88,4 % |
+| A1_OFERT_10K | sem_covariaveis_mesma_amostra | U | 1 | 1446 / 1257 | −0,059 | [−0,132; +0,014] | 0,113 | −76,2 % |
+| A1_OFERT_10K | com_covariaveis | U | 1 | 1446 / 1257 | −0,068 | [−0,138; +0,002] | 0,057 | −87,7 % |
+| A1_OFERT_10K | com_covariaveis_coeficiente_unico | U | 1 | 1446 / 1257 | −0,059 | [−0,129; +0,010] | 0,095 | −76,6 % |
+| A1_PREENCH_10K | sem_covariaveis_mesma_amostra | U | 2 | 1446 / 1257 | −0,081 | [−0,242; +0,080] | 0,323 | −173,6 % |
+| A1_PREENCH_10K | com_covariaveis | U | 2 | 1446 / 1257 | −0,097 | [−0,263; +0,068] | 0,250 | −208,2 % |
+| A1_PREENCH_10K | com_covariaveis_coeficiente_unico | U | 2 | 1446 / 1257 | −0,075 | [−0,219; +0,068] | 0,305 | −160,7 % |
+| A1_OFERT_10K | sem_covariaveis_mesma_amostra | U | 2 | 1446 / 1257 | −0,078 | [−0,252; +0,097] | 0,384 | −72,7 % |
+| A1_OFERT_10K | com_covariaveis | U | 2 | 1446 / 1257 | −0,093 | [−0,269; +0,083] | 0,301 | −87,0 % |
+| A1_OFERT_10K | com_covariaveis_coeficiente_unico | U | 2 | 1446 / 1257 | −0,072 | [−0,229; +0,085] | 0,369 | −67,4 % |
+| A1_PREENCH_10K | sem_covariaveis_mesma_amostra | U | 3 | 1446 / 1257 | −0,021 | [−0,053; +0,011] | 0,197 | −112,1 % |
+| A1_PREENCH_10K | com_covariaveis | U | 3 | 1446 / 1257 | −0,024 | [−0,055; +0,007] | 0,124 | −129,4 % |
+| A1_PREENCH_10K | com_covariaveis_coeficiente_unico | U | 3 | 1446 / 1257 | −0,020 | [−0,051; +0,010] | 0,188 | −108,4 % |
+| A1_OFERT_10K | sem_covariaveis_mesma_amostra | U | 3 | 1446 / 1257 | −0,060 | [−0,184; +0,064] | 0,344 | −34,8 % |
+| A1_OFERT_10K | com_covariaveis | U | 3 | 1446 / 1257 | −0,069 | [−0,189; +0,050] | 0,257 | −40,2 % |
+| A1_OFERT_10K | com_covariaveis_coeficiente_unico | U | 3 | 1446 / 1257 | −0,058 | [−0,176; +0,061] | 0,339 | −33,5 % |
+| A1_PREENCH_10K | sem_covariaveis_mesma_amostra | U | 1+2+3 | 1446 / 1257 | −0,039 | [−0,100; +0,023] | 0,217 | −142,8 % |
+| A1_PREENCH_10K | com_covariaveis | U | 1+2+3 | 1446 / 1257 | −0,046 | [−0,107; +0,015] | 0,141 | −169,9 % |
+| A1_PREENCH_10K | com_covariaveis_coeficiente_unico | U | 1+2+3 | 1446 / 1257 | −0,036 | [−0,091; +0,018] | 0,189 | −134,8 % |
+| A1_OFERT_10K | sem_covariaveis_mesma_amostra | U | 1+2+3 | 1446 / 1257 | −0,066 | [−0,159; +0,028] | 0,171 | −55,2 % |
+| A1_OFERT_10K | com_covariaveis | U | 1+2+3 | 1446 / 1257 | −0,077 | [−0,163; +0,009] | 0,080 | −64,6 % |
+| A1_OFERT_10K | com_covariaveis_coeficiente_unico | U | 1+2+3 | 1446 / 1257 | −0,063 | [−0,147; +0,021] | 0,139 | −53,0 % |
+<!-- NA:a4:fim -->
+
+### Leitura conjunta
+
+Gerada por regra fixa no script, a partir das linhas empilhadas (todos os
+ciclos e o ciclo 1):
+
+<!-- NA:leitura_conjunta:inicio -->
+**Todos os ciclos empilhados** (corte empilhado):
+- A1, vagas preenchidas por 10 mil habitantes: salto negativo (−0,039; IC 95% [−0,100; +0,023]), que contém zero; vagas oferecidas por 10 mil habitantes: salto negativo (−0,066; IC 95% [−0,159; +0,028]), que contém zero.
+- A2, margem intensiva — vagas: aparando 38,3 % do lado abaixo (o de maior abertura), o salto no preenchimento fica entre −31,2 e +26,3 p.p., intervalo que contém zero; o IC de Imbens–Manski [−60,9; +47,3] contém zero.
+- A2, margem extensiva — municípios: aparando 14,2 % do lado abaixo (o de maior abertura), o salto no preenchimento fica entre −12,7 e +5,3 p.p., intervalo que contém zero; o IC de Imbens–Manski [−24,2; +18,6] contém zero.
+- A3, probabilidade de a célula aberta ser preenchida (efeitos fixos): salto negativo (−4,9 p.p.; IC 95% [−12,9; +3,2]), que contém zero.
+- A4, N1 sem controle das vagas: sem covariáveis: salto negativo (−1,45; IC 95% [−2,90; −0,01]), que exclui zero; com covariáveis pré-determinadas: salto negativo (−0,98; IC 95% [−2,00; +0,03]), que contém zero; vagas preenchidas por 10 mil hab. com covariáveis: salto negativo (−0,046; IC 95% [−0,107; +0,015]), que contém zero.
+- **Leitura conjunta (todos os ciclos empilhados):** nenhuma leitura por habitante (A1), nas vagas sempre abertas (A2), por célula aberta (A3) ou com covariáveis pré-determinadas (A4) distingue de zero, com a precisão relatada, um efeito do pacote do corte sobre o preenchimento, nem sobre a abertura por habitante; o único salto que exclui zero é o de N1 em contagem por município sem covariáveis (S-b), que deixa de excluir zero com o porte e a capacidade instalada pré-existentes e não aparece por habitante: é compatível com diferença de porte entre os lados do corte, não com efeito sobre o preenchimento. É descrição com a precisão relatada, do pacote do corte, e não efeito da participação no PMM-E.
+
+**Ciclo 1** (corte empilhado):
+- A1, vagas preenchidas por 10 mil habitantes: salto negativo (−0,013; IC 95% [−0,032; +0,005]), que contém zero; vagas oferecidas por 10 mil habitantes: salto negativo (−0,059; IC 95% [−0,132; +0,014]), que contém zero.
+- A2, margem intensiva — vagas: aparando 56,4 % do lado abaixo (o de maior abertura), o salto no preenchimento fica entre −49,1 e +23,8 p.p., intervalo que contém zero; o IC de Imbens–Manski [−87,1; +43,0] contém zero.
+- A2, margem extensiva — municípios: aparando 33,1 % do lado abaixo (o de maior abertura), o salto no preenchimento fica entre −22,0 e +15,4 p.p., intervalo que contém zero; o IC de Imbens–Manski [−47,5; +36,3] contém zero.
+- A3, probabilidade de a célula aberta ser preenchida (efeitos fixos): salto negativo (−3,3 p.p.; IC 95% [−20,9; +14,2]), que contém zero.
+- A4, N1 sem controle das vagas: sem covariáveis: salto negativo (−0,54; IC 95% [−1,65; +0,57]), que contém zero; com covariáveis pré-determinadas: salto negativo (−0,75; IC 95% [−1,81; +0,31]), que contém zero; vagas preenchidas por 10 mil hab. com covariáveis: salto negativo (−0,016; IC 95% [−0,032; +0,001]), que contém zero.
+- No ciclo 1 a oferta não pode ter respondido à faixa em si (protocolo 48, §8), e condicionar nas vagas oferecidas é mais defensável: S-a do doc 49 (N1 dado as vagas), vagas por município: salto negativo (−0,36; IC 95% [−1,21; +0,49]), que contém zero.
+- **Leitura conjunta (ciclo 1):** nenhuma leitura por habitante (A1), nas vagas sempre abertas (A2), por célula aberta (A3) ou com covariáveis pré-determinadas (A4) distingue de zero, com a precisão relatada, um efeito do pacote do corte sobre o preenchimento, nem sobre a abertura por habitante. É descrição com a precisão relatada, do pacote do corte, e não efeito da participação no PMM-E.
+<!-- NA:leitura_conjunta:fim -->
+
+O que estas análises **não** dizem: nada sobre participação no PMM-E, o Agora
+Tem Especialistas ou retenção individual; o salto é o do pacote do corte; os
+limites de Lee dependem da monotonicidade; e um intervalo que contém zero é
+falta de evidência com a precisão relatada, não ausência de efeito.
+
+### Figuras e validações do adendo
+
+<!-- NA:figuras:inicio -->
+| Figura | Outcome | População | Salto no título | IC 95% | p |
+|---|---|---|---|---|---|
+| `NA_A1_por_10k_empilhado.png` | A1_PREENCH_10K | U | −0,039 | [−0,100; +0,023] | 0,217 |
+| `NA_A1_por_10k_empilhado.png` | A1_OFERT_10K | U | −0,066 | [−0,159; +0,028] | 0,171 |
+| `NA_A3_celula_preenchida_empilhado.png` | A3_PREENCHIDA | V1+V2+V3 (celulas) | −4,9 | [−12,9; +3,2] | 0,237 |
+<!-- NA:figuras:fim -->
+
+<!-- NA:validacoes:inicio -->
+| Conferência | Resultado |
+|---|---|
+| linhas em NA_estimativas.csv | 690 |
+| EXECUTADO / SEM_ESTIMATIVA / NAO_EXECUTADO | 681 / 0 / 9 |
+| MQP rápido do bootstrap = rdd_lib (salto, interceptos, pesos omega), todas as amostras do A2 | True |
+| Lee extensivo daqui = rdd_lib.limites_lee_rd (cortes únicos) | 6 amostras |
+| Poisson local daqui = rdd_lib (um corte, offset) | True |
+| soma das células = município (vagas e alocados), V1–V3 | True |
+| população de U = Censo 2022 do a06 | True |
+| bootstrap: reamostras, semente, municípios reamostrados | 999, [20261018, 48, 7], 5565 |
+| células de município sem IVS oficial (fora da RDD) | 1 |
+| municípios sem estoque CNES completo (fora do A4) | estoque_alvo_pre: 0; estoque_gen_pre: 0 |
+<!-- NA:validacoes:fim -->
