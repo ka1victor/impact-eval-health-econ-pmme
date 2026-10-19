@@ -242,3 +242,33 @@ Nenhum outcome da família K foi visto por município nem por lado de corte.
 | aquisição TISS | `scripts/aquisicao/a14_adquirir_tiss_ans.py` | `output/aquisicao/tiss/` | `A14_tiss_ans.md` |
 | D1 | `scripts/rdd_bolsa/21_producao_dird.py` | `output/rdd_bolsa/K_D1_*` | `50_resultados_producao_especializada.md` |
 | D2 | `scripts/rdd_bolsa/22_chegada_pmme_evento.py` | `output/rdd_bolsa/K_D2_*` | idem |
+
+## 10. Adendo de 19/10/2026 (depois da aquisição de SIA e SIH, antes de estimar)
+
+A aquisição (A12 e A13) mostrou três fatos da fonte. Eles foram vistos só em
+totais nacionais e por UF, nunca por IVS ou lado de corte. As decisões abaixo
+são tomadas antes de qualquer contraste:
+
+1. **Meses imaturos.** O número de municípios com produção no SIA cai nos dois
+   últimos meses de processamento:
+   - todos os profissionais: de cerca de 5.450 para 4.884 em 202606 e para
+     3.973 em 202607;
+   - na SIH, AC e RR não têm o arquivo de 202607;
+   - o TabNet avisa que os últimos seis meses estão sujeitos a revisão.
+
+   **Decisão:** o pós principal de K1 e K2 passa a 202510–202605. As linhas até
+   202607 viram sensibilidade.
+2. **Grupo 09 do SIGTAP (OCI, Ofertas de Cuidados Integrados).** O grupo 09
+   começa em 202501. São pacotes de cuidado especializado do Agora Tem
+   Especialistas, que substituem procedimentos antes cobrados um a um. Se
+   ficassem fora, K1 poderia cair sem queda real da produção.
+
+   **Decisão:**
+   - K1 principal inclui o grupo 09 executado pelas CBO `alvo_pmme`;
+   - K1 sem o grupo 09, na definição original, vira sensibilidade;
+   - OCI sozinho entra como secundária K1f.
+3. **SIH, meses atípicos e município sem população.**
+   - Meses atípicos de RR (`uf_mes_atipico`): ficam na amostra principal; uma
+     sensibilidade exclui as UF-meses marcadas.
+   - O município 510183, criado depois do Censo 2022, não tem população e fica
+     fora das taxas, com registro.
