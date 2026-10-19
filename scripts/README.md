@@ -19,7 +19,8 @@ Ele executa sequencialmente:
 2. `scripts/02_auditar_fontes_pmme.py` — auditoria e integridade de fontes oficiais.
 3. `scripts/aquisicao/01_congelar_ponte_cbo.py` — congelamento da ponte operacional curso–CBO.
 4. `scripts/aquisicao/02_consolidar_quadro_vagas.py` — consolidação da matriz de vagas e tratamento.
-5. `scripts/aquisicao/04_harmonizar_territorio_ibge.py` — harmonização territorial.
+5. `scripts/aquisicao/a07_adquirir_ivs_administrativo.py` e `a08_adquirir_ivs_2010_oficial.py` — escore publicado pelo MS e base completa do Ipea (zip fora do Git; tamanho e SHA-256 em `output/aquisicao/a08_manifesto_ivs_2010_oficial.json`). Rodam antes da malha desde 18/10/2026.
+   Depois, `scripts/aquisicao/04_harmonizar_territorio_ibge.py` — harmonização territorial com o IVS 2010 oficial (a08) e o Censo 2022; até 18/10/2026 lia o arquivo de IVS errado (`docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`).
 6. `scripts/aquisicao/05_integrar_painel_analitico.py` — construção do painel analítico CNES mensal.
 7. `scripts/avaliacao_impacto/run_pipeline_avaliacao.py` — pipeline completo do diagnóstico histórico DDD (etapas 01 a 09).
 8. `scripts/tema_trabalho/01_auditar_atracao_provimento_interior.py` — diagnóstico de atração e provimento.
@@ -32,7 +33,7 @@ Ele executa sequencialmente:
 15. `scripts/tema_trabalho/08_auditar_cutoff_selecao.py` — auditoria do último selecionado versus primeiro não selecionado, ligação agregada a homologação/presença ativa e portão causal (A7).
 16. `scripts/tema_trabalho/09_estimar_cutoff_escore_estrito.py` e `09b_intervalos_exatos_escore.py` — efeito local condicional no corte de seleção, placebos, sensibilidades, replicação e intervalos exatos (A8).
 17. **RDD da bolsa** (IVS 2010 oficial do Ipea como running variable; `docs/06_execucao/37`, `38` e `39`):
-    - `scripts/aquisicao/a07_adquirir_ivs_administrativo.py` e `a08_adquirir_ivs_2010_oficial.py` — escore publicado pelo MS e base completa do Ipea (zip de 201 MB fora do Git, conferido por SHA-256);
+    - as aquisições `a07` e `a08` rodam no início (passo 5);
     - `scripts/rdd_bolsa/04_*`, `04b_*` e `04c_*` — portão R1 (`APROVADO_SHARP`), escore completo e identificação do arquivo de IVS errado;
     - `05_*` (E1), `06_*` (E2), `07_*` (E3, principal), `08a_*` e `08_*` (E4) e `11_*` (E5, exploratório);
     - `09b_conferir_sinal.py`, `09_gerar_relatorio_pdf.py` e `10_galeria_figura_regra.py` — conferência do sinal, relatório em PDF e galeria da figura da regra.
@@ -42,6 +43,11 @@ Saíram do pipeline em 18/10/2026, sem apagar os scripts: `scripts/rdd_bolsa/01_
 `01b_*`, `02_*` e `03_*`. Eles usavam `data/ivs_ipea_2010_municipios.csv`, que não
 é o IVS do município (`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`),
 ou dependiam do pedido do escore ao MS, cancelado porque o escore é público.
+
+Fora do pipeline, por depender do histórico do Git: `scripts/tema_trabalho/12_registrar_failure_mode_ivs.py`
+lê as versões de A2, A4, A5 e da Tabela 1 anteriores à correção de 18/10/2026 no commit
+`22eddb5`, compara com as atuais e gera `output/tema_trabalho/failure_mode_ivs_*` e
+`docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`. Rodar depois do pipeline.
 
 ---
 

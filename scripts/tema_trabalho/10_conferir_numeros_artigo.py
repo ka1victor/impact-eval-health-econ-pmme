@@ -42,6 +42,7 @@ A4_LPM = "output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv"
 A4_LOGIT = "output/tema_trabalho/A4_tabela_02b_logit_AME.csv"
 A4_ESTAGIO = "output/tema_trabalho/A4_tabela_02c_confirmacao_homologacao.csv"
 A4_MUNCURSO = "output/tema_trabalho/A4_tabela_02d_municipio_curso.csv"
+A4_AJUSTE = "output/tema_trabalho/A4_tabela_03b_ajuste_completo.csv"
 A4_JSON = "output/tema_trabalho/A4_estimativas_atracao.json"
 A5_JSON = "output/tema_trabalho/A5_estimativas_provimento.json"
 A5_EVENTO = "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv"
@@ -745,9 +746,11 @@ for chave, amostra, modelo in [
 A4_LINHAS = [
     ("LPM", A4_LPM, {"termo": "estrato_metropolitano"}, "Modelo linear pré-especificado"),
     ("LOGIT", A4_LOGIT, {"termo": "estrato_metropolitano"}, "Logit, efeito marginal médio"),
-    # O ajuste completo saiu da tabela: usou IVS e populacao de
-    # data/ivs_ipea_2010_municipios.csv, que e a linha de um subgrupo populacional
-    # (auditoria 16, secao 4), e sera reestimado com a base oficial.
+    # Ajuste completo reestimado em 18/10/2026 com a base oficial (IVS e populacao
+    # 2010 do Ipea, a08; Censo 2022 no denominador do estoque). A versao anterior
+    # usava data/ivs_ipea_2010_municipios.csv, linha de subgrupo populacional
+    # (auditorias 16 e 19); seus numeros nao sao citados nos artigos.
+    ("AJUSTE", A4_AJUSTE, {"termo": "estrato_metropolitano"}, "Ajuste completo, base oficial"),
     ("CONFIRMACAO", A4_ESTAGIO,
      {"termo": "estrato_metropolitano", "outcome_estagio": "alguma_confirmacao"},
      "Apenas confirmação"),
@@ -804,6 +807,25 @@ registrar("A4_TXT_CAPITAL", "Apendice A", "Contraste capital x interior remoto",
 registrar("A4_TXT_INTERIOR", "Apendice A", "Contraste interior proximo x interior remoto",
           pontos(a4_interior), A4_LPM, loc_int, a4_interior, "proporcao x100, 1 casa",
           trecho_a4_outros)
+
+# Ajuste completo no texto (Apendice A do principal; Secao 3 do curto: mesma redacao)
+aj_b, loc_ajb = csv_valor(A4_AJUSTE, {"termo": "estrato_metropolitano"}, "coef")
+aj_se, loc_ajse = csv_valor(A4_AJUSTE, {"termo": "estrato_metropolitano"}, "se_cluster")
+aj_p, loc_ajp = csv_valor(A4_AJUSTE, {"termo": "estrato_metropolitano"}, "p_valor")
+aj_q, loc_ajq = csv_valor(A4_AJUSTE, {"termo": "estrato_metropolitano"}, "q_fdr_estrato")
+trecho_ajuste = (
+    f"reduz o contraste metropolitano para {pontos(aj_b)} pontos percentuais (erro-padrão "
+    f"{pontos(aj_se)}; $p$ = {decimal_br(aj_p, 3)}; $q$ de Benjamini--Hochberg na família dos "
+    f"três estratos = {decimal_br(aj_q, 3)})"
+)
+for chave, bruto, loc, fmt, tr in [
+    ("COEF", aj_b, loc_ajb, pontos(aj_b), "proporcao x100, 1 casa"),
+    ("EP", aj_se, loc_ajse, pontos(aj_se), "proporcao x100, 1 casa"),
+    ("P", aj_p, loc_ajp, decimal_br(aj_p, 3), "3 casas"),
+    ("Q", aj_q, loc_ajq, decimal_br(aj_q, 3), "3 casas"),
+]:
+    registrar(f"A4_TXT_AJUSTE_{chave}", "Apendice A", f"ajuste completo, base oficial: {chave}",
+              fmt, A4_AJUSTE, loc, bruto, tr, trecho_ajuste)
 
 bench, loc_bench = json_valor(A4_JSON, "potencia_referencia/benchmark_global_proporcao_p30")
 mde, loc_mde = json_valor(
@@ -1323,7 +1345,7 @@ c7_n_ctrl, loc_c6 = json_valor(A5_C7, "placebo/resultado/nivel/n_controle")
 trecho_c7_pl = (f"Entre as {inteiro(c7_n_trat + c7_n_ctrl)} células sem atração, estar em um município que atraiu em alguma outra "
                 f"célula não muda o estoque: {decimal_br(c7_pl_n_b, 3)} em nível e {decimal_br(c7_pl_p_b, 4)} na escala proporcional, "
                 f"com $p$ de {decimal_br(c7_pl_n_p, 3)} e {decimal_br(c7_pl_p_p, 3)}")
-for chave, bruto, loc, fmt, tr in [("N", c7_n_trat + c7_n_ctrl, loc_c5, inteiro(c7_n_trat + c7_n_ctrl), "inteiro"),
+for chave, bruto, loc, fmt, tr in [("N", c7_n_trat + c7_n_ctrl, f"soma: {loc_c5} + {loc_c6}", inteiro(c7_n_trat + c7_n_ctrl), "inteiro"),
                                    ("NIVEL", c7_pl_n_b, loc_c1, decimal_br(c7_pl_n_b, 3), "3 casas"),
                                    ("PROP", c7_pl_p_b, loc_c2, decimal_br(c7_pl_p_b, 4), "4 casas"),
                                    ("NIVEL_P", c7_pl_n_p, loc_c3, decimal_br(c7_pl_n_p, 3), "3 casas"),
@@ -1379,6 +1401,19 @@ for chave, bruto, loc, fmt, tr in [("Q16", c7_q16, loc_c17, decimal_br(c7_q16, 4
 # ------------------------------------------------------------------ execucao
 
 
+def decimais_sem_origem(tex: str, registros: list[dict[str, Any]]) -> tuple[list[str], list[str]]:
+    """Cobertura (como no conferidor do artigo curto): todo decimal com vírgula no corpo
+    do artigo tem de estar contido em algum trecho conferido com status OK."""
+    corpo = tex.split("\\begin{document}", 1)[1].split("\\begin{thebibliography}", 1)[0]
+    corpo = re.sub(r"\\(label|ref|includegraphics|cite[tp]?)\{[^}]*\}", " ", corpo)
+    corpo_norm = re.sub(r"\s+", " ", corpo)
+    trechos_ok = " || ".join(r["trecho_esperado_no_tex"] for r in registros if r.get("status") == "OK")
+    decimais = sorted(set(re.findall(r"(?<![\d,.])\d+,\d+(?![\d,])", corpo_norm)))
+    sem_origem = [d for d in decimais
+                  if not re.search(r"(?<![\d,.])" + re.escape(d) + r"(?![\d,])", trechos_ok)]
+    return decimais, sem_origem
+
+
 def main() -> None:
     if not TEX.exists():
         raise SystemExit(f"Arquivo do artigo ausente: {TEX}")
@@ -1402,8 +1437,10 @@ def main() -> None:
 
     divergentes = quadro[quadro["status"].ne("OK")]
     problemas = conferir_estrutura(tex)
+    decimais, sem_origem = decimais_sem_origem(tex, REGISTROS)
 
     print(f"Numeros conferidos: {len(quadro)}")
+    print(f"Decimais distintos no corpo: {len(decimais)}; sem origem: {len(sem_origem)}")
     print(f"Mapeamento gravado em: {CONFERENCIA_CSV.relative_to(ROOT)}")
     print(f"Problemas estruturais: {len(problemas)}")
     for problema in problemas:
@@ -1414,7 +1451,12 @@ def main() -> None:
         for _, linha in divergentes.iterrows():
             print(f"  - {linha['id']}: esperava '{linha['trecho_esperado_no_tex']}'")
 
-    if len(divergentes) or problemas:
+    if sem_origem:
+        print("\nDecimais no corpo sem trecho conferido que os contenha:")
+        for d in sem_origem:
+            print(f"  - {d}")
+
+    if len(divergentes) or problemas or sem_origem:
         raise SystemExit(1)
 
     print("\nCONFERENCIA APROVADA: toda cifra do artigo corresponde a um artefato.")

@@ -1185,7 +1185,9 @@ Dois defeitos no mesmo lugar, ambos de **leitura**, não de estimativa.
 1. A `A5_tabela_11` publicou só os cinco modelos `minimal`, mas a definição de
    `uf_fe` move também a `full`, que passou de `p = 0,791` a `p = 0,094` no
    estoque. A tabela passa a trazer as duas especificações por variante, 30
-   linhas. Ver errata **E-7**.
+   linhas. Ver errata **E-7**. *Failure mode (18/10/2026): os dois `p` citados
+   vêm de covariadas do arquivo de IVS errado; ver
+   [`auditorias/19`](../auditorias/19_reestimacao_base_oficial_failure_mode.md).*
 2. Sob a variante primária, três níveis de `uf_fe` têm uma única célula (`41`,
    `MACRO_CENTRO-OESTE`, `MACRO_SUDESTE`), porque o limiar de colapso conta
    municípios no painel de 1.184 e não células na amostra de 587. O dummy

@@ -300,6 +300,12 @@ def main() -> None:
                 "ativos_por_competencia": dict(sorted(series_totals.items())),
             },
             "ivs_ipea_2010_municipios.csv": {
+                "rotulo": (
+                    "FAILURE MODE: arquivo rebaixado. Não é o IVS do município: é, em cada município, a última "
+                    "linha de subgrupo com IVS preenchido da base do Ipea (auditorias 16 e 19). Inventariado só "
+                    "como dado observado; nenhuma análise o usa. IVS do município: "
+                    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv"
+                ),
                 "sha256": sha256(DATA / "ivs_ipea_2010_municipios.csv"),
                 "linhas": len(ivs),
                 "campos": list(ivs[0]),

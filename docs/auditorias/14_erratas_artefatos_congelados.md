@@ -355,6 +355,14 @@ especificações, não só a `minimal`:
 | `cobertura_6m` | `+0,0293` (`p = 0,102`) | `+0,0321` (`p = 0,077`) |
 | `presentes_baseline_6m` | `+0,0013` (`p = 0,975`) | `+0,0161` (`p = 0,679`) |
 
+> **Nota de 18/10/2026 — failure mode.** As duas colunas desta tabela vêm de
+> especificações `full` cujas covariadas (`ivs_2010`, `log_pop`, `estoque_por_10k`)
+> saíam de `data/ivs_ipea_2010_municipios.csv`, linha de subgrupo populacional e
+> não o município. Os valores só documentam o erro. O ponto da errata — a
+> definição de `uf_fe` move também a `full` — continua válido; os valores com a
+> base oficial estão em `output/tema_trabalho/A5_tabela_11_sensibilidade_colapso_uf.csv`
+> e a comparação em [`19`](19_reestimacao_base_oficial_failure_mode.md).
+
 **Leitura correta.** A frase de C-9 permanece verdadeira no que afirma — os
 dois modelos `full` são o mesmo estimador por Frisch–Waugh–Lovell —, mas os
 números que ela cita são de uma execução superada. A leitura de que «no `full`

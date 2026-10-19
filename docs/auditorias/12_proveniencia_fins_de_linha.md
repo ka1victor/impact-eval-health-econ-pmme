@@ -77,7 +77,9 @@ Os resultados publicados permanecem: A4 com 1.295 células em 368 municípios,
 atração de 30,3%, metropolitano versus interior remoto de +29,4 p.p. no LPM
 mínimo, +19,8 no ajuste completo, +28,5 em confirmação, +25,0 em homologação e
 +33,1 em município–curso; A5 com 587 células em 295 municípios, 0,50 (EP 0,23)
-em `202603` e pré-tendências `F=1,03`, `p=0,420`.
+em `202603` e pré-tendências `F=1,03`, `p=0,420`. *Failure mode (18/10/2026): o
+"+19,8 no ajuste completo" usava covariadas de `data/ivs_ipea_2010_municipios.csv`,
+linha de subgrupo; ver [`19`](19_reestimacao_base_oficial_failure_mode.md).*
 
 ## 6. Lacuna de cobertura corrigida
 

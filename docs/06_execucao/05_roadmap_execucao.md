@@ -483,10 +483,12 @@ C3-02B de 31/08/2026 historicizou as 25 versões SIGTAP e produziu manifesto
 para os 675 pares, mas o FTP oficial não continha AC e RR em 2026-06: foram 673
 sucessos e duas falhas documentadas, sem zeros fabricados. O portão foi então
 separado corretamente: C3-03 executou somente a força de trabalho com 26 meses
-CNES pré-T0; o SIH continua bloqueando somente cirurgias. Anestesiologia teve
-suporte, mas falhou equivalência estrita e potência para detectar um especialista:
-MDE 2,22 no CNES e 4,44 no município. A classificação prospectiva é
-`associacao_ajustada`, documentada em
+CNES pré-T0; o SIH continua bloqueando somente cirurgias.
+<!-- c3-03-valores-em-vigor: início; gerado por scripts/tema_trabalho/12_registrar_failure_mode_ivs.py -->
+Anestesiologia teve suporte, mas falhou equivalência estrita e potência para detectar um especialista: MDE 2,12 no CNES e
+4,62 no município. A classificação prospectiva é `associacao_ajustada` (valores da emenda de 18/10/2026, com o IVS 2010 oficial; os de 31/08/2026 usavam o arquivo de IVS errado e só valem como failure mode, [`auditorias/19`](../auditorias/19_reestimacao_base_oficial_failure_mode.md)).
+<!-- c3-03-valores-em-vigor: fim -->
+A classificação está documentada em
 [`docs/05_identificacao/13_plano_pre_analise_ciclo3.md`](../05_identificacao/13_plano_pre_analise_ciclo3.md). A fila
 deve seguir
 [`prompts/avaliacao_ciclo3/`](../../prompts/avaliacao_ciclo3/README.md). Estimação

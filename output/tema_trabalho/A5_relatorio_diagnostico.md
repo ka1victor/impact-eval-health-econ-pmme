@@ -9,7 +9,7 @@
 
 Setembro/2025 não é usado como baseline principal. O snapshot nominal registra início mediano em 2025-09-19, com datas entre 2025-09-11 e 2026-03-17; portanto, setembro já contém exposição parcial. A janela setembro/2025–março/2026 permanece apenas como diagnóstico histórico em `A5_tabela_03f_sensibilidade_T0_alternativo.csv`.
 
-Os modelos principais usam somente a ponte sem CBO compartilhado. As 597 células dos seis cursos com CBO compartilhado aparecem como sensibilidade ampliada, nunca misturadas ao estimando principal.
+Os modelos principais usam somente a ponte sem CBO compartilhado. As 597 células fora da amostra confirmatória (591 dos 6 cursos com CBO compartilhado e 6 de cursos sem compartilhamento que ficam fora da amostra principal) aparecem como sensibilidade ampliada, nunca misturadas ao estimando principal.
 
 ## 2. Resultado principal: dinâmica proporcional do estoque
 
@@ -73,4 +73,4 @@ Permitido: **evolução do estoque cadastral**, **trajetória diferencial associ
 
 O CNES não identifica participantes do programa. Sem log completo, ponte individual e pagamentos, o A5 permanece uma análise descritiva longitudinal complementar ao resultado de implementação A4.
 
-*Gerado em 2026-09-21 por `scripts/tema_trabalho/06_avaliar_provimento_cnes.py`.*
+*Gerado com data de referência 2026-10-18 (protocolo A3 e emendas) por `scripts/tema_trabalho/06_avaliar_provimento_cnes.py`.*

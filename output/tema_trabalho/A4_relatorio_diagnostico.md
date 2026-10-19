@@ -1,17 +1,17 @@
 # A4 — Atração e implementação: diagnóstico e linguagem autorizada (02/09/2026)
 
-> Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash eb2bf812)
+> Registro A3: `output/tema_trabalho/registro_pre_analise_atracao.json` (hash cdaf71c4)
 > Potência: `output/tema_trabalho/potencia_atracao.json`; MDE **ex-ante** dos contrastes vs remoto: capital 19.5%, metro 13.7%, próximo 11.9%. O MDE **ex-post** do EP realizado está na seção 2 e em `A4_tabela_09_mde_ex_ante_ex_post.csv`
 > Tipologia A2 strict 540/540 (25/101/238/176) quadro 368 (18/72/203/75)
 > Amostra primária: **1295 células CNES–curso Ch1 em 368 municípios**; estendida 3057 (1762 Ch2)
 
 ## 1. Construção e suporte (antes dos coeficientes)
 
-Primária 1295: outcome médio **30.3%** (393/1295). Por estrato: capital 35.6% (73), metropolitano 44.9% (265), interior próximo 26.9% (811), remoto 20.5% (146). Ver `A4_tabela_01_amostra_construcao.csv` (por estrato) + `A4_tabela_00_construcao_steps.csv` (3323→3057→1295, 266 sem municipio, 29 fora quadro Ch1 com municipio).
+Primária 1295: outcome médio **30.3%** (393/1295). Por estrato: capital 35.6% (73), metropolitano 44.9% (265), interior próximo 26.9% (811), remoto 20.5% (146). Ver `A4_tabela_01_amostra_construcao.csv` (por estrato) + `A4_tabela_00_construcao_steps.csv` (3323 → 3057 → 1295, 266 sem municipio, 0 fora quadro Ch1 com municipio).
 
-Faixa anunciada (descritiva, não causal): FAIXA1 31.6% (n=291), FAIXA2 37.4% (465), FAIXA3 23.6% (539) — ver `A4_tabela_01b_amostra_faixa.csv`. IVS 2010 mediano 0.331; Q1–Q4 prevalência ver figura 02; correlação IVS–outcome 0.09 (associativa). Estoque pré médio 26.1 por município; log(pop) mediano 9.77. Curso distribuição ver `A4_tabela_01c_amostra_curso.csv` (16 cursos, min 22 max 188), UF ver `A4_tabela_01d_amostra_uf.csv` (27 UFs, 8 com <5 clusters colapsadas na macrorregião de saúde conforme A3 — AL, AP, DF, ES, PB, PE, RR, SE —, resultando em 24 níveis de FE) para FE.
+Faixa anunciada (descritiva, não causal): FAIXA1 31.6% (n=291), FAIXA2 37.4% (n=465), FAIXA3 23.6% (n=539) — ver `A4_tabela_01b_amostra_faixa.csv`. IVS 2010 mediano 0.328; Q1–Q4 prevalência ver figura 02; correlação IVS–outcome 0.06 (associativa). Estoque pré médio 26.1 por município; log(pop) mediano 11.24. Curso distribuição ver `A4_tabela_01c_amostra_curso.csv` (16 cursos, min 22 max 188), UF ver `A4_tabela_01d_amostra_uf.csv` (27 UFs, 8 com <5 clusters colapsadas na macrorregião de saúde conforme A3 — AL, AP, DF, ES, PB, PE, RR, SE —, resultando em 24 níveis de FE) para FE.
 
-População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, reforçando que Ch2 é cadastro reserva sem capacidade imediata numérica; análise conjunta mantém FE de chamada. Construção sem escolher amostra por resultado; 266 sem municipio e 29 fora quadro mantidos fora da primária por definição prévia.
+População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, reforçando que Ch2 é cadastro reserva sem capacidade imediata numérica; análise conjunta mantém FE de chamada. Construção sem escolher amostra por resultado; 266 sem municipio e 0 fora quadro com municipio mantidos fora da primária por definição prévia.
 
 ## 2. Modelo primário exatamente como congelado em A3
 
@@ -25,7 +25,7 @@ População estendida Ch1+Ch2 (3057): prevalência Ch1 30.3% vs Ch2 11.7%, refor
 | interior proximo polo | 0.121 (0.043)** | 0.036 a 0.205 | 0.005 |
 | metropolitano | 0.279 (0.059)*** | 0.165 a 0.394 | 0.000 |
 
-N=1295, G=368, R²=0.261, outcome médio 30.3%. O benchmark global de 3,8% mede precisão de uma proporção, não potência do coeficiente. Para os contrastes efetivos contra remoto, os MDEs **ex-ante** aproximados são 19.5% (capital), 13.7% (metro) e 11.9% (próximo).
+N=1295, G=368, R²=0.261, outcome médio 30.3%. O benchmark global de 3.8% mede precisão de uma proporção, não potência do coeficiente. Para os contrastes efetivos contra remoto, os MDEs **ex-ante** aproximados são 19.5% (capital), 13.7% (metro) e 11.9% (próximo).
 
 **Logit AME (mesma spec):** o contraste de estrato troca o **bloco inteiro** de indicadoras contra `interior_remoto`, e não uma indicadora isolada. A última coluna traz, só para auditoria, o valor que `get_margeff(dummy=True)` devolvia: ele altera apenas a coluna do estrato avaliado e mantém as demais no valor observado, o que constrói células simultaneamente capital e metropolitana — um contrafactual que não existe na população — e superestima o contraste.
 
@@ -72,19 +72,19 @@ O `p` wild é **coluna adicional**, não substituto: o `p` principal continua se
 
 A escolha da primária é a do protocolo, não uma seleção posterior ao resultado; as três ficam publicadas em `A4_tabela_07_sensibilidade_colapso_uf.csv` com EP cluster, p-valor, níveis de FE e N. O balde único `RESTO`, usado antes da auditoria, punha num único nível de FE quatro macrorregiões, com 32 células de capital contra 1 de interior remoto — exatamente a comparação entre estados que o FE de UF deveria impedir. O contraste metropolitano é estável entre as três variantes; o de capital é o que se move. Limite conhecido: os 4 municípios de UF pequena sem macrorregião publicada na tipologia (UNIAO DOS PALMARES/AL, OIAPOQUE/AP, CACHOEIRO DE ITAPEMIRIM/ES, LINHARES/ES; 6 células, estratos interior_proximo_polo, interior_remoto) formam o nível residual MACRO_SEM_REGIAO_SAUDE, que ainda agrega UFs de macrorregiões distintas.
 
-- **Ajuste completo** (+ IVS linear, log pop, estoque/10k, faixa): estrato metro 0.209 (p=0.008), capital 0.198 (ns), próximo 0.082 (ns); IVS -0.245 (p=0.384, ns); log pop 0.036 (p=0.117); faixa FAIXA2 vs FAIXA1 -0.011 (ns), FAIXA3 vs FAIXA1 -0.100 (ns). Com ajuste, gradiente atenua — UF e curso capturam parte da variação territorial. Ver `A4_tabela_03b_ajuste_completo.csv`.
+- **Ajuste completo** (+ IVS linear, log pop, estoque/10k, faixa): estrato metro 0.185 (p=0.018; q FDR=0.055), capital 0.154 (p=0.204), próximo 0.071 (p=0.173); IVS -0.310 (p=0.340); log pop 0.051 (p=0.042); estoque/10k 0.0045 (p=0.462); faixa FAIXA2 vs FAIXA1 -0.028 (p=0.623), FAIXA3 vs FAIXA1 -0.131 (p=0.109). Com ajuste, gradiente atenua — UF e curso capturam parte da variação territorial. Covariadas contínuas da base oficial do Ipea (a08): IVS 2010 e log(1 + população 2010); estoque/10k com a população do Censo 2022 no denominador. Até 18/10/2026 vinham de `data/ivs_ipea_2010_municipios.csv`, que é uma linha de subgrupo populacional e não o município; os números daquela versão só valem como registro de failure mode (`docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`). Ver `A4_tabela_03b_ajuste_completo.csv`.
 
-- **Winsorizado p99** (pop e estoque clipados p01-p99): metro 0.212, capital 0.205, próximo 0.086 — gradiente preservado, outliers não dirigem resultado. Ver `A4_tabela_03c_winsorizado.csv`.
+- **Winsorizado p99** (pop e estoque clipados p01-p99): metro 0.187, capital 0.162, próximo 0.073 — gradiente preservado, outliers não dirigem resultado. Ver `A4_tabela_03c_winsorizado.csv`.
 
-- **IVS quadrático** (linear + quadrático como proxy spline): IVS linear -0.957, quadrático 0.952 (p=0.530, ns) — não linearidade não detectada; mantém linear parsimonioso. Ver `A4_tabela_03d_ivs_spline.csv`.
+- **IVS quadrático** (linear + quadrático como proxy spline): IVS linear -1.587, quadrático 1.550 (p=0.205, ns) — não linearidade não detectada; mantém linear parsimonioso. Ver `A4_tabela_03d_ivs_spline.csv`.
 
 - **Faixa só (FE)**: FAIXA2 +0.096 vs FAIXA1, FAIXA3 +0.008 — descritivo; **não chamar de efeito da bolsa** (faixa colinear com IVS, colinearidade intencional da regra 2025).
 
-- **IVS só (FE)**: coef -0.102 (p=0.671, ns) — gradiente vulnerabilidade não significativo condicional a FE; figura Q1–Q4 mostra variação modesta.
+- **IVS só (FE)**: coef -0.186 (p=0.360, ns) — gradiente vulnerabilidade não significativo condicional a FE; figura Q1–Q4 mostra variação modesta.
 
-- **Estrato×IVS**: interação não significativa global; heterogeneidade IVS dentro de cada estrato limitada (ver `A4_tabela_03_separacao_*.csv`).
+- **Estrato×IVS**: capital×IVS -3.210 (p=0.000); interior_proximo_polo×IVS -0.252 (p=0.454); metropolitano×IVS -0.248 (p=0.656) — interação distinta de zero a 5% em capital; leitura descritiva, sem correção de multiplicidade nem hipótese pré-especificada de sinal (ver `A4_tabela_03_separacao_*.csv`).
 
-Interpretação: **associado a** maior atração em metropolitano/capital vs remoto, mas ajustado perde significância para capital/próximo; nenhuma evidência de gradiente causal de bolsa ou IVS.
+Interpretação: **associado a** maior atração em metropolitano/capital vs remoto. No ajuste completo, metropolitano fica com p=0.018 e q FDR=0.055 (acima de 5% após a correção), capital p=0.204 e próximo p=0.173; nenhuma evidência de gradiente causal de bolsa ou IVS.
 
 ## 4. Influência e robustez
 

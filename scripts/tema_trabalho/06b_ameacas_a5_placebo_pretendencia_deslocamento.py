@@ -47,6 +47,7 @@ from __future__ import annotations
 import datetime as dt
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -78,11 +79,39 @@ ALPHA_PRE = 0.05
 
 # Comparacoes declaradas no protocolo: o que a reauditoria independente mediu
 # por conta propria. Nao sao alvos: sao a referencia contra a qual a leitura e
-# feita, registrada antes de rodar.
-REAUDITORIA = {
-    "placebo_nivel": {"beta": 0.092, "se": 0.303, "p": 0.761, "pre_F": 0.81},
-    "pretendencia_por_curso_nivel": {"14": {"F": 2.46, "p": 0.007}, "16": {"F": 11.90}, "2": {"F": 6.85}},
-}
+# feita, registrada antes de rodar. Sao lidas do proprio protocolo congelado
+# (docs/06_execucao/36_backlog_pos_auditoria.md, secao "Protocolo congelado em
+# 16/09/2026", itens 1 e 2, "Comparacao declarada"), nao digitadas aqui.
+PROTOCOLO_C7 = ROOT / "docs" / "06_execucao" / "36_backlog_pos_auditoria.md"
+
+
+def _num(texto: str) -> float:
+    return float(texto.replace(",", "."))
+
+
+def ler_comparacoes_protocolo(path: Path = PROTOCOLO_C7) -> dict:
+    """Extrai as comparacoes declaradas do protocolo C-7; formato inesperado aborta."""
+    texto = path.read_text(encoding="utf-8")
+    ini = texto.index("### Protocolo congelado em 16/09/2026")
+    secao = " ".join(texto[ini:ini + 6000].split())
+    m = re.search(r"Comparação declarada: a reauditoria mediu `([\d,]+)` \(EP `([\d,]+)`; `p = ([\d,]+)`\) "
+                  r"e pré-`F` `([\d,]+)` em nível", secao)
+    if not m:
+        raise RuntimeError("comparacao declarada do placebo nao encontrada no protocolo C-7")
+    placebo = {"beta": _num(m.group(1)), "se": _num(m.group(2)), "p": _num(m.group(3)), "pre_F": _num(m.group(4))}
+    trecho = re.search(r"Comparação declarada: a reauditoria mediu (curso .*?), em subamostras", secao)
+    if not trecho:
+        raise RuntimeError("comparacao declarada por curso nao encontrada no protocolo C-7")
+    cursos = {}
+    for c, f, pv in re.findall(r"curso (\d+) `F = ([\d,]+)`(?: \(`p = ([\d,]+)`\))?", trecho.group(1)):
+        cursos[c] = {"F": _num(f), **({"p": _num(pv)} if pv else {})}
+    if not cursos:
+        raise RuntimeError("nenhum curso na comparacao declarada do protocolo C-7")
+    return {"placebo_nivel": placebo, "pretendencia_por_curso_nivel": cursos,
+            "fonte": str(path.relative_to(ROOT)) + ", protocolo C-7 de 16/09/2026, itens 1 e 2"}
+
+
+REAUDITORIA = ler_comparacoes_protocolo()
 
 
 def bh_fdr(pvals: np.ndarray) -> np.ndarray:
@@ -210,6 +239,9 @@ def linha(r: dict[str, Any], **extra) -> dict[str, Any]:
 
 def main() -> None:
     panel, hash_painel = carregar_painel()
+    # Contagens do painel para os textos do JSON (não digitadas).
+    N_CELULAS_PAINEL = int(panel[["co_ibge_6d", "cod_curso"]].drop_duplicates().shape[0])
+    N_MUNICIPIOS_PAINEL = int(panel["co_ibge_6d"].nunique())
     conf = panel[panel["amostra_confirmatoria"].astype(bool)].copy()
     assert conf[["co_ibge_6d", "cod_curso"]].drop_duplicates().shape[0] == 587
     fes_celula = ["cell_id", "course_month", "uf_month"]
@@ -374,13 +406,16 @@ def main() -> None:
     def resumo(rs: list[dict[str, Any]]) -> dict[str, Any]:
         return {r["escala"]: {k: v for k, v in r.items() if k not in ("coeficientes",)} | {"coeficientes": r["coeficientes"]} for r in rs}
 
-    principal = json.loads(A5_ESTIMATIVAS.read_text(encoding="utf-8"))["modelos"]
+    a5 = json.loads(A5_ESTIMATIVAS.read_text(encoding="utf-8"))
+    principal = a5["modelos"]
     saida = {
         "protocolo": "A5_AMEACAS_C7",
-        "data_referencia": dt.date.today().isoformat(),
+        # Data de referência do A5 (protocolo A3 e emendas), não do relógio.
+        "data_referencia": a5["data_referencia"],
+        "natureza_dos_dados": "EMPIRICO",
         "protocolo_congelado_em": "2026-09-16, docs/06_execucao/36_backlog_pos_auditoria.md, item C-7, antes da execucao",
         "linguagem": "associativa; atracao e resultado realizado; nenhum efeito causal",
-        "amostra": {"celulas_confirmatorias": 587, "municipios": int(conf["co_ibge_6d"].nunique()), "cursos": sorted(int(c) for c in conf["cod_curso"].unique())},
+        "amostra": {"celulas_confirmatorias": int(conf[["co_ibge_6d", "cod_curso"]].drop_duplicates().shape[0]), "municipios": int(conf["co_ibge_6d"].nunique()), "cursos": sorted(int(c) for c in conf["cod_curso"].unique())},
         "convencao_inferencia": "erros agrupados por municipio (ou regiao, no teste regional) com graus de liberdade que contam os efeitos fixos absorvidos (_gl_fe)",
         "referencia_principal_a5": {
             "proporcional_mar2026_beta": principal["principal_proporcional_confirmatorio"]["mar2026_beta"],
@@ -389,7 +424,7 @@ def main() -> None:
             "nivel_mar2026_p_gl_fe": principal["principal_dinamico_confirmatorio"]["mar2026_p_gl_fe"],
         },
         "placebo": {
-            "definicao": "celulas confirmatorias sem atracao; placebo = municipio com atracao em alguma das suas 1.184 celulas",
+            "definicao": f"celulas confirmatorias sem atracao; placebo = municipio com atracao em alguma das suas {N_CELULAS_PAINEL:,} celulas".replace(",", "."),
             "leitura_pre_especificada": "coeficiente pos distinguivel de zero indicaria choque municipal correlacionado com atrair; indistinguivel de zero sustenta que o resultado principal e da celula",
             "comparacao_reauditoria_nivel": REAUDITORIA["placebo_nivel"],
             "resultado": resumo(placebo),
@@ -425,7 +460,7 @@ def main() -> None:
             "definicao_a": "transbordo: celulas confirmatorias sem atracao; exposicao = outro municipio do painel na mesma regiao de saude com atracao no mesmo curso",
             "definicao_b": "oferta liquida: estoque somado por regiao-curso-mes sobre municipios do painel; tratamento = regiao-curso com ao menos uma celula com atracao; FE regiao-curso, curso-mes, UF-mes; cluster regiao",
             "leitura_pre_especificada": "em (a), coeficiente pos negativo indica deslocamento a partir de vizinhos; em (b), coeficiente zero indicaria pura realocacao dentro da regiao e positivo indicaria expansao liquida",
-            "limite": "o painel contem apenas os 368 municipios do quadro; vizinho e vizinho dentro do quadro",
+            "limite": f"o painel contem apenas os {N_MUNICIPIOS_PAINEL} municipios do quadro; vizinho e vizinho dentro do quadro",
             "n_regioes": int(reg["region_id"].nunique()),
             "n_regiao_curso": int(reg[["region_id", "cod_curso"]].drop_duplicates().shape[0]),
             "n_regiao_curso_com_mais_de_um_municipio": n_reg_multi,

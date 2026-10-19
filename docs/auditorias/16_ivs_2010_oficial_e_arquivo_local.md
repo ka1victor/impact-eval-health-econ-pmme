@@ -145,10 +145,10 @@ com o rótulo correto.
 | primeiro estágio instável em 0,400 e nulo em 0,500 | arquivo local | **artefato**: no IVS oficial o salto é 0% → 100% em 0,300 e 0,400, e 0,500 não é corte |
 | teto de 78% de qualquer regra de dois cortes | arquivo local | **artefato** |
 | RDD-IVS arquivada; pedido do escore ao MS | anterior | **superado**: o escore é público |
-| gradiente de IVS no A4 e covariáveis de IVS, IDHM e população do arquivo local | arquivo local | **a rever**: os coeficientes de estrato do A4 não dependem do arquivo, mas os de IVS sim |
-| `log_pop` e `estoque_pre_por_10k` (especialistas por 10 mil habitantes) da tipologia A2 e do ajuste completo do A4 | `populacao_2010` do arquivo local, que é a população do subgrupo | **a rever**: denominador errado. A classificação dos estratos (capital, metropolitano, interior próximo de polo, interior remoto) usa só capitais, RM/RIDE e REGIC e **não depende** do arquivo |
+| gradiente de IVS no A4 e covariáveis de IVS, IDHM e população do arquivo local | arquivo local | **reestimado em 18/10/2026** com a base oficial ([`19`](19_reestimacao_base_oficial_failure_mode.md)); os coeficientes de estrato do modelo principal não dependiam do arquivo |
+| `log_pop` e `estoque_pre_por_10k` (especialistas por 10 mil habitantes) da tipologia A2 e do ajuste completo do A4 | `populacao_2010` do arquivo local, que é a população do subgrupo | **reestimado em 18/10/2026** ([`19`](19_reestimacao_base_oficial_failure_mode.md)): população 2010 oficial no `log_pop` e Censo 2022 no denominador do estoque; o denominador antigo estava errado. A classificação dos estratos (capital, metropolitano, interior próximo de polo, interior remoto) usa só capitais, RM/RIDE e REGIC e **não depende** do arquivo |
 
-Scripts que leem o arquivo local, para revisão:
+Scripts que leem o arquivo local, para revisão (revisão feita em 18/10/2026; auditoria completa de leitores diretos e indiretos, com a classe de cada uso, em [`19`](19_reestimacao_base_oficial_failure_mode.md), §2):
 - `scripts/00_inventario_dados.py`;
 - `scripts/02_auditar_fontes_pmme.py`;
 - `scripts/aquisicao/04_harmonizar_territorio_ibge.py`;

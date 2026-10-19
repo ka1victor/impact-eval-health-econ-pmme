@@ -246,7 +246,8 @@ def insumos_declarados() -> list[tuple[Path, str, str | None]]:
         (ROOT / "output/aquisicao/manifesto_cnes_26_competencias.json", "manifesto das 26 competências mensais do CNES", None),
         (ROOT / "data/pmm_especialistas_nominal.csv", "retrato nominal observado, insumo de A7/A8", None),
         (IVS_LOCAL, "arquivo local rebaixado (auditoria 16): linha de subgrupo populacional da base do Ipea, "
-         "não o IVS do município; não é running variable; o ajuste completo de A4 ainda usa IVS e população dele", None),
+         "não o IVS do município; não é running variable nem covariável; nenhuma etapa de A2 a A5 o lê desde "
+         "18/10/2026 (auditoria 19); hasheado só como registro do failure mode", None),
         (IVS_OFICIAL, "IVS 2010 oficial do Ipea (= escore administrativo do MS), running variable canônica da RDD da bolsa", None),
         (FUNIL, "matriz do funil do ciclo 1, saída de A1", None),
         (OUT / "matriz_tipologia_territorial.parquet", "tipologia territorial congelada, saída de A2", None),
@@ -334,6 +335,7 @@ def main() -> None:
     q_prop = a5["multiplicidade"]["mar2026_q_fdr_bh_gl_fe_proporcional_confirmatoria"]
     q_nivel = a5["multiplicidade"]["mar2026_q_fdr_bh_gl_fe_nivel_confirmatoria"]
     pl_n = c7["placebo"]["resultado"]["nivel"]
+    reaud = c7["placebo"]["comparacao_reauditoria_nivel"]  # lida do protocolo C-7 pelo 06b
     pl_p = c7["placebo"]["resultado"]["proporcional"]
     pre = c7["pretendencia_por_curso"]
     cursos_rej = pre["cursos_pre_p_lt_0_05_proporcional"]
@@ -358,7 +360,11 @@ def main() -> None:
     p_curso2_prop = pre["por_curso"]["2"]["proporcional"]["pre_p_gl_fe"]
     lista = lambda xs: ", ".join(str(x) for x in xs) if xs else "nenhum"
     celulas_fmt = f"{prev['celulas']:,}".replace(",", ".")
-    date = dt.date.today().isoformat()
+    # Contagens das amostras lidas dos artefatos de A4 e A5 (não digitadas).
+    a4_mun = int(m4["primario_LPM_minimal"]["n_clusters"])
+    a5_cel, a5_mun, a5_cursos = int(event["n_celulas"]), int(event["n_clusters"]), int(event["n_cursos"])
+    # Data de referência dos insumos (A4 e A5 a gravam a partir do protocolo), não do relógio.
+    date = max(str(a4.get("data_referencia", "")), str(a5.get("data_referencia", "")))
 
     # RDD da bolsa: estado vigente lido de R1, E3 e E5 (auditoria 16).
     rdd = estado_rdd_bolsa()
@@ -373,10 +379,19 @@ def main() -> None:
     p_min_e3 = num(rdd["p_min"], 3)
     janelas_txt = [num(j, 3) for j in rdd["janelas"]]
     janelas_e3 = ", ".join(janelas_txt[:-1]) + f" e {janelas_txt[-1]}" if len(janelas_txt) > 1 else janelas_txt[0]
-    # Ajuste completo de A4: usou IVS, log da população e estoque por 10 mil
-    # habitantes do arquivo local errado (auditoria 16, §4). Os coeficientes de
-    # estrato do LPM pré-especificado não dependem dele.
-    ressalva_full = "usou IVS e população do arquivo local errado e será reestimado com a base oficial (auditoria 16, §4)"
+    # Ajuste completo de A4, reestimado em 18/10/2026 com a base oficial (IVS e
+    # população 2010 do Ipea; Censo 2022 no denominador do estoque). A versão
+    # anterior usava o arquivo local errado; seus números ficam só na auditoria 19.
+    aj = pd.read_csv(OUT / "A4_tabela_03b_ajuste_completo.csv").set_index("termo").loc["estrato_metropolitano"]
+    p_full, q_full = float(aj["p_valor"]), float(aj["q_fdr_estrato"])
+    ressalva_full = (
+        f"usa IVS e população 2010 da base oficial do Ipea e o estoque por 10 mil habitantes do Censo 2022 "
+        f"(p={num(p_full, 3)}; q de FDR nos três estratos={num(q_full, 3)}); a versão com o arquivo local "
+        "errado (auditoria 16) só consta como failure mode (auditoria 19)"
+    )
+    pot = json.loads((OUT / "potencia_atracao.json").read_text(encoding="utf-8"))
+    bench_global = pct(pot["mde_global"]["mde_80_pp_p30"])
+    mde_metro = pct(pot["contrastes_vs_interior_remoto"]["metropolitano"]["mde_80_pp_p30"])
 
     redteam = f"""# A6 — Red team da evidência empírica
 
@@ -403,7 +418,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ### 3. Seleção de municípios, cursos e estabelecimentos
 
 **Refutação tentada:** misturar cursos com ponte CBO sobreposta e atribuir a mudança a uma especialidade específica.  
-**Veredito:** A4 cobre 1.295 células em 368 municípios; A5 principal restringe-se a 587 células município–curso de dez cursos cujo CBO não é compartilhado com outro curso do PMM-E, em 295 municípios; apenas oito desses cursos têm CBO estritamente 1:1. A amostra ampliada é apenas sensibilidade.
+**Veredito:** A4 cobre {celulas_fmt} células em {a4_mun} municípios; A5 principal restringe-se a {a5_cel} células município–curso de {a5_cursos} cursos cujo CBO não é compartilhado com outro curso do PMM-E, em {a5_mun} municípios; apenas oito desses cursos têm CBO estritamente 1:1. A amostra ampliada é apenas sensibilidade.
 
 ### 4. Inferência municipal e concentração
 
@@ -437,7 +452,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 
 ## Ataques ao resultado principal (A4)
 
-- O contraste metropolitano versus interior remoto é {pct(metro)} pp no LPM pré-especificado e {pct(metro_full)} pp no ajuste completo. **Ressalva:** o ajuste completo usou IVS, log da população e estoque por 10 mil habitantes de `data/ivs_ipea_2010_municipios.csv`, que é a linha de um subgrupo populacional e não o município, e será reestimado com a base oficial (auditoria 16, §4); a variante winsorizada parte do mesmo ajuste e herda a ressalva. Os coeficientes de estrato do LPM pré-especificado não dependem desse arquivo.
+- O contraste metropolitano versus interior remoto é {pct(metro)} pp no LPM pré-especificado e {pct(metro_full)} pp no ajuste completo, que {ressalva_full}. Os coeficientes de estrato do LPM pré-especificado nunca dependeram do arquivo local.
 - Separar o funil preserva o sinal: {pct(confirm)} pp em confirmação e {pct(homolog)} pp em homologação.
 - Colapsar múltiplos CNES para município–curso aumenta o contraste para {pct(collapsed)} pp; logo, o resultado não decorre do peso implícito de estabelecimentos múltiplos.
 - Winsorizar covariadas e executar leave-one-out não inverte o gradiente. O resultado é robusto como associação territorial, não como efeito da bolsa.
@@ -461,7 +476,7 @@ Na escala proporcional, que é a primária, o mesmo exercício não desfaz o res
 
 As três ameaças que a reauditoria independente levantou foram testadas em 16/09/2026 sob protocolo congelado antes da execução (`docs/06_execucao/36_backlog_pos_auditoria.md`, item C-7), a partir do painel congelado de A5 com hash conferido contra este manifesto. Resultados em `A5_ameacas_c7.json` e nas tabelas `A5_tabela_12` a `A5_tabela_14`; inferência na convenção que conta os efeitos fixos absorvidos.
 
-**Placebo — células sem atração em municípios com atração.** Refutação tentada: o resultado principal seria choque municipal correlacionado com atrair, e não a atração da própria célula. Entre as células confirmatórias sem atração ({pl_n['n_tratadas']} em municípios com atração em alguma célula, {pl_n['n_controle']} em municípios sem nenhuma), o coeficiente de março/2026 é {num(pl_n['mar2026_beta'], 3)} em nível (EP {num(pl_n['mar2026_se_gl_fe'], 3)}; p={num(pl_n['mar2026_p_gl_fe'], 3)}; pré-F {num(pl_n['pre_F_gl_fe'])}, p={num(pl_n['pre_p_gl_fe'], 3)}) e {num(pl_p['mar2026_beta'], 4)} na escala proporcional (p={num(pl_p['mar2026_p_gl_fe'], 3)}). **Veredito:** o placebo passa nas duas escalas; a reauditoria havia medido 0,092 (EP 0,303; p=0,761) em nível, mesma ordem e mesma leitura. O resultado principal é da célula, não do município.
+**Placebo — células sem atração em municípios com atração.** Refutação tentada: o resultado principal seria choque municipal correlacionado com atrair, e não a atração da própria célula. Entre as células confirmatórias sem atração ({pl_n['n_tratadas']} em municípios com atração em alguma célula, {pl_n['n_controle']} em municípios sem nenhuma), o coeficiente de março/2026 é {num(pl_n['mar2026_beta'], 3)} em nível (EP {num(pl_n['mar2026_se_gl_fe'], 3)}; p={num(pl_n['mar2026_p_gl_fe'], 3)}; pré-F {num(pl_n['pre_F_gl_fe'])}, p={num(pl_n['pre_p_gl_fe'], 3)}) e {num(pl_p['mar2026_beta'], 4)} na escala proporcional (p={num(pl_p['mar2026_p_gl_fe'], 3)}). **Veredito:** o placebo passa nas duas escalas; a reauditoria havia medido {num(reaud['beta'], 3)} (EP {num(reaud['se'], 3)}; p={num(reaud['p'], 3)}) em nível, mesma ordem e mesma leitura. O resultado principal é da célula, não do município.
 
 **Heterogeneidade de pré-tendência por curso.** Refutação tentada: o p agregado do teste pré esconderia cursos com caminhos pré divergentes. Dentro de cada um dos dez cursos, o teste conjunto dos doze coeficientes pré rejeita a 5% na escala proporcional nos cursos {lista(cursos_rej)} e, em nível, nos cursos {lista(cursos_rej_nivel)} — os mesmos que a reauditoria apontara (2, 14 e 16 em nível). Nos cursos {lista(posto_baixo)} a covariância das restrições não tem posto completo (poucos municípios), e o F conjunto não é confiável; o curso 16 está entre eles. Pela regra fixada no protocolo, excluindo os cursos rejeitados na escala proporcional o coeficiente de março/2026 vai a {num(sens_p['mar2026_beta'], 4)} (EP {num(sens_p['mar2026_se_gl_fe'], 4)}; p={num(sens_p['mar2026_p_gl_fe'], 4)}) na proporção e a {num(sens_n['mar2026_beta'], 3)} (p={num(sens_n['mar2026_p_gl_fe'], 3)}) em nível, sobre {sens_p['n_unidades']} células. Sob a correção de multiplicidade que o item B-5 adotou para as demais famílias de A5, aplicada aqui à família dos dez testes por curso (item C-7b, posterior ao protocolo), só o curso {lista(cursos_q_prop)} mantém q abaixo de 5% na escala proporcional: o curso 2 passa de p={num(p_curso2_prop, 4)} a q={num(q_por_curso_prop["2"], 3)}, e o curso 16 fica em q={num(q_por_curso_prop["16"], 4)} — justamente o curso cujo F conjunto não é confiável por posto incompleto. Duas rejeições a 5% em dez testes ocorrem com probabilidade próxima de 9% sob o nulo global. **Veredito:** a heterogeneidade por curso fica publicada, mas com ressalva: na escala que governa a regra de exclusão, nenhum dos dois cursos passa ao mesmo tempo pela correção de multiplicidade e pelo posto da covariância. A regra de exclusão continua a pré-registrada, sobre o p cru, e a escala proporcional não é desfeita por ela.
 
@@ -487,7 +502,7 @@ O núcleo útil é a desigualdade territorial na atração administrativa, robus
         ("Resultado preservado ao colapsar CNES", f"Município–curso: +{pct(collapsed)} pp", "Muda o peso analítico", "robustez à unidade"),
         ("IVS/faixa, como níveis, não identificam efeito marginal",
          f"Faixa é função determinística do IVS 2010 oficial: regra reproduzida em {p1}/{p1} (ciclo 1) e {p2}/{p2} (ciclo 2); R1 aprovado sharp",
-         "Fora dos cortes, colineares com o território; coeficientes de IVS do A4 usaram o arquivo local errado e serão reestimados (auditoria 16, §4)",
+         "Fora dos cortes, colineares com o território; coeficientes de IVS do A4 reestimados com a base oficial do Ipea em 18/10/2026; a versão com o arquivo local errado só consta como failure mode (auditorias 16 e 19)",
          "gradiente descritivo"),
         (f"Dinâmica CNES em março/2026: +{num(event['mar2026_beta'])}", f"FE célula, curso–mês, UF–mês; p={num(event['mar2026_p'], 3)}", "Atração é resultado realizado; sem grupo causal", "associado a trajetória diferencial"),
         ("Pré-tendências não rejeitadas", f"Teste conjunto p={num(event['pre_p'], 3)}", "Não rejeitar não prova paralelismo", "diagnóstico favorável, não validação causal"),
@@ -517,7 +532,7 @@ O núcleo útil é a desigualdade territorial na atração administrativa, robus
 
 ## Resumo
 
-Analisamos o **quadro da primeira chamada** do primeiro ciclo do PMM-E, {celulas_fmt} células CNES–curso em 368 municípios. Alguma confirmação ou homologação **na própria primeira chamada** ocorreu em {prev['ch1_celulas']} células, {pct(prev['ch1_prop'])}% do quadro — é essa a prevalência da população primária de A4. Somando as homologações novas da segunda chamada, o **ciclo 1 inteiro** alcança {prev['ciclo_celulas']} das mesmas {celulas_fmt} células, {pct(prev['ciclo_prop'])}%: {prev['celulas_novas_ch2']} células sem desfecho na primeira chamada receberam homologado novo na segunda, somando {prev['pessoas_novas_ch2']} pessoas. Os dois números medem coisas diferentes e não são intercambiáveis. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade {pct(metro)} pontos percentuais maior que as do interior remoto; o contraste foi {pct(metro_full)} pontos no ajuste completo, {pct(confirm)} na confirmação, {pct(homolog)} na homologação e {pct(collapsed)} ao colapsar para município–curso; o ajuste completo {ressalva_full}. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO não compartilhado entre cursos encontrou diferença associada à atração de {num(event['mar2026_beta'])} médico cadastrado em março/2026 (EP {num(event['mar2026_se'])}), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Em camada separada, a RDD do adicional de bolsa nos cortes de {c1} e {c2} do IVS 2010 oficial do Ipea, que reproduz a faixa anunciada em {p1} de {p1} municípios do ciclo 1 (R1 aprovado sharp), não encontra salto distinguível de zero na fração de células preenchidas na primeira chamada: {tau_c1} pontos percentuais em {c1} (IC 95% {ic_c1}) e {tau_c2} em {c2} (IC 95% {ic_c2}). O contraste é só o incentivo marginal anunciado de {salto}, local aos cortes; o resultado é inconclusivo, e não evidência de ineficácia. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
+Analisamos o **quadro da primeira chamada** do primeiro ciclo do PMM-E, {celulas_fmt} células CNES–curso em {a4_mun} municípios. Alguma confirmação ou homologação **na própria primeira chamada** ocorreu em {prev['ch1_celulas']} células, {pct(prev['ch1_prop'])}% do quadro — é essa a prevalência da população primária de A4. Somando as homologações novas da segunda chamada, o **ciclo 1 inteiro** alcança {prev['ciclo_celulas']} das mesmas {celulas_fmt} células, {pct(prev['ciclo_prop'])}%: {prev['celulas_novas_ch2']} células sem desfecho na primeira chamada receberam homologado novo na segunda, somando {prev['pessoas_novas_ch2']} pessoas. Os dois números medem coisas diferentes e não são intercambiáveis. Em modelo linear com efeitos fixos de curso e UF e erros agrupados por município, células metropolitanas tiveram probabilidade {pct(metro)} pontos percentuais maior que as do interior remoto; o contraste foi {pct(metro_full)} pontos no ajuste completo, {pct(confirm)} na confirmação, {pct(homolog)} na homologação e {pct(collapsed)} ao colapsar para município–curso; o ajuste completo {ressalva_full}. Como evidência secundária, um estudo dinâmico do CNES em 587 células de dez cursos com CBO não compartilhado entre cursos encontrou diferença associada à atração de {num(event['mar2026_beta'])} médico cadastrado em março/2026 (EP {num(event['mar2026_se'])}), relativa a junho/2025. A distribuição é assimétrica e contém máximo 211 no grupo com atração. Em camada separada, a RDD do adicional de bolsa nos cortes de {c1} e {c2} do IVS 2010 oficial do Ipea, que reproduz a faixa anunciada em {p1} de {p1} municípios do ciclo 1 (R1 aprovado sharp), não encontra salto distinguível de zero na fração de células preenchidas na primeira chamada: {tau_c1} pontos percentuais em {c1} (IC 95% {ic_c1}) e {tau_c2} em {c2} (IC 95% {ic_c2}). O contraste é só o incentivo marginal anunciado de {salto}, local aos cortes; o resultado é inconclusivo, e não evidência de ineficácia. Os achados sustentam um gradiente territorial de implementação e uma trajetória cadastral diferencial modesta; não sustentam efeito causal da bolsa, provimento atribuível ao programa ou retenção individual.
 
 ## Introdução
 
@@ -525,9 +540,9 @@ O núcleo A1–A5 não estima o retorno causal de cada faixa de bolsa: mede onde
 
 ## Métodos
 
-A análise principal usa células CNES–curso da chamada 1, tipologia territorial REGIC/RM-RIDE congelada antes da estimação e LPM pré-especificado com efeitos fixos de curso e UF e cluster municipal; Logit, ajuste completo, estágios do funil, colapso município–curso, winsorização e leave-one-out são robustez. O ajuste completo e sua variante winsorizada usaram IVS e população do arquivo local errado e serão reestimados com a base oficial (auditoria 16, §4). O benchmark global de 3,8 pp é precisão de uma proporção, não MDE do contraste territorial; para metropolitano versus interior remoto, o MDE prévio é 13,7 pp sob p=0,30.
+A análise principal usa células CNES–curso da chamada 1, tipologia territorial REGIC/RM-RIDE congelada antes da estimação e LPM pré-especificado com efeitos fixos de curso e UF e cluster municipal; Logit, ajuste completo, estágios do funil, colapso município–curso, winsorização e leave-one-out são robustez. O ajuste completo e sua variante winsorizada usam IVS e população 2010 da base oficial do Ipea e o estoque por 10 mil habitantes do Censo 2022 (auditoria 19). O benchmark global de {bench_global} pp é precisão de uma proporção, não MDE do contraste territorial; para metropolitano versus interior remoto, o MDE prévio é {mde_metro} pp sob p=0,30.
 
-A análise secundária usa 26 competências CNES e, como amostra principal, 587 células município–curso em 295 municípios. Junho/2025 é a última referência limpa antes da oferta; setembro/2025 já pode estar tratado. O estudo dinâmico absorve efeitos fixos de célula, curso–mês e UF–mês, com erros agrupados por município. Atração administrativa é um resultado realizado, não tratamento exógeno. Estoque e entradas referem-se a vínculos cadastrados; não identificam médicos do programa.
+A análise secundária usa 26 competências CNES e, como amostra principal, {a5_cel} células município–curso em {a5_mun} municípios. Junho/2025 é a última referência limpa antes da oferta; setembro/2025 já pode estar tratado. O estudo dinâmico absorve efeitos fixos de célula, curso–mês e UF–mês, com erros agrupados por município. Atração administrativa é um resultado realizado, não tratamento exógeno. Estoque e entradas referem-se a vínculos cadastrados; não identificam médicos do programa.
 
 ## Conclusão
 

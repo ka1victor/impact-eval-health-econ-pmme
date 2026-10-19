@@ -133,10 +133,23 @@ class PreAnaliseAtracaoTest(unittest.TestCase):
                     h.update(chunk)
             return h.hexdigest()
 
-        for rel, meta in self.registro["hashes_entradas"].items():
-            self.assertEqual(sha(rel), meta["sha256"], f"hash diverge {rel}")
-        for rel, meta in self.registro["hashes_artefatos_A1_A2"].items():
-            self.assertEqual(sha(rel), meta["sha256"], f"hash artefato diverge {rel}")
+        # Os hashes congelados em 02/09/2026 não são reescritos. A emenda de 18/10/2026
+        # (insumos corrigidos: arquivo de IVS errado, auditoria 19) traz os hashes em
+        # vigor, que conferem com o disco; insumo não corrigido tem o mesmo hash nos dois.
+        emenda = {e["data"]: e for e in self.registro["emendas"]}["2026-10-18"]
+        for campo, campo_vigor in (("hashes_entradas", "hashes_entradas_em_vigor"),
+                                   ("hashes_artefatos_A1_A2", "hashes_artefatos_A1_A2_em_vigor")):
+            congelado, vigor = self.registro[campo], emenda[campo_vigor]
+            self.assertEqual(set(congelado), set(vigor), campo)
+            for rel, meta in vigor.items():
+                self.assertEqual(sha(rel), meta["sha256"], f"hash em vigor diverge {rel}")
+            mudaram = {rel for rel in congelado if congelado[rel]["sha256"] != vigor[rel]["sha256"]}
+            self.assertTrue(mudaram <= {
+                "output/tema_trabalho/matriz_tipologia_territorial.parquet",
+                "output/aquisicao/malha_municipios_regioes_saude.parquet",
+                "output/tema_trabalho/manifesto_tipologia_territorial.json",
+                "output/tema_trabalho/suporte_estratos_territoriais.csv",
+            }, f"{campo}: insumo não corrigido mudou de hash: {sorted(mudaram)}")
 
     def test_tipologia_congelada_strict(self) -> None:
         tip = self.registro["tipologia_congelada"]

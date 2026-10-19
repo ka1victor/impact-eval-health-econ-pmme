@@ -164,18 +164,16 @@ class TestValidadeSintetica(unittest.TestCase):
                         self.assertLessEqual(estreito["delta_min"], verdade + TOL)
                         self.assertGreaterEqual(estreito["delta_max"], verdade - TOL)
 
-    def test_conjunto_informado_dentro_da_faixa(self) -> None:
+    def test_conjunto_pior_caso_e_a_faixa_e_informado_saiu(self) -> None:
         sem = pd.DataFrame({  # municípios SINTÉTICOS sem escore
             "faixa_lo": [0, 301, 401, 301],
             "faixa_hi": [300, 400, 1000, 400],
-            "ivs10_mil": [280, 350, 600, 100],  # o último contradiz a faixa: [-14, 289] fora de [301, 400]
         })
-        lo_p, hi_p, vazios_p = E2.conjuntos_possiveis(sem, "pior_caso", -114, 189)
-        lo_i, hi_i, vazios_i = E2.conjuntos_possiveis(sem, "informado", -114, 189)
+        lo_p, hi_p, vazios_p = E2.conjuntos_possiveis(sem, "pior_caso")
         self.assertEqual((lo_p.tolist(), hi_p.tolist(), vazios_p), ([0, 301, 401, 301], [300, 400, 1000, 400], 0))
-        self.assertTrue(((lo_i >= lo_p) & (hi_i <= hi_p) & (lo_i <= hi_i)).all())
-        self.assertEqual((lo_i.tolist(), hi_i.tolist()), ([166, 301, 486, 301], [300, 400, 789, 400]))
-        self.assertEqual(vazios_i, 1)  # intersecção vazia volta à faixa inteira
+        # O cenário `informado` usava o arquivo de IVS errado e saiu em 18/10/2026 (auditoria 19).
+        with self.assertRaises(ValueError):
+            E2.conjuntos_possiveis(sem, "informado")
 
 
 class TestSaidasReaisE2(unittest.TestCase):
@@ -189,20 +187,19 @@ class TestSaidasReaisE2(unittest.TestCase):
     def test_ordenacao_dos_limites(self) -> None:
         t = self.tab
         eps = 2e-6
-        self.assertEqual(len(t), 2 * 2 * 3 * 2)  # ciclos x cortes x janelas x cenários
+        self.assertEqual(len(t), 2 * 2 * 3 * 1)  # ciclos x cortes x janelas x cenário (só pior_caso)
         self.assertTrue((t["p_inf_min"] <= t["p_inf_max"] + eps).all())
         self.assertTrue((t["p_sup_min"] <= t["p_sup_max"] + eps).all())
         self.assertTrue((t["delta_min"] <= t["delta_max"] + eps).all())
         self.assertTrue((t["delta_min"] >= t["p_sup_min"] - t["p_inf_max"] - eps).all())
         self.assertTrue((t["delta_max"] <= t["p_sup_max"] - t["p_inf_min"] + eps).all())
 
-    def test_informado_aninhado_no_pior_caso(self) -> None:
-        chave = ["ciclo", "corte", "h"]
-        pior = self.tab[self.tab["cenario"] == "pior_caso"].set_index(chave)
-        inf = self.tab[self.tab["cenario"] == "informado"].set_index(chave)
-        self.assertEqual(len(pior), 12)
-        self.assertTrue((inf["delta_min"] >= pior.loc[inf.index, "delta_min"] - 2e-6).all())
-        self.assertTrue((inf["delta_max"] <= pior.loc[inf.index, "delta_max"] + 2e-6).all())
+    def test_so_pior_caso_e_desvio_registrado(self) -> None:
+        # O `informado` usava data/ivs_ipea_2010_municipios.csv como banda; saiu em 18/10/2026.
+        self.assertEqual(set(self.tab["cenario"]), {"pior_caso"})
+        self.assertEqual(len(self.tab), 12)
+        self.assertEqual(self.resumo["desvio_do_protocolo"]["cenario"], "informado")
+        self.assertNotIn("data/ivs_ipea_2010_municipios.csv", self.resumo["fontes_sha256"])
 
     def test_exclusividade_nunca_restringe_nos_dados(self) -> None:
         met = self.resumo["metodo_extremos"]

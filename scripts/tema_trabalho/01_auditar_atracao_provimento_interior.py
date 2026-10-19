@@ -41,9 +41,14 @@ PAINEL_CNES = (
     / "dados"
     / "painel_municipio_curso_mes.parquet"
 )
-DIAGNOSTICO_RDD = (
-    ROOT / "output" / "rdd_bolsa" / "diagnostico_viabilidade_salario_ivs.json"
-)
+# Regra da faixa conferida contra o IVS 2010 oficial do Ipea (a08). Até 18/10/2026 este
+# módulo lia `output/rdd_bolsa/diagnostico_viabilidade_salario_ivs.json`, do script
+# retirado `rdd_bolsa/00`, que usava `data/ivs_ipea_2010_municipios.csv` (linha de
+# subgrupo populacional, não o município; auditorias 16 e 19) e concluía que a regra
+# não se reproduzia. Aquele JSON fica só como registro do failure mode.
+IVS_OFICIAL = ROOT / "output" / "aquisicao" / "a08_ivs_2010_oficial_municipio.csv"
+# Parâmetros da regra (edital): bolsa R$ 10 mil até 0,300; R$ 15 mil até 0,400; R$ 20 mil acima.
+CORTES_MIL = (300, 400)
 OUT_DIR = ROOT / "output" / "tema_trabalho"
 OUT_JSON = OUT_DIR / "diagnostico_atracao_provimento_interior.json"
 
@@ -173,8 +178,27 @@ def load_public_outcome(
     )
 
 
+def reproduzir_regra_faixa(offer: pd.DataFrame, ivs_path: Path) -> dict[str, int]:
+    """Confere, por município, a faixa anunciada contra a regra aplicada ao IVS oficial."""
+    of = pd.read_csv(ivs_path, dtype={"co_ibge": str})
+    of["co_ibge_6d"] = of["co_ibge"].str.zfill(6)
+    of["s_mil"] = (of["ivs"] * 1000).round().astype(int)
+    mun = offer[["co_ibge_6d", "faixa_atracao_anunciada"]].drop_duplicates("co_ibge_6d")
+    mun = mun.merge(of[["co_ibge_6d", "s_mil"]], on="co_ibge_6d", how="left")
+    com = mun[mun["s_mil"].notna()].copy()
+    faixa = com["s_mil"].map(
+        lambda s: "FAIXA 3" if s <= CORTES_MIL[0] else ("FAIXA 2" if s <= CORTES_MIL[1] else "FAIXA 1"))
+    reproduz = int((faixa == com["faixa_atracao_anunciada"]).sum())
+    return {
+        "municipios": int(len(mun)),
+        "sem_ivs_oficial": int(mun["s_mil"].isna().sum()),
+        "reproduzidos": reproduz,
+        "divergentes": int(len(com) - reproduz),
+    }
+
+
 def main() -> None:
-    inputs = [QUADRO, ALOCACAO, HOMOLOGADOS, PAINEL_CNES, DIAGNOSTICO_RDD]
+    inputs = [QUADRO, ALOCACAO, HOMOLOGADOS, PAINEL_CNES, IVS_OFICIAL]
     for path in inputs:
         if not path.exists():
             raise FileNotFoundError(path)
@@ -286,7 +310,7 @@ def main() -> None:
             "ultima_competencia": str(group["competencia"].max()),
         }
 
-    rdd = json.loads(DIAGNOSTICO_RDD.read_text(encoding="utf-8"))
+    regra = reproduzir_regra_faixa(offer, IVS_OFICIAL)
 
     module_rows = [
         {
@@ -347,12 +371,15 @@ def main() -> None:
         },
         {
             "modulo": "rdd_bolsa",
-            "status": "BLOQUEADO_R1",
+            "status": "REGRA_REPRODUZIDA_IVS_OFICIAL" if regra["divergentes"] == 0 else "BLOQUEADO_R1",
             "evidencia": (
-                f"{rdd['running_variable']['municipios_faixa_divergente']} de "
-                f"{rdd['oferta_e_bolsa']['municipios']} municípios divergem da regra candidata"
+                f"{regra['reproduzidos']} de {regra['municipios']} municípios com a faixa anunciada "
+                f"reproduzida pelo IVS 2010 oficial (a08), cortes 0,{CORTES_MIL[0]} e 0,{CORTES_MIL[1]}; "
+                f"{regra['sem_ivs_oficial']} sem IVS oficial"
             ),
-            "linguagem_maxima": "upgrade causal somente após R1-R3",
+            "linguagem_maxima": (
+                "incentivo marginal anunciado nos cortes; portão R1 e estimação em scripts/rdd_bolsa/04b e 07"
+            ),
         },
     ]
 
@@ -441,7 +468,7 @@ def main() -> None:
                 "efeito total do PMM-E na atração e retenção individual de médicos do interior"
             ),
             "nucleo_garantido": "econometria associativa de implementação e preenchimento",
-            "upgrade_causal": "RDD do adicional da bolsa condicionado a R1-R3",
+            "upgrade_causal": "RDD do adicional da bolsa (R1 com o IVS 2010 oficial; ver docs/auditorias/16 e 19)",
         },
     }
 
@@ -452,7 +479,7 @@ def main() -> None:
 
     print(
         "[OK] Tema auditado: atração administrativa e oferta local agregada são viáveis; "
-        "retenção individual e RDD permanecem bloqueadas."
+        "retenção individual permanece bloqueada; RDD da bolsa depende do IVS 2010 oficial."
     )
 
 

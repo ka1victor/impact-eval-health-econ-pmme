@@ -134,6 +134,8 @@ separar confirmação (+27,0 p.p.), homologação (+23,8 p.p.) e ao colapsar a
 unidade para município–curso (+31,6 p.p.). Leave-one-UF, leave-one-curso e
 leave-one-município não invertem o sinal metropolitano.
 
+**Nota de 18/10/2026 — failure mode.** O contraste do modelo completo citado acima (com seu `p` e seu `q`) veio de uma especificação cujas covariadas de IVS e população saíam de `data/ivs_ipea_2010_municipios.csv`, linha de subgrupo populacional e não o município. O número só vale como registro do erro. Reestimado com a base oficial, o contraste é **+18,5 p.p.** (EP 7,8; `p=0,018`; `q=0,055`), lido de `output/tema_trabalho/A4_tabela_03b_ajuste_completo.csv` e a comparação em [`auditorias/19`](../auditorias/19_reestimacao_base_oficial_failure_mode.md).
+
 > **Série atualizada em 14/09/2026.** Os valores acima são os da especificação
 > primária vigente, com as oito unidades da federação de menos de cinco
 > municípios colapsadas em macrorregião de saúde, conforme o protocolo A3

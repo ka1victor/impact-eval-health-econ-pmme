@@ -236,7 +236,7 @@ trecho_n = (f"são as {inteiro(n_trat + n_ctrl)} células sem atração; no plac
             f"e {inteiro(n_ctrl)} em municípios sem nenhuma; no transbordo, {inteiro(tr_trat)} têm")
 if int(tr_trat + tr_ctrl) != int(n_trat + n_ctrl):
     raise SystemExit("C-7: placebo e transbordo deveriam partilhar as mesmas celulas sem atracao")
-for chave, bruto, loc in [("TOTAL", n_trat + n_ctrl, l7), ("TRAT", n_trat, l7), ("CTRL", n_ctrl, l8), ("TRANSBORDO", tr_trat, l9)]:
+for chave, bruto, loc in [("TOTAL", n_trat + n_ctrl, f"soma: {l7} + {l8}"), ("TRAT", n_trat, l7), ("CTRL", n_ctrl, l8), ("TRANSBORDO", tr_trat, l9)]:
     registrar(f"CURTO_C7_N_{chave}", "Tabela 4 (nota)", f"contagem {chave}", inteiro(bruto), A5_C7, loc, bruto, "inteiro", trecho_n)
 tb_b, l11 = c7("deslocamento/transbordo/proporcional/mar2026_beta")
 tb_se, l12 = c7("deslocamento/transbordo/proporcional/mar2026_se_gl_fe")

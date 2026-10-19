@@ -1,10 +1,10 @@
 afirmacao,evidencia,limite,linguagem_maxima
 "Atração administrativa de 30,3% no quadro da primeira chamada","393 de 1.295 células; pelo ciclo 1 inteiro, 461 (35,6%)",Célula não é vaga física; primeira chamada não é o ciclo inteiro,prevalência administrativa observada
-"Metropolitano associado a +27,9 pp versus remoto",LPM com FE curso e UF; cluster município,"Ajuste completo: +20,9 pp; usou IVS e população do arquivo local errado e será reestimado com a base oficial (auditoria 16, §4)",associado a maior atração
+"Metropolitano associado a +27,9 pp versus remoto",LPM com FE curso e UF; cluster município,"Ajuste completo: +18,5 pp; usa IVS e população 2010 da base oficial do Ipea e o estoque por 10 mil habitantes do Censo 2022 (p=0,018; q de FDR nos três estratos=0,055); a versão com o arquivo local errado (auditoria 16) só consta como failure mode (auditoria 19)",associado a maior atração
 Resultado preservado em confirmação,"Contraste metropolitano +27,0 pp",Confirmação não é entrada física,associação no estágio de confirmação
 Resultado preservado em homologação,"Contraste metropolitano +23,8 pp",Homologação não é exercício,associação no estágio de homologação
 Resultado preservado ao colapsar CNES,"Município–curso: +31,6 pp",Muda o peso analítico,robustez à unidade
-"IVS/faixa, como níveis, não identificam efeito marginal",Faixa é função determinística do IVS 2010 oficial: regra reproduzida em 368/368 (ciclo 1) e 454/454 (ciclo 2); R1 aprovado sharp,"Fora dos cortes, colineares com o território; coeficientes de IVS do A4 usaram o arquivo local errado e serão reestimados (auditoria 16, §4)",gradiente descritivo
+"IVS/faixa, como níveis, não identificam efeito marginal",Faixa é função determinística do IVS 2010 oficial: regra reproduzida em 368/368 (ciclo 1) e 454/454 (ciclo 2); R1 aprovado sharp,"Fora dos cortes, colineares com o território; coeficientes de IVS do A4 reestimados com a base oficial do Ipea em 18/10/2026; a versão com o arquivo local errado só consta como failure mode (auditorias 16 e 19)",gradiente descritivo
 "Dinâmica CNES em março/2026: +0,50","FE célula, curso–mês, UF–mês; p=0,033",Atração é resultado realizado; sem grupo causal,associado a trajetória diferencial
 Pré-tendências não rejeitadas,"Teste conjunto p=0,420",Não rejeitar não prova paralelismo,"diagnóstico favorável, não validação causal"
 Distribuição da mudança é assimétrica,Medianas 0 e 1; máximo com atração 211,Cauda extrema influencia a média,"descrever média, mediana e caudas"

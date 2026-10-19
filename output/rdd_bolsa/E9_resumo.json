@@ -985,7 +985,7 @@
     },
     {
       "caminho": "output/rdd_bolsa/outcomes/dicionario_outcomes_funil.json",
-      "sha256": "790e8350d2ce970c9f485df34e297583094cda17c91b9c714dc6b91deca13cdc",
+      "sha256": "912b80994f9fbefc3bbe1f5f978de16771a6c064f0044960887366a91bb88e8d",
       "bytes": 91512,
       "papel": "dicionário da tarefa B (SHA-256 das tabelas de escolha conferido)",
       "fonte": "pipeline do repositório",

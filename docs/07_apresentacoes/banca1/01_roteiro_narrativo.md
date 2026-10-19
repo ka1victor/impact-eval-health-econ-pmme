@@ -892,6 +892,8 @@ atração, com erro padrão 0,234, e o contraste ajustado de +20,9 p.p. do estra
 metropolitano. O gradiente **bruto** por território continua na tela, na figura e
 na leitura, e continua chamado de gradiente.
 
+**Nota de 18/10/2026 — failure mode.** O contraste ajustado citado neste parágrafo veio de uma especificação cujas covariadas de IVS e população saíam de `data/ivs_ipea_2010_municipios.csv`, linha de subgrupo populacional e não o município. O número só vale como registro do erro; o valor reestimado com a base oficial está em `output/tema_trabalho/A4_tabela_03b_ajuste_completo.csv` e a comparação em [`auditorias/19`](../../auditorias/19_reestimacao_base_oficial_failure_mode.md).
+
 ### O que a próxima reconstrução dos decks precisa contemplar
 
 Aos quatro requisitos da seção 4f somam-se dois, e um deles muda de endereço: os

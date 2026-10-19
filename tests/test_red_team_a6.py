@@ -197,7 +197,7 @@ class RedTeamA6Test(unittest.TestCase):
         R1", conclusões que vinham de `data/ivs_ipea_2010_municipios.csv`, a linha
         de um subgrupo populacional e não o IVS do município. Os números citados
         têm de bater com R1 e E3, e o ajuste completo de A4, estimado com o
-        arquivo errado, só aparece com a ressalva de reestimação.
+        arquivo errado, só aparece reestimado com a base oficial (auditoria 19).
         """
         r1 = json.loads((ROOT / "output" / "rdd_bolsa" / "portao_r1_ivs_oficial.json").read_text(encoding="utf-8"))
         n1 = r1["populacoes"]["P1"]["municipios"]
@@ -221,7 +221,13 @@ class RedTeamA6Test(unittest.TestCase):
         for nome, txt in [("red team", redteam), ("síntese", sintese)]:
             self.assertIn(salto, txt, f"{nome} não cita o salto do E3 em 0,300")
             self.assertIn("R$ 5 mil", txt, nome)
-            self.assertIn("reestimado", txt.lower(), f"{nome} cita o ajuste completo sem a ressalva")
+            # Ajuste completo reestimado com a base oficial (auditoria 19): o número
+            # citado é o do artefato corrente, com a fonte das covariadas declarada.
+            self.assertIn("base oficial", txt.lower(), f"{nome} cita o ajuste completo sem a fonte oficial")
+            self.assertIn("auditoria 19", txt.lower(), f"{nome} não aponta o registro do failure mode")
+        a4 = json.loads((ROOT / "output" / "tema_trabalho" / "A4_estimativas_atracao.json").read_text(encoding="utf-8"))
+        full = a4["modelos"]["sensibilidade_full"]["coef_estrato_full"]["estrato_metropolitano"]
+        self.assertIn(f"{100 * full:.1f}".replace(".", ",") + " pp no ajuste completo", redteam)
         self.assertIn(f"{n1}/{n1}", redteam)
         self.assertIn(f"{n2}/{n2}", redteam)
         self.assertIn(f"{n1} de {n1}", sintese)
