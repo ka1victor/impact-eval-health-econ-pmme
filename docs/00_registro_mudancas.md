@@ -8,6 +8,26 @@
 
 ---
 
+## 19/10/2026 — Relatório curto de validação para os professores
+
+Motivo: o autor precisa de um relatório de 10 a 15 páginas A4 para os professores validarem o desenho e os
+resultados da RDD da bolsa obtidos até agora (E3 a E9, síntese E8, X1 a X3 e X6). É um derivado do relatório de 46
+páginas (`output/rdd_bolsa/relatorio_resultados_rdd_bolsa.pdf`), que continua sendo a referência completa. A análise
+de produção (SIA/SIH/TISS) não entra: ainda não rodou.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `scripts/apresentacao/gerar_relatorio_validacao_professores.py` | gera `output/apresentacao_validacao/relatorio_validacao_rdd_bolsa.html` e `.pdf` (A4, Chromium headless); reutiliza as funções do `scripts/rdd_bolsa/09_gerar_relatorio_pdf.py`; sem estimação nova, sem leitura de `data/`, sem data nem commit no HTML (saída determinística) |
+| `tests/test_relatorio_validacao_professores.py` | HTML em dia, números rastreados a `output/`, código sem número digitado, nada de `data/`, figuras do pipeline, sinal e rótulos, PDF |
+| `output/apresentacao_validacao/relatorio_validacao_rdd_bolsa.{html,pdf}` | o relatório |
+
+### Atualizado
+
+[`07_apresentacoes/banca2/README.md`](07_apresentacoes/banca2/README.md) (uma linha com o ponteiro) e
+[`tests/README.md`](../tests/README.md) (contagem e linha do módulo novo).
+
 ## 19/10/2026 — Resultados exploratórios pós-síntese X1–X6 (doc 46)
 
 Motivo: execução do protocolo exploratório
