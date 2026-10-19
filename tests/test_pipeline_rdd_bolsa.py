@@ -37,6 +37,8 @@ CADEIA = [
     AQ / "a10_normas_mesmos_cortes_ivs.py",
     AQ / "a11_adquirir_resultado_ciclo2_chamada1.py",
     AQ / "a09_adquirir_cnes_nacional.py",
+    # Protocolo 47: SIA do TabNet, só conferido (`--etapa verificar`), como o a09.
+    AQ / "a12_adquirir_sia_tabnet.py",
     RDD / "12_construir_outcomes_funil.py",
     RDD / "13_estimar_E6_funil.py",
     RDD / "16_estimar_E9_escolha.py",
@@ -125,6 +127,8 @@ class TestCadeiaRddBolsa(unittest.TestCase):
             # a09 lê o universo do a08, a ponte e o painel do ciclo 1 (para conferir hashes).
             A09: [AQ / "a08_adquirir_ivs_2010_oficial.py", AQ / "01_congelar_ponte_cbo.py",
                   ROOT / "scripts" / "avaliacao_impacto" / "run_pipeline_avaliacao.py"],
+            # a12 lê a ponte (CBO-alvo) e importa a regra de grupos de CBO do a09; não lê IVS.
+            AQ / "a12_adquirir_sia_tabnet.py": [AQ / "01_congelar_ponte_cbo.py", A09],
             # 12 lê o E4 municipal (08), o manifesto do a11, o funil (A1), a tipologia (A2) e o Censo 2022.
             RDD / "12_construir_outcomes_funil.py": [
                 RDD / "08_estimar_E4_proporcao.py", AQ / "a11_adquirir_resultado_ciclo2_chamada1.py",
@@ -225,7 +229,9 @@ class TestCadeiaRddBolsa(unittest.TestCase):
 
     def test_e3_roda_com_o_escore_completo(self) -> None:
         self.assertEqual(RA.ARGUMENTOS[RDD / "07_estimar_E3_rdd_completa.py"], ["--escore", ESCORE_COMPLETO])
-        self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09})
+        self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09,
+                                              AQ / "a12_adquirir_sia_tabnet.py"})
+        self.assertEqual(RA.ARGUMENTOS[AQ / "a12_adquirir_sia_tabnet.py"], ["--etapa", "verificar"])
         self.assertTrue((ROOT / ESCORE_COMPLETO).exists())
         # O 04b, que grava o escore completo, vem antes do E3.
         self.assertLess(posicao(RDD / "04b_validar_ivs_oficial_escore_administrativo.py"),

@@ -8,6 +8,27 @@
 
 ---
 
+## 19/10/2026 — Aquisição SIA/SUS pelo TabNet (a12, protocolo 47)
+
+Motivo: primeira aquisição da família K do protocolo
+[`47`](06_execucao/47_protocolo_producao_especializada.md): produção
+ambulatorial aprovada pelo SUS por município de atendimento, mês de
+processamento, subgrupo e conjunto de CBO do profissional executante. Só
+aquisição e validação; nada por IVS, faixa ou lado de corte.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/aquisicao/A12_sia_tabnet.md`](auditorias/aquisicao/A12_sia_tabnet.md) | auditoria da aquisição: fonte, consultas, conjuntos de CBO, chaves, regras de zero e ausência, validações, cobertura e limites |
+| `scripts/aquisicao/a12_adquirir_sia_tabnet.py` | aquisição (`--etapa verificar` padrão, `baixar`, `consolidar`, `tudo`) |
+| `output/aquisicao/sia/` | painel, tabelas de validação, manifesto e resumo gerado (`a12_resumo.md`); respostas brutas em `brutos/`, fora do Git |
+| `tests/test_aquisicao_sia.py` | testes do a12 |
+
+O a12 entra no `run_all.py` em `--etapa verificar`, depois do a09, como o a09.
+O inventário [`04_dados/02`](04_dados/02_inventario_dados_por_outcome.md) ganha
+a linha do SIA.
+
 ## 19/10/2026 — Protocolo de produção especializada (doc 47)
 
 Motivo: pedido do autor de medir, como KPI central, consultas, exames e

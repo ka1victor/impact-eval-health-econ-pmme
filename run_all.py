@@ -8,8 +8,8 @@ Uso:
 A opção `--rdd-bolsa` roda a cadeia sobre os insumos já versionados das etapas
 anteriores (quadro de vagas, funil e tipologia do ciclo 1, população do Censo
 2022, painel do ciclo 1), inclusive as aquisições a07 a a11 e a rodada
-multi-outcome (12, 13, 16 e 14). Nenhuma etapa baixa o CNES nacional: o a09 roda
-em `--etapa verificar`.
+multi-outcome (12, 13, 16 e 14). Nenhuma etapa baixa o CNES nacional nem o SIA:
+o a09 e o a12 rodam em `--etapa verificar`.
 """
 
 from pathlib import Path
@@ -90,6 +90,9 @@ STEPS = [
     ROOT / "scripts" / "aquisicao" / "a10_normas_mesmos_cortes_ivs.py",
     ROOT / "scripts" / "aquisicao" / "a11_adquirir_resultado_ciclo2_chamada1.py",
     ROOT / "scripts" / "aquisicao" / "a09_adquirir_cnes_nacional.py",
+    # a12 (SIA/SUS do TabNet, protocolo 47): como o a09, só confere as saídas versionadas
+    # contra o manifesto, sem rede (ver ARGUMENTOS). Lê a ponte (01) e a regra de CBO do a09.
+    ROOT / "scripts" / "aquisicao" / "a12_adquirir_sia_tabnet.py",
     # Outcomes do funil (tarefa B): lê E4 (08) e o manifesto do a11.
     ROOT / "scripts" / "rdd_bolsa" / "12_construir_outcomes_funil.py",
     # E6: lê os outcomes (12), E3, E4, a janela LR do E5 (11) e as saídas do a10.
@@ -128,6 +131,11 @@ ARGUMENTOS = {
     # e sem gravar. Refazer exige pedir de propósito: `--etapa painel` (cache local) ou
     # `--etapa tudo` (download). Decisão de 19/10/2026 (tarefa E8d).
     ROOT / "scripts" / "aquisicao" / "a09_adquirir_cnes_nacional.py": ["--etapa", "verificar"],
+    # O SIA vem de ~400 consultas ao TabNet cujas respostas brutas ficam fora do Git
+    # (output/aquisicao/sia/brutos/). O run_all só confere as saídas versionadas contra o
+    # manifesto, sem rede e sem gravar. Refazer exige `--etapa consolidar` (cache local) ou
+    # `--etapa tudo` (download). Protocolo 47, 19/10/2026.
+    ROOT / "scripts" / "aquisicao" / "a12_adquirir_sia_tabnet.py": ["--etapa", "verificar"],
 }
 
 AQUISICAO_RDD_BOLSA = (
@@ -136,6 +144,7 @@ AQUISICAO_RDD_BOLSA = (
     ROOT / "scripts" / "aquisicao" / "a10_normas_mesmos_cortes_ivs.py",
     ROOT / "scripts" / "aquisicao" / "a11_adquirir_resultado_ciclo2_chamada1.py",
     ROOT / "scripts" / "aquisicao" / "a09_adquirir_cnes_nacional.py",
+    ROOT / "scripts" / "aquisicao" / "a12_adquirir_sia_tabnet.py",
 )
 
 
