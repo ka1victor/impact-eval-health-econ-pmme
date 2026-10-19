@@ -8,6 +8,24 @@
 
 ---
 
+## 19/10/2026 — Resultados da família N: contagem de vagas preenchidas (doc 49)
+
+Motivo: execução do protocolo
+[`06_execucao/48`](06_execucao/48_protocolo_contagem_vagas_preenchidas.md)
+(diretriz do autor: número de vagas preenchidas, controlando pelas vagas
+oferecidas). Estatuto pós-resultado; nada altera o protocolo 40, o Holm de P1 e
+P2 nem os docs 41–46.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/49_resultados_contagem_vagas_preenchidas.md`](06_execucao/49_resultados_contagem_vagas_preenchidas.md) | resultados de N1–N4 (S-a a S-j), verificação do cadastro reserva e escolha do controle, S-c (oferta como outcome), decomposição total = oferta + preenchimento, Holm das quatro linhas empilhadas, figuras com guia de leitura; tabelas geradas pelo script |
+
+Insumos novos fora de `docs/`: `scripts/rdd_bolsa/23_estimar_contagem_vagas.py`,
+saídas `output/rdd_bolsa/N_estimativas.csv`, `N_resumo.json` e `N_figuras/`, e
+`tests/test_contagem_vagas.py`. O `run_all.py` roda o 23 logo depois do E6 (13).
+
 ## 19/10/2026 — Aquisição SIH/SUS no TabNet (a13, protocolo 47)
 
 Motivo: o protocolo de produção especializada

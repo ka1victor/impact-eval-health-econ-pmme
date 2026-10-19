@@ -49,6 +49,7 @@
     ".venv/bin/python scripts/aquisicao/a13_adquirir_sih_tabnet.py",
     ".venv/bin/python scripts/rdd_bolsa/12_construir_outcomes_funil.py",
     ".venv/bin/python scripts/rdd_bolsa/13_estimar_E6_funil.py",
+    ".venv/bin/python scripts/rdd_bolsa/23_estimar_contagem_vagas.py",
     ".venv/bin/python scripts/rdd_bolsa/16_estimar_E9_escolha.py",
     ".venv/bin/python scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py",
     ".venv/bin/python scripts/rdd_bolsa/15_sintese_E8.py",

@@ -39,6 +39,7 @@ CADEIA = [
     AQ / "a09_adquirir_cnes_nacional.py",
     RDD / "12_construir_outcomes_funil.py",
     RDD / "13_estimar_E6_funil.py",
+    RDD / "23_estimar_contagem_vagas.py",  # família N (protocolo 48): lê os outcomes e o E6
     RDD / "16_estimar_E9_escolha.py",
     RDD / "14_estimar_E7_dird_cnes.py",
     RDD / "15_sintese_E8.py",
@@ -135,6 +136,10 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                 RDD / "12_construir_outcomes_funil.py", RDD / "07_estimar_E3_rdd_completa.py",
                 RDD / "08_estimar_E4_proporcao.py", RDD / "11_inferencia_alternativa.py",
                 AQ / "a10_normas_mesmos_cortes_ivs.py"],
+            # Família N (protocolo 48) lê os outcomes (12), a janela LR e as estimativas do E6 (13).
+            RDD / "23_estimar_contagem_vagas.py": [RDD / "12_construir_outcomes_funil.py",
+                                                  RDD / "13_estimar_E6_funil.py",
+                                                  AQ / "a08_adquirir_ivs_2010_oficial.py"],
             # E9 lê as tabelas de escolha do 12 e o manifesto do a11.
             RDD / "16_estimar_E9_escolha.py": [RDD / "12_construir_outcomes_funil.py",
                                               AQ / "a11_adquirir_resultado_ciclo2_chamada1.py"],
