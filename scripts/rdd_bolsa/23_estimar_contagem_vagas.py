@@ -1420,14 +1420,17 @@ def _redondo(n: float) -> int:
 
 def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda: str, caminho: Path, *,
              unidade_n: tuple[str, str] = ("município", "municípios"), tamanhos_leg=(1, 10, 50),
-             rotulo_salto: str | bool = "meio") -> None:
+             rotulo_salto: str | bool = "meio", legenda_salto: str = "salto no corte = efeito estimado",
+             legenda_fora: bool = True) -> None:
     """Cada painel: x (IVS ou IVS - corte, em milésimos), y_ponto, dentro (bool), curva, corte, rótulo, título.
 
     `unidade_n` = (singular, plural) do que o tamanho do ponto conta (no empilhado, linhas município x ciclo).
     `tamanhos_leg`: contagens da legenda de tamanhos; "auto" usa o menor, o mediano e o maior número por faixa dos
     painéis (1 algarismo significativo). `rotulo_salto`: "meio" (padrão, ao lado do meio da seta) ou "topo" (no alto
     do painel, junto à linha do corte, longe dos pontos; auditoria 22) ou False (omite o texto; a legenda já explica
-    a seta; auditoria 21, figuras da família K). Os padrões reproduzem as figuras N.
+    a seta; auditoria 21, figuras da família K). `legenda_salto`: texto da seta na legenda; `legenda_fora=False`
+    tira da legenda o ponto cinza "fora da janela" quando a figura não tem esses pontos (auditoria 23, figuras P5,
+    que leem o salto como pacote do corte e não como efeito). Os padrões reproduzem as figuras N.
     """
     import matplotlib
     matplotlib.use("Agg")
@@ -1511,9 +1514,11 @@ def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda
         Line2D([], [], marker="o", linestyle="", color=COR_FORA, markersize=8, label="média da faixa, fora da janela"),
         Line2D([], [], color=COR_RETA, linewidth=2, label="reta ajustada (separada de cada lado)"),
         Patch(color=COR_BANDA, alpha=0.16, label="IC 95% da reta"),
-        Line2D([], [], color=COR_SALTO, linewidth=2.2, label="salto no corte = efeito estimado"),
+        Line2D([], [], color=COR_SALTO, linewidth=2.2, label=legenda_salto),
         Line2D([], [], color=TINTA_2, linewidth=1, linestyle="--", label="corte"),
     ]
+    if not legenda_fora:
+        handles = [h for h in handles if h.get_label() != "média da faixa, fora da janela"]
     tamanhos = [Line2D([], [], marker="o", linestyle="", color=COR_FORA, markersize=math.sqrt(_area(n)),
                        label=f"{n} {unidade_n[1] if n > 1 else unidade_n[0]}") for n in tamanhos_leg]
     if auto:
