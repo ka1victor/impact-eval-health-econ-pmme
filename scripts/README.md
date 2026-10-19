@@ -44,6 +44,7 @@ Ele executa sequencialmente:
       - `scripts/aquisicao/a13_adquirir_sih_tabnet.py` — SIH/SUS no TabNet (protocolo 47, insumo de K2): AIH por município de internação × mês de processamento × grupo; no pipeline roda em `--etapa verificar` (sem rede, não grava). Refazer exige `--etapa consolidar` (cache local, fora do Git) ou `--etapa tudo` (440 consultas ao TabNet);
       - `scripts/rdd_bolsa/12_construir_outcomes_funil.py` — outcomes F0–F4 dos ciclos 1–3 e tabelas de escolha;
       - `scripts/rdd_bolsa/13_estimar_E6_funil.py` — E6, RDD dos outcomes do funil (lê a janela LR do E5);
+      - `scripts/rdd_bolsa/23_estimar_contagem_vagas.py` — família N (protocolo 48, pós-resultado): número de vagas preenchidas com e sem controle pelas vagas oferecidas, decomposição, Poisson, placebos e figuras (`docs/06_execucao/49`);
       - `scripts/rdd_bolsa/16_estimar_E9_escolha.py` — E9, logit condicional da escolha dos candidatos;
       - `scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py` — E7, DiRD no CNES nacional (confere a janela LR de U com a do E6).
       - `scripts/rdd_bolsa/15_sintese_E8.py` — síntese E8: Holm das primárias P1 e P2 e tabela-síntese (`docs/06_execucao/44`);

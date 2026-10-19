@@ -106,6 +106,7 @@ Nos slides, use um dos dois e diga qual.
 | E9: escolha revelada dos candidatos (secundário, exploratório) | concluído | [`42`](42_resultados_E9_escolha.md); `output/rdd_bolsa/E9_*` |
 | E7: DiRD no CNES nacional (F3, P2) | concluído | [`43`](43_resultados_E7_dird_cnes.md); `output/rdd_bolsa/E7_*` |
 | E8: síntese, Holm das primárias e proposta de revisão da hipótese | concluído | [`44`](44_sintese_rdd_bolsa_multioutcome.md); `output/rdd_bolsa/E8_*`; `scripts/rdd_bolsa/15_sintese_E8.py` |
+| Família N (protocolo [`48`](48_protocolo_contagem_vagas_preenchidas.md), pós-resultado): número de vagas preenchidas com e sem controle pelas vagas oferecidas, ciclos 1–3, Holm de N1–N4 | concluído; auditado ([`auditorias/20`](../auditorias/20_auditoria_contagem_vagas_N.md), aprovado com correções) | [`49`](49_resultados_contagem_vagas_preenchidas.md); `output/rdd_bolsa/N_*`; `scripts/rdd_bolsa/23_estimar_contagem_vagas.py` |
 
 O relatório tem:
 - **ordem:** a hipótese primeiro e a presença como secundário;

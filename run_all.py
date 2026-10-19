@@ -8,7 +8,7 @@ Uso:
 A opção `--rdd-bolsa` roda a cadeia sobre os insumos já versionados das etapas
 anteriores (quadro de vagas, funil e tipologia do ciclo 1, população do Censo
 2022, painel do ciclo 1), inclusive as aquisições a07 a a11 e a rodada
-multi-outcome (12, 13, 16 e 14). Nenhuma etapa baixa o CNES nacional, o SIA, o SIH nem o
+multi-outcome (12, 13, 16 e 14) e a família N (23). Nenhuma etapa baixa o CNES nacional, o SIA, o SIH nem o
 TISS: o a09, o a12, o a13 e o a14 rodam em `--etapa verificar`; o a13 não faz parte da opção
 `--rdd-bolsa`.
 """
@@ -103,6 +103,9 @@ STEPS = [
     ROOT / "scripts" / "rdd_bolsa" / "12_construir_outcomes_funil.py",
     # E6: lê os outcomes (12), E3, E4, a janela LR do E5 (11) e as saídas do a10.
     ROOT / "scripts" / "rdd_bolsa" / "13_estimar_E6_funil.py",
+    # Família N (protocolo 48, pós-resultado): número de vagas preenchidas com e sem controle pelas
+    # vagas oferecidas. Lê os outcomes (12), a janela LR e as estimativas do E6 (13) e os editais.
+    ROOT / "scripts" / "rdd_bolsa" / "23_estimar_contagem_vagas.py",
     # E9: lê as tabelas de escolha do 12 e o manifesto do a11.
     ROOT / "scripts" / "rdd_bolsa" / "16_estimar_E9_escolha.py",
     # E7: lê o painel do a09, o IED do a10, a janela LR do E5 e confere a de U com a do E6 (13).

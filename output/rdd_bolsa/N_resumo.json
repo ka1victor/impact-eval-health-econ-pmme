@@ -1,0 +1,1257 @@
+{
+  "etapa": "N_contagem_vagas_preenchidas",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "PROTOCOLO_48_POS_RESULTADO",
+  "data_execucao": "2026-10-19",
+  "script": "scripts/rdd_bolsa/23_estimar_contagem_vagas.py",
+  "protocolo": {
+    "arquivo": "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md",
+    "sha256": "df84a5d874ceec932aa675ee2117012ced7be5432646847b8c44d7f85e57f236"
+  },
+  "contraste": "pacote do corte: anúncio de +R$ 5 mil por mês na bolsa (0,300: R$ 10 mil -> 15 mil; 0,400: R$ 15 mil -> 20 mil) mais as outras regras federais que mudam nos mesmos cortes (protocolo §13, auditoria 18); não é efeito da participação no PMM-E nem do Agora Tem Especialistas",
+  "salto": "tau = lado com bolsa maior (s > c) menos lado com bolsa menor; o corte pertence ao lado inferior",
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md",
+      "sha256": "df84a5d874ceec932aa675ee2117012ced7be5432646847b8c44d7f85e57f236",
+      "bytes": 6312,
+      "papel": "protocolo 48 congelado (somente lido)",
+      "fonte": "pipeline do repositorio",
+      "data_referencia": "2026-10-19",
+      "cobertura": "§§1-6",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial)",
+      "fonte": "Ipea, Atlas da Vulnerabilidade Social (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "ivs"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "N1-N4, vagas oferecidas e celulas (V1-V3)",
+      "fonte": "tarefa B (12_construir_outcomes_funil.py)",
+      "data_referencia": "ver dicionario",
+      "cobertura": "V1: 368, V2: 454, V3: 747",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "municipios sem IVS oficial fora"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "verificacao do cadastro reserva (contagens globais por celula, sem corte)",
+      "fonte": "tarefa B",
+      "data_referencia": "ver dicionario",
+      "cobertura": "5135 celulas",
+      "unidade": "celula CNES x curso x ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "colunas n_alocados_ch1, vagas_imediatas, vagas_cr"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_U_municipio.parquet",
+      "sha256": "5d4bf05a24e1b5f704aa50bbff4325b3997f1505f57c80f14f822e08e1c3db14",
+      "bytes": 246282,
+      "papel": "populacao secundaria U (zero fora do quadro)",
+      "fonte": "tarefa B",
+      "data_referencia": "ver dicionario",
+      "cobertura": "5565 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/dicionario_outcomes_funil.json",
+      "sha256": "912b80994f9fbefc3bbe1f5f978de16771a6c064f0044960887366a91bb88e8d",
+      "bytes": 91512,
+      "papel": "conferencia da verificacao (linhas alocadas em celula so CR)",
+      "fonte": "tarefa B",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E6_lr_selecao_janela.csv",
+      "sha256": "aac0d0d9673d166fc8ce3a7f87062f0851808ad8e977446c87c55b652d6f6dda",
+      "bytes": 41565,
+      "papel": "janela de local randomization de V1-V3 (regra do E5)",
+      "fonte": "13_estimar_E6_funil.py",
+      "data_referencia": "2026-10-18",
+      "cobertura": "V1, V2, V3",
+      "unidade": "janela",
+      "chaves": "populacao, corte, w",
+      "filtros": "selecionada"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E6_estimativas.csv",
+      "sha256": "223b4c77326b8399d9d0e3308f585da97e4db9237d361515911b7fd1c27f0f30",
+      "bytes": 1413878,
+      "papel": "alvo de conferencia (S-e de N2/N3 = ponderado do E6)",
+      "fonte": "13_estimar_E6_funil.py",
+      "data_referencia": "2026-10-18",
+      "cobertura": "2175 linhas",
+      "unidade": "linha de estimativa",
+      "chaves": "outcome_id, populacao, corte",
+      "filtros": "especificacao == ponderado_celulas"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_regra/edital_sgtes_01_2026_ciclo2.html",
+      "sha256": "3ca76e6fceef05881e22b18828bedd6f584d484287b22985fb8c63ec45ca4061",
+      "bytes": 128700,
+      "papel": "texto do edital (verificacao do cadastro reserva; somente lido)",
+      "fonte": "Ministerio da Saude, SGTES",
+      "data_referencia": "edital do ciclo",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf",
+      "sha256": "417c82d903ab6cf26ca17a5b50705175de40ccc539f0fd2f1e66a3ad9daf6fb2",
+      "bytes": 476954,
+      "papel": "texto do edital (verificacao do cadastro reserva; somente lido)",
+      "fonte": "Ministerio da Saude, SGTES",
+      "data_referencia": "edital do ciclo",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_regra/edital_sgtes_06_2026_edital_28_2026_ciclo3.html",
+      "sha256": "eb1e07b44465edc8226efe0743ed1fd8fca97de0f88d5886e249478052c84306",
+      "bytes": 224250,
+      "papel": "texto do edital (verificacao do cadastro reserva; somente lido)",
+      "fonte": "Ministerio da Saude, SGTES",
+      "data_referencia": "edital do ciclo",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    }
+  ],
+  "verificacao_cadastro_reserva": {
+    "pergunta": "um alocado da 1a chamada pode ocupar vaga de cadastro reserva?",
+    "resposta": "sim",
+    "pode_por_ciclo_nos_dados": {
+      "1": true,
+      "2": false,
+      "3": true
+    },
+    "contagens_por_ciclo": {
+      "1": {
+        "celulas": 1295,
+        "celulas_com_ausencia_em_alocados_ou_vagas": 0,
+        "celulas_so_cadastro_reserva": 782,
+        "alocados_ch1": 468.0,
+        "vagas_imediatas": 678.0,
+        "vagas_cr": 1145.0,
+        "alocados_em_celulas_so_cadastro_reserva": 211.0,
+        "celulas_so_cadastro_reserva_com_alocado": 175,
+        "celulas_com_alocados_acima_das_imediatas": 185,
+        "alocados_acima_das_imediatas": 221.0,
+        "celulas_com_alocados_acima_de_imediatas_mais_cr": 15,
+        "municipios": 368,
+        "municipios_com_N1_acima_das_imediatas": 80,
+        "municipios_com_N1_acima_de_imediatas_mais_cr": 0
+      },
+      "2": {
+        "celulas": 1547,
+        "celulas_com_ausencia_em_alocados_ou_vagas": 0,
+        "celulas_so_cadastro_reserva": 532,
+        "alocados_ch1": 1057.0,
+        "vagas_imediatas": 1836.0,
+        "vagas_cr": 1053.0,
+        "alocados_em_celulas_so_cadastro_reserva": 0.0,
+        "celulas_so_cadastro_reserva_com_alocado": 0,
+        "celulas_com_alocados_acima_das_imediatas": 0,
+        "alocados_acima_das_imediatas": 0.0,
+        "celulas_com_alocados_acima_de_imediatas_mais_cr": 0,
+        "municipios": 454,
+        "municipios_com_N1_acima_das_imediatas": 0,
+        "municipios_com_N1_acima_de_imediatas_mais_cr": 0
+      },
+      "3": {
+        "celulas": 2293,
+        "celulas_com_ausencia_em_alocados_ou_vagas": 0,
+        "celulas_so_cadastro_reserva": 1599,
+        "alocados_ch1": 704.0,
+        "vagas_imediatas": 1132.0,
+        "vagas_cr": 3999.0,
+        "alocados_em_celulas_so_cadastro_reserva": 131.0,
+        "celulas_so_cadastro_reserva_com_alocado": 96,
+        "celulas_com_alocados_acima_das_imediatas": 121,
+        "alocados_acima_das_imediatas": 163.0,
+        "celulas_com_alocados_acima_de_imediatas_mais_cr": 0,
+        "municipios": 748,
+        "municipios_com_N1_acima_das_imediatas": 63,
+        "municipios_com_N1_acima_de_imediatas_mais_cr": 0
+      }
+    },
+    "conferencia_tarefa_B": {
+      "ciclo_2_igual_ao_dicionario_tarefa_B": true,
+      "ciclo_3_igual_ao_dicionario_tarefa_B": true
+    },
+    "editais": [
+      {
+        "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf",
+        "sha256": "417c82d903ab6cf26ca17a5b50705175de40ccc539f0fd2f1e66a3ad9daf6fb2",
+        "edital": "Edital de Chamamento Publico SGTES/MS no 3/2025 (DOU), ciclo 1",
+        "ciclo": "1",
+        "item": "4.1.3.3",
+        "trecho": "O candidato poderá escolher, dentre suas opções, município com vaga para preenchimento imediato e município que esteja em cadastro de reserva."
+      },
+      {
+        "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf",
+        "sha256": "417c82d903ab6cf26ca17a5b50705175de40ccc539f0fd2f1e66a3ad9daf6fb2",
+        "edital": "Edital de Chamamento Publico SGTES/MS no 3/2025 (DOU), ciclo 1",
+        "ciclo": "1",
+        "item": "4.1.3.4",
+        "trecho": "Considera-se em cadastro de reserva o município que, na oferta inicial, não tinha vaga imediata, mas que poderá recebê-la por remanejamento"
+      },
+      {
+        "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf",
+        "sha256": "417c82d903ab6cf26ca17a5b50705175de40ccc539f0fd2f1e66a3ad9daf6fb2",
+        "edital": "Edital de Chamamento Publico SGTES/MS no 3/2025 (DOU), ciclo 1",
+        "ciclo": "1",
+        "item": "5.7",
+        "trecho": "as vagas remanescentes poderão ser redistribuídas para municípios com cadastro de reserva e que tenham candidatos na lista de espera"
+      },
+      {
+        "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_06_2026_edital_28_2026_ciclo3.html",
+        "sha256": "eb1e07b44465edc8226efe0743ed1fd8fca97de0f88d5886e249478052c84306",
+        "edital": "Edital SGTES/MS no 28/2026, ciclo 3",
+        "ciclo": "3",
+        "item": "4.1.3.4",
+        "trecho": "A disponibilização de vaga para esses municípios poderá ocorrer por remanejamento de vagas não ocupadas"
+      },
+      {
+        "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_06_2026_edital_28_2026_ciclo3.html",
+        "sha256": "eb1e07b44465edc8226efe0743ed1fd8fca97de0f88d5886e249478052c84306",
+        "edital": "Edital SGTES/MS no 28/2026, ciclo 3",
+        "ciclo": "3",
+        "item": "5.7",
+        "trecho": "as vagas remanescentes poderão ser redistribuídas para municípios com cadastro de reserva e que tenham candidatos na lista de espera"
+      }
+    ],
+    "edital_ciclo_2": {
+      "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_01_2026_ciclo2.html",
+      "sha256": "3ca76e6fceef05881e22b18828bedd6f584d484287b22985fb8c63ec45ca4061",
+      "nota": "a copia no repositorio e so a pagina do chamamento (sem o texto do edital); nao examinado"
+    },
+    "controle_principal": "VIC",
+    "controle_sensibilidade": "VI",
+    "regra": "protocolo 48, §1: se o alocado pode ocupar cadastro reserva, vagas oferecidas = vagas_imediatas + vagas_cr; senao, so vagas_imediatas. Decidido antes de estimar, so com contagens globais por ciclo (sem quebra por corte, faixa ou IVS) e com o texto dos editais",
+    "notas": [
+      "Ciclo 1: n_alocados_ch1 = confirmacoes de local na alocacao sub judice (tarefa B); celulas com mais confirmacoes que vagas imediatas + CR ficam registradas acima e nao sao alteradas.",
+      "Ciclo 1: n_celulas_preenchidas_ch1 (N2) segue o Y1 do E3 (confirmacao OU homologacao); por isso N2 pode contar celula sem confirmacao.",
+      "Ciclo 2: nenhum alocado da 1a chamada em celula so de cadastro reserva; o edital 1/2026 nao foi examinado (so a pagina do chamamento esta no repositorio). A regra vale para todos os ciclos; a forma 'so imediatas' e relatada como sensibilidade."
+    ]
+  },
+  "controle": {
+    "principal": "VIC",
+    "principal_coluna": "vagas_imediatas_mais_cr",
+    "sensibilidade": "VI",
+    "sensibilidade_coluna": "vagas_imediatas",
+    "N2_N3": "n_celulas",
+    "forma": "linear, coeficiente comum aos dois lados (CCFT 2019), dentro da regressao local ponderada; centrado na media ponderada pelo kernel na janela; no empilhado, um coeficiente por grupo (ciclo x corte)"
+  },
+  "populacoes": {
+    "V1": {
+      "municipios_no_quadro": 368,
+      "municipios_com_ivs_oficial": 368,
+      "municipios_sem_ivs_fora": 0,
+      "municipios_com_vagas_oferecidas_ausentes": {
+        "vagas_imediatas_mais_cr": 0,
+        "vagas_imediatas": 0,
+        "n_celulas": 0
+      },
+      "municipios_com_outcome_ausente": {
+        "n_alocados_ch1": 0,
+        "n_celulas_preenchidas_ch1": 0,
+        "n_celulas_preenchidas_ate_ch2": 0,
+        "n_ativos_ciclo": 0
+      },
+      "U_igual_a_V_nas_colunas_de_oferta_e_ativos": true
+    },
+    "V2": {
+      "municipios_no_quadro": 454,
+      "municipios_com_ivs_oficial": 454,
+      "municipios_sem_ivs_fora": 0,
+      "municipios_com_vagas_oferecidas_ausentes": {
+        "vagas_imediatas_mais_cr": 0,
+        "vagas_imediatas": 0,
+        "n_celulas": 0
+      },
+      "municipios_com_outcome_ausente": {
+        "n_alocados_ch1": 0,
+        "n_celulas_preenchidas_ch1": 0,
+        "n_celulas_preenchidas_ate_ch2": 0,
+        "n_ativos_ciclo": 0
+      },
+      "U_igual_a_V_nas_colunas_de_oferta_e_ativos": true
+    },
+    "V3": {
+      "municipios_no_quadro": 748,
+      "municipios_com_ivs_oficial": 747,
+      "municipios_sem_ivs_fora": 1,
+      "municipios_com_vagas_oferecidas_ausentes": {
+        "vagas_imediatas_mais_cr": 0,
+        "vagas_imediatas": 0,
+        "n_celulas": 0
+      },
+      "municipios_com_outcome_ausente": {
+        "n_alocados_ch1": 0,
+        "n_celulas_preenchidas_ch1": 0,
+        "n_celulas_preenchidas_ate_ch2": 747,
+        "n_ativos_ciclo": 747
+      },
+      "U_igual_a_V_nas_colunas_de_oferta_e_ativos": true
+    }
+  },
+  "municipios_sem_ivs_oficial_fora_da_rdd": {
+    "U": [],
+    "G3": [
+      "422000"
+    ],
+    "V1": [],
+    "V2": [],
+    "V3": [
+      "422000"
+    ]
+  },
+  "janelas_lr": {
+    "V1|0.300": 0.02,
+    "V1|0.400": 0.007,
+    "V2|0.300": null,
+    "V2|0.400": 0.006,
+    "V3|0.300": 0.002,
+    "V3|0.400": null
+  },
+  "holm": {
+    "linhas": [
+      {
+        "outcome_id": "N1",
+        "populacao": "V1+V2+V3",
+        "ciclo": "1+2+3",
+        "corte": "empilhado",
+        "tau": -0.7558679548614217,
+        "ep": 0.3501611258212572,
+        "ic95_inf": -1.4421711502570842,
+        "ic95_sup": -0.06956475946575924,
+        "p_valor": 0.03087896237252089,
+        "p_holm": 0.12351584949008355,
+        "ic_honesto_inf": -79.58150323209486,
+        "ic_honesto_sup": 78.06976732237203,
+        "media_abaixo": 2.15625,
+        "efeito_relativo_media_abaixo": -0.3505474573270361,
+        "mde": 0.9804511522995201
+      },
+      {
+        "outcome_id": "N2",
+        "populacao": "V1+V2+V3",
+        "ciclo": "1+2+3",
+        "corte": "empilhado",
+        "tau": -0.31135144803331677,
+        "ep": 0.1768262794634858,
+        "ic95_inf": -0.6579245873019636,
+        "ic95_sup": 0.03522169123533003,
+        "p_valor": 0.07827634360636229,
+        "p_holm": 0.23482903081908688,
+        "ic_honesto_inf": -48.439472453170296,
+        "ic_honesto_sup": 47.81676955710368,
+        "media_abaixo": 1.5133928571428572,
+        "efeito_relativo_media_abaixo": -0.20573075032289956,
+        "mde": 0.4951135824977602
+      },
+      {
+        "outcome_id": "N3",
+        "populacao": "V1+V2",
+        "ciclo": "1+2",
+        "corte": "empilhado",
+        "tau": -0.35088463924364965,
+        "ep": 0.2664536956204291,
+        "ic95_inf": -0.8731242862072885,
+        "ic95_sup": 0.17135500771998924,
+        "p_valor": 0.18788250454394118,
+        "p_holm": 0.37576500908788235,
+        "ic_honesto_inf": -20.40274653217102,
+        "ic_honesto_sup": 19.700977253683835,
+        "media_abaixo": 2.3132530120481927,
+        "efeito_relativo_media_abaixo": -0.1516845055063694,
+        "mde": 0.7460703477372014
+      },
+      {
+        "outcome_id": "N4",
+        "populacao": "V1+V2",
+        "ciclo": "1+2",
+        "corte": "empilhado",
+        "tau": -0.20905834228819883,
+        "ep": 0.5761597837107792,
+        "ic95_inf": -1.3383107677017134,
+        "ic95_sup": 0.9201940831253157,
+        "p_valor": 0.7167185405814687,
+        "p_holm": 0.7167185405814687,
+        "ic_honesto_inf": -46.54220352772233,
+        "ic_honesto_sup": 46.12408684314588,
+        "media_abaixo": 2.42570281124498,
+        "efeito_relativo_media_abaixo": -0.08618464773139323,
+        "mde": 1.6132473943901817
+      }
+    ],
+    "descricao": "Holm entre as quatro linhas S-a com ciclos e cortes empilhados (N1, N2, N3, N4), protocolo 48 §3"
+  },
+  "sensibilidade_coeficiente_unico_auditoria_20": {
+    "rotulo": "SENSIBILIDADE_AUDITORIA_20 (fora do protocolo: um so coeficiente do controle para todos os grupos ciclo x corte)",
+    "no_protocolo": false,
+    "linhas": [
+      {
+        "outcome_id": "N1",
+        "populacao": "V1+V2+V3",
+        "tau_principal": -0.7558679548614217,
+        "p_principal": 0.03087896237252089,
+        "p_holm_principal": 0.12351584949008355,
+        "tau_coef_unico": -1.032411826445141,
+        "ep_coef_unico": 0.3843295582988757,
+        "ic95_inf_coef_unico": -1.7856839189051246,
+        "ic95_sup_coef_unico": -0.27913973398515746,
+        "p_coef_unico": 0.007225531416551889,
+        "coef_controle_unico": 0.24284545497546955,
+        "wald_igualdade_chi2": 146.00394631268372,
+        "wald_igualdade_gl": 5,
+        "wald_igualdade_p": 9.46028558903748e-30,
+        "p_holm_coef_unico": 0.028902125666207555
+      },
+      {
+        "outcome_id": "N2",
+        "populacao": "V1+V2+V3",
+        "tau_principal": -0.31135144803331677,
+        "p_principal": 0.07827634360636229,
+        "p_holm_principal": 0.23482903081908688,
+        "tau_coef_unico": -0.44270070324991107,
+        "ep_coef_unico": 0.1859979155500139,
+        "ic95_inf_coef_unico": -0.8072499189274608,
+        "ic95_sup_coef_unico": -0.07815148757236134,
+        "p_coef_unico": 0.01730615648028486,
+        "coef_controle_unico": 0.38182204863496627,
+        "wald_igualdade_chi2": 120.04170255107306,
+        "wald_igualdade_gl": 5,
+        "wald_igualdade_p": 3.0753899331696404e-24,
+        "p_holm_coef_unico": 0.051918469440854584
+      },
+      {
+        "outcome_id": "N3",
+        "populacao": "V1+V2",
+        "tau_principal": -0.35088463924364965,
+        "p_principal": 0.18788250454394118,
+        "p_holm_principal": 0.37576500908788235,
+        "tau_coef_unico": -0.4529768960752314,
+        "ep_coef_unico": 0.29936536104621125,
+        "ic95_inf_coef_unico": -1.0397222219446354,
+        "ic95_sup_coef_unico": 0.1337684297941727,
+        "p_coef_unico": 0.13024817837928993,
+        "coef_controle_unico": 0.6213581899744597,
+        "wald_igualdade_chi2": 115.96039542826041,
+        "wald_igualdade_gl": 3,
+        "wald_igualdade_p": 5.718905116982707e-25,
+        "p_holm_coef_unico": 0.26049635675857985
+      },
+      {
+        "outcome_id": "N4",
+        "populacao": "V1+V2",
+        "tau_principal": -0.20905834228819883,
+        "p_principal": 0.7167185405814687,
+        "p_holm_principal": 0.7167185405814687,
+        "tau_coef_unico": -0.3883152910570189,
+        "ep_coef_unico": 0.6018676402058851,
+        "ic95_inf_coef_unico": -1.5679541893206652,
+        "ic95_sup_coef_unico": 0.7913236072066274,
+        "p_coef_unico": 0.5188080402328572,
+        "coef_controle_unico": 0.3847911818686515,
+        "wald_igualdade_chi2": 59.20397926045504,
+        "wald_igualdade_gl": 3,
+        "wald_igualdade_p": 8.69546689607845e-13,
+        "p_holm_coef_unico": 0.5188080402328572
+      }
+    ],
+    "descricao": "S-a empilhada com um so coeficiente do controle para todos os grupos ciclo x corte (o protocolo nao diz se o coeficiente e por grupo ou unico; a linha principal usa um por grupo, decisao registrada em 'decisoes'); Holm entre as quatro linhas nessa variante, so como sensibilidade; Wald (CR1) da igualdade dos coeficientes por grupo na S-a principal"
+  },
+  "veredito_S_c": {
+    "oferta": "vagas_imediatas_mais_cr",
+    "n_linhas": 12,
+    "n_p_menor_005": 1,
+    "quais": "V1 0,400",
+    "p_empilhado": 0.43824202278182245,
+    "tau_empilhado": -1.7339530655875777,
+    "possivelmente_afetado": true,
+    "regra": "possivelmente afetado se alguma linha principal de S-c em V (forma principal) tiver p < 0,05"
+  },
+  "placebos_grade": [
+    {
+      "outcome_id": "N1",
+      "ciclo": "1",
+      "especificacao": "S-a",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.1865817358441637,
+      "t_real": -0.9433191158510785,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 11,
+      "p_posto": 0.42857142857142855
+    },
+    {
+      "outcome_id": "N1",
+      "ciclo": "1",
+      "especificacao": "S-a",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.1865817358441637,
+      "t_real": -0.18288245350271334,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 23,
+      "p_posto": 0.8571428571428571
+    },
+    {
+      "outcome_id": "N1",
+      "ciclo": "1",
+      "especificacao": "S-b",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.07407407407407407,
+      "abs_t_placebo_max": 2.160195859536389,
+      "t_real": -0.25669982220231574,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 24,
+      "p_posto": 0.8928571428571429
+    },
+    {
+      "outcome_id": "N1",
+      "ciclo": "1",
+      "especificacao": "S-b",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.07407407407407407,
+      "abs_t_placebo_max": 2.160195859536389,
+      "t_real": -1.2524296154398795,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 11,
+      "p_posto": 0.42857142857142855
+    },
+    {
+      "outcome_id": "N1",
+      "ciclo": "2",
+      "especificacao": "S-a",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.0,
+      "abs_t_placebo_max": 1.7959333857491189,
+      "t_real": -2.216323538488712,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 0,
+      "p_posto": 0.03571428571428571
+    },
+    {
+      "outcome_id": "N1",
+      "ciclo": "2",
+      "especificacao": "S-a",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.0,
+      "abs_t_placebo_max": 1.7959333857491189,
+      "t_real": -0.32621774465313813,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 15,
+      "p_posto": 0.5714285714285714
+    },
+    {
+      "outcome_id": "N1",
+      "ciclo": "2",
+      "especificacao": "S-b",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.4879648724376677,
+      "t_real": -1.683022092799707,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 2,
+      "p_posto": 0.10714285714285714
+    },
+    {
+      "outcome_id": "N1",
+      "ciclo": "2",
+      "especificacao": "S-b",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.4879648724376677,
+      "t_real": -1.1665077150516558,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 5,
+      "p_posto": 0.21428571428571427
+    },
+    {
+      "outcome_id": "N1",
+      "ciclo": "3",
+      "especificacao": "S-a",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 3.1678849910974587,
+      "t_real": -1.4366607203118447,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 5,
+      "p_posto": 0.21428571428571427
+    },
+    {
+      "outcome_id": "N1",
+      "ciclo": "3",
+      "especificacao": "S-a",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 3.1678849910974587,
+      "t_real": -0.25579602778308,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 22,
+      "p_posto": 0.8214285714285714
+    },
+    {
+      "outcome_id": "N1",
+      "ciclo": "3",
+      "especificacao": "S-b",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.904330935830171,
+      "t_real": -0.7672743070308674,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 13,
+      "p_posto": 0.5
+    },
+    {
+      "outcome_id": "N1",
+      "ciclo": "3",
+      "especificacao": "S-b",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.904330935830171,
+      "t_real": -0.7362194748578715,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 14,
+      "p_posto": 0.5357142857142857
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "1",
+      "especificacao": "S-a",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.0872696510998026,
+      "t_real": -0.5686331048507254,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 17,
+      "p_posto": 0.6428571428571429
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "1",
+      "especificacao": "S-a",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.0872696510998026,
+      "t_real": -0.19246265592161696,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 25,
+      "p_posto": 0.9285714285714286
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "1",
+      "especificacao": "S-b",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.07407407407407407,
+      "abs_t_placebo_max": 2.043049868430647,
+      "t_real": -0.10167185431475878,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 25,
+      "p_posto": 0.9285714285714286
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "1",
+      "especificacao": "S-b",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.07407407407407407,
+      "abs_t_placebo_max": 2.043049868430647,
+      "t_real": -0.9662898992190125,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 13,
+      "p_posto": 0.5
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "2",
+      "especificacao": "S-a",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.0,
+      "abs_t_placebo_max": 1.9273516109313138,
+      "t_real": -2.0576669032002965,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 0,
+      "p_posto": 0.03571428571428571
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "2",
+      "especificacao": "S-a",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.0,
+      "abs_t_placebo_max": 1.9273516109313138,
+      "t_real": 0.5005029311056796,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 13,
+      "p_posto": 0.5
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "2",
+      "especificacao": "S-b",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.7047639554896326,
+      "t_real": -1.9504786074155216,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 1,
+      "p_posto": 0.07142857142857142
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "2",
+      "especificacao": "S-b",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.7047639554896326,
+      "t_real": -0.878257193015288,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 10,
+      "p_posto": 0.39285714285714285
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "3",
+      "especificacao": "S-a",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 3.098345216617352,
+      "t_real": -1.08861720805682,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 4,
+      "p_posto": 0.17857142857142858
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "3",
+      "especificacao": "S-a",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 3.098345216617352,
+      "t_real": -0.599157951889481,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 13,
+      "p_posto": 0.5
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "3",
+      "especificacao": "S-b",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.7527448398799894,
+      "t_real": -0.6450708084441478,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 13,
+      "p_posto": 0.5
+    },
+    {
+      "outcome_id": "N2",
+      "ciclo": "3",
+      "especificacao": "S-b",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.7527448398799894,
+      "t_real": -1.438336457176326,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 3,
+      "p_posto": 0.14285714285714285
+    },
+    {
+      "outcome_id": "N3",
+      "ciclo": "1",
+      "especificacao": "S-a",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.3724035148671643,
+      "t_real": -0.6877653343707519,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 16,
+      "p_posto": 0.6071428571428571
+    },
+    {
+      "outcome_id": "N3",
+      "ciclo": "1",
+      "especificacao": "S-a",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.3724035148671643,
+      "t_real": -0.6504507134729252,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 17,
+      "p_posto": 0.6428571428571429
+    },
+    {
+      "outcome_id": "N3",
+      "ciclo": "1",
+      "especificacao": "S-b",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.0,
+      "abs_t_placebo_max": 1.8349387543167794,
+      "t_real": -0.09832700334064069,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 25,
+      "p_posto": 0.9285714285714286
+    },
+    {
+      "outcome_id": "N3",
+      "ciclo": "1",
+      "especificacao": "S-b",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.0,
+      "abs_t_placebo_max": 1.8349387543167794,
+      "t_real": -1.393704024803882,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 5,
+      "p_posto": 0.21428571428571427
+    },
+    {
+      "outcome_id": "N3",
+      "ciclo": "2",
+      "especificacao": "S-a",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.1111111111111111,
+      "abs_t_placebo_max": 3.4838449090282233,
+      "t_real": -2.0388131630040363,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 2,
+      "p_posto": 0.10714285714285714
+    },
+    {
+      "outcome_id": "N3",
+      "ciclo": "2",
+      "especificacao": "S-a",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.1111111111111111,
+      "abs_t_placebo_max": 3.4838449090282233,
+      "t_real": 0.8803264548530277,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 13,
+      "p_posto": 0.5
+    },
+    {
+      "outcome_id": "N3",
+      "ciclo": "2",
+      "especificacao": "S-b",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.0954810577829845,
+      "t_real": -1.8083495354019237,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 2,
+      "p_posto": 0.10714285714285714
+    },
+    {
+      "outcome_id": "N3",
+      "ciclo": "2",
+      "especificacao": "S-b",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.0954810577829845,
+      "t_real": -0.8224635880479673,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 10,
+      "p_posto": 0.39285714285714285
+    },
+    {
+      "outcome_id": "N4",
+      "ciclo": "1",
+      "especificacao": "S-a",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.4590706107209073,
+      "t_real": 0.6898386651653932,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 12,
+      "p_posto": 0.4642857142857143
+    },
+    {
+      "outcome_id": "N4",
+      "ciclo": "1",
+      "especificacao": "S-a",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.4590706107209073,
+      "t_real": 0.3410784985506671,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 18,
+      "p_posto": 0.6785714285714286
+    },
+    {
+      "outcome_id": "N4",
+      "ciclo": "1",
+      "especificacao": "S-b",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.07407407407407407,
+      "abs_t_placebo_max": 2.37404784885668,
+      "t_real": 0.8274491157622289,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 9,
+      "p_posto": 0.35714285714285715
+    },
+    {
+      "outcome_id": "N4",
+      "ciclo": "1",
+      "especificacao": "S-b",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.07407407407407407,
+      "abs_t_placebo_max": 2.37404784885668,
+      "t_real": -0.49420328943895114,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 17,
+      "p_posto": 0.6428571428571429
+    },
+    {
+      "outcome_id": "N4",
+      "ciclo": "2",
+      "especificacao": "S-a",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.199603830897134,
+      "t_real": -1.4807580100143423,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 1,
+      "p_posto": 0.07142857142857142
+    },
+    {
+      "outcome_id": "N4",
+      "ciclo": "2",
+      "especificacao": "S-a",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.037037037037037035,
+      "abs_t_placebo_max": 2.199603830897134,
+      "t_real": -0.16895249689020417,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 23,
+      "p_posto": 0.8571428571428571
+    },
+    {
+      "outcome_id": "N4",
+      "ciclo": "2",
+      "especificacao": "S-b",
+      "corte": "0.300",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.0,
+      "abs_t_placebo_max": 1.6969962269420902,
+      "t_real": -1.2966571582590274,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 1,
+      "p_posto": 0.07142857142857142
+    },
+    {
+      "outcome_id": "N4",
+      "ciclo": "2",
+      "especificacao": "S-b",
+      "corte": "0.400",
+      "n_placebos": 27,
+      "fracao_abs_t_maior_1_96": 0.0,
+      "abs_t_placebo_max": 1.6969962269420902,
+      "t_real": -1.1359593119012248,
+      "n_abs_t_placebo_maior_ou_igual_ao_real": 2,
+      "p_posto": 0.10714285714285714
+    }
+  ],
+  "validacoes": {
+    "populacoes": {
+      "U_ivs_igual_a08": true,
+      "G3_ivs_igual_a08": true,
+      "V1_ivs_igual_a08": true,
+      "V2_ivs_igual_a08": true,
+      "V3_ivs_igual_a08": true,
+      "primeiro_estagio": {
+        "V1": {
+          "municipios": 368,
+          "reproduzidos": 368,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        },
+        "V2": {
+          "municipios": 454,
+          "reproduzidos": 454,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        },
+        "V3": {
+          "municipios": 747,
+          "reproduzidos": 747,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        }
+      },
+      "municipios_sem_ivs_oficial_fora_da_rdd": {
+        "U": [],
+        "G3": [
+          "422000"
+        ],
+        "V1": [],
+        "V2": [],
+        "V3": [
+          "422000"
+        ]
+      }
+    },
+    "E6_ponderado": {
+      "linhas_conferidas": 21,
+      "max_abs_dif": 1.1102230246251565e-16,
+      "tolerancia": 1e-10,
+      "reproduz": true,
+      "o_que": "S-e de N2 (N3) = F1.3 (F1.4) ponderado por celulas do E6, em cada ciclo, corte e empilhamento"
+    },
+    "fwl_residualizacao": true,
+    "decomposicao": {
+      "linhas": 42,
+      "max_abs_residuo": 1.673106098110111e-13
+    },
+    "poisson_igual_rdd_lib": true,
+    "linhas_com_nan_sem_nota": 0
+  },
+  "contagens": {
+    "linhas": 2221,
+    "executado": 2171,
+    "sem_estimativa": 0,
+    "nao_executado": 50,
+    "por_especificacao": {
+      "S-a": 175,
+      "S-b": 252,
+      "S-c": 414,
+      "S-d": 84,
+      "S-e": 42,
+      "S-f": 42,
+      "S-g": 336,
+      "S-h": 62,
+      "S-i": 604,
+      "S-j": 84,
+      "decomposicao": 126
+    },
+    "municipios_com_controle_ausente": 0,
+    "municipios_sem_ivs_fora": 1
+  },
+  "decisoes": [
+    "Controle principal escolhido pela verificacao registrada em verificacao_cadastro_reserva antes de estimar; a outra forma e a variante 'controle_forma_alternativa' de S-a.",
+    "Controle linear com coeficiente comum aos dois lados (CCFT 2019), centrado na media ponderada pelo kernel na janela (o centro so muda o intercepto). No empilhado (cortes e/ou ciclos), um coeficiente por grupo, comum aos dois lados do grupo.",
+    "S-f: controle e T x controle, ambos centrados na media da janela; o salto e o do municipio com a media de vagas oferecidas da janela.",
+    "S-g: IC honesto com a regra do E6 (M pela regra de bolso, quartica por lado com suporte ate o ponto medio entre cortes; M x 0,5, 1 e 2) e a variante POS_RESULTADO do E6 (lado interno ate o outro corte). Com controle, o IC honesto e aplicado a y~ = y - gamma (v - v_barra), com gamma de S-a na janela tratado como fixo (a incerteza de gamma nao entra no IC honesto). Sem h otimo (o protocolo fixa h = 0,050).",
+    "S-d: Poisson local com o mesmo algoritmo da rdd_lib (reproduz rd_poisson_local com um corte e offset, conferido); com covariavel e no empilhado, colunas extras e CR1 por municipio. Ciclos empilhados com intercepto e inclinacoes por grupo.",
+    "S-e: y / controle com peso = kernel x controle; para N2 e N3 e o F1.3 e o F1.4 ponderados do E6 (reproduzidos).",
+    "S-h: janela da regra do E5 gravada pelo E6 (E6_lr_selecao_janela.csv, 'janela minima do E5' = a janela selecionada pela regra de balanco); com controle, ajuste de covariavel de Rosenbaum (2002): residuo de MQO de y em (1, controle) na janela, sem o tratamento. So por ciclo x corte.",
+    "S-i: 'cortes placebo nas medias de cada lado, como no E9' lido como (a) corte falso na media do IVS de cada segmento de bolsa (abaixo de 0,300, entre 0,300 e 0,400, acima de 0,400) e (b) a grade do E9 (0,190 a 0,510 de 0,010 em 0,010, a mais de 0,010 dos cortes), com p por posto; cada corte falso usa so os municipios do seu segmento. So por ciclo.",
+    "S-j: donut sem os municipios com |IVS - corte| < 0,002 (IVS em milesimos: x em -1, 0, +1).",
+    "Media abaixo do corte = media simples do outcome bruto nas linhas usadas do lado de baixo da janela; efeito relativo = salto / essa media; MDE = 2,8 x EP (convencional; na linha honesta, o EP do IC honesto).",
+    "Populacao secundaria U: N1-N3 = valor de V_k no municipio do quadro e zero estrutural fora do quadro (sem celula, sem alocado); N4 = ativos do ciclo na relacao nominal (n_ativos_pmme_c{k}, igual a V_k no quadro); so S-b (efeito total) e S-c, com h = 0,050, 0,030 e 0,080.",
+    "Holm entre as quatro linhas S-a principais com ciclos e cortes empilhados: N1 e N2 em V1+V2+V3; N3 e N4 em V1+V2 (nao definidos no ciclo 3)."
+  ],
+  "desvios": [
+    {
+      "data": "2026-10-19",
+      "item": "N3 e N4 no ciclo 3",
+      "situacao": "o protocolo 48 lista ciclos 1 a 3; N3 (ate a 2a chamada) e N4 (ativos) nao existem no ciclo 3 (tarefa B; ciclo 3 congelado para presenca)",
+      "resolucao": "linhas NAO_EXECUTADO com o motivo gravado pela tarefa B; empilhamento so com os ciclos 1 e 2"
+    },
+    {
+      "data": "2026-10-19",
+      "item": "S-d, S-h e S-i empilhados",
+      "situacao": "a rdd_lib nao tem Poisson empilhado nem local randomization empilhada",
+      "resolucao": "Poisson empilhado implementado aqui com o algoritmo da rdd_lib (CR1); S-h e S-i so por ciclo x corte"
+    },
+    {
+      "data": "2026-10-19",
+      "item": "auditoria 20 (docs/auditorias/20_auditoria_contagem_vagas_N.md)",
+      "situacao": "o protocolo nao diz se, no empilhado, o coeficiente do controle e por grupo ou unico; S-h e S-i empilhados nao tinham linha propria",
+      "resolucao": "acrescentada a variante S-a 'controle_coeficiente_unico' (fora do protocolo, rotulo SENSIBILIDADE_AUDITORIA_20) com Holm proprio e Wald da igualdade dos coeficientes; S-h empilhado e S-i com ciclos empilhados saem NAO_EXECUTADO com o motivo; a linha principal e o Holm do protocolo nao mudam"
+    },
+    {
+      "data": "2026-10-19",
+      "item": "edital do ciclo 2",
+      "situacao": "a copia do Edital SGTES/MS 1/2026 no repositorio e so a pagina do chamamento",
+      "resolucao": "a verificacao do ciclo 2 usa so os quadros e resultados (nenhum alocado da 1a chamada em celula so de CR); os editais dos ciclos 1 e 3 sao citados"
+    }
+  ],
+  "saidas": {
+    "N_estimativas.csv": {
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "sha256": "3490d69c568ed13eb2b03612100a24aeefd72fc5f5f7cb3ac84e301d94f684ed"
+    },
+    "figuras": [
+      {
+        "arquivo": "output/rdd_bolsa/N_figuras/N1_sem_controle_ciclo1.png",
+        "outcome_id": "N1",
+        "populacao": "V1",
+        "paineis": [
+          {
+            "ciclo": "1",
+            "corte": "0.300",
+            "especificacao": "S-b",
+            "tau": -0.258600440229352,
+            "ic95_inf": -2.233076093883157,
+            "ic95_sup": 1.7158752134244528,
+            "p_valor": 0.7974105088105531
+          },
+          {
+            "ciclo": "1",
+            "corte": "0.400",
+            "especificacao": "S-b",
+            "tau": -0.7694932965756731,
+            "ic95_inf": -1.9736960150682517,
+            "ic95_sup": 0.4347094219169054,
+            "p_valor": 0.21041336049476583
+          }
+        ]
+      },
+      {
+        "arquivo": "output/rdd_bolsa/N_figuras/N1_sem_controle_ciclo2.png",
+        "outcome_id": "N1",
+        "populacao": "V2",
+        "paineis": [
+          {
+            "ciclo": "2",
+            "corte": "0.300",
+            "especificacao": "S-b",
+            "tau": -3.064500252633332,
+            "ic95_inf": -6.633265125935578,
+            "ic95_sup": 0.5042646206689141,
+            "p_valor": 0.09237081465677226
+          },
+          {
+            "ciclo": "2",
+            "corte": "0.400",
+            "especificacao": "S-b",
+            "tau": -3.9003924084999477,
+            "ic95_inf": -10.45382411546025,
+            "ic95_sup": 2.653039298460355,
+            "p_valor": 0.2434092311376827
+          }
+        ]
+      },
+      {
+        "arquivo": "output/rdd_bolsa/N_figuras/N1_sem_controle_empilhado.png",
+        "outcome_id": "N1",
+        "populacao": "V1+V2+V3",
+        "paineis": [
+          {
+            "ciclo": "1+2+3",
+            "corte": "empilhado",
+            "especificacao": "S-b",
+            "tau": -1.45349444756393,
+            "ic95_inf": -2.8974021786549002,
+            "ic95_sup": -0.009586716472959944,
+            "p_valor": 0.04849818082383465,
+            "pesos_da_reta_media": {
+              "c1_300": 0.12128565541870794,
+              "c1_400": 0.11863009935442519,
+              "c2_300": 0.16070692733849182,
+              "c2_400": 0.12467377867313767,
+              "c3_300": 0.21537475390320954,
+              "c3_400": 0.2593287853120278
+            }
+          }
+        ]
+      },
+      {
+        "arquivo": "output/rdd_bolsa/N_figuras/N1_com_controle_ciclo1.png",
+        "outcome_id": "N1",
+        "populacao": "V1",
+        "paineis": [
+          {
+            "ciclo": "1",
+            "corte": "0.300",
+            "especificacao": "S-a",
+            "tau": -0.6726305513032463,
+            "ic95_inf": -2.070176337562717,
+            "ic95_sup": 0.7249152349562241,
+            "p_valor": 0.34551770105689955
+          },
+          {
+            "ciclo": "1",
+            "corte": "0.400",
+            "especificacao": "S-a",
+            "tau": -0.09497357466894248,
+            "ic95_inf": -1.1128119854566187,
+            "ic95_sup": 0.9228648361187338,
+            "p_valor": 0.8548902507774526
+          }
+        ]
+      },
+      {
+        "arquivo": "output/rdd_bolsa/N_figuras/N1_com_controle_ciclo2.png",
+        "outcome_id": "N1",
+        "populacao": "V2",
+        "paineis": [
+          {
+            "ciclo": "2",
+            "corte": "0.300",
+            "especificacao": "S-a",
+            "tau": -2.0879247504187357,
+            "ic95_inf": -3.934341684672374,
+            "ic95_sup": -0.2415078161650972,
+            "p_valor": 0.026669352082346668
+          },
+          {
+            "ciclo": "2",
+            "corte": "0.400",
+            "especificacao": "S-a",
+            "tau": -0.28568470393029255,
+            "ic95_inf": -2.0021202437343213,
+            "ic95_sup": 1.430750835873736,
+            "p_valor": 0.7442596168199833
+          }
+        ]
+      },
+      {
+        "arquivo": "output/rdd_bolsa/N_figuras/N1_com_controle_empilhado.png",
+        "outcome_id": "N1",
+        "populacao": "V1+V2+V3",
+        "paineis": [
+          {
+            "ciclo": "1+2+3",
+            "corte": "empilhado",
+            "especificacao": "S-a",
+            "tau": -0.7558679548614217,
+            "ic95_inf": -1.4421711502570842,
+            "ic95_sup": -0.06956475946575924,
+            "p_valor": 0.03087896237252089,
+            "pesos_da_reta_media": {
+              "c1_300": 0.12128565541870794,
+              "c1_400": 0.11863009935442519,
+              "c2_300": 0.16070692733849182,
+              "c2_400": 0.12467377867313767,
+              "c3_300": 0.21537475390320954,
+              "c3_400": 0.2593287853120278
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "linguagem": "RDD em nivel = pacote do corte; com controle, o salto e condicional as vagas oferecidas, que podem responder a faixa; resultado nulo e falta de evidencia com a precisao relatada, nao ausencia de efeito"
+}
