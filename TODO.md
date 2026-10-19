@@ -12,7 +12,7 @@
 > `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`; portões
 > executados em `docs/06_execucao/33_status_execucao_plano_causal.md`.
 
-## Fila imediata — RDD da bolsa (estado em 18/10/2026)
+## Fila imediata — RDD da bolsa (estado em 19/10/2026)
 
 Detalhe em `docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md`.
 
@@ -25,12 +25,20 @@ Detalhe em `docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md`.
 - [x] **Pipeline:** cadeia no `run_all.py`, com `--rdd-bolsa`.
 - [x] **Testes da cadeia.**
 - [x] **Artigos e A6 atualizados.**
+- [x] **Protocolo multi-outcome congelado** (`docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md`)
+  e políticas nos mesmos cortes (`docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md`).
+- [x] **D2:** preenchimento do ciclo 2, no E6 (`docs/06_execucao/41_resultados_E6_funil.md`).
+- [x] **D3(b):** reestimação com a base oficial e failure mode
+  (`docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`).
+- [x] **E6, E9 e E7:** funil, escolha e DiRD no CNES (docs 41, 42 e 43).
+- [x] **E8:** síntese com o Holm das primárias e proposta de revisão da
+  hipótese (`docs/06_execucao/44_sintese_rdd_bolsa_multioutcome.md`).
+- [ ] **Decisão do autor sobre a revisão da hipótese** (doc 44, §7): manter H1
+  e relatar o nulo, ou adotar uma das propostas, com registro datado.
 - [ ] **Conteúdo canônico da apresentação de 28/10/2026** em
-  `docs/07_apresentacoes/`, a partir do relatório e da figura da regra
-  (variante A colorida).
-- [ ] **D2:** preenchimento do ciclo 2. Decisão do autor; não antes do dia 28.
-- [ ] **D3(b):** reestimar o gradiente de IVS e o ajuste completo do A4 com a
-  base oficial. Depois do dia 28.
+  `docs/07_apresentacoes/`, a partir do doc 44, do relatório e da figura da
+  regra (variante A colorida).
+- [ ] **Artigos:** levar a síntese do doc 44 aos `.tex` (tarefa posterior).
 - [ ] **Ambiente:** instalar `scipy`, `statsmodels` e `matplotlib`, que estão no
   `requirements.txt`, para os três testes antigos que dependem deles.
 

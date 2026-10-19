@@ -2,16 +2,33 @@
 
 > Situação das fontes atualmente preservadas no repositório. “Temos” significa que o campo está presente; não significa que o outcome já esteja identificado.
 
+> **Atualização de 19/10/2026.** A rodada multi-outcome da RDD da bolsa
+> (protocolo [`06_execucao/40`](../06_execucao/40_protocolo_multioutcome_rdd_bolsa.md))
+> trouxe ao repositório os quadros de vagas e os resultados das chamadas dos
+> ciclos 1 a 3, a relação nominal de ativos, o PMMB consolidado, o IVS 2010
+> oficial do Ipea e o CNES nacional mensal. As novas bases estão na seção 1.1;
+> a tabela da seção 2 foi revista. Contagens de linhas, municípios e
+> competências não são repetidas aqui: estão nos manifestos e dicionários
+> citados, gerados pelos scripts de aquisição e construção.
+
 ## 1. Bases atuais
 
-### `data/ivs_ipea_2010_municipios.csv`
+### `data/ivs_ipea_2010_municipios.csv` — não é o IVS do município
 
 - 5.565 municípios;
 - IVS 2010 entre 0,066 e 0,752;
 - dimensões do IVS, IDHM, população de 2010 e renda domiciliar per capita;
 - códigos IBGE e UF.
 
-Uso: running variable canônica, estratificação de equidade, população e covariáveis históricas. Limite: população e contexto são de 2010; não representam capacidade de saúde no início do programa.
+> **Corrigido em 14/10/2026.** O arquivo é, em cada município, a última linha
+> de subgrupo com IVS preenchido da base do Ipea, e não a linha do município
+> ([`auditorias/16`](../auditorias/16_ivs_2010_oficial_e_arquivo_local.md)).
+> **Não é running variable nem covariável municipal.** Só serve para
+> documentar o failure mode
+> ([`auditorias/19`](../auditorias/19_reestimacao_base_oficial_failure_mode.md)).
+> A running variable canônica é o IVS 2010 oficial (seção 1.1).
+
+~~Uso: running variable canônica, estratificação de equidade, população e covariáveis históricas.~~ Limite: população e contexto são de 2010; não representam capacidade de saúde no início do programa.
 
 ### `data/pmm_especialistas_nominal.csv`
 
@@ -43,15 +60,30 @@ Uso: **único denominador populacional válido do repositório**. Motivo na seç
 4.1. Limite: população de 2022, fixa no tempo; adequada para taxas em 2024–2026,
 não para tendências demográficas.
 
+### 1.1 Bases trazidas pela RDD da bolsa (14 a 19/10/2026)
+
+| Base | Onde | Proveniência | Uso | Limite |
+|---|---|---|---|---|
+| IVS 2010 oficial do Ipea, por município, com subíndices, IDHM e população de 2010 | `output/aquisicao/a08_ivs_2010_oficial_municipio.csv` | Plataforma IVS do Ipea; `scripts/aquisicao/a08_*`; manifesto `a08_manifesto_ivs_2010_oficial.json` | **running variable canônica** da bolsa e covariáveis pré | contexto de 2010 |
+| Quadros de vagas da 1ª chamada (células CNES × curso) dos ciclos 1, 2 e 3, com a faixa da bolsa impressa | `data/raw/aquisicao/vagas/`, `data/raw/pmm_e/` | páginas dos chamamentos; versões em `output/aquisicao/a01_inventario_versoes.json` | oferta de vagas (F0), denominador por célula | sem identificador persistente de vaga |
+| Resultados das chamadas: candidaturas com 1ª e 2ª opção, nota, alocação | `data/raw/aquisicao/vagas/`, `data/raw/pmm_e/`; 1ª chamada do ciclo 2 pela aquisição a11 (`output/aquisicao/a11_manifesto_ciclo2_chamada1.json`) | publicações oficiais do PMM-E | candidaturas, preenchimento e escolha (F1, F4, E9) | registros publicados, não o universo de inscrições; sem residência do candidato |
+| Adesão e cardápio de gestores do ciclo 3 | `data/raw/aquisicao/vagas/`, `data/raw/pmm_e/` | publicações oficiais | demanda municipal (F0.3) | só o ciclo 3 |
+| Relação nominal de especialistas ativos do PMM-E | `data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip` | MS | presença no retrato (F2) | retrato em uma data, não retenção |
+| PMMB consolidado por município | `data/raw/aquisicao/ivs_administrativo/ppf_mais_medicos_csv.zip` | MS; dicionário arquivado no mesmo diretório | co-política nos mesmos cortes (F0.4, S1, S4) | estoque acumulado em uma data |
+| Normas com cortes de IVS e estrato da APS | `output/aquisicao/a10_*` | portarias arquivadas; [`auditorias/18`](../auditorias/18_politicas_nos_mesmos_cortes_ivs.md) | co-políticas (S3) | — |
+| Outcomes do funil por município, célula e candidato (U, G3, V1–V3) | `output/rdd_bolsa/outcomes/` | `scripts/rdd_bolsa/12_construir_outcomes_funil.py`; contagens em `dicionario_outcomes_funil.json` | F0, F1, F2, F4 e E9 | construídos às cegas ([`06_execucao/41a`](../06_execucao/41a_construcao_outcomes_funil.md)) |
+| CNES nacional: painel município × grupo de CBO × mês, desde 2022 | `output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet` | CNES/DATASUS; `scripts/aquisicao/a09_*`; manifesto `a09_manifesto_cnes_nacional.json`; [`auditorias/aquisicao/A09`](../auditorias/aquisicao/A09_cnes_nacional.md) | oferta líquida local por DiRD (F3) | vínculo cadastrado não é médico do PMM-E nem retenção; competências do ciclo 3 pós-T0 não lidas |
+
 ## 2. Disponibilidade por outcome
 
 | Outcome | O que temos | O que falta | Prontidão |
 |---|---|---|:---:|
-| Vagas ofertadas | Nada no repositório | Editais em formato tabular, vaga, CNES, especialidade e chamada | 🔴 |
-| Preenchimento | Estoque final de ativos | Denominador de vagas e status de cada chamada | 🔴 |
+| Vagas ofertadas | Quadros da 1ª chamada dos ciclos 1–3 por célula CNES × curso, com faixa da bolsa; cardápio de gestores do ciclo 3 (seção 1.1) | Identificador persistente de vaga; versões internas | 🟢 por célula |
+| Candidaturas e escolha | 1ª e 2ª opção e nota dos candidatos publicados nos ciclos 1–3 (E9) | Universo de inscrições, conjunto de escolha efetivo e residência do candidato ([`pedidos_dados/eventos_e_ponte_cnes.md`](../pedidos_dados/eventos_e_ponte_cnes.md), não enviado) | 🟡 |
+| Preenchimento | Alocação e confirmação por célula nas chamadas dos ciclos 1–3; preenchimento do ciclo 2 estimado no E6 | Denominador por vaga; status individual de cada chamada | 🟢 por célula |
 | Entrada efetiva | Data de início dos ativos atuais | Selecionados que não entraram e datas administrativas | 🟡 |
 | Retenção individual | Série agregada e fotografia final | Identificador longitudinal, saída e censura | 🔴 |
-| FTE líquido | Tipo de prática e participante ativo | CNES mensal com carga horária e baseline prévio | 🔴 |
+| FTE líquido | Tipo de prática e participante ativo; CNES nacional mensal com horas SUS por município e grupo de CBO, desde 2022 (E7) | Ponte PMM-E–CNES por profissional | 🟡 agregado |
 | Produção especializada | Nenhum microdado preservado | SIA por CNES, procedimento, residência e competência | 🔴 |
 | Cirurgias e internações | Nenhum microdado preservado | SIH com residência, prestador, procedimento e `CAR_INT` | 🔴 |
 | Acesso local/global | Município do profissional | Fluxo residência-prestador observado | 🔴 |
@@ -59,18 +91,21 @@ não para tendências demográficas.
 | Linha oncológica | Nada | APAC, estágio, diagnóstico e início da terapia | 🔴 |
 | Transporte | Nada | Rotas, pacientes, ocupação, distância e custo | 🔴 |
 | Custos do programa | Faixa, sem folha | Valores pagos, supervisão e administração | 🔴 |
-| Equidade por IVS | IVS e localização | Qualquer outcome observado para cruzamento | 🟡 |
+| Equidade por IVS | IVS 2010 oficial (a08) e os outcomes acima | Outcomes de acesso e saúde | 🟡 |
 | Transbordamentos | Município e região | Fluxos médicos e de pacientes entre municípios | 🔴 |
 
 ## 3. Aquisições mínimas
 
 ### Bloco A — provimento
 
-1. Universo de vagas ofertadas por chamada.
-2. Candidaturas, classificação, aceite e convocação.
+1. Universo de vagas ofertadas por chamada. *(Obtido por célula, de fonte
+   pública, para a 1ª chamada dos ciclos 1–3; falta o identificador de vaga.)*
+2. Candidaturas, classificação, aceite e convocação. *(Registros publicados
+   obtidos; falta o universo de inscrições.)*
 3. Entrada, afastamento, transferência e desligamento.
 4. Valor efetivamente pago e regras aplicadas a cada vaga.
-5. CNES mensal de vínculos e carga horária antes e depois.
+5. CNES mensal de vínculos e carga horária antes e depois. *(Obtido: painel
+   nacional a09.)*
 
 ### Bloco B — acesso e produção
 
