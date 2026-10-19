@@ -8,6 +8,30 @@
 
 ---
 
+## 19/10/2026 — Portão G1: candidatos do PMM-E ligados ao CNES pré (onda 1 do doc 51)
+
+Motivo: o portão G1 do plano
+[`06_execucao/51`](06_execucao/51_plano_perguntas_reformuladas.md) (§5, onda 1;
+T1.0) verifica se os arquivos públicos de classificação e resultado
+identificam todos os candidatos da 1ª chamada dos ciclos 1–3 e se essa
+identificação liga cada um ao CNES antes do programa. É só viabilidade: nenhum
+contraste por IVS, faixa, alocação ou outcome.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/G1_viabilidade_candidatos.md`](auditorias/G1_viabilidade_candidatos.md) | inventário dos identificadores, regra de ligação (CPF mascarado + nome; a regra da X1 por CRM vira validação), taxas por ciclo e por alocação, cobertura de origem e distância, veredito e o que os protocolos 52 (P1) e 56 (P6) podem usar |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/G1_identificar_candidatos.py` (fora do `run_all.py` por
+  enquanto);
+- saídas `output/rdd_bolsa/G1_resumo.json`, `G1_candidatos_origem.parquet`,
+  `G1_distancias_opcoes.parquet` e `G1_inventario_identificadores.csv`;
+- `.gitignore`: `output/rdd_bolsa/G1_cache/` (ZIP transitório do CNES 202602 e
+  dicionário com nome normalizado e chave do CPF em hash);
+- `tests/test_G1.py` e `tests/README.md`.
+
 ## 19/10/2026 — Portões G3 e G4 do plano 51 (SIH por residência; mapa especialidade → procedimento)
 
 Motivo: onda 1 do plano das perguntas reformuladas
