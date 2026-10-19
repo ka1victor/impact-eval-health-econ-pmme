@@ -8,6 +8,19 @@
 
 ---
 
+## 19/10/2026 — Plano das perguntas reformuladas (doc 51)
+
+Motivo: pedido do autor de planejar tudo o que deveríamos e poderíamos rodar
+para as perguntas que saíram da teoria da mudança do programa (escolha, preenchimento dada a
+vaga aberta, produção, substituição, abertura de vagas e mecanismo de
+alocação), com execução em ondas de subagentes.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/51_plano_perguntas_reformuladas.md`](06_execucao/51_plano_perguntas_reformuladas.md) | plano P1–P6: tarefas, portões de viabilidade G1–G5, protocolos 52–56, ondas de execução, auditorias e síntese (doc 57) |
+
 ## 19/10/2026 — Auditoria independente da família N (auditoria 20)
 
 Motivo: auditoria independente do commit `c47380e`, que tem o script 23, as
