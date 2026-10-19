@@ -1,0 +1,1733 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "EXPLORATORIO_POS_SINTESE",
+  "documento": "X4 (heterogeneidade da escolha) e X5 (deslocamento regional) do protocolo exploratório 45",
+  "data_execucao": "2026-10-19",
+  "script": "scripts/rdd_bolsa/19_escolha_heterogeneidade.py",
+  "protocolo": {
+    "arquivo": "docs/06_execucao/45_protocolo_exploratorio_pos_sintese.md",
+    "sha256": "a16931d4e2b2814c60d40c15ff5f26cdc54fb77df5a27978e3300401e4ce1065",
+    "secoes": [
+      "§2",
+      "§3 X4",
+      "§3 X5"
+    ]
+  },
+  "conferencias": {
+    "escolhas_candidatos": true,
+    "escolhas_conjunto_principal": true,
+    "escolhas_conjunto_sensibilidade_vaga_imediata": true,
+    "protocolo_texto_igual_ao_congelado": true,
+    "reproducao_principal_E9": {
+      "1": {
+        "coef": 0.06534945131634178,
+        "ep_cluster_conjunto": 0.0439757316920881,
+        "coef_E9": 0.06534945132,
+        "ep_E9": 0.04397573169,
+        "igual": true,
+        "expansao_por_grupo_de_candidato_igual": true
+      },
+      "2": {
+        "coef": 0.13310062634537656,
+        "ep_cluster_conjunto": 0.02823648503813016,
+        "coef_E9": 0.1331006263,
+        "ep_E9": 0.02823648504,
+        "igual": true,
+        "expansao_por_grupo_de_candidato_igual": true
+      },
+      "3": {
+        "coef": 0.009657879162046818,
+        "ep_cluster_conjunto": 0.03181439274253998,
+        "coef_E9": 0.009657879162,
+        "ep_E9": 0.03181439274,
+        "igual": true,
+        "expansao_por_grupo_de_candidato_igual": true
+      },
+      "empilhado": {
+        "coef": 0.06617135704773298,
+        "ep_cluster_conjunto": 0.022183297772011924,
+        "coef_E9": 0.06617135705,
+        "ep_E9": 0.02218329777,
+        "igual": true,
+        "expansao_por_grupo_de_candidato_igual": true
+      }
+    },
+    "faixa_impressa_igual_regra_ivs": {
+      "celulas": 5134,
+      "discordantes": 0
+    },
+    "cir_contra_malha": {
+      "municipios_com_regiao_na_malha": 531,
+      "municipios_da_malha_sem_cir_oficial": [
+        "110002"
+      ],
+      "regioes_da_malha": 278,
+      "regioes_da_malha_em_mais_de_uma_cir": {},
+      "cir_com_mais_de_uma_regiao_da_malha": 0,
+      "fracao_nomes_iguais_normalizados": 0.9226415094339623,
+      "leitura": "a malha só é conferência (cobertura condicionada a ter ativo do PMM-E); a CIR do X5 é a oficial"
+    }
+  },
+  "estimando": "variação da resposta da ESCOLHA da 1a opção à bolsa anunciada (+R$ 1 mil) entre grupos (X4) e substituição adicional entre células da mesma região de saúde (X5), condicional a candidatar-se ao curso; não é efeito sobre o total de candidatos nem sobre a oferta líquida",
+  "x4": {
+    "dimensoes": {
+      "nota_tercil": "(a) tercil da pontuação do candidato no ciclo",
+      "curso": "(b) curso (≥ 100 candidatos de 1a opção; demais juntos)",
+      "escassez_tercil": "(c) tercil da escassez pré-programa da especialidade no município (dentro do conjunto)",
+      "estrato": "(d) estrato territorial A2"
+    },
+    "por_modelo": {
+      "nota_tercil|1": {
+        "dimensao": "nota_tercil",
+        "ciclo": "1",
+        "nivel": "candidato",
+        "base": "tercil1",
+        "grupos": [
+          "tercil1",
+          "tercil2",
+          "tercil3",
+          "sem_pontuacao"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 5,
+        "n_candidatos": 993,
+        "n_alternativas_originais": 1295,
+        "n_conjuntos": 16,
+        "cortes": {
+          "1": [
+            4.0,
+            5.0
+          ]
+        },
+        "n_candidatos_por_grupo": {
+          "tercil1": 323,
+          "tercil2": 284,
+          "tercil3": 272,
+          "sem_pontuacao": 114
+        },
+        "n_alternativas_por_grupo": {
+          "tercil1": 1273,
+          "tercil2": 1295,
+          "tercil3": 1273,
+          "sem_pontuacao": 1273
+        }
+      },
+      "nota_tercil|2": {
+        "dimensao": "nota_tercil",
+        "ciclo": "2",
+        "nivel": "candidato",
+        "base": "tercil1",
+        "grupos": [
+          "tercil1",
+          "tercil2",
+          "tercil3"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 6,
+        "n_candidatos": 2140,
+        "n_alternativas_originais": 1547,
+        "n_conjuntos": 16,
+        "cortes": {
+          "2": [
+            5.0,
+            6.0
+          ]
+        },
+        "n_candidatos_por_grupo": {
+          "tercil1": 1372,
+          "tercil2": 120,
+          "tercil3": 648
+        },
+        "n_alternativas_por_grupo": {
+          "tercil1": 1404,
+          "tercil2": 1315,
+          "tercil3": 1522
+        }
+      },
+      "nota_tercil|3": {
+        "dimensao": "nota_tercil",
+        "ciclo": "3",
+        "nivel": "candidato",
+        "base": "tercil1",
+        "grupos": [
+          "tercil1",
+          "tercil2",
+          "tercil3"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 6,
+        "n_candidatos": 2581,
+        "n_alternativas_originais": 2292,
+        "n_conjuntos": 24,
+        "cortes": {
+          "3": [
+            5.0,
+            6.0
+          ]
+        },
+        "n_candidatos_por_grupo": {
+          "tercil1": 1635,
+          "tercil2": 184,
+          "tercil3": 762
+        },
+        "n_alternativas_por_grupo": {
+          "tercil1": 2123,
+          "tercil2": 2058,
+          "tercil3": 2292
+        }
+      },
+      "nota_tercil|empilhado": {
+        "dimensao": "nota_tercil",
+        "ciclo": "empilhado",
+        "nivel": "candidato",
+        "base": "tercil1",
+        "grupos": [
+          "tercil1",
+          "tercil2",
+          "tercil3",
+          "sem_pontuacao"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 5,
+        "n_candidatos": 5714,
+        "n_alternativas_originais": 5134,
+        "n_conjuntos": 56,
+        "cortes": {
+          "1": [
+            4.0,
+            5.0
+          ],
+          "2": [
+            5.0,
+            6.0
+          ],
+          "3": [
+            5.0,
+            6.0
+          ]
+        },
+        "n_candidatos_por_grupo": {
+          "tercil1": 3330,
+          "tercil2": 588,
+          "tercil3": 1682,
+          "sem_pontuacao": 114
+        },
+        "n_alternativas_por_grupo": {
+          "tercil1": 4800,
+          "tercil2": 4668,
+          "tercil3": 5087,
+          "sem_pontuacao": 1273
+        }
+      },
+      "curso|1": {
+        "dimensao": "curso",
+        "ciclo": "1",
+        "nivel": "celula",
+        "base": "demais_cursos",
+        "grupos": [
+          "curso02",
+          "curso08",
+          "curso14",
+          "demais_cursos"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 5,
+        "n_candidatos": 993,
+        "n_alternativas_originais": 1295,
+        "n_conjuntos": 16,
+        "cursos_com_100": [
+          2,
+          8,
+          14
+        ],
+        "candidatos_por_curso": {
+          "1": 93,
+          "2": 106,
+          "3": 25,
+          "4": 41,
+          "5": 24,
+          "6": 66,
+          "7": 59,
+          "8": 185,
+          "9": 57,
+          "10": 16,
+          "11": 37,
+          "12": 33,
+          "13": 15,
+          "14": 115,
+          "15": 89,
+          "16": 32
+        },
+        "n_candidatos_por_grupo": {
+          "curso02": 106,
+          "curso08": 185,
+          "curso14": 115,
+          "demais_cursos": 587
+        },
+        "n_alternativas_por_grupo": {
+          "curso02": 64,
+          "curso08": 92,
+          "curso14": 108,
+          "demais_cursos": 1031
+        }
+      },
+      "curso|2": {
+        "dimensao": "curso",
+        "ciclo": "2",
+        "nivel": "celula",
+        "base": "curso01",
+        "grupos": [
+          "curso01",
+          "curso02",
+          "curso07",
+          "curso08",
+          "curso11",
+          "curso14",
+          "curso15",
+          "demais_cursos"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 6,
+        "n_candidatos": 2140,
+        "n_alternativas_originais": 1547,
+        "n_conjuntos": 16,
+        "cursos_com_100": [
+          1,
+          2,
+          7,
+          8,
+          11,
+          14,
+          15
+        ],
+        "candidatos_por_curso": {
+          "1": 510,
+          "2": 408,
+          "3": 36,
+          "4": 15,
+          "5": 30,
+          "6": 81,
+          "7": 103,
+          "8": 400,
+          "9": 42,
+          "10": 13,
+          "11": 119,
+          "12": 32,
+          "13": 6,
+          "14": 162,
+          "15": 139,
+          "16": 44
+        },
+        "n_candidatos_por_grupo": {
+          "curso01": 510,
+          "curso02": 408,
+          "curso07": 103,
+          "curso08": 400,
+          "curso11": 119,
+          "curso14": 162,
+          "curso15": 139,
+          "demais_cursos": 299
+        },
+        "n_alternativas_por_grupo": {
+          "curso01": 333,
+          "curso02": 274,
+          "curso07": 121,
+          "curso08": 105,
+          "curso11": 121,
+          "curso14": 129,
+          "curso15": 96,
+          "demais_cursos": 368
+        }
+      },
+      "curso|3": {
+        "dimensao": "curso",
+        "ciclo": "3",
+        "nivel": "celula",
+        "base": "demais_cursos",
+        "grupos": [
+          "curso01",
+          "curso02",
+          "curso08",
+          "curso17",
+          "curso18",
+          "curso24",
+          "demais_cursos"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 6,
+        "n_candidatos": 2581,
+        "n_alternativas_originais": 2292,
+        "n_conjuntos": 24,
+        "cursos_com_100": [
+          1,
+          2,
+          8,
+          17,
+          18,
+          24
+        ],
+        "candidatos_por_curso": {
+          "1": 597,
+          "2": 349,
+          "3": 21,
+          "4": 30,
+          "5": 15,
+          "6": 59,
+          "7": 44,
+          "8": 222,
+          "9": 40,
+          "10": 47,
+          "11": 93,
+          "12": 34,
+          "13": 13,
+          "14": 95,
+          "15": 90,
+          "16": 45,
+          "17": 155,
+          "18": 216,
+          "19": 8,
+          "20": 2,
+          "21": 90,
+          "22": 60,
+          "23": 26,
+          "24": 230
+        },
+        "n_candidatos_por_grupo": {
+          "curso01": 597,
+          "curso02": 349,
+          "curso08": 222,
+          "curso17": 155,
+          "curso18": 216,
+          "curso24": 230,
+          "demais_cursos": 812
+        },
+        "n_alternativas_por_grupo": {
+          "curso01": 307,
+          "curso02": 276,
+          "curso08": 82,
+          "curso17": 107,
+          "curso18": 438,
+          "curso24": 92,
+          "demais_cursos": 990
+        }
+      },
+      "curso|empilhado": {
+        "dimensao": "curso",
+        "ciclo": "empilhado",
+        "nivel": "celula",
+        "base": "curso01",
+        "grupos": [
+          "curso01",
+          "curso02",
+          "curso06",
+          "curso07",
+          "curso08",
+          "curso09",
+          "curso11",
+          "curso14",
+          "curso15",
+          "curso16",
+          "curso17",
+          "curso18",
+          "curso24",
+          "demais_cursos"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 5,
+        "n_candidatos": 5714,
+        "n_alternativas_originais": 5134,
+        "n_conjuntos": 56,
+        "cursos_com_100": [
+          1,
+          2,
+          6,
+          7,
+          8,
+          9,
+          11,
+          14,
+          15,
+          16,
+          17,
+          18,
+          24
+        ],
+        "candidatos_por_curso": {
+          "1": 1200,
+          "2": 863,
+          "3": 82,
+          "4": 86,
+          "5": 69,
+          "6": 206,
+          "7": 206,
+          "8": 807,
+          "9": 139,
+          "10": 76,
+          "11": 249,
+          "12": 99,
+          "13": 34,
+          "14": 372,
+          "15": 318,
+          "16": 121,
+          "17": 155,
+          "18": 216,
+          "19": 8,
+          "20": 2,
+          "21": 90,
+          "22": 60,
+          "23": 26,
+          "24": 230
+        },
+        "n_candidatos_por_grupo": {
+          "curso01": 1200,
+          "curso02": 863,
+          "curso06": 206,
+          "curso07": 206,
+          "curso08": 807,
+          "curso09": 139,
+          "curso11": 249,
+          "curso14": 372,
+          "curso15": 318,
+          "curso16": 121,
+          "curso17": 155,
+          "curso18": 216,
+          "curso24": 230,
+          "demais_cursos": 632
+        },
+        "n_alternativas_por_grupo": {
+          "curso01": 787,
+          "curso02": 614,
+          "curso06": 122,
+          "curso07": 310,
+          "curso08": 279,
+          "curso09": 369,
+          "curso11": 419,
+          "curso14": 407,
+          "curso15": 183,
+          "curso16": 74,
+          "curso17": 107,
+          "curso18": 438,
+          "curso24": 92,
+          "demais_cursos": 933
+        }
+      },
+      "escassez_tercil|1": {
+        "dimensao": "escassez_tercil",
+        "ciclo": "1",
+        "nivel": "celula",
+        "base": "tercil1",
+        "grupos": [
+          "tercil1",
+          "tercil2",
+          "tercil3"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 5,
+        "n_candidatos": 993,
+        "n_alternativas_originais": 1295,
+        "n_conjuntos": 16,
+        "cortes": {
+          "c1_curso01": [
+            0.86734207101592,
+            1.717255603217967
+          ],
+          "c1_curso02": [
+            1.460848093004187,
+            2.7012355362045555
+          ],
+          "c1_curso03": [
+            0.19641300266811765,
+            0.41644938590086983
+          ],
+          "c1_curso04": [
+            0.11943749838113817,
+            0.39762413633211724
+          ],
+          "c1_curso05": [
+            0.07016551364548639,
+            0.25029078747670036
+          ],
+          "c1_curso06": [
+            3.694476411102906,
+            5.104760227926761
+          ],
+          "c1_curso07": [
+            0.9383227402249296,
+            1.7626951874002368
+          ],
+          "c1_curso08": [
+            1.6129698224134876,
+            3.3482971405071233
+          ],
+          "c1_curso09": [
+            0.8905823450246423,
+            1.772004169229146
+          ],
+          "c1_curso10": [
+            0.8137723612347748,
+            1.4481884907164555
+          ],
+          "c1_curso11": [
+            0.7515427489271961,
+            1.4105458141184168
+          ],
+          "c1_curso12": [
+            0.3915351694468327,
+            0.5821653640716645
+          ],
+          "c1_curso13": [
+            0.08731336767659129,
+            0.17077256083416703
+          ],
+          "c1_curso14": [
+            1.5643032076560595,
+            2.7271408220724593
+          ],
+          "c1_curso15": [
+            0.4696627538456089,
+            0.9419419945329671
+          ],
+          "c1_curso16": [
+            0.4925550307108062,
+            0.9708261028505774
+          ]
+        },
+        "n_candidatos_por_grupo": {
+          "tercil1": 300,
+          "tercil2": 302,
+          "tercil3": 391
+        },
+        "n_alternativas_por_grupo": {
+          "tercil1": 437,
+          "tercil2": 425,
+          "tercil3": 433
+        }
+      },
+      "escassez_tercil|2": {
+        "dimensao": "escassez_tercil",
+        "ciclo": "2",
+        "nivel": "celula",
+        "base": "tercil1",
+        "grupos": [
+          "tercil1",
+          "tercil2",
+          "tercil3"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 6,
+        "n_candidatos": 2140,
+        "n_alternativas_originais": 1547,
+        "n_conjuntos": 16,
+        "cortes": {
+          "c2_curso01": [
+            1.676580900554349,
+            4.680031362955544
+          ],
+          "c2_curso02": [
+            2.1726141980337843,
+            4.4327754084682525
+          ],
+          "c2_curso03": [
+            0.322911686804017,
+            0.5392588712211297
+          ],
+          "c2_curso04": [
+            0.4456272906708809,
+            0.6224693043352302
+          ],
+          "c2_curso05": [
+            0.18391350817464916,
+            0.3783952638879684
+          ],
+          "c2_curso06": [
+            5.753453594120639,
+            7.3335553741384505
+          ],
+          "c2_curso07": [
+            1.4233935765754802,
+            2.828122123220524
+          ],
+          "c2_curso08": [
+            3.617218319989963,
+            6.2218071165117035
+          ],
+          "c2_curso09": [
+            2.002365248627142,
+            4.035731093332386
+          ],
+          "c2_curso10": [
+            0.774511529660271,
+            1.947137635022128
+          ],
+          "c2_curso11": [
+            0.6893936782599703,
+            1.600048170583402
+          ],
+          "c2_curso12": [
+            0.46529909730786734,
+            0.9996777122011213
+          ],
+          "c2_curso13": [
+            0.11162051466211748,
+            0.19993130229350703
+          ],
+          "c2_curso14": [
+            1.5892664299109291,
+            4.648385858003539
+          ],
+          "c2_curso15": [
+            0.9809469038114974,
+            1.7840958705167889
+          ],
+          "c2_curso16": [
+            0.355912057644359,
+            0.5490888255018473
+          ]
+        },
+        "n_candidatos_por_grupo": {
+          "tercil1": 563,
+          "tercil2": 793,
+          "tercil3": 784
+        },
+        "n_alternativas_por_grupo": {
+          "tercil1": 521,
+          "tercil2": 517,
+          "tercil3": 509
+        }
+      },
+      "escassez_tercil|3": {
+        "dimensao": "escassez_tercil",
+        "ciclo": "3",
+        "nivel": "celula",
+        "base": "tercil1",
+        "grupos": [
+          "tercil1",
+          "tercil2",
+          "tercil3",
+          "sem_ponte_curso_cbo"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [
+          "escassez_sem_ponte_curso_cbo"
+        ],
+        "iteracoes": 6,
+        "n_candidatos": 2581,
+        "n_alternativas_originais": 2292,
+        "n_conjuntos": 24,
+        "cortes": {
+          "c3_curso01": [
+            1.6280811435641953,
+            6.111430084583544
+          ],
+          "c3_curso02": [
+            1.7709188380241467,
+            4.10585974775039
+          ],
+          "c3_curso03": [
+            0.31403338213309373,
+            0.5360394700578245
+          ],
+          "c3_curso04": [
+            0.44948493457793537,
+            0.695887656336493
+          ],
+          "c3_curso05": [
+            0.21669345925366218,
+            0.44709116788169617
+          ],
+          "c3_curso06": [
+            6.166938268285981,
+            8.09621429265198
+          ],
+          "c3_curso07": [
+            1.4504077517276228,
+            2.2844916580599355
+          ],
+          "c3_curso08": [
+            3.4078356718136735,
+            7.075526591411613
+          ],
+          "c3_curso09": [
+            2.345548367389241,
+            3.906707817322342
+          ],
+          "c3_curso10": [
+            1.3050779991730552,
+            2.061656364804591
+          ],
+          "c3_curso11": [
+            1.6195663058446355,
+            2.2737511525566187
+          ],
+          "c3_curso12": [
+            0.9539959328382122,
+            1.4361100865320728
+          ],
+          "c3_curso13": [
+            0.1887402355876922,
+            0.25760391557951684
+          ],
+          "c3_curso14": [
+            1.2095098746723143,
+            3.220926039667989
+          ],
+          "c3_curso15": [
+            1.04921530706336,
+            1.7957856269246486
+          ],
+          "c3_curso16": [
+            0.21151689892534808,
+            0.6217773150348069
+          ]
+        },
+        "n_candidatos_por_grupo": {
+          "tercil1": 549,
+          "tercil2": 554,
+          "tercil3": 691,
+          "sem_ponte_curso_cbo": 787
+        },
+        "n_alternativas_por_grupo": {
+          "tercil1": 507,
+          "tercil2": 502,
+          "tercil3": 487,
+          "sem_ponte_curso_cbo": 796
+        }
+      },
+      "escassez_tercil|empilhado": {
+        "dimensao": "escassez_tercil",
+        "ciclo": "empilhado",
+        "nivel": "celula",
+        "base": "tercil1",
+        "grupos": [
+          "tercil1",
+          "tercil2",
+          "tercil3",
+          "sem_ponte_curso_cbo"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [
+          "escassez_sem_ponte_curso_cbo"
+        ],
+        "iteracoes": 5,
+        "n_candidatos": 5714,
+        "n_alternativas_originais": 5134,
+        "n_conjuntos": 56,
+        "cortes": {
+          "c1_curso01": [
+            0.86734207101592,
+            1.717255603217967
+          ],
+          "c1_curso02": [
+            1.460848093004187,
+            2.7012355362045555
+          ],
+          "c1_curso03": [
+            0.19641300266811765,
+            0.41644938590086983
+          ],
+          "c1_curso04": [
+            0.11943749838113817,
+            0.39762413633211724
+          ],
+          "c1_curso05": [
+            0.07016551364548639,
+            0.25029078747670036
+          ],
+          "c1_curso06": [
+            3.694476411102906,
+            5.104760227926761
+          ],
+          "c1_curso07": [
+            0.9383227402249296,
+            1.7626951874002368
+          ],
+          "c1_curso08": [
+            1.6129698224134876,
+            3.3482971405071233
+          ],
+          "c1_curso09": [
+            0.8905823450246423,
+            1.772004169229146
+          ],
+          "c1_curso10": [
+            0.8137723612347748,
+            1.4481884907164555
+          ],
+          "c1_curso11": [
+            0.7515427489271961,
+            1.4105458141184168
+          ],
+          "c1_curso12": [
+            0.3915351694468327,
+            0.5821653640716645
+          ],
+          "c1_curso13": [
+            0.08731336767659129,
+            0.17077256083416703
+          ],
+          "c1_curso14": [
+            1.5643032076560595,
+            2.7271408220724593
+          ],
+          "c1_curso15": [
+            0.4696627538456089,
+            0.9419419945329671
+          ],
+          "c1_curso16": [
+            0.4925550307108062,
+            0.9708261028505774
+          ],
+          "c2_curso01": [
+            1.676580900554349,
+            4.680031362955544
+          ],
+          "c2_curso02": [
+            2.1726141980337843,
+            4.4327754084682525
+          ],
+          "c2_curso03": [
+            0.322911686804017,
+            0.5392588712211297
+          ],
+          "c2_curso04": [
+            0.4456272906708809,
+            0.6224693043352302
+          ],
+          "c2_curso05": [
+            0.18391350817464916,
+            0.3783952638879684
+          ],
+          "c2_curso06": [
+            5.753453594120639,
+            7.3335553741384505
+          ],
+          "c2_curso07": [
+            1.4233935765754802,
+            2.828122123220524
+          ],
+          "c2_curso08": [
+            3.617218319989963,
+            6.2218071165117035
+          ],
+          "c2_curso09": [
+            2.002365248627142,
+            4.035731093332386
+          ],
+          "c2_curso10": [
+            0.774511529660271,
+            1.947137635022128
+          ],
+          "c2_curso11": [
+            0.6893936782599703,
+            1.600048170583402
+          ],
+          "c2_curso12": [
+            0.46529909730786734,
+            0.9996777122011213
+          ],
+          "c2_curso13": [
+            0.11162051466211748,
+            0.19993130229350703
+          ],
+          "c2_curso14": [
+            1.5892664299109291,
+            4.648385858003539
+          ],
+          "c2_curso15": [
+            0.9809469038114974,
+            1.7840958705167889
+          ],
+          "c2_curso16": [
+            0.355912057644359,
+            0.5490888255018473
+          ],
+          "c3_curso01": [
+            1.6280811435641953,
+            6.111430084583544
+          ],
+          "c3_curso02": [
+            1.7709188380241467,
+            4.10585974775039
+          ],
+          "c3_curso03": [
+            0.31403338213309373,
+            0.5360394700578245
+          ],
+          "c3_curso04": [
+            0.44948493457793537,
+            0.695887656336493
+          ],
+          "c3_curso05": [
+            0.21669345925366218,
+            0.44709116788169617
+          ],
+          "c3_curso06": [
+            6.166938268285981,
+            8.09621429265198
+          ],
+          "c3_curso07": [
+            1.4504077517276228,
+            2.2844916580599355
+          ],
+          "c3_curso08": [
+            3.4078356718136735,
+            7.075526591411613
+          ],
+          "c3_curso09": [
+            2.345548367389241,
+            3.906707817322342
+          ],
+          "c3_curso10": [
+            1.3050779991730552,
+            2.061656364804591
+          ],
+          "c3_curso11": [
+            1.6195663058446355,
+            2.2737511525566187
+          ],
+          "c3_curso12": [
+            0.9539959328382122,
+            1.4361100865320728
+          ],
+          "c3_curso13": [
+            0.1887402355876922,
+            0.25760391557951684
+          ],
+          "c3_curso14": [
+            1.2095098746723143,
+            3.220926039667989
+          ],
+          "c3_curso15": [
+            1.04921530706336,
+            1.7957856269246486
+          ],
+          "c3_curso16": [
+            0.21151689892534808,
+            0.6217773150348069
+          ]
+        },
+        "n_candidatos_por_grupo": {
+          "tercil1": 1412,
+          "tercil2": 1649,
+          "tercil3": 1866,
+          "sem_ponte_curso_cbo": 787
+        },
+        "n_alternativas_por_grupo": {
+          "tercil1": 1465,
+          "tercil2": 1444,
+          "tercil3": 1429,
+          "sem_ponte_curso_cbo": 796
+        }
+      },
+      "estrato|1": {
+        "dimensao": "estrato",
+        "ciclo": "1",
+        "nivel": "celula",
+        "base": "capital",
+        "grupos": [
+          "capital",
+          "interior_proximo_polo",
+          "interior_remoto",
+          "metropolitano"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 6,
+        "n_candidatos": 993,
+        "n_alternativas_originais": 1295,
+        "n_conjuntos": 16,
+        "n_candidatos_por_grupo": {
+          "capital": 73,
+          "interior_proximo_polo": 510,
+          "interior_remoto": 84,
+          "metropolitano": 326
+        },
+        "n_alternativas_por_grupo": {
+          "capital": 73,
+          "interior_proximo_polo": 811,
+          "interior_remoto": 146,
+          "metropolitano": 265
+        }
+      },
+      "estrato|2": {
+        "dimensao": "estrato",
+        "ciclo": "2",
+        "nivel": "celula",
+        "base": "capital",
+        "grupos": [
+          "capital",
+          "interior_proximo_polo",
+          "interior_remoto",
+          "metropolitano"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 6,
+        "n_candidatos": 2140,
+        "n_alternativas_originais": 1547,
+        "n_conjuntos": 16,
+        "n_candidatos_por_grupo": {
+          "capital": 714,
+          "interior_proximo_polo": 665,
+          "interior_remoto": 135,
+          "metropolitano": 626
+        },
+        "n_alternativas_por_grupo": {
+          "capital": 276,
+          "interior_proximo_polo": 661,
+          "interior_remoto": 199,
+          "metropolitano": 411
+        }
+      },
+      "estrato|3": {
+        "dimensao": "estrato",
+        "ciclo": "3",
+        "nivel": "celula",
+        "base": "capital",
+        "grupos": [
+          "capital",
+          "interior_proximo_polo",
+          "interior_remoto",
+          "metropolitano"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 6,
+        "n_candidatos": 2581,
+        "n_alternativas_originais": 2292,
+        "n_conjuntos": 24,
+        "n_candidatos_por_grupo": {
+          "capital": 985,
+          "interior_proximo_polo": 746,
+          "interior_remoto": 214,
+          "metropolitano": 636
+        },
+        "n_alternativas_por_grupo": {
+          "capital": 524,
+          "interior_proximo_polo": 821,
+          "interior_remoto": 335,
+          "metropolitano": 612
+        }
+      },
+      "estrato|empilhado": {
+        "dimensao": "estrato",
+        "ciclo": "empilhado",
+        "nivel": "celula",
+        "base": "capital",
+        "grupos": [
+          "capital",
+          "interior_proximo_polo",
+          "interior_remoto",
+          "metropolitano"
+        ],
+        "ok": true,
+        "nota": "",
+        "omitidas": [],
+        "iteracoes": 5,
+        "n_candidatos": 5714,
+        "n_alternativas_originais": 5134,
+        "n_conjuntos": 56,
+        "n_candidatos_por_grupo": {
+          "capital": 1772,
+          "interior_proximo_polo": 1921,
+          "interior_remoto": 433,
+          "metropolitano": 1588
+        },
+        "n_alternativas_por_grupo": {
+          "capital": 873,
+          "interior_proximo_polo": 2293,
+          "interior_remoto": 680,
+          "metropolitano": 1288
+        }
+      }
+    },
+    "escassez": {
+      "cbos_por_curso": {
+        "1": [
+          "225151"
+        ],
+        "2": [
+          "225225"
+        ],
+        "3": [
+          "225290"
+        ],
+        "4": [
+          "225280"
+        ],
+        "5": [
+          "225220"
+        ],
+        "6": [
+          "225250"
+        ],
+        "7": [
+          "225310",
+          "225280",
+          "225165"
+        ],
+        "8": [
+          "225250"
+        ],
+        "9": [
+          "225120"
+        ],
+        "10": [
+          "225310",
+          "225165"
+        ],
+        "11": [
+          "225310",
+          "225165"
+        ],
+        "12": [
+          "225121"
+        ],
+        "13": [
+          "225330"
+        ],
+        "14": [
+          "225320",
+          "225255"
+        ],
+        "15": [
+          "225275"
+        ],
+        "16": [
+          "225148",
+          "225325",
+          "225305"
+        ]
+      },
+      "cursos_com_cbo_compartilhada": [
+        4,
+        6,
+        7,
+        8,
+        10,
+        11
+      ],
+      "competencias": [
+        "202406",
+        "202407",
+        "202408",
+        "202409",
+        "202410",
+        "202411",
+        "202412",
+        "202501",
+        "202502",
+        "202503",
+        "202504",
+        "202505",
+        "202506"
+      ],
+      "pares_municipio_curso": 3503,
+      "status": {
+        "ok": 2922,
+        "sem_ponte_curso_cbo": 581
+      },
+      "definicao": "soma de n_vinculos das cbos_elegiveis do curso no município, média dos 13 meses de 202406 a 202506, por 10 mil habitantes do Censo 2022 (populacao_2022 do conjunto de escolha)"
+    },
+    "cursos_sem_ponte": [
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ],
+    "adicao_pos_auditoria": "adição pós-auditoria (19/10/2026), fora do doc 45: empilhado com inclinação da bolsa própria de cada ciclo e diferenças por estrato comuns aos ciclos; separa estrato de composição por ciclo; fora do BKY",
+    "familia_bky": {
+      "linhas": 44,
+      "regra": "termos de interação e Wald da igualdade, p cluster por conjunto; dimensão curso fora (inferência por cluster degenerada)"
+    }
+  },
+  "x5": {
+    "regioes_saude": {
+      "manifesto": {
+        "natureza_dos_dados": "EMPIRICO",
+        "fonte": "DATASUS/MS, TabNet: arquivo de conversão territorio/br_regsaud.cnv (Região de Saúde – CIR), referenciado pela definição cnes/cnv/estabbr.def ('Região de Saúde (CIR), CODUFMUN, territorio\\br_regsaud.cnv')",
+        "url": "http://tabnet.datasus.gov.br/cgi/territorio/br_regsaud.cnv",
+        "http_status": 200,
+        "data_download_utc": "2026-10-19T10:44:54Z",
+        "arquivo": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+        "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+        "bytes": 383336,
+        "nota": "o FTP do DATASUS (base territorial) não responde pelo proxy; o HTTPS do TabNet recusou a conexão; o arquivo veio por HTTP do próprio TabNet. Versão corrente da base territorial do TabNet na data do download (não é competência do CNES)",
+        "script": "scripts/rdd_bolsa/19_escolha_heterogeneidade.py"
+      },
+      "leitura": {
+        "municipios": 5606,
+        "regioes": 446,
+        "linhas_ignorado_faixas": 28,
+        "cabecalho": "474 6"
+      }
+    },
+    "retirados": {
+      "municipios_sem_cir_oficial": [
+        "110002"
+      ],
+      "celulas_retiradas_por_ciclo": {
+        "1": 6,
+        "2": 2,
+        "3": 1
+      },
+      "candidatos_de_1a_opcao_retirados_por_ciclo": {
+        "1": 3
+      },
+      "motivo": "município ausente da tabela oficial de CIR do TabNet; não se imputa região (a malha do repositório não é usada para preencher)"
+    },
+    "por_ciclo": {
+      "1": {
+        "ciclo": "1",
+        "n_candidatos": 990,
+        "n_alternativas": 1289,
+        "n_conjuntos": 16,
+        "celulas_com_vizinho_na_regiao": 416,
+        "celulas_com_vizinho_de_bolsa_maior": 99,
+        "aninhado": {
+          "ll": -4071.197055894153,
+          "convergiu": true,
+          "grad_max": 6.821210263296962e-07,
+          "lambda_no_limite": false,
+          "hessiana_definida": true,
+          "autovalor_min_informacao": 9.352220713251029,
+          "otimizador": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "n_ninhos": 1044,
+          "n_ninhos_unitarios": 873,
+          "celulas_por_ninho_media": 1.2346743295019158,
+          "termos": [
+            "bolsa_mil",
+            "ivs_inclinacao",
+            "ivs_mudanca_inclinacao_0300",
+            "ivs_mudanca_inclinacao_0400",
+            "tem_vaga_imediata",
+            "log_vagas_imediatas_mais_1",
+            "log_populacao_2022",
+            "macro_centro_oeste",
+            "macro_nordeste",
+            "macro_norte",
+            "macro_sul",
+            "estrato_interior_proximo_polo",
+            "estrato_interior_remoto",
+            "estrato_metropolitano",
+            "lambda"
+          ],
+          "G_conj": 16,
+          "G_curso": 16,
+          "G_cand": 990
+        }
+      },
+      "2": {
+        "ciclo": "2",
+        "n_candidatos": 2140,
+        "n_alternativas": 1545,
+        "n_conjuntos": 16,
+        "celulas_com_vizinho_na_regiao": 783,
+        "celulas_com_vizinho_de_bolsa_maior": 200,
+        "aninhado": {
+          "ll": -9976.358554702512,
+          "convergiu": true,
+          "grad_max": 1.8189894035458565e-06,
+          "lambda_no_limite": false,
+          "hessiana_definida": true,
+          "autovalor_min_informacao": 25.537998705868016,
+          "otimizador": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "n_ninhos": 1032,
+          "n_ninhos_unitarios": 762,
+          "celulas_por_ninho_media": 1.497093023255814,
+          "termos": [
+            "bolsa_mil",
+            "ivs_inclinacao",
+            "ivs_mudanca_inclinacao_0300",
+            "ivs_mudanca_inclinacao_0400",
+            "tem_vaga_imediata",
+            "log_vagas_imediatas_mais_1",
+            "log_populacao_2022",
+            "macro_centro_oeste",
+            "macro_nordeste",
+            "macro_norte",
+            "macro_sul",
+            "estrato_interior_proximo_polo",
+            "estrato_interior_remoto",
+            "estrato_metropolitano",
+            "lambda"
+          ],
+          "G_conj": 16,
+          "G_curso": 16,
+          "G_cand": 2140
+        }
+      },
+      "3": {
+        "ciclo": "3",
+        "n_candidatos": 2581,
+        "n_alternativas": 2291,
+        "n_conjuntos": 24,
+        "celulas_com_vizinho_na_regiao": 1676,
+        "celulas_com_vizinho_de_bolsa_maior": 444,
+        "aninhado": {
+          "ll": -12270.499795931726,
+          "convergiu": true,
+          "grad_max": 1.8189894035458565e-06,
+          "lambda_no_limite": false,
+          "hessiana_definida": true,
+          "autovalor_min_informacao": 29.268362725887354,
+          "otimizador": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "n_ninhos": 1098,
+          "n_ninhos_unitarios": 615,
+          "celulas_por_ninho_media": 2.086520947176685,
+          "termos": [
+            "bolsa_mil",
+            "ivs_inclinacao",
+            "ivs_mudanca_inclinacao_0300",
+            "ivs_mudanca_inclinacao_0400",
+            "tem_vaga_imediata",
+            "log_vagas_imediatas_mais_1",
+            "log_populacao_2022",
+            "macro_centro_oeste",
+            "macro_nordeste",
+            "macro_norte",
+            "macro_sul",
+            "estrato_interior_proximo_polo",
+            "estrato_interior_remoto",
+            "estrato_metropolitano",
+            "lambda"
+          ],
+          "G_conj": 24,
+          "G_curso": 24,
+          "G_cand": 2581
+        }
+      },
+      "empilhado": {
+        "ciclo": "empilhado",
+        "n_candidatos": 5711,
+        "n_alternativas": 5125,
+        "n_conjuntos": 56,
+        "celulas_com_vizinho_na_regiao": 2875,
+        "celulas_com_vizinho_de_bolsa_maior": 743,
+        "aninhado": {
+          "ll": -26488.42744514418,
+          "convergiu": true,
+          "grad_max": 3.637978807091713e-06,
+          "lambda_no_limite": false,
+          "hessiana_definida": true,
+          "autovalor_min_informacao": 70.53847125365098,
+          "otimizador": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "n_ninhos": 3174,
+          "n_ninhos_unitarios": 2250,
+          "celulas_por_ninho_media": 1.6146817895400125,
+          "termos": [
+            "bolsa_mil",
+            "ivs_inclinacao",
+            "ivs_mudanca_inclinacao_0300",
+            "ivs_mudanca_inclinacao_0400",
+            "tem_vaga_imediata",
+            "log_vagas_imediatas_mais_1",
+            "log_populacao_2022",
+            "macro_centro_oeste",
+            "macro_nordeste",
+            "macro_norte",
+            "macro_sul",
+            "estrato_interior_proximo_polo",
+            "estrato_interior_remoto",
+            "estrato_metropolitano",
+            "lambda"
+          ],
+          "G_conj": 56,
+          "G_curso": 24,
+          "G_cand": 5711
+        }
+      }
+    },
+    "especificacoes": {
+      "sem_vizinhanca": [],
+      "vizinhos_contagem": [
+        "n_vizinhos_bolsa_maior"
+      ],
+      "vizinhos_contagem_e_total": [
+        "n_vizinhos_bolsa_maior",
+        "n_outras_celulas_regiao"
+      ],
+      "vizinhos_fracao": [
+        "fracao_vizinhos_bolsa_maior",
+        "tem_vizinho_regiao",
+        "n_outras_celulas_regiao"
+      ]
+    },
+    "familia_bky": {
+      "linhas": 16,
+      "regra": "termos de vizinhança (contagem, contagem com total, fração) e Wald de lambda = 1 do aninhado convergido, p cluster por conjunto"
+    }
+  },
+  "decisoes_de_construcao": [
+    "X4a: tercis da pontuação dentro do ciclo, sobre candidatos de 1a opção com pontuação numérica; empate no corte vai para o tercil de baixo; sem pontuação = grupo próprio (sem imputação)",
+    "X4a: conjunto replicado por grupo de candidato (verossimilhança idêntica à do E9 sem interações; conferido)",
+    "X4b: limiar de 100 candidatos de 1a opção contado na amostra de cada modelo (ciclo ou empilhado); base = grupo com mais candidatos",
+    "X4c: tercis dentro do conjunto de escolha (curso × ciclo), sobre as células com escassez calculada; tercil 1 = menos vínculos por habitante (mais escasso); indicadores de grupo também como efeito principal",
+    "X4d: base capital, como no E9",
+    "X5: CIR oficial do TabNet/DATASUS, não a da malha (cobertura condicionada a ter ativo do PMM-E)",
+    "X5: fração de vizinhos com bolsa maior vale 0 sem vizinho, sempre com o indicador de ter vizinho no modelo",
+    "X5: a variante com o total de outras células da CIR separa 'ter vizinhos' de 'ter vizinhos de bolsa maior'",
+    "X5: logit aninhado iniciado no condicional (lambda = 1), lambda limitado a [0,001; 50] na otimização"
+  ],
+  "desvios": [
+    {
+      "item": "região de saúde",
+      "situacao": "a malha indicada traz região só para municípios com ativo do PMM-E",
+      "resolucao": "download público da tabela oficial de CIR (TabNet/DATASUS), permitido pelo §2 do doc 45; malha usada só como conferência"
+    },
+    {
+      "item": "município sem CIR oficial",
+      "situacao": "município do quadro ausente da tabela de CIR",
+      "resolucao": "células e candidatos que as escolheram fora do X5 (contagens em x5.retirados); o principal do E9 é reestimado na amostra do X5 (linhas sem_vizinhanca)"
+    },
+    {
+      "item": "curso como dimensão",
+      "situacao": "termo próprio do curso só varia nos conjuntos do curso",
+      "resolucao": "inferência por cluster marcada como degenerada; EP de MV e por candidato ao lado; fora do BKY"
+    },
+    {
+      "item": "cursos sem ponte curso → CBO",
+      "situacao": "cursos fora do catálogo da ponte (lista em x4.cursos_sem_ponte)",
+      "resolucao": "grupo sem_ponte_curso_cbo na escassez, sem imputação"
+    },
+    {
+      "item": "adição pós-auditoria: estrato com inclinação por ciclo",
+      "situacao": "a auditoria independente de X4/X5 observou que o empilhado tem uma só inclinação para os três ciclos e que a composição de candidatos por estrato difere entre ciclos",
+      "resolucao": "linhas dimensao = estrato_com_inclinacao_por_ciclo, adicao_pos_auditoria = True, fora do BKY; não substituem as do doc 45"
+    },
+    {
+      "item": "CIR por HTTP",
+      "situacao": "o TabNet não serviu o arquivo por HTTPS",
+      "resolucao": "integridade conferida pelo SHA-256 do manifesto a cada execução; o script para se o arquivo mudar"
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/45_protocolo_exploratorio_pos_sintese.md",
+      "sha256": "a16931d4e2b2814c60d40c15ff5f26cdc54fb77df5a27978e3300401e4ce1065",
+      "bytes": 7510,
+      "papel": "protocolo exploratório congelado (X4, X5)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
+      "sha256": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+      "bytes": 20212,
+      "papel": "protocolo 40 (§14, §15: forma do E9; SHA conferido contra o congelado)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
+      "sha256": "a66fe6183562f8a233b0175c8653b29a6d1bde44cc8897e28867057905461849",
+      "bytes": 7906,
+      "papel": "protocolo 40 congelado (JSON)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/dicionario_outcomes_funil.json",
+      "sha256": "912b80994f9fbefc3bbe1f5f978de16771a6c064f0044960887366a91bb88e8d",
+      "bytes": 91512,
+      "papel": "dicionário da tarefa B (SHA-256 das tabelas de escolha conferido)",
+      "fonte": "pipeline do repositório",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "bytes": 128788,
+      "papel": "escolhas dos candidatos (1a opção) e pontuação do F4",
+      "fonte": "pipeline do repositório (tarefa B)",
+      "data_referencia": "resultados da 1a chamada dos ciclos 1-3",
+      "cobertura": "9849 linhas",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "posto 1; pontuacao para os tercis (X4a)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_conjunto_principal.parquet",
+      "sha256": "ad655dbce17753a996594213f6f9b9dff18e42af6556e48d0ee20df858bfca22",
+      "bytes": 63077,
+      "papel": "conjunto de escolha principal (§14)",
+      "fonte": "pipeline do repositório (tarefa B)",
+      "data_referencia": "quadros da 1a chamada",
+      "cobertura": "5135 células",
+      "unidade": "célula CNES × curso × ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "retiradas as células sem IVS oficial (como no E9)"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable: IVS 2010 oficial (a08)",
+      "fonte": "Ipea, Atlas da Vulnerabilidade Social",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "co_ibge, ivs"
+    },
+    {
+      "caminho": "output/aquisicao/a03_matriz_regra_tratamento.json",
+      "sha256": "4afe7af6d925b0b67054918ddbece2a7ad87df1b80d5bbb779c6ee8dd7c39583",
+      "bytes": 11686,
+      "papel": "mapa faixa → bolsa (como no E9)",
+      "fonte": "editais (a03)",
+      "data_referencia": "2025-2026",
+      "cobertura": "3 faixas",
+      "unidade": "faixa",
+      "chaves": "faixa",
+      "filtros": "mapeamento_regras_por_edital"
+    },
+    {
+      "caminho": "output/aquisicao/a04_grade_anunciada_2025.csv",
+      "sha256": "3d2542142d97f90632d47e8b0cc9d5d0cb7b934df1d7df47691a421d9bf82112",
+      "bytes": 1595,
+      "papel": "conferência do mapa faixa → bolsa (como no E9)",
+      "fonte": "FAQ do edital 3/2025 (a04)",
+      "data_referencia": "2025",
+      "cobertura": "3 faixas",
+      "unidade": "faixa",
+      "chaves": "faixa_atracao",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E9_estimativas.csv",
+      "sha256": "517e88d1488568c645b71707b63c5ffed985af53beae84f8f8684a124f604bd0",
+      "bytes": 726232,
+      "papel": "alvo da conferência de reprodução do principal do E9",
+      "fonte": "pipeline (E9)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "linhas do principal",
+      "unidade": "especificação × termo",
+      "chaves": "ciclo, modelo, conjunto, especificacao, termo",
+      "filtros": "condicional, principal, spline_linear__bolsa_linear, bolsa_mil"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+      "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
+      "bytes": 20167560,
+      "papel": "escassez pré-programa (X4c): vínculos por município × CBO × mês",
+      "fonte": "CNES nacional, DATASUS (CNES — base completa mensal (BASE_DE_DADOS_CNES_AAAAMM.ZIP), DATASUS/MS), via a09",
+      "data_referencia": "202406 a 202506",
+      "cobertura": "todos os municípios da malha 2010",
+      "unidade": "município × grupo CBO × competência",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "grupos cbo_* das cbos_elegiveis da ponte; competências 202406 a 202506; coluna n_vinculos"
+    },
+    {
+      "caminho": "output/aquisicao/a09_manifesto_cnes_nacional.json",
+      "sha256": "666d3283f36e323aedf4e4f3a1c85089f1ee7827211084b7a1a3baf0e315701f",
+      "bytes": 190325,
+      "papel": "manifesto do painel CNES nacional (fonte e URLs)",
+      "fonte": "pipeline (a09)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/ponte_curso_cbo_oficial.json",
+      "sha256": "ed8c2a9a3fcda4f0f261b5321da7750da389cc0f574f2e5ac5140e5ebd8f2d9e",
+      "bytes": 16218,
+      "papel": "ponte curso → CBO (cbos_elegiveis)",
+      "fonte": "repositório (ponte operacional auditada)",
+      "data_referencia": "2026-08-30",
+      "cobertura": "16 cursos",
+      "unidade": "curso",
+      "chaves": "cod_curso",
+      "filtros": "catalogo_cursos.cbos_elegiveis"
+    },
+    {
+      "caminho": "output/aquisicao/malha_municipios_regioes_saude.parquet",
+      "sha256": "beed0d11a1d367c97261aa20b798dd050473677a879fb3d6f69a3d8dfead9728",
+      "bytes": 292377,
+      "papel": "só conferência da CIR oficial (região da malha só existe onde houve ativo do PMM-E)",
+      "fonte": "pipeline (04_harmonizar_territorio_ibge)",
+      "data_referencia": "série histórica e lista nominal do PMM-E",
+      "cobertura": "531 municípios com região",
+      "unidade": "município",
+      "chaves": "co_ibge_6d",
+      "filtros": "no_regiao_saude não vazio"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+      "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+      "bytes": 383336,
+      "papel": "região de saúde (CIR) por município (X5)",
+      "fonte": "DATASUS/TabNet, http://tabnet.datasus.gov.br/cgi/territorio/br_regsaud.cnv",
+      "data_referencia": "base territorial corrente do TabNet, baixada em 2026-10-19T10:44:54Z",
+      "cobertura": "5606 municípios, 446 CIR",
+      "unidade": "município",
+      "chaves": "co_ibge (6 dígitos) → código CIR (5 dígitos)",
+      "filtros": "linhas 'Ignorado' (faixas) fora"
+    },
+    {
+      "caminho": "output/rdd_bolsa/X5_manifesto_regioes_saude_cir.json",
+      "sha256": "295a013b516ea5dd2af822c27304e4a86a6dc707bb84d5c97f286873f7c0af58",
+      "bytes": 900,
+      "papel": "manifesto do download da CIR",
+      "fonte": "este script",
+      "data_referencia": "2026-10-19T10:44:54Z",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    }
+  ],
+  "saidas": {
+    "output/rdd_bolsa/X4_estimativas.csv": "b1e0048c596eed043b03356ce65dbab687dfa7bab38ae5a1c7d700a6dfb2574e",
+    "output/rdd_bolsa/X5_estimativas.csv": "90785fc884eaa137877125ff8787c176f66255d065f9a7e19be802cc5f755949",
+    "output/rdd_bolsa/X4X5_tabelas_relato.md": "12d3f8079a085abb6ba08c3e2fd600e0ab0e27ede2f0cbd8ea4600e914e8a4dd"
+  },
+  "linguagem": "exploratório e pós-resultado: diferenças entre grupos e termos de vizinhança são descritivas da escolha, com p e q exploratórios; nenhuma linha é teste confirmatório"
+}
