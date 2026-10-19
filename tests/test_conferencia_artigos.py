@@ -33,6 +33,28 @@ class ConferenciaArtigosTest(unittest.TestCase):
             self.assertIn(identificador, set(q["id"]), identificador)
         for antigo in ["RDD_TXT_REPRODUZIDOS", "RDD_TXT_DIVERGENTES", "A4_TAB_FULL_dif", "A4_TXT_FULL_COEF"]:
             self.assertNotIn(antigo, set(q["id"]), antigo)
+        # Rodada multi-outcome (E6-E9, síntese E8): primárias com Holm, tabela C2,
+        # estudo de evento do E7 e tabela C3 do E9 lidos de output/rdd_bolsa.
+        mo = q[q["id"].str.startswith("MO_")]
+        for identificador in ["MO_HOLM_TXT_P1_p_holm", "MO_HOLM_TXT_P2_p_holm", "MO_TAB_F1_3_V1V2V3_tau",
+                              "MO_TAB_F3_1_U_aj", "MO_E7_NIVEL_NIVEL_PRE_EXTRA_TAU", "MO_TAB_E9_RC_C2_RC_5MIL",
+                              "MO_DESCARTE_EMPILHADO_HI"]:
+            self.assertIn(identificador, set(mo["id"]), identificador)
+        self.assertTrue(mo["fonte_arquivo"].str.startswith("output/").all())
+
+    def test_varredura_de_orfaos_cobre_os_apendices(self) -> None:
+        """Sintético: no principal os apêndices vêm depois da bibliografia; a varredura
+        tem de vê-los e tirar só o bloco thebibliography."""
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "conferidor_principal_teste", ROOT / "scripts" / "tema_trabalho" / "10_conferir_numeros_artigo.py")
+        modulo = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(modulo)
+        tex = ("\\begin{document} corpo 1,5 \\begin{thebibliography}{9} 105(7), 2,25 \\end{thebibliography}"
+               " \\appendix apendice 7,25 \\end{document}")
+        decimais, sem_origem = modulo.decimais_sem_origem(tex, [{"status": "OK", "trecho_esperado_no_tex": "corpo 1,5"}])
+        self.assertEqual(decimais, ["1,5", "7,25"])
+        self.assertEqual(sem_origem, ["7,25"])
 
     def test_artigo_curto_toda_cifra_aprovada_e_coberta(self) -> None:
         q = self._quadro("A8_conferencia_numeros_artigo_curto.csv")
