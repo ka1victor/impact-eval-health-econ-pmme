@@ -8,6 +8,30 @@
 
 ---
 
+## 19/10/2026 — Portão G2: replicação do mecanismo de alocação (P6, T6.0 do doc 51)
+
+Motivo: portão de viabilidade da onda 1 do doc
+[`06_execucao/51`](06_execucao/51_plano_perguntas_reformuladas.md). Verifica se
+a alocação publicada da 1ª chamada dos ciclos 1–3 (e da 2ª chamada dos ciclos
+1 e 2) é reconstruída a partir das escolhas, notas, elegibilidade e vagas. Não
+abre outcome: nada de CNES, produção, IVS ou faixa foi lido. Veredito
+`VIAVEL_PARCIAL`: ≥ 99% em todos os ciclos com a capacidade efetiva ex post e a
+classificação publicada como desempate; ex ante só no ciclo 2.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/G2_viabilidade_mecanismo.md`](auditorias/G2_viabilidade_mecanismo.md) | relatório do portão G2, gerado pelo script: mecanismo dos editais, concordância por ciclo e chamada, divergências, cortes e margens (contagens), veredito |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/G2_mecanismo_alocacao.py` (novo; fora do `run_all.py`);
+- saídas novas `output/rdd_bolsa/G2_alocacao_reconstruida.parquet`,
+  `G2_cortes_celula.csv` e `G2_resumo.json`;
+- `tests/test_G2.py` (novo) e `tests/README.md`.
+
+O `docs/README.md` passa a apontar para o relatório.
+
 ## 19/10/2026 — Auditoria independente do adendo §7 do protocolo 48 (auditoria 22)
 
 Motivo: auditoria independente do commit `738a706`, que tem o script 24, as
