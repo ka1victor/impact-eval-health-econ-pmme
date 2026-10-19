@@ -1,0 +1,8362 @@
+{
+  "por_competencia": {
+    "202201": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 1912,
+        "03": 607498,
+        "04": 373321,
+        "05": 5576,
+        "total": 988307
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 1912,
+        "03": 607498,
+        "04": 373321,
+        "05": 5576,
+        "total": 988307
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 1912,
+          "03": 607498,
+          "04": 373321,
+          "05": 5576,
+          "total": 988307
+        },
+        "internacoes": {
+          "02": 1912,
+          "03": 595734,
+          "04": 373321,
+          "05": 5576,
+          "total": 976543
+        },
+        "valor": {
+          "02": 2268092.48,
+          "03": 844587878.46,
+          "04": 665101495.63,
+          "05": 54436380.86,
+          "total": 1566393847.43
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5550
+    },
+    "202202": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 1789,
+        "03": 575149,
+        "04": 374383,
+        "05": 5250,
+        "total": 956571
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 1789,
+        "03": 575149,
+        "04": 374383,
+        "05": 5250,
+        "total": 956571
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 1789,
+          "03": 575149,
+          "04": 374383,
+          "05": 5250,
+          "total": 956571
+        },
+        "internacoes": {
+          "02": 1789,
+          "03": 563310,
+          "04": 374383,
+          "05": 5250,
+          "total": 944732
+        },
+        "valor": {
+          "02": 2117755.62,
+          "03": 866346860.44,
+          "04": 658899886.46,
+          "05": 46457081.66,
+          "total": 1573821584.18
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5556
+    },
+    "202203": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2068,
+        "03": 613028,
+        "04": 417911,
+        "05": 5869,
+        "total": 1038876
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2068,
+        "03": 613028,
+        "04": 417911,
+        "05": 5869,
+        "total": 1038876
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2068,
+          "03": 613028,
+          "04": 417911,
+          "05": 5869,
+          "total": 1038876
+        },
+        "internacoes": {
+          "02": 2068,
+          "03": 600801,
+          "04": 417911,
+          "05": 5869,
+          "total": 1026649
+        },
+        "valor": {
+          "02": 2444563.16,
+          "03": 790483336.0,
+          "04": 723643263.31,
+          "05": 57690936.22,
+          "total": 1574262098.69
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5560
+    },
+    "202204": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2118,
+        "03": 602374,
+        "04": 413195,
+        "05": 5664,
+        "total": 1023351
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2118,
+        "03": 602374,
+        "04": 413195,
+        "05": 5664,
+        "total": 1023351
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2118,
+          "03": 602374,
+          "04": 413195,
+          "05": 5664,
+          "total": 1023351
+        },
+        "internacoes": {
+          "02": 2118,
+          "03": 590325,
+          "04": 413195,
+          "05": 5664,
+          "total": 1011302
+        },
+        "valor": {
+          "02": 2731415.68,
+          "03": 744365807.21,
+          "04": 726430028.46,
+          "05": 56720119.83,
+          "total": 1530247371.18
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5562
+    },
+    "202205": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2198,
+        "03": 620838,
+        "04": 426102,
+        "05": 6181,
+        "total": 1055319
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2198,
+        "03": 620838,
+        "04": 426102,
+        "05": 6181,
+        "total": 1055319
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2198,
+          "03": 620838,
+          "04": 426102,
+          "05": 6181,
+          "total": 1055319
+        },
+        "internacoes": {
+          "02": 2198,
+          "03": 608755,
+          "04": 426102,
+          "05": 6181,
+          "total": 1043236
+        },
+        "valor": {
+          "02": 3084012.85,
+          "03": 743647384.39,
+          "04": 757252077.07,
+          "05": 60167186.2,
+          "total": 1564150660.51
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5559
+    },
+    "202206": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2134,
+        "03": 603894,
+        "04": 421928,
+        "05": 6057,
+        "total": 1034013
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2134,
+        "03": 603894,
+        "04": 421928,
+        "05": 6057,
+        "total": 1034013
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2134,
+          "03": 603894,
+          "04": 421928,
+          "05": 6057,
+          "total": 1034013
+        },
+        "internacoes": {
+          "02": 2134,
+          "03": 592064,
+          "04": 421928,
+          "05": 6057,
+          "total": 1022183
+        },
+        "valor": {
+          "02": 2821254.75,
+          "03": 714223543.18,
+          "04": 733774094.55,
+          "05": 54182275.87,
+          "total": 1505001168.35
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5568,
+      "municipios_com_aih_g04": 5559
+    },
+    "202207": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2437,
+        "03": 619981,
+        "04": 448875,
+        "05": 6026,
+        "total": 1077319
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2437,
+        "03": 619981,
+        "04": 448875,
+        "05": 6026,
+        "total": 1077319
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2437,
+          "03": 619981,
+          "04": 448875,
+          "05": 6026,
+          "total": 1077319
+        },
+        "internacoes": {
+          "02": 2437,
+          "03": 607996,
+          "04": 448875,
+          "05": 6026,
+          "total": 1065334
+        },
+        "valor": {
+          "02": 3285553.25,
+          "03": 755499245.23,
+          "04": 795549889.5,
+          "05": 60944622.28,
+          "total": 1615279310.26
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5564
+    },
+    "202208": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2671,
+        "03": 619823,
+        "04": 471090,
+        "05": 6628,
+        "total": 1100212
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2671,
+        "03": 619823,
+        "04": 471090,
+        "05": 6628,
+        "total": 1100212
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2671,
+          "03": 619823,
+          "04": 471090,
+          "05": 6628,
+          "total": 1100212
+        },
+        "internacoes": {
+          "02": 2671,
+          "03": 607841,
+          "04": 471090,
+          "05": 6628,
+          "total": 1088230
+        },
+        "valor": {
+          "02": 3610129.76,
+          "03": 752988067.88,
+          "04": 829627384.24,
+          "05": 70170575.61,
+          "total": 1656396157.49
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5563
+    },
+    "202209": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2531,
+        "03": 599283,
+        "04": 463566,
+        "05": 6383,
+        "total": 1071763
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2531,
+        "03": 599283,
+        "04": 463566,
+        "05": 6383,
+        "total": 1071763
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2531,
+          "03": 599283,
+          "04": 463566,
+          "05": 6383,
+          "total": 1071763
+        },
+        "internacoes": {
+          "02": 2531,
+          "03": 587120,
+          "04": 463566,
+          "05": 6383,
+          "total": 1059600
+        },
+        "valor": {
+          "02": 3167496.91,
+          "03": 730604155.09,
+          "04": 839396755.55,
+          "05": 63486703.36,
+          "total": 1636655110.91
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5565
+    },
+    "202210": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2342,
+        "03": 597287,
+        "04": 468102,
+        "05": 6160,
+        "total": 1073891
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2342,
+        "03": 597287,
+        "04": 468102,
+        "05": 6160,
+        "total": 1073891
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2342,
+          "03": 597287,
+          "04": 468102,
+          "05": 6160,
+          "total": 1073891
+        },
+        "internacoes": {
+          "02": 2342,
+          "03": 585243,
+          "04": 468102,
+          "05": 6160,
+          "total": 1061847
+        },
+        "valor": {
+          "02": 2758800.57,
+          "03": 729921803.95,
+          "04": 847964289.3,
+          "05": 61243045.21,
+          "total": 1641887939.03
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5565
+    },
+    "202211": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2126,
+        "03": 585624,
+        "04": 450351,
+        "05": 6231,
+        "total": 1044332
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2126,
+        "03": 585624,
+        "04": 450351,
+        "05": 6231,
+        "total": 1044332
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2126,
+          "03": 585624,
+          "04": 450351,
+          "05": 6231,
+          "total": 1044332
+        },
+        "internacoes": {
+          "02": 2126,
+          "03": 573813,
+          "04": 450351,
+          "05": 6231,
+          "total": 1032521
+        },
+        "valor": {
+          "02": 2251332.97,
+          "03": 706365080.86,
+          "04": 815771646.43,
+          "05": 58473335.28,
+          "total": 1582861395.54
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5561
+    },
+    "202212": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2376,
+        "03": 598938,
+        "04": 449403,
+        "05": 6243,
+        "total": 1056960
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2376,
+        "03": 598938,
+        "04": 449403,
+        "05": 6243,
+        "total": 1056960
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2376,
+          "03": 598938,
+          "04": 449403,
+          "05": 6243,
+          "total": 1056960
+        },
+        "internacoes": {
+          "02": 2376,
+          "03": 587119,
+          "04": 449403,
+          "05": 6243,
+          "total": 1045141
+        },
+        "valor": {
+          "02": 3369622.34,
+          "03": 733740991.34,
+          "04": 828765564.09,
+          "05": 62609709.88,
+          "total": 1628485887.65
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5563
+    },
+    "202301": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2268,
+        "03": 605526,
+        "04": 438376,
+        "05": 6279,
+        "total": 1052449
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2268,
+        "03": 605526,
+        "04": 438376,
+        "05": 6279,
+        "total": 1052449
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2268,
+          "03": 605526,
+          "04": 438376,
+          "05": 6279,
+          "total": 1052449
+        },
+        "internacoes": {
+          "02": 2268,
+          "03": 594063,
+          "04": 438376,
+          "05": 6279,
+          "total": 1040986
+        },
+        "valor": {
+          "02": 2739507.16,
+          "03": 737655131.09,
+          "04": 813960071.18,
+          "05": 58482622.25,
+          "total": 1612837331.68
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5561
+    },
+    "202302": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2202,
+        "03": 579689,
+        "04": 424749,
+        "05": 5836,
+        "total": 1012476
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2202,
+        "03": 579689,
+        "04": 424749,
+        "05": 5836,
+        "total": 1012476
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2202,
+          "03": 579689,
+          "04": 424749,
+          "05": 5836,
+          "total": 1012476
+        },
+        "internacoes": {
+          "02": 2202,
+          "03": 567856,
+          "04": 424749,
+          "05": 5836,
+          "total": 1000643
+        },
+        "valor": {
+          "02": 2839954.09,
+          "03": 690103153.28,
+          "04": 769293185.26,
+          "05": 54465724.1,
+          "total": 1516702016.73
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5560
+    },
+    "202303": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2473,
+        "03": 643648,
+        "04": 479611,
+        "05": 6459,
+        "total": 1132191
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2473,
+        "03": 643648,
+        "04": 479611,
+        "05": 6459,
+        "total": 1132191
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2473,
+          "03": 643648,
+          "04": 479611,
+          "05": 6459,
+          "total": 1132191
+        },
+        "internacoes": {
+          "02": 2473,
+          "03": 631654,
+          "04": 479611,
+          "05": 6459,
+          "total": 1120197
+        },
+        "valor": {
+          "02": 3131966.16,
+          "03": 760988031.52,
+          "04": 871901681.99,
+          "05": 64383332.16,
+          "total": 1700405011.83
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5564
+    },
+    "202304": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2354,
+        "03": 624534,
+        "04": 452452,
+        "05": 6601,
+        "total": 1085941
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2354,
+        "03": 624534,
+        "04": 452452,
+        "05": 6601,
+        "total": 1085941
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2354,
+          "03": 624534,
+          "04": 452452,
+          "05": 6601,
+          "total": 1085941
+        },
+        "internacoes": {
+          "02": 2354,
+          "03": 612593,
+          "04": 452452,
+          "05": 6601,
+          "total": 1074000
+        },
+        "valor": {
+          "02": 3191844.06,
+          "03": 735432369.78,
+          "04": 820141711.98,
+          "05": 63587169.03,
+          "total": 1622353094.85
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5562
+    },
+    "202305": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2343,
+        "03": 654929,
+        "04": 487266,
+        "05": 6787,
+        "total": 1151325
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2343,
+        "03": 654929,
+        "04": 487266,
+        "05": 6787,
+        "total": 1151325
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2343,
+          "03": 654929,
+          "04": 487266,
+          "05": 6787,
+          "total": 1151325
+        },
+        "internacoes": {
+          "02": 2343,
+          "03": 642988,
+          "04": 487266,
+          "05": 6787,
+          "total": 1139384
+        },
+        "valor": {
+          "02": 3245055.9,
+          "03": 779288924.24,
+          "04": 872955900.99,
+          "05": 62590504.04,
+          "total": 1718080385.17
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5568
+    },
+    "202306": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2576,
+        "03": 640630,
+        "04": 483042,
+        "05": 7040,
+        "total": 1133288
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2576,
+        "03": 640630,
+        "04": 483042,
+        "05": 7040,
+        "total": 1133288
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2576,
+          "03": 640630,
+          "04": 483042,
+          "05": 7040,
+          "total": 1133288
+        },
+        "internacoes": {
+          "02": 2576,
+          "03": 628720,
+          "04": 483042,
+          "05": 7040,
+          "total": 1121378
+        },
+        "valor": {
+          "02": 3432390.27,
+          "03": 769415165.25,
+          "04": 894805881.31,
+          "05": 68232475.15,
+          "total": 1735885911.98
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5568
+    },
+    "202307": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2503,
+        "03": 644100,
+        "04": 497339,
+        "05": 6792,
+        "total": 1150734
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2503,
+        "03": 644100,
+        "04": 497339,
+        "05": 6792,
+        "total": 1150734
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2503,
+          "03": 644100,
+          "04": 497339,
+          "05": 6792,
+          "total": 1150734
+        },
+        "internacoes": {
+          "02": 2503,
+          "03": 632535,
+          "04": 497339,
+          "05": 6792,
+          "total": 1139169
+        },
+        "valor": {
+          "02": 3596051.9,
+          "03": 796182335.04,
+          "04": 922432482.25,
+          "05": 66740432.13,
+          "total": 1788951301.32
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5559
+    },
+    "202308": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2741,
+        "03": 647573,
+        "04": 518916,
+        "05": 7023,
+        "total": 1176253
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2741,
+        "03": 647573,
+        "04": 518916,
+        "05": 7023,
+        "total": 1176253
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2741,
+          "03": 647573,
+          "04": 518916,
+          "05": 7023,
+          "total": 1176253
+        },
+        "internacoes": {
+          "02": 2741,
+          "03": 636002,
+          "04": 518916,
+          "05": 7023,
+          "total": 1164682
+        },
+        "valor": {
+          "02": 3828967.95,
+          "03": 791625000.69,
+          "04": 966379858.22,
+          "05": 70906066.54,
+          "total": 1832739893.4
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5564
+    },
+    "202309": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2552,
+        "03": 618322,
+        "04": 500423,
+        "05": 6660,
+        "total": 1127957
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2552,
+        "03": 618322,
+        "04": 500423,
+        "05": 6660,
+        "total": 1127957
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2552,
+          "03": 618322,
+          "04": 500423,
+          "05": 6660,
+          "total": 1127957
+        },
+        "internacoes": {
+          "02": 2552,
+          "03": 606736,
+          "04": 500423,
+          "05": 6660,
+          "total": 1116371
+        },
+        "valor": {
+          "02": 3300163.89,
+          "03": 756322116.2,
+          "04": 935152230.74,
+          "05": 68315616.16,
+          "total": 1763090126.99
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5567
+    },
+    "202310": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2325,
+        "03": 619274,
+        "04": 503902,
+        "05": 6877,
+        "total": 1132378
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2325,
+        "03": 619274,
+        "04": 503902,
+        "05": 6877,
+        "total": 1132378
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2325,
+          "03": 619274,
+          "04": 503902,
+          "05": 6877,
+          "total": 1132378
+        },
+        "internacoes": {
+          "02": 2325,
+          "03": 607493,
+          "04": 503902,
+          "05": 6877,
+          "total": 1120597
+        },
+        "valor": {
+          "02": 3151329.44,
+          "03": 766207283.51,
+          "04": 969720680.03,
+          "05": 72147216.4,
+          "total": 1811226509.38
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5570
+    },
+    "202311": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2508,
+        "03": 610035,
+        "04": 494148,
+        "05": 6720,
+        "total": 1113411
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2508,
+        "03": 610035,
+        "04": 494148,
+        "05": 6720,
+        "total": 1113411
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2508,
+          "03": 610035,
+          "04": 494148,
+          "05": 6720,
+          "total": 1113411
+        },
+        "internacoes": {
+          "02": 2508,
+          "03": 598519,
+          "04": 494148,
+          "05": 6720,
+          "total": 1101895
+        },
+        "valor": {
+          "02": 3452191.87,
+          "03": 745974709.67,
+          "04": 957743870.91,
+          "05": 75184652.87,
+          "total": 1782355425.32
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5567
+    },
+    "202312": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2494,
+        "03": 601881,
+        "04": 476026,
+        "05": 7010,
+        "total": 1087411
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2494,
+        "03": 601881,
+        "04": 476026,
+        "05": 7010,
+        "total": 1087411
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2494,
+          "03": 601881,
+          "04": 476026,
+          "05": 7010,
+          "total": 1087411
+        },
+        "internacoes": {
+          "02": 2494,
+          "03": 590414,
+          "04": 476026,
+          "05": 7010,
+          "total": 1075944
+        },
+        "valor": {
+          "02": 3237420.53,
+          "03": 735022739.41,
+          "04": 970298781.56,
+          "05": 76871957.95,
+          "total": 1785430899.45
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5564
+    },
+    "202401": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2537,
+        "03": 620097,
+        "04": 480005,
+        "05": 6455,
+        "total": 1109094
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2537,
+        "03": 620097,
+        "04": 480005,
+        "05": 6455,
+        "total": 1109094
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2537,
+          "03": 620097,
+          "04": 480005,
+          "05": 6455,
+          "total": 1109094
+        },
+        "internacoes": {
+          "02": 2537,
+          "03": 609161,
+          "04": 480005,
+          "05": 6455,
+          "total": 1098158
+        },
+        "valor": {
+          "02": 3511130.09,
+          "03": 758783252.93,
+          "04": 973835128.42,
+          "05": 71028960.93,
+          "total": 1807158472.37
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5569
+    },
+    "202402": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2373,
+        "03": 609133,
+        "04": 476063,
+        "05": 6565,
+        "total": 1094134
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2373,
+        "03": 609133,
+        "04": 476063,
+        "05": 6565,
+        "total": 1094134
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2373,
+          "03": 609133,
+          "04": 476063,
+          "05": 6565,
+          "total": 1094134
+        },
+        "internacoes": {
+          "02": 2373,
+          "03": 597955,
+          "04": 476063,
+          "05": 6565,
+          "total": 1082956
+        },
+        "valor": {
+          "02": 3172562.23,
+          "03": 732298784.72,
+          "04": 974884099.05,
+          "05": 67057063.06,
+          "total": 1777412509.06
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5564
+    },
+    "202403": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2578,
+        "03": 662485,
+        "04": 513604,
+        "05": 7292,
+        "total": 1185959
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2578,
+        "03": 662485,
+        "04": 513604,
+        "05": 7292,
+        "total": 1185959
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2578,
+          "03": 662485,
+          "04": 513604,
+          "05": 7292,
+          "total": 1185959
+        },
+        "internacoes": {
+          "02": 2578,
+          "03": 651242,
+          "04": 513604,
+          "05": 7292,
+          "total": 1174716
+        },
+        "valor": {
+          "02": 3294133.33,
+          "03": 777286662.34,
+          "04": 1065796588.9,
+          "05": 72077735.21,
+          "total": 1918455119.78
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5568
+    },
+    "202404": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2586,
+        "03": 690948,
+        "04": 524097,
+        "05": 7231,
+        "total": 1224862
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2586,
+        "03": 690948,
+        "04": 524097,
+        "05": 7231,
+        "total": 1224862
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2586,
+          "03": 690948,
+          "04": 524097,
+          "05": 7231,
+          "total": 1224862
+        },
+        "internacoes": {
+          "02": 2586,
+          "03": 679747,
+          "04": 524097,
+          "05": 7231,
+          "total": 1213661
+        },
+        "valor": {
+          "02": 3276291.65,
+          "03": 799203410.79,
+          "04": 1088689446.44,
+          "05": 70152970.84,
+          "total": 1961322119.72
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5567
+    },
+    "202405": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2628,
+        "03": 689257,
+        "04": 520861,
+        "05": 6943,
+        "total": 1219689
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2628,
+        "03": 689257,
+        "04": 520861,
+        "05": 6943,
+        "total": 1219689
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2628,
+          "03": 689257,
+          "04": 520861,
+          "05": 6943,
+          "total": 1219689
+        },
+        "internacoes": {
+          "02": 2628,
+          "03": 678038,
+          "04": 520861,
+          "05": 6943,
+          "total": 1208470
+        },
+        "valor": {
+          "02": 3669900.58,
+          "03": 811785497.36,
+          "04": 1088825529.83,
+          "05": 79731941.67,
+          "total": 1984012869.44
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5565
+    },
+    "202406": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2552,
+        "03": 663327,
+        "04": 515819,
+        "05": 7192,
+        "total": 1188890
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2552,
+        "03": 663327,
+        "04": 515819,
+        "05": 7192,
+        "total": 1188890
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2552,
+          "03": 663327,
+          "04": 515819,
+          "05": 7192,
+          "total": 1188890
+        },
+        "internacoes": {
+          "02": 2552,
+          "03": 652417,
+          "04": 515819,
+          "05": 7192,
+          "total": 1177980
+        },
+        "valor": {
+          "02": 3544697.81,
+          "03": 797106739.71,
+          "04": 1093473561.12,
+          "05": 76249655.96,
+          "total": 1970374654.6
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5562
+    },
+    "202407": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2832,
+        "03": 668540,
+        "04": 541408,
+        "05": 7300,
+        "total": 1220080
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2832,
+        "03": 668540,
+        "04": 541408,
+        "05": 7300,
+        "total": 1220080
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2832,
+          "03": 668540,
+          "04": 541408,
+          "05": 7300,
+          "total": 1220080
+        },
+        "internacoes": {
+          "02": 2832,
+          "03": 657325,
+          "04": 541408,
+          "05": 7300,
+          "total": 1208865
+        },
+        "valor": {
+          "02": 3477193.87,
+          "03": 820328206.23,
+          "04": 1159383783.44,
+          "05": 80094461.83,
+          "total": 2063283645.37
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5566
+    },
+    "202408": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2857,
+        "03": 661069,
+        "04": 557833,
+        "05": 7459,
+        "total": 1229218
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2857,
+        "03": 661069,
+        "04": 557833,
+        "05": 7459,
+        "total": 1229218
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2857,
+          "03": 661069,
+          "04": 557833,
+          "05": 7459,
+          "total": 1229218
+        },
+        "internacoes": {
+          "02": 2857,
+          "03": 649944,
+          "04": 557833,
+          "05": 7459,
+          "total": 1218093
+        },
+        "valor": {
+          "02": 4058222.9,
+          "03": 811256572.96,
+          "04": 1213428867.18,
+          "05": 78097168.56,
+          "total": 2106840831.6
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5564
+    },
+    "202409": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2851,
+        "03": 648668,
+        "04": 547847,
+        "05": 7202,
+        "total": 1206568
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2851,
+        "03": 648668,
+        "04": 547847,
+        "05": 7202,
+        "total": 1206568
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2851,
+          "03": 648668,
+          "04": 547847,
+          "05": 7202,
+          "total": 1206568
+        },
+        "internacoes": {
+          "02": 2851,
+          "03": 637672,
+          "04": 547847,
+          "05": 7202,
+          "total": 1195572
+        },
+        "valor": {
+          "02": 3693584.83,
+          "03": 782763368.4,
+          "04": 1204068422.13,
+          "05": 75359274.64,
+          "total": 2065884650.0
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5569
+    },
+    "202410": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2923,
+        "03": 653857,
+        "04": 560494,
+        "05": 7345,
+        "total": 1224619
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2923,
+        "03": 653857,
+        "04": 560494,
+        "05": 7345,
+        "total": 1224619
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2923,
+          "03": 653857,
+          "04": 560494,
+          "05": 7345,
+          "total": 1224619
+        },
+        "internacoes": {
+          "02": 2923,
+          "03": 642557,
+          "04": 560494,
+          "05": 7345,
+          "total": 1213319
+        },
+        "valor": {
+          "02": 3771656.07,
+          "03": 802747298.82,
+          "04": 1226665021.39,
+          "05": 80704637.09,
+          "total": 2113888613.37
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5569
+    },
+    "202411": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2728,
+        "03": 620019,
+        "04": 527020,
+        "05": 7047,
+        "total": 1156814
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2728,
+        "03": 620019,
+        "04": 527020,
+        "05": 7047,
+        "total": 1156814
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2728,
+          "03": 620019,
+          "04": 527020,
+          "05": 7047,
+          "total": 1156814
+        },
+        "internacoes": {
+          "02": 2728,
+          "03": 608948,
+          "04": 527020,
+          "05": 7047,
+          "total": 1145743
+        },
+        "valor": {
+          "02": 3445999.01,
+          "03": 750330099.37,
+          "04": 1147226221.71,
+          "05": 77941917.55,
+          "total": 1978944237.64
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5563
+    },
+    "202412": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2449,
+        "03": 610432,
+        "04": 491479,
+        "05": 7077,
+        "total": 1111437
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2449,
+        "03": 610432,
+        "04": 491479,
+        "05": 7077,
+        "total": 1111437
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2449,
+          "03": 610432,
+          "04": 491479,
+          "05": 7077,
+          "total": 1111437
+        },
+        "internacoes": {
+          "02": 2449,
+          "03": 599290,
+          "04": 491479,
+          "05": 7077,
+          "total": 1100295
+        },
+        "valor": {
+          "02": 3292243.46,
+          "03": 752378979.57,
+          "04": 1094209332.63,
+          "05": 73968128.02,
+          "total": 1923848683.68
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5565
+    },
+    "202501": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2404,
+        "03": 653067,
+        "04": 501893,
+        "05": 7290,
+        "total": 1164654
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2404,
+        "03": 653067,
+        "04": 501893,
+        "05": 7290,
+        "total": 1164654
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2404,
+          "03": 653067,
+          "04": 501893,
+          "05": 7290,
+          "total": 1164654
+        },
+        "internacoes": {
+          "02": 2404,
+          "03": 642303,
+          "04": 501893,
+          "05": 7290,
+          "total": 1153890
+        },
+        "valor": {
+          "02": 3435711.73,
+          "03": 803891923.11,
+          "04": 1094605615.2,
+          "05": 81641528.47,
+          "total": 1983574778.51
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5566
+    },
+    "202502": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2605,
+        "03": 619419,
+        "04": 501940,
+        "05": 7010,
+        "total": 1130974
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2605,
+        "03": 619419,
+        "04": 501940,
+        "05": 7010,
+        "total": 1130974
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2605,
+          "03": 619419,
+          "04": 501940,
+          "05": 7010,
+          "total": 1130974
+        },
+        "internacoes": {
+          "02": 2605,
+          "03": 608148,
+          "04": 501940,
+          "05": 7010,
+          "total": 1119703
+        },
+        "valor": {
+          "02": 3403179.03,
+          "03": 745601476.11,
+          "04": 1108294200.63,
+          "05": 70244064.4,
+          "total": 1927542920.17
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5566
+    },
+    "202503": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2566,
+        "03": 665829,
+        "04": 519866,
+        "05": 6762,
+        "total": 1195023
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2566,
+        "03": 665829,
+        "04": 519866,
+        "05": 6762,
+        "total": 1195023
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2566,
+          "03": 665829,
+          "04": 519866,
+          "05": 6762,
+          "total": 1195023
+        },
+        "internacoes": {
+          "02": 2566,
+          "03": 654591,
+          "04": 519866,
+          "05": 6762,
+          "total": 1183785
+        },
+        "valor": {
+          "02": 3027753.5,
+          "03": 794836312.6,
+          "04": 1147875129.61,
+          "05": 71961667.95,
+          "total": 2017700863.66
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5568
+    },
+    "202504": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2692,
+        "03": 666091,
+        "04": 524954,
+        "05": 7513,
+        "total": 1201250
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2692,
+        "03": 666091,
+        "04": 524954,
+        "05": 7513,
+        "total": 1201250
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2692,
+          "03": 666091,
+          "04": 524954,
+          "05": 7513,
+          "total": 1201250
+        },
+        "internacoes": {
+          "02": 2692,
+          "03": 654660,
+          "04": 524954,
+          "05": 7513,
+          "total": 1189819
+        },
+        "valor": {
+          "02": 3286136.41,
+          "03": 784662922.45,
+          "04": 1162395157.3,
+          "05": 79238866.21,
+          "total": 2029583082.37
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5566
+    },
+    "202505": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2926,
+        "03": 704306,
+        "04": 557303,
+        "05": 7441,
+        "total": 1271976
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2926,
+        "03": 704306,
+        "04": 557303,
+        "05": 7441,
+        "total": 1271976
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2926,
+          "03": 704306,
+          "04": 557303,
+          "05": 7441,
+          "total": 1271976
+        },
+        "internacoes": {
+          "02": 2926,
+          "03": 693127,
+          "04": 557303,
+          "05": 7441,
+          "total": 1260797
+        },
+        "valor": {
+          "02": 3700283.35,
+          "03": 840972374.68,
+          "04": 1271120969.84,
+          "05": 82398486.74,
+          "total": 2198192114.61
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5567
+    },
+    "202506": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2873,
+        "03": 687864,
+        "04": 533750,
+        "05": 7526,
+        "total": 1232013
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2873,
+        "03": 687864,
+        "04": 533750,
+        "05": 7526,
+        "total": 1232013
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2873,
+          "03": 687864,
+          "04": 533750,
+          "05": 7526,
+          "total": 1232013
+        },
+        "internacoes": {
+          "02": 2873,
+          "03": 676424,
+          "04": 533750,
+          "05": 7526,
+          "total": 1220573
+        },
+        "valor": {
+          "02": 3615515.39,
+          "03": 828146552.99,
+          "04": 1228498288.03,
+          "05": 78191241.26,
+          "total": 2138451597.67
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5568
+    },
+    "202507": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2797,
+        "03": 694922,
+        "04": 568937,
+        "05": 8040,
+        "total": 1274696
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2797,
+        "03": 694922,
+        "04": 568937,
+        "05": 8040,
+        "total": 1274696
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2797,
+          "03": 694922,
+          "04": 568937,
+          "05": 8040,
+          "total": 1274696
+        },
+        "internacoes": {
+          "02": 2797,
+          "03": 683441,
+          "04": 568937,
+          "05": 8040,
+          "total": 1263215
+        },
+        "valor": {
+          "02": 4007089.14,
+          "03": 852980014.99,
+          "04": 1307906517.86,
+          "05": 86290820.13,
+          "total": 2251184442.12
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5567
+    },
+    "202508": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 3065,
+        "03": 681592,
+        "04": 570751,
+        "05": 8313,
+        "total": 1263721
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 3065,
+        "03": 681592,
+        "04": 570751,
+        "05": 8313,
+        "total": 1263721
+      },
+      "v9_situacao_frente_ao_a13": "igual_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": true,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 3065,
+          "03": 681592,
+          "04": 570751,
+          "05": 8313,
+          "total": 1263721
+        },
+        "internacoes": {
+          "02": 3065,
+          "03": 670363,
+          "04": 570751,
+          "05": 8313,
+          "total": 1252492
+        },
+        "valor": {
+          "02": 3761896.81,
+          "03": 838456710.05,
+          "04": 1329605890.82,
+          "05": 85745720.67,
+          "total": 2257570218.35
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5568
+    },
+    "202509": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2980,
+        "03": 672118,
+        "04": 576912,
+        "05": 8427,
+        "total": 1260437
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2980,
+        "03": 672118,
+        "04": 576912,
+        "05": 8427,
+        "total": 1260437
+      },
+      "v9_situacao_frente_ao_a13": "revisado_na_fonte_depois_do_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": null,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2980,
+          "03": 672118,
+          "04": 576912,
+          "05": 8427,
+          "total": 1260437
+        },
+        "internacoes": {
+          "02": 2980,
+          "03": 660749,
+          "04": 576912,
+          "05": 8427,
+          "total": 1249068
+        },
+        "valor": {
+          "02": 3491780.83,
+          "03": 830095100.43,
+          "04": 1367075327.7,
+          "05": 82230341.67,
+          "total": 2282892550.63
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5568
+    },
+    "202510": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 3025,
+        "03": 677291,
+        "04": 585311,
+        "05": 7839,
+        "total": 1273466
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 3025,
+        "03": 677291,
+        "04": 585311,
+        "05": 7839,
+        "total": 1273466
+      },
+      "v9_situacao_frente_ao_a13": "revisado_na_fonte_depois_do_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": null,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 3025,
+          "03": 677291,
+          "04": 585311,
+          "05": 7839,
+          "total": 1273466
+        },
+        "internacoes": {
+          "02": 3025,
+          "03": 666021,
+          "04": 585311,
+          "05": 7839,
+          "total": 1262196
+        },
+        "valor": {
+          "02": 3873325.75,
+          "03": 835957760.78,
+          "04": 1398356805.03,
+          "05": 82233788.75,
+          "total": 2320421680.31
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5569
+    },
+    "202511": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2948,
+        "03": 642063,
+        "04": 552471,
+        "05": 8003,
+        "total": 1205485
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2948,
+        "03": 642063,
+        "04": 552471,
+        "05": 8003,
+        "total": 1205485
+      },
+      "v9_situacao_frente_ao_a13": "revisado_na_fonte_depois_do_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": null,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2948,
+          "03": 642063,
+          "04": 552471,
+          "05": 8003,
+          "total": 1205485
+        },
+        "internacoes": {
+          "02": 2948,
+          "03": 630860,
+          "04": 552471,
+          "05": 8003,
+          "total": 1194282
+        },
+        "valor": {
+          "02": 2591811.39,
+          "03": 792744013.94,
+          "04": 1331049376.24,
+          "05": 80874404.64,
+          "total": 2207259606.21
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5569
+    },
+    "202512": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2693,
+        "03": 641244,
+        "04": 523399,
+        "05": 7477,
+        "total": 1174813
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2693,
+        "03": 641244,
+        "04": 523399,
+        "05": 7477,
+        "total": 1174813
+      },
+      "v9_situacao_frente_ao_a13": "revisado_na_fonte_depois_do_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": null,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2693,
+          "03": 641244,
+          "04": 523399,
+          "05": 7477,
+          "total": 1174813
+        },
+        "internacoes": {
+          "02": 2693,
+          "03": 629906,
+          "04": 523399,
+          "05": 7477,
+          "total": 1163475
+        },
+        "valor": {
+          "02": 2637297.17,
+          "03": 794174038.78,
+          "04": 1285512743.15,
+          "05": 77785584.58,
+          "total": 2160109663.68
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5569
+    },
+    "202601": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2493,
+        "03": 652921,
+        "04": 527721,
+        "05": 7684,
+        "total": 1190819
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2493,
+        "03": 652921,
+        "04": 527721,
+        "05": 7684,
+        "total": 1190819
+      },
+      "v9_situacao_frente_ao_a13": "revisado_na_fonte_depois_do_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": null,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2493,
+          "03": 652921,
+          "04": 527721,
+          "05": 7684,
+          "total": 1190819
+        },
+        "internacoes": {
+          "02": 2493,
+          "03": 641968,
+          "04": 527721,
+          "05": 7684,
+          "total": 1179866
+        },
+        "valor": {
+          "02": 2538053.66,
+          "03": 822755879.93,
+          "04": 1257530641.93,
+          "05": 77698567.81,
+          "total": 2160523143.33
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5566
+    },
+    "202602": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2501,
+        "03": 626609,
+        "04": 519907,
+        "05": 7358,
+        "total": 1156375
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2501,
+        "03": 626609,
+        "04": 519907,
+        "05": 7358,
+        "total": 1156375
+      },
+      "v9_situacao_frente_ao_a13": "revisado_na_fonte_depois_do_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": null,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2501,
+          "03": 626609,
+          "04": 519907,
+          "05": 7358,
+          "total": 1156375
+        },
+        "internacoes": {
+          "02": 2501,
+          "03": 615344,
+          "04": 519907,
+          "05": 7358,
+          "total": 1145110
+        },
+        "valor": {
+          "02": 2515272.8,
+          "03": 776528775.66,
+          "04": 1262983395.03,
+          "05": 81793019.46,
+          "total": 2123820462.95
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5565
+    },
+    "202603": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2908,
+        "03": 683534,
+        "04": 578197,
+        "05": 7786,
+        "total": 1272425
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2908,
+        "03": 683534,
+        "04": 578197,
+        "05": 7786,
+        "total": 1272425
+      },
+      "v9_situacao_frente_ao_a13": "revisado_na_fonte_depois_do_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": null,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2908,
+          "03": 683534,
+          "04": 578197,
+          "05": 7786,
+          "total": 1272425
+        },
+        "internacoes": {
+          "02": 2908,
+          "03": 671899,
+          "04": 578197,
+          "05": 7786,
+          "total": 1260790
+        },
+        "valor": {
+          "02": 2925437.84,
+          "03": 843600255.7,
+          "04": 1414456556.72,
+          "05": 78752047.68,
+          "total": 2339734297.94
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5568,
+      "municipios_com_aih_g04": 5563
+    },
+    "202604": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2511,
+        "03": 672663,
+        "04": 556297,
+        "05": 7292,
+        "total": 1238763
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2511,
+        "03": 672663,
+        "04": 556297,
+        "05": 7292,
+        "total": 1238763
+      },
+      "v9_situacao_frente_ao_a13": "revisado_na_fonte_depois_do_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": null,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2511,
+          "03": 672663,
+          "04": 556297,
+          "05": 7292,
+          "total": 1238763
+        },
+        "internacoes": {
+          "02": 2511,
+          "03": 661486,
+          "04": 556297,
+          "05": 7292,
+          "total": 1227586
+        },
+        "valor": {
+          "02": 2465816.43,
+          "03": 816804153.22,
+          "04": 1367150126.42,
+          "05": 73375166.71,
+          "total": 2259795262.78
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5558
+    },
+    "202605": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2813,
+        "03": 682998,
+        "04": 580467,
+        "05": 8188,
+        "total": 1274466
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2813,
+        "03": 682998,
+        "04": 580467,
+        "05": 8188,
+        "total": 1274466
+      },
+      "v9_situacao_frente_ao_a13": "revisado_na_fonte_depois_do_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": null,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2813,
+          "03": 682998,
+          "04": 580467,
+          "05": 8188,
+          "total": 1274466
+        },
+        "internacoes": {
+          "02": 2813,
+          "03": 671692,
+          "04": 580467,
+          "05": 8188,
+          "total": 1263160
+        },
+        "valor": {
+          "02": 2624091.72,
+          "03": 837245653.51,
+          "04": 1471484010.4,
+          "05": 84012883.89,
+          "total": 2395366639.52
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5568
+    },
+    "202606": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2945,
+        "03": 674515,
+        "04": 566469,
+        "05": 7680,
+        "total": 1251609
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 2945,
+        "03": 674515,
+        "04": 566469,
+        "05": 7680,
+        "total": 1251609
+      },
+      "v9_situacao_frente_ao_a13": "revisado_na_fonte_depois_do_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": null,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 2945,
+          "03": 674515,
+          "04": 566469,
+          "05": 7680,
+          "total": 1251609
+        },
+        "internacoes": {
+          "02": 2945,
+          "03": 663319,
+          "04": 566469,
+          "05": 7680,
+          "total": 1240413
+        },
+        "valor": {
+          "02": 2964941.8,
+          "03": 836321735.27,
+          "04": 1458923433.48,
+          "05": 80537200.16,
+          "total": 2378747310.71
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5570,
+      "municipios_com_aih_g04": 5568
+    },
+    "202607": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 3196,
+        "03": 672690,
+        "04": 587675,
+        "05": 8054,
+        "total": 1271615
+      },
+      "v8_total_residencia_igual_internacao": true,
+      "total_aih_internacao_contemporaneo": {
+        "02": 3196,
+        "03": 672690,
+        "04": 587675,
+        "05": 8054,
+        "total": 1271615
+      },
+      "v9_situacao_frente_ao_a13": "revisado_na_fonte_depois_do_a13",
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v9_internacoes_valor_iguais_a13": null,
+      "totais_nacionais_residencia": {
+        "aih": {
+          "02": 3196,
+          "03": 672690,
+          "04": 587675,
+          "05": 8054,
+          "total": 1271615
+        },
+        "internacoes": {
+          "02": 3196,
+          "03": 661491,
+          "04": 587675,
+          "05": 8054,
+          "total": 1260416
+        },
+        "valor": {
+          "02": 3049268.37,
+          "03": 849434997.71,
+          "04": 1542363346.35,
+          "05": 78351825.79,
+          "total": 2473199438.22
+        }
+      },
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 5569,
+      "municipios_com_aih_g04": 5566
+    }
+  },
+  "uf_meses_sem_dado": [],
+  "uf_meses_sem_arquivo_internacao": [],
+  "uf_meses_atipicos": [
+    {
+      "competencia": "202206",
+      "uf": "14",
+      "sigla": "RR",
+      "aih_total_uf_internacao": 668,
+      "aih_total_uf_residencia": 770,
+      "mediana_mensal_uf_internacao": 3340.0,
+      "fracao_da_mediana": 0.2
+    },
+    {
+      "competencia": "202309",
+      "uf": "14",
+      "sigla": "RR",
+      "aih_total_uf_internacao": 1535,
+      "aih_total_uf_residencia": 1625,
+      "mediana_mensal_uf_internacao": 3340.0,
+      "fracao_da_mediana": 0.4596
+    },
+    {
+      "competencia": "202607",
+      "uf": "14",
+      "sigla": "RR",
+      "aih_total_uf_internacao": 515,
+      "aih_total_uf_residencia": 650,
+      "mediana_mensal_uf_internacao": 3340.0,
+      "fracao_da_mediana": 0.1542
+    }
+  ],
+  "meses_com_falta_ou_atipico_em_alguma_uf_de_internacao": {
+    "202206": [
+      "RR"
+    ],
+    "202309": [
+      "RR"
+    ],
+    "202607": [
+      "RR"
+    ]
+  },
+  "regra_uf_mes_sem_dado": "total de AIH aprovadas da UF de residência no mês igual a zero na consulta UF × grupo",
+  "regra_uf_mes_sem_arquivo_internacao": "total de AIH aprovadas da UF no mês igual a zero na consulta contemporânea por local de internação (int_uf_grupo_aih, formulário qibr.def)",
+  "regra_uf_mes_atipico": "total da UF de internação no mês > 0 e < 0.5 × mediana mensal da UF em 202201–202607 (consulta contemporânea por local de internação); alerta (coluna uf_mes_atipico), o valor não é alterado",
+  "regra_mes_com_falta_em_outra_uf": "no mês, outra UF de internação está sem arquivo ou atípica: residentes desta UF internados lá podem faltar; alerta, o valor não é alterado",
+  "comparacao_a13": {
+    "a13_validacoes_sha256": "b2a42464b2dbcbe1bd1e0a5e8a8bfbb6092dd8f357229d6792ce05b04137c35a",
+    "por_competencia": {
+      "202201": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 1912,
+          "03": 607498,
+          "04": 373321,
+          "05": 5576,
+          "total": 988307
+        },
+        "total_residencia": {
+          "02": 1912,
+          "03": 607498,
+          "04": 373321,
+          "05": 5576,
+          "total": 988307
+        },
+        "total_internacao_contemporaneo": {
+          "02": 1912,
+          "03": 607498,
+          "04": 373321,
+          "05": 5576,
+          "total": 988307
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202202": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 1789,
+          "03": 575149,
+          "04": 374383,
+          "05": 5250,
+          "total": 956571
+        },
+        "total_residencia": {
+          "02": 1789,
+          "03": 575149,
+          "04": 374383,
+          "05": 5250,
+          "total": 956571
+        },
+        "total_internacao_contemporaneo": {
+          "02": 1789,
+          "03": 575149,
+          "04": 374383,
+          "05": 5250,
+          "total": 956571
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202203": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2068,
+          "03": 613028,
+          "04": 417911,
+          "05": 5869,
+          "total": 1038876
+        },
+        "total_residencia": {
+          "02": 2068,
+          "03": 613028,
+          "04": 417911,
+          "05": 5869,
+          "total": 1038876
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2068,
+          "03": 613028,
+          "04": 417911,
+          "05": 5869,
+          "total": 1038876
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202204": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2118,
+          "03": 602374,
+          "04": 413195,
+          "05": 5664,
+          "total": 1023351
+        },
+        "total_residencia": {
+          "02": 2118,
+          "03": 602374,
+          "04": 413195,
+          "05": 5664,
+          "total": 1023351
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2118,
+          "03": 602374,
+          "04": 413195,
+          "05": 5664,
+          "total": 1023351
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202205": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2198,
+          "03": 620838,
+          "04": 426102,
+          "05": 6181,
+          "total": 1055319
+        },
+        "total_residencia": {
+          "02": 2198,
+          "03": 620838,
+          "04": 426102,
+          "05": 6181,
+          "total": 1055319
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2198,
+          "03": 620838,
+          "04": 426102,
+          "05": 6181,
+          "total": 1055319
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202206": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2134,
+          "03": 603894,
+          "04": 421928,
+          "05": 6057,
+          "total": 1034013
+        },
+        "total_residencia": {
+          "02": 2134,
+          "03": 603894,
+          "04": 421928,
+          "05": 6057,
+          "total": 1034013
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2134,
+          "03": 603894,
+          "04": 421928,
+          "05": 6057,
+          "total": 1034013
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202207": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2437,
+          "03": 619981,
+          "04": 448875,
+          "05": 6026,
+          "total": 1077319
+        },
+        "total_residencia": {
+          "02": 2437,
+          "03": 619981,
+          "04": 448875,
+          "05": 6026,
+          "total": 1077319
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2437,
+          "03": 619981,
+          "04": 448875,
+          "05": 6026,
+          "total": 1077319
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202208": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2671,
+          "03": 619823,
+          "04": 471090,
+          "05": 6628,
+          "total": 1100212
+        },
+        "total_residencia": {
+          "02": 2671,
+          "03": 619823,
+          "04": 471090,
+          "05": 6628,
+          "total": 1100212
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2671,
+          "03": 619823,
+          "04": 471090,
+          "05": 6628,
+          "total": 1100212
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202209": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2531,
+          "03": 599283,
+          "04": 463566,
+          "05": 6383,
+          "total": 1071763
+        },
+        "total_residencia": {
+          "02": 2531,
+          "03": 599283,
+          "04": 463566,
+          "05": 6383,
+          "total": 1071763
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2531,
+          "03": 599283,
+          "04": 463566,
+          "05": 6383,
+          "total": 1071763
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202210": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2342,
+          "03": 597287,
+          "04": 468102,
+          "05": 6160,
+          "total": 1073891
+        },
+        "total_residencia": {
+          "02": 2342,
+          "03": 597287,
+          "04": 468102,
+          "05": 6160,
+          "total": 1073891
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2342,
+          "03": 597287,
+          "04": 468102,
+          "05": 6160,
+          "total": 1073891
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202211": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2126,
+          "03": 585624,
+          "04": 450351,
+          "05": 6231,
+          "total": 1044332
+        },
+        "total_residencia": {
+          "02": 2126,
+          "03": 585624,
+          "04": 450351,
+          "05": 6231,
+          "total": 1044332
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2126,
+          "03": 585624,
+          "04": 450351,
+          "05": 6231,
+          "total": 1044332
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202212": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2376,
+          "03": 598938,
+          "04": 449403,
+          "05": 6243,
+          "total": 1056960
+        },
+        "total_residencia": {
+          "02": 2376,
+          "03": 598938,
+          "04": 449403,
+          "05": 6243,
+          "total": 1056960
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2376,
+          "03": 598938,
+          "04": 449403,
+          "05": 6243,
+          "total": 1056960
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202301": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2268,
+          "03": 605526,
+          "04": 438376,
+          "05": 6279,
+          "total": 1052449
+        },
+        "total_residencia": {
+          "02": 2268,
+          "03": 605526,
+          "04": 438376,
+          "05": 6279,
+          "total": 1052449
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2268,
+          "03": 605526,
+          "04": 438376,
+          "05": 6279,
+          "total": 1052449
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202302": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2202,
+          "03": 579689,
+          "04": 424749,
+          "05": 5836,
+          "total": 1012476
+        },
+        "total_residencia": {
+          "02": 2202,
+          "03": 579689,
+          "04": 424749,
+          "05": 5836,
+          "total": 1012476
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2202,
+          "03": 579689,
+          "04": 424749,
+          "05": 5836,
+          "total": 1012476
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202303": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2473,
+          "03": 643648,
+          "04": 479611,
+          "05": 6459,
+          "total": 1132191
+        },
+        "total_residencia": {
+          "02": 2473,
+          "03": 643648,
+          "04": 479611,
+          "05": 6459,
+          "total": 1132191
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2473,
+          "03": 643648,
+          "04": 479611,
+          "05": 6459,
+          "total": 1132191
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202304": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2354,
+          "03": 624534,
+          "04": 452452,
+          "05": 6601,
+          "total": 1085941
+        },
+        "total_residencia": {
+          "02": 2354,
+          "03": 624534,
+          "04": 452452,
+          "05": 6601,
+          "total": 1085941
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2354,
+          "03": 624534,
+          "04": 452452,
+          "05": 6601,
+          "total": 1085941
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202305": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2343,
+          "03": 654929,
+          "04": 487266,
+          "05": 6787,
+          "total": 1151325
+        },
+        "total_residencia": {
+          "02": 2343,
+          "03": 654929,
+          "04": 487266,
+          "05": 6787,
+          "total": 1151325
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2343,
+          "03": 654929,
+          "04": 487266,
+          "05": 6787,
+          "total": 1151325
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202306": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2576,
+          "03": 640630,
+          "04": 483042,
+          "05": 7040,
+          "total": 1133288
+        },
+        "total_residencia": {
+          "02": 2576,
+          "03": 640630,
+          "04": 483042,
+          "05": 7040,
+          "total": 1133288
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2576,
+          "03": 640630,
+          "04": 483042,
+          "05": 7040,
+          "total": 1133288
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202307": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2503,
+          "03": 644100,
+          "04": 497339,
+          "05": 6792,
+          "total": 1150734
+        },
+        "total_residencia": {
+          "02": 2503,
+          "03": 644100,
+          "04": 497339,
+          "05": 6792,
+          "total": 1150734
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2503,
+          "03": 644100,
+          "04": 497339,
+          "05": 6792,
+          "total": 1150734
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202308": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2741,
+          "03": 647573,
+          "04": 518916,
+          "05": 7023,
+          "total": 1176253
+        },
+        "total_residencia": {
+          "02": 2741,
+          "03": 647573,
+          "04": 518916,
+          "05": 7023,
+          "total": 1176253
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2741,
+          "03": 647573,
+          "04": 518916,
+          "05": 7023,
+          "total": 1176253
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202309": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2552,
+          "03": 618322,
+          "04": 500423,
+          "05": 6660,
+          "total": 1127957
+        },
+        "total_residencia": {
+          "02": 2552,
+          "03": 618322,
+          "04": 500423,
+          "05": 6660,
+          "total": 1127957
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2552,
+          "03": 618322,
+          "04": 500423,
+          "05": 6660,
+          "total": 1127957
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202310": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2325,
+          "03": 619274,
+          "04": 503902,
+          "05": 6877,
+          "total": 1132378
+        },
+        "total_residencia": {
+          "02": 2325,
+          "03": 619274,
+          "04": 503902,
+          "05": 6877,
+          "total": 1132378
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2325,
+          "03": 619274,
+          "04": 503902,
+          "05": 6877,
+          "total": 1132378
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202311": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2508,
+          "03": 610035,
+          "04": 494148,
+          "05": 6720,
+          "total": 1113411
+        },
+        "total_residencia": {
+          "02": 2508,
+          "03": 610035,
+          "04": 494148,
+          "05": 6720,
+          "total": 1113411
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2508,
+          "03": 610035,
+          "04": 494148,
+          "05": 6720,
+          "total": 1113411
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202312": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2494,
+          "03": 601881,
+          "04": 476026,
+          "05": 7010,
+          "total": 1087411
+        },
+        "total_residencia": {
+          "02": 2494,
+          "03": 601881,
+          "04": 476026,
+          "05": 7010,
+          "total": 1087411
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2494,
+          "03": 601881,
+          "04": 476026,
+          "05": 7010,
+          "total": 1087411
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202401": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2537,
+          "03": 620097,
+          "04": 480005,
+          "05": 6455,
+          "total": 1109094
+        },
+        "total_residencia": {
+          "02": 2537,
+          "03": 620097,
+          "04": 480005,
+          "05": 6455,
+          "total": 1109094
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2537,
+          "03": 620097,
+          "04": 480005,
+          "05": 6455,
+          "total": 1109094
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202402": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2373,
+          "03": 609133,
+          "04": 476063,
+          "05": 6565,
+          "total": 1094134
+        },
+        "total_residencia": {
+          "02": 2373,
+          "03": 609133,
+          "04": 476063,
+          "05": 6565,
+          "total": 1094134
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2373,
+          "03": 609133,
+          "04": 476063,
+          "05": 6565,
+          "total": 1094134
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202403": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2578,
+          "03": 662485,
+          "04": 513604,
+          "05": 7292,
+          "total": 1185959
+        },
+        "total_residencia": {
+          "02": 2578,
+          "03": 662485,
+          "04": 513604,
+          "05": 7292,
+          "total": 1185959
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2578,
+          "03": 662485,
+          "04": 513604,
+          "05": 7292,
+          "total": 1185959
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202404": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2586,
+          "03": 690948,
+          "04": 524097,
+          "05": 7231,
+          "total": 1224862
+        },
+        "total_residencia": {
+          "02": 2586,
+          "03": 690948,
+          "04": 524097,
+          "05": 7231,
+          "total": 1224862
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2586,
+          "03": 690948,
+          "04": 524097,
+          "05": 7231,
+          "total": 1224862
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202405": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2628,
+          "03": 689257,
+          "04": 520861,
+          "05": 6943,
+          "total": 1219689
+        },
+        "total_residencia": {
+          "02": 2628,
+          "03": 689257,
+          "04": 520861,
+          "05": 6943,
+          "total": 1219689
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2628,
+          "03": 689257,
+          "04": 520861,
+          "05": 6943,
+          "total": 1219689
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202406": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2552,
+          "03": 663327,
+          "04": 515819,
+          "05": 7192,
+          "total": 1188890
+        },
+        "total_residencia": {
+          "02": 2552,
+          "03": 663327,
+          "04": 515819,
+          "05": 7192,
+          "total": 1188890
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2552,
+          "03": 663327,
+          "04": 515819,
+          "05": 7192,
+          "total": 1188890
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202407": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2832,
+          "03": 668540,
+          "04": 541408,
+          "05": 7300,
+          "total": 1220080
+        },
+        "total_residencia": {
+          "02": 2832,
+          "03": 668540,
+          "04": 541408,
+          "05": 7300,
+          "total": 1220080
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2832,
+          "03": 668540,
+          "04": 541408,
+          "05": 7300,
+          "total": 1220080
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202408": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2857,
+          "03": 661069,
+          "04": 557833,
+          "05": 7459,
+          "total": 1229218
+        },
+        "total_residencia": {
+          "02": 2857,
+          "03": 661069,
+          "04": 557833,
+          "05": 7459,
+          "total": 1229218
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2857,
+          "03": 661069,
+          "04": 557833,
+          "05": 7459,
+          "total": 1229218
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202409": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2851,
+          "03": 648668,
+          "04": 547847,
+          "05": 7202,
+          "total": 1206568
+        },
+        "total_residencia": {
+          "02": 2851,
+          "03": 648668,
+          "04": 547847,
+          "05": 7202,
+          "total": 1206568
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2851,
+          "03": 648668,
+          "04": 547847,
+          "05": 7202,
+          "total": 1206568
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202410": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2923,
+          "03": 653857,
+          "04": 560494,
+          "05": 7345,
+          "total": 1224619
+        },
+        "total_residencia": {
+          "02": 2923,
+          "03": 653857,
+          "04": 560494,
+          "05": 7345,
+          "total": 1224619
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2923,
+          "03": 653857,
+          "04": 560494,
+          "05": 7345,
+          "total": 1224619
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202411": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2728,
+          "03": 620019,
+          "04": 527020,
+          "05": 7047,
+          "total": 1156814
+        },
+        "total_residencia": {
+          "02": 2728,
+          "03": 620019,
+          "04": 527020,
+          "05": 7047,
+          "total": 1156814
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2728,
+          "03": 620019,
+          "04": 527020,
+          "05": 7047,
+          "total": 1156814
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202412": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2449,
+          "03": 610432,
+          "04": 491479,
+          "05": 7077,
+          "total": 1111437
+        },
+        "total_residencia": {
+          "02": 2449,
+          "03": 610432,
+          "04": 491479,
+          "05": 7077,
+          "total": 1111437
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2449,
+          "03": 610432,
+          "04": 491479,
+          "05": 7077,
+          "total": 1111437
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202501": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2404,
+          "03": 653067,
+          "04": 501893,
+          "05": 7290,
+          "total": 1164654
+        },
+        "total_residencia": {
+          "02": 2404,
+          "03": 653067,
+          "04": 501893,
+          "05": 7290,
+          "total": 1164654
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2404,
+          "03": 653067,
+          "04": 501893,
+          "05": 7290,
+          "total": 1164654
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202502": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2605,
+          "03": 619419,
+          "04": 501940,
+          "05": 7010,
+          "total": 1130974
+        },
+        "total_residencia": {
+          "02": 2605,
+          "03": 619419,
+          "04": 501940,
+          "05": 7010,
+          "total": 1130974
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2605,
+          "03": 619419,
+          "04": 501940,
+          "05": 7010,
+          "total": 1130974
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202503": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2566,
+          "03": 665829,
+          "04": 519866,
+          "05": 6762,
+          "total": 1195023
+        },
+        "total_residencia": {
+          "02": 2566,
+          "03": 665829,
+          "04": 519866,
+          "05": 6762,
+          "total": 1195023
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2566,
+          "03": 665829,
+          "04": 519866,
+          "05": 6762,
+          "total": 1195023
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202504": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2692,
+          "03": 666091,
+          "04": 524954,
+          "05": 7513,
+          "total": 1201250
+        },
+        "total_residencia": {
+          "02": 2692,
+          "03": 666091,
+          "04": 524954,
+          "05": 7513,
+          "total": 1201250
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2692,
+          "03": 666091,
+          "04": 524954,
+          "05": 7513,
+          "total": 1201250
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202505": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2926,
+          "03": 704306,
+          "04": 557303,
+          "05": 7441,
+          "total": 1271976
+        },
+        "total_residencia": {
+          "02": 2926,
+          "03": 704306,
+          "04": 557303,
+          "05": 7441,
+          "total": 1271976
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2926,
+          "03": 704306,
+          "04": 557303,
+          "05": 7441,
+          "total": 1271976
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202506": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2873,
+          "03": 687864,
+          "04": 533750,
+          "05": 7526,
+          "total": 1232013
+        },
+        "total_residencia": {
+          "02": 2873,
+          "03": 687864,
+          "04": 533750,
+          "05": 7526,
+          "total": 1232013
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2873,
+          "03": 687864,
+          "04": 533750,
+          "05": 7526,
+          "total": 1232013
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202507": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 2797,
+          "03": 694922,
+          "04": 568937,
+          "05": 8040,
+          "total": 1274696
+        },
+        "total_residencia": {
+          "02": 2797,
+          "03": 694922,
+          "04": 568937,
+          "05": 8040,
+          "total": 1274696
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2797,
+          "03": 694922,
+          "04": 568937,
+          "05": 8040,
+          "total": 1274696
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202508": {
+        "situacao": "igual_a13",
+        "total_a13": {
+          "02": 3065,
+          "03": 681592,
+          "04": 570751,
+          "05": 8313,
+          "total": 1263721
+        },
+        "total_residencia": {
+          "02": 3065,
+          "03": 681592,
+          "04": 570751,
+          "05": 8313,
+          "total": 1263721
+        },
+        "total_internacao_contemporaneo": {
+          "02": 3065,
+          "03": 681592,
+          "04": 570751,
+          "05": 8313,
+          "total": 1263721
+        },
+        "diferenca_total_residencia_menos_a13": 0
+      },
+      "202509": {
+        "situacao": "revisado_na_fonte_depois_do_a13",
+        "total_a13": {
+          "02": 2980,
+          "03": 672061,
+          "04": 576912,
+          "05": 8427,
+          "total": 1260380
+        },
+        "total_residencia": {
+          "02": 2980,
+          "03": 672118,
+          "04": 576912,
+          "05": 8427,
+          "total": 1260437
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2980,
+          "03": 672118,
+          "04": 576912,
+          "05": 8427,
+          "total": 1260437
+        },
+        "diferenca_total_residencia_menos_a13": 57
+      },
+      "202510": {
+        "situacao": "revisado_na_fonte_depois_do_a13",
+        "total_a13": {
+          "02": 3025,
+          "03": 677182,
+          "04": 585250,
+          "05": 7839,
+          "total": 1273296
+        },
+        "total_residencia": {
+          "02": 3025,
+          "03": 677291,
+          "04": 585311,
+          "05": 7839,
+          "total": 1273466
+        },
+        "total_internacao_contemporaneo": {
+          "02": 3025,
+          "03": 677291,
+          "04": 585311,
+          "05": 7839,
+          "total": 1273466
+        },
+        "diferenca_total_residencia_menos_a13": 170
+      },
+      "202511": {
+        "situacao": "revisado_na_fonte_depois_do_a13",
+        "total_a13": {
+          "02": 2948,
+          "03": 641890,
+          "04": 552258,
+          "05": 8003,
+          "total": 1205099
+        },
+        "total_residencia": {
+          "02": 2948,
+          "03": 642063,
+          "04": 552471,
+          "05": 8003,
+          "total": 1205485
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2948,
+          "03": 642063,
+          "04": 552471,
+          "05": 8003,
+          "total": 1205485
+        },
+        "diferenca_total_residencia_menos_a13": 386
+      },
+      "202512": {
+        "situacao": "revisado_na_fonte_depois_do_a13",
+        "total_a13": {
+          "02": 2693,
+          "03": 640900,
+          "04": 523353,
+          "05": 7477,
+          "total": 1174423
+        },
+        "total_residencia": {
+          "02": 2693,
+          "03": 641244,
+          "04": 523399,
+          "05": 7477,
+          "total": 1174813
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2693,
+          "03": 641244,
+          "04": 523399,
+          "05": 7477,
+          "total": 1174813
+        },
+        "diferenca_total_residencia_menos_a13": 390
+      },
+      "202601": {
+        "situacao": "revisado_na_fonte_depois_do_a13",
+        "total_a13": {
+          "02": 2493,
+          "03": 652595,
+          "04": 527553,
+          "05": 7684,
+          "total": 1190325
+        },
+        "total_residencia": {
+          "02": 2493,
+          "03": 652921,
+          "04": 527721,
+          "05": 7684,
+          "total": 1190819
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2493,
+          "03": 652921,
+          "04": 527721,
+          "05": 7684,
+          "total": 1190819
+        },
+        "diferenca_total_residencia_menos_a13": 494
+      },
+      "202602": {
+        "situacao": "revisado_na_fonte_depois_do_a13",
+        "total_a13": {
+          "02": 2501,
+          "03": 626335,
+          "04": 519646,
+          "05": 7358,
+          "total": 1155840
+        },
+        "total_residencia": {
+          "02": 2501,
+          "03": 626609,
+          "04": 519907,
+          "05": 7358,
+          "total": 1156375
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2501,
+          "03": 626609,
+          "04": 519907,
+          "05": 7358,
+          "total": 1156375
+        },
+        "diferenca_total_residencia_menos_a13": 535
+      },
+      "202603": {
+        "situacao": "revisado_na_fonte_depois_do_a13",
+        "total_a13": {
+          "02": 2908,
+          "03": 682186,
+          "04": 577675,
+          "05": 7785,
+          "total": 1270554
+        },
+        "total_residencia": {
+          "02": 2908,
+          "03": 683534,
+          "04": 578197,
+          "05": 7786,
+          "total": 1272425
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2908,
+          "03": 683534,
+          "04": 578197,
+          "05": 7786,
+          "total": 1272425
+        },
+        "diferenca_total_residencia_menos_a13": 1871
+      },
+      "202604": {
+        "situacao": "revisado_na_fonte_depois_do_a13",
+        "total_a13": {
+          "02": 2510,
+          "03": 668828,
+          "04": 554359,
+          "05": 7279,
+          "total": 1232976
+        },
+        "total_residencia": {
+          "02": 2511,
+          "03": 672663,
+          "04": 556297,
+          "05": 7292,
+          "total": 1238763
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2511,
+          "03": 672663,
+          "04": 556297,
+          "05": 7292,
+          "total": 1238763
+        },
+        "diferenca_total_residencia_menos_a13": 5787
+      },
+      "202605": {
+        "situacao": "revisado_na_fonte_depois_do_a13",
+        "total_a13": {
+          "02": 2810,
+          "03": 678568,
+          "04": 577676,
+          "05": 8176,
+          "total": 1267230
+        },
+        "total_residencia": {
+          "02": 2813,
+          "03": 682998,
+          "04": 580467,
+          "05": 8188,
+          "total": 1274466
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2813,
+          "03": 682998,
+          "04": 580467,
+          "05": 8188,
+          "total": 1274466
+        },
+        "diferenca_total_residencia_menos_a13": 7236
+      },
+      "202606": {
+        "situacao": "revisado_na_fonte_depois_do_a13",
+        "total_a13": {
+          "02": 2937,
+          "03": 662112,
+          "04": 559418,
+          "05": 7674,
+          "total": 1232141
+        },
+        "total_residencia": {
+          "02": 2945,
+          "03": 674515,
+          "04": 566469,
+          "05": 7680,
+          "total": 1251609
+        },
+        "total_internacao_contemporaneo": {
+          "02": 2945,
+          "03": 674515,
+          "04": 566469,
+          "05": 7680,
+          "total": 1251609
+        },
+        "diferenca_total_residencia_menos_a13": 19468
+      },
+      "202607": {
+        "situacao": "revisado_na_fonte_depois_do_a13",
+        "total_a13": {
+          "02": 3175,
+          "03": 635288,
+          "04": 564701,
+          "05": 7996,
+          "total": 1211160
+        },
+        "total_residencia": {
+          "02": 3196,
+          "03": 672690,
+          "04": 587675,
+          "05": 8054,
+          "total": 1271615
+        },
+        "total_internacao_contemporaneo": {
+          "02": 3196,
+          "03": 672690,
+          "04": 587675,
+          "05": 8054,
+          "total": 1271615
+        },
+        "diferenca_total_residencia_menos_a13": 60455
+      }
+    },
+    "meses_iguais": [
+      "202201",
+      "202202",
+      "202203",
+      "202204",
+      "202205",
+      "202206",
+      "202207",
+      "202208",
+      "202209",
+      "202210",
+      "202211",
+      "202212",
+      "202301",
+      "202302",
+      "202303",
+      "202304",
+      "202305",
+      "202306",
+      "202307",
+      "202308",
+      "202309",
+      "202310",
+      "202311",
+      "202312",
+      "202401",
+      "202402",
+      "202403",
+      "202404",
+      "202405",
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202411",
+      "202412",
+      "202501",
+      "202502",
+      "202503",
+      "202504",
+      "202505",
+      "202506",
+      "202507",
+      "202508"
+    ],
+    "meses_revisados_na_fonte": [
+      "202509",
+      "202510",
+      "202511",
+      "202512",
+      "202601",
+      "202602",
+      "202603",
+      "202604",
+      "202605",
+      "202606",
+      "202607"
+    ],
+    "uf_meses_sem_dado_no_a13": [
+      {
+        "competencia": "202607",
+        "uf": "12",
+        "sigla": "AC"
+      },
+      {
+        "competencia": "202607",
+        "uf": "14",
+        "sigla": "RR"
+      }
+    ],
+    "uf_meses_atipicos_no_a13": [
+      {
+        "competencia": "202206",
+        "uf": "14",
+        "sigla": "RR"
+      },
+      {
+        "competencia": "202309",
+        "uf": "14",
+        "sigla": "RR"
+      },
+      {
+        "competencia": "202606",
+        "uf": "14",
+        "sigla": "RR"
+      }
+    ]
+  },
+  "grupos_por_competencia": {
+    "202201": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202202": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202203": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202204": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202205": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202206": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202207": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202208": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202209": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202210": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202211": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202212": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202301": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202302": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202303": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202304": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202305": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202306": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202307": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202308": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202309": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202310": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202311": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202312": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202401": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202402": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202403": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202404": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202405": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202406": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202407": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202408": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202409": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202410": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202411": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202412": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202501": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202502": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202503": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202504": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202505": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202506": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202507": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202508": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202509": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202510": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202511": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202512": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202601": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202602": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202603": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202604": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202605": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202606": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202607": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ]
+  },
+  "grupos_painel": [
+    "02",
+    "03",
+    "04",
+    "05"
+  ],
+  "carater_rotulos": {
+    "eletivo": "Eletivo",
+    "urgencia": "Urgência",
+    "acid_local_trab": "Acid local trab",
+    "acid_trajeto": "Acid trajeto",
+    "outros_ac_trab": "Outros ac trab",
+    "outras_caus_ext": "Outras caus ext"
+  },
+  "universo_municipios_formulario": 5571,
+  "totais_uf_mes_aih_residencia": {
+    "202201": {
+      "RO": 9236,
+      "AC": 3875,
+      "AM": 16201,
+      "RR": 3525,
+      "PA": 41840,
+      "AP": 3501,
+      "TO": 6938,
+      "MA": 39922,
+      "PI": 18250,
+      "CE": 42205,
+      "RN": 14374,
+      "PB": 15822,
+      "PE": 47309,
+      "AL": 13027,
+      "SE": 8385,
+      "BA": 67768,
+      "MG": 105662,
+      "ES": 21677,
+      "RJ": 62498,
+      "SP": 198109,
+      "PR": 68780,
+      "SC": 39435,
+      "RS": 58898,
+      "MS": 15111,
+      "MT": 16662,
+      "GO": 33013,
+      "DF": 16284
+    },
+    "202202": {
+      "RO": 9522,
+      "AC": 3601,
+      "AM": 16125,
+      "RR": 3418,
+      "PA": 40575,
+      "AP": 3023,
+      "TO": 6776,
+      "MA": 38822,
+      "PI": 16284,
+      "CE": 39152,
+      "RN": 14210,
+      "PB": 15863,
+      "PE": 45735,
+      "AL": 12995,
+      "SE": 8621,
+      "BA": 65088,
+      "MG": 99984,
+      "ES": 21199,
+      "RJ": 60947,
+      "SP": 190988,
+      "PR": 67517,
+      "SC": 40784,
+      "RS": 59373,
+      "MS": 15714,
+      "MT": 16378,
+      "GO": 30133,
+      "DF": 13744
+    },
+    "202203": {
+      "RO": 10897,
+      "AC": 4143,
+      "AM": 18032,
+      "RR": 4292,
+      "PA": 41885,
+      "AP": 3237,
+      "TO": 6848,
+      "MA": 40578,
+      "PI": 17581,
+      "CE": 44623,
+      "RN": 15211,
+      "PB": 17196,
+      "PE": 48581,
+      "AL": 14023,
+      "SE": 9122,
+      "BA": 70569,
+      "MG": 108689,
+      "ES": 21269,
+      "RJ": 66996,
+      "SP": 213870,
+      "PR": 72905,
+      "SC": 43391,
+      "RS": 62383,
+      "MS": 16110,
+      "MT": 16995,
+      "GO": 33886,
+      "DF": 15564
+    },
+    "202204": {
+      "RO": 10637,
+      "AC": 4088,
+      "AM": 17552,
+      "RR": 4015,
+      "PA": 43062,
+      "AP": 3586,
+      "TO": 7502,
+      "MA": 41269,
+      "PI": 17671,
+      "CE": 44279,
+      "RN": 14916,
+      "PB": 17335,
+      "PE": 48509,
+      "AL": 13254,
+      "SE": 8262,
+      "BA": 68489,
+      "MG": 107527,
+      "ES": 22089,
+      "RJ": 65165,
+      "SP": 204510,
+      "PR": 71836,
+      "SC": 42537,
+      "RS": 63740,
+      "MS": 16103,
+      "MT": 16812,
+      "GO": 33455,
+      "DF": 15151
+    },
+    "202205": {
+      "RO": 10810,
+      "AC": 5148,
+      "AM": 18046,
+      "RR": 4455,
+      "PA": 43057,
+      "AP": 3318,
+      "TO": 7769,
+      "MA": 43274,
+      "PI": 18241,
+      "CE": 45135,
+      "RN": 17473,
+      "PB": 18742,
+      "PE": 51481,
+      "AL": 12845,
+      "SE": 9464,
+      "BA": 66352,
+      "MG": 117071,
+      "ES": 21598,
+      "RJ": 68407,
+      "SP": 205173,
+      "PR": 74826,
+      "SC": 43866,
+      "RS": 63996,
+      "MS": 15557,
+      "MT": 17331,
+      "GO": 36683,
+      "DF": 15201
+    },
+    "202206": {
+      "RO": 9463,
+      "AC": 3614,
+      "AM": 16041,
+      "RR": 770,
+      "PA": 42507,
+      "AP": 3318,
+      "TO": 7941,
+      "MA": 41659,
+      "PI": 17448,
+      "CE": 44355,
+      "RN": 16028,
+      "PB": 17418,
+      "PE": 47754,
+      "AL": 12400,
+      "SE": 8192,
+      "BA": 67015,
+      "MG": 113074,
+      "ES": 23725,
+      "RJ": 66520,
+      "SP": 209756,
+      "PR": 72964,
+      "SC": 44372,
+      "RS": 65661,
+      "MS": 17221,
+      "MT": 17454,
+      "GO": 32970,
+      "DF": 14373
+    },
+    "202207": {
+      "RO": 9474,
+      "AC": 3330,
+      "AM": 18683,
+      "RR": 4228,
+      "PA": 43037,
+      "AP": 3329,
+      "TO": 7227,
+      "MA": 42885,
+      "PI": 17984,
+      "CE": 45405,
+      "RN": 16163,
+      "PB": 18124,
+      "PE": 50729,
+      "AL": 13810,
+      "SE": 9721,
+      "BA": 71973,
+      "MG": 116600,
+      "ES": 23305,
+      "RJ": 69702,
+      "SP": 219248,
+      "PR": 74226,
+      "SC": 46510,
+      "RS": 66705,
+      "MS": 17269,
+      "MT": 16641,
+      "GO": 36437,
+      "DF": 14574
+    },
+    "202208": {
+      "RO": 9479,
+      "AC": 4033,
+      "AM": 19260,
+      "RR": 4944,
+      "PA": 42883,
+      "AP": 3298,
+      "TO": 7390,
+      "MA": 41504,
+      "PI": 17113,
+      "CE": 46814,
+      "RN": 15958,
+      "PB": 17902,
+      "PE": 53576,
+      "AL": 14403,
+      "SE": 8784,
+      "BA": 76740,
+      "MG": 122168,
+      "ES": 21785,
+      "RJ": 71801,
+      "SP": 219301,
+      "PR": 75934,
+      "SC": 47326,
+      "RS": 69310,
+      "MS": 17188,
+      "MT": 18434,
+      "GO": 36303,
+      "DF": 16581
+    },
+    "202209": {
+      "RO": 10792,
+      "AC": 3546,
+      "AM": 19253,
+      "RR": 4054,
+      "PA": 41830,
+      "AP": 3087,
+      "TO": 7192,
+      "MA": 39698,
+      "PI": 17901,
+      "CE": 44125,
+      "RN": 15389,
+      "PB": 16863,
+      "PE": 49176,
+      "AL": 14191,
+      "SE": 9250,
+      "BA": 75183,
+      "MG": 116708,
+      "ES": 21890,
+      "RJ": 67860,
+      "SP": 220071,
+      "PR": 74650,
+      "SC": 45997,
+      "RS": 66873,
+      "MS": 16748,
+      "MT": 18460,
+      "GO": 36057,
+      "DF": 14919
+    },
+    "202210": {
+      "RO": 9444,
+      "AC": 4026,
+      "AM": 17061,
+      "RR": 4802,
+      "PA": 42203,
+      "AP": 3510,
+      "TO": 7528,
+      "MA": 39861,
+      "PI": 16668,
+      "CE": 45066,
+      "RN": 16067,
+      "PB": 16622,
+      "PE": 48023,
+      "AL": 14724,
+      "SE": 9052,
+      "BA": 72544,
+      "MG": 115384,
+      "ES": 22626,
+      "RJ": 69500,
+      "SP": 218814,
+      "PR": 75749,
+      "SC": 47427,
+      "RS": 68843,
+      "MS": 16434,
+      "MT": 18719,
+      "GO": 37187,
+      "DF": 16007
+    },
+    "202211": {
+      "RO": 10318,
+      "AC": 4507,
+      "AM": 17607,
+      "RR": 4595,
+      "PA": 41138,
+      "AP": 2897,
+      "TO": 7353,
+      "MA": 38345,
+      "PI": 16952,
+      "CE": 43597,
+      "RN": 16366,
+      "PB": 16662,
+      "PE": 47202,
+      "AL": 14677,
+      "SE": 8750,
+      "BA": 70274,
+      "MG": 113325,
+      "ES": 21756,
+      "RJ": 66616,
+      "SP": 212479,
+      "PR": 70649,
+      "SC": 46304,
+      "RS": 66177,
+      "MS": 16788,
+      "MT": 18045,
+      "GO": 34880,
+      "DF": 16073
+    },
+    "202212": {
+      "RO": 10270,
+      "AC": 4542,
+      "AM": 18108,
+      "RR": 4583,
+      "PA": 41854,
+      "AP": 3689,
+      "TO": 7896,
+      "MA": 40753,
+      "PI": 16931,
+      "CE": 44723,
+      "RN": 14737,
+      "PB": 17614,
+      "PE": 52872,
+      "AL": 14137,
+      "SE": 8532,
+      "BA": 69806,
+      "MG": 116422,
+      "ES": 20939,
+      "RJ": 67082,
+      "SP": 210799,
+      "PR": 75511,
+      "SC": 45909,
+      "RS": 66908,
+      "MS": 16075,
+      "MT": 17271,
+      "GO": 35529,
+      "DF": 13468
+    },
+    "202301": {
+      "RO": 9683,
+      "AC": 4055,
+      "AM": 18382,
+      "RR": 4833,
+      "PA": 42878,
+      "AP": 3602,
+      "TO": 7918,
+      "MA": 41854,
+      "PI": 17431,
+      "CE": 44595,
+      "RN": 15539,
+      "PB": 17019,
+      "PE": 47532,
+      "AL": 14499,
+      "SE": 9532,
+      "BA": 70980,
+      "MG": 111902,
+      "ES": 23554,
+      "RJ": 67467,
+      "SP": 209255,
+      "PR": 74485,
+      "SC": 44596,
+      "RS": 64848,
+      "MS": 16638,
+      "MT": 16665,
+      "GO": 38359,
+      "DF": 14348
+    },
+    "202302": {
+      "RO": 9543,
+      "AC": 4686,
+      "AM": 15705,
+      "RR": 4023,
+      "PA": 42176,
+      "AP": 3359,
+      "TO": 7581,
+      "MA": 39196,
+      "PI": 17066,
+      "CE": 42801,
+      "RN": 14470,
+      "PB": 18101,
+      "PE": 45021,
+      "AL": 11796,
+      "SE": 8355,
+      "BA": 67389,
+      "MG": 107572,
+      "ES": 22128,
+      "RJ": 64439,
+      "SP": 201403,
+      "PR": 73553,
+      "SC": 47337,
+      "RS": 60170,
+      "MS": 16696,
+      "MT": 17526,
+      "GO": 36598,
+      "DF": 13786
+    },
+    "202303": {
+      "RO": 10984,
+      "AC": 5131,
+      "AM": 19092,
+      "RR": 4591,
+      "PA": 43829,
+      "AP": 5381,
+      "TO": 7781,
+      "MA": 41418,
+      "PI": 18869,
+      "CE": 46734,
+      "RN": 16958,
+      "PB": 19566,
+      "PE": 52594,
+      "AL": 13411,
+      "SE": 9671,
+      "BA": 73819,
+      "MG": 123246,
+      "ES": 23849,
+      "RJ": 74684,
+      "SP": 232525,
+      "PR": 78619,
+      "SC": 48318,
+      "RS": 66612,
+      "MS": 18479,
+      "MT": 19458,
+      "GO": 39580,
+      "DF": 16992
+    },
+    "202304": {
+      "RO": 10885,
+      "AC": 4850,
+      "AM": 17385,
+      "RR": 4600,
+      "PA": 44296,
+      "AP": 5173,
+      "TO": 8613,
+      "MA": 38722,
+      "PI": 17544,
+      "CE": 46338,
+      "RN": 16255,
+      "PB": 19378,
+      "PE": 48138,
+      "AL": 12353,
+      "SE": 8840,
+      "BA": 74322,
+      "MG": 116900,
+      "ES": 22725,
+      "RJ": 70274,
+      "SP": 216818,
+      "PR": 76474,
+      "SC": 47315,
+      "RS": 65844,
+      "MS": 18787,
+      "MT": 18775,
+      "GO": 39702,
+      "DF": 14635
+    },
+    "202305": {
+      "RO": 11820,
+      "AC": 5413,
+      "AM": 19425,
+      "RR": 4149,
+      "PA": 44505,
+      "AP": 8676,
+      "TO": 9696,
+      "MA": 41486,
+      "PI": 18966,
+      "CE": 48509,
+      "RN": 17350,
+      "PB": 19789,
+      "PE": 52076,
+      "AL": 13297,
+      "SE": 9953,
+      "BA": 78725,
+      "MG": 122882,
+      "ES": 24066,
+      "RJ": 78133,
+      "SP": 228286,
+      "PR": 79192,
+      "SC": 51471,
+      "RS": 69131,
+      "MS": 18022,
+      "MT": 19926,
+      "GO": 40551,
+      "DF": 15830
+    },
+    "202306": {
+      "RO": 10754,
+      "AC": 5478,
+      "AM": 19970,
+      "RR": 4008,
+      "PA": 43475,
+      "AP": 3626,
+      "TO": 8307,
+      "MA": 41005,
+      "PI": 18956,
+      "CE": 48767,
+      "RN": 18728,
+      "PB": 18354,
+      "PE": 51049,
+      "AL": 14116,
+      "SE": 8907,
+      "BA": 76295,
+      "MG": 123047,
+      "ES": 25349,
+      "RJ": 75327,
+      "SP": 230993,
+      "PR": 78301,
+      "SC": 49255,
+      "RS": 67722,
+      "MS": 17871,
+      "MT": 20620,
+      "GO": 37401,
+      "DF": 15607
+    },
+    "202307": {
+      "RO": 11336,
+      "AC": 5636,
+      "AM": 22821,
+      "RR": 4304,
+      "PA": 46177,
+      "AP": 7720,
+      "TO": 7861,
+      "MA": 42264,
+      "PI": 18521,
+      "CE": 47258,
+      "RN": 17790,
+      "PB": 20485,
+      "PE": 52689,
+      "AL": 14918,
+      "SE": 9993,
+      "BA": 81050,
+      "MG": 123460,
+      "ES": 24359,
+      "RJ": 75471,
+      "SP": 225786,
+      "PR": 78786,
+      "SC": 49332,
+      "RS": 69313,
+      "MS": 17684,
+      "MT": 19796,
+      "GO": 41221,
+      "DF": 14703
+    },
+    "202308": {
+      "RO": 11342,
+      "AC": 4910,
+      "AM": 21335,
+      "RR": 4765,
+      "PA": 45812,
+      "AP": 3840,
+      "TO": 8242,
+      "MA": 41338,
+      "PI": 18821,
+      "CE": 47013,
+      "RN": 18560,
+      "PB": 21194,
+      "PE": 54933,
+      "AL": 15101,
+      "SE": 10017,
+      "BA": 80818,
+      "MG": 126295,
+      "ES": 25034,
+      "RJ": 77578,
+      "SP": 236276,
+      "PR": 83692,
+      "SC": 50877,
+      "RS": 70972,
+      "MS": 18471,
+      "MT": 19555,
+      "GO": 41914,
+      "DF": 17548
+    },
+    "202309": {
+      "RO": 11179,
+      "AC": 4662,
+      "AM": 15907,
+      "RR": 1625,
+      "PA": 45409,
+      "AP": 3377,
+      "TO": 8412,
+      "MA": 40877,
+      "PI": 19523,
+      "CE": 47150,
+      "RN": 18077,
+      "PB": 20367,
+      "PE": 49286,
+      "AL": 15202,
+      "SE": 10038,
+      "BA": 75630,
+      "MG": 123026,
+      "ES": 25001,
+      "RJ": 76732,
+      "SP": 222199,
+      "PR": 81228,
+      "SC": 50877,
+      "RS": 67467,
+      "MS": 18314,
+      "MT": 19237,
+      "GO": 40570,
+      "DF": 16585
+    },
+    "202310": {
+      "RO": 10843,
+      "AC": 4134,
+      "AM": 16643,
+      "RR": 2254,
+      "PA": 44711,
+      "AP": 3197,
+      "TO": 8366,
+      "MA": 40718,
+      "PI": 18727,
+      "CE": 47283,
+      "RN": 18206,
+      "PB": 20248,
+      "PE": 54815,
+      "AL": 15171,
+      "SE": 10129,
+      "BA": 78915,
+      "MG": 121627,
+      "ES": 25053,
+      "RJ": 79585,
+      "SP": 223193,
+      "PR": 79796,
+      "SC": 49456,
+      "RS": 68775,
+      "MS": 17544,
+      "MT": 18959,
+      "GO": 38334,
+      "DF": 15696
+    },
+    "202311": {
+      "RO": 11308,
+      "AC": 5337,
+      "AM": 17458,
+      "RR": 3711,
+      "PA": 43900,
+      "AP": 3295,
+      "TO": 7402,
+      "MA": 42237,
+      "PI": 18284,
+      "CE": 47351,
+      "RN": 16672,
+      "PB": 19276,
+      "PE": 51719,
+      "AL": 14329,
+      "SE": 9721,
+      "BA": 75279,
+      "MG": 123484,
+      "ES": 23904,
+      "RJ": 74619,
+      "SP": 216882,
+      "PR": 79766,
+      "SC": 49567,
+      "RS": 68125,
+      "MS": 17846,
+      "MT": 18460,
+      "GO": 38366,
+      "DF": 15113
+    },
+    "202312": {
+      "RO": 9365,
+      "AC": 3936,
+      "AM": 14256,
+      "RR": 3609,
+      "PA": 44289,
+      "AP": 3790,
+      "TO": 8760,
+      "MA": 40240,
+      "PI": 17335,
+      "CE": 44578,
+      "RN": 17235,
+      "PB": 18706,
+      "PE": 51258,
+      "AL": 14312,
+      "SE": 9707,
+      "BA": 72102,
+      "MG": 119940,
+      "ES": 23609,
+      "RJ": 74890,
+      "SP": 216074,
+      "PR": 77768,
+      "SC": 46059,
+      "RS": 66201,
+      "MS": 17626,
+      "MT": 17832,
+      "GO": 38996,
+      "DF": 14938
+    },
+    "202401": {
+      "RO": 10985,
+      "AC": 4184,
+      "AM": 16263,
+      "RR": 3788,
+      "PA": 43363,
+      "AP": 4586,
+      "TO": 8077,
+      "MA": 41348,
+      "PI": 17172,
+      "CE": 46395,
+      "RN": 17411,
+      "PB": 19254,
+      "PE": 49688,
+      "AL": 13819,
+      "SE": 9676,
+      "BA": 73384,
+      "MG": 122454,
+      "ES": 22789,
+      "RJ": 73060,
+      "SP": 221739,
+      "PR": 80945,
+      "SC": 48859,
+      "RS": 68302,
+      "MS": 18038,
+      "MT": 19219,
+      "GO": 38507,
+      "DF": 15789
+    },
+    "202402": {
+      "RO": 10594,
+      "AC": 4194,
+      "AM": 18880,
+      "RR": 3506,
+      "PA": 43740,
+      "AP": 4391,
+      "TO": 8516,
+      "MA": 39629,
+      "PI": 16512,
+      "CE": 44716,
+      "RN": 17091,
+      "PB": 20619,
+      "PE": 48915,
+      "AL": 13262,
+      "SE": 9500,
+      "BA": 73303,
+      "MG": 122794,
+      "ES": 22691,
+      "RJ": 69580,
+      "SP": 219871,
+      "PR": 80621,
+      "SC": 48251,
+      "RS": 63280,
+      "MS": 16253,
+      "MT": 18695,
+      "GO": 38541,
+      "DF": 16189
+    },
+    "202403": {
+      "RO": 11245,
+      "AC": 4442,
+      "AM": 19548,
+      "RR": 3704,
+      "PA": 46934,
+      "AP": 4499,
+      "TO": 8515,
+      "MA": 43461,
+      "PI": 17422,
+      "CE": 47212,
+      "RN": 17771,
+      "PB": 23623,
+      "PE": 53860,
+      "AL": 14826,
+      "SE": 9817,
+      "BA": 79021,
+      "MG": 131656,
+      "ES": 25755,
+      "RJ": 78118,
+      "SP": 240514,
+      "PR": 84157,
+      "SC": 52099,
+      "RS": 69530,
+      "MS": 17703,
+      "MT": 20221,
+      "GO": 43020,
+      "DF": 17286
+    },
+    "202404": {
+      "RO": 11352,
+      "AC": 5049,
+      "AM": 19725,
+      "RR": 3146,
+      "PA": 47883,
+      "AP": 4261,
+      "TO": 9382,
+      "MA": 43179,
+      "PI": 19338,
+      "CE": 52677,
+      "RN": 17692,
+      "PB": 23015,
+      "PE": 58073,
+      "AL": 15133,
+      "SE": 10666,
+      "BA": 84928,
+      "MG": 139580,
+      "ES": 26981,
+      "RJ": 76655,
+      "SP": 243538,
+      "PR": 85497,
+      "SC": 54758,
+      "RS": 69518,
+      "MS": 18731,
+      "MT": 21456,
+      "GO": 44718,
+      "DF": 17931
+    },
+    "202405": {
+      "RO": 12110,
+      "AC": 4986,
+      "AM": 20566,
+      "RR": 2911,
+      "PA": 47848,
+      "AP": 4505,
+      "TO": 9257,
+      "MA": 44259,
+      "PI": 18480,
+      "CE": 51440,
+      "RN": 17860,
+      "PB": 22253,
+      "PE": 59010,
+      "AL": 15245,
+      "SE": 9908,
+      "BA": 82201,
+      "MG": 134123,
+      "ES": 25980,
+      "RJ": 79506,
+      "SP": 245110,
+      "PR": 89281,
+      "SC": 56157,
+      "RS": 65717,
+      "MS": 18065,
+      "MT": 21493,
+      "GO": 44465,
+      "DF": 16953
+    },
+    "202406": {
+      "RO": 11624,
+      "AC": 4560,
+      "AM": 19232,
+      "RR": 3081,
+      "PA": 47020,
+      "AP": 4485,
+      "TO": 9110,
+      "MA": 42944,
+      "PI": 17526,
+      "CE": 50806,
+      "RN": 18653,
+      "PB": 22140,
+      "PE": 55203,
+      "AL": 15472,
+      "SE": 9834,
+      "BA": 75757,
+      "MG": 129092,
+      "ES": 25915,
+      "RJ": 77222,
+      "SP": 239083,
+      "PR": 87364,
+      "SC": 54462,
+      "RS": 70028,
+      "MS": 18530,
+      "MT": 21073,
+      "GO": 42389,
+      "DF": 16285
+    },
+    "202407": {
+      "RO": 12087,
+      "AC": 5633,
+      "AM": 19626,
+      "RR": 2727,
+      "PA": 46524,
+      "AP": 4751,
+      "TO": 8958,
+      "MA": 43659,
+      "PI": 18104,
+      "CE": 51576,
+      "RN": 19222,
+      "PB": 23211,
+      "PE": 58192,
+      "AL": 15483,
+      "SE": 10727,
+      "BA": 83663,
+      "MG": 132861,
+      "ES": 27013,
+      "RJ": 78748,
+      "SP": 240178,
+      "PR": 88330,
+      "SC": 57125,
+      "RS": 70593,
+      "MS": 18353,
+      "MT": 22332,
+      "GO": 43381,
+      "DF": 17023
+    },
+    "202408": {
+      "RO": 11755,
+      "AC": 4587,
+      "AM": 19050,
+      "RR": 3221,
+      "PA": 46746,
+      "AP": 4633,
+      "TO": 9556,
+      "MA": 43436,
+      "PI": 18403,
+      "CE": 51250,
+      "RN": 19717,
+      "PB": 23289,
+      "PE": 58870,
+      "AL": 15458,
+      "SE": 10124,
+      "BA": 84034,
+      "MG": 134700,
+      "ES": 25620,
+      "RJ": 77825,
+      "SP": 244779,
+      "PR": 91186,
+      "SC": 57154,
+      "RS": 73503,
+      "MS": 19088,
+      "MT": 22165,
+      "GO": 42455,
+      "DF": 16614
+    },
+    "202409": {
+      "RO": 11145,
+      "AC": 4780,
+      "AM": 20270,
+      "RR": 2977,
+      "PA": 47327,
+      "AP": 4999,
+      "TO": 9368,
+      "MA": 42989,
+      "PI": 18298,
+      "CE": 50054,
+      "RN": 18717,
+      "PB": 22918,
+      "PE": 57128,
+      "AL": 14907,
+      "SE": 9460,
+      "BA": 81862,
+      "MG": 132478,
+      "ES": 26089,
+      "RJ": 76242,
+      "SP": 238606,
+      "PR": 90552,
+      "SC": 56400,
+      "RS": 70381,
+      "MS": 19337,
+      "MT": 21834,
+      "GO": 42334,
+      "DF": 15116
+    },
+    "202410": {
+      "RO": 10472,
+      "AC": 4626,
+      "AM": 20407,
+      "RR": 3348,
+      "PA": 47503,
+      "AP": 5052,
+      "TO": 9055,
+      "MA": 42656,
+      "PI": 17905,
+      "CE": 49579,
+      "RN": 18940,
+      "PB": 22535,
+      "PE": 57838,
+      "AL": 15136,
+      "SE": 10258,
+      "BA": 81087,
+      "MG": 133330,
+      "ES": 27683,
+      "RJ": 75150,
+      "SP": 248658,
+      "PR": 90567,
+      "SC": 59292,
+      "RS": 75297,
+      "MS": 18951,
+      "MT": 21051,
+      "GO": 42384,
+      "DF": 15859
+    },
+    "202411": {
+      "RO": 11199,
+      "AC": 4901,
+      "AM": 18821,
+      "RR": 3467,
+      "PA": 46336,
+      "AP": 4800,
+      "TO": 7735,
+      "MA": 41909,
+      "PI": 17012,
+      "CE": 46878,
+      "RN": 17857,
+      "PB": 20760,
+      "PE": 53030,
+      "AL": 13884,
+      "SE": 9944,
+      "BA": 79896,
+      "MG": 127083,
+      "ES": 25327,
+      "RJ": 71372,
+      "SP": 233155,
+      "PR": 86280,
+      "SC": 53848,
+      "RS": 69267,
+      "MS": 17439,
+      "MT": 19693,
+      "GO": 39393,
+      "DF": 15528
+    },
+    "202412": {
+      "RO": 9810,
+      "AC": 3731,
+      "AM": 17214,
+      "RR": 2707,
+      "PA": 45175,
+      "AP": 4149,
+      "TO": 8503,
+      "MA": 37920,
+      "PI": 17358,
+      "CE": 44477,
+      "RN": 15173,
+      "PB": 20246,
+      "PE": 53374,
+      "AL": 13852,
+      "SE": 8899,
+      "BA": 73837,
+      "MG": 123346,
+      "ES": 25477,
+      "RJ": 69265,
+      "SP": 224503,
+      "PR": 79855,
+      "SC": 52932,
+      "RS": 67295,
+      "MS": 18124,
+      "MT": 19408,
+      "GO": 40410,
+      "DF": 14397
+    },
+    "202501": {
+      "RO": 10615,
+      "AC": 4447,
+      "AM": 22182,
+      "RR": 4033,
+      "PA": 45126,
+      "AP": 4033,
+      "TO": 9048,
+      "MA": 42409,
+      "PI": 18421,
+      "CE": 45952,
+      "RN": 17849,
+      "PB": 20234,
+      "PE": 52343,
+      "AL": 13629,
+      "SE": 9320,
+      "BA": 73158,
+      "MG": 126864,
+      "ES": 25804,
+      "RJ": 75852,
+      "SP": 236927,
+      "PR": 87138,
+      "SC": 53717,
+      "RS": 67070,
+      "MS": 19000,
+      "MT": 20503,
+      "GO": 42297,
+      "DF": 16683
+    },
+    "202502": {
+      "RO": 10214,
+      "AC": 4141,
+      "AM": 19201,
+      "RR": 2984,
+      "PA": 44420,
+      "AP": 3855,
+      "TO": 8949,
+      "MA": 39843,
+      "PI": 16556,
+      "CE": 45212,
+      "RN": 17840,
+      "PB": 19695,
+      "PE": 49910,
+      "AL": 14023,
+      "SE": 9372,
+      "BA": 75647,
+      "MG": 122756,
+      "ES": 24947,
+      "RJ": 71665,
+      "SP": 230127,
+      "PR": 85515,
+      "SC": 53412,
+      "RS": 66368,
+      "MS": 17314,
+      "MT": 20666,
+      "GO": 41289,
+      "DF": 15053
+    },
+    "202503": {
+      "RO": 10757,
+      "AC": 5193,
+      "AM": 20104,
+      "RR": 3594,
+      "PA": 47622,
+      "AP": 4775,
+      "TO": 9237,
+      "MA": 42122,
+      "PI": 17987,
+      "CE": 48146,
+      "RN": 18513,
+      "PB": 21738,
+      "PE": 53329,
+      "AL": 14561,
+      "SE": 10263,
+      "BA": 79164,
+      "MG": 128190,
+      "ES": 27081,
+      "RJ": 73757,
+      "SP": 244602,
+      "PR": 87584,
+      "SC": 55122,
+      "RS": 69026,
+      "MS": 18170,
+      "MT": 23315,
+      "GO": 44784,
+      "DF": 16287
+    },
+    "202504": {
+      "RO": 11555,
+      "AC": 5705,
+      "AM": 20517,
+      "RR": 3043,
+      "PA": 47193,
+      "AP": 5032,
+      "TO": 9277,
+      "MA": 43185,
+      "PI": 17172,
+      "CE": 49564,
+      "RN": 18606,
+      "PB": 21268,
+      "PE": 55629,
+      "AL": 14609,
+      "SE": 10382,
+      "BA": 79329,
+      "MG": 131439,
+      "ES": 23731,
+      "RJ": 73181,
+      "SP": 243651,
+      "PR": 90709,
+      "SC": 55730,
+      "RS": 70683,
+      "MS": 19139,
+      "MT": 21869,
+      "GO": 43312,
+      "DF": 15740
+    },
+    "202505": {
+      "RO": 11839,
+      "AC": 5460,
+      "AM": 20373,
+      "RR": 3012,
+      "PA": 49595,
+      "AP": 5060,
+      "TO": 9616,
+      "MA": 45192,
+      "PI": 18701,
+      "CE": 54223,
+      "RN": 20279,
+      "PB": 22520,
+      "PE": 58369,
+      "AL": 15522,
+      "SE": 10418,
+      "BA": 83444,
+      "MG": 139919,
+      "ES": 29605,
+      "RJ": 78637,
+      "SP": 257790,
+      "PR": 92958,
+      "SC": 60674,
+      "RS": 73462,
+      "MS": 19107,
+      "MT": 23024,
+      "GO": 46158,
+      "DF": 17019
+    },
+    "202506": {
+      "RO": 11280,
+      "AC": 5793,
+      "AM": 22751,
+      "RR": 3069,
+      "PA": 49363,
+      "AP": 5110,
+      "TO": 9851,
+      "MA": 44896,
+      "PI": 18685,
+      "CE": 50439,
+      "RN": 19229,
+      "PB": 22584,
+      "PE": 54674,
+      "AL": 13931,
+      "SE": 9246,
+      "BA": 79652,
+      "MG": 136735,
+      "ES": 27965,
+      "RJ": 78084,
+      "SP": 244075,
+      "PR": 93657,
+      "SC": 57561,
+      "RS": 71747,
+      "MS": 18063,
+      "MT": 23308,
+      "GO": 43667,
+      "DF": 16598
+    },
+    "202507": {
+      "RO": 12610,
+      "AC": 4967,
+      "AM": 24806,
+      "RR": 3122,
+      "PA": 50111,
+      "AP": 4912,
+      "TO": 9660,
+      "MA": 44852,
+      "PI": 18961,
+      "CE": 50842,
+      "RN": 20156,
+      "PB": 23075,
+      "PE": 57416,
+      "AL": 17546,
+      "SE": 10398,
+      "BA": 85385,
+      "MG": 141286,
+      "ES": 27500,
+      "RJ": 80783,
+      "SP": 253620,
+      "PR": 95483,
+      "SC": 60452,
+      "RS": 75172,
+      "MS": 18637,
+      "MT": 21912,
+      "GO": 43692,
+      "DF": 17340
+    },
+    "202508": {
+      "RO": 12359,
+      "AC": 4964,
+      "AM": 24587,
+      "RR": 3332,
+      "PA": 51130,
+      "AP": 4771,
+      "TO": 9595,
+      "MA": 43489,
+      "PI": 18497,
+      "CE": 50185,
+      "RN": 19292,
+      "PB": 23520,
+      "PE": 58415,
+      "AL": 15385,
+      "SE": 10473,
+      "BA": 85882,
+      "MG": 139560,
+      "ES": 27586,
+      "RJ": 79215,
+      "SP": 251633,
+      "PR": 93600,
+      "SC": 60360,
+      "RS": 74484,
+      "MS": 18435,
+      "MT": 23436,
+      "GO": 43359,
+      "DF": 16177
+    },
+    "202509": {
+      "RO": 12292,
+      "AC": 4912,
+      "AM": 23314,
+      "RR": 2845,
+      "PA": 49941,
+      "AP": 4601,
+      "TO": 9272,
+      "MA": 44336,
+      "PI": 16741,
+      "CE": 53111,
+      "RN": 18851,
+      "PB": 22750,
+      "PE": 58126,
+      "AL": 15459,
+      "SE": 11068,
+      "BA": 86654,
+      "MG": 138891,
+      "ES": 27072,
+      "RJ": 80469,
+      "SP": 249621,
+      "PR": 94158,
+      "SC": 59422,
+      "RS": 75745,
+      "MS": 18753,
+      "MT": 22951,
+      "GO": 42582,
+      "DF": 16500
+    },
+    "202510": {
+      "RO": 12774,
+      "AC": 5415,
+      "AM": 25312,
+      "RR": 2470,
+      "PA": 50522,
+      "AP": 4718,
+      "TO": 9433,
+      "MA": 43922,
+      "PI": 19254,
+      "CE": 52419,
+      "RN": 18220,
+      "PB": 23454,
+      "PE": 57950,
+      "AL": 15921,
+      "SE": 10864,
+      "BA": 83163,
+      "MG": 139793,
+      "ES": 28326,
+      "RJ": 81121,
+      "SP": 255386,
+      "PR": 95661,
+      "SC": 61580,
+      "RS": 76086,
+      "MS": 17833,
+      "MT": 22451,
+      "GO": 43136,
+      "DF": 16282
+    },
+    "202511": {
+      "RO": 12146,
+      "AC": 4509,
+      "AM": 22201,
+      "RR": 2845,
+      "PA": 49112,
+      "AP": 4014,
+      "TO": 8465,
+      "MA": 42688,
+      "PI": 17720,
+      "CE": 49905,
+      "RN": 18049,
+      "PB": 20906,
+      "PE": 54816,
+      "AL": 14946,
+      "SE": 10221,
+      "BA": 80777,
+      "MG": 130235,
+      "ES": 26229,
+      "RJ": 77327,
+      "SP": 238190,
+      "PR": 91554,
+      "SC": 58674,
+      "RS": 73968,
+      "MS": 17041,
+      "MT": 21222,
+      "GO": 42033,
+      "DF": 15692
+    },
+    "202512": {
+      "RO": 11526,
+      "AC": 4378,
+      "AM": 21919,
+      "RR": 2219,
+      "PA": 49364,
+      "AP": 4674,
+      "TO": 7942,
+      "MA": 41009,
+      "PI": 18458,
+      "CE": 48522,
+      "RN": 17582,
+      "PB": 19519,
+      "PE": 55550,
+      "AL": 14352,
+      "SE": 10228,
+      "BA": 77701,
+      "MG": 128524,
+      "ES": 25521,
+      "RJ": 76318,
+      "SP": 229492,
+      "PR": 89245,
+      "SC": 55294,
+      "RS": 71079,
+      "MS": 16524,
+      "MT": 20607,
+      "GO": 41065,
+      "DF": 16201
+    },
+    "202601": {
+      "RO": 11475,
+      "AC": 4659,
+      "AM": 21953,
+      "RR": 2696,
+      "PA": 47927,
+      "AP": 4664,
+      "TO": 9045,
+      "MA": 41762,
+      "PI": 19194,
+      "CE": 49011,
+      "RN": 17719,
+      "PB": 21057,
+      "PE": 51902,
+      "AL": 14728,
+      "SE": 10085,
+      "BA": 78726,
+      "MG": 132212,
+      "ES": 25582,
+      "RJ": 73525,
+      "SP": 236690,
+      "PR": 93272,
+      "SC": 56901,
+      "RS": 70326,
+      "MS": 17937,
+      "MT": 21290,
+      "GO": 40807,
+      "DF": 15674
+    },
+    "202602": {
+      "RO": 11374,
+      "AC": 4364,
+      "AM": 20643,
+      "RR": 3073,
+      "PA": 46137,
+      "AP": 4454,
+      "TO": 9201,
+      "MA": 39546,
+      "PI": 17637,
+      "CE": 46637,
+      "RN": 16615,
+      "PB": 19816,
+      "PE": 51098,
+      "AL": 14125,
+      "SE": 10527,
+      "BA": 79216,
+      "MG": 129089,
+      "ES": 25395,
+      "RJ": 72625,
+      "SP": 229722,
+      "PR": 89579,
+      "SC": 54000,
+      "RS": 68451,
+      "MS": 17167,
+      "MT": 20668,
+      "GO": 40484,
+      "DF": 14732
+    },
+    "202603": {
+      "RO": 13442,
+      "AC": 4963,
+      "AM": 23519,
+      "RR": 3201,
+      "PA": 51848,
+      "AP": 5207,
+      "TO": 9784,
+      "MA": 44556,
+      "PI": 17932,
+      "CE": 53163,
+      "RN": 18621,
+      "PB": 23462,
+      "PE": 58467,
+      "AL": 15703,
+      "SE": 11124,
+      "BA": 85357,
+      "MG": 140256,
+      "ES": 26742,
+      "RJ": 81822,
+      "SP": 254302,
+      "PR": 94425,
+      "SC": 59046,
+      "RS": 74273,
+      "MS": 17760,
+      "MT": 23145,
+      "GO": 44018,
+      "DF": 16287
+    },
+    "202604": {
+      "RO": 12408,
+      "AC": 4806,
+      "AM": 23688,
+      "RR": 3167,
+      "PA": 50806,
+      "AP": 5358,
+      "TO": 9362,
+      "MA": 42315,
+      "PI": 17532,
+      "CE": 49809,
+      "RN": 18277,
+      "PB": 22464,
+      "PE": 57609,
+      "AL": 16023,
+      "SE": 10758,
+      "BA": 84016,
+      "MG": 135571,
+      "ES": 26197,
+      "RJ": 78571,
+      "SP": 249901,
+      "PR": 85452,
+      "SC": 58850,
+      "RS": 75393,
+      "MS": 17976,
+      "MT": 23463,
+      "GO": 43569,
+      "DF": 15422
+    },
+    "202605": {
+      "RO": 12014,
+      "AC": 5180,
+      "AM": 23706,
+      "RR": 3315,
+      "PA": 50493,
+      "AP": 5642,
+      "TO": 10405,
+      "MA": 43231,
+      "PI": 18764,
+      "CE": 54148,
+      "RN": 18713,
+      "PB": 21599,
+      "PE": 59579,
+      "AL": 16366,
+      "SE": 10321,
+      "BA": 83208,
+      "MG": 136997,
+      "ES": 26701,
+      "RJ": 81389,
+      "SP": 254246,
+      "PR": 99240,
+      "SC": 59234,
+      "RS": 75031,
+      "MS": 18265,
+      "MT": 24312,
+      "GO": 45365,
+      "DF": 17002
+    },
+    "202606": {
+      "RO": 10229,
+      "AC": 4878,
+      "AM": 23118,
+      "RR": 4051,
+      "PA": 48618,
+      "AP": 5539,
+      "TO": 9506,
+      "MA": 40721,
+      "PI": 18389,
+      "CE": 55458,
+      "RN": 18685,
+      "PB": 21864,
+      "PE": 55785,
+      "AL": 15912,
+      "SE": 10652,
+      "BA": 80282,
+      "MG": 136564,
+      "ES": 27063,
+      "RJ": 81665,
+      "SP": 247620,
+      "PR": 94837,
+      "SC": 60243,
+      "RS": 76974,
+      "MS": 17840,
+      "MT": 23855,
+      "GO": 44301,
+      "DF": 16960
+    },
+    "202607": {
+      "RO": 9764,
+      "AC": 4948,
+      "AM": 23273,
+      "RR": 650,
+      "PA": 48133,
+      "AP": 5899,
+      "TO": 9580,
+      "MA": 38974,
+      "PI": 18338,
+      "CE": 53612,
+      "RN": 18948,
+      "PB": 21867,
+      "PE": 59370,
+      "AL": 15258,
+      "SE": 11178,
+      "BA": 84100,
+      "MG": 140711,
+      "ES": 26842,
+      "RJ": 84694,
+      "SP": 250780,
+      "PR": 98915,
+      "SC": 64279,
+      "RS": 77349,
+      "MS": 18500,
+      "MT": 22615,
+      "GO": 44881,
+      "DF": 18157
+    }
+  },
+  "totais_uf_mes_aih_internacao": {
+    "202201": {
+      "RO": 9256,
+      "AC": 3977,
+      "AM": 16024,
+      "RR": 3440,
+      "PA": 41468,
+      "AP": 3641,
+      "TO": 6825,
+      "MA": 39343,
+      "PI": 18762,
+      "CE": 42225,
+      "RN": 14485,
+      "PB": 15517,
+      "PE": 47999,
+      "AL": 12854,
+      "SE": 8512,
+      "BA": 67300,
+      "MG": 105244,
+      "ES": 21783,
+      "RJ": 62443,
+      "SP": 199070,
+      "PR": 68941,
+      "SC": 39441,
+      "RS": 58770,
+      "MS": 14888,
+      "MT": 16602,
+      "GO": 28839,
+      "DF": 20658
+    },
+    "202202": {
+      "RO": 9572,
+      "AC": 3703,
+      "AM": 15948,
+      "RR": 3340,
+      "PA": 40219,
+      "AP": 3158,
+      "TO": 6699,
+      "MA": 38267,
+      "PI": 16783,
+      "CE": 39163,
+      "RN": 14327,
+      "PB": 15588,
+      "PE": 46448,
+      "AL": 12804,
+      "SE": 8768,
+      "BA": 64518,
+      "MG": 99645,
+      "ES": 21269,
+      "RJ": 60882,
+      "SP": 191763,
+      "PR": 67713,
+      "SC": 40730,
+      "RS": 59290,
+      "MS": 15503,
+      "MT": 16338,
+      "GO": 26456,
+      "DF": 17677
+    },
+    "202203": {
+      "RO": 10985,
+      "AC": 4185,
+      "AM": 17772,
+      "RR": 4206,
+      "PA": 41553,
+      "AP": 3349,
+      "TO": 6750,
+      "MA": 40028,
+      "PI": 18016,
+      "CE": 44666,
+      "RN": 15258,
+      "PB": 16900,
+      "PE": 49268,
+      "AL": 13846,
+      "SE": 9302,
+      "BA": 70102,
+      "MG": 108235,
+      "ES": 21307,
+      "RJ": 66933,
+      "SP": 214984,
+      "PR": 73026,
+      "SC": 43440,
+      "RS": 62268,
+      "MS": 15918,
+      "MT": 16898,
+      "GO": 29749,
+      "DF": 19932
+    },
+    "202204": {
+      "RO": 10675,
+      "AC": 4183,
+      "AM": 17294,
+      "RR": 3930,
+      "PA": 42681,
+      "AP": 3739,
+      "TO": 7418,
+      "MA": 40667,
+      "PI": 18152,
+      "CE": 44350,
+      "RN": 14977,
+      "PB": 17074,
+      "PE": 49258,
+      "AL": 13054,
+      "SE": 8417,
+      "BA": 67839,
+      "MG": 107176,
+      "ES": 22092,
+      "RJ": 65080,
+      "SP": 205573,
+      "PR": 71993,
+      "SC": 42560,
+      "RS": 63668,
+      "MS": 15919,
+      "MT": 16718,
+      "GO": 29493,
+      "DF": 19371
+    },
+    "202205": {
+      "RO": 10873,
+      "AC": 5283,
+      "AM": 17790,
+      "RR": 4372,
+      "PA": 42637,
+      "AP": 3417,
+      "TO": 7667,
+      "MA": 42813,
+      "PI": 18649,
+      "CE": 45153,
+      "RN": 17510,
+      "PB": 18471,
+      "PE": 52130,
+      "AL": 12621,
+      "SE": 9624,
+      "BA": 65822,
+      "MG": 116627,
+      "ES": 21612,
+      "RJ": 68404,
+      "SP": 206283,
+      "PR": 75026,
+      "SC": 43853,
+      "RS": 63922,
+      "MS": 15294,
+      "MT": 17238,
+      "GO": 32773,
+      "DF": 19455
+    },
+    "202206": {
+      "RO": 9468,
+      "AC": 3689,
+      "AM": 15857,
+      "RR": 668,
+      "PA": 42174,
+      "AP": 3431,
+      "TO": 7809,
+      "MA": 41146,
+      "PI": 17845,
+      "CE": 44383,
+      "RN": 16023,
+      "PB": 17202,
+      "PE": 48562,
+      "AL": 12208,
+      "SE": 8349,
+      "BA": 66339,
+      "MG": 112689,
+      "ES": 23838,
+      "RJ": 66480,
+      "SP": 210807,
+      "PR": 73120,
+      "SC": 44380,
+      "RS": 65621,
+      "MS": 16962,
+      "MT": 17378,
+      "GO": 29444,
+      "DF": 18141
+    },
+    "202207": {
+      "RO": 9481,
+      "AC": 3391,
+      "AM": 18502,
+      "RR": 4134,
+      "PA": 42717,
+      "AP": 3431,
+      "TO": 7020,
+      "MA": 42401,
+      "PI": 18389,
+      "CE": 45426,
+      "RN": 16264,
+      "PB": 17803,
+      "PE": 51423,
+      "AL": 13605,
+      "SE": 9882,
+      "BA": 71392,
+      "MG": 116148,
+      "ES": 23391,
+      "RJ": 69602,
+      "SP": 220407,
+      "PR": 74447,
+      "SC": 46441,
+      "RS": 66624,
+      "MS": 17014,
+      "MT": 16557,
+      "GO": 32717,
+      "DF": 18710
+    },
+    "202208": {
+      "RO": 9487,
+      "AC": 4104,
+      "AM": 19026,
+      "RR": 4863,
+      "PA": 42545,
+      "AP": 3430,
+      "TO": 7269,
+      "MA": 40992,
+      "PI": 17510,
+      "CE": 46883,
+      "RN": 16010,
+      "PB": 17542,
+      "PE": 54230,
+      "AL": 14218,
+      "SE": 8909,
+      "BA": 76291,
+      "MG": 121754,
+      "ES": 21767,
+      "RJ": 71781,
+      "SP": 220379,
+      "PR": 76149,
+      "SC": 47213,
+      "RS": 69243,
+      "MS": 16916,
+      "MT": 18397,
+      "GO": 32062,
+      "DF": 21242
+    },
+    "202209": {
+      "RO": 10793,
+      "AC": 3597,
+      "AM": 19040,
+      "RR": 3972,
+      "PA": 41484,
+      "AP": 3185,
+      "TO": 6982,
+      "MA": 39229,
+      "PI": 18346,
+      "CE": 44186,
+      "RN": 15465,
+      "PB": 16527,
+      "PE": 49918,
+      "AL": 14032,
+      "SE": 9387,
+      "BA": 74586,
+      "MG": 116241,
+      "ES": 21906,
+      "RJ": 67832,
+      "SP": 221328,
+      "PR": 74819,
+      "SC": 45909,
+      "RS": 66789,
+      "MS": 16513,
+      "MT": 18410,
+      "GO": 32115,
+      "DF": 19172
+    },
+    "202210": {
+      "RO": 9435,
+      "AC": 4126,
+      "AM": 16811,
+      "RR": 4713,
+      "PA": 41809,
+      "AP": 3654,
+      "TO": 7394,
+      "MA": 39318,
+      "PI": 17089,
+      "CE": 45130,
+      "RN": 16141,
+      "PB": 16349,
+      "PE": 48662,
+      "AL": 14593,
+      "SE": 9149,
+      "BA": 71982,
+      "MG": 114891,
+      "ES": 22597,
+      "RJ": 69497,
+      "SP": 220173,
+      "PR": 75968,
+      "SC": 47334,
+      "RS": 68769,
+      "MS": 16164,
+      "MT": 18627,
+      "GO": 33309,
+      "DF": 20207
+    },
+    "202211": {
+      "RO": 10301,
+      "AC": 4638,
+      "AM": 17348,
+      "RR": 4486,
+      "PA": 40786,
+      "AP": 3048,
+      "TO": 7221,
+      "MA": 37896,
+      "PI": 17343,
+      "CE": 43632,
+      "RN": 16502,
+      "PB": 16364,
+      "PE": 47880,
+      "AL": 14509,
+      "SE": 8844,
+      "BA": 69677,
+      "MG": 112867,
+      "ES": 21771,
+      "RJ": 66626,
+      "SP": 213602,
+      "PR": 70758,
+      "SC": 46302,
+      "RS": 66103,
+      "MS": 16559,
+      "MT": 18011,
+      "GO": 31104,
+      "DF": 20154
+    },
+    "202212": {
+      "RO": 10294,
+      "AC": 4671,
+      "AM": 17846,
+      "RR": 4489,
+      "PA": 41483,
+      "AP": 3829,
+      "TO": 7777,
+      "MA": 40301,
+      "PI": 17344,
+      "CE": 44761,
+      "RN": 14780,
+      "PB": 17364,
+      "PE": 53551,
+      "AL": 13946,
+      "SE": 8645,
+      "BA": 69234,
+      "MG": 116067,
+      "ES": 20908,
+      "RJ": 67111,
+      "SP": 211850,
+      "PR": 75708,
+      "SC": 45794,
+      "RS": 66871,
+      "MS": 15868,
+      "MT": 17238,
+      "GO": 31886,
+      "DF": 17344
+    },
+    "202301": {
+      "RO": 9645,
+      "AC": 4165,
+      "AM": 18155,
+      "RR": 4734,
+      "PA": 42528,
+      "AP": 3773,
+      "TO": 7795,
+      "MA": 41286,
+      "PI": 17879,
+      "CE": 44667,
+      "RN": 15623,
+      "PB": 16741,
+      "PE": 48075,
+      "AL": 14340,
+      "SE": 9666,
+      "BA": 70518,
+      "MG": 111575,
+      "ES": 23540,
+      "RJ": 67461,
+      "SP": 210225,
+      "PR": 74743,
+      "SC": 44570,
+      "RS": 64773,
+      "MS": 16406,
+      "MT": 16641,
+      "GO": 34531,
+      "DF": 18394
+    },
+    "202302": {
+      "RO": 9505,
+      "AC": 4834,
+      "AM": 15441,
+      "RR": 3936,
+      "PA": 41810,
+      "AP": 3494,
+      "TO": 7506,
+      "MA": 38624,
+      "PI": 17555,
+      "CE": 42868,
+      "RN": 14503,
+      "PB": 17835,
+      "PE": 45610,
+      "AL": 11638,
+      "SE": 8480,
+      "BA": 66875,
+      "MG": 107100,
+      "ES": 22165,
+      "RJ": 64410,
+      "SP": 202499,
+      "PR": 73704,
+      "SC": 47378,
+      "RS": 60068,
+      "MS": 16464,
+      "MT": 17535,
+      "GO": 32848,
+      "DF": 17791
+    },
+    "202303": {
+      "RO": 10976,
+      "AC": 5266,
+      "AM": 18782,
+      "RR": 4495,
+      "PA": 43481,
+      "AP": 5499,
+      "TO": 7689,
+      "MA": 40805,
+      "PI": 19342,
+      "CE": 46793,
+      "RN": 17005,
+      "PB": 19245,
+      "PE": 53192,
+      "AL": 13239,
+      "SE": 9798,
+      "BA": 73354,
+      "MG": 122773,
+      "ES": 23902,
+      "RJ": 74669,
+      "SP": 233649,
+      "PR": 78766,
+      "SC": 48385,
+      "RS": 66519,
+      "MS": 18225,
+      "MT": 19442,
+      "GO": 35346,
+      "DF": 21554
+    },
+    "202304": {
+      "RO": 10841,
+      "AC": 5010,
+      "AM": 17087,
+      "RR": 4492,
+      "PA": 43940,
+      "AP": 5284,
+      "TO": 8513,
+      "MA": 38148,
+      "PI": 17970,
+      "CE": 46328,
+      "RN": 16356,
+      "PB": 19096,
+      "PE": 48784,
+      "AL": 12176,
+      "SE": 8988,
+      "BA": 73638,
+      "MG": 116414,
+      "ES": 22721,
+      "RJ": 70256,
+      "SP": 218158,
+      "PR": 76656,
+      "SC": 47319,
+      "RS": 65771,
+      "MS": 18504,
+      "MT": 18728,
+      "GO": 35885,
+      "DF": 18878
+    },
+    "202305": {
+      "RO": 11800,
+      "AC": 5582,
+      "AM": 19063,
+      "RR": 4054,
+      "PA": 44076,
+      "AP": 8830,
+      "TO": 9593,
+      "MA": 40899,
+      "PI": 19417,
+      "CE": 48517,
+      "RN": 17392,
+      "PB": 19505,
+      "PE": 52657,
+      "AL": 13123,
+      "SE": 10117,
+      "BA": 78248,
+      "MG": 122465,
+      "ES": 24081,
+      "RJ": 78114,
+      "SP": 229386,
+      "PR": 79417,
+      "SC": 51369,
+      "RS": 69091,
+      "MS": 17797,
+      "MT": 19914,
+      "GO": 36313,
+      "DF": 20505
+    },
+    "202306": {
+      "RO": 10777,
+      "AC": 5590,
+      "AM": 19630,
+      "RR": 3915,
+      "PA": 43083,
+      "AP": 3802,
+      "TO": 8151,
+      "MA": 40378,
+      "PI": 19470,
+      "CE": 48761,
+      "RN": 18821,
+      "PB": 18095,
+      "PE": 51718,
+      "AL": 13950,
+      "SE": 9060,
+      "BA": 75679,
+      "MG": 122555,
+      "ES": 25344,
+      "RJ": 75355,
+      "SP": 232263,
+      "PR": 78486,
+      "SC": 49205,
+      "RS": 67655,
+      "MS": 17594,
+      "MT": 20632,
+      "GO": 33497,
+      "DF": 19822
+    },
+    "202307": {
+      "RO": 11348,
+      "AC": 5788,
+      "AM": 22502,
+      "RR": 4201,
+      "PA": 45784,
+      "AP": 7883,
+      "TO": 7760,
+      "MA": 41649,
+      "PI": 19008,
+      "CE": 47264,
+      "RN": 17845,
+      "PB": 20271,
+      "PE": 53215,
+      "AL": 14752,
+      "SE": 10154,
+      "BA": 80509,
+      "MG": 122828,
+      "ES": 24393,
+      "RJ": 75451,
+      "SP": 227183,
+      "PR": 78988,
+      "SC": 49206,
+      "RS": 69295,
+      "MS": 17392,
+      "MT": 19806,
+      "GO": 37472,
+      "DF": 18787
+    },
+    "202308": {
+      "RO": 11360,
+      "AC": 5051,
+      "AM": 20991,
+      "RR": 4655,
+      "PA": 45388,
+      "AP": 4011,
+      "TO": 8145,
+      "MA": 40785,
+      "PI": 19252,
+      "CE": 47048,
+      "RN": 18611,
+      "PB": 20966,
+      "PE": 55523,
+      "AL": 14926,
+      "SE": 10115,
+      "BA": 80337,
+      "MG": 125781,
+      "ES": 25064,
+      "RJ": 77563,
+      "SP": 237476,
+      "PR": 83968,
+      "SC": 50740,
+      "RS": 70915,
+      "MS": 18173,
+      "MT": 19517,
+      "GO": 37772,
+      "DF": 22120
+    },
+    "202309": {
+      "RO": 11194,
+      "AC": 4786,
+      "AM": 15551,
+      "RR": 1535,
+      "PA": 45018,
+      "AP": 3531,
+      "TO": 8289,
+      "MA": 40264,
+      "PI": 20053,
+      "CE": 47162,
+      "RN": 18141,
+      "PB": 20112,
+      "PE": 49742,
+      "AL": 15040,
+      "SE": 10164,
+      "BA": 75231,
+      "MG": 122564,
+      "ES": 24997,
+      "RJ": 76758,
+      "SP": 223515,
+      "PR": 81529,
+      "SC": 50763,
+      "RS": 67420,
+      "MS": 17989,
+      "MT": 19143,
+      "GO": 36369,
+      "DF": 21097
+    },
+    "202310": {
+      "RO": 10863,
+      "AC": 4223,
+      "AM": 16347,
+      "RR": 2171,
+      "PA": 44366,
+      "AP": 3339,
+      "TO": 8213,
+      "MA": 40124,
+      "PI": 19173,
+      "CE": 47311,
+      "RN": 18281,
+      "PB": 19968,
+      "PE": 55341,
+      "AL": 15008,
+      "SE": 10296,
+      "BA": 78427,
+      "MG": 121125,
+      "ES": 25097,
+      "RJ": 79589,
+      "SP": 224391,
+      "PR": 80002,
+      "SC": 49373,
+      "RS": 68723,
+      "MS": 17272,
+      "MT": 18956,
+      "GO": 34396,
+      "DF": 20003
+    },
+    "202311": {
+      "RO": 11312,
+      "AC": 5509,
+      "AM": 17116,
+      "RR": 3632,
+      "PA": 43480,
+      "AP": 3448,
+      "TO": 7265,
+      "MA": 41704,
+      "PI": 18733,
+      "CE": 47402,
+      "RN": 16752,
+      "PB": 18998,
+      "PE": 52264,
+      "AL": 14152,
+      "SE": 9830,
+      "BA": 74877,
+      "MG": 122960,
+      "ES": 23944,
+      "RJ": 74673,
+      "SP": 218054,
+      "PR": 79975,
+      "SC": 49464,
+      "RS": 68092,
+      "MS": 17543,
+      "MT": 18448,
+      "GO": 34302,
+      "DF": 19482
+    },
+    "202312": {
+      "RO": 9369,
+      "AC": 4031,
+      "AM": 13959,
+      "RR": 3534,
+      "PA": 43920,
+      "AP": 3957,
+      "TO": 8602,
+      "MA": 39682,
+      "PI": 17821,
+      "CE": 44544,
+      "RN": 17309,
+      "PB": 18433,
+      "PE": 51827,
+      "AL": 14127,
+      "SE": 9832,
+      "BA": 71654,
+      "MG": 119510,
+      "ES": 23650,
+      "RJ": 74895,
+      "SP": 217339,
+      "PR": 77903,
+      "SC": 46020,
+      "RS": 66182,
+      "MS": 17358,
+      "MT": 17803,
+      "GO": 35201,
+      "DF": 18949
+    },
+    "202401": {
+      "RO": 11004,
+      "AC": 4315,
+      "AM": 15990,
+      "RR": 3714,
+      "PA": 42908,
+      "AP": 4790,
+      "TO": 7963,
+      "MA": 40746,
+      "PI": 17674,
+      "CE": 46396,
+      "RN": 17493,
+      "PB": 18992,
+      "PE": 50175,
+      "AL": 13664,
+      "SE": 9829,
+      "BA": 72903,
+      "MG": 122143,
+      "ES": 22835,
+      "RJ": 73046,
+      "SP": 222849,
+      "PR": 81125,
+      "SC": 48856,
+      "RS": 68221,
+      "MS": 17755,
+      "MT": 19210,
+      "GO": 34548,
+      "DF": 19950
+    },
+    "202402": {
+      "RO": 10648,
+      "AC": 4316,
+      "AM": 18532,
+      "RR": 3413,
+      "PA": 43327,
+      "AP": 4538,
+      "TO": 8409,
+      "MA": 39051,
+      "PI": 16969,
+      "CE": 44734,
+      "RN": 17164,
+      "PB": 20407,
+      "PE": 49364,
+      "AL": 13108,
+      "SE": 9627,
+      "BA": 72809,
+      "MG": 122371,
+      "ES": 22718,
+      "RJ": 69561,
+      "SP": 221117,
+      "PR": 80850,
+      "SC": 48259,
+      "RS": 63207,
+      "MS": 15930,
+      "MT": 18687,
+      "GO": 34511,
+      "DF": 20507
+    },
+    "202403": {
+      "RO": 11244,
+      "AC": 4517,
+      "AM": 19267,
+      "RR": 3619,
+      "PA": 46482,
+      "AP": 4645,
+      "TO": 8388,
+      "MA": 42899,
+      "PI": 17871,
+      "CE": 47223,
+      "RN": 17878,
+      "PB": 23330,
+      "PE": 54444,
+      "AL": 14638,
+      "SE": 9988,
+      "BA": 78510,
+      "MG": 131254,
+      "ES": 25744,
+      "RJ": 78101,
+      "SP": 241806,
+      "PR": 84414,
+      "SC": 52011,
+      "RS": 69475,
+      "MS": 17413,
+      "MT": 20198,
+      "GO": 38710,
+      "DF": 21890
+    },
+    "202404": {
+      "RO": 11349,
+      "AC": 5214,
+      "AM": 19407,
+      "RR": 3041,
+      "PA": 47449,
+      "AP": 4427,
+      "TO": 9250,
+      "MA": 42606,
+      "PI": 19821,
+      "CE": 52679,
+      "RN": 17727,
+      "PB": 22752,
+      "PE": 58638,
+      "AL": 14943,
+      "SE": 10790,
+      "BA": 84487,
+      "MG": 139135,
+      "ES": 27000,
+      "RJ": 76667,
+      "SP": 244842,
+      "PR": 85725,
+      "SC": 54694,
+      "RS": 69431,
+      "MS": 18427,
+      "MT": 21427,
+      "GO": 40544,
+      "DF": 22390
+    },
+    "202405": {
+      "RO": 12105,
+      "AC": 5133,
+      "AM": 20218,
+      "RR": 2805,
+      "PA": 47430,
+      "AP": 4700,
+      "TO": 9091,
+      "MA": 43661,
+      "PI": 18978,
+      "CE": 51426,
+      "RN": 17920,
+      "PB": 21976,
+      "PE": 59502,
+      "AL": 15072,
+      "SE": 10087,
+      "BA": 81716,
+      "MG": 133685,
+      "ES": 25964,
+      "RJ": 79514,
+      "SP": 246414,
+      "PR": 89623,
+      "SC": 56031,
+      "RS": 65652,
+      "MS": 17744,
+      "MT": 21512,
+      "GO": 40033,
+      "DF": 21697
+    },
+    "202406": {
+      "RO": 11640,
+      "AC": 4675,
+      "AM": 18921,
+      "RR": 2996,
+      "PA": 46571,
+      "AP": 4652,
+      "TO": 8978,
+      "MA": 42491,
+      "PI": 17875,
+      "CE": 50792,
+      "RN": 18716,
+      "PB": 21942,
+      "PE": 55884,
+      "AL": 15277,
+      "SE": 9962,
+      "BA": 75098,
+      "MG": 128533,
+      "ES": 25921,
+      "RJ": 77251,
+      "SP": 240552,
+      "PR": 87591,
+      "SC": 54373,
+      "RS": 69944,
+      "MS": 18252,
+      "MT": 21086,
+      "GO": 38105,
+      "DF": 20812
+    },
+    "202407": {
+      "RO": 12124,
+      "AC": 5830,
+      "AM": 19286,
+      "RR": 2637,
+      "PA": 46082,
+      "AP": 4936,
+      "TO": 8841,
+      "MA": 43112,
+      "PI": 18549,
+      "CE": 51572,
+      "RN": 19293,
+      "PB": 22983,
+      "PE": 58769,
+      "AL": 15294,
+      "SE": 10903,
+      "BA": 83058,
+      "MG": 132337,
+      "ES": 27057,
+      "RJ": 78751,
+      "SP": 241470,
+      "PR": 88618,
+      "SC": 57004,
+      "RS": 70523,
+      "MS": 18031,
+      "MT": 22351,
+      "GO": 39119,
+      "DF": 21550
+    },
+    "202408": {
+      "RO": 11769,
+      "AC": 4712,
+      "AM": 18733,
+      "RR": 3127,
+      "PA": 46227,
+      "AP": 4838,
+      "TO": 9486,
+      "MA": 42839,
+      "PI": 18884,
+      "CE": 51288,
+      "RN": 19768,
+      "PB": 23044,
+      "PE": 59288,
+      "AL": 15290,
+      "SE": 10237,
+      "BA": 83622,
+      "MG": 134161,
+      "ES": 25649,
+      "RJ": 77860,
+      "SP": 246085,
+      "PR": 91493,
+      "SC": 57052,
+      "RS": 73447,
+      "MS": 18740,
+      "MT": 22196,
+      "GO": 38165,
+      "DF": 21218
+    },
+    "202409": {
+      "RO": 11225,
+      "AC": 4896,
+      "AM": 19962,
+      "RR": 2882,
+      "PA": 46896,
+      "AP": 5188,
+      "TO": 9242,
+      "MA": 42368,
+      "PI": 18830,
+      "CE": 50083,
+      "RN": 18797,
+      "PB": 22657,
+      "PE": 57731,
+      "AL": 14743,
+      "SE": 9558,
+      "BA": 81214,
+      "MG": 131953,
+      "ES": 26106,
+      "RJ": 76250,
+      "SP": 240093,
+      "PR": 90904,
+      "SC": 56179,
+      "RS": 70325,
+      "MS": 19012,
+      "MT": 21841,
+      "GO": 38177,
+      "DF": 19456
+    },
+    "202410": {
+      "RO": 10537,
+      "AC": 4771,
+      "AM": 20118,
+      "RR": 3221,
+      "PA": 47059,
+      "AP": 5230,
+      "TO": 8976,
+      "MA": 41966,
+      "PI": 18375,
+      "CE": 49551,
+      "RN": 19005,
+      "PB": 22299,
+      "PE": 58387,
+      "AL": 14983,
+      "SE": 10398,
+      "BA": 80604,
+      "MG": 132844,
+      "ES": 27688,
+      "RJ": 75164,
+      "SP": 250130,
+      "PR": 90926,
+      "SC": 59141,
+      "RS": 75212,
+      "MS": 18558,
+      "MT": 21016,
+      "GO": 38134,
+      "DF": 20326
+    },
+    "202411": {
+      "RO": 11282,
+      "AC": 5042,
+      "AM": 18532,
+      "RR": 3349,
+      "PA": 45877,
+      "AP": 5002,
+      "TO": 7637,
+      "MA": 41245,
+      "PI": 17531,
+      "CE": 46923,
+      "RN": 17887,
+      "PB": 20561,
+      "PE": 53576,
+      "AL": 13726,
+      "SE": 10087,
+      "BA": 79287,
+      "MG": 126661,
+      "ES": 25292,
+      "RJ": 71375,
+      "SP": 234425,
+      "PR": 86606,
+      "SC": 53676,
+      "RS": 69201,
+      "MS": 17135,
+      "MT": 19697,
+      "GO": 35452,
+      "DF": 19750
+    },
+    "202412": {
+      "RO": 9817,
+      "AC": 3851,
+      "AM": 17037,
+      "RR": 2584,
+      "PA": 44746,
+      "AP": 4299,
+      "TO": 8416,
+      "MA": 37278,
+      "PI": 17817,
+      "CE": 44465,
+      "RN": 15236,
+      "PB": 20005,
+      "PE": 53957,
+      "AL": 13656,
+      "SE": 9023,
+      "BA": 73356,
+      "MG": 123002,
+      "ES": 25526,
+      "RJ": 69189,
+      "SP": 225756,
+      "PR": 80026,
+      "SC": 52892,
+      "RS": 67246,
+      "MS": 17814,
+      "MT": 19397,
+      "GO": 36504,
+      "DF": 18542
+    },
+    "202501": {
+      "RO": 10637,
+      "AC": 4541,
+      "AM": 22037,
+      "RR": 3882,
+      "PA": 44600,
+      "AP": 4219,
+      "TO": 8962,
+      "MA": 41684,
+      "PI": 19037,
+      "CE": 45944,
+      "RN": 17948,
+      "PB": 20029,
+      "PE": 52811,
+      "AL": 13473,
+      "SE": 9452,
+      "BA": 72641,
+      "MG": 126429,
+      "ES": 25860,
+      "RJ": 75893,
+      "SP": 238144,
+      "PR": 87482,
+      "SC": 53631,
+      "RS": 66998,
+      "MS": 18667,
+      "MT": 20561,
+      "GO": 38096,
+      "DF": 20996
+    },
+    "202502": {
+      "RO": 10219,
+      "AC": 4243,
+      "AM": 18984,
+      "RR": 2855,
+      "PA": 43943,
+      "AP": 4023,
+      "TO": 8872,
+      "MA": 39186,
+      "PI": 17055,
+      "CE": 45200,
+      "RN": 17891,
+      "PB": 19487,
+      "PE": 50421,
+      "AL": 13863,
+      "SE": 9482,
+      "BA": 75138,
+      "MG": 122372,
+      "ES": 24987,
+      "RJ": 71711,
+      "SP": 231291,
+      "PR": 85810,
+      "SC": 53444,
+      "RS": 66262,
+      "MS": 16939,
+      "MT": 20655,
+      "GO": 37258,
+      "DF": 19383
+    },
+    "202503": {
+      "RO": 10762,
+      "AC": 5348,
+      "AM": 19892,
+      "RR": 3459,
+      "PA": 47078,
+      "AP": 5009,
+      "TO": 9144,
+      "MA": 41505,
+      "PI": 18468,
+      "CE": 48114,
+      "RN": 18603,
+      "PB": 21502,
+      "PE": 53849,
+      "AL": 14431,
+      "SE": 10435,
+      "BA": 78502,
+      "MG": 127776,
+      "ES": 27148,
+      "RJ": 73809,
+      "SP": 245839,
+      "PR": 88023,
+      "SC": 55023,
+      "RS": 68915,
+      "MS": 17766,
+      "MT": 23311,
+      "GO": 40265,
+      "DF": 21047
+    },
+    "202504": {
+      "RO": 11551,
+      "AC": 5887,
+      "AM": 20290,
+      "RR": 2895,
+      "PA": 46662,
+      "AP": 5258,
+      "TO": 9139,
+      "MA": 42493,
+      "PI": 17687,
+      "CE": 49533,
+      "RN": 18676,
+      "PB": 21058,
+      "PE": 56353,
+      "AL": 14383,
+      "SE": 10574,
+      "BA": 78674,
+      "MG": 130850,
+      "ES": 23758,
+      "RJ": 73206,
+      "SP": 244996,
+      "PR": 91035,
+      "SC": 55685,
+      "RS": 70578,
+      "MS": 18774,
+      "MT": 21906,
+      "GO": 39034,
+      "DF": 20315
+    },
+    "202505": {
+      "RO": 11824,
+      "AC": 5601,
+      "AM": 20167,
+      "RR": 2898,
+      "PA": 49149,
+      "AP": 5246,
+      "TO": 9527,
+      "MA": 44494,
+      "PI": 19217,
+      "CE": 54231,
+      "RN": 20311,
+      "PB": 22266,
+      "PE": 58995,
+      "AL": 15373,
+      "SE": 10594,
+      "BA": 82789,
+      "MG": 139441,
+      "ES": 29636,
+      "RJ": 78635,
+      "SP": 259070,
+      "PR": 93300,
+      "SC": 60523,
+      "RS": 73411,
+      "MS": 18744,
+      "MT": 22989,
+      "GO": 41650,
+      "DF": 21895
+    },
+    "202506": {
+      "RO": 11235,
+      "AC": 5988,
+      "AM": 22515,
+      "RR": 2935,
+      "PA": 48859,
+      "AP": 5312,
+      "TO": 9711,
+      "MA": 44136,
+      "PI": 19293,
+      "CE": 50393,
+      "RN": 19292,
+      "PB": 22325,
+      "PE": 55198,
+      "AL": 13732,
+      "SE": 9399,
+      "BA": 79101,
+      "MG": 136264,
+      "ES": 28053,
+      "RJ": 78073,
+      "SP": 245373,
+      "PR": 94036,
+      "SC": 57435,
+      "RS": 71678,
+      "MS": 17680,
+      "MT": 23317,
+      "GO": 39560,
+      "DF": 21120
+    },
+    "202507": {
+      "RO": 12611,
+      "AC": 5122,
+      "AM": 24613,
+      "RR": 3003,
+      "PA": 49639,
+      "AP": 5059,
+      "TO": 9478,
+      "MA": 44192,
+      "PI": 19503,
+      "CE": 50832,
+      "RN": 20225,
+      "PB": 22819,
+      "PE": 57887,
+      "AL": 17324,
+      "SE": 10602,
+      "BA": 84930,
+      "MG": 140907,
+      "ES": 27542,
+      "RJ": 80739,
+      "SP": 254726,
+      "PR": 95792,
+      "SC": 60325,
+      "RS": 75146,
+      "MS": 18272,
+      "MT": 21917,
+      "GO": 39900,
+      "DF": 21591
+    },
+    "202508": {
+      "RO": 12372,
+      "AC": 5091,
+      "AM": 24408,
+      "RR": 3193,
+      "PA": 50660,
+      "AP": 4957,
+      "TO": 9466,
+      "MA": 42849,
+      "PI": 18952,
+      "CE": 50126,
+      "RN": 19379,
+      "PB": 23200,
+      "PE": 58867,
+      "AL": 15188,
+      "SE": 10681,
+      "BA": 85529,
+      "MG": 139123,
+      "ES": 27626,
+      "RJ": 79180,
+      "SP": 252988,
+      "PR": 93912,
+      "SC": 60270,
+      "RS": 74379,
+      "MS": 18088,
+      "MT": 23377,
+      "GO": 39319,
+      "DF": 20541
+    },
+    "202509": {
+      "RO": 12259,
+      "AC": 5062,
+      "AM": 23100,
+      "RR": 2738,
+      "PA": 49448,
+      "AP": 4792,
+      "TO": 9104,
+      "MA": 43689,
+      "PI": 17236,
+      "CE": 53086,
+      "RN": 18947,
+      "PB": 22459,
+      "PE": 58532,
+      "AL": 15198,
+      "SE": 11259,
+      "BA": 86324,
+      "MG": 138501,
+      "ES": 27108,
+      "RJ": 80405,
+      "SP": 251016,
+      "PR": 94437,
+      "SC": 59352,
+      "RS": 75659,
+      "MS": 18389,
+      "MT": 22979,
+      "GO": 38484,
+      "DF": 20874
+    },
+    "202510": {
+      "RO": 12766,
+      "AC": 5561,
+      "AM": 25113,
+      "RR": 2346,
+      "PA": 50058,
+      "AP": 4903,
+      "TO": 9302,
+      "MA": 43150,
+      "PI": 19901,
+      "CE": 52343,
+      "RN": 18369,
+      "PB": 23172,
+      "PE": 58387,
+      "AL": 15731,
+      "SE": 11059,
+      "BA": 82670,
+      "MG": 139336,
+      "ES": 28429,
+      "RJ": 81109,
+      "SP": 256628,
+      "PR": 96026,
+      "SC": 61454,
+      "RS": 75980,
+      "MS": 17417,
+      "MT": 22427,
+      "GO": 39000,
+      "DF": 20829
+    },
+    "202511": {
+      "RO": 12159,
+      "AC": 4609,
+      "AM": 21990,
+      "RR": 2740,
+      "PA": 48679,
+      "AP": 4195,
+      "TO": 8338,
+      "MA": 42047,
+      "PI": 18131,
+      "CE": 49855,
+      "RN": 18148,
+      "PB": 20599,
+      "PE": 55363,
+      "AL": 14768,
+      "SE": 10374,
+      "BA": 80315,
+      "MG": 129707,
+      "ES": 26276,
+      "RJ": 77277,
+      "SP": 239627,
+      "PR": 91835,
+      "SC": 58629,
+      "RS": 73866,
+      "MS": 16642,
+      "MT": 21284,
+      "GO": 38239,
+      "DF": 19793
+    },
+    "202512": {
+      "RO": 11527,
+      "AC": 4527,
+      "AM": 21768,
+      "RR": 2128,
+      "PA": 48817,
+      "AP": 4900,
+      "TO": 7768,
+      "MA": 40293,
+      "PI": 19014,
+      "CE": 48468,
+      "RN": 17704,
+      "PB": 19260,
+      "PE": 55935,
+      "AL": 14176,
+      "SE": 10417,
+      "BA": 77304,
+      "MG": 128022,
+      "ES": 25613,
+      "RJ": 76232,
+      "SP": 230747,
+      "PR": 89610,
+      "SC": 55204,
+      "RS": 70967,
+      "MS": 16193,
+      "MT": 20653,
+      "GO": 37206,
+      "DF": 20360
+    },
+    "202601": {
+      "RO": 11520,
+      "AC": 4774,
+      "AM": 21748,
+      "RR": 2597,
+      "PA": 47347,
+      "AP": 4938,
+      "TO": 8884,
+      "MA": 41163,
+      "PI": 19653,
+      "CE": 48981,
+      "RN": 17831,
+      "PB": 20858,
+      "PE": 52213,
+      "AL": 14548,
+      "SE": 10283,
+      "BA": 78433,
+      "MG": 131838,
+      "ES": 25680,
+      "RJ": 73439,
+      "SP": 237679,
+      "PR": 93664,
+      "SC": 56937,
+      "RS": 70160,
+      "MS": 17584,
+      "MT": 21372,
+      "GO": 37161,
+      "DF": 19534
+    },
+    "202602": {
+      "RO": 11425,
+      "AC": 4479,
+      "AM": 20400,
+      "RR": 2961,
+      "PA": 45674,
+      "AP": 4640,
+      "TO": 9024,
+      "MA": 39036,
+      "PI": 18035,
+      "CE": 46598,
+      "RN": 16694,
+      "PB": 19614,
+      "PE": 51506,
+      "AL": 13930,
+      "SE": 10722,
+      "BA": 78892,
+      "MG": 128686,
+      "ES": 25428,
+      "RJ": 72584,
+      "SP": 230773,
+      "PR": 89925,
+      "SC": 53982,
+      "RS": 68329,
+      "MS": 16834,
+      "MT": 20715,
+      "GO": 37139,
+      "DF": 18350
+    },
+    "202603": {
+      "RO": 13535,
+      "AC": 5088,
+      "AM": 23276,
+      "RR": 3082,
+      "PA": 51283,
+      "AP": 5420,
+      "TO": 9574,
+      "MA": 44156,
+      "PI": 18254,
+      "CE": 53082,
+      "RN": 18698,
+      "PB": 23238,
+      "PE": 58974,
+      "AL": 15533,
+      "SE": 11331,
+      "BA": 84818,
+      "MG": 139823,
+      "ES": 26817,
+      "RJ": 81756,
+      "SP": 255597,
+      "PR": 94863,
+      "SC": 58975,
+      "RS": 74165,
+      "MS": 17346,
+      "MT": 23193,
+      "GO": 40110,
+      "DF": 20438
+    },
+    "202604": {
+      "RO": 12441,
+      "AC": 4951,
+      "AM": 23452,
+      "RR": 3013,
+      "PA": 50366,
+      "AP": 5563,
+      "TO": 9168,
+      "MA": 41891,
+      "PI": 17845,
+      "CE": 49778,
+      "RN": 18356,
+      "PB": 22218,
+      "PE": 57844,
+      "AL": 15829,
+      "SE": 10944,
+      "BA": 83766,
+      "MG": 135007,
+      "ES": 26289,
+      "RJ": 78575,
+      "SP": 251270,
+      "PR": 85532,
+      "SC": 58781,
+      "RS": 75288,
+      "MS": 17846,
+      "MT": 23452,
+      "GO": 39530,
+      "DF": 19768
+    },
+    "202605": {
+      "RO": 12024,
+      "AC": 5328,
+      "AM": 23457,
+      "RR": 3199,
+      "PA": 49924,
+      "AP": 5849,
+      "TO": 10218,
+      "MA": 42797,
+      "PI": 19103,
+      "CE": 54102,
+      "RN": 18795,
+      "PB": 21323,
+      "PE": 59900,
+      "AL": 16212,
+      "SE": 10476,
+      "BA": 83003,
+      "MG": 136447,
+      "ES": 26759,
+      "RJ": 81357,
+      "SP": 255599,
+      "PR": 99814,
+      "SC": 59066,
+      "RS": 74919,
+      "MS": 17680,
+      "MT": 24440,
+      "GO": 41153,
+      "DF": 21522
+    },
+    "202606": {
+      "RO": 10245,
+      "AC": 4997,
+      "AM": 22860,
+      "RR": 3936,
+      "PA": 48089,
+      "AP": 5777,
+      "TO": 9353,
+      "MA": 40245,
+      "PI": 18752,
+      "CE": 55432,
+      "RN": 18725,
+      "PB": 21651,
+      "PE": 56633,
+      "AL": 15695,
+      "SE": 10839,
+      "BA": 79569,
+      "MG": 136124,
+      "ES": 27077,
+      "RJ": 81661,
+      "SP": 248807,
+      "PR": 95172,
+      "SC": 60147,
+      "RS": 76872,
+      "MS": 17495,
+      "MT": 23954,
+      "GO": 40315,
+      "DF": 21187
+    },
+    "202607": {
+      "RO": 9798,
+      "AC": 5065,
+      "AM": 23077,
+      "RR": 515,
+      "PA": 47572,
+      "AP": 6160,
+      "TO": 9424,
+      "MA": 38489,
+      "PI": 18727,
+      "CE": 53588,
+      "RN": 19023,
+      "PB": 21635,
+      "PE": 59704,
+      "AL": 15074,
+      "SE": 11346,
+      "BA": 83756,
+      "MG": 140349,
+      "ES": 26795,
+      "RJ": 84695,
+      "SP": 252063,
+      "PR": 99326,
+      "SC": 64102,
+      "RS": 77246,
+      "MS": 18102,
+      "MT": 22658,
+      "GO": 40758,
+      "DF": 22568
+    }
+  },
+  "erros": [],
+  "status": "APROVADO",
+  "natureza_dos_dados": "EMPIRICO"
+}

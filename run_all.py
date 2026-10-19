@@ -9,8 +9,8 @@ A opção `--rdd-bolsa` roda a cadeia sobre os insumos já versionados das etapa
 anteriores (quadro de vagas, funil e tipologia do ciclo 1, população do Censo
 2022, painel do ciclo 1), inclusive as aquisições a07 a a11 e a rodada
 multi-outcome (12, 13, 16 e 14), a família N (23) e a família K (21 e 22). Nenhuma etapa baixa o CNES nacional, o SIA, o SIH nem o
-TISS: o a09, o a12, o a13 e o a14 rodam em `--etapa verificar`; o a13 não faz parte da opção
-`--rdd-bolsa`.
+TISS: o a09, o a12, o a13, o a14 e o a15 rodam em `--etapa verificar`; o a13 e o a15 não fazem
+parte da opção `--rdd-bolsa`.
 """
 
 from pathlib import Path
@@ -97,6 +97,9 @@ STEPS = [
     # SIH/SUS no TabNet (protocolo 47, insumo de K2): o run_all só confere os painéis
     # versionados com `--etapa verificar`, sem rede (ver ARGUMENTOS). Não lê IVS.
     ROOT / "scripts" / "aquisicao" / "a13_adquirir_sih_tabnet.py",
+    # SIH por local de residência (a15, portão G3 do plano 51): como o a13, só confere os painéis
+    # versionados sem rede (ver ARGUMENTOS). Vem depois do a13, cujas validações compara. Não lê IVS.
+    ROOT / "scripts" / "aquisicao" / "a15_adquirir_sih_residencia.py",
     # TISS/ANS do protocolo 47 (a14): como o a09, só confere o painel versionado (ARGUMENTOS).
     ROOT / "scripts" / "aquisicao" / "a14_adquirir_tiss_ans.py",
     # Outcomes do funil (tarefa B): lê E4 (08) e o manifesto do a11.
@@ -159,6 +162,9 @@ ARGUMENTOS = {
     # o run_all só confere os painéis versionados contra o manifesto, sem rede e sem gravar;
     # refazer exige `--etapa consolidar` (cache local) ou `--etapa tudo` (download).
     ROOT / "scripts" / "aquisicao" / "a13_adquirir_sih_tabnet.py": ["--etapa", "verificar"],
+    # SIH por residência (a15): 495 consultas ao TabNet, cache bruto fora do controle de versão; o run_all só
+    # confere as saídas versionadas contra o manifesto, sem rede e sem gravar.
+    ROOT / "scripts" / "aquisicao" / "a15_adquirir_sih_residencia.py": ["--etapa", "verificar"],
     # TISS/ANS (a14): cerca de 83 GB de ZIPs, apagados depois da agregação; o run_all só
     # confere as saídas versionadas contra o manifesto, sem rede e sem gravar.
     ROOT / "scripts" / "aquisicao" / "a14_adquirir_tiss_ans.py": ["--etapa", "verificar"],

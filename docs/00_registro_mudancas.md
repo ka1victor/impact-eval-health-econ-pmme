@@ -8,6 +8,36 @@
 
 ---
 
+## 19/10/2026 — Portões G3 e G4 do plano 51 (SIH por residência; mapa especialidade → procedimento)
+
+Motivo: onda 1 do plano das perguntas reformuladas
+([`06_execucao/51`](06_execucao/51_plano_perguntas_reformuladas.md)), P3. O G3
+adquire a SIH por município de residência (a15) e libera o T3.4. O G4 monta o
+mapa curso → formas de organização e testa o filtro de CBO no TabNet do SIA, que
+o T3.2 exige. São só portões: nada foi calculado por IVS, lado de corte,
+tratamento ou chegada.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/aquisicao/A15_sih_residencia.md`](auditorias/aquisicao/A15_sih_residencia.md) | aquisição a15: fonte, consultas, ausências (residência zerada e arquivo de internação ausente), conferência com o a13 e a revisão de 202606–202607 na fonte, validações, limites e veredito do G3 |
+| [`auditorias/G4_viabilidade_especialidade.md`](auditorias/G4_viabilidade_especialidade.md) | portão G4: sondagem do SIGTAP (download indisponível, FTP inalcançável), mapa revelado pela produção de 2024, classes dos cursos, teste do filtro e veredito |
+
+Mudanças fora de `docs/`:
+- `scripts/aquisicao/a15_adquirir_sih_residencia.py` e saídas em
+  `output/aquisicao/sih_residencia/` (cache bruto fora do controle de versão);
+- `scripts/aquisicao/g4_mapa_especialidade_procedimento.py` e saídas em
+  `output/aquisicao/sigtap/` (cache bruto fora do controle de versão) e
+  `output/rdd_bolsa/G4_*`;
+- `run_all.py`: a15 em `--etapa verificar`, depois do a13; manifesto A6
+  regenerado pelo gerador;
+- testes `tests/test_aquisicao_sih_residencia.py` e
+  `tests/test_g4_mapa_especialidade.py`; `tests/test_pipeline_rdd_bolsa.py`
+  atualizado;
+- `.gitignore`, `scripts/README.md`, `tests/README.md` e o inventário
+  [`04_dados/02`](04_dados/02_inventario_dados_por_outcome.md).
+
 ## 19/10/2026 — Auditoria independente do adendo §7 do protocolo 48 (auditoria 22)
 
 Motivo: auditoria independente do commit `738a706`, que tem o script 24, as
