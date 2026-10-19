@@ -75,7 +75,7 @@ PASSOS = {
         "cada lado do corte. <b>Faixa azul clara</b> = incerteza da reta (IC 95%). <b>Traço preto no corte</b> = o "
         "degrau entre as duas retas, que é o efeito estimado; os percentuais ao lado são o valor de cada reta no "
         "corte. O degrau é pequeno diante da faixa de incerteza: não dá para distingui-lo de zero."),
-    7: ("5. Separando a bolsa de outras políticas",
+    7: ("6. Separando a bolsa de outras políticas",
         "<b>Por quê:</b> outras regras federais mudam nos mesmos cortes, então medimos o degrau na <b>variação</b> "
         "da oferta (depois − antes do programa), o que cancela diferenças que já existiam. <b>Como ler:</b> cada "
         "bolinha é a média, numa faixa estreita de IVS, da variação de vínculos de especialistas no CNES por 10 mil "
@@ -138,7 +138,7 @@ def _pagina_resultado() -> str:
     todos_zero = all(l["zero"] for l in linhas)
     leitura = ("Todos os intervalos incluem zero: em nenhum resultado, corte ou ciclo o degrau é distinguível de zero."
                if todos_zero else "Ver a última coluna: há intervalo que exclui zero.")
-    return ('<section class="pagina"><h2>3. Resultado: nenhum efeito detectável</h2>'
+    return ('<section class="pagina"><h2>5. Outros resultados já estimados: preenchimento (fração), presença e CNES</h2>'
             '<table class="res"><thead><tr><th>Resultado</th><th>Ciclo</th><th>Corte</th>'
             '<th>Municípios abaixo / acima</th><th>Efeito (degrau)</th><th>IC 95%</th><th>p</th><th>IC</th></tr>'
             f'</thead><tbody>{corpo}</tbody></table>'
@@ -153,6 +153,90 @@ def _pagina_resultado() -> str:
             '<div class="cartao"><div class="rot">Onde há mais precisão</div>A DiRD no CNES usa todos os municípios '
             'perto do corte, não só os com vaga; mesmo assim, sem degrau. Correção para testes múltiplos (Holm) não '
             'muda a leitura.</div></div></section>')
+
+
+def _num(x: float, casas: int = 2) -> str:
+    return f"{x:.{casas}f}".replace(".", ",")
+
+
+def _linhas_N() -> list[dict]:
+    """Família N (protocolo 48, auditoria 20), h = 0,050, cortes empilhados, lida de output/rdd_bolsa/N_estimativas.csv."""
+    import pandas as pd
+    n = pd.read_csv(ROOT / "output" / "rdd_bolsa" / "N_estimativas.csv")
+    n = n[(n["h"] == 0.05) & (n["corte"].astype(str) == "empilhado") & (n["variante"] == "principal")]
+    pedidas = [("Com controle (vagas oferecidas)", "1", "N1", "S-a", "V1"),
+               ("Com controle (vagas oferecidas)", "2", "N1", "S-a", "V2"),
+               ("Com controle (vagas oferecidas)", "3", "N1", "S-a", "V3"),
+               ("Com controle (vagas oferecidas)", "1–3", "N1", "S-a", "V1+V2+V3"),
+               ("Sem controle (efeito total)", "1–3", "N1", "S-b", "V1+V2+V3"),
+               ("Vagas oferecidas como resultado", "1–3", "VIC", "S-c", "V1+V2+V3")]
+    linhas = []
+    for nome, ciclo, oid, esp, pop in pedidas:
+        r = n[(n["outcome_id"] == oid) & (n["especificacao"] == esp) & (n["populacao"] == pop)]
+        if len(r) != 1:
+            raise SystemExit(f"linha N ausente ou duplicada: {oid} {esp} {pop}")
+        r = r.iloc[0]
+        linhas.append(dict(nome=nome, ciclo=ciclo, n=f"{int(r['n_abaixo'])} / {int(r['n_acima'])}",
+                           media=_num(r["media_abaixo"]), efeito=_fmt(r["tau"], 2),
+                           ic=f"[{_fmt(r['ic95_inf'], 2)}; {_fmt(r['ic95_sup'], 2)}]", p=_num(r["p_valor"], 3),
+                           holm=_num(r["p_holm"], 3) if pd.notna(r["p_holm"]) else "—",
+                           exclui=not (r["ic95_inf"] <= 0 <= r["ic95_sup"]), p_holm=r["p_holm"]))
+    return linhas
+
+
+def _pagina_N() -> str:
+    import json
+    linhas = _linhas_N()
+    resumo = json.loads((ROOT / "output" / "rdd_bolsa" / "N_resumo.json").read_text(encoding="utf-8"))
+    sens = next(l for l in resumo["sensibilidade_coeficiente_unico_auditoria_20"]["linhas"] if l["outcome_id"] == "N1")
+    oferta_afetada = resumo["veredito_S_c"]["possivelmente_afetado"]
+    corpo = "".join(
+        f"<tr><td class='txt'>{l['nome']}</td><td>{l['ciclo']}</td><td>{l['n']}</td><td class='num'>{l['media']}</td>"
+        f"<td class='num'><b>{l['efeito']}</b></td><td class='num'>{l['ic']}</td><td class='num'>{l['p']}</td>"
+        f"<td class='num'>{l['holm']}</td></tr>" for l in linhas)
+    princ = linhas[3]
+    if princ["exclui"] and princ["p_holm"] >= 0.05:
+        mostra = ("Com ciclos e cortes juntos, o salto é negativo e o IC 95% exclui zero, mas a correção para os quatro "
+                  "resultados testados (Holm) não rejeita zero. Por ciclo, nenhum é robusto. O sinal é contrário à "
+                  "hipótese, mas não é evidência de que a bolsa reduz o preenchimento.")
+    elif princ["p_holm"] < 0.05:
+        mostra = "O salto empilhado rejeita zero mesmo após a correção de Holm."
+    else:
+        mostra = "Nenhuma linha principal tem IC que exclua zero."
+    controle = ("As próprias vagas oferecidas saltam num dos cortes de um ciclo. Por isso a linha com controle se lê "
+                "como preenchimento <b>dado</b> o nº de vagas, e a linha sem controle como o efeito total da faixa "
+                "(oferecer vagas + preenchê-las)." if oferta_afetada else
+                "As vagas oferecidas não saltam no corte: o controle é seguro.")
+    robustez = ("Se o controle tiver um único coeficiente para todos os ciclos e cortes, o salto fica em "
+                f"{_fmt(sens['tau_coef_unico'], 2)} vagas e passa no Holm (p = {_num(sens['p_holm_coef_unico'], 3)}). "
+                "O teste de Wald rejeita coeficiente único, e o protocolo usa um por ciclo × corte; a leitura "
+                "fica \"negativo, frágil\".")
+    return ('<section class="pagina"><h2>3. Resultado principal: nº de vagas preenchidas na 1ª chamada</h2>'
+            '<table class="res compacta"><thead><tr><th>Especificação</th><th>Ciclos</th><th>Municípios abaixo / acima</th>'
+            '<th>Média abaixo do corte</th><th>Efeito (vagas por município)</th><th>IC 95%</th><th>p</th>'
+            f'<th>p Holm</th></tr></thead><tbody>{corpo}</tbody></table>'
+            '<p class="nota">Cortes 0,300 e 0,400 empilhados. Efeito = lado de bolsa maior − lado de bolsa menor. '
+            'Vagas oferecidas = imediatas + cadastro reserva (alocados podem ocupar reserva). Regressão local linear, '
+            'h = 0,050, kernel triangular, erro por município. Fonte: <code>output/rdd_bolsa/N_estimativas.csv</code>; '
+            'protocolo 48, auditoria 20.</p>'
+            '<div class="cartoes">'
+            f'<div class="cartao"><div class="rot">O que mostra</div>{mostra}</div>'
+            f'<div class="cartao"><div class="rot">Cuidado com o controle</div>{controle}</div>'
+            f'<div class="cartao"><div class="rot">Robustez</div>{robustez}</div></div></section>')
+
+
+def _figura_N() -> str:
+    import base64
+    png = ROOT / "output" / "rdd_bolsa" / "N_figuras" / "N1_com_controle_empilhado.png"
+    b64 = base64.b64encode(png.read_bytes()).decode("ascii")
+    return ('<section class="pagina"><h2>4. O resultado em gráfico</h2><figure class="fig">'
+            f'<img style="max-height: 128mm" src="data:image/png;base64,{b64}" alt="RDD de vagas preenchidas com controle">'
+            '<div class="fonte">Fonte: <code>output/rdd_bolsa/N_figuras/N1_com_controle_empilhado.png</code>, gravada por '
+            '<code>scripts/rdd_bolsa/23_estimar_contagem_vagas.py</code> e incorporada sem alteração.</div>'
+            '<p class="explica"><b>Em uma frase:</b> cada bolinha é a média de vagas preenchidas dos municípios com IVS '
+            'parecido; as retas são ajustadas de cada lado do corte; a seta laranja é o degrau no corte, isto é, o '
+            'efeito estimado; a faixa azul clara é a incerteza da reta. O bloco "Como ler" da figura detalha cada '
+            'elemento.</p></figure></section>')
 
 
 def montar_html() -> str:
@@ -171,6 +255,8 @@ def montar_html() -> str:
         ".rot { font-size: 8.5pt; text-transform: uppercase; letter-spacing: .06em; color: var(--s1); font-weight: 650; margin-bottom: 2mm; }\n"
         "table.res { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 4mm 0 2mm; }\n"
         "table.res th, table.res td { padding: 2.2mm 2mm; border-bottom: 1px solid var(--grid); text-align: center; }\n"
+        "table.compacta th, table.compacta td { padding: 1.4mm 2mm; }\n"
+        ".compacta + .nota { margin-top: 3mm; } .compacta ~ .cartoes .cartao { font-size: 10.5pt; padding: 4mm; }\n"
         "table.res th { background: var(--wash); font-weight: 650; } table.res td.txt { text-align: left; }\n"
         ".nota { font-size: 8.5pt; color: var(--muted); margin-top: 8mm; }\n</style>"))
     capa = ('<section class="pagina"><h1>A bolsa maior atrai e fixa especialistas?</h1>'
@@ -181,16 +267,16 @@ def montar_html() -> str:
             '<div class="cartao"><div class="rot">Método</div>Regressão descontínua <i>sharp</i> com regressão '
             'linear local nos cortes de IVS 0,300 e 0,400; diferença em descontinuidades contra outras políticas nos '
             'mesmos cortes. Desenho padrão em economia.</div>'
-            '<div class="cartao"><div class="rot">Resposta curta</div>Desenho válido. Nenhum efeito detectável sobre '
-            'preenchimento, presença ou oferta; intervalos largos, portanto inconclusivo. Único sinal: candidatos '
-            'preferem as vagas de bolsa maior.</div></div>'
+            '<div class="cartao"><div class="rot">Resposta curta</div>Desenho válido. Nenhum efeito positivo detectável '
+            'sobre o nº de vagas preenchidas, presença ou oferta; o único salto é negativo e não sobrevive à correção '
+            'para testes múltiplos. Único sinal robusto: candidatos preferem as vagas de bolsa maior.</div></div>'
             '<p class="nota">Detalhes, tabelas e diagnósticos: <code>relatorio_validacao_rdd_bolsa.pdf</code>. '
             'Salto = lado de bolsa maior − lado de bolsa menor. O contraste mede o incentivo marginal, não a '
             'participação no PMM-E.</p></section>')
-    fim = ('<section class="pagina"><h2>6. O que concluímos</h2><div class="cartoes">'
+    fim = ('<section class="pagina"><h2>7. O que concluímos</h2><div class="cartoes">'
            '<div class="cartao"><div class="rot">Validade</div>Regra exata nos cortes; sem manipulação do IVS.</div>'
-           '<div class="cartao"><div class="rot">Efeito</div>Nenhum degrau detectável em preenchimento, presença ou '
-           'oferta no CNES, em nenhum corte ou ciclo, mesmo após correção para testes múltiplos.</div>'
+           '<div class="cartao"><div class="rot">Efeito</div>Nº de vagas preenchidas: nenhum aumento; salto negativo '
+           'frágil, que não passa no Holm. Fração preenchida, presença e oferta no CNES: sem degrau.</div>'
            '<div class="cartao"><div class="rot">Cautela</div>Poucas dezenas de municípios por lado: inconclusivo, '
            'não prova de efeito zero.</div>'
            '<div class="cartao"><div class="rot">Sinal</div>No ciclo 2, a bolsa muda <b>para onde</b> os candidatos '
@@ -199,7 +285,7 @@ def montar_html() -> str:
            'especialistas (SUS e planos) como medida mais próxima do objetivo da política.</div>'
            '</div></section>')
     figs = _figuras(origem)
-    corpo = capa + figs[0] + figs[1] + _pagina_resultado() + figs[2] + figs[3] + fim
+    corpo = capa + figs[0] + figs[1] + _pagina_N() + _figura_N() + _pagina_resultado() + figs[3] + fim
     return ('<!DOCTYPE html>\n<html lang="pt-BR"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width, initial-scale=1">'
             f'<title>RDD da bolsa: visão geral</title>{estilo}</head><body><main>{corpo}</main></body></html>\n')
