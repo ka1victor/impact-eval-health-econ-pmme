@@ -225,7 +225,10 @@ class TestCadeiaRddBolsa(unittest.TestCase):
 
     def test_e3_roda_com_o_escore_completo(self) -> None:
         self.assertEqual(RA.ARGUMENTOS[RDD / "07_estimar_E3_rdd_completa.py"], ["--escore", ESCORE_COMPLETO])
-        self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09})
+        self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09,
+                                              AQ / "a13_adquirir_sih_tabnet.py"})
+        # a13 (SIH no TabNet, protocolo 47): como o a09, o run_all só confere sem rede.
+        self.assertEqual(RA.ARGUMENTOS[AQ / "a13_adquirir_sih_tabnet.py"], ["--etapa", "verificar"])
         self.assertTrue((ROOT / ESCORE_COMPLETO).exists())
         # O 04b, que grava o escore completo, vem antes do E3.
         self.assertLess(posicao(RDD / "04b_validar_ivs_oficial_escore_administrativo.py"),

@@ -73,6 +73,7 @@ não para tendências demográficas.
 | Normas com cortes de IVS e estrato da APS | `output/aquisicao/a10_*` | portarias arquivadas; [`auditorias/18`](../auditorias/18_politicas_nos_mesmos_cortes_ivs.md) | co-políticas (S3) | — |
 | Outcomes do funil por município, célula e candidato (U, G3, V1–V3) | `output/rdd_bolsa/outcomes/` | `scripts/rdd_bolsa/12_construir_outcomes_funil.py`; contagens em `dicionario_outcomes_funil.json` | F0, F1, F2, F4 e E9 | construídos às cegas ([`06_execucao/41a`](../06_execucao/41a_construcao_outcomes_funil.md)) |
 | CNES nacional: painel município × grupo de CBO × mês, desde 2022 | `output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet` | CNES/DATASUS; `scripts/aquisicao/a09_*`; manifesto `a09_manifesto_cnes_nacional.json`; [`auditorias/aquisicao/A09`](../auditorias/aquisicao/A09_cnes_nacional.md) | oferta líquida local por DiRD (F3) | vínculo cadastrado não é médico do PMM-E nem retenção; competências do ciclo 3 pós-T0 não lidas |
+| SIH/SUS: AIH aprovadas, internações e valor por município de internação × mês de processamento × grupo do procedimento, 202201–202607; grupo 04 também por caráter (eletivo, urgência e causas externas) | `output/aquisicao/sih/painel_sih_municipio_mes_grupo.parquet`, `painel_sih_municipio_mes_carater_g04.parquet` | TabNet/DATASUS (`sih/cnv/qibr.def`); `scripts/aquisicao/a13_*`; manifesto `output/aquisicao/sih/manifesto_sih.json`; [`auditorias/aquisicao/A13`](../auditorias/aquisicao/A13_sih_tabnet.md) | cirurgias SUS hospitalares (K2 do protocolo 47) | sem CBO do executante; local de internação, não residência; mês de processamento, não de internação; UF-mês sem dado na fonte fica ausente |
 
 ## 2. Disponibilidade por outcome
 
@@ -85,7 +86,7 @@ não para tendências demográficas.
 | Retenção individual | Série agregada e fotografia final | Identificador longitudinal, saída e censura | 🔴 |
 | FTE líquido | Tipo de prática e participante ativo; CNES nacional mensal com horas SUS por município e grupo de CBO, desde 2022 (E7) | Ponte PMM-E–CNES por profissional | 🟡 agregado |
 | Produção especializada | Nenhum microdado preservado | SIA por CNES, procedimento, residência e competência | 🔴 |
-| Cirurgias e internações | Nenhum microdado preservado | SIH com residência, prestador, procedimento e `CAR_INT` | 🔴 |
+| Cirurgias e internações | SIH agregado do TabNet (a13): AIH por município de internação × mês de processamento × grupo, e grupo 04 por caráter, 202201–202607 | Microdado da AIH com residência, prestador, procedimento e `CAR_INT`; CBO do executante | 🟡 agregado |
 | Acesso local/global | Município do profissional | Fluxo residência-prestador observado | 🔴 |
 | Tempo de espera | Nada | Solicitação, prioridade, atendimento/cancelamento e datas | 🔴 |
 | Linha oncológica | Nada | APAC, estágio, diagnóstico e início da terapia | 🔴 |
