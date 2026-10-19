@@ -313,3 +313,20 @@ assim, para que a bolsa seja identificada só pelos degraus nos cortes:
 - **Relato:** o coeficiente da bolsa, a razão de chances por +R$ 5 mil e a
   variação média da probabilidade de escolha de uma célula quando a bolsa sobe
   R$ 5 mil, mantido o resto.
+
+## 16. Esclarecimento de 19/10/2026 (antes de estimar o E7): horas no CNES
+
+A auditoria independente do painel nacional (tarefa C) levantou duas questões
+de definição. Nenhum outcome do CNES foi aberto por lado de corte.
+
+1. **"Horas SUS" (F3.3)** passa a ser a soma das horas ambulatoriais e
+   hospitalares dos vínculos com `TP_SUS_NAO_SUS = 'S'`. A soma sem esse filtro
+   misturava vínculos não SUS; ela continua no painel como `horas_totais` e
+   entra só como sensibilidade rotulada.
+2. **Horas em branco.** São 22 vínculos por mês, os mesmos em todos os meses.
+   - **Principal:** célula com campo de hora em branco fica sem valor de horas,
+     e o município sai do F3.3 com nota (regra atual da tarefa C).
+   - **Sensibilidade rotulada:** a soma parcial das horas observadas, com a
+     contagem de vínculos em branco ao lado.
+3. **`todos_medicos`** inclui residentes (CBO 2231F9). Entra também uma
+   variante sem residentes; nenhuma das duas é outcome primário.
