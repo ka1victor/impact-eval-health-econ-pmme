@@ -280,7 +280,7 @@ class TestX4X5SaidasEmpiricas(unittest.TestCase):
             self.assertEqual(int((sel.tipo_linha == "teste_lambda_igual_1").sum()), 1)
 
     def test_inclinacao_igual_base_mais_interacao(self) -> None:
-        for (dim, ciclo), sel in self.x4.groupby(["dimensao", "ciclo"]):
+        for (dim, ciclo), sel in self.x4[~self.x4.adicao_pos_auditoria.astype(bool)].groupby(["dimensao", "ciclo"]):
             inc = sel[sel.tipo_linha == "inclinacao_do_grupo"].set_index("grupo")["coef"]
             base = sel["grupo_base"].iloc[0]
             for r in sel[sel.tipo_linha == "interacao"].itertuples():
@@ -346,7 +346,7 @@ class TestX4X5SaidasEmpiricas(unittest.TestCase):
 
     def test_tabelas_regeneradas_dos_csv(self) -> None:
         res = {"x5_por_ciclo": self.resumo["x5"]["por_ciclo"], "x4_por_modelo": self.resumo["x4"]["por_modelo"],
-               "x5_retirados": self.resumo["x5"]["retirados"]}
+               "x5_retirados": self.resumo["x5"]["retirados"], "cursos_sem_ponte": self.resumo["x4"]["cursos_sem_ponte"]}
         texto = X.tabelas_relato(pd.read_csv(X.OUT_X4), pd.read_csv(X.OUT_X5), res)
         self.assertEqual(texto, X.OUT_TABELAS.read_text(encoding="utf-8"))
 
@@ -362,6 +362,10 @@ class TestX4X5SaidasEmpiricas(unittest.TestCase):
         gerado = X.OUT_TABELAS.read_text(encoding="utf-8")
         for chave in ("X4", "X5"):
             self.assertIn(X.bloco_do_texto(gerado, chave), self._secao(chave))
+        # linhas de curso das Tabelas X4.1 e X4.2 trazem a inferência de MV, marcada (cluster degenerado)
+        linhas_curso = [ln for ln in X.bloco_do_texto(gerado, "X4").splitlines() if ln.startswith("| curso |")]
+        self.assertTrue(linhas_curso)
+        self.assertTrue(all(ln.rstrip().endswith("| MV (cluster degenerado) |") for ln in linhas_curso))
 
     def test_doc_46_sem_numero_digitado_fora_dos_blocos(self) -> None:
         """Fora dos blocos gerados, só números do protocolo (cortes, meses, limiares, mínimo de candidatos),
@@ -378,8 +382,8 @@ class TestX4X5SaidasEmpiricas(unittest.TestCase):
                            r"\b[A-Z]\d+\b", r"IC 95%", r"G − 1", r"G ≤ 24", r"SHA-256", r"\d+ª", r"1/3", r"2/3",
                            r"\(a\)|\(b\)|\(c\)|\(d\)|\(i\)|\(ii\)"):
                 limpo = re.sub(padrao, " ", limpo, flags=re.MULTILINE)
-            permitidos = {"0,300", "0,400", "0,05", "0", "1", "2", "3", "5", "10", "17", "24", "100", "202406",
-                          "202506", "2010", "2022"}
+            permitidos = {"0,300", "0,400", "0,05", "0", "1", "2", "3", "5", "10", "100", "202406", "202506",
+                          "2010", "2022"}
             for n in re.findall(r"−?\d+(?:,\d+)?", limpo):
                 self.assertIn(n, permitidos, f"número fora dos blocos gerados na seção {chave}: {n}")
 
@@ -423,11 +427,33 @@ class TestX4X5SaidasEmpiricas(unittest.TestCase):
         self.assertLess(e1["tercil2"], min(e1["tercil1"], e1["tercil3"]))
         self.assertTrue((es[es.grupo == "sem_ponte_curso_cbo"]["coef"] < 0).all())
         self.assertTrue((es[es.grupo == "sem_ponte_curso_cbo"]["q_bky"] < 0.05).all())
-        # "curso: no ciclo 3, o curso 24 tem inclinação negativa também pelo EP de máxima verossimilhança"
-        c24 = x4[(x4.dimensao == "curso") & (x4.ciclo == "3") & (x4.grupo == "curso24") &
-                 (x4.tipo_linha == "inclinacao_do_grupo")].iloc[0]
-        self.assertLess(c24.coef, 0)
-        self.assertLess(c24.p_mle, 0.05)
+        # "o curso de menor inclinação no ciclo 3 é um dos cursos sem ponte, e a inclinação dele é negativa também
+        # pelo EP de MV"
+        c3 = x4[(x4.dimensao == "curso") & (x4.ciclo == "3") &
+                (x4.tipo_linha == "inclinacao_do_grupo")].sort_values("coef").iloc[0]
+        self.assertIn(int(c3.grupo.replace("curso", "")), self.resumo["x4"]["cursos_sem_ponte"])
+        self.assertLess(c3.coef, 0)
+        self.assertLess(c3.p_mle, 0.05)
+        # Estrato (resposta à auditoria): "a capital é o estrato com a maior fração de candidatos no ciclo 3";
+        # "a capital tem a menor inclinação nos três ciclos, mas a diferença só tem q < 0,05 no ciclo 3"
+        est = x4[(x4.dimensao == "estrato") & (x4.tipo_linha == "inclinacao_do_grupo") & (x4.ciclo != "empilhado")]
+        n = est.pivot(index="grupo", columns="ciclo", values="n_candidatos_grupo")
+        frac3 = n["3"] / n.sum(axis=1)
+        self.assertEqual(frac3.idxmax(), "capital")
+        bc = est.pivot(index="grupo", columns="ciclo", values="coef")
+        for c in ("1", "2", "3"):
+            self.assertEqual(bc[c].idxmin(), "capital")
+        ie = fam[(fam.dimensao == "estrato") & (fam.tipo_linha == "interacao")]
+        self.assertTrue((ie[ie.ciclo.isin(["1", "2"])]["q_bky"] > 0.05).all())
+        # Adição pós-auditoria: "as três diferenças continuam positivas, com IC 95% acima de zero e p do score
+        # bootstrap abaixo de 0,05 por conjunto e por curso"; fora do BKY
+        ad = x4[x4.adicao_pos_auditoria.astype(bool)]
+        self.assertFalse(ad.entra_bky.astype(bool).any())
+        ai = ad[ad.tipo_linha == "interacao"]
+        self.assertEqual(len(ai), 3)
+        self.assertTrue((ai["ic95_inf"] > 0).all())
+        self.assertTrue((ai["p_score_rademacher_conjunto"] < 0.05).all())
+        self.assertTrue((ai["p_score_rademacher_curso"] < 0.05).all())
         # "na dimensão curso, o EP por cluster é menor que o de máxima verossimilhança nos termos próprios de curso"
         cp = x4[(x4.dimensao == "curso") & (x4.tipo_linha == "interacao") & (x4.ciclo != "empilhado") &
                 (x4.grupo != "demais_cursos")]

@@ -575,6 +575,71 @@ def estimar_x4(dim: str, ciclo: str, conj_c: pd.DataFrame, cand_c: pd.DataFrame,
     return linhas, resumo
 
 
+DIM_ADICAO = "estrato_com_inclinacao_por_ciclo"
+NOTA_ADICAO = ("adição pós-auditoria (19/10/2026), fora do doc 45: empilhado com inclinação da bolsa própria de cada "
+               "ciclo e diferenças por estrato comuns aos ciclos; separa estrato de composição por ciclo; fora do BKY")
+
+
+def estimar_estrato_por_ciclo(conj_c: pd.DataFrame, cand_c: pd.DataFrame, macros: list[str],
+                              estratos: list[str]) -> list[dict]:
+    """Adição pós-auditoria: bolsa × ciclo (inclinação de base, capital, por ciclo) + bolsa × estrato (comum)."""
+    des = desenho_e9(conj_c, cand_c, macros, estratos)
+    X = des["X"].copy()
+    bolsa = X["bolsa_mil"].to_numpy()
+    ciclo_cel = conj_c["ciclo"].to_numpy()
+    estr = conj_c["estrato_territorial"].to_numpy()
+    ciclos = sorted(set(int(c) for c in ciclo_cel))
+    for c in ciclos[1:]:
+        X[f"bolsa_x_ciclo{c}"] = bolsa * (ciclo_cel == c)
+    outros = [g for g in sorted(set(estr)) if g != E9.BASE_ESTRATO]
+    for g in outros:
+        X[f"bolsa_x_{g}"] = bolsa * (estr == g)
+    r = ajustar(X, des["conj_cel"], des["grupos"])
+    if not r["ok"]:
+        raise AssertionError(f"adição estrato × ciclo: {r['nota']}")
+    termos = r["termos"]
+    comuns = {"natureza_dos_dados": NATUREZA, "estatuto": ESTATUTO, "analise": "X4", "dimensao": DIM_ADICAO,
+              "ciclo": "empilhado", "modelo": "logit_condicional_1a_opcao", "conjunto": "principal",
+              "especificacao_base": "E9 principal + bolsa × ciclo + bolsa × estrato", "grupo_base": E9.BASE_ESTRATO,
+              "nivel_do_grupo": "celula", "n_candidatos": int(len(des["grupos"])), "g_conjuntos": r["G_conj"],
+              "g_cursos": r["G_curso"], "log_verossimilhanca": r["ll"], "iteracoes": r["iteracoes"],
+              "inferencia_cluster_degenerada": False, "adicao_pos_auditoria": True, "entra_bky": False}
+    linhas = []
+    kb = termos.index("bolsa_mil")
+    for c in ciclos:
+        a = np.zeros(len(termos))
+        a[kb] = 1.0
+        if c != ciclos[0]:
+            a[termos.index(f"bolsa_x_ciclo{c}")] = 1.0
+        cc = combinacao(r, a)
+        linhas.append({**comuns, "tipo_linha": "inclinacao_base_do_ciclo", "termo": f"bolsa_mil|ciclo{c}",
+                       "grupo": f"{E9.BASE_ESTRATO}, ciclo {c}", **cc, "p": cc["p_conj"],
+                       "nota": f"inclinação da bolsa do estrato de base no ciclo {c}; {NOTA_ADICAO}"})
+    R = []
+    for g in outros:
+        k = termos.index(f"bolsa_x_{g}")
+        a = np.zeros(len(termos))
+        a[k] = 1.0
+        R.append(a)
+        cc = combinacao(r, a)
+        sb = score_bootstrap(r, k, "cluster_conjunto")
+        sc = score_bootstrap(r, k, "cluster_curso")
+        linhas.append({**comuns, "tipo_linha": "interacao", "termo": f"bolsa_x_{g}", "grupo": g, **cc,
+                       "p": cc["p_conj"], "p_score_rademacher_conjunto": sb["rademacher"],
+                       "p_score_webb_conjunto": sb["webb"], "metodo_score_conjunto": sb["metodo_rademacher"],
+                       "p_score_rademacher_curso": sc["rademacher"], "p_score_webb_curso": sc["webb"],
+                       "nota": f"diferença da inclinação do estrato {g} para a da capital, comum aos ciclos; {NOTA_ADICAO}"})
+    w = wald(r, np.array(R))
+    linhas.append({**comuns, "tipo_linha": "wald_igualdade", "termo": "wald_inclinacoes_iguais", "grupo": "todos",
+                   "coef": float("nan"), "estatistica_wald": w["wald_conj"], "gl": w["gl_conj"],
+                   "gl_completo": w["gl_completo"], "p": w["p_conj"], "p_conj": w["p_conj"], "p_curso": w["p_curso"],
+                   "p_mle": w["p_mle"], "p_cand": w["p_cand"], "estatistica_wald_curso": w["wald_curso"],
+                   "gl_curso": w["gl_curso"], "estatistica_wald_mle": w["wald_mle"],
+                   "estatistica_wald_cand": w["wald_cand"], "p_f_g_menos_1": w["p_f_g_menos_1"],
+                   "nota": f"Wald de H0: mesmas diferenças por estrato nulas, com inclinação própria por ciclo; {NOTA_ADICAO}"})
+    return linhas
+
+
 # --------------------------------------------------------------------------
 # X5
 # --------------------------------------------------------------------------
@@ -817,35 +882,54 @@ CABECALHO_GERADO = "<!-- gerado por scripts/rdd_bolsa/19_escolha_heterogeneidade
 def tabelas_relato(x4: pd.DataFrame, x5: pd.DataFrame, res: dict) -> str:
     """Dois blocos marcados (X4 e X5), copiados como estão para as seções do doc 46."""
     L_ = [MARCAS["X4"][0], CABECALHO_GERADO, ""]
+    def inferencia(r) -> tuple[str, str, str]:
+        """IC, p e rótulo: cluster por conjunto; na dimensão curso (cluster degenerado), máxima verossimilhança."""
+        if bool(r.inferencia_cluster_degenerada):
+            return (_ic(r.coef - Z95 * r.ep_mle, r.coef + Z95 * r.ep_mle, 4), fmt_p(r.p_mle),
+                    "MV (cluster degenerado)")
+        return _ic(r.ic95_inf, r.ic95_sup, 4), fmt_p(r.p_conj), "cluster por conjunto"
+
+    proto = x4[~x4.adicao_pos_auditoria.astype(bool)]
     L_.append("**Tabela X4.1. Inclinação da bolsa por grupo (coef. por R$ 1 mil; logit condicional, principal do E9 "
-              "com interações).** EP e IC 95% com cluster por conjunto; p pela normal. Na dimensão curso, o EP por "
-              "cluster é degenerado (ver nota) e o p de máxima verossimilhança vem ao lado.")
+              "com interações).** IC 95% e p pela normal com EP de cluster por conjunto; na dimensão curso, em que o "
+              "EP por cluster é degenerado, com o EP de máxima verossimilhança (MV), que ignora o choque comum do "
+              "conjunto (coluna inferência).")
     L_.append("")
-    L_.append("| dimensão | ciclo | grupo | candidatos | coef. | IC 95% | p | p (MV) |")
-    L_.append("|---|---|---|---:|---:|---|---:|---:|")
-    for r in x4[x4.tipo_linha == "inclinacao_do_grupo"].itertuples():
+    L_.append("| dimensão | ciclo | grupo | candidatos | coef. | IC 95% | p | inferência |")
+    L_.append("|---|---|---|---:|---:|---|---:|---|")
+    for r in proto[proto.tipo_linha == "inclinacao_do_grupo"].itertuples():
+        ic, p_, rot = inferencia(r)
         L_.append(f"| {r.dimensao} | {r.ciclo} | {r.grupo} | {int(r.n_candidatos_grupo)} | {fmt(r.coef, 4)} | "
-                  f"{_ic(r.ic95_inf, r.ic95_sup, 4)} | {fmt_p(r.p_conj)} | {fmt_p(r.p_mle)} |")
+                  f"{ic} | {p_} | {rot} |")
     L_.append("")
     L_.append("**Tabela X4.2. Termos de interação (diferença para o grupo de base) e Wald da igualdade das "
-              "inclinações.** p pela normal com cluster por conjunto; p do score bootstrap (Rademacher; enumeração "
-              "completa com G ≤ 24, senão sorteios); no empilhado, também com cluster por curso. q de BKY dentro do "
-              "X4 (linhas fora da família: —).")
+              "inclinações.** IC e p como na Tabela X4.1 (na dimensão curso, MV; o Wald de curso também é o de MV); "
+              "p do score bootstrap (Rademacher, enumeração completa com G ≤ 24, senão sorteios) com cluster por "
+              "conjunto e, no empilhado, por curso; não relatado na dimensão curso. q de BKY dentro do X4 (linhas "
+              "fora da família: —).")
     L_.append("")
-    L_.append("| dimensão | ciclo | termo | base | coef. | IC 95% | p | p score (conjunto) | p score (curso) | q BKY |")
-    L_.append("|---|---|---|---|---:|---|---:|---:|---:|---:|")
-    for r in x4[x4.tipo_linha.isin(["interacao", "wald_igualdade"])].itertuples():
+    L_.append("| dimensão | ciclo | termo | base | coef. | IC 95% | p | p score (conjunto) | p score (curso) | q BKY | "
+              "inferência |")
+    L_.append("|---|---|---|---|---:|---|---:|---:|---:|---:|---|")
+    for r in proto[proto.tipo_linha.isin(["interacao", "wald_igualdade"])].itertuples():
+        deg = bool(r.inferencia_cluster_degenerada)
         if r.tipo_linha == "wald_igualdade":
-            termo = f"Wald (χ², {int(r.gl)} gl) = {fmt(r.estatistica_wald, 2)}"
+            if deg:
+                termo = f"Wald MV (χ², {int(r.gl_completo)} gl) = {fmt(r.estatistica_wald_mle, 2)}"
+                p_, rot = fmt_p(r.p_mle), "MV (cluster degenerado)"
+            else:
+                termo = f"Wald (χ², {int(r.gl)} gl) = {fmt(r.estatistica_wald, 2)}"
+                p_, rot = fmt_p(r.p), "cluster por conjunto"
             coef, ic, psc, psc2 = "—", "—", "—", "—"
         else:
             termo = r.termo
-            coef, ic = fmt(r.coef, 4), _ic(r.ic95_inf, r.ic95_sup, 4)
-            psc = fmt_p(r.p_score_rademacher_conjunto)
-            psc2 = fmt_p(r.p_score_rademacher_curso) if r.ciclo == "empilhado" else "—"
+            coef = fmt(r.coef, 4)
+            ic, p_, rot = inferencia(r)
+            psc = "—" if deg else fmt_p(r.p_score_rademacher_conjunto)
+            psc2 = fmt_p(r.p_score_rademacher_curso) if (r.ciclo == "empilhado" and not deg) else "—"
         q = fmt(r.q_bky, 3) if bool(r.entra_bky) else "—"
-        L_.append(f"| {r.dimensao} | {r.ciclo} | {termo} | {r.grupo_base} | {coef} | {ic} | {fmt_p(r.p)} | "
-                  f"{psc} | {psc2} | {q} |")
+        L_.append(f"| {r.dimensao} | {r.ciclo} | {termo} | {r.grupo_base} | {coef} | {ic} | {p_} | "
+                  f"{psc} | {psc2} | {q} | {rot} |")
     L_.append("")
     L_.append("**Tabela X4.3. Pontos de corte dos tercis da pontuação (1/3 e 2/3, quantil linear; empate no corte vai "
               "para o tercil de baixo).**")
@@ -858,6 +942,49 @@ def tabelas_relato(x4: pd.DataFrame, x5: pd.DataFrame, res: dict) -> str:
         n = d["n_candidatos_por_grupo"]
         L_.append(f"| {ciclo} | {fmt(q1, 2)} | {fmt(q2, 2)} | {n.get('tercil1', 0)} | {n.get('tercil2', 0)} | "
                   f"{n.get('tercil3', 0)} | {n.get('sem_pontuacao', 0)} |")
+    L_.append("")
+    L_.append("**Tabela X4.4. Estrato: candidatos de 1a opção por ciclo e inclinação da bolsa de cada estrato no "
+              "modelo do ciclo (Tabela X4.1).** A fração no ciclo 3 mostra a composição que o empilhado, com uma só "
+              "inclinação para os três ciclos, mistura com o estrato. Em cada ciclo, * marca a menor inclinação.")
+    L_.append("")
+    L_.append("| estrato | ciclo 1 | ciclo 2 | ciclo 3 | fração no ciclo 3 | coef. ciclo 1 | coef. ciclo 2 | "
+              "coef. ciclo 3 |")
+    L_.append("|---|---:|---:|---:|---:|---:|---:|---:|")
+    est = proto[(proto.dimensao == "estrato") & (proto.tipo_linha == "inclinacao_do_grupo") &
+                (proto.ciclo.astype(str) != "empilhado")]
+    n = est.pivot(index="grupo", columns="ciclo", values="n_candidatos_grupo")
+    b_ = est.pivot(index="grupo", columns="ciclo", values="coef")
+    n.columns, b_.columns = [str(c) for c in n.columns], [str(c) for c in b_.columns]
+    for g in n.index:
+        tot = float(n.loc[g].sum())
+        coefs = [fmt(b_.loc[g, c], 4) + ("*" if b_.loc[g, c] == b_[c].min() else "") for c in ("1", "2", "3")]
+        L_.append(f"| {g} | {int(n.loc[g, '1'])} | {int(n.loc[g, '2'])} | {int(n.loc[g, '3'])} | "
+                  f"{fmt(n.loc[g, '3'] / tot, 3)} | " + " | ".join(coefs) + " |")
+    L_.append("")
+    ad = x4[x4.adicao_pos_auditoria.astype(bool)]
+    L_.append("**Tabela X4.5. Adição pós-auditoria (fora do doc 45 e do BKY): empilhado com inclinação da bolsa "
+              "própria de cada ciclo (estrato de base, capital) e diferenças por estrato comuns aos ciclos.** IC e p "
+              "com cluster por conjunto; p do score bootstrap com cluster por conjunto e por curso.")
+    L_.append("")
+    L_.append("| termo | coef. | IC 95% | p | p score (conjunto) | p score (curso) |")
+    L_.append("|---|---:|---|---:|---:|---:|")
+    for r in ad.itertuples():
+        if r.tipo_linha == "wald_igualdade":
+            L_.append(f"| Wald (χ², {int(r.gl)} gl) = {fmt(r.estatistica_wald, 2)} | — | — | {fmt_p(r.p)} | — | — |")
+        elif r.tipo_linha == "interacao":
+            L_.append(f"| {r.termo} | {fmt(r.coef, 4)} | {_ic(r.ic95_inf, r.ic95_sup, 4)} | {fmt_p(r.p)} | "
+                      f"{fmt_p(r.p_score_rademacher_conjunto)} | {fmt_p(r.p_score_rademacher_curso)} |")
+        else:
+            L_.append(f"| {r.grupo} | {fmt(r.coef, 4)} | {_ic(r.ic95_inf, r.ic95_sup, 4)} | {fmt_p(r.p)} | — | — |")
+    L_.append("")
+    L_.append("**Tabela X4.6. Cursos sem ponte curso → CBO (grupo sem_ponte_curso_cbo da escassez) e curso de menor "
+              "inclinação no ciclo 3 (Tabela X4.1).**")
+    L_.append("")
+    c3 = proto[(proto.dimensao == "curso") & (proto.ciclo.astype(str) == "3") &
+               (proto.tipo_linha == "inclinacao_do_grupo")].sort_values("coef")
+    L_.append("| cursos sem ponte | curso de menor inclinação no ciclo 3 |")
+    L_.append("|---|---|")
+    L_.append(f"| {', '.join(str(c) for c in res['cursos_sem_ponte'])} | {c3.iloc[0].grupo} |")
     L_ += ["", MARCAS["X4"][1], "", MARCAS["X5"][0], CABECALHO_GERADO, ""]
     L_.append("**Tabela X5.1. Bolsa com e sem termos de vizinhança, termos de vizinhança e logit aninhado por região "
               "de saúde (CIR).** Amostra do X5 (sem células de município sem CIR oficial). EP e IC 95% com cluster "
@@ -976,6 +1103,7 @@ def main(argv: list[str] | None = None) -> int:
 
     # ------------------------------------------------------------------ X4
     esc_cel, diag_esc = escassez_por_celula(conj_p)
+    cursos_sem_ponte = sorted(int(c) for c in set(conj_p["cod_curso"]) if str(int(c)) not in diag_esc["cbos_por_curso"])
     x4_linhas, x4_resumo = [], {}
     for dim in DIMENSOES:
         for ciclo in CICLOS:
@@ -987,7 +1115,10 @@ def main(argv: list[str] | None = None) -> int:
             x4_linhas += linhas
             x4_resumo[f"{dim}|{ciclo}"] = resumo
             print(f"X4 {dim:16s} ciclo {ciclo:9s} grupos={resumo['grupos']} it={resumo['iteracoes']}", flush=True)
+    # Adição pós-auditoria (fora do doc 45 e do BKY): estrato com inclinação da bolsa própria de cada ciclo.
+    x4_linhas += estimar_estrato_por_ciclo(conj_p, cand, macros, estratos)
     x4 = pd.DataFrame(x4_linhas)
+    x4["adicao_pos_auditoria"] = x4["adicao_pos_auditoria"].fillna(False).astype(bool)
     fam = x4["entra_bky"].astype(bool) & x4["p"].notna()
     x4["q_bky"] = np.nan
     x4.loc[fam, "q_bky"] = L.qvalores_bky(x4.loc[fam, "p"].to_numpy())
@@ -1038,7 +1169,8 @@ def main(argv: list[str] | None = None) -> int:
               "p_score_rademacher_curso", "p_score_webb_curso", "g_efetivo_conjunto", "g_efetivo_curso",
               "estatistica_wald", "gl", "gl_completo", "p_f_g_menos_1", "estatistica_wald_curso", "gl_curso",
               "estatistica_wald_mle", "estatistica_wald_cand", "rc_por_5mil", "n_candidatos", "n_candidatos_grupo",
-              "n_alternativas_grupo", "g_conjuntos", "g_cursos", "inferencia_cluster_degenerada", "modelo",
+              "n_alternativas_grupo", "g_conjuntos", "g_cursos", "inferencia_cluster_degenerada", "adicao_pos_auditoria",
+              "modelo",
               "conjunto", "especificacao_base", "log_verossimilhanca", "iteracoes", "nota"]
     x4 = x4.reindex(columns=ordem4)
     ordem5 = ["natureza_dos_dados", "estatuto", "analise", "ciclo", "modelo", "especificacao", "tipo_linha", "termo",
@@ -1052,7 +1184,8 @@ def main(argv: list[str] | None = None) -> int:
     x5.to_csv(OUT_X5, index=False, float_format="%.10g")
     # Relê os CSVs para que as tabelas saiam exatamente do que foi gravado.
     x4r, x5r = pd.read_csv(OUT_X4), pd.read_csv(OUT_X5)
-    res_tab = {"x5_por_ciclo": x5_resumo, "x4_por_modelo": x4_resumo, "x5_retirados": retirados_x5}
+    res_tab = {"x5_por_ciclo": x5_resumo, "x4_por_modelo": x4_resumo, "x5_retirados": retirados_x5,
+               "cursos_sem_ponte": cursos_sem_ponte}
     OUT_TABELAS.write_text(tabelas_relato(x4r, x5r, res_tab), encoding="utf-8")
 
     painel_meta = json.loads(MANIFESTO_PAINEL.read_text(encoding="utf-8"))
@@ -1119,6 +1252,7 @@ def main(argv: list[str] | None = None) -> int:
                       "substituição adicional entre células da mesma região de saúde (X5), condicional a candidatar-se "
                       "ao curso; não é efeito sobre o total de candidatos nem sobre a oferta líquida"),
         "x4": {"dimensoes": ROTULO_DIM, "por_modelo": x4_resumo, "escassez": diag_esc,
+               "cursos_sem_ponte": cursos_sem_ponte, "adicao_pos_auditoria": NOTA_ADICAO,
                "familia_bky": {"linhas": int(len(q4)), "regra": "termos de interação e Wald da igualdade, p cluster "
                                "por conjunto; dimensão curso fora (inferência por cluster degenerada)"}},
         "x5": {"regioes_saude": {"manifesto": manifesto_cir, "leitura": diag_cir}, "retirados": retirados_x5,
@@ -1148,8 +1282,16 @@ def main(argv: list[str] | None = None) -> int:
                           "do E9 é reestimado na amostra do X5 (linhas sem_vizinhanca)"},
             {"item": "curso como dimensão", "situacao": "termo próprio do curso só varia nos conjuntos do curso",
              "resolucao": "inferência por cluster marcada como degenerada; EP de MV e por candidato ao lado; fora do BKY"},
-            {"item": "cursos sem ponte curso → CBO", "situacao": "cursos fora do catálogo da ponte (lista em x4.escassez.cbos_por_curso)",
+            {"item": "cursos sem ponte curso → CBO", "situacao": "cursos fora do catálogo da ponte (lista em x4.cursos_sem_ponte)",
              "resolucao": "grupo sem_ponte_curso_cbo na escassez, sem imputação"},
+            {"item": "adição pós-auditoria: estrato com inclinação por ciclo",
+             "situacao": "a auditoria independente de X4/X5 observou que o empilhado tem uma só inclinação para os "
+                         "três ciclos e que a composição de candidatos por estrato difere entre ciclos",
+             "resolucao": f"linhas dimensao = {DIM_ADICAO}, adicao_pos_auditoria = True, fora do BKY; não substituem "
+                          "as do doc 45"},
+            {"item": "CIR por HTTP", "situacao": "o TabNet não serviu o arquivo por HTTPS",
+             "resolucao": "integridade conferida pelo SHA-256 do manifesto a cada execução; o script para se o "
+                          "arquivo mudar"},
         ],
         "entradas": entradas,
         "saidas": {rel(p): sha256_arquivo(p) for p in (OUT_X4, OUT_X5, OUT_TABELAS)},
