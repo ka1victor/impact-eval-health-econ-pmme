@@ -51,6 +51,7 @@ de produção (SIA/SIH/TISS) não entra: ainda não rodou.
 | `scripts/apresentacao/gerar_relatorio_validacao_professores.py` | gera `output/apresentacao_validacao/relatorio_validacao_rdd_bolsa.html` e `.pdf` (A4, Chromium headless); reutiliza as funções do `scripts/rdd_bolsa/09_gerar_relatorio_pdf.py`; sem estimação nova, sem leitura de `data/`, sem data nem commit no HTML (saída determinística) |
 | `tests/test_relatorio_validacao_professores.py` | HTML em dia, números rastreados a `output/`, código sem número digitado, nada de `data/`, figuras do pipeline, sinal e rótulos, PDF |
 | `output/apresentacao_validacao/relatorio_validacao_rdd_bolsa.{html,pdf}` | o relatório |
+| `scripts/apresentacao/gerar_figuras_validacao_professores.py` e `output/apresentacao_validacao/figuras_validacao_rdd_bolsa.{html,pdf}` | versão lean (7 páginas): tabela de resultados lida de `output/` (E3 e E7) antes das figuras, quatro figuras do relatório com guia de leitura e conclusões; sem estimação nova |
 
 ### Atualizado
 
