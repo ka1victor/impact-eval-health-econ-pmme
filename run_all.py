@@ -3,10 +3,13 @@
 Uso:
 
     python run_all.py              # pipeline inteiro
-    python run_all.py --rdd-bolsa  # só a cadeia da RDD da bolsa (a07 a 10)
+    python run_all.py --rdd-bolsa  # só a cadeia da RDD da bolsa (a07 a 14)
 
 A opção `--rdd-bolsa` roda a cadeia sobre os insumos já versionados das etapas
-anteriores (quadro de vagas, funil e tipologia do ciclo 1).
+anteriores (quadro de vagas, funil e tipologia do ciclo 1, população do Censo
+2022, painel do ciclo 1), inclusive as aquisições a07 a a11 e a rodada
+multi-outcome (12, 13, 16 e 14). Nenhuma etapa baixa o CNES nacional: o a09 roda
+em `--etapa verificar`.
 """
 
 from pathlib import Path
@@ -79,10 +82,32 @@ STEPS = [
     ROOT / "scripts" / "rdd_bolsa" / "08_estimar_E4_proporcao.py",
     # E5, exploratório e pós-resultado: reproduz o principal do E3 e lê a proporção do 08a.
     ROOT / "scripts" / "rdd_bolsa" / "11_inferencia_alternativa.py",
+    # Rodada multi-outcome (docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md, §11),
+    # antes do relatório 09, que lê E1 a E9 e a síntese E8. Aquisições primeiro, todas sem rede
+    # quando o cache versionado confere: a10 (normas nos mesmos cortes; lê a07 e a08),
+    # a11 (resultado da 1a chamada do ciclo 2) e a09 (CNES nacional; o run_all só confere
+    # o painel versionado com `--etapa verificar`, ver ARGUMENTOS).
+    ROOT / "scripts" / "aquisicao" / "a10_normas_mesmos_cortes_ivs.py",
+    ROOT / "scripts" / "aquisicao" / "a11_adquirir_resultado_ciclo2_chamada1.py",
+    ROOT / "scripts" / "aquisicao" / "a09_adquirir_cnes_nacional.py",
+    # Outcomes do funil (tarefa B): lê E4 (08) e o manifesto do a11.
+    ROOT / "scripts" / "rdd_bolsa" / "12_construir_outcomes_funil.py",
+    # E6: lê os outcomes (12), E3, E4, a janela LR do E5 (11) e as saídas do a10.
+    ROOT / "scripts" / "rdd_bolsa" / "13_estimar_E6_funil.py",
+    # E9: lê as tabelas de escolha do 12 e o manifesto do a11.
+    ROOT / "scripts" / "rdd_bolsa" / "16_estimar_E9_escolha.py",
+    # E7: lê o painel do a09, o IED do a10, a janela LR do E5 e confere a de U com a do E6 (13).
+    ROOT / "scripts" / "rdd_bolsa" / "14_estimar_E7_dird_cnes.py",
+    # Síntese E8: lê E3, E5, E6, E7 e E9 e aplica o Holm às primárias P1 e P2.
+    ROOT / "scripts" / "rdd_bolsa" / "15_sintese_E8.py",
     # O relatório para se a conferência do sinal não corresponder ao E3 atual.
     ROOT / "scripts" / "rdd_bolsa" / "09b_conferir_sinal.py",
     ROOT / "scripts" / "rdd_bolsa" / "09_gerar_relatorio_pdf.py",
     ROOT / "scripts" / "rdd_bolsa" / "10_galeria_figura_regra.py",
+    # Fora do pipeline: tema_trabalho/12_registrar_failure_mode_ivs.py lê com `git show`
+    # as versões anteriores à correção de 18/10/2026 (commit 22eddb5) e para sem elas;
+    # num clone raso o pipeline quebraria por motivo alheio aos dados. Roda-se à mão,
+    # depois do pipeline (scripts/README.md).
     # A6 lê R1, E3 e E5 e registra os hashes deles no manifesto.
     ROOT / "scripts" / "tema_trabalho" / "07_red_team_sintese.py",
     ROOT / "scripts" / "tema_trabalho" / "10_conferir_numeros_artigo.py",
@@ -98,11 +123,19 @@ ARGUMENTOS = {
     ROOT / "scripts" / "rdd_bolsa" / "07_estimar_E3_rdd_completa.py": [
         "--escore", "output/rdd_bolsa/escore_completo_ivs2010_oficial.csv",
     ],
+    # O painel do CNES nacional vem de 39 ZIPs (~600 MB cada, ~23 GB) cujo cache fica
+    # fora do Git. O run_all só confere o painel versionado contra o manifesto, sem rede
+    # e sem gravar. Refazer exige pedir de propósito: `--etapa painel` (cache local) ou
+    # `--etapa tudo` (download). Decisão de 19/10/2026 (tarefa E8d).
+    ROOT / "scripts" / "aquisicao" / "a09_adquirir_cnes_nacional.py": ["--etapa", "verificar"],
 }
 
 AQUISICAO_RDD_BOLSA = (
     ROOT / "scripts" / "aquisicao" / "a07_adquirir_ivs_administrativo.py",
     ROOT / "scripts" / "aquisicao" / "a08_adquirir_ivs_2010_oficial.py",
+    ROOT / "scripts" / "aquisicao" / "a10_normas_mesmos_cortes_ivs.py",
+    ROOT / "scripts" / "aquisicao" / "a11_adquirir_resultado_ciclo2_chamada1.py",
+    ROOT / "scripts" / "aquisicao" / "a09_adquirir_cnes_nacional.py",
 )
 
 
@@ -118,7 +151,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument(
         "--rdd-bolsa",
         action="store_true",
-        help="executa só a cadeia da RDD da bolsa (a07 a 10), sobre os insumos versionados",
+        help="executa só a cadeia da RDD da bolsa (a07 a 14), sobre os insumos versionados",
     )
     args = parser.parse_args(argv)
 

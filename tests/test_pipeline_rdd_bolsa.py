@@ -1,6 +1,8 @@
 """A cadeia da RDD da bolsa no `run_all.py`: ordem, argumentos e scripts retirados.
 
-Lê `run_all.py` como módulo, sem executar nenhuma etapa.
+Lê `run_all.py` como módulo, sem executar nenhuma etapa do pipeline. Só a conferência
+sem rede do a09 (`--etapa verificar`) e a leitura do cache do a10 e do a11 são
+exercitadas, com a rede bloqueada, para provar que o pipeline não baixa nada por padrão.
 """
 
 from __future__ import annotations
@@ -31,10 +33,20 @@ CADEIA = [
     RDD / "08a_reconstruir_proporcao_preenchida.py",
     RDD / "08_estimar_E4_proporcao.py",
     RDD / "11_inferencia_alternativa.py",
+    # Rodada multi-outcome (protocolo 40, §11).
+    AQ / "a10_normas_mesmos_cortes_ivs.py",
+    AQ / "a11_adquirir_resultado_ciclo2_chamada1.py",
+    AQ / "a09_adquirir_cnes_nacional.py",
+    RDD / "12_construir_outcomes_funil.py",
+    RDD / "13_estimar_E6_funil.py",
+    RDD / "16_estimar_E9_escolha.py",
+    RDD / "14_estimar_E7_dird_cnes.py",
+    RDD / "15_sintese_E8.py",
     RDD / "09b_conferir_sinal.py",  # o 09 exige a conferência em dia com o E3
-    RDD / "09_gerar_relatorio_pdf.py",
+    RDD / "09_gerar_relatorio_pdf.py",  # lê E1 a E9 e a síntese E8
     RDD / "10_galeria_figura_regra.py",
 ]
+A09 = AQ / "a09_adquirir_cnes_nacional.py"
 # Leem data/ivs_ipea_2010_municipios.csv como IVS 2010 ou dependem disso (auditoria 16).
 RETIRADOS = [
     RDD / "01_auditar_regra_e_suporte.py",
@@ -105,8 +117,115 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                       "11_inferencia_alternativa.py"):
             self.assertLess(posicao(RDD / etapa), a6, etapa)
 
+    def test_dependencias_da_rodada_multioutcome(self) -> None:
+        antes = {
+            # a10 lê a categoria do a07 e o IVS oficial do a08.
+            AQ / "a10_normas_mesmos_cortes_ivs.py": [AQ / "a07_adquirir_ivs_administrativo.py",
+                                                    AQ / "a08_adquirir_ivs_2010_oficial.py"],
+            # a09 lê o universo do a08, a ponte e o painel do ciclo 1 (para conferir hashes).
+            A09: [AQ / "a08_adquirir_ivs_2010_oficial.py", AQ / "01_congelar_ponte_cbo.py",
+                  ROOT / "scripts" / "avaliacao_impacto" / "run_pipeline_avaliacao.py"],
+            # 12 lê o E4 municipal (08), o manifesto do a11, o funil (A1), a tipologia (A2) e o Censo 2022.
+            RDD / "12_construir_outcomes_funil.py": [
+                RDD / "08_estimar_E4_proporcao.py", AQ / "a11_adquirir_resultado_ciclo2_chamada1.py",
+                AQ / "a07_adquirir_ivs_administrativo.py", TT / "02_reconciliar_funil_ciclo1.py",
+                TT / "03_construir_tipologia_territorial.py", AQ / "06_adquirir_populacao_censo2022.py"],
+            # E6 lê os outcomes (12), E3, E4, a janela LR do E5 (11) e o IED/diagnóstico do a10.
+            RDD / "13_estimar_E6_funil.py": [
+                RDD / "12_construir_outcomes_funil.py", RDD / "07_estimar_E3_rdd_completa.py",
+                RDD / "08_estimar_E4_proporcao.py", RDD / "11_inferencia_alternativa.py",
+                AQ / "a10_normas_mesmos_cortes_ivs.py"],
+            # E9 lê as tabelas de escolha do 12 e o manifesto do a11.
+            RDD / "16_estimar_E9_escolha.py": [RDD / "12_construir_outcomes_funil.py",
+                                              AQ / "a11_adquirir_resultado_ciclo2_chamada1.py"],
+            # E7 lê o painel do a09, o IED do a10, a janela LR do E5 e confere a de U com a do E6.
+            RDD / "14_estimar_E7_dird_cnes.py": [
+                A09, AQ / "a10_normas_mesmos_cortes_ivs.py", RDD / "11_inferencia_alternativa.py",
+                RDD / "12_construir_outcomes_funil.py", RDD / "13_estimar_E6_funil.py"],
+        }
+        for etapa, deps in antes.items():
+            for dep in deps:
+                self.assertLess(posicao(dep), posicao(etapa), f"{dep.name} tem de vir antes de {etapa.name}")
+
+    def test_relatorio_09_depois_da_rodada_multioutcome(self) -> None:
+        # O 09 lê as saídas de E6, E7, E9, da síntese E8 e da auditoria 18 (a10).
+        texto = (RDD / "09_gerar_relatorio_pdf.py").read_text(encoding="utf-8")
+        produtores = {"E6_": "13_estimar_E6_funil.py", "E7_": "14_estimar_E7_dird_cnes.py",
+                      "E9_": "16_estimar_E9_escolha.py", "E8_": "15_sintese_E8.py"}
+        for saida, script in produtores.items():
+            if saida in texto:
+                self.assertLess(posicao(RDD / script), posicao(RDD / "09_gerar_relatorio_pdf.py"), script)
+        if "a10_" in texto:
+            self.assertLess(posicao(AQ / "a10_normas_mesmos_cortes_ivs.py"), posicao(RDD / "09_gerar_relatorio_pdf.py"))
+        # A síntese lê E3, E5, E6, E7 e E9.
+        for dep in ("07_estimar_E3_rdd_completa.py", "11_inferencia_alternativa.py", "13_estimar_E6_funil.py",
+                    "14_estimar_E7_dird_cnes.py", "16_estimar_E9_escolha.py"):
+            self.assertLess(posicao(RDD / dep), posicao(RDD / "15_sintese_E8.py"), dep)
+
+    def test_cnes_nacional_nao_baixa_por_padrao(self) -> None:
+        """O run_all não dispara os ~23 GB do CNES nacional: a09 só confere o painel versionado."""
+        self.assertEqual(RA.ARGUMENTOS[A09], ["--etapa", "verificar"])
+        arvore = ast.parse(A09.read_text(encoding="utf-8"))
+        padrao = None
+        for no in ast.walk(arvore):
+            if isinstance(no, ast.Call) and getattr(no.func, "attr", None) == "add_argument" \
+                    and no.args and isinstance(no.args[0], ast.Constant) and no.args[0].value == "--etapa":
+                padrao = next(k.value.value for k in no.keywords if k.arg == "default")
+        self.assertEqual(padrao, "verificar")
+
+    def test_verificacao_do_a09_nao_usa_rede_nem_grava(self) -> None:
+        import json
+        import sys
+        from unittest import mock
+
+        spec = importlib.util.spec_from_file_location("a09_pipeline", A09)
+        a09 = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(a09)
+        saidas = [a09.PAINEL_FILE, a09.MANIFESTO_FILE, a09.VALIDACAO_FILE, a09.ROTULOS_FILE, a09.RESUMO_FILE]
+        antes = {p: p.stat().st_mtime_ns for p in saidas}
+
+        def sem_rede(*_a, **_k):
+            raise AssertionError("a09 em --etapa verificar tentou acessar a rede")
+
+        with mock.patch("urllib.request.urlopen", sem_rede), \
+                mock.patch.object(a09, "etapa_aquisicao", sem_rede), \
+                mock.patch.object(a09, "gravar_painel", sem_rede), \
+                mock.patch.object(sys, "argv", ["a09", "--etapa", "verificar"]):
+            self.assertEqual(a09.main(), 0)
+        self.assertEqual({p: p.stat().st_mtime_ns for p in saidas}, antes)
+        self.assertEqual(json.loads(a09.MANIFESTO_FILE.read_text(encoding="utf-8"))["competencias_planejadas"],
+                         a09.COMPETENCIAS)
+
+    def test_a10_e_a11_rodam_do_cache_versionado(self) -> None:
+        """Com o cache conferido no repositório, nenhuma das duas aquisições baixa nada."""
+        from unittest import mock
+
+        def sem_rede(*_a, **_k):
+            raise AssertionError("aquisição tentou acessar a rede com o cache presente")
+
+        mods = {}
+        for nome in ("a10_normas_mesmos_cortes_ivs.py", "a11_adquirir_resultado_ciclo2_chamada1.py"):
+            spec = importlib.util.spec_from_file_location(f"pipeline_{nome[:3]}", AQ / nome)
+            mods[nome[:3]] = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mods[nome[:3]])
+        with mock.patch("urllib.request.urlopen", sem_rede):
+            for fonte in mods["a10"].FONTES:
+                _, status = mods["a10"].obter(fonte)
+                self.assertTrue(status.startswith("cache_conferido"), (fonte["id"], status))
+            for item in mods["a11"].ARQUIVOS:
+                status, _, _ = mods["a11"].obter(item)
+                self.assertEqual(status, "ja_preservado", item["arquivo"])
+
+    def test_registro_do_failure_mode_fica_fora_do_pipeline(self) -> None:
+        # Lê versões antigas do histórico do Git; não roda num clone sem histórico.
+        script = TT / "12_registrar_failure_mode_ivs.py"
+        self.assertTrue(script.exists())
+        self.assertNotIn(script, RA.STEPS)
+        self.assertIn("12_registrar_failure_mode_ivs.py", (ROOT / "run_all.py").read_text(encoding="utf-8"))
+
     def test_e3_roda_com_o_escore_completo(self) -> None:
-        self.assertEqual(RA.ARGUMENTOS, {RDD / "07_estimar_E3_rdd_completa.py": ["--escore", ESCORE_COMPLETO]})
+        self.assertEqual(RA.ARGUMENTOS[RDD / "07_estimar_E3_rdd_completa.py"], ["--escore", ESCORE_COMPLETO])
+        self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09})
         self.assertTrue((ROOT / ESCORE_COMPLETO).exists())
         # O 04b, que grava o escore completo, vem antes do E3.
         self.assertLess(posicao(RDD / "04b_validar_ivs_oficial_escore_administrativo.py"),

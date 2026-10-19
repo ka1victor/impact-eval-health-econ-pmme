@@ -202,10 +202,20 @@ mostram.
 ## 8. Reprodução
 
 ```bash
-python3 scripts/aquisicao/a09_adquirir_cnes_nacional.py            # aquisição + painel
+python3 scripts/aquisicao/a09_adquirir_cnes_nacional.py                 # padrão: verificar (sem rede, não grava)
+python3 scripts/aquisicao/a09_adquirir_cnes_nacional.py --etapa tudo    # aquisição + painel
 python3 scripts/aquisicao/a09_adquirir_cnes_nacional.py --etapa painel  # só refaz o painel do cache
 python3 -m unittest tests.test_cnes_nacional
 ```
+
+Desde 19/10/2026 o modo padrão é `--etapa verificar`, e é nele que o `run_all.py`
+roda o a09. As 39 competências somam cerca de 23 GB de ZIPs e o cache por
+competência (`output/aquisicao/cnes_nacional/mensal/`) fica fora do Git, então o
+pipeline não refaz o painel: confere o painel versionado contra o manifesto
+(SHA-256, colunas, linhas), o plano de competências do script, o portão contra o
+ciclo 1 e os SHA-256 das entradas locais registradas, sem rede e sem gravar nada.
+Qualquer divergência para e pede `--etapa painel` ou `--etapa tudo`. Baixar exige
+pedir `--etapa tudo` ou `--etapa aquisicao` de propósito.
 
 A aquisição é idempotente e retomável: competência com cache e metadado não é
 baixada de novo; ZIP local íntegro é reaproveitado. Quatro a seis downloads
