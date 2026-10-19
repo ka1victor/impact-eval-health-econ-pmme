@@ -64,6 +64,17 @@ Saidas
 - output/rdd_bolsa/relatorio_resultados_rdd_bolsa.html  (autocontido)
 - output/rdd_bolsa/relatorio_resultados_rdd_bolsa.pdf  (A4 retrato, via Chromium headless)
 
+Parte II (rodada multi-outcome, protocolo 40)
+---------------------------------------------
+Seções 6 a 12 e o resumo da rodada: protocolo 40 (lido de `protocolo_E6_multioutcome.json`), políticas nos
+mesmos cortes (tabelas da auditoria 18 copiadas na geração e datas do resumo do E7), E6, E9 e E7 (lidos de
+`output/rdd_bolsa/E6_*`, `E9_*` e `E7_*`), A4 corrigido (`output/tema_trabalho/failure_mode_ivs_*`, coluna
+"antes" rotulada FAILURE_MODE) e a síntese E8 (`E8_resumo.json`; sem ele, a seção diz "pendente"). Nada é
+estimado aqui: tabelas e frases saem das saídas na geração (as frases de leitura do E7 vêm da própria função
+`gerar_leitura` do script do E7), e as figuras são os PNG gravados pelos scripts do E6, E7 e E9, incorporados
+sem alteração. Antes de cada tabela há uma caixa "Como ler" (salto = lado com bolsa maior menos lado com bolsa
+menor; RDD em nível = pacote do corte; DiRD = bolsa + variação das outras descontinuidades).
+
 Linguagem: o E3 da a estimativa local do efeito do anuncio de +R$ 5 mil sob as
 premissas da RDD; nao identifica participacao no PMM-E. E1, E2 e E4 sao
 exploratorios. O relatorio nao diz que "a bolsa nao funciona": diz que nao
@@ -72,6 +83,7 @@ detectamos efeito e que os intervalos nao excluem efeitos grandes.
 
 from __future__ import annotations
 
+import base64
 import datetime as dt
 import glob
 import hashlib
@@ -137,11 +149,48 @@ E2_LIM = OUT_DIR / "E2_limites.csv"
 E2_RES = OUT_DIR / "E2_limites_resumo.json"
 E4_EST = OUT_DIR / "E4_estimativas.csv"
 E4_RES = OUT_DIR / "E4_resumo.json"
+# Parte II: rodada multi-outcome (protocolo 40). O relatório só lê estas saídas; nada é estimado aqui.
+PROT40_JSON = OUT_DIR / "protocolo_E6_multioutcome.json"
+PROT40_MD = ROOT / "docs" / "06_execucao" / "40_protocolo_multioutcome_rdd_bolsa.md"
+AUD18_MD = ROOT / "docs" / "auditorias" / "18_politicas_nos_mesmos_cortes_ivs.md"
+A10_DIAG = AQ_DIR / "a10_diagnostico_cortes_normas.json"
+E6_EST = OUT_DIR / "E6_estimativas.csv"
+E6_DIAG = OUT_DIR / "E6_diagnosticos.csv"
+E6_RES = OUT_DIR / "E6_resumo.json"
+E6_FIG = OUT_DIR / "E6_figuras"
+E6_SCRIPT = ROOT / "scripts" / "rdd_bolsa" / "13_estimar_E6_funil.py"
+E7_EST = OUT_DIR / "E7_estimativas.csv"
+E7_EV = OUT_DIR / "E7_estudo_evento.csv"
+E7_RES = OUT_DIR / "E7_resumo.json"
+E7_FIG = OUT_DIR / "E7_figuras"
+E7_SCRIPT = ROOT / "scripts" / "rdd_bolsa" / "14_estimar_E7_dird_cnes.py"
+E9_EST = OUT_DIR / "E9_estimativas.csv"
+E9_EFE = OUT_DIR / "E9_efeitos_marginais.csv"
+E9_ROB = OUT_DIR / "E9_robustez_pos_auditoria.csv"
+E9_RES = OUT_DIR / "E9_resumo.json"
+E9_FIG = OUT_DIR / "E9_figuras"
+E9_SCRIPT = ROOT / "scripts" / "rdd_bolsa" / "16_estimar_E9_escolha.py"
+FM_CSV = ROOT / "output" / "tema_trabalho" / "failure_mode_ivs_antes_depois.csv"
+FM_RES = ROOT / "output" / "tema_trabalho" / "failure_mode_ivs_resumo.json"
+FM_SCRIPT = ROOT / "scripts" / "tema_trabalho" / "12_registrar_failure_mode_ivs.py"
+E8_RES = OUT_DIR / "E8_resumo.json"  # gravado pela tarefa E8 (síntese); ausente = seção "pendente"
+# Figuras do pipeline incorporadas na parte II (PNG gravados pelos scripts do E6, E7 e E9).
+FIGURAS_MO = {
+    E6_SCRIPT: [E6_FIG / "E6_indice_P1_agrupado.png", *(E6_FIG / f"E6_indice_P1_V{k}.png" for k in (1, 2, 3)),
+                E6_FIG / "E6_F0_1_U_c1.png", *(E6_FIG / f"E6_F1_3_V{k}.png" for k in (1, 2, 3))],
+    E7_SCRIPT: [E7_FIG / "E7_dird_F3_1_U.png", E7_FIG / "E7_nivel_F3_1_U.png", E7_FIG / "E7_evento_F3_1_U.png",
+                E7_FIG / "E7_evento_F3_P1_U.png", E7_FIG / "E7_evento_F3_1_V1.png"],
+    E9_SCRIPT: [E9_FIG / "E9_utilidade_ivs.png"],
+}
+# Arquivos lidos pelas seções da parte II (o teste de rastreabilidade dos números usa esta lista).
+FONTES_RODADA_MO = [PROT40_JSON, PROT40_MD, AUD18_MD, A10_DIAG, E6_EST, E6_DIAG, E6_RES, E7_EST, E7_EV, E7_RES,
+                    E9_EST, E9_EFE, E9_ROB, E9_RES, FM_CSV, FM_RES, E8_RES]
 
 ENTRADAS = [
     R1_OFICIAL, R1_ADMIN, MATRIZ, ESCORE, IVS_OFICIAL, MANIF_OFICIAL, ESCORE_ADMIN, CATEGORIA, IVS_LOCAL,
     IDENT_LOCAL, A01B, PROTOCOLO, ADENDO_E4, E3_STATUS, E3_EST, E3_DIAG, E4_PROP, ATIVOS_ZIP, E3_SCRIPT,
     CONF_SINAL, TIPOLOGIA, *E5_ARQS, E1_EST, E1_RES, E2_LIM, E2_RES, E4_EST, E4_RES,
+    *FONTES_RODADA_MO, E7_SCRIPT, *(f for figs in FIGURAS_MO.values() for f in figs),
 ]
 OBRIGATORIAS = [R1_OFICIAL, MATRIZ, ESCORE, IVS_OFICIAL, IVS_LOCAL, IDENT_LOCAL, PROTOCOLO, E3_STATUS, E3_EST,
                 E3_DIAG, E4_PROP, ATIVOS_ZIP, E3_SCRIPT, CONF_SINAL]
@@ -1881,15 +1930,39 @@ def secao_capa(ctx) -> str:
          "exploratórios, com escore parcial; superados pelo E3" if (E1_EST.exists() and E2_LIM.exists())
          else "ausente"),
     ]
+    mo = ctx.get("mo") or {}
+
+    def st_mo(nome, chave, ok_txt, detalhe):
+        tem = chave in mo and mo[chave]
+        return (nome, "pill-ok" if tem else "pill-pend", ok_txt if tem else "ausente", detalhe if tem else "saídas ausentes")
+
+    itens += [
+        st_mo("E6 — funil (P1 e famílias F0, F1, F2, F4)", "e6", "executado", "protocolo 40; P1 é hipótese primária"),
+        st_mo("E9 — escolha revelada dos candidatos", "e9", "executado", "secundário e exploratório (§12)"),
+        st_mo("E7 — DiRD no CNES (P2 e família F3)", "e7", "executado", "protocolo 40; P2 é hipótese primária"),
+        st_mo("A4 reestimado com a base oficial", "fm", "executado", "antes = failure mode (auditoria 19)"),
+        ("Síntese da rodada (E8)", "pill-ok" if mo.get("e8") else "pill-pend", "lida" if mo.get("e8") else "pendente",
+         "<code>output/rdd_bolsa/E8_resumo.json</code>" + ("" if mo.get("e8") else " ainda não gravado")),
+    ]
     stt = "".join(f'<tr><td>{a}</td><td><span class="pill {b}">{esc(c)}</span></td><td>{d}</td></tr>'
                   for a, b, c, d in itens)
     sumario = "".join(f"<li>{s}</li>" for s in [
-        "Resumo em 1 página",
+        "Resumo em 1 página (E3)",
+        "Resumo da rodada multi-outcome (hipóteses primárias primeiro)",
+        "<strong>Parte I — RDD da bolsa com o escore completo</strong>",
         "1. A regra: IVS 2010 oficial, cortes 0,300 e 0,400",
         "2. RDD sharp com o escore completo (E3)",
         "3. Inferência alternativa (E5; exploratória, pós-resultado)",
         "4. Antes do escore completo: E1, E2 e E4 (exploratórios)",
         "5. Leitura e limites",
+        "<strong>Parte II — rodada multi-outcome (protocolo 40)</strong>",
+        "6. Protocolo 40: famílias, métodos, primárias e adendos",
+        "7. Políticas nos mesmos cortes de IVS (auditoria 18)",
+        "8. E6 — funil: atração, presença e seleção",
+        "9. E9 — escolha revelada dos candidatos",
+        "10. E7 — DiRD no CNES (oferta líquida)",
+        "11. A4 reestimado com a base oficial (auditoria 19)",
+        "12. Síntese (E8)",
         "Apêndice A — dados dos gráficos RD",
         "Apêndice B — proveniência das entradas",
     ])
@@ -1899,8 +1972,9 @@ def secao_capa(ctx) -> str:
   <h1>{esc(TITULO)}</h1>
   <p class="lead">A bolsa anunciada é atribuída pelo IVS 2010 oficial do Ipea, com dois cortes. Este relatório
   reconstrói a regra, apresenta a RDD sharp com o escore completo (E3) e resume as análises exploratórias
-  anteriores. É a base para montar os slides: todo número e gráfico é lido de <code>output/</code> por script
-  versionado.</p>
+  anteriores (parte I). A parte II traz a rodada multi-outcome do protocolo 40: funil (E6), escolha dos
+  candidatos (E9), DiRD no CNES (E7), políticas nos mesmos cortes e o A4 corrigido. É a base para montar os
+  slides: todo número e gráfico é lido de <code>output/</code> por script versionado.</p>
   <dl class="meta">{dl}</dl>
   <div class="aviso"><strong>Como ler.</strong> O E3 dá uma <strong>estimativa local do efeito do anúncio de
   +R$ 5 mil</strong> por mês, sob as premissas da RDD, para municípios do quadro de vagas com IVS perto dos
@@ -3113,8 +3187,8 @@ def paragrafo_desenhos_e5(ctx, e5) -> str:
         "extrapolação pede grupos expostos a cortes diferentes; todos os municípios enfrentam os mesmos dois cortes, e o "
         "que cabe é o empilhamento (B). RD geográfica não se aplica, porque a bolsa segue o IVS municipal, não uma "
         "fronteira. <strong>Esses desenhos não se aplicam ao outcome da hipótese.</strong> Diferença em "
-        "descontinuidades com a oferta CNES é candidata, mas muda o outcome e exige protocolo próprio, fora da fila "
-        "autorizada. O que aumentaria a precisão, com o mesmo estimando, é <strong>mais coortes com o mesmo "
+        "descontinuidades com a oferta CNES muda o outcome e exige protocolo próprio: foi feita depois, no protocolo "
+        "40 (E7, seção 10). O que aumentaria a precisão, com o mesmo estimando, é <strong>mais coortes com o mesmo "
         f"outcome</strong>.{prec}</p>")
 
 
@@ -3495,6 +3569,11 @@ def secao_apendice_rd(ctx) -> str:
 def secao_proveniencia() -> str:
     resumos = {E1_EST: ler_json(E1_RES), E1_RES: ler_json(E1_RES), E2_LIM: ler_json(E2_RES), E2_RES: ler_json(E2_RES),
                E4_EST: ler_json(E4_RES), E4_RES: ler_json(E4_RES)}
+    # Parte II: produtores declarados (as figuras têm nome montado em f-string e não são achadas por busca).
+    for script, figs in FIGURAS_MO.items():
+        resumos.update({f: {"script": rel(script)} for f in figs})
+    resumos.update({p: {"script": rel(E7_SCRIPT)} for p in (E7_EST, E7_EV, E7_RES)})
+    resumos.update({p: {"script": rel(FM_SCRIPT)} for p in (FM_CSV, FM_RES)})
     linhas = []
     for p in ENTRADAS:
         h = sha256(p)
@@ -3518,6 +3597,1160 @@ def secao_proveniencia() -> str:
           "pelo próprio script, sem biblioteca de gráficos; PDF impresso pelo Chromium headless a partir do HTML.</p>"
         + "</section>"
     )
+
+
+# ---------------------------------------------------------------------------
+# Parte II: rodada multi-outcome (protocolo 40). Só lê saídas gravadas; nada é estimado aqui.
+# ---------------------------------------------------------------------------
+
+
+def corte_txt(c) -> str:
+    """'0.300' -> '0,300'; 'empilhado' fica como está."""
+    s = str(c)
+    return s.replace(".", ",") if re.fullmatch(r"\d\.\d{3}", s) else s
+
+
+def escala_mo(unidade: str) -> tuple[int, float, str]:
+    """(casas, fator, sufixo) de exibição de um salto, pela coluna `unidade` das saídas E6/E7."""
+    u = str(unidade)
+    if u.startswith("fracao"):
+        return 1, 100.0, " p.p."
+    if u.startswith("desvios"):
+        return 2, 1.0, " DP"
+    if u.startswith("log"):
+        return 3, 1.0, " (log)"
+    if u.startswith("horas"):
+        return 1, 1.0, ""
+    return 3, 1.0, ""
+
+
+def tau_mo(x, unidade, sufixo: bool = True) -> str:
+    nd, f, suf = escala_mo(unidade)
+    return "—" if not finito(x) else sinal(float(x) * f, nd) + (suf if sufixo else "")
+
+
+def ic_mo(lo, hi, unidade) -> str:
+    nd, f, _ = escala_mo(unidade)
+    if not (finito(lo) and finito(hi)):
+        return "—"
+    return f"[{sinal(float(lo) * f, nd)}; {sinal(float(hi) * f, nd)}]"
+
+
+def n_mo(r) -> str:
+    return f"{br_int(r['n_abaixo'])} / {br_int(r['n_acima'])}"
+
+
+def q_mo(q) -> str:
+    return "—" if not finito(q) else br(q, 3)
+
+
+def contem_zero(lo, hi) -> bool | None:
+    if not (finito(lo) and finito(hi)):
+        return None
+    return float(lo) <= 0 <= float(hi)
+
+
+def unidade_txt(unidade: str) -> str:
+    return {"fracao (x100 = p.p.)": "p.p.", "desvios-padrao (indice)": "DP do lado de baixo"}.get(str(unidade),
+                                                                                                  str(unidade))
+
+
+def como_ler(tipo: str, ctx, extra: str = "") -> str:
+    """Caixa "Como ler" antes de cada tabela da parte II (pedido do autor, 19/10/2026)."""
+    vf, fx = ctx["valor_faixa"], ctx["faixas"]
+    passo = br_mil(vf[fx[1]] - vf[fx[0]])
+    por_corte = "; ".join(f"em {br(c)}: {br_mil(vf[fx[i]])} → {br_mil(vf[fx[i + 1]])}" for i, c in enumerate(ctx["cortes"]))
+    salto = (f"Salto = lado com bolsa maior (IVS acima do corte) − lado com bolsa menor ({por_corte}); empilhado = "
+             f"salto comum aos dois cortes. Positivo = mais do outcome onde a bolsa é {passo} maior.")
+    textos = {
+        "nivel": salto + " Contraste: <strong>RDD em nível = pacote do corte</strong> (bolsa e outras regras dos mesmos "
+                         "cortes, seção 7), não a bolsa pura nem a participação no PMM-E.",
+        "dird": (f"Salto da DiRD = salto de ΔY (média do pós − média do pré), lado com bolsa maior − lado com bolsa menor "
+                 f"({por_corte}); empilhado = salto comum. Contraste: <strong>bolsa + variação, entre pré e pós, das "
+                 "outras descontinuidades</strong>; a DiRD tira só a parte constante no tempo, e a RDD em nível mede o "
+                 "pacote inteiro."),
+        "escolha": "Coef. = variação no log da razão de chances de a célula ser a 1ª opção por +R$ 1 mil na bolsa dela; "
+                   "RC por +" + passo + " = exp(5 × coef.); Δ prob. em p.p. Positivo = bolsa maior atrai mais escolhas. "
+                   "Identificado pelos degraus em " + " e ".join(br(c) for c in ctx["cortes"]) + " (IVS em spline "
+                   "contínuo). Mede realocação entre células do mesmo curso, condicional a candidatar-se; não é efeito "
+                   "sobre o total de candidatos.",
+        "diagnostico": salto + " Diagnóstico sem hipótese de efeito: o desejável é não haver salto.",
+        "failure": "<strong>Antes</strong> = número calculado com o arquivo de IVS errado (linha de subgrupo da base do "
+                   "Ipea, auditoria 16): rótulo FAILURE_MODE, só registro, <strong>não citável</strong>. "
+                   "<strong>Depois</strong> = reestimado com o IVS 2010 oficial (a08). A comparação não é resultado.",
+        "politicas": "[V] = verificado no texto do ato; [V-dados] = verificado por cálculo sobre arquivos do repositório; "
+                     "[INFERÊNCIA] = tirado de dois ou mais textos; [NÃO VERIFICADO] = fonte secundária ou não conferida. "
+                     "Qualquer regra que mude no corte entra no contraste de uma RDD em nível (pacote).",
+        "datas": "Datas de publicação ou início de cada ato e do PMM-E. “Marca principal” = linha tracejada vermelha no "
+                 "estudo de evento do E7; as demais são pontilhadas. Uma política que muda entre o pré e o pós entra no "
+                 "contraste da DiRD.",
+        "protocolo": "Lista fixada antes de abrir os outcomes novos; nenhuma linha foi escolhida depois de ver "
+                     "resultados. Sinal pré-especificado: + = mais provimento.",
+        "sintese": "Conteúdo lido de <code>output/rdd_bolsa/E8_resumo.json</code> (tarefa E8), sem interpretação "
+                   "acrescentada aqui.",
+    }
+    txt = textos[tipo] + (" " + extra if extra else "")
+    return f'<p class="legenda-salto"><strong>Como ler.</strong> {txt}</p>'
+
+
+def img_png(p: Path, classe: str = "") -> str:
+    dados = base64.b64encode(p.read_bytes()).decode("ascii")
+    cl = f' class="{classe}"' if classe else ""
+    return f'<img{cl} src="data:image/png;base64,{dados}" alt="{esc(p.name)}">'
+
+
+def figura_png(titulo: str, arquivos: list[Path], produtor: Path, sub: str = "", nota: str = "", legenda: str = "",
+               chave: str | None = None, classe: str = "") -> str:
+    """Figura gravada pelo pipeline (PNG em output/), incorporada sem alteração."""
+    presentes = [p for p in arquivos if p.exists()]
+    if not presentes:
+        return caixa_ausente(titulo, arquivos)
+    imgs = "".join(img_png(p, classe) for p in presentes)
+    lista = ", ".join(f"<code>{esc(rel(p))}</code>" for p in presentes)
+    fonte = (f'<div class="fonte">Fonte: {lista} (gravada por <code>{esc(rel(produtor))}</code>; incorporada sem '
+             "alteração, não redesenhada por este relatório).</div>")
+    return figura(titulo, imgs, fonte, sub=sub, nota=nota, chave=chave, legenda=legenda)
+
+
+def carregar_mo() -> dict:
+    """Saídas da rodada multi-outcome. Cada bloco ausente vira caixa "ausente" na seção correspondente."""
+    mo: dict = {"prot40": ler_json(PROT40_JSON)}
+    if all(p.exists() for p in (E6_EST, E6_DIAG, E6_RES)):
+        mo["e6"] = {"est": pd.read_csv(E6_EST, dtype={"corte": str, "ciclo": str}),
+                    "diag": pd.read_csv(E6_DIAG, dtype={"corte": str}), "res": ler_json(E6_RES)}
+    if all(p.exists() for p in (E7_EST, E7_EV, E7_RES)):
+        mo["e7"] = {"est": pd.read_csv(E7_EST, dtype={"corte": str}),
+                    "ev": pd.read_csv(E7_EV, dtype={"corte": str, "competencia": str}), "res": ler_json(E7_RES)}
+    if all(p.exists() for p in (E9_EST, E9_EFE, E9_ROB, E9_RES)):
+        mo["e9"] = {"est": pd.read_csv(E9_EST, dtype={"ciclo": str}), "efe": pd.read_csv(E9_EFE, dtype={"ciclo": str}),
+                    "rob": pd.read_csv(E9_ROB, dtype={"ciclo": str}), "res": ler_json(E9_RES)}
+    if FM_CSV.exists() and FM_RES.exists():
+        mo["fm"] = {"csv": pd.read_csv(FM_CSV), "res": ler_json(FM_RES)}
+    mo["a10"] = ler_json(A10_DIAG)
+    mo["e8"] = ler_json(E8_RES) if E8_RES.exists() else None
+    for k in ("e6", "e7", "e9"):
+        if k in mo:
+            nat = {str(v).upper() for v in mo[k]["est"]["natureza_dos_dados"].dropna().unique()}
+            if nat != {"EMPIRICO"}:
+                raise SystemExit(f"{k.upper()}: natureza_dos_dados {sorted(nat)}; o relatório só exibe dado EMPIRICO")
+    return mo
+
+
+# ----- E6 -----------------------------------------------------------------
+
+
+def e6_linha(est: pd.DataFrame, **f) -> pd.Series | None:
+    m = np.ones(len(est), dtype=bool)
+    for k, v in f.items():
+        m &= (est[k].astype(str) == str(v)).to_numpy()
+    g = est[m]
+    return g.iloc[0] if len(g) else None
+
+
+def rot_pop_mo(pop: str, ciclo: str) -> str:
+    return f"{esc(pop)} <span class=\"muted\">ciclo {esc(ciclo)}</span>" if str(ciclo) not in ("-", "nan") else esc(pop)
+
+
+def rot_outcome_mo(r, vistos: set, chave: str = "outcome") -> str:
+    """Id do outcome; a descrição só na primeira linha de cada outcome (tabelas longas)."""
+    k = str(r[chave])
+    if k in vistos:
+        return f"<span class=\"muted\">{esc(r['outcome_id'])}</span>"
+    vistos.add(k)
+    return f"<strong>{esc(r['outcome_id'])}</strong> <span class=\"muted\">{esc(r['descricao_outcome'])}</span>"
+
+
+def tabela_p1(ctx, e6) -> str:
+    est = e6["est"]
+    p = est[(est["outcome_id"] == "P1") & (est["especificacao"] == "principal")]
+    linhas = [[rot_pop_mo(r["populacao"], r["ciclo"]), corte_txt(r["corte"]), n_mo(r),
+               f"<strong>{tau_mo(r['tau'], r['unidade'])}</strong>", ic_mo(r["ic95_inf"], r["ic95_sup"], r["unidade"]),
+               ic_mo(r["ic_honesto_inf"], r["ic_honesto_sup"], r["unidade"]), br_p(r["p_valor"])]
+              for _, r in p.iterrows()]
+    cab = [("População", "txt nowrap"), ("Corte", "txt"), ("Municípios<br><span class=\"muted\">menor / maior</span>", "num"),
+           ("Salto", "num"), ("IC 95%<br><span class=\"muted\">CR1/HC1</span>", "num"),
+           ("IC honesto<br><span class=\"muted\">M do protocolo</span>", "num"), ("p", "num")]
+    return tabela(cab, linhas, classe="compacta", titulo="P1 — índice de atração-presença (KLK de F1.1, F1.2, F1.3 e "
+                  "F2.1), h = 0,050: a primeira linha é a hipótese primária", legenda=como_ler("nivel", ctx,
+                  "Índice em desvios-padrão do lado de baixo, dentro da janela. No ciclo 3 não há F2.1 (não imputado)."),
+                  rodape=fonte_html(E6_EST, grafico=False, extra="linhas outcome_id = P1, especificacao = principal"),
+                  chave="tab_p1")
+
+
+def tabela_p1_sens(ctx, e6) -> str:
+    est = e6["est"]
+    base = (est["populacao"] == "V1+V2+V3") & (est["corte"] == "empilhado")
+    p = est[base & (((est["outcome_id"] == "P1") & est["especificacao"].isin(
+        ["principal", "sensibilidade_h", "ic_honesto", "ic_honesto_pos_resultado", "S2_donut", "local_randomization"]))
+                    | ((est["outcome_id"] == "P1.anderson") & (est["especificacao"] == "indice_anderson")))]
+    rot = {"principal": "principal (protocolo)", "sensibilidade_h": "janela h", "ic_honesto": "IC honesto, M × fator",
+           "ic_honesto_pos_resultado": "IC honesto POS_RESULTADO (fora do protocolo)", "S2_donut": "S2 donut",
+           "local_randomization": "local randomization", "indice_anderson": "índice de Anderson (adição rotulada)"}
+    linhas = []
+    for _, r in p.iterrows():
+        det = []
+        if r["especificacao"] in ("principal", "sensibilidade_h", "S2_donut") and finito(r["h"]):
+            det.append(f"h = {br(r['h'], 3)}")
+        if finito(r["fator_M"]):
+            det.append(f"fator {br(r['fator_M'], 1)}")
+        linhas.append([esc(rot.get(r["especificacao"], r["especificacao"])), "; ".join(det) or "—",
+                       tau_mo(r["tau"], r["unidade"]), ic_mo(r["ic95_inf"], r["ic95_sup"], r["unidade"]),
+                       br_p(r["p_valor"]), "sim" if str(r["no_protocolo"]) == "True" else "não"])
+    return tabela([("Especificação", "txt"), ("Parâmetro", "txt"), ("Salto", "num"), ("IC 95%", "num"), ("p", "num"),
+                   ("No protocolo", "txt")], linhas, classe="compacta",
+                  titulo="P1 empilhado (ciclos e cortes): sensibilidades", legenda=como_ler("nivel", ctx),
+                  rodape=fonte_html(E6_EST, grafico=False, extra="população V1+V2+V3, corte empilhado"))
+
+
+def tabela_f0(ctx, e6) -> str:
+    est = e6["est"]
+    p = est[(est["especificacao"] == "principal") & est["outcome_id"].isin(["F0.1", "F0.2"]) & (est["populacao"] == "U")
+            & (est["no_protocolo"].astype(str) == "True")]
+    vistos: set = set()
+    linhas = [[rot_outcome_mo(r, vistos), esc(r["ciclo"]),
+               corte_txt(r["corte"]), n_mo(r), tau_mo(r["tau"], r["unidade"]),
+               ic_mo(r["ic95_inf"], r["ic95_sup"], r["unidade"]), br_p(r["p_valor"]), q_mo(r["q_bky"])]
+              for _, r in p.iterrows()]
+    return tabela([("Outcome (U)", "txt"), ("Ciclo", "num"), ("Corte", "txt"), ("Municípios", "num"), ("Salto", "num"),
+                   ("IC 95%", "num"), ("p", "num"), ("q BKY", "num")], linhas, classe="compacta",
+                  titulo="F0 — seleção: ter célula no quadro e células ou vagas por 10 mil hab., em todos os municípios (U)",
+                  legenda=como_ler("diagnostico", ctx, "V1, V2 e V3 só existem onde houve vaga; se ter vaga saltasse "
+                                   "no corte, a comparação dentro de V_k misturaria efeito e seleção."),
+                  rodape=fonte_html(E6_EST, grafico=False), inteiro=False, chave="tab_f0")
+
+
+def tabela_copolitica(ctx, e6) -> str:
+    est = e6["est"]
+    p = est[(est["especificacao"] == "principal") & est["outcome_id"].isin(["F0.3", "F0.4", "S1"])
+            & (est["no_protocolo"].astype(str) == "True")]
+    vistos: set = set()
+    linhas = [[rot_outcome_mo(r, vistos), esc(r["populacao"]),
+               corte_txt(r["corte"]), n_mo(r), tau_mo(r["tau"], r["unidade"]),
+               ic_mo(r["ic95_inf"], r["ic95_sup"], r["unidade"]), br_p(r["p_valor"])] for _, r in p.iterrows()]
+    return tabela([("Outcome", "txt"), ("População", "txt"), ("Corte", "txt"), ("Municípios", "num"), ("Salto", "num"),
+                   ("IC 95%", "num"), ("p", "num")], linhas, classe="compacta",
+                  titulo="F0.3, F0.4 e S1 — demanda municipal do ciclo 3 e PMMB (co-intervenção)",
+                  legenda=como_ler("diagnostico", ctx, "F0.4 e S1 são retratos do PMMB em uma data: estoque acumulado "
+                                   "de todas as políticas, não fluxo do PMM-E. Salto em S1 (coparticipação) seria o "
+                                   "sinal de que o teto da Portaria 752/2023 operou no corte."),
+                  rodape=fonte_html(E6_EST, grafico=False), inteiro=False)
+
+
+def tabela_diag_e6(ctx, e6) -> str:
+    diag = e6["diag"]
+    dens = diag[(diag["diagnostico"] == "densidade_poisson_mass_points") & (diag["especificacao"] == "principal")]
+    bal = diag[(diag["diagnostico"] == "balanco_covariavel_pre") & (diag["especificacao"] == "principal")]
+    linhas = []
+    for _, r in dens.iterrows():
+        b = bal[(bal["populacao"] == r["populacao"]) & (bal["corte"] == r["corte"]) & bal["p_valor"].notna()]
+        sig = b[b["p_valor"] < ALFA]
+        quais = "; ".join(f"{esc(v)} ({sinal(t, 3)}; p = {br_p(pv)})"
+                          for v, t, pv in zip(sig["variavel"], sig["tau"], sig["p_valor"])) or "—"
+        linhas.append([esc(r["populacao"]), corte_txt(r["corte"]), n_mo(r),
+                       f"{br(r['rho'], 2)} [{br(r['rho_ic95_inf'], 2)}; {br(r['rho_ic95_sup'], 2)}]", br_p(r["p_valor"]),
+                       f"{br_int(len(sig))} de {br_int(len(b))}", quais])
+    return tabela([("População", "txt"), ("Corte", "txt"), ("Municípios", "num"), ("Razão de densidades [IC 95%]", "num"),
+                   ("p", "num"), ("Balanço: p &lt; 0,05", "num"), ("Quais (salto; p)", "txt")], linhas,
+                  classe="compacta", titulo="Diagnósticos sem outcome: densidade do IVS e balanço de covariáveis "
+                  "pré-programa (h = 0,050)",
+                  legenda=como_ler("diagnostico", ctx, "Razão de densidades = municípios logo acima ÷ logo abaixo do "
+                                   "corte (1 = sem acúmulo). Balanço: subíndices do IVS, IDHM, população, renda, "
+                                   "estrato e macrorregião; o próprio IVS não entra (é a running variable). Parte dos "
+                                   "p &lt; 0,05 é esperada por acaso."),
+                  rodape=fonte_html(E6_DIAG, grafico=False))
+
+
+def tabela_componentes(ctx, e6) -> str:
+    est = e6["est"]
+    p = est[(est["especificacao"] == "principal") & est["familia"].isin(["F1", "F2", "F4"])
+            & (est["no_protocolo"].astype(str) == "True")
+            & (est["populacao"].str.contains(r"\+", regex=True) | (est["outcome_id"] == "F2.2"))]
+    vistos: set = set()
+    linhas = [[rot_outcome_mo(r, vistos, "outcome_id"),
+               rot_pop_mo(r["populacao"], r["ciclo"]), corte_txt(r["corte"]), n_mo(r),
+               tau_mo(r["tau"], r["unidade"]), ic_mo(r["ic95_inf"], r["ic95_sup"], r["unidade"]), br_p(r["p_valor"]),
+               q_mo(r["q_bky"])] for _, r in p.iterrows()]
+    return tabela([("Outcome", "txt"), ("População", "txt nowrap"), ("Corte", "txt"), ("Municípios", "num"),
+                   ("Salto", "num"), ("IC 95%", "num"), ("p", "num"), ("q BKY", "num")], linhas, classe="compacta",
+                  titulo="Componentes (secundárias): F1 atração, F2 presença e F4 seleção de quem chega, por corte e "
+                         "empilhado, com os ciclos juntos",
+                  legenda=como_ler("nivel", ctx, "Frações em p.p.; contagens por célula ou por 10 mil hab. na própria "
+                                   "escala; F4 em pontos do barema (sinal teórico ambíguo, fora do índice). q BKY = "
+                                   "q-valor de Benjamini–Krieger–Yekutieli dentro da família."),
+                  rodape=fonte_html(E6_EST, grafico=False, extra="cada ciclo separado está no mesmo CSV e no doc 41"),
+                  inteiro=False, chave="tab_comp")
+
+
+def tabela_testes_e6(ctx, e6) -> str:
+    est = e6["est"]
+    linhas = []
+    for fam in ("F0", "F1", "F2", "F4"):
+        g = est[(est["familia"] == fam) & est["entra_bky"].astype(str).eq("True")]
+        linhas.append([fam, br_int(len(g)), br_int(int((g["p_valor"] < ALFA).sum())),
+                       br_int(int((g["q_bky"] < ALFA).sum())), br_p(g["p_valor"].min()), q_mo(g["q_bky"].min())])
+    return tabela([("Família", "txt"), ("Linhas principais no BKY", "num"), ("p &lt; 0,05", "num"),
+                   ("q BKY &lt; 0,05", "num"), ("Menor p", "num"), ("Menor q", "num")], linhas,
+                  classe="compacta estreita", titulo="Testes múltiplos por família (linhas principais do protocolo)",
+                  legenda=como_ler("protocolo", ctx, "p &lt; 0,05 isolado não é evidência: com muitas linhas, algumas "
+                                   "passam por acaso; o q BKY controla a taxa de falsas descobertas na família."),
+                  rodape=fonte_html(E6_EST, grafico=False, extra="contagens feitas aqui sobre as colunas entra_bky, "
+                                                                 "p_valor e q_bky"))
+
+
+def secao_e6(ctx) -> str:
+    mo = ctx["mo"]
+    o = ['<section class="quebra" data-rodada="multioutcome"><h2>8. E6 — funil da bolsa: atração, presença e seleção</h2>']
+    e6 = mo.get("e6")
+    if not e6:
+        o.append(caixa_ausente("Saídas do E6 ausentes", [E6_EST, E6_DIAG, E6_RES]))
+        return "".join(o) + "</section>"
+    res = e6["res"]
+    p1 = res.get("p1_para_holm") or {}
+    o.append(f"<p>O E6 estima as famílias F0, F1, F2 e F4 do protocolo 40 em todas as populações e especificações "
+             f"fixadas (<code>{esc(rel(E6_EST))}</code>). Contraste registrado nas saídas: “{esc(res.get('contraste', ''))}”. "
+             "Ordem de leitura: a hipótese primária P1 primeiro; depois os diagnósticos de seleção, que condicionam a "
+             "leitura de V1–V3; por fim os componentes.</p>")
+    o.append("<h3>Hipótese primária P1</h3>")
+    o.append(tabela_p1(ctx, e6))
+    cz = contem_zero(p1.get("ic95_inf"), p1.get("ic95_sup"))
+    if cz is not None:
+        o.append(f"<p>{'O IC 95% de P1 contém zero: não detectamos efeito do pacote do corte sobre o índice.' if cz else '<span class=\"alerta\">O IC 95% de P1 exclui zero.</span>'} "
+                 f"O p de P1 para o Holm com P2 (seção 10) é {br_p(p1.get('p_valor'))} "
+                 f"(<code>{esc(rel(E6_RES))}</code>, <code>p1_para_holm</code>). Com o M do protocolo, o IC honesto não "
+                 "informa (suporte da quártica até o ponto médio entre cortes); a sensibilidade POS_RESULTADO está abaixo, "
+                 "rotulada como fora do protocolo.</p>")
+    o.append(tabela_p1_sens(ctx, e6))
+    o.append(figura_png("Índice P1 com ciclos e cortes agrupados em r = IVS − corte (visual)",
+                        [E6_FIG / "E6_indice_P1_agrupado.png"], E6_SCRIPT, classe="meia",
+                        sub="Reta comum em r, só visual; a estimativa P1 usa interceptos e inclinações por ciclo × corte "
+                            "(tabela acima).", chave="fig_p1"))
+    o.append(figura_png("Índice P1 por ciclo, nos dois cortes (V1, V2 e V3)",
+                        [E6_FIG / f"E6_indice_P1_V{k}.png" for k in (1, 2, 3)], E6_SCRIPT))
+    o.append("<h3>Seleção e diagnósticos (antes de ler V1–V3)</h3>")
+    o.append(tabela_f0(ctx, e6))
+    o.append(figura_png("F0.1 — município tem célula no quadro do ciclo 1, em todos os municípios (U)",
+                        [E6_FIG / "E6_F0_1_U_c1.png"], E6_SCRIPT,
+                        sub="Os ciclos 2 e 3 estão em <code>output/rdd_bolsa/E6_figuras/E6_F0_1_U_c2.png</code> e "
+                            "<code>E6_F0_1_U_c3.png</code>."))
+    o.append(tabela_diag_e6(ctx, e6))
+    o.append(tabela_copolitica(ctx, e6))
+    o.append("<h3>Componentes</h3>")
+    o.append(tabela_componentes(ctx, e6))
+    o.append(figura_png("F1.3 — fração de células preenchidas na 1ª chamada, por ciclo (V1, V2 e V3)",
+                        [E6_FIG / f"E6_F1_3_V{k}.png" for k in (1, 2, 3)], E6_SCRIPT,
+                        sub="Os gráficos de F1.1, F1.2, F2.1 e F2.3 estão em <code>output/rdd_bolsa/E6_figuras/</code>."))
+    o.append(tabela_testes_e6(ctx, e6))
+    o.append(f'<div class="fonte">Situação: executado em {data_br(res.get("data_execucao"))} por '
+             f"<code>{esc(res.get('script', '—'))}</code>; linguagem registrada: “{esc(res.get('linguagem', ''))}”. "
+             "Texto de referência: <code>docs/06_execucao/41_resultados_E6_funil.md</code>.</div>")
+    return "".join(o) + "</section>"
+
+
+# ----- E9 -----------------------------------------------------------------
+
+
+E9_COMBOS = [  # (modelo, conjunto, especificacao, rótulo) — todas as de bolsa linear do protocolo
+    ("logit_condicional_1a_opcao", "principal", "spline_linear__bolsa_linear", "condicional, conjunto principal, spline linear (principal)"),
+    ("logit_condicional_1a_opcao", "principal", "spline_quadratico__bolsa_linear", "condicional, conjunto principal, spline quadrático"),
+    ("logit_condicional_1a_opcao", "sensibilidade", "spline_linear__bolsa_linear", "condicional, só vaga imediata, spline linear"),
+    ("logit_condicional_1a_opcao", "sensibilidade", "spline_quadratico__bolsa_linear", "condicional, só vaga imediata, spline quadrático"),
+    ("logit_explodido_1a_2a_opcao", "principal", "spline_linear__bolsa_linear", "explodido (1ª > 2ª), spline linear"),
+    ("logit_explodido_1a_2a_opcao", "principal", "spline_quadratico__bolsa_linear", "explodido (1ª > 2ª), spline quadrático"),
+]
+E9_CICLOS = ("1", "2", "3", "empilhado")
+
+
+def e9_coef(est, ciclo, especificacao, termo="bolsa_mil", modelo="logit_condicional_1a_opcao",
+            conjunto="principal") -> pd.Series | None:
+    g = est[(est["ciclo"] == ciclo) & (est["especificacao"] == especificacao) & (est["termo"] == termo)
+            & (est["modelo"] == modelo) & (est["conjunto"] == conjunto)]
+    return g.iloc[0] if len(g) else None
+
+
+def e9_efe(efe, ciclo, quantidade, especificacao="spline_linear__bolsa_linear", modelo="logit_condicional_1a_opcao",
+           conjunto="principal") -> pd.Series | None:
+    g = efe[(efe["ciclo"] == ciclo) & (efe["especificacao"] == especificacao) & (efe["quantidade"] == quantidade)
+            & (efe["modelo"] == modelo) & (efe["conjunto"] == conjunto) & (efe["termo"] == "bolsa_mil")]
+    return g.iloc[0] if len(g) else None
+
+
+def e9_rob(rob, analise, ciclo, estatistica) -> pd.Series | None:
+    g = rob[(rob["analise"] == analise) & (rob["ciclo"] == ciclo) & (rob["estatistica"] == estatistica)]
+    return g.iloc[0] if len(g) else None
+
+
+def coef_ic_txt(r, nd: int = 3) -> str:
+    if r is None:
+        return "—"
+    return f"{br(r['coef'], nd)} [{br(r['ic95_inf'], nd)}; {br(r['ic95_sup'], nd)}]"
+
+
+def tabela_e9_principal(ctx, e9) -> str:
+    est, efe = e9["est"], e9["efe"]
+    linhas = []
+    for c in E9_CICLOS:
+        r = e9_coef(est, c, "spline_linear__bolsa_linear")
+        if r is None:
+            continue
+        rc = e9_efe(efe, c, "razao_chances_por_5mil")
+        dp = e9_efe(efe, c, "variacao_prob_media_pp")
+        base = e9_efe(efe, c, "prob_media_base_pp")
+        linhas.append([esc(c), br_int(r["n_candidatos"]), br_int(r["g_conjuntos"]), f"<strong>{br(r['coef'], 4)}</strong>",
+                       br(r["ep_cluster_conjunto"], 4), f"[{br(r['ic95_inf'], 4)}; {br(r['ic95_sup'], 4)}]", br_p(r["p"]),
+                       br_p(r["p_t_g_menos_1"]),
+                       f"{br(rc['estimativa'], 3)} [{br(rc['ic95_inf'], 3)}; {br(rc['ic95_sup'], 3)}]" if rc is not None else "—",
+                       f"{br(dp['estimativa'], 3)} [{br(dp['ic95_inf'], 3)}; {br(dp['ic95_sup'], 3)}]" if dp is not None else "—",
+                       br(base["estimativa"], 3) if base is not None else "—"])
+    mu = '<span class="muted">'
+    return tabela([("Ciclo", "txt"), ("Candidatos", "num"), (f"Conjuntos<br>{mu}G</span>", "num"),
+                   (f"Coef.<br>{mu}por R$ 1 mil</span>", "num"), (f"EP<br>{mu}cluster conjunto</span>", "num"),
+                   ("IC 95%", "num"), ("p", "num"), (f"p<br>{mu}t, G − 1</span>", "num"),
+                   (f"RC por +R$ 5 mil<br>{mu}[IC 95%]</span>", "num"), (f"Δ prob., p.p.<br>{mu}[IC 95%]</span>", "num"),
+                   (f"Prob. base<br>{mu}p.p.</span>", "num")], linhas, classe="compacta",
+                  titulo="E9 principal: logit condicional da 1ª opção, conjunto principal, spline linear, bolsa linear",
+                  legenda=como_ler("escolha", ctx), rodape=fonte_html(E9_EST, E9_EFE, grafico=False), chave="tab_e9")
+
+
+def tabela_e9_especificacoes(ctx, e9) -> str:
+    est = e9["est"]
+    linhas = []
+    for modelo, conj, espec, rot in E9_COMBOS:
+        lin = [esc(rot)]
+        for c in E9_CICLOS:
+            r = e9_coef(est, c, espec, modelo=modelo, conjunto=conj)
+            lin.append("—" if r is None else f"{coef_ic_txt(r)}<br><span class=\"muted\">p {br_p(r['p'])}</span>")
+        linhas.append(lin)
+    for modelo, conj, espec, rot in [("logit_condicional_1a_opcao", "principal", "spline_linear__degraus_por_corte",
+                                      "degraus iguais? p (spline linear)"),
+                                     ("logit_condicional_1a_opcao", "principal", "spline_quadratico__degraus_por_corte",
+                                      "degraus iguais? p (spline quadrático)")]:
+        lin = [esc(rot)]
+        for c in E9_CICLOS:
+            r = e9_coef(est, c, espec, termo="teste_igualdade_degraus_0300_menos_0400", modelo=modelo, conjunto=conj)
+            lin.append("—" if r is None else br_p(r["p"]))
+        linhas.append(lin)
+    return tabela([("Especificação do protocolo", "txt")] + [(f"Ciclo {c}" if c != "empilhado" else "Empilhado", "num")
+                                                           for c in E9_CICLOS], linhas, classe="compacta",
+                  titulo="E9: todas as especificações de bolsa linear do protocolo (coef. [IC 95%] e p) e o teste de "
+                         "igualdade dos dois degraus",
+                  legenda=como_ler("escolha", ctx, "“Degraus iguais?” testa se o degrau em 0,300 e o em 0,400 têm o "
+                                   "mesmo coeficiente (p alto = não rejeita)."),
+                  rodape=fonte_html(E9_EST, grafico=False))
+
+
+def flags_e9(e9) -> dict:
+    """Leitura da robustez pós-auditoria, calculada das saídas (nada digitado)."""
+    est, rob = e9["est"], e9["rob"]
+    f: dict = {}
+    for c in E9_CICLOS:
+        rad = e9_rob(rob, "score_bootstrap_rademacher_cluster_conjunto", c, "p_H0_beta_igual_0")
+        web = e9_rob(rob, "score_bootstrap_webb_cluster_conjunto", c, "p_H0_beta_igual_0")
+        cv3 = e9_rob(rob, "cv3_cluster_conjunto", c, "coef_ep_cv3")
+        inv = e9_rob(rob, "ic_inversao_score_rademacher_cluster_conjunto", c, "coef_ic95_inversao")
+        npl = e9_rob(rob, "placebo_cortes", c, "n_placebos")
+        nge = e9_rob(rob, "placebo_cortes", c, "n_abs_t_placebo_maior_ou_igual_ao_real")
+        ppo = e9_rob(rob, "placebo_cortes", c, "p_posto")
+        cub = e9_coef(est, c, "ROBUSTEZ_POS_AUDITORIA:spline_cubico__bolsa_linear")
+        f[c] = {"rad": rad, "web": web, "cv3": cv3, "inv": inv, "npl": npl, "nge": nge, "ppo": ppo, "cub": cub,
+                "j050c": e9_coef(est, c, "ROBUSTEZ_POS_AUDITORIA:janela_0050__spline_cubico__bolsa_linear"),
+                "j050l": e9_coef(est, c, "ROBUSTEZ_POS_AUDITORIA:janela_0050__spline_linear__bolsa_linear"),
+                "nos": e9_coef(est, c, "ROBUSTEZ_POS_AUDITORIA:nos_cada_0050__spline_linear__bolsa_linear")}
+    f["c13"] = e9_coef(est, "1+3", "ROBUSTEZ_POS_AUDITORIA:ciclos_1_e_3_empilhados__spline_linear__bolsa_linear")
+    if f["c13"] is None:
+        g = est[est["especificacao"].eq("ROBUSTEZ_POS_AUDITORIA:ciclos_1_e_3_empilhados__spline_linear__bolsa_linear")
+                & est["termo"].eq("bolsa_mil")]
+        f["c13"] = g.iloc[0] if len(g) else None
+    f["cochran"] = e9_rob(rob, "heterogeneidade_ciclos", "1,2,3", "cochran_Q")
+    f["z23"] = e9_rob(rob, "heterogeneidade_ciclos", "2 vs 3", "z_ciclo2_menos_ciclo3")
+    f["curso"] = e9_rob(rob, "score_bootstrap_rademacher_cluster_curso", "empilhado", "p_H0_beta_igual_0")
+
+    def menor(r, lim=ALFA):
+        return r is not None and finito(r["p"]) and float(r["p"]) < lim
+
+    def exclui(r, a="ic95_inf", b="ic95_sup"):
+        return r is not None and contem_zero(r[a], r[b]) is False
+
+    c2 = f["2"]
+    f["c2_robusto"] = (menor(c2["rad"]) and menor(c2["web"]) and menor(c2["cv3"]) and exclui(c2["inv"])
+                       and c2["nge"] is not None and float(c2["nge"]["valor"]) == 0)
+    em = f["empilhado"]
+    f["emp_motivos"] = [m for m, ok in [
+        ("spline cúbico: IC 95% contém zero", em["cub"] is not None and contem_zero(em["cub"]["ic95_inf"], em["cub"]["ic95_sup"])),
+        ("janela ±0,050 com spline cúbico: IC 95% contém zero",
+         em["j050c"] is not None and contem_zero(em["j050c"]["ic95_inf"], em["j050c"]["ic95_sup"])),
+        ("cortes placebo: p por posto ≥ 0,05", em["ppo"] is not None and float(em["ppo"]["valor"]) >= ALFA),
+        ("ciclos 1 e 3 sem o 2: IC 95% contém zero", f["c13"] is not None and contem_zero(f["c13"]["ic95_inf"], f["c13"]["ic95_sup"])),
+        ("Q de Cochran rejeita ciclos iguais", menor(f["cochran"])),
+    ] if ok]
+    f["emp_fragil"] = len(f["emp_motivos"]) > 0
+    f["c2_cubico_zero"] = c2["cub"] is not None and contem_zero(c2["cub"]["ic95_inf"], c2["cub"]["ic95_sup"])
+    return f
+
+
+def tabela_e9_robustez(ctx, e9, f) -> str:
+    def p_(r):
+        return "—" if r is None else br_p(r["p"])
+
+    def ic_(r, a="ic95_inf", b="ic95_sup"):
+        return "—" if r is None or not finito(r[a]) else f"[{br(r[a], 3)}; {br(r[b], 3)}]"
+
+    def v_(r, nd=2):
+        return "—" if r is None else br(r["valor"], nd)
+
+    itens = [
+        ("p score bootstrap, Rademacher", lambda d: p_(d["rad"])),
+        ("p score bootstrap, Webb", lambda d: p_(d["web"])),
+        ("p CV3 (t, G − 1)", lambda d: p_(d["cv3"])),
+        ("IC 95% por inversão do score", lambda d: ic_(d["inv"])),
+        ("Placebos: t real", lambda d: v_(e9_rob(e9["rob"], "placebo_cortes", d["_c"], "t_real"))),
+        ("Placebos: |t placebo| ≥ |t real| (de N)",
+         lambda d: "—" if d["nge"] is None else f"{br_int(d['nge']['valor'])} de {br_int(d['npl']['valor'])}"),
+        ("Placebos: p por posto", lambda d: v_(d["ppo"], 3)),
+        ("Spline cúbico: coef. [IC 95%]", lambda d: coef_ic_txt(d["cub"])),
+        ("Nós a cada 0,05: coef. [IC 95%]", lambda d: coef_ic_txt(d["nos"])),
+        ("Janela ±0,050, spline linear", lambda d: coef_ic_txt(d["j050l"])),
+        ("Janela ±0,050, spline cúbico", lambda d: coef_ic_txt(d["j050c"])),
+    ]
+    linhas = []
+    for rot, fn in itens:
+        linhas.append([esc(rot)] + [fn({**f[c], "_c": c}) for c in E9_CICLOS])
+    return tabela([("Teste (cluster por conjunto)", "txt")] + [(f"Ciclo {c}" if c != "empilhado" else "Empilhado", "num")
+                                                             for c in E9_CICLOS], linhas, classe="compacta",
+                  titulo="E9 — robustez pós-auditoria do principal (pós-resultado, fora do protocolo)",
+                  legenda=como_ler("escolha", ctx, "Estes testes foram pedidos pela auditoria independente depois de "
+                                   "ver os resultados (linhas ROBUSTEZ_POS_AUDITORIA, no_protocolo = False); não "
+                                   "substituem a tabela do protocolo."),
+                  rodape=fonte_html(E9_ROB, E9_EST, grafico=False))
+
+
+def tabela_e9_heterogeneidade(ctx, f) -> str:
+    linhas = []
+    if f["c13"] is not None:
+        r = f["c13"]
+        linhas.append(["Ciclos 1 e 3 empilhados, sem o ciclo 2: coef. da bolsa", coef_ic_txt(r, 4), br_p(r["p"])])
+    for rot, r in (("Q de Cochran, ciclos 1, 2 e 3", f["cochran"]), ("z, ciclo 2 menos ciclo 3", f["z23"])):
+        if r is not None:
+            linhas.append([esc(rot), br(r["valor"], 2), br_p(r["p"])])
+    if f["curso"] is not None:
+        linhas.append(["Empilhado com cluster por curso: p do score bootstrap (Rademacher)", "—", br_p(f["curso"]["p"])])
+    return tabela([("Teste", "txt"), ("Estimativa", "num"), ("p", "num")], linhas, classe="compacta estreita",
+                  titulo="E9 — heterogeneidade entre ciclos e cluster por curso (pós-auditoria)",
+                  legenda=como_ler("escolha", ctx, "Se o empilhado depende de um único ciclo, ele é uma média de ciclos "
+                                   "heterogêneos, não um efeito comum bem medido."),
+                  rodape=fonte_html(E9_ROB, E9_EST, grafico=False))
+
+
+def leitura_e9(ctx, e9, f) -> str:
+    est = e9["est"]
+    pr = {c: e9_coef(est, c, "spline_linear__bolsa_linear") for c in E9_CICLOS}
+    itens = []
+    zeros = [c for c in ("1", "3") if pr[c] is not None and contem_zero(pr[c]["ic95_inf"], pr[c]["ic95_sup"])]
+    pos = [c for c in E9_CICLOS if pr[c] is not None and contem_zero(pr[c]["ic95_inf"], pr[c]["ic95_sup"]) is False
+           and float(pr[c]["coef"]) > 0]
+    itens.append(f"No principal do protocolo, o IC 95% do coeficiente da bolsa fica acima de zero em: "
+                 f"{', '.join(('ciclo ' + c) if c != 'empilhado' else 'empilhado' for c in pos) or 'nenhum'}; "
+                 f"contém zero em: {', '.join('ciclo ' + c for c in zeros) or 'nenhum'}.")
+    c2 = f["2"]
+    if f["c2_robusto"]:
+        itens.append(f"<strong>O ciclo 2 é robusto</strong> na inferência com poucos clusters: score bootstrap "
+                     f"(Rademacher p {br_p(c2['rad']['p'])}; Webb p {br_p(c2['web']['p'])}), CV3 (p {br_p(c2['cv3']['p'])}) "
+                     f"e IC por inversão {('[' + br(c2['inv']['ic95_inf'], 3) + '; ' + br(c2['inv']['ic95_sup'], 3) + ']')} "
+                     f"excluem zero; nenhum dos {br_int(c2['npl']['valor'])} cortes placebo tem |t| igual ou maior que o "
+                     f"real (p por posto {br(c2['ppo']['valor'], 3)})."
+                     + (" Ressalva: com spline cúbico na amostra toda, o IC 95% do ciclo 2 contém zero." if f["c2_cubico_zero"]
+                        else ""))
+    else:
+        itens.append('<span class="alerta">A leitura “ciclo 2 robusto” do doc 42 não se confirma nas saídas atuais; '
+                     "ver a tabela de robustez.</span>")
+    if f["emp_fragil"]:
+        itens.append("<strong>O empilhado é frágil</strong>: " + "; ".join(f["emp_motivos"]) + ". Ele é uma média de "
+                     "ciclos heterogêneos e não sobrevive à forma funcional nem à calibração por placebos.")
+    else:
+        itens.append("O empilhado passa em todos os testes pós-auditoria listados.")
+    itens.append("Leitura conjunta: há evidência de que a bolsa anunciada desloca a 1ª opção dentro do ciclo 2, "
+                 "condicional a candidatar-se; ela não se generaliza aos ciclos 1 e 3. É realocação entre células, "
+                 "secundária e exploratória (protocolo §12), não efeito sobre o total de candidatos."
+                 if f["c2_robusto"] and f["emp_fragil"] else
+                 "Leitura conjunta: ver as tabelas; a combinação de robustez desta versão difere da registrada no doc 42.")
+    return '<ul class="leitura">' + "".join(f"<li>{x}</li>" for x in itens) + "</ul>"
+
+
+def secao_e9(ctx) -> str:
+    mo = ctx["mo"]
+    o = ['<section class="quebra" data-rodada="multioutcome"><h2>9. E9 — escolha revelada dos candidatos '
+         "(secundária, exploratória)</h2>"]
+    e9 = mo.get("e9")
+    if not e9:
+        o.append(caixa_ausente("Saídas do E9 ausentes", [E9_EST, E9_EFE, E9_ROB, E9_RES]))
+        return "".join(o) + "</section>"
+    res = e9["res"]
+    o.append(f"<p>Estimando registrado: “{esc(res.get('estimando', ''))}”. Identificação: “{esc(res.get('identificacao', ''))}”. "
+             "O E9 usa a variação <em>dentro do candidato</em>: a mesma pessoa vê células com bolsas diferentes no "
+             "quadro do seu curso. Por isso é muito mais potente que a RDD entre municípios, mas responde a outra "
+             "pergunta.</p>")
+    f = flags_e9(e9)
+    o.append(tabela_e9_principal(ctx, e9))
+    o.append(tabela_e9_especificacoes(ctx, e9))
+    o.append(tabela_e9_robustez(ctx, e9, f))
+    o.append(tabela_e9_heterogeneidade(ctx, f))
+    o.append("<h3>Leitura (gerada das saídas)</h3>" + leitura_e9(ctx, e9, f))
+    o.append(figura_png("Utilidade estimada da célula contra o IVS, relativa a IVS = 0,300 (spline mais bolsa pela faixa)",
+                        [E9_FIG / "E9_utilidade_ivs.png"], E9_SCRIPT, classe="tres-quartos",
+                        sub="Os saltos em 0,300 e 0,400 só são efeito da bolsa sob a hipótese de identificação "
+                            "(nenhuma outra descontinuidade na atratividade da célula nos cortes); a forma entre os "
+                            "cortes depende da flexibilidade do spline.", chave="fig_e9"))
+    lim = "".join(f"<li>{esc(x)}</li>" for x in (res.get("limites") or []))
+    o.append(f"<p class=\"nota\"><strong>Limites registrados.</strong></p><ul class=\"leitura nota\">{lim}</ul>")
+    o.append(f'<div class="fonte">Situação: {br_int(res.get("n_modelos_ok"))} de {br_int(res.get("n_modelos"))} modelos '
+             f"convergiram; executado em {data_br(res.get('data_execucao'))} por <code>{esc(res.get('script', '—'))}</code>. "
+             "Texto de referência: <code>docs/06_execucao/42_resultados_E9_escolha.md</code>.</div>")
+    return "".join(o) + "</section>"
+
+
+# ----- E7 -----------------------------------------------------------------
+
+
+def importar_e7():
+    spec = importlib.util.spec_from_file_location("e7_dird_relatorio", E7_SCRIPT)
+    mod = importlib.util.module_from_spec(spec)
+    antes = sys.dont_write_bytecode
+    sys.dont_write_bytecode = True
+    try:
+        sys.modules["e7_dird_relatorio"] = mod
+        spec.loader.exec_module(mod)
+    finally:
+        sys.dont_write_bytecode = antes
+    return mod
+
+
+E7_ORDEM = [("F3.1", "U"), ("F3.1", "V1"), ("F3.2", "U"), ("F3.3", "U"), ("F3.3.sem_filtro_sus", "U"),
+            ("F3.3.soma_parcial", "U"), ("F3.P1", "U"), ("F3.P2", "U"), ("S6", "U")]
+E7_CORTES = ("0.300", "0.400", "empilhado")
+
+
+def e7_linha(est, oid, pop, corte, esp) -> pd.Series | None:
+    g = est[(est["outcome_id"] == oid) & (est["populacao"] == pop) & (est["corte"] == corte) & (est["especificacao"] == esp)]
+    return g.iloc[0] if len(g) else None
+
+
+def tau_p_e7(r) -> str:
+    if r is None or not finito(r["tau"]):
+        return "—"
+    marca = "" if contem_zero(r["ic95_inf"], r["ic95_sup"]) is not False else " ●"
+    return f"{tau_mo(r['tau'], r['unidade'], sufixo=False)}{marca}<br><span class=\"muted\">p {br_p(r['p_valor'])}</span>"
+
+
+def tabela_p2(ctx, e7) -> str:
+    p2 = e7["res"].get("p2_para_holm") or {}
+    r = e7_linha(e7["est"], "F3.1", "U", "empilhado", "principal")
+    linhas = [[esc(p2.get("hipotese", "P2")), n_mo(r) if r is not None else "—",
+               f"<strong>{tau_mo(p2.get('tau'), r['unidade'] if r is not None else '')}</strong>",
+               ic_mo(p2.get("ic95_inf"), p2.get("ic95_sup"), r["unidade"] if r is not None else ""),
+               ic_mo(p2.get("ic_honesto_inf"), p2.get("ic_honesto_sup"), r["unidade"] if r is not None else ""),
+               br_p(p2.get("p_valor")), q_mo(p2.get("q_bky"))]]
+    return tabela([("Hipótese primária", "txt"), ("Municípios", "num"), ("Salto (vínculos por 10 mil hab.)", "num"),
+                   ("IC 95% CR1", "num"), ("IC honesto (M)", "num"), ("p", "num"), ("q BKY (F3)", "num")], linhas,
+                  classe="compacta", titulo="P2 — F3.1 (vínculos nas CBO-alvo do PMM-E por 10 mil hab.) por DiRD em U, "
+                  "cortes empilhados", legenda=como_ler("dird", ctx),
+                  rodape=fonte_html(E7_RES, E7_EST, grafico=False, extra="p2_para_holm"), chave="tab_p2")
+
+
+def tabela_e7_familia(ctx, e7) -> str:
+    est = e7["est"]
+    linhas = []
+    for oid, pop in E7_ORDEM:
+        for c in E7_CORTES:
+            r = e7_linha(est, oid, pop, c, "principal")
+            if r is None:
+                continue
+            linhas.append([f"{esc(oid)} <span class=\"muted\">{esc(r['descricao_outcome'])}</span>" if c == "0.300" else
+                           f"<span class=\"muted\">{esc(oid)}</span>", esc(pop), corte_txt(c), n_mo(r),
+                           tau_mo(r["tau"], r["unidade"]), ic_mo(r["ic95_inf"], r["ic95_sup"], r["unidade"]),
+                           br_p(r["p_valor"]), q_mo(r["q_bky"]), esc(r["papel"]) if c == "0.300" else ""])
+    return tabela([("Outcome", "txt"), ("Pop.", "txt"), ("Corte", "txt"), ("Municípios", "num"), ("Salto", "num"),
+                   ("IC 95%", "num"), ("p", "num"), ("q BKY", "num"), ("Papel", "txt")], linhas, classe="compacta",
+                  titulo="Família F3 por DiRD (h = 0,050): efeitos, sensibilidades de horas do §16 e placebos",
+                  legenda=como_ler("dird", ctx, "Unidades: vínculos ou horas SUS semanais por 10 mil hab. (Censo 2022); "
+                                   "F3.2 em p.p. Placebos: generalistas (F3.P1, o que a Portaria 752 e o IED movem e a "
+                                   "bolsa não), especialistas fora das CBO-alvo (F3.P2) e médico de família (S6). S6 e as "
+                                   "sensibilidades de horas ficam fora do BKY."),
+                  rodape=fonte_html(E7_EST, grafico=False), inteiro=False, chave="tab_e7")
+
+
+def tabela_e7_placebos(ctx, e7) -> str:
+    est = e7["est"]
+    linhas = []
+    for oid, pop in [("F3.1", "U"), ("F3.1", "V1"), ("F3.2", "U"), ("F3.P1", "U"), ("S6", "U")]:
+        for c in E7_CORTES:
+            vals = [tau_p_e7(e7_linha(est, oid, pop, c, esp)) for esp in
+                    ("placebo_pre", "S5_pre_menos_pre_extra", "S5_dird_pre_extra", "principal")]
+            if all(v == "—" for v in vals):
+                continue
+            linhas.append([esc(oid), esc(pop), corte_txt(c)] + vals)
+    # Atos com data entre um mês antes do pré e o fim do pré (janelas do protocolo), lidos do resumo do E7.
+    atos = [d for d in (e7["res"].get("datas_politicas") or []) if "2024-05" <= str(d.get("data", ""))[:7] <= "2025-06"
+            and "PMM-E" not in str(d.get("ato", ""))]
+    atos_txt = "; ".join(f"{esc(d.get('ato', ''))}, {data_br(d.get('data'))}" for d in sorted(atos, key=lambda d: d["data"]))
+    return tabela([("Outcome", "txt"), ("Pop.", "txt"), ("Corte", "txt"),
+                   ("Placebo dentro do pré<br><span class=\"muted\">2024-12..2025-05 − 2024-06..2024-11</span>", "num"),
+                   ("S5: pré − pré extra<br><span class=\"muted\">antes do PMM-E</span>", "num"),
+                   ("S5: DiRD com pré extra", "num"), ("DiRD principal", "num")], linhas, classe="compacta",
+                  titulo="Placebos no tempo e pré extra (S5): a descontinuidade se movia antes do PMM-E?",
+                  legenda=como_ler("dird", ctx, "Placebo e S5 deveriam ficar em zero se as outras políticas forem "
+                                   "constantes no tempo. ● = IC 95% exclui zero. O placebo dentro do pré não é um nulo "
+                                   "limpo; atos das outras políticas perto ou dentro do pré (resumo do E7, auditoria 18): "
+                                   + (atos_txt or "—") + "."),
+                  rodape=fonte_html(E7_EST, grafico=False))
+
+
+def tabela_e7_nivel(ctx, e7) -> str:
+    est = e7["est"]
+    linhas = []
+    for oid, pop in [("F3.1", "U"), ("F3.1", "V1"), ("F3.2", "U"), ("F3.3", "U"), ("F3.P1", "U"), ("F3.P2", "U")]:
+        for c in ("0.300", "0.400"):
+            vals = [tau_p_e7(e7_linha(est, oid, pop, c, esp)) for esp in
+                    ("nivel_pre_extra", "nivel_pre", "nivel_pos", "principal")]
+            if all(v == "—" for v in vals):
+                continue
+            linhas.append([esc(oid), esc(pop), corte_txt(c)] + vals)
+    return tabela([("Outcome", "txt"), ("Pop.", "txt"), ("Corte", "txt"),
+                   ("Nível, pré extra<br><span class=\"muted\">2022-01..2023-03</span>", "num"),
+                   ("Nível, pré<br><span class=\"muted\">2024-06..2025-06</span>", "num"),
+                   ("Nível, pós<br><span class=\"muted\">2025-10..2026-08</span>", "num"), ("DiRD", "num")], linhas,
+                  classe="compacta", titulo="RDD em nível (o pacote do corte) ao lado da DiRD",
+                  legenda=como_ler("nivel", ctx, "● = IC 95% exclui zero. Uma descontinuidade em nível já no pré extra, "
+                                   "antes de todas as regras com corte em 0,3 ou 0,4 encontradas, é a razão para não ler "
+                                   "a RDD em nível como efeito da bolsa; a DiRD tira essa parte se ela for constante."),
+                  rodape=fonte_html(E7_EST, grafico=False))
+
+
+def tabela_e7_evento(ctx, e7) -> str:
+    ev = e7["ev"]
+    jan = [("pre_extra", "pré extra"), ("entre_pre_extra_e_pre", "entre"), ("pre", "pré"), ("transicao", "transição"),
+           ("pos", "pós")]
+    linhas = []
+    for oid, pop in [("F3.1", "U"), ("F3.1", "V1"), ("F3.P1", "U")]:
+        for c in E7_CORTES:
+            g = ev[(ev["outcome_id"] == oid) & (ev["populacao"] == pop) & (ev["corte"] == c)
+                   & ~ev["referencia"].astype(str).eq("True")]
+            if not len(g):
+                continue
+            lin = [esc(oid), esc(pop), corte_txt(c)]
+            for j, _ in jan:
+                gj = g[g["janela"] == j]
+                lin.append(f"{br_int(int((gj['p_valor'] < ALFA).sum()))} / {br_int(len(gj))}" if len(gj) else "—")
+            linhas.append(lin)
+    return tabela([("Outcome", "txt"), ("Pop.", "txt"), ("Corte", "txt")] + [(r, "num") for _, r in jan], linhas,
+                  classe="compacta", titulo="Estudo de evento: meses com p &lt; 0,05 / meses estimados, por janela "
+                  "(referência 2025-06)",
+                  legenda=como_ler("dird", ctx, "Cada mês é a RDD de Y_t − Y_2025-06. Antes do PMM-E o desejável é não "
+                                   "haver meses fora de zero; contagens feitas aqui sobre a coluna p_valor."),
+                  rodape=fonte_html(E7_EV, grafico=False))
+
+
+def leitura_e7_gerada(ctx, e7) -> str:
+    """Frases geradas pela própria função do E7 (gerar_leitura), a partir das saídas; mesmas do doc 43."""
+    try:
+        mod = importar_e7()
+        t = mod.gerar_leitura(e7["est"], e7["ev"])
+    except Exception as exc:  # noqa: BLE001 - a seção mostra a falha em vez de inventar texto
+        return f'<p class="alerta">Leitura do E7 indisponível: {esc(type(exc).__name__)}: {esc(exc)}</p>'
+    blocos = [("leitura_p2", "P2"), ("leitura_evento_f31", "Estudo de evento de F3.1 em U"),
+              ("leitura_generalistas", "Generalistas (F3.P1) em 0,400"), ("leitura_s5", "Pré extra (S5) de F3.1")]
+    return '<dl class="leitura-dl">' + "".join(
+        f'<dt>{esc(rot)}</dt><dd><p class="gerado" data-gerador="14_estimar_E7_dird_cnes.gerar_leitura" '
+        f'data-chave="{k}">{esc(t[k])}</p></dd>' for k, rot in blocos if k in t) + "</dl>"
+
+
+def secao_e7(ctx) -> str:
+    mo = ctx["mo"]
+    o = ['<section class="quebra" data-rodada="multioutcome"><h2>10. E7 — diferença em descontinuidades no CNES '
+         "(oferta líquida, F3)</h2>"]
+    e7 = mo.get("e7")
+    if not e7:
+        o.append(caixa_ausente("Saídas do E7 ausentes", [E7_EST, E7_EV, E7_RES]))
+        return "".join(o) + "</section>"
+    res = e7["res"]
+    ct = res.get("contraste") or {}
+    o.append(f"<p>Contraste registrado da DiRD: “{esc(ct.get('dird', ''))}”. O E7 mede oferta cadastrada local no CNES "
+             "(vínculos de qualquer programa nas CBO-alvo), não a presença do especialista do PMM-E (F2, no E6), nem "
+             "retenção individual.</p>")
+    o.append("<h3>Hipótese primária P2</h3>")
+    o.append(tabela_p2(ctx, e7))
+    o.append(figura_png("DiRD de F3.1 em U: ΔY contra o IVS, nos dois cortes", [E7_FIG / "E7_dird_F3_1_U.png"],
+                        E7_SCRIPT))
+    o.append("<h3>Família F3</h3>")
+    o.append(tabela_e7_familia(ctx, e7))
+    o.append("<h3>Placebos, pré extra (S5) e descontinuidade em nível</h3>")
+    o.append(tabela_e7_placebos(ctx, e7))
+    o.append(tabela_e7_nivel(ctx, e7))
+    o.append(figura_png("F3.1 em U: RDD em nível no pré extra, no pré e no pós (o pacote do corte)",
+                        [E7_FIG / "E7_nivel_F3_1_U.png"], E7_SCRIPT, classe="tres-quartos"))
+    o.append("<h3>Estudo de evento (S5: datas das políticas marcadas)</h3>")
+    o.append(tabela_e7_evento(ctx, e7))
+    for oid, pop, tit in [("F3_1", "U", "F3.1 (CBO-alvo) em U"), ("F3_P1", "U", "F3.P1 (generalistas, placebo) em U"),
+                          ("F3_1", "V1", "F3.1 em V1 (municípios do quadro do ciclo 1)")]:
+        o.append(figura_png(f"Estudo de evento da DiRD: {tit}", [E7_FIG / f"E7_evento_{oid}_{pop}.png"], E7_SCRIPT,
+                            sub="Salto da RDD de Y_t − Y_2025-06 em cada mês. Tracejado vermelho: atos principais e "
+                                "datas do PMM-E; pontilhado: demais regras da auditoria 18; quadrado = referência."))
+    o.append("<h3>Leitura do E7 (frases geradas das saídas pelo script do E7)</h3>")
+    o.append(leitura_e7_gerada(ctx, e7))
+    cont = res.get("contagens") or {}
+    o.append(f'<div class="fonte">Situação: executado em {data_br(res.get("data_execucao"))} por '
+             f"<code>{esc(res.get('gerador', '—'))}</code>; {br_int(cont.get('linhas'))} linhas em "
+             f"<code>{esc(rel(E7_EST))}</code> ({br_int(cont.get('linhas_no_protocolo'))} do protocolo). Demais figuras "
+             "(F3.2, F3.3, F3.P2, S6; nível e DiRD) em <code>output/rdd_bolsa/E7_figuras/</code>. Texto de referência: "
+             "<code>docs/06_execucao/43_resultados_E7_dird_cnes.md</code>.</div>")
+    return "".join(o) + "</section>"
+
+
+# ----- Protocolo 40, auditoria 18, A4 corrigido e síntese E8 -------------------------------
+
+
+def secao_protocolo40(ctx) -> str:
+    mo = ctx["mo"]
+    pj = mo.get("prot40")
+    o = ['<section class="quebra" data-rodada="multioutcome"><h2>6. Protocolo 40: famílias, métodos, primárias e '
+         "adendos</h2>"]
+    if not pj:
+        o.append(caixa_ausente("Protocolo 40 (versão de máquina) ausente", [PROT40_JSON]))
+        return "".join(o) + "</section>"
+    sha_md = sha256(PROT40_MD)
+    conf = "confere" if sha_md == pj.get("sha256_texto_canonico") else "NÃO confere"
+    aut = pj.get("autorizacao_autor") or {}
+    o.append(f"<p>O E3 testou um único outcome e ficou inconclusivo. Em {data_br(aut.get('data'))} o autor autorizou a "
+             "rodada multi-outcome; o protocolo foi congelado em "
+             f"{data_br(pj.get('data_congelamento'))}, antes de abrir qualquer outcome novo (pré-registro externo: "
+             f"{'sim' if pj.get('pre_registro') else 'não'}; o SHA-256 do texto canônico <code>{esc(rel(PROT40_MD))}</code> "
+             f"{conf} com o registrado em <code>{esc(rel(PROT40_JSON))}</code>). Ele faz três coisas: deriva do edital "
+             "uma família de outcomes fixada antes dos dados; ganha precisão empilhando cortes e ciclos, usando o "
+             "universo de municípios e a DiRD no CNES; e trata a ameaça de outras políticas nos mesmos cortes.</p>")
+    # Famílias: descrições lidas das saídas (E6/E7) ou, na falta, do protocolo.
+    desc: dict[str, str] = {}
+    pops: dict[str, str] = {}
+    for k in ("e6", "e7"):
+        if k in mo:
+            est = mo[k]["est"]
+            pr = est[est["especificacao"] == "principal"]
+            for oid, g in pr.groupby("outcome_id", sort=False):
+                desc.setdefault(oid, str(g["descricao_outcome"].iloc[0]))
+                pops.setdefault(oid, ", ".join(sorted(set(g["populacao"].astype(str)))))
+    linhas = []
+    for fam, info in (pj.get("familias") or {}).items():
+        for oid, txt in (info.get("outcomes") or {}).items():
+            linhas.append([f"<strong>{esc(fam)}</strong>" if oid.endswith(".1") else "", esc(oid),
+                           esc(desc.get(oid, txt)), esc(pops.get(oid, "—")),
+                           esc(info.get("papel", "")) if oid.endswith(".1") else ""])
+    o.append(tabela([("Família", "txt"), ("Id", "txt nowrap"), ("Outcome", "txt"), ("Populações estimadas", "txt"),
+                     ("Papel no protocolo", "txt")], linhas, classe="compacta",
+                    titulo="Família de outcomes derivada do edital (protocolo §5)",
+                    legenda=como_ler("protocolo", ctx, "Populações: U = todos os municípios com IVS oficial; V1–V3 = "
+                                     "municípios com célula no quadro do ciclo 1, 2 ou 3; G3 = cardápio de gestores do "
+                                     "ciclo 3; “+” = ciclos empilhados."),
+                    rodape=fonte_html(PROT40_JSON, E6_EST, E7_EST, grafico=False,
+                                      extra="descrições lidas das saídas do E6 e do E7"), inteiro=False))
+    tm = pj.get("testes_multiplos") or {}
+    prim = "".join(f"<li><strong>{esc(x)}</strong></li>" for x in tm.get("primarias_holm") or [])
+    ref = tm.get("referencias_magnitude") or {}
+    o.append("<h3>Métodos e testes</h3><ul class=\"leitura\">"
+             "<li><strong>Principal:</strong> local linear, kernel triangular, h = 0,050, EP HC1 por município, como no "
+             "E3; cada corte e os dois cortes empilhados (r = s − c, intercepto e inclinações por corte e lado, "
+             "tratamento comum, cluster por município). Ciclos empilhados com intercepto e inclinações por ciclo.</li>"
+             "<li><strong>Sensibilidades:</strong> h = 0,030 e 0,080; IC honesto de Armstrong e Kolesár (M pela regra de "
+             "bolso, 0,5M e 2M), ao lado do HC1; local randomization na janela escolhida por balanço (regra do E5).</li>"
+             "<li><strong>Por tipo:</strong> Poisson local para contagens; ponderado por células e nível célula para "
+             "proporções; limites de Lee para F4.1; DiRD (ΔY = média do pós − média do pré) com estudo de evento, "
+             "placebo no pré e Y_pós com Y_pré como covariável no CNES.</li>"
+             f"<li><strong>Hipóteses primárias, com Holm entre as duas:</strong><ul>{prim}</ul></li>"
+             f"<li><strong>Secundárias:</strong> {esc(tm.get('secundarias', ''))}. Índice: {esc(tm.get('indice', ''))}.</li>"
+             f"<li><strong>Referências de magnitude:</strong> preenchimento {esc(ref.get('preenchimento', '—'))}; "
+             f"candidaturas {esc(ref.get('candidaturas', '—'))}.</li></ul>")
+    # Adendos §12–§16
+    mapa = [("E9", "§12", "E9: escolha revelada dos candidatos (logit condicional da 1ª opção; explodido como "
+                          "sensibilidade); estimando = escolha entre vagas, não total de candidatos"),
+            ("politicas_mesmos_cortes", "§13", "Políticas nos mesmos cortes (auditoria 18): RDD em nível = pacote; "
+                                               "suplementares S1–S6"),
+            ("E9_conjunto_de_escolha", "§14", "E9: conjunto de escolha principal = todas as células do curso e ciclo, "
+                                              "com ou sem vaga imediata; sensibilidade = só vaga imediata"),
+            ("E9_forma_funcional", "§15", "E9: IVS em spline contínuo com nós nos cortes (sem salto de nível); bolsa "
+                                          "linear (principal) e degrau por corte (sensibilidade)"),
+            ("horas_sus", "§16", "F3.3 = horas SUS (TP_SUS_NAO_SUS = 'S'); horas em branco ficam sem valor; sem filtro "
+                                 "e soma parcial como sensibilidades rotuladas")]
+    linhas = []
+    for ad in pj.get("adendos") or []:
+        for chave, par, txt in mapa:
+            if chave in ad:
+                antes = [k.replace("_", " ") for k, v in ad.items() if k.startswith("antes_") and v is True]
+                sup = ad.get("suplementares") or {}
+                extra = ("<br><span class=\"muted\">" + "; ".join(f"{esc(k)}: {esc(v)}" for k, v in sup.items())
+                         + "</span>") if sup else ""
+                linhas.append([par, data_br(ad.get("data")), esc(txt) + extra, esc(", ".join(antes))])
+    o.append(tabela([("§", "txt"), ("Data", "txt nowrap"), ("Conteúdo", "txt"), ("Registrado", "txt")], linhas,
+                    classe="compacta", titulo="Adendos e esclarecimentos (§12–§16), todos antes de estimar",
+                    legenda=como_ler("protocolo", ctx, "Cada adendo foi registrado antes da etapa que ele afeta "
+                                     "(coluna “Registrado”, lida do JSON do protocolo)."),
+                    rodape=fonte_html(PROT40_JSON, grafico=False)))
+    expo = "".join(f"<li>{esc(x)}</li>" for x in pj.get("exposicao_previa_a_outcomes") or [])
+    o.append(f"<p class=\"nota\"><strong>Exposição prévia a outcomes (registrada no protocolo):</strong></p>"
+             f"<ul class=\"leitura nota\">{expo}</ul>"
+             f"<p class=\"nota\">Regra de relato: “{esc(pj.get('regra_de_relato', ''))}”.</p>")
+    return "".join(o) + "</section>"
+
+
+def tabelas_md(texto: str) -> list[tuple[list[str], list[list[str]]]]:
+    """Tabelas Markdown (cabeçalho, linhas) de um texto."""
+    out, atual = [], []
+    for ln in texto.splitlines() + [""]:
+        if ln.startswith("|"):
+            atual.append([c.strip() for c in ln.strip().strip("|").split("|")])
+        elif atual:
+            if len(atual) >= 2 and set("".join(atual[1])) <= set("-: "):
+                out.append((atual[0], atual[2:]))
+            atual = []
+    return out
+
+
+def md_inline(s: str) -> str:
+    """Markdown em linha (negrito, código) para HTML, com escape."""
+    h = esc(s)
+    h = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", h)
+    return re.sub(r"`(.+?)`", r"<code>\1</code>", h)
+
+
+def secao_politicas(ctx) -> str:
+    mo = ctx["mo"]
+    o = ['<section class="quebra" data-rodada="multioutcome"><h2>7. Políticas nos mesmos cortes de IVS '
+         "(auditoria 18)</h2>"]
+    if not AUD18_MD.exists():
+        o.append(caixa_ausente("Auditoria 18 ausente", [AUD18_MD]))
+        return "".join(o) + "</section>"
+    texto = AUD18_MD.read_text(encoding="utf-8")
+    o.append("<p>Além da bolsa do PMM-E, outras regras federais mudam em 0,300 e em 0,400. Uma RDD em nível nesses "
+             "cortes mede um <strong>pacote</strong>; a DiRD do CNES (seção 10) remove só a parte constante no tempo. "
+             "Os outcomes do funil do candidato (E6 F1, E9) são os mais próximos da bolsa, porque as outras regras não "
+             "pagam o especialista do PMM-E nos atos arquivados.</p>")
+    tabs = tabelas_md(texto)
+    imp = next(((c, l) for c, l in tabs if c and c[0] == "Corte" and any("verificado" in x for x in c)), None)
+    if imp:
+        cab, lin = imp
+        o.append(tabela([(md_inline(x), "txt") for x in cab], [[md_inline(x) for x in ln] for ln in lin],
+                        classe="compacta", titulo="O que muda em cada corte além da bolsa: verificado × não verificado",
+                        legenda=como_ler("politicas", ctx),
+                        rodape=fonte_html(AUD18_MD, grafico=False, extra=f"§3, tabela copiada do documento na geração; "
+                                                                          f"SHA-256 {sha256(AUD18_MD)[:12]}")))
+    else:
+        o.append('<p class="alerta">Tabela “Implicações para o estimando” não encontrada na auditoria 18.</p>')
+    dird = next(((c, l) for c, l in tabs if c and c[0] == "Política" and any("Constante" in x for x in c)), None)
+    if dird:
+        cab, lin = dird
+        o.append(tabela([(md_inline(x), "txt") for x in cab], [[md_inline(x) for x in ln] for ln in lin],
+                        classe="compacta", titulo="A hipótese da DiRD: cada política é constante entre pré e pós?",
+                        legenda=como_ler("politicas", ctx, "A DiRD remove só a parte constante; o que muda entre pré e "
+                                         "pós continua no contraste."),
+                        rodape=fonte_html(AUD18_MD, grafico=False, extra="§3.1")))
+    a10 = mo.get("a10") or {}
+    sob = a10.get("municipios_sobre_os_limites") or {}
+    e7 = mo.get("e7")
+    datas = (e7["res"].get("datas_politicas") if e7 else None) or []
+    if datas:
+        linhas = [[data_br(d.get("data")), esc(d.get("ato", "")), "sim" if d.get("marca_principal") else "não",
+                   esc(d.get("fonte", ""))] for d in sorted(datas, key=lambda d: d.get("data", ""))]
+        o.append(tabela([("Data", "txt nowrap"), ("Ato ou marco", "txt"), ("Marca principal no estudo de evento", "txt"),
+                         ("Fonte", "txt")], linhas, classe="compacta",
+                        titulo="Datas das políticas e do PMM-E marcadas no estudo de evento do E7",
+                        legenda=como_ler("datas", ctx, "Datas lidas do resumo do E7, que as tirou das auditorias 18 "
+                                         "e 01."), rodape=fonte_html(E7_RES, grafico=False, extra="datas_politicas")))
+    itens = []
+    for c in ("0.300", "0.400"):
+        v = sob.get(c) or {}
+        if v:
+            itens.append(f"{br_int(v.get('n_municipios'))} municípios com IVS exatamente {corte_txt(c)}")
+    s3 = ((mo.get("e6") or {}).get("res") or {}).get("S3") or {}
+    pm = s3.get("portes_muda") or {}
+    if itens or pm:
+        o.append("<p class=\"nota\">Onde as convenções de fronteira divergem: "
+                 + ("; ".join(itens) + f" (<code>{esc(rel(A10_DIAG))}</code>), excluídos no donut S2. " if itens else "")
+                 + ("Classes de porte em que o estrato da APS muda no corte (S3): "
+                    + "; ".join(f"{corte_txt(c)}: portes {', '.join(str(x) for x in v)}" for c, v in pm.items())
+                    + f" (<code>{esc(rel(E6_RES))}</code>)." if pm else "") + "</p>")
+    return "".join(o) + "</section>"
+
+
+def secao_a4(ctx) -> str:
+    mo = ctx["mo"]
+    o = ['<section class="quebra" data-rodada="multioutcome"><h2>11. A4 reestimado com a base oficial '
+         "(auditoria 19)</h2>"]
+    fm = mo.get("fm")
+    if not fm:
+        o.append(caixa_ausente("Registro do failure mode ausente", [FM_CSV, FM_RES]))
+        return "".join(o) + "</section>"
+    d, res = fm["csv"], fm["res"]
+    nat = set(d["natureza_antes"].astype(str)) | set(d["natureza_depois"].astype(str))
+    o.append("<p>O A4 (atração por estrato territorial e gradiente de IVS no ciclo 1) usava covariáveis do arquivo de "
+             "IVS errado. Ele foi reestimado com o IVS 2010 oficial e a população do Censo 2022. A coluna "
+             "“antes” fica só como registro do failure mode "
+             f"(natureza das colunas no arquivo: {esc(', '.join(sorted(nat)))}; referência Git "
+             f"<code>{esc(str(res.get('ref_git_antes', ''))[:12])}</code>).</p>")
+    a4 = d[d["bloco"].astype(str).str.startswith("A4")]
+    linhas, blocos = [], set()
+    for _, r in a4.iterrows():
+        muda = [m for m, k in (("p", "muda_lado_de_5pct_p"), ("q", "muda_lado_de_5pct_q"), ("sinal", "muda_sinal"))
+                if str(r[k]) == "True"]
+        novo = r["bloco"] not in blocos
+        blocos.add(r["bloco"])
+        linhas.append([f"<strong>{esc(r['bloco'])}</strong>" if novo else "", esc(r["termo"]),
+                       f'<span class="failure">{br(r["coef_antes_failure_mode"], 3)}</span>',
+                       f"<strong>{br(r['coef_depois'], 3)}</strong>",
+                       f"{br(r['ep_antes_failure_mode'], 3)} → {br(r['ep_depois'], 3)}",
+                       f"{br_p(r['p_antes_failure_mode'])} → {br_p(r['p_depois'])}",
+                       (f"{br_p(r['q_antes_failure_mode'])} → {br_p(r['q_depois'])}" if finito(r["q_depois"]) else "—"),
+                       ", ".join(muda) or "—"])
+    o.append(tabela([("Bloco", "txt"), ("Termo", "txt nowrap"),
+                     ("Coef. antes<br><span class=\"muted\">FAILURE_MODE</span>", "num"),
+                     ("Coef. depois<br><span class=\"muted\">EMPIRICO</span>", "num"), ("EP antes → depois", "num"),
+                     ("p antes → depois", "num"), ("q antes → depois", "num"), ("Cruza 5% / sinal", "txt")], linhas,
+                    classe="compacta",
+                    titulo="A4: antes (failure mode, não citável) → depois (base oficial)",
+                    legenda=como_ler("failure", ctx), rodape=fonte_html(FM_CSV, grafico=False,
+                                                                        extra="blocos A4; os blocos A5 estão no mesmo "
+                                                                              "arquivo e na auditoria 19"),
+                    inteiro=False, chave="tab_a4"))
+    mud = [m.lstrip("- ").strip() for m in res.get("mudancas_de_conclusao") or []]
+    if mud:
+        o.append("<p><strong>Mudanças de conclusão registradas</strong> (sinal ou lado do limiar de 5%):</p>"
+                 '<ul class="leitura">' + "".join(f"<li>{md_inline(m)}</li>" for m in mud) + "</ul>")
+    cad = res.get("cadeia_rdd") or {}
+    idt = cad.get("estimativas_identicas_byte_a_byte") or {}
+    if idt:
+        n_ok = sum(1 for v in idt.values() if v is True)
+        o.append(f"<p class=\"nota\">RDD da bolsa: {br_int(n_ok)} de {br_int(len(idt))} arquivos de estimativas "
+                 "reexecutados ficaram idênticos byte a byte (a cadeia da RDD já usava o IVS oficial).</p>")
+    o.append(f'<div class="fonte">Fonte: <code>{esc(rel(FM_CSV))}</code> e <code>{esc(rel(FM_RES))}</code> '
+             "(gravados por <code>scripts/tema_trabalho/12_registrar_failure_mode_ivs.py</code>). Texto de referência: "
+             "<code>docs/auditorias/19_reestimacao_base_oficial_failure_mode.md</code>.</div>")
+    return "".join(o) + "</section>"
+
+
+def valor_e8(v, prof: int = 0) -> str:
+    """Renderização genérica de E8_resumo.json (esquema definido pela tarefa E8, não por este relatório)."""
+    if isinstance(v, dict):
+        if prof >= 3:
+            return f"<code>{esc(json.dumps(v, ensure_ascii=False)[:400])}</code>"
+        return '<dl class="kv">' + "".join(f"<dt>{esc(k)}</dt><dd>{valor_e8(x, prof + 1)}</dd>" for k, x in v.items()) + "</dl>"
+    if isinstance(v, list):
+        if v and all(isinstance(x, dict) for x in v):
+            chaves = list(dict.fromkeys(k for x in v for k in x))
+            if len(chaves) <= 10:
+                return tabela([(esc(k), "txt") for k in chaves],
+                              [[valor_e8(x.get(k), prof + 1) for k in chaves] for x in v], classe="compacta")
+        return "<ul>" + "".join(f"<li>{valor_e8(x, prof + 1)}</li>" for x in v) + "</ul>"
+    if isinstance(v, bool):
+        return "sim" if v else "não"
+    if isinstance(v, (int, float)) and not isinstance(v, bool):
+        return esc(f"{v}".replace(".", ",")) if isinstance(v, float) else br_int(v)
+    return "—" if v is None else md_inline(str(v))
+
+
+def secao_sintese_e8(ctx, caminho: Path | None = None) -> str:
+    """Placeholder marcado da síntese E8: lê E8_resumo.json se existir; senão, 'pendente'. Nunca inventa conteúdo."""
+    caminho = caminho or E8_RES
+    o = ['<section class="quebra" data-rodada="multioutcome" id="sintese-e8"><h2>12. Síntese (E8)</h2>',
+         '<div class="reservado"><p class="pend-tit">Seção reservada à tarefa E8 (síntese, Holm entre P1 e P2 e '
+         "doc 44). O relatório não escreve conteúdo próprio aqui.</p>"]
+    dados = ler_json(caminho) if caminho.exists() else None
+    if not dados:
+        o.append(f'<p><span class="pill pill-pend">pendente</span> <code>{esc(rel(caminho))}</code> ainda não existe. '
+                 "A seção será preenchida quando a síntese for gravada e o relatório for gerado de novo.</p>")
+    else:
+        o.append(como_ler("sintese", ctx))
+        o.append(f'<p><span class="pill pill-ok">lido</span> <code>{esc(rel(caminho))}</code> '
+                 f"(SHA-256 <code>{sha256(caminho)[:12]}</code>).</p>")
+        o.append(valor_e8(dados))
+        docs44 = sorted((ROOT / "docs" / "06_execucao").glob("44_*.md"))
+        if docs44:
+            o.append(f'<p class="nota">Texto de referência: <code>{esc(rel(docs44[0]))}</code>.</p>')
+    o.append("</div></section>")
+    return "".join(o)
+
+
+# ----- Resumo da rodada (hipóteses primeiro) --------------------------------------------
+
+
+def secao_resumo_mo(ctx) -> str:
+    mo = ctx["mo"]
+    o = ['<section class="quebra resumo" data-rodada="multioutcome"><h2>Resumo da rodada multi-outcome '
+         "(protocolo 40)</h2>"]
+    e6, e7, e9 = mo.get("e6"), mo.get("e7"), mo.get("e9")
+    linhas = []
+    if e6:
+        p1 = e6["res"].get("p1_para_holm") or {}
+        r = e6_linha(e6["est"], outcome_id="P1", especificacao="principal", populacao="V1+V2+V3", corte="empilhado")
+        u = r["unidade"] if r is not None else "desvios-padrao (indice)"
+        linhas.append(["<strong>P1</strong> índice de atração-presença (F1.1, F1.2, F1.3, F2.1)",
+                       "RDD em nível: pacote do corte", "V1+V2+V3, ciclos e cortes empilhados",
+                       n_mo(r) if r is not None else "—", f"<strong>{tau_mo(p1.get('tau'), u)}</strong>",
+                       ic_mo(p1.get("ic95_inf"), p1.get("ic95_sup"), u), br_p(p1.get("p_valor"))])
+    if e7:
+        p2 = e7["res"].get("p2_para_holm") or {}
+        r = e7_linha(e7["est"], "F3.1", "U", "empilhado", "principal")
+        u = r["unidade"] if r is not None else ""
+        linhas.append(["<strong>P2</strong> F3.1: vínculos nas CBO-alvo do PMM-E por 10 mil hab. (CNES)",
+                       "DiRD: bolsa + variação das outras descontinuidades", "U, cortes empilhados",
+                       n_mo(r) if r is not None else "—", f"<strong>{tau_mo(p2.get('tau'), u)}</strong>",
+                       ic_mo(p2.get("ic95_inf"), p2.get("ic95_sup"), u), br_p(p2.get("p_valor"))])
+    holm = "ver seção 12 (E8)" if mo.get("e8") else '<span class="pill pill-pend">pendente</span> (E8)'
+    o.append(tabela([("Hipótese primária (ordem do protocolo §7)", "txt"), ("Contraste", "txt"), ("População", "txt"),
+                     ("Municípios", "num"), ("Salto", "num"), ("IC 95%", "num"), ("p (antes do Holm)", "num")], linhas,
+                    classe="compacta resultados", titulo="As duas hipóteses primárias da rodada, com Holm entre elas",
+                    legenda=como_ler("nivel", ctx, "P1 está em desvios-padrão do lado de baixo; P2 em vínculos por 10 mil "
+                                     "hab., por DiRD."),
+                    rodape=f'<p class="nota">Holm entre P1 e P2: {holm}.</p>'
+                           + fonte_html(E6_RES, E7_RES, grafico=False, extra="p1_para_holm e p2_para_holm")))
+    itens = []
+    if e6:
+        p1 = e6["res"].get("p1_para_holm") or {}
+        cz = contem_zero(p1.get("ic95_inf"), p1.get("ic95_sup"))
+        itens.append("<strong>P1 (funil, E6):</strong> " + ("IC 95% contém zero: não detectamos efeito do pacote do corte "
+                     "sobre atração e presença." if cz else "IC 95% exclui zero (ver seção 8).") + " Componentes e "
+                     "diagnósticos na seção 8; o F0 de seleção é lido antes de V1–V3.")
+    if e7:
+        p2 = e7["res"].get("p2_para_holm") or {}
+        cz = contem_zero(p2.get("ic95_inf"), p2.get("ic95_sup"))
+        itens.append("<strong>P2 (CNES, E7):</strong> " + ("IC 95% contém zero: a DiRD não detecta mudança na oferta "
+                     "cadastrada nas CBO-alvo." if cz else "IC 95% exclui zero (ver seção 10).")
+                     + " Vínculo no CNES não é médico do PMM-E; placebos, pré extra e estudo de evento na seção 10.")
+    if e9:
+        f = flags_e9(e9)
+        pr = {c: e9_coef(e9["est"], c, "spline_linear__bolsa_linear") for c in E9_CICLOS}
+        coefs = "; ".join(f"{'ciclo ' + c if c != 'empilhado' else 'empilhado'} {br(pr[c]['coef'], 3)} (p {br_p(pr[c]['p'])})"
+                          for c in E9_CICLOS if pr[c] is not None)
+        itens.append("<strong>Secundária (E9, escolha dos candidatos; exploratória):</strong> coeficiente da bolsa por "
+                     f"R$ 1 mil: {coefs}. "
+                     + ("O ciclo 2 sobrevive à inferência com poucos clusters e aos cortes placebo; o empilhado é frágil "
+                        "(forma funcional e placebos). " if f["c2_robusto"] and f["emp_fragil"] else
+                        "Robustez: ver seção 9. ")
+                     + "É realocação entre células, não efeito sobre o total de candidatos.")
+    itens.append("<strong>Pacote:</strong> outras regras federais mudam nos mesmos cortes (seção 7); nenhuma linha em "
+                 "nível é o efeito da bolsa pura, nem da participação no PMM-E, nem do Agora Tem Especialistas.")
+    if mo.get("fm"):
+        itens.append("<strong>A4 corrigido:</strong> o gradiente territorial reestimado com a base oficial está na "
+                     "seção 11; os números antigos ficam só como failure mode.")
+    o.append('<ul class="resumo-lista">' + "".join(f"<li>{x}</li>" for x in itens) + "</ul>")
+    dizer = []
+    p1z = contem_zero(*((e6["res"].get("p1_para_holm") or {}).get(k) for k in ("ic95_inf", "ic95_sup"))) if e6 else None
+    p2z = contem_zero(*((e7["res"].get("p2_para_holm") or {}).get(k) for k in ("ic95_inf", "ic95_sup"))) if e7 else None
+    if p1z and p2z:
+        dizer.append("“Com o protocolo congelado, não detectamos efeito do pacote do corte de IVS sobre o funil (P1) nem "
+                     "sobre a oferta de especialistas no CNES (P2)”, com os IC ao lado.")
+    if e9:
+        f = flags_e9(e9)
+        if f["c2_robusto"] and f["emp_fragil"]:
+            dizer.append("“Entre as vagas do mesmo curso, candidatos do ciclo 2 escolheram mais as células com bolsa "
+                         "maior; o resultado não se repete nos ciclos 1 e 3” (E9, exploratório).")
+    dizer.append("Evitar: “a bolsa não funciona”, “efeito nulo” e “efeito da bolsa” para resultados em nível.")
+    o.append('<div class="dizer"><strong>Como dizer nos slides.</strong><ul>' + "".join(f"<li>{x}</li>" for x in dizer)
+             + "</ul></div>")
+    return "".join(o) + "</section>"
 
 
 # ---------------------------------------------------------------------------
@@ -3620,6 +4853,21 @@ table.resultados td { vertical-align: middle; }
 .afirmar li { margin-bottom: 3pt; }
 .afirmar-tit { font-weight: 650; margin: 0 0 2pt; }
 ol.leitura { padding-left: 16pt; }
+figure img { display: block; width: 100%; height: auto; margin: 2pt auto 4pt; }
+figure img.meia { width: 62%; }
+figure img.tres-quartos { width: 78%; }
+.failure { color: var(--muted); text-decoration: line-through; text-decoration-color: #c3c2b7; }
+.parte { break-before: page; font-size: 17pt; font-weight: 650; color: var(--ink); border-bottom: 2px solid var(--ink);
+  padding-bottom: 4pt; margin: 0 0 10pt; }
+.parte + section.quebra { break-before: auto; }
+ul.nota li { font-size: 8.2pt; color: var(--ink2); }
+.legenda-salto { break-after: avoid; }
+ol.sumario { columns: 2; column-gap: 10mm; font-size: 8.8pt; }
+section.capa table.status { font-size: 7.8pt; }
+section.capa dl.meta { margin: 4mm 0; }
+section.capa .aviso { margin-bottom: 3mm; }
+section.capa h3 { margin-top: 8pt; }
+section.capa table.status td { padding: 1.6pt 4pt; }
 ol.leitura li, ul.leitura li { margin-bottom: 3pt; }
 """
 
@@ -3640,14 +4888,24 @@ def montar_html(commit, sujo, agora) -> str:
     ctx["balanco_dp"] = dados_balanco(ctx)
     ctx["nota_suporte"] = nota_suporte(ctx)
     ctx["e5"] = carregar_e5(ctx)
+    ctx["mo"] = carregar_mo()
     corpo = [
         secao_capa(ctx),
         secao_resumo(ctx),
+        secao_resumo_mo(ctx),
         secao_regra(ctx),
         secao_e3(ctx),
         secao_e5(ctx),
         secao_antes(ctx),
         secao_leitura(ctx),
+        '<div class="parte" data-rodada="divisor">Parte II — rodada multi-outcome (protocolo 40)</div>',
+        secao_protocolo40(ctx),
+        secao_politicas(ctx),
+        secao_e6(ctx),
+        secao_e9(ctx),
+        secao_e7(ctx),
+        secao_a4(ctx),
+        secao_sintese_e8(ctx),
         secao_apendice_rd(ctx),
         secao_proveniencia(),
     ]
