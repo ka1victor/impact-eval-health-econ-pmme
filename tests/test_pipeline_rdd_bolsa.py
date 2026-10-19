@@ -59,6 +59,10 @@ A09 = AQ / "a09_adquirir_cnes_nacional.py"
 A14 = AQ / "a14_adquirir_tiss_ans.py"
 A15 = AQ / "a15_adquirir_sih_residencia.py"  # portão G3 (plano 51): SIH por residência, só verificar
 A16 = AQ / "a16_cnes_profissional_mensal.py"
+# Adendo §12 do protocolo 47: safras v2 do SIA (a12b) e do SIH (a13b) e SIA por forma × curso (a17), só verificar
+A12B = AQ / "a12b_safra_v2_sia.py"
+A13B = AQ / "a13b_safra_v2_sih.py"
+A17 = AQ / "a17_adquirir_sia_forma_curso.py"
 # Leem data/ivs_ipea_2010_municipios.csv como IVS 2010 ou dependem disso (auditoria 16).
 RETIRADOS = [
     RDD / "01_auditar_regra_e_suporte.py",
@@ -183,6 +187,12 @@ class TestCadeiaRddBolsa(unittest.TestCase):
             A15: [AQ / "a13_adquirir_sih_tabnet.py"],
             # a16 (portão G5) importa funções do a09 e confere o SHA-256 dos ZIPs contra o manifesto dele.
             A16: [A09],
+            # Safras v2 (adendo §12.1): o a12b embrulha o a12 e compara com a v1; o a13b embrulha o a13 e compara
+            # com a v1 e com as validações do a15.
+            A12B: [AQ / "a12_adquirir_sia_tabnet.py"],
+            A13B: [AQ / "a13_adquirir_sih_tabnet.py", A15],
+            # a17 (adendo §12.2) importa o a12, lê o G4 e cruza com as tabelas CBO × subgrupo do a12 e do a12b.
+            A17: [AQ / "a12_adquirir_sia_tabnet.py", A12B, AQ / "01_congelar_ponte_cbo.py"],
             # E7 lê o painel do a09, o IED do a10, a janela LR do E5 e confere a de U com a do E6.
             RDD / "14_estimar_E7_dird_cnes.py": [
                 A09, AQ / "a10_normas_mesmos_cortes_ivs.py", RDD / "11_inferencia_alternativa.py",
@@ -272,7 +282,7 @@ class TestCadeiaRddBolsa(unittest.TestCase):
         self.assertEqual(RA.ARGUMENTOS[RDD / "07_estimar_E3_rdd_completa.py"], ["--escore", ESCORE_COMPLETO])
         self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09,
                                               AQ / "a12_adquirir_sia_tabnet.py", AQ / "a13_adquirir_sih_tabnet.py", A14,
-                                              A15, A16})
+                                              A15, A16, A12B, A13B, A17})
         # a16 (portão G5): como o a09, o run_all só confere sem rede.
         self.assertEqual(RA.ARGUMENTOS[A16], ["--etapa", "verificar"])
         self.assertEqual(RA.ARGUMENTOS[AQ / "a12_adquirir_sia_tabnet.py"], ["--etapa", "verificar"])
@@ -282,6 +292,10 @@ class TestCadeiaRddBolsa(unittest.TestCase):
         # a15 (SIH por residência, portão G3): como o a13, o run_all só confere sem rede; fora do --rdd-bolsa.
         self.assertEqual(RA.ARGUMENTOS[A15], ["--etapa", "verificar"])
         self.assertNotIn(A15, RA.etapas(somente_rdd_bolsa=True))
+        # Safras v2 e a17 (adendo §12 do protocolo 47): só verificar, sem rede; fora do --rdd-bolsa.
+        for script in (A12B, A13B, A17):
+            self.assertEqual(RA.ARGUMENTOS[script], ["--etapa", "verificar"], script.name)
+            self.assertNotIn(script, RA.etapas(somente_rdd_bolsa=True), script.name)
         self.assertTrue((ROOT / ESCORE_COMPLETO).exists())
         # O 04b, que grava o escore completo, vem antes do E3.
         self.assertLess(posicao(RDD / "04b_validar_ivs_oficial_escore_administrativo.py"),

@@ -9,8 +9,8 @@ A opção `--rdd-bolsa` roda a cadeia sobre os insumos já versionados das etapa
 anteriores (quadro de vagas, funil e tipologia do ciclo 1, população do Censo
 2022, painel do ciclo 1), inclusive as aquisições a07 a a11 e a rodada
 multi-outcome (12, 13, 16 e 14), a família N (23), a abertura (24 e o P5, 29) e a família K (21 e 22). Nenhuma etapa baixa o CNES nacional, o SIA, o SIH nem o
-TISS: o a09, o a12, o a13, o a14, o a15 e o a16 (portão G5, CNES profissional mensal) rodam em
-`--etapa verificar`; o a13 e o a15 não fazem parte da opção `--rdd-bolsa`.
+TISS: o a09, o a12, o a12b, o a13, o a13b, o a14, o a15, o a16 (portão G5) e o a17 rodam em `--etapa verificar`;
+o a12b, o a13, o a13b, o a15 e o a17 não fazem parte da opção `--rdd-bolsa`.
 """
 
 from pathlib import Path
@@ -94,12 +94,21 @@ STEPS = [
     # a12 (SIA/SUS do TabNet, protocolo 47): como o a09, só confere as saídas versionadas
     # contra o manifesto, sem rede (ver ARGUMENTOS). Lê a ponte (01) e a regra de CBO do a09.
     ROOT / "scripts" / "aquisicao" / "a12_adquirir_sia_tabnet.py",
+    # Safra v2 do SIA nos meses 202509–202607 (a12b, adendo §12.1 do protocolo 47): embrulho do a12;
+    # só confere as saídas versionadas e a comparação com a v1, sem rede (ver ARGUMENTOS). Não lê IVS.
+    ROOT / "scripts" / "aquisicao" / "a12b_safra_v2_sia.py",
     # SIH/SUS no TabNet (protocolo 47, insumo de K2): o run_all só confere os painéis
     # versionados com `--etapa verificar`, sem rede (ver ARGUMENTOS). Não lê IVS.
     ROOT / "scripts" / "aquisicao" / "a13_adquirir_sih_tabnet.py",
     # SIH por local de residência (a15, portão G3 do plano 51): como o a13, só confere os painéis
     # versionados sem rede (ver ARGUMENTOS). Vem depois do a13, cujas validações compara. Não lê IVS.
     ROOT / "scripts" / "aquisicao" / "a15_adquirir_sih_residencia.py",
+    # Safra v2 do SIH (a13b, adendo §12.1 do protocolo 47): embrulho do a13; compara com a v1 do a13 e com
+    # as validações do a15; só confere sem rede (ver ARGUMENTOS). Não lê IVS.
+    ROOT / "scripts" / "aquisicao" / "a13b_safra_v2_sih.py",
+    # SIA por forma de organização × curso específico (a17, adendo §12.2 do protocolo 47): importa o a12 e o
+    # G4 e cruza com as tabelas CBO × subgrupo do a12 e do a12b; só confere sem rede (ver ARGUMENTOS).
+    ROOT / "scripts" / "aquisicao" / "a17_adquirir_sia_forma_curso.py",
     # TISS/ANS do protocolo 47 (a14): como o a09, só confere o painel versionado (ARGUMENTOS).
     ROOT / "scripts" / "aquisicao" / "a14_adquirir_tiss_ans.py",
     # Portão G5 (doc 51, T4.0): painel CNES médico × mês dos médicos ligados na X1 (a16). Como o a09,
@@ -172,6 +181,11 @@ ARGUMENTOS = {
     # SIH por residência (a15): 495 consultas ao TabNet, cache bruto fora do controle de versão; o run_all só
     # confere as saídas versionadas contra o manifesto, sem rede e sem gravar.
     ROOT / "scripts" / "aquisicao" / "a15_adquirir_sih_residencia.py": ["--etapa", "verificar"],
+    # Safras v2 (adendo §12.1 do protocolo 47) e a17 (adendo §12.2): consultas ao TabNet com cache bruto
+    # fora do controle de versão; o run_all só confere as saídas versionadas contra o manifesto, sem rede.
+    ROOT / "scripts" / "aquisicao" / "a12b_safra_v2_sia.py": ["--etapa", "verificar"],
+    ROOT / "scripts" / "aquisicao" / "a13b_safra_v2_sih.py": ["--etapa", "verificar"],
+    ROOT / "scripts" / "aquisicao" / "a17_adquirir_sia_forma_curso.py": ["--etapa", "verificar"],
     # TISS/ANS (a14): cerca de 83 GB de ZIPs, apagados depois da agregação; o run_all só
     # confere as saídas versionadas contra o manifesto, sem rede e sem gravar.
     ROOT / "scripts" / "aquisicao" / "a14_adquirir_tiss_ans.py": ["--etapa", "verificar"],

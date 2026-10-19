@@ -8,6 +8,37 @@
 
 ---
 
+## 19/10/2026 — Aquisições do adendo §12 do protocolo 47: safras v2 do SIH e do SIA (§12.1) e a17 (§12.2)
+
+Motivo: o adendo §12 do protocolo
+[`06_execucao/47`](06_execucao/47_protocolo_producao_especializada.md) pede uma
+segunda safra do SIH e do SIA, por causa da revisão da fonte vista no A15 §5, e a
+produção ambulatorial por forma de organização dos cursos "específico" do G4
+(T3.2). É só aquisição e validação: nada foi calculado por IVS, lado de corte,
+tratamento ou chegada, e nada foi estimado.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/aquisicao/A12b_A13b_safras_v2.md`](auditorias/aquisicao/A12b_A13b_safras_v2.md) | safras v2 do SIH (202201–202607) e do SIA (202509–202607): como foram feitas, comparação com a v1 (SIH revisto em 202509–202607; SIA sem revisão), limites |
+| [`auditorias/aquisicao/A17_sia_forma_curso.md`](auditorias/aquisicao/A17_sia_forma_curso.md) | aquisição a17: SIA por município × mês × forma de organização × curso "específico", consultas, regras de zero e ausência, validações, cobertura e limites |
+
+Mudanças fora de `docs/`:
+- `scripts/aquisicao/a12b_safra_v2_sia.py` e `a13b_safra_v2_sih.py` (embrulhos do
+  a12 e do a13; o a12 e o a13 não mudaram) e saídas em `output/aquisicao/sia_v2/`
+  e `output/aquisicao/sih_v2/`;
+- `scripts/aquisicao/a17_adquirir_sia_forma_curso.py` e saídas em
+  `output/aquisicao/sia_forma_curso/`;
+- caches brutos dos três no `.gitignore`;
+- `run_all.py`: a12b, a13b e a17 em `--etapa verificar`, fora do `--rdd-bolsa`;
+  manifesto A6 regenerado pelo gerador;
+- testes `tests/test_aquisicao_safras_v2.py` e
+  `tests/test_aquisicao_sia_forma_curso.py`; `tests/test_pipeline_rdd_bolsa.py`
+  atualizado;
+- `scripts/README.md`, `tests/README.md` e o inventário
+  [`04_dados/02`](04_dados/02_inventario_dados_por_outcome.md).
+
 ## 19/10/2026 — Auditoria 23: P5 (protocolo 55), aprovado com correções
 
 Motivo: auditoria independente do P5 (commit `89c0eef`). Bases, T5.1, T5.2,
