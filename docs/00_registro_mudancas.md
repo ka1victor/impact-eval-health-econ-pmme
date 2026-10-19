@@ -8,6 +8,19 @@
 
 ---
 
+## 19/10/2026 — Resultados do E7: DiRD no CNES (família F3 do protocolo 40)
+
+Motivo: a tarefa E7 do protocolo multi-outcome
+([`06_execucao/40`](06_execucao/40_protocolo_multioutcome_rdd_bolsa.md)) estima
+a família F3 (oferta líquida no CNES) por diferença em descontinuidades, com
+placebos, estudo de evento e as suplementares S2–S6.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/43_resultados_E7_dird_cnes.md`](06_execucao/43_resultados_E7_dird_cnes.md) | contraste identificado, amostras, P2, estimativas, sensibilidades, placebos, níveis, S5, estudo de evento, S3/S4, limites e desvios do E7; tabelas geradas de `output/rdd_bolsa/E7_*` por `scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py` |
+
 ## 18/10/2026 — CNES nacional para a DiRD (tarefa C do protocolo 40)
 
 Motivo: a família F3 do protocolo multi-outcome
