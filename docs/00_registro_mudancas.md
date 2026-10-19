@@ -8,6 +8,18 @@
 
 ---
 
+## 19/10/2026 — Protocolo de produção especializada (doc 47)
+
+Motivo: pedido do autor de medir, como KPI central, consultas, exames e
+cirurgias que exigem médico especialista, no SUS e no conjunto SUS + planos do
+município. O protocolo foi congelado antes de baixar qualquer outcome.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/47_protocolo_producao_especializada.md`](06_execucao/47_protocolo_producao_especializada.md) | protocolo da família K: SIA e SIH (TabNet) e TISS da ANS; DiRD nos cortes (D1) e chegada do especialista do PMM-E (D2, exploratório) |
+
 ## 19/10/2026 — Resultados exploratórios pós-síntese X1–X6 (doc 46)
 
 Motivo: execução do protocolo exploratório
