@@ -8,6 +8,37 @@
 
 ---
 
+## 19/10/2026 — Auditoria 23: P5 (protocolo 55), aprovado com correções
+
+Motivo: auditoria independente do P5 (commit `89c0eef`). Bases, T5.1, T5.2,
+BKY e T5.3 foram reproduzidos com código próprio, e nenhuma estimativa mudou.
+As correções são de relato:
+- nota e marca † no termo CAPS da sensibilidade, idêntico ao curso 17;
+- leitura com todas as associações que excluem zero e com o T5.2b;
+- desvios 6 e 7 declarados (células pedidas fora do cardápio no E2; amostra do
+  T5.2b por célula);
+- linguagem sem verbo de mudança;
+- rótulos e legenda das figuras.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/23_auditoria_P5_abertura.md`](auditorias/23_auditoria_P5_abertura.md) | auditoria do P5: recálculo, achados C1–C5, julgamento dos desvios e números principais |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/29_determinantes_abertura.py`, reexecutado; as saídas
+  `P5_*` são byte a byte iguais entre duas execuções;
+- `scripts/rdd_bolsa/23_estimar_contagem_vagas.py`: `desenhar` ganhou
+  `legenda_salto` e `legenda_fora`, com padrões que mantêm as figuras N, NA e
+  K;
+- `tests/test_P5_abertura.py`, que passou de 27 para 36 testes, com a classe
+  `TestRecalculoIndependenteAuditoria23`, e `tests/README.md`, agora com 1.065
+  testes em 58 módulos. Rodados módulo a módulo: 1.063 passaram e 2 foram
+  pulados;
+- o link no [`README.md`](README.md) de `docs/` e a linha de auditoria no
+  [doc 57e](06_execucao/57e_resultados_P5_abertura.md).
+
 ## 19/10/2026 — Resultados do P5 (protocolo 55): determinantes da abertura e da priorização
 
 Motivo: onda 3 do plano do doc 51 (agente E-P5). Estima o protocolo 55, congelado

@@ -129,6 +129,8 @@ ROTULO_COMPLEMENTAR = "COMPLEMENTAR (contribuicao por bloco no T5.3 nao pedida p
 CONTRASTE = E6.CONTRASTE
 Z = float(stats.norm.ppf(0.975))
 
+LEGENDA_SALTO = "salto no corte (pacote do corte; descritivo)"   # auditoria 23: nao "efeito estimado"
+NOTA_IDENTICA = "coluna identica a"     # auditoria 23: termo mantido igual a uma coluna descartada
 MOTIVO_CURSO_FORA_DA_PONTE = ("curso sem CBO na ponte curso-CBO do a09 (output/aquisicao/ponte_curso_cbo_oficial.json "
                               "cobre os cursos 1 a 16): vinculos do curso ausentes, nada imputado")
 
@@ -532,6 +534,9 @@ def montar_celulas(card: pd.DataFrame, adesao: pd.DataFrame, mun: pd.DataFrame, 
         "linhas_adesao": int(len(adesao)),
         "linhas_adesao_fora_do_cardapio": int(len(fora)),
         "linhas_adesao_fora_do_cardapio_em_municipio_do_cardapio": int(fora["co_ibge"].isin(set(cel["co_ibge"])).sum()),
+        # Auditoria 23: o que fica fora do E2 (células pedidas sem linha no cardápio).
+        "linhas_adesao_fora_do_cardapio_priorizadas": int((fora["priorizadas"] > 0).sum()),
+        "linhas_adesao_fora_do_cardapio_com_cnes_no_cardapio": int(fora["co_cnes_7d"].isin(set(cel["co_cnes_7d"])).sum()),
         "celulas_de_cursos_fora_da_ponte": int((cel["curso_na_ponte"] == 0).sum()),
         "celulas_de_municipio_sem_ivs_oficial": int(cel["s_mil"].isna().sum()),
         "municipios_do_cardapio_sem_ivs_oficial": sorted(cel.loc[cel["s_mil"].isna(), "co_ibge"].unique().tolist()),
@@ -779,6 +784,14 @@ def ajustar_glm(df: pd.DataFrame, y: str, covs: list[dict], fe: str | None, fami
     d, sep = remover_separacao(resto, y, covs, fe, familia)
     X, nomes, meta = desenho(d, covs, fe)
     manter, colin = remover_colineares(X, nomes)
+    # Auditoria 23: coluna mantida idêntica a uma descartada (ex.: tipo CAPS = curso 17 na sensibilidade): o termo
+    # mantido carrega os dois contrastes juntos; registrado para a nota da linha e a marca da tabela do doc.
+    identicas = {}
+    for nome_d in colin:
+        jd = nomes.index(nome_d)
+        for jk in manter[1:]:
+            if np.array_equal(X[:, jd], X[:, jk]):
+                identicas.setdefault(nomes[jk], []).append(nome_d)
     X, nomes, meta = X[:, manter], [nomes[i] for i in manter], [meta[i] for i in manter]
     yv = d[y].to_numpy(dtype=float)
     fit = irls(X, yv, familia)
@@ -795,8 +808,8 @@ def ajustar_glm(df: pd.DataFrame, y: str, covs: list[dict], fe: str | None, fami
     f_fe = irls(X[:, idx_fe], yv, familia)
     return {"d": d, "X": X, "y": yv, "nomes": nomes, "meta": meta, "fit": fit, "V": V, "G": G, "pseudo_r2": r2,
             "blocos": blocos, "pseudo_r2_so_fe": pseudo_r2(familia, X[:, idx_fe], yv, f_fe),
-            "descartadas_covariavel": desc, "separacao": sep, "colineares": colin, "n_entrada": int(len(d0)),
-            "familia": familia}
+            "descartadas_covariavel": desc, "separacao": sep, "colineares": colin, "identicas": identicas,
+            "n_entrada": int(len(d0)), "familia": familia}
 
 
 def _nota_amostra(r: dict) -> str:
@@ -833,16 +846,19 @@ def linhas_logit(r: dict, base: dict, esp_coef: str) -> list[dict]:
             continue
         b, ep = float(fit["beta"][j]), float(math.sqrt(max(V[j, j], 0.0)))
         p = L.p_normal(b / ep) if ep > 0 else float("nan")
+        ident = r.get("identicas", {}).get(m["termo"], [])
+        nota_ident = (f"{NOTA_IDENTICA} {';'.join(ident)} (descartada por colinearidade): o termo junta o atributo e "
+                      "esse nivel, e o efeito marginal nao compara celulas do mesmo curso") if ident else ""
         out.append(nova_linha(**comum, especificacao=esp_coef, termo=m["termo"], descricao_termo=m["desc"],
                               bloco=m["bloco"], tipo_termo=m["tipo"], coef=b, ep_coef=ep, estimativa=b, ep=ep,
                               ic95_inf=b - Z * ep, ic95_sup=b + Z * ep, p_valor=p, unidade_estimativa=UN_LOGIT,
-                              nota=_juntar(nota, "" if ep > 0 else "EP nulo")))
+                              nota=_juntar(nota, "" if ep > 0 else "EP nulo", nota_ident)))
         ame, ep_a = ame_logit(X, fit["beta"], V, j, m, nomes, meta)
         linha = nova_linha(**comum, especificacao="T5.1c", termo=m["termo"], descricao_termo=m["desc"],
                            bloco=m["bloco"], tipo_termo=m["tipo"], coef=b, ep_coef=ep, estimativa=ame, ep=ep_a,
                            ic95_inf=ame - Z * ep_a, ic95_sup=ame + Z * ep_a,
                            p_valor=L.p_normal(ame / ep_a) if ep_a > 0 else float("nan"),
-                           unidade_estimativa=UN_PROB, nota=nota)
+                           unidade_estimativa=UN_PROB, nota=_juntar(nota, nota_ident))
         if m["tipo"] == "continua":
             dp = float(np.std(X[:, j], ddof=1))
             linha.update({"dp_termo": dp, "estimativa_por_dp": ame * dp, "ic95_inf_por_dp": (ame - Z * ep_a) * dp,
@@ -987,7 +1003,10 @@ def estimar_t52(cel: pd.DataFrame, g3: pd.DataFrame) -> list[dict]:
                         efeitos_fixos="curso" if fe else "",
                         nota=_juntar(r.get("nota", ""),
                                      f"colunas descartadas: {r['covariaveis_descartadas']}" if r.get("covariaveis_descartadas") else "",
-                                     "media_outcome = media bruta do lado de baixo na janela"))
+                                     "media_outcome = media bruta do lado de baixo na janela",
+                                     ("amostra de casos completos: sem os cursos fora da ponte curso-CBO (vinculos do "
+                                      "curso ausentes); difere da do T5.2a (auditoria 23)")
+                                     if (cv and unidade == "celula") else ""))
                     if not np.isfinite(tau):
                         linha["status"] = "SEM_ESTIMATIVA"
                         linha["nota"] = _juntar(linha["nota"], "rdd_lib devolveu NaN")
@@ -1085,7 +1104,8 @@ def _resumo_modelo(r: dict) -> dict:
             "pseudo_r2_so_efeito_fixo": r["pseudo_r2_so_fe"], "convergiu": r["fit"]["convergiu"],
             "iteracoes": r["fit"]["iteracoes"], "max_abs_indice_linear": r["fit"]["max_abs_eta"],
             "descartadas_por_covariavel_ausente": r["descartadas_covariavel"], "separacao": r["separacao"],
-            "colineares_descartadas": r["colineares"], "familia": r["familia"]}
+            "colineares_descartadas": r["colineares"], "colunas_identicas_a_descartadas": r["identicas"],
+            "familia": r["familia"]}
 
 
 # ---------------------------------------------------------------------------
@@ -1098,19 +1118,20 @@ def _fmt(v, casas=1, sinal=True) -> str:
     return (f"{v:+.{casas}f}" if sinal else f"{v:.{casas}f}").replace("-", "−").replace(".", ",")
 
 
-def _rotulo_curto(r: dict) -> str:
-    d = str(r["descricao_termo"])
-    if r["tipo_termo"] == "continua":
-        d += " (+1 DP)"
-    return d if len(d) <= 78 else d[:75] + "..."
+def _rotulo_curto(r: dict, maximo: int = 78) -> str:
+    """Rótulo do eixo: a marca '(+1 DP)' das contínuas nunca é cortada (auditoria 23: o corte a escondia)."""
+    d = str(r["descricao_termo"]).replace(" (média mensal)", " por mês")
+    suf = " (+1 DP)" if r["tipo_termo"] == "continua" else ""
+    lim = maximo - len(suf)
+    return (d if len(d) <= lim else d[:lim - 3] + "...") + suf
 
 
 COMO_LER_AME = (
     "COMO LER. Cada linha é uma característica medida antes do ciclo 3 (do estabelecimento, do município, da "
     "capacidade e da produção pré-programa, da região de saúde e o IVS). O ponto é o efeito marginal médio do logit: "
-    "quantos pontos percentuais a probabilidade muda, em média, quando a característica sobe um desvio-padrão (para "
-    "as medidas contínuas, marcadas '+1 DP') ou quando a célula tem o atributo em vez da categoria de referência "
-    "(entre parênteses). Todas as características entram juntas, com efeito fixo de curso: cada ponto compara células "
+    "quantos pontos percentuais a probabilidade é maior (ou menor), em média, entre células com um desvio-padrão a "
+    "mais da característica (medidas contínuas, marcadas '+1 DP') ou entre células com o atributo e as da categoria "
+    "de referência (entre parênteses). Todas as características entram juntas, com efeito fixo de curso: cada ponto compara células "
     "do mesmo curso que diferem só naquele atributo, mantidas as demais. A barra é o IC 95% (EP com cluster por "
     "município). Barra que não cruza a linha do zero: associação que os dados distinguem de zero; barra que cruza: os "
     "dados não distinguem a associação de zero, o que não prova que ela seja zero. À esquerda, o pedido do gestor "
@@ -1145,9 +1166,10 @@ COMO_LER_T52_CEL = (
     "salto no corte, com valor em pontos percentuais, IC e p no título. O salto mede o pacote do corte, não a bolsa "
     "sozinha nem a participação no PMM-E. Se o IC 95% contém zero, os dados não distinguem o salto de zero. EMPIRICO.")
 COMO_LER_T53 = (
-    "COMO LER. Cada linha é uma característica municipal pré-determinada; o ponto é a razão de taxas do Poisson: por "
-    "quanto o número esperado de células (ou de vagas) no quadro da 1ª chamada se multiplica quando a característica "
-    "sobe um desvio-padrão (medidas contínuas, '+1 DP') ou quando o município tem o atributo em vez da referência. "
+    "COMO LER. Cada linha é uma característica municipal pré-determinada; o ponto é a razão de taxas do Poisson: "
+    "quantas vezes maior (ou menor) é o número esperado de células (ou de vagas) no quadro da 1ª chamada entre "
+    "municípios com um desvio-padrão a mais da característica (medidas contínuas, '+1 DP') ou entre municípios com o "
+    "atributo e os da referência, mantidas as demais. "
     "1 = nenhuma diferença; 1,5 = 50% a mais; 0,5 = metade. Entram todos os municípios com IVS oficial, valendo zero "
     "os que não tiveram célula no quadro. A barra é o IC 95% (EP robusto). Ciclos 1 e 2 em cores diferentes. É "
     "descritivo: dá base ao A4 do P2 e não diz por que o quadro saiu assim. O eixo é logarítmico. EMPIRICO.")
@@ -1212,15 +1234,20 @@ def gerar_figuras(est: pd.DataFrame, dados: dict, dir_fig: Path) -> list[dict]:
                ("Priorização da SGTES (E2, célula pedida)", {"especificacao": "T5.1c", "etapa": "E2", "variante": "principal"})]
     lin = [_ordem(est, f) for _, f in filtros]
     n = max(len(x) for x in lin)
-    fig, axs = plt.subplots(1, 2, figsize=(15, 0.33 * n + 4.6), sharey=False)
+    # Auditoria 23: os dois painéis têm os mesmos termos na mesma ordem; o rótulo fica só à esquerda e os painéis
+    # ganham largura (antes, os rótulos repetidos espremiam os pontos).
+    mesmos = [r["termo"] for r in lin[0]] == [r["termo"] for r in lin[1]]
+    fig, axs = plt.subplots(1, 2, figsize=(15, 0.33 * n + 3.6), sharey=mesmos)
     fig.patch.set_facecolor(T23.SUPERFICIE)
-    for ax, (tit, _), ls in zip(axs, filtros, lin):
-        _forest(ax, ls, 100.0, T23.COR_DENTRO, rotulos=True)
+    for i, (ax, (tit, _), ls) in enumerate(zip(axs, filtros, lin)):
+        _forest(ax, ls, 100.0, T23.COR_DENTRO, rotulos=(i == 0 or not mesmos))
+        if mesmos and i == 1:
+            ax.tick_params(axis="y", left=False, labelleft=False)
         ax.set_title(tit, fontsize=11)
         ax.set_xlabel("efeito marginal médio (p.p.; contínuas: +1 DP)", fontsize=9)
         ax.set_facecolor(T23.SUPERFICIE)
     fig.suptitle("P5 — com o que o pedido e a priorização das células do ciclo 3 andam juntos (descritivo)", fontsize=13)
-    fig.tight_layout(rect=(0, 0.17, 1, 0.96))
+    fig.tight_layout(rect=(0, 0.13, 1, 0.96))
     _como_ler(fig, COMO_LER_AME)
     nome = "P5_T51_efeitos_marginais.png"
     fig.savefig(dir_fig / nome, dpi=110, facecolor=fig.get_facecolor())
@@ -1290,7 +1317,8 @@ def gerar_figuras(est: pd.DataFrame, dados: dict, dir_fig: Path) -> list[dict]:
     nome = "P5_T52_rdd_municipio_empilhado.png"
     T23.desenhar(paineis, "T5.2a — pedido e priorização nos cortes do IVS, por município (ciclo 3, cortes empilhados)",
                  "Fração de células", "distância ao corte (IVS 2010 oficial − corte)", COMO_LER_T52_MUN, dir_fig / nome,
-                 unidade_n=("município", "municípios"), tamanhos_leg="auto", rotulo_salto="topo")
+                 unidade_n=("município", "municípios"), tamanhos_leg="auto", rotulo_salto="topo",
+                 legenda_salto=LEGENDA_SALTO, legenda_fora=False)
     feitas.append({"arquivo": rotulo(dir_fig / nome), "paineis": meta})
     # 4. RDD por célula com efeito fixo de curso (T5.2a, empilhado).
     cel = dados["cel"]
@@ -1313,7 +1341,7 @@ def gerar_figuras(est: pd.DataFrame, dados: dict, dir_fig: Path) -> list[dict]:
     T23.desenhar(paineis, "T5.2a — pedido e priorização nos cortes do IVS, por célula (ciclo 3, efeito fixo de curso)",
                  "Probabilidade (ajustada pelo efeito fixo de curso)", "distância ao corte (IVS 2010 oficial − corte)",
                  COMO_LER_T52_CEL, dir_fig / nome, unidade_n=("célula", "células"), tamanhos_leg="auto",
-                 rotulo_salto="topo")
+                 rotulo_salto="topo", legenda_salto=LEGENDA_SALTO, legenda_fora=False)
     feitas.append({"arquivo": rotulo(dir_fig / nome), "paineis": meta})
     # 5. T5.3: razão de taxas por DP, ciclos 1 e 2.
     fig, axs = plt.subplots(1, 2, figsize=(15, 9.5), sharey=True)
@@ -1417,10 +1445,18 @@ def tabela_ame(est: pd.DataFrame, **f) -> str:
     linhas = []
     ordem_bloco = {b: i for i, b in enumerate(BLOCOS)}
     sub = sub.assign(_o=sub["bloco"].map(ordem_bloco)).sort_values(["_o", "termo"], kind="stable")
+    marcas = []
     for r in sub.to_dict("records"):
         v, ic = _ame_txt(r)
         lo, hi = (r["ic95_inf_por_dp"], r["ic95_sup_por_dp"]) if r["tipo_termo"] == "continua" else (r["ic95_inf"], r["ic95_sup"])
-        linhas.append([ROTULO_BLOCO[r["bloco"]].split(" (")[0], str(r["descricao_termo"]),
+        nota_r = str(r["nota"]) if isinstance(r["nota"], str) else ""
+        marca = ""
+        if NOTA_IDENTICA in nota_r:
+            marca = " †"
+            iguais = nota_r.split(NOTA_IDENTICA, 1)[1].split("(descartada", 1)[0].strip()
+            marcas.append(f"† {r['descricao_termo']}: a coluna é idêntica a `{iguais}`, descartada por colinearidade. "
+                          "O valor junta o atributo e esse nível; não compara células do mesmo curso.")
+        linhas.append([ROTULO_BLOCO[r["bloco"]].split(" (")[0], str(r["descricao_termo"]) + marca,
                        "+1 DP" + (f" (DP = {_n(r['dp_termo'], 3, sinal=False)})" if np.isfinite(r["dp_termo"]) else "")
                        if r["tipo_termo"] == "continua" else "atributo vs. referência",
                        v, ic, _n(r["p_valor"], 3, sinal=False), "sim" if _exclui_zero(lo, hi) else "não"])
@@ -1428,6 +1464,8 @@ def tabela_ame(est: pd.DataFrame, **f) -> str:
     rod = (f"\n\nAmostra: {_i(m['n_obs'])} linhas ({_i(m['n_eventos'])} com outcome = 1), {_i(m['n_clusters'])} "
            f"municípios (clusters); {_i(m['n_descartadas'])} linhas fora (motivos na coluna `nota` do CSV). Média do "
            f"outcome: {_n(m['media_outcome'], 1, pp=True, sinal=False)} %.")
+    if marcas:
+        rod += "\n\n" + "\n".join(dict.fromkeys(marcas))
     return _tab(["Grupo", "Característica", "Variação", "Efeito marginal médio", "IC 95%", "p", "IC exclui zero"],
                 linhas) + rod
 
@@ -1518,9 +1556,11 @@ def tabela_amostras(resumo: dict) -> str:
 
 def _frase_ame(r: dict) -> str:
     v, ic = _ame_txt(r)
-    quem = "o município" if r["unidade_analise"] == "municipio" else "a célula"
-    alvo = "a característica sobe um desvio-padrão" if r["tipo_termo"] == "continua" else f"{quem} tem o atributo"
-    return f"{r['descricao_termo']} (quando {alvo}: {v}, IC 95% {ic})"
+    # Auditoria 23: comparação entre unidades, sem verbo de mudança ("quando sobe").
+    quem = "municípios" if r["unidade_analise"] == "municipio" else "células"
+    alvo = ("por desvio-padrão a mais" if r["tipo_termo"] == "continua"
+            else f"{quem} com o atributo contra a referência")
+    return f"{r['descricao_termo']} ({alvo}: {v}, IC 95% {ic})"
 
 
 def leitura(est: pd.DataFrame) -> str:
@@ -1540,8 +1580,10 @@ def leitura(est: pd.DataFrame) -> str:
             lo, hi = (r["ic95_inf_por_dp"], r["ic95_sup_por_dp"]) if r["tipo_termo"] == "continua" else (r["ic95_inf"], r["ic95_sup"])
             return _exclui_zero(lo, hi)
         sig = sorted([r for r in termos if excl(r) and r["termo"] != "ivs"], key=tam, reverse=True)
-        mais = [r for r in sig if (r["estimativa"] > 0)][:4]
-        menos = [r for r in sig if (r["estimativa"] < 0)][:4]
+        # Auditoria 23: todas as que excluem zero, em ordem de tamanho (antes, só as 4 maiores de cada sinal, o que
+        # omitia linhas sem dizer).
+        mais = [r for r in sig if (r["estimativa"] > 0)]
+        menos = [r for r in sig if (r["estimativa"] < 0)]
         txt = [nome]
         if mais:
             txt.append("Probabilidade maior associada a: " + "; ".join(_frase_ame(r) for r in mais) + ".")
@@ -1582,10 +1624,29 @@ def leitura(est: pd.DataFrame) -> str:
             fim = ": o IC 95% exclui zero, mas a linha não passa no BKY entre as linhas do T5.2 (q ≥ 0,05)"
         else:
             fim = ": o IC 95% exclui zero e a linha passa no BKY (q < 0,05)"
+        if ex:
+            # Auditoria 23: a linha que exclui zero vem com a contraparte com covariáveis (T5.2b).
+            sb = _sel(est, especificacao="T5.2b", unidade_analise=un, outcome=oid, corte=EMPILHADO)
+            if len(sb) == 1:
+                rb = sb.iloc[0]
+                fim += (f"; com as covariáveis pré-determinadas (T5.2b), {_n(rb['estimativa'], 1, pp=True)} p.p. (IC 95% "
+                        f"[{_n(rb['ic95_inf'], 1, pp=True)}; {_n(rb['ic95_sup'], 1, pp=True)}])"
+                        + ("" if _exclui_zero(rb["ic95_inf"], rb["ic95_sup"]) else ", que os dados não distinguem de zero")
+                        + (", numa amostra sem os cursos fora da ponte curso–CBO" if un == "celula" else ""))
         t.append(f"{nome}: salto de {_n(r['estimativa'], 1, pp=True)} p.p. (IC 95% [{_n(r['ic95_inf'], 1, pp=True)}; "
                  f"{_n(r['ic95_sup'], 1, pp=True)}], q BKY {_n(r['q_bky'], 3, sinal=False)})" + fim)
     if t:
-        partes.append("**Nos cortes (T5.2a, cortes empilhados, h = 0,050).** " + "; ".join(t) + ". Cada salto mede o "
+        prot = est[est["entra_bky"].astype(bool)]
+        exc = prot[[_exclui_zero(a, b) for a, b in zip(prot["ic95_inf"], prot["ic95_sup"])]]
+        lista = "; ".join(f"{r['especificacao']}, {r['unidade_analise']}, {r['outcome']}, corte "
+                          f"{str(r['corte']).replace('.', ',')} ({_n(r['estimativa'], 1, pp=True)} p.p., q BKY "
+                          f"{_n(r['q_bky'], 3, sinal=False)})" for r in exc.to_dict("records"))
+        n_q = int((prot["q_bky"] < 0.05).sum())
+        partes.append("**Nos cortes (T5.2a, cortes empilhados, h = 0,050).** " + "; ".join(t) + ". "
+                      f"Entre as {len(prot)} linhas do T5.2 que entram no BKY (cortes separados e empilhados, com e sem "
+                      f"covariáveis), {len(exc)} têm IC 95% que exclui zero" + (f" ({lista})" if len(exc) else "")
+                      + f"; {'nenhuma' if n_q == 0 else n_q} {'tem' if n_q <= 1 else 'têm'} q BKY < 0,05. "
+                      "Cada salto mede o "
                       "pacote do corte (bolsa anunciada +R$ 5 mil e outras regras federais nos mesmos cortes), não a "
                       "bolsa sozinha nem efeito da participação no PMM-E; IC que contém zero é falta de evidência com a "
                       "precisão relatada, não prova de ausência.")
@@ -1666,8 +1727,8 @@ DESCRICAO_FIGURAS = {
 DECISOES = [
     "E1: outcome = a celula do cardapio tem linha no resultado final da adesao (aba principal); populacao = celulas "
     "do cardapio de municipios que constam do resultado (qualquer linha). Municipio que nao consta: pedido ausente, "
-    "nunca zero (doc 41a, §5). Linhas da adesao com celula fora do cardapio nao entram (nao ha atributo do cardapio "
-    "para elas) e sao contadas.",
+    "nunca zero (doc 41a, §5). Linhas da adesao com celula fora do cardapio nao entram no E1 nem no E2 (o cardapio "
+    "nao tem a celula; ver desvios, auditoria 23) e sao contadas.",
     "E2: outcome = priorizadas > 0 na linha da adesao; populacao = celulas do cardapio com linha na adesao. A regra "
     "tudo ou nada e conferida (falha fechada).",
     "Presenca (linha separada do §1): logit no nivel do municipio (G3), com as covariaveis municipais.",
@@ -1726,12 +1787,29 @@ def montar_desvios(dados: dict) -> list[dict]:
         {"data": DATA_EXECUCAO, "item": "Municípios sem região de saúde ou sem IVS",
          "situacao": f"Sem região de saúde na tabela do TabNet: {', '.join(im['municipios_sem_cir']) or 'nenhum'}; "
                      f"sem IVS 2010 oficial (criados depois de 2010): "
-                     f"{', '.join(im['municipios_sem_ivs_oficial']) or 'nenhum'}.",
+                     f"{', '.join(im['municipios_sem_ivs_oficial']) or 'nenhum'}. O código sem região só cabe na "
+                     "faixa 'Ignorado' da UF na tabela; a região de saúde a que ele pertence tem o polo e a escassez "
+                     "calculados sem ele (auditoria 23).",
          "resolucao": "Polo e escassez regional (ou IVS) ausentes; o município e as suas células saem dos modelos que "
                       "usam a covariável e são contados; nada imputado."},
         {"data": DATA_EXECUCAO, "item": "Local do resultado",
          "situacao": "O §5 do protocolo diz 'doc 57, seção P5'; o doc 57 é a síntese da onda 5 (doc 51, §5).",
          "resolucao": "Resultados em docs/06_execucao/57e_resultados_P5_abertura.md, para entrar na síntese 57."},
+        # Auditoria 23: dois desvios que estavam só nas decisões, ou em lugar nenhum.
+        {"data": "2026-10-19 (auditoria 23)", "item": "Células pedidas fora do cardápio no E2",
+         "situacao": f"O §1 define a unidade do E2 como a célula pedida. {ic['linhas_adesao_fora_do_cardapio']} linhas "
+                     f"da adesão não têm célula no cardápio ({ic['linhas_adesao_fora_do_cardapio_priorizadas']} "
+                     f"priorizadas; {ic['linhas_adesao_fora_do_cardapio_com_cnes_no_cardapio']} com o estabelecimento "
+                     "no cardápio, em outro curso). O §2 tira os atributos do estabelecimento do cardápio.",
+         "resolucao": "Ficam fora do E1 (não há célula do cardápio para comparar) e também do E2, cuja população é a "
+                      "das células do cardápio com linha na adesão; contadas. A taxa de priorização dessas linhas é "
+                      "maior que a das células do cardápio, então o E2 descreve a priorização das células do cardápio, "
+                      "não a de todo pedido."},
+        {"data": "2026-10-19 (auditoria 23)", "item": "Amostra do T5.2b por célula",
+         "situacao": "As covariáveis do §2 incluem os vínculos do curso, ausentes nos cursos fora da ponte.",
+         "resolucao": "O T5.2b por célula é de casos completos e não tem os cursos fora da ponte; a diferença entre "
+                      "T5.2a e T5.2b por célula junta o ajuste pelas covariáveis e a mudança de amostra (n_obs e "
+                      "n_descartadas no CSV)."},
     ]
 
 
