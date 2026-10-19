@@ -24,11 +24,25 @@
 | `output/aquisicao/cnes_nacional/mensal/` | cache por competência dos vínculos médicos (Parquet) e metadados | não (`.gitignore`) |
 | `data/raw/cnes/BASE_DE_DADOS_CNES_AAAAMM.ZIP` | ZIP bruto, apagado depois da extração validada | não |
 
-Colunas do painel: `n_vinculos`, `n_profissionais_distintos`
-(`CO_PROFISSIONAL_SUS`), `horas_sus_semanais` (ambulatorial + hospitalar SUS),
-`horas_totais` (SUS + outros), `n_vinculos_horas_ausentes`, `tem_profissional`
-(≥ 1 profissional distinto) e `natureza_dos_dados = "EMPIRICO"`. As duas
-colunas de horas podem ser ausentes (nulo), pela regra da §4.
+Colunas do painel (horas pelo §16 do protocolo 40):
+
+| Coluna | Definição | Papel |
+|---|---|---|
+| `n_vinculos` | linhas de `tbCargaHorariaSus` na célula | |
+| `n_vinculos_sus` | vínculos com `TP_SUS_NAO_SUS = 'S'` | |
+| `n_profissionais_distintos` | `CO_PROFISSIONAL_SUS` distintos | |
+| `horas_sus_semanais` | ambulatorial + hospitalar dos vínculos com `TP_SUS_NAO_SUS = 'S'`; nulo se algum deles tem um desses campos em branco | **principal (F3.3)** |
+| `horas_sus_semanais_parcial` | a mesma soma, só com as horas observadas | sensibilidade rotulada |
+| `horas_totais_amb_hosp` | ambulatorial + hospitalar de todos os vínculos, sem filtro SUS; nulo se algum vínculo tem um desses campos em branco | sensibilidade rotulada |
+| `horas_totais` | ambulatorial + hospitalar + outros de todos os vínculos; nulo se algum vínculo tem qualquer dos três em branco | sensibilidade rotulada |
+| `horas_totais_parcial` | `horas_totais` só com as horas observadas | sensibilidade rotulada |
+| `n_vinculos_horas_ausentes` | vínculos da célula (SUS ou não) com algum dos três campos em branco ou não numérico; ler ao lado das parciais | |
+| `tem_profissional` | `n_profissionais_distintos ≥ 1` | |
+| `natureza_dos_dados` | sempre `"EMPIRICO"` | |
+
+Na primeira versão do painel, `horas_sus_semanais` somava ambulatorial e
+hospitalar de todos os vínculos, SUS ou não; essa soma agora se chama
+`horas_totais_amb_hosp`.
 
 Grupos:
 - `cbo_XXXXXX`: cada CBO-alvo da ponte
@@ -41,7 +55,10 @@ Grupos:
   §13 do protocolo 40 (especificação S6). Não entra em `generalistas`;
 - `especialistas_nao_alvo`: CBO 2251/2252/2253 fora das CBO-alvo e dos
   generalistas (contém a 225130);
-- `todos_medicos`: CBO 2251/2252/2253 e a família 2231 (ver §4).
+- `todos_medicos`: CBO 2251/2252/2253 e a família 2231 (ver §4), **inclusive
+  médicos residentes** (2231F9);
+- `todos_medicos_sem_residentes`: `todos_medicos` sem a CBO 2231F9 (médico
+  residente), pelo §16 do protocolo 40. Nenhuma das duas é outcome primário.
 
 ## 2. Fonte e competências
 
@@ -78,6 +95,11 @@ manifesto, campo `diagnostico_chave_municipal`). É também a chave do painel do
 ciclo 1 (`03_adquirir_cnes_mensal.py` e `05_integrar_painel_analitico.py`), o
 que permite a validação da §5.
 
+**Distrito Federal.** O universo tem um único código para o DF, 530010. O
+script falha (fail-closed) se algum vínculo médico cair num código 53xxxx
+diferente (regiões administrativas). Em nenhuma competência isso ocorreu
+(`painel.portao_df` no manifesto).
+
 O universo é a lista de municípios do IVS 2010 oficial
 (`output/aquisicao/a08_ivs_2010_oficial_municipio.csv`). Municípios do CNES
 fora dele (instalados depois de 2010) são registrados no manifesto
@@ -108,7 +130,9 @@ fora dele (instalados depois de 2010) são registrados no manifesto
   ausente; `horas_totais` é ausente se algum vínculo tem qualquer dos três
   campos ausente; `n_vinculos_horas_ausentes` conta esses vínculos. Contagem e
   presença de profissional não são afetadas. Célula sem vínculo tem horas 0
-  (observado). A versão 1 do extrator, usada na primeira rodada de 18/10/2026,
+  (observado). Pelo §16, a regra do nulo vale para as colunas principais, e as
+  colunas `*_parcial` dão a soma das horas observadas como sensibilidade
+  rotulada, com `n_vinculos_horas_ausentes` ao lado. A versão 1 do extrator, usada na primeira rodada de 18/10/2026,
   convertia vazio em 0 sem contar; todo o cache foi refeito com novo download
   e o SHA-256 de cada ZIP foi comparado com o da rodada anterior
   (`extracao_anterior` no metadado de cada competência).
@@ -125,7 +149,10 @@ compara com `especialistas_mst` de
 `output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet`. Do painel
 antigo só são lidas as chaves e essa coluna. O portão, fixado antes de ver o
 resultado, exige ≥ 99% de células idênticas e diferença relativa da soma
-≤ 0,5%; reprovação faz o script terminar com erro. O resultado, inclusive se o
+≤ 0,5%. O portão roda antes de qualquer gravação: o painel é montado em
+memória e, se a validação reprova, o script termina com erro sem gravar nada
+em `output/` (o diagnóstico vai só para o log). A etapa `--etapa aquisicao`
+só atualiza o cache, que fica fora do controle de versão. O resultado, inclusive se o
 SHA-256 de cada ZIP coincide com o do manifesto do ciclo 1, está em
 `a09_validacao_painel_ciclo1.json` e no resumo.
 

@@ -103,7 +103,19 @@ GENERALISTAS = ("225125", "225142", "225170")
 # generalistas. Continua contida em especialistas_nao_alvo (não é CBO-alvo).
 MFC = "225130"
 GRUPO_MFC = f"mfc_{MFC}"
-GRUPOS_AGREGADOS = ("alvo_pmme", "generalistas", GRUPO_MFC, "especialistas_nao_alvo", "todos_medicos")
+# §16 do protocolo 40: variante de todos_medicos sem médicos residentes (2231F9).
+RESIDENTE = "2231F9"
+GRUPOS_AGREGADOS = ("alvo_pmme", "generalistas", GRUPO_MFC, "especialistas_nao_alvo", "todos_medicos",
+                    "todos_medicos_sem_residentes")
+# Distrito Federal: único município do universo é 530010; códigos 53xxxx de regiões
+# administrativas não podem receber vínculo (portão fail-closed).
+DF_MUNICIPIO = "530010"
+COLUNAS_PAINEL = [
+    "co_ibge", "competencia", "grupo", "n_vinculos", "n_vinculos_sus", "n_profissionais_distintos",
+    "horas_sus_semanais", "horas_sus_semanais_parcial",
+    "horas_totais_amb_hosp", "horas_totais", "horas_totais_parcial",
+    "n_vinculos_horas_ausentes", "tem_profissional", "natureza_dos_dados",
+]
 
 TABELAS = {
     "carga": "tbCargaHorariaSus",
@@ -587,11 +599,17 @@ def agregar_mes(df: pd.DataFrame, alvo: list[str]) -> pd.DataFrame:
     df["eh_generalista"] = df["co_cbo"].isin(GENERALISTAS)
     df["eh_2251_3"] = df["co_cbo"].str.startswith(("2251", "2252", "2253"))
     amb, hosp, outros = (df[c].astype("Int64") for c in ("qt_ch_ambulatorial", "qt_ch_hosp_sus", "qt_ch_outros"))
-    df["aus_sus"] = (amb.isna() | hosp.isna()).astype(np.int64)
-    df["aus_qualquer"] = (df["aus_sus"].astype(bool) | outros.isna()).astype(np.int64)
-    # somas parciais; a célula vira ausente abaixo se algum vínculo tiver hora ausente
-    df["horas_sus"] = (amb.fillna(0) + hosp.fillna(0)).astype(np.int64)
-    df["horas_tot"] = (df["horas_sus"] + outros.fillna(0)).astype(np.int64)
+    eh_sus = (df["tp_sus_nao_sus"].astype("string").str.strip() == "S").fillna(False).to_numpy(dtype=bool)
+    aus_ah = (amb.isna() | hosp.isna()).to_numpy(dtype=bool)
+    df["sus"] = eh_sus.astype(np.int64)
+    df["aus_ah"] = aus_ah.astype(np.int64)
+    df["aus_sus"] = (aus_ah & eh_sus).astype(np.int64)
+    df["aus_qualquer"] = (aus_ah | outros.isna().to_numpy(dtype=bool)).astype(np.int64)
+    # somas das horas observadas; a versão principal vira ausente abaixo (regra do §16)
+    ah = (amb.fillna(0) + hosp.fillna(0)).astype(np.int64)
+    df["h_ah"] = ah
+    df["h_sus"] = ah.where(eh_sus, 0).astype(np.int64)
+    df["h_tot"] = (ah + outros.fillna(0)).astype(np.int64)
     prof = df["co_profissional_sus"].where(df["co_profissional_sus"].fillna("") != "")
     df["prof"] = prof
 
@@ -599,16 +617,21 @@ def agregar_mes(df: pd.DataFrame, alvo: list[str]) -> pd.DataFrame:
         g = sub.assign(grupo=grupo).groupby(["co_municipio", "grupo"], sort=True)
         out = g.agg(
             n_vinculos=("co_cbo", "size"),
+            n_vinculos_sus=("sus", "sum"),
             n_profissionais_distintos=("prof", "nunique"),
-            horas_sus_semanais=("horas_sus", "sum"),
-            horas_totais=("horas_tot", "sum"),
+            horas_sus_semanais_parcial=("h_sus", "sum"),
+            horas_amb_hosp_parcial=("h_ah", "sum"),
+            horas_totais_parcial=("h_tot", "sum"),
             n_vinculos_horas_ausentes=("aus_qualquer", "sum"),
             _aus_sus=("aus_sus", "sum"),
+            _aus_ah=("aus_ah", "sum"),
         ).reset_index()
-        # regra: soma de horas é ausente se algum vínculo que entra nela tem hora ausente
-        out["horas_sus_semanais"] = out["horas_sus_semanais"].astype("Int64").mask(out["_aus_sus"] > 0)
-        out["horas_totais"] = out["horas_totais"].astype("Int64").mask(out["n_vinculos_horas_ausentes"] > 0)
-        return out.drop(columns="_aus_sus")
+        # regra principal (§16): a soma é ausente se algum vínculo que entra nela tem hora em branco;
+        # as colunas *_parcial são a sensibilidade rotulada (soma só das horas observadas)
+        out["horas_sus_semanais"] = out["horas_sus_semanais_parcial"].astype("Int64").mask(out["_aus_sus"] > 0)
+        out["horas_totais_amb_hosp"] = out["horas_amb_hosp_parcial"].astype("Int64").mask(out["_aus_ah"] > 0)
+        out["horas_totais"] = out["horas_totais_parcial"].astype("Int64").mask(out["n_vinculos_horas_ausentes"] > 0)
+        return out.drop(columns=["_aus_sus", "_aus_ah", "horas_amb_hosp_parcial"])
 
     partes = [
         _agg(df.loc[df["eh_alvo"]], "cbo_" + df.loc[df["eh_alvo"], "co_cbo"]),
@@ -617,6 +640,7 @@ def agregar_mes(df: pd.DataFrame, alvo: list[str]) -> pd.DataFrame:
         _agg(df.loc[df["co_cbo"] == MFC], GRUPO_MFC),
         _agg(df.loc[df["eh_2251_3"] & ~df["eh_alvo"] & ~df["eh_generalista"]], "especialistas_nao_alvo"),
         _agg(df, "todos_medicos"),
+        _agg(df.loc[df["co_cbo"] != RESIDENTE], "todos_medicos_sem_residentes"),
     ]
     return pd.concat(partes, ignore_index=True)
 
@@ -626,6 +650,7 @@ def construir_painel(competencias: list[str]) -> tuple[pd.DataFrame, dict[str, A
     universo = carregar_universo()
     grupos = grupos_do_cbo(alvo)
     fora: dict[str, dict[str, int]] = {}
+    tp_sus: dict[str, dict[str, int]] = {}
     partes = []
     for comp in competencias:
         checar_limite(comp)
@@ -635,6 +660,14 @@ def construir_painel(competencias: list[str]) -> tuple[pd.DataFrame, dict[str, A
         df = pd.read_parquet(caminho_cache(comp))
         if set(df["competencia"].unique()) != {comp}:
             raise RuntimeError(f"competência interna incompatível no cache de {comp}")
+        df_rad = df["co_municipio"].fillna("").str.startswith("53") & (df["co_municipio"] != DF_MUNICIPIO)
+        if df_rad.any():
+            raise RuntimeError(
+                f"{comp}: {int(df_rad.sum())} vínculos médicos em códigos do DF diferentes de {DF_MUNICIPIO}: "
+                f"{sorted(df.loc[df_rad, 'co_municipio'].unique())}"
+            )
+        tp = df["tp_sus_nao_sus"].astype("string").str.strip().fillna("<nulo>").replace("", "<vazio>")
+        tp_sus[comp] = {str(k): int(v) for k, v in tp.value_counts().sort_index().items()}
         agg = agregar_mes(df, alvo)
         fora_mes = agg.loc[(agg["grupo"] == "todos_medicos") & ~agg["co_municipio"].isin(universo)]
         for r in fora_mes.itertuples(index=False):
@@ -649,23 +682,24 @@ def construir_painel(competencias: list[str]) -> tuple[pd.DataFrame, dict[str, A
     ).to_frame(index=False)
     painel = esqueleto.merge(obs, on=["co_ibge", "competencia", "grupo"], how="left", validate="one_to_one")
     obs_mask = painel["n_vinculos"].notna()
-    for col in ("n_vinculos", "n_profissionais_distintos", "n_vinculos_horas_ausentes"):
+    for col in ("n_vinculos", "n_vinculos_sus", "n_profissionais_distintos", "n_vinculos_horas_ausentes"):
         painel[col] = painel[col].fillna(0).astype(np.int32)
-    for col in ("horas_sus_semanais", "horas_totais"):
+    for col in ("horas_sus_semanais", "horas_sus_semanais_parcial", "horas_totais_amb_hosp",
+                "horas_totais", "horas_totais_parcial"):
         # zero só onde não há vínculo; com vínculo, NA vem da regra de hora ausente
         valores = painel[col].astype("Int64")
         painel[col] = valores.where(obs_mask, 0).astype("Int32")
     painel["tem_profissional"] = (painel["n_profissionais_distintos"] >= 1).astype(np.int8)
     # zeros só em competência lida com sucesso; competência não obtida fica sem linhas
     painel["natureza_dos_dados"] = "EMPIRICO"
-    painel = painel[["co_ibge", "competencia", "grupo", "n_vinculos", "n_profissionais_distintos",
-                     "horas_sus_semanais", "horas_totais", "n_vinculos_horas_ausentes",
-                     "tem_profissional", "natureza_dos_dados"]]
+    painel = painel[COLUNAS_PAINEL]
     painel = painel.sort_values(["co_ibge", "competencia", "grupo"], kind="mergesort").reset_index(drop=True)
     info = {
         "municipios_universo": len(universo),
         "grupos": grupos,
         "linhas": int(len(painel)),
+        "vinculos_medicos_por_tp_sus_nao_sus": tp_sus,
+        "portao_df": f"nenhum vínculo médico em código 53xxxx diferente de {DF_MUNICIPIO} (verificado por competência)",
         "municipios_cnes_fora_do_universo": {
             k: {"competencias": len(v), "vinculos_medicos_max_mes": max(v.values())}
             for k, v in sorted(fora.items())
@@ -834,9 +868,13 @@ def gravar_manifesto(registros: dict[str, dict[str, Any]], painel_info: dict[str
         "definicoes": {
             "n_vinculos": "linhas de tbCargaHorariaSus (profissional × estabelecimento × CBO × vínculo) no município-grupo-mês",
             "n_profissionais_distintos": "CO_PROFISSIONAL_SUS distintos no município-grupo-mês (agregados contam a pessoa uma vez)",
-            "horas_sus_semanais": "soma de QT_CARGA_HORARIA_AMBULATORIAL + QT_CARGA_HOR_HOSP_SUS; ausente (NA) se algum vínculo da célula tem um desses campos vazio ou não numérico",
-            "horas_totais": "horas_sus_semanais + QT_CARGA_HORARIA_OUTROS; ausente (NA) se algum vínculo da célula tem qualquer dos três campos vazio ou não numérico",
-            "n_vinculos_horas_ausentes": "vínculos da célula com pelo menos um dos três campos de horas vazio ou não numérico",
+            "n_vinculos_sus": "vínculos com TP_SUS_NAO_SUS = 'S'",
+            "horas_sus_semanais": "PRINCIPAL (F3.3, protocolo 40 §16): soma de QT_CARGA_HORARIA_AMBULATORIAL + QT_CARGA_HOR_HOSP_SUS dos vínculos com TP_SUS_NAO_SUS = 'S'; ausente (NA) se algum desses vínculos tem um dos dois campos vazio ou não numérico",
+            "horas_sus_semanais_parcial": "SENSIBILIDADE rotulada (§16): a mesma soma só com as horas observadas; ler com n_vinculos_horas_ausentes",
+            "horas_totais_amb_hosp": "SENSIBILIDADE rotulada (§16): ambulatorial + hospitalar de todos os vínculos, sem filtro de TP_SUS_NAO_SUS; ausente (NA) se algum vínculo tem um dos dois campos vazio ou não numérico",
+            "horas_totais": "ambulatorial + hospitalar + QT_CARGA_HORARIA_OUTROS de todos os vínculos; ausente (NA) se algum vínculo tem qualquer dos três campos vazio ou não numérico",
+            "horas_totais_parcial": "SENSIBILIDADE rotulada (§16): horas_totais só com as horas observadas",
+            "n_vinculos_horas_ausentes": "vínculos da célula (qualquer TP_SUS_NAO_SUS) com pelo menos um dos três campos de horas vazio ou não numérico",
             "regra_horas_ausentes": "campo de horas vazio ou não numérico é ausente, nunca zero: nenhuma documentação do CNES no repositório ou consultada nesta tarefa define vazio como zero. Contagens por campo e competência em por_competencia.*.horas_ausentes_por_campo_vinculos_medicos",
             "tem_profissional": "n_profissionais_distintos >= 1",
             "grupos": {
@@ -845,7 +883,8 @@ def gravar_manifesto(registros: dict[str, dict[str, Any]], painel_info: dict[str
                 "generalistas": list(GENERALISTAS),
                 GRUPO_MFC: f"CBO {MFC} (médico de família e comunidade), grupo próprio pelo adendo §13 (S6); também contido em especialistas_nao_alvo",
                 "especialistas_nao_alvo": "CBO 2251/2252/2253 fora das CBO-alvo e dos generalistas",
-                "todos_medicos": "CBO 2251/2252/2253 e 2231 (a família 2231 só entra se aparecer)",
+                "todos_medicos": "CBO 2251/2252/2253 e família 2231 (inclui médicos residentes, 2231F9)",
+                "todos_medicos_sem_residentes": f"todos_medicos sem a CBO {RESIDENTE} (médico residente), protocolo 40 §16",
             },
         },
         "ponte": {"arquivo": PONTE_FILE.relative_to(ROOT).as_posix(), "versao": versao,
@@ -945,7 +984,8 @@ def gravar_resumo(registros: dict[str, dict[str, Any]], painel: pd.DataFrame | N
             "Municípios com profissional = número de municípios com `tem_profissional = 1`.",
             "",
         ]
-        for grupo in ("todos_medicos", "alvo_pmme", "generalistas", GRUPO_MFC, "especialistas_nao_alvo"):
+        for grupo in ("todos_medicos", "todos_medicos_sem_residentes", "alvo_pmme", "generalistas", GRUPO_MFC,
+                      "especialistas_nao_alvo"):
             linhas += [f"### {grupo}", "", "| Competência | Vínculos | Profissionais (soma municipal) | Municípios com profissional | Vínculos com hora ausente |",
                        "|---|---:|---:|---:|---:|"]
             for r in tot.loc[tot["grupo"] == grupo].itertuples(index=False):
@@ -1026,31 +1066,34 @@ def main() -> int:
         registros.setdefault(c, r)
     obtidas = sorted(c for c, r in registros.items() if r.get("status") == "adquirido_extraido_zip_apagado")
 
-    painel_info = validacao = painel = None
     rotulos = consolidar_rotulos(obtidas)
-    if args.etapa in ("painel", "tudo"):
-        if not obtidas:
-            raise SystemExit("nenhuma competência em cache")
-        log(f"Construindo painel com {len(obtidas)} competências")
-        painel, painel_info = construir_painel(obtidas)
-        gravar_painel(painel)
-        painel_info["competencias"] = obtidas
-        log(f"Painel: {len(painel):,} linhas, {PAINEL_FILE.stat().st_size / 1024**2:.1f} MB")
-        validacao = validar_contra_ciclo1(obtidas)
-        VALIDACAO_FILE.write_text(json.dumps(validacao, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        log(f"Validação ciclo 1: {validacao['fracao_celulas_identicas']} das células idênticas")
-        rotulos.to_csv(ROTULOS_FILE, index=False)
-    gravar_manifesto(registros, painel_info, validacao, rotulos)
-    log(f"Manifesto: {MANIFESTO_FILE.relative_to(ROOT)}")
-    if args.etapa in ("painel", "tudo"):
-        gravar_resumo(registros, painel, validacao, rotulos)
-        log(f"Resumo: {RESUMO_FILE.relative_to(ROOT)}")
     faltantes = sorted(set(comps) - set(obtidas))
     if faltantes:
         log(f"Competências não obtidas: {faltantes}")
-    if validacao is not None and validacao["status"] != "APROVADO":
-        log("PORTÃO REPROVADO: o painel não reproduz o ciclo 1 dentro da tolerância")
+    if args.etapa == "aquisicao":
+        # só o cache (ignorado pelo controle de versão) muda; saídas canônicas exigem o portão
+        log("Aquisição concluída; rode --etapa painel para gerar as saídas")
+        return 0
+    if not obtidas:
+        raise SystemExit("nenhuma competência em cache")
+    log(f"Construindo painel com {len(obtidas)} competências")
+    painel, painel_info = construir_painel(obtidas)  # em memória; portão do DF dentro
+    painel_info["competencias"] = obtidas
+    validacao = validar_contra_ciclo1(obtidas)
+    log(f"Validação ciclo 1: {validacao['status']}, {validacao['fracao_celulas_identicas']} das células idênticas")
+    if validacao["status"] != "APROVADO":
+        # fail-closed: nada é gravado em output/; o diagnóstico fica só no log
+        log("PORTÃO REPROVADO: o painel não reproduz o ciclo 1 dentro da tolerância; nada gravado em output/")
+        print(json.dumps({k: v for k, v in validacao.items() if k != "por_competencia"}, ensure_ascii=False, indent=2))
         return 2
+    gravar_painel(painel)
+    log(f"Painel: {len(painel):,} linhas, {PAINEL_FILE.stat().st_size / 1024**2:.1f} MB")
+    VALIDACAO_FILE.write_text(json.dumps(validacao, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    rotulos.assign(natureza_dos_dados="EMPIRICO").to_csv(ROTULOS_FILE, index=False)
+    gravar_manifesto(registros, painel_info, validacao, rotulos)
+    log(f"Manifesto: {MANIFESTO_FILE.relative_to(ROOT)}")
+    gravar_resumo(registros, painel, validacao, rotulos)
+    log(f"Resumo: {RESUMO_FILE.relative_to(ROOT)}")
     return 0
 
 
