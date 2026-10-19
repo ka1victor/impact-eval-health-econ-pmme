@@ -49,8 +49,8 @@ que 0,3" e, em 0,400, a ajuda de custo do PMMB.
 | F3.1 | vínculos nas CBO-alvo do PMM-E (`alvo_pmme`) por 10 mil hab. | U e V1 |
 | F3.2 | município com ≥ 1 profissional nas CBO-alvo | U |
 | F3.3 | horas SUS semanais (vínculos com `TP_SUS_NAO_SUS = 'S'`) nas CBO-alvo por 10 mil hab. | U |
-| F3.3.sem_filtro_sus | sensibilidade rotulada (§16): as mesmas horas sem o filtro `TP_SUS_NAO_SUS` | U |
-| F3.3.soma_parcial | sensibilidade rotulada (§16): soma parcial das horas observadas, com a contagem de vínculos em branco | U |
+| F3.3.sem_filtro_sus | sensibilidade rotulada (§16): as mesmas horas sem o filtro `TP_SUS_NAO_SUS` (coluna `horas_totais_amb_hosp`) | U |
+| F3.3.soma_parcial | sensibilidade rotulada (§16): soma parcial das horas observadas, com a contagem de vínculos em branco (coluna `horas_sus_semanais_parcial`) | U |
 | F3.P1 | vínculos de generalistas (225125, 225142, 225170) por 10 mil hab. | U |
 | S6 | vínculos de médico de família e comunidade (225130) por 10 mil hab. | U |
 | F3.P2 | vínculos de especialistas fora das CBO-alvo por 10 mil hab. | U |

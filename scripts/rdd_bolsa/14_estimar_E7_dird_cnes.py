@@ -188,11 +188,13 @@ CONTRASTE_NIVEL = ("RDD em nível: pacote do corte (bolsa anunciada + todas as o
 # Horas no CNES (protocolo §16, 19/10/2026). Principal: `horas_sus_semanais` = horas ambulatoriais +
 # hospitalares dos vínculos com TP_SUS_NAO_SUS == 'S'; célula com hora em branco fica ausente. Sensibilidades
 # rotuladas: a soma sem o filtro TP_SUS_NAO_SUS e a soma parcial das horas observadas (com a contagem de
-# vínculos em branco ao lado). Os nomes das colunas de sensibilidade seguem o painel regenerado pela tarefa C;
-# coluna ausente faz a validação falhar (nada é substituído).
+# vínculos em branco ao lado). Nomes das colunas do painel auditado da tarefa C (definições no manifesto a09);
+# coluna ausente faz a validação falhar (nada é substituído). O §16 diz que a soma sem filtro "continua como
+# horas_totais", mas no painel `horas_totais` é o total dos três campos; a soma ambulatorial + hospitalar sem
+# filtro é `horas_totais_amb_hosp` (nota de nomenclatura em DESVIOS).
 COL_HORAS_SUS = "horas_sus_semanais"
-COL_HORAS_SEM_FILTRO = "horas_sus_semanais_sem_filtro_sus"
-COL_HORAS_PARCIAL = "horas_sus_semanais_soma_parcial"
+COL_HORAS_SEM_FILTRO = "horas_totais_amb_hosp"
+COL_HORAS_PARCIAL = "horas_sus_semanais_parcial"
 COLS_HORAS_SENSIBILIDADE = (COL_HORAS_SEM_FILTRO, COL_HORAS_PARCIAL)
 TERMO_FILTRO_SUS = "TP_SUS_NAO_SUS"
 ROTULO_SENS_HORAS = "SENSIBILIDADE_PROTOCOLO_§16"
@@ -286,6 +288,13 @@ DESVIOS = [
                   "horas observadas, com a contagem de vinculos em branco na nota e em validacoes.horas_ausentes). "
                   "O grupo todos_medicos_sem_residentes do painel nao e outcome do E7 (§16: nao primario; F3 nao "
                   "o lista)."},
+    {"data": DATA_EXECUCAO, "tipo": "nota_de_nomenclatura",
+     "item": "coluna da sensibilidade 'horas sem filtro SUS' (§16)",
+     "descricao": "o texto do §16 diz que a soma sem o filtro TP_SUS_NAO_SUS 'continua no painel como "
+                  "horas_totais'; no painel auditado da tarefa C, horas_totais e a soma dos tres campos "
+                  "(ambulatorial + hospitalar + outros) e a soma ambulatorial + hospitalar sem filtro chama-se "
+                  "horas_totais_amb_hosp (definicao no manifesto a09). O E7 usa horas_totais_amb_hosp em "
+                  "F3.3.sem_filtro_sus. Mapeamento de nome, sem mudanca de substancia."},
     {"data": DATA_EXECUCAO, "tipo": "esclarecimento",
      "item": "populacoes",
      "descricao": "protocolo §5: F3.1 em U e V1; F3.2, F3.3, F3.P1, F3.P2 e S6 em U. V1 = municipios do quadro "
