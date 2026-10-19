@@ -1,10 +1,13 @@
 """Confere cada numero citado em paper_pmme_submission.tex contra os artefatos.
 
 O script releia os artefatos versionados de A4, A5, A7, A8, da RDD da bolsa no
-IVS 2010 oficial (R1, E3 e E5) e do portao de relevancia, reformata cada valor
+IVS 2010 oficial (R1, E3 e E5), da rodada multi-outcome da bolsa (E6, E7, E8 e
+E9) e do portao de relevancia, reformata cada valor
 no padrao usado no artigo e exige que o trecho correspondente exista no arquivo
 LaTeX. Nenhuma cifra do artigo pode existir sem uma origem rastreavel; qualquer
-divergencia interrompe a execucao com codigo de saida diferente de zero.
+divergencia interrompe a execucao com codigo de saida diferente de zero. Todo
+decimal com virgula no corpo, apendices incluidos (so a bibliografia fica de
+fora), tem de estar contido em algum trecho conferido.
 
 O mapeamento completo e gravado em
 `output/tema_trabalho/A8_conferencia_numeros_artigo.csv`, com arquivo-fonte e
@@ -1226,6 +1229,458 @@ registrar("RDD_LIMSUP_EMPILHADO", "Apendice C", "Limite superior unilateral com 
           pontos(rdd_lim_b), RDD_E5_ESPEC, loc_rdd_lim_b, rdd_lim_b, "proporcao x100, 1 casa", trecho_rdd_lim)
 
 
+# ------------------- Apendice C: rodada multi-outcome da bolsa (E6, E7, E8, E9)
+#
+# Protocolo congelado em docs/06_execucao/40; sintese em docs/06_execucao/44.
+# Os numeros vem das saidas do E8 (que so copia e conta as do E6, E7 e E9, e
+# faz o Holm); P1, P2 e as razoes de chances do E9 sao reconferidas aqui contra
+# as saidas de origem. As frases qualitativas (descarta, nao descarta,
+# sobrevive, fragil) tem guarda: se o artefato mudar, o conferidor para.
+# Os trechos MO_* valem para os dois artigos: o curto reutiliza os que repete.
+
+MO_E8_RESUMO = "output/rdd_bolsa/E8_resumo.json"
+MO_E8_TABELA = "output/rdd_bolsa/E8_tabela_sintese.csv"
+MO_E6_RESUMO = "output/rdd_bolsa/E6_resumo.json"
+MO_E7_RESUMO = "output/rdd_bolsa/E7_resumo.json"
+MO_E9_EFM = "output/rdd_bolsa/E9_efeitos_marginais.csv"
+MO_PROTOCOLO = "output/rdd_bolsa/protocolo_E6_multioutcome.json"
+
+MO_MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto",
+            "setembro", "outubro", "novembro", "dezembro"]
+MO_EXTENSO = {2: "dois", 3: "três", 4: "quatro", 5: "cinco", 6: "seis"}
+
+
+def mo_mes(competencia: str) -> str:
+    """'2025-10', '202510' ou '2025-10-18' -> 'outubro de 2025' (dia, se houver, a parte)."""
+    digitos = str(competencia).replace("-", "")
+    return f"{MO_MESES[int(digitos[4:6]) - 1]} de {digitos[:4]}"
+
+
+def mo_data(data_iso: str) -> str:
+    """'2026-10-18' -> '18 de outubro de 2026'."""
+    return f"{int(str(data_iso)[8:10])} de {mo_mes(data_iso)}"
+
+
+def mo_exigir(condicao: bool, mensagem: str) -> None:
+    if not condicao:
+        raise SystemExit(f"Rodada multi-outcome: {mensagem}; o texto dos artigos deixou de valer")
+
+
+def mo_e8(caminho: str) -> tuple[Any, str]:
+    return json_valor(MO_E8_RESUMO, caminho)
+
+
+def mo_p(valor: float) -> str:
+    """p com 3 casas; abaixo de 0,001 o artigo escreve '$<$0,001'."""
+    return "$<$0,001" if float(valor) < 0.001 else decimal_br(valor, 3)
+
+
+def mo_fmt(valor: float, unidade: str) -> str:
+    """Formato do E8 por unidade: fracao em p.p. com 1 casa, DP com 2, horas com 1, demais com 3."""
+    if str(unidade).startswith("fracao"):
+        return pontos(valor)
+    if str(unidade).startswith("desvios"):
+        return decimal_br(valor, 2)
+    if str(unidade).startswith("horas"):
+        return decimal_br(valor, 1)
+    return decimal_br(valor, 3)
+
+
+def mo_transf(unidade: str) -> str:
+    return {"fracao": "proporcao x100, 1 casa", "desvios": "2 casas", "horas": "1 casa"}.get(
+        str(unidade).split(" ")[0].split("-")[0], "3 casas")
+
+
+def mo_registrar(prefixo: str, bloco: str, trecho: str,
+                 itens: list[tuple[str, str, Any, str, str, str]]) -> None:
+    """Um registro por numero do trecho: (chave, formatado, bruto, fonte, localizador, transformacao)."""
+    for chave, formatado, bruto, fonte, local, transformacao in itens:
+        mo_exigir(formatado in trecho, f"{prefixo}_{chave}: '{formatado}' fora do trecho")
+        registrar(f"{prefixo}_{chave}", bloco, f"{prefixo}: {chave}", formatado, fonte, local, bruto,
+                  transformacao, trecho)
+
+
+def mo_linha(outcome_id: str, populacao: str, ciclo: str | None = None) -> dict[str, tuple[Any, str]]:
+    filtros = {"outcome_id": outcome_id, "populacao": populacao}
+    if ciclo is not None:
+        filtros["ciclo"] = ciclo
+    return {campo: csv_valor(MO_E8_TABELA, filtros, campo)
+            for campo in ("estimativa", "ic95_inf", "ic95_sup", "p_valor", "q_bky", "p_holm", "unidade")}
+
+
+# Protocolo: data de congelamento, janelas da DiRD e referencia de magnitude.
+mo_congel, loc_mo_congel = json_valor(MO_PROTOCOLO, "data_congelamento")
+mo_registrar("MO_PROTOCOLO_DATA", "Apendice C (multi-outcome)",
+             f"congelado em {mo_data(mo_congel)} antes de abrir os desfechos novos",
+             [("DATA", mo_data(mo_congel), mo_congel, MO_PROTOCOLO, loc_mo_congel, "data por extenso")])
+mo_pre, loc_mo_pre = json_valor(MO_E7_RESUMO, "parametros/pre")
+mo_pos, loc_mo_pos = json_valor(MO_E7_RESUMO, "parametros/pos")
+mo_ref, loc_mo_ref = json_valor(MO_E7_RESUMO, "parametros/ref")
+mo_pre_extra, loc_mo_pre_extra = json_valor(MO_E7_RESUMO, "parametros/pre_extra")
+mo_janelas = [("PRE_INI", mo_mes(mo_pre[0]), mo_pre[0], MO_E7_RESUMO, f"{loc_mo_pre}/0", "competencia por extenso"),
+              ("PRE_FIM", mo_mes(mo_pre[-1]), mo_pre[-1], MO_E7_RESUMO, f"{loc_mo_pre}/-1", "competencia por extenso"),
+              ("POS_INI", mo_mes(mo_pos[0]), mo_pos[0], MO_E7_RESUMO, f"{loc_mo_pos}/0", "competencia por extenso"),
+              ("POS_FIM", mo_mes(mo_pos[-1]), mo_pos[-1], MO_E7_RESUMO, f"{loc_mo_pos}/-1", "competencia por extenso")]
+mo_registrar("MO_JANELAS_TXT", "Apendice C (multi-outcome)",
+             f"entre a média de {mo_mes(mo_pre[0])} a {mo_mes(mo_pre[-1])} e a de {mo_mes(mo_pos[0])} a "
+             f"{mo_mes(mo_pos[-1])}", mo_janelas)
+mo_registrar("MO_JANELAS_NOTA", "Tabela C2 (nota)",
+             f"diferença entre a média de {mo_mes(mo_pos[0])} a {mo_mes(mo_pos[-1])} e a de {mo_mes(mo_pre[0])} a "
+             f"{mo_mes(mo_pre[-1])} no CNES", mo_janelas)
+mo_ref_pp, loc_mo_ref_pp = mo_e8("descarte/referencias/preenchimento_pp")
+mo_ref_prot, _ = json_valor(MO_PROTOCOLO, "testes_multiplos/referencias_magnitude/preenchimento")
+mo_exigir(mo_ref_prot.replace(" ", "") == f"+{inteiro(float(mo_ref_pp) * 100)}p.p.",
+          "a referencia de preenchimento do E8 difere da do protocolo")
+MO_REF_TXT = inteiro(float(mo_ref_pp) * 100)
+mo_item_ref = ("REF", MO_REF_TXT, mo_ref_pp, MO_E8_RESUMO, loc_mo_ref_pp, "proporcao x100, inteiro")
+mo_registrar("MO_REFERENCIA", "Apendice C (multi-outcome)",
+             f"A referência de magnitude fixada de antemão é um aumento de {MO_REF_TXT} pontos percentuais no "
+             f"preenchimento", [mo_item_ref])
+
+# Holm: P1 e P2, reconferidos contra o E6 e o E7.
+mo_holm = {k: {c: mo_e8(f"holm/{k}/{c}") for c in ("tau", "ic95_inf", "ic95_sup", "p_valor", "p_holm")}
+           for k in ("P1", "P2")}
+for chave, rel, campo in (("P1", MO_E6_RESUMO, "p1_para_holm"), ("P2", MO_E7_RESUMO, "p2_para_holm")):
+    for c in ("tau", "ic95_inf", "ic95_sup", "p_valor"):
+        origem, _ = json_valor(rel, f"{campo}/{c}")
+        mo_exigir(abs(float(origem) - float(mo_holm[chave][c][0])) < 1e-12, f"{chave}.{c} do E8 difere de {rel}")
+mo_exigir(not mo_e8("holm/alguma_rejeitada")[0], "o Holm rejeitou alguma primaria")
+mo_exigir(decimal_br(mo_holm["P1"]["p_holm"][0], 3) == decimal_br(mo_holm["P2"]["p_holm"][0], 3),
+          "o texto diz o mesmo p de Holm para as duas primarias")
+
+
+def mo_itens_holm(com_ic: bool = True) -> list[tuple[str, str, Any, str, str, str]]:
+    itens = []
+    for k, casas in (("P1", 2), ("P2", 3)):
+        campos = ("tau", "ic95_inf", "ic95_sup", "p_valor") if com_ic else ()
+        for c in campos:
+            bruto, local = mo_holm[k][c]
+            fmt = decimal_br(bruto, 3) if c == "p_valor" else decimal_br(bruto, casas)
+            itens.append((f"{k}_{c}", fmt, bruto, MO_E8_RESUMO, local, "3 casas" if c == "p_valor" else f"{casas} casas"))
+        bruto, local = mo_holm[k]["p_holm"]
+        itens.append((f"{k}_p_holm", decimal_br(bruto, 3), bruto, MO_E8_RESUMO, local, "3 casas"))
+    return itens
+
+
+h1, h2 = mo_holm["P1"], mo_holm["P2"]
+mo_registrar("MO_HOLM_TXT", "Apendice C (multi-outcome)",
+             f"o índice P1 tem salto de {decimal_br(h1['tau'][0], 2)} desvio-padrão, com intervalo de "
+             f"[{decimal_br(h1['ic95_inf'][0], 2)}; {decimal_br(h1['ic95_sup'][0], 2)}] e $p$ de "
+             f"{decimal_br(h1['p_valor'][0], 3)}, e P2 tem salto de {decimal_br(h2['tau'][0], 3)} vínculo por 10 mil "
+             f"habitantes, com intervalo de [{decimal_br(h2['ic95_inf'][0], 3)}; {decimal_br(h2['ic95_sup'][0], 3)}] e "
+             f"$p$ de {decimal_br(h2['p_valor'][0], 3)}; o $p$ ajustado por Holm é de "
+             f"{decimal_br(h1['p_holm'][0], 3)} para os dois", mo_itens_holm())
+mo_registrar("MO_HOLM_RESUMO", "Resumo",
+             f"não rejeita zero nos dois testes primários depois da correção de Holm ($p$ ajustado de "
+             f"{decimal_br(h1['p_holm'][0], 3)} em ambos); o intervalo convencional do preenchimento empilhado "
+             f"exclui ganhos de {MO_REF_TXT} pontos percentuais", mo_itens_holm(False) + [mo_item_ref])
+
+# Tabela C2: primarias e componentes (linhas da tabela-sintese do E8).
+MO_LINHAS_TAB = [
+    ("P1", "V1+V2+V3", None, "P1: índice de atração--presença (DP)", "p_holm"),
+    ("F3.1", "U", None, "P2: vínculos nas CBO-alvo por 10 mil hab., DiRD", "p_holm"),
+    ("F1.1", "V1+V2+V3", None, "Candidatos de 1ª opção por célula", "q_bky"),
+    ("F1.2", "V1+V2+V3", None, "Células com candidato (p.p.)", "q_bky"),
+    ("F1.3", "V1+V2+V3", None, "Células preenchidas na 1ª chamada (p.p.)", "q_bky"),
+    ("F1.4", "V1+V2", None, "Células preenchidas até a 2ª chamada (p.p.)", "q_bky"),
+    ("F2.1", "V1+V2", None, "Especialistas ativos por célula", "q_bky"),
+    ("F2.3", "V1+V2", None, "Algum especialista ativo (p.p.)", "q_bky"),
+    ("F3.2", "U", None, "Município com especialista nas CBO-alvo (p.p.), DiRD", "q_bky"),
+    ("F3.3", "U", None, "Horas SUS nas CBO-alvo por 10 mil hab., DiRD", "q_bky"),
+    ("F3.P1", "U", None, "Placebo: generalistas por 10 mil hab., DiRD", "q_bky"),
+    ("F3.P2", "U", None, "Placebo: especialistas fora das CBO-alvo, DiRD", "q_bky"),
+    ("F0.2", "U", "1", "Vagas imediatas do ciclo 1 por 10 mil hab.", "q_bky"),
+    ("F4.2", "V1+V2+V3", None, "Nota dos candidatos de 1ª opção", "q_bky"),
+]
+MO_TAB: dict[str, dict[str, tuple[Any, str]]] = {}
+for outcome_id, populacao, ciclo, rotulo, ajuste in MO_LINHAS_TAB:
+    v = mo_linha(outcome_id, populacao, ciclo)
+    MO_TAB[outcome_id] = v
+    unidade = v["unidade"][0]
+    fmts = {"tau": mo_fmt(v["estimativa"][0], unidade), "lo": mo_fmt(v["ic95_inf"][0], unidade),
+            "hi": mo_fmt(v["ic95_sup"][0], unidade), "p": decimal_br(v["p_valor"][0], 3),
+            "aj": decimal_br(v[ajuste][0], 3)}
+    mo_exigir(float(v["p_valor"][0]) >= 0.001, f"{outcome_id}: p abaixo de 0,001 pede outro formato")
+    trecho = (f"{rotulo} & {populacao} & {fmts['tau']} & [{fmts['lo']}; {fmts['hi']}] & {fmts['p']} & "
+              f"{fmts['aj']} \\\\")
+    itens = []
+    for chave, campo in (("tau", "estimativa"), ("lo", "ic95_inf"), ("hi", "ic95_sup"), ("p", "p_valor"), ("aj", ajuste)):
+        bruto, local = v[campo]
+        transf = mo_transf(unidade) if chave in ("tau", "lo", "hi") else "3 casas"
+        itens.append((chave, fmts[chave], bruto, MO_E8_TABELA, local, transf))
+    mo_registrar(f"MO_TAB_{outcome_id.replace('.', '_')}_{populacao.replace('+', '')}", "Tabela C2 (multi-outcome)",
+                 trecho, itens)
+for oid in ("F3.1", "F3.2", "F3.3", "F3.P1", "F3.P2"):
+    mo_exigir(float(MO_TAB[oid]["p_valor"][0]) >= 0.05, f"{oid}: o texto diz que a DiRD nao detecta mudanca")
+registrar("MO_DIRD_NULA", "Apendice C (multi-outcome)", "DiRD sem efeito detectavel em F3 e nos placebos (U)",
+          "nao detecta", MO_E8_TABELA, "p_valor das linhas F3.1, F3.2, F3.3, F3.P1 e F3.P2 em U",
+          [float(MO_TAB[o]["p_valor"][0]) for o in ("F3.1", "F3.2", "F3.3", "F3.P1", "F3.P2")], "guarda: p >= 0,05",
+          "diferença em descontinuidades não detecta mudança na oferta das ocupações-alvo nem nos")
+mo_exigir(float(MO_TAB["F0.2"]["p_valor"][0]) < 0.05 and float(MO_TAB["F4.2"]["p_valor"][0]) < 0.05,
+          "o texto cita vagas imediatas e nota dos candidatos entre os p isolados abaixo de 5%")
+
+# Familias: nenhuma com q < 0,05; contagem de testes por familia.
+mo_familias, loc_mo_fam = mo_e8("familias")
+mo_exigir(all(int(f["resumo_testes"]["q_menor_005"]) == 0 for f in mo_familias.values()),
+          "alguma familia tem q BKY < 0,05")
+mo_n_testes = [int(f["resumo_testes"]["linhas_principais_no_bky"]) for f in mo_familias.values()]
+mo_registrar("MO_FAMILIAS", "Apendice C (multi-outcome)",
+             f"Nas {MO_EXTENSO[len(mo_familias)]} famílias de desfechos do protocolo, com {min(mo_n_testes)} a "
+             f"{max(mo_n_testes)} testes cada, nenhum valor $q$ fica abaixo de 5\\%",
+             [("N", MO_EXTENSO[len(mo_familias)], len(mo_familias), MO_E8_RESUMO, loc_mo_fam, "contagem por extenso"),
+              ("MIN", inteiro(min(mo_n_testes)), mo_n_testes, MO_E8_RESUMO,
+               f"{loc_mo_fam}/*/resumo_testes/linhas_principais_no_bky", "minimo"),
+              ("MAX", inteiro(max(mo_n_testes)), mo_n_testes, MO_E8_RESUMO,
+               f"{loc_mo_fam}/*/resumo_testes/linhas_principais_no_bky", "maximo")])
+
+# Descarte de +10 p.p. com ciclos e cortes empilhados (F1.3), e o que nao descarta.
+mo_desc, loc_mo_desc = mo_e8("descarte/preenchimento")
+mo_d = {(d["outcome_id"], d["populacao"]): (i, d) for i, d in enumerate(mo_desc)}
+i_emp, d_emp = mo_d[("F1.3", "V1+V2+V3")]
+mo_exigir(d_emp["exclui_referencia"] and d_emp["todas_convencionais_excluem_referencia"]
+          and d_emp["convencionais_todas_com_salto_negativo"], "F1.3 empilhado deixou de descartar +10 p.p.")
+mo_exigir(not any(d["ic_honesto_exclui_referencia"] for d in mo_desc), "algum IC honesto passou a descartar")
+mo_exigir(not mo_d[("F1.3", "V1")][1]["exclui_referencia"] and not mo_d[("F1.3", "V2")][1]["exclui_referencia"],
+          "o texto diz que, nos ciclos 1 e 2 isolados, o IC ainda admite +10 p.p.")
+loc_emp = f"{loc_mo_desc}/{i_emp}"
+mo_registrar("MO_DESCARTE_EMPILHADO", "Apendice C (multi-outcome)",
+             f"o salto na fração de células preenchidas na primeira chamada é de {pontos(d_emp['tau'])} pontos "
+             f"percentuais, com intervalo de [{pontos(d_emp['ic95_inf'])}; {pontos(d_emp['ic95_sup'])}]: um aumento "
+             f"de {MO_REF_TXT} pontos percentuais fica fora do intervalo convencional",
+             [("TAU", pontos(d_emp["tau"]), d_emp["tau"], MO_E8_RESUMO, f"{loc_emp}/tau", "proporcao x100, 1 casa"),
+              ("LO", pontos(d_emp["ic95_inf"]), d_emp["ic95_inf"], MO_E8_RESUMO, f"{loc_emp}/ic95_inf", "proporcao x100, 1 casa"),
+              ("HI", pontos(d_emp["ic95_sup"]), d_emp["ic95_sup"], MO_E8_RESUMO, f"{loc_emp}/ic95_sup", "proporcao x100, 1 casa"),
+              mo_item_ref])
+mo_registrar("MO_DESCARTE_ESPECS", "Apendice C (multi-outcome)",
+             f"de cada uma das {inteiro(d_emp['n_especificacoes_convencionais'])} especificações convencionais do "
+             f"protocolo, todas com salto negativo",
+             [("N", inteiro(d_emp["n_especificacoes_convencionais"]), d_emp["n_especificacoes_convencionais"],
+               MO_E8_RESUMO, f"{loc_emp}/n_especificacoes_convencionais", "inteiro")])
+registrar("MO_HONESTO_NAO_DESCARTA", "Apendice C (multi-outcome)", "IC honesto (M do protocolo) nao descarta +10 p.p.",
+          "não descarta", MO_E8_RESUMO, f"{loc_mo_desc}/*/ic_honesto_exclui_referencia",
+          [d["ic_honesto_exclui_referencia"] for d in mo_desc], "guarda booleana",
+          "intervalo honesto com a constante do protocolo não descarta nada")
+mo_registrar("MO_CICLOS_ISOLADOS", "Apendice C (multi-outcome)",
+             f"nos ciclos 1 e 2, o intervalo convencional ainda admite {MO_REF_TXT} pontos percentuais",
+             [mo_item_ref])
+mo_registrar("MO_CONCLUSAO_DESCARTE", "Conclusao",
+             f"o intervalo convencional exclui ganhos de preenchimento de {MO_REF_TXT} pontos percentuais",
+             [mo_item_ref])
+mo_registrar("MO_E5_CICLO1", "Apendice C",
+             f"Nenhuma especificação restrita ao ciclo 1 descarta efeitos de {MO_REF_TXT} pontos percentuais",
+             [mo_item_ref])
+
+# P2 relativo a media do pre.
+mo_rel = {c: mo_e8(f"e7/p2_sup_relativo_media_pre/{c}/razao_sup_p2") for c in ("0.300", "0.400")}
+mo_registrar("MO_P2_RELATIVO", "Apendice C (multi-outcome)",
+             f"equivale a {pontos(mo_rel['0.300'][0])}\\% da média do pré abaixo do corte de {decimal_br(rdd_c1, 3)} e "
+             f"a {pontos(mo_rel['0.400'][0])}\\% da média abaixo do de {decimal_br(rdd_c2, 3)}",
+             [(f"C{c[2:]}", pontos(b), b, MO_E8_RESUMO, l, "proporcao x100, 1 casa") for c, (b, l) in mo_rel.items()])
+
+# Selecao em V1 no corte de 0,400.
+mo_vg = {c: mo_e8(f"selecao_v1_0400/vagas_imediatas_c1_0400/{c}") for c in ("tau", "ic95_inf", "ic95_sup")}
+mo_dens, loc_mo_dens = mo_e8("selecao_v1_0400/densidade_V1_0400/razao")
+mo_bal_n, loc_mo_bal_n = mo_e8("selecao_v1_0400/balanco_V1_0400/covariaveis_testadas")
+mo_bal_r, loc_mo_bal_r = mo_e8("selecao_v1_0400/balanco_V1_0400/p_menor_005")
+mo_peso, loc_mo_peso = mo_e8("selecao_v1_0400/peso_c1_400_no_P1")
+mo_registrar("MO_SELECAO_V1", "Apendice C (multi-outcome)",
+             f"com salto de {decimal_br(mo_vg['tau'][0], 3)} [{decimal_br(mo_vg['ic95_inf'][0], 3)}; "
+             f"{decimal_br(mo_vg['ic95_sup'][0], 3)}], e, entre os municípios com vaga do ciclo 1 nesse corte, a razão "
+             f"de densidades é de {decimal_br(mo_dens, 2)} e {inteiro(mo_bal_r)} de {inteiro(mo_bal_n)} covariáveis "
+             f"diferem a 5\\%",
+             [(c.upper(), decimal_br(b, 3), b, MO_E8_RESUMO, l, "3 casas") for c, (b, l) in mo_vg.items()]
+             + [("DENS", decimal_br(mo_dens, 2), mo_dens, MO_E8_RESUMO, loc_mo_dens, "2 casas"),
+                ("BAL_REJ", inteiro(mo_bal_r), mo_bal_r, MO_E8_RESUMO, loc_mo_bal_r, "inteiro"),
+                ("BAL_N", inteiro(mo_bal_n), mo_bal_n, MO_E8_RESUMO, loc_mo_bal_n, "inteiro")])
+mo_registrar("MO_SELECAO_PESO", "Apendice C (multi-outcome)",
+             f"seu peso no índice P1 empilhado é de {pontos(mo_peso)}\\%",
+             [("PESO", pontos(mo_peso), mo_peso, MO_E8_RESUMO, loc_mo_peso, "proporcao x100, 1 casa")])
+
+# E7: estudo de evento, nivel pre-existente, generalistas e V1.
+mo_seq = {c: mo_e8(f"e7/f31_U_0300/maior_sequencia_p_menor_005/{c}")
+          for c in ("n_meses", "inicio", "fim", "janela", "tau_min", "tau_max")}
+mo_primeiro_pos, _ = mo_e8("e7/f31_U_0300/primeiro_mes_pos")
+mo_depois, loc_mo_depois = mo_e8("e7/f31_U_0300/meses_pos_depois_da_sequencia")
+mo_depois_sig, _ = mo_e8("e7/f31_U_0300/meses_pos_depois_da_sequencia_p_menor_005")
+mo_antes, loc_mo_antes = mo_e8("e7/f31_U_0300/meses_antes_da_referencia")
+mo_antes_sig, _ = mo_e8("e7/f31_U_0300/meses_antes_da_referencia_p_menor_005")
+mo_exigir(mo_seq["janela"][0] == ["pos"] and mo_seq["inicio"][0] == mo_primeiro_pos,
+          "a sequencia de meses com p < 0,05 deixou de comecar no primeiro mes do pos")
+mo_exigir(int(mo_depois_sig) == 0 and int(mo_antes_sig) == 0, "ha meses com p < 0,05 fora da sequencia")
+mo_registrar("MO_E7_SEQUENCIA", "Apendice C (multi-outcome)",
+             f"No corte de {decimal_br(rdd_c1, 3)}, há {inteiro(mo_seq['n_meses'][0])} meses consecutivos com $p$ abaixo "
+             f"de 5\\%, de {mo_mes(mo_seq['inicio'][0])} a {mo_mes(mo_seq['fim'][0])}, com saltos de "
+             f"{decimal_br(mo_seq['tau_min'][0], 3)} a {decimal_br(mo_seq['tau_max'][0], 3)} vínculo por 10 mil "
+             f"habitantes, e nenhum nos {inteiro(mo_depois)} meses seguintes; antes da referência, nenhum dos "
+             f"{inteiro(mo_antes)} meses tem $p$ abaixo de 5\\%",
+             [("N", inteiro(mo_seq["n_meses"][0]), mo_seq["n_meses"][0], MO_E8_RESUMO, mo_seq["n_meses"][1], "inteiro"),
+              ("INICIO", mo_mes(mo_seq["inicio"][0]), mo_seq["inicio"][0], MO_E8_RESUMO, mo_seq["inicio"][1], "mes por extenso"),
+              ("FIM", mo_mes(mo_seq["fim"][0]), mo_seq["fim"][0], MO_E8_RESUMO, mo_seq["fim"][1], "mes por extenso"),
+              ("TAU_MIN", decimal_br(mo_seq["tau_min"][0], 3), mo_seq["tau_min"][0], MO_E8_RESUMO, mo_seq["tau_min"][1], "3 casas"),
+              ("TAU_MAX", decimal_br(mo_seq["tau_max"][0], 3), mo_seq["tau_max"][0], MO_E8_RESUMO, mo_seq["tau_max"][1], "3 casas"),
+              ("DEPOIS", inteiro(mo_depois), mo_depois, MO_E8_RESUMO, loc_mo_depois, "inteiro"),
+              ("ANTES", inteiro(mo_antes), mo_antes, MO_E8_RESUMO, loc_mo_antes, "inteiro")])
+mo_registrar("MO_E7_REFERENCIA", "Apendice C (multi-outcome)", f"relativo a {mo_mes(mo_ref)}",
+             [("REF", mo_mes(mo_ref), mo_ref, MO_E7_RESUMO, loc_mo_ref, "competencia por extenso")])
+mo_med = {c: mo_e8(f"e7/f31_U_0300/{c}") for c in ("media_tau_pre_extra", "media_tau_pre", "media_tau_pos")}
+mo_exigir(mo_med["media_tau_pre"][0] < min(mo_med["media_tau_pre_extra"][0], mo_med["media_tau_pos"][0]),
+          "a referencia deixou de estar num vale entre o pre extra e o pos")
+mo_registrar("MO_E7_VALE", "Apendice C (multi-outcome)", f"a referência de {mo_mes(mo_ref)} está num vale",
+             [("REF", mo_mes(mo_ref), mo_ref, MO_E7_RESUMO, loc_mo_ref, "competencia por extenso")])
+mo_pe_txt = f"de {mo_mes(mo_pre_extra[0])} a {mo_mes(mo_pre_extra[-1])}"
+mo_item_pe = [("PRE_EXTRA_INI", mo_mes(mo_pre_extra[0]), mo_pre_extra[0], MO_E7_RESUMO, f"{loc_mo_pre_extra}/0",
+               "competencia por extenso"),
+              ("PRE_EXTRA_FIM", mo_mes(mo_pre_extra[-1]), mo_pre_extra[-1], MO_E7_RESUMO, f"{loc_mo_pre_extra}/-1",
+               "competencia por extenso")]
+mo_registrar("MO_E7_MEDIAS", "Apendice C (multi-outcome)",
+             f"o salto médio do estudo de evento é de {decimal_br(mo_med['media_tau_pre_extra'][0], 3)} {mo_pe_txt} e "
+             f"de {decimal_br(mo_med['media_tau_pos'][0], 3)} no pós",
+             [("PRE_EXTRA", decimal_br(mo_med["media_tau_pre_extra"][0], 3), mo_med["media_tau_pre_extra"][0],
+               MO_E8_RESUMO, mo_med["media_tau_pre_extra"][1], "3 casas"),
+              ("POS", decimal_br(mo_med["media_tau_pos"][0], 3), mo_med["media_tau_pos"][0], MO_E8_RESUMO,
+               mo_med["media_tau_pos"][1], "3 casas")] + mo_item_pe)
+mo_dird = {c: mo_e8(f"e7/f31_U_0300/dird_principal/{c}") for c in ("tau", "ic95_inf", "ic95_sup", "p_valor")}
+mo_registrar("MO_E7_DIRD_0300", "Apendice C (multi-outcome)",
+             f"a DiRD principal nesse corte é de {decimal_br(mo_dird['tau'][0], 3)} [{decimal_br(mo_dird['ic95_inf'][0], 3)}; "
+             f"{decimal_br(mo_dird['ic95_sup'][0], 3)}], com $p$ de {decimal_br(mo_dird['p_valor'][0], 3)}",
+             [(c.upper(), decimal_br(b, 3), b, MO_E8_RESUMO, l, "3 casas") for c, (b, l) in mo_dird.items()])
+mo_exigir(bool(mo_e8("e7/f31_U_0300/descontinuidade_preexistente")[0]), "a descontinuidade pre-existente sumiu")
+mo_niv = {j: {c: mo_e8(f"e7/f31_U_0300/{j}/{c}") for c in ("tau", "ic95_inf", "ic95_sup")}
+          for j in ("nivel_pre_extra", "nivel_pre")}
+mo_exigir(all(v["ic95_sup"][0] < 0 for v in mo_niv.values()), "o nivel pre deixou de ser menor do lado de cima")
+mo_registrar("MO_E7_NIVEL", "Apendice C (multi-outcome)",
+             f"com salto de {decimal_br(mo_niv['nivel_pre_extra']['tau'][0], 3)} "
+             f"[{decimal_br(mo_niv['nivel_pre_extra']['ic95_inf'][0], 3)}; "
+             f"{decimal_br(mo_niv['nivel_pre_extra']['ic95_sup'][0], 3)}] {mo_pe_txt} e de "
+             f"{decimal_br(mo_niv['nivel_pre']['tau'][0], 3)} [{decimal_br(mo_niv['nivel_pre']['ic95_inf'][0], 3)}; "
+             f"{decimal_br(mo_niv['nivel_pre']['ic95_sup'][0], 3)}] no pré principal",
+             [(f"{j.upper()}_{c.upper()}", decimal_br(b, 3), b, MO_E8_RESUMO, l, "3 casas")
+              for j, v in mo_niv.items() for c, (b, l) in v.items()] + mo_item_pe)
+mo_gen_n, loc_mo_gen_n = mo_e8("e7/generalistas_U_0400/pre_extra_meses")
+mo_gen_s, loc_mo_gen_s = mo_e8("e7/generalistas_U_0400/pre_extra_p_menor_005")
+mo_exigir(int(mo_gen_s) > 0, "o placebo de generalistas deixou de se deslocar antes do pre principal")
+mo_registrar("MO_E7_GENERALISTAS", "Apendice C (multi-outcome)",
+             f"o placebo de generalistas já tem $p$ abaixo de 5\\% em {inteiro(mo_gen_s)} dos {inteiro(mo_gen_n)} meses "
+             f"{mo_pe_txt}",
+             [("SIG", inteiro(mo_gen_s), mo_gen_s, MO_E8_RESUMO, loc_mo_gen_s, "inteiro"),
+              ("N", inteiro(mo_gen_n), mo_gen_n, MO_E8_RESUMO, loc_mo_gen_n, "inteiro")] + mo_item_pe)
+mo_exigir(int(mo_e8("e7/f31_U_0400_pos_p_menor_005")[0]) == 0, "ha mes do pos com p < 0,05 no corte de 0,400")
+registrar("MO_E7_0400_POS", "Apendice C (multi-outcome)", "meses do pos com p<0,05 em 0,400 (F3.1, U)", "nenhum",
+          MO_E8_RESUMO, "campo e7/f31_U_0400_pos_p_menor_005", 0, "guarda: zero",
+          "nesse corte, nenhum mês do pós tem $p$ abaixo de 5\\% nas ocupações-alvo")
+mo_v1 = {c: mo_e8(f"e7/v1_0300/{c}") for c in ("meses_pre_extra_e_entre", "meses_pre_extra_e_entre_p_menor_005",
+                                               "meses_pre_extra_e_entre_tau_positivo")}
+mo_exigir(len({int(v[0]) for v in mo_v1.values()}) == 1, "nem todos os meses de V1 em 0,300 tem p < 0,05 e salto positivo")
+mo_registrar("MO_E7_V1", "Apendice C (multi-outcome)",
+             f"todos os {inteiro(mo_v1['meses_pre_extra_e_entre'][0])} meses anteriores ao pré principal têm salto "
+             f"positivo com $p$ abaixo de 5\\%",
+             [("N", inteiro(mo_v1["meses_pre_extra_e_entre"][0]), mo_v1["meses_pre_extra_e_entre"][0], MO_E8_RESUMO,
+               mo_v1["meses_pre_extra_e_entre"][1], "inteiro")])
+
+# E9: escolha da 1a opcao (secundario e exploratorio), reconferido contra o E9.
+mo_e9 = {c: {k: mo_e8(f"e9/principal/{c}/{k}") for k in ("rc_5mil", "rc_5mil_ic95/0", "rc_5mil_ic95/1", "p", "ic_exclui_zero")}
+         for c in ("1", "2", "3", "empilhado")}
+for c, v in mo_e9.items():
+    origem = csv_valor(MO_E9_EFM, {"ciclo": c, "modelo": "logit_condicional_1a_opcao", "conjunto": "principal",
+                                   "especificacao": "spline_linear__bolsa_linear", "termo": "bolsa_mil",
+                                   "quantidade": "razao_chances_por_5mil"}, "estimativa")[0]
+    mo_exigir(abs(float(origem) - float(v["rc_5mil"][0])) < 1e-9, f"razao de chances do ciclo {c} difere do E9")
+mo_exigir(mo_e9["2"]["ic_exclui_zero"][0] and mo_e9["empilhado"]["ic_exclui_zero"][0]
+          and not mo_e9["1"]["ic_exclui_zero"][0] and not mo_e9["3"]["ic_exclui_zero"][0],
+          "o padrao de significancia do E9 por ciclo mudou")
+
+
+def mo_rc(ciclo: str) -> str:
+    v = mo_e9[ciclo]
+    return (f"{decimal_br(v['rc_5mil'][0], 2)} [{decimal_br(v['rc_5mil_ic95/0'][0], 2)}; "
+            f"{decimal_br(v['rc_5mil_ic95/1'][0], 2)}]")
+
+
+def mo_itens_rc(ciclo: str) -> list[tuple[str, str, Any, str, str, str]]:
+    return [(f"C{ciclo.upper()}_{k.replace('/', '_').upper()}", decimal_br(b, 2), b, MO_E8_RESUMO, l, "2 casas")
+            for k, (b, l) in mo_e9[ciclo].items() if k.startswith("rc_5mil")]
+
+
+c2r = {k: mo_e8(f"e9/ciclo2/{k}") for k in ("p_score_rademacher", "p_score_webb", "placebo/n_placebos",
+                                             "placebo/n_abs_t_placebo_ge_real", "placebo/p_posto", "spline_cubico/p")}
+emr = {k: mo_e8(f"e9/empilhado/{k}") for k in ("cluster_curso/p_score_rademacher", "cluster_curso/p_score_webb",
+                                                "placebo/n_placebos", "placebo/n_abs_t_placebo_ge_real",
+                                                "placebo/p_posto", "spline_cubico/p", "ciclos_1_e_3/p", "cochran_Q/p")}
+mo_exigir(bool(mo_e8("e9/ciclo2/robusto_inferencia_poucos_clusters")[0]) and bool(mo_e8("e9/ciclo2/nenhum_placebo_supera")[0])
+          and bool(mo_e8("e9/ciclo2/ic_cubico_contem_zero")[0]), "a robustez do ciclo 2 mudou")
+mo_exigir(bool(mo_e8("e9/empilhado/fragil")[0]) and bool(mo_e8("e9/empilhado/heterogeneidade_rejeitada")[0]),
+          "o empilhado do E9 deixou de ser fragil")
+mo_exigir(int(c2r["placebo/n_placebos"][0]) == int(emr["placebo/n_placebos"][0]), "numero de placebos difere")
+mo_item_salto = ("SALTO_BRL", mil_reais(rdd_salto), rdd_salto, RDD_E3_ESTIM, "coluna salto_anunciado_brl, todas as linhas",
+                 "reais em mil")
+mo_registrar("MO_E9_C2", "Apendice C (multi-outcome)",
+             f"com razão de chances de {mo_rc('2')} por {mil_reais(rdd_salto)} a mais", mo_itens_rc("2") + [mo_item_salto])
+mo_registrar("MO_E9_PLACEBOS", "Apendice C (multi-outcome)",
+             f"aos {inteiro(c2r['placebo/n_placebos'][0])} cortes placebo, nenhum dos quais tem estatística $t$ maior ou "
+             f"igual à real, mas o intervalo inclui o zero com um \\emph{{spline}} cúbico",
+             [("N", inteiro(c2r["placebo/n_placebos"][0]), c2r["placebo/n_placebos"][0], MO_E8_RESUMO,
+               c2r["placebo/n_placebos"][1], "inteiro")])
+mo_registrar("MO_E9_C1_C3", "Apendice C (multi-outcome)",
+             f"Nos ciclos 1 e 3, as razões são de {mo_rc('1')} e {mo_rc('3')}", mo_itens_rc("1") + mo_itens_rc("3"))
+mo_registrar("MO_E9_EMPILHADO", "Apendice C (multi-outcome)",
+             f"O empilhado, de {mo_rc('empilhado')}, é frágil: sem o ciclo 2, o $p$ é de "
+             f"{decimal_br(emr['ciclos_1_e_3/p'][0], 3)}; a homogeneidade entre ciclos é rejeitada, com $p$ de "
+             f"{decimal_br(emr['cochran_Q/p'][0], 3)}; contra os placebos, o $p$ por posto é de "
+             f"{decimal_br(emr['placebo/p_posto'][0], 3)}; e, com \\emph{{spline}} cúbico, é de "
+             f"{decimal_br(emr['spline_cubico/p'][0], 3)}",
+             mo_itens_rc("empilhado")
+             + [(k.replace("/", "_").upper(), decimal_br(b, 3), b, MO_E8_RESUMO, l, "3 casas")
+                for k, (b, l) in emr.items() if k in ("ciclos_1_e_3/p", "cochran_Q/p", "placebo/p_posto", "spline_cubico/p")])
+
+# Tabela C3: E9, ciclo 2 contra empilhado.
+mo_p_c2, loc_mo_p_c2 = mo_e9["2"]["p"]
+mo_p_em, loc_mo_p_em = mo_e9["empilhado"]["p"]
+mo_tab_e9 = [
+    ("RC", f"Razão de chances por {mil_reais(rdd_salto)} a mais [IC95\\%] & {mo_rc('2')} & {mo_rc('empilhado')} \\\\",
+     mo_itens_rc("2") + mo_itens_rc("empilhado") + [mo_item_salto]),
+    ("P", f"$p$, \\emph{{cluster}} por conjunto de escolha & {mo_p(mo_p_c2)} & {mo_p(mo_p_em)} \\\\",
+     [("C2", mo_p(mo_p_c2), mo_p_c2, MO_E8_RESUMO, loc_mo_p_c2, "3 casas; < 0,001"),
+      ("EMP", mo_p(mo_p_em), mo_p_em, MO_E8_RESUMO, loc_mo_p_em, "3 casas")]),
+    ("SCORE", f"$p$ do \\emph{{score bootstrap}}, Rademacher / Webb & {mo_p(c2r['p_score_rademacher'][0])} / "
+              f"{mo_p(c2r['p_score_webb'][0])} & --- \\\\",
+     [(k.upper(), mo_p(c2r[k][0]), c2r[k][0], MO_E8_RESUMO, c2r[k][1], "3 casas; < 0,001")
+      for k in ("p_score_rademacher", "p_score_webb")]),
+    ("SCORE_CURSO", f"$p$ do \\emph{{score bootstrap}} por curso, Rademacher / Webb & --- & "
+                    f"{mo_p(emr['cluster_curso/p_score_rademacher'][0])} / {mo_p(emr['cluster_curso/p_score_webb'][0])} \\\\",
+     [(k.split("/")[1].upper(), mo_p(emr[k][0]), emr[k][0], MO_E8_RESUMO, emr[k][1], "3 casas")
+      for k in ("cluster_curso/p_score_rademacher", "cluster_curso/p_score_webb")]),
+    ("PLACEBO_N", f"Placebos com $|t|$ maior ou igual ao real, de {inteiro(c2r['placebo/n_placebos'][0])} & "
+                  f"{inteiro(c2r['placebo/n_abs_t_placebo_ge_real'][0])} & "
+                  f"{inteiro(emr['placebo/n_abs_t_placebo_ge_real'][0])} \\\\",
+     [("N", inteiro(c2r["placebo/n_placebos"][0]), c2r["placebo/n_placebos"][0], MO_E8_RESUMO,
+       c2r["placebo/n_placebos"][1], "inteiro"),
+      ("C2", inteiro(c2r["placebo/n_abs_t_placebo_ge_real"][0]), c2r["placebo/n_abs_t_placebo_ge_real"][0],
+       MO_E8_RESUMO, c2r["placebo/n_abs_t_placebo_ge_real"][1], "inteiro"),
+      ("EMP", inteiro(emr["placebo/n_abs_t_placebo_ge_real"][0]), emr["placebo/n_abs_t_placebo_ge_real"][0],
+       MO_E8_RESUMO, emr["placebo/n_abs_t_placebo_ge_real"][1], "inteiro")]),
+    ("POSTO", f"$p$ por posto contra os placebos & {decimal_br(c2r['placebo/p_posto'][0], 3)} & "
+              f"{decimal_br(emr['placebo/p_posto'][0], 3)} \\\\",
+     [("C2", decimal_br(c2r["placebo/p_posto"][0], 3), c2r["placebo/p_posto"][0], MO_E8_RESUMO,
+       c2r["placebo/p_posto"][1], "3 casas"),
+      ("EMP", decimal_br(emr["placebo/p_posto"][0], 3), emr["placebo/p_posto"][0], MO_E8_RESUMO,
+       emr["placebo/p_posto"][1], "3 casas")]),
+    ("CUBICO", f"\\emph{{Spline}} cúbico do IVS: $p$ & {decimal_br(c2r['spline_cubico/p'][0], 3)} & "
+               f"{decimal_br(emr['spline_cubico/p'][0], 3)} \\\\",
+     [("C2", decimal_br(c2r["spline_cubico/p"][0], 3), c2r["spline_cubico/p"][0], MO_E8_RESUMO,
+       c2r["spline_cubico/p"][1], "3 casas"),
+      ("EMP", decimal_br(emr["spline_cubico/p"][0], 3), emr["spline_cubico/p"][0], MO_E8_RESUMO,
+       emr["spline_cubico/p"][1], "3 casas")]),
+    ("SEM_C2", f"Sem o ciclo 2 (ciclos 1 e 3): $p$ & --- & {decimal_br(emr['ciclos_1_e_3/p'][0], 3)} \\\\",
+     [("EMP", decimal_br(emr["ciclos_1_e_3/p"][0], 3), emr["ciclos_1_e_3/p"][0], MO_E8_RESUMO,
+       emr["ciclos_1_e_3/p"][1], "3 casas")]),
+    ("COCHRAN", f"Homogeneidade entre os ciclos (Cochran): $p$ & --- & {decimal_br(emr['cochran_Q/p'][0], 3)} \\\\",
+     [("EMP", decimal_br(emr["cochran_Q/p"][0], 3), emr["cochran_Q/p"][0], MO_E8_RESUMO, emr["cochran_Q/p"][1],
+       "3 casas")]),
+]
+for chave, trecho, itens in mo_tab_e9:
+    mo_registrar(f"MO_TAB_E9_{chave}", "Tabela C3 (E9)", trecho, itens)
+
+
 # --------------------------------------- Apendice D: rotas avaliadas e descartadas
 
 ddd_cel, loc_dc = json_valor(DDD_PORTAO, "amostra_ddd_municipio_curso/n_celulas")
@@ -1401,10 +1856,21 @@ for chave, bruto, loc, fmt, tr in [("Q16", c7_q16, loc_c17, decimal_br(c7_q16, 4
 # ------------------------------------------------------------------ execucao
 
 
+def corpo_sem_bibliografia(tex: str) -> str:
+    """Corpo do documento sem o ambiente thebibliography.
+
+    No artigo principal os apêndices vêm depois da bibliografia; cortar o texto
+    em `\\begin{thebibliography}` deixava os apêndices fora da varredura de
+    órfãos. Aqui só o bloco da bibliografia sai."""
+    corpo = tex.split("\\begin{document}", 1)[1].split("\\end{document}", 1)[0]
+    return re.sub(r"\\begin\{thebibliography\}.*?\\end\{thebibliography\}", " ", corpo, flags=re.S)
+
+
 def decimais_sem_origem(tex: str, registros: list[dict[str, Any]]) -> tuple[list[str], list[str]]:
     """Cobertura (como no conferidor do artigo curto): todo decimal com vírgula no corpo
-    do artigo tem de estar contido em algum trecho conferido com status OK."""
-    corpo = tex.split("\\begin{document}", 1)[1].split("\\begin{thebibliography}", 1)[0]
+    do artigo, apêndices incluídos, tem de estar contido em algum trecho conferido com
+    status OK."""
+    corpo = corpo_sem_bibliografia(tex)
     corpo = re.sub(r"\\(label|ref|includegraphics|cite[tp]?)\{[^}]*\}", " ", corpo)
     corpo_norm = re.sub(r"\s+", " ", corpo)
     trechos_ok = " || ".join(r["trecho_esperado_no_tex"] for r in registros if r.get("status") == "OK")

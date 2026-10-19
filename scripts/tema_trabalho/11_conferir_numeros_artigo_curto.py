@@ -4,8 +4,10 @@ Mesma regra do artigo principal (`10_conferir_numeros_artigo.py`): nenhuma
 cifra pode existir sem origem rastreavel em `output/`. Este script reutiliza os
 leitores, formatadores e a conferencia estrutural do conferidor principal e
 acrescenta as origens que so o artigo curto cita — intervalo exato de A8, wild
-cluster bootstrap e MDE ex-post de A4, valores q de multiplicidade e as tres
-ameacas do C-7 em A5.
+cluster bootstrap e MDE ex-post de A4, valores q de multiplicidade, as tres
+ameacas do C-7 em A5 e as frases da rodada multi-outcome da bolsa (E6 a E9)
+que o curto escreve de modo proprio; as que repetem o principal reutilizam os
+trechos MO_* dele.
 
 Dois portoes:
 
@@ -13,9 +15,9 @@ Dois portoes:
    `.tex` do artigo curto. Os trechos do conferidor principal sao reutilizados
    quando o artigo curto repete a mesma formulacao; os demais sao declarados
    aqui.
-2. Cobertura: todo numero com virgula decimal no corpo do artigo curto tem de
-   estar contido em algum trecho conferido. Um decimal que nao esteja e
-   numero sem origem, e reprova.
+2. Cobertura: todo numero com virgula decimal no corpo do artigo curto (sem a
+   bibliografia) tem de estar contido em algum trecho conferido. Um decimal que
+   nao esteja e numero sem origem, e reprova.
 
 Mapeamento gravado em `output/tema_trabalho/A8_conferencia_numeros_artigo_curto.csv`.
 """
@@ -440,6 +442,39 @@ registrar("CURTO_RDD_LIMSUP_EMPILHADO", "Secao 3.3", "limite superior unilateral
           loc_lb, lim_b, "proporcao x100, 1 casa", trecho_lim)
 
 
+# ------------------------------------- RDD da bolsa: rodada multi-outcome (E6-E9)
+# Os trechos com numero que o artigo curto repete do principal (Holm, descarte
+# empilhado, nivel pre-existente no CNES, E9) sao os MO_* do conferidor
+# principal, reutilizados abaixo em main(). Aqui ficam so as frases que o curto
+# escreve de outro modo; as guardas do principal ja rodaram ao carrega-lo e sao
+# repetidas onde a frase do curto depende delas.
+
+MO_E8 = cp.MO_E8_RESUMO
+seq_janela, loc_seq_j = cp.mo_e8("e7/f31_U_0300/maior_sequencia_p_menor_005/janela")
+seq_inicio, loc_seq_i = cp.mo_e8("e7/f31_U_0300/maior_sequencia_p_menor_005/inicio")
+primeiro_pos, loc_pp1 = cp.mo_e8("e7/f31_U_0300/primeiro_mes_pos")
+depois_sig, loc_dsig = cp.mo_e8("e7/f31_U_0300/meses_pos_depois_da_sequencia_p_menor_005")
+if seq_janela != ["pos"] or seq_inicio != primeiro_pos or int(depois_sig) != 0:
+    raise SystemExit("E7: o curto diz que a sequencia de meses significativos comeca no pos e depois se desfaz")
+registrar("CURTO_MO_E7_SEQUENCIA", "Secao 3.4", "sequencia de meses com p<0,05 em 0,300 no inicio do pos",
+          "sequência no início do pós", MO_E8, f"{loc_seq_j}; {loc_seq_i}; {loc_pp1}; {loc_dsig}",
+          [seq_janela, seq_inicio, primeiro_pos, depois_sig], "guarda: janela pos, inicio = 1o mes do pos, 0 depois",
+          f"o corte de {decimal_br(c1, 3)} tem uma sequência de meses significativos logo no início do pós, que depois "
+          f"se desfaz")
+gen_sig, loc_gen = cp.mo_e8("e7/generalistas_U_0400/pre_extra_p_menor_005")
+if int(gen_sig) <= 0:
+    raise SystemExit("E7: o curto diz que o placebo de generalistas se desloca antes do pre principal")
+registrar("CURTO_MO_E7_GENERALISTAS", "Secao 3.4", "placebo de generalistas com p<0,05 antes do pre principal (0,400)",
+          "já se desloca", MO_E8, loc_gen, gen_sig, "guarda: > 0",
+          f"no corte de {decimal_br(c2, 3)}, o placebo de generalistas já se desloca antes do pré principal")
+alguma, loc_alg = cp.mo_e8("holm/alguma_rejeitada")
+if alguma:
+    raise SystemExit("E8: o resumo do curto diz que o segundo desenho nao detecta efeito")
+registrar("CURTO_MO_RESUMO_NAO_DETECTA", "Resumo", "nenhuma primaria rejeitada pelo Holm", "não detecta", MO_E8,
+          loc_alg, alguma, "guarda: False",
+          "e não detecta efeito sobre preenchimento, presença ou oferta cadastrada")
+
+
 # ------------------------------------------------------------------ execucao
 
 # Numeros que aparecem no artigo curto sem serem cifra estimada: datas, lei,
@@ -474,7 +509,7 @@ def main() -> None:
         raise SystemExit("Identificadores repetidos na conferencia do artigo curto")
 
     # 3. Cobertura: todo decimal com virgula no corpo tem de estar num trecho OK.
-    corpo = tex.split("\\begin{document}", 1)[1].split("\\begin{thebibliography}", 1)[0]
+    corpo = cp.corpo_sem_bibliografia(tex)
     corpo = re.sub(r"\\(label|ref|includegraphics|cite[tp]?)\{[^}]*\}", " ", corpo)
     corpo_norm = re.sub(r"\s+", " ", corpo)
     trechos_ok = " || ".join(r["trecho_esperado_no_tex"] for r in todos if r["status"] == "OK")

@@ -12,7 +12,7 @@
 efeitos locais da alocação no Programa Mais Médicos Especialistas sobre adesão,
 presença e oferta cadastrada}
 \author{Versão curta de trabalho}
-\date{18 de outubro de 2026}
+\date{19 de outubro de 2026}
 
 \begin{document}
 \maketitle
@@ -34,7 +34,14 @@ Vulnerabilidade Social (IVS) de 2010 do Ipea, que reproduzem a faixa anunciada
 em todos os municípios do ciclo 1; o salto na fração de células preenchidas na
 primeira chamada é de $-$12,8 pontos percentuais no corte de 0,300 e de
 $-$5,1 no de 0,400, sem distinção de zero e com intervalos largos, de modo que
-o resultado é inconclusivo, e não evidência de ineficácia. A
+o resultado é inconclusivo, e não evidência de ineficácia. Uma
+rodada multi-outcome sob protocolo congelado, com os ciclos 1 a 3, os cortes
+empilhados e a oferta cadastrada no CNES, não rejeita zero nos dois testes
+primários depois da correção de Holm ($p$ ajustado de 0,851 em ambos); o
+intervalo convencional do preenchimento empilhado exclui ganhos de 10 pontos
+percentuais, mas o intervalo honesto não é informativo, e a única resposta que
+resiste a vários testes é o deslocamento da escolha dos candidatos entre vagas
+no ciclo 2. A
 camada descritiva mostra que a atração administrativa realizada é 27,9 pontos
 percentuais maior em células metropolitanas do que no interior remoto. A camada
 associativa mostra que, nas células município--curso com atração, o estoque de
@@ -45,8 +52,9 @@ região de saúde não encontra perda nos vizinhos observados, mas não tem
 capacidade de distinguir expansão líquida de realocação, e essa ameaça fica
 declarada como não testada. O primeiro desenho identifica o efeito da alocação
 marginal sobre adesão e presença; o segundo mira o incentivo marginal de bolsa
-perto dos cortes, mas não tem precisão para distinguir efeitos moderados de
-zero. Nenhum dos dois identifica o efeito do programa sobre o estoque
+perto dos cortes, somado a outras regras federais que mudam nos mesmos cortes,
+e não detecta efeito sobre preenchimento, presença ou oferta cadastrada.
+Nenhum dos dois identifica o efeito do programa sobre o estoque
 municipal, a decisão de se inscrever, a retenção contínua nem desfechos
 assistenciais.
 \end{abstract}
@@ -374,7 +382,8 @@ trocar o estimando ou acrescentar premissas. O que os dados permitem é
 descartar efeitos positivos grandes: o limite superior unilateral de 95\% do
 principal é de 14,5 pontos percentuais no corte de 0,300 e de 21,2 no de
 0,400; com os cortes empilhados, é de 10,3 para a média dos dois saltos.
-Nenhuma especificação descarta efeitos de 10 pontos percentuais.
+Nenhuma especificação restrita ao ciclo 1 descarta efeitos de 10 pontos
+percentuais.
 
 Não encontramos, portanto, evidência de que o adicional de R\$ 5 mil aumente o
 preenchimento das vagas perto dos cortes, mas a amostra também não permite
@@ -382,6 +391,97 @@ descartar efeitos positivos moderados: o resultado é inconclusivo, e não
 evidência de que a bolsa seja ineficaz. O alcance é local, restrito a
 municípios com IVS próximo dos cortes, à bolsa anunciada e à primeira chamada
 do ciclo 1.
+
+\subsection{Rodada multi-outcome}
+\label{sec:bolsa_multi}
+
+Como um único desfecho de um único ciclo não tem precisão para informar um
+nulo, um segundo protocolo, congelado em 18 de outubro de 2026 antes de abrir
+os desfechos novos, derivou do edital uma família de desfechos ordenada pela
+cadeia que a bolsa deveria mover: implementação e seleção dos municípios com
+vaga, atração (candidaturas e preenchimento), presença do especialista, oferta
+cadastrada no CNES e seleção de quem chega. O protocolo fixou dois testes
+primários, com a correção de \citet{holm1979}: (P1) um índice de
+atração--presença, média de escores padronizados de candidaturas, células com
+candidato, preenchimento e especialistas ativos por célula \citep{kling2007},
+com os ciclos 1 a 3 e os dois cortes empilhados; e (P2) os vínculos de especialistas nas ocupações-alvo do programa
+por 10 mil habitantes, em todos os municípios, por diferença em
+descontinuidades \citep{grembi2016} entre a média de junho de 2024 a junho de
+2025 e a de outubro de 2025 a agosto de 2026. Os demais desfechos são
+secundários, com valores $q$ de \citet{benjamini2006} dentro de cada família, e
+todo intervalo convencional é acompanhado do intervalo honesto de
+\citet{armstrong2018,armstrong2020}.
+
+O protocolo também tratou uma ameaça que o desenho original não tratava. Uma
+auditoria das normas federais, feita antes de abrir os desfechos novos,
+mostrou que nos mesmos cortes de IVS mudam ainda o teto de vagas de
+coparticipação do Mais Médicos para o Brasil, o estrato do cofinanciamento
+federal da atenção primária, o teto de emendas e de parcelas de custeio da
+média e alta complexidade para municípios com IVS acima do primeiro corte e, no
+segundo corte, a ajuda de custo do Mais Médicos para o Brasil. A regressão
+descontínua em nível mede, portanto, o pacote de regras do corte, e não a bolsa
+isolada. A diferença em descontinuidades mede a bolsa somada à variação, entre
+o pré e o pós, das descontinuidades dessas outras políticas: remove só a parte
+constante no tempo. Nenhum dos contrastes é o efeito da participação no PMM-E
+nem do Agora Tem Especialistas.
+
+Nenhum teste primário rejeita zero: o índice P1 tem salto de $-$0,13
+desvio-padrão, com intervalo de [$-$0,44; 0,19] e $p$ de 0,426, e P2 tem salto
+de 0,083 vínculo por 10 mil habitantes, com intervalo de [$-$0,309; 0,476] e
+$p$ de 0,677; o $p$ ajustado por Holm é de 0,851 para os dois. Nas cinco
+famílias de desfechos do protocolo, com 18 a 45 testes cada, nenhum valor $q$
+fica abaixo de 5\%. O ganho de precisão veio de empilhar ciclos e cortes. Com
+os três ciclos e os dois cortes, o salto na fração de células preenchidas na
+primeira chamada é de $-$7,3 pontos percentuais, com intervalo de
+[$-$17,9; 3,4]: um aumento de 10 pontos percentuais fica fora do intervalo
+convencional, e também fora do intervalo de cada uma das 6 especificações
+convencionais do protocolo, todas com salto negativo. Esse descarte vale só sob
+a aproximação local linear e para o pacote do corte: o intervalo honesto com a
+constante do protocolo não descarta nada, e, por ciclo isolado, nos ciclos 1 e
+2, o intervalo convencional ainda admite 10 pontos percentuais.
+
+No CNES, a diferença em descontinuidades não detecta mudança na oferta das
+ocupações-alvo nem nos placebos de generalistas e de especialistas fora do
+programa. No estudo de evento, mês a mês e relativo a junho de 2025, o corte de
+0,300 tem uma sequência de meses significativos logo no início do pós, que
+depois se desfaz. Ela não é lida como efeito: a oferta em nível já era menor do
+lado de cima do corte antes de todas as regras com esses cortes encontradas
+pela auditoria, com salto de $-$1,811 [$-$3,591; $-$0,030] de janeiro de 2022 a
+março de 2023 e de $-$2,147 [$-$4,192; $-$0,101] no pré principal, e, no corte
+de 0,400, o placebo de generalistas já se desloca antes do pré principal, o que
+é compatível com uma co-política variável no tempo.
+
+A escolha dos candidatos é o único elo com sinal que resiste a vários testes, e
+só no ciclo 2. Numa análise secundária e exploratória, por logit condicional
+\citep{mcfadden1974} entre as células do mesmo curso e ciclo, com o IVS em
+\emph{spline} contínuo, a bolsa anunciada desloca a primeira opção para
+células de bolsa maior, com razão de chances de 1,95 [1,48; 2,57] por R\$ 5 mil
+a mais; o sinal sobrevive ao \emph{score bootstrap} com poucos \emph{clusters}
+\citep{kline2012} e aos 27 cortes placebo, nenhum dos quais tem estatística $t$
+maior ou igual à real, mas o intervalo inclui o zero com um \emph{spline}
+cúbico. Nos ciclos 1 e 3, as razões são de 1,39 [0,90; 2,13] e 1,05
+[0,77; 1,43]. O empilhado, de 1,39 [1,12; 1,73], é frágil: sem o ciclo 2, o
+$p$ é de 0,267; a homogeneidade entre ciclos é rejeitada, com $p$ de 0,014;
+contra os placebos, o $p$ por posto é de 0,107; e, com \emph{spline} cúbico, é
+de 0,220. O logit condicional mede realocação entre células: o que uma ganha as
+outras perdem, e o total de candidatos não é observado.
+
+Sob o protocolo, portanto, o degrau de R\$ 5 mil não tem efeito detectável
+sobre preenchimento, presença ou oferta local, e o que se detecta é compatível
+com realocação de candidatos entre vagas, e não com expansão líquida. A
+pergunta desta seção continua a ser a hipótese apresentada na qualificação.
+
+\paragraph{O que os resultados sugerem (proposta, não decisão).} A síntese da
+rodada registra, como proposta ainda pendente de decisão do autor, três
+revisões da hipótese econômica para trabalho futuro: tratar o degrau da bolsa
+como instrumento de realocação e perguntar se ele atrai novos especialistas ou
+redistribui um conjunto dado entre municípios, com o universo de inscrições e o
+ciclo 3 maduro; estimar a elasticidade da escolha locacional à remuneração,
+comparada ao peso da distância e dos custos não pecuniários que o IVS resume; e
+trocar a pergunta binária sobre a eficácia da bolsa por duas quantitativas,
+quanto de bolsa seria preciso para mover o preenchimento e em que margem o
+incentivo atual atua. Nenhuma dessas propostas foi executada, e nenhuma muda o
+que foi estimado.
 
 \section{Camada descritiva: onde a atração acontece}
 \label{sec:territorio}
@@ -568,12 +668,17 @@ políticas de base territorial, o desenho da alocação é parte do instrumento
 subsequentes afeta onde o especialista de fato aparece.
 
 O adicional de bolsa, que é o instrumento de preço do programa, não mostra
-efeito distinguível de zero sobre o preenchimento nos cortes do IVS. A
-descontinuidade é nítida e a regra se reproduz por inteiro, mas a amostra
-local é pequena e o desfecho é disperso: os dados descartam apenas efeitos
-positivos grandes e deixam em aberto efeitos moderados. A pergunta sobre a
-bolsa continua de pé, e a resposta depende de mais coortes com o mesmo
-desfecho, não de outra especificação para as mesmas.
+efeito distinguível de zero sobre o preenchimento nos cortes do IVS, nem no
+ciclo 1 isolado nem na rodada multi-outcome com os ciclos 1 a 3, e a oferta
+cadastrada de especialistas no CNES também não se move. A descontinuidade é
+nítida e a regra se reproduz por inteiro. Com ciclos e cortes empilhados, o
+intervalo convencional exclui ganhos de preenchimento de 10 pontos
+percentuais, mas esse descarte depende da aproximação local linear e vale para
+o pacote de regras do corte. O único sinal robusto está na escolha dos
+candidatos entre vagas, no ciclo 2, o que é compatível com realocação, e não
+com expansão líquida. A pergunta sobre a bolsa continua de pé; o ciclo 3
+maduro e o universo de inscrições podem respondê-la, não outra especificação
+para os mesmos dados.
 
 O gradiente territorial mostra que a atração realizada é sistematicamente menor
 no interior remoto, e a evidência do CNES é compatível com uma diferença
@@ -590,10 +695,13 @@ inscrever, retenção contínua ou duração até a saída, produção assistenc
 filas ou desfechos de saúde. Suas limitações são a pontuação discreta com um
 ponto de massa de cada lado, a amostra de 36 pares, a ligação por nome
 normalizado, o protocolo retrospectivo e o desfecho de presença medido como
-retrato em uma data. O desenho da bolsa identifica apenas o incentivo marginal
-anunciado perto dos cortes, possivelmente somado a outros benefícios ligados
-às mesmas categorias de IVS; suas limitações são o poder baixo, o protocolo
-retrospectivo e o desequilíbrio de covariáveis no corte de 0,400. Os desfechos
+retrato em uma data. O desenho da bolsa identifica o incentivo marginal
+anunciado perto dos cortes somado às outras regras federais que mudam nos
+mesmos cortes, e a diferença em descontinuidades no CNES remove só a parte
+constante no tempo dessas regras; suas limitações são o poder baixo por ciclo
+e corte, a exposição prévia de parte dos desfechos do ciclo 1, a provável
+seleção dos municípios com vaga no corte de 0,400 e um intervalo honesto que
+não é informativo. Os desfechos
 assistenciais exigem portões próprios de dados e permanecem fora do escopo.
 
 \begin{thebibliography}{99}
@@ -602,10 +710,23 @@ assistenciais exigem portões próprios de dados e permanecem fora do escopo.
 Agarwal, N. (2015). An Empirical Model of the Medical Match.
 \textit{American Economic Review}, 105(7), 1939--1978.
 
+\bibitem[Armstrong e Kolesár(2018)]{armstrong2018}
+Armstrong, T. B.; Kolesár, M. (2018). Optimal Inference in a Class of
+Regression Models. \textit{Econometrica}, 86(2), 655--683.
+
+\bibitem[Armstrong e Kolesár(2020)]{armstrong2020}
+Armstrong, T. B.; Kolesár, M. (2020). Simple and Honest Confidence Intervals
+in Nonparametric Regression. \textit{Quantitative Economics}, 11(1), 1--39.
+
 \bibitem[Bärnighausen e Bloom(2009)]{barnighausen2009}
 Bärnighausen, T.; Bloom, D. E. (2009). Financial Incentives for Return of
 Service in Underserved Areas: A Systematic Review.
 \textit{BMC Health Services Research}, 9, 86.
+
+\bibitem[Benjamini et al.(2006)]{benjamini2006}
+Benjamini, Y.; Krieger, A. M.; Yekutieli, D. (2006). Adaptive Linear Step-up
+Procedures That Control the False Discovery Rate.
+\textit{Biometrika}, 93(3), 491--507.
 
 \bibitem[Calonico et al.(2019)]{calonico2019}
 Calonico, S.; Cattaneo, M. D.; Farrell, M. H.; Titiunik, R. (2019).
@@ -643,14 +764,35 @@ Gravelle, H.; Scott, A.; Yong, J.; McGrail, M. (2018). Do Rural Incentives
 Payments Affect Entries and Exits of General Practitioners?
 \textit{Social Science \& Medicine}, 216, 88--96.
 
+\bibitem[Grembi et al.(2016)]{grembi2016}
+Grembi, V.; Nannicini, T.; Troiano, U. (2016). Do Fiscal Rules Matter?
+\textit{American Economic Journal: Applied Economics}, 8(3), 1--30.
+
+\bibitem[Holm(1979)]{holm1979}
+Holm, S. (1979). A Simple Sequentially Rejective Multiple Test Procedure.
+\textit{Scandinavian Journal of Statistics}, 6(2), 65--70.
+
 \bibitem[Kline e Moretti(2014)]{kline2014}
 Kline, P.; Moretti, E. (2014). People, Places, and Public Policy: Some Simple
 Analytics of Local Economic Development Programs.
 \textit{Annual Review of Economics}, 6(1), 629--662.
 
+\bibitem[Kline e Santos(2012)]{kline2012}
+Kline, P.; Santos, A. (2012). A Score Based Approach to Wild Bootstrap
+Inference. \textit{Journal of Econometric Methods}, 1(1), 23--41.
+
+\bibitem[Kling et al.(2007)]{kling2007}
+Kling, J. R.; Liebman, J. B.; Katz, L. F. (2007). Experimental Analysis of
+Neighborhood Effects. \textit{Econometrica}, 75(1), 83--119.
+
 \bibitem[Lee e Lemieux(2010)]{leelemieux2010}
 Lee, D. S.; Lemieux, T. (2010). Regression Discontinuity Designs in
 Economics. \textit{Journal of Economic Literature}, 48(2), 281--355.
+
+\bibitem[McFadden(1974)]{mcfadden1974}
+McFadden, D. (1974). Conditional Logit Analysis of Qualitative Choice
+Behavior. In: Zarembka, P. (Ed.), \textit{Frontiers in Econometrics}.
+New York: Academic Press, 105--142.
 
 \bibitem[Olden e Møen(2022)]{olden2022}
 Olden, A.; Møen, J. (2022). The Triple Difference Estimator.
