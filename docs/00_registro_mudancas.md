@@ -8,6 +8,19 @@
 
 ---
 
+## 19/10/2026 — Protocolos 54 (P4) e 56 (P6)
+
+Motivo: execução do plano do doc 51 depois do portão G5. Os protocolos foram
+congelados antes de abrir o painel CNES por tempo de evento e antes de ligar os
+candidatos aos outcomes.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/54_protocolo_P4_oferta_substituicao.md`](06_execucao/54_protocolo_P4_oferta_substituicao.md) | P4: trajetória das horas cadastradas dos médicos do PMM-E ao redor da entrada, por origem; perdas na origem; contabilidade líquida (exploratório) |
+| [`06_execucao/56_protocolo_P6_mecanismo_alocacao.md`](06_execucao/56_protocolo_P6_mecanismo_alocacao.md) | P6: alocado por pouco contra não alocado por pouco, perto da nota de corte de cada célula, com as restrições do G2 (capacidade efetiva, desempate fixo, cotas) (exploratório) |
+
 ## 19/10/2026 — Portão G5: CNES profissional mensal (a16)
 
 Motivo: portão de viabilidade G5 do plano
