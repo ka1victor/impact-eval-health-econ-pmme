@@ -400,3 +400,30 @@ Se for preciso cortar, esta é a ordem:
 6. P2, com T2.2–T2.3.
 7. P6. É a mais cara e incerta e depende de G2.
 8. T1.6, os cenários. Só depois de o modelo do P1 ser auditado.
+
+## 8. Atualização de 19/10/2026 (depois dos portões G1–G4)
+
+| Portão | Veredito |
+|---|---|
+| G1 | `VIAVEL`: 96,5% dos candidatos ligados ao CNES; 94,9% com origem |
+| G2 | `VIAVEL_PARCIAL`: ≥ 99% de concordância só com a capacidade efetiva; desempate perto do corte por regra fixa (UF, idade), não por sorteio |
+| G3 | `VIAVEL`: SIH por residência (a15) |
+| G4 | `VIAVEL_PARCIAL`: mapa pela produção de 2024; SIGTAP oficial indisponível; formas cruzam com CBO no TabNet |
+
+**Protocolos congelados:**
+- 52 (P1);
+- 55 (P5);
+- adendo §12 do protocolo 47 (P3).
+
+**P2:** o protocolo 53 não será escrito. As tarefas T2.2 e T2.3 já foram cobertas
+pelo adendo §7 do protocolo 48:
+- A3 por célula com o ciclo 1 à parte;
+- A2 com limites de Lee.
+
+A ponte com a escolha é a P1g do protocolo 52, e o cálculo de poder entra na
+síntese (doc 57).
+
+**Pendentes:**
+- P4 e P6 esperam o G5;
+- o protocolo 56 (P6) terá de lidar com a capacidade efetiva e com o desempate
+  por regra fixa.

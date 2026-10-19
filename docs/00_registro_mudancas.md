@@ -8,6 +8,22 @@
 
 ---
 
+## 19/10/2026 — Protocolos 52 (P1) e 55 (P5); adendo §12 do protocolo 47 (P3)
+
+Motivo: execução do plano do doc 51, depois dos portões G1–G4. Os protocolos
+foram congelados antes de qualquer estimação.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/52_protocolo_P1_escolha_dap.md`](06_execucao/52_protocolo_P1_escolha_dap.md) | P1: elasticidade da escolha à bolsa, disposição a pagar por distância e atributos, ciclos, heterogeneidade, logit misto, ponte com o preenchimento |
+| [`06_execucao/55_protocolo_P5_abertura_vagas.md`](06_execucao/55_protocolo_P5_abertura_vagas.md) | P5: determinantes descritivos do pedido e da priorização (ciclo 3) e do quadro (ciclos 1–2); RDD nos cortes |
+
+O protocolo 47 ganhou o adendo §12 (revisão da SIH, produção por especialidade,
+controles alternativos, acesso dos residentes, transbordamento regional). O doc
+51 ganhou a §8 com os vereditos dos portões.
+
 ## 19/10/2026 — Portão G1: candidatos do PMM-E ligados ao CNES pré (onda 1 do doc 51)
 
 Motivo: o portão G1 do plano

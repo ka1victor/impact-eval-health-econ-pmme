@@ -294,3 +294,76 @@ totais nacionais e por UF, sem IVS. Decisões antes de qualquer contraste:
      se cancela.
    - Isso é declarado como limite. Sensibilidade de K3: pós só 202510–202511.
    - As UF-meses marcadas como atípicas pela A14 saem numa sensibilidade.
+
+## 12. Adendo de 19/10/2026: extensões do P3 (doc 51), depois dos portões G3 e G4
+
+**Por que este adendo.**
+- Pedido do autor: rodar o plano do doc 51.
+- Os resultados D1 e D2 (doc 50) já foram vistos, então tudo abaixo leva
+  `estatuto = PROTOCOLO_47_ADENDO_12_POS_RESULTADO`.
+- Nada aqui muda o Holm de K1–K3.
+
+### 12.1 Revisão da fonte (A15 §5)
+
+O DATASUS revisou as AIH de 202509 a 202607 entre a extração do a13 e a do
+a15, no mesmo dia.
+
+**Decisão:** a versão usada (a13) **continua sendo a principal**, porque o
+resultado já foi visto.
+
+**Sensibilidade:**
+- reextrair o a13 numa versão datada (`output/aquisicao/sih_v2/`) e reestimar
+  K2 em D1 e D2 com ela;
+- reextrair o a12 nos meses 202509–202607 (`output/aquisicao/sia_v2/`) e, se
+  houver revisão, reestimar K1;
+- as duas versões são relatadas lado a lado.
+
+### 12.2 T3.2: produção da especialidade que chegou
+
+| Item | Especificação |
+|---|---|
+| Cursos | os da classe "específico" do G4 (`G4_resumo.json`) |
+| Dado novo | aquisição a17: SIA no TabNet por município × mês de processamento × forma de organização, filtrado pelo conjunto de CBO de cada curso; 202201–202607; mesmas validações do a12 |
+| Outcome | produção do curso c no município m, nas formas típicas de c (`G4_mapa_especialidade_procedimento.csv`, coluna de forma típica), por 10 mil habitantes |
+| Desenho | D2 no nível município × curso; tratado = chegada de especialista do curso c em m (lista nominal); controles = municípios que ofereceram célula do curso c e ainda não receberam; Callaway–Sant'Anna como no D2 |
+| Inferência | cluster por município |
+| Principal | média dos ATT entre cursos, com peso pelo número de pares |
+| Relato | também por curso |
+
+### 12.3 T3.3: controles alternativos e heterogeneidade (D2)
+
+- (a) Usar só municípios com célula do mesmo curso e ciclo que ficou vazia.
+  Isso já está implícito no 12.2 e também é relatado no nível do município.
+- (b) Diferenças em diferenças sintéticas (Arkhangelsky et al., 2021) para K1,
+  por coorte.
+- (c) Heterogeneidade pela fração de chegados que já tinham vínculo no
+  município (X1, regra D1), em tercis pré-definidos pela distribuição entre
+  tratados.
+
+### 12.4 T3.4: acesso dos residentes
+
+- K2r: AIH do grupo 04 de residentes (a15) por 10 mil habitantes.
+- K2r_tot: todas as AIH de residentes.
+- Rodam em D1 e D2, com as mesmas janelas de K2.
+- Leitura: acesso dos residentes a cirurgia, não oferta local.
+
+### 12.5 T3.5: transbordamento regional
+
+- Outcome: K1 e K2 somados nos **outros** municípios da mesma região de saúde
+  do município tratado, por 10 mil habitantes da região sem o município.
+- Desenho: D2 com as mesmas coortes.
+- Leitura:
+  - negativo = deslocamento de produção;
+  - positivo = atendimento de referência.
+
+### Relato e integridade
+
+**Relato:**
+- BKY dentro do adendo;
+- figuras com "Como ler";
+- resultados no doc 57, seção P3.
+
+**Integridade:** valem as mesmas regras do protocolo:
+- meses ≥ 202609 não são lidos;
+- ausente não vira zero;
+- nada é calculado por IVS ou tratamento na aquisição.
