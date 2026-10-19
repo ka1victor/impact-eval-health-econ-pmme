@@ -8,6 +8,20 @@
 
 ---
 
+## 19/10/2026 — X6 do protocolo exploratório: poder e o que se descarta
+
+Motivo: tarefa X6 do protocolo 45 (§3). A síntese relata IC, mas não uma tabela
+de poder comparável entre outcomes. Os resultados exploratórios X1–X6 vão para
+um documento novo; a seção X6 é gerada pelo script a partir das saídas.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/46_resultados_exploratorios_pos_sintese.md`](06_execucao/46_resultados_exploratorios_pos_sintese.md) | resultados exploratórios pós-síntese (X1–X6); a seção X6 (MDE de 80%, descartes absolutos e relativos, TOST, referências do protocolo e da literatura, IC honesto) é gerada por `scripts/rdd_bolsa/20_poder_descartes.py --atualizar-doc` |
+| `scripts/rdd_bolsa/20_poder_descartes.py` | X6: aritmética sobre as saídas do E6, E7, E8 e E9, sem estimação nova; grava `output/rdd_bolsa/X6_*` |
+| `tests/test_x6_poder.py` | fórmulas do MDE e do TOST com números sintéticos; saídas contra os CSV de origem; blocos e prosa da seção X6 |
+
 ## 19/10/2026 — Conteúdo canônico da banca 2 (28/10/2026)
 
 Motivo: a apresentação de 28/10/2026 precisa de conteúdo canônico em

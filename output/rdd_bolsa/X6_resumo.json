@@ -1,0 +1,290 @@
+{
+  "etapa": "X6_poder_descartes",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "EXPLORATORIO_POS_SINTESE",
+  "data_execucao": "2026-10-19",
+  "script": "scripts/rdd_bolsa/20_poder_descartes.py",
+  "protocolo": {
+    "texto": "docs/06_execucao/45_protocolo_exploratorio_pos_sintese.md",
+    "sha256": "a16931d4e2b2814c60d40c15ff5f26cdc54fb77df5a27978e3300401e4ce1065",
+    "secao": "§3 X6",
+    "referencias": {
+      "texto": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
+      "sha256": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+      "secao": "§7"
+    }
+  },
+  "regra": "nenhuma estimacao nova: so aritmetica sobre EP, IC e medias ja publicados no E6, E7, E8 e E9",
+  "parametros": {
+    "alfa": 0.05,
+    "poder": 0.8,
+    "fator_mde": 2.8,
+    "z95": 1.9599639845400536,
+    "z90": 1.6448536269514715,
+    "ref_preenchimento_fracao": 0.1,
+    "ref_candidaturas_relativo": 0.25,
+    "poder_exato_com_fator_mde": 0.7995568714356516
+  },
+  "definicoes": {
+    "mde80": "2,8 x EP (80% de poder, bicaudal a 5%; convencao do E5). Na razao de chances: exp(2,8 x EP do log)",
+    "delta_tost": "menor margem simetrica delta com o IC 90% (tau +- z95unilateral x EP) dentro de [-delta, +delta]; = |tau| + 1,645 x EP. Para toda margem maior, o TOST rejeita nao-equivalencia a 5%",
+    "relativos": "valor / base_relativa (escala_relativa = base); exp(.) - 1 (escala_relativa = log); copia (ja_relativa)",
+    "base_relativa": "E6: media_bruta_abaixo da linha; empilhadas: medias dos grupos ponderadas por pesos_grupos. E7: media bruta do pre abaixo do corte (nivel_pre), idem no empilhado. E9: probabilidade-base de escolha",
+    "ic95_exclui_ref_protocolo": "limite superior do IC 95% convencional abaixo da referencia",
+    "mde80_abaixo_ref_protocolo": "o desenho tem ao menos 80% de poder contra a referencia",
+    "tost_dentro_ref_protocolo": "equivalencia a 5% dentro de +-referencia",
+    "lit_posicao_ic95": "IC_ABAIXO_DA_REFERENCIA = o IC descarta a magnitude da literatura pelo lado de cima; IC_ACIMA = descarta pelo lado de baixo; IC_CONTEM = nao descarta",
+    "ic_honesto_informativo": "True se o IC honesto (M do protocolo, fator 1) exclui a referencia do protocolo, ou uma magnitude da literatura aplicavel, ou fica dentro de +-100% da base; False se nenhuma dessas; null se nao ha IC honesto (Poisson, E9) ou nada a comparar"
+  },
+  "contraste": {
+    "E6": "pacote do corte (RDD em nível): bolsa anunciada + outras regras federais nos mesmos cortes",
+    "E7": "DiRD: bolsa + variação, entre pré e pós, das descontinuidades das co-políticas",
+    "E9": "degrau da bolsa na escolha da 1a opção entre células do mesmo curso e ciclo (realocação, condicional a candidatar-se; não é total de candidatos)"
+  },
+  "selecao": {
+    "E6": "especificacao = principal e familia in (P1, F0, F1, F2, F4); mais poisson_local de F1.1",
+    "E7": "especificacao = principal e outcome_id in (F3.1, F3.2, F3.3, F3.P1, F3.P2)",
+    "E9": "modelo principal, ciclos 1, 2, 3 e empilhado",
+    "excluidas": "E6 S1 (suplementar PMMB); E7 S6 e sensibilidades F3.3.* (fora do BKY); E3 (ancora ja no doc 44 com MDE do E5)"
+  },
+  "entradas": [
+    {
+      "caminho": "output/rdd_bolsa/E6_estimativas.csv",
+      "sha256": "223b4c77326b8399d9d0e3308f585da97e4db9237d361515911b7fd1c27f0f30",
+      "bytes": 1413878,
+      "papel": "E6: linhas principais de P1, F0-F4 e Poisson local de F1.1",
+      "fonte": "13_estimar_E6_funil.py",
+      "data_referencia": "2026-10-18",
+      "cobertura": "U, G3, V1-V3; ciclos 1-3",
+      "unidade": "linha de especificacao",
+      "chaves": "familia, outcome, populacao, ciclo, corte, especificacao",
+      "filtros": "especificacao in (principal, poisson_local [so F1.1], ic_honesto [fator_M = 1, conferencia]); familia in (P1, F0, F1, F2, F4)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E7_estimativas.csv",
+      "sha256": "f6acdd7062cd0dadfc9b216973ab8c040e0e5ce3c3708525d76c2a8d576134ad",
+      "bytes": 510706,
+      "papel": "E7: DiRD principal da familia F3 e bases do pre (nivel_pre)",
+      "fonte": "14_estimar_E7_dird_cnes.py",
+      "data_referencia": "2026-10-19",
+      "cobertura": "U (5565 municipios) e V1; pre 2024-06..2025-06, pos 2025-10..2026-08",
+      "unidade": "linha de especificacao",
+      "chaves": "outcome_id, populacao, corte, especificacao",
+      "filtros": "especificacao in (principal, nivel_pre, ic_honesto [fator_M = 1]); outcome_id in (F3.1, F3.2, F3.3, F3.P1, F3.P2)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E9_estimativas.csv",
+      "sha256": "517e88d1488568c645b71707b63c5ffed985af53beae84f8f8684a124f604bd0",
+      "bytes": 726232,
+      "papel": "E9: coeficiente da bolsa, modelo principal",
+      "fonte": "16_estimar_E9_escolha.py",
+      "data_referencia": "2026-10-18",
+      "cobertura": "ciclos 1, 2, 3 e empilhado",
+      "unidade": "ciclo x modelo x conjunto x especificacao x termo",
+      "chaves": "ciclo, modelo, conjunto, especificacao, termo",
+      "filtros": "modelo = logit_condicional_1a_opcao; conjunto = principal; especificacao = spline_linear__bolsa_linear; termo = bolsa_mil"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E9_efeitos_marginais.csv",
+      "sha256": "812ac52a25cb2b8685c49f31e0ddbe27d829d5a5f57867e9281183eb57bf809f",
+      "bytes": 178231,
+      "papel": "E9: razao de chances e efeitos na probabilidade por +R$ 5 mil",
+      "fonte": "16_estimar_E9_escolha.py",
+      "data_referencia": "2026-10-18",
+      "cobertura": "ciclos 1, 2, 3 e empilhado",
+      "unidade": "ciclo x modelo x conjunto x especificacao x quantidade",
+      "chaves": "ciclo, modelo, conjunto, especificacao, termo, quantidade",
+      "filtros": "mesmos filtros do E9; termo = bolsa_mil"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E8_resumo.json",
+      "sha256": "2a5a3eb7fc42eaa37b67e7f38e64fc589f6b2d9d465d41ff520738672b951d2e",
+      "bytes": 69817,
+      "papel": "E8: degrau relativo da bolsa por corte (grades dos editais)",
+      "fonte": "15_sintese_E8.py",
+      "data_referencia": "2026-10-19",
+      "cobertura": "cortes 0,300 e 0,400",
+      "unidade": "corte",
+      "chaves": "corte",
+      "filtros": "degrau_relativo_bolsa"
+    },
+    {
+      "caminho": "docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md",
+      "sha256": "0ac000f5be5ae0caab35a8f7058ad10203ca10318c9205da80e46fba319e2bd8",
+      "bytes": 107414,
+      "papel": "magnitudes da literatura (texto, nao resultado)",
+      "fonte": "docs/03_literatura_empirica/20",
+      "data_referencia": "2026-10-05",
+      "cobertura": "tabela-resumo e fichas A1, A2, C1, C2",
+      "unidade": "trecho literal",
+      "chaves": "id do estudo",
+      "filtros": "trechos em LIT"
+    },
+    {
+      "caminho": "docs/06_execucao/45_protocolo_exploratorio_pos_sintese.md",
+      "sha256": "a16931d4e2b2814c60d40c15ff5f26cdc54fb77df5a27978e3300401e4ce1065",
+      "bytes": 7510,
+      "papel": "protocolo exploratorio pos-sintese (X6)",
+      "fonte": "doc 45",
+      "data_referencia": "2026-10-19",
+      "cobertura": "§3 X6",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
+      "sha256": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+      "bytes": 20212,
+      "papel": "protocolo 40 (referencias +10 p.p. e +25%, §7)",
+      "fonte": "doc 40",
+      "data_referencia": "2026-10-18",
+      "cobertura": "§7",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    }
+  ],
+  "literatura": [
+    {
+      "id": "A2_aceitacao",
+      "estudo": "Dal Bó, Finan & Rossi (2013)",
+      "trecho": "aceitação +15,1 p.p.",
+      "regex": "\\+(\\d+,\\d+) p\\.p\\.",
+      "aplica": "preenchimento",
+      "escala": "fracao (absoluta)",
+      "nota": "aceitação da oferta com salário anunciado sorteado (+33%); servidores públicos, México; outcome e população diferentes (doc 44, §6)",
+      "fonte": "docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md",
+      "valores_no_trecho": [
+        15.1
+      ],
+      "fator_escala": 0.01,
+      "valor_inf": 0.151,
+      "valor_sup": 0.151
+    },
+    {
+      "id": "A1_preenchimento",
+      "estudo": "Bobba et al. (NBER 2021, rev. 2026)",
+      "trecho": "preenchimento (0,063, EP 0,048)",
+      "regex": "\\((\\d+,\\d+), EP",
+      "aplica": "preenchimento",
+      "escala": "fracao (absoluta)",
+      "nota": "estimativa pontual NÃO significativa na fonte; adicional de +13% por regra (RDD), professores, Peru",
+      "fonte": "docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md",
+      "valores_no_trecho": [
+        0.063
+      ],
+      "fator_escala": 1.0,
+      "valor_inf": 0.063,
+      "valor_sup": 0.063
+    },
+    {
+      "id": "A2_candidaturas",
+      "estudo": "Dal Bó, Finan & Rossi (2013)",
+      "trecho": "candidaturas **+26%**",
+      "regex": "\\+(\\d+)%",
+      "aplica": "candidaturas",
+      "escala": "relativa",
+      "nota": "tamanho do pool de candidatos com +33% de salário; aqui, candidatos de 1a opção por célula",
+      "fonte": "docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md",
+      "valores_no_trecho": [
+        26.0
+      ],
+      "fator_escala": 0.01,
+      "valor_inf": 0.26,
+      "valor_sup": 0.26
+    },
+    {
+      "id": "C2_liquido_pmm",
+      "estudo": "Hone et al. (2020)",
+      "trecho": "**+15,1** médicos do programa por 100 mil habitantes, mas **líquido de só +5,7**",
+      "regex": "líquido de só \\+(\\d+,\\d+)",
+      "aplica": "oferta_cnes",
+      "escala": "por 10 mil hab. (absoluta)",
+      "nota": "efeito líquido do Mais Médicos inteiro (2013) sobre médicos de APS em tempo integral; só ordem de grandeza: programa inteiro, generalistas e outra medida (aqui, vínculos de especialistas)",
+      "fonte": "docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md",
+      "valores_no_trecho": [
+        5.7
+      ],
+      "fator_escala": 0.1,
+      "valor_inf": 0.5700000000000001,
+      "valor_sup": 0.5700000000000001
+    },
+    {
+      "id": "A2_elasticidade",
+      "estudo": "Dal Bó, Finan & Rossi (2013)",
+      "trecho": "elasticidade ≈ 2;",
+      "regex": "≈ (\\d+(?:,\\d+)?)",
+      "aplica": "elasticidade_escolha",
+      "escala": "elasticidade",
+      "nota": "elasticidade-arco da oferta de candidatos ao salário (pool), não da repartição entre vagas",
+      "fonte": "docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md",
+      "valores_no_trecho": [
+        2.0
+      ],
+      "fator_escala": 1.0,
+      "valor_inf": 2.0,
+      "valor_sup": 2.0
+    },
+    {
+      "id": "C1_elasticidade",
+      "estudo": "Costa, Nunes & Sanches (2024)",
+      "trecho": "elasticidade 0,4–0,7",
+      "regex": "(\\d+,\\d+)–(\\d+,\\d+)",
+      "aplica": "elasticidade_escolha",
+      "escala": "elasticidade",
+      "nota": "elasticidade-salário da escolha locacional de médicos no Brasil (logit estrutural); a mais próxima do E9, mas para o salário total, não um degrau de bolsa",
+      "fonte": "docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md",
+      "valores_no_trecho": [
+        0.4,
+        0.7
+      ],
+      "fator_escala": 1.0,
+      "valor_inf": 0.4,
+      "valor_sup": 0.7
+    }
+  ],
+  "degrau_relativo_bolsa": {
+    "0.300": {
+      "de_mil": 10.0,
+      "para_mil": 15.0,
+      "relativo": 0.5
+    },
+    "0.400": {
+      "de_mil": 15.0,
+      "para_mil": 20.0,
+      "relativo": 0.3333333333333333
+    }
+  },
+  "contagens": {
+    "linhas": 202,
+    "por_etapa": {
+      "E6": 156,
+      "E7": 18,
+      "E9": 28
+    },
+    "com_referencia_do_protocolo": 39,
+    "ic95_exclui_ref_protocolo": 11,
+    "mde80_abaixo_ref_protocolo": 0,
+    "tost_dentro_ref_protocolo": 0,
+    "ic_honesto_exclui_ref_protocolo": 0,
+    "com_ic_honesto": 168,
+    "ic_honesto_informativo": 7,
+    "ic_honesto_nao_informativo": 149,
+    "ic_honesto_nao_avaliavel": 12,
+    "fracoes_com_ic_honesto_cobrindo_todo_salto_possivel": 56,
+    "fracoes_com_ic_honesto": 60,
+    "bases_indisponiveis": 0
+  },
+  "saidas": {
+    "X6_poder_descartes.csv": {
+      "caminho": "output/rdd_bolsa/X6_poder_descartes.csv",
+      "sha256": "b4b36d3566f6045ba69b9a92782d32298b3ea2eb45867a80f7b9ef1689a86917",
+      "linhas": 202
+    },
+    "X6_descartes.png": {
+      "caminho": "output/rdd_bolsa/X6_figuras/X6_descartes.png",
+      "sha256": "418ca90a614224b76bac9589862b126fe14b2d62fa170fbebfc5464a1afe22fa"
+    }
+  }
+}
