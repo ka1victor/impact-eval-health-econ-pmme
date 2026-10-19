@@ -1,0 +1,26 @@
+cod_curso,conjunto_cbo,co_forma,no_forma,participacao_g4_2024,classe_especificidade_g4,meses_presente,primeiro_mes_presente,ultimo_mes_presente,qtd_nacional_202201_202607,natureza_dos_dados
+7,c07,030101,Consultas medicas/outros profissionais  de nivel superior,0.470801,baixa,55,202201,202607,12354658,EMPIRICO
+7,c07,020901,Aparelho digestivo,0.302318,alta,55,202201,202607,7766825,EMPIRICO
+7,c07,070105,OPM em gastroenterologia,0.064595,alta,55,202201,202607,2086460,EMPIRICO
+10,c10_c11,030101,Consultas medicas/outros profissionais  de nivel superior,0.446544,baixa,55,202201,202607,9189463,EMPIRICO
+10,c10_c11,020901,Aparelho digestivo,0.357734,alta,55,202201,202607,7224942,EMPIRICO
+11,c10_c11,030101,Consultas medicas/outros profissionais  de nivel superior,0.446544,baixa,55,202201,202607,9189463,EMPIRICO
+11,c10_c11,020901,Aparelho digestivo,0.357734,alta,55,202201,202607,7224942,EMPIRICO
+12,c12,030101,Consultas medicas/outros profissionais  de nivel superior,0.385536,baixa,55,202201,202607,12763704,EMPIRICO
+12,c12,030405,Quimioterapia adjuvante (profilatica) - adulto,0.252963,alta,55,202201,202607,8174834,EMPIRICO
+12,c12,030402,Quimioterapia paliativa - adulto,0.212414,alta,55,202201,202607,6933140,EMPIRICO
+13,c13,030101,Consultas medicas/outros profissionais  de nivel superior,0.648544,baixa,55,202201,202607,2175511,EMPIRICO
+13,c13,030401,Radioterapia,0.238644,alta,55,202201,202607,798516,EMPIRICO
+14,c14,020502,Ultra-sonografias dos demais sistemas,0.205773,alta,55,202201,202607,72021991,EMPIRICO
+14,c14,020403,Exames radiologicos do torax e mediastino,0.202878,alta,55,202201,202607,71220333,EMPIRICO
+14,c14,020406,Exames radiologicos da cintura pelvica e dos membros inferiores,0.148815,alta,55,202201,202607,52342479,EMPIRICO
+14,c14,020404,Exames radiologicos da cintura escapular e dos membros superiores,0.095262,alta,55,202201,202607,33728486,EMPIRICO
+14,c14,020603,"Tomografia do abdomen, pelve e membros inferiores",0.059662,alta,55,202201,202607,20995736,EMPIRICO
+14,c14,020601,"Tomografia da cabeca, pescoco e coluna vertebral",0.059345,alta,55,202201,202607,20878519,EMPIRICO
+14,c14,020402,Exames radiologicos da coluna vertebral,0.046578,alta,55,202201,202607,16472163,EMPIRICO
+15,c15,030101,Consultas medicas/outros profissionais  de nivel superior,0.654994,baixa,55,202201,202607,14405257,EMPIRICO
+15,c15,021107,Diagnostico em otorrinolaringologia/fonoaudiologia,0.117211,alta,55,202201,202607,2766862,EMPIRICO
+15,c15,020904,Aparelho respiratorio,0.083721,alta,55,202201,202607,1867916,EMPIRICO
+16,c16,020301,Exames citopatologicos,0.324568,alta,55,202201,202607,19592319,EMPIRICO
+16,c16,020302,Exames anatomopatologicos,0.264454,alta,55,202201,202607,15899151,EMPIRICO
+16,c16,020201,Exames bioquimicos,0.259417,baixa,55,202201,202607,17214070,EMPIRICO

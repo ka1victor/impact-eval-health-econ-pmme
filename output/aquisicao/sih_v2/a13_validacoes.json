@@ -1,0 +1,3465 @@
+{
+  "por_competencia": {
+    "202201": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 1912,
+        "03": 607498,
+        "04": 373321,
+        "05": 5576,
+        "total": 988307
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3024,
+      "municipios_com_aih_g04": 1828
+    },
+    "202202": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 1789,
+        "03": 575149,
+        "04": 374383,
+        "05": 5250,
+        "total": 956571
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3030,
+      "municipios_com_aih_g04": 1874
+    },
+    "202203": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2068,
+        "03": 613028,
+        "04": 417911,
+        "05": 5869,
+        "total": 1038876
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3028,
+      "municipios_com_aih_g04": 1890
+    },
+    "202204": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2118,
+        "03": 602374,
+        "04": 413195,
+        "05": 5664,
+        "total": 1023351
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3024,
+      "municipios_com_aih_g04": 1891
+    },
+    "202205": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2198,
+        "03": 620838,
+        "04": 426102,
+        "05": 6181,
+        "total": 1055319
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3039,
+      "municipios_com_aih_g04": 1873
+    },
+    "202206": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2134,
+        "03": 603894,
+        "04": 421928,
+        "05": 6057,
+        "total": 1034013
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3020,
+      "municipios_com_aih_g04": 1886
+    },
+    "202207": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2437,
+        "03": 619981,
+        "04": 448875,
+        "05": 6026,
+        "total": 1077319
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3034,
+      "municipios_com_aih_g04": 1893
+    },
+    "202208": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2671,
+        "03": 619823,
+        "04": 471090,
+        "05": 6628,
+        "total": 1100212
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3034,
+      "municipios_com_aih_g04": 1907
+    },
+    "202209": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2531,
+        "03": 599283,
+        "04": 463566,
+        "05": 6383,
+        "total": 1071763
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3031,
+      "municipios_com_aih_g04": 1922
+    },
+    "202210": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2342,
+        "03": 597287,
+        "04": 468102,
+        "05": 6160,
+        "total": 1073891
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3039,
+      "municipios_com_aih_g04": 1924
+    },
+    "202211": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2126,
+        "03": 585624,
+        "04": 450351,
+        "05": 6231,
+        "total": 1044332
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3029,
+      "municipios_com_aih_g04": 1896
+    },
+    "202212": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2376,
+        "03": 598938,
+        "04": 449403,
+        "05": 6243,
+        "total": 1056960
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3014,
+      "municipios_com_aih_g04": 1906
+    },
+    "202301": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2268,
+        "03": 605526,
+        "04": 438376,
+        "05": 6279,
+        "total": 1052449
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3030,
+      "municipios_com_aih_g04": 1891
+    },
+    "202302": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2202,
+        "03": 579689,
+        "04": 424749,
+        "05": 5836,
+        "total": 1012476
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3044,
+      "municipios_com_aih_g04": 1907
+    },
+    "202303": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2473,
+        "03": 643648,
+        "04": 479611,
+        "05": 6459,
+        "total": 1132191
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3048,
+      "municipios_com_aih_g04": 1916
+    },
+    "202304": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2354,
+        "03": 624534,
+        "04": 452452,
+        "05": 6601,
+        "total": 1085941
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3051,
+      "municipios_com_aih_g04": 1919
+    },
+    "202305": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2343,
+        "03": 654929,
+        "04": 487266,
+        "05": 6787,
+        "total": 1151325
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3056,
+      "municipios_com_aih_g04": 1917
+    },
+    "202306": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2576,
+        "03": 640630,
+        "04": 483042,
+        "05": 7040,
+        "total": 1133288
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3054,
+      "municipios_com_aih_g04": 1924
+    },
+    "202307": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2503,
+        "03": 644100,
+        "04": 497339,
+        "05": 6792,
+        "total": 1150734
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3047,
+      "municipios_com_aih_g04": 1931
+    },
+    "202308": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2741,
+        "03": 647573,
+        "04": 518916,
+        "05": 7023,
+        "total": 1176253
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3051,
+      "municipios_com_aih_g04": 1937
+    },
+    "202309": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2552,
+        "03": 618322,
+        "04": 500423,
+        "05": 6660,
+        "total": 1127957
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3033,
+      "municipios_com_aih_g04": 1933
+    },
+    "202310": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2325,
+        "03": 619274,
+        "04": 503902,
+        "05": 6877,
+        "total": 1132378
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3040,
+      "municipios_com_aih_g04": 1940
+    },
+    "202311": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2508,
+        "03": 610035,
+        "04": 494148,
+        "05": 6720,
+        "total": 1113411
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3032,
+      "municipios_com_aih_g04": 1934
+    },
+    "202312": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2494,
+        "03": 601881,
+        "04": 476026,
+        "05": 7010,
+        "total": 1087411
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3023,
+      "municipios_com_aih_g04": 1927
+    },
+    "202401": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2537,
+        "03": 620097,
+        "04": 480005,
+        "05": 6455,
+        "total": 1109094
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3039,
+      "municipios_com_aih_g04": 1944
+    },
+    "202402": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2373,
+        "03": 609133,
+        "04": 476063,
+        "05": 6565,
+        "total": 1094134
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3041,
+      "municipios_com_aih_g04": 1927
+    },
+    "202403": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2578,
+        "03": 662485,
+        "04": 513604,
+        "05": 7292,
+        "total": 1185959
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3046,
+      "municipios_com_aih_g04": 1943
+    },
+    "202404": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2586,
+        "03": 690948,
+        "04": 524097,
+        "05": 7231,
+        "total": 1224862
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3056,
+      "municipios_com_aih_g04": 1958
+    },
+    "202405": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2628,
+        "03": 689257,
+        "04": 520861,
+        "05": 6943,
+        "total": 1219689
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3051,
+      "municipios_com_aih_g04": 1969
+    },
+    "202406": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2552,
+        "03": 663327,
+        "04": 515819,
+        "05": 7192,
+        "total": 1188890
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3062,
+      "municipios_com_aih_g04": 1955
+    },
+    "202407": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2832,
+        "03": 668540,
+        "04": 541408,
+        "05": 7300,
+        "total": 1220080
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3063,
+      "municipios_com_aih_g04": 1973
+    },
+    "202408": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2857,
+        "03": 661069,
+        "04": 557833,
+        "05": 7459,
+        "total": 1229218
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3054,
+      "municipios_com_aih_g04": 1973
+    },
+    "202409": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2851,
+        "03": 648668,
+        "04": 547847,
+        "05": 7202,
+        "total": 1206568
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3067,
+      "municipios_com_aih_g04": 1961
+    },
+    "202410": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2923,
+        "03": 653857,
+        "04": 560494,
+        "05": 7345,
+        "total": 1224619
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3068,
+      "municipios_com_aih_g04": 1967
+    },
+    "202411": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2728,
+        "03": 620019,
+        "04": 527020,
+        "05": 7047,
+        "total": 1156814
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3057,
+      "municipios_com_aih_g04": 1948
+    },
+    "202412": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2449,
+        "03": 610432,
+        "04": 491479,
+        "05": 7077,
+        "total": 1111437
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3015,
+      "municipios_com_aih_g04": 1891
+    },
+    "202501": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2404,
+        "03": 653067,
+        "04": 501893,
+        "05": 7290,
+        "total": 1164654
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3053,
+      "municipios_com_aih_g04": 1852
+    },
+    "202502": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2605,
+        "03": 619419,
+        "04": 501940,
+        "05": 7010,
+        "total": 1130974
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3054,
+      "municipios_com_aih_g04": 1892
+    },
+    "202503": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2566,
+        "03": 665829,
+        "04": 519866,
+        "05": 6762,
+        "total": 1195023
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3067,
+      "municipios_com_aih_g04": 1913
+    },
+    "202504": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2692,
+        "03": 666091,
+        "04": 524954,
+        "05": 7513,
+        "total": 1201250
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3083,
+      "municipios_com_aih_g04": 1930
+    },
+    "202505": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2926,
+        "03": 704306,
+        "04": 557303,
+        "05": 7441,
+        "total": 1271976
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3079,
+      "municipios_com_aih_g04": 1930
+    },
+    "202506": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2873,
+        "03": 687864,
+        "04": 533750,
+        "05": 7526,
+        "total": 1232013
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3078,
+      "municipios_com_aih_g04": 1948
+    },
+    "202507": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2797,
+        "03": 694922,
+        "04": 568937,
+        "05": 8040,
+        "total": 1274696
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3077,
+      "municipios_com_aih_g04": 1966
+    },
+    "202508": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 3065,
+        "03": 681592,
+        "04": 570751,
+        "05": 8313,
+        "total": 1263721
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3091,
+      "municipios_com_aih_g04": 1963
+    },
+    "202509": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2980,
+        "03": 672118,
+        "04": 576912,
+        "05": 8427,
+        "total": 1260437
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3082,
+      "municipios_com_aih_g04": 1972
+    },
+    "202510": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 3025,
+        "03": 677291,
+        "04": 585311,
+        "05": 7839,
+        "total": 1273466
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3075,
+      "municipios_com_aih_g04": 1955
+    },
+    "202511": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2948,
+        "03": 642063,
+        "04": 552471,
+        "05": 8003,
+        "total": 1205485
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3057,
+      "municipios_com_aih_g04": 1956
+    },
+    "202512": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2693,
+        "03": 641244,
+        "04": 523399,
+        "05": 7477,
+        "total": 1174813
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3042,
+      "municipios_com_aih_g04": 1927
+    },
+    "202601": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2493,
+        "03": 652921,
+        "04": 527721,
+        "05": 7684,
+        "total": 1190819
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3044,
+      "municipios_com_aih_g04": 1890
+    },
+    "202602": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2501,
+        "03": 626609,
+        "04": 519907,
+        "05": 7358,
+        "total": 1156375
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3042,
+      "municipios_com_aih_g04": 1911
+    },
+    "202603": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2908,
+        "03": 683534,
+        "04": 578197,
+        "05": 7786,
+        "total": 1272425
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3030,
+      "municipios_com_aih_g04": 1945
+    },
+    "202604": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2511,
+        "03": 672663,
+        "04": 556297,
+        "05": 7292,
+        "total": 1238763
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 3000,
+      "municipios_com_aih_g04": 1923
+    },
+    "202605": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2813,
+        "03": 682998,
+        "04": 580467,
+        "05": 8188,
+        "total": 1274466
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 2983,
+      "municipios_com_aih_g04": 1917
+    },
+    "202606": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 2945,
+        "03": 674515,
+        "04": 566469,
+        "05": 7680,
+        "total": 1251609
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 2936,
+      "municipios_com_aih_g04": 1904
+    },
+    "202607": {
+      "v4_mes_processamento": true,
+      "v2_total_mun_uf_procmes": true,
+      "total_aih_por_grupo": {
+        "02": 3196,
+        "03": 672690,
+        "04": 587675,
+        "05": 8054,
+        "total": 1271615
+      },
+      "v7_universo_municipios": true,
+      "v3_soma_municipal_por_uf": true,
+      "v1_soma_linhas_igual_total": true,
+      "v5_carater_soma_g04": true,
+      "v6_uf_pequena_celula_a_celula": {
+        "AC": {
+          "celulas_comparadas": 115,
+          "identicas": true
+        },
+        "RR": {
+          "celulas_comparadas": 80,
+          "identicas": true
+        }
+      },
+      "municipios_com_aih": 2783,
+      "municipios_com_aih_g04": 1827
+    }
+  },
+  "uf_meses_sem_dado": [],
+  "uf_meses_atipicos": [
+    {
+      "competencia": "202206",
+      "uf": "14",
+      "sigla": "RR",
+      "aih_total_uf": 668,
+      "mediana_mensal_uf": 3340.0,
+      "fracao_da_mediana": 0.2
+    },
+    {
+      "competencia": "202309",
+      "uf": "14",
+      "sigla": "RR",
+      "aih_total_uf": 1535,
+      "mediana_mensal_uf": 3340.0,
+      "fracao_da_mediana": 0.4596
+    },
+    {
+      "competencia": "202607",
+      "uf": "14",
+      "sigla": "RR",
+      "aih_total_uf": 515,
+      "mediana_mensal_uf": 3340.0,
+      "fracao_da_mediana": 0.1542
+    }
+  ],
+  "regra_uf_mes_sem_dado": "total de AIH aprovadas da UF no mês igual a zero na consulta UF × grupo",
+  "regra_uf_mes_atipico": "total da UF no mês > 0 e < 0.5 × mediana mensal da UF em 202201–202607; alerta (coluna uf_mes_atipico), o valor não é alterado",
+  "grupos_por_competencia": {
+    "202201": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202202": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202203": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202204": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202205": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202206": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202207": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202208": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202209": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202210": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202211": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202212": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202301": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202302": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202303": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202304": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202305": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202306": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202307": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202308": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202309": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202310": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202311": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202312": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202401": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202402": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202403": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202404": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202405": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202406": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202407": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202408": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202409": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202410": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202411": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202412": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202501": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202502": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202503": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202504": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202505": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202506": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202507": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202508": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202509": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202510": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202511": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202512": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202601": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202602": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202603": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202604": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202605": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202606": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "202607": [
+      "02",
+      "03",
+      "04",
+      "05"
+    ]
+  },
+  "grupos_painel": [
+    "02",
+    "03",
+    "04",
+    "05"
+  ],
+  "carater_rotulos": {
+    "eletivo": "Eletivo",
+    "urgencia": "Urgência",
+    "acid_local_trab": "Acid local trab",
+    "acid_trajeto": "Acid trajeto",
+    "outros_ac_trab": "Outros ac trab",
+    "outras_caus_ext": "Outras caus ext"
+  },
+  "universo_municipios_formulario": 5571,
+  "totais_uf_mes_aih": {
+    "202201": {
+      "RO": 9256,
+      "AC": 3977,
+      "AM": 16024,
+      "RR": 3440,
+      "PA": 41468,
+      "AP": 3641,
+      "TO": 6825,
+      "MA": 39343,
+      "PI": 18762,
+      "CE": 42225,
+      "RN": 14485,
+      "PB": 15517,
+      "PE": 47999,
+      "AL": 12854,
+      "SE": 8512,
+      "BA": 67300,
+      "MG": 105244,
+      "ES": 21783,
+      "RJ": 62443,
+      "SP": 199070,
+      "PR": 68941,
+      "SC": 39441,
+      "RS": 58770,
+      "MS": 14888,
+      "MT": 16602,
+      "GO": 28839,
+      "DF": 20658
+    },
+    "202202": {
+      "RO": 9572,
+      "AC": 3703,
+      "AM": 15948,
+      "RR": 3340,
+      "PA": 40219,
+      "AP": 3158,
+      "TO": 6699,
+      "MA": 38267,
+      "PI": 16783,
+      "CE": 39163,
+      "RN": 14327,
+      "PB": 15588,
+      "PE": 46448,
+      "AL": 12804,
+      "SE": 8768,
+      "BA": 64518,
+      "MG": 99645,
+      "ES": 21269,
+      "RJ": 60882,
+      "SP": 191763,
+      "PR": 67713,
+      "SC": 40730,
+      "RS": 59290,
+      "MS": 15503,
+      "MT": 16338,
+      "GO": 26456,
+      "DF": 17677
+    },
+    "202203": {
+      "RO": 10985,
+      "AC": 4185,
+      "AM": 17772,
+      "RR": 4206,
+      "PA": 41553,
+      "AP": 3349,
+      "TO": 6750,
+      "MA": 40028,
+      "PI": 18016,
+      "CE": 44666,
+      "RN": 15258,
+      "PB": 16900,
+      "PE": 49268,
+      "AL": 13846,
+      "SE": 9302,
+      "BA": 70102,
+      "MG": 108235,
+      "ES": 21307,
+      "RJ": 66933,
+      "SP": 214984,
+      "PR": 73026,
+      "SC": 43440,
+      "RS": 62268,
+      "MS": 15918,
+      "MT": 16898,
+      "GO": 29749,
+      "DF": 19932
+    },
+    "202204": {
+      "RO": 10675,
+      "AC": 4183,
+      "AM": 17294,
+      "RR": 3930,
+      "PA": 42681,
+      "AP": 3739,
+      "TO": 7418,
+      "MA": 40667,
+      "PI": 18152,
+      "CE": 44350,
+      "RN": 14977,
+      "PB": 17074,
+      "PE": 49258,
+      "AL": 13054,
+      "SE": 8417,
+      "BA": 67839,
+      "MG": 107176,
+      "ES": 22092,
+      "RJ": 65080,
+      "SP": 205573,
+      "PR": 71993,
+      "SC": 42560,
+      "RS": 63668,
+      "MS": 15919,
+      "MT": 16718,
+      "GO": 29493,
+      "DF": 19371
+    },
+    "202205": {
+      "RO": 10873,
+      "AC": 5283,
+      "AM": 17790,
+      "RR": 4372,
+      "PA": 42637,
+      "AP": 3417,
+      "TO": 7667,
+      "MA": 42813,
+      "PI": 18649,
+      "CE": 45153,
+      "RN": 17510,
+      "PB": 18471,
+      "PE": 52130,
+      "AL": 12621,
+      "SE": 9624,
+      "BA": 65822,
+      "MG": 116627,
+      "ES": 21612,
+      "RJ": 68404,
+      "SP": 206283,
+      "PR": 75026,
+      "SC": 43853,
+      "RS": 63922,
+      "MS": 15294,
+      "MT": 17238,
+      "GO": 32773,
+      "DF": 19455
+    },
+    "202206": {
+      "RO": 9468,
+      "AC": 3689,
+      "AM": 15857,
+      "RR": 668,
+      "PA": 42174,
+      "AP": 3431,
+      "TO": 7809,
+      "MA": 41146,
+      "PI": 17845,
+      "CE": 44383,
+      "RN": 16023,
+      "PB": 17202,
+      "PE": 48562,
+      "AL": 12208,
+      "SE": 8349,
+      "BA": 66339,
+      "MG": 112689,
+      "ES": 23838,
+      "RJ": 66480,
+      "SP": 210807,
+      "PR": 73120,
+      "SC": 44380,
+      "RS": 65621,
+      "MS": 16962,
+      "MT": 17378,
+      "GO": 29444,
+      "DF": 18141
+    },
+    "202207": {
+      "RO": 9481,
+      "AC": 3391,
+      "AM": 18502,
+      "RR": 4134,
+      "PA": 42717,
+      "AP": 3431,
+      "TO": 7020,
+      "MA": 42401,
+      "PI": 18389,
+      "CE": 45426,
+      "RN": 16264,
+      "PB": 17803,
+      "PE": 51423,
+      "AL": 13605,
+      "SE": 9882,
+      "BA": 71392,
+      "MG": 116148,
+      "ES": 23391,
+      "RJ": 69602,
+      "SP": 220407,
+      "PR": 74447,
+      "SC": 46441,
+      "RS": 66624,
+      "MS": 17014,
+      "MT": 16557,
+      "GO": 32717,
+      "DF": 18710
+    },
+    "202208": {
+      "RO": 9487,
+      "AC": 4104,
+      "AM": 19026,
+      "RR": 4863,
+      "PA": 42545,
+      "AP": 3430,
+      "TO": 7269,
+      "MA": 40992,
+      "PI": 17510,
+      "CE": 46883,
+      "RN": 16010,
+      "PB": 17542,
+      "PE": 54230,
+      "AL": 14218,
+      "SE": 8909,
+      "BA": 76291,
+      "MG": 121754,
+      "ES": 21767,
+      "RJ": 71781,
+      "SP": 220379,
+      "PR": 76149,
+      "SC": 47213,
+      "RS": 69243,
+      "MS": 16916,
+      "MT": 18397,
+      "GO": 32062,
+      "DF": 21242
+    },
+    "202209": {
+      "RO": 10793,
+      "AC": 3597,
+      "AM": 19040,
+      "RR": 3972,
+      "PA": 41484,
+      "AP": 3185,
+      "TO": 6982,
+      "MA": 39229,
+      "PI": 18346,
+      "CE": 44186,
+      "RN": 15465,
+      "PB": 16527,
+      "PE": 49918,
+      "AL": 14032,
+      "SE": 9387,
+      "BA": 74586,
+      "MG": 116241,
+      "ES": 21906,
+      "RJ": 67832,
+      "SP": 221328,
+      "PR": 74819,
+      "SC": 45909,
+      "RS": 66789,
+      "MS": 16513,
+      "MT": 18410,
+      "GO": 32115,
+      "DF": 19172
+    },
+    "202210": {
+      "RO": 9435,
+      "AC": 4126,
+      "AM": 16811,
+      "RR": 4713,
+      "PA": 41809,
+      "AP": 3654,
+      "TO": 7394,
+      "MA": 39318,
+      "PI": 17089,
+      "CE": 45130,
+      "RN": 16141,
+      "PB": 16349,
+      "PE": 48662,
+      "AL": 14593,
+      "SE": 9149,
+      "BA": 71982,
+      "MG": 114891,
+      "ES": 22597,
+      "RJ": 69497,
+      "SP": 220173,
+      "PR": 75968,
+      "SC": 47334,
+      "RS": 68769,
+      "MS": 16164,
+      "MT": 18627,
+      "GO": 33309,
+      "DF": 20207
+    },
+    "202211": {
+      "RO": 10301,
+      "AC": 4638,
+      "AM": 17348,
+      "RR": 4486,
+      "PA": 40786,
+      "AP": 3048,
+      "TO": 7221,
+      "MA": 37896,
+      "PI": 17343,
+      "CE": 43632,
+      "RN": 16502,
+      "PB": 16364,
+      "PE": 47880,
+      "AL": 14509,
+      "SE": 8844,
+      "BA": 69677,
+      "MG": 112867,
+      "ES": 21771,
+      "RJ": 66626,
+      "SP": 213602,
+      "PR": 70758,
+      "SC": 46302,
+      "RS": 66103,
+      "MS": 16559,
+      "MT": 18011,
+      "GO": 31104,
+      "DF": 20154
+    },
+    "202212": {
+      "RO": 10294,
+      "AC": 4671,
+      "AM": 17846,
+      "RR": 4489,
+      "PA": 41483,
+      "AP": 3829,
+      "TO": 7777,
+      "MA": 40301,
+      "PI": 17344,
+      "CE": 44761,
+      "RN": 14780,
+      "PB": 17364,
+      "PE": 53551,
+      "AL": 13946,
+      "SE": 8645,
+      "BA": 69234,
+      "MG": 116067,
+      "ES": 20908,
+      "RJ": 67111,
+      "SP": 211850,
+      "PR": 75708,
+      "SC": 45794,
+      "RS": 66871,
+      "MS": 15868,
+      "MT": 17238,
+      "GO": 31886,
+      "DF": 17344
+    },
+    "202301": {
+      "RO": 9645,
+      "AC": 4165,
+      "AM": 18155,
+      "RR": 4734,
+      "PA": 42528,
+      "AP": 3773,
+      "TO": 7795,
+      "MA": 41286,
+      "PI": 17879,
+      "CE": 44667,
+      "RN": 15623,
+      "PB": 16741,
+      "PE": 48075,
+      "AL": 14340,
+      "SE": 9666,
+      "BA": 70518,
+      "MG": 111575,
+      "ES": 23540,
+      "RJ": 67461,
+      "SP": 210225,
+      "PR": 74743,
+      "SC": 44570,
+      "RS": 64773,
+      "MS": 16406,
+      "MT": 16641,
+      "GO": 34531,
+      "DF": 18394
+    },
+    "202302": {
+      "RO": 9505,
+      "AC": 4834,
+      "AM": 15441,
+      "RR": 3936,
+      "PA": 41810,
+      "AP": 3494,
+      "TO": 7506,
+      "MA": 38624,
+      "PI": 17555,
+      "CE": 42868,
+      "RN": 14503,
+      "PB": 17835,
+      "PE": 45610,
+      "AL": 11638,
+      "SE": 8480,
+      "BA": 66875,
+      "MG": 107100,
+      "ES": 22165,
+      "RJ": 64410,
+      "SP": 202499,
+      "PR": 73704,
+      "SC": 47378,
+      "RS": 60068,
+      "MS": 16464,
+      "MT": 17535,
+      "GO": 32848,
+      "DF": 17791
+    },
+    "202303": {
+      "RO": 10976,
+      "AC": 5266,
+      "AM": 18782,
+      "RR": 4495,
+      "PA": 43481,
+      "AP": 5499,
+      "TO": 7689,
+      "MA": 40805,
+      "PI": 19342,
+      "CE": 46793,
+      "RN": 17005,
+      "PB": 19245,
+      "PE": 53192,
+      "AL": 13239,
+      "SE": 9798,
+      "BA": 73354,
+      "MG": 122773,
+      "ES": 23902,
+      "RJ": 74669,
+      "SP": 233649,
+      "PR": 78766,
+      "SC": 48385,
+      "RS": 66519,
+      "MS": 18225,
+      "MT": 19442,
+      "GO": 35346,
+      "DF": 21554
+    },
+    "202304": {
+      "RO": 10841,
+      "AC": 5010,
+      "AM": 17087,
+      "RR": 4492,
+      "PA": 43940,
+      "AP": 5284,
+      "TO": 8513,
+      "MA": 38148,
+      "PI": 17970,
+      "CE": 46328,
+      "RN": 16356,
+      "PB": 19096,
+      "PE": 48784,
+      "AL": 12176,
+      "SE": 8988,
+      "BA": 73638,
+      "MG": 116414,
+      "ES": 22721,
+      "RJ": 70256,
+      "SP": 218158,
+      "PR": 76656,
+      "SC": 47319,
+      "RS": 65771,
+      "MS": 18504,
+      "MT": 18728,
+      "GO": 35885,
+      "DF": 18878
+    },
+    "202305": {
+      "RO": 11800,
+      "AC": 5582,
+      "AM": 19063,
+      "RR": 4054,
+      "PA": 44076,
+      "AP": 8830,
+      "TO": 9593,
+      "MA": 40899,
+      "PI": 19417,
+      "CE": 48517,
+      "RN": 17392,
+      "PB": 19505,
+      "PE": 52657,
+      "AL": 13123,
+      "SE": 10117,
+      "BA": 78248,
+      "MG": 122465,
+      "ES": 24081,
+      "RJ": 78114,
+      "SP": 229386,
+      "PR": 79417,
+      "SC": 51369,
+      "RS": 69091,
+      "MS": 17797,
+      "MT": 19914,
+      "GO": 36313,
+      "DF": 20505
+    },
+    "202306": {
+      "RO": 10777,
+      "AC": 5590,
+      "AM": 19630,
+      "RR": 3915,
+      "PA": 43083,
+      "AP": 3802,
+      "TO": 8151,
+      "MA": 40378,
+      "PI": 19470,
+      "CE": 48761,
+      "RN": 18821,
+      "PB": 18095,
+      "PE": 51718,
+      "AL": 13950,
+      "SE": 9060,
+      "BA": 75679,
+      "MG": 122555,
+      "ES": 25344,
+      "RJ": 75355,
+      "SP": 232263,
+      "PR": 78486,
+      "SC": 49205,
+      "RS": 67655,
+      "MS": 17594,
+      "MT": 20632,
+      "GO": 33497,
+      "DF": 19822
+    },
+    "202307": {
+      "RO": 11348,
+      "AC": 5788,
+      "AM": 22502,
+      "RR": 4201,
+      "PA": 45784,
+      "AP": 7883,
+      "TO": 7760,
+      "MA": 41649,
+      "PI": 19008,
+      "CE": 47264,
+      "RN": 17845,
+      "PB": 20271,
+      "PE": 53215,
+      "AL": 14752,
+      "SE": 10154,
+      "BA": 80509,
+      "MG": 122828,
+      "ES": 24393,
+      "RJ": 75451,
+      "SP": 227183,
+      "PR": 78988,
+      "SC": 49206,
+      "RS": 69295,
+      "MS": 17392,
+      "MT": 19806,
+      "GO": 37472,
+      "DF": 18787
+    },
+    "202308": {
+      "RO": 11360,
+      "AC": 5051,
+      "AM": 20991,
+      "RR": 4655,
+      "PA": 45388,
+      "AP": 4011,
+      "TO": 8145,
+      "MA": 40785,
+      "PI": 19252,
+      "CE": 47048,
+      "RN": 18611,
+      "PB": 20966,
+      "PE": 55523,
+      "AL": 14926,
+      "SE": 10115,
+      "BA": 80337,
+      "MG": 125781,
+      "ES": 25064,
+      "RJ": 77563,
+      "SP": 237476,
+      "PR": 83968,
+      "SC": 50740,
+      "RS": 70915,
+      "MS": 18173,
+      "MT": 19517,
+      "GO": 37772,
+      "DF": 22120
+    },
+    "202309": {
+      "RO": 11194,
+      "AC": 4786,
+      "AM": 15551,
+      "RR": 1535,
+      "PA": 45018,
+      "AP": 3531,
+      "TO": 8289,
+      "MA": 40264,
+      "PI": 20053,
+      "CE": 47162,
+      "RN": 18141,
+      "PB": 20112,
+      "PE": 49742,
+      "AL": 15040,
+      "SE": 10164,
+      "BA": 75231,
+      "MG": 122564,
+      "ES": 24997,
+      "RJ": 76758,
+      "SP": 223515,
+      "PR": 81529,
+      "SC": 50763,
+      "RS": 67420,
+      "MS": 17989,
+      "MT": 19143,
+      "GO": 36369,
+      "DF": 21097
+    },
+    "202310": {
+      "RO": 10863,
+      "AC": 4223,
+      "AM": 16347,
+      "RR": 2171,
+      "PA": 44366,
+      "AP": 3339,
+      "TO": 8213,
+      "MA": 40124,
+      "PI": 19173,
+      "CE": 47311,
+      "RN": 18281,
+      "PB": 19968,
+      "PE": 55341,
+      "AL": 15008,
+      "SE": 10296,
+      "BA": 78427,
+      "MG": 121125,
+      "ES": 25097,
+      "RJ": 79589,
+      "SP": 224391,
+      "PR": 80002,
+      "SC": 49373,
+      "RS": 68723,
+      "MS": 17272,
+      "MT": 18956,
+      "GO": 34396,
+      "DF": 20003
+    },
+    "202311": {
+      "RO": 11312,
+      "AC": 5509,
+      "AM": 17116,
+      "RR": 3632,
+      "PA": 43480,
+      "AP": 3448,
+      "TO": 7265,
+      "MA": 41704,
+      "PI": 18733,
+      "CE": 47402,
+      "RN": 16752,
+      "PB": 18998,
+      "PE": 52264,
+      "AL": 14152,
+      "SE": 9830,
+      "BA": 74877,
+      "MG": 122960,
+      "ES": 23944,
+      "RJ": 74673,
+      "SP": 218054,
+      "PR": 79975,
+      "SC": 49464,
+      "RS": 68092,
+      "MS": 17543,
+      "MT": 18448,
+      "GO": 34302,
+      "DF": 19482
+    },
+    "202312": {
+      "RO": 9369,
+      "AC": 4031,
+      "AM": 13959,
+      "RR": 3534,
+      "PA": 43920,
+      "AP": 3957,
+      "TO": 8602,
+      "MA": 39682,
+      "PI": 17821,
+      "CE": 44544,
+      "RN": 17309,
+      "PB": 18433,
+      "PE": 51827,
+      "AL": 14127,
+      "SE": 9832,
+      "BA": 71654,
+      "MG": 119510,
+      "ES": 23650,
+      "RJ": 74895,
+      "SP": 217339,
+      "PR": 77903,
+      "SC": 46020,
+      "RS": 66182,
+      "MS": 17358,
+      "MT": 17803,
+      "GO": 35201,
+      "DF": 18949
+    },
+    "202401": {
+      "RO": 11004,
+      "AC": 4315,
+      "AM": 15990,
+      "RR": 3714,
+      "PA": 42908,
+      "AP": 4790,
+      "TO": 7963,
+      "MA": 40746,
+      "PI": 17674,
+      "CE": 46396,
+      "RN": 17493,
+      "PB": 18992,
+      "PE": 50175,
+      "AL": 13664,
+      "SE": 9829,
+      "BA": 72903,
+      "MG": 122143,
+      "ES": 22835,
+      "RJ": 73046,
+      "SP": 222849,
+      "PR": 81125,
+      "SC": 48856,
+      "RS": 68221,
+      "MS": 17755,
+      "MT": 19210,
+      "GO": 34548,
+      "DF": 19950
+    },
+    "202402": {
+      "RO": 10648,
+      "AC": 4316,
+      "AM": 18532,
+      "RR": 3413,
+      "PA": 43327,
+      "AP": 4538,
+      "TO": 8409,
+      "MA": 39051,
+      "PI": 16969,
+      "CE": 44734,
+      "RN": 17164,
+      "PB": 20407,
+      "PE": 49364,
+      "AL": 13108,
+      "SE": 9627,
+      "BA": 72809,
+      "MG": 122371,
+      "ES": 22718,
+      "RJ": 69561,
+      "SP": 221117,
+      "PR": 80850,
+      "SC": 48259,
+      "RS": 63207,
+      "MS": 15930,
+      "MT": 18687,
+      "GO": 34511,
+      "DF": 20507
+    },
+    "202403": {
+      "RO": 11244,
+      "AC": 4517,
+      "AM": 19267,
+      "RR": 3619,
+      "PA": 46482,
+      "AP": 4645,
+      "TO": 8388,
+      "MA": 42899,
+      "PI": 17871,
+      "CE": 47223,
+      "RN": 17878,
+      "PB": 23330,
+      "PE": 54444,
+      "AL": 14638,
+      "SE": 9988,
+      "BA": 78510,
+      "MG": 131254,
+      "ES": 25744,
+      "RJ": 78101,
+      "SP": 241806,
+      "PR": 84414,
+      "SC": 52011,
+      "RS": 69475,
+      "MS": 17413,
+      "MT": 20198,
+      "GO": 38710,
+      "DF": 21890
+    },
+    "202404": {
+      "RO": 11349,
+      "AC": 5214,
+      "AM": 19407,
+      "RR": 3041,
+      "PA": 47449,
+      "AP": 4427,
+      "TO": 9250,
+      "MA": 42606,
+      "PI": 19821,
+      "CE": 52679,
+      "RN": 17727,
+      "PB": 22752,
+      "PE": 58638,
+      "AL": 14943,
+      "SE": 10790,
+      "BA": 84487,
+      "MG": 139135,
+      "ES": 27000,
+      "RJ": 76667,
+      "SP": 244842,
+      "PR": 85725,
+      "SC": 54694,
+      "RS": 69431,
+      "MS": 18427,
+      "MT": 21427,
+      "GO": 40544,
+      "DF": 22390
+    },
+    "202405": {
+      "RO": 12105,
+      "AC": 5133,
+      "AM": 20218,
+      "RR": 2805,
+      "PA": 47430,
+      "AP": 4700,
+      "TO": 9091,
+      "MA": 43661,
+      "PI": 18978,
+      "CE": 51426,
+      "RN": 17920,
+      "PB": 21976,
+      "PE": 59502,
+      "AL": 15072,
+      "SE": 10087,
+      "BA": 81716,
+      "MG": 133685,
+      "ES": 25964,
+      "RJ": 79514,
+      "SP": 246414,
+      "PR": 89623,
+      "SC": 56031,
+      "RS": 65652,
+      "MS": 17744,
+      "MT": 21512,
+      "GO": 40033,
+      "DF": 21697
+    },
+    "202406": {
+      "RO": 11640,
+      "AC": 4675,
+      "AM": 18921,
+      "RR": 2996,
+      "PA": 46571,
+      "AP": 4652,
+      "TO": 8978,
+      "MA": 42491,
+      "PI": 17875,
+      "CE": 50792,
+      "RN": 18716,
+      "PB": 21942,
+      "PE": 55884,
+      "AL": 15277,
+      "SE": 9962,
+      "BA": 75098,
+      "MG": 128533,
+      "ES": 25921,
+      "RJ": 77251,
+      "SP": 240552,
+      "PR": 87591,
+      "SC": 54373,
+      "RS": 69944,
+      "MS": 18252,
+      "MT": 21086,
+      "GO": 38105,
+      "DF": 20812
+    },
+    "202407": {
+      "RO": 12124,
+      "AC": 5830,
+      "AM": 19286,
+      "RR": 2637,
+      "PA": 46082,
+      "AP": 4936,
+      "TO": 8841,
+      "MA": 43112,
+      "PI": 18549,
+      "CE": 51572,
+      "RN": 19293,
+      "PB": 22983,
+      "PE": 58769,
+      "AL": 15294,
+      "SE": 10903,
+      "BA": 83058,
+      "MG": 132337,
+      "ES": 27057,
+      "RJ": 78751,
+      "SP": 241470,
+      "PR": 88618,
+      "SC": 57004,
+      "RS": 70523,
+      "MS": 18031,
+      "MT": 22351,
+      "GO": 39119,
+      "DF": 21550
+    },
+    "202408": {
+      "RO": 11769,
+      "AC": 4712,
+      "AM": 18733,
+      "RR": 3127,
+      "PA": 46227,
+      "AP": 4838,
+      "TO": 9486,
+      "MA": 42839,
+      "PI": 18884,
+      "CE": 51288,
+      "RN": 19768,
+      "PB": 23044,
+      "PE": 59288,
+      "AL": 15290,
+      "SE": 10237,
+      "BA": 83622,
+      "MG": 134161,
+      "ES": 25649,
+      "RJ": 77860,
+      "SP": 246085,
+      "PR": 91493,
+      "SC": 57052,
+      "RS": 73447,
+      "MS": 18740,
+      "MT": 22196,
+      "GO": 38165,
+      "DF": 21218
+    },
+    "202409": {
+      "RO": 11225,
+      "AC": 4896,
+      "AM": 19962,
+      "RR": 2882,
+      "PA": 46896,
+      "AP": 5188,
+      "TO": 9242,
+      "MA": 42368,
+      "PI": 18830,
+      "CE": 50083,
+      "RN": 18797,
+      "PB": 22657,
+      "PE": 57731,
+      "AL": 14743,
+      "SE": 9558,
+      "BA": 81214,
+      "MG": 131953,
+      "ES": 26106,
+      "RJ": 76250,
+      "SP": 240093,
+      "PR": 90904,
+      "SC": 56179,
+      "RS": 70325,
+      "MS": 19012,
+      "MT": 21841,
+      "GO": 38177,
+      "DF": 19456
+    },
+    "202410": {
+      "RO": 10537,
+      "AC": 4771,
+      "AM": 20118,
+      "RR": 3221,
+      "PA": 47059,
+      "AP": 5230,
+      "TO": 8976,
+      "MA": 41966,
+      "PI": 18375,
+      "CE": 49551,
+      "RN": 19005,
+      "PB": 22299,
+      "PE": 58387,
+      "AL": 14983,
+      "SE": 10398,
+      "BA": 80604,
+      "MG": 132844,
+      "ES": 27688,
+      "RJ": 75164,
+      "SP": 250130,
+      "PR": 90926,
+      "SC": 59141,
+      "RS": 75212,
+      "MS": 18558,
+      "MT": 21016,
+      "GO": 38134,
+      "DF": 20326
+    },
+    "202411": {
+      "RO": 11282,
+      "AC": 5042,
+      "AM": 18532,
+      "RR": 3349,
+      "PA": 45877,
+      "AP": 5002,
+      "TO": 7637,
+      "MA": 41245,
+      "PI": 17531,
+      "CE": 46923,
+      "RN": 17887,
+      "PB": 20561,
+      "PE": 53576,
+      "AL": 13726,
+      "SE": 10087,
+      "BA": 79287,
+      "MG": 126661,
+      "ES": 25292,
+      "RJ": 71375,
+      "SP": 234425,
+      "PR": 86606,
+      "SC": 53676,
+      "RS": 69201,
+      "MS": 17135,
+      "MT": 19697,
+      "GO": 35452,
+      "DF": 19750
+    },
+    "202412": {
+      "RO": 9817,
+      "AC": 3851,
+      "AM": 17037,
+      "RR": 2584,
+      "PA": 44746,
+      "AP": 4299,
+      "TO": 8416,
+      "MA": 37278,
+      "PI": 17817,
+      "CE": 44465,
+      "RN": 15236,
+      "PB": 20005,
+      "PE": 53957,
+      "AL": 13656,
+      "SE": 9023,
+      "BA": 73356,
+      "MG": 123002,
+      "ES": 25526,
+      "RJ": 69189,
+      "SP": 225756,
+      "PR": 80026,
+      "SC": 52892,
+      "RS": 67246,
+      "MS": 17814,
+      "MT": 19397,
+      "GO": 36504,
+      "DF": 18542
+    },
+    "202501": {
+      "RO": 10637,
+      "AC": 4541,
+      "AM": 22037,
+      "RR": 3882,
+      "PA": 44600,
+      "AP": 4219,
+      "TO": 8962,
+      "MA": 41684,
+      "PI": 19037,
+      "CE": 45944,
+      "RN": 17948,
+      "PB": 20029,
+      "PE": 52811,
+      "AL": 13473,
+      "SE": 9452,
+      "BA": 72641,
+      "MG": 126429,
+      "ES": 25860,
+      "RJ": 75893,
+      "SP": 238144,
+      "PR": 87482,
+      "SC": 53631,
+      "RS": 66998,
+      "MS": 18667,
+      "MT": 20561,
+      "GO": 38096,
+      "DF": 20996
+    },
+    "202502": {
+      "RO": 10219,
+      "AC": 4243,
+      "AM": 18984,
+      "RR": 2855,
+      "PA": 43943,
+      "AP": 4023,
+      "TO": 8872,
+      "MA": 39186,
+      "PI": 17055,
+      "CE": 45200,
+      "RN": 17891,
+      "PB": 19487,
+      "PE": 50421,
+      "AL": 13863,
+      "SE": 9482,
+      "BA": 75138,
+      "MG": 122372,
+      "ES": 24987,
+      "RJ": 71711,
+      "SP": 231291,
+      "PR": 85810,
+      "SC": 53444,
+      "RS": 66262,
+      "MS": 16939,
+      "MT": 20655,
+      "GO": 37258,
+      "DF": 19383
+    },
+    "202503": {
+      "RO": 10762,
+      "AC": 5348,
+      "AM": 19892,
+      "RR": 3459,
+      "PA": 47078,
+      "AP": 5009,
+      "TO": 9144,
+      "MA": 41505,
+      "PI": 18468,
+      "CE": 48114,
+      "RN": 18603,
+      "PB": 21502,
+      "PE": 53849,
+      "AL": 14431,
+      "SE": 10435,
+      "BA": 78502,
+      "MG": 127776,
+      "ES": 27148,
+      "RJ": 73809,
+      "SP": 245839,
+      "PR": 88023,
+      "SC": 55023,
+      "RS": 68915,
+      "MS": 17766,
+      "MT": 23311,
+      "GO": 40265,
+      "DF": 21047
+    },
+    "202504": {
+      "RO": 11551,
+      "AC": 5887,
+      "AM": 20290,
+      "RR": 2895,
+      "PA": 46662,
+      "AP": 5258,
+      "TO": 9139,
+      "MA": 42493,
+      "PI": 17687,
+      "CE": 49533,
+      "RN": 18676,
+      "PB": 21058,
+      "PE": 56353,
+      "AL": 14383,
+      "SE": 10574,
+      "BA": 78674,
+      "MG": 130850,
+      "ES": 23758,
+      "RJ": 73206,
+      "SP": 244996,
+      "PR": 91035,
+      "SC": 55685,
+      "RS": 70578,
+      "MS": 18774,
+      "MT": 21906,
+      "GO": 39034,
+      "DF": 20315
+    },
+    "202505": {
+      "RO": 11824,
+      "AC": 5601,
+      "AM": 20167,
+      "RR": 2898,
+      "PA": 49149,
+      "AP": 5246,
+      "TO": 9527,
+      "MA": 44494,
+      "PI": 19217,
+      "CE": 54231,
+      "RN": 20311,
+      "PB": 22266,
+      "PE": 58995,
+      "AL": 15373,
+      "SE": 10594,
+      "BA": 82789,
+      "MG": 139441,
+      "ES": 29636,
+      "RJ": 78635,
+      "SP": 259070,
+      "PR": 93300,
+      "SC": 60523,
+      "RS": 73411,
+      "MS": 18744,
+      "MT": 22989,
+      "GO": 41650,
+      "DF": 21895
+    },
+    "202506": {
+      "RO": 11235,
+      "AC": 5988,
+      "AM": 22515,
+      "RR": 2935,
+      "PA": 48859,
+      "AP": 5312,
+      "TO": 9711,
+      "MA": 44136,
+      "PI": 19293,
+      "CE": 50393,
+      "RN": 19292,
+      "PB": 22325,
+      "PE": 55198,
+      "AL": 13732,
+      "SE": 9399,
+      "BA": 79101,
+      "MG": 136264,
+      "ES": 28053,
+      "RJ": 78073,
+      "SP": 245373,
+      "PR": 94036,
+      "SC": 57435,
+      "RS": 71678,
+      "MS": 17680,
+      "MT": 23317,
+      "GO": 39560,
+      "DF": 21120
+    },
+    "202507": {
+      "RO": 12611,
+      "AC": 5122,
+      "AM": 24613,
+      "RR": 3003,
+      "PA": 49639,
+      "AP": 5059,
+      "TO": 9478,
+      "MA": 44192,
+      "PI": 19503,
+      "CE": 50832,
+      "RN": 20225,
+      "PB": 22819,
+      "PE": 57887,
+      "AL": 17324,
+      "SE": 10602,
+      "BA": 84930,
+      "MG": 140907,
+      "ES": 27542,
+      "RJ": 80739,
+      "SP": 254726,
+      "PR": 95792,
+      "SC": 60325,
+      "RS": 75146,
+      "MS": 18272,
+      "MT": 21917,
+      "GO": 39900,
+      "DF": 21591
+    },
+    "202508": {
+      "RO": 12372,
+      "AC": 5091,
+      "AM": 24408,
+      "RR": 3193,
+      "PA": 50660,
+      "AP": 4957,
+      "TO": 9466,
+      "MA": 42849,
+      "PI": 18952,
+      "CE": 50126,
+      "RN": 19379,
+      "PB": 23200,
+      "PE": 58867,
+      "AL": 15188,
+      "SE": 10681,
+      "BA": 85529,
+      "MG": 139123,
+      "ES": 27626,
+      "RJ": 79180,
+      "SP": 252988,
+      "PR": 93912,
+      "SC": 60270,
+      "RS": 74379,
+      "MS": 18088,
+      "MT": 23377,
+      "GO": 39319,
+      "DF": 20541
+    },
+    "202509": {
+      "RO": 12259,
+      "AC": 5062,
+      "AM": 23100,
+      "RR": 2738,
+      "PA": 49448,
+      "AP": 4792,
+      "TO": 9104,
+      "MA": 43689,
+      "PI": 17236,
+      "CE": 53086,
+      "RN": 18947,
+      "PB": 22459,
+      "PE": 58532,
+      "AL": 15198,
+      "SE": 11259,
+      "BA": 86324,
+      "MG": 138501,
+      "ES": 27108,
+      "RJ": 80405,
+      "SP": 251016,
+      "PR": 94437,
+      "SC": 59352,
+      "RS": 75659,
+      "MS": 18389,
+      "MT": 22979,
+      "GO": 38484,
+      "DF": 20874
+    },
+    "202510": {
+      "RO": 12766,
+      "AC": 5561,
+      "AM": 25113,
+      "RR": 2346,
+      "PA": 50058,
+      "AP": 4903,
+      "TO": 9302,
+      "MA": 43150,
+      "PI": 19901,
+      "CE": 52343,
+      "RN": 18369,
+      "PB": 23172,
+      "PE": 58387,
+      "AL": 15731,
+      "SE": 11059,
+      "BA": 82670,
+      "MG": 139336,
+      "ES": 28429,
+      "RJ": 81109,
+      "SP": 256628,
+      "PR": 96026,
+      "SC": 61454,
+      "RS": 75980,
+      "MS": 17417,
+      "MT": 22427,
+      "GO": 39000,
+      "DF": 20829
+    },
+    "202511": {
+      "RO": 12159,
+      "AC": 4609,
+      "AM": 21990,
+      "RR": 2740,
+      "PA": 48679,
+      "AP": 4195,
+      "TO": 8338,
+      "MA": 42047,
+      "PI": 18131,
+      "CE": 49855,
+      "RN": 18148,
+      "PB": 20599,
+      "PE": 55363,
+      "AL": 14768,
+      "SE": 10374,
+      "BA": 80315,
+      "MG": 129707,
+      "ES": 26276,
+      "RJ": 77277,
+      "SP": 239627,
+      "PR": 91835,
+      "SC": 58629,
+      "RS": 73866,
+      "MS": 16642,
+      "MT": 21284,
+      "GO": 38239,
+      "DF": 19793
+    },
+    "202512": {
+      "RO": 11527,
+      "AC": 4527,
+      "AM": 21768,
+      "RR": 2128,
+      "PA": 48817,
+      "AP": 4900,
+      "TO": 7768,
+      "MA": 40293,
+      "PI": 19014,
+      "CE": 48468,
+      "RN": 17704,
+      "PB": 19260,
+      "PE": 55935,
+      "AL": 14176,
+      "SE": 10417,
+      "BA": 77304,
+      "MG": 128022,
+      "ES": 25613,
+      "RJ": 76232,
+      "SP": 230747,
+      "PR": 89610,
+      "SC": 55204,
+      "RS": 70967,
+      "MS": 16193,
+      "MT": 20653,
+      "GO": 37206,
+      "DF": 20360
+    },
+    "202601": {
+      "RO": 11520,
+      "AC": 4774,
+      "AM": 21748,
+      "RR": 2597,
+      "PA": 47347,
+      "AP": 4938,
+      "TO": 8884,
+      "MA": 41163,
+      "PI": 19653,
+      "CE": 48981,
+      "RN": 17831,
+      "PB": 20858,
+      "PE": 52213,
+      "AL": 14548,
+      "SE": 10283,
+      "BA": 78433,
+      "MG": 131838,
+      "ES": 25680,
+      "RJ": 73439,
+      "SP": 237679,
+      "PR": 93664,
+      "SC": 56937,
+      "RS": 70160,
+      "MS": 17584,
+      "MT": 21372,
+      "GO": 37161,
+      "DF": 19534
+    },
+    "202602": {
+      "RO": 11425,
+      "AC": 4479,
+      "AM": 20400,
+      "RR": 2961,
+      "PA": 45674,
+      "AP": 4640,
+      "TO": 9024,
+      "MA": 39036,
+      "PI": 18035,
+      "CE": 46598,
+      "RN": 16694,
+      "PB": 19614,
+      "PE": 51506,
+      "AL": 13930,
+      "SE": 10722,
+      "BA": 78892,
+      "MG": 128686,
+      "ES": 25428,
+      "RJ": 72584,
+      "SP": 230773,
+      "PR": 89925,
+      "SC": 53982,
+      "RS": 68329,
+      "MS": 16834,
+      "MT": 20715,
+      "GO": 37139,
+      "DF": 18350
+    },
+    "202603": {
+      "RO": 13535,
+      "AC": 5088,
+      "AM": 23276,
+      "RR": 3082,
+      "PA": 51283,
+      "AP": 5420,
+      "TO": 9574,
+      "MA": 44156,
+      "PI": 18254,
+      "CE": 53082,
+      "RN": 18698,
+      "PB": 23238,
+      "PE": 58974,
+      "AL": 15533,
+      "SE": 11331,
+      "BA": 84818,
+      "MG": 139823,
+      "ES": 26817,
+      "RJ": 81756,
+      "SP": 255597,
+      "PR": 94863,
+      "SC": 58975,
+      "RS": 74165,
+      "MS": 17346,
+      "MT": 23193,
+      "GO": 40110,
+      "DF": 20438
+    },
+    "202604": {
+      "RO": 12441,
+      "AC": 4951,
+      "AM": 23452,
+      "RR": 3013,
+      "PA": 50366,
+      "AP": 5563,
+      "TO": 9168,
+      "MA": 41891,
+      "PI": 17845,
+      "CE": 49778,
+      "RN": 18356,
+      "PB": 22218,
+      "PE": 57844,
+      "AL": 15829,
+      "SE": 10944,
+      "BA": 83766,
+      "MG": 135007,
+      "ES": 26289,
+      "RJ": 78575,
+      "SP": 251270,
+      "PR": 85532,
+      "SC": 58781,
+      "RS": 75288,
+      "MS": 17846,
+      "MT": 23452,
+      "GO": 39530,
+      "DF": 19768
+    },
+    "202605": {
+      "RO": 12024,
+      "AC": 5328,
+      "AM": 23457,
+      "RR": 3199,
+      "PA": 49924,
+      "AP": 5849,
+      "TO": 10218,
+      "MA": 42797,
+      "PI": 19103,
+      "CE": 54102,
+      "RN": 18795,
+      "PB": 21323,
+      "PE": 59900,
+      "AL": 16212,
+      "SE": 10476,
+      "BA": 83003,
+      "MG": 136447,
+      "ES": 26759,
+      "RJ": 81357,
+      "SP": 255599,
+      "PR": 99814,
+      "SC": 59066,
+      "RS": 74919,
+      "MS": 17680,
+      "MT": 24440,
+      "GO": 41153,
+      "DF": 21522
+    },
+    "202606": {
+      "RO": 10245,
+      "AC": 4997,
+      "AM": 22860,
+      "RR": 3936,
+      "PA": 48089,
+      "AP": 5777,
+      "TO": 9353,
+      "MA": 40245,
+      "PI": 18752,
+      "CE": 55432,
+      "RN": 18725,
+      "PB": 21651,
+      "PE": 56633,
+      "AL": 15695,
+      "SE": 10839,
+      "BA": 79569,
+      "MG": 136124,
+      "ES": 27077,
+      "RJ": 81661,
+      "SP": 248807,
+      "PR": 95172,
+      "SC": 60147,
+      "RS": 76872,
+      "MS": 17495,
+      "MT": 23954,
+      "GO": 40315,
+      "DF": 21187
+    },
+    "202607": {
+      "RO": 9798,
+      "AC": 5065,
+      "AM": 23077,
+      "RR": 515,
+      "PA": 47572,
+      "AP": 6160,
+      "TO": 9424,
+      "MA": 38489,
+      "PI": 18727,
+      "CE": 53588,
+      "RN": 19023,
+      "PB": 21635,
+      "PE": 59704,
+      "AL": 15074,
+      "SE": 11346,
+      "BA": 83756,
+      "MG": 140349,
+      "ES": 26795,
+      "RJ": 84695,
+      "SP": 252063,
+      "PR": 99326,
+      "SC": 64102,
+      "RS": 77246,
+      "MS": 18102,
+      "MT": 22658,
+      "GO": 40758,
+      "DF": 22568
+    }
+  },
+  "erros": [],
+  "status": "APROVADO",
+  "natureza_dos_dados": "EMPIRICO"
+}

@@ -1,0 +1,199 @@
+conjunto_cbo,co_cbo,rotulo_tabnet,indice_formulario,natureza_dos_dados
+alvo_pmme,225120,225120 Medico cardiologista,548,EMPIRICO
+alvo_pmme,225121,225121 Medico oncologista clinico,549,EMPIRICO
+alvo_pmme,225148,225148 Medico anatomopatologista,562,EMPIRICO
+alvo_pmme,225151,225151 Medico anestesiologista,564,EMPIRICO
+alvo_pmme,225165,225165 Medico gastroenterologista,568,EMPIRICO
+alvo_pmme,225220,225220 Medico cirurgiao do aparelho digestivo,578,EMPIRICO
+alvo_pmme,225225,225225 Medico cirurgiao geral,579,EMPIRICO
+alvo_pmme,225250,225250 Medico ginecologista e obstetra,584,EMPIRICO
+alvo_pmme,225255,225255 Medico mastologista,585,EMPIRICO
+alvo_pmme,225275,225275 Medico otorrinolaringologista,589,EMPIRICO
+alvo_pmme,225280,225280 Medico coloproctologista,590,EMPIRICO
+alvo_pmme,225290,225290 Medico cancerologista cirurgico,592,EMPIRICO
+alvo_pmme,225305,225305 Medico citopatologista,594,EMPIRICO
+alvo_pmme,225310,225310 Medico em endoscopia,595,EMPIRICO
+alvo_pmme,225320,225320 Medico em radiologia e diagnostico por imagem,597,EMPIRICO
+alvo_pmme,225325,225325 Medico patologista,598,EMPIRICO
+alvo_pmme,225330,225330 Medico radioterapeuta,599,EMPIRICO
+especialistas_nao_alvo,225103,225103 Medico infectologista,540,EMPIRICO
+especialistas_nao_alvo,225105,225105 Medico acupunturista,541,EMPIRICO
+especialistas_nao_alvo,225106,225106 Medico legista,542,EMPIRICO
+especialistas_nao_alvo,225109,225109 Medico nefrologista,543,EMPIRICO
+especialistas_nao_alvo,225110,225110 Medico alergista e imunologista,544,EMPIRICO
+especialistas_nao_alvo,225112,225112 Medico neurologista,545,EMPIRICO
+especialistas_nao_alvo,225115,225115 Medico angiologista,546,EMPIRICO
+especialistas_nao_alvo,225118,225118 Medico nutrologista,547,EMPIRICO
+especialistas_nao_alvo,225122,225122 Medico cancerologista pediatrico,550,EMPIRICO
+especialistas_nao_alvo,225124,225124 Medico pediatra,551,EMPIRICO
+especialistas_nao_alvo,225127,225127 Medico pneumologista,553,EMPIRICO
+especialistas_nao_alvo,225130,225130 Medico de familia e comunidade,554,EMPIRICO
+especialistas_nao_alvo,225133,225133 Medico psiquiatra,555,EMPIRICO
+especialistas_nao_alvo,225135,225135 Medico dermatologista,556,EMPIRICO
+especialistas_nao_alvo,225136,225136 Medico reumatologista,557,EMPIRICO
+especialistas_nao_alvo,225139,225139 Medico sanitarista,558,EMPIRICO
+especialistas_nao_alvo,225140,225140 Medico do trabalho,559,EMPIRICO
+especialistas_nao_alvo,225145,225145 Medico em medicina de trafego,561,EMPIRICO
+especialistas_nao_alvo,225150,225150 Medico em medicina intensiva,563,EMPIRICO
+especialistas_nao_alvo,225154,225154 Medico Antroposofico,565,EMPIRICO
+especialistas_nao_alvo,225155,225155 Medico endocrinologista e metabologista,566,EMPIRICO
+especialistas_nao_alvo,225160,225160 Medico fisiatra,567,EMPIRICO
+especialistas_nao_alvo,225175,225175 Medico geneticista,570,EMPIRICO
+especialistas_nao_alvo,225180,225180 Medico geriatra,571,EMPIRICO
+especialistas_nao_alvo,225185,225185 Medico hematologista,572,EMPIRICO
+especialistas_nao_alvo,225190,225190 Medico hemoterapeuta,573,EMPIRICO
+especialistas_nao_alvo,225195,225195 Medico homeopata,574,EMPIRICO
+especialistas_nao_alvo,225203,225203 Medico em cirurgia vascular,575,EMPIRICO
+especialistas_nao_alvo,225210,225210 Medico cirurgiao cardiovascular,576,EMPIRICO
+especialistas_nao_alvo,225215,225215 Medico cirurgiao de cabeca e pescoco,577,EMPIRICO
+especialistas_nao_alvo,225230,225230 Medico cirurgiao pediatrico,580,EMPIRICO
+especialistas_nao_alvo,225235,225235 Medico cirurgiao plastico,581,EMPIRICO
+especialistas_nao_alvo,225240,225240 Medico cirurgiao toracico,582,EMPIRICO
+especialistas_nao_alvo,225245,225245 Medico foniatra,583,EMPIRICO
+especialistas_nao_alvo,225260,225260 Medico neurocirurgiao,586,EMPIRICO
+especialistas_nao_alvo,225265,225265 Medico oftalmologista,587,EMPIRICO
+especialistas_nao_alvo,225270,225270 Medico ortopedista e traumatologista,588,EMPIRICO
+especialistas_nao_alvo,225285,225285 Medico urologista,591,EMPIRICO
+especialistas_nao_alvo,225295,225295 Medico cirurgiao da mao,593,EMPIRICO
+especialistas_nao_alvo,225315,225315 Medico em medicina nuclear,596,EMPIRICO
+especialistas_nao_alvo,225335,225335 Medico patologista clinico / medicina laboratorial,600,EMPIRICO
+especialistas_nao_alvo,225340,225340 Medico hemoterapeuta,601,EMPIRICO
+especialistas_nao_alvo,225345,225345 Medico hiperbarista,602,EMPIRICO
+especialistas_nao_alvo,225350,225350 Medico neurofisiologista clinico,603,EMPIRICO
+especialistas_nao_alvo,225355,225355 Medico Radiologista Intervencionista,604,EMPIRICO
+generalistas,225125,225125 Medico clinico,552,EMPIRICO
+generalistas,225142,225142 Medico da estrategia de saude da familia,560,EMPIRICO
+generalistas,225170,225170 Medico generalista,569,EMPIRICO
+mfc_225130,225130,225130 Medico de familia e comunidade,554,EMPIRICO
+_opcao_medica_do_formulario,2231A1,2231A1 Medico broncoesofalogista,384,EMPIRICO
+_opcao_medica_do_formulario,2231A2,2231A2 Medico hansenologista,385,EMPIRICO
+_opcao_medica_do_formulario,2231F3,2231F3 Medico cirurgiao vascular,386,EMPIRICO
+_opcao_medica_do_formulario,2231F4,2231F4 Medico cancerologista pediatrico,387,EMPIRICO
+_opcao_medica_do_formulario,2231F5,2231F5 Medico cancerologista cirurgico,388,EMPIRICO
+_opcao_medica_do_formulario,2231F6,2231F6 Medico cancerologista clinico,389,EMPIRICO
+_opcao_medica_do_formulario,2231F7,2231F7 Medico em medicina de familia e comunidade,390,EMPIRICO
+_opcao_medica_do_formulario,2231F8,2231F8 Medico em medicina preventiva e social,391,EMPIRICO
+_opcao_medica_do_formulario,2231F9,2231F9 Medico residente,392,EMPIRICO
+_opcao_medica_do_formulario,2231G1,2231G1 Medico Cardiologista Intervencionista,393,EMPIRICO
+_opcao_medica_do_formulario,223101,223101 Medico acupunturista,394,EMPIRICO
+_opcao_medica_do_formulario,223102,223102 Medico alergista e imunologista,395,EMPIRICO
+_opcao_medica_do_formulario,223103,223103 Medico anatomopatologista,396,EMPIRICO
+_opcao_medica_do_formulario,223104,223104 Medico anestesiologista,397,EMPIRICO
+_opcao_medica_do_formulario,223105,223105 Medico angiologista,398,EMPIRICO
+_opcao_medica_do_formulario,223106,223106 Medico cardiologista,399,EMPIRICO
+_opcao_medica_do_formulario,223107,223107 Medico cirurgiao cardiovascular,400,EMPIRICO
+_opcao_medica_do_formulario,223108,223108 Medico cirurgiao de cabeca e pescoco,401,EMPIRICO
+_opcao_medica_do_formulario,223109,223109 Medico cirurgiao do aparelho digestivo,402,EMPIRICO
+_opcao_medica_do_formulario,223110,223110 Medico cirurgiao geral,403,EMPIRICO
+_opcao_medica_do_formulario,223111,223111 Medico cirurgiao pediatrico,404,EMPIRICO
+_opcao_medica_do_formulario,223112,223112 Medico cirurgiao plastico,405,EMPIRICO
+_opcao_medica_do_formulario,223113,223113 Medico cirurgiao toracico,406,EMPIRICO
+_opcao_medica_do_formulario,223114,223114 Medico citopatologista,407,EMPIRICO
+_opcao_medica_do_formulario,223115,223115 Medico clinico,408,EMPIRICO
+_opcao_medica_do_formulario,223116,223116 Medico de saude da familia,409,EMPIRICO
+_opcao_medica_do_formulario,223117,223117 Medico dermatologista,410,EMPIRICO
+_opcao_medica_do_formulario,223118,223118 Medico do trabalho,411,EMPIRICO
+_opcao_medica_do_formulario,223119,223119 Medico em eletroencefalografia,412,EMPIRICO
+_opcao_medica_do_formulario,223120,223120 Medico em endoscopia,413,EMPIRICO
+_opcao_medica_do_formulario,223121,223121 Medico em medicina de trafego,414,EMPIRICO
+_opcao_medica_do_formulario,223122,223122 Medico em medicina intensiva,415,EMPIRICO
+_opcao_medica_do_formulario,223123,223123 Medico em medicina nuclear,416,EMPIRICO
+_opcao_medica_do_formulario,223124,223124 Medico em radiologia e diagnostico por imagem,417,EMPIRICO
+_opcao_medica_do_formulario,223125,223125 Medico endocrinologista e metabologista,418,EMPIRICO
+_opcao_medica_do_formulario,223126,223126 Medico fisiatra,419,EMPIRICO
+_opcao_medica_do_formulario,223127,223127 Medico foniatra,420,EMPIRICO
+_opcao_medica_do_formulario,223128,223128 Medico gastroenterologista,421,EMPIRICO
+_opcao_medica_do_formulario,223129,223129 Medico generalista,422,EMPIRICO
+_opcao_medica_do_formulario,223130,223130 Medico geneticista,423,EMPIRICO
+_opcao_medica_do_formulario,223131,223131 Medico geriatra,424,EMPIRICO
+_opcao_medica_do_formulario,223132,223132 Medico ginecologista e obstetra,425,EMPIRICO
+_opcao_medica_do_formulario,223133,223133 Medico hematologista,426,EMPIRICO
+_opcao_medica_do_formulario,223134,223134 Medico hemoterapeuta,427,EMPIRICO
+_opcao_medica_do_formulario,223135,223135 Medico homeopata,428,EMPIRICO
+_opcao_medica_do_formulario,223136,223136 Medico infectologista,429,EMPIRICO
+_opcao_medica_do_formulario,223137,223137 Medico legista,430,EMPIRICO
+_opcao_medica_do_formulario,223138,223138 Medico mastologista,431,EMPIRICO
+_opcao_medica_do_formulario,223139,223139 Medico nefrologista,432,EMPIRICO
+_opcao_medica_do_formulario,223140,223140 Medico neurocirurgiao,433,EMPIRICO
+_opcao_medica_do_formulario,223141,223141 Medico neurofisiologista,434,EMPIRICO
+_opcao_medica_do_formulario,223142,223142 Medico neurologista,435,EMPIRICO
+_opcao_medica_do_formulario,223143,223143 Medico nutrologista,436,EMPIRICO
+_opcao_medica_do_formulario,223144,223144 Medico oftalmologista,437,EMPIRICO
+_opcao_medica_do_formulario,223145,223145 Medico oncologista,438,EMPIRICO
+_opcao_medica_do_formulario,223146,223146 Medico ortopedista e traumatologista,439,EMPIRICO
+_opcao_medica_do_formulario,223147,223147 Medico otorrinolaringologista,440,EMPIRICO
+_opcao_medica_do_formulario,223148,223148 Medico patologista clinico,441,EMPIRICO
+_opcao_medica_do_formulario,223149,223149 Medico pediatra,442,EMPIRICO
+_opcao_medica_do_formulario,223150,223150 Medico perito,443,EMPIRICO
+_opcao_medica_do_formulario,223151,223151 Medico pneumologista,444,EMPIRICO
+_opcao_medica_do_formulario,223152,223152 Medico proctologista,445,EMPIRICO
+_opcao_medica_do_formulario,223153,223153 Medico psiquiatra,446,EMPIRICO
+_opcao_medica_do_formulario,223154,223154 Medico radioterapeuta,447,EMPIRICO
+_opcao_medica_do_formulario,223155,223155 Medico reumatologista,448,EMPIRICO
+_opcao_medica_do_formulario,223156,223156 Medico sanitarista,449,EMPIRICO
+_opcao_medica_do_formulario,223157,223157 Medico urologista,450,EMPIRICO
+_opcao_medica_do_formulario,225103,225103 Medico infectologista,540,EMPIRICO
+_opcao_medica_do_formulario,225105,225105 Medico acupunturista,541,EMPIRICO
+_opcao_medica_do_formulario,225106,225106 Medico legista,542,EMPIRICO
+_opcao_medica_do_formulario,225109,225109 Medico nefrologista,543,EMPIRICO
+_opcao_medica_do_formulario,225110,225110 Medico alergista e imunologista,544,EMPIRICO
+_opcao_medica_do_formulario,225112,225112 Medico neurologista,545,EMPIRICO
+_opcao_medica_do_formulario,225115,225115 Medico angiologista,546,EMPIRICO
+_opcao_medica_do_formulario,225118,225118 Medico nutrologista,547,EMPIRICO
+_opcao_medica_do_formulario,225120,225120 Medico cardiologista,548,EMPIRICO
+_opcao_medica_do_formulario,225121,225121 Medico oncologista clinico,549,EMPIRICO
+_opcao_medica_do_formulario,225122,225122 Medico cancerologista pediatrico,550,EMPIRICO
+_opcao_medica_do_formulario,225124,225124 Medico pediatra,551,EMPIRICO
+_opcao_medica_do_formulario,225125,225125 Medico clinico,552,EMPIRICO
+_opcao_medica_do_formulario,225127,225127 Medico pneumologista,553,EMPIRICO
+_opcao_medica_do_formulario,225130,225130 Medico de familia e comunidade,554,EMPIRICO
+_opcao_medica_do_formulario,225133,225133 Medico psiquiatra,555,EMPIRICO
+_opcao_medica_do_formulario,225135,225135 Medico dermatologista,556,EMPIRICO
+_opcao_medica_do_formulario,225136,225136 Medico reumatologista,557,EMPIRICO
+_opcao_medica_do_formulario,225139,225139 Medico sanitarista,558,EMPIRICO
+_opcao_medica_do_formulario,225140,225140 Medico do trabalho,559,EMPIRICO
+_opcao_medica_do_formulario,225142,225142 Medico da estrategia de saude da familia,560,EMPIRICO
+_opcao_medica_do_formulario,225145,225145 Medico em medicina de trafego,561,EMPIRICO
+_opcao_medica_do_formulario,225148,225148 Medico anatomopatologista,562,EMPIRICO
+_opcao_medica_do_formulario,225150,225150 Medico em medicina intensiva,563,EMPIRICO
+_opcao_medica_do_formulario,225151,225151 Medico anestesiologista,564,EMPIRICO
+_opcao_medica_do_formulario,225154,225154 Medico Antroposofico,565,EMPIRICO
+_opcao_medica_do_formulario,225155,225155 Medico endocrinologista e metabologista,566,EMPIRICO
+_opcao_medica_do_formulario,225160,225160 Medico fisiatra,567,EMPIRICO
+_opcao_medica_do_formulario,225165,225165 Medico gastroenterologista,568,EMPIRICO
+_opcao_medica_do_formulario,225170,225170 Medico generalista,569,EMPIRICO
+_opcao_medica_do_formulario,225175,225175 Medico geneticista,570,EMPIRICO
+_opcao_medica_do_formulario,225180,225180 Medico geriatra,571,EMPIRICO
+_opcao_medica_do_formulario,225185,225185 Medico hematologista,572,EMPIRICO
+_opcao_medica_do_formulario,225190,225190 Medico hemoterapeuta,573,EMPIRICO
+_opcao_medica_do_formulario,225195,225195 Medico homeopata,574,EMPIRICO
+_opcao_medica_do_formulario,225203,225203 Medico em cirurgia vascular,575,EMPIRICO
+_opcao_medica_do_formulario,225210,225210 Medico cirurgiao cardiovascular,576,EMPIRICO
+_opcao_medica_do_formulario,225215,225215 Medico cirurgiao de cabeca e pescoco,577,EMPIRICO
+_opcao_medica_do_formulario,225220,225220 Medico cirurgiao do aparelho digestivo,578,EMPIRICO
+_opcao_medica_do_formulario,225225,225225 Medico cirurgiao geral,579,EMPIRICO
+_opcao_medica_do_formulario,225230,225230 Medico cirurgiao pediatrico,580,EMPIRICO
+_opcao_medica_do_formulario,225235,225235 Medico cirurgiao plastico,581,EMPIRICO
+_opcao_medica_do_formulario,225240,225240 Medico cirurgiao toracico,582,EMPIRICO
+_opcao_medica_do_formulario,225245,225245 Medico foniatra,583,EMPIRICO
+_opcao_medica_do_formulario,225250,225250 Medico ginecologista e obstetra,584,EMPIRICO
+_opcao_medica_do_formulario,225255,225255 Medico mastologista,585,EMPIRICO
+_opcao_medica_do_formulario,225260,225260 Medico neurocirurgiao,586,EMPIRICO
+_opcao_medica_do_formulario,225265,225265 Medico oftalmologista,587,EMPIRICO
+_opcao_medica_do_formulario,225270,225270 Medico ortopedista e traumatologista,588,EMPIRICO
+_opcao_medica_do_formulario,225275,225275 Medico otorrinolaringologista,589,EMPIRICO
+_opcao_medica_do_formulario,225280,225280 Medico coloproctologista,590,EMPIRICO
+_opcao_medica_do_formulario,225285,225285 Medico urologista,591,EMPIRICO
+_opcao_medica_do_formulario,225290,225290 Medico cancerologista cirurgico,592,EMPIRICO
+_opcao_medica_do_formulario,225295,225295 Medico cirurgiao da mao,593,EMPIRICO
+_opcao_medica_do_formulario,225305,225305 Medico citopatologista,594,EMPIRICO
+_opcao_medica_do_formulario,225310,225310 Medico em endoscopia,595,EMPIRICO
+_opcao_medica_do_formulario,225315,225315 Medico em medicina nuclear,596,EMPIRICO
+_opcao_medica_do_formulario,225320,225320 Medico em radiologia e diagnostico por imagem,597,EMPIRICO
+_opcao_medica_do_formulario,225325,225325 Medico patologista,598,EMPIRICO
+_opcao_medica_do_formulario,225330,225330 Medico radioterapeuta,599,EMPIRICO
+_opcao_medica_do_formulario,225335,225335 Medico patologista clinico / medicina laboratorial,600,EMPIRICO
+_opcao_medica_do_formulario,225340,225340 Medico hemoterapeuta,601,EMPIRICO
+_opcao_medica_do_formulario,225345,225345 Medico hiperbarista,602,EMPIRICO
+_opcao_medica_do_formulario,225350,225350 Medico neurofisiologista clinico,603,EMPIRICO
+_opcao_medica_do_formulario,225355,225355 Medico Radiologista Intervencionista,604,EMPIRICO

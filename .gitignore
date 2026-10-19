@@ -82,3 +82,8 @@ output/aquisicao/sigtap/cache/
 # A14 (TISS/ANS): ZIPs brutos transitórios e cache por UF × mês; só agregados e manifesto entram no Git
 output/aquisicao/tiss/cache_bruto/
 output/aquisicao/tiss/cache_pacote/
+# Adendo §12 do protocolo 47: safras v2 do SIH (a13b) e do SIA (a12b) e a17 (SIA por forma × curso);
+# respostas brutas do TabNet e metadados por consulta, reproduzíveis com --etapa baixar
+output/aquisicao/sih_v2/cache_tabnet/
+output/aquisicao/sia_v2/brutos/
+output/aquisicao/sia_forma_curso/brutos/
