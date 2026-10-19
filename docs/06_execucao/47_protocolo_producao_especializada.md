@@ -240,5 +240,5 @@ Nenhum outcome da família K foi visto por município nem por lado de corte.
 | aquisição SIA | `scripts/aquisicao/a12_adquirir_sia_tabnet.py` | `output/aquisicao/sia/` | `docs/auditorias/aquisicao/A12_sia_tabnet.md` |
 | aquisição SIH | `scripts/aquisicao/a13_adquirir_sih_tabnet.py` | `output/aquisicao/sih/` | `A13_sih_tabnet.md` |
 | aquisição TISS | `scripts/aquisicao/a14_adquirir_tiss_ans.py` | `output/aquisicao/tiss/` | `A14_tiss_ans.md` |
-| D1 | `scripts/rdd_bolsa/21_producao_dird.py` | `output/rdd_bolsa/K_D1_*` | `48_resultados_producao_especializada.md` |
+| D1 | `scripts/rdd_bolsa/21_producao_dird.py` | `output/rdd_bolsa/K_D1_*` | `50_resultados_producao_especializada.md` |
 | D2 | `scripts/rdd_bolsa/22_chegada_pmme_evento.py` | `output/rdd_bolsa/K_D2_*` | idem |

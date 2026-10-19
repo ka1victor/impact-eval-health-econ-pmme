@@ -25,6 +25,19 @@ Insumos novos fora de `docs/`: `scripts/aquisicao/a13_adquirir_sih_tabnet.py`,
 saídas em `output/aquisicao/sih/` (cache bruto `cache_tabnet/` fora do Git) e
 `tests/test_aquisicao_sih.py`. O `run_all.py` roda o a13 só em `--etapa verificar`.
 
+## 19/10/2026 — Protocolo de contagem de vagas preenchidas (doc 48)
+
+Motivo: diretriz do autor de trocar a variável de efeito da fração para o
+número de vagas preenchidas, controlando pelas vagas oferecidas, e rodar tudo de
+novo com prioridade. Os resultados da família K (doc 47) passam do doc 48 para o
+doc 50.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/48_protocolo_contagem_vagas_preenchidas.md`](06_execucao/48_protocolo_contagem_vagas_preenchidas.md) | protocolo da família N: vagas preenchidas com e sem controle pelas vagas oferecidas, decomposição, Poisson, ciclos 1–3, cortes e ciclos empilhados |
+
 ## 19/10/2026 — Protocolo de produção especializada (doc 47)
 
 Motivo: pedido do autor de medir, como KPI central, consultas, exames e
