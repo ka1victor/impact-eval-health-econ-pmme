@@ -68,3 +68,6 @@ data/raw/aquisicao/ivs_oficial/
 
 # X1 (ponte PMM-E–CNES): cache com registro profissional e nome normalizado; nunca versionar
 output/rdd_bolsa/X1_cache/
+
+# A13 (SIH TabNet): respostas brutas e metadados por consulta; reproduzíveis com --etapa baixar
+output/aquisicao/sih/cache_tabnet/

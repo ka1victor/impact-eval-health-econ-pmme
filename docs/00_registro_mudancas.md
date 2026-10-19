@@ -8,6 +8,23 @@
 
 ---
 
+## 19/10/2026 — Aquisição SIH/SUS no TabNet (a13, protocolo 47)
+
+Motivo: o protocolo de produção especializada
+([`06_execucao/47`](06_execucao/47_protocolo_producao_especializada.md), §9)
+pede as AIH do SUS por município de internação e mês, insumo da primária K2
+(cirurgias, grupo 04). Só aquisição: nada foi calculado por IVS ou corte.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/aquisicao/A13_sih_tabnet.md`](auditorias/aquisicao/A13_sih_tabnet.md) | fonte, consultas, conceito de tempo e lugar, chaves, filtros, validações, UF-mês sem dado e limites do painel SIH município × mês × grupo (`scripts/aquisicao/a13_adquirir_sih_tabnet.py`) |
+
+Insumos novos fora de `docs/`: `scripts/aquisicao/a13_adquirir_sih_tabnet.py`,
+saídas em `output/aquisicao/sih/` (cache bruto `cache_tabnet/` fora do Git) e
+`tests/test_aquisicao_sih.py`. O `run_all.py` roda o a13 só em `--etapa verificar`.
+
 ## 19/10/2026 — Protocolo de produção especializada (doc 47)
 
 Motivo: pedido do autor de medir, como KPI central, consultas, exames e
