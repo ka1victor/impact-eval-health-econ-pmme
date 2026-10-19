@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **947 testes em 53 módulos** (contagem de 19/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **967 testes em 54 módulos** (contagem de 19/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -74,6 +74,7 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_x2_x3_permanencia.py`](test_x2_x3_permanencia.py) | Exploratório — X2/X3 | Permanência dos alocados (regras estreita e larga) e dinâmica dos ativos: ligação sintética, completude da série, rótulos de condicionamento e de adição, ausência de dados pessoais. |
 | [`test_x4_x5_escolha.py`](test_x4_x5_escolha.py) | Exploratório — X4/X5 | Heterogeneidade da escolha e deslocamento regional: recuperação sintética de interação e de efeito de vizinhança, reprodução do E9, regiões de saúde oficiais, linhas de curso com inferência MV. |
 | [`test_x6_poder.py`](test_x6_poder.py) | Exploratório — X6 | Poder e descartes: MDE, TOST e elasticidades (base menor e arco) recalculados das saídas; rótulos de adição ao doc 45; números do doc 46 conferidos. |
+| [`test_G1.py`](test_G1.py) | Portão G1 — candidatos ao CNES | Viabilidade de identificar todos os candidatos da 1ª chamada (ciclos 1–3) e ligá-los ao CNES pré: máscara e chave do CPF, regra CPF + nome (idêntico, depois compatível; ambíguos fora) e sensibilidade só por nome em dados sintéticos; universo igual ao de `escolhas_candidatos`, taxas e veredito recalculados das saídas, motivo em toda ausência, nenhum dado pessoal, IVS, faixa ou outcome nas saídas, nenhuma competência >= 202609; blocos do doc de auditoria G1 conferidos. |
 | [`test_conferencia_sinal_rdd.py`](test_conferencia_sinal_rdd.py) | RDD Bolsa — sinal do salto | O salto é o lado com bolsa maior menos o lado com bolsa menor; reestimação independente e decomposição da diferença bruta em salto e inclinação. Sintético. |
 | [`test_pipeline_rdd_bolsa.py`](test_pipeline_rdd_bolsa.py) | RDD Bolsa — pipeline | Ordem da cadeia da RDD no `run_all.py` (inclusive a10, a11, a09, 12, 13, 16 e 14 e as dependências de cada um), argumentos do E3 e do a09, nenhum download por padrão (a09 em `--etapa verificar` e cache do a10/a11 conferidos com a rede bloqueada), o 09 sem ler a rodada multi-outcome, o registro do failure mode fora do pipeline e a retirada dos scripts que liam o arquivo de IVS errado. |
 | [`test_integridade_dados.py`](test_integridade_dados.py) | Integridade | Nenhum arquivo em `data/` ou `output/` com nome de dado simulado; toda saída rotulada com `natureza_dos_dados` é `EMPIRICO`. |

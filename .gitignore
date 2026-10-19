@@ -70,6 +70,8 @@ data/raw/aquisicao/ivs_oficial/
 
 # X1 (ponte PMM-E–CNES): cache com registro profissional e nome normalizado; nunca versionar
 output/rdd_bolsa/X1_cache/
+# G1 (candidatos ao CNES): ZIP transitório e dicionário com nome normalizado e chaves de CPF em hash; nunca versionar
+output/rdd_bolsa/G1_cache/
 
 # A13 (SIH TabNet): respostas brutas e metadados por consulta; reproduzíveis com --etapa baixar
 output/aquisicao/sih/cache_tabnet/
