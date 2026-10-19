@@ -76,3 +76,6 @@ output/aquisicao/sih/cache_tabnet/
 # A14 (TISS/ANS): ZIPs brutos transitórios e cache por UF × mês; só agregados e manifesto entram no Git
 output/aquisicao/tiss/cache_bruto/
 output/aquisicao/tiss/cache_pacote/
+# A16 (portão G5, CNES profissional mensal): ZIPs transitórios, vínculos médicos com registro do
+# conselho (CRM, UF, CO_PROFISSIONAL_SUS) e nomes normalizados do alvo; nunca versionar
+output/aquisicao/cnes_profissional/cache_privado/

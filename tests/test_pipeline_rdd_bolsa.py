@@ -40,6 +40,7 @@ CADEIA = [
     # Protocolo 47: SIA do TabNet, só conferido (`--etapa verificar`), como o a09.
     AQ / "a12_adquirir_sia_tabnet.py",
     AQ / "a14_adquirir_tiss_ans.py",  # protocolo 47: TISS/ANS, só verificar
+    AQ / "a16_cnes_profissional_mensal.py",  # portão G5 (doc 51): painel médico × mês, só verificar
     RDD / "12_construir_outcomes_funil.py",
     RDD / "13_estimar_E6_funil.py",
     RDD / "23_estimar_contagem_vagas.py",  # família N (protocolo 48): lê os outcomes e o E6
@@ -55,6 +56,7 @@ CADEIA = [
 ]
 A09 = AQ / "a09_adquirir_cnes_nacional.py"
 A14 = AQ / "a14_adquirir_tiss_ans.py"
+A16 = AQ / "a16_cnes_profissional_mensal.py"
 # Leem data/ivs_ipea_2010_municipios.csv como IVS 2010 ou dependem disso (auditoria 16).
 RETIRADOS = [
     RDD / "01_auditar_regra_e_suporte.py",
@@ -166,6 +168,8 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                 RDD / "12_construir_outcomes_funil.py", RDD / "14_estimar_E7_dird_cnes.py",
                 RDD / "23_estimar_contagem_vagas.py"],
             RDD / "22_chegada_pmme_evento.py": [RDD / "21_producao_dird.py", RDD / "12_construir_outcomes_funil.py"],
+            # a16 (portão G5) importa funções do a09 e confere o SHA-256 dos ZIPs contra o manifesto dele.
+            A16: [A09],
             # E7 lê o painel do a09, o IED do a10, a janela LR do E5 e confere a de U com a do E6.
             RDD / "14_estimar_E7_dird_cnes.py": [
                 A09, AQ / "a10_normas_mesmos_cortes_ivs.py", RDD / "11_inferencia_alternativa.py",
@@ -254,7 +258,10 @@ class TestCadeiaRddBolsa(unittest.TestCase):
     def test_e3_roda_com_o_escore_completo(self) -> None:
         self.assertEqual(RA.ARGUMENTOS[RDD / "07_estimar_E3_rdd_completa.py"], ["--escore", ESCORE_COMPLETO])
         self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09,
-                                              AQ / "a12_adquirir_sia_tabnet.py", AQ / "a13_adquirir_sih_tabnet.py", A14})
+                                              AQ / "a12_adquirir_sia_tabnet.py", AQ / "a13_adquirir_sih_tabnet.py", A14,
+                                              A16})
+        # a16 (portão G5): como o a09, o run_all só confere sem rede.
+        self.assertEqual(RA.ARGUMENTOS[A16], ["--etapa", "verificar"])
         self.assertEqual(RA.ARGUMENTOS[AQ / "a12_adquirir_sia_tabnet.py"], ["--etapa", "verificar"])
         # a13 (SIH no TabNet, protocolo 47): como o a09, o run_all só confere sem rede.
         self.assertEqual(RA.ARGUMENTOS[AQ / "a13_adquirir_sih_tabnet.py"], ["--etapa", "verificar"])

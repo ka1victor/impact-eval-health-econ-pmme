@@ -1,0 +1,372 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "portao": "G5",
+  "plano": "docs/06_execucao/51_plano_perguntas_reformuladas.md (T4.0)",
+  "script": "scripts/aquisicao/a16_cnes_profissional_mensal.py",
+  "documento": "docs/auditorias/aquisicao/A16_cnes_profissional.md",
+  "data_execucao": "2026-10-19",
+  "veredito": "VIAVEL_PARCIAL",
+  "status_por_criterio": {
+    "C1_competencias": "ok",
+    "C2_registro_por_vinculo": "ok",
+    "C3_horas": "ok",
+    "C2_valor_min_fracao_com_registro": 0.9997710552579094,
+    "C3_valor_max_fracao_hora_ausente": 1.3488260308709492e-05,
+    "colunas_exigidas": [
+      "CO_CONSELHO_CLASSE",
+      "NU_REGISTRO",
+      "QT_CARGA_HORARIA_AMBULATORIAL",
+      "QT_CARGA_HORARIA_OUTROS",
+      "QT_CARGA_HOR_HOSP_SUS",
+      "SG_UF_CRM",
+      "TP_SUS_NAO_SUS"
+    ],
+    "C4_reproducao_x1": "ok",
+    "C5_valor_min_fracao_com_crm_da_lista": 0.8850446428571429,
+    "C5_valor_max_fracao_em_outro_codigo": 0.0,
+    "C5_estabilidade_chave": "parcial"
+  },
+  "criterios": {
+    "C1_competencias": "27 de 27 competências obtidas → ok; ≥ 24 com 202406 e 202608 → parcial; menos → falha",
+    "C2_registro_por_vinculo": "CO_CONSELHO_CLASSE, NU_REGISTRO e SG_UF_CRM presentes em toda competência obtida e fração de vínculos médicos com NU_REGISTRO ≥ 0,99 em cada uma → ok; colunas presentes com fração menor → parcial; coluna ausente → falha",
+    "C3_horas": "as três cargas horárias e TP_SUS_NAO_SUS presentes em toda competência obtida e fração de vínculos médicos com alguma hora ausente ≤ 0,001 em cada uma → ok; colunas presentes com fração maior → parcial; coluna ausente → falha",
+    "C4_reproducao_x1": "a ligação refeita do cache reproduz X1_medicos.parquet (ligado, etapa e motivo) em 100% dos registros nas duas regras → ok; senão → parcial (diferenças registradas)",
+    "C5_estabilidade_chave": "em toda competência obtida, entre os profissionais ligados pela X1 (regra D1) com vínculo médico, fração com vínculo que traz o CRM da lista ≥ 0,95, e fração de registros CRM+UF que aparecem em outro código de profissional ≤ 0,01 → ok; senão → parcial",
+    "regra_do_veredito": "VIAVEL: todos ok; INVIAVEL: C1, C2 ou C3 em falha; VIAVEL_PARCIAL: nos demais casos"
+  },
+  "competencias_planejadas": 27,
+  "competencias_obtidas": [
+    "202406",
+    "202407",
+    "202408",
+    "202409",
+    "202410",
+    "202411",
+    "202412",
+    "202501",
+    "202502",
+    "202503",
+    "202504",
+    "202505",
+    "202506",
+    "202507",
+    "202508",
+    "202509",
+    "202510",
+    "202511",
+    "202512",
+    "202601",
+    "202602",
+    "202603",
+    "202604",
+    "202605",
+    "202606",
+    "202607",
+    "202608"
+  ],
+  "competencias_nao_obtidas": {},
+  "volume": {
+    "bytes_zip_total": 17985222708,
+    "gb_zip_total": 16.75,
+    "competencias_com_tempo_medido": 25,
+    "segundos_download_soma": 16561.4,
+    "nota": "segundos somados por conexão; os downloads correram em paralelo"
+  },
+  "reproducao_x1": {
+    "reproduz_100pct": true,
+    "por_regra": {
+      "literal_doc45": {
+        "registros_x1": 1990,
+        "registros_identicos": 1990,
+        "ligados_a16": 1901
+      },
+      "d1_pos_hoc": {
+        "registros_x1": 1990,
+        "registros_identicos": 1990,
+        "ligados_a16": 1876
+      }
+    }
+  },
+  "painel": {
+    "profissionais": 1968,
+    "linhas_medico_mes": 53136,
+    "arquivo_medico_mes": "output/aquisicao/cnes_profissional/painel_medico_mes.parquet",
+    "arquivo_vinculo_mes": "output/aquisicao/cnes_profissional/painel_vinculo_mes.parquet",
+    "arquivo_chaves": "output/aquisicao/cnes_profissional/chaves_origem.parquet",
+    "arquivo_cobertura": "output/aquisicao/cnes_profissional/a16_cobertura_mensal.csv"
+  },
+  "cobertura_x1_d1_por_competencia": [
+    {
+      "competencia": "202406",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1792,
+      "fracao_com_vinculo_medico": 0.960857908847185,
+      "fracao_com_crm_da_lista_entre_presentes": 0.8850446428571429,
+      "com_vinculo_so_com_outro_crm": 206,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202407",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1792,
+      "fracao_com_vinculo_medico": 0.960857908847185,
+      "fracao_com_crm_da_lista_entre_presentes": 0.8856026785714286,
+      "com_vinculo_so_com_outro_crm": 205,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202408",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1793,
+      "fracao_com_vinculo_medico": 0.9613941018766756,
+      "fracao_com_crm_da_lista_entre_presentes": 0.8884551031790295,
+      "com_vinculo_so_com_outro_crm": 200,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202409",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1799,
+      "fracao_com_vinculo_medico": 0.9646112600536193,
+      "fracao_com_crm_da_lista_entre_presentes": 0.8916064480266815,
+      "com_vinculo_so_com_outro_crm": 195,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202410",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1801,
+      "fracao_com_vinculo_medico": 0.9656836461126005,
+      "fracao_com_crm_da_lista_entre_presentes": 0.8956135480288728,
+      "com_vinculo_so_com_outro_crm": 188,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202411",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1803,
+      "fracao_com_vinculo_medico": 0.9667560321715818,
+      "fracao_com_crm_da_lista_entre_presentes": 0.8973932334997227,
+      "com_vinculo_so_com_outro_crm": 185,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202412",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1805,
+      "fracao_com_vinculo_medico": 0.967828418230563,
+      "fracao_com_crm_da_lista_entre_presentes": 0.8980609418282548,
+      "com_vinculo_so_com_outro_crm": 184,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202501",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1803,
+      "fracao_com_vinculo_medico": 0.9667560321715818,
+      "fracao_com_crm_da_lista_entre_presentes": 0.8996117581808097,
+      "com_vinculo_so_com_outro_crm": 181,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202502",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1803,
+      "fracao_com_vinculo_medico": 0.9667560321715818,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9101497504159733,
+      "com_vinculo_so_com_outro_crm": 162,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202503",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1798,
+      "fracao_com_vinculo_medico": 0.9640750670241287,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9221357063403782,
+      "com_vinculo_so_com_outro_crm": 140,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202504",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1801,
+      "fracao_com_vinculo_medico": 0.9656836461126005,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9372570794003331,
+      "com_vinculo_so_com_outro_crm": 113,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202505",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1803,
+      "fracao_com_vinculo_medico": 0.9667560321715818,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9412090959511925,
+      "com_vinculo_so_com_outro_crm": 106,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202506",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1806,
+      "fracao_com_vinculo_medico": 0.9683646112600536,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9429678848283499,
+      "com_vinculo_so_com_outro_crm": 103,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202507",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1806,
+      "fracao_com_vinculo_medico": 0.9683646112600536,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9462901439645626,
+      "com_vinculo_so_com_outro_crm": 97,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202508",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1810,
+      "fracao_com_vinculo_medico": 0.9705093833780161,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9464088397790055,
+      "com_vinculo_so_com_outro_crm": 97,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202509",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1810,
+      "fracao_com_vinculo_medico": 0.9705093833780161,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9502762430939227,
+      "com_vinculo_so_com_outro_crm": 90,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202510",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1815,
+      "fracao_com_vinculo_medico": 0.9731903485254692,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9542699724517907,
+      "com_vinculo_so_com_outro_crm": 83,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202511",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1821,
+      "fracao_com_vinculo_medico": 0.9764075067024128,
+      "fracao_com_crm_da_lista_entre_presentes": 0.957166392092257,
+      "com_vinculo_so_com_outro_crm": 78,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202512",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1822,
+      "fracao_com_vinculo_medico": 0.9769436997319035,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9582875960482986,
+      "com_vinculo_so_com_outro_crm": 76,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202601",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1824,
+      "fracao_com_vinculo_medico": 0.9780160857908847,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9572368421052632,
+      "com_vinculo_so_com_outro_crm": 78,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202602",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1827,
+      "fracao_com_vinculo_medico": 0.9796246648793566,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9584017515051998,
+      "com_vinculo_so_com_outro_crm": 76,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202603",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1821,
+      "fracao_com_vinculo_medico": 0.9764075067024128,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9637561779242174,
+      "com_vinculo_so_com_outro_crm": 66,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202604",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1830,
+      "fracao_com_vinculo_medico": 0.9812332439678284,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9655737704918033,
+      "com_vinculo_so_com_outro_crm": 63,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202605",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1841,
+      "fracao_com_vinculo_medico": 0.9871313672922252,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9663226507332972,
+      "com_vinculo_so_com_outro_crm": 62,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202606",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1847,
+      "fracao_com_vinculo_medico": 0.9903485254691688,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9653492149431511,
+      "com_vinculo_so_com_outro_crm": 64,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202607",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1847,
+      "fracao_com_vinculo_medico": 0.9903485254691688,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9685977260422306,
+      "com_vinculo_so_com_outro_crm": 58,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    },
+    {
+      "competencia": "202608",
+      "profissionais": 1865,
+      "profissionais_com_vinculo_medico": 1856,
+      "fracao_com_vinculo_medico": 0.9951742627345844,
+      "fracao_com_crm_da_lista_entre_presentes": 0.9719827586206896,
+      "com_vinculo_so_com_outro_crm": 52,
+      "com_vinculo_sem_registro_crm": 0,
+      "registros_crm_uf_em_outro_codigo": 0
+    }
+  ],
+  "g1": "pendente: o painel aceita as chaves do G1 por --chaves-extra (origem, id_externo, co_profissional_sus, num arquivo fora do Git) sem novo download; T6.2 depende do G1 e do G2",
+  "cegamento": "nenhum contraste antes/depois da entrada, por IVS, corte, faixa, ciclo ou tratamento"
+}

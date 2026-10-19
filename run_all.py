@@ -9,8 +9,8 @@ A opção `--rdd-bolsa` roda a cadeia sobre os insumos já versionados das etapa
 anteriores (quadro de vagas, funil e tipologia do ciclo 1, população do Censo
 2022, painel do ciclo 1), inclusive as aquisições a07 a a11 e a rodada
 multi-outcome (12, 13, 16 e 14), a família N (23) e a família K (21 e 22). Nenhuma etapa baixa o CNES nacional, o SIA, o SIH nem o
-TISS: o a09, o a12, o a13 e o a14 rodam em `--etapa verificar`; o a13 não faz parte da opção
-`--rdd-bolsa`.
+TISS: o a09, o a12, o a13, o a14 e o a16 (portão G5, CNES profissional mensal) rodam em
+`--etapa verificar`; o a13 não faz parte da opção `--rdd-bolsa`.
 """
 
 from pathlib import Path
@@ -99,6 +99,9 @@ STEPS = [
     ROOT / "scripts" / "aquisicao" / "a13_adquirir_sih_tabnet.py",
     # TISS/ANS do protocolo 47 (a14): como o a09, só confere o painel versionado (ARGUMENTOS).
     ROOT / "scripts" / "aquisicao" / "a14_adquirir_tiss_ans.py",
+    # Portão G5 (doc 51, T4.0): painel CNES médico × mês dos médicos ligados na X1 (a16). Como o a09,
+    # só confere as saídas versionadas contra o manifesto, sem rede e sem gravar (ver ARGUMENTOS).
+    ROOT / "scripts" / "aquisicao" / "a16_cnes_profissional_mensal.py",
     # Outcomes do funil (tarefa B): lê E4 (08) e o manifesto do a11.
     ROOT / "scripts" / "rdd_bolsa" / "12_construir_outcomes_funil.py",
     # E6: lê os outcomes (12), E3, E4, a janela LR do E5 (11) e as saídas do a10.
@@ -162,6 +165,9 @@ ARGUMENTOS = {
     # TISS/ANS (a14): cerca de 83 GB de ZIPs, apagados depois da agregação; o run_all só
     # confere as saídas versionadas contra o manifesto, sem rede e sem gravar.
     ROOT / "scripts" / "aquisicao" / "a14_adquirir_tiss_ans.py": ["--etapa", "verificar"],
+    # Portão G5 (a16): 27 ZIPs do CNES (~20 GB), apagados depois da extração; o cache com registro do
+    # conselho fica fora do Git. O run_all só confere as saídas versionadas, sem rede e sem gravar.
+    ROOT / "scripts" / "aquisicao" / "a16_cnes_profissional_mensal.py": ["--etapa", "verificar"],
 }
 
 AQUISICAO_RDD_BOLSA = (
@@ -172,6 +178,7 @@ AQUISICAO_RDD_BOLSA = (
     ROOT / "scripts" / "aquisicao" / "a09_adquirir_cnes_nacional.py",
     ROOT / "scripts" / "aquisicao" / "a12_adquirir_sia_tabnet.py",
     ROOT / "scripts" / "aquisicao" / "a14_adquirir_tiss_ans.py",
+    ROOT / "scripts" / "aquisicao" / "a16_cnes_profissional_mensal.py",
 )
 
 
