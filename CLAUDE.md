@@ -17,6 +17,14 @@
   protocolo congelado `docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md`;
   só pedidos externos de dados continuam fora. Números do arquivo de IVS errado
   só entram como registro de failure mode.
+  A rodada multi-outcome (E6, E7, E9 e a síntese E8) terminou em 19/10/2026:
+  nenhuma primária rejeita zero depois do Holm, e o único sinal robusto é a
+  escolha dos candidatos no ciclo 2. Síntese, Holm e a proposta de revisão da
+  hipótese estão em `docs/06_execucao/44_sintese_rdd_bolsa_multioutcome.md`.
+  A revisão da hipótese é proposta, não decisão: só o autor a adota. Em 0,300
+  e 0,400 mudam também outras regras federais
+  (`docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md`): RDD em nível
+  nesses cortes mede um pacote.
 - `docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md` define a pergunta do artigo:
   salário anunciado é o instrumento candidato, IVS é gradiente territorial e
   oferta persistente no CNES não equivale a retenção individual.
