@@ -1,7 +1,7 @@
 {
   "documento": "Protocolo multi-outcome da bolsa do PMM-E (E6-E9)",
   "texto_canonico": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
-  "sha256_texto_canonico": "f80223ea07774b9fc2fa1a1c6ac7c2b9707a45173dc5a023194e32fafc983ccf",
+  "sha256_texto_canonico": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065",
   "data_congelamento": "2026-10-18",
   "autorizacao_autor": {
     "data": "2026-10-18",
@@ -135,6 +135,11 @@
       "data": "2026-10-18",
       "antes_de_estimar_E9": true,
       "E9_conjunto_de_escolha": "principal: todas as celulas do curso e ciclo no quadro da 1a chamada (com ou sem vaga imediata), com atributo tem_vaga_imediata e log(vagas imediatas+1); sensibilidade: so celulas com vaga imediata"
+    },
+    {
+      "data": "2026-10-18",
+      "antes_de_estimar_E9": true,
+      "E9_forma_funcional": "IVS em spline continuo com nos em 0,300 e 0,400 (inclinacoes livres, sem salto de nivel; variante quadratica continua); bolsa em R$ mil linear (principal); indicadores de degrau por corte (sensibilidade); atributos tem_vaga_imediata, log(vagas imediatas+1), log pop Censo 2022, macrorregiao, estrato; EP cluster por conjunto de escolha (curso x ciclo), tambem MLE e cluster por candidato"
     }
   ]
 }

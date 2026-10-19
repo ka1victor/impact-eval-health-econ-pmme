@@ -1,0 +1,446 @@
+{
+  "data_execucao": "2026-10-18",
+  "outcomes_abertos": false,
+  "natureza_dos_dados": "EMPIRICO",
+  "totais": {
+    "sobre_os_cortes_da_bolsa": 31,
+    "sobre_os_quatro_limites": 51,
+    "diferenca_convencoes_ied": 51,
+    "diferenca_convencoes_pmmb": 51,
+    "fontes_no_manifesto": 44,
+    "fontes_em_normas_ivs": 43
+  },
+  "entradas": {
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+    "output/aquisicao/a07_categoria_ivs_pmmb_municipio.csv": "f9556bd46b20b5e4c7e1b3f782cc0c87be69558c865c995a890e00c0ce269025",
+    "data/raw/aquisicao/ivs_administrativo/ppf_mais_medicos_csv.zip": "15083f8127917e5279be01d372c1250a467ee77d289a030e1229932d0013cb3a"
+  },
+  "ied_aps_3493_2024": {
+    "municipios_anexo_vi": 5570,
+    "com_ivs_oficial_a08": 5565,
+    "sem_ivs_oficial_a08": [
+      "150475",
+      "421265",
+      "422000",
+      "431454",
+      "500627"
+    ],
+    "codigo_igual_classe_fechada_a_direita": 5565,
+    "codigo_igual_classe_fechada_a_esquerda": 5514,
+    "faixa_ivs_oficial_por_codigo": {
+      "1": {
+        "min": 0.501,
+        "max": 0.784,
+        "n": 803
+      },
+      "2": {
+        "min": 0.401,
+        "max": 0.5,
+        "n": 1178
+      },
+      "3": {
+        "min": 0.301,
+        "max": 0.4,
+        "n": 1258
+      },
+      "4": {
+        "min": 0.201,
+        "max": 0.3,
+        "n": 1699
+      },
+      "5": {
+        "min": 0.09,
+        "max": 0.2,
+        "n": 627
+      }
+    },
+    "estrato_ied_por_codigo_ivs_e_porte": [
+      {
+        "ivs_codigo": 1,
+        "porte_codigo": 1,
+        "estratos_observados": [
+          1
+        ]
+      },
+      {
+        "ivs_codigo": 1,
+        "porte_codigo": 2,
+        "estratos_observados": [
+          1
+        ]
+      },
+      {
+        "ivs_codigo": 1,
+        "porte_codigo": 3,
+        "estratos_observados": [
+          2
+        ]
+      },
+      {
+        "ivs_codigo": 1,
+        "porte_codigo": 4,
+        "estratos_observados": [
+          3
+        ]
+      },
+      {
+        "ivs_codigo": 2,
+        "porte_codigo": 1,
+        "estratos_observados": [
+          2
+        ]
+      },
+      {
+        "ivs_codigo": 2,
+        "porte_codigo": 2,
+        "estratos_observados": [
+          2
+        ]
+      },
+      {
+        "ivs_codigo": 2,
+        "porte_codigo": 3,
+        "estratos_observados": [
+          3
+        ]
+      },
+      {
+        "ivs_codigo": 2,
+        "porte_codigo": 4,
+        "estratos_observados": [
+          3
+        ]
+      },
+      {
+        "ivs_codigo": 3,
+        "porte_codigo": 1,
+        "estratos_observados": [
+          3
+        ]
+      },
+      {
+        "ivs_codigo": 3,
+        "porte_codigo": 2,
+        "estratos_observados": [
+          3
+        ]
+      },
+      {
+        "ivs_codigo": 3,
+        "porte_codigo": 3,
+        "estratos_observados": [
+          3
+        ]
+      },
+      {
+        "ivs_codigo": 3,
+        "porte_codigo": 4,
+        "estratos_observados": [
+          4
+        ]
+      },
+      {
+        "ivs_codigo": 4,
+        "porte_codigo": 1,
+        "estratos_observados": [
+          3
+        ]
+      },
+      {
+        "ivs_codigo": 4,
+        "porte_codigo": 2,
+        "estratos_observados": [
+          4
+        ]
+      },
+      {
+        "ivs_codigo": 4,
+        "porte_codigo": 3,
+        "estratos_observados": [
+          4
+        ]
+      },
+      {
+        "ivs_codigo": 4,
+        "porte_codigo": 4,
+        "estratos_observados": [
+          4
+        ]
+      },
+      {
+        "ivs_codigo": 5,
+        "porte_codigo": 1,
+        "estratos_observados": [
+          4
+        ]
+      },
+      {
+        "ivs_codigo": 5,
+        "porte_codigo": 2,
+        "estratos_observados": [
+          4
+        ]
+      },
+      {
+        "ivs_codigo": 5,
+        "porte_codigo": 3,
+        "estratos_observados": [
+          4
+        ]
+      },
+      {
+        "ivs_codigo": 5,
+        "porte_codigo": 4,
+        "estratos_observados": [
+          4
+        ]
+      }
+    ],
+    "regra_deterministica": true,
+    "porte_codigo_rotulos": {
+      "1": "1-Até 20mil hab.",
+      "2": "2-Acima de 20mil até 50mil hab.",
+      "3": "3-Acima de 50mil até 100mil hab.",
+      "4": "4-Acima de 100mil hab."
+    }
+  },
+  "categoria_pmmb_a07": {
+    "comparados": 5565,
+    "igual_classe_fechada_a_direita": 5565,
+    "igual_classe_fechada_a_esquerda": 5514
+  },
+  "ivs_a08_max_casas_decimais": 3,
+  "municipios_sobre_os_limites": {
+    "0.200": {
+      "n_municipios": 11,
+      "corte_da_bolsa": false,
+      "categoria_pmmb_a07": {
+        "MUITO BAIXA VULNERABILIDADE": 11
+      },
+      "codigo_ivs_anexo_vi_3493": {
+        "5": 11
+      }
+    },
+    "0.300": {
+      "n_municipios": 18,
+      "corte_da_bolsa": true,
+      "categoria_pmmb_a07": {
+        "BAIXA VULNERABILIDADE": 18
+      },
+      "codigo_ivs_anexo_vi_3493": {
+        "4": 18
+      }
+    },
+    "0.400": {
+      "n_municipios": 13,
+      "corte_da_bolsa": true,
+      "categoria_pmmb_a07": {
+        "MEDIA VULNERABILIDADE": 13
+      },
+      "codigo_ivs_anexo_vi_3493": {
+        "3": 13
+      }
+    },
+    "0.500": {
+      "n_municipios": 9,
+      "corte_da_bolsa": false,
+      "categoria_pmmb_a07": {
+        "ALTA VULNERABILIDADE": 9
+      },
+      "codigo_ivs_anexo_vi_3493": {
+        "2": 9
+      }
+    }
+  },
+  "portaria_5721_2024_quadro_2": {
+    "quadro_2": {
+      "Muito Baixa": {
+        "intervalo": "De 0,09 a 0,199",
+        "valor_adicional_1": "R$ 1.999,57",
+        "n_municipios": 619
+      },
+      "Baixa": {
+        "intervalo": "De 0,2 a 0,299",
+        "valor_adicional_1": "R$ 3.000,00",
+        "n_municipios": 1692
+      },
+      "Média": {
+        "intervalo": "De 0,3 a 0,399",
+        "valor_adicional_1": "R$ 6.700,00",
+        "n_municipios": 1264
+      },
+      "Alta": {
+        "intervalo": "De 0,4 a 0,499",
+        "valor_adicional_1": "R$ 8.990,00",
+        "n_municipios": 1182
+      },
+      "Muito Alta": {
+        "intervalo": "De 0,5 a 0,784",
+        "valor_adicional_1": "R$ 11.499,00",
+        "n_municipios": 812
+      }
+    },
+    "total_quadro_2": 5569,
+    "a08_municipios_com_ivs": 5565,
+    "contagem_a08_fechada_a_esquerda": {
+      "Muito Alta": 812,
+      "Alta": 1182,
+      "Média": 1263,
+      "Baixa": 1692,
+      "Muito Baixa": 616
+    },
+    "contagem_a08_fechada_a_direita": {
+      "Muito Alta": 803,
+      "Alta": 1178,
+      "Média": 1258,
+      "Baixa": 1699,
+      "Muito Baixa": 627
+    },
+    "nota": "o Quadro 2 cobre municípios criados depois de 2010 que não estão em a08; a comparação é indicativa da convenção, não uma reprodução exata"
+  },
+  "esquema_consolidado_pmmb": {
+    "arquivo": "data/raw/aquisicao/ivs_administrativo/ppf_mais_medicos_csv.zip",
+    "sha256_zip": "15083f8127917e5279be01d372c1250a467ee77d289a030e1229932d0013cb3a",
+    "arquivo_interno": "ppf_mais_medicos.csv",
+    "colunas": [
+      "nivel",
+      "regiao",
+      "uf",
+      "cir",
+      "co_ibge",
+      "municipio_dsei",
+      "amazonia_legal",
+      "faixa_fronteira",
+      "categoria_ivs",
+      "cobertura",
+      "ativas_ff",
+      "ativas_coparticipacao",
+      "total_vagas_ativas",
+      "ampliacao_ecr",
+      "ampliacao_eapp",
+      "equipe_esf",
+      "equipe_emsi",
+      "total_ocupadas",
+      "em_processo_ocupacao",
+      "total_desocupadas",
+      "ativos_crm_pmm",
+      "ativos_intercambista_pmm",
+      "ativos_bolsistas",
+      "ativos_celetista_mfc",
+      "ativos_tutores",
+      "ativos_esf",
+      "ativos_emsi",
+      "ativos_eapp",
+      "ativos_ecr",
+      "ativos_fem",
+      "ativos_masc",
+      "ativos_sem_inf_sx",
+      "ativos_branca",
+      "ativos_preta_parda",
+      "ativos_indigena",
+      "ativos_amarela",
+      "ativos_sem_inf_rc",
+      "id_20_24",
+      "id_25_29",
+      "id_30_34",
+      "id_35_39",
+      "id_40_44",
+      "id_45_49",
+      "id_50_54",
+      "id_55_59",
+      "id_60_64",
+      "id_65_69",
+      "id_70_74",
+      "id_75_79",
+      "id_80_mais",
+      "nac_outros",
+      "nac_brasileiro",
+      "nac_cubano",
+      "nac_boliviano",
+      "nac_venezuelano",
+      "dt_geracao",
+      "dt_referencia"
+    ],
+    "n_colunas": 57,
+    "valores_distintos_por_coluna": {
+      "nivel": 3,
+      "regiao": 5,
+      "uf": 27,
+      "cir": 425,
+      "co_ibge": 5631,
+      "municipio_dsei": 5344,
+      "amazonia_legal": 2,
+      "faixa_fronteira": 2,
+      "categoria_ivs": 5,
+      "cobertura": 132,
+      "ativas_ff": 71,
+      "ativas_coparticipacao": 49,
+      "total_vagas_ativas": 88,
+      "ampliacao_ecr": 7,
+      "ampliacao_eapp": 5,
+      "equipe_esf": 85,
+      "equipe_emsi": 23,
+      "total_ocupadas": 82,
+      "em_processo_ocupacao": 12,
+      "total_desocupadas": 9,
+      "ativos_crm_pmm": 60,
+      "ativos_intercambista_pmm": 47,
+      "ativos_bolsistas": 4,
+      "ativos_celetista_mfc": 18,
+      "ativos_tutores": 10,
+      "ativos_esf": 84,
+      "ativos_emsi": 25,
+      "ativos_eapp": 5,
+      "ativos_ecr": 6,
+      "ativos_fem": 61,
+      "ativos_masc": 48,
+      "ativos_sem_inf_sx": 2,
+      "ativos_branca": 58,
+      "ativos_preta_parda": 31,
+      "ativos_indigena": 5,
+      "ativos_amarela": 37,
+      "ativos_sem_inf_rc": 10,
+      "id_20_24": 1,
+      "id_25_29": 24,
+      "id_30_34": 34,
+      "id_35_39": 34,
+      "id_40_44": 28,
+      "id_45_49": 21,
+      "id_50_54": 16,
+      "id_55_59": 9,
+      "id_60_64": 8,
+      "id_65_69": 3,
+      "id_70_74": 1,
+      "id_75_79": 1,
+      "id_80_mais": 1,
+      "nac_outros": 82,
+      "nac_brasileiro": 1,
+      "nac_cubano": 1,
+      "nac_boliviano": 1,
+      "nac_venezuelano": 1,
+      "dt_geracao": 1,
+      "dt_referencia": 1
+    },
+    "linhas_por_nivel": {
+      "DSEI": 34,
+      "ESTADUAL": 26,
+      "MUNICIPAL": 5571
+    },
+    "dt_referencia": [
+      "2026-10-09"
+    ],
+    "dt_geracao": [
+      "2026-10-09"
+    ],
+    "municipal_co_ibge_unicos": 5571,
+    "municipal_com_ivs_oficial_a08": 5565,
+    "a08_sem_linha_municipal_pmmb": 0,
+    "nota": "esquema e cobertura apenas; nenhum valor de vaga ou médico foi cruzado com o IVS"
+  },
+  "saidas": {
+    "output/aquisicao/a10_ied_aps_2024_municipio.csv": {
+      "linhas": 5570,
+      "sha256": "2bd4aec48a14e610a13d6bc1bece7c7be6a0abbd31eca2cb9281f733964af887"
+    }
+  }
+}
