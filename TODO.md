@@ -35,9 +35,12 @@ Detalhe em `docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md`.
   hipótese (`docs/06_execucao/44_sintese_rdd_bolsa_multioutcome.md`).
 - [ ] **Decisão do autor sobre a revisão da hipótese** (doc 44, §7): manter H1
   e relatar o nulo, ou adotar uma das propostas, com registro datado.
-- [ ] **Conteúdo canônico da apresentação de 28/10/2026** em
-  `docs/07_apresentacoes/`, a partir do doc 44, do relatório e da figura da
-  regra (variante A colorida).
+- [x] **Rascunho do conteúdo canônico da apresentação de 28/10/2026** em
+  `docs/07_apresentacoes/banca2/` (21 slides e apêndice; números conferidos
+  por `tests/test_conteudo_banca2.py`).
+- [ ] **Mensagem principal da banca 2** (depende da decisão acima) e, depois,
+  o deck derivado.
+- [x] **Relatório PDF (parte II), artigos e pipeline** atualizados em 19/10/2026.
 - [ ] **Artigos:** levar a síntese do doc 44 aos `.tex` (tarefa posterior).
 - [ ] **Ambiente:** instalar `scipy`, `statsmodels` e `matplotlib`, que estão no
   `requirements.txt`, para os três testes antigos que dependem deles.

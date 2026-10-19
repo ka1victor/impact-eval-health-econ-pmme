@@ -8,8 +8,16 @@
 > ([`44`](44_sintese_rdd_bolsa_multioutcome.md)), com o Holm das duas
 > primárias. Nenhuma primária é rejeitada; o único sinal robusto está na
 > escolha dos candidatos no ciclo 2 (números e condições no doc 44).
+> **Também feitos em 19/10/2026:** relatório em PDF com a parte II (46
+> páginas, `output/rdd_bolsa/relatorio_resultados_rdd_bolsa.pdf`); os dois
+> artigos com a rodada multi-outcome, conferidores aprovados e compilação sem
+> erro; pipeline com os passos novos (`run_all.py`; o CNES nacional só é
+> verificado, não baixado); rascunho do conteúdo canônico da apresentação de
+> 28/10 em [`07_apresentacoes/banca2`](../07_apresentacoes/banca2/README.md);
+> ambiente igual ao `requirements.txt` (todos os testes passam).
 > **Pendente, só do autor:** (1) decidir sobre a revisão da hipótese
-> econômica proposta no doc 44, §7; (2) o conteúdo canônico da apresentação.
+> econômica proposta no doc 44, §7; (2) aprovar a mensagem principal da
+> banca 2, que depende de (1), antes de montar o deck.
 > As seções abaixo, de 18/10/2026, ficam como registro do E3 e do E5.
 
 > **Atualização de 18/10/2026, noite:** o autor decidiu D2 e D3(b) — rodar
@@ -156,8 +164,9 @@ reconciliado para o ciclo 1.
 
 > **Em 19/10/2026:** o que falta é decisão do autor — a revisão da hipótese
 > (doc [`44`](44_sintese_rdd_bolsa_multioutcome.md), §7, marcada como proposta)
-> e o conteúdo canônico da apresentação a partir do doc 44. A atualização dos
-> artigos com a síntese é tarefa posterior. Os itens abaixo são de 18/10/2026.
+> e a mensagem principal da banca 2, cujo rascunho já existe. Artigos,
+> relatório e ambiente foram resolvidos em 19/10/2026; os itens 1 e 2 abaixo,
+> de 18/10/2026, ficam como registro.
 
 1. **Conteúdo canônico da apresentação** de 28/10 em `docs/07_apresentacoes/`,
    como exige o `CLAUDE.md`, a partir do relatório e da figura escolhida. O
