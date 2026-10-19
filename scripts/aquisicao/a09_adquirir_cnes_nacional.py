@@ -30,6 +30,11 @@ painel do ciclo 1 (``03_adquirir_cnes_mensal.py``/``05_integrar_painel_analitico
 Regra de cegamento: este script não lê IVS além da lista de municípios do
 universo, não quebra nada por faixa ou lado de corte e não estima RDD.
 
+Modos (``--etapa``): ``verificar`` (padrão, usado pelo ``run_all.py``) só confere
+o painel versionado contra o manifesto, sem rede e sem gravar; ``tudo`` baixa
+(~23 GB de ZIPs, cache fora do Git) e constrói o painel; ``aquisicao`` e
+``painel`` fazem cada metade. O download exige pedir ``tudo`` ou ``aquisicao``.
+
 Saídas:
 - ``output/aquisicao/cnes_nacional/mensal/`` (cache por competência, ignorado pelo Git);
 - ``output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet``;
@@ -1044,12 +1049,73 @@ def consolidar_rotulos(obtidas: list[str]) -> pd.DataFrame:
     return r
 
 
+def verificar_painel_versionado() -> int:
+    """Confere o painel versionado contra o manifesto, sem rede e sem gravar nada.
+
+    Modo padrão (e o do ``run_all.py``) desde 19/10/2026: as 39 competências somam
+    cerca de 23 GB de ZIPs e o cache por competência é ignorado pelo Git, então
+    o pipeline não pode refazer o painel sem baixar tudo. Aqui só se exige que o
+    painel versionado seja o que o manifesto registra (SHA-256, esquema, linhas),
+    que o plano de competências do script não tenha mudado desde a construção,
+    que o portão contra o ciclo 1 tenha sido aprovado e que as entradas locais
+    registradas não tenham mudado. Qualquer divergência para (fail closed) e
+    pede ``--etapa painel`` (cache presente) ou ``--etapa tudo`` (download).
+    """
+    erros: list[str] = []
+    if not MANIFESTO_FILE.exists() or not PAINEL_FILE.exists():
+        raise SystemExit(f"verificar: {MANIFESTO_FILE.relative_to(ROOT)} ou {PAINEL_FILE.relative_to(ROOT)} ausente; "
+                         "rode --etapa tudo para baixar e construir o painel")
+    man = json.loads(MANIFESTO_FILE.read_text(encoding="utf-8"))
+    painel = man.get("painel") or {}
+    if sha256_arquivo(PAINEL_FILE) != painel.get("sha256"):
+        erros.append("SHA-256 do painel diferente do registrado no manifesto")
+    meta = pq.read_metadata(PAINEL_FILE)
+    if meta.schema.to_arrow_schema().names != COLUNAS_PAINEL:
+        erros.append(f"colunas do painel diferentes de COLUNAS_PAINEL: {meta.schema.to_arrow_schema().names}")
+    if meta.num_rows != painel.get("linhas"):
+        erros.append(f"painel com {meta.num_rows} linhas; manifesto registra {painel.get('linhas')}")
+    if man.get("competencias_planejadas") != COMPETENCIAS:
+        erros.append("plano de competências do script mudou desde a construção do painel")
+    obtidas = man.get("competencias_obtidas") or []
+    if any(c >= LIMITE_EXCLUSIVO for c in obtidas) or painel.get("competencias") != obtidas:
+        erros.append("competências do painel incoerentes com o manifesto ou >= limite do ciclo 3")
+    if (man.get("validacao_ciclo1") or {}).get("status") != "APROVADO":
+        erros.append("portão de validação contra o ciclo 1 não aprovado no manifesto")
+    if VALIDACAO_FILE.exists():
+        if json.loads(VALIDACAO_FILE.read_text(encoding="utf-8")).get("status") != "APROVADO":
+            erros.append(f"{VALIDACAO_FILE.relative_to(ROOT)} não está APROVADO")
+    else:
+        erros.append(f"{VALIDACAO_FILE.relative_to(ROOT)} ausente")
+    for rel, reg in (man.get("entradas_locais") or {}).items():
+        p = ROOT / rel
+        if not p.exists():
+            erros.append(f"entrada registrada ausente: {rel}")
+        elif sha256_arquivo(p) != reg.get("sha256"):
+            erros.append(f"entrada mudou desde a construção do painel: {rel}")
+    if erros:
+        for e in erros:
+            log(f"VERIFICAÇÃO REPROVADA: {e}")
+        raise SystemExit("verificar: painel versionado não confere; refaça com --etapa painel ou --etapa tudo")
+    log(f"Painel versionado conferido sem rede: {meta.num_rows:,} linhas, {len(obtidas)} competências, "
+        f"SHA-256 {painel['sha256'][:12]}; nada gravado")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--etapa", choices=["aquisicao", "painel", "tudo"], default="tudo")
+    ap.add_argument(
+        "--etapa", choices=["verificar", "aquisicao", "painel", "tudo"], default="verificar",
+        help="verificar (padrão): confere o painel versionado sem rede e sem gravar; "
+             "aquisicao: baixa e extrai para o cache (~23 GB de ZIPs); painel: refaz o painel do cache; "
+             "tudo: aquisição + painel",
+    )
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--competencias", nargs="*", help="subconjunto (para depuração)")
     args = ap.parse_args()
+    if args.etapa == "verificar":
+        if args.competencias:
+            raise SystemExit("--competencias não se aplica a --etapa verificar")
+        return verificar_painel_versionado()
     comps = sorted(args.competencias) if args.competencias else COMPETENCIAS
     for c in comps:
         checar_limite(c)

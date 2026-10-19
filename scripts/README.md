@@ -36,7 +36,15 @@ Ele executa sequencialmente:
     - as aquisições `a07` e `a08` rodam no início (passo 5);
     - `scripts/rdd_bolsa/04_*`, `04b_*` e `04c_*` — portão R1 (`APROVADO_SHARP`), escore completo e identificação do arquivo de IVS errado;
     - `05_*` (E1), `06_*` (E2), `07_*` (E3, principal), `08a_*` e `08_*` (E4) e `11_*` (E5, exploratório);
-    - `09b_conferir_sinal.py`, `09_gerar_relatorio_pdf.py` e `10_galeria_figura_regra.py` — conferência do sinal, relatório em PDF e galeria da figura da regra.
+    - `09b_conferir_sinal.py`, `09_gerar_relatorio_pdf.py` e `10_galeria_figura_regra.py` — conferência do sinal, relatório em PDF e galeria da figura da regra;
+    - rodada multi-outcome (`docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md`, §11), depois do relatório, que só lê E1 a E5:
+      - `scripts/aquisicao/a10_normas_mesmos_cortes_ivs.py` — normas federais nos mesmos cortes do IVS (cache em `data/raw/aquisicao/normas_ivs/` conferido por SHA-256; só baixa ato ausente) e IED da Portaria 3.493/2024;
+      - `scripts/aquisicao/a11_adquirir_resultado_ciclo2_chamada1.py` — resultado da 1a chamada do ciclo 2 (arquivos em `data/raw/pmm_e/` conferidos por SHA-256; só baixa arquivo ausente);
+      - `scripts/aquisicao/a09_adquirir_cnes_nacional.py` — CNES nacional; no pipeline roda em `--etapa verificar`: confere o painel versionado contra o manifesto, sem rede e sem gravar. Refazer o painel exige pedir `--etapa painel` (cache local, fora do Git) ou `--etapa tudo` (39 ZIPs, ~23 GB);
+      - `scripts/rdd_bolsa/12_construir_outcomes_funil.py` — outcomes F0–F4 dos ciclos 1–3 e tabelas de escolha;
+      - `scripts/rdd_bolsa/13_estimar_E6_funil.py` — E6, RDD dos outcomes do funil (lê a janela LR do E5);
+      - `scripts/rdd_bolsa/16_estimar_E9_escolha.py` — E9, logit condicional da escolha dos candidatos;
+      - `scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py` — E7, DiRD no CNES nacional (confere a janela LR de U com a do E6).
 18. `scripts/tema_trabalho/10_conferir_numeros_artigo.py` e `11_conferir_numeros_artigo_curto.py` — relêem os artefatos, reformatam cada valor no padrão dos artigos e exigem que o trecho exista em `paper_pmme_submission.tex` e `paper_pmme_curto.tex`; falham se alguma cifra não tiver origem rastreável.
 
 Saíram do pipeline em 18/10/2026, sem apagar os scripts: `scripts/rdd_bolsa/01_*`,
@@ -48,6 +56,9 @@ Fora do pipeline, por depender do histórico do Git: `scripts/tema_trabalho/12_r
 lê as versões de A2, A4, A5 e da Tabela 1 anteriores à correção de 18/10/2026 no commit
 `22eddb5`, compara com as atuais e gera `output/tema_trabalho/failure_mode_ivs_*` e
 `docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`. Rodar depois do pipeline.
+Não entra no `run_all.py` porque lê os valores "antes" com `git show` do commit de
+referência e para sem ele: num clone raso ou numa exportação do repositório o
+pipeline quebraria por um motivo alheio aos dados.
 
 ---
 
@@ -71,11 +82,11 @@ scripts/
 
 ### Detalhamento por Domínio:
 
-- **`aquisicao/`:** Scripts responsáveis pela ingestão, higienização, mapeamento curso–CBO e integração longitudinal das 26 competências do CNES. Contém tanto a rotina de produção (`01_` a `05_`) quanto os scripts de auditoria de versões (`a01_` a `a06_`). O `06_adquirir_populacao_censo2022.py` baixa a população residente do Censo 2022 (IBGE/SIDRA), único denominador populacional válido do repositório — a coluna `populacao_2010` do arquivo do IVS não é população residente.
+- **`aquisicao/`:** Scripts responsáveis pela ingestão, higienização, mapeamento curso–CBO e integração longitudinal das 26 competências do CNES. Contém tanto a rotina de produção (`01_` a `05_`) quanto os scripts de auditoria de versões (`a01_` a `a06_`) e as aquisições da RDD da bolsa (`a07_` a `a11_`; o `a09_` baixa o CNES nacional só com `--etapa tudo` ou `aquisicao`). O `06_adquirir_populacao_censo2022.py` baixa a população residente do Censo 2022 (IBGE/SIDRA), único denominador populacional válido do repositório — a coluna `populacao_2010` do arquivo do IVS não é população residente.
 - **`apresentacao/`:** `gerar_figuras_banca1.py` produz as figuras da banca 1 em `output/apresentacao_banca1/`, com manifesto de entradas e hashes. Lê o painel município–curso–mês e a população do Censo 2022; não recalcula nada do pipeline analítico.
 - **`tema_trabalho/`:** Contém a cadeia empírica central do artigo (A1 a A8), desde a auditoria inicial, tipologia territorial e resultados associativos até o cutoff estrito de seleção, seus placebos e a replicação pública.
 - **`avaliacao_impacto/`:** Reúne o pipeline do diagnóstico histórico DDD (imediatas vs reserva). Avalia portão de relevância, constrói painéis analíticos, estima modelos estáticos e dinâmicos (estudo de evento), testa mecanismos, gera figuras, nota técnica e infográfico.
-- **`rdd_bolsa/`:** RDD sharp do adicional de R$ 5 mil nos cortes 0,300 e 0,400 do IVS 2010 oficial do Ipea: portão R1, escore completo, estimações E1 a E5, conferência do sinal, relatório e galeria. Os scripts `00_` a `03_` são registro superado: usavam o arquivo de IVS errado ou o pedido de dados cancelado.
+- **`rdd_bolsa/`:** RDD sharp do adicional de R$ 5 mil nos cortes 0,300 e 0,400 do IVS 2010 oficial do Ipea: portão R1, escore completo, estimações E1 a E5, conferência do sinal, relatório e galeria; na rodada multi-outcome, outcomes do funil (`12_`), E6 (`13_`), E7 (`14_`) e E9 (`16_`), com a biblioteca `rdd_lib.py`. Os scripts `00_` a `03_` são registro superado: usavam o arquivo de IVS errado ou o pedido de dados cancelado.
 - **`avaliacao_ciclo3/`:** Pipeline prospectivo do ciclo 3 (congelamento de coorte, ingestão de dados de procedimentos hospitalares SIH/SUS pré-tratamento e auditoria de potência).
 - **`revisao_literatura/`:** Mineração de referências (`01_minerar_literatura.py`) e subpasta `historico/` com os scripts de apoio que geraram tabelas de rúbrica e documentação teórica em estágios anteriores.
 - **`utils/`:** Módulos utilitários reutilizáveis:

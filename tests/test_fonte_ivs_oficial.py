@@ -69,6 +69,10 @@ LEITORES_DERIVADOS_AUTORIZADOS = {
     S + "rdd_bolsa/09_gerar_relatorio_pdf.py",
     S + "rdd_bolsa/09b_conferir_sinal.py",
     S + "tema_trabalho/10_conferir_numeros_artigo.py",
+    # E9 lê de a03_matriz_regra_tratamento.json só o bloco mapeamento_regras_por_edital
+    # (faixa impressa -> bolsa anunciada, transcrito dos editais), nenhum IVS, e o confere
+    # contra a grade da FAQ (a04); declarado no manifesto do E9.
+    S + "rdd_bolsa/16_estimar_E9_escolha.py",
 }
 
 
