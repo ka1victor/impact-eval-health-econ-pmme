@@ -6,15 +6,15 @@
   "script": "scripts/rdd_bolsa/23_estimar_contagem_vagas.py",
   "protocolo": {
     "arquivo": "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md",
-    "sha256": "39d22a8ca7d8241fd55d5e4eb900cf47a3d0e1465f84a5738b4a04c021456f7e"
+    "sha256": "fd012a47da4f48e96638c128797d35b673f4952253822f669c6cb8d43fa41e50"
   },
   "contraste": "pacote do corte: anúncio de +R$ 5 mil por mês na bolsa (0,300: R$ 10 mil -> 15 mil; 0,400: R$ 15 mil -> 20 mil) mais as outras regras federais que mudam nos mesmos cortes (protocolo §13, auditoria 18); não é efeito da participação no PMM-E nem do Agora Tem Especialistas",
   "salto": "tau = lado com bolsa maior (s > c) menos lado com bolsa menor; o corte pertence ao lado inferior",
   "entradas": [
     {
       "caminho": "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md",
-      "sha256": "39d22a8ca7d8241fd55d5e4eb900cf47a3d0e1465f84a5738b4a04c021456f7e",
-      "bytes": 9585,
+      "sha256": "fd012a47da4f48e96638c128797d35b673f4952253822f669c6cb8d43fa41e50",
+      "bytes": 12474,
       "papel": "protocolo 48 congelado (somente lido)",
       "fonte": "pipeline do repositorio",
       "data_referencia": "2026-10-19",

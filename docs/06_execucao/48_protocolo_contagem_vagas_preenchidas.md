@@ -195,3 +195,22 @@ S-b e A1 com covariáveis CCFT pré-determinadas:
 **Leitura.** Mede se o salto nas contagens vem de diferenças de porte e de
 capacidade instalada já existentes antes do programa. Diferenças nascidas da
 resposta à faixa não são retiradas.
+
+## 8. Correção de 19/10/2026: quando a faixa da bolsa ficou conhecida
+
+**O que se corrige.** O §2 diz que as vagas oferecidas são definidas pelo
+gestor "**depois** de a faixa da bolsa ser conhecida". Para o ciclo 1, as
+fontes arquivadas não sustentam essa frase. O texto congelado do §2 fica como
+está; esta nota o corrige, ciclo a ciclo.
+
+| Ciclo | O que as fontes arquivadas mostram | Consequência |
+|---|---|---|
+| 1 | O chamamento de gestores (Edital SGTES/MS nº 2/2025, DOU de 12/06/2025, `data/raw/aquisicao/normas_ivs/edital_sgtes_02_2025_gestores_dou.html`) não menciona IVS, faixa nem valor de bolsa por município: diz só que "serão oferecidas 500 (quinhentas) bolsas de formação para médicos especialistas, conforme chamamento público que será publicado posteriormente" (item 3.9). A grade por faixa de IVS aparece pela primeira vez no Edital de Chamamento Público nº 3/2025 (DOU de 24/07/2025, `data/raw/aquisicao/normas_ivs/edital_sgtes_03_2025_ciclo1_dou.html`, item 11.1.4: "foi estabelecido o critério de faixa de atração com base na categorização municipal do Índice de Vulnerabilidade Social IVS") e na FAQ da bolsa publicada em 24/07/2025 (`data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_faq_bolsa.html`; a página foi atualizada depois, em 25/06/2026), no mesmo dia do quadro de vagas da 1ª chamada (24/07/2025, `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md`) | a adesão dos gestores precedeu o anúncio da faixa. As vagas oferecidas do ciclo 1 não podem ter respondido à faixa da bolsa em si; só a outras regras que mudam nos mesmos cortes (auditoria 18) ou à discricionariedade da SGTES na montagem do quadro |
+| 2 | Não há etapa de gestores arquivada no repositório; a cópia do Edital SGTES/MS nº 1/2026 (`data/raw/aquisicao/ivs_regra/edital_sgtes_01_2026_ciclo2.html`) é só a página do chamamento, publicada em 03/02/2026 | indeterminado |
+| 3 | A grade de 2026 por faixa estava pública desde o Chamamento nº 1/2026 (fevereiro de 2026; grade de 2026 extraída em `output/aquisicao/a03_matriz_regra_tratamento.json`, `grade_2026_edital_1_2026_e_edital_28_2026`), antes do cardápio de gestores do ciclo 3 (proposta preliminar de 15/05/2026, `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md`) e da adesão de gestores (Chamamento SGTES/MS nº 5/2026, página publicada em 10/06/2026, `data/raw/aquisicao/ivs_regra/edital_sgtes_05_2026_adesao_ciclo3.html`) | a faixa era inferível pelo gestor; a frase do §2 vale |
+
+**Consequência para a leitura.** No ciclo 1, condicionar nas vagas oferecidas
+(S-a, A3) é mais defensável do que nos outros ciclos: a oferta pode ter
+respondido ao pacote do corte, mas não ao valor anunciado da bolsa. Por isso o
+adendo §7 relata o ciclo 1 em separado onde isso muda a leitura. Nenhuma
+especificação, amostra ou estimador do §3 ou do §7 muda com esta correção.

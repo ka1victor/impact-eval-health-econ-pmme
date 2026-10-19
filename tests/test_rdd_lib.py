@@ -716,6 +716,24 @@ class TestLee(unittest.TestCase):
         np.testing.assert_allclose(m, [0.0, 1.0, 0.5, 1.0])
         self.assertAlmostEqual(float(np.sum(w * (1 - m))), 0.375 * 4)
 
+    def test_aparo_proporcional_nos_empates(self) -> None:
+        # Sintético (auditoria 22): três empates no topo; q tira 1,5 unidades de peso -> cada um perde a metade,
+        # sem depender da ordem das linhas; sem empate na fronteira, igual ao padrão "ordem".
+        y = np.array([1.0, 0.0, 1.0, 0.5, 1.0, 0.0])
+        w = np.ones(6)
+        m = L._multiplicador_aparo(y, w, 0.25, de_cima=True, empates="proporcional")
+        np.testing.assert_allclose(m, [0.5, 1.0, 0.5, 1.0, 0.5, 1.0])
+        perm = np.array([5, 3, 1, 0, 4, 2])
+        np.testing.assert_allclose(L._multiplicador_aparo(y[perm], w[perm], 0.25, True, "proporcional"), m[perm])
+        self.assertAlmostEqual(float(np.sum(w * (1 - m))), 0.25 * 6)
+        m0 = L._multiplicador_aparo(y, w, 0.25, de_cima=True)
+        np.testing.assert_allclose(m0, [0.0, 1.0, 0.5, 1.0, 1.0, 1.0])   # padrão: apara pela ordem das linhas
+        y2 = np.array([5.0, 1.0, 3.0, 2.0])
+        np.testing.assert_allclose(L._multiplicador_aparo(y2, np.ones(4), 0.375, True, "proporcional"),
+                                   L._multiplicador_aparo(y2, np.ones(4), 0.375, True))
+        with self.assertRaises(ValueError):
+            L._multiplicador_aparo(y, w, 0.25, True, "aleatorio")
+
 
 class TestLocalRandomizationEDeterminismo(unittest.TestCase):
     """Sintético: Fisher e determinismo."""

@@ -1410,13 +1410,24 @@ def _fmt_eixo_x(v, _=None) -> str:
     return (txt[:-1] if txt.endswith("0") else txt).replace(".", ",").replace("-", "−")
 
 
+def _redondo(n: float) -> int:
+    """Arredonda para 1 algarismo significativo (escala da legenda de tamanhos)."""
+    if n < 1:
+        return 1
+    e = 10 ** int(math.floor(math.log10(n)))
+    return int(round(n / e) * e)
+
+
 def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda: str, caminho: Path, *,
-             unidade_n: tuple[str, str] = ("município", "municípios"), rotulo_salto: bool = True) -> None:
+             unidade_n: tuple[str, str] = ("município", "municípios"), tamanhos_leg=(1, 10, 50),
+             rotulo_salto: str | bool = "meio") -> None:
     """Cada painel: x (IVS ou IVS - corte, em milésimos), y_ponto, dentro (bool), curva, corte, rótulo, título.
 
     `unidade_n` = (singular, plural) do que o tamanho do ponto conta (no empilhado, linhas município x ciclo).
-    `rotulo_salto=False` omite o texto "salto" ao lado da seta (a legenda já explica a seta; auditoria 21: o
-    texto cobria pontos perto do corte nas figuras da família K). O padrão mantém as figuras da família N.
+    `tamanhos_leg`: contagens da legenda de tamanhos; "auto" usa o menor, o mediano e o maior número por faixa dos
+    painéis (1 algarismo significativo). `rotulo_salto`: "meio" (padrão, ao lado do meio da seta) ou "topo" (no alto
+    do painel, junto à linha do corte, longe dos pontos; auditoria 22) ou False (omite o texto; a legenda já explica
+    a seta; auditoria 21, figuras da família K). Os padrões reproduzem as figuras N.
     """
     import matplotlib
     matplotlib.use("Agg")
@@ -1435,6 +1446,21 @@ def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda
     # 0,30 pol. por linha da legenda: o marcador de 50 unidades é mais alto que o texto (auditoria 20: com 0,26 e a
     # altura do texto subestimada, a terceira linha da legenda do painel único encostava no texto "COMO LER").
     h_tit, h_plot, h_xlab, h_leg = 0.75, 3.9, 0.5, 0.30 * n_linhas_leg + 0.25
+    # Legenda de tamanhos "auto" (auditoria 22): faixa própria, abaixo da legenda principal, com altura do maior
+    # marcador; os padrões (1, 10, 50) mantêm o leiaute original das figuras N.
+    auto = isinstance(tamanhos_leg, str) and tamanhos_leg == "auto"
+    h_tam = 0.0
+    if auto:
+        cont = []
+        for p in paineis:
+            ok = np.isfinite(p["x"]) & np.isfinite(p["y"])
+            _, c = np.unique(_faixas(p["x"][ok] - p["corte"]), return_counts=True)
+            cont.extend(c.tolist())
+        tamanhos_leg = tuple(sorted({_redondo(v) for v in (min(cont), max(cont))}))
+        n_linhas_leg = math.ceil(6 / ncol)
+        h_leg = 0.30 * n_linhas_leg + 0.25
+        h_tam = math.sqrt(_area(max(tamanhos_leg))) / 72 + 0.35
+        h_leg += h_tam
     # 7,4 pt com espaçamento 1,25 ocupa ~0,155 pol. por linha (0,125 subestimava a altura do texto: auditoria 20).
     h_txt = 0.155 * len(linhas_leg) + 0.2
     altura = h_tit + h_plot + h_xlab + h_leg + h_txt
@@ -1463,7 +1489,11 @@ def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda
         ax.axvline(corte / 1000, color=TINTA_2, linewidth=1, linestyle="--", zorder=0)
         ax.annotate("", xy=(corte / 1000, y1), xytext=(corte / 1000, y0),
                     arrowprops=dict(arrowstyle="-|>", color=COR_SALTO, linewidth=2.2, mutation_scale=12), zorder=4)
-        if rotulo_salto:
+        if rotulo_salto == "topo":
+            ax.text(corte / 1000, 0.98, "  salto (seta laranja na linha do corte)", color=COR_SALTO, fontsize=8.5,
+                    va="top", ha="left", fontweight="bold", zorder=5, transform=ax.get_xaxis_transform(),
+                    bbox=dict(facecolor=SUPERFICIE, edgecolor="none", alpha=0.85, pad=0.6))
+        elif rotulo_salto:
             ax.text(corte / 1000, (y0 + y1) / 2, "  salto", color=COR_SALTO, fontsize=9, va="center", ha="left",
                     fontweight="bold", zorder=5,
                     bbox=dict(facecolor=SUPERFICIE, edgecolor="none", alpha=0.85, pad=0.6))
@@ -1485,9 +1515,29 @@ def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda
         Line2D([], [], color=TINTA_2, linewidth=1, linestyle="--", label="corte"),
     ]
     tamanhos = [Line2D([], [], marker="o", linestyle="", color=COR_FORA, markersize=math.sqrt(_area(n)),
-                       label=f"{n} {unidade_n[1] if n > 1 else unidade_n[0]}") for n in (1, 10, 50)]
-    fig.legend(handles=handles + tamanhos, loc="center", ncol=ncol, fontsize=7.6,
-               frameon=False, bbox_to_anchor=(0.5, (h_txt + h_leg / 2) / altura))
+                       label=f"{n} {unidade_n[1] if n > 1 else unidade_n[0]}") for n in tamanhos_leg]
+    if auto:
+        fig.legend(handles=handles, loc="center", ncol=ncol, fontsize=7.6, frameon=False,
+                   bbox_to_anchor=(0.5, (h_txt + h_tam + (h_leg - h_tam) / 2) / altura))
+        # Chave de tamanhos desenhada à mão, com a mesma área (pt²) dos pontos do gráfico: sem sobreposição de
+        # marcador e texto (auditoria 22).
+        larg_chave = min(largura - 1.0, 2.2 + 2.4 * len(tamanhos_leg))
+        axk = fig.add_axes([(largura - larg_chave) / 2 / largura, (h_txt + 0.1) / altura, larg_chave / largura,
+                            (h_tam - 0.2) / altura])
+        axk.set_xlim(0, 1)
+        axk.set_ylim(0, 1)
+        axk.axis("off")
+        axk.text(0.0, 0.5, "tamanho do ponto:", fontsize=7.6, color=TINTA, va="center", ha="left")
+        passo = (1.0 - 0.32) / len(tamanhos_leg)
+        for j, n in enumerate(tamanhos_leg):
+            xc = 0.32 + passo * j + 0.05
+            axk.scatter([xc], [0.5], s=_area(n), color=COR_FORA, edgecolor=SUPERFICIE, linewidth=1.2, clip_on=False)
+            axk.annotate(f"{n} {unidade_n[1] if n > 1 else unidade_n[0]}", xy=(xc, 0.5),
+                         xytext=(math.sqrt(_area(n)) / 2 + 5, 0), textcoords="offset points", fontsize=7.6,
+                         color=TINTA, va="center", ha="left")
+    else:
+        fig.legend(handles=handles + tamanhos, loc="center", ncol=ncol, fontsize=7.6,
+                   frameon=False, bbox_to_anchor=(0.5, (h_txt + h_leg / 2) / altura))
     fig.suptitle(titulo, fontsize=11, color=TINTA, y=1 - 0.18 / altura)
     fig.text(0.12 / largura, 0.1 / altura, "\n".join(linhas_leg), fontsize=7.4, color=TINTA_2, va="bottom", ha="left",
              linespacing=1.25, parse_math=False)

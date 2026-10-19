@@ -108,6 +108,9 @@ STEPS = [
     ROOT / "scripts" / "rdd_bolsa" / "23_estimar_contagem_vagas.py",
     # E9: lê as tabelas de escolha do 12 e o manifesto do a11.
     ROOT / "scripts" / "rdd_bolsa" / "16_estimar_E9_escolha.py",
+    # Adendo §7 do protocolo 48 (pós-resultado): abertura de vagas como seleção (A1–A4). Lê os outcomes (12),
+    # o painel CNES pré-programa (a09), o Censo 2022 (a06), N_estimativas (23) e o resumo do E9 (16).
+    ROOT / "scripts" / "rdd_bolsa" / "24_abertura_vagas_selecao.py",
     # E7: lê o painel do a09, o IED do a10, a janela LR do E5 e confere a de U com a do E6 (13).
     ROOT / "scripts" / "rdd_bolsa" / "14_estimar_E7_dird_cnes.py",
     # Família K (protocolo 47, pós-síntese, Holm próprio): D1, DiRD da produção especializada nos cortes.

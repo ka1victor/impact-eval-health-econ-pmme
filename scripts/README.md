@@ -46,6 +46,7 @@ Ele executa sequencialmente:
       - `scripts/rdd_bolsa/13_estimar_E6_funil.py` — E6, RDD dos outcomes do funil (lê a janela LR do E5);
       - `scripts/rdd_bolsa/23_estimar_contagem_vagas.py` — família N (protocolo 48, pós-resultado): número de vagas preenchidas com e sem controle pelas vagas oferecidas, decomposição, Poisson, placebos e figuras (`docs/06_execucao/49`);
       - `scripts/rdd_bolsa/16_estimar_E9_escolha.py` — E9, logit condicional da escolha dos candidatos;
+      - `scripts/rdd_bolsa/24_abertura_vagas_selecao.py` — adendo §7 do protocolo 48 (pós-resultado): abertura de vagas como seleção — A1 por habitante em U, A2 limites de Lee com IC de Imbens–Manski por bootstrap de municípios, A3 por célula com efeitos fixos, A4 com covariáveis pré-determinadas do CNES (seção 15 do `docs/06_execucao/49`);
       - `scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py` — E7, DiRD no CNES nacional (confere a janela LR de U com a do E6).
       - `scripts/rdd_bolsa/21_producao_dird.py` — família K, D1 (protocolo 47, pós-síntese): DiRD da produção especializada (SIA, SIH, TISS e CNES não SUS) nos cortes, Holm de K1–K3, estudo de evento e figuras (`docs/06_execucao/50`);
       - `scripts/rdd_bolsa/22_chegada_pmme_evento.py` — família K, D2 (exploratório): chegada do especialista do PMM-E, Callaway–Sant'Anna com bootstrap multiplicador (lê `X2_municipios.csv`, saída versionada do 18);
