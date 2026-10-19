@@ -386,9 +386,9 @@ class TestE7SinteticoValidacoes(unittest.TestCase):
 class TestE7CodigoSemArquivoProibido(unittest.TestCase):
     def test_arquivo_local_errado_nao_e_lido(self) -> None:
         texto = SCRIPT.read_text(encoding="utf-8")
-        ocorrencias = [ln for ln in texto.splitlines() if "ivs_ipea_2010_municipios" in ln]
-        self.assertEqual(len(ocorrencias), 1)
-        self.assertIn("ARQUIVO_PROIBIDO", ocorrencias[0])
+        # Nem lido nem citado pelo nome (a guarda de test_fonte_ivs_oficial conta ocorrências por script).
+        self.assertNotIn("ipea_2010_municipios", texto.lower())
+        self.assertIn("a08_ivs_2010_oficial_municipio.csv", texto)
 
 
 # --------------------------------------------------------------------------
@@ -468,7 +468,8 @@ class TestE7SaidasReais(unittest.TestCase):
     def test_doc_sem_numero_digitado_fora_das_tabelas(self) -> None:
         """Fora dos blocos gerados, o doc só tem parâmetros do protocolo (cortes, h, fatores, R$, datas, seções)."""
         texto = E7.MARCA.sub("", DOC.read_text(encoding="utf-8"))
-        permitidos = {"0,300", "0,400", "0,050", "0,030", "0,080", "0,5", "0,3", "0,4", "0,2", "0,5M"}
+        permitidos = {"0,300", "0,400", "0,050", "0,030", "0,080", "0,5", "0,3", "0,4", "0,2", "0,5M",
+                      "0,05"}   # parâmetros do protocolo e o nível de significância convencional
         decimais = set(re.findall(r"(?<![\w/.-])\d+,\d+(?![\w/])", texto))
         self.assertEqual(decimais - permitidos, set(), "numero decimal fora das tabelas geradas")
 

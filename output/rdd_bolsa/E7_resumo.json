@@ -1,0 +1,1124 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "gerador": "scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py",
+  "data_execucao": "2026-10-19",
+  "protocolo": {
+    "texto": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
+    "sha256_texto": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+    "maquina": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
+    "sha256_maquina": "a66fe6183562f8a233b0175c8653b29a6d1bde44cc8897e28867057905461849",
+    "secoes": "§3, §4, §5 F3, §6 (painel CNES), §7 (P2), §13 (S2-S6), §16 (horas SUS)"
+  },
+  "contraste": {
+    "dird": "DiRD: anúncio de +R$ 5 mil por mês na bolsa (0,300: R$ 10 mil -> 15 mil; 0,400: R$ 15 mil -> 20 mil) mais a variação, entre pré (202406-202506) e pós (202510-202608), das descontinuidades das outras políticas nos mesmos cortes (auditoria 18, §3.1); remove só a parte constante no tempo delas; não é efeito da participação no PMM-E nem do Agora Tem Especialistas",
+    "nivel": "RDD em nível: pacote do corte (bolsa anunciada + todas as outras regras federais nos mesmos cortes, auditoria 18)"
+  },
+  "parametros": {
+    "cortes_mil": [
+      300,
+      400
+    ],
+    "h_mil": 50,
+    "h_sensibilidade_mil": [
+      30,
+      80
+    ],
+    "fatores_M": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "pre": [
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202411",
+      "202412",
+      "202501",
+      "202502",
+      "202503",
+      "202504",
+      "202505",
+      "202506"
+    ],
+    "pos": [
+      "202510",
+      "202511",
+      "202512",
+      "202601",
+      "202602",
+      "202603",
+      "202604",
+      "202605",
+      "202606",
+      "202607",
+      "202608"
+    ],
+    "ref": "202506",
+    "placebo_a": [
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202411"
+    ],
+    "placebo_b": [
+      "202412",
+      "202501",
+      "202502",
+      "202503",
+      "202504",
+      "202505"
+    ],
+    "pre_extra": [
+      "202201",
+      "202204",
+      "202207",
+      "202210",
+      "202301",
+      "202302",
+      "202303"
+    ],
+    "evento": [
+      "202201",
+      "202204",
+      "202207",
+      "202210",
+      "202301",
+      "202302",
+      "202303",
+      "202304",
+      "202307",
+      "202310",
+      "202401",
+      "202404",
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202411",
+      "202412",
+      "202501",
+      "202502",
+      "202503",
+      "202504",
+      "202505",
+      "202506",
+      "202507",
+      "202508",
+      "202509",
+      "202510",
+      "202511",
+      "202512",
+      "202601",
+      "202602",
+      "202603",
+      "202604",
+      "202605",
+      "202606",
+      "202607",
+      "202608"
+    ],
+    "escala_taxa": "por 10 mil habitantes (Censo 2022)"
+  },
+  "datas_politicas": [
+    {
+      "data": "2023-06-19",
+      "ato": "Portaria 752/2023 (teto PMMB)",
+      "fonte": "auditoria 18 §2.1 (DOU 19/06/2023)",
+      "marca_principal": true
+    },
+    {
+      "data": "2024-05-01",
+      "ato": "Portaria 3.493/2024 (IED, parcela 05/2024)",
+      "fonte": "auditoria 18 §2.5 (art. 8º)",
+      "marca_principal": true
+    },
+    {
+      "data": "2025-07-24",
+      "ato": "PMM-E ciclo 1: quadro de vagas",
+      "fonte": "auditoria 18 §1; auditoria 01 §7 (Edital 3/2025)",
+      "marca_principal": true
+    },
+    {
+      "data": "2025-09-11",
+      "ato": "PMM-E ciclo 1: início",
+      "fonte": "auditoria 01 §7 (homologação/início 11–18/09/2025)",
+      "marca_principal": true
+    },
+    {
+      "data": "2026-02-03",
+      "ato": "PMM-E ciclo 2: edital e vagas",
+      "fonte": "auditoria 01 §7 (Edital 3/2026)",
+      "marca_principal": true
+    },
+    {
+      "data": "2026-03-25",
+      "ato": "PMM-E ciclo 2: início",
+      "fonte": "auditoria 01 §7 (25/03–08/04/2026)",
+      "marca_principal": true
+    },
+    {
+      "data": "2023-04-18",
+      "ato": "Portaria 485/2023",
+      "fonte": "auditoria 18 §2.2",
+      "marca_principal": false
+    },
+    {
+      "data": "2023-05-18",
+      "ato": "PI 604/2023 (ajuda de custo)",
+      "fonte": "auditoria 18 §2.3",
+      "marca_principal": false
+    },
+    {
+      "data": "2023-05-22",
+      "ato": "Portaria 635/2023 (eMulti)",
+      "fonte": "auditoria 18 §2.7",
+      "marca_principal": false
+    },
+    {
+      "data": "2024-03-08",
+      "ato": "Portaria 3.283/2024 (emendas +20% IVS > 0,3)",
+      "fonte": "auditoria 18 §2.6",
+      "marca_principal": false
+    },
+    {
+      "data": "2024-11-18",
+      "ato": "Portaria 5.721/2024 (nutrição)",
+      "fonte": "auditoria 18 §2.7",
+      "marca_principal": false
+    },
+    {
+      "data": "2025-04-16",
+      "ato": "Portaria 6.870/2025 (emendas 2025)",
+      "fonte": "auditoria 18 §2.6",
+      "marca_principal": false
+    },
+    {
+      "data": "2025-12-09",
+      "ato": "Portaria 9.177/2025 (Eixo Vínculo)",
+      "fonte": "auditoria 18 §2.7",
+      "marca_principal": false
+    },
+    {
+      "data": "2026-01-20",
+      "ato": "Portaria 10.169/2026 (parcelas ATE)",
+      "fonte": "auditoria 18 §2.6",
+      "marca_principal": false
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "F3.1",
+      "grupo": "alvo_pmme",
+      "col": "n_vinculos",
+      "tipo": "taxa",
+      "pops": [
+        "U",
+        "V1"
+      ],
+      "bky": true,
+      "papel": "efeito (P2 = U, cortes empilhados)",
+      "desc": "vínculos nas CBO-alvo do PMM-E por 10 mil hab."
+    },
+    {
+      "id": "F3.2",
+      "grupo": "alvo_pmme",
+      "col": "tem_profissional",
+      "tipo": "binario",
+      "pops": [
+        "U"
+      ],
+      "bky": true,
+      "papel": "efeito (cobertura)",
+      "desc": "município com >= 1 profissional nas CBO-alvo"
+    },
+    {
+      "id": "F3.3",
+      "grupo": "alvo_pmme",
+      "col": "horas_sus_semanais",
+      "tipo": "horas",
+      "pops": [
+        "U"
+      ],
+      "bky": true,
+      "papel": "efeito (horas)",
+      "desc": "horas SUS semanais (vínculos TP_SUS_NAO_SUS = 'S') nas CBO-alvo por 10 mil hab."
+    },
+    {
+      "id": "F3.3.sem_filtro_sus",
+      "grupo": "alvo_pmme",
+      "col": "horas_totais_amb_hosp",
+      "tipo": "horas",
+      "pops": [
+        "U"
+      ],
+      "bky": false,
+      "figura": false,
+      "rotulo": "SENSIBILIDADE_PROTOCOLO_§16 (horas sem o filtro TP_SUS_NAO_SUS)",
+      "papel": "sensibilidade rotulada do F3.3 (§16; fora do BKY)",
+      "desc": "horas ambulatoriais + hospitalares SUS sem o filtro TP_SUS_NAO_SUS, nas CBO-alvo, por 10 mil hab."
+    },
+    {
+      "id": "F3.3.soma_parcial",
+      "grupo": "alvo_pmme",
+      "col": "horas_sus_semanais_parcial",
+      "tipo": "horas",
+      "pops": [
+        "U"
+      ],
+      "bky": false,
+      "figura": false,
+      "horas_parcial": true,
+      "rotulo": "SENSIBILIDADE_PROTOCOLO_§16 (soma parcial das horas observadas; vinculos em branco contados)",
+      "papel": "sensibilidade rotulada do F3.3 (§16; fora do BKY)",
+      "desc": "horas SUS (TP_SUS_NAO_SUS = 'S') com soma parcial das horas observadas, nas CBO-alvo, por 10 mil hab."
+    },
+    {
+      "id": "F3.P1",
+      "grupo": "generalistas",
+      "col": "n_vinculos",
+      "tipo": "taxa",
+      "pops": [
+        "U"
+      ],
+      "bky": true,
+      "papel": "placebo/confundidor (Portaria 752, IED)",
+      "desc": "vínculos de generalistas (225125, 225142, 225170) por 10 mil hab."
+    },
+    {
+      "id": "F3.P2",
+      "grupo": "especialistas_nao_alvo",
+      "col": "n_vinculos",
+      "tipo": "taxa",
+      "pops": [
+        "U"
+      ],
+      "bky": true,
+      "papel": "placebo",
+      "desc": "vínculos de especialistas fora das CBO-alvo por 10 mil hab."
+    },
+    {
+      "id": "S6",
+      "grupo": "mfc_225130",
+      "col": "n_vinculos",
+      "tipo": "taxa",
+      "pops": [
+        "U"
+      ],
+      "bky": false,
+      "papel": "placebo suplementar (§13 S6; fora do BKY)",
+      "desc": "vínculos de médico de família e comunidade (225130) por 10 mil hab."
+    }
+  ],
+  "especificacoes": {
+    "principal": "DiRD: RDD local linear triangular h = 0,050 sobre delta = media(pos) - media(pre); HC1 por corte, CR1 por municipio no empilhado",
+    "sensibilidade_h": "idem com h = 0,030 e 0,080",
+    "ic_honesto": "IC com viés limitado (Armstrong-Kolesar, classe de Taylor), M da regra de bolso com suporte ate o ponto medio entre cortes, fatores 0,5; 1; 2; h = 0,050",
+    "ic_honesto_h_otimo": "ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO: h que minimiza o IC honesto (rdd_lib.ROTULO_H_OTIMO)",
+    "pos_com_pre_covariavel": "alternativa do protocolo §6: RDD de media(pos) com media(pre) como covariavel",
+    "local_randomization": "protocolo §6: diferenca de medias de delta na janela do E5 (so covariaveis), Fisher",
+    "dird_painel": "ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO (conferencia): rd_dird_painel em linhas municipio x mes, CR1; ponto identico ao principal",
+    "placebo_pre": "protocolo §6: delta = media(202412-202505) - media(202406-202411)",
+    "nivel_pre": "ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO (pedido do coordenador antes de estimar): RDD em nivel de media(pre) = pacote",
+    "nivel_pos": "ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO (pedido do coordenador antes de estimar): RDD em nivel de media(pos) = pacote",
+    "nivel_pre_extra": "ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO (pedido do coordenador antes de estimar): RDD em nivel de media(pre extra)",
+    "S5_pre_menos_pre_extra": "§13 S5: delta = media(pre) - media(pre extra 202201-202303); a descontinuidade mudou antes do PMM-E?",
+    "S5_dird_pre_extra": "§13 S5 / auditoria 18 §5.7: DiRD com pre = pre extra (delta = media(pos) - media(pre extra))",
+    "S2_donut": "§13 S2: principal sem IVS == 0,300 e == 0,400",
+    "S3_porte_muda": "§13 S3: principal nos portes em que o estrato IED muda no corte",
+    "S3_porte_nao_muda": "§13 S3: principal nos portes em que o estrato IED nao muda",
+    "S3_diferenca": "§13 S3: diferenca dos dois saltos (subamostras disjuntas)",
+    "S4_dentro": "§13 S4 (0,400): principal dentro da Amazonia Legal ou faixa de fronteira",
+    "S4_fora": "§13 S4 (0,400): principal fora",
+    "S4_diferenca": "§13 S4: diferenca dos dois saltos (subamostras disjuntas)",
+    "estudo_evento": "§6/§13 S5: RDD de (Y_t - Y_202506) em cada competencia (E7_estudo_evento.csv)"
+  },
+  "entradas": [
+    {
+      "caminho": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+      "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
+      "bytes": 20167560,
+      "papel": "painel CNES municipio x grupo de CBO x mes (F3)",
+      "fonte": "CNES/DATASUS, base completa mensal (tarefa C, a09)",
+      "data_referencia": "competencias 202201-202608 (lista no a09)",
+      "cobertura": "universo a08",
+      "unidade": "municipio x competencia x grupo",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "grupos lidos: alvo_pmme, especialistas_nao_alvo, generalistas, mfc_225130; nenhuma competencia >= 202609"
+    },
+    {
+      "caminho": "output/aquisicao/a09_manifesto_cnes_nacional.json",
+      "sha256": "666d3283f36e323aedf4e4f3a1c85089f1ee7827211084b7a1a3baf0e315701f",
+      "bytes": 190325,
+      "papel": "manifesto do painel (SHA-256, competencias)",
+      "fonte": "a09",
+      "data_referencia": "2026-10-19 (execucao)",
+      "cobertura": "painel inteiro",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "lidos: painel.sha256, competencias_nao_obtidas, natureza"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial) e universo U",
+      "fonte": "Ipea, Plataforma IVS (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "municipios da malha 2010",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "colunas co_ibge, ivs"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "denominador das taxas por 10 mil hab.",
+      "fonte": "IBGE, Censo 2022",
+      "data_referencia": "2022",
+      "cobertura": "municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "filtros": "coluna populacao_2022"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "lista de municipios de V1 (quadro do ciclo 1)",
+      "fonte": "tarefa B (12_construir_outcomes)",
+      "data_referencia": "ciclo 1 (Edital 3/2025)",
+      "cobertura": "V1-V3",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "ciclo == 1; colunas ciclo, co_ibge, ivs_2010_oficial (conferencia); nenhum outcome"
+    },
+    {
+      "caminho": "output/aquisicao/a10_ied_aps_2024_municipio.csv",
+      "sha256": "2bd4aec48a14e610a13d6bc1bece7c7be6a0abbd31eca2cb9281f733964af887",
+      "bytes": 578407,
+      "papel": "S3: porte e estrato IED",
+      "fonte": "Portaria GM/MS 3.493/2024, Anexo VI (a10)",
+      "data_referencia": "2024",
+      "cobertura": "municipios do Anexo VI",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "colunas co_ibge, ivs_codigo_portaria, porte_codigo, estrato_ied"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_administrativo/ppf_mais_medicos_csv.zip",
+      "sha256": "15083f8127917e5279be01d372c1250a467ee77d289a030e1229932d0013cb3a",
+      "bytes": 150344,
+      "papel": "S4: Amazonia Legal / faixa de fronteira",
+      "fonte": "MS, PMMB consolidado",
+      "data_referencia": "2026-10-09",
+      "cobertura": "linhas MUNICIPAL",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "nivel == MUNICIPAL; colunas co_ibge, amazonia_legal, faixa_fronteira, dt_referencia (nenhuma vaga ou medico lido)"
+    },
+    {
+      "caminho": "output/tema_trabalho/matriz_tipologia_territorial.parquet",
+      "sha256": "10af8712eef95cc8ab3e5d7f70d9da1319229494ae2b774cb3ca15a8a2095552",
+      "bytes": 322793,
+      "papel": "covariavel estrato da selecao da janela LR (regra do E5)",
+      "fonte": "tipologia A2",
+      "data_referencia": "REGIC 2018; RM/RIDE 2022",
+      "cobertura": "municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "filtros": "so a coluna estrato"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E5_lr_selecao_janela.csv",
+      "sha256": "366d65f59a47921d2373cf8f329ab935817b128c93dc20263fa802949dd22d47",
+      "bytes": 13445,
+      "papel": "janela LR de V1 (E5, P1) para conferencia",
+      "fonte": "E5 (11_inferencia_alternativa)",
+      "data_referencia": "2026-10-18",
+      "cobertura": "P1/P2",
+      "unidade": "corte x janela",
+      "chaves": "populacao, corte, w",
+      "filtros": "populacao == P1"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E6_lr_selecao_janela.csv",
+      "sha256": "aac0d0d9673d166fc8ce3a7f87062f0851808ad8e977446c87c55b652d6f6dda",
+      "bytes": 41565,
+      "papel": "janela LR de U (E6) para conferencia",
+      "fonte": "E6 (13_estimar_E6_funil)",
+      "data_referencia": "2026-10-18",
+      "cobertura": "U, G3, V1-V3",
+      "unidade": "corte x janela",
+      "chaves": "populacao, corte, w",
+      "filtros": "populacao == U"
+    },
+    {
+      "caminho": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
+      "sha256": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+      "bytes": 20212,
+      "papel": "protocolo congelado (texto canonico)",
+      "fonte": "doc 40",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
+      "sha256": "a66fe6183562f8a233b0175c8653b29a6d1bde44cc8897e28867057905461849",
+      "bytes": 7906,
+      "papel": "protocolo congelado (maquina)",
+      "fonte": "protocolo_E6_multioutcome.json",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md",
+      "sha256": "9afe8cc10cc28edcd29016c7578140e28eaafc41713cea8cda6704adb6a66eb9",
+      "bytes": 42237,
+      "papel": "datas das politicas nos mesmos cortes (marcas do estudo de evento)",
+      "fonte": "auditoria 18",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "datas transcritas em DATAS_POLITICAS"
+    },
+    {
+      "caminho": "docs/auditorias/01_regra_institucional.md",
+      "sha256": "2c4f675c7b6608e89dbd2387b5768130533a440f90061acb39ff9ec9c19ed9cf",
+      "bytes": 23151,
+      "papel": "datas dos ciclos 1 e 2 do PMM-E",
+      "fonte": "auditoria 01 §7",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "datas transcritas em DATAS_POLITICAS"
+    }
+  ],
+  "arquivo_proibido_nao_lido": "data/ivs_ipea_2010_municipios.csv",
+  "validacoes": {
+    "manifesto": {
+      "sha256_painel_igual_manifesto": true,
+      "competencias_nao_obtidas": [],
+      "data_execucao_a09": "2026-10-19",
+      "definicao_horas_sus_no_manifesto": "PRINCIPAL (F3.3, protocolo 40 §16): soma de QT_CARGA_HORARIA_AMBULATORIAL + QT_CARGA_HOR_HOSP_SUS dos vínculos com TP_SUS_NAO_SUS = 'S'; ausente (NA) se algum desses vínculos tem um dos dois campos vazio ou não numérico"
+    },
+    "painel": {
+      "linhas_grupos_usados": 868140,
+      "municipios": 5565,
+      "competencias": [
+        "202201",
+        "202204",
+        "202207",
+        "202210",
+        "202301",
+        "202302",
+        "202303",
+        "202304",
+        "202307",
+        "202310",
+        "202401",
+        "202404",
+        "202406",
+        "202407",
+        "202408",
+        "202409",
+        "202410",
+        "202411",
+        "202412",
+        "202501",
+        "202502",
+        "202503",
+        "202504",
+        "202505",
+        "202506",
+        "202507",
+        "202508",
+        "202509",
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605",
+        "202606",
+        "202607",
+        "202608"
+      ],
+      "competencias_fora_do_protocolo": [],
+      "grupos": [
+        "alvo_pmme",
+        "especialistas_nao_alvo",
+        "generalistas",
+        "mfc_225130"
+      ],
+      "chave_unica": true,
+      "balanceado": true,
+      "celulas_horas_sus_ausentes_por_grupo_e_competencia": {
+        "alvo_pmme": {
+          "202201": 6,
+          "202204": 6,
+          "202207": 6,
+          "202210": 6,
+          "202301": 6,
+          "202302": 6,
+          "202303": 6,
+          "202304": 6,
+          "202307": 6,
+          "202310": 6,
+          "202401": 6,
+          "202404": 6,
+          "202406": 6,
+          "202407": 6,
+          "202408": 6,
+          "202409": 6,
+          "202410": 6,
+          "202411": 6,
+          "202412": 6,
+          "202501": 6,
+          "202502": 6,
+          "202503": 6,
+          "202504": 6,
+          "202505": 6,
+          "202506": 6,
+          "202507": 6,
+          "202508": 6,
+          "202509": 6,
+          "202510": 6,
+          "202511": 6,
+          "202512": 6,
+          "202601": 6,
+          "202602": 6,
+          "202603": 6,
+          "202604": 6,
+          "202605": 6,
+          "202606": 6,
+          "202607": 6,
+          "202608": 6
+        },
+        "especialistas_nao_alvo": {
+          "202201": 4,
+          "202204": 4,
+          "202207": 4,
+          "202210": 4,
+          "202301": 4,
+          "202302": 4,
+          "202303": 4,
+          "202304": 4,
+          "202307": 4,
+          "202310": 4,
+          "202401": 4,
+          "202404": 4,
+          "202406": 4,
+          "202407": 4,
+          "202408": 4,
+          "202409": 4,
+          "202410": 4,
+          "202411": 4,
+          "202412": 4,
+          "202501": 4,
+          "202502": 4,
+          "202503": 4,
+          "202504": 4,
+          "202505": 4,
+          "202506": 4,
+          "202507": 4,
+          "202508": 4,
+          "202509": 4,
+          "202510": 4,
+          "202511": 4,
+          "202512": 4,
+          "202601": 4,
+          "202602": 4,
+          "202603": 4,
+          "202604": 4,
+          "202605": 4,
+          "202606": 4,
+          "202607": 4,
+          "202608": 4
+        },
+        "generalistas": {
+          "202201": 7,
+          "202204": 7,
+          "202207": 7,
+          "202210": 7,
+          "202301": 7,
+          "202302": 7,
+          "202303": 7,
+          "202304": 7,
+          "202307": 7,
+          "202310": 7,
+          "202401": 7,
+          "202404": 7,
+          "202406": 7,
+          "202407": 7,
+          "202408": 7,
+          "202409": 7,
+          "202410": 7,
+          "202411": 7,
+          "202412": 7,
+          "202501": 7,
+          "202502": 7,
+          "202503": 7,
+          "202504": 7,
+          "202505": 7,
+          "202506": 7,
+          "202507": 7,
+          "202508": 7,
+          "202509": 7,
+          "202510": 7,
+          "202511": 7,
+          "202512": 7,
+          "202601": 7,
+          "202602": 7,
+          "202603": 7,
+          "202604": 7,
+          "202605": 7,
+          "202606": 7,
+          "202607": 7,
+          "202608": 7
+        }
+      },
+      "vinculos_horas_em_branco_por_grupo_e_competencia": {
+        "alvo_pmme": {
+          "202201": 8,
+          "202204": 8,
+          "202207": 8,
+          "202210": 8,
+          "202301": 8,
+          "202302": 8,
+          "202303": 8,
+          "202304": 8,
+          "202307": 8,
+          "202310": 8,
+          "202401": 8,
+          "202404": 8,
+          "202406": 8,
+          "202407": 8,
+          "202408": 8,
+          "202409": 8,
+          "202410": 8,
+          "202411": 8,
+          "202412": 8,
+          "202501": 8,
+          "202502": 8,
+          "202503": 8,
+          "202504": 8,
+          "202505": 8,
+          "202506": 8,
+          "202507": 8,
+          "202508": 8,
+          "202509": 8,
+          "202510": 8,
+          "202511": 8,
+          "202512": 8,
+          "202601": 8,
+          "202602": 8,
+          "202603": 8,
+          "202604": 8,
+          "202605": 8,
+          "202606": 8,
+          "202607": 8,
+          "202608": 8
+        },
+        "especialistas_nao_alvo": {
+          "202201": 5,
+          "202204": 5,
+          "202207": 5,
+          "202210": 5,
+          "202301": 5,
+          "202302": 5,
+          "202303": 5,
+          "202304": 5,
+          "202307": 5,
+          "202310": 5,
+          "202401": 5,
+          "202404": 5,
+          "202406": 5,
+          "202407": 5,
+          "202408": 5,
+          "202409": 5,
+          "202410": 5,
+          "202411": 5,
+          "202412": 5,
+          "202501": 5,
+          "202502": 5,
+          "202503": 5,
+          "202504": 5,
+          "202505": 5,
+          "202506": 5,
+          "202507": 5,
+          "202508": 5,
+          "202509": 5,
+          "202510": 5,
+          "202511": 5,
+          "202512": 5,
+          "202601": 5,
+          "202602": 5,
+          "202603": 5,
+          "202604": 5,
+          "202605": 5,
+          "202606": 5,
+          "202607": 5,
+          "202608": 5
+        },
+        "generalistas": {
+          "202201": 9,
+          "202204": 9,
+          "202207": 9,
+          "202210": 9,
+          "202301": 9,
+          "202302": 9,
+          "202303": 9,
+          "202304": 9,
+          "202307": 9,
+          "202310": 9,
+          "202401": 9,
+          "202404": 9,
+          "202406": 9,
+          "202407": 9,
+          "202408": 9,
+          "202409": 9,
+          "202410": 9,
+          "202411": 9,
+          "202412": 9,
+          "202501": 9,
+          "202502": 9,
+          "202503": 9,
+          "202504": 9,
+          "202505": 9,
+          "202506": 9,
+          "202507": 9,
+          "202508": 9,
+          "202509": 9,
+          "202510": 9,
+          "202511": 9,
+          "202512": 9,
+          "202601": 9,
+          "202602": 9,
+          "202603": 9,
+          "202604": 9,
+          "202605": 9,
+          "202606": 9,
+          "202607": 9,
+          "202608": 9
+        }
+      },
+      "colunas_horas": {
+        "principal": "horas_sus_semanais",
+        "sensibilidades": [
+          "horas_totais_amb_hosp",
+          "horas_sus_semanais_parcial"
+        ]
+      }
+    },
+    "populacoes": {
+      "U_municipios": 5565,
+      "U_sem_populacao_2022": [],
+      "nota_sem_populacao": "municipio sem populacao 2022 > 0 fica com taxa ausente (fora dos outcomes por 10 mil hab.), nunca zero",
+      "V1_municipios": 368,
+      "V1_sem_ivs_oficial_fora": [],
+      "V1_ivs_igual_a08": true
+    },
+    "identidade_painel_delta": true,
+    "local_randomization": {
+      "U_selecao_lr_reproduz_E6": true,
+      "V1_selecao_lr_reproduz_E5": true,
+      "janelas": {
+        "U|0.300": null,
+        "U|0.400": 0.008,
+        "V1|0.300": 0.02,
+        "V1|0.400": 0.007
+      }
+    },
+    "s3_portes_muda": {
+      "300": [
+        2,
+        3
+      ],
+      "400": [
+        1,
+        2,
+        4
+      ]
+    },
+    "s4_definicao": "dentro = Amazonia Legal OU faixa de fronteira (atributo municipal do PMMB consolidado, MS); areas indigenas, que a PI 604 tambem poe na Faixa 1, nao entram (sem atributo municipal)",
+    "s4_info": {
+      "membro_zip": "ppf_mais_medicos.csv",
+      "dt_referencia": [
+        "2026-10-09"
+      ],
+      "colunas_lidas": [
+        "nivel",
+        "co_ibge",
+        "amazonia_legal",
+        "faixa_fronteira",
+        "dt_referencia"
+      ]
+    },
+    "horas_ausentes": {
+      "F3.3|U": {
+        "janelas": {
+          "principal": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+          "placebo_pre": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+          "S5_pre_menos_pre_extra": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+          "S5_dird_pre_extra": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+          "municipios_y_ausente_em_algum_mes_do_evento": 6
+        },
+        "em_branco": {
+          "celulas_municipio_mes": 234,
+          "vinculos_em_branco_soma_nos_meses": 312,
+          "municipios": 6
+        }
+      },
+      "F3.3.sem_filtro_sus|U": {
+        "janelas": {
+          "principal": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+          "placebo_pre": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+          "S5_pre_menos_pre_extra": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+          "S5_dird_pre_extra": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+          "municipios_y_ausente_em_algum_mes_do_evento": 6
+        },
+        "em_branco": {
+          "celulas_municipio_mes": 234,
+          "vinculos_em_branco_soma_nos_meses": 312,
+          "municipios": 6
+        }
+      },
+      "F3.3.soma_parcial|U": {
+        "janelas": {
+          "principal": "",
+          "placebo_pre": "",
+          "S5_pre_menos_pre_extra": "",
+          "S5_dird_pre_extra": "",
+          "municipios_y_ausente_em_algum_mes_do_evento": 0
+        },
+        "em_branco": {
+          "celulas_municipio_mes": 234,
+          "vinculos_em_branco_soma_nos_meses": 312,
+          "municipios": 6
+        }
+      }
+    }
+  },
+  "amostras": {
+    "F3.1|U": {
+      "n_municipios": 5565,
+      "n_delta_principal_completo": 5565,
+      "notas": {
+        "principal": "",
+        "placebo_pre": "",
+        "S5_pre_menos_pre_extra": "",
+        "S5_dird_pre_extra": "",
+        "municipios_y_ausente_em_algum_mes_do_evento": 0
+      }
+    },
+    "F3.1|V1": {
+      "n_municipios": 368,
+      "n_delta_principal_completo": 368,
+      "notas": {
+        "principal": "",
+        "placebo_pre": "",
+        "S5_pre_menos_pre_extra": "",
+        "S5_dird_pre_extra": "",
+        "municipios_y_ausente_em_algum_mes_do_evento": 0
+      }
+    },
+    "F3.2|U": {
+      "n_municipios": 5565,
+      "n_delta_principal_completo": 5565,
+      "notas": {
+        "principal": "",
+        "placebo_pre": "",
+        "S5_pre_menos_pre_extra": "",
+        "S5_dird_pre_extra": "",
+        "municipios_y_ausente_em_algum_mes_do_evento": 0
+      }
+    },
+    "F3.3|U": {
+      "n_municipios": 5565,
+      "n_delta_principal_completo": 5559,
+      "notas": {
+        "principal": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+        "placebo_pre": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+        "S5_pre_menos_pre_extra": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+        "S5_dird_pre_extra": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+        "municipios_y_ausente_em_algum_mes_do_evento": 6
+      }
+    },
+    "F3.3.sem_filtro_sus|U": {
+      "n_municipios": 5565,
+      "n_delta_principal_completo": 5559,
+      "notas": {
+        "principal": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+        "placebo_pre": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+        "S5_pre_menos_pre_extra": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+        "S5_dird_pre_extra": "painel desbalanceado: 6 unidades sem todos os periodos de pre e 6 sem todos os de pos; delta NaN nessas unidades",
+        "municipios_y_ausente_em_algum_mes_do_evento": 6
+      }
+    },
+    "F3.3.soma_parcial|U": {
+      "n_municipios": 5565,
+      "n_delta_principal_completo": 5565,
+      "notas": {
+        "principal": "",
+        "placebo_pre": "",
+        "S5_pre_menos_pre_extra": "",
+        "S5_dird_pre_extra": "",
+        "municipios_y_ausente_em_algum_mes_do_evento": 0
+      }
+    },
+    "F3.P1|U": {
+      "n_municipios": 5565,
+      "n_delta_principal_completo": 5565,
+      "notas": {
+        "principal": "",
+        "placebo_pre": "",
+        "S5_pre_menos_pre_extra": "",
+        "S5_dird_pre_extra": "",
+        "municipios_y_ausente_em_algum_mes_do_evento": 0
+      }
+    },
+    "F3.P2|U": {
+      "n_municipios": 5565,
+      "n_delta_principal_completo": 5565,
+      "notas": {
+        "principal": "",
+        "placebo_pre": "",
+        "S5_pre_menos_pre_extra": "",
+        "S5_dird_pre_extra": "",
+        "municipios_y_ausente_em_algum_mes_do_evento": 0
+      }
+    },
+    "S6|U": {
+      "n_municipios": 5565,
+      "n_delta_principal_completo": 5565,
+      "notas": {
+        "principal": "",
+        "placebo_pre": "",
+        "S5_pre_menos_pre_extra": "",
+        "S5_dird_pre_extra": "",
+        "municipios_y_ausente_em_algum_mes_do_evento": 0
+      }
+    }
+  },
+  "p2_para_holm": {
+    "hipotese": "P2: F3.1 por DiRD em U, cortes empilhados (protocolo §7)",
+    "tau": 0.08341241040089997,
+    "ep": 0.2002960765312325,
+    "ic95_inf": -0.30916068584499407,
+    "ic95_sup": 0.475985506646794,
+    "p_valor": 0.6770840008413129,
+    "q_bky": 1.0,
+    "ic_honesto_inf": -9.957951988874592,
+    "ic_honesto_sup": 10.124776809676392,
+    "M": 20971.931410428228,
+    "n_abaixo": 1446.0,
+    "n_acima": 1257.0,
+    "n_clusters": 2703.0,
+    "unidade": "vinculos por 10 mil hab. (Censo 2022)",
+    "status": "EXECUTADO",
+    "holm": "o coordenador junta este p com o de P1 (E6_resumo.json) no Holm; nao calculado aqui"
+  },
+  "desvios": [
+    {
+      "data": "2026-10-19",
+      "tipo": "desvio",
+      "item": "Poisson local (protocolo §6, contagens por habitante)",
+      "descricao": "nao estimado na F3. O estimando da DiRD e uma diferenca de medias de taxas por municipio; um analogo em log exigiria um modelo de painel (Poisson com efeito de periodo e interacao) que o protocolo nao especifica, e o coordenador o deixou opcional. Nada foi estimado e descartado."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "regra_de_dado",
+      "item": "F3.3 horas (protocolo §16)",
+      "descricao": "principal: horas_sus_semanais = horas ambulatoriais + hospitalares dos vinculos com TP_SUS_NAO_SUS = 'S'; celula com hora em branco fica ausente, nunca zero; o municipio sem todos os meses de uma janela sai daquele outcome naquela especificacao (diferenca_pos_pre com exigir_completo=True); no estudo de evento sai so dos meses afetados. Sensibilidades rotuladas (fora do BKY): F3.3.sem_filtro_sus (sem o filtro TP_SUS_NAO_SUS) e F3.3.soma_parcial (soma das horas observadas, com a contagem de vinculos em branco na nota e em validacoes.horas_ausentes). O grupo todos_medicos_sem_residentes do painel nao e outcome do E7 (§16: nao primario; F3 nao o lista)."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "nota_de_nomenclatura",
+      "item": "coluna da sensibilidade 'horas sem filtro SUS' (§16)",
+      "descricao": "o texto do §16 diz que a soma sem o filtro TP_SUS_NAO_SUS 'continua no painel como horas_totais'; no painel auditado da tarefa C, horas_totais e a soma dos tres campos (ambulatorial + hospitalar + outros) e a soma ambulatorial + hospitalar sem filtro chama-se horas_totais_amb_hosp (definicao no manifesto a09). O E7 usa horas_totais_amb_hosp em F3.3.sem_filtro_sus. Mapeamento de nome, sem mudanca de substancia."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "populacoes",
+      "descricao": "protocolo §5: F3.1 em U e V1; F3.2, F3.3, F3.P1, F3.P2 e S6 em U. V1 = municipios do quadro do ciclo 1 (outcomes_V_municipio, ciclo 1). Nenhuma outra populacao foi estimada."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "S5",
+      "descricao": "duas formas, ambas fixadas antes de estimar: (a) media(pre) - media(pre extra), teste de que a descontinuidade se moveu antes do PMM-E; (b) DiRD com pre extra (auditoria 18, recomendacao 7). O pre extra contem as Portarias 377/2022 e 1.054/2022 (IVS em indice composto; auditoria 18 §3.2)."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "adicao",
+      "item": "RDD em nivel e conferencia painel",
+      "descricao": "nivel_pre, nivel_pos e nivel_pre_extra (pacote do corte) e dird_painel (identidade com o principal) sao adicoes rotuladas ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO, pedidas antes de estimar."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "datas do estudo de evento",
+      "descricao": "datas do ciclo 2 do PMM-E vem da auditoria 01 §7 (cronologia auditada), nao da auditoria 18. Estudo de evento empilhado: rd_empilhado em cada competencia (CR1 por municipio)."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "S3 e S4",
+      "descricao": "porte = classe do Anexo VI da Portaria 3.493/2024 (a10), portes em que o estrato muda recalculados do a10 e conferidos com o protocolo §13; S4 = Amazonia Legal OU faixa de fronteira do PMMB consolidado (mesmo atributo e mesma regra do E6; areas indigenas sem atributo municipal no repositorio). So corte a corte (S3) e so 0,400 (S4)."
+    }
+  ],
+  "contagens": {
+    "linhas": 549,
+    "linhas_no_protocolo": 396,
+    "sem_estimativa": 0,
+    "nao_executado": 8,
+    "linhas_bky": 18,
+    "linhas_evento": 1053
+  },
+  "figuras": [
+    "output/rdd_bolsa/E7_figuras/E7_dird_F3_1_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_nivel_F3_1_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_evento_F3_1_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_dird_F3_1_V1.png",
+    "output/rdd_bolsa/E7_figuras/E7_nivel_F3_1_V1.png",
+    "output/rdd_bolsa/E7_figuras/E7_evento_F3_1_V1.png",
+    "output/rdd_bolsa/E7_figuras/E7_dird_F3_2_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_nivel_F3_2_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_evento_F3_2_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_dird_F3_3_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_nivel_F3_3_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_evento_F3_3_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_dird_F3_P1_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_nivel_F3_P1_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_evento_F3_P1_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_dird_F3_P2_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_nivel_F3_P2_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_evento_F3_P2_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_dird_S6_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_nivel_S6_U.png",
+    "output/rdd_bolsa/E7_figuras/E7_evento_S6_U.png"
+  ],
+  "saidas": [
+    "output/rdd_bolsa/E7_estimativas.csv",
+    "output/rdd_bolsa/E7_estudo_evento.csv",
+    "output/rdd_bolsa/E7_resumo.json"
+  ]
+}

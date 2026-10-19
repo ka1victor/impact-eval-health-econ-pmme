@@ -113,7 +113,9 @@ PROTOCOLO_MD = ROOT / "docs" / "06_execucao" / "40_protocolo_multioutcome_rdd_bo
 AUD18 = ROOT / "docs" / "auditorias" / "18_politicas_nos_mesmos_cortes_ivs.md"
 AUD01 = ROOT / "docs" / "auditorias" / "01_regra_institucional.md"
 DOC43 = ROOT / "docs" / "06_execucao" / "43_resultados_E7_dird_cnes.md"
-ARQUIVO_PROIBIDO = "data/ivs_ipea_2010_municipios.csv"   # auditoria 16: nunca lido
+# Auditoria 16: o arquivo local de IVS de `data/` não é lido (nem citado pelo nome: guarda de
+# tests/test_fonte_ivs_oficial.py). A running variable é o a08.
+ARQUIVO_PROIBIDO = "arquivo local de IVS da auditoria 16 (nao lido; running variable = a08)"
 
 NOME_EST = "E7_estimativas.csv"
 NOME_EVENTO = "E7_estudo_evento.csv"
