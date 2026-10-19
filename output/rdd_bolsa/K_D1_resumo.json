@@ -1,0 +1,1985 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "PROTOCOLO_47_POS_SINTESE",
+  "gerador": "scripts/rdd_bolsa/21_producao_dird.py",
+  "data_execucao": "2026-10-19",
+  "protocolo": {
+    "texto": "docs/06_execucao/47_protocolo_producao_especializada.md",
+    "sha256_texto": "27b8f4535798dba2f245128da0b858e5819fa82c3d1e05f10ff58c6b69700bd8",
+    "secoes": "§3, §4, §5 D1, §6, §7, adendos §10 e §11; protocolo 40 §5-§6 e §13"
+  },
+  "contraste": {
+    "dird": "DiRD: anuncio de +R$ 5 mil por mes na bolsa do PMM-E (0,300: R$ 10 mil -> 15 mil; 0,400: R$ 15 mil -> 20 mil) mais a variacao, entre pre e pos, das descontinuidades das outras politicas nos mesmos cortes (auditoria 18); identifica no maximo o incentivo marginal; nao e participacao no PMM-E nem Agora Tem Especialistas",
+    "nivel": "RDD em nivel: pacote do corte (bolsa anunciada + outras regras federais nos mesmos cortes)"
+  },
+  "parametros": {
+    "cortes_mil": [
+      300,
+      400
+    ],
+    "h_mil": 50,
+    "h_sensibilidade_mil": [
+      35,
+      75
+    ],
+    "fatores_M": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "fator_mde": 2.8,
+    "pre": "202406-202506",
+    "pos_K1_K2_SIA_SIH_CNES": "202510-202605",
+    "pos_sensibilidade_ate_202607": "202510-202607",
+    "pos_TISS": "202510-202512",
+    "pos_TISS_curto": "202510-202511",
+    "pos_K4_sensibilidade": "202510-202608",
+    "placebo_a": "202406-202411",
+    "placebo_b": "202412-202505",
+    "pre_extra": "202201-202303",
+    "pre_extra_cnes": [
+      "202201",
+      "202204",
+      "202207",
+      "202210",
+      "202301",
+      "202302",
+      "202303"
+    ],
+    "referencia_evento": "202506",
+    "escala": "por 10 mil habitantes (Censo 2022) por mes"
+  },
+  "datas_politicas": [
+    {
+      "data": "2023-06-19",
+      "ato": "Portaria 752/2023 (teto PMMB)",
+      "fonte": "auditoria 18 §2.1 (DOU 19/06/2023)",
+      "marca_principal": true
+    },
+    {
+      "data": "2024-05-01",
+      "ato": "Portaria 3.493/2024 (IED, parcela 05/2024)",
+      "fonte": "auditoria 18 §2.5 (art. 8º)",
+      "marca_principal": true
+    },
+    {
+      "data": "2025-07-24",
+      "ato": "PMM-E ciclo 1: quadro de vagas",
+      "fonte": "auditoria 18 §1; auditoria 01 §7 (Edital 3/2025)",
+      "marca_principal": true
+    },
+    {
+      "data": "2025-09-11",
+      "ato": "PMM-E ciclo 1: início",
+      "fonte": "auditoria 01 §7 (homologação/início 11–18/09/2025)",
+      "marca_principal": true
+    },
+    {
+      "data": "2026-02-03",
+      "ato": "PMM-E ciclo 2: edital e vagas",
+      "fonte": "auditoria 01 §7 (Edital 3/2026)",
+      "marca_principal": true
+    },
+    {
+      "data": "2026-03-25",
+      "ato": "PMM-E ciclo 2: início",
+      "fonte": "auditoria 01 §7 (25/03–08/04/2026)",
+      "marca_principal": true
+    },
+    {
+      "data": "2023-04-18",
+      "ato": "Portaria 485/2023",
+      "fonte": "auditoria 18 §2.2",
+      "marca_principal": false
+    },
+    {
+      "data": "2023-05-18",
+      "ato": "PI 604/2023 (ajuda de custo)",
+      "fonte": "auditoria 18 §2.3",
+      "marca_principal": false
+    },
+    {
+      "data": "2023-05-22",
+      "ato": "Portaria 635/2023 (eMulti)",
+      "fonte": "auditoria 18 §2.7",
+      "marca_principal": false
+    },
+    {
+      "data": "2024-03-08",
+      "ato": "Portaria 3.283/2024 (emendas +20% IVS > 0,3)",
+      "fonte": "auditoria 18 §2.6",
+      "marca_principal": false
+    },
+    {
+      "data": "2024-11-18",
+      "ato": "Portaria 5.721/2024 (nutrição)",
+      "fonte": "auditoria 18 §2.7",
+      "marca_principal": false
+    },
+    {
+      "data": "2025-04-16",
+      "ato": "Portaria 6.870/2025 (emendas 2025)",
+      "fonte": "auditoria 18 §2.6",
+      "marca_principal": false
+    },
+    {
+      "data": "2025-12-09",
+      "ato": "Portaria 9.177/2025 (Eixo Vínculo)",
+      "fonte": "auditoria 18 §2.7",
+      "marca_principal": false
+    },
+    {
+      "data": "2026-01-20",
+      "ato": "Portaria 10.169/2026 (parcelas ATE)",
+      "fonte": "auditoria 18 §2.6",
+      "marca_principal": false
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "K1",
+      "papel": "primaria",
+      "fonte": "SIA",
+      "conj": [
+        "alvo_pmme"
+      ],
+      "tipos": [
+        "consultas",
+        "exames",
+        "cirurgias",
+        "oci"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "produção SUS ambulatorial executada pelas CBO-alvo (consultas 0301 + exames 02 + cirurgias 04 + OCI 09)",
+      "variantes": [
+        {
+          "nome": "pos_ate_202607",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607"
+          ],
+          "motivo": "§10.1: pós até 202607 (meses imaturos incluídos)"
+        },
+        {
+          "nome": "sem_grupo_09",
+          "tipos": [
+            "consultas",
+            "exames",
+            "cirurgias"
+          ],
+          "motivo": "§10.2: definição original, sem o grupo 09 (OCI)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": true,
+      "bky": false
+    },
+    {
+      "id": "K2",
+      "papel": "primaria",
+      "fonte": "SIH",
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "cirurgias SUS hospitalares: AIH aprovadas do grupo 04 (sem filtro de CBO)",
+      "variantes": [
+        {
+          "nome": "pos_ate_202607",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607"
+          ],
+          "motivo": "§10.1: pós até 202607 (AC e RR sem dado em 202607 ficam ausentes)"
+        },
+        {
+          "nome": "sem_uf_mes_atipico",
+          "mascara": "sih",
+          "motivo": "§10.3: sem as UF-meses atípicas da A13"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": true,
+      "bky": false
+    },
+    {
+      "id": "K3",
+      "papel": "primaria",
+      "fonte": "K3",
+      "pos": [
+        "202510",
+        "202511",
+        "202512"
+      ],
+      "desc": "consultas especializadas SUS + planos pelas CBO-alvo (SIA 0301 + TISS consultas)",
+      "variantes": [
+        {
+          "nome": "pos_202510_202511",
+          "pos": [
+            "202510",
+            "202511"
+          ],
+          "motivo": "§11.4: pós só 202510-202511"
+        },
+        {
+          "nome": "sem_uf_mes_atipico",
+          "mascara": "tiss_amb",
+          "motivo": "§11.4: sem as UF-meses sinalizadas pela A14"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": true,
+      "bky": false
+    },
+    {
+      "id": "K1a",
+      "papel": "secundaria",
+      "fonte": "SIA",
+      "conj": [
+        "alvo_pmme"
+      ],
+      "tipos": [
+        "consultas"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "K1, só consultas (0301)",
+      "variantes": [
+        {
+          "nome": "pos_ate_202607",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607"
+          ],
+          "motivo": "§10.1: pós até 202607 (meses imaturos incluídos)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K1b",
+      "papel": "secundaria",
+      "fonte": "SIA",
+      "conj": [
+        "alvo_pmme"
+      ],
+      "tipos": [
+        "exames"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "K1, só exames (grupo 02)",
+      "variantes": [
+        {
+          "nome": "pos_ate_202607",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607"
+          ],
+          "motivo": "§10.1: pós até 202607 (meses imaturos incluídos)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K1c",
+      "papel": "secundaria",
+      "fonte": "SIA",
+      "conj": [
+        "alvo_pmme"
+      ],
+      "tipos": [
+        "cirurgias"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "K1, só cirurgias ambulatoriais (grupo 04)",
+      "variantes": [
+        {
+          "nome": "pos_ate_202607",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607"
+          ],
+          "motivo": "§10.1: pós até 202607 (meses imaturos incluídos)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K1d",
+      "papel": "secundaria",
+      "fonte": "SIA",
+      "conj": [
+        "alvo_pmme",
+        "especialistas_nao_alvo"
+      ],
+      "tipos": [
+        "consultas",
+        "exames",
+        "cirurgias",
+        "oci"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "K1 com todos os especialistas (alvo + não alvo)",
+      "variantes": [
+        {
+          "nome": "pos_ate_202607",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607"
+          ],
+          "motivo": "§10.1: pós até 202607 (meses imaturos incluídos)"
+        },
+        {
+          "nome": "sem_grupo_09",
+          "tipos": [
+            "consultas",
+            "exames",
+            "cirurgias"
+          ],
+          "motivo": "§10.2: definição original, sem o grupo 09 (OCI)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K1f",
+      "papel": "secundaria",
+      "fonte": "SIA",
+      "conj": [
+        "alvo_pmme"
+      ],
+      "tipos": [
+        "oci"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "K1, só OCI (grupo 09, Ofertas de Cuidados Integrados)",
+      "variantes": [
+        {
+          "nome": "pos_ate_202607",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607"
+          ],
+          "motivo": "§10.1: pós até 202607 (meses imaturos incluídos)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K3a.consultas",
+      "papel": "secundaria",
+      "fonte": "TISS",
+      "tipos": [
+        "consultas"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512"
+      ],
+      "desc": "planos (TISS): consultas pelas CBO-alvo",
+      "variantes": [
+        {
+          "nome": "pos_202510_202511",
+          "pos": [
+            "202510",
+            "202511"
+          ],
+          "motivo": "§11.4: pós só 202510-202511"
+        },
+        {
+          "nome": "sem_uf_mes_atipico",
+          "mascara": "tiss_amb",
+          "motivo": "§11.4: sem as UF-meses sinalizadas pela A14"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K3a.exames",
+      "papel": "secundaria",
+      "fonte": "TISS",
+      "tipos": [
+        "exames"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512"
+      ],
+      "desc": "planos (TISS): exames (família 4) pelas CBO-alvo; piso (CBO ausente em parte dos eventos)",
+      "variantes": [
+        {
+          "nome": "com_tuss63",
+          "tipos": [
+            "exames",
+            "agrupados_tuss63"
+          ],
+          "motivo": "§11.1: inclui os itens agrupados da tabela TUSS 63"
+        },
+        {
+          "nome": "pos_202510_202511",
+          "pos": [
+            "202510",
+            "202511"
+          ],
+          "motivo": "§11.4: pós só 202510-202511"
+        },
+        {
+          "nome": "sem_uf_mes_atipico",
+          "mascara": "tiss_amb",
+          "motivo": "§11.4: sem as UF-meses sinalizadas pela A14"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K3a.cirurgias",
+      "papel": "secundaria",
+      "fonte": "TISS",
+      "tipos": [
+        "cirurgicos"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512"
+      ],
+      "desc": "planos (TISS): procedimentos cirúrgicos (família 3) pelas CBO-alvo; piso",
+      "variantes": [
+        {
+          "nome": "pos_202510_202511",
+          "pos": [
+            "202510",
+            "202511"
+          ],
+          "motivo": "§11.4: pós só 202510-202511"
+        },
+        {
+          "nome": "sem_uf_mes_atipico",
+          "mascara": "tiss_amb",
+          "motivo": "§11.4: sem as UF-meses sinalizadas pela A14"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K3b",
+      "papel": "secundaria",
+      "fonte": "SIA",
+      "conj": [
+        "alvo_pmme"
+      ],
+      "tipos": [
+        "consultas"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512"
+      ],
+      "desc": "parte SIA de K3 (consultas 0301 pelas CBO-alvo) no mesmo pós 202510-202512",
+      "variantes": [
+        {
+          "nome": "pos_202510_202511",
+          "pos": [
+            "202510",
+            "202511"
+          ],
+          "motivo": "§11.4: pós só 202510-202511"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K3c",
+      "papel": "secundaria",
+      "fonte": "TISSH",
+      "medida": "qt_itens",
+      "pos": [
+        "202510",
+        "202511",
+        "202512"
+      ],
+      "desc": "planos (TISS hospitalar): procedimentos cirúrgicos, total municipal sem filtro de CBO",
+      "variantes": [
+        {
+          "nome": "n_eventos",
+          "medida": "n_eventos",
+          "motivo": "internações com item cirúrgico, em vez de itens"
+        },
+        {
+          "nome": "pos_202510_202511",
+          "pos": [
+            "202510",
+            "202511"
+          ],
+          "motivo": "§11.4: pós só 202510-202511"
+        },
+        {
+          "nome": "sem_uf_mes_atipico",
+          "mascara": "tiss_hosp",
+          "motivo": "§11.4: sem as UF-meses sinalizadas pela A14 (hospitalar)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K4.vinculos",
+      "papel": "secundaria",
+      "fonte": "CNES",
+      "medida": "vinculos_nao_sus",
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "capacidade privada: vínculos não SUS das CBO-alvo (CNES; total − SUS)",
+      "variantes": [
+        {
+          "nome": "pos_ate_202608",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607",
+            "202608"
+          ],
+          "motivo": "pós do E7 (202510-202608)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K4.horas",
+      "papel": "secundaria",
+      "fonte": "CNES",
+      "medida": "horas_nao_sus",
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "capacidade privada: horas semanais não SUS das CBO-alvo (CNES; amb. + hosp. total − SUS)",
+      "variantes": [
+        {
+          "nome": "pos_ate_202608",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607",
+            "202608"
+          ],
+          "motivo": "pós do E7 (202510-202608)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "K5",
+      "papel": "secundaria",
+      "fonte": "K5",
+      "pos": [
+        "202510",
+        "202511",
+        "202512"
+      ],
+      "unidade": "fracao",
+      "desc": "composição: participação do SUS nas consultas de K3 (SIA / (SIA + TISS)), razão das somas da janela",
+      "variantes": [
+        {
+          "nome": "pos_202510_202511",
+          "pos": [
+            "202510",
+            "202511"
+          ],
+          "motivo": "§11.4: pós só 202510-202511"
+        },
+        {
+          "nome": "sem_uf_mes_atipico",
+          "mascara": "tiss_amb",
+          "motivo": "§11.4: sem as UF-meses sinalizadas pela A14"
+        }
+      ],
+      "poisson": false,
+      "honesto": false,
+      "bky": true
+    },
+    {
+      "id": "KP1",
+      "papel": "placebo",
+      "fonte": "SIA",
+      "conj": [
+        "generalistas"
+      ],
+      "tipos": [
+        "consultas",
+        "exames",
+        "cirurgias",
+        "oci"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "placebo: produção SIA dos generalistas (225125, 225142, 225170)",
+      "variantes": [
+        {
+          "nome": "pos_ate_202607",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607"
+          ],
+          "motivo": "§10.1: pós até 202607 (meses imaturos incluídos)"
+        },
+        {
+          "nome": "sem_grupo_09",
+          "tipos": [
+            "consultas",
+            "exames",
+            "cirurgias"
+          ],
+          "motivo": "§10.2: definição original, sem o grupo 09 (OCI)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": false
+    },
+    {
+      "id": "KP2",
+      "papel": "placebo",
+      "fonte": "SIA",
+      "conj": [
+        "especialistas_nao_alvo"
+      ],
+      "tipos": [
+        "consultas",
+        "exames",
+        "cirurgias",
+        "oci"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "placebo: produção SIA dos especialistas fora das CBO-alvo",
+      "variantes": [
+        {
+          "nome": "pos_ate_202607",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607"
+          ],
+          "motivo": "§10.1: pós até 202607 (meses imaturos incluídos)"
+        },
+        {
+          "nome": "sem_grupo_09",
+          "tipos": [
+            "consultas",
+            "exames",
+            "cirurgias"
+          ],
+          "motivo": "§10.2: definição original, sem o grupo 09 (OCI)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": false
+    },
+    {
+      "id": "KP1.mfc",
+      "papel": "suplementar",
+      "fonte": "SIA",
+      "conj": [
+        "mfc_225130"
+      ],
+      "tipos": [
+        "consultas",
+        "exames",
+        "cirurgias",
+        "oci"
+      ],
+      "pos": [
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605"
+      ],
+      "desc": "S6: produção SIA de medicina de família e comunidade (225130), à parte (§3.1)",
+      "variantes": [
+        {
+          "nome": "pos_ate_202607",
+          "pos": [
+            "202510",
+            "202511",
+            "202512",
+            "202601",
+            "202602",
+            "202603",
+            "202604",
+            "202605",
+            "202606",
+            "202607"
+          ],
+          "motivo": "§10.1: pós até 202607 (meses imaturos incluídos)"
+        }
+      ],
+      "unidade": "taxa",
+      "poisson": true,
+      "honesto": false,
+      "bky": false
+    }
+  ],
+  "primarias_holm": [
+    "K1",
+    "K2",
+    "K3"
+  ],
+  "secundarias_bky": [
+    "K1a",
+    "K1b",
+    "K1c",
+    "K1d",
+    "K1f",
+    "K3a.consultas",
+    "K3a.exames",
+    "K3a.cirurgias",
+    "K3b",
+    "K3c",
+    "K4.vinculos",
+    "K4.horas",
+    "K5"
+  ],
+  "especificacoes": {
+    "principal": "DiRD: RDD local linear triangular h = 0,050 sobre delta = media(pos) - media(pre), medias dos meses com dado; HC1 por corte, CR1 por municipio no empilhado",
+    "media_completa": "§5 D1 robustez: so municipios com todos os meses de pre e de pos (media do pos inteiro)",
+    "sensibilidade_h": "§5 D1 robustez: h = 0,035 e 0,075",
+    "ic_honesto": "§5 D1 robustez (primarias): IC Armstrong-Kolesar, M da regra de bolso (suporte ate o ponto medio entre cortes), fatores 0,5; 1; 2; h = 0,050",
+    "ic_honesto_h_otimo": "ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO: h que minimiza o IC honesto (rdd_lib.ROTULO_H_OTIMO)",
+    "poisson_dird": "§5 D1 robustez: Poisson local nas contagens da janela com exposicao populacional; tau = salto em log da razao pos/pre (painel municipio x janela, CR1 por municipio)",
+    "placebo_pre": "KP3 (§4): delta = media(202412-202505) - media(202406-202411)",
+    "nivel_pre": "ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO: RDD em nivel de media(pre) = pacote do corte",
+    "nivel_pos": "ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO: RDD em nivel de media(pos) = pacote do corte",
+    "S5_pre_menos_pre_extra": "protocolo 40 §13 S5: delta = media(pre) - media(pre extra 202201-202303)",
+    "S2_donut": "protocolo 40 §13 S2: principal sem IVS == 0,300 e == 0,400",
+    "S3_porte_muda": "protocolo 40 §13 S3: principal nos portes em que o estrato IED muda no corte",
+    "S3_porte_nao_muda": "protocolo 40 §13 S3: principal nos portes em que o estrato IED nao muda",
+    "S3_diferenca": "protocolo 40 §13 S3: diferenca dos dois saltos",
+    "S4_dentro": "protocolo 40 §13 S4 (0,400): Amazonia Legal ou faixa de fronteira",
+    "S4_fora": "protocolo 40 §13 S4 (0,400): fora",
+    "S4_diferenca": "protocolo 40 §13 S4: diferenca dos dois saltos",
+    "sens": "§10-§11: variante do outcome ou da janela (nome depois de '|'), estimador principal",
+    "estudo_evento": "§5 D1: RDD de (Y_t - Y_202506) em cada mes desde 202201 (K_D1_estudo_evento.csv)"
+  },
+  "entradas": [
+    {
+      "caminho": "output/aquisicao/sia/painel_sia_municipio_mes_subgrupo_cbo.parquet",
+      "sha256": "2f0c8353deb58eeb95b30a35a7a36bbf752b8ca90b4c26395735ea6450d3eb0e",
+      "bytes": 29993902,
+      "papel": "SIA/SUS: K1, K1a-K1f, K3, K3b, K5, KP1, KP2",
+      "fonte": "DATASUS TabNet qabr.def (a12)",
+      "data_referencia": "processamento 202201-202607",
+      "cobertura": "municipios do formulario",
+      "unidade": "municipio x mes x subgrupo x conjunto CBO",
+      "chaves": "co_ibge, competencia_processamento, subgrupo, conjunto_cbo",
+      "filtros": "conjuntos alvo_pmme, especialistas_nao_alvo, generalistas, mfc_225130; subgrupos 0301, 02xx, 04xx, 09xx"
+    },
+    {
+      "caminho": "output/aquisicao/sia/sia_subgrupos_por_consulta.csv",
+      "sha256": "3b9b4d4aa060147da5ef270e8cfb427e968a9394a9a4a0195369b07bc8042510",
+      "bytes": 1365682,
+      "papel": "SIA: subgrupos presentes em cada consulta (zero de subgrupo omitido)",
+      "fonte": "a12",
+      "data_referencia": "202201-202607",
+      "cobertura": "mes x conjunto x subgrupo",
+      "unidade": "consulta",
+      "chaves": "competencia_processamento, conjunto_cbo, subgrupo",
+      "filtros": "presente_na_resposta"
+    },
+    {
+      "caminho": "output/aquisicao/sia/sia_municipios_tabnet.csv",
+      "sha256": "fbc96adae2ba4b4d70cf60fd5ab16cf90d317d69426023e36bd0231d0a3adb57",
+      "bytes": 192874,
+      "papel": "SIA: lista de municipios do formulario",
+      "fonte": "a12",
+      "data_referencia": "2026-10-19",
+      "cobertura": "TabNet",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/sia/manifesto_sia.json",
+      "sha256": "aa31915d31d2f354461ec863e9037643236ad17303f0690f5da88ef4ee023117",
+      "bytes": 461857,
+      "papel": "manifesto SIA (SHA-256 do painel)",
+      "fonte": "a12",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "saidas"
+    },
+    {
+      "caminho": "output/aquisicao/sih/painel_sih_municipio_mes_grupo.parquet",
+      "sha256": "3428600a111838d7f730d30b7474b86294f36a28a76576309ab87fc937f0b6b6",
+      "bytes": 2712877,
+      "papel": "SIH/SUS: K2",
+      "fonte": "DATASUS TabNet qibr.def (a13)",
+      "data_referencia": "processamento 202201-202607",
+      "cobertura": "municipios do formulario",
+      "unidade": "municipio x mes x grupo",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "grupo == 04; aih_aprovadas, status, uf_mes_atipico"
+    },
+    {
+      "caminho": "output/aquisicao/sih/manifesto_sih.json",
+      "sha256": "9d2648760c23e56881f7af34092a200bda67e095e4b42c1b983e0780a3fca6a8",
+      "bytes": 775533,
+      "papel": "manifesto SIH (SHA-256 do painel)",
+      "fonte": "a13",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "saidas.painel"
+    },
+    {
+      "caminho": "output/aquisicao/tiss/painel_tiss_municipio_mes_tipo_cbo.parquet",
+      "sha256": "5ebd922df41456c82b73f23ee1023df7ad534128555b156d63916c59c7432e8e",
+      "bytes": 23638834,
+      "papel": "TISS ambulatorial: K3, K3a, K5",
+      "fonte": "ANS dados abertos TISS (a14)",
+      "data_referencia": "realizacao 202201-202512",
+      "cobertura": "municipios do IBGE",
+      "unidade": "municipio x mes x tipo x grupo CBO",
+      "chaves": "co_ibge, competencia_realizacao, tipo, grupo_cbo",
+      "filtros": "grupo_cbo == alvo_pmme; tipos consultas, exames, cirurgicos, agrupados_tuss63; qt_itens"
+    },
+    {
+      "caminho": "output/aquisicao/tiss/painel_tiss_hospitalar_municipio_mes_tipo.parquet",
+      "sha256": "840c05d0c9293f0c67b59c5ff85a520ce58c3aadb5b9f385b9c5bf5538335517",
+      "bytes": 1958570,
+      "papel": "TISS hospitalar: K3c",
+      "fonte": "ANS dados abertos TISS (a14)",
+      "data_referencia": "realizacao 202201-202512",
+      "cobertura": "municipios do IBGE",
+      "unidade": "municipio x mes x tipo",
+      "chaves": "co_ibge, competencia_realizacao, tipo",
+      "filtros": "todos_cbo, cirurgicos; qt_itens e n_eventos"
+    },
+    {
+      "caminho": "output/aquisicao/tiss/validacao_tiss.json",
+      "sha256": "344f4e6be5362e9e041559cf5c0832f85f21f0ad57851347919c0cb9c8d86f6b",
+      "bytes": 43092,
+      "papel": "TISS: UF-meses sinalizados (alertas_queda)",
+      "fonte": "a14",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "UF x mes",
+      "chaves": "base, uf, mes",
+      "filtros": "alertas_queda"
+    },
+    {
+      "caminho": "output/aquisicao/tiss/manifesto_tiss.json",
+      "sha256": "8201939a1d5f65f33b0183c8ad08ba7f9016b4d3140b6e0fb6e291b15878c0df",
+      "bytes": 2934672,
+      "papel": "manifesto TISS (SHA-256 dos paineis)",
+      "fonte": "a14",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "saidas"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+      "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
+      "bytes": 20167560,
+      "papel": "CNES: K4 (vinculos e horas nao SUS das CBO-alvo)",
+      "fonte": "CNES/DATASUS (a09)",
+      "data_referencia": "competencias < 202609",
+      "cobertura": "universo a08",
+      "unidade": "municipio x mes x grupo",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "grupo == alvo_pmme; n_vinculos - n_vinculos_sus; horas_totais_amb_hosp - horas_sus_semanais"
+    },
+    {
+      "caminho": "output/aquisicao/a09_manifesto_cnes_nacional.json",
+      "sha256": "666d3283f36e323aedf4e4f3a1c85089f1ee7827211084b7a1a3baf0e315701f",
+      "bytes": 190325,
+      "papel": "manifesto CNES (SHA-256 do painel)",
+      "fonte": "a09",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "painel.sha256"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial) e universo U",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "co_ibge, ivs"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "denominador por 10 mil hab.",
+      "fonte": "IBGE Censo 2022",
+      "data_referencia": "2022",
+      "cobertura": "municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "filtros": "populacao_2022"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "lista de V1 (quadro do ciclo 1)",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclo 1",
+      "cobertura": "V1-V3",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "ciclo == 1; nenhum outcome"
+    },
+    {
+      "caminho": "output/aquisicao/a10_ied_aps_2024_municipio.csv",
+      "sha256": "2bd4aec48a14e610a13d6bc1bece7c7be6a0abbd31eca2cb9281f733964af887",
+      "bytes": 578407,
+      "papel": "S3: porte e estrato IED",
+      "fonte": "Portaria 3.493/2024 (a10)",
+      "data_referencia": "2024",
+      "cobertura": "municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "porte_codigo, estrato_ied, ivs_codigo_portaria"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_administrativo/ppf_mais_medicos_csv.zip",
+      "sha256": "15083f8127917e5279be01d372c1250a467ee77d289a030e1229932d0013cb3a",
+      "bytes": 150344,
+      "papel": "S4: Amazonia Legal / faixa de fronteira",
+      "fonte": "MS, PMMB consolidado",
+      "data_referencia": "2026-10-09",
+      "cobertura": "MUNICIPAL",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "amazonia_legal, faixa_fronteira (nenhuma vaga ou medico lido)"
+    },
+    {
+      "caminho": "docs/06_execucao/47_protocolo_producao_especializada.md",
+      "sha256": "27b8f4535798dba2f245128da0b858e5819fa82c3d1e05f10ff58c6b69700bd8",
+      "bytes": 14571,
+      "papel": "protocolo congelado (com adendos §10 e §11)",
+      "fonte": "doc 47",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md",
+      "sha256": "9afe8cc10cc28edcd29016c7578140e28eaafc41713cea8cda6704adb6a66eb9",
+      "bytes": 42237,
+      "papel": "datas das politicas nos mesmos cortes",
+      "fonte": "auditoria 18",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "datas em E7.DATAS_POLITICAS"
+    }
+  ],
+  "arquivo_proibido_nao_lido": "arquivo local de IVS da auditoria 16 (nao lido; running variable = a08)",
+  "validacoes": {
+    "populacoes": {
+      "U_municipios": 5565,
+      "U_sem_populacao_2022": [],
+      "nota_sem_populacao": "municipio sem populacao 2022 > 0 fica com taxa ausente (fora dos outcomes por 10 mil hab.), nunca zero",
+      "V1_municipios": 368,
+      "V1_sem_ivs_oficial_fora": [],
+      "V1_ivs_igual_a08": true,
+      "U_com_populacao": 5565,
+      "U_excluidos_sem_populacao": [],
+      "censo2022_sem_ivs_oficial_fora": [
+        "150475",
+        "421265",
+        "422000",
+        "431454",
+        "500627"
+      ]
+    },
+    "sia": {
+      "municipios_tabnet": 5571,
+      "municipios_tabnet_fora_de_U": [
+        "150475",
+        "421265",
+        "422000",
+        "431454",
+        "500627",
+        "510183"
+      ],
+      "municipios_de_U_fora_do_tabnet": [],
+      "celulas_ausentes_municipio_mes_conjunto_tipo": 0,
+      "subgrupos_lidos": [
+        "0201",
+        "0202",
+        "0203",
+        "0204",
+        "0205",
+        "0206",
+        "0207",
+        "0208",
+        "0209",
+        "0210",
+        "0211",
+        "0212",
+        "0213",
+        "0214",
+        "0301",
+        "0401",
+        "0403",
+        "0404",
+        "0405",
+        "0406",
+        "0407",
+        "0408",
+        "0409",
+        "0410",
+        "0411",
+        "0412",
+        "0413",
+        "0414",
+        "0415",
+        "0416",
+        "0417",
+        "0418",
+        "0901",
+        "0902",
+        "0903",
+        "0904",
+        "0905",
+        "0906"
+      ],
+      "meses": [
+        "202201",
+        "202607"
+      ],
+      "regra_subgrupo_ausente": "subgrupo que nao veio como coluna da consulta = zero daquela consulta (V4 do a12)"
+    },
+    "sih": {
+      "municipios_painel": 5571,
+      "municipios_painel_fora_de_U": [
+        "150475",
+        "421265",
+        "422000",
+        "431454",
+        "500627",
+        "510183"
+      ],
+      "municipios_de_U_fora_do_painel": [],
+      "uf_meses_sem_dado": [
+        "12|202607",
+        "14|202607"
+      ],
+      "uf_meses_atipicos": [
+        "14|202206",
+        "14|202309",
+        "14|202606"
+      ],
+      "celulas_ausentes": 37
+    },
+    "tiss": {
+      "municipios_painel": 5570,
+      "municipios_painel_fora_de_U": [
+        "150475",
+        "421265",
+        "422000",
+        "431454",
+        "500627"
+      ],
+      "municipios_de_U_fora_do_painel": [],
+      "celulas_ausentes": 0,
+      "uf_meses_sinalizados_alertas_queda": [
+        "AC|202509",
+        "AC|202510",
+        "AC|202511",
+        "AC|202512",
+        "PI|202211",
+        "PI|202212",
+        "PI|202307",
+        "PI|202308",
+        "PI|202402",
+        "RR|202511",
+        "RR|202512"
+      ]
+    },
+    "tiss_hosp": {
+      "municipios_painel": 5570,
+      "municipios_painel_fora_de_U": [
+        "150475",
+        "421265",
+        "422000",
+        "431454",
+        "500627"
+      ],
+      "municipios_de_U_fora_do_painel": [],
+      "celulas_ausentes": 0,
+      "uf_meses_sinalizados_alertas_queda": [
+        "AC|202509",
+        "AC|202510",
+        "AC|202511",
+        "AC|202512",
+        "AL|202206",
+        "AL|202502",
+        "AM|202410",
+        "AP|202206",
+        "AP|202210",
+        "AP|202302",
+        "AP|202409",
+        "AP|202511",
+        "AP|202512",
+        "CE|202501",
+        "CE|202502",
+        "CE|202503",
+        "MA|202512",
+        "PI|202512",
+        "RR|202202",
+        "RR|202203",
+        "RR|202204",
+        "RR|202205",
+        "RR|202206",
+        "RR|202207",
+        "RR|202208",
+        "RR|202209",
+        "RR|202210",
+        "RR|202211",
+        "RR|202212",
+        "RR|202511",
+        "RR|202512",
+        "SE|202204",
+        "SE|202212",
+        "SE|202503",
+        "SE|202512",
+        "TO|202303",
+        "TO|202309",
+        "TO|202402"
+      ]
+    },
+    "cnes": {
+      "municipios_painel_fora_de_U": [],
+      "celulas_horas_ausentes": 234,
+      "competencias": [
+        "202201",
+        "202204",
+        "202207",
+        "202210",
+        "202301",
+        "202302",
+        "202303",
+        "202304",
+        "202307",
+        "202310",
+        "202401",
+        "202404",
+        "202406",
+        "202407",
+        "202408",
+        "202409",
+        "202410",
+        "202411",
+        "202412",
+        "202501",
+        "202502",
+        "202503",
+        "202504",
+        "202505",
+        "202506",
+        "202507",
+        "202508",
+        "202509",
+        "202510",
+        "202511",
+        "202512",
+        "202601",
+        "202602",
+        "202603",
+        "202604",
+        "202605",
+        "202606",
+        "202607",
+        "202608"
+      ]
+    },
+    "sha256_iguais_manifestos": true,
+    "meses_maximos": {
+      "sia_sih": "202607",
+      "tiss": "202512",
+      "cnes": "202608"
+    },
+    "s3_portes_muda": {
+      "300": [
+        2,
+        3
+      ],
+      "400": [
+        1,
+        2,
+        4
+      ]
+    },
+    "s4_info": {
+      "membro_zip": "ppf_mais_medicos.csv",
+      "dt_referencia": [
+        "2026-10-09"
+      ],
+      "colunas_lidas": [
+        "nivel",
+        "co_ibge",
+        "amazonia_legal",
+        "faixa_fronteira",
+        "dt_referencia"
+      ]
+    }
+  },
+  "amostras": {
+    "K1|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K1|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K2|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K2|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K3|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K3|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K1a|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K1a|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K1b|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K1b|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K1c|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K1c|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K1d|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K1d|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K1f|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K1f|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K3a.consultas|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K3a.consultas|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K3a.exames|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K3a.exames|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K3a.cirurgias|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K3a.cirurgias|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K3b|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K3b|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K3c|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K3c|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K4.vinculos|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "K4.vinculos|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "K4.horas|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5559,
+      "n_delta_media_completa": 5559
+    },
+    "K4.horas|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 367,
+      "n_delta_media_completa": 367
+    },
+    "K5|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 3654,
+      "n_delta_media_completa": 3654
+    },
+    "K5|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 354,
+      "n_delta_media_completa": 354
+    },
+    "KP1|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "KP1|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "KP2|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "KP2|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    },
+    "KP1.mfc|U": {
+      "n_municipios": 5565,
+      "n_delta_principal": 5565,
+      "n_delta_media_completa": 5565
+    },
+    "KP1.mfc|V1": {
+      "n_municipios": 368,
+      "n_delta_principal": 368,
+      "n_delta_media_completa": 368
+    }
+  },
+  "holm_K": [
+    {
+      "outcome_id": "K1",
+      "tau": 7.919606415918196,
+      "ep": 18.113994491828045,
+      "ic95_inf": -27.58317040422169,
+      "ic95_sup": 43.42238323605808,
+      "p_valor": 0.6619595832285657,
+      "p_holm": 1.0,
+      "ic_honesto_inf": -929.324952817514,
+      "ic_honesto_sup": 945.1641656493505,
+      "mde": 50.719184577118526,
+      "efeito_relativo": 0.027470606923407456,
+      "media_pre_abaixo": 288.2938275808523,
+      "n_abaixo": 1446,
+      "n_acima": 1257,
+      "unidade": "por 10 mil hab. por mes (Censo 2022)"
+    },
+    {
+      "outcome_id": "K2",
+      "tau": 0.4151522996634627,
+      "ep": 0.5089991728739386,
+      "ic95_inf": -0.5824677473301338,
+      "ic95_sup": 1.4127723466570592,
+      "p_valor": 0.41471481582043823,
+      "p_holm": 1.0,
+      "ic_honesto_inf": -64.03262442696298,
+      "ic_honesto_sup": 64.8629290262899,
+      "mde": 1.425197684047028,
+      "efeito_relativo": 0.0383931868573803,
+      "media_pre_abaixo": 10.813176337917314,
+      "n_abaixo": 1446,
+      "n_acima": 1257,
+      "unidade": "por 10 mil hab. por mes (Censo 2022)"
+    },
+    {
+      "outcome_id": "K3",
+      "tau": -1.8525039994299064,
+      "ep": 10.73853564630086,
+      "ic95_inf": -22.899647112879144,
+      "ic95_sup": 19.19463911401933,
+      "p_valor": 0.8630366578113919,
+      "p_holm": 1.0,
+      "ic_honesto_inf": -549.9773102323195,
+      "ic_honesto_sup": 546.2723022334596,
+      "mde": 30.06789980964241,
+      "efeito_relativo": -0.013055830695171463,
+      "media_pre_abaixo": 141.89093307674648,
+      "n_abaixo": 1446,
+      "n_acima": 1257,
+      "unidade": "por 10 mil hab. por mes (Censo 2022)"
+    }
+  ],
+  "desvios": [
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "K1e",
+      "descricao": "o protocolo 47 (§4, §10, §11) define K1a, K1b, K1c, K1d e K1f; nao existe K1e. Nada foi estimado com esse nome."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "K3b",
+      "descricao": "'K3 com SIA no mesmo pos 202510-202512, para separar janela de fonte' foi lido como a parte SIA de K3 (consultas 0301 das CBO-alvo) com pre 202406-202506 e pos 202510-202512: K3 = K3b + K3a.consultas, e K3b contra K1a separa a janela; K3 contra K3b separa a fonte."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "janela de K4",
+      "descricao": "o protocolo nao da o pos de K4 (CNES). Fixado antes de estimar: o mesmo pos de K1 (202510-202605), para que a leitura de substituicao SUS x privado (§5) compare a mesma janela; o pos do E7 (202510-202608) e sensibilidade. Nenhum mes CNES >= 202609 e lido."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "medida de K3c e K4.horas",
+      "descricao": "K3c usa a quantidade informada (qt_itens, §3.2) dos itens cirurgicos do TISS hospitalar; o numero de internacoes com item cirurgico (n_eventos) e variante. K4.horas = horas_totais_amb_hosp - horas_sus_semanais (ambulatorial + hospitalar, total menos SUS, regra do §16 do protocolo 40); hora em branco fica ausente."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "K5",
+      "descricao": "participacao do SUS = soma(SIA) / soma(SIA + TISS) das consultas das CBO-alvo nos meses da janela com os dois dados; municipio sem nenhuma consulta na janela tem a razao indefinida e sai (contado). Sem Poisson (nao e contagem)."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "principal com meses de dado",
+      "descricao": "a robustez 'media do pos em vez da media de meses com dado' (§5 D1) fixa o principal como a media dos meses com dado e a robustez (media_completa) como so os municipios com todos os meses. Ausencia nunca vira zero."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "testes multiplos",
+      "descricao": "Holm entre K1, K2 e K3 (linha principal, U, cortes empilhados); BKY nas secundarias (mesma linha, uma por outcome). Placebos e KP1.mfc ficam fora dos dois."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "S1 a S6",
+      "descricao": "S2, S3 e S4 por outcome como no E7; S5 = linhas S5_pre_menos_pre_extra e o pre extra do estudo de evento; S6 = KP1.mfc; S1 (RDD no PMMB) nao depende do outcome e esta no E6. Local randomization nao esta no protocolo 47 e nao foi estimada."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "efeito relativo",
+      "descricao": "efeito relativo = salto / media simples de Y_pre dos municipios abaixo do corte na janela (-h < x <= 0) com delta definido; no empilhado, as linhas dos dois cortes juntas. MDE = 2,8 x EP."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "esclarecimento",
+      "item": "variantes por fonte",
+      "descricao": "'ate 202607' vale para todo outcome SIA/SIH; 'sem grupo 09' para todo outcome SIA que inclui OCI; 'sem UF-mes atipico' e 'pos 202510-202511' para os outcomes TISS; 'com TUSS 63' so para exames."
+    }
+  ],
+  "contagens": {
+    "linhas": 1758,
+    "linhas_no_protocolo": 1494,
+    "sem_estimativa": 6,
+    "nao_executado": 0,
+    "linhas_evento": 3387
+  },
+  "figuras": [
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_dird_K1_U.png",
+      "outcome_id": "K1",
+      "populacao": "U",
+      "tipo": "dird",
+      "paineis": [
+        {
+          "corte": "0.300",
+          "tau": -3.9612232913502528,
+          "ic95_inf": -54.67718250979837,
+          "ic95_sup": 46.75473592709787,
+          "p_valor": 0.878331207879617
+        },
+        {
+          "corte": "0.400",
+          "tau": 23.164344784545804,
+          "ic95_inf": -25.22634712395682,
+          "ic95_sup": 71.55503669304844,
+          "p_valor": 0.34812959398909415
+        }
+      ]
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_evento_K1_U.png",
+      "outcome_id": "K1",
+      "populacao": "U",
+      "tipo": "evento"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_dird_K2_U.png",
+      "outcome_id": "K2",
+      "populacao": "U",
+      "tipo": "dird",
+      "paineis": [
+        {
+          "corte": "0.300",
+          "tau": 0.4180746120334937,
+          "ic95_inf": -0.6449768476618674,
+          "ic95_sup": 1.4811260717288548,
+          "p_valor": 0.44081928758080835
+        },
+        {
+          "corte": "0.400",
+          "tau": 0.41140257101569544,
+          "ic95_inf": -1.4134431216165106,
+          "ic95_sup": 2.2362482636479015,
+          "p_valor": 0.6585873827272939
+        }
+      ]
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_evento_K2_U.png",
+      "outcome_id": "K2",
+      "populacao": "U",
+      "tipo": "evento"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_dird_K3_U.png",
+      "outcome_id": "K3",
+      "populacao": "U",
+      "tipo": "dird",
+      "paineis": [
+        {
+          "corte": "0.300",
+          "tau": -19.45051813765115,
+          "ic95_inf": -47.00286412585226,
+          "ic95_sup": 8.10182785054996,
+          "p_valor": 0.16647108195481003
+        },
+        {
+          "corte": "0.400",
+          "tau": 20.72816822251651,
+          "ic95_inf": -11.714428695107621,
+          "ic95_sup": 53.17076514014064,
+          "p_valor": 0.21047629831743767
+        }
+      ]
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_evento_K3_U.png",
+      "outcome_id": "K3",
+      "populacao": "U",
+      "tipo": "evento"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_dird_K1d_U.png",
+      "outcome_id": "K1d",
+      "populacao": "U",
+      "tipo": "dird",
+      "paineis": [
+        {
+          "corte": "0.300",
+          "tau": -21.083090274065427,
+          "ic95_inf": -123.52764584298407,
+          "ic95_sup": 81.36146529485322,
+          "p_valor": 0.6866829654923694
+        },
+        {
+          "corte": "0.400",
+          "tau": 18.350091810004812,
+          "ic95_inf": -53.17455107340089,
+          "ic95_sup": 89.87473469341052,
+          "p_valor": 0.6150761033459139
+        }
+      ]
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_evento_K1d_U.png",
+      "outcome_id": "K1d",
+      "populacao": "U",
+      "tipo": "evento"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_dird_KP1_U.png",
+      "outcome_id": "KP1",
+      "populacao": "U",
+      "tipo": "dird",
+      "paineis": [
+        {
+          "corte": "0.300",
+          "tau": -36.69451235396076,
+          "ic95_inf": -283.4946335077975,
+          "ic95_sup": 210.105608799876,
+          "p_valor": 0.7707380792802673
+        },
+        {
+          "corte": "0.400",
+          "tau": -48.925355974471756,
+          "ic95_inf": -374.0911676924026,
+          "ic95_sup": 276.2404557434591,
+          "p_valor": 0.7680690085370506
+        }
+      ]
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_evento_KP1_U.png",
+      "outcome_id": "KP1",
+      "populacao": "U",
+      "tipo": "evento"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_dird_KP2_U.png",
+      "outcome_id": "KP2",
+      "populacao": "U",
+      "tipo": "dird",
+      "paineis": [
+        {
+          "corte": "0.300",
+          "tau": -17.12186698271455,
+          "ic95_inf": -96.84542105853862,
+          "ic95_sup": 62.60168709310952,
+          "p_valor": 0.6738043016880637
+        },
+        {
+          "corte": "0.400",
+          "tau": -4.814252974541205,
+          "ic95_inf": -51.48802904639118,
+          "ic95_sup": 41.859523097308774,
+          "p_valor": 0.8397884291458805
+        }
+      ]
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_evento_KP2_U.png",
+      "outcome_id": "KP2",
+      "populacao": "U",
+      "tipo": "evento"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_dird_K4_vinculos_U.png",
+      "outcome_id": "K4.vinculos",
+      "populacao": "U",
+      "tipo": "dird",
+      "paineis": [
+        {
+          "corte": "0.300",
+          "tau": 0.03668017926126297,
+          "ic95_inf": -0.08825150931434478,
+          "ic95_sup": 0.1616118678368707,
+          "p_valor": 0.5649875916542971
+        },
+        {
+          "corte": "0.400",
+          "tau": 0.13302279004790962,
+          "ic95_inf": 0.00622345677034622,
+          "ic95_sup": 0.25982212332547305,
+          "p_valor": 0.0397669744680677
+        }
+      ]
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_D1_figuras/K_D1_evento_K4_vinculos_U.png",
+      "outcome_id": "K4.vinculos",
+      "populacao": "U",
+      "tipo": "evento"
+    }
+  ],
+  "saidas": [
+    "output/rdd_bolsa/K_D1_estimativas.csv",
+    "output/rdd_bolsa/K_D1_estudo_evento.csv",
+    "output/rdd_bolsa/K_D1_resumo.json"
+  ]
+}

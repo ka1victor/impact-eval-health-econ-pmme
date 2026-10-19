@@ -8,7 +8,7 @@ Uso:
 A opção `--rdd-bolsa` roda a cadeia sobre os insumos já versionados das etapas
 anteriores (quadro de vagas, funil e tipologia do ciclo 1, população do Censo
 2022, painel do ciclo 1), inclusive as aquisições a07 a a11 e a rodada
-multi-outcome (12, 13, 16 e 14) e a família N (23). Nenhuma etapa baixa o CNES nacional, o SIA, o SIH nem o
+multi-outcome (12, 13, 16 e 14), a família N (23) e a família K (21 e 22). Nenhuma etapa baixa o CNES nacional, o SIA, o SIH nem o
 TISS: o a09, o a12, o a13 e o a14 rodam em `--etapa verificar`; o a13 não faz parte da opção
 `--rdd-bolsa`.
 """
@@ -110,6 +110,13 @@ STEPS = [
     ROOT / "scripts" / "rdd_bolsa" / "16_estimar_E9_escolha.py",
     # E7: lê o painel do a09, o IED do a10, a janela LR do E5 e confere a de U com a do E6 (13).
     ROOT / "scripts" / "rdd_bolsa" / "14_estimar_E7_dird_cnes.py",
+    # Família K (protocolo 47, pós-síntese, Holm próprio): D1, DiRD da produção especializada nos cortes.
+    # Lê as saídas versionadas do a12 (SIA), a13 (SIH), a14 (TISS) e a09 (CNES), o a08, o Censo 2022, a lista de
+    # V1 do 12, o IED do a10 e funções do E7 (14) e das figuras da família N (23).
+    ROOT / "scripts" / "rdd_bolsa" / "21_producao_dird.py",
+    # D2 (exploratório): chegada do especialista do PMM-E, Callaway-Sant'Anna. Lê as mesmas séries do D1 (21),
+    # a lista nominal (só leitura), os outcomes do 12 e X2_municipios.csv (saída versionada do 18, fora do run_all).
+    ROOT / "scripts" / "rdd_bolsa" / "22_chegada_pmme_evento.py",
     # Síntese E8: lê E3, E5, E6, E7 e E9 e aplica o Holm às primárias P1 e P2.
     ROOT / "scripts" / "rdd_bolsa" / "15_sintese_E8.py",
     # O relatório para se a conferência do sinal não corresponder ao E3 atual.

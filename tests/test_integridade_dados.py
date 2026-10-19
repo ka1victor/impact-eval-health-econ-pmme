@@ -13,6 +13,9 @@ import unittest
 from pathlib import Path
 
 import pandas as pd
+import pyarrow as pa
+import pyarrow.compute as pc
+import pyarrow.parquet as pq
 
 ROOT = Path(__file__).resolve().parents[1]
 PASTAS_DE_DADOS = [ROOT / "data", ROOT / "output"]
@@ -49,10 +52,22 @@ class TestNadaSimuladoGravado(unittest.TestCase):
                         continue
                 valores = pd.read_csv(caminho, usecols=[CHAVE])[CHAVE]
             else:
+                # Só a coluna, lida pelo pyarrow como dicionário, e só os valores distintos: o painel SIA tem
+                # ~64 milhões de linhas e pd.read_parquet da coluna inteira estourava a memória (auditoria 21).
+                # Mesma semântica: arquivo sem a coluna (ou ilegível) é pulado; nulos não contam.
                 try:
-                    valores = pd.read_parquet(caminho, columns=[CHAVE])[CHAVE]
-                except (KeyError, ValueError, Exception):  # sem a coluna
+                    if CHAVE not in pq.read_schema(caminho).names:
+                        continue
+                    try:
+                        coluna = pq.read_table(caminho, columns=[CHAVE], read_dictionary=[CHAVE]).column(CHAVE)
+                    except (pa.ArrowException, ValueError, TypeError):  # tipo que não aceita dicionário
+                        coluna = pq.read_table(caminho, columns=[CHAVE]).column(CHAVE)
+                    distintos = pc.unique(coluna)
+                    if pa.types.is_dictionary(distintos.type):
+                        distintos = distintos.dictionary_decode()
+                except (KeyError, ValueError, Exception):  # sem a coluna ou ilegível
                     continue
+                valores = pd.Series(distintos.to_pylist(), dtype=object)
             rotulos = set(valores.dropna().astype(str).str.upper())
             self.assertTrue(rotulos <= {"EMPIRICO"}, f"{caminho.relative_to(ROOT)}: {sorted(rotulos)}")
 
