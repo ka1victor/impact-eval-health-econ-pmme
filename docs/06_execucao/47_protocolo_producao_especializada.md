@@ -272,3 +272,25 @@ são tomadas antes de qualquer contraste:
      sensibilidade exclui as UF-meses marcadas.
    - O município 510183, criado depois do Censo 2022, não tem população e fica
      fora das taxas, com registro.
+
+## 11. Adendo de 19/10/2026 (depois da aquisição do TISS, antes de estimar)
+
+A aquisição A14 trouxe mais quatro fatos. Eles também foram vistos só em
+totais nacionais e por UF, sem IVS. Decisões antes de qualquer contraste:
+
+1. **Exames agrupados na tabela TUSS 63.** Muitos exames chegam agrupados
+   nessa tabela, sobretudo o grupo 009, de laboratório.
+   - Ficam fora de "exames" em K3a: laboratório não exige especialista.
+   - Uma sensibilidade os inclui.
+2. **CBO vazio no TISS.** Falta em cerca de 41% dos eventos ambulatoriais,
+   mas em só 7% das consultas.
+   - K3 (consultas por CBO `alvo_pmme`) fica como definido.
+   - K3a de exames e cirurgias por CBO é um **piso** e é relatado assim.
+3. **TISS hospitalar sem CBO.** Cirurgias pagas por planos entram só como
+   total municipal (K3c, secundária), sem filtro de especialista.
+4. **Possível subnotificação no último trimestre de 2025.** A razão TISS/SIP é a
+   menor da série no 4º trimestre de 2025.
+   - K3 é uma DiRD, então um nível subnotificado igual dos dois lados do corte
+     se cancela.
+   - Isso é declarado como limite. Sensibilidade de K3: pós só 202510–202511.
+   - As UF-meses marcadas como atípicas pela A14 saem numa sensibilidade.
