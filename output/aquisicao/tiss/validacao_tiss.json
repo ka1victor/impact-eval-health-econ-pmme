@@ -1,0 +1,1781 @@
+{
+ "portoes_por_pacote": {
+  "taxa_juncao_det_min": 0.995,
+  "fracao_mes_divergente_cons_max": 0.01
+ },
+ "pacotes_planejados": 2592,
+ "pacotes_aprovados": 2592,
+ "pacotes_por_status": {
+  "aprovado": 2592
+ },
+ "juncao_det_cons": {
+  "minima": 1.0,
+  "maxima": 1.0,
+  "pacotes_com_juncao_menor_que_1": 0,
+  "linhas_det_nao_juntadas": 0
+ },
+ "eventos_por_status_municipio": {
+  "municipio_invalido": 649,
+  "municipio_omitido_pela_ans": 10472,
+  "ok": 2968012743
+ },
+ "eventos_operadora_odontologica_excluidos": 76454398,
+ "eventos_cons_sem_item_det": 0,
+ "quantidades": {
+  "det_mes_divergente": 0,
+  "qt_nao_inteira": 3713345,
+  "qt_nao_numerica": 0,
+  "qt_negativa": 0,
+  "qt_vazia_fora_de_pacote": 0,
+  "qt_vazia_item_de_pacote": 445976575
+ },
+ "linhas_det_por_tabela": {
+  "00": 235439239,
+  "18": 1481,
+  "19": 235666,
+  "20": 43159208,
+  "22": 4870922972,
+  "63": 984732374,
+  "90": 65147394,
+  "98": 207010723
+ },
+ "linhas_det_tuss22_por_capitulo": {
+  "1": 1031610238,
+  "2": 200025682,
+  "3": 105050964,
+  "4": 2751665373,
+  "5": 215580654,
+  "8": 566990061
+ },
+ "linhas_det_tuss63_por_grupo": {
+  "001": 31739675,
+  "002": 5799345,
+  "003": 1131497,
+  "004": 33286685,
+  "005": 10234604,
+  "006": 3127135,
+  "007": 2758055,
+  "008": 696947,
+  "009": 304899032,
+  "010": 828987,
+  "011": 889092,
+  "012": 1103043,
+  "013": 115912756,
+  "014": 269939,
+  "015": 612301,
+  "016": 4933855,
+  "017": 1675109,
+  "018": 7377872,
+  "019": 13541791,
+  "020": 2805927,
+  "021": 167500,
+  "022": 1084207,
+  "023": 3236604,
+  "024": 161668,
+  "025": 4168697,
+  "026": 149026,
+  "027": 16750317,
+  "028": 240797,
+  "029": 107886418,
+  "030": 120080264,
+  "031": 187183229
+ },
+ "eventos_amb_por_cbo": {
+  "": 1206584090,
+  "131120": 458,
+  "131205": 401,
+  "131210": 645,
+  "131220": 59628,
+  "201115": 3601805,
+  "203010": 18,
+  "203015": 2199486,
+  "203020": 205,
+  "203305": 3,
+  "213150": 30471,
+  "221105": 514869,
+  "221205": 400977,
+  "2231": 103186,
+  "223101": 716,
+  "223102": 3629,
+  "223103": 227,
+  "223104": 2414,
+  "223105": 3276,
+  "223106": 40476,
+  "223107": 170,
+  "223108": 1210,
+  "223109": 22619,
+  "223110": 10525,
+  "223111": 359,
+  "223112": 2599,
+  "223113": 165,
+  "223114": 1944,
+  "223115": 205794,
+  "223116": 344,
+  "223117": 36706,
+  "223118": 50,
+  "223119": 11,
+  "223120": 685,
+  "223122": 22,
+  "223123": 507,
+  "223124": 3206,
+  "223125": 28405,
+  "223126": 138,
+  "223127": 10,
+  "223128": 3102,
+  "223129": 101,
+  "223130": 68,
+  "223131": 2924,
+  "223132": 19062,
+  "223133": 1367,
+  "223134": 853,
+  "223135": 1335,
+  "223136": 2132,
+  "223138": 1248,
+  "223139": 4936,
+  "223140": 2501,
+  "223141": 213,
+  "223142": 8392,
+  "223143": 1008,
+  "223144": 22805,
+  "223145": 1298,
+  "223146": 16284,
+  "223147": 29832,
+  "223148": 736,
+  "223149": 23152,
+  "223151": 8514,
+  "223152": 160813,
+  "223153": 31770,
+  "223154": 1397,
+  "223155": 5285,
+  "223157": 20411,
+  "2231F3": 260,
+  "2231F4": 62,
+  "2231F6": 1,
+  "2231F8": 1178,
+  "2232": 2874,
+  "223204": 82389,
+  "223208": 22506802,
+  "223212": 978565,
+  "223216": 760,
+  "223220": 27049,
+  "223224": 254811,
+  "223228": 17517,
+  "223232": 54481,
+  "223236": 618052,
+  "223240": 915364,
+  "223244": 12220,
+  "223248": 1016706,
+  "223252": 97799,
+  "223256": 440396,
+  "223260": 1566361,
+  "223264": 62765,
+  "223268": 750427,
+  "223272": 9071,
+  "223276": 6988,
+  "223280": 689545,
+  "223284": 74370,
+  "223288": 137965,
+  "223293": 8118,
+  "223305": 21,
+  "223405": 2115103,
+  "223415": 2544465,
+  "223420": 12,
+  "223425": 21,
+  "223430": 308,
+  "223435": 1268,
+  "223440": 3977,
+  "223445": 54158,
+  "2235": 2,
+  "223505": 2757599,
+  "223510": 91486,
+  "223515": 1365,
+  "223520": 2945,
+  "223525": 2353,
+  "223530": 3528,
+  "223535": 1864,
+  "223540": 776,
+  "223545": 30268,
+  "223550": 3972,
+  "223555": 510,
+  "223560": 22,
+  "223565": 54985,
+  "223570": 3755,
+  "223575": 11940,
+  "2236": 726,
+  "223605": 40316180,
+  "223615": 260,
+  "223620": 72766,
+  "223625": 144172,
+  "223630": 689556,
+  "223635": 840428,
+  "223640": 813,
+  "223645": 18131,
+  "223650": 613323,
+  "223655": 4323,
+  "223660": 5828,
+  "2237": 294,
+  "223705": 319,
+  "223710": 9164332,
+  "2238": 4244,
+  "223810": 14660988,
+  "223815": 21326,
+  "223820": 17771,
+  "223825": 2435,
+  "223830": 15340,
+  "223835": 311,
+  "223840": 453,
+  "223845": 61600,
+  "223905": 5396850,
+  "223910": 477702,
+  "223915": 215335,
+  "224105": 14380,
+  "224110": 49709,
+  "224115": 6,
+  "224120": 8432,
+  "224125": 194,
+  "224130": 13,
+  "224135": 12,
+  "224140": 332737,
+  "225103": 3294054,
+  "225105": 10277626,
+  "225106": 23886,
+  "225109": 8222043,
+  "225110": 8919902,
+  "225112": 21896485,
+  "225115": 6856243,
+  "225118": 3339352,
+  "225120": 91231777,
+  "225121": 10778497,
+  "225122": 245025,
+  "225124": 105198007,
+  "225125": 413777939,
+  "225127": 11746301,
+  "225130": 11429029,
+  "225133": 30863698,
+  "225135": 48315623,
+  "225136": 9208763,
+  "225139": 32363,
+  "225140": 1356689,
+  "225142": 208984,
+  "225145": 77280,
+  "225148": 3755137,
+  "225150": 1278891,
+  "225151": 12983055,
+  "225154": 2684,
+  "225155": 40254918,
+  "225160": 3047348,
+  "225165": 25088611,
+  "225170": 84104587,
+  "225175": 2081095,
+  "225180": 12274657,
+  "225185": 7384649,
+  "225195": 2488716,
+  "225203": 16519063,
+  "225210": 2111831,
+  "225215": 2397126,
+  "225220": 5674106,
+  "225225": 28695489,
+  "225230": 1637384,
+  "225235": 5611115,
+  "225240": 902797,
+  "225250": 117314420,
+  "225255": 6937978,
+  "225260": 6980578,
+  "225265": 93830456,
+  "225270": 100645085,
+  "225275": 49959106,
+  "225280": 6745553,
+  "225285": 27344559,
+  "225290": 1724941,
+  "225295": 1045309,
+  "225305": 1097198,
+  "225310": 4024101,
+  "225315": 1733139,
+  "225320": 43932733,
+  "225325": 18190394,
+  "225330": 1082685,
+  "225335": 19086874,
+  "225340": 418430,
+  "225345": 46740,
+  "225350": 182751,
+  "225355": 10590,
+  "226105": 56,
+  "226110": 113,
+  "226305": 221759,
+  "226310": 6811,
+  "226315": 2543,
+  "226320": 299,
+  "239425": 1058288,
+  "239440": 188924,
+  "239445": 1090,
+  "2515": 1999,
+  "251505": 5,
+  "251510": 50670097,
+  "251520": 40,
+  "251525": 1,
+  "251530": 1,
+  "251545": 288492,
+  "251550": 118479,
+  "251555": 285,
+  "251605": 109083,
+  "252105": 3,
+  "301105": 324,
+  "313410": 8,
+  "322105": 8163,
+  "322115": 153,
+  "322120": 1264,
+  "322125": 849,
+  "322135": 22,
+  "322205": 520915,
+  "322220": 1356,
+  "322225": 51018,
+  "322230": 54488,
+  "322305": 57,
+  "322405": 140,
+  "322410": 14,
+  "324105": 11,
+  "324110": 1,
+  "324115": 125,
+  "324205": 899,
+  "515105": 19,
+  "515110": 80,
+  "516210": 27576
+ },
+ "codigos_municipio_invalidos_ou_de_outra_uf": [
+  "240000",
+  "260000",
+  "290000",
+  "310000",
+  "320000",
+  "330000",
+  "350000",
+  "410000",
+  "430000",
+  "520000"
+ ],
+ "municipios_validos": "lista do IBGE em output/aquisicao/populacao_censo2022_municipios.csv (co_ibge_6d)",
+ "alertas_queda": [
+  {
+   "base": "AMB",
+   "uf": "AC",
+   "competencia_realizacao": "202509",
+   "n_eventos": 28298,
+   "mediana_uf": 44334.5,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202508"
+   ]
+  },
+  {
+   "base": "AMB",
+   "uf": "AC",
+   "competencia_realizacao": "202510",
+   "n_eventos": 13079,
+   "mediana_uf": 44334.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf",
+    "queda_de_mais_de_40pct_contra_202509"
+   ]
+  },
+  {
+   "base": "AMB",
+   "uf": "AC",
+   "competencia_realizacao": "202511",
+   "n_eventos": 11062,
+   "mediana_uf": 44334.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "AMB",
+   "uf": "AC",
+   "competencia_realizacao": "202512",
+   "n_eventos": 10056,
+   "mediana_uf": 44334.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "AMB",
+   "uf": "PI",
+   "competencia_realizacao": "202211",
+   "n_eventos": 1865090,
+   "mediana_uf": 466700.0,
+   "motivos": [
+    "acima_do_dobro_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "AMB",
+   "uf": "PI",
+   "competencia_realizacao": "202212",
+   "n_eventos": 523611,
+   "mediana_uf": 466700.0,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202211"
+   ]
+  },
+  {
+   "base": "AMB",
+   "uf": "PI",
+   "competencia_realizacao": "202307",
+   "n_eventos": 1011296,
+   "mediana_uf": 466700.0,
+   "motivos": [
+    "acima_do_dobro_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "AMB",
+   "uf": "PI",
+   "competencia_realizacao": "202308",
+   "n_eventos": 447532,
+   "mediana_uf": 466700.0,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202307"
+   ]
+  },
+  {
+   "base": "AMB",
+   "uf": "PI",
+   "competencia_realizacao": "202402",
+   "n_eventos": 439292,
+   "mediana_uf": 466700.0,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202401"
+   ]
+  },
+  {
+   "base": "AMB",
+   "uf": "RR",
+   "competencia_realizacao": "202511",
+   "n_eventos": 18016,
+   "mediana_uf": 31339.0,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202510"
+   ]
+  },
+  {
+   "base": "AMB",
+   "uf": "RR",
+   "competencia_realizacao": "202512",
+   "n_eventos": 13500,
+   "mediana_uf": 31339.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AC",
+   "competencia_realizacao": "202509",
+   "n_eventos": 140,
+   "mediana_uf": 372.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf",
+    "queda_de_mais_de_40pct_contra_202508"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AC",
+   "competencia_realizacao": "202510",
+   "n_eventos": 124,
+   "mediana_uf": 372.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AC",
+   "competencia_realizacao": "202511",
+   "n_eventos": 102,
+   "mediana_uf": 372.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AC",
+   "competencia_realizacao": "202512",
+   "n_eventos": 64,
+   "mediana_uf": 372.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AL",
+   "competencia_realizacao": "202206",
+   "n_eventos": 17130,
+   "mediana_uf": 7217.0,
+   "motivos": [
+    "acima_do_dobro_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AL",
+   "competencia_realizacao": "202502",
+   "n_eventos": 3606,
+   "mediana_uf": 7217.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AM",
+   "competencia_realizacao": "202410",
+   "n_eventos": 5147,
+   "mediana_uf": 5333.5,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202409"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AP",
+   "competencia_realizacao": "202206",
+   "n_eventos": 735,
+   "mediana_uf": 885.5,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202205"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AP",
+   "competencia_realizacao": "202210",
+   "n_eventos": 678,
+   "mediana_uf": 885.5,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202209"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AP",
+   "competencia_realizacao": "202302",
+   "n_eventos": 944,
+   "mediana_uf": 885.5,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202301"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AP",
+   "competencia_realizacao": "202409",
+   "n_eventos": 736,
+   "mediana_uf": 885.5,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202408"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AP",
+   "competencia_realizacao": "202511",
+   "n_eventos": 371,
+   "mediana_uf": 885.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "AP",
+   "competencia_realizacao": "202512",
+   "n_eventos": 314,
+   "mediana_uf": 885.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "CE",
+   "competencia_realizacao": "202501",
+   "n_eventos": 12169,
+   "mediana_uf": 25983.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "CE",
+   "competencia_realizacao": "202502",
+   "n_eventos": 10611,
+   "mediana_uf": 25983.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "CE",
+   "competencia_realizacao": "202503",
+   "n_eventos": 11177,
+   "mediana_uf": 25983.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "MA",
+   "competencia_realizacao": "202512",
+   "n_eventos": 4104,
+   "mediana_uf": 9763.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "PI",
+   "competencia_realizacao": "202512",
+   "n_eventos": 2076,
+   "mediana_uf": 4687.5,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202202",
+   "n_eventos": 123,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202203",
+   "n_eventos": 75,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202204",
+   "n_eventos": 72,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202205",
+   "n_eventos": 96,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202206",
+   "n_eventos": 107,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202207",
+   "n_eventos": 89,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202208",
+   "n_eventos": 85,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202209",
+   "n_eventos": 92,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202210",
+   "n_eventos": 85,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202211",
+   "n_eventos": 111,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202212",
+   "n_eventos": 122,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202511",
+   "n_eventos": 210,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202510"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "RR",
+   "competencia_realizacao": "202512",
+   "n_eventos": 47,
+   "mediana_uf": 256.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf",
+    "queda_de_mais_de_40pct_contra_202511"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "SE",
+   "competencia_realizacao": "202204",
+   "n_eventos": 3490,
+   "mediana_uf": 7094.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "SE",
+   "competencia_realizacao": "202212",
+   "n_eventos": 15440,
+   "mediana_uf": 7094.0,
+   "motivos": [
+    "acima_do_dobro_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "SE",
+   "competencia_realizacao": "202503",
+   "n_eventos": 3479,
+   "mediana_uf": 7094.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf",
+    "queda_de_mais_de_40pct_contra_202502"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "SE",
+   "competencia_realizacao": "202512",
+   "n_eventos": 2875,
+   "mediana_uf": 7094.0,
+   "motivos": [
+    "abaixo_de_metade_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "TO",
+   "competencia_realizacao": "202303",
+   "n_eventos": 3413,
+   "mediana_uf": 1471.5,
+   "motivos": [
+    "acima_do_dobro_da_mediana_da_uf"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "TO",
+   "competencia_realizacao": "202309",
+   "n_eventos": 1097,
+   "mediana_uf": 1471.5,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202308"
+   ]
+  },
+  {
+   "base": "HOSP",
+   "uf": "TO",
+   "competencia_realizacao": "202402",
+   "n_eventos": 988,
+   "mediana_uf": 1471.5,
+   "motivos": [
+    "queda_de_mais_de_40pct_contra_202401"
+   ]
+  }
+ ],
+ "comparacao_sip": {
+  "fonte": "SIP — mapa assistencial trimestral, dados abertos da ANS (FTP/PDA/SIP)",
+  "arquivos": {
+   "202201": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202201.csv",
+    "sha256": "63311b37d4586328aed97b09531e963cb6d10fcdc81369f381394f5e8b4d12a3",
+    "bytes": 926921
+   },
+   "202204": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202204.csv",
+    "sha256": "436564d5356bd4540dfd1ce5b84fe468b46eadaac2554428daca39af402f6796",
+    "bytes": 968115
+   },
+   "202207": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202207.csv",
+    "sha256": "9e054ed1a50cebc2576b1290c4f9ba175d7a9f5e1315f61440b4e370301d06ea",
+    "bytes": 865210
+   },
+   "202210": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202210.csv",
+    "sha256": "6bbcc3d5b81a06229ccb11e07963e56eefaca37a191f487091ff8acbcf2db9b3",
+    "bytes": 905810
+   },
+   "202301": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202301.csv",
+    "sha256": "8dac9917bf443148fe46315c9c667db382344ceb6e5191fe0edbae75d5b32bf6",
+    "bytes": 988137
+   },
+   "202304": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202304.csv",
+    "sha256": "510f6cce8fd644c32759400f6ec79b1f324f9e6ff0ed828bc8bcee50613f0736",
+    "bytes": 987979
+   },
+   "202307": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202307.csv",
+    "sha256": "c224db97a4e55f374476061a9d3f6af2323791e719316f0f7389277cb88fc096",
+    "bytes": 956120
+   },
+   "202310": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202310.csv",
+    "sha256": "42f3a5782e0d84589a708d494ae3c13ab09501e53e1be6ac3d05dfff0b9202a1",
+    "bytes": 937243
+   },
+   "202401": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202401.csv",
+    "sha256": "0064653066496cd12f0172934accbba010f26a97ef3f5f564c17934acbaad13d",
+    "bytes": 995416
+   },
+   "202404": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202404.csv",
+    "sha256": "a6dc348ca43ccf429e89b991071081c0346166f1699bc20cd258f7bbc2559a48",
+    "bytes": 924080
+   },
+   "202407": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202407.csv",
+    "sha256": "cb7a094c88baf09d912ed2f8f18ac6a0341a68ea067f242c15466db891510157",
+    "bytes": 899130
+   },
+   "202410": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202410.csv",
+    "sha256": "27e46001852cf737265d151e301888c0340f980a6772abeb65234423e8a978b8",
+    "bytes": 875580
+   },
+   "202501": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202501.csv",
+    "sha256": "f22ed0e44dfc1d8437d0acd7560638ffbd350ac0f2e4ccff4aeb1932737672ef",
+    "bytes": 853395
+   },
+   "202504": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202504.csv",
+    "sha256": "78781eb1ae4a18d6f1eae09f0a0e1baebdcd550e69279eb6d445d2eded8f6a27",
+    "bytes": 841146
+   },
+   "202507": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202507.csv",
+    "sha256": "ce0375cd5bd2075a59222520194446fa9c6f6dbc38593ff4982d46a1278902b1",
+    "bytes": 832792
+   },
+   "202510": {
+    "url": "https://dadosabertos.ans.gov.br/FTP/PDA/SIP/sip_mapa_assistencial_202510.csv",
+    "sha256": "7696f4b7e00361f56dfd7ad659f3a92102ae713642ae8990bca03690f56ce966",
+    "bytes": 791991
+   }
+  },
+  "filtro_sip": "COBERTURA = MÉDICO-HOSPITALAR; soma de QT_EVENTOS em todos os portes, modalidades e contratações",
+  "tiss": "soma nacional do TISS em todos os municípios, inclusive eventos não atribuídos, sem operadoras odontológicas, todos os CBO",
+  "natureza": "comparação descritiva entre sistemas diferentes (SIP por operadora e beneficiário; TISS por evento); não é portão",
+  "faixa_alerta": {
+   "razao_min": 0.67,
+   "razao_max": 1.5
+  },
+  "linhas": [
+   {
+    "trimestre": "202201",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 54793515.5701,
+    "valor_sip": 62681521.0,
+    "razao_tiss_sip": 0.8741574023084092,
+    "alerta": false
+   },
+   {
+    "trimestre": "202201",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 57294929.0,
+    "valor_sip": 62681521.0,
+    "razao_tiss_sip": 0.914064114685411,
+    "alerta": false
+   },
+   {
+    "trimestre": "202201",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 1647832.0,
+    "valor_sip": 1943104.0,
+    "razao_tiss_sip": 0.8480410724284444,
+    "alerta": false
+   },
+   {
+    "trimestre": "202201",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 733103.0,
+    "valor_sip": 828237.0,
+    "razao_tiss_sip": 0.8851367422609712,
+    "alerta": false
+   },
+   {
+    "trimestre": "202204",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 58016621.4333,
+    "valor_sip": 67841107.0,
+    "razao_tiss_sip": 0.8551838847986369,
+    "alerta": false
+   },
+   {
+    "trimestre": "202204",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 60808482.0,
+    "valor_sip": 67841107.0,
+    "razao_tiss_sip": 0.8963368183246184,
+    "alerta": false
+   },
+   {
+    "trimestre": "202204",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 1850554.0,
+    "valor_sip": 2240212.0,
+    "razao_tiss_sip": 0.8260619977037887,
+    "alerta": false
+   },
+   {
+    "trimestre": "202204",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 789120.0,
+    "valor_sip": 982170.0,
+    "razao_tiss_sip": 0.8034454320535142,
+    "alerta": false
+   },
+   {
+    "trimestre": "202207",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 58077082.71000001,
+    "valor_sip": 69358550.0,
+    "razao_tiss_sip": 0.8373456871575315,
+    "alerta": false
+   },
+   {
+    "trimestre": "202207",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 60744754.0,
+    "valor_sip": 69358550.0,
+    "razao_tiss_sip": 0.8758077266609524,
+    "alerta": false
+   },
+   {
+    "trimestre": "202207",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 1966839.0,
+    "valor_sip": 2278318.0,
+    "razao_tiss_sip": 0.863285546618163,
+    "alerta": false
+   },
+   {
+    "trimestre": "202207",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 852318.0,
+    "valor_sip": 1028177.0,
+    "razao_tiss_sip": 0.8289603832803106,
+    "alerta": false
+   },
+   {
+    "trimestre": "202210",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 56638670.55,
+    "valor_sip": 64798897.0,
+    "razao_tiss_sip": 0.8740684359179756,
+    "alerta": false
+   },
+   {
+    "trimestre": "202210",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 57575775.0,
+    "valor_sip": 64798897.0,
+    "razao_tiss_sip": 0.8885301705058344,
+    "alerta": false
+   },
+   {
+    "trimestre": "202210",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 1898852.0,
+    "valor_sip": 2305899.0,
+    "razao_tiss_sip": 0.8234757897028447,
+    "alerta": false
+   },
+   {
+    "trimestre": "202210",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 829243.0,
+    "valor_sip": 1053469.0,
+    "razao_tiss_sip": 0.7871546291347918,
+    "alerta": false
+   },
+   {
+    "trimestre": "202301",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 63236979.4266,
+    "valor_sip": 65044743.0,
+    "razao_tiss_sip": 0.97220738387113,
+    "alerta": false
+   },
+   {
+    "trimestre": "202301",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 63589129.0,
+    "valor_sip": 65044743.0,
+    "razao_tiss_sip": 0.9776213428962276,
+    "alerta": false
+   },
+   {
+    "trimestre": "202301",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 1961325.0,
+    "valor_sip": 2170238.0,
+    "razao_tiss_sip": 0.9037372859566555,
+    "alerta": false
+   },
+   {
+    "trimestre": "202301",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 863088.0,
+    "valor_sip": 998371.0,
+    "razao_tiss_sip": 0.8644962644147316,
+    "alerta": false
+   },
+   {
+    "trimestre": "202304",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 62554155.9376,
+    "valor_sip": 72767031.0,
+    "razao_tiss_sip": 0.8596496940709317,
+    "alerta": false
+   },
+   {
+    "trimestre": "202304",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 65011210.0,
+    "valor_sip": 72767031.0,
+    "razao_tiss_sip": 0.8934157283399401,
+    "alerta": false
+   },
+   {
+    "trimestre": "202304",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 1985872.0,
+    "valor_sip": 2301392.0,
+    "razao_tiss_sip": 0.8629003663869519,
+    "alerta": false
+   },
+   {
+    "trimestre": "202304",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 857615.0,
+    "valor_sip": 1053670.0,
+    "razao_tiss_sip": 0.8139313067658754,
+    "alerta": false
+   },
+   {
+    "trimestre": "202307",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 61216416.2976,
+    "valor_sip": 70494926.0,
+    "razao_tiss_sip": 0.8683804604263291,
+    "alerta": false
+   },
+   {
+    "trimestre": "202307",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 63975587.0,
+    "valor_sip": 70494926.0,
+    "razao_tiss_sip": 0.9075204504789465,
+    "alerta": false
+   },
+   {
+    "trimestre": "202307",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 2039073.0,
+    "valor_sip": 2410011.0,
+    "razao_tiss_sip": 0.8460845199461745,
+    "alerta": false
+   },
+   {
+    "trimestre": "202307",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 928727.0,
+    "valor_sip": 1131516.0,
+    "razao_tiss_sip": 0.8207811467093704,
+    "alerta": false
+   },
+   {
+    "trimestre": "202310",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 55785117.7195,
+    "valor_sip": 67013116.0,
+    "razao_tiss_sip": 0.8324507357559675,
+    "alerta": false
+   },
+   {
+    "trimestre": "202310",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 58733750.0,
+    "valor_sip": 67013116.0,
+    "razao_tiss_sip": 0.8764515591246347,
+    "alerta": false
+   },
+   {
+    "trimestre": "202310",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 1924482.0,
+    "valor_sip": 2306450.0,
+    "razao_tiss_sip": 0.8343913806932732,
+    "alerta": false
+   },
+   {
+    "trimestre": "202310",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 870757.0,
+    "valor_sip": 1078433.0,
+    "razao_tiss_sip": 0.8074279996995641,
+    "alerta": false
+   },
+   {
+    "trimestre": "202401",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 60002612.0,
+    "valor_sip": 66308328.0,
+    "razao_tiss_sip": 0.9049031065901707,
+    "alerta": false
+   },
+   {
+    "trimestre": "202401",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 63393006.0,
+    "valor_sip": 66308328.0,
+    "razao_tiss_sip": 0.9560338484179544,
+    "alerta": false
+   },
+   {
+    "trimestre": "202401",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 2006062.0,
+    "valor_sip": 2171829.0,
+    "razao_tiss_sip": 0.9236740093257803,
+    "alerta": false
+   },
+   {
+    "trimestre": "202401",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 888020.0,
+    "valor_sip": 1013990.0,
+    "razao_tiss_sip": 0.8757680056016331,
+    "alerta": false
+   },
+   {
+    "trimestre": "202404",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 64742667.3979,
+    "valor_sip": 74931894.0,
+    "razao_tiss_sip": 0.8640201647365273,
+    "alerta": false
+   },
+   {
+    "trimestre": "202404",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 68568281.0,
+    "valor_sip": 74931894.0,
+    "razao_tiss_sip": 0.9150747077072414,
+    "alerta": false
+   },
+   {
+    "trimestre": "202404",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 2105725.0,
+    "valor_sip": 2295135.0,
+    "razao_tiss_sip": 0.9174732640999331,
+    "alerta": false
+   },
+   {
+    "trimestre": "202404",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 896843.0,
+    "valor_sip": 1046814.0,
+    "razao_tiss_sip": 0.8567357715888401,
+    "alerta": false
+   },
+   {
+    "trimestre": "202407",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 64705774.0238,
+    "valor_sip": 72631769.0,
+    "razao_tiss_sip": 0.8908742677574052,
+    "alerta": false
+   },
+   {
+    "trimestre": "202407",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 68408017.0,
+    "valor_sip": 72631769.0,
+    "razao_tiss_sip": 0.9418470449205223,
+    "alerta": false
+   },
+   {
+    "trimestre": "202407",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 2144536.0,
+    "valor_sip": 2278832.0,
+    "razao_tiss_sip": 0.9410680559163642,
+    "alerta": false
+   },
+   {
+    "trimestre": "202407",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 955923.0,
+    "valor_sip": 1076559.0,
+    "razao_tiss_sip": 0.8879429738639498,
+    "alerta": false
+   },
+   {
+    "trimestre": "202410",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 59428361.105000004,
+    "valor_sip": 70665391.0,
+    "razao_tiss_sip": 0.8409825554492439,
+    "alerta": false
+   },
+   {
+    "trimestre": "202410",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 62810330.0,
+    "valor_sip": 70665391.0,
+    "razao_tiss_sip": 0.888841469793891,
+    "alerta": false
+   },
+   {
+    "trimestre": "202410",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 2015442.0,
+    "valor_sip": 2352286.0,
+    "razao_tiss_sip": 0.8568014263571692,
+    "alerta": false
+   },
+   {
+    "trimestre": "202410",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 892274.0,
+    "valor_sip": 1103373.0,
+    "razao_tiss_sip": 0.8086784795350258,
+    "alerta": false
+   },
+   {
+    "trimestre": "202501",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 61196468.1633,
+    "valor_sip": 67533809.0,
+    "razao_tiss_sip": 0.9061604708731889,
+    "alerta": false
+   },
+   {
+    "trimestre": "202501",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 64623896.0,
+    "valor_sip": 67533809.0,
+    "razao_tiss_sip": 0.9569117595603115,
+    "alerta": false
+   },
+   {
+    "trimestre": "202501",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 1917629.0,
+    "valor_sip": 2315999.0,
+    "razao_tiss_sip": 0.827992153709911,
+    "alerta": false
+   },
+   {
+    "trimestre": "202501",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 898689.0,
+    "valor_sip": 1115543.0,
+    "razao_tiss_sip": 0.8056067762515654,
+    "alerta": false
+   },
+   {
+    "trimestre": "202504",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 64371204.4553,
+    "valor_sip": 72324448.0,
+    "razao_tiss_sip": 0.8900338161626896,
+    "alerta": false
+   },
+   {
+    "trimestre": "202504",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 68432398.0,
+    "valor_sip": 72324448.0,
+    "razao_tiss_sip": 0.9461862467308426,
+    "alerta": false
+   },
+   {
+    "trimestre": "202504",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 2021894.0,
+    "valor_sip": 2395692.0,
+    "razao_tiss_sip": 0.8439707608490574,
+    "alerta": false
+   },
+   {
+    "trimestre": "202504",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 943538.0,
+    "valor_sip": 1140524.0,
+    "razao_tiss_sip": 0.8272846516162746,
+    "alerta": false
+   },
+   {
+    "trimestre": "202507",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 65875646.42999999,
+    "valor_sip": 76372687.0,
+    "razao_tiss_sip": 0.862555044449333,
+    "alerta": false
+   },
+   {
+    "trimestre": "202507",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 69873421.0,
+    "valor_sip": 76372687.0,
+    "razao_tiss_sip": 0.9149006502809047,
+    "alerta": false
+   },
+   {
+    "trimestre": "202507",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 2110421.0,
+    "valor_sip": 2607134.0,
+    "razao_tiss_sip": 0.8094792979570671,
+    "alerta": false
+   },
+   {
+    "trimestre": "202507",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 1033663.0,
+    "valor_sip": 1261608.0,
+    "razao_tiss_sip": 0.8193218495760966,
+    "alerta": false
+   },
+   {
+    "trimestre": "202510",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "qt_itens",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 58049809.6746,
+    "valor_sip": 72492774.0,
+    "razao_tiss_sip": 0.8007668415972052,
+    "alerta": false
+   },
+   {
+    "trimestre": "202510",
+    "item_sip": "A",
+    "descricao_sip": "consultas médicas",
+    "tiss_base": "AMB",
+    "tiss_tipo": "consultas",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 61910045.0,
+    "valor_sip": 72492774.0,
+    "razao_tiss_sip": 0.8540167741408268,
+    "alerta": false
+   },
+   {
+    "trimestre": "202510",
+    "item_sip": "E",
+    "descricao_sip": "internações",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "evento_qualquer",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 1760155.0,
+    "valor_sip": 2592035.0,
+    "razao_tiss_sip": 0.6790629756156842,
+    "alerta": false
+   },
+   {
+    "trimestre": "202510",
+    "item_sip": "E1.02",
+    "descricao_sip": "internações cirúrgicas",
+    "tiss_base": "HOSP",
+    "tiss_tipo": "cirurgicos",
+    "tiss_medida": "n_eventos",
+    "tiss_trimestre_completo": true,
+    "valor_tiss": 873013.0,
+    "valor_sip": 1279410.0,
+    "razao_tiss_sip": 0.6823559296863398,
+    "alerta": false
+   }
+  ]
+ },
+ "totais_nacionais_d_tiss": "comparação com o D-TISS não feita: a página da ANS (gov.br/ans/.../dados-e-indicadores-do-setor/d-tiss-painel-dos-dados-do-tiss, consultada em 19/10/2026) só publica painéis Power BI, sem arquivo de totais para download reprodutível; o agregado publicado usado é o SIP trimestral",
+ "natureza_dos_dados": "EMPIRICO"
+}

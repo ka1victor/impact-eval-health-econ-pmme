@@ -73,3 +73,6 @@ output/rdd_bolsa/X1_cache/
 
 # A13 (SIH TabNet): respostas brutas e metadados por consulta; reproduzíveis com --etapa baixar
 output/aquisicao/sih/cache_tabnet/
+# A14 (TISS/ANS): ZIPs brutos transitórios e cache por UF × mês; só agregados e manifesto entram no Git
+output/aquisicao/tiss/cache_bruto/
+output/aquisicao/tiss/cache_pacote/

@@ -39,6 +39,7 @@ CADEIA = [
     AQ / "a09_adquirir_cnes_nacional.py",
     # Protocolo 47: SIA do TabNet, só conferido (`--etapa verificar`), como o a09.
     AQ / "a12_adquirir_sia_tabnet.py",
+    AQ / "a14_adquirir_tiss_ans.py",  # protocolo 47: TISS/ANS, só verificar
     RDD / "12_construir_outcomes_funil.py",
     RDD / "13_estimar_E6_funil.py",
     RDD / "16_estimar_E9_escolha.py",
@@ -49,6 +50,7 @@ CADEIA = [
     RDD / "10_galeria_figura_regra.py",
 ]
 A09 = AQ / "a09_adquirir_cnes_nacional.py"
+A14 = AQ / "a14_adquirir_tiss_ans.py"
 # Leem data/ivs_ipea_2010_municipios.csv como IVS 2010 ou dependem disso (auditoria 16).
 RETIRADOS = [
     RDD / "01_auditar_regra_e_suporte.py",
@@ -230,10 +232,11 @@ class TestCadeiaRddBolsa(unittest.TestCase):
     def test_e3_roda_com_o_escore_completo(self) -> None:
         self.assertEqual(RA.ARGUMENTOS[RDD / "07_estimar_E3_rdd_completa.py"], ["--escore", ESCORE_COMPLETO])
         self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09,
-                                              AQ / "a12_adquirir_sia_tabnet.py", AQ / "a13_adquirir_sih_tabnet.py"})
+                                              AQ / "a12_adquirir_sia_tabnet.py", AQ / "a13_adquirir_sih_tabnet.py", A14})
         self.assertEqual(RA.ARGUMENTOS[AQ / "a12_adquirir_sia_tabnet.py"], ["--etapa", "verificar"])
         # a13 (SIH no TabNet, protocolo 47): como o a09, o run_all só confere sem rede.
         self.assertEqual(RA.ARGUMENTOS[AQ / "a13_adquirir_sih_tabnet.py"], ["--etapa", "verificar"])
+        self.assertEqual(RA.ARGUMENTOS[A14], ["--etapa", "verificar"])
         self.assertTrue((ROOT / ESCORE_COMPLETO).exists())
         # O 04b, que grava o escore completo, vem antes do E3.
         self.assertLess(posicao(RDD / "04b_validar_ivs_oficial_escore_administrativo.py"),

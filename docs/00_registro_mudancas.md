@@ -8,6 +8,25 @@
 
 ---
 
+## 19/10/2026 — Aquisição TISS/ANS para a família K (a14)
+
+Motivo: o protocolo
+[`06_execucao/47`](06_execucao/47_protocolo_producao_especializada.md) (§2, §9)
+pede a produção paga por planos de saúde (dados abertos TISS da ANS) por
+município do prestador, mês, tipo de procedimento e grupo de CBO, para K3,
+K3a, K3b e K5. Só aquisição: nada calculado por IVS, corte ou tratamento.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/aquisicao/A14_tiss_ans.md`](auditorias/aquisicao/A14_tiss_ans.md) | fonte, dicionário, unidade, chaves, filtros, grupos de CBO (importados do a09), regra TUSS dos tipos, cobertura (zero × ausente), validações, limites e pressupostos do protocolo que falharam |
+
+Insumos e scripts novos: `scripts/aquisicao/a14_adquirir_tiss_ans.py`,
+`tests/test_aquisicao_tiss.py` e `output/aquisicao/tiss/` (painéis, manifesto,
+cobertura, validação e resumo gerado). O `run_all.py` roda o a14 só em
+`--etapa verificar`.
+
 ## 19/10/2026 — Aquisição SIA/SUS pelo TabNet (a12, protocolo 47)
 
 Motivo: primeira aquisição da família K do protocolo

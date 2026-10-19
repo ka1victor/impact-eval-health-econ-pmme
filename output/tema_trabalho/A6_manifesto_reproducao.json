@@ -48,6 +48,7 @@
     ".venv/bin/python scripts/aquisicao/a09_adquirir_cnes_nacional.py",
     ".venv/bin/python scripts/aquisicao/a12_adquirir_sia_tabnet.py",
     ".venv/bin/python scripts/aquisicao/a13_adquirir_sih_tabnet.py",
+    ".venv/bin/python scripts/aquisicao/a14_adquirir_tiss_ans.py",
     ".venv/bin/python scripts/rdd_bolsa/12_construir_outcomes_funil.py",
     ".venv/bin/python scripts/rdd_bolsa/13_estimar_E6_funil.py",
     ".venv/bin/python scripts/rdd_bolsa/16_estimar_E9_escolha.py",
