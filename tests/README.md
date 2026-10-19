@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **558 testes em 39 módulos** (contagem de 18/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **575 testes em 40 módulos** (contagem de 19/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -60,6 +60,7 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_e9_escolha.py`](test_e9_escolha.py) | RDD Bolsa — E9 | Logit condicional da escolha dos candidatos (§12, §14, §15): recuperação sintética do coeficiente, equivalência com o statsmodels, robustez pós-auditoria e números do doc 42 conferidos contra os CSVs. |
 | [`test_cnes_nacional.py`](test_cnes_nacional.py) | Aquisição — CNES nacional | Painel município × grupo de CBO × mês (39 competências): esquema, painel balanceado só em meses lidos, nenhum mês ≥ 202609, horas SUS (§16), horas em branco nunca viram zero, portão antes de gravar e validação contra o painel do ciclo 1. |
 | [`test_e7_dird.py`](test_e7_dird.py) | RDD Bolsa — E7 | Diferença em descontinuidades no CNES nacional (F3, P2, S2–S6, §16): recuperação sintética, horas faltantes nunca viram zero, portões fail-closed, tabelas e afirmações do doc 43 conferidas contra os CSVs. |
+| [`test_relatorio_rdd_bolsa.py`](test_relatorio_rdd_bolsa.py) | RDD Bolsa — relatório (parte II) | Relatório HTML/PDF da RDD com a rodada multi-outcome: seções do protocolo 40, auditorias 18 e 19, E6, E9, E7 e síntese E8 presentes e em ordem (hipóteses primárias primeiro); caixa “Como ler” antes de cada tabela; todo número da parte II rastreado às saídas lidas e números-chave (P1, P2, E9) conferidos; figuras = PNG do pipeline byte a byte; HTML em dia com as saídas (SHA-256); A4 antigo rotulado como failure mode; síntese E8 “pendente” sem o JSON (JSON sintético só em pasta temporária). |
 | [`test_conferencia_sinal_rdd.py`](test_conferencia_sinal_rdd.py) | RDD Bolsa — sinal do salto | O salto é o lado com bolsa maior menos o lado com bolsa menor; reestimação independente e decomposição da diferença bruta em salto e inclinação. Sintético. |
 | [`test_pipeline_rdd_bolsa.py`](test_pipeline_rdd_bolsa.py) | RDD Bolsa — pipeline | Ordem da cadeia da RDD no `run_all.py`, argumento do E3 e retirada dos scripts que liam o arquivo de IVS errado. |
 | [`test_integridade_dados.py`](test_integridade_dados.py) | Integridade | Nenhum arquivo em `data/` ou `output/` com nome de dado simulado; toda saída rotulada com `natureza_dos_dados` é `EMPIRICO`. |
