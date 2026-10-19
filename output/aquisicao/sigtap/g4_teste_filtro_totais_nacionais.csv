@@ -1,0 +1,138 @@
+mes_processamento,filtro_cbo,co_subgrupo,co_forma,no_forma,qtd_total_consulta_municipal,qtd_total_consulta_por_cbo,natureza_dos_dados
+202406,alvo_pmme (17 CBO da ponte),0101,010101,Educacao em saude,13266,13266,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0101,010104,Alimentacao e nutricao,20314,20314,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0102,010201,Vigilancia sanitaria,32,32,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0102,010202,Vigilancia em Saude do Trabalhador,39,39,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0201,020101,Coleta de material por meio de puncao/biopsia,47430,47430,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0201,020102,Outras formas de coleta de material,35958,35958,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020201,Exames bioquimicos,464497,464497,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020202,Exames hematologicos e hemostasia,122088,122088,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020203,Exames sorologicos e imunologicos,54190,54190,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020204,Exames coprologicos,6450,6450,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020205,Exames de uroanalise,31249,31249,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020206,Exames hormonais,37735,37735,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020207,Exames toxicologicos ou de monitorizacao terapeutica,419,419,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020208,Exames microbiologicos,24742,24742,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020209,Exames em outros liquidos biologicos,636,636,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020210,Exames de genetica,169,169,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020211,Exames para triagem neonatal,2482,2482,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0202,020212,Exames imunohematologicos,4883,4883,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0203,020301,Exames citopatologicos,384863,384863,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0203,020302,Exames anatomopatologicos,316295,316295,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0204,020401,Exames radiologicos da cabeca e pescoco,186082,186082,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0204,020402,Exames radiologicos da coluna vertebral,306932,306932,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0204,020403,Exames radiologicos do torax e mediastino,1477440,1477440,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0204,020404,Exames radiologicos da cintura escapular e dos membros superiores,629814,629814,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0204,020405,Exames radiologicos do abdomen e pelve,108135,108135,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0204,020406,Exames radiologicos da cintura pelvica e dos membros inferiores,983485,983485,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0205,020501,Ultra-sonografias do sistema circulatorio (qualquer regiao anatomica),388795,388795,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0205,020502,Ultra-sonografias dos demais sistemas,1469332,1469332,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0206,020601,"Tomografia da cabeca, pescoco e coluna vertebral",399105,399105,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0206,020602,Tomografia do torax e membros superiores,195343,195343,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0206,020603,"Tomografia do abdomen, pelve e membros inferiores",396574,396574,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0207,020701,"RM da cabeca, pescoco e coluna vertebral",110071,110071,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0207,020702,RM do torax e membros superiores,18393,18393,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0207,020703,"RM do abdomen, pelve e membros inferiores",76138,76138,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0209,020901,Aparelho digestivo,167146,167146,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0209,020902,Aparelho urinario,282,282,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0209,020903,Aparelho ginecologico,814,814,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0209,020904,Aparelho respiratorio,35145,35145,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0210,021001,Exames radiologicos de vasos sanguineos e linfaticos,3770,3770,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0210,021002,Vias biliares,28,28,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0211,021101,Diagnostico em angiologia,14,14,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0211,021102,Diagnostico em cardiologia,675879,675879,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0211,021104,Diagnostico em ginecologia-obstetricia,126507,126507,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0211,021105,Diagnostico em neurologia,3891,3891,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0211,021106,Diagnostico em oftalmologia,11441,11441,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0211,021107,Diagnostico em otorrinolaringologia/fonoaudiologia,46371,46371,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0211,021108,Diagnostico em pneumologia,1848,1848,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0211,021109,Diagnostico em urologia,915,915,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0212,021201,Exames do doador/receptor,4388,4388,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0212,021202,Procedimentos especiais em hemoterapica,5990,5990,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0213,021301,Exames relacionados a doencas e agravos de notificacao compulsoria,5,5,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0214,021401,Teste realizado fora da estrutura de laboratorio,22425,22425,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030101,Consultas medicas/outros profissionais  de nivel superior,3139308,3139308,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030102,Atendimento/Acompanhamento em saude do trabalhador,67,67,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030103,Atendimento pre-hospitalar de urgencia,588,588,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030104,Outros atendimentos realizados por profissionais de niveis superior,11121,11121,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030105,Atencao domiciliar,6,6,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030106,Consulta/Atendimento as urgencias (em geral),937661,937661,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030107,"Atendimento/acompanhamento em reabilitacao fisica, mental, visual e multiplas deficiencias",4478,4478,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030108,Atendimento/Acompanhamento psicossocial,1220,1220,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030109,Atendimento/Acompanhamento em saude do idoso,35,35,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030110,Atendimentos de enfermagem (em geral),56984,56984,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030111,Atendimento/Acompanhamento queimados,34,34,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030112,Atendimento/acompanhamento de diagnostico de doencas endocrinas/metabolicas e nutricionais,2140,2140,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030113,Acompanhamento em outras especialidades,5679,5679,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0301,030114,Cuidados Paliativos,42,42,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0303,030302,"Tratamento de doencas do sangue, orgaos hematopoeticos e alguns transtornos imunitarios",411,411,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0303,030307,Tratamento de doencas do aparelho digestivo,1000,1000,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0303,030308,Tratamento de doencas da pele e do tecido  subcutaneo,2205,2205,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0303,030309,Tratamento de doencas do sistema osteomuscular e do tecido conjuntivo,3265,3265,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0303,030314,Tratamento de doencas do ouvido/apofise mastoide e vias aereas,247,247,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0304,030401,Radioterapia,14918,14918,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0304,030402,Quimioterapia paliativa - adulto,127027,127027,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0304,030403,Quimioterapia para controle temporario de doenca - adulto,4517,4517,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0304,030404,Quimioterapia previa (neoadjuvante/citorredutora)- adulto,27719,27719,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0304,030405,Quimioterapia adjuvante (profilatica) - adulto,150529,150529,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0304,030406,Quimioterapia curativa - adulto,1384,1384,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0304,030408,Quimioterapia - procedimentos especiais,14934,14934,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0305,030502,Tratamento em nefrologia em geral,1,1,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0306,030601,Procedimentos destinados a obtencao do sangue para fins de assistencia hemoterapica,1794,1794,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0306,030602,Medicina transfusional,749,749,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0307,030702,Endodontia,1,1,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0307,030703,Periodontia clinica,1,1,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0309,030902,Terapias em doencas alergicas,1,1,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0309,030903,Terapias do aparelho geniturinario,1736,1736,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0309,030904,Terapias do aparelho cardiovascular,91,91,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0309,030905,Praticas integrativas e complementares,411,411,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0310,031001,Parto e nascimento,57,57,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0401,040101,Pequenas cirurgias,103640,103640,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0401,040102,"Cirurgias de pele, tecido subcutaneo e mucosa",335,335,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0403,040305,Tratamento neurocirurgico da dor funcional,54,54,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0404,040401,Cirurgia das vias aereas superiores e do pescoco,121538,121538,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0404,040402,Cirurgia da face e do sistema estomatognatico,514,514,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0405,040501,Palpebras e vias lacrimais,224,224,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0405,040503,"Corpo vitreo, retina, coroide e esclera",4,4,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0405,040504,Cavidade orbitaria e globo ocular,7,7,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0405,040505,"Conjuntiva, cornea, camara anterior, iris, corpo ciliar e cristalino",254,254,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0406,040602,Cirurgia vascular,4128,4128,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0407,040701,"Esofago, estomago e duodeno",6393,6393,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0407,040702,"Intestinos , reto e anus",6750,6750,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0407,040703,"Pancreas, baco, figado e vias biliares",93,93,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0407,040704,Parede e cavidade abdominal,1124,1124,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0408,040801,Cintura escapular,59,59,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0408,040802,Membros superiores,111,111,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0408,040805,Membros inferiores,23,23,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0408,040806,Gerais,194,194,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0409,040901,"Rim, ureter e bexiga",261,261,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0409,040902,Uretra,107,107,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0409,040904,"Bolsa escrotal, testiculos e cordao espermatico",657,657,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0409,040905,Penis,683,683,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0409,040906,Utero e anexos,2055,2055,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0409,040907,"Vagina, vulva e perineo",667,667,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0410,041001,Mama,310,310,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0411,041101,Parto,564,564,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0411,041102,Outras cirurgias relacionadas com o estado gestacional,18,18,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0412,041201,Traqueia e bronquios,11,11,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0412,041203,Pleura,73,73,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0412,041205,Pulmao,204,204,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0413,041301,Tratamento de queimados,582,582,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0413,041304,Outras cirurgias plasticas/reparadoras,344,344,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0414,041401,Buco-maxilo-facial,5,5,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0414,041402,Cirurgia oral,107,107,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0415,041504,Procedimentos cirurgicos gerais,1376,1376,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0417,041701,Anestesias,60688,60688,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0418,041801,Acessos para dialise,577,577,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0418,041802,Intervencoess cirurgicas em acessos para dialise,70,70,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0501,050103,Coleta e exames para ident. de doador de celula-tronco hematopoeticas (busca internacional/nacional,15,15,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0501,050105,Exames imunogeneticos/histocompatibilidade para identificacao de receptor de orgaos,114,114,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0501,050107,"Outros exames complementares para doacao de orgaos, tecidos e celulas",250,250,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0501,050108,Exames complementares para pacientes transplantados,2548,2548,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0506,050601,Acompanhamento de paciente no pre e pos-transplante,5042,5042,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0701,070103,OPM auditivas,2885,2885,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0701,070105,OPM em gastroenterologia,45202,45202,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0701,070106,OPM em urologia,4794,4794,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0702,070210,OPM em nefrologia,284,284,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0801,080101,Incentivos,328,328,EMPIRICO
+202406,alvo_pmme (17 CBO da ponte),0803,080301,Deslocamento/Ajuda de custo,384033,384033,EMPIRICO

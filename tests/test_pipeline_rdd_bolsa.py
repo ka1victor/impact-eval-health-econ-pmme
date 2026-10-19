@@ -55,6 +55,7 @@ CADEIA = [
 ]
 A09 = AQ / "a09_adquirir_cnes_nacional.py"
 A14 = AQ / "a14_adquirir_tiss_ans.py"
+A15 = AQ / "a15_adquirir_sih_residencia.py"  # portão G3 (plano 51): SIH por residência, só verificar
 # Leem data/ivs_ipea_2010_municipios.csv como IVS 2010 ou dependem disso (auditoria 16).
 RETIRADOS = [
     RDD / "01_auditar_regra_e_suporte.py",
@@ -166,6 +167,8 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                 RDD / "12_construir_outcomes_funil.py", RDD / "14_estimar_E7_dird_cnes.py",
                 RDD / "23_estimar_contagem_vagas.py"],
             RDD / "22_chegada_pmme_evento.py": [RDD / "21_producao_dird.py", RDD / "12_construir_outcomes_funil.py"],
+            # a15 (SIH por residência) compara seus totais nacionais com as validações versionadas do a13.
+            A15: [AQ / "a13_adquirir_sih_tabnet.py"],
             # E7 lê o painel do a09, o IED do a10, a janela LR do E5 e confere a de U com a do E6.
             RDD / "14_estimar_E7_dird_cnes.py": [
                 A09, AQ / "a10_normas_mesmos_cortes_ivs.py", RDD / "11_inferencia_alternativa.py",
@@ -254,11 +257,15 @@ class TestCadeiaRddBolsa(unittest.TestCase):
     def test_e3_roda_com_o_escore_completo(self) -> None:
         self.assertEqual(RA.ARGUMENTOS[RDD / "07_estimar_E3_rdd_completa.py"], ["--escore", ESCORE_COMPLETO])
         self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09,
-                                              AQ / "a12_adquirir_sia_tabnet.py", AQ / "a13_adquirir_sih_tabnet.py", A14})
+                                              AQ / "a12_adquirir_sia_tabnet.py", AQ / "a13_adquirir_sih_tabnet.py", A14,
+                                              A15})
         self.assertEqual(RA.ARGUMENTOS[AQ / "a12_adquirir_sia_tabnet.py"], ["--etapa", "verificar"])
         # a13 (SIH no TabNet, protocolo 47): como o a09, o run_all só confere sem rede.
         self.assertEqual(RA.ARGUMENTOS[AQ / "a13_adquirir_sih_tabnet.py"], ["--etapa", "verificar"])
         self.assertEqual(RA.ARGUMENTOS[A14], ["--etapa", "verificar"])
+        # a15 (SIH por residência, portão G3): como o a13, o run_all só confere sem rede; fora do --rdd-bolsa.
+        self.assertEqual(RA.ARGUMENTOS[A15], ["--etapa", "verificar"])
+        self.assertNotIn(A15, RA.etapas(somente_rdd_bolsa=True))
         self.assertTrue((ROOT / ESCORE_COMPLETO).exists())
         # O 04b, que grava o escore completo, vem antes do E3.
         self.assertLess(posicao(RDD / "04b_validar_ivs_oficial_escore_administrativo.py"),

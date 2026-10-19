@@ -1,0 +1,60 @@
+{
+  "data_hora_utc": "2026-10-19T20:16:09+00:00",
+  "competencia_alvo": "202412",
+  "tentativas": [
+    {
+      "via": "pagina_download",
+      "url": "http://sigtap.datasus.gov.br/tabela-unificada/app/download.jsp",
+      "data_hora_utc": "2026-10-19T20:16:10+00:00",
+      "http_status": 200,
+      "content_type": "text/html;charset=ISO-8859-1",
+      "bytes": 5483,
+      "sha256": "fff4dcfd7e355b1975268f5ef12e451cabebdac748fab907e3a9b4fb5a26b5d9",
+      "mensagem_indisponivel": true,
+      "trecho": "Caro usuário, no momento o serviço de downloads encontra-se indisponível.",
+      "resultado": "servico_de_download_indisponivel"
+    },
+    {
+      "via": "rss_competencias",
+      "url": "http://sigtap.datasus.gov.br/tabela-unificada/competencias.rss",
+      "data_hora_utc": "2026-10-19T20:16:11+00:00",
+      "http_status": 200,
+      "bytes": 7122,
+      "sha256": "8ee74e575478f1987fde2ddc956e9df442eb03a29bea7d856a64c652c601b10e",
+      "itens": 226,
+      "itens_recentes": [
+        {
+          "titulo": "Competência 10/2026",
+          "link": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202610_v2610151110.zip",
+          "pub_date": "Thu, 15 Oct 2026 14:11:00 GMT"
+        },
+        {
+          "titulo": "Competência 09/2026",
+          "link": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202609_v2610050950.zip",
+          "pub_date": "Mon, 05 Oct 2026 12:50:00 GMT"
+        },
+        {
+          "titulo": "Competência 08/2026",
+          "link": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202608_v2608141139.zip",
+          "pub_date": "Fri, 14 Aug 2026 14:40:00 GMT"
+        }
+      ],
+      "item_competencia_alvo": {
+        "titulo": "Competência 12/2024",
+        "link": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202412_v2501172121.zip",
+        "pub_date": "Fri, 17 Jan 2025 02:00:00 GMT"
+      },
+      "resultado": "ok"
+    },
+    {
+      "via": "ftp",
+      "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202412_v2501172121.zip",
+      "data_hora_utc": "2026-10-19T20:16:56+00:00",
+      "resultado": "falha",
+      "erro": "TimeoutError: timed out"
+    }
+  ],
+  "zip_oficial_nome": "TabelaUnificada_202412_v2501172121.zip",
+  "obtido": false,
+  "status": "INDISPONIVEL_NESTA_EXECUCAO"
+}

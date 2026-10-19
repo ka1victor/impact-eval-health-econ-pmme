@@ -1,0 +1,1081 @@
+{
+  "gerador": "scripts/aquisicao/g4_mapa_especialidade_procedimento.py",
+  "plano": "docs/06_execucao/51_plano_perguntas_reformuladas.md (P3, T3.2, portão G4)",
+  "data_execucao": "2026-10-19",
+  "natureza_dos_dados": "EMPIRICO",
+  "veredito": "VIAVEL_PARCIAL",
+  "motivo": "O filtro de CBO cruza com a forma de organização por município e mês no TabNet do SIA (teste de um mês aprovado), e o mapa curso → formas foi montado com a produção nacional aprovada de 2024. Falta a fonte normativa pedida: a compatibilidade procedimento × CBO do SIGTAP (rl_procedimento_ocupacao) não pôde ser obtida nesta execução (sondagem registrada). O mapa é revelado (o que as CBO registram), não normativo. Do lado hospitalar, o TabNet do SIH não tem CBO: cirurgias por AIH não se atribuem à especialidade.",
+  "sigtap": {
+    "status": "INDISPONIVEL_NESTA_EXECUCAO",
+    "competencia_alvo": "202412",
+    "zip_oficial_nome": "TabelaUnificada_202412_v2501172121.zip",
+    "tentativas": [
+      {
+        "via": "pagina_download",
+        "url": "http://sigtap.datasus.gov.br/tabela-unificada/app/download.jsp",
+        "resultado": "servico_de_download_indisponivel",
+        "http_status": 200,
+        "erro": null,
+        "trecho": "Caro usuário, no momento o serviço de downloads encontra-se indisponível."
+      },
+      {
+        "via": "rss_competencias",
+        "url": "http://sigtap.datasus.gov.br/tabela-unificada/competencias.rss",
+        "resultado": "ok",
+        "http_status": 200,
+        "erro": null,
+        "trecho": null
+      },
+      {
+        "via": "ftp",
+        "url": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads/TabelaUnificada_202412_v2501172121.zip",
+        "resultado": "falha",
+        "http_status": null,
+        "erro": "TimeoutError: timed out",
+        "trecho": null
+      }
+    ]
+  },
+  "regras": {
+    "janela_producao": "202401–202412 (meses de processamento, antes das chegadas do PMM-E)",
+    "tipica": "formas que, em ordem decrescente de produção das CBO do curso, somam os primeiros 80% da produção (a forma que cruza o limiar entra)",
+    "especificidade": "qtd das CBO do curso / qtd de todas as CBO médicas (2251, 2252, 2253, 2231) na forma; alta >= 0.5, média >= 0.2, baixa abaixo",
+    "classe_mapa_curso": "ESPECIFICO se >= 20% da produção das CBO do curso está em formas de especificidade alta; PARCIAL se só somando média e alta; GENERICO senão. Limiar fixado depois de ver só o mapa nacional de 2024 (sem IVS nem outcome); a escolha de outcomes fica para o adendo §12 do protocolo 47",
+    "forma_especifica_relevante": "especificidade alta e >= 1% da produção do curso"
+  },
+  "classes_dos_cursos": {
+    "ESPECIFICO": [
+      7,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "PARCIAL": [
+      4,
+      9
+    ],
+    "GENERICO": [
+      1,
+      2,
+      3,
+      5,
+      6,
+      8
+    ]
+  },
+  "cobertura": {
+    "cursos": 16,
+    "cursos_com_mapa": 16,
+    "cursos_sem_producao_sia_2024": [],
+    "cbos_da_ponte": 17,
+    "cbos_sem_producao_sia_2024": [],
+    "formas_com_producao_medica_2024": 265,
+    "formas_no_total_2024": 281,
+    "linhas_do_mapa": 1381,
+    "linhas_tipicas": 50
+  },
+  "por_curso": [
+    {
+      "classe_mapa_curso": "GENERICO",
+      "formas_especificas_relevantes": [],
+      "cod_curso": 1,
+      "no_curso": "ANESTESIOLOGIA PERIOPERATORIA E SEDACAO SEGURA",
+      "cbos": [
+        "225151"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 2218596,
+      "qtd_por_cbo_2024": {
+        "225151": 2218596
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 95,
+      "n_formas_tipicas": 2,
+      "participacao_formas_tipicas": 0.8939,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.0,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.1854,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.708481,
+          "especificidade_medicos": 0.007751,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "041701",
+          "no_forma": "Anestesias",
+          "participacao": 0.185421,
+          "especificidade_medicos": 0.429121,
+          "classe": "media"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [],
+      "distinguivel_de_outros_cursos_pela_cbo": true
+    },
+    {
+      "classe_mapa_curso": "GENERICO",
+      "formas_especificas_relevantes": [],
+      "cod_curso": 2,
+      "no_curso": "CIRURGIA GERAL MINIMAMENTE INVASIVA",
+      "cbos": [
+        "225225"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 13070666,
+      "qtd_por_cbo_2024": {
+        "225225": 13070666
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 118,
+      "n_formas_tipicas": 4,
+      "participacao_formas_tipicas": 0.8437,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.0003,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.0066,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.383543,
+          "especificidade_medicos": 0.024721,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "030106",
+          "no_forma": "Consulta/Atendimento as urgencias (em geral)",
+          "participacao": 0.301596,
+          "especificidade_medicos": 0.014192,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "040101",
+          "no_forma": "Pequenas cirurgias",
+          "participacao": 0.086073,
+          "especificidade_medicos": 0.177548,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "080301",
+          "no_forma": "Deslocamento/Ajuda de custo",
+          "participacao": 0.072449,
+          "especificidade_medicos": 0.012946,
+          "classe": "baixa"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [],
+      "distinguivel_de_outros_cursos_pela_cbo": true
+    },
+    {
+      "classe_mapa_curso": "GENERICO",
+      "formas_especificas_relevantes": [],
+      "cod_curso": 3,
+      "no_curso": "CIRURGIA ONCOLOGICA AVANCADA",
+      "cbos": [
+        "225290"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 818591,
+      "qtd_por_cbo_2024": {
+        "225290": 818591
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 70,
+      "n_formas_tipicas": 1,
+      "participacao_formas_tipicas": 0.8878,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.0,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.0,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.887775,
+          "especificidade_medicos": 0.003584,
+          "classe": "baixa"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [],
+      "distinguivel_de_outros_cursos_pela_cbo": true
+    },
+    {
+      "classe_mapa_curso": "PARCIAL",
+      "formas_especificas_relevantes": [],
+      "cod_curso": 4,
+      "no_curso": "CIRURGIA COLOPROCTOLOGICA COM FOCO EM TUMORES COLORRETAIS",
+      "cbos": [
+        "225280"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 1247475,
+      "qtd_por_cbo_2024": {
+        "225280": 1247475
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 65,
+      "n_formas_tipicas": 3,
+      "participacao_formas_tipicas": 0.8907,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.0,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.2779,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.559857,
+          "especificidade_medicos": 0.003444,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "070105",
+          "no_forma": "OPM em gastroenterologia",
+          "participacao": 0.231962,
+          "especificidade_medicos": 0.43717,
+          "classe": "media"
+        },
+        {
+          "co_forma": "020901",
+          "no_forma": "Aparelho digestivo",
+          "participacao": 0.098872,
+          "especificidade_medicos": 0.059866,
+          "classe": "baixa"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [
+        7
+      ],
+      "distinguivel_de_outros_cursos_pela_cbo": false
+    },
+    {
+      "classe_mapa_curso": "GENERICO",
+      "formas_especificas_relevantes": [],
+      "cod_curso": 5,
+      "no_curso": "CIRURGIA DO APARELHO DIGESTIVO COM FOCO EM TUMORES DIGESTIVOS",
+      "cbos": [
+        "225220"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 355959,
+      "qtd_por_cbo_2024": {
+        "225220": 355959
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 71,
+      "n_formas_tipicas": 3,
+      "participacao_formas_tipicas": 0.8063,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.0,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.0,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.51068,
+          "especificidade_medicos": 0.000896,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "070105",
+          "no_forma": "OPM em gastroenterologia",
+          "participacao": 0.210294,
+          "especificidade_medicos": 0.113091,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "020901",
+          "no_forma": "Aparelho digestivo",
+          "participacao": 0.085294,
+          "especificidade_medicos": 0.014737,
+          "classe": "baixa"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [],
+      "distinguivel_de_outros_cursos_pela_cbo": true
+    },
+    {
+      "classe_mapa_curso": "GENERICO",
+      "formas_especificas_relevantes": [
+        {
+          "co_forma": "021104",
+          "no_forma": "Diagnostico em ginecologia-obstetricia",
+          "participacao": 0.049991,
+          "especificidade_medicos": 0.885633
+        }
+      ],
+      "cod_curso": 6,
+      "no_curso": "CIRURGIA GINECOLOGICA COM FOCO EM TUMORES GINECOLOGICOS",
+      "cbos": [
+        "225250"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 27058625,
+      "qtd_por_cbo_2024": {
+        "225250": 27058625
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 105,
+      "n_formas_tipicas": 4,
+      "participacao_formas_tipicas": 0.8176,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.0514,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.1017,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.479876,
+          "especificidade_medicos": 0.064032,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "030106",
+          "no_forma": "Consulta/Atendimento as urgencias (em geral)",
+          "participacao": 0.227646,
+          "especificidade_medicos": 0.022176,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "080301",
+          "no_forma": "Deslocamento/Ajuda de custo",
+          "participacao": 0.060023,
+          "especificidade_medicos": 0.022203,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "020102",
+          "no_forma": "Outras formas de coleta de material",
+          "participacao": 0.050078,
+          "especificidade_medicos": 0.417414,
+          "classe": "media"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [
+        8
+      ],
+      "cursos_que_compartilham_alguma_cbo": [
+        8
+      ],
+      "distinguivel_de_outros_cursos_pela_cbo": false
+    },
+    {
+      "classe_mapa_curso": "ESPECIFICO",
+      "formas_especificas_relevantes": [
+        {
+          "co_forma": "020901",
+          "no_forma": "Aparelho digestivo",
+          "participacao": 0.302318,
+          "especificidade_medicos": 0.855091
+        },
+        {
+          "co_forma": "070105",
+          "no_forma": "OPM em gastroenterologia",
+          "participacao": 0.064595,
+          "especificidade_medicos": 0.56868
+        },
+        {
+          "co_forma": "040701",
+          "no_forma": "Esofago, estomago e duodeno",
+          "participacao": 0.011379,
+          "especificidade_medicos": 0.79253
+        },
+        {
+          "co_forma": "040702",
+          "no_forma": "Intestinos , reto e anus",
+          "participacao": 0.011297,
+          "especificidade_medicos": 0.808807
+        }
+      ],
+      "cod_curso": 7,
+      "no_curso": "COLONOSCOPIA DIAGNOSTICA E TERAPEUTICA NO SUS",
+      "cbos": [
+        "225165",
+        "225280",
+        "225310"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 5827315,
+      "qtd_por_cbo_2024": {
+        "225165": 2991483,
+        "225280": 1247475,
+        "225310": 1588357
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 93,
+      "n_formas_tipicas": 3,
+      "participacao_formas_tipicas": 0.8377,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.3896,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.3971,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.470801,
+          "especificidade_medicos": 0.013529,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "020901",
+          "no_forma": "Aparelho digestivo",
+          "participacao": 0.302318,
+          "especificidade_medicos": 0.855091,
+          "classe": "alta"
+        },
+        {
+          "co_forma": "070105",
+          "no_forma": "OPM em gastroenterologia",
+          "participacao": 0.064595,
+          "especificidade_medicos": 0.56868,
+          "classe": "alta"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [
+        4,
+        10,
+        11
+      ],
+      "distinguivel_de_outros_cursos_pela_cbo": false
+    },
+    {
+      "classe_mapa_curso": "GENERICO",
+      "formas_especificas_relevantes": [
+        {
+          "co_forma": "021104",
+          "no_forma": "Diagnostico em ginecologia-obstetricia",
+          "participacao": 0.049991,
+          "especificidade_medicos": 0.885633
+        }
+      ],
+      "cod_curso": 8,
+      "no_curso": "COLPOSCOPIA E DOENCAS DO TRATO GENITAL INFERIOR",
+      "cbos": [
+        "225250"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 27058625,
+      "qtd_por_cbo_2024": {
+        "225250": 27058625
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 105,
+      "n_formas_tipicas": 4,
+      "participacao_formas_tipicas": 0.8176,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.0514,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.1017,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.479876,
+          "especificidade_medicos": 0.064032,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "030106",
+          "no_forma": "Consulta/Atendimento as urgencias (em geral)",
+          "participacao": 0.227646,
+          "especificidade_medicos": 0.022176,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "080301",
+          "no_forma": "Deslocamento/Ajuda de custo",
+          "participacao": 0.060023,
+          "especificidade_medicos": 0.022203,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "020102",
+          "no_forma": "Outras formas de coleta de material",
+          "participacao": 0.050078,
+          "especificidade_medicos": 0.417414,
+          "classe": "media"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [
+        6
+      ],
+      "cursos_que_compartilham_alguma_cbo": [
+        6
+      ],
+      "distinguivel_de_outros_cursos_pela_cbo": false
+    },
+    {
+      "classe_mapa_curso": "PARCIAL",
+      "formas_especificas_relevantes": [],
+      "cod_curso": 9,
+      "no_curso": "ECOCARDIOGRAFIA TRANSTORACICA APLICADA AO SUS",
+      "cbos": [
+        "225120"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 21802357,
+      "qtd_por_cbo_2024": {
+        "225120": 21802357
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 96,
+      "n_formas_tipicas": 4,
+      "participacao_formas_tipicas": 0.8668,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.0,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.4362,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.342617,
+          "especificidade_medicos": 0.036836,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "021102",
+          "no_forma": "Diagnostico em cardiologia",
+          "participacao": 0.342186,
+          "especificidade_medicos": 0.383872,
+          "classe": "media"
+        },
+        {
+          "co_forma": "020501",
+          "no_forma": "Ultra-sonografias do sistema circulatorio (qualquer regiao anatomica)",
+          "participacao": 0.091004,
+          "especificidade_medicos": 0.331153,
+          "classe": "media"
+        },
+        {
+          "co_forma": "080301",
+          "no_forma": "Deslocamento/Ajuda de custo",
+          "participacao": 0.091001,
+          "especificidade_medicos": 0.027123,
+          "classe": "baixa"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [],
+      "distinguivel_de_outros_cursos_pela_cbo": true
+    },
+    {
+      "classe_mapa_curso": "ESPECIFICO",
+      "formas_especificas_relevantes": [
+        {
+          "co_forma": "020901",
+          "no_forma": "Aparelho digestivo",
+          "participacao": 0.357734,
+          "especificidade_medicos": 0.795225
+        },
+        {
+          "co_forma": "040701",
+          "no_forma": "Esofago, estomago e duodeno",
+          "participacao": 0.013457,
+          "especificidade_medicos": 0.736628
+        }
+      ],
+      "cod_curso": 10,
+      "no_curso": "ENDOSCOPIA DIGESTIVA AVANCADA E PROCEDIMENTOS TERAPEUTICOS",
+      "cbos": [
+        "225165",
+        "225310"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 4579840,
+      "qtd_por_cbo_2024": {
+        "225165": 2991483,
+        "225310": 1588357
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 89,
+      "n_formas_tipicas": 2,
+      "participacao_formas_tipicas": 0.8043,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.3712,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.3812,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.446544,
+          "especificidade_medicos": 0.010085,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "020901",
+          "no_forma": "Aparelho digestivo",
+          "participacao": 0.357734,
+          "especificidade_medicos": 0.795225,
+          "classe": "alta"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [
+        11
+      ],
+      "cursos_que_compartilham_alguma_cbo": [
+        7,
+        11
+      ],
+      "distinguivel_de_outros_cursos_pela_cbo": false
+    },
+    {
+      "classe_mapa_curso": "ESPECIFICO",
+      "formas_especificas_relevantes": [
+        {
+          "co_forma": "020901",
+          "no_forma": "Aparelho digestivo",
+          "participacao": 0.357734,
+          "especificidade_medicos": 0.795225
+        },
+        {
+          "co_forma": "040701",
+          "no_forma": "Esofago, estomago e duodeno",
+          "participacao": 0.013457,
+          "especificidade_medicos": 0.736628
+        }
+      ],
+      "cod_curso": 11,
+      "no_curso": "ENDOSCOPIA DIGESTIVA: ALTA DIAGNOSTICA E TERAPEUTICA",
+      "cbos": [
+        "225165",
+        "225310"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 4579840,
+      "qtd_por_cbo_2024": {
+        "225165": 2991483,
+        "225310": 1588357
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 89,
+      "n_formas_tipicas": 2,
+      "participacao_formas_tipicas": 0.8043,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.3712,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.3812,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.446544,
+          "especificidade_medicos": 0.010085,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "020901",
+          "no_forma": "Aparelho digestivo",
+          "participacao": 0.357734,
+          "especificidade_medicos": 0.795225,
+          "classe": "alta"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [
+        10
+      ],
+      "cursos_que_compartilham_alguma_cbo": [
+        7,
+        10
+      ],
+      "distinguivel_de_outros_cursos_pela_cbo": false
+    },
+    {
+      "classe_mapa_curso": "ESPECIFICO",
+      "formas_especificas_relevantes": [
+        {
+          "co_forma": "030405",
+          "no_forma": "Quimioterapia adjuvante (profilatica) - adulto",
+          "participacao": 0.252963,
+          "especificidade_medicos": 0.999411
+        },
+        {
+          "co_forma": "030402",
+          "no_forma": "Quimioterapia paliativa - adulto",
+          "participacao": 0.212414,
+          "especificidade_medicos": 0.999348
+        },
+        {
+          "co_forma": "030404",
+          "no_forma": "Quimioterapia previa (neoadjuvante/citorredutora)- adulto",
+          "participacao": 0.045743,
+          "especificidade_medicos": 1.0
+        },
+        {
+          "co_forma": "030408",
+          "no_forma": "Quimioterapia - procedimentos especiais",
+          "participacao": 0.025535,
+          "especificidade_medicos": 0.746822
+        }
+      ],
+      "cod_curso": 12,
+      "no_curso": "ONCOLOGIA CLINICA: CANCERES PREVALENTES NO SUS",
+      "cbos": [
+        "225121"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 7243409,
+      "qtd_por_cbo_2024": {
+        "225121": 7243409
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 94,
+      "n_formas_tipicas": 3,
+      "participacao_formas_tipicas": 0.8509,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.5367,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.539,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.385536,
+          "especificidade_medicos": 0.013771,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "030405",
+          "no_forma": "Quimioterapia adjuvante (profilatica) - adulto",
+          "participacao": 0.252963,
+          "especificidade_medicos": 0.999411,
+          "classe": "alta"
+        },
+        {
+          "co_forma": "030402",
+          "no_forma": "Quimioterapia paliativa - adulto",
+          "participacao": 0.212414,
+          "especificidade_medicos": 0.999348,
+          "classe": "alta"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [],
+      "distinguivel_de_outros_cursos_pela_cbo": true
+    },
+    {
+      "classe_mapa_curso": "ESPECIFICO",
+      "formas_especificas_relevantes": [
+        {
+          "co_forma": "030401",
+          "no_forma": "Radioterapia",
+          "participacao": 0.238644,
+          "especificidade_medicos": 0.992679
+        }
+      ],
+      "cod_curso": 13,
+      "no_curso": "RADIOTERAPIA: PLANEJAMENTO E EXECUCAO NO SUS",
+      "cbos": [
+        "225330"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 745433,
+      "qtd_por_cbo_2024": {
+        "225330": 745433
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 43,
+      "n_formas_tipicas": 2,
+      "participacao_formas_tipicas": 0.8872,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.2386,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.2386,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.648544,
+          "especificidade_medicos": 0.002384,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "030401",
+          "no_forma": "Radioterapia",
+          "participacao": 0.238644,
+          "especificidade_medicos": 0.992679,
+          "classe": "alta"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [],
+      "distinguivel_de_outros_cursos_pela_cbo": true
+    },
+    {
+      "classe_mapa_curso": "ESPECIFICO",
+      "formas_especificas_relevantes": [
+        {
+          "co_forma": "020502",
+          "no_forma": "Ultra-sonografias dos demais sistemas",
+          "participacao": 0.205773,
+          "especificidade_medicos": 0.772711
+        },
+        {
+          "co_forma": "020403",
+          "no_forma": "Exames radiologicos do torax e mediastino",
+          "participacao": 0.202878,
+          "especificidade_medicos": 0.575915
+        },
+        {
+          "co_forma": "020406",
+          "no_forma": "Exames radiologicos da cintura pelvica e dos membros inferiores",
+          "participacao": 0.148815,
+          "especificidade_medicos": 0.622189
+        },
+        {
+          "co_forma": "020404",
+          "no_forma": "Exames radiologicos da cintura escapular e dos membros superiores",
+          "participacao": 0.095262,
+          "especificidade_medicos": 0.569675
+        },
+        {
+          "co_forma": "020603",
+          "no_forma": "Tomografia do abdomen, pelve e membros inferiores",
+          "participacao": 0.059662,
+          "especificidade_medicos": 0.994596
+        },
+        {
+          "co_forma": "020601",
+          "no_forma": "Tomografia da cabeca, pescoco e coluna vertebral",
+          "participacao": 0.059345,
+          "especificidade_medicos": 0.992934
+        },
+        {
+          "co_forma": "020402",
+          "no_forma": "Exames radiologicos da coluna vertebral",
+          "participacao": 0.046578,
+          "especificidade_medicos": 0.599827
+        },
+        {
+          "co_forma": "020602",
+          "no_forma": "Tomografia do torax e membros superiores",
+          "participacao": 0.028656,
+          "especificidade_medicos": 0.995302
+        },
+        {
+          "co_forma": "020701",
+          "no_forma": "RM da cabeca, pescoco e coluna vertebral",
+          "participacao": 0.01711,
+          "especificidade_medicos": 1.0
+        },
+        {
+          "co_forma": "020703",
+          "no_forma": "RM do abdomen, pelve e membros inferiores",
+          "participacao": 0.011707,
+          "especificidade_medicos": 1.0
+        }
+      ],
+      "cod_curso": 14,
+      "no_curso": "ULTRASSONOGRAFIA MAMARIA DIAGNOSTICA E INTERVENCIONISTA",
+      "cbos": [
+        "225255",
+        "225320"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 80411667,
+      "qtd_por_cbo_2024": {
+        "225255": 1851051,
+        "225320": 78560616
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 105,
+      "n_formas_tipicas": 7,
+      "participacao_formas_tipicas": 0.8183,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.8791,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.9562,
+      "formas_tipicas": [
+        {
+          "co_forma": "020502",
+          "no_forma": "Ultra-sonografias dos demais sistemas",
+          "participacao": 0.205773,
+          "especificidade_medicos": 0.772711,
+          "classe": "alta"
+        },
+        {
+          "co_forma": "020403",
+          "no_forma": "Exames radiologicos do torax e mediastino",
+          "participacao": 0.202878,
+          "especificidade_medicos": 0.575915,
+          "classe": "alta"
+        },
+        {
+          "co_forma": "020406",
+          "no_forma": "Exames radiologicos da cintura pelvica e dos membros inferiores",
+          "participacao": 0.148815,
+          "especificidade_medicos": 0.622189,
+          "classe": "alta"
+        },
+        {
+          "co_forma": "020404",
+          "no_forma": "Exames radiologicos da cintura escapular e dos membros superiores",
+          "participacao": 0.095262,
+          "especificidade_medicos": 0.569675,
+          "classe": "alta"
+        },
+        {
+          "co_forma": "020603",
+          "no_forma": "Tomografia do abdomen, pelve e membros inferiores",
+          "participacao": 0.059662,
+          "especificidade_medicos": 0.994596,
+          "classe": "alta"
+        },
+        {
+          "co_forma": "020601",
+          "no_forma": "Tomografia da cabeca, pescoco e coluna vertebral",
+          "participacao": 0.059345,
+          "especificidade_medicos": 0.992934,
+          "classe": "alta"
+        },
+        {
+          "co_forma": "020402",
+          "no_forma": "Exames radiologicos da coluna vertebral",
+          "participacao": 0.046578,
+          "especificidade_medicos": 0.599827,
+          "classe": "alta"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [],
+      "distinguivel_de_outros_cursos_pela_cbo": true
+    },
+    {
+      "classe_mapa_curso": "ESPECIFICO",
+      "formas_especificas_relevantes": [
+        {
+          "co_forma": "021107",
+          "no_forma": "Diagnostico em otorrinolaringologia/fonoaudiologia",
+          "participacao": 0.117211,
+          "especificidade_medicos": 0.86102
+        },
+        {
+          "co_forma": "020904",
+          "no_forma": "Aparelho respiratorio",
+          "participacao": 0.083721,
+          "especificidade_medicos": 0.81065
+        },
+        {
+          "co_forma": "040401",
+          "no_forma": "Cirurgia das vias aereas superiores e do pescoco",
+          "participacao": 0.073073,
+          "especificidade_medicos": 0.635421
+        }
+      ],
+      "cod_curso": 15,
+      "no_curso": "VIDEOLARINGOSCOPIA E ENDOSCOPIA NASOFARINGEA",
+      "cbos": [
+        "225275"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 4930387,
+      "qtd_por_cbo_2024": {
+        "225275": 4930387
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 77,
+      "n_formas_tipicas": 3,
+      "participacao_formas_tipicas": 0.8559,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.2824,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.2824,
+      "formas_tipicas": [
+        {
+          "co_forma": "030101",
+          "no_forma": "Consultas medicas/outros profissionais  de nivel superior",
+          "participacao": 0.654994,
+          "especificidade_medicos": 0.015925,
+          "classe": "baixa"
+        },
+        {
+          "co_forma": "021107",
+          "no_forma": "Diagnostico em otorrinolaringologia/fonoaudiologia",
+          "participacao": 0.117211,
+          "especificidade_medicos": 0.86102,
+          "classe": "alta"
+        },
+        {
+          "co_forma": "020904",
+          "no_forma": "Aparelho respiratorio",
+          "participacao": 0.083721,
+          "especificidade_medicos": 0.81065,
+          "classe": "alta"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [],
+      "distinguivel_de_outros_cursos_pela_cbo": true
+    },
+    {
+      "classe_mapa_curso": "ESPECIFICO",
+      "formas_especificas_relevantes": [
+        {
+          "co_forma": "020301",
+          "no_forma": "Exames citopatologicos",
+          "participacao": 0.324568,
+          "especificidade_medicos": 0.926864
+        },
+        {
+          "co_forma": "020302",
+          "no_forma": "Exames anatomopatologicos",
+          "participacao": 0.264454,
+          "especificidade_medicos": 0.823623
+        }
+      ],
+      "cod_curso": 16,
+      "no_curso": "ANATOMIA PATOLOGICA COM ENFASE EM ONCOLOGIA E DIAGNOSTICO INTEGRADO",
+      "cbos": [
+        "225148",
+        "225305",
+        "225325"
+      ],
+      "qtd_aprovada_cbo_curso_2024": 13639651,
+      "qtd_por_cbo_2024": {
+        "225148": 9199339,
+        "225305": 1728523,
+        "225325": 2711789
+      },
+      "cbos_sem_producao_sia_2024": [],
+      "n_formas_com_producao": 66,
+      "n_formas_tipicas": 3,
+      "participacao_formas_tipicas": 0.8484,
+      "participacao_da_producao_em_formas_de_especificidade_alta": 0.589,
+      "participacao_da_producao_em_formas_de_especificidade_media_ou_alta": 0.5892,
+      "formas_tipicas": [
+        {
+          "co_forma": "020301",
+          "no_forma": "Exames citopatologicos",
+          "participacao": 0.324568,
+          "especificidade_medicos": 0.926864,
+          "classe": "alta"
+        },
+        {
+          "co_forma": "020302",
+          "no_forma": "Exames anatomopatologicos",
+          "participacao": 0.264454,
+          "especificidade_medicos": 0.823623,
+          "classe": "alta"
+        },
+        {
+          "co_forma": "020201",
+          "no_forma": "Exames bioquimicos",
+          "participacao": 0.259417,
+          "especificidade_medicos": 0.049256,
+          "classe": "baixa"
+        }
+      ],
+      "cursos_com_o_mesmo_conjunto_de_cbo": [],
+      "cursos_que_compartilham_alguma_cbo": [],
+      "distinguivel_de_outros_cursos_pela_cbo": true
+    }
+  ],
+  "teste_filtro_tabnet": {
+    "consulta": "Linha = Município, Coluna = Forma organização, Incremento = Qtd.aprovada, filtro Profissional - CBO = 17 CBO-alvo da ponte, Arquivos = qabr2406.dbf, exibirlz",
+    "mes_processamento": "202406",
+    "respondeu_no_formato": true,
+    "bytes_resposta": 1733979,
+    "segundos": 4.7,
+    "linhas_municipio": 5571,
+    "linhas_ignorado": 27,
+    "municipios_do_formulario": 5571,
+    "todos_os_municipios_do_formulario_presentes": true,
+    "formas_como_coluna": 137,
+    "total_municipal_igual_ao_nacional_por_cbo_em_cada_forma": true,
+    "soma_por_subgrupo_igual_ao_a12": true,
+    "diferencas_por_subgrupo_frente_ao_a12": {},
+    "qtd_total_nacional": 14692895,
+    "procedimento_como_coluna": false,
+    "nota_procedimento": "no formulário qabr.def 'Procedimento' só existe como Linha e como filtro; o nível mais fino que cruza com Município numa mesma consulta é a Forma de organização (coluna). Profissional - CBO só existe como Linha e como filtro, por isso cada consulta municipal cobre um conjunto de CBO.",
+    "viavel": true
+  },
+  "custo_estimado_aquisicao": {
+    "consultas_por_mes": "uma por conjunto de CBO (Linha = Município, Coluna = Forma, filtro de CBO)",
+    "conjuntos_de_cbo_distintos_nos_cursos": 14,
+    "cbos_distintas": 17,
+    "meses_202201_202607": 55,
+    "consultas_se_por_cbo": 935,
+    "bytes_por_consulta_no_teste": 1733979
+  },
+  "limites": [
+    "mapa revelado pela produção, não pela regra de compatibilidade do SIGTAP (não obtida nesta execução)",
+    "produção ambulatorial (SIA) apenas; a AIH (SIH) no TabNet não tem CBO, então cirurgias hospitalares e anestesias em internação não entram no mapa por especialidade",
+    "cursos que compartilham CBO (6 e 8; 10 e 11; 7 com 4, 10 e 11) não se distinguem pela CBO",
+    "CBO informada pelo prestador; produção sem CBO na tabela do TabNet fica fora de 'médicos' e entra só em 'todos'",
+    "grupo 09 (OCI) não existe em 2024; formas de OCI ficam fora do mapa"
+  ],
+  "cegamento": "nada foi calculado por IVS, faixa da bolsa, lado de corte, tratamento ou chegada; o IVS não é lido",
+  "erros": []
+}

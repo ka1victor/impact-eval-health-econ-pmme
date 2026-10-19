@@ -1,0 +1,121 @@
+{
+  "gerador": "scripts/aquisicao/g4_mapa_especialidade_procedimento.py",
+  "natureza_dos_dados": "EMPIRICO",
+  "data_execucao": "2026-10-19",
+  "entradas": {
+    "ponte_curso_cbo": {
+      "arquivo": "output/aquisicao/ponte_curso_cbo_oficial.json",
+      "sha256": "ed8c2a9a3fcda4f0f261b5321da7750da389cc0f574f2e5ac5140e5ebd8f2d9e"
+    },
+    "a12_subgrupos": {
+      "arquivo": "output/aquisicao/sia/sia_subgrupos_por_consulta.csv",
+      "sha256": "3b9b4d4aa060147da5ef270e8cfb427e968a9394a9a4a0195369b07bc8042510"
+    }
+  },
+  "fonte_sigtap": {
+    "url_download": "http://sigtap.datasus.gov.br/tabela-unificada/app/download.jsp",
+    "url_rss": "http://sigtap.datasus.gov.br/tabela-unificada/competencias.rss",
+    "ftp": "ftp://ftp2.datasus.gov.br/pub/sistemas/tup/downloads",
+    "sondagem": "output/aquisicao/sigtap/sigtap_sondagem.json",
+    "status": "INDISPONIVEL_NESTA_EXECUCAO"
+  },
+  "fonte_tabnet": {
+    "nome": "SIA/SUS — Produção Ambulatorial do SUS, Brasil, por local de atendimento (TabNet)",
+    "url_formulario": "http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sia/cnv/qabr.def",
+    "url_consulta": "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sia/cnv/qabr.def",
+    "formulario": {
+      "url": "http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sia/cnv/qabr.def",
+      "metodo": "GET",
+      "data_hora_utc": "2026-10-19T20:16:58+00:00",
+      "http_status": 200,
+      "sha256": "576c964ec075c93eafb977cbfc72638f9b830f9c820dfd173876026cd76e0009",
+      "bytes": 1093427
+    },
+    "consultas": [
+      {
+        "id": "nac_cbo_medica_forma_2024",
+        "url": "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sia/cnv/qabr.def",
+        "metodo": "POST",
+        "codificacao_corpo": "latin-1",
+        "corpo_post": "Linha=Profissional_-_CBO&Coluna=Forma_organiza%E7%E3o&Incremento=Qtd.aprovada&Arquivos=qabr2401.dbf&Arquivos=qabr2402.dbf&Arquivos=qabr2403.dbf&Arquivos=qabr2404.dbf&Arquivos=qabr2405.dbf&Arquivos=qabr2406.dbf&Arquivos=qabr2407.dbf&Arquivos=qabr2408.dbf&Arquivos=qabr2409.dbf&Arquivos=qabr2410.dbf&Arquivos=qabr2411.dbf&Arquivos=qabr2412.dbf&SProfissional_-_CBO=384&SProfissional_-_CBO=385&SProfissional_-_CBO=386&SProfissional_-_CBO=387&SProfissional_-_CBO=388&SProfissional_-_CBO=389&SProfissional_-_CBO=390&SProfissional_-_CBO=391&SProfissional_-_CBO=392&SProfissional_-_CBO=393&SProfissional_-_CBO=394&SProfissional_-_CBO=395&SProfissional_-_CBO=396&SProfissional_-_CBO=397&SProfissional_-_CBO=398&SProfissional_-_CBO=399&SProfissional_-_CBO=400&SProfissional_-_CBO=401&SProfissional_-_CBO=402&SProfissional_-_CBO=403&SProfissional_-_CBO=404&SProfissional_-_CBO=405&SProfissional_-_CBO=406&SProfissional_-_CBO=407&SProfissional_-_CBO=408&SProfissional_-_CBO=409&SProfissional_-_CBO=410&SProfissional_-_CBO=411&SProfissional_-_CBO=412&SProfissional_-_CBO=413&SProfissional_-_CBO=414&SProfissional_-_CBO=415&SProfissional_-_CBO=416&SProfissional_-_CBO=417&SProfissional_-_CBO=418&SProfissional_-_CBO=419&SProfissional_-_CBO=420&SProfissional_-_CBO=421&SProfissional_-_CBO=422&SProfissional_-_CBO=423&SProfissional_-_CBO=424&SProfissional_-_CBO=425&SProfissional_-_CBO=426&SProfissional_-_CBO=427&SProfissional_-_CBO=428&SProfissional_-_CBO=429&SProfissional_-_CBO=430&SProfissional_-_CBO=431&SProfissional_-_CBO=432&SProfissional_-_CBO=433&SProfissional_-_CBO=434&SProfissional_-_CBO=435&SProfissional_-_CBO=436&SProfissional_-_CBO=437&SProfissional_-_CBO=438&SProfissional_-_CBO=439&SProfissional_-_CBO=440&SProfissional_-_CBO=441&SProfissional_-_CBO=442&SProfissional_-_CBO=443&SProfissional_-_CBO=444&SProfissional_-_CBO=445&SProfissional_-_CBO=446&SProfissional_-_CBO=447&SProfissional_-_CBO=448&SProfissional_-_CBO=449&SProfissional_-_CBO=450&SProfissional_-_CBO=540&SProfissional_-_CBO=541&SProfissional_-_CBO=542&SProfissional_-_CBO=543&SProfissional_-_CBO=544&SProfissional_-_CBO=545&SProfissional_-_CBO=546&SProfissional_-_CBO=547&SProfissional_-_CBO=548&SProfissional_-_CBO=549&SProfissional_-_CBO=550&SProfissional_-_CBO=551&SProfissional_-_CBO=552&SProfissional_-_CBO=553&SProfissional_-_CBO=554&SProfissional_-_CBO=555&SProfissional_-_CBO=556&SProfissional_-_CBO=557&SProfissional_-_CBO=558&SProfissional_-_CBO=559&SProfissional_-_CBO=560&SProfissional_-_CBO=561&SProfissional_-_CBO=562&SProfissional_-_CBO=563&SProfissional_-_CBO=564&SProfissional_-_CBO=565&SProfissional_-_CBO=566&SProfissional_-_CBO=567&SProfissional_-_CBO=568&SProfissional_-_CBO=569&SProfissional_-_CBO=570&SProfissional_-_CBO=571&SProfissional_-_CBO=572&SProfissional_-_CBO=573&SProfissional_-_CBO=574&SProfissional_-_CBO=575&SProfissional_-_CBO=576&SProfissional_-_CBO=577&SProfissional_-_CBO=578&SProfissional_-_CBO=579&SProfissional_-_CBO=580&SProfissional_-_CBO=581&SProfissional_-_CBO=582&SProfissional_-_CBO=583&SProfissional_-_CBO=584&SProfissional_-_CBO=585&SProfissional_-_CBO=586&SProfissional_-_CBO=587&SProfissional_-_CBO=588&SProfissional_-_CBO=589&SProfissional_-_CBO=590&SProfissional_-_CBO=591&SProfissional_-_CBO=592&SProfissional_-_CBO=593&SProfissional_-_CBO=594&SProfissional_-_CBO=595&SProfissional_-_CBO=596&SProfissional_-_CBO=597&SProfissional_-_CBO=598&SProfissional_-_CBO=599&SProfissional_-_CBO=600&SProfissional_-_CBO=601&SProfissional_-_CBO=602&SProfissional_-_CBO=603&SProfissional_-_CBO=604&zeradas=exibirlz&formato=prn&mostre=Mostra",
+        "data_hora_utc": "2026-10-19T20:13:39+00:00",
+        "http_status": 200,
+        "sha256": "8248c6968a38886d7cc87930c91589f8c3da75079b56ed1c4210391992312501",
+        "bytes": 1643835,
+        "segundos": 20.0,
+        "tentativas": 1
+      },
+      {
+        "id": "nac_forma_todos_2024",
+        "url": "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sia/cnv/qabr.def",
+        "metodo": "POST",
+        "codificacao_corpo": "latin-1",
+        "corpo_post": "Linha=Forma_organiza%E7%E3o&Coluna=--N%E3o-Ativa--&Incremento=Qtd.aprovada&Arquivos=qabr2401.dbf&Arquivos=qabr2402.dbf&Arquivos=qabr2403.dbf&Arquivos=qabr2404.dbf&Arquivos=qabr2405.dbf&Arquivos=qabr2406.dbf&Arquivos=qabr2407.dbf&Arquivos=qabr2408.dbf&Arquivos=qabr2409.dbf&Arquivos=qabr2410.dbf&Arquivos=qabr2411.dbf&Arquivos=qabr2412.dbf&formato=prn&mostre=Mostra",
+        "data_hora_utc": "2026-10-19T20:14:01+00:00",
+        "http_status": 200,
+        "sha256": "bfd2b6ff5dbb49f7e38dc69d41bd386672e04bc3683f8b96fe9d9e4201a8ddf8",
+        "bytes": 17614,
+        "segundos": 19.3,
+        "tentativas": 1
+      },
+      {
+        "id": "teste_mun_forma_alvo_202406",
+        "url": "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sia/cnv/qabr.def",
+        "metodo": "POST",
+        "codificacao_corpo": "latin-1",
+        "corpo_post": "Linha=Munic%EDpio&Coluna=Forma_organiza%E7%E3o&Incremento=Qtd.aprovada&Arquivos=qabr2406.dbf&SProfissional_-_CBO=548&SProfissional_-_CBO=549&SProfissional_-_CBO=562&SProfissional_-_CBO=564&SProfissional_-_CBO=568&SProfissional_-_CBO=578&SProfissional_-_CBO=579&SProfissional_-_CBO=584&SProfissional_-_CBO=585&SProfissional_-_CBO=589&SProfissional_-_CBO=590&SProfissional_-_CBO=592&SProfissional_-_CBO=594&SProfissional_-_CBO=595&SProfissional_-_CBO=597&SProfissional_-_CBO=598&SProfissional_-_CBO=599&zeradas=exibirlz&formato=prn&mostre=Mostra",
+        "data_hora_utc": "2026-10-19T20:14:22+00:00",
+        "http_status": 200,
+        "sha256": "c704a33c2f0b31a6a295e681ab3d28afa492556f37a4837f63ff86bad87c19b7",
+        "bytes": 1733979,
+        "segundos": 4.7,
+        "tentativas": 1
+      },
+      {
+        "id": "teste_cbo_forma_alvo_202406",
+        "url": "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sia/cnv/qabr.def",
+        "metodo": "POST",
+        "codificacao_corpo": "latin-1",
+        "corpo_post": "Linha=Profissional_-_CBO&Coluna=Forma_organiza%E7%E3o&Incremento=Qtd.aprovada&Arquivos=qabr2406.dbf&SProfissional_-_CBO=548&SProfissional_-_CBO=549&SProfissional_-_CBO=562&SProfissional_-_CBO=564&SProfissional_-_CBO=568&SProfissional_-_CBO=578&SProfissional_-_CBO=579&SProfissional_-_CBO=584&SProfissional_-_CBO=585&SProfissional_-_CBO=589&SProfissional_-_CBO=590&SProfissional_-_CBO=592&SProfissional_-_CBO=594&SProfissional_-_CBO=595&SProfissional_-_CBO=597&SProfissional_-_CBO=598&SProfissional_-_CBO=599&zeradas=exibirlz&formato=prn&mostre=Mostra",
+        "data_hora_utc": "2026-10-19T20:14:28+00:00",
+        "http_status": 200,
+        "sha256": "8fb9448a68dfebb4c5b2a0563f345eb2efb60fb2adadb51ab241df712f50ab4a",
+        "bytes": 906375,
+        "segundos": 3.3,
+        "tentativas": 1
+      }
+    ]
+  },
+  "saidas": {
+    "sondagem": {
+      "arquivo": "output/aquisicao/sigtap/sigtap_sondagem.json",
+      "sha256": "651d13573474d6ebf363ec8ccfdf87578dc82062c8b66d05b03a566b46e8bf91"
+    },
+    "cbo_forma": {
+      "arquivo": "output/aquisicao/sigtap/g4_sia_nacional_cbo_forma_2024.csv",
+      "sha256": "68b2609ab8520f10f6c82175755e745695de4ae1cd2acb5fd5bc1a94f79ab1eb"
+    },
+    "forma": {
+      "arquivo": "output/aquisicao/sigtap/g4_sia_nacional_forma_2024.csv",
+      "sha256": "18f419095da6e14fe9c57e8be2863e82dcfaf5624bb62a85040f45aeecae5d2a"
+    },
+    "teste": {
+      "arquivo": "output/aquisicao/sigtap/g4_teste_filtro_totais_nacionais.csv",
+      "sha256": "73316b085e02fe9dbee7deaf0b5d0ce27a2436bd8b74f88e0838845e3e4eba85"
+    },
+    "mapa": {
+      "arquivo": "output/rdd_bolsa/G4_mapa_especialidade_procedimento.csv",
+      "sha256": "7b7e9a46858748374fd7c7793a186d0db7b5bc7c2f9a7a75460ebf153280e6d7"
+    },
+    "mapa_subgrupo": {
+      "arquivo": "output/rdd_bolsa/G4_mapa_especialidade_subgrupo.csv",
+      "sha256": "4e707fd28f75caf98fe9066b9670de534ff335b27b32171d30b564fead8756c2"
+    },
+    "resumo": {
+      "arquivo": "output/rdd_bolsa/G4_resumo.json",
+      "sha256": "9b576aaeed908bb38dc91835b4b51db5296562fa1b61b26be914051e9302ff85"
+    }
+  },
+  "cache_bruto": "output/aquisicao/sigtap/cache/ (fora do controle de versão; respostas municipais do teste só aqui)",
+  "cegamento": "nada foi calculado por IVS, faixa da bolsa, lado de corte, tratamento ou chegada; o IVS não é lido"
+}
