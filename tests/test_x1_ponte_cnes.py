@@ -60,6 +60,7 @@ def _vinc_sintetico(linhas: list[tuple]) -> pd.DataFrame:
     df = pd.DataFrame(linhas, columns=cols)
     df["co_regiao_saude"] = pd.NA
     df["co_cbo"] = "225125"
+    df["co_conselho_classe"] = "71"
     return df
 
 
@@ -84,18 +85,20 @@ class TestX1LigacaoSintetico(unittest.TestCase):
             ("202406", "u7", "0000007", "261160", "P7", "500", "AL"),
             ("202406", "u8", "0000008", "355030", "P8", "800", "SP"),     # m8: colisão de CRM na UF do posto ...
             ("202406", "u9", "0000009", "330455", "P9", "800", "RJ"),     # ... e a pessoa certa em outra UF
+            ("202406", "u0", "0000010", "355030", "P0", "100", "SP"),     # m1: mesmo número em outro conselho
         ])
+        self.vinc.loc[self.vinc["co_profissional_sus"] == "P0", "co_conselho_classe"] = "83"
         self.nomes = pd.DataFrame({
             "competencia": "202406",
-            "co_profissional_sus": ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"],
+            "co_profissional_sus": ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P0"],
             "nome_norm": ["ANA MARIA SOUZA", "BRUNO LIMA", "BRUNO LIMA", "CARLA MARIA DIAS", "JOAO REIS",
-                          "EVA ROCHA", "EVA MARIA ROCHA", "OTAVIO NUNES", "HELENA M PRADO"],
+                          "EVA ROCHA", "EVA MARIA ROCHA", "OTAVIO NUNES", "HELENA M PRADO", "ANA SOUZA"],
         })
 
     def test_regra(self) -> None:
-        lig, diag = X1.ligar(self.listas, self.vinc, self.nomes)
+        lig, diag = X1.ligar(self.listas, self.vinc, self.nomes, conselho_crm="71", exigir_nome_etapa1=True)
         r = lig.set_index("id_medico")
-        self.assertEqual(r.at["m1", "co_profissional_sus"], "P1")
+        self.assertEqual(r.at["m1", "co_profissional_sus"], "P1")  # P0 (outro conselho) fora da busca
         self.assertEqual(r.at["m1", "etapa_ligacao"], "1_crm_uf")
         self.assertTrue(pd.isna(r.at["m2", "co_profissional_sus"]))
         self.assertEqual(r.at["m2", "motivo"], "ambiguo_crm_uf_com_mais_de_um_profissional")
@@ -112,9 +115,15 @@ class TestX1LigacaoSintetico(unittest.TestCase):
         self.assertEqual(diag["etapa1_candidato_unico"], 2)
         self.assertEqual(diag["etapa1_nome_compativel"], 1)
         self.assertEqual(diag["etapa1_rejeitadas_ligadas_na_etapa2"], 1)
+        self.assertEqual(diag["vinculos_medicos_fora_do_conselho_crm_excluidos_da_busca"], 1)
+
+    def test_sem_filtro_de_conselho_m1_seria_ambiguo(self) -> None:
+        vinc = self.vinc.assign(co_conselho_classe="71")
+        lig, _ = X1.ligar(self.listas, vinc, self.nomes, conselho_crm="71", exigir_nome_etapa1=True)
+        self.assertEqual(lig.set_index("id_medico").at["m1", "motivo"], "ambiguo_crm_uf_com_mais_de_um_profissional")
 
     def test_regra_literal(self) -> None:
-        lig, _ = X1.ligar(self.listas, self.vinc, self.nomes, exigir_nome_etapa1=False)
+        lig, _ = X1.ligar(self.listas, self.vinc, self.nomes, conselho_crm="71", exigir_nome_etapa1=False)
         r = lig.set_index("id_medico")
         self.assertEqual(r.at["m8", "co_profissional_sus"], "P8")
         self.assertEqual(r.at["m8", "etapa_ligacao"], "1_crm_uf")
@@ -178,6 +187,24 @@ class TestX1OutcomesSintetico(unittest.TestCase):
         self.assertEqual(o.at["a", "e_estabelecimentos_202608"], 2)
         self.assertEqual(o.at["a", "vinculo_no_estab_do_posto_202608"], 1)
         self.assertEqual(o.at["b", "e_vinculos_202608"], 0)
+        # Meses fixos: e tinha vínculo no município em 202406, mas não na última competência pré-início.
+        self.assertEqual(o.at["e", "b_mesmo_mun_em_202406"], 1)
+        self.assertEqual(o.at["e", "b_mesmo_mun_em_202506"], 0)
+        self.assertEqual(o.at["a", "b_mesmo_mun_em_202406"], 0)
+        self.assertEqual(o.at["f", "_munis_ultimo_pre"], ("100002", "200001"))
+
+    def test_faixa_e_persistencia(self) -> None:
+        mm = pd.DataFrame({"ciclo": [1, 1, 2, 2], "ligado": 1,
+                           "b_mesmo_mun_ultimo_pre": [1, 1, 0, 1],
+                           "b_mesmo_mun_em_202406": [1, 0, 1, 0],
+                           "b_mesmo_mun_em_202501": [1, 1, 0, 0],
+                           "b_mesmo_mun_em_202506": [1, 1, 0, 1]})
+        f = X1.faixa_mesmo_municipio(mm)["1+2"]
+        self.assertAlmostEqual(f["fracao_por_referencia"]["ultima_competencia_pre"], 0.75)
+        self.assertAlmostEqual(f["minimo"], 0.5)
+        self.assertAlmostEqual(f["maximo"], 0.75)
+        self.assertTrue(f["ultima_competencia_pre_e_o_maximo"])
+        self.assertAlmostEqual(f["persistencia"]["fracao"], 1 / 3)
 
     def test_limite_ciclo3(self) -> None:
         self.assertTrue(all(c < X1.LIMITE_EXCLUSIVO for c in X1.COMPETENCIAS))
@@ -218,17 +245,57 @@ class TestX1SaidasReais(unittest.TestCase):
             self.assertEqual(sha256(ROOT / p), h, p)
 
     def test_taxas_de_ligacao_recalculadas(self) -> None:
-        for ciclo, r in self.resumo["taxas_ligacao"]["por_ciclo"].items():
-            d = self.med[self.med["ciclo"] == int(ciclo)]
-            self.assertEqual(r["registros"], len(d))
-            self.assertEqual(r["ligados"], int(d["ligado"].sum()))
-            self.assertAlmostEqual(r["taxa"], float(d["ligado"].mean()))
-            self.assertEqual(r["etapa_1_crm_uf"] + r["etapa_2_crm_nome"], r["ligados"])
-            self.assertEqual(r["ligados"] + r["ambiguos"] + r["nao_ligados_sem_ambiguidade"], r["registros"])
+        self.assertEqual(set(self.med["regra_ligacao"]), set(X1.REGRAS))
+        for regra in X1.REGRAS:
+            mr = self.med[self.med["regra_ligacao"] == regra]
+            self.assertTrue(mr["id_medico"].is_unique)
+            for ciclo in ("1", "2", "3"):
+                r = self.resumo["taxas_ligacao"][regra][ciclo]
+                d = mr[mr["ciclo"] == int(ciclo)]
+                self.assertEqual(r["registros"], len(d))
+                self.assertEqual(r["ligados"], int(d["ligado"].sum()))
+                self.assertAlmostEqual(r["taxa"], float(d["ligado"].mean()))
+                self.assertEqual(r["etapa_1_crm_uf"] + r["etapa_2_crm_nome"], r["ligados"])
+                self.assertEqual(r["ligados"] + r["ambiguos"] + r["nao_ligados_sem_ambiguidade"], r["registros"])
         self.assertTrue(((self.med["ligado"] == 1) == (self.med["motivo_ligacao"] == "ligado")).all())
+        lit = self.med[self.med["regra_ligacao"] == "literal_doc45"]
+        self.assertEqual(int(lit["etapa1_rejeitada_por_nome"].sum()), 0)
+
+    def test_mes_de_referencia_recalculado(self) -> None:
+        for regra in X1.REGRAS:
+            for ciclo, cs in (("1", [1]), ("2", [2]), ("1+2", [1, 2])):
+                m = self.med[(self.med["regra_ligacao"] == regra) & self.med["ciclo"].isin(cs) & (self.med["ligado"] == 1)]
+                r = self.resumo["mesmo_municipio_por_mes_de_referencia"][regra][ciclo]
+                vals = [float(m["b_mesmo_mun_ultimo_pre"].mean())] + [
+                    float(m[f"b_mesmo_mun_em_{mf}"].mean()) for mf in X1.MESES_FIXOS]
+                self.assertAlmostEqual(r["minimo"], min(vals))
+                self.assertAlmostEqual(r["maximo"], max(vals))
+                inc = m[m["b_mesmo_mun_ultimo_pre"] == 1]
+                self.assertAlmostEqual(r["persistencia"]["fracao"], float(inc["b_mesmo_mun_em_202406"].mean()))
+
+    def test_parquet_sem_mes_de_inicio_nem_curso(self) -> None:
+        self.assertFalse({"mes_inicio", "cod_curso", "curso", "dt_inicio"} & set(self.med.columns))
+
+    def test_e9_diagnostico_fecha(self) -> None:
+        for regra in X1.REGRAS:
+            de = self.resumo["e9_distancia"]["diagnostico"][regra]
+            self.assertEqual(de["pares_total"] - de["excluidos_sem_vinculo_medico_na_ultima_competencia_pre"]
+                             - de["excluidos_sem_linha_de_1a_opcao"] - de["excluidos_1a_opcao_fora_do_conjunto"]
+                             - de["excluidos_sem_coordenada"], de["candidatos_no_logit"])
+            n = self.est[(self.est["analise"] == "e9_distancia") & (self.est["regra_ligacao"] == regra)]["n_obs"]
+            self.assertTrue((n == de["candidatos_no_logit"]).all())
+
+    def test_conselho_e_a09(self) -> None:
+        self.assertIn("MEDICINA", X1.texto_norm(self.resumo["conselho_classe"]["descricao"]))
+        for m in self.resumo["competencias_cnes"].values():
+            self.assertTrue(m["validacao_contra_a09"]["sha256_igual_ao_a09"])
+        self.assertIn("malha_periodo_verificado", self.resumo["coordenadas"])
 
     def test_outcomes_coerentes(self) -> None:
         m = self.med[(self.med["ligado"] == 1) & self.med["ciclo"].isin([1, 2])]
+        for mf in X1.MESES_FIXOS:
+            self.assertTrue(m[f"b_mesmo_mun_em_{mf}"].notna().all())
+            self.assertTrue((m[f"a_mesmo_estab_em_{mf}"] <= m[f"b_mesmo_mun_em_{mf}"]).all())
         com_pre = m[m["competencias_pre_inicio"] > 0]
         self.assertTrue(com_pre["b_mesmo_mun_ultimo_pre"].notna().all())
         self.assertTrue((com_pre["a_mesmo_estab_ultimo_pre"] <= com_pre["b_mesmo_mun_ultimo_pre"]).all())
@@ -242,10 +309,10 @@ class TestX1SaidasReais(unittest.TestCase):
         self.assertTrue(self.med.loc[self.med["ciclo"] == 3, "c_origem"].isna().all())
 
     def test_descritivo_recalculado(self) -> None:
-        for ciclo, cs in (("1", [1]), ("2", [2]), ("1+2", [1, 2])):
-            m = self.med[self.med["ciclo"].isin(cs) & (self.med["ligado"] == 1)]
+        for regra, ciclo, cs in [(r, c, cs) for r in X1.REGRAS for c, cs in (("1", [1]), ("2", [2]), ("1+2", [1, 2]))]:
+            m = self.med[(self.med["regra_ligacao"] == regra) & self.med["ciclo"].isin(cs) & (self.med["ligado"] == 1)]
             novo = (1 - m["b_mesmo_mun_ultimo_pre"]).dropna()
-            d = self.desc[self.desc["regra_ligacao"] == "principal_d1"]
+            d = self.desc[self.desc["regra_ligacao"] == regra]
             r = d[(d["ciclo"] == ciclo) & (d["faixa"] == "todas") & (d["fonte_lista"] == "todas")
                   & (d["indicador"] == "novo_no_municipio")].iloc[0]
             self.assertEqual(r["n_base"], len(novo))
@@ -259,11 +326,16 @@ class TestX1SaidasReais(unittest.TestCase):
     def test_bky_recalculado(self) -> None:
         sys.path.insert(0, str(ROOT / "scripts" / "rdd_bolsa"))
         import rdd_lib
-        q = rdd_lib.qvalores_bky(self.est["p_valor"].to_numpy(dtype=float))
-        np.testing.assert_allclose(q, self.est["q_bky_x1"].to_numpy(dtype=float), equal_nan=True)
+        for regra in X1.REGRAS:
+            e = self.est[self.est["regra_ligacao"] == regra]
+            q = rdd_lib.qvalores_bky(e["p_valor"].to_numpy(dtype=float))
+            np.testing.assert_allclose(q, e["q_bky_x1"].to_numpy(dtype=float), equal_nan=True)
 
     def test_especificacoes_presentes(self) -> None:
-        e = self.est
+        for regra in X1.REGRAS:
+            self._especificacoes(self.est[self.est["regra_ligacao"] == regra])
+
+    def _especificacoes(self, e: pd.DataFrame) -> None:
         for y in X1.OUTCOMES_RDD:
             for ciclo in ("1", "2"):
                 for corte in ("0.300", "0.400", "empilhado"):

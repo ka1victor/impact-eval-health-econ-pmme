@@ -30,7 +30,13 @@ Ligação (doc 45, §3)
   UF do posto) com um único profissional (``CO_PROFISSIONAL_SUS``) nas seis
   competências; (2) sem (1), CRM exato em qualquer UF com nome compatível, com
   um único profissional; (3) ambíguos (mais de um profissional) e não achados
-  ficam fora, com o motivo.
+  ficam fora, com o motivo. Só entram na busca vínculos com
+  ``CO_CONSELHO_CLASSE`` do CRM (código lido da ``tbConselhoClasse``).
+- Duas regras, lado a lado em todas as saídas (coluna ``regra_ligacao``):
+  ``literal_doc45`` é a regra do protocolo congelado; ``d1_pos_hoc`` é a correção
+  D1, decidida depois da primeira execução completa (a UF das listas é a do
+  posto, não a do CRM; na etapa 1, o candidato único só liga com nome
+  compatível). O q de BKY é calculado dentro de cada regra.
 - Nome compatível (fixado antes de ligar): nomes normalizados (maiúsculas, sem
   acento, sem partículas DE/DA/DO/DAS/DOS/E/D/DI/DU) com o mesmo primeiro nome e
   o mesmo último sobrenome, ou com o mesmo primeiro nome e o conjunto de nomes
@@ -43,7 +49,9 @@ lidas estritamente anteriores ao mês de início; a última delas é a de
 referência. Um vínculo médico conta se tem CBO médica.
 - (a) vínculo no mesmo estabelecimento (CNES do posto) na última competência
   pré-início; variante: em alguma competência pré-início;
-- (b) vínculo no mesmo município do posto, idem;
+- (b) vínculo no mesmo município do posto, idem; também em meses fixos iguais
+  para todos (202406, 202501, 202506) e a persistência dos incumbentes (dos que
+  têm (b) na última competência pré-início, quantos já o tinham em 202406);
 - (c) origem na última competência pré-início, pela ligação mais próxima:
   ``mesmo_municipio`` > ``mesma_regiao_saude`` > ``mesma_uf`` > ``outra_uf``;
   sem vínculo médico nessa competência: ``sem_vinculo_medico_anterior``;
@@ -68,10 +76,12 @@ Análises
 - E9 com distância (sensibilidade): candidatos alocados na 1ª chamada ligados
   pelo nome e pela célula a um médico ativo ligado ao CNES com vínculo
   pré-início; logit condicional da 1ª opção com os atributos do E9 principal e
-  a distância da origem a cada célula. Amostra selecionada (alocados, ativos,
-  ligados, com origem): sensibilidade, não estimativa do efeito da distância
-  sobre todos os candidatos.
-- q de BKY dentro do X1 (todas as linhas com p).
+  a distância de cada célula ao município de origem mais próximo dela (mínimo
+  sobre todos os municípios com vínculo médico na última competência
+  pré-início; independe da célula escolhida). Amostra selecionada (alocados,
+  ativos, ligados, com origem): sensibilidade, não estimativa do efeito da
+  distância sobre todos os candidatos.
+- q de BKY dentro do X1 (todas as linhas com p), uma família por regra.
 
 Uso
 ---
@@ -87,7 +97,9 @@ com o motivo. As constantes são parâmetros do protocolo (competências, cortes
 h, limite do ciclo 3) e de definição (prefixos de CBO, partículas do nome, raio
 da Terra). Saídas sem nome, CPF, CNS, CRM nem código de profissional: o médico
 tem pseudônimo determinístico (ordem do SHA-256 de ciclo, CRM, UF, CNES e
-curso, calculado só em memória).
+curso, calculado só em memória). O pseudônimo é fraco: ciclo, município e faixa,
+cruzados com a lista nominal pública e com o CNES, podem reidentificar o médico;
+por isso o parquet não traz mês de início nem curso.
 """
 
 from __future__ import annotations
@@ -159,6 +171,10 @@ COMPETENCIAS = ("202406", "202501", "202506", "202510", "202602", "202608")
 LIMITE_EXCLUSIVO = "202609"  # ciclo 3: nada a partir daqui é baixado ou lido
 assert all(c < LIMITE_EXCLUSIVO for c in COMPETENCIAS)
 COMPETENCIA_POS = "202608"  # (e): vínculos simultâneos depois do início
+# Pedido da auditoria de X1: "no mesmo município" em meses fixos, iguais para todos (pré-início dos ciclos 1-2).
+MESES_FIXOS = ("202406", "202501", "202506")
+# Regras de ligação relatadas lado a lado: a literal é a do protocolo congelado; D1 é correção pós-hoc.
+REGRAS = {"literal_doc45": False, "d1_pos_hoc": True}
 CICLOS_OUTCOME = (1, 2)
 CORTES_MIL = L.CORTES_MIL
 H_MIL = L.H_PRINCIPAL_MIL
@@ -431,8 +447,11 @@ def adquirir(competencias: tuple[str, ...], alvo: set[str], workers: int = 3) ->
                     "linhas_vinculos_medicos_a09": ref.get("linhas_vinculos_medicos"),
                     "linhas_vinculos_medicos_x1": meta["linhas_vinculos_medicos"],
                 }
-                # Fail closed: com o mesmo ZIP, a extração tem de reproduzir a contagem de vínculos médicos do a09.
-                if validacao["sha256_igual_ao_a09"] and ref.get("linhas_vinculos_medicos") != meta["linhas_vinculos_medicos"]:
+                # Fail closed: o ZIP tem de ser o mesmo do a09 (SHA-256) e a extração tem de reproduzir a contagem
+                # de vínculos médicos do a09.
+                if not validacao["sha256_igual_ao_a09"]:
+                    raise AssertionError(f"{comp}: SHA-256 do ZIP difere do manifesto do a09: {validacao}")
+                if ref.get("linhas_vinculos_medicos") != meta["linhas_vinculos_medicos"]:
                     raise AssertionError(f"{comp}: contagem de vínculos médicos difere do a09 com o mesmo ZIP: {validacao}")
                 if meta["linhas_vinculos_medicos"] < a09.MIN_VINCULOS_MEDICOS_MES:
                     raise AssertionError(f"{comp}: extração implausível ({meta['linhas_vinculos_medicos']} vínculos)")
@@ -444,6 +463,100 @@ def adquirir(competencias: tuple[str, ...], alvo: set[str], workers: int = 3) ->
                 log(f"{comp}: {meta['linhas_vinculos_medicos']:,} vínculos médicos; ZIP apagado")
                 infos[comp] = registro
     return infos
+
+
+TABELAS_CODIGOS = ("tbConselhoClasse", "tbOrgaoEmissor")
+CONSELHO_META = CACHE_DIR / f"tabelas_codigos_{COMPETENCIA_POS}.json"
+
+
+def caminho_tabela_codigos(tabela: str) -> Path:
+    return CACHE_DIR / f"{tabela}_{COMPETENCIA_POS}.csv"
+
+
+def adquirir_conselho() -> None:
+    """Tabelas de código do CNES (competência 202608): tbConselhoClasse e tbOrgaoEmissor. ZIP conferido contra o a09."""
+    a09 = _a09()
+    comp = COMPETENCIA_POS
+    info = a09.baixar(comp)
+    ref = json.loads(MANIFESTO_A09.read_text(encoding="utf-8"))["por_competencia"][comp]
+    if info["sha256_zip"] != ref["sha256_zip"]:
+        raise AssertionError(f"{comp}: SHA-256 do ZIP difere do a09 (fail closed)")
+    membros = {}
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(a09.caminho_zip(comp)) as zf:
+        for tabela in TABELAS_CODIGOS:
+            membro = a09._membro(zf, tabela)
+            tb = pd.read_csv(zf.open(membro), sep=";", encoding="latin1", dtype=str, keep_default_na=False)
+            tb.columns = [c.strip().strip('"').upper() for c in tb.columns]
+            tb.to_csv(caminho_tabela_codigos(tabela), index=False)
+            membros[tabela] = {"membro": membro, "linhas": int(len(tb)), "colunas": list(tb.columns)}
+    CONSELHO_META.write_text(json.dumps({"competencia": comp, "tabelas": membros, **info, "sha256_igual_ao_a09": True,
+                                         "data_processamento": dt.date.today().isoformat()},
+                                        ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    a09.caminho_zip(comp).unlink()
+    log(f"tabelas de código de {comp} extraídas; ZIP apagado")
+
+
+def codigo_conselho_crm(vinc: pd.DataFrame | None = None) -> tuple[str, dict]:
+    """Código do CRM no campo CO_CONSELHO_CLASSE da tbCargaHorariaSus; para se não for único.
+
+    O campo segue a tabela tbOrgaoEmissor do CNES (código → órgão emissor), não a tbConselhoClasse (que tem
+    outra numeração). Regra: descrição normalizada contém MEDICINA e CONSELHO REGIONAL e não VETERINARIA.
+    """
+    if not CONSELHO_META.exists():
+        raise SystemExit("tabelas de código do CNES ausentes do cache; rode --etapa aquisicao (fail closed)")
+    tb = pd.read_csv(caminho_tabela_codigos("tbOrgaoEmissor"), dtype=str, keep_default_na=False)
+    desc = tb["DS_ORGAO_EMISSOR"].map(texto_norm)
+    crm = tb[desc.str.contains("MEDICINA") & desc.str.contains("CONSELHO REGIONAL") & ~desc.str.contains("VETERINARIA")]
+    if len(crm) != 1:
+        raise AssertionError(f"tbOrgaoEmissor: esperado um código de Conselho Regional de Medicina, achados {len(crm)}")
+    codigo = str(crm["CO_ORGAO_EMISSOR"].iloc[0]).strip()
+    cc = pd.read_csv(caminho_tabela_codigos("tbConselhoClasse"), dtype=str, keep_default_na=False)
+    cc_med = cc[cc["DS_CONSELHO_CLASSE"].map(texto_norm).str.contains("MEDICINA")
+                & ~cc["DS_CONSELHO_CLASSE"].map(texto_norm).str.contains("VETERINARIA")]
+    meta = json.loads(CONSELHO_META.read_text(encoding="utf-8"))
+    diag = {"codigo_crm": codigo, "descricao": str(crm["DS_ORGAO_EMISSOR"].iloc[0]).strip(),
+            "tabela": meta["tabelas"]["tbOrgaoEmissor"]["membro"], "competencia": meta["competencia"],
+            "sha256_zip": meta["sha256_zip"], "url": meta["url"],
+            "regra": "tbOrgaoEmissor: descrição contém MEDICINA e CONSELHO REGIONAL e não VETERINARIA; uma linha",
+            "nota_tbConselhoClasse": ("a tbConselhoClasse tem outra numeração (medicina = "
+                                      + ", ".join(cc_med["CO_CONSELHO_CLASSE"].tolist()) +
+                                      "); o campo CO_CONSELHO_CLASSE da carga horária segue a tbOrgaoEmissor")}
+    if vinc is not None:
+        diag["fracao_dos_vinculos_medicos_com_o_codigo"] = float((vinc["co_conselho_classe"] == codigo).mean())
+    return codigo, diag
+
+
+def verificar_periodo_malha() -> None:
+    """Descobre a que período da malha municipal a resposta padrão da API corresponde (bytes idênticos)."""
+    import gzip
+    import urllib.error
+    import urllib.request
+    man = json.loads(COORD_MANIFESTO.read_text(encoding="utf-8"))
+    alvo = sha256_arquivo(COORD_JSON)
+    iguais, testados = [], {}
+    for periodo in range(2020, 2026):
+        url = f"{COORD_URL}&periodo={periodo}"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        try:
+            with urllib.request.urlopen(req, timeout=300) as resp:
+                corpo = resp.read()
+        except urllib.error.HTTPError as erro:  # período sem malha na API
+            testados[str(periodo)] = {"erro_http": erro.code}
+            continue
+        if corpo[:2] == b"\x1f\x8b":
+            corpo = gzip.decompress(corpo)
+        h = hashlib.sha256(corpo).hexdigest()
+        testados[str(periodo)] = {"sha256": h, "bytes": len(corpo)}
+        if h == alvo:
+            iguais.append(str(periodo))
+    if len(iguais) != 1:
+        raise AssertionError(f"período da malha não identificado de forma única: {iguais}")
+    man.update({"malha_periodo_verificado": iguais[0], "verificacao_periodo": {
+        "metodo": "a resposta padrão tem os mesmos bytes que a resposta com &periodo=AAAA",
+        "data": dt.date.today().isoformat(), "testados": testados}})
+    COORD_MANIFESTO.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    log(f"malha municipal da API: período {iguais[0]}")
 
 
 def baixar_coordenadas() -> None:
@@ -533,21 +646,25 @@ def haversine_km(lon1, lat1, lon2, lat2) -> np.ndarray:
 
 # ---------------------------------------------------------------- ligação
 
-def ligar(listas: pd.DataFrame, vinc: pd.DataFrame, nomes: pd.DataFrame, *,
-          exigir_nome_etapa1: bool = True) -> tuple[pd.DataFrame, dict]:
-    """Regra do doc 45 (CRM+UF exato; depois CRM exato com nome compatível; ambíguos fora), com o desvio §D1.
+def ligar(listas: pd.DataFrame, vinc: pd.DataFrame, nomes: pd.DataFrame, *, conselho_crm: str,
+          exigir_nome_etapa1: bool) -> tuple[pd.DataFrame, dict]:
+    """Regra do doc 45 (CRM+UF exato; depois CRM exato com nome compatível; ambíguos fora) e a correção D1.
 
-    Desvio registrado (D1, 19/10/2026, antes de abrir qualquer outcome): a UF das listas é a do posto, não a
-    do CRM. Na etapa 1 literal, um CRM de outra UF colide com o de outra pessoa na UF do posto. Por isso, no
-    principal (`exigir_nome_etapa1=True`), o candidato único da etapa 1 só liga com nome compatível; sem nome
-    compatível, o registro segue para a etapa 2 (CRM em qualquer UF com nome compatível). A regra literal
-    (`exigir_nome_etapa1=False`) é relatada como sensibilidade.
+    `exigir_nome_etapa1=False` é a regra literal do protocolo congelado (doc 45). `True` é a correção D1,
+    decidida em 19/10/2026 DEPOIS da primeira execução completa (que gravou e exibiu as estimativas com a
+    regra literal): a UF das listas é a do posto, não a do CRM, e na etapa 1 literal um CRM de outra UF
+    colide com o de outra pessoa na UF do posto. Com D1, o candidato único da etapa 1 só liga com nome
+    compatível; sem ele, o registro segue para a etapa 2 (CRM em qualquer UF com nome compatível). As duas
+    regras são relatadas lado a lado.
 
-    `listas`: id_medico, crm, uf, _nome. `vinc`: nu_registro, sg_uf_crm, co_profissional_sus (só vínculos
-    médicos). `nomes`: co_profissional_sus, nome_norm. Devolve uma linha por id_medico com
-    co_profissional_sus (ou <NA>), etapa_ligacao e motivo.
+    Só entram na busca os vínculos médicos cujo `co_conselho_classe` é o do CRM (`conselho_crm`, lido da
+    tabela tbConselhoClasse do CNES).
+
+    `listas`: id_medico, crm, uf, _nome. `vinc`: nu_registro, sg_uf_crm, co_conselho_classe,
+    co_profissional_sus (só vínculos médicos). `nomes`: co_profissional_sus, nome_norm. Devolve uma linha
+    por id_medico com co_profissional_sus (ou <NA>), etapa_ligacao e motivo.
     """
-    reg = vinc.dropna(subset=["nu_registro", "co_profissional_sus"])
+    reg = vinc[vinc["co_conselho_classe"] == conselho_crm].dropna(subset=["nu_registro", "co_profissional_sus"])
     reg = reg[["nu_registro", "sg_uf_crm", "co_profissional_sus"]].drop_duplicates()
     por_crm_uf = reg.groupby(["nu_registro", "sg_uf_crm"])["co_profissional_sus"].agg(lambda s: sorted(set(s)))
     por_crm = reg.groupby("nu_registro")["co_profissional_sus"].agg(lambda s: sorted(set(s)))
@@ -582,7 +699,9 @@ def ligar(listas: pd.DataFrame, vinc: pd.DataFrame, nomes: pd.DataFrame, *,
         else:
             linhas.append({**base, "motivo": "crm_sem_nome_compativel"})
     out = pd.DataFrame(linhas)
-    diag = {"exigir_nome_etapa1": exigir_nome_etapa1,
+    diag = {"exigir_nome_etapa1": exigir_nome_etapa1, "conselho_crm": conselho_crm,
+            "vinculos_medicos_fora_do_conselho_crm_excluidos_da_busca": int((vinc["co_conselho_classe"]
+                                                                              != conselho_crm).sum()),
             "etapa1_candidato_unico": len(compat_etapa1),
             "etapa1_nome_compativel": int(sum(compat_etapa1)),
             "etapa1_fracao_nome_compativel": (sum(compat_etapa1) / len(compat_etapa1)) if compat_etapa1 else None,
@@ -620,6 +739,11 @@ def outcomes_medico(med: pd.DataFrame, vinc: pd.DataFrame, regiao: pd.Series, co
             o["b_mesmo_mun_ultimo_pre"] = int((gu["co_municipio"] == r.co_ibge).any())
             o["b_mesmo_mun_algum_pre"] = int((gp["co_municipio"] == r.co_ibge).any())
             o["vinculo_medico_algum_pre"] = int(len(gp) > 0)
+            for mf in MESES_FIXOS:
+                if mf < r.mes_inicio:  # mês fixo pré-início para todos os ciclos 1 e 2
+                    gf = g[g["competencia"] == mf]
+                    o[f"b_mesmo_mun_em_{mf}"] = int((gf["co_municipio"] == r.co_ibge).any())
+                    o[f"a_mesmo_estab_em_{mf}"] = int((gf["co_cnes"] == r.co_cnes).any())
             o["vinculos_ultimo_pre"] = int(len(gu))
             if gu.empty:
                 o["c_origem"] = "sem_vinculo_medico_anterior"
@@ -637,6 +761,7 @@ def outcomes_medico(med: pd.DataFrame, vinc: pd.DataFrame, regiao: pd.Series, co
                 o["c_origem"] = "outra_uf"
             if not gu.empty:
                 muns = sorted(set(gu["co_municipio"].dropna()))
+                o["_munis_ultimo_pre"] = tuple(muns)  # só em memória (E9 com distância); não é gravado
                 if xy is None:
                     o["motivo_distancia_ausente"] = "coordenadas do IBGE indisponíveis"
                 elif r.co_ibge in xy.index and all(m in xy.index for m in muns):
@@ -686,10 +811,14 @@ INDICADORES_DESC = [
      "ligados com início antes de 202608"),
     ("vinculo_no_estab_do_posto_202608", "conferência: vínculo no estabelecimento do posto em 202608",
      "ligados com início antes de 202608"),
-]
+] + [(f"b_mesmo_mun_em_{m}", f"vínculo no mesmo município em {m} (mês fixo)", "ligados") for m in MESES_FIXOS] + [
+    (f"a_mesmo_estab_em_{m}", f"vínculo no mesmo estabelecimento em {m} (mês fixo)", "ligados") for m in MESES_FIXOS
+] + [(f"persistencia_incumbentes_em_{MESES_FIXOS[0]}",
+      f"entre os que tinham vínculo no município na última competência pré-início, fração que já o tinha em "
+      f"{MESES_FIXOS[0]}", "ligados com (b) = 1")]
 
 
-def descritivo(med: pd.DataFrame, regra: str = "principal_d1") -> pd.DataFrame:
+def descritivo(med: pd.DataFrame, regra: str) -> pd.DataFrame:
     linhas = []
     for ciclo in ("1", "2", "1+2", "3"):
         cs = [1, 2] if ciclo == "1+2" else [int(ciclo)]
@@ -712,6 +841,8 @@ def descritivo(med: pd.DataFrame, regra: str = "principal_d1") -> pd.DataFrame:
                         x = 1 - lig["b_mesmo_mun_ultimo_pre"]
                     elif col == "d_distancia_km_mediana":
                         x = lig["d_distancia_km"]
+                    elif col.startswith("persistencia_incumbentes_em_"):
+                        x = lig.loc[lig["b_mesmo_mun_ultimo_pre"] == 1, f"b_mesmo_mun_em_{MESES_FIXOS[0]}"]
                     else:
                         x = lig[col] if col in lig else pd.Series(dtype=float)
                     x = pd.to_numeric(x, errors="coerce").dropna()
@@ -768,7 +899,7 @@ def painel_municipio(med: pd.DataFrame, vmun: pd.DataFrame, ivs: pd.Series) -> t
     return pm.reset_index(drop=True), diag
 
 
-COLS_EST = ["natureza_dos_dados", "estatuto", "analise", "outcome", "ciclo", "corte", "especificacao", "condicional",
+COLS_EST = ["natureza_dos_dados", "estatuto", "regra_ligacao", "analise", "outcome", "ciclo", "corte", "especificacao", "condicional",
             "tau", "ep", "ic95_inf", "ic95_sup", "p_valor", "q_bky_x1", "n_abaixo", "n_acima", "n_obs", "n_clusters",
             "h_mil", "media_bruta_abaixo", "media_bruta_acima", "lee_tau_inf", "lee_tau_sup", "lee_q_aparo",
             "lee_lado_aparado", "lee_salto_selecao", "lee_p0_selecao", "lee_p1_selecao", "nota"]
@@ -888,14 +1019,25 @@ def ligar_candidatos(med: pd.DataFrame, listas: pd.DataFrame) -> tuple[pd.DataFr
 
 
 def e9_com_distancia(med: pd.DataFrame, listas: pd.DataFrame, coord: pd.DataFrame) -> tuple[list[dict], dict]:
+    """Logit condicional da 1a opção com a distância de cada célula à origem pré-início do médico.
+
+    A distância a uma célula é o mínimo, sobre TODOS os municípios em que o médico tinha vínculo médico na
+    última competência pré-início, da distância ao município da célula. Ela não depende da célula escolhida
+    nem do posto final (a versão anterior usava a origem mais próxima do posto final, o que embutia a
+    escolha na distância; pedido da auditoria de X1).
+    """
     e9 = _importar("e9_escolha_16_x1", SCRIPT_16)
     pares, diag = ligar_candidatos(med, listas)
     m = med.set_index("id_medico")
-    pares["co_ibge_origem"] = pares["id_medico"].map(m["co_ibge_origem_mais_proxima"])
-    diag["pares_com_origem"] = int(pares["co_ibge_origem"].notna().sum())
-    pares = pares.dropna(subset=["co_ibge_origem"])
+    diag["pares_total"] = int(len(pares))
+    pares["_munis"] = pares["id_medico"].map(m["_munis_ultimo_pre"])
+    sem_origem = pares["_munis"].isna()
+    diag["excluidos_sem_vinculo_medico_na_ultima_competencia_pre"] = int(sem_origem.sum())
+    pares = pares[~sem_origem]
+    diag["pares_com_origem"] = int(len(pares))
     esc = pd.read_parquet(ESCOLHAS)
     r1 = esc[(esc["opcao_rank"] == 1) & esc["id_candidato"].isin(set(pares["id_candidato"]))]
+    diag["excluidos_sem_linha_de_1a_opcao"] = int(len(set(pares["id_candidato"]) - set(r1["id_candidato"])))
     conj = pd.read_parquet(CONJ_PRINCIPAL)
     conj = conj[conj["ciclo"].isin(CICLOS_OUTCOME)]
     mapa, _ = e9.mapa_bolsa_por_faixa()
@@ -903,26 +1045,39 @@ def e9_com_distancia(med: pd.DataFrame, listas: pd.DataFrame, coord: pd.DataFram
     macros = sorted(conj["macrorregiao"].unique())
     estratos = sorted(conj["estrato_territorial"].unique())
     xy = coord.set_index("co_ibge")
-    linhas_long, esc_idx, clus, n_fora = [], [], [], 0
+    munis_por_cand = pares.set_index("id_candidato")["_munis"]
+    linhas_long, esc_idx, clus = [], [], []
+    fora_conj = sem_coord = 0
     for r in r1.itertuples(index=False):
         alt = conj[conj["id_conjunto_escolha"] == r.id_conjunto_escolha].copy()
         pos = np.flatnonzero((alt["co_cnes_7d"] == r.co_cnes_7d).to_numpy() & (alt["cod_curso"] == r.cod_curso).to_numpy())
         if len(pos) != 1:
-            n_fora += 1
+            fora_conj += 1
             continue
-        orig = pares.loc[pares["id_candidato"] == r.id_candidato, "co_ibge_origem"].iloc[0]
-        if orig not in xy.index or not alt["co_ibge"].isin(xy.index).all():
-            n_fora += 1
+        munis = list(munis_por_cand.loc[r.id_candidato])
+        if not all(mu in xy.index for mu in munis) or not alt["co_ibge"].isin(xy.index).all():
+            sem_coord += 1
             continue
-        alt["distancia_100km"] = haversine_km(xy.at[orig, "lon"], xy.at[orig, "lat"], xy.loc[alt["co_ibge"], "lon"],
-                                              xy.loc[alt["co_ibge"], "lat"]) / ESCALA_DISTANCIA_KM
+        lon_c, lat_c = xy.loc[alt["co_ibge"], "lon"].to_numpy(), xy.loc[alt["co_ibge"], "lat"].to_numpy()
+        dist = np.min(np.vstack([haversine_km(xy.at[mu, "lon"], xy.at[mu, "lat"], lon_c, lat_c) for mu in munis]),
+                      axis=0)
+        alt["distancia_100km"] = dist / ESCALA_DISTANCIA_KM
         alt["_grupo"] = r.id_candidato
         esc_idx.append(sum(len(x) for x in linhas_long) + int(pos[0]))
         clus.append(r.id_conjunto_escolha)
         linhas_long.append(alt)
+    diag["excluidos_1a_opcao_fora_do_conjunto"] = fora_conj
+    diag["excluidos_sem_coordenada"] = sem_coord
     diag["candidatos_no_logit"] = len(linhas_long)
-    diag["candidatos_excluidos_escolha_fora_do_conjunto_ou_sem_coordenada"] = n_fora
     diag["minimo_fixado"] = MIN_CANDIDATOS_E9_DIST
+    diag["distancia"] = ("mínimo, sobre os municípios com vínculo médico na última competência pré-início, da "
+                         "distância ao município da célula; independe da célula escolhida")
+    if linhas_long:
+        longo0 = pd.concat(linhas_long, ignore_index=True)
+        escolhida = np.zeros(len(longo0), dtype=bool)
+        escolhida[np.asarray(esc_idx)] = True
+        diag["candidatos_com_distancia_zero_a_celula_escolhida"] = int((longo0.loc[escolhida, "distancia_100km"] == 0).sum())
+        diag["fracao_das_alternativas_com_distancia_zero"] = float((longo0["distancia_100km"] == 0).mean())
     linhas = []
     if len(linhas_long) < MIN_CANDIDATOS_E9_DIST:
         nota = f"não estimado: {len(linhas_long)} candidatos < mínimo fixado de {MIN_CANDIDATOS_E9_DIST}"
@@ -934,6 +1089,7 @@ def e9_com_distancia(med: pd.DataFrame, listas: pd.DataFrame, coord: pd.DataFram
     _, grupo_cel = np.unique(longo["_grupo"].to_numpy(), return_inverse=True)
     esc_arr = np.asarray(esc_idx)
     clus_arr = np.asarray(clus)
+    from scipy import stats
     for espec, extra in (("e9_principal_mesma_amostra", []), ("e9_com_distancia", ["distancia_100km"])):
         X = e9.matriz_atributos(longo, 1, "linear", macros, estratos)
         for c in extra:
@@ -956,7 +1112,7 @@ def e9_com_distancia(med: pd.DataFrame, listas: pd.DataFrame, coord: pd.DataFram
             b, ep = float(fit["theta"][j]), float(math.sqrt(max(V[j, j], 0.0)))
             ep_mv = float(math.sqrt(max(info_inv[j, j], 0.0)))
             z = b / ep if ep > 0 else np.nan
-            p = float(2 * (1 - __import__("scipy").stats.norm.cdf(abs(z)))) if np.isfinite(z) else np.nan
+            p = float(2 * stats.norm.sf(abs(z))) if np.isfinite(z) else np.nan
             nota = (f"logit condicional da 1a opção, ciclos 1+2; EP sanduíche por conjunto (curso × ciclo), "
                     f"G = {G}; EP de MV = {ep_mv:.6g}; convergiu = {fit['convergiu']}; omitidas: {', '.join(omit) or '—'}"
                     "; amostra selecionada (alocados, ativos, ligados, com vínculo pré-início)")
@@ -1003,127 +1159,157 @@ def ler_saidas() -> tuple[dict, pd.DataFrame, pd.DataFrame]:
     return resumo, est, desc
 
 
+ROTULO_REGRA = {"literal_doc45": "literal (protocolo, doc 45)", "d1_pos_hoc": "D1 (correção pós-hoc)"}
+
+
 def blocos_doc(resumo: dict, est: pd.DataFrame, desc: pd.DataFrame) -> dict[str, str]:
     b: dict[str, str] = {}
-    # Ligação.
-    t = ["| Ciclo | Registros | Ligados | Taxa | Etapa 1 (CRM+UF) | Etapa 2 (CRM+nome) | Ambíguos | Não achados |",
-         "|---|---|---|---|---|---|---|---|"]
-    for ciclo, r in resumo["taxas_ligacao"]["por_ciclo"].items():
-        t.append(f"| {ciclo} | {fmt_int(r['registros'])} | {fmt_int(r['ligados'])} | {fmt_pct(r['taxa'])} | "
-                 f"{fmt_int(r['etapa_1_crm_uf'])} | {fmt_int(r['etapa_2_crm_nome'])} | {fmt_int(r['ambiguos'])} | "
-                 f"{fmt_int(r['nao_ligados_sem_ambiguidade'])} |")
-    mot = resumo["taxas_ligacao"]["motivos"]
+    # Ligação, nas duas regras.
+    t = ["| Regra | Ciclo | Registros | Ligados | Taxa | Etapa 1 (CRM+UF) | Etapa 2 (CRM+nome) | Ambíguos | Não achados |",
+         "|---|---|---|---|---|---|---|---|---|"]
+    for regra in REGRAS:
+        for ciclo in ("1", "2", "3"):
+            r = resumo["taxas_ligacao"][regra][ciclo]
+            t.append(f"| {ROTULO_REGRA[regra]} | {ciclo} | {fmt_int(r['registros'])} | {fmt_int(r['ligados'])} | "
+                     f"{fmt_pct(r['taxa'])} | {fmt_int(r['etapa_1_crm_uf'])} | {fmt_int(r['etapa_2_crm_nome'])} | "
+                     f"{fmt_int(r['ambiguos'])} | {fmt_int(r['nao_ligados_sem_ambiguidade'])} |")
     t.append("")
-    t.append("Motivos (todos os ciclos): " + "; ".join(f"{k}: {fmt_int(v)}" for k, v in mot.items()) + ".")
-    d1 = resumo["diagnostico_ligacao"]
+    for regra in REGRAS:
+        mot = resumo["taxas_ligacao"][regra]["motivos"]
+        t.append(f"Motivos, regra {ROTULO_REGRA[regra]}: " + "; ".join(f"{k}: {fmt_int(v)}" for k, v in mot.items()) + ".")
+    d1 = resumo["diagnostico_ligacao"]["d1_pos_hoc"]
     t.append(f"Etapa 1 (CRM + UF do posto) com candidato único: {fmt_int(d1['etapa1_candidato_unico'])}; com nome "
-             f"compatível: {fmt_int(d1['etapa1_nome_compativel'])} "
-             f"({fmt_pct(d1['etapa1_fracao_nome_compativel'])}). Sem nome compatível (desvio D1, vão para a etapa 2): "
-             f"{fmt_int(d1['etapa1_rejeitadas_por_nome'])}, das quais "
-             f"{fmt_int(d1['etapa1_rejeitadas_ligadas_na_etapa2'])} ligam na etapa 2.")
-    cp = d1["conferencia_vinculo_no_estab_do_posto_202608"]
-    t.append("Conferência (ligados com início antes de 202608 que têm vínculo médico no estabelecimento do posto em "
-             "202608): " + "; ".join(f"{k.replace('|', ', ')}: {fmt_pct(v['fracao_com_vinculo_no_estab_do_posto_202608'])}"
-                                    f" de {fmt_int(v['n'])}" for k, v in cp.items()) + ".")
-    lit = resumo["sensibilidade_regra_literal_doc45"]
-    t.append(f"Regra literal do doc 45 (sensibilidade): {fmt_int(lit['registros_ligados'])} registros ligados; "
-             f"mesmo profissional nas duas regras: {fmt_int(lit['mesmo_profissional_nas_duas_regras'])}; profissional "
-             f"diferente: {fmt_int(lit['profissional_diferente_entre_as_regras'])}; ligado só na literal: "
-             f"{fmt_int(lit['ligado_so_na_literal'])}.")
+             f"compatível: {fmt_int(d1['etapa1_nome_compativel'])} ({fmt_pct(d1['etapa1_fracao_nome_compativel'])}). "
+             f"Sem nome compatível: {fmt_int(d1['etapa1_rejeitadas_por_nome'])}; a literal os liga, D1 os manda para a "
+             f"etapa 2, onde {fmt_int(d1['etapa1_rejeitadas_ligadas_na_etapa2'])} ligam.")
+    t.append("Conferência (ligados com início antes de 202608 com vínculo médico no estabelecimento do posto em "
+             "202608): " + "; ".join(
+                 f"{ROTULO_REGRA[regra]}, {etapa}: {fmt_pct(v['fracao_com_vinculo_no_estab_do_posto_202608'])} de "
+                 f"{fmt_int(v['n'])}"
+                 for regra in REGRAS
+                 for etapa, v in resumo["diagnostico_ligacao"][regra]["conferencia_vinculo_no_estab_do_posto_202608"].items())
+             + ".")
+    cr = resumo["comparacao_entre_regras"]
+    t.append(f"Entre as regras: mesmo profissional em {fmt_int(cr['mesmo_profissional_nas_duas_regras'])} registros; "
+             f"profissional diferente em {fmt_int(cr['profissional_diferente_entre_as_regras'])}; ligado só na literal: "
+             f"{fmt_int(cr['ligado_so_na_literal'])}; só em D1: {fmt_int(cr['ligado_so_na_d1'])}.")
+    cc = resumo["conselho_classe"]
+    fora = resumo["diagnostico_ligacao"]["d1_pos_hoc"]["vinculos_medicos_fora_do_conselho_crm_excluidos_da_busca"]
+    t.append(f"Conselho: só entram na busca vínculos com CO_CONSELHO_CLASSE = {cc['codigo_crm']} ({cc['descricao']}, "
+             f"tbOrgaoEmissor de {cc['competencia']}); vínculos médicos com outro código, fora da busca, somadas as "
+             f"seis competências: {fmt_int(fora)} ({fmt_pct(1 - cc['fracao_dos_vinculos_medicos_com_o_codigo'], 2)}).")
     b["ligacao"] = "\n".join(t)
 
-    # Origem por ciclo e faixa.
-    d = desc[(desc["fonte_lista"] == "todas") & (desc["regra_ligacao"] == "principal_d1")]
+    def tab_desc(regra: str) -> str:
+        d = desc[(desc["fonte_lista"] == "todas") & (desc["regra_ligacao"] == regra)]
 
-    def v(ciclo, faixa, ind):
-        x = d[(d["ciclo"] == ciclo) & (d["faixa"] == faixa) & (d["indicador"] == ind)]
-        return x.iloc[0] if len(x) else None
+        def v(ciclo, faixa, ind):
+            x = d[(d["ciclo"] == ciclo) & (d["faixa"] == faixa) & (d["indicador"] == ind)]
+            return x.iloc[0]
 
-    t = ["| Ciclo | Faixa | Ligados | (a) mesmo estab. | (b) mesmo município | Novo no município | Mesma região | "
-         "Mesma UF | Outra UF | Sem vínculo médico | Distância média (km) | Distância mediana (km) | (e) vínculos em 202608 |",
-         "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
-    for ciclo in ("1", "2", "1+2"):
-        for faixa in ("FAIXA 3", "FAIXA 2", "FAIXA 1", "todas"):
-            rb = v(ciclo, faixa, "b_mesmo_mun_ultimo_pre")
-            if rb is None:
-                continue
-            cel = [fmt_pct(v(ciclo, faixa, i)["valor"]) for i in (
-                "a_mesmo_estab_ultimo_pre", "b_mesmo_mun_ultimo_pre", "novo_no_municipio", "origem_mesma_regiao_saude",
-                "origem_mesma_uf", "origem_outra_uf", "origem_sem_vinculo_medico_anterior")]
-            t.append(f"| {ciclo} | {faixa} | {fmt_int(rb['n_base'])} | " + " | ".join(cel) +
-                     f" | {fmt(v(ciclo, faixa, 'd_distancia_km')['valor'], 0)} | "
-                     f"{fmt(v(ciclo, faixa, 'd_distancia_km_mediana')['valor'], 0)} | "
-                     f"{fmt(v(ciclo, faixa, 'e_vinculos_202608')['valor'], 2)} |")
-    b["descritivo"] = "\n".join(t)
+        t = ["| Ciclo | Faixa | Ligados | (a) mesmo estab. | (b) mesmo município | Novo no município | Mesma região | "
+             "Mesma UF | Outra UF | Sem vínculo médico | Distância média (km) | Distância mediana (km) | "
+             "(e) vínculos em 202608 |",
+             "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+        for ciclo in ("1", "2", "1+2"):
+            for faixa in ("FAIXA 3", "FAIXA 2", "FAIXA 1", "todas"):
+                cel = [fmt_pct(v(ciclo, faixa, i)["valor"]) for i in (
+                    "a_mesmo_estab_ultimo_pre", "b_mesmo_mun_ultimo_pre", "novo_no_municipio",
+                    "origem_mesma_regiao_saude", "origem_mesma_uf", "origem_outra_uf",
+                    "origem_sem_vinculo_medico_anterior")]
+                t.append(f"| {ciclo} | {faixa} | {fmt_int(v(ciclo, faixa, 'b_mesmo_mun_ultimo_pre')['n_base'])} | "
+                         + " | ".join(cel) + f" | {fmt(v(ciclo, faixa, 'd_distancia_km')['valor'], 0)} | "
+                         f"{fmt(v(ciclo, faixa, 'd_distancia_km_mediana')['valor'], 0)} | "
+                         f"{fmt(v(ciclo, faixa, 'e_vinculos_202608')['valor'], 2)} |")
+        return "\n".join(t)
 
-    # Sensibilidade do descritivo à regra de ligação.
-    t = ["| Ciclo | Regra de ligação | Ligados | Novo no município | Outra UF | Sem vínculo médico | Distância mediana (km) |",
-         "|---|---|---|---|---|---|---|"]
-    dd = desc[(desc["fonte_lista"] == "todas") & (desc["faixa"] == "todas")]
-    for ciclo in ("1", "2", "1+2"):
-        for regra in ("principal_d1", "literal_doc45"):
-            def w(ind):
-                x = dd[(dd["ciclo"] == ciclo) & (dd["regra_ligacao"] == regra) & (dd["indicador"] == ind)]
-                return x.iloc[0]
-            t.append(f"| {ciclo} | {regra} | {fmt_int(w('novo_no_municipio')['n_base'])} | "
-                     f"{fmt_pct(w('novo_no_municipio')['valor'])} | {fmt_pct(w('origem_outra_uf')['valor'])} | "
-                     f"{fmt_pct(w('origem_sem_vinculo_medico_anterior')['valor'])} | "
-                     f"{fmt(w('d_distancia_km_mediana')['valor'], 0)} |")
-    b["sensibilidade_regra"] = "\n".join(t)
+    b["descritivo"] = tab_desc("literal_doc45")
+    b["descritivo_d1"] = tab_desc("d1_pos_hoc")
 
-    # RDD condicional e Lee.
+    # Mês de referência de "já estava no município".
+    t = ["| Regra | Ciclo | Ligados | Última competência pré-início | " + " | ".join(MESES_FIXOS) +
+         " | Faixa (mín.–máx.) | A última é o máximo? | Persistência: incumbentes já presentes em " + MESES_FIXOS[0] + " |",
+         "|---|---|---|---|" + "---|" * len(MESES_FIXOS) + "---|---|---|"]
+    for regra in REGRAS:
+        for ciclo, r in resumo["mesmo_municipio_por_mes_de_referencia"][regra].items():
+            fr = r["fracao_por_referencia"]
+            ps = r["persistencia"]
+            t.append(f"| {ROTULO_REGRA[regra]} | {ciclo} | {fmt_int(r['n_ligados'])} | {fmt_pct(fr['ultima_competencia_pre'])} | "
+                     + " | ".join(fmt_pct(fr[m]) for m in MESES_FIXOS) +
+                     f" | {fmt_pct(r['minimo'])}–{fmt_pct(r['maximo'])} | "
+                     f"{'sim' if r['ultima_competencia_pre_e_o_maximo'] else 'não'} | {fmt_pct(ps['fracao'])} "
+                     f"({fmt_int(ps['ja_presentes_em_' + MESES_FIXOS[0]])} de "
+                     f"{fmt_int(ps['incumbentes_na_ultima_competencia_pre'])}) |")
+    b["mes_referencia"] = "\n".join(t)
+
+    # RDD condicional e Lee, lado a lado nas duas regras.
     rot = {"frac_novos_no_municipio": "novos no município", "frac_outra_uf": "outra UF",
            "distancia_media_km": "distância média (km)"}
-    t = ["| Outcome | Ciclo | Corte | Salto | IC 95% | p | q BKY (X1) | N abaixo / acima | Lee: limites | Lee: IC 95% conservador |",
-         "|---|---|---|---|---|---|---|---|---|---|"]
     e = est[est["analise"] == "rdd_condicional"]
     lee = est[est["analise"] == "limites_lee"]
+    t = ["| Outcome | Ciclo | Corte | Regra | Salto | IC 95% | p | q BKY (X1, por regra) | N abaixo / acima | "
+         "Lee: limites | Lee: IC 95% conservador |",
+         "|---|---|---|---|---|---|---|---|---|---|---|"]
     for y in rot:
-        for _, r in e[e["outcome"] == y].iterrows():
-            casas = 0 if y == "distancia_media_km" else 3
-            lr = lee[(lee["outcome"] == y) & (lee["ciclo"] == r["ciclo"]) & (lee["corte"] == r["corte"])]
-            if len(lr):
-                l0 = lr.iloc[0]
-                lim = f"[{fmt(l0['lee_tau_inf'], casas)}; {fmt(l0['lee_tau_sup'], casas)}]"
-                lic = f"[{fmt(l0['ic95_inf'], casas)}; {fmt(l0['ic95_sup'], casas)}]"
-            else:
-                lim = lic = "não se aplica (empilhado)"
-            corte = r["corte"].replace(".", ",") if r["corte"] != "empilhado" else "empilhado"
-            na = f"{fmt_int(r['n_abaixo'])} / {fmt_int(r['n_acima'])}"
-            t.append(f"| {rot[y]} | {r['ciclo']} | {corte} | {fmt(r['tau'], casas)} | "
-                     f"[{fmt(r['ic95_inf'], casas)}; {fmt(r['ic95_sup'], casas)}] | {fmt_p(r['p_valor'])} | "
-                     f"{fmt(r['q_bky_x1'], 3)} | {na} | {lim} | {lic} |")
+        casas = 0 if y == "distancia_media_km" else 3
+        chaves = e[e["outcome"] == y][["ciclo", "corte"]].drop_duplicates().itertuples(index=False)
+        for ciclo, corte in chaves:
+            for regra in REGRAS:
+                r = e[(e["outcome"] == y) & (e["ciclo"] == ciclo) & (e["corte"] == corte)
+                      & (e["regra_ligacao"] == regra)].iloc[0]
+                lr = lee[(lee["outcome"] == y) & (lee["ciclo"] == ciclo) & (lee["corte"] == corte)
+                         & (lee["regra_ligacao"] == regra)]
+                if len(lr):
+                    l0 = lr.iloc[0]
+                    lim = f"[{fmt(l0['lee_tau_inf'], casas)}; {fmt(l0['lee_tau_sup'], casas)}]"
+                    lic = f"[{fmt(l0['ic95_inf'], casas)}; {fmt(l0['ic95_sup'], casas)}]"
+                else:
+                    lim = lic = "não se aplica (empilhado)"
+                cr_ = corte.replace(".", ",") if corte != "empilhado" else "empilhado"
+                t.append(f"| {rot[y]} | {ciclo} | {cr_} | {ROTULO_REGRA[regra]} | {fmt(r['tau'], casas)} | "
+                         f"[{fmt(r['ic95_inf'], casas)}; {fmt(r['ic95_sup'], casas)}] | {fmt_p(r['p_valor'])} | "
+                         f"{fmt(r['q_bky_x1'], 3)} | {fmt_int(r['n_abaixo'])} / {fmt_int(r['n_acima'])} | {lim} | {lic} |")
     b["rdd"] = "\n".join(t)
 
     # Seleção.
-    s = est[(est["analise"] == "rdd_selecao") & (est["outcome"] == "selecao_n_ligados_maior_que_0")]
-    t = ["| Ciclo | Corte | Salto na fração de municípios de V_k com médico ligado | IC 95% | p |", "|---|---|---|---|---|"]
-    for _, r in s.iterrows():
-        t.append(f"| {r['ciclo']} | {r['corte'].replace('.', ',')} | {fmt(r['tau'], 3)} | "
-                 f"[{fmt(r['ic95_inf'], 3)}; {fmt(r['ic95_sup'], 3)}] | {fmt_p(r['p_valor'])} |")
+    s_ = est[(est["analise"] == "rdd_selecao") & (est["outcome"] == "selecao_n_ligados_maior_que_0")]
+    t = ["| Regra | Ciclo | Corte | Salto na fração de municípios de V_k com médico ligado | IC 95% | p |",
+         "|---|---|---|---|---|---|"]
+    for _, r in s_.iterrows():
+        t.append(f"| {ROTULO_REGRA[r['regra_ligacao']]} | {r['ciclo']} | {r['corte'].replace('.', ',')} | "
+                 f"{fmt(r['tau'], 3)} | [{fmt(r['ic95_inf'], 3)}; {fmt(r['ic95_sup'], 3)}] | {fmt_p(r['p_valor'])} |")
     b["selecao"] = "\n".join(t)
 
     # E9 com distância.
     e9 = est[est["analise"] == "e9_distancia"]
-    t = ["| Especificação | Termo | Coeficiente | IC 95% (cluster por conjunto) | p | Candidatos | Conjuntos |",
-         "|---|---|---|---|---|---|---|"]
+    t = ["| Regra | Especificação | Termo | Coeficiente | IC 95% (cluster por conjunto) | p | q BKY | Candidatos | Conjuntos |",
+         "|---|---|---|---|---|---|---|---|---|"]
     for _, r in e9.iterrows():
-        t.append(f"| {r['especificacao']} | {r['outcome']} | {fmt(r['tau'], 3)} | "
-                 f"[{fmt(r['ic95_inf'], 3)}; {fmt(r['ic95_sup'], 3)}] | {fmt_p(r['p_valor'])} | "
+        t.append(f"| {ROTULO_REGRA[r['regra_ligacao']]} | {r['especificacao']} | {r['outcome']} | {fmt(r['tau'], 3)} | "
+                 f"[{fmt(r['ic95_inf'], 3)}; {fmt(r['ic95_sup'], 3)}] | {fmt_p(r['p_valor'])} | {fmt(r['q_bky_x1'], 3)} | "
                  f"{fmt_int(r['n_obs'])} | {fmt_int(r['n_clusters'])} |")
-    de = resumo["e9_distancia"]["diagnostico"]
     t.append("")
-    t.append("Amostra: " + "; ".join(
-        f"ciclo {k[-1]}: {fmt_int(de[k]['pares_unicos'])} pares candidato alocado–médico ligado"
-        for k in ("ciclo_1", "ciclo_2") if k in de) +
-        f"; {fmt_int(de['pares_com_origem'])} com vínculo pré-início; {fmt_int(de['candidatos_no_logit'])} no logit.")
+    for regra in REGRAS:
+        de = resumo["e9_distancia"]["diagnostico"][regra]
+        t.append(f"Amostra, regra {ROTULO_REGRA[regra]}: pares candidato alocado–médico ligado: "
+                 f"{fmt_int(de['pares_total'])}; sem vínculo médico na última competência pré-início: "
+                 f"{fmt_int(de['excluidos_sem_vinculo_medico_na_ultima_competencia_pre'])}; sem linha de 1ª opção: "
+                 f"{fmt_int(de['excluidos_sem_linha_de_1a_opcao'])}; 1ª opção fora do conjunto: "
+                 f"{fmt_int(de['excluidos_1a_opcao_fora_do_conjunto'])}; sem coordenada: "
+                 f"{fmt_int(de['excluidos_sem_coordenada'])}; no logit: {fmt_int(de['candidatos_no_logit'])}, dos quais "
+                 f"{fmt_int(de['candidatos_com_distancia_zero_a_celula_escolhida'])} com distância zero à célula "
+                 f"escolhida.")
     b["e9"] = "\n".join(t)
 
-    # Contagens de BKY.
-    q = est["q_bky_x1"].dropna()
-    pv = est["p_valor"].dropna()
-    b["bky"] = (f"Linhas com p no X1: {fmt_int(len(pv))}; com p < 0,05: {fmt_int((pv < 0.05).sum())}; "
-                f"com q BKY < 0,05: {fmt_int((q < 0.05).sum())}; menor q: {fmt(q.min() if len(q) else np.nan, 3)}.")
+    # Contagens de BKY, por regra.
+    partes = []
+    for regra in REGRAS:
+        x = est[est["regra_ligacao"] == regra]
+        q, pv = x["q_bky_x1"].dropna(), x["p_valor"].dropna()
+        partes.append(f"Regra {ROTULO_REGRA[regra]}: linhas com p: {fmt_int(len(pv))}; com p < 0,05: "
+                      f"{fmt_int((pv < 0.05).sum())}; com q BKY < 0,05: {fmt_int((q < 0.05).sum())}; menor q: "
+                      f"{fmt(q.min() if len(q) else np.nan, 3)}.")
+    b["bky"] = "\n".join(partes)
     return b
 
 
@@ -1152,6 +1338,40 @@ def bloco_entrada(caminho: Path, papel: str, data_ref: str, cobertura: str, unid
             "chaves": chaves, "filtros": filtros}
 
 
+def taxas_ligacao(mm: pd.DataFrame) -> dict:
+    out = {}
+    for k in ("1", "2", "3", "total"):
+        d = mm if k == "total" else mm[mm["ciclo"] == int(k)]
+        amb = d["motivo"].str.startswith("ambiguo")
+        out[k] = {"registros": int(len(d)), "ligados": int(d["ligado"].sum()), "taxa": float(d["ligado"].mean()),
+                  "etapa_1_crm_uf": int((d["etapa_ligacao"] == "1_crm_uf").sum()),
+                  "etapa_2_crm_nome": int((d["etapa_ligacao"] == "2_crm_nome").sum()),
+                  "ambiguos": int(amb.sum()), "nao_ligados_sem_ambiguidade": int(((d["ligado"] == 0) & ~amb).sum())}
+    out["por_fonte_lista"] = {f: {"registros": int(len(g)), "ligados": int(g["ligado"].sum()),
+                                  "taxa": float(g["ligado"].mean())} for f, g in mm.groupby("fonte_lista")}
+    out["motivos"] = {k: int(v) for k, v in mm["motivo"].value_counts().sort_index().items()}
+    return out
+
+
+def faixa_mesmo_municipio(mm: pd.DataFrame) -> dict:
+    """Fração com vínculo no município do posto conforme o mês de referência, e persistência dos incumbentes."""
+    out = {}
+    for ciclo, cs in (("1", [1]), ("2", [2]), ("1+2", [1, 2])):
+        lig = mm[mm["ciclo"].isin(cs) & (mm["ligado"] == 1)]
+        valores = {"ultima_competencia_pre": float(lig["b_mesmo_mun_ultimo_pre"].dropna().mean())}
+        for mf in MESES_FIXOS:
+            valores[mf] = float(lig[f"b_mesmo_mun_em_{mf}"].dropna().mean())
+        inc = lig[lig["b_mesmo_mun_ultimo_pre"] == 1]
+        out[ciclo] = {"n_ligados": int(len(lig)), "fracao_por_referencia": valores,
+                      "minimo": min(valores.values()), "maximo": max(valores.values()),
+                      "ultima_competencia_pre_e_o_maximo": valores["ultima_competencia_pre"] == max(valores.values()),
+                      "persistencia": {"incumbentes_na_ultima_competencia_pre": int(len(inc)),
+                                       f"ja_presentes_em_{MESES_FIXOS[0]}":
+                                           int(inc[f"b_mesmo_mun_em_{MESES_FIXOS[0]}"].sum()),
+                                       "fracao": float(inc[f"b_mesmo_mun_em_{MESES_FIXOS[0]}"].mean())}}
+    return out
+
+
 def analisar() -> None:
     listas, diag_listas = ler_listas_pmme()
     vinc, nomes, metas = ler_cache()
@@ -1170,23 +1390,28 @@ def analisar() -> None:
         raise AssertionError(f"faixa da lista difere da regra do IVS oficial em {discord} registros (fail closed)")
     listas["faixa"] = listas["faixa_atracao"]
 
-    lig, diag_lig = ligar(listas, vinc, nomes)
-    med = listas.merge(lig, on="id_medico", validate="one_to_one")
-    med["ligado"] = med["co_profissional_sus"].notna().astype(int)
-    dup = med[med["ligado"] == 1].duplicated(["ciclo", "co_profissional_sus"], keep=False)
-    diag_lig["profissional_ligado_a_mais_de_um_registro_do_mesmo_ciclo"] = int(dup.sum())
-    # Sensibilidade: regra literal do doc 45 (etapa 1 sem conferir o nome).
-    lig_lit, diag_lit = ligar(listas, vinc, nomes, exigir_nome_etapa1=False)
-    med_lit = listas.merge(lig_lit, on="id_medico", validate="one_to_one")
-    med_lit["ligado"] = med_lit["co_profissional_sus"].notna().astype(int)
-    comp = med[["id_medico", "co_profissional_sus"]].merge(med_lit[["id_medico", "co_profissional_sus"]],
-                                                           on="id_medico", suffixes=("_d1", "_lit"))
+    conselho_crm, diag_conselho = codigo_conselho_crm(vinc)
+    # Fail closed: toda competência do cache veio de ZIP com o mesmo SHA-256 do a09.
+    sem_a09 = [c for c, m in metas.items() if not m.get("validacao_contra_a09", {}).get("sha256_igual_ao_a09")]
+    if sem_a09:
+        raise AssertionError(f"competências com SHA-256 diferente do a09: {sem_a09} (fail closed)")
+    meds: dict[str, pd.DataFrame] = {}
+    diags_lig: dict[str, dict] = {}
+    for regra, exigir in REGRAS.items():
+        lig, dg = ligar(listas, vinc, nomes, conselho_crm=conselho_crm, exigir_nome_etapa1=exigir)
+        mm = listas.merge(lig, on="id_medico", validate="one_to_one")
+        mm["ligado"] = mm["co_profissional_sus"].notna().astype(int)
+        dup = mm[mm["ligado"] == 1].duplicated(["ciclo", "co_profissional_sus"], keep=False)
+        dg["profissional_ligado_a_mais_de_um_registro_do_mesmo_ciclo"] = int(dup.sum())
+        meds[regra], diags_lig[regra] = mm, dg
+    comp = meds["d1_pos_hoc"][["id_medico", "co_profissional_sus"]].merge(
+        meds["literal_doc45"][["id_medico", "co_profissional_sus"]], on="id_medico", suffixes=("_d1", "_lit"))
     a_, b_ = comp["co_profissional_sus_d1"], comp["co_profissional_sus_lit"]
-    diag_lit["registros_ligados"] = int(med_lit["ligado"].sum())
-    diag_lit["mesmo_profissional_nas_duas_regras"] = int((a_.notna() & b_.notna() & (a_ == b_)).sum())
-    diag_lit["profissional_diferente_entre_as_regras"] = int((a_.notna() & b_.notna() & (a_ != b_)).sum())
-    diag_lit["ligado_so_na_literal"] = int((a_.isna() & b_.notna()).sum())
-    diag_lit["ligado_so_na_principal"] = int((a_.notna() & b_.isna()).sum())
+    comparacao_regras = {
+        "mesmo_profissional_nas_duas_regras": int((a_.notna() & b_.notna() & (a_ == b_)).sum()),
+        "profissional_diferente_entre_as_regras": int((a_.notna() & b_.notna() & (a_ != b_)).sum()),
+        "ligado_so_na_literal": int((a_.isna() & b_.notna()).sum()),
+        "ligado_so_na_d1": int((a_.notna() & b_.isna()).sum())}
 
     # Validação da região: CIR do painel do PMMB × regiao_saude da lista de ativos, nos municípios do PMM-E.
     with zipfile.ZipFile(ATIVOS_ZIP) as z:
@@ -1202,63 +1427,57 @@ def analisar() -> None:
     if diag_reg["conferencia_lista_ativos"]["regiao_igual"] != len(a):
         raise AssertionError(f"região de saúde do PPF difere da lista de ativos: {diag_reg['conferencia_lista_ativos']}")
 
-    out = outcomes_medico(med[med["ciclo"].isin(CICLOS_OUTCOME)], vinc, regiao, coord)
-    med = med.merge(out, on="id_medico", how="left", validate="one_to_one")
-    out_lit = outcomes_medico(med_lit[med_lit["ciclo"].isin(CICLOS_OUTCOME)], vinc, regiao, coord)
-    med_lit = med_lit.merge(out_lit, on="id_medico", how="left", validate="one_to_one")
-    med_lit["faixa"] = med_lit["faixa_atracao"]
-    conferencia_posto = {}
-    for nome_regra, mm in (("principal_d1", med), ("literal_doc45", med_lit)):
+    vmun = pd.read_parquet(V_MUNICIPIO, columns=["ciclo", "co_ibge"])
+    descs, ests, saidas_med, diag_pm, diags_e9, taxas, faixa_mes = [], [], [], {}, {}, {}, {}
+    for regra, mm in meds.items():
+        out = outcomes_medico(mm[mm["ciclo"].isin(CICLOS_OUTCOME)], vinc, regiao, coord)
+        mm = mm.merge(out, on="id_medico", how="left", validate="one_to_one")
+        meds[regra] = mm
+        cp = {}
         for etapa in ("1_crm_uf", "2_crm_nome"):
             x = mm.loc[(mm["etapa_ligacao"] == etapa), "vinculo_no_estab_do_posto_202608"].dropna()
-            conferencia_posto[f"{nome_regra}|{etapa}"] = {"n": int(len(x)),
-                                                          "fracao_com_vinculo_no_estab_do_posto_202608":
-                                                              float(x.mean()) if len(x) else None}
-    diag_lig["conferencia_vinculo_no_estab_do_posto_202608"] = conferencia_posto
-
-    # E9 com distância (usa nome só em memória).
-    linhas_e9, diag_e9 = e9_com_distancia(med, listas, coord) if diag_coord["status"] == "OBTIDO" else (
-        [], {"status": "não estimado: coordenadas indisponíveis"})
-
-    # Descritivo e RDD.
-    desc = pd.concat([descritivo(med, "principal_d1"), descritivo(med_lit, "literal_doc45")], ignore_index=True)
-    vmun = pd.read_parquet(V_MUNICIPIO, columns=["ciclo", "co_ibge"])
-    pm, diag_pm = painel_municipio(med, vmun, ivs)
-    linhas = estimar_rdd(pm) + linhas_e9
-    est = pd.DataFrame(linhas)[COLS_EST]
-    est["q_bky_x1"] = L.qvalores_bky(est["p_valor"].to_numpy(dtype=float))
-
-    # Saídas.
-    cols_med = ["id_medico", "ciclo", "fonte_lista", "co_ibge", "faixa", "cod_curso", "mes_inicio", "ligado",
-                "etapa_ligacao", "etapa1_rejeitada_por_nome", "motivo", "competencias_pre_inicio", "ultima_competencia_pre",
-                "a_mesmo_estab_ultimo_pre", "a_mesmo_estab_algum_pre", "b_mesmo_mun_ultimo_pre", "b_mesmo_mun_algum_pre",
-                "vinculo_medico_algum_pre", "vinculos_ultimo_pre", "c_origem", "motivo_origem_ausente",
-                "d_distancia_km", "motivo_distancia_ausente", "e_vinculos_202608", "e_estabelecimentos_202608",
-                "e_municipios_202608", "vinculo_no_estab_do_posto_202608"]
-    for c in cols_med:
-        if c not in med:
-            med[c] = pd.NA
-    saida_med = med[cols_med].rename(columns={"motivo": "motivo_ligacao"}).copy()
+            cp[etapa] = {"n": int(len(x)),
+                         "fracao_com_vinculo_no_estab_do_posto_202608": float(x.mean()) if len(x) else None}
+        diags_lig[regra]["conferencia_vinculo_no_estab_do_posto_202608"] = cp
+        # E9 com distância (usa nome só em memória).
+        if diag_coord["status"] == "OBTIDO":
+            linhas_e9, diags_e9[regra] = e9_com_distancia(mm, listas, coord)
+        else:
+            linhas_e9, diags_e9[regra] = [], {"status": "não estimado: coordenadas indisponíveis"}
+        descs.append(descritivo(mm, regra))
+        pm, diag_pm[regra] = painel_municipio(mm, vmun, ivs)
+        e = pd.DataFrame(estimar_rdd(pm) + linhas_e9)
+        e["regra_ligacao"] = regra
+        # BKY dentro do X1, uma família por regra de ligação (as duas regras repetem as mesmas hipóteses).
+        e["q_bky_x1"] = L.qvalores_bky(e["p_valor"].to_numpy(dtype=float))
+        ests.append(e[COLS_EST])
+        taxas[regra] = taxas_ligacao(mm)
+        faixa_mes[regra] = faixa_mesmo_municipio(mm)
+        cols_med = ["id_medico", "ciclo", "fonte_lista", "co_ibge", "faixa", "ligado", "etapa_ligacao",
+                    "etapa1_rejeitada_por_nome", "motivo", "competencias_pre_inicio", "ultima_competencia_pre",
+                    "a_mesmo_estab_ultimo_pre", "a_mesmo_estab_algum_pre", "b_mesmo_mun_ultimo_pre",
+                    "b_mesmo_mun_algum_pre"] + [f"b_mesmo_mun_em_{m}" for m in MESES_FIXOS] + [
+                    f"a_mesmo_estab_em_{m}" for m in MESES_FIXOS] + [
+                    "vinculo_medico_algum_pre", "vinculos_ultimo_pre", "c_origem", "motivo_origem_ausente",
+                    "d_distancia_km", "motivo_distancia_ausente", "e_vinculos_202608", "e_estabelecimentos_202608",
+                    "e_municipios_202608", "vinculo_no_estab_do_posto_202608"]
+        for c in cols_med:
+            if c not in mm:
+                mm[c] = pd.NA
+        sm = mm[cols_med].rename(columns={"motivo": "motivo_ligacao"}).copy()
+        sm.insert(1, "regra_ligacao", regra)
+        saidas_med.append(sm)
+    desc = pd.concat(descs, ignore_index=True)
+    est = pd.concat(ests, ignore_index=True)
+    saida_med = pd.concat(saidas_med, ignore_index=True)
     saida_med["natureza_dos_dados"] = NATUREZA
     saida_med["estatuto"] = ESTATUTO
-    saida_med = saida_med.sort_values("id_medico").reset_index(drop=True)
+    saida_med = saida_med.sort_values(["regra_ligacao", "id_medico"]).reset_index(drop=True)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     saida_med.to_parquet(OUT_MEDICOS, index=False)
     est.to_csv(OUT_ESTIMATIVAS, index=False)
     desc.to_csv(OUT_DESCRITIVO, index=False)
 
-    por_ciclo = {}
-    for k in (1, 2, 3):
-        d = med[med["ciclo"] == k]
-        amb = d["motivo"].str.startswith("ambiguo")
-        por_ciclo[str(k)] = {"registros": int(len(d)), "ligados": int(d["ligado"].sum()),
-                             "taxa": float(d["ligado"].mean()),
-                             "etapa_1_crm_uf": int((d["etapa_ligacao"] == "1_crm_uf").sum()),
-                             "etapa_2_crm_nome": int((d["etapa_ligacao"] == "2_crm_nome").sum()),
-                             "ambiguos": int(amb.sum()),
-                             "nao_ligados_sem_ambiguidade": int(((d["ligado"] == 0) & ~amb).sum())}
-    por_fonte = {f: {"registros": int(len(g)), "ligados": int(g["ligado"].sum()), "taxa": float(g["ligado"].mean())}
-                 for f, g in med.groupby("fonte_lista")}
     competencias = {}
     for c, m in metas.items():
         competencias[c] = {k: m.get(k) for k in (
@@ -1289,7 +1508,8 @@ def analisar() -> None:
         bloco_entrada(PROTOCOLO_45, "protocolo congelado do X1", "19/10/2026", "—", "—", "—", "—"),
     ]
     if COORD_JSON.exists():
-        entradas.append(bloco_entrada(COORD_JSON, "centroides municipais oficiais (distância)", "malha vigente na API",
+        entradas.append(bloco_entrada(COORD_JSON, "centroides municipais oficiais (distância)",
+                                      f"malha municipal {diag_coord.get('malha_periodo_verificado', 'não verificada')}",
                                       "municípios do Brasil", "município", "id (7 dígitos)", "centroide"))
     s12 = _importar("outcomes_funil_12_x1_ent", SCRIPT_12)
     for fonte in ("c1_ch1", "c2_ch1"):
@@ -1310,32 +1530,40 @@ def analisar() -> None:
         "entradas": entradas,
         "competencias_cnes": competencias,
         "limite_ciclo3": f"nenhuma competência >= {LIMITE_EXCLUSIVO} é baixada ou lida",
-        "regra_ligacao": ("principal (com o desvio D1): (1) NU_REGISTRO = CRM e SG_UF_CRM = UF do posto, um único "
-                          "CO_PROFISSIONAL_SUS nas seis competências, com nome compatível; (2) sem (1), NU_REGISTRO = "
-                          "CRM em qualquer UF com nome compatível, um único profissional; ambíguos e não achados ficam "
-                          "fora. Literal (doc 45, sensibilidade): a etapa 1 não confere o nome"),
+        "regra_ligacao": {
+            "literal_doc45": ("regra do protocolo congelado (doc 45): (1) NU_REGISTRO = CRM e SG_UF_CRM = UF da lista, um "
+                              "único CO_PROFISSIONAL_SUS nas seis competências; (2) sem (1), NU_REGISTRO = CRM em qualquer "
+                              "UF com nome compatível, um único profissional; ambíguos e não achados ficam fora"),
+            "d1_pos_hoc": ("correção pós-hoc D1: igual à literal, mas o candidato único da etapa 1 só liga com nome "
+                           "compatível; sem ele, o registro vai para a etapa 2"),
+            "conselho": "só vínculos médicos com CO_CONSELHO_CLASSE do CRM entram na busca",
+        },
+        "conselho_classe": diag_conselho,
         "regra_nome_compativel": ("tokens normalizados sem partículas " + ",".join(sorted(PARTICULAS)) +
                                   "; mesmo primeiro nome e (mesmo último ou um conjunto contido no outro, ≥ 2 nomes)"),
         "listas_pmme": diag_listas,
-        "taxas_ligacao": {"por_ciclo": por_ciclo, "por_fonte_lista": por_fonte,
-                          "motivos": {k: int(v) for k, v in med["motivo"].value_counts().sort_index().items()}},
-        "diagnostico_ligacao": diag_lig,
-        "sensibilidade_regra_literal_doc45": diag_lit,
+        "taxas_ligacao": taxas,
+        "diagnostico_ligacao": diags_lig,
+        "comparacao_entre_regras": comparacao_regras,
+        "mesmo_municipio_por_mes_de_referencia": faixa_mes,
         "desvios": [{
             "id": "D1", "data": "2026-10-19",
             "o_que": "etapa 1 (CRM+UF) passa a exigir nome compatível; sem ele, o registro vai para a etapa 2",
             "motivo": ("a UF das listas do PMM-E é a do posto, não a do CRM; na regra literal, um CRM de outra UF "
                        "colide com o registro de outra pessoa na UF do posto. A conferência de nomes da etapa 1 "
                        "mostrou ligações sem nenhum nome em comum e sem vínculo no estabelecimento do posto"),
-            "honestidade": ("o desvio foi decidido depois da primeira execução completa do script, que gravou e "
-                            "exibiu as estimativas com a regra literal; o motivo é a qualidade da ligação (nome), não "
-                            "o resultado, e por isso a regra literal continua relatada"),
-            "relato": "a regra literal é relatada como sensibilidade (taxas e descritivo, regra_ligacao = literal_doc45)",
+            "honestidade": ("correção pós-hoc: decidida depois da primeira execução completa do script, que gravou e "
+                            "exibiu as estimativas com a regra literal. Ela leva as linhas mais próximas de "
+                            "significância em direção a zero; por isso a regra literal, que é a do protocolo, é "
+                            "relatada lado a lado em todas as saídas"),
+            "relato": "todas as saídas trazem as duas regras (coluna regra_ligacao)",
         }],
         "regiao_saude": diag_reg,
         "coordenadas": diag_coord,
         "painel_municipio": diag_pm,
-        "e9_distancia": {"diagnostico": diag_e9},
+        "e9_distancia": {"diagnostico": diags_e9,
+                         "substitui": ("versão de e02d83a, em que a distância usava a origem mais próxima do posto "
+                                       "final (escolha embutida na distância); retirada pela auditoria de X1")},
         "definicoes": {
             "mes_inicio": "AAAAMM de dt_inicio_atividade",
             "competencias_pre_inicio": "competências lidas estritamente anteriores ao mês de início",
@@ -1343,12 +1571,17 @@ def analisar() -> None:
             "origem": "última competência pré-início; mesmo_municipio > mesma_regiao_saude > mesma_uf > outra_uf; "
                       "sem linha nessa competência: sem_vinculo_medico_anterior",
             "distancia": f"círculo máximo (raio médio de {RAIO_TERRA_KM} km) entre centroides do IBGE, do município de "
-                         "origem mais próximo ao do posto",
+                         "origem mais próximo ao do posto (descritivo e RDD); no E9, mínimo sobre os municípios de "
+                         "origem até cada célula do conjunto",
+            "meses_fixos": (f"(b) e (a) também em {', '.join(MESES_FIXOS)}, os mesmos para todos; persistência = "
+                            f"fração, entre os que têm (b) na última competência pré-início, dos que já o tinham em "
+                            f"{MESES_FIXOS[0]}"),
             "e": f"vínculos médicos na competência {COMPETENCIA_POS}, para mês de início < {COMPETENCIA_POS}",
             "rdd": "local linear, kernel triangular, h = 0,050, HC1 por corte; CR1 por município nos empilhados",
             "lee": "rdd_lib.limites_lee_rd por ciclo × corte; selecionado = município de V_k com >= 1 médico ligado "
                    "(n_ligados, n_ligados_origem ou n_com_distancia > 0, conforme o outcome)",
-            "bky": "q aguçados de Benjamini, Krieger e Yekutieli sobre todas as linhas do X1 com p",
+            "bky": ("q aguçados de Benjamini, Krieger e Yekutieli sobre todas as linhas do X1 com p, uma família por "
+                    "regra de ligação"),
         },
         "limitacoes": [
             "a UF das listas é a do posto; CRM em outra UF só liga pela etapa 2 (nome)",
@@ -1360,12 +1593,16 @@ def analisar() -> None:
             "E9 com distância: amostra de alocados ligados, selecionada pela alocação; a origem é a do CNES pré-início",
         ],
         "dados_pessoais": ("nenhum nome, CPF, CNS, CRM ou código de profissional é gravado em output/rdd_bolsa/X1_*; "
-                           "o cache com registro e nome normalizado fica em output/rdd_bolsa/X1_cache/ (ignorado pelo Git)"),
+                           "o cache com registro e nome normalizado fica em output/rdd_bolsa/X1_cache/ (ignorado pelo "
+                           "Git). O pseudônimo id_medico é FRACO: ciclo, município e faixa, cruzados com a lista nominal "
+                           "pública do PMM-E e com o CNES público, podem reidentificar o médico. Por isso o parquet não "
+                           "traz mês de início nem curso; não deve ser cruzado com dados nominais"),
         "saidas": {rel(p): sha256_arquivo(p) for p in (OUT_MEDICOS, OUT_ESTIMATIVAS, OUT_DESCRITIVO)},
     }
     OUT_RESUMO.write_text(json.dumps(resumo, ensure_ascii=False, indent=2, default=_json_default) + "\n",
                           encoding="utf-8")
-    log(f"X1: {int(med['ligado'].sum())} de {len(med)} registros ligados; {len(est)} linhas de estimativa")
+    log("X1: " + "; ".join(f"{r}: {taxas[r]['total']['ligados']} de {taxas[r]['total']['registros']} ligados"
+                           for r in REGRAS) + f"; {len(est)} linhas de estimativa")
 
 
 def _json_default(o: Any) -> Any:
@@ -1391,6 +1628,10 @@ def main() -> int:
         listas, _ = ler_listas_pmme()
         if not COORD_JSON.exists():
             baixar_coordenadas()
+        if "malha_periodo_verificado" not in json.loads(COORD_MANIFESTO.read_text(encoding="utf-8")):
+            verificar_periodo_malha()
+        if not CONSELHO_META.exists():
+            adquirir_conselho()
         adquirir(COMPETENCIAS, crms_alvo(listas), args.workers)
     if args.etapa in ("analise", "tudo"):
         analisar()

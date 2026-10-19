@@ -111,7 +111,7 @@
       "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
       "bytes": 1685039,
       "papel": "centroides municipais oficiais (distância)",
-      "data_referencia": "malha vigente na API",
+      "data_referencia": "malha municipal 2022",
       "cobertura": "municípios do Brasil",
       "unidade": "município",
       "chaves": "id (7 dígitos)",
@@ -392,7 +392,22 @@
     }
   },
   "limite_ciclo3": "nenhuma competência >= 202609 é baixada ou lida",
-  "regra_ligacao": "principal (com o desvio D1): (1) NU_REGISTRO = CRM e SG_UF_CRM = UF do posto, um único CO_PROFISSIONAL_SUS nas seis competências, com nome compatível; (2) sem (1), NU_REGISTRO = CRM em qualquer UF com nome compatível, um único profissional; ambíguos e não achados ficam fora. Literal (doc 45, sensibilidade): a etapa 1 não confere o nome",
+  "regra_ligacao": {
+    "literal_doc45": "regra do protocolo congelado (doc 45): (1) NU_REGISTRO = CRM e SG_UF_CRM = UF da lista, um único CO_PROFISSIONAL_SUS nas seis competências; (2) sem (1), NU_REGISTRO = CRM em qualquer UF com nome compatível, um único profissional; ambíguos e não achados ficam fora",
+    "d1_pos_hoc": "correção pós-hoc D1: igual à literal, mas o candidato único da etapa 1 só liga com nome compatível; sem ele, o registro vai para a etapa 2",
+    "conselho": "só vínculos médicos com CO_CONSELHO_CLASSE do CRM entram na busca"
+  },
+  "conselho_classe": {
+    "codigo_crm": "71",
+    "descricao": "MEDICINA, CONSELHO REGIONAL",
+    "tabela": "tbOrgaoEmissor202608.csv",
+    "competencia": "202608",
+    "sha256_zip": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a",
+    "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202608.ZIP",
+    "regra": "tbOrgaoEmissor: descrição contém MEDICINA e CONSELHO REGIONAL e não VETERINARIA; uma linha",
+    "nota_tbConselhoClasse": "a tbConselhoClasse tem outra numeração (medicina = 10, 15); o campo CO_CONSELHO_CLASSE da carga horária segue a tbOrgaoEmissor",
+    "fracao_dos_vinculos_medicos_com_o_codigo": 0.9950676996238286
+  },
   "regra_nome_compativel": "tokens normalizados sem partículas D,DA,DAS,DE,DI,DO,DOS,DU,E; mesmo primeiro nome e (mesmo último ou um conjunto contido no outro, ≥ 2 nomes)",
   "listas_pmme": {
     "registros_ativos_2026_09_11": 1957,
@@ -412,7 +427,64 @@
     "nota_uf": "a UF das listas é a do posto do PMM-E; as listas não trazem a UF do CRM"
   },
   "taxas_ligacao": {
-    "por_ciclo": {
+    "literal_doc45": {
+      "1": {
+        "registros": 525,
+        "ligados": 508,
+        "taxa": 0.9676190476190476,
+        "etapa_1_crm_uf": 468,
+        "etapa_2_crm_nome": 40,
+        "ambiguos": 0,
+        "nao_ligados_sem_ambiguidade": 17
+      },
+      "2": {
+        "registros": 968,
+        "ligados": 924,
+        "taxa": 0.9545454545454546,
+        "etapa_1_crm_uf": 843,
+        "etapa_2_crm_nome": 81,
+        "ambiguos": 1,
+        "nao_ligados_sem_ambiguidade": 43
+      },
+      "3": {
+        "registros": 497,
+        "ligados": 469,
+        "taxa": 0.9436619718309859,
+        "etapa_1_crm_uf": 404,
+        "etapa_2_crm_nome": 65,
+        "ambiguos": 0,
+        "nao_ligados_sem_ambiguidade": 28
+      },
+      "total": {
+        "registros": 1990,
+        "ligados": 1901,
+        "taxa": 0.9552763819095478,
+        "etapa_1_crm_uf": 1715,
+        "etapa_2_crm_nome": 186,
+        "ambiguos": 1,
+        "nao_ligados_sem_ambiguidade": 88
+      },
+      "por_fonte_lista": {
+        "ativos_2026-09-11": {
+          "registros": 1957,
+          "ligados": 1870,
+          "taxa": 0.9555442003065917
+        },
+        "nominal_2026-08-12": {
+          "registros": 33,
+          "ligados": 31,
+          "taxa": 0.9393939393939394
+        }
+      },
+      "motivos": {
+        "ambiguo_crm_nome_com_mais_de_um_profissional": 1,
+        "crm_ausente_na_lista": 2,
+        "crm_sem_nome_compativel": 33,
+        "crm_sem_vinculo_medico_no_cnes": 53,
+        "ligado": 1901
+      }
+    },
+    "d1_pos_hoc": {
       "1": {
         "registros": 525,
         "ligados": 499,
@@ -439,67 +511,194 @@
         "etapa_2_crm_nome": 89,
         "ambiguos": 0,
         "nao_ligados_sem_ambiguidade": 29
-      }
-    },
-    "por_fonte_lista": {
-      "ativos_2026-09-11": {
-        "registros": 1957,
-        "ligados": 1845,
-        "taxa": 0.942769545222279
       },
-      "nominal_2026-08-12": {
-        "registros": 33,
-        "ligados": 31,
-        "taxa": 0.9393939393939394
+      "total": {
+        "registros": 1990,
+        "ligados": 1876,
+        "taxa": 0.942713567839196,
+        "etapa_1_crm_uf": 1609,
+        "etapa_2_crm_nome": 267,
+        "ambiguos": 1,
+        "nao_ligados_sem_ambiguidade": 113
+      },
+      "por_fonte_lista": {
+        "ativos_2026-09-11": {
+          "registros": 1957,
+          "ligados": 1845,
+          "taxa": 0.942769545222279
+        },
+        "nominal_2026-08-12": {
+          "registros": 33,
+          "ligados": 31,
+          "taxa": 0.9393939393939394
+        }
+      },
+      "motivos": {
+        "ambiguo_crm_nome_com_mais_de_um_profissional": 1,
+        "crm_ausente_na_lista": 2,
+        "crm_sem_nome_compativel": 58,
+        "crm_sem_vinculo_medico_no_cnes": 53,
+        "ligado": 1876
       }
-    },
-    "motivos": {
-      "ambiguo_crm_nome_com_mais_de_um_profissional": 1,
-      "crm_ausente_na_lista": 2,
-      "crm_sem_nome_compativel": 58,
-      "crm_sem_vinculo_medico_no_cnes": 53,
-      "ligado": 1876
     }
   },
   "diagnostico_ligacao": {
-    "exigir_nome_etapa1": true,
-    "etapa1_candidato_unico": 1715,
-    "etapa1_nome_compativel": 1609,
-    "etapa1_fracao_nome_compativel": 0.9381924198250728,
-    "etapa1_rejeitadas_por_nome": 106,
-    "etapa1_rejeitadas_ligadas_na_etapa2": 81,
-    "profissional_ligado_a_mais_de_um_registro_do_mesmo_ciclo": 22,
-    "conferencia_vinculo_no_estab_do_posto_202608": {
-      "principal_d1|1_crm_uf": {
-        "n": 1229,
-        "fracao_com_vinculo_no_estab_do_posto_202608": 0.80553295362083
-      },
-      "principal_d1|2_crm_nome": {
-        "n": 178,
-        "fracao_com_vinculo_no_estab_do_posto_202608": 0.7640449438202247
-      },
-      "literal_doc45|1_crm_uf": {
-        "n": 1310,
-        "fracao_com_vinculo_no_estab_do_posto_202608": 0.7603053435114504
-      },
-      "literal_doc45|2_crm_nome": {
-        "n": 121,
-        "fracao_com_vinculo_no_estab_do_posto_202608": 0.7272727272727273
+    "literal_doc45": {
+      "exigir_nome_etapa1": false,
+      "conselho_crm": "71",
+      "vinculos_medicos_fora_do_conselho_crm_excluidos_da_busca": 51384,
+      "etapa1_candidato_unico": 1715,
+      "etapa1_nome_compativel": 1609,
+      "etapa1_fracao_nome_compativel": 0.9381924198250728,
+      "etapa1_rejeitadas_por_nome": 0,
+      "etapa1_rejeitadas_ligadas_na_etapa2": 0,
+      "profissional_ligado_a_mais_de_um_registro_do_mesmo_ciclo": 24,
+      "conferencia_vinculo_no_estab_do_posto_202608": {
+        "1_crm_uf": {
+          "n": 1310,
+          "fracao_com_vinculo_no_estab_do_posto_202608": 0.7603053435114504
+        },
+        "2_crm_nome": {
+          "n": 121,
+          "fracao_com_vinculo_no_estab_do_posto_202608": 0.7272727272727273
+        }
+      }
+    },
+    "d1_pos_hoc": {
+      "exigir_nome_etapa1": true,
+      "conselho_crm": "71",
+      "vinculos_medicos_fora_do_conselho_crm_excluidos_da_busca": 51384,
+      "etapa1_candidato_unico": 1715,
+      "etapa1_nome_compativel": 1609,
+      "etapa1_fracao_nome_compativel": 0.9381924198250728,
+      "etapa1_rejeitadas_por_nome": 106,
+      "etapa1_rejeitadas_ligadas_na_etapa2": 81,
+      "profissional_ligado_a_mais_de_um_registro_do_mesmo_ciclo": 22,
+      "conferencia_vinculo_no_estab_do_posto_202608": {
+        "1_crm_uf": {
+          "n": 1229,
+          "fracao_com_vinculo_no_estab_do_posto_202608": 0.80553295362083
+        },
+        "2_crm_nome": {
+          "n": 178,
+          "fracao_com_vinculo_no_estab_do_posto_202608": 0.7640449438202247
+        }
       }
     }
   },
-  "sensibilidade_regra_literal_doc45": {
-    "exigir_nome_etapa1": false,
-    "etapa1_candidato_unico": 1715,
-    "etapa1_nome_compativel": 1609,
-    "etapa1_fracao_nome_compativel": 0.9381924198250728,
-    "etapa1_rejeitadas_por_nome": 0,
-    "etapa1_rejeitadas_ligadas_na_etapa2": 0,
-    "registros_ligados": 1901,
+  "comparacao_entre_regras": {
     "mesmo_profissional_nas_duas_regras": 1795,
     "profissional_diferente_entre_as_regras": 81,
     "ligado_so_na_literal": 25,
-    "ligado_so_na_principal": 0
+    "ligado_so_na_d1": 0
+  },
+  "mesmo_municipio_por_mes_de_referencia": {
+    "literal_doc45": {
+      "1": {
+        "n_ligados": 508,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.4153543307086614,
+          "202406": 0.3661417322834646,
+          "202501": 0.38188976377952755,
+          "202506": 0.40551181102362205
+        },
+        "minimo": 0.3661417322834646,
+        "maximo": 0.4153543307086614,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 211,
+          "ja_presentes_em_202406": 177,
+          "fracao": 0.8388625592417062
+        }
+      },
+      "2": {
+        "n_ligados": 924,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.5465367965367965,
+          "202406": 0.4751082251082251,
+          "202501": 0.4935064935064935,
+          "202506": 0.5216450216450217
+        },
+        "minimo": 0.4751082251082251,
+        "maximo": 0.5465367965367965,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 505,
+          "ja_presentes_em_202406": 420,
+          "fracao": 0.8316831683168316
+        }
+      },
+      "1+2": {
+        "n_ligados": 1432,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.5,
+          "202406": 0.43645251396648044,
+          "202501": 0.45391061452513964,
+          "202506": 0.48044692737430167
+        },
+        "minimo": 0.43645251396648044,
+        "maximo": 0.5,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 716,
+          "ja_presentes_em_202406": 597,
+          "fracao": 0.8337988826815642
+        }
+      }
+    },
+    "d1_pos_hoc": {
+      "1": {
+        "n_ligados": 499,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.4288577154308617,
+          "202406": 0.37675350701402804,
+          "202501": 0.39478957915831664,
+          "202506": 0.4188376753507014
+        },
+        "minimo": 0.37675350701402804,
+        "maximo": 0.4288577154308617,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 214,
+          "ja_presentes_em_202406": 179,
+          "fracao": 0.8364485981308412
+        }
+      },
+      "2": {
+        "n_ligados": 909,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.5577557755775577,
+          "202406": 0.48404840484048406,
+          "202501": 0.5038503850385039,
+          "202506": 0.5313531353135313
+        },
+        "minimo": 0.48404840484048406,
+        "maximo": 0.5577557755775577,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 507,
+          "ja_presentes_em_202406": 420,
+          "fracao": 0.8284023668639053
+        }
+      },
+      "1+2": {
+        "n_ligados": 1408,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.5120738636363636,
+          "202406": 0.4460227272727273,
+          "202501": 0.46519886363636365,
+          "202506": 0.4914772727272727
+        },
+        "minimo": 0.4460227272727273,
+        "maximo": 0.5120738636363636,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 721,
+          "ja_presentes_em_202406": 599,
+          "fracao": 0.8307905686546463
+        }
+      }
+    }
   },
   "desvios": [
     {
@@ -507,8 +706,8 @@
       "data": "2026-10-19",
       "o_que": "etapa 1 (CRM+UF) passa a exigir nome compatível; sem ele, o registro vai para a etapa 2",
       "motivo": "a UF das listas do PMM-E é a do posto, não a do CRM; na regra literal, um CRM de outra UF colide com o registro de outra pessoa na UF do posto. A conferência de nomes da etapa 1 mostrou ligações sem nenhum nome em comum e sem vínculo no estabelecimento do posto",
-      "honestidade": "o desvio foi decidido depois da primeira execução completa do script, que gravou e exibiu as estimativas com a regra literal; o motivo é a qualidade da ligação (nome), não o resultado, e por isso a regra literal continua relatada",
-      "relato": "a regra literal é relatada como sensibilidade (taxas e descritivo, regra_ligacao = literal_doc45)"
+      "honestidade": "correção pós-hoc: decidida depois da primeira execução completa do script, que gravou e exibiu as estimativas com a regra literal. Ela leva as linhas mais próximas de significância em direção a zero; por isso a regra literal, que é a do protocolo, é relatada lado a lado em todas as saídas",
+      "relato": "todas as saídas trazem as duas regras (coluna regra_ligacao)"
     }
   ],
   "regiao_saude": {
@@ -534,55 +733,138 @@
     "bytes": 1685039,
     "fonte": "IBGE, API de malhas geográficas v3, metadados (centroide) por município",
     "natureza_dos_dados": "EMPIRICO",
+    "malha_periodo_verificado": "2022",
+    "verificacao_periodo": {
+      "metodo": "a resposta padrão tem os mesmos bytes que a resposta com &periodo=AAAA",
+      "data": "2026-10-19",
+      "testados": {
+        "2020": {
+          "sha256": "69df9bc1fd4e13173d2a0f121e71285e8f490ba0639740625bf03a8261215d2d",
+          "bytes": 1188709
+        },
+        "2021": {
+          "sha256": "0ac434a072d4c28d81c73b9cec33dcb90e0d26943767eb32dd002b15999e1e5a",
+          "bytes": 1188768
+        },
+        "2022": {
+          "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+          "bytes": 1685039
+        },
+        "2023": {
+          "erro_http": 500
+        },
+        "2024": {
+          "erro_http": 500
+        },
+        "2025": {
+          "erro_http": 500
+        }
+      }
+    },
     "sha256_atual": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd"
   },
   "painel_municipio": {
-    "ciclo_1": {
-      "municipios_V": 368,
-      "registros_ativos": 519,
-      "registros_ativos_fora_de_V": 36,
-      "registros_ativos_ligados_fora_de_V": 33
+    "literal_doc45": {
+      "ciclo_1": {
+        "municipios_V": 368,
+        "registros_ativos": 519,
+        "registros_ativos_fora_de_V": 36,
+        "registros_ativos_ligados_fora_de_V": 34
+      },
+      "ciclo_2": {
+        "municipios_V": 454,
+        "registros_ativos": 941,
+        "registros_ativos_fora_de_V": 1,
+        "registros_ativos_ligados_fora_de_V": 1
+      },
+      "municipios_V_sem_ivs_oficial": 0
     },
-    "ciclo_2": {
-      "municipios_V": 454,
-      "registros_ativos": 941,
-      "registros_ativos_fora_de_V": 1,
-      "registros_ativos_ligados_fora_de_V": 1
-    },
-    "municipios_V_sem_ivs_oficial": 0
+    "d1_pos_hoc": {
+      "ciclo_1": {
+        "municipios_V": 368,
+        "registros_ativos": 519,
+        "registros_ativos_fora_de_V": 36,
+        "registros_ativos_ligados_fora_de_V": 33
+      },
+      "ciclo_2": {
+        "municipios_V": 454,
+        "registros_ativos": 941,
+        "registros_ativos_fora_de_V": 1,
+        "registros_ativos_ligados_fora_de_V": 1
+      },
+      "municipios_V_sem_ivs_oficial": 0
+    }
   },
   "e9_distancia": {
     "diagnostico": {
-      "ciclo_1": {
-        "reconstrucao_pseudonimo": "reproduz escolhas_candidatos.parquet",
-        "candidatos_alocados_ch1": 468,
-        "medicos_ativos_ligados": 499,
-        "pares_mesma_celula_nome_compativel": 216,
-        "pares_unicos": 216
+      "literal_doc45": {
+        "ciclo_1": {
+          "reconstrucao_pseudonimo": "reproduz escolhas_candidatos.parquet",
+          "candidatos_alocados_ch1": 468,
+          "medicos_ativos_ligados": 508,
+          "pares_mesma_celula_nome_compativel": 218,
+          "pares_unicos": 218
+        },
+        "ciclo_2": {
+          "reconstrucao_pseudonimo": "reproduz escolhas_candidatos.parquet",
+          "candidatos_alocados_ch1": 1057,
+          "medicos_ativos_ligados": 924,
+          "pares_mesma_celula_nome_compativel": 657,
+          "pares_unicos": 657
+        },
+        "pares_total": 875,
+        "excluidos_sem_vinculo_medico_na_ultima_competencia_pre": 21,
+        "pares_com_origem": 854,
+        "excluidos_sem_linha_de_1a_opcao": 23,
+        "excluidos_1a_opcao_fora_do_conjunto": 0,
+        "excluidos_sem_coordenada": 0,
+        "candidatos_no_logit": 831,
+        "minimo_fixado": 50,
+        "distancia": "mínimo, sobre os municípios com vínculo médico na última competência pré-início, da distância ao município da célula; independe da célula escolhida",
+        "candidatos_com_distancia_zero_a_celula_escolhida": 425,
+        "fracao_das_alternativas_com_distancia_zero": 0.013325451905043384
       },
-      "ciclo_2": {
-        "reconstrucao_pseudonimo": "reproduz escolhas_candidatos.parquet",
-        "candidatos_alocados_ch1": 1057,
-        "medicos_ativos_ligados": 909,
-        "pares_mesma_celula_nome_compativel": 652,
-        "pares_unicos": 652
-      },
-      "pares_com_origem": 851,
-      "candidatos_no_logit": 828,
-      "candidatos_excluidos_escolha_fora_do_conjunto_ou_sem_coordenada": 0,
-      "minimo_fixado": 50
-    }
+      "d1_pos_hoc": {
+        "ciclo_1": {
+          "reconstrucao_pseudonimo": "reproduz escolhas_candidatos.parquet",
+          "candidatos_alocados_ch1": 468,
+          "medicos_ativos_ligados": 499,
+          "pares_mesma_celula_nome_compativel": 216,
+          "pares_unicos": 216
+        },
+        "ciclo_2": {
+          "reconstrucao_pseudonimo": "reproduz escolhas_candidatos.parquet",
+          "candidatos_alocados_ch1": 1057,
+          "medicos_ativos_ligados": 909,
+          "pares_mesma_celula_nome_compativel": 652,
+          "pares_unicos": 652
+        },
+        "pares_total": 868,
+        "excluidos_sem_vinculo_medico_na_ultima_competencia_pre": 17,
+        "pares_com_origem": 851,
+        "excluidos_sem_linha_de_1a_opcao": 23,
+        "excluidos_1a_opcao_fora_do_conjunto": 0,
+        "excluidos_sem_coordenada": 0,
+        "candidatos_no_logit": 828,
+        "minimo_fixado": 50,
+        "distancia": "mínimo, sobre os municípios com vínculo médico na última competência pré-início, da distância ao município da célula; independe da célula escolhida",
+        "candidatos_com_distancia_zero_a_celula_escolhida": 431,
+        "fracao_das_alternativas_com_distancia_zero": 0.013531276014663142
+      }
+    },
+    "substitui": "versão de e02d83a, em que a distância usava a origem mais próxima do posto final (escolha embutida na distância); retirada pela auditoria de X1"
   },
   "definicoes": {
     "mes_inicio": "AAAAMM de dt_inicio_atividade",
     "competencias_pre_inicio": "competências lidas estritamente anteriores ao mês de início",
     "vinculo_medico": "linha de tbCargaHorariaSus com CBO iniciando em 2251, 2252, 2253 ou 2231",
     "origem": "última competência pré-início; mesmo_municipio > mesma_regiao_saude > mesma_uf > outra_uf; sem linha nessa competência: sem_vinculo_medico_anterior",
-    "distancia": "círculo máximo (raio médio de 6371.0088 km) entre centroides do IBGE, do município de origem mais próximo ao do posto",
+    "distancia": "círculo máximo (raio médio de 6371.0088 km) entre centroides do IBGE, do município de origem mais próximo ao do posto (descritivo e RDD); no E9, mínimo sobre os municípios de origem até cada célula do conjunto",
+    "meses_fixos": "(b) e (a) também em 202406, 202501, 202506, os mesmos para todos; persistência = fração, entre os que têm (b) na última competência pré-início, dos que já o tinham em 202406",
     "e": "vínculos médicos na competência 202608, para mês de início < 202608",
     "rdd": "local linear, kernel triangular, h = 0,050, HC1 por corte; CR1 por município nos empilhados",
     "lee": "rdd_lib.limites_lee_rd por ciclo × corte; selecionado = município de V_k com >= 1 médico ligado (n_ligados, n_ligados_origem ou n_com_distancia > 0, conforme o outcome)",
-    "bky": "q aguçados de Benjamini, Krieger e Yekutieli sobre todas as linhas do X1 com p"
+    "bky": "q aguçados de Benjamini, Krieger e Yekutieli sobre todas as linhas do X1 com p, uma família por regra de ligação"
   },
   "limitacoes": [
     "a UF das listas é a do posto; CRM em outra UF só liga pela etapa 2 (nome)",
@@ -592,10 +874,10 @@
     "o retrato de ativos exclui quem saiu antes de 11/09/2026 (só a lista de 12/08 recupera parte)",
     "E9 com distância: amostra de alocados ligados, selecionada pela alocação; a origem é a do CNES pré-início"
   ],
-  "dados_pessoais": "nenhum nome, CPF, CNS, CRM ou código de profissional é gravado em output/rdd_bolsa/X1_*; o cache com registro e nome normalizado fica em output/rdd_bolsa/X1_cache/ (ignorado pelo Git)",
+  "dados_pessoais": "nenhum nome, CPF, CNS, CRM ou código de profissional é gravado em output/rdd_bolsa/X1_*; o cache com registro e nome normalizado fica em output/rdd_bolsa/X1_cache/ (ignorado pelo Git). O pseudônimo id_medico é FRACO: ciclo, município e faixa, cruzados com a lista nominal pública do PMM-E e com o CNES público, podem reidentificar o médico. Por isso o parquet não traz mês de início nem curso; não deve ser cruzado com dados nominais",
   "saidas": {
-    "output/rdd_bolsa/X1_medicos.parquet": "ce0ec50e512ca697ff10840c380fde2fcd1b1f055920e3535ea5724e126a526e",
-    "output/rdd_bolsa/X1_estimativas.csv": "f20846dc79988a21a3f1e1dd7f713be428898edbb95598c42c0a05b657cdaafb",
-    "output/rdd_bolsa/X1_descritivo.csv": "874d7dcabb195e0f01eec4a894bed3637feff080f460e41fd54be5c7595494a2"
+    "output/rdd_bolsa/X1_medicos.parquet": "b4d73a6ae6adce59d014b11bf5490072964b49d600782af3d96a8f2e12f91789",
+    "output/rdd_bolsa/X1_estimativas.csv": "993f295829211e85f2ce708d453a037bd637180100f6a1e42f519d78efc3f3e6",
+    "output/rdd_bolsa/X1_descritivo.csv": "0202837891646b1bb8a0f75c589cdbc5057e748a8ccd3333ea88210a4d82bc90"
   }
 }
