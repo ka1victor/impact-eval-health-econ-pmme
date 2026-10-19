@@ -630,61 +630,99 @@ Amazônia Legal ou faixa de fronteira, onde a ajuda de custo do PMMB não salta.
 
 ## 11. Leitura
 
-Leitura escrita depois da execução única de 19/10/2026. Ela não reescolhe
-nada e não traz número: os valores estão nas tabelas acima.
+Leitura escrita depois da execução de 19/10/2026. Ela não reescolhe nada. Os
+números dos blocos `E7:leitura_*` são gerados das saídas, como as tabelas.
 
-1. **P2 não detecta efeito.** A DiRD de F3.1 em U, cortes empilhados, tem IC
-   95% que inclui zero. Nenhuma linha principal da família F3 tem p < 0,05,
-   em U ou em V1, e todos os q BKY ficam no máximo da grade. O limite superior
-   do IC CR1 de P2 é o maior aumento de vínculos nas CBO-alvo que o dado ainda
-   admite (§3). É um nulo, não evidência de efeito zero.
-2. **O IC honesto não informa.** Com o suporte da quártica até o ponto médio
-   entre cortes, o lado interno de cada corte tem só meia distância entre
-   cortes de IVS, e o M da regra de bolso explode (coluna M). O mesmo aconteceu
-   no E6. Nenhuma especificação pós-resultado foi acrescentada aqui.
-3. **Placebo de generalistas (F3.P1) e S6.** Nenhum salto na DiRD, no placebo
-   dentro do pré, nem no S5 em U. No estudo de evento, os generalistas ficam
-   planos no pré principal e no pós; só meses isolados do pré extra em 0,400
-   saem de zero. Não aparece, nesse outcome, a assinatura de uma co-política
-   variável no tempo (752, IED, Eixo Vínculo). Isso não exclui o canal da MAC
-   em 0,300, que mira especialistas.
-4. **Estudo de evento de F3.1 em U.** Em 0,300, o salto relativo a 2025-06 é
-   positivo, com magnitude parecida, no pré extra, no trecho entre os dois prés
-   e no pós; o mês de referência está num vale do pré principal. Alguns meses
-   do pós saem de zero isoladamente, mas o perfil é um vale em 2024–2025, não
-   uma quebra nas datas do PMM-E. Por isso a DiRD, que usa a média do pré
-   inteiro, não detecta salto. Em 0,400 o salto deriva para baixo no pós, sem
-   significância. Empilhado, só um mês do pós sai de zero.
-5. **Placebo dentro do pré e S5 em U:** nenhuma linha, de nenhum outcome, tem
-   p < 0,05. A descontinuidade de F3.1 não mudou entre 2022–2023 e o pré
-   principal.
-6. **V1 tem tendência pré.** Em 0,300, o placebo dentro do pré e o S5 (pré menos
-   pré extra) saem de zero, e no estudo de evento todos os meses do pré extra e
-   do trecho seguinte ficam acima da referência. A descontinuidade de F3.1 em
-   V1 já caía antes do PMM-E. A DiRD em V1 nesse corte não é crível. V1 é
-   condicionada a ter vaga no ciclo 1, e ter vaga pode depender do corte e da
-   trajetória (protocolo §3).
-7. **Pacote em nível.** Em U, F3.1 tem salto negativo em nível em 0,300 no pré
-   extra e no pré principal, ambos com IC que exclui zero. Ou seja, havia uma
-   descontinuidade de oferta antes de 2023-03, anterior a todas as regras com
-   corte em 0,3 ou 0,4 encontradas pela auditoria 18. Ela é a razão para não
-   ler a RDD em nível como efeito da bolsa e para usar a DiRD.
-8. **Horas (F3.3, §16).** A versão só SUS, a versão sem filtro e a soma parcial
-   dão saltos quase iguais. A definição de horas não move o resultado. Em
-   0,400 os pontos de F3.3 e F3.2 são negativos, sem significância. F3.2 tem
-   meses do pré principal fora de zero no estudo de evento, sinal de
-   instabilidade antes do PMM-E.
-9. **Suplementares S3 e S4** (fora do BKY, muitos testes): duas diferenças
-   saem de zero isoladamente. A primeira é F3.3 em 0,300 (portes onde o
-   estrato do IED muda contra os demais). A segunda é F3.P2 em 0,400, no porte
-   sem mudança de estrato, que tem poucos municípios. Com o número de
-   comparações suplementares, elas não sustentam um canal. A soma parcial de
-   horas repete a primeira, e a versão sem filtro SUS não. Em F3.2 no porte
-   sem mudança em 0,400, todos os municípios da janela têm cobertura, e o EP
-   é nulo (nota da linha).
-10. **Local randomization** em U no corte 0,300 não foi estimada: nenhuma
-    janela passou no balanço de covariáveis (regra do E5). Nos demais casos,
-    ela também não detecta salto.
+**1. P2 não detecta efeito.** A DiRD de F3.1 em U, cortes empilhados, tem IC
+95% que inclui zero. Nenhuma linha principal da família F3 tem p < 0,05, em U
+ou em V1, e todos os q BKY ficam no máximo da grade. É um nulo, não evidência
+de efeito zero.
+
+<!-- E7:leitura_p2:inicio -->
+P2: salto +0,083, IC 95% CR1 [−0,309; +0,476], p = 0,677. Só sob a hipótese da DiRD (as outras descontinuidades não mudam entre pré e pós) e sem viés de suavidade, o maior aumento que esse IC admite é +0,476 vínculo por 10 mil hab., ou 4,4 % da média bruta do pré abaixo do corte 0,300 na janela (10,711); 8,0 % da média bruta do pré abaixo do corte 0,400 na janela (5,941).
+<!-- E7:leitura_p2:fim -->
+
+**2. O IC honesto não informa.** Com o suporte da quártica até o ponto médio
+entre cortes, o lado interno de cada corte tem só meia distância entre cortes
+de IVS, e o M da regra de bolso explode (coluna M). O mesmo aconteceu no E6.
+Nenhuma especificação pós-resultado foi acrescentada aqui.
+
+**3. Placebo de generalistas (F3.P1) e S6.** A DiRD principal, o placebo dentro
+do pré e o S5 de generalistas não têm p < 0,05 em U. Mas o estudo de evento em
+0,400 mostra deriva antes do pré principal:
+
+<!-- E7:leitura_generalistas:inicio -->
+Em 0,400, o salto de generalistas relativo a 2025-06 é +1,542 (p = 0,045) em 2022-01 (2 meses do pré extra com p < 0,05) e cai no pré principal (média +0,193; −0,221 em 2025-05), atravessando a data da Portaria 752 (2023-06). O S5 (pré menos pré extra) de generalistas em 0,400 é −0,958 (p = 0,061). Isso é compatível com uma co-política variável no tempo em 0,400, antes do pré principal. A DiRD principal de generalistas em 0,400 é −0,111 (p = 0,816).
+<!-- E7:leitura_generalistas:fim -->
+
+Ou seja, o placebo não detecta co-política variável no tempo entre o pré
+principal e o pós, mas o perfil anterior não é plano em 0,400. Ele também não
+exclui o canal da MAC em 0,300, que mira especialistas.
+
+**4. Estudo de evento de F3.1 em U.**
+
+<!-- E7:leitura_evento_f31:inicio -->
+Em 0,300 (U, F3.1), os 5 meses consecutivos de 2025-10 a 2026-02 têm p < 0,05 (saltos de +0,346 a +0,609; maior p 0,040), logo depois do início do ciclo 1 (2025-09). De 2026-03 a 2026-08 os saltos ficam entre +0,220 e +0,465; meses com p < 0,05: 0. Ressalva: os saltos são relativos a 2025-06, que está num vale. O salto é +0,577 em 2024-01 e cai até +0,075 em 2025-05; no pré extra a média é +0,455. Meses anteriores a 2025-06 com p < 0,05: 0. A DiRD principal, com a média do pré inteiro, é +0,287 (p = 0,281).
+<!-- E7:leitura_evento_f31:fim -->
+
+A sequência significativa começa logo depois do início do ciclo 1 e se
+desfaz. Como a referência está num vale e o salto do pré extra tem tamanho
+parecido com o do pós, a DiRD com o pré inteiro não detecta salto. Em 0,400 o
+salto deriva para baixo no pós, sem significância.
+
+**5. Placebo dentro do pré e S5 em U.** Nenhuma linha, de nenhum outcome, tem
+p < 0,05. Para F3.1 não se detecta mudança da descontinuidade entre 2022–2023
+e o pré principal, mas há a deriva dentro dos prés descrita no item 4.
+
+<!-- E7:leitura_s5:inicio -->
+S5 de F3.1 em U (média do pré menos média do pré extra): 0,300: −0,336 (p = 0,372); 0,400: −0,059 (p = 0,850); empilhado: −0,215 (p = 0,394).
+<!-- E7:leitura_s5:fim -->
+
+**6. V1 tem tendência pré.** Em 0,300, o placebo dentro do pré e o S5 (pré menos
+pré extra) saem de zero, e no estudo de evento todos os meses do pré extra e
+do trecho seguinte ficam acima da referência. A descontinuidade de F3.1 em V1
+já caía antes do PMM-E, e a DiRD em V1 nesse corte não é crível. V1 é
+condicionada a ter vaga no ciclo 1, e ter vaga pode depender do corte e da
+trajetória (protocolo §3).
+
+**7. Pacote em nível.** Em U, F3.1 tem salto negativo em nível em 0,300 no pré
+extra e no pré principal, ambos com IC que exclui zero. Havia uma
+descontinuidade de oferta antes de 2023-03, anterior a todas as regras com
+corte em 0,3 ou 0,4 encontradas pela auditoria 18. Ela é a razão para não ler
+a RDD em nível como efeito da bolsa.
+
+**8. Horas (F3.3, §16).** A soma parcial quase não muda o salto. Sem o filtro
+SUS o salto muda de magnitude, mas não de sinal nem de significância (tabela
+principal):
+
+<!-- E7:leitura_horas:inicio -->
+Salto principal das sensibilidades de horas contra o F3.3 só SUS (diferença relativa ao valor absoluto do principal): 0,300, sem filtro SUS: +0,95 contra +1,15 (−17,1 %); 0,300, soma parcial: +1,12 contra +1,15 (−2,6 %); 0,400, sem filtro SUS: −4,86 contra −6,11 (+20,5 %); 0,400, soma parcial: −6,11 contra −6,11 (+0,0 %); empilhado, sem filtro SUS: −1,60 contra −2,04 (+21,5 %); empilhado, soma parcial: −2,05 contra −2,04 (−0,7 %).
+<!-- E7:leitura_horas:fim -->
+
+Em 0,400 os pontos de F3.3 e F3.2 são negativos, sem significância. F3.2 tem
+meses do pré principal fora de zero no estudo de evento, sinal de
+instabilidade antes do PMM-E.
+
+**9. Suplementares S3 e S4** (fora do BKY, muitos testes): duas diferenças
+saem de zero isoladamente. A primeira é F3.3 em 0,300 (portes onde o estrato
+do IED muda contra os demais); a soma parcial de horas repete essa diferença,
+e a versão sem filtro SUS não. A segunda é F3.P2 em 0,400, no porte sem
+mudança de estrato, que tem poucos municípios. Com o número de comparações
+suplementares, elas não sustentam um canal.
+
+<!-- E7:leitura_s3_nulo:inicio -->
+Subamostras do S3/S4 com EP nulo (Δ igual em todos os municípios da janela, sem variação residual): F3.2 0,400 S3_porte_nao_muda (36 / 36 municípios). Nesses casos a linha S3_diferenca correspondente usa só a variância da outra subamostra.
+<!-- E7:leitura_s3_nulo:fim -->
+
+**10. Local randomization** em U no corte 0,300 não foi estimada: nenhuma
+janela passou no balanço de covariáveis (regra do E5). Nos demais casos, ela
+também não detecta salto.
+
+**11. Pré extra.**
+
+<!-- E7:leitura_pre_extra:inicio -->
+O pré extra usa as 7 competências disponíveis de 2022-01 a 2023-03 (2022-01, 2022-04, 2022-07, 2022-10, 2023-01, 2023-02, 2023-03). 3 delas são do 1º trimestre de 2023, porque 2023-02 e 2023-03 entraram pelo adendo §13; a média simples do pré extra dá mais peso a esse trimestre do que aos de 2022, que têm uma competência cada.
+<!-- E7:leitura_pre_extra:fim -->
 
 **Contraste.** Em U, a DiRD mede a bolsa mais a variação, entre pré e pós, das
 descontinuidades das outras políticas. Ela não detecta mudança na oferta
@@ -725,13 +763,16 @@ vínculo no CNES não é médico do PMM-E (§12).
 | 2026-10-19 | esclarecimento | S3 e S4 | porte = classe do Anexo VI da Portaria 3.493/2024 (a10), portes em que o estrato muda recalculados do a10 e conferidos com o protocolo §13; S4 = Amazonia Legal OU faixa de fronteira do PMMB consolidado (mesmo atributo e mesma regra do E6; areas indigenas sem atributo municipal no repositorio). So corte a corte (S3) e so 0,400 (S4). |
 <!-- E7:desvios:fim -->
 
-Nota de 19/10/2026, depois da execução: a guarda de texto da tarefa E
+Nota de 19/10/2026, depois da primeira execução: a guarda de texto da tarefa E
 (`tests/test_fonte_ivs_oficial.py`), integrada depois que o código do E7 foi
 escrito, proíbe citar pelo nome o arquivo local de IVS da auditoria 16 em
 qualquer script. O script do E7 tinha esse nome uma vez, só como rótulo do
 campo `arquivo_proibido_nao_lido` do resumo, sem ler o arquivo. O rótulo foi
-trocado por uma descrição sem o nome, sem reexecutar. Por isso o campo em
-`E7_resumo.json` ainda traz o nome antigo. Nenhuma estimativa depende dele.
+trocado por uma descrição sem o nome, e as frases da leitura (§11) passaram a
+ser geradas das saídas. A pedido da auditoria independente, o script foi
+reexecutado por inteiro. As estimativas e o estudo de evento saíram idênticos
+byte a byte (conferido por SHA-256 antes do commit), e o resumo saiu sem o
+nome antigo.
 
 ## 14. Proveniência e validações
 

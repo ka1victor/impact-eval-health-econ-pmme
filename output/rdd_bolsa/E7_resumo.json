@@ -508,7 +508,7 @@
       "filtros": "datas transcritas em DATAS_POLITICAS"
     }
   ],
-  "arquivo_proibido_nao_lido": "data/ivs_ipea_2010_municipios.csv",
+  "arquivo_proibido_nao_lido": "arquivo local de IVS da auditoria 16 (nao lido; running variable = a08)",
   "validacoes": {
     "manifesto": {
       "sha256_painel_igual_manifesto": true,

@@ -1468,6 +1468,154 @@ def gerar_tabelas_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> dict
     for dv in resumo.get("desvios", []):
         linhas.append(f"| {dv['data']} | {dv['tipo']} | {dv['item']} | {dv['descricao']} |")
     t["desvios"] = "\n".join(linhas)
+    t.update(gerar_leitura(est, ev))
+    return t
+
+
+# ---------------------------------------------------------------------------
+# Frases da leitura (§11 do doc 43): todo número sai das saídas
+# ---------------------------------------------------------------------------
+
+def _linha_est(est: pd.DataFrame, oid: str, pop: str, corte: str, esp: str) -> dict | None:
+    g = est[(est["outcome_id"] == oid) & (est["populacao"] == pop) & (est["corte"].astype(str) == corte)
+            & (est["especificacao"] == esp)]
+    return g.iloc[0].to_dict() if len(g) == 1 else None
+
+
+def _serie_evento(ev: pd.DataFrame, oid: str, pop: str, corte: str) -> pd.DataFrame:
+    e = ev[(ev["outcome_id"] == oid) & (ev["populacao"] == pop) & (ev["corte"].astype(str) == corte)].copy()
+    e["competencia"] = e["competencia"].astype(str)
+    return e.sort_values("competencia").reset_index(drop=True)
+
+
+def _comp(c: str) -> str:
+    return f"{c[:4]}-{c[4:]}"
+
+
+def maior_sequencia_significativa(e: pd.DataFrame, janelas=("transicao", "pos"), alfa: float = 0.05) -> list[str]:
+    """Competências da maior sequência consecutiva (na ordem do estudo de evento) com p < alfa nas janelas dadas.
+
+    Empate: a primeira. Sequência vazia se nenhum mês tem p < alfa.
+    """
+    sub = e[e["janela"].isin(janelas) & ~e["referencia"].astype(bool)].sort_values("competencia")
+    melhor, atual = [], []
+    for c, p in zip(sub["competencia"], sub["p_valor"].astype(float)):
+        if np.isfinite(p) and p < alfa:
+            atual.append(c)
+            if len(atual) > len(melhor):
+                melhor = list(atual)
+        else:
+            atual = []
+    return melhor
+
+
+def _tau_p(r: dict | None, casas: int = 3, pp: bool = False) -> str:
+    if r is None:
+        return "— (linha ausente)"
+    return f"{_n(r['tau'], casas, pp)} (p = {_p(r['p_valor'])})"
+
+
+def gerar_leitura(est: pd.DataFrame, ev: pd.DataFrame) -> dict[str, str]:
+    t: dict[str, str] = {}
+    # 1. P2 e escala relativa (médias brutas do pré abaixo do corte, linhas nivel_pre de F3.1 em U).
+    p2 = _linha_est(est, "F3.1", "U", EMPILHADO, "principal")
+    partes = []
+    for c in ("0.300", "0.400"):
+        nv = _linha_est(est, "F3.1", "U", c, "nivel_pre")
+        if p2 is not None and nv is not None and np.isfinite(float(nv["media_bruta_abaixo"])) \
+                and float(nv["media_bruta_abaixo"]) > 0:
+            rel = float(p2["ic95_sup"]) / float(nv["media_bruta_abaixo"])
+            partes.append(f"{_n(rel, 1, pp=True, sinal=False)} % da média bruta do pré abaixo do corte {c.replace('.', ',')} "
+                          f"na janela ({_n(nv['media_bruta_abaixo'], 3, sinal=False)})")
+    if p2 is not None:
+        t["leitura_p2"] = (
+            f"P2: salto {_n(p2['tau'])}, IC 95% CR1 {_ic(p2['ic95_inf'], p2['ic95_sup'])}, p = {_p(p2['p_valor'])}. "
+            f"Só sob a hipótese da DiRD (as outras descontinuidades não mudam entre pré e pós) e sem viés de "
+            f"suavidade, o maior aumento que esse IC admite é {_n(p2['ic95_sup'])} vínculo por 10 mil hab., ou "
+            + ("; ".join(partes) if partes else "— (média bruta indisponível)") + ".")
+    else:
+        t["leitura_p2"] = "— (linha de P2 ausente)"
+    # 4. Estudo de evento de F3.1 em U, 0,300.
+    e = _serie_evento(ev, "F3.1", "U", "0.300")
+    if len(e):
+        seq = maior_sequencia_significativa(e)
+        pre_sig = int(((e["janela"].isin(["pre_extra", "entre_pre_extra_e_pre", "pre"]))
+                       & (e["p_valor"].astype(float) < 0.05)).sum())
+        idx = e.set_index("competencia")
+        txt = []
+        if seq:
+            s = idx.loc[seq]
+            depois = e[(e["competencia"] > seq[-1]) & e["janela"].isin(["pos"])]
+            txt.append(f"Em 0,300 (U, F3.1), os {len(seq)} meses consecutivos de {_comp(seq[0])} a {_comp(seq[-1])} têm "
+                       f"p < 0,05 (saltos de {_n(s['tau'].min())} a {_n(s['tau'].max())}; maior p "
+                       f"{_p(s['p_valor'].max())}), logo depois do início do ciclo 1 (2025-09).")
+            if len(depois):
+                txt.append(f"De {_comp(depois['competencia'].iloc[0])} a {_comp(depois['competencia'].iloc[-1])} os saltos "
+                           f"ficam entre {_n(depois['tau'].min())} e {_n(depois['tau'].max())}; meses com p < 0,05: "
+                           f"{int((depois['p_valor'] < 0.05).sum())}.")
+        else:
+            txt.append("Em 0,300 (U, F3.1), nenhum mês do pós tem p < 0,05.")
+        vals = {c: idx.loc[c, "tau"] for c in ("202401", "202505") if c in idx.index}
+        pre_extra = e[e["janela"] == "pre_extra"]["tau"]
+        txt.append(f"Ressalva: os saltos são relativos a 2025-06, que está num vale. O salto é "
+                   f"{_n(vals.get('202401'))} em 2024-01 e cai até {_n(vals.get('202505'))} em 2025-05; no pré extra a "
+                   f"média é {_n(pre_extra.mean() if len(pre_extra) else np.nan)}. Meses anteriores a 2025-06 com "
+                   f"p < 0,05: {pre_sig}. A DiRD principal, com a média do pré inteiro, é "
+                   f"{_tau_p(_linha_est(est, 'F3.1', 'U', '0.300', 'principal'))}.")
+        t["leitura_evento_f31"] = " ".join(txt)
+    else:
+        t["leitura_evento_f31"] = "— (estudo de evento de F3.1 em U ausente)"
+    # 3. Generalistas em 0,400.
+    g = _serie_evento(ev, "F3.P1", "U", "0.400")
+    if len(g):
+        gi = g.set_index("competencia")
+        pre = g[g["janela"] == "pre"]
+        sig_extra = g[(g["janela"] == "pre_extra") & (g["p_valor"].astype(float) < 0.05)]
+        t["leitura_generalistas"] = (
+            f"Em 0,400, o salto de generalistas relativo a 2025-06 é {_n(gi.loc['202201', 'tau'])} "
+            f"(p = {_p(gi.loc['202201', 'p_valor'])}) em 2022-01 ({len(sig_extra)} meses do pré extra com p < 0,05) e "
+            f"cai no pré principal (média {_n(pre['tau'].mean())}; "
+            f"{_n(gi.loc['202505', 'tau']) if '202505' in gi.index else '—'} em 2025-05), atravessando a data da "
+            f"Portaria 752 (2023-06). O S5 (pré menos pré extra) de generalistas em 0,400 é "
+            f"{_tau_p(_linha_est(est, 'F3.P1', 'U', '0.400', 'S5_pre_menos_pre_extra'))}. Isso é compatível com uma "
+            f"co-política variável no tempo em 0,400, antes do pré principal. A DiRD principal de generalistas em "
+            f"0,400 é {_tau_p(_linha_est(est, 'F3.P1', 'U', '0.400', 'principal'))}.")
+    else:
+        t["leitura_generalistas"] = "— (estudo de evento de F3.P1 em U ausente)"
+    # 5. S5 de F3.1 em U.
+    t["leitura_s5"] = ("S5 de F3.1 em U (média do pré menos média do pré extra): " + "; ".join(
+        f"{c.replace('.', ',')}: {_tau_p(_linha_est(est, 'F3.1', 'U', c, 'S5_pre_menos_pre_extra'))}"
+        for c in ("0.300", "0.400", EMPILHADO)) + ".")
+    # 8. Horas: diferença relativa das sensibilidades do §16.
+    partes = []
+    for c in ("0.300", "0.400", EMPILHADO):
+        m = _linha_est(est, "F3.3", "U", c, "principal")
+        for oid, rot in (("F3.3.sem_filtro_sus", "sem filtro SUS"), ("F3.3.soma_parcial", "soma parcial")):
+            v = _linha_est(est, oid, "U", c, "principal")
+            if m is None or v is None or not (abs(float(m["tau"])) > 0):
+                continue
+            rel = (float(v["tau"]) - float(m["tau"])) / abs(float(m["tau"]))
+            partes.append(f"{c.replace('.', ',')}, {rot}: {_n(v['tau'], 2)} contra {_n(m['tau'], 2)} "
+                          f"({_n(rel, 1, pp=True)} %)")
+    t["leitura_horas"] = ("Salto principal das sensibilidades de horas contra o F3.3 só SUS (diferença relativa ao "
+                          "valor absoluto do principal): " + ("; ".join(partes) if partes else "—") + ".")
+    # Nota do S3: subamostras com EP nulo.
+    z = est[est["especificacao"].str.startswith(("S3", "S4")) & (est["ep"].astype(float) == 0)]
+    if len(z):
+        t["leitura_s3_nulo"] = ("Subamostras do S3/S4 com EP nulo (Δ igual em todos os municípios da janela, sem "
+                                "variação residual): " + "; ".join(
+            f"{r['outcome_id']} {str(r['corte']).replace('.', ',')} {r['especificacao']} "
+            f"({_fmt_int(r['n_abaixo'])} / {_fmt_int(r['n_acima'])} municípios)" for r in z.to_dict("records"))
+            + ". Nesses casos a linha S3_diferenca correspondente usa só a variância da outra subamostra.")
+    else:
+        t["leitura_s3_nulo"] = "Nenhuma subamostra do S3/S4 tem EP nulo."
+    # Nota do pré extra.
+    q1 = [c for c in COMP_PRE_EXTRA if c.startswith("2023") and c[4:] in ("01", "02", "03")]
+    t["leitura_pre_extra"] = (
+        f"O pré extra usa as {len(COMP_PRE_EXTRA)} competências disponíveis de 2022-01 a 2023-03 "
+        f"({', '.join(_comp(c) for c in COMP_PRE_EXTRA)}). {len(q1)} delas são do 1º trimestre de 2023, porque "
+        f"2023-02 e 2023-03 entraram pelo adendo §13; a média simples do pré extra dá mais peso a esse trimestre "
+        f"do que aos de 2022, que têm uma competência cada.")
     return t
 
 

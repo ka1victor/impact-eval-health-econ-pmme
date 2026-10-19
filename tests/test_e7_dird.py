@@ -383,6 +383,18 @@ class TestE7SinteticoValidacoes(unittest.TestCase):
         self.assertEqual(len(set(E7.COMP_EVENTO)), len(E7.COMP_EVENTO))
 
 
+class TestE7SinteticoSequencia(unittest.TestCase):
+    """Dados sintéticos: a maior sequência de meses com p < 0,05 é achada na ordem do estudo de evento."""
+
+    def test_maior_sequencia(self) -> None:
+        comps = ["202508", "202509", "202510", "202511", "202512", "202601", "202602"]
+        ps = [0.01, 0.2, 0.01, 0.02, 0.03, 0.5, 0.01]
+        e = pd.DataFrame({"competencia": comps, "janela": "pos", "referencia": False, "p_valor": ps})
+        self.assertEqual(E7.maior_sequencia_significativa(e), ["202510", "202511", "202512"])
+        e["p_valor"] = 0.5
+        self.assertEqual(E7.maior_sequencia_significativa(e), [])
+
+
 class TestE7CodigoSemArquivoProibido(unittest.TestCase):
     def test_arquivo_local_errado_nao_e_lido(self) -> None:
         texto = SCRIPT.read_text(encoding="utf-8")
@@ -450,6 +462,29 @@ class TestE7SaidasReais(unittest.TestCase):
         ref = self.ev[self.ev["referencia"].astype(bool)]
         self.assertEqual(set(ref["competencia"]), {E7.COMP_REF})
         self.assertTrue(ref["tau"].isna().all())
+
+    def test_resumo_sem_nome_do_arquivo_errado(self) -> None:
+        self.assertNotIn("ipea_2010_municipios", RESUMO.read_text(encoding="utf-8").lower())
+
+    def test_sequencia_do_evento_recalculada(self) -> None:
+        """Recalcula, com código independente, a sequência de p < 0,05 de F3.1 (U, 0,300) citada no doc."""
+        e = self.ev[(self.ev["outcome_id"] == "F3.1") & (self.ev["populacao"] == "U") & (self.ev["corte"] == "0.300")
+                    & self.ev["janela"].isin(["transicao", "pos"])].sort_values("competencia")
+        sig = (e["p_valor"].astype(float) < 0.05).to_numpy()
+        melhor, ini = (0, 0), None
+        for i, s in enumerate(list(sig) + [False]):
+            if s and ini is None:
+                ini = i
+            if not s and ini is not None:
+                if i - ini > melhor[1] - melhor[0]:
+                    melhor = (ini, i)
+                ini = None
+        seq = e["competencia"].iloc[melhor[0]:melhor[1]].tolist()
+        self.assertEqual(seq, E7.maior_sequencia_significativa(
+            self.ev[(self.ev["outcome_id"] == "F3.1") & (self.ev["populacao"] == "U") & (self.ev["corte"] == "0.300")]))
+        if seq:
+            texto = DOC.read_text(encoding="utf-8")
+            self.assertIn(f"de {seq[0][:4]}-{seq[0][4:]} a {seq[-1][:4]}-{seq[-1][4:]} têm", texto)
 
     def test_figuras_existem(self) -> None:
         for f in self.resumo["figuras"]:
