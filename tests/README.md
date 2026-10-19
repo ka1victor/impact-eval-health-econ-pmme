@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **719 testes em 46 módulos** (contagem de 19/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **763 testes em 47 módulos** (contagem de 19/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -59,6 +59,7 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_e6_funil.py`](test_e6_funil.py) | RDD Bolsa — E6 | Estimação do protocolo 40 para F0, F1, F2, F4, índice P1 e S1–S4: todas as especificações presentes, reprodução do E3/E5, sinal, BKY, tabelas do doc 41 geradas das saídas. |
 | [`test_e9_escolha.py`](test_e9_escolha.py) | RDD Bolsa — E9 | Logit condicional da escolha dos candidatos (§12, §14, §15): recuperação sintética do coeficiente, equivalência com o statsmodels, robustez pós-auditoria e números do doc 42 conferidos contra os CSVs. |
 | [`test_cnes_nacional.py`](test_cnes_nacional.py) | Aquisição — CNES nacional | Painel município × grupo de CBO × mês (39 competências): esquema, painel balanceado só em meses lidos, nenhum mês ≥ 202609, horas SUS (§16), horas em branco nunca viram zero, portão antes de gravar e validação contra o painel do ciclo 1. |
+| [`test_aquisicao_tiss.py`](test_aquisicao_tiss.py) | Aquisição — TISS/ANS (a14) | Produção paga por planos por município do prestador × mês × tipo × CBO: grupos de CBO pela função do a09, regra TUSS dos tipos, odontologia fora, evento contado uma vez por tipo, quantidade vazia nunca vira zero, município inválido nunca atribuído, portões de junção e de mês, zero só em UF × mês aprovado e ausente sempre NA com motivo (sintético); painéis, manifesto, cobertura e resumo conferidos entre si; nenhum mês ≥ 202601; o script não lê IVS. |
 | [`test_e7_dird.py`](test_e7_dird.py) | RDD Bolsa — E7 | Diferença em descontinuidades no CNES nacional (F3, P2, S2–S6, §16): recuperação sintética, horas faltantes nunca viram zero, portões fail-closed, tabelas e afirmações do doc 43 conferidas contra os CSVs. |
 | [`test_e8_sintese.py`](test_e8_sintese.py) | RDD Bolsa — E8 | Síntese do protocolo 40: Holm das primárias (sintético, statsmodels e contra os CSV do E6/E7), reprodução de `E8_resumo.json` e `E8_tabela_sintese.csv`, conferência independente contra os CSV de origem e blocos e prosa do doc 44 sem número digitado. |
 | [`test_relatorio_rdd_bolsa.py`](test_relatorio_rdd_bolsa.py) | RDD Bolsa — relatório (parte II) | Relatório HTML/PDF da RDD com a rodada multi-outcome: seções do protocolo 40, auditorias 18 e 19, E6, E9, E7 e síntese E8 presentes e em ordem (hipóteses primárias primeiro); caixa “Como ler” antes de cada tabela; todo número da parte II rastreado às saídas lidas e números-chave (P1, P2, E9) conferidos; figuras = PNG do pipeline byte a byte; HTML em dia com as saídas (SHA-256); A4 antigo rotulado como failure mode; síntese E8 “pendente” sem o JSON (JSON sintético só em pasta temporária). |

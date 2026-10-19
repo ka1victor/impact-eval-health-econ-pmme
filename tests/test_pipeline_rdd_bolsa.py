@@ -37,6 +37,7 @@ CADEIA = [
     AQ / "a10_normas_mesmos_cortes_ivs.py",
     AQ / "a11_adquirir_resultado_ciclo2_chamada1.py",
     AQ / "a09_adquirir_cnes_nacional.py",
+    AQ / "a14_adquirir_tiss_ans.py",  # protocolo 47: TISS/ANS, só verificar
     RDD / "12_construir_outcomes_funil.py",
     RDD / "13_estimar_E6_funil.py",
     RDD / "16_estimar_E9_escolha.py",
@@ -47,6 +48,7 @@ CADEIA = [
     RDD / "10_galeria_figura_regra.py",
 ]
 A09 = AQ / "a09_adquirir_cnes_nacional.py"
+A14 = AQ / "a14_adquirir_tiss_ans.py"
 # Leem data/ivs_ipea_2010_municipios.csv como IVS 2010 ou dependem disso (auditoria 16).
 RETIRADOS = [
     RDD / "01_auditar_regra_e_suporte.py",
@@ -225,7 +227,8 @@ class TestCadeiaRddBolsa(unittest.TestCase):
 
     def test_e3_roda_com_o_escore_completo(self) -> None:
         self.assertEqual(RA.ARGUMENTOS[RDD / "07_estimar_E3_rdd_completa.py"], ["--escore", ESCORE_COMPLETO])
-        self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09})
+        self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09, A14})
+        self.assertEqual(RA.ARGUMENTOS[A14], ["--etapa", "verificar"])
         self.assertTrue((ROOT / ESCORE_COMPLETO).exists())
         # O 04b, que grava o escore completo, vem antes do E3.
         self.assertLess(posicao(RDD / "04b_validar_ivs_oficial_escore_administrativo.py"),

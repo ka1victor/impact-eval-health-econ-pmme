@@ -73,6 +73,7 @@ não para tendências demográficas.
 | Normas com cortes de IVS e estrato da APS | `output/aquisicao/a10_*` | portarias arquivadas; [`auditorias/18`](../auditorias/18_politicas_nos_mesmos_cortes_ivs.md) | co-políticas (S3) | — |
 | Outcomes do funil por município, célula e candidato (U, G3, V1–V3) | `output/rdd_bolsa/outcomes/` | `scripts/rdd_bolsa/12_construir_outcomes_funil.py`; contagens em `dicionario_outcomes_funil.json` | F0, F1, F2, F4 e E9 | construídos às cegas ([`06_execucao/41a`](../06_execucao/41a_construcao_outcomes_funil.md)) |
 | CNES nacional: painel município × grupo de CBO × mês, desde 2022 | `output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet` | CNES/DATASUS; `scripts/aquisicao/a09_*`; manifesto `a09_manifesto_cnes_nacional.json`; [`auditorias/aquisicao/A09`](../auditorias/aquisicao/A09_cnes_nacional.md) | oferta líquida local por DiRD (F3) | vínculo cadastrado não é médico do PMM-E nem retenção; competências do ciclo 3 pós-T0 não lidas |
+| TISS/ANS: eventos pagos por planos por município do prestador × mês de realização × tipo (TUSS) × grupo de CBO, 2022–2025 | `output/aquisicao/tiss/painel_tiss_municipio_mes_tipo_cbo.parquet` (e o hospitalar, sem CBO) | dados abertos TISS da ANS; `scripts/aquisicao/a14_*`; manifesto `tiss/manifesto_tiss.json`; [`auditorias/aquisicao/A14`](../auditorias/aquisicao/A14_tiss_ans.md) | K3, K3a, K3b e K5 do protocolo 47 (SUS + planos) | só eventos pagos por planos (sem desembolso direto); município do prestador; CBO ausente em parte grande dos eventos; envio varia por operadora; realização até 202512 |
 
 ## 2. Disponibilidade por outcome
 
@@ -84,7 +85,7 @@ não para tendências demográficas.
 | Entrada efetiva | Data de início dos ativos atuais | Selecionados que não entraram e datas administrativas | 🟡 |
 | Retenção individual | Série agregada e fotografia final | Identificador longitudinal, saída e censura | 🔴 |
 | FTE líquido | Tipo de prática e participante ativo; CNES nacional mensal com horas SUS por município e grupo de CBO, desde 2022 (E7) | Ponte PMM-E–CNES por profissional | 🟡 agregado |
-| Produção especializada | Nenhum microdado preservado | SIA por CNES, procedimento, residência e competência | 🔴 |
+| Produção especializada | Planos de saúde: TISS/ANS por município do prestador × mês × tipo × CBO, 2022–2025 (a14, seção 1.1) | SIA por CNES, procedimento, residência e competência; desembolso direto | 🟡 só planos |
 | Cirurgias e internações | Nenhum microdado preservado | SIH com residência, prestador, procedimento e `CAR_INT` | 🔴 |
 | Acesso local/global | Município do profissional | Fluxo residência-prestador observado | 🔴 |
 | Tempo de espera | Nada | Solicitação, prioridade, atendimento/cancelamento e datas | 🔴 |

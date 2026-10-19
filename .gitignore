@@ -68,3 +68,7 @@ data/raw/aquisicao/ivs_oficial/
 
 # X1 (ponte PMM-E–CNES): cache com registro profissional e nome normalizado; nunca versionar
 output/rdd_bolsa/X1_cache/
+
+# A14 (TISS/ANS): ZIPs brutos transitórios e cache por UF × mês; só agregados e manifesto entram no Git
+output/aquisicao/tiss/cache_bruto/
+output/aquisicao/tiss/cache_pacote/
