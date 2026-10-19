@@ -15,6 +15,12 @@
 > verificado, não baixado); rascunho do conteúdo canônico da apresentação de
 > 28/10 em [`07_apresentacoes/banca2`](../07_apresentacoes/banca2/README.md);
 > ambiente igual ao `requirements.txt` (todos os testes passam).
+> **Rodada exploratória pós-síntese (19/10/2026):** a pedido do autor, antes
+> da decisão sobre a hipótese, o protocolo
+> [`45`](45_protocolo_exploratorio_pos_sintese.md) foi executado e auditado;
+> resultados em [`46`](46_resultados_exploratorios_pos_sintese.md) (origem e
+> substituição pela ponte PMM-E–CNES, permanência, dinâmica, heterogeneidade,
+> deslocamento e poder). Tudo é exploratório e não muda o Holm das primárias.
 > **Pendente, só do autor:** (1) decidir sobre a revisão da hipótese
 > econômica proposta no doc 44, §7; (2) aprovar a mensagem principal da
 > banca 2, que depende de (1), antes de montar o deck.

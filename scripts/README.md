@@ -48,6 +48,13 @@ Ele executa sequencialmente:
     - `09b_conferir_sinal.py`, `09_gerar_relatorio_pdf.py` e `10_galeria_figura_regra.py` — conferência do sinal, relatório em PDF (E1 a E9 e síntese E8) e galeria da figura da regra;
 18. `scripts/tema_trabalho/10_conferir_numeros_artigo.py` e `11_conferir_numeros_artigo_curto.py` — relêem os artefatos, reformatam cada valor no padrão dos artigos e exigem que o trecho exista em `paper_pmme_submission.tex` e `paper_pmme_curto.tex`; falham se alguma cifra não tiver origem rastreável.
 
+Rodada exploratória pós-síntese (`docs/06_execucao/45` e `46`), fora do
+`run_all.py` por ser exploratória e, no X1, por baixar seis competências do CNES
+com o registro profissional (cache local fora do Git):
+`scripts/rdd_bolsa/17_ponte_pmme_cnes.py` (X1, ponte PMM-E–CNES pelo CRM),
+`18_permanencia_ativos.py` (X2 e X3), `19_escolha_heterogeneidade.py` (X4 e X5)
+e `20_poder_descartes.py` (X6, só aritmética sobre saídas existentes).
+
 Saíram do pipeline em 18/10/2026, sem apagar os scripts: `scripts/rdd_bolsa/01_*`,
 `01b_*`, `02_*` e `03_*`. Eles usavam `data/ivs_ipea_2010_municipios.csv`, que não
 é o IVS do município (`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`),

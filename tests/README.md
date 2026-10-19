@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **624 testes em 42 módulos** (contagem de 19/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **719 testes em 46 módulos** (contagem de 19/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -63,6 +63,10 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_e8_sintese.py`](test_e8_sintese.py) | RDD Bolsa — E8 | Síntese do protocolo 40: Holm das primárias (sintético, statsmodels e contra os CSV do E6/E7), reprodução de `E8_resumo.json` e `E8_tabela_sintese.csv`, conferência independente contra os CSV de origem e blocos e prosa do doc 44 sem número digitado. |
 | [`test_relatorio_rdd_bolsa.py`](test_relatorio_rdd_bolsa.py) | RDD Bolsa — relatório (parte II) | Relatório HTML/PDF da RDD com a rodada multi-outcome: seções do protocolo 40, auditorias 18 e 19, E6, E9, E7 e síntese E8 presentes e em ordem (hipóteses primárias primeiro); caixa “Como ler” antes de cada tabela; todo número da parte II rastreado às saídas lidas e números-chave (P1, P2, E9) conferidos; figuras = PNG do pipeline byte a byte; HTML em dia com as saídas (SHA-256); A4 antigo rotulado como failure mode; síntese E8 “pendente” sem o JSON (JSON sintético só em pasta temporária). |
 | [`test_conteudo_banca2.py`](test_conteudo_banca2.py) | Apresentação — banca 2 | Conteúdo de 28/10/2026: cada número dos slides e da proveniência relido da sua fonte em `output/`; figuras existentes e geradas pelo pipeline, com hash; arquivo de IVS errado só como failure mode. |
+| [`test_x1_ponte_cnes.py`](test_x1_ponte_cnes.py) | Exploratório — X1 | Ponte PMM-E–CNES pelo CRM: regra literal e D1 lado a lado, meses de referência fixos, distância independente da escolha, nenhum dado pessoal nas saídas, números do doc 46 conferidos. |
+| [`test_x2_x3_permanencia.py`](test_x2_x3_permanencia.py) | Exploratório — X2/X3 | Permanência dos alocados (regras estreita e larga) e dinâmica dos ativos: ligação sintética, completude da série, rótulos de condicionamento e de adição, ausência de dados pessoais. |
+| [`test_x4_x5_escolha.py`](test_x4_x5_escolha.py) | Exploratório — X4/X5 | Heterogeneidade da escolha e deslocamento regional: recuperação sintética de interação e de efeito de vizinhança, reprodução do E9, regiões de saúde oficiais, linhas de curso com inferência MV. |
+| [`test_x6_poder.py`](test_x6_poder.py) | Exploratório — X6 | Poder e descartes: MDE, TOST e elasticidades (base menor e arco) recalculados das saídas; rótulos de adição ao doc 45; números do doc 46 conferidos. |
 | [`test_conferencia_sinal_rdd.py`](test_conferencia_sinal_rdd.py) | RDD Bolsa — sinal do salto | O salto é o lado com bolsa maior menos o lado com bolsa menor; reestimação independente e decomposição da diferença bruta em salto e inclinação. Sintético. |
 | [`test_pipeline_rdd_bolsa.py`](test_pipeline_rdd_bolsa.py) | RDD Bolsa — pipeline | Ordem da cadeia da RDD no `run_all.py` (inclusive a10, a11, a09, 12, 13, 16 e 14 e as dependências de cada um), argumentos do E3 e do a09, nenhum download por padrão (a09 em `--etapa verificar` e cache do a10/a11 conferidos com a rede bloqueada), o 09 sem ler a rodada multi-outcome, o registro do failure mode fora do pipeline e a retirada dos scripts que liam o arquivo de IVS errado. |
 | [`test_integridade_dados.py`](test_integridade_dados.py) | Integridade | Nenhum arquivo em `data/` ou `output/` com nome de dado simulado; toda saída rotulada com `natureza_dos_dados` é `EMPIRICO`. |

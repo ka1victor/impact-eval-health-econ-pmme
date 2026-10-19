@@ -8,45 +8,23 @@
 
 ---
 
-## 19/10/2026 — X1 do protocolo exploratório pós-síntese (ponte PMM-E–CNES)
+## 19/10/2026 — Resultados exploratórios pós-síntese X1–X6 (doc 46)
 
-Motivo: execução do X1 do [doc 45](06_execucao/45_protocolo_exploratorio_pos_sintese.md)
-(origem dos especialistas do PMM-E pelo registro profissional no CNES). O doc
-46 recebe a leitura conjunta de X1–X6; esta entrada cobre a seção X1.
-## 19/10/2026 — X4 e X5 do protocolo exploratório pós-síntese (doc 45)
-
-Motivo: o protocolo [45](06_execucao/45_protocolo_exploratorio_pos_sintese.md)
-(§4) manda a leitura de X1–X6 para o doc 46. As seções X4 (heterogeneidade da
-escolha) e X5 (deslocamento regional) foram as primeiras a entrar; as demais
-tarefas acrescentam as suas seções no mesmo arquivo.
-## 19/10/2026 — X6 do protocolo exploratório: poder e o que se descarta
-
-Motivo: tarefa X6 do protocolo 45 (§3). A síntese relata IC, mas não uma tabela
-de poder comparável entre outcomes. Os resultados exploratórios X1–X6 vão para
-um documento novo; a seção X6 é gerada pelo script a partir das saídas.
+Motivo: execução do protocolo exploratório
+[`45`](06_execucao/45_protocolo_exploratorio_pos_sintese.md), pedida pelo autor
+antes de escolher a hipótese. Cada tarefa foi auditada de forma independente
+antes da junção.
 
 ### Criado
 
 | Arquivo | O que é |
 |---|---|
-| [`06_execucao/46_resultados_exploratorios_pos_sintese.md`](06_execucao/46_resultados_exploratorios_pos_sintese.md) | resultados exploratórios pós-síntese; seção X1 com blocos gerados das saídas |
-| `scripts/rdd_bolsa/17_ponte_pmme_cnes.py` | ligação PMM-E–CNES (seis competências), outcomes de origem, descritivo, RDD condicional com Lee e E9 com distância |
-| `tests/test_x1_ponte_cnes.py` | regra de ligação e outcomes com dados sintéticos; invariantes e ausência de dado pessoal nas saídas; blocos do doc 46 |
-| `data/raw/aquisicao/territorio/ibge_api_v3_malhas_metadados_municipios.json` | centroides municipais da API de malhas v3 do IBGE, com manifesto (URL, data, SHA-256) |
+| [`06_execucao/46_resultados_exploratorios_pos_sintese.md`](06_execucao/46_resultados_exploratorios_pos_sintese.md) | resultados exploratórios: X1 (ponte PMM-E–CNES pelo CRM: origem, substituição e distância), X2 (permanência dos alocados), X3 (dinâmica dos ativos), X4 (heterogeneidade da escolha), X5 (deslocamento regional) e X6 (poder e descartes); cada seção é gerada pelo seu script |
 
-### Atualizado
-
-`.gitignore`: `output/rdd_bolsa/X1_cache/` (extrato do CNES com registro
-profissional e nome normalizado; nunca versionado).
-| [`06_execucao/46_resultados_exploratorios_pos_sintese.md`](06_execucao/46_resultados_exploratorios_pos_sintese.md) | resultados exploratórios pós-síntese; seções X4 e X5 com blocos gerados |
-| `scripts/rdd_bolsa/19_escolha_heterogeneidade.py` | X4 e X5: interações da bolsa no logit condicional do E9, logit aninhado por CIR e atributos de vizinhança |
-| `tests/test_x4_x5_escolha.py` | recuperação sintética de interação, vizinhança e lambda; invariantes; blocos e frases do doc 46 |
-| `data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv` | tabela oficial município → Região de Saúde (CIR) do TabNet/DATASUS, baixada pelo script 19 (manifesto em `output/rdd_bolsa/X5_manifesto_regioes_saude_cir.json`) |
-
----
-| [`06_execucao/46_resultados_exploratorios_pos_sintese.md`](06_execucao/46_resultados_exploratorios_pos_sintese.md) | resultados exploratórios pós-síntese (X1–X6); a seção X6 (MDE de 80%, descartes absolutos e relativos, TOST, referências do protocolo e da literatura, IC honesto) é gerada por `scripts/rdd_bolsa/20_poder_descartes.py --atualizar-doc` |
-| `scripts/rdd_bolsa/20_poder_descartes.py` | X6: aritmética sobre as saídas do E6, E7, E8 e E9, sem estimação nova; grava `output/rdd_bolsa/X6_*` |
-| `tests/test_x6_poder.py` | fórmulas do MDE e do TOST com números sintéticos; saídas contra os CSV de origem; blocos e prosa da seção X6 |
+Insumos e scripts novos: `scripts/rdd_bolsa/17_ponte_pmme_cnes.py`,
+`18_permanencia_ativos.py`, `19_escolha_heterogeneidade.py` e
+`20_poder_descartes.py`; regiões de saúde oficiais (TabNet/DATASUS) e
+centroides municipais do IBGE em `data/raw/aquisicao/territorio/`.
 
 ## 19/10/2026 — Conteúdo canônico da banca 2 (28/10/2026)
 
@@ -135,20 +113,6 @@ viáveis, congeladas antes de abrir os outcomes.
 | Arquivo | O que é |
 |---|---|
 | [`06_execucao/45_protocolo_exploratorio_pos_sintese.md`](06_execucao/45_protocolo_exploratorio_pos_sintese.md) | protocolo exploratório: ponte PMM-E–CNES pelo registro profissional (origem e substituição), permanência dos alocados, dinâmica dos ativos, heterogeneidade e deslocamento na escolha, poder e descartes |
-
-## 19/10/2026 — X2 e X3 do protocolo exploratório (permanência e dinâmica dos ativos)
-
-Motivo: execução do X2 (permanência dos alocados da 1ª chamada) e do X3
-(série histórica de ativos) do doc 45, §3. O doc 46 recebe os resultados de
-todos os X; cada tarefa escreve a sua seção.
-
-### Criado
-
-| Arquivo | O que é |
-|---|---|
-| [`06_execucao/46_resultados_exploratorios_pos_sintese.md`](06_execucao/46_resultados_exploratorios_pos_sintese.md) | resultados exploratórios pós-síntese; seções X2 e X3 com blocos gerados de `output/rdd_bolsa/X2_*` e `X3_*` |
-| `scripts/rdd_bolsa/18_permanencia_ativos.py` | ligação alocados → ativos (pseudônimos, sem nome, CPF ou CRM nas saídas), conferência de completude da série, RDD com limites de Lee e BKY dentro de cada X |
-| `tests/test_x2_x3_permanencia.py` | regra de ligação, completude e estimação com dados sintéticos; rótulos, hashes, ausência de dados pessoais e tabelas do doc 46 contra `output/` |
 
 ## 18/10/2026 — Estimação do E6 (famílias F0, F1, F2 e F4 do protocolo 40)
 

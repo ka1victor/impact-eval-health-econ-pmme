@@ -33,6 +33,7 @@ Detalhe em `docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md`.
 - [x] **E6, E9 e E7:** funil, escolha e DiRD no CNES (docs 41, 42 e 43).
 - [x] **E8:** síntese com o Holm das primárias e proposta de revisão da
   hipótese (`docs/06_execucao/44_sintese_rdd_bolsa_multioutcome.md`).
+- [x] **Rodada exploratória X1–X6** (docs 45 e 46), auditada, antes da decisão.
 - [ ] **Decisão do autor sobre a revisão da hipótese** (doc 44, §7): manter H1
   e relatar o nulo, ou adotar uma das propostas, com registro datado.
 - [x] **Rascunho do conteúdo canônico da apresentação de 28/10/2026** em
