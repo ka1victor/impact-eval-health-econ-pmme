@@ -1345,7 +1345,7 @@ c7_n_ctrl, loc_c6 = json_valor(A5_C7, "placebo/resultado/nivel/n_controle")
 trecho_c7_pl = (f"Entre as {inteiro(c7_n_trat + c7_n_ctrl)} células sem atração, estar em um município que atraiu em alguma outra "
                 f"célula não muda o estoque: {decimal_br(c7_pl_n_b, 3)} em nível e {decimal_br(c7_pl_p_b, 4)} na escala proporcional, "
                 f"com $p$ de {decimal_br(c7_pl_n_p, 3)} e {decimal_br(c7_pl_p_p, 3)}")
-for chave, bruto, loc, fmt, tr in [("N", c7_n_trat + c7_n_ctrl, loc_c5, inteiro(c7_n_trat + c7_n_ctrl), "inteiro"),
+for chave, bruto, loc, fmt, tr in [("N", c7_n_trat + c7_n_ctrl, f"soma: {loc_c5} + {loc_c6}", inteiro(c7_n_trat + c7_n_ctrl), "inteiro"),
                                    ("NIVEL", c7_pl_n_b, loc_c1, decimal_br(c7_pl_n_b, 3), "3 casas"),
                                    ("PROP", c7_pl_p_b, loc_c2, decimal_br(c7_pl_p_b, 4), "4 casas"),
                                    ("NIVEL_P", c7_pl_n_p, loc_c3, decimal_br(c7_pl_n_p, 3), "3 casas"),

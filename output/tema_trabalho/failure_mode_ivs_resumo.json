@@ -122,7 +122,13 @@
       "suporte_aprovado_antes": true,
       "suporte_aprovado_depois": true,
       "decisao_antes": "associacao_ajustada",
-      "decisao_depois": "associacao_ajustada"
+      "decisao_depois": "associacao_ajustada",
+      "potencia_antes": 0.2278,
+      "potencia_depois": 0.253,
+      "tendencia_antes": -0.002787437316267,
+      "tendencia_depois": -0.0048012834011346,
+      "leads_p_antes": 0.859280903239779,
+      "leads_p_depois": 0.8655672040883708
     },
     {
       "modulo": "oncologia_clinica",
@@ -136,7 +142,13 @@
       "suporte_aprovado_antes": true,
       "suporte_aprovado_depois": false,
       "decisao_antes": "inviavel",
-      "decisao_depois": "inviavel"
+      "decisao_depois": "inviavel",
+      "potencia_antes": 0.6242,
+      "potencia_depois": 0.6948,
+      "tendencia_antes": 0.0034179000830513,
+      "tendencia_depois": 0.0038435269295953,
+      "leads_p_antes": 0.3207314405238138,
+      "leads_p_depois": 0.4282793170539039
     },
     {
       "modulo": "medicina_intensiva",
@@ -150,7 +162,13 @@
       "suporte_aprovado_antes": false,
       "suporte_aprovado_depois": false,
       "decisao_antes": "inviavel",
-      "decisao_depois": "inviavel"
+      "decisao_depois": "inviavel",
+      "potencia_antes": NaN,
+      "potencia_depois": 0.1424688561721404,
+      "tendencia_antes": -0.013912993669671,
+      "tendencia_depois": 0.2622358119426049,
+      "leads_p_antes": 1.756054310256461e-284,
+      "leads_p_depois": 0.0
     },
     {
       "modulo": "cirurgia_geral_cbo_exclusivo",
@@ -164,7 +182,13 @@
       "suporte_aprovado_antes": false,
       "suporte_aprovado_depois": false,
       "decisao_antes": "associacao_ajustada",
-      "decisao_depois": "associacao_ajustada"
+      "decisao_depois": "associacao_ajustada",
+      "potencia_antes": 0.3844,
+      "potencia_depois": 0.385,
+      "tendencia_antes": 0.0157769409905359,
+      "tendencia_depois": 0.0183044571362109,
+      "leads_p_antes": 5.856001484282812e-05,
+      "leads_p_depois": 1.953080109298572e-05
     },
     {
       "modulo": "anestesiologia",
@@ -178,7 +202,13 @@
       "suporte_aprovado_antes": true,
       "suporte_aprovado_depois": true,
       "decisao_antes": "associacao_ajustada",
-      "decisao_depois": "associacao_ajustada"
+      "decisao_depois": "associacao_ajustada",
+      "potencia_antes": 0.09,
+      "potencia_depois": 0.0896,
+      "tendencia_antes": -0.0343717239466277,
+      "tendencia_depois": -0.0554210591353911,
+      "leads_p_antes": 0.4966339026150365,
+      "leads_p_depois": 0.5287300645725528
     },
     {
       "modulo": "oncologia_clinica",
@@ -192,7 +222,13 @@
       "suporte_aprovado_antes": false,
       "suporte_aprovado_depois": false,
       "decisao_antes": "inviavel",
-      "decisao_depois": "inviavel"
+      "decisao_depois": "inviavel",
+      "potencia_antes": 0.1254,
+      "potencia_depois": 0.1218,
+      "tendencia_antes": 0.0082284367941133,
+      "tendencia_depois": -0.0114126322720689,
+      "leads_p_antes": 7.202950225573195e-07,
+      "leads_p_depois": 0.0013489317931192
     },
     {
       "modulo": "medicina_intensiva",
@@ -206,7 +242,13 @@
       "suporte_aprovado_antes": false,
       "suporte_aprovado_depois": false,
       "decisao_antes": "inviavel",
-      "decisao_depois": "inviavel"
+      "decisao_depois": "inviavel",
+      "potencia_antes": NaN,
+      "potencia_depois": NaN,
+      "tendencia_antes": 0.7271794871794872,
+      "tendencia_depois": -0.1464872507813059,
+      "leads_p_antes": 0.0,
+      "leads_p_depois": 3.955884810322491e-15
     },
     {
       "modulo": "cirurgia_geral_cbo_exclusivo",
@@ -220,7 +262,13 @@
       "suporte_aprovado_antes": false,
       "suporte_aprovado_depois": false,
       "decisao_antes": "associacao_ajustada",
-      "decisao_depois": "associacao_ajustada"
+      "decisao_depois": "associacao_ajustada",
+      "potencia_antes": 0.1756,
+      "potencia_depois": 0.1634,
+      "tendencia_antes": -0.0637262462039981,
+      "tendencia_depois": -0.0525926253566084,
+      "leads_p_antes": 0.0653132098031439,
+      "leads_p_depois": 0.0529104515403259
     }
   ],
   "banca1_detalhe_por_categoria_ivs": {

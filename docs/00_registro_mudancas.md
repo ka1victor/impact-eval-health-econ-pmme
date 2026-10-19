@@ -21,7 +21,7 @@ protocolo [`40`](06_execucao/40_protocolo_multioutcome_rdd_bolsa.md)).
 |---|---|
 | [`auditorias/19_reestimacao_base_oficial_failure_mode.md`](auditorias/19_reestimacao_base_oficial_failure_mode.md) | registro do failure mode: o erro, a propagação, a detecção, todos os leitores do arquivo com a classe de cada uso, antes e depois de cada estimativa (A2, A4, A5, Tabela 1 do ciclo 1, C3-03, banca 1, E2/E4) e onde os números antigos ainda aparecem. Gerado por script |
 | `scripts/tema_trabalho/12_registrar_failure_mode_ivs.py` | lê do histórico do Git as versões anteriores à correção, compara com `output/` e gera a auditoria 19 e `output/tema_trabalho/failure_mode_ivs_*` |
-| `tests/test_fonte_ivs_oficial.py` | reprova script do pipeline (e de `avaliacao_ciclo3/` e `apresentacao/`) que leia o arquivo errado fora dos documentadores do failure mode ou use colunas territoriais de painel antigo sem repô-las; confere malha e tipologia contra a a08 e o Censo 2022 |
+| `tests/test_fonte_ivs_oficial.py` | reprova script do pipeline (e de `avaliacao_ciclo3/` e `apresentacao/`) que leia o arquivo errado fora dos documentadores do failure mode ou use colunas territoriais de painel antigo sem repô-las; varre o texto bruto de todo `.py` de `scripts/` e da raiz com contagem exata autorizada por script; confere malha e tipologia contra a a08 e o Censo 2022 |
 | `output/aquisicao/manifesto_territorio_ibge.json` | proveniência da malha territorial |
 
 ### Atualizado no mesmo dia

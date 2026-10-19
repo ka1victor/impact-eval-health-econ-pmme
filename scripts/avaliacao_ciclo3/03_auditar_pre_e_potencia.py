@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -621,6 +622,12 @@ def diagnosticar(panel: pd.DataFrame, cnes_panel: pd.DataFrame, units: pd.DataFr
 
 
 def gravar_potencia_e_decisao(diagnostics: list[dict], powers: dict) -> None:
+    power_doc, decisions = documentos_potencia_e_decisao(diagnostics, powers)
+    write_json(OUT / "potencia_pre.json", power_doc)
+    write_json(OUT / "decisao_torneio_pre.json", decisions)
+
+
+def documentos_potencia_e_decisao(diagnostics: list[dict], powers: dict) -> tuple[dict, dict]:
     power_doc = {
         "protocolo": "C3-03-potencia-pre",
         "data_corte": "2026-08-31",
@@ -630,7 +637,6 @@ def gravar_potencia_e_decisao(diagnostics: list[dict], powers: dict) -> None:
         "metodo": "bootstrap empírico por cluster municipal, no suporte comum e com pesos de sobreposição, de mudanças prévias de seis meses; teste bilateral 5%",
         "resultados": powers,
     }
-    write_json(OUT / "potencia_pre.json", power_doc)
 
     clinical_status = "inviavel"
     clinical_reason = "C3-02B tem 673/675 arquivos; RDAC2606.dbc e RDRR2606.dbc ausentes; nenhum zero imputado"
@@ -657,7 +663,7 @@ def gravar_potencia_e_decisao(diagnostics: list[dict], powers: dict) -> None:
         },
         "proxima_estimacao": "somente após seis meses comuns maduros; nunca nesta etapa",
     }
-    write_json(OUT / "decisao_torneio_pre.json", decisions)
+    return power_doc, decisions
 
 
 def main() -> None:
@@ -744,6 +750,46 @@ def rel(p: Path) -> str:
     return str(p.relative_to(ROOT)).replace("\\", "/")
 
 
+REF_ANTES_CORRECAO = "22eddb528c37aa0bf8721275999423900959070b"  # último commit com a malha antiga
+
+
+def _git_antes(rel_path: str) -> bytes:
+    import subprocess
+    return subprocess.run(["git", "-C", str(ROOT), "show", f"{REF_ANTES_CORRECAO}:{rel_path}"],
+                          check=True, capture_output=True).stdout
+
+
+def validar_modo_com_malha_antiga(panel, cnes_panel, units, cnes_units, congelados: dict) -> dict:
+    """Fail closed: com a malha antiga, o modo de reestimação tem de reproduzir o congelado.
+
+    Decisão e potência têm de ser idênticas byte a byte; diagnósticos e pesos, iguais a
+    menos de erro de ponto flutuante. Diferenças medidas são gravadas na emenda.
+    """
+    import io
+    antiga = pd.read_parquet(io.BytesIO(_git_antes(rel(MUNICIPAL))))
+    diagnostics, diag_df, weights_df, powers = diagnosticar(panel, cnes_panel, units, cnes_units, antiga)
+    power_doc, decisions = documentos_potencia_e_decisao(diagnostics, powers)
+    texto = lambda d: json.dumps(d, ensure_ascii=False, indent=2) + "\n"
+    potencia_ok = hashlib.sha256(texto(power_doc).encode("utf-8")).hexdigest() == congelados[rel(OUT / "potencia_pre.json")]
+    decisao_ok = hashlib.sha256(texto(decisions).encode("utf-8")).hexdigest() == congelados[rel(OUT / "decisao_torneio_pre.json")]
+    resultado = {"ref_malha_antiga": REF_ANTES_CORRECAO, "potencia_identica_byte_a_byte": potencia_ok,
+                 "decisao_identica_byte_a_byte": decisao_ok}
+    for nome, novo, arquivo in (("diagnosticos", diag_df, "diagnosticos_pre.csv"), ("pesos", weights_df, "pesos_sobreposicao_pre.csv")):
+        velho = pd.read_csv(io.BytesIO(_git_antes(rel(OUT / arquivo))))
+        novo = pd.read_csv(io.StringIO(novo.to_csv(index=False)))
+        num = [c for c in velho.select_dtypes("number").columns if c in novo.columns]
+        dif = (velho[num] - novo[num]).abs().to_numpy(float)
+        base = velho[num].abs().to_numpy(float)
+        rel_ok = base > 1e-10
+        resultado[f"{nome}_max_dif_absoluta"] = float(np.nanmax(dif))
+        resultado[f"{nome}_max_dif_relativa_valores_acima_de_1e-10"] = float(np.nanmax(np.where(rel_ok, dif / np.where(rel_ok, base, 1), 0)))
+        resultado[f"{nome}_mesmas_linhas_e_colunas"] = bool(velho.shape == novo.shape and list(velho.columns) == list(novo.columns))
+    if not (potencia_ok and decisao_ok and resultado["diagnosticos_mesmas_linhas_e_colunas"]
+            and resultado["diagnosticos_max_dif_absoluta"] < 1e-8 and resultado["pesos_max_dif_absoluta"] < 1e-8):
+        raise RuntimeError(f"modo de reestimação não reproduz o congelado com a malha antiga: {resultado}")
+    return resultado
+
+
 def main_reestimacao_covariaveis_oficiais() -> None:
     registry_path = OUT / "registro_pre_analise.json"
     registry = json.loads(registry_path.read_text(encoding="utf-8"))
@@ -762,6 +808,7 @@ def main_reestimacao_covariaveis_oficiais() -> None:
             raise RuntimeError(f"braços congelados não reproduzidos: {rel(path)}")
     panel = pd.read_parquet(PAINEL_PRE)
     cnes_panel = pd.read_parquet(PAINEL_CNES_PRE)
+    validacao = validar_modo_com_malha_antiga(panel, cnes_panel, units, cnes_units, congelados)
     municipal = pd.read_parquet(MUNICIPAL)
 
     diagnostics, diagnostic_df, weights_df, powers = diagnosticar(panel, cnes_panel, units, cnes_units, municipal)
@@ -785,6 +832,7 @@ def main_reestimacao_covariaveis_oficiais() -> None:
         "inalterado": "coorte, braços, painéis CNES pré-T0, janela, outcome, estimadores, regras e limiares",
         "leitura_pos_t0": False,
         "competencia_maxima_lida": max(str(panel["competencia"].max()), str(cnes_panel["competencia"].max())),
+        "validacao_do_modo_com_a_malha_antiga": validacao,
         "insumo_corrigido": {rel(MUNICIPAL): sha256(MUNICIPAL)},
         "hashes_artefatos_em_vigor": {rel(p): sha256(p) for p in alterados},
         "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md",
@@ -797,19 +845,33 @@ def main_reestimacao_covariaveis_oficiais() -> None:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 2 and sys.argv[1] in {"--refresh-protocol-hash", "--refresh-hashes"}:
+    if len(sys.argv) >= 2 and sys.argv[1] in {"--refresh-protocol-hash", "--refresh-hashes"}:
+        # O bloco `hashes_artefatos_congelados` é imutável depois do congelamento de
+        # 31/08/2026. Hash novo só entra por emenda datada, com motivo:
+        #   --refresh-hashes --emenda AAAA-MM-DD "motivo"
+        # grava os hashes em vigor dentro de `emendas` e não toca no bloco congelado.
+        args = sys.argv[1:]
+        if len(args) != 4 or args[1] != "--emenda" or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", args[2]) or not args[3].strip():
+            raise SystemExit(
+                "o bloco congelado não é reescrito; use: --refresh-hashes --emenda AAAA-MM-DD \"motivo\" "
+                "(grava os hashes em vigor numa emenda datada)"
+            )
         registry_path = OUT / "registro_pre_analise.json"
         registry = json.loads(registry_path.read_text(encoding="utf-8"))
-        if sys.argv[1] == "--refresh-protocol-hash":
-            relative = str(PROTOCOL_DOC.relative_to(ROOT)).replace("\\", "/")
-            registry["hashes_artefatos_congelados"][relative] = sha256(PROTOCOL_DOC)
+        data_emenda, motivo = args[2], args[3].strip()
+        em_vigor = {relative: sha256(ROOT / relative) for relative in registry["hashes_artefatos_congelados"]}
+        mudaram = {k: v for k, v in em_vigor.items() if v != registry["hashes_artefatos_congelados"][k]}
+        emendas = registry.get("emendas", [])
+        existente = next((e for e in emendas if e.get("data") == data_emenda), None)
+        if existente is None:
+            emendas.append({"data": data_emenda, "tipo": "atualizacao_de_hash", "motivo": motivo,
+                            "leitura_pos_t0": False, "hashes_artefatos_em_vigor": mudaram})
         else:
-            registry["hashes_artefatos_congelados"] = {
-                relative: sha256(ROOT / relative)
-                for relative in registry["hashes_artefatos_congelados"]
-            }
+            existente.setdefault("hashes_artefatos_em_vigor", {}).update(mudaram)
+            existente.setdefault("motivos_de_atualizacao_de_hash", []).append(motivo)
+        registry["emendas"] = emendas
         write_json(registry_path, registry)
-        print("Hashes atualizados sem reler outcomes.")
+        print(f"Hashes em vigor gravados na emenda de {data_emenda}; bloco congelado intacto.")
     elif len(sys.argv) == 2 and sys.argv[1] == "--reestimar-covariaveis-oficiais":
         main_reestimacao_covariaveis_oficiais()
     else:

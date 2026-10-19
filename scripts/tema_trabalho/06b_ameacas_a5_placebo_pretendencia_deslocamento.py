@@ -239,6 +239,9 @@ def linha(r: dict[str, Any], **extra) -> dict[str, Any]:
 
 def main() -> None:
     panel, hash_painel = carregar_painel()
+    # Contagens do painel para os textos do JSON (não digitadas).
+    N_CELULAS_PAINEL = int(panel[["co_ibge_6d", "cod_curso"]].drop_duplicates().shape[0])
+    N_MUNICIPIOS_PAINEL = int(panel["co_ibge_6d"].nunique())
     conf = panel[panel["amostra_confirmatoria"].astype(bool)].copy()
     assert conf[["co_ibge_6d", "cod_curso"]].drop_duplicates().shape[0] == 587
     fes_celula = ["cell_id", "course_month", "uf_month"]
@@ -412,7 +415,7 @@ def main() -> None:
         "natureza_dos_dados": "EMPIRICO",
         "protocolo_congelado_em": "2026-09-16, docs/06_execucao/36_backlog_pos_auditoria.md, item C-7, antes da execucao",
         "linguagem": "associativa; atracao e resultado realizado; nenhum efeito causal",
-        "amostra": {"celulas_confirmatorias": 587, "municipios": int(conf["co_ibge_6d"].nunique()), "cursos": sorted(int(c) for c in conf["cod_curso"].unique())},
+        "amostra": {"celulas_confirmatorias": int(conf[["co_ibge_6d", "cod_curso"]].drop_duplicates().shape[0]), "municipios": int(conf["co_ibge_6d"].nunique()), "cursos": sorted(int(c) for c in conf["cod_curso"].unique())},
         "convencao_inferencia": "erros agrupados por municipio (ou regiao, no teste regional) com graus de liberdade que contam os efeitos fixos absorvidos (_gl_fe)",
         "referencia_principal_a5": {
             "proporcional_mar2026_beta": principal["principal_proporcional_confirmatorio"]["mar2026_beta"],
@@ -421,7 +424,7 @@ def main() -> None:
             "nivel_mar2026_p_gl_fe": principal["principal_dinamico_confirmatorio"]["mar2026_p_gl_fe"],
         },
         "placebo": {
-            "definicao": "celulas confirmatorias sem atracao; placebo = municipio com atracao em alguma das suas 1.184 celulas",
+            "definicao": f"celulas confirmatorias sem atracao; placebo = municipio com atracao em alguma das suas {N_CELULAS_PAINEL:,} celulas".replace(",", "."),
             "leitura_pre_especificada": "coeficiente pos distinguivel de zero indicaria choque municipal correlacionado com atrair; indistinguivel de zero sustenta que o resultado principal e da celula",
             "comparacao_reauditoria_nivel": REAUDITORIA["placebo_nivel"],
             "resultado": resumo(placebo),
@@ -457,7 +460,7 @@ def main() -> None:
             "definicao_a": "transbordo: celulas confirmatorias sem atracao; exposicao = outro municipio do painel na mesma regiao de saude com atracao no mesmo curso",
             "definicao_b": "oferta liquida: estoque somado por regiao-curso-mes sobre municipios do painel; tratamento = regiao-curso com ao menos uma celula com atracao; FE regiao-curso, curso-mes, UF-mes; cluster regiao",
             "leitura_pre_especificada": "em (a), coeficiente pos negativo indica deslocamento a partir de vizinhos; em (b), coeficiente zero indicaria pura realocacao dentro da regiao e positivo indicaria expansao liquida",
-            "limite": "o painel contem apenas os 368 municipios do quadro; vizinho e vizinho dentro do quadro",
+            "limite": f"o painel contem apenas os {N_MUNICIPIOS_PAINEL} municipios do quadro; vizinho e vizinho dentro do quadro",
             "n_regioes": int(reg["region_id"].nunique()),
             "n_regiao_curso": int(reg[["region_id", "cod_curso"]].drop_duplicates().shape[0]),
             "n_regiao_curso_com_mais_de_um_municipio": n_reg_multi,

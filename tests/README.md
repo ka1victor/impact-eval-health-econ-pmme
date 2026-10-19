@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **422 testes em 35 módulos** (contagem de 18/10/2026, depois da reestimação com a base oficial do IVS), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **431 testes em 35 módulos** (contagem de 19/10/2026, depois da reestimação com a base oficial do IVS e da guarda sobre o texto bruto dos scripts), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -41,7 +41,7 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_red_team_a6.py`](test_red_team_a6.py) | A6 Red Team | Auditoria das 11 afirmações substantivas na matriz afirmação–evidência–limite e validação do manifesto de hashes reproduzíveis. |
 | [`test_cutoff_selecao_a7.py`](test_cutoff_selecao_a7.py) | A7 Corte de seleção | Suporte dos pares adjacentes, resultados de homologação/presença ativa, proteção de dados pessoais e bloqueio explícito de linguagem causal sem os desempates. |
 | [`test_cutoff_escore_estrito_a8.py`](test_cutoff_escore_estrito_a8.py) | A8 Cutoff estrito | Suporte sem empates e gap de um ponto, efeitos principais, placebos, sensibilidades, replicação de 2026, linguagem causal condicional e proteção de dados pessoais. |
-| [`test_fonte_ivs_oficial.py`](test_fonte_ivs_oficial.py) | IVS oficial | Nenhum script do pipeline lê `data/ivs_ipea_2010_municipios.csv` (ou saída de script retirado que o usava) fora da lista de documentadores do failure mode; malha e tipologia iguais à a08 e ao Censo 2022 em todo município; ajuste completo antigo só como failure mode (auditoria 19). |
+| [`test_fonte_ivs_oficial.py`](test_fonte_ivs_oficial.py) | IVS oficial | Nenhum script do pipeline lê `data/ivs_ipea_2010_municipios.csv` (ou saída de script retirado que o usava) fora da lista de documentadores do failure mode; varre o texto bruto de todo `.py` sob `scripts/` e na raiz (inclusive `utils/` e `rdd_lib.py`), juntando literais concatenados e casando globs, com contagem exata de ocorrências autorizada por script, e prova a guarda injetando violações numa cópia temporária fora do repositório; doc 16 e proveniência da banca 1 citam o ajuste completo lido de `A4_tabela_03b`; plano, estratégia, roadmap e fila do ciclo 3 citam o C3-03 reestimado e explicitam a virada de suporte; malha e tipologia iguais à a08 e ao Censo 2022 em todo município; ajuste completo antigo só como failure mode (auditoria 19). |
 | [`test_tipologia_territorial.py`](test_tipologia_territorial.py) | A2 Território | Classificação em 4 estratos (Capital, Metropolitano, Interior Próximo e Interior Remoto) via REGIC 2018 + RM/RIDE 2022 strict, sem consulta a desfechos. |
 | [`test_reconciliacao_funil_ciclo1.py`](test_reconciliacao_funil_ciclo1.py) | A1 Funil | Auditoria de confirmações em células de reserva e formalização do portão `APROVADO_CELULA`. |
 | [`test_pre_analise_atracao.py`](test_pre_analise_atracao.py) | A3 Pré-Análise | Congelamento dos contrastes e MDEs calculados antes da estimação de A4, verificação de hashes de entrada e clusterização. |
@@ -68,7 +68,7 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_verificacao_ambiente.py`](test_verificacao_ambiente.py) | Ambiente | Verificação das versões exigidas antes de rodar o pipeline. |
 | [`test_coorte_c3.py`](test_coorte_c3.py) | Ciclo 3 Coorte | Congelamento dos cursos 1, 12 e 24 com suporte integral e verificação da assinatura cadastral (Nota Técnica nº 59/2026). |
 | [`test_sih_pre_c3.py`](test_sih_pre_c3.py) | Ciclo 3 SIH Pré | Auditoria dos dados hospitalares do SIH, dicionário SIGTAP e regra *fail-closed* ante ausência de arquivos no FTP. |
-| [`test_pre_analysis_c3.py`](test_pre_analysis_c3.py) | Ciclo 3 Pré-Análise | Torneio pré-tratamento de anestesiologia e congelamento de protocolo antes da maturidade de 202703. |
+| [`test_pre_analysis_c3.py`](test_pre_analysis_c3.py) | Ciclo 3 Pré-Análise | Torneio pré-tratamento de anestesiologia e congelamento de protocolo antes da maturidade de 202703; o bloco congelado não é reescrito (`--refresh-hashes` só por emenda datada) e a emenda de 18/10/2026 registra a validação do modo de reestimação com a malha antiga. |
 | [`test_datasus_parser.py`](test_datasus_parser.py) | Utilitário DBC | Validação funcional da rotina de descompressão e conversão de arquivos `.dbc` do DATASUS. |
 
 ---

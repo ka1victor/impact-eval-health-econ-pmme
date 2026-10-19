@@ -48,13 +48,16 @@
   competências CNES futuras;
 - protocolo prospectivo: congelado em `docs/05_identificacao/13_plano_pre_analise_ciclo3.md`;
 - efeitos pós-tratamento: não estimados;
+<!-- errata-c3-03-ivs-oficial: início; gerado por scripts/tema_trabalho/12_registrar_failure_mode_ivs.py -->
 - errata de 18/10/2026: os diagnósticos C3-03 (propensão, suporte, pesos e
   potência) foram reestimados com o IVS 2010 e a população 2010 oficiais do Ipea,
   por emenda datada em `output/avaliacao_ciclo3/registro_pre_analise.json`
   (`scripts/avaliacao_ciclo3/03_auditar_pre_e_potencia.py --reestimar-covariaveis-oficiais`);
   a versão anterior usava o arquivo de IVS errado e só vale como failure mode
   (`docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`). Nenhum mês pós-T0
-  foi lido.
+  foi lido. Nenhuma decisão do torneio muda. Suporte que muda de status: Oncologia, CNES: suporte aprovado → reprovado (retenção T/C 0,917/0,872 → 0,917/0,769).
+  Suporte aprovado perto do limiar de 0,8: Anestesiologia, CNES (0,832/0,970); Anestesiologia, município (0,857/0,818).
+<!-- errata-c3-03-ivs-oficial: fim -->
 
 O “C3-03” desta fila é um torneio exclusivamente pré-tratamento e não é o
 prompt 03 histórico do desenho individual. Este último continua bloqueado.

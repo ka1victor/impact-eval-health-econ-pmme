@@ -92,7 +92,7 @@
     "municipios_ampliada": 368,
     "status_substantivo": "OPERACIONAL_NAO_PUBLICADA_COMO_CROSSWALK_OFICIAL",
     "versao_ponte": "2.0_operacional_auditada",
-    "regra": "Primario restrito ao nucleo sem CBO compartilhado (587 celulas, 295 mun); sensibilidade inclui ampliada 597 celulas com CBO compartilhado, estratificadas; nao colapsar CBOs compartilhados no primario para evitar contaminacao"
+    "regra": "Primario restrito ao nucleo sem CBO compartilhado (587 celulas, 295 mun); sensibilidade inclui ampliada 597 celulas (591 com CBO compartilhado e 6 de cursos sem compartilhamento fora da amostra principal), estratificadas; nao colapsar CBOs compartilhados no primario para evitar contaminacao"
   },
   "horizonte_e_censura": {
     "janela_dinamica_primaria": "202506 -> 202603 (referencia limpa e follow comum; 9 meses de calendario)",

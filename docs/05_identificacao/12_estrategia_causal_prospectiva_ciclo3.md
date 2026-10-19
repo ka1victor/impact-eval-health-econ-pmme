@@ -49,11 +49,14 @@ desfecho acrescentado por conveniência. A rubrica prévia não a selecionou: SI
 não será baixado nem substituirá automaticamente o SIH incompleto. Essa decisão
 não altera o estudo principal de força de trabalho em anestesiologia.
 
-O torneio C3-03 foi concluído em 31/08/2026 sem abrir o pós. No CNES, há 119
-tratados e 305 controles, MDE de 2,22 especialistas e suporte suficiente, mas
-os intervalos não demonstraram equivalência de pré-tendências. No município,
-há 77 tratados e 247 controles e MDE de 4,44. A classificação congelada é
-`associacao_ajustada`; detalhes e linguagem permitida estão no
+O torneio C3-03 foi concluído em 31/08/2026 sem abrir o pós.
+<!-- c3-03-valores-em-vigor: início; gerado por scripts/tema_trabalho/12_registrar_failure_mode_ivs.py -->
+No CNES, há 119 tratados e 305 controles, MDE de 2,12 especialistas e suporte
+suficiente, mas os intervalos não demonstraram equivalência de pré-tendências.
+No município, há 77 tratados e 247 controles e MDE de 4,62. A classificação
+congelada é `associacao_ajustada` (valores da emenda de 18/10/2026, com o IVS 2010 oficial; os de 31/08/2026 usavam o arquivo de IVS errado e só valem como failure mode, [`auditorias/19`](../auditorias/19_reestimacao_base_oficial_failure_mode.md)).
+<!-- c3-03-valores-em-vigor: fim -->
+Detalhes e linguagem permitida estão no
 [`plano de pré-análise`](13_plano_pre_analise_ciclo3.md).
 
 ## 2. O que SIH e SIA permitem observar

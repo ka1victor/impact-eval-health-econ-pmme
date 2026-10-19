@@ -361,8 +361,170 @@ def comparar_c3() -> list[dict[str, Any]]:
             "suporte_c_antes": g["suporte_retido_controle_a"], "suporte_c_depois": g["suporte_retido_controle_d"],
             "suporte_aprovado_antes": bool(g["suporte_aprovado_a"]), "suporte_aprovado_depois": bool(g["suporte_aprovado_d"]),
             "decisao_antes": g["decisao_a"], "decisao_depois": g["decisao_d"],
+            "potencia_antes": g["potencia_para_um_especialista_a"], "potencia_depois": g["potencia_para_um_especialista_d"],
+            "tendencia_antes": g["pre_tendencia_mensal_coef_a"], "tendencia_depois": g["pre_tendencia_mensal_coef_d"],
+            "leads_p_antes": g["teste_conjunto_leads_p_a"], "leads_p_depois": g["teste_conjunto_leads_p_d"],
         })
     return linhas
+
+
+DOC13 = ROOT / "docs" / "05_identificacao" / "13_plano_pre_analise_ciclo3.md"
+FILA_C3 = ROOT / "prompts" / "avaliacao_ciclo3" / "README.md"
+REGISTRO_C3 = ROOT / "output" / "avaliacao_ciclo3" / "registro_pre_analise.json"
+MARCA_INI = "<!-- errata-c3-03-ivs-oficial: início; gerado por scripts/tema_trabalho/12_registrar_failure_mode_ivs.py -->"
+MARCA_FIM = "<!-- errata-c3-03-ivs-oficial: fim -->"
+MARCA2_INI = "<!-- c3-03-valores-em-vigor: início; gerado por scripts/tema_trabalho/12_registrar_failure_mode_ivs.py -->"
+MARCA2_FIM = "<!-- c3-03-valores-em-vigor: fim -->"
+DOC12 = ROOT / "docs" / "05_identificacao" / "12_estrategia_causal_prospectiva_ciclo3.md"
+ROADMAP = ROOT / "docs" / "06_execucao" / "05_roadmap_execucao.md"
+# Regra congelada do C3-03 (diagnostic_course): suporte aprovado se retenção >= 0,8 nos dois braços.
+LIMIAR_SUPORTE_C3 = 0.8
+# Folga abaixo da qual um suporte aprovado é dito "perto do limiar" (descritivo).
+FOLGA_PERTO_DO_LIMIAR = 0.05
+ROTULO_C3 = {"anestesiologia": "Anestesiologia", "oncologia_clinica": "Oncologia", "medicina_intensiva": "Intensiva",
+             "cirurgia_geral_cbo_exclusivo": "Cirurgia geral/CBO exclusivo"}
+NIVEL_C3 = {"cnes_ofertante": "CNES", "municipio": "município"}
+
+
+def cientifico(v: float) -> str:
+    return f"{v:.1e}".replace(".", ",")
+
+
+def pct1(v: float) -> str:
+    return num(100 * v, 1) + "%"
+
+
+def rotulo_decisao(decisao: str, papel: str) -> str:
+    if decisao == "associacao_ajustada":
+        return "sensibilidade ajustada" if papel == "sensibilidade" else "associação ajustada"
+    if decisao == "inviavel":
+        return "inviável confirmatoriamente"
+    return decisao
+
+
+def blocos_c3(c3: list[dict[str, Any]]) -> tuple[str, str, str, str]:
+    """Errata do C3-03 para o plano do ciclo 3 e para a fila de prompts, lida das saídas."""
+    novo = ler_csv("output/avaliacao_ciclo3/diagnosticos_pre.csv", False)
+    reg = json.loads(REGISTRO_C3.read_text(encoding="utf-8"))
+    val = {e["data"]: e for e in reg["emendas"]}["2026-10-18"]["validacao_do_modo_com_a_malha_antiga"]
+    linhas = []
+    for r in novo.itertuples(index=False):
+        mde = "não estimável" if pd.isna(r.mde_80_especialistas) else num(r.mde_80_especialistas, 2)
+        pot = "—" if pd.isna(r.potencia_para_um_especialista) else pct1(r.potencia_para_um_especialista)
+        linhas.append(f"| {ROTULO_C3.get(r.modulo, r.modulo)}, {NIVEL_C3.get(r.nivel, r.nivel)} | {int(r.n_tratados)} | "
+                      f"{int(r.n_controles)} | {pct1(r.suporte_retido_tratado)} / {pct1(r.suporte_retido_controle)} | "
+                      f"{'sim' if r.suporte_aprovado else 'não'} | {mde} | {pot} | {rotulo_decisao(r.decisao, r.papel)} |")
+    viraram = [x for x in c3 if x["suporte_aprovado_antes"] != x["suporte_aprovado_depois"]]
+    perto = [x for _, x in novo.iterrows() if x["suporte_aprovado"]
+             and min(x["suporte_retido_tratado"], x["suporte_retido_controle"]) - LIMIAR_SUPORTE_C3 < FOLGA_PERTO_DO_LIMIAR]
+    decisoes_mudam = [x for x in c3 if x["decisao_antes"] != x["decisao_depois"]]
+    txt_vir = "; ".join(
+        f"{ROTULO_C3.get(x['modulo'], x['modulo'])}, {NIVEL_C3.get(x['nivel'], x['nivel'])}: suporte "
+        f"{'aprovado' if x['suporte_aprovado_antes'] else 'reprovado'} → {'aprovado' if x['suporte_aprovado_depois'] else 'reprovado'} "
+        f"(retenção T/C {num(x['suporte_t_antes'])}/{num(x['suporte_c_antes'])} → {num(x['suporte_t_depois'])}/{num(x['suporte_c_depois'])})"
+        for x in viraram) or "nenhum"
+    txt_perto = "; ".join(
+        f"{ROTULO_C3.get(x['modulo'], x['modulo'])}, {NIVEL_C3.get(x['nivel'], x['nivel'])} "
+        f"({num(x['suporte_retido_tratado'])}/{num(x['suporte_retido_controle'])})" for x in perto) or "nenhum"
+    txt_dec = ("nenhuma decisão do torneio muda" if not decisoes_mudam else
+               "mudam as decisões de " + ", ".join(f"{x['modulo']}/{x['nivel']}" for x in decisoes_mudam))
+    an = {r.nivel: r for r in novo.itertuples(index=False) if r.modulo == "anestesiologia"}
+    c, m = an["cnes_ofertante"], an["municipio"]
+    sup = pd.read_csv(ROOT / "output/avaliacao_ciclo3/suporte_c3.csv").set_index("cod_curso").loc[int(c.cod_curso)]
+    vagas = sup["vagas_imediata_pura"] / sup["cnes_imediata_pura"]
+    aloc = sup["alocados_imediata_pura"] / sup["cnes_imediata_pura"]
+    if int(sup["cnes_imediata_pura"]) != int(c.n_tratados):
+        raise SystemExit("C3-03: CNES tratados de suporte_c3.csv diferem de diagnosticos_pre.csv")
+    nome_nivel = {"cnes_ofertante": "no CNES", "municipio": "no município"}
+    falhas_eq = [nome_nivel[r.nivel] for r in (c, m) if not (r.equivalencia_tendencia and r.equivalencia_leads)]
+    if len(falhas_eq) == 2:
+        txt_eq = ("A equivalência falhou no CNES e no município: os intervalos não ficaram integralmente "
+                  "dentro dos limites congelados.")
+    elif falhas_eq:
+        txt_eq = f"A equivalência falhou {falhas_eq[0]} e passou no outro nível."
+    else:
+        txt_eq = "A equivalência passou nos dois níveis."
+    mmr = float(c.mudanca_minima_relevante)
+    if mmr < c.mde_80_especialistas < vagas:
+        txt_fim = "Isso permite detectar uma resposta forte do pacote ofertado, não garante precisão para um acréscimo unitário."
+    elif c.mde_80_especialistas <= mmr:
+        txt_fim = "A MDE fica abaixo do acréscimo unitário."
+    else:
+        txt_fim = "Nem uma resposta do tamanho do pacote ofertado seria detectada com 80% de potência."
+    doc13 = f"""{MARCA_INI}
+Valores em vigor, lidos de `output/avaliacao_ciclo3/diagnosticos_pre.csv` (emenda de
+18/10/2026, com o IVS 2010 e a população 2010 oficiais do Ipea):
+
+| Módulo e nível | Tratados | Controles | Suporte retido T/C | Suporte aprovado | MDE 80% | Potência para 1 | Decisão |
+|---|---:|---:|---:|---|---:|---:|---|
+""" + "\n".join(linhas) + f"""
+
+Para anestesiologia no CNES, a diferença de tendência mensal ponderada foi
+`{num(c.pre_tendencia_mensal_coef, 4)}` (EP municipal `{num(c.pre_tendencia_mensal_se, 4)}`; IC90%
+`[{num(c.pre_tendencia_ic90_inf, 4)}; {num(c.pre_tendencia_ic90_sup, 4)}]`) e o teste conjunto dos leads teve
+`p={num(c.teste_conjunto_leads_p, 4)}`. No município, a tendência foi `{num(m.pre_tendencia_mensal_coef, 4)}`
+(EP `{num(m.pre_tendencia_mensal_se, 4)}`; IC90% `[{num(m.pre_tendencia_ic90_inf, 4)}; {num(m.pre_tendencia_ic90_sup, 4)}]`)
+e o teste conjunto teve `p={num(m.teste_conjunto_leads_p, 4)}`.
+
+Esses p-valores não comprovam paralelismo. {txt_eq} A potência para detectar um
+anestesiologista foi {pct1(c.potencia_para_um_especialista)} no CNES e {pct1(m.potencia_para_um_especialista)} no município; a MDE
+direta de {num(c.mde_80_especialistas, 2)} no CNES fica {'abaixo' if c.mde_80_especialistas < vagas else 'acima'} das {num(vagas, 2)} vagas oferecidas por CNES
+tratado e {'acima' if c.mde_80_especialistas > aloc else 'abaixo'} das {num(aloc, 2)} alocações publicadas por CNES
+(`output/avaliacao_ciclo3/suporte_c3.csv`). {txt_fim}
+
+> **Errata de 18/10/2026 — failure mode.** A versão de 31/08/2026 desta seção usou,
+> na propensão que gera o suporte comum e os pesos de sobreposição, `ivs_2010` e
+> `log_pop_2010` da malha antiga, feita com `data/ivs_ipea_2010_municipios.csv`, que é
+> uma linha de subgrupo populacional e não o município. Seus números só valem como
+> registro do erro e estão, ao lado dos atuais, em
+> [`auditorias/19`](../auditorias/19_reestimacao_base_oficial_failure_mode.md). A emenda datada
+> em `output/avaliacao_ciclo3/registro_pre_analise.json` reestimou os diagnósticos com
+> mesma coorte, mesmos braços, mesmos painéis CNES pré-T0 (conferidos por hash) e
+> nenhuma competência a partir de 202609. Antes de corrigir, o modo de reestimação foi
+> rodado com a malha antiga e reproduziu decisão e potência byte a byte, com diferença
+> absoluta máxima de {cientifico(val['diagnosticos_max_dif_absoluta'])} nos diagnósticos.
+>
+> - **Suporte que muda de status:** {txt_vir}. {txt_dec[0].upper() + txt_dec[1:]}.
+> - **Suporte aprovado perto do limiar de {num(LIMIAR_SUPORTE_C3, 1)}:** {txt_perto}.
+{MARCA_FIM}"""
+    fila = f"""{MARCA_INI}
+- errata de 18/10/2026: os diagnósticos C3-03 (propensão, suporte, pesos e
+  potência) foram reestimados com o IVS 2010 e a população 2010 oficiais do Ipea,
+  por emenda datada em `output/avaliacao_ciclo3/registro_pre_analise.json`
+  (`scripts/avaliacao_ciclo3/03_auditar_pre_e_potencia.py --reestimar-covariaveis-oficiais`);
+  a versão anterior usava o arquivo de IVS errado e só vale como failure mode
+  (`docs/auditorias/19_reestimacao_base_oficial_failure_mode.md`). Nenhum mês pós-T0
+  foi lido. {txt_dec[0].upper() + txt_dec[1:]}. Suporte que muda de status: {txt_vir}.
+  Suporte aprovado perto do limiar de {num(LIMIAR_SUPORTE_C3, 1)}: {txt_perto}.
+{MARCA_FIM}"""
+    razoes = {"equivalência_pré_tendências": "equivalência estrita", "potência": "potência para detectar um especialista",
+              "suporte": "suporte comum"}
+    falhou = [razoes.get(x.strip(), x.strip()) for x in dict.fromkeys(
+        y for r in (c, m) if r.razao.startswith("falhou:") for y in r.razao.removeprefix("falhou:").split(","))]
+    sup_txt = "teve suporte" if c.suporte_aprovado and m.suporte_aprovado else "não teve suporte nos dois níveis"
+    dec_txt = (f"`{c.decisao}`" if c.decisao == m.decisao else f"`{c.decisao}` no CNES e `{m.decisao}` no município")
+    nota_fm = ("valores da emenda de 18/10/2026, com o IVS 2010 oficial; os de 31/08/2026 usavam o arquivo de IVS "
+               "errado e só valem como failure mode, [`auditorias/19`](../auditorias/19_reestimacao_base_oficial_failure_mode.md)")
+    eq_ok = not falhas_eq
+    doc12 = f"""{MARCA2_INI}
+No CNES, há {int(c.n_tratados)} tratados e {int(c.n_controles)} controles, MDE de {num(c.mde_80_especialistas, 2)} especialistas e suporte
+{'suficiente' if c.suporte_aprovado else 'insuficiente'}, {'e os intervalos demonstraram' if eq_ok else 'mas os intervalos não demonstraram'} equivalência de pré-tendências.
+No município, há {int(m.n_tratados)} tratados e {int(m.n_controles)} controles e MDE de {num(m.mde_80_especialistas, 2)}. A classificação
+congelada é {dec_txt} ({nota_fm}).
+{MARCA2_FIM}"""
+    roadmap = f"""{MARCA2_INI}
+Anestesiologia {sup_txt}, mas falhou {' e '.join(falhou)}: MDE {num(c.mde_80_especialistas, 2)} no CNES e
+{num(m.mde_80_especialistas, 2)} no município. A classificação prospectiva é {dec_txt} ({nota_fm}).
+{MARCA2_FIM}"""
+    return doc13, fila, doc12, roadmap
+
+
+def substituir_bloco(path: Path, bloco: str, ini: str = MARCA_INI, fim: str = MARCA_FIM) -> None:
+    texto = path.read_text(encoding="utf-8")
+    if texto.count(ini) != 1 or texto.count(fim) != 1:
+        raise SystemExit(f"{path.relative_to(ROOT)}: marcadores do bloco gerado do C3-03 ausentes ou repetidos")
+    i, j = texto.index(ini), texto.index(fim) + len(fim)
+    path.write_text(texto[:i] + bloco + texto[j:], encoding="utf-8")
 
 
 def comparar_banca1() -> dict[str, Any]:
@@ -431,11 +593,18 @@ def conclusoes(linhas: list[dict[str, Any]]) -> list[str]:
 
 
 def gerar_doc(linhas, tab1, tip, rdd, fm, d01, hashes, c3, banca) -> str:
+    val_c3 = {e["data"]: e for e in json.loads(REGISTRO_C3.read_text(encoding="utf-8"))["emendas"]}["2026-10-18"][
+        "validacao_do_modo_com_a_malha_antiga"]
     c3_md = "\n".join(
         f"| {r['modulo']} | {r['nivel']} | {num(r['mde_80_antes_failure_mode'], 2)} | **{num(r['mde_80_depois'], 2)}** | "
         f"{num(r['suporte_t_antes'])} / {num(r['suporte_c_antes'])} → {num(r['suporte_t_depois'])} / {num(r['suporte_c_depois'])} | "
         f"{'sim' if r['suporte_aprovado_antes'] else 'não'} → {'sim' if r['suporte_aprovado_depois'] else 'não'} | "
         f"{r['decisao_antes']} → **{r['decisao_depois']}** |" for r in c3)
+    c3_md2 = "\n".join(
+        f"| {r['modulo']} | {r['nivel']} | {pct1(r['potencia_antes']) if pd.notna(r['potencia_antes']) else '—'} → "
+        f"**{pct1(r['potencia_depois']) if pd.notna(r['potencia_depois']) else '—'}** | "
+        f"{num(r['tendencia_antes'], 4)} → **{num(r['tendencia_depois'], 4)}** | "
+        f"{num(r['leads_p_antes'], 4)} → **{num(r['leads_p_depois'], 4)}** |" for r in c3)
     c3_mudou = [r for r in c3 if r["decisao_antes"] != r["decisao_depois"]]
     c3_texto = ("Nenhuma decisão do torneio muda." if not c3_mudou else
                 "Decisões que mudam: " + "; ".join(f"{r['modulo']}/{r['nivel']}: {r['decisao_antes']} → {r['decisao_depois']}" for r in c3_mudou) + ".")
@@ -605,7 +774,18 @@ tipologia corrigida (E3: {'sim' if rdd['e3_registra_tipologia_nova'] else 'não'
 |---|---|---:|---:|---|---|---|
 {c3_md}
 
+| Módulo | Nível | Potência para 1 especialista, antes → depois | Tendência mensal ponderada, antes → depois | Leads, p conjunto, antes → depois |
+|---|---|---:|---:|---:|
+{c3_md2}
+
 {c3_texto}{c3_sup_texto}
+
+Validação do modo de reestimação, antes de corrigir (emenda em
+`output/avaliacao_ciclo3/registro_pre_analise.json`): com a malha antiga, decisão e potência
+saem idênticas byte a byte ({'sim' if val_c3['decisao_identica_byte_a_byte'] and val_c3['potencia_identica_byte_a_byte'] else 'NÃO'}),
+e a diferença absoluta máxima é {cientifico(val_c3['diagnosticos_max_dif_absoluta'])} nos diagnósticos e
+{cientifico(val_c3['pesos_max_dif_absoluta'])} nos pesos. A mensagem do commit `a526bbf` dizia "a 1e-14"
+para os diagnósticos; o valor medido e gravado é o desta frase.
 
 ### Figuras da banca 1: especialistas por 100 mil em 202506, por categoria de IVS (manifesto)
 
@@ -704,6 +884,11 @@ def main() -> None:
     }
     OUT_JSON.write_text(json.dumps(resumo, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     DOC.write_text(gerar_doc(linhas, tab1, tip, rdd, fm, d01, hashes, c3, banca), encoding="utf-8")
+    bloco13, bloco_fila, bloco12, bloco_roadmap = blocos_c3(c3)
+    substituir_bloco(DOC13, bloco13)
+    substituir_bloco(FILA_C3, bloco_fila)
+    substituir_bloco(DOC12, bloco12, MARCA2_INI, MARCA2_FIM)
+    substituir_bloco(ROADMAP, bloco_roadmap, MARCA2_INI, MARCA2_FIM)
     print(f"[OK] {len(linhas)} estimativas comparadas; {len(conclusoes(linhas))} mudanças de conclusão; "
           f"documento em {DOC.relative_to(ROOT)}")
 

@@ -296,7 +296,25 @@ sim).
 | medicina_intensiva | municipio | — | **—** | 0,500 / 0,016 → 0,500 / 0,048 | não → não | inviavel → **inviavel** |
 | cirurgia_geral_cbo_exclusivo | municipio | 2,74 | **2,80** | 0,826 / 0,609 → 0,826 / 0,685 | não → não | associacao_ajustada → **associacao_ajustada** |
 
+| Módulo | Nível | Potência para 1 especialista, antes → depois | Tendência mensal ponderada, antes → depois | Leads, p conjunto, antes → depois |
+|---|---|---:|---:|---:|
+| anestesiologia | cnes_ofertante | 22,8% → **25,3%** | −0,0028 → **−0,0048** | 0,8593 → **0,8656** |
+| oncologia_clinica | cnes_ofertante | 62,4% → **69,5%** | 0,0034 → **0,0038** | 0,3207 → **0,4283** |
+| medicina_intensiva | cnes_ofertante | — → **14,2%** | −0,0139 → **0,2622** | 0,0000 → **0,0000** |
+| cirurgia_geral_cbo_exclusivo | cnes_ofertante | 38,4% → **38,5%** | 0,0158 → **0,0183** | 0,0001 → **0,0000** |
+| anestesiologia | municipio | 9,0% → **9,0%** | −0,0344 → **−0,0554** | 0,4966 → **0,5287** |
+| oncologia_clinica | municipio | 12,5% → **12,2%** | 0,0082 → **−0,0114** | 0,0000 → **0,0013** |
+| medicina_intensiva | municipio | — → **—** | 0,7272 → **−0,1465** | 0,0000 → **0,0000** |
+| cirurgia_geral_cbo_exclusivo | municipio | 17,6% → **16,3%** | −0,0637 → **−0,0526** | 0,0653 → **0,0529** |
+
 Nenhuma decisão do torneio muda. O suporte comum muda de aprovado para reprovado (ou o inverso) em oncologia_clinica/cnes_ofertante, sem mudar a decisão.
+
+Validação do modo de reestimação, antes de corrigir (emenda em
+`output/avaliacao_ciclo3/registro_pre_analise.json`): com a malha antiga, decisão e potência
+saem idênticas byte a byte (sim),
+e a diferença absoluta máxima é 1,8e-13 nos diagnósticos e
+5,0e-16 nos pesos. A mensagem do commit `a526bbf` dizia "a 1e-14"
+para os diagnósticos; o valor medido e gravado é o desta frase.
 
 ### Figuras da banca 1: especialistas por 100 mil em 202506, por categoria de IVS (manifesto)
 
