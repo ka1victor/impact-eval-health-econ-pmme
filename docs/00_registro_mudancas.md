@@ -8,6 +8,24 @@
 
 ---
 
+## 19/10/2026 — X4 e X5 do protocolo exploratório pós-síntese (doc 45)
+
+Motivo: o protocolo [45](06_execucao/45_protocolo_exploratorio_pos_sintese.md)
+(§4) manda a leitura de X1–X6 para o doc 46. As seções X4 (heterogeneidade da
+escolha) e X5 (deslocamento regional) foram as primeiras a entrar; as demais
+tarefas acrescentam as suas seções no mesmo arquivo.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/46_resultados_exploratorios_pos_sintese.md`](06_execucao/46_resultados_exploratorios_pos_sintese.md) | resultados exploratórios pós-síntese; seções X4 e X5 com blocos gerados |
+| `scripts/rdd_bolsa/19_escolha_heterogeneidade.py` | X4 e X5: interações da bolsa no logit condicional do E9, logit aninhado por CIR e atributos de vizinhança |
+| `tests/test_x4_x5_escolha.py` | recuperação sintética de interação, vizinhança e lambda; invariantes; blocos e frases do doc 46 |
+| `data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv` | tabela oficial município → Região de Saúde (CIR) do TabNet/DATASUS, baixada pelo script 19 (manifesto em `output/rdd_bolsa/X5_manifesto_regioes_saude_cir.json`) |
+
+---
+
 ## 19/10/2026 — Conteúdo canônico da banca 2 (28/10/2026)
 
 Motivo: a apresentação de 28/10/2026 precisa de conteúdo canônico em

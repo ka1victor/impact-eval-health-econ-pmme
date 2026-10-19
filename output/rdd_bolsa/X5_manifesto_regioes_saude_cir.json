@@ -1,0 +1,12 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "fonte": "DATASUS/MS, TabNet: arquivo de conversão territorio/br_regsaud.cnv (Região de Saúde – CIR), referenciado pela definição cnes/cnv/estabbr.def ('Região de Saúde (CIR), CODUFMUN, territorio\\br_regsaud.cnv')",
+  "url": "http://tabnet.datasus.gov.br/cgi/territorio/br_regsaud.cnv",
+  "http_status": 200,
+  "data_download_utc": "2026-10-19T10:44:54Z",
+  "arquivo": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+  "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+  "bytes": 383336,
+  "nota": "o FTP do DATASUS (base territorial) não responde pelo proxy; o HTTPS do TabNet recusou a conexão; o arquivo veio por HTTP do próprio TabNet. Versão corrente da base territorial do TabNet na data do download (não é competência do CNES)",
+  "script": "scripts/rdd_bolsa/19_escolha_heterogeneidade.py"
+}
