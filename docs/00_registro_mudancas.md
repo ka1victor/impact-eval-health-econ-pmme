@@ -8,6 +8,34 @@
 
 ---
 
+## 19/10/2026 — Portão G5: CNES profissional mensal (a16)
+
+Motivo: portão de viabilidade G5 do plano
+[`06_execucao/51`](06_execucao/51_plano_perguntas_reformuladas.md) (T4.0,
+insumo de P4 e de T6.2). Verifica se o CNES público traz o registro do
+conselho por vínculo e monta o painel médico × mês (202406–202608) dos
+médicos do PMM-E ligados na X1, com chave pseudônima pronta para receber as
+chaves do G1. Nenhum contraste foi calculado.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/aquisicao/A16_cnes_profissional.md`](auditorias/aquisicao/A16_cnes_profissional.md) | fonte, tabelas, chave pseudônima, cobertura, estabilidade da chave, critérios e veredito do G5; o que P4 e T6.2 podem usar |
+
+Mudanças fora de `docs/`:
+- `scripts/aquisicao/a16_cnes_profissional_mensal.py` (etapas `verificar`,
+  `baixar`, `consolidar`, `tudo`);
+- saídas em `output/aquisicao/cnes_profissional/` (painéis, chaves,
+  cobertura, resumo e manifesto) e `output/rdd_bolsa/G5_resumo.json`;
+- cache privado `output/aquisicao/cnes_profissional/cache_privado/`, fora do
+  controle de versão (entrada nova no arquivo de exclusões);
+- `run_all.py`: a16 em `--etapa verificar`; `tests/test_pipeline_rdd_bolsa.py`;
+  manifesto A6 regenerado pelo gerador;
+- `tests/test_aquisicao_cnes_profissional.py` e `tests/README.md`;
+- inventário [`04_dados/02`](04_dados/02_inventario_dados_por_outcome.md),
+  seção 1.1.
+
 ## 19/10/2026 — Protocolos 52 (P1) e 55 (P5); adendo §12 do protocolo 47 (P3)
 
 Motivo: execução do plano do doc 51, depois dos portões G1–G4. Os protocolos
