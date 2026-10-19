@@ -73,6 +73,7 @@ não para tendências demográficas.
 | Normas com cortes de IVS e estrato da APS | `output/aquisicao/a10_*` | portarias arquivadas; [`auditorias/18`](../auditorias/18_politicas_nos_mesmos_cortes_ivs.md) | co-políticas (S3) | — |
 | Outcomes do funil por município, célula e candidato (U, G3, V1–V3) | `output/rdd_bolsa/outcomes/` | `scripts/rdd_bolsa/12_construir_outcomes_funil.py`; contagens em `dicionario_outcomes_funil.json` | F0, F1, F2, F4 e E9 | construídos às cegas ([`06_execucao/41a`](../06_execucao/41a_construcao_outcomes_funil.md)) |
 | CNES nacional: painel município × grupo de CBO × mês, desde 2022 | `output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet` | CNES/DATASUS; `scripts/aquisicao/a09_*`; manifesto `a09_manifesto_cnes_nacional.json`; [`auditorias/aquisicao/A09`](../auditorias/aquisicao/A09_cnes_nacional.md) | oferta líquida local por DiRD (F3) | vínculo cadastrado não é médico do PMM-E nem retenção; competências do ciclo 3 pós-T0 não lidas |
+| SIA/SUS: painel município (local de atendimento) × mês de processamento × subgrupo × conjunto de CBO do executante, 202201–202607 | `output/aquisicao/sia/painel_sia_municipio_mes_subgrupo_cbo.parquet` | TabNet/DATASUS (`sia/cnv/qabr.def`); `scripts/aquisicao/a12_*`; manifesto `output/aquisicao/sia/manifesto_sia.json`; [`auditorias/aquisicao/A12`](../auditorias/aquisicao/A12_sia_tabnet.md) | família K do protocolo [`47`](../06_execucao/47_protocolo_producao_especializada.md) (K1, KP1, KP2) | quantidade aprovada pelo SUS; mês de processamento, não de atendimento; local de atendimento, não residência; sem produção paga fora do SUS |
 | SIH/SUS: AIH aprovadas, internações e valor por município de internação × mês de processamento × grupo do procedimento, 202201–202607; grupo 04 também por caráter (eletivo, urgência e causas externas) | `output/aquisicao/sih/painel_sih_municipio_mes_grupo.parquet`, `painel_sih_municipio_mes_carater_g04.parquet` | TabNet/DATASUS (`sih/cnv/qibr.def`); `scripts/aquisicao/a13_*`; manifesto `output/aquisicao/sih/manifesto_sih.json`; [`auditorias/aquisicao/A13`](../auditorias/aquisicao/A13_sih_tabnet.md) | cirurgias SUS hospitalares (K2 do protocolo 47) | sem CBO do executante; local de internação, não residência; mês de processamento, não de internação; UF-mês sem dado na fonte fica ausente |
 
 ## 2. Disponibilidade por outcome
@@ -85,7 +86,7 @@ não para tendências demográficas.
 | Entrada efetiva | Data de início dos ativos atuais | Selecionados que não entraram e datas administrativas | 🟡 |
 | Retenção individual | Série agregada e fotografia final | Identificador longitudinal, saída e censura | 🔴 |
 | FTE líquido | Tipo de prática e participante ativo; CNES nacional mensal com horas SUS por município e grupo de CBO, desde 2022 (E7) | Ponte PMM-E–CNES por profissional | 🟡 agregado |
-| Produção especializada | Nenhum microdado preservado | SIA por CNES, procedimento, residência e competência | 🔴 |
+| Produção especializada | SIA agregado (a12): quantidade aprovada por município de atendimento × mês de processamento × subgrupo × conjunto de CBO do executante, 202201–202607 (seção 1.1) | Microdado por CNES e procedimento; residência do paciente; mês de atendimento; produção fora do SUS | 🟡 agregado |
 | Cirurgias e internações | SIH agregado do TabNet (a13): AIH por município de internação × mês de processamento × grupo, e grupo 04 por caráter, 202201–202607 | Microdado da AIH com residência, prestador, procedimento e `CAR_INT`; CBO do executante | 🟡 agregado |
 | Acesso local/global | Município do profissional | Fluxo residência-prestador observado | 🔴 |
 | Tempo de espera | Nada | Solicitação, prioridade, atendimento/cancelamento e datas | 🔴 |
@@ -110,7 +111,9 @@ não para tendências demográficas.
 
 ### Bloco B — acesso e produção
 
-1. SIA mensal por residência, prestador, procedimento e quantidade.
+1. SIA mensal por residência, prestador, procedimento e quantidade. *(Obtido
+   agregado por município de atendimento, subgrupo e conjunto de CBO do
+   executante: a12. Falta residência e prestador.)*
 2. SIH mensal com caráter, procedimento, residência e prestador.
 3. Mapa de códigos comparável no tempo, incluindo migração para OCI.
 4. População contemporânea e capacidade instalada do CNES.
