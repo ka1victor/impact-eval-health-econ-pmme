@@ -20,6 +20,18 @@ as suplementares S1–S4.
 |---|---|
 | [`06_execucao/41_resultados_E6_funil.md`](06_execucao/41_resultados_E6_funil.md) | resultados do E6 (índice P1, componentes, diagnósticos de seleção, co-políticas, suplementares), como ler o salto, o que cada contraste identifica e limites; as tabelas são geradas de `output/rdd_bolsa/E6_*` por `scripts/rdd_bolsa/13_estimar_E6_funil.py --atualizar-doc` |
 
+## 18/10/2026 — E9: escolha revelada dos candidatos (protocolo 40, §12, §14, §15)
+
+Motivo: estimação do logit condicional (e explodido) da escolha dos
+candidatos entre células do mesmo curso e ciclo, com a forma funcional fixada
+no §15 antes de estimar.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/42_resultados_E9_escolha.md`](06_execucao/42_resultados_E9_escolha.md) | estimando, especificação, diagnósticos, resultados (tabelas geradas por `scripts/rdd_bolsa/16_estimar_E9_escolha.py` e conferidas por `tests/test_e9_escolha.py`), desvios e limites do E9 |
+
 ## 18/10/2026 — Construção dos outcomes do funil (tarefa B do protocolo 40)
 
 Motivo: a tarefa B do protocolo multi-outcome constrói, às cegas quanto ao
