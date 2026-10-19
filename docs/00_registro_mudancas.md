@@ -8,6 +8,27 @@
 
 ---
 
+## 19/10/2026 — Síntese E8 da RDD da bolsa (protocolo 40)
+
+Motivo: a tarefa E8 do protocolo multi-outcome
+([`06_execucao/40`](06_execucao/40_protocolo_multioutcome_rdd_bolsa.md), §7 e
+§11) junta E3, E5, E6, E7 e E9, faz o Holm das duas primárias e registra, como
+proposta ao autor, a revisão da pergunta econômica.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/44_sintese_rdd_bolsa_multioutcome.md`](06_execucao/44_sintese_rdd_bolsa_multioutcome.md) | resposta curta, tabela por elo da cadeia, Holm, o que se pode e não se pode afirmar, literatura de magnitude e proposta de revisão da hipótese; blocos gerados de `output/rdd_bolsa/E8_*` |
+| `scripts/rdd_bolsa/15_sintese_E8.py` | gera `E8_resumo.json`, `E8_tabela_sintese.csv` e os blocos do doc 44, sem estimação nova além do Holm |
+| `tests/test_e8_sintese.py` | Holm (sintético e contra os CSV), reprodução das saídas e números do doc 44 |
+
+### Atualizado
+
+[`06_execucao/38`](06_execucao/38_estado_e_pendencias_rdd_bolsa.md) (estado),
+[`README.md`](README.md) (índice), [`04_dados/02`](04_dados/02_inventario_dados_por_outcome.md)
+(inventário com as bases novas), `TODO.md` e `README.md` da raiz.
+
 ## 19/10/2026 — Resultados do E7: DiRD no CNES (família F3 do protocolo 40)
 
 Motivo: a tarefa E7 do protocolo multi-outcome

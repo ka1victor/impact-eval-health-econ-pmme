@@ -69,6 +69,7 @@ as decisões em aberto estão em
 [`38`](docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md); o relatório com
 as figuras é `output/rdd_bolsa/relatorio_resultados_rdd_bolsa.pdf`
 (`python run_all.py --rdd-bolsa`).
+A rodada multi-outcome (protocolo 40: funil dos ciclos 1–3, escolha dos candidatos e DiRD no CNES nacional) terminou em 19/10/2026: nenhuma das duas primárias é rejeitada depois do Holm, e a síntese, com a proposta de revisão da hipótese para decisão do autor, está em [`44`](docs/06_execucao/44_sintese_rdd_bolsa_multioutcome.md).
 
 O diagnóstico histórico imediata versus reserva usa `município–curso–mês` no ciclo 1 e o CNES mensal de
 junho de 2024 a julho de 2026:

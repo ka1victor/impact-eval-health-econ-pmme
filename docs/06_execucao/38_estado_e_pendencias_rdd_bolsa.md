@@ -1,5 +1,17 @@
 # RDD da bolsa — estado, pendências e decisões em aberto
 
+> **Estado em 19/10/2026: rodada multi-outcome concluída.** D2 e D3(b) estão
+> feitos. O protocolo
+> [`40`](40_protocolo_multioutcome_rdd_bolsa.md) foi executado até o fim: E6
+> ([`41`](41_resultados_E6_funil.md)), E9 ([`42`](42_resultados_E9_escolha.md)),
+> E7 ([`43`](43_resultados_E7_dird_cnes.md)) e a síntese E8
+> ([`44`](44_sintese_rdd_bolsa_multioutcome.md)), com o Holm das duas
+> primárias. Nenhuma primária é rejeitada; o único sinal robusto está na
+> escolha dos candidatos no ciclo 2 (números e condições no doc 44).
+> **Pendente, só do autor:** (1) decidir sobre a revisão da hipótese
+> econômica proposta no doc 44, §7; (2) o conteúdo canônico da apresentação.
+> As seções abaixo, de 18/10/2026, ficam como registro do E3 e do E5.
+
 > **Atualização de 18/10/2026, noite:** o autor decidiu D2 e D3(b) — rodar
 > tudo, sem esperar o dia 28 — e pediu vários outcomes simultâneos. A rodada
 > segue o protocolo congelado
@@ -73,6 +85,13 @@ Nos slides, use um dos dois e diga qual.
 | Artigo de submissão: apêndice C com a RDD da bolsa; descarte antigo e ajuste completo retirados | concluído | `paper_pmme_submission.tex` (conferidor aprovado) |
 | Síntese do red team (A6) e manifesto: RDD aprovada em R1 e inconclusiva no E3; ressalva do ajuste completo | concluído | [`auditorias/09`](../auditorias/09_red_team_atracao_provimento.md); [`32`](32_sintese_A6_resumo_intro_metodos_conclusao.md); `output/tema_trabalho/A6_manifesto_reproducao.json` |
 | Guia de conferência manual | concluído | [`auditorias/17`](../auditorias/17_guia_conferencia_manual_ivs.md) |
+| Protocolo multi-outcome congelado (E6–E9) e políticas nos mesmos cortes | concluído | [`40`](40_protocolo_multioutcome_rdd_bolsa.md); [`auditorias/18`](../auditorias/18_politicas_nos_mesmos_cortes_ivs.md) |
+| D3(b): reestimação com a base oficial e registro do failure mode | concluído | [`auditorias/19`](../auditorias/19_reestimacao_base_oficial_failure_mode.md) |
+| Outcomes do funil dos ciclos 1–3, construídos às cegas | concluído | [`41a`](41a_construcao_outcomes_funil.md); `output/rdd_bolsa/outcomes/` |
+| E6: F0, F1, F2, F4 e P1 (inclui o preenchimento do ciclo 2, D2) | concluído | [`41`](41_resultados_E6_funil.md); `output/rdd_bolsa/E6_*` |
+| E9: escolha revelada dos candidatos (secundário, exploratório) | concluído | [`42`](42_resultados_E9_escolha.md); `output/rdd_bolsa/E9_*` |
+| E7: DiRD no CNES nacional (F3, P2) | concluído | [`43`](43_resultados_E7_dird_cnes.md); `output/rdd_bolsa/E7_*` |
+| E8: síntese, Holm das primárias e proposta de revisão da hipótese | concluído | [`44`](44_sintese_rdd_bolsa_multioutcome.md); `output/rdd_bolsa/E8_*`; `scripts/rdd_bolsa/15_sintese_E8.py` |
 
 O relatório tem:
 - **ordem:** a hipótese primeiro e a presença como secundário;
@@ -94,7 +113,14 @@ Ipea (0,15 a 0,55) e satura fora desse intervalo; essa escolha é ajustável. Na
 versão do arquivo antigo, os 101 municípios do lado errado do corte têm
 contorno preto.
 
-### D2. Preenchimento do ciclo 2 (opcional) — em aberto
+### D2. Preenchimento do ciclo 2 (opcional) — feito em 18/10/2026
+
+> **Feito.** O autor decidiu rodar. O preenchimento do ciclo 2 (F1.3 e F1.4 em
+> V2) entrou no E6, sob o protocolo 40, com o funil reconstruído às cegas
+> ([`41a`](41a_construcao_outcomes_funil.md)) e a 1ª chamada obtida de fonte
+> oficial (a11). Resultado em [`41`](41_resultados_E6_funil.md) e na síntese
+> [`44`](44_sintese_rdd_bolsa_multioutcome.md). O texto abaixo é o registro da
+> decisão.
 
 Hoje o ciclo 2 só tem o outcome de presença, porque o funil por célula só foi
 reconciliado para o ciclo 1.
@@ -128,6 +154,11 @@ reconciliado para o ciclo 1.
 
 ## 4. O que falta
 
+> **Em 19/10/2026:** o que falta é decisão do autor — a revisão da hipótese
+> (doc [`44`](44_sintese_rdd_bolsa_multioutcome.md), §7, marcada como proposta)
+> e o conteúdo canônico da apresentação a partir do doc 44. A atualização dos
+> artigos com a síntese é tarefa posterior. Os itens abaixo são de 18/10/2026.
+
 1. **Conteúdo canônico da apresentação** de 28/10 em `docs/07_apresentacoes/`,
    como exige o `CLAUDE.md`, a partir do relatório e da figura escolhida. O
    deck é derivado desse conteúdo.
@@ -141,8 +172,10 @@ reconciliado para o ciclo 1.
 
 ## 5. Depois do dia 28
 
-- D2, se decidido. D3(b) foi aplicada em 18/10/2026.
-- Diferença em descontinuidades com a oferta no CNES, o único desenho
-  alternativo candidato ([`39`](39_inferencia_alternativa_rdd_bolsa.md), §5).
-  Muda o outcome e exige protocolo próprio congelado antes de olhar os dados.
+- ~~D2, se decidido.~~ D2 e D3(b) feitos em 18/10/2026.
+- ~~Diferença em descontinuidades com a oferta no CNES~~ — feita no E7, sob o
+  protocolo 40 congelado antes de abrir os dados
+  ([`43`](43_resultados_E7_dird_cnes.md)).
 - O ciclo 3 continua congelado até a maturidade dos dados.
+- As propostas de revisão da hipótese (doc 44, §7) dependem de decisão do
+  autor; os pedidos externos de dados continuam fora.
