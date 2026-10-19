@@ -953,51 +953,62 @@ f / (1 − p), e o salto fica entre esses
 valores menos (ou, se o lado aparado é o de baixo, o lado de cima menos) a taxa
 do outro lado. Na margem extensiva, a seleção é ter pelo menos uma vaga no
 quadro e o outcome é a fração das vagas oferecidas que foi preenchida, com o
-aparo de Lee pelo topo e pela base; como o aparo usa a reta local, ali os
+aparo de Lee pelo topo e pela base; municípios com a mesma fração (muitos
+zeros e uns) perdem a mesma parte do peso quando estão na fronteira do aparo,
+sem depender da ordem das linhas ([auditoria do adendo](../auditorias/22_auditoria_abertura_vagas_NA.md));
+como o aparo usa a reta local, ali os
 limites podem não conter o salto sem aparo (fica anotado na linha). O IC é o de Imbens e Manski, com o erro
 padrão de cada limite tirado de um bootstrap de municípios com semente fixa
 (contagem de reamostras na tabela de validações). "Salto ingênuo" é a
 diferença entre os lados sem aparo.
+
+A taxa de seleção principal é a média municipal de vagas por habitante, a
+mesma medida do A1, como o adendo pede. A variante com seleção ponderada pela
+população (fora do adendo) é a que mede a fração da massa de vagas, coerente
+com a taxa de preenchimento ponderada pelas vagas; as duas só coincidem se a
+intensidade de abertura não depender do porte do município. A variante
+ponderada é instável perto do corte (intercepto negativo e muitas reamostras
+inválidas em algumas linhas) e não substitui a principal.
 
 <!-- NA:a2:inicio -->
 | Margem | Variante | Ciclo | Corte | Seleção abaixo / acima | p aparado (lado) | Preench. abaixo / acima | Salto ingênuo [IC 95%] | Limites de Lee | IC Imbens–Manski | Reamostras válidas |
 |---|---|---|---|---|---|---|---|---|---|---|
 | intensiva (vaga) | principal | 1 | 0,300 | 0,044 / 0,045 por 10 mil | 0,8 % (acima) | 34,2 / 19,9 % | −14,3 p.p. [−35,0; +6,4] | [−14,9; −14,1] | [−53,2; +24,0] | 987 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1 | 0,300 | −0,003 / 0,086 por 10 mil | — | 34,2 / 19,9 % | −14,3 p.p. [−35,0; +6,4] | [—; —] | [—; —] | 500 / 999 |
-| extensiva (abertura) | principal | 1 | 0,300 | 0,061 / 0,049 (prob.) | 20,2 % (abaixo) | — | −16,1 p.p. [−48,6; +16,3] | [−23,6; +12,9] | [−62,9; +45,2] | 995 / 999 |
+| extensiva (abertura) | principal | 1 | 0,300 | 0,061 / 0,049 (prob.) | 20,2 % (abaixo) | — | −16,1 p.p. [−48,6; +16,3] | [−26,1; +12,7] | [−64,9; +44,9] | 997 / 999 |
 | intensiva (vaga) | principal | 1 | 0,400 | 0,184 / 0,049 por 10 mil | 73,4 % (abaixo) | 30,6 / 30,9 % | +0,3 p.p. [−25,1; +25,7] | [−69,1; +30,9] | [−107,2; +52,4] | 947 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1 | 0,400 | 0,209 / 0,066 por 10 mil | 68,2 % (abaixo) | 30,6 / 30,9 % | +0,3 p.p. [−25,1; +25,7] | [−65,4; +30,9] | [−109,1; +51,6] | 944 / 999 |
-| extensiva (abertura) | principal | 1 | 0,400 | 0,131 / 0,078 (prob.) | 40,7 % (abaixo) | — | −3,3 p.p. [−30,1; +23,6] | [−18,2; +14,7] | [−46,7; +40,3] | 999 / 999 |
+| extensiva (abertura) | principal | 1 | 0,400 | 0,131 / 0,078 (prob.) | 40,7 % (abaixo) | — | −3,3 p.p. [−30,1; +23,6] | [−18,7; +15,3] | [−47,5; +40,8] | 999 / 999 |
 | intensiva (vaga) | principal | 1 | empilhado | 0,105 / 0,046 por 10 mil | 56,4 % (abaixo) | 31,8 / 23,8 % | −8,0 p.p. [−24,5; +8,5] | [−49,1; +23,8] | [−87,1; +43,0] | 990 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1 | empilhado | 0,053 / 0,076 por 10 mil | 30,2 % (acima) | 31,5 / 23,5 % | −8,0 p.p. [−24,5; +8,5] | [−31,5; +2,1] | [−59,8; +37,4] | 975 / 999 |
-| extensiva (abertura) | principal | 1 | empilhado | 0,092 / 0,061 (prob.) | 33,1 % (abaixo) | — | −9,1 p.p. [−29,8; +11,7] | [−22,0; +15,4] | [−47,5; +36,3] | 999 / 999 |
+| extensiva (abertura) | principal | 1 | empilhado | 0,092 / 0,061 (prob.) | 33,1 % (abaixo) | — | −9,1 p.p. [−29,8; +11,7] | [−23,2; +15,5] | [−48,5; +36,4] | 999 / 999 |
 | intensiva (vaga) | principal | 2 | 0,300 | 0,069 / 0,074 por 10 mil | 6,8 % (acima) | 55,8 / 28,0 % | −27,8 p.p. [−49,0; −6,7] | [−33,1; −25,8] | [−60,4; +20,2] | 989 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 2 | 0,300 | 0,037 / 0,142 por 10 mil | 73,8 % (acima) | 55,8 / 28,0 % | −27,8 p.p. [−49,0; −6,7] | [−55,8; +44,2] | [−74,8; +93,2] | 837 / 999 |
-| extensiva (abertura) | principal | 2 | 0,300 | 0,093 / 0,091 (prob.) | 1,5 % (abaixo) | — | −19,3 p.p. [−47,4; +8,8] | [−19,1; −17,5] | [−49,1; +23,1] | 999 / 999 |
+| extensiva (abertura) | principal | 2 | 0,300 | 0,093 / 0,091 (prob.) | 1,5 % (abaixo) | — | −19,3 p.p. [−47,4; +8,8] | [−20,0; −17,6] | [−50,0; +22,0] | 999 / 999 |
 | intensiva (vaga) | principal | 2 | 0,400 | 0,311 / 0,127 por 10 mil | 59,0 % (abaixo) | 55,5 / 65,0 % | +9,5 p.p. [−15,8; +34,8] | [−35,0; +65,0] | [−68,0; +101,7] | 999 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 2 | 0,400 | 0,404 / 0,203 por 10 mil | 49,6 % (abaixo) | 55,5 / 65,0 % | +9,5 p.p. [−15,8; +34,8] | [−35,0; +53,4] | [−64,7; +94,8] | 999 / 999 |
-| extensiva (abertura) | principal | 2 | 0,400 | 0,101 / 0,105 (prob.) | 3,7 % (acima) | — | +13,1 p.p. [−13,2; +39,5] | [+10,6; +11,2] | [−19,5; +45,9] | 999 / 999 |
+| extensiva (abertura) | principal | 2 | 0,400 | 0,101 / 0,105 (prob.) | 3,7 % (acima) | — | +13,1 p.p. [−13,2; +39,5] | [+11,3; +12,2] | [−18,2; +46,8] | 999 / 999 |
 | intensiva (vaga) | principal | 2 | empilhado | 0,174 / 0,096 por 10 mil | 44,6 % (abaixo) | 54,5 / 41,7 % | −12,9 p.p. [−30,6; +4,9] | [−56,7; +23,7] | [−85,2; +61,5] | 999 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 2 | empilhado | 0,135 / 0,153 por 10 mil | 11,6 % (acima) | 52,6 / 39,7 % | −12,9 p.p. [−30,6; +4,9] | [−20,7; −7,7] | [−51,1; +32,0] | 996 / 999 |
-| extensiva (abertura) | principal | 2 | empilhado | 0,096 / 0,097 (prob.) | 0,9 % (acima) | — | −4,4 p.p. [−24,0; +15,2] | [−5,3; −4,7] | [−27,8; +24,2] | 999 / 999 |
+| extensiva (abertura) | principal | 2 | empilhado | 0,096 / 0,097 (prob.) | 0,9 % (acima) | — | −4,4 p.p. [−24,0; +15,2] | [−4,9; −4,3] | [−27,8; +24,0] | 999 / 999 |
 | intensiva (vaga) | principal | 3 | 0,300 | 0,113 / 0,099 por 10 mil | 12,3 % (abaixo) | 21,4 / 10,6 % | −10,7 p.p. [−24,1; +2,6] | [−13,7; +0,3] | [−36,6; +19,2] | 998 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 3 | 0,300 | 0,127 / 0,336 por 10 mil | 62,1 % (acima) | 21,4 / 10,6 % | −10,7 p.p. [−24,1; +2,6] | [−21,4; +6,7] | [−35,0; +51,7] | 975 / 999 |
-| extensiva (abertura) | principal | 3 | 0,300 | 0,142 / 0,099 (prob.) | 30,0 % (abaixo) | — | −2,4 p.p. [−17,1; +12,4] | [−7,1; +8,5] | [−30,4; +19,9] | 999 / 999 |
+| extensiva (abertura) | principal | 3 | 0,300 | 0,142 / 0,099 (prob.) | 30,0 % (abaixo) | — | −2,4 p.p. [−17,1; +12,4] | [−8,6; +8,5] | [−31,6; +19,6] | 999 / 999 |
 | intensiva (vaga) | principal | 3 | 0,400 | 0,391 / 0,272 por 10 mil | 30,5 % (abaixo) | 18,4 / 16,5 % | −1,9 p.p. [−15,6; +11,8] | [−10,0; +16,5] | [−32,5; +31,2] | 999 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 3 | 0,400 | 0,405 / 0,420 por 10 mil | 3,5 % (acima) | 18,4 / 16,5 % | −1,9 p.p. [−15,6; +11,8] | [−4,9; −1,3] | [−23,3; +16,4] | 999 / 999 |
-| extensiva (abertura) | principal | 3 | 0,400 | 0,217 / 0,221 (prob.) | 1,8 % (acima) | — | −12,3 p.p. [−27,5; +2,9] | [−12,3; −11,3] | [−28,5; +7,3] | 999 / 999 |
+| extensiva (abertura) | principal | 3 | 0,400 | 0,217 / 0,221 (prob.) | 1,8 % (acima) | — | −12,3 p.p. [−27,5; +2,9] | [−12,5; −12,2] | [−28,8; +7,1] | 999 / 999 |
 | intensiva (vaga) | principal | 3 | empilhado | 0,234 / 0,174 por 10 mil | 25,6 % (abaixo) | 20,2 / 12,8 % | −7,4 p.p. [−17,4; +2,5] | [−14,4; +12,8] | [−31,4; +27,1] | 999 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 3 | empilhado | 0,202 / 0,356 por 10 mil | 43,1 % (acima) | 20,1 / 12,7 % | −7,4 p.p. [−17,4; +2,5] | [−20,1; +2,2] | [−30,0; +21,1] | 999 / 999 |
-| extensiva (abertura) | principal | 3 | empilhado | 0,175 / 0,153 (prob.) | 12,7 % (abaixo) | — | −8,1 p.p. [−18,9; +2,8] | [−10,2; +3,0] | [−21,5; +14,5] | 999 / 999 |
+| extensiva (abertura) | principal | 3 | empilhado | 0,175 / 0,153 (prob.) | 12,7 % (abaixo) | — | −8,1 p.p. [−18,9; +2,8] | [−10,5; +2,9] | [−21,7; +14,6] | 999 / 999 |
 | intensiva (vaga) | principal | 1+2+3 | 0,300 | 0,076 / 0,073 por 10 mil | 3,8 % (abaixo) | 36,5 / 20,3 % | −16,3 p.p. [−28,1; −4,5] | [−17,7; −13,8] | [−44,7; +15,2] | 998 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1+2+3 | 0,300 | 0,054 / 0,188 por 10 mil | 71,3 % (acima) | 36,5 / 20,3 % | −16,3 p.p. [−28,1; −4,5] | [−36,5; +34,1] | [−50,0; +85,1] | 943 / 999 |
-| extensiva (abertura) | principal | 1+2+3 | 0,300 | 0,099 / 0,080 (prob.) | 19,1 % (abaixo) | — | −11,2 p.p. [−26,2; +3,8] | [−18,9; +6,8] | [−36,8; +24,9] | 999 / 999 |
+| extensiva (abertura) | principal | 1+2+3 | 0,300 | 0,099 / 0,080 (prob.) | 19,1 % (abaixo) | — | −11,2 p.p. [−26,2; +3,8] | [−17,9; +7,1] | [−36,0; +25,1] | 999 / 999 |
 | intensiva (vaga) | principal | 1+2+3 | 0,400 | 0,295 / 0,149 por 10 mil | 49,4 % (abaixo) | 34,9 / 36,8 % | +1,9 p.p. [−10,4; +14,3] | [−32,1; +36,8] | [−68,5; +54,5] | 999 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1+2+3 | 0,400 | 0,339 / 0,230 por 10 mil | 32,3 % (abaixo) | 34,9 / 36,8 % | +1,9 p.p. [−10,4; +14,3] | [−14,7; +33,0] | [−41,3; +56,1] | 999 / 999 |
-| extensiva (abertura) | principal | 1+2+3 | 0,400 | 0,150 / 0,135 (prob.) | 10,1 % (abaixo) | — | −3,7 p.p. [−17,1; +9,7] | [−6,9; +5,1] | [−21,2; +19,9] | 999 / 999 |
+| extensiva (abertura) | principal | 1+2+3 | 0,400 | 0,150 / 0,135 (prob.) | 10,1 % (abaixo) | — | −3,7 p.p. [−17,1; +9,7] | [−6,7; +4,0] | [−20,8; +18,9] | 999 / 999 |
 | intensiva (vaga) | principal | 1+2+3 | empilhado | 0,171 / 0,105 por 10 mil | 38,3 % (abaixo) | 35,4 / 26,3 % | −9,1 p.p. [−18,4; +0,1] | [−31,2; +26,3] | [−60,9; +47,3] | 999 / 999 |
 | intensiva (vaga) | seleção ponderada pela população (fora do adendo) | 1+2+3 | empilhado | 0,130 / 0,195 por 10 mil | 33,2 % (acima) | 34,6 / 25,5 % | −9,1 p.p. [−18,4; +0,1] | [−34,6; +3,5] | [−52,0; +31,2] | 999 / 999 |
-| extensiva (abertura) | principal | 1+2+3 | empilhado | 0,121 / 0,104 (prob.) | 14,2 % (abaixo) | — | −7,2 p.p. [−17,2; +2,8] | [−12,7; +5,3] | [−24,2; +18,6] | 999 / 999 |
+| extensiva (abertura) | principal | 1+2+3 | empilhado | 0,121 / 0,104 (prob.) | 14,2 % (abaixo) | — | −7,2 p.p. [−17,2; +2,8] | [−11,8; +5,2] | [−23,2; +18,6] | 999 / 999 |
 <!-- NA:a2:fim -->
 
 ### A3 — unidade = célula aberta
@@ -1198,19 +1209,19 @@ ciclos e o ciclo 1):
 **Todos os ciclos empilhados** (corte empilhado):
 - A1, vagas preenchidas por 10 mil habitantes: salto negativo (−0,039; IC 95% [−0,100; +0,023]), que contém zero; vagas oferecidas por 10 mil habitantes: salto negativo (−0,066; IC 95% [−0,159; +0,028]), que contém zero.
 - A2, margem intensiva — vagas: aparando 38,3 % do lado abaixo (o de maior abertura), o salto no preenchimento fica entre −31,2 e +26,3 p.p., intervalo que contém zero; o IC de Imbens–Manski [−60,9; +47,3] contém zero.
-- A2, margem extensiva — municípios: aparando 14,2 % do lado abaixo (o de maior abertura), o salto no preenchimento fica entre −12,7 e +5,3 p.p., intervalo que contém zero; o IC de Imbens–Manski [−24,2; +18,6] contém zero.
+- A2, margem extensiva — municípios: aparando 14,2 % do lado abaixo (o de maior abertura), o salto no preenchimento fica entre −11,8 e +5,2 p.p., intervalo que contém zero; o IC de Imbens–Manski [−23,2; +18,6] contém zero.
 - A3, probabilidade de a célula aberta ser preenchida (efeitos fixos): salto negativo (−4,9 p.p.; IC 95% [−12,9; +3,2]), que contém zero.
 - A4, N1 sem controle das vagas: sem covariáveis: salto negativo (−1,45; IC 95% [−2,90; −0,01]), que exclui zero; com covariáveis pré-determinadas: salto negativo (−0,98; IC 95% [−2,00; +0,03]), que contém zero; vagas preenchidas por 10 mil hab. com covariáveis: salto negativo (−0,046; IC 95% [−0,107; +0,015]), que contém zero.
-- **Leitura conjunta (todos os ciclos empilhados):** nenhuma leitura por habitante (A1), nas vagas sempre abertas (A2), por célula aberta (A3) ou com covariáveis pré-determinadas (A4) distingue de zero, com a precisão relatada, um efeito do pacote do corte sobre o preenchimento, nem sobre a abertura por habitante; o único salto que exclui zero é o de N1 em contagem por município sem covariáveis (S-b), que deixa de excluir zero com o porte e a capacidade instalada pré-existentes e não aparece por habitante: é compatível com diferença de porte entre os lados do corte, não com efeito sobre o preenchimento. É descrição com a precisão relatada, do pacote do corte, e não efeito da participação no PMM-E.
+- **Leitura conjunta (todos os ciclos empilhados):** nenhuma leitura por habitante (A1), nas vagas ou nos municípios sempre abertos (A2), por célula aberta (A3) ou com covariáveis pré-determinadas (A4) distingue de zero, com a precisão relatada, um efeito do pacote do corte sobre o preenchimento, nem sobre a abertura por habitante; isso é falta de evidência, não prova de efeito nulo; entre as linhas empilhadas desta leitura, só N1 em contagem por município sem covariáveis (S-b) exclui zero (−1,45 vagas por município); com o log da população e os estoques do CNES pré-programa o salto passa a −0,98 e o IC passa a conter zero, e por habitante (A1) o salto não exclui zero. Isso é compatível com diferenças pré-existentes de porte ou de capacidade instalada entre os lados do corte, mas não as demonstra nem mostra que o efeito sobre o preenchimento seja zero; com um só coeficiente para as covariáveis (fora do adendo) o salto, −1,39, ainda exclui zero: a leitura depende da especificação das covariáveis; por corte isolado (não empilhado), excluem zero: A1, vagas preenchidas por 10 mil hab. no corte 0,300 (−0,016; IC 95% [−0,029; −0,003]) (leitura por corte, sem correção por comparações múltiplas). É descrição com a precisão relatada, do pacote do corte, e não efeito da participação no PMM-E.
 
 **Ciclo 1** (corte empilhado):
 - A1, vagas preenchidas por 10 mil habitantes: salto negativo (−0,013; IC 95% [−0,032; +0,005]), que contém zero; vagas oferecidas por 10 mil habitantes: salto negativo (−0,059; IC 95% [−0,132; +0,014]), que contém zero.
 - A2, margem intensiva — vagas: aparando 56,4 % do lado abaixo (o de maior abertura), o salto no preenchimento fica entre −49,1 e +23,8 p.p., intervalo que contém zero; o IC de Imbens–Manski [−87,1; +43,0] contém zero.
-- A2, margem extensiva — municípios: aparando 33,1 % do lado abaixo (o de maior abertura), o salto no preenchimento fica entre −22,0 e +15,4 p.p., intervalo que contém zero; o IC de Imbens–Manski [−47,5; +36,3] contém zero.
+- A2, margem extensiva — municípios: aparando 33,1 % do lado abaixo (o de maior abertura), o salto no preenchimento fica entre −23,2 e +15,5 p.p., intervalo que contém zero; o IC de Imbens–Manski [−48,5; +36,4] contém zero.
 - A3, probabilidade de a célula aberta ser preenchida (efeitos fixos): salto negativo (−3,3 p.p.; IC 95% [−20,9; +14,2]), que contém zero.
 - A4, N1 sem controle das vagas: sem covariáveis: salto negativo (−0,54; IC 95% [−1,65; +0,57]), que contém zero; com covariáveis pré-determinadas: salto negativo (−0,75; IC 95% [−1,81; +0,31]), que contém zero; vagas preenchidas por 10 mil hab. com covariáveis: salto negativo (−0,016; IC 95% [−0,032; +0,001]), que contém zero.
 - No ciclo 1 a oferta não pode ter respondido à faixa em si (protocolo 48, §8), e condicionar nas vagas oferecidas é mais defensável: S-a do doc 49 (N1 dado as vagas), vagas por município: salto negativo (−0,36; IC 95% [−1,21; +0,49]), que contém zero.
-- **Leitura conjunta (ciclo 1):** nenhuma leitura por habitante (A1), nas vagas sempre abertas (A2), por célula aberta (A3) ou com covariáveis pré-determinadas (A4) distingue de zero, com a precisão relatada, um efeito do pacote do corte sobre o preenchimento, nem sobre a abertura por habitante. É descrição com a precisão relatada, do pacote do corte, e não efeito da participação no PMM-E.
+- **Leitura conjunta (ciclo 1):** nenhuma leitura por habitante (A1), nas vagas ou nos municípios sempre abertos (A2), por célula aberta (A3) ou com covariáveis pré-determinadas (A4) distingue de zero, com a precisão relatada, um efeito do pacote do corte sobre o preenchimento, nem sobre a abertura por habitante; isso é falta de evidência, não prova de efeito nulo. É descrição com a precisão relatada, do pacote do corte, e não efeito da participação no PMM-E.
 <!-- NA:leitura_conjunta:fim -->
 
 O que estas análises **não** dizem: nada sobre participação no PMM-E, o Agora

@@ -153,12 +153,25 @@ class TestSintetico(unittest.TestCase):
         a = self._amostras()[0]
         D = NA.Desenho(a, self.mapa)
         meu = NA.lee_extensivo_desenho(D, D.janela(a.col("tem_celula")), D.janela(a.col("frac_lim")), None)
-        ref = L.limites_lee_rd(a.s, a.col("frac_lim"), a.col("tem_celula"), 300, NA.H)
+        ref = L.limites_lee_rd(a.s, a.col("frac_lim"), a.col("tem_celula"), 300, NA.H, empates=NA.EMPATES_LEE)
         for x, z in ((meu["inf"], ref["tau_inf"]), (meu["sup"], ref["tau_sup"]), (meu["q"], ref["q_aparo"]),
                      (meu["ingenuo"], ref["tau_selecionados"])):
             self.assertAlmostEqual(x, z, places=9)
         self.assertLessEqual(meu["inf"], meu["ingenuo"])
         self.assertGreaterEqual(meu["sup"], meu["ingenuo"])
+
+    def test_lee_extensivo_nao_depende_da_ordem_das_linhas(self) -> None:
+        # Sintético (auditoria 22): a fração tem muitos empates (0 e 1); embaralhar as linhas não muda os limites.
+        self.assertEqual(NA.EMPATES_LEE, "proporcional")
+        a = self._amostras()[0]
+        perm = np.random.default_rng(11).permutation(len(self.d))
+        b = T23.montar_amostra([(self.d.iloc[perm].reset_index(drop=True), 300, "300")], empilhada=False)
+        r = []
+        for x in (a, b):
+            D = NA.Desenho(x, self.mapa)
+            r.append(NA.lee_extensivo_desenho(D, D.janela(x.col("tem_celula")), D.janela(x.col("frac_lim")), None))
+        self.assertAlmostEqual(r[0]["inf"], r[1]["inf"], places=9)
+        self.assertAlmostEqual(r[0]["sup"], r[1]["sup"], places=9)
 
     def test_bootstrap_deterministico(self) -> None:
         a1 = self._amostras()[0]
@@ -270,6 +283,195 @@ class TestSaidasReais(unittest.TestCase):
         self.assertIn("output/rdd_bolsa/N_estimativas.csv", lidos)
 
 
+OUTC = OUT / "outcomes"
+
+
+def _rdd_independente(s, c, g, cl, y, *, empilhada: bool, cluster: bool, colunas_extra=(), fe=None, peso=None):
+    """Auditoria 22: MQP local linear escrito do zero (não usa rdd_lib nem o script 24). Devolve salto, EP,
+    interceptos do lado de baixo por grupo e pesos omega_g."""
+    x_mil = s - c
+    w = np.where((x_mil > -NA.H) & (x_mil < NA.H), 1 - np.abs(x_mil) / NA.H, 0.0)
+    if peso is not None:
+        w = w * peso
+    t = (x_mil > 0).astype(float)
+    x = x_mil / 1000
+    grupos = sorted(np.unique(g))
+    cols = []
+    for gl in grupos:
+        ind = (g == gl).astype(float)
+        cols += [ind, ind * x, ind * t * x]
+    cols.append(t)
+    n_estr = len(cols)
+    if fe is not None:
+        for nivel in sorted(np.unique(fe))[1:]:
+            cols.append((fe == nivel).astype(float))
+    cols += list(colunas_extra)
+    X = np.column_stack(cols)
+    ok = (w > 0) & np.isfinite(y) & np.isfinite(X).all(axis=1)
+    X, yy, ww = X[ok], y[ok], w[ok]
+    # Colunas de efeito fixo sem variação ou colineares com as estruturais saem, na ordem dada.
+    manter = list(range(n_estr))
+    sw = np.sqrt(ww)
+    for j in range(n_estr, X.shape[1]):
+        M = X[:, manter + [j]] * sw[:, None]
+        M = M / np.where(np.linalg.norm(M, axis=0) > 0, np.linalg.norm(M, axis=0), 1.0)
+        if np.linalg.matrix_rank(M, tol=1e-9) == len(manter) + 1:
+            manter.append(j)
+    X = X[:, manter]
+    B = np.linalg.inv(X.T @ (X * ww[:, None]))
+    b = B @ (X.T @ (ww * yy))
+    e = yy - X @ b
+    sc = X * (ww * e)[:, None]
+    n, k = X.shape
+    iT = n_estr - 1
+    if cluster:
+        _, ids = np.unique(cl[ok], return_inverse=True)
+        G = ids.max() + 1
+        S = np.zeros((G, k))
+        np.add.at(S, ids, sc)
+        V = B @ S.T @ S @ B * (G / (G - 1)) * ((n - 1) / (n - k))
+    else:
+        V = B @ sc.T @ sc @ B * n / (n - k)
+    a = (B[iT] @ X.T) * ww
+    gg, tt = g[ok], t[ok]
+    return {"tau": b[iT], "ep": float(np.sqrt(V[iT, iT])), "const": {gl: b[3 * i] for i, gl in enumerate(grupos)},
+            "omega": {gl: float(np.sum(a[gg == gl] * tt[gg == gl])) for gl in grupos}}
+
+
+@unittest.skipUnless(EST.exists() and (OUTC / "outcomes_U_municipio.parquet").exists(), "saidas ou outcomes ausentes")
+class TestRecalculoIndependenteAuditoria22(unittest.TestCase):
+    """Auditoria 22: linhas principais recalculadas dos parquets da tarefa B, com o IVS oficial dos outcomes."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        import pyarrow.parquet as pq
+        cls.est = pd.read_csv(EST, dtype={"corte": str, "ciclo": str})
+        U = pd.read_parquet(OUTC / "outcomes_U_municipio.parquet")
+        U = U[U["ivs_2010_oficial"].notna()].reset_index(drop=True)
+        VM = pd.read_parquet(OUTC / "outcomes_V_municipio.parquet")
+        C = pd.read_parquet(OUTC / "outcomes_V_celula.parquet")
+        C["vic"] = C["vagas_imediatas"].astype(float) + C["vagas_cr"].astype(float)
+        C["lim"] = np.minimum(C["n_alocados_ch1"].astype(float), C["vic"])
+        t = pq.read_table(ROOT / "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+                          columns=["co_ibge", "competencia", "grupo", "n_profissionais_distintos"],
+                          filters=[("competencia", ">=", "202406"), ("competencia", "<=", "202506"),
+                                   ("grupo", "in", ["alvo_pmme", "generalistas"])]).to_pandas()
+        est_cnes = t.groupby(["co_ibge", "grupo"])["n_profissionais_distintos"].mean().unstack()
+        smap = U.set_index("co_ibge")["ivs_2010_oficial"].mul(1000).round()
+        pop = U.set_index("co_ibge")["populacao_2022"].astype(float)
+        cls.U, cls.V, cls.C = {}, {}, {}
+        for k in (1, 2, 3):
+            v = VM[(VM["ciclo"] == k) & VM["ivs_2010_oficial"].notna()].copy()
+            v["s"] = (v["ivs_2010_oficial"] * 1000).round()
+            v["ofert"] = v["vagas_imediatas"].astype(float) + v["vagas_cr"].astype(float)
+            v["lim"] = v["co_ibge"].map(C[C["ciclo"] == k].groupby("co_ibge")["lim"].sum())
+            v["frac"] = v["lim"] / v["ofert"]
+            v["preench"] = v["n_alocados_ch1"].astype(float)
+            v["log_pop"] = np.log(v["co_ibge"].map(pop))
+            v["alvo"] = v["co_ibge"].map(est_cnes["alvo_pmme"])
+            v["gen"] = v["co_ibge"].map(est_cnes["generalistas"])
+            cls.V[k] = v
+            u = pd.DataFrame({"co_ibge": U["co_ibge"], "s": (U["ivs_2010_oficial"] * 1000).round(),
+                              "pop": U["populacao_2022"].astype(float)})
+            vi = v.set_index("co_ibge")
+            no_q = u["co_ibge"].isin(vi.index)
+            u["ofert"] = U[f"vagas_imediatas_c{k}"].astype(float) + U[f"vagas_cr_c{k}"].astype(float)
+            u["preench"] = np.where(no_q, u["co_ibge"].map(vi["preench"]), 0.0)   # zero verdadeiro fora do quadro
+            u["sel"] = no_q.astype(float)
+            u["frac"] = np.where(no_q, u["co_ibge"].map(vi["frac"]), np.nan)
+            u["ofert_10k"] = u["ofert"] / u["pop"] * 1e4
+            u["preench_10k"] = u["preench"] / u["pop"] * 1e4
+            cls.U[k] = u
+            c_ = C[C["ciclo"] == k].copy()
+            c_["s"] = c_["co_ibge"].map(smap)
+            c_ = c_[c_["s"].notna()].copy()
+            c_["fe"] = f"c{k}_" + c_["cod_curso"].astype(int).astype(str).str.zfill(2)
+            cls.C[k] = c_
+
+    @staticmethod
+    def _emp(frames):
+        partes = [f.assign(c=float(c), g=f"c{k}_{c}") for k, f in frames.items() for c in (300, 400)]
+        d = pd.concat(partes, ignore_index=True)
+        return d, d["s"].to_numpy(float), d["c"].to_numpy(float), d["g"].to_numpy(str), d["co_ibge"].to_numpy(str)
+
+    def _ref(self, **f):
+        m = np.ones(len(self.est), dtype=bool)
+        for k, v in f.items():
+            m &= self.est[k].astype(str) == str(v)
+        self.assertEqual(int(m.sum()), 1, f)
+        return self.est[m].iloc[0]
+
+    def test_a1_a3_a4_principais(self) -> None:
+        d, s, c, g, cl = self._emp(self.U)
+        for oid, col in (("A1_PREENCH_10K", "preench_10k"), ("A1_OFERT_10K", "ofert_10k")):
+            r = _rdd_independente(s, c, g, cl, d[col].to_numpy(float), empilhada=True, cluster=True)
+            ref = self._ref(especificacao="A1", outcome_id=oid, variante="principal", ciclo="1+2+3", corte="empilhado")
+            self.assertAlmostEqual(r["tau"], ref["tau"], places=10)
+            self.assertAlmostEqual(r["ep"], ref["ep"], places=10)
+        d, s, c, g, cl = self._emp(self.C)
+        r = _rdd_independente(s, c, g, cl, (d["n_alocados_ch1"] >= 1).astype(float).to_numpy(), empilhada=True,
+                              cluster=True, fe=d["fe"].to_numpy(str),
+                              colunas_extra=[d["com_vagas_imediatas"].to_numpy(float)])
+        ref = self._ref(especificacao="A3", outcome_id="A3_PREENCHIDA", variante="principal",
+                        populacao="V1+V2+V3 (celulas)", corte="empilhado")
+        self.assertAlmostEqual(r["tau"], ref["tau"], places=10)
+        self.assertAlmostEqual(r["ep"], ref["ep"], places=10)
+        d, s, c, g, cl = self._emp(self.V)
+        extra = [np.where(g == gl, d[cv].to_numpy(float), 0.0) for cv in ("log_pop", "alvo", "gen")
+                 for gl in sorted(np.unique(g))]
+        r = _rdd_independente(s, c, g, cl, d["preench"].to_numpy(float), empilhada=True, cluster=True,
+                              colunas_extra=extra)
+        ref = self._ref(especificacao="A4", outcome_id="N1", variante="com_covariaveis", populacao="V1+V2+V3",
+                        corte="empilhado")
+        self.assertAlmostEqual(r["tau"], ref["tau"], places=8)
+        self.assertAlmostEqual(r["ep"], ref["ep"], places=8)
+
+    def test_a2_limites_empilhados(self) -> None:
+        du, s, c, g, cl = self._emp(self.U)
+        dv, sv, cv, gv, clv = self._emp(self.V)
+        rs = _rdd_independente(s, c, g, cl, du["ofert_10k"].to_numpy(float), empilhada=True, cluster=True)
+        rf = _rdd_independente(sv, cv, gv, clv, dv["frac"].to_numpy(float), empilhada=True, cluster=True,
+                               peso=dv["ofert"].to_numpy(float))
+        s0 = sum(rs["omega"][k] * rs["const"][k] for k in rs["omega"])
+        s1 = s0 + rs["tau"]
+        f0 = sum(rs["omega"][k] * rf["const"][k] for k in rs["omega"])
+        f1 = f0 + rf["tau"]
+        self.assertGreater(s0, s1)                      # mais vagas por habitante abaixo: apara abaixo
+        p = (s0 - s1) / s0
+        lo, hi = max(0.0, (f0 - p) / (1 - p)), min(1.0, f0 / (1 - p))
+        ref = self._ref(especificacao="A2", variante="margem_intensiva_vaga", ciclo="1+2+3", corte="empilhado")
+        self.assertEqual(ref["lee_lado_aparado"], "abaixo")
+        self.assertAlmostEqual(f1 - hi, ref["lee_limite_inf"], places=10)
+        self.assertAlmostEqual(f1 - lo, ref["lee_limite_sup"], places=10)
+        # Extensiva, com empates repartidos proporcionalmente dentro de cada grupo do lado de maior abertura.
+        rsel = _rdd_independente(s, c, g, cl, du["sel"].to_numpy(float), empilhada=True, cluster=True)
+        p0 = sum(rsel["omega"][k] * rsel["const"][k] for k in rsel["omega"])
+        p1 = p0 + rsel["tau"]
+        q = (p0 - p1) / p0 if p0 > p1 else (p1 - p0) / p1
+        x = s - c
+        w = np.where((x > -NA.H) & (x < NA.H), 1 - np.abs(x) / NA.H, 0.0)
+        y = du["frac"].to_numpy(float)
+        lado_t = (x > 0) if p1 >= p0 else (x <= 0)
+        taus = []
+        for de_cima in (True, False):
+            mult = np.ones(len(y))
+            for gl in np.unique(g):
+                m = (du["sel"].to_numpy() == 1) & (w > 0) & (g == gl) & lado_t
+                yv, wv = y[m], w[m]
+                alvo, acum, mm = q * wv.sum(), 0.0, np.ones(m.sum())
+                for v in (np.unique(yv)[::-1] if de_cima else np.unique(yv)):
+                    e = yv == v
+                    if acum >= alvo:
+                        break
+                    mm[e] = 1 - min(alvo - acum, wv[e].sum()) / wv[e].sum()
+                    acum += wv[e].sum()
+                mult[m] = mm
+            taus.append(_rdd_independente(s, c, g, cl, y, empilhada=True, cluster=True, peso=mult)["tau"])
+        ref = self._ref(especificacao="A2", variante="margem_extensiva_abertura", ciclo="1+2+3", corte="empilhado")
+        self.assertAlmostEqual(min(taus), ref["lee_limite_inf"], places=10)
+        self.assertAlmostEqual(max(taus), ref["lee_limite_sup"], places=10)
+
+
 @unittest.skipUnless(DOC.exists() and EST.exists(), "doc 49 ou saidas do adendo ausentes")
 class TestDoc49Adendo(unittest.TestCase):
     def test_blocos_iguais_aos_gerados(self) -> None:
@@ -302,6 +504,15 @@ class TestDoc49Adendo(unittest.TestCase):
         corpo = NA.tabelas_no_doc(DOC.read_text(encoding="utf-8"))["leitura_conjunta"]
         self.assertIn("**Ciclo 1**", corpo)
         self.assertIn("**Todos os ciclos empilhados**", corpo)
+
+    def test_leitura_conjunta_sem_afirmar_efeito_nulo(self) -> None:
+        # Auditoria 22: IC que contém zero é falta de evidência; a regra não afirma "não é efeito" nem "o único".
+        corpo = NA.tabelas_no_doc(DOC.read_text(encoding="utf-8"))["leitura_conjunta"]
+        for frase in ("não com efeito sobre o preenchimento", "o único salto que exclui zero é",
+                      "não o preenchimento das vagas abertas"):
+            self.assertNotIn(frase, corpo)
+        self.assertIn("pacote do corte", corpo)
+        self.assertIn("não efeito da participação no PMM-E", corpo)
 
 
 if __name__ == "__main__":

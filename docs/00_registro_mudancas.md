@@ -8,6 +8,39 @@
 
 ---
 
+## 19/10/2026 — Auditoria independente do adendo §7 do protocolo 48 (auditoria 22)
+
+Motivo: auditoria independente do commit `738a706`, que tem o script 24, as
+saídas `NA_*`, a seção 15 do doc 49, a correção §8 do protocolo
+[`06_execucao/48`](06_execucao/48_protocolo_contagem_vagas_preenchidas.md) e os
+testes. Veredito: aprovado com correções. Das linhas de `NA_estimativas.csv`,
+mudam só as 12 `A2_EXTENSIVA`, porque o aparo de empates passou a ser
+proporcional.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/22_auditoria_abertura_vagas_NA.md`](auditorias/22_auditoria_abertura_vagas_NA.md) | recálculo independente de A1–A4 e do bootstrap do A2; achados e correções C1–C4; conferência das fontes do §8 |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/rdd_lib.py`: opção `empates` no aparo de Lee, com o
+  padrão antigo mantido;
+- `scripts/rdd_bolsa/23_estimar_contagem_vagas.py`: opções de `desenhar`, com
+  padrões que reproduzem as figuras N byte a byte;
+- `scripts/rdd_bolsa/24_abertura_vagas_selecao.py`:
+  - empates proporcionais no Lee extensivo;
+  - regras da leitura conjunta;
+  - ausente que não vira zero;
+  - figuras;
+- saídas `output/rdd_bolsa/NA_*` regeneradas pelo script;
+- `tests/test_abertura_vagas.py`, com o recálculo independente versionado, e
+  `tests/test_rdd_lib.py`.
+
+O doc 49, seção 15, ganhou prosa sobre empates e sobre a variante ponderada
+pela população, e os blocos foram regenerados. O `docs/README.md` e o doc 38
+apontam para a auditoria.
+
 ## 19/10/2026 — Auditoria independente da família N (auditoria 20)
 
 Motivo: auditoria independente do commit `c47380e`, que tem o script 23, as

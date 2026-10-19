@@ -29,7 +29,8 @@ Análises
   * margem extensiva: seleção = ter ≥ 1 vaga (célula) no quadro; outcome =
     vagas preenchidas ÷ oferecidas do município (mesma contagem limitada);
     aparo de Lee pelo topo e pela base (`rdd_lib.limites_lee_rd` com um corte;
-    no empilhado, o mesmo algoritmo com aparo dentro de cada grupo).
+    no empilhado, o mesmo algoritmo com aparo dentro de cada grupo); empates
+    na fronteira do aparo repartidos proporcionalmente (auditoria 22).
   Monotonicidade: a abertura muda num só sentido no corte (toda vaga que
   existiria do lado de menor abertura também existiria do outro).
 - A3: unidade = célula (estabelecimento × curso) do quadro da 1ª chamada,
@@ -124,6 +125,7 @@ SEMENTE_BOOT = (L.SEMENTE, 48, 7)           # semente fixa do bootstrap de munic
 COMP_PRE = ("202406", "202506")             # competências pré-programa do CNES (adendo §7, A4)
 GRUPOS_CNES = {"alvo_pmme": "estoque_alvo_pre", "generalistas": "estoque_gen_pre"}
 ALFA = 0.05
+EMPATES_LEE = "proporcional"                # auditoria 22: aparo de valores empatados sem depender da ordem das linhas
 ROTULO_CORTE = T23.ROTULO_CORTE
 EMPILHADO = T23.EMPILHADO
 CONTRASTE = T23.CONTRASTE
@@ -330,11 +332,11 @@ def carregar_tudo() -> dict:
         c = c[c["s_mil"].notna()].copy()
         if (E6.s_mil_de_ivs(c["ivs_2010_oficial"]) != c["s_mil"]).any():
             raise FalhaValidacao(f"V{k}: IVS da celula difere do IVS oficial do municipio")
-        c["preenchida"] = (c["aloc"] >= 1).astype(float)
+        c["preenchida"] = np.where(c["aloc"].notna(), (c["aloc"] >= 1).astype(float), np.nan)
         c["aloc_por_vaga"] = c["aloc"] / c["vic"]
         c["aloc_por_vaga_lim"] = c["aloc_lim"] / c["vic"]
         c["cand1"] = c["n_cand_1a_opcao"].astype(float)
-        c["tem_cand1"] = (c["n_cand_1a_opcao"] > 0).astype(float)
+        c["tem_cand1"] = np.where(c["n_cand_1a_opcao"].notna(), (c["n_cand_1a_opcao"] > 0).astype(float), np.nan)
         c["preenchida_e3"] = c["f1_3_preenchida_ch1"].astype(float)
         c["fe_curso_ciclo"] = f"c{k}_curso" + c["cod_curso"].astype(int).astype(str).str.zfill(2)
         c["tipo_vaga_imediata"] = c["com_vagas_imediatas"].astype(float)
@@ -565,7 +567,7 @@ def lee_extensivo_desenho(D: Desenho, sel: np.ndarray, y: np.ndarray, m: np.ndar
         for gl, mg in D.mascara_g.items():
             lado = ok & (wk > 0) & mg & (D.t == lado_t)
             if lado.any():
-                mult[lado] = L._multiplicador_aparo(y[lado], wk[lado], q, de_cima)
+                mult[lado] = L._multiplicador_aparo(y[lado], wk[lado], q, de_cima, EMPATES_LEE)
         r = D.ajustar_janela(np.where(ok, y, np.nan), mult, m)
         if r is None:
             return None
@@ -645,7 +647,7 @@ def a2_pontual(meta: dict, aU, aV, mapa: dict) -> tuple[list[dict], dict]:
             "ext": lee_extensivo_desenho(DU, *args["ext"], None)}
     conf_lee = None
     if not aU.empilhada:
-        ref = L.limites_lee_rd(aU.s, ye, sel, aU.corte_unico, H)
+        ref = L.limites_lee_rd(aU.s, ye, sel, aU.corte_unico, H, empates=EMPATES_LEE)
         meu = pont["ext"]
         if meu is None:
             if np.isfinite(ref["tau_inf"]):
@@ -728,8 +730,8 @@ def a2_linhas(meta: dict, e: dict, n_boot: int = N_BOOT) -> list[dict]:
                                     f"semente {list(SEMENTE_BOOT)}"]
         if chave == "ext" and not (r["inf"] - 1e-12 <= float(ln["tau"]) <= r["sup"] + 1e-12):
             notas.append("salto ingenuo fora dos limites: com reta local, aparar pelo quantil do meio-janela muda "
-                         "tambem a inclinacao, e os limites nao contem o ingenuo por construcao (aproximacao (i) de "
-                         "rdd_lib.limites_lee_rd)")
+                         "tambem a inclinacao, e nada garante que os limites contenham o ingenuo (aproximacao (i) de "
+                         "rdd_lib.limites_lee_rd; empates ja repartidos proporcionalmente)")
         if len(bt["inf"]) < 0.9 * n_boot:
             notas.append("menos de 90% das reamostras validas: EP dos limites menos confiavel")
         ln["nota"] = _juntar(ln["nota"], *notas)
@@ -980,7 +982,10 @@ COMO_LER_A1 = (
     "linhas município × ciclo. A reta é a média ponderada das retas de cada ciclo × corte (local linear, kernel "
     "triangular, h = 0,050), e a faixa clara é o IC 95%. A seta laranja é o salto comum no corte, com valor, IC 95% "
     "(CR1 por município) e p no título. É o efeito total da faixa por habitante, sem condicionar em ter aberto vaga. "
-    "O salto mede o pacote do corte (bolsa anunciada +R$ 5 mil e outras regras que mudam no mesmo IVS). EMPIRICO.")
+    "O salto mede o pacote do corte (bolsa anunciada +R$ 5 mil e outras regras que mudam no mesmo IVS). Seta para "
+    "baixo: do lado de bolsa maior há, no corte, menos vagas por habitante que do lado de bolsa menor. Se o IC 95% "
+    "do título contém zero, os dados não distinguem o salto de zero, o que não prova que ele seja zero. Resultado "
+    "descritivo do pacote do corte, não efeito da participação no PMM-E. EMPIRICO.")
 COMO_LER_A3 = (
     "COMO LER. Aqui a unidade é a célula (estabelecimento × curso) do quadro da 1ª chamada, nos ciclos 1 a 3 e nos "
     "cortes 0,300 e 0,400 empilhados; o eixo horizontal é a distância do IVS 2010 oficial do município da célula ao "
@@ -990,7 +995,10 @@ COMO_LER_A3 = (
     "células de uma faixa de 0,010 de distância; o tamanho conta células. A faixa clara é o IC 95% da reta (CR1 por "
     "município), e a seta laranja é o salto no corte, com valor em pontos percentuais, IC 95% e p no título. Só "
     "entram células que foram abertas: o salto é condicional à abertura, e os limites de Lee do A2 dizem quanto a "
-    "seleção na abertura poderia movê-lo. O tipo de prática não existe no quadro e não entra. EMPIRICO.")
+    "seleção na abertura poderia movê-lo. O tipo de prática não existe no quadro e não entra. Seta para baixo: do "
+    "lado de bolsa maior, a célula aberta tem, no corte, menor probabilidade de ser preenchida. Se o IC 95% do título "
+    "contém zero, os dados não distinguem o salto de zero, o que não prova que ele seja zero. O salto mede o pacote do "
+    "corte (bolsa anunciada +R$ 5 mil e outras regras no mesmo IVS), não a participação no PMM-E. EMPIRICO.")
 
 
 def gerar_figuras(dados: dict, dir_fig: Path) -> list[dict]:
@@ -1017,7 +1025,8 @@ def gerar_figuras(dados: dict, dir_fig: Path) -> list[dict]:
     nome = "NA_A1_por_10k_empilhado.png"
     T23.desenhar(paineis, "A1 — vagas preenchidas e oferecidas por 10 mil habitantes, todos os municípios (U), ciclos "
                           "e cortes empilhados", "Vagas por 10 mil habitantes", "distância ao corte (IVS 2010 oficial − corte)",
-                 COMO_LER_A1, dir_fig / nome, unidade_n=("linha município × ciclo", "linhas município × ciclo"))
+                 COMO_LER_A1, dir_fig / nome, unidade_n=("linha município × ciclo", "linhas município × ciclo"),
+                 tamanhos_leg="auto", rotulo_salto="topo")
     feitas.append({"arquivo": rotulo(dir_fig / nome), "paineis": meta})
     # A3: célula preenchida, empilhado, com efeitos fixos (especificação principal).
     a = T23.montar_amostra([(CK[k], c, f"c{k}_{c}") for k in ks for c in CORTES], empilhada=True)
@@ -1032,7 +1041,7 @@ def gerar_figuras(dados: dict, dir_fig: Path) -> list[dict]:
                  "A3 — probabilidade de a célula aberta ser preenchida na 1ª chamada (efeitos fixos de curso × ciclo e "
                  "tipo de vaga)", "Probabilidade de célula preenchida\n(ajustada pelos efeitos fixos)",
                  "distância ao corte (IVS 2010 oficial do município − corte)", COMO_LER_A3, dir_fig / nome,
-                 unidade_n=("célula", "células"))
+                 unidade_n=("célula", "células"), tamanhos_leg="auto", rotulo_salto="topo")
     feitas.append({"arquivo": rotulo(dir_fig / nome), "paineis": [
         {"outcome_id": "A3_PREENCHIDA", "populacao": rot_c(ks), "ciclo": "+".join(map(str, ks)), "corte": EMPILHADO,
          "especificacao": "A3", "variante": "principal", "tau": r["tau"], "ic95_inf": r["ic95_inf"],
@@ -1155,11 +1164,28 @@ def leitura_conjunta(est: pd.DataFrame, n_est: pd.DataFrame | None) -> str:
                    corte=EMPILHADO)
         a4f = _uma(est, especificacao="A4", outcome_id="A1_PREENCH_10K", variante="com_covariaveis", ciclo=ck,
                    corte=EMPILHADO, populacao="U")
+        a4u = _uma(est, especificacao="A4", outcome_id="N1", variante="com_covariaveis_coeficiente_unico",
+                   populacao=popv, corte=EMPILHADO)
+        # Auditoria 22: cortes isolados do mesmo ciclo que excluem zero (A1 e A3), para a leitura do empilhado não
+        # esconder um corte.
+        cortes_isolados = []
+        for c in CORTES:
+            for nome_c, r in (("A1, vagas preenchidas por 10 mil hab.",
+                               _uma(est, especificacao="A1", outcome_id="A1_PREENCH_10K", variante="principal",
+                                    ciclo=ck, corte=ROTULO_CORTE[c])),
+                              ("A1, vagas oferecidas por 10 mil hab.",
+                               _uma(est, especificacao="A1", outcome_id="A1_OFERT_10K", variante="principal",
+                                    ciclo=ck, corte=ROTULO_CORTE[c])),
+                              ("A3, célula preenchida",
+                               _uma(est, especificacao="A3", outcome_id="A3_PREENCHIDA", variante="principal",
+                                    populacao=popc, corte=ROTULO_CORTE[c]))):
+                if r is not None and _exclui(r["ic95_inf"], r["ic95_sup"]):
+                    cortes_isolados.append(f"{nome_c} no corte {_corte(r)} ({_tau(r)}; IC 95% {_icr(r)})")
         sa = None
         if n_est is not None:
             sa = _uma(n_est, especificacao="S-a", variante="principal", outcome_id="N1", populacao=popv, corte=EMPILHADO)
         blocos[rotulo_c] = {"a1f": a1f, "a1o": a1o, "a2i": a2i, "a2e": a2e, "a3": a3, "a4s": a4s, "a4b": a4b,
-                            "a4f": a4f, "sa": sa}
+                            "a4f": a4f, "a4u": a4u, "sa": sa, "isolados": cortes_isolados}
     out = []
     for rotulo_c, b in blocos.items():
         out.append(f"**{rotulo_c.capitalize()}** (corte empilhado):")
@@ -1183,31 +1209,49 @@ def leitura_conjunta(est: pd.DataFrame, n_est: pd.DataFrame | None) -> str:
         eo = _exclui(a1o["ic95_inf"], a1o["ic95_sup"])
         e3 = _exclui(a3["ic95_inf"], a3["ic95_sup"])
         eim = a2i is not None and _exclui(a2i["ic_im_inf"], a2i["ic_im_sup"])
+        # Auditoria 22: a regra cobre todas as linhas que a frase "nenhuma leitura" cita (A2 extensiva e A4 por
+        # habitante incluídos).
+        eie = b["a2e"] is not None and _exclui(b["a2e"]["ic_im_inf"], b["a2e"]["ic_im_sup"])
         eb = b["a4b"] is not None and _exclui(b["a4b"]["ic95_inf"], b["a4b"]["ic95_sup"])
         ec = b["a4s"] is not None and _exclui(b["a4s"]["ic95_inf"], b["a4s"]["ic95_sup"])
+        efc = b["a4f"] is not None and _exclui(b["a4f"]["ic95_inf"], b["a4f"]["ic95_sup"])
+        eu = b["a4u"] is not None and _exclui(b["a4u"]["ic95_inf"], b["a4u"]["ic95_sup"])
         if ef and e3 and eim and np.sign(a1f["tau"]) == np.sign(a3["tau"]):
             concl = ("as três leituras do preenchimento (por habitante, nas vagas sempre abertas e por célula aberta) "
                      "excluem zero com o mesmo sinal: há indício de efeito do pacote do corte sobre o preenchimento, "
                      "não só sobre a abertura")
         elif eo and not (e3 or eim):
             concl = ("a oferta por habitante salta, mas o preenchimento condicional à abertura não se distingue de "
-                     "zero: o que muda no corte é a abertura ou o porte, não o preenchimento das vagas abertas")
-        elif not (ef or eo or e3 or eim or ec):
-            concl = ("nenhuma leitura por habitante (A1), nas vagas sempre abertas (A2), por célula aberta (A3) ou com "
-                     "covariáveis pré-determinadas (A4) distingue de zero, com a precisão relatada, um efeito do pacote "
-                     "do corte sobre o preenchimento, nem sobre a abertura por habitante")
+                     "zero com a precisão relatada: o sinal está na abertura ou no porte, e não há evidência de "
+                     "mudança no preenchimento das vagas abertas")
+        elif not (ef or eo or e3 or eim or eie or ec or efc):
+            concl = ("nenhuma leitura por habitante (A1), nas vagas ou nos municípios sempre abertos (A2), por célula "
+                     "aberta (A3) ou com covariáveis pré-determinadas (A4) distingue de zero, com a precisão relatada, "
+                     "um efeito do pacote do corte sobre o preenchimento, nem sobre a abertura por habitante; isso é "
+                     "falta de evidência, não prova de efeito nulo")
             if eb:
-                concl += ("; o único salto que exclui zero é o de N1 em contagem por município sem covariáveis (S-b), "
-                          "que deixa de excluir zero com o porte e a capacidade instalada pré-existentes e não aparece "
-                          "por habitante: é compatível com diferença de porte entre os lados do corte, não com efeito "
-                          "sobre o preenchimento")
+                concl += ("; entre as linhas empilhadas desta leitura, só N1 em contagem por município sem covariáveis "
+                          f"(S-b) exclui zero ({_tau(b['a4b'])} vagas por município); com o log da população e os "
+                          f"estoques do CNES pré-programa o salto passa a {_tau(b['a4s'])} e o IC passa a conter zero, "
+                          "e por habitante "
+                          "(A1) o salto não exclui zero. Isso é compatível com diferenças pré-existentes de porte ou de "
+                          "capacidade instalada entre os lados do corte, mas não as demonstra nem mostra que o efeito "
+                          "sobre o preenchimento seja zero")
+                if eu:
+                    concl += (f"; com um só coeficiente para as covariáveis (fora do adendo) o salto, {_tau(b['a4u'])}, "
+                              "ainda exclui zero: a leitura depende da especificação das covariáveis")
         else:
             partes = [n for n, v in (("o preenchimento por habitante (A1)", ef), ("a oferta por habitante (A1)", eo),
                                      ("o preenchimento por célula aberta (A3)", e3),
                                      ("o IC de Imbens–Manski da margem intensiva (A2)", eim),
-                                     ("N1 com covariáveis pré-determinadas (A4)", ec)) if v]
+                                     ("o IC de Imbens–Manski da margem extensiva (A2)", eie),
+                                     ("N1 com covariáveis pré-determinadas (A4)", ec),
+                                     ("as vagas preenchidas por habitante com covariáveis (A4)", efc)) if v]
             concl = ("as leituras não concordam: só " + ", ".join(partes) + " exclui(em) zero; não há base para "
                      "separar efeito sobre o preenchimento de efeito sobre a abertura")
+        if b["isolados"]:
+            concl += ("; por corte isolado (não empilhado), excluem zero: " + "; ".join(b["isolados"])
+                      + " (leitura por corte, sem correção por comparações múltiplas)")
         out.append(f"- **Leitura conjunta ({rotulo_c}):** {concl}. É descrição com a precisão relatada, do pacote do "
                    f"corte, e não efeito da participação no PMM-E.")
         out.append("")
@@ -1438,7 +1482,9 @@ def main(argv: list[str] | None = None) -> int:
             "ponderado pela populacao, fora do adendo.",
             "A2 extensiva: rdd_lib.limites_lee_rd com um corte (selecao = ter >= 1 celula, que no quadro equivale a ter "
             ">= 1 vaga; outcome = fracao limitada); no empilhado, o mesmo algoritmo com a fracao de aparo comum e o "
-            "aparo dentro de cada grupo ciclo x corte.",
+            "aparo dentro de cada grupo ciclo x corte. Empates na fronteira do aparo repartidos proporcionalmente "
+            "(empates='proporcional', auditoria 22): a fracao limitada tem muitos 0 e 1, e o aparo pela ordem das "
+            "linhas (codigo IBGE) escolhia municipios por UF.",
             "A2 extensiva: o aparo usa o quantil ponderado do meio-janela com reta local (aproximacao (i) da "
             "rdd_lib); por isso, ao contrario da margem intensiva, os limites podem nao conter o salto ingenuo, o que "
             "fica anotado na linha.",
@@ -1466,6 +1512,13 @@ def main(argv: list[str] | None = None) -> int:
              "situacao": "a rdd_lib so tem limites_lee_rd com um corte",
              "resolucao": "algoritmo identico implementado aqui (conferido contra a rdd_lib em todo corte unico); no "
                           "empilhado, aparo por grupo com fracao comum"},
+            {"data": "2026-10-19", "item": "empates no aparo do Lee extensivo (auditoria 22)",
+             "situacao": "a versao auditada aparava, entre municipios com a mesma fracao (muitos 0 e 1), os que vinham "
+                         "antes na ordem das linhas (codigo IBGE, isto e, por UF), o que mudava a inclinacao local e "
+                         "deixava 4 de 12 linhas com o salto ingenuo fora dos limites",
+             "resolucao": "rdd_lib.limites_lee_rd e _multiplicador_aparo ganharam empates='proporcional' (padrao "
+                          "'ordem' inalterado para os scripts 17 e 18); o A2 extensivo usa a reparticao proporcional; "
+                          "especificacao, amostra e estimador do §7 inalterados"},
         ],
         "contagens": q,
         "validacoes": {"populacoes": dados["conf_pop"], "desenho_rapido_igual_rdd_lib": True,

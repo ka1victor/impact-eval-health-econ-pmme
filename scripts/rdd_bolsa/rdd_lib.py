@@ -1311,8 +1311,34 @@ def qvalores_bky(pvalores) -> np.ndarray:
 # 8. Limites de Lee no corte
 # ---------------------------------------------------------------------------
 
-def _multiplicador_aparo(y: np.ndarray, w: np.ndarray, q: float, de_cima: bool) -> np.ndarray:
-    """Multiplicador em [0, 1] que retira exatamente a fração q da massa de peso, pelo topo ou pela base de y."""
+EMPATES_APARO = ("ordem", "proporcional")
+
+
+def _multiplicador_aparo(y: np.ndarray, w: np.ndarray, q: float, de_cima: bool, empates: str = "ordem") -> np.ndarray:
+    """Multiplicador em [0, 1] que retira exatamente a fração q da massa de peso, pelo topo ou pela base de y.
+
+    `empates="ordem"` (padrão, comportamento original): entre valores iguais de y, apara primeiro as linhas que
+    vêm antes no vetor. `empates="proporcional"` (auditoria 22): o bloco de valores iguais que cruza a fronteira
+    do aparo perde a mesma fração de peso em todas as suas linhas, sem depender da ordem das linhas (que, ordenadas
+    pelo código IBGE, carregam a UF e a posição no IVS). Os dois coincidem quando não há empate na fronteira.
+    """
+    if empates not in EMPATES_APARO:
+        raise ValueError(f"empates deve ser um de {EMPATES_APARO}")
+    if empates == "proporcional":
+        valores = np.unique(y)
+        valores = valores[::-1] if de_cima else valores
+        alvo = q * w.sum()
+        mult = np.ones(len(y))
+        acum = 0.0
+        for v in valores:
+            m = y == v
+            wv = float(w[m].sum())
+            if acum >= alvo:
+                break
+            if wv > 0:
+                mult[m] = 1.0 - min(alvo - acum, wv) / wv
+            acum += wv
+        return mult
     chave = -y if de_cima else y
     ordem = np.lexsort((np.arange(len(y)), chave))
     wo = w[ordem]
@@ -1326,7 +1352,8 @@ def _multiplicador_aparo(y: np.ndarray, w: np.ndarray, q: float, de_cima: bool) 
 
 
 def limites_lee_rd(s_mil, y, selecionado, corte_mil: float, h_mil: float = H_PRINCIPAL_MIL, *,
-                   kernel: str = "triangular", peso=None, cluster=None, ids_unidade=None) -> dict:
+                   kernel: str = "triangular", peso=None, cluster=None, ids_unidade=None,
+                   empates: str = "ordem") -> dict:
     """Limites de Lee (2009) locais para outcome observado só nos selecionados (ex.: barema dos alocados).
 
     Passos (versão local, com aproximações registradas):
@@ -1344,6 +1371,8 @@ def limites_lee_rd(s_mil, y, selecionado, corte_mil: float, h_mil: float = H_PRI
     dentro da janela); (ii) o EP de cada limite é o do local linear na amostra
     aparada e não incorpora a incerteza de q nem do quantil; (iii) o IC
     95% relatado é conservador: [tau_inf - 1,96 ep_inf; tau_sup + 1,96 ep_sup].
+    `empates`: como `_multiplicador_aparo` reparte o aparo entre valores iguais de y
+    ("ordem", padrão; "proporcional", para outcomes com muitos empates, como frações).
     """
     s = normalizar_s_mil(s_mil)
     n = len(s)
@@ -1400,7 +1429,7 @@ def limites_lee_rd(s_mil, y, selecionado, corte_mil: float, h_mil: float = H_PRI
     limites = []
     for de_cima in (True, False):
         mult = np.ones(n)
-        mult[lado] = _multiplicador_aparo(yv[lado], wk[lado], q, de_cima)
+        mult[lado] = _multiplicador_aparo(yv[lado], wk[lado], q, de_cima, empates)
         r = rd_local_linear(s[ok], yv[ok], corte_mil, h_mil, peso=(pv * mult)[ok], kernel=kernel,
                             cluster=cl_ok, ids_unidade=ids_ok)
         limites.append((r["tau"], r["ep"], r["nota"]))

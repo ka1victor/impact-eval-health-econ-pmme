@@ -189,7 +189,7 @@
       "1|0.300": {
         "int": 987,
         "int_pop": 500,
-        "ext": 995
+        "ext": 997
       },
       "1|0.400": {
         "int": 947,
@@ -253,7 +253,7 @@
   "decisoes": [
     "A1: vagas preenchidas = N1 (n_alocados_ch1, como no doc 49); vagas oferecidas = imediatas + cadastro reserva (forma principal do doc 49); por 10 mil habitantes do Censo 2022; zero estrutural fora do quadro. A versao com alocados limitados as vagas da celula (contagem do A2) e ponte, fora do adendo.",
     "A2 intensiva: s = intercepto local linear (sem peso) das vagas oferecidas por 10 mil hab. em U de cada lado; f = intercepto local linear da fracao limitada do municipio com peso = vagas oferecidas (equivale ao outcome binario no nivel da vaga) em V; no empilhado, interceptos agregados com os pesos omega_g da regressao de s (os mesmos para s e f) e lado de cima = lado de baixo + salto comum. Variante com s ponderado pela populacao, fora do adendo.",
-    "A2 extensiva: rdd_lib.limites_lee_rd com um corte (selecao = ter >= 1 celula, que no quadro equivale a ter >= 1 vaga; outcome = fracao limitada); no empilhado, o mesmo algoritmo com a fracao de aparo comum e o aparo dentro de cada grupo ciclo x corte.",
+    "A2 extensiva: rdd_lib.limites_lee_rd com um corte (selecao = ter >= 1 celula, que no quadro equivale a ter >= 1 vaga; outcome = fracao limitada); no empilhado, o mesmo algoritmo com a fracao de aparo comum e o aparo dentro de cada grupo ciclo x corte. Empates na fronteira do aparo repartidos proporcionalmente (empates='proporcional', auditoria 22): a fracao limitada tem muitos 0 e 1, e o aparo pela ordem das linhas (codigo IBGE) escolhia municipios por UF.",
     "A2 extensiva: o aparo usa o quantil ponderado do meio-janela com reta local (aproximacao (i) da rdd_lib); por isso, ao contrario da margem intensiva, os limites podem nao conter o salto ingenuo, o que fica anotado na linha.",
     "A2 bootstrap: municipios de U reamostrados com reposicao (o mesmo sorteio serve a todas as amostras e ciclos da reamostra, preservando o cluster); reamostra sem suporte (menos de 2 mass points num lado de algum grupo) ou com taxa de selecao nao positiva e descartada e contada.",
     "A3: celula preenchida = >= 1 alocado na 1a chamada (n_alocados_ch1); alocados / vagas sem limite (como o §7 diz) e, fora do adendo, limitado; candidatos de 1a opcao e, como ponte com o E9, ter >= 1 candidato de 1a opcao; efeitos fixos de curso x ciclo (efeitos_fixos da rdd_lib) e tipo de vaga (covariavel linear nao interagida); variantes sem tipo de vaga (o tipo de vaga tambem e decisao de quem monta o quadro) e sem efeitos fixos.",
@@ -278,6 +278,12 @@
       "item": "Lee empilhado",
       "situacao": "a rdd_lib so tem limites_lee_rd com um corte",
       "resolucao": "algoritmo identico implementado aqui (conferido contra a rdd_lib em todo corte unico); no empilhado, aparo por grupo com fracao comum"
+    },
+    {
+      "data": "2026-10-19",
+      "item": "empates no aparo do Lee extensivo (auditoria 22)",
+      "situacao": "a versao auditada aparava, entre municipios com a mesma fracao (muitos 0 e 1), os que vinham antes na ordem das linhas (codigo IBGE, isto e, por UF), o que mudava a inclinacao local e deixava 4 de 12 linhas com o salto ingenuo fora dos limites",
+      "resolucao": "rdd_lib.limites_lee_rd e _multiplicador_aparo ganharam empates='proporcional' (padrao 'ordem' inalterado para os scripts 17 e 18); o A2 extensivo usa a reparticao proporcional; especificacao, amostra e estimador do §7 inalterados"
     }
   ],
   "contagens": {
@@ -363,7 +369,7 @@
   "saidas": {
     "NA_estimativas.csv": {
       "arquivo": "output/rdd_bolsa/NA_estimativas.csv",
-      "sha256": "e322328451ac4158979224a99f54aa3b984c9f3fd445e71786b01c51d539e7ea"
+      "sha256": "9f737d4c2a2850ddff6647dfb67ba7d7276758bf84b773ee0701a8d890000374"
     },
     "figuras": [
       {

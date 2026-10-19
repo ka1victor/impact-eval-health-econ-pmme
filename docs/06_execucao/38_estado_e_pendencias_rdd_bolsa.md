@@ -107,6 +107,7 @@ Nos slides, use um dos dois e diga qual.
 | E7: DiRD no CNES nacional (F3, P2) | concluído | [`43`](43_resultados_E7_dird_cnes.md); `output/rdd_bolsa/E7_*` |
 | E8: síntese, Holm das primárias e proposta de revisão da hipótese | concluído | [`44`](44_sintese_rdd_bolsa_multioutcome.md); `output/rdd_bolsa/E8_*`; `scripts/rdd_bolsa/15_sintese_E8.py` |
 | Família N (protocolo [`48`](48_protocolo_contagem_vagas_preenchidas.md), pós-resultado): número de vagas preenchidas com e sem controle pelas vagas oferecidas, ciclos 1–3, Holm de N1–N4 | concluído; auditado ([`auditorias/20`](../auditorias/20_auditoria_contagem_vagas_N.md), aprovado com correções) | [`49`](49_resultados_contagem_vagas_preenchidas.md); `output/rdd_bolsa/N_*`; `scripts/rdd_bolsa/23_estimar_contagem_vagas.py` |
+| Adendo §7 do protocolo 48 (pós-resultado): abertura de vagas como seleção (A1–A4), ciclo 1 à parte pela correção §8 | concluído; auditado ([`auditorias/22`](../auditorias/22_auditoria_abertura_vagas_NA.md), aprovado com correções) | [`49`](49_resultados_contagem_vagas_preenchidas.md), seção 15; `output/rdd_bolsa/NA_*`; `scripts/rdd_bolsa/24_abertura_vagas_selecao.py` |
 
 O relatório tem:
 - **ordem:** a hipótese primeiro e a presença como secundário;
