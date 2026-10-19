@@ -124,3 +124,74 @@ nunca recebe zero.
 | estimativas e resumo | `output/rdd_bolsa/N_estimativas.csv`, `N_resumo.json` |
 | figuras | `output/rdd_bolsa/N_figuras/` |
 | resultados | `docs/06_execucao/49_resultados_contagem_vagas_preenchidas.md` |
+
+## 7. Adendo de 19/10/2026: abertura de vagas como seleção (antes de estimar)
+
+**Por que este adendo.** Pedido do autor depois de ver a S-c e o perfil
+descritivo das vagas oferecidas ao longo do IVS. Vagas oferecidas e preenchidas
+andam juntas e acompanham o porte do município. A abertura de vagas é decisão
+do gestor e pode responder ao corte. Por isso, quatro análises novas:
+
+**Estatuto.** Toda saída leva `estatuto = PROTOCOLO_48_ADENDO_7_POS_RESULTADO`.
+Nenhuma muda as linhas S-a a S-j nem o Holm do §3.
+
+**Base comum.** Mesmos estimadores do §3:
+- h = 0,050;
+- ciclos 1–3;
+- cortes separados e empilhados;
+- CR1 por município.
+
+### A1 — Efeito total por habitante (sem condicionar na abertura)
+
+| Item | Especificação |
+|---|---|
+| População | U (todos os municípios com IVS oficial), com zero onde não houve vaga |
+| Outcomes | vagas preenchidas por 10 mil habitantes; vagas oferecidas por 10 mil habitantes |
+| Denominador | população do Censo 2022 (`populacao_2022`) |
+| Robustez | Poisson local das contagens com offset log(população) |
+| Leitura | efeito total da faixa sobre o provimento por habitante, sem condicionar na abertura |
+
+### A2 — Limites de Lee para a abertura
+
+**Margem extensiva.** Seleção = ter ≥ 1 vaga. Outcome = vagas preenchidas
+÷ oferecidas. Os limites de Lee usam a taxa local de abertura de cada lado do
+corte.
+
+**Margem intensiva, no nível da vaga.**
+- Taxa de seleção de cada lado = vagas oferecidas por 10 mil habitantes,
+  estimada localmente no corte.
+- Fração a aparar: p = (s_maior − s_menor) / s_maior, aplicada ao lado com
+  mais vagas por habitante.
+- Outcome binário: vaga preenchida ou não. As vagas são contadas pelo número de
+  alocados, limitado às vagas oferecidas de cada célula.
+- Limites, com f = taxa de preenchimento:
+  - inferior = max(0, (f − p) / (1 − p));
+  - superior = min(1, f / (1 − p)).
+- O IC usa Imbens–Manski, com bootstrap por município (semente fixa).
+
+**Monotonicidade.** A suposição de que a abertura muda num só sentido no corte
+é declarada.
+
+### A3 — Unidade = célula aberta
+
+| Item | Especificação |
+|---|---|
+| Unidade | célula (estabelecimento × curso) do quadro da 1ª chamada |
+| Outcomes | célula preenchida (≥ 1 alocado); alocados ÷ vagas da célula; candidatos de 1ª opção |
+| Estimação | RDD no IVS do município, cluster por município |
+| Efeitos fixos | curso × ciclo; tipo de vaga (imediata ou só cadastro reserva); tipo de prática, se disponível |
+| Ponte com o E9 | atratividade da célula e preenchimento |
+| Leitura | condicional à abertura; os limites do A2 dizem quanto a seleção pode mover esse resultado |
+
+### A4 — Covariáveis pré-determinadas da abertura
+
+S-b e A1 com covariáveis CCFT pré-determinadas:
+- log da população de 2022;
+- estoque CNES pré-programa (202406–202506) de especialistas das CBO-alvo e de
+  generalistas, do painel nacional;
+- número de estabelecimentos hospitalares no CNES pré, se o painel trouxer;
+- se não trouxer, a lacuna é registrada e nada é imputado.
+
+**Leitura.** Mede se o salto nas contagens vem de diferenças de porte e de
+capacidade instalada já existentes antes do programa. Diferenças nascidas da
+resposta à faixa não são retiradas.
