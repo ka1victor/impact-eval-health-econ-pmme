@@ -1,4 +1,10 @@
-"""Invariantes do diagnóstico salário–IVS e provimento duradouro."""
+"""Invariantes do diagnóstico salário–IVS e provimento duradouro.
+
+O diagnóstico é saída do script retirado `scripts/rdd_bolsa/00_*`, que usava
+`data/ivs_ipea_2010_municipios.csv` como IVS 2010. A parte de running variable é
+registro de failure mode (auditorias 16 e 19): o estado vigente da regra é o do
+portão R1 com o IVS 2010 oficial.
+"""
 
 from __future__ import annotations
 
@@ -25,14 +31,28 @@ class ViabilidadeSalarioIvsTest(unittest.TestCase):
         self.assertEqual(offer["vagas_imediatas_publicadas"], 678)
         self.assertEqual(offer["vagas_reserva_publicadas"], 1145)
 
-    def test_rdd_remains_blocked(self) -> None:
+    def test_bloqueio_da_rdd_e_failure_mode_e_r1_oficial_e_o_vigente(self) -> None:
+        # O "bloqueio" deste diagnóstico veio do arquivo de IVS errado.
+        self.assertIn("data/ivs_ipea_2010_municipios.csv", self.report["fontes"])
         running = self.report["running_variable"]
-        self.assertEqual(running["municipios_faixa_reproduzida"], 191)
-        self.assertEqual(running["municipios_faixa_divergente"], 177)
-        self.assertEqual(
-            running["portao_rdd"],
-            "BLOQUEADO_R1_REGRA_E_ESCORE_NAO_RECONSTRUIDOS",
-        )
+        self.assertEqual(running["portao_rdd"], "BLOQUEADO_R1_REGRA_E_ESCORE_NAO_RECONSTRUIDOS")
+        # O script que o gera está fora do pipeline.
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("run_all_viab", ROOT / "run_all.py")
+        ra = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(ra)
+        self.assertNotIn(ROOT / "scripts" / "rdd_bolsa" / "00_diagnosticar_viabilidade_salario_ivs.py", ra.STEPS)
+        # Estado vigente: R1 com o IVS 2010 oficial reproduz a regra em toda a população P1.
+        r1 = json.loads((ROOT / "output" / "rdd_bolsa" / "portao_r1_ivs_oficial.json").read_text(encoding="utf-8"))
+        self.assertEqual(r1["decisao_r1"], "APROVADO_SHARP")
+        p1 = r1["populacoes"]["P1"]
+        self.assertEqual(p1["regra_reproduz"], p1["municipios"])
+        # Nenhum diagnóstico vigente repete o número de divergência do arquivo errado.
+        vigente = json.loads((ROOT / "output" / "tema_trabalho" / "diagnostico_atracao_provimento_interior.json")
+                             .read_text(encoding="utf-8"))
+        rdd = next(m for m in vigente["decisao_por_modulo"] if m["modulo"] == "rdd_bolsa")
+        self.assertNotIn(str(running["municipios_faixa_divergente"]) + " de", rdd["evidencia"])
+        self.assertIn(f"{p1['municipios']} de {p1['municipios']}", rdd["evidencia"])
 
     def test_support_is_municipal_and_not_authorization(self) -> None:
         support = self.report["running_variable"]["suporte_preliminar_nao_autorizativo"]

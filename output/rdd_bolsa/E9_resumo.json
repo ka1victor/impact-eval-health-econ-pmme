@@ -5,10 +5,10 @@
   "script": "scripts/rdd_bolsa/16_estimar_E9_escolha.py",
   "protocolo": {
     "arquivo": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
-    "sha256": "cc54d12a8d00184cf83fd0acb54b1fe42b414b6bd2838861814655a26197cc67",
+    "sha256": "a66fe6183562f8a233b0175c8653b29a6d1bde44cc8897e28867057905461849",
     "texto_canonico": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
-    "sha256_texto_canonico": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065",
-    "sha256_texto_canonico_congelado": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065",
+    "sha256_texto_canonico": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+    "sha256_texto_canonico_congelado": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
     "secoes": [
       "§12",
       "§13",
@@ -961,8 +961,8 @@
   "entradas": [
     {
       "caminho": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
-      "sha256": "cc54d12a8d00184cf83fd0acb54b1fe42b414b6bd2838861814655a26197cc67",
-      "bytes": 7443,
+      "sha256": "a66fe6183562f8a233b0175c8653b29a6d1bde44cc8897e28867057905461849",
+      "bytes": 7906,
       "papel": "protocolo congelado (E9: §12, §14, §15)",
       "fonte": "pipeline do repositório",
       "data_referencia": "2026-10-18",
@@ -973,8 +973,8 @@
     },
     {
       "caminho": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
-      "sha256": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065",
-      "bytes": 19222,
+      "sha256": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+      "bytes": 20212,
       "papel": "texto canônico do protocolo 40",
       "fonte": "pipeline do repositório",
       "data_referencia": "2026-10-18",
@@ -985,7 +985,7 @@
     },
     {
       "caminho": "output/rdd_bolsa/outcomes/dicionario_outcomes_funil.json",
-      "sha256": "d59ff622987effdcf53de3f90759aaa287bb53e7369c508f4d73645ce11d986a",
+      "sha256": "912b80994f9fbefc3bbe1f5f978de16771a6c064f0044960887366a91bb88e8d",
       "bytes": 91512,
       "papel": "dicionário da tarefa B (SHA-256 das tabelas de escolha conferido)",
       "fonte": "pipeline do repositório",

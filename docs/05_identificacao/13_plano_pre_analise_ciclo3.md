@@ -133,25 +133,49 @@ pré-tendência incompatível. Não haverá inferência por randomização.
 
 ## 6. Diagnósticos pré-tratamento
 
-| Módulo e nível | Tratados | Controles | Suporte retido T/C | MDE 80% | Decisão |
-|---|---:|---:|---:|---:|---|
-| Anestesiologia, CNES | 119 | 305 | 83,2% / 97,7% | 2,22 | associação ajustada |
-| Anestesiologia, município | 77 | 247 | 90,9% / 91,1% | 4,44 | associação ajustada |
-| Oncologia, CNES | 12 | 39 | ver CSV | 1,22 | inviável confirmatoriamente |
-| Intensiva, CNES | 6 | 83 | ver CSV | não estimável | inviável confirmatoriamente |
-| Cirurgia geral/CBO exclusivo, CNES | 33 | 337 | ver CSV | 1,70 | sensibilidade ajustada |
+<!-- errata-c3-03-ivs-oficial: início; gerado por scripts/tema_trabalho/12_registrar_failure_mode_ivs.py -->
+Valores em vigor, lidos de `output/avaliacao_ciclo3/diagnosticos_pre.csv` (emenda de
+18/10/2026, com o IVS 2010 e a população 2010 oficiais do Ipea):
+
+| Módulo e nível | Tratados | Controles | Suporte retido T/C | Suporte aprovado | MDE 80% | Potência para 1 | Decisão |
+|---|---:|---:|---:|---|---:|---:|---|
+| Anestesiologia, CNES | 119 | 305 | 83,2% / 97,0% | sim | 2,12 | 25,3% | associação ajustada |
+| Oncologia, CNES | 12 | 39 | 91,7% / 76,9% | não | 1,14 | 69,5% | inviável confirmatoriamente |
+| Intensiva, CNES | 6 | 83 | 33,3% / 36,1% | não | 3,36 | 14,2% | inviável confirmatoriamente |
+| Cirurgia geral/CBO exclusivo, CNES | 33 | 337 | 75,8% / 77,4% | não | 1,70 | 38,5% | sensibilidade ajustada |
+| Anestesiologia, município | 77 | 247 | 85,7% / 81,8% | sim | 4,62 | 9,0% | associação ajustada |
+| Oncologia, município | 8 | 35 | 87,5% / 37,1% | não | 3,84 | 12,2% | inviável confirmatoriamente |
+| Intensiva, município | 2 | 63 | 50,0% / 4,8% | não | não estimável | — | inviável confirmatoriamente |
+| Cirurgia geral/CBO exclusivo, município | 23 | 279 | 82,6% / 68,5% | não | 2,80 | 16,3% | sensibilidade ajustada |
 
 Para anestesiologia no CNES, a diferença de tendência mensal ponderada foi
-`-0,0028` (EP municipal `0,0698`; IC90% `[-0,1179; 0,1123]`) e o teste conjunto
-dos leads teve `p=0,8593`. No município, a tendência foi `-0,0344` (EP `0,1205`;
-IC90% `[-0,2332; 0,1645]`) e o teste conjunto teve `p=0,4966`.
+`−0,0048` (EP municipal `0,0709`; IC90%
+`[−0,1218; 0,1122]`) e o teste conjunto dos leads teve
+`p=0,8656`. No município, a tendência foi `−0,0554`
+(EP `0,1241`; IC90% `[−0,2603; 0,1494]`)
+e o teste conjunto teve `p=0,5287`.
 
-Esses p-valores não comprovam paralelismo. A equivalência falhou porque os
-intervalos não ficaram integralmente dentro dos limites congelados. A potência
-para detectar um anestesiologista foi 22,8% no CNES e 9,0% no município; a MDE
-direta de 2,22 é próxima das 2,44 vagas oferecidas por CNES tratado, mas maior
-que as 1,12 alocações publicadas por CNES. Isso permite detectar uma resposta
-forte do pacote ofertado, não garante precisão para um acréscimo unitário.
+Esses p-valores não comprovam paralelismo. A equivalência falhou no CNES e no município: os intervalos não ficaram integralmente dentro dos limites congelados. A potência para detectar um
+anestesiologista foi 25,3% no CNES e 9,0% no município; a MDE
+direta de 2,12 no CNES fica abaixo das 2,44 vagas oferecidas por CNES
+tratado e acima das 1,12 alocações publicadas por CNES
+(`output/avaliacao_ciclo3/suporte_c3.csv`). Isso permite detectar uma resposta forte do pacote ofertado, não garante precisão para um acréscimo unitário.
+
+> **Errata de 18/10/2026 — failure mode.** A versão de 31/08/2026 desta seção usou,
+> na propensão que gera o suporte comum e os pesos de sobreposição, `ivs_2010` e
+> `log_pop_2010` da malha antiga, feita com `data/ivs_ipea_2010_municipios.csv`, que é
+> uma linha de subgrupo populacional e não o município. Seus números só valem como
+> registro do erro e estão, ao lado dos atuais, em
+> [`auditorias/19`](../auditorias/19_reestimacao_base_oficial_failure_mode.md). A emenda datada
+> em `output/avaliacao_ciclo3/registro_pre_analise.json` reestimou os diagnósticos com
+> mesma coorte, mesmos braços, mesmos painéis CNES pré-T0 (conferidos por hash) e
+> nenhuma competência a partir de 202609. Antes de corrigir, o modo de reestimação foi
+> rodado com a malha antiga e reproduziu decisão e potência byte a byte, com diferença
+> absoluta máxima de 1,8e-13 nos diagnósticos.
+>
+> - **Suporte que muda de status:** Oncologia, CNES: suporte aprovado → reprovado (retenção T/C 0,917/0,872 → 0,917/0,769). Nenhuma decisão do torneio muda.
+> - **Suporte aprovado perto do limiar de 0,8:** Anestesiologia, CNES (0,832/0,970); Anestesiologia, município (0,857/0,818).
+<!-- errata-c3-03-ivs-oficial: fim -->
 
 Foram usados três placebos temporais, teste conjunto de 13 leads e equivalência
 contra limites substantivos. Os resultados integrais, sem seleção pelo menor

@@ -501,7 +501,7 @@ O vínculo entre arquivos foi feito somente por nome normalizado exato e único,
 
 ## 4. Relação com os resultados existentes
 
-A4 continua sendo evidência associativa sobre quais territórios atraíram candidatos. A5 continua sendo evidência associativa sobre estoque municipal no CNES. O RDD do IVS continua encerrado. A7 é um desenho distinto, no nível do candidato, voltado exatamente à margem de atração/entrada; ele não transforma retrospectivamente A4 ou A5 em resultados causais.
+A4 continua sendo evidência associativa sobre quais territórios atraíram candidatos. A5 continua sendo evidência associativa sobre estoque municipal no CNES. A RDD da bolsa nos cortes do IVS 2010 oficial é uma camada separada (R1 aprovado; E3 inconclusivo), ver `docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md`; a leitura de que ela estava encerrada vinha do arquivo de IVS errado (auditorias 16 e 19). A7 é um desenho distinto, no nível do candidato, voltado exatamente à margem de atração/entrada; ele não transforma retrospectivamente A4 ou A5 em resultados causais.
 
 ## 5. Uso autorizado
 

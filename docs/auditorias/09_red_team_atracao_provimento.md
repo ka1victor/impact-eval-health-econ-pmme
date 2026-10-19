@@ -23,7 +23,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 ### 3. Seleção de municípios, cursos e estabelecimentos
 
 **Refutação tentada:** misturar cursos com ponte CBO sobreposta e atribuir a mudança a uma especialidade específica.  
-**Veredito:** A4 cobre 1.295 células em 368 municípios; A5 principal restringe-se a 587 células município–curso de dez cursos cujo CBO não é compartilhado com outro curso do PMM-E, em 295 municípios; apenas oito desses cursos têm CBO estritamente 1:1. A amostra ampliada é apenas sensibilidade.
+**Veredito:** A4 cobre 1.295 células em 368 municípios; A5 principal restringe-se a 587 células município–curso de 10 cursos cujo CBO não é compartilhado com outro curso do PMM-E, em 295 municípios; apenas oito desses cursos têm CBO estritamente 1:1. A amostra ampliada é apenas sensibilidade.
 
 ### 4. Inferência municipal e concentração
 
@@ -57,7 +57,7 @@ Cada afirmação foi atacada por mudança de denominador, estágio do funil, uni
 
 ## Ataques ao resultado principal (A4)
 
-- O contraste metropolitano versus interior remoto é 27,9 pp no LPM pré-especificado e 20,9 pp no ajuste completo. **Ressalva:** o ajuste completo usou IVS, log da população e estoque por 10 mil habitantes de `data/ivs_ipea_2010_municipios.csv`, que é a linha de um subgrupo populacional e não o município, e será reestimado com a base oficial (auditoria 16, §4); a variante winsorizada parte do mesmo ajuste e herda a ressalva. Os coeficientes de estrato do LPM pré-especificado não dependem desse arquivo.
+- O contraste metropolitano versus interior remoto é 27,9 pp no LPM pré-especificado e 18,5 pp no ajuste completo, que usa IVS e população 2010 da base oficial do Ipea e o estoque por 10 mil habitantes do Censo 2022 (p=0,018; q de FDR nos três estratos=0,055); a versão com o arquivo local errado (auditoria 16) só consta como failure mode (auditoria 19). Os coeficientes de estrato do LPM pré-especificado nunca dependeram do arquivo local.
 - Separar o funil preserva o sinal: 27,0 pp em confirmação e 23,8 pp em homologação.
 - Colapsar múltiplos CNES para município–curso aumenta o contraste para 31,6 pp; logo, o resultado não decorre do peso implícito de estabelecimentos múltiplos.
 - Winsorizar covariadas e executar leave-one-out não inverte o gradiente. O resultado é robusto como associação territorial, não como efeito da bolsa.

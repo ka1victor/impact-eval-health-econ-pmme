@@ -13,13 +13,26 @@
 Motivo: a tarefa E7 do protocolo multi-outcome
 ([`06_execucao/40`](06_execucao/40_protocolo_multioutcome_rdd_bolsa.md)) estima
 a família F3 (oferta líquida no CNES) por diferença em descontinuidades, com
-placebos, estudo de evento e as suplementares S2–S6.
+placebos, estudo de evento e as suplementares S2–S6 e as horas do §16.
 
 ### Criado
 
 | Arquivo | O que é |
 |---|---|
 | [`06_execucao/43_resultados_E7_dird_cnes.md`](06_execucao/43_resultados_E7_dird_cnes.md) | contraste identificado, amostras, P2, estimativas, sensibilidades, placebos, níveis, S5, estudo de evento, S3/S4, limites e desvios do E7; tabelas geradas de `output/rdd_bolsa/E7_*` por `scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py` |
+
+## 18/10/2026 — CNES nacional para a DiRD (tarefa C do protocolo 40)
+
+Motivo: a família F3 do protocolo multi-outcome
+([`06_execucao/40`](06_execucao/40_protocolo_multioutcome_rdd_bolsa.md)) pede
+o painel CNES de todos os municípios, com pré-período desde 2022, para a
+diferença em descontinuidades (E7).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/aquisicao/A09_cnes_nacional.md`](auditorias/aquisicao/A09_cnes_nacional.md) | fonte, competências, chave municipal, esquema e validação do painel município × grupo de CBO × mês (`scripts/aquisicao/a09_adquirir_cnes_nacional.py`) |
 
 ## 18/10/2026 — Estimação do E6 (famílias F0, F1, F2 e F4 do protocolo 40)
 
@@ -45,18 +58,32 @@ no §15 antes de estimar.
 |---|---|
 | [`06_execucao/42_resultados_E9_escolha.md`](06_execucao/42_resultados_E9_escolha.md) | estimando, especificação, diagnósticos, resultados (tabelas geradas por `scripts/rdd_bolsa/16_estimar_E9_escolha.py` e conferidas por `tests/test_e9_escolha.py`), desvios e limites do E9 |
 
-## 18/10/2026 — CNES nacional para a DiRD (tarefa C do protocolo 40)
+## 18/10/2026 — Reestimação com a base oficial do IVS (failure mode)
 
-Motivo: a família F3 do protocolo multi-outcome
-([`06_execucao/40`](06_execucao/40_protocolo_multioutcome_rdd_bolsa.md)) pede
-o painel CNES de todos os municípios, com pré-período desde 2022, para a
-diferença em descontinuidades (E7).
+Motivo: o autor mandou reestimar tudo o que dependia de
+`data/ivs_ipea_2010_municipios.csv` (linha de subgrupo, não o IVS do município)
+com a base oficial; os números antigos só valem como failure mode (tarefa E do
+protocolo [`40`](06_execucao/40_protocolo_multioutcome_rdd_bolsa.md)).
 
 ### Criado
 
 | Arquivo | O que é |
 |---|---|
-| [`auditorias/aquisicao/A09_cnes_nacional.md`](auditorias/aquisicao/A09_cnes_nacional.md) | fonte, competências, chave municipal, esquema e validação do painel município × grupo de CBO × mês (`scripts/aquisicao/a09_adquirir_cnes_nacional.py`) |
+| [`auditorias/19_reestimacao_base_oficial_failure_mode.md`](auditorias/19_reestimacao_base_oficial_failure_mode.md) | registro do failure mode: o erro, a propagação, a detecção, todos os leitores do arquivo com a classe de cada uso, antes e depois de cada estimativa (A2, A4, A5, Tabela 1 do ciclo 1, C3-03, banca 1, E2/E4) e onde os números antigos ainda aparecem. Gerado por script |
+| `scripts/tema_trabalho/12_registrar_failure_mode_ivs.py` | lê do histórico do Git as versões anteriores à correção, compara com `output/` e gera a auditoria 19 e `output/tema_trabalho/failure_mode_ivs_*` |
+| `tests/test_fonte_ivs_oficial.py` | reprova script do pipeline (e de `avaliacao_ciclo3/` e `apresentacao/`) que leia o arquivo errado fora dos documentadores do failure mode ou use colunas territoriais de painel antigo sem repô-las; varre o texto bruto de todo `.py` de `scripts/` e da raiz com contagem exata autorizada por script; confere malha e tipologia contra a a08 e o Censo 2022 |
+| `output/aquisicao/manifesto_territorio_ibge.json` | proveniência da malha territorial |
+
+### Atualizado no mesmo dia
+
+- `run_all.py`: a07, a08 e o Censo 2022 (`aquisicao/06`) rodam antes da malha.
+- Erratas e notas de failure mode: [`05_identificacao/13`](05_identificacao/13_plano_pre_analise_ciclo3.md)
+  (C3-03), [`05_identificacao/16`](05_identificacao/16_sintese_achados_e_novo_plano_causal.md),
+  [`06_execucao/36`](06_execucao/36_backlog_pos_auditoria.md),
+  [`auditorias/12`](auditorias/12_proveniencia_fins_de_linha.md), [`13`](auditorias/13_reauditoria_independente_A1_A8.md),
+  [`14`](auditorias/14_erratas_artefatos_congelados.md) (E-7), [`16`](auditorias/16_ivs_2010_oficial_e_arquivo_local.md),
+  banca 1 (`07_apresentacoes/banca1/01`, `02`, `03`) e a fila `prompts/avaliacao_ciclo3/README.md`.
+- [`06_execucao/38`](06_execucao/38_estado_e_pendencias_rdd_bolsa.md): D3 (a) e (b) aplicadas.
 
 ## 18/10/2026 — Construção dos outcomes do funil (tarefa B do protocolo 40)
 

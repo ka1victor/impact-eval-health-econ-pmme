@@ -449,10 +449,15 @@ class ProvimentoCnesA5Test(unittest.TestCase):
             for variante in ("balde_unico", "macro_regiao", "sem_colapso"):
                 sel = tab[(tab["espec"] == espec) & (tab["variante_uf_fe"] == variante)]
                 self.assertEqual(len(sel), 5, f"{espec}/{variante}")
-        # A cifra que a errata E-7 declara: o `full` saiu de p=0,791 para p=0,094.
+        # O ponto da errata E-7: a definicao de uf_fe move o `full`. As cifras que a
+        # errata citava (p=0,791 -> 0,094) eram da versao com covariadas do arquivo
+        # de IVS errado e ficaram como registro de failure mode (auditoria 19); aqui
+        # o alvo e lido do proprio artefato: a variante primaria do `full` e a do JSON.
         full = tab[(tab["modelo"] == "estoque_6m_full")].set_index("variante_uf_fe")
-        self.assertEqual(round(float(full.loc["balde_unico", "p_valor"]), 3), 0.791)
-        self.assertEqual(round(float(full.loc["macro_regiao", "p_valor"]), 3), 0.094)
+        self.assertAlmostEqual(float(full.loc["macro_regiao", "p_valor"]),
+                               float(self.est["modelos"]["estoque_6m_full"]["p"]), places=10)
+        self.assertNotAlmostEqual(float(full.loc["balde_unico", "p_valor"]),
+                                  float(full.loc["macro_regiao", "p_valor"]), places=3)
 
     def test_a1b_singletons_nao_movem_coeficiente_mas_inflam_r2(self) -> None:
         # Nivel de efeito fixo com uma unica celula e ajustado exatamente: nao

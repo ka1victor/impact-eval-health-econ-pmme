@@ -175,9 +175,13 @@
   "definicoes": {
     "n_vinculos": "linhas de tbCargaHorariaSus (profissional × estabelecimento × CBO × vínculo) no município-grupo-mês",
     "n_profissionais_distintos": "CO_PROFISSIONAL_SUS distintos no município-grupo-mês (agregados contam a pessoa uma vez)",
-    "horas_sus_semanais": "soma de QT_CARGA_HORARIA_AMBULATORIAL + QT_CARGA_HOR_HOSP_SUS; ausente (NA) se algum vínculo da célula tem um desses campos vazio ou não numérico",
-    "horas_totais": "horas_sus_semanais + QT_CARGA_HORARIA_OUTROS; ausente (NA) se algum vínculo da célula tem qualquer dos três campos vazio ou não numérico",
-    "n_vinculos_horas_ausentes": "vínculos da célula com pelo menos um dos três campos de horas vazio ou não numérico",
+    "n_vinculos_sus": "vínculos com TP_SUS_NAO_SUS = 'S'",
+    "horas_sus_semanais": "PRINCIPAL (F3.3, protocolo 40 §16): soma de QT_CARGA_HORARIA_AMBULATORIAL + QT_CARGA_HOR_HOSP_SUS dos vínculos com TP_SUS_NAO_SUS = 'S'; ausente (NA) se algum desses vínculos tem um dos dois campos vazio ou não numérico",
+    "horas_sus_semanais_parcial": "SENSIBILIDADE rotulada (§16): a mesma soma só com as horas observadas; ler com n_vinculos_horas_ausentes",
+    "horas_totais_amb_hosp": "SENSIBILIDADE rotulada (§16): ambulatorial + hospitalar de todos os vínculos, sem filtro de TP_SUS_NAO_SUS; ausente (NA) se algum vínculo tem um dos dois campos vazio ou não numérico",
+    "horas_totais": "ambulatorial + hospitalar + QT_CARGA_HORARIA_OUTROS de todos os vínculos; ausente (NA) se algum vínculo tem qualquer dos três campos vazio ou não numérico",
+    "horas_totais_parcial": "SENSIBILIDADE rotulada (§16): horas_totais só com as horas observadas",
+    "n_vinculos_horas_ausentes": "vínculos da célula (qualquer TP_SUS_NAO_SUS) com pelo menos um dos três campos de horas vazio ou não numérico",
     "regra_horas_ausentes": "campo de horas vazio ou não numérico é ausente, nunca zero: nenhuma documentação do CNES no repositório ou consultada nesta tarefa define vazio como zero. Contagens por campo e competência em por_competencia.*.horas_ausentes_por_campo_vinculos_medicos",
     "tem_profissional": "n_profissionais_distintos >= 1",
     "grupos": {
@@ -190,7 +194,8 @@
       ],
       "mfc_225130": "CBO 225130 (médico de família e comunidade), grupo próprio pelo adendo §13 (S6); também contido em especialistas_nao_alvo",
       "especialistas_nao_alvo": "CBO 2251/2252/2253 fora das CBO-alvo e dos generalistas",
-      "todos_medicos": "CBO 2251/2252/2253 e 2231 (a família 2231 só entra se aparecer)"
+      "todos_medicos": "CBO 2251/2252/2253 e família 2231 (inclui médicos residentes, 2231F9)",
+      "todos_medicos_sem_residentes": "todos_medicos sem a CBO 2231F9 (médico residente), protocolo 40 §16"
     }
   },
   "ponte": {
@@ -1561,7 +1566,7 @@
   },
   "painel": {
     "arquivo": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
-    "sha256": "b2c23d18b967193d8d666a85b7dd2c5963e6c5558bd7986f948e2861384d53d4",
+    "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
     "municipios_universo": 5565,
     "grupos": [
       "cbo_225120",
@@ -1585,9 +1590,169 @@
       "generalistas",
       "mfc_225130",
       "especialistas_nao_alvo",
-      "todos_medicos"
+      "todos_medicos",
+      "todos_medicos_sem_residentes"
     ],
-    "linhas": 4774770,
+    "linhas": 4991805,
+    "vinculos_medicos_por_tp_sus_nao_sus": {
+      "202201": {
+        "N": 479078,
+        "S": 901269
+      },
+      "202204": {
+        "N": 485999,
+        "S": 921423
+      },
+      "202207": {
+        "N": 493229,
+        "S": 934603
+      },
+      "202210": {
+        "N": 505146,
+        "S": 942721
+      },
+      "202301": {
+        "N": 509811,
+        "S": 959380
+      },
+      "202302": {
+        "N": 509583,
+        "S": 964992
+      },
+      "202303": {
+        "N": 512161,
+        "S": 970686
+      },
+      "202304": {
+        "N": 515013,
+        "S": 977247
+      },
+      "202307": {
+        "N": 524804,
+        "S": 989906
+      },
+      "202310": {
+        "N": 533585,
+        "S": 997654
+      },
+      "202401": {
+        "N": 548961,
+        "S": 1013404
+      },
+      "202404": {
+        "N": 561625,
+        "S": 1049637
+      },
+      "202406": {
+        "N": 566393,
+        "S": 1064655
+      },
+      "202407": {
+        "N": 571388,
+        "S": 1071150
+      },
+      "202408": {
+        "N": 574667,
+        "S": 1076097
+      },
+      "202409": {
+        "N": 567449,
+        "S": 1079596
+      },
+      "202410": {
+        "N": 572435,
+        "S": 1083425
+      },
+      "202411": {
+        "N": 575414,
+        "S": 1086847
+      },
+      "202412": {
+        "N": 578016,
+        "S": 1093613
+      },
+      "202501": {
+        "N": 577013,
+        "S": 1098584
+      },
+      "202502": {
+        "N": 578824,
+        "S": 1102570
+      },
+      "202503": {
+        "N": 581519,
+        "S": 1113850
+      },
+      "202504": {
+        "N": 584544,
+        "S": 1118840
+      },
+      "202505": {
+        "N": 588510,
+        "S": 1123451
+      },
+      "202506": {
+        "N": 591898,
+        "S": 1129884
+      },
+      "202507": {
+        "N": 595932,
+        "S": 1133696
+      },
+      "202508": {
+        "N": 598083,
+        "S": 1139790
+      },
+      "202509": {
+        "N": 601470,
+        "S": 1144280
+      },
+      "202510": {
+        "N": 601006,
+        "S": 1149977
+      },
+      "202511": {
+        "N": 601606,
+        "S": 1153327
+      },
+      "202512": {
+        "N": 600719,
+        "S": 1161073
+      },
+      "202601": {
+        "N": 602958,
+        "S": 1169896
+      },
+      "202602": {
+        "N": 600577,
+        "S": 1177159
+      },
+      "202603": {
+        "N": 603659,
+        "S": 1192992
+      },
+      "202604": {
+        "N": 609544,
+        "S": 1200664
+      },
+      "202605": {
+        "N": 616550,
+        "S": 1206969
+      },
+      "202606": {
+        "N": 622227,
+        "S": 1213818
+      },
+      "202607": {
+        "N": 624112,
+        "S": 1222805
+      },
+      "202608": {
+        "N": 629124,
+        "S": 1231587
+      }
+    },
+    "portao_df": "nenhum vínculo médico em código 53xxxx diferente de 530010 (verificado por competência)",
     "municipios_cnes_fora_do_universo": {
       "150475": {
         "competencias": 39,

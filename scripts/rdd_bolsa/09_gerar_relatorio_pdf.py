@@ -3236,7 +3236,8 @@ def secao_antes(ctx) -> str:
         "premissa A1 (não testável na época); <strong>E2</strong>, limites para a diferença de presença sem supor "
         "onde estavam os municípios sem escore; <strong>E4</strong> (adendo), limites e Lee para a proporção "
         "preenchida. <strong>Todos ficam superados pelo E3</strong>, que observa o escore de todos os municípios. "
-        f"Os cenários “informados” de E2 e E4 usaram como banda o {esc(ctx['rl']['longo'])} e ficam sem valor.</p>")
+        f"Os cenários “informados” de E2 e E4 usavam como banda o {esc(ctx['rl']['longo'])}; saíram das saídas "
+        "em 18/10/2026 (auditoria 19).</p>")
     e1 = ler_csv(E1_EST)
     e2 = ler_csv(E2_LIM)
     e4 = ler_csv(E4_EST)
@@ -3375,12 +3376,14 @@ def secao_leitura(ctx) -> str:
     cov_txt = "; ".join(f"<code>{esc(k)}</code>" for k in cov)
     auditoria = re.search(r"docs/[\w/.\-]+\.md", str((r1.get("arquivo_local_ivs_2010") or {}).get("leitura", "")))
     rever = [
-        ("Gradiente de IVS no A4 e covariáveis de IVS, IDHM e população do arquivo local",
+        ("Gradiente de IVS no A4 e covariáveis de IVS, IDHM e população do arquivo local — reestimados com a base "
+         "oficial em 18/10/2026 (auditoria 19)",
          [ROOT / "output" / "tema_trabalho" / "A4_figura_02_gradiente_ivs.png",
           ROOT / "output" / "tema_trabalho" / "A4_tabela_03d_ivs_spline.csv"]),
         ("R1 antigo: “a regra não se reproduz pelo IVS”, “177 acima do piso”, “IVS é piso”", [REGRA_ANTIGA, A01B]),
         ("Primeiro estágio público: salto instável em 0,400 e nulo em 0,500 (artefatos do arquivo local)", [A01]),
-        ("Cenário “informado” de E2 e E4, que usou o arquivo local como banda", [E2_RES, E4_RES]),
+        ("Cenário “informado” de E2 e E4, que usava o arquivo local como banda — retirado das saídas em "
+         "18/10/2026 (auditoria 19)", [E2_RES, E4_RES]),
         ("Comparação “IVS 2010 público × escore” do R1 com escore parcial", [R1_ADMIN]),
     ]
     rever_html = "".join(
@@ -3434,7 +3437,9 @@ def secao_leitura(ctx) -> str:
          f"O protocolo do E3 não fixa correção; como nenhum outcome tem p &lt; 0,05 (menor p = {br_p(ne['p_min'])}), "
          "uma correção não mudaria a leitura."),
         ("Análises antigas a rever",
-         "O arquivo local entrou em análises anteriores do projeto, que precisam ser revistas antes de serem citadas:"
+         "O arquivo local entrou em análises anteriores do projeto. As que seguem ativas foram corrigidas em "
+         "18/10/2026; as demais ficam só como registro do failure mode "
+         "(<code>docs/auditorias/19_reestimacao_base_oficial_failure_mode.md</code>):"
          f"<ul>{rever_html}</ul>"
          + (f"Detalhes em <code>{esc(auditoria.group(0))}</code>. " if auditoria else "")
          + f"Varredura automática: {br_int(len(varredura))} arquivos JSON em <code>output/</code> registram "

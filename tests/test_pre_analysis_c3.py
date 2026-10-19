@@ -83,10 +83,41 @@ class PreAnalysisC3Test(unittest.TestCase):
         self.assertFalse(self.registry["efeitos_pos_tratamento_estimados"])
 
     def test_registry_hashes(self) -> None:
+        # Hashes congelados em 31/08/2026; a emenda de 18/10/2026 (covariadas da
+        # propensão corrigidas: arquivo de IVS errado, auditoria 19) traz os hashes em
+        # vigor dos artefatos que ela regravou. Painéis pré-T0 continuam os congelados.
+        emendas = {e["data"]: e for e in self.registry.get("emendas", [])}
+        em_vigor = emendas["2026-10-18"]["hashes_artefatos_em_vigor"]
+        self.assertFalse(emendas["2026-10-18"]["leitura_pos_t0"])
+        self.assertLess(emendas["2026-10-18"]["competencia_maxima_lida"], "202609")
         for relative, expected in self.registry["hashes_artefatos_congelados"].items():
             path = ROOT / relative
             self.assertTrue(path.exists(), relative)
-            self.assertEqual(sha256(path), expected, relative)
+            self.assertEqual(sha256(path), em_vigor.get(relative, expected), relative)
+        for relative in ("output/avaliacao_ciclo3/cnes_pre/painel_forca_trabalho_pre.parquet",
+                         "output/avaliacao_ciclo3/cnes_pre/painel_forca_trabalho_cnes_pre.parquet"):
+            self.assertNotIn(relative, em_vigor, "painel pré-T0 não pode ser regravado pela emenda")
+
+    def test_bloco_congelado_nao_e_reescrito(self) -> None:
+        """--refresh-hashes sem emenda datada falha e não toca no registro."""
+        import subprocess
+        import sys
+        registro = OUT / "registro_pre_analise.json"
+        antes = registro.read_bytes()
+        script = ROOT / "scripts" / "avaliacao_ciclo3" / "03_auditar_pre_e_potencia.py"
+        for args in (["--refresh-hashes"], ["--refresh-protocol-hash"], ["--refresh-hashes", "--emenda", "18/10/2026", "x"]):
+            r = subprocess.run([sys.executable, str(script), *args], cwd=ROOT, capture_output=True, text=True)
+            self.assertNotEqual(r.returncode, 0, args)
+            self.assertIn("bloco congelado não é reescrito", r.stderr + r.stdout, args)
+        self.assertEqual(registro.read_bytes(), antes)
+
+    def test_validacao_do_modo_com_a_malha_antiga(self) -> None:
+        emenda = {e["data"]: e for e in self.registry["emendas"]}["2026-10-18"]
+        val = emenda["validacao_do_modo_com_a_malha_antiga"]
+        self.assertTrue(val["potencia_identica_byte_a_byte"])
+        self.assertTrue(val["decisao_identica_byte_a_byte"])
+        self.assertLess(val["diagnosticos_max_dif_absoluta"], 1e-8)
+        self.assertLess(val["pesos_max_dif_absoluta"], 1e-8)
 
     def test_independent_estimator_audit(self) -> None:
         path = ROOT / "scripts" / "avaliacao_ciclo3" / "03_auditar_pre_e_potencia.py"

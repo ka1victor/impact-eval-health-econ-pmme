@@ -5,10 +5,10 @@
   "script": "scripts/rdd_bolsa/13_estimar_E6_funil.py",
   "protocolo": {
     "arquivo": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
-    "sha256": "cc54d12a8d00184cf83fd0acb54b1fe42b414b6bd2838861814655a26197cc67",
+    "sha256": "a66fe6183562f8a233b0175c8653b29a6d1bde44cc8897e28867057905461849",
     "texto_canonico": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
-    "sha256_texto_canonico": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065",
-    "sha256_texto_canonico_declarado_no_json": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065",
+    "sha256_texto_canonico": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+    "sha256_texto_canonico_declarado_no_json": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
     "texto_igual_ao_declarado": true
   },
   "contraste": "pacote do corte: anúncio de +R$ 5 mil por mês na bolsa (0,300: R$ 10 mil -> 15 mil; 0,400: R$ 15 mil -> 20 mil) mais as outras regras federais que mudam nos mesmos cortes (protocolo §13, auditoria 18); não é efeito da participação no PMM-E nem do Agora Tem Especialistas",
@@ -16,8 +16,8 @@
   "entradas": [
     {
       "caminho": "output/rdd_bolsa/protocolo_E6_multioutcome.json",
-      "sha256": "cc54d12a8d00184cf83fd0acb54b1fe42b414b6bd2838861814655a26197cc67",
-      "bytes": 7443,
+      "sha256": "a66fe6183562f8a233b0175c8653b29a6d1bde44cc8897e28867057905461849",
+      "bytes": 7906,
       "papel": "protocolo congelado (somente lido)",
       "fonte": "pipeline do repositorio",
       "data_referencia": "2026-10-18",
@@ -28,8 +28,8 @@
     },
     {
       "caminho": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
-      "sha256": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065",
-      "bytes": 19222,
+      "sha256": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+      "bytes": 20212,
       "papel": "texto canonico do protocolo (somente lido)",
       "fonte": "pipeline do repositorio",
       "data_referencia": "2026-10-18",
@@ -64,8 +64,8 @@
     },
     {
       "caminho": "output/tema_trabalho/matriz_tipologia_territorial.parquet",
-      "sha256": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
-      "bytes": 280913,
+      "sha256": "10af8712eef95cc8ab3e5d7f70d9da1319229494ae2b774cb3ca15a8a2095552",
+      "bytes": 322793,
       "papel": "estrato territorial (so a coluna estrato)",
       "fonte": "tipologia A2 (REGIC 2018, RM/RIDE 2022)",
       "data_referencia": "REGIC 2018; RM/RIDE 2022",
@@ -124,7 +124,7 @@
     },
     {
       "caminho": "output/rdd_bolsa/outcomes/dicionario_outcomes_funil.json",
-      "sha256": "d59ff622987effdcf53de3f90759aaa287bb53e7369c508f4d73645ce11d986a",
+      "sha256": "912b80994f9fbefc3bbe1f5f978de16771a6c064f0044960887366a91bb88e8d",
       "bytes": 91512,
       "papel": "dicionario dos outcomes (somente lido)",
       "fonte": "tarefa B",

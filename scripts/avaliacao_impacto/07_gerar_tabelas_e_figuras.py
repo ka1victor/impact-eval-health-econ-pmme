@@ -21,6 +21,24 @@ from model_utils import atomic_savefig, atomic_to_csv
 
 OUT = ROOT / "output" / "avaliacao_impacto"
 PANEL = OUT / "dados" / "painel_municipio_curso_mes.parquet"
+# IVS e população 2010 da base oficial do Ipea (a08). As colunas `ivs_2010` e
+# `populacao_2010` do painel vieram, pela malha, de `data/ivs_ipea_2010_municipios.csv`,
+# que é uma linha de subgrupo populacional e não o município (auditorias 16 e 19); o
+# painel não é regenerável sem o CNES mensal, e por isso as colunas são trocadas aqui.
+IVS_OFICIAL = ROOT / "output" / "aquisicao" / "a08_ivs_2010_oficial_municipio.csv"
+
+
+def covariaveis_oficiais(df: pd.DataFrame) -> pd.DataFrame:
+    """Repõe `ivs_2010` e `populacao_2010` com a base oficial; município sem IVS oficial aborta."""
+    of = pd.read_csv(IVS_OFICIAL, dtype={"co_ibge": str})
+    of = of.assign(co_ibge_6d=of["co_ibge"].str.zfill(6))[["co_ibge_6d", "ivs", "populacao"]]
+    of = of.rename(columns={"ivs": "ivs_2010", "populacao": "populacao_2010"})
+    out = df.drop(columns=["ivs_2010", "populacao_2010"], errors="ignore")
+    out = out.assign(co_ibge_6d=out["co_ibge_6d"].astype(str).str.zfill(6))
+    out = out.merge(of, on="co_ibge_6d", how="left", validate="many_to_one")
+    if out["ivs_2010"].isna().any():
+        raise AssertionError("municipio do painel sem IVS 2010 oficial (a08)")
+    return out
 TABLES = OUT / "tabelas"
 FIGURES = OUT / "figuras"
 
@@ -36,6 +54,7 @@ def main() -> None:
     FIGURES.mkdir(parents=True, exist_ok=True)
     df = pd.read_parquet(PANEL)
     df = df[df["amostra_confirmatoria"] & df["within_muni_var_confirmatoria"]].copy()
+    df = covariaveis_oficiais(df)
     pre = df[df["competencia"] <= "202506"]
     baseline = (
         pre.groupby(["co_ibge_6d", "cod_curso"], as_index=False)

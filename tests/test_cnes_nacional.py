@@ -11,8 +11,11 @@ from __future__ import annotations
 import importlib.util
 import json
 import re
+import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import pandas as pd
 
@@ -26,11 +29,16 @@ PAINEL = ROOT / "output" / "aquisicao" / "cnes_nacional" / "painel_municipio_cbo
 MANIFESTO = ROOT / "output" / "aquisicao" / "a09_manifesto_cnes_nacional.json"
 VALIDACAO = ROOT / "output" / "aquisicao" / "cnes_nacional" / "a09_validacao_painel_ciclo1.json"
 COLUNAS = [
-    "co_ibge", "competencia", "grupo", "n_vinculos", "n_profissionais_distintos",
-    "horas_sus_semanais", "horas_totais", "n_vinculos_horas_ausentes", "tem_profissional",
-    "natureza_dos_dados",
+    "co_ibge", "competencia", "grupo", "n_vinculos", "n_vinculos_sus", "n_profissionais_distintos",
+    "horas_sus_semanais", "horas_sus_semanais_parcial",
+    "horas_totais_amb_hosp", "horas_totais", "horas_totais_parcial",
+    "n_vinculos_horas_ausentes", "tem_profissional", "natureza_dos_dados",
 ]
-METRICAS = COLUNAS[3:9]
+METRICAS = COLUNAS[3:13]
+HORAS_PRINCIPAIS = {  # coluna principal -> coluna parcial (sensibilidade, protocolo 40 §16)
+    "horas_sus_semanais": "horas_sus_semanais_parcial",
+    "horas_totais": "horas_totais_parcial",
+}
 
 
 class TestPlanoDeCompetencias(unittest.TestCase):
@@ -65,6 +73,7 @@ class TestAgregacaoSintetica(unittest.TestCase):
             "qt_ch_hosp_sus": pd.array([2, 0, 0, 0, 0, 0, 1, 0, 0, 0], dtype="Int32"),
             # 999993: um vínculo com 'outros' ausente (SUS observado) e, em cbo_225120, nada mais
             "qt_ch_outros": pd.array([1, 0, 0, 6, 0, 0, 1, 0, None, 0], dtype="Int32"),
+            "tp_sus_nao_sus": ["S", "N", "S", "S", "S", "S", "S", "S", "S", "S"],
         })
         self.df_sus_ausente = self.df.copy()
         self.df_sus_ausente["qt_ch_hosp_sus"] = pd.array([2, 0, 0, 0, 0, 0, 1, 0, 0, None], dtype="Int32")
@@ -74,8 +83,25 @@ class TestAgregacaoSintetica(unittest.TestCase):
         r = self.agg.loc[("999991", "alvo_pmme")]
         self.assertEqual(r["n_vinculos"], 2)
         self.assertEqual(r["n_profissionais_distintos"], 1)
-        self.assertEqual(r["horas_sus_semanais"], 17)
+        self.assertEqual(r["horas_totais_amb_hosp"], 17)
         self.assertEqual(r["horas_totais"], 18)
+
+    def test_horas_sus_so_vinculos_sus(self) -> None:
+        # o vínculo 225225 do P1 é não SUS ('N'): fica fora das horas SUS (§16)
+        r = self.agg.loc[("999991", "alvo_pmme")]
+        self.assertEqual(r["n_vinculos_sus"], 1)
+        self.assertEqual(r["horas_sus_semanais"], 12)
+        self.assertEqual(r["horas_sus_semanais_parcial"], 12)
+        self.assertEqual(self.agg.loc[("999991", "cbo_225225"), "horas_sus_semanais"], 0)
+        self.assertEqual(self.agg.loc[("999991", "cbo_225225"), "horas_totais_amb_hosp"], 5)
+
+    def test_sem_residentes(self) -> None:
+        df = self.df.copy()
+        df.loc[3, "co_cbo"] = "2231F9"
+        agg = A09.agregar_mes(df, self.alvo).set_index(["co_municipio", "grupo"])
+        self.assertEqual(agg.loc[("999991", "todos_medicos"), "n_vinculos"], 4)
+        self.assertEqual(agg.loc[("999991", "todos_medicos_sem_residentes"), "n_vinculos"], 3)
+        self.assertEqual(agg.loc[("999991", "todos_medicos_sem_residentes"), "n_profissionais_distintos"], 2)
 
     def test_grupos_disjuntos(self) -> None:
         self.assertEqual(self.agg.loc[("999991", "generalistas"), "n_profissionais_distintos"], 1)
@@ -94,12 +120,23 @@ class TestAgregacaoSintetica(unittest.TestCase):
         self.assertEqual(r["n_vinculos_horas_ausentes"], 1)
         self.assertEqual(r["horas_sus_semanais"], 30)  # só 'outros' ausente: soma SUS observada
         self.assertTrue(pd.isna(r["horas_totais"]))
+        self.assertEqual(r["horas_totais_parcial"], 30)
         agg2 = A09.agregar_mes(self.df_sus_ausente, self.alvo).set_index(["co_municipio", "grupo"])
         r2 = agg2.loc[("999993", "cbo_225120")]
         self.assertEqual(r2["n_vinculos_horas_ausentes"], 2)
         self.assertTrue(pd.isna(r2["horas_sus_semanais"]))
+        self.assertTrue(pd.isna(r2["horas_totais_amb_hosp"]))
         self.assertTrue(pd.isna(r2["horas_totais"]))
+        self.assertEqual(r2["horas_sus_semanais_parcial"], 30)  # 20 + 10 observadas; o branco não vira número
+        self.assertEqual(r2["horas_totais_parcial"], 30)
         self.assertEqual(self.agg.loc[("999991", "alvo_pmme"), "n_vinculos_horas_ausentes"], 0)
+
+    def test_hora_em_branco_de_vinculo_nao_sus_nao_anula_horas_sus(self) -> None:
+        df = self.df_sus_ausente.copy()
+        df.loc[9, "tp_sus_nao_sus"] = "N"
+        r = A09.agregar_mes(df, self.alvo).set_index(["co_municipio", "grupo"]).loc[("999993", "cbo_225120")]
+        self.assertEqual(r["horas_sus_semanais"], 20)
+        self.assertTrue(pd.isna(r["horas_totais_amb_hosp"]))
 
     def test_id_vazio_e_sem_municipio(self) -> None:
         r = self.agg.loc[("999992", "cbo_225151")]
@@ -145,8 +182,11 @@ class TestPainelNacional(unittest.TestCase):
         for col in METRICAS:
             self.assertTrue((p[col].dropna() >= 0).all(), col)
         self.assertTrue((p["tem_profissional"] == (p["n_profissionais_distintos"] >= 1).astype(int)).all())
-        ambos = p["horas_totais"].notna() & p["horas_sus_semanais"].notna()
-        self.assertTrue((p.loc[ambos, "horas_totais"] >= p.loc[ambos, "horas_sus_semanais"]).all())
+        for maior, menor in (("horas_totais", "horas_totais_amb_hosp"), ("horas_totais_amb_hosp", "horas_sus_semanais"),
+                             ("horas_totais_parcial", "horas_sus_semanais_parcial")):
+            ambos = p[maior].notna() & p[menor].notna()
+            self.assertTrue((p.loc[ambos, maior] >= p.loc[ambos, menor]).all(), (maior, menor))
+        self.assertTrue((p["n_vinculos_sus"] <= p["n_vinculos"]).all())
         self.assertTrue((p["n_vinculos"] >= p["n_profissionais_distintos"]).all())
 
     def test_regra_de_horas_ausentes(self) -> None:
@@ -156,6 +196,12 @@ class TestPainelNacional(unittest.TestCase):
         self.assertTrue((p["horas_totais"].isna() == (p["n_vinculos_horas_ausentes"] > 0)).all())
         # horas SUS ausente só onde há vínculo com hora ausente
         self.assertFalse((p["horas_sus_semanais"].isna() & (p["n_vinculos_horas_ausentes"] == 0)).any())
+        self.assertFalse((p["horas_totais_amb_hosp"].isna() & (p["n_vinculos_horas_ausentes"] == 0)).any())
+        # parciais nunca são ausentes e coincidem com a principal quando ela existe
+        for principal, parcial in HORAS_PRINCIPAIS.items():
+            self.assertFalse(p[parcial].isna().any(), parcial)
+            ok = p[principal].notna()
+            self.assertTrue((p.loc[ok, principal] == p.loc[ok, parcial]).all(), principal)
         # célula sem vínculo: zeros observados, nunca ausente
         vazias = p["n_vinculos"] == 0
         self.assertTrue((p.loc[vazias, ["horas_sus_semanais", "horas_totais"]] == 0).all().all())
@@ -184,6 +230,8 @@ class TestPainelNacional(unittest.TestCase):
         self.assertTrue((n["alvo_pmme"] >= n[cbo_cols].max(axis=1)).all())
         self.assertTrue((n["todos_medicos"] >= n["alvo_pmme"]).all())
         self.assertTrue((n["especialistas_nao_alvo"] >= n["mfc_225130"]).all())
+        self.assertTrue((v["todos_medicos"] >= v["todos_medicos_sem_residentes"]).all())
+        self.assertTrue((n["todos_medicos"] >= n["todos_medicos_sem_residentes"]).all())
         self.assertTrue((v["especialistas_nao_alvo"] >= v["mfc_225130"]).all())
 
     def test_natureza_empirica(self) -> None:
@@ -208,8 +256,55 @@ class TestPainelNacional(unittest.TestCase):
         self.assertTrue(all(c < "202609" for c in self.man["por_competencia"]))
         self.assertEqual(self.man["painel"]["sha256"], A09.sha256_arquivo(PAINEL))
 
+    def test_df_so_530010(self) -> None:
+        self.assertFalse(self.painel["co_ibge"].str.match(r"53").pipe(
+            lambda m: m & (self.painel["co_ibge"] != A09.DF_MUNICIPIO)).any())
+        self.assertIn("portao_df", self.man["painel"])
+
+    def test_rotulos_empiricos(self) -> None:
+        rot = pd.read_csv(ROOT / "output" / "aquisicao" / "cnes_nacional" / "a09_rotulos_cbo_medicos.csv", dtype=str)
+        self.assertEqual(set(rot["natureza_dos_dados"]), {"EMPIRICO"})
+        self.assertIn("2231F9", set(rot["co_cbo"]))
+
     def test_tamanho_versionado(self) -> None:
         self.assertLess(PAINEL.stat().st_size, 50 * 1024**2)
+
+
+class TestPortaoFailClosedSintetico(unittest.TestCase):
+    """Portão reprovado (validação SINTÉTICA forçada): nada é gravado nos caminhos de saída."""
+
+    def test_reprovado_nao_grava(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            t = Path(tmp)
+            alvos = {nome: t / f"{nome}.out" for nome in
+                     ("PAINEL_FILE", "VALIDACAO_FILE", "ROTULOS_FILE", "MANIFESTO_FILE", "RESUMO_FILE")}
+            painel = pd.DataFrame({"co_ibge": ["999991"], "natureza_dos_dados": ["EMPIRICO"]})
+            reprovado = {"status": "REPROVADO", "fracao_celulas_identicas": 0.5, "por_competencia": []}
+            with mock.patch.multiple(A09, **alvos), \
+                    mock.patch.object(A09, "ler_registros", return_value={"202406": {"status": "adquirido_extraido_zip_apagado"}}), \
+                    mock.patch.object(A09, "consolidar_rotulos", return_value=pd.DataFrame(columns=["co_cbo", "ds_cbo"])), \
+                    mock.patch.object(A09, "construir_painel", return_value=(painel, {})), \
+                    mock.patch.object(A09, "validar_contra_ciclo1", return_value=reprovado), \
+                    mock.patch.object(sys, "argv", ["a09", "--etapa", "painel"]):
+                codigo = A09.main()
+            self.assertEqual(codigo, 2)
+            self.assertEqual(list(t.iterdir()), [])
+
+    def test_portao_df(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = Path(tmp)
+            df = pd.DataFrame({
+                "competencia": ["202406"], "co_municipio": ["530020"], "co_profissional_sus": ["P1"],
+                "co_cbo": ["225125"], "qt_ch_ambulatorial": pd.array([1], dtype="Int32"),
+                "qt_ch_hosp_sus": pd.array([0], dtype="Int32"), "qt_ch_outros": pd.array([0], dtype="Int32"),
+                "tp_sus_nao_sus": ["S"],
+            })
+            df.to_parquet(cache / "c.parquet")
+            (cache / "m.json").write_text(json.dumps({"versao_extracao": A09.VERSAO_EXTRACAO}))
+            with mock.patch.object(A09, "caminho_cache", return_value=cache / "c.parquet"), \
+                    mock.patch.object(A09, "caminho_meta", return_value=cache / "m.json"):
+                with self.assertRaisesRegex(RuntimeError, "DF"):
+                    A09.construir_painel(["202406"])
 
 
 @unittest.skipUnless(VALIDACAO.exists(), "validação a09 ausente")

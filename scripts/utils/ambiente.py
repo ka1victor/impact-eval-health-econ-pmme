@@ -29,8 +29,10 @@ REQUIREMENTS = ROOT / "requirements.txt"
 
 PYTHON_MINIMO = (3, 12)
 
-# Pacotes cuja versão altera o resultado numérico gravado em disco.
-PACOTES_CRITICOS = ("numpy", "pandas", "statsmodels", "scipy")
+# Pacotes cuja versão altera o resultado gravado em disco: os quatro primeiros mudam
+# números; matplotlib muda os bytes das figuras PNG/PDF, cujos hashes entram nos
+# manifestos.
+PACOTES_CRITICOS = ("numpy", "pandas", "statsmodels", "scipy", "matplotlib")
 
 
 def _versoes_fixadas() -> dict[str, str]:

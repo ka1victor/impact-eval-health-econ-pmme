@@ -37,6 +37,7 @@ output/
 - **`tema_trabalho/`:** Resultados centrais da pesquisa atual:
   - `matriz_funil_ciclo1.parquet` e `portao_denominador.json` (A1 — reconciliação do funil).
   - `matriz_tipologia_territorial.parquet` e `suporte_estratos_territoriais.csv` (A2 — REGIC + RMs).
+  - `failure_mode_ivs_antes_depois.csv` e `failure_mode_ivs_resumo.json`: antes (FAILURE_MODE, arquivo de IVS errado) e depois (EMPIRICO, base oficial) de cada estimativa afetada; gerados por `scripts/tema_trabalho/12_registrar_failure_mode_ivs.py`.
   - `registro_pre_analise_atracao.json` e `potencia_atracao.json` (A3 — pré-análise e MDE).
   - `A4_tabela_02_modelo_principal_LPM.csv`, `A4_tabela_02b_logit_AME.csv` e figuras de gradiente (A4 — estimação de atração).
   - `A5_relatorio_diagnostico.md` e tabelas dinâmicas de oferta cadastrada (A5 — evolução CNES).
@@ -55,7 +56,7 @@ output/
 - **`aquisicao/`:**
   - `ponte_curso_cbo_oficial.json`: mapeamento operacional entre cursos e CBOs com status explícito de sobreposição.
   - `quadro_vagas_tratamento.parquet`: universo de 1.295 células de oferta do ciclo 1.
-  - `malha_municipios_regioes_saude.parquet` e `painel_municipios_regioes.parquet`: harmonização territorial IBGE/IPEA.
+  - `malha_municipios_regioes_saude.parquet` e `painel_municipios_regioes.parquet`: harmonização territorial IBGE/IPEA, com IVS, IDHM e população 2010 da base oficial do Ipea (a08) e população do Censo 2022 desde 18/10/2026; manifesto em `manifesto_territorio_ibge.json`.
 
 - **`rdd_bolsa/`:** Diagnósticos de viabilidade da grade salarial, teste de
   replicação do escore administrativo IVS 2010 e primeiro estágio público em

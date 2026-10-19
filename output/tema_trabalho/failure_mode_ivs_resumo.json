@@ -1,0 +1,349 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "natureza_coluna_antes": "FAILURE_MODE (só documentação; não é resultado)",
+  "ref_git_antes": "22eddb528c37aa0bf8721275999423900959070b",
+  "data_referencia": "2026-10-18",
+  "arquivo_errado": {
+    "municipios": 5565,
+    "ivs_igual_3_casas": 38,
+    "correlacao_ivs": 0.8510764657215389,
+    "populacao_2010_soma_arquivo_errado": 41852890,
+    "populacao_2010_soma_oficial": 190755799,
+    "linha_escolhida_por_municipio": {
+      "Negro / Mulher / Urbano": 4362,
+      "Negro / Mulher / Total Situação de Domicílio": 576,
+      "Total Cor / Mulher / Urbano": 484,
+      "Total Cor / Mulher / Total Situação de Domicílio": 142,
+      "Total Cor / Total Sexo / Total Situação de Domicílio": 1
+    },
+    "fonte_mecanismo": "output/rdd_bolsa/identificacao_arquivo_local_ivs.json"
+  },
+  "tipologia": {
+    "municipios": 5570,
+    "estrato_identico": true,
+    "estoque_pre_identico": true,
+    "ivs_igual_ao_oficial_depois": 5565,
+    "ivs_comparados_com_oficial": 5565,
+    "ivs_igual_antes_e_depois_3_casas": 38,
+    "ivs_categoria_igual_antes_e_depois": 2999,
+    "a1_municipios": 540,
+    "a1_ivs_medio": {
+      "antes_failure_mode": 0.32894999999999996,
+      "depois": 0.32660925925925927
+    },
+    "a1_populacao_2010_mediana": {
+      "antes_failure_mode": 9092.5,
+      "depois": 45185.0
+    },
+    "quadro_municipios_com_estoque": 368,
+    "quadro_estoque_pre_por_10k_mediana": {
+      "antes_failure_mode": 4.429705141558268,
+      "depois": 0.8117692716778433
+    },
+    "sha256_antes": "742945f62b02832ec4224b9e5c1f7c2bc0969c10537f28d170a9bb2ddc36dc69",
+    "sha256_depois": "10af8712eef95cc8ab3e5d7f70d9da1319229494ae2b774cb3ca15a8a2095552"
+  },
+  "cadeia_rdd": {
+    "e3_registra_tipologia_nova": true,
+    "e5_registra_tipologia_nova": true,
+    "estrato_identico": true,
+    "estimativas_identicas_byte_a_byte": {
+      "output/rdd_bolsa/E1_densidade_estimativas.csv": true,
+      "output/rdd_bolsa/E3_estimativas.csv": true,
+      "output/rdd_bolsa/E3_diagnosticos.csv": true,
+      "output/rdd_bolsa/E4_proporcao_municipio.csv": true,
+      "output/rdd_bolsa/E5_especificacoes.csv": true,
+      "output/rdd_bolsa/E5_decomposicao_ic.csv": true,
+      "output/rdd_bolsa/E5_decomposicao_lados.csv": true,
+      "output/rdd_bolsa/E5_lr_selecao_janela.csv": true,
+      "output/rdd_bolsa/E5_lr_sensibilidade_janelas.csv": true
+    },
+    "e2_linhas_antes": 24,
+    "e2_linhas_depois": 12,
+    "e2_linhas_informado_retiradas": 12,
+    "e2_pior_caso_identico": true,
+    "e4_linhas_antes": 70,
+    "e4_linhas_depois": 46,
+    "e4_linhas_informado_retiradas": 24,
+    "e4_demais_identicas": true
+  },
+  "tabela1_ciclo1": [
+    {
+      "variavel": "População municipal 2010",
+      "coluna": "Imediata média",
+      "antes_failure_mode": 40625.54945054945,
+      "depois": 139186.87362637362
+    },
+    {
+      "variavel": "População municipal 2010",
+      "coluna": "Reserva média",
+      "antes_failure_mode": 30713.394160583943,
+      "depois": 112082.70802919708
+    },
+    {
+      "variavel": "População municipal 2010",
+      "coluna": "Diferença padronizada",
+      "antes_failure_mode": 0.1401559281659603,
+      "depois": 0.1371855265696076
+    },
+    {
+      "variavel": "IVS 2010",
+      "coluna": "Imediata média",
+      "antes_failure_mode": 0.3411978021978022,
+      "depois": 0.3430714285714286
+    },
+    {
+      "variavel": "IVS 2010",
+      "coluna": "Reserva média",
+      "antes_failure_mode": 0.3461605839416058,
+      "depois": 0.3465547445255474
+    },
+    {
+      "variavel": "IVS 2010",
+      "coluna": "Diferença padronizada",
+      "antes_failure_mode": -0.0733849017404515,
+      "depois": -0.0363707668661878
+    }
+  ],
+  "diagnostico_tema_01": {
+    "antes_failure_mode": "177 de 368 municípios divergem da regra candidata",
+    "depois": "368 de 368 municípios com a faixa anunciada reproduzida pelo IVS 2010 oficial (a08), cortes 0,300 e 0,400; 0 sem IVS oficial"
+  },
+  "c3_03_ciclo3": [
+    {
+      "modulo": "anestesiologia",
+      "nivel": "cnes_ofertante",
+      "mde_80_antes_failure_mode": 2.22,
+      "mde_80_depois": 2.12,
+      "suporte_t_antes": 0.8319327731092437,
+      "suporte_t_depois": 0.8319327731092437,
+      "suporte_c_antes": 0.9770491803278688,
+      "suporte_c_depois": 0.9704918032786886,
+      "suporte_aprovado_antes": true,
+      "suporte_aprovado_depois": true,
+      "decisao_antes": "associacao_ajustada",
+      "decisao_depois": "associacao_ajustada",
+      "potencia_antes": 0.2278,
+      "potencia_depois": 0.253,
+      "tendencia_antes": -0.002787437316267,
+      "tendencia_depois": -0.0048012834011346,
+      "leads_p_antes": 0.859280903239779,
+      "leads_p_depois": 0.8655672040883708
+    },
+    {
+      "modulo": "oncologia_clinica",
+      "nivel": "cnes_ofertante",
+      "mde_80_antes_failure_mode": 1.22,
+      "mde_80_depois": 1.14,
+      "suporte_t_antes": 0.9166666666666666,
+      "suporte_t_depois": 0.9166666666666666,
+      "suporte_c_antes": 0.8717948717948718,
+      "suporte_c_depois": 0.7692307692307693,
+      "suporte_aprovado_antes": true,
+      "suporte_aprovado_depois": false,
+      "decisao_antes": "inviavel",
+      "decisao_depois": "inviavel",
+      "potencia_antes": 0.6242,
+      "potencia_depois": 0.6948,
+      "tendencia_antes": 0.0034179000830513,
+      "tendencia_depois": 0.0038435269295953,
+      "leads_p_antes": 0.3207314405238138,
+      "leads_p_depois": 0.4282793170539039
+    },
+    {
+      "modulo": "medicina_intensiva",
+      "nivel": "cnes_ofertante",
+      "mde_80_antes_failure_mode": NaN,
+      "mde_80_depois": 3.36,
+      "suporte_t_antes": 0.1666666666666666,
+      "suporte_t_depois": 0.3333333333333333,
+      "suporte_c_antes": 0.3132530120481928,
+      "suporte_c_depois": 0.3614457831325301,
+      "suporte_aprovado_antes": false,
+      "suporte_aprovado_depois": false,
+      "decisao_antes": "inviavel",
+      "decisao_depois": "inviavel",
+      "potencia_antes": NaN,
+      "potencia_depois": 0.1424688561721404,
+      "tendencia_antes": -0.013912993669671,
+      "tendencia_depois": 0.2622358119426049,
+      "leads_p_antes": 1.756054310256461e-284,
+      "leads_p_depois": 0.0
+    },
+    {
+      "modulo": "cirurgia_geral_cbo_exclusivo",
+      "nivel": "cnes_ofertante",
+      "mde_80_antes_failure_mode": 1.7,
+      "mde_80_depois": 1.7,
+      "suporte_t_antes": 0.7575757575757576,
+      "suporte_t_depois": 0.7575757575757576,
+      "suporte_c_antes": 0.8011869436201781,
+      "suporte_c_depois": 0.7744807121661721,
+      "suporte_aprovado_antes": false,
+      "suporte_aprovado_depois": false,
+      "decisao_antes": "associacao_ajustada",
+      "decisao_depois": "associacao_ajustada",
+      "potencia_antes": 0.3844,
+      "potencia_depois": 0.385,
+      "tendencia_antes": 0.0157769409905359,
+      "tendencia_depois": 0.0183044571362109,
+      "leads_p_antes": 5.856001484282812e-05,
+      "leads_p_depois": 1.953080109298572e-05
+    },
+    {
+      "modulo": "anestesiologia",
+      "nivel": "municipio",
+      "mde_80_antes_failure_mode": 4.44,
+      "mde_80_depois": 4.62,
+      "suporte_t_antes": 0.9090909090909092,
+      "suporte_t_depois": 0.8571428571428571,
+      "suporte_c_antes": 0.9109311740890688,
+      "suporte_c_depois": 0.8178137651821862,
+      "suporte_aprovado_antes": true,
+      "suporte_aprovado_depois": true,
+      "decisao_antes": "associacao_ajustada",
+      "decisao_depois": "associacao_ajustada",
+      "potencia_antes": 0.09,
+      "potencia_depois": 0.0896,
+      "tendencia_antes": -0.0343717239466277,
+      "tendencia_depois": -0.0554210591353911,
+      "leads_p_antes": 0.4966339026150365,
+      "leads_p_depois": 0.5287300645725528
+    },
+    {
+      "modulo": "oncologia_clinica",
+      "nivel": "municipio",
+      "mde_80_antes_failure_mode": 3.96,
+      "mde_80_depois": 3.84,
+      "suporte_t_antes": 0.875,
+      "suporte_t_depois": 0.875,
+      "suporte_c_antes": 0.6857142857142857,
+      "suporte_c_depois": 0.3714285714285714,
+      "suporte_aprovado_antes": false,
+      "suporte_aprovado_depois": false,
+      "decisao_antes": "inviavel",
+      "decisao_depois": "inviavel",
+      "potencia_antes": 0.1254,
+      "potencia_depois": 0.1218,
+      "tendencia_antes": 0.0082284367941133,
+      "tendencia_depois": -0.0114126322720689,
+      "leads_p_antes": 7.202950225573195e-07,
+      "leads_p_depois": 0.0013489317931192
+    },
+    {
+      "modulo": "medicina_intensiva",
+      "nivel": "municipio",
+      "mde_80_antes_failure_mode": NaN,
+      "mde_80_depois": NaN,
+      "suporte_t_antes": 0.5,
+      "suporte_t_depois": 0.5,
+      "suporte_c_antes": 0.0158730158730158,
+      "suporte_c_depois": 0.0476190476190476,
+      "suporte_aprovado_antes": false,
+      "suporte_aprovado_depois": false,
+      "decisao_antes": "inviavel",
+      "decisao_depois": "inviavel",
+      "potencia_antes": NaN,
+      "potencia_depois": NaN,
+      "tendencia_antes": 0.7271794871794872,
+      "tendencia_depois": -0.1464872507813059,
+      "leads_p_antes": 0.0,
+      "leads_p_depois": 3.955884810322491e-15
+    },
+    {
+      "modulo": "cirurgia_geral_cbo_exclusivo",
+      "nivel": "municipio",
+      "mde_80_antes_failure_mode": 2.74,
+      "mde_80_depois": 2.8,
+      "suporte_t_antes": 0.8260869565217391,
+      "suporte_t_depois": 0.8260869565217391,
+      "suporte_c_antes": 0.6093189964157706,
+      "suporte_c_depois": 0.6845878136200717,
+      "suporte_aprovado_antes": false,
+      "suporte_aprovado_depois": false,
+      "decisao_antes": "associacao_ajustada",
+      "decisao_depois": "associacao_ajustada",
+      "potencia_antes": 0.1756,
+      "potencia_depois": 0.1634,
+      "tendencia_antes": -0.0637262462039981,
+      "tendencia_depois": -0.0525926253566084,
+      "leads_p_antes": 0.0653132098031439,
+      "leads_p_depois": 0.0529104515403259
+    }
+  ],
+  "banca1_detalhe_por_categoria_ivs": {
+    "antes_failure_mode": {
+      "ALTA": {
+        "municipios": 46,
+        "por_100k": 9.97
+      },
+      "BAIXA": {
+        "municipios": 89,
+        "por_100k": 12.46
+      },
+      "MEDIA": {
+        "municipios": 132,
+        "por_100k": 17.6
+      },
+      "MUITO_ALTA": {
+        "municipios": 15,
+        "por_100k": 7.33
+      },
+      "MUITO_BAIXA": {
+        "municipios": 13,
+        "por_100k": 25.82
+      }
+    },
+    "depois": {
+      "ALTA": {
+        "municipios": 50,
+        "por_100k": 23.94
+      },
+      "BAIXA": {
+        "municipios": 95,
+        "por_100k": 14.39
+      },
+      "MEDIA": {
+        "municipios": 89,
+        "por_100k": 14.41
+      },
+      "MUITO_ALTA": {
+        "municipios": 35,
+        "por_100k": 8.76
+      },
+      "MUITO_BAIXA": {
+        "municipios": 26,
+        "por_100k": 18.43
+      }
+    }
+  },
+  "mudancas_de_conclusao": [
+    "- **A4 ajuste completo, `estrato_metropolitano`:** 0,209 → 0,185; o q de FDR cruza 5% (0,023 → 0,055).",
+    "- **A4 ajuste completo, `log_pop`:** 0,036 → 0,051; o p cruza 5% (0,117 → 0,042).",
+    "- **A4 ajuste completo winsorizado p99, `log_pop`:** 0,034 → 0,050; o p cruza 5% (0,139 → 0,048).",
+    "- **A5 estoque em 6 meses, completo, `estrato_capital`:** −1,685 → −1,341; o p cruza 5% (0,043 → 0,109)."
+  ],
+  "hashes_entradas": {
+    "data/ivs_ipea_2010_municipios.csv": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c",
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+    "output/aquisicao/populacao_censo2022_municipios.csv": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+    "output/rdd_bolsa/identificacao_arquivo_local_ivs.json": "674e8f36243ad433f0925bcd554df05d028b2523f29a4965e85a4343846e8eff",
+    "output/tema_trabalho/matriz_tipologia_territorial.parquet": "10af8712eef95cc8ab3e5d7f70d9da1319229494ae2b774cb3ca15a8a2095552",
+    "output/rdd_bolsa/E3_status.json": "d9db202cd00449686dad4d94947d19ba822e11aedb545f0b2158ab72e3623195",
+    "output/rdd_bolsa/E5_resumo.json": "35d7a1c25dfc0b026a249374e14610455ccae2eb9752ac8c447d15a0eab90c9a",
+    "output/avaliacao_impacto/tabelas/tabela1_estatisticas_descritivas_baseline.csv": "ff48ffe42de3e050c56b5fae733bf6fe4362195213771a316f0f8c1e1db4e949",
+    "output/tema_trabalho/A4_tabela_02_modelo_principal_LPM.csv": "3e7cf00700b2990967c83ffddc05fd58163e2890fd547e7bd1194e3d59b8ee0e",
+    "output/tema_trabalho/A4_tabela_03_separacao_faixa_ivs_remoticidade.csv": "4731e7caac1dc11b88cdc883e8f8ebffc09c3d92e7d740fc42f8930c87fa081b",
+    "output/tema_trabalho/A4_tabela_03b_ajuste_completo.csv": "fa2d4c960145ace687f92313926d0860defbe617db7223724710ec14c99efa42",
+    "output/tema_trabalho/A4_tabela_03c_winsorizado.csv": "fb21b8a6fa1161e901bff7187f80c44c46ddb790aab0e0e331fd7e91211085f8",
+    "output/tema_trabalho/A4_tabela_03d_ivs_spline.csv": "7c8c968be21a1c159cc0a7f7d7a65f8085a06e5d6eb9cea9516383f25758cf39",
+    "output/tema_trabalho/A5_tabela_03_modelo_estoque_6m.csv": "27ea0b675238d450e3d653aefaa6d38936d94e9f245866e5783081d22158e488",
+    "output/tema_trabalho/A5_tabela_03c_modelo_cobertura.csv": "4bc3305c1f1cfc18c0a9cfc70022093aef2e4685ee8d900ac41820e5dbba8065",
+    "output/tema_trabalho/A5_tabela_03d_modelo_entradas.csv": "1b1845c0e31cf14c2de22417a48ca996dce0620ebc7e8f0914e22955e042754b",
+    "output/tema_trabalho/A5_tabela_03e_modelo_presenca.csv": "fd185c8b3a184bdc857c609d0368843d76b5f82047fe0f34ac0b2f9d49e7fb05",
+    "output/tema_trabalho/A5_tabela_03i_heterogeneidade_estrato.csv": "b37ae8fe90f73ea1227bcfc52c9444e78a96903f802c5a626e7d2d9cb4bb22c2",
+    "output/tema_trabalho/A5_tabela_07_estudo_evento_atracao.csv": "b21797f18a15f71d7ed54fe33c3a673f9d3b659b7dd0323a48f22a3d7bb01680",
+    "output/tema_trabalho/A5_tabela_08_estudo_evento_proporcional.csv": "fd342fac1e479502320ab1d9b00e4c685d4280ba13fa81ff216002c780393ea2",
+    "output/tema_trabalho/diagnostico_atracao_provimento_interior.json": "27f01389dfb2bb4e436b9198544c4902dcc881949ccf2ca6bf76fc847e7dabb8"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "etapa": "04_harmonizar_territorio_ibge",
+  "correcao": {
+    "data": "2026-10-18",
+    "descricao": "IVS, subíndices, IDHM, população 2010 e renda passam a vir da base oficial do Ipea (a08); código de 7 dígitos e população 2022, do Censo 2022. data/ivs_ipea_2010_municipios.csv (linha de subgrupo, auditoria 16) deixou de ser lido.",
+    "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md"
+  },
+  "entradas": {
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": {
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "fonte": "Atlas da Vulnerabilidade Social (Ipea), base completa, linha Total/Total/Total de 2010",
+      "data_referencia": "Censo 2010",
+      "unidade": "município (malha 2010)",
+      "chave": "co_ibge (6 dígitos)",
+      "colunas_usadas": {
+        "ivs_2010": "ivs",
+        "ivs_infra_2010": "ivs_infraestrutura_urbana",
+        "ivs_ch_2010": "ivs_capital_humano",
+        "ivs_rt_2010": "ivs_renda_e_trabalho",
+        "idhm_2010": "idhm",
+        "populacao_2010": "populacao",
+        "rdpc_2010": "renda_per_capita"
+      }
+    },
+    "output/aquisicao/populacao_censo2022_municipios.csv": {
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "fonte": "IBGE, Censo Demográfico 2022, SIDRA 4709, variável 93",
+      "data_referencia": "2022",
+      "unidade": "município (malha 2022)",
+      "chave": "co_ibge_6d; co_ibge_7d",
+      "colunas_usadas": [
+        "co_ibge_7d",
+        "populacao_2022"
+      ]
+    },
+    "data/pmm_especialistas_serie_historica.csv": {
+      "sha256": "3ebc624a7446a017940f00f131085e9bf7199482b7315a5b75d632e2397eb7a0",
+      "colunas_usadas": [
+        "co_ibge",
+        "regiao",
+        "regiao_saude"
+      ]
+    },
+    "data/pmm_especialistas_nominal.csv": {
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
+      "colunas_usadas": [
+        "co_ibge",
+        "regiao",
+        "regiao_saude"
+      ]
+    }
+  },
+  "cobertura": {
+    "municipios": 5565,
+    "ivs_valido": 5565,
+    "populacao_2010_total": 190755799,
+    "populacao_2022_total_nos_municipios_da_malha_2010": 203022851,
+    "com_regiao_saude": 531
+  },
+  "saidas": {
+    "output/aquisicao/malha_municipios_regioes_saude.parquet": {
+      "sha256": "beed0d11a1d367c97261aa20b798dd050473677a879fb3d6f69a3d8dfead9728"
+    },
+    "output/aquisicao/painel_municipios_regioes.parquet": {
+      "sha256": "beed0d11a1d367c97261aa20b798dd050473677a879fb3d6f69a3d8dfead9728"
+    }
+  }
+}

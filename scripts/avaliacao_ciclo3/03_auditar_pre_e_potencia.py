@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -600,17 +601,12 @@ def diagnostic_course(
     return result, prop, power
 
 
-def main() -> None:
-    OUT.mkdir(parents=True, exist_ok=True)
-    CNES_OUT.mkdir(parents=True, exist_ok=True)
-    files = validate_inputs()
-    cohort = pd.read_parquet(COHORT)
-    municipal = pd.read_parquet(MUNICIPAL)
-    units, excluded = freeze_municipal_arms(cohort)
-    cnes_units, cnes_excluded = freeze_cnes_arms(cohort)
-    panel = load_cnes_panel(files, units)
-    cnes_panel = load_cnes_establishment_panel(files, cnes_units)
-
+def diagnosticar(panel: pd.DataFrame, cnes_panel: pd.DataFrame, units: pd.DataFrame,
+                 cnes_units: pd.DataFrame, municipal: pd.DataFrame):
+    """Diagnósticos pré-tratamento por nível e curso; não lê nenhuma competência >= T0."""
+    for nome, painel in (("municipio", panel), ("cnes_ofertante", cnes_panel)):
+        if painel["competencia"].astype(str).max() >= T0:
+            raise AssertionError(f"painel {nome} contém competência >= T0")
     diagnostics, weights, powers = [], [], {}
     for level, level_panel, level_units in [
         ("cnes_ofertante", cnes_panel, cnes_units),
@@ -622,27 +618,16 @@ def main() -> None:
             propensity["nivel"] = level
             weights.append(propensity)
             powers[f'{COURSES[course]["module"]}__{level}'] = power
-    diagnostic_df = pd.DataFrame(diagnostics)
-    weights_df = pd.concat(weights, ignore_index=True)
-    audit = audit_estimators()
+    return diagnostics, pd.DataFrame(diagnostics), pd.concat(weights, ignore_index=True), powers
 
-    panel_path = CNES_OUT / "painel_forca_trabalho_pre.parquet"
-    cnes_panel_path = CNES_OUT / "painel_forca_trabalho_cnes_pre.parquet"
-    units_path = CNES_OUT / "unidades_elegiveis_congeladas.csv"
-    excluded_path = CNES_OUT / "unidades_excluidas_congeladas.csv"
-    cnes_units_path = CNES_OUT / "cnes_elegiveis_congelados.csv"
-    cnes_excluded_path = CNES_OUT / "cnes_excluidos_congelados.csv"
-    weights_path = OUT / "pesos_sobreposicao_pre.csv"
-    diagnostics_path = OUT / "diagnosticos_pre.csv"
-    panel.to_parquet(panel_path, index=False)
-    cnes_panel.to_parquet(cnes_panel_path, index=False)
-    write_csv_if_changed(units, units_path)
-    write_csv_if_changed(excluded, excluded_path)
-    write_csv_if_changed(cnes_units, cnes_units_path)
-    write_csv_if_changed(cnes_excluded, cnes_excluded_path)
-    write_csv_if_changed(weights_df, weights_path)
-    write_csv_if_changed(diagnostic_df, diagnostics_path)
 
+def gravar_potencia_e_decisao(diagnostics: list[dict], powers: dict) -> None:
+    power_doc, decisions = documentos_potencia_e_decisao(diagnostics, powers)
+    write_json(OUT / "potencia_pre.json", power_doc)
+    write_json(OUT / "decisao_torneio_pre.json", decisions)
+
+
+def documentos_potencia_e_decisao(diagnostics: list[dict], powers: dict) -> tuple[dict, dict]:
     power_doc = {
         "protocolo": "C3-03-potencia-pre",
         "data_corte": "2026-08-31",
@@ -652,7 +637,6 @@ def main() -> None:
         "metodo": "bootstrap empírico por cluster municipal, no suporte comum e com pesos de sobreposição, de mudanças prévias de seis meses; teste bilateral 5%",
         "resultados": powers,
     }
-    write_json(OUT / "potencia_pre.json", power_doc)
 
     clinical_status = "inviavel"
     clinical_reason = "C3-02B tem 673/675 arquivos; RDAC2606.dbc e RDRR2606.dbc ausentes; nenhum zero imputado"
@@ -679,7 +663,41 @@ def main() -> None:
         },
         "proxima_estimacao": "somente após seis meses comuns maduros; nunca nesta etapa",
     }
-    write_json(OUT / "decisao_torneio_pre.json", decisions)
+    return power_doc, decisions
+
+
+def main() -> None:
+    OUT.mkdir(parents=True, exist_ok=True)
+    CNES_OUT.mkdir(parents=True, exist_ok=True)
+    files = validate_inputs()
+    cohort = pd.read_parquet(COHORT)
+    municipal = pd.read_parquet(MUNICIPAL)
+    units, excluded = freeze_municipal_arms(cohort)
+    cnes_units, cnes_excluded = freeze_cnes_arms(cohort)
+    panel = load_cnes_panel(files, units)
+    cnes_panel = load_cnes_establishment_panel(files, cnes_units)
+
+    diagnostics, diagnostic_df, weights_df, powers = diagnosticar(panel, cnes_panel, units, cnes_units, municipal)
+    audit = audit_estimators()
+
+    panel_path = CNES_OUT / "painel_forca_trabalho_pre.parquet"
+    cnes_panel_path = CNES_OUT / "painel_forca_trabalho_cnes_pre.parquet"
+    units_path = CNES_OUT / "unidades_elegiveis_congeladas.csv"
+    excluded_path = CNES_OUT / "unidades_excluidas_congeladas.csv"
+    cnes_units_path = CNES_OUT / "cnes_elegiveis_congelados.csv"
+    cnes_excluded_path = CNES_OUT / "cnes_excluidos_congelados.csv"
+    weights_path = OUT / "pesos_sobreposicao_pre.csv"
+    diagnostics_path = OUT / "diagnosticos_pre.csv"
+    panel.to_parquet(panel_path, index=False)
+    cnes_panel.to_parquet(cnes_panel_path, index=False)
+    write_csv_if_changed(units, units_path)
+    write_csv_if_changed(excluded, excluded_path)
+    write_csv_if_changed(cnes_units, cnes_units_path)
+    write_csv_if_changed(cnes_excluded, cnes_excluded_path)
+    write_csv_if_changed(weights_df, weights_path)
+    write_csv_if_changed(diagnostic_df, diagnostics_path)
+
+    gravar_potencia_e_decisao(diagnostics, powers)
 
     generated = [
         panel_path, cnes_panel_path, units_path, excluded_path, cnes_units_path,
@@ -712,19 +730,149 @@ def main() -> None:
     print("C3-03 concluído sem leitura pós-T0 e sem estimação de efeito.")
 
 
+# --------------------------------------------------------------------------
+# Emenda de 18/10/2026: covariadas municipais da propensão corrigidas.
+#
+# `ivs_2010` e `log_pop_2010` (= log1p(populacao_2010)) vêm de
+# output/aquisicao/painel_municipios_regioes.parquet. Até 18/10/2026 essa malha lia
+# data/ivs_ipea_2010_municipios.csv, que é uma linha de subgrupo populacional e não o
+# município (docs/auditorias/16 e 19). A malha passou a ler o IVS 2010 oficial e a
+# população 2010 oficial do Ipea (a08); a especificação congelada (log da população de
+# 2010) não muda. Os painéis CNES pré-T0 congelados não são reconstruídos: o CNES
+# mensal não está no disco, e eles são conferidos contra o hash do registro antes do
+# uso. Nenhuma competência >= T0 é lida; nenhum efeito é estimado.
+EMENDA_DATA = "2026-10-18"
+PAINEL_PRE = CNES_OUT / "painel_forca_trabalho_pre.parquet"
+PAINEL_CNES_PRE = CNES_OUT / "painel_forca_trabalho_cnes_pre.parquet"
+
+
+def rel(p: Path) -> str:
+    return str(p.relative_to(ROOT)).replace("\\", "/")
+
+
+REF_ANTES_CORRECAO = "22eddb528c37aa0bf8721275999423900959070b"  # último commit com a malha antiga
+
+
+def _git_antes(rel_path: str) -> bytes:
+    import subprocess
+    return subprocess.run(["git", "-C", str(ROOT), "show", f"{REF_ANTES_CORRECAO}:{rel_path}"],
+                          check=True, capture_output=True).stdout
+
+
+def validar_modo_com_malha_antiga(panel, cnes_panel, units, cnes_units, congelados: dict) -> dict:
+    """Fail closed: com a malha antiga, o modo de reestimação tem de reproduzir o congelado.
+
+    Decisão e potência têm de ser idênticas byte a byte; diagnósticos e pesos, iguais a
+    menos de erro de ponto flutuante. Diferenças medidas são gravadas na emenda.
+    """
+    import io
+    antiga = pd.read_parquet(io.BytesIO(_git_antes(rel(MUNICIPAL))))
+    diagnostics, diag_df, weights_df, powers = diagnosticar(panel, cnes_panel, units, cnes_units, antiga)
+    power_doc, decisions = documentos_potencia_e_decisao(diagnostics, powers)
+    texto = lambda d: json.dumps(d, ensure_ascii=False, indent=2) + "\n"
+    potencia_ok = hashlib.sha256(texto(power_doc).encode("utf-8")).hexdigest() == congelados[rel(OUT / "potencia_pre.json")]
+    decisao_ok = hashlib.sha256(texto(decisions).encode("utf-8")).hexdigest() == congelados[rel(OUT / "decisao_torneio_pre.json")]
+    resultado = {"ref_malha_antiga": REF_ANTES_CORRECAO, "potencia_identica_byte_a_byte": potencia_ok,
+                 "decisao_identica_byte_a_byte": decisao_ok}
+    for nome, novo, arquivo in (("diagnosticos", diag_df, "diagnosticos_pre.csv"), ("pesos", weights_df, "pesos_sobreposicao_pre.csv")):
+        velho = pd.read_csv(io.BytesIO(_git_antes(rel(OUT / arquivo))))
+        novo = pd.read_csv(io.StringIO(novo.to_csv(index=False)))
+        num = [c for c in velho.select_dtypes("number").columns if c in novo.columns]
+        dif = (velho[num] - novo[num]).abs().to_numpy(float)
+        base = velho[num].abs().to_numpy(float)
+        rel_ok = base > 1e-10
+        resultado[f"{nome}_max_dif_absoluta"] = float(np.nanmax(dif))
+        resultado[f"{nome}_max_dif_relativa_valores_acima_de_1e-10"] = float(np.nanmax(np.where(rel_ok, dif / np.where(rel_ok, base, 1), 0)))
+        resultado[f"{nome}_mesmas_linhas_e_colunas"] = bool(velho.shape == novo.shape and list(velho.columns) == list(novo.columns))
+    if not (potencia_ok and decisao_ok and resultado["diagnosticos_mesmas_linhas_e_colunas"]
+            and resultado["diagnosticos_max_dif_absoluta"] < 1e-8 and resultado["pesos_max_dif_absoluta"] < 1e-8):
+        raise RuntimeError(f"modo de reestimação não reproduz o congelado com a malha antiga: {resultado}")
+    return resultado
+
+
+def main_reestimacao_covariaveis_oficiais() -> None:
+    registry_path = OUT / "registro_pre_analise.json"
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    congelados = registry["hashes_artefatos_congelados"]
+    for p in (PAINEL_PRE, PAINEL_CNES_PRE):
+        if sha256(p) != congelados[rel(p)]:
+            raise RuntimeError(f"{rel(p)} diverge do hash congelado; reestimação abortada")
+    cohort = pd.read_parquet(COHORT)
+    units, excluded = freeze_municipal_arms(cohort)
+    cnes_units, cnes_excluded = freeze_cnes_arms(cohort)
+    for frame, path in ((units, CNES_OUT / "unidades_elegiveis_congeladas.csv"),
+                        (excluded, CNES_OUT / "unidades_excluidas_congeladas.csv"),
+                        (cnes_units, CNES_OUT / "cnes_elegiveis_congelados.csv"),
+                        (cnes_excluded, CNES_OUT / "cnes_excluidos_congelados.csv")):
+        if frame.to_csv(index=False, lineterminator="\n") != path.read_text(encoding="utf-8"):
+            raise RuntimeError(f"braços congelados não reproduzidos: {rel(path)}")
+    panel = pd.read_parquet(PAINEL_PRE)
+    cnes_panel = pd.read_parquet(PAINEL_CNES_PRE)
+    validacao = validar_modo_com_malha_antiga(panel, cnes_panel, units, cnes_units, congelados)
+    municipal = pd.read_parquet(MUNICIPAL)
+
+    diagnostics, diagnostic_df, weights_df, powers = diagnosticar(panel, cnes_panel, units, cnes_units, municipal)
+    write_csv_if_changed(weights_df, OUT / "pesos_sobreposicao_pre.csv")
+    write_csv_if_changed(diagnostic_df, OUT / "diagnosticos_pre.csv")
+    gravar_potencia_e_decisao(diagnostics, powers)
+
+    alterados = [OUT / "pesos_sobreposicao_pre.csv", OUT / "diagnosticos_pre.csv", OUT / "potencia_pre.json",
+                 OUT / "decisao_torneio_pre.json", PROTOCOL_DOC]
+    emenda = {
+        "data": EMENDA_DATA,
+        "tipo": "correcao_de_dado_de_entrada",
+        "motivo": (
+            "ivs_2010 e log_pop_2010 da propensão vinham, pela malha, de data/ivs_ipea_2010_municipios.csv, linha "
+            "de subgrupo populacional e não o município (docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md)"
+        ),
+        "correcao": (
+            "malha com IVS 2010 e população 2010 oficiais do Ipea (output/aquisicao/a08_ivs_2010_oficial_municipio.csv); "
+            "log_pop_2010 continua log1p(populacao_2010), como congelado"
+        ),
+        "inalterado": "coorte, braços, painéis CNES pré-T0, janela, outcome, estimadores, regras e limiares",
+        "leitura_pos_t0": False,
+        "competencia_maxima_lida": max(str(panel["competencia"].max()), str(cnes_panel["competencia"].max())),
+        "validacao_do_modo_com_a_malha_antiga": validacao,
+        "insumo_corrigido": {rel(MUNICIPAL): sha256(MUNICIPAL)},
+        "hashes_artefatos_em_vigor": {rel(p): sha256(p) for p in alterados},
+        "registro": "docs/auditorias/19_reestimacao_base_oficial_failure_mode.md",
+    }
+    emendas = [e for e in registry.get("emendas", []) if e.get("data") != EMENDA_DATA] + [emenda]
+    registry["emendas"] = emendas
+    write_json(registry_path, registry)
+    print(diagnostic_df[["modulo", "nivel", "n_tratados", "n_controles", "mde_80_especialistas", "decisao"]].to_string(index=False))
+    print("C3-03 reestimado com covariadas oficiais, sem leitura pós-T0 e sem estimação de efeito.")
+
+
 if __name__ == "__main__":
-    if len(sys.argv) == 2 and sys.argv[1] in {"--refresh-protocol-hash", "--refresh-hashes"}:
+    if len(sys.argv) >= 2 and sys.argv[1] in {"--refresh-protocol-hash", "--refresh-hashes"}:
+        # O bloco `hashes_artefatos_congelados` é imutável depois do congelamento de
+        # 31/08/2026. Hash novo só entra por emenda datada, com motivo:
+        #   --refresh-hashes --emenda AAAA-MM-DD "motivo"
+        # grava os hashes em vigor dentro de `emendas` e não toca no bloco congelado.
+        args = sys.argv[1:]
+        if len(args) != 4 or args[1] != "--emenda" or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", args[2]) or not args[3].strip():
+            raise SystemExit(
+                "o bloco congelado não é reescrito; use: --refresh-hashes --emenda AAAA-MM-DD \"motivo\" "
+                "(grava os hashes em vigor numa emenda datada)"
+            )
         registry_path = OUT / "registro_pre_analise.json"
         registry = json.loads(registry_path.read_text(encoding="utf-8"))
-        if sys.argv[1] == "--refresh-protocol-hash":
-            relative = str(PROTOCOL_DOC.relative_to(ROOT)).replace("\\", "/")
-            registry["hashes_artefatos_congelados"][relative] = sha256(PROTOCOL_DOC)
+        data_emenda, motivo = args[2], args[3].strip()
+        em_vigor = {relative: sha256(ROOT / relative) for relative in registry["hashes_artefatos_congelados"]}
+        mudaram = {k: v for k, v in em_vigor.items() if v != registry["hashes_artefatos_congelados"][k]}
+        emendas = registry.get("emendas", [])
+        existente = next((e for e in emendas if e.get("data") == data_emenda), None)
+        if existente is None:
+            emendas.append({"data": data_emenda, "tipo": "atualizacao_de_hash", "motivo": motivo,
+                            "leitura_pos_t0": False, "hashes_artefatos_em_vigor": mudaram})
         else:
-            registry["hashes_artefatos_congelados"] = {
-                relative: sha256(ROOT / relative)
-                for relative in registry["hashes_artefatos_congelados"]
-            }
+            existente.setdefault("hashes_artefatos_em_vigor", {}).update(mudaram)
+            existente.setdefault("motivos_de_atualizacao_de_hash", []).append(motivo)
+        registry["emendas"] = emendas
         write_json(registry_path, registry)
-        print("Hashes atualizados sem reler outcomes.")
+        print(f"Hashes em vigor gravados na emenda de {data_emenda}; bloco congelado intacto.")
+    elif len(sys.argv) == 2 and sys.argv[1] == "--reestimar-covariaveis-oficiais":
+        main_reestimacao_covariaveis_oficiais()
     else:
         main()

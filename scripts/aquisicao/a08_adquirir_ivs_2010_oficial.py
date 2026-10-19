@@ -4,7 +4,7 @@ A busca de 14/10/2026 mostrou que o escore administrativo de IVS que o
 Ministério da Saúde publica na relação nominal do PMM-E é o IVS 2010 oficial
 do Ipea, e que `data/ivs_ipea_2010_municipios.csv` não reproduz o IVS 2010
 oficial. Este script baixa a base completa da plataforma, preserva o zip
-(fora do Git: 201 MB), confere o SHA-256 e extrai as linhas municipais de
+(fora do Git; tamanho e hash no manifesto), confere o SHA-256 e extrai as linhas municipais de
 2010 para o total da população (cor, sexo e situação de domicílio "Total").
 
 Cache: zip e planilha extraída ficam em `data/raw/aquisicao/ivs_oficial/`
@@ -147,6 +147,7 @@ def main() -> None:
     base.to_csv(OUT / "a08_ivs_2010_oficial_municipio.csv", index=False)
 
     manifesto = {
+        "natureza_dos_dados": "EMPIRICO",
         "data_execucao": DATA_CAPTURA,
         "fonte": {
             "url": URL,
@@ -160,7 +161,7 @@ def main() -> None:
             "arquivo_extraido": str(destino.relative_to(ROOT)),
             "sha256_xlsx": hash_xlsx,
             "no_git": False,
-            "motivo_fora_do_git": "201 MB; reprodutível por URL e SHA-256",
+            "motivo_fora_do_git": f"{ZIP.stat().st_size:,} bytes; reprodutível por URL e SHA-256".replace(",", "."),
         },
         "recorte": "nivel = 'regiao,uf,rm,municipio', ano = 2010, cor/sexo/situação de domicílio = Total",
         "saida": {
