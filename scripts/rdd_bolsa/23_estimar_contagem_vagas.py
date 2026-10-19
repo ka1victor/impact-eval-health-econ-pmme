@@ -80,6 +80,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from scipy.stats import chi2
 
 ROOT = Path(__file__).resolve().parents[2]
 DIR_RDD = ROOT / "scripts" / "rdd_bolsa"
@@ -333,21 +334,27 @@ def _kern(a: Amostra, h) -> np.ndarray:
     return L.pesos_kernel(L.normalizar_s_mil(a.s) - a.c, h)
 
 
+COEF_UNICO = "unico"   # rótulo do "grupo" quando o controle tem um só coeficiente (sensibilidade da auditoria 20)
+ROTULO_AUD20 = ("SENSIBILIDADE_AUDITORIA_20 (fora do protocolo: um so coeficiente do controle para todos os "
+                "grupos ciclo x corte)")
+
+
 def colunas_controle(a: Amostra, y: np.ndarray, v: np.ndarray, h, *, lados: bool = False,
-                     peso: np.ndarray | None = None) -> tuple[np.ndarray, list[str], dict, dict]:
+                     peso: np.ndarray | None = None, unico: bool = False) -> tuple[np.ndarray, list[str], dict, dict]:
     """Controle centrado na média ponderada pelo kernel da janela, um coluna por grupo (comum aos dois lados).
 
     Linhas com v ausente ficam NaN na coluna do seu grupo (a rdd_lib as descarta e conta); nunca viram zero.
-    `lados=True` acrescenta T x controle (S-f). Devolve (Z, nomes, v_barra por grupo, colunas por grupo).
+    `lados=True` acrescenta T x controle (S-f). `unico=True` (só na sensibilidade da auditoria 20) usa uma só
+    coluna para todos os grupos. Devolve (Z, nomes, v_barra por grupo, colunas por grupo).
     """
     k = _kern(a, h)
     ok_base = (k > 0) & np.isfinite(y) & np.isfinite(v)
     if peso is not None:
         ok_base &= np.isfinite(peso) & (peso > 0)
     cols, nomes, vbar, vc_g = [], [], {}, {}
-    grupos = sorted(np.unique(a.g).tolist())
+    grupos = [COEF_UNICO] if unico else sorted(np.unique(a.g).tolist())
     for gl in grupos:
-        m = a.g == gl
+        m = np.ones(len(a.g), dtype=bool) if unico else a.g == gl
         ok = ok_base & m
         vb = float(np.sum(k[ok] * v[ok]) / np.sum(k[ok])) if ok.any() else float("nan")
         vbar[gl] = vb
@@ -363,7 +370,7 @@ def colunas_controle(a: Amostra, y: np.ndarray, v: np.ndarray, h, *, lados: bool
 
 
 def ajustar(a: Amostra, y: np.ndarray, h, *, v: np.ndarray | None = None, lados: bool = False,
-            peso: np.ndarray | None = None) -> dict:
+            peso: np.ndarray | None = None, unico: bool = False) -> dict:
     """Local linear (um corte) ou empilhado (CR1 por município), com ou sem controle; devolve o resultado da rdd_lib.
 
     Extras: `gamma` e `ep_gamma` por grupo, `v_barra`, `vc_g` (controle centrado por grupo), `media_abaixo`
@@ -372,7 +379,7 @@ def ajustar(a: Amostra, y: np.ndarray, h, *, v: np.ndarray | None = None, lados:
     Z = nomes = None
     vbar, vc_g = {}, {}
     if v is not None:
-        Z, nomes, vbar, vc_g = colunas_controle(a, y, v, h, lados=lados, peso=peso)
+        Z, nomes, vbar, vc_g = colunas_controle(a, y, v, h, lados=lados, peso=peso, unico=unico)
     if a.empilhada:
         r = L.rd_empilhado(a.s, y, a.c, grupo=a.g, h_mil=h, cluster=a.cl, ids_unidade=a.cl, Z=Z, nomes_z=nomes,
                            peso=peso, detalhes=True)
@@ -398,6 +405,31 @@ def ajustar(a: Amostra, y: np.ndarray, h, *, v: np.ndarray | None = None, lados:
                     r["gamma"][gl] = float("nan")
                     r["ep_gamma"][gl] = float("nan")
     return r
+
+
+def wald_igualdade_gamma(r: dict) -> dict | None:
+    """Wald (CR1 da S-a principal) de H0: coeficientes do controle iguais entre os grupos (auditoria 20)."""
+    if "_detalhes" not in r or len(r.get("gamma", {})) < 2:
+        return None
+    fit = r["_detalhes"]["fit"]
+    idx = [fit["nomes"].index(f"controle[{g}]") for g in sorted(r["gamma"]) if f"controle[{g}]" in fit["nomes"]]
+    if len(idx) < 2:
+        return None
+    b = fit["beta"][idx]
+    R = np.zeros((len(idx) - 1, len(idx)))
+    R[:, 0] = 1.0
+    R[np.arange(len(idx) - 1), np.arange(1, len(idx))] = -1.0
+    Vb = fit["V"][np.ix_(idx, idx)]
+    w = float((R @ b) @ np.linalg.solve(R @ Vb @ R.T, R @ b))
+    gl = len(idx) - 1
+    return {"n_grupos": len(idx), "gl": gl, "chi2": w, "p_valor": float(chi2.sf(w, gl))}
+
+
+def _nota_wald(wd: dict | None) -> str:
+    if wd is None:
+        return ""
+    return (f"Wald (CR1) da igualdade dos coeficientes do controle entre os {wd['n_grupos']} grupos na S-a "
+            f"principal: chi2({wd['gl']}) = {wd['chi2']:.4g}, p = {wd['p_valor']:.4g}")
 
 
 def residualizar(y: np.ndarray, r: dict) -> np.ndarray:
@@ -732,6 +764,18 @@ def especificacoes_n(spec: dict, meta: dict, a: Amostra, ctrl: dict, *, w_lr: di
         linhas.append(preencher(nova_linha(meta, "S-a", "controle_forma_alternativa",
                                            _est(a, f"controle linear comum: {alt['col']}"), h_mil=H, unidade=un,
                                            controle=alt["col"], forma=alt["id"]), ajustar(a, y, H, v=a.col(alt["col"]))))
+    # Sensibilidade da auditoria 20 (fora do protocolo): no empilhado, um só coeficiente do controle para todos os
+    # grupos, com teste de Wald da igualdade dos coeficientes por grupo da S-a principal.
+    if a.empilhada:
+        lu = preencher(nova_linha(meta, "S-a", "controle_coeficiente_unico",
+                                  _est(a, "controle linear comum aos dois lados e a todos os grupos (um so coeficiente)"),
+                                  h_mil=H, unidade=un, controle=ctl, forma=forma, no_protocolo=False, rot=ROTULO_AUD20),
+                       ajustar(a, y, H, v=v, unico=True))
+        wd = wald_igualdade_gamma(ra)
+        lu["nota"] = _juntar(lu["nota"], _nota_wald(wd))
+        linhas.append(lu)
+        if holm and extras is not None:
+            extras.setdefault("wald_gamma", {})[spec["id"]] = wd
     # Decomposição exata: total (S-b na amostra de S-a) = via oferta (sum gamma_g x salto do controle) + S-a.
     if "_detalhes" in ra and np.isfinite(ra["tau"]):
         okv = np.isfinite(v)
@@ -838,10 +882,18 @@ def especificacoes_n(spec: dict, meta: dict, a: Amostra, ctrl: dict, *, w_lr: di
                        ajustar(sub, sub.col(spec["col"]), H, v=vv))
         ln["nota"] = _juntar(f"{int(fora.sum())} linhas excluidas (|IVS - corte| < 0,002)", ln["nota"])
         linhas.append(ln)
-    # S-h: local randomization (só um corte).
+    # S-h: local randomization (só um corte). No empilhado, linha NAO_EXECUTADO com o motivo (auditoria 20).
     if not a.empilhada and w_lr is not None:
         linhas.extend(local_randomization(meta, a, y, v, w_lr, un, ctl, forma))
+    elif a.empilhada:
+        linhas.append(nao_executado(meta, "S-h", "empilhado", MOTIVO_SH_EMPILHADO, unidade=un))
     return linhas
+
+
+MOTIVO_SH_EMPILHADO = ("local randomization empilhada nao executada: a janela do E5 e o p de Fisher sao por "
+                       "populacao x corte e a rdd_lib nao tem versao empilhada; ver as linhas S-h por ciclo x corte")
+MOTIVO_SI_EMPILHADO = ("cortes placebo com ciclos empilhados nao executados: o protocolo os pede como no E9, por "
+                       "ciclo; ver as linhas S-i de cada ciclo")
 
 
 def local_randomization(meta: dict, a: Amostra, y: np.ndarray, v: np.ndarray, lr: dict, un: str, ctl: str,
@@ -1054,6 +1106,8 @@ def estimar_tudo(V: dict[int, pd.DataFrame], U: pd.DataFrame | None, *, controle
                 linhas.extend(especificacoes_n(spec, {**meta, "corte": ROTULO_CORTE[c]}, a, ctrl, extras=extras))
             a = montar_amostra([(V[k], c, f"c{k}_{c}") for k in ks for c in CORTES], empilhada=True)
             linhas.extend(especificacoes_n(spec, {**meta, "corte": EMPILHADO}, a, ctrl, extras=extras, holm=True))
+            linhas.append(nao_executado({**meta, "corte": "placebo"}, "S-i", "ciclos_empilhados", MOTIVO_SI_EMPILHADO,
+                                        unidade=spec["unidade"]))
         log(f"  {spec['id']}: {len(linhas)} linhas acumuladas")
     # S-c em V: as variáveis de oferta.
     for oid in OFERTA:
@@ -1356,8 +1410,12 @@ def _fmt_eixo_x(v, _=None) -> str:
     return (txt[:-1] if txt.endswith("0") else txt).replace(".", ",").replace("-", "−")
 
 
-def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda: str, caminho: Path) -> None:
-    """Cada painel: x (IVS ou IVS - corte, em milésimos), y_ponto, dentro (bool), curva, corte, rótulo, título."""
+def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda: str, caminho: Path, *,
+             unidade_n: tuple[str, str] = ("município", "municípios")) -> None:
+    """Cada painel: x (IVS ou IVS - corte, em milésimos), y_ponto, dentro (bool), curva, corte, rótulo, título.
+
+    `unidade_n` = (singular, plural) do que o tamanho do ponto conta (no empilhado, linhas município x ciclo).
+    """
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -1372,8 +1430,11 @@ def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda
     linhas_leg = []
     for par in legenda.split("\n"):
         linhas_leg.extend(textwrap.wrap(par, int(largura * 15.5)) or [""])
-    h_tit, h_plot, h_xlab, h_leg = 0.75, 3.9, 0.5, 0.26 * n_linhas_leg + 0.25
-    h_txt = 0.125 * len(linhas_leg) + 0.2
+    # 0,30 pol. por linha da legenda: o marcador de 50 unidades é mais alto que o texto (auditoria 20: com 0,26 e a
+    # altura do texto subestimada, a terceira linha da legenda do painel único encostava no texto "COMO LER").
+    h_tit, h_plot, h_xlab, h_leg = 0.75, 3.9, 0.5, 0.30 * n_linhas_leg + 0.25
+    # 7,4 pt com espaçamento 1,25 ocupa ~0,155 pol. por linha (0,125 subestimava a altura do texto: auditoria 20).
+    h_txt = 0.155 * len(linhas_leg) + 0.2
     altura = h_tit + h_plot + h_xlab + h_leg + h_txt
     fig = plt.figure(figsize=(largura, altura), facecolor=SUPERFICIE)
     base = (h_txt + h_leg + h_xlab) / altura
@@ -1401,7 +1462,8 @@ def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda
         ax.annotate("", xy=(corte / 1000, y1), xytext=(corte / 1000, y0),
                     arrowprops=dict(arrowstyle="-|>", color=COR_SALTO, linewidth=2.2, mutation_scale=12), zorder=4)
         ax.text(corte / 1000, (y0 + y1) / 2, "  salto", color=COR_SALTO, fontsize=9, va="center", ha="left",
-                fontweight="bold", zorder=5)
+                fontweight="bold", zorder=5,
+                bbox=dict(facecolor=SUPERFICIE, edgecolor="none", alpha=0.85, pad=0.6))
         ax.set_title(f"{p['rotulo']}\n{p['titulo']}", fontsize=9.5, color=TINTA)
         ax.set_xlabel(xlabel, fontsize=9, color=TINTA_2)
         ax.grid(alpha=0.25, linewidth=0.6)
@@ -1420,7 +1482,7 @@ def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda
         Line2D([], [], color=TINTA_2, linewidth=1, linestyle="--", label="corte"),
     ]
     tamanhos = [Line2D([], [], marker="o", linestyle="", color=COR_FORA, markersize=math.sqrt(_area(n)),
-                       label=f"{n} município{'s' if n > 1 else ''}") for n in (1, 10, 50)]
+                       label=f"{n} {unidade_n[1] if n > 1 else unidade_n[0]}") for n in (1, 10, 50)]
     fig.legend(handles=handles + tamanhos, loc="center", ncol=ncol, fontsize=7.6,
                frameon=False, bbox_to_anchor=(0.5, (h_txt + h_leg / 2) / altura))
     fig.suptitle(titulo, fontsize=11, color=TINTA, y=1 - 0.18 / altura)
@@ -1457,7 +1519,8 @@ LEGENDA_EMPILHADO = (
     "\nEMPILHADO: o eixo horizontal é a distância ao corte (IVS − corte), juntando os ciclos 1 a 3 e os dois cortes. "
     "A reta é a média ponderada das retas de cada ciclo × corte da regressão empilhada (interceptos e inclinações "
     "próprios, salto comum, EP CR1 por município), e cada ponto é essa reta mais o resíduo médio dos municípios da "
-    "faixa; só aparecem municípios dentro da janela.")
+    "faixa; só aparecem municípios dentro da janela. Aqui o tamanho do ponto conta linhas município × ciclo: o "
+    "mesmo município entra uma vez em cada ciclo em que tem célula no quadro.")
 
 
 def gerar_figuras(V: dict[int, pd.DataFrame], est: pd.DataFrame, ctrl_principal: str, dir_fig: Path) -> list[dict]:
@@ -1509,7 +1572,8 @@ def gerar_figuras(V: dict[int, pd.DataFrame], est: pd.DataFrame, ctrl_principal:
         nome = f"N1_{sufixo}_empilhado.png"
         desenhar(paineis, f"N1 — vagas preenchidas na 1ª chamada, {'com' if com else 'sem'} controle, ciclos e cortes "
                           f"empilhados", ylab[com], "distância ao corte (IVS 2010 oficial − corte)",
-                 LEGENDA_BASE + (LEGENDA_CONTROLE if com else "") + LEGENDA_EMPILHADO, dir_fig / nome)
+                 LEGENDA_BASE + (LEGENDA_CONTROLE if com else "") + LEGENDA_EMPILHADO, dir_fig / nome,
+                 unidade_n=("linha município × ciclo", "linhas município × ciclo"))
         feitas.append({"arquivo": rotulo(dir_fig / nome), "outcome_id": "N1", "populacao": "+".join(f"V{k}" for k in ks),
                        "paineis": [{"ciclo": _fmt_ciclo(ks), "corte": EMPILHADO, "especificacao": esp, "tau": r["tau"],
                                     "ic95_inf": r["ic95_inf"], "ic95_sup": r["ic95_sup"], "p_valor": r["p_valor"],
@@ -1595,6 +1659,23 @@ def gerar_tabelas_doc(est: pd.DataFrame, resumo: dict) -> dict[str, str]:
                                 lambda r: _icr(r, "ic_honesto_inf", "ic_honesto_sup"), lambda r: _p(r["p_valor"]),
                                 lambda r: _p(r["p_holm"]), _rel, lambda r: _n(r["mde"], 2, sinal=False)])
     t["leitura_principal"] = leitura_principal(est)
+    su = resumo.get("sensibilidade_coeficiente_unico_auditoria_20", {}).get("linhas", [])
+    linhas = ["| Outcome | População | Salto (S-a, coef. por grupo) | p Holm (protocolo) | Salto (coef. único) | "
+              "IC 95% (CR1) | p | p Holm (só nesta variante) | Wald: coeficientes iguais entre grupos, p |",
+              "|---|---|---|---|---|---|---|---|---|"]
+    for x in su:
+        linhas.append(f"| {x['outcome_id']} | {x['populacao']} | {_n(x['tau_principal'], 2)} | {_p(x['p_holm_principal'])} | "
+                      f"{_n(x['tau_coef_unico'], 2)} | {_ic(x['ic95_inf_coef_unico'], x['ic95_sup_coef_unico'], 2)} | "
+                      f"{_p(x['p_coef_unico'])} | {_p(x['p_holm_coef_unico'])} | {_p(x['wald_igualdade_p'])} |")
+    t["coef_unico"] = "\n".join(linhas)
+    rej_p = [x["outcome_id"] for x in su if x["p_holm_principal"] < 0.05]
+    rej_u = [x["outcome_id"] for x in su if x["p_holm_coef_unico"] < 0.05]
+    wald_rej = [x["outcome_id"] for x in su if x["wald_igualdade_p"] is not None and x["wald_igualdade_p"] < 0.05]
+    t["leitura_coef_unico"] = (
+        f"Linhas que rejeitam zero depois do Holm: no protocolo (coeficiente por grupo), "
+        f"**{', '.join(rej_p) if rej_p else 'nenhuma'}**; com coeficiente único, "
+        f"**{', '.join(rej_u) if rej_u else 'nenhuma'}**. O Wald rejeita a igualdade dos coeficientes entre os "
+        f"grupos (p < 0,05) em **{', '.join(wald_rej) if wald_rej else 'nenhuma'}** das quatro linhas.")
     # Sem controle, mesma amostra empilhada.
     chave = est[f][["outcome_id", "populacao"]]
     g = est.merge(chave, on=["outcome_id", "populacao"])
@@ -1787,6 +1868,37 @@ def atualizar_doc() -> None:
 # Execução
 # ---------------------------------------------------------------------------
 
+def sensibilidade_coef_unico(est: pd.DataFrame, wald: dict) -> dict:
+    """Auditoria 20 (fora do protocolo): as quatro linhas do Holm com um só coeficiente do controle, Holm entre elas
+    e o Wald da igualdade dos coeficientes por grupo da S-a principal. Não substitui o Holm do protocolo."""
+    princ = est[est["entra_holm"].astype(bool)]
+    linhas = []
+    for r in princ.to_dict("records"):
+        u = est[(est["outcome_id"] == r["outcome_id"]) & (est["populacao"] == r["populacao"])
+                & (est["corte"] == EMPILHADO) & (est["especificacao"] == "S-a")
+                & (est["variante"] == "controle_coeficiente_unico")]
+        if len(u) != 1:
+            raise FalhaValidacao(f"sensibilidade de coeficiente unico sem linha unica para {r['outcome_id']}")
+        u = u.iloc[0]
+        wd = wald.get(r["outcome_id"]) or {}
+        linhas.append({"outcome_id": r["outcome_id"], "populacao": r["populacao"],
+                       "tau_principal": r["tau"], "p_principal": r["p_valor"], "p_holm_principal": r["p_holm"],
+                       "tau_coef_unico": float(u["tau"]), "ep_coef_unico": float(u["ep"]),
+                       "ic95_inf_coef_unico": float(u["ic95_inf"]), "ic95_sup_coef_unico": float(u["ic95_sup"]),
+                       "p_coef_unico": float(u["p_valor"]), "coef_controle_unico": float(u["coef_controle"]),
+                       "wald_igualdade_chi2": wd.get("chi2"), "wald_igualdade_gl": wd.get("gl"),
+                       "wald_igualdade_p": wd.get("p_valor")})
+    ph = L.holm(np.array([x["p_coef_unico"] for x in linhas], dtype=float)) if linhas else []
+    for x, p in zip(linhas, ph):
+        x["p_holm_coef_unico"] = float(p)
+    return {"rotulo": ROTULO_AUD20, "no_protocolo": False, "linhas": linhas,
+            "descricao": "S-a empilhada com um so coeficiente do controle para todos os grupos ciclo x corte (o "
+                         "protocolo nao diz se o coeficiente e por grupo ou unico; a linha principal usa um por "
+                         "grupo, decisao registrada em 'decisoes'); Holm entre as quatro linhas "
+                         "nessa variante, so como sensibilidade; Wald (CR1) da igualdade dos coeficientes por grupo "
+                         "na S-a principal"}
+
+
 def veredito_sc(est: pd.DataFrame, oferta: str) -> dict:
     """Regra fixada no código: as vagas oferecidas são tratadas como possivelmente afetadas pela faixa se alguma
     linha principal de S-c (forma principal, V, por ciclo x corte, cortes empilhados ou ciclos empilhados) tiver p < 0,05."""
@@ -1844,6 +1956,7 @@ def main(argv: list[str] | None = None) -> int:
     holm = est[est["entra_holm"]][["outcome_id", "populacao", "ciclo", "corte", "tau", "ep", "ic95_inf", "ic95_sup",
                                     "p_valor", "p_holm", "ic_honesto_inf", "ic_honesto_sup", "media_abaixo",
                                     "efeito_relativo_media_abaixo", "mde"]].to_dict("records")
+    sens_unico = sensibilidade_coef_unico(est, extras.get("wald_gamma", {}))
     entradas = [
         E6.bloco_entrada(PROTOCOLO_MD, "protocolo 48 congelado (somente lido)", "pipeline do repositorio", "2026-10-19",
                          "§§1-6", "documento", "-", "-"),
@@ -1900,6 +2013,7 @@ def main(argv: list[str] | None = None) -> int:
         "janelas_lr": {f"{k[0]}|{ROTULO_CORTE[k[1]]}": (v["w"] / 1000 if v["w"] else None) for k, v in lr.items()},
         "holm": {"linhas": holm, "descricao": "Holm entre as quatro linhas S-a com ciclos e cortes empilhados "
                                               "(N1, N2, N3, N4), protocolo 48 §3"},
+        "sensibilidade_coeficiente_unico_auditoria_20": sens_unico,
         "veredito_S_c": ver,
         "placebos_grade": plac,
         "validacoes": {"populacoes": conf_pop, "E6_ponderado": val_e6, "fwl_residualizacao": True,
@@ -1949,6 +2063,13 @@ def main(argv: list[str] | None = None) -> int:
              "situacao": "a rdd_lib nao tem Poisson empilhado nem local randomization empilhada",
              "resolucao": "Poisson empilhado implementado aqui com o algoritmo da rdd_lib (CR1); S-h e S-i so por ciclo "
                           "x corte"},
+            {"data": DATA_EXECUCAO, "item": "auditoria 20 (docs/auditorias/20_auditoria_contagem_vagas_N.md)",
+             "situacao": "o protocolo nao diz se, no empilhado, o coeficiente do controle e por grupo ou unico; S-h "
+                         "e S-i empilhados nao tinham linha propria",
+             "resolucao": "acrescentada a variante S-a 'controle_coeficiente_unico' (fora do protocolo, rotulo "
+                          "SENSIBILIDADE_AUDITORIA_20) com Holm proprio e Wald da igualdade dos coeficientes; S-h "
+                          "empilhado e S-i com ciclos empilhados saem NAO_EXECUTADO com o motivo; a linha principal "
+                          "e o Holm do protocolo nao mudam"},
             {"data": DATA_EXECUCAO, "item": "edital do ciclo 2",
              "situacao": "a copia do Edital SGTES/MS 1/2026 no repositorio e so a pagina do chamamento",
              "resolucao": "a verificacao do ciclo 2 usa so os quadros e resultados (nenhum alocado da 1a chamada em "

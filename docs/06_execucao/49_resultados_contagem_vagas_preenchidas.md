@@ -137,16 +137,58 @@ Leitura, por regra fixa no script:
 - **N4** (V1+V2): com controle (S-a), salto negativo (menos no lado de bolsa maior); o IC 95% convencional contém zero; depois do Holm, não rejeita zero; o IC honesto da regra do E6 contém zero, e o POS_RESULTADO também contém zero. Sem controle (S-b), salto negativo (menos no lado de bolsa maior), IC 95% convencional que contém zero.
 <!-- N:leitura_principal:fim -->
 
+**Sensibilidade ao coeficiente do controle (auditoria 20, fora do protocolo).**
+O protocolo não diz se, com ciclos e cortes empilhados, o controle tem um
+coeficiente por ciclo × corte ou um só. A linha principal usa um por grupo
+(decisão registrada em `N_resumo.json`). A tabela abaixo refaz as quatro linhas
+do Holm com um só coeficiente, e o Wald testa, na linha principal, se os
+coeficientes por grupo são iguais. A variante não substitui a linha principal
+nem o Holm do protocolo: escolher a especificação depois de ver o resultado
+seria seleção retrospectiva. Ela mostra até onde a conclusão do Holm depende
+dessa escolha.
+
+<!-- N:coef_unico:inicio -->
+| Outcome | População | Salto (S-a, coef. por grupo) | p Holm (protocolo) | Salto (coef. único) | IC 95% (CR1) | p | p Holm (só nesta variante) | Wald: coeficientes iguais entre grupos, p |
+|---|---|---|---|---|---|---|---|---|
+| N1 | V1+V2+V3 | −0,76 | 0,124 | −1,03 | [−1,79; −0,28] | 0,007 | 0,029 | 0,000 |
+| N2 | V1+V2+V3 | −0,31 | 0,235 | −0,44 | [−0,81; −0,08] | 0,017 | 0,052 | 0,000 |
+| N3 | V1+V2 | −0,35 | 0,376 | −0,45 | [−1,04; +0,13] | 0,130 | 0,260 | 0,000 |
+| N4 | V1+V2 | −0,21 | 0,717 | −0,39 | [−1,57; +0,79] | 0,519 | 0,519 | 0,000 |
+<!-- N:coef_unico:fim -->
+
+<!-- N:leitura_coef_unico:inicio -->
+Linhas que rejeitam zero depois do Holm: no protocolo (coeficiente por grupo), **nenhuma**; com coeficiente único, **N1**. O Wald rejeita a igualdade dos coeficientes entre os grupos (p < 0,05) em **N1, N2, N3, N4** das quatro linhas.
+<!-- N:leitura_coef_unico:fim -->
+
+Quando o Wald rejeita a igualdade, o coeficiente único impõe uma restrição que
+os dados não sustentam. A taxa de preenchimento por vaga oferecida muda de um
+ciclo para outro, e a linha com coeficiente por grupo é a defensável. Mesmo
+assim, o "nenhuma linha rejeita zero" do Holm não é robusto a essa escolha, e
+o sinal negativo se mantém nas duas formas.
+
 O sinal das estimativas é o oposto do que a hipótese da bolsa previa: há menos
 vagas preenchidas do lado de bolsa maior. Isso não é evidência de que a bolsa
-reduz o preenchimento, por quatro motivos. (i) Depois do Holm, nenhuma das
-quatro linhas rejeita zero. (ii) O IC honesto, que admite curvatura na
-regressão de cada lado, contém zero com folga. (iii) O contraste é o pacote do
-corte. (iv) No ciclo 2, um corte placebo no meio do segmento entre 0,300 e
-0,400 também acusa salto sem controle, e fica no limiar com controle (seção 9):
-sinal de que a reta local não capta bem a forma do outcome ali. A leitura defensável é a mesma do E6: não há efeito
-positivo detectável do degrau de R$ 5 mil sobre o número de vagas preenchidas,
-e a precisão relatada (MDE) diz qual efeito ainda passaria despercebido.
+reduz o preenchimento, por quatro motivos.
+
+- (i) Na especificação do protocolo, nenhuma das quatro linhas rejeita zero
+  depois do Holm. Essa conclusão depende do coeficiente do controle por grupo
+  (tabela acima); o sinal negativo de N1 com controle não muda.
+- (ii) O IC honesto contém zero, mas aqui informa pouco. A regra de bolso do E6
+  ajusta uma quártica num suporte largo, e numa contagem com poucos municípios
+  de muitas vagas isso dá um M enorme (seção 7). O IC sai muitas vezes mais
+  largo que a média do outcome, e não é ele que sustenta a leitura.
+- (iii) O contraste é o pacote do corte, não o degrau de R$ 5 mil isolado.
+- (iv) No ciclo 2, um corte placebo na média do IVS do segmento entre 0,300 e
+  0,400 acusa salto sem controle e fica no limiar com controle (seção 9). Esse
+  corte falso usa os mesmos municípios que formam o lado de cima da janela do
+  corte de 0,300 no ciclo 2. Ali a forma do outcome não é linear, e a reta local
+  desse lado não a capta. Por isso o salto em 0,300 no ciclo 2, a linha por
+  ciclo com o sinal mais forte, e a parte do empilhado que vem dele não devem
+  ser lidos como descontinuidade no corte.
+
+A leitura defensável é a mesma do E6: não há efeito positivo detectável do
+degrau de R$ 5 mil sobre o número de vagas preenchidas. A precisão relatada
+(MDE) diz qual efeito ainda passaria despercebido.
 
 ## 4. As vagas oferecidas saltam no corte? (S-c)
 
@@ -419,6 +461,7 @@ protocolo é muito largo, e o POS_RESULTADO, mais estreito, ainda contém zero.
 | V1 | S-a | h=0.080 | 0,080 | −0,23 | [−0,92; +0,46] | 0,518 | −14,8 % |  |
 | V1 | S-b | h=0.080 | 0,080 | −0,60 | [−1,50; +0,30] | 0,189 | −39,4 % |  |
 | V1 | S-a | controle_forma_alternativa | 0,050 | +0,09 | [−0,85; +1,03] | 0,852 | +5,1 % |  |
+| V1 | S-a | controle_coeficiente_unico | 0,050 | −0,41 | [−1,26; +0,44] | 0,349 | −23,1 % |  |
 | V1 | S-d | log_controle_covariavel | 0,050 | −0,273 (log) | [−0,908; +0,361] | 0,399 | — |  |
 | V1 | S-d | log_controle_offset | 0,050 | −0,216 (log) | [−0,874; +0,442] | 0,520 | — |  |
 | V1 | S-e | fracao_ponderada_pelo_controle | 0,050 | −5,6 p.p. | [−22,9; +11,8] | 0,530 | −20,0 % |  |
@@ -433,6 +476,7 @@ protocolo é muito largo, e o POS_RESULTADO, mais estreito, ainda contém zero.
 | V1 | S-g | S-b: ic_honesto_pos_resultado | 0,050 | −0,54 | [−10,87; +9,80] | 1,000 | — | M = 19949,0 |
 | V1 | S-j | donut (S-a) | 0,050 | −0,47 | [−1,41; +0,47] | 0,329 | −26,5 % |  |
 | V1 | S-j | donut (S-b) | 0,050 | −0,59 | [−1,84; +0,67] | 0,359 | −33,1 % |  |
+| V1 | S-h | empilhado | 0,050 | — | [—; —] | — | — | NAO_EXECUTADO |
 | V2 | S-a | principal | 0,050 | −1,27 | [−2,55; +0,01] | 0,051 | −35,8 % | M = 108168,7 |
 | V2 | S-b | principal | 0,050 | −3,45 | [−7,02; +0,12] | 0,058 | −97,2 % | M = 127157,4 |
 | V2 | S-a | h=0.030 | 0,030 | −1,32 | [−2,89; +0,24] | 0,097 | −28,0 % |  |
@@ -440,6 +484,7 @@ protocolo é muito largo, e o POS_RESULTADO, mais estreito, ainda contém zero.
 | V2 | S-a | h=0.080 | 0,080 | −0,54 | [−1,69; +0,60] | 0,351 | −16,6 % |  |
 | V2 | S-b | h=0.080 | 0,080 | −2,35 | [−5,31; +0,61] | 0,120 | −71,4 % |  |
 | V2 | S-a | controle_forma_alternativa | 0,050 | −0,16 | [−1,17; +0,86] | 0,764 | −4,4 % |  |
+| V2 | S-a | controle_coeficiente_unico | 0,050 | −1,33 | [−2,62; −0,03] | 0,045 | −37,4 % |  |
 | V2 | S-d | log_controle_covariavel | 0,050 | −0,425 (log) | [−0,816; −0,033] | 0,034 | — |  |
 | V2 | S-d | log_controle_offset | 0,050 | −0,305 (log) | [−0,707; +0,097] | 0,137 | — |  |
 | V2 | S-e | fracao_ponderada_pelo_controle | 0,050 | −12,9 p.p. | [−30,6; +4,9] | 0,157 | −33,1 % |  |
@@ -454,6 +499,7 @@ protocolo é muito largo, e o POS_RESULTADO, mais estreito, ainda contém zero.
 | V2 | S-g | S-b: ic_honesto_pos_resultado | 0,050 | −3,45 | [−18,57; +11,68] | 1,000 | — | M = 27636,5 |
 | V2 | S-j | donut (S-a) | 0,050 | −0,88 | [−2,41; +0,66] | 0,262 | −25,1 % |  |
 | V2 | S-j | donut (S-b) | 0,050 | −3,81 | [−8,57; +0,94] | 0,116 | −108,9 % |  |
+| V2 | S-h | empilhado | 0,050 | — | [—; —] | — | — | NAO_EXECUTADO |
 | V3 | S-a | principal | 0,050 | −0,62 | [−1,49; +0,25] | 0,164 | −43,2 % | M = 176439,7 |
 | V3 | S-b | principal | 0,050 | −0,64 | [−1,88; +0,60] | 0,309 | −44,7 % | M = 257979,4 |
 | V3 | S-a | h=0.030 | 0,030 | −0,68 | [−1,58; +0,22] | 0,141 | −39,2 % |  |
@@ -461,6 +507,7 @@ protocolo é muito largo, e o POS_RESULTADO, mais estreito, ainda contém zero.
 | V3 | S-a | h=0.080 | 0,080 | −0,55 | [−1,37; +0,28] | 0,193 | −39,8 % |  |
 | V3 | S-b | h=0.080 | 0,080 | −0,41 | [−1,61; +0,80] | 0,507 | −29,7 % |  |
 | V3 | S-a | controle_forma_alternativa | 0,050 | −0,64 | [−1,24; −0,04] | 0,038 | −44,4 % |  |
+| V3 | S-a | controle_coeficiente_unico | 0,050 | −0,63 | [−1,51; +0,24] | 0,158 | −43,9 % |  |
 | V3 | S-d | log_controle_covariavel | 0,050 | −0,436 (log) | [−1,101; +0,229] | 0,199 | — |  |
 | V3 | S-d | log_controle_offset | 0,050 | −0,480 (log) | [−1,123; +0,164] | 0,144 | — |  |
 | V3 | S-e | fracao_ponderada_pelo_controle | 0,050 | −7,4 p.p. | [−17,4; +2,5] | 0,144 | −58,0 % |  |
@@ -475,6 +522,7 @@ protocolo é muito largo, e o POS_RESULTADO, mais estreito, ainda contém zero.
 | V3 | S-g | S-b: ic_honesto_pos_resultado | 0,050 | −0,64 | [−11,55; +10,26] | 1,000 | — | M = 22772,0 |
 | V3 | S-j | donut (S-a) | 0,050 | −0,60 | [−1,59; +0,39] | 0,237 | −41,4 % |  |
 | V3 | S-j | donut (S-b) | 0,050 | −0,86 | [−2,33; +0,60] | 0,249 | −59,5 % |  |
+| V3 | S-h | empilhado | 0,050 | — | [—; —] | — | — | NAO_EXECUTADO |
 | V1+V2+V3 | S-a | principal | 0,050 | −0,76 | [−1,44; −0,07] | 0,031 | −35,1 % | M = 176421,8 |
 | V1+V2+V3 | S-b | principal | 0,050 | −1,45 | [−2,90; −0,01] | 0,048 | −67,4 % | M = 257979,4 |
 | V1+V2+V3 | S-a | h=0.030 | 0,030 | −0,78 | [−1,57; +0,00] | 0,051 | −30,9 % |  |
@@ -482,6 +530,7 @@ protocolo é muito largo, e o POS_RESULTADO, mais estreito, ainda contém zero.
 | V1+V2+V3 | S-a | h=0.080 | 0,080 | −0,47 | [−1,08; +0,14] | 0,128 | −23,8 % |  |
 | V1+V2+V3 | S-b | h=0.080 | 0,080 | −1,02 | [−2,27; +0,23] | 0,111 | −51,2 % |  |
 | V1+V2+V3 | S-a | controle_forma_alternativa | 0,050 | −0,34 | [−0,83; +0,16] | 0,180 | −15,6 % |  |
+| V1+V2+V3 | S-a | controle_coeficiente_unico | 0,050 | −1,03 | [−1,79; −0,28] | 0,007 | −47,9 % |  |
 | V1+V2+V3 | S-d | log_controle_covariavel | 0,050 | −0,402 (log) | [−0,745; −0,059] | 0,022 | — |  |
 | V1+V2+V3 | S-d | log_controle_offset | 0,050 | −0,346 (log) | [−0,704; +0,011] | 0,057 | — |  |
 | V1+V2+V3 | S-e | fracao_ponderada_pelo_controle | 0,050 | −8,7 p.p. | [−18,1; +0,6] | 0,067 | −35,7 % |  |
@@ -496,6 +545,7 @@ protocolo é muito largo, e o POS_RESULTADO, mais estreito, ainda contém zero.
 | V1+V2+V3 | S-g | S-b: ic_honesto_pos_resultado | 0,050 | −1,45 | [−14,92; +12,02] | 1,000 | — | M = 27636,5 |
 | V1+V2+V3 | S-j | donut (S-a) | 0,050 | −0,65 | [−1,43; +0,14] | 0,105 | −30,2 % |  |
 | V1+V2+V3 | S-j | donut (S-b) | 0,050 | −1,63 | [−3,43; +0,18] | 0,078 | −75,8 % |  |
+| V1+V2+V3 | S-h | empilhado | 0,050 | — | [—; —] | — | — | NAO_EXECUTADO |
 <!-- N:robustez_N1:fim -->
 
 S-d e S-e por ciclo e corte:
@@ -544,14 +594,20 @@ janela passou no balanço, a linha sai NAO_EXECUTADO com o motivo.
 | V1 | 0,300 | residuo_rosenbaum | 0,020 | 20 / 19 | −0,41 | 0,458 | EXECUTADO |
 | V1 | 0,400 | sem_controle | 0,007 | 10 / 9 | −0,38 | 0,595 | EXECUTADO |
 | V1 | 0,400 | residuo_rosenbaum | 0,007 | 10 / 9 | +0,01 | 0,986 | EXECUTADO |
+| V1 | empilhado | empilhado | — | — / — | — | — | NAO_EXECUTADO |
 | V2 | 0,300 | sem_controle | — | — / — | — | — | NAO_EXECUTADO |
 | V2 | 0,300 | residuo_rosenbaum | — | — / — | — | — | NAO_EXECUTADO |
 | V2 | 0,400 | sem_controle | 0,006 | 7 / 11 | −1,10 | 0,530 | EXECUTADO |
 | V2 | 0,400 | residuo_rosenbaum | 0,006 | 7 / 11 | −0,45 | 0,636 | EXECUTADO |
+| V2 | empilhado | empilhado | — | — / — | — | — | NAO_EXECUTADO |
 | V3 | 0,300 | sem_controle | 0,002 | 2 / 3 | +0,67 | 0,402 | EXECUTADO |
 | V3 | 0,300 | residuo_rosenbaum | 0,002 | 2 / 3 | +0,29 | 0,605 | EXECUTADO |
 | V3 | 0,400 | sem_controle | — | — / — | — | — | NAO_EXECUTADO |
 | V3 | 0,400 | residuo_rosenbaum | — | — / — | — | — | NAO_EXECUTADO |
+| V3 | empilhado | empilhado | — | — / — | — | — | NAO_EXECUTADO |
+| V1+V2+V3 | 0,300 | empilhado | — | — / — | — | — | NAO_EXECUTADO |
+| V1+V2+V3 | 0,400 | empilhado | — | — / — | — | — | NAO_EXECUTADO |
+| V1+V2+V3 | empilhado | empilhado | — | — / — | — | — | NAO_EXECUTADO |
 <!-- N:sh_N1:fim -->
 
 ## 9. Cortes placebo (S-i)
@@ -680,7 +736,8 @@ e com ciclos e cortes empilhados. Cada figura traz a legenda na própria imagem:
 - **empilhado**: o eixo horizontal é a distância ao corte; a reta é a média
   ponderada das retas de cada ciclo × corte da regressão empilhada (o salto é
   o comum), e cada ponto é essa reta mais o resíduo médio dos municípios da
-  faixa. Só aparecem municípios dentro da janela.
+  faixa. Só aparecem municípios dentro da janela, e o tamanho do ponto conta
+  linhas município × ciclo.
 
 <!-- N:figuras:inicio -->
 | Figura | População | Painel | Salto no título | IC 95% |
@@ -711,14 +768,17 @@ Pode-se afirmar, como descrição com a precisão relatada:
 - trocar a fração pelo número de vagas preenchidas, com ou sem controle pelas
   vagas oferecidas, não faz aparecer efeito positivo do degrau de R$ 5 mil;
 - as estimativas pontuais empilhadas são negativas, mas nenhuma sobrevive ao
-  Holm, e o IC honesto contém zero;
+  Holm na especificação do protocolo. A conclusão do Holm depende do
+  coeficiente do controle por grupo (seção 3). O IC honesto contém zero, mas
+  aqui é pouco informativo;
 - o controle pelas vagas oferecidas não é inócuo: a oferta salta em parte das
   amostras, e a estimativa com controle é condicional a ela.
 
 Não se pode afirmar:
 
-- que a bolsa reduz o preenchimento (o pacote do corte inclui outras regras, e
-  os ICs honestos e o Holm não descartam zero);
+- que a bolsa reduz o preenchimento. O pacote do corte inclui outras regras, o
+  Holm do protocolo não descarta zero e o placebo do ciclo 2 põe em dúvida a
+  reta local em 0,300 nesse ciclo;
 - que o salto com controle mede o "preenchimento por vaga" causal, se a oferta
   respondeu à faixa;
 - nada sobre participação no PMM-E, o Agora Tem Especialistas ou retenção
@@ -733,7 +793,11 @@ Estão em `decisoes` e `desvios` de `N_resumo.json`, com data e motivo:
 - Poisson empilhado implementado com o algoritmo da rdd_lib;
 - leitura de "janela mínima do E5" e de "médias de cada lado";
 - N3 e N4 ausentes no ciclo 3;
-- edital do ciclo 2 não examinado.
+- edital do ciclo 2 não examinado;
+- correções da auditoria 20
+  ([`auditorias/20`](../auditorias/20_auditoria_contagem_vagas_N.md)): a
+  variante de coeficiente único (fora do protocolo) e as linhas NAO_EXECUTADO
+  de S-h empilhado e de S-i com ciclos empilhados.
 
 ## 14. Validações
 
@@ -744,8 +808,8 @@ Estão em `decisoes` e `desvios` de `N_resumo.json`, com data e motivo:
 | salto de y residualizado = salto de S-a (FWL), em todas as amostras | True |
 | decomposição total = oferta + preenchimento fecha | 42 amostras; max abs resíduo = 1.673106098110111e-13 |
 | Poisson local daqui = rdd_lib (um corte, offset) | True |
-| linhas em N_estimativas.csv | 2173 |
-| linhas EXECUTADO / SEM_ESTIMATIVA / NAO_EXECUTADO | 2149 / 0 / 24 |
+| linhas em N_estimativas.csv | 2221 |
+| linhas EXECUTADO / SEM_ESTIMATIVA / NAO_EXECUTADO | 2171 / 0 / 50 |
 | municípios com vagas oferecidas ausentes (saem da linha, nunca viram zero) | 0 |
 | municípios do quadro sem IVS 2010 oficial (fora da RDD) | 1 |
 <!-- N:validacoes:fim -->

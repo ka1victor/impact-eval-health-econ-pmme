@@ -8,6 +8,32 @@
 
 ---
 
+## 19/10/2026 — Auditoria independente da família N (auditoria 20)
+
+Motivo: auditoria independente do commit `c47380e`, que tem o script 23, as
+saídas `N_*`, o doc 49 e os testes, contra o protocolo
+[`06_execucao/48`](06_execucao/48_protocolo_contagem_vagas_preenchidas.md).
+Veredito: aprovado com correções. As linhas originais de `N_estimativas.csv`
+não mudam.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/20_auditoria_contagem_vagas_N.md`](auditorias/20_auditoria_contagem_vagas_N.md) | recálculo independente (statsmodels, a partir do parquet) de S-a, S-b, S-c, decomposição, Holm, IC honesto e Poisson empilhado; julgamento dos desvios; achados e correções C1–C5 |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/23_estimar_contagem_vagas.py`:
+  - variante de coeficiente único, fora do protocolo, com o Wald;
+  - linhas NAO_EXECUTADO para S-h e S-i empilhados;
+  - figuras sem sobreposição;
+- saídas `output/rdd_bolsa/N_*` regeneradas pelo script;
+- `tests/test_contagem_vagas.py`: recálculo independente versionado.
+
+O doc 49 ganhou a tabela de sensibilidade, gerada pelo script, e a prosa dos
+motivos (ii) e (iv) foi corrigida. O `docs/README.md` e o doc 38 apontam para a
+auditoria.
+
 ## 19/10/2026 — Resultados da família N: contagem de vagas preenchidas (doc 49)
 
 Motivo: execução do protocolo

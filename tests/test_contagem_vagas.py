@@ -304,10 +304,11 @@ class TestSaidasReais(unittest.TestCase):
                     sub = self.est[(self.est["outcome_id"] == spec["id"]) & (self.est["populacao"] == pop)
                                    & (self.est["corte"] == c)]
                     esp = sub["especificacao"].value_counts().to_dict()
-                    exig = {"S-a": 3 + (1 if spec["controle"] == "vagas_oferecidas" else 0), "S-b": 3, "S-d": 2,
-                            "S-e": 1, "S-f": 1, "S-g": 8, "S-j": 2, "decomposicao": 3}
-                    if "+" not in pop and c != "empilhado":
-                        exig["S-h"] = 2
+                    empilhada = "+" in pop or c == "empilhado"
+                    # No empilhado: + a variante de coeficiente único da auditoria 20; S-h sai NAO_EXECUTADO.
+                    exig = {"S-a": 3 + (1 if spec["controle"] == "vagas_oferecidas" else 0) + (1 if empilhada else 0),
+                            "S-b": 3, "S-d": 2, "S-e": 1, "S-f": 1, "S-g": 8, "S-j": 2, "decomposicao": 3,
+                            "S-h": 1 if empilhada else 2}
                     for e, n in exig.items():
                         if esp.get(e, 0) != n:
                             faltam.append((spec["id"], pop, c, e, esp.get(e, 0)))
@@ -324,6 +325,72 @@ class TestSaidasReais(unittest.TestCase):
                     if n < 1:
                         faltam.append((oid, pop, c, "S-c"))
         self.assertEqual(faltam, [])
+
+    def test_empilhados_sem_s_h_e_s_i_saem_nao_executado(self) -> None:
+        # Auditoria 20: toda especificação do protocolo aparece em cada amostra, executada ou com o motivo.
+        sh = self.est[(self.est["especificacao"] == "S-h") & (self.est["variante"] == "empilhado")]
+        self.assertTrue(len(sh) > 0 and (sh["status"] == "NAO_EXECUTADO").all() and sh["nota"].str.len().gt(0).all())
+        self.assertTrue(sh["tau"].isna().all())
+        si = self.est[(self.est["especificacao"] == "S-i") & (self.est["variante"] == "ciclos_empilhados")]
+        self.assertEqual(sorted(si["outcome_id"]), ["N1", "N2", "N3", "N4"])
+        self.assertTrue((si["status"] == "NAO_EXECUTADO").all() and si["tau"].isna().all())
+
+    def test_sensibilidade_coeficiente_unico(self) -> None:
+        # Auditoria 20: variante fora do protocolo, rotulada, fora do Holm do protocolo; Holm próprio recalculado.
+        u = self.est[self.est["variante"] == "controle_coeficiente_unico"]
+        self.assertTrue(len(u) > 0)
+        self.assertTrue((u["especificacao"] == "S-a").all() and (~u["no_protocolo"].astype(bool)).all())
+        self.assertTrue(u["rotulo"].str.startswith("SENSIBILIDADE_AUDITORIA_20").all())
+        self.assertFalse(u["entra_holm"].astype(bool).any())
+        self.assertTrue(((u["corte"] == "empilhado") | u["populacao"].str.contains(r"\+")).all())
+        s = self.resumo["sensibilidade_coeficiente_unico_auditoria_20"]
+        self.assertFalse(s["no_protocolo"])
+        h = self.est[self.est["entra_holm"].astype(bool)]
+        self.assertEqual({x["outcome_id"] for x in s["linhas"]}, set(h["outcome_id"]))
+        pu = np.array([x["p_coef_unico"] for x in s["linhas"]], dtype=float)
+        np.testing.assert_allclose([x["p_holm_coef_unico"] for x in s["linhas"]], L.holm(pu))
+        for x in s["linhas"]:
+            r = self._uma(outcome_id=x["outcome_id"], populacao=x["populacao"], corte="empilhado",
+                          especificacao="S-a", variante="controle_coeficiente_unico")
+            self.assertAlmostEqual(float(r["p_valor"]), x["p_coef_unico"], places=12)
+            self.assertTrue(0.0 <= x["wald_igualdade_p"] <= 1.0)
+
+    def test_coeficiente_unico_igual_a_mqp_independente(self) -> None:
+        # MQP à mão, CR1 por município: grupos ciclo x corte com intercepto e inclinações por lado, salto comum e
+        # um só coeficiente das vagas oferecidas; confere a linha de N1 com ciclos e cortes empilhados.
+        vm = pd.read_parquet(OUT / "outcomes" / "outcomes_V_municipio.parquet")
+        vm = vm[vm["ivs_2010_oficial"].notna()]
+        blocos = []
+        for k in (1, 2, 3):
+            d = vm[vm["ciclo"] == k]
+            for c in (300, 400):
+                blocos.append(pd.DataFrame({"m": d["co_ibge"].to_numpy(), "x": (d["ivs_2010_oficial"] * 1000).round()
+                                            .to_numpy() - c, "y": d["n_alocados_ch1"].to_numpy(float),
+                                            "v": (d["vagas_imediatas"] + d["vagas_cr"]).to_numpy(float),
+                                            "g": f"{k}_{c}"}))
+        b = pd.concat(blocos, ignore_index=True)
+        w = np.clip(1 - np.abs(b["x"].to_numpy()) / 50, 0, None)
+        b, w = b[w > 0].reset_index(drop=True), w[w > 0]
+        x, t = b["x"].to_numpy() / 1000, (b["x"].to_numpy() > 0).astype(float)
+        cols = []
+        for g in sorted(b["g"].unique()):
+            ind = (b["g"] == g).to_numpy(float)
+            cols += [ind, ind * x, ind * t * x]
+        X = np.column_stack(cols + [t, b["v"].to_numpy()])
+        y = b["y"].to_numpy()
+        bread = np.linalg.inv(X.T @ (X * w[:, None]))
+        beta = bread @ (X.T @ (w * y))
+        sc = X * (w * (y - X @ beta))[:, None]
+        _, idx = np.unique(b["m"], return_inverse=True)
+        S = np.zeros((idx.max() + 1, X.shape[1]))
+        np.add.at(S, idx, sc)
+        G, n, k = S.shape[0], len(y), X.shape[1]
+        V = bread @ (S.T @ S) @ bread * (G / (G - 1)) * ((n - 1) / (n - k))
+        i = X.shape[1] - 2
+        r = self._uma(outcome_id="N1", populacao="V1+V2+V3", corte="empilhado", especificacao="S-a",
+                      variante="controle_coeficiente_unico")
+        self.assertAlmostEqual(float(r["tau"]), beta[i], places=9)
+        self.assertAlmostEqual(float(r["ep"]), float(np.sqrt(V[i, i])), places=9)
 
     def test_ciclo3_de_n3_e_n4_nao_executado_com_motivo(self) -> None:
         for oid in ("N3", "N4"):
@@ -430,6 +497,112 @@ class TestSaidasReais(unittest.TestCase):
         lidos = {e["caminho"] for e in self.resumo["entradas"]}
         self.assertIn("output/rdd_bolsa/E6_estimativas.csv", lidos)
         self.assertTrue(self.resumo["validacoes"]["E6_ponderado"]["reproduz"])
+
+
+@unittest.skipUnless(EST.exists(), "saidas da familia N ausentes")
+class TestRecalculoIndependenteAuditoria20(unittest.TestCase):
+    """Auditoria 20: S-a, S-b e S-c principais (por corte, cortes empilhados, ciclos empilhados) refeitos com o MQP
+    ponderado do statsmodels (HC1; CR1 por município no empilhado), sem a rdd_lib nem o script 23, lendo só
+    `outcomes_V_municipio.parquet` (running variable = coluna `ivs_2010_oficial`); confere também a média abaixo,
+    o efeito relativo, o MDE, os n e o Holm."""
+
+    TOL = 1e-9
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        import statsmodels.api as sm
+        cls.sm = sm
+        cls.est = pd.read_csv(EST, dtype={"corte": str, "ciclo": str})
+        vm = pd.read_parquet(OUT / "outcomes" / "outcomes_V_municipio.parquet")
+        vm = vm[vm["ivs_2010_oficial"].notna()].copy()   # o município sem IVS oficial fica fora (nunca vira zero)
+        vm["s"] = (vm["ivs_2010_oficial"] * 1000).round()
+        vm["VIC"] = vm["vagas_imediatas"] + vm["vagas_cr"]
+        cls.V = {int(k): d.reset_index(drop=True) for k, d in vm.groupby("ciclo")}
+
+    def _amostras(self, ks):
+        rc = {300: "0.300", 400: "0.400"}
+        out = []
+        for k in ks:
+            out += [(f"V{k}", rc[c], [(self.V[k], c, str(c))], False) for c in (300, 400)]
+            out.append((f"V{k}", "empilhado", [(self.V[k], c, str(c)) for c in (300, 400)], True))
+        if len(ks) > 1:
+            pop = "+".join(f"V{k}" for k in ks)
+            out += [(pop, rc[c], [(self.V[k], c, f"c{k}") for k in ks], True) for c in (300, 400)]
+            out.append((pop, "empilhado", [(self.V[k], c, f"c{k}_{c}") for k in ks for c in (300, 400)], True))
+        return out
+
+    def _ajuste(self, partes, ycol, vcol, empilhada):
+        b = pd.concat([pd.DataFrame({"m": d["co_ibge"].to_numpy(), "x": d["s"].to_numpy() - c,
+                                     "y": d[ycol].to_numpy(float),
+                                     "v": d[vcol].to_numpy(float) if vcol else 0.0, "g": g}) for d, c, g in partes],
+                      ignore_index=True)
+        b["k"] = np.where(np.abs(b["x"]) < 50, 1 - np.abs(b["x"]) / 50, 0.0)
+        b = b[(b["k"] > 0) & np.isfinite(b["y"]) & np.isfinite(b["v"])].reset_index(drop=True)
+        t, x = (b["x"] > 0).astype(float), b["x"] / 1000
+        cols = {}
+        grupos = sorted(b["g"].unique())
+        if empilhada:
+            for g in grupos:
+                ind = (b["g"] == g).astype(float)
+                cols.update({f"c{g}": ind, f"x{g}": ind * x, f"tx{g}": ind * t * x})
+            cols["T"] = t
+        else:
+            cols.update({"c": 1.0 + 0 * x, "x": x, "T": t, "tx": t * x})
+        if vcol:
+            for g in grupos:
+                cols[f"v{g}"] = (b["g"] == g).astype(float) * b["v"]
+        X = pd.DataFrame(cols)
+        m = self.sm.WLS(b["y"].to_numpy(), X.to_numpy(), weights=b["k"].to_numpy())
+        if empilhada:
+            _, cl = np.unique(b["m"].to_numpy(), return_inverse=True)
+            r = m.fit(cov_type="cluster", cov_kwds={"groups": cl, "use_correction": True})
+        else:
+            r = m.fit(cov_type="HC1")
+        i = list(X.columns).index("T")
+        abaixo = b["x"] <= 0
+        return {"tau": r.params[i], "ep": r.bse[i], "p": float(r.pvalues[i]), "media": b.loc[abaixo, "y"].mean(),
+                "n_ab": b.loc[abaixo, "m"].nunique(), "n_ac": b.loc[~abaixo, "m"].nunique(), "n_obs": len(b)}
+
+    def _conferir(self, meu, **f):
+        m = np.ones(len(self.est), dtype=bool)
+        for k, v in f.items():
+            m &= self.est[k].astype(str) == str(v)
+        sub = self.est[m]
+        self.assertEqual(len(sub), 1, f)
+        r = sub.iloc[0]
+        for a, b in (("tau", "tau"), ("ep", "ep"), ("p", "p_valor"), ("media", "media_abaixo")):
+            self.assertLess(abs(meu[a] - float(r[b])), self.TOL, (f, b))
+        self.assertLess(abs(meu["tau"] / meu["media"] - float(r["efeito_relativo_media_abaixo"])), self.TOL, f)
+        self.assertLess(abs(2.8 * meu["ep"] - float(r["mde"])), self.TOL, f)
+        self.assertEqual((meu["n_ab"], meu["n_ac"], meu["n_obs"]),
+                         (int(r["n_abaixo"]), int(r["n_acima"]), int(r["n_obs"])), f)
+        return r
+
+    def test_s_a_s_b_s_c_e_holm(self) -> None:
+        outs = {"N1": ("n_alocados_ch1", "VIC", (1, 2, 3)), "N2": ("n_celulas_preenchidas_ch1", "n_celulas", (1, 2, 3)),
+                "N3": ("n_celulas_preenchidas_ate_ch2", "n_celulas", (1, 2)), "N4": ("n_ativos_ciclo", "VIC", (1, 2))}
+        p_holm, n = {}, 0
+        for oid, (ycol, vcol, ks) in outs.items():
+            for pop, corte, partes, emp in self._amostras(ks):
+                ra = self._ajuste(partes, ycol, vcol, emp)
+                self._conferir(ra, outcome_id=oid, populacao=pop, corte=corte, especificacao="S-a", variante="principal")
+                self._conferir(self._ajuste(partes, ycol, None, emp), outcome_id=oid, populacao=pop, corte=corte,
+                               especificacao="S-b", variante="principal")
+                n += 2
+                if corte == "empilhado" and "+" in pop:
+                    p_holm[oid] = ra["p"]
+        for oid, col in (("VIC", "VIC"), ("VI", "vagas_imediatas"), ("NC", "n_celulas")):
+            for pop, corte, partes, emp in self._amostras((1, 2, 3)):
+                self._conferir(self._ajuste(partes, col, None, emp), outcome_id=oid, populacao=pop, corte=corte,
+                               especificacao="S-c", variante="principal")
+                n += 1
+        self.assertEqual(n, 120)
+        from statsmodels.stats.multitest import multipletests
+        ids = sorted(p_holm)
+        ref = multipletests([p_holm[i] for i in ids], method="holm")[1]
+        h = self.est[self.est["entra_holm"].astype(bool)].set_index("outcome_id")
+        for i, p in zip(ids, ref):
+            self.assertLess(abs(float(h.loc[i, "p_holm"]) - p), self.TOL, i)
 
 
 @unittest.skipUnless(DOC.exists() and EST.exists(), "doc 49 ou saidas da familia N ausentes")

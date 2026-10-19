@@ -415,6 +415,81 @@
     ],
     "descricao": "Holm entre as quatro linhas S-a com ciclos e cortes empilhados (N1, N2, N3, N4), protocolo 48 §3"
   },
+  "sensibilidade_coeficiente_unico_auditoria_20": {
+    "rotulo": "SENSIBILIDADE_AUDITORIA_20 (fora do protocolo: um so coeficiente do controle para todos os grupos ciclo x corte)",
+    "no_protocolo": false,
+    "linhas": [
+      {
+        "outcome_id": "N1",
+        "populacao": "V1+V2+V3",
+        "tau_principal": -0.7558679548614217,
+        "p_principal": 0.03087896237252089,
+        "p_holm_principal": 0.12351584949008355,
+        "tau_coef_unico": -1.032411826445141,
+        "ep_coef_unico": 0.3843295582988757,
+        "ic95_inf_coef_unico": -1.7856839189051246,
+        "ic95_sup_coef_unico": -0.27913973398515746,
+        "p_coef_unico": 0.007225531416551889,
+        "coef_controle_unico": 0.24284545497546955,
+        "wald_igualdade_chi2": 146.00394631268372,
+        "wald_igualdade_gl": 5,
+        "wald_igualdade_p": 9.46028558903748e-30,
+        "p_holm_coef_unico": 0.028902125666207555
+      },
+      {
+        "outcome_id": "N2",
+        "populacao": "V1+V2+V3",
+        "tau_principal": -0.31135144803331677,
+        "p_principal": 0.07827634360636229,
+        "p_holm_principal": 0.23482903081908688,
+        "tau_coef_unico": -0.44270070324991107,
+        "ep_coef_unico": 0.1859979155500139,
+        "ic95_inf_coef_unico": -0.8072499189274608,
+        "ic95_sup_coef_unico": -0.07815148757236134,
+        "p_coef_unico": 0.01730615648028486,
+        "coef_controle_unico": 0.38182204863496627,
+        "wald_igualdade_chi2": 120.04170255107306,
+        "wald_igualdade_gl": 5,
+        "wald_igualdade_p": 3.0753899331696404e-24,
+        "p_holm_coef_unico": 0.051918469440854584
+      },
+      {
+        "outcome_id": "N3",
+        "populacao": "V1+V2",
+        "tau_principal": -0.35088463924364965,
+        "p_principal": 0.18788250454394118,
+        "p_holm_principal": 0.37576500908788235,
+        "tau_coef_unico": -0.4529768960752314,
+        "ep_coef_unico": 0.29936536104621125,
+        "ic95_inf_coef_unico": -1.0397222219446354,
+        "ic95_sup_coef_unico": 0.1337684297941727,
+        "p_coef_unico": 0.13024817837928993,
+        "coef_controle_unico": 0.6213581899744597,
+        "wald_igualdade_chi2": 115.96039542826041,
+        "wald_igualdade_gl": 3,
+        "wald_igualdade_p": 5.718905116982707e-25,
+        "p_holm_coef_unico": 0.26049635675857985
+      },
+      {
+        "outcome_id": "N4",
+        "populacao": "V1+V2",
+        "tau_principal": -0.20905834228819883,
+        "p_principal": 0.7167185405814687,
+        "p_holm_principal": 0.7167185405814687,
+        "tau_coef_unico": -0.3883152910570189,
+        "ep_coef_unico": 0.6018676402058851,
+        "ic95_inf_coef_unico": -1.5679541893206652,
+        "ic95_sup_coef_unico": 0.7913236072066274,
+        "p_coef_unico": 0.5188080402328572,
+        "coef_controle_unico": 0.3847911818686515,
+        "wald_igualdade_chi2": 59.20397926045504,
+        "wald_igualdade_gl": 3,
+        "wald_igualdade_p": 8.69546689607845e-13,
+        "p_holm_coef_unico": 0.5188080402328572
+      }
+    ],
+    "descricao": "S-a empilhada com um so coeficiente do controle para todos os grupos ciclo x corte (o protocolo nao diz se o coeficiente e por grupo ou unico; a linha principal usa um por grupo, decisao registrada em 'decisoes'); Holm entre as quatro linhas nessa variante, so como sensibilidade; Wald (CR1) da igualdade dos coeficientes por grupo na S-a principal"
+  },
   "veredito_S_c": {
     "oferta": "vagas_imediatas_mais_cr",
     "n_linhas": 12,
@@ -962,20 +1037,20 @@
     "linhas_com_nan_sem_nota": 0
   },
   "contagens": {
-    "linhas": 2173,
-    "executado": 2149,
+    "linhas": 2221,
+    "executado": 2171,
     "sem_estimativa": 0,
-    "nao_executado": 24,
+    "nao_executado": 50,
     "por_especificacao": {
-      "S-a": 153,
+      "S-a": 175,
       "S-b": 252,
       "S-c": 414,
       "S-d": 84,
       "S-e": 42,
       "S-f": 42,
       "S-g": 336,
-      "S-h": 40,
-      "S-i": 600,
+      "S-h": 62,
+      "S-i": 604,
       "S-j": 84,
       "decomposicao": 126
     },
@@ -1011,6 +1086,12 @@
     },
     {
       "data": "2026-10-19",
+      "item": "auditoria 20 (docs/auditorias/20_auditoria_contagem_vagas_N.md)",
+      "situacao": "o protocolo nao diz se, no empilhado, o coeficiente do controle e por grupo ou unico; S-h e S-i empilhados nao tinham linha propria",
+      "resolucao": "acrescentada a variante S-a 'controle_coeficiente_unico' (fora do protocolo, rotulo SENSIBILIDADE_AUDITORIA_20) com Holm proprio e Wald da igualdade dos coeficientes; S-h empilhado e S-i com ciclos empilhados saem NAO_EXECUTADO com o motivo; a linha principal e o Holm do protocolo nao mudam"
+    },
+    {
+      "data": "2026-10-19",
       "item": "edital do ciclo 2",
       "situacao": "a copia do Edital SGTES/MS 1/2026 no repositorio e so a pagina do chamamento",
       "resolucao": "a verificacao do ciclo 2 usa so os quadros e resultados (nenhum alocado da 1a chamada em celula so de CR); os editais dos ciclos 1 e 3 sao citados"
@@ -1019,7 +1100,7 @@
   "saidas": {
     "N_estimativas.csv": {
       "arquivo": "output/rdd_bolsa/N_estimativas.csv",
-      "sha256": "da47bca46cfb4ad6b404a652553f60c136ad094d2438df850847cb678f437269"
+      "sha256": "3490d69c568ed13eb2b03612100a24aeefd72fc5f5f7cb3ac84e301d94f684ed"
     },
     "figuras": [
       {
