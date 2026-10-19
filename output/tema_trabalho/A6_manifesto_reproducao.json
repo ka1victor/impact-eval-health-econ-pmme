@@ -55,6 +55,7 @@
     ".venv/bin/python scripts/rdd_bolsa/23_estimar_contagem_vagas.py",
     ".venv/bin/python scripts/rdd_bolsa/16_estimar_E9_escolha.py",
     ".venv/bin/python scripts/rdd_bolsa/24_abertura_vagas_selecao.py",
+    ".venv/bin/python scripts/rdd_bolsa/29_determinantes_abertura.py",
     ".venv/bin/python scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py",
     ".venv/bin/python scripts/rdd_bolsa/21_producao_dird.py",
     ".venv/bin/python scripts/rdd_bolsa/22_chegada_pmme_evento.py",

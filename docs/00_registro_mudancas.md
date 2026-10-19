@@ -8,6 +8,27 @@
 
 ---
 
+## 19/10/2026 — Resultados do P5 (protocolo 55): determinantes da abertura e da priorização
+
+Motivo: onda 3 do plano do doc 51 (agente E-P5). Estima o protocolo 55, congelado
+antes: T5.1 (logit do pedido e da priorização do ciclo 3, efeitos marginais e
+contribuição de blocos), T5.2 (RDD nos cortes, pacote) e T5.3 (Poisson do quadro
+dos ciclos 1 e 2). T5.1 e T5.3 são descritivos.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57e_resultados_P5_abertura.md`](06_execucao/57e_resultados_P5_abertura.md) | resultados do P5, com os números gerados pelo script entre marcadores; é a seção P5 que o §5 do protocolo 55 manda pôr no doc 57 (síntese da onda 5) |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/29_determinantes_abertura.py`, no `run_all.py` logo depois
+  do 24 (o manifesto A6 foi regerado pelo gerador);
+- saídas `output/rdd_bolsa/P5_estimativas.csv`, `P5_resumo.json` e
+  `P5_figuras/`;
+- `tests/test_P5_abertura.py`, `tests/test_pipeline_rdd_bolsa.py` e
+  `tests/README.md`.
+
 ## 19/10/2026 — Protocolos 52 (P1) e 55 (P5); adendo §12 do protocolo 47 (P3)
 
 Motivo: execução do plano do doc 51, depois dos portões G1–G4. Os protocolos
