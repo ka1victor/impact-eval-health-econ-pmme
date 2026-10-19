@@ -1,0 +1,462 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "script": "scripts/apresentacao/gerar_figuras_banca2.py",
+  "regra": "nenhuma estimação; figuras e números lidos de output/; o arquivo errado só entra na figura e na contagem do failure mode, separadas em failure_mode/",
+  "entradas": [
+    {
+      "caminho": "output/rdd_bolsa/E8_resumo.json",
+      "sha256": "2a5a3eb7fc42eaa37b67e7f38e64fc589f6b2d9d465d41ff520738672b951d2e",
+      "papel": "síntese E8 (Holm, descarte, E9, E7, seleção, famílias, degrau)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "RDD da bolsa, ciclos 1-3 e CNES 2022-01..2026-08",
+      "unidade": "várias (ver chaves)",
+      "chaves": "chaves JSON"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E8_tabela_sintese.csv",
+      "sha256": "9148b55c83280feebcfd5d9ad2e13efabbc0a9675499d6ab97b5ca50caaf10fc",
+      "papel": "tabela-síntese por elo (figuras da cadeia e números)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "23 linhas principais, h = 0,050, cortes empilhados",
+      "unidade": "por linha (coluna unidade)",
+      "chaves": "outcome_id + populacao + ciclo"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E3_estimativas.csv",
+      "sha256": "b38a2d0ea11aaa1be802a8dfe7875547dda23951ee19e0731f5a7398c9e87982",
+      "papel": "E3: municípios por lado na âncora do ciclo 1",
+      "data_referencia": "2026-10-14",
+      "cobertura": "P1 (ciclo 1), cortes 0,300 e 0,400",
+      "unidade": "municípios",
+      "chaves": "populacao + outcome + corte + especificacao"
+    },
+    {
+      "caminho": "output/rdd_bolsa/portao_r1_ivs_oficial.json",
+      "sha256": "cdf4579ff9897e98f27aaa393ab05318e2398ff43f779dc2df0d5eb66fe750f0",
+      "papel": "portão R1 com o IVS oficial (regra)",
+      "data_referencia": "2026-10-14",
+      "cobertura": "ciclos 1, 2 e 3",
+      "unidade": "municípios",
+      "chaves": "populacoes"
+    },
+    {
+      "caminho": "output/rdd_bolsa/identificacao_arquivo_local_ivs.json",
+      "sha256": "674e8f36243ad433f0925bcd554df05d028b2523f29a4965e85a4343846e8eff",
+      "papel": "mecanismo do arquivo errado, só failure mode",
+      "data_referencia": "2026-10-14",
+      "cobertura": "5.565 municípios (malha 2010)",
+      "unidade": "municípios",
+      "chaves": "mecanismo"
+    },
+    {
+      "caminho": "output/tema_trabalho/failure_mode_ivs_resumo.json",
+      "sha256": "c7a84d22a5834450d947c29ce1dc1a089bc5ec2e2277e56e6419617124fc461d",
+      "papel": "registro do failure mode (auditoria 19)",
+      "data_referencia": "2026-10-18",
+      "cobertura": "5.565 municípios",
+      "unidade": "municípios",
+      "chaves": "arquivo_errado"
+    },
+    {
+      "caminho": "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv",
+      "sha256": "9e5d18274034ba944874345924bb16826c67b4311adc8fbd31907231916b56e9",
+      "papel": "faixa anunciada por município (figura da regra)",
+      "data_referencia": "2026-10-14",
+      "cobertura": "quadro c1_ch1, 368 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge; filtro quadro == c1_ch1"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "papel": "running variable: IVS 2010 oficial (a08)",
+      "data_referencia": "2010 (base Ipea de 28/02/2024)",
+      "cobertura": "5.565 municípios",
+      "unidade": "índice 0-1",
+      "chaves": "co_ibge"
+    },
+    {
+      "caminho": "data/ivs_ipea_2010_municipios.csv",
+      "sha256": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c",
+      "papel": "SÓ FAILURE MODE: eixo da figura 2 e contagem do lado errado",
+      "data_referencia": "desconhecida (sem fonte)",
+      "cobertura": "5.565 municípios",
+      "unidade": "linha de subgrupo, não IVS do município",
+      "chaves": "cod_ibge6"
+    },
+    {
+      "caminho": "docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md",
+      "sha256": "9afe8cc10cc28edcd29016c7578140e28eaafc41713cea8cda6704adb6a66eb9",
+      "papel": "parâmetros normativos citados (co-políticas)",
+      "data_referencia": "2026-10-18",
+      "cobertura": "atos federais com corte em IVS",
+      "unidade": "texto",
+      "chaves": "trechos por regex"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/10_galeria_figura_regra.py",
+      "sha256": "e7a035d8f550b570354b4d211cfa14fd7b6ba1d3d2bfe3c5ca965bda51f30673",
+      "papel": "código da variante A colorida (fig_regra_pontos)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-"
+    }
+  ],
+  "regra_bolsa": {
+    "municipios_ciclo1": 368,
+    "lado_errado_oficial": 0,
+    "lado_errado_arquivo_errado": 101,
+    "png_gerado": true
+  },
+  "cadeia_sintese_principal": [
+    {
+      "outcome": "F0.2 vagas imediatas por 10 mil hab. (ciclo 1)",
+      "populacao": "U",
+      "ciclo": "1",
+      "texto": "−0,035 [−0,065; −0,006]",
+      "exclui_nulo": true
+    },
+    {
+      "outcome": "P1 índice de atração-presença",
+      "populacao": "V1+V2+V3",
+      "ciclo": "1+2+3",
+      "texto": "−0,13 DP [−0,44; +0,19]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F1.3 fração de células preenchidas na 1ª chamada",
+      "populacao": "V1+V2+V3",
+      "ciclo": "1+2+3",
+      "texto": "−7,3 p.p. [−17,9; +3,4]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "E9 escolha da 1ª opção (razão de chances por +R$ 5 mil)",
+      "populacao": "candidatos de 1ª opção",
+      "ciclo": "2",
+      "texto": "1,95 [1,48; 2,57]",
+      "exclui_nulo": true
+    },
+    {
+      "outcome": "E9 escolha da 1ª opção (razão de chances por +R$ 5 mil)",
+      "populacao": "candidatos de 1ª opção",
+      "ciclo": "1+2+3",
+      "texto": "1,39 [1,12; 1,73]",
+      "exclui_nulo": true
+    },
+    {
+      "outcome": "F2.1 especialistas ativos por célula",
+      "populacao": "V1+V2",
+      "ciclo": "1+2",
+      "texto": "−0,136 [−0,491; +0,218]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "P2 F3.1 vínculos nas CBO-alvo por 10 mil hab.",
+      "populacao": "U",
+      "ciclo": "pós 2025-10..2026-08",
+      "texto": "+0,083 [−0,309; +0,476]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F4.2 nota média dos candidatos de 1ª opção",
+      "populacao": "V1+V2+V3",
+      "ciclo": "1+2+3",
+      "texto": "−0,453 [−0,873; −0,033]",
+      "exclui_nulo": true
+    }
+  ],
+  "cadeia_sintese_completa": [
+    {
+      "outcome": "F0.1 município tem célula no quadro (ciclo 1)",
+      "populacao": "U",
+      "ciclo": "1",
+      "texto": "−3,0 p.p. [−7,4; +1,3]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F0.1 município tem célula no quadro (ciclo 2)",
+      "populacao": "U",
+      "ciclo": "2",
+      "texto": "+0,1 p.p. [−4,8; +5,0]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F0.1 município tem célula no quadro (ciclo 3)",
+      "populacao": "U",
+      "ciclo": "3",
+      "texto": "−2,2 p.p. [−8,2; +3,8]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F0.2 vagas imediatas por 10 mil hab. (ciclo 1)",
+      "populacao": "U",
+      "ciclo": "1",
+      "texto": "−0,035 [−0,065; −0,006]",
+      "exclui_nulo": true
+    },
+    {
+      "outcome": "P1 índice de atração-presença",
+      "populacao": "V1+V2+V3",
+      "ciclo": "1+2+3",
+      "texto": "−0,13 DP [−0,44; +0,19]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F1.1 candidatos de 1ª opção por célula",
+      "populacao": "V1+V2+V3",
+      "ciclo": "1+2+3",
+      "texto": "+0,063 [−0,511; +0,636]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F1.2 fração de células com candidato",
+      "populacao": "V1+V2+V3",
+      "ciclo": "1+2+3",
+      "texto": "−7,0 p.p. [−18,9; +4,9]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F1.3 fração de células preenchidas na 1ª chamada",
+      "populacao": "V1+V2+V3",
+      "ciclo": "1+2+3",
+      "texto": "−7,3 p.p. [−17,9; +3,4]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F1.4 fração de células preenchidas até a 2ª chamada",
+      "populacao": "V1+V2",
+      "ciclo": "1+2",
+      "texto": "−8,0 p.p. [−23,6; +7,6]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "E9 escolha da 1ª opção (razão de chances por +R$ 5 mil)",
+      "populacao": "candidatos de 1ª opção",
+      "ciclo": "1+2+3",
+      "texto": "1,39 [1,12; 1,73]",
+      "exclui_nulo": true
+    },
+    {
+      "outcome": "E9 escolha da 1ª opção (razão de chances por +R$ 5 mil)",
+      "populacao": "candidatos de 1ª opção",
+      "ciclo": "2",
+      "texto": "1,95 [1,48; 2,57]",
+      "exclui_nulo": true
+    },
+    {
+      "outcome": "F2.1 especialistas ativos por célula",
+      "populacao": "V1+V2",
+      "ciclo": "1+2",
+      "texto": "−0,136 [−0,491; +0,218]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F2.2 especialistas ativos por 10 mil hab. (ciclo 1)",
+      "populacao": "U",
+      "ciclo": "1",
+      "texto": "−0,008 [−0,068; +0,051]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F2.2 especialistas ativos por 10 mil hab. (ciclo 2)",
+      "populacao": "U",
+      "ciclo": "2",
+      "texto": "−0,079 [−0,239; +0,081]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F2.3 algum especialista ativo do ciclo",
+      "populacao": "V1+V2",
+      "ciclo": "1+2",
+      "texto": "−5,2 p.p. [−25,0; +14,7]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "P2 F3.1 vínculos nas CBO-alvo por 10 mil hab.",
+      "populacao": "U",
+      "ciclo": "pós 2025-10..2026-08",
+      "texto": "+0,083 [−0,309; +0,476]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F3.1 vínculos nas CBO-alvo por 10 mil hab.",
+      "populacao": "V1",
+      "ciclo": "pós 2025-10..2026-08",
+      "texto": "−1,234 [−2,907; +0,439]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F3.2 município com especialista nas CBO-alvo",
+      "populacao": "U",
+      "ciclo": "pós 2025-10..2026-08",
+      "texto": "−2,5 p.p. [−5,9; +1,0]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F3.3 horas SUS nas CBO-alvo por 10 mil hab.",
+      "populacao": "U",
+      "ciclo": "pós 2025-10..2026-08",
+      "texto": "−2,0 [−6,4; +2,3]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F3.P1 placebo: generalistas por 10 mil hab.",
+      "populacao": "U",
+      "ciclo": "pós 2025-10..2026-08",
+      "texto": "−0,088 [−1,190; +1,014]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F3.P2 placebo: especialistas fora das CBO-alvo",
+      "populacao": "U",
+      "ciclo": "pós 2025-10..2026-08",
+      "texto": "−0,059 [−0,485; +0,367]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F4.1 nota média dos alocados",
+      "populacao": "V1+V2+V3",
+      "ciclo": "1+2+3",
+      "texto": "−0,396 [−0,939; +0,147]",
+      "exclui_nulo": false
+    },
+    {
+      "outcome": "F4.2 nota média dos candidatos de 1ª opção",
+      "populacao": "V1+V2+V3",
+      "ciclo": "1+2+3",
+      "texto": "−0,453 [−0,873; −0,033]",
+      "exclui_nulo": true
+    }
+  ],
+  "descarte_preenchimento": [
+    {
+      "linha": "E3, ciclo 1, corte 0,300",
+      "texto": "−12,8 [−45,5; +19,8]",
+      "descarta_referencia": false,
+      "leitura": "não descarta +10 p.p."
+    },
+    {
+      "linha": "E3, ciclo 1, corte 0,400",
+      "texto": "−5,1 [−36,5; +26,2]",
+      "descarta_referencia": false,
+      "leitura": "não descarta +10 p.p."
+    },
+    {
+      "linha": "F1.3 preenchidas na 1ª chamada, ciclo 1",
+      "texto": "−8,6 [−31,2; +14,0]",
+      "descarta_referencia": false,
+      "leitura": "não descarta +10 p.p."
+    },
+    {
+      "linha": "F1.3 preenchidas na 1ª chamada, ciclo 2",
+      "texto": "−5,4 [−24,8; +14,1]",
+      "descarta_referencia": false,
+      "leitura": "não descarta +10 p.p."
+    },
+    {
+      "linha": "F1.3 preenchidas na 1ª chamada, ciclo 3",
+      "texto": "−7,8 [−20,4; +4,7]",
+      "descarta_referencia": true,
+      "leitura": "descarta +10 p.p. só na principal"
+    },
+    {
+      "linha": "F1.3 preenchidas na 1ª chamada, ciclos 1+2+3 empilhados",
+      "texto": "−7,3 [−17,9; +3,4]",
+      "descarta_referencia": true,
+      "leitura": "descarta +10 p.p. em todas as convencionais"
+    },
+    {
+      "linha": "F1.4 preenchidas até a 2ª chamada, ciclo 1",
+      "texto": "−8,3 [−31,0; +14,4]",
+      "descarta_referencia": false,
+      "leitura": "não descarta +10 p.p."
+    },
+    {
+      "linha": "F1.4 preenchidas até a 2ª chamada, ciclo 2",
+      "texto": "−7,8 [−27,0; +11,4]",
+      "descarta_referencia": false,
+      "leitura": "não descarta +10 p.p."
+    },
+    {
+      "linha": "F1.4 preenchidas até a 2ª chamada, ciclos 1+2 empilhados",
+      "texto": "−8,0 [−23,6; +7,6]",
+      "descarta_referencia": true,
+      "leitura": "descarta +10 p.p. só na principal"
+    }
+  ],
+  "figuras": [
+    {
+      "arquivo": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.svg",
+      "sha256": "90bbb8fcb00e276a87f4f16a22c692976eec6c083fe9d860246de009c88caf1f",
+      "natureza": "EMPIRICO",
+      "descricao": "bolsa anunciada contra o IVS 2010 oficial, ciclo 1 (variante A colorida, doc 38 D1)",
+      "fontes": [
+        "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv",
+        "output/aquisicao/a08_ivs_2010_oficial_municipio.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
+      "sha256": "86cb89519386f64c74c2cb12961a7a1fa6090f63e6802c9e2a725b6bef20cd19",
+      "natureza": "EMPIRICO",
+      "descricao": "rasterização do SVG acima",
+      "fontes": [
+        "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv",
+        "output/aquisicao/a08_ivs_2010_oficial_municipio.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/failure_mode/regra_bolsa_arquivo_errado_FAILURE_MODE.svg",
+      "sha256": "22d1f146391a9569c34a9c12946f7e5c17b0f6374265c96ba574b79c70a63e18",
+      "natureza": "FAILURE_MODE",
+      "descricao": "a mesma figura com o arquivo errado no eixo; só documenta o failure mode (auditoria 16)",
+      "fontes": [
+        "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv",
+        "data/ivs_ipea_2010_municipios.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/failure_mode/regra_bolsa_arquivo_errado_FAILURE_MODE.png",
+      "sha256": "8b8503387ca32c34b2b6237c63a80c852972d2e709979a80fd5c6e8d8520b2b5",
+      "natureza": "FAILURE_MODE",
+      "descricao": "rasterização do SVG acima",
+      "fontes": [
+        "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv",
+        "data/ivs_ipea_2010_municipios.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/cadeia_sintese_principal.png",
+      "sha256": "b79aa3a56d751d8774ddb177eac2ee11b7b76876ddebc2c26c704ff7eb05bd2e",
+      "natureza": "EMPIRICO",
+      "descricao": "um outcome por elo da cadeia (forest com escala por linha)",
+      "fontes": [
+        "output/rdd_bolsa/E8_tabela_sintese.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/cadeia_sintese_completa.png",
+      "sha256": "149e56be77d9c53dfd8b6dfadb3aba344673b1f73de317adf3bdf00240ffd69b",
+      "natureza": "EMPIRICO",
+      "descricao": "as 23 linhas da tabela-síntese do E8",
+      "fontes": [
+        "output/rdd_bolsa/E8_tabela_sintese.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/descarte_preenchimento.png",
+      "sha256": "15cfbe0b8d63a0c1b481865974f475e4c29e179b1c6b105a449256f8df3526a7",
+      "natureza": "EMPIRICO",
+      "descricao": "IC convencional do preenchimento contra a referência de +10 p.p.",
+      "fontes": [
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    }
+  ],
+  "numeros": {
+    "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
+    "sha256": "e1f7ed36452ae3903e3f79d7b05d9a40e0cbcc1b9811b9f09a3026d471b413ff"
+  }
+}

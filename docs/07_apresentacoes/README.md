@@ -22,6 +22,7 @@
 | Apresentação | Escopo | Estado | Documentos |
 |---|---|---|---|
 | [Banca 1](banca1/) | **apresentada** em cinco seções — motivação, pergunta, literatura, hipótese e viabilidade empírica —, 21 páginas, 17 numeradas; a versão de preparação de 21/09/2026 tinha 17 slides em três seções | versão apresentada transcrita, com errata e proveniência, e o PDF exibido; a versão de preparação segue em markdown, com figuras, e é dela que derivam os decks Beamer e Slidev, que **não** reproduzem a versão apresentada | [README](banca1/README.md), [**versão apresentada**](banca1/04_versao_apresentada.md), [PDF exibido](banca1/apresentada/banca1_apresentada.pdf), [roteiro](banca1/01_roteiro_narrativo.md), [conteúdo de preparação](banca1/02_conteudo_slides.md), [proveniência](banca1/03_proveniencia_figuras_e_numeros.md) |
+| [Banca 2](banca2/) | resultados da RDD da bolsa para 28/10/2026: da hipótese da banca 1 à regra com o IVS oficial (e o failure mode do arquivo errado), desenho, resultados elo a elo, o que se pode afirmar, co-políticas nos mesmos cortes e opções de revisão da hipótese; 21 slides e 7 de apêndice | **rascunho** do conteúdo canônico, pendente da decisão do autor sobre a revisão da hipótese (doc 44, §7) e a mensagem principal; figuras do pipeline; deck não montado | [README](banca2/README.md), [roteiro](banca2/01_roteiro_narrativo.md), [conteúdo](banca2/02_conteudo_slides.md), [proveniência](banca2/03_proveniencia_figuras_e_numeros.md) |
 
 ## 3. O que não entra em apresentação
 

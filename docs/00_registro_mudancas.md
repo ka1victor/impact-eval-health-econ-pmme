@@ -8,6 +8,35 @@
 
 ---
 
+## 19/10/2026 — Conteúdo canônico da banca 2 (28/10/2026)
+
+Motivo: a apresentação de 28/10/2026 precisa de conteúdo canônico em
+`docs/07_apresentacoes/` antes de qualquer deck (`CLAUDE.md`; doc 38, §4;
+doc 44, §9). O conteúdo parte da síntese E8 e é rascunho até o autor decidir
+a revisão da hipótese (doc 44, §7) e a mensagem principal.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca2/README.md`](07_apresentacoes/banca2/README.md) | propósito, estado (rascunho), decisões em aberto, figuras e índice |
+| [`07_apresentacoes/banca2/01_roteiro_narrativo.md`](07_apresentacoes/banca2/01_roteiro_narrativo.md) | arco, lógica de cada bloco, mensagens candidatas e frases que não mudam |
+| [`07_apresentacoes/banca2/02_conteudo_slides.md`](07_apresentacoes/banca2/02_conteudo_slides.md) | 21 slides e 7 de apêndice, com figura, linha de números e notas do apresentador |
+| [`07_apresentacoes/banca2/03_proveniencia_figuras_e_numeros.md`](07_apresentacoes/banca2/03_proveniencia_figuras_e_numeros.md) | figura → arquivo e script; número → arquivo e chave, em bloco gerado |
+| `scripts/apresentacao/gerar_figuras_banca2.py` | figuras da regra (variante A colorida e failure mode, separado), da cadeia e do descarte, registro de números e manifesto em `output/apresentacao_banca2/` |
+| `tests/test_conteudo_banca2.py` | números dos slides contra `output/`, figuras do pipeline, failure mode separado, formatador com valores sintéticos |
+
+### Atualizado
+
+[`07_apresentacoes/README.md`](07_apresentacoes/README.md) (índice). O gerador
+lê o arquivo de IVS errado só para a figura e a contagem do failure mode; por
+isso entrou como documentador autorizado na guarda
+`tests/test_fonte_ivs_oficial.py` (contagem exata 1) e na tabela de leitores
+da [auditoria 19](auditorias/19_reestimacao_base_oficial_failure_mode.md),
+pela lista `AUDITORIA` de `scripts/tema_trabalho/12_registrar_failure_mode_ivs.py`.
+
+---
+
 ## 19/10/2026 — Síntese E8 da RDD da bolsa (protocolo 40)
 
 Motivo: a tarefa E8 do protocolo multi-outcome

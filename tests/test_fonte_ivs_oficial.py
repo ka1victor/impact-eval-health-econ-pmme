@@ -62,6 +62,7 @@ LEITORES_AUTORIZADOS = {
     S + "rdd_bolsa/04c_identificar_recorte_arquivo_local.py": "reproduz a extração errada",
     S + "rdd_bolsa/09_gerar_relatorio_pdf.py": "figura comparativa do arquivo errado",
     S + "rdd_bolsa/10_galeria_figura_regra.py": "figura comparativa do arquivo errado",
+    S + "apresentacao/gerar_figuras_banca2.py": "figura e contagem do failure mode da banca 2, em failure_mode/",
     S + "tema_trabalho/07_red_team_sintese.py": "hash no manifesto A6, rotulado como failure mode",
 }
 # Leitores autorizados de saídas de scripts retirados: só como histórico rotulado.
@@ -276,6 +277,7 @@ OCORRENCIAS_AUTORIZADAS: dict[str, tuple[int, str]] = {
     "scripts/00_inventario_dados.py": (1, LE),  # inventário de data/, com rótulo FAILURE MODE
     "scripts/02_auditar_fontes_pmme.py": (3, LE),  # auditoria de fontes de data/, com rótulo FAILURE MODE
     "scripts/apresentacao/gerar_figuras_banca1.py": (1, TXT),  # comentário: ivs_categoria vem da malha oficial
+    "scripts/apresentacao/gerar_figuras_banca2.py": (1, LE),  # figura e contagem do failure mode (FAILURE_MODE, separada)
     "scripts/aquisicao/04_harmonizar_territorio_ibge.py": (2, TXT),  # docstring e nota do manifesto
     "scripts/aquisicao/06_adquirir_populacao_censo2022.py": (2, TXT),  # docstring e nota do manifesto
     "scripts/aquisicao/a03_adquirir_ivs_regra.py": (3, RET),  # aquisição retirada que lia o arquivo

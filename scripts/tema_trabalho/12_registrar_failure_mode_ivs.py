@@ -119,6 +119,8 @@ AUDITORIA: list[tuple[str, str, str, str, str]] = [
      "corrigido por emenda datada (--reestimar-covariaveis-oficiais): painéis pré-T0 congelados, nenhum mês pós-T0 lido"),
     ("scripts/apresentacao/gerar_figuras_banca1.py", "indireto: ivs_categoria do painel município–curso", "(b) descritivo", "não",
      "corrigido: categoria da malha oficial; manifesto das figuras regenerado"),
+    ("scripts/apresentacao/gerar_figuras_banca2.py", "direto: eixo da figura do failure mode da banca 2 e contagem dos municípios do lado errado", "(c)", "não",
+     "documenta o erro; saída em `output/apresentacao_banca2/failure_mode/`, natureza FAILURE_MODE (19/10/2026)"),
     ("scripts/tema_trabalho/01_auditar_atracao_provimento_interior.py", "indireto: veredito de rdd_bolsa/00", "(a)", "sim",
      "corrigido: confere a regra com a a08"),
     ("scripts/tema_trabalho/03_construir_tipologia_territorial.py", "indireto: malha", "(b)", "sim",
