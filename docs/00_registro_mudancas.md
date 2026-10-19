@@ -19,6 +19,11 @@ Motivo: o protocolo [45](06_execucao/45_protocolo_exploratorio_pos_sintese.md)
 (§4) manda a leitura de X1–X6 para o doc 46. As seções X4 (heterogeneidade da
 escolha) e X5 (deslocamento regional) foram as primeiras a entrar; as demais
 tarefas acrescentam as suas seções no mesmo arquivo.
+## 19/10/2026 — X6 do protocolo exploratório: poder e o que se descarta
+
+Motivo: tarefa X6 do protocolo 45 (§3). A síntese relata IC, mas não uma tabela
+de poder comparável entre outcomes. Os resultados exploratórios X1–X6 vão para
+um documento novo; a seção X6 é gerada pelo script a partir das saídas.
 
 ### Criado
 
@@ -39,6 +44,9 @@ profissional e nome normalizado; nunca versionado).
 | `data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv` | tabela oficial município → Região de Saúde (CIR) do TabNet/DATASUS, baixada pelo script 19 (manifesto em `output/rdd_bolsa/X5_manifesto_regioes_saude_cir.json`) |
 
 ---
+| [`06_execucao/46_resultados_exploratorios_pos_sintese.md`](06_execucao/46_resultados_exploratorios_pos_sintese.md) | resultados exploratórios pós-síntese (X1–X6); a seção X6 (MDE de 80%, descartes absolutos e relativos, TOST, referências do protocolo e da literatura, IC honesto) é gerada por `scripts/rdd_bolsa/20_poder_descartes.py --atualizar-doc` |
+| `scripts/rdd_bolsa/20_poder_descartes.py` | X6: aritmética sobre as saídas do E6, E7, E8 e E9, sem estimação nova; grava `output/rdd_bolsa/X6_*` |
+| `tests/test_x6_poder.py` | fórmulas do MDE e do TOST com números sintéticos; saídas contra os CSV de origem; blocos e prosa da seção X6 |
 
 ## 19/10/2026 — Conteúdo canônico da banca 2 (28/10/2026)
 
