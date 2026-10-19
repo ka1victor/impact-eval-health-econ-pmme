@@ -1,0 +1,36 @@
+{
+  "url": "https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR/metadados?intrarregiao=municipio",
+  "data_download": "2026-10-19",
+  "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+  "bytes": 1685039,
+  "fonte": "IBGE, API de malhas geográficas v3, metadados (centroide) por município",
+  "natureza_dos_dados": "EMPIRICO",
+  "malha_periodo_verificado": "2022",
+  "verificacao_periodo": {
+    "metodo": "a resposta padrão tem os mesmos bytes que a resposta com &periodo=AAAA",
+    "data": "2026-10-19",
+    "testados": {
+      "2020": {
+        "sha256": "69df9bc1fd4e13173d2a0f121e71285e8f490ba0639740625bf03a8261215d2d",
+        "bytes": 1188709
+      },
+      "2021": {
+        "sha256": "0ac434a072d4c28d81c73b9cec33dcb90e0d26943767eb32dd002b15999e1e5a",
+        "bytes": 1188768
+      },
+      "2022": {
+        "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+        "bytes": 1685039
+      },
+      "2023": {
+        "erro_http": 500
+      },
+      "2024": {
+        "erro_http": 500
+      },
+      "2025": {
+        "erro_http": 500
+      }
+    }
+  }
+}

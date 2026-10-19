@@ -8,6 +8,28 @@
 
 ---
 
+## 19/10/2026 — X1 do protocolo exploratório pós-síntese (ponte PMM-E–CNES)
+
+Motivo: execução do X1 do [doc 45](06_execucao/45_protocolo_exploratorio_pos_sintese.md)
+(origem dos especialistas do PMM-E pelo registro profissional no CNES). O doc
+46 recebe a leitura conjunta de X1–X6; esta entrada cobre a seção X1.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/46_resultados_exploratorios_pos_sintese.md`](06_execucao/46_resultados_exploratorios_pos_sintese.md) | resultados exploratórios pós-síntese; seção X1 com blocos gerados das saídas |
+| `scripts/rdd_bolsa/17_ponte_pmme_cnes.py` | ligação PMM-E–CNES (seis competências), outcomes de origem, descritivo, RDD condicional com Lee e E9 com distância |
+| `tests/test_x1_ponte_cnes.py` | regra de ligação e outcomes com dados sintéticos; invariantes e ausência de dado pessoal nas saídas; blocos do doc 46 |
+| `data/raw/aquisicao/territorio/ibge_api_v3_malhas_metadados_municipios.json` | centroides municipais da API de malhas v3 do IBGE, com manifesto (URL, data, SHA-256) |
+
+### Atualizado
+
+`.gitignore`: `output/rdd_bolsa/X1_cache/` (extrato do CNES com registro
+profissional e nome normalizado; nunca versionado).
+
+---
+
 ## 19/10/2026 — Conteúdo canônico da banca 2 (28/10/2026)
 
 Motivo: a apresentação de 28/10/2026 precisa de conteúdo canônico em

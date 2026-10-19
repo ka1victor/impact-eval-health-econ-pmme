@@ -1,0 +1,883 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "EXPLORATORIO_POS_SINTESE",
+  "documento": "X1 do protocolo exploratório pós-síntese (doc 45, §3)",
+  "script": "scripts/rdd_bolsa/17_ponte_pmme_cnes.py",
+  "protocolo": "docs/06_execucao/45_protocolo_exploratorio_pos_sintese.md",
+  "data_execucao": "2026-10-19",
+  "contraste": "descritivo da origem dos médicos do PMM-E; RDD condicional à alocação com limites de Lee: pacote do corte (RDD em nível), não efeito da participação no PMM-E nem do Agora Tem Especialistas",
+  "entradas": [
+    {
+      "caminho": "data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip",
+      "sha256": "e57edeb50946395fa90fe510f4a658501f9b0e92069fcc53aa41b9e893e89c1c",
+      "bytes": 117155,
+      "papel": "lista nominal de ativos do PMM-E (CRM, UF do posto, CNES, curso, início, ciclo, nome)",
+      "data_referencia": "dt_referencia 11/09/2026",
+      "cobertura": "ciclos 1–3, Brasil",
+      "unidade": "registro de médico ativo",
+      "chaves": "ciclo, crm, uf, co_cnes, curso",
+      "filtros": "nenhum; nome só em memória"
+    },
+    {
+      "caminho": "data/pmm_especialistas_nominal.csv",
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
+      "bytes": 361832,
+      "papel": "lista nominal de 12/08/2026 (registros que não estão nos ativos de 11/09 entram)",
+      "data_referencia": "dt_referencia 2026-08-12",
+      "cobertura": "ciclos 1–2",
+      "unidade": "registro de médico ativo",
+      "chaves": "ciclo, crm, uf, co_cnes, curso",
+      "filtros": "nenhum; nome só em memória"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial) e conferência da faixa",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "colunas co_ibge e ivs"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "populações V1 e V2 (municípios com célula no quadro da 1a chamada)",
+      "data_referencia": "ciclos 1–2",
+      "cobertura": "V1, V2",
+      "unidade": "ciclo × município",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "colunas ciclo e co_ibge"
+    },
+    {
+      "caminho": "output/aquisicao/a09_manifesto_cnes_nacional.json",
+      "sha256": "666d3283f36e323aedf4e4f3a1c85089f1ee7827211084b7a1a3baf0e315701f",
+      "bytes": 190325,
+      "papel": "SHA-256 e contagem de vínculos médicos por competência (validação)",
+      "data_referencia": "2026-10-18",
+      "cobertura": "competências do a09",
+      "unidade": "competência",
+      "chaves": "competencia",
+      "filtros": "por_competencia"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "bytes": 128788,
+      "papel": "E9 com distância: escolhas e alocação da 1a chamada",
+      "data_referencia": "ciclos 1–2",
+      "cobertura": "candidatos",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "ciclos 1 e 2"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_conjunto_principal.parquet",
+      "sha256": "ad655dbce17753a996594213f6f9b9dff18e42af6556e48d0ee20df858bfca22",
+      "bytes": 63077,
+      "papel": "E9 com distância: conjunto de escolha principal",
+      "data_referencia": "ciclos 1–2",
+      "cobertura": "células",
+      "unidade": "célula",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "ciclos 1 e 2"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_administrativo/ppf_mais_medicos_csv.zip",
+      "sha256": "15083f8127917e5279be01d372c1250a467ee77d289a030e1229932d0013cb3a",
+      "bytes": 150344,
+      "papel": "região de saúde (CIR) por município, painel do PMMB do MS",
+      "data_referencia": "dt_referencia 2026-10-09",
+      "cobertura": "5571 municípios (nível MUNICIPAL)",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "nivel = MUNICIPAL; colunas uf, cir"
+    },
+    {
+      "caminho": "docs/06_execucao/45_protocolo_exploratorio_pos_sintese.md",
+      "sha256": "a16931d4e2b2814c60d40c15ff5f26cdc54fb77df5a27978e3300401e4ce1065",
+      "bytes": 7510,
+      "papel": "protocolo congelado do X1",
+      "data_referencia": "19/10/2026",
+      "cobertura": "—",
+      "unidade": "—",
+      "chaves": "—",
+      "filtros": "—"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/ibge_api_v3_malhas_metadados_municipios.json",
+      "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+      "bytes": 1685039,
+      "papel": "centroides municipais oficiais (distância)",
+      "data_referencia": "malha municipal 2022",
+      "cobertura": "municípios do Brasil",
+      "unidade": "município",
+      "chaves": "id (7 dígitos)",
+      "filtros": "centroide"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+      "sha256": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec",
+      "bytes": 165250,
+      "papel": "E9 com distância: nomes dos candidatos (c1_ch1), só em memória",
+      "data_referencia": "resultado da 1a chamada",
+      "cobertura": "candidatos",
+      "unidade": "candidato × opção",
+      "chaves": "CNES, curso, nome, CPF mascarado",
+      "filtros": "nenhum gravado"
+    },
+    {
+      "caminho": "data/raw/pmm_e/resultado-final-pmme-2o-ciclo-25-05.xlsx",
+      "sha256": "8e85a28a57db1283cd3103065b04909b637cb76aab73482889e6b5fe50182e3c",
+      "bytes": 320107,
+      "papel": "E9 com distância: nomes dos candidatos (c2_ch1), só em memória",
+      "data_referencia": "resultado da 1a chamada",
+      "cobertura": "candidatos",
+      "unidade": "candidato × opção",
+      "chaves": "CNES, curso, nome, CPF mascarado",
+      "filtros": "nenhum gravado"
+    }
+  ],
+  "competencias_cnes": {
+    "202406": {
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202406.ZIP",
+      "data_download": "2026-10-19",
+      "sha256_zip": "10746d84f19d45f5ef6f89e74d616ae73e37e6dd7dfd3b026e1b93a519a22253",
+      "bytes_zip": 594371169,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202406.csv",
+        "estab": "tbEstabelecimento202406.csv",
+        "profissional": "tbDadosProfissionalSus202406.csv"
+      },
+      "linhas_tbCargaHorariaSus": 5940061,
+      "linhas_vinculos_medicos": 1631048,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_registro": 157,
+      "vinculos_sem_uf_crm": 200,
+      "conselho_classe_dos_vinculos_medicos": {
+        "": 155,
+        "15": 1,
+        "17": 14,
+        "19": 3,
+        "23": 134,
+        "66": 102,
+        "69": 2,
+        "70": 18,
+        "71": 1622040,
+        "74": 5,
+        "75": 1,
+        "77": 19,
+        "81": 1,
+        "83": 8553
+      },
+      "profissionais_distintos": 516339,
+      "vinculos_com_registro_no_alvo": 42465,
+      "profissionais_com_registro_no_alvo": 13360,
+      "profissionais_alvo_com_nome": 13360,
+      "validacao_contra_a09": {
+        "sha256_igual_ao_a09": true,
+        "linhas_vinculos_medicos_a09": 1631048,
+        "linhas_vinculos_medicos_x1": 1631048
+      },
+      "data_processamento": "2026-10-19",
+      "status": "extraido_zip_apagado"
+    },
+    "202501": {
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202501.ZIP",
+      "data_download": "2026-10-19",
+      "sha256_zip": "fb8dddb8f0b4abe3a7d24c91ccb00af6c0869f3f06939874ab0dfaa4ff2ec59a",
+      "bytes_zip": 620062933,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202501.csv",
+        "estab": "tbEstabelecimento202501.csv",
+        "profissional": "tbDadosProfissionalSus202501.csv"
+      },
+      "linhas_tbCargaHorariaSus": 6104979,
+      "linhas_vinculos_medicos": 1675597,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_registro": 118,
+      "vinculos_sem_uf_crm": 158,
+      "conselho_classe_dos_vinculos_medicos": {
+        "": 115,
+        "15": 1,
+        "17": 11,
+        "19": 3,
+        "23": 125,
+        "66": 110,
+        "69": 2,
+        "70": 16,
+        "71": 1666591,
+        "74": 6,
+        "75": 1,
+        "77": 15,
+        "81": 1,
+        "83": 8600
+      },
+      "profissionais_distintos": 534093,
+      "vinculos_com_registro_no_alvo": 43138,
+      "profissionais_com_registro_no_alvo": 13577,
+      "profissionais_alvo_com_nome": 13577,
+      "validacao_contra_a09": {
+        "sha256_igual_ao_a09": true,
+        "linhas_vinculos_medicos_a09": 1675597,
+        "linhas_vinculos_medicos_x1": 1675597
+      },
+      "data_processamento": "2026-10-19",
+      "status": "extraido_zip_apagado"
+    },
+    "202506": {
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202506.ZIP",
+      "data_download": "2026-10-19",
+      "sha256_zip": "b43d12780a1d2ad47ab244272912262fd3b3b59e08c5f2ae715abf2a318e95ba",
+      "bytes_zip": 639832653,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202506.csv",
+        "estab": "tbEstabelecimento202506.csv",
+        "profissional": "tbDadosProfissionalSus202506.csv"
+      },
+      "linhas_tbCargaHorariaSus": 6283850,
+      "linhas_vinculos_medicos": 1721782,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_registro": 80,
+      "vinculos_sem_uf_crm": 118,
+      "conselho_classe_dos_vinculos_medicos": {
+        "": 77,
+        "15": 1,
+        "17": 10,
+        "23": 124,
+        "66": 110,
+        "69": 1,
+        "71": 1713274,
+        "74": 6,
+        "75": 4,
+        "81": 1,
+        "83": 8174
+      },
+      "profissionais_distintos": 546858,
+      "vinculos_com_registro_no_alvo": 43882,
+      "profissionais_com_registro_no_alvo": 13719,
+      "profissionais_alvo_com_nome": 13719,
+      "validacao_contra_a09": {
+        "sha256_igual_ao_a09": true,
+        "linhas_vinculos_medicos_a09": 1721782,
+        "linhas_vinculos_medicos_x1": 1721782
+      },
+      "data_processamento": "2026-10-19",
+      "status": "extraido_zip_apagado"
+    },
+    "202510": {
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202510.ZIP",
+      "data_download": "2026-10-19",
+      "sha256_zip": "595cb9232444ab4cafb6ac05f90866a37d862f64a0131c5f04100cea1ebe021a",
+      "bytes_zip": 704376063,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202510.csv",
+        "estab": "tbEstabelecimento202510.csv",
+        "profissional": "tbDadosProfissionalSus202510.csv"
+      },
+      "linhas_tbCargaHorariaSus": 6418002,
+      "linhas_vinculos_medicos": 1750983,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_registro": 121,
+      "vinculos_sem_uf_crm": 158,
+      "conselho_classe_dos_vinculos_medicos": {
+        "": 117,
+        "15": 2,
+        "17": 10,
+        "23": 126,
+        "66": 110,
+        "69": 3,
+        "71": 1742395,
+        "74": 8,
+        "75": 5,
+        "81": 9,
+        "83": 8198
+      },
+      "profissionais_distintos": 556216,
+      "vinculos_com_registro_no_alvo": 44609,
+      "profissionais_com_registro_no_alvo": 13858,
+      "profissionais_alvo_com_nome": 13858,
+      "validacao_contra_a09": {
+        "sha256_igual_ao_a09": true,
+        "linhas_vinculos_medicos_a09": 1750983,
+        "linhas_vinculos_medicos_x1": 1750983
+      },
+      "data_processamento": "2026-10-19",
+      "status": "extraido_zip_apagado"
+    },
+    "202602": {
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202602.ZIP",
+      "data_download": "2026-10-19",
+      "sha256_zip": "c77ca01fdcef62cdac9c1b73b04549a1e1b6d34096dd7268a3c191d9f4fd37f6",
+      "bytes_zip": 709394498,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202602.csv",
+        "estab": "tbEstabelecimento202602.csv",
+        "profissional": "tbDadosProfissionalSus202602.csv"
+      },
+      "linhas_tbCargaHorariaSus": 6507899,
+      "linhas_vinculos_medicos": 1777736,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_registro": 117,
+      "vinculos_sem_uf_crm": 155,
+      "conselho_classe_dos_vinculos_medicos": {
+        "": 113,
+        "15": 5,
+        "17": 9,
+        "23": 129,
+        "66": 116,
+        "69": 3,
+        "70": 4,
+        "71": 1769596,
+        "74": 8,
+        "75": 5,
+        "77": 1,
+        "81": 9,
+        "83": 7738
+      },
+      "profissionais_distintos": 566098,
+      "vinculos_com_registro_no_alvo": 45110,
+      "profissionais_com_registro_no_alvo": 13967,
+      "profissionais_alvo_com_nome": 13967,
+      "validacao_contra_a09": {
+        "sha256_igual_ao_a09": true,
+        "linhas_vinculos_medicos_a09": 1777736,
+        "linhas_vinculos_medicos_x1": 1777736
+      },
+      "data_processamento": "2026-10-19",
+      "status": "extraido_zip_apagado"
+    },
+    "202608": {
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202608.ZIP",
+      "data_download": "2026-10-19",
+      "sha256_zip": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a",
+      "bytes_zip": 739134749,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202608.csv",
+        "estab": "tbEstabelecimento202608.csv",
+        "profissional": "tbDadosProfissionalSus202608.csv"
+      },
+      "linhas_tbCargaHorariaSus": 6779657,
+      "linhas_vinculos_medicos": 1860711,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_registro": 426,
+      "vinculos_sem_uf_crm": 470,
+      "conselho_classe_dos_vinculos_medicos": {
+        "": 424,
+        "15": 3,
+        "17": 9,
+        "23": 134,
+        "66": 121,
+        "69": 2,
+        "70": 2,
+        "71": 1852577,
+        "74": 2,
+        "75": 4,
+        "81": 8,
+        "83": 7425
+      },
+      "profissionais_distintos": 585405,
+      "vinculos_com_registro_no_alvo": 47278,
+      "profissionais_com_registro_no_alvo": 14219,
+      "profissionais_alvo_com_nome": 14219,
+      "validacao_contra_a09": {
+        "sha256_igual_ao_a09": true,
+        "linhas_vinculos_medicos_a09": 1860711,
+        "linhas_vinculos_medicos_x1": 1860711
+      },
+      "data_processamento": "2026-10-19",
+      "status": "extraido_zip_apagado"
+    }
+  },
+  "limite_ciclo3": "nenhuma competência >= 202609 é baixada ou lida",
+  "regra_ligacao": {
+    "literal_doc45": "regra do protocolo congelado (doc 45): (1) NU_REGISTRO = CRM e SG_UF_CRM = UF da lista, um único CO_PROFISSIONAL_SUS nas seis competências; (2) sem (1), NU_REGISTRO = CRM em qualquer UF com nome compatível, um único profissional; ambíguos e não achados ficam fora",
+    "d1_pos_hoc": "correção pós-hoc D1: igual à literal, mas o candidato único da etapa 1 só liga com nome compatível; sem ele, o registro vai para a etapa 2",
+    "conselho": "só vínculos médicos com CO_CONSELHO_CLASSE do CRM entram na busca"
+  },
+  "conselho_classe": {
+    "codigo_crm": "71",
+    "descricao": "MEDICINA, CONSELHO REGIONAL",
+    "tabela": "tbOrgaoEmissor202608.csv",
+    "competencia": "202608",
+    "sha256_zip": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a",
+    "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202608.ZIP",
+    "regra": "tbOrgaoEmissor: descrição contém MEDICINA e CONSELHO REGIONAL e não VETERINARIA; uma linha",
+    "nota_tbConselhoClasse": "a tbConselhoClasse tem outra numeração (medicina = 10, 15); o campo CO_CONSELHO_CLASSE da carga horária segue a tbOrgaoEmissor",
+    "fracao_dos_vinculos_medicos_com_o_codigo": 0.9950676996238286
+  },
+  "regra_nome_compativel": "tokens normalizados sem partículas D,DA,DAS,DE,DI,DO,DOS,DU,E; mesmo primeiro nome e (mesmo último ou um conjunto contido no outro, ≥ 2 nomes)",
+  "listas_pmme": {
+    "registros_ativos_2026_09_11": 1957,
+    "registros_nominal_2026_08_12": 1480,
+    "registros_nominal_tambem_nos_ativos": 1447,
+    "registros_so_na_nominal": 33,
+    "registros_uniao": 1990,
+    "chave_registro": [
+      "ciclo",
+      "crm",
+      "uf",
+      "co_cnes",
+      "cod_curso"
+    ],
+    "registros_repetidos_na_chave": 0,
+    "crm_ausente": 2,
+    "nota_uf": "a UF das listas é a do posto do PMM-E; as listas não trazem a UF do CRM"
+  },
+  "taxas_ligacao": {
+    "literal_doc45": {
+      "1": {
+        "registros": 525,
+        "ligados": 508,
+        "taxa": 0.9676190476190476,
+        "etapa_1_crm_uf": 468,
+        "etapa_2_crm_nome": 40,
+        "ambiguos": 0,
+        "nao_ligados_sem_ambiguidade": 17
+      },
+      "2": {
+        "registros": 968,
+        "ligados": 924,
+        "taxa": 0.9545454545454546,
+        "etapa_1_crm_uf": 843,
+        "etapa_2_crm_nome": 81,
+        "ambiguos": 1,
+        "nao_ligados_sem_ambiguidade": 43
+      },
+      "3": {
+        "registros": 497,
+        "ligados": 469,
+        "taxa": 0.9436619718309859,
+        "etapa_1_crm_uf": 404,
+        "etapa_2_crm_nome": 65,
+        "ambiguos": 0,
+        "nao_ligados_sem_ambiguidade": 28
+      },
+      "total": {
+        "registros": 1990,
+        "ligados": 1901,
+        "taxa": 0.9552763819095478,
+        "etapa_1_crm_uf": 1715,
+        "etapa_2_crm_nome": 186,
+        "ambiguos": 1,
+        "nao_ligados_sem_ambiguidade": 88
+      },
+      "por_fonte_lista": {
+        "ativos_2026-09-11": {
+          "registros": 1957,
+          "ligados": 1870,
+          "taxa": 0.9555442003065917
+        },
+        "nominal_2026-08-12": {
+          "registros": 33,
+          "ligados": 31,
+          "taxa": 0.9393939393939394
+        }
+      },
+      "motivos": {
+        "ambiguo_crm_nome_com_mais_de_um_profissional": 1,
+        "crm_ausente_na_lista": 2,
+        "crm_sem_nome_compativel": 33,
+        "crm_sem_vinculo_medico_no_cnes": 53,
+        "ligado": 1901
+      }
+    },
+    "d1_pos_hoc": {
+      "1": {
+        "registros": 525,
+        "ligados": 499,
+        "taxa": 0.9504761904761905,
+        "etapa_1_crm_uf": 428,
+        "etapa_2_crm_nome": 71,
+        "ambiguos": 0,
+        "nao_ligados_sem_ambiguidade": 26
+      },
+      "2": {
+        "registros": 968,
+        "ligados": 909,
+        "taxa": 0.9390495867768595,
+        "etapa_1_crm_uf": 802,
+        "etapa_2_crm_nome": 107,
+        "ambiguos": 1,
+        "nao_ligados_sem_ambiguidade": 58
+      },
+      "3": {
+        "registros": 497,
+        "ligados": 468,
+        "taxa": 0.9416498993963782,
+        "etapa_1_crm_uf": 379,
+        "etapa_2_crm_nome": 89,
+        "ambiguos": 0,
+        "nao_ligados_sem_ambiguidade": 29
+      },
+      "total": {
+        "registros": 1990,
+        "ligados": 1876,
+        "taxa": 0.942713567839196,
+        "etapa_1_crm_uf": 1609,
+        "etapa_2_crm_nome": 267,
+        "ambiguos": 1,
+        "nao_ligados_sem_ambiguidade": 113
+      },
+      "por_fonte_lista": {
+        "ativos_2026-09-11": {
+          "registros": 1957,
+          "ligados": 1845,
+          "taxa": 0.942769545222279
+        },
+        "nominal_2026-08-12": {
+          "registros": 33,
+          "ligados": 31,
+          "taxa": 0.9393939393939394
+        }
+      },
+      "motivos": {
+        "ambiguo_crm_nome_com_mais_de_um_profissional": 1,
+        "crm_ausente_na_lista": 2,
+        "crm_sem_nome_compativel": 58,
+        "crm_sem_vinculo_medico_no_cnes": 53,
+        "ligado": 1876
+      }
+    }
+  },
+  "diagnostico_ligacao": {
+    "literal_doc45": {
+      "exigir_nome_etapa1": false,
+      "conselho_crm": "71",
+      "vinculos_medicos_fora_do_conselho_crm_excluidos_da_busca": 51384,
+      "etapa1_candidato_unico": 1715,
+      "etapa1_nome_compativel": 1609,
+      "etapa1_fracao_nome_compativel": 0.9381924198250728,
+      "etapa1_rejeitadas_por_nome": 0,
+      "etapa1_rejeitadas_ligadas_na_etapa2": 0,
+      "profissional_ligado_a_mais_de_um_registro_do_mesmo_ciclo": 24,
+      "conferencia_vinculo_no_estab_do_posto_202608": {
+        "1_crm_uf": {
+          "n": 1310,
+          "fracao_com_vinculo_no_estab_do_posto_202608": 0.7603053435114504
+        },
+        "2_crm_nome": {
+          "n": 121,
+          "fracao_com_vinculo_no_estab_do_posto_202608": 0.7272727272727273
+        }
+      }
+    },
+    "d1_pos_hoc": {
+      "exigir_nome_etapa1": true,
+      "conselho_crm": "71",
+      "vinculos_medicos_fora_do_conselho_crm_excluidos_da_busca": 51384,
+      "etapa1_candidato_unico": 1715,
+      "etapa1_nome_compativel": 1609,
+      "etapa1_fracao_nome_compativel": 0.9381924198250728,
+      "etapa1_rejeitadas_por_nome": 106,
+      "etapa1_rejeitadas_ligadas_na_etapa2": 81,
+      "profissional_ligado_a_mais_de_um_registro_do_mesmo_ciclo": 22,
+      "conferencia_vinculo_no_estab_do_posto_202608": {
+        "1_crm_uf": {
+          "n": 1229,
+          "fracao_com_vinculo_no_estab_do_posto_202608": 0.80553295362083
+        },
+        "2_crm_nome": {
+          "n": 178,
+          "fracao_com_vinculo_no_estab_do_posto_202608": 0.7640449438202247
+        }
+      }
+    }
+  },
+  "comparacao_entre_regras": {
+    "mesmo_profissional_nas_duas_regras": 1795,
+    "profissional_diferente_entre_as_regras": 81,
+    "ligado_so_na_literal": 25,
+    "ligado_so_na_d1": 0
+  },
+  "mesmo_municipio_por_mes_de_referencia": {
+    "literal_doc45": {
+      "1": {
+        "n_ligados": 508,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.4153543307086614,
+          "202406": 0.3661417322834646,
+          "202501": 0.38188976377952755,
+          "202506": 0.40551181102362205
+        },
+        "minimo": 0.3661417322834646,
+        "maximo": 0.4153543307086614,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 211,
+          "ja_presentes_em_202406": 177,
+          "fracao": 0.8388625592417062
+        }
+      },
+      "2": {
+        "n_ligados": 924,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.5465367965367965,
+          "202406": 0.4751082251082251,
+          "202501": 0.4935064935064935,
+          "202506": 0.5216450216450217
+        },
+        "minimo": 0.4751082251082251,
+        "maximo": 0.5465367965367965,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 505,
+          "ja_presentes_em_202406": 420,
+          "fracao": 0.8316831683168316
+        }
+      },
+      "1+2": {
+        "n_ligados": 1432,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.5,
+          "202406": 0.43645251396648044,
+          "202501": 0.45391061452513964,
+          "202506": 0.48044692737430167
+        },
+        "minimo": 0.43645251396648044,
+        "maximo": 0.5,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 716,
+          "ja_presentes_em_202406": 597,
+          "fracao": 0.8337988826815642
+        }
+      }
+    },
+    "d1_pos_hoc": {
+      "1": {
+        "n_ligados": 499,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.4288577154308617,
+          "202406": 0.37675350701402804,
+          "202501": 0.39478957915831664,
+          "202506": 0.4188376753507014
+        },
+        "minimo": 0.37675350701402804,
+        "maximo": 0.4288577154308617,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 214,
+          "ja_presentes_em_202406": 179,
+          "fracao": 0.8364485981308412
+        }
+      },
+      "2": {
+        "n_ligados": 909,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.5577557755775577,
+          "202406": 0.48404840484048406,
+          "202501": 0.5038503850385039,
+          "202506": 0.5313531353135313
+        },
+        "minimo": 0.48404840484048406,
+        "maximo": 0.5577557755775577,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 507,
+          "ja_presentes_em_202406": 420,
+          "fracao": 0.8284023668639053
+        }
+      },
+      "1+2": {
+        "n_ligados": 1408,
+        "fracao_por_referencia": {
+          "ultima_competencia_pre": 0.5120738636363636,
+          "202406": 0.4460227272727273,
+          "202501": 0.46519886363636365,
+          "202506": 0.4914772727272727
+        },
+        "minimo": 0.4460227272727273,
+        "maximo": 0.5120738636363636,
+        "ultima_competencia_pre_e_o_maximo": true,
+        "persistencia": {
+          "incumbentes_na_ultima_competencia_pre": 721,
+          "ja_presentes_em_202406": 599,
+          "fracao": 0.8307905686546463
+        }
+      }
+    }
+  },
+  "desvios": [
+    {
+      "id": "D1",
+      "data": "2026-10-19",
+      "o_que": "etapa 1 (CRM+UF) passa a exigir nome compatível; sem ele, o registro vai para a etapa 2",
+      "motivo": "a UF das listas do PMM-E é a do posto, não a do CRM; na regra literal, um CRM de outra UF colide com o registro de outra pessoa na UF do posto. A conferência de nomes da etapa 1 mostrou ligações sem nenhum nome em comum e sem vínculo no estabelecimento do posto",
+      "honestidade": "correção pós-hoc: decidida depois da primeira execução completa do script, que gravou e exibiu as estimativas com a regra literal. Ela leva as linhas mais próximas de significância em direção a zero; por isso a regra literal, que é a do protocolo, é relatada lado a lado em todas as saídas",
+      "relato": "todas as saídas trazem as duas regras (coluna regra_ligacao)"
+    }
+  ],
+  "regiao_saude": {
+    "fonte": "data/raw/aquisicao/ivs_administrativo/ppf_mais_medicos_csv.zip",
+    "municipios": 5571,
+    "municipios_com_regiao": 5570,
+    "regioes_distintas": 439,
+    "regra": "região = UF + nome normalizado da CIR do painel do PMMB (nível MUNICIPAL)",
+    "co_regiao_saude_cnes_vazio_nos_vinculos_medicos": 0.39000996078176153,
+    "nota_cnes": "CO_REGIAO_SAUDE do CNES é texto livre e muito vazio; não é usado",
+    "conferencia_lista_ativos": {
+      "municipios": 404,
+      "com_regiao_no_ppf": 404,
+      "regiao_igual": 404
+    }
+  },
+  "coordenadas": {
+    "status": "OBTIDO",
+    "municipios": 5570,
+    "url": "https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR/metadados?intrarregiao=municipio",
+    "data_download": "2026-10-19",
+    "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+    "bytes": 1685039,
+    "fonte": "IBGE, API de malhas geográficas v3, metadados (centroide) por município",
+    "natureza_dos_dados": "EMPIRICO",
+    "malha_periodo_verificado": "2022",
+    "verificacao_periodo": {
+      "metodo": "a resposta padrão tem os mesmos bytes que a resposta com &periodo=AAAA",
+      "data": "2026-10-19",
+      "testados": {
+        "2020": {
+          "sha256": "69df9bc1fd4e13173d2a0f121e71285e8f490ba0639740625bf03a8261215d2d",
+          "bytes": 1188709
+        },
+        "2021": {
+          "sha256": "0ac434a072d4c28d81c73b9cec33dcb90e0d26943767eb32dd002b15999e1e5a",
+          "bytes": 1188768
+        },
+        "2022": {
+          "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+          "bytes": 1685039
+        },
+        "2023": {
+          "erro_http": 500
+        },
+        "2024": {
+          "erro_http": 500
+        },
+        "2025": {
+          "erro_http": 500
+        }
+      }
+    },
+    "sha256_atual": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd"
+  },
+  "painel_municipio": {
+    "literal_doc45": {
+      "ciclo_1": {
+        "municipios_V": 368,
+        "registros_ativos": 519,
+        "registros_ativos_fora_de_V": 36,
+        "registros_ativos_ligados_fora_de_V": 34
+      },
+      "ciclo_2": {
+        "municipios_V": 454,
+        "registros_ativos": 941,
+        "registros_ativos_fora_de_V": 1,
+        "registros_ativos_ligados_fora_de_V": 1
+      },
+      "municipios_V_sem_ivs_oficial": 0
+    },
+    "d1_pos_hoc": {
+      "ciclo_1": {
+        "municipios_V": 368,
+        "registros_ativos": 519,
+        "registros_ativos_fora_de_V": 36,
+        "registros_ativos_ligados_fora_de_V": 33
+      },
+      "ciclo_2": {
+        "municipios_V": 454,
+        "registros_ativos": 941,
+        "registros_ativos_fora_de_V": 1,
+        "registros_ativos_ligados_fora_de_V": 1
+      },
+      "municipios_V_sem_ivs_oficial": 0
+    }
+  },
+  "e9_distancia": {
+    "diagnostico": {
+      "literal_doc45": {
+        "ciclo_1": {
+          "reconstrucao_pseudonimo": "reproduz escolhas_candidatos.parquet",
+          "candidatos_alocados_ch1": 468,
+          "medicos_ativos_ligados": 508,
+          "pares_mesma_celula_nome_compativel": 218,
+          "pares_unicos": 218
+        },
+        "ciclo_2": {
+          "reconstrucao_pseudonimo": "reproduz escolhas_candidatos.parquet",
+          "candidatos_alocados_ch1": 1057,
+          "medicos_ativos_ligados": 924,
+          "pares_mesma_celula_nome_compativel": 657,
+          "pares_unicos": 657
+        },
+        "pares_total": 875,
+        "excluidos_sem_vinculo_medico_na_ultima_competencia_pre": 21,
+        "pares_com_origem": 854,
+        "excluidos_sem_linha_de_1a_opcao": 23,
+        "excluidos_1a_opcao_fora_do_conjunto": 0,
+        "excluidos_sem_coordenada": 0,
+        "candidatos_no_logit": 831,
+        "minimo_fixado": 50,
+        "distancia": "mínimo, sobre os municípios com vínculo médico na última competência pré-início, da distância ao município da célula; independe da célula escolhida",
+        "candidatos_com_distancia_zero_a_celula_escolhida": 425,
+        "fracao_das_alternativas_com_distancia_zero": 0.013325451905043384
+      },
+      "d1_pos_hoc": {
+        "ciclo_1": {
+          "reconstrucao_pseudonimo": "reproduz escolhas_candidatos.parquet",
+          "candidatos_alocados_ch1": 468,
+          "medicos_ativos_ligados": 499,
+          "pares_mesma_celula_nome_compativel": 216,
+          "pares_unicos": 216
+        },
+        "ciclo_2": {
+          "reconstrucao_pseudonimo": "reproduz escolhas_candidatos.parquet",
+          "candidatos_alocados_ch1": 1057,
+          "medicos_ativos_ligados": 909,
+          "pares_mesma_celula_nome_compativel": 652,
+          "pares_unicos": 652
+        },
+        "pares_total": 868,
+        "excluidos_sem_vinculo_medico_na_ultima_competencia_pre": 17,
+        "pares_com_origem": 851,
+        "excluidos_sem_linha_de_1a_opcao": 23,
+        "excluidos_1a_opcao_fora_do_conjunto": 0,
+        "excluidos_sem_coordenada": 0,
+        "candidatos_no_logit": 828,
+        "minimo_fixado": 50,
+        "distancia": "mínimo, sobre os municípios com vínculo médico na última competência pré-início, da distância ao município da célula; independe da célula escolhida",
+        "candidatos_com_distancia_zero_a_celula_escolhida": 431,
+        "fracao_das_alternativas_com_distancia_zero": 0.013531276014663142
+      }
+    },
+    "substitui": "versão de e02d83a, em que a distância usava a origem mais próxima do posto final (escolha embutida na distância); retirada pela auditoria de X1"
+  },
+  "definicoes": {
+    "mes_inicio": "AAAAMM de dt_inicio_atividade",
+    "competencias_pre_inicio": "competências lidas estritamente anteriores ao mês de início",
+    "vinculo_medico": "linha de tbCargaHorariaSus com CBO iniciando em 2251, 2252, 2253 ou 2231",
+    "origem": "última competência pré-início; mesmo_municipio > mesma_regiao_saude > mesma_uf > outra_uf; sem linha nessa competência: sem_vinculo_medico_anterior",
+    "distancia": "círculo máximo (raio médio de 6371.0088 km) entre centroides do IBGE, do município de origem mais próximo ao do posto (descritivo e RDD); no E9, mínimo sobre os municípios de origem até cada célula do conjunto",
+    "meses_fixos": "(b) e (a) também em 202406, 202501, 202506, os mesmos para todos; persistência = fração, entre os que têm (b) na última competência pré-início, dos que já o tinham em 202406",
+    "e": "vínculos médicos na competência 202608, para mês de início < 202608",
+    "rdd": "local linear, kernel triangular, h = 0,050, HC1 por corte; CR1 por município nos empilhados",
+    "lee": "rdd_lib.limites_lee_rd por ciclo × corte; selecionado = município de V_k com >= 1 médico ligado (n_ligados, n_ligados_origem ou n_com_distancia > 0, conforme o outcome)",
+    "bky": "q aguçados de Benjamini, Krieger e Yekutieli sobre todas as linhas do X1 com p, uma família por regra de ligação"
+  },
+  "limitacoes": [
+    "a UF das listas é a do posto; CRM em outra UF só liga pela etapa 2 (nome)",
+    "vínculo no CNES não é presença nem trabalho efetivo; ausência de vínculo não prova ausência de atividade",
+    "competências pré-início são esparsas (seis meses lidos); a última pode estar meses antes do início",
+    "outcome condicional à alocação e à ligação: a RDD condicional não é causal; os limites de Lee supõem monotonicidade da seleção",
+    "o retrato de ativos exclui quem saiu antes de 11/09/2026 (só a lista de 12/08 recupera parte)",
+    "E9 com distância: amostra de alocados ligados, selecionada pela alocação; a origem é a do CNES pré-início"
+  ],
+  "dados_pessoais": "nenhum nome, CPF, CNS, CRM ou código de profissional é gravado em output/rdd_bolsa/X1_*; o cache com registro e nome normalizado fica em output/rdd_bolsa/X1_cache/ (ignorado pelo Git). O pseudônimo id_medico é FRACO: ciclo, município e faixa, cruzados com a lista nominal pública do PMM-E e com o CNES público, podem reidentificar o médico. Por isso o parquet não traz mês de início nem curso; não deve ser cruzado com dados nominais",
+  "saidas": {
+    "output/rdd_bolsa/X1_medicos.parquet": "b4d73a6ae6adce59d014b11bf5490072964b49d600782af3d96a8f2e12f91789",
+    "output/rdd_bolsa/X1_estimativas.csv": "993f295829211e85f2ce708d453a037bd637180100f6a1e42f519d78efc3f3e6",
+    "output/rdd_bolsa/X1_descritivo.csv": "0202837891646b1bb8a0f75c589cdbc5057e748a8ccd3333ea88210a4d82bc90"
+  }
+}
