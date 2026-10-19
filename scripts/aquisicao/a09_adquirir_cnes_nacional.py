@@ -137,6 +137,11 @@ TOLERANCIA_VALIDACAO = {"fracao_celulas_identicas_min": 0.99, "dif_relativa_soma
 MIN_VINCULOS_MEDICOS_MES = 500_000
 MIN_MUNICIPIOS_MES = 4_000
 
+# Versão do extrator. 1: horas vazias viravam 0 (sem contagem). 2: horas vazias ou
+# não numéricas ficam ausentes (NA) e são contadas por campo. Cache de versão
+# anterior é refeito (o ZIP é baixado de novo).
+VERSAO_EXTRACAO = 2
+
 ESPACO_MINIMO_LIVRE = 3 * 1024**3  # bytes livres exigidos antes de iniciar um download
 _trava_disco = threading.Lock()
 
@@ -320,11 +325,29 @@ def _so_digitos(s: pd.Series) -> pd.Series:
     return s.astype("string").str.replace(r"\D", "", regex=True)
 
 
-def _horas(s: pd.Series | None, n: int) -> np.ndarray:
+def _horas(s: pd.Series | None, n: int) -> tuple[pd.Series, dict[str, int]]:
+    """Converte um campo de carga horária sem preencher nada.
+
+    Campo vazio ou não numérico vira ausente (NA), nunca zero; as contagens vão
+    para o metadado da competência. Valor não inteiro é arredondado e contado.
+    """
     if s is None:
-        return np.zeros(n, dtype=np.int32)
-    v = pd.to_numeric(s.astype("string").str.replace(",", ".", regex=False), errors="coerce")
-    return v.fillna(0).round().astype(np.int32).to_numpy()
+        return pd.Series(pd.NA, index=range(n), dtype="Int32"), {"coluna_ausente": n}
+    txt = s.astype("string").str.strip()
+    vazio = txt.isna() | (txt == "")
+    v = pd.to_numeric(txt.str.replace(",", ".", regex=False), errors="coerce")
+    nao_num = v.isna() & ~vazio
+    nao_int = v.notna() & (v != v.round())
+    contagem = {
+        "vazio": int(vazio.sum()),
+        "nao_numerico": int(nao_num.sum()),
+        "nao_inteiro_arredondado": int(nao_int.sum()),
+        "negativo": int((v < 0).sum()),
+    }
+    exemplos = sorted(set(txt[nao_num].dropna().tolist()))[:10]
+    if exemplos:
+        contagem["exemplos_nao_numericos"] = exemplos  # type: ignore[assignment]
+    return v.round().astype("Int32").reset_index(drop=True), contagem
 
 
 def extrair(comp: str, zip_path: Path) -> tuple[pd.DataFrame, dict[str, Any], pd.DataFrame]:
@@ -376,6 +399,8 @@ def extrair(comp: str, zip_path: Path) -> tuple[pd.DataFrame, dict[str, Any], pd
         with zf.open(membros["carga"]) as f:
             for bloco in pd.read_csv(
                 f, sep=";", encoding="latin1", dtype=str, chunksize=1_000_000,
+                # texto bruto preservado: "NA" ou "NULL" não viram ausente sem contagem
+                keep_default_na=False, na_values=[],
                 usecols=lambda c: c.strip().strip('"').upper() in set(mapa_carga.values()),
             ):
                 bloco.columns = [c.strip().strip('"').upper() for c in bloco.columns]
@@ -401,6 +426,12 @@ def extrair(comp: str, zip_path: Path) -> tuple[pd.DataFrame, dict[str, Any], pd
     carga["CO_UNIDADE"] = carga["CO_UNIDADE"].astype("string").str.strip()
     m = carga.merge(estab, on="CO_UNIDADE", how="left", validate="many_to_one")
     n = len(m)
+    m = m.reset_index(drop=True)
+    horas, contagem_horas = {}, {}
+    for canon, col in (("QT_CARGA_HORARIA_AMBULATORIAL", "qt_ch_ambulatorial"),
+                       ("QT_CARGA_HOR_HOSP_SUS", "qt_ch_hosp_sus"),
+                       ("QT_CARGA_HORARIA_OUTROS", "qt_ch_outros")):
+        horas[col], contagem_horas[canon] = _horas(m.get(canon), n)
     df = pd.DataFrame({
         "competencia": pd.Series([comp] * n, dtype="string"),
         "co_unidade": m["CO_UNIDADE"].astype("string"),
@@ -408,9 +439,9 @@ def extrair(comp: str, zip_path: Path) -> tuple[pd.DataFrame, dict[str, Any], pd
         "co_municipio": m["co_municipio"].astype("string"),
         "co_profissional_sus": m["CO_PROFISSIONAL_SUS"].astype("string").str.strip(),
         "co_cbo": m["CO_CBO"].astype("string").str.strip(),
-        "qt_ch_ambulatorial": _horas(m.get("QT_CARGA_HORARIA_AMBULATORIAL"), n),
-        "qt_ch_hosp_sus": _horas(m.get("QT_CARGA_HOR_HOSP_SUS"), n),
-        "qt_ch_outros": _horas(m.get("QT_CARGA_HORARIA_OUTROS"), n),
+        "qt_ch_ambulatorial": horas["qt_ch_ambulatorial"],
+        "qt_ch_hosp_sus": horas["qt_ch_hosp_sus"],
+        "qt_ch_outros": horas["qt_ch_outros"],
         "tp_sus_nao_sus": m["TP_SUS_NAO_SUS"].astype("string") if "TP_SUS_NAO_SUS" in m else pd.Series([pd.NA] * n, dtype="string"),
         "ind_vinculacao": m["IND_VINCULACAO"].astype("string") if "IND_VINCULACAO" in m else pd.Series([pd.NA] * n, dtype="string"),
         "tp_gestao": m["TP_GESTAO"].astype("string") if "TP_GESTAO" in m else pd.Series([pd.NA] * n, dtype="string"),
@@ -439,6 +470,11 @@ def extrair(comp: str, zip_path: Path) -> tuple[pd.DataFrame, dict[str, Any], pd
         k: int(v) for k, v in prefixo4.value_counts().sort_index().items()
     }
     meta["linhas_vinculos_medicos"] = int(n)
+    meta["versao_extracao"] = VERSAO_EXTRACAO
+    meta["horas_ausentes_por_campo_vinculos_medicos"] = contagem_horas
+    aus = df[["qt_ch_ambulatorial", "qt_ch_hosp_sus", "qt_ch_outros"]].isna()
+    meta["vinculos_medicos_com_alguma_hora_ausente"] = int(aus.any(axis=1).sum())
+    meta["vinculos_medicos_com_hora_sus_ausente"] = int(aus[["qt_ch_ambulatorial", "qt_ch_hosp_sus"]].any(axis=1).sum())
     meta["vinculos_sem_estabelecimento"] = int(df["co_municipio"].isna().sum())
     prof_valido = df["co_profissional_sus"].notna() & (df["co_profissional_sus"] != "")
     meta["vinculos_sem_co_profissional_sus"] = int((~prof_valido).sum())
@@ -452,8 +488,11 @@ def extrair(comp: str, zip_path: Path) -> tuple[pd.DataFrame, dict[str, Any], pd
 def processar(comp: str) -> dict[str, Any]:
     """Download → teste → extração → cache → apaga ZIP. Idempotente."""
     checar_limite(comp)
-    if caminho_cache(comp).exists() and caminho_meta(comp).exists():
-        return json.loads(caminho_meta(comp).read_text(encoding="utf-8"))
+    anterior: dict[str, Any] = {}
+    if caminho_meta(comp).exists():
+        anterior = json.loads(caminho_meta(comp).read_text(encoding="utf-8"))
+        if caminho_cache(comp).exists() and anterior.get("versao_extracao") == VERSAO_EXTRACAO:
+            return anterior
     try:
         info = baixar(comp)
     except Indisponivel as exc:
@@ -483,6 +522,16 @@ def processar(comp: str) -> dict[str, Any]:
         "cache_parquet": caminho_cache(comp).relative_to(ROOT).as_posix(),
         "data_processamento": dt.date.today().isoformat(),
     }
+    if anterior.get("sha256_zip"):
+        # reextração (versão nova do extrator): o ZIP é baixado de novo e comparado
+        registro["extracao_anterior"] = {
+            "versao_extracao": anterior.get("versao_extracao", 1),
+            "data_download": anterior.get("data_download"),
+            "sha256_zip": anterior.get("sha256_zip"),
+            "bytes_zip": anterior.get("bytes_zip"),
+            "linhas_vinculos_medicos": anterior.get("linhas_vinculos_medicos"),
+            "sha256_igual": anterior.get("sha256_zip") == info.get("sha256_zip"),
+        }
     caminho_meta(comp).write_text(json.dumps(registro, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     caminho_zip(comp).unlink()
     log(f"  {comp}: OK — {meta['linhas_vinculos_medicos']:,} vínculos médicos, "
@@ -537,19 +586,29 @@ def agregar_mes(df: pd.DataFrame, alvo: list[str]) -> pd.DataFrame:
     df["eh_alvo"] = df["co_cbo"].isin(alvo)
     df["eh_generalista"] = df["co_cbo"].isin(GENERALISTAS)
     df["eh_2251_3"] = df["co_cbo"].str.startswith(("2251", "2252", "2253"))
-    df["horas_sus"] = df["qt_ch_ambulatorial"].astype(np.int64) + df["qt_ch_hosp_sus"].astype(np.int64)
-    df["horas_tot"] = df["horas_sus"] + df["qt_ch_outros"].astype(np.int64)
+    amb, hosp, outros = (df[c].astype("Int64") for c in ("qt_ch_ambulatorial", "qt_ch_hosp_sus", "qt_ch_outros"))
+    df["aus_sus"] = (amb.isna() | hosp.isna()).astype(np.int64)
+    df["aus_qualquer"] = (df["aus_sus"].astype(bool) | outros.isna()).astype(np.int64)
+    # somas parciais; a célula vira ausente abaixo se algum vínculo tiver hora ausente
+    df["horas_sus"] = (amb.fillna(0) + hosp.fillna(0)).astype(np.int64)
+    df["horas_tot"] = (df["horas_sus"] + outros.fillna(0)).astype(np.int64)
     prof = df["co_profissional_sus"].where(df["co_profissional_sus"].fillna("") != "")
     df["prof"] = prof
 
     def _agg(sub: pd.DataFrame, grupo: pd.Series | str) -> pd.DataFrame:
         g = sub.assign(grupo=grupo).groupby(["co_municipio", "grupo"], sort=True)
-        return g.agg(
+        out = g.agg(
             n_vinculos=("co_cbo", "size"),
             n_profissionais_distintos=("prof", "nunique"),
             horas_sus_semanais=("horas_sus", "sum"),
             horas_totais=("horas_tot", "sum"),
+            n_vinculos_horas_ausentes=("aus_qualquer", "sum"),
+            _aus_sus=("aus_sus", "sum"),
         ).reset_index()
+        # regra: soma de horas é ausente se algum vínculo que entra nela tem hora ausente
+        out["horas_sus_semanais"] = out["horas_sus_semanais"].astype("Int64").mask(out["_aus_sus"] > 0)
+        out["horas_totais"] = out["horas_totais"].astype("Int64").mask(out["n_vinculos_horas_ausentes"] > 0)
+        return out.drop(columns="_aus_sus")
 
     partes = [
         _agg(df.loc[df["eh_alvo"]], "cbo_" + df.loc[df["eh_alvo"], "co_cbo"]),
@@ -570,6 +629,9 @@ def construir_painel(competencias: list[str]) -> tuple[pd.DataFrame, dict[str, A
     partes = []
     for comp in competencias:
         checar_limite(comp)
+        meta = json.loads(caminho_meta(comp).read_text(encoding="utf-8"))
+        if meta.get("versao_extracao") != VERSAO_EXTRACAO:
+            raise RuntimeError(f"cache de {comp} é da versão {meta.get('versao_extracao', 1)} do extrator; refaça a aquisição")
         df = pd.read_parquet(caminho_cache(comp))
         if set(df["competencia"].unique()) != {comp}:
             raise RuntimeError(f"competência interna incompatível no cache de {comp}")
@@ -586,11 +648,19 @@ def construir_painel(competencias: list[str]) -> tuple[pd.DataFrame, dict[str, A
         [universo, competencias, grupos], names=["co_ibge", "competencia", "grupo"]
     ).to_frame(index=False)
     painel = esqueleto.merge(obs, on=["co_ibge", "competencia", "grupo"], how="left", validate="one_to_one")
-    for col in ("n_vinculos", "n_profissionais_distintos", "horas_sus_semanais", "horas_totais"):
+    obs_mask = painel["n_vinculos"].notna()
+    for col in ("n_vinculos", "n_profissionais_distintos", "n_vinculos_horas_ausentes"):
         painel[col] = painel[col].fillna(0).astype(np.int32)
+    for col in ("horas_sus_semanais", "horas_totais"):
+        # zero só onde não há vínculo; com vínculo, NA vem da regra de hora ausente
+        valores = painel[col].astype("Int64")
+        painel[col] = valores.where(obs_mask, 0).astype("Int32")
     painel["tem_profissional"] = (painel["n_profissionais_distintos"] >= 1).astype(np.int8)
     # zeros só em competência lida com sucesso; competência não obtida fica sem linhas
     painel["natureza_dos_dados"] = "EMPIRICO"
+    painel = painel[["co_ibge", "competencia", "grupo", "n_vinculos", "n_profissionais_distintos",
+                     "horas_sus_semanais", "horas_totais", "n_vinculos_horas_ausentes",
+                     "tem_profissional", "natureza_dos_dados"]]
     painel = painel.sort_values(["co_ibge", "competencia", "grupo"], kind="mergesort").reset_index(drop=True)
     info = {
         "municipios_universo": len(universo),
@@ -764,8 +834,10 @@ def gravar_manifesto(registros: dict[str, dict[str, Any]], painel_info: dict[str
         "definicoes": {
             "n_vinculos": "linhas de tbCargaHorariaSus (profissional × estabelecimento × CBO × vínculo) no município-grupo-mês",
             "n_profissionais_distintos": "CO_PROFISSIONAL_SUS distintos no município-grupo-mês (agregados contam a pessoa uma vez)",
-            "horas_sus_semanais": "soma de QT_CARGA_HORARIA_AMBULATORIAL + QT_CARGA_HOR_HOSP_SUS",
-            "horas_totais": "horas_sus_semanais + QT_CARGA_HORARIA_OUTROS",
+            "horas_sus_semanais": "soma de QT_CARGA_HORARIA_AMBULATORIAL + QT_CARGA_HOR_HOSP_SUS; ausente (NA) se algum vínculo da célula tem um desses campos vazio ou não numérico",
+            "horas_totais": "horas_sus_semanais + QT_CARGA_HORARIA_OUTROS; ausente (NA) se algum vínculo da célula tem qualquer dos três campos vazio ou não numérico",
+            "n_vinculos_horas_ausentes": "vínculos da célula com pelo menos um dos três campos de horas vazio ou não numérico",
+            "regra_horas_ausentes": "campo de horas vazio ou não numérico é ausente, nunca zero: nenhuma documentação do CNES no repositório ou consultada nesta tarefa define vazio como zero. Contagens por campo e competência em por_competencia.*.horas_ausentes_por_campo_vinculos_medicos",
             "tem_profissional": "n_profissionais_distintos >= 1",
             "grupos": {
                 "cbo_XXXXXX": "cada CBO-alvo da ponte (cbos_elegiveis dos 16 cursos)",
@@ -783,6 +855,14 @@ def gravar_manifesto(registros: dict[str, dict[str, Any]], painel_info: dict[str
             if rotulos is not None else None
         ),
         "diferencas_de_esquema": _comparar_esquemas(registros),
+        "horas_ausentes_por_competencia": {
+            c: {
+                "por_campo": r.get("horas_ausentes_por_campo_vinculos_medicos"),
+                "vinculos_medicos_com_alguma_hora_ausente": r.get("vinculos_medicos_com_alguma_hora_ausente"),
+                "vinculos_medicos_com_hora_sus_ausente": r.get("vinculos_medicos_com_hora_sus_ausente"),
+            }
+            for c, r in sorted(registros.items()) if c in obtidas
+        },
         "painel": ({"arquivo": PAINEL_FILE.relative_to(ROOT).as_posix(), "sha256": sha256_arquivo(PAINEL_FILE),
                     **painel_info} if painel_info else None),
         "validacao_ciclo1": ({"arquivo": VALIDACAO_FILE.relative_to(ROOT).as_posix(),
@@ -827,8 +907,35 @@ def gravar_resumo(registros: dict[str, dict[str, Any]], painel: pd.DataFrame | N
             f"{r.get('municipios_distintos', '')} | {fam.get('2231', 0)} | {fam.get('2251', 0)} | "
             f"{fam.get('2252', 0)} | {fam.get('2253', 0)} |"
         )
+    linhas += [
+        "",
+        "## Campos de horas vazios ou não numéricos (vínculos médicos)",
+        "",
+        "Regra: vazio ou não numérico é ausente, nunca zero. A soma de horas da célula fica ausente "
+        "quando algum vínculo que entra nela tem hora ausente (`n_vinculos_horas_ausentes`).",
+        "",
+        "| Competência | Ambulatorial vazio | Ambulatorial não numérico | Hosp. SUS vazio | Hosp. SUS não numérico | "
+        "Outros vazio | Outros não numérico | Não inteiros | Negativos | Vínculos com alguma hora ausente |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
+    ]
+    for c in COMPETENCIAS:
+        r = registros.get(c) or {}
+        h = r.get("horas_ausentes_por_campo_vinculos_medicos")
+        if not h:
+            linhas.append(f"| {c} | n/d | n/d | n/d | n/d | n/d | n/d | n/d | n/d | n/d |")
+            continue
+        a, ho, o = (h.get(k, {}) for k in ("QT_CARGA_HORARIA_AMBULATORIAL", "QT_CARGA_HOR_HOSP_SUS", "QT_CARGA_HORARIA_OUTROS"))
+        nint = sum(x.get("nao_inteiro_arredondado", 0) for x in (a, ho, o))
+        neg = sum(x.get("negativo", 0) for x in (a, ho, o))
+        linhas.append(
+            f"| {c} | {a.get('vazio', a.get('coluna_ausente', 0))} | {a.get('nao_numerico', 0)} | "
+            f"{ho.get('vazio', ho.get('coluna_ausente', 0))} | {ho.get('nao_numerico', 0)} | "
+            f"{o.get('vazio', o.get('coluna_ausente', 0))} | {o.get('nao_numerico', 0)} | {nint} | {neg} | "
+            f"{r.get('vinculos_medicos_com_alguma_hora_ausente', 'n/d')} |"
+        )
     if painel is not None:
-        tot = (painel.groupby(["competencia", "grupo"])[["n_vinculos", "n_profissionais_distintos", "tem_profissional"]]
+        tot = (painel.groupby(["competencia", "grupo"])[["n_vinculos", "n_profissionais_distintos", "tem_profissional",
+                                                          "n_vinculos_horas_ausentes"]]
                .sum().reset_index())
         linhas += [
             "",
@@ -839,10 +946,10 @@ def gravar_resumo(registros: dict[str, dict[str, Any]], painel: pd.DataFrame | N
             "",
         ]
         for grupo in ("todos_medicos", "alvo_pmme", "generalistas", GRUPO_MFC, "especialistas_nao_alvo"):
-            linhas += [f"### {grupo}", "", "| Competência | Vínculos | Profissionais (soma municipal) | Municípios com profissional |",
-                       "|---|---:|---:|---:|"]
+            linhas += [f"### {grupo}", "", "| Competência | Vínculos | Profissionais (soma municipal) | Municípios com profissional | Vínculos com hora ausente |",
+                       "|---|---:|---:|---:|---:|"]
             for r in tot.loc[tot["grupo"] == grupo].itertuples(index=False):
-                linhas.append(f"| {r.competencia} | {r.n_vinculos} | {r.n_profissionais_distintos} | {r.tem_profissional} |")
+                linhas.append(f"| {r.competencia} | {r.n_vinculos} | {r.n_profissionais_distintos} | {r.tem_profissional} | {r.n_vinculos_horas_ausentes} |")
             linhas.append("")
     if validacao is not None:
         linhas += [

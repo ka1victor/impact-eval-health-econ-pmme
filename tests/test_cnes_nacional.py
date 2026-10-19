@@ -27,9 +27,10 @@ MANIFESTO = ROOT / "output" / "aquisicao" / "a09_manifesto_cnes_nacional.json"
 VALIDACAO = ROOT / "output" / "aquisicao" / "cnes_nacional" / "a09_validacao_painel_ciclo1.json"
 COLUNAS = [
     "co_ibge", "competencia", "grupo", "n_vinculos", "n_profissionais_distintos",
-    "horas_sus_semanais", "horas_totais", "tem_profissional", "natureza_dos_dados",
+    "horas_sus_semanais", "horas_totais", "n_vinculos_horas_ausentes", "tem_profissional",
+    "natureza_dos_dados",
 ]
-METRICAS = COLUNAS[3:8]
+METRICAS = COLUNAS[3:9]
 
 
 class TestPlanoDeCompetencias(unittest.TestCase):
@@ -55,15 +56,18 @@ class TestAgregacaoSintetica(unittest.TestCase):
     """Mini-cadastro SINTÉTICO: dois municípios fictícios e códigos de profissional inventados."""
 
     def setUp(self) -> None:
-        self.alvo = ["225151", "225225"]
+        self.alvo = ["225120", "225151", "225225"]
         self.df = pd.DataFrame({
-            "co_municipio": ["999991", "999991", "999991", "999991", "999992", "999992", None, "999992"],
-            "co_profissional_sus": ["P1", "P1", "P2", "P3", "P4", "", "P9", "P5"],
-            "co_cbo": ["225151", "225225", "225125", "225133", "225142", "225151", "225151", "225130"],
-            "qt_ch_ambulatorial": [10, 5, 20, 4, 40, 8, 1, 30],
-            "qt_ch_hosp_sus": [2, 0, 0, 0, 0, 0, 1, 0],
-            "qt_ch_outros": [1, 0, 0, 6, 0, 0, 1, 0],
+            "co_municipio": ["999991", "999991", "999991", "999991", "999992", "999992", None, "999992", "999993", "999993"],
+            "co_profissional_sus": ["P1", "P1", "P2", "P3", "P4", "", "P9", "P5", "P6", "P7"],
+            "co_cbo": ["225151", "225225", "225125", "225133", "225142", "225151", "225151", "225130", "225120", "225120"],
+            "qt_ch_ambulatorial": pd.array([10, 5, 20, 4, 40, 8, 1, 30, 20, 10], dtype="Int32"),
+            "qt_ch_hosp_sus": pd.array([2, 0, 0, 0, 0, 0, 1, 0, 0, 0], dtype="Int32"),
+            # 999993: um vínculo com 'outros' ausente (SUS observado) e, em cbo_225120, nada mais
+            "qt_ch_outros": pd.array([1, 0, 0, 6, 0, 0, 1, 0, None, 0], dtype="Int32"),
         })
+        self.df_sus_ausente = self.df.copy()
+        self.df_sus_ausente["qt_ch_hosp_sus"] = pd.array([2, 0, 0, 0, 0, 0, 1, 0, 0, None], dtype="Int32")
         self.agg = A09.agregar_mes(self.df, self.alvo).set_index(["co_municipio", "grupo"])
 
     def test_uniao_conta_pessoa_uma_vez(self) -> None:
@@ -84,6 +88,18 @@ class TestAgregacaoSintetica(unittest.TestCase):
         self.assertEqual(self.agg.loc[("999992", "especialistas_nao_alvo"), "n_profissionais_distintos"], 1)
         self.assertNotIn(("999992", "mfc_225130"), [(m, g) for m, g in self.agg.index if g == "generalistas"])
         self.assertEqual(self.agg.loc[("999992", "generalistas"), "n_profissionais_distintos"], 1)
+
+    def test_hora_ausente_nao_vira_zero(self) -> None:
+        r = self.agg.loc[("999993", "cbo_225120")]
+        self.assertEqual(r["n_vinculos_horas_ausentes"], 1)
+        self.assertEqual(r["horas_sus_semanais"], 30)  # só 'outros' ausente: soma SUS observada
+        self.assertTrue(pd.isna(r["horas_totais"]))
+        agg2 = A09.agregar_mes(self.df_sus_ausente, self.alvo).set_index(["co_municipio", "grupo"])
+        r2 = agg2.loc[("999993", "cbo_225120")]
+        self.assertEqual(r2["n_vinculos_horas_ausentes"], 2)
+        self.assertTrue(pd.isna(r2["horas_sus_semanais"]))
+        self.assertTrue(pd.isna(r2["horas_totais"]))
+        self.assertEqual(self.agg.loc[("999991", "alvo_pmme"), "n_vinculos_horas_ausentes"], 0)
 
     def test_id_vazio_e_sem_municipio(self) -> None:
         r = self.agg.loc[("999992", "cbo_225151")]
@@ -126,10 +142,34 @@ class TestPainelNacional(unittest.TestCase):
 
     def test_nao_negativo_e_coerente(self) -> None:
         p = self.painel
-        self.assertTrue((p[METRICAS] >= 0).all().all())
+        for col in METRICAS:
+            self.assertTrue((p[col].dropna() >= 0).all(), col)
         self.assertTrue((p["tem_profissional"] == (p["n_profissionais_distintos"] >= 1).astype(int)).all())
-        self.assertTrue((p["horas_totais"] >= p["horas_sus_semanais"]).all())
+        ambos = p["horas_totais"].notna() & p["horas_sus_semanais"].notna()
+        self.assertTrue((p.loc[ambos, "horas_totais"] >= p.loc[ambos, "horas_sus_semanais"]).all())
         self.assertTrue((p["n_vinculos"] >= p["n_profissionais_distintos"]).all())
+
+    def test_regra_de_horas_ausentes(self) -> None:
+        p = self.painel
+        self.assertTrue((p["n_vinculos_horas_ausentes"] <= p["n_vinculos"]).all())
+        # horas_totais ausente exatamente quando algum vínculo tem hora ausente
+        self.assertTrue((p["horas_totais"].isna() == (p["n_vinculos_horas_ausentes"] > 0)).all())
+        # horas SUS ausente só onde há vínculo com hora ausente
+        self.assertFalse((p["horas_sus_semanais"].isna() & (p["n_vinculos_horas_ausentes"] == 0)).any())
+        # célula sem vínculo: zeros observados, nunca ausente
+        vazias = p["n_vinculos"] == 0
+        self.assertTrue((p.loc[vazias, ["horas_sus_semanais", "horas_totais"]] == 0).all().all())
+
+    def test_contagem_de_horas_ausentes_bate_com_manifesto(self) -> None:
+        tm = self.painel.loc[self.painel["grupo"] == "todos_medicos"]
+        por_mes = tm.groupby("competencia")["n_vinculos_horas_ausentes"].sum()
+        for comp, n in por_mes.items():
+            reg = self.man["horas_ausentes_por_competencia"][comp]
+            self.assertEqual(reg["por_campo"].keys(), {"QT_CARGA_HORARIA_AMBULATORIAL", "QT_CARGA_HOR_HOSP_SUS",
+                                                       "QT_CARGA_HORARIA_OUTROS"})
+            # o painel só cobre o universo do a08: no máximo o total nacional do mês
+            self.assertLessEqual(n, reg["vinculos_medicos_com_alguma_hora_ausente"], comp)
+            self.assertEqual(self.man["por_competencia"][comp]["versao_extracao"], A09.VERSAO_EXTRACAO)
 
     def test_agregados(self) -> None:
         w = self.painel.pivot_table(index=["co_ibge", "competencia"], columns="grupo",

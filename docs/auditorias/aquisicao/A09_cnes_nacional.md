@@ -26,8 +26,9 @@
 
 Colunas do painel: `n_vinculos`, `n_profissionais_distintos`
 (`CO_PROFISSIONAL_SUS`), `horas_sus_semanais` (ambulatorial + hospitalar SUS),
-`horas_totais` (SUS + outros), `tem_profissional` (≥ 1 profissional distinto) e
-`natureza_dos_dados = "EMPIRICO"`.
+`horas_totais` (SUS + outros), `n_vinculos_horas_ausentes`, `tem_profissional`
+(≥ 1 profissional distinto) e `natureza_dos_dados = "EMPIRICO"`. As duas
+colunas de horas podem ser ausentes (nulo), pela regra da §4.
 
 Grupos:
 - `cbo_XXXXXX`: cada CBO-alvo da ponte
@@ -97,6 +98,20 @@ fora dele (instalados depois de 2010) são registrados no manifesto
   pede a tarefa, e em nenhum outro grupo. A contagem por família e competência
   está no resumo; quem usar `todos_medicos` como série deve conferir se a
   família 2231 muda de tamanho no período.
+- **Horas vazias ou não numéricas.** Nenhuma documentação do CNES no
+  repositório, nem a consultada nesta tarefa, define campo de carga horária
+  vazio como zero. Por isso o extrator (versão 2) lê o texto bruto
+  (`keep_default_na=False`), conta por campo e competência os valores vazios,
+  não numéricos, não inteiros e negativos, e guarda o vazio como **ausente**,
+  nunca zero. Regra do painel: `horas_sus_semanais` é ausente se algum vínculo
+  da célula tem `QT_CARGA_HORARIA_AMBULATORIAL` ou `QT_CARGA_HOR_HOSP_SUS`
+  ausente; `horas_totais` é ausente se algum vínculo tem qualquer dos três
+  campos ausente; `n_vinculos_horas_ausentes` conta esses vínculos. Contagem e
+  presença de profissional não são afetadas. Célula sem vínculo tem horas 0
+  (observado). A versão 1 do extrator, usada na primeira rodada de 18/10/2026,
+  convertia vazio em 0 sem contar; todo o cache foi refeito com novo download
+  e o SHA-256 de cada ZIP foi comparado com o da rodada anterior
+  (`extracao_anterior` no metadado de cada competência).
 - Sem filtro de `TP_SUS_NAO_SUS`, vinculação ou tipo de unidade, como no painel
   do ciclo 1. `n_vinculos` conta linhas de `tbCargaHorariaSus`; vínculos sem
   `CO_PROFISSIONAL_SUS` entram em vínculos e horas, não em distintos.
@@ -132,13 +147,21 @@ mostram.
   depois de 2010, ficam fora do painel (lista e tamanho no manifesto). Um deles
   aparece só em parte do período; o estoque do município de origem pode ter um
   degrau quando ele é instalado.
+- **Horas ausentes:** poucos vínculos médicos por competência têm algum campo
+  de horas vazio, quase todos no hospitalar SUS, e nenhum valor é não
+  numérico, não inteiro ou negativo (tabela no resumo e
+  `horas_ausentes_por_competencia` no manifesto). São os mesmos vínculos em
+  todas as competências (mesmo estabelecimento, profissional e CBO), o que
+  sugere registros antigos não atualizados. No painel, só as células que os
+  contêm ficam com horas ausentes. A reextração encontrou o mesmo SHA-256 da
+  rodada anterior em todas as competências.
 - **Família 2231:** presente em todas as competências, dominada pelo médico
   residente (2231F9); entra só em `todos_medicos`.
 - **Validação:** o portão foi **aprovado**. Nas competências em que o ZIP é
   o mesmo do ciclo 1 (SHA-256 igual), as células são idênticas. As competências
   mais recentes do ciclo 1 foram republicadas pelo DATASUS depois de 30/08/2026
   (SHA-256 diferente); nelas restam diferenças de uma unidade em poucas células,
-  atribuíveis à atualização retroativa do cadastro.
+  compatíveis com atualização retroativa do cadastro.
 
 ## 7. Limites
 
