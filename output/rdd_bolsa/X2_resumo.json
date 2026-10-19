@@ -1,0 +1,274 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "EXPLORATORIO_POS_SINTESE",
+  "x_id": "X2",
+  "data_execucao": "2026-10-19",
+  "script": "scripts/rdd_bolsa/18_permanencia_ativos.py",
+  "protocolo": "docs/06_execucao/45_protocolo_exploratorio_pos_sintese.md, secao 3 (X2)",
+  "contraste": "salto = lado com bolsa maior (s > c) menos lado com bolsa menor; IVS 2010 oficial (a08) em milesimos; em nivel mede o pacote do corte (bolsa anunciada +R$ 5 mil e outras regras nos mesmos cortes), nao a participacao no PMM-E",
+  "h_mil": 50,
+  "cortes_mil": [
+    300,
+    400
+  ],
+  "limiar_grafia": 0.85,
+  "regra_de_ligacao": [
+    "arquivos de resultado sem coluna CRM (conferido no cabecalho): ligacao por nome normalizado (maiusculas, sem acento, so alfanumericos) + codigo do curso + municipio (do quadro pela celula)",
+    "LIGADO: chave exata e unica entre alocados e entre ativos; mesmo ativo ligado a dois alocados -> AMBIGUO",
+    "INCERTO: sem chave exata, ativo nao ligado no mesmo curso e municipio com similaridade de nome >= limiar_grafia (difflib.SequenceMatcher) ou com o mesmo primeiro nome e ao menos 2 partes do nome em comum (criterio de partes acrescentado depois de um diagnostico de quase-correspondencias e antes de qualquer estimativa RDD ser aberta)",
+    "NAO_LIGADO: motivo = nome e curso em outro municipio / nome em outro curso / sem correspondente",
+    "AMBIGUO e INCERTO ficam fora do outcome (NaN com motivo)"
+  ],
+  "ordem_de_execucao": [
+    "1a execucao com a regra estreita (INCERTO so por similaridade): impressos as taxas de ligacao, os motivos e a tabela descritiva de permanencia por ciclo e faixa",
+    "diagnostico de quase-correspondencias (nomes com o mesmo 1o nome e partes em comum, sem chave exata); o criterio de partes foi acrescentado DEPOIS de vista a tabela de permanencia por faixa da regra estreita e ANTES de abrir qualquer estimativa RDD",
+    "as duas regras sao relatadas: regra_ligacao nas saidas (estreita fora do BKY)",
+    "auditoria independente (19/10/2026): rotulos de adicao ao protocolo (X2.3, X2.4 e especificacoes empilhadas) e de condicionamento acrescentados sem mudar estimativa"
+  ],
+  "horizonte_por_ciclo": {
+    "ciclo_1": {
+      "x2_mediana_meses_inicio_ate_retrato_set": 11.761806981519507,
+      "x2_inicio_min": "2025-09-11",
+      "x2_inicio_max": "2025-11-24",
+      "x3_mediana_meses_inicio_ate_retrato_ago": 10.743326488706366
+    },
+    "ciclo_2": {
+      "x2_mediana_meses_inicio_ate_retrato_set": 5.3552361396303905,
+      "x2_inicio_min": "2026-03-25",
+      "x2_inicio_max": "2026-08-24",
+      "x3_mediana_meses_inicio_ate_retrato_ago": 4.369609856262834
+    }
+  },
+  "eventos_de_alocacao": {
+    "c1_confirmacao": {
+      "arquivo": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+      "aba": 0,
+      "coluna_status": "ALOCACAO",
+      "linhas_selecionadas": 468,
+      "situacoes_publicadas": {
+        "": 1144,
+        "LOCAL DE ATUACAO CONFIRMADO PARA INICIO DAS ATIVIDADES": 468,
+        "LOCAL DE ATUACAO DESCONSIDERADO A PEDIDO DA GESTAO LOCAL OU POR NAO TER CAPACIDADE INSTALADA SUFICIENTE OBSERVAR O QUADRO 2": 59
+      },
+      "arquivo_tem_coluna_crm": false
+    },
+    "c1_homologacao": {
+      "arquivo": "data/raw/pmm_e/2025_ciclo1_chamada1_homologados.xlsx",
+      "aba": 0,
+      "coluna_status": "RESULTADO",
+      "linhas_selecionadas": 316,
+      "situacoes_publicadas": {
+        "HOMOLOGADO": 316
+      },
+      "arquivo_tem_coluna_crm": false
+    },
+    "c2_alocacao": {
+      "arquivo": "data/raw/pmm_e/resultado-final-pmme-2o-ciclo-25-05.xlsx",
+      "aba": "Classificados",
+      "coluna_status": "SITUACAO",
+      "linhas_selecionadas": 1057,
+      "situacoes_publicadas": {
+        "ALOCADO AC": 1043,
+        "CADASTRO RESERVA": 2589,
+        "ALOCADO ER": 10,
+        "ALOCADO PCD": 4
+      },
+      "arquivo_tem_coluna_crm": false
+    }
+  },
+  "conferencia_contra_tarefa_b": {
+    "c1_confirmacao_igual_a_n_confirmacoes_ch1": true,
+    "c1_confirmacao_eventos_fora_do_quadro": 0,
+    "c1_homologacao_igual_a_n_homologacoes_ch1": true,
+    "c1_homologacao_eventos_fora_do_quadro": 20,
+    "c2_alocacao_igual_a_n_alocados_ch1": true,
+    "c2_alocacao_eventos_fora_do_quadro": 0
+  },
+  "pessoas": {
+    "trilha_ciclo1": {
+      "homologado_na_celula_da_confirmacao": 279,
+      "confirmado_sem_homologacao": 178,
+      "homologado_sem_confirmacao": 26,
+      "homologado_em_outra_celula": 11
+    },
+    "pessoas_por_ciclo": {
+      "1": 494,
+      "2": 1057
+    },
+    "ambiguos_na_alocacao": 0
+  },
+  "conferencia_selecao": {
+    "c1_celulas_com_alocado_final": 386,
+    "c1_celulas_com_confirmacao_ou_homologacao": 393,
+    "c1_celulas_que_divergem": 7,
+    "c2_n_alocados_por_celula_igual_a_n_alocados_ch1": true
+  },
+  "ligacao_por_ciclo": {
+    "ciclo_1": {
+      "retrato_11_09_2026": {
+        "LIGADO": 249,
+        "NAO_LIGADO": 227,
+        "INCERTO": 15,
+        "AMBIGUO": 3
+      },
+      "retrato_12_08_2026": {
+        "LIGADO": 249,
+        "NAO_LIGADO": 227,
+        "INCERTO": 15,
+        "AMBIGUO": 3
+      },
+      "taxa_ligacao_11_09_2026": 0.5040485829959515,
+      "ligados_com_mesmo_cnes": 245,
+      "ligados_com_ciclo_do_ativo_igual": 249
+    },
+    "ciclo_2": {
+      "retrato_11_09_2026": {
+        "LIGADO": 667,
+        "NAO_LIGADO": 345,
+        "INCERTO": 42,
+        "AMBIGUO": 3
+      },
+      "retrato_12_08_2026": {
+        "LIGADO": 680,
+        "NAO_LIGADO": 332,
+        "INCERTO": 42,
+        "AMBIGUO": 3
+      },
+      "taxa_ligacao_11_09_2026": 0.631031220435194,
+      "ligados_com_mesmo_cnes": 642,
+      "ligados_com_ciclo_do_ativo_igual": 664
+    }
+  },
+  "cobertura_dos_ativos_do_retrato": {
+    "ciclo_1": {
+      "ativos": 519,
+      "ligados_a_alocado_da_1a_chamada": 249
+    },
+    "ciclo_2": {
+      "ativos": 941,
+      "ligados_a_alocado_da_1a_chamada": 664
+    },
+    "ciclo_3": {
+      "ativos": 497,
+      "ligados_a_alocado_da_1a_chamada": 3
+    }
+  },
+  "crm_entre_retratos": {
+    "ligados_nos_dois_retratos": 911,
+    "ligados_nos_dois_com_mesmo_crm": 911,
+    "ligados_em_ago_e_nao_ligados_em_set": 18,
+    "desses_crm_presente_no_retrato_de_set": 2,
+    "desses_crm_ausente_do_retrato_de_set": 16,
+    "nota": "CRM sem UF do conselho (a lista de ativos nao traz a UF do CRM): presenca do CRM e indicio, nao prova, de que a pessoa segue ativa em outro municipio ou curso"
+  },
+  "selecao_lee": "celula (ou municipio) com ao menos um alocado determinado (LIGADO ou NAO_LIGADO); celulas so com alocados AMBIGUO/INCERTO saem da amostra da RDD (contagem em celulas_so_excluidos)",
+  "celulas_so_excluidos": 30,
+  "especificacoes": [
+    "ciclos_e_cortes_empilhados",
+    "ciclos_empilhados",
+    "cortes_empilhados",
+    "limites_lee",
+    "principal"
+  ],
+  "n_linhas_bky": 36,
+  "dados_pessoais_gravados": "nenhum: id_pessoa e pseudonimo deterministico (ordem de hash); sem nome, CPF ou CRM",
+  "entradas": [
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial)",
+      "data_referencia": "Censo 2010 (Plataforma IVS)",
+      "cobertura": "5565 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "populacao (X3 por 10 mil hab.)",
+      "data_referencia": "Censo 2022",
+      "cobertura": "municipios do Censo 2022",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "celulas do quadro da 1a chamada (V1, V2) e contagens da tarefa B para conferencia",
+      "data_referencia": "quadros da 1a chamada (ciclo 1 jul/2025; ciclo 2 retificado 19/03/2026)",
+      "cobertura": "ciclos 1 e 2",
+      "unidade": "celula CNES x curso x ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "ciclo em {1, 2}"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip",
+      "sha256": "e57edeb50946395fa90fe510f4a658501f9b0e92069fcc53aa41b9e893e89c1c",
+      "bytes": 117155,
+      "papel": "relacao nominal de ativos (retrato principal)",
+      "data_referencia": "publicada 09/10/2026; dt_referencia 11/09/2026",
+      "cobertura": "ciclos 1 a 3",
+      "unidade": "profissional ativo",
+      "chaves": "nome normalizado + curso + municipio (so em memoria); CRM entre retratos",
+      "filtros": "todas as linhas; nome e CRM nao gravados"
+    },
+    {
+      "caminho": "data/pmm_especialistas_nominal.csv",
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
+      "bytes": 361832,
+      "papel": "retrato nominal anterior (X2 descritivo; X3 conferencia de completude)",
+      "data_referencia": "dt_referencia 2026-08-12",
+      "cobertura": "ciclos 1 e 2",
+      "unidade": "profissional ativo",
+      "chaves": "nome normalizado + curso + municipio; CRM",
+      "filtros": "nome e CRM nao gravados"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+      "sha256": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec",
+      "bytes": 165250,
+      "papel": "alocados ciclo 1 (confirmacao de local)",
+      "data_referencia": "alocacao retificada sub judice, 1a chamada ciclo 1",
+      "cobertura": "ciclo 1",
+      "unidade": "candidato x opcao",
+      "chaves": "CNES, CURSO, nome (memoria)",
+      "filtros": "ALOCACAO comeca com LOCAL DE ATUACAO CONFIRMADO"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2025_ciclo1_chamada1_homologados.xlsx",
+      "sha256": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b",
+      "bytes": 40259,
+      "papel": "homologados ciclo 1, 1a chamada",
+      "data_referencia": "lista de homologados da 1a chamada",
+      "cobertura": "ciclo 1",
+      "unidade": "pessoa homologada",
+      "chaves": "CNES, CURSO, nome (memoria)",
+      "filtros": "RESULTADO = HOMOLOGADO"
+    },
+    {
+      "caminho": "data/raw/pmm_e/resultado-final-pmme-2o-ciclo-25-05.xlsx",
+      "sha256": "8e85a28a57db1283cd3103065b04909b637cb76aab73482889e6b5fe50182e3c",
+      "bytes": 320107,
+      "papel": "alocados ciclo 2, 1a chamada",
+      "data_referencia": "resultado final 1a chamada ciclo 2 (25/05)",
+      "cobertura": "ciclo 2",
+      "unidade": "candidato x opcao",
+      "chaves": "CNES, CURSO, nome (memoria)",
+      "filtros": "aba Classificados; SITUACAO comeca com ALOCADO"
+    }
+  ],
+  "saidas": {
+    "X2_pessoas.csv": "025be816f00a4818b7e4a664ba9c46fd16982f57ce12f531be8efd75c2c18fc5",
+    "X2_celulas.csv": "507802b555f67e4f56b1e18311abc8da046218e469510bbefa0856f86e316ad5",
+    "X2_municipios.csv": "a83775a39fc1e8280302df76833cada08df2cc31a397cb9b2e147117d2e06be0",
+    "X2_descritivo.csv": "867180fd38f58c80c5d56e3ecebac406abace96aa5af327b5f4f540fa04384c0",
+    "X2_motivos_ligacao.csv": "c1b01101a1494eee349b9e30320ecb929e907666072392d365b2b6674f6bad72",
+    "X2_estimativas.csv": "e69f6c3ecbb07856aadaef47a4eddc28402da8070d267b1ade12e27c859e41c6"
+  },
+  "linguagem": "exploratorio pos-resultado; permanencia no municipio de alocacao no retrato, nao retencao individual completa (saida antes do retrato e retorno nao sao observados separadamente)"
+}

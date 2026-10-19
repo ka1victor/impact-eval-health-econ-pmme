@@ -1,0 +1,166 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "EXPLORATORIO_POS_SINTESE",
+  "x_id": "X3",
+  "data_execucao": "2026-10-19",
+  "script": "scripts/rdd_bolsa/18_permanencia_ativos.py",
+  "protocolo": "docs/06_execucao/45_protocolo_exploratorio_pos_sintese.md, secao 3 (X3)",
+  "contraste": "salto = lado com bolsa maior (s > c) menos lado com bolsa menor; IVS 2010 oficial (a08) em milesimos; em nivel mede o pacote do corte (bolsa anunciada +R$ 5 mil e outras regras nos mesmos cortes), nao a participacao no PMM-E",
+  "h_mil": 50,
+  "cortes_mil": [
+    300,
+    400
+  ],
+  "serie": {
+    "linhas": 7276,
+    "co_cnes_preenchido": 0,
+    "rotulos_de_curso": 40,
+    "codigos_de_curso": 24,
+    "linhas_alem_da_primeira_por_municipio_curso_mes": 1382,
+    "linhas_com_qtd_zero_por_mes": {
+      "2026-07": 669
+    },
+    "meses": [
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07",
+      "2026-08"
+    ]
+  },
+  "completude": {
+    "ultimo_mes": "2026-08",
+    "ultimo_mes_reproduz_retrato_nominal": true,
+    "celulas_divergentes_no_ultimo_mes": 0,
+    "listagem_completa_em_todos_os_meses": false,
+    "meses_com_violacao": [
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+    ],
+    "meses_sem_municipio_da_cota_ausente": [
+      "2026-04",
+      "2026-07",
+      "2026-08"
+    ]
+  },
+  "populacao": {
+    "municipios_listados_em_algum_mes": 531,
+    "listados_sem_ivs_oficial": [],
+    "listados_sem_populacao_2022": [],
+    "listados_fora_de_V1_uniao_V2": 145,
+    "municipios_de_V1_uniao_V2_nunca_listados": 212,
+    "regra": "se a listagem fosse completa em todos os meses, ausencia de linha seria zero em U (todos os municipios do a08); como nao e, cada mes usa so os municipios listados naquele mes; a queda usa zero no ultimo mes para quem nao esta listado nele so porque o ultimo mes reproduz o retrato"
+  },
+  "populacao_estimacao_mensal": "municipios listados no mes (listagem incompleta: ausencia nao e zero)",
+  "colunas_nao_usadas": "ivs e faixa_atracao do arquivo (rotulos inconsistentes); municipio, uf, regiao e regiao_saude; co_cnes e estabelecimento (vazios)",
+  "especificacoes": [
+    "cortes_empilhados",
+    "principal",
+    "sensibilidade_meses_sem_ausencia",
+    "sensibilidade_meses_sem_ausencia_cortes_empilhados",
+    "sensibilidade_sem_mai_jun",
+    "sensibilidade_sem_mai_jun_cortes_empilhados"
+  ],
+  "ordem_de_execucao": [
+    "conferencia de completude e outcomes do protocolo; impressos o descritivo mensal e o descritivo da queda por faixa",
+    "diagnostico da redistribuicao em mai/26 e jun/26 (municipios da cota ausentes e capitais acima dos meses vizinhos); a sensibilidade x3s (pico so nos meses sem municipio da cota ausente) foi definida DEPOIS de impresso o descritivo da queda por faixa e ANTES de abrir qualquer estimativa X3",
+    "x3s exclui 6 dos 9 meses, nao so mai/26 e jun/26; a variante x3m (exclui so mai/26 e jun/26) foi pedida pela auditoria independente de 19/10/2026, depois de vistos os resultados X3",
+    "rotulos de condicionamento (listagem e pico pos-tratamento, sem Lee) e de adicao ao protocolo acrescentados na mesma auditoria sem mudar estimativa"
+  ],
+  "meses_excluidos_na_variante_x3m": [
+    "2026-05",
+    "2026-06"
+  ],
+  "horizonte_por_ciclo": {
+    "ciclo_1": {
+      "x2_mediana_meses_inicio_ate_retrato_set": 11.761806981519507,
+      "x2_inicio_min": "2025-09-11",
+      "x2_inicio_max": "2025-11-24",
+      "x3_mediana_meses_inicio_ate_retrato_ago": 10.743326488706366
+    },
+    "ciclo_2": {
+      "x2_mediana_meses_inicio_ate_retrato_set": 5.3552361396303905,
+      "x2_inicio_min": "2026-03-25",
+      "x2_inicio_max": "2026-08-24",
+      "x3_mediana_meses_inicio_ate_retrato_ago": 4.369609856262834
+    }
+  },
+  "nota_horizonte": "municipios do ciclo 1 tem seguimento mais longo que os do ciclo 2; a queda do pico e as RDD mensais misturam os dois horizontes",
+  "n_linhas_bky": 84,
+  "entradas": [
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial)",
+      "data_referencia": "Censo 2010 (Plataforma IVS)",
+      "cobertura": "5565 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "populacao (X3 por 10 mil hab.)",
+      "data_referencia": "Censo 2022",
+      "cobertura": "municipios do Censo 2022",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "data/pmm_especialistas_serie_historica.csv",
+      "sha256": "3ebc624a7446a017940f00f131085e9bf7199482b7315a5b75d632e2397eb7a0",
+      "bytes": 1123173,
+      "papel": "serie historica de ativos",
+      "data_referencia": "competencias dez/25 a ago/26",
+      "cobertura": "municipios com linha no mes",
+      "unidade": "municipio x curso x mes (linhas por estabelecimento vazio)",
+      "chaves": "co_ibge, codigo do curso, competencia",
+      "filtros": "nenhum; soma de qtd_ativos por chave"
+    },
+    {
+      "caminho": "data/pmm_especialistas_nominal.csv",
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
+      "bytes": 361832,
+      "papel": "retrato nominal anterior (X2 descritivo; X3 conferencia de completude)",
+      "data_referencia": "dt_referencia 2026-08-12",
+      "cobertura": "ciclos 1 e 2",
+      "unidade": "profissional ativo",
+      "chaves": "nome normalizado + curso + municipio; CRM",
+      "filtros": "nome e CRM nao gravados"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "V1 uniao V2 (diagnostico de cobertura)",
+      "data_referencia": "quadros da 1a chamada",
+      "cobertura": "ciclos 1 e 2",
+      "unidade": "celula",
+      "chaves": "co_ibge",
+      "filtros": "ciclo em {1, 2}"
+    }
+  ],
+  "saidas": {
+    "X3_painel_municipio_curso_mes.csv": "d3ca0288ffd223d8e541403f3daf13ade9016443198cb43fd8b7428210a003f1",
+    "X3_painel_municipio_mes.csv": "1bb815215100b8b07d91c237bb2cf456136c1066a329d2d4b185c10d5b7d1375",
+    "X3_municipio.csv": "4d4573459d82b63160bc035faed924ef057d574ca88374d8192e5c3a2d375234",
+    "X3_completude.csv": "4d8cc6ede5572d98f8e117bc35794ec438add75d73d18ad1c1abec09729a1548",
+    "X3_descritivo.csv": "118355a32722ceee1e167c631f9a63c6f4c150f1111c5eb067cb34bf39421bb8",
+    "X3_estimativas.csv": "be22ca11be7f8175400f6c002e1c4d03e5c940a9c9c9a0816ffdc57800878f6e"
+  },
+  "linguagem": "exploratorio pos-resultado; descritivo da serie e RDD por mes sem pre-periodo"
+}
