@@ -84,6 +84,18 @@ diferença em descontinuidades (E7).
 |---|---|
 | [`auditorias/aquisicao/A09_cnes_nacional.md`](auditorias/aquisicao/A09_cnes_nacional.md) | fonte, competências, chave municipal, esquema e validação do painel município × grupo de CBO × mês (`scripts/aquisicao/a09_adquirir_cnes_nacional.py`) |
 
+## 19/10/2026 — Protocolo exploratório pós-síntese (X1–X6)
+
+Motivo: antes de escolher a hipótese, o autor pediu garantia de que tudo o que
+os dados permitem foi explorado. A revisão das lacunas achou seis análises
+viáveis, congeladas antes de abrir os outcomes.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/45_protocolo_exploratorio_pos_sintese.md`](06_execucao/45_protocolo_exploratorio_pos_sintese.md) | protocolo exploratório: ponte PMM-E–CNES pelo registro profissional (origem e substituição), permanência dos alocados, dinâmica dos ativos, heterogeneidade e deslocamento na escolha, poder e descartes |
+
 ## 18/10/2026 — Estimação do E6 (famílias F0, F1, F2 e F4 do protocolo 40)
 
 Motivo: a tarefa E6 do protocolo multi-outcome estima, sob o protocolo
