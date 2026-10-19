@@ -1,0 +1,5928 @@
+{
+  "gerador": "scripts/aquisicao/a09_adquirir_cnes_nacional.py",
+  "protocolo": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md (tarefa C, família F3)",
+  "fonte": {
+    "nome": "CNES — base completa mensal (BASE_DE_DADOS_CNES_AAAAMM.ZIP), DATASUS/MS",
+    "url_modelo": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_AAAAMM.ZIP",
+    "referer": "https://cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp",
+    "nota": "FTP do DATASUS bloqueado pelo proxy; servlet HTTPS do CNES serve o mesmo arquivo (sem Content-Length)",
+    "tabelas": {
+      "carga": "tbCargaHorariaSus",
+      "estab": "tbEstabelecimento",
+      "cbo": "tbAtividadeProfissional"
+    }
+  },
+  "natureza_dos_dados": "EMPIRICO",
+  "data_execucao": "2026-10-19",
+  "entradas_locais": {
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": {
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "uso": "só a lista co_ibge do universo (IVS não é lido)"
+    },
+    "output/aquisicao/ponte_curso_cbo_oficial.json": {
+      "sha256": "ed8c2a9a3fcda4f0f261b5321da7750da389cc0f574f2e5ac5140e5ebd8f2d9e",
+      "bytes": 16218,
+      "uso": "CBO-alvo (cbos_elegiveis dos 16 cursos)"
+    },
+    "output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet": {
+      "sha256": "285db22127654ee60c3d4bd91bf34dcb2409ae8469ffbbb52a83d626d747a059",
+      "bytes": 109578,
+      "uso": "validação: co_ibge_6d, cod_curso, competencia, especialistas_mst"
+    },
+    "output/aquisicao/manifesto_cnes_26_competencias.json": {
+      "sha256": "a85f52e39430badc7c837c6c7649097dae97f00e79c90a505ab0def02da04ea4",
+      "bytes": 13292,
+      "uso": "validação: SHA-256 dos ZIPs do ciclo 1"
+    }
+  },
+  "competencias_planejadas": [
+    "202201",
+    "202204",
+    "202207",
+    "202210",
+    "202301",
+    "202302",
+    "202303",
+    "202304",
+    "202307",
+    "202310",
+    "202401",
+    "202404",
+    "202406",
+    "202407",
+    "202408",
+    "202409",
+    "202410",
+    "202411",
+    "202412",
+    "202501",
+    "202502",
+    "202503",
+    "202504",
+    "202505",
+    "202506",
+    "202507",
+    "202508",
+    "202509",
+    "202510",
+    "202511",
+    "202512",
+    "202601",
+    "202602",
+    "202603",
+    "202604",
+    "202605",
+    "202606",
+    "202607",
+    "202608"
+  ],
+  "regra_competencia_ausente": "competência não obtida ou reprovada não tem linhas no painel; nada é interpolado ou copiado de outro mês. Zeros só existem em competências lidas com sucesso.",
+  "competencias_trimestrais": [
+    "202201",
+    "202204",
+    "202207",
+    "202210",
+    "202301",
+    "202304",
+    "202307",
+    "202310",
+    "202401",
+    "202404"
+  ],
+  "competencias_pre_adicionais": [
+    "202302",
+    "202303"
+  ],
+  "competencias_mensais": [
+    "202406",
+    "202407",
+    "202408",
+    "202409",
+    "202410",
+    "202411",
+    "202412",
+    "202501",
+    "202502",
+    "202503",
+    "202504",
+    "202505",
+    "202506",
+    "202507",
+    "202508",
+    "202509",
+    "202510",
+    "202511",
+    "202512",
+    "202601",
+    "202602",
+    "202603",
+    "202604",
+    "202605",
+    "202606",
+    "202607",
+    "202608"
+  ],
+  "competencias_obtidas": [
+    "202201",
+    "202204",
+    "202207",
+    "202210",
+    "202301",
+    "202302",
+    "202303",
+    "202304",
+    "202307",
+    "202310",
+    "202401",
+    "202404",
+    "202406",
+    "202407",
+    "202408",
+    "202409",
+    "202410",
+    "202411",
+    "202412",
+    "202501",
+    "202502",
+    "202503",
+    "202504",
+    "202505",
+    "202506",
+    "202507",
+    "202508",
+    "202509",
+    "202510",
+    "202511",
+    "202512",
+    "202601",
+    "202602",
+    "202603",
+    "202604",
+    "202605",
+    "202606",
+    "202607",
+    "202608"
+  ],
+  "competencias_nao_obtidas": {},
+  "limite_ciclo3": "nenhuma competência >= 202609 é baixada ou lida",
+  "filtros": {
+    "vinculos": "tbCargaHorariaSus com CO_CBO iniciando em ['2251', '2252', '2253', '2231']; sem filtro de TP_SUS_NAO_SUS, vinculação ou tipo de unidade",
+    "municipio": "tbEstabelecimento.CO_MUNICIPIO_GESTOR (6 dígitos) via CO_UNIDADE: município de localização do estabelecimento",
+    "universo": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv (só a lista de co_ibge; IVS não é lido)",
+    "profissional": "CO_PROFISSIONAL_SUS não vazio para contagem de distintos; vínculos sem ID entram em n_vinculos e horas"
+  },
+  "definicoes": {
+    "n_vinculos": "linhas de tbCargaHorariaSus (profissional × estabelecimento × CBO × vínculo) no município-grupo-mês",
+    "n_profissionais_distintos": "CO_PROFISSIONAL_SUS distintos no município-grupo-mês (agregados contam a pessoa uma vez)",
+    "n_vinculos_sus": "vínculos com TP_SUS_NAO_SUS = 'S'",
+    "horas_sus_semanais": "PRINCIPAL (F3.3, protocolo 40 §16): soma de QT_CARGA_HORARIA_AMBULATORIAL + QT_CARGA_HOR_HOSP_SUS dos vínculos com TP_SUS_NAO_SUS = 'S'; ausente (NA) se algum desses vínculos tem um dos dois campos vazio ou não numérico",
+    "horas_sus_semanais_parcial": "SENSIBILIDADE rotulada (§16): a mesma soma só com as horas observadas; ler com n_vinculos_horas_ausentes",
+    "horas_totais_amb_hosp": "SENSIBILIDADE rotulada (§16): ambulatorial + hospitalar de todos os vínculos, sem filtro de TP_SUS_NAO_SUS; ausente (NA) se algum vínculo tem um dos dois campos vazio ou não numérico",
+    "horas_totais": "ambulatorial + hospitalar + QT_CARGA_HORARIA_OUTROS de todos os vínculos; ausente (NA) se algum vínculo tem qualquer dos três campos vazio ou não numérico",
+    "horas_totais_parcial": "SENSIBILIDADE rotulada (§16): horas_totais só com as horas observadas",
+    "n_vinculos_horas_ausentes": "vínculos da célula (qualquer TP_SUS_NAO_SUS) com pelo menos um dos três campos de horas vazio ou não numérico",
+    "regra_horas_ausentes": "campo de horas vazio ou não numérico é ausente, nunca zero: nenhuma documentação do CNES no repositório ou consultada nesta tarefa define vazio como zero. Contagens por campo e competência em por_competencia.*.horas_ausentes_por_campo_vinculos_medicos",
+    "tem_profissional": "n_profissionais_distintos >= 1",
+    "grupos": {
+      "cbo_XXXXXX": "cada CBO-alvo da ponte (cbos_elegiveis dos 16 cursos)",
+      "alvo_pmme": "união das CBO-alvo",
+      "generalistas": [
+        "225125",
+        "225142",
+        "225170"
+      ],
+      "mfc_225130": "CBO 225130 (médico de família e comunidade), grupo próprio pelo adendo §13 (S6); também contido em especialistas_nao_alvo",
+      "especialistas_nao_alvo": "CBO 2251/2252/2253 fora das CBO-alvo e dos generalistas",
+      "todos_medicos": "CBO 2251/2252/2253 e família 2231 (inclui médicos residentes, 2231F9)",
+      "todos_medicos_sem_residentes": "todos_medicos sem a CBO 2231F9 (médico residente), protocolo 40 §16"
+    }
+  },
+  "ponte": {
+    "arquivo": "output/aquisicao/ponte_curso_cbo_oficial.json",
+    "versao": "2.0_operacional_auditada",
+    "cbos_alvo": [
+      "225120",
+      "225121",
+      "225148",
+      "225151",
+      "225165",
+      "225220",
+      "225225",
+      "225250",
+      "225255",
+      "225275",
+      "225280",
+      "225290",
+      "225305",
+      "225310",
+      "225320",
+      "225325",
+      "225330"
+    ],
+    "cbo_para_cursos": {
+      "225151": [
+        1
+      ],
+      "225225": [
+        2
+      ],
+      "225290": [
+        3
+      ],
+      "225280": [
+        4,
+        7
+      ],
+      "225220": [
+        5
+      ],
+      "225250": [
+        6,
+        8
+      ],
+      "225310": [
+        7,
+        10,
+        11
+      ],
+      "225165": [
+        7,
+        10,
+        11
+      ],
+      "225120": [
+        9
+      ],
+      "225121": [
+        12
+      ],
+      "225330": [
+        13
+      ],
+      "225320": [
+        14
+      ],
+      "225255": [
+        14
+      ],
+      "225275": [
+        15
+      ],
+      "225148": [
+        16
+      ],
+      "225325": [
+        16
+      ],
+      "225305": [
+        16
+      ]
+    }
+  },
+  "rotulos_cbo_verificados": [
+    {
+      "co_cbo": "225120",
+      "ds_cbo": "MEDICO CARDIOLOGISTA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225121",
+      "ds_cbo": "MEDICO ONCOLOGISTA CLINICO",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225125",
+      "ds_cbo": "MEDICO CLINICO",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225130",
+      "ds_cbo": "MEDICO DE FAMILIA E COMUNIDADE",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225142",
+      "ds_cbo": "MEDICO DA ESTRATEGIA DE SAUDE DA FAMILIA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225148",
+      "ds_cbo": "MEDICO ANATOMOPATOLOGISTA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225151",
+      "ds_cbo": "MEDICO ANESTESIOLOGISTA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225165",
+      "ds_cbo": "MEDICO GASTROENTEROLOGISTA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225170",
+      "ds_cbo": "MEDICO GENERALISTA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225220",
+      "ds_cbo": "MEDICO CIRURGIAO DO APARELHO DIGESTIVO",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225225",
+      "ds_cbo": "MEDICO CIRURGIAO GERAL",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225250",
+      "ds_cbo": "MEDICO GINECOLOGISTA E OBSTETRA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225255",
+      "ds_cbo": "MEDICO MASTOLOGISTA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225275",
+      "ds_cbo": "MEDICO OTORRINOLARINGOLOGISTA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225280",
+      "ds_cbo": "MEDICO COLOPROCTOLOGISTA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225290",
+      "ds_cbo": "MEDICO CANCEROLOGISTA CIRURGICO",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225305",
+      "ds_cbo": "MEDICO CITOPATOLOGISTA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225310",
+      "ds_cbo": "MEDICO EM ENDOSCOPIA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225320",
+      "ds_cbo": "MEDICO EM RADIOLOGIA E DIAGNOSTICO POR IMAGEM",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225325",
+      "ds_cbo": "MEDICO PATOLOGISTA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    },
+    {
+      "co_cbo": "225330",
+      "ds_cbo": "MEDICO RADIOTERAPEUTA",
+      "primeira": "202201",
+      "ultima": "202608",
+      "n_competencias": 39
+    }
+  ],
+  "diferencas_de_esquema": {
+    "referencia": "202608",
+    "diferencas": {
+      "202201": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "CO_TIPO_ABRANGENCIA",
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202201.csv",
+          "estab": "tbEstabelecimento202201.csv",
+          "cbo": "tbAtividadeProfissional202201.csv"
+        }
+      },
+      "202204": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "CO_TIPO_ABRANGENCIA",
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202204.csv",
+          "estab": "tbEstabelecimento202204.csv",
+          "cbo": "tbAtividadeProfissional202204.csv"
+        }
+      },
+      "202207": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "CO_TIPO_ABRANGENCIA",
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202207.csv",
+          "estab": "tbEstabelecimento202207.csv",
+          "cbo": "tbAtividadeProfissional202207.csv"
+        }
+      },
+      "202210": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "CO_TIPO_ABRANGENCIA",
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202210.csv",
+          "estab": "tbEstabelecimento202210.csv",
+          "cbo": "tbAtividadeProfissional202210.csv"
+        }
+      },
+      "202301": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "CO_TIPO_ABRANGENCIA",
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202301.csv",
+          "estab": "tbEstabelecimento202301.csv",
+          "cbo": "tbAtividadeProfissional202301.csv"
+        }
+      },
+      "202302": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "CO_TIPO_ABRANGENCIA",
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202302.csv",
+          "estab": "tbEstabelecimento202302.csv",
+          "cbo": "tbAtividadeProfissional202302.csv"
+        }
+      },
+      "202303": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "CO_TIPO_ABRANGENCIA",
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202303.csv",
+          "estab": "tbEstabelecimento202303.csv",
+          "cbo": "tbAtividadeProfissional202303.csv"
+        }
+      },
+      "202304": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "CO_TIPO_ABRANGENCIA",
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202304.csv",
+          "estab": "tbEstabelecimento202304.csv",
+          "cbo": "tbAtividadeProfissional202304.csv"
+        }
+      },
+      "202307": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "CO_TIPO_ABRANGENCIA",
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202307.csv",
+          "estab": "tbEstabelecimento202307.csv",
+          "cbo": "tbAtividadeProfissional202307.csv"
+        }
+      },
+      "202310": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "CO_TIPO_ABRANGENCIA",
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202310.csv",
+          "estab": "tbEstabelecimento202310.csv",
+          "cbo": "tbAtividadeProfissional202310.csv"
+        }
+      },
+      "202401": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202401.csv",
+          "estab": "tbEstabelecimento202401.csv",
+          "cbo": "tbAtividadeProfissional202401.csv"
+        }
+      },
+      "202404": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202404.csv",
+          "estab": "tbEstabelecimento202404.csv",
+          "cbo": "tbAtividadeProfissional202404.csv"
+        }
+      },
+      "202406": {
+        "colunas_tbEstabelecimento": {
+          "so_nesta": [],
+          "so_na_referencia": [
+            "ST_COWORKING"
+          ]
+        },
+        "colunas_canonicas_ausentes": [],
+        "membros_lidos": {
+          "carga": "tbCargaHorariaSus202406.csv",
+          "estab": "tbEstabelecimento202406.csv",
+          "cbo": "tbAtividadeProfissional202406.csv"
+        }
+      }
+    }
+  },
+  "horas_ausentes_por_competencia": {
+    "202201": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202204": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202207": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202210": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202301": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202302": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202303": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202304": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202307": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202310": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202401": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202404": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202406": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202407": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202408": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202409": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202410": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202411": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202412": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202501": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202502": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202503": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202504": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202505": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202506": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202507": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202508": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202509": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202510": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202511": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202512": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202601": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202602": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202603": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202604": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202605": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202606": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202607": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    },
+    "202608": {
+      "por_campo": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22
+    }
+  },
+  "painel": {
+    "arquivo": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+    "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
+    "municipios_universo": 5565,
+    "grupos": [
+      "cbo_225120",
+      "cbo_225121",
+      "cbo_225148",
+      "cbo_225151",
+      "cbo_225165",
+      "cbo_225220",
+      "cbo_225225",
+      "cbo_225250",
+      "cbo_225255",
+      "cbo_225275",
+      "cbo_225280",
+      "cbo_225290",
+      "cbo_225305",
+      "cbo_225310",
+      "cbo_225320",
+      "cbo_225325",
+      "cbo_225330",
+      "alvo_pmme",
+      "generalistas",
+      "mfc_225130",
+      "especialistas_nao_alvo",
+      "todos_medicos",
+      "todos_medicos_sem_residentes"
+    ],
+    "linhas": 4991805,
+    "vinculos_medicos_por_tp_sus_nao_sus": {
+      "202201": {
+        "N": 479078,
+        "S": 901269
+      },
+      "202204": {
+        "N": 485999,
+        "S": 921423
+      },
+      "202207": {
+        "N": 493229,
+        "S": 934603
+      },
+      "202210": {
+        "N": 505146,
+        "S": 942721
+      },
+      "202301": {
+        "N": 509811,
+        "S": 959380
+      },
+      "202302": {
+        "N": 509583,
+        "S": 964992
+      },
+      "202303": {
+        "N": 512161,
+        "S": 970686
+      },
+      "202304": {
+        "N": 515013,
+        "S": 977247
+      },
+      "202307": {
+        "N": 524804,
+        "S": 989906
+      },
+      "202310": {
+        "N": 533585,
+        "S": 997654
+      },
+      "202401": {
+        "N": 548961,
+        "S": 1013404
+      },
+      "202404": {
+        "N": 561625,
+        "S": 1049637
+      },
+      "202406": {
+        "N": 566393,
+        "S": 1064655
+      },
+      "202407": {
+        "N": 571388,
+        "S": 1071150
+      },
+      "202408": {
+        "N": 574667,
+        "S": 1076097
+      },
+      "202409": {
+        "N": 567449,
+        "S": 1079596
+      },
+      "202410": {
+        "N": 572435,
+        "S": 1083425
+      },
+      "202411": {
+        "N": 575414,
+        "S": 1086847
+      },
+      "202412": {
+        "N": 578016,
+        "S": 1093613
+      },
+      "202501": {
+        "N": 577013,
+        "S": 1098584
+      },
+      "202502": {
+        "N": 578824,
+        "S": 1102570
+      },
+      "202503": {
+        "N": 581519,
+        "S": 1113850
+      },
+      "202504": {
+        "N": 584544,
+        "S": 1118840
+      },
+      "202505": {
+        "N": 588510,
+        "S": 1123451
+      },
+      "202506": {
+        "N": 591898,
+        "S": 1129884
+      },
+      "202507": {
+        "N": 595932,
+        "S": 1133696
+      },
+      "202508": {
+        "N": 598083,
+        "S": 1139790
+      },
+      "202509": {
+        "N": 601470,
+        "S": 1144280
+      },
+      "202510": {
+        "N": 601006,
+        "S": 1149977
+      },
+      "202511": {
+        "N": 601606,
+        "S": 1153327
+      },
+      "202512": {
+        "N": 600719,
+        "S": 1161073
+      },
+      "202601": {
+        "N": 602958,
+        "S": 1169896
+      },
+      "202602": {
+        "N": 600577,
+        "S": 1177159
+      },
+      "202603": {
+        "N": 603659,
+        "S": 1192992
+      },
+      "202604": {
+        "N": 609544,
+        "S": 1200664
+      },
+      "202605": {
+        "N": 616550,
+        "S": 1206969
+      },
+      "202606": {
+        "N": 622227,
+        "S": 1213818
+      },
+      "202607": {
+        "N": 624112,
+        "S": 1222805
+      },
+      "202608": {
+        "N": 629124,
+        "S": 1231587
+      }
+    },
+    "portao_df": "nenhum vínculo médico em código 53xxxx diferente de 530010 (verificado por competência)",
+    "municipios_cnes_fora_do_universo": {
+      "150475": {
+        "competencias": 39,
+        "vinculos_medicos_max_mes": 27
+      },
+      "421265": {
+        "competencias": 39,
+        "vinculos_medicos_max_mes": 34
+      },
+      "422000": {
+        "competencias": 39,
+        "vinculos_medicos_max_mes": 67
+      },
+      "431454": {
+        "competencias": 39,
+        "vinculos_medicos_max_mes": 8
+      },
+      "500627": {
+        "competencias": 39,
+        "vinculos_medicos_max_mes": 47
+      },
+      "510183": {
+        "competencias": 17,
+        "vinculos_medicos_max_mes": 23
+      }
+    },
+    "competencias": [
+      "202201",
+      "202204",
+      "202207",
+      "202210",
+      "202301",
+      "202302",
+      "202303",
+      "202304",
+      "202307",
+      "202310",
+      "202401",
+      "202404",
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202411",
+      "202412",
+      "202501",
+      "202502",
+      "202503",
+      "202504",
+      "202505",
+      "202506",
+      "202507",
+      "202508",
+      "202509",
+      "202510",
+      "202511",
+      "202512",
+      "202601",
+      "202602",
+      "202603",
+      "202604",
+      "202605",
+      "202606",
+      "202607",
+      "202608"
+    ]
+  },
+  "validacao_ciclo1": {
+    "arquivo": "output/aquisicao/cnes_nacional/a09_validacao_painel_ciclo1.json",
+    "status": "APROVADO",
+    "fracao_celulas_identicas": 0.9999350311850311,
+    "dif_relativa_soma": -4.689859585604007e-06
+  },
+  "por_competencia": {
+    "202201": {
+      "competencia": "202201",
+      "tipo": "trimestral",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202201.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202201.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "51846cb2fbbf25e8e8a751f29755b3121edbe3735ca90473bb1e151d0a1a2ef5",
+      "bytes_zip": 502256567,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202201.csv",
+        "estab": "tbEstabelecimento202201.csv",
+        "cbo": "tbAtividadeProfissional202201.csv"
+      },
+      "n_membros_zip": 107,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 452740,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5094745,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 5658,
+            "municipios_distintos": 2183
+          },
+          "E": {
+            "estabelecimentos": 18969,
+            "municipios_distintos": 2235
+          },
+          "M": {
+            "estabelecimentos": 427959,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 154,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 44081,
+        "2251": 843288,
+        "2252": 417854,
+        "2253": 75124
+      },
+      "linhas_vinculos_medicos": 1380347,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 449285,
+      "municipios_distintos": 5568,
+      "estabelecimentos_distintos": 193733,
+      "segundos_extracao": 67.5,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202201.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "51846cb2fbbf25e8e8a751f29755b3121edbe3735ca90473bb1e151d0a1a2ef5",
+        "bytes_zip": 502256567,
+        "linhas_vinculos_medicos": 1380347,
+        "sha256_igual": true
+      }
+    },
+    "202204": {
+      "competencia": "202204",
+      "tipo": "trimestral",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202204.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202204.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "4a34983db54e8da1d41f2fea733c9c5e1c1aed8c4344e07d16eb7931be36a249",
+      "bytes_zip": 512975387,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202204.csv",
+        "estab": "tbEstabelecimento202204.csv",
+        "cbo": "tbAtividadeProfissional202204.csv"
+      },
+      "n_membros_zip": 107,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 459503,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5170542,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 5552,
+            "municipios_distintos": 2163
+          },
+          "E": {
+            "estabelecimentos": 19166,
+            "municipios_distintos": 2243
+          },
+          "M": {
+            "estabelecimentos": 434604,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 181,
+            "municipios_distintos": 53
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 46967,
+        "2251": 858408,
+        "2252": 425492,
+        "2253": 76555
+      },
+      "linhas_vinculos_medicos": 1407422,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 454384,
+      "municipios_distintos": 5566,
+      "estabelecimentos_distintos": 196117,
+      "segundos_extracao": 35.0,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202204.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "4a34983db54e8da1d41f2fea733c9c5e1c1aed8c4344e07d16eb7931be36a249",
+        "bytes_zip": 512975387,
+        "linhas_vinculos_medicos": 1407422,
+        "sha256_igual": true
+      }
+    },
+    "202207": {
+      "competencia": "202207",
+      "tipo": "trimestral",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202207.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202207.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "bad20c5a06383d976c7ef57f2368a1ec90cc4820122507053012effc12d99ebe",
+      "bytes_zip": 522704543,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202207.csv",
+        "estab": "tbEstabelecimento202207.csv",
+        "cbo": "tbAtividadeProfissional202207.csv"
+      },
+      "n_membros_zip": 107,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 466430,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5244307,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 4937,
+            "municipios_distintos": 2039
+          },
+          "E": {
+            "estabelecimentos": 19873,
+            "municipios_distintos": 2311
+          },
+          "M": {
+            "estabelecimentos": 441518,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 47177,
+        "2251": 871727,
+        "2252": 431016,
+        "2253": 77912
+      },
+      "linhas_vinculos_medicos": 1427832,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 459336,
+      "municipios_distintos": 5569,
+      "estabelecimentos_distintos": 198915,
+      "segundos_extracao": 68.5,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202207.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "bad20c5a06383d976c7ef57f2368a1ec90cc4820122507053012effc12d99ebe",
+        "bytes_zip": 522704543,
+        "linhas_vinculos_medicos": 1427832,
+        "sha256_igual": true
+      }
+    },
+    "202210": {
+      "competencia": "202210",
+      "tipo": "trimestral",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202210.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202210.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "8c863651e5bd1090ef15782c981d5e65d5b110fbfbf84e8efa7e95f54e59560b",
+      "bytes_zip": 528836003,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202210.csv",
+        "estab": "tbEstabelecimento202210.csv",
+        "cbo": "tbAtividadeProfissional202210.csv"
+      },
+      "n_membros_zip": 107,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 474339,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5314899,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 4938,
+            "municipios_distintos": 2030
+          },
+          "E": {
+            "estabelecimentos": 20051,
+            "municipios_distintos": 2310
+          },
+          "M": {
+            "estabelecimentos": 449248,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 46513,
+        "2251": 884451,
+        "2252": 437335,
+        "2253": 79568
+      },
+      "linhas_vinculos_medicos": 1447867,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 462554,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 201657,
+      "segundos_extracao": 67.1,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202210.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "8c863651e5bd1090ef15782c981d5e65d5b110fbfbf84e8efa7e95f54e59560b",
+        "bytes_zip": 528836003,
+        "linhas_vinculos_medicos": 1447867,
+        "sha256_igual": true
+      }
+    },
+    "202301": {
+      "competencia": "202301",
+      "tipo": "trimestral",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202301.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202301.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "5c5cea3193cb1ca46d62b861e4ee7393f4aec5347cd9236c422a71af94c68809",
+      "bytes_zip": 540375997,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202301.csv",
+        "estab": "tbEstabelecimento202301.csv",
+        "cbo": "tbAtividadeProfissional202301.csv"
+      },
+      "n_membros_zip": 107,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 480526,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5370012,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 4922,
+            "municipios_distintos": 2004
+          },
+          "E": {
+            "estabelecimentos": 20126,
+            "municipios_distintos": 2299
+          },
+          "M": {
+            "estabelecimentos": 455376,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 45892,
+        "2251": 901913,
+        "2252": 440811,
+        "2253": 80575
+      },
+      "linhas_vinculos_medicos": 1469191,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 470856,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 202693,
+      "segundos_extracao": 56.5,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202301.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "5c5cea3193cb1ca46d62b861e4ee7393f4aec5347cd9236c422a71af94c68809",
+        "bytes_zip": 540375997,
+        "linhas_vinculos_medicos": 1469191,
+        "sha256_igual": true
+      }
+    },
+    "202302": {
+      "competencia": "202302",
+      "tipo": "pre_adicional",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202302.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202302.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "95ffeb6f4c795c510cee91fa1cffb7b1976482f158129b67df031bff9ed86c33",
+      "bytes_zip": 533630738,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202302.csv",
+        "estab": "tbEstabelecimento202302.csv",
+        "cbo": "tbAtividadeProfissional202302.csv"
+      },
+      "n_membros_zip": 107,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 482479,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5384356,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 4915,
+            "municipios_distintos": 1999
+          },
+          "E": {
+            "estabelecimentos": 20176,
+            "municipios_distintos": 2292
+          },
+          "M": {
+            "estabelecimentos": 457286,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 47012,
+        "2251": 905070,
+        "2252": 441672,
+        "2253": 80821
+      },
+      "linhas_vinculos_medicos": 1474575,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 472432,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 202615,
+      "segundos_extracao": 22.0,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202302.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "95ffeb6f4c795c510cee91fa1cffb7b1976482f158129b67df031bff9ed86c33",
+        "bytes_zip": 533630738,
+        "linhas_vinculos_medicos": 1474575,
+        "sha256_igual": true
+      }
+    },
+    "202303": {
+      "competencia": "202303",
+      "tipo": "pre_adicional",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202303.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202303.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "8bab7c2639ee56219e176403b1e3a972d86544e4d82f928c7c6cddce161cbd67",
+      "bytes_zip": 536713802,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202303.csv",
+        "estab": "tbEstabelecimento202303.csv",
+        "cbo": "tbAtividadeProfissional202303.csv"
+      },
+      "n_membros_zip": 107,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 484986,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5407329,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 4882,
+            "municipios_distintos": 1987
+          },
+          "E": {
+            "estabelecimentos": 20228,
+            "municipios_distintos": 2293
+          },
+          "M": {
+            "estabelecimentos": 459774,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 48638,
+        "2251": 908851,
+        "2252": 443955,
+        "2253": 81403
+      },
+      "linhas_vinculos_medicos": 1482847,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 474853,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 203109,
+      "segundos_extracao": 34.6,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202303.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "8bab7c2639ee56219e176403b1e3a972d86544e4d82f928c7c6cddce161cbd67",
+        "bytes_zip": 536713802,
+        "linhas_vinculos_medicos": 1482847,
+        "sha256_igual": true
+      }
+    },
+    "202304": {
+      "competencia": "202304",
+      "tipo": "trimestral",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202304.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202304.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "f20ef32c7a2bc2626731edca0a2d88ec2cde590c609e171e8b8d1354ff229dbd",
+      "bytes_zip": 540127978,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202304.csv",
+        "estab": "tbEstabelecimento202304.csv",
+        "cbo": "tbAtividadeProfissional202304.csv"
+      },
+      "n_membros_zip": 107,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 487614,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5440047,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 4857,
+            "municipios_distintos": 1974
+          },
+          "E": {
+            "estabelecimentos": 20241,
+            "municipios_distintos": 2282
+          },
+          "M": {
+            "estabelecimentos": 462414,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 50042,
+        "2251": 913844,
+        "2252": 446442,
+        "2253": 81932
+      },
+      "linhas_vinculos_medicos": 1492260,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 476913,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 204113,
+      "segundos_extracao": 25.2,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202304.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "f20ef32c7a2bc2626731edca0a2d88ec2cde590c609e171e8b8d1354ff229dbd",
+        "bytes_zip": 540127978,
+        "linhas_vinculos_medicos": 1492260,
+        "sha256_igual": true
+      }
+    },
+    "202307": {
+      "competencia": "202307",
+      "tipo": "trimestral",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202307.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202307.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "23eb0c75b9d6c62d233401430b4b8ce57589b0ccba416c02c33dd07c8dd08b6a",
+      "bytes_zip": 553141189,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202307.csv",
+        "estab": "tbEstabelecimento202307.csv",
+        "cbo": "tbAtividadeProfissional202307.csv"
+      },
+      "n_membros_zip": 107,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 495996,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5559886,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 4780,
+            "municipios_distintos": 1946
+          },
+          "E": {
+            "estabelecimentos": 20465,
+            "municipios_distintos": 2281
+          },
+          "M": {
+            "estabelecimentos": 470649,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 49498,
+        "2251": 929316,
+        "2252": 452320,
+        "2253": 83576
+      },
+      "linhas_vinculos_medicos": 1514710,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 484234,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 207017,
+      "segundos_extracao": 23.7,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202307.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "23eb0c75b9d6c62d233401430b4b8ce57589b0ccba416c02c33dd07c8dd08b6a",
+        "bytes_zip": 553141189,
+        "linhas_vinculos_medicos": 1514710,
+        "sha256_igual": true
+      }
+    },
+    "202310": {
+      "competencia": "202310",
+      "tipo": "trimestral",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202310.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202310.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "65bb9ff8cf57ba546b6af3f2134a5b58264a299c745052b82d88347220bebefb",
+      "bytes_zip": 563580221,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202310.csv",
+        "estab": "tbEstabelecimento202310.csv",
+        "cbo": "tbAtividadeProfissional202310.csv"
+      },
+      "n_membros_zip": 107,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 504941,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5640681,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 4747,
+            "municipios_distintos": 1935
+          },
+          "E": {
+            "estabelecimentos": 20704,
+            "municipios_distintos": 2258
+          },
+          "M": {
+            "estabelecimentos": 479388,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 48784,
+        "2251": 939857,
+        "2252": 457702,
+        "2253": 84896
+      },
+      "linhas_vinculos_medicos": 1531239,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 489887,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 209252,
+      "segundos_extracao": 37.6,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202310.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "65bb9ff8cf57ba546b6af3f2134a5b58264a299c745052b82d88347220bebefb",
+        "bytes_zip": 563580221,
+        "linhas_vinculos_medicos": 1531239,
+        "sha256_igual": true
+      }
+    },
+    "202401": {
+      "competencia": "202401",
+      "tipo": "trimestral",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202401.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202401.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "e11f4fd31471d1d94d925beaed52483de739c51eb856c1f53d7f5c0e0d0b7b05",
+      "bytes_zip": 572113510,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202401.csv",
+        "estab": "tbEstabelecimento202401.csv",
+        "cbo": "tbAtividadeProfissional202401.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 512966,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5720835,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 4684,
+            "municipios_distintos": 1917
+          },
+          "E": {
+            "estabelecimentos": 20911,
+            "municipios_distintos": 2238
+          },
+          "M": {
+            "estabelecimentos": 487269,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 48303,
+        "2251": 963814,
+        "2252": 463584,
+        "2253": 86664
+      },
+      "linhas_vinculos_medicos": 1562365,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 501939,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 211358,
+      "segundos_extracao": 26.1,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202401.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "e11f4fd31471d1d94d925beaed52483de739c51eb856c1f53d7f5c0e0d0b7b05",
+        "bytes_zip": 572113510,
+        "linhas_vinculos_medicos": 1562365,
+        "sha256_igual": true
+      }
+    },
+    "202404": {
+      "competencia": "202404",
+      "tipo": "trimestral",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202404.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202404.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "b952dea039975f4c4c2b62553791985f92f0a41ba14991d74fc52b6215cf85d2",
+      "bytes_zip": 585452821,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202404.csv",
+        "estab": "tbEstabelecimento202404.csv",
+        "cbo": "tbAtividadeProfissional202404.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 527297,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5861783,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 4276,
+            "municipios_distintos": 1646
+          },
+          "E": {
+            "estabelecimentos": 21380,
+            "municipios_distintos": 2206
+          },
+          "M": {
+            "estabelecimentos": 501538,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 53552,
+        "2251": 994900,
+        "2252": 474548,
+        "2253": 88262
+      },
+      "linhas_vinculos_medicos": 1611262,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 512496,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 214711,
+      "segundos_extracao": 26.1,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202404.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "b952dea039975f4c4c2b62553791985f92f0a41ba14991d74fc52b6215cf85d2",
+        "bytes_zip": 585452821,
+        "linhas_vinculos_medicos": 1611262,
+        "sha256_igual": true
+      }
+    },
+    "202406": {
+      "competencia": "202406",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202406.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202406.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "10746d84f19d45f5ef6f89e74d616ae73e37e6dd7dfd3b026e1b93a519a22253",
+      "bytes_zip": 594371169,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202406.csv",
+        "estab": "tbEstabelecimento202406.csv",
+        "cbo": "tbAtividadeProfissional202406.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 535727,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5940061,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3980,
+            "municipios_distintos": 1556
+          },
+          "E": {
+            "estabelecimentos": 21431,
+            "municipios_distintos": 2178
+          },
+          "M": {
+            "estabelecimentos": 510213,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 53967,
+        "2251": 1008975,
+        "2252": 478999,
+        "2253": 89107
+      },
+      "linhas_vinculos_medicos": 1631048,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 516339,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 216691,
+      "segundos_extracao": 27.9,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202406.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "10746d84f19d45f5ef6f89e74d616ae73e37e6dd7dfd3b026e1b93a519a22253",
+        "bytes_zip": 594371169,
+        "linhas_vinculos_medicos": 1631048,
+        "sha256_igual": true
+      }
+    },
+    "202407": {
+      "competencia": "202407",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202407.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202407.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "b5abf13bd3ff630882e51d059a2cd91ade5f716c9130b2f5d49350154f3c6b21",
+      "bytes_zip": 600492498,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202407.csv",
+        "estab": "tbEstabelecimento202407.csv",
+        "cbo": "tbAtividadeProfissional202407.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 540668,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 5982498,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3920,
+            "municipios_distintos": 1538
+          },
+          "E": {
+            "estabelecimentos": 21555,
+            "municipios_distintos": 2203
+          },
+          "M": {
+            "estabelecimentos": 515090,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 53445,
+        "2251": 1018108,
+        "2252": 481472,
+        "2253": 89513
+      },
+      "linhas_vinculos_medicos": 1642538,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 520247,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 217932,
+      "segundos_extracao": 28.0,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202407.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "b5abf13bd3ff630882e51d059a2cd91ade5f716c9130b2f5d49350154f3c6b21",
+        "bytes_zip": 600492498,
+        "linhas_vinculos_medicos": 1642538,
+        "sha256_igual": true
+      }
+    },
+    "202408": {
+      "competencia": "202408",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202408.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202408.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "f54dd2c23d99773eac2928d7f1ba2c48cf41b28a6752028e0bddd0e30c374ed5",
+      "bytes_zip": 604856233,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202408.csv",
+        "estab": "tbEstabelecimento202408.csv",
+        "cbo": "tbAtividadeProfissional202408.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 544985,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6013267,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3898,
+            "municipios_distintos": 1534
+          },
+          "E": {
+            "estabelecimentos": 21636,
+            "municipios_distintos": 2204
+          },
+          "M": {
+            "estabelecimentos": 519348,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 53864,
+        "2251": 1023254,
+        "2252": 483757,
+        "2253": 89889
+      },
+      "linhas_vinculos_medicos": 1650764,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 522748,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 219080,
+      "segundos_extracao": 31.9,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202408.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "f54dd2c23d99773eac2928d7f1ba2c48cf41b28a6752028e0bddd0e30c374ed5",
+        "bytes_zip": 604856233,
+        "linhas_vinculos_medicos": 1650764,
+        "sha256_igual": true
+      }
+    },
+    "202409": {
+      "competencia": "202409",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202409.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202409.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "ae346d0b0a7d40e5e1e98a45198f94e0695edd5a74cfe1b70c84b1e1966486b9",
+      "bytes_zip": 607520168,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202409.csv",
+        "estab": "tbEstabelecimento202409.csv",
+        "cbo": "tbAtividadeProfissional202409.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 548991,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6017065,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3878,
+            "municipios_distintos": 1536
+          },
+          "E": {
+            "estabelecimentos": 21706,
+            "municipios_distintos": 2202
+          },
+          "M": {
+            "estabelecimentos": 523304,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 53696,
+        "2251": 1022828,
+        "2252": 480509,
+        "2253": 90012
+      },
+      "linhas_vinculos_medicos": 1647045,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 522540,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 219352,
+      "segundos_extracao": 33.8,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202409.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "ae346d0b0a7d40e5e1e98a45198f94e0695edd5a74cfe1b70c84b1e1966486b9",
+        "bytes_zip": 607520168,
+        "linhas_vinculos_medicos": 1647045,
+        "sha256_igual": true
+      }
+    },
+    "202410": {
+      "competencia": "202410",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202410.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202410.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "2440504b162f5092873e8ee40448f2dbffeff42544c33cb4659a02dedfea4f17",
+      "bytes_zip": 610967667,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202410.csv",
+        "estab": "tbEstabelecimento202410.csv",
+        "cbo": "tbAtividadeProfissional202410.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 552304,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6055156,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3870,
+            "municipios_distintos": 1531
+          },
+          "E": {
+            "estabelecimentos": 21770,
+            "municipios_distintos": 2206
+          },
+          "M": {
+            "estabelecimentos": 526561,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 54236,
+        "2251": 1028596,
+        "2252": 482239,
+        "2253": 90789
+      },
+      "linhas_vinculos_medicos": 1655860,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 525003,
+      "municipios_distintos": 5569,
+      "estabelecimentos_distintos": 220798,
+      "segundos_extracao": 26.8,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202410.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "2440504b162f5092873e8ee40448f2dbffeff42544c33cb4659a02dedfea4f17",
+        "bytes_zip": 610967667,
+        "linhas_vinculos_medicos": 1655860,
+        "sha256_igual": true
+      }
+    },
+    "202411": {
+      "competencia": "202411",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202411.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202411.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "d7e4600deb591e4868088f18531f4167753a465082f65d64c6495769d9afa4ef",
+      "bytes_zip": 613612542,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202411.csv",
+        "estab": "tbEstabelecimento202411.csv",
+        "cbo": "tbAtividadeProfissional202411.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 555179,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6075363,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3874,
+            "municipios_distintos": 1534
+          },
+          "E": {
+            "estabelecimentos": 21814,
+            "municipios_distintos": 2202
+          },
+          "M": {
+            "estabelecimentos": 529388,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 54149,
+        "2251": 1033208,
+        "2252": 483695,
+        "2253": 91209
+      },
+      "linhas_vinculos_medicos": 1662261,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 526412,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 221519,
+      "segundos_extracao": 25.7,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202411.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "d7e4600deb591e4868088f18531f4167753a465082f65d64c6495769d9afa4ef",
+        "bytes_zip": 613612542,
+        "linhas_vinculos_medicos": 1662261,
+        "sha256_igual": true
+      }
+    },
+    "202412": {
+      "competencia": "202412",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202412.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202412.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "6490fe149865f9094f4420285f91d02088614b633a7860e37cc816b7b4c87a01",
+      "bytes_zip": 624215097,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202412.csv",
+        "estab": "tbEstabelecimento202412.csv",
+        "cbo": "tbAtividadeProfissional202412.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 557329,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6094265,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3874,
+            "municipios_distintos": 1535
+          },
+          "E": {
+            "estabelecimentos": 21856,
+            "municipios_distintos": 2205
+          },
+          "M": {
+            "estabelecimentos": 531496,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 54031,
+        "2251": 1041108,
+        "2252": 484857,
+        "2253": 91633
+      },
+      "linhas_vinculos_medicos": 1671629,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 529908,
+      "municipios_distintos": 5569,
+      "estabelecimentos_distintos": 221998,
+      "segundos_extracao": 27.7,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202412.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "6490fe149865f9094f4420285f91d02088614b633a7860e37cc816b7b4c87a01",
+        "bytes_zip": 624215097,
+        "linhas_vinculos_medicos": 1671629,
+        "sha256_igual": true
+      }
+    },
+    "202501": {
+      "competencia": "202501",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202501.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202501.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "fb8dddb8f0b4abe3a7d24c91ccb00af6c0869f3f06939874ab0dfaa4ff2ec59a",
+      "bytes_zip": 620062933,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202501.csv",
+        "estab": "tbEstabelecimento202501.csv",
+        "cbo": "tbAtividadeProfissional202501.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 560166,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6104979,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3871,
+            "municipios_distintos": 1534
+          },
+          "E": {
+            "estabelecimentos": 21901,
+            "municipios_distintos": 2203
+          },
+          "M": {
+            "estabelecimentos": 534291,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 53966,
+        "2251": 1046244,
+        "2252": 483613,
+        "2253": 91774
+      },
+      "linhas_vinculos_medicos": 1675597,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 534093,
+      "municipios_distintos": 5568,
+      "estabelecimentos_distintos": 222597,
+      "segundos_extracao": 29.1,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202501.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "fb8dddb8f0b4abe3a7d24c91ccb00af6c0869f3f06939874ab0dfaa4ff2ec59a",
+        "bytes_zip": 620062933,
+        "linhas_vinculos_medicos": 1675597,
+        "sha256_igual": true
+      }
+    },
+    "202502": {
+      "competencia": "202502",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202502.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202502.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "318aaae2caf2c820aebb5cd84ca1e536bfccfb68d85380784cae400cb981c747",
+      "bytes_zip": 623284782,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202502.csv",
+        "estab": "tbEstabelecimento202502.csv",
+        "cbo": "tbAtividadeProfissional202502.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 563346,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6129860,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3872,
+            "municipios_distintos": 1535
+          },
+          "E": {
+            "estabelecimentos": 21946,
+            "municipios_distintos": 2197
+          },
+          "M": {
+            "estabelecimentos": 537425,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 54664,
+        "2251": 1049525,
+        "2252": 485241,
+        "2253": 91964
+      },
+      "linhas_vinculos_medicos": 1681394,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 536437,
+      "municipios_distintos": 5567,
+      "estabelecimentos_distintos": 223474,
+      "segundos_extracao": 26.9,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202502.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "318aaae2caf2c820aebb5cd84ca1e536bfccfb68d85380784cae400cb981c747",
+        "bytes_zip": 623284782,
+        "linhas_vinculos_medicos": 1681394,
+        "sha256_igual": true
+      }
+    },
+    "202503": {
+      "competencia": "202503",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202503.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202503.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "fbdb6274c131edc9238bb73fa93376a976b1158c8b835b4e10d6d60d7629e227",
+      "bytes_zip": 627824301,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202503.csv",
+        "estab": "tbEstabelecimento202503.csv",
+        "cbo": "tbAtividadeProfissional202503.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 567123,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6169650,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3878,
+            "municipios_distintos": 1534
+          },
+          "E": {
+            "estabelecimentos": 22010,
+            "municipios_distintos": 2199
+          },
+          "M": {
+            "estabelecimentos": 541132,
+            "municipios_distintos": 5582
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 57864,
+        "2251": 1056312,
+        "2252": 488871,
+        "2253": 92322
+      },
+      "linhas_vinculos_medicos": 1695369,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 540428,
+      "municipios_distintos": 5569,
+      "estabelecimentos_distintos": 224500,
+      "segundos_extracao": 26.8,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202503.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "fbdb6274c131edc9238bb73fa93376a976b1158c8b835b4e10d6d60d7629e227",
+        "bytes_zip": 627824301,
+        "linhas_vinculos_medicos": 1695369,
+        "sha256_igual": true
+      }
+    },
+    "202504": {
+      "competencia": "202504",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202504.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202504.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "84a099b96aa2ff1c7e0dd9f9bc07bb1c377ee04814fb9d0adabc914725b6c28c",
+      "bytes_zip": 631694960,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202504.csv",
+        "estab": "tbEstabelecimento202504.csv",
+        "cbo": "tbAtividadeProfissional202504.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 570422,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6210376,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3884,
+            "municipios_distintos": 1537
+          },
+          "E": {
+            "estabelecimentos": 22051,
+            "municipios_distintos": 2198
+          },
+          "M": {
+            "estabelecimentos": 544384,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 58975,
+        "2251": 1059736,
+        "2252": 491548,
+        "2253": 93125
+      },
+      "linhas_vinculos_medicos": 1703384,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 542841,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 225245,
+      "segundos_extracao": 27.2,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202504.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "84a099b96aa2ff1c7e0dd9f9bc07bb1c377ee04814fb9d0adabc914725b6c28c",
+        "bytes_zip": 631694960,
+        "linhas_vinculos_medicos": 1703384,
+        "sha256_igual": true
+      }
+    },
+    "202505": {
+      "competencia": "202505",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202505.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202505.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "bbde78626c06ec4070c02d51c44ff8ea14b3436943c23726a45a3c76b9b23f51",
+      "bytes_zip": 636150644,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202505.csv",
+        "estab": "tbEstabelecimento202505.csv",
+        "cbo": "tbAtividadeProfissional202505.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 574172,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6244921,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3889,
+            "municipios_distintos": 1536
+          },
+          "E": {
+            "estabelecimentos": 22091,
+            "municipios_distintos": 2194
+          },
+          "M": {
+            "estabelecimentos": 548089,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 58665,
+        "2251": 1064805,
+        "2252": 494612,
+        "2253": 93879
+      },
+      "linhas_vinculos_medicos": 1711961,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 544406,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 226270,
+      "segundos_extracao": 28.3,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202505.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "bbde78626c06ec4070c02d51c44ff8ea14b3436943c23726a45a3c76b9b23f51",
+        "bytes_zip": 636150644,
+        "linhas_vinculos_medicos": 1711961,
+        "sha256_igual": true
+      }
+    },
+    "202506": {
+      "competencia": "202506",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202506.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202506.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "b43d12780a1d2ad47ab244272912262fd3b3b59e08c5f2ae715abf2a318e95ba",
+      "bytes_zip": 639832653,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202506.csv",
+        "estab": "tbEstabelecimento202506.csv",
+        "cbo": "tbAtividadeProfissional202506.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 577247,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6283850,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3730,
+            "municipios_distintos": 1499
+          },
+          "E": {
+            "estabelecimentos": 22136,
+            "municipios_distintos": 2194
+          },
+          "M": {
+            "estabelecimentos": 551278,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 59623,
+        "2251": 1069691,
+        "2252": 498141,
+        "2253": 94327
+      },
+      "linhas_vinculos_medicos": 1721782,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 546858,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 227103,
+      "segundos_extracao": 27.4,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202506.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "b43d12780a1d2ad47ab244272912262fd3b3b59e08c5f2ae715abf2a318e95ba",
+        "bytes_zip": 639832653,
+        "linhas_vinculos_medicos": 1721782,
+        "sha256_igual": true
+      }
+    },
+    "202507": {
+      "competencia": "202507",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202507.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202507.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "d7cf77826f67bcdb6394949d69112be168102b6c7cc13643cb942132884ce6cb",
+      "bytes_zip": 644413230,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202507.csv",
+        "estab": "tbEstabelecimento202507.csv",
+        "cbo": "tbAtividadeProfissional202507.csv"
+      },
+      "n_membros_zip": 108,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 581577,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6319502,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3693,
+            "municipios_distintos": 1490
+          },
+          "E": {
+            "estabelecimentos": 22233,
+            "municipios_distintos": 2191
+          },
+          "M": {
+            "estabelecimentos": 555548,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 59972,
+        "2251": 1074065,
+        "2252": 500794,
+        "2253": 94797
+      },
+      "linhas_vinculos_medicos": 1729628,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 551037,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 228429,
+      "segundos_extracao": 29.7,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202507.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "d7cf77826f67bcdb6394949d69112be168102b6c7cc13643cb942132884ce6cb",
+        "bytes_zip": 644413230,
+        "linhas_vinculos_medicos": 1729628,
+        "sha256_igual": true
+      }
+    },
+    "202508": {
+      "competencia": "202508",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202508.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202508.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "d9f1b628838f58febc546f91c1165f7db9e8bbc04e58c52db28c565277d6eb0b",
+      "bytes_zip": 695600637,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202508.csv",
+        "estab": "tbEstabelecimento202508.csv",
+        "cbo": "tbAtividadeProfissional202508.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 585085,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6357018,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3689,
+            "municipios_distintos": 1488
+          },
+          "E": {
+            "estabelecimentos": 22301,
+            "municipios_distintos": 2193
+          },
+          "M": {
+            "estabelecimentos": 558992,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 60052,
+        "2251": 1079568,
+        "2252": 502874,
+        "2253": 95379
+      },
+      "linhas_vinculos_medicos": 1737873,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 553589,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 229389,
+      "segundos_extracao": 28.3,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202508.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "d9f1b628838f58febc546f91c1165f7db9e8bbc04e58c52db28c565277d6eb0b",
+        "bytes_zip": 695600637,
+        "linhas_vinculos_medicos": 1737873,
+        "sha256_igual": true
+      }
+    },
+    "202509": {
+      "competencia": "202509",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202509.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202509.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "024fa2589741ca68cdde4a632864943ee13e4fd2e42235d5144ff4356b924a3e",
+      "bytes_zip": 700721838,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202509.csv",
+        "estab": "tbEstabelecimento202509.csv",
+        "cbo": "tbAtividadeProfissional202509.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 589761,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6390817,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3682,
+            "municipios_distintos": 1481
+          },
+          "E": {
+            "estabelecimentos": 22415,
+            "municipios_distintos": 2193
+          },
+          "M": {
+            "estabelecimentos": 563561,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 60065,
+        "2251": 1084942,
+        "2252": 504723,
+        "2253": 96020
+      },
+      "linhas_vinculos_medicos": 1745750,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 555564,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 230542,
+      "segundos_extracao": 32.4,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202509.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "024fa2589741ca68cdde4a632864943ee13e4fd2e42235d5144ff4356b924a3e",
+        "bytes_zip": 700721838,
+        "linhas_vinculos_medicos": 1745750,
+        "sha256_igual": true
+      }
+    },
+    "202510": {
+      "competencia": "202510",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202510.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202510.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "595cb9232444ab4cafb6ac05f90866a37d862f64a0131c5f04100cea1ebe021a",
+      "bytes_zip": 704376063,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202510.csv",
+        "estab": "tbEstabelecimento202510.csv",
+        "cbo": "tbAtividadeProfissional202510.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 593131,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6418002,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3682,
+            "municipios_distintos": 1480
+          },
+          "E": {
+            "estabelecimentos": 22515,
+            "municipios_distintos": 2190
+          },
+          "M": {
+            "estabelecimentos": 566831,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 60003,
+        "2251": 1088726,
+        "2252": 505947,
+        "2253": 96307
+      },
+      "linhas_vinculos_medicos": 1750983,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 556216,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 230754,
+      "segundos_extracao": 28.0,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202510.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "595cb9232444ab4cafb6ac05f90866a37d862f64a0131c5f04100cea1ebe021a",
+        "bytes_zip": 704376063,
+        "linhas_vinculos_medicos": 1750983,
+        "sha256_igual": true
+      }
+    },
+    "202511": {
+      "competencia": "202511",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202511.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202511.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "d0dcb41bbcd7a411cf68223f82a113b5880f412ccf88d728516807c92f2f26d8",
+      "bytes_zip": 707734313,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202511.csv",
+        "estab": "tbEstabelecimento202511.csv",
+        "cbo": "tbAtividadeProfissional202511.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 596392,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6438862,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3668,
+            "municipios_distintos": 1479
+          },
+          "E": {
+            "estabelecimentos": 22562,
+            "municipios_distintos": 2191
+          },
+          "M": {
+            "estabelecimentos": 570059,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 59585,
+        "2251": 1091645,
+        "2252": 507189,
+        "2253": 96514
+      },
+      "linhas_vinculos_medicos": 1754933,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 557143,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 230746,
+      "segundos_extracao": 28.8,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202511.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "d0dcb41bbcd7a411cf68223f82a113b5880f412ccf88d728516807c92f2f26d8",
+        "bytes_zip": 707734313,
+        "linhas_vinculos_medicos": 1754933,
+        "sha256_igual": true
+      }
+    },
+    "202512": {
+      "competencia": "202512",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202512.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202512.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "0f76ed35c5c36a655c96653efa4d88c79e1648f71bccd9fd392663c64b4a8e75",
+      "bytes_zip": 710623472,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202512.csv",
+        "estab": "tbEstabelecimento202512.csv",
+        "cbo": "tbAtividadeProfissional202512.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 598661,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6458360,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3662,
+            "municipios_distintos": 1480
+          },
+          "E": {
+            "estabelecimentos": 22616,
+            "municipios_distintos": 2192
+          },
+          "M": {
+            "estabelecimentos": 572280,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 59485,
+        "2251": 1098191,
+        "2252": 507532,
+        "2253": 96584
+      },
+      "linhas_vinculos_medicos": 1761792,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 559969,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 230214,
+      "segundos_extracao": 27.1,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202512.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "0f76ed35c5c36a655c96653efa4d88c79e1648f71bccd9fd392663c64b4a8e75",
+        "bytes_zip": 710623472,
+        "linhas_vinculos_medicos": 1761792,
+        "sha256_igual": true
+      }
+    },
+    "202601": {
+      "competencia": "202601",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202601.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202601.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "836ddab37c084246f833980544a826a77213746215139923f8e5595aa14e367f",
+      "bytes_zip": 714455015,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202601.csv",
+        "estab": "tbEstabelecimento202601.csv",
+        "cbo": "tbAtividadeProfissional202601.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 602160,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6482997,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3652,
+            "municipios_distintos": 1474
+          },
+          "E": {
+            "estabelecimentos": 22677,
+            "municipios_distintos": 2199
+          },
+          "M": {
+            "estabelecimentos": 575728,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 59371,
+        "2251": 1107563,
+        "2252": 508997,
+        "2253": 96923
+      },
+      "linhas_vinculos_medicos": 1772854,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 563828,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 230597,
+      "segundos_extracao": 28.1,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202601.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "836ddab37c084246f833980544a826a77213746215139923f8e5595aa14e367f",
+        "bytes_zip": 714455015,
+        "linhas_vinculos_medicos": 1772854,
+        "sha256_igual": true
+      }
+    },
+    "202602": {
+      "competencia": "202602",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202602.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202602.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "c77ca01fdcef62cdac9c1b73b04549a1e1b6d34096dd7268a3c191d9f4fd37f6",
+      "bytes_zip": 709394498,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202602.csv",
+        "estab": "tbEstabelecimento202602.csv",
+        "cbo": "tbAtividadeProfissional202602.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 605447,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6507899,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3500,
+            "municipios_distintos": 1465
+          },
+          "E": {
+            "estabelecimentos": 22256,
+            "municipios_distintos": 2205
+          },
+          "M": {
+            "estabelecimentos": 579588,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 103,
+            "municipios_distintos": 52
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 60102,
+        "2251": 1111155,
+        "2252": 509150,
+        "2253": 97329
+      },
+      "linhas_vinculos_medicos": 1777736,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 566098,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 230449,
+      "segundos_extracao": 26.4,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202602.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "c77ca01fdcef62cdac9c1b73b04549a1e1b6d34096dd7268a3c191d9f4fd37f6",
+        "bytes_zip": 709394498,
+        "linhas_vinculos_medicos": 1777736,
+        "sha256_igual": true
+      }
+    },
+    "202603": {
+      "competencia": "202603",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202603.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202603.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "82d0a79215671a16650f4ba6b138745b17b075c1690a7c2d7187ffaabd3c4804",
+      "bytes_zip": 714423438,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202603.csv",
+        "estab": "tbEstabelecimento202603.csv",
+        "cbo": "tbAtividadeProfissional202603.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 609786,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6557476,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3379,
+            "municipios_distintos": 1450
+          },
+          "E": {
+            "estabelecimentos": 22165,
+            "municipios_distintos": 2206
+          },
+          "M": {
+            "estabelecimentos": 584140,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 64224,
+        "2251": 1120652,
+        "2252": 513578,
+        "2253": 98197
+      },
+      "linhas_vinculos_medicos": 1796651,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 571715,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 231225,
+      "segundos_extracao": 24.9,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202603.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "82d0a79215671a16650f4ba6b138745b17b075c1690a7c2d7187ffaabd3c4804",
+        "bytes_zip": 714423438,
+        "linhas_vinculos_medicos": 1796651,
+        "sha256_igual": true
+      }
+    },
+    "202604": {
+      "competencia": "202604",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202604.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202604.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "619e7a91ceeaa31c8bb539c680f4b0b58f1dba38260c39f61b4c5102c610d14c",
+      "bytes_zip": 719500886,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202604.csv",
+        "estab": "tbEstabelecimento202604.csv",
+        "cbo": "tbAtividadeProfissional202604.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 615401,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6604012,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3360,
+            "municipios_distintos": 1447
+          },
+          "E": {
+            "estabelecimentos": 22253,
+            "municipios_distintos": 2218
+          },
+          "M": {
+            "estabelecimentos": 589686,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 65160,
+        "2251": 1127662,
+        "2252": 518367,
+        "2253": 99019
+      },
+      "linhas_vinculos_medicos": 1810208,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 574654,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 232508,
+      "segundos_extracao": 24.0,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202604.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "619e7a91ceeaa31c8bb539c680f4b0b58f1dba38260c39f61b4c5102c610d14c",
+        "bytes_zip": 719500886,
+        "linhas_vinculos_medicos": 1810208,
+        "sha256_igual": true
+      }
+    },
+    "202605": {
+      "competencia": "202605",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202605.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202605.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "a2fd2ded037733712d69047b6e82c0b750cbe530a4b7755a7edd240c7b92e371",
+      "bytes_zip": 725309803,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202605.csv",
+        "estab": "tbEstabelecimento202605.csv",
+        "cbo": "tbAtividadeProfissional202605.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 623208,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6653183,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3343,
+            "municipios_distintos": 1444
+          },
+          "E": {
+            "estabelecimentos": 22383,
+            "municipios_distintos": 2220
+          },
+          "M": {
+            "estabelecimentos": 597380,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 65485,
+        "2251": 1135699,
+        "2252": 522725,
+        "2253": 99610
+      },
+      "linhas_vinculos_medicos": 1823519,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 576731,
+      "municipios_distintos": 5570,
+      "estabelecimentos_distintos": 233871,
+      "segundos_extracao": 22.3,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202605.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "a2fd2ded037733712d69047b6e82c0b750cbe530a4b7755a7edd240c7b92e371",
+        "bytes_zip": 725309803,
+        "linhas_vinculos_medicos": 1823519,
+        "sha256_igual": true
+      }
+    },
+    "202606": {
+      "competencia": "202606",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202606.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202606.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "6cdcaf45525cc6996c3f4fa185ac0d73e9fcf38938324d843509bfa270467912",
+      "bytes_zip": 729870215,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202606.csv",
+        "estab": "tbEstabelecimento202606.csv",
+        "cbo": "tbAtividadeProfissional202606.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 627705,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6696387,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3357,
+            "municipios_distintos": 1443
+          },
+          "E": {
+            "estabelecimentos": 22487,
+            "municipios_distintos": 2222
+          },
+          "M": {
+            "estabelecimentos": 601759,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 65151,
+        "2251": 1143983,
+        "2252": 526559,
+        "2253": 100352
+      },
+      "linhas_vinculos_medicos": 1836045,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 579091,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 235518,
+      "segundos_extracao": 21.4,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202606.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "6cdcaf45525cc6996c3f4fa185ac0d73e9fcf38938324d843509bfa270467912",
+        "bytes_zip": 729870215,
+        "linhas_vinculos_medicos": 1836045,
+        "sha256_igual": true
+      }
+    },
+    "202607": {
+      "competencia": "202607",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202607.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202607.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "a82f8a0b4efa51f12b5a4f75166d807cab27acbb62f8d14e98dee54268de11e1",
+      "bytes_zip": 734778904,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202607.csv",
+        "estab": "tbEstabelecimento202607.csv",
+        "cbo": "tbAtividadeProfissional202607.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 631973,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6734280,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3345,
+            "municipios_distintos": 1447
+          },
+          "E": {
+            "estabelecimentos": 22606,
+            "municipios_distintos": 2222
+          },
+          "M": {
+            "estabelecimentos": 605920,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 65399,
+        "2251": 1151616,
+        "2252": 528951,
+        "2253": 100951
+      },
+      "linhas_vinculos_medicos": 1846917,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 582424,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 236611,
+      "segundos_extracao": 21.2,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202607.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "a82f8a0b4efa51f12b5a4f75166d807cab27acbb62f8d14e98dee54268de11e1",
+        "bytes_zip": 734778904,
+        "linhas_vinculos_medicos": 1846917,
+        "sha256_igual": true
+      }
+    },
+    "202608": {
+      "competencia": "202608",
+      "tipo": "mensal",
+      "status": "adquirido_extraido_zip_apagado",
+      "arquivo": "BASE_DE_DADOS_CNES_202608.ZIP",
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202608.ZIP",
+      "data_download": "2026-10-18",
+      "sha256_zip": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a",
+      "bytes_zip": 739134749,
+      "tentativas_download": 1,
+      "membros_lidos": {
+        "carga": "tbCargaHorariaSus202608.csv",
+        "estab": "tbEstabelecimento202608.csv",
+        "cbo": "tbAtividadeProfissional202608.csv"
+      },
+      "n_membros_zip": 109,
+      "mapa_colunas_carga": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_PROFISSIONAL_SUS": "CO_PROFISSIONAL_SUS",
+        "CO_CBO": "CO_CBO",
+        "TP_SUS_NAO_SUS": "TP_SUS_NAO_SUS",
+        "IND_VINCULACAO": "IND_VINCULACAO",
+        "QT_CARGA_HORARIA_AMBULATORIAL": "QT_CARGA_HORARIA_AMBULATORIAL",
+        "QT_CARGA_HOR_HOSP_SUS": "QT_CARGA_HOR_HOSP_SUS",
+        "QT_CARGA_HORARIA_OUTROS": "QT_CARGA_HORARIA_OUTROS"
+      },
+      "mapa_colunas_estab": {
+        "CO_UNIDADE": "CO_UNIDADE",
+        "CO_CNES": "CO_CNES",
+        "CO_MUNICIPIO_GESTOR": "CO_MUNICIPIO_GESTOR",
+        "CO_ESTADO_GESTOR": "CO_ESTADO_GESTOR",
+        "TP_GESTAO": "TP_GESTAO"
+      },
+      "colunas_canonicas_ausentes": [],
+      "linhas_tbEstabelecimento": 636189,
+      "co_unidade_duplicados_estab": 0,
+      "linhas_tbCargaHorariaSus": 6779657,
+      "diagnostico_chave_municipal": {
+        "por_tp_gestao": {
+          "D": {
+            "estabelecimentos": 3344,
+            "municipios_distintos": 1445
+          },
+          "E": {
+            "estabelecimentos": 22718,
+            "municipios_distintos": 2222
+          },
+          "M": {
+            "estabelecimentos": 610025,
+            "municipios_distintos": 5583
+          },
+          "S": {
+            "estabelecimentos": 102,
+            "municipios_distintos": 51
+          }
+        },
+        "fracao_uf_do_municipio_igual_co_estado_gestor": 1.0
+      },
+      "vinculos_medicos_por_familia_cbo": {
+        "2231": 65594,
+        "2251": 1160257,
+        "2252": 532970,
+        "2253": 101890
+      },
+      "linhas_vinculos_medicos": 1860711,
+      "versao_extracao": 2,
+      "horas_ausentes_por_campo_vinculos_medicos": {
+        "QT_CARGA_HORARIA_AMBULATORIAL": {
+          "vazio": 1,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HOR_HOSP_SUS": {
+          "vazio": 22,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        },
+        "QT_CARGA_HORARIA_OUTROS": {
+          "vazio": 16,
+          "nao_numerico": 0,
+          "nao_inteiro_arredondado": 0,
+          "negativo": 0
+        }
+      },
+      "vinculos_medicos_com_alguma_hora_ausente": 22,
+      "vinculos_medicos_com_hora_sus_ausente": 22,
+      "vinculos_sem_estabelecimento": 0,
+      "vinculos_sem_co_profissional_sus": 0,
+      "profissionais_distintos": 585405,
+      "municipios_distintos": 5571,
+      "estabelecimentos_distintos": 238157,
+      "segundos_extracao": 31.1,
+      "cache_parquet": "output/aquisicao/cnes_nacional/mensal/cnes_medicos_202608.parquet",
+      "data_processamento": "2026-10-18",
+      "extracao_anterior": {
+        "versao_extracao": 1,
+        "data_download": "2026-10-18",
+        "sha256_zip": "13ef03c49009aa12178042e83c774aa793dd0ae123b5b046694cd4c4a0e6619a",
+        "bytes_zip": 739134749,
+        "linhas_vinculos_medicos": 1860711,
+        "sha256_igual": true
+      }
+    }
+  },
+  "cegamento": "nenhum outcome foi tabulado por faixa, lado de corte ou contra o IVS"
+}

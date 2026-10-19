@@ -1,0 +1,289 @@
+{
+  "painel_comparado": "output/avaliacao_impacto/dados/painel_municipio_curso_mes.parquet",
+  "colunas_lidas_do_painel_antigo": [
+    "co_ibge_6d",
+    "cod_curso",
+    "competencia",
+    "especialistas_mst"
+  ],
+  "definicao": "CO_PROFISSIONAL_SUS distinto por município (CO_MUNICIPIO_GESTOR) × curso (CBOs elegíveis da ponte) × competência, como em 05_integrar_painel_analitico.py",
+  "competencias_comparadas": [
+    "202406",
+    "202407",
+    "202408",
+    "202409",
+    "202410",
+    "202411",
+    "202412",
+    "202501",
+    "202502",
+    "202503",
+    "202504",
+    "202505",
+    "202506",
+    "202507",
+    "202508",
+    "202509",
+    "202510",
+    "202511",
+    "202512",
+    "202601",
+    "202602",
+    "202603",
+    "202604",
+    "202605",
+    "202606",
+    "202607"
+  ],
+  "municipios": 368,
+  "celulas_municipio_curso_mes": 30784,
+  "celulas_identicas": 30782,
+  "fracao_celulas_identicas": 0.9999350311850311,
+  "soma_estoque_ciclo1": 426452,
+  "soma_estoque_a09": 426450,
+  "dif_relativa_soma": -4.689859585604007e-06,
+  "max_abs_dif_celula": 1,
+  "por_competencia": [
+    {
+      "competencia": "202406",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 15456,
+      "soma_estoque_a09": 15456,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202407",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 15546,
+      "soma_estoque_a09": 15546,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202408",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 15597,
+      "soma_estoque_a09": 15597,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202409",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 15590,
+      "soma_estoque_a09": 15590,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202410",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 15718,
+      "soma_estoque_a09": 15718,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202411",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 15729,
+      "soma_estoque_a09": 15729,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202412",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 15758,
+      "soma_estoque_a09": 15758,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202501",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 15696,
+      "soma_estoque_a09": 15696,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202502",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 15708,
+      "soma_estoque_a09": 15708,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202503",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 15803,
+      "soma_estoque_a09": 15803,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202504",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 15913,
+      "soma_estoque_a09": 15913,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202505",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 16005,
+      "soma_estoque_a09": 16005,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202506",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 16111,
+      "soma_estoque_a09": 16111,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202507",
+      "sha256_igual_ao_manifesto_ciclo1": true,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 16207,
+      "soma_estoque_a09": 16207,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202508",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 16316,
+      "soma_estoque_a09": 16316,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202509",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 16482,
+      "soma_estoque_a09": 16482,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202510",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1183,
+      "soma_estoque_ciclo1": 16660,
+      "soma_estoque_a09": 16659,
+      "max_abs_dif": 1
+    },
+    {
+      "competencia": "202511",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1183,
+      "soma_estoque_ciclo1": 16823,
+      "soma_estoque_a09": 16822,
+      "max_abs_dif": 1
+    },
+    {
+      "competencia": "202512",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 16872,
+      "soma_estoque_a09": 16872,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202601",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 16985,
+      "soma_estoque_a09": 16985,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202602",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 17087,
+      "soma_estoque_a09": 17087,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202603",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 17348,
+      "soma_estoque_a09": 17348,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202604",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 17549,
+      "soma_estoque_a09": 17549,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202605",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 17655,
+      "soma_estoque_a09": 17655,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202606",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 17842,
+      "soma_estoque_a09": 17842,
+      "max_abs_dif": 0
+    },
+    {
+      "competencia": "202607",
+      "sha256_igual_ao_manifesto_ciclo1": false,
+      "celulas": 1184,
+      "celulas_identicas": 1184,
+      "soma_estoque_ciclo1": 17996,
+      "soma_estoque_a09": 17996,
+      "max_abs_dif": 0
+    }
+  ],
+  "tolerancia_teste": {
+    "fracao_celulas_identicas_min": 0.99,
+    "dif_relativa_soma_max": 0.005
+  },
+  "nota_cegamento": "comparação só de contagens; nenhuma coluna de IVS ou faixa é lida",
+  "natureza_dos_dados": "EMPIRICO",
+  "status": "APROVADO"
+}
