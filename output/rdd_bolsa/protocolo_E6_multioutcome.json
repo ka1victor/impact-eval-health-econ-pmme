@@ -1,7 +1,7 @@
 {
   "documento": "Protocolo multi-outcome da bolsa do PMM-E (E6-E9)",
   "texto_canonico": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
-  "sha256_texto_canonico": "6fd4f27ed1c37ed188d7eea69472a1815f52877ea38bdc23b928e7835492a065",
+  "sha256_texto_canonico": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
   "data_congelamento": "2026-10-18",
   "autorizacao_autor": {
     "data": "2026-10-18",
@@ -140,6 +140,13 @@
       "data": "2026-10-18",
       "antes_de_estimar_E9": true,
       "E9_forma_funcional": "IVS em spline continuo com nos em 0,300 e 0,400 (inclinacoes livres, sem salto de nivel; variante quadratica continua); bolsa em R$ mil linear (principal); indicadores de degrau por corte (sensibilidade); atributos tem_vaga_imediata, log(vagas imediatas+1), log pop Censo 2022, macrorregiao, estrato; EP cluster por conjunto de escolha (curso x ciclo), tambem MLE e cluster por candidato"
+    },
+    {
+      "data": "2026-10-19",
+      "antes_de_estimar_E7": true,
+      "horas_sus": "F3.3 = horas ambulatoriais + hospitalares de vinculos com TP_SUS_NAO_SUS == 'S'; horas sem filtro so como sensibilidade",
+      "horas_em_branco": "principal: celula com hora em branco fica sem valor e sai do F3.3 com nota; sensibilidade: soma parcial com contagem de vinculos em branco",
+      "todos_medicos": "variante sem residentes (2231F9); nenhuma e primaria"
     }
   ]
 }

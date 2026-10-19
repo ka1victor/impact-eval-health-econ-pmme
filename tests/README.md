@@ -1,6 +1,6 @@
 # Suíte de Testes Automatizados do PMM-E
 
-Este diretório reúne a suíte de testes automatizados do projeto, composta por **405 testes em 34 módulos** (contagem de 18/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
+Este diretório reúne a suíte de testes automatizados do projeto, composta por **466 testes em 36 módulos** (contagem de 18/10/2026), garantindo a integridade substantiva, metodológica, computacional e documental da pesquisa.
 
 ---
 
@@ -55,6 +55,8 @@ python -m unittest tests/test_pipeline_invariants.py
 | [`test_e5_inferencia_sintetico.py`](test_e5_inferencia_sintetico.py) | RDD Bolsa — E5 (exploratório) | Especificações alternativas, permutação de Fisher, limites unilaterais e TOST, seleção da janela de local randomization só por balanço. Sintético. |
 | [`test_rdd_lib.py`](test_rdd_lib.py) | RDD Bolsa — biblioteca E6–E9 | `rdd_lib.py`: identidade bit a bit com o E3 e com o E5; local linear, empilhado (duplicatas, cluster, EF de ciclo), IC honesto de Armstrong–Kolesár (cv(0) = 1,96, M = 0 igual a HC1, cobertura), Poisson local, DiRD em delta = DiRD em painel, estudo de evento, índices KLK e Anderson, Holm e BKY contra exemplos à mão, limites de Lee, Fisher; nada descartado em silêncio (rótulo ausente levanta erro, descartes contados), suporte explícito da regra de bolso, separação no Poisson e EP igual ao sanduíche do statsmodels, BKY igual ao statsmodels. Sintético. |
 | [`test_outcomes_funil.py`](test_outcomes_funil.py) | RDD Bolsa — outcomes do funil | Construção dos outcomes F0–F4 dos ciclos 1–3 e das tabelas de escolha do E9: reprodução de E3/E4, chaves, NaN sempre com motivo, nada lido do arquivo de IVS errado. |
+| [`test_e6_funil.py`](test_e6_funil.py) | RDD Bolsa — E6 | Estimação do protocolo 40 para F0, F1, F2, F4, índice P1 e S1–S4: todas as especificações presentes, reprodução do E3/E5, sinal, BKY, tabelas do doc 41 geradas das saídas. |
+| [`test_e9_escolha.py`](test_e9_escolha.py) | RDD Bolsa — E9 | Logit condicional da escolha dos candidatos (§12, §14, §15): recuperação sintética do coeficiente, equivalência com o statsmodels, robustez pós-auditoria e números do doc 42 conferidos contra os CSVs. |
 | [`test_conferencia_sinal_rdd.py`](test_conferencia_sinal_rdd.py) | RDD Bolsa — sinal do salto | O salto é o lado com bolsa maior menos o lado com bolsa menor; reestimação independente e decomposição da diferença bruta em salto e inclinação. Sintético. |
 | [`test_pipeline_rdd_bolsa.py`](test_pipeline_rdd_bolsa.py) | RDD Bolsa — pipeline | Ordem da cadeia da RDD no `run_all.py`, argumento do E3 e retirada dos scripts que liam o arquivo de IVS errado. |
 | [`test_integridade_dados.py`](test_integridade_dados.py) | Integridade | Nenhum arquivo em `data/` ou `output/` com nome de dado simulado; toda saída rotulada com `natureza_dos_dados` é `EMPIRICO`. |
