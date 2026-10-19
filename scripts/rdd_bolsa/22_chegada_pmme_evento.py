@@ -124,6 +124,11 @@ DESVIOS = [
     {"data": DATA_EXECUCAO, "tipo": "esclarecimento", "item": "tratado fora da amostra",
      "descricao": "município da lista nominal que não ofereceu célula nos ciclos 1 ou 2 (ou sem IVS/população) fica fora "
                   "e é contado no resumo."},
+    {"data": "2026-10-19", "tipo": "correcao (auditoria 21)", "item": "chegada depois do fim da série",
+     "descricao": "município cuja 1ª chegada é posterior ao último mês da série do outcome (202605 em SIA, SIH e CNES) "
+                  "fica como ainda não tratado em todo o horizonte, como pede o §5 D2 (controles: ainda não tratados). "
+                  "A versão anterior testava o início do trimestre e contava como tratadas, desde 202604, as chegadas "
+                  "de 202606. A correção não olha resultado: segue a regra que o próprio script declarava."},
 ]
 
 
@@ -363,12 +368,15 @@ def serie(D, spec: dict, amostra: pd.Index) -> tuple[np.ndarray, list[str]]:
 def indices_coorte(chegadas: pd.DataFrame, meses: list[str], *, coorte_max: str | None = None) -> tuple[np.ndarray, list[int]]:
     pos = {m: i for i, m in enumerate(meses)}
     G = np.full(len(chegadas), -1, dtype=int)
-    for i, c in enumerate(chegadas["coorte"].to_numpy()):
+    for i, (c, ch) in enumerate(zip(chegadas["coorte"].to_numpy(), chegadas["chegada"].to_numpy())):
         if isinstance(c, str):
-            if c in pos:
+            if ch > meses[-1]:
+                # 1ª chegada depois do fim da série: ainda não tratado no horizonte. O teste é no mês da chegada,
+                # não no início do trimestre (auditoria 21: chegadas de 202606 caíam na coorte 202604 e contavam
+                # como tratadas em 202604-202605, sem nenhum mês de exposição na série que acaba em 202605).
+                G[i] = -1
+            elif c in pos:
                 G[i] = pos[c]
-            elif c > meses[-1]:
-                G[i] = -1           # chega depois do fim da série: ainda não tratado no horizonte
             else:
                 raise FalhaValidacao(f"coorte {c} antes do início da série")
     coortes = sorted({int(g) for g, c in zip(G, chegadas["coorte"]) if g >= 0
@@ -446,13 +454,42 @@ def rodar(D, amostra: pd.Index, chegadas: pd.DataFrame, xi: np.ndarray, variante
 # 5. Figuras
 # ---------------------------------------------------------------------------
 
-def legenda(oid: str, spec: dict) -> str:
+COR_POS_D2 = "#efece4"      # fundo do pós no D2: neutro, distinto da banda azul (auditoria 21)
+
+
+def limites_eixo(th: np.ndarray, lo: np.ndarray, hi: np.ndarray) -> tuple[float, float, bool]:
+    """Limites do eixo vertical: todos os θ e os IC 95% dos meses típicos; IC muito mais largo que os outros é cortado.
+
+    Auditoria 21: um único mês com IC enorme (K1, e = −12) achatava todos os outros pontos. Mês "atípico" = meia
+    largura do IC maior que 4 x a mediana das meias larguras. Todos os θ ficam sempre visíveis.
+    """
+    ok = np.isfinite(lo) & np.isfinite(hi) & np.isfinite(th)
+    fin = np.isfinite(th)
+    if not ok.any():
+        v = th[fin] if fin.any() else np.array([0.0])
+        return float(v.min()) - 1, float(v.max()) + 1, False
+    meia = (hi - lo)[ok] / 2
+    tip = meia <= 4 * np.median(meia)
+    vals = np.concatenate([th[fin], lo[ok][tip], hi[ok][tip], [0.0]])
+    a, b = float(vals.min()), float(vals.max())
+    pad = 0.06 * (b - a if b > a else 1.0)
+    ylo, yhi = a - pad, b + pad
+    cortado = bool((lo[ok] < ylo).any() or (hi[ok] > yhi).any())
+    return ylo, yhi, cortado
+
+
+def legenda(oid: str, spec: dict, *, cortado: bool = False) -> str:
+    corte_txt = (" O eixo vertical foi limitado para que um mês muito incerto não esconda os outros: triângulo na ponta "
+                 "da barra = o IC 95% daquele mês vai além do limite, e a banda também é cortada nesse limite (valores "
+                 "completos no CSV)." if cortado else "")
     return (
         "COMO LER. Cada ponto é a diferença média entre os municípios que receberam o 1º especialista do PMM-E e os "
-        "que ainda não tinham recebido (ou nunca receberam) na mudança da produção, em cada mês contado a partir do "
-        "trimestre de chegada (0 = primeiro mês do trimestre em que o 1º especialista começou). O mês -1 é a base "
-        "(quadrado preto, zero por construção): tudo é medido como mudança em relação a ele. A barra vertical é o IC "
-        "95% de cada mês e a faixa clara é a banda de 95% para todos os meses ao mesmo tempo. À esquerda do zero "
+        f"que ainda não tinham recebido (ou nunca receberam) na mudança {K1M._o_que(spec)}, em cada mês contado a "
+        "partir do trimestre de chegada (0 = primeiro mês do trimestre em que o 1º especialista começou; como ele pode "
+        "ter começado no 2º ou no 3º mês do trimestre, os meses 0 e 1 podem ainda ser anteriores à chegada). O mês −1 "
+        "é a base (quadrado preto, zero por construção): tudo é medido como mudança em relação a ele. A barra vertical "
+        "é o IC 95% de cada mês e a faixa azul clara é a banda de 95% para todos os meses ao mesmo tempo; o fundo bege "
+        "marca os meses a partir do trimestre de chegada." + corte_txt + " À esquerda do zero "
         "(antes da chegada) os pontos deveriam ficar em torno de zero; se não ficam, os municípios que receberam "
         "especialista já vinham mudando de outro jeito e a diferença depois da chegada não pode ser atribuída a ela. "
         "À direita, pontos acima de zero indicam valores maiores (mais produção ou mais capacidade, conforme o "
@@ -473,21 +510,32 @@ def figura(oid: str, spec: dict, ev: pd.DataFrame, est: pd.DataFrame, caminho: P
     th = e["theta"].to_numpy(dtype=float)
     lo, hi = e["ic95_inf"].to_numpy(dtype=float), e["ic95_sup"].to_numpy(dtype=float)
     bl, bh = e["banda_unif_inf"].to_numpy(dtype=float), e["banda_unif_sup"].to_numpy(dtype=float)
-    texto = textwrap.wrap(legenda(oid, spec), 180)
+    ylo, yhi, cortado = limites_eixo(th, lo, hi)
+    cortado = cortado or bool(((bl < ylo) | (bh > yhi))[np.isfinite(bl) & np.isfinite(bh)].any())
+    texto = textwrap.wrap(legenda(oid, spec, cortado=cortado), 180)
     h_txt = 0.16 * len(texto) + 0.3
     h_leg, h_xlab, h_plot, h_tit = 0.6, 0.6, 4.0, 1.05
     altura = h_txt + h_leg + h_xlab + h_plot + h_tit
     fig = plt.figure(figsize=(11.5, altura), facecolor=S.SUPERFICIE)
     ax = fig.add_axes([0.09, (h_txt + h_leg + h_xlab) / altura, 0.88, h_plot / altura])
     ax.set_facecolor(S.SUPERFICIE)
-    ax.axvspan(-0.5, x.max() + 0.5, color=S.COR_POS, linewidth=0, zorder=0)
+    # Fundo do pós em tom neutro, distinto da banda azul (auditoria 21: azul sobre azul escondia a banda no pós).
+    ax.axvspan(-0.5, x[np.isfinite(th)].max() + 0.5, color=COR_POS_D2, linewidth=0, zorder=0)
     okb = np.isfinite(bl) & np.isfinite(bh)
-    ax.fill_between(x[okb], bl[okb], bh[okb], color=S.COR_IC, alpha=0.12, linewidth=0, step="mid", zorder=1)
+    ok = np.isfinite(lo) & np.isfinite(hi)
+    ax.fill_between(x[okb], np.clip(bl[okb], ylo, yhi), np.clip(bh[okb], ylo, yhi), color=S.COR_IC, alpha=0.16,
+                    linewidth=0, step="mid", zorder=1)
     ax.axhline(0, color=S.TINTA_2, linewidth=0.9)
     ax.axvline(-0.5, color=S.COR_ATO, linestyle="--", linewidth=1.0)
-    ok = np.isfinite(lo) & np.isfinite(hi)
-    ax.errorbar(x[ok], th[ok], yerr=[th[ok] - lo[ok], hi[ok] - th[ok]], fmt="none", ecolor=S.COR_IC, elinewidth=1.3,
-                alpha=0.7, zorder=2)
+    lo_c, hi_c = np.clip(lo, ylo, yhi), np.clip(hi, ylo, yhi)
+    ax.errorbar(x[ok], th[ok], yerr=[th[ok] - lo_c[ok], hi_c[ok] - th[ok]], fmt="none", ecolor=S.COR_IC,
+                elinewidth=1.3, alpha=0.7, zorder=2)
+    for xi_, lo_i, hi_i in zip(x[ok], lo[ok], hi[ok]):
+        if hi_i > yhi:
+            ax.plot([xi_], [yhi], marker="^", color=S.COR_IC, markersize=6, zorder=3, clip_on=False)
+        if lo_i < ylo:
+            ax.plot([xi_], [ylo], marker="v", color=S.COR_IC, markersize=6, zorder=3, clip_on=False)
+    ax.set_ylim(ylo, yhi)
     ref = e["referencia"].astype(bool).to_numpy()
     ax.plot(x[~ref], th[~ref], "o", color=S.COR_PONTO, markersize=4.5, zorder=3)
     ax.plot(x[ref], th[ref], "s", color=S.TINTA, markersize=6.5, zorder=4)
@@ -507,9 +555,11 @@ def figura(oid: str, spec: dict, ev: pd.DataFrame, est: pd.DataFrame, caminho: P
         ax.spines[lado].set_visible(False)
     handles = [Line2D([], [], marker="o", linestyle="", color=S.COR_PONTO, label="diferença no mês (chegou − comparáveis)"),
                Line2D([], [], color=S.COR_IC, linewidth=1.3, label="IC 95% do mês"),
-               Patch(color=S.COR_IC, alpha=0.12, label="banda de 95% para todos os meses"),
+               Patch(color=S.COR_IC, alpha=0.16, label="banda de 95% para todos os meses"),
                Line2D([], [], marker="s", linestyle="", color=S.TINTA, label="mês −1 = base (zero)"),
-               Patch(color=S.COR_POS, label="depois da chegada")]
+               Patch(color=COR_POS_D2, label="a partir do trimestre de chegada")]
+    if ((lo < ylo) | (hi > yhi))[ok].any():
+        handles.append(Line2D([], [], marker="^", linestyle="", color=S.COR_IC, label="IC além do limite do eixo"))
     fig.legend(handles=handles, loc="center", ncol=3, fontsize=8, frameon=False,
                bbox_to_anchor=(0.5, (h_txt + h_leg / 2) / altura))
     fig.suptitle(f"{oid} — {spec['desc']}\nD2 exploratório: chegada do especialista do PMM-E (Callaway–Sant'Anna)",
@@ -542,6 +592,10 @@ def gerar_tabelas_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> dict
               f"| municípios com célula fora de U (fora) | {len(a.get('fora_de_U', []))} |",
               f"| municípios tratados (≥ 1 especialista ativo) na amostra | {a.get('n_tratados')} |",
               f"| municípios nunca tratados na amostra | {a.get('n_nunca_tratados')} |",
+              f"| tratados com 1ª chegada depois de {a.get('fim_serie_sia')} (fim da série de SIA, SIH e CNES): "
+              f"ainda não tratados no horizonte desses outcomes | {a.get('n_chegada_depois_fim_serie_sia')} |",
+              f"| tratados com 1ª chegada depois de {a.get('fim_serie_k3')} (fim da série de K3): ainda não "
+              f"tratados no horizonte de K3 | {a.get('n_chegada_depois_fim_serie_k3')} |",
               f"| municípios da lista nominal fora da amostra (fora) | {a.get('municipios_com_ativo_fora_da_amostra')} |",
               f"| especialistas da lista nominal nesses municípios | {a.get('especialistas_em_municipios_fora_da_amostra')} |",
               f"| sensibilidade: municípios com alocado e sem ativo (excluídos) | {a.get('n_alocado_sem_ativo')} |"]
@@ -595,8 +649,8 @@ def gerar_tabelas_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> dict
     return t
 
 
-def media_pre(ev: pd.DataFrame, oid: str, var: str = "principal") -> float:
-    g = ev[(ev["outcome_id"] == oid) & (ev["variante"] == var) & (ev["e"] <= -2)]["theta"].astype(float)
+def media_pre(ev: pd.DataFrame, oid: str, var: str = "principal", *, e_min: int = E_MIN) -> float:
+    g = ev[(ev["outcome_id"] == oid) & (ev["variante"] == var) & (ev["e"] <= -2) & (ev["e"] >= e_min)]["theta"].astype(float)
     g = g[np.isfinite(g)]
     return float(g.mean()) if len(g) else float("nan")
 
@@ -620,25 +674,47 @@ def gerar_leitura(est: pd.DataFrame, ev: pd.DataFrame) -> dict[str, str]:
                       f"[{_n(pos['ic95_inf'], 2)}; {_n(pos['ic95_sup'], 2)}], p = {_p(pos['p_valor'])}); pré "
                       + ("compatível com plano" if plano else "não plano") + f" (p do Wald = {_p(pre['p_valor'])})")
     def pre_parecido(oid):
-        """θ médio do pré com o mesmo sinal e >= metade do ATT do pós (diferença já presente antes da chegada)."""
-        pos, _ = _pos(est, oid)
-        mp = media_pre(ev, oid)
-        return (pos is not None and np.isfinite(mp) and np.isfinite(pos["valor"]) and pos["valor"] != 0
-                and np.sign(mp) == np.sign(pos["valor"]) and abs(mp) >= 0.5 * abs(pos["valor"])), mp, pos
+        """θ médio do pré com o mesmo sinal e >= metade do ATT do pós (diferença já presente antes da chegada).
 
-    base_alta = []
+        Vale o pré inteiro (−24 a −2) ou os 12 meses antes do mês-base (−13 a −2): a auditoria 21 acrescentou a
+        segunda média, só no sentido de pôr ressalva (nunca de tirá-la), porque meses distantes e ruidosos podiam
+        diluir uma diferença que já estava presente no ano anterior à chegada.
+        """
+        pos, _ = _pos(est, oid)
+        mp, mp12 = media_pre(ev, oid), media_pre(ev, oid, e_min=-13)
+
+        def parecido(m):
+            return (pos is not None and np.isfinite(m) and np.isfinite(pos["valor"]) and pos["valor"] != 0
+                    and np.sign(m) == np.sign(pos["valor"]) and abs(m) >= 0.5 * abs(pos["valor"]))
+        return parecido(mp) or parecido(mp12), mp, mp12, pos
+
+    base_alta, base_oposta = [], []
     for oid in OUTCOMES_D2:
-        sim, mp, pos = pre_parecido(oid)
+        sim, mp, mp12, pos = pre_parecido(oid)
         if sim:
-            base_alta.append(f"{oid} (θ médio do pré {_n(mp, 2)} contra ATT do pós {_n(pos['valor'], 2)})")
+            base_alta.append(f"{oid} (θ médio do pré {_n(mp, 2)}; nos 12 meses antes do mês-base {_n(mp12, 2)}; "
+                             f"ATT do pós {_n(pos['valor'], 2)})")
+        elif (pos is not None and np.isfinite(mp) and np.isfinite(pos["valor"]) and pos["valor"] != 0
+              and np.sign(mp) == -np.sign(pos["valor"]) and abs(mp) >= 0.5 * abs(pos["valor"])):
+            base_oposta.append(f"{oid} (θ médio do pré {_n(mp, 2)}; ATT do pós {_n(pos['valor'], 2)})")
     nota_base = ("" if not base_alta else
-                 " Em " + "; ".join(base_alta) + ", o θ médio do pré tem o mesmo sinal e pelo menos metade do tamanho "
-                 "do ATT do pós: boa parte da diferença do pós já aparece antes da chegada, em relação ao mês-base, "
-                 "e não pode ser lida como mudança causada pela chegada.")
+                 " Em " + "; ".join(base_alta) + ", o θ médio do pré (inteiro ou nos 12 meses antes do mês-base) tem o "
+                 "mesmo sinal e pelo menos metade do tamanho do ATT do pós: boa parte da diferença do pós já aparece "
+                 "antes da chegada, em relação ao mês-base, e não pode ser lida como mudança causada pela chegada.")
+    if base_oposta:
+        nota_base += (" Em " + "; ".join(base_oposta) + ", o θ médio do pré tem sinal oposto ao do ATT do pós e pelo "
+                      "menos metade do tamanho (auditoria 21): o ATT depende do mês-base (−1); contra a média do pré a "
+                      "diferença seria maior, e uma subida (ou queda) que começou antes da chegada não é descartada "
+                      "pelo teste conjunto, que tem pouco poder contra tendências suaves.")
+    sig = [oid for oid in OUTCOMES_D2 if (p := _pos(est, oid)[0]) is not None and np.isfinite(p["p_valor"])
+           and p["p_valor"] < 0.05]
+    nota_mult = (f" O D2 não tem correção para múltiplos testes: {len(sig)} de {len(partes)} ATT médios do pós têm "
+                 f"p < 0,05 ({', '.join(sig) or 'nenhum'}), e por acaso, a 5%, esperam-se cerca de "
+                 f"{_n(0.05 * len(partes), 1, sinal=False)} (auditoria 21).")
     t["leitura_d2"] = ("; ".join(partes) + f". {planos} de {len(partes)} outcomes têm pré compatível com tendências "
                        "paralelas pelo teste conjunto a 5%. Onde o pré não é plano, a diferença do pós é só uma "
                        "associação; onde é plano, continua sendo ATT sob tendências paralelas, porque a chegada depende "
-                       "da escolha do candidato, sem fonte de exogeneidade validada." + nota_base)
+                       "da escolha do candidato, sem fonte de exogeneidade validada." + nota_base + nota_mult)
 
     def linha(oid):
         pos, _ = _pos(est, oid)
@@ -669,6 +745,14 @@ def gerar_leitura(est: pd.DataFrame, ev: pd.DataFrame) -> dict[str, str]:
         "recebido especialista. Como quem chega escolhe o município, isso é uma comparação, não a prova de um efeito.")
     t["leitura_substituicao_d2"] = K1M.leitura_substituicao(pares, desenho="D2 (chegada, ATT médio do pós)").replace(
         "consultas SUS + planos nas CBO-alvo (K3)", "consultas SUS + planos nas CBO-alvo (K3, coortes até 2025-12)")
+    ressalva = [oid for oid, k in (("K1", "sus"), ("K4.vinculos", "privado_vinculos"), ("K4.horas", "privado_horas"),
+                                   ("K3", "total"), ("KP2", "nao_alvo"))
+                if pares[k] is not None and K1M.classificar(pares[k]) in ("sobe", "cai") and pre_parecido(oid)[0]]
+    if ressalva:
+        t["leitura_substituicao_d2"] += (
+            " Ressalva (auditoria 21): em " + ", ".join(ressalva) + " o θ médio do pré (inteiro ou nos 12 meses antes "
+            "do mês-base) tem o mesmo sinal e pelo menos metade do ATT do pós, então o sinal dessa margem não se lê "
+            "como mudança causada pela chegada.")
     return t
 
 
@@ -760,7 +844,10 @@ def main(argv: list[str] | None = None) -> int:
         "amostra": {**info_am, **info_ch, "n_municipios": int(len(amostra)),
                     "n_tratados": int(chegadas["coorte"].notna().sum()),
                     "n_nunca_tratados": int(chegadas["coorte"].isna().sum()),
-                    "n_alocado_sem_ativo": len(aloc_sem)},
+                    "n_alocado_sem_ativo": len(aloc_sem),
+                    "fim_serie_sia": FIM["SIA"], "fim_serie_k3": FIM["K3"],
+                    "n_chegada_depois_fim_serie_sia": int((chegadas["chegada"] > FIM["SIA"]).sum()),
+                    "n_chegada_depois_fim_serie_k3": int((chegadas["chegada"] > FIM["K3"]).sum())},
         "coortes": coortes,
         "variantes": VARIANTES,
         "entradas": [K1M.E7.bloco_entrada(NOMINAL, "tratamento: menor dt_inicio_atividade por municipio",

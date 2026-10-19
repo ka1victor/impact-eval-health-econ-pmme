@@ -49,7 +49,11 @@
     "n_municipios": 598,
     "n_tratados": 315,
     "n_nunca_tratados": 283,
-    "n_alocado_sem_ativo": 100
+    "n_alocado_sem_ativo": 100,
+    "fim_serie_sia": "202605",
+    "fim_serie_k3": "202512",
+    "n_chegada_depois_fim_serie_sia": 20,
+    "n_chegada_depois_fim_serie_k3": 151
   },
   "coortes": {
     "202507": {
@@ -213,6 +217,12 @@
       "tipo": "esclarecimento",
       "item": "tratado fora da amostra",
       "descricao": "município da lista nominal que não ofereceu célula nos ciclos 1 ou 2 (ou sem IVS/população) fica fora e é contado no resumo."
+    },
+    {
+      "data": "2026-10-19",
+      "tipo": "correcao (auditoria 21)",
+      "item": "chegada depois do fim da série",
+      "descricao": "município cuja 1ª chegada é posterior ao último mês da série do outcome (202605 em SIA, SIH e CNES) fica como ainda não tratado em todo o horizonte, como pede o §5 D2 (controles: ainda não tratados). A versão anterior testava o início do trimestre e contava como tratadas, desde 202604, as chegadas de 202606. A correção não olha resultado: segue a regra que o próprio script declarava."
     }
   ],
   "contagens": {

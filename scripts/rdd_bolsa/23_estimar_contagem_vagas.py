@@ -1411,10 +1411,12 @@ def _fmt_eixo_x(v, _=None) -> str:
 
 
 def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda: str, caminho: Path, *,
-             unidade_n: tuple[str, str] = ("município", "municípios")) -> None:
+             unidade_n: tuple[str, str] = ("município", "municípios"), rotulo_salto: bool = True) -> None:
     """Cada painel: x (IVS ou IVS - corte, em milésimos), y_ponto, dentro (bool), curva, corte, rótulo, título.
 
     `unidade_n` = (singular, plural) do que o tamanho do ponto conta (no empilhado, linhas município x ciclo).
+    `rotulo_salto=False` omite o texto "salto" ao lado da seta (a legenda já explica a seta; auditoria 21: o
+    texto cobria pontos perto do corte nas figuras da família K). O padrão mantém as figuras da família N.
     """
     import matplotlib
     matplotlib.use("Agg")
@@ -1461,9 +1463,10 @@ def desenhar(paineis: list[dict], titulo: str, ylabel: str, xlabel: str, legenda
         ax.axvline(corte / 1000, color=TINTA_2, linewidth=1, linestyle="--", zorder=0)
         ax.annotate("", xy=(corte / 1000, y1), xytext=(corte / 1000, y0),
                     arrowprops=dict(arrowstyle="-|>", color=COR_SALTO, linewidth=2.2, mutation_scale=12), zorder=4)
-        ax.text(corte / 1000, (y0 + y1) / 2, "  salto", color=COR_SALTO, fontsize=9, va="center", ha="left",
-                fontweight="bold", zorder=5,
-                bbox=dict(facecolor=SUPERFICIE, edgecolor="none", alpha=0.85, pad=0.6))
+        if rotulo_salto:
+            ax.text(corte / 1000, (y0 + y1) / 2, "  salto", color=COR_SALTO, fontsize=9, va="center", ha="left",
+                    fontweight="bold", zorder=5,
+                    bbox=dict(facecolor=SUPERFICIE, edgecolor="none", alpha=0.85, pad=0.6))
         ax.set_title(f"{p['rotulo']}\n{p['titulo']}", fontsize=9.5, color=TINTA)
         ax.set_xlabel(xlabel, fontsize=9, color=TINTA_2)
         ax.grid(alpha=0.25, linewidth=0.6)

@@ -21,7 +21,10 @@
 > texto só tem parâmetros do protocolo.<br>
 > **Estatuto:** teste posterior à síntese E8 (doc 44) e à rodada X (doc 46). A
 > família K tem Holm próprio (K1–K3) e **não altera** o Holm de P1 e P2 do
-> protocolo 40.
+> protocolo 40.<br>
+> **Auditoria:** [`auditorias/21_auditoria_producao_K.md`](../auditorias/21_auditoria_producao_K.md)
+> (recálculo independente dos outcomes, do D1 e do D2; correção da data de
+> tratamento no D2 e das figuras).
 
 ## 1. O que se mede, na cadeia da política
 
@@ -43,7 +46,10 @@ PMM-E (`alvo_pmme`, regra importada do a09). Os grupos de procedimento seguem o
 §3.2 e o §10.2 do protocolo: consultas = subgrupo 0301; exames = grupo 02;
 cirurgias = grupo 04; OCI (Ofertas de Cuidados Integrados) = grupo 09, que
 entra em K1 porque substitui procedimentos antes cobrados um a um. Unidade:
-município × mês; taxa por 10 mil habitantes (Censo 2022) por mês.
+município × mês; taxa por 10 mil habitantes (Censo 2022) por mês. Pela regra
+do a09, o conjunto `especialistas_nao_alvo` (usado em K1d e KP2) **inclui a
+CBO 225130** (medicina de família e comunidade); KP1.mfc mostra essa CBO à
+parte, e os generalistas (KP1) não a incluem.
 
 ## 2. O que cada desenho identifica
 
@@ -958,7 +964,7 @@ das políticas S1–S6 da auditoria 18 e dos ciclos do PMM-E.
 <!-- K:evento:fim -->
 
 <!-- K:leitura_evento:inicio -->
-Estudo de evento, cortes empilhados, U (mês a mês contra jun/2025): K1: 0 de 41 meses antes de jun/2025 com p < 0,05; no pós principal, 0 de 8; K2: 4 de 41 meses antes de jun/2025 com p < 0,05; no pós principal, 0 de 8; K3: 1 de 41 meses antes de jun/2025 com p < 0,05; no pós principal, 0 de 3; KP1: 23 de 41 meses antes de jun/2025 com p < 0,05; no pós principal, 2 de 8; KP2: 0 de 41 meses antes de jun/2025 com p < 0,05; no pós principal, 0 de 8. Com 5% de nível, cerca de 1 mês em 20 dá p < 0,05 por acaso, sem correção para muitos meses.
+Estudo de evento, cortes empilhados, U (mês a mês contra jun/2025): K1: 0 de 41 meses antes de jun/2025 com p < 0,05; no pós principal, 0 de 8; K2: 4 de 41 meses antes de jun/2025 com p < 0,05; no pós principal, 0 de 8; K3: 1 de 41 meses antes de jun/2025 com p < 0,05; no pós principal, 0 de 3; KP1: 23 de 41 meses antes de jun/2025 com p < 0,05; no pós principal, 2 de 8; KP2: 0 de 41 meses antes de jun/2025 com p < 0,05; no pós principal, 0 de 8. Com 5% de nível, cerca de 1 mês em 20 dá p < 0,05 por acaso, sem correção para muitos meses. Em KP1, a fração de meses antes de jun/2025 com p < 0,05 passa de três vezes os 5% esperados por acaso: a descontinuidade no corte de jun/2025 difere da dos outros meses. Como 89 % dos saltos mensais, antes e depois de jun/2025, têm o mesmo sinal, o padrão é o de um mês de referência atípico, e não necessariamente de uma tendência; a DiRD, que compara médias de janelas, não depende desse mês.
 <!-- K:leitura_evento:fim -->
 
 ## 7. D2 — chegada do especialista do PMM-E (EXPLORATORIO_PARTICIPACAO)
@@ -974,6 +980,8 @@ some e o município pode contar como não tratado):
 | municípios com célula fora de U (fora) | 0 |
 | municípios tratados (≥ 1 especialista ativo) na amostra | 315 |
 | municípios nunca tratados na amostra | 283 |
+| tratados com 1ª chegada depois de 202605 (fim da série de SIA, SIH e CNES): ainda não tratados no horizonte desses outcomes | 20 |
+| tratados com 1ª chegada depois de 202512 (fim da série de K3): ainda não tratados no horizonte de K3 | 151 |
 | municípios da lista nominal fora da amostra (fora) | 10 |
 | especialistas da lista nominal nesses municípios | 13 |
 | sensibilidade: municípios com alocado e sem ativo (excluídos) | 100 |
@@ -991,21 +999,21 @@ K3, que vai até dez/2025, inclui as coortes de 2026):
 <!-- KD2:att:inicio -->
 | Outcome | Tratados / nunca tratados | Coortes | ATT médio do pós | IC 95% (bootstrap) | p | θ médio do pré (−24 a −2) | Pré: Wald (gl), p | Pré: p sup-t | Dose por especialista (descritivo) |
 |---|---|---|---|---|---|---|---|---|---|
-| K1 | 315 / 283 | 4 | +31,37 | [−5,14; +67,88] | 0,092 | −20,80 | 23,1 (23), 0,454 | 0,611 | +6,74 |
-| K1a | 315 / 283 | 4 | +30,73 | [−10,38; +71,84] | 0,143 | +1,27 | 22,1 (23), 0,512 | 0,516 | +6,60 |
-| K1b | 315 / 283 | 4 | +0,59 | [−50,05; +51,23] | 0,982 | −21,22 | 29,1 (23), 0,176 | 0,330 | +0,13 |
-| K1c | 315 / 283 | 4 | +0,23 | [−0,96; +1,43] | 0,702 | −0,15 | 30,2 (23), 0,145 | 0,621 | +0,05 |
-| K1d | 315 / 283 | 4 | +65,03 | [+1,72; +128,33] | 0,044 | +9,15 | 26,5 (23), 0,276 | 0,792 | +13,96 |
-| K2 | 315 / 283 | 4 | +0,77 | [−0,97; +2,52] | 0,385 | +2,60 | 38,9 (23), 0,020 | 0,012 | +0,17 |
-| KP1 | 315 / 283 | 4 | −110,66 | [−429,29; +207,96] | 0,496 | −126,67 | 31,3 (23), 0,115 | 0,148 | −23,76 |
-| KP2 | 315 / 283 | 4 | +33,66 | [−15,15; +82,46] | 0,176 | +29,95 | 29,2 (23), 0,174 | 0,545 | +7,23 |
-| K4.vinculos | 315 / 283 | 4 | −0,13 | [−0,25; −0,01] | 0,035 | −0,08 | 26,0 (22), 0,250 | 0,359 | −0,03 |
-| K4.horas | 315 / 283 | 4 | −1,88 | [−3,88; +0,11] | 0,064 | +0,01 | 13,2 (22), 0,928 | 0,904 | −0,40 |
+| K1 | 295 / 303 | 4 | +32,97 | [−3,82; +69,75] | 0,079 | −27,28 | 21,7 (23), 0,538 | 0,326 | +6,74 |
+| K1a | 295 / 303 | 4 | +31,66 | [−9,49; +72,81] | 0,132 | −1,88 | 18,6 (23), 0,722 | 0,718 | +6,48 |
+| K1b | 295 / 303 | 4 | +1,41 | [−49,46; +52,28] | 0,957 | −24,64 | 25,8 (23), 0,308 | 0,332 | +0,29 |
+| K1c | 295 / 303 | 4 | +0,15 | [−1,06; +1,37] | 0,805 | −0,06 | 27,4 (23), 0,240 | 0,818 | +0,03 |
+| K1d | 295 / 303 | 4 | +66,14 | [+1,93; +130,35] | 0,043 | +2,42 | 24,6 (23), 0,372 | 0,793 | +13,53 |
+| K2 | 295 / 303 | 4 | +0,72 | [−1,03; +2,47] | 0,418 | +2,37 | 37,6 (23), 0,028 | 0,029 | +0,15 |
+| KP1 | 295 / 303 | 4 | −103,15 | [−417,13; +210,83] | 0,520 | −128,23 | 38,8 (23), 0,021 | 0,149 | −21,10 |
+| KP2 | 295 / 303 | 4 | +33,17 | [−15,85; +82,20] | 0,185 | +29,70 | 26,9 (23), 0,260 | 0,534 | +6,79 |
+| K4.vinculos | 295 / 303 | 4 | −0,13 | [−0,26; −0,01] | 0,031 | −0,06 | 29,1 (22), 0,141 | 0,449 | −0,03 |
+| K4.horas | 295 / 303 | 4 | −1,89 | [−3,88; +0,10] | 0,063 | −0,16 | 12,7 (22), 0,941 | 0,867 | −0,39 |
 | K3 | 164 / 434 | 2 | +32,32 | [−23,46; +88,11] | 0,256 | +5,22 | 25,9 (23), 0,307 | 0,608 | +4,86 |
 <!-- KD2:att:fim -->
 
 <!-- KD2:leitura_d2:inicio -->
-K1: ATT médio do pós +31,37 por 10 mil hab. por mês (IC 95% [−5,14; +67,88], p = 0,092); pré compatível com plano (p do Wald = 0,454); K1a: ATT médio do pós +30,73 por 10 mil hab. por mês (IC 95% [−10,38; +71,84], p = 0,143); pré compatível com plano (p do Wald = 0,512); K1b: ATT médio do pós +0,59 por 10 mil hab. por mês (IC 95% [−50,05; +51,23], p = 0,982); pré compatível com plano (p do Wald = 0,176); K1c: ATT médio do pós +0,23 por 10 mil hab. por mês (IC 95% [−0,96; +1,43], p = 0,702); pré compatível com plano (p do Wald = 0,145); K1d: ATT médio do pós +65,03 por 10 mil hab. por mês (IC 95% [+1,72; +128,33], p = 0,044); pré compatível com plano (p do Wald = 0,276); K2: ATT médio do pós +0,77 por 10 mil hab. por mês (IC 95% [−0,97; +2,52], p = 0,385); pré não plano (p do Wald = 0,020); KP1: ATT médio do pós −110,66 por 10 mil hab. por mês (IC 95% [−429,29; +207,96], p = 0,496); pré compatível com plano (p do Wald = 0,115); KP2: ATT médio do pós +33,66 por 10 mil hab. por mês (IC 95% [−15,15; +82,46], p = 0,176); pré compatível com plano (p do Wald = 0,174); K4.vinculos: ATT médio do pós −0,13 por 10 mil hab. por mês (IC 95% [−0,25; −0,01], p = 0,035); pré compatível com plano (p do Wald = 0,250); K4.horas: ATT médio do pós −1,88 por 10 mil hab. por mês (IC 95% [−3,88; +0,11], p = 0,064); pré compatível com plano (p do Wald = 0,928); K3: ATT médio do pós +32,32 por 10 mil hab. por mês (IC 95% [−23,46; +88,11], p = 0,256); pré compatível com plano (p do Wald = 0,307). 10 de 11 outcomes têm pré compatível com tendências paralelas pelo teste conjunto a 5%. Onde o pré não é plano, a diferença do pós é só uma associação; onde é plano, continua sendo ATT sob tendências paralelas, porque a chegada depende da escolha do candidato, sem fonte de exogeneidade validada. Em K2 (θ médio do pré +2,60 contra ATT do pós +0,77); KP1 (θ médio do pré −126,67 contra ATT do pós −110,66); KP2 (θ médio do pré +29,95 contra ATT do pós +33,66); K4.vinculos (θ médio do pré −0,08 contra ATT do pós −0,13), o θ médio do pré tem o mesmo sinal e pelo menos metade do tamanho do ATT do pós: boa parte da diferença do pós já aparece antes da chegada, em relação ao mês-base, e não pode ser lida como mudança causada pela chegada.
+K1: ATT médio do pós +32,97 por 10 mil hab. por mês (IC 95% [−3,82; +69,75], p = 0,079); pré compatível com plano (p do Wald = 0,538); K1a: ATT médio do pós +31,66 por 10 mil hab. por mês (IC 95% [−9,49; +72,81], p = 0,132); pré compatível com plano (p do Wald = 0,722); K1b: ATT médio do pós +1,41 por 10 mil hab. por mês (IC 95% [−49,46; +52,28], p = 0,957); pré compatível com plano (p do Wald = 0,308); K1c: ATT médio do pós +0,15 por 10 mil hab. por mês (IC 95% [−1,06; +1,37], p = 0,805); pré compatível com plano (p do Wald = 0,240); K1d: ATT médio do pós +66,14 por 10 mil hab. por mês (IC 95% [+1,93; +130,35], p = 0,043); pré compatível com plano (p do Wald = 0,372); K2: ATT médio do pós +0,72 por 10 mil hab. por mês (IC 95% [−1,03; +2,47], p = 0,418); pré não plano (p do Wald = 0,028); KP1: ATT médio do pós −103,15 por 10 mil hab. por mês (IC 95% [−417,13; +210,83], p = 0,520); pré não plano (p do Wald = 0,021); KP2: ATT médio do pós +33,17 por 10 mil hab. por mês (IC 95% [−15,85; +82,20], p = 0,185); pré compatível com plano (p do Wald = 0,260); K4.vinculos: ATT médio do pós −0,13 por 10 mil hab. por mês (IC 95% [−0,26; −0,01], p = 0,031); pré compatível com plano (p do Wald = 0,141); K4.horas: ATT médio do pós −1,89 por 10 mil hab. por mês (IC 95% [−3,88; +0,10], p = 0,063); pré compatível com plano (p do Wald = 0,941); K3: ATT médio do pós +32,32 por 10 mil hab. por mês (IC 95% [−23,46; +88,11], p = 0,256); pré compatível com plano (p do Wald = 0,307). 9 de 11 outcomes têm pré compatível com tendências paralelas pelo teste conjunto a 5%. Onde o pré não é plano, a diferença do pós é só uma associação; onde é plano, continua sendo ATT sob tendências paralelas, porque a chegada depende da escolha do candidato, sem fonte de exogeneidade validada. Em K2 (θ médio do pré +2,37; nos 12 meses antes do mês-base +1,29; ATT do pós +0,72); KP1 (θ médio do pré −128,23; nos 12 meses antes do mês-base −135,30; ATT do pós −103,15); KP2 (θ médio do pré +29,70; nos 12 meses antes do mês-base +13,59; ATT do pós +33,17); K4.vinculos (θ médio do pré −0,06; nos 12 meses antes do mês-base −0,09; ATT do pós −0,13), o θ médio do pré (inteiro ou nos 12 meses antes do mês-base) tem o mesmo sinal e pelo menos metade do tamanho do ATT do pós: boa parte da diferença do pós já aparece antes da chegada, em relação ao mês-base, e não pode ser lida como mudança causada pela chegada. Em K1 (θ médio do pré −27,28; ATT do pós +32,97); K1b (θ médio do pré −24,64; ATT do pós +1,41), o θ médio do pré tem sinal oposto ao do ATT do pós e pelo menos metade do tamanho (auditoria 21): o ATT depende do mês-base (−1); contra a média do pré a diferença seria maior, e uma subida (ou queda) que começou antes da chegada não é descartada pelo teste conjunto, que tem pouco poder contra tendências suaves. O D2 não tem correção para múltiplos testes: 2 de 11 ATT médios do pós têm p < 0,05 (K1d, K4.vinculos), e por acaso, a 5%, esperam-se cerca de 0,6 (auditoria 21).
 <!-- KD2:leitura_d2:fim -->
 
 <!-- KD2:leitura_simples_d2:inicio -->
@@ -1018,16 +1026,16 @@ especialista ativo):
 <!-- KD2:sensibilidade:inicio -->
 | Outcome | Variante | ATT médio do pós | IC 95% | p | Pré: p Wald | Tratados / nunca tratados |
 |---|---|---|---|---|---|---|
-| K1 | sem_alocado_sem_ativo | +22,78 | [−11,26; +56,82] | 0,190 | 0,381 | 315 / 183 |
-| K1a | sem_alocado_sem_ativo | +29,15 | [−11,92; +70,23] | 0,164 | 0,419 | 315 / 183 |
-| K1b | sem_alocado_sem_ativo | −6,78 | [−56,41; +42,85] | 0,789 | 0,345 | 315 / 183 |
-| K1c | sem_alocado_sem_ativo | +0,26 | [−1,03; +1,54] | 0,694 | 0,233 | 315 / 183 |
-| K1d | sem_alocado_sem_ativo | +51,17 | [−11,86; +114,21] | 0,112 | 0,113 | 315 / 183 |
-| K2 | sem_alocado_sem_ativo | +1,08 | [−0,74; +2,89] | 0,244 | 0,195 | 315 / 183 |
-| KP1 | sem_alocado_sem_ativo | −177,26 | [−540,19; +185,67] | 0,338 | 0,133 | 315 / 183 |
-| KP2 | sem_alocado_sem_ativo | +28,39 | [−23,15; +79,93] | 0,280 | 0,079 | 315 / 183 |
-| K4.vinculos | sem_alocado_sem_ativo | −0,10 | [−0,22; +0,02] | 0,114 | 0,342 | 315 / 183 |
-| K4.horas | sem_alocado_sem_ativo | −1,48 | [−3,45; +0,49] | 0,142 | 0,904 | 315 / 183 |
+| K1 | sem_alocado_sem_ativo | +24,73 | [−9,28; +58,75] | 0,154 | 0,460 | 295 / 203 |
+| K1a | sem_alocado_sem_ativo | +30,53 | [−10,35; +71,41] | 0,143 | 0,591 | 295 / 203 |
+| K1b | sem_alocado_sem_ativo | −5,97 | [−56,04; +44,11] | 0,815 | 0,509 | 295 / 203 |
+| K1c | sem_alocado_sem_ativo | +0,13 | [−1,16; +1,43] | 0,842 | 0,389 | 295 / 203 |
+| K1d | sem_alocado_sem_ativo | +52,55 | [−11,42; +116,53] | 0,107 | 0,114 | 295 / 203 |
+| K2 | sem_alocado_sem_ativo | +1,01 | [−0,81; +2,83] | 0,278 | 0,195 | 295 / 203 |
+| KP1 | sem_alocado_sem_ativo | −163,37 | [−519,04; +192,30] | 0,368 | 0,029 | 295 / 203 |
+| KP2 | sem_alocado_sem_ativo | +27,82 | [−24,13; +79,77] | 0,294 | 0,148 | 295 / 203 |
+| K4.vinculos | sem_alocado_sem_ativo | −0,10 | [−0,23; +0,02] | 0,096 | 0,191 | 295 / 203 |
+| K4.horas | sem_alocado_sem_ativo | −1,50 | [−3,47; +0,48] | 0,137 | 0,957 | 295 / 203 |
 | K3 | sem_alocado_sem_ativo | +32,64 | [−22,71; +87,99] | 0,248 | 0,248 | 164 / 334 |
 <!-- KD2:sensibilidade:fim -->
 
@@ -1036,26 +1044,26 @@ Resumo do estudo de evento por janela (θ(e) mês a mês no CSV e nas figuras):
 <!-- KD2:evento:inicio -->
 | Outcome | Janela | Tempos de evento estimados | p < 0,05 | maior abs(θ) | θ médio |
 |---|---|---|---|---|---|
-| K1 | pre | 23 | 0 | 242,91 | −20,80 |
-| K1 | pos | 10 | 1 | 103,02 | +31,37 |
-| K1a | pre | 23 | 0 | 31,92 | +1,27 |
-| K1a | pos | 10 | 0 | 48,78 | +30,73 |
-| K1b | pre | 23 | 0 | 247,14 | −21,22 |
-| K1b | pos | 10 | 0 | 58,62 | +0,59 |
-| K1c | pre | 23 | 0 | 6,35 | −0,15 |
-| K1c | pos | 10 | 0 | 1,47 | +0,23 |
-| K1d | pre | 23 | 0 | 290,10 | +9,15 |
-| K1d | pos | 10 | 1 | 161,50 | +65,03 |
-| K2 | pre | 23 | 10 | 5,42 | +2,60 |
-| K2 | pos | 10 | 1 | 2,16 | +0,77 |
-| KP1 | pre | 23 | 1 | 356,71 | −126,67 |
-| KP1 | pos | 10 | 0 | 201,40 | −110,66 |
-| KP2 | pre | 23 | 0 | 83,31 | +29,95 |
-| KP2 | pos | 10 | 1 | 71,51 | +33,66 |
-| K4.vinculos | pre | 22 | 0 | 0,29 | −0,08 |
+| K1 | pre | 23 | 0 | 259,89 | −27,28 |
+| K1 | pos | 10 | 1 | 105,24 | +32,97 |
+| K1a | pre | 23 | 0 | 32,37 | −1,88 |
+| K1a | pos | 10 | 1 | 48,78 | +31,66 |
+| K1b | pre | 23 | 0 | 264,25 | −24,64 |
+| K1b | pos | 10 | 0 | 59,29 | +1,41 |
+| K1c | pre | 23 | 0 | 6,84 | −0,06 |
+| K1c | pos | 10 | 0 | 1,14 | +0,15 |
+| K1d | pre | 23 | 0 | 303,78 | +2,42 |
+| K1d | pos | 10 | 1 | 164,38 | +66,14 |
+| K2 | pre | 23 | 6 | 5,14 | +2,37 |
+| K2 | pos | 10 | 0 | 2,07 | +0,72 |
+| KP1 | pre | 23 | 1 | 367,66 | −128,23 |
+| KP1 | pos | 10 | 0 | 201,40 | −103,15 |
+| KP2 | pre | 23 | 0 | 87,15 | +29,70 |
+| KP2 | pos | 10 | 0 | 70,11 | +33,17 |
+| K4.vinculos | pre | 22 | 0 | 0,28 | −0,06 |
 | K4.vinculos | pos | 10 | 4 | 0,21 | −0,13 |
-| K4.horas | pre | 22 | 0 | 1,53 | +0,01 |
-| K4.horas | pos | 10 | 1 | 3,25 | −1,88 |
+| K4.horas | pre | 22 | 0 | 1,72 | −0,16 |
+| K4.horas | pos | 10 | 2 | 3,11 | −1,89 |
 | K3 | pre | 23 | 0 | 51,17 | +5,22 |
 | K3 | pos | 6 | 0 | 64,25 | +32,32 |
 <!-- KD2:evento:fim -->
@@ -1073,7 +1081,7 @@ D1 (DiRD nos cortes, U, empilhado). Sinal de cada margem pelo IC 95% ('sobe' = I
 <!-- K:leitura_substituicao:fim -->
 
 <!-- KD2:leitura_substituicao_d2:inicio -->
-D2 (chegada, ATT médio do pós). Sinal de cada margem pelo IC 95% ('sobe' = IC acima de zero; 'cai' = abaixo; 'indeterminado' = inclui zero): SUS nas CBO-alvo (K1): indeterminado; vínculos não SUS das CBO-alvo (K4.vinculos): cai; horas não SUS das CBO-alvo (K4.horas): indeterminado; consultas SUS + planos nas CBO-alvo (K3, coortes até 2025-12): indeterminado; SUS dos especialistas fora das CBO-alvo (KP2): indeterminado. Nenhum dos três padrões do §5 (migração, ganho líquido, remanejamento) aparece, porque nenhuma das margens necessárias tem IC que exclua zero no sentido exigido. Isso não mostra ausência de substituição: mostra que os dados não a distinguem de zero.
+D2 (chegada, ATT médio do pós). Sinal de cada margem pelo IC 95% ('sobe' = IC acima de zero; 'cai' = abaixo; 'indeterminado' = inclui zero): SUS nas CBO-alvo (K1): indeterminado; vínculos não SUS das CBO-alvo (K4.vinculos): cai; horas não SUS das CBO-alvo (K4.horas): indeterminado; consultas SUS + planos nas CBO-alvo (K3, coortes até 2025-12): indeterminado; SUS dos especialistas fora das CBO-alvo (KP2): indeterminado. Nenhum dos três padrões do §5 (migração, ganho líquido, remanejamento) aparece, porque nenhuma das margens necessárias tem IC que exclua zero no sentido exigido. Isso não mostra ausência de substituição: mostra que os dados não a distinguem de zero. Ressalva (auditoria 21): em K4.vinculos o θ médio do pré (inteiro ou nos 12 meses antes do mês-base) tem o mesmo sinal e pelo menos metade do ATT do pós, então o sinal dessa margem não se lê como mudança causada pela chegada.
 <!-- KD2:leitura_substituicao_d2:fim -->
 
 "Privado" aqui é a capacidade não SUS no CNES (K4) e o que os planos pagam
@@ -1130,8 +1138,11 @@ Todas com o bloco "COMO LER" dentro da imagem, no estilo de
   quebra de série.
 - **D2.** A lista nominal é um retrato de quem estava ativo; a coorte trimestral
   data a chegada pelo início do trimestre (o tratamento efetivo pode começar até
-  dois meses depois); as coortes de 2026 têm poucos meses de pós; o ATT do pós
-  médio mistura tempos de evento com coortes diferentes.
+  dois meses depois, então os meses 0 e 1 entram no ATT do pós e o diluem);
+  município cuja 1ª chegada é posterior ao fim da série do outcome fica como
+  ainda não tratado (correção da auditoria 21, tabela da amostra); as coortes
+  de 2026 têm poucos meses de pós; o ATT do pós médio mistura tempos de evento
+  com coortes diferentes; o D2 não tem correção para múltiplos testes.
 - **Poder.** O MDE das primárias está na tabela da seção 4: efeitos menores que
   ele não seriam detectados.
 
@@ -1160,6 +1171,7 @@ Todas com o bloco "COMO LER" dentro da imagem, no estilo de
 | 2026-10-19 | esclarecimento | K4 no D2 | K4 entra como duas linhas, vínculos e horas não SUS; o CNES é trimestral antes de 202406, então tempos de evento sem competência ficam sem ATT (não são preenchidos). |
 | 2026-10-19 | esclarecimento | inferência | bootstrap multiplicador (Mammen) implementado no script, sem pacote externo; a unidade do bootstrap é o município, que é o cluster pedido. O IF de θ(e) inclui o termo da estimação dos pesos de coorte. |
 | 2026-10-19 | esclarecimento | tratado fora da amostra | município da lista nominal que não ofereceu célula nos ciclos 1 ou 2 (ou sem IVS/população) fica fora e é contado no resumo. |
+| 2026-10-19 | correcao (auditoria 21) | chegada depois do fim da série | município cuja 1ª chegada é posterior ao último mês da série do outcome (202605 em SIA, SIH e CNES) fica como ainda não tratado em todo o horizonte, como pede o §5 D2 (controles: ainda não tratados). A versão anterior testava o início do trimestre e contava como tratadas, desde 202604, as chegadas de 202606. A correção não olha resultado: segue a regra que o próprio script declarava. |
 <!-- KD2:desvios:fim -->
 
 ## 12. Entradas (D1)

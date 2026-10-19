@@ -8,6 +8,31 @@
 
 ---
 
+## 19/10/2026 — Auditoria independente da família K (auditoria 21)
+
+Motivo: auditoria do commit `1c35900` (doc 50, scripts 21 e 22) com código
+próprio. Veredito: aprovado com correções. O D1 não muda. O D2 passa a tratar
+como ainda não tratados os municípios cuja 1ª chegada é posterior ao fim da
+série. As figuras foram refeitas, e o teste de integridade de rótulos foi
+corrigido para não estourar a memória.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/21_auditoria_producao_K.md`](auditorias/21_auditoria_producao_K.md) | achados, tabela de recálculo independente (outcomes, D1, D2), correções e observações para o autor |
+
+Fora de `docs/`, foram alterados:
+- `scripts/rdd_bolsa/21_producao_dird.py`: figuras e frase gerada do estudo de
+  evento;
+- `22_chegada_pmme_evento.py`: data de tratamento, leituras geradas e figuras;
+- `23_estimar_contagem_vagas.py`: opção `rotulo_salto`, com o padrão
+  inalterado;
+- `tests/test_producao_K.py` e `tests/test_integridade_dados.py`;
+- as saídas `K_D1_figuras/`, `K_D2_*` e as tabelas geradas do doc 50.
+
+---
+
 ## 19/10/2026 — Resultados da família K: produção especializada (doc 50)
 
 Motivo: execução do protocolo

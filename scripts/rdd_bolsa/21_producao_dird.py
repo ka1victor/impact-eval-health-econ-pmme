@@ -1157,19 +1157,34 @@ def _rotulo_unidade(spec: dict) -> str:
     return "procedimentos por 10 mil habitantes por mês"
 
 
+def _o_que(spec: dict) -> str:
+    """Substantivo do outcome para os guias de leitura (auditoria 21: K4 é capacidade, não produção)."""
+    if spec["unidade"] == "fracao":
+        return "da participação do SUS nas consultas"
+    if spec["fonte"] == "CNES":
+        return "dos vínculos não SUS" if spec["medida"] == "vinculos_nao_sus" else "das horas semanais não SUS"
+    if spec["fonte"] == "SIH":
+        return "das cirurgias com internação (AIH)"
+    return "da produção"
+
+
 def legenda_dird(spec: dict) -> str:
+    por_hab = "" if spec["unidade"] == "fracao" else ", por 10 mil habitantes"
     return (
-        "COMO LER. Para cada município calcula-se quanto a produção mudou: a média mensal no pós "
+        f"COMO LER. Para cada município calcula-se a mudança {_o_que(spec)}: a média mensal no pós "
         f"({_mes_txt(spec['pos'][0])} a {_mes_txt(spec['pos'][-1])}) menos a média mensal no pré "
-        f"({_mes_txt(COMP_PRE[0])} a {_mes_txt(COMP_PRE[-1])}), por 10 mil habitantes. Cada ponto é a média dessa mudança "
+        f"({_mes_txt(COMP_PRE[0])} a {_mes_txt(COMP_PRE[-1])}){por_hab}. Cada ponto é a média dessa mudança "
         "entre os municípios de uma faixa de IVS de largura 0,010 (o tamanho do ponto é o número de municípios); azul: "
         "faixa dentro da janela usada na estimativa (IVS a menos de 0,050 do corte); cinza: fora da janela, só para "
-        "contexto. As retas são ajustadas separadamente de cada lado do corte (municípios mais perto do corte pesam "
-        "mais), com a faixa clara do IC 95%. A seta laranja é o salto no corte: quanto a produção cresceu a mais (ou a "
-        "menos) do lado de bolsa maior, à direita, do que do lado de bolsa menor, à esquerda. Salto com IC 95% que cruza "
-        "zero quer dizer que não se vê diferença. Em 0,300 a bolsa passa de R$ 10 mil para R$ 15 mil por mês; em 0,400, "
-        "de R$ 15 mil para R$ 20 mil. Por usar a mudança, o que já era diferente no corte antes do PMM-E sai da conta; o "
-        "que outras políticas com o mesmo corte mudaram no mesmo período, não. EMPIRICO.")
+        "contexto. A média de uma faixa pode ficar longe das outras por causa de um único município com mudança muito "
+        "grande (por 10 mil habitantes, isso acontece sobretudo em municípios pequenos). As "
+        "retas são ajustadas separadamente de cada lado do corte (municípios mais perto do corte pesam mais), com a "
+        "faixa clara do IC 95%. A seta laranja no corte é o salto: quanto essa mudança foi maior (ou menor) do lado de "
+        "bolsa maior, à direita, do que do lado de bolsa menor, à esquerda; o valor e o IC 95% estão no título de cada "
+        "painel (a seta pode ser curta demais para ver). Salto com IC 95% que cruza zero quer dizer que não se vê "
+        "diferença, não que a diferença seja zero. Em 0,300 a bolsa passa de R$ 10 mil para R$ 15 mil por mês; em "
+        "0,400, de R$ 15 mil para R$ 20 mil. Por usar a mudança, o que já era diferente no corte antes do PMM-E sai da "
+        "conta; o que outras políticas com o mesmo corte mudaram no mesmo período, não. EMPIRICO.")
 
 
 def figura_dird(spec: dict, d: pd.DataFrame, est: pd.DataFrame, caminho: Path) -> dict:
@@ -1198,21 +1213,32 @@ def figura_dird(spec: dict, d: pd.DataFrame, est: pd.DataFrame, caminho: Path) -
     ylab = ("Mudança da participação do SUS (pós − pré)" if spec["unidade"] == "fracao" else
             f"Mudança entre pré e pós (média mensal),\n{_rotulo_unidade(spec)}")
     N23.desenhar(paineis, f"{spec['id']} — {spec['desc']}: mudança entre pré e pós nos cortes (U)", ylab,
-                 "IVS 2010 oficial do município", legenda_dird(spec), caminho)
+                 "IVS 2010 oficial do município", legenda_dird(spec), caminho, rotulo_salto=False)
     return {"arquivo": rotulo(caminho), "outcome_id": spec["id"], "populacao": "U", "tipo": "dird", "paineis": meta}
 
 
-def legenda_evento(spec: dict) -> str:
+def _atos_principais() -> list[tuple[str, str]]:
+    return [(d, r) for d, r, _, principal in DATAS_POLITICAS if principal]
+
+
+def legenda_evento(spec: dict, *, com_sensibilidade: bool = True) -> str:
+    atos = "; ".join(f"{k} = {r}" for k, (_, r) in enumerate(_atos_principais(), 1))
+    o_que = _o_que(spec)
+    por_hab = "" if spec["unidade"] == "fracao" else ", por 10 mil habitantes"
+    sens = "; azul mais claro: meses fora do pós principal, só da sensibilidade" if com_sensibilidade else ""
+    cnes = (" O CNES só tem competências trimestrais antes de jun/2024, por isso há menos pontos nesse trecho."
+            if spec["fonte"] == "CNES" else "")
     return (
         "COMO LER. Cada ponto azul compara, num mês, os municípios logo acima do corte (bolsa maior) com os logo abaixo "
-        "(bolsa menor): é o salto no corte da produção daquele mês menos a de junho de 2025 (quadrado preto, fixado em "
-        "zero), por 10 mil habitantes. A barra vertical é o IC 95% de cada mês. Antes do PMM-E (faixa cinza, pré; à "
+        f"(bolsa menor): é o salto no corte {o_que} daquele mês menos o de junho de 2025 (quadrado preto, fixado em "
+        f"zero){por_hab}. A barra vertical é o IC 95% de cada mês. Antes do PMM-E (faixa cinza, pré; à "
         "esquerda dela, 2022 a 2024) os pontos deveriam ficar em torno de zero: se já se afastam de zero antes, a "
-        "diferença entre os lados não vem da bolsa. Depois do início do ciclo 1 (faixa azul, pós; azul mais claro: "
-        "meses fora do pós principal) um efeito da bolsa apareceria como pontos acima de zero (mais produção do lado "
-        "de bolsa maior) ou abaixo (menos). Linhas vermelhas tracejadas: quadro e início dos ciclos 1 e 2 do PMM-E e "
-        "as portarias de 2023-2024 com o mesmo corte; pontilhadas cinza: outros atos com o mesmo corte (auditoria 18). "
-        "Painéis: corte 0,300 (R$ 10 mil -> 15 mil), corte 0,400 (R$ 15 mil -> 20 mil) e os dois juntos. EMPIRICO.")
+        "diferença entre os lados não vem da bolsa. Os meses em branco entre o pré e o pós (jul a set/2025) são de "
+        f"transição e não entram nas médias. Depois do início do ciclo 1 (faixa azul, pós{sens}) um efeito da bolsa "
+        "apareceria como pontos acima de zero (valor maior do lado de bolsa maior) ou abaixo (menor)." + cnes +
+        " Linhas vermelhas tracejadas, numeradas no alto do primeiro painel: " + atos + ". Pontilhadas cinza: outros "
+        "atos com o mesmo corte (auditoria 18). Painéis: corte 0,300 (R$ 10 mil -> 15 mil), corte 0,400 (R$ 15 mil -> "
+        "20 mil) e os dois juntos. EMPIRICO.")
 
 
 def figura_evento(spec: dict, ev: pd.DataFrame, caminho: Path) -> dict:
@@ -1228,13 +1254,14 @@ def figura_evento(spec: dict, ev: pd.DataFrame, caminho: Path) -> dict:
 
     cortes = [ROTULO_CORTE[c] for c in (*CORTES, EMPILHADO)]
     titulos = {"0.300": "corte 0,300", "0.400": "corte 0,400", EMPILHADO: "cortes 0,300 e 0,400 juntos"}
-    texto = textwrap.wrap(legenda_evento(spec), 175)
+    meses = sorted(ev["competencia"].astype(str).unique())
+    pos = spec["pos"]
+    com_sens = meses[-1] > pos[-1]
+    texto = textwrap.wrap(legenda_evento(spec, com_sensibilidade=com_sens), 175)
     h_txt = 0.16 * len(texto) + 0.3
     fig = plt.figure(figsize=(12.5, 3.0 * len(cortes) + 1.4 + h_txt), facecolor=SUPERFICIE)
     altura = 3.0 * len(cortes) + 1.4 + h_txt
     eixos = []
-    meses = sorted(ev["competencia"].astype(str).unique())
-    pos = spec["pos"]
     for i, c in enumerate(cortes):
         ax = fig.add_axes([0.08, (h_txt + 0.9 + 3.0 * (len(cortes) - 1 - i) + 0.35) / altura, 0.9, 2.45 / altura])
         ax.set_facecolor(SUPERFICIE)
@@ -1246,7 +1273,7 @@ def figura_evento(spec: dict, ev: pd.DataFrame, caminho: Path) -> dict:
                    color=COR_PRE, linewidth=0, zorder=0)
         ax.axvspan(data(pos[0]) - dt.timedelta(days=15), data(pos[-1]) + dt.timedelta(days=15), color=COR_POS,
                    linewidth=0, zorder=0)
-        if meses[-1] > pos[-1]:
+        if com_sens:
             ax.axvspan(data(pos[-1]) + dt.timedelta(days=15), data(meses[-1]) + dt.timedelta(days=15),
                        color=COR_POS_SENS, linewidth=0, zorder=0)
         ax.axhline(0, color=TINTA_2, linewidth=0.9)
@@ -1273,18 +1300,20 @@ def figura_evento(spec: dict, ev: pd.DataFrame, caminho: Path) -> dict:
         ax.tick_params(labelbottom=False)
     eixos[-1].set_xlabel("mês (SIA e SIH: mês de processamento; TISS: mês de realização; CNES: competência)",
                          fontsize=9, color=TINTA_2)
-    yl = eixos[0].get_ylim()
-    for dd, rot_, _, principal in DATAS_POLITICAS:
-        if principal:
-            eixos[0].text(dt.date.fromisoformat(dd), yl[1], " " + rot_, rotation=90, va="top", ha="right", fontsize=6.5,
-                          color=COR_ATO)
+    # Números dos atos principais acima do primeiro painel, fora da área dos dados (auditoria 21: o rótulo vertical
+    # dentro do painel cobria pontos e barras); a chave dos números está no "COMO LER".
+    for k, (dd, _) in enumerate(_atos_principais(), 1):
+        eixos[0].annotate(str(k), xy=(dt.date.fromisoformat(dd), 1.0), xycoords=("data", "axes fraction"),
+                          xytext=(0, 2), textcoords="offset points", ha="center", va="bottom", fontsize=7.5,
+                          fontweight="bold", color=COR_ATO, annotation_clip=False)
     handles = [Line2D([], [], marker="o", linestyle="", color=COR_PONTO, label="salto no mês (lado de bolsa maior − menor)"),
                Line2D([], [], color=COR_IC, linewidth=1.2, label="IC 95% do mês"),
                Line2D([], [], marker="s", linestyle="", color=TINTA, label="jun/2025 = referência (zero)"),
-               Patch(color=COR_PRE, label="pré"), Patch(color=COR_POS, label="pós principal"),
-               Patch(color=COR_POS_SENS, label="meses só da sensibilidade"),
-               Line2D([], [], color=COR_ATO, linestyle="--", label="PMM-E e portarias principais"),
-               Line2D([], [], color="#9ca3af", linestyle=":", label="outros atos com o mesmo corte")]
+               Patch(color=COR_PRE, label="pré"), Patch(color=COR_POS, label="pós principal")]
+    if com_sens:
+        handles.append(Patch(color=COR_POS_SENS, label="meses só da sensibilidade"))
+    handles += [Line2D([], [], color=COR_ATO, linestyle="--", label="PMM-E e portarias principais (números no alto)"),
+                Line2D([], [], color="#9ca3af", linestyle=":", label="outros atos com o mesmo corte")]
     fig.legend(handles=handles, loc="center", ncol=4, fontsize=8, frameon=False,
                bbox_to_anchor=(0.5, (h_txt + 0.45) / altura))
     fig.suptitle(f"{spec['id']} — {spec['desc']}\nestudo de evento: {_rotulo_unidade(spec)} (U)", fontsize=10.5,
@@ -1554,18 +1583,33 @@ def gerar_leitura(est: pd.DataFrame, ev: pd.DataFrame) -> dict[str, str]:
         (f"{rej} das {len(PRIMARIAS)} primárias rejeita(m) zero a 5% depois do Holm." if rej else
          f"Nenhuma das {len(PRIMARIAS)} primárias rejeita zero a 5% depois do Holm."))
     # Pré-tendências do estudo de evento (U, empilhado): meses do pré e do pré extra com p < 0,05.
-    partes = []
+    partes, muitos = [], []
     for oid in PRIMARIAS + ["KP1", "KP2"]:
         e = ev[(ev["outcome_id"] == oid) & (ev["populacao"] == "U") & (ev["corte"] == EMPILHADO)
                & ~ev["referencia"].astype(bool)]
         pre = e[e["janela"].isin(["pre_extra", "entre_pre_extra_e_pre", "pre"])]
         pos = e[e["janela"] == "pos"]
-        partes.append(f"{oid}: {int((pre['p_valor'] < 0.05).sum())} de {int(pre['tau'].notna().sum())} meses antes de "
+        n_rej, n_pre = int((pre["p_valor"] < 0.05).sum()), int(pre["tau"].notna().sum())
+        if n_pre and n_rej >= 0.15 * n_pre:      # 3x os 5% esperados por acaso (auditoria 21)
+            tau_todos = e["tau"].astype(float).dropna()       # todos os meses (antes e depois de jun/2025)
+            mesmo_sinal = max((tau_todos > 0).mean(), (tau_todos < 0).mean())
+            muitos.append((oid, float(mesmo_sinal)))
+        partes.append(f"{oid}: {n_rej} de {n_pre} meses antes de "
                       f"jun/2025 com p < 0,05; no pós principal, {int((pos['p_valor'] < 0.05).sum())} de "
                       f"{int(pos['tau'].notna().sum())}")
+    nota = ""
+    for oid, ms in muitos:
+        nota += (f" Em {oid}, a fração de meses antes de jun/2025 com p < 0,05 passa de três vezes os 5% esperados por "
+                 "acaso: a descontinuidade no corte de jun/2025 difere da dos outros meses.")
+        if ms >= 0.8:
+            nota += (f" Como {_n(100 * ms, 0, sinal=False)} % dos saltos mensais, antes e depois de jun/2025, têm o "
+                     "mesmo sinal, o padrão é o de um mês de referência atípico, e não necessariamente de uma "
+                     "tendência; a DiRD, que compara médias de janelas, não depende desse mês.")
+        else:
+            nota += " A descontinuidade varia no tempo antes do PMM-E, e a DiRD só remove a parte fixa no tempo."
     t["leitura_evento"] = ("Estudo de evento, cortes empilhados, U (mês a mês contra jun/2025): " + "; ".join(partes) +
                            ". Com 5% de nível, cerca de 1 mês em 20 dá p < 0,05 por acaso, sem correção para muitos "
-                           "meses.")
+                           "meses." + nota)
     # Placebos.
     partes = []
     for oid in ("KP1", "KP2", "KP1.mfc"):

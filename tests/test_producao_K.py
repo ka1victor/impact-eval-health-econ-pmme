@@ -16,6 +16,7 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import math
 import re
 import sys
 import unittest
@@ -250,6 +251,15 @@ class TestSinteticoRegras(unittest.TestCase):
         self.assertEqual(D2.trimestre_inicio("202604"), "202604")
         self.assertEqual(D2.trimestre_inicio("202612"), "202610")
 
+    def test_chegada_depois_do_fim_da_serie_fica_ainda_nao_tratada(self) -> None:
+        """Auditoria 21: o teste do fim da série é no mês da chegada, não no início do trimestre."""
+        meses = list(K._meses("202601", "202605"))
+        ch = pd.DataFrame({"chegada": ["202603", "202604", "202606", None],
+                           "coorte": ["202601", "202604", "202604", None]})
+        G, coortes = D2.indices_coorte(ch, meses)
+        self.assertEqual(G.tolist(), [0, 3, -1, -1])
+        self.assertEqual(coortes, [0, 3])
+
     def test_substituicao(self) -> None:
         sobe, cai, zero = ({"ic95_inf": 1, "ic95_sup": 2}, {"ic95_inf": -2, "ic95_sup": -1},
                            {"ic95_inf": -1, "ic95_sup": 1})
@@ -469,6 +479,183 @@ class TestSaidasReaisD2(unittest.TestCase):
         self.assertEqual(set(no_doc), set(geradas))
         for k, v in geradas.items():
             self.assertEqual(no_doc[k], v, f"bloco KD2:{k} do doc 50 difere das saidas")
+
+
+def _meses_aud(a: str, b: str) -> list[str]:
+    out, y, m = [], int(a[:4]), int(a[4:])
+    while f"{y}{m:02d}" <= b:
+        out.append(f"{y}{m:02d}")
+        m += 1
+        if m == 13:
+            y, m = y + 1, 1
+    return out
+
+
+def _wls_aud(X, y, w, cluster=None):
+    """MQP com EP HC1 (sem cluster) ou CR1; escrito à parte, sem a rdd_lib (auditoria 21)."""
+    A = np.linalg.inv((X.T * w) @ X)
+    b = A @ ((X.T * w) @ y)
+    sc = X * (w * (y - X @ b))[:, None]
+    n, k = X.shape
+    if cluster is None:
+        return b, A @ (sc.T @ sc) @ A * n / (n - k)
+    _, ix = np.unique(cluster, return_inverse=True)
+    G = ix.max() + 1
+    S = np.zeros((G, k))
+    np.add.at(S, ix, sc)
+    return b, A @ (S.T @ S) @ A * (G / (G - 1)) * ((n - 1) / (n - k))
+
+
+def _rdd_aud(s, y, corte, h=50):
+    """Local linear triangular; corte 300/400 (HC1) ou 'emp' (interceptos e inclinações por corte, salto comum, CR1)."""
+    cortes = [300, 400] if corte == "emp" else [corte]
+    cols, Y, W, ids = [], [], [], []
+    for j, c in enumerate(cortes):
+        x = s - c
+        k = np.where(np.abs(x) < h, 1 - np.abs(x) / h, 0.0)
+        ok = (k > 0) & np.isfinite(y)
+        xx, T = x[ok] / 1000, (x[ok] > 0).astype(float)
+        bloco = np.zeros((ok.sum(), 3 * len(cortes) + 1))
+        bloco[:, 3 * j:3 * j + 3] = np.column_stack([np.ones(ok.sum()), xx, T * xx])
+        bloco[:, -1] = T
+        cols.append(bloco), Y.append(y[ok]), W.append(k[ok]), ids.append(np.flatnonzero(ok))
+    b, V = _wls_aud(np.vstack(cols), np.concatenate(Y), np.concatenate(W),
+                    np.concatenate(ids) if corte == "emp" else None)
+    return float(b[-1]), float(np.sqrt(V[-1, -1]))
+
+
+@unittest.skipUnless(EST1.exists() and EST2.exists(), "saidas da familia K ausentes")
+class TestRecalculoIndependenteAuditoria21(unittest.TestCase):
+    """Auditoria 21: outcomes refeitos dos painéis de aquisição e estimadores escritos à parte (sem importar 21/22)."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        import pyarrow.parquet as pq
+        aq = ROOT / "output" / "aquisicao"
+        a08 = pd.read_csv(aq / "a08_ivs_2010_oficial_municipio.csv", dtype={"co_ibge": str})
+        pop = pd.read_csv(aq / "populacao_censo2022_municipios.csv", dtype={"co_ibge_6d": str})
+        u = a08.assign(co_ibge=a08["co_ibge"].str[:6]).merge(
+            pop.rename(columns={"co_ibge_6d": "co_ibge"})[["co_ibge", "populacao_2022"]], on="co_ibge")
+        u = u[u["populacao_2022"] > 0].set_index("co_ibge").sort_index()
+        cls.u, cls.s = u, np.round(u["ivs"].astype(float).to_numpy() * 1000)
+        meses = _meses_aud("202201", "202607")
+        sia = {}
+        for conj in ("alvo_pmme", "especialistas_nao_alvo"):
+            df = pq.read_table(aq / "sia" / "painel_sia_municipio_mes_subgrupo_cbo.parquet",
+                               columns=["co_ibge", "competencia_processamento", "subgrupo", "qtd_aprovada"],
+                               filters=[("conjunto_cbo", "=", conj)]).to_pandas()
+            sg = df["subgrupo"].astype(str)
+            df = df[(sg == "0301") | sg.str[:2].isin(["02", "04", "09"])]
+            df = df.assign(cons=df["subgrupo"].astype(str) == "0301",
+                           co=df["co_ibge"].astype(str), cp=df["competencia_processamento"].astype(str))
+            for nome, sub in (("tudo", df), ("cons", df[df["cons"]])):
+                sia[(conj, nome)] = (sub.groupby(["co", "cp"])["qtd_aprovada"].sum().unstack("cp")
+                                     .reindex(columns=meses).fillna(0.0).reindex(u.index))
+            del df
+        sih = pd.read_parquet(aq / "sih" / "painel_sih_municipio_mes_grupo.parquet",
+                              columns=["co_ibge", "competencia", "grupo", "aih_aprovadas", "status"],
+                              filters=[("grupo", "=", "04")])
+        sih["v"] = sih["aih_aprovadas"].astype(float).where(sih["status"] != "ausente_uf_mes_sem_dado")
+        tiss = pd.read_parquet(aq / "tiss" / "painel_tiss_municipio_mes_tipo_cbo.parquet",
+                               columns=["co_ibge", "competencia_realizacao", "grupo_cbo", "tipo_procedimento",
+                                        "qt_itens", "status_cobertura"],
+                               filters=[("grupo_cbo", "=", "alvo_pmme"), ("tipo_procedimento", "=", "consultas")])
+        tiss["v"] = tiss["qt_itens"].astype(float).where(~tiss["status_cobertura"].str.startswith("ausente"))
+        cls.num = {
+            "K1": sia[("alvo_pmme", "tudo")],
+            "K1d": sia[("alvo_pmme", "tudo")] + sia[("especialistas_nao_alvo", "tudo")],
+            "K2": sih.pivot(index="co_ibge", columns="competencia", values="v").reindex(columns=meses).reindex(u.index),
+            "K3": sia[("alvo_pmme", "cons")].reindex(columns=_meses_aud("202201", "202512"))
+            + tiss.pivot(index="co_ibge", columns="competencia_realizacao", values="v").reindex(u.index),
+        }
+        cls.est, cls.est2 = K.ler_saidas()[0], D2.ler_saidas()[0]
+
+    def _taxa(self, oid):
+        return self.num[oid].div(self.u["populacao_2022"], axis=0) * 1e4
+
+    def test_primarias_d1_e_holm(self) -> None:
+        pre, pos = _meses_aud("202406", "202506"), {"K1": _meses_aud("202510", "202605"),
+                                                    "K2": _meses_aud("202510", "202605"),
+                                                    "K3": _meses_aud("202510", "202512")}
+        ps = {}
+        for oid in ("K1", "K2", "K3"):
+            r = self._taxa(oid)
+            ypre = r[pre].mean(axis=1)
+            delta = (r[pos[oid]].mean(axis=1) - ypre).to_numpy()
+            for corte, rot in ((300, "0.300"), (400, "0.400"), ("emp", "empilhado")):
+                tau, ep = _rdd_aud(self.s, delta, corte)
+                ln = self.est[(self.est["outcome_id"] == oid) & (self.est["populacao"] == "U")
+                              & (self.est["corte"] == rot) & (self.est["especificacao"] == "principal")].iloc[0]
+                self.assertAlmostEqual(tau, ln["tau"], places=8, msg=f"{oid} {rot}")
+                self.assertAlmostEqual(ep, ln["ep"], places=8, msg=f"{oid} {rot}")
+                self.assertAlmostEqual(2.8 * ep, ln["mde"], places=8)
+                if corte == "emp":
+                    ps[oid] = math.erfc(abs(tau / ep) / math.sqrt(2))
+                    x = np.concatenate([self.s - 300, self.s - 400])
+                    yp = np.concatenate([ypre.to_numpy()] * 2)
+                    ok = (x > -50) & (x <= 0) & np.isfinite(np.concatenate([delta] * 2))
+                    self.assertAlmostEqual(tau / yp[ok].mean(), ln["efeito_relativo"], places=8)
+        ordem = sorted(ps, key=ps.get)
+        acum = 0.0
+        for k_, oid in enumerate(ordem):
+            acum = max(acum, min(1.0, (3 - k_) * ps[oid]))
+            h = self.est[(self.est["outcome_id"] == oid) & self.est["entra_holm"].astype(bool)].iloc[0]
+            self.assertAlmostEqual(acum, h["p_holm"], places=8)
+
+    def test_d2_att_e_pretendencia_k1_k1d(self) -> None:
+        """Callaway–Sant'Anna à parte: ATT médio do pós e Wald do pré de K1 e K1d (amostra, coortes e chegada)."""
+        vm = pd.read_parquet(ROOT / "output" / "rdd_bolsa" / "outcomes" / "outcomes_V_municipio.parquet",
+                             columns=["ciclo", "co_ibge"])
+        am = sorted(set(vm.loc[vm["ciclo"].isin([1, 2]), "co_ibge"].astype(str).str[:6]) & set(self.u.index))
+        nom = pd.read_csv(ROOT / "data" / "pmm_especialistas_nominal.csv", usecols=["co_ibge", "dt_inicio_atividade"],
+                          dtype=str)
+        cheg = (nom.assign(co=nom["co_ibge"].str[:6], m=nom["dt_inicio_atividade"].str[:7].str.replace("-", ""))
+                .groupby("co")["m"].min().reindex(am))
+        meses = _meses_aud("202201", "202605")
+        pos_m = {m: i for i, m in enumerate(meses)}
+        G = np.array([-1 if not isinstance(c, str) or c > meses[-1]
+                      else pos_m[f"{c[:4]}{3 * ((int(c[4:]) - 1) // 3) + 1:02d}"] for c in cheg])
+        self.assertEqual((len(am), int(cheg.notna().sum())), (598, 315))
+        for oid in ("K1", "K1d"):
+            Y = self._taxa(oid).loc[am, meses].to_numpy()
+            N = len(am)
+            th, IF = {}, {}
+            for e in range(-24, 10):
+                if e == -1:
+                    continue
+                atts, infs, pis = [], [], []
+                for g in sorted(set(G[G >= 0])):
+                    t, b = g + e, g - 1
+                    if t < 0 or t >= Y.shape[1]:
+                        continue
+                    dy = Y[:, t] - Y[:, b]
+                    ok = np.isfinite(dy)
+                    tr, ct = (G == g) & ok, ((G < 0) | (G > max(t, b))) & (G != g) & ok
+                    if tr.sum() < 1 or ct.sum() < 2:
+                        continue
+                    inf = np.zeros(N)
+                    inf[tr] = (dy[tr] - dy[tr].mean()) / tr.mean()
+                    inf[ct] = -(dy[ct] - dy[ct].mean()) / ct.mean()
+                    atts.append(dy[tr].mean() - dy[ct].mean()), infs.append((g, inf)), pis.append(np.mean(G == g))
+                if not atts:
+                    continue
+                pis, atts = np.array(pis), np.array(atts)
+                w = pis / pis.sum()
+                th[e] = float(w @ atts)
+                Dm = np.column_stack([(G == g).astype(float) - p for (g, _), p in zip(infs, pis)])
+                ifw = Dm / pis.sum() - Dm.sum(axis=1, keepdims=True) * pis[None, :] / pis.sum() ** 2
+                IF[e] = sum(wi * f for wi, (_, f) in zip(w, infs)) + ifw @ atts
+            post = [e for e in range(0, 10) if e in th]
+            pre = [e for e in range(-24, -1) if e in th]
+            P, v = np.column_stack([IF[e] for e in pre]), np.array([th[e] for e in pre])
+            V = P.T @ P / N ** 2
+            wald = float(v @ np.linalg.pinv(V) @ v)
+            r = self.est2[(self.est2["outcome_id"] == oid) & (self.est2["variante"] == "principal")].set_index(
+                "estatistica")
+            self.assertAlmostEqual(np.mean([th[e] for e in post]), r.loc["att_pos_medio", "valor"], places=8)
+            self.assertAlmostEqual(np.sqrt(np.sum(np.mean([IF[e] for e in post], axis=0) ** 2)) / N,
+                                   r.loc["att_pos_medio", "ep_analitico"], places=8)
+            self.assertAlmostEqual(wald, r.loc["pretendencia_wald", "valor"], places=6)
 
 
 @unittest.skipUnless(DOC.exists(), "doc 50 ausente")
