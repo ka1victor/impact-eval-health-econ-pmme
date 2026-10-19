@@ -19,6 +19,26 @@
     "NAO_LIGADO: motivo = nome e curso em outro municipio / nome em outro curso / sem correspondente",
     "AMBIGUO e INCERTO ficam fora do outcome (NaN com motivo)"
   ],
+  "ordem_de_execucao": [
+    "1a execucao com a regra estreita (INCERTO so por similaridade): impressos as taxas de ligacao, os motivos e a tabela descritiva de permanencia por ciclo e faixa",
+    "diagnostico de quase-correspondencias (nomes com o mesmo 1o nome e partes em comum, sem chave exata); o criterio de partes foi acrescentado DEPOIS de vista a tabela de permanencia por faixa da regra estreita e ANTES de abrir qualquer estimativa RDD",
+    "as duas regras sao relatadas: regra_ligacao nas saidas (estreita fora do BKY)",
+    "auditoria independente (19/10/2026): rotulos de adicao ao protocolo (X2.3, X2.4 e especificacoes empilhadas) e de condicionamento acrescentados sem mudar estimativa"
+  ],
+  "horizonte_por_ciclo": {
+    "ciclo_1": {
+      "x2_mediana_meses_inicio_ate_retrato_set": 11.761806981519507,
+      "x2_inicio_min": "2025-09-11",
+      "x2_inicio_max": "2025-11-24",
+      "x3_mediana_meses_inicio_ate_retrato_ago": 10.743326488706366
+    },
+    "ciclo_2": {
+      "x2_mediana_meses_inicio_ate_retrato_set": 5.3552361396303905,
+      "x2_inicio_min": "2026-03-25",
+      "x2_inicio_max": "2026-08-24",
+      "x3_mediana_meses_inicio_ate_retrato_ago": 4.369609856262834
+    }
+  },
   "eventos_de_alocacao": {
     "c1_confirmacao": {
       "arquivo": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
@@ -243,12 +263,12 @@
     }
   ],
   "saidas": {
-    "X2_pessoas.csv": "acd13c090804bbdf49b5706448841dd13d78a446f69fa0adfb45e32528c2a494",
+    "X2_pessoas.csv": "025be816f00a4818b7e4a664ba9c46fd16982f57ce12f531be8efd75c2c18fc5",
     "X2_celulas.csv": "507802b555f67e4f56b1e18311abc8da046218e469510bbefa0856f86e316ad5",
     "X2_municipios.csv": "a83775a39fc1e8280302df76833cada08df2cc31a397cb9b2e147117d2e06be0",
-    "X2_descritivo.csv": "dc87d0e75347348e511cb45a4418a80d84c2f79f7db6e65035278dc574d0ddd8",
+    "X2_descritivo.csv": "867180fd38f58c80c5d56e3ecebac406abace96aa5af327b5f4f540fa04384c0",
     "X2_motivos_ligacao.csv": "c1b01101a1494eee349b9e30320ecb929e907666072392d365b2b6674f6bad72",
-    "X2_estimativas.csv": "7a8e5a965bf1bc790fcaaa2868838dbe886be283a3807f5947b873667f79f60b"
+    "X2_estimativas.csv": "e69f6c3ecbb07856aadaef47a4eddc28402da8070d267b1ade12e27c859e41c6"
   },
   "linguagem": "exploratorio pos-resultado; permanencia no municipio de alocacao no retrato, nao retencao individual completa (saida antes do retrato e retorno nao sao observados separadamente)"
 }

@@ -36,10 +36,16 @@
     ativo ligado a dois alocados: AMBÍGUO.
   - Sem chave exata, mas com um ativo não ligado no mesmo curso e município e
     nome próximo: INCERTO. Nome próximo é similaridade ≥ 0,85 ou o mesmo
-    primeiro nome com ao menos duas partes do nome em comum. O critério das
-    partes entrou depois de um diagnóstico de quase-correspondências e antes de
-    qualquer estimativa RDD ser aberta. Ele só reclassifica alocados de "sem
-    correspondente" para INCERTO.
+    primeiro nome com ao menos duas partes do nome em comum. Ele só
+    reclassifica alocados de "sem correspondente" para INCERTO.
+  - **Ordem de execução (divulgação).** A primeira execução usou a regra
+    estreita, com INCERTO só por similaridade. Ela imprimiu as taxas de
+    ligação, os motivos e a tabela de permanência por ciclo e faixa. Só depois
+    de ver essa tabela entrou o critério das partes (regra ampla), após um
+    diagnóstico de quase-correspondências. Nenhuma estimativa RDD tinha sido
+    aberta. As duas regras estão nas saídas (coluna `regra_ligacao`). A ampla
+    é a principal e a única no BKY. A estreita aparece ao lado, na seção
+    "Regra estreita".
   - O resto é NÃO LIGADO, com o motivo.
   - AMBÍGUO e INCERTO ficam fora do outcome.
   - O CRM entra entre os dois retratos de ativos: a relação nominal de
@@ -50,15 +56,21 @@
     de alocação, por célula e por município. São condicionais a preencher e
     recebem limites de Lee, com seleção = ter alocado determinado.
   - X2.3: célula com alocado ainda ativo. X2.4: alocados ainda ativos por
-    célula oferecida. Os dois são incondicionais.
+    célula oferecida. Os dois são incondicionais e são **adições ao
+    protocolo**: o §3 do doc 45 não os lista.
 - **Estimação.**
   - Local linear sharp no IVS 2010 oficial (a08), cortes 0,300 e 0,400,
     h = 0,050, kernel triangular. Células com CR1 por município; municípios
     com HC1.
-  - Também: cortes empilhados, ciclos empilhados (interceptos por ciclo) e
-    tudo empilhado.
-  - Lee só por ciclo e corte (a biblioteca não tem Lee empilhado). q de BKY
-    sobre todas as linhas X2 com p.
+  - Também, como **adições ao protocolo** (o §3 do X2 não as lista; o §2 só
+    cita cortes empilhados de forma genérica): cortes empilhados, ciclos
+    empilhados (interceptos por ciclo) e tudo empilhado.
+  - Ciclos empilhados misturam horizontes de seguimento diferentes. O ciclo 1
+    começou bem antes do ciclo 2 (horizontes medianos no bloco "Leitura").
+  - Lee só por ciclo e corte (a biblioteca não tem Lee empilhado).
+  - Colunas `no_protocolo_45`, `rotulo` e `condicionamento` em
+    `X2_estimativas.csv`. `q_bky` cobre todas as linhas X2 com p da regra
+    ampla. `q_bky_so_protocolo` cobre só as do §3.
 
 **O que o outcome mede.** Mede presença, no retrato, no município de
 alocação. Não observa a data de saída, nem a diferença entre não começar e
@@ -144,63 +156,134 @@ Nas linhas `limites_lee`, τ é o local linear ingênuo nos selecionados. O
 efeito só é limitado pelo par Lee [inf; sup], e o IC de Lee é conservador.
 
 <!-- X2:estimativas:inicio -->
-| Outcome | Ciclo | Corte | Especificação | τ | IC 95% | p | q BKY | Lee [inf; sup] | IC 95% Lee | n abaixo/acima |
-|---|---|---|---|---:|---|---:|---:|---|---|---|
-| X2.1 | 1 | 0.300 | principal | 0,130 | [−0,302; 0,562] | 0,555 | 1,000 | — | — | 31/35 |
-| X2.1 | 1 | 0.300 | limites_lee | 0,130 | — | — | — | [0,035; 0,339] | [−0,465; 0,777] | 31/35 |
-| X2.1 | 1 | 0.400 | principal | −0,055 | [−0,356; 0,246] | 0,719 | 1,000 | — | — | 41/25 |
-| X2.1 | 1 | 0.400 | limites_lee | −0,055 | — | — | — | [−0,063; −0,032] | [−0,364; 0,264] | 41/25 |
-| X2.1 | 1 | empilhado | cortes_empilhados | 0,037 | [−0,232; 0,306] | 0,789 | 1,000 | — | — | 72/60 |
-| X2.1 | 2 | 0.300 | principal | −0,021 | [−0,256; 0,213] | 0,858 | 1,000 | — | — | 53/45 |
-| X2.1 | 2 | 0.300 | limites_lee | −0,021 | — | — | — | [−0,399; 0,312] | [−0,609; 0,603] | 53/45 |
-| X2.1 | 2 | 0.400 | principal | −0,093 | [−0,305; 0,118] | 0,388 | 1,000 | — | — | 42/45 |
-| X2.1 | 2 | 0.400 | limites_lee | −0,093 | — | — | — | [−0,140; 0,034] | [−0,392; 0,192] | 42/45 |
-| X2.1 | 2 | empilhado | cortes_empilhados | −0,057 | [−0,218; 0,103] | 0,485 | 1,000 | — | — | 95/90 |
-| X2.1 | 1+2 | 0.300 | ciclos_empilhados | 0,031 | [−0,209; 0,270] | 0,802 | 1,000 | — | — | 64/58 |
-| X2.1 | 1+2 | 0.400 | ciclos_empilhados | −0,080 | [−0,241; 0,081] | 0,329 | 1,000 | — | — | 59/57 |
-| X2.1 | 1+2 | empilhado | ciclos_e_cortes_empilhados | −0,025 | [−0,173; 0,123] | 0,743 | 1,000 | — | — | 123/115 |
-| X2.2 | 1 | 0.300 | principal | 0,035 | [−0,456; 0,525] | 0,890 | 1,000 | — | — | 31/35 |
-| X2.2 | 1 | 0.300 | limites_lee | 0,035 | — | — | — | [0,039; 0,041] | [−0,452; 0,531] | 31/35 |
-| X2.2 | 1 | 0.400 | principal | 0,062 | [−0,322; 0,445] | 0,753 | 1,000 | — | — | 41/25 |
-| X2.2 | 1 | 0.400 | limites_lee | 0,062 | — | — | — | [−0,292; 0,295] | [−0,614; 0,664] | 41/25 |
-| X2.2 | 1 | empilhado | cortes_empilhados | 0,050 | [−0,253; 0,353] | 0,746 | 1,000 | — | — | 72/60 |
-| X2.2 | 2 | 0.300 | principal | −0,078 | [−0,425; 0,269] | 0,661 | 1,000 | — | — | 53/45 |
-| X2.2 | 2 | 0.300 | limites_lee | −0,078 | — | — | — | [−0,288; 0,028] | [−0,601; 0,364] | 53/45 |
-| X2.2 | 2 | 0.400 | principal | −0,109 | [−0,335; 0,116] | 0,341 | 1,000 | — | — | 42/45 |
-| X2.2 | 2 | 0.400 | limites_lee | −0,109 | — | — | — | [−0,140; 0,020] | [−0,388; 0,192] | 42/45 |
-| X2.2 | 2 | empilhado | cortes_empilhados | −0,094 | [−0,298; 0,109] | 0,364 | 1,000 | — | — | 95/90 |
-| X2.2 | 1+2 | 0.300 | ciclos_empilhados | −0,039 | [−0,344; 0,266] | 0,802 | 1,000 | — | — | 64/58 |
-| X2.2 | 1+2 | 0.400 | ciclos_empilhados | −0,042 | [−0,229; 0,144] | 0,656 | 1,000 | — | — | 59/57 |
-| X2.2 | 1+2 | empilhado | ciclos_e_cortes_empilhados | −0,041 | [−0,214; 0,132] | 0,643 | 1,000 | — | — | 123/115 |
-| X2.3 | 1 | 0.300 | principal | 0,003 | [−0,200; 0,205] | 0,978 | 1,000 | — | — | 61/53 |
-| X2.3 | 1 | 0.400 | principal | −0,037 | [−0,245; 0,171] | 0,725 | 1,000 | — | — | 53/41 |
-| X2.3 | 1 | empilhado | cortes_empilhados | −0,016 | [−0,162; 0,130] | 0,832 | 1,000 | — | — | 114/94 |
-| X2.3 | 2 | 0.300 | principal | −0,175 | [−0,361; 0,011] | 0,066 | 1,000 | — | — | 82/61 |
-| X2.3 | 2 | 0.400 | principal | 0,007 | [−0,243; 0,258] | 0,954 | 1,000 | — | — | 52/53 |
-| X2.3 | 2 | empilhado | cortes_empilhados | −0,099 | [−0,248; 0,051] | 0,197 | 1,000 | — | — | 134/114 |
-| X2.3 | 1+2 | 0.300 | ciclos_empilhados | −0,100 | [−0,246; 0,046] | 0,180 | 1,000 | — | — | 100/80 |
-| X2.3 | 1+2 | 0.400 | ciclos_empilhados | −0,014 | [−0,186; 0,159] | 0,878 | 1,000 | — | — | 69/71 |
-| X2.3 | 1+2 | empilhado | ciclos_e_cortes_empilhados | −0,062 | [−0,173; 0,049] | 0,271 | 1,000 | — | — | 169/151 |
-| X2.4 | 1 | 0.300 | principal | −0,007 | [−0,286; 0,271] | 0,959 | 1,000 | — | — | 59/53 |
-| X2.4 | 1 | 0.400 | principal | −0,011 | [−0,325; 0,303] | 0,945 | 1,000 | — | — | 47/38 |
-| X2.4 | 1 | empilhado | cortes_empilhados | −0,009 | [−0,221; 0,202] | 0,931 | 1,000 | — | — | 106/91 |
-| X2.4 | 2 | 0.300 | principal | −0,088 | [−0,382; 0,207] | 0,559 | 1,000 | — | — | 74/56 |
-| X2.4 | 2 | 0.400 | principal | −0,339 | [−1,160; 0,482] | 0,419 | 1,000 | — | — | 48/50 |
-| X2.4 | 2 | empilhado | cortes_empilhados | −0,200 | [−0,606; 0,206] | 0,334 | 1,000 | — | — | 122/106 |
-| X2.4 | 1+2 | 0.300 | ciclos_empilhados | −0,055 | [−0,278; 0,168] | 0,628 | 1,000 | — | — | 97/79 |
-| X2.4 | 1+2 | 0.400 | ciclos_empilhados | −0,176 | [−0,598; 0,246] | 0,413 | 1,000 | — | — | 66/68 |
-| X2.4 | 1+2 | empilhado | ciclos_e_cortes_empilhados | −0,114 | [−0,351; 0,123] | 0,344 | 1,000 | — | — | 163/147 |
+| Outcome | Ciclo | Corte | Especificação | Protocolo | τ | IC 95% | p | q BKY | q BKY só protocolo | Lee [inf; sup] | IC 95% Lee | n abaixo/acima |
+|---|---|---|---|---|---:|---|---:|---:|---:|---|---|---|
+| X2.1 | 1 | 0.300 | principal | sim | 0,130 | [−0,302; 0,562] | 0,555 | 1,000 | 1,000 | — | — | 31/35 |
+| X2.1 | 1 | 0.300 | limites_lee | sim | 0,130 | — | — | — | — | [0,035; 0,339] | [−0,465; 0,777] | 31/35 |
+| X2.1 | 1 | 0.400 | principal | sim | −0,055 | [−0,356; 0,246] | 0,719 | 1,000 | 1,000 | — | — | 41/25 |
+| X2.1 | 1 | 0.400 | limites_lee | sim | −0,055 | — | — | — | — | [−0,063; −0,032] | [−0,364; 0,264] | 41/25 |
+| X2.1 | 1 | empilhado | cortes_empilhados | adição | 0,037 | [−0,232; 0,306] | 0,789 | 1,000 | — | — | — | 72/60 |
+| X2.1 | 2 | 0.300 | principal | sim | −0,021 | [−0,256; 0,213] | 0,858 | 1,000 | 1,000 | — | — | 53/45 |
+| X2.1 | 2 | 0.300 | limites_lee | sim | −0,021 | — | — | — | — | [−0,399; 0,312] | [−0,609; 0,603] | 53/45 |
+| X2.1 | 2 | 0.400 | principal | sim | −0,093 | [−0,305; 0,118] | 0,388 | 1,000 | 1,000 | — | — | 42/45 |
+| X2.1 | 2 | 0.400 | limites_lee | sim | −0,093 | — | — | — | — | [−0,140; 0,034] | [−0,392; 0,192] | 42/45 |
+| X2.1 | 2 | empilhado | cortes_empilhados | adição | −0,057 | [−0,218; 0,103] | 0,485 | 1,000 | — | — | — | 95/90 |
+| X2.1 | 1+2 | 0.300 | ciclos_empilhados | adição | 0,031 | [−0,209; 0,270] | 0,802 | 1,000 | — | — | — | 64/58 |
+| X2.1 | 1+2 | 0.400 | ciclos_empilhados | adição | −0,080 | [−0,241; 0,081] | 0,329 | 1,000 | — | — | — | 59/57 |
+| X2.1 | 1+2 | empilhado | ciclos_e_cortes_empilhados | adição | −0,025 | [−0,173; 0,123] | 0,743 | 1,000 | — | — | — | 123/115 |
+| X2.2 | 1 | 0.300 | principal | sim | 0,035 | [−0,456; 0,525] | 0,890 | 1,000 | 1,000 | — | — | 31/35 |
+| X2.2 | 1 | 0.300 | limites_lee | sim | 0,035 | — | — | — | — | [0,039; 0,041] | [−0,452; 0,531] | 31/35 |
+| X2.2 | 1 | 0.400 | principal | sim | 0,062 | [−0,322; 0,445] | 0,753 | 1,000 | 1,000 | — | — | 41/25 |
+| X2.2 | 1 | 0.400 | limites_lee | sim | 0,062 | — | — | — | — | [−0,292; 0,295] | [−0,614; 0,664] | 41/25 |
+| X2.2 | 1 | empilhado | cortes_empilhados | adição | 0,050 | [−0,253; 0,353] | 0,746 | 1,000 | — | — | — | 72/60 |
+| X2.2 | 2 | 0.300 | principal | sim | −0,078 | [−0,425; 0,269] | 0,661 | 1,000 | 1,000 | — | — | 53/45 |
+| X2.2 | 2 | 0.300 | limites_lee | sim | −0,078 | — | — | — | — | [−0,288; 0,028] | [−0,601; 0,364] | 53/45 |
+| X2.2 | 2 | 0.400 | principal | sim | −0,109 | [−0,335; 0,116] | 0,341 | 1,000 | 1,000 | — | — | 42/45 |
+| X2.2 | 2 | 0.400 | limites_lee | sim | −0,109 | — | — | — | — | [−0,140; 0,020] | [−0,388; 0,192] | 42/45 |
+| X2.2 | 2 | empilhado | cortes_empilhados | adição | −0,094 | [−0,298; 0,109] | 0,364 | 1,000 | — | — | — | 95/90 |
+| X2.2 | 1+2 | 0.300 | ciclos_empilhados | adição | −0,039 | [−0,344; 0,266] | 0,802 | 1,000 | — | — | — | 64/58 |
+| X2.2 | 1+2 | 0.400 | ciclos_empilhados | adição | −0,042 | [−0,229; 0,144] | 0,656 | 1,000 | — | — | — | 59/57 |
+| X2.2 | 1+2 | empilhado | ciclos_e_cortes_empilhados | adição | −0,041 | [−0,214; 0,132] | 0,643 | 1,000 | — | — | — | 123/115 |
+| X2.3 | 1 | 0.300 | principal | adição | 0,003 | [−0,200; 0,205] | 0,978 | 1,000 | — | — | — | 61/53 |
+| X2.3 | 1 | 0.400 | principal | adição | −0,037 | [−0,245; 0,171] | 0,725 | 1,000 | — | — | — | 53/41 |
+| X2.3 | 1 | empilhado | cortes_empilhados | adição | −0,016 | [−0,162; 0,130] | 0,832 | 1,000 | — | — | — | 114/94 |
+| X2.3 | 2 | 0.300 | principal | adição | −0,175 | [−0,361; 0,011] | 0,066 | 1,000 | — | — | — | 82/61 |
+| X2.3 | 2 | 0.400 | principal | adição | 0,007 | [−0,243; 0,258] | 0,954 | 1,000 | — | — | — | 52/53 |
+| X2.3 | 2 | empilhado | cortes_empilhados | adição | −0,099 | [−0,248; 0,051] | 0,197 | 1,000 | — | — | — | 134/114 |
+| X2.3 | 1+2 | 0.300 | ciclos_empilhados | adição | −0,100 | [−0,246; 0,046] | 0,180 | 1,000 | — | — | — | 100/80 |
+| X2.3 | 1+2 | 0.400 | ciclos_empilhados | adição | −0,014 | [−0,186; 0,159] | 0,878 | 1,000 | — | — | — | 69/71 |
+| X2.3 | 1+2 | empilhado | ciclos_e_cortes_empilhados | adição | −0,062 | [−0,173; 0,049] | 0,271 | 1,000 | — | — | — | 169/151 |
+| X2.4 | 1 | 0.300 | principal | adição | −0,007 | [−0,286; 0,271] | 0,959 | 1,000 | — | — | — | 59/53 |
+| X2.4 | 1 | 0.400 | principal | adição | −0,011 | [−0,325; 0,303] | 0,945 | 1,000 | — | — | — | 47/38 |
+| X2.4 | 1 | empilhado | cortes_empilhados | adição | −0,009 | [−0,221; 0,202] | 0,931 | 1,000 | — | — | — | 106/91 |
+| X2.4 | 2 | 0.300 | principal | adição | −0,088 | [−0,382; 0,207] | 0,559 | 1,000 | — | — | — | 74/56 |
+| X2.4 | 2 | 0.400 | principal | adição | −0,339 | [−1,160; 0,482] | 0,419 | 1,000 | — | — | — | 48/50 |
+| X2.4 | 2 | empilhado | cortes_empilhados | adição | −0,200 | [−0,606; 0,206] | 0,334 | 1,000 | — | — | — | 122/106 |
+| X2.4 | 1+2 | 0.300 | ciclos_empilhados | adição | −0,055 | [−0,278; 0,168] | 0,628 | 1,000 | — | — | — | 97/79 |
+| X2.4 | 1+2 | 0.400 | ciclos_empilhados | adição | −0,176 | [−0,598; 0,246] | 0,413 | 1,000 | — | — | — | 66/68 |
+| X2.4 | 1+2 | empilhado | ciclos_e_cortes_empilhados | adição | −0,114 | [−0,351; 0,123] | 0,344 | 1,000 | — | — | — | 163/147 |
 <!-- X2:estimativas:fim -->
+
+### Regra estreita (divulgação)
+
+Esta é a permanência por ciclo e faixa com a regra estreita, a da tabela
+impressa na primeira execução. Ela é recalculada pelo script.
+
+<!-- X2:descritivo_estreita:inicio -->
+| Ciclo | Subgrupo | Faixa | Alocados | Ligados | Não ligados | Ambíguos | Incertos | Ligação | Permanência (11/09) | Incertos como ativos | Incertos como saídos | Permanência (12/08) | Presença no programa |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | todos | FAIXA 1 | 121 | 79 | 37 | 1 | 4 | 65,3% | 68,1% | 69,2% | 65,8% | 68,1% | 73,3% |
+| 1 | todos | FAIXA 2 | 204 | 109 | 91 | 0 | 4 | 53,4% | 54,5% | 55,4% | 53,4% | 55,0% | 67,0% |
+| 1 | todos | FAIXA 3 | 169 | 61 | 104 | 2 | 2 | 36,1% | 37,0% | 37,7% | 36,5% | 36,4% | 51,5% |
+| 1 | todos | TOTAL | 494 | 249 | 232 | 3 | 10 | 50,4% | 51,8% | 52,7% | 50,7% | 51,8% | 63,2% |
+| 2 | todos | FAIXA 1 | 178 | 128 | 46 | 1 | 3 | 71,9% | 73,6% | 74,0% | 72,3% | 74,1% | 78,2% |
+| 2 | todos | FAIXA 2 | 425 | 297 | 119 | 0 | 9 | 69,9% | 71,4% | 72,0% | 69,9% | 73,6% | 73,8% |
+| 2 | todos | FAIXA 3 | 454 | 242 | 197 | 2 | 13 | 53,3% | 55,1% | 56,4% | 53,5% | 55,8% | 57,6% |
+| 2 | todos | TOTAL | 1057 | 667 | 362 | 3 | 25 | 63,1% | 64,8% | 65,7% | 63,3% | 66,1% | 67,6% |
+<!-- X2:descritivo_estreita:fim -->
+
+As estimativas abaixo comparam as duas regras na mesma especificação. As da
+regra estreita ficam fora do BKY.
+
+<!-- X2:estimativas_estreita:inicio -->
+| Outcome | Ciclo | Corte | Especificação | τ ampla | τ estreita | p ampla | p estreita | Lee ampla | Lee estreita |
+|---|---|---|---|---:|---:|---:|---:|---|---|
+| X2.1 | 1 | 0.300 | principal | 0,130 | 0,144 | 0,555 | 0,516 | — | — |
+| X2.1 | 1 | 0.300 | limites_lee | 0,130 | 0,144 | — | — | [0,035; 0,339] | [0,032; 0,390] |
+| X2.1 | 1 | 0.400 | principal | −0,055 | −0,060 | 0,719 | 0,696 | — | — |
+| X2.1 | 1 | 0.400 | limites_lee | −0,055 | −0,060 | — | — | [−0,063; −0,032] | [−0,073; −0,030] |
+| X2.1 | 1 | empilhado | cortes_empilhados | 0,037 | 0,041 | 0,789 | 0,765 | — | — |
+| X2.1 | 2 | 0.300 | principal | −0,021 | 0,010 | 0,858 | 0,937 | — | — |
+| X2.1 | 2 | 0.300 | limites_lee | −0,021 | 0,010 | — | — | [−0,399; 0,312] | [−0,395; 0,361] |
+| X2.1 | 2 | 0.400 | principal | −0,093 | −0,063 | 0,388 | 0,568 | — | — |
+| X2.1 | 2 | 0.400 | limites_lee | −0,093 | −0,063 | — | — | [−0,140; 0,034] | [−0,103; 0,069] |
+| X2.1 | 2 | empilhado | cortes_empilhados | −0,057 | −0,027 | 0,485 | 0,746 | — | — |
+| X2.1 | 1+2 | 0.300 | ciclos_empilhados | 0,031 | 0,056 | 0,802 | 0,651 | — | — |
+| X2.1 | 1+2 | 0.400 | ciclos_empilhados | −0,080 | −0,062 | 0,329 | 0,452 | — | — |
+| X2.1 | 1+2 | empilhado | ciclos_e_cortes_empilhados | −0,025 | −0,003 | 0,743 | 0,966 | — | — |
+| X2.2 | 1 | 0.300 | principal | 0,035 | 0,035 | 0,890 | 0,890 | — | — |
+| X2.2 | 1 | 0.300 | limites_lee | 0,035 | 0,035 | — | — | [0,039; 0,041] | [0,039; 0,041] |
+| X2.2 | 1 | 0.400 | principal | 0,062 | 0,058 | 0,753 | 0,768 | — | — |
+| X2.2 | 1 | 0.400 | limites_lee | 0,062 | 0,058 | — | — | [−0,292; 0,295] | [−0,296; 0,318] |
+| X2.2 | 1 | empilhado | cortes_empilhados | 0,050 | 0,048 | 0,746 | 0,756 | — | — |
+| X2.2 | 2 | 0.300 | principal | −0,078 | −0,072 | 0,661 | 0,684 | — | — |
+| X2.2 | 2 | 0.300 | limites_lee | −0,078 | −0,072 | — | — | [−0,288; 0,028] | [−0,280; 0,032] |
+| X2.2 | 2 | 0.400 | principal | −0,109 | −0,104 | 0,341 | 0,367 | — | — |
+| X2.2 | 2 | 0.400 | limites_lee | −0,109 | −0,104 | — | — | [−0,140; 0,020] | [−0,134; 0,025] |
+| X2.2 | 2 | empilhado | cortes_empilhados | −0,094 | −0,089 | 0,364 | 0,393 | — | — |
+| X2.2 | 1+2 | 0.300 | ciclos_empilhados | −0,039 | −0,035 | 0,802 | 0,820 | — | — |
+| X2.2 | 1+2 | 0.400 | ciclos_empilhados | −0,042 | −0,041 | 0,656 | 0,669 | — | — |
+| X2.2 | 1+2 | empilhado | ciclos_e_cortes_empilhados | −0,041 | −0,038 | 0,643 | 0,664 | — | — |
+| X2.3 | 1 | 0.300 | principal | 0,003 | 0,005 | 0,978 | 0,965 | — | — |
+| X2.3 | 1 | 0.400 | principal | −0,037 | −0,038 | 0,725 | 0,721 | — | — |
+| X2.3 | 1 | empilhado | cortes_empilhados | −0,016 | −0,015 | 0,832 | 0,838 | — | — |
+| X2.3 | 2 | 0.300 | principal | −0,175 | −0,169 | 0,066 | 0,075 | — | — |
+| X2.3 | 2 | 0.400 | principal | 0,007 | 0,013 | 0,954 | 0,920 | — | — |
+| X2.3 | 2 | empilhado | cortes_empilhados | −0,099 | −0,093 | 0,197 | 0,223 | — | — |
+| X2.3 | 1+2 | 0.300 | ciclos_empilhados | −0,100 | −0,096 | 0,180 | 0,200 | — | — |
+| X2.3 | 1+2 | 0.400 | ciclos_empilhados | −0,014 | −0,011 | 0,878 | 0,901 | — | — |
+| X2.3 | 1+2 | empilhado | ciclos_e_cortes_empilhados | −0,062 | −0,059 | 0,271 | 0,298 | — | — |
+| X2.4 | 1 | 0.300 | principal | −0,007 | −0,001 | 0,959 | 0,992 | — | — |
+| X2.4 | 1 | 0.400 | principal | −0,011 | −0,013 | 0,945 | 0,933 | — | — |
+| X2.4 | 1 | empilhado | cortes_empilhados | −0,009 | −0,008 | 0,931 | 0,941 | — | — |
+| X2.4 | 2 | 0.300 | principal | −0,088 | −0,090 | 0,559 | 0,548 | — | — |
+| X2.4 | 2 | 0.400 | principal | −0,339 | −0,355 | 0,419 | 0,395 | — | — |
+| X2.4 | 2 | empilhado | cortes_empilhados | −0,200 | −0,209 | 0,334 | 0,313 | — | — |
+| X2.4 | 1+2 | 0.300 | ciclos_empilhados | −0,055 | −0,054 | 0,628 | 0,633 | — | — |
+| X2.4 | 1+2 | 0.400 | ciclos_empilhados | −0,176 | −0,186 | 0,413 | 0,387 | — | — |
+| X2.4 | 1+2 | empilhado | ciclos_e_cortes_empilhados | −0,114 | −0,118 | 0,344 | 0,326 | — | — |
+<!-- X2:estimativas_estreita:fim -->
 
 ### Leitura
 
 <!-- X2:leitura:inicio -->
-- Ciclo 1: 494 alocados da 1ª chamada; 50,4% ligados a um ativo no município de alocação em 11/09/2026; permanência entre os determinados 52,3% (12/08/2026: 52,3%).
-- Ciclo 2: 1057 alocados da 1ª chamada; 63,1% ligados a um ativo no município de alocação em 11/09/2026; permanência entre os determinados 65,9% (12/08/2026: 67,2%).
+- Ciclo 1: 494 alocados da 1ª chamada; 50,4% ligados a um ativo no município de alocação em 11/09/2026; permanência entre os determinados 52,3% (12/08/2026: 52,3%); com a regra estreita, 10 incertos (ampla: 15) e permanência 51,8%.
+- Ciclo 2: 1057 alocados da 1ª chamada; 63,1% ligados a um ativo no município de alocação em 11/09/2026; permanência entre os determinados 65,9% (12/08/2026: 67,2%); com a regra estreita, 25 incertos (ampla: 42) e permanência 64,8%.
 - Ciclo 1 por evento final: permanência 82,4% entre os homologados e 0,6% entre os que só tiveram o local confirmado.
+- Horizonte mediano do início de atividade ao retrato de 11/09/2026, entre os ligados: ciclo 1: 11,8 meses; ciclo 2: 5,4 meses.
 - CRM entre os dois retratos: 911 de 911 pessoas ligadas nos dois têm o mesmo CRM.
-- RDD: 36 estimativas com p; 0 com p < 0,05; menor q de BKY = 1,000.
-- Limites de Lee: 8 de 8 ICs de Lee contêm zero.
+- RDD, regra ampla: 36 estimativas com p (8 do protocolo); 0 com p < 0,05; menor q de BKY = 1,000 (só protocolo: 1,000); 8 de 8 ICs de Lee contêm zero.
+- RDD, regra estreita: 36 estimativas com p (8 do protocolo); 0 com p < 0,05; fora do BKY; 8 de 8 ICs de Lee contêm zero.
 <!-- X2:leitura:fim -->
 
 - Os números estão no bloco acima.
@@ -240,9 +323,18 @@ efeito só é limitado pelo par Lee [inf; sup], e o IC de Lee é conservador.
   - A conferência mostrou meses em que municípios da cota somem da listagem.
     O total do mês se mantém, porque alguns municípios aparecem com mais
     ativos que nos meses vizinhos.
-  - Daí uma sensibilidade, declarada antes de abrir qualquer estimativa X3:
-    pico só nos meses sem município da cota ausente (X3.3s–X3.5s, rotulada
-    `ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO`).
+  - Daí uma sensibilidade: pico só nos meses sem município da cota ausente
+    (X3.3s–X3.5s, rotulada `ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO`).
+  - **Ordem de execução (divulgação).** Essa sensibilidade foi definida antes
+    de abrir qualquer estimativa X3. Mas foi definida depois de impressos o
+    descritivo mensal e o descritivo da queda por faixa.
+  - Ela não tira só os meses da redistribuição. Mantém apenas os meses sem
+    município da cota ausente e exclui a maior parte da série (contagem no
+    bloco "Leitura"). Por isso muda a definição do pico, e não só remove o
+    artefato.
+  - A auditoria independente de 19/10/2026, já com os resultados vistos,
+    pediu uma variante que exclui só mai/26 e jun/26 (X3.3m–X3.5m, também
+    adição). As duas estão nas tabelas.
 
 <!-- X3:completude:inicio -->
 | Mês | Municípios listados | Células município × curso | Ativos na série | Cota inferior do retrato | Células com violação | Déficit | Municípios da cota ausentes | Municípios acima dos meses vizinhos | Excesso |
@@ -278,12 +370,12 @@ mensais não são comparáveis entre meses com listagens diferentes.
 <!-- X3:descritivo_mensal:fim -->
 
 <!-- X3:descritivo_queda:inicio -->
-| Faixa | Municípios com ativo em algum mês | Com ativo no último mês | Queda média (ativos) | Queda média por 10 mil | Fração com queda | Queda relativa média | Meses com ativo (média) | Queda média (sensibilidade) | Queda relativa média (sensibilidade) |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| FAIXA 1 | 115 | 112 | 0,078 | 0,016 | 7,0% | 4,1% | 5,93 | 0,053 | 2,1% |
-| FAIXA 2 | 111 | 105 | 2,117 | 0,097 | 29,7% | 12,8% | 6,82 | 0,302 | 5,0% |
-| FAIXA 3 | 131 | 108 | 1,427 | 0,088 | 40,5% | 25,6% | 5,68 | 0,435 | 17,0% |
-| TOTAL | 357 | 325 | 1,207 | 0,068 | 26,3% | 14,7% | 6,11 | 0,268 | 8,4% |
+| Faixa | Municípios com ativo em algum mês | Com ativo no último mês | Queda média (ativos) | Queda média por 10 mil | Fração com queda | Queda relativa média | Meses com ativo (média) | Queda média (meses sem ausência) | Queda relativa média (meses sem ausência) | Queda média (sem mai/jun) | Queda relativa média (sem mai/jun) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| FAIXA 1 | 115 | 112 | 0,078 | 0,016 | 7,0% | 4,1% | 5,93 | 0,053 | 2,1% | 0,078 | 4,1% |
+| FAIXA 2 | 111 | 105 | 2,117 | 0,097 | 29,7% | 12,8% | 6,82 | 0,302 | 5,0% | 0,766 | 11,0% |
+| FAIXA 3 | 131 | 108 | 1,427 | 0,088 | 40,5% | 25,6% | 5,68 | 0,435 | 17,0% | 0,580 | 23,4% |
+| TOTAL | 357 | 325 | 1,207 | 0,068 | 26,3% | 14,7% | 6,11 | 0,268 | 8,4% | 0,476 | 13,4% |
 <!-- X3:descritivo_queda:fim -->
 
 ### RDD mês a mês e da queda
@@ -293,89 +385,111 @@ mensais não são comparáveis entre meses com listagens diferentes.
   - X3.3 a X3.5: queda do pico ao último mês (contagem, por 10 mil habitantes
     e relativa);
   - X3.6: meses listados com ativo.
-- Estimação: local linear sharp, h = 0,050, HC1, cortes 0,300 e 0,400 e
-  empilhado.
-- A nota de cada linha mensal em `X3_estimativas.csv` registra se o mês falha
-  a conferência de completude.
+- Estimação: local linear sharp, h = 0,050, HC1, cortes 0,300 e 0,400. Os
+  cortes empilhados e as duas variantes do pico são **adições ao
+  protocolo**: o §3 do X3 pede RDD mês a mês e da queda.
+- **Condicionamento.**
+  - As RDD mensais condicionam à listagem do mês. Ser listado é
+    pós-tratamento e pode depender do lado do corte.
+  - A queda e os meses com ativo condicionam a ter pico positivo nas
+    listagens, também pós-tratamento.
+  - Não há limites de Lee para esse condicionamento: as linhas são
+    descritivas da população listada, não efeitos sobre todos os municípios.
+- **Horizontes.**
+  - Municípios do ciclo 1 têm seguimento muito mais longo que os do ciclo 2
+    (medianas no bloco "Leitura").
+  - A queda do pico e os meses de abril em diante misturam os dois
+    horizontes, e o empilhamento também.
+- Em `X3_estimativas.csv`, a coluna `condicionamento` e a nota de cada linha
+  mensal registram se o mês falha a conferência de completude.
 
 <!-- X3:estimativas:inicio -->
-| Outcome | Mês | Corte | Especificação | τ | IC 95% | p | q BKY | n abaixo/acima |
-|---|---|---|---|---:|---|---:|---:|---|
-| X3.1 | 2025-12 | 0.300 | principal | 2,800 | [−2,413; 8,013] | 0,293 | 1,000 | 31/36 |
-| X3.1 | 2025-12 | 0.400 | principal | 0,419 | [−2,488; 3,325] | 0,778 | 1,000 | 37/29 |
-| X3.1 | 2025-12 | empilhado | cortes_empilhados | 1,404 | [−1,347; 4,155] | 0,317 | 1,000 | 68/65 |
-| X3.1 | 2026-01 | 0.300 | principal | 1,485 | [−4,454; 7,424] | 0,624 | 1,000 | 27/35 |
-| X3.1 | 2026-01 | 0.400 | principal | 2,040 | [−2,044; 6,124] | 0,328 | 1,000 | 28/20 |
-| X3.1 | 2026-01 | empilhado | cortes_empilhados | 1,764 | [−1,832; 5,361] | 0,336 | 1,000 | 55/55 |
-| X3.1 | 2026-02 | 0.300 | principal | 2,338 | [−2,417; 7,094] | 0,335 | 1,000 | 32/39 |
-| X3.1 | 2026-02 | 0.400 | principal | −0,089 | [−3,043; 2,865] | 0,953 | 1,000 | 36/29 |
-| X3.1 | 2026-02 | empilhado | cortes_empilhados | 1,022 | [−1,675; 3,719] | 0,458 | 1,000 | 68/68 |
-| X3.1 | 2026-03 | 0.300 | principal | 2,700 | [−2,297; 7,696] | 0,290 | 1,000 | 32/38 |
-| X3.1 | 2026-03 | 0.400 | principal | −0,142 | [−3,127; 2,842] | 0,926 | 1,000 | 36/28 |
-| X3.1 | 2026-03 | empilhado | cortes_empilhados | 1,100 | [−1,675; 3,875] | 0,437 | 1,000 | 68/66 |
-| X3.1 | 2026-04 | 0.300 | principal | −1,460 | [−7,735; 4,814] | 0,648 | 1,000 | 54/51 |
-| X3.1 | 2026-04 | 0.400 | principal | −4,434 | [−10,357; 1,489] | 0,142 | 1,000 | 49/57 |
-| X3.1 | 2026-04 | empilhado | cortes_empilhados | −3,213 | [−7,563; 1,138] | 0,148 | 1,000 | 103/108 |
-| X3.1 | 2026-05 | 0.300 | principal | −7,404 | [−20,530; 5,721] | 0,269 | 1,000 | 43/41 |
-| X3.1 | 2026-05 | 0.400 | principal | −4,181 | [−12,465; 4,103] | 0,323 | 1,000 | 34/40 |
-| X3.1 | 2026-05 | empilhado | cortes_empilhados | −5,574 | [−12,912; 1,763] | 0,136 | 1,000 | 77/81 |
-| X3.1 | 2026-06 | 0.300 | principal | −6,954 | [−20,822; 6,915] | 0,326 | 1,000 | 45/42 |
-| X3.1 | 2026-06 | 0.400 | principal | −4,637 | [−14,710; 5,436] | 0,367 | 1,000 | 34/43 |
-| X3.1 | 2026-06 | empilhado | cortes_empilhados | −5,649 | [−13,917; 2,620] | 0,181 | 1,000 | 79/85 |
-| X3.1 | 2026-07 | 0.300 | principal | −4,238 | [−9,759; 1,282] | 0,132 | 1,000 | 75/75 |
-| X3.1 | 2026-07 | 0.400 | principal | −3,693 | [−10,230; 2,844] | 0,268 | 1,000 | 76/75 |
-| X3.1 | 2026-07 | empilhado | cortes_empilhados | −3,942 | [−8,290; 0,406] | 0,076 | 1,000 | 151/150 |
-| X3.1 | 2026-08 | 0.300 | principal | −3,243 | [−10,100; 3,613] | 0,354 | 1,000 | 51/56 |
-| X3.1 | 2026-08 | 0.400 | principal | −4,773 | [−12,291; 2,745] | 0,213 | 1,000 | 48/60 |
-| X3.1 | 2026-08 | empilhado | cortes_empilhados | −4,137 | [−9,366; 1,092] | 0,121 | 1,000 | 99/116 |
-| X3.2 | 2025-12 | 0.300 | principal | 0,239 | [−0,247; 0,726] | 0,335 | 1,000 | 31/36 |
-| X3.2 | 2025-12 | 0.400 | principal | 0,470 | [−1,604; 2,544] | 0,657 | 1,000 | 37/29 |
-| X3.2 | 2025-12 | empilhado | cortes_empilhados | 0,375 | [−0,852; 1,601] | 0,549 | 1,000 | 68/65 |
-| X3.2 | 2026-01 | 0.300 | principal | 0,313 | [−0,191; 0,816] | 0,223 | 1,000 | 27/35 |
-| X3.2 | 2026-01 | 0.400 | principal | 1,331 | [−1,998; 4,660] | 0,433 | 1,000 | 28/20 |
-| X3.2 | 2026-01 | empilhado | cortes_empilhados | 0,825 | [−0,859; 2,509] | 0,337 | 1,000 | 55/55 |
-| X3.2 | 2026-02 | 0.300 | principal | 0,199 | [−0,234; 0,631] | 0,368 | 1,000 | 32/39 |
-| X3.2 | 2026-02 | 0.400 | principal | 0,405 | [−1,688; 2,498] | 0,704 | 1,000 | 36/29 |
-| X3.2 | 2026-02 | empilhado | cortes_empilhados | 0,311 | [−0,835; 1,456] | 0,595 | 1,000 | 68/68 |
-| X3.2 | 2026-03 | 0.300 | principal | 0,217 | [−0,261; 0,694] | 0,374 | 1,000 | 32/38 |
-| X3.2 | 2026-03 | 0.400 | principal | 0,388 | [−1,716; 2,493] | 0,718 | 1,000 | 36/28 |
-| X3.2 | 2026-03 | empilhado | cortes_empilhados | 0,313 | [−0,882; 1,509] | 0,608 | 1,000 | 68/66 |
-| X3.2 | 2026-04 | 0.300 | principal | −0,241 | [−0,674; 0,193] | 0,277 | 1,000 | 54/51 |
-| X3.2 | 2026-04 | 0.400 | principal | −1,629 | [−5,466; 2,209] | 0,405 | 1,000 | 49/57 |
-| X3.2 | 2026-04 | empilhado | cortes_empilhados | −1,059 | [−3,340; 1,223] | 0,363 | 1,000 | 103/108 |
-| X3.2 | 2026-05 | 0.300 | principal | −0,152 | [−0,586; 0,281] | 0,491 | 1,000 | 43/41 |
-| X3.2 | 2026-05 | 0.400 | principal | −2,088 | [−7,075; 2,899] | 0,412 | 1,000 | 34/40 |
-| X3.2 | 2026-05 | empilhado | cortes_empilhados | −1,251 | [−4,110; 1,608] | 0,391 | 1,000 | 77/81 |
-| X3.2 | 2026-06 | 0.300 | principal | −0,117 | [−0,586; 0,353] | 0,626 | 1,000 | 45/42 |
-| X3.2 | 2026-06 | 0.400 | principal | −2,056 | [−7,035; 2,923] | 0,418 | 1,000 | 34/43 |
-| X3.2 | 2026-06 | empilhado | cortes_empilhados | −1,209 | [−4,043; 1,625] | 0,403 | 1,000 | 79/85 |
-| X3.2 | 2026-07 | 0.300 | principal | −0,381 | [−0,711; −0,052] | 0,023 | 1,000 | 75/75 |
-| X3.2 | 2026-07 | 0.400 | principal | −1,023 | [−4,197; 2,150] | 0,527 | 1,000 | 76/75 |
-| X3.2 | 2026-07 | empilhado | cortes_empilhados | −0,730 | [−2,462; 1,002] | 0,409 | 1,000 | 151/150 |
-| X3.2 | 2026-08 | 0.300 | principal | −0,315 | [−0,729; 0,099] | 0,136 | 1,000 | 51/56 |
-| X3.2 | 2026-08 | 0.400 | principal | −1,538 | [−5,400; 2,324] | 0,435 | 1,000 | 48/60 |
-| X3.2 | 2026-08 | empilhado | cortes_empilhados | −1,029 | [−3,301; 1,243] | 0,375 | 1,000 | 99/116 |
-| X3.3 | dez/25-ago/26 | 0.300 | principal | −4,424 | [−9,606; 0,757] | 0,094 | 1,000 | 60/58 |
-| X3.3 | dez/25-ago/26 | 0.400 | principal | −0,086 | [−0,848; 0,675] | 0,824 | 1,000 | 51/61 |
-| X3.3 | dez/25-ago/26 | empilhado | cortes_empilhados | −1,927 | [−4,199; 0,345] | 0,096 | 1,000 | 111/119 |
-| X3.3s | 2026-04,2026-07,2026-08 | 0.300 | sensibilidade_meses_sem_ausencia | −0,432 | [−1,171; 0,306] | 0,251 | 1,000 | 58/56 |
-| X3.3s | 2026-04,2026-07,2026-08 | 0.400 | sensibilidade_meses_sem_ausencia | −0,242 | [−0,545; 0,062] | 0,118 | 1,000 | 49/60 |
-| X3.3s | 2026-04,2026-07,2026-08 | empilhado | sensibilidade_meses_sem_ausencia_cortes_empilhados | −0,324 | [−0,686; 0,037] | 0,079 | 1,000 | 107/116 |
-| X3.4 | dez/25-ago/26 | 0.300 | principal | −0,099 | [−0,186; −0,011] | 0,027 | 1,000 | 60/58 |
-| X3.4 | dez/25-ago/26 | 0.400 | principal | −0,038 | [−0,140; 0,064] | 0,461 | 1,000 | 51/61 |
-| X3.4 | dez/25-ago/26 | empilhado | cortes_empilhados | −0,064 | [−0,133; 0,005] | 0,069 | 1,000 | 111/119 |
-| X3.4s | 2026-04,2026-07,2026-08 | 0.300 | sensibilidade_meses_sem_ausencia | −0,024 | [−0,085; 0,037] | 0,434 | 1,000 | 58/56 |
-| X3.4s | 2026-04,2026-07,2026-08 | 0.400 | sensibilidade_meses_sem_ausencia | 0,006 | [−0,086; 0,098] | 0,894 | 1,000 | 49/60 |
-| X3.4s | 2026-04,2026-07,2026-08 | empilhado | sensibilidade_meses_sem_ausencia_cortes_empilhados | −0,007 | [−0,065; 0,051] | 0,815 | 1,000 | 107/116 |
-| X3.5 | dez/25-ago/26 | 0.300 | principal | −0,250 | [−0,488; −0,013] | 0,039 | 1,000 | 60/58 |
-| X3.5 | dez/25-ago/26 | 0.400 | principal | −0,139 | [−0,311; 0,033] | 0,114 | 1,000 | 51/61 |
-| X3.5 | dez/25-ago/26 | empilhado | cortes_empilhados | −0,186 | [−0,327; −0,045] | 0,010 | 1,000 | 111/119 |
-| X3.5s | 2026-04,2026-07,2026-08 | 0.300 | sensibilidade_meses_sem_ausencia | −0,069 | [−0,275; 0,136] | 0,509 | 1,000 | 58/56 |
-| X3.5s | 2026-04,2026-07,2026-08 | 0.400 | sensibilidade_meses_sem_ausencia | −0,008 | [−0,063; 0,046] | 0,769 | 1,000 | 49/60 |
-| X3.5s | 2026-04,2026-07,2026-08 | empilhado | sensibilidade_meses_sem_ausencia_cortes_empilhados | −0,035 | [−0,129; 0,059] | 0,471 | 1,000 | 107/116 |
-| X3.6 | dez/25-ago/26 | 0.300 | principal | −0,352 | [−2,353; 1,649] | 0,730 | 1,000 | 60/58 |
-| X3.6 | dez/25-ago/26 | 0.400 | principal | −1,148 | [−2,968; 0,671] | 0,216 | 1,000 | 51/61 |
-| X3.6 | dez/25-ago/26 | empilhado | cortes_empilhados | −0,810 | [−2,155; 0,534] | 0,238 | 1,000 | 111/119 |
+| Outcome | Mês | Corte | Especificação | Protocolo | τ | IC 95% | p | q BKY | q BKY só protocolo | n abaixo/acima |
+|---|---|---|---|---|---:|---|---:|---:|---:|---|
+| X3.1 | 2025-12 | 0.300 | principal | sim | 2,800 | [−2,413; 8,013] | 0,293 | 1,000 | 1,000 | 31/36 |
+| X3.1 | 2025-12 | 0.400 | principal | sim | 0,419 | [−2,488; 3,325] | 0,778 | 1,000 | 1,000 | 37/29 |
+| X3.1 | 2025-12 | empilhado | cortes_empilhados | adição | 1,404 | [−1,347; 4,155] | 0,317 | 1,000 | — | 68/65 |
+| X3.1 | 2026-01 | 0.300 | principal | sim | 1,485 | [−4,454; 7,424] | 0,624 | 1,000 | 1,000 | 27/35 |
+| X3.1 | 2026-01 | 0.400 | principal | sim | 2,040 | [−2,044; 6,124] | 0,328 | 1,000 | 1,000 | 28/20 |
+| X3.1 | 2026-01 | empilhado | cortes_empilhados | adição | 1,764 | [−1,832; 5,361] | 0,336 | 1,000 | — | 55/55 |
+| X3.1 | 2026-02 | 0.300 | principal | sim | 2,338 | [−2,417; 7,094] | 0,335 | 1,000 | 1,000 | 32/39 |
+| X3.1 | 2026-02 | 0.400 | principal | sim | −0,089 | [−3,043; 2,865] | 0,953 | 1,000 | 1,000 | 36/29 |
+| X3.1 | 2026-02 | empilhado | cortes_empilhados | adição | 1,022 | [−1,675; 3,719] | 0,458 | 1,000 | — | 68/68 |
+| X3.1 | 2026-03 | 0.300 | principal | sim | 2,700 | [−2,297; 7,696] | 0,290 | 1,000 | 1,000 | 32/38 |
+| X3.1 | 2026-03 | 0.400 | principal | sim | −0,142 | [−3,127; 2,842] | 0,926 | 1,000 | 1,000 | 36/28 |
+| X3.1 | 2026-03 | empilhado | cortes_empilhados | adição | 1,100 | [−1,675; 3,875] | 0,437 | 1,000 | — | 68/66 |
+| X3.1 | 2026-04 | 0.300 | principal | sim | −1,460 | [−7,735; 4,814] | 0,648 | 1,000 | 1,000 | 54/51 |
+| X3.1 | 2026-04 | 0.400 | principal | sim | −4,434 | [−10,357; 1,489] | 0,142 | 1,000 | 1,000 | 49/57 |
+| X3.1 | 2026-04 | empilhado | cortes_empilhados | adição | −3,213 | [−7,563; 1,138] | 0,148 | 1,000 | — | 103/108 |
+| X3.1 | 2026-05 | 0.300 | principal | sim | −7,404 | [−20,530; 5,721] | 0,269 | 1,000 | 1,000 | 43/41 |
+| X3.1 | 2026-05 | 0.400 | principal | sim | −4,181 | [−12,465; 4,103] | 0,323 | 1,000 | 1,000 | 34/40 |
+| X3.1 | 2026-05 | empilhado | cortes_empilhados | adição | −5,574 | [−12,912; 1,763] | 0,136 | 1,000 | — | 77/81 |
+| X3.1 | 2026-06 | 0.300 | principal | sim | −6,954 | [−20,822; 6,915] | 0,326 | 1,000 | 1,000 | 45/42 |
+| X3.1 | 2026-06 | 0.400 | principal | sim | −4,637 | [−14,710; 5,436] | 0,367 | 1,000 | 1,000 | 34/43 |
+| X3.1 | 2026-06 | empilhado | cortes_empilhados | adição | −5,649 | [−13,917; 2,620] | 0,181 | 1,000 | — | 79/85 |
+| X3.1 | 2026-07 | 0.300 | principal | sim | −4,238 | [−9,759; 1,282] | 0,132 | 1,000 | 1,000 | 75/75 |
+| X3.1 | 2026-07 | 0.400 | principal | sim | −3,693 | [−10,230; 2,844] | 0,268 | 1,000 | 1,000 | 76/75 |
+| X3.1 | 2026-07 | empilhado | cortes_empilhados | adição | −3,942 | [−8,290; 0,406] | 0,076 | 1,000 | — | 151/150 |
+| X3.1 | 2026-08 | 0.300 | principal | sim | −3,243 | [−10,100; 3,613] | 0,354 | 1,000 | 1,000 | 51/56 |
+| X3.1 | 2026-08 | 0.400 | principal | sim | −4,773 | [−12,291; 2,745] | 0,213 | 1,000 | 1,000 | 48/60 |
+| X3.1 | 2026-08 | empilhado | cortes_empilhados | adição | −4,137 | [−9,366; 1,092] | 0,121 | 1,000 | — | 99/116 |
+| X3.2 | 2025-12 | 0.300 | principal | sim | 0,239 | [−0,247; 0,726] | 0,335 | 1,000 | 1,000 | 31/36 |
+| X3.2 | 2025-12 | 0.400 | principal | sim | 0,470 | [−1,604; 2,544] | 0,657 | 1,000 | 1,000 | 37/29 |
+| X3.2 | 2025-12 | empilhado | cortes_empilhados | adição | 0,375 | [−0,852; 1,601] | 0,549 | 1,000 | — | 68/65 |
+| X3.2 | 2026-01 | 0.300 | principal | sim | 0,313 | [−0,191; 0,816] | 0,223 | 1,000 | 1,000 | 27/35 |
+| X3.2 | 2026-01 | 0.400 | principal | sim | 1,331 | [−1,998; 4,660] | 0,433 | 1,000 | 1,000 | 28/20 |
+| X3.2 | 2026-01 | empilhado | cortes_empilhados | adição | 0,825 | [−0,859; 2,509] | 0,337 | 1,000 | — | 55/55 |
+| X3.2 | 2026-02 | 0.300 | principal | sim | 0,199 | [−0,234; 0,631] | 0,368 | 1,000 | 1,000 | 32/39 |
+| X3.2 | 2026-02 | 0.400 | principal | sim | 0,405 | [−1,688; 2,498] | 0,704 | 1,000 | 1,000 | 36/29 |
+| X3.2 | 2026-02 | empilhado | cortes_empilhados | adição | 0,311 | [−0,835; 1,456] | 0,595 | 1,000 | — | 68/68 |
+| X3.2 | 2026-03 | 0.300 | principal | sim | 0,217 | [−0,261; 0,694] | 0,374 | 1,000 | 1,000 | 32/38 |
+| X3.2 | 2026-03 | 0.400 | principal | sim | 0,388 | [−1,716; 2,493] | 0,718 | 1,000 | 1,000 | 36/28 |
+| X3.2 | 2026-03 | empilhado | cortes_empilhados | adição | 0,313 | [−0,882; 1,509] | 0,608 | 1,000 | — | 68/66 |
+| X3.2 | 2026-04 | 0.300 | principal | sim | −0,241 | [−0,674; 0,193] | 0,277 | 1,000 | 1,000 | 54/51 |
+| X3.2 | 2026-04 | 0.400 | principal | sim | −1,629 | [−5,466; 2,209] | 0,405 | 1,000 | 1,000 | 49/57 |
+| X3.2 | 2026-04 | empilhado | cortes_empilhados | adição | −1,059 | [−3,340; 1,223] | 0,363 | 1,000 | — | 103/108 |
+| X3.2 | 2026-05 | 0.300 | principal | sim | −0,152 | [−0,586; 0,281] | 0,491 | 1,000 | 1,000 | 43/41 |
+| X3.2 | 2026-05 | 0.400 | principal | sim | −2,088 | [−7,075; 2,899] | 0,412 | 1,000 | 1,000 | 34/40 |
+| X3.2 | 2026-05 | empilhado | cortes_empilhados | adição | −1,251 | [−4,110; 1,608] | 0,391 | 1,000 | — | 77/81 |
+| X3.2 | 2026-06 | 0.300 | principal | sim | −0,117 | [−0,586; 0,353] | 0,626 | 1,000 | 1,000 | 45/42 |
+| X3.2 | 2026-06 | 0.400 | principal | sim | −2,056 | [−7,035; 2,923] | 0,418 | 1,000 | 1,000 | 34/43 |
+| X3.2 | 2026-06 | empilhado | cortes_empilhados | adição | −1,209 | [−4,043; 1,625] | 0,403 | 1,000 | — | 79/85 |
+| X3.2 | 2026-07 | 0.300 | principal | sim | −0,381 | [−0,711; −0,052] | 0,023 | 1,000 | 1,000 | 75/75 |
+| X3.2 | 2026-07 | 0.400 | principal | sim | −1,023 | [−4,197; 2,150] | 0,527 | 1,000 | 1,000 | 76/75 |
+| X3.2 | 2026-07 | empilhado | cortes_empilhados | adição | −0,730 | [−2,462; 1,002] | 0,409 | 1,000 | — | 151/150 |
+| X3.2 | 2026-08 | 0.300 | principal | sim | −0,315 | [−0,729; 0,099] | 0,136 | 1,000 | 1,000 | 51/56 |
+| X3.2 | 2026-08 | 0.400 | principal | sim | −1,538 | [−5,400; 2,324] | 0,435 | 1,000 | 1,000 | 48/60 |
+| X3.2 | 2026-08 | empilhado | cortes_empilhados | adição | −1,029 | [−3,301; 1,243] | 0,375 | 1,000 | — | 99/116 |
+| X3.3 | dez/25-ago/26 | 0.300 | principal | sim | −4,424 | [−9,606; 0,757] | 0,094 | 1,000 | 1,000 | 60/58 |
+| X3.3 | dez/25-ago/26 | 0.400 | principal | sim | −0,086 | [−0,848; 0,675] | 0,824 | 1,000 | 1,000 | 51/61 |
+| X3.3 | dez/25-ago/26 | empilhado | cortes_empilhados | adição | −1,927 | [−4,199; 0,345] | 0,096 | 1,000 | — | 111/119 |
+| X3.3m | 2025-12,2026-01,2026-02,2026-03,2026-04,2026-07,2026-08 | 0.300 | sensibilidade_sem_mai_jun | adição | −0,571 | [−1,844; 0,702] | 0,379 | 1,000 | — | 60/58 |
+| X3.3m | 2025-12,2026-01,2026-02,2026-03,2026-04,2026-07,2026-08 | 0.400 | sensibilidade_sem_mai_jun | adição | −0,208 | [−0,609; 0,194] | 0,311 | 1,000 | — | 51/61 |
+| X3.3m | 2025-12,2026-01,2026-02,2026-03,2026-04,2026-07,2026-08 | empilhado | sensibilidade_sem_mai_jun_cortes_empilhados | adição | −0,362 | [−0,950; 0,226] | 0,228 | 1,000 | — | 111/119 |
+| X3.3s | 2026-04,2026-07,2026-08 | 0.300 | sensibilidade_meses_sem_ausencia | adição | −0,432 | [−1,171; 0,306] | 0,251 | 1,000 | — | 58/56 |
+| X3.3s | 2026-04,2026-07,2026-08 | 0.400 | sensibilidade_meses_sem_ausencia | adição | −0,242 | [−0,545; 0,062] | 0,118 | 1,000 | — | 49/60 |
+| X3.3s | 2026-04,2026-07,2026-08 | empilhado | sensibilidade_meses_sem_ausencia_cortes_empilhados | adição | −0,324 | [−0,686; 0,037] | 0,079 | 1,000 | — | 107/116 |
+| X3.4 | dez/25-ago/26 | 0.300 | principal | sim | −0,099 | [−0,186; −0,011] | 0,027 | 1,000 | 1,000 | 60/58 |
+| X3.4 | dez/25-ago/26 | 0.400 | principal | sim | −0,038 | [−0,140; 0,064] | 0,461 | 1,000 | 1,000 | 51/61 |
+| X3.4 | dez/25-ago/26 | empilhado | cortes_empilhados | adição | −0,064 | [−0,133; 0,005] | 0,069 | 1,000 | — | 111/119 |
+| X3.4m | 2025-12,2026-01,2026-02,2026-03,2026-04,2026-07,2026-08 | 0.300 | sensibilidade_sem_mai_jun | adição | −0,053 | [−0,120; 0,013] | 0,118 | 1,000 | — | 60/58 |
+| X3.4m | 2025-12,2026-01,2026-02,2026-03,2026-04,2026-07,2026-08 | 0.400 | sensibilidade_sem_mai_jun | adição | −0,040 | [−0,141; 0,062] | 0,446 | 1,000 | — | 51/61 |
+| X3.4m | 2025-12,2026-01,2026-02,2026-03,2026-04,2026-07,2026-08 | empilhado | sensibilidade_sem_mai_jun_cortes_empilhados | adição | −0,045 | [−0,110; 0,019] | 0,170 | 1,000 | — | 111/119 |
+| X3.4s | 2026-04,2026-07,2026-08 | 0.300 | sensibilidade_meses_sem_ausencia | adição | −0,024 | [−0,085; 0,037] | 0,434 | 1,000 | — | 58/56 |
+| X3.4s | 2026-04,2026-07,2026-08 | 0.400 | sensibilidade_meses_sem_ausencia | adição | 0,006 | [−0,086; 0,098] | 0,894 | 1,000 | — | 49/60 |
+| X3.4s | 2026-04,2026-07,2026-08 | empilhado | sensibilidade_meses_sem_ausencia_cortes_empilhados | adição | −0,007 | [−0,065; 0,051] | 0,815 | 1,000 | — | 107/116 |
+| X3.5 | dez/25-ago/26 | 0.300 | principal | sim | −0,250 | [−0,488; −0,013] | 0,039 | 1,000 | 1,000 | 60/58 |
+| X3.5 | dez/25-ago/26 | 0.400 | principal | sim | −0,139 | [−0,311; 0,033] | 0,114 | 1,000 | 1,000 | 51/61 |
+| X3.5 | dez/25-ago/26 | empilhado | cortes_empilhados | adição | −0,186 | [−0,327; −0,045] | 0,010 | 1,000 | — | 111/119 |
+| X3.5m | 2025-12,2026-01,2026-02,2026-03,2026-04,2026-07,2026-08 | 0.300 | sensibilidade_sem_mai_jun | adição | −0,172 | [−0,407; 0,063] | 0,151 | 1,000 | — | 60/58 |
+| X3.5m | 2025-12,2026-01,2026-02,2026-03,2026-04,2026-07,2026-08 | 0.400 | sensibilidade_sem_mai_jun | adição | −0,138 | [−0,310; 0,034] | 0,116 | 1,000 | — | 51/61 |
+| X3.5m | 2025-12,2026-01,2026-02,2026-03,2026-04,2026-07,2026-08 | empilhado | sensibilidade_sem_mai_jun_cortes_empilhados | adição | −0,153 | [−0,293; −0,012] | 0,033 | 1,000 | — | 111/119 |
+| X3.5s | 2026-04,2026-07,2026-08 | 0.300 | sensibilidade_meses_sem_ausencia | adição | −0,069 | [−0,275; 0,136] | 0,509 | 1,000 | — | 58/56 |
+| X3.5s | 2026-04,2026-07,2026-08 | 0.400 | sensibilidade_meses_sem_ausencia | adição | −0,008 | [−0,063; 0,046] | 0,769 | 1,000 | — | 49/60 |
+| X3.5s | 2026-04,2026-07,2026-08 | empilhado | sensibilidade_meses_sem_ausencia_cortes_empilhados | adição | −0,035 | [−0,129; 0,059] | 0,471 | 1,000 | — | 107/116 |
+| X3.6 | dez/25-ago/26 | 0.300 | principal | sim | −0,352 | [−2,353; 1,649] | 0,730 | 1,000 | 1,000 | 60/58 |
+| X3.6 | dez/25-ago/26 | 0.400 | principal | sim | −1,148 | [−2,968; 0,671] | 0,216 | 1,000 | 1,000 | 51/61 |
+| X3.6 | dez/25-ago/26 | empilhado | cortes_empilhados | adição | −0,810 | [−2,155; 0,534] | 0,238 | 1,000 | — | 111/119 |
 <!-- X3:estimativas:fim -->
 
 ### Leitura
@@ -384,14 +498,24 @@ mensais não são comparáveis entre meses com listagens diferentes.
 - Último mês (2026-08) reproduz o retrato nominal por município × curso: sim.
 - Listagem completa em todos os meses: não; meses que falham a cota inferior: 2025-12, 2026-01, 2026-02, 2026-03, 2026-04, 2026-05, 2026-06, 2026-07; meses sem município da cota ausente: 2026-04, 2026-07, 2026-08.
 - População de estimação mensal: municipios listados no mes (listagem incompleta: ausencia nao e zero).
-- Especificações do protocolo: 66 estimativas com p; com p < 0,05: X3.2 2026-07 0.300 (τ = −0,381, p = 0,023, q = 1,000); X3.4 dez/25-ago/26 0.300 (τ = −0,099, p = 0,027, q = 1,000); X3.5 dez/25-ago/26 0.300 (τ = −0,250, p = 0,039, q = 1,000); X3.5 dez/25-ago/26 empilhado (τ = −0,186, p = 0,010, q = 1,000).
-- Sensibilidade de meses sem ausência: 9 estimativas com p; com p < 0,05: nenhuma.
-- Menor q de BKY no X3: 1,000.
+- Horizonte mediano do início de atividade ao retrato de 12/08/2026, por ciclo do ativo: ciclo 1: 10,7 meses; ciclo 2: 4,4 meses.
+- Especificações por corte do protocolo (§3): 44 estimativas com p; com p < 0,05: X3.2 2026-07 0.300 (τ = −0,381, p = 0,023, q = 1,000); X3.4 dez/25-ago/26 0.300 (τ = −0,099, p = 0,027, q = 1,000); X3.5 dez/25-ago/26 0.300 (τ = −0,250, p = 0,039, q = 1,000).
+- Cortes empilhados (adição): 22 estimativas com p; com p < 0,05: X3.5 dez/25-ago/26 empilhado (τ = −0,186, p = 0,010, q = 1,000).
+- Sensibilidade de meses sem ausência (pico em 3 dos 9 meses: 2026-04, 2026-07, 2026-08): 9 estimativas com p; com p < 0,05: nenhuma.
+- Variante sem 2026-05, 2026-06 (pico em 7 dos 9 meses; pedido da auditoria): 9 estimativas com p; com p < 0,05: X3.5m 2025-12,2026-01,2026-02,2026-03,2026-04,2026-07,2026-08 empilhado (τ = −0,153, p = 0,033, q = 1,000).
+- Menor q de BKY no X3: 1,000 (só protocolo: 1,000).
 <!-- X3:leitura:fim -->
 
 - A série é agregada e sem identificador individual. Uma queda de ativos num
   município não separa saída, transferência, correção cadastral e mudança na
   regra de listagem.
 - Nos meses em que a listagem falha a conferência, o pico pode vir da
-  redistribuição de ativos entre municípios, não de presença real. Por isso a
-  queda das especificações do protocolo e a da sensibilidade são lidas juntas.
+  redistribuição de ativos entre municípios, não de presença real.
+- As três definições do pico não contam a mesma história. Com a
+  sensibilidade de meses sem ausência, nenhuma linha tem p < 0,05. Essa
+  sensibilidade, porém, descarta a maior parte da série.
+- Na variante que exclui só mai/26 e jun/26, a queda relativa empilhada
+  continua negativa com p < 0,05 (bloco acima). Portanto não é correto
+  dizer que todos os sinais da queda somem quando se tira o artefato.
+- Todas as linhas X3 têm q de BKY no teto, e o condicionamento à listagem
+  impede leitura causal.

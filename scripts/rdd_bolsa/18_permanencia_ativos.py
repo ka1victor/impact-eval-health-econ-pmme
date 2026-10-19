@@ -148,6 +148,8 @@ EMPILHADO = "empilhado"
 CICLOS_X2 = (1, 2)
 LIMIAR_GRAFIA = 0.85           # similaridade (difflib) para INCERTO; fixado antes de ligar
 POR_HAB = 10_000
+# Variante do pico pedida pela auditoria independente (19/10/2026), depois dos resultados: sem mai/26 e jun/26.
+MESES_EXCLUIDOS_AUDITORIA = ("2026-05", "2026-06")
 MESES_PT = {"jan": 1, "fev": 2, "mar": 3, "abr": 4, "mai": 5, "jun": 6, "jul": 7, "ago": 8, "set": 9,
             "out": 10, "nov": 11, "dez": 12}
 CONTRASTE = ("salto = lado com bolsa maior (s > c) menos lado com bolsa menor; IVS 2010 oficial (a08) em milesimos; "
@@ -364,7 +366,8 @@ def ler_ativos_nominais() -> dict[str, pd.DataFrame]:
             raise FalhaValidacao("zip de ativos sem CSV único")
         bruto = z.read(nomes[0])
     a = pd.read_csv(io.BytesIO(bruto), sep=";", dtype=str, encoding="latin1",
-                    usecols=["co_ibge", "co_cnes", "curso", "ciclo", "nome", "crm", "dt_referencia"])
+                    usecols=["co_ibge", "co_cnes", "curso", "ciclo", "nome", "crm", "dt_referencia",
+                             "dt_inicio_atividade"])
     n = pd.read_csv(NOMINAL_CSV, dtype=str,
                     usecols=["co_ibge", "co_cnes", "curso", "ciclo", "nome", "crm", "dt_referencia",
                              "dt_inicio_atividade"])
@@ -377,8 +380,9 @@ def ler_ativos_nominais() -> dict[str, pd.DataFrame]:
             "ciclo_k": pd.to_numeric(df["ciclo"].str.strip(), errors="coerce"),
             "dt_referencia": df["dt_referencia"],
         })
-        if "dt_inicio_atividade" in df:
-            d["dt_inicio"] = pd.to_datetime(df["dt_inicio_atividade"], format="%Y-%m-%d", errors="raise")
+        fmt = "%d/%m/%Y" if nome == "set" else "%Y-%m-%d"
+        d["dt_inicio"] = pd.to_datetime(df["dt_inicio_atividade"], format=fmt, errors="raise")
+        d["dt_ref"] = pd.to_datetime(df["dt_referencia"], format=fmt, errors="raise")
         if d[["cod_curso", "ciclo_k"]].isna().any().any() or (d["co_ibge"].str.len() != 6).any() or (
                 d["_nome"] == "").any():
             raise FalhaValidacao(f"retrato {nome}: curso, ciclo, IBGE ou nome inválido")
@@ -396,15 +400,18 @@ def similaridade(a: str, b: str) -> float:
     return difflib.SequenceMatcher(None, a, b).ratio()
 
 
-def nome_proximo(a: str, b: str, limiar: float = LIMIAR_GRAFIA) -> bool:
-    """Grafia próxima: similaridade >= limiar, ou mesmo 1º nome e ao menos 2 partes do nome em comum."""
+def nome_proximo(a: str, b: str, limiar: float = LIMIAR_GRAFIA, partes: bool = True) -> bool:
+    """Grafia próxima: similaridade >= limiar, ou (regra ampla) mesmo 1º nome e ao menos 2 partes em comum."""
     if similaridade(a, b) >= limiar:
         return True
+    if not partes:
+        return False
     ta, tb = a.split(), b.split()
     return bool(ta and tb and ta[0] == tb[0] and len(set(ta) & set(tb)) >= 2)
 
 
-def ligar(pessoas: pd.DataFrame, ativos: pd.DataFrame, limiar: float = LIMIAR_GRAFIA) -> pd.DataFrame:
+def ligar(pessoas: pd.DataFrame, ativos: pd.DataFrame, limiar: float = LIMIAR_GRAFIA,
+          partes: bool = True) -> pd.DataFrame:
     """Liga alocados a uma lista de ativos por nome normalizado + curso + município.
 
     Entradas: `pessoas` com _nome, cod_curso, co_ibge, co_cnes_7d, ciclo,
@@ -413,7 +420,8 @@ def ligar(pessoas: pd.DataFrame, ativos: pd.DataFrame, limiar: float = LIMIAR_GR
     (LIGADO, AMBIGUO, INCERTO, NAO_LIGADO), motivo, índice do ativo ligado,
     `ativo` (1/0/NaN), `ativo_no_programa` (1/0/NaN: nome e curso em outro
     município ou nome em outro curso contam como presentes), `cnes_igual` e
-    `ciclo_igual` para os ligados.
+    `ciclo_igual` para os ligados. `partes=False` é a regra estreita (só
+    similaridade), a da primeira execução, relatada ao lado da ampla.
     """
     p = pessoas.copy().reset_index(drop=True)
     a = ativos.reset_index(drop=True)
@@ -449,10 +457,11 @@ def ligar(pessoas: pd.DataFrame, ativos: pd.DataFrame, limiar: float = LIMIAR_GR
             continue
         nome, curso, mun = k
         proximos = [i for i in idx_cel[(curso, mun)] if i not in ligados_exatos
-                    and nome_proximo(nome, a.at[i, "_nome"], limiar)]
+                    and nome_proximo(nome, a.at[i, "_nome"], limiar, partes)]
         if proximos:
-            status[j], motivo[j] = "INCERTO", (f"grafia proxima (similaridade >= {limiar} ou mesmo 1o nome e 2 partes "
-                                               "em comum) no mesmo curso e municipio")
+            status[j], motivo[j] = "INCERTO", (f"grafia proxima (similaridade >= {limiar}"
+                                               + (" ou mesmo 1o nome e 2 partes em comum" if partes else "")
+                                               + ") no mesmo curso e municipio")
         elif idx_nome_curso[(nome, curso)]:
             status[j], motivo[j], no_programa[j] = "NAO_LIGADO", "nome e curso ativos em outro municipio", 1.0
         elif idx_nome[nome]:
@@ -650,7 +659,8 @@ def verificar_completude(painel: pd.DataFrame, nominal: pd.DataFrame) -> tuple[p
 
 def outcomes_x3(painel: pd.DataFrame, rv: pd.DataFrame, pop: pd.Series, *, completa: bool,
                 ultimo_completo: bool, universo: pd.Index | None = None,
-                meses_sensibilidade: list[str] | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+                meses_sensibilidade: list[str] | dict[str, list[str]] | None = None
+                ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Painel município × mês e outcomes por município (queda e meses com ativo).
 
     `completa`: ausência de linha vira zero em `universo` (U). Senão, cada mês
@@ -658,9 +668,13 @@ def outcomes_x3(painel: pd.DataFrame, rv: pd.DataFrame, pop: pd.Series, *, compl
     reproduz o retrato nominal (`ultimo_completo`), município listado antes e
     ausente no último mês tem zero no último mês; senão a queda fica NaN.
     População da queda e dos meses com ativo: municípios com pico > 0.
-    Sensibilidade (`meses_sensibilidade`, colunas x3s_*): o pico só nos meses
-    em que nenhum município da cota do retrato está ausente da listagem.
+    Sensibilidades (`meses_sensibilidade`: {prefixo: meses}; uma lista vira
+    {"x3s": lista}): o pico só nos meses dados. x3s = meses sem município da
+    cota ausente; x3m = todos menos mai/26 e jun/26 (pedido da auditoria).
     """
+    if isinstance(meses_sensibilidade, (list, tuple)):
+        meses_sensibilidade = {"x3s": list(meses_sensibilidade)}
+    meses_sensibilidade = meses_sensibilidade or {}
     meses = sorted(painel["mes"].unique())
     ultimo = meses[-1]
     pm = painel.groupby(["co_ibge", "mes"], as_index=False)["ativos"].sum()
@@ -693,18 +707,19 @@ def outcomes_x3(painel: pd.DataFrame, rv: pd.DataFrame, pop: pd.Series, *, compl
     mun["x3_queda_pico_ultimo_por_10k"] = mun["x3_queda_pico_ultimo"] / mun["populacao_2022"] * POR_HAB
     mun["x3_queda_relativa"] = np.where(pos, mun["x3_queda_pico_ultimo"] / mun["pico"].where(pos), np.nan)
     mun["x3_meses_com_ativo"] = np.where(pos, (larga > 0).sum(axis=1).reindex(mun["co_ibge"]).to_numpy(), np.nan)
-    if meses_sensibilidade:
-        ms = [m for m in meses if m in set(meses_sensibilidade)]
+    for pre, lista in meses_sensibilidade.items():
+        ms = [m for m in meses if m in set(lista)]
         if ultimo not in ms:
             raise ValueError("a sensibilidade exige o ultimo mes")
         pico_s = larga[ms].max(axis=1).reindex(mun["co_ibge"]).to_numpy()
         pos_s = np.nan_to_num(pico_s, nan=0.0) > 0
-        mun["pico_meses_sensibilidade"] = pico_s
-        mun["com_ativo_nos_meses_sensibilidade"] = pos_s.astype(int)
-        mun["x3s_queda_pico_ultimo"] = np.where(pos_s, pico_s - mun["ativos_ultimo_mes"], np.nan)
-        mun["x3s_queda_pico_ultimo_por_10k"] = mun["x3s_queda_pico_ultimo"] / mun["populacao_2022"] * POR_HAB
-        mun["x3s_queda_relativa"] = np.where(pos_s, mun["x3s_queda_pico_ultimo"] / np.where(pos_s, pico_s, 1.0),
-                                             np.nan)
+        suf = "" if pre == "x3s" else f"_{pre}"
+        mun[f"pico_meses_sensibilidade{suf}"] = pico_s
+        mun[f"com_ativo_nos_meses_sensibilidade{suf}"] = pos_s.astype(int)
+        mun[f"{pre}_queda_pico_ultimo"] = np.where(pos_s, pico_s - mun["ativos_ultimo_mes"], np.nan)
+        mun[f"{pre}_queda_pico_ultimo_por_10k"] = mun[f"{pre}_queda_pico_ultimo"] / mun["populacao_2022"] * POR_HAB
+        mun[f"{pre}_queda_relativa"] = np.where(pos_s, mun[f"{pre}_queda_pico_ultimo"] / np.where(pos_s, pico_s, 1.0),
+                                                np.nan)
     motivos = []
     for r in mun.itertuples(index=False):
         m = {}
@@ -716,9 +731,11 @@ def outcomes_x3(painel: pd.DataFrame, rv: pd.DataFrame, pop: pd.Series, *, compl
             m["x3_queda_pico_ultimo"] = "ultimo mes nao listado e listagem do ultimo mes nao validada"
         if not np.isfinite(r.populacao_2022) and "x3_queda_pico_ultimo_por_10k" not in m:
             m["x3_queda_pico_ultimo_por_10k"] = "sem populacao do Censo 2022"
-        if meses_sensibilidade and not r.com_ativo_nos_meses_sensibilidade:
-            for c in ("x3s_queda_pico_ultimo", "x3s_queda_pico_ultimo_por_10k", "x3s_queda_relativa"):
-                m[c] = "sem ativo nos meses da sensibilidade (fora da populacao)"
+        for pre in meses_sensibilidade:
+            suf = "" if pre == "x3s" else f"_{pre}"
+            if not getattr(r, f"com_ativo_nos_meses_sensibilidade{suf}"):
+                for c in ("queda_pico_ultimo", "queda_pico_ultimo_por_10k", "queda_relativa"):
+                    m[f"{pre}_{c}"] = "sem ativo nos meses da sensibilidade (fora da populacao)"
         motivos.append(json.dumps(m, ensure_ascii=False, sort_keys=True))
     mun["motivos_ausencia"] = motivos
     return pm, mun
@@ -733,15 +750,26 @@ COLUNAS_EST = [
     "ciclo", "mes", "corte", "especificacao", "estimador", "status", "h", "n_abaixo", "n_acima", "n_obs",
     "n_clusters", "tau", "ep", "ic95_inf", "ic95_sup", "p_valor", "entra_bky", "q_bky", "lee_tau_inf",
     "lee_tau_sup", "lee_ic95_inf", "lee_ic95_sup", "lee_q_aparo", "lee_salto_selecao", "lee_p0_selecao",
-    "lee_p1_selecao", "media_bruta_abaixo", "media_bruta_acima", "pesos_grupos", "unidade", "contraste", "nota",
+    "lee_p1_selecao", "media_bruta_abaixo", "media_bruta_acima", "pesos_grupos", "unidade", "contraste",
+    "no_protocolo_45", "rotulo", "condicionamento", "regra_ligacao", "q_bky_so_protocolo", "nota",
 ]
+ADICIONAL = "ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO"
+REGRA_AMPLA = "ampla (principal): similaridade ou mesmo 1o nome e 2 partes"
+REGRA_ESTREITA = "estreita (1a execucao): so similaridade"
+COND_X2_CONDICIONAL = "condicional a preencher (pos-tratamento): limites de Lee por ciclo e corte"
+COND_X2_INCONDICIONAL = "incondicional: todas as celulas (municipios) oferecidas"
+COND_X3_MES = ("condicional a listagem do mes (pos-tratamento: a listagem pode depender do lado do corte); "
+               "sem limites de Lee")
+COND_X3_QUEDA = ("condicional a pico > 0 nas listagens (pos-tratamento); sem limites de Lee; mistura municipios "
+                 "com horizontes diferentes (ciclo 1 e ciclo 2)")
 
 
 def nova_linha(meta: dict, especificacao: str, estimador: str) -> dict:
     linha = {c: np.nan for c in COLUNAS_EST}
     linha.update({"natureza_dos_dados": NATUREZA, "estatuto": ESTATUTO, "mes": "", "ciclo": "", **meta,
                   "especificacao": especificacao, "estimador": estimador, "status": "EXECUTADO",
-                  "h": H / 1000.0, "entra_bky": False, "contraste": CONTRASTE, "nota": ""})
+                  "h": H / 1000.0, "entra_bky": False, "contraste": CONTRASTE, "no_protocolo_45": True,
+                  "rotulo": "", "condicionamento": "", "regra_ligacao": "", "nota": ""})
     return linha
 
 
@@ -826,16 +854,31 @@ EST_EMP = ("empilhado: local linear triangular, intercepto e inclinacoes por gru
 SEM_LEE_EMP = "rdd_lib so tem limites de Lee em um corte e um ciclo; relatados por ciclo e corte"
 
 
-def estimar_x2(cel: pd.DataFrame, mun: pd.DataFrame) -> pd.DataFrame:
-    linhas = []
+def estimar_x2(cel: pd.DataFrame, mun: pd.DataFrame, regra: str = REGRA_AMPLA, bky: bool = True) -> pd.DataFrame:
+    """Todas as linhas X2. Rótulos: X2.3, X2.4 e as especificações empilhadas são adições ao doc 45 (§3 do X2
+    lista RDD com Lee e descritivo; não lista outcomes incondicionais nem empilhamento). `bky=False` (regra
+    estreita) deixa as linhas fora do BKY."""
+    linhas: list[dict] = []
     for sp in OUTCOMES_X2:
         base = {"x_id": "X2", "outcome_id": sp["id"], "outcome": sp["col"], "descricao_outcome": sp["desc"],
                 "nivel": sp["nivel"], "unidade": sp["unidade"]}
+        cond = COND_X2_CONDICIONAL if sp["lee"] else COND_X2_INCONDICIONAL
+        outcome_no_prot = sp["lee"] is not None
+        rot_out = "" if outcome_no_prot else "outcome incondicional nao listado no doc 45"
         dados = {k: (cel if sp["nivel"] == "celula" else mun).query("ciclo == @k").reset_index(drop=True)
                  for k in CICLOS_X2}
+
+        def m(i0: int, empilhado: bool) -> None:
+            no_prot = outcome_no_prot and not empilhado
+            extra = "; ".join(x for x in (rot_out, "especificacao empilhada nao listada no §3 do doc 45 "
+                                                   "(o §2 cita cortes empilhados de forma generica)" if empilhado
+                                          else "") if x)
+            marcar(linhas, i0, no_protocolo=no_prot, rotulo_extra=extra, condicionamento=cond, regra=regra, bky=bky)
+
         for k in CICLOS_X2:
             d = dados[k]
             for corte in CORTES:
+                i0 = len(linhas)
                 meta = {**base, "populacao": f"V{k}", "ciclo": str(k), "corte": ROTULO_CORTE[corte]}
                 if sp["nivel"] == "celula":
                     r = L.rd_local_linear(_arr(d, "s_mil"), _arr(d, sp["col"]), corte, H,
@@ -850,11 +893,15 @@ def estimar_x2(cel: pd.DataFrame, mun: pd.DataFrame) -> pd.DataFrame:
                     rl = L.limites_lee_rd(_arr(d, "s_mil"), _arr(d, sp["col"]), _arr(d, sp["lee"]), corte, H,
                                           cluster=cl, ids_unidade=cl)
                     linhas.append(linha_lee(meta, rl, f"{sp['lee']} (ter alocado determinado)"))
+                m(i0, False)
+            i0 = len(linhas)
             meta = {**base, "populacao": f"V{k}", "ciclo": str(k), "corte": EMPILHADO}
             e = empilhar([(d, c, str(c)) for c in CORTES], [sp["col"]])
             linhas.append(preencher(nova_linha(meta, "cortes_empilhados", EST_EMP), rd_empilhado_df(e, sp["col"])))
             if sp["lee"]:
                 linhas.append(nao_executado(meta, "limites_lee", "limites de Lee empilhados", SEM_LEE_EMP))
+            m(i0, True)
+        i0 = len(linhas)
         for corte in CORTES:
             meta = {**base, "populacao": "V1+V2", "ciclo": "1+2", "corte": ROTULO_CORTE[corte]}
             e = empilhar([(dados[k], corte, f"c{k}") for k in CICLOS_X2], [sp["col"]])
@@ -870,17 +917,37 @@ def estimar_x2(cel: pd.DataFrame, mun: pd.DataFrame) -> pd.DataFrame:
                                 rd_empilhado_df(e, sp["col"])))
         if sp["lee"]:
             linhas.append(nao_executado(meta, "limites_lee", "limites de Lee empilhados", SEM_LEE_EMP))
+        m(i0, True)
+        for linha in linhas[i0:]:
+            linha["nota"] = "; ".join(x for x in (linha["nota"], "ciclos empilhados misturam horizontes de "
+                                                  "seguimento diferentes (ver horizonte_por_ciclo no resumo)") if x)
     return aplicar_bky(pd.DataFrame(linhas, columns=COLUNAS_EST))
 
 
 def aplicar_bky(est: pd.DataFrame) -> pd.DataFrame:
-    """q de BKY sobre todas as linhas com p (dentro do X)."""
+    """q de BKY dentro do X: `q_bky` sobre todas as linhas com `entra_bky` (protocolo e adições, regra de
+    ligação principal); `q_bky_so_protocolo` só sobre as linhas que estão no §3 do doc 45."""
     est = est.copy()
-    est["q_bky"] = np.nan
-    m = est["entra_bky"].astype(bool) & est["p_valor"].notna()
-    if m.any():
-        est.loc[m, "q_bky"] = L.qvalores_bky(est.loc[m, "p_valor"].to_numpy(dtype=float))
+    for col, extra in (("q_bky", None), ("q_bky_so_protocolo", "no_protocolo_45")):
+        est[col] = np.nan
+        m = est["entra_bky"].astype(bool) & est["p_valor"].notna()
+        if extra:
+            m &= est[extra].astype(bool)
+        if m.any():
+            est.loc[m, col] = L.qvalores_bky(est.loc[m, "p_valor"].to_numpy(dtype=float))
     return est
+
+
+def marcar(linhas: list[dict], i0: int, *, no_protocolo: bool, rotulo_extra: str = "", condicionamento: str = "",
+           regra: str = "", bky: bool = True) -> None:
+    """Rótulos das linhas linhas[i0:] (adição ao protocolo, condicionamento, regra de ligação)."""
+    for linha in linhas[i0:]:
+        linha["no_protocolo_45"] = no_protocolo
+        linha["rotulo"] = "" if no_protocolo else f"{ADICIONAL}{': ' + rotulo_extra if rotulo_extra else ''}"
+        linha["condicionamento"] = condicionamento
+        linha["regra_ligacao"] = regra
+        if not bky:
+            linha["entra_bky"] = False
 
 
 # ---------------------------------------------------------------------------
@@ -888,21 +955,29 @@ def aplicar_bky(est: pd.DataFrame) -> pd.DataFrame:
 # ---------------------------------------------------------------------------
 
 def estimar_x3(pm: pd.DataFrame, mun: pd.DataFrame, pop_desc: str, comp_tab: pd.DataFrame) -> pd.DataFrame:
-    linhas = []
+    """Linhas X3. Por corte: protocolo (§3 do X3: RDD mês a mês e da queda). Cortes empilhados e as
+    sensibilidades do pico são adições ao protocolo."""
+    linhas: list[dict] = []
     qual = comp_tab.set_index("mes")
 
-    def rodar(d: pd.DataFrame, col: str, meta: dict, esp: str = "principal", nota: str = "") -> None:
+    def rodar(d: pd.DataFrame, col: str, meta: dict, cond: str, esp: str = "principal", nota: str = "",
+              rotulo_extra: str = "") -> None:
         d = d[d["s_mil"].notna()].reset_index(drop=True)
         for corte in CORTES:
             r = L.rd_local_linear(_arr(d, "s_mil"), _arr(d, col), corte, H)
             linha = nova_linha({**meta, "corte": ROTULO_CORTE[corte]}, esp, EST_MUN)
             linha["nota"] = nota
             linhas.append(preencher(linha, r))
+            marcar(linhas, len(linhas) - 1, no_protocolo=esp == "principal", rotulo_extra=rotulo_extra,
+                   condicionamento=cond)
         e = empilhar([(d, c, str(c)) for c in CORTES], [col])
         linha = nova_linha({**meta, "corte": EMPILHADO}, "cortes_empilhados" if esp == "principal" else
                            f"{esp}_cortes_empilhados", EST_EMP)
         linha["nota"] = nota
         linhas.append(preencher(linha, rd_empilhado_df(e, col)))
+        marcar(linhas, len(linhas) - 1, no_protocolo=False, condicionamento=cond,
+               rotulo_extra="; ".join(x for x in (rotulo_extra, "cortes empilhados nao listados no §3 do doc 45 "
+                                                  "(o §2 cita cortes empilhados de forma generica)") if x))
 
     for mes in sorted(pm["mes"].unique()):
         d = pm[pm["mes"] == mes]
@@ -920,7 +995,8 @@ def estimar_x3(pm: pd.DataFrame, mun: pd.DataFrame, pop_desc: str, comp_tab: pd.
                 ("X3.2", "ativos_por_10k", "ativos por 10 mil hab. (Censo 2022)",
                  "ativos do PMM-E no municipio no mes por 10 mil habitantes")):
             rodar(d, col, {"x_id": "X3", "outcome_id": oid, "outcome": col, "descricao_outcome": desc,
-                           "nivel": "municipio", "populacao": pop_desc, "mes": mes, "unidade": un}, nota=nota_mes)
+                           "nivel": "municipio", "populacao": pop_desc, "mes": mes, "unidade": un}, COND_X3_MES,
+                  nota=nota_mes)
     for oid, col, un, desc in (
             ("X3.3", "x3_queda_pico_ultimo", "ativos (contagem)", "queda do pico ao ultimo mes (pico - ultimo)"),
             ("X3.4", "x3_queda_pico_ultimo_por_10k", "ativos por 10 mil hab.", "queda do pico ao ultimo mes por "
@@ -930,20 +1006,29 @@ def estimar_x3(pm: pd.DataFrame, mun: pd.DataFrame, pop_desc: str, comp_tab: pd.
         rodar(mun[mun["com_ativo_em_algum_mes"] == 1], col,
               {"x_id": "X3", "outcome_id": oid, "outcome": col, "descricao_outcome": desc, "nivel": "municipio",
                "populacao": "municipios com ativo em algum mes listado", "mes": "dez/25-ago/26", "unidade": un},
-              nota="pico entre os meses listados, inclusive meses que falham a conferencia de completude")
+              COND_X3_QUEDA, nota="pico entre os meses listados, inclusive meses que falham a conferencia de "
+                                  "completude")
+    sens = []
     if "x3s_queda_pico_ultimo" in mun:
         meses_s = ",".join(qual.index[qual["sem_municipio_da_cota_ausente"] == 1])
+        sens.append(("x3s", "s", "", meses_s, "sensibilidade_meses_sem_ausencia",
+                     f"pico so nos meses sem municipio da cota ausente ({meses_s})",
+                     "definida pelo diagnostico de completude, antes de abrir qualquer estimativa X3, mas depois de "
+                     "impresso o descritivo da queda por faixa"))
+    if "x3m_queda_pico_ultimo" in mun:
+        meses_m = ",".join(m for m in qual.index if m not in MESES_EXCLUIDOS_AUDITORIA)
+        sens.append(("x3m", "m", "_x3m", meses_m, "sensibilidade_sem_mai_jun",
+                     f"pico em todos os meses menos {', '.join(MESES_EXCLUIDOS_AUDITORIA)}",
+                     "pedida pela auditoria independente de 19/10/2026, depois de vistos os resultados X3"))
+    for pre, letra, suf, meses_x, esp, desc_pico, origem in sens:
         for oid, col, un, desc in (
-                ("X3.3s", "x3s_queda_pico_ultimo", "ativos (contagem)", "queda do pico ao ultimo mes"),
-                ("X3.4s", "x3s_queda_pico_ultimo_por_10k", "ativos por 10 mil hab.", "queda por 10 mil hab."),
-                ("X3.5s", "x3s_queda_relativa", "fracao do pico", "queda relativa ao pico")):
-            rodar(mun[mun["com_ativo_nos_meses_sensibilidade"] == 1], col,
-                  {"x_id": "X3", "outcome_id": oid, "outcome": col,
-                   "descricao_outcome": f"{desc}, pico so nos meses sem municipio da cota ausente ({meses_s})",
-                   "nivel": "municipio", "populacao": "municipios com ativo nesses meses", "mes": meses_s,
-                   "unidade": un}, esp="sensibilidade_meses_sem_ausencia",
-                  nota="ESPECIFICACAO_ADICIONAL_AO_PROTOCOLO: definida pelo diagnostico de completude (redistribuicao "
-                       "de ativos entre municipios em meses incompletos), antes de abrir qualquer estimativa X3")
+                (f"X3.3{letra}", f"{pre}_queda_pico_ultimo", "ativos (contagem)", "queda do pico ao ultimo mes"),
+                (f"X3.4{letra}", f"{pre}_queda_pico_ultimo_por_10k", "ativos por 10 mil hab.", "queda por 10 mil hab."),
+                (f"X3.5{letra}", f"{pre}_queda_relativa", "fracao do pico", "queda relativa ao pico")):
+            rodar(mun[mun[f"com_ativo_nos_meses_sensibilidade{'' if pre == 'x3s' else suf}"] == 1], col,
+                  {"x_id": "X3", "outcome_id": oid, "outcome": col, "descricao_outcome": f"{desc}, {desc_pico}",
+                   "nivel": "municipio", "populacao": "municipios com ativo nesses meses", "mes": meses_x,
+                   "unidade": un}, COND_X3_QUEDA, esp=esp, rotulo_extra=origem)
     return aplicar_bky(pd.DataFrame(linhas, columns=COLUNAS_EST))
 
 
@@ -1017,7 +1102,11 @@ def descritivo_x3(pm: pd.DataFrame, painel_mc: pd.DataFrame, mun: pd.DataFrame) 
                        "queda_media_sensibilidade": float(g["x3s_queda_pico_ultimo"].mean())
                        if "x3s_queda_pico_ultimo" in g else np.nan,
                        "queda_relativa_media_sensibilidade": float(g["x3s_queda_relativa"].mean())
-                       if "x3s_queda_relativa" in g else np.nan})
+                       if "x3s_queda_relativa" in g else np.nan,
+                       "queda_media_sem_mai_jun": float(g["x3m_queda_pico_ultimo"].mean())
+                       if "x3m_queda_pico_ultimo" in g else np.nan,
+                       "queda_relativa_media_sem_mai_jun": float(g["x3m_queda_relativa"].mean())
+                       if "x3m_queda_relativa" in g else np.nan})
     return pd.DataFrame(linhas)
 
 
@@ -1057,6 +1146,27 @@ def conferir_eventos_contra_tarefa_b(ev: pd.DataFrame, cel: pd.DataFrame) -> dic
     return conf
 
 
+def horizonte_por_ciclo(lig_set: pd.DataFrame, at: dict[str, pd.DataFrame]) -> dict:
+    """Meses entre o início de atividade (dos ativos ligados) e as datas de referência, por ciclo de alocação.
+
+    X2 (retrato de set): só os alocados ligados têm data de início; quem saiu não tem, então a mediana é dos que
+    ficaram. X3 (retrato de 12/08/2026): ativos do retrato pelo ciclo do próprio ativo.
+    """
+    a, n = at["set"], at["ago"]
+    out = {}
+    lig = lig_set[lig_set["_idx_ativo"].notna()]
+    for k, g in lig.groupby("ciclo"):
+        ia = g["_idx_ativo"].astype(int).to_numpy()
+        meses = (a.loc[ia, "dt_ref"] - a.loc[ia, "dt_inicio"]).dt.days / 30.4375
+        out[f"ciclo_{k}"] = {"x2_mediana_meses_inicio_ate_retrato_set": float(meses.median()),
+                             "x2_inicio_min": str(a.loc[ia, "dt_inicio"].min().date()),
+                             "x2_inicio_max": str(a.loc[ia, "dt_inicio"].max().date())}
+    for k, g in n.groupby("ciclo_k"):
+        meses = (g["dt_ref"] - g["dt_inicio"]).dt.days / 30.4375
+        out.setdefault(f"ciclo_{k}", {})["x3_mediana_meses_inicio_ate_retrato_ago"] = float(meses.median())
+    return out
+
+
 def executar() -> dict:
     sha_ativos = sha256(ATIVOS_ZIP)
     if sha_ativos != B.SHA256_ATIVOS_PROTOCOLO:
@@ -1072,12 +1182,19 @@ def executar() -> dict:
     pessoas = municipio_pela_celula(pessoas, cel_v)
     pessoas["s_mil"] = pessoas["co_ibge"].map(rv.set_index("co_ibge")["s_mil"])
     at = ler_ativos_nominais()
-    lig_set = ligar(pessoas, at["set"])
-    lig_ago = ligar(pessoas, at["ago"])
+    base_pessoas = pessoas
+
+    def montar(partes: bool) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+        ls, la = ligar(base_pessoas, at["set"], partes=partes), ligar(base_pessoas, at["ago"], partes=partes)
+        pp = ls.copy()
+        pp["status_ligacao_ago"] = la["status_ligacao"].to_numpy()
+        pp["ativo_ago"] = la["ativo"].to_numpy()
+        return pp, ls, la
+
+    pessoas, lig_set, lig_ago = montar(True)
+    pessoas_e, lig_set_e, _ = montar(False)          # regra estreita (1a execucao), relatada ao lado
     crm = concordancia_crm(lig_set, lig_ago, at)
-    pessoas = lig_set.copy()
-    pessoas["status_ligacao_ago"] = lig_ago["status_ligacao"].to_numpy()
-    pessoas["ativo_ago"] = lig_ago["ativo"].to_numpy()
+    horizonte = horizonte_por_ciclo(lig_set, at)
     # Ativos do retrato sem alocado da 1a chamada ligado (cobertura da ligação, por ciclo do ativo).
     usados = set(lig_set["_idx_ativo"].dropna().astype(int))
     a_set = at["set"].assign(ligado=lambda d: d.index.isin(list(usados)))
@@ -1101,7 +1218,16 @@ def executar() -> dict:
         raise FalhaValidacao("ciclo 2: pessoas alocadas por celula diferem de n_alocados_ch1 da tarefa B")
     est_x2 = estimar_x2(celulas[celulas["s_mil"].notna() & (celulas["so_excluidos"] == 0)],
                         municipios[municipios["s_mil"].notna() & (municipios["so_excluidos"] == 0)])
-    desc_x2 = descritivo_x2(pessoas)
+    cel_e = agregar_celulas(pessoas_e, cel_v)
+    mun_e = agregar_municipios(cel_e)
+    est_x2_e = estimar_x2(cel_e[cel_e["s_mil"].notna() & (cel_e["so_excluidos"] == 0)],
+                          mun_e[mun_e["s_mil"].notna() & (mun_e["so_excluidos"] == 0)], regra=REGRA_ESTREITA,
+                          bky=False)
+    est_x2 = aplicar_bky(pd.concat([est_x2, est_x2_e], ignore_index=True))
+    desc_x2 = pd.concat([descritivo_x2(pessoas).assign(regra_ligacao=REGRA_AMPLA),
+                         descritivo_x2(pessoas_e).assign(regra_ligacao=REGRA_ESTREITA)], ignore_index=True)
+    pessoas["status_ligacao_regra_estreita"] = pessoas_e["status_ligacao"].to_numpy()
+    pessoas["ativo_regra_estreita"] = pessoas_e["ativo"].to_numpy()
     motivos = (pessoas.groupby(["ciclo", "status_ligacao", "motivo_ligacao"]).size().rename("n").reset_index()
                .assign(natureza_dos_dados=NATUREZA, estatuto=ESTATUTO, x_id="X2", retrato="11/09/2026"))
     motivos_ago = (pessoas.assign(m=lig_ago["motivo_ligacao"].to_numpy())
@@ -1111,7 +1237,8 @@ def executar() -> dict:
     motivos = pd.concat([motivos, motivos_ago], ignore_index=True)
     pessoas_out = pessoas[["id_pessoa", "ciclo", "co_cnes_7d", "cod_curso", "co_ibge", "celula_no_quadro", "s_mil",
                            "evento_final", "eventos", "status_ligacao", "motivo_ligacao", "ativo", "ativo_no_programa",
-                           "cnes_igual", "ciclo_igual", "status_ligacao_ago", "ativo_ago"]].copy()
+                           "cnes_igual", "ciclo_igual", "status_ligacao_ago", "ativo_ago",
+                           "status_ligacao_regra_estreita", "ativo_regra_estreita"]].copy()
     pessoas_out["faixa_regra"] = pessoas_out["s_mil"].map(faixa_regra)
     pessoas_out.insert(0, "estatuto", ESTATUTO)
     pessoas_out.insert(0, "natureza_dos_dados", NATUREZA)
@@ -1125,7 +1252,10 @@ def executar() -> dict:
     universo = pd.Index(rv["co_ibge"]) if comp["listagem_completa_em_todos_os_meses"] else None
     pm, mun3 = outcomes_x3(painel_mc, rv, pop, completa=comp["listagem_completa_em_todos_os_meses"],
                            ultimo_completo=comp["ultimo_mes_reproduz_retrato_nominal"], universo=universo,
-                           meses_sensibilidade=comp["meses_sem_municipio_da_cota_ausente"])
+                           meses_sensibilidade={
+                               "x3s": comp["meses_sem_municipio_da_cota_ausente"],
+                               "x3m": [m for m in sorted(painel_mc["mes"].unique())
+                                       if m not in MESES_EXCLUIDOS_AUDITORIA]})
     pop_desc = ("U com zero onde nao ha linha (listagem completa)" if comp["listagem_completa_em_todos_os_meses"]
                 else "municipios listados no mes (listagem incompleta: ausencia nao e zero)")
     est_x3 = estimar_x3(pm, mun3, pop_desc, comp_tab)
@@ -1189,6 +1319,17 @@ def executar() -> dict:
             "NAO_LIGADO: motivo = nome e curso em outro municipio / nome em outro curso / sem correspondente",
             "AMBIGUO e INCERTO ficam fora do outcome (NaN com motivo)",
         ],
+        "ordem_de_execucao": [
+            "1a execucao com a regra estreita (INCERTO so por similaridade): impressos as taxas de ligacao, os motivos "
+            "e a tabela descritiva de permanencia por ciclo e faixa",
+            "diagnostico de quase-correspondencias (nomes com o mesmo 1o nome e partes em comum, sem chave exata); "
+            "o criterio de partes foi acrescentado DEPOIS de vista a tabela de permanencia por faixa da regra "
+            "estreita e ANTES de abrir qualquer estimativa RDD",
+            "as duas regras sao relatadas: regra_ligacao nas saidas (estreita fora do BKY)",
+            "auditoria independente (19/10/2026): rotulos de adicao ao protocolo (X2.3, X2.4 e especificacoes "
+            "empilhadas) e de condicionamento acrescentados sem mudar estimativa",
+        ],
+        "horizonte_por_ciclo": horizonte,
         "eventos_de_alocacao": diag_ev, "conferencia_contra_tarefa_b": conf_b, "pessoas": diag_p,
         "conferencia_selecao": conf_sel,
         "ligacao_por_ciclo": {
@@ -1229,6 +1370,21 @@ def executar() -> dict:
         "colunas_nao_usadas": "ivs e faixa_atracao do arquivo (rotulos inconsistentes); municipio, uf, regiao e "
                               "regiao_saude; co_cnes e estabelecimento (vazios)",
         "especificacoes": sorted(est_x3["especificacao"].unique().tolist()),
+        "ordem_de_execucao": [
+            "conferencia de completude e outcomes do protocolo; impressos o descritivo mensal e o descritivo da queda "
+            "por faixa",
+            "diagnostico da redistribuicao em mai/26 e jun/26 (municipios da cota ausentes e capitais acima dos "
+            "meses vizinhos); a sensibilidade x3s (pico so nos meses sem municipio da cota ausente) foi definida "
+            "DEPOIS de impresso o descritivo da queda por faixa e ANTES de abrir qualquer estimativa X3",
+            "x3s exclui 6 dos 9 meses, nao so mai/26 e jun/26; a variante x3m (exclui so mai/26 e jun/26) foi pedida "
+            "pela auditoria independente de 19/10/2026, depois de vistos os resultados X3",
+            "rotulos de condicionamento (listagem e pico pos-tratamento, sem Lee) e de adicao ao protocolo "
+            "acrescentados na mesma auditoria sem mudar estimativa",
+        ],
+        "meses_excluidos_na_variante_x3m": list(MESES_EXCLUIDOS_AUDITORIA),
+        "horizonte_por_ciclo": horizonte,
+        "nota_horizonte": "municipios do ciclo 1 tem seguimento mais longo que os do ciclo 2; a queda do pico e as RDD "
+                          "mensais misturam os dois horizontes",
         "n_linhas_bky": int(est_x3["entra_bky"].sum()),
         "entradas": entradas_comuns[:2] + [
             bloco_entrada(SERIE_CSV, "serie historica de ativos", "competencias dez/25 a ago/26",
@@ -1268,9 +1424,27 @@ def _ic(a, b, casas: int = 3) -> str:
     return f"[{_n(a, casas)}; {_n(b, casas)}]"
 
 
+def _prot(r) -> str:
+    return "sim" if str(r.no_protocolo_45) == "True" else "adição"
+
+
+def _tabela_desc_x2(d: pd.DataFrame) -> str:
+    cab = ("| Ciclo | Subgrupo | Faixa | Alocados | Ligados | Não ligados | Ambíguos | Incertos | Ligação | Permanência "
+           "(11/09) | Incertos como ativos | Incertos como saídos | Permanência (12/08) | Presença no programa |\n"
+           "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+    linhas = [f"| {int(r.ciclo)} | {r.subgrupo} | {r.faixa} | {_int(r.n_alocados)} | {_int(r.n_ligados)} | "
+              f"{_int(r.n_nao_ligados)} | {_int(r.n_ambiguos)} | {_int(r.n_incertos)} | {_pct(r.taxa_ligacao)} | "
+              f"{_pct(r.permanencia_set)} | {_pct(r.permanencia_set_incertos_como_ativos)} | "
+              f"{_pct(r.permanencia_set_incertos_como_saidos)} | {_pct(r.permanencia_ago)} | "
+              f"{_pct(r.presenca_no_programa_set)} |" for r in d.itertuples()]
+    return cab + "\n".join(linhas)
+
+
 def gerar_tabelas_doc(dados: dict) -> dict[str, str]:
     d2, m2, e2, r2 = dados["X2_descritivo"], dados["X2_motivos_ligacao"], dados["X2_estimativas"], dados["X2_resumo"]
     d3, c3, e3, r3 = dados["X3_descritivo"], dados["X3_completude"], dados["X3_estimativas"], dados["X3_resumo"]
+    d2a, d2e = d2[d2["regra_ligacao"] == REGRA_AMPLA], d2[d2["regra_ligacao"] == REGRA_ESTREITA]
+    e2a, e2e = e2[e2["regra_ligacao"] == REGRA_AMPLA], e2[e2["regra_ligacao"] == REGRA_ESTREITA]
     t = {}
     # X2: ligação.
     cab = "| Ciclo | Retrato | Status | Motivo | Alocados |\n|---|---|---|---|---:|\n"
@@ -1281,28 +1455,35 @@ def gerar_tabelas_doc(dados: dict) -> dict[str, str]:
     crm = r2["crm_entre_retratos"]
     t["crm"] = ("| Medida | Pessoas |\n|---|---:|\n"
                 + "\n".join(f"| {k.replace('_', ' ')} | {_int(v)} |" for k, v in crm.items() if k != "nota"))
-    cab = ("| Ciclo | Subgrupo | Faixa | Alocados | Ligados | Não ligados | Ambíguos | Incertos | Ligação | Permanência "
-           "(11/09) | Incertos como ativos | Incertos como saídos | Permanência (12/08) | Presença no programa |\n"
-           "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
-    linhas = [f"| {int(r.ciclo)} | {r.subgrupo} | {r.faixa} | {_int(r.n_alocados)} | {_int(r.n_ligados)} | {_int(r.n_nao_ligados)} | "
-              f"{_int(r.n_ambiguos)} | {_int(r.n_incertos)} | {_pct(r.taxa_ligacao)} | {_pct(r.permanencia_set)} | "
-              f"{_pct(r.permanencia_set_incertos_como_ativos)} | {_pct(r.permanencia_set_incertos_como_saidos)} | "
-              f"{_pct(r.permanencia_ago)} | {_pct(r.presenca_no_programa_set)} |" for r in d2.itertuples()]
-    t["descritivo"] = cab + "\n".join(linhas)
-    cab = ("| Outcome | Ciclo | Corte | Especificação | τ | IC 95% | p | q BKY | Lee [inf; sup] | IC 95% Lee | "
-           "n abaixo/acima |\n|---|---|---|---|---:|---|---:|---:|---|---|---|\n")
+    t["descritivo"] = _tabela_desc_x2(d2a)
+    t["descritivo_estreita"] = _tabela_desc_x2(d2e[d2e["subgrupo"] == "todos"])
+    cab = ("| Outcome | Ciclo | Corte | Especificação | Protocolo | τ | IC 95% | p | q BKY | q BKY só protocolo | "
+           "Lee [inf; sup] | IC 95% Lee | n abaixo/acima |\n|---|---|---|---|---|---:|---|---:|---:|---:|---|---|---|\n")
     linhas = []
-    for oid, g in e2.groupby("outcome_id", sort=True):
+    for oid, g in e2a.groupby("outcome_id", sort=True):
         for r in g.itertuples():
             if r.status == "NAO_EXECUTADO":
                 continue
             lee = r.especificacao == "limites_lee"
             linhas.append(
-                f"| {oid} | {r.ciclo} | {r.corte} | {r.especificacao} | {_n(r.tau)} | "
+                f"| {oid} | {r.ciclo} | {r.corte} | {r.especificacao} | {_prot(r)} | {_n(r.tau)} | "
                 f"{'—' if lee else _ic(r.ic95_inf, r.ic95_sup)} | {'—' if lee else _n(r.p_valor)} | "
-                f"{'—' if lee else _n(r.q_bky)} | {_ic(r.lee_tau_inf, r.lee_tau_sup) if lee else '—'} | "
+                f"{'—' if lee else _n(r.q_bky)} | {'—' if lee else _n(r.q_bky_so_protocolo)} | "
+                f"{_ic(r.lee_tau_inf, r.lee_tau_sup) if lee else '—'} | "
                 f"{_ic(r.lee_ic95_inf, r.lee_ic95_sup) if lee else '—'} | {_int(r.n_abaixo)}/{_int(r.n_acima)} |")
     t["estimativas"] = cab + "\n".join(linhas)
+    chave = ["outcome_id", "ciclo", "corte", "especificacao"]
+    cmp_ = e2a[e2a["status"] != "NAO_EXECUTADO"].merge(e2e, on=chave, suffixes=("_a", "_e"))
+    cab = ("| Outcome | Ciclo | Corte | Especificação | τ ampla | τ estreita | p ampla | p estreita | Lee ampla | "
+           "Lee estreita |\n|---|---|---|---|---:|---:|---:|---:|---|---|\n")
+    linhas = []
+    for r in cmp_.itertuples():
+        lee = r.especificacao == "limites_lee"
+        linhas.append(f"| {r.outcome_id} | {r.ciclo} | {r.corte} | {r.especificacao} | {_n(r.tau_a)} | {_n(r.tau_e)} | "
+                      f"{'—' if lee else _n(r.p_valor_a)} | {'—' if lee else _n(r.p_valor_e)} | "
+                      f"{_ic(r.lee_tau_inf_a, r.lee_tau_sup_a) if lee else '—'} | "
+                      f"{_ic(r.lee_tau_inf_e, r.lee_tau_sup_e) if lee else '—'} |")
+    t["estimativas_estreita"] = cab + "\n".join(linhas)
     # X3.
     cab = ("| Mês | Municípios listados | Células município × curso | Ativos na série | Cota inferior do retrato | "
            "Células com violação | Déficit | Municípios da cota ausentes | Municípios acima dos meses vizinhos | "
@@ -1327,21 +1508,23 @@ def gerar_tabelas_doc(dados: dict) -> dict[str, str]:
     q = d3[d3["mes"] == "queda"]
     cab = ("| Faixa | Municípios com ativo em algum mês | Com ativo no último mês | Queda média (ativos) | "
            "Queda média por 10 mil | Fração com queda | Queda relativa média | Meses com ativo (média) | "
-           "Queda média (sensibilidade) | Queda relativa média (sensibilidade) |\n"
-           "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+           "Queda média (meses sem ausência) | Queda relativa média (meses sem ausência) | "
+           "Queda média (sem mai/jun) | Queda relativa média (sem mai/jun) |\n"
+           "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
     linhas = [f"| {r.faixa} | {_int(r.municipios_listados)} | {_int(r.municipios_com_ativo)} | "
               f"{_n(r.media_ativos_por_municipio_listado)} | {_n(r.media_ativos_por_10k)} | {_pct(r.fracao_com_queda)} | "
               f"{_pct(r.queda_relativa_media)} | {_n(r.meses_com_ativo_media, 2)} | {_n(r.queda_media_sensibilidade)} | "
-              f"{_pct(r.queda_relativa_media_sensibilidade)} |" for r in q.itertuples()]
+              f"{_pct(r.queda_relativa_media_sensibilidade)} | {_n(r.queda_media_sem_mai_jun)} | "
+              f"{_pct(r.queda_relativa_media_sem_mai_jun)} |" for r in q.itertuples()]
     t["descritivo_queda"] = cab + "\n".join(linhas)
-    cab = ("| Outcome | Mês | Corte | Especificação | τ | IC 95% | p | q BKY | n abaixo/acima |\n"
-           "|---|---|---|---|---:|---|---:|---:|---|\n")
-    linhas = [f"| {r.outcome_id} | {r.mes} | {r.corte} | {r.especificacao} | {_n(r.tau)} | "
-              f"{_ic(r.ic95_inf, r.ic95_sup)} | "
-              f"{_n(r.p_valor)} | {_n(r.q_bky)} | {_int(r.n_abaixo)}/{_int(r.n_acima)} |"
+    cab = ("| Outcome | Mês | Corte | Especificação | Protocolo | τ | IC 95% | p | q BKY | q BKY só protocolo | "
+           "n abaixo/acima |\n|---|---|---|---|---|---:|---|---:|---:|---:|---|\n")
+    linhas = [f"| {r.outcome_id} | {r.mes} | {r.corte} | {r.especificacao} | {_prot(r)} | {_n(r.tau)} | "
+              f"{_ic(r.ic95_inf, r.ic95_sup)} | {_n(r.p_valor)} | {_n(r.q_bky)} | {_n(r.q_bky_so_protocolo)} | "
+              f"{_int(r.n_abaixo)}/{_int(r.n_acima)} |"
               for r in e3.sort_values(["outcome_id", "mes", "corte"]).itertuples()]
     t["x3_estimativas"] = cab + "\n".join(linhas)
-    t["x2_leitura"] = leitura_x2(d2, e2, r2)
+    t["x2_leitura"] = leitura_x2(d2a, d2e, e2a, e2e, r2)
     t["x3_leitura"] = leitura_x3(e3, r3)
     return t
 
@@ -1350,34 +1533,50 @@ def _p_menor(est: pd.DataFrame, limite: float) -> pd.DataFrame:
     return est[est["p_valor"].notna() & (est["p_valor"] < limite)]
 
 
-def leitura_x2(d2: pd.DataFrame, e2: pd.DataFrame, r2: dict) -> str:
+def _horizontes(r: dict, chave: str) -> str:
+    h = r["horizonte_por_ciclo"]
+    return "; ".join(f"{k.replace('_', ' ')}: {_n(v.get(chave), 1)} meses" for k, v in sorted(h.items())
+                     if v.get(chave) is not None)
+
+
+def leitura_x2(d2a: pd.DataFrame, d2e: pd.DataFrame, e2a: pd.DataFrame, e2e: pd.DataFrame, r2: dict) -> str:
     """Frases com os números-chave do X2, geradas das saídas."""
-    tot = d2[(d2["faixa"] == "TOTAL") & (d2["subgrupo"] == "todos")].set_index("ciclo")
-    sub = d2[(d2["faixa"] == "TOTAL") & (d2["ciclo"] == 1)].set_index("subgrupo")
+    tot = d2a[(d2a["faixa"] == "TOTAL") & (d2a["subgrupo"] == "todos")].set_index("ciclo")
+    tot_e = d2e[(d2e["faixa"] == "TOTAL") & (d2e["subgrupo"] == "todos")].set_index("ciclo")
+    sub = d2a[(d2a["faixa"] == "TOTAL") & (d2a["ciclo"] == 1)].set_index("subgrupo")
     itens = []
     for k, r in tot.iterrows():
         itens.append(f"- Ciclo {k}: {_int(r['n_alocados'])} alocados da 1ª chamada; {_pct(r['taxa_ligacao'])} ligados "
                      f"a um ativo no município de alocação em 11/09/2026; permanência entre os determinados "
-                     f"{_pct(r['permanencia_set'])} (12/08/2026: {_pct(r['permanencia_ago'])}).")
+                     f"{_pct(r['permanencia_set'])} (12/08/2026: {_pct(r['permanencia_ago'])}); com a regra estreita, "
+                     f"{_int(tot_e.at[k, 'n_incertos'])} incertos (ampla: {_int(r['n_incertos'])}) e permanência "
+                     f"{_pct(tot_e.at[k, 'permanencia_set'])}.")
     if {"homologacao", "confirmacao"} <= set(sub.index):
         itens.append(f"- Ciclo 1 por evento final: permanência {_pct(sub.at['homologacao', 'permanencia_set'])} entre "
                      f"os homologados e {_pct(sub.at['confirmacao', 'permanencia_set'])} entre os que só tiveram o "
                      f"local confirmado.")
+    itens.append(f"- Horizonte mediano do início de atividade ao retrato de 11/09/2026, entre os ligados: "
+                 f"{_horizontes(r2, 'x2_mediana_meses_inicio_ate_retrato_set')}.")
     crm = r2["crm_entre_retratos"]
     itens.append(f"- CRM entre os dois retratos: {_int(crm['ligados_nos_dois_com_mesmo_crm'])} de "
                  f"{_int(crm['ligados_nos_dois_retratos'])} pessoas ligadas nos dois têm o mesmo CRM.")
-    rd = e2[e2["especificacao"] != "limites_lee"]
-    itens.append(f"- RDD: {_int(len(rd[rd['p_valor'].notna()]))} estimativas com p; {_int(len(_p_menor(rd, 0.05)))} "
-                 f"com p < 0,05; menor q de BKY = {_n(rd['q_bky'].min())}.")
-    lee = e2[(e2["especificacao"] == "limites_lee") & (e2["status"] == "EXECUTADO")]
-    cobre = ((lee["lee_ic95_inf"] <= 0) & (lee["lee_ic95_sup"] >= 0)).sum()
-    itens.append(f"- Limites de Lee: {_int(cobre)} de {_int(len(lee))} ICs de Lee contêm zero.")
+    for nome, e in (("regra ampla", e2a), ("regra estreita", e2e)):
+        rd = e[(e["especificacao"] != "limites_lee") & e["p_valor"].notna()]
+        prot = rd[rd["no_protocolo_45"].astype(str) == "True"]
+        lee = e[(e["especificacao"] == "limites_lee") & (e["status"] == "EXECUTADO")]
+        cobre = ((lee["lee_ic95_inf"] <= 0) & (lee["lee_ic95_sup"] >= 0)).sum()
+        q = (f"; menor q de BKY = {_n(rd['q_bky'].min())} (só protocolo: {_n(rd['q_bky_so_protocolo'].min())})"
+             if rd["q_bky"].notna().any() else "; fora do BKY")
+        itens.append(f"- RDD, {nome}: {_int(len(rd))} estimativas com p ({_int(len(prot))} do protocolo); "
+                     f"{_int(len(_p_menor(rd, 0.05)))} com p < 0,05{q}; {_int(cobre)} de {_int(len(lee))} ICs de Lee "
+                     f"contêm zero.")
     return "\n".join(itens)
 
 
 def leitura_x3(e3: pd.DataFrame, r3: dict) -> str:
     """Frases com os números-chave do X3, geradas das saídas."""
     c = r3["completude"]
+    n_meses = len(r3["serie"]["meses"])
     itens = [
         f"- Último mês ({c['ultimo_mes']}) reproduz o retrato nominal por município × curso: "
         f"{'sim' if c['ultimo_mes_reproduz_retrato_nominal'] else 'não'}.",
@@ -1385,16 +1584,26 @@ def leitura_x3(e3: pd.DataFrame, r3: dict) -> str:
         f"meses que falham a cota inferior: {', '.join(c['meses_com_violacao']) or 'nenhum'}; meses sem município "
         f"da cota ausente: {', '.join(c['meses_sem_municipio_da_cota_ausente'])}.",
         f"- População de estimação mensal: {r3['populacao_estimacao_mensal']}.",
+        f"- Horizonte mediano do início de atividade ao retrato de 12/08/2026, por ciclo do ativo: "
+        f"{_horizontes(r3, 'x3_mediana_meses_inicio_ate_retrato_ago')}.",
     ]
-    prin = e3[~e3["especificacao"].str.startswith("sensibilidade")]
-    sens = e3[e3["especificacao"].str.startswith("sensibilidade")]
-    for nome, d in (("especificações do protocolo", prin), ("sensibilidade de meses sem ausência", sens)):
+    n_s = len(c["meses_sem_municipio_da_cota_ausente"])
+    grupos = (("especificações por corte do protocolo (§3)", e3[e3["especificacao"] == "principal"]),
+              ("cortes empilhados (adição)", e3[e3["especificacao"] == "cortes_empilhados"]),
+              (f"sensibilidade de meses sem ausência (pico em {n_s} dos {n_meses} meses: "
+               f"{', '.join(c['meses_sem_municipio_da_cota_ausente'])})",
+               e3[e3["especificacao"].str.startswith("sensibilidade_meses_sem_ausencia")]),
+              (f"variante sem {', '.join(r3['meses_excluidos_na_variante_x3m'])} (pico em "
+               f"{n_meses - len(r3['meses_excluidos_na_variante_x3m'])} dos {n_meses} meses; pedido da auditoria)",
+               e3[e3["especificacao"].str.startswith("sensibilidade_sem_mai_jun")]))
+    for nome, d in grupos:
         sig = _p_menor(d, 0.05)
         lista = "; ".join(f"{r.outcome_id} {r.mes} {r.corte} (τ = {_n(r.tau)}, p = {_n(r.p_valor)}, "
                           f"q = {_n(r.q_bky)})" for r in sig.itertuples()) or "nenhuma"
-        itens.append(f"- {nome.capitalize()}: {_int(len(d[d['p_valor'].notna()]))} estimativas com p; com p < 0,05: "
-                     f"{lista}.")
-    itens.append(f"- Menor q de BKY no X3: {_n(e3['q_bky'].min())}.")
+        itens.append(f"- {nome[0].upper() + nome[1:]}: {_int(len(d[d['p_valor'].notna()]))} estimativas com p; "
+                     f"com p < 0,05: {lista}.")
+    itens.append(f"- Menor q de BKY no X3: {_n(e3['q_bky'].min())} (só protocolo: "
+                 f"{_n(e3['q_bky_so_protocolo'].min())}).")
     return "\n".join(itens)
 
 
@@ -1404,7 +1613,8 @@ MAPA_MARCAS = {("X2", "ligacao"): "ligacao", ("X2", "crm"): "crm", ("X2", "descr
                ("X2", "estimativas"): "estimativas", ("X3", "completude"): "completude",
                ("X3", "descritivo_mensal"): "descritivo_mensal", ("X3", "descritivo_queda"): "descritivo_queda",
                ("X3", "estimativas"): "x3_estimativas", ("X2", "leitura"): "x2_leitura",
-               ("X3", "leitura"): "x3_leitura"}
+               ("X3", "leitura"): "x3_leitura", ("X2", "descritivo_estreita"): "descritivo_estreita",
+               ("X2", "estimativas_estreita"): "estimativas_estreita"}
 
 
 def aplicar_tabelas_doc(texto: str, tabelas: dict[str, str]) -> str:

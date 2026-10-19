@@ -67,9 +67,36 @@
     "cortes_empilhados",
     "principal",
     "sensibilidade_meses_sem_ausencia",
-    "sensibilidade_meses_sem_ausencia_cortes_empilhados"
+    "sensibilidade_meses_sem_ausencia_cortes_empilhados",
+    "sensibilidade_sem_mai_jun",
+    "sensibilidade_sem_mai_jun_cortes_empilhados"
   ],
-  "n_linhas_bky": 75,
+  "ordem_de_execucao": [
+    "conferencia de completude e outcomes do protocolo; impressos o descritivo mensal e o descritivo da queda por faixa",
+    "diagnostico da redistribuicao em mai/26 e jun/26 (municipios da cota ausentes e capitais acima dos meses vizinhos); a sensibilidade x3s (pico so nos meses sem municipio da cota ausente) foi definida DEPOIS de impresso o descritivo da queda por faixa e ANTES de abrir qualquer estimativa X3",
+    "x3s exclui 6 dos 9 meses, nao so mai/26 e jun/26; a variante x3m (exclui so mai/26 e jun/26) foi pedida pela auditoria independente de 19/10/2026, depois de vistos os resultados X3",
+    "rotulos de condicionamento (listagem e pico pos-tratamento, sem Lee) e de adicao ao protocolo acrescentados na mesma auditoria sem mudar estimativa"
+  ],
+  "meses_excluidos_na_variante_x3m": [
+    "2026-05",
+    "2026-06"
+  ],
+  "horizonte_por_ciclo": {
+    "ciclo_1": {
+      "x2_mediana_meses_inicio_ate_retrato_set": 11.761806981519507,
+      "x2_inicio_min": "2025-09-11",
+      "x2_inicio_max": "2025-11-24",
+      "x3_mediana_meses_inicio_ate_retrato_ago": 10.743326488706366
+    },
+    "ciclo_2": {
+      "x2_mediana_meses_inicio_ate_retrato_set": 5.3552361396303905,
+      "x2_inicio_min": "2026-03-25",
+      "x2_inicio_max": "2026-08-24",
+      "x3_mediana_meses_inicio_ate_retrato_ago": 4.369609856262834
+    }
+  },
+  "nota_horizonte": "municipios do ciclo 1 tem seguimento mais longo que os do ciclo 2; a queda do pico e as RDD mensais misturam os dois horizontes",
+  "n_linhas_bky": 84,
   "entradas": [
     {
       "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
@@ -130,10 +157,10 @@
   "saidas": {
     "X3_painel_municipio_curso_mes.csv": "d3ca0288ffd223d8e541403f3daf13ade9016443198cb43fd8b7428210a003f1",
     "X3_painel_municipio_mes.csv": "1bb815215100b8b07d91c237bb2cf456136c1066a329d2d4b185c10d5b7d1375",
-    "X3_municipio.csv": "387cda3d1a2d3ed1dad1e23db4e19da97b92c4ec9fe3aa45c116e1e86c6d9ceb",
+    "X3_municipio.csv": "4d4573459d82b63160bc035faed924ef057d574ca88374d8192e5c3a2d375234",
     "X3_completude.csv": "4d8cc6ede5572d98f8e117bc35794ec438add75d73d18ad1c1abec09729a1548",
-    "X3_descritivo.csv": "dcdb661f65269d8adc91a10ed1dd2cb4168311f8919ca9b71dafb5a3432daaf6",
-    "X3_estimativas.csv": "6d728e1d4ec9bbb99ca14108fa6d104dd0615fef2487e2e145719bda34d8e021"
+    "X3_descritivo.csv": "118355a32722ceee1e167c631f9a63c6f4c150f1111c5eb067cb34bf39421bb8",
+    "X3_estimativas.csv": "be22ca11be7f8175400f6c002e1c4d03e5c940a9c9c9a0816ffdc57800878f6e"
   },
   "linguagem": "exploratorio pos-resultado; descritivo da serie e RDD por mes sem pre-periodo"
 }

@@ -122,6 +122,12 @@ class TestLigacaoSintetico(unittest.TestCase):
             self.assertEqual(r["status_ligacao"], "INCERTO", nome)
             self.assertTrue(np.isnan(r["ativo"]))
 
+    def test_regra_estreita_nao_usa_partes_do_nome(self) -> None:
+        lig = X.ligar(pessoas_sinteticas(), ativos_sinteticos(), partes=False).set_index("_nome")
+        self.assertEqual(lig.at["DANIEL ROCHA PINTO", "status_ligacao"], "INCERTO")      # similaridade
+        self.assertEqual(lig.at["EVA MARIA NUNES", "status_ligacao"], "NAO_LIGADO")      # só partes
+        self.assertEqual(lig.at["EVA MARIA NUNES", "ativo"], 0.0)
+
     def test_motivos_de_nao_ligacao(self) -> None:
         r = self._st("FABIO REIS").iloc[0]
         self.assertEqual((r["status_ligacao"], r["ativo"], r["ativo_no_programa"]), ("NAO_LIGADO", 0.0, 1.0))
@@ -355,11 +361,19 @@ class TestSaidasReais(unittest.TestCase):
 
     def test_pessoas_e_descritivo_coerentes(self) -> None:
         p, d = self.csv["X2_pessoas"], self.csv["X2_descritivo"]
-        tot = d[(d["faixa"] == "TOTAL") & (d["subgrupo"] == "todos")].set_index("ciclo")
-        for k, g in p.groupby("ciclo"):
-            self.assertEqual(int(tot.at[k, "n_alocados"]), len(g))
-            self.assertEqual(int(tot.at[k, "n_ligados"]), int((g["status_ligacao"] == "LIGADO").sum()))
-            self.assertAlmostEqual(float(tot.at[k, "permanencia_set"]), float(g["ativo"].mean()))
+        for regra, st, at in ((X.REGRA_AMPLA, "status_ligacao", "ativo"),
+                              (X.REGRA_ESTREITA, "status_ligacao_regra_estreita", "ativo_regra_estreita")):
+            tot = d[(d["faixa"] == "TOTAL") & (d["subgrupo"] == "todos") & (d["regra_ligacao"] == regra)]
+            tot = tot.set_index("ciclo")
+            for k, g in p.groupby("ciclo"):
+                self.assertEqual(int(tot.at[k, "n_alocados"]), len(g))
+                self.assertEqual(int(tot.at[k, "n_ligados"]), int((g[st] == "LIGADO").sum()))
+                self.assertEqual(int(tot.at[k, "n_incertos"]), int((g[st] == "INCERTO").sum()))
+                self.assertAlmostEqual(float(tot.at[k, "permanencia_set"]), float(g[at].mean()))
+        # A regra ampla só reclassifica NAO_LIGADO (sem correspondente) da estreita como INCERTO.
+        mud = p[p["status_ligacao"] != p["status_ligacao_regra_estreita"]]
+        self.assertTrue((mud["status_ligacao"] == "INCERTO").all())
+        self.assertTrue((mud["status_ligacao_regra_estreita"] == "NAO_LIGADO").all())
         self.assertTrue((p.loc[p["status_ligacao"] == "LIGADO", "ativo"] == 1).all())
         self.assertTrue(p.loc[p["status_ligacao"].isin(["AMBIGUO", "INCERTO"]), "ativo"].isna().all())
         cel = self.csv["X2_celulas"]
@@ -373,7 +387,7 @@ class TestSaidasReais(unittest.TestCase):
                                 X.H, cluster=d["co_ibge"].to_numpy(), ids_unidade=d["co_ibge"].to_numpy())
         e = self.csv["X2_estimativas"]
         lin = e[(e["outcome_id"] == "X2.3") & (e["ciclo"] == "2") & (e["corte"] == "0.300")
-                & (e["especificacao"] == "principal")].iloc[0]
+                & (e["especificacao"] == "principal") & (e["regra_ligacao"] == X.REGRA_AMPLA)].iloc[0]
         self.assertAlmostEqual(lin["tau"], r["tau"], places=10)
         self.assertAlmostEqual(lin["ep"], r["ep"], places=10)
 
@@ -384,6 +398,44 @@ class TestSaidasReais(unittest.TestCase):
             q = X.L.qvalores_bky(e.loc[m, "p_valor"].to_numpy(float))
             self.assertTrue(np.allclose(q, e.loc[m, "q_bky"].to_numpy(float)), n)
             self.assertTrue(e.loc[~m, "q_bky"].isna().all(), n)
+            mp = m & e["no_protocolo_45"].astype(bool)
+            qp = X.L.qvalores_bky(e.loc[mp, "p_valor"].to_numpy(float))
+            self.assertTrue(np.allclose(qp, e.loc[mp, "q_bky_so_protocolo"].to_numpy(float)), n)
+        e = self.csv["X2_estimativas"]
+        self.assertFalse(e.loc[e["regra_ligacao"] == X.REGRA_ESTREITA, "entra_bky"].astype(bool).any())
+
+    def test_rotulos_de_adicao_e_condicionamento(self) -> None:
+        e2 = self.csv["X2_estimativas"]
+        adic = e2["outcome_id"].isin(["X2.3", "X2.4"]) | e2["corte"].eq("empilhado") | e2["ciclo"].eq("1+2")
+        self.assertFalse(e2.loc[adic, "no_protocolo_45"].astype(bool).any())
+        self.assertTrue(e2.loc[adic, "rotulo"].str.startswith(X.ADICIONAL).all())
+        self.assertTrue(e2.loc[~adic, "no_protocolo_45"].astype(bool).all())
+        self.assertTrue(e2["condicionamento"].notna().all())
+        e3 = self.csv["X3_estimativas"]
+        prot = e3["especificacao"].eq("principal")
+        self.assertTrue(e3.loc[prot, "no_protocolo_45"].astype(bool).all())
+        self.assertFalse(e3.loc[~prot, "no_protocolo_45"].astype(bool).any())
+        self.assertTrue(e3["condicionamento"].str.contains("pos-tratamento").all())
+        self.assertTrue(e3["condicionamento"].str.contains("sem limites de Lee").all())
+
+    def test_variante_sem_mai_jun(self) -> None:
+        mun = self.csv["X3_municipio"]
+        pm = self.csv["X3_painel_municipio_mes"]
+        larga = pm.pivot(index="co_ibge", columns="mes", values="ativos")
+        meses = [m for m in larga.columns if m not in self.r3["meses_excluidos_na_variante_x3m"]]
+        pico = larga[meses].max(axis=1)
+        m = mun.set_index("co_ibge")
+        pos = m["com_ativo_nos_meses_sensibilidade_x3m"] == 1
+        self.assertTrue(np.allclose(m.loc[pos, "pico_meses_sensibilidade_x3m"], pico.reindex(m.index[pos])))
+        self.assertTrue(np.allclose(m.loc[pos, "x3m_queda_pico_ultimo"],
+                                    m.loc[pos, "pico_meses_sensibilidade_x3m"] - m.loc[pos, "ativos_ultimo_mes"]))
+        e3 = self.csv["X3_estimativas"]
+        self.assertEqual(int(e3["especificacao"].str.startswith("sensibilidade_sem_mai_jun").sum()), 9)
+
+    def test_ordem_de_execucao_divulgada(self) -> None:
+        self.assertTrue(any("DEPOIS" in x and "faixa" in x for x in self.r2["ordem_de_execucao"]))
+        self.assertTrue(any("DEPOIS" in x and "queda por faixa" in x for x in self.r3["ordem_de_execucao"]))
+        self.assertIn("horizonte_por_ciclo", self.r2)
 
     def test_lee_so_por_ciclo_e_corte(self) -> None:
         e = self.csv["X2_estimativas"]
@@ -443,7 +495,7 @@ class TestSaidasReais(unittest.TestCase):
         texto = re.sub(r"\d+ª", "", texto)
         texto = re.sub(r"§\s?\d+", "", texto)
         for fixo in ("SHA-256", "IC 95%", "auditoria 18", "doc 41a", "doc 45", "protocolo 40", "protocolo 45", "dez/25",
-                      "ago/26"):
+                      "ago/26", "mai/26", "jun/26", "p < 0,05"):
             texto = texto.replace(fixo, "")
         return texto
 
