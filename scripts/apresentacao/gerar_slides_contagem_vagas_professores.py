@@ -46,6 +46,9 @@ N_EST = ROOT / "output" / "rdd_bolsa" / "N_estimativas.csv"
 NA_EST = ROOT / "output" / "rdd_bolsa" / "NA_estimativas.csv"
 E6_EST = ROOT / "output" / "rdd_bolsa" / "E6_estimativas.csv"
 N_RES = ROOT / "output" / "rdd_bolsa" / "N_resumo.json"
+ND_EST = ROOT / "output" / "rdd_bolsa" / "ND_estimativas.csv"
+ND_RES = ROOT / "output" / "rdd_bolsa" / "ND_resumo.json"
+ND_FIG = ROOT / "output" / "rdd_bolsa" / "ND_figuras"
 SCRIPT_N = ROOT / "scripts" / "rdd_bolsa" / "23_estimar_contagem_vagas.py"
 
 AZUL, LARANJA, CINZA, TINTA2 = "#2a78d6", "#e8693a", "#898781", "#52514e"
@@ -83,6 +86,10 @@ def _cs(x) -> str:
 
 def _pct(x: float) -> str:
     return _fmt(100 * x, 0) + " %"
+
+
+def _mil(x: float) -> str:
+    return f"{x / 1000:.0f}"
 
 
 def _pp(x: float) -> str:
@@ -607,6 +614,7 @@ h2.titulo { font-size: 23pt; font-weight: 650; line-height: 1.15; margin: 0 0 4m
 .capa { justify-content: center; }
 .capa h1 { font-size: 38pt; line-height: 1.1; margin: 0 0 6mm; font-weight: 650; }
 .capa .sub { font-size: 16pt; color: #52514e; margin: 0 0 12mm; }
+.aviso { margin: 9mm 0 0; padding-top: 4mm; border-top: 1px solid #e1e0d9; font-size: 18pt; font-weight: 600; }
 .dois-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12mm; }
 .dois-col h3 { font-size: 13pt; text-transform: uppercase; letter-spacing: .06em; color: var(--s1); margin: 0 0 4mm; }
 .dois-col .bullets { font-size: 16pt; }
@@ -625,6 +633,7 @@ document.addEventListener('keydown', function (e) {
 });
 </script>"""
 
+FONTE_ND = "Gráfico e números: <code>ND_figuras/</code>, <code>ND_estimativas.csv</code> (diagnóstico, doc 49b)"
 FONTE_PNG = "Gráfico: <code>gerar_slides_contagem_vagas_professores.py</code> · números de <code>{}</code>"
 
 
@@ -681,13 +690,41 @@ def montar_html() -> str:
                      "cada ponto é um município; a bolsa anunciada pula nos dois cortes de IVS.",
                      FONTE_PNG.format("outcomes_V_municipio.parquet e N_resumo.json")))
 
+    # Diagnóstico ND (doc 49b): números lidos de ND_estimativas.csv e ND_resumo.json
+    ndf = pd.read_csv(ND_EST, dtype={"corte": str, "ciclo": str})
+    ndres = json.loads(ND_RES.read_text(encoding="utf-8"))
+    c1, c2 = cs[0], cs[1]
+
+    def nd(**k):
+        return _unica(ndf, amostra="POR_CORTE", **k)
+
+    def d1(c, o, esp):
+        return nd(diagnostico="D1", tipo_linha="estimativa", corte=c, outcome=o, especificacao=esp, variante="principal")
+
+    nd_logpop, nd_vic = d1(c1, "log_pop", "sem_controle"), d1(c1, "VIC", "sem_controle")
+    nd_sem2, nd_com2 = d1(c2, "N1", "sem_controle"), d1(c2, "N1", "controle_protocolo_48")
+    nd_taxa1, nd_taxa2 = d1(c1, "TAXA_VIC", "taxa_ponderada"), d1(c2, "TAXA_VIC", "taxa_ponderada")
+    nd_vic2 = d1(c2, "VIC", "sem_controle")
+    nd_taxa_vi = nd(diagnostico="D3", corte=c1, outcome="TAXA_VI", especificacao="taxa_ponderada_local_linear", variante="h=0.050")
+    nd_taxa_mun = nd(diagnostico="D3", corte=c1, outcome="TAXA_VIC", especificacao="local_constante", variante="janela_0.010_sem_peso")
+    nd_sem3 = nd(diagnostico="D2", tipo_linha="sem_maiores", corte=c2, outcome="N1", especificacao="sem_controle",
+                 variante="sem_3_maiores_abaixo")
+    fx = ndf[(ndf["tipo_linha"] == "faixa") & (ndf["corte"] == c1) & (ndf["lado"] == "abaixo")].sort_values("faixa_inf")
+    colada, longe = fx.iloc[-1], fx.iloc[0]
+    maior = re.sub(r"^\d+\s+", "", str(colada["maior_municipio"]))
+    como_nd = {Path(f["arquivo"]).name: f["como_ler"] for f in ndres["saidas"]["figuras"]}
+    cond_400 = abs(nd_com2["tau"]) < abs(nd_sem2["tau"]) / 2 and not _exclui(nd_taxa2)
+    cond_300 = not _exclui(nd_logpop) and not _exclui(nd_vic)
+    pp_ic = lambda a, b: f"[{_fmt(100 * a, 1)}; {_fmt(100 * b, 1)}]"  # noqa: E731
+
     # 3. Porte: oferta
     vi_neg = all(r["tau"] < 0 for r in s_vi.values())
-    sl.append(_slide("Do lado de bolsa maior, a oferta de vagas é menor nos dois cortes" if vi_neg
-                     else "A oferta de vagas difere entre os lados do corte",
+    sl.append(_slide("A oferta de vagas imediatas é menor à direita nos dois cortes, mas os intervalos são largos" if vi_neg
+                     and all(not _exclui(r) for r in s_vi.values()) else "A oferta de vagas difere entre os lados do corte",
                      fig_vi,
                      ["Contagem = vagas oferecidas × taxa de preenchimento.", *_linhas_saltos(s_vi, u1, ic2),
-                      "Menos vagas à direita puxa a contagem para baixo." if vi_neg else "A oferta não tem o mesmo sinal nos dois cortes."],
+                      f"Em {_cs(float(c2))} a oferta acompanha a queda; em {_cs(float(c1))} o porte não salta." if cond_400 and cond_300
+                      else "Os próximos slides separam o que cada corte mostra."],
                      LER_RD, FONTE_PNG.format("N_estimativas.csv (S-c, VI)"), diag=True))
     # 4. Porte: população
     pop_neg = all(r["tau"] < 0 for r in s_pop.values())
@@ -742,6 +779,33 @@ def montar_html() -> str:
                      fig_com, [*_linhas_saltos(n1a, u1, ic2), "Preenchimento dado a oferta; condicional a ela.",
                                "Sem correção para comparações múltiplas por corte."],
                      LER_RD + " O eixo vertical compara municípios com a mesma oferta de vagas.", FONTE_PNG.format("N_estimativas.csv (S-a)")))
+
+    # 8b. Diagnóstico ND: por que os padrões são estranhos
+    sl.append(_slide("A contagem sobe à esquerda do corte por causa de poucas cidades grandes coladas nele"
+                     if colada["pop_media"] > 2 * colada["pop_mediana"] else "A população perto do corte é muito desigual",
+                     _img(ND_FIG / "ND_faixas_populacao.png", "ND_faixas_populacao"),
+                     [f"Em {_cs(float(c1))}, a faixa colada ao corte tem média de {_mil(colada['pop_media'])} mil habitantes "
+                      f"e mediana de {_mil(colada['pop_mediana'])} mil.",
+                      f"Poucas cidades muito grandes puxam a média (a maior: {maior}).",
+                      "O eixo é a distância ao corte (IVS − corte), não o IVS."],
+                     como_nd["ND_faixas_populacao.png"], FONTE_ND, diag=True))
+    sl.append(_slide(f"Em {_cs(float(c1))} a queda vem da taxa por vaga oferecida, mas depende de como se mede"
+                     if _exclui(nd_taxa1) and not _exclui(nd_taxa_vi) else
+                     f"Em {_cs(float(c1))} a queda da taxa por vaga depende de como se mede",
+                     _img(ND_FIG / "ND_taxa_janelas.png", "ND_taxa_janelas"),
+                     [f"O porte não salta: log da população {_fmt(nd_logpop['tau'], 2)} {_ic(nd_logpop['ic95_inf'], nd_logpop['ic95_sup'])}.",
+                      f"Taxa por vaga oferecida: {_pp(nd_taxa1['tau'])} {pp_ic(nd_taxa1['ic95_inf'], nd_taxa1['ic95_sup'])}.",
+                      f"Vagas imediatas no denominador: {_pp(nd_taxa_vi['tau'])} {pp_ic(nd_taxa_vi['ic95_inf'], nd_taxa_vi['ic95_sup'])}.",
+                      f"Cada município igual, só perto do corte: {_pp(nd_taxa_mun['tau'])} {pp_ic(nd_taxa_mun['ic95_inf'], nd_taxa_mun['ic95_sup'])}."],
+                     como_nd["ND_taxa_janelas.png"], FONTE_ND, diag=True))
+    sl.append(_slide(f"Em {_cs(float(c2))} a queda acompanha a oferta e o porte" if cond_400 else
+                     f"Em {_cs(float(c2))} o controle pela oferta não faz a queda sumir",
+                     _img(ND_FIG / "ND_faixas_vagas.png", "ND_faixas_vagas"),
+                     [f"Sem controle: {_fmt(nd_sem2['tau'], 2)} {_ic(nd_sem2['ic95_inf'], nd_sem2['ic95_sup'])}; "
+                      f"sem os três maiores municípios abaixo do corte: {_fmt(nd_sem3['tau'], 2)}.",
+                      f"Com controle: {_fmt(nd_com2['tau'], 2)} {_ic(nd_com2['ic95_inf'], nd_com2['ic95_sup'])}.",
+                      f"A taxa não salta: {_pp(nd_taxa2['tau'])} {pp_ic(nd_taxa2['ic95_inf'], nd_taxa2['ic95_sup'])}."],
+                     como_nd["ND_faixas_vagas.png"], FONTE_ND, diag=True))
 
     # 9. Forest N1–N4
     fs = [_svg_fig(sv, f"coeficientes_{o.lower()}") for sv, o in zip(_fig_n1_a_n4(d), ROTULOS)]
@@ -799,16 +863,18 @@ def montar_html() -> str:
                      FONTE_PNG.format("N_estimativas.csv, N_resumo.json")))
 
     # 12. Conclusão
-    sl.append('<section class="slide"><h2 class="titulo">Contar vagas não faz aparecer efeito positivo, e a contagem acompanha o porte</h2>'
+    sl.append('<section class="slide"><h2 class="titulo">Contar vagas não faz aparecer efeito positivo, e cada corte tem um padrão diferente</h2>'
               '<div class="corpo texto"><div class="dois-col"><div><h3>Pode-se afirmar</h3><ul class="bullets">'
               f'<li>Sem aumento em nenhum dos dois cortes ({degrau}, pacote do corte).</li>'
               '<li>Sinais negativos, concentrados no corte inferior; sem Holm no empilhado.</li>'
-              '<li>Contagem = oferta × taxa; atração e taxa sem salto distinguível de zero.</li></ul></div>'
+              f'<li>Em {_cs(float(c2))} a queda acompanha a oferta e o porte; em {_cs(float(c1))} vem da taxa por vaga, e depende de como se mede.</li>'
+              '<li>Atração e taxa de preenchimento: sem salto distinguível de zero.</li></ul></div>'
               '<div><h3>Não se pode afirmar</h3><ul class="bullets">'
               '<li>Que a bolsa reduz o preenchimento (pacote, porte, placebo).</li>'
               '<li>Que o salto com controle é causal por vaga.</li>'
               '<li>Nada sobre PMM-E, Agora Tem Especialistas ou retenção.</li>'
-              '<li>Falta de evidência não é prova de efeito nulo.</li></ul></div></div></div></section>')
+              '<li>Falta de evidência não é prova de efeito nulo.</li></ul></div></div>'
+              '<p class="aviso">Empilhar os cortes junta dois padrões diferentes; por isso tudo aqui é por corte.</p></div></section>')
 
     sl.append(_slide("Notas técnicas", "", [
         f"RDD local linear, kernel triangular, janela h = {h} de IVS (IVS 2010 oficial do Ipea), cortes {cortes}, um corte por vez.",
@@ -816,6 +882,7 @@ def montar_html() -> str:
         "Com controle: vagas oferecidas (imediatas + cadastro reserva) entram linearmente, um coeficiente por ciclo e corte; sem controle é o efeito total.",
         "Pontos: médias por faixa estreita de IVS, só municípios dentro da janela; faixa clara = IC 95% da reta. A reta desenhada reproduz o salto, o IC e o p dos CSV; o script aborta se não reproduzir.",
         "Holm só na linha de cortes empilhados com controle (N1 a N4). Diagnóstico de porte (vagas imediatas e população 2022): descritivo, fora do protocolo 48.",
+        "O diagnóstico ND (doc 49b) é descritivo, fora do protocolo 48: não muda o Holm nem as conclusões do doc 49 e nenhuma variante dele vira especificação principal.",
     ], "", "protocolo 48 e docs/06_execucao/49", classe="notas"))
     return ('<!DOCTYPE html>\n<html lang="pt-BR"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width, initial-scale=1">'

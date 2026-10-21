@@ -103,7 +103,7 @@ def _walk(obj, out: set[str]) -> None:
 
 def valores_das_fontes() -> set[str]:
     out: set[str] = set()
-    for csv in (G.N_EST, G.NA_EST, G.E6_EST):
+    for csv in (G.N_EST, G.NA_EST, G.E6_EST, G.ND_EST):
         df = pd.read_csv(csv)
         for c in df.columns:
             if pd.api.types.is_numeric_dtype(df[c]):
@@ -112,11 +112,16 @@ def valores_das_fontes() -> set[str]:
             else:
                 for v in df[c].dropna().astype(str).unique():
                     _tokens(v, out)
+        for c in ("pop_media", "pop_mediana"):  # população média e mediana das faixas, em mil habitantes
+            if c in df:
+                for v in df[c].dropna().unique():
+                    _formatos(float(v) / 1000, out)
         if "media_abaixo" in df:  # salto e IC em % da média abaixo (forest de robustez)
             for c in ("tau", "ic95_inf", "ic95_sup"):
                 for v in (df[c] / df["media_abaixo"]).replace([math.inf, -math.inf], math.nan).dropna().unique():
                     _formatos(float(v), out)
     _walk(json.loads(G.N_RES.read_text(encoding="utf-8")), out)
+    _walk(json.loads(G.ND_RES.read_text(encoding="utf-8")), out)
     return out
 
 
@@ -204,7 +209,7 @@ class TestSlidesContagemVagas(unittest.TestCase):
         tree = ast.parse(SCRIPT.read_text(encoding="utf-8"))
         doc = ast.get_docstring(tree, clean=False)
         # CSS e JS são estilo/navegação; as funções de desenho (_svg_*, _png_*, figura da regra, refit) têm só geometria
-        exentas = ("_svg_", "_png_", "_fig_regra", "_figura_rd", "_refit", "_confere", "_titulo")
+        exentas = ("_svg_", "_png_", "_fig_regra", "_figura_rd", "_refit", "_confere", "_titulo", "_mil")
         for n in ast.walk(tree):
             if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id in ("CSS_SLIDES", "JS_NAV")
                                                  for t in n.targets):
@@ -223,7 +228,7 @@ class TestSlidesContagemVagas(unittest.TestCase):
             def visit_Constant(self, n):
                 if isinstance(n.value, str) and n.value != doc and id(n) not in docstrings:
                     t = n.value
-                    for p in IDENT + [r"\b(?:utf-8|SHA-256)\b", r"\bv\d\b", r"\bf2\b", r"\bdocs/06_execucao/49\b"]:
+                    for p in IDENT + [r"\b(?:utf-8|SHA-256)\b", r"\bv\d\b", r"\bf2\b", r"\bdocs/06_execucao/49\b", r"\bdoc 49\b"]:
                         t = re.sub(p, " ", t)
                     for m in PT.finditer(t):
                         if _canon(m.group(1)) not in permitidos_txt:
@@ -240,6 +245,8 @@ class TestSlidesContagemVagas(unittest.TestCase):
         imgs = re.findall(r'<img src="data:image/png;base64,([A-Za-z0-9+/=]+)"', self.doc)
         self.assertGreaterEqual(len(imgs), 7)
         daqui = {f.read_bytes() for f in PASTA_FIG.glob("*.png")}
+        # o diagnóstico ND (doc 49b) grava figuras sem texto embutido; elas podem ser reutilizadas diretamente
+        daqui |= {f.read_bytes() for f in G.ND_FIG.glob("*.png")}
         alheias = {f.read_bytes() for pasta in ("N_figuras", "NA_figuras", "E6_figuras")
                    for f in (ROOT / "output" / "rdd_bolsa" / pasta).glob("*.png")}
         for b64 in imgs:
@@ -308,10 +315,12 @@ class TestSlidesContagemVagas(unittest.TestCase):
         taxa = {c: G._linha_e6(d, "f1_3_fracao_celulas_preenchidas_ch1", c) for c in cs}
         if "A taxa de preenchimento não aumenta do lado de bolsa maior" in txt:
             self.assertTrue(all(r["tau"] < 0 and not G._exclui(r) for r in taxa.values()))
-        if "Do lado de bolsa maior, a oferta de vagas é menor nos dois cortes" in txt:
+        if "A oferta de vagas imediatas é menor à direita nos dois cortes, mas os intervalos são largos" in txt:
             for c in cs:
-                self.assertLess(G._unica(d["n"], outcome_id="VI", especificacao="S-c", variante="principal",
-                                         populacao="V1+V2+V3", corte=c)["tau"], 0)
+                r = G._unica(d["n"], outcome_id="VI", especificacao="S-c", variante="principal",
+                             populacao="V1+V2+V3", corte=c)
+                self.assertLess(r["tau"], 0)
+                self.assertFalse(G._exclui(r))
         sem = {c: G._linha_n(d, "N1", "S-b", c) for c in cs}
         if "Sem controle, as vagas preenchidas não aumentam, e nenhum IC exclui zero" in txt:
             self.assertTrue(all(r["tau"] < 0 and not G._exclui(r) for r in sem.values()))
@@ -320,6 +329,42 @@ class TestSlidesContagemVagas(unittest.TestCase):
             self.assertFalse(any(r["ic95_inf"] > 0 for r in todas))
             self.assertEqual({c for o in G.ROTULOS for e in ("S-a", "S-b") for c in cs
                               if G._exclui(G._linha_n(d, o, e, c))}, {cs[0]})
+
+    def test_slides_do_diagnostico_nd_vem_do_nd_e_nao_atribuem_0300_ao_porte(self):
+        ndf = pd.read_csv(G.ND_EST, dtype={"corte": str, "ciclo": str})
+        c1, c2 = self.d["cortes"]
+        ndres = json.loads(G.ND_RES.read_text(encoding="utf-8"))
+        # as três figuras do ND estão nos slides, byte a byte, e o "Como ler" é o do ND
+        for nome in ("ND_faixas_populacao.png", "ND_taxa_janelas.png", "ND_faixas_vagas.png"):
+            b64 = base64.b64encode((G.ND_FIG / nome).read_bytes()).decode("ascii")
+            self.assertIn(b64, self.doc, nome)
+            como = next(f["como_ler"] for f in ndres["saidas"]["figuras"] if f["arquivo"].endswith(nome))
+            self.assertIn(como, self.doc)
+        nd_slides = [s for s in self.slides if "ND_estimativas.csv" in s]
+        self.assertEqual(len(nd_slides), 3)
+        # ficam depois do N1 com controle e antes do forest
+        pos = [self.slides.index(s) for s in nd_slides]
+        n1_com = next(i for i, s in enumerate(self.slides) if "Com controle, " in s and "figbox" in s)
+        self.assertEqual(pos, [n1_com + 1, n1_com + 2, n1_com + 3])
+        # o texto condiz com o ND: em c2 o controle quase tira a queda e a taxa não salta; em c1 o porte não salta
+        def l(c, o, esp):
+            return G._unica(ndf, amostra="POR_CORTE", diagnostico="D1", tipo_linha="estimativa", corte=c, outcome=o,
+                            especificacao=esp, variante="principal")
+        txt = _texto(self.doc)
+        if "a queda acompanha a oferta e o porte" in txt:
+            self.assertLess(abs(l(c2, "N1", "controle_protocolo_48")["tau"]), abs(l(c2, "N1", "sem_controle")["tau"]) / 2)
+            self.assertFalse(G._exclui(l(c2, "TAXA_VIC", "taxa_ponderada")))
+        if "a queda vem da taxa por vaga oferecida" in txt:
+            self.assertFalse(G._exclui(l(c1, "log_pop", "sem_controle")))
+            self.assertTrue(G._exclui(l(c1, "TAXA_VIC", "taxa_ponderada")))
+        # nenhum slide fora do ND atribui a queda em c1 ao porte
+        for s in self.slides:
+            if s not in nd_slides:
+                self.assertNotIn("puxa a contagem para baixo", s)
+        # conclusão e notas técnicas
+        self.assertIn("Empilhar os cortes junta dois padrões diferentes; por isso tudo aqui é por corte.", txt)
+        self.assertIn("não muda o Holm", self.slides[-1])
+        self.assertIn("fora do protocolo 48", self.slides[-1])
 
     def test_forest_mostra_cortes_separados_e_empilhado_secundario(self):
         self.assertIn("secundário", self.doc)
