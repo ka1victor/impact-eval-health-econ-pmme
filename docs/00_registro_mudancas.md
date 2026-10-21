@@ -8,20 +8,28 @@
 
 ---
 
-## 21/10/2026 — Resumo para os professores sobre a troca para o nº de vagas preenchidas
+## 21/10/2026 — Slides para os professores sobre a troca para o nº de vagas preenchidas
 
 Motivo: os professores sugeriram trocar a variável de efeito de "% de vagas preenchidas" para "número de vagas
-preenchidas". O autor precisa de uma página curta (até 3 páginas A4) que explique a troca, o desenho, a tabela N1–N4,
-uma figura, a robustez e o que se pode afirmar, a partir da família N já executada
-([`06_execucao/49`](06_execucao/49_resultados_contagem_vagas_preenchidas.md)). Não há estimação nova.
+preenchidas". O autor pediu uma apresentação de slides simples (16:9, um gráfico por slide, título = conclusão, poucos
+bullets), com cada corte (0,300 e 0,400) em painel separado, a atração e a taxa de preenchimento, e o diagnóstico de porte
+(vagas oferecidas e população 2022, descritivo, fora do protocolo 48), a partir da família N já executada
+([`06_execucao/49`](06_execucao/49_resultados_contagem_vagas_preenchidas.md)). Não há estimação nova: as retas desenhadas
+reproduzem, com as funções do script 23, as estimativas dos CSV (o script aborta se divergirem).
 
 ### Criado
 
 | Arquivo | O que é |
 |---|---|
-| `scripts/apresentacao/gerar_resumo_contagem_vagas_professores.py` | gera `output/apresentacao_validacao/resumo_contagem_vagas.html` e `.pdf` (A4, Chromium headless); lê só `output/rdd_bolsa/N_estimativas.csv`, `NA_estimativas.csv`, `N_resumo.json` e a figura `N_figuras/N1_com_controle_empilhado.png`; reutiliza estilo e PDF do `gerar_figuras_validacao_professores.py`; sem número digitado, sem leitura de `data/`, sem data nem commit no HTML |
-| `tests/test_resumo_contagem_vagas_professores.py` | HTML em dia, números rastreados a `output/`, código sem número digitado, nada de `data/`, figura do pipeline, PDF |
-| `output/apresentacao_validacao/resumo_contagem_vagas.{html,pdf}` | o resumo |
+| `scripts/apresentacao/gerar_slides_contagem_vagas_professores.py` | gera `output/apresentacao_validacao/slides_contagem_vagas.html` (uma `<section>` por slide, navegável) e `.pdf` (16:9, Chromium headless) e as figuras em `slides_contagem_vagas_figuras/`; lê só `output/` (CSV do N, NA e E6, `N_resumo.json`, `outcomes/`); nenhuma figura embute texto de leitura; sem número digitado, sem leitura de `data/`, sem data nem commit no HTML |
+| `tests/test_slides_contagem_vagas_professores.py` | HTML em dia, números rastreados a `output/`, código sem número digitado, nada de `data/`, figuras vindas da pasta do script (e não de `N_figuras/`), slides enxutos, PDF 16:9 |
+| `output/apresentacao_validacao/slides_contagem_vagas.{html,pdf}` e `slides_contagem_vagas_figuras/` | os slides e seus gráficos |
+
+### Removido
+
+O resumo A4 da primeira versão (`scripts/apresentacao/gerar_resumo_contagem_vagas_professores.py`,
+`tests/test_resumo_contagem_vagas_professores.py` e `output/apresentacao_validacao/resumo_contagem_vagas.{html,pdf}`),
+substituído pelos slides (mesmo script e mesmo teste, renomeados).
 
 ### Atualizado
 
