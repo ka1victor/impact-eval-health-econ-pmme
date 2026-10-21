@@ -8,6 +8,25 @@
 
 ---
 
+## 21/10/2026 — Resumo para os professores sobre a troca para o nº de vagas preenchidas
+
+Motivo: os professores sugeriram trocar a variável de efeito de "% de vagas preenchidas" para "número de vagas
+preenchidas". O autor precisa de uma página curta (até 3 páginas A4) que explique a troca, o desenho, a tabela N1–N4,
+uma figura, a robustez e o que se pode afirmar, a partir da família N já executada
+([`06_execucao/49`](06_execucao/49_resultados_contagem_vagas_preenchidas.md)). Não há estimação nova.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `scripts/apresentacao/gerar_resumo_contagem_vagas_professores.py` | gera `output/apresentacao_validacao/resumo_contagem_vagas.html` e `.pdf` (A4, Chromium headless); lê só `output/rdd_bolsa/N_estimativas.csv`, `NA_estimativas.csv`, `N_resumo.json` e a figura `N_figuras/N1_com_controle_empilhado.png`; reutiliza estilo e PDF do `gerar_figuras_validacao_professores.py`; sem número digitado, sem leitura de `data/`, sem data nem commit no HTML |
+| `tests/test_resumo_contagem_vagas_professores.py` | HTML em dia, números rastreados a `output/`, código sem número digitado, nada de `data/`, figura do pipeline, PDF |
+| `output/apresentacao_validacao/resumo_contagem_vagas.{html,pdf}` | o resumo |
+
+### Atualizado
+
+[`tests/README.md`](../tests/README.md) (contagem e linha do módulo novo).
+
 ## 19/10/2026 — Aquisições do adendo §12 do protocolo 47: safras v2 do SIH e do SIA (§12.1) e a17 (§12.2)
 
 Motivo: o adendo §12 do protocolo
