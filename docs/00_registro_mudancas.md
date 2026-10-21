@@ -59,6 +59,10 @@ Mudanças fora de `docs/`:
 - teste `tests/test_diagnostico_contagem_porte.py`;
 - `scripts/README.md` e `tests/README.md`;
 - uma linha no cabeçalho do doc 49 apontando para o 49b.
+- adendo de 21/10/2026 (AD2), no mesmo script e nas mesmas saídas: por que a taxa por vaga
+  oferecida cai em 0,300 (cadastro reserva, decomposição denominador × peso, por ciclo e
+  influência no nível da vaga), seção 14 do 49b e figuras `ND_adendo_*.png`; nenhum arquivo novo
+  em `docs/`.
 
 ---
 
