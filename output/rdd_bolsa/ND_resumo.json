@@ -1,0 +1,328 @@
+{
+  "etapa": "ND_diagnostico_contagem_porte",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "DIAGNOSTICO_FORA_PROTOCOLO_48",
+  "data_execucao": "2026-10-21",
+  "script": "scripts/rdd_bolsa/23b_diagnostico_contagem_porte.py",
+  "contraste": "pacote do corte: anúncio de +R$ 5 mil por mês na bolsa (0,300: R$ 10 mil -> 15 mil; 0,400: R$ 15 mil -> 20 mil) mais as outras regras federais que mudam nos mesmos cortes (protocolo §13, auditoria 18); não é efeito da participação no PMM-E nem do Agora Tem Especialistas",
+  "salto": "tau = lado com bolsa maior (s > c) menos lado com bolsa menor; o corte pertence ao lado inferior",
+  "nao_muda": "nao substitui a S-a empilhada do protocolo 48, nao muda o Holm do protocolo 48 nem as conclusoes do doc 49; nenhuma variante daqui vira especificacao principal",
+  "diagnosticos": [
+    {
+      "id": "D1",
+      "nome": "decomposicao contagem = oferta x taxa",
+      "itens": [
+        "saltos local linear (h = 0,050, triangular, CR1 por municipio) em log(pop 2022), vagas imediatas, vagas oferecidas (imediatas + CR), n de celulas, N1 sem controle, N1 com o controle do protocolo, taxa ponderada com as vagas oferecidas e taxa ponderada com as vagas imediatas",
+        "decomposicao log-aditiva log(N1) = log(vagas oferecidas) + log(taxa) nos municipios com N1 > 0, com o numero de linhas fora por lado e a identidade conferida",
+        "por corte (ciclos juntos); apendice por ciclo; empilhado so como comparacao"
+      ]
+    },
+    {
+      "id": "D2",
+      "nome": "de onde vem a inclinacao",
+      "itens": [
+        "medias por faixa de 0,010 da distancia ao corte (populacao media e mediana, vagas, N1, taxa ponderada e media simples), por corte e no empilhado de comparacao",
+        "inclinacao de cada lado (por 0,010 de IVS) de N1 sem e com o controle do protocolo, cada uma sem e com log(pop) como covariavel",
+        "influencia por municipio: leave-one-out do salto de N1 com controle (S-a) e do Poisson com offset (S-d), todos os municipios da janela; os 10 mais influentes por corte (co_ibge, nome, populacao, vagas, lado, distancia)",
+        "sensibilidade retirando os k = 1, 3, 5 municipios mais populosos da janela, abaixo, acima e dos dois lados, em N1 com e sem controle, no Poisson com offset e na taxa ponderada"
+      ]
+    },
+    {
+      "id": "D3",
+      "nome": "forma da estimativa da taxa",
+      "itens": [
+        "Poisson local com offset log(vagas oferecidas), h em 0,020; 0,030; 0,050; 0,080",
+        "local linear da taxa ponderada (vagas oferecidas e vagas imediatas), mesmas janelas",
+        "diferenca de medias (local constante, kernel uniforme, intercepto por ciclo) em +-0,010, +-0,020 e +-0,030, ponderada por vagas e sem peso, com as vagas oferecidas e com as imediatas",
+        "local quadratico (curvatura propria de cada lado) com h = 0,080 da taxa ponderada e de N1 com e sem controle",
+        "banda otima com vies corrigido estilo rdrobust, se a rdd_lib tiver"
+      ]
+    },
+    {
+      "id": "D4",
+      "nome": "porte como covariavel",
+      "itens": [
+        "N1 sem controle; com log(pop); com log(pop) + vagas imediatas; com o controle do protocolo 48 (vagas oferecidas, referencia)",
+        "contagem por vaga oferecida (N1 / vagas, sem peso) como outcome",
+        "por corte; apendice por ciclo; empilhado so como comparacao"
+      ]
+    },
+    {
+      "id": "D5",
+      "nome": "empilhamento",
+      "itens": [
+        "peso efetivo omega (Cattaneo, Keele, Titiunik e Vazquez-Bare 2016) e contribuicao omega x salto de cada ciclo x corte no salto empilhado, para N1 sem e com controle, com a identidade salto empilhado = soma das contribuicoes conferida",
+        "o mesmo dentro de cada corte (pesos dos ciclos)",
+        "empilhado comparado com os cortes isolados (N1 sem e com controle, Poisson com offset, taxa)"
+      ]
+    }
+  ],
+  "amostras": {
+    "POR_CORTE": "um corte por vez; ciclos 1-3 juntos com intercepto e inclinacoes por ciclo, salto comum, CR1 por municipio; h = 0,050, kernel triangular",
+    "APENDICE_POR_CICLO": "ciclo x corte, local linear, EP HC1",
+    "EMPILHADO_COMPARACAO": "ciclos e cortes empilhados (amostra da figura do doc 49), so comparacao"
+  },
+  "parametros": {
+    "h_mil": 50,
+    "h_D3_mil": [
+      20,
+      30,
+      50,
+      80
+    ],
+    "janelas_local_constante_mil": [
+      10,
+      20,
+      30
+    ],
+    "janela_adendo_AD1_mil": 50,
+    "h_local_quadratico_mil": 80,
+    "k_maiores": [
+      1,
+      3,
+      5
+    ],
+    "n_top_influencia": 10,
+    "largura_faixa_mil": 10
+  },
+  "exposicao_previa": [
+    "Pistas do pedido (conta descritiva no chat, fora de output/): populacao media e vagas imediatas nas faixas -0,015, -0,005 e +0,005; taxa bruta alocados/vagas maior acima do corte em media simples; N1 por corte com e sem controle (doc 49); Poisson com offset empilhado negativo; atracao (f1_1) e fracao preenchida (f1_3) sem salto no E6.",
+    "Ja publicados no doc 49 antes deste diagnostico: S-a, S-b, S-c, S-d e S-e por corte e empilhados; decomposicao total = oferta + preenchimento; A4 (log pop e estoques CNES).",
+    "Exploracao feita ao preparar este script, antes de fixar a lista (registrada aqui por transparencia): medias por faixa de populacao, vagas, N1 e taxa ponderada por corte; saltos por corte em log(pop), vagas e taxa ponderada; Poisson com offset por corte com h de 0,020 a 0,080; leave-one-out de S-a e do Poisson por corte; taxas medias simples e ponderadas com vagas oferecidas e imediatas nas janelas +-0,010 a +-0,050."
+  ],
+  "adendos": [
+    {
+      "data": "2026-10-21",
+      "id": "AD1",
+      "o_que": "D3 ganha a diferenca de medias na janela inteira (|x| < 0,050), ponderada e sem peso, com as vagas oferecidas e com as imediatas",
+      "por_que": "a taxa bruta das pistas (maior acima do corte em media simples) e uma media da janela inteira com as vagas imediatas no denominador; sem esta linha, o conflito com o Poisson com offset nao pode ser reconciliado com os numeros gravados",
+      "ja_visto": "a exploracao registrada em exposicao_previa (medias simples e ponderadas com os dois denominadores nas janelas +-0,010 a +-0,050) ja tinha mostrado que a media simples com as vagas imediatas, na janela inteira, e maior acima do corte"
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial) e nome do municipio",
+      "fonte": "Ipea, Atlas da Vulnerabilidade Social (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "ivs, nome_municipio_uf"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "N1, vagas oferecidas, celulas e populacao 2022 (V1-V3)",
+      "fonte": "tarefa B (12_construir_outcomes_funil.py)",
+      "data_referencia": "ver dicionario",
+      "cobertura": "V1: 368, V2: 454, V3: 747",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "municipios sem IVS oficial fora"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_U_municipio.parquet",
+      "sha256": "5d4bf05a24e1b5f704aa50bbff4325b3997f1505f57c80f14f822e08e1c3db14",
+      "bytes": 246282,
+      "papel": "conferencia do IVS e das colunas de oferta (funcoes do script 23)",
+      "fonte": "tarefa B",
+      "data_referencia": "ver dicionario",
+      "cobertura": "-",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_G3_municipio.parquet",
+      "sha256": "b2133fbd60b3189f162ebe35b6e3650eb1d97fda0a5e267b965802e684866948",
+      "bytes": 85002,
+      "papel": "conferencia do IVS da tarefa B (funcao do E6)",
+      "fonte": "tarefa B",
+      "data_referencia": "ver dicionario",
+      "cobertura": "-",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "so co_ibge e ivs_2010_oficial"
+    },
+    {
+      "caminho": "output/rdd_bolsa/N_estimativas.csv",
+      "sha256": "3490d69c568ed13eb2b03612100a24aeefd72fc5f5f7cb3ac84e301d94f684ed",
+      "bytes": 1455159,
+      "papel": "alvo de conferencia (S-a, S-b, S-d, S-e por corte e empilhados)",
+      "fonte": "23_estimar_contagem_vagas.py",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "linha de estimativa",
+      "chaves": "outcome_id, populacao, corte, especificacao, variante",
+      "filtros": "N1, V1+V2+V3"
+    }
+  ],
+  "validacoes": {
+    "populacoes": {
+      "U_ivs_igual_a08": true,
+      "G3_ivs_igual_a08": true,
+      "V1_ivs_igual_a08": true,
+      "V2_ivs_igual_a08": true,
+      "V3_ivs_igual_a08": true,
+      "primeiro_estagio": {
+        "V1": {
+          "municipios": 368,
+          "reproduzidos": 368,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        },
+        "V2": {
+          "municipios": 454,
+          "reproduzidos": 454,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        },
+        "V3": {
+          "municipios": 747,
+          "reproduzidos": 747,
+          "municipios_com_mais_de_uma_faixa": 0,
+          "sharp": true
+        }
+      },
+      "municipios_sem_ivs_oficial_fora_da_rdd": {
+        "U": [],
+        "G3": [
+          "422000"
+        ],
+        "V1": [],
+        "V2": [],
+        "V3": [
+          "422000"
+        ]
+      }
+    },
+    "doc49": {
+      "linhas_conferidas": [
+        "S-b principal 0.300",
+        "S-b principal 0.400",
+        "S-b principal empilhado",
+        "S-a principal 0.300",
+        "S-a principal 0.400",
+        "S-a principal empilhado",
+        "S-d log_controle_offset 0.300",
+        "S-d log_controle_offset 0.400",
+        "S-d log_controle_offset empilhado",
+        "S-e fracao_ponderada_pelo_controle 0.300",
+        "S-e fracao_ponderada_pelo_controle 0.400",
+        "S-e fracao_ponderada_pelo_controle empilhado"
+      ],
+      "max_abs_dif": 9.71445146547012e-17
+    },
+    "log_aditiva": {
+      "linhas": 9,
+      "max_abs_residuo": 5.995204332975845e-15
+    },
+    "omega": {
+      "linhas": 6,
+      "max_abs_residuo": 1.8540724511240114e-14
+    }
+  },
+  "contagens": {
+    "linhas": 1460,
+    "executado": 1457,
+    "sem_estimativa": 0,
+    "nao_executado": 3,
+    "por_diagnostico": {
+      "D1": 108,
+      "D2": 1178,
+      "D3": 99,
+      "D4": 45,
+      "D5": 30
+    },
+    "por_tipo_linha": {
+      "contribuicao": 24,
+      "estimativa": 243,
+      "faixa": 30,
+      "identidade": 15,
+      "inclinacao": 12,
+      "influencia": 1064,
+      "sem_maiores": 72
+    },
+    "linhas_sem_vaga_imediata": 655,
+    "linhas_n1_zero": 836,
+    "municipios_sem_ivs_fora": 1,
+    "influencia": {
+      "0.300": {
+        "n_municipios": 265
+      },
+      "0.400": {
+        "n_municipios": 267
+      }
+    }
+  },
+  "decisoes": [
+    "Taxa ponderada = N1 / vagas com peso = kernel x vagas (a S-e do script 23); com as vagas oferecidas (imediatas + CR, forma principal do protocolo 48) e com as imediatas (forma de sensibilidade).",
+    "Covariaveis (log pop, vagas) entram como no script 23: centradas na media ponderada pelo kernel do grupo, um coeficiente por grupo (ciclo), comum aos dois lados.",
+    "Local constante: kernel uniforme em |x| <= w (IVS em milesimos inteiros; h = w + 0,5 milesimo), intercepto por ciclo como dummies comuns aos dois lados, CR1 por municipio.",
+    "Local quadratico: x^2 e T x^2 por grupo como colunas extras (curvatura propria de cada lado).",
+    "Influencia: leave-one-out por municipio (todas as linhas de ciclo saem juntas); o salto base e o da amostra POR_CORTE.",
+    "Sem os maiores: os k municipios de maior populacao 2022 na janela do lado indicado (empate pelo co_ibge).",
+    "D5: omega = pesos_grupos da rdd_lib; salto do grupo = local linear so do ciclo x corte; a identidade salto empilhado = soma omega x salto do grupo e exata (Frisch-Waugh-Lovell) e conferida."
+  ],
+  "saidas": {
+    "ND_estimativas.csv": {
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "sha256": "10730af2295f90ccb7e47c01369225ae587a3c9a461cf22598c32dc732cc71f7"
+    },
+    "figuras": [
+      {
+        "arquivo": "output/rdd_bolsa/ND_figuras/ND_faixas_populacao.png",
+        "fonte": "ND_estimativas.csv, tipo_linha = faixa, amostra = POR_CORTE; salto da linha D1",
+        "como_ler": "Cada ponto é o tamanho típico dos municípios num trecho de distância ao corte. Perto do corte, do lado de bolsa menor, a média fica muito acima da mediana: ali há poucas cidades muito grandes.",
+        "sha256": "e94f084a122c03343bcd68d45b3c988d7e1f37b814ef1b74bd1395d500d375ba"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/ND_figuras/ND_faixas_vagas.png",
+        "fonte": "ND_estimativas.csv, tipo_linha = faixa, amostra = POR_CORTE; salto da linha D1",
+        "como_ler": "Cada ponto é o número médio de vagas oferecidas por município num trecho de distância ao corte. Mostra se um lado do corte simplesmente abriu mais vagas.",
+        "sha256": "fc5b6368270f77db30cdc9112d1035c2a1db27a5e4c80ad3bd6929572bcb6a81"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/ND_figuras/ND_faixas_N1.png",
+        "fonte": "ND_estimativas.csv, tipo_linha = faixa, amostra = POR_CORTE; salto da linha D1",
+        "como_ler": "Cada ponto é o número médio de vagas preenchidas por município num trecho de distância ao corte. Ele sobe e desce junto com o tamanho das cidades e com as vagas abertas, por isso não mede atração.",
+        "sha256": "057926f47151315c3f71adaf3e7929d9fadf511c6f9e04b4999ad4330b1e7c00"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/ND_figuras/ND_faixas_taxa.png",
+        "fonte": "ND_estimativas.csv, tipo_linha = faixa, amostra = POR_CORTE; salto da linha D1",
+        "como_ler": "Cada ponto é a parte das vagas oferecidas que foi preenchida num trecho de distância ao corte. Círculos contam cada vaga igual; quadrados contam cada município igual.",
+        "sha256": "901990f75f3fb3eb39908c3f129f39353d7b2a3642ed54812a0e793c382e45bc"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/ND_figuras/ND_influencia_Sa.png",
+        "fonte": "ND_estimativas.csv, tipo_linha = influencia, especificacao = S-a",
+        "como_ler": "Cada ponto é um município: a altura mostra quanto o salto no corte muda se ele for retirado. Pontos perto de zero, sem nenhum isolado, querem dizer que o salto não depende de uma cidade só.",
+        "sha256": "03ba1cb99bec48cfdcd13d6c1c2a2acc8e773f96edc8a02a8cbacfeabdd729c5"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/ND_figuras/ND_influencia_poisson.png",
+        "fonte": "ND_estimativas.csv, tipo_linha = influencia, especificacao = poisson_offset",
+        "como_ler": "O mesmo que a figura anterior, para a taxa de preenchimento por vaga. Pontos perto de zero querem dizer que nenhuma cidade sozinha decide o resultado.",
+        "sha256": "88a8cd0bf4a1475baa2bf3a9a07bf394843750bbf114692f6ec5638f8ecaeebd"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/ND_figuras/ND_taxa_janelas.png",
+        "fonte": "ND_estimativas.csv, diagnostico = D3, amostra = POR_CORTE",
+        "como_ler": "Cada linha é uma forma diferente de medir o salto na taxa de preenchimento no corte, com seu intervalo de confiança. Se as linhas mudam de lado do zero conforme a forma, o salto não é nítido.",
+        "sha256": "68af2cc5e3c8813d29453590d6ce7283e18e34317f20af04a9372a4d8c97cee7"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/ND_figuras/ND_poisson_janelas.png",
+        "fonte": "ND_estimativas.csv, diagnostico = D3, amostra = POR_CORTE",
+        "como_ler": "Cada linha mede o salto na taxa de preenchimento por vaga usando um trecho mais estreito ou mais largo em volta do corte. Resultados que mudam muito com o trecho pedem cautela.",
+        "sha256": "dbd00af9cd10d8eb8271b098d3763aa1ab921c797ae14dfe3c5de75981f2adca"
+      }
+    ]
+  },
+  "linguagem": "diagnostico descritivo do pacote do corte; nada aqui e efeito da participacao no PMM-E nem do degrau de R$ 5 mil isolado"
+}
