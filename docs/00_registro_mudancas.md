@@ -33,7 +33,7 @@ substituído pelos slides (mesmo script e mesmo teste, renomeados).
 
 ### Atualizado
 
-[`tests/README.md`](../tests/README.md) (contagem e linha do módulo novo). Os slides incorporam o diagnóstico ND ([`06_execucao/49b`](06_execucao/49b_diagnostico_contagem_porte.md), `output/rdd_bolsa/ND_estimativas.csv`, `ND_resumo.json` e `ND_figuras/`, reutilizadas sem alteração): três slides após o N1 com controle (porte perto do corte, taxa por vaga em 0,300, oferta e porte em 0,400), a linha "empilhar os cortes junta dois padrões" na conclusão e uma nota técnica; o diagnóstico é descritivo, fora do protocolo 48, e não muda o Holm.
+[`tests/README.md`](../tests/README.md) (contagem e linha do módulo novo). Os slides incorporam o diagnóstico ND ([`06_execucao/49b`](06_execucao/49b_diagnostico_contagem_porte.md), `output/rdd_bolsa/ND_estimativas.csv`, `ND_resumo.json` e `ND_figuras/`, reutilizadas sem alteração): cinco slides após o N1 com controle (porte perto do corte, taxa por vaga em 0,300, adendo AD2 sobre o ciclo 2 e o cadastro reserva em duas figuras, oferta e porte em 0,400), a linha "empilhar os cortes junta dois padrões" na conclusão e uma nota técnica; o diagnóstico é descritivo, fora do protocolo 48, e não muda o Holm.
 
 ---
 

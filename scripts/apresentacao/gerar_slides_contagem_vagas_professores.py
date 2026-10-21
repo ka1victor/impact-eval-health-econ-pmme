@@ -713,6 +713,19 @@ def montar_html() -> str:
     colada, longe = fx.iloc[-1], fx.iloc[0]
     maior = re.sub(r"^\d+\s+", "", str(colada["maior_municipio"]))
     como_nd = {Path(f["arquivo"]).name: f["como_ler"] for f in ndres["saidas"]["figuras"]}
+    def ad(**k):
+        return _unica(ndf, adendo="AD2", **k)
+
+    ad_tot = ad(diagnostico="AD2_A3", tipo_linha="identidade", corte=c1, outcome="TAXA_VIC", variante="soma_das_contribuicoes")
+    ad_c2 = ad(diagnostico="AD2_A3", tipo_linha="contribuicao", corte=c1, outcome="TAXA_VIC", variante="grupo_c2")
+    ad_taxa_c2 = ad(diagnostico="AD2_A3", tipo_linha="estimativa", corte=c1, populacao="V2", outcome="TAXA_VIC")
+    ad_cr_c2 = ad(diagnostico="AD2_A3", tipo_linha="estimativa", corte=c1, populacao="V2", outcome="FRAC_CR")
+    ad_cr1 = ad(diagnostico="AD2_A1", tipo_linha="estimativa", corte=c1, outcome="FRAC_CR")
+    ad_cr2 = ad(diagnostico="AD2_A1", tipo_linha="estimativa", corte=c2, outcome="FRAC_CR")
+    max_delta = ndf[(ndf["adendo"] == "AD2") & (ndf["tipo_linha"] == "influencia_vaga") & (ndf["corte"] == c1)]["delta_tau"].abs().max()
+    so_cr_c2 = ndres["adendo_2026_10_21"]["taxa_separada_por_tipo_de_vaga"]["celulas_por_tipo"]["ciclo 2 / so_cr"]["alocados"]
+    parte_c2 = ad_c2["contribuicao"] / ad_tot["tau"]
+    cond_ad = abs(parte_c2 - 0.5) < 0.1 and _exclui(ad_cr_c2) and so_cr_c2 == 0
     cond_400 = abs(nd_com2["tau"]) < abs(nd_sem2["tau"]) / 2 and not _exclui(nd_taxa2)
     cond_300 = not _exclui(nd_logpop) and not _exclui(nd_vic)
     pp_ic = lambda a, b: f"[{_fmt(100 * a, 1)}; {_fmt(100 * b, 1)}]"  # noqa: E731
@@ -798,6 +811,24 @@ def montar_html() -> str:
                       f"Vagas imediatas no denominador: {_pp(nd_taxa_vi['tau'])} {pp_ic(nd_taxa_vi['ic95_inf'], nd_taxa_vi['ic95_sup'])}.",
                       f"Cada município igual, só perto do corte: {_pp(nd_taxa_mun['tau'])} {pp_ic(nd_taxa_mun['ic95_inf'], nd_taxa_mun['ic95_sup'])}."],
                      como_nd["ND_taxa_janelas.png"], FONTE_ND, diag=True))
+    sl.append(_slide(f"Em {_cs(float(c1))}, metade da queda vem do ciclo 2, junto com mais vagas de reserva" if cond_ad else
+                     f"Em {_cs(float(c1))}, a queda da taxa por vaga se divide de forma desigual entre os ciclos",
+                     _img(ND_FIG / "ND_adendo_ciclos.png", "ND_adendo_ciclos"),
+                     [f"O ciclo 2 responde por {_num(100 * parte_c2, 0)} % do salto ({_pp(ad_tot['tau'])}).",
+                      f"Ciclo 2: taxa {_pp(ad_taxa_c2['tau'])} {pp_ic(ad_taxa_c2['ic95_inf'], ad_taxa_c2['ic95_sup'])}; "
+                      f"reserva {_pp(ad_cr_c2['tau'])} {pp_ic(ad_cr_c2['ic95_inf'], ad_cr_c2['ic95_sup'])}.",
+                      f"Nenhuma vaga só de reserva foi preenchida no ciclo 2 ({int(so_cr_c2)} alocados)."],
+                     como_nd["ND_adendo_ciclos.png"], FONTE_ND, diag=True))
+    sl.append(_slide(f"A fração de vagas de reserva sobe em {_cs(float(c1))}, mas não explica a queda sozinha"
+                     if _exclui(ad_cr1) and not _exclui(ad_cr2) and nd_taxa_vi["tau"] < 0 else
+                     "A fração de vagas de reserva e a queda da taxa não se explicam uma à outra",
+                     _img(ND_FIG / "ND_adendo_cr_taxas.png", "ND_adendo_cr_taxas"),
+                     [f"Reserva: {_pp(ad_cr1['tau'])} {pp_ic(ad_cr1['ic95_inf'], ad_cr1['ic95_sup'])} em {_cs(float(c1))}; "
+                      f"{_pp(ad_cr2['tau'])} {pp_ic(ad_cr2['ic95_inf'], ad_cr2['ic95_sup'])} em {_cs(float(c2))}.",
+                      f"Só com vagas imediatas a queda continua: {_pp(nd_taxa_vi['tau'])} {pp_ic(nd_taxa_vi['ic95_inf'], nd_taxa_vi['ic95_sup'])}.",
+                      f"Sem as maiores cidades, o salto muda no máximo ({_num(100 * max_delta, 1)} p.p.).",
+                      "Nenhum suspeito explica tudo sozinho; sem correção para testes múltiplos."],
+                     como_nd["ND_adendo_cr_taxas.png"], FONTE_ND, diag=True))
     sl.append(_slide(f"Em {_cs(float(c2))} a queda acompanha a oferta e o porte" if cond_400 else
                      f"Em {_cs(float(c2))} o controle pela oferta não faz a queda sumir",
                      _img(ND_FIG / "ND_faixas_vagas.png", "ND_faixas_vagas"),
@@ -867,7 +898,8 @@ def montar_html() -> str:
               '<div class="corpo texto"><div class="dois-col"><div><h3>Pode-se afirmar</h3><ul class="bullets">'
               f'<li>Sem aumento em nenhum dos dois cortes ({degrau}, pacote do corte).</li>'
               '<li>Sinais negativos, concentrados no corte inferior; sem Holm no empilhado.</li>'
-              f'<li>Em {_cs(float(c2))} a queda acompanha a oferta e o porte; em {_cs(float(c1))} vem da taxa por vaga, e depende de como se mede.</li>'
+              f'<li>Em {_cs(float(c2))} a queda acompanha a oferta e o porte; em {_cs(float(c1))}, queda da taxa por vaga '
+              f'{"concentrada no ciclo 2 e ligada às vagas de reserva" if cond_ad else "que depende de como se mede"} (diagnóstico).</li>'
               '<li>Atração e taxa de preenchimento: sem salto distinguível de zero.</li></ul></div>'
               '<div><h3>Não se pode afirmar</h3><ul class="bullets">'
               '<li>Que a bolsa reduz o preenchimento (pacote, porte, placebo).</li>'

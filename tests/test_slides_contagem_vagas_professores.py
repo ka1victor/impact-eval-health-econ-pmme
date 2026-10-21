@@ -122,6 +122,12 @@ def valores_das_fontes() -> set[str]:
                     _formatos(float(v), out)
     _walk(json.loads(G.N_RES.read_text(encoding="utf-8")), out)
     _walk(json.loads(G.ND_RES.read_text(encoding="utf-8")), out)
+    # AD2: parte do salto da taxa (corte inferior) que vem do ciclo 2, em %
+    ad = pd.read_csv(G.ND_EST, dtype={"corte": str, "ciclo": str})
+    ad = ad[(ad["adendo"] == "AD2") & (ad["diagnostico"] == "AD2_A3") & (ad["outcome"] == "TAXA_VIC") & (ad["corte"] == "0.300")]
+    tot = ad[ad["tipo_linha"] == "identidade"]["tau"].iloc[0]
+    c2 = ad[ad["variante"] == "grupo_c2"]["contribuicao"].iloc[0]
+    _formatos(c2 / tot, out)
     return out
 
 
@@ -234,7 +240,7 @@ class TestSlidesContagemVagas(unittest.TestCase):
                         if _canon(m.group(1)) not in permitidos_txt:
                             fora.append(f"linha {n.lineno}: {m.group(1)} em {n.value[:50]!r}")
                 elif isinstance(n.value, (int, float)) and not isinstance(n.value, bool):
-                    if n.value not in {0, 1, 2, 3, 100, 0.05, 0.001, 1e-6, 0.5}:
+                    if n.value not in {0, 1, 2, 3, 100, 0.05, 0.001, 1e-6, 0.5, 0.1}:
                         nums.append(f"linha {n.lineno}: {n.value}")
 
         V().visit(tree)
@@ -335,17 +341,18 @@ class TestSlidesContagemVagas(unittest.TestCase):
         c1, c2 = self.d["cortes"]
         ndres = json.loads(G.ND_RES.read_text(encoding="utf-8"))
         # as três figuras do ND estão nos slides, byte a byte, e o "Como ler" é o do ND
-        for nome in ("ND_faixas_populacao.png", "ND_taxa_janelas.png", "ND_faixas_vagas.png"):
+        for nome in ("ND_faixas_populacao.png", "ND_taxa_janelas.png", "ND_adendo_ciclos.png", "ND_adendo_cr_taxas.png",
+                     "ND_faixas_vagas.png"):
             b64 = base64.b64encode((G.ND_FIG / nome).read_bytes()).decode("ascii")
             self.assertIn(b64, self.doc, nome)
             como = next(f["como_ler"] for f in ndres["saidas"]["figuras"] if f["arquivo"].endswith(nome))
             self.assertIn(como, self.doc)
         nd_slides = [s for s in self.slides if "ND_estimativas.csv" in s]
-        self.assertEqual(len(nd_slides), 3)
+        self.assertEqual(len(nd_slides), 5)
         # ficam depois do N1 com controle e antes do forest
         pos = [self.slides.index(s) for s in nd_slides]
         n1_com = next(i for i, s in enumerate(self.slides) if "Com controle, " in s and "figbox" in s)
-        self.assertEqual(pos, [n1_com + 1, n1_com + 2, n1_com + 3])
+        self.assertEqual(pos, [n1_com + k for k in (1, 2, 3, 4, 5)])
         # o texto condiz com o ND: em c2 o controle quase tira a queda e a taxa não salta; em c1 o porte não salta
         def l(c, o, esp):
             return G._unica(ndf, amostra="POR_CORTE", diagnostico="D1", tipo_linha="estimativa", corte=c, outcome=o,
@@ -357,6 +364,21 @@ class TestSlidesContagemVagas(unittest.TestCase):
         if "a queda vem da taxa por vaga oferecida" in txt:
             self.assertFalse(G._exclui(l(c1, "log_pop", "sem_controle")))
             self.assertTrue(G._exclui(l(c1, "TAXA_VIC", "taxa_ponderada")))
+        # adendo AD2: ciclo 2 responde por cerca de metade do salto em c1, com mais reserva e nenhuma vaga só de reserva preenchida
+        def ad(**k):
+            return G._unica(ndf, adendo="AD2", **k)
+        tot = ad(diagnostico="AD2_A3", tipo_linha="identidade", corte=c1, outcome="TAXA_VIC", variante="soma_das_contribuicoes")
+        c2g = ad(diagnostico="AD2_A3", tipo_linha="contribuicao", corte=c1, outcome="TAXA_VIC", variante="grupo_c2")
+        cr2 = ad(diagnostico="AD2_A3", tipo_linha="estimativa", corte=c1, populacao="V2", outcome="FRAC_CR")
+        so_cr = ndres["adendo_2026_10_21"]["taxa_separada_por_tipo_de_vaga"]["celulas_por_tipo"]["ciclo 2 / so_cr"]["alocados"]
+        if "metade da queda vem do ciclo 2" in txt:
+            self.assertLess(abs(c2g["contribuicao"] / tot["tau"] - 0.5), 0.1)
+            self.assertTrue(G._exclui(cr2))
+            self.assertEqual(so_cr, 0)
+            self.assertIn("concentrada no ciclo 2 e ligada às vagas de reserva (diagnóstico)", txt)
+        if "A fração de vagas de reserva sobe em" in txt:
+            self.assertTrue(G._exclui(ad(diagnostico="AD2_A1", tipo_linha="estimativa", corte=c1, outcome="FRAC_CR")))
+            self.assertFalse(G._exclui(ad(diagnostico="AD2_A1", tipo_linha="estimativa", corte=c2, outcome="FRAC_CR")))
         # nenhum slide fora do ND atribui a queda em c1 ao porte
         for s in self.slides:
             if s not in nd_slides:
