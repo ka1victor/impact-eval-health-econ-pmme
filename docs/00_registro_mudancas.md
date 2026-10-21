@@ -35,6 +35,33 @@ substituído pelos slides (mesmo script e mesmo teste, renomeados).
 
 [`tests/README.md`](../tests/README.md) (contagem e linha do módulo novo).
 
+---
+
+## 21/10/2026 — Diagnóstico ND da família N (porte, oferta e taxa), fora do protocolo 48
+
+Motivo: na figura de N1 do doc
+[`06_execucao/49`](06_execucao/49_resultados_contagem_vagas_preenchidas.md) a
+contagem de vagas preenchidas sobe com o IVS dentro da janela e cai no corte. O
+diagnóstico examina os dois padrões por corte, com um conjunto fixo de
+diagnósticos (D1–D5) listado antes de rodar. Não substitui a especificação
+principal, não muda o Holm do protocolo 48 nem as conclusões do doc 49.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/49b_diagnostico_contagem_porte.md`](06_execucao/49b_diagnostico_contagem_porte.md) | diagnóstico ND, gerado inteiro pelo script: decomposição contagem = oferta × taxa, médias por faixa, inclinações, influência por município, sensibilidade sem os maiores, forma da estimativa da taxa, porte como covariável, pesos do empilhamento, "Como evitar confusão" e figuras com "Como ler" |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/23b_diagnostico_contagem_porte.py` e saídas
+  `output/rdd_bolsa/ND_estimativas.csv`, `ND_resumo.json` e `ND_figuras/`
+  (fora do `run_all.py`, como diagnóstico);
+- teste `tests/test_diagnostico_contagem_porte.py`;
+- `scripts/README.md` e `tests/README.md`;
+- uma linha no cabeçalho do doc 49 apontando para o 49b.
+
+---
+
 ## 19/10/2026 — Aquisições do adendo §12 do protocolo 47: safras v2 do SIH e do SIA (§12.1) e a17 (§12.2)
 
 Motivo: o adendo §12 do protocolo

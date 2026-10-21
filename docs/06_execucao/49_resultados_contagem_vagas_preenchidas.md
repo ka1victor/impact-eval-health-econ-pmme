@@ -14,6 +14,7 @@
 > especificação), `N_resumo.json` (entradas com SHA-256, verificação do
 > cadastro reserva, decisões, desvios, validações) e `N_figuras/`.<br>
 > **Testes:** `tests/test_contagem_vagas.py`.<br>
+> **Diagnóstico fora do protocolo:** por que a contagem sobe com o IVS dentro da janela e cai no corte, por corte, está em [`49b_diagnostico_contagem_porte.md`](49b_diagnostico_contagem_porte.md); ele não muda nenhuma conclusão deste documento.<br>
 > **Números:** nenhum número de resultado é digitado aqui. As tabelas e as
 > frases de leitura ficam entre marcadores `<!-- N:... -->` e são regravadas
 > das saídas por `23_estimar_contagem_vagas.py --atualizar-doc`; o teste
