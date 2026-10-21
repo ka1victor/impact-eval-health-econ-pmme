@@ -77,6 +77,11 @@ Não entra no `run_all.py` porque lê os valores "antes" com `git show` do commi
 referência e para sem ele: num clone raso ou numa exportação do repositório o
 pipeline quebraria por um motivo alheio aos dados.
 
+Fora do pipeline, por ser diagnóstico fora do protocolo 48: `scripts/rdd_bolsa/23b_diagnostico_contagem_porte.py`
+(porte, oferta e taxa na contagem de vagas preenchidas da família N, por corte; lê as saídas da tarefa B, do a08 e
+`N_estimativas.csv`, grava `output/rdd_bolsa/ND_*` e gera `docs/06_execucao/49b_diagnostico_contagem_porte.md`).
+Rodar depois do script 23. Não substitui a especificação principal nem muda o Holm do protocolo 48.
+
 ---
 
 ## 2. Mapa dos Subdiretórios
