@@ -208,8 +208,10 @@ class TestSaidas(unittest.TestCase):
         self.assertEqual(ids, ["D1", "D2", "D3", "D4", "D5"])
         pc = self.est[self.est["amostra"] == ND.POR_CORTE]
         for corte in ("0.300", "0.400"):
-            presentes = set(pc.loc[pc["corte"] == corte, "diagnostico"])
+            presentes = set(pc.loc[(pc["corte"] == corte) & (pc["adendo"] != "AD2"), "diagnostico"])
             self.assertEqual(presentes, {"D1", "D2", "D3", "D4", "D5"}, corte)
+            ad2 = set(pc.loc[(pc["corte"] == corte) & (pc["adendo"] == "AD2"), "diagnostico"])
+            self.assertEqual(ad2, {"AD2_A1", "AD2_A2", "AD2_A3"} | ({"AD2_A4"} if corte == "0.300" else set()), corte)
             d3 = pc[(pc["corte"] == corte) & (pc["diagnostico"] == "D3")]
             for h in ND.H_D3:
                 self.assertEqual(len(d3[(d3["especificacao"] == "poisson_offset") & (d3["variante"] == f"h={h / 1000:.3f}")]), 1)
@@ -299,7 +301,8 @@ class TestSaidas(unittest.TestCase):
 
     def test_figuras_16x9_e_como_ler_simples(self) -> None:
         figs = self.resumo["saidas"]["figuras"]
-        self.assertEqual(len(figs), 8)
+        self.assertEqual(len(figs), 10)
+        self.assertEqual(sum(f.get("adendo") == "AD2" for f in figs), 2)
         proibidas = ("kernel", "cr1", "hc1", "gamma", "omega", "poisson", "offset", "ccft", "leave-one-out")
         for f in figs:
             with open(ROOT / f["arquivo"], "rb") as fh:
@@ -316,6 +319,105 @@ class TestSaidas(unittest.TestCase):
         src = SCRIPT.read_text(encoding="utf-8")
         self.assertNotIn("ivs_ipea", src)
         self.assertNotRegex(src, r"ROOT\s*/\s*\"data\"")
+
+
+@unittest.skipUnless(EST.exists() and RESUMO.exists(), "saidas ND ausentes")
+class TestAdendo2(unittest.TestCase):
+    """Adendo de 21/10/2026 (AD2): a queda da taxa por vaga oferecida em 0,300."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.est, cls.resumo = ND.ler_saidas()
+        cls.ad = cls.est[cls.est["adendo"] == "AD2"]
+
+    def test_rotulos_do_adendo(self) -> None:
+        self.assertTrue(len(self.ad))
+        self.assertTrue(self.ad["diagnostico"].str.startswith("AD2_").all())
+        self.assertTrue((self.est.loc[self.est["diagnostico"].str.startswith("AD2_"), "adendo"] == "AD2").all())
+        self.assertEqual(set(self.ad["estatuto"]), {"DIAGNOSTICO_FORA_PROTOCOLO_48"})
+        self.assertEqual(set(self.ad["natureza_dos_dados"]), {"EMPIRICO"})
+        r = self.resumo["adendo_2026_10_21"]
+        self.assertEqual(r["data"], "2026-10-21")
+        self.assertEqual([d["id"] for d in r["conjunto_fixo"]], ["A1", "A2", "A3", "A4"])
+        self.assertIn("-16 p.p.", r["ja_visto"])
+        self.assertEqual(r["taxa_separada_por_tipo_de_vaga"]["situacao"], "PARCIAL")
+        self.assertIn("celulas mistas", r["taxa_separada_por_tipo_de_vaga"]["motivo"])
+        # as linhas do adendo não usam tipo_linha "faixa" (os slides leem as faixas do D2)
+        self.assertFalse(((self.est["tipo_linha"] == "faixa") & (self.est["adendo"] == "AD2")).any())
+
+    def test_taxa_separada_por_celula_refeita(self) -> None:
+        cel = pd.read_parquet(ROOT / "output" / "rdd_bolsa" / "outcomes" / "outcomes_V_celula.parquet")
+        tipos = self.resumo["adendo_2026_10_21"]["taxa_separada_por_tipo_de_vaga"]["celulas_por_tipo"]
+        vi, cr = cel["vagas_imediatas"], cel["vagas_cr"]
+        cel["tipo"] = np.where((vi > 0) & (cr > 0), "mista", np.where(vi > 0, "so_imed", "so_cr"))
+        g = cel.groupby(["ciclo", "tipo"])
+        for (k, tp), d in g:
+            alvo = tipos[f"ciclo {k} / {tp}"]
+            self.assertEqual(alvo["celulas"], len(d))
+            self.assertEqual(alvo["alocados"], d["n_alocados_ch1"].sum())
+
+    def test_saltos_A1_e_A4_refeitos(self) -> None:
+        V = _dados_independentes()
+        for k in V:
+            V[k]["cr"] = V[k]["vagas_cr"].astype(float)
+            V[k]["frac"] = V[k]["cr"] / V[k]["vic"]
+        for c in (300, 400):
+            r = ND._um(self.est, adendo="AD2", diagnostico="AD2_A1", tipo_linha="estimativa", corte=f"0.{c}",
+                       outcome="FRAC_CR")
+            tau, ep = _mqp_cr1(V, c, "frac", "vic")
+            self.assertAlmostEqual(float(r["tau"]), tau, places=8)
+            self.assertAlmostEqual(float(r["ep"]), ep, places=8)
+        for _, r in self.ad[self.ad["tipo_linha"] == "influencia_vaga"].iterrows():
+            Vs = {k: d[d["co_ibge"] != r["co_ibge"]].reset_index(drop=True) for k, d in V.items()}
+            tau, _ = _mqp_cr1(Vs, 300, "taxa", "vic")
+            self.assertAlmostEqual(float(r["tau"]), tau, places=8, msg=r["co_ibge"])
+        top = self.ad[self.ad["tipo_linha"] == "influencia_vaga"]
+        self.assertEqual(len(top), ND.N_TOP_VAGA)
+        d = pd.concat(V.values())
+        jan = d[np.abs(d["s"] - 300) < 50].groupby("co_ibge")["vic"].sum().sort_values(ascending=False)
+        self.assertEqual(set(top["co_ibge"]), set(jan.index[:ND.N_TOP_VAGA]))
+
+    def test_A2_passos_e_A3_identidade(self) -> None:
+        for corte in ("0.300", "0.400"):
+            for ordem in ("ordem_denominador_primeiro", "ordem_peso_primeiro"):
+                p = self.ad[(self.ad["tipo_linha"] == "decomposicao") & (self.ad["corte"] == corte)
+                            & (self.ad["especificacao"] == ordem)].sort_values("posto")
+                self.assertEqual(len(p), 3)
+                ini = ND._um(self.ad, diagnostico="AD2_A2", tipo_linha="estimativa", corte=corte,
+                             variante="vic_vaga_todos")
+                fim = ND._um(self.ad, diagnostico="AD2_A2", tipo_linha="estimativa", corte=corte,
+                             variante="vi_municipio_com_vi")
+                self.assertAlmostEqual(float(p["tau_grupo"].iloc[0]), float(ini["tau"]), places=12)
+                self.assertAlmostEqual(float(p["tau"].iloc[-1]), float(fim["tau"]), places=12)
+                self.assertAlmostEqual(p["contribuicao"].astype(float).sum(), float(fim["tau"]) - float(ini["tau"]),
+                                       places=12)
+            # a linha principal do A2 é a mesma taxa ponderada do D1
+            d1 = ND._um(self.est, diagnostico="D1", tipo_linha="estimativa", amostra=ND.POR_CORTE, corte=corte,
+                        outcome="TAXA_VIC", especificacao="taxa_ponderada")
+            ini = ND._um(self.ad, diagnostico="AD2_A2", tipo_linha="estimativa", corte=corte, variante="vic_vaga_todos")
+            self.assertAlmostEqual(float(d1["tau"]), float(ini["tau"]), places=12)
+            for oid in ("TAXA_VIC", "TAXA_VI"):
+                co = self.ad[(self.ad["diagnostico"] == "AD2_A3") & (self.ad["tipo_linha"] == "contribuicao")
+                             & (self.ad["corte"] == corte) & (self.ad["outcome"] == oid)]
+                self.assertEqual(len(co), 3)
+                self.assertAlmostEqual(co["peso_omega"].astype(float).sum(), 1.0, places=9)
+                self.assertAlmostEqual(co["contribuicao"].astype(float).sum(), float(co["tau"].iloc[0]), places=9)
+                # salto de cada ciclo = linha por ciclo do A3
+                for _, r in co.iterrows():
+                    k = r["variante"][-1]
+                    e = ND._um(self.ad, diagnostico="AD2_A3", tipo_linha="estimativa", populacao=f"V{k}", corte=corte,
+                               outcome=oid)
+                    self.assertAlmostEqual(float(r["tau_grupo"]), float(e["tau"]), places=12)
+
+    def test_secao_do_adendo_no_doc(self) -> None:
+        doc = DOC.read_text(encoding="utf-8")
+        i = doc.index("## 14. Adendo: a queda da taxa em 0,300")
+        self.assertIn("Adendo de 21/10/2026", doc[i:])
+        self.assertIn("Qual suspeito se sustenta:", doc[i:])
+        self.assertIn("Força da evidência", doc[i:])
+        for f in self.resumo["saidas"]["figuras"]:
+            if f.get("adendo") == "AD2":
+                self.assertGreater(doc.index(f["arquivo"]), i)
 
 
 # --------------------------------------------------------------------------
@@ -406,7 +508,7 @@ class TestDoc49b(unittest.TestCase):
         """
         import ast
         arvore = ast.parse(SCRIPT.read_text(encoding="utf-8"))
-        prefixos = ("gerar_doc", "leitura", "tabela_", "lista_retirados", "_sentido")
+        prefixos = ("gerar_doc", "leitura", "tabela_", "lista_retirados", "_sentido", "secao_adendo2")
         achados: set[str] = set()
 
         def andar(no):
@@ -423,7 +525,7 @@ class TestDoc49b(unittest.TestCase):
                 andar(f)
         parametros = {"0,300", "0,400", "0,050", "0.050", "0,010", "0,020", "0,080", "−0,010", "−0,040", "−0,050",
                       "2010", "95", "16", "9", "256", "5", "1", "2", "3", "0"}
-        referencias = {str(n) for n in range(4, 14)} | {"18", "23", "48", "49"}
+        referencias = {str(n) for n in range(4, 15)} | {"18", "23", "48", "49"}
         self.assertEqual(achados - parametros - referencias, set())
         self.assertTrue(achados)
 

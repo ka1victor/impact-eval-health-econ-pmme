@@ -99,6 +99,105 @@
       "ja_visto": "a exploracao registrada em exposicao_previa (medias simples e ponderadas com os dois denominadores nas janelas +-0,010 a +-0,050) ja tinha mostrado que a media simples com as vagas imediatas, na janela inteira, e maior acima do corte"
     }
   ],
+  "adendo_2026_10_21": {
+    "id": "AD2",
+    "data": "2026-10-21",
+    "pergunta": "por que a taxa de preenchimento por vaga oferecida cai no corte 0,300, onde o porte nao explica a queda",
+    "ja_visto": "antes deste adendo ja estavam gravados e lidos: o salto de -16 p.p. da taxa ponderada pelas vagas oferecidas no local linear (D1, corte 0,300) e a dependencia da medida (com as vagas imediatas no denominador, e com cada municipio pesando igual em +-0,010, o IC contem zero; D3)",
+    "conjunto_fixo": [
+      {
+        "id": "A1",
+        "nome": "cadastro reserva",
+        "itens": [
+          "saltos na fracao de vagas de cadastro reserva sobre as vagas oferecidas (peso = vagas oferecidas), no n de vagas de CR e no n de vagas imediatas",
+          "taxa de preenchimento separada: alocados em vaga imediata / vagas imediatas e alocados em CR / vagas de CR, se a base distinguir; se nao distinguir, a ausencia e o motivo"
+        ]
+      },
+      {
+        "id": "A2",
+        "nome": "decomposicao da diferenca entre as taxas",
+        "itens": [
+          "no corte 0,300, quanto do salto vem de trocar o denominador (imediatas -> imediatas + CR) e quanto de trocar o peso (municipio -> vaga), mesma janela e especificacao, um elemento por vez, nas duas ordens; a restricao a municipios com vaga imediata (exigida pelo denominador de imediatas) e relatada como passo proprio"
+        ]
+      },
+      {
+        "id": "A3",
+        "nome": "por ciclo",
+        "itens": [
+          "taxa ponderada pelas vagas oferecidas, taxa so com vagas imediatas e fracao de CR, ciclo x corte, EP HC1",
+          "peso efetivo omega e contribuicao de cada ciclo no salto da taxa com os ciclos juntos"
+        ]
+      },
+      {
+        "id": "A4",
+        "nome": "influencia no nivel da vaga",
+        "itens": [
+          "os 5 municipios com mais vagas oferecidas (soma dos ciclos) na janela de 0,300, com vagas imediatas, CR, alocados, lado e nome, e o salto da taxa ponderada sem cada um deles"
+        ]
+      }
+    ],
+    "especificacao": "a do ND: local linear, h = 0,050, kernel triangular, CR1 por municipio, ciclos juntos com intercepto e inclinacao por ciclo; por corte (0,300 e 0,400, este como contraste)",
+    "taxa_separada_por_tipo_de_vaga": {
+      "situacao": "PARCIAL",
+      "motivo": "a base nao registra em que tipo de vaga (imediata ou cadastro reserva) cada alocado entrou; so e possivel separar nas celulas puras: celula so com vagas imediatas (todo alocado ocupa vaga imediata ou entrou acima delas) e celula so de cadastro reserva (todo alocado ocupa vaga de CR). As celulas mistas (imediatas e CR na mesma celula) ficam fora das duas taxas separadas, contadas, nunca divididas por suposicao",
+      "celulas_por_tipo": {
+        "ciclo 1 / mista": {
+          "celulas": 10.0,
+          "vagas_imediatas": 10.0,
+          "vagas_cr": 11.0,
+          "alocados": 4.0
+        },
+        "ciclo 1 / so_cr": {
+          "celulas": 782.0,
+          "vagas_imediatas": 0.0,
+          "vagas_cr": 1134.0,
+          "alocados": 211.0
+        },
+        "ciclo 1 / so_imed": {
+          "celulas": 503.0,
+          "vagas_imediatas": 668.0,
+          "vagas_cr": 0.0,
+          "alocados": 253.0
+        },
+        "ciclo 2 / mista": {
+          "celulas": 1.0,
+          "vagas_imediatas": 3.0,
+          "vagas_cr": 1.0,
+          "alocados": 1.0
+        },
+        "ciclo 2 / so_cr": {
+          "celulas": 532.0,
+          "vagas_imediatas": 0.0,
+          "vagas_cr": 1052.0,
+          "alocados": 0.0
+        },
+        "ciclo 2 / so_imed": {
+          "celulas": 1014.0,
+          "vagas_imediatas": 1833.0,
+          "vagas_cr": 0.0,
+          "alocados": 1056.0
+        },
+        "ciclo 3 / mista": {
+          "celulas": 245.0,
+          "vagas_imediatas": 250.0,
+          "vagas_cr": 450.0,
+          "alocados": 178.0
+        },
+        "ciclo 3 / so_cr": {
+          "celulas": 1599.0,
+          "vagas_imediatas": 0.0,
+          "vagas_cr": 3549.0,
+          "alocados": 131.0
+        },
+        "ciclo 3 / so_imed": {
+          "celulas": 449.0,
+          "vagas_imediatas": 882.0,
+          "vagas_cr": 0.0,
+          "alocados": 395.0
+        }
+      }
+    }
+  },
   "entradas": [
     {
       "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
@@ -147,6 +246,18 @@
       "unidade": "municipio",
       "chaves": "co_ibge",
       "filtros": "so co_ibge e ivs_2010_oficial"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "adendo AD2: vagas e alocados por tipo de celula (so imediatas, so CR, mista)",
+      "fonte": "tarefa B",
+      "data_referencia": "ver dicionario",
+      "cobertura": "5135 celulas",
+      "unidade": "celula CNES x curso x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "colunas vagas_imediatas, vagas_cr, n_alocados_ch1"
     },
     {
       "caminho": "output/rdd_bolsa/N_estimativas.csv",
@@ -224,14 +335,22 @@
     "omega": {
       "linhas": 6,
       "max_abs_residuo": 1.8540724511240114e-14
+    },
+    "omega_adendo2": {
+      "linhas": 4,
+      "max_abs_residuo": 4.85722573273506e-16
     }
   },
   "contagens": {
-    "linhas": 1460,
-    "executado": 1457,
+    "linhas": 1553,
+    "executado": 1550,
     "sem_estimativa": 0,
     "nao_executado": 3,
     "por_diagnostico": {
+      "AD2_A1": 30,
+      "AD2_A2": 24,
+      "AD2_A3": 34,
+      "AD2_A4": 5,
       "D1": 108,
       "D2": 1178,
       "D3": 99,
@@ -239,12 +358,15 @@
       "D5": 30
     },
     "por_tipo_linha": {
-      "contribuicao": 24,
-      "estimativa": 243,
+      "contribuicao": 36,
+      "decomposicao": 12,
+      "estimativa": 283,
       "faixa": 30,
-      "identidade": 15,
+      "faixa_cr": 20,
+      "identidade": 19,
       "inclinacao": 12,
       "influencia": 1064,
+      "influencia_vaga": 5,
       "sem_maiores": 72
     },
     "linhas_sem_vaga_imediata": 655,
@@ -271,7 +393,7 @@
   "saidas": {
     "ND_estimativas.csv": {
       "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
-      "sha256": "10730af2295f90ccb7e47c01369225ae587a3c9a461cf22598c32dc732cc71f7"
+      "sha256": "0b78d4469229be4f42d275c626ba1782d01be74a985e862097cf0f7556837146"
     },
     "figuras": [
       {
@@ -321,6 +443,20 @@
         "fonte": "ND_estimativas.csv, diagnostico = D3, amostra = POR_CORTE",
         "como_ler": "Cada linha mede o salto na taxa de preenchimento por vaga usando um trecho mais estreito ou mais largo em volta do corte. Resultados que mudam muito com o trecho pedem cautela.",
         "sha256": "dbd00af9cd10d8eb8271b098d3763aa1ab921c797ae14dfe3c5de75981f2adca"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/ND_figuras/ND_adendo_cr_taxas.png",
+        "fonte": "ND_estimativas.csv, adendo = AD2, tipo_linha = faixa_cr",
+        "como_ler": "Cada linha acompanha, trecho a trecho, a parte das vagas que é cadastro reserva e as duas formas de medir o preenchimento. Mostra se a taxa cai no corte junto com mais vagas de cadastro reserva.",
+        "adendo": "AD2",
+        "sha256": "49e16c62fb5b2c113d5428c4f40724b342cca783710ed8a6c05420556e900395"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/ND_figuras/ND_adendo_ciclos.png",
+        "fonte": "ND_estimativas.csv, adendo = AD2, AD2_A1/A2/A3",
+        "como_ler": "Cada ponto é o salto no corte em um ciclo, com seu intervalo de confiança. Mostra de que ciclo vem a queda da taxa.",
+        "adendo": "AD2",
+        "sha256": "c927967a23dbf5d89b7ed1168585c7b5cda876a9d7fc09f6451821ffabe3fb51"
       }
     ]
   },

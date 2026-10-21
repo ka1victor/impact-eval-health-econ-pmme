@@ -214,6 +214,7 @@ COLUNAS = [
     "taxa_vi_ponderada", "maior_municipio",
     "co_ibge", "nome_municipio", "populacao_2022", "vagas_oferecidas_ciclos", "n_alocados_ciclos", "distancia",
     "delta_tau", "delta_tau_sobre_ep", "posto", "k_retirados", "retirados", "nota",
+    "adendo", "vagas_imediatas_ciclos", "vagas_cr_ciclos", "fracao_cr",
 ]
 
 
@@ -370,7 +371,7 @@ def nova(diag: str, tipo: str, amostra: str, pop: str, ciclo: str, corte: str, o
                "amostra": amostra, "populacao": pop, "ciclo": ciclo, "corte": corte, "outcome": outcome,
                "especificacao": esp, "variante": variante, "status": "EXECUTADO", "nota": "", "peso": "",
                "estimador": "", "unidade": "", "motivo_fora": "", "grupo": "", "faixa": "", "lado": "",
-               "maior_municipio": "", "co_ibge": "", "nome_municipio": "", "retirados": "",
+               "maior_municipio": "", "co_ibge": "", "nome_municipio": "", "retirados": "", "adendo": "",
                "descricao_outcome": VARIAVEIS.get(outcome, {}).get("desc", "")})
     ln["id_linha"] = "|".join(str(x) for x in (diag, tipo, amostra, pop, corte, outcome, esp, variante))
     ln.update(kw)
@@ -634,6 +635,7 @@ def d3(amostra, a, ctx) -> list[dict]:
             for p in (peso, None):
                 ln = linha_lc("D3", amostra, a, ctx, oid, w, peso_col=p, nota=nota)
                 if w == JANELA_LC_ADENDO:
+                    ln["adendo"] = "AD1"
                     ln["especificacao"] = "local_constante_adendo_AD1"
                     ln["id_linha"] = ln["id_linha"].replace("|local_constante|", "|local_constante_adendo_AD1|")
                 linhas.append(ln)
@@ -698,11 +700,285 @@ def d5(V: dict, extras: dict) -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
+# Adendo AD2 (21/10/2026): por que a taxa por vaga oferecida cai em 0,300
+# ---------------------------------------------------------------------------
+
+ADENDO2 = "AD2"
+ADENDO2_DATA = "2026-10-21"
+ADENDO2_DESC = {
+    "id": ADENDO2, "data": ADENDO2_DATA,
+    "pergunta": "por que a taxa de preenchimento por vaga oferecida cai no corte 0,300, onde o porte nao explica a "
+                "queda",
+    "ja_visto": "antes deste adendo ja estavam gravados e lidos: o salto de -16 p.p. da taxa ponderada pelas vagas "
+                "oferecidas no local linear (D1, corte 0,300) e a dependencia da medida (com as vagas imediatas no "
+                "denominador, e com cada municipio pesando igual em +-0,010, o IC contem zero; D3)",
+    "conjunto_fixo": [
+        {"id": "A1", "nome": "cadastro reserva",
+         "itens": ["saltos na fracao de vagas de cadastro reserva sobre as vagas oferecidas (peso = vagas oferecidas), "
+                   "no n de vagas de CR e no n de vagas imediatas",
+                   "taxa de preenchimento separada: alocados em vaga imediata / vagas imediatas e alocados em CR / "
+                   "vagas de CR, se a base distinguir; se nao distinguir, a ausencia e o motivo"]},
+        {"id": "A2", "nome": "decomposicao da diferenca entre as taxas",
+         "itens": ["no corte 0,300, quanto do salto vem de trocar o denominador (imediatas -> imediatas + CR) e quanto "
+                   "de trocar o peso (municipio -> vaga), mesma janela e especificacao, um elemento por vez, nas duas "
+                   "ordens; a restricao a municipios com vaga imediata (exigida pelo denominador de imediatas) e "
+                   "relatada como passo proprio"]},
+        {"id": "A3", "nome": "por ciclo",
+         "itens": ["taxa ponderada pelas vagas oferecidas, taxa so com vagas imediatas e fracao de CR, ciclo x corte, "
+                   "EP HC1", "peso efetivo omega e contribuicao de cada ciclo no salto da taxa com os ciclos juntos"]},
+        {"id": "A4", "nome": "influencia no nivel da vaga",
+         "itens": ["os 5 municipios com mais vagas oferecidas (soma dos ciclos) na janela de 0,300, com vagas "
+                   "imediatas, CR, alocados, lado e nome, e o salto da taxa ponderada sem cada um deles"]},
+    ],
+    "especificacao": "a do ND: local linear, h = 0,050, kernel triangular, CR1 por municipio, ciclos juntos com "
+                     "intercepto e inclinacao por ciclo; por corte (0,300 e 0,400, este como contraste)",
+}
+MOTIVO_SEPARADA = ("a base nao registra em que tipo de vaga (imediata ou cadastro reserva) cada alocado entrou; so e "
+                   "possivel separar nas celulas puras: celula so com vagas imediatas (todo alocado ocupa vaga "
+                   "imediata ou entrou acima delas) e celula so de cadastro reserva (todo alocado ocupa vaga de CR). "
+                   "As celulas mistas (imediatas e CR na mesma celula) ficam fora das duas taxas separadas, contadas, "
+                   "nunca divididas por suposicao")
+N_TOP_VAGA = 5
+
+
+def agregar_celulas(cel: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+    """Por município × ciclo: vagas e alocados nas células só de imediatas, só de CR e mistas (contagens observadas)."""
+    c = cel.copy()
+    vi, vcr = c["vagas_imediatas"].astype(float), c["vagas_cr"].astype(float)
+    c["tipo"] = np.where((vi > 0) & (vcr > 0), "mista", np.where(vi > 0, "so_imed", "so_cr"))
+    out = c.pivot_table(index=["ciclo", "co_ibge"], columns="tipo",
+                        values=["vagas_imediatas", "vagas_cr", "n_alocados_ch1"], aggfunc="sum", fill_value=0)
+    out.columns = [f"{a}_{b}" for a, b in out.columns]
+    for col in [f"{a}_{b}" for a in ("vagas_imediatas", "vagas_cr", "n_alocados_ch1") for b in ("so_imed", "so_cr", "mista")]:
+        if col not in out:
+            out[col] = 0.0
+    out = out.reset_index()
+    tot = c.groupby(["ciclo", "tipo"]).agg(celulas=("tipo", "size"), vagas_imediatas=("vagas_imediatas", "sum"),
+                                           vagas_cr=("vagas_cr", "sum"), alocados=("n_alocados_ch1", "sum"))
+    info = {f"ciclo {k} / {t}": {kk: float(v) for kk, v in r.items()} for (k, t), r in tot.iterrows()}
+    return out, info
+
+
+def preparar_adendo2(V: dict[int, pd.DataFrame], agg: pd.DataFrame) -> dict[int, pd.DataFrame]:
+    out = {}
+    for k, d in V.items():
+        a = agg[agg["ciclo"] == k].drop(columns="ciclo")
+        d = d.merge(a, on="co_ibge", how="left", validate="one_to_one")
+        cols = [c for c in a.columns if c != "co_ibge"]
+        if d[cols].isna().any().any():
+            raise FalhaValidacao(f"V{k}: municipio do quadro sem celula no arquivo de celulas")
+        soma_vi = d[["vagas_imediatas_so_imed", "vagas_imediatas_mista"]].sum(axis=1)
+        soma_cr = d[["vagas_cr_so_cr", "vagas_cr_mista"]].sum(axis=1)
+        soma_al = d[["n_alocados_ch1_so_imed", "n_alocados_ch1_so_cr", "n_alocados_ch1_mista"]].sum(axis=1)
+        if (np.abs(soma_vi - d["vagas_imediatas"]) > 1e-9).any() or (np.abs(soma_cr - d["vagas_cr"]) > 1e-9).any() \
+                or (np.abs(soma_al - d["n_alocados_ch1"]) > 1e-9).any():
+            raise FalhaValidacao(f"V{k}: soma das celulas difere do municipio")
+        d["vagas_cr_f"] = d["vagas_cr"].astype(float)
+        d["frac_cr"] = d["vagas_cr_f"] / d["vagas_imediatas_mais_cr"]
+        vsi, vsc = d["vagas_imediatas_so_imed"].astype(float), d["vagas_cr_so_cr"].astype(float)
+        d["vagas_so_imed"], d["vagas_so_cr"] = vsi, vsc
+        d["taxa_so_imed"] = np.where(vsi > 0, d["n_alocados_ch1_so_imed"] / np.where(vsi > 0, vsi, 1.0), np.nan)
+        d["taxa_so_cr"] = np.where(vsc > 0, d["n_alocados_ch1_so_cr"] / np.where(vsc > 0, vsc, 1.0), np.nan)
+        d["tem_vi"] = (d["vagas_imediatas"] > 0).astype(float)
+        out[k] = d
+    return out
+
+
+VARIAVEIS.update({
+    "FRAC_CR": {"col": "frac_cr", "desc": "vagas de cadastro reserva / vagas oferecidas, peso = vagas oferecidas",
+                "un": "fracao (x100 = p.p.)", "peso": "vagas_imediatas_mais_cr"},
+    "CR": {"col": "vagas_cr_f", "desc": "vagas de cadastro reserva no quadro da 1a chamada", "un": "vagas por municipio"},
+    "TAXA_SO_IMED": {"col": "taxa_so_imed", "desc": "alocados / vagas nas celulas so de vagas imediatas, peso = essas "
+                     "vagas", "un": "fracao (x100 = p.p.)", "peso": "vagas_so_imed"},
+    "TAXA_SO_CR": {"col": "taxa_so_cr", "desc": "alocados / vagas nas celulas so de cadastro reserva, peso = essas "
+                   "vagas", "un": "fracao (x100 = p.p.)", "peso": "vagas_so_cr"},
+})
+
+
+def _ad2(ln: dict, diag: str, tipo: str | None = None) -> dict:
+    ln["adendo"] = ADENDO2
+    partes = ln["id_linha"].split("|")
+    partes[0] = diag
+    if tipo:
+        partes[1] = tipo
+        ln["tipo_linha"] = tipo
+    ln["diagnostico"] = diag
+    ln["id_linha"] = "|".join(partes)
+    return ln
+
+
+def ad2_a1(amostra, a, ctx) -> list[dict]:
+    linhas = []
+    for oid, peso in (("FRAC_CR", "vagas_imediatas_mais_cr"), ("CR", None), ("VI", None),
+                      ("TAXA_SO_IMED", "vagas_so_imed"), ("TAXA_SO_CR", "vagas_so_cr")):
+        esp = "taxa_ponderada" if peso else "sem_controle"
+        ln, _ = linha_ll("AD2_A1", amostra, a, ctx, oid, esp, "principal", peso_col=peso)
+        if oid.startswith("TAXA_SO"):
+            ln["nota"] = _juntar(ln["nota"], "separacao parcial: " + MOTIVO_SEPARADA)
+            if ln["motivo_fora"] == "ausente":
+                ln["motivo_fora"] = "municipio sem celula pura desse tipo: taxa indefinida (nunca zero)"
+        linhas.append(_ad2(ln, "AD2_A1"))
+    return linhas
+
+
+A2_CELULAS = [  # (nome, outcome, peso, so municipios com vaga imediata)
+    ("vic_vaga_todos", "TAXA_VIC", "vagas_imediatas_mais_cr", False),
+    ("vic_vaga_com_vi", "TAXA_VIC", "vagas_imediatas_mais_cr", True),
+    ("vi_vaga_com_vi", "TAXA_VI", "vagas_imediatas", True),
+    ("vic_municipio_todos", "TAXA_VIC", None, False),
+    ("vic_municipio_com_vi", "TAXA_VIC", None, True),
+    ("vi_municipio_com_vi", "TAXA_VI", None, True),
+]
+
+
+def ad2_a2(a, ctx) -> list[dict]:
+    linhas, tau = [], {}
+    for nome, oid, peso, so_vi in A2_CELULAS:
+        sub = a.subconjunto(a.col("vagas_imediatas") > 0) if so_vi else a
+        ln, r = linha_ll("AD2_A2", POR_CORTE, sub, ctx, oid, "taxa_2x2", nome, peso_col=peso)
+        ln["nota"] = _juntar(ln["nota"], ("amostra: so municipios x ciclo com vaga imediata" if so_vi else
+                                          "amostra: todos os municipios x ciclo do quadro"),
+                             "peso = vagas" if peso else "peso = municipio (sem peso)")
+        tau[nome] = r["tau"]
+        linhas.append(_ad2(ln, "AD2_A2"))
+    # Caminhos de um elemento por vez, do salto principal (VIC, vaga, todos) até a taxa so com imediatas por município.
+    caminhos = {
+        "ordem_denominador_primeiro": [("amostra (so com vaga imediata)", "vic_vaga_todos", "vic_vaga_com_vi"),
+                                       ("denominador (imediatas + CR -> imediatas)", "vic_vaga_com_vi", "vi_vaga_com_vi"),
+                                       ("peso (vaga -> municipio)", "vi_vaga_com_vi", "vi_municipio_com_vi")],
+        "ordem_peso_primeiro": [("peso (vaga -> municipio)", "vic_vaga_todos", "vic_municipio_todos"),
+                                ("amostra (so com vaga imediata)", "vic_municipio_todos", "vic_municipio_com_vi"),
+                                ("denominador (imediatas + CR -> imediatas)", "vic_municipio_com_vi", "vi_municipio_com_vi")],
+    }
+    for ordem, passos in caminhos.items():
+        for i, (rot, de, para) in enumerate(passos, 1):
+            ln = nova("AD2_A2", "decomposicao", POR_CORTE, ctx["pop"], ctx["ciclo"], ctx["corte"], "TAXA", ordem,
+                      f"passo_{i}", grupo=rot, tau_grupo=tau[de], tau=tau[para], contribuicao=tau[para] - tau[de],
+                      posto=i, unidade="fracao (x100 = p.p.)", h=H / 1000.0, adendo=ADENDO2,
+                      nota=f"de {de} para {para}; contribuicao = salto depois - salto antes")
+            linhas.append(ln)
+    return linhas
+
+
+def ad2_a3(V, extras) -> list[dict]:
+    linhas = []
+    for k in CICLOS:
+        for c in CORTES:
+            a = amostra_ciclo(V, k, c)
+            ctx = _ctx(APENDICE, a, k=k, c=c)
+            for oid, peso in (("TAXA_VIC", "vagas_imediatas_mais_cr"), ("TAXA_VI", "vagas_imediatas"),
+                              ("FRAC_CR", "vagas_imediatas_mais_cr")):
+                ln, _ = linha_ll("AD2_A3", APENDICE, a, ctx, oid, "taxa_ponderada", "principal", peso_col=peso)
+                linhas.append(_ad2(ln, "AD2_A3"))
+    for c in CORTES:
+        a = amostra_corte(V, c)
+        ctx = _ctx(POR_CORTE, a, c=c)
+        for oid, peso in (("TAXA_VIC", "vagas_imediatas_mais_cr"), ("TAXA_VI", "vagas_imediatas")):
+            col = VARIAVEIS[oid]["col"]
+            y = a.col(col)
+            pw = np.where(np.isfinite(y), a.col(peso), np.nan)
+            r = ajustar(a, y, H, peso=pw)
+            soma = 0.0
+            for k in CICLOS:
+                om = r["pesos_grupos"][f"c{k}"]
+                ak = amostra_ciclo(V, k, c)
+                yk = ak.col(col)
+                rg = ajustar(ak, yk, H, peso=np.where(np.isfinite(yk), ak.col(peso), np.nan))
+                soma += om * rg["tau"]
+                linhas.append(nova("AD2_A3", "contribuicao", POR_CORTE, ctx["pop"], ctx["ciclo"], ctx["corte"], oid,
+                                   "taxa_ponderada", f"grupo_c{k}", grupo=f"ciclo {k}", peso_omega=om,
+                                   tau_grupo=rg["tau"], contribuicao=om * rg["tau"], tau=r["tau"], ep=r["ep"],
+                                   ic95_inf=rg["ic95_inf"], ic95_sup=rg["ic95_sup"], p_valor=rg["p_valor"],
+                                   n_abaixo=rg["n_abaixo"], n_acima=rg["n_acima"], h=H / 1000.0, adendo=ADENDO2,
+                                   peso=peso, unidade="fracao (x100 = p.p.)",
+                                   nota="tau/ep = salto com os ciclos juntos; tau_grupo e IC/p = so o ciclo (HC1); "
+                                        "contribuicao = omega x tau_grupo"))
+            resid = r["tau"] - soma
+            if not abs(resid) <= 1e-8 * max(1.0, abs(r["tau"])):
+                raise FalhaValidacao(f"identidade omega da taxa nao fecha em {c} {oid}: {resid}")
+            extras["residuos_omega_ad2"].append(float(resid))
+            linhas.append(nova("AD2_A3", "identidade", POR_CORTE, ctx["pop"], ctx["ciclo"], ctx["corte"], oid,
+                               "taxa_ponderada", "soma_das_contribuicoes", tau=r["tau"], ep=r["ep"],
+                               ic95_inf=r["ic95_inf"], ic95_sup=r["ic95_sup"], p_valor=r["p_valor"], contribuicao=soma,
+                               residuo_identidade=resid, h=H / 1000.0, adendo=ADENDO2, peso=peso,
+                               unidade="fracao (x100 = p.p.)"))
+    return linhas
+
+
+def ad2_a4(a, ctx) -> list[dict]:
+    x = _x(a)
+    dentro = np.abs(x) < H
+    d = a.d.assign(x=x)[dentro]
+    por_mun = d.groupby("co_ibge").agg(vic=("vagas_imediatas_mais_cr", "sum"), vi=("vagas_imediatas", "sum"),
+                                       cr=("vagas_cr_f", "sum"), n1=("n_alocados_ch1", "sum"), x=("x", "first"),
+                                       nome=("nome_municipio", "first"), pop=("populacao_2022", "first"),
+                                       ciclos=("ciclo", lambda s: ",".join(str(int(z)) for z in sorted(s))))
+    top = por_mun.reset_index().sort_values(["vic", "co_ibge"], ascending=[False, True]).head(N_TOP_VAGA)
+    y = a.col("taxa_vic")
+    base = ajustar(a, y, H, peso=a.col("vagas_imediatas_mais_cr"))
+    linhas = []
+    for i, rr in enumerate(top.itertuples(), 1):
+        k = a.cl != rr.co_ibge
+        sub = a.subconjunto(k)
+        r = ajustar(sub, y[k], H, peso=sub.col("vagas_imediatas_mais_cr"))
+        ln = nova("AD2_A4", "influencia_vaga", POR_CORTE, ctx["pop"], ctx["ciclo"], ctx["corte"], "TAXA_VIC",
+                  "taxa_ponderada", f"sem_{rr.co_ibge}", co_ibge=rr.co_ibge, nome_municipio=rr.nome,
+                  populacao_2022=rr.pop, vagas_oferecidas_ciclos=rr.vic, n_alocados_ciclos=rr.n1,
+                  vagas_imediatas_ciclos=rr.vi, vagas_cr_ciclos=rr.cr, distancia=rr.x / 1000.0, lado="abaixo" if rr.x <= 0 else "acima",
+                  posto=i, tau=r["tau"], ep=r["ep"], ic95_inf=r["ic95_inf"], ic95_sup=r["ic95_sup"], p_valor=r["p_valor"],
+                  n_abaixo=r["n_abaixo"], n_acima=r["n_acima"], delta_tau=base["tau"] - r["tau"],
+                  delta_tau_sobre_ep=(base["tau"] - r["tau"]) / base["ep"], h=H / 1000.0, adendo=ADENDO2,
+                  peso="vagas_imediatas_mais_cr", unidade="fracao (x100 = p.p.)",
+                  nota=f"ciclos na janela: {rr.ciclos}; tau = salto da taxa ponderada sem o municipio; delta_tau = "
+                       f"salto com todos - salto sem ele")
+        linhas.append(ln)
+    return linhas
+
+
+def faixas_adendo2(a, ctx) -> list[dict]:
+    """Por faixa de 0,010: fração de CR (soma CR / soma vagas) e as duas taxas ponderadas (para a figura do adendo)."""
+    x = _x(a)
+    d = a.d.assign(x=x)[np.abs(x) < H].copy()
+    d["faixa"] = T23._faixas(d["x"].to_numpy())
+    linhas = []
+    for f, g in d.groupby("faixa", sort=True):
+        f = int(f)
+        lo, hi = 10 * f, 10 * (f + 1)
+        vi = g["vagas_imediatas"].sum()
+        linhas.append(nova("AD2_A1", "faixa_cr", POR_CORTE, ctx["pop"], ctx["ciclo"], ctx["corte"], "faixas_cr",
+                           "medias_por_faixa", f"faixa_{f:+d}", faixa=f"{f:+d}", faixa_inf=lo / 1000.0,
+                           faixa_sup=hi / 1000.0, lado="abaixo" if f < 0 else "acima", n_linhas=len(g),
+                           n_municipios=g["co_ibge"].nunique(), vi_media=g["vagas_imediatas"].mean(),
+                           vic_media=g["vagas_imediatas_mais_cr"].mean(), n1_media=g["n_alocados_ch1"].mean(),
+                           taxa_vic_ponderada=g["n_alocados_ch1"].sum() / g["vagas_imediatas_mais_cr"].sum(),
+                           taxa_vi_ponderada=g["n_alocados_ch1"].sum() / vi if vi > 0 else np.nan,
+                           fracao_cr=g["vagas_cr_f"].sum() / g["vagas_imediatas_mais_cr"].sum(),
+                           adendo=ADENDO2, unidade="taxas ponderadas = soma N1 / soma vagas; fracao_cr = soma CR / "
+                                                   "soma vagas oferecidas",
+                           nota="faixa abaixo: (faixa_inf, faixa_sup]; acima: [faixa_inf, faixa_sup)"))
+    return linhas
+
+
+def estimar_adendo2(V: dict, extras: dict) -> list[dict]:
+    linhas = []
+    for c in CORTES:
+        a = amostra_corte(V, c)
+        ctx = _ctx(POR_CORTE, a, c=c)
+        linhas += ad2_a1(POR_CORTE, a, ctx)
+        linhas += faixas_adendo2(a, ctx)
+        linhas += ad2_a2(a, ctx)
+        if c == 300:
+            linhas += ad2_a4(a, ctx)
+    linhas += ad2_a3(V, extras)
+    return linhas
+
+
+# ---------------------------------------------------------------------------
 # Orquestração
 # ---------------------------------------------------------------------------
 
 def estimar_tudo(V: dict, log=print) -> tuple[pd.DataFrame, dict]:
-    extras = {"residuos_log": [], "residuos_omega": [], "influencia": {}}
+    extras = {"residuos_log": [], "residuos_omega": [], "influencia": {}, "residuos_omega_ad2": []}
     linhas: list[dict] = []
     for c in CORTES:
         a = amostra_corte(V, c)
@@ -733,6 +1009,8 @@ def estimar_tudo(V: dict, log=print) -> tuple[pd.DataFrame, dict]:
     linhas += d4(EMP, ae, ctx)
     linhas += d5(V, extras)
     log(f"  empilhado e D5: {len(linhas)} linhas")
+    linhas += estimar_adendo2(V, extras)
+    log(f"  adendo AD2: {len(linhas)} linhas")
     est = pd.DataFrame(linhas)[COLUNAS]
     if est["id_linha"].duplicated().any():
         raise FalhaValidacao(f"id_linha duplicado: {est.loc[est['id_linha'].duplicated(), 'id_linha'].tolist()[:5]}")
@@ -784,6 +1062,8 @@ def _fx(v, _=None) -> str:
 def _num(v, casas=2, sinal=True) -> str:
     if v is None or (isinstance(v, float) and not math.isfinite(v)):
         return "—"
+    if round(v, casas) == 0:
+        v = 0.0                      # sem "−0,0"
     return (f"{v:+.{casas}f}" if sinal else f"{v:.{casas}f}").replace("-", "−").replace(".", ",")
 
 
@@ -1447,7 +1727,10 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
     val = resumo["validacoes"]
     figs = "\n\n".join(f"![{Path(f['arquivo']).stem}](../../{f['arquivo']})\n\n**Como ler:** {f['como_ler']}\n\n"
                          f"*Detalhe técnico:* {DETALHE_FIG[Path(f['arquivo']).name]}"
-                         for f in resumo["saidas"]["figuras"])
+                         for f in resumo["saidas"]["figuras"] if not f.get("adendo"))
+    figs_ad2 = "\n\n".join(f"![{Path(f['arquivo']).stem}](../../{f['arquivo']})\n\n**Como ler:** {f['como_ler']}\n\n"
+                             f"*Detalhe técnico:* {DETALHE_FIG[Path(f['arquivo']).name]}"
+                             for f in resumo["saidas"]["figuras"] if f.get("adendo") == ADENDO2)
     cont = resumo["contagens"]
     G = {ROTULO_CORTE[c]: {
         "sa": _um(est, diagnostico="D1", tipo_linha="estimativa", amostra=POR_CORTE, corte=ROTULO_CORTE[c], outcome="N1",
@@ -1795,7 +2078,7 @@ Saltos; taxa em p.p.; `*` = IC 95% que exclui zero.
 
 ## 12. Figuras
 
-Todas em 16:9, com um painel por corte (0,300 à esquerda, 0,400 à direita). A imagem traz só o gráfico; o "Como ler" fica abaixo de cada uma e também em `como_ler` de cada figura em `ND_resumo.json`.
+Todas em 16:9, com um painel por corte (0,300 à esquerda, 0,400 à direita). A imagem traz só o gráfico; o "Como ler" fica abaixo de cada uma e também em `como_ler` de cada figura em `ND_resumo.json`. As figuras do adendo AD2 ficam na seção 14.
 
 {figs}
 
@@ -1806,6 +2089,7 @@ Todas em 16:9, com um painel por corte (0,300 à esquerda, 0,400 à direita). A 
 | saltos por corte e empilhados de S-a, S-b, S-d (offset) e S-e reproduzem `N_estimativas.csv` | {len(val['doc49']['linhas_conferidas'])} linhas; max abs dif = {val['doc49']['max_abs_dif']:.1e} |
 | decomposição log-aditiva fecha | {val['log_aditiva']['linhas']} amostras; max abs resíduo = {val['log_aditiva']['max_abs_residuo']:.1e} |
 | salto empilhado = soma omega × salto do grupo | {val['omega']['linhas']} identidades; max abs resíduo = {val['omega']['max_abs_residuo']:.1e} |
+| adendo AD2: salto da taxa com ciclos juntos = soma omega × salto do ciclo | {val['omega_adendo2']['linhas']} identidades; max abs resíduo = {val['omega_adendo2']['max_abs_residuo']:.1e} |
 | linhas em `ND_estimativas.csv` | {cont['linhas']} |
 | EXECUTADO / SEM_ESTIMATIVA / NAO_EXECUTADO | {cont['executado']} / {cont['sem_estimativa']} / {cont['nao_executado']} |
 | linhas município × ciclo sem vaga imediata (taxa com vagas imediatas ausente, nunca zero) | {cont['linhas_sem_vaga_imediata']} |
@@ -1814,8 +2098,287 @@ Todas em 16:9, com um painel por corte (0,300 à esquerda, 0,400 à direita). A 
 
 Nada imputado ou simulado; a running variable é o IVS 2010 oficial do Ipea (a08), conferido contra as saídas da
 tarefa B; o arquivo local de IVS da auditoria 16 não é lido; `data/` é só lido.
+
 """
+    doc = doc + secao_adendo2(est, resumo) + figs_ad2 + "\n"
     return re.sub(r"(?<![\w.])0\.(\d{3})\b", r"0,\1", doc)
+
+
+COMO_LER.update({
+    "ND_adendo_cr_taxas.png": "Cada linha acompanha, trecho a trecho, a parte das vagas que é cadastro reserva e as duas "
+                              "formas de medir o preenchimento. Mostra se a taxa cai no corte junto com mais vagas de "
+                              "cadastro reserva.",
+    "ND_adendo_ciclos.png": "Cada ponto é o salto no corte em um ciclo, com seu intervalo de confiança. Mostra de que "
+                            "ciclo vem a queda da taxa.",
+})
+DETALHE_FIG.update({
+    "ND_adendo_cr_taxas.png": "Adendo AD2. Por faixa de 0,010 da distância ao corte, ciclos juntos: fração de cadastro "
+                              "reserva (soma de CR / soma das vagas oferecidas), taxa por vaga oferecida (soma de N1 / "
+                              "soma das vagas oferecidas) e taxa só com vagas imediatas (soma de N1 / soma das vagas "
+                              "imediatas). Anotação = salto local linear da fração de CR (peso = vagas oferecidas, CR1).",
+    "ND_adendo_ciclos.png": "Adendo AD2. Saltos local linear por ciclo × corte (EP HC1) da taxa ponderada pelas vagas "
+                            "oferecidas e da fração de CR, em p.p.; a última linha é o salto com os ciclos juntos (CR1).",
+})
+
+
+def gerar_figuras_adendo2(est: pd.DataFrame, dir_fig: Path) -> list[dict]:
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.ticker import FuncFormatter
+    feitas = []
+    fmt_y = FuncFormatter(lambda v, _=None: f"{v:g}".replace(".", ",").replace("-", "−"))
+    fx = est[(est["adendo"] == ADENDO2) & (est["tipo_linha"] == "faixa_cr")].copy()
+    fx["meio"] = (fx["faixa_inf"].astype(float) + fx["faixa_sup"].astype(float)) / 2
+    series = (("fracao_cr", "#7a5195", "s", "parte das vagas que é cadastro reserva"),
+              ("taxa_vic_ponderada", COR_AB, "o", "preenchidas / vagas oferecidas"),
+              ("taxa_vi_ponderada", COR_AC, "^", "preenchidas / vagas imediatas"))
+    fig, axs = plt.subplots(1, 2, figsize=TAMANHO_FIG, facecolor=SUPERF, sharey=True)
+    for ax, c in zip(axs, CORTES):
+        sub = fx[fx["corte"] == ROTULO_CORTE[c]].sort_values("meio")
+        for col, cor, mk, rot in series:
+            for j, lado in enumerate(("abaixo", "acima")):
+                s = sub[sub["lado"] == lado]
+                ax.plot(s["meio"], s[col].astype(float), marker=mk, color=cor, lw=1.4, ms=7,
+                        label=rot if j == 0 else None)
+        ax.axvline(0, color=TINTA, ls="--", lw=0.9)
+        r = _sel(est, adendo=ADENDO2, diagnostico="AD2_A1", tipo_linha="estimativa", corte=ROTULO_CORTE[c],
+                 outcome="FRAC_CR").iloc[0]
+        ax.text(0.02, 0.97, f"salto na parte de cadastro reserva: {_num(100 * float(r['tau']), 1)} p.p. "
+                f"[{_num(100 * float(r['ic95_inf']), 1)}; {_num(100 * float(r['ic95_sup']), 1)}]",
+                transform=ax.transAxes, fontsize=8.5, va="top", ha="left", color=TINTA,
+                bbox={"boxstyle": "round,pad=0.25", "fc": "white", "ec": "#d0cfca", "lw": 0.6})
+        ax.set_title(f"corte {ROTULO_CORTE[c].replace('.', ',')}", fontsize=12, color=TINTA)
+        ax.set_xlabel("distância ao corte (IVS − corte)", fontsize=10)
+        ax.xaxis.set_major_formatter(FuncFormatter(_fx))
+        ax.yaxis.set_major_formatter(fmt_y)
+        ax.set_facecolor(SUPERF)
+        ax.grid(alpha=0.25)
+    axs[0].set_ylabel("fração", fontsize=10)
+    axs[1].legend(fontsize=8.5, loc="lower right", frameon=False)
+    fig.suptitle("Cadastro reserva e taxa de preenchimento perto do corte", fontsize=13, color=TINTA)
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
+    nome = "ND_adendo_cr_taxas.png"
+    fig.savefig(dir_fig / nome, dpi=110, facecolor=fig.get_facecolor())
+    plt.close(fig)
+    feitas.append({"arquivo": rotulo(dir_fig / nome), "fonte": "ND_estimativas.csv, adendo = AD2, tipo_linha = faixa_cr",
+                   "como_ler": COMO_LER[nome], "adendo": ADENDO2})
+
+    fig, axs = plt.subplots(1, 2, figsize=TAMANHO_FIG, facecolor=SUPERF, sharey=True)
+    for ax, c in zip(axs, CORTES):
+        rotulos = [f"ciclo {k}" for k in CICLOS] + ["ciclos juntos"]
+        yy = np.arange(len(rotulos))[::-1]
+        for desl, (oid, cor, mk, leg) in zip((0.12, -0.12), (("TAXA_VIC", COR_AB, "o", "taxa por vaga oferecida"),
+                                                              ("FRAC_CR", "#7a5195", "s", "parte de cadastro reserva"))):
+            rs = [_um(est, adendo=ADENDO2, diagnostico="AD2_A3", tipo_linha="estimativa", populacao=f"V{k}",
+                      corte=ROTULO_CORTE[c], outcome=oid) for k in CICLOS]
+            rs.append(_um(est, adendo=ADENDO2, diagnostico="AD2_A1" if oid == "FRAC_CR" else "AD2_A2",
+                          tipo_linha="estimativa", corte=ROTULO_CORTE[c], outcome=oid,
+                          **({} if oid == "FRAC_CR" else {"variante": "vic_vaga_todos"})))
+            v = np.array([100 * float(r["tau"]) for r in rs])
+            lo = np.array([100 * float(r["ic95_inf"]) for r in rs])
+            hi = np.array([100 * float(r["ic95_sup"]) for r in rs])
+            ax.errorbar(v, yy + desl, xerr=[v - lo, hi - v], fmt=mk, color=cor, ecolor=cor, capsize=2, ms=6, label=leg)
+        ax.axvline(0, color=TINTA, lw=0.8)
+        ax.set_yticks(yy)
+        ax.set_yticklabels(rotulos, fontsize=10)
+        ax.set_title(f"corte {ROTULO_CORTE[c].replace('.', ',')}", fontsize=12, color=TINTA)
+        ax.set_xlabel("salto no corte (pontos percentuais)", fontsize=10)
+        ax.set_facecolor(SUPERF)
+        ax.grid(alpha=0.25, axis="x")
+    axs[1].legend(fontsize=8.5, loc="lower right", frameon=False)
+    fig.suptitle("Salto na taxa e na parte de cadastro reserva, por ciclo", fontsize=13, color=TINTA)
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
+    nome = "ND_adendo_ciclos.png"
+    fig.savefig(dir_fig / nome, dpi=110, facecolor=fig.get_facecolor())
+    plt.close(fig)
+    feitas.append({"arquivo": rotulo(dir_fig / nome), "fonte": "ND_estimativas.csv, adendo = AD2, AD2_A1/A2/A3",
+                   "como_ler": COMO_LER[nome], "adendo": ADENDO2})
+    return feitas
+
+
+def secao_adendo2(est: pd.DataFrame, resumo: dict) -> str:
+    ad = resumo["adendo_2026_10_21"]
+    c3, c4 = ROTULO_CORTE[300], ROTULO_CORTE[400]
+
+    def R(**f):
+        return _um(est, adendo=ADENDO2, **f)
+
+    def lin(r, pct=True, casas=1):
+        return f"{_f(r['tau'], casas, pct=pct)} {_ic(r, casas, pct)}"
+
+    conj = "\n".join(f"- **{d['id']}, {d['nome']}:** " + "; ".join(d["itens"]) + "." for d in ad["conjunto_fixo"])
+    # A1
+    a1 = []
+    for oid in ("FRAC_CR", "CR", "VI", "TAXA_SO_IMED", "TAXA_SO_CR"):
+        cel = [{"FRAC_CR": "parte das vagas que é cadastro reserva (%)", "CR": "vagas de cadastro reserva",
+                "VI": "vagas imediatas", "TAXA_SO_IMED": "taxa nas células só de vagas imediatas (%)",
+                "TAXA_SO_CR": "taxa nas células só de cadastro reserva (%)"}[oid]]
+        for corte in (c3, c4):
+            r = R(diagnostico="AD2_A1", tipo_linha="estimativa", corte=corte, outcome=oid)
+            pct = oid in ("FRAC_CR", "TAXA_SO_IMED", "TAXA_SO_CR")
+            fora = (f" ({_int(r['n_fora_abaixo'])} / {_int(r['n_fora_acima'])} fora)"
+                    if str(r["n_fora_abaixo"]) not in ("nan", "") else "")
+            cel += [f"{_f(r['media_abaixo'], 1, False, pct)} → {_f(r['media_acima'], 1, False, pct)}",
+                    f"{lin(r, pct, 1 if pct else 2)}{fora}", _p(r)]
+        a1.append(cel)
+    tab_a1 = _tab(["Variável", f"{c3}: média abaixo → acima", f"{c3}: salto [IC 95%]", f"{c3}: p",
+                   f"{c4}: média abaixo → acima", f"{c4}: salto [IC 95%]", f"{c4}: p"], a1)
+    tipos = ad["taxa_separada_por_tipo_de_vaga"]["celulas_por_tipo"]
+    tab_tipos = _tab(["Ciclo / tipo de célula", "células", "vagas imediatas", "vagas de CR", "alocados na 1ª chamada"],
+                     [[k.replace("so_imed", "só imediatas").replace("so_cr", "só CR"), _f(v["celulas"], 0, False),
+                       _f(v["vagas_imediatas"], 0, False), _f(v["vagas_cr"], 0, False), _f(v["alocados"], 0, False)]
+                      for k, v in tipos.items()])
+    # A2
+    rot2 = {"vic_vaga_todos": ("imediatas + CR", "vaga", "todos"),
+            "vic_vaga_com_vi": ("imediatas + CR", "vaga", "só com vaga imediata"),
+            "vi_vaga_com_vi": ("imediatas", "vaga", "só com vaga imediata"),
+            "vic_municipio_todos": ("imediatas + CR", "município", "todos"),
+            "vic_municipio_com_vi": ("imediatas + CR", "município", "só com vaga imediata"),
+            "vi_municipio_com_vi": ("imediatas", "município", "só com vaga imediata")}
+    a2 = []
+    for nome, (den, peso, am) in rot2.items():
+        r3 = R(diagnostico="AD2_A2", tipo_linha="estimativa", corte=c3, variante=nome)
+        r4 = R(diagnostico="AD2_A2", tipo_linha="estimativa", corte=c4, variante=nome)
+        a2.append([den, peso, am, f"{_int(r3['n_abaixo'])} / {_int(r3['n_acima'])}", lin(r3), _p(r3), lin(r4)])
+    tab_a2 = _tab(["Denominador", "cada um pesa igual", "municípios", f"{c3}: n abaixo / acima",
+                   f"{c3}: salto [IC 95%] (p.p.)", f"{c3}: p", f"{c4}: salto [IC 95%] (p.p.)"], a2)
+    passos = []
+    for ordem, rot in (("ordem_denominador_primeiro", "denominador antes do peso"), ("ordem_peso_primeiro",
+                                                                                   "peso antes do denominador")):
+        for i in (1, 2, 3):
+            r = R(diagnostico="AD2_A2", tipo_linha="decomposicao", corte=c3, especificacao=ordem, variante=f"passo_{i}")
+            passos.append([rot, str(i), r["grupo"], _f(r["tau_grupo"], 1, pct=True), _f(r["tau"], 1, pct=True),
+                           _f(r["contribuicao"], 1, pct=True)])
+    tab_passos = _tab(["Ordem", "passo", "o que muda", "salto antes (p.p.)", "salto depois (p.p.)",
+                       "mudança (p.p.)"], passos)
+    # A3
+    a3 = []
+    for k in CICLOS:
+        for corte in (c3, c4):
+            cel = [str(k), corte]
+            for oid in ("TAXA_VIC", "TAXA_VI", "FRAC_CR"):
+                r = R(diagnostico="AD2_A3", tipo_linha="estimativa", populacao=f"V{k}", corte=corte, outcome=oid)
+                cel.append(f"{_f(r['tau'], 1, pct=True)}{'*' if _excl(r) else ''}")
+            co = R(diagnostico="AD2_A3", tipo_linha="contribuicao", corte=corte, outcome="TAXA_VIC",
+                   variante=f"grupo_c{k}")
+            cel += [_f(co["peso_omega"], 3, False), _f(co["contribuicao"], 1, pct=True)]
+            a3.append(cel)
+    tab_a3 = _tab(["Ciclo", "Corte", "taxa por vaga oferecida (p.p.)", "taxa só imediatas (p.p.)",
+                   "parte de CR (p.p.)", "peso omega no salto com ciclos juntos", "contribuição (p.p.)"], a3)
+    # A4
+    a4 = []
+    base = R(diagnostico="AD2_A2", tipo_linha="estimativa", corte=c3, variante="vic_vaga_todos")
+    sub = _sel(est, adendo=ADENDO2, tipo_linha="influencia_vaga").copy()
+    sub["po"] = sub["posto"].astype(int)
+    for _, r in sub.sort_values("po").iterrows():
+        a4.append([_int(r["posto"]), r["co_ibge"], str(r["nome_municipio"]), _f(r["vagas_oferecidas_ciclos"], 0, False),
+                   _f(r["vagas_imediatas_ciclos"], 0, False), _f(r["vagas_cr_ciclos"], 0, False),
+                   _f(r["n_alocados_ciclos"], 0, False), r["lado"], _fx(float(r["distancia"])),
+                   f"{_f(r['tau'], 1, pct=True)} {_ic(r, 1, True)}", _f(r["delta_tau"], 1, pct=True)])
+    tab_a4 = _tab(["Posto", "co_ibge", "Município", "vagas oferecidas", "imediatas", "CR", "alocados", "lado",
+                   "distância", "salto sem ele (p.p.)", "Δ (p.p.)"], a4)
+
+    # Resposta curta, por regra a partir das linhas gravadas.
+    fcr3 = R(diagnostico="AD2_A1", tipo_linha="estimativa", corte=c3, outcome="FRAC_CR")
+    fcr4 = R(diagnostico="AD2_A1", tipo_linha="estimativa", corte=c4, outcome="FRAC_CR")
+    vi_vaga = R(diagnostico="AD2_A2", tipo_linha="estimativa", corte=c3, variante="vi_vaga_com_vi")
+    vic_mun = R(diagnostico="AD2_A2", tipo_linha="estimativa", corte=c3, variante="vic_municipio_todos")
+    vi_mun = R(diagnostico="AD2_A2", tipo_linha="estimativa", corte=c3, variante="vi_municipio_com_vi")
+    so_imed = R(diagnostico="AD2_A1", tipo_linha="estimativa", corte=c3, outcome="TAXA_SO_IMED")
+    so_cr = R(diagnostico="AD2_A1", tipo_linha="estimativa", corte=c3, outcome="TAXA_SO_CR")
+    contr = {k: R(diagnostico="AD2_A3", tipo_linha="contribuicao", corte=c3, outcome="TAXA_VIC", variante=f"grupo_c{k}")
+             for k in CICLOS}
+    c2 = R(diagnostico="AD2_A3", tipo_linha="estimativa", populacao="V2", corte=c3, outcome="TAXA_VIC")
+    maxd = float(sub["delta_tau"].astype(float).abs().max())
+    frac_c2 = float(contr[2]["contribuicao"]) / float(base["tau"])
+    cr_sustenta = _excl(fcr3) and not _excl(fcr4) and abs(float(vi_vaga["tau"])) < abs(float(base["tau"])) / 2
+    cr_coincide = _excl(fcr3) and not _excl(fcr4)
+    c2_sustenta = frac_c2 > 0.5
+    grandes = maxd > abs(float(base["tau"])) / 4
+    veredito = ("cadastro reserva" if cr_sustenta else
+                "ciclo 2, que responde por cerca de metade do salto; nenhum suspeito explica a queda inteira"
+                if c2_sustenta else "peso das cidades grandes" if grandes else "nenhum dos três sozinho")
+    fcr_c2 = R(diagnostico="AD2_A3", tipo_linha="estimativa", populacao="V2", corte=c3, outcome="FRAC_CR")
+    vi_c2 = R(diagnostico="AD2_A3", tipo_linha="estimativa", populacao="V2", corte=c3, outcome="TAXA_VI")
+    vi_c3 = R(diagnostico="AD2_A3", tipo_linha="estimativa", populacao="V3", corte=c3, outcome="TAXA_VI")
+    al_cr_c2 = resumo["adendo_2026_10_21"]["taxa_separada_por_tipo_de_vaga"]["celulas_por_tipo"]["ciclo 2 / so_cr"]["alocados"]
+    resposta = (
+        f"**Qual suspeito se sustenta: {veredito}.** "
+        f"(1) **Cadastro reserva:** a parte das vagas que é cadastro reserva sobe no corte {c3} "
+        f"({lin(fcr3)} p.p., {'exclui' if _excl(fcr3) else 'contém'} zero) e não em {c4} ({lin(fcr4)} p.p.). Mas, se a "
+        f"queda fosse só efeito de mais vagas de reserva no denominador, ela sumiria ao contar só as vagas imediatas, e "
+        f"não some: {lin(vi_vaga)} p.p. Nas células puras, a taxa das células só de vagas imediatas também é menor "
+        f"acima ({lin(so_imed)} p.p.) e a das células só de reserva quase não muda ({lin(so_cr)} p.p.); os dois IC "
+        f"contêm zero. O cadastro reserva {'coincide com a queda, mas não a explica sozinho' if cr_coincide and not cr_sustenta else 'explica a queda' if cr_sustenta else 'não acompanha a queda'}. "
+        f"(2) **Ciclo 2:** é o ciclo com a maior queda ({lin(c2)} p.p.) e responde por "
+        f"{_f(100 * frac_c2, 0, False)} % do salto com os ciclos juntos ({_f(contr[2]['contribuicao'], 1, pct=True)} de "
+        f"{_f(base['tau'], 1, pct=True)} p.p.); o ciclo 3 contribui {_f(contr[3]['contribuicao'], 1, pct=True)} e o "
+        f"ciclo 1, {_f(contr[1]['contribuicao'], 1, pct=True)}. "
+        f"No ciclo 2, a parte de cadastro reserva sobe no corte ({lin(fcr_c2)} p.p.), e nenhuma vaga de célula só de "
+        f"reserva foi preenchida na 1ª chamada desse ciclo ({_f(al_cr_c2, 0, False)} alocados): ali, mais reserva no "
+        f"denominador baixa a taxa por vaga oferecida, e contando só as vagas imediatas a queda do ciclo 2 fica em "
+        f"{lin(vi_c2)} p.p. Nos ciclos juntos isso não basta, porque no ciclo 3 a taxa só com vagas imediatas também "
+        f"cai ({lin(vi_c3)} p.p., IC largo). "
+        f"(3) **Peso das cidades grandes:** tirar qualquer um dos {N_TOP_VAGA} municípios com mais vagas oferecidas "
+        f"muda o salto em no máximo {_f(100 * maxd, 1, False)} p.p. Trocar o peso de vaga para município leva o salto a "
+        f"{lin(vic_mun)} p.p.; só a combinação das duas trocas (vagas imediatas no denominador e cada município "
+        f"pesando igual) o leva a {lin(vi_mun)} p.p. A decomposição não é aditiva: a ordem das trocas muda quanto cabe "
+        f"a cada uma (tabela de passos). **Força da evidência:** a queda da taxa por vaga oferecida em {c3} é "
+        f"estatisticamente nítida na medida principal (p = {_p(base)}), mas não há um único suspeito que a explique; "
+        f"é uma linha diagnóstica, sem correção por comparações múltiplas, e descreve o pacote do corte, não a bolsa "
+        f"sozinha.")
+
+    return f"""## 14. Adendo: a queda da taxa em 0,300
+
+> **Adendo de {ad['data'][8:10]}/{ad['data'][5:7]}/{ad['data'][:4]}** (`adendo = {ADENDO2}` em `ND_estimativas.csv`;
+> `adendo_2026_10_21` em `ND_resumo.json`). Fora do protocolo 48; nada aqui vira especificação principal.<br>
+> **Pergunta:** {ad['pergunta']}.<br>
+> **O que já tinha sido visto:** {ad['ja_visto']}.<br>
+> **Especificação:** {ad['especificacao']}.
+
+**Conjunto fixo, listado antes de rodar** (todos relatados):
+
+{conj}
+
+### Resposta curta
+
+{resposta}
+
+### A1 — cadastro reserva
+
+{tab_a1}
+
+A taxa separada por tipo de vaga só existe em parte: {ad['taxa_separada_por_tipo_de_vaga']['motivo']}.
+Células por tipo (todos os municípios do quadro):
+
+{tab_tipos}
+
+### A2 — denominador, peso e amostra, um elemento por vez
+
+{tab_a2}
+
+Passos, no corte {c3}, do salto principal (imediatas + CR, peso por vaga, todos os municípios) até a taxa só com vagas
+imediatas e cada município pesando igual:
+
+{tab_passos}
+
+### A3 — por ciclo
+
+Saltos ciclo × corte (EP HC1); `*` = IC 95% que exclui zero. O peso omega e a contribuição referem-se ao salto da
+taxa por vaga oferecida com os ciclos juntos (a soma das contribuições é o salto com os ciclos juntos).
+
+{tab_a3}
+
+### A4 — os {N_TOP_VAGA} municípios com mais vagas oferecidas na janela de {c3}
+
+Salto da taxa ponderada com todos: {lin(base)} p.p.
+
+{tab_a4}
+
+### Figuras do adendo
+
+"""
 
 
 def ler_saidas() -> tuple[pd.DataFrame, dict]:
@@ -1849,6 +2412,9 @@ def main(argv: list[str] | None = None) -> int:
     a08 = pd.read_csv(A08, dtype={"co_ibge": str}, usecols=["co_ibge", "nome_municipio_uf"])
     a08["co_ibge"] = a08["co_ibge"].str.zfill(6)
     V = preparar(V0, a08.set_index("co_ibge")["nome_municipio_uf"])
+    cel = pd.read_parquet(T23.ARQ_VC, columns=["ciclo", "co_ibge", "vagas_imediatas", "vagas_cr", "n_alocados_ch1"])
+    agg, info_cel = agregar_celulas(cel)
+    V = preparar_adendo2(V, agg)
     est, extras = estimar_tudo(V)
     nucleo = ["tau", "ep", "ic95_inf", "ic95_sup", "p_valor"]
     est_ = est[est["tipo_linha"] == "estimativa"]
@@ -1859,6 +2425,7 @@ def main(argv: list[str] | None = None) -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     est.to_csv(OUT / NOME_EST, index=False)
     figs = gerar_figuras(est, OUT / DIR_FIG)
+    figs += gerar_figuras_adendo2(est, OUT / DIR_FIG)
     todas = pd.concat(V.values(), ignore_index=True)
     contagens = {
         "linhas": int(len(est)), "executado": int((est["status"] == "EXECUTADO").sum()),
@@ -1883,6 +2450,9 @@ def main(argv: list[str] | None = None) -> int:
                          "ver dicionario", "-", "municipio", "co_ibge", "nenhum"),
         E6.bloco_entrada(E6.ARQ_G3, "conferencia do IVS da tarefa B (funcao do E6)", "tarefa B", "ver dicionario", "-",
                          "municipio", "co_ibge", "so co_ibge e ivs_2010_oficial"),
+        E6.bloco_entrada(T23.ARQ_VC, "adendo AD2: vagas e alocados por tipo de celula (so imediatas, so CR, mista)",
+                         "tarefa B", "ver dicionario", f"{len(cel)} celulas", "celula CNES x curso x ciclo",
+                         "ciclo, co_ibge", "colunas vagas_imediatas, vagas_cr, n_alocados_ch1"),
         E6.bloco_entrada(N_EST, "alvo de conferencia (S-a, S-b, S-d, S-e por corte e empilhados)",
                          "23_estimar_contagem_vagas.py", "2026-10-19", "-", "linha de estimativa",
                          "outcome_id, populacao, corte, especificacao, variante", "N1, V1+V2+V3"),
@@ -1907,6 +2477,8 @@ def main(argv: list[str] | None = None) -> int:
                        "n_top_influencia": N_TOP, "largura_faixa_mil": LARGURA_FAIXA},
         "exposicao_previa": EXPOSICAO_PREVIA,
         "adendos": ADENDOS,
+        "adendo_2026_10_21": {**ADENDO2_DESC, "taxa_separada_por_tipo_de_vaga": {
+            "situacao": "PARCIAL", "motivo": MOTIVO_SEPARADA, "celulas_por_tipo": info_cel}},
         "entradas": entradas,
         "validacoes": {
             "populacoes": conf_pop,
@@ -1915,6 +2487,8 @@ def main(argv: list[str] | None = None) -> int:
                             "max_abs_residuo": float(np.max(np.abs(extras["residuos_log"])))},
             "omega": {"linhas": len(extras["residuos_omega"]),
                       "max_abs_residuo": float(np.max(np.abs(extras["residuos_omega"])))},
+            "omega_adendo2": {"linhas": len(extras["residuos_omega_ad2"]),
+                              "max_abs_residuo": float(np.max(np.abs(extras["residuos_omega_ad2"])))},
         },
         "contagens": contagens,
         "decisoes": [

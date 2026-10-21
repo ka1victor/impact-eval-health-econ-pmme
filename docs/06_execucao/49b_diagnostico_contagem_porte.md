@@ -198,7 +198,7 @@ participação de cada ciclo no peso de kernel.
 | 0,300 | com o controle do protocolo 48 | sim | +0,37 (EP 0,14) | +0,29 (EP 0,15) | −1,43 [−2,65; −0,21] |
 | 0,400 | sem controle | não | +0,39 (EP 0,31) | −0,04 (EP 0,09) | −1,36 [−3,30; +0,57] |
 | 0,400 | sem controle | sim | +0,55 (EP 0,36) | +0,11 (EP 0,15) | −1,49 [−3,51; +0,53] |
-| 0,400 | com o controle do protocolo 48 | não | +0,20 (EP 0,13) | −0,00 (EP 0,08) | −0,14 [−0,82; +0,54] |
+| 0,400 | com o controle do protocolo 48 | não | +0,20 (EP 0,13) | +0,00 (EP 0,08) | −0,14 [−0,82; +0,54] |
 | 0,400 | com o controle do protocolo 48 | sim | +0,20 (EP 0,13) | −0,01 (EP 0,08) | −0,09 [−0,77; +0,60] |
 
 Empilhado (só comparação):
@@ -298,7 +298,7 @@ Corte 0,400:
 
 | Outcome | todos | k=1 abaixo | k=1 acima | k=1 ambos | k=3 abaixo | k=3 acima | k=3 ambos | k=5 abaixo | k=5 acima | k=5 ambos |
 |---|---|---|---|---|---|---|---|---|---|---|
-| N1 (com o controle do protocolo 48) | −0,14 | −0,08 | −0,18 | −0,12 | −0,12 | −0,16 | −0,14 | −0,02 | −0,15 | −0,00 |
+| N1 (com o controle do protocolo 48) | −0,14 | −0,08 | −0,18 | −0,12 | −0,12 | −0,16 | −0,14 | −0,02 | −0,15 | +0,00 |
 | N1 (sem controle) | −1,36 | −1,22 | −1,41 | −1,27 | −0,33 | −1,43 | −0,41 | −0,33 | −1,42 | −0,40 |
 | N1 Poisson com offset | +0,064 | +0,100 | +0,043 | +0,079 | −0,021 | +0,073 | −0,012 | +0,004 | +0,078 | +0,019 |
 | taxa N1 / vagas oferecidas (ponderada) | +2,5 | +3,7 | +1,8 | +3,0 | +0,2 | +2,7 | +0,4 | +0,8 | +2,9 | +1,2 |
@@ -309,7 +309,7 @@ Corte 0,400:
 Leitura:
 
 - **Corte 0,300.** O município mais influente no salto com controle é Teresina (PI) (Δ = −0,28 vaga, −0,45 EP); nenhum muda o salto em mais de 0,45 EP. No Poisson com offset, o mais influente é Teófilo Otoni (MG) (Δ = −0,123 em log). Retirando os k = 1, 3, 5 municípios mais populosos (abaixo, acima, dos dois lados), o salto com controle fica entre −1,78 e −1,49 (9 de 9 com IC que exclui zero); o Poisson com offset, entre −0,879 e −0,724 (9 de 9); a taxa ponderada, entre −20,2 e −16,4 p.p. (9 de 9).
-- **Corte 0,400.** O município mais influente no salto com controle é Piripiri (PI) (Δ = −0,22 vaga, −0,64 EP); nenhum muda o salto em mais de 0,64 EP. No Poisson com offset, o mais influente é Maceió (AL) (Δ = +0,116 em log). Retirando os k = 1, 3, 5 municípios mais populosos (abaixo, acima, dos dois lados), o salto com controle fica entre −0,18 e −0,00 (0 de 9 com IC que exclui zero); o Poisson com offset, entre −0,021 e +0,100 (0 de 9); a taxa ponderada, entre +0,2 e +3,7 p.p. (0 de 9).
+- **Corte 0,400.** O município mais influente no salto com controle é Piripiri (PI) (Δ = −0,22 vaga, −0,64 EP); nenhum muda o salto em mais de 0,64 EP. No Poisson com offset, o mais influente é Maceió (AL) (Δ = +0,116 em log). Retirando os k = 1, 3, 5 municípios mais populosos (abaixo, acima, dos dois lados), o salto com controle fica entre −0,18 e +0,00 (0 de 9 com IC que exclui zero); o Poisson com offset, entre −0,021 e +0,100 (0 de 9); a taxa ponderada, entre +0,2 e +3,7 p.p. (0 de 9).
 
 ## 6. D3 — forma da estimativa da taxa
 
@@ -551,7 +551,7 @@ Saltos; taxa em p.p.; `*` = IC 95% que exclui zero.
 
 ## 12. Figuras
 
-Todas em 16:9, com um painel por corte (0,300 à esquerda, 0,400 à direita). A imagem traz só o gráfico; o "Como ler" fica abaixo de cada uma e também em `como_ler` de cada figura em `ND_resumo.json`.
+Todas em 16:9, com um painel por corte (0,300 à esquerda, 0,400 à direita). A imagem traz só o gráfico; o "Como ler" fica abaixo de cada uma e também em `como_ler` de cada figura em `ND_resumo.json`. As figuras do adendo AD2 ficam na seção 14.
 
 ![ND_faixas_populacao](../../output/rdd_bolsa/ND_figuras/ND_faixas_populacao.png)
 
@@ -608,11 +608,119 @@ Todas em 16:9, com um painel por corte (0,300 à esquerda, 0,400 à direita). A 
 | saltos por corte e empilhados de S-a, S-b, S-d (offset) e S-e reproduzem `N_estimativas.csv` | 12 linhas; max abs dif = 9.7e-17 |
 | decomposição log-aditiva fecha | 9 amostras; max abs resíduo = 6.0e-15 |
 | salto empilhado = soma omega × salto do grupo | 6 identidades; max abs resíduo = 1.9e-14 |
-| linhas em `ND_estimativas.csv` | 1460 |
-| EXECUTADO / SEM_ESTIMATIVA / NAO_EXECUTADO | 1457 / 0 / 3 |
+| adendo AD2: salto da taxa com ciclos juntos = soma omega × salto do ciclo | 4 identidades; max abs resíduo = 4.9e-16 |
+| linhas em `ND_estimativas.csv` | 1553 |
+| EXECUTADO / SEM_ESTIMATIVA / NAO_EXECUTADO | 1550 / 0 / 3 |
 | linhas município × ciclo sem vaga imediata (taxa com vagas imediatas ausente, nunca zero) | 655 |
 | linhas município × ciclo com N1 = 0 (fora da decomposição em log, nunca zero) | 836 |
 | municípios do quadro sem IVS 2010 oficial (fora da RDD) | 1 |
 
 Nada imputado ou simulado; a running variable é o IVS 2010 oficial do Ipea (a08), conferido contra as saídas da
 tarefa B; o arquivo local de IVS da auditoria 16 não é lido; `data/` é só lido.
+
+## 14. Adendo: a queda da taxa em 0,300
+
+> **Adendo de 21/10/2026** (`adendo = AD2` em `ND_estimativas.csv`;
+> `adendo_2026_10_21` em `ND_resumo.json`). Fora do protocolo 48; nada aqui vira especificação principal.<br>
+> **Pergunta:** por que a taxa de preenchimento por vaga oferecida cai no corte 0,300, onde o porte nao explica a queda.<br>
+> **O que já tinha sido visto:** antes deste adendo ja estavam gravados e lidos: o salto de -16 p.p. da taxa ponderada pelas vagas oferecidas no local linear (D1, corte 0,300) e a dependencia da medida (com as vagas imediatas no denominador, e com cada municipio pesando igual em +-0,010, o IC contem zero; D3).<br>
+> **Especificação:** a do ND: local linear, h = 0,050, kernel triangular, CR1 por municipio, ciclos juntos com intercepto e inclinacao por ciclo; por corte (0,300 e 0,400, este como contraste).
+
+**Conjunto fixo, listado antes de rodar** (todos relatados):
+
+- **A1, cadastro reserva:** saltos na fracao de vagas de cadastro reserva sobre as vagas oferecidas (peso = vagas oferecidas), no n de vagas de CR e no n de vagas imediatas; taxa de preenchimento separada: alocados em vaga imediata / vagas imediatas e alocados em CR / vagas de CR, se a base distinguir; se nao distinguir, a ausencia e o motivo.
+- **A2, decomposicao da diferenca entre as taxas:** no corte 0,300, quanto do salto vem de trocar o denominador (imediatas -> imediatas + CR) e quanto de trocar o peso (municipio -> vaga), mesma janela e especificacao, um elemento por vez, nas duas ordens; a restricao a municipios com vaga imediata (exigida pelo denominador de imediatas) e relatada como passo proprio.
+- **A3, por ciclo:** taxa ponderada pelas vagas oferecidas, taxa so com vagas imediatas e fracao de CR, ciclo x corte, EP HC1; peso efetivo omega e contribuicao de cada ciclo no salto da taxa com os ciclos juntos.
+- **A4, influencia no nivel da vaga:** os 5 municipios com mais vagas oferecidas (soma dos ciclos) na janela de 0,300, com vagas imediatas, CR, alocados, lado e nome, e o salto da taxa ponderada sem cada um deles.
+
+### Resposta curta
+
+**Qual suspeito se sustenta: ciclo 2, que responde por cerca de metade do salto; nenhum suspeito explica a queda inteira.** (1) **Cadastro reserva:** a parte das vagas que é cadastro reserva sobe no corte 0,300 (+13,4 [+0,7; +26,1] p.p., exclui zero) e não em 0,400 (+0,8 [−12,3; +13,8] p.p.). Mas, se a queda fosse só efeito de mais vagas de reserva no denominador, ela sumiria ao contar só as vagas imediatas, e não some: −19,2 [−43,1; +4,7] p.p. Nas células puras, a taxa das células só de vagas imediatas também é menor acima (−16,5 [−37,0; +4,1] p.p.) e a das células só de reserva quase não muda (−5,4 [−12,4; +1,7] p.p.); os dois IC contêm zero. O cadastro reserva coincide com a queda, mas não a explica sozinho. (2) **Ciclo 2:** é o ciclo com a maior queda (−27,8 [−49,0; −6,7] p.p.) e responde por 51 % do salto com os ciclos juntos (−8,1 de −16,0 p.p.); o ciclo 3 contribui −6,0 e o ciclo 1, −1,9. No ciclo 2, a parte de cadastro reserva sobe no corte (+32,5 [+10,9; +54,1] p.p.), e nenhuma vaga de célula só de reserva foi preenchida na 1ª chamada desse ciclo (0 alocados): ali, mais reserva no denominador baixa a taxa por vaga oferecida, e contando só as vagas imediatas a queda do ciclo 2 fica em −12,9 [−45,1; +19,3] p.p. Nos ciclos juntos isso não basta, porque no ciclo 3 a taxa só com vagas imediatas também cai (−40,5 [−82,9; +1,8] p.p., IC largo). (3) **Peso das cidades grandes:** tirar qualquer um dos 5 municípios com mais vagas oferecidas muda o salto em no máximo 2,5 p.p. Trocar o peso de vaga para município leva o salto a −11,0 [−26,1; +4,1] p.p.; só a combinação das duas trocas (vagas imediatas no denominador e cada município pesando igual) o leva a −2,4 [−37,4; +32,6] p.p. A decomposição não é aditiva: a ordem das trocas muda quanto cabe a cada uma (tabela de passos). **Força da evidência:** a queda da taxa por vaga oferecida em 0,300 é estatisticamente nítida na medida principal (p = 0,008), mas não há um único suspeito que a explique; é uma linha diagnóstica, sem correção por comparações múltiplas, e descreve o pacote do corte, não a bolsa sozinha.
+
+### A1 — cadastro reserva
+
+| Variável | 0,300: média abaixo → acima | 0,300: salto [IC 95%] | 0,300: p | 0,400: média abaixo → acima | 0,400: salto [IC 95%] | 0,400: p |
+|---|---|---|---|---|---|---|
+| parte das vagas que é cadastro reserva (%) | 58,3 → 64,9 | +13,4 [+0,7; +26,1] | 0,039 | 60,3 → 62,8 | +0,8 [−12,3; +13,8] | 0,906 |
+| vagas de cadastro reserva | 5,9 → 6,4 | +1,91 [−3,11; +6,93] | 0,457 | 4,3 → 2,5 | −1,48 [−4,57; +1,62] | 0,349 |
+| vagas imediatas | 4,2 → 3,4 | −1,52 [−4,36; +1,32] | 0,295 | 2,8 → 1,5 | −2,11 [−4,54; +0,32] | 0,089 |
+| taxa nas células só de vagas imediatas (%) | 47,0 → 56,3 | −16,5 [−37,0; +4,1] (103 / 76 fora) | 0,116 | 57,2 → 63,5 | −2,1 [−22,8; +18,6] (73 / 106 fora) | 0,843 |
+| taxa nas células só de cadastro reserva (%) | 5,7 → 5,4 | −5,4 [−12,4; +1,7] (46 / 44 fora) | 0,136 | 7,1 → 11,5 | +2,2 [−5,1; +9,4] (51 / 56 fora) | 0,555 |
+
+A taxa separada por tipo de vaga só existe em parte: a base nao registra em que tipo de vaga (imediata ou cadastro reserva) cada alocado entrou; so e possivel separar nas celulas puras: celula so com vagas imediatas (todo alocado ocupa vaga imediata ou entrou acima delas) e celula so de cadastro reserva (todo alocado ocupa vaga de CR). As celulas mistas (imediatas e CR na mesma celula) ficam fora das duas taxas separadas, contadas, nunca divididas por suposicao.
+Células por tipo (todos os municípios do quadro):
+
+| Ciclo / tipo de célula | células | vagas imediatas | vagas de CR | alocados na 1ª chamada |
+|---|---|---|---|---|
+| ciclo 1 / mista | 10 | 10 | 11 | 4 |
+| ciclo 1 / só CR | 782 | 0 | 1134 | 211 |
+| ciclo 1 / só imediatas | 503 | 668 | 0 | 253 |
+| ciclo 2 / mista | 1 | 3 | 1 | 1 |
+| ciclo 2 / só CR | 532 | 0 | 1052 | 0 |
+| ciclo 2 / só imediatas | 1014 | 1833 | 0 | 1056 |
+| ciclo 3 / mista | 245 | 250 | 450 | 178 |
+| ciclo 3 / só CR | 1599 | 0 | 3549 | 131 |
+| ciclo 3 / só imediatas | 449 | 882 | 0 | 395 |
+
+### A2 — denominador, peso e amostra, um elemento por vez
+
+| Denominador | cada um pesa igual | municípios | 0,300: n abaixo / acima | 0,300: salto [IC 95%] (p.p.) | 0,300: p | 0,400: salto [IC 95%] (p.p.) |
+|---|---|---|---|---|---|---|
+| imediatas + CR | vaga | todos | 145 / 120 | −16,0 [−27,9; −4,1] | 0,008 | +2,5 [−9,9; +15,0] |
+| imediatas + CR | vaga | só com vaga imediata | 98 / 79 | −16,9 [−30,7; −3,0] | 0,017 | +1,1 [−16,2; +18,4] |
+| imediatas | vaga | só com vaga imediata | 98 / 79 | −19,2 [−43,1; +4,7] | 0,115 | +1,0 [−26,0; +28,1] |
+| imediatas + CR | município | todos | 145 / 120 | −11,0 [−26,1; +4,1] | 0,154 | −3,1 [−16,6; +10,4] |
+| imediatas + CR | município | só com vaga imediata | 98 / 79 | −15,4 [−33,6; +2,9] | 0,099 | −5,4 [−26,2; +15,3] |
+| imediatas | município | só com vaga imediata | 98 / 79 | −2,4 [−37,4; +32,6] | 0,893 | +3,7 [−40,7; +48,2] |
+
+Passos, no corte 0,300, do salto principal (imediatas + CR, peso por vaga, todos os municípios) até a taxa só com vagas
+imediatas e cada município pesando igual:
+
+| Ordem | passo | o que muda | salto antes (p.p.) | salto depois (p.p.) | mudança (p.p.) |
+|---|---|---|---|---|---|
+| denominador antes do peso | 1 | amostra (so com vaga imediata) | −16,0 | −16,9 | −0,9 |
+| denominador antes do peso | 2 | denominador (imediatas + CR -> imediatas) | −16,9 | −19,2 | −2,3 |
+| denominador antes do peso | 3 | peso (vaga -> municipio) | −19,2 | −2,4 | +16,8 |
+| peso antes do denominador | 1 | peso (vaga -> municipio) | −16,0 | −11,0 | +5,0 |
+| peso antes do denominador | 2 | amostra (so com vaga imediata) | −11,0 | −15,4 | −4,4 |
+| peso antes do denominador | 3 | denominador (imediatas + CR -> imediatas) | −15,4 | −2,4 | +13,0 |
+
+### A3 — por ciclo
+
+Saltos ciclo × corte (EP HC1); `*` = IC 95% que exclui zero. O peso omega e a contribuição referem-se ao salto da
+taxa por vaga oferecida com os ciclos juntos (a soma das contribuições é o salto com os ciclos juntos).
+
+| Ciclo | Corte | taxa por vaga oferecida (p.p.) | taxa só imediatas (p.p.) | parte de CR (p.p.) | peso omega no salto com ciclos juntos | contribuição (p.p.) |
+|---|---|---|---|---|---|---|
+| 1 | 0,300 | −12,5 | +7,7 | +23,5 | 0,153 | −1,9 |
+| 1 | 0,400 | +3,6 | +52,3 | +32,5* | 0,181 | +0,7 |
+| 2 | 0,300 | −27,8* | −12,9 | +32,5* | 0,291 | −8,1 |
+| 2 | 0,400 | +9,5 | +3,5 | −8,9 | 0,303 | +2,9 |
+| 3 | 0,300 | −10,7 | −40,5 | +0,5 | 0,555 | −6,0 |
+| 3 | 0,400 | −1,9 | −25,9 | −4,6 | 0,516 | −1,0 |
+
+### A4 — os 5 municípios com mais vagas oferecidas na janela de 0,300
+
+Salto da taxa ponderada com todos: −16,0 [−27,9; −4,1] p.p.
+
+| Posto | co_ibge | Município | vagas oferecidas | imediatas | CR | alocados | lado | distância | salto sem ele (p.p.) | Δ (p.p.) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 230440 | Fortaleza (CE) | 250 | 62 | 188 | 57 | acima | +0,030 | −16,4 [−28,3; −4,6] | +0,4 |
+| 2 | 221100 | Teresina (PI) | 150 | 74 | 76 | 61 | abaixo | −0,012 | −13,5 [−25,4; −1,6] | −2,5 |
+| 3 | 310620 | Belo Horizonte (MG) | 134 | 20 | 114 | 17 | abaixo | −0,024 | −15,9 [−27,7; −4,2] | −0,1 |
+| 4 | 110020 | Porto Velho (RO) | 112 | 37 | 75 | 16 | acima | +0,022 | −16,0 [−27,9; −4,0] | +0,0 |
+| 5 | 231290 | Sobral (CE) | 108 | 79 | 29 | 36 | abaixo | −0,014 | −16,0 [−28,4; −3,7] | +0,0 |
+
+### Figuras do adendo
+
+![ND_adendo_cr_taxas](../../output/rdd_bolsa/ND_figuras/ND_adendo_cr_taxas.png)
+
+**Como ler:** Cada linha acompanha, trecho a trecho, a parte das vagas que é cadastro reserva e as duas formas de medir o preenchimento. Mostra se a taxa cai no corte junto com mais vagas de cadastro reserva.
+
+*Detalhe técnico:* Adendo AD2. Por faixa de 0,010 da distância ao corte, ciclos juntos: fração de cadastro reserva (soma de CR / soma das vagas oferecidas), taxa por vaga oferecida (soma de N1 / soma das vagas oferecidas) e taxa só com vagas imediatas (soma de N1 / soma das vagas imediatas). Anotação = salto local linear da fração de CR (peso = vagas oferecidas, CR1).
+
+![ND_adendo_ciclos](../../output/rdd_bolsa/ND_figuras/ND_adendo_ciclos.png)
+
+**Como ler:** Cada ponto é o salto no corte em um ciclo, com seu intervalo de confiança. Mostra de que ciclo vem a queda da taxa.
+
+*Detalhe técnico:* Adendo AD2. Saltos local linear por ciclo × corte (EP HC1) da taxa ponderada pelas vagas oferecidas e da fração de CR, em p.p.; a última linha é o salto com os ciclos juntos (CR1).
