@@ -8,7 +8,7 @@ Uso:
 A opção `--rdd-bolsa` roda a cadeia sobre os insumos já versionados das etapas
 anteriores (quadro de vagas, funil e tipologia do ciclo 1, população do Censo
 2022, painel do ciclo 1), inclusive as aquisições a07 a a11 e a rodada
-multi-outcome (12, 13, 16 e 14), a família N (23), a abertura (24 e o P5, 29) e a família K (21 e 22). Nenhuma etapa baixa o CNES nacional, o SIA, o SIH nem o
+multi-outcome (12, 13, 16 e 14), a família N (23), a abertura (24 e o P5, 29), a trajetória dos médicos (P4, 28) e a família K (21 e 22). Nenhuma etapa baixa o CNES nacional, o SIA, o SIH nem o
 TISS: o a09, o a12, o a12b, o a13, o a13b, o a14, o a15, o a16 (portão G5) e o a17 rodam em `--etapa verificar`;
 o a12b, o a13, o a13b, o a15 e o a17 não fazem parte da opção `--rdd-bolsa`.
 """
@@ -130,6 +130,10 @@ STEPS = [
     # Lê os outcomes e as leituras do cardápio e da adesão do 12, o CNES pré (a09), o SIA pré (a12), o a08, o
     # Censo 2022 (a06), a tipologia (tema_trabalho/03), o REGIC e a CIR brutos, e funções do 24 e do 23.
     ROOT / "scripts" / "rdd_bolsa" / "29_determinantes_abertura.py",
+    # P4 (protocolo 54, exploratório): trajetória individual dos médicos do PMM-E, origem e contabilidade líquida.
+    # Lê o painel médico × mês do a16 (conferido acima), X1_medicos.parquet (saída versionada do 17, fora do
+    # run_all), as listas nominais só em memória (função do 17), o painel do a09 e a ponte curso–CBO. Não lê IVS.
+    ROOT / "scripts" / "rdd_bolsa" / "28_trajetoria_medicos.py",
     # E7: lê o painel do a09, o IED do a10, a janela LR do E5 e confere a de U com a do E6 (13).
     ROOT / "scripts" / "rdd_bolsa" / "14_estimar_E7_dird_cnes.py",
     # Família K (protocolo 47, pós-síntese, Holm próprio): D1, DiRD da produção especializada nos cortes.

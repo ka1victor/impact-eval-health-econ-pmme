@@ -1,0 +1,743 @@
+{
+  "etapa": "P4_trajetoria_medicos",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "EXPLORATORIO_P4",
+  "data_execucao": "2026-10-23",
+  "script": "scripts/rdd_bolsa/28_trajetoria_medicos.py",
+  "documento": "docs/06_execucao/57d_resultados_P4_trajetoria.md",
+  "protocolo": {
+    "arquivo": "docs/06_execucao/54_protocolo_P4_oferta_substituicao.md",
+    "sha256": "7de1303f29116019e210886b577c9fb4a163d18a611b97082f98b83304921e13"
+  },
+  "contraste": "entrada do médico no PMM-E, entre médicos que começam em meses diferentes (T4.1b/T4.1c); não é o efeito da bolsa, nem do PMM-E sobre o município, nem retenção individual",
+  "leitura": {
+    "T4.1a": "descritivo (médias por tempo de evento; horas cadastradas)",
+    "T4.1b": "associado à entrada no PMM-E, sob tendências paralelas entre médicos que entram em datas diferentes; exploratório",
+    "T4.1c": "associado à entrada, por origem pré-tratamento (X1 b); exploratório",
+    "T4.2": "descritivo do deslocamento",
+    "T4.3": "descritivo (contabilidade pré × pós sem grupo de comparação)",
+    "origem": "descritivo (composição dos médicos pela origem)"
+  },
+  "parametros": {
+    "competencias": [
+      "202406",
+      "202608"
+    ],
+    "limite_exclusivo": "202609",
+    "janela_principal": [
+      -6,
+      6
+    ],
+    "janela_longa": [
+      -12,
+      10
+    ],
+    "balanceada_inicio": [
+      "202412",
+      "202602"
+    ],
+    "regras": [
+      "d1_pos_hoc",
+      "literal_doc45"
+    ],
+    "regra_principal": "d1_pos_hoc",
+    "bootstrap": {
+      "B": 9999,
+      "pesos": "Mammen",
+      "semente": 20261019,
+      "unidade": "médico"
+    },
+    "min_controles": 30,
+    "ciclos_tratados": [
+      1,
+      2
+    ]
+  },
+  "outcomes": {
+    "horas_totais": {
+      "rotulo": "horas totais",
+      "unidade": "h/sem",
+      "bky": true
+    },
+    "horas_sus": {
+      "rotulo": "horas em vínculos SUS",
+      "unidade": "h/sem",
+      "bky": true
+    },
+    "horas_nao_sus": {
+      "rotulo": "horas em vínculos não SUS",
+      "unidade": "h/sem",
+      "bky": true
+    },
+    "horas_amb": {
+      "rotulo": "horas ambulatoriais",
+      "unidade": "h/sem",
+      "bky": true
+    },
+    "horas_hosp": {
+      "rotulo": "horas hospitalares",
+      "unidade": "h/sem",
+      "bky": true
+    },
+    "n_vinculos": {
+      "rotulo": "número de vínculos",
+      "unidade": "vínculos",
+      "bky": true
+    },
+    "n_estabelecimentos": {
+      "rotulo": "número de estabelecimentos",
+      "unidade": "estabelecimentos",
+      "bky": true
+    },
+    "n_municipios": {
+      "rotulo": "número de municípios",
+      "unidade": "municípios",
+      "bky": true
+    },
+    "horas_estab_posto": {
+      "rotulo": "horas no estabelecimento do posto",
+      "unidade": "h/sem",
+      "bky": true
+    },
+    "horas_mun_posto": {
+      "rotulo": "horas no município do posto",
+      "unidade": "h/sem",
+      "bky": true
+    },
+    "horas_fora_mun_posto": {
+      "rotulo": "horas fora do município do posto",
+      "unidade": "h/sem",
+      "bky": true
+    },
+    "horas_publico": {
+      "rotulo": "horas em estabelecimentos públicos",
+      "unidade": "h/sem",
+      "bky": true
+    },
+    "horas_privado_com_fins": {
+      "rotulo": "horas em privados com fins lucrativos",
+      "unidade": "h/sem",
+      "bky": true
+    },
+    "horas_privado_sem_fins": {
+      "rotulo": "horas em privados sem fins lucrativos",
+      "unidade": "h/sem",
+      "bky": true
+    },
+    "com_vinculo_medico": {
+      "rotulo": "tem vínculo médico cadastrado no mês",
+      "unidade": "fração",
+      "bky": false,
+      "nota": "COMPLEMENTAR (fora do §2 e do BKY; relatado para leitura)"
+    },
+    "horas_resto_mun_posto": {
+      "rotulo": "horas no município do posto fora do estabelecimento do posto",
+      "unidade": "h/sem",
+      "bky": false,
+      "nota": "COMPLEMENTAR (fora do §2 e do BKY; relatado para leitura)"
+    },
+    "horas_outra_natureza": {
+      "rotulo": "horas em outras naturezas jurídicas (pessoa física etc.)",
+      "unidade": "h/sem",
+      "bky": false,
+      "nota": "COMPLEMENTAR (fora do §2 e do BKY; relatado para leitura)"
+    }
+  },
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/54_protocolo_P4_oferta_substituicao.md",
+      "sha256": "7de1303f29116019e210886b577c9fb4a163d18a611b97082f98b83304921e13",
+      "bytes": 4009,
+      "papel": "protocolo 54 (somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-19",
+      "cobertura": "§1–§6",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/painel_vinculo_mes.parquet",
+      "sha256": "1760fbc496da008d574e0c9ea196144e320337f83e3568ba363980b0ca279132",
+      "bytes": 706598,
+      "papel": "vínculos médicos por médico × mês (horas, estabelecimento, município, natureza)",
+      "fonte": "CNES/DATASUS, a16 (portão G5)",
+      "data_referencia": "202406–202608",
+      "cobertura": "27 competências",
+      "unidade": "vínculo × competência",
+      "chaves": "id_prof, competencia, co_cnes, co_cbo",
+      "filtros": "nenhuma competência >= 202609"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/painel_medico_mes.parquet",
+      "sha256": "7d042a793c006fe1252e2dddebb0ab7a97a20339b7be024cf456aecdaa87e55a",
+      "bytes": 146141,
+      "papel": "conferência do painel refeito (fail closed)",
+      "fonte": "a16",
+      "data_referencia": "202406–202608",
+      "cobertura": "27 competências",
+      "unidade": "médico × competência",
+      "chaves": "id_prof, competencia",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/chaves_origem.parquet",
+      "sha256": "7284a475530b3c9639a9f807baecd07a40b00561a8b21ddd7339767207f34f09",
+      "bytes": 19129,
+      "papel": "ponte id_prof ↔ id_medico da X1, por regra",
+      "fonte": "a16",
+      "data_referencia": "2026-10-19",
+      "cobertura": "X1",
+      "unidade": "registro × regra",
+      "chaves": "id_prof, id_externo, regra_ligacao",
+      "filtros": "origem = X1"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G5_resumo.json",
+      "sha256": "b38b8ec2e547987d4608ea8ff741521c340dab283f60319b8797ca20fd9538ad",
+      "bytes": 14133,
+      "papel": "competências obtidas e veredito do portão",
+      "fonte": "a16",
+      "data_referencia": "2026-10-19",
+      "cobertura": "27 competências",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/X1_medicos.parquet",
+      "sha256": "b4d73a6ae6adce59d014b11bf5490072964b49d600782af3d96a8f2e12f91789",
+      "bytes": 79430,
+      "papel": "ligação, faixa e origem (X1 b)",
+      "fonte": "X1 (script 17)",
+      "data_referencia": "listas de 12/08 e 11/09/2026",
+      "cobertura": "1.990 registros × 2 regras",
+      "unidade": "registro × regra",
+      "chaves": "id_medico, regra_ligacao",
+      "filtros": "colunas id_medico, regra_ligacao, ciclo, fonte_lista, co_ibge, faixa, ligado, b_mesmo_mun_ultimo_pre"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip",
+      "sha256": "e57edeb50946395fa90fe510f4a658501f9b0e92069fcc53aa41b9e893e89c1c",
+      "bytes": 117155,
+      "papel": "início, ciclo, curso, estabelecimento e município do posto (só em memória; nome, CRM e UF descartados)",
+      "fonte": "SGTES/MS, relação nominal de ativos",
+      "data_referencia": "2026-09-11",
+      "cobertura": "1957 registros",
+      "unidade": "registro",
+      "chaves": "ciclo, CRM, UF, CNES, curso",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "data/pmm_especialistas_nominal.csv",
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
+      "bytes": 361832,
+      "papel": "idem, registros só da lista de agosto (só em memória)",
+      "fonte": "SGTES/MS, lista nominal",
+      "data_referencia": "2026-08-12",
+      "cobertura": "33 registros só nela",
+      "unidade": "registro",
+      "chaves": "ciclo, CRM, UF, CNES, curso",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+      "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
+      "bytes": 20167560,
+      "papel": "T4.2: horas da mesma CBO no município de origem",
+      "fonte": "CNES nacional (a09)",
+      "data_referencia": "202406–202608",
+      "cobertura": "municípios dos vínculos do painel",
+      "unidade": "município × grupo de CBO × mês",
+      "chaves": "co_ibge, grupo, competencia",
+      "filtros": "competência entre 202406 e 202608 (filtro na leitura)"
+    },
+    {
+      "caminho": "output/aquisicao/ponte_curso_cbo_oficial.json",
+      "sha256": "ed8c2a9a3fcda4f0f261b5321da7750da389cc0f574f2e5ac5140e5ebd8f2d9e",
+      "bytes": 16218,
+      "papel": "rótulo dos cursos 1–16",
+      "fonte": "ponte curso–CBO (aquisição/01)",
+      "data_referencia": "2026-08-30",
+      "cobertura": "16 cursos",
+      "unidade": "curso",
+      "chaves": "cod_curso",
+      "filtros": "só especialidade_cfm"
+    }
+  ],
+  "listas_pmme": {
+    "registros_ativos_2026_09_11": 1957,
+    "registros_nominal_2026_08_12": 1480,
+    "registros_so_na_nominal": 33,
+    "registros_uniao": 1990
+  },
+  "conferencia_listas_x1": {
+    "registros_x1": 3980,
+    "diferencas": {
+      "ciclo": 0,
+      "co_ibge": 0,
+      "fonte_lista": 0,
+      "faixa": 0
+    }
+  },
+  "cache_privado_a16": {
+    "existe": false,
+    "necessario": false
+  },
+  "por_regra": {
+    "d1_pos_hoc": {
+      "medicos": {
+        "registros_ligados": 1876,
+        "medicos_distintos": 1865,
+        "medicos_com_mais_de_um_registro": 11,
+        "registros_descartados_na_deduplicacao": 11,
+        "deduplicados_com_ciclo_diferente": 0,
+        "deduplicados_com_inicio_diferente": 0,
+        "por_ciclo": {
+          "1": 495,
+          "2": 902,
+          "3": 468
+        },
+        "inicio_depois_do_horizonte": 2,
+        "tratados_ciclos_1_2": 1397,
+        "ciclos_1_2_sem_origem_x1": 0
+      },
+      "conferencia_a16": {
+        "linhas_conferidas": 50355,
+        "diferencas": {
+          "n_vinculos": 0,
+          "n_estabelecimentos": 0,
+          "n_municipios": 0,
+          "horas_totais": 0,
+          "horas_sus": 0,
+          "horas_nao_sus": 0,
+          "com_vinculo_medico": 0
+        }
+      },
+      "cs": {
+        "coortes_principal": 12,
+        "celulas_att_gt_principal": 123,
+        "celulas_sem_suporte_principal": 12,
+        "coortes_longa": 12,
+        "celulas_att_gt_longa": 209,
+        "celulas_sem_suporte_longa": 22
+      },
+      "origem": {
+        "fracao_ja_no_municipio_x1b": {
+          "k": 713,
+          "n": 1397,
+          "fracao": 0.5103793843951324
+        },
+        "fracao_novos_x1b": {
+          "k": 684,
+          "n": 1397,
+          "fracao": 0.4896206156048676
+        },
+        "fracao_no_municipio_em_e_menos_1": {
+          "k": 761,
+          "n": 1397,
+          "fracao": 0.5447387258410881
+        },
+        "fracao_sem_vinculo_medico_em_e_menos_1": {
+          "k": 37,
+          "n": 1397,
+          "fracao": 0.026485325697924122
+        },
+        "sem_origem_x1": 0
+      },
+      "t42": {
+        "novos_ciclos_1_2": 684,
+        "mudaram_com_origem_em_e_menos_1": 647,
+        "pares_medico_municipio_cbo": 1929,
+        "pares_sem_serie_a09": {
+          "CBO sem série própria no painel do a09": 485,
+          "horas ausentes no painel do a09 em algum mês": 16
+        },
+        "pares_com_serie_a09": 1428
+      },
+      "t43": {
+        "completa": {
+          "n": 1397,
+          "soma_delta_mun_posto": 13015.380952380952,
+          "soma_delta_fora": -3421.7857142857138,
+          "soma_saldo": 9593.595238095239
+        },
+        "balanceada": {
+          "n": 493,
+          "soma_delta_mun_posto": 4955.380952380952,
+          "soma_delta_fora": -580.2857142857142,
+          "soma_saldo": 4375.0952380952385
+        }
+      },
+      "meses_sem_vinculo_medico_por_e": {
+        "-6": {
+          "medicos": 1397,
+          "sem_vinculo_medico": 42
+        },
+        "-5": {
+          "medicos": 1397,
+          "sem_vinculo_medico": 40
+        },
+        "-4": {
+          "medicos": 1397,
+          "sem_vinculo_medico": 42
+        },
+        "-3": {
+          "medicos": 1397,
+          "sem_vinculo_medico": 40
+        },
+        "-2": {
+          "medicos": 1397,
+          "sem_vinculo_medico": 40
+        },
+        "-1": {
+          "medicos": 1397,
+          "sem_vinculo_medico": 37
+        },
+        "0": {
+          "medicos": 1397,
+          "sem_vinculo_medico": 31
+        },
+        "1": {
+          "medicos": 1396,
+          "sem_vinculo_medico": 20
+        },
+        "2": {
+          "medicos": 1394,
+          "sem_vinculo_medico": 11
+        },
+        "3": {
+          "medicos": 1222,
+          "sem_vinculo_medico": 8
+        },
+        "4": {
+          "medicos": 1206,
+          "sem_vinculo_medico": 5
+        },
+        "5": {
+          "medicos": 785,
+          "sem_vinculo_medico": 3
+        },
+        "6": {
+          "medicos": 493,
+          "sem_vinculo_medico": 1
+        }
+      },
+      "horas_ausentes_medico_mes": 0
+    },
+    "literal_doc45": {
+      "medicos": {
+        "registros_ligados": 1901,
+        "medicos_distintos": 1887,
+        "medicos_com_mais_de_um_registro": 14,
+        "registros_descartados_na_deduplicacao": 14,
+        "deduplicados_com_ciclo_diferente": 2,
+        "deduplicados_com_inicio_diferente": 2,
+        "por_ciclo": {
+          "1": 504,
+          "2": 915,
+          "3": 468
+        },
+        "inicio_depois_do_horizonte": 2,
+        "tratados_ciclos_1_2": 1419,
+        "ciclos_1_2_sem_origem_x1": 0
+      },
+      "conferencia_a16": {
+        "linhas_conferidas": 50949,
+        "diferencas": {
+          "n_vinculos": 0,
+          "n_estabelecimentos": 0,
+          "n_municipios": 0,
+          "horas_totais": 0,
+          "horas_sus": 0,
+          "horas_nao_sus": 0,
+          "com_vinculo_medico": 0
+        }
+      },
+      "cs": {
+        "coortes_principal": 12,
+        "celulas_att_gt_principal": 123,
+        "celulas_sem_suporte_principal": 12,
+        "coortes_longa": 12,
+        "celulas_att_gt_longa": 209,
+        "celulas_sem_suporte_longa": 22
+      },
+      "origem": {
+        "fracao_ja_no_municipio_x1b": {
+          "k": 708,
+          "n": 1419,
+          "fracao": 0.4989429175475687
+        },
+        "fracao_novos_x1b": {
+          "k": 711,
+          "n": 1419,
+          "fracao": 0.5010570824524313
+        },
+        "fracao_no_municipio_em_e_menos_1": {
+          "k": 757,
+          "n": 1419,
+          "fracao": 0.5334742776603242
+        },
+        "fracao_sem_vinculo_medico_em_e_menos_1": {
+          "k": 40,
+          "n": 1419,
+          "fracao": 0.028188865398167725
+        },
+        "sem_origem_x1": 0
+      },
+      "t42": {
+        "novos_ciclos_1_2": 711,
+        "mudaram_com_origem_em_e_menos_1": 671,
+        "pares_medico_municipio_cbo": 1954,
+        "pares_sem_serie_a09": {
+          "CBO sem série própria no painel do a09": 532,
+          "horas ausentes no painel do a09 em algum mês": 18
+        },
+        "pares_com_serie_a09": 1404
+      },
+      "t43": {
+        "completa": {
+          "n": 1419,
+          "soma_delta_mun_posto": 12375.514285714286,
+          "soma_delta_fora": -3224.1523809523806,
+          "soma_saldo": 9151.361904761905
+        },
+        "balanceada": {
+          "n": 502,
+          "soma_delta_mun_posto": 4598.047619047618,
+          "soma_delta_fora": -504.6190476190475,
+          "soma_saldo": 4093.4285714285716
+        }
+      },
+      "meses_sem_vinculo_medico_por_e": {
+        "-6": {
+          "medicos": 1419,
+          "sem_vinculo_medico": 45
+        },
+        "-5": {
+          "medicos": 1419,
+          "sem_vinculo_medico": 43
+        },
+        "-4": {
+          "medicos": 1419,
+          "sem_vinculo_medico": 44
+        },
+        "-3": {
+          "medicos": 1419,
+          "sem_vinculo_medico": 43
+        },
+        "-2": {
+          "medicos": 1419,
+          "sem_vinculo_medico": 42
+        },
+        "-1": {
+          "medicos": 1419,
+          "sem_vinculo_medico": 40
+        },
+        "0": {
+          "medicos": 1419,
+          "sem_vinculo_medico": 34
+        },
+        "1": {
+          "medicos": 1418,
+          "sem_vinculo_medico": 22
+        },
+        "2": {
+          "medicos": 1416,
+          "sem_vinculo_medico": 13
+        },
+        "3": {
+          "medicos": 1239,
+          "sem_vinculo_medico": 10
+        },
+        "4": {
+          "medicos": 1223,
+          "sem_vinculo_medico": 7
+        },
+        "5": {
+          "medicos": 796,
+          "sem_vinculo_medico": 4
+        },
+        "6": {
+          "medicos": 502,
+          "sem_vinculo_medico": 2
+        }
+      },
+      "horas_ausentes_medico_mes": 0
+    }
+  },
+  "principais": {
+    "fracao_ja_no_municipio_x1b": {
+      "estimativa": 0.5103793844,
+      "ic95_inf": 0.4841732952,
+      "ic95_sup": 0.5365285479,
+      "p_valor": null,
+      "n_obs": 1397.0
+    },
+    "fracao_novos_x1b": {
+      "estimativa": 0.4896206156,
+      "ic95_inf": 0.4634714521,
+      "ic95_sup": 0.5158267048,
+      "p_valor": null,
+      "n_obs": 1397.0
+    },
+    "att_pos_medio_horas_totais": {
+      "estimativa": 6.604264097,
+      "ic95_inf": 5.368806913,
+      "ic95_sup": 7.839721281,
+      "p_valor": 1.0996238010000001e-25,
+      "n_obs": 7.0
+    },
+    "att_pos_medio_horas_mun_posto": {
+      "estimativa": 8.703042541,
+      "ic95_inf": 7.945143479,
+      "ic95_sup": 9.460941603,
+      "p_valor": 3.5853534859999997e-112,
+      "n_obs": 7.0
+    },
+    "att_pos_medio_horas_fora_mun_posto": {
+      "estimativa": -2.098778444,
+      "ic95_inf": -3.161530231,
+      "ic95_sup": -1.036026656,
+      "p_valor": 0.0001085497517,
+      "n_obs": 7.0
+    },
+    "t43_saldo_medio_por_medico": {
+      "estimativa": 6.867283635,
+      "ic95_inf": 5.852001783,
+      "ic95_sup": 7.882565487,
+      "p_valor": null,
+      "n_obs": 1397.0
+    },
+    "t43_fracao_do_ganho_compensada_fora": {
+      "estimativa": 0.2629032317,
+      "ic95_inf": 0.1742107227,
+      "ic95_sup": 0.3536306556,
+      "p_valor": null,
+      "n_obs": 1397.0
+    }
+  },
+  "desvios": [
+    {
+      "data": "2026-10-23",
+      "item": "Um registro por médico",
+      "descricao": "Na X1 um mesmo id_prof pode estar ligado a mais de um registro das listas (o médico aparece na lista de agosto com outro estabelecimento, ou em dois cursos ou ciclos). O protocolo fala em médico × mês; fica o registro da lista de ativos de 11/09/2026, depois o início mais antigo, depois o menor id_medico. Regra fixada antes de abrir os dados por tempo de evento; contagens no resumo."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Ciclo 3",
+      "descricao": "Pelo §3, os médicos do ciclo 3 são controles ainda não iniciados até 202608. Eles não entram como coorte tratada (o início do ciclo 3 é 202608 ou 202609): outcomes do ciclo 3 depois do início seguem o plano prospectivo do CLAUDE.md. O T4.1a, o T4.2 e o T4.3 são só dos ciclos 1 e 2."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Mínimo de controles por célula",
+      "descricao": "ATT(g, t) só é estimado com pelo menos 30 controles; em 202608 os únicos ainda não iniciados são os poucos médicos com início em 202609, e essas células ficam sem estimativa (nota no CSV). Fixado antes de abrir os dados."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Inferência do T4.1b",
+      "descricao": "Bootstrap multiplicador com pesos de Mammen, B = 9999, semente 20261019, unidade = médico; EP = intervalo interquartil / (z_0,75 − z_0,25), como no D2 (script 22); a função de influência de θ(e) inclui a estimação dos pesos de coorte. Teste dos pré: Wald conjunto de θ(e) = 0 para e <= −2 com a covariância das funções de influência."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Controles do T4.1c",
+      "descricao": "O §3 separa os tratados pela origem. Os controles continuam sendo todos os médicos ainda não iniciados, de qualquer origem, porque a X1 só calcula a origem dos ciclos 1 e 2."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "BKY",
+      "descricao": "Família = θ(e) para e de 0 a +6, janela principal, os 14 outcomes do §2, uma família no T4.1b e outra no T4.1c, por regra de ligação. Os pré, a média do pós, a janela longa e os outcomes complementares ficam fora."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Natureza jurídica",
+      "descricao": "Público = natureza jurídica 1xxx (administração pública); privado com fins = 2xxx (entidades empresariais); sem fins = 3xxx. Pessoa física (4xxx) e outras ficam num outcome complementar, para que as partes somem as horas totais."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Sinal da contabilidade líquida (T4.3)",
+      "descricao": "O §3 escreve 'Δ horas no município do posto − Δ horas fora dele'; o doc 51 diz 'ganho no destino menos perda na origem'. Como a perda fora é −Δ fora, o saldo relatado é Δ município do posto + Δ fora (= Δ horas totais), com as duas parcelas também relatadas."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Janelas do pré e do pós no T4.2 e no T4.3",
+      "descricao": "O protocolo diz 'entre o pré e o pós' sem fixar meses. Pré = média dos meses −6 a −1; pós = média dos meses 0 a +6 disponíveis até 202608 (a janela principal)."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Mudança de município e CBO no T4.2",
+      "descricao": "Mudou = novo no município pela X1 b com vínculo médico em outro município no mês −1 do painel mensal. A série do CNES nacional é a da CBO do vínculo na origem; CBO sem série própria no a09 fica ausente, com motivo."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Cache privado do a16",
+      "descricao": "O cache privado (`output/aquisicao/cnes_profissional/cache_privado/`) não existe neste ambiente e não é necessário: o P4 usa os painéis e as chaves pseudônimas versionados e lê as listas nominais só em memória, sem gravar nome, CPF, CNS ou CRM."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Local do resultado",
+      "descricao": "O protocolo indica docs/06_execucao/57d_resultados_P4_trajetoria.md; seguido."
+    }
+  ],
+  "contagens": {
+    "linhas": 7170,
+    "por_especificacao": {
+      "T4.1a": 3672,
+      "T4.1b": 1360,
+      "T4.1c": 1020,
+      "T4.2": 14,
+      "T4.3": 1056,
+      "origem": 48
+    },
+    "executado": 6406,
+    "sem_estimativa": 628,
+    "referencia": 136,
+    "linhas_bky": 588
+  },
+  "saidas": {
+    "P4_estimativas.csv": {
+      "arquivo": "output/rdd_bolsa/P4_estimativas.csv",
+      "sha256": "93f3e35bb21baced3051a5c359ab469da12c8385251cc68158a271d85f4ea741"
+    },
+    "figuras": [
+      {
+        "arquivo": "output/rdd_bolsa/P4_figuras/P4_T41a_medias_evento.png",
+        "descricao": "T4.1a: médias por tempo de evento, ciclos 1 e 2, amostra completa, regra D1",
+        "como_ler": "Cada linha mostra, mês a mês em torno do início no programa, a média das horas cadastradas pelos médicos de um ciclo. O mês 0 é o do início; a faixa clara é o intervalo de 95%.",
+        "sha256": "807004861ce83ba05de6bea6eeab3a7812b55283866ae2965fe1e0cc44a8cd97"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/P4_figuras/P4_T41b_evento_horas.png",
+        "descricao": "T4.1b: θ(e) das horas totais, no município do posto e fora dele, regra D1",
+        "como_ler": "Cada ponto compara a variação das horas de quem já começou com a de quem ainda vai começar, a cada mês desde o início; o mês −1 é a referência e vale zero. Pontos antes do mês 0 perto de zero dão mais confiança na comparação.",
+        "sha256": "fc3b82f1e8d0bbe4cae1e2b76b1612a10c5ba74c6f8a350780f5405aa0f36818"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/P4_figuras/P4_T41b_evento_tipo.png",
+        "descricao": "T4.1b: θ(e) das horas SUS, não SUS, públicas e privadas com fins, regra D1",
+        "como_ler": "Mesma leitura da figura anterior, para horas em vínculos SUS e não SUS e em estabelecimentos públicos e privados com fins lucrativos.",
+        "sha256": "af68b88db1363e84d420f7a3e847a799f5a8887f8dc94e9b01bb0496147e1f9d"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/P4_figuras/P4_T41c_origem.png",
+        "descricao": "T4.1c: θ(e) das horas no município do posto e totais, por origem, regra D1",
+        "como_ler": "A mesma comparação, separando quem já tinha vínculo no município do posto antes de começar (azul) de quem chegou de fora ou sem vínculo (laranja).",
+        "sha256": "b1e7b661a5f4858ce1c54275a16505de352303e5161637899fede130ac08630a"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/P4_figuras/P4_T43_contabilidade.png",
+        "descricao": "T4.3: componentes da contabilidade líquida por faixa e no total, regra D1",
+        "como_ler": "Barras: variação média, por médico, das horas cadastradas no estabelecimento do posto, no resto do município do posto e fora dele, entre os seis meses antes e os sete a partir do início; o losango é o saldo. Não há grupo de comparação.",
+        "sha256": "acdb513331c91781e223da6ae2817e8e4b6836c27997ffec545517873ac9deb2"
+      }
+    ]
+  },
+  "como_ler": {
+    "P4_T41a_medias_evento.png": "Cada linha mostra, mês a mês em torno do início no programa, a média das horas cadastradas pelos médicos de um ciclo. O mês 0 é o do início; a faixa clara é o intervalo de 95%.",
+    "P4_T41b_evento_horas.png": "Cada ponto compara a variação das horas de quem já começou com a de quem ainda vai começar, a cada mês desde o início; o mês −1 é a referência e vale zero. Pontos antes do mês 0 perto de zero dão mais confiança na comparação.",
+    "P4_T41b_evento_tipo.png": "Mesma leitura da figura anterior, para horas em vínculos SUS e não SUS e em estabelecimentos públicos e privados com fins lucrativos.",
+    "P4_T41c_origem.png": "A mesma comparação, separando quem já tinha vínculo no município do posto antes de começar (azul) de quem chegou de fora ou sem vínculo (laranja).",
+    "P4_T43_contabilidade.png": "Barras: variação média, por médico, das horas cadastradas no estabelecimento do posto, no resto do município do posto e fora dele, entre os seis meses antes e os sete a partir do início; o losango é o saldo. Não há grupo de comparação."
+  },
+  "integridade": "nada simulado ou imputado; mês em que o médico não aparece numa competência lida = zero vínculos, com rótulo; nenhuma competência >= 202609; o arquivo local de IVS não é lido; sem nome, CPF, CNS, CRM ou código de profissional nas saídas; só agregados"
+}

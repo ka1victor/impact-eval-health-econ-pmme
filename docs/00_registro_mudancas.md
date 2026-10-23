@@ -8,6 +8,46 @@
 
 ---
 
+## 23/10/2026 — Auditoria 24: P4 (protocolo 54), aprovado com correções
+
+Motivo: auditoria independente do P4 (commit `a922e66`). Amostra, origem, T4.1b nas horas totais, no município do
+posto e fora dele, BKY e T4.3 foram reproduzidos com código próprio; nenhuma estimativa mudou. As correções são de
+relato: destaque das falhas de pré-tendência, "exploratório" no texto, `p = < 0,001` e o rótulo do T4.2.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/24_auditoria_P4_trajetoria.md`](auditorias/24_auditoria_P4_trajetoria.md) | auditoria do P4: método, recálculo, conferência com o protocolo 54, integridade e correções |
+
+### Alterado
+
+- `scripts/rdd_bolsa/28_trajetoria_medicos.py` (só a geração do doc) e o doc 57d, regerado por `--atualizar-doc`;
+- `tests/test_trajetoria_medicos.py`, de 20 para 26 testes, com a classe `TestRecalculoIndependenteAuditoria24`;
+- o link no [`README.md`](README.md) de `docs/`.
+
+---
+
+## 23/10/2026 — P4 (protocolo 54): trajetória individual dos médicos, origem e contabilidade líquida
+
+Motivo: onda 3 do plano [`06_execucao/51`](06_execucao/51_plano_perguntas_reformuladas.md) (agente E-P4),
+execução do protocolo congelado [`06_execucao/54`](06_execucao/54_protocolo_P4_oferta_substituicao.md) sobre o
+painel CNES médico × mês do a16 (202406–202608). Exploratório; nada aqui tem fonte de exogeneidade validada.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `scripts/rdd_bolsa/28_trajetoria_medicos.py` | T4.1a (médias por tempo de evento), T4.1b/T4.1c (Callaway–Sant'Anna no nível do médico, por origem), T4.2 (origem dos que mudaram) e T4.3 (contabilidade líquida); gera também o doc 57d inteiro; entra no `run_all.py` depois do P5 |
+| `output/rdd_bolsa/P4_estimativas.csv`, `P4_resumo.json`, `P4_figuras/` | saídas agregadas, `natureza_dos_dados = EMPIRICO`, sem identificadores |
+| [`06_execucao/57d_resultados_P4_trajetoria.md`](06_execucao/57d_resultados_P4_trajetoria.md) | resultados do P4, gerado pelo script |
+| `tests/test_trajetoria_medicos.py` | esquema, rótulos, ausência de identificadores, BKY, hashes, números contra `output/`, doc igual ao gerado e verificação sintética |
+
+O manifesto A6 foi regerado pelo gerador (`scripts/tema_trabalho/07_red_team_sintese.py`) porque a lista `STEPS`
+do `run_all.py` mudou.
+
+---
+
 ## 21/10/2026 — Slides para os professores sobre a troca para o nº de vagas preenchidas
 
 Motivo: os professores sugeriram trocar a variável de efeito de "% de vagas preenchidas" para "número de vagas
