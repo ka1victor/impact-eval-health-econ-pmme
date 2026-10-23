@@ -8,6 +8,49 @@
 
 ---
 
+## 23/10/2026 — Auditoria do P3x (extensões do adendo §12 do protocolo 47)
+
+Motivo: auditoria independente do commit `b358283`. Recálculo das linhas
+principais com código próprio (ponto idêntico), correção de relato no doc 57c
+(leitura do 12.5, pré dos ATT que excluem zero, limites declarados) e testes.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/25_auditoria_P3_extensoes.md`](auditorias/25_auditoria_P3_extensoes.md) | auditoria do P3x: método, recálculo, conferência do protocolo e da integridade, achados e correções C1–C5 |
+
+---
+
+## 23/10/2026 — Resultados do P3: extensões do adendo §12 do protocolo 47 (doc 57c)
+
+Motivo: onda 3 do plano do doc 51 (agente E-P3x, recomeço do zero depois de uma
+rodada perdida sem push). Estima o adendo §12 do protocolo 47, congelado depois
+dos portões G3 e G4 e dos resultados D1/D2 do doc 50: 12.2 (produção da
+especialidade que chegou, município × curso, a17), 12.4 (internações dos
+residentes, a15, em D1 e D2), 12.1 (K2 com a safra v2 do SIH, lado a lado com
+a v1; K1 sem revisão no SIA, não reestimado), 12.3 (controles só nunca
+tratados, DiD sintético por coorte e tercis da fração de chegados que já
+tinham vínculo no município) e 12.5 (transbordamento para os outros municípios
+da região de saúde). ATT sob tendências paralelas; BKY próprio do adendo; o
+Holm de K1–K3 não muda.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57c_resultados_P3_extensoes.md`](06_execucao/57c_resultados_P3_extensoes.md) | resultados do P3 (adendo §12), gerado inteiro pelo script 27. O adendo pede "doc 57, seção P3"; o doc 57 é a síntese da onda 5, por isso o nome 57c (desvio registrado no próprio doc) |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/27_producao_extensoes.py`, no `run_all.py` logo depois do
+  22 (o manifesto A6 foi regerado pelo gerador);
+- saídas `output/rdd_bolsa/K_X_estimativas.csv`, `K_X_estudo_evento.csv`,
+  `K_X_att_gt.csv`, `K_X_resumo.json` e `K_X_figuras/`;
+- `tests/test_producao_extensoes.py`, `tests/test_pipeline_rdd_bolsa.py`,
+  `tests/README.md` e `scripts/README.md`.
+
+---
+
 ## 23/10/2026 — Auditoria 24: P4 (protocolo 54), aprovado com correções
 
 Motivo: auditoria independente do P4 (commit `a922e66`). Amostra, origem, T4.1b nas horas totais, no município do

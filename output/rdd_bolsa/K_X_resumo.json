@@ -1,0 +1,928 @@
+{
+  "etapa": "K_X_extensoes_P3",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "PROTOCOLO_47_ADENDO_12_POS_RESULTADO",
+  "gerador": "scripts/rdd_bolsa/27_producao_extensoes.py",
+  "data_execucao": "2026-10-23",
+  "protocolo": {
+    "texto": "docs/06_execucao/47_protocolo_producao_especializada.md",
+    "sha256_texto": "e6b16cb0a4a47f4da2317088511bd4cadc21bda01da12d210c6d55dc1e71286a",
+    "secao": "adendo §12"
+  },
+  "doc": "docs/06_execucao/57c_resultados_P3_extensoes.md",
+  "leitura": "D2, 12.2, 12.3 e 12.5: ATT sob tendencias paralelas (chegada depende da escolha do candidato); D1: incentivo marginal dentro do pacote dos cortes; 12.4: acesso dos residentes, nao oferta local; 12.5: leitura do protocolo (negativo = deslocamento, positivo = referencia) e so hipotese; expansao liquida e deslocamento nao ficam separados",
+  "parametros": {
+    "e_min": -24,
+    "e_max": 9,
+    "inicio": "202201",
+    "fim_da_serie": "202605",
+    "bootstrap_cs": {
+      "B": 9999,
+      "pesos": "Mammen",
+      "semente": 20261019,
+      "cluster": "municipio"
+    },
+    "bootstrap_sdid": {
+      "B": 200,
+      "semente": 20261023,
+      "unidade": "municipio"
+    },
+    "pos_K2": [
+      "202510",
+      "202605"
+    ],
+    "pre": [
+      "202406",
+      "202506"
+    ]
+  },
+  "amostras": {
+    "cursos_especificos": {
+      "cursos": [
+        7,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "formas_tipicas": {
+        "7": [
+          "020901",
+          "030101",
+          "070105"
+        ],
+        "10": [
+          "020901",
+          "030101"
+        ],
+        "11": [
+          "020901",
+          "030101"
+        ],
+        "12": [
+          "030101",
+          "030402",
+          "030405"
+        ],
+        "13": [
+          "030101",
+          "030401"
+        ],
+        "14": [
+          "020402",
+          "020403",
+          "020404",
+          "020406",
+          "020502",
+          "020601",
+          "020603"
+        ],
+        "15": [
+          "020904",
+          "021107",
+          "030101"
+        ],
+        "16": [
+          "020201",
+          "020301",
+          "020302"
+        ]
+      },
+      "conjunto_cbo": {
+        "7": "c07",
+        "10": "c10_c11",
+        "11": "c10_c11",
+        "12": "c12",
+        "13": "c13",
+        "14": "c14",
+        "15": "c15",
+        "16": "c16"
+      },
+      "cbos": {
+        "7": "225165|225280|225310",
+        "10": "225165|225310",
+        "11": "225165|225310",
+        "12": "225121",
+        "13": "225330",
+        "14": "225255|225320",
+        "15": "225275",
+        "16": "225148|225305|225325"
+      }
+    },
+    "12.2_pares": {
+      "pares": 1017,
+      "pares_tratados": 331,
+      "pares_tratados_ate_fim_serie": 298,
+      "pares_com_chegada_depois_do_fim": 33,
+      "municipios_com_celula_fora_de_U": [],
+      "pares_da_lista_nominal_sem_celula_do_curso_nos_ciclos_1_2": 24,
+      "especialistas_nesses_pares": 28,
+      "linhas_lista_nominal_sem_data": 0,
+      "por_curso": {
+        "7": {
+          "pares": 208,
+          "tratados_ate_fim": 46,
+          "municipios": 208
+        },
+        "10": {
+          "pares": 144,
+          "tratados_ate_fim": 15,
+          "municipios": 144
+        },
+        "11": {
+          "pares": 226,
+          "tratados_ate_fim": 64,
+          "municipios": 226
+        },
+        "12": {
+          "pares": 52,
+          "tratados_ate_fim": 15,
+          "municipios": 52
+        },
+        "13": {
+          "pares": 35,
+          "tratados_ate_fim": 8,
+          "municipios": 35
+        },
+        "14": {
+          "pares": 186,
+          "tratados_ate_fim": 76,
+          "municipios": 186
+        },
+        "15": {
+          "pares": 120,
+          "tratados_ate_fim": 58,
+          "municipios": 120
+        },
+        "16": {
+          "pares": 46,
+          "tratados_ate_fim": 16,
+          "municipios": 46
+        }
+      },
+      "colunas_lidas_lista_nominal": [
+        "co_ibge",
+        "curso",
+        "dt_inicio_atividade",
+        "ciclo",
+        "dt_referencia"
+      ]
+    },
+    "a17": {
+      "linhas_lidas": 7381575,
+      "municipios_formulario": 5571,
+      "celulas_curso_forma_mes_sem_coluna_zero": 0,
+      "municipios_de_U_fora_do_a17": [],
+      "celulas_ausentes": 0,
+      "meses": [
+        "202201",
+        "202605"
+      ]
+    },
+    "d2": {
+      "municipios_ciclos_1_2": 598,
+      "fora_de_U": [],
+      "linhas_lista_nominal": 1480,
+      "linhas_sem_data_fora": 0,
+      "dt_referencia": [
+        "2026-08-12"
+      ],
+      "municipios_com_ativo": 325,
+      "municipios_com_ativo_fora_da_amostra": 10,
+      "especialistas_em_municipios_fora_da_amostra": 13,
+      "n_municipios": 598,
+      "n_tratados_horizonte": 295,
+      "n_nao_tratados_horizonte": 303
+    },
+    "12.3": {
+      "retirados_chegada_depois_do_fim": 20,
+      "sdid_sem_serie_completa": 0,
+      "sdid": {
+        "sem_serie_completa": 0,
+        "por_coorte": {
+          "202507": {
+            "tratados": 130,
+            "controles": 283,
+            "meses_pre": 42,
+            "meses_pos": 11,
+            "controles_com_peso": 283,
+            "maior_peso_unidade": 0.0048375380575511094
+          },
+          "202510": {
+            "tratados": 34,
+            "controles": 283,
+            "meses_pre": 45,
+            "meses_pos": 8,
+            "controles_com_peso": 283,
+            "maior_peso_unidade": 0.01135435866449223
+          },
+          "202601": {
+            "tratados": 47,
+            "controles": 283,
+            "meses_pre": 48,
+            "meses_pos": 5,
+            "controles_com_peso": 283,
+            "maior_peso_unidade": 0.005193899001533186
+          },
+          "202604": {
+            "tratados": 84,
+            "controles": 283,
+            "meses_pre": 51,
+            "meses_pos": 2,
+            "controles_com_peso": 283,
+            "maior_peso_unidade": 0.004890497735098028
+          }
+        },
+        "bootstrap_sorteios_refeitos": 0
+      },
+      "cortes_tercis": [
+        0.0,
+        0.5128205128205121
+      ],
+      "tratados_com_fracao": 285,
+      "tratados_sem_fracao": 10,
+      "tratados_por_tercil": {
+        "1": 122,
+        "2": 68,
+        "3": 95
+      },
+      "medicos_ligados_ciclos_1_2_regra_d1": 1408,
+      "medicos_sem_competencia_pre_fora": 0,
+      "municipios_com_fracao": 316,
+      "municipios_com_fracao_fora_da_amostra_D2": 10
+    },
+    "12.4": {
+      "municipios_painel": 5571,
+      "municipios_de_U_fora_do_painel": [],
+      "celulas_ausentes": 0,
+      "uf_meses_atipicos": [
+        "14|202206",
+        "14|202309",
+        "14|202607"
+      ],
+      "meses_com_falta_em_outra_uf": [
+        "202206",
+        "202309",
+        "202607"
+      ],
+      "grupos_somados_em_K2r_tot": [
+        "02",
+        "03",
+        "04",
+        "05"
+      ]
+    },
+    "12.5": {
+      "municipios_de_U_sem_cir": [
+        "110002"
+      ],
+      "municipios_da_amostra_sem_cir": [
+        "110002"
+      ],
+      "municipios_da_amostra_sozinhos_na_regiao": [
+        "355030",
+        "530010"
+      ],
+      "celulas_ausentes_na_amostra": 159,
+      "K2_reg": {
+        "municipios_de_U_sem_cir": [
+          "110002"
+        ],
+        "municipios_da_amostra_sem_cir": [
+          "110002"
+        ],
+        "municipios_da_amostra_sozinhos_na_regiao": [
+          "355030",
+          "530010"
+        ],
+        "celulas_ausentes_na_amostra": 159
+      },
+      "cir": {
+        "codigos": 5606,
+        "regioes": 446,
+        "linhas_ignorado": 28
+      }
+    },
+    "sia": {
+      "municipios_tabnet": 5571,
+      "municipios_tabnet_fora_de_U": [
+        "150475",
+        "421265",
+        "422000",
+        "431454",
+        "500627",
+        "510183"
+      ],
+      "municipios_de_U_fora_do_tabnet": [],
+      "celulas_ausentes_municipio_mes_conjunto_tipo": 0,
+      "subgrupos_lidos": [
+        "0201",
+        "0202",
+        "0203",
+        "0204",
+        "0205",
+        "0206",
+        "0207",
+        "0208",
+        "0209",
+        "0210",
+        "0211",
+        "0212",
+        "0213",
+        "0214",
+        "0301",
+        "0401",
+        "0403",
+        "0404",
+        "0405",
+        "0406",
+        "0407",
+        "0408",
+        "0409",
+        "0410",
+        "0411",
+        "0412",
+        "0413",
+        "0414",
+        "0415",
+        "0416",
+        "0417",
+        "0418",
+        "0901",
+        "0902",
+        "0903",
+        "0904",
+        "0905",
+        "0906"
+      ],
+      "meses": [
+        "202201",
+        "202607"
+      ],
+      "regra_subgrupo_ausente": "subgrupo que nao veio como coluna da consulta = zero daquela consulta (V4 do a12)"
+    },
+    "sih_v1": {
+      "municipios_painel": 5571,
+      "municipios_painel_fora_de_U": [
+        "150475",
+        "421265",
+        "422000",
+        "431454",
+        "500627",
+        "510183"
+      ],
+      "municipios_de_U_fora_do_painel": [],
+      "uf_meses_sem_dado": [
+        "12|202607",
+        "14|202607"
+      ],
+      "uf_meses_atipicos": [
+        "14|202206",
+        "14|202309",
+        "14|202606"
+      ],
+      "celulas_ausentes": 37
+    },
+    "sih_v2": {
+      "municipios_painel": 5571,
+      "municipios_de_U_fora_do_painel": [],
+      "uf_meses_sem_dado": [],
+      "uf_meses_atipicos": [
+        "14|202206",
+        "14|202309",
+        "14|202607"
+      ],
+      "celulas_ausentes": 0
+    },
+    "populacoes": {
+      "U_municipios": 5565,
+      "U_sem_populacao_2022": [],
+      "nota_sem_populacao": "municipio sem populacao 2022 > 0 fica com taxa ausente (fora dos outcomes por 10 mil hab.), nunca zero",
+      "V1_municipios": 368,
+      "V1_sem_ivs_oficial_fora": [],
+      "V1_ivs_igual_a08": true,
+      "U_com_populacao": 5565,
+      "U_excluidos_sem_populacao": [],
+      "censo2022_sem_ivs_oficial_fora": [
+        "150475",
+        "421265",
+        "422000",
+        "431454",
+        "500627"
+      ]
+    }
+  },
+  "revisao_fonte": {
+    "sih_meses_revisados": [
+      "202509",
+      "202510",
+      "202511",
+      "202512",
+      "202601",
+      "202602",
+      "202603",
+      "202604",
+      "202605",
+      "202606",
+      "202607"
+    ],
+    "sih_contagem_situacao_uf_mes_grupo": {
+      "ausente_so_na_v1": 8,
+      "diferente": 237,
+      "igual": 5695
+    },
+    "sia_celulas_comparadas": 14250618,
+    "sia_celulas_diferentes": 0
+  },
+  "desvios": [
+    {
+      "data": "2026-10-23",
+      "tipo": "desvio",
+      "item": "local do resultado",
+      "descricao": "o adendo §12 pede os resultados no 'doc 57, secao P3'; o doc 57 e a sintese da onda 5 (doc 51, §5). Os resultados ficam em docs/06_execucao/57c_resultados_P3_extensoes.md, gerado inteiro pelo script."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "12.2: peso da agregacao",
+      "descricao": "'media dos ATT entre cursos, com peso pelo numero de pares' foi lido como o theta(e) agregado sobre todas as celulas curso x coorte com peso = numero de pares tratados (o ATT dos pares tratados), fixado antes de estimar; os ATT por curso sao relatados a parte."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "12.2: cursos 10 e 11",
+      "descricao": "os dois cursos tem o mesmo conjunto de CBO e as mesmas formas tipicas: o outcome de um par (m, 10) e igual ao de (m, 11). Os pares ficam separados (tratamento por curso), e o cluster no municipio absorve a correlacao."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "12.2: celulas e chegadas",
+      "descricao": "par = municipio x curso com celula do curso no quadro dos ciclos 1 ou 2 (outcomes_V_celula) e em U; chegada = menor dt_inicio_atividade da lista nominal no curso e municipio; especialista da lista num par sem celula do curso fica fora (contado). Chegada depois de 202605 = ainda nao tratado no horizonte, como no D2."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "12.3a no nivel do municipio",
+      "descricao": "'so municipios com celula do mesmo curso e ciclo que ficou vazia' foi implementado no municipio como D2 de K1 com controles = nunca tratados (nenhum especialista da lista nominal, celulas vazias); os municipios com 1a chegada depois de 202605 saem (a celula nao ficou vazia). O pareamento por curso e o 12.2."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "12.3b: DiD sintetico",
+      "descricao": "algoritmo do pacote synthdid (Frank-Wolfe com intercepto, zeta_omega = (N1 T1)^(1/4) x DP das primeiras diferencas dos controles no pre, zeta_lambda = 1e-6 x esse DP, esparsificacao em max/4); por coorte trimestral, pre = 202201 ate o mes antes da coorte, pos = coorte ate 202605; controles = nunca tratados; so unidades com a serie completa de K1. Agregado = media das coortes com peso pelo numero de tratados. EP: bootstrap de municipios com reposicao (B = 200, semente fixa), sorteio conjunto para todas as coortes, pesos reestimados a partir dos originais e zetas fixos (como no pacote); sorteio sem tratado de alguma coorte ou com menos de 2 controles e refeito."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "12.3c: fracao e tercis",
+      "descricao": "fracao = media de b_mesmo_mun_ultimo_pre (vinculo no municipio do posto na ultima competencia antes do inicio) dos medicos ligados na X1, regra D1, ciclos 1 e 2; tercis pelos quantis 1/3 e 2/3 entre os municipios tratados da amostra D2 com fracao (tercil 1: <= q1; 2: (q1, q2]; 3: > q2). Cada tercil usa como controles os nunca tratados e os ainda nao tratados de qualquer tercil; diferenca tercil 3 - tercil 1 com os mesmos pesos do bootstrap. A composicao da fracao inclui chegadas posteriores a 1a (limite: a condicao e pre-tratamento para cada medico, nao para o municipio)."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "12.4: D1",
+      "descricao": "K2r e K2r_tot em D1 como K2: DiRD local linear triangular h = 0,050, populacao U, cortes 0,300, 0,400 e empilhado; variantes media completa, pos ate 202607 e sem UF-mes atipico (alerta do a15). V1, IC honesto e Poisson do D1 nao foram repetidos."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "12.4: meses com falta em outra UF",
+      "descricao": "o a15 sinaliza meses em que outra UF de internacao esta sem arquivo ou atipica (residentes internados la podem faltar); o valor nao e alterado, como no a15, e os meses sinalizados vao no resumo."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "12.5: regiao de saude",
+      "descricao": "CIR da tabela do TabNet (br_regsaud.cnv, o mesmo leitor do P5); so municipios de U entram no numerador e no denominador; municipio sozinho na regiao ou sem CIR fica sem outcome (contado); outros municipios tratados da mesma regiao continuam no somatorio (limite)."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "BKY do adendo",
+      "descricao": "BKY entre as linhas principais novas: 12.2 agregado; K2r e K2r_tot em D1 (U, empilhado) e em D2; 12.3c (tercil 3 - tercil 1); K1_reg e K2_reg. 12.1 e 12.3a/b sao sensibilidades de estimativas ja relatadas e ficam fora."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "12.3c: ligacao do medico (auditoria 25)",
+      "descricao": "a ligacao da lista nominal ao CNES (X1, regra D1) usa as seis competencias do CNES lidas pela ponte 17 (202406, 202501, 202506, 202510, 202602 e 202608), algumas posteriores ao inicio; quem entra na fracao pode depender de informacao posterior a chegada, embora o valor de cada medico use so a ultima competencia anterior ao inicio. Os tercis tem tamanhos desiguais porque o corte inferior (0,000) agrupa todos os municipios sem incumbente. Limite declarado; a diferenca entre tercis e descritiva."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "leitura do pre e do 12.5 (auditoria 25)",
+      "descricao": "a leitura segue o doc 50: alem do Wald do pre (5%), cada ATT com IC fora de zero e lido com o theta medio do pre (pre inteiro ou 12 meses antes do mes-base) de mesmo sinal ou sinal oposto e pelo menos metade do ATT do pos; as colunas do doc mostram esses theta. Do 12.5, so a hipotese do protocolo (negativo = deslocamento, positivo = referencia) e relatada, como hipotese: o K1 do municipio e o K1 regional nao separam expansao liquida de deslocamento."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "12.1: K1",
+      "descricao": "o adendo manda reestimar K1 so se a safra v2 do SIA tiver revisao; o a12b relata zero celulas diferentes, entao K1 nao foi reestimado (linha NAO_EXECUTADO com o motivo)."
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/47_protocolo_producao_especializada.md",
+      "sha256": "e6b16cb0a4a47f4da2317088511bd4cadc21bda01da12d210c6d55dc1e71286a",
+      "bytes": 17696,
+      "papel": "protocolo congelado (adendo §12)",
+      "fonte": "doc 47",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/sia_forma_curso/painel_sia_municipio_mes_forma_curso.parquet",
+      "sha256": "370a49fe3ba03c425754d224e4e318a97f465ebf5e1cee2b6f89d61535cbc1e2",
+      "bytes": 22183622,
+      "papel": "12.2: SIA por forma x curso",
+      "fonte": "DATASUS TabNet qabr.def (a17)",
+      "data_referencia": "processamento 202201-202607",
+      "cobertura": "municipios do formulario",
+      "unidade": "municipio x mes x curso x forma",
+      "chaves": "co_ibge, competencia_processamento, cod_curso, forma",
+      "filtros": "cursos ESPECIFICO; formas tipicas do G4; meses 202201-202605"
+    },
+    {
+      "caminho": "output/aquisicao/sia_forma_curso/manifesto_sia_forma_curso.json",
+      "sha256": "1f828132838f693ff53b2c26f9e01ef8c49d3fde28b600758180b078d2b518ce",
+      "bytes": 555428,
+      "papel": "manifesto do a17 (SHA-256 do painel)",
+      "fonte": "a17",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "saidas"
+    },
+    {
+      "caminho": "output/aquisicao/sia_forma_curso/sia_forma_curso_formas_por_consulta.csv",
+      "sha256": "4b0caf1fa0cd4d3052886f7e796032b24673980044412d83a97dd9298fb448a0",
+      "bytes": 1799601,
+      "papel": "12.2: formas presentes por consulta (zero de forma omitida)",
+      "fonte": "a17",
+      "data_referencia": "202201-202607",
+      "cobertura": "consultas",
+      "unidade": "mes x conjunto x forma",
+      "chaves": "competencia_processamento, conjunto_cbo, forma",
+      "filtros": "presente_na_resposta"
+    },
+    {
+      "caminho": "output/aquisicao/sia_forma_curso/sia_forma_curso_formas_tipicas.csv",
+      "sha256": "9d989b3a951b527d6d8d6a69006e9db6bf0b171b64f8b9659566407e76407055",
+      "bytes": 2789,
+      "papel": "12.2: formas tipicas (conferencia com o G4)",
+      "fonte": "a17",
+      "data_referencia": "2026-10-19",
+      "cobertura": "cursos",
+      "unidade": "curso x forma",
+      "chaves": "cod_curso, co_forma",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/sia_forma_curso/sia_forma_curso_cursos.csv",
+      "sha256": "2d365106faef6e6122c632f7baf899e8e63990c8d87bf97c1af70ed28fe96a47",
+      "bytes": 1333,
+      "papel": "12.2: conjunto de CBO por curso",
+      "fonte": "a17",
+      "data_referencia": "2026-10-19",
+      "cobertura": "cursos",
+      "unidade": "curso",
+      "chaves": "cod_curso",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G4_resumo.json",
+      "sha256": "9b576aaeed908bb38dc91835b4b51db5296562fa1b61b26be914051e9302ff85",
+      "bytes": 36535,
+      "papel": "12.2: cursos da classe ESPECIFICO",
+      "fonte": "portao G4",
+      "data_referencia": "2026-10-19",
+      "cobertura": "16 cursos",
+      "unidade": "curso",
+      "chaves": "cod_curso",
+      "filtros": "classes_dos_cursos.ESPECIFICO"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G4_mapa_especialidade_procedimento.csv",
+      "sha256": "7b7e9a46858748374fd7c7793a186d0db7b5bc7c2f9a7a75460ebf153280e6d7",
+      "bytes": 372699,
+      "papel": "12.2: formas tipicas por curso",
+      "fonte": "portao G4",
+      "data_referencia": "SIA 2024",
+      "cobertura": "curso x forma",
+      "unidade": "curso x forma",
+      "chaves": "cod_curso, co_forma",
+      "filtros": "tipica == True"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "12.2: celulas por curso nos ciclos 1-2",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-2",
+      "cobertura": "celulas",
+      "unidade": "celula",
+      "chaves": "ciclo, co_ibge, cod_curso",
+      "filtros": "ciclo in (1, 2); cursos ESPECIFICO"
+    },
+    {
+      "caminho": "data/pmm_especialistas_nominal.csv",
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
+      "bytes": 361832,
+      "papel": "chegada por municipio (D2) e por municipio x curso (12.2)",
+      "fonte": "MS, lista nominal do PMM-E (retrato)",
+      "data_referencia": "2026-08-12",
+      "cobertura": "especialistas ativos",
+      "unidade": "especialista",
+      "chaves": "co_ibge, curso",
+      "filtros": "so as colunas co_ibge, curso, dt_inicio_atividade, ciclo, dt_referencia; nenhum nome lido"
+    },
+    {
+      "caminho": "output/aquisicao/sih_residencia/painel_sih_residencia_municipio_mes_grupo.parquet",
+      "sha256": "49cda43c0b350d767b2bba465fec98e8c4566c75ad592602f425754760616b26",
+      "bytes": 5964309,
+      "papel": "12.4: SIH por residencia",
+      "fonte": "DATASUS TabNet qrbr.def (a15)",
+      "data_referencia": "processamento 202201-202607",
+      "cobertura": "municipios do formulario",
+      "unidade": "municipio x mes x grupo",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "grupos 02-05"
+    },
+    {
+      "caminho": "output/aquisicao/sih_residencia/manifesto_sih_residencia.json",
+      "sha256": "42a09193d449161a8acd5f9af84ec0cc68ad924e7f45ef792e06f24c42fcdd67",
+      "bytes": 877764,
+      "papel": "manifesto do a15",
+      "fonte": "a15",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "saidas.painel"
+    },
+    {
+      "caminho": "output/aquisicao/sih_v2/painel_sih_municipio_mes_grupo.parquet",
+      "sha256": "33874d3d03887938e5c3a7320b9169b6a531964ea6473e977cf606cc91a476b2",
+      "bytes": 2718181,
+      "papel": "12.1: SIH safra v2",
+      "fonte": "DATASUS TabNet qibr.def (a13b)",
+      "data_referencia": "processamento 202201-202607",
+      "cobertura": "municipios do formulario",
+      "unidade": "municipio x mes x grupo",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "grupo == 04"
+    },
+    {
+      "caminho": "output/aquisicao/sih_v2/manifesto_sih.json",
+      "sha256": "77be48f0f561e1a7b5f51fe1d60d3ea91582ffdac2d6ab2b07a64e41623f80c4",
+      "bytes": 776588,
+      "papel": "manifesto da safra v2 do SIH",
+      "fonte": "a13b",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "saidas.painel"
+    },
+    {
+      "caminho": "output/aquisicao/sih_v2/comparacao_v2_v1_resumo.json",
+      "sha256": "60b5c1e1a93024d73450ec959928fa266607a97b407d65987558394f57785ff8",
+      "bytes": 29315,
+      "papel": "12.1: meses revisados do SIH",
+      "fonte": "a13b",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "UF x mes x grupo",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/sia_v2/comparacao_v2_v1_resumo.json",
+      "sha256": "7e1a48cdc56796c76faebf18a5ade76e724eb193accccd4611857bff6aebc1d0",
+      "bytes": 33923,
+      "papel": "12.1: revisao do SIA (celulas diferentes)",
+      "fonte": "a12b",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "celula",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/sia/painel_sia_municipio_mes_subgrupo_cbo.parquet",
+      "sha256": "2f0c8353deb58eeb95b30a35a7a36bbf752b8ca90b4c26395735ea6450d3eb0e",
+      "bytes": 29993902,
+      "papel": "K1 (12.3) e K1_reg (12.5)",
+      "fonte": "DATASUS TabNet qabr.def (a12)",
+      "data_referencia": "processamento 202201-202607",
+      "cobertura": "municipios do formulario",
+      "unidade": "municipio x mes x subgrupo x conjunto",
+      "chaves": "co_ibge, competencia_processamento, subgrupo, conjunto_cbo",
+      "filtros": "alvo_pmme; subgrupos 0301, 02, 04, 09"
+    },
+    {
+      "caminho": "output/aquisicao/sia/manifesto_sia.json",
+      "sha256": "aa31915d31d2f354461ec863e9037643236ad17303f0690f5da88ef4ee023117",
+      "bytes": 461857,
+      "papel": "manifesto do a12",
+      "fonte": "a12",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "saidas"
+    },
+    {
+      "caminho": "output/aquisicao/sih/painel_sih_municipio_mes_grupo.parquet",
+      "sha256": "3428600a111838d7f730d30b7474b86294f36a28a76576309ab87fc937f0b6b6",
+      "bytes": 2712877,
+      "papel": "K2 v1 (12.1) e K2_reg (12.5)",
+      "fonte": "DATASUS TabNet qibr.def (a13)",
+      "data_referencia": "processamento 202201-202607",
+      "cobertura": "municipios do formulario",
+      "unidade": "municipio x mes x grupo",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "grupo == 04"
+    },
+    {
+      "caminho": "output/aquisicao/sih/manifesto_sih.json",
+      "sha256": "9d2648760c23e56881f7af34092a200bda67e095e4b42c1b983e0780a3fca6a8",
+      "bytes": 775533,
+      "papel": "manifesto do a13",
+      "fonte": "a13",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "saidas.painel"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+      "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+      "bytes": 383336,
+      "papel": "12.5: regiao de saude (CIR)",
+      "fonte": "DATASUS/TabNet br_regsaud.cnv (bruto, somente lido)",
+      "data_referencia": "corrente",
+      "cobertura": "municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "linhas 'Ignorado' fora"
+    },
+    {
+      "caminho": "output/rdd_bolsa/X1_medicos.parquet",
+      "sha256": "b4d73a6ae6adce59d014b11bf5490072964b49d600782af3d96a8f2e12f91789",
+      "bytes": 79430,
+      "papel": "12.3c: vinculo no municipio antes do inicio",
+      "fonte": "X1 (17)",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "medicos ligados",
+      "unidade": "medico",
+      "chaves": "id_medico",
+      "filtros": "regra d1_pos_hoc; ciclos 1-2; ligado == 1"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "universo U e running variable do D1 (IVS 2010 oficial)",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "co_ibge, ivs"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "denominador por 10 mil hab.",
+      "fonte": "IBGE Censo 2022",
+      "data_referencia": "2022",
+      "cobertura": "municipios",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "filtros": "populacao_2022"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "amostra do D2 (celulas nos ciclos 1-2)",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-2",
+      "cobertura": "V1, V2",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "ciclo in (1, 2)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/K_D1_estimativas.csv",
+      "sha256": "6d89726c7ad8102989b44a11cfe10248c769cf7a15ca1826e7f93906ba71cd05",
+      "bytes": 1561218,
+      "papel": "conferencia: K2 v1 em D1",
+      "fonte": "21",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "K2, U, principal"
+    },
+    {
+      "caminho": "output/rdd_bolsa/K_D2_estimativas.csv",
+      "sha256": "c3b62441a2345e4807999a5bdcf5e55c57f92dca2a3c891e6d6499c63756cec1",
+      "bytes": 49487,
+      "papel": "conferencia: K1 e K2 v1 em D2",
+      "fonte": "22",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "att_pos_medio, principal"
+    }
+  ],
+  "contagens": {
+    "linhas_estimativas": 115,
+    "linhas_evento": 680,
+    "linhas_att_gt": 2979,
+    "por_status": {
+      "EXECUTADO": 114,
+      "NAO_EXECUTADO": 1
+    },
+    "linhas_bky": 8
+  },
+  "validacoes": {
+    "K2_v1_D1_reproduz_doc50": true,
+    "K2_v1_D2_reproduz_doc50": true,
+    "K1_D2_reproduz_doc50": true,
+    "formas_tipicas_G4_iguais_a17": true,
+    "sha256_iguais_manifestos": true
+  },
+  "integridade": "nada imputado; ausente nao vira zero; SIA e SIH lidos ate 202607 (series ate 202605); nenhum mes CNES lido; lista nominal sem nomes; o arquivo local de IVS da auditoria 16 nao e lido",
+  "figuras": [
+    {
+      "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_2_evento.png",
+      "descricao": "12.2: estudo de evento agregado entre os cursos específicos",
+      "como_ler": "Cada ponto compara, mês a mês desde a chegada, a produção típica da especialidade nos pares município × curso que receberam o especialista com a dos pares que ofereceram a vaga e ainda não tinham recebido; à esquerda do zero os pontos deveriam ficar perto de zero.",
+      "eixo_cortado": false,
+      "sha256": "7169c1effbbdfa53cce3c32eef19f4becec6688f918e7da3302f588e13f746d4"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_2_cursos.png",
+      "descricao": "12.2: ATT médio do pós por curso e agregado",
+      "como_ler": "Cada linha é um curso: o ponto é a diferença média depois da chegada e o traço é o intervalo de 95%; traço que cruza a linha vertical do zero não distingue a diferença de zero.",
+      "eixo_cortado": false,
+      "sha256": "b215c66fa3255b29b518e3f9c7021491879cb37786e2ed6190854728d3058f8a"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_4_residentes.png",
+      "descricao": "12.4: estudo de evento de K2r e K2r_tot (D2)",
+      "como_ler": "Mês a mês desde a chegada, a diferença nas internações de residentes (cirúrgicas à esquerda, todas à direita) entre municípios que receberam o especialista e os comparáveis; mede uso pelos moradores, não oferta local.",
+      "eixo_cortado": false,
+      "sha256": "34d7fb710fca0f34f94c9b6356b96d9e33a999d1c2b2ed5d2bf7e9300de7a91a"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_1_versoes.png",
+      "descricao": "12.1: K2 com a safra v1 e a v2 do SIH, D1 empilhado e D2",
+      "como_ler": "Cada par de pontos é a mesma estimativa de K2 com a versão antiga (v1) e a revisada (v2) do SIH; pontos próximos indicam que a revisão da fonte não muda a conclusão.",
+      "eixo_cortado": false,
+      "sha256": "0aa62602209d88c511416d04299ebeb0e7bbdccfea6f04482cbd478786820fb2"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_3_controles.png",
+      "descricao": "12.3: K1 sob controles alternativos, DiD sintético e tercis de incumbência",
+      "como_ler": "Cada linha é uma forma diferente de comparar os municípios que receberam especialista com os que não receberam, para a produção K1; se as linhas concordam, o resultado não depende da escolha do grupo de comparação.",
+      "eixo_cortado": false,
+      "sha256": "c124988fedd0a995101c8563eca04c7e125aeac9062d1cfdac8c46f73103d670"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_5_regiao.png",
+      "descricao": "12.5: estudo de evento de K1_reg e K2_reg (D2)",
+      "como_ler": "Mês a mês desde a chegada, a diferença na produção dos outros municípios da mesma região de saúde; o sinal é uma pista e não separa expansão líquida de deslocamento. O eixo vertical foi limitado: intervalos que o ultrapassam aparecem cortados na borda.",
+      "eixo_cortado": true,
+      "sha256": "1165d8dec8b0642c2ae76dda98246845beb7f2debbf836e013b2919e32188095"
+    }
+  ],
+  "saidas": {
+    "K_X_estimativas.csv": {
+      "arquivo": "output/rdd_bolsa/K_X_estimativas.csv",
+      "sha256": "fd2e95f59185e245974bc907244f4a066486e6fa55391af3b94811cd201b3825"
+    },
+    "K_X_estudo_evento.csv": {
+      "arquivo": "output/rdd_bolsa/K_X_estudo_evento.csv",
+      "sha256": "2944844b85e56bbe6c806b5b2ea085d6aa48c92e1aaaad885c1718cbfadbe5ce"
+    },
+    "K_X_att_gt.csv": {
+      "arquivo": "output/rdd_bolsa/K_X_att_gt.csv",
+      "sha256": "5aed1086d1fb52d04164c0cd281a806842807d131e0869339419037b9d795bab"
+    }
+  }
+}
