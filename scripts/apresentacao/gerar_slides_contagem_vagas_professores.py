@@ -1,9 +1,10 @@
 """Slides para os professores: nº de vagas preenchidas como variável de efeito (família N, protocolo 48).
 
 Apresentação 16:9 simples, um gráfico por slide, título = conclusão, 2 a 4 bullets curtos e o "Como ler" numa linha
-no rodapé. Ordem: abertura; regra IVS × bolsa; porte e oferta por corte (diagnóstico descritivo, fora do protocolo 48) e o
-cuidado com o controle pela oferta (S-c); atração (E6); taxa de preenchimento (E6); N1 sem e com controle; forest N1–N4
-por corte; robustez e placebo do ciclo 2; conclusão.
+no rodapé. Corpo (13 slides): abertura com a resposta; regra IVS × bolsa; esquema contagem = oferta × taxa; atração (E6);
+taxa de preenchimento (E6); N1 sem e com controle; forest só de N1; por que a contagem engana (diagnóstico ND, fora do
+protocolo 48: porte em 0,300, oferta e porte em 0,400, taxa por vaga em 0,300); robustez; conclusão. Depois da divisória
+"Apêndice": forests de N2 a N4, S-c, vagas e população por faixa, reserva e taxas por tipo, placebo, notas técnicas.
 
 Todas as figuras RD têm um painel por corte (0,300 e 0,400): dentro de cada corte, os ciclos entram juntos, com
 intercepto e inclinação por ciclo (como no protocolo). A linha de cortes empilhados é secundária e só aparece nos
@@ -447,7 +448,7 @@ def _rel(r) -> tuple[float, float, float]:
     return r["tau"] / m, r["ic95_inf"] / m, r["ic95_sup"] / m
 
 
-def _fig_robustez(d: dict, parte: int) -> tuple[str, bool]:
+def _fig_robustez(d: dict, parte: int | None) -> tuple[str, bool]:
     n, na = d["n"], d["na"]
 
     def n_(esp, var, c, pop="V1+V2+V3"):
@@ -477,7 +478,7 @@ def _fig_robustez(d: dict, parte: int) -> tuple[str, bool]:
     ]
     for ci in d["ciclos"]:
         spec.append((f"Ciclo {ci} isolado (com controle)", [("", lambda c, ci=ci: n_("S-a", "principal", c, pop=f"V{ci}"))]))
-    spec = (spec[:3], spec[3:])[parte]
+    spec = spec[2:] if parte is None else (spec[:3], spec[3:])[parte]
     grupos, todas_neg = [], True
     cores = dict(zip(d["cortes"], (AZUL, LARANJA)))
     for titulo, itens in spec:
@@ -564,6 +565,30 @@ def _fig_regra(d: dict, V: dict) -> str:
     return _img(caminho, "regra_bolsa_ivs")
 
 
+def _svg_esquema() -> str:
+    """Esquema ilustrativo (sem dados): contagem = vagas oferecidas × taxa de preenchimento."""
+    caixa = ('<rect x="{x}" y="40" width="210" height="100" rx="12" fill="{f}" stroke="{c}" stroke-width="2.5"/>'
+             '<text x="{cx}" y="82" class="t" text-anchor="middle">{l1}</text>'
+             '<text x="{cx}" y="108" class="t" text-anchor="middle">{l2}</text>')
+    caixas = [(20, "#eaf1fb", AZUL, "vagas", "oferecidas"), (320, "#eaf1fb", AZUL, "taxa de", "preenchimento"),
+              (590, "#fdeee8", LARANJA, "vagas preenchidas", "(a contagem)")]
+    corpo = "".join(caixa.format(x=x, f=f, c=c, cx=x + 105, l1=a, l2=b) for x, f, c, a, b in caixas)
+    corpo += '<text x="270" y="105" class="op" text-anchor="middle">×</text><text x="552" y="105" class="op" text-anchor="middle">=</text>'
+    # exemplo qualitativo
+    ex = [(125, "município maior"), (425, "oferece mais vagas"), (695, "preenche mais vagas")]
+    for k, (cx, t) in enumerate(ex):
+        corpo += f'<text x="{cx}" y="215" class="e" text-anchor="middle">{t}</text>'
+        if k < 2:
+            x0, x1 = cx + 95, ex[k + 1][0] - 95
+            corpo += (f'<line x1="{x0}" y1="208" x2="{x1 - 12}" y2="208" stroke="{TINTA2}" stroke-width="2"/>'
+                      f'<path d="M{x1 - 12} 201 L{x1} 208 L{x1 - 12} 215 Z" fill="{TINTA2}"/>')
+    corpo += '<text x="400" y="290" class="n" text-anchor="middle">Esquema ilustrativo, sem dados.</text>'
+    estilo = ('<style>text{font-family:Inter,"Liberation Sans",sans-serif;fill:#0b0b0b}.t{font-size:22px;font-weight:650}'
+              '.op{font-size:54px;font-weight:650;fill:#52514e}.e{font-size:19px;fill:#52514e}.n{font-size:17px;fill:#898781}</style>')
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 310" role="img" '
+            f'aria-label="Esquema ilustrativo: contagem igual a vagas oferecidas vezes taxa de preenchimento">{estilo}{corpo}</svg>')
+
+
 def _slide(titulo: str, figura: str = "", bullets: list[str] | None = None, como_ler: str = "", fonte: str = "",
            classe: str = "", diag: bool = False) -> str:
     """Um slide 16:9: título = conclusão, figura à esquerda, bullets à direita, 'Como ler' no rodapé."""
@@ -614,6 +639,8 @@ h2.titulo { font-size: 23pt; font-weight: 650; line-height: 1.15; margin: 0 0 4m
 .capa { justify-content: center; }
 .capa h1 { font-size: 38pt; line-height: 1.1; margin: 0 0 6mm; font-weight: 650; }
 .capa .sub { font-size: 16pt; color: #52514e; margin: 0 0 12mm; }
+.resposta { font-size: 22pt; font-weight: 600; max-width: 270mm; line-height: 1.25; margin: 0 0 10mm; }
+.divisoria { justify-content: center; } .divisoria .titulo { font-size: 38pt; }
 .aviso { margin: 9mm 0 0; padding-top: 4mm; border-top: 1px solid #e1e0d9; font-size: 18pt; font-weight: 600; }
 .dois-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12mm; }
 .dois-col h3 { font-size: 13pt; text-transform: uppercase; letter-spacing: .06em; color: var(--s1); margin: 0 0 4mm; }
@@ -640,6 +667,9 @@ FONTE_PNG = "Gráfico: <code>gerar_slides_contagem_vagas_professores.py</code> �
 def montar_html() -> str:
     d = _dados()
     res = d["res"]
+    if PASTA_FIG.exists():  # nenhuma figura sobra de versões anteriores
+        for velho in PASTA_FIG.iterdir():
+            velho.unlink()
     N23 = _modulo_n()
     V = _png_hab_para_mil(_carregar_v(N23))
     degrau = re.search(r"R\$ \d+ mil", res["contraste"]).group(0)
@@ -675,14 +705,6 @@ def montar_html() -> str:
                             "n_alocados_ch1", ctl, n1a, unidade="vagas")
 
     sl = []
-    # 1. Abertura
-    sl.append('<section class="slide capa"><h1>Nº de vagas preenchidas como variável de efeito</h1>'
-              '<p class="sub">RDD do adicional da bolsa do PMM-E · família N (protocolo 48) · para os professores</p>'
-              '<ul class="bullets" style="font-size:18pt">'
-              '<li>O efeito passa da <b>fração</b> de vagas preenchidas para o <b>número</b> de vagas preenchidas na 1ª chamada.</li>'
-              f'<li>Contraste = <b>pacote do corte</b> ({cortes}); não é o degrau de {degrau} isolado nem a participação no PMM-E.</li>'
-              f'<li>Cada corte é estimado separadamente, juntando os ciclos {ciclos}.</li></ul></section>')
-
     # 2. Regra
     sl.append(_slide(f"A bolsa sobe em degrau exatamente nos cortes de IVS {cortes}", _fig_regra(d, V),
                      [f"Degrau de {degrau} por mês em cada corte.", "Municípios logo abaixo e logo acima são parecidos.",
@@ -802,23 +824,6 @@ def montar_html() -> str:
                       f"Poucas cidades muito grandes puxam a média (a maior: {maior}).",
                       "O eixo é a distância ao corte (IVS − corte), não o IVS."],
                      como_nd["ND_faixas_populacao.png"], FONTE_ND, diag=True))
-    sl.append(_slide(f"Em {_cs(float(c1))} a queda vem da taxa por vaga oferecida, mas depende de como se mede"
-                     if _exclui(nd_taxa1) and not _exclui(nd_taxa_vi) else
-                     f"Em {_cs(float(c1))} a queda da taxa por vaga depende de como se mede",
-                     _img(ND_FIG / "ND_taxa_janelas.png", "ND_taxa_janelas"),
-                     [f"O porte não salta: log da população {_fmt(nd_logpop['tau'], 2)} {_ic(nd_logpop['ic95_inf'], nd_logpop['ic95_sup'])}.",
-                      f"Taxa por vaga oferecida: {_pp(nd_taxa1['tau'])} {pp_ic(nd_taxa1['ic95_inf'], nd_taxa1['ic95_sup'])}.",
-                      f"Vagas imediatas no denominador: {_pp(nd_taxa_vi['tau'])} {pp_ic(nd_taxa_vi['ic95_inf'], nd_taxa_vi['ic95_sup'])}.",
-                      f"Cada município igual, só perto do corte: {_pp(nd_taxa_mun['tau'])} {pp_ic(nd_taxa_mun['ic95_inf'], nd_taxa_mun['ic95_sup'])}."],
-                     como_nd["ND_taxa_janelas.png"], FONTE_ND, diag=True))
-    sl.append(_slide(f"Em {_cs(float(c1))}, metade da queda vem do ciclo 2, junto com mais vagas de reserva" if cond_ad else
-                     f"Em {_cs(float(c1))}, a queda da taxa por vaga se divide de forma desigual entre os ciclos",
-                     _img(ND_FIG / "ND_adendo_ciclos.png", "ND_adendo_ciclos"),
-                     [f"O ciclo 2 responde por {_num(100 * parte_c2, 0)} % do salto ({_pp(ad_tot['tau'])}).",
-                      f"Ciclo 2: taxa {_pp(ad_taxa_c2['tau'])} {pp_ic(ad_taxa_c2['ic95_inf'], ad_taxa_c2['ic95_sup'])}; "
-                      f"reserva {_pp(ad_cr_c2['tau'])} {pp_ic(ad_cr_c2['ic95_inf'], ad_cr_c2['ic95_sup'])}.",
-                      f"Nenhuma vaga só de reserva foi preenchida no ciclo 2 ({int(so_cr_c2)} alocados)."],
-                     como_nd["ND_adendo_ciclos.png"], FONTE_ND, diag=True))
     sl.append(_slide(f"A fração de vagas de reserva sobe em {_cs(float(c1))}, mas não explica a queda sozinha"
                      if _exclui(ad_cr1) and not _exclui(ad_cr2) and nd_taxa_vi["tau"] < 0 else
                      "A fração de vagas de reserva e a queda da taxa não se explicam uma à outra",
@@ -838,47 +843,12 @@ def montar_html() -> str:
                       f"A taxa não salta: {_pp(nd_taxa2['tau'])} {pp_ic(nd_taxa2['ic95_inf'], nd_taxa2['ic95_sup'])}."],
                      como_nd["ND_faixas_vagas.png"], FONTE_ND, diag=True))
 
-    # 9. Forest N1–N4
+    # forests por outcome e robustez (montados abaixo)
     fs = [_svg_fig(sv, f"coeficientes_{o.lower()}") for sv, o in zip(_fig_n1_a_n4(d), ROTULOS)]
-    todas = [_linha_n(d, o, e, c) for o in ROTULOS for e in ("S-a", "S-b") for c in cs]
-    ex_cuts = {c for o in ROTULOS for e in ("S-a", "S-b") for c in cs if _exclui(_linha_n(d, o, e, c))}
-    emp_a = [_linha_n(d, o, "S-a", "empilhado") for o in ROTULOS]
-    holm_ok = all(r["p_holm"] >= 0.05 for r in emp_a)
-    if not any(r["ic95_inf"] > 0 for r in todas) and ex_cuts == {cs[0]}:
-        tit = f"Nenhum resultado indica aumento; o sinal negativo se concentra no corte {_cs(float(cs[0]))}"
-    elif not any(r["ic95_inf"] > 0 for r in todas) and not ex_cuts:
-        tit = "Nenhum resultado indica aumento e nenhum IC por corte exclui zero"
-    else:
-        tit = "Nenhum resultado indica aumento; alguns ICs por corte excluem zero"
-    bl9 = ["Marcador cheio: o intervalo não inclui zero.",
-           "Cinza (empilhado) é secundário: junta dois cortes.",
-           "Holm, só no empilhado com controle: " + ("nenhuma das quatro rejeita zero." if holm_ok else "alguma rejeita zero.")]
-    cl9 = "cada linha é a diferença estimada entre os dois lados do corte (barra = intervalo); à esquerda do zero, menos vagas do lado de bolsa maior."
-    sl.append(_slide(tit, f'<div class="dois">{fs[0]}{fs[1]}</div>', bl9, cl9, FONTE_PNG.format("N_estimativas.csv"),
-                     classe="f2"))
-    sl.append(_slide("N3 e N4 seguem o mesmo padrão", f'<div class="dois">{fs[2]}{fs[3]}</div>',
-                     ["N3 e N4 só existem nos ciclos 1 e 2.", "Saltos negativos ou próximos de zero.",
-                      "Nenhum IC fica acima de zero." if not any(r["ic95_inf"] > 0 for r in todas) else "Há IC acima de zero."], cl9, FONTE_PNG.format("N_estimativas.csv"), classe="f2"))
-
-    # 10. Robustez
     sens = next(x for x in res["sensibilidade_coeficiente_unico_auditoria_20"]["linhas"] if x["outcome_id"] == "N1")
-    svg_a, neg_a = _fig_robustez(d, 0)
-    svg_b, neg_b = _fig_robustez(d, 1)
-    sl.append(_slide("Nenhuma variação do controle ou da janela produz aumento distinguível de zero" if neg_a else
-                     "Algumas variações do controle ou da janela têm IC acima de zero",
-                     _svg_fig(svg_a, "robustez_n1_controle_janela"),
-                     [f"Um só coeficiente do controle: {_fmt(sens['tau_coef_unico'], 2)} vaga, Holm p = {_num(sens['p_holm_coef_unico'], 3)}.",
-                      f"Wald rejeita coeficientes iguais (p {_p(sens['wald_igualdade_p'])}); protocolo usa um por ciclo × corte.",
-                      "Leitura: negativo, frágil."],
-                     "cada linha refaz a análise de N1 de outro jeito; a diferença vem em % do valor médio do lado de bolsa menor.",
-                     FONTE_PNG.format("N_estimativas.csv, N_resumo.json")))
-    sl.append(_slide("Com covariáveis, por habitante ou por ciclo, tampouco aparece aumento distinguível de zero" if neg_b else
-                     "Algumas variações têm IC acima de zero",
-                     _svg_fig(svg_b, "robustez_n1_covariaveis_medidas_ciclos"),
-                     ["Covariáveis: log da população e estoques do CNES pré-programa.",
-                      "O padrão por corte se repete.", "O corte " + _cs(float(cs[0])) + " concentra os saltos negativos."],
-                     "cada linha refaz a análise de N1 de outro jeito; a diferença vem em % do valor médio do lado de bolsa menor.",
-                     FONTE_PNG.format("N_estimativas.csv, NA_estimativas.csv")))
+    svg_rob, neg_rob = _fig_robustez(d, None)
+    fig_rob = _svg_fig(svg_rob, "robustez_n1")
+
     # 11. Placebo
     pl = next(x for x in res["placebos_grade"] if x["outcome_id"] == "N1" and x["ciclo"] == "2"
               and x["especificacao"] == "S-a" and x["corte"] == "0.300")
@@ -893,33 +863,108 @@ def montar_html() -> str:
                      "cinza = diferença num corte falso, onde a bolsa não muda; laranja = os cortes reais.",
                      FONTE_PNG.format("N_estimativas.csv, N_resumo.json")))
 
-    # 12. Conclusão
-    sl.append('<section class="slide"><h2 class="titulo">Contar vagas não faz aparecer efeito positivo, e cada corte tem um padrão diferente</h2>'
-              '<div class="corpo texto"><div class="dois-col"><div><h3>Pode-se afirmar</h3><ul class="bullets">'
-              f'<li>Sem aumento em nenhum dos dois cortes ({degrau}, pacote do corte).</li>'
-              '<li>Sinais negativos, concentrados no corte inferior; sem Holm no empilhado.</li>'
-              f'<li>Em {_cs(float(c2))} a queda acompanha a oferta e o porte; em {_cs(float(c1))}, queda da taxa por vaga '
-              f'{"concentrada no ciclo 2 e ligada às vagas de reserva" if cond_ad else "que depende de como se mede"} (diagnóstico).</li>'
-              '<li>Atração e taxa de preenchimento: sem salto distinguível de zero.</li></ul></div>'
-              '<div><h3>Não se pode afirmar</h3><ul class="bullets">'
-              '<li>Que a bolsa reduz o preenchimento (pacote, porte, placebo).</li>'
-              '<li>Que o salto com controle é causal por vaga.</li>'
-              '<li>Nada sobre PMM-E, Agora Tem Especialistas ou retenção.</li>'
-              '<li>Falta de evidência não é prova de efeito nulo.</li></ul></div></div>'
-              '<p class="aviso">Empilhar os cortes junta dois padrões diferentes; por isso tudo aqui é por corte.</p></div></section>')
+    # --- slides novos e montagem (corpo de 13 slides, divisória e apêndice)
+    def pick(token: str) -> str:
+        return next(x for x in sl if token in x)
 
-    sl.append(_slide("Notas técnicas", "", [
+    def titulo_forest(oids: list[str], rotulo: str) -> str:
+        linhas = [_linha_n(d, o, e, c) for o in oids for e in ("S-a", "S-b") for c in cs]
+        exc = sorted({_cs(float(c)) for o in oids for e in ("S-a", "S-b") for c in cs if _exclui(_linha_n(d, o, e, c))})
+        if any(r["ic95_inf"] > 0 for r in linhas):
+            return f"{rotulo}: alguns intervalos por corte ficam acima de zero"
+        if not exc:
+            return f"{rotulo}: nenhuma estimativa indica aumento e nenhum intervalo por corte exclui zero"
+        onde = f"só no corte {exc[0]}" if len(exc) == 1 else f"nos cortes {' e '.join(exc)}"
+        return f"{rotulo}: nenhuma estimativa indica aumento; o intervalo exclui zero {onde}"
+
+    sem_alta = all(not (r["ic95_inf"] > 0) for r in [*atr.values(), *taxa.values(), *n1a.values(), *n1b.values()])
+    resposta = (f"Os {degrau} a mais não aumentam a atração nem o preenchimento, em nenhum dos dois cortes." if sem_alta
+                else "Os resultados por corte estão nos slides seguintes; nem todos descartam um aumento.")
+    capa = ('<section class="slide capa"><h1>Nº de vagas preenchidas como variável de efeito</h1>'
+            '<p class="sub">RDD do adicional da bolsa do PMM-E · família N (protocolo 48) · para os professores</p>'
+            f'<p class="resposta">{resposta}</p>'
+            '<ul class="bullets" style="font-size:17pt">'
+            f'<li>Contraste = <b>pacote do corte</b> ({cortes}); não é o degrau de {degrau} isolado nem a participação no PMM-E.</li>'
+            f'<li>Cada corte é estimado separadamente, juntando os ciclos {ciclos}.</li></ul></section>')
+    esquema = _slide("A contagem de vagas é oferta vezes taxa, então acompanha o tamanho do município",
+                     _svg_fig(_svg_esquema(), "esquema_contagem"),
+                     ["Município maior oferece mais vagas e por isso preenche mais, mesmo com a mesma taxa.",
+                      f"Controlar pela oferta exige cuidado: ela salta em {r_sc['n_p_menor_005']} de {r_sc['n_linhas']} comparações.",
+                      "Por isso mostramos a contagem com e sem controle."],
+                     "o esquema é só uma ilustração, sem dados: a contagem de vagas preenchidas é o produto das vagas oferecidas pela taxa de preenchimento.",
+                     "esquema desenhado pelo script (ilustrativo)")
+    holm_ok = all(_linha_n(d, o, "S-a", "empilhado")["p_holm"] >= 0.05 for o in ROTULOS)
+    cl_forest = ("cada linha é a diferença estimada entre os dois lados do corte (barra = intervalo); à esquerda do zero, "
+                 "menos vagas do lado de bolsa maior.")
+    forest_n1 = _slide(titulo_forest(["N1"], "Em N1"), fs[0],
+                       ["Marcador cheio: o intervalo não inclui zero.",
+                        "Cinza (empilhado) é secundário: junta dois cortes.",
+                        "Holm, só no empilhado com controle (N1 a N4): " + ("nenhuma das quatro rejeita zero." if holm_ok
+                                                                             else "alguma rejeita zero.")],
+                       cl_forest, FONTE_PNG.format("N_estimativas.csv"))
+    ciclo2 = (f"Em {_cs(float(c1))}, a queda vem da taxa por vaga, concentrada no ciclo 2 e com mais vagas de reserva"
+              if cond_ad and _exclui(nd_taxa1) and not _exclui(nd_taxa_vi) else
+              f"Em {_cs(float(c1))}, a queda da taxa por vaga se divide entre os ciclos e depende de como se mede")
+    slide_0300 = _slide(ciclo2, _img(ND_FIG / "ND_adendo_ciclos.png", "ND_adendo_ciclos"),
+                        [f"Ciclo 2: {_num(100 * parte_c2, 0)} % do salto ({_pp(ad_tot['tau'])}), com mais reserva ({_pp(ad_cr_c2['tau'])}).",
+                         f"Nenhuma vaga só de reserva preenchida no ciclo 2 ({int(so_cr_c2)} alocados).",
+                         f"Depende da medida: vagas imediatas {_pp(nd_taxa_vi['tau'])} {pp_ic(nd_taxa_vi['ic95_inf'], nd_taxa_vi['ic95_sup'])}.",
+                         f"Sem as maiores cidades, muda no máximo {_num(100 * max_delta, 1)} p.p."],
+                        como_nd["ND_adendo_ciclos.png"], FONTE_ND, diag=True)
+    seg = _unica(d["n"][(d["n"]["outcome_id"] == "N1") & (d["n"]["populacao"] == "V2")], especificacao="S-i",
+                 variante="media_do_segmento_entre_0,300_e_0,400 (S-b)")
+    slide_rob = _slide("Nenhuma variação de janela, covariáveis, medida ou ciclo produz aumento distinguível de zero" if neg_rob
+                       else "Algumas variações de janela, covariáveis, medida ou ciclo têm intervalo acima de zero",
+                       fig_rob,
+                       ["Nenhuma variação tem IC acima de zero." if neg_rob else "Algumas variações têm IC acima de zero.",
+                        f"Um só coeficiente do controle: {_fmt(sens['tau_coef_unico'], 2)} vaga, Holm p = {_num(sens['p_holm_coef_unico'], 3)} (frágil).",
+                        f"O corte {_cs(float(c1))} concentra os saltos negativos.",
+                        "O placebo do ciclo 2 sugere cautela com a reta." if _exclui(seg)
+                        else "O placebo do ciclo 2 não mostra salto isolado."],
+                       "cada linha refaz a análise de N1 de outro jeito; a diferença vem em % do valor médio do lado de bolsa menor.",
+                       FONTE_PNG.format("N_estimativas.csv, NA_estimativas.csv"))
+    conclusao = ('<section class="slide"><h2 class="titulo">Contar vagas não faz aparecer efeito positivo, e cada corte tem um padrão diferente</h2>'
+                 '<div class="corpo texto"><div class="dois-col"><div><h3>Pode-se afirmar</h3><ul class="bullets">'
+                 f'<li>Sem aumento em nenhum dos dois cortes ({degrau}, pacote do corte).</li>'
+                 '<li>Sinais negativos, concentrados no corte inferior; sem Holm no empilhado.</li>'
+                 f'<li>Em {_cs(float(c2))} a queda acompanha a oferta e o porte; em {_cs(float(c1))}, queda da taxa por vaga '
+                 f'{"concentrada no ciclo 2 e ligada às vagas de reserva" if cond_ad else "que depende de como se mede"} (diagnóstico).</li>'
+                 '<li>Atração e taxa de preenchimento: sem salto distinguível de zero.</li></ul></div>'
+                 '<div><h3>Não se pode afirmar</h3><ul class="bullets">'
+                 '<li>Que a bolsa reduz o preenchimento (pacote, porte, placebo).</li>'
+                 '<li>Que o salto com controle é causal por vaga.</li>'
+                 '<li>Nada sobre PMM-E, Agora Tem Especialistas ou retenção.</li>'
+                 '<li>Falta de evidência não é prova de efeito nulo.</li></ul></div></div>'
+                 '<p class="aviso">Empilhar os cortes junta dois padrões diferentes; por isso tudo aqui é por corte.</p>'
+                 '<p class="aviso" style="margin-top:4mm;border:0;padding:0">Próximo passo: a escolha dos candidatos (P1) como pergunta seguinte.</p>'
+                 '</div></section>')
+    divisoria = ('<section class="slide divisoria"><h2 class="titulo">Apêndice</h2><div class="corpo texto"><ul class="bullets">'
+                 '<li>N2, N3 e N4 por corte</li>'
+                 f'<li>A oferta salta em {r_sc["n_p_menor_005"]} de {r_sc["n_linhas"]} comparações (S-c)</li>'
+                 '<li>Vagas imediatas e população por faixa</li><li>Fração de reserva e taxas por tipo de vaga</li>'
+                 '<li>Placebo do ciclo 2</li><li>Notas técnicas</li></ul></div></section>')
+    ap_n2 = _slide(titulo_forest(["N2"], "Em N2"), fs[1], ["Mesma leitura do slide de N1.", "Cinza (empilhado) é secundário."],
+                   cl_forest, FONTE_PNG.format("N_estimativas.csv"))
+    ap_n34 = _slide(titulo_forest(["N3", "N4"], "Em N3 e N4"), f'<div class="dois">{fs[2]}{fs[3]}</div>',
+                    ["N3 e N4 só existem nos ciclos 1 e 2.", "Cinza (empilhado) é secundário."],
+                    cl_forest, FONTE_PNG.format("N_estimativas.csv"), classe="f2")
+    notas = _slide("Notas técnicas", "", [
         f"RDD local linear, kernel triangular, janela h = {h} de IVS (IVS 2010 oficial do Ipea), cortes {cortes}, um corte por vez.",
         f"Ciclos {ciclos} juntos em cada corte, com intercepto e inclinação por ciclo; erro-padrão por município (CR1); salto = lado de bolsa maior menos lado de bolsa menor.",
         "Com controle: vagas oferecidas (imediatas + cadastro reserva) entram linearmente, um coeficiente por ciclo e corte; sem controle é o efeito total.",
         "Pontos: médias por faixa estreita de IVS, só municípios dentro da janela; faixa clara = IC 95% da reta. A reta desenhada reproduz o salto, o IC e o p dos CSV; o script aborta se não reproduzir.",
         "Holm só na linha de cortes empilhados com controle (N1 a N4). Diagnóstico de porte (vagas imediatas e população 2022): descritivo, fora do protocolo 48.",
         "O diagnóstico ND (doc 49b) é descritivo, fora do protocolo 48: não muda o Holm nem as conclusões do doc 49 e nenhuma variante dele vira especificação principal.",
-    ], "", "protocolo 48 e docs/06_execucao/49", classe="notas"))
+    ], "", "protocolo 48 e docs/06_execucao/49", classe="notas")
+    corpo = [capa, pick('alt="regra_bolsa_ivs"'), esquema, pick('alt="atracao_candidatos"'), pick('alt="taxa_preenchimento"'),
+             pick('alt="n1_sem_controle"'), pick('alt="n1_com_controle"'), forest_n1, pick('alt="ND_faixas_populacao"'),
+             pick('alt="ND_faixas_vagas"'), slide_0300, slide_rob, conclusao]
+    apendice = [divisoria, ap_n2, ap_n34, pick('aria-label="Salto das vagas oferecidas'), pick('alt="porte_vagas_imediatas"'),
+                pick('alt="porte_populacao"'), pick('alt="ND_adendo_cr_taxas"'), pick('aria-label="Salto em cortes falsos'), notas]
     return ('<!DOCTYPE html>\n<html lang="pt-BR"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width, initial-scale=1">'
             f'<title>Contagem de vagas preenchidas: slides</title><style>{CSS_SLIDES}</style></head><body>'
-            + "".join(sl) + JS_NAV + '</body></html>\n')
+            + "".join(corpo + apendice) + JS_NAV + '</body></html>\n')
 
 
 def main() -> None:

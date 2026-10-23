@@ -19,6 +19,7 @@ from __future__ import annotations
 import ast
 import base64
 import builtins
+import html
 import importlib.util
 import io
 import json
@@ -330,29 +331,29 @@ class TestSlidesContagemVagas(unittest.TestCase):
         sem = {c: G._linha_n(d, "N1", "S-b", c) for c in cs}
         if "Sem controle, as vagas preenchidas não aumentam, e nenhum IC exclui zero" in txt:
             self.assertTrue(all(r["tau"] < 0 and not G._exclui(r) for r in sem.values()))
-        if "o sinal negativo se concentra no corte" in txt:
-            todas = [G._linha_n(d, o, e, c) for o in G.ROTULOS for e in ("S-a", "S-b") for c in cs]
-            self.assertFalse(any(r["ic95_inf"] > 0 for r in todas))
-            self.assertEqual({c for o in G.ROTULOS for e in ("S-a", "S-b") for c in cs
-                              if G._exclui(G._linha_n(d, o, e, c))}, {cs[0]})
+        if "Em N1: nenhuma estimativa indica aumento; o intervalo exclui zero só no corte" in txt:
+            n1 = [G._linha_n(d, "N1", e, c) for e in ("S-a", "S-b") for c in cs]
+            self.assertFalse(any(r["ic95_inf"] > 0 for r in n1))
+            self.assertEqual({c for e in ("S-a", "S-b") for c in cs if G._exclui(G._linha_n(d, "N1", e, c))}, {cs[0]})
 
     def test_slides_do_diagnostico_nd_vem_do_nd_e_nao_atribuem_0300_ao_porte(self):
         ndf = pd.read_csv(G.ND_EST, dtype={"corte": str, "ciclo": str})
         c1, c2 = self.d["cortes"]
         ndres = json.loads(G.ND_RES.read_text(encoding="utf-8"))
         # as três figuras do ND estão nos slides, byte a byte, e o "Como ler" é o do ND
-        for nome in ("ND_faixas_populacao.png", "ND_taxa_janelas.png", "ND_adendo_ciclos.png", "ND_adendo_cr_taxas.png",
+        for nome in ("ND_faixas_populacao.png", "ND_adendo_ciclos.png", "ND_adendo_cr_taxas.png",
                      "ND_faixas_vagas.png"):
             b64 = base64.b64encode((G.ND_FIG / nome).read_bytes()).decode("ascii")
             self.assertIn(b64, self.doc, nome)
             como = next(f["como_ler"] for f in ndres["saidas"]["figuras"] if f["arquivo"].endswith(nome))
             self.assertIn(como, self.doc)
         nd_slides = [s for s in self.slides if "ND_estimativas.csv" in s]
-        self.assertEqual(len(nd_slides), 5)
-        # ficam depois do N1 com controle e antes do forest
+        self.assertEqual(len(nd_slides), 4)  # três no corpo e a fração de reserva no apêndice
         pos = [self.slides.index(s) for s in nd_slides]
-        n1_com = next(i for i, s in enumerate(self.slides) if "Com controle, " in s and "figbox" in s)
-        self.assertEqual(pos, [n1_com + k for k in (1, 2, 3, 4, 5)])
+        n1_com = next(i for i, s in enumerate(self.slides) if '<h2 class="titulo">Com controle,' in s)
+        # no corpo: depois do forest de N1 (que vem logo depois do N1 com controle)
+        self.assertEqual(pos[:3], [n1_com + 2, n1_com + 3, n1_com + 4])
+        self.assertGreater(pos[3], self.slides.index(next(s for s in self.slides if "slide divisoria" in s)))
         # o texto condiz com o ND: em c2 o controle quase tira a queda e a taxa não salta; em c1 o porte não salta
         def l(c, o, esp):
             return G._unica(ndf, amostra="POR_CORTE", diagnostico="D1", tipo_linha="estimativa", corte=c, outcome=o,
@@ -361,7 +362,7 @@ class TestSlidesContagemVagas(unittest.TestCase):
         if "a queda acompanha a oferta e o porte" in txt:
             self.assertLess(abs(l(c2, "N1", "controle_protocolo_48")["tau"]), abs(l(c2, "N1", "sem_controle")["tau"]) / 2)
             self.assertFalse(G._exclui(l(c2, "TAXA_VIC", "taxa_ponderada")))
-        if "a queda vem da taxa por vaga oferecida" in txt:
+        if "a queda vem da taxa por vaga, concentrada no ciclo 2" in txt:
             self.assertFalse(G._exclui(l(c1, "log_pop", "sem_controle")))
             self.assertTrue(G._exclui(l(c1, "TAXA_VIC", "taxa_ponderada")))
         # adendo AD2: ciclo 2 responde por cerca de metade do salto em c1, com mais reserva e nenhuma vaga só de reserva preenchida
@@ -371,7 +372,7 @@ class TestSlidesContagemVagas(unittest.TestCase):
         c2g = ad(diagnostico="AD2_A3", tipo_linha="contribuicao", corte=c1, outcome="TAXA_VIC", variante="grupo_c2")
         cr2 = ad(diagnostico="AD2_A3", tipo_linha="estimativa", corte=c1, populacao="V2", outcome="FRAC_CR")
         so_cr = ndres["adendo_2026_10_21"]["taxa_separada_por_tipo_de_vaga"]["celulas_por_tipo"]["ciclo 2 / so_cr"]["alocados"]
-        if "metade da queda vem do ciclo 2" in txt:
+        if "concentrada no ciclo 2 e com mais vagas de reserva" in txt:
             self.assertLess(abs(c2g["contribuicao"] / tot["tau"] - 0.5), 0.1)
             self.assertTrue(G._exclui(cr2))
             self.assertEqual(so_cr, 0)
@@ -387,6 +388,63 @@ class TestSlidesContagemVagas(unittest.TestCase):
         self.assertIn("Empilhar os cortes junta dois padrões diferentes; por isso tudo aqui é por corte.", txt)
         self.assertIn("não muda o Holm", self.slides[-1])
         self.assertIn("fora do protocolo 48", self.slides[-1])
+
+    def test_estrutura_corpo_divisoria_e_apendice(self):
+        S = self.slides
+        self.assertEqual(len(S), 22)
+        corpo, divisoria, apendice = S[:13], S[13], S[14:]
+        self.assertIn("slide divisoria", divisoria)
+        self.assertIn("Apêndice", divisoria)
+        esperado_corpo = ["slide capa", 'alt="regra_bolsa_ivs"', "Esquema ilustrativo", 'alt="atracao_candidatos"',
+                          'alt="taxa_preenchimento"', 'alt="n1_sem_controle"', 'alt="n1_com_controle"',
+                          "Salto de N1 por corte", 'alt="ND_faixas_populacao"', 'alt="ND_faixas_vagas"',
+                          'alt="ND_adendo_ciclos"', "Robustez do salto de N1", "Pode-se afirmar"]
+        for s, tok in zip(corpo, esperado_corpo):
+            self.assertIn(tok, s)
+        esperado_ap = ["Salto de N2 por corte", "Salto de N3 por corte", "Salto das vagas oferecidas", 'alt="porte_vagas_imediatas"',
+                       'alt="porte_populacao"', 'alt="ND_adendo_cr_taxas"', "Salto em cortes falsos", "slide notas"]
+        for s, tok in zip(apendice, esperado_ap):
+            self.assertIn(tok, s)
+        # só N1 no forest do corpo; N2 a N4 só no apêndice
+        corpo_txt = "".join(corpo)
+        self.assertNotIn("Salto de N2 por corte", corpo_txt)
+        self.assertNotIn("N2 · células", corpo_txt)
+        # esquema rotulado como ilustração
+        esq = corpo[2]
+        self.assertIn("Esquema ilustrativo, sem dados.", esq)
+        self.assertIn("ilustração, sem dados", esq)
+        # todo slide de resultado com figura RD tem dois painéis (um por corte): títulos dos dois cortes na PNG gravada
+        for nome in ("atracao_candidatos", "taxa_preenchimento", "n1_sem_controle", "n1_com_controle",
+                     "porte_vagas_imediatas", "porte_populacao"):
+            self.assertTrue((PASTA_FIG / f"{nome}.png").exists())
+        # nenhuma figura sobrando de versões anteriores
+        nomes = {f.name for f in PASTA_FIG.iterdir()}
+        esperados = {"regra_bolsa_ivs.png", "atracao_candidatos.png", "taxa_preenchimento.png", "n1_sem_controle.png",
+                     "n1_com_controle.png", "porte_vagas_imediatas.png", "porte_populacao.png", "esquema_contagem.svg",
+                     "coeficientes_n1.svg", "coeficientes_n2.svg", "coeficientes_n3.svg", "coeficientes_n4.svg",
+                     "oferta_no_corte_S-c.svg", "robustez_n1.svg", "placebo_ciclo2.svg"}
+        self.assertEqual(nomes, esperados)
+
+    def test_capa_resposta_condiz_com_os_dados(self):
+        d, cs = self.d, self.d["cortes"]
+        capa = html.unescape(self.slides[0])
+        linhas = [G._linha_e6(d, "f1_1_cand_1a_opcao_por_celula", c) for c in cs]
+        linhas += [G._linha_e6(d, "f1_3_fracao_celulas_preenchidas_ch1", c) for c in cs]
+        linhas += [G._linha_n(d, "N1", e, c) for e in ("S-a", "S-b") for c in cs]
+        if "não aumentam a atração nem o preenchimento, em nenhum dos dois cortes" in capa:
+            self.assertFalse(any(r["ic95_inf"] > 0 for r in linhas))
+        else:
+            self.assertTrue(any(r["ic95_inf"] > 0 for r in linhas))
+
+    def test_forest_de_n1_bate_com_os_csv(self):
+        d, cs = self.d, self.d["cortes"]
+        forest = html.unescape(self.slides[7])
+        for c in (*cs, "empilhado"):
+            for esp in ("S-a", "S-b"):
+                r = G._linha_n(d, "N1", esp, c)
+                cauda = (f"Holm p = {G._num(r['p_holm'], 3)}" if c == "empilhado" and esp == "S-a"
+                         else f"p = {G._p(r['p_valor'])}")
+                self.assertIn(f"{G._fmt(r['tau'], 2)} {G._ic(r['ic95_inf'], r['ic95_sup'])}  {cauda}", forest, (c, esp))
 
     def test_forest_mostra_cortes_separados_e_empilhado_secundario(self):
         self.assertIn("secundário", self.doc)
