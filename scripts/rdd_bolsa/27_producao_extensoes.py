@@ -814,8 +814,7 @@ COMO_LER = {
                               "com os que não receberam, para a produção K1; se as linhas concordam, o resultado não "
                               "depende da escolha do grupo de comparação.",
     "K_X_12_5_regiao.png": "Mês a mês desde a chegada, a diferença na produção dos outros municípios da mesma região "
-                           "de saúde; abaixo de zero sugere que a produção mudou de lugar, acima sugere atendimento de "
-                           "referência.",
+                           "de saúde; o sinal é uma pista e não separa expansão líquida de deslocamento.",
 }
 DESCRICAO_FIGURAS = {
     "K_X_12_2_evento.png": "12.2: estudo de evento agregado entre os cursos específicos",
@@ -844,7 +843,7 @@ def _evento(ax, ev: pd.DataFrame, rotulo_y: str):
     x = e["e"].to_numpy()
     th = e["theta"].to_numpy(dtype=float)
     lo, hi = e["ic95_inf"].to_numpy(dtype=float), e["ic95_sup"].to_numpy(dtype=float)
-    ylo, yhi, _ = D2M.limites_eixo(th, lo, hi)
+    ylo, yhi, cortado = D2M.limites_eixo(th, lo, hi)
     ok = np.isfinite(lo) & np.isfinite(hi)
     if np.isfinite(th).any():
         ax.axvspan(-0.5, x[np.isfinite(th)].max() + 0.5, color=D2M.COR_POS_D2, linewidth=0, zorder=0)
@@ -859,6 +858,7 @@ def _evento(ax, ev: pd.DataFrame, rotulo_y: str):
     ax.set_xlabel("meses desde o início do trimestre de chegada", fontsize=9, color=S.TINTA_2)
     ax.set_ylabel(rotulo_y, fontsize=9, color=S.TINTA_2)
     _eixo(ax)
+    return cortado
 
 
 def _forest(ax, rotulos: list[str], vals, los, his, cores=None):
@@ -880,11 +880,15 @@ def _forest(ax, rotulos: list[str], vals, los, his, cores=None):
     ax.yaxis.set_major_formatter(matplotlib.ticker.FixedFormatter(rotulos))
 
 
-def _salvar(fig, caminho: Path) -> dict:
+AVISO_CORTE = " O eixo vertical foi limitado: intervalos que o ultrapassam aparecem cortados na borda."
+
+
+def _salvar(fig, caminho: Path, cortado: bool = False) -> dict:
     fig.savefig(caminho, dpi=120, facecolor=K1M.SUPERFICIE, metadata={"Software": None})
     import matplotlib.pyplot as plt
     plt.close(fig)
-    return {"arquivo": rotulo(caminho), "descricao": DESCRICAO_FIGURAS[caminho.name], "como_ler": COMO_LER[caminho.name],
+    return {"arquivo": rotulo(caminho), "descricao": DESCRICAO_FIGURAS[caminho.name],
+            "como_ler": COMO_LER[caminho.name] + (AVISO_CORTE if cortado else ""), "eixo_cortado": bool(cortado),
             "sha256": sha256(caminho)}
 
 
@@ -911,10 +915,10 @@ def gerar_figuras(est: pd.DataFrame, ev: pd.DataFrame, dir_fig: Path) -> list[di
         return est[m]
 
     fig, ax = plt.subplots(figsize=(9, 4.2), facecolor=S.SUPERFICIE)
-    _evento(ax, sel_ev(item="12.2", recorte=TODOS, variante="principal"), "diferença na mudança desde o mês −1,\n"
-            "por 10 mil hab. por mês")
+    cort = _evento(ax, sel_ev(item="12.2", recorte=TODOS, variante="principal"), "diferença na mudança desde o mês −1,\n"
+                   "por 10 mil hab. por mês")
     fig.tight_layout()
-    figs.append(_salvar(fig, dir_fig / "K_X_12_2_evento.png"))
+    figs.append(_salvar(fig, dir_fig / "K_X_12_2_evento.png", cort))
 
     s = sel_est(item="12.2", estatistica="att_pos_medio", variante="principal")
     ordem = [TODOS] + [r for r in s["recorte"] if r != TODOS]
@@ -927,11 +931,12 @@ def gerar_figuras(est: pd.DataFrame, ev: pd.DataFrame, dir_fig: Path) -> list[di
     figs.append(_salvar(fig, dir_fig / "K_X_12_2_cursos.png"))
 
     fig, axs = plt.subplots(1, 2, figsize=(12, 4.2), facecolor=S.SUPERFICIE)
+    cort = False
     for ax, oid in zip(axs, ("K2r", "K2r_tot")):
-        _evento(ax, sel_ev(item="12.4", outcome_id=oid, variante="principal"), f"{oid}: diferença desde o mês −1,\n"
-                "por 10 mil hab. por mês")
+        cort |= _evento(ax, sel_ev(item="12.4", outcome_id=oid, variante="principal"), f"{oid}: diferença desde o mês −1,\n"
+                        "por 10 mil hab. por mês")
     fig.tight_layout()
-    figs.append(_salvar(fig, dir_fig / "K_X_12_4_residentes.png"))
+    figs.append(_salvar(fig, dir_fig / "K_X_12_4_residentes.png", cort))
 
     linhas = []
     for desenho, est_nome, corte in (("D1", "salto_dird", "empilhado"), ("D2", "att_pos_medio", "")):
@@ -967,11 +972,12 @@ def gerar_figuras(est: pd.DataFrame, ev: pd.DataFrame, dir_fig: Path) -> list[di
     figs.append(_salvar(fig, dir_fig / "K_X_12_3_controles.png"))
 
     fig, axs = plt.subplots(1, 2, figsize=(12, 4.2), facecolor=S.SUPERFICIE)
+    cort = False
     for ax, oid in zip(axs, ("K1_reg", "K2_reg")):
-        _evento(ax, sel_ev(item="12.5", outcome_id=oid, variante="principal"), f"{oid}: diferença desde o mês −1,\n"
-                "por 10 mil hab. da região por mês")
+        cort |= _evento(ax, sel_ev(item="12.5", outcome_id=oid, variante="principal"), f"{oid}: diferença desde o mês −1,\n"
+                        "por 10 mil hab. da região por mês")
     fig.tight_layout()
-    figs.append(_salvar(fig, dir_fig / "K_X_12_5_regiao.png"))
+    figs.append(_salvar(fig, dir_fig / "K_X_12_5_regiao.png", cort))
     return figs
 
 
@@ -1025,18 +1031,48 @@ def _pre_txt(est, **f) -> str:
     return f"{_p(w['p_valor'])} ({'compatível com plano' if w['p_valor'] >= 0.05 else 'não plano'})"
 
 
-def tabela_d2(est: pd.DataFrame, filtros: list[tuple[str, dict]]) -> str:
+def theta_pre(ev: pd.DataFrame, r: dict) -> tuple[float, float]:
+    """θ médio do pré (e de −24 a −2) e dos 12 meses antes do mês-base (−13 a −2) da estimação da linha `r`
+    (mesma regra do doc 50 e da auditoria 21)."""
+    m = ((ev["item"] == r["item"]) & (ev["outcome_id"] == r["outcome_id"]) & (ev["desenho"] == r["desenho"])
+         & (ev["recorte"] == r["recorte"]) & (ev["versao_fonte"] == r["versao_fonte"])
+         & (ev["variante"] == r["variante"]))
+    th = ev[m].set_index("e")["theta"].astype(float)
+    th = th[np.isfinite(th)]
+    a, b = th[th.index <= -2], th[(th.index <= -2) & (th.index >= -13)]
+    return (float(a.mean()) if len(a) else np.nan, float(b.mean()) if len(b) else np.nan)
+
+
+def classe_pre(valor: float, mp: float, mp12: float) -> str:
+    """'parecido': o θ médio do pré (inteiro ou dos 12 meses antes do mês-base) tem o sinal e pelo menos metade do
+    tamanho do ATT do pós; 'oposto': sinal contrário e pelo menos metade (só o pré inteiro, como no doc 50)."""
+    if not np.isfinite(valor) or valor == 0:
+        return "neutro"
+
+    def mesmo(m):
+        return np.isfinite(m) and np.sign(m) == np.sign(valor) and abs(m) >= 0.5 * abs(valor)
+    if mesmo(mp) or mesmo(mp12):
+        return "parecido"
+    if np.isfinite(mp) and np.sign(mp) == -np.sign(valor) and abs(mp) >= 0.5 * abs(valor):
+        return "oposto"
+    return "neutro"
+
+
+def tabela_d2(est: pd.DataFrame, ev: pd.DataFrame, filtros: list[tuple[str, dict]]) -> str:
     linhas = []
     for rot, f in filtros:
         r = _um(est, **f, estatistica="att_pos_medio")
         if r is None:
             continue
+        mp, mp12 = theta_pre(ev, r)
         linhas.append([rot, f"{_fi(r['n_tratados'])} / {_fi(r['n_controles_nunca'])}", _fi(r["n_coortes"]),
                        _n(r["valor"], 2), _ic(r), _p(r["p_valor"]), _n(r["mde"], 2, sinal=False),
                        _n(r["media_referencia"], 2, sinal=False), _pre_txt(est, **f),
-                       _p(_um(est, **f, estatistica="pretendencia_supt")["p_valor"])])
+                       _p(_um(est, **f, estatistica="pretendencia_supt")["p_valor"]),
+                       f"{_n(mp, 2)} / {_n(mp12, 2)}"])
     return _tabela(["Linha", "Tratados / não tratados no horizonte", "Coortes", "ATT médio do pós", "IC 95%", "p",
-                    "MDE (2,8 × EP)", "Média do pré dos tratados", "Pré: p do Wald", "Pré: p sup-t"], linhas)
+                    "MDE (2,8 × EP)", "Média do pré dos tratados", "Pré: p do Wald", "Pré: p sup-t",
+                    "θ médio do pré (−24 a −2 / −13 a −2)"], linhas)
 
 
 def tabela_d1(est: pd.DataFrame, item: str, oids: list[str], versao: str = "") -> str:
@@ -1092,7 +1128,65 @@ def tabela_amostras(resumo: dict) -> str:
     return _tabela(["Item", "Valor"], linhas)
 
 
-def leitura(est: pd.DataFrame) -> str:
+def _rotulo_linha(r: dict) -> str:
+    rec, it = r["recorte"], r["item"]
+    if it == "12.2":
+        return "12.2, " + ("todos os cursos (ATT agregado)" if rec == TODOS else rec.replace("curso_", "curso "))
+    if it == "12.3":
+        return {"D2_doc50": "12.3, D2 do doc 50", "a_nunca_tratados": "12.3a, só nunca tratados"}.get(
+            rec, "12.3c, " + rec.replace("c_tercil_", "tercil "))
+    if it == "12.1":
+        return f"12.1, K2 ({r['versao_fonte']})"
+    return f"{it}, {r['outcome_id']} (D2)"
+
+
+def alertas_pre(est: pd.DataFrame, ev: pd.DataFrame) -> str:
+    """Toda estimação D2 principal cujo IC exclui zero é lida junto com o pré: pré não plano (Wald), diferença que já
+    aparecia antes da chegada ou pré de sinal oposto (convenção do doc 50 e da auditoria 21)."""
+    nao_plano, parecido, oposto, limpos, n_supt = [], [], [], [], 0
+    todas = est[(est["estatistica"] == "att_pos_medio") & (est["variante"] == "principal")
+                & (est["status"] == "EXECUTADO")]
+    for r in todas.to_dict("records"):
+        if classificar(r) not in ("acima de zero", "abaixo de zero"):
+            continue
+        f = {k: r[k] for k in ("item", "outcome_id", "desenho", "versao_fonte", "recorte", "variante")}
+        w = _um(est, **f, estatistica="pretendencia_wald")
+        st = _um(est, **f, estatistica="pretendencia_supt")
+        mp, mp12 = theta_pre(ev, r)
+        rot = f"{_rotulo_linha(r)}: ATT {_n(r['valor'], 2)}, IC 95% {_ic(r)}"
+        if w is not None and np.isfinite(float(w["p_valor"])) and float(w["p_valor"]) < 0.05:
+            n_supt += int(float(st["p_valor"]) < 0.05)
+            nao_plano.append(f"{rot}; Wald do pré p = {_p(w['p_valor'])}, sup-t p = {_p(st['p_valor'])}")
+            continue
+        cl = classe_pre(float(r["valor"]), mp, mp12)
+        if cl == "parecido":
+            parecido.append(f"{rot}; θ médio do pré {_n(mp, 2)} (−13 a −2: {_n(mp12, 2)})")
+        elif cl == "oposto":
+            oposto.append(f"{rot}; θ médio do pré {_n(mp, 2)}")
+        else:
+            limpos.append(_rotulo_linha(r))
+    txt = ""
+    if nao_plano:
+        txt += (" Pré não plano (Wald p < 0,05), então a diferença é só uma associação e não se lê como mudança causada "
+                "pela chegada: " + "; ".join(nao_plano) + ". O sup-t, menos potente contra tendências suaves, "
+                + ("não rejeita em nenhuma delas" if n_supt == 0 else f"rejeita em {n_supt} delas")
+                + "; vale o Wald, que é a regra do doc 50, e a ressalva fica.")
+    if parecido:
+        txt += (" Pré compatível com plano pelo Wald, mas com o θ médio do pré de mesmo sinal e pelo menos metade do "
+                "ATT do pós (boa parte da diferença já aparecia antes da chegada, em relação ao mês-base): "
+                + "; ".join(parecido) + ".")
+    if oposto:
+        txt += (" θ médio do pré com sinal oposto ao do ATT e pelo menos metade do tamanho (o ATT depende do mês-base): "
+                + "; ".join(oposto) + ".")
+    if limpos:
+        txt += (" Sem ressalva do pré, mas ainda ATT sob tendências paralelas, sem exogeneidade validada: "
+                + "; ".join(limpos) + ".")
+    n_ic = len(nao_plano) + len(parecido) + len(oposto) + len(limpos)
+    return txt + (f" São {n_ic} ATT principais com IC fora de zero entre {len(todas)} estimações D2 principais, sem "
+                  "correção para múltiplos testes fora das 8 linhas do BKY." if n_ic else "")
+
+
+def leitura(est: pd.DataFrame, ev: pd.DataFrame) -> str:
     def frase(rot, r, pre_f):
         if r is None:
             return f"{rot}: sem estimativa"
@@ -1120,23 +1214,19 @@ def leitura(est: pd.DataFrame) -> str:
                       ("K2_reg", "12.5, cirurgias K2 nos outros municípios da região")):
         f = dict(item="12.5", outcome_id=oid, variante="principal")
         partes.append(frase(nome, _um(est, **f, estatistica="att_pos_medio"), f))
-    texto = "; ".join(partes) + "."
+    texto = "; ".join(partes) + "." + alertas_pre(est, ev)
     r_k1 = _um(est, item="12.3", recorte="D2_doc50", estatistica="att_pos_medio")
     r_reg = _um(est, item="12.5", outcome_id="K1_reg", variante="principal", estatistica="att_pos_medio")
+    w_reg = _um(est, item="12.5", outcome_id="K1_reg", variante="principal", estatistica="pretendencia_wald")
     c_k1, c_reg = classificar(r_k1), classificar(r_reg)
-    if c_reg == "abaixo de zero" and c_k1 == "acima de zero":
-        sub = ("a produção sobe no município que recebeu e cai nos vizinhos: o padrão é compatível com deslocamento de "
-               "produção dentro da região, não com expansão líquida")
-    elif c_reg == "abaixo de zero":
-        sub = "a produção cai nos vizinhos sem subida distinguível no município: o padrão sugere deslocamento"
-    elif c_reg == "acima de zero":
-        sub = ("a produção sobe também nos vizinhos: o padrão é compatível com atendimento de referência, não com "
-               "deslocamento")
-    else:
-        sub = ("o intervalo da região inclui zero: os dados não distinguem expansão líquida de deslocamento entre "
-               "municípios da região")
-    texto += (f" Expansão líquida contra deslocamento (K1 no município, D2 do doc 50: o intervalo {c_k1}; K1 nos outros "
-              f"municípios da região: o intervalo {c_reg}): {sub}.")
+    pre_reg = ("o pré não é plano" if w_reg is not None and float(w_reg["p_valor"]) < 0.05
+               else "o pré é compatível com plano")
+    texto += (f" Expansão líquida e deslocamento não ficam separados: K1 no município (D2 do doc 50): o intervalo "
+              f"{c_k1}; K1 nos outros municípios da região: o intervalo {c_reg} e {pre_reg}. A leitura do protocolo "
+              "(negativo nos vizinhos = deslocamento de produção; positivo = atendimento de referência) vale só como "
+              "hipótese: sem exogeneidade validada, o sinal nos vizinhos também pode ser tendência regional comum, e "
+              "pacientes que migram de município não são observados na produção por município de execução (os "
+              "residentes do 12.4 olham só as internações).")
     sig = est[est["entra_bky"].astype(bool) & (est["q_bky"] < 0.05)]
     texto += (f" Depois do BKY do adendo, {len(sig)} de {int(est['entra_bky'].astype(bool).sum())} linhas têm q < 0,05"
               + (f" ({', '.join(f'{a} {b}' for a, b in zip(sig['item'], sig['outcome_id']))})" if len(sig) else "")
@@ -1197,8 +1287,9 @@ def gerar_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> str:
         "- **D1** (12.1 e 12.4) mede, no máximo, o incentivo marginal de R$ 5 mil dentro do pacote de regras dos "
         "cortes 0,300 e 0,400 (auditoria 18), não a participação no PMM-E.",
         "- **12.4** mede o uso de internação pelos residentes (acesso), não a oferta local.",
-        "- **12.5** separa expansão líquida de deslocamento: produção que sobe no município e cai nos vizinhos da "
-        "região de saúde é deslocamento; subida nos vizinhos é atendimento de referência.",
+        "- **12.5** não separa expansão líquida de deslocamento: o protocolo lê negativo nos vizinhos como "
+        "deslocamento de produção e positivo como atendimento de referência, mas isso é hipótese, não teste; a "
+        "produção por município de execução não vê o paciente que migra.",
         "- Produção não é saúde nem espera: a fila não é pública e continua fora.",
         "",
         "## 2. Amostras e dados",
@@ -1215,7 +1306,7 @@ def gerar_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> str:
         "pelas CBO do curso, por 10 mil habitantes. Controles: pares do mesmo curso que ofereceram célula e ainda não "
         "tinham recebido especialista. Inferência com cluster no município.",
         "",
-        tabela_d2(est, f22),
+        tabela_d2(est, ev, f22),
         "",
         fig("K_X_12_2_evento.png"),
         "",
@@ -1228,7 +1319,7 @@ def gerar_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> str:
         "",
         "### 4.1 D2 (chegada)",
         "",
-        tabela_d2(est, f24),
+        tabela_d2(est, ev, f24),
         "",
         "### 4.2 D1 (DiRD nos cortes, população U)",
         "",
@@ -1244,7 +1335,7 @@ def gerar_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> str:
         "",
         "### 5.1 D2",
         "",
-        tabela_d2(est, f21),
+        tabela_d2(est, ev, f21),
         "",
         "### 5.2 D1 (v1 e v2)",
         "",
@@ -1260,7 +1351,7 @@ def gerar_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> str:
         "",
         "### 6.1 (a) Só controles cujas células ficaram vazias",
         "",
-        tabela_d2(est, f23),
+        tabela_d2(est, ev, f23),
         "",
         "### 6.2 (b) Diferenças em diferenças sintéticas, por coorte",
         "",
@@ -1271,7 +1362,7 @@ def gerar_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> str:
         f"Tercis pela distribuição entre os municípios tratados (cortes: {_n(terc[0], 3, sinal=False)} e "
         f"{_n(terc[1], 3, sinal=False)}); a condição é anterior ao início de cada médico (X1, regra D1).",
         "",
-        tabela_d2(est, f23c),
+        tabela_d2(est, ev, f23c),
         "",
         (f"Diferença tercil 3 − tercil 1: {_n(dif['valor'], 2)} (IC 95% {_ic(dif)}; p = {_p(dif['p_valor'])})."
          if dif else "Diferença tercil 3 − tercil 1: sem estimativa."),
@@ -1280,7 +1371,7 @@ def gerar_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> str:
         "",
         "## 7. 12.5 — Transbordamento para os outros municípios da região de saúde",
         "",
-        tabela_d2(est, f25),
+        tabela_d2(est, ev, f25),
         "",
         fig("K_X_12_5_regiao.png"),
         "",
@@ -1288,7 +1379,7 @@ def gerar_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> str:
         "",
         tabela_bky(est),
         "",
-        leitura(est),
+        leitura(est, ev),
         "",
         "### 8.1 Itens não executados",
         "",
@@ -1325,6 +1416,8 @@ def ler_tabelas():
     for c in ("corte", "recorte", "versao_fonte"):
         est[c] = est[c].fillna("")
     ev = pd.read_csv(OUT / NOME_EVENTO, dtype={"item": str, "recorte": str, "versao_fonte": str})
+    for c in ("recorte", "versao_fonte"):
+        ev[c] = ev[c].fillna("")
     return est, ev
 
 
@@ -1390,6 +1483,18 @@ DESVIOS = [
      "descricao": "BKY entre as linhas principais novas: 12.2 agregado; K2r e K2r_tot em D1 (U, empilhado) e em D2; "
                   "12.3c (tercil 3 - tercil 1); K1_reg e K2_reg. 12.1 e 12.3a/b sao sensibilidades de estimativas ja "
                   "relatadas e ficam fora."},
+    {"data": DATA_EXECUCAO, "tipo": "esclarecimento", "item": "12.3c: ligacao do medico (auditoria 25)",
+     "descricao": "a ligacao da lista nominal ao CNES (X1, regra D1) usa as seis competencias do CNES lidas pela ponte 17 (202406, "
+                  "202501, 202506, 202510, 202602 e 202608), algumas posteriores ao inicio; quem entra na fracao pode depender de "
+                  "informacao posterior a chegada, embora o valor de cada medico use so a ultima competencia anterior ao "
+                  "inicio. Os tercis tem tamanhos desiguais porque o corte inferior (0,000) agrupa todos os municipios "
+                  "sem incumbente. Limite declarado; a diferenca entre tercis e descritiva."},
+    {"data": DATA_EXECUCAO, "tipo": "esclarecimento", "item": "leitura do pre e do 12.5 (auditoria 25)",
+     "descricao": "a leitura segue o doc 50: alem do Wald do pre (5%), cada ATT com IC fora de zero e lido com o theta medio "
+                  "do pre (pre inteiro ou 12 meses antes do mes-base) de mesmo sinal ou sinal oposto e pelo menos metade do "
+                  "ATT do pos; as colunas do doc mostram esses theta. Do 12.5, so a hipotese do protocolo (negativo = "
+                  "deslocamento, positivo = referencia) e relatada, como hipotese: o K1 do municipio e o K1 regional nao "
+                  "separam expansao liquida de deslocamento."},
     {"data": DATA_EXECUCAO, "tipo": "esclarecimento", "item": "12.1: K1",
      "descricao": "o adendo manda reestimar K1 so se a safra v2 do SIA tiver revisao; o a12b relata zero celulas "
                   "diferentes, entao K1 nao foi reestimado (linha NAO_EXECUTADO com o motivo)."},
@@ -1608,7 +1713,8 @@ def executar():
         "doc": rotulo(DOC),
         "leitura": "D2, 12.2, 12.3 e 12.5: ATT sob tendencias paralelas (chegada depende da escolha do candidato); D1: "
                    "incentivo marginal dentro do pacote dos cortes; 12.4: acesso dos residentes, nao oferta local; "
-                   "12.5: negativo = deslocamento, positivo = referencia",
+                   "12.5: leitura do protocolo (negativo = deslocamento, positivo = referencia) e so hipotese; expansao liquida e "
+                   "deslocamento nao ficam separados",
         "parametros": {"e_min": E_MIN, "e_max": E_MAX, "inicio": INICIO, "fim_da_serie": FIM,
                        "bootstrap_cs": {"B": B_BOOT, "pesos": "Mammen", "semente": SEMENTE, "cluster": "municipio"},
                        "bootstrap_sdid": {"B": B_SDID, "semente": SEMENTE_SDID, "unidade": "municipio"},

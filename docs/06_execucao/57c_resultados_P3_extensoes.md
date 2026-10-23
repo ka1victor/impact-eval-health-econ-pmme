@@ -10,7 +10,7 @@
 - **D2, 12.2, 12.3 e 12.5** medem o **ATT da chegada do especialista sob tendências paralelas**: a chegada depende da escolha do candidato e não há fonte de exogeneidade validada. Onde o pré não é plano, a diferença é só uma associação.
 - **D1** (12.1 e 12.4) mede, no máximo, o incentivo marginal de R$ 5 mil dentro do pacote de regras dos cortes 0,300 e 0,400 (auditoria 18), não a participação no PMM-E.
 - **12.4** mede o uso de internação pelos residentes (acesso), não a oferta local.
-- **12.5** separa expansão líquida de deslocamento: produção que sobe no município e cai nos vizinhos da região de saúde é deslocamento; subida nos vizinhos é atendimento de referência.
+- **12.5** não separa expansão líquida de deslocamento: o protocolo lê negativo nos vizinhos como deslocamento de produção e positivo como atendimento de referência, mas isso é hipótese, não teste; a produção por município de execução não vê o paciente que migra.
 - Produção não é saúde nem espera: a fila não é pública e continua fora.
 
 ## 2. Amostras e dados
@@ -43,17 +43,17 @@ Ausências: nenhum mês posterior a 2026-07 é lido; as séries terminam em 2026
 
 Outcome: quantidade aprovada no SIA (a17) nas formas de organização típicas do curso (mapa do G4), executada pelas CBO do curso, por 10 mil habitantes. Controles: pares do mesmo curso que ofereceram célula e ainda não tinham recebido especialista. Inferência com cluster no município.
 
-| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t |
-|---|---|---|---|---|---|---|---|---|---|
-| todos os cursos (peso = pares tratados) | 298 / 719 | 29 | +14,34 | [+3,08; +25,60] | 0,013 | 16,08 | 86,21 | 0,040 (não plano) | 0,595 |
-| curso 7 | 46 / 162 | 4 | +4,20 | [−0,30; +8,71] | 0,068 | 6,44 | 25,20 | 0,000 (não plano) | 0,283 |
-| curso 10 | 15 / 129 | 4 | +6,63 | [−1,48; +14,75] | 0,109 | 11,60 | 16,83 | 0,000 (não plano) | 0,478 |
-| curso 11 | 64 / 162 | 4 | +4,61 | [−0,12; +9,33] | 0,056 | 6,75 | 19,29 | 0,268 (compatível com plano) | 0,592 |
-| curso 12 | 15 / 37 | 4 | −0,64 | [−4,41; +3,14] | 0,740 | 5,39 | 101,24 | 0,315 (compatível com plano) | 0,602 |
-| curso 13 | 8 / 27 | 2 | +1,43 | [−3,83; +6,69] | 0,594 | 7,51 | 16,48 | 0,000 (não plano) | 0,730 |
-| curso 14 | 76 / 110 | 4 | +39,79 | [+3,09; +76,48] | 0,034 | 52,42 | 247,36 | 0,003 (não plano) | 0,632 |
-| curso 15 | 58 / 62 | 4 | +5,08 | [+0,82; +9,35] | 0,019 | 6,09 | 17,90 | 0,930 (compatível com plano) | 0,974 |
-| curso 16 | 16 / 30 | 3 | −0,21 | [−10,07; +9,66] | 0,967 | 14,09 | 97,32 | 0,000 (não plano) | 0,441 |
+| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t | θ médio do pré (−24 a −2 / −13 a −2) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| todos os cursos (peso = pares tratados) | 298 / 719 | 29 | +14,34 | [+3,08; +25,60] | 0,013 | 16,08 | 86,21 | 0,040 (não plano) | 0,595 | +1,98 / +2,60 |
+| curso 7 | 46 / 162 | 4 | +4,20 | [−0,30; +8,71] | 0,068 | 6,44 | 25,20 | 0,000 (não plano) | 0,283 | +2,22 / +1,76 |
+| curso 10 | 15 / 129 | 4 | +6,63 | [−1,48; +14,75] | 0,109 | 11,60 | 16,83 | 0,000 (não plano) | 0,478 | −0,97 / −0,45 |
+| curso 11 | 64 / 162 | 4 | +4,61 | [−0,12; +9,33] | 0,056 | 6,75 | 19,29 | 0,268 (compatível com plano) | 0,592 | −0,15 / −0,95 |
+| curso 12 | 15 / 37 | 4 | −0,64 | [−4,41; +3,14] | 0,740 | 5,39 | 101,24 | 0,315 (compatível com plano) | 0,602 | +4,50 / +2,85 |
+| curso 13 | 8 / 27 | 2 | +1,43 | [−3,83; +6,69] | 0,594 | 7,51 | 16,48 | 0,000 (não plano) | 0,730 | −0,69 / −0,69 |
+| curso 14 | 76 / 110 | 4 | +39,79 | [+3,09; +76,48] | 0,034 | 52,42 | 247,36 | 0,003 (não plano) | 0,632 | +3,64 / +8,80 |
+| curso 15 | 58 / 62 | 4 | +5,08 | [+0,82; +9,35] | 0,019 | 6,09 | 17,90 | 0,930 (compatível com plano) | 0,974 | +0,17 / +0,09 |
+| curso 16 | 16 / 30 | 3 | −0,21 | [−10,07; +9,66] | 0,967 | 14,09 | 97,32 | 0,000 (não plano) | 0,441 | +10,27 / +3,23 |
 
 ![12.2: estudo de evento agregado entre os cursos específicos](../../output/rdd_bolsa/K_X_figuras/K_X_12_2_evento.png)
 
@@ -69,10 +69,10 @@ K2r: AIH do grupo 04 (cirúrgico) de residentes; K2r_tot: todas as AIH de reside
 
 ### 4.1 D2 (chegada)
 
-| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t |
-|---|---|---|---|---|---|---|---|---|---|
-| K2r (D2) | 295 / 303 | 4 | +0,15 | [−0,74; +1,04] | 0,742 | 1,28 | 27,85 | 0,260 (compatível com plano) | 0,165 |
-| K2r_tot (D2) | 295 / 303 | 4 | +2,12 | [+0,30; +3,94] | 0,023 | 2,61 | 63,84 | 0,477 (compatível com plano) | 0,289 |
+| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t | θ médio do pré (−24 a −2 / −13 a −2) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| K2r (D2) | 295 / 303 | 4 | +0,15 | [−0,74; +1,04] | 0,742 | 1,28 | 27,85 | 0,260 (compatível com plano) | 0,165 | +0,47 / +0,33 |
+| K2r_tot (D2) | 295 / 303 | 4 | +2,12 | [+0,30; +3,94] | 0,023 | 2,61 | 63,84 | 0,477 (compatível com plano) | 0,289 | +1,18 / +1,09 |
 
 ### 4.2 D1 (DiRD nos cortes, população U)
 
@@ -113,10 +113,10 @@ A safra v1 (a13) continua a principal. A v2 (a13b) foi extraída depois da revis
 
 ### 5.1 D2
 
-| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t |
-|---|---|---|---|---|---|---|---|---|---|
-| K2, a13_v1 (D2) | 295 / 303 | 4 | +0,72 | [−1,03; +2,47] | 0,418 | 2,50 | 37,43 | 0,028 (não plano) | 0,029 |
-| K2, a13b_v2 (D2) | 295 / 303 | 4 | +0,71 | [−1,03; +2,45] | 0,422 | 2,49 | 37,43 | 0,027 (não plano) | 0,028 |
+| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t | θ médio do pré (−24 a −2 / −13 a −2) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| K2, a13_v1 (D2) | 295 / 303 | 4 | +0,72 | [−1,03; +2,47] | 0,418 | 2,50 | 37,43 | 0,028 (não plano) | 0,029 | +2,37 / +1,29 |
+| K2, a13b_v2 (D2) | 295 / 303 | 4 | +0,71 | [−1,03; +2,45] | 0,422 | 2,49 | 37,43 | 0,027 (não plano) | 0,028 | +2,38 / +1,29 |
 
 ### 5.2 D1 (v1 e v2)
 
@@ -160,10 +160,10 @@ K1 com a safra v2 do SIA: sem revisao na fonte: o a12b compara 14250618 celulas 
 
 ### 6.1 (a) Só controles cujas células ficaram vazias
 
-| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t |
-|---|---|---|---|---|---|---|---|---|---|
-| D2 do doc 50 (controles ainda não tratados, recalculado) | 295 / 303 | 4 | +32,97 | [−3,82; +69,75] | 0,079 | 52,55 | 694,06 | 0,538 (compatível com plano) | 0,326 |
-| (a) controles só nunca tratados (células que ficaram vazias) | 295 / 283 | 4 | +43,42 | [+3,63; +83,21] | 0,032 | 56,85 | 694,06 | 0,597 (compatível com plano) | 0,367 |
+| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t | θ médio do pré (−24 a −2 / −13 a −2) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| D2 do doc 50 (controles ainda não tratados, recalculado) | 295 / 303 | 4 | +32,97 | [−3,82; +69,75] | 0,079 | 52,55 | 694,06 | 0,538 (compatível com plano) | 0,326 | −27,28 / −16,86 |
+| (a) controles só nunca tratados (células que ficaram vazias) | 295 / 283 | 4 | +43,42 | [+3,63; +83,21] | 0,032 | 56,85 | 694,06 | 0,597 (compatível com plano) | 0,367 | −24,61 / −9,38 |
 
 ### 6.2 (b) Diferenças em diferenças sintéticas, por coorte
 
@@ -179,11 +179,11 @@ K1 com a safra v2 do SIA: sem revisao na fonte: o a12b compara 14250618 celulas 
 
 Tercis pela distribuição entre os municípios tratados (cortes: 0,000 e 0,513); a condição é anterior ao início de cada médico (X1, regra D1).
 
-| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t |
-|---|---|---|---|---|---|---|---|---|---|
-| (c) tercil 1 | 122 / 303 | 4 | +1,60 | [−56,96; +60,16] | 0,957 | 83,66 | 588,39 | 0,664 (compatível com plano) | 0,399 |
-| (c) tercil 2 | 68 / 303 | 4 | +70,71 | [+6,98; +134,44] | 0,030 | 91,04 | 711,95 | 0,193 (compatível com plano) | 0,561 |
-| (c) tercil 3 | 95 / 303 | 4 | +39,10 | [−1,40; +79,59] | 0,058 | 57,85 | 828,64 | 0,276 (compatível com plano) | 0,199 |
+| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t | θ médio do pré (−24 a −2 / −13 a −2) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| (c) tercil 1 | 122 / 303 | 4 | +1,60 | [−56,96; +60,16] | 0,957 | 83,66 | 588,39 | 0,664 (compatível com plano) | 0,399 | −81,38 / −76,25 |
+| (c) tercil 2 | 68 / 303 | 4 | +70,71 | [+6,98; +134,44] | 0,030 | 91,04 | 711,95 | 0,193 (compatível com plano) | 0,561 | +51,94 / +95,85 |
+| (c) tercil 3 | 95 / 303 | 4 | +39,10 | [−1,40; +79,59] | 0,058 | 57,85 | 828,64 | 0,276 (compatível com plano) | 0,199 | −14,80 / −20,56 |
 
 Diferença tercil 3 − tercil 1: +37,50 (IC 95% [−26,02; +101,02]; p = 0,247).
 
@@ -193,14 +193,14 @@ Diferença tercil 3 − tercil 1: +37,50 (IC 95% [−26,02; +101,02]; p = 0,247)
 
 ## 7. 12.5 — Transbordamento para os outros municípios da região de saúde
 
-| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t |
-|---|---|---|---|---|---|---|---|---|---|
-| K1_reg | 295 / 303 | 4 | +16,23 | [+0,81; +31,66] | 0,039 | 22,04 | 372,72 | 0,005 (não plano) | 0,745 |
-| K2_reg | 295 / 303 | 4 | −0,41 | [−1,03; +0,21] | 0,198 | 0,89 | 15,87 | 0,004 (não plano) | 0,025 |
+| Linha | Tratados / não tratados no horizonte | Coortes | ATT médio do pós | IC 95% | p | MDE (2,8 × EP) | Média do pré dos tratados | Pré: p do Wald | Pré: p sup-t | θ médio do pré (−24 a −2 / −13 a −2) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| K1_reg | 295 / 303 | 4 | +16,23 | [+0,81; +31,66] | 0,039 | 22,04 | 372,72 | 0,005 (não plano) | 0,745 | +2,68 / −0,15 |
+| K2_reg | 295 / 303 | 4 | −0,41 | [−1,03; +0,21] | 0,198 | 0,89 | 15,87 | 0,004 (não plano) | 0,025 | +0,53 / +0,10 |
 
 ![12.5: estudo de evento de K1_reg e K2_reg (D2)](../../output/rdd_bolsa/K_X_figuras/K_X_12_5_regiao.png)
 
-**Como ler.** Mês a mês desde a chegada, a diferença na produção dos outros municípios da mesma região de saúde; abaixo de zero sugere que a produção mudou de lugar, acima sugere atendimento de referência.
+**Como ler.** Mês a mês desde a chegada, a diferença na produção dos outros municípios da mesma região de saúde; o sinal é uma pista e não separa expansão líquida de deslocamento. O eixo vertical foi limitado: intervalos que o ultrapassam aparecem cortados na borda.
 
 ## 8. Teste múltiplo (BKY dentro do adendo) e leitura
 
@@ -215,7 +215,7 @@ Diferença tercil 3 − tercil 1: +37,50 (IC 95% [−26,02; +101,02]; p = 0,247)
 | 12.5 | K1_reg | D2 | — | — | +16,23 | [+0,81; +31,66] | 0,039 | 0,101 |
 | 12.5 | K2_reg | D2 | — | — | −0,41 | [−1,03; +0,21] | 0,198 | 0,230 |
 
-12.2, produção típica da especialidade no par que recebeu o especialista (ATT agregado): +14,34 (IC 95% [+3,08; +25,60]; o intervalo acima de zero); o pré não é plano, então é só uma associação; 12.4, internações cirúrgicas de residentes (D2): +0,15 (IC 95% [−0,74; +1,04]; o intervalo inclui zero); 12.4, internações cirúrgicas de residentes (D1, empilhado): −0,37 (IC 95% [−1,37; +0,64]; o intervalo inclui zero); 12.4, todas as internações de residentes (D2): +2,12 (IC 95% [+0,30; +3,94]; o intervalo acima de zero); 12.4, todas as internações de residentes (D1, empilhado): −1,48 (IC 95% [−3,21; +0,25]; o intervalo inclui zero); 12.5, produção K1 nos outros municípios da região: +16,23 (IC 95% [+0,81; +31,66]; o intervalo acima de zero); o pré não é plano, então é só uma associação; 12.5, cirurgias K2 nos outros municípios da região: −0,41 (IC 95% [−1,03; +0,21]; o intervalo inclui zero); o pré não é plano, então é só uma associação. Expansão líquida contra deslocamento (K1 no município, D2 do doc 50: o intervalo inclui zero; K1 nos outros municípios da região: o intervalo acima de zero): a produção sobe também nos vizinhos: o padrão é compatível com atendimento de referência, não com deslocamento. Depois do BKY do adendo, 0 de 8 linhas têm q < 0,05. Tudo isso é ATT sob tendências paralelas (ou, no D1, o incentivo marginal dentro do pacote dos cortes), relatado depois de vistos os resultados do doc 50.
+12.2, produção típica da especialidade no par que recebeu o especialista (ATT agregado): +14,34 (IC 95% [+3,08; +25,60]; o intervalo acima de zero); o pré não é plano, então é só uma associação; 12.4, internações cirúrgicas de residentes (D2): +0,15 (IC 95% [−0,74; +1,04]; o intervalo inclui zero); 12.4, internações cirúrgicas de residentes (D1, empilhado): −0,37 (IC 95% [−1,37; +0,64]; o intervalo inclui zero); 12.4, todas as internações de residentes (D2): +2,12 (IC 95% [+0,30; +3,94]; o intervalo acima de zero); 12.4, todas as internações de residentes (D1, empilhado): −1,48 (IC 95% [−3,21; +0,25]; o intervalo inclui zero); 12.5, produção K1 nos outros municípios da região: +16,23 (IC 95% [+0,81; +31,66]; o intervalo acima de zero); o pré não é plano, então é só uma associação; 12.5, cirurgias K2 nos outros municípios da região: −0,41 (IC 95% [−1,03; +0,21]; o intervalo inclui zero); o pré não é plano, então é só uma associação. Pré não plano (Wald p < 0,05), então a diferença é só uma associação e não se lê como mudança causada pela chegada: 12.2, todos os cursos (ATT agregado): ATT +14,34, IC 95% [+3,08; +25,60]; Wald do pré p = 0,040, sup-t p = 0,595; 12.2, curso 14: ATT +39,79, IC 95% [+3,09; +76,48]; Wald do pré p = 0,003, sup-t p = 0,632; 12.5, K1_reg (D2): ATT +16,23, IC 95% [+0,81; +31,66]; Wald do pré p = 0,005, sup-t p = 0,745. O sup-t, menos potente contra tendências suaves, não rejeita em nenhuma delas; vale o Wald, que é a regra do doc 50, e a ressalva fica. Pré compatível com plano pelo Wald, mas com o θ médio do pré de mesmo sinal e pelo menos metade do ATT do pós (boa parte da diferença já aparecia antes da chegada, em relação ao mês-base): 12.4, K2r_tot (D2): ATT +2,12, IC 95% [+0,30; +3,94]; θ médio do pré +1,18 (−13 a −2: +1,09); 12.3c, tercil 2: ATT +70,71, IC 95% [+6,98; +134,44]; θ médio do pré +51,94 (−13 a −2: +95,85). θ médio do pré com sinal oposto ao do ATT e pelo menos metade do tamanho (o ATT depende do mês-base): 12.3a, só nunca tratados: ATT +43,42, IC 95% [+3,63; +83,21]; θ médio do pré −24,61. Sem ressalva do pré, mas ainda ATT sob tendências paralelas, sem exogeneidade validada: 12.2, curso 15. São 7 ATT principais com IC fora de zero entre 20 estimações D2 principais, sem correção para múltiplos testes fora das 8 linhas do BKY. Expansão líquida e deslocamento não ficam separados: K1 no município (D2 do doc 50): o intervalo inclui zero; K1 nos outros municípios da região: o intervalo acima de zero e o pré não é plano. A leitura do protocolo (negativo nos vizinhos = deslocamento de produção; positivo = atendimento de referência) vale só como hipótese: sem exogeneidade validada, o sinal nos vizinhos também pode ser tendência regional comum, e pacientes que migram de município não são observados na produção por município de execução (os residentes do 12.4 olham só as internações). Depois do BKY do adendo, 0 de 8 linhas têm q < 0,05. Tudo isso é ATT sob tendências paralelas (ou, no D1, o incentivo marginal dentro do pacote dos cortes), relatado depois de vistos os resultados do doc 50.
 
 ### 8.1 Itens não executados
 
@@ -238,6 +238,8 @@ Diferença tercil 3 − tercil 1: +37,50 (IC 95% [−26,02; +101,02]; p = 0,247)
 | 2026-10-23 | esclarecimento | 12.4: meses com falta em outra UF | o a15 sinaliza meses em que outra UF de internacao esta sem arquivo ou atipica (residentes internados la podem faltar); o valor nao e alterado, como no a15, e os meses sinalizados vao no resumo. |
 | 2026-10-23 | esclarecimento | 12.5: regiao de saude | CIR da tabela do TabNet (br_regsaud.cnv, o mesmo leitor do P5); so municipios de U entram no numerador e no denominador; municipio sozinho na regiao ou sem CIR fica sem outcome (contado); outros municipios tratados da mesma regiao continuam no somatorio (limite). |
 | 2026-10-23 | esclarecimento | BKY do adendo | BKY entre as linhas principais novas: 12.2 agregado; K2r e K2r_tot em D1 (U, empilhado) e em D2; 12.3c (tercil 3 - tercil 1); K1_reg e K2_reg. 12.1 e 12.3a/b sao sensibilidades de estimativas ja relatadas e ficam fora. |
+| 2026-10-23 | esclarecimento | 12.3c: ligacao do medico (auditoria 25) | a ligacao da lista nominal ao CNES (X1, regra D1) usa as seis competencias do CNES lidas pela ponte 17 (202406, 202501, 202506, 202510, 202602 e 202608), algumas posteriores ao inicio; quem entra na fracao pode depender de informacao posterior a chegada, embora o valor de cada medico use so a ultima competencia anterior ao inicio. Os tercis tem tamanhos desiguais porque o corte inferior (0,000) agrupa todos os municipios sem incumbente. Limite declarado; a diferenca entre tercis e descritiva. |
+| 2026-10-23 | esclarecimento | leitura do pre e do 12.5 (auditoria 25) | a leitura segue o doc 50: alem do Wald do pre (5%), cada ATT com IC fora de zero e lido com o theta medio do pre (pre inteiro ou 12 meses antes do mes-base) de mesmo sinal ou sinal oposto e pelo menos metade do ATT do pos; as colunas do doc mostram esses theta. Do 12.5, so a hipotese do protocolo (negativo = deslocamento, positivo = referencia) e relatada, como hipotese: o K1 do municipio e o K1 regional nao separam expansao liquida de deslocamento. |
 | 2026-10-23 | esclarecimento | 12.1: K1 | o adendo manda reestimar K1 so se a safra v2 do SIA tiver revisao; o a12b relata zero celulas diferentes, entao K1 nao foi reestimado (linha NAO_EXECUTADO com o motivo). |
 
 ## 10. Entradas

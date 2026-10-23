@@ -8,6 +8,20 @@
 
 ---
 
+## 23/10/2026 — Auditoria do P3x (extensões do adendo §12 do protocolo 47)
+
+Motivo: auditoria independente do commit `b358283`. Recálculo das linhas
+principais com código próprio (ponto idêntico), correção de relato no doc 57c
+(leitura do 12.5, pré dos ATT que excluem zero, limites declarados) e testes.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/25_auditoria_P3_extensoes.md`](auditorias/25_auditoria_P3_extensoes.md) | auditoria do P3x: método, recálculo, conferência do protocolo e da integridade, achados e correções C1–C5 |
+
+---
+
 ## 23/10/2026 — Resultados do P3: extensões do adendo §12 do protocolo 47 (doc 57c)
 
 Motivo: onda 3 do plano do doc 51 (agente E-P3x, recomeço do zero depois de uma

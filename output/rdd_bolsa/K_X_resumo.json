@@ -10,7 +10,7 @@
     "secao": "adendo §12"
   },
   "doc": "docs/06_execucao/57c_resultados_P3_extensoes.md",
-  "leitura": "D2, 12.2, 12.3 e 12.5: ATT sob tendencias paralelas (chegada depende da escolha do candidato); D1: incentivo marginal dentro do pacote dos cortes; 12.4: acesso dos residentes, nao oferta local; 12.5: negativo = deslocamento, positivo = referencia",
+  "leitura": "D2, 12.2, 12.3 e 12.5: ATT sob tendencias paralelas (chegada depende da escolha do candidato); D1: incentivo marginal dentro do pacote dos cortes; 12.4: acesso dos residentes, nao oferta local; 12.5: leitura do protocolo (negativo = deslocamento, positivo = referencia) e so hipotese; expansao liquida e deslocamento nao ficam separados",
   "parametros": {
     "e_min": -24,
     "e_max": 9,
@@ -507,6 +507,18 @@
     {
       "data": "2026-10-23",
       "tipo": "esclarecimento",
+      "item": "12.3c: ligacao do medico (auditoria 25)",
+      "descricao": "a ligacao da lista nominal ao CNES (X1, regra D1) usa as seis competencias do CNES lidas pela ponte 17 (202406, 202501, 202506, 202510, 202602 e 202608), algumas posteriores ao inicio; quem entra na fracao pode depender de informacao posterior a chegada, embora o valor de cada medico use so a ultima competencia anterior ao inicio. Os tercis tem tamanhos desiguais porque o corte inferior (0,000) agrupa todos os municipios sem incumbente. Limite declarado; a diferenca entre tercis e descritiva."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
+      "item": "leitura do pre e do 12.5 (auditoria 25)",
+      "descricao": "a leitura segue o doc 50: alem do Wald do pre (5%), cada ATT com IC fora de zero e lido com o theta medio do pre (pre inteiro ou 12 meses antes do mes-base) de mesmo sinal ou sinal oposto e pelo menos metade do ATT do pos; as colunas do doc mostram esses theta. Do 12.5, so a hipotese do protocolo (negativo = deslocamento, positivo = referencia) e relatada, como hipotese: o K1 do municipio e o K1 regional nao separam expansao liquida de deslocamento."
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "esclarecimento",
       "item": "12.1: K1",
       "descricao": "o adendo manda reestimar K1 so se a safra v2 do SIA tiver revisao; o a12b relata zero celulas diferentes, entao K1 nao foi reestimado (linha NAO_EXECUTADO com o motivo)."
     }
@@ -860,36 +872,42 @@
       "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_2_evento.png",
       "descricao": "12.2: estudo de evento agregado entre os cursos específicos",
       "como_ler": "Cada ponto compara, mês a mês desde a chegada, a produção típica da especialidade nos pares município × curso que receberam o especialista com a dos pares que ofereceram a vaga e ainda não tinham recebido; à esquerda do zero os pontos deveriam ficar perto de zero.",
+      "eixo_cortado": false,
       "sha256": "7169c1effbbdfa53cce3c32eef19f4becec6688f918e7da3302f588e13f746d4"
     },
     {
       "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_2_cursos.png",
       "descricao": "12.2: ATT médio do pós por curso e agregado",
       "como_ler": "Cada linha é um curso: o ponto é a diferença média depois da chegada e o traço é o intervalo de 95%; traço que cruza a linha vertical do zero não distingue a diferença de zero.",
+      "eixo_cortado": false,
       "sha256": "b215c66fa3255b29b518e3f9c7021491879cb37786e2ed6190854728d3058f8a"
     },
     {
       "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_4_residentes.png",
       "descricao": "12.4: estudo de evento de K2r e K2r_tot (D2)",
       "como_ler": "Mês a mês desde a chegada, a diferença nas internações de residentes (cirúrgicas à esquerda, todas à direita) entre municípios que receberam o especialista e os comparáveis; mede uso pelos moradores, não oferta local.",
+      "eixo_cortado": false,
       "sha256": "34d7fb710fca0f34f94c9b6356b96d9e33a999d1c2b2ed5d2bf7e9300de7a91a"
     },
     {
       "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_1_versoes.png",
       "descricao": "12.1: K2 com a safra v1 e a v2 do SIH, D1 empilhado e D2",
       "como_ler": "Cada par de pontos é a mesma estimativa de K2 com a versão antiga (v1) e a revisada (v2) do SIH; pontos próximos indicam que a revisão da fonte não muda a conclusão.",
+      "eixo_cortado": false,
       "sha256": "0aa62602209d88c511416d04299ebeb0e7bbdccfea6f04482cbd478786820fb2"
     },
     {
       "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_3_controles.png",
       "descricao": "12.3: K1 sob controles alternativos, DiD sintético e tercis de incumbência",
       "como_ler": "Cada linha é uma forma diferente de comparar os municípios que receberam especialista com os que não receberam, para a produção K1; se as linhas concordam, o resultado não depende da escolha do grupo de comparação.",
+      "eixo_cortado": false,
       "sha256": "c124988fedd0a995101c8563eca04c7e125aeac9062d1cfdac8c46f73103d670"
     },
     {
       "arquivo": "output/rdd_bolsa/K_X_figuras/K_X_12_5_regiao.png",
       "descricao": "12.5: estudo de evento de K1_reg e K2_reg (D2)",
-      "como_ler": "Mês a mês desde a chegada, a diferença na produção dos outros municípios da mesma região de saúde; abaixo de zero sugere que a produção mudou de lugar, acima sugere atendimento de referência.",
+      "como_ler": "Mês a mês desde a chegada, a diferença na produção dos outros municípios da mesma região de saúde; o sinal é uma pista e não separa expansão líquida de deslocamento. O eixo vertical foi limitado: intervalos que o ultrapassam aparecem cortados na borda.",
+      "eixo_cortado": true,
       "sha256": "1165d8dec8b0642c2ae76dda98246845beb7f2debbf836e013b2919e32188095"
     }
   ],
