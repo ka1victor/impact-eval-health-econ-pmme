@@ -47,6 +47,7 @@ CADEIA = [
     RDD / "16_estimar_E9_escolha.py",
     RDD / "24_abertura_vagas_selecao.py",  # adendo §7 do protocolo 48: lê 12, a09, 23 e o E9 (16)
     RDD / "29_determinantes_abertura.py",  # P5 (protocolo 55): lê 12, a09, a12, a08 e funções do 24
+    RDD / "28_trajetoria_medicos.py",  # P4 (protocolo 54): lê o a16, a X1 (17, versionada), o a09 e a ponte
     RDD / "14_estimar_E7_dird_cnes.py",
     RDD / "21_producao_dird.py",  # família K, D1 (protocolo 47): lê a12, a13, a14, a09 e funções do 14 e do 23
     RDD / "22_chegada_pmme_evento.py",  # família K, D2: lê as séries do 21
@@ -172,6 +173,9 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                                                   TT / "03_construir_tipologia_territorial.py",
                                                   RDD / "24_abertura_vagas_selecao.py",
                                                   RDD / "23_estimar_contagem_vagas.py"],
+            # P4 (28) lê o painel médico × mês do a16, o painel do a09 e a ponte curso–CBO (01); importa a função das
+            # listas do 17 (fora do run_all; X1_medicos.parquet é saída versionada).
+            RDD / "28_trajetoria_medicos.py": [A16, A09, AQ / "01_congelar_ponte_cbo.py"],
             # E9 lê as tabelas de escolha do 12 e o manifesto do a11.
             RDD / "16_estimar_E9_escolha.py": [RDD / "12_construir_outcomes_funil.py",
                                               AQ / "a11_adquirir_resultado_ciclo2_chamada1.py"],

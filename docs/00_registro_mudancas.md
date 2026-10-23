@@ -8,6 +8,26 @@
 
 ---
 
+## 23/10/2026 — P4 (protocolo 54): trajetória individual dos médicos, origem e contabilidade líquida
+
+Motivo: onda 3 do plano [`06_execucao/51`](06_execucao/51_plano_perguntas_reformuladas.md) (agente E-P4),
+execução do protocolo congelado [`06_execucao/54`](06_execucao/54_protocolo_P4_oferta_substituicao.md) sobre o
+painel CNES médico × mês do a16 (202406–202608). Exploratório; nada aqui tem fonte de exogeneidade validada.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `scripts/rdd_bolsa/28_trajetoria_medicos.py` | T4.1a (médias por tempo de evento), T4.1b/T4.1c (Callaway–Sant'Anna no nível do médico, por origem), T4.2 (origem dos que mudaram) e T4.3 (contabilidade líquida); gera também o doc 57d inteiro; entra no `run_all.py` depois do P5 |
+| `output/rdd_bolsa/P4_estimativas.csv`, `P4_resumo.json`, `P4_figuras/` | saídas agregadas, `natureza_dos_dados = EMPIRICO`, sem identificadores |
+| [`06_execucao/57d_resultados_P4_trajetoria.md`](06_execucao/57d_resultados_P4_trajetoria.md) | resultados do P4, gerado pelo script |
+| `tests/test_trajetoria_medicos.py` | esquema, rótulos, ausência de identificadores, BKY, hashes, números contra `output/`, doc igual ao gerado e verificação sintética |
+
+O manifesto A6 foi regerado pelo gerador (`scripts/tema_trabalho/07_red_team_sintese.py`) porque a lista `STEPS`
+do `run_all.py` mudou.
+
+---
+
 ## 21/10/2026 — Slides para os professores sobre a troca para o nº de vagas preenchidas
 
 Motivo: os professores sugeriram trocar a variável de efeito de "% de vagas preenchidas" para "número de vagas
