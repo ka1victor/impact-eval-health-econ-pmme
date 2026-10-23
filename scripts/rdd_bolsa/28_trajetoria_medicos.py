@@ -775,7 +775,7 @@ ROTULO_T42 = {
     "horas_na_origem_pre": "horas do médico nos municípios de origem, pré",
     "horas_na_origem_pos": "horas do médico nos municípios de origem, pós",
     "delta_horas_na_origem": "variação das horas do médico na origem (pós − pré)",
-    "fracao_mantem_horas_na_origem": "fração que mantém horas na origem no pós",
+    "fracao_mantem_horas_na_origem": "fração com horas na origem em algum mês de 0 a +6 (critério frouxo)",
     "delta_horas_cbo_municipio_origem": "variação das horas da mesma CBO no município de origem (a09)",
     "delta_horas_cbo_origem_sem_o_medico": "a mesma variação sem as horas do próprio médico",
     "delta_horas_do_medico_no_par": "variação das horas do médico nesses pares (conferência)",
@@ -1060,6 +1060,13 @@ def _p(v) -> str:
     return "< 0,001" if v < 0.001 else _n(v, 3)
 
 
+def _p_pre(v) -> str:
+    """p do teste dos pré; em negrito e com rótulo quando rejeita zero (p < 0,05)."""
+    if v is None or pd.isna(v):
+        return "—"
+    return f"**{_p(v)} (rejeita)**" if v < 0.05 else _p(v)
+
+
 def _i(v) -> str:
     return "—" if v is None or pd.isna(v) else _n(float(v), 0)
 
@@ -1125,7 +1132,7 @@ def tabela_t41b(est, regra, esp="T4.1b", grupo="ciclos 1 e 2") -> str:
         q6 = "—" if not np.isfinite(e6["q_bky"]) else _n(e6["q_bky"], 3)
         linhas.append([ROTULO[o], f"{_n(e0['estimativa'], casas, True)} {_ic(e0, casas)}",
                        f"{_n(e6['estimativa'], casas, True)} {_ic(e6, casas)}", q6,
-                       f"{_n(pos['estimativa'], casas, True)} {_ic(pos, casas)}", _p(pre["p_valor"])])
+                       f"{_n(pos['estimativa'], casas, True)} {_ic(pos, casas)}", _p_pre(pre["p_valor"])])
     return _tab(["Outcome", "θ(0) [IC 95%]", "θ(+6) [IC 95%]", "q BKY de θ(+6)", "média de θ(0..+6) [IC 95%]",
                  "p do pré (Wald)"], linhas)
 
@@ -1142,7 +1149,7 @@ def tabela_t41c(est, regra) -> str:
             pre = _um(est, especificacao="T4.1c", regra_ligacao=regra, janela=jan, grupo=g, outcome=o,
                       medida="wald_pre")
             casas = 2 if UNIDADE[o] != "h/sem" else 1
-            cel += [f"{_n(pos['estimativa'], casas, True)} {_ic(pos, casas)}", _p(pre["p_valor"])]
+            cel += [f"{_n(pos['estimativa'], casas, True)} {_ic(pos, casas)}", _p_pre(pre["p_valor"])]
         linhas.append(cel)
     return _tab(["Outcome", "já no município: média θ(0..+6)", "p do pré", "novos: média θ(0..+6)", "p do pré"], linhas)
 
@@ -1202,7 +1209,7 @@ def tabela_sensibilidade(est) -> str:
                 outcome=o, medida="att_pos_medio")
         p = _um(est, especificacao="T4.1b", regra_ligacao=REGRAS[0], janela=f"[{E_LONGA[0]},{E_LONGA[1]}]",
                 outcome=o, medida="wald_pre")
-        cel += [f"{_n(r['estimativa'], 1, True)} {_ic(r)}", _p(p["p_valor"])]
+        cel += [f"{_n(r['estimativa'], 1, True)} {_ic(r)}", _p_pre(p["p_valor"])]
         linhas.append(cel)
     return _tab(["Outcome", "D1, janela principal", "literal, janela principal", "D1, janela longa (média θ(0..+10))",
                  "p do pré, janela longa"], linhas)
@@ -1249,7 +1256,18 @@ def leitura(est, resumo) -> str:
     q = est[(est["regra_ligacao"] == r0) & est["entra_bky"]]
     pr = est[(est["especificacao"] == "T4.1b") & (est["regra_ligacao"] == r0) & (est["janela"] == jan)
              & (est["medida"] == "wald_pre") & est["outcome"].isin(OUT_PROTOCOLO) & (est["p_valor"] < 0.05)]
-    pre_rej = "; ".join(f"{ROTULO[o]} (p = {_p(pv)})" for o, pv in zip(pr["outcome"], pr["p_valor"])) or "nenhum"
+    pre_rej = "; ".join(f"{ROTULO[o]} (p {_p(pv) if pv < 0.001 else '= ' + _p(pv)})"
+                        for o, pv in zip(pr["outcome"], pr["p_valor"])) or "nenhum"
+    pc = est[(est["especificacao"] == "T4.1c") & (est["regra_ligacao"] == r0) & (est["janela"] == jan)
+             & (est["medida"] == "wald_pre") & est["outcome"].isin(OUT_PROTOCOLO) & (est["p_valor"] < 0.05)]
+    pre_rej_c = "; ".join(f"{ROTULO[o]}, {ROTULO_ORIGEM[g]} (p {_p(pv) if pv < 0.001 else '= ' + _p(pv)})"
+                          for o, g, pv in zip(pc["outcome"], pc["grupo"], pc["p_valor"])) or "nenhum"
+
+    def pre_de(o):
+        r = _um(est, especificacao="T4.1b", regra_ligacao=r0, janela=jan, outcome=o, medida="wald_pre")
+        return ("; **o teste dos pré rejeita zero (p " + (_p(r["p_valor"]) if r["p_valor"] < 0.001
+                                                        else "= " + _p(r["p_valor"])) + "): leitura menos confiável**"
+                ) if r["p_valor"] < 0.05 else f"; teste dos pré sem rejeição (p = {_p(r['p_valor'])})"
 
     def dir_(r):
         if not _exclui_zero(r):
@@ -1263,17 +1281,20 @@ def leitura(est, resumo) -> str:
         f"- **Horas totais (T4.1b).** A média de θ(0..+6) das horas totais cadastradas é "
         f"{_n(tot['estimativa'], 1, True)} h/sem {_ic(tot)}; {dir_(tot)}. O teste conjunto dos pré tem "
         f"p = {_p(pre_tot['p_valor'])}.",
-        f"- **Pré-tendências (T4.1b).** O teste conjunto dos pré rejeita zero (p < 0,05) em: {pre_rej}. Nesses "
-        "outcomes a comparação entre coortes é menos confiável.",
+        f"- **Falha de pré-tendência (T4.1b).** O teste conjunto dos pré rejeita zero (p < 0,05) em: {pre_rej}. Nesses "
+        "outcomes a comparação entre coortes é menos confiável. No T4.1c, por origem, rejeita em: "
+        f"{pre_rej_c}.",
         f"- **Onde estão as horas (T4.1b).** No município do posto: {_n(mun['estimativa'], 1, True)} h/sem "
-        f"{_ic(mun)} ({dir_(mun)}); fora dele: {_n(fora['estimativa'], 1, True)} h/sem {_ic(fora)} ({dir_(fora)}). "
+        f"{_ic(mun)} ({dir_(mun)}{pre_de('horas_mun_posto')}); fora dele: {_n(fora['estimativa'], 1, True)} h/sem "
+        f"{_ic(fora)} ({dir_(fora)}{pre_de('horas_fora_mun_posto')}). "
         "Como horas totais = município do posto + fora, o saldo associado à entrada é a soma das duas.",
         f"- **Contabilidade pré × pós (T4.3, sem grupo de comparação).** O saldo médio por médico é "
         f"{_n(sal['estimativa'], 1, True)} h/sem {_ic(sal)}; a fração do ganho no município do posto compensada por "
         f"perda fora dele é {_pct(fr['estimativa'])} {_ic(fr, pct=True)}. Essa conta inclui qualquer tendência "
         "comum a todos os médicos; o T4.1b a desconta usando quem ainda não começou.",
         f"- **Teste múltiplo.** Das {_i(len(q))} linhas da regra D1 no BKY (T4.1b e T4.1c), "
-        f"{_i((q['q_bky'] <= 0.05).sum())} têm q <= 0,05.",
+        f"{_i((q['q_bky'] <= 0.05).sum())} têm q <= 0,05; essa conta inclui outcomes cujo teste dos pré rejeita zero "
+        "(acima).",
         "- **O que o contraste identifica.** No máximo a associação entre entrar no PMM-E e as horas cadastradas "
         "do próprio médico, sob tendências paralelas entre médicos que entram em meses diferentes. Não é o efeito "
         "da bolsa, nem do PMM-E sobre a oferta do município (que exige o teste município–mês), nem retenção "
@@ -1308,6 +1329,8 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
         "",
         "- **Contraste:** entrada no PMM-E, comparando médicos que começam em meses diferentes (T4.1b e T4.1c). "
         "Mede associação sob tendências paralelas; não é o efeito da bolsa nem do PMM-E sobre o município.",
+        "- **Resultado exploratório.** Nenhuma fonte de exogeneidade foi validada para a data de entrada; os "
+        "números descrevem o que está associado à entrada, não provam efeito.",
         "- **Vínculo não é presença.** Horas cadastradas não são horas trabalhadas, e permanecer no cadastro não "
         "é retenção individual.",
         "- **Heterogeneidade só por condição pré-tratamento:** a origem (X1 b) e a faixa da lista.",
@@ -1347,6 +1370,9 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
         "",
         tabela_t41b(est, r0),
         "",
+        "**Atenção.** Onde o p do pré está em negrito, o teste conjunto dos pré rejeita zero: nesses outcomes as "
+        "coortes já diferiam antes do início e a leitura de θ(e) como associada à entrada é menos confiável.",
+        "",
         "## 6. Por origem (T4.1c)",
         "",
         "Mesma especificação, separando quem já tinha vínculo no município do posto antes do início (X1 b = 1) de "
@@ -1354,9 +1380,14 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
         "",
         tabela_t41c(est, r0),
         "",
+        "**Atenção.** O p do pré em negrito rejeita zero (p < 0,05); vale a mesma ressalva do T4.1b.",
+        "",
         "## 7. Teste múltiplo (BKY)",
         "",
         tabela_bky(est),
+        "",
+        "Os q de BKY corrigem o número de testes, não a falha de pré-tendência: linhas de outcomes cujo teste dos "
+        "pré rejeita zero entram nas contagens acima e não devem ser lidas como confirmadas.",
         "",
         "## 8. Quem mudou de município (T4.2, descritivo)",
         "",
@@ -1390,6 +1421,8 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
         "",
         tabela_sensibilidade(est),
         "",
+        "p do pré em negrito rejeita zero (p < 0,05).",
+        "",
         "## 11. Figuras",
         "",
     ]
@@ -1397,6 +1430,10 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
         nome = Path(f["arquivo"]).name
         partes += [f"### {f['descricao']}", "", f"![{nome}](../../{f['arquivo']})", "",
                    f"**Como ler.** {f['como_ler']}", ""]
+        if nome in ("P4_T41b_evento_horas.png", "P4_T41c_origem.png"):
+            partes += ["**Atenção.** Pontos antes do mês 0 longe de zero indicam falha de pré-tendência; os p do "
+                       "teste conjunto dos pré estão nas seções 5 e 6, e nos outcomes em que ele rejeita a leitura "
+                       "é menos confiável.", ""]
     partes += ["## 12. Leitura", "", leitura(est, resumo), "",
                "## 13. Decisões e desvios", ""]
     partes += [f"- **{d['item']}** ({d['data']}). {d['descricao']}" for d in resumo["desvios"]]

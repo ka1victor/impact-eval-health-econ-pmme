@@ -14,6 +14,7 @@ Este documento é gerado pelo script a partir de `output/`; não edite à mão. 
 O P4 acompanha, mês a mês, as horas e os vínculos **cadastrados** no CNES de cada médico do PMM-E ligado na X1, antes e depois do início no programa. A pergunta é se o médico soma horas, troca privado por SUS, muda de município ou só passa a ser registrado no posto onde já estava.
 
 - **Contraste:** entrada no PMM-E, comparando médicos que começam em meses diferentes (T4.1b e T4.1c). Mede associação sob tendências paralelas; não é o efeito da bolsa nem do PMM-E sobre o município.
+- **Resultado exploratório.** Nenhuma fonte de exogeneidade foi validada para a data de entrada; os números descrevem o que está associado à entrada, não provam efeito.
 - **Vínculo não é presença.** Horas cadastradas não são horas trabalhadas, e permanecer no cadastro não é retenção individual.
 - **Heterogeneidade só por condição pré-tratamento:** a origem (X1 b) e a faixa da lista.
 - **T4.2 e T4.3 são descritivos.**
@@ -75,15 +76,17 @@ Callaway–Sant'Anna no nível do médico, janela principal, regra D1. θ(e) em 
 | horas em vínculos não SUS | +0,0 [-0,2; +0,3] | -0,1 [-0,8; +0,6] | 0,116 | -0,2 [-0,5; +0,2] | 0,865 |
 | horas ambulatoriais | +2,4 [+1,9; +3,0] | +6,5 [+5,0; +8,0] | 0,001 | +4,7 [+3,9; +5,5] | 0,124 |
 | horas hospitalares | +1,2 [+0,7; +1,7] | +2,3 [+1,0; +3,5] | 0,001 | +1,8 [+1,1; +2,6] | 0,214 |
-| número de vínculos | +0,20 [+0,16; +0,25] | +0,28 [+0,14; +0,43] | 0,001 | +0,34 [+0,27; +0,42] | 0,003 |
-| número de estabelecimentos | +0,19 [+0,15; +0,23] | +0,25 [+0,12; +0,38] | 0,001 | +0,30 [+0,23; +0,37] | 0,003 |
-| número de municípios | +0,14 [+0,11; +0,17] | +0,31 [+0,23; +0,40] | 0,001 | +0,27 [+0,22; +0,31] | < 0,001 |
-| horas no estabelecimento do posto | +4,3 [+3,8; +4,8] | +10,0 [+9,0; +11,0] | 0,001 | +8,2 [+7,6; +8,8] | < 0,001 |
-| horas no município do posto | +4,4 [+3,9; +5,0] | +10,7 [+9,4; +12,0] | 0,001 | +8,7 [+7,9; +9,5] | 0,001 |
+| número de vínculos | +0,20 [+0,16; +0,25] | +0,28 [+0,14; +0,43] | 0,001 | +0,34 [+0,27; +0,42] | **0,003 (rejeita)** |
+| número de estabelecimentos | +0,19 [+0,15; +0,23] | +0,25 [+0,12; +0,38] | 0,001 | +0,30 [+0,23; +0,37] | **0,003 (rejeita)** |
+| número de municípios | +0,14 [+0,11; +0,17] | +0,31 [+0,23; +0,40] | 0,001 | +0,27 [+0,22; +0,31] | **< 0,001 (rejeita)** |
+| horas no estabelecimento do posto | +4,3 [+3,8; +4,8] | +10,0 [+9,0; +11,0] | 0,001 | +8,2 [+7,6; +8,8] | **< 0,001 (rejeita)** |
+| horas no município do posto | +4,4 [+3,9; +5,0] | +10,7 [+9,4; +12,0] | 0,001 | +8,7 [+7,9; +9,5] | **0,001 (rejeita)** |
 | horas fora do município do posto | -0,8 [-1,5; -0,1] | -1,9 [-3,8; +0,1] | 0,012 | -2,1 [-3,2; -1,0] | 0,927 |
 | horas em estabelecimentos públicos | +3,4 [+2,8; +4,1] | +7,4 [+5,5; +9,2] | 0,001 | +5,9 [+4,9; +6,9] | 0,127 |
 | horas em privados com fins lucrativos | -0,3 [-0,7; +0,2] | -0,1 [-1,2; +1,0] | 0,130 | -0,5 [-1,1; +0,2] | 0,692 |
 | horas em privados sem fins lucrativos | +0,5 [+0,1; +0,9] | +1,7 [+0,6; +2,7] | 0,001 | +1,3 [+0,7; +1,9] | 0,498 |
+
+**Atenção.** Onde o p do pré está em negrito, o teste conjunto dos pré rejeita zero: nesses outcomes as coortes já diferiam antes do início e a leitura de θ(e) como associada à entrada é menos confiável.
 
 ## 6. Por origem (T4.1c)
 
@@ -94,11 +97,13 @@ Mesma especificação, separando quem já tinha vínculo no município do posto 
 | horas totais | +4,9 [+3,3; +6,5] | 0,377 | +8,1 [+6,5; +9,7] | 0,169 |
 | horas em vínculos SUS | +4,9 [+3,3; +6,5] | 0,325 | +8,5 [+6,9; +10,1] | 0,126 |
 | horas em vínculos não SUS | +0,0 [-0,5; +0,6] | 0,517 | -0,3 [-0,8; +0,1] | 0,903 |
-| horas no estabelecimento do posto | +6,1 [+5,2; +7,0] | 0,114 | +10,0 [+9,3; +10,7] | < 0,001 |
-| horas no município do posto | +6,2 [+5,0; +7,4] | 0,799 | +11,0 [+10,2; +11,8] | < 0,001 |
+| horas no estabelecimento do posto | +6,1 [+5,2; +7,0] | 0,114 | +10,0 [+9,3; +10,7] | **< 0,001 (rejeita)** |
+| horas no município do posto | +6,2 [+5,0; +7,4] | 0,799 | +11,0 [+10,2; +11,8] | **< 0,001 (rejeita)** |
 | horas fora do município do posto | -1,2 [-2,4; -0,1] | 0,527 | -2,9 [-4,4; -1,4] | 0,216 |
-| número de vínculos | +0,19 [+0,10; +0,29] | 0,041 | +0,48 [+0,38; +0,58] | 0,010 |
-| número de municípios | -0,07 [-0,12; -0,02] | 0,448 | +0,58 [+0,52; +0,64] | < 0,001 |
+| número de vínculos | +0,19 [+0,10; +0,29] | **0,041 (rejeita)** | +0,48 [+0,38; +0,58] | **0,010 (rejeita)** |
+| número de municípios | -0,07 [-0,12; -0,02] | 0,448 | +0,58 [+0,52; +0,64] | **< 0,001 (rejeita)** |
+
+**Atenção.** O p do pré em negrito rejeita zero (p < 0,05); vale a mesma ressalva do T4.1b.
 
 ## 7. Teste múltiplo (BKY)
 
@@ -109,6 +114,8 @@ Mesma especificação, separando quem já tinha vínculo no município do posto 
 | literal (sensibilidade) | T4.1b | 98 | 83 | 88 | 92 |
 | literal (sensibilidade) | T4.1c | 196 | 159 | 172 | 181 |
 
+Os q de BKY corrigem o número de testes, não a falha de pré-tendência: linhas de outcomes cujo teste dos pré rejeita zero entram nas contagens acima e não devem ser lidas como confirmadas.
+
 ## 8. Quem mudou de município (T4.2, descritivo)
 
 Médicos novos no município do posto (X1 b = 0) com vínculo médico em outro município no mês antes do início. Pré = média dos meses −6 a −1; pós = média dos meses 0 a +6 disponíveis. A variação da CBO no município de origem é em horas totais do município (CNES nacional, a09): a média por par pesa mais os municípios grandes e inclui a tendência local, sem grupo de comparação. Pares com CBO sem série própria no a09 ficam fora dessas três linhas (contagens no resumo).
@@ -118,7 +125,7 @@ Médicos novos no município do posto (X1 b = 0) com vínculo médico em outro m
 | horas do médico nos municípios de origem, pré | media por medico | 647 | +57,0 [+54,3; +59,6] |
 | horas do médico nos municípios de origem, pós | media por medico | 647 | +52,9 [+50,3; +55,5] |
 | variação das horas do médico na origem (pós − pré) | media por medico | 647 | -4,1 [-5,4; -2,7] |
-| fração que mantém horas na origem no pós | fracao | 647 | 98,6% [97,4%; 99,3%] |
+| fração com horas na origem em algum mês de 0 a +6 (critério frouxo) | fracao | 647 | 98,6% [97,4%; 99,3%] |
 | variação das horas da mesma CBO no município de origem (a09) | media por par | 1.428 | +209,4 [+155,4; +263,4] |
 | a mesma variação sem as horas do próprio médico | media por par | 1.428 | +209,4 [+155,4; +263,4] |
 | variação das horas do médico nesses pares (conferência) | media por par | 1.428 | +0,1 [-0,3; +0,4] |
@@ -177,10 +184,12 @@ Subamostra balanceada (início entre 202412 e 202602):
 | Outcome | D1, janela principal | literal, janela principal | D1, janela longa (média θ(0..+10)) | p do pré, janela longa |
 |---|---|---|---|---|
 | horas totais | +6,6 [+5,4; +7,8] | +6,1 [+4,9; +7,3] | +7,5 [+5,8; +9,3] | 0,504 |
-| horas no município do posto | +8,7 [+7,9; +9,5] | +8,0 [+7,2; +8,7] | +9,8 [+8,8; +10,7] | 0,007 |
+| horas no município do posto | +8,7 [+7,9; +9,5] | +8,0 [+7,2; +8,7] | +9,8 [+8,8; +10,7] | **0,007 (rejeita)** |
 | horas fora do município do posto | -2,1 [-3,2; -1,0] | -1,9 [-2,9; -0,9] | -2,2 [-3,8; -0,7] | 0,735 |
 | horas em vínculos SUS | +6,8 [+5,6; +8,0] | +6,2 [+5,1; +7,4] | +7,7 [+6,1; +9,4] | 0,478 |
 | horas em vínculos não SUS | -0,2 [-0,5; +0,2] | -0,1 [-0,5; +0,2] | -0,2 [-0,8; +0,3] | 0,421 |
+
+p do pré em negrito rejeita zero (p < 0,05).
 
 ## 11. Figuras
 
@@ -196,6 +205,8 @@ Subamostra balanceada (início entre 202412 e 202602):
 
 **Como ler.** Cada ponto compara a variação das horas de quem já começou com a de quem ainda vai começar, a cada mês desde o início; o mês −1 é a referência e vale zero. Pontos antes do mês 0 perto de zero dão mais confiança na comparação.
 
+**Atenção.** Pontos antes do mês 0 longe de zero indicam falha de pré-tendência; os p do teste conjunto dos pré estão nas seções 5 e 6, e nos outcomes em que ele rejeita a leitura é menos confiável.
+
 ### T4.1b: θ(e) das horas SUS, não SUS, públicas e privadas com fins, regra D1
 
 ![P4_T41b_evento_tipo.png](../../output/rdd_bolsa/P4_figuras/P4_T41b_evento_tipo.png)
@@ -208,6 +219,8 @@ Subamostra balanceada (início entre 202412 e 202602):
 
 **Como ler.** A mesma comparação, separando quem já tinha vínculo no município do posto antes de começar (azul) de quem chegou de fora ou sem vínculo (laranja).
 
+**Atenção.** Pontos antes do mês 0 longe de zero indicam falha de pré-tendência; os p do teste conjunto dos pré estão nas seções 5 e 6, e nos outcomes em que ele rejeita a leitura é menos confiável.
+
 ### T4.3: componentes da contabilidade líquida por faixa e no total, regra D1
 
 ![P4_T43_contabilidade.png](../../output/rdd_bolsa/P4_figuras/P4_T43_contabilidade.png)
@@ -218,10 +231,10 @@ Subamostra balanceada (início entre 202412 e 202602):
 
 - **Origem (descritivo).** Na regra D1, 51,0% [48,4%; 53,7%] dos 1.397 médicos dos ciclos 1 e 2 com X1 b já tinham vínculo médico cadastrado no município do posto na última competência pré-início; 49,0% eram novos no município. 0 médicos não têm X1 b e ficam fora do T4.1c.
 - **Horas totais (T4.1b).** A média de θ(0..+6) das horas totais cadastradas é +6,6 h/sem [+5,4; +7,8]; o IC 95% exclui zero. O teste conjunto dos pré tem p = 0,310.
-- **Pré-tendências (T4.1b).** O teste conjunto dos pré rejeita zero (p < 0,05) em: número de vínculos (p = 0,003); número de estabelecimentos (p = 0,003); número de municípios (p = < 0,001); horas no estabelecimento do posto (p = < 0,001); horas no município do posto (p = 0,001). Nesses outcomes a comparação entre coortes é menos confiável.
-- **Onde estão as horas (T4.1b).** No município do posto: +8,7 h/sem [+7,9; +9,5] (o IC 95% exclui zero); fora dele: -2,1 h/sem [-3,2; -1,0] (o IC 95% exclui zero). Como horas totais = município do posto + fora, o saldo associado à entrada é a soma das duas.
+- **Falha de pré-tendência (T4.1b).** O teste conjunto dos pré rejeita zero (p < 0,05) em: número de vínculos (p = 0,003); número de estabelecimentos (p = 0,003); número de municípios (p < 0,001); horas no estabelecimento do posto (p < 0,001); horas no município do posto (p = 0,001). Nesses outcomes a comparação entre coortes é menos confiável. No T4.1c, por origem, rejeita em: número de vínculos, já tinha vínculo no município do posto (p = 0,041); número de vínculos, novo no município do posto (p = 0,010); número de estabelecimentos, já tinha vínculo no município do posto (p = 0,034); número de estabelecimentos, novo no município do posto (p = 0,013); número de municípios, novo no município do posto (p < 0,001); horas no estabelecimento do posto, novo no município do posto (p < 0,001); horas no município do posto, novo no município do posto (p < 0,001).
+- **Onde estão as horas (T4.1b).** No município do posto: +8,7 h/sem [+7,9; +9,5] (o IC 95% exclui zero; **o teste dos pré rejeita zero (p = 0,001): leitura menos confiável**); fora dele: -2,1 h/sem [-3,2; -1,0] (o IC 95% exclui zero; teste dos pré sem rejeição (p = 0,927)). Como horas totais = município do posto + fora, o saldo associado à entrada é a soma das duas.
 - **Contabilidade pré × pós (T4.3, sem grupo de comparação).** O saldo médio por médico é +6,9 h/sem [+5,9; +7,9]; a fração do ganho no município do posto compensada por perda fora dele é 26,3% [17,4%; 35,4%]. Essa conta inclui qualquer tendência comum a todos os médicos; o T4.1b a desconta usando quem ainda não começou.
-- **Teste múltiplo.** Das 294 linhas da regra D1 no BKY (T4.1b e T4.1c), 264 têm q <= 0,05.
+- **Teste múltiplo.** Das 294 linhas da regra D1 no BKY (T4.1b e T4.1c), 264 têm q <= 0,05; essa conta inclui outcomes cujo teste dos pré rejeita zero (acima).
 - **O que o contraste identifica.** No máximo a associação entre entrar no PMM-E e as horas cadastradas do próprio médico, sob tendências paralelas entre médicos que entram em meses diferentes. Não é o efeito da bolsa, nem do PMM-E sobre a oferta do município (que exige o teste município–mês), nem retenção individual: vínculo cadastrado não é presença.
 
 ## 13. Decisões e desvios

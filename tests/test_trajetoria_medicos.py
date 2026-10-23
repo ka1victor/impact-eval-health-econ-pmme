@@ -313,6 +313,182 @@ class TestSaidasReais(unittest.TestCase):
             self.assertAlmostEqual(float(r.iloc[0]["estimativa"]), esperado, places=6)
 
 
+class TestRecalculoIndependenteAuditoria24(unittest.TestCase):
+    """Recálculo independente da auditoria 24 (`docs/auditorias/24_auditoria_P4_trajetoria.md`).
+
+    Código próprio em pandas/numpy, sem chamar as funções do script 28 (só a leitura das listas nominais pela X1,
+    que dá o `id_medico`). Refaz: deduplicação por médico, fração de novos e já presentes por faixa, painel
+    médico × mês (horas totais, no município do posto e fora), Callaway–Sant'Anna com controles ainda não
+    iniciados e base g − 1, e a contabilidade líquida T4.3. Tolerância 1e-8 nos pontos.
+    """
+
+    TOL = 1e-8
+
+    @classmethod
+    def setUpClass(cls):
+        cls.est = pd.read_csv(EST, dtype={"grupo": str})
+        spec = importlib.util.spec_from_file_location("x1_auditoria24", ROOT / "scripts" / "rdd_bolsa" /
+                                                      "17_ponte_pmme_cnes.py")
+        b = sys.dont_write_bytecode
+        sys.dont_write_bytecode = True
+        x1m = importlib.util.module_from_spec(spec)
+        sys.modules["x1_auditoria24"] = x1m
+        spec.loader.exec_module(x1m)
+        sys.dont_write_bytecode = b
+        li, _ = x1m.ler_listas_pmme()
+        x1 = pd.read_parquet(OUT / "X1_medicos.parquet")
+        ch = pd.read_parquet(ROOT / "output" / "aquisicao" / "cnes_profissional" / "chaves_origem.parquet")
+        v = pd.read_parquet(ROOT / "output" / "aquisicao" / "cnes_profissional" / "painel_vinculo_mes.parquet")
+        cls.comps = [str(q).replace("-", "") for q in pd.period_range("2024-06", "2026-08", freq="M")]
+        assert v["competencia"].max() < "202609"
+        cls.res = {}
+        for regra in ("d1_pos_hoc", "literal_doc45"):
+            c = ch[(ch["origem"] == "X1") & (ch["regra_ligacao"] == regra)][["id_prof", "id_externo"]]
+            c = c.rename(columns={"id_externo": "id_medico"})
+            m = c.merge(li[["id_medico", "ciclo", "co_cnes", "co_ibge", "mes_inicio", "fonte_lista"]], on="id_medico")
+            m = m.merge(x1[x1["regra_ligacao"] == regra][["id_medico", "faixa", "b_mesmo_mun_ultimo_pre"]],
+                        on="id_medico")
+            m["o"] = (m["fonte_lista"] != "ativos_2026-09-11").astype(int)
+            m = m.sort_values(["id_prof", "o", "mes_inicio", "id_medico"]).drop_duplicates("id_prof")
+            m = m.reset_index(drop=True)
+            m["G"] = m["mes_inicio"].map({k: i for i, k in enumerate(cls.comps)}).fillna(-1).astype(int)
+            m["trat"] = m["ciclo"].isin([1, 2]) & (m["G"] >= 1)
+            vv = v.merge(m[["id_prof", "co_ibge"]].rename(columns={"co_ibge": "ip"}), on="id_prof")
+            vv["h"] = (vv["qt_ch_ambulatorial"].astype(float) + vv["qt_ch_hosp_sus"].astype(float)
+                       + vv["qt_ch_outros"].astype(float))
+            no = vv["co_municipio"] == vv["ip"]
+            vv["hm"] = np.where(no, vv["h"], 0.0)
+            vv["hf"] = np.where(~no, vv["h"], 0.0)
+            g = vv.groupby(["id_prof", "competencia"])[["h", "hm", "hf"]].sum()
+            g = g.reindex(pd.MultiIndex.from_product([m["id_prof"], cls.comps])).fillna(0.0)
+            Y = {k: g[k].unstack().reindex(index=m["id_prof"], columns=cls.comps).to_numpy(float)
+                 for k in ("h", "hm", "hf")}
+            cls.res[regra] = (m, Y)
+
+    @staticmethod
+    def _cs(Y, G, trat, e0=-6, e1=6, minc=30):
+        N, T = Y.shape
+        cel = {}
+        for g in sorted(set(G[trat])):
+            b = g - 1
+            for t in range(max(0, g + e0), min(T, g + e1 + 1)):
+                if t == b:
+                    continue
+                ok = np.isfinite(Y[:, t]) & np.isfinite(Y[:, b])
+                dy = Y[:, t] - Y[:, b]
+                a = (G == g) & trat & ok
+                c = ((G < 0) | (G > max(t, b))) & (G != g) & ok
+                if a.sum() >= 1 and c.sum() >= minc:
+                    cel[(g, t)] = dy[a].mean() - dy[c].mean()
+        th = {}
+        for e in range(e0, e1 + 1):
+            gs = [g for (g, t) in cel if t - g == e]
+            if e == -1:
+                th[e] = 0.0
+            elif not gs:
+                th[e] = np.nan
+            else:
+                w = np.array([((G == g) & trat).sum() for g in gs], float)
+                th[e] = float(sum(wi * cel[(g, g + e)] for wi, g in zip(w / w.sum(), gs)))
+        return th
+
+    def _linha(self, **f):
+        s = self.est
+        for k, x in f.items():
+            s = s[s[k] == x]
+        self.assertEqual(len(s), 1, f)
+        return s.iloc[0]
+
+    def test_amostra_e_limites(self):
+        for regra, (m, _) in self.res.items():
+            self.assertEqual(m["id_prof"].is_unique, True)
+            self.assertLess(max(self.comps), "202609")
+            self.assertEqual(int(m["trat"].sum()), {"d1_pos_hoc": 1397, "literal_doc45": 1419}[regra])
+            self.assertEqual(int((m["ciclo"] == 3).sum()), 468)
+
+    def test_fracao_novos_e_ja_presentes_por_faixa(self):
+        for regra, (m, _) in self.res.items():
+            t = m[m["trat"]]
+            grupos = {"ciclos 1 e 2": t, "1": t[t["ciclo"] == 1], "2": t[t["ciclo"] == 2],
+                      "FAIXA 1": t[t["faixa"] == "FAIXA 1"], "FAIXA 2": t[t["faixa"] == "FAIXA 2"],
+                      "FAIXA 3": t[t["faixa"] == "FAIXA 3"]}
+            for nome, d in grupos.items():
+                b = d["b_mesmo_mun_ultimo_pre"].dropna()
+                r = self._linha(especificacao="origem", regra_ligacao=regra, grupo=nome,
+                                outcome="fracao_ja_no_municipio_x1b")
+                self.assertAlmostEqual(float(r["estimativa"]), float((b == 1).mean()), delta=self.TOL)
+                self.assertEqual(int(r["n_obs"]), len(b))
+                r2 = self._linha(especificacao="origem", regra_ligacao=regra, grupo=nome, outcome="fracao_novos_x1b")
+                self.assertAlmostEqual(float(r2["estimativa"]), float((b == 0).mean()), delta=self.TOL)
+
+    def test_cs_horas_total_municipio_e_fora(self):
+        for regra, (m, Y) in self.res.items():
+            G, tr = m["G"].to_numpy(), m["trat"].to_numpy()
+            for col, o in (("h", "horas_totais"), ("hm", "horas_mun_posto"), ("hf", "horas_fora_mun_posto")):
+                th = self._cs(Y[col], G, tr)
+                for e in range(-6, 7):
+                    if e == -1:
+                        continue
+                    r = self._linha(especificacao="T4.1b", regra_ligacao=regra, janela="[-6,6]",
+                                    grupo="ciclos 1 e 2", outcome=o, medida="att_e", e=e)
+                    if np.isfinite(th[e]):
+                        self.assertAlmostEqual(float(r["estimativa"]), th[e], delta=self.TOL, msg=(regra, o, e))
+                    else:
+                        self.assertTrue(np.isnan(r["estimativa"]))
+                pos = float(np.nanmean([th[e] for e in range(0, 7)]))
+                r = self._linha(especificacao="T4.1b", regra_ligacao=regra, janela="[-6,6]", grupo="ciclos 1 e 2",
+                                outcome=o, medida="att_pos_medio")
+                self.assertAlmostEqual(float(r["estimativa"]), pos, delta=self.TOL)
+
+    def test_pre_tendencia_horas_totais_por_bootstrap_proprio(self):
+        """Wald dos pré refeito com bootstrap não paramétrico por médico (B = 300): mesma conclusão (não rejeita)."""
+        from scipy import stats
+        m, Y = self.res["d1_pos_hoc"]
+        G, tr = m["G"].to_numpy(), m["trat"].to_numpy()
+        th0 = self._cs(Y["h"], G, tr)
+        pre = [-6, -5, -4, -3, -2]
+        rng = np.random.default_rng(24)
+        N = len(m)
+        P = np.array([[self._cs(Y["h"][i], G[i], tr[i])[e] for e in pre]
+                      for i in (rng.integers(0, N, N) for _ in range(300))])
+        th = np.array([th0[e] for e in pre])
+        V = np.cov(P.T)
+        W = float(th @ np.linalg.pinv(V) @ th)
+        p = float(stats.chi2.sf(W, np.linalg.matrix_rank(V)))
+        r = self._linha(especificacao="T4.1b", regra_ligacao="d1_pos_hoc", janela="[-6,6]", grupo="ciclos 1 e 2",
+                        outcome="horas_totais", medida="wald_pre")
+        self.assertGreater(p, 0.05)
+        self.assertGreater(float(r["p_valor"]), 0.05)
+        self.assertLess(abs(p - float(r["p_valor"])), 0.15)
+
+    def test_contabilidade_liquida(self):
+        m, Y = self.res["d1_pos_hoc"]
+        G = m["G"].to_numpy()
+        ids = np.flatnonzero(m["trat"].to_numpy())
+
+        def jm(A, a, b):
+            return np.array([np.nanmean(A[i, [G[i] + e for e in range(a, b + 1) if 0 <= G[i] + e < A.shape[1]]])
+                             for i in ids])
+        d = {k: jm(Y[k], 0, 6) - jm(Y[k], -6, -1) for k in ("h", "hm", "hf")}
+        np.testing.assert_allclose(d["h"], d["hm"] + d["hf"], atol=1e-9)
+        for o, k in (("delta_horas_totais", "h"), ("delta_horas_mun_posto", "hm"), ("delta_horas_fora_mun_posto", "hf")):
+            r = self._linha(especificacao="T4.3", regra_ligacao="d1_pos_hoc", amostra="completa",
+                            grupo="ciclos 1 e 2", outcome=o, medida="soma")
+            self.assertAlmostEqual(float(r["estimativa"]), float(d[k].sum()), delta=1e-4)  # soma de ~1.400 médicos, CSV com 10 dígitos
+        r = self._linha(especificacao="T4.3", regra_ligacao="d1_pos_hoc", amostra="completa", grupo="ciclos 1 e 2",
+                        outcome="fracao_do_ganho_compensada_fora", medida="razao")
+        self.assertAlmostEqual(float(r["estimativa"]), float(-d["hf"].sum() / d["hm"].sum()), delta=1e-8)
+
+    def test_doc_destaca_falhas_de_pre_tendencia(self):
+        texto = DOC.read_text(encoding="utf-8")
+        self.assertNotIn("p = <", texto)
+        self.assertIn("**Falha de pré-tendência (T4.1b).**", texto)
+        self.assertIn("o teste dos pré rejeita zero", texto)           # no bullet "Onde estão as horas"
+        self.assertIn("(rejeita)**", texto)                             # nas tabelas
+        self.assertIn("exploratório", texto.lower())
+        self.assertIn("não são horas trabalhadas", texto)
+
+
 class TestDoc57d(unittest.TestCase):
     def test_doc_igual_ao_gerado(self):
         est, resumo = P4.ler_saidas()

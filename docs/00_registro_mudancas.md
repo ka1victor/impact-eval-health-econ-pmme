@@ -8,6 +8,26 @@
 
 ---
 
+## 23/10/2026 — Auditoria 24: P4 (protocolo 54), aprovado com correções
+
+Motivo: auditoria independente do P4 (commit `a922e66`). Amostra, origem, T4.1b nas horas totais, no município do
+posto e fora dele, BKY e T4.3 foram reproduzidos com código próprio; nenhuma estimativa mudou. As correções são de
+relato: destaque das falhas de pré-tendência, "exploratório" no texto, `p = < 0,001` e o rótulo do T4.2.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/24_auditoria_P4_trajetoria.md`](auditorias/24_auditoria_P4_trajetoria.md) | auditoria do P4: método, recálculo, conferência com o protocolo 54, integridade e correções |
+
+### Alterado
+
+- `scripts/rdd_bolsa/28_trajetoria_medicos.py` (só a geração do doc) e o doc 57d, regerado por `--atualizar-doc`;
+- `tests/test_trajetoria_medicos.py`, de 20 para 26 testes, com a classe `TestRecalculoIndependenteAuditoria24`;
+- o link no [`README.md`](README.md) de `docs/`.
+
+---
+
 ## 23/10/2026 — P4 (protocolo 54): trajetória individual dos médicos, origem e contabilidade líquida
 
 Motivo: onda 3 do plano [`06_execucao/51`](06_execucao/51_plano_perguntas_reformuladas.md) (agente E-P4),
