@@ -51,6 +51,7 @@ CADEIA = [
     RDD / "14_estimar_E7_dird_cnes.py",
     RDD / "21_producao_dird.py",  # família K, D1 (protocolo 47): lê a12, a13, a14, a09 e funções do 14 e do 23
     RDD / "22_chegada_pmme_evento.py",  # família K, D2: lê as séries do 21
+    RDD / "27_producao_extensoes.py",  # P3, adendo §12: importa o 21 e o 22; lê a12b, a13b, a15, a17 e K_D1/K_D2
     RDD / "15_sintese_E8.py",
     RDD / "09b_conferir_sinal.py",  # o 09 exige a conferência em dia com o E3
     RDD / "09_gerar_relatorio_pdf.py",  # lê E1 a E9 e a síntese E8
@@ -187,6 +188,10 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                 RDD / "12_construir_outcomes_funil.py", RDD / "14_estimar_E7_dird_cnes.py",
                 RDD / "23_estimar_contagem_vagas.py"],
             RDD / "22_chegada_pmme_evento.py": [RDD / "21_producao_dird.py", RDD / "12_construir_outcomes_funil.py"],
+            # Extensões do P3 (27, adendo §12): importa o 21 e o 22 e confere K_D1/K_D2; lê as safras v2 (a12b,
+            # a13b), o SIH por residência (a15) e o SIA por forma × curso (a17).
+            RDD / "27_producao_extensoes.py": [RDD / "21_producao_dird.py", RDD / "22_chegada_pmme_evento.py",
+                                               RDD / "12_construir_outcomes_funil.py", A12B, A13B, A15, A17],
             # a15 (SIH por residência) compara seus totais nacionais com as validações versionadas do a13.
             A15: [AQ / "a13_adquirir_sih_tabnet.py"],
             # a16 (portão G5) importa funções do a09 e confere o SHA-256 dos ZIPs contra o manifesto dele.
