@@ -47,6 +47,7 @@ CADEIA = [
     RDD / "16_estimar_E9_escolha.py",
     RDD / "24_abertura_vagas_selecao.py",  # adendo §7 do protocolo 48: lê 12, a09, 23 e o E9 (16)
     RDD / "29_determinantes_abertura.py",  # P5 (protocolo 55): lê 12, a09, a12, a08 e funções do 24
+    RDD / "25_escolha_dap.py",  # P1 (protocolo 52): lê 12, a08, G1 (versionado), E9 (16) e NA (24)
     RDD / "14_estimar_E7_dird_cnes.py",
     RDD / "21_producao_dird.py",  # família K, D1 (protocolo 47): lê a12, a13, a14, a09 e funções do 14 e do 23
     RDD / "22_chegada_pmme_evento.py",  # família K, D2: lê as séries do 21
@@ -172,6 +173,9 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                                                   TT / "03_construir_tipologia_territorial.py",
                                                   RDD / "24_abertura_vagas_selecao.py",
                                                   RDD / "23_estimar_contagem_vagas.py"],
+            # P1 (25) lê as tabelas de escolha do 12, o a08, E9_estimativas (16) e NA_estimativas (24), e importa o 16.
+            RDD / "25_escolha_dap.py": [RDD / "12_construir_outcomes_funil.py", RDD / "16_estimar_E9_escolha.py",
+                                       RDD / "24_abertura_vagas_selecao.py", AQ / "a08_adquirir_ivs_2010_oficial.py"],
             # E9 lê as tabelas de escolha do 12 e o manifesto do a11.
             RDD / "16_estimar_E9_escolha.py": [RDD / "12_construir_outcomes_funil.py",
                                               AQ / "a11_adquirir_resultado_ciclo2_chamada1.py"],
