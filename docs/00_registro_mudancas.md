@@ -35,6 +35,8 @@ substituído pelos slides (mesmo script e mesmo teste, renomeados).
 
 [`tests/README.md`](../tests/README.md) (contagem e linha do módulo novo). Os slides incorporam o diagnóstico ND ([`06_execucao/49b`](06_execucao/49b_diagnostico_contagem_porte.md), `output/rdd_bolsa/ND_estimativas.csv`, `ND_resumo.json` e `ND_figuras/`, reutilizadas sem alteração): cinco slides após o N1 com controle (porte perto do corte, taxa por vaga em 0,300, adendo AD2 sobre o ciclo 2 e o cadastro reserva em duas figuras, oferta e porte em 0,400), a linha "empilhar os cortes junta dois padrões" na conclusão e uma nota técnica; o diagnóstico é descritivo, fora do protocolo 48, e não muda o Holm.
 
+Reorganização em 23/10/2026: 13 slides no corpo (abertura com a resposta, regra, esquema contagem = oferta × taxa, atração, taxa, N1 sem e com controle, forest só de N1, três slides sobre por que a contagem engana — porte, oferta em 0,400 e taxa por vaga em 0,300 fundida com o adendo AD2 —, robustez em um só gráfico e conclusão), divisória "Apêndice" (N2 a N4, S-c, vagas e população por faixa, reserva e taxas por tipo, placebo, notas técnicas) e remoção das figuras que deixaram de ser usadas (`robustez_n1_controle_janela` e `robustez_n1_covariaveis_medidas_ciclos`; o `ND_taxa_janelas` deixou de ser usado nos slides). Sem estimação nova e sem mudar número.
+
 ---
 
 ## 21/10/2026 — Diagnóstico ND da família N (porte, oferta e taxa), fora do protocolo 48
