@@ -8,6 +8,52 @@
 
 ---
 
+## 24/10/2026 — Auditoria 28 da realocação (protocolo 58)
+
+Motivo: auditoria independente do bloco da realocação. Veredito aprovado com correções de relato; nenhuma
+estimativa mudou.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/28_auditoria_realocacao.md`](auditorias/28_auditoria_realocacao.md) | auditoria: ordem dos commits, recálculo independente (principal, Holm, MDE, R1, R2, PL1, PL2), conferência do protocolo, integridade e correções de texto do doc 57g |
+
+---
+
+## 24/10/2026 — Realocação (protocolo 58): execução
+
+Motivo: execução do protocolo [`06_execucao/58`](06_execucao/58_protocolo_realocacao_bolsa.md), congelado no commit
+anterior. Estatuto `EXPLORATORIO_REALOCACAO`.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57g_resultados_realocacao.md`](06_execucao/57g_resultados_realocacao.md) | resultados da realocação, gerado inteiro pelo script: amostra, leitura pré-registrada, variação da exposição, principal com Holm e MDE, sensibilidades R1–R7, placebos, por ciclo, figuras com "Como ler", decisões de implementação e limites |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/32_realocacao_bolsa.py` e saídas `output/rdd_bolsa/R_estimativas.csv`,
+  `R_variacao_exposicao.csv`, `R_resumo.json` e `R_figuras/` (todas `EMPIRICO`);
+- teste `tests/test_realocacao_bolsa.py`; `tests/README.md`; `scripts/README.md`;
+- `run_all.py` (depois do P1) e `tests/test_pipeline_rdd_bolsa.py`; manifesto A6 regerado pelo gerador.
+
+---
+
+## 24/10/2026 — Protocolo 58: realocação entre vagas pela bolsa das concorrentes
+
+Motivo: pedido do autor de testar se a bolsa maior desloca médicos entre vagas do programa (violação de SUTVA na
+RDD nos cortes). Protocolo congelado antes de abrir qualquer outcome por exposição; estatuto
+`EXPLORATORIO_REALOCACAO` (E9, P1 e A3 já vistos).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/58_protocolo_realocacao_bolsa.md`](06_execucao/58_protocolo_realocacao_bolsa.md) | protocolo: unidade (célula aberta), mercado (mesmo curso e ciclo na CIR; raio de 200 km e UF como sensibilidade), exposição (bolsa média das concorrentes menos a própria), desenho com IVS próprio e das concorrentes controlados, outcomes, Holm, placebos, MDE, leitura e limitações |
+
+---
+
 ## 24/10/2026 — T1.6: cenários contrafactuais de bolsa (adendo §7 do protocolo 52, agente E-P1c)
 
 Motivo: pergunta do autor sobre quantas vagas a mais seriam preenchidas no total com +R$ 5 mil de bolsa, com as
