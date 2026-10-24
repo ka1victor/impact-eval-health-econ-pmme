@@ -8,6 +8,36 @@
 
 ---
 
+## 24/10/2026 — Auditoria 27 do P6 (doc 57f)
+
+Criado `docs/auditorias/27_auditoria_P6_mecanismo.md` (veredito, recálculo independente, correções de relato). Sem
+mudança de estimativa; doc 57f, `P6_balanco.png` e `P6_resumo.json` regerados pelo script 31; teste
+`TestRecalculoIndependenteAuditoria27` acrescentado.
+
+## 23/10/2026 — P6 (protocolo 56): alocado por pouco contra não alocado por pouco (doc 57f)
+
+Motivo: onda 3 do plano [`06_execucao/51`](06_execucao/51_plano_perguntas_reformuladas.md) (agente E-P6,
+recomeço do zero depois de uma rodada perdida sem push), execução do protocolo congelado
+[`06_execucao/56`](06_execucao/56_protocolo_P6_mecanismo_alocacao.md). Exploratório; o contraste é ser alocado
+perto da nota de corte, não a bolsa. O cache privado do a16 e o dicionário do G1 foram refeitos fora do Git
+(caminhos já no `.gitignore`) e conferidos contra o a16 e o G1 versionados.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `scripts/rdd_bolsa/30_mecanismo_alocacao.py` | passo 0 (chaves dos candidatos no cache privado, painel dos candidatos em memória, cobertura mensal) e amostra (células elegíveis, r, D e D', covariáveis e outcomes Y1–Y5 por candidato); entra no `run_all.py` em `--etapa verificar` |
+| `scripts/rdd_bolsa/31_rd_mecanismo.py` | primeiro estágio, balanço, R1–R5 (R6 e T6.3 registrados como não executados), BKY e Holm; gera o doc 57f inteiro; entra no `run_all.py` depois do 30 |
+| `output/rdd_bolsa/P6_amostra.parquet`, `P6_celulas.csv`, `P6_cobertura_mensal.csv`, `P6_passo0_resumo.json` | saídas do passo 0, `natureza_dos_dados = EMPIRICO`, pseudônimo `id_candidato` e nenhum nome, CPF, CNS, CRM ou código do profissional |
+| `output/rdd_bolsa/P6_estimativas.csv`, `P6_resumo.json`, `P6_figuras/` | estimativas e figuras do P6 |
+| [`06_execucao/57f_resultados_P6_mecanismo.md`](06_execucao/57f_resultados_P6_mecanismo.md) | resultados do P6, gerado pelo script 31 |
+| `tests/test_mecanismo_alocacao.py` | esquema, rótulos, ausência de identificadores (com varredura de `output/`), BKY e Holm, hashes, números refeitos de `output/` com código próprio, doc igual ao gerado e verificação sintética |
+
+O manifesto A6 foi regerado pelo gerador (`scripts/tema_trabalho/07_red_team_sintese.py`) porque a lista `STEPS`
+do `run_all.py` mudou.
+
+---
+
 ## 24/10/2026 — Auditoria 26 do P1 (protocolo 52)
 
 Motivo: auditoria independente do bloco P1. Veredito aprovado com correções de texto; nenhuma estimativa mudou.
