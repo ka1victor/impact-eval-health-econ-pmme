@@ -474,18 +474,20 @@ def aplicar_familia(est: pd.DataFrame) -> pd.DataFrame:
 # 3. Figuras (sem texto embutido; legenda simples; "Como ler" no doc e no resumo)
 # ---------------------------------------------------------------------------
 
+ROT_CURTO_COV = {"cov_vinculo_medico_pre": "vínculo médico pré", "cov_horas_pre": "horas pré",
+                 "cov_mesma_uf": "mesma UF da vaga", "cov_dist_km": "distância até a vaga", "ligado": "ligado ao CNES"}
 COR = ["#2a78d6", "#eb6834", "#1baf7a"]
 COR_TEXTO = "#52514e"
 COMO_LER = {
     "P6_primeiro_estagio.png": "Cada ponto é a fração de candidatos alocados na 1ª opção (azul) e em qualquer célula "
                                "(laranja) para cada distância r da nota de corte. À direita do zero, a nota passou "
                                "do corte; r = 0 são os empatados, decididos por regra fixa.",
-    "P6_outcomes_media.png": "Média de cada outcome nos meses de seguimento, por r, entre os candidatos ligados ao "
-                             "CNES. Um degrau entre r = −1 e r = +1 sugere efeito de ser alocado; barras são IC de "
-                             "95% sem efeito fixo de célula.",
-    "P6_outcomes_ultimo.png": "Mesma leitura, com o valor de cada outcome no último mês, 202608.",
-    "P6_balanco.png": "Covariáveis de antes do programa e taxa de ligação ao CNES, por r. Sem diferença entre os "
-                      "dois lados do corte, a comparação dos outcomes é mais crível.",
+    "P6_outcomes_media.png": "Média de cada outcome no seguimento, por r, entre os ligados (barras: IC de 95% sem "
+                             "efeito fixo de célula). O degrau do Y1 é quase mecânico; nos demais, os intervalos se "
+                             "sobrepõem.",
+    "P6_outcomes_ultimo.png": "Mesma leitura, no último mês (202608).",
+    "P6_balanco.png": "Covariáveis de antes do programa e taxa de ligação, por r. Distância e ligação "
+                      "diferem entre os lados (seção 5).",
 }
 DESCRICAO_FIGURAS = {
     "P6_primeiro_estagio.png": "Primeiro estágio: alocação por r (regra principal, todos os candidatos)",
@@ -562,7 +564,7 @@ def gerar_figuras(est: pd.DataFrame, dir_fig: Path) -> list[dict]:
     fig, axs = plt.subplots(1, 5, figsize=(14, 3.0))
     for ax, (c, u) in zip(axs, [(c, u) for c, _, u in COVS] + [("ligado", "fração")]):
         pontos(ax, _sel(est, especificacao="medias_por_r", outcome=c), COR[2])
-        _eixo(ax, f"{ROT_COV[c]} ({u})" if len(ROT_COV[c]) < 28 else f"{c.replace('cov_', '')} ({u})")
+        _eixo(ax, f"{ROT_CURTO_COV[c]} ({u})")
     fig.tight_layout()
     salvar(fig, "P6_balanco.png")
     for f in figs:
@@ -743,6 +745,9 @@ def leitura(est: pd.DataFrame, resumo: dict) -> str:
     lig_a = _um(est, especificacao="BAL", regra_ligacao=REGRAS[0], outcome="ligado", medida="taxa_acima")
     lig_b = _um(est, especificacao="BAL", regra_ligacao=REGRAS[0], outcome="ligado", medida="taxa_abaixo")
     dist = _um(est, especificacao="BAL", outcome="cov_dist_km", medida="R1")
+    y3 = _um(est, especificacao="R1", outcome="y3_horas_totais", medida="media")
+    y3u = _um(est, especificacao="R1", outcome="y3_horas_totais", medida="ultimo")
+    y3r3 = _um(est, especificacao="R3", outcome="y3_horas_totais", medida="media")
     am = resumo["amostra"]
     largura = []
     for col, i, rot, u in OUTCOMES:
@@ -758,7 +763,14 @@ def leitura(est: pd.DataFrame, resumo: dict) -> str:
         f"{_n(pe['estimativa'], 3, True)} (fração): a regra é cumprida, porque o corte vem da própria alocação "
         "publicada. Por isso o R2 (Wald) repete o R1.",
         f"- **Outcomes.** Na família do R1 (Y1–Y5 × último mês e média, {_i(len(fam))} testes), {_i(n_p05)} têm p de "
-        f"permutação < 0,05, {_i(n_holm)} rejeitam zero depois do Holm e {_i(n_q)} têm q de BKY ≤ 0,05.",
+        f"permutação < 0,05, {_i(n_holm)} rejeitam zero depois do Holm e {_i(n_q)} têm q de BKY ≤ 0,05. "
+        "Os que rejeitam são os dois do Y1 (quase mecânico); Y2 a Y5 não rejeitam zero.",
+        f"- **Y3, média do seguimento, não é efeito.** {_n(y3['estimativa'], 1, True)} h/sem {_ic_txt(y3, 1)}, "
+        f"p de permutação = {_p(y3['p_perm'])}, mas q de BKY = {_p(y3['q_bky'])} e p de Holm = {_p(y3['p_holm'])}: "
+        "um p < 0,05 entre 10 testes não é evidência. No último mês o p é "
+        f"{_p(y3u['p_perm'])}, e com tendência em r (R3) a estimativa cai para "
+        f"{_n(y3r3['estimativa'], 1, True)}. Os ICs do R4 (empatados incluídos, sem permutação, desempate por regra "
+        "fixa) que excluem zero em Y2 a Y4 também não são evidência: não têm correção para testes múltiplos.",
         "- **Balanço.** " + ("Nenhuma covariável pré nem a taxa de ligação tem diferença com p < 0,05 entre os lados."
                              if not bal_rej else "Diferença com p < 0,05 em: " + "; ".join(bal_rej) +
                              ". Nessas, os lados já diferiam antes da alocação e o contraste fica menos crível.")
@@ -882,6 +894,12 @@ def gerar_doc(est: pd.DataFrame, resumo: dict, p0: dict, am: pd.DataFrame) -> st
         "de Holm na família de 10 testes desta tabela.",
         "",
         tabela_r1(est),
+        "",
+        "**Leia com três avisos.** (1) O Y1 é quase mecânico: ser alocado cria o vínculo cadastrado no município da 1ª "
+        "opção; é o único que rejeita zero depois do Holm. (2) Os dois lados diferem na distância origem–1ª opção e na "
+        "taxa de ligação ao CNES (seção 5); os outcomes só existem para os ligados. (3) Y3 na média, com p = "
+        f"{_p(_um(est, especificacao='R1', outcome='y3_horas_totais', medida='media')['p_perm'])}, não "
+        "sobrevive à correção (q de BKY e p de Holm na tabela) e não é efeito. Tudo é efeito de ser alocado, não da bolsa.",
         "",
         "## 7. Robustez e sensibilidades (R2–R5)",
         "",

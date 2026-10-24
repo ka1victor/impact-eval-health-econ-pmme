@@ -8,6 +8,12 @@
 
 ---
 
+## 24/10/2026 — Auditoria 27 do P6 (doc 57f)
+
+Criado `docs/auditorias/27_auditoria_P6_mecanismo.md` (veredito, recálculo independente, correções de relato). Sem
+mudança de estimativa; doc 57f, `P6_balanco.png` e `P6_resumo.json` regerados pelo script 31; teste
+`TestRecalculoIndependenteAuditoria27` acrescentado.
+
 ## 23/10/2026 — P6 (protocolo 56): alocado por pouco contra não alocado por pouco (doc 57f)
 
 Motivo: onda 3 do plano [`06_execucao/51`](06_execucao/51_plano_perguntas_reformuladas.md) (agente E-P6,

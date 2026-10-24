@@ -415,3 +415,130 @@ class TestDoc57f(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestRecalculoIndependenteAuditoria27(unittest.TestCase):
+    """Recálculo independente da auditoria 27 (`docs/auditorias/27_auditoria_P6_mecanismo.md`).
+
+    Código próprio em pandas/numpy a partir de `P6_amostra.parquet` (agregado pseudônimo versionado), sem chamar
+    funções dos scripts 30 e 31: contagem da janela, primeiro estágio, R1 (efeito fixo de célula por centragem) em
+    Y1 e Y3, permutação dentro da célula com outra semente (ordem de grandeza), Holm e BKY da família de 10 e
+    balanço de distância e taxa de ligação. Também confere os avisos do doc.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        g = pd.read_parquet(AMOSTRA)
+        g = g[g["regra_ligacao"] == "g1_cpf_nome"]
+        w = g[g["r"].isin([-2, -1, 1, 2])].copy()
+        w["D"] = (w["r"] > 0).astype(int)
+        cls.g, cls.w = g, w
+        cls.est = pd.read_csv(EST)
+
+    @staticmethod
+    def _fe(df, y):
+        df = df[df.groupby("celula")["D"].transform(lambda s: s.nunique() == 2)]
+        yy = df[y] - df.groupby("celula")[y].transform("mean")
+        dd = df["D"] - df.groupby("celula")["D"].transform("mean")
+        return float((dd * yy).sum() / (dd * dd).sum()), df
+
+    @staticmethod
+    def _perm(df, y, B=1999, semente=7):
+        rng = np.random.default_rng(semente)
+        b, df = TestRecalculoIndependenteAuditoria27._fe(df, y)
+        grupos = [np.where(df["celula"].to_numpy() == c)[0] for c in df["celula"].unique()]
+        yv, dv = df[y].to_numpy(float), df["D"].to_numpy(float)
+        n = 0
+        for _ in range(B):
+            num = den = 0.0
+            for ix in grupos:
+                dp = rng.permutation(dv[ix])
+                d0 = dp - dp.mean()
+                num += float((d0 * (yv[ix] - yv[ix].mean())).sum())
+                den += float((d0 * d0).sum())
+            n += abs(num / den) >= abs(b) - 1e-12
+        return (n + 1) / (B + 1)
+
+    def _est(self, esp, out, medida):
+        r = self.est[(self.est["especificacao"] == esp) & (self.est["regra_ligacao"] == "g1_cpf_nome") &
+                     (self.est["outcome"] == out) & (self.est["medida"] == medida)]
+        self.assertEqual(len(r), 1)
+        return r.iloc[0]
+
+    def test_contagens_e_primeiro_estagio(self):
+        self.assertEqual((len(self.g), self.g["celula"].nunique()), (320, 62))
+        lig = self.w[self.w["ligado"] == 1]
+        self.assertEqual(((lig["D"] == 1).sum(), (lig["D"] == 0).sum()), (64, 70))
+        b, df = self._fe(lig, "d_alocado_1a_opcao")
+        self.assertEqual((round(b, 6), int((df["D"] == 1).sum()), int((df["D"] == 0).sum())), (1.0, 30, 68))
+        b, _ = self._fe(lig, "d_alocado_pmme")
+        self.assertAlmostEqual(b, 0.917902, places=5)
+        b, df = self._fe(self.w, "d_alocado_pmme")
+        self.assertAlmostEqual(b, 0.925721, places=5)
+        self.assertEqual((int((df["D"] == 1).sum()), int((df["D"] == 0).sum())), (32, 73))
+
+    def test_r1_y1_y3_e_permutacao(self):
+        lig = self.w[self.w["ligado"] == 1]
+        for col, out, medida, pmax in (("y1_vinculo_mun_1a_opcao_ultimo", "y1_vinculo_mun_1a_opcao", "ultimo", 0.005),
+                                       ("y1_vinculo_mun_1a_opcao_media", "y1_vinculo_mun_1a_opcao", "media", 0.005),
+                                       ("y3_horas_totais_media", "y3_horas_totais", "media", 0.12)):
+            s = lig.dropna(subset=[col])
+            b, _ = self._fe(s, col)
+            e = self._est("R1", out, medida)
+            self.assertAlmostEqual(b, float(e["estimativa"]), places=6)
+            p = self._perm(s, col)
+            self.assertLess(p, pmax)
+            if out == "y3_horas_totais":
+                self.assertGreater(p, 0.01)
+                self.assertLess(abs(p - float(e["p_perm"])), 0.03)
+
+    def test_holm_e_bky_da_familia(self):
+        f = self.est[self.est["entra_familia"].astype(bool)]
+        p = f["p_perm"].to_numpy(float)
+        m = len(p)
+        self.assertEqual(m, 10)
+        o = np.argsort(p)
+        holm, corrente = np.empty(m), 0.0
+        for k, i in enumerate(o):
+            corrente = max(corrente, (m - k) * p[i])
+            holm[i] = min(corrente, 1.0)
+        np.testing.assert_allclose(holm, f["p_holm"].to_numpy(float), atol=1e-3)
+        q = np.ones(m)
+        for nivel in np.arange(0.999, 0.0, -0.001):
+            qq = nivel / (1 + nivel)
+            ps = p[o]
+            r1 = next((k for k in range(m, 0, -1) if ps[k - 1] <= qq * k / m), 0)
+            if r1 == 0:
+                continue
+            if r1 == m:
+                rej = np.ones(m, bool)
+            else:
+                q2 = qq * m / (m - r1)
+                r2 = next((k for k in range(m, 0, -1) if ps[k - 1] <= q2 * k / m), 0)
+                rej = np.zeros(m, bool)
+                rej[o[:r2]] = True
+            q[rej] = nivel
+        np.testing.assert_allclose(q, f["q_bky"].to_numpy(float), atol=1e-3)
+        y3 = self._est("R1", "y3_horas_totais", "media")
+        self.assertLess(float(y3["p_perm"]), 0.05)
+        self.assertGreater(float(y3["q_bky"]), 0.05)
+        self.assertGreater(float(y3["p_holm"]), 0.05)
+
+    def test_balanco_distancia_e_ligacao(self):
+        lig = self.w[self.w["ligado"] == 1]
+        b, _ = self._fe(lig.dropna(subset=["cov_dist_km"]), "cov_dist_km")
+        self.assertAlmostEqual(b, float(self._est("BAL", "cov_dist_km", "R1")["estimativa"]), places=4)
+        self.assertGreater(b, 300)
+        w = self.w.assign(lg=self.w["ligado"].astype(float))
+        b, df = self._fe(w, "lg")
+        self.assertAlmostEqual(b, 0.0913, places=3)
+        self.assertEqual(df.groupby("D")["lg"].mean().round(3).to_dict(), {0: 0.932, 1: 1.0})
+
+    def test_doc_destaca_avisos(self):
+        t = DOC.read_text(encoding="utf-8")
+        self.assertIn("Leia com três avisos", t)
+        self.assertIn("Y3, média do seguimento, não é efeito", t)
+        self.assertIn("O degrau do Y1 é quase mecânico", t)
+        self.assertNotIn("sugere efeito de ser alocado", t)
+        for f in ("P6_balanco.png",):
+            self.assertIn("Distância e ligação diferem", t)

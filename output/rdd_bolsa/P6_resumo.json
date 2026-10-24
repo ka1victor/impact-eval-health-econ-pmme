@@ -299,28 +299,28 @@
       {
         "arquivo": "output/rdd_bolsa/P6_figuras/P6_outcomes_media.png",
         "descricao": "Outcomes Y1–Y5, média do seguimento, por r (regra principal)",
-        "como_ler": "Média de cada outcome nos meses de seguimento, por r, entre os candidatos ligados ao CNES. Um degrau entre r = −1 e r = +1 sugere efeito de ser alocado; barras são IC de 95% sem efeito fixo de célula.",
+        "como_ler": "Média de cada outcome no seguimento, por r, entre os ligados (barras: IC de 95% sem efeito fixo de célula). O degrau do Y1 é quase mecânico; nos demais, os intervalos se sobrepõem.",
         "sha256": "3246a44257c2f59454d6abb3732bf24d4b6ae7d00104933550e85a639e2917e3"
       },
       {
         "arquivo": "output/rdd_bolsa/P6_figuras/P6_outcomes_ultimo.png",
         "descricao": "Outcomes Y1–Y5 em 202608, por r (regra principal)",
-        "como_ler": "Mesma leitura, com o valor de cada outcome no último mês, 202608.",
+        "como_ler": "Mesma leitura, no último mês (202608).",
         "sha256": "a0a617c9b3f0abdb05cb170192f6de00f07486b00e1bfcdc298e3224308946d5"
       },
       {
         "arquivo": "output/rdd_bolsa/P6_figuras/P6_balanco.png",
         "descricao": "Balanço: covariáveis pré e taxa de ligação, por r (regra principal)",
-        "como_ler": "Covariáveis de antes do programa e taxa de ligação ao CNES, por r. Sem diferença entre os dois lados do corte, a comparação dos outcomes é mais crível.",
-        "sha256": "ba80521ed4d1dac3b246485bf998310103aa29e50b5fbd13b8205f1a1d8100d9"
+        "como_ler": "Covariáveis de antes do programa e taxa de ligação, por r. Distância e ligação diferem entre os lados (seção 5).",
+        "sha256": "a6f827f40f27ee54f182e47f9abcb645e999c86256fd36f442379390850ee011"
       }
     ]
   },
   "como_ler": {
     "P6_primeiro_estagio.png": "Cada ponto é a fração de candidatos alocados na 1ª opção (azul) e em qualquer célula (laranja) para cada distância r da nota de corte. À direita do zero, a nota passou do corte; r = 0 são os empatados, decididos por regra fixa.",
-    "P6_outcomes_media.png": "Média de cada outcome nos meses de seguimento, por r, entre os candidatos ligados ao CNES. Um degrau entre r = −1 e r = +1 sugere efeito de ser alocado; barras são IC de 95% sem efeito fixo de célula.",
-    "P6_outcomes_ultimo.png": "Mesma leitura, com o valor de cada outcome no último mês, 202608.",
-    "P6_balanco.png": "Covariáveis de antes do programa e taxa de ligação ao CNES, por r. Sem diferença entre os dois lados do corte, a comparação dos outcomes é mais crível."
+    "P6_outcomes_media.png": "Média de cada outcome no seguimento, por r, entre os ligados (barras: IC de 95% sem efeito fixo de célula). O degrau do Y1 é quase mecânico; nos demais, os intervalos se sobrepõem.",
+    "P6_outcomes_ultimo.png": "Mesma leitura, no último mês (202608).",
+    "P6_balanco.png": "Covariáveis de antes do programa e taxa de ligação, por r. Distância e ligação diferem entre os lados (seção 5)."
   },
   "integridade": "nada simulado ou imputado; não ligados ficam fora dos outcomes e são contados; nenhuma competência >= 202609; o arquivo local de IVS não é lido; sem nome, CPF, CNS, CRM ou código do profissional nas saídas"
 }

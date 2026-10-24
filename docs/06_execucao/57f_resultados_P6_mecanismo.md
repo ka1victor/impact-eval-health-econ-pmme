@@ -143,6 +143,8 @@ Diferença entre r ∈ {+1, +2} e r ∈ {−1, −2}, com efeito fixo de célula
 | Y5: número de municípios com vínculo | último mês (202608) | +0,446 | [-0,371; +1,264] | 0,299 | 0,224 | 0,855 | 30 | 68 |
 | Y5: número de municípios com vínculo | média dos meses de seguimento | +0,432 | [-0,350; +1,215] | 0,285 | 0,224 | 0,855 | 30 | 68 |
 
+**Leia com três avisos.** (1) O Y1 é quase mecânico: ser alocado cria o vínculo cadastrado no município da 1ª opção; é o único que rejeita zero depois do Holm. (2) Os dois lados diferem na distância origem–1ª opção e na taxa de ligação ao CNES (seção 5); os outcomes só existem para os ligados. (3) Y3 na média, com p = 0,048, não sobrevive à correção (q de BKY e p de Holm na tabela) e não é efeito. Tudo é efeito de ser alocado, não da bolsa.
+
 ## 7. Robustez e sensibilidades (R2–R5)
 
 Efeito e IC 95%. R2 = Wald (efeito para os que obedecem); R3 = tendência linear em r de cada lado, r ∈ [−3, +3] sem 0; R4 = inclui os empatados, com indicador do desempate; R5 = ligação só por nome.
@@ -181,25 +183,26 @@ Efeito e IC 95%. R2 = Wald (efeito para os que obedecem); R3 = tendência linear
 
 ![P6_outcomes_media.png](../../output/rdd_bolsa/P6_figuras/P6_outcomes_media.png)
 
-**Como ler.** Média de cada outcome nos meses de seguimento, por r, entre os candidatos ligados ao CNES. Um degrau entre r = −1 e r = +1 sugere efeito de ser alocado; barras são IC de 95% sem efeito fixo de célula.
+**Como ler.** Média de cada outcome no seguimento, por r, entre os ligados (barras: IC de 95% sem efeito fixo de célula). O degrau do Y1 é quase mecânico; nos demais, os intervalos se sobrepõem.
 
 ### Outcomes Y1–Y5 em 202608, por r (regra principal)
 
 ![P6_outcomes_ultimo.png](../../output/rdd_bolsa/P6_figuras/P6_outcomes_ultimo.png)
 
-**Como ler.** Mesma leitura, com o valor de cada outcome no último mês, 202608.
+**Como ler.** Mesma leitura, no último mês (202608).
 
 ### Balanço: covariáveis pré e taxa de ligação, por r (regra principal)
 
 ![P6_balanco.png](../../output/rdd_bolsa/P6_figuras/P6_balanco.png)
 
-**Como ler.** Covariáveis de antes do programa e taxa de ligação ao CNES, por r. Sem diferença entre os dois lados do corte, a comparação dos outcomes é mais crível.
+**Como ler.** Covariáveis de antes do programa e taxa de ligação, por r. Distância e ligação diferem entre os lados (seção 5).
 
 ## 10. Leitura
 
 - **Amostra pequena.** A janela do R1 tem 64 candidatos ligados logo acima do corte e 70 logo abaixo; o efeito vem só das 27 células com os dois lados, com 30 acima e 68 abaixo. Os intervalos são largos: média do seguimento, Y1 [+0,210; +0,600]; Y2 [-4,4; +25,3]; Y3 [+0,6; +30,4]; Y4 [-0,036; +0,450]; Y5 [-0,350; +1,215].
 - **Primeiro estágio.** Na janela do R1, ser aprovado por pouco muda a alocação na 1ª opção em +1,000 (fração): a regra é cumprida, porque o corte vem da própria alocação publicada. Por isso o R2 (Wald) repete o R1.
-- **Outcomes.** Na família do R1 (Y1–Y5 × último mês e média, 10 testes), 3 têm p de permutação < 0,05, 2 rejeitam zero depois do Holm e 2 têm q de BKY ≤ 0,05.
+- **Outcomes.** Na família do R1 (Y1–Y5 × último mês e média, 10 testes), 3 têm p de permutação < 0,05, 2 rejeitam zero depois do Holm e 2 têm q de BKY ≤ 0,05. Os que rejeitam são os dois do Y1 (quase mecânico); Y2 a Y5 não rejeitam zero.
+- **Y3, média do seguimento, não é efeito.** +15,5 h/sem [+0,6; +30,4], p de permutação = 0,048, mas q de BKY = 0,147 e p de Holm = 0,384: um p < 0,05 entre 10 testes não é evidência. No último mês o p é 0,113, e com tendência em r (R3) a estimativa cai para +0,6. Os ICs do R4 (empatados incluídos, sem permutação, desempate por regra fixa) que excluem zero em Y2 a Y4 também não são evidência: não têm correção para testes múltiplos.
 - **Balanço.** Nenhuma covariável pré nem a taxa de ligação tem diferença com p < 0,05 entre os lados. Desequilíbrios declarados mesmo sem p < 0,05: a distância origem–1ª opção difere em +329 km [-25; +683] (p = 0,052), com os de cima vindo de mais longe; e a taxa de ligação ao CNES difere em +0,091 [-0,009; +0,192] (p = 0,093; acima 100,0%, abaixo 93,3%). A ligação diferencial pode enviesar os outcomes, que só existem para os ligados.
 - **Y1 é quase mecânico.** Ser alocado num posto cria um vínculo cadastrado no município da 1ª opção; o salto em Y1 mostra que a alocação aparece no CNES, não que o médico fique ou trabalhe lá.
 - **O que o contraste identifica.** O efeito de SER ALOCADO na 1ª opção do PMM-E, para candidatos de ampla concorrência perto da nota de corte de células com corte efetivo, sobre a trajetória cadastrada no CNES. Não é o efeito da bolsa, nem o do PMM-E sobre a oferta do município, nem retenção: vínculo cadastrado não é presença.
