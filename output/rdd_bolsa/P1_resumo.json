@@ -1,0 +1,733 @@
+{
+  "etapa": "P1_escolha_dap",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "PROTOCOLO_52_POS_RESULTADO",
+  "data_execucao": "2026-10-23",
+  "script": "scripts/rdd_bolsa/25_escolha_dap.py",
+  "protocolo": {
+    "arquivo": "docs/06_execucao/52_protocolo_P1_escolha_dap.md",
+    "sha256": "c5ef2bd250cc4d48355b6283b8aee09be6e622cba2eb35ac53f4cbeae5ec8c1d",
+    "tarefas": "T1.1–T1.5 (T1.6 fora)"
+  },
+  "estimando": "P1a: coeficiente da bolsa anunciada (por R$ 1 mil/mês) na utilidade da 1ª opção, dentro do conjunto de vagas abertas do curso e ciclo, ciclos 1–3 empilhados, com distância e atributos de origem; identificado pelos saltos da bolsa nos cortes 0,300 e 0,400 com o IVS contínuo controlado; mede o pacote do corte e o incentivo marginal, não a participação no PMM-E; nada diz sobre quem não se candidatou",
+  "ameacas": [
+    "seleção pela ligação (candidatos sem município de origem no G1 ficam fora)",
+    "origem = município do estabelecimento de vínculo médico na referência, não residência",
+    "o conjunto de escolha supõe que o candidato viu todas as células do curso",
+    "outras políticas nos mesmos cortes podem mudar atributos não observados da vaga (pacote)"
+  ],
+  "resultado_principal": {
+    "modelo": "M1",
+    "coef_bolsa_por_mil": 0.04239598739,
+    "ic95": [
+      -0.0026506294,
+      0.08744260417
+    ],
+    "p": 0.06509051502,
+    "p_holm": 0.06509051502,
+    "n_candidatos": 5421.0
+  },
+  "inferencia": {
+    "principal": "sanduíche com cluster por conjunto de escolha (curso × ciclo), fator G/(G−1)",
+    "adicionais": [
+      "máxima verossimilhança",
+      "cluster por candidato",
+      "p pela t com G − 1 gl"
+    ],
+    "holm": "só em P1a (M1 empilhado, bolsa): família de um teste",
+    "bky": "família única: P1d (β por ciclo, Wald), P1e (interações da nota e do município, Wald da nota), P1f (média da bolsa e desvios no M8, se convergir)",
+    "dap": "delta (cluster por conjunto) e bootstrap de pares por conjunto (percentil)"
+  },
+  "amostra": {
+    "r1_por_ciclo": {
+      "1": 993,
+      "2": 2140,
+      "3": 2581
+    },
+    "exclusoes": {
+      "1ª opção em célula de município sem região de saúde na tabela oficial": {
+        "1": 3
+      },
+      "município de origem sem região de saúde na tabela oficial (TabNet)": {
+        "2": 1
+      },
+      "sem município de origem no G1 (candidato não ligado)": {
+        "1": 55,
+        "2": 77,
+        "3": 69
+      },
+      "sem município de origem no G1 (sem vínculo médico na competência de referência)": {
+        "1": 20,
+        "2": 30,
+        "3": 38
+      }
+    },
+    "p1_por_ciclo": {
+      "1": 915,
+      "2": 2032,
+      "3": 2474
+    },
+    "r2_por_ciclo": {
+      "1": 629,
+      "2": 1384,
+      "3": 1850
+    },
+    "r2_fora_sem_cir": 2,
+    "candidatos_sem_linha_de_1a_opcao": 62,
+    "celulas_e9": 5134,
+    "celulas_p1": 5125,
+    "celulas_sem_cir": 9,
+    "municipios_sem_cir": [
+      "110002"
+    ],
+    "linhas_m1": 932577,
+    "conjuntos_m1": 56,
+    "linhas_m7": 1630577,
+    "conferencia_distancia": {
+      "escolhas_conferidas": 5421,
+      "diferenca_maxima_km": 0.0
+    },
+    "reproducao_E9": {
+      "coef": 0.06617135704773264,
+      "ep": 0.022183297772013374,
+      "coef_E9": 0.06617135705,
+      "ep_E9": 0.02218329777,
+      "igual": true
+    },
+    "taxa_ligacao_g1_com_origem": {}
+  },
+  "tercis_nota": {
+    "cortes": {
+      "1": [
+        4.0,
+        5.0
+      ],
+      "2": [
+        5.0,
+        6.0
+      ],
+      "3": [
+        5.0,
+        6.0
+      ]
+    },
+    "regra": "dentro do ciclo, candidatos de 1ª opção da amostra P1 com pontuação; empate no corte vai para baixo"
+  },
+  "cursos_m6": {
+    "cursos_com_100": [
+      1,
+      2,
+      6,
+      7,
+      8,
+      9,
+      11,
+      14,
+      15,
+      17,
+      18,
+      24
+    ],
+    "base": "curso01",
+    "candidatos_por_curso": {
+      "1": 1165,
+      "2": 829,
+      "3": 79,
+      "4": 82,
+      "5": 67,
+      "6": 198,
+      "7": 198,
+      "8": 761,
+      "9": 133,
+      "10": 72,
+      "11": 239,
+      "12": 95,
+      "13": 30,
+      "14": 338,
+      "15": 295,
+      "16": 91,
+      "17": 139,
+      "18": 204,
+      "19": 8,
+      "20": 2,
+      "21": 88,
+      "22": 59,
+      "23": 25,
+      "24": 224
+    }
+  },
+  "bootstrap": {
+    "n_boot": 999,
+    "n_validos": 999,
+    "falhas": {},
+    "semente": 20261019,
+    "desenho_comprimido": {
+      "tipos": 2479,
+      "linhas": 361614,
+      "diferenca_maxima_theta_contra_M1": 1.1102230246251565e-15,
+      "regra": "tipo = conjunto × município de origem (linhas idênticas); mesma verossimilhança do desenho por candidato (conferido)"
+    },
+    "fracao_beta_bolsa_nao_positivo": 0.04004004004004004,
+    "beta_bolsa_percentis_2_5_97_5": [
+      -0.004666348511804183,
+      0.08123899797665661
+    ],
+    "por_atributo": {
+      "distancia_100km_a_menos": {
+        "ic95_inf": -20.093222391832235,
+        "ic95_sup": 45.546293863806895,
+        "mediana": 4.321418220551974
+      },
+      "mesma_uf": {
+        "ic95_inf": -251.8280186881929,
+        "ic95_sup": 558.8703854777857,
+        "mediana": 54.81427242527412
+      },
+      "capital": {
+        "ic95_inf": -44.2705591644278,
+        "ic95_sup": 16.298307631237623,
+        "mediana": -3.2479581311142094
+      },
+      "vaga_imediata": {
+        "ic95_inf": -54.71364357791497,
+        "ic95_sup": 126.27289739384663,
+        "mediana": 13.003932171768842
+      }
+    }
+  },
+  "m8": {
+    "modelo": "M8",
+    "termos": [
+      "ivs_inclinacao",
+      "ivs_mudanca_inclinacao_0300",
+      "ivs_mudanca_inclinacao_0400",
+      "tem_vaga_imediata",
+      "log_vagas_imediatas_mais_1",
+      "log_populacao_2022",
+      "macro_centro_oeste",
+      "macro_nordeste",
+      "macro_norte",
+      "macro_sul",
+      "capital",
+      "estrato_interior_remoto",
+      "estrato_metropolitano",
+      "mesma_uf",
+      "mesma_regiao_saude",
+      "mesmo_municipio",
+      "media_bolsa_mil",
+      "desvio_bolsa_mil",
+      "media_distancia_100km",
+      "desvio_distancia_100km"
+    ],
+    "n_sorteios": 500,
+    "semente": 20261019,
+    "max_avaliacoes": 300,
+    "ok": true,
+    "status": "EXECUTADO",
+    "ll": -12657.984222544983,
+    "G_conj": 56,
+    "G_cand": 5421,
+    "avaliacoes": 140,
+    "grad_max": 1.0329552324606084e-08,
+    "otimizador": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+    "passos_newton": 1,
+    "autovalor_min_informacao": 13.854455542778597,
+    "iteracoes": 129,
+    "nota": "máxima verossimilhança simulada (Halton embaralhado, um bloco de sorteios por candidato); desvios relatados em valor absoluto (o sinal não é identificado); H0 desvio = 0 fica na fronteira e o p normal é conservador",
+    "ciclo": "empilhado",
+    "amostra": "P1 (G1 com origem)",
+    "n_candidatos": 5421,
+    "n_grupos": 5421,
+    "n_linhas": 932577,
+    "n_conjuntos": 56
+  },
+  "m9": {
+    "modelo": "M9",
+    "termos": [
+      "bolsa_mil",
+      "ivs_inclinacao",
+      "ivs_mudanca_inclinacao_0300",
+      "ivs_mudanca_inclinacao_0400",
+      "tem_vaga_imediata",
+      "log_vagas_imediatas_mais_1",
+      "log_populacao_2022",
+      "macro_centro_oeste",
+      "macro_nordeste",
+      "macro_norte",
+      "macro_sul",
+      "capital",
+      "estrato_interior_remoto",
+      "estrato_metropolitano",
+      "distancia_100km",
+      "mesma_uf",
+      "mesma_regiao_saude",
+      "mesmo_municipio",
+      "lambda"
+    ],
+    "avaliacoes": 184,
+    "otimizador": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+    "n_ninhos": 488023,
+    "n_ninhos_unitarios": 298916,
+    "celulas_por_ninho_media": 1.9109283783756092,
+    "passos_newton": 1,
+    "ll": -13500.560007170632,
+    "grad_max": 5.454646179181566e-10,
+    "lambda_no_limite": false,
+    "hessiana_definida": true,
+    "autovalor_min_informacao": 37.725320834875916,
+    "iteracoes": 162,
+    "ok": true,
+    "status": "EXECUTADO",
+    "G_conj": 56,
+    "G_cand": 5421,
+    "lr_contra_M1": 315.2017453890694,
+    "nota": "488023 ninhos (CIR × candidato), 298916 com uma só célula; lambda = 1 é o logit condicional; utilidade na escala do logit (V = x'b)",
+    "ciclo": "empilhado",
+    "amostra": "P1 (G1 com origem)",
+    "n_candidatos": 5421,
+    "n_grupos": 5421,
+    "n_linhas": 932577,
+    "n_conjuntos": 56
+  },
+  "p1g": {
+    "conferencia_A3": {
+      "1|empilhado": {
+        "tau": 0.06768893334800519,
+        "tau_A3": 0.067688933348019,
+        "igual": true
+      },
+      "2|empilhado": {
+        "tau": -0.9323388544683551,
+        "tau_A3": -0.9323388544683888,
+        "igual": true
+      },
+      "3|empilhado": {
+        "tau": -0.47771581527670526,
+        "tau_A3": -0.4777158152767214,
+        "igual": true
+      },
+      "1+2+3|empilhado": {
+        "tau": -0.4882952909477152,
+        "tau_A3": -0.4882952909476943,
+        "igual": true
+      }
+    },
+    "celulas_amostra_p1": 5125,
+    "celulas_todas": 5134
+  },
+  "descritivos_ciclo": {
+    "1": {
+      "candidatos": 915,
+      "conjuntos": 16,
+      "celulas": 1289,
+      "alternativas_por_candidato_media": 88.00218579234972,
+      "fracao_celulas_com_vaga_imediata": 0.395655546935609,
+      "fracao_celulas_por_faixa": {
+        "FAIXA 3": 0.4134988363072149,
+        "FAIXA 2": 0.360744763382467,
+        "FAIXA 1": 0.22575640031031807
+      },
+      "fracao_candidatos_sem_pontuacao": 0.10382513661202186
+    },
+    "2": {
+      "candidatos": 2032,
+      "conjuntos": 16,
+      "celulas": 1545,
+      "alternativas_por_candidato_media": 187.01870078740157,
+      "fracao_celulas_com_vaga_imediata": 0.655663430420712,
+      "fracao_celulas_por_faixa": {
+        "FAIXA 3": 0.5236245954692557,
+        "FAIXA 2": 0.3093851132686084,
+        "FAIXA 1": 0.1669902912621359
+      },
+      "fracao_candidatos_sem_pontuacao": 0.0
+    },
+    "3": {
+      "candidatos": 2474,
+      "conjuntos": 24,
+      "celulas": 2291,
+      "alternativas_por_candidato_media": 190.79749393694422,
+      "fracao_celulas_com_vaga_imediata": 0.3029244871235268,
+      "fracao_celulas_por_faixa": {
+        "FAIXA 3": 0.4543867306852903,
+        "FAIXA 2": 0.34351811436054125,
+        "FAIXA 1": 0.2020951549541685
+      },
+      "fracao_candidatos_sem_pontuacao": 0.0
+    }
+  },
+  "convergencia": {
+    "M0": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 5,
+      "omitidas": []
+    },
+    "M1": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 9,
+      "omitidas": []
+    },
+    "M2": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 8,
+      "omitidas": []
+    },
+    "M4": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 10,
+      "omitidas": []
+    },
+    "M5_1": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 11,
+      "omitidas": []
+    },
+    "M5_2": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 9,
+      "omitidas": []
+    },
+    "M5_3": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 10,
+      "omitidas": []
+    },
+    "M6_nota": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 9,
+      "omitidas": []
+    },
+    "M6_municipio": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 10,
+      "omitidas": []
+    },
+    "M6_curso": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 9,
+      "omitidas": []
+    },
+    "M7": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 10,
+      "omitidas": []
+    },
+    "M9": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 162,
+      "omitidas": []
+    },
+    "M8": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 129,
+      "omitidas": []
+    }
+  },
+  "figuras": [
+    {
+      "arquivo": "output/rdd_bolsa/P1_figuras/P1_dap.png",
+      "como_ler": "Cada ponto é quanto de bolsa mensal (em R$ mil) equivale a um atributo da vaga no modelo principal; a barra mais grossa é o intervalo pelo método delta e a mais fina, o do bootstrap. Ponto à direita do zero: o atributo vale como bolsa a mais. Intervalo que cruza o zero ou é muito largo não permite ler o ponto como preço.",
+      "descricao": "DAP do M1 (P1b, P1c) com IC delta e bootstrap",
+      "sha256": "8cfe20cd301b900387fbea5b29429e95c9083ecacb73ce4f6b4fa207d8962ace"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/P1_figuras/P1_beta_por_ciclo.png",
+      "como_ler": "Cada ponto é o peso da bolsa (por R$ 1 mil) na escolha, em cada ciclo e nos três juntos, com intervalo de 95%. Ponto acima do zero: vagas com bolsa maior foram mais escolhidas como 1ª opção.",
+      "descricao": "coeficiente da bolsa por ciclo (M5) e empilhado (M1), IC 95% cluster por conjunto",
+      "sha256": "810c4da104782387b2c00a1799e9a06dc19b9414ae37e80ceef7ee15e957bc5a"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/P1_figuras/P1_ponte_P1g.png",
+      "como_ler": "Cada par compara, no corte, quantos candidatos de 1ª opção a mais por célula o modelo de escolha prevê (só mudando a bolsa) com o salto observado nos dados. É leitura de consistência, não teste: sinais opostos com intervalos que se sobrepõem não mostram que o modelo acerta nem que erra.",
+      "descricao": "P1g: salto previsto por M1 contra a RDD por célula, ciclos 1–3",
+      "sha256": "4e1434deba601a7847a41fece938d3663625c3137b085247bcaff3bc07408f66"
+    }
+  ],
+  "como_ler": {
+    "P1_dap.png": "Cada ponto é quanto de bolsa mensal (em R$ mil) equivale a um atributo da vaga no modelo principal; a barra mais grossa é o intervalo pelo método delta e a mais fina, o do bootstrap. Ponto à direita do zero: o atributo vale como bolsa a mais. Intervalo que cruza o zero ou é muito largo não permite ler o ponto como preço.",
+    "P1_beta_por_ciclo.png": "Cada ponto é o peso da bolsa (por R$ 1 mil) na escolha, em cada ciclo e nos três juntos, com intervalo de 95%. Ponto acima do zero: vagas com bolsa maior foram mais escolhidas como 1ª opção.",
+    "P1_ponte_P1g.png": "Cada par compara, no corte, quantos candidatos de 1ª opção a mais por célula o modelo de escolha prevê (só mudando a bolsa) com o salto observado nos dados. É leitura de consistência, não teste: sinais opostos com intervalos que se sobrepõem não mostram que o modelo acerta nem que erra."
+  },
+  "desvios": [
+    {
+      "data": "2026-10-23",
+      "item": "Local do resultado",
+      "situacao": "O §5 do protocolo diz 'doc 57, seção P1'; o doc 57 é a síntese da onda 5 (doc 51, §5), e outros blocos escrevem em paralelo.",
+      "resolucao": "Resultados em docs/06_execucao/57a_resultados_P1_escolha.md, gerado inteiro pelo script, para entrar na síntese 57 (mesma solução do P5, doc 57e)."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "M3 não executado",
+      "situacao": "a distância da origem mais próxima exige o conjunto completo de municípios de origem de cada candidato; o G1 gravou só a origem principal e a distância mais próxima das células ranqueadas (G1_distancias_opcoes.parquet), não das demais células do conjunto de escolha; o cache dos vínculos (output/rdd_bolsa/G1_cache/ e X1_cache/, fora do Git) não está neste checkout; refazê-lo exige baixar de novo a tbDadosProfissionalSus e os vínculos do CNES; nada é aproximado.",
+      "resolucao": "Linhas do M3 com status NAO_EXECUTADO e o motivo; nenhuma distância aproximada."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Células e origens sem região de saúde",
+      "situacao": "A 'mesma região de saúde' de M1 exige a CIR da origem e da célula; um município do quadro (células nos três ciclos) e um município de origem não estão na tabela oficial do TabNet.",
+      "resolucao": "Como na X5: as células desse município saem do conjunto de escolha de todos os modelos da amostra P1 (M0 incluído), e saem os candidatos cuja 1ª opção estava nelas ou cuja origem não tem região; a 2ª opção nessas células sai do M7. Contagens na seção 2; nada imputado."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Capital em M1",
+      "situacao": "O E9 já tem o estrato A2 com base na capital; acrescentar um indicador de capital seria colinear.",
+      "resolucao": "Em M1 a base do estrato passa a ser o interior próximo de polo; o termo 'capital' é capital contra essa base, mantidos porte (log da população) e macrorregião. É reparametrização: o coeficiente da bolsa não muda por isso."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Vaga imediata na DAP",
+      "situacao": "O E9 tem 'tem vaga imediata' e log(vagas imediatas + 1); mudar o indicador sem mudar o log é impossível.",
+      "resolucao": "DAP da vaga imediata = célula com 1 vaga imediata contra só cadastro reserva: [β(tem) + ln 2 · β(log)] / β(bolsa)."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "M4",
+      "situacao": "A macrorregião é função da UF.",
+      "resolucao": "Em M4 o efeito fixo de UF da vaga substitui a macrorregião (UF de base: a de mais células)."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "M6",
+      "situacao": "O §3 lista três interações sem dizer se entram juntas.",
+      "resolucao": "Um modelo por dimensão (como na X4). Tercis da nota dentro do ciclo, sobre os candidatos de 1ª opção da amostra P1 com pontuação, empate no corte para baixo, sem pontuação = grupo próprio. Curso: cursos com ≥ 100 candidatos de 1ª opção na amostra empilhada, base = o de mais candidatos; inferência por cluster degenerada (o termo do curso só varia nos conjuntos dele), EP de máxima verossimilhança relatado e linhas fora do BKY, como na X4."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "BKY",
+      "situacao": "O §4 manda BKY nas secundárias com p-valor sem listar as linhas.",
+      "resolucao": "Família única: β da bolsa por ciclo e Wald entre ciclos (P1d); termos de interação da nota e do município de origem e Wald da nota (P1e); média da bolsa e desvios da bolsa e da distância no logit misto, se convergir (P1f). p com cluster por conjunto."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "M8 (logit misto)",
+      "situacao": "500 sorteios por candidato em cerca de um milhão de linhas candidato × célula; o prompt do agente pede não forçar além de 30 min.",
+      "resolucao": "Gradiente analítico, teto determinístico de 300 avaliações da verossimilhança (≈ 30 min nesta máquina) para que duas execuções deem o mesmo resultado; sem convergência, status NAO_CONVERGIU com o motivo."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Polimento por Newton no M8 e no M9",
+      "situacao": "Na primeira execução completa o L-BFGS-B parou pelo critério de redução relativa da função com gradiente máximo de 1,2e-3 (M8) e 3,6e-4 (M9), acima da tolerância de 1e-4; as duas linhas saíram NAO_CONVERGIU. Nenhum coeficiente dessas execuções foi lido para decidir a mudança.",
+      "resolucao": "Até 6 passos de Newton com a hessiana numérica do gradiente analítico depois do L-BFGS-B, como o polimento da X5; mesma tolerância (1e-4), mesma amostra, mesma especificação. Se ainda assim não convergir, a linha fica NAO_CONVERGIU."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "M9 (logit aninhado)",
+      "situacao": "A X5 usou gradiente numérico; aqui as linhas são do candidato (distância e origem variam por candidato).",
+      "resolucao": "Ninhos = CIR da célula dentro do conjunto de cada candidato; gradiente analítico (conferido contra o numérico no teste sintético); lambda limitado a [0,001; 50] como na X5."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "P1g",
+      "situacao": "O §3 manda comparar com a RDD por célula de n_cand_1a_opcao, mas o modelo só prevê os candidatos da amostra P1.",
+      "resolucao": "Relatadas as duas RDDs (todos os candidatos, conferida contra o A3 gravado, e só a amostra P1); o salto previsto é a média, com peso de kernel triangular nas células da janela, da diferença de candidatos esperados com a bolsa do lado de cima e do lado de baixo do corte."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "T1.4 (RDD da nota média)",
+      "situacao": "O doc 51 lista a RDD da nota média dos alocados e dos candidatos (F4) no T1.4; o protocolo 52 não a inclui.",
+      "resolucao": "Não reestimada aqui (o F4 está no E6); o T1.4 entra pela interação bolsa × tercil da nota (M6)."
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/52_protocolo_P1_escolha_dap.md",
+      "sha256": "c5ef2bd250cc4d48355b6283b8aee09be6e622cba2eb35ac53f4cbeae5ec8c1d",
+      "bytes": 5777,
+      "papel": "protocolo 52 (somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-19",
+      "cobertura": "§1–§6",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "bytes": 128788,
+      "papel": "escolhas dos candidatos (1ª e 2ª opção) e pontuação",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "resultados da 1ª chamada dos ciclos 1–3",
+      "cobertura": "9849 linhas",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "postos 1 e 2"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_conjunto_principal.parquet",
+      "sha256": "ad655dbce17753a996594213f6f9b9dff18e42af6556e48d0ee20df858bfca22",
+      "bytes": 63077,
+      "papel": "conjunto de escolha principal (E9 §14)",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "quadros da 1ª chamada",
+      "cobertura": "5135 células",
+      "unidade": "célula CNES × curso × ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "sem IVS oficial e sem CIR fora (listados)"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "IVS 2010 oficial (a08): spline e regra das faixas",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "co_ibge, ivs"
+    },
+    {
+      "caminho": "output/aquisicao/a03_matriz_regra_tratamento.json",
+      "sha256": "4afe7af6d925b0b67054918ddbece2a7ad87df1b80d5bbb779c6ee8dd7c39583",
+      "bytes": 11686,
+      "papel": "mapa faixa → bolsa (como no E9)",
+      "fonte": "editais (a03)",
+      "data_referencia": "2025–2026",
+      "cobertura": "3 faixas",
+      "unidade": "faixa",
+      "chaves": "faixa",
+      "filtros": "mapeamento_regras_por_edital"
+    },
+    {
+      "caminho": "output/aquisicao/a04_grade_anunciada_2025.csv",
+      "sha256": "3d2542142d97f90632d47e8b0cc9d5d0cb7b934df1d7df47691a421d9bf82112",
+      "bytes": 1595,
+      "papel": "conferência do mapa faixa → bolsa (como no E9)",
+      "fonte": "FAQ 3/2025 (a04)",
+      "data_referencia": "2025",
+      "cobertura": "3 faixas",
+      "unidade": "faixa",
+      "chaves": "faixa_atracao",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/dicionario_outcomes_funil.json",
+      "sha256": "912b80994f9fbefc3bbe1f5f978de16771a6c064f0044960887366a91bb88e8d",
+      "bytes": 91512,
+      "papel": "dicionário da tarefa B (SHA-256 das tabelas de escolha conferido)",
+      "fonte": "pipeline",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "bytes": 107325,
+      "papel": "município de origem dos candidatos (G1)",
+      "fonte": "portão G1",
+      "data_referencia": "referências 202506, 202510, 202602",
+      "cobertura": "5776 candidatos (regra principal)",
+      "unidade": "candidato",
+      "chaves": "ciclo, id_candidato",
+      "filtros": "regra_ligacao = g1_cpf_nome"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "sha256": "8faf60ed277beae815d1a13ac54d2dd70ab65a4c1a38d796aa8b361898e02a78",
+      "bytes": 166732,
+      "papel": "conferência das distâncias das células escolhidas",
+      "fonte": "portão G1",
+      "data_referencia": "idem",
+      "cobertura": "linhas candidato × opção",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "regra_ligacao = g1_cpf_nome"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_resumo.json",
+      "sha256": "c8a88d469f818d364fdbe9b8405652987c0b90568af406050f08e8ead06d8529",
+      "bytes": 38802,
+      "papel": "taxas de ligação do G1",
+      "fonte": "portão G1",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+      "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+      "bytes": 383336,
+      "papel": "região de saúde (CIR) por município (só lido)",
+      "fonte": "DATASUS/TabNet (manifesto da X5)",
+      "data_referencia": "2026-10-19T10:44:54Z",
+      "cobertura": "5606 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge → co_cir",
+      "filtros": "linhas 'Ignorado' fora"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/ibge_api_v3_malhas_metadados_municipios.json",
+      "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+      "bytes": 1685039,
+      "papel": "centroides municipais do IBGE (distância, só lido)",
+      "fonte": "IBGE, API de malhas v3",
+      "data_referencia": "2026-10-19",
+      "cobertura": "5570 municípios",
+      "unidade": "município",
+      "chaves": "id (7 dígitos)",
+      "filtros": "centroide"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E9_estimativas.csv",
+      "sha256": "517e88d1488568c645b71707b63c5ffed985af53beae84f8f8684a124f604bd0",
+      "bytes": 726232,
+      "papel": "alvo da conferência de reprodução do E9",
+      "fonte": "E9 (script 16)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "linha principal empilhada",
+      "unidade": "especificação × termo",
+      "chaves": "ciclo, modelo, conjunto, especificacao, termo",
+      "filtros": "condicional, principal, spline_linear__bolsa_linear, bolsa_mil"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "candidatos de 1ª opção por célula (P1g)",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "ciclos 1–3",
+      "cobertura": "células do quadro",
+      "unidade": "célula",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "n_cand_1a_opcao"
+    },
+    {
+      "caminho": "output/rdd_bolsa/NA_estimativas.csv",
+      "sha256": "9f737d4c2a2850ddff6647dfb67ba7d7276758bf84b773ee0701a8d890000374",
+      "bytes": 538158,
+      "papel": "conferência da RDD por célula contra o A3 (só curso × ciclo)",
+      "fonte": "script 24",
+      "data_referencia": "2026-10-19",
+      "cobertura": "linhas A3_CAND_1A_OPCAO",
+      "unidade": "linha",
+      "chaves": "outcome_id, variante, ciclo, corte",
+      "filtros": "variante so_curso_x_ciclo"
+    }
+  ],
+  "saidas": {
+    "output/rdd_bolsa/P1_estimativas.csv": "8c4ca2e98b671709ec208526ff4e58a8060d5643d8ce37776f1b7c1f4fcc1f24",
+    "output/rdd_bolsa/P1_dap.csv": "20f31bdab64958aab146809456760b4502a08db335caba674db0f466491dd606"
+  },
+  "integridade": "nada simulado, imputado ou digitado como observação; faltante fica faltante com motivo; IVS do a08 (o arquivo local de IVS da auditoria 16 não é lido); nenhum mês do CNES é lido; sem nome nem CPF em output/; data/ só lido",
+  "linguagem": "P1a é efeito da remuneração anunciada na escolha DENTRO do conjunto de vagas abertas, identificado pelos saltos nos cortes com o IVS contínuo controlado; mede o pacote do corte e o incentivo marginal, não a participação no PMM-E; não diz nada sobre quem não se candidatou",
+  "tempo_execucao_nao_registrado": "o tempo de execução fica fora do resumo para que duas execuções deem o mesmo hash"
+}
