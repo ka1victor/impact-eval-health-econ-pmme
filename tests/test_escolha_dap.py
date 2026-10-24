@@ -395,5 +395,337 @@ class TestDoc57a(unittest.TestCase):
             self.assertIn(v, t)
 
 
+# ---------------------------------------------------------------------------
+# Auditoria 26: recálculo independente
+# ---------------------------------------------------------------------------
+
+def _importar_leitor(nome_arquivo: str, apelido: str):
+    """Carrega só os LEITORES de insumos do E9, da X5 e do X1 (nada do script 25)."""
+    antigo = sys.dont_write_bytecode
+    sys.dont_write_bytecode = True
+    spec = importlib.util.spec_from_file_location(apelido, ROOT / "scripts" / "rdd_bolsa" / nome_arquivo)
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules[apelido] = mod
+    spec.loader.exec_module(mod)
+    sys.dont_write_bytecode = antigo
+    return mod
+
+
+class TestRecalculoIndependenteAuditoria26(unittest.TestCase):
+    """Refaz M0, M1, P1b (DAP delta), M5 e o Wald entre ciclos com código próprio: logit condicional escrito aqui
+    (log-verossimilhança, escore, informação e sanduíche com cluster por conjunto, fator G/(G − 1)), distância
+    haversine, mesma UF, região de saúde e município montados aqui. Só os leitores dos insumos (IVS oficial, conjunto
+    de escolha, CIR, centroides) vêm do E9, da X5 e do X1; nenhuma função do script 25 é usada nos números."""
+
+    ZN = ["distancia_100km", "mesma_uf", "mesma_regiao_saude", "mesmo_municipio"]
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.est = pd.read_csv(EST, dtype={"ciclo": str})
+        cls.dap = pd.read_csv(DAP, dtype={"ciclo": str})
+        cls.res = json.loads(RESUMO.read_text(encoding="utf-8"))
+        e9 = _importar_leitor("16_estimar_E9_escolha.py", "e9_aud26")
+        x45 = _importar_leitor("19_escolha_heterogeneidade.py", "x45_aud26")
+        x1 = _importar_leitor("17_ponte_pmme_cnes.py", "x1_aud26")
+        mapa, _ = e9.mapa_bolsa_por_faixa()
+        cand = pd.read_parquet(e9.ESCOLHAS)
+        conj, _ = e9.preparar_conjunto(pd.read_parquet(e9.CONJ_PRINCIPAL), e9.carregar_ivs(), mapa)
+        cir, _ = x45.ler_cir()
+        cls.mcir = cir.set_index("co_ibge")["co_cir"]
+        coord, _ = x1.ler_coordenadas()
+        cls.xy = coord.set_index("co_ibge")
+        org = pd.read_parquet(OUT / "G1_candidatos_origem.parquet")
+        org = org[org["regra_ligacao"] == "g1_cpf_nome"]
+        r1 = cand[cand["opcao_rank"] == 1].merge(org[["ciclo", "id_candidato", "co_ibge_origem"]],
+                                                   on=["ciclo", "id_candidato"], how="left")
+        conj["co_cir"] = conj["co_ibge"].map(cls.mcir)
+        sem_cir = set(zip(*[conj.loc[conj["co_cir"].isna(), c] for c in ("ciclo", "co_cnes_7d", "cod_curso")]))
+        manter = r1["co_ibge_origem"].notna() & r1["co_ibge_origem"].isin(cls.mcir.index)
+        manter &= ~np.array([k in sem_cir for k in zip(r1["ciclo"], r1["co_cnes_7d"], r1["cod_curso"])])
+        cls.r1 = r1[manter].copy()
+        cls.conj = conj[conj["co_cir"].notna()].reset_index(drop=True)
+        cls.cache: dict = {}
+
+    # -- construção própria ------------------------------------------------
+    def _celulas(self, com_dist: bool) -> pd.DataFrame:
+        c = self.conj
+        s = c["s_mil"].to_numpy(float)
+        X = pd.DataFrame({"bolsa_mil": c["bolsa_mil"].to_numpy(float), "ivs_inclinacao": (s - 300) / 100.0,
+                          "ivs_mudanca_inclinacao_0300": np.maximum(s - 300, 0) / 100.0,
+                          "ivs_mudanca_inclinacao_0400": np.maximum(s - 400, 0) / 100.0,
+                          "tem_vaga_imediata": c["tem_vaga_imediata"].astype(float).to_numpy(),
+                          "log_vagas_imediatas_mais_1": c["log_vagas_imediatas_mais_1"].astype(float).to_numpy(),
+                          "log_populacao_2022": np.log(c["populacao_2022"].astype(float)).to_numpy()})
+        for m in sorted(c["macrorregiao"].unique()):
+            if m != "SUDESTE":
+                X["macro_" + m.lower().replace(" ", "_")] = (c["macrorregiao"] == m).astype(float).to_numpy()
+        base = "interior_proximo_polo" if com_dist else "capital"
+        for e in sorted(c["estrato_territorial"].unique()):
+            if e != base:
+                nome = "capital" if (com_dist and e == "capital") else "estrato_" + e
+                X[nome] = (c["estrato_territorial"] == e).astype(float).to_numpy()
+        return X
+
+    @staticmethod
+    def _haversine(lo1, la1, lo2, la2):
+        lo1, la1, lo2, la2 = (np.radians(v) for v in (lo1, la1, lo2, la2))
+        a = np.sin((la2 - la1) / 2) ** 2 + np.cos(la1) * np.cos(la2) * np.sin((lo2 - lo1) / 2) ** 2
+        return 2 * 6371.0088 * np.arcsin(np.sqrt(a))
+
+    def _desenho(self, ciclos, com_dist: bool):
+        Xc = self._celulas(com_dist)
+        cols = list(Xc.columns) + (self.ZN if com_dist else [])
+        blocos = []
+        for sid, g in self.r1[self.r1["ciclo"].isin(ciclos)].groupby("id_conjunto_escolha"):
+            idx = np.flatnonzero((self.conj["id_conjunto_escolha"] == sid).to_numpy())
+            cel = self.conj.iloc[idx]
+            chave = {k: i for i, k in enumerate(zip(cel["ciclo"], cel["co_cnes_7d"], cel["cod_curso"]))}
+            esc = np.array([chave[k] for k in zip(g["ciclo"], g["co_cnes_7d"], g["cod_curso"])])
+            A = np.broadcast_to(Xc.iloc[idx].to_numpy(float)[None], (len(esc), len(idx), Xc.shape[1]))
+            if com_dist:
+                o, c = g["co_ibge_origem"].to_numpy(), cel["co_ibge"].to_numpy()
+                dist = self._haversine(self.xy.loc[o, "lon"].to_numpy()[:, None], self.xy.loc[o, "lat"].to_numpy()[:, None],
+                                       self.xy.loc[c, "lon"].to_numpy()[None, :], self.xy.loc[c, "lat"].to_numpy()[None, :])
+                uf_o, uf_c = np.array([x[:2] for x in o])[:, None], np.array([x[:2] for x in c])[None, :]
+                ci_o, ci_c = self.mcir.reindex(o).to_numpy()[:, None], self.mcir.reindex(c).to_numpy()[None, :]
+                Z = np.stack([dist / 100.0, (uf_o == uf_c).astype(float), (ci_o == ci_c).astype(float),
+                              (o[:, None] == c[None, :]).astype(float)], -1)
+                A = np.concatenate([A, Z], -1)
+            blocos.append((sid, np.ascontiguousarray(A), esc))
+        manter = np.array([max((A[:, :, j].max(1) - A[:, :, j].min(1)).max() for _, A, _ in blocos) > 0
+                           for j in range(len(cols))])
+        return [c for c, k in zip(cols, manter) if k], [(s, A[:, :, manter], e) for s, A, e in blocos]
+
+    @staticmethod
+    def _ll_escore_info(theta, blocos):
+        ll, g, H, esc_conj = 0.0, np.zeros(len(theta)), np.zeros((len(theta),) * 2), {}
+        for sid, A, esc in blocos:
+            v = A @ theta
+            m = v.max(1, keepdims=True)
+            e = np.exp(v - m)
+            S = e.sum(1, keepdims=True)
+            p = e / S
+            ll += float((v[np.arange(len(esc)), esc] - m[:, 0] - np.log(S[:, 0])).sum())
+            xb = np.einsum("nc,nck->nk", p, A)
+            sc = A[np.arange(len(esc)), esc] - xb
+            esc_conj[sid] = sc.sum(0)
+            g += sc.sum(0)
+            H += np.einsum("nc,nck,ncl->kl", p, A, A) - xb.T @ xb
+        return ll, g, H, esc_conj
+
+    def _ajustar(self, ciclos, com_dist: bool) -> dict:
+        chave = (tuple(ciclos), com_dist)
+        if chave in self.cache:
+            return self.cache[chave]
+        cols, blocos = self._desenho(ciclos, com_dist)
+        th = np.zeros(len(cols))
+        ll, g, H, _ = self._ll_escore_info(th, blocos)
+        for _ in range(100):
+            passo = np.linalg.solve(H, g)
+            passo *= min(1.0, 3.0 / np.abs(passo).max())
+            t = 1.0
+            while True:
+                l2, g2, H2, _ = self._ll_escore_info(th + t * passo, blocos)
+                if l2 >= ll - 1e-9 or t < 1e-6:
+                    break
+                t /= 2
+            th = th + t * passo
+            fim = abs(l2 - ll) < 1e-10 and np.abs(g2).max() < 1e-6
+            ll, g, H = l2, g2, H2
+            if fim:
+                break
+        _, g, H, sc = self._ll_escore_info(th, blocos)
+        Hi = np.linalg.inv(H)
+        S = np.array(list(sc.values()))
+        G = len(S)
+        out = {"cols": cols, "theta": th, "ll": ll, "grad_max": float(np.abs(g).max()), "G": G,
+               "V": G / (G - 1) * Hi @ (S.T @ S) @ Hi, "N": int(sum(len(e) for _, _, e in blocos))}
+        self.cache[chave] = out
+        return out
+
+    def _csv(self, modelo, termo, ciclo="empilhado"):
+        s = self.est[(self.est["modelo"] == modelo) & (self.est["termo"] == termo) &
+                     (self.est["ciclo"] == ciclo) & (self.est["tipo_linha"] == "coeficiente")]
+        self.assertEqual(len(s), 1, (modelo, termo, ciclo))
+        return s.iloc[0]
+
+    # -- M0 e M1 -----------------------------------------------------------
+    def test_M0_bolsa_e_ep_cluster(self) -> None:
+        f = self._ajustar((1, 2, 3), False)
+        k = f["cols"].index("bolsa_mil")
+        r = self._csv("M0", "bolsa_mil")
+        self.assertEqual(f["N"], int(r["n_candidatos"]))
+        self.assertLess(f["grad_max"], 1e-6)
+        self.assertAlmostEqual(f["theta"][k], r["coef"], delta=1e-6)
+        self.assertAlmostEqual(math.sqrt(f["V"][k, k]) / r["ep_cluster_conjunto"], 1.0, delta=1e-4)
+
+    def test_M1_todos_os_termos_e_ep_cluster(self) -> None:
+        f = self._ajustar((1, 2, 3), True)
+        self.assertEqual(f["N"], 5421)
+        self.assertLess(f["grad_max"], 1e-6)
+        self.assertEqual(f["G"], 56)
+        self.assertAlmostEqual(f["ll"], float(self._csv("M1", "bolsa_mil")["log_verossimilhanca"]), delta=1e-3)
+        for i, t in enumerate(f["cols"]):
+            r = self._csv("M1", t)
+            self.assertAlmostEqual(f["theta"][i], r["coef"], delta=1e-6, msg=t)
+            self.assertAlmostEqual(math.sqrt(f["V"][i, i]) / r["ep_cluster_conjunto"], 1.0, delta=1e-4, msg=t)
+        # IC e p da bolsa (normal)
+        k = f["cols"].index("bolsa_mil")
+        b, se = f["theta"][k], math.sqrt(f["V"][k, k])
+        r = self._csv("M1", "bolsa_mil")
+        z = float(stats.norm.ppf(0.975))
+        self.assertAlmostEqual(b - z * se, r["ic95_inf"], delta=1e-5)
+        self.assertAlmostEqual(b + z * se, r["ic95_sup"], delta=1e-5)
+        self.assertAlmostEqual(2 * stats.norm.sf(abs(b / se)), r["p"], delta=1e-5)
+
+    # -- P1b: DAP pelo método delta -----------------------------------------
+    def test_DAP_M1_e_ic_delta(self) -> None:
+        f = self._ajustar((1, 2, 3), True)
+        th, V, c = f["theta"], f["V"], f["cols"]
+        kb = c.index("bolsa_mil")
+        b = th[kb]
+        z = float(stats.norm.ppf(0.975))
+        casos = {"distancia_100km_a_menos": (-th[c.index("distancia_100km")], {"distancia_100km": -1.0 / b}),
+                 "mesma_uf": (th[c.index("mesma_uf")], {"mesma_uf": 1.0 / b}),
+                 "capital": (th[c.index("capital")], {"capital": 1.0 / b}),
+                 "vaga_imediata": (th[c.index("tem_vaga_imediata")] + math.log(2) * th[c.index("log_vagas_imediatas_mais_1")],
+                                   {"tem_vaga_imediata": 1.0 / b, "log_vagas_imediatas_mais_1": math.log(2) / b})}
+        for attr, (num, grad) in casos.items():
+            g = np.zeros(len(th))
+            for t, v in grad.items():
+                g[c.index(t)] = v
+            g[kb] = -num / b ** 2
+            d, ep = num / b, math.sqrt(g @ V @ g)
+            r = self.dap[(self.dap["modelo"] == "M1") & (self.dap["atributo"] == attr)].iloc[0]
+            self.assertAlmostEqual(d, r["dap"], delta=1e-5, msg=attr)
+            self.assertAlmostEqual(ep / r["ep_delta"], 1.0, delta=1e-4, msg=attr)
+            self.assertAlmostEqual(d - z * ep, r["ic95_delta_inf"], delta=1e-4, msg=attr)
+            self.assertAlmostEqual(d + z * ep, r["ic95_delta_sup"], delta=1e-4, msg=attr)
+
+    # -- M5 e Wald -------------------------------------------------------------
+    def test_M5_por_ciclo_e_wald(self) -> None:
+        th, v = [], []
+        for k in (1, 2, 3):
+            f = self._ajustar((k,), True)
+            i = f["cols"].index("bolsa_mil")
+            th.append(f["theta"][i])
+            v.append(f["V"][i, i])
+            r = self._csv("M5", "bolsa_mil", str(k))
+            self.assertEqual(f["N"], int(r["n_candidatos"]))
+            self.assertAlmostEqual(th[-1], r["coef"], delta=1e-6, msg=f"ciclo {k}")
+            self.assertAlmostEqual(math.sqrt(v[-1]) / r["ep_cluster_conjunto"], 1.0, delta=1e-4, msg=f"ciclo {k}")
+        R = np.array([[1.0, -1.0, 0.0], [0.0, 1.0, -1.0]])
+        d = R @ np.array(th)
+        W = float(d @ np.linalg.solve(R @ np.diag(v) @ R.T, d))
+        w = self.est[(self.est["modelo"] == "M5") & (self.est["tipo_linha"] == "wald_igualdade_ciclos")].iloc[0]
+        self.assertAlmostEqual(W, w["estatistica_wald"], delta=1e-5)
+        self.assertAlmostEqual(float(stats.chi2.sf(W, 2)), w["p"], delta=1e-6)
+
+    # -- BKY ------------------------------------------------------------------
+    def test_BKY_refeito_com_grade_propria(self) -> None:
+        sub = self.est[self.est["entra_bky"].astype(bool)]
+        p = sub["p"].to_numpy(float)
+        m = len(p)
+        ordem = np.argsort(p)
+        ps = p[ordem]
+        r = np.arange(1, m + 1)
+        q = np.ones(m)
+        for qq in np.arange(0.0005, 1.0, 0.0005):          # menor q que ainda rejeita, BKY de dois estágios
+            q1 = qq / (1 + qq)
+            r1 = r[ps <= q1 * r / m].max(initial=0)
+            if r1 == 0:
+                continue
+            rej = m if r1 == m else r[ps <= (q1 * m / (m - r1)) * r / m].max(initial=0)
+            idx = ordem[:rej]
+            q[idx] = np.minimum(q[idx], qq)
+        np.testing.assert_allclose(q, sub["q_bky"].to_numpy(float), atol=2e-3)
+        # Holm só no P1a (M1 empilhado, família de um teste)
+        h = self.est[self.est["entra_holm"].astype(bool)]
+        self.assertEqual(h[["modelo", "termo", "ciclo"]].values.tolist(), [["M1", "bolsa_mil", "empilhado"]])
+        self.assertAlmostEqual(float(h["p_holm"].iloc[0]), float(h["p"].iloc[0]), places=12)
+
+    # -- M8, M9 e bootstrap: só plausibilidade ----------------------------------
+    def test_convergencia_M8_M9_e_plausibilidade(self) -> None:
+        m8, m9 = self.res["m8"], self.res["m9"]
+        for m in (m8, m9):
+            self.assertTrue(m["ok"])
+            self.assertLess(m["grad_max"], 1e-4)
+            self.assertGreater(m["autovalor_min_informacao"], 0.0)
+        self.assertLessEqual(m8["avaliacoes"], m8["max_avaliacoes"])
+        f = self._ajustar((1, 2, 3), True)
+        # M9 aninha o M1 (lambda = 1): verossimilhança maior ou igual, e a razão registrada é 2·ΔLL
+        self.assertGreaterEqual(m9["ll"], f["ll"])
+        self.assertAlmostEqual(m9["lr_contra_M1"], 2 * (m9["ll"] - f["ll"]), delta=1e-2)
+        # M8 tem a distância normal: verossimilhança maior que a do M1 (mesmas linhas)
+        self.assertGreater(m8["ll"], f["ll"])
+        b = self.res["bootstrap"]
+        self.assertEqual((b["n_boot"], b["n_validos"]), (999, 999))
+        lo, hi = b["beta_bolsa_percentis_2_5_97_5"]
+        k = f["cols"].index("bolsa_mil")
+        self.assertLess(lo, f["theta"][k])
+        self.assertGreater(hi, f["theta"][k])
+
+    # -- Protocolo e integridade -------------------------------------------------
+    def test_amostra_e_natureza(self) -> None:
+        self.assertEqual(int(self.r1.shape[0]), 5421)
+        self.assertEqual(set(self.est["natureza_dos_dados"]), {"EMPIRICO"})
+        self.assertEqual(set(self.dap["natureza_dos_dados"]), {"EMPIRICO"})
+        self.assertEqual(self.res["natureza_dos_dados"], "EMPIRICO")
+
+    def test_M3_nao_executado_com_motivo_e_nada_aproximado(self) -> None:
+        m3 = self.est[self.est["modelo"] == "M3"]
+        self.assertTrue(len(m3) > 0)
+        self.assertEqual(set(m3["status"]), {"NAO_EXECUTADO"})
+        self.assertTrue(m3["coef"].isna().all())
+        self.assertTrue(m3["nota"].notna().all())
+
+    def test_arquivo_de_ivs_errado_nao_e_lido(self) -> None:
+        for arq in ("25_escolha_dap.py", "16_estimar_E9_escolha.py", "17_ponte_pmme_cnes.py",
+                    "19_escolha_heterogeneidade.py"):
+            self.assertNotIn("ivs_ipea_2010_municipios", (ROOT / "scripts" / "rdd_bolsa" / arq).read_text(encoding="utf-8"))
+
+    def test_desvios_datados_no_doc(self) -> None:
+        t = DOC.read_text(encoding="utf-8")
+        sec = t.split("<!-- P1:desvios:inicio -->")[1].split("<!-- P1:desvios:fim -->")[0]
+        itens = [ln for ln in sec.splitlines() if re.match(r"^\d+\. ", ln)]
+        self.assertEqual(len(itens), len(self.res["desvios"]))
+        for ln in itens:
+            self.assertRegex(ln, r"\(\d{2}/\d{2}/2026\)")
+
+    # -- Linguagem --------------------------------------------------------------
+    def test_linguagem_P1a_dap_e_P1g(self) -> None:
+        t = " ".join(DOC.read_text(encoding="utf-8").split())
+        leit = t.split("<!-- P1:leitura:inicio -->")[1].split("<!-- P1:leitura:fim -->")[0]
+        m1 = self._csv("M1", "bolsa_mil")
+        self.assertLess(m1["ic95_inf"], 0.0)
+        self.assertGreater(m1["ic95_sup"], 0.0)
+        # IC do M1 contém zero: nunca "efeito" afirmado, e o texto diz que os dados não distinguem de zero
+        p1a = leit.split("**P1b")[0]
+        self.assertIn("contém zero", p1a)
+        self.assertIn("não distinguem", p1a)
+        self.assertNotRegex(p1a.lower(), r"efeito (significativo|positivo|causal)|aumenta|eleva")
+        self.assertIn("sensível à especificação", p1a)
+        # DAP: ICs largos destacados em negrito e ponto que não é preço
+        self.assertRegex(leit, r"\*\*Os intervalos são largos")
+        self.assertIn("o ponto não é um preço", leit)
+        # P1g: sinal oposto lido como consistência, não como teste
+        p1g = leit.split("**P1g.**")[1]
+        self.assertIn("Os sinais são opostos", p1g)
+        self.assertIn("não confirma nem refuta", p1g)
+        self.assertIn("consistência, não teste", p1g)
+        self.assertNotRegex(p1g.lower(), r"(?<!para )rejeita|confirma o modelo|\btestou\b|teste confirma")
+        # nenhuma "Como ler" sugere que pares próximos validam o modelo
+        for v in self.res["como_ler"].values():
+            self.assertNotIn("mesma história", v)
+            self.assertLessEqual(len(v.split()), 70)
+
+    def test_figuras_sem_texto_de_leitura_embutido(self) -> None:
+        # texto de leitura só no doc/resumo; o script não usa ax.text, fig.text nem title nas figuras
+        src = SCRIPT.read_text(encoding="utf-8")
+        trecho = src.split("def figuras(")[1].split("# Documento 57a")[0]
+        for proibido in ("ax.text(", "fig.text(", "set_title(", "suptitle(", "annotate("):
+            self.assertNotIn(proibido, trecho)
+
+
 if __name__ == "__main__":
     unittest.main()

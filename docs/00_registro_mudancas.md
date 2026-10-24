@@ -8,6 +8,21 @@
 
 ---
 
+## 24/10/2026 — Auditoria 26 do P1 (protocolo 52)
+
+Motivo: auditoria independente do bloco P1. Veredito aprovado com correções de texto; nenhuma estimativa mudou.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/26_auditoria_P1_escolha.md`](auditorias/26_auditoria_P1_escolha.md) | recálculo independente de M0, M1, DAP, M5 e Wald, protocolo, integridade, linguagem e correções |
+
+Mudanças fora de `docs/`: `tests/test_escolha_dap.py` (classe `TestRecalculoIndependenteAuditoria26`), `tests/README.md`,
+`scripts/rdd_bolsa/25_escolha_dap.py` (texto: desvios datados, leitura da DAP e do P1g) e `P1_resumo.json`; o doc 57a foi regenerado pelo script.
+
+---
+
 ## 23/10/2026 — P1 (protocolo 52): escolha do candidato e disposição a pagar (onda 3, agente E-P1)
 
 Motivo: execução do T1.1–T1.5 do P1 sob o protocolo congelado

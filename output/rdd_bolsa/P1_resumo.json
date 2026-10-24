@@ -439,7 +439,7 @@
   "figuras": [
     {
       "arquivo": "output/rdd_bolsa/P1_figuras/P1_dap.png",
-      "como_ler": "Cada ponto é quanto de bolsa mensal (em R$ mil) equivale a um atributo da vaga no modelo principal; a barra mais grossa é o intervalo pelo método delta e a mais fina, o do bootstrap. Ponto à direita do zero: o atributo vale como bolsa a mais.",
+      "como_ler": "Cada ponto é quanto de bolsa mensal (em R$ mil) equivale a um atributo da vaga no modelo principal; a barra mais grossa é o intervalo pelo método delta e a mais fina, o do bootstrap. Ponto à direita do zero: o atributo vale como bolsa a mais. Intervalo que cruza o zero ou é muito largo não permite ler o ponto como preço.",
       "descricao": "DAP do M1 (P1b, P1c) com IC delta e bootstrap",
       "sha256": "8cfe20cd301b900387fbea5b29429e95c9083ecacb73ce4f6b4fa207d8962ace"
     },
@@ -451,15 +451,15 @@
     },
     {
       "arquivo": "output/rdd_bolsa/P1_figuras/P1_ponte_P1g.png",
-      "como_ler": "Cada par compara, no corte, quantos candidatos de 1ª opção a mais por célula o modelo de escolha prevê (só mudando a bolsa) com o salto observado nos dados. Pares próximos indicam que o modelo e o resultado agregado contam a mesma história.",
+      "como_ler": "Cada par compara, no corte, quantos candidatos de 1ª opção a mais por célula o modelo de escolha prevê (só mudando a bolsa) com o salto observado nos dados. É leitura de consistência, não teste: sinais opostos com intervalos que se sobrepõem não mostram que o modelo acerta nem que erra.",
       "descricao": "P1g: salto previsto por M1 contra a RDD por célula, ciclos 1–3",
       "sha256": "4e1434deba601a7847a41fece938d3663625c3137b085247bcaff3bc07408f66"
     }
   ],
   "como_ler": {
-    "P1_dap.png": "Cada ponto é quanto de bolsa mensal (em R$ mil) equivale a um atributo da vaga no modelo principal; a barra mais grossa é o intervalo pelo método delta e a mais fina, o do bootstrap. Ponto à direita do zero: o atributo vale como bolsa a mais.",
+    "P1_dap.png": "Cada ponto é quanto de bolsa mensal (em R$ mil) equivale a um atributo da vaga no modelo principal; a barra mais grossa é o intervalo pelo método delta e a mais fina, o do bootstrap. Ponto à direita do zero: o atributo vale como bolsa a mais. Intervalo que cruza o zero ou é muito largo não permite ler o ponto como preço.",
     "P1_beta_por_ciclo.png": "Cada ponto é o peso da bolsa (por R$ 1 mil) na escolha, em cada ciclo e nos três juntos, com intervalo de 95%. Ponto acima do zero: vagas com bolsa maior foram mais escolhidas como 1ª opção.",
-    "P1_ponte_P1g.png": "Cada par compara, no corte, quantos candidatos de 1ª opção a mais por célula o modelo de escolha prevê (só mudando a bolsa) com o salto observado nos dados. Pares próximos indicam que o modelo e o resultado agregado contam a mesma história."
+    "P1_ponte_P1g.png": "Cada par compara, no corte, quantos candidatos de 1ª opção a mais por célula o modelo de escolha prevê (só mudando a bolsa) com o salto observado nos dados. É leitura de consistência, não teste: sinais opostos com intervalos que se sobrepõem não mostram que o modelo acerta nem que erra."
   },
   "desvios": [
     {

@@ -186,13 +186,15 @@ MOTIVO_M3 = ("a distância da origem mais próxima exige o conjunto completo de 
 COMO_LER = {
     "P1_dap.png": ("Cada ponto é quanto de bolsa mensal (em R$ mil) equivale a um atributo da vaga no modelo "
                    "principal; a barra mais grossa é o intervalo pelo método delta e a mais fina, o do bootstrap. "
-                   "Ponto à direita do zero: o atributo vale como bolsa a mais."),
+                   "Ponto à direita do zero: o atributo vale como bolsa a mais. Intervalo que cruza o zero ou é muito "
+                   "largo não permite ler o ponto como preço."),
     "P1_beta_por_ciclo.png": ("Cada ponto é o peso da bolsa (por R$ 1 mil) na escolha, em cada ciclo e nos três "
                               "juntos, com intervalo de 95%. Ponto acima do zero: vagas com bolsa maior foram "
                               "mais escolhidas como 1ª opção."),
     "P1_ponte_P1g.png": ("Cada par compara, no corte, quantos candidatos de 1ª opção a mais por célula o "
-                         "modelo de escolha prevê (só mudando a bolsa) com o salto observado nos dados. Pares "
-                         "próximos indicam que o modelo e o resultado agregado contam a mesma história."),
+                         "modelo de escolha prevê (só mudando a bolsa) com o salto observado nos dados. É leitura de "
+                         "consistência, não teste: sinais opostos com intervalos que se sobrepõem não mostram que o "
+                         "modelo acerta nem que erra."),
 }
 
 
@@ -1634,7 +1636,9 @@ def tabela_dap(dap: pd.DataFrame) -> str:
     boot = (f"\n\nBootstrap de pares por conjunto de escolha: {_int(m1['n_boot_validos'])} réplicas válidas de "
             f"{_int(m1['n_boot'])}; fração das réplicas com coeficiente da bolsa ≤ 0: "
             f"{_n(m1['fracao_boot_beta_bolsa_nao_positivo'], 3)}.")
-    return t + boot + "\n\n" + defs
+    aviso = ("Leitura: os intervalos acima são largos, e a maioria contém zero no M1. Por ciclo (M5), onde o coeficiente "
+             "da bolsa é próximo de zero, a razão explode e não tem leitura econômica; a DAP não é um preço de mercado.")
+    return t + boot + "\n\n" + aviso + "\n\n" + defs
 
 
 def tabela_m1(est: pd.DataFrame) -> str:
@@ -1735,7 +1739,10 @@ def tabela_figuras(resumo: dict) -> str:
 
 
 def tabela_desvios(resumo: dict) -> str:
-    return "\n".join(f"{i}. **{d['item']}.** {d['situacao']} *Resolução:* {d['resolucao']}"
+    def data_br(iso: str) -> str:
+        a, m, d = iso.split("-")
+        return f"{d}/{m}/{a}"
+    return "\n".join(f"{i}. **{d['item']}** ({data_br(d['data'])}). {d['situacao']} *Resolução:* {d['resolucao']}"
                      for i, d in enumerate(resumo["desvios"], start=1))
 
 
@@ -1754,14 +1761,35 @@ def leitura(est: pd.DataFrame, dap: pd.DataFrame, resumo: dict) -> str:
         f"Sem a distância, na mesma amostra (M0): {_n(m0['coef'], 4, True)} (IC {_ic(m0['ic95_inf'], m0['ic95_sup'], 4)}); "
         f"na amostra completa do E9: {_n(e9['coef'], 4, True)} (IC {_ic(e9['ic95_inf'], e9['ic95_sup'], 4)}).",
     ]
+    outras = []
+    for mod, termo in (("M2", TERMO_BOLSA), ("M4", TERMO_BOLSA), ("M7", TERMO_BOLSA), ("M8", f"media_{TERMO_BOLSA}"),
+                       ("M9", TERMO_BOLSA)):
+        sub = est[(est["modelo"] == mod) & (est["ciclo"] == EMPILHADO) & (est["termo"] == termo) &
+                  (est["status"] == "EXECUTADO")]
+        if len(sub):
+            outras.append((mod, float(sub.iloc[0]["coef"]), float(sub.iloc[0]["ic95_inf"]), float(sub.iloc[0]["ic95_sup"])))
+    if outras:
+        exclui = [m for m, _, lo, hi in outras if lo > 0 or hi < 0]
+        contem = [m for m, _, lo, hi in outras if not (lo > 0 or hi < 0)]
+        coefs = [m1["coef"]] + [c for _, c, _, _ in outras]
+        txt[0] += (f" Nas outras especificações do empilhado, o IC de 95% exclui zero em {', '.join(exclui) or 'nenhuma'} "
+                   f"e contém zero em {', '.join(contem) or 'nenhuma'}; o coeficiente varia de {_n(min(coefs), 4, True)} a "
+                   f"{_n(max(coefs), 4, True)}. A leitura de P1a é sensível à especificação: só o M1 é a principal e o "
+                   f"único com Holm, e as demais são relatadas, não escolhidas.")
     d = dap[dap["modelo"] == "M1"].set_index("atributo")
     partes = []
     for a in DAP_DEF:
         r = d.loc[a]
         partes.append(f"{ROTULO_DAP[a]}: {_n(r['dap'], 2, True)} (delta {_ic(r['ic95_delta_inf'], r['ic95_delta_sup'], 2)}; "
                       f"bootstrap {_ic(r['ic95_boot_inf'], r['ic95_boot_sup'], 2)})")
-    txt.append("**P1b e P1c (R$ mil por mês de bolsa equivalentes, M1).** " + "; ".join(partes) + ". A DAP é uma "
-               "razão: com o coeficiente da bolsa perto de zero, o intervalo fica largo e assimétrico.")
+    n_zero_delta = sum(1 for a in DAP_DEF if d.loc[a, "ic95_delta_inf"] <= 0 <= d.loc[a, "ic95_delta_sup"])
+    n_zero_boot = sum(1 for a in DAP_DEF if d.loc[a, "ic95_boot_inf"] <= 0 <= d.loc[a, "ic95_boot_sup"])
+    txt.append("**P1b e P1c (R$ mil por mês de bolsa equivalentes, M1).** " + "; ".join(partes) + ". **Os intervalos "
+               f"são largos: o IC contém zero em {n_zero_delta} dos {len(DAP_DEF)} atributos pelo delta e em "
+               f"{n_zero_boot} pelo bootstrap.** A DAP é uma razão: com o coeficiente da bolsa perto de zero (o IC do "
+               "M1 contém zero), o intervalo fica largo e assimétrico, e o ponto não é um preço. A bolsa só varia entre "
+               "R$ 10 e R$ 20 mil nos dados, então valores muito maiores que isso são extrapolação da razão, não algo "
+               "que a escolha observada mostre.")
     w = _um(est, modelo="M5", tipo_linha="wald_igualdade_ciclos")
     cic = []
     for k in ("1", "2", "3"):
@@ -1790,6 +1818,15 @@ def leitura(est: pd.DataFrame, dap: pd.DataFrame, resumo: dict) -> str:
                f"1ª opção por célula (IC {_ic(prev['ic95_inf'], prev['ic95_sup'], 3)}) quando só a bolsa sobe um degrau; "
                f"a RDD por célula, na mesma amostra de candidatos, observa {_n(obs['coef'], 3, True)} "
                f"(IC {_ic(obs['ic95_inf'], obs['ic95_sup'], 3)}). É leitura de consistência, não teste.")
+    if prev["coef"] * obs["coef"] < 0:
+        sobrepoe = max(prev["ic95_inf"], obs["ic95_inf"]) <= min(prev["ic95_sup"], obs["ic95_sup"])
+        ambos_zero = all(x["ic95_inf"] <= 0 <= x["ic95_sup"] for x in (prev, obs))
+        txt[-1] += (" Os sinais são opostos"
+                    + (", mas os dois intervalos se sobrepõem" if sobrepoe else "")
+                    + (" e ambos contêm zero" if ambos_zero else "")
+                    + ": o salto observado não confirma nem refuta o modelo, e o P1g não é usado para validar nem para "
+                      "rejeitar o M1. O observado inclui quem passou a se candidatar ou deixou de se candidatar; o "
+                      "previsto não.")
     txt.append("Tudo acima é escolha condicional a candidatar-se, dentro das vagas abertas; o contraste no corte mede o "
                "pacote do corte e o incentivo marginal da bolsa, não a participação no PMM-E.")
     return "\n\n".join(txt)
