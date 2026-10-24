@@ -179,16 +179,12 @@ MOTIVOS = {
 
 COMO_LER = {
     "R_coeficientes.png": (
-        "Cada ponto é quanto o outcome da célula muda quando a bolsa média das concorrentes sobe R$ 5 mil (um "
-        "degrau de faixa em todas), com a própria faixa e o IVS próprio e das concorrentes mantidos; a barra é o "
-        "IC de 95%. Ponto abaixo do zero com barra que não cruza o zero seria sinal de deslocamento; os placebos "
-        "(outros cursos e vagas que só abrem depois) deveriam ficar em torno de zero. A especificação R3 (fração) "
-        "fica fora porque a exposição não está em reais."),
+        "Cada ponto é a mudança do outcome da célula quando a bolsa média das concorrentes sobe R$ 5 mil; a barra é "
+        "o IC de 95%. Placebos em laranja. A leitura que vale é a da tabela da seção 5, não a de um ponto isolado."),
     "R_residuos_principal.png": (
-        "Na especificação principal, cada ponto é a média, num grupo de células com exposição parecida, do outcome "
-        "e da exposição depois de tirar os controles (faixa própria, IVS próprio e das concorrentes, número de "
-        "concorrentes, curso × ciclo e covariáveis). A reta tem a inclinação do coeficiente. A largura do eixo "
-        "horizontal mostra quanta variação da exposição sobra para identificar o efeito."),
+        "Cada ponto é a média de um grupo de células com exposição parecida, depois de tirar os controles; a reta tem "
+        "a inclinação do coeficiente principal. A largura do eixo horizontal é a variação da exposição que sobra "
+        "para identificar o efeito."),
 }
 
 
@@ -842,16 +838,19 @@ def leitura(est: pd.DataFrame, resumo: dict) -> str:
             if (r := _uma(est, eid, oid)) is not None and not (r["ic95_inf"] <= 0 <= r["ic95_sup"])]
     if excl:
         txt = ", ".join(f"{e}/{o}" for e, o in excl)
-        pl = []
-        for _, o in excl:
-            r = _uma(est, "PL1", o)
-            if r is not None:
-                pl.append(f"no placebo de outros cursos (PL1/{o}) o coeficiente por R$ 1 mil é "
-                          f"{_n(r['coef'] * _escala(o)[0], _escala(o)[1] + 1, True)}{_escala(o)[2]} (p = {_p(r['p'])})")
+        comp = []
+        for e, o in excl:
+            r, q = _uma(est, e, o), _uma(est, "PL1", o)
+            if q is not None and e != "R3":
+                esc, casas, suf = _escala(o)
+                comp.append(f"{e}/{o} {_n(r['coef'] * esc, casas + 1, True)}{suf} contra PL1/{o} "
+                            f"{_n(q['coef'] * esc, casas + 1, True)}{suf} (p = {_p(q['p'])}), ambos por R$ 1 mil")
         partes.append(f"Entre as sensibilidades das primárias, o IC de 95% exclui zero em {txt}. São linhas sem Holm "
-                      "e não mudam a leitura pré-registrada, que é a da principal" + ("; para comparar, " +
-                                                                                       "; ".join(dict.fromkeys(pl))
-                                                                                       if pl else "") + ".")
+                      "e não mudam a leitura pré-registrada, que é a da principal. O placebo de outros cursos, que não "
+                      "disputa os mesmos candidatos, tem tamanho parecido"
+                      + (": " + "; ".join(dict.fromkeys(comp)) if comp else "")
+                      + ". Esse sinal, portanto, não é específico das concorrentes do mesmo curso e não é lido como "
+                      "deslocamento.")
     pls = []
     for oid in PRIMARIAS:
         for eid in ("PL1", "PL2"):
@@ -861,6 +860,22 @@ def leitura(est: pd.DataFrame, resumo: dict) -> str:
             pls.append(f"{eid}/{oid}: {_efeito5(r)}, p = {_p(r['p'])}")
     partes.append("**Placebos.** " + "; ".join(pls) + ". Um placebo com p < 0,05 indicaria que a exposição capta "
                   "outra coisa (geografia do IVS ou abertura de vagas).")
+    inc = [oid for oid in PRIMARIAS if resumo["leitura"][oid]["classe"] == "INCONCLUSIVO"]
+    if inc:
+        ics = []
+        for oid in inc:
+            r = _uma(est, "PRINCIPAL", oid)
+            esc, casas, suf = _escala(oid)
+            ics.append(f"{oid} de {_n(r['ic95_inf_5mil'] * esc, casas)}{suf} a {_n(r['ic95_sup_5mil'] * esc, casas, True)}{suf}")
+        partes.append("**O que \"inconclusivo\" quer dizer.** O IC de 95% por R$ 5 mil vai " + "; ".join(ics) +
+                      ", e o MDE fica acima do limiar do protocolo: o desenho não separa deslocamento de zero nessa "
+                      "margem. Não é evidência de que não haja deslocamento, nem de que haja.")
+    ciclo_ex = [f"{e}/{o}" for e in ("C1", "C2", "C3") for o in ("R_P1", "R_P2", "R_S1")
+                if (r := _uma(est, e, o)) is not None and not (r["ic95_inf"] <= 0 <= r["ic95_sup"])]
+    partes.append("**Por ciclo.** São 9 estimativas (3 ciclos × 3 outcomes), sem correção de multiplicidade e com MDE "
+                  "bem acima do da principal; o IC de 95% exclui zero em " + (", ".join(ciclo_ex) if ciclo_ex else
+                  "nenhuma") + ", e os sinais mudam de um ciclo para outro. Isso não é achado nem heterogeneidade "
+                  "estabelecida: a leitura continua sendo a da principal.")
     v = resumo["variacao_principal"]
     partes.append(f"**Variação disponível.** Na principal, {_n(v['frac_com_conc_bolsa_diferente'] * 100, 1)}% das "
                   f"células têm alguma concorrente na CIR com bolsa diferente da sua; o desvio-padrão da exposição é "
@@ -926,7 +941,8 @@ def gerar_doc(est: pd.DataFrame, var: pd.DataFrame, resumo: dict) -> str:
         "que só abrem em ciclo posterior (o candidato do ciclo não podia escolhê-las).\n\n"
         + bloco("placebos", tabela_espec(est, ["PL1", "PL2"])) + "\n\n"
         "## 8. Por ciclo (condição pré-tratamento)\n\n"
-        "O ciclo 1 fica à parte porque a adesão dos gestores precedeu o anúncio da faixa.\n\n"
+        "O ciclo 1 fica à parte porque a adesão dos gestores precedeu o anúncio da faixa. As nove linhas abaixo não têm "
+        "correção de multiplicidade e MDE alto: um p < 0,05 isolado aqui não é achado e não muda a leitura da principal.\n\n"
         + bloco("ciclos", tabela_espec(est, ["C1", "C2", "C3"])) + "\n\n"
         "## 9. Figuras\n\n"
         "Nenhuma figura traz texto de leitura dentro da imagem; o \"Como ler\" fica aqui e no campo `como_ler` de "
@@ -968,7 +984,7 @@ def desvios(dados: dict) -> list[dict]:
          "situacao": (f"O §7 diz 'a até 0,050 de um corte'; uma célula com IVS 0,350 está a 0,050 dos dois. No "
                       f"universo há {n_empate} células com IVS 0,350."),
          "resolucao": ("Cada concorrente usa o corte mais próximo; no empate, 0,300 (fica acima dele, com bolsa da "
-                       "faixa 2). Regra escrita no código antes da primeira execução.")},
+                       "faixa 2). Regra definida sem consultar outcome.")},
         {"tema": "PL2: chave que reaparece em mais de um ciclo posterior", "data": "24/10/2026",
          "situacao": ("Uma célula (estabelecimento × curso) ausente do ciclo 1 pode aparecer nos ciclos 2 e 3."),
          "resolucao": "Entra uma vez, com os atributos do primeiro ciclo posterior em que aparece."},
@@ -976,6 +992,15 @@ def desvios(dados: dict) -> list[dict]:
          "situacao": ("O §5 fixa cluster por CIR; no raio de 200 km (R1) e na UF (R2) a exposição se repete além "
                       "da CIR."),
          "resolucao": "Mantido o cluster por CIR, como no protocolo; a limitação fica declarada na seção 11."},
+        {"tema": "R7: controle do número de concorrentes", "data": "24/10/2026",
+         "situacao": ("O §7 manda manter os controles próprios da principal; o log(1 + nº de concorrentes) da "
+                      "principal conta todas as concorrentes da CIR, não só as vizinhas do corte."),
+         "resolucao": "Mantido o log(1 + nº de concorrentes) da CIR inteira; a média da spline das concorrentes sai "
+                      "e entram as médias de (IVS − corte) das vizinhas, como no §7."},
+        {"tema": "Intervalo de confiança", "data": "24/10/2026",
+         "situacao": "O §5 pede EP CR1 e o p pela t com G − 1 graus de liberdade ao lado.",
+         "resolucao": "O IC de 95% e o p principal usam a normal; o p pela t com G − 1 "
+                      "fica na coluna `p_t_G1`. Nenhuma conclusão muda de um para o outro."},
     ]
 
 

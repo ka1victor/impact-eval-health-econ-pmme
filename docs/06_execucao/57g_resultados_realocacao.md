@@ -53,9 +53,13 @@ Na amostra principal há 227 regiões de saúde (clusters) e 754 municípios. As
 
 **Sensibilidades (relatadas, não escolhidas).** R1/R_P1: −2,17 p.p. por unidade da exposição (IC [−4,01; −0,34]; exclui zero); R2/R_P1: −0,26 p.p. por unidade da exposição (IC [−2,95; 2,42]; contém zero); R3/R_P1: +2,74 p.p. por unidade da exposição (IC [−7,02; 12,50]; contém zero); R7/R_P1: −0,21 p.p. por unidade da exposição (IC [−2,89; 2,46]; contém zero); R1/R_P2: −0,0195 por unidade da exposição (IC [−0,1193; 0,0803]; contém zero); R2/R_P2: −0,0041 por unidade da exposição (IC [−0,1197; 0,1115]; contém zero); R3/R_P2: +0,2814 por unidade da exposição (IC [−0,1836; 0,7463]; contém zero); R7/R_P2: −0,1095 por unidade da exposição (IC [−0,2438; 0,0249]; contém zero).
 
-Entre as sensibilidades das primárias, o IC de 95% exclui zero em R1/R_P1. São linhas sem Holm e não mudam a leitura pré-registrada, que é a da principal; para comparar, no placebo de outros cursos (PL1/R_P1) o coeficiente por R$ 1 mil é −1,99 p.p. (p = 0,065).
+Entre as sensibilidades das primárias, o IC de 95% exclui zero em R1/R_P1. São linhas sem Holm e não mudam a leitura pré-registrada, que é a da principal. O placebo de outros cursos, que não disputa os mesmos candidatos, tem tamanho parecido: R1/R_P1 −2,17 p.p. contra PL1/R_P1 −1,99 p.p. (p = 0,065), ambos por R$ 1 mil. Esse sinal, portanto, não é específico das concorrentes do mesmo curso e não é lido como deslocamento.
 
 **Placebos.** PL1/R_P1: −10,0 p.p. (IC 95% [−20,5; 0,6]), p = 0,065; PL2/R_P1: −10,2 p.p. (IC 95% [−31,0; 10,5]), p = 0,333; PL1/R_P2: −0,020 (IC 95% [−0,561; 0,521]), p = 0,942; PL2/R_P2: −0,750 (IC 95% [−1,749; 0,249]), p = 0,141. Um placebo com p < 0,05 indicaria que a exposição capta outra coisa (geografia do IVS ou abertura de vagas).
+
+**O que "inconclusivo" quer dizer.** O IC de 95% por R$ 5 mil vai R_P1 de −14,3 p.p. a +4,6 p.p.; R_P2 de −0,553 a +0,404, e o MDE fica acima do limiar do protocolo: o desenho não separa deslocamento de zero nessa margem. Não é evidência de que não haja deslocamento, nem de que haja.
+
+**Por ciclo.** São 9 estimativas (3 ciclos × 3 outcomes), sem correção de multiplicidade e com MDE bem acima do da principal; o IC de 95% exclui zero em C1/R_P2, C2/R_S1, e os sinais mudam de um ciclo para outro. Isso não é achado nem heterogeneidade estabelecida: a leitura continua sendo a da principal.
 
 **Variação disponível.** Na principal, 44,1% das células têm alguma concorrente na CIR com bolsa diferente da sua; o desvio-padrão da exposição é R$ 2,61 mil e, depois dos controles, R$ 1,03 mil (os controles explicam 84,6% da variância da exposição).
 
@@ -143,7 +147,7 @@ PL1 usa as células de outros cursos (não disputam os mesmos candidatos); PL2 u
 
 ## 8. Por ciclo (condição pré-tratamento)
 
-O ciclo 1 fica à parte porque a adesão dos gestores precedeu o anúncio da faixa.
+O ciclo 1 fica à parte porque a adesão dos gestores precedeu o anúncio da faixa. As nove linhas abaixo não têm correção de multiplicidade e MDE alto: um p < 0,05 isolado aqui não é achado e não muda a leitura da principal.
 
 <!-- R:ciclos:inicio -->
 | Especificação | Outcome | Células | Coef. por unidade da exposição | IC 95% | p | MDE por R$ 5 mil | DP residual da exposição | Nota |
@@ -166,17 +170,19 @@ Nenhuma figura traz texto de leitura dentro da imagem; o "Como ler" fica aqui e 
 <!-- R:figuras:inicio -->
 | Arquivo | O que mostra | Como ler |
 |---|---|---|
-| `R_coeficientes.png` | coeficiente da exposição por R$ 5 mil, principal, sensibilidades, ciclos e placebos | Cada ponto é quanto o outcome da célula muda quando a bolsa média das concorrentes sobe R$ 5 mil (um degrau de faixa em todas), com a própria faixa e o IVS próprio e das concorrentes mantidos; a barra é o IC de 95%. Ponto abaixo do zero com barra que não cruza o zero seria sinal de deslocamento; os placebos (outros cursos e vagas que só abrem depois) deveriam ficar em torno de zero. A especificação R3 (fração) fica fora porque a exposição não está em reais. |
-| `R_residuos_principal.png` | médias por grupo do outcome e da exposição residualizados, especificação principal | Na especificação principal, cada ponto é a média, num grupo de células com exposição parecida, do outcome e da exposição depois de tirar os controles (faixa própria, IVS próprio e das concorrentes, número de concorrentes, curso × ciclo e covariáveis). A reta tem a inclinação do coeficiente. A largura do eixo horizontal mostra quanta variação da exposição sobra para identificar o efeito. |
+| `R_coeficientes.png` | coeficiente da exposição por R$ 5 mil, principal, sensibilidades, ciclos e placebos | Cada ponto é a mudança do outcome da célula quando a bolsa média das concorrentes sobe R$ 5 mil; a barra é o IC de 95%. Placebos em laranja. A leitura que vale é a da tabela da seção 5, não a de um ponto isolado. |
+| `R_residuos_principal.png` | médias por grupo do outcome e da exposição residualizados, especificação principal | Cada ponto é a média de um grupo de células com exposição parecida, depois de tirar os controles; a reta tem a inclinação do coeficiente principal. A largura do eixo horizontal é a variação da exposição que sobra para identificar o efeito. |
 <!-- R:figuras:fim -->
 
 ## 10. Desvios e decisões de implementação
 
 <!-- R:desvios:inicio -->
 1. **Contagem do §4 do protocolo** (24/10/2026). O §4 registrou 2.876 (CIR), 4.533 (raio) e 4.854 (UF) células com concorrente, numa conta de desenho feita antes de congelar, em que a célula sem IVS oficial e as 9 células sem CIR ainda entravam no universo. O próprio §4 diz que essas células ficam fora. *Resolução:* Universo = células com IVS oficial e CIR, como o §4 manda; a amostra principal tem o número da seção 2. Nada muda na especificação.
-2. **R7: concorrente equidistante dos dois cortes** (24/10/2026). O §7 diz 'a até 0,050 de um corte'; uma célula com IVS 0,350 está a 0,050 dos dois. No universo há 23 células com IVS 0,350. *Resolução:* Cada concorrente usa o corte mais próximo; no empate, 0,300 (fica acima dele, com bolsa da faixa 2). Regra escrita no código antes da primeira execução.
+2. **R7: concorrente equidistante dos dois cortes** (24/10/2026). O §7 diz 'a até 0,050 de um corte'; uma célula com IVS 0,350 está a 0,050 dos dois. No universo há 23 células com IVS 0,350. *Resolução:* Cada concorrente usa o corte mais próximo; no empate, 0,300 (fica acima dele, com bolsa da faixa 2). Regra definida sem consultar outcome.
 3. **PL2: chave que reaparece em mais de um ciclo posterior** (24/10/2026). Uma célula (estabelecimento × curso) ausente do ciclo 1 pode aparecer nos ciclos 2 e 3. *Resolução:* Entra uma vez, com os atributos do primeiro ciclo posterior em que aparece.
 4. **Cluster nos mercados largos** (24/10/2026). O §5 fixa cluster por CIR; no raio de 200 km (R1) e na UF (R2) a exposição se repete além da CIR. *Resolução:* Mantido o cluster por CIR, como no protocolo; a limitação fica declarada na seção 11.
+5. **R7: controle do número de concorrentes** (24/10/2026). O §7 manda manter os controles próprios da principal; o log(1 + nº de concorrentes) da principal conta todas as concorrentes da CIR, não só as vizinhas do corte. *Resolução:* Mantido o log(1 + nº de concorrentes) da CIR inteira; a média da spline das concorrentes sai e entram as médias de (IVS − corte) das vizinhas, como no §7.
+6. **Intervalo de confiança** (24/10/2026). O §5 pede EP CR1 e o p pela t com G − 1 graus de liberdade ao lado. *Resolução:* O IC de 95% e o p principal usam a normal; o p pela t com G − 1 fica na coluna `p_t_G1`. Nenhuma conclusão muda de um para o outro.
 <!-- R:desvios:fim -->
 
 ## 11. Limites

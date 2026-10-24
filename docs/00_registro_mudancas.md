@@ -8,6 +8,19 @@
 
 ---
 
+## 24/10/2026 — Auditoria 28 da realocação (protocolo 58)
+
+Motivo: auditoria independente do bloco da realocação. Veredito aprovado com correções de relato; nenhuma
+estimativa mudou.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/28_auditoria_realocacao.md`](auditorias/28_auditoria_realocacao.md) | auditoria: ordem dos commits, recálculo independente (principal, Holm, MDE, R1, R2, PL1, PL2), conferência do protocolo, integridade e correções de texto do doc 57g |
+
+---
+
 ## 24/10/2026 — Realocação (protocolo 58): execução
 
 Motivo: execução do protocolo [`06_execucao/58`](06_execucao/58_protocolo_realocacao_bolsa.md), congelado no commit

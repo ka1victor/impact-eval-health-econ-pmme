@@ -13,6 +13,8 @@ Quatro partes:
 3. `TestRecalculoIndependente`: refaz a exposição de algumas células com laço próprio e a regressão principal
    com o statsmodels (efeitos fixos por dummies do pandas, cluster por CIR) e compara com o CSV gravado.
 4. `TestDoc57g`: doc 57g igual ao gerado das saídas, "Como ler" no doc, linguagem e limites.
+5. `TestRecalculoIndependenteAuditoria28`: recálculo da auditoria 28, sem importar o script 32 (leitura própria
+   das entradas, mercado por junção, regressão com EP CR1 escrita à mão).
 """
 
 from __future__ import annotations
@@ -326,6 +328,195 @@ class TestDoc57g(unittest.TestCase):
         self.assertIn("EXPLORATORIO_REALOCACAO", texto)
         for visto in ("E9", "P1", "A3"):
             self.assertIn(visto, texto)
+
+
+# ---------------------------------------------------------------------------
+# 5. Recálculo independente da auditoria 28 (não usa o módulo `R`)
+# ---------------------------------------------------------------------------
+
+def _ler_entradas_auditoria() -> pd.DataFrame:
+    """Universo de células com IVS oficial e CIR, covariáveis do A4; leitura própria, sem o script 32."""
+    import pyarrow.parquet as pq
+    from scipy import stats  # noqa: F401
+    c = pd.read_parquet(OUT / "outcomes" / "outcomes_V_celula.parquet")
+    c["co_ibge"] = c["co_ibge"].astype(str).str.zfill(6)
+    a8 = pd.read_csv(ROOT / "output" / "aquisicao" / "a08_ivs_2010_oficial_municipio.csv", dtype={"co_ibge": str})
+    a8["co_ibge"] = a8["co_ibge"].str.zfill(6)
+    c["ivs"] = c["co_ibge"].map(a8.set_index("co_ibge")["ivs"])
+    c["s"] = np.round(c["ivs"] * 1000)
+    c["bolsa"] = c["faixa_anunciada"].map({"FAIXA 1": 20.0, "FAIXA 2": 15.0, "FAIXA 3": 10.0})
+    cir = {}
+    texto = (ROOT / "data" / "raw" / "aquisicao" / "territorio" / "datasus_tabnet_br_regsaud.cnv").read_text(
+        encoding="latin1")
+    for ln in texto.splitlines()[1:]:
+        m = re.match(r"^\s*\d+\s+(\d{5})\s+.*?\s+(\d{6})\s*$", ln)
+        if m:
+            cir[m.group(2)] = m.group(1)
+    c["cir"] = c["co_ibge"].map(cir)
+    pop = pd.read_csv(ROOT / "output" / "aquisicao" / "populacao_censo2022_municipios.csv", dtype={"co_ibge_6d": str})
+    pop["k"] = pop["co_ibge_6d"].str.zfill(6)
+    c["lpop"] = np.log(c["co_ibge"].map(pop.set_index("k")["populacao_2022"].astype(float)).where(lambda v: v > 0))
+    t = pq.read_table(ROOT / "output" / "aquisicao" / "cnes_nacional" / "painel_municipio_cbo_mes.parquet",
+                      columns=["co_ibge", "competencia", "grupo", "n_profissionais_distintos"]).to_pandas()
+    t = t[(t["competencia"] >= "202406") & (t["competencia"] <= "202506") & t["grupo"].isin(["alvo_pmme", "generalistas"])]
+    g = t.groupby(["co_ibge", "grupo"])["n_profissionais_distintos"].agg(["mean", "count"]).reset_index()
+    g = g[g["count"] == t["competencia"].nunique()]
+    w = g.pivot(index="co_ibge", columns="grupo", values="mean")
+    w.index = w.index.astype(str).str.zfill(6)
+    c["ea"] = c["co_ibge"].map(w["alvo_pmme"])
+    c["eg"] = c["co_ibge"].map(w["generalistas"])
+    c["y1"] = (c["n_alocados_ch1"] >= 1).astype(float)
+    c["y2"] = c["n_cand_1a_opcao"].astype(float)
+    u = c[c["ivs"].notna() & c["cir"].notna()].reset_index(drop=True)
+    u["k"] = u.index
+    return u
+
+
+def _spline_aud(s: np.ndarray) -> dict:
+    return {"u": (s - 300) / 100.0, "a": np.maximum(s - 300, 0) / 100.0, "b": np.maximum(s - 400, 0) / 100.0}
+
+
+def _exposicao_aud(u: pd.DataFrame, tipo: str) -> pd.DataFrame:
+    """Exposição por junção (self-merge) em vez de laço; média simples das concorrentes."""
+    sp = pd.DataFrame(_spline_aud(u["s"].to_numpy(float)))
+    b = pd.concat([u[["k", "ciclo", "cod_curso", "cir", "co_cnes_7d", "bolsa"]], sp.add_prefix("c_")], axis=1)
+    a = u[["k", "ciclo", "cod_curso", "cir", "co_cnes_7d"]]
+    if tipo == "mesmo":
+        j = a.merge(b, on=["ciclo", "cod_curso", "cir"], suffixes=("", "_b"))
+        j = j[j["k"] != j["k_b"]]
+    elif tipo == "outros":
+        j = a.merge(b, on=["ciclo", "cir"], suffixes=("", "_b"))
+        j = j[j["cod_curso"] != j["cod_curso_b"]]
+    else:
+        j = a.merge(b, on=["cod_curso", "cir"], suffixes=("", "_b"))
+        j = j[j["ciclo_b"] > j["ciclo"]]
+        chaves = set(zip(u["ciclo"], u["co_cnes_7d"], u["cod_curso"]))
+        ausente = np.array([(ci, e, cu) not in chaves for ci, e, cu in zip(j["ciclo"], j["co_cnes_7d_b"],
+                                                                         j["cod_curso"])], dtype=bool)
+        j = j[ausente].sort_values(["k", "ciclo_b"]).drop_duplicates(["k", "co_cnes_7d_b"])
+    agg = j.groupby("k").agg(n=("k_b", "size"), bm=("bolsa", "mean"), c_u=("c_u", "mean"), c_a=("c_a", "mean"),
+                             c_b=("c_b", "mean"))
+    d = u.set_index("k").join(agg)
+    d["n"] = d["n"].fillna(0)
+    d["E"] = d["bm"] - d["bolsa"]
+    return d
+
+
+def _mqo_cluster_aud(d: pd.DataFrame, ycol: str) -> tuple[float, float, int, int]:
+    """MQO com EP CR1 por CIR escrito à mão: G/(G-1) × (n-1)/(n-k)."""
+    sp = _spline_aud(d["s"].to_numpy(float))
+    X = pd.DataFrame({"E": d["E"], "f2": (d["faixa_anunciada"] == "FAIXA 2") * 1.0,
+                      "f1": (d["faixa_anunciada"] == "FAIXA 1") * 1.0, "u": sp["u"], "a": sp["a"], "b": sp["b"],
+                      "cu": d["c_u"], "ca": d["c_a"], "cb": d["c_b"], "ln": np.log1p(d["n"]), "lp": d["lpop"],
+                      "ea": d["ea"], "eg": d["eg"]}, index=d.index)
+    fe = pd.get_dummies(d["ciclo"].astype(str) + "_" + d["cod_curso"].astype(str), drop_first=True, dtype=float)
+    X = pd.concat([X, fe], axis=1)
+    X["const"] = 1.0
+    Xm = X.to_numpy(float)
+    y = d[ycol].to_numpy(float)
+    n, k = Xm.shape
+    b = np.linalg.lstsq(Xm, y, rcond=None)[0]
+    e = y - Xm @ b
+    bread = np.linalg.inv(Xm.T @ Xm)
+    ids = pd.factorize(d["cir"].astype(str))[0]
+    G = int(ids.max()) + 1
+    sc = pd.DataFrame(Xm * e[:, None]).groupby(ids).sum().to_numpy()
+    V = bread @ (sc.T @ sc) @ bread * (G / (G - 1)) * ((n - 1) / (n - k))
+    return float(b[0]), float(np.sqrt(V[0, 0])), n, G
+
+
+class TestRecalculoIndependenteAuditoria28(unittest.TestCase):
+    """Auditoria 28: leitura própria das entradas, exposição por junção, MQO e Holm escritos do zero.
+
+    Não usa o módulo `R` (script 32) nem a `rdd_lib`; compara com R_estimativas.csv (tolerância 1e-8 nos pontos).
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.u = _ler_entradas_auditoria()
+        cls.est = pd.read_csv(EST)
+        cls.cache: dict = {}
+
+    def _amostra(self, tipo: str, ate_ciclo2: bool = False) -> pd.DataFrame:
+        if tipo not in self.cache:
+            self.cache[tipo] = _exposicao_aud(self.u, tipo)
+        d = self.cache[tipo]
+        d = d[(d["n"] > 0) & d[["lpop", "ea", "eg"]].notna().all(axis=1)]
+        return d[d["ciclo"] < 3] if ate_ciclo2 else d
+
+    def _linha(self, esp: str, oid: str) -> pd.Series:
+        return self.est[(self.est["especificacao"] == esp) & (self.est["outcome_id"] == oid)].iloc[0]
+
+    def test_amostras_e_exposicao_de_celulas(self) -> None:
+        d = self._amostra("mesmo")
+        self.assertEqual(len(self.u), 5125)
+        self.assertEqual(len(d), 2875)
+        self.assertEqual(int(d["cir"].nunique()), 227)
+        u = self.u
+        for i in range(0, len(u), 211):      # laço direto em amostra de células
+            r = u.loc[i]
+            m = (u["ciclo"] == r["ciclo"]) & (u["cod_curso"] == r["cod_curso"]) & (u["cir"] == r["cir"]) & (u.index != i)
+            if m.sum() == 0:
+                self.assertEqual(self.cache["mesmo"].loc[i, "n"] if "mesmo" in self.cache else 0, 0)
+                continue
+            self.assertAlmostEqual(self.cache["mesmo"].loc[i, "E"], u.loc[m, "bolsa"].mean() - r["bolsa"], places=12)
+
+    def test_principal_nas_tres_saidas(self) -> None:
+        d = self._amostra("mesmo")
+        for oid, col in (("R_P1", "y1"), ("R_P2", "y2")):
+            b, ep, n, G = _mqo_cluster_aud(d, col)
+            g = self._linha("PRINCIPAL", oid)
+            self.assertEqual((n, G), (int(g["n_celulas"]), int(g["n_clusters"])))
+            self.assertAlmostEqual(b, g["coef"], delta=1e-8)
+            self.assertAlmostEqual(ep, g["ep"], delta=1e-8)
+            self.assertAlmostEqual(2.8015852 * ep * 5, g["mde_por_5mil"], delta=1e-6)
+
+    def test_holm_e_leitura(self) -> None:
+        d = self._amostra("mesmo")
+        from scipy import stats
+        p = []
+        for col in ("y1", "y2"):
+            b, ep, *_ = _mqo_cluster_aud(d, col)
+            p.append(2 * stats.norm.sf(abs(b / ep)))
+        p = np.array(p)
+        o = np.argsort(p)
+        holm = np.empty(2)
+        holm[o] = np.maximum.accumulate(np.minimum(1.0, (2 - np.arange(2)) * p[o]))
+        ref = [self._linha("PRINCIPAL", x)["p_holm"] for x in ("R_P1", "R_P2")]
+        np.testing.assert_allclose(holm, ref, atol=1e-8)
+        # Leitura pré-registrada: IC contém zero e MDE acima do limiar (10 p.p.; 0,25) -> inconclusivo.
+        for oid, col, lim in (("R_P1", "y1", 0.10), ("R_P2", "y2", 0.25)):
+            b, ep, *_ = _mqo_cluster_aud(d, col)
+            self.assertLess(b - 1.959964 * ep, 0)
+            self.assertGreater(b + 1.959964 * ep, 0)
+            self.assertGreater(2.8015852 * ep * 5, lim)
+            self.assertIn("INCONCLUSIVO", json.loads(RESUMO.read_text(encoding="utf-8"))["leitura"][oid]["classe"])
+
+    def test_placebo_pl1_e_pl2(self) -> None:
+        for esp, tipo, ate2 in (("PL1", "outros", False), ("PL2", "futuras", True)):
+            d = self._amostra(tipo, ate_ciclo2=ate2)
+            for oid, col in (("R_P1", "y1"), ("R_P2", "y2")):
+                b, ep, n, G = _mqo_cluster_aud(d, col)
+                g = self._linha(esp, oid)
+                self.assertEqual(n, int(g["n_celulas"]), esp)
+                self.assertAlmostEqual(b, g["coef"], delta=1e-8, msg=f"{esp}/{oid}")
+                self.assertAlmostEqual(ep, g["ep"], delta=1e-8, msg=f"{esp}/{oid}")
+
+    def test_pl1_de_tamanho_parecido_com_r1_no_doc(self) -> None:
+        doc = DOC.read_text(encoding="utf-8")
+        self.assertIn("PL1/R_P1", doc)
+        self.assertIn("não é específico das concorrentes do mesmo curso", doc)
+        self.assertNotRegex(doc.lower(), r"não há deslocamento|sem deslocamento|descarta o deslocamento")
+        self.assertIn("**Por ciclo.**", doc)
+
+    def test_como_ler_curto_e_figuras_sem_texto_de_leitura(self) -> None:
+        resumo = json.loads(RESUMO.read_text(encoding="utf-8"))
+        for f in resumo["figuras"]:
+            self.assertLessEqual(len(re.findall(r"\.\s", f["como_ler"] + " ")), 3, f["arquivo"])
+        fonte = SCRIPT.read_text(encoding="utf-8")
+        self.assertNotIn(".set_title(", fonte)
+        self.assertNotIn("fig.suptitle", fonte)
+        self.assertNotIn("ax.text(", fonte)
 
 
 if __name__ == "__main__":

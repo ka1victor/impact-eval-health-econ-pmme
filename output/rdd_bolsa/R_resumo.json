@@ -575,12 +575,12 @@
   "figuras": [
     {
       "arquivo": "output/rdd_bolsa/R_figuras/R_coeficientes.png",
-      "como_ler": "Cada ponto é quanto o outcome da célula muda quando a bolsa média das concorrentes sobe R$ 5 mil (um degrau de faixa em todas), com a própria faixa e o IVS próprio e das concorrentes mantidos; a barra é o IC de 95%. Ponto abaixo do zero com barra que não cruza o zero seria sinal de deslocamento; os placebos (outros cursos e vagas que só abrem depois) deveriam ficar em torno de zero. A especificação R3 (fração) fica fora porque a exposição não está em reais.",
+      "como_ler": "Cada ponto é a mudança do outcome da célula quando a bolsa média das concorrentes sobe R$ 5 mil; a barra é o IC de 95%. Placebos em laranja. A leitura que vale é a da tabela da seção 5, não a de um ponto isolado.",
       "descricao": "coeficiente da exposição por R$ 5 mil, principal, sensibilidades, ciclos e placebos"
     },
     {
       "arquivo": "output/rdd_bolsa/R_figuras/R_residuos_principal.png",
-      "como_ler": "Na especificação principal, cada ponto é a média, num grupo de células com exposição parecida, do outcome e da exposição depois de tirar os controles (faixa própria, IVS próprio e das concorrentes, número de concorrentes, curso × ciclo e covariáveis). A reta tem a inclinação do coeficiente. A largura do eixo horizontal mostra quanta variação da exposição sobra para identificar o efeito.",
+      "como_ler": "Cada ponto é a média de um grupo de células com exposição parecida, depois de tirar os controles; a reta tem a inclinação do coeficiente principal. A largura do eixo horizontal é a variação da exposição que sobra para identificar o efeito.",
       "descricao": "médias por grupo do outcome e da exposição residualizados, especificação principal"
     }
   ],
@@ -595,7 +595,7 @@
       "tema": "R7: concorrente equidistante dos dois cortes",
       "data": "24/10/2026",
       "situacao": "O §7 diz 'a até 0,050 de um corte'; uma célula com IVS 0,350 está a 0,050 dos dois. No universo há 23 células com IVS 0,350.",
-      "resolucao": "Cada concorrente usa o corte mais próximo; no empate, 0,300 (fica acima dele, com bolsa da faixa 2). Regra escrita no código antes da primeira execução."
+      "resolucao": "Cada concorrente usa o corte mais próximo; no empate, 0,300 (fica acima dele, com bolsa da faixa 2). Regra definida sem consultar outcome."
     },
     {
       "tema": "PL2: chave que reaparece em mais de um ciclo posterior",
@@ -608,6 +608,18 @@
       "data": "24/10/2026",
       "situacao": "O §5 fixa cluster por CIR; no raio de 200 km (R1) e na UF (R2) a exposição se repete além da CIR.",
       "resolucao": "Mantido o cluster por CIR, como no protocolo; a limitação fica declarada na seção 11."
+    },
+    {
+      "tema": "R7: controle do número de concorrentes",
+      "data": "24/10/2026",
+      "situacao": "O §7 manda manter os controles próprios da principal; o log(1 + nº de concorrentes) da principal conta todas as concorrentes da CIR, não só as vizinhas do corte.",
+      "resolucao": "Mantido o log(1 + nº de concorrentes) da CIR inteira; a média da spline das concorrentes sai e entram as médias de (IVS − corte) das vizinhas, como no §7."
+    },
+    {
+      "tema": "Intervalo de confiança",
+      "data": "24/10/2026",
+      "situacao": "O §5 pede EP CR1 e o p pela t com G − 1 graus de liberdade ao lado.",
+      "resolucao": "O IC de 95% e o p principal usam a normal; o p pela t com G − 1 fica na coluna `p_t_G1`. Nenhuma conclusão muda de um para o outro."
     }
   ],
   "validacoes": {
