@@ -8,6 +8,20 @@
 
 ---
 
+## 24/10/2026 — Protocolo 58: realocação entre vagas pela bolsa das concorrentes
+
+Motivo: pedido do autor de testar se a bolsa maior desloca médicos entre vagas do programa (violação de SUTVA na
+RDD nos cortes). Protocolo congelado antes de abrir qualquer outcome por exposição; estatuto
+`EXPLORATORIO_REALOCACAO` (E9, P1 e A3 já vistos).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/58_protocolo_realocacao_bolsa.md`](06_execucao/58_protocolo_realocacao_bolsa.md) | protocolo: unidade (célula aberta), mercado (mesmo curso e ciclo na CIR; raio de 200 km e UF como sensibilidade), exposição (bolsa média das concorrentes menos a própria), desenho com IVS próprio e das concorrentes controlados, outcomes, Holm, placebos, MDE, leitura e limitações |
+
+---
+
 ## 24/10/2026 — Auditoria 26 do P1 (protocolo 52)
 
 Motivo: auditoria independente do bloco P1. Veredito aprovado com correções de texto; nenhuma estimativa mudou.
