@@ -8,6 +8,33 @@
 
 ---
 
+## 24/10/2026 — Síntese das perguntas reformuladas (onda 5 do doc 51)
+
+Motivo: síntese de P1, P2 (A3 e N), P3 (D1, D2 e P3x), P4, P5, P6, realocação e T1.6, com Holm e BKY refeitos
+dos p gravados, poder e MDE, resposta à pergunta central do autor e leitura pela cadeia. Nenhuma estimativa nova;
+nenhuma revisão de hipótese adotada (só proposta rotulada).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57_sintese_perguntas_reformuladas.md`](06_execucao/57_sintese_perguntas_reformuladas.md) | síntese gerada inteira pelo script 33: tabela por pergunta (estimando, desenho, unidade, contraste, resultado, força da evidência), Holm e BKY recalculados com divergências, primárias com limite superior e MDE, pergunta central (atração e preenchimento por corte), cadeia, lacunas e proposta ao autor |
+
+### Alterado
+
+| Arquivo | O que mudou |
+|---|---|
+| [`06_execucao/38_estado_e_pendencias_rdd_bolsa.md`](06_execucao/38_estado_e_pendencias_rdd_bolsa.md) | estado de 24/10/2026, fila e linhas da tabela do que está feito |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/33_sintese_perguntas.py` e saídas `output/rdd_bolsa/S57_resumo.json`,
+  `S57_tabela_perguntas.csv`, `S57_multiplicidade.csv` e `S57_poder.csv` (`EMPIRICO`);
+- teste `tests/test_sintese_perguntas.py`; `tests/README.md`; `scripts/README.md`; bullet do estado da RDD no
+  `CLAUDE.md`.
+- O script não entrou no `run_all.py`: só lê saídas versionadas.
+
+---
+
 ## 24/10/2026 — Auditoria 28 da realocação (protocolo 58)
 
 Motivo: auditoria independente do bloco da realocação. Veredito aprovado com correções de relato; nenhuma

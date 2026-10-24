@@ -1,0 +1,37 @@
+natureza_dos_dados,linha,estimativa,ic95_inf,ic95_sup,maior_valor_compativel,mde_80,fonte
+EMPIRICO,P1 (protocolo 40),-0.1283235567,-0.4440761753,0.1874290618,0.1874290618,0.4510834582,output/rdd_bolsa/E6_estimativas.csv
+EMPIRICO,P2 (protocolo 40),0.0834124104,-0.3091606858,0.4759855066,0.4759855066,0.5608290143,output/rdd_bolsa/E7_estimativas.csv
+EMPIRICO,K1 (protocolo 47),7.919606416,-27.5831704,43.42238324,43.42238324,50.71918458,output/rdd_bolsa/K_D1_estimativas.csv
+EMPIRICO,K2 (protocolo 47),0.4151522997,-0.5824677473,1.412772347,1.412772347,1.425197684,output/rdd_bolsa/K_D1_estimativas.csv
+EMPIRICO,K3 (protocolo 47),-1.852503999,-22.89964711,19.19463911,19.19463911,30.06789981,output/rdd_bolsa/K_D1_estimativas.csv
+EMPIRICO,N1 (protocolo 48),-0.7558679549,-1.44217115,-0.06956475947,-0.06956475947,0.9804511523,output/rdd_bolsa/N_estimativas.csv
+EMPIRICO,N2 (protocolo 48),-0.311351448,-0.6579245873,0.03522169124,0.03522169124,0.4951135825,output/rdd_bolsa/N_estimativas.csv
+EMPIRICO,N3 (protocolo 48),-0.3508846392,-0.8731242862,0.1713550077,0.1713550077,0.7460703477,output/rdd_bolsa/N_estimativas.csv
+EMPIRICO,N4 (protocolo 48),-0.2090583423,-1.338310768,0.9201940831,0.9201940831,1.613247394,output/rdd_bolsa/N_estimativas.csv
+EMPIRICO,P1a M1 (protocolo 52),0.04239598739,-0.0026506294,0.08744260417,0.08744260417,0.0643534922,output/rdd_bolsa/P1_estimativas.csv
+EMPIRICO,"P1a M1, razão de chances por +R$ 5 mil",1.236123084,0.9868342893,1.54838588,1.54838588,1.379563936,output/rdd_bolsa/P1_estimativas.csv
+EMPIRICO,"R-P1 por +R$ 5 mil, p.p. (protocolo 58)",-4.871509536,-14.31755854,4.574539471,4.574539471,13.50224365,output/rdd_bolsa/R_estimativas.csv
+EMPIRICO,R-P2 por +R$ 5 mil (protocolo 58),-0.07455268273,-0.5532868628,0.4041814973,0.4041814973,0.6843057386,output/rdd_bolsa/R_estimativas.csv
+EMPIRICO,P6 y1 ultimo (protocolo 56),0.4197305115,0.2150870588,0.6243739643,0.6243739643,0.2923531618,output/rdd_bolsa/P6_estimativas.csv
+EMPIRICO,P6 y1 media (protocolo 56),0.4048426985,0.2096420941,0.6000433029,0.6000433029,0.2788631305,output/rdd_bolsa/P6_estimativas.csv
+EMPIRICO,P6 y2 ultimo (protocolo 56),8.572737901,-6.569636901,23.7151127,23.7151127,21.6323615,output/rdd_bolsa/P6_estimativas.csv
+EMPIRICO,P6 y2 media (protocolo 56),10.45140351,-4.418927546,25.32173457,25.32173457,21.24372044,output/rdd_bolsa/P6_estimativas.csv
+EMPIRICO,P6 y3 ultimo (protocolo 56),13.19537913,-3.125780796,29.51653905,29.51653905,23.31637119,output/rdd_bolsa/P6_estimativas.csv
+EMPIRICO,P6 y3 media (protocolo 56),15.52815976,0.626476677,30.42984284,30.42984284,21.28850987,output/rdd_bolsa/P6_estimativas.csv
+EMPIRICO,P6 y4 ultimo (protocolo 56),0.2020116677,-0.05289407317,0.4569174085,0.4569174085,0.3641577498,output/rdd_bolsa/P6_estimativas.csv
+EMPIRICO,P6 y4 media (protocolo 56),0.2068557634,-0.03591830699,0.4496298338,0.4496298338,0.3468264736,output/rdd_bolsa/P6_estimativas.csv
+EMPIRICO,P6 y5 ultimo (protocolo 56),0.4461697567,-0.3712282074,1.263567721,1.263567721,1.167732835,output/rdd_bolsa/P6_estimativas.csv
+EMPIRICO,P6 y5 media (protocolo 56),0.4324884965,-0.3497600669,1.21473706,1.21473706,1.117518482,output/rdd_bolsa/P6_estimativas.csv
+EMPIRICO,pergunta central: a3p_todos_300 (p.p.),-8.394018209,-18.5107842,1.72274778,1.72274778,14.45278841,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: a3p_todos_400 (p.p.),-1.318283112,-13.97195515,11.33538893,11.33538893,18.07700651,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: a3p_todos_emp (p.p.),-4.859047539,-12.90786923,3.189774151,3.189774151,11.49852799,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: a3c_todos_300 (p.p.),-10.75462395,-28.18722346,6.677975552,6.677975552,24.9041712,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: a3c_todos_400 (p.p.),-2.686400462,-19.65732605,14.28452512,14.28452512,24.24462491,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: a3c_todos_emp (p.p.),-7.071404307,-19.5880252,5.445216587,5.445216587,17.88121556,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: a3p_c1_300 (p.p.),0.9120750508,-23.49825728,25.32240738,25.32240738,34.87254411,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: a3p_c1_400 (p.p.),-12.44657883,-37.4967948,12.60363714,12.60363714,35.7866804,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: a3p_c1_emp (p.p.),-3.311023495,-20.85776744,14.23572045,14.23572045,25.06723768,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: a3c_c1_300 (p.p.),-10.56220541,-31.59089192,10.4664811,10.4664811,30.04153275,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: a3c_c1_400 (p.p.),-6.494320109,-32.41567262,19.4270324,19.4270324,37.03118404,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: a3c_c1_emp (p.p.),-6.493804004,-22.67918409,9.691576084,9.691576084,23.12239643,output/rdd_bolsa/NA_estimativas.csv
+EMPIRICO,pergunta central: F1.1 empilhado,0.06274401916,-0.5107950238,0.6362830621,0.6362830621,0.8193565458,output/rdd_bolsa/E6_estimativas.csv
