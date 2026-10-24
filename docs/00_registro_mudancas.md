@@ -8,6 +8,34 @@
 
 ---
 
+## 24/10/2026 — T1.6: cenários contrafactuais de bolsa (adendo §7 do protocolo 52, agente E-P1c)
+
+Motivo: pergunta do autor sobre quantas vagas a mais seriam preenchidas no total com +R$ 5 mil de bolsa, com as
+vagas disputando o mesmo grupo de candidatos. O adendo §7 do protocolo 52 foi commitado antes de simular. A
+validação de base **falhou** (ciclo 1, Faixa 3), e por isso, como manda o adendo, os cenários não foram
+calculados.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57b_cenarios_P1_bolsa.md`](06_execucao/57b_cenarios_P1_bolsa.md) | gerado inteiro pelo script. Traz o aviso de simulação no topo, o mercado, a validação de base, a falha com o diagnóstico, as decisões em aberto do autor e a nota de processo |
+
+### Alterado
+
+- `06_execucao/52_protocolo_P1_escolha_dap.md`: seção 7, adendo de 24/10/2026 (commit próprio, antes da
+  simulação).
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/25b_cenarios_bolsa.py` (fora do `run_all.py`);
+- pasta nova `output/cenarios/`, com `P1_cenarios_resumo.json` e `P1_cenarios_validacao_base.csv`, rotulados
+  `CENARIO_CONTRAFACTUAL`;
+- `tests/test_cenarios_bolsa.py`;
+- `tests/test_integridade_dados.py`, que passa a aceitar `CENARIO_CONTRAFACTUAL` só em `output/cenarios/`;
+- `tests/README.md` e `output/README.md`.
+
+---
+
 ## 24/10/2026 — Auditoria 27 do P6 (doc 57f)
 
 Criado `docs/auditorias/27_auditoria_P6_mecanismo.md` (veredito, recálculo independente, correções de relato). Sem

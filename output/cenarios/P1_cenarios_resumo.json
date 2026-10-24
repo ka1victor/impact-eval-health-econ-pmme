@@ -1,0 +1,229 @@
+{
+  "etapa": "T1.6 (adendo §7 do protocolo 52)",
+  "natureza_dos_dados": "CENARIO_CONTRAFACTUAL",
+  "estatuto": "ADENDO_52_T16_CENARIOS",
+  "aviso": "SIMULAÇÃO: cenário contrafactual sob hipóteses fixas; nada aqui é observação",
+  "data_execucao": "2026-10-24",
+  "script": "scripts/rdd_bolsa/25b_cenarios_bolsa.py",
+  "protocolo": "docs/06_execucao/52_protocolo_P1_escolha_dap.md §7",
+  "parametros": {
+    "R": 200,
+    "semente": 20261024,
+    "K_M8": 100,
+    "tolerancia_abs": 3,
+    "tolerancia_rel": 0.02,
+    "bolsa_observada": {
+      "FAIXA 1": 20.0,
+      "FAIXA 2": 15.0,
+      "FAIXA 3": 10.0
+    },
+    "cenarios": {
+      "C1": {
+        "FAIXA 3": 15.0,
+        "FAIXA 2": 15.0,
+        "FAIXA 1": 20.0
+      },
+      "C2": {
+        "FAIXA 3": 20.0,
+        "FAIXA 2": 20.0,
+        "FAIXA 1": 20.0
+      },
+      "C3": {
+        "FAIXA 3": 10.0,
+        "FAIXA 2": 20.0,
+        "FAIXA 1": 20.0
+      },
+      "C4": {
+        "FAIXA 3": 15.0,
+        "FAIXA 2": 15.0,
+        "FAIXA 1": 15.0
+      }
+    },
+    "descricao_cenarios": {
+      "C1": "+R$ 5 mil na faixa de bolsa menor (Faixa 3: 10 → 15)",
+      "C2": "todas no maior valor (R$ 20 mil)",
+      "C3": "+R$ 5 mil só na faixa 0,300–0,400 (Faixa 2: 15 → 20)",
+      "C4": "bolsa uniforme de R$ 15 mil"
+    },
+    "variantes": {
+      "principal": "M1, θ̂ (só sorteio do erro)",
+      "S1_beta_inf": "M1 com β_bolsa no limite inferior do IC 95%",
+      "S2_beta_sup": "M1 com β_bolsa no limite superior do IC 95%",
+      "S3_assintotico": "M1 com θ sorteado de N(θ̂, V_cluster) a cada réplica",
+      "S4_M8": "M8 (logit misto), coeficientes individuais condicionais às escolhas"
+    }
+  },
+  "modelo": {
+    "termos": [
+      "bolsa_mil",
+      "ivs_inclinacao",
+      "ivs_mudanca_inclinacao_0300",
+      "ivs_mudanca_inclinacao_0400",
+      "tem_vaga_imediata",
+      "log_vagas_imediatas_mais_1",
+      "log_populacao_2022",
+      "macro_centro_oeste",
+      "macro_nordeste",
+      "macro_norte",
+      "macro_sul",
+      "capital",
+      "estrato_interior_remoto",
+      "estrato_metropolitano",
+      "distancia_100km",
+      "mesma_uf",
+      "mesma_regiao_saude",
+      "mesmo_municipio"
+    ],
+    "theta": [
+      0.042395987385265406,
+      -0.0012044698579673748,
+      0.3755098508124979,
+      -0.5325540448956525,
+      0.35302962789398196,
+      0.30883694390069333,
+      0.04773670983309567,
+      0.913330118301129,
+      1.4685476452893442,
+      0.9302045649521412,
+      0.4146249065613999,
+      -0.15542161192451365,
+      -0.2546306109494202,
+      0.23293178510472548,
+      -0.18930203190781508,
+      2.4023763319384974,
+      1.6452183202210369,
+      0.7874393087910084
+    ],
+    "beta_bolsa": 0.042395987385265406,
+    "ic95_beta": [
+      -0.0026506294,
+      0.08744260417
+    ],
+    "diferenca_theta_gravado": 2.8934432627636397e-10
+  },
+  "unidades": {
+    "total": 5639,
+    "A": 3645,
+    "B": 1776,
+    "C": 218,
+    "linhas": 953352
+  },
+  "contagens": {
+    "1": {
+      "candidatos_elegiveis": 879,
+      "respondem_ao_cenario": 820,
+      "lista_fixa_observada": 59,
+      "amostra_P1_inelegiveis_no_mecanismo": 95,
+      "celulas_com_capacidade": 705,
+      "capacidade_efetiva_total": 921,
+      "preenchidas_publicadas": 527
+    },
+    "2": {
+      "candidatos_elegiveis": 2179,
+      "respondem_ao_cenario": 2032,
+      "lista_fixa_observada": 147,
+      "amostra_P1_inelegiveis_no_mecanismo": 0,
+      "celulas_com_capacidade": 1015,
+      "capacidade_efetiva_total": 1836,
+      "preenchidas_publicadas": 1057
+    },
+    "3": {
+      "candidatos_elegiveis": 2604,
+      "respondem_ao_cenario": 2474,
+      "lista_fixa_observada": 130,
+      "amostra_P1_inelegiveis_no_mecanismo": 0,
+      "celulas_com_capacidade": 790,
+      "capacidade_efetiva_total": 1295,
+      "preenchidas_publicadas": 704
+    }
+  },
+  "s4": {
+    "ess_mediana": 69.75480717136703,
+    "ess_minimo": 1.0
+  },
+  "validacao_base": {
+    "passou": false,
+    "regra": "|B0 − observado| ≤ max(3; 2% do observado) em todas as réplicas, por ciclo × faixa e no total do ciclo",
+    "conservacao_b0": {
+      "celulas_acima_da_capacidade": 0,
+      "alocados_fora_da_lista": 0
+    }
+  },
+  "nota_processo": "Antes da execução com R = 200, o script foi rodado três vezes com R = 2 para depurar o código (24/10/2026, depois do commit do adendo). A 1ª parou numa conferência interna (instabilidade numérica no S4, corrigida no sorteio condicional); a 2ª parou num erro do código das figuras; a 3ª passou a validação de base com 2 réplicas e calculou os cenários, e o agente viu esses números de 2 réplicas. A execução com R = 200 falhou na validação de base. Depois disso só mudaram o texto do doc e a limpeza das saídas de cenário da depuração (apagadas); nada mudou no modelo, no mecanismo, na tolerância ou no desempate.",
+  "entradas": [
+    {
+      "caminho": "output/rdd_bolsa/P1_estimativas.csv",
+      "sha256": "8c4ca2e98b671709ec208526ff4e58a8060d5643d8ce37776f1b7c1f4fcc1f24",
+      "papel": "θ̂ e IC do M1; coeficientes do M8",
+      "fonte": "script 25 (P1, EMPIRICO)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "papel": "listas observadas"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_conjunto_principal.parquet",
+      "sha256": "ad655dbce17753a996594213f6f9b9dff18e42af6556e48d0ee20df858bfca22",
+      "papel": "conjunto de escolha e faixa anunciada da célula"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "papel": "origem do candidato (G1)"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+      "sha256": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec",
+      "papel": "resultado publicado, ciclo 1, 1ª chamada (nome e CPF só em memória, em hash, como no G2)"
+    },
+    {
+      "caminho": "data/raw/pmm_e/resultado-final-pmme-2o-ciclo-25-05.xlsx",
+      "sha256": "8e85a28a57db1283cd3103065b04909b637cb76aab73482889e6b5fe50182e3c",
+      "papel": "resultado publicado, ciclo 2, 1ª chamada (nome e CPF só em memória, em hash, como no G2)"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx",
+      "sha256": "d74f268bb7192c80a02c94e54eb4407e60a0923ad7d0310c2c6b432b3dbbb6ee",
+      "papel": "resultado publicado, ciclo 3, 1ª chamada (nome e CPF só em memória, em hash, como no G2)"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx",
+      "sha256": "51c6807f6bc2efa252b5236d89c5384ae484c4d47c8b65d4161c3facbfebe304",
+      "papel": "quadro de vagas, ciclo 1, 1ª chamada (AC/ER/PCD)"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+      "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+      "papel": "quadro de vagas, ciclo 2, 1ª chamada (AC/ER/PCD)"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo3_chamada1_vagas_retificadas.xlsx",
+      "sha256": "6bc07f48d0eaac37936fc827ebdefd12fb7bf2be86dc26f64a08e1f5b57f5371",
+      "papel": "quadro de vagas, ciclo 3, 1ª chamada (AC/ER/PCD)"
+    }
+  ],
+  "integridade": {
+    "data_alterado": false,
+    "identificador_de_candidato_gravado": false,
+    "arquivo_local_de_ivs_lido": false,
+    "saidas_em_output_rdd_bolsa": false
+  },
+  "limites": [
+    "grupo de candidatos fixo (sem entrada nem desistência)",
+    "sem extrapolação fora de R$ 10–20 mil",
+    "sem 2ª chamada, desistência, homologação ou custo fiscal (custo = aritmética simples)",
+    "capacidade efetiva fixa (inclui a redistribuição do item 5.7 publicada)",
+    "M1 com IC de β_bolsa que contém zero; IIA dentro do curso"
+  ],
+  "status": "FALHA_VALIDACAO_BASE",
+  "figuras": [],
+  "como_ler": {},
+  "leitura_geral": "",
+  "saidas": [
+    {
+      "caminho": "output/cenarios/P1_cenarios_validacao_base.csv",
+      "sha256": "41960b0c7f1b8aea21e8aed130b951a6baa9edef48015558512db5cacdf2e532"
+    }
+  ]
+}
