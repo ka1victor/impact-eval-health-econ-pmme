@@ -22,6 +22,14 @@ PASTAS_DE_DADOS = [ROOT / "data", ROOT / "output"]
 NOME_SUSPEITO = re.compile(r"sintetic|synthetic|simulad|simulated|fake|mock|dummy|placeholder", re.IGNORECASE)
 # Saídas gravadas por estimadores que rotulam a natureza dos dados (07, 09b, 11 e os novos E6+).
 CHAVE = "natureza_dos_dados"
+# Cenários contrafactuais (doc 51, §2, item 4; adendo §7 do protocolo 52): o rótulo CENARIO_CONTRAFACTUAL só é
+# aceito dentro de `output/cenarios/`, e lá dentro é o único aceito. Fora dela, só EMPIRICO.
+PASTA_CENARIOS = ROOT / "output" / "cenarios"
+ROTULO_CENARIO = "CENARIO_CONTRAFACTUAL"
+
+
+def _rotulos_aceitos(caminho: Path) -> set[str]:
+    return {ROTULO_CENARIO} if PASTA_CENARIOS in caminho.parents else {"EMPIRICO"}
 
 
 def _arquivos(sufixos: tuple[str, ...]) -> list[Path]:
@@ -69,7 +77,7 @@ class TestNadaSimuladoGravado(unittest.TestCase):
                     continue
                 valores = pd.Series(distintos.to_pylist(), dtype=object)
             rotulos = set(valores.dropna().astype(str).str.upper())
-            self.assertTrue(rotulos <= {"EMPIRICO"}, f"{caminho.relative_to(ROOT)}: {sorted(rotulos)}")
+            self.assertTrue(rotulos <= _rotulos_aceitos(caminho), f"{caminho.relative_to(ROOT)}: {sorted(rotulos)}")
 
     def test_json_rotulados_sao_empiricos(self) -> None:
         for caminho in _arquivos((".json",)):
@@ -78,7 +86,15 @@ class TestNadaSimuladoGravado(unittest.TestCase):
             except (UnicodeDecodeError, json.JSONDecodeError):
                 continue
             rotulos = {str(v).upper() for v in _valores_da_chave(obj) if not isinstance(v, (dict, list))}
-            self.assertTrue(rotulos <= {"EMPIRICO"}, f"{caminho.relative_to(ROOT)}: {sorted(rotulos)}")
+            self.assertTrue(rotulos <= _rotulos_aceitos(caminho), f"{caminho.relative_to(ROOT)}: {sorted(rotulos)}")
+
+    def test_rotulo_de_cenario_so_em_output_cenarios(self) -> None:
+        """Nenhum arquivo fora de output/cenarios/ cita o rótulo de cenário como natureza dos dados; dentro dela,
+        todo arquivo de dados rotulado é cenário (nada passa por EMPIRICO)."""
+        self.assertEqual(_rotulos_aceitos(ROOT / "output" / "rdd_bolsa" / "x.csv"), {"EMPIRICO"})
+        self.assertEqual(_rotulos_aceitos(PASTA_CENARIOS / "x.csv"), {ROTULO_CENARIO})
+        self.assertEqual(_rotulos_aceitos(PASTA_CENARIOS / "sub" / "x.json"), {ROTULO_CENARIO})
+        self.assertEqual(_rotulos_aceitos(ROOT / "output" / "cenarios_x" / "y.csv"), {"EMPIRICO"})
 
 
 if __name__ == "__main__":

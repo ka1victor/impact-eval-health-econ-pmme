@@ -27,6 +27,7 @@ output/
 ├── aquisicao/                             # Insumos intermediários e auditorias de entrada
 ├── avaliacao_ciclo3/                      # Coorte congelada e pré-análise do ciclo 3
 ├── avaliacao_impacto/                     # Diagnóstico histórico DDD (tabelas, figuras, notas)
+├── cenarios/                              # Cenários contrafactuais (CENARIO_CONTRAFACTUAL; T1.6, doc 57b), separados do empírico
 ├── rdd_bolsa/                             # Diagnóstico de viabilidade do RDD do IVS
 ├── revisao_literatura/                    # Rúbricas e matrizes comparativas de papers
 └── tema_trabalho/                         # Núcleo principal de atração e cutoff local (A1–A8)

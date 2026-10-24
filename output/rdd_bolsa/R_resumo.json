@@ -1,0 +1,775 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "EXPLORATORIO_REALOCACAO",
+  "data_execucao": "2026-10-24",
+  "protocolo": "docs/06_execucao/58_protocolo_realocacao_bolsa.md",
+  "script": "scripts/rdd_bolsa/32_realocacao_bolsa.py",
+  "doc": "docs/06_execucao/57g_resultados_realocacao.md",
+  "estimando": "efeito, sobre os outcomes da célula aberta, de R$ 1 mil a mais na bolsa média das concorrentes do mesmo curso e ciclo no mercado (menos a própria), com a faixa própria, o IVS próprio e o IVS das concorrentes controlados; pacote do corte das concorrentes, condicional às vagas abertas",
+  "contraste": "incentivo marginal (e pacote do corte) das concorrentes; não é participação no PMM-E",
+  "parametros": {
+    "cortes_mil": [
+      300,
+      400
+    ],
+    "raio_km": 200.0,
+    "h_vizinho_mil": 50,
+    "passo_bolsa_mil": 5.0,
+    "alfa": 0.05,
+    "poder": 0.8,
+    "fator_mde": 2.8015852181129683,
+    "limiar_mde_por_5mil": {
+      "R_P1": 0.1,
+      "R_P2": 0.25
+    },
+    "covariaveis": [
+      "log_pop22",
+      "estoque_alvo_pre",
+      "estoque_gen_pre"
+    ],
+    "mapa_faixa_bolsa_mil": {
+      "FAIXA 1": 20.0,
+      "FAIXA 2": 15.0,
+      "FAIXA 3": 10.0
+    },
+    "faixa_base": "FAIXA 3",
+    "especificacoes": [
+      {
+        "id": "PRINCIPAL",
+        "mercado": "cir",
+        "exp": "E",
+        "grau": 1,
+        "covs": true,
+        "cluster": "cir",
+        "ciclos": [
+          1,
+          2,
+          3
+        ],
+        "desc": "CIR, E, ciclos 1–3, cluster CIR, com covariáveis"
+      },
+      {
+        "id": "R1",
+        "mercado": "raio200",
+        "exp": "E",
+        "grau": 1,
+        "covs": true,
+        "cluster": "cir",
+        "ciclos": [
+          1,
+          2,
+          3
+        ],
+        "desc": "mercado = raio de 200 km (sensibilidade declarada)"
+      },
+      {
+        "id": "R2",
+        "mercado": "uf",
+        "exp": "E",
+        "grau": 1,
+        "covs": true,
+        "cluster": "cir",
+        "ciclos": [
+          1,
+          2,
+          3
+        ],
+        "desc": "mercado = mesma UF"
+      },
+      {
+        "id": "R3",
+        "mercado": "cir",
+        "exp": "frac",
+        "grau": 1,
+        "covs": true,
+        "cluster": "cir",
+        "ciclos": [
+          1,
+          2,
+          3
+        ],
+        "desc": "exposição = fração das concorrentes com bolsa maior"
+      },
+      {
+        "id": "R4",
+        "mercado": "cir",
+        "exp": "E",
+        "grau": 2,
+        "covs": true,
+        "cluster": "cir",
+        "ciclos": [
+          1,
+          2,
+          3
+        ],
+        "desc": "spline quadrática no IVS próprio e na média das concorrentes"
+      },
+      {
+        "id": "R5",
+        "mercado": "cir",
+        "exp": "E",
+        "grau": 1,
+        "covs": true,
+        "cluster": "co_ibge",
+        "ciclos": [
+          1,
+          2,
+          3
+        ],
+        "desc": "cluster por município"
+      },
+      {
+        "id": "R6",
+        "mercado": "cir",
+        "exp": "E",
+        "grau": 1,
+        "covs": false,
+        "cluster": "cir",
+        "ciclos": [
+          1,
+          2,
+          3
+        ],
+        "desc": "sem covariáveis, na mesma amostra"
+      },
+      {
+        "id": "R7",
+        "mercado": "cir",
+        "exp": "vizinho",
+        "grau": 1,
+        "covs": true,
+        "cluster": "cir",
+        "ciclos": [
+          1,
+          2,
+          3
+        ],
+        "desc": "RDD do vizinho: concorrentes de outro município a até 0,050 de um corte"
+      },
+      {
+        "id": "C1",
+        "mercado": "cir",
+        "exp": "E",
+        "grau": 1,
+        "covs": true,
+        "cluster": "cir",
+        "ciclos": [
+          1
+        ],
+        "desc": "principal, só o ciclo 1"
+      },
+      {
+        "id": "C2",
+        "mercado": "cir",
+        "exp": "E",
+        "grau": 1,
+        "covs": true,
+        "cluster": "cir",
+        "ciclos": [
+          2
+        ],
+        "desc": "principal, só o ciclo 2"
+      },
+      {
+        "id": "C3",
+        "mercado": "cir",
+        "exp": "E",
+        "grau": 1,
+        "covs": true,
+        "cluster": "cir",
+        "ciclos": [
+          3
+        ],
+        "desc": "principal, só o ciclo 3"
+      },
+      {
+        "id": "PL1",
+        "mercado": "cir",
+        "exp": "outros_cursos",
+        "grau": 1,
+        "covs": true,
+        "cluster": "cir",
+        "ciclos": [
+          1,
+          2,
+          3
+        ],
+        "desc": "placebo: bolsa média das células de outros cursos na mesma CIR e ciclo"
+      },
+      {
+        "id": "PL2",
+        "mercado": "cir",
+        "exp": "futuras",
+        "grau": 1,
+        "covs": true,
+        "cluster": "cir",
+        "ciclos": [
+          1,
+          2
+        ],
+        "desc": "placebo: bolsa média das células do mesmo curso na CIR que só abrem em ciclo posterior"
+      }
+    ]
+  },
+  "amostra": {
+    "n_total": {
+      "1": 1295,
+      "2": 1547,
+      "3": 2293
+    },
+    "exclusoes_universo": {
+      "sem_ivs": {
+        "3": 1
+      },
+      "sem_cir": {
+        "1": 6,
+        "2": 2,
+        "3": 1
+      }
+    },
+    "sem_covariaveis_no_universo": {},
+    "celulas_fora_do_universo": [
+      {
+        "ciclo": 1,
+        "co_cnes_7d": "2494299",
+        "cod_curso": 1,
+        "co_ibge": "110002",
+        "motivo_universo": "sem_cir"
+      },
+      {
+        "ciclo": 1,
+        "co_cnes_7d": "2494299",
+        "cod_curso": 2,
+        "co_ibge": "110002",
+        "motivo_universo": "sem_cir"
+      },
+      {
+        "ciclo": 1,
+        "co_cnes_7d": "2494299",
+        "cod_curso": 7,
+        "co_ibge": "110002",
+        "motivo_universo": "sem_cir"
+      },
+      {
+        "ciclo": 1,
+        "co_cnes_7d": "4730224",
+        "cod_curso": 9,
+        "co_ibge": "110002",
+        "motivo_universo": "sem_cir"
+      },
+      {
+        "ciclo": 1,
+        "co_cnes_7d": "2494299",
+        "cod_curso": 10,
+        "co_ibge": "110002",
+        "motivo_universo": "sem_cir"
+      },
+      {
+        "ciclo": 1,
+        "co_cnes_7d": "2494299",
+        "cod_curso": 11,
+        "co_ibge": "110002",
+        "motivo_universo": "sem_cir"
+      },
+      {
+        "ciclo": 2,
+        "co_cnes_7d": "2494299",
+        "cod_curso": 1,
+        "co_ibge": "110002",
+        "motivo_universo": "sem_cir"
+      },
+      {
+        "ciclo": 2,
+        "co_cnes_7d": "4730224",
+        "cod_curso": 9,
+        "co_ibge": "110002",
+        "motivo_universo": "sem_cir"
+      },
+      {
+        "ciclo": 3,
+        "co_cnes_7d": "2494299",
+        "cod_curso": 1,
+        "co_ibge": "110002",
+        "motivo_universo": "sem_cir"
+      },
+      {
+        "ciclo": 3,
+        "co_cnes_7d": "9012362",
+        "cod_curso": 18,
+        "co_ibge": "422000",
+        "motivo_universo": "sem_ivs"
+      }
+    ],
+    "por_especificacao": {
+      "PRINCIPAL": {
+        "n_celulas": 2875,
+        "por_ciclo": {
+          "1": 416,
+          "2": 783,
+          "3": 1676
+        },
+        "fora": {
+          "sem_conc": {
+            "1": 873,
+            "2": 762,
+            "3": 615
+          }
+        },
+        "n_cir": 227,
+        "n_municipios": 754
+      },
+      "R1": {
+        "n_celulas": 4522,
+        "por_ciclo": {
+          "1": 1061,
+          "2": 1364,
+          "3": 2097
+        },
+        "fora": {
+          "sem_conc": {
+            "1": 228,
+            "2": 181,
+            "3": 194
+          }
+        },
+        "n_cir": 367,
+        "n_municipios": 1004
+      },
+      "R2": {
+        "n_celulas": 4844,
+        "por_ciclo": {
+          "1": 1201,
+          "2": 1458,
+          "3": 2185
+        },
+        "fora": {
+          "sem_conc": {
+            "1": 88,
+            "2": 87,
+            "3": 106
+          }
+        },
+        "n_cir": 373,
+        "n_municipios": 1034
+      },
+      "R3": {
+        "n_celulas": 2875,
+        "por_ciclo": {
+          "1": 416,
+          "2": 783,
+          "3": 1676
+        },
+        "fora": {
+          "sem_conc": {
+            "1": 873,
+            "2": 762,
+            "3": 615
+          }
+        },
+        "n_cir": 227,
+        "n_municipios": 754
+      },
+      "R4": {
+        "n_celulas": 2875,
+        "por_ciclo": {
+          "1": 416,
+          "2": 783,
+          "3": 1676
+        },
+        "fora": {
+          "sem_conc": {
+            "1": 873,
+            "2": 762,
+            "3": 615
+          }
+        },
+        "n_cir": 227,
+        "n_municipios": 754
+      },
+      "R5": {
+        "n_celulas": 2875,
+        "por_ciclo": {
+          "1": 416,
+          "2": 783,
+          "3": 1676
+        },
+        "fora": {
+          "sem_conc": {
+            "1": 873,
+            "2": 762,
+            "3": 615
+          }
+        },
+        "n_cir": 227,
+        "n_municipios": 754
+      },
+      "R6": {
+        "n_celulas": 2875,
+        "por_ciclo": {
+          "1": 416,
+          "2": 783,
+          "3": 1676
+        },
+        "fora": {
+          "sem_conc": {
+            "1": 873,
+            "2": 762,
+            "3": 615
+          }
+        },
+        "n_cir": 227,
+        "n_municipios": 754
+      },
+      "R7": {
+        "n_celulas": 1444,
+        "por_ciclo": {
+          "1": 203,
+          "2": 360,
+          "3": 881
+        },
+        "fora": {
+          "sem_conc": {
+            "1": 873,
+            "2": 762,
+            "3": 615
+          },
+          "sem_vizinho": {
+            "1": 213,
+            "2": 423,
+            "3": 795
+          }
+        },
+        "n_cir": 154,
+        "n_municipios": 498
+      },
+      "C1": {
+        "n_celulas": 416,
+        "por_ciclo": {
+          "1": 416
+        },
+        "fora": {
+          "sem_conc": {
+            "1": 873
+          }
+        },
+        "n_cir": 69,
+        "n_municipios": 142
+      },
+      "C2": {
+        "n_celulas": 783,
+        "por_ciclo": {
+          "2": 783
+        },
+        "fora": {
+          "sem_conc": {
+            "2": 762
+          }
+        },
+        "n_cir": 99,
+        "n_municipios": 236
+      },
+      "C3": {
+        "n_celulas": 1676,
+        "por_ciclo": {
+          "3": 1676
+        },
+        "fora": {
+          "sem_conc": {
+            "3": 615
+          }
+        },
+        "n_cir": 184,
+        "n_municipios": 595
+      },
+      "PL1": {
+        "n_celulas": 4864,
+        "por_ciclo": {
+          "1": 1217,
+          "2": 1479,
+          "3": 2168
+        },
+        "fora": {
+          "sem_outros": {
+            "1": 72,
+            "2": 66,
+            "3": 123
+          }
+        },
+        "n_cir": 323,
+        "n_municipios": 914
+      },
+      "PL2": {
+        "n_celulas": 623,
+        "por_ciclo": {
+          "1": 284,
+          "2": 339
+        },
+        "fora": {
+          "ciclo3": {
+            "3": 2291
+          },
+          "sem_futuras": {
+            "1": 1005,
+            "2": 1206
+          }
+        },
+        "n_cir": 149,
+        "n_municipios": 248
+      }
+    },
+    "motivos": {
+      "sem_ivs": "município sem IVS 2010 oficial (a08); célula fora do universo e das concorrentes",
+      "sem_cir": "município sem região de saúde na tabela oficial (TabNet); célula fora do universo e das concorrentes",
+      "sem_cov": "estoque CNES pré-programa incompleto (a09, 202406–202506) ou população ausente; célula fora da estimação (continua como concorrente)",
+      "sem_conc": "sem concorrente do mesmo curso e ciclo no mercado",
+      "sem_vizinho": "sem concorrente de outro município a até 0,050 de um corte (R7)",
+      "sem_outros": "sem célula de outro curso no mesmo ciclo e CIR (PL1)",
+      "sem_futuras": "sem célula do mesmo curso na CIR que só abre em ciclo posterior (PL2)",
+      "ciclo3": "ciclo 3 sem ciclo posterior publicado (PL2)"
+    }
+  },
+  "variacao_principal": {
+    "especificacao": "PRINCIPAL",
+    "mercado": "mesma região de saúde (CIR)",
+    "exposicao": "E",
+    "unidade_exposicao": "R$ mil (bolsa média das concorrentes − própria)",
+    "ciclos": "1+2+3",
+    "n_celulas": 2875,
+    "n_conc_mediana": 2,
+    "n_conc_media": 3.64173913,
+    "frac_com_conc_outro_municipio": 0.7008695652,
+    "frac_com_conc_bolsa_diferente": 0.4406956522,
+    "frac_com_conc_bolsa_maior": 0.2584347826,
+    "exposicao_media": 1.853589745e-17,
+    "exposicao_dp": 2.613171094,
+    "exposicao_p10": -3.75,
+    "exposicao_p50": 0.0,
+    "exposicao_p90": 2.5,
+    "estatuto": "EXPLORATORIO_REALOCACAO",
+    "natureza_dos_dados": "EMPIRICO",
+    "dp_exposicao_residual": 1.025370727,
+    "r2_exposicao_controles": 0.8460335349
+  },
+  "leitura": {
+    "R_P1": {
+      "classe": "INCONCLUSIVO",
+      "leitura": "inconclusivo",
+      "p_holm": 0.6242327487,
+      "mde_por_5mil": 0.1350224365,
+      "limiar_mde_5mil": 0.1,
+      "mde_pequeno": false,
+      "mesmo_sinal_R1_R3": false,
+      "placebos_p_maior_ou_igual_005": true
+    },
+    "R_P2": {
+      "classe": "INCONCLUSIVO",
+      "leitura": "inconclusivo",
+      "p_holm": 0.7601964905,
+      "mde_por_5mil": 0.6843057386,
+      "limiar_mde_5mil": 0.25,
+      "mde_pequeno": false,
+      "mesmo_sinal_R1_R3": false,
+      "placebos_p_maior_ou_igual_005": true
+    }
+  },
+  "figuras": [
+    {
+      "arquivo": "output/rdd_bolsa/R_figuras/R_coeficientes.png",
+      "como_ler": "Cada ponto é a mudança do outcome da célula quando a bolsa média das concorrentes sobe R$ 5 mil; a barra é o IC de 95%. Placebos em laranja. A leitura que vale é a da tabela da seção 5, não a de um ponto isolado.",
+      "descricao": "coeficiente da exposição por R$ 5 mil, principal, sensibilidades, ciclos e placebos"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/R_figuras/R_residuos_principal.png",
+      "como_ler": "Cada ponto é a média de um grupo de células com exposição parecida, depois de tirar os controles; a reta tem a inclinação do coeficiente principal. A largura do eixo horizontal é a variação da exposição que sobra para identificar o efeito.",
+      "descricao": "médias por grupo do outcome e da exposição residualizados, especificação principal"
+    }
+  ],
+  "desvios": [
+    {
+      "tema": "Contagem do §4 do protocolo",
+      "data": "24/10/2026",
+      "situacao": "O §4 registrou 2.876 (CIR), 4.533 (raio) e 4.854 (UF) células com concorrente, numa conta de desenho feita antes de congelar, em que a célula sem IVS oficial e as 9 células sem CIR ainda entravam no universo. O próprio §4 diz que essas células ficam fora.",
+      "resolucao": "Universo = células com IVS oficial e CIR, como o §4 manda; a amostra principal tem o número da seção 2. Nada muda na especificação."
+    },
+    {
+      "tema": "R7: concorrente equidistante dos dois cortes",
+      "data": "24/10/2026",
+      "situacao": "O §7 diz 'a até 0,050 de um corte'; uma célula com IVS 0,350 está a 0,050 dos dois. No universo há 23 células com IVS 0,350.",
+      "resolucao": "Cada concorrente usa o corte mais próximo; no empate, 0,300 (fica acima dele, com bolsa da faixa 2). Regra definida sem consultar outcome."
+    },
+    {
+      "tema": "PL2: chave que reaparece em mais de um ciclo posterior",
+      "data": "24/10/2026",
+      "situacao": "Uma célula (estabelecimento × curso) ausente do ciclo 1 pode aparecer nos ciclos 2 e 3.",
+      "resolucao": "Entra uma vez, com os atributos do primeiro ciclo posterior em que aparece."
+    },
+    {
+      "tema": "Cluster nos mercados largos",
+      "data": "24/10/2026",
+      "situacao": "O §5 fixa cluster por CIR; no raio de 200 km (R1) e na UF (R2) a exposição se repete além da CIR.",
+      "resolucao": "Mantido o cluster por CIR, como no protocolo; a limitação fica declarada na seção 11."
+    },
+    {
+      "tema": "R7: controle do número de concorrentes",
+      "data": "24/10/2026",
+      "situacao": "O §7 manda manter os controles próprios da principal; o log(1 + nº de concorrentes) da principal conta todas as concorrentes da CIR, não só as vizinhas do corte.",
+      "resolucao": "Mantido o log(1 + nº de concorrentes) da CIR inteira; a média da spline das concorrentes sai e entram as médias de (IVS − corte) das vizinhas, como no §7."
+    },
+    {
+      "tema": "Intervalo de confiança",
+      "data": "24/10/2026",
+      "situacao": "O §5 pede EP CR1 e o p pela t com G − 1 graus de liberdade ao lado.",
+      "resolucao": "O IC de 95% e o p principal usam a normal; o p pela t com G − 1 fica na coluna `p_t_G1`. Nenhuma conclusão muda de um para o outro."
+    }
+  ],
+  "validacoes": {
+    "ivs_celula_igual_a08": true,
+    "faixa_igual_regra_dois_cortes": true,
+    "cir": {
+      "municipios": 5606,
+      "regioes": 446,
+      "linhas_ignorado_faixas": 28,
+      "cabecalho": "474 6"
+    },
+    "centroides": {
+      "status": "OBTIDO",
+      "municipios": 5570
+    },
+    "cnes_pre": {
+      "competencias": [
+        "202406",
+        "202407",
+        "202408",
+        "202409",
+        "202410",
+        "202411",
+        "202412",
+        "202501",
+        "202502",
+        "202503",
+        "202504",
+        "202505",
+        "202506"
+      ],
+      "n_competencias": 13,
+      "municipios_sem_estoque_completo": {
+        "estoque_alvo_pre": 1,
+        "estoque_gen_pre": 1
+      },
+      "medida": "media mensal de n_profissionais_distintos no municipio-grupo (a09)",
+      "estabelecimentos_hospitalares": "ausentes do painel: lacuna registrada"
+    },
+    "linhas_nao_executadas_com_motivo": true
+  },
+  "entradas": [
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "células do quadro da 1ª chamada e outcomes (n_alocados_ch1, n_cand_1a_opcao)",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "quadros e resultados da 1ª chamada, ciclos 1–3",
+      "cobertura": "5.135 células",
+      "unidade": "célula",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "IVS 2010 oficial (running variable e spline)",
+      "fonte": "IPEA, Plataforma IVS (a08)",
+      "data_referencia": "2010",
+      "cobertura": "municípios",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "coluna ivs"
+    },
+    {
+      "caminho": "output/aquisicao/a03_matriz_regra_tratamento.json",
+      "sha256": "4afe7af6d925b0b67054918ddbece2a7ad87df1b80d5bbb779c6ee8dd7c39583",
+      "bytes": 11686,
+      "papel": "grade faixa → bolsa (editais 2025 e 2026)",
+      "fonte": "a03",
+      "data_referencia": "2025–2026",
+      "cobertura": "faixas 1–3",
+      "unidade": "faixa",
+      "chaves": "faixa",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/aquisicao/a04_grade_anunciada_2025.csv",
+      "sha256": "3d2542142d97f90632d47e8b0cc9d5d0cb7b934df1d7df47691a421d9bf82112",
+      "bytes": 1595,
+      "papel": "grade faixa → bolsa (FAQ 2025, conferência)",
+      "fonte": "a04",
+      "data_referencia": "2025",
+      "cobertura": "faixas 1–3",
+      "unidade": "faixa",
+      "chaves": "faixa_atracao",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+      "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+      "bytes": 383336,
+      "papel": "região de saúde (CIR) por município (só lido)",
+      "fonte": "DATASUS/TabNet (manifesto da X5)",
+      "data_referencia": "base territorial corrente no download",
+      "cobertura": "Brasil",
+      "unidade": "município",
+      "chaves": "co_ibge (6 dígitos)",
+      "filtros": "linhas 'Ignorado' fora"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/ibge_api_v3_malhas_metadados_municipios.json",
+      "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+      "bytes": 1685039,
+      "papel": "centroides municipais do IBGE (distância, só lido)",
+      "fonte": "IBGE, API de malhas v3",
+      "data_referencia": "malha corrente no download",
+      "cobertura": "municípios",
+      "unidade": "município",
+      "chaves": "id (7 dígitos)",
+      "filtros": "centroide"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "população do Censo 2022 (covariável)",
+      "fonte": "IBGE, Censo 2022 (a06)",
+      "data_referencia": "2022",
+      "cobertura": "municípios",
+      "unidade": "município",
+      "chaves": "co_ibge_6d",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+      "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
+      "bytes": 20167560,
+      "papel": "estoques CNES pré-programa (covariáveis do A4)",
+      "fonte": "CNES nacional (a09)",
+      "data_referencia": "202406–202506",
+      "cobertura": "municípios × grupo de CBO × mês",
+      "unidade": "município",
+      "chaves": "co_ibge, grupo, competencia",
+      "filtros": "competências 202406–202506; grupos alvo_pmme e generalistas"
+    }
+  ],
+  "saidas": [
+    "output/rdd_bolsa/R_estimativas.csv",
+    "output/rdd_bolsa/R_variacao_exposicao.csv",
+    "output/rdd_bolsa/R_resumo.json",
+    "output/rdd_bolsa/R_figuras/R_coeficientes.png",
+    "output/rdd_bolsa/R_figuras/R_residuos_principal.png"
+  ],
+  "hashes_saidas": {
+    "output/rdd_bolsa/R_estimativas.csv": "9612da8684affe2d5bfc48520725d056f82732922e4831026a8ff588598cf729",
+    "output/rdd_bolsa/R_variacao_exposicao.csv": "479f6b6e4175dccf9b942711bd30a9b9dc9b1c65d361e853e65021972a51661d",
+    "output/rdd_bolsa/R_figuras/R_coeficientes.png": "ba3c61a0adf4070fd1bc449d72ff8cae7ee8b7a4ad92c7fb4625187d8a11e601",
+    "output/rdd_bolsa/R_figuras/R_residuos_principal.png": "9dca25d6f89f20b2c2d25b3ec32052af2e1be0b397a2af6cd084d9f1b9f9dcea"
+  }
+}
