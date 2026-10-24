@@ -8,6 +8,45 @@
 
 ---
 
+## 24/10/2026 — Auditoria 26 do P1 (protocolo 52)
+
+Motivo: auditoria independente do bloco P1. Veredito aprovado com correções de texto; nenhuma estimativa mudou.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/26_auditoria_P1_escolha.md`](auditorias/26_auditoria_P1_escolha.md) | recálculo independente de M0, M1, DAP, M5 e Wald, protocolo, integridade, linguagem e correções |
+
+Mudanças fora de `docs/`: `tests/test_escolha_dap.py` (classe `TestRecalculoIndependenteAuditoria26`), `tests/README.md`,
+`scripts/rdd_bolsa/25_escolha_dap.py` (texto: desvios datados, leitura da DAP e do P1g) e `P1_resumo.json`; o doc 57a foi regenerado pelo script.
+
+---
+
+## 23/10/2026 — P1 (protocolo 52): escolha do candidato e disposição a pagar (onda 3, agente E-P1)
+
+Motivo: execução do T1.1–T1.5 do P1 sob o protocolo congelado
+[`06_execucao/52`](06_execucao/52_protocolo_P1_escolha_dap.md), sobre a origem dos candidatos do portão G1. Os
+cenários do T1.6 não foram rodados (ficam para depois da auditoria). Uma rodada anterior deste agente se perdeu
+sem push; esta recomeçou do zero.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57a_resultados_P1_escolha.md`](06_execucao/57a_resultados_P1_escolha.md) | resultados do P1, gerado inteiro pelo script: amostra, leitura simples, coeficiente da bolsa em M0–M9, DAP (delta e bootstrap), atributos do M1, ciclos (M5 e Wald), heterogeneidade (M6, M8, M9), ponte P1g, figuras com "Como ler", desvios e limites |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/25_escolha_dap.py` e saídas `output/rdd_bolsa/P1_estimativas.csv`, `P1_dap.csv`,
+  `P1_resumo.json` e `P1_figuras/` (todas `EMPIRICO`);
+- teste `tests/test_escolha_dap.py`; `tests/README.md`;
+- `run_all.py` (P1 depois do P5) e `tests/test_pipeline_rdd_bolsa.py`; manifesto A6 regerado pelo gerador.
+
+Desvio de local: o §5 do protocolo pede "doc 57, seção P1"; o doc 57 é a síntese da onda 5, e os blocos da onda 3
+escrevem em paralelo, por isso o resultado ficou no 57a (como o P5 no 57e).
+
+---
+
 ## 23/10/2026 — Auditoria do P3x (extensões do adendo §12 do protocolo 47)
 
 Motivo: auditoria independente do commit `b358283`. Recálculo das linhas
