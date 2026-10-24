@@ -49,6 +49,8 @@ CADEIA = [
     RDD / "29_determinantes_abertura.py",  # P5 (protocolo 55): lê 12, a09, a12, a08 e funções do 24
     RDD / "25_escolha_dap.py",  # P1 (protocolo 52): lê 12, a08, G1 (versionado), E9 (16) e NA (24)
     RDD / "28_trajetoria_medicos.py",  # P4 (protocolo 54): lê o a16, a X1 (17, versionada), o a09 e a ponte
+    RDD / "30_mecanismo_alocacao.py",  # P6 (protocolo 56), passo 0: só verificar; lê o G1 e o G2 versionados
+    RDD / "31_rd_mecanismo.py",  # P6: estimação a partir das saídas versionadas do 30
     RDD / "14_estimar_E7_dird_cnes.py",
     RDD / "21_producao_dird.py",  # família K, D1 (protocolo 47): lê a12, a13, a14, a09 e funções do 14 e do 23
     RDD / "22_chegada_pmme_evento.py",  # família K, D2: lê as séries do 21
@@ -62,6 +64,7 @@ A09 = AQ / "a09_adquirir_cnes_nacional.py"
 A14 = AQ / "a14_adquirir_tiss_ans.py"
 A15 = AQ / "a15_adquirir_sih_residencia.py"  # portão G3 (plano 51): SIH por residência, só verificar
 A16 = AQ / "a16_cnes_profissional_mensal.py"
+P6_PASSO0 = RDD / "30_mecanismo_alocacao.py"  # P6 (protocolo 56): passo 0 só verificar no run_all
 # Adendo §12 do protocolo 47: safras v2 do SIA (a12b) e do SIH (a13b) e SIA por forma × curso (a17), só verificar
 A12B = AQ / "a12b_safra_v2_sia.py"
 A13B = AQ / "a13b_safra_v2_sih.py"
@@ -181,6 +184,10 @@ class TestCadeiaRddBolsa(unittest.TestCase):
             # P4 (28) lê o painel médico × mês do a16, o painel do a09 e a ponte curso–CBO (01); importa a função das
             # listas do 17 (fora do run_all; X1_medicos.parquet é saída versionada).
             RDD / "28_trajetoria_medicos.py": [A16, A09, AQ / "01_congelar_ponte_cbo.py"],
+            # P6: o 30 confere-se contra o a16 versionado e lê o G1 e o G2 (fora do run_all, versionados); o 31 lê
+            # só as saídas do 30.
+            RDD / "30_mecanismo_alocacao.py": [A16],
+            RDD / "31_rd_mecanismo.py": [RDD / "30_mecanismo_alocacao.py"],
             # E9 lê as tabelas de escolha do 12 e o manifesto do a11.
             RDD / "16_estimar_E9_escolha.py": [RDD / "12_construir_outcomes_funil.py",
                                               AQ / "a11_adquirir_resultado_ciclo2_chamada1.py"],
@@ -295,7 +302,9 @@ class TestCadeiaRddBolsa(unittest.TestCase):
         self.assertEqual(RA.ARGUMENTOS[RDD / "07_estimar_E3_rdd_completa.py"], ["--escore", ESCORE_COMPLETO])
         self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09,
                                               AQ / "a12_adquirir_sia_tabnet.py", AQ / "a13_adquirir_sih_tabnet.py", A14,
-                                              A15, A16, A12B, A13B, A17})
+                                              A15, A16, A12B, A13B, A17, P6_PASSO0})
+        # P6, passo 0: a amostra vem do cache privado; o run_all só confere sem rede.
+        self.assertEqual(RA.ARGUMENTOS[P6_PASSO0], ["--etapa", "verificar"])
         # a16 (portão G5): como o a09, o run_all só confere sem rede.
         self.assertEqual(RA.ARGUMENTOS[A16], ["--etapa", "verificar"])
         self.assertEqual(RA.ARGUMENTOS[AQ / "a12_adquirir_sia_tabnet.py"], ["--etapa", "verificar"])

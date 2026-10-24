@@ -1,0 +1,1545 @@
+natureza_dos_dados,estatuto,ciclo,celula,co_cnes_7d,cod_curso,vagas_ac,vagas_reserva,vagas_total,vagas_imediatas_quadro,corte_ativo,corte_opcao,corte_pontuacao,maior_nota_ac_1a_opcao,n_ac_1a_opcao,n_reserva_1a_opcao,celula_elegivel,motivo_celula
+EMPIRICO,EXPLORATORIO_P6,1,c1_0002534_08,0002534,8,1,0,1,1.0,1,1.0,5.0,5.0,15,3,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0002534_09,0002534,9,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0008044_07,0008044,7,1,0,1,0.0,1,1.0,7.0,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0008044_11,0008044,11,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0011193_14,0011193,14,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0012505_05,0012505,5,1,0,1,0.0,1,1.0,9.0,9.0,3,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0015245_16,0015245,16,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0015644_16,0015644,16,1,1,2,2.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0019445_16,0019445,16,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0025135_11,0025135,11,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_0025143_11,0025143,11,1,0,1,0.0,1,1.0,5.0,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0059218_07,0059218,7,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_0092894_03,0092894,3,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0092894_04,0092894,4,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0092894_05,0092894,5,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0092894_13,0092894,13,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0105317_11,0105317,11,1,0,1,0.0,1,1.0,9.0,9.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0136581_05,0136581,5,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_0136581_11,0136581,11,1,0,1,0.0,0,,,8.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0181927_09,0181927,9,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0181927_14,0181927,14,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0219207_12,0219207,12,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0310921_07,0310921,7,1,0,1,0.0,0,,,3.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0310921_09,0310921,9,1,0,1,1.0,0,,,8.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0310921_11,0310921,11,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0409642_10,0409642,10,1,0,1,0.0,0,,,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0409642_14,0409642,14,1,0,1,1.0,1,2.0,2.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0452025_14,0452025,14,1,0,1,0.0,0,,,2.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0509620_07,0509620,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_0509620_14,0509620,14,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0509620_15,0509620,15,1,0,1,0.0,1,1.0,5.0,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0694312_01,0694312,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0694312_14,0694312,14,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0785245_08,0785245,8,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0785245_14,0785245,14,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0786608_11,0786608,11,1,0,1,0.0,0,,,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0786608_15,0786608,15,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0789887_14,0789887,14,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0806285_15,0806285,15,1,0,1,1.0,1,1.0,5.0,5.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0829781_08,0829781,8,1,0,1,1.0,1,1.0,6.0,6.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0829781_14,0829781,14,1,0,1,1.0,0,,,0.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0832014_08,0832014,8,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0832014_15,0832014,15,1,0,1,1.0,1,1.0,3.0,3.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_0884189_07,0884189,7,1,0,1,0.0,0,,,9.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0884189_10,0884189,10,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_0951021_15,0951021,15,1,0,1,1.0,1,1.0,7.0,7.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2000083_01,2000083,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2001586_03,2001586,3,2,0,2,1.0,0,,,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2001586_04,2001586,4,1,3,4,4.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2005417_12,2005417,12,1,1,2,0.0,1,1.0,7.0,7.0,4,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2005417_13,2005417,13,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2005417_16,2005417,16,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2006197_16,2006197,16,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2011859_08,2011859,8,1,0,1,1.0,0,,,,0,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2012677_13,2012677,13,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2012677_16,2012677,16,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2013258_08,2013258,8,1,0,1,1.0,1,1.0,4.0,4.0,2,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2016125_01,2016125,1,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2016125_02,2016125,2,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2016141_08,2016141,8,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2016893_01,2016893,1,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2016923_11,2016923,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2017016_08,2017016,8,1,0,1,0.0,0,,,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2021064_01,2021064,1,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2078139_01,2078139,1,1,0,1,0.0,1,1.0,4.0,4.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2078139_02,2078139,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2079348_02,2079348,2,0,0,0,0.0,1,,,4.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2079348_14,2079348,14,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2079798_16,2079798,16,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2080044_02,2080044,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2080338_04,2080338,4,1,0,1,1.0,1,1.0,13.0,13.0,7,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2080338_07,2080338,7,1,0,1,1.0,1,2.0,7.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2080338_11,2080338,11,1,0,1,1.0,1,2.0,5.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2080338_12,2080338,12,1,0,1,1.0,1,1.0,8.0,8.0,5,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2080338_13,2080338,13,1,0,1,1.0,1,1.0,5.0,5.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2080400_16,2080400,16,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2080443_02,2080443,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2080664_01,2080664,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2080664_07,2080664,7,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2080664_15,2080664,15,1,0,1,1.0,1,1.0,9.0,9.0,9,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2081482_16,2081482,16,1,0,1,1.0,1,2.0,2.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2082691_01,2082691,1,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2082691_02,2082691,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2082691_14,2082691,14,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2082810_09,2082810,9,1,0,1,0.0,1,1.0,7.0,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2082861_07,2082861,7,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2100681_02,2100681,2,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2100681_14,2100681,14,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2100681_15,2100681,15,1,0,1,0.0,1,1.0,7.0,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2100754_01,2100754,1,1,0,1,0.0,0,,,3.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2100754_02,2100754,2,0,0,0,0.0,1,,,4.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2101777_01,2101777,1,1,2,3,3.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2101777_02,2101777,2,4,0,4,0.0,0,,,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2105365_02,2105365,2,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2105365_08,2105365,8,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2105578_01,2105578,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2105578_08,2105578,8,0,0,0,0.0,1,,,7.0,8,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2105578_14,2105578,14,1,1,2,0.0,0,,,4.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2115174_08,2115174,8,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2118513_02,2118513,2,0,0,0,0.0,1,,,0.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2118513_07,2118513,7,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2118513_08,2118513,8,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2118513_09,2118513,9,1,1,2,2.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2118513_15,2118513,15,1,0,1,0.0,1,1.0,4.0,4.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2119471_01,2119471,1,1,0,1,0.0,1,1.0,5.0,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2119471_07,2119471,7,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2119471_08,2119471,8,1,1,2,2.0,1,1.0,7.0,7.0,4,3,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2119471_11,2119471,11,1,0,1,0.0,0,,,8.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2119471_14,2119471,14,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2119471_15,2119471,15,1,0,1,0.0,1,1.0,3.0,3.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2122901_08,2122901,8,1,0,1,1.0,1,1.0,11.0,11.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2122901_14,2122901,14,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2126494_07,2126494,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2126494_10,2126494,10,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2135108_01,2135108,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2135108_14,2135108,14,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2135124_01,2135124,1,1,2,3,3.0,0,,,5.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2135124_02,2135124,2,0,0,0,0.0,1,,,5.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2135124_14,2135124,14,3,0,3,0.0,0,,,9.0,3,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2135132_15,2135132,15,3,0,3,0.0,0,,,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2135930_01,2135930,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2139049_02,2139049,2,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2139944_01,2139944,1,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2140098_01,2140098,1,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2140098_02,2140098,2,1,1,2,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2140098_08,2140098,8,1,3,4,4.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2140098_14,2140098,14,1,3,4,4.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2140098_15,2140098,15,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2140942_08,2140942,8,1,1,2,0.0,0,,,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2140942_14,2140942,14,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2142244_08,2142244,8,0,0,0,0.0,1,,,5.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2142244_14,2142244,14,1,0,1,0.0,1,1.0,5.0,5.0,1,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2144530_09,2144530,9,2,0,2,1.0,0,,,9.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2149710_01,2149710,1,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2159279_07,2159279,7,2,0,2,1.0,0,,,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2161702_01,2161702,1,1,0,1,0.0,1,1.0,4.0,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2165058_16,2165058,16,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2171945_12,2171945,12,1,0,1,0.0,1,1.0,6.0,6.0,3,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2183803_02,2183803,2,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2183803_08,2183803,8,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2184834_03,2184834,3,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2184834_04,2184834,4,1,0,1,1.0,1,1.0,11.0,11.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2184834_05,2184834,5,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2184834_06,2184834,6,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2184834_07,2184834,7,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2184834_10,2184834,10,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2184834_12,2184834,12,1,0,1,0.0,0,,,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2186357_08,2186357,8,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2191512_07,2191512,7,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2194198_08,2194198,8,1,0,1,1.0,1,1.0,3.0,3.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2198061_07,2198061,7,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2202891_01,2202891,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2202913_08,2202913,8,1,0,1,0.0,0,,,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2204622_07,2204622,7,1,0,1,0.0,0,,,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2204622_08,2204622,8,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2204622_11,2204622,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2204622_14,2204622,14,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2206064_01,2206064,1,1,0,1,0.0,0,,,3.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2206064_14,2206064,14,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2206595_07,2206595,7,0,0,0,0.0,1,,,7.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2206595_16,2206595,16,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2209195_06,2209195,6,1,0,1,1.0,1,1.0,7.0,7.0,2,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2209195_07,2209195,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2209918_08,2209918,8,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2209918_14,2209918,14,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2211254_02,2211254,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2227665_01,2227665,1,1,0,1,0.0,0,,,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2227762_07,2227762,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2228688_02,2228688,2,0,0,0,0.0,1,,,4.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2232146_07,2232146,7,1,1,2,2.0,0,,,6.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2232995_05,2232995,5,1,0,1,0.0,0,,,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2244306_03,2244306,3,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2244306_06,2244306,6,2,0,2,1.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2248298_02,2248298,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2249472_01,2249472,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2252694_07,2252694,7,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2254611_04,2254611,4,1,0,1,0.0,0,,,0.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2254611_06,2254611,6,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2254611_15,2254611,15,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2261057_15,2261057,15,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2262568_16,2262568,16,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2269899_11,2269899,11,1,0,1,0.0,1,1.0,7.0,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2276186_02,2276186,2,0,0,0,0.0,1,,,9.0,5,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2278197_15,2278197,15,2,0,2,1.0,1,1.0,5.0,6.0,6,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2278286_03,2278286,3,1,1,2,2.0,1,1.0,4.0,9.0,2,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,1,c1_2278286_05,2278286,5,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2278286_06,2278286,6,1,3,4,4.0,1,1.0,5.0,5.0,7,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2278286_13,2278286,13,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2278286_16,2278286,16,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2278855_12,2278855,12,1,0,1,0.0,1,1.0,6.0,6.0,1,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2281384_07,2281384,7,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2283395_07,2283395,7,0,0,0,0.0,1,,,9.0,2,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2283395_10,2283395,10,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2306336_03,2306336,3,2,0,2,1.0,0,,,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2306336_04,2306336,4,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2306336_05,2306336,5,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2306700_14,2306700,14,1,0,1,0.0,1,2.0,5.0,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2307421_14,2307421,14,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2307898_14,2307898,14,1,0,1,1.0,1,1.0,3.0,3.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2312050_15,2312050,15,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2316064_14,2316064,14,1,0,1,1.0,0,,,2.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2319659_01,2319659,1,4,1,5,0.0,0,,,5.0,5,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2319659_02,2319659,2,2,5,7,7.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2319659_04,2319659,4,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2319659_06,2319659,6,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2319659_14,2319659,14,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2319659_15,2319659,15,1,3,4,4.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2323680_01,2323680,1,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2323680_02,2323680,2,1,0,1,1.0,1,1.0,4.0,4.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2323680_05,2323680,5,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2328399_01,2328399,1,1,0,1,0.0,1,1.0,7.0,7.0,6,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2328399_02,2328399,2,1,0,1,0.0,1,1.0,9.0,9.0,6,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2329905_02,2329905,2,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2329905_15,2329905,15,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2330830_14,2330830,14,1,0,1,1.0,0,,,8.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2330938_14,2330938,14,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2332981_04,2332981,4,1,0,1,0.0,1,1.0,7.0,7.0,3,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2332981_07,2332981,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2334321_04,2334321,4,1,1,2,0.0,1,1.0,4.0,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2334321_16,2334321,16,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2334356_08,2334356,8,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2334356_14,2334356,14,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2348489_01,2348489,1,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2348489_09,2348489,9,1,0,1,1.0,1,1.0,9.0,9.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2365146_02,2365146,2,0,0,0,0.0,1,,,6.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2365146_04,2365146,4,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2365146_05,2365146,5,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2365146_15,2365146,15,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2365154_03,2365154,3,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2371707_03,2371707,3,2,0,2,1.0,0,,,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2371707_07,2371707,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2371707_11,2371707,11,1,0,1,0.0,1,1.0,9.0,9.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2372967_07,2372967,7,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2374064_01,2374064,1,1,1,2,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2381206_01,2381206,1,1,0,1,0.0,1,1.0,5.0,5.0,3,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2381680_08,2381680,8,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2381990_01,2381990,1,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2382431_14,2382431,14,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2382482_14,2382482,14,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2382687_07,2382687,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2382687_08,2382687,8,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2395037_07,2395037,7,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2395037_12,2395037,12,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2402076_04,2402076,4,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2402076_05,2402076,5,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2402076_06,2402076,6,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2407205_05,2407205,5,1,0,1,0.0,1,1.0,7.0,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2407574_08,2407574,8,1,0,1,0.0,1,1.0,4.0,4.0,2,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2407574_14,2407574,14,2,0,2,0.0,0,,,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2410508_08,2410508,8,1,0,1,0.0,1,1.0,5.0,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2415488_02,2415488,2,0,0,0,0.0,1,,,9.0,5,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2421518_09,2421518,9,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2428385_02,2428385,2,1,0,1,0.0,0,,,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2428393_01,2428393,1,3,7,10,10.0,0,,,5.0,6,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2428393_02,2428393,2,2,4,6,0.0,1,1.0,3.0,7.0,7,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2438313_02,2438313,2,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2442477_02,2442477,2,1,1,2,2.0,0,,,,0,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2449641_01,2449641,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2452081_07,2452081,7,1,0,1,0.0,1,1.0,9.0,9.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2452081_10,2452081,10,1,0,1,0.0,0,,,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2452081_11,2452081,11,1,0,1,0.0,0,,,9.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2452782_08,2452782,8,1,0,1,0.0,1,1.0,5.0,5.0,2,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2452782_09,2452782,9,1,0,1,1.0,1,1.0,11.0,11.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2455463_09,2455463,9,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2460106_14,2460106,14,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2460262_08,2460262,8,1,0,1,0.0,1,1.0,5.0,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2461765_09,2461765,9,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2468972_07,2468972,7,1,0,1,0.0,0,,,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2481073_03,2481073,3,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2481073_04,2481073,4,1,0,1,1.0,0,,,,0,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2481073_05,2481073,5,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2481073_06,2481073,6,1,0,1,1.0,1,1.0,9.0,9.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2493888_09,2493888,9,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2494299_02,2494299,2,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2495228_08,2495228,8,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2495228_14,2495228,14,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2504537_01,2504537,1,1,0,1,0.0,1,2.0,5.0,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2504537_02,2504537,2,1,0,1,0.0,1,1.0,6.0,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2504537_07,2504537,7,1,0,1,1.0,1,1.0,6.0,6.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2504537_08,2504537,8,1,0,1,1.0,1,1.0,7.0,7.0,11,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2504537_10,2504537,10,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2504537_11,2504537,11,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2507420_01,2507420,1,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2519593_01,2519593,1,1,1,2,2.0,1,1.0,5.0,6.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,1,c1_2521792_12,2521792,12,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2522691_16,2522691,16,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2527413_01,2527413,1,1,1,2,0.0,1,2.0,4.0,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2527413_10,2527413,10,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2531348_04,2531348,4,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2531348_05,2531348,5,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2531348_06,2531348,6,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2531798_15,2531798,15,1,0,1,1.0,1,1.0,3.0,3.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2534460_11,2534460,11,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2534460_14,2534460,14,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2537788_04,2537788,4,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2537788_05,2537788,5,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2537788_16,2537788,16,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2547821_03,2547821,3,1,0,1,1.0,1,1.0,6.0,6.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2547821_07,2547821,7,0,0,0,0.0,1,,,7.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2552914_07,2552914,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2552914_09,2552914,9,1,0,1,0.0,0,,,9.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2552914_10,2552914,10,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2558254_16,2558254,16,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2560127_09,2560127,9,1,0,1,1.0,1,1.0,9.0,9.0,8,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2560127_14,2560127,14,1,0,1,0.0,1,1.0,5.0,5.0,4,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2560127_15,2560127,15,1,0,1,0.0,1,1.0,7.0,7.0,10,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2560828_01,2560828,1,1,1,2,0.0,0,,,4.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2560828_02,2560828,2,1,0,1,0.0,1,1.0,4.0,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2560828_08,2560828,8,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2560828_09,2560828,9,1,0,1,1.0,0,,,8.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2560852_02,2560852,2,1,0,1,0.0,1,1.0,11.0,11.0,3,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2562316_11,2562316,11,1,1,2,0.0,1,1.0,8.0,10.0,5,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2564211_13,2564211,13,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2564211_16,2564211,16,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2568713_01,2568713,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2568713_12,2568713,12,1,0,1,0.0,0,,,9.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2580055_11,2580055,11,1,0,1,0.0,0,,,,0,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2600536_07,2600536,7,0,0,0,0.0,1,,,,0,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2600536_09,2600536,9,1,1,2,2.0,0,,,11.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2600536_10,2600536,10,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2601680_04,2601680,4,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2601680_05,2601680,5,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2601680_06,2601680,6,1,0,1,1.0,1,1.0,4.0,,0,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2601680_13,2601680,13,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2605473_01,2605473,1,1,0,1,0.0,1,1.0,5.0,5.0,6,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2605473_02,2605473,2,1,0,1,1.0,1,1.0,11.0,11.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2605473_03,2605473,3,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2605473_04,2605473,4,1,0,1,1.0,1,1.0,9.0,9.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2605473_05,2605473,5,1,0,1,1.0,1,1.0,11.0,11.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2605473_06,2605473,6,1,0,1,1.0,1,1.0,7.0,7.0,9,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2605473_07,2605473,7,1,0,1,1.0,1,1.0,7.0,7.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2605473_10,2605473,10,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2605473_11,2605473,11,1,0,1,0.0,0,,,3.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2605473_12,2605473,12,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2613476_11,2613476,11,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2615797_02,2615797,2,1,1,2,0.0,1,1.0,5.0,5.0,3,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2615797_15,2615797,15,2,0,2,1.0,0,,,4.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2621614_07,2621614,7,1,0,1,0.0,0,,,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2621614_10,2621614,10,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2621614_13,2621614,13,1,2,3,3.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2621649_08,2621649,8,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2659417_01,2659417,1,1,0,1,0.0,0,,,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2665778_01,2665778,1,1,2,3,3.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2665778_14,2665778,14,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2675560_01,2675560,1,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2675560_15,2675560,15,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2675625_08,2675625,8,2,0,2,0.0,1,1.0,3.0,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2678667_01,2678667,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2678667_12,2678667,12,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2678667_15,2678667,15,1,0,1,1.0,1,1.0,6.0,6.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2687127_07,2687127,7,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2697289_10,2697289,10,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2697696_16,2697696,16,1,1,2,2.0,0,,,,0,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2704900_12,2704900,12,1,0,1,1.0,1,2.0,6.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2704900_13,2704900,13,1,0,1,1.0,1,2.0,5.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2707918_16,2707918,16,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2710935_07,2710935,7,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2712040_01,2712040,1,2,0,2,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2748223_04,2748223,4,1,0,1,1.0,1,1.0,9.0,9.0,3,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2748223_07,2748223,7,1,0,1,1.0,1,1.0,3.0,3.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2748223_10,2748223,10,1,0,1,1.0,0,,,8.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2752700_07,2752700,7,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2752700_10,2752700,10,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2755149_02,2755149,2,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2756951_02,2756951,2,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2756951_04,2756951,4,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2758164_12,2758164,12,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2759403_10,2759403,10,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2760711_01,2760711,1,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2760940_01,2760940,1,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2760940_07,2760940,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2760940_08,2760940,8,2,2,4,3.0,1,1.0,5.0,5.0,4,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2760940_15,2760940,15,1,1,2,0.0,1,1.0,7.0,9.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2760991_02,2760991,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2761203_01,2761203,1,1,0,1,0.0,0,,,3.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2769603_06,2769603,6,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2769603_08,2769603,8,1,0,1,0.0,1,1.0,5.0,5.0,4,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2769875_01,2769875,1,1,1,2,0.0,1,1.0,5.0,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2772280_04,2772280,4,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2772299_01,2772299,1,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2772299_15,2772299,15,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777649_01,2777649,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777649_02,2777649,2,1,0,1,0.0,1,1.0,7.0,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777649_04,2777649,4,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777649_06,2777649,6,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777746_02,2777746,2,1,0,1,0.0,1,2.0,7.0,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777746_05,2777746,5,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777746_06,2777746,6,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777746_09,2777746,9,1,0,1,1.0,0,,,11.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777754_02,2777754,2,1,0,1,0.0,1,1.0,9.0,9.0,3,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777754_06,2777754,6,1,0,1,1.0,1,1.0,7.0,7.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777754_09,2777754,9,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777762_02,2777762,2,1,0,1,0.0,1,1.0,5.0,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777770_02,2777770,2,1,0,1,1.0,1,1.0,4.0,4.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777789_02,2777789,2,1,0,1,0.0,0,,,3.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2777789_05,2777789,5,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2781859_07,2781859,7,0,0,0,0.0,1,,,6.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2781859_10,2781859,10,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2786125_02,2786125,2,0,0,0,0.0,1,,,8.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2786435_05,2786435,5,1,0,1,0.0,1,1.0,7.0,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2789647_11,2789647,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2790602_05,2790602,5,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2790602_06,2790602,6,1,0,1,1.0,1,1.0,4.0,4.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2792141_01,2792141,1,1,0,1,0.0,1,1.0,7.0,7.0,6,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2796562_01,2796562,1,1,0,1,0.0,1,1.0,5.0,5.0,3,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2796562_02,2796562,2,0,0,0,0.0,1,,,4.0,4,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2797496_01,2797496,1,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2797496_02,2797496,2,1,0,1,0.0,0,,,3.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2797496_08,2797496,8,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2797496_14,2797496,14,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2798484_08,2798484,8,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2799286_03,2799286,3,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2799286_04,2799286,4,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2799286_06,2799286,6,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2799286_12,2799286,12,1,0,1,0.0,1,1.0,6.0,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2799286_13,2799286,13,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2800950_01,2800950,1,1,1,2,2.0,1,1.0,9.0,9.0,5,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2800950_02,2800950,2,1,0,1,0.0,1,1.0,9.0,9.0,4,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2800950_07,2800950,7,1,0,1,0.0,0,,,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2800950_08,2800950,8,1,0,1,1.0,1,1.0,7.0,7.0,13,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2800950_10,2800950,10,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_2800950_14,2800950,14,1,2,3,0.0,1,2.0,5.0,,0,2,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2806215_11,2806215,11,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2808501_14,2808501,14,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2808609_02,2808609,2,1,1,2,2.0,1,1.0,5.0,7.0,2,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,1,c1_2858185_08,2858185,8,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_2877880_14,2877880,14,1,1,2,0.0,1,1.0,9.0,9.0,7,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2882663_08,2882663,8,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_2964465_10,2964465,10,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3021114_03,3021114,3,1,3,4,4.0,0,,,9.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3021114_04,3021114,4,1,1,2,2.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3021114_05,3021114,5,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3021114_06,3021114,6,1,1,2,2.0,1,1.0,3.0,5.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,1,c1_3021114_15,3021114,15,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3021114_16,3021114,16,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3210243_08,3210243,8,1,0,1,1.0,1,2.0,4.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_3210243_11,3210243,11,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3259749_08,3259749,8,1,2,3,3.0,1,1.0,5.0,5.0,9,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_3285391_05,3285391,5,1,0,1,0.0,1,1.0,7.0,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3432076_08,3432076,8,1,1,2,0.0,1,1.0,5.0,5.0,3,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3437396_08,3437396,8,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_3437396_14,3437396,14,1,3,4,4.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3675580_05,3675580,5,1,1,2,0.0,0,,,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3675580_16,3675580,16,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_3741583_08,3741583,8,1,0,1,1.0,1,1.0,5.0,5.0,7,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_3972925_01,3972925,1,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_3972925_04,3972925,4,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_4009444_03,4009444,3,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4009444_06,4009444,6,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_4009444_07,4009444,7,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4009622_06,4009622,6,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4009622_07,4009622,7,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_4009622_08,4009622,8,1,0,1,0.0,0,,,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4009622_12,4009622,12,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4009622_14,4009622,14,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4009622_15,4009622,15,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4014138_02,4014138,2,1,1,2,0.0,1,2.0,7.0,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4014138_09,4014138,9,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_4026896_03,4026896,3,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4026896_06,4026896,6,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4026896_12,4026896,12,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4028155_01,4028155,1,1,0,1,0.0,1,1.0,5.0,5.0,4,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4028155_03,4028155,3,1,0,1,1.0,1,1.0,8.0,8.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_4028155_04,4028155,4,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4028155_06,4028155,6,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4057864_09,4057864,9,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4093577_06,4093577,6,2,0,2,1.0,1,1.0,4.0,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4093577_07,4093577,7,0,0,0,0.0,1,,,6.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_4352726_07,4352726,7,2,0,2,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4412710_11,4412710,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_4578732_03,4578732,3,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4578732_06,4578732,6,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_4578732_13,4578732,13,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_5292190_06,5292190,6,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_5292190_14,5292190,14,1,0,1,0.0,1,2.0,7.0,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_5302277_14,5302277,14,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_5336171_14,5336171,14,1,0,1,0.0,0,,,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_5372690_08,5372690,8,1,0,1,0.0,1,1.0,5.0,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_5498465_02,5498465,2,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_5584183_14,5584183,14,1,1,2,0.0,0,,,6.0,1,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_5699290_14,5699290,14,1,0,1,0.0,1,1.0,6.0,6.0,3,1,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_5709547_08,5709547,8,1,0,1,0.0,1,1.0,4.0,4.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_5882451_14,5882451,14,1,2,3,3.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_5922402_14,5922402,14,1,0,1,0.0,0,,,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6257267_11,6257267,11,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6402305_14,6402305,14,1,1,2,2.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_6408354_08,6408354,8,1,0,1,0.0,0,,,3.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6425542_02,6425542,2,1,0,1,0.0,0,,,3.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6476058_07,6476058,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_6497489_13,6497489,13,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6542638_07,6542638,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_6542638_10,6542638,10,0,0,0,0.0,1,,,,0,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_6568343_07,6568343,7,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6568343_09,6568343,9,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_6632513_09,6632513,9,1,1,2,2.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6697054_02,6697054,2,0,0,0,0.0,1,,,5.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_6697054_08,6697054,8,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6697054_09,6697054,9,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6778798_08,6778798,8,1,0,1,0.0,1,2.0,5.0,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6778798_14,6778798,14,1,0,1,0.0,1,1.0,7.0,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6778798_15,6778798,15,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_6779522_02,6779522,2,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_6827756_09,6827756,9,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_6908535_04,6908535,4,1,0,1,0.0,0,,,3.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7051123_15,7051123,15,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7072341_07,7072341,7,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7072341_08,7072341,8,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_7072341_14,7072341,14,1,0,1,0.0,1,1.0,9.0,9.0,8,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7088302_08,7088302,8,1,0,1,1.0,1,1.0,5.0,5.0,2,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_7186347_14,7186347,14,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7262698_08,7262698,8,1,0,1,0.0,1,1.0,5.0,5.0,4,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7262698_09,7262698,9,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7262698_14,7262698,14,1,0,1,0.0,1,1.0,8.0,8.0,9,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7354746_07,7354746,7,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_7354746_10,7354746,10,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_7376928_07,7376928,7,1,0,1,0.0,0,,,3.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7376928_08,7376928,8,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7376928_14,7376928,14,1,0,1,0.0,1,1.0,5.0,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7386257_07,7386257,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_7386257_14,7386257,14,1,0,1,0.0,1,1.0,7.0,7.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7420501_08,7420501,8,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7459750_01,7459750,1,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7468717_07,7468717,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_7468717_10,7468717,10,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7468717_11,7468717,11,1,0,1,0.0,0,,,8.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7469683_14,7469683,14,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7470371_01,7470371,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_7470371_14,7470371,14,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7649126_07,7649126,7,1,0,1,0.0,1,1.0,9.0,9.0,3,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7826060_08,7826060,8,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7826060_15,7826060,15,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_7891067_01,7891067,1,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7891067_06,7891067,6,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_7891067_08,7891067,8,1,0,1,0.0,1,1.0,5.0,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7891067_11,7891067,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_7891067_15,7891067,15,1,0,1,0.0,1,1.0,4.0,4.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_7960352_08,7960352,8,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_8015899_06,8015899,6,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_8015899_07,8015899,7,1,0,1,0.0,0,,,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_8015899_09,8015899,9,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_8015899_15,8015899,15,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9065768_07,9065768,7,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_9065768_10,9065768,10,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_9065768_11,9065768,11,1,0,1,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9077413_08,9077413,8,1,0,1,0.0,1,1.0,6.0,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9077413_15,9077413,15,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9156836_08,9156836,8,1,1,2,2.0,1,1.0,5.0,7.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,1,c1_9373853_07,9373853,7,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9384553_14,9384553,14,1,0,1,0.0,1,1.0,5.0,5.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9507949_08,9507949,8,1,0,1,1.0,1,1.0,7.0,7.0,6,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9507949_10,9507949,10,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_9516182_07,9516182,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_9516182_10,9516182,10,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9516182_11,9516182,11,1,0,1,0.0,1,1.0,9.0,9.0,2,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9516182_14,9516182,14,1,0,1,1.0,1,1.0,9.0,9.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9516182_15,9516182,15,1,0,1,1.0,1,1.0,5.0,5.0,3,2,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9580816_14,9580816,14,1,0,1,1.0,0,,,,0,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9613374_11,9613374,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,1,c1_9680977_07,9680977,7,1,2,3,0.0,0,,,5.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9680977_10,9680977,10,1,0,1,0.0,0,,,6.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9680977_11,9680977,11,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9685871_08,9685871,8,1,0,1,0.0,0,,,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9685871_15,9685871,15,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9742441_15,9742441,15,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9837841_08,9837841,8,1,0,1,1.0,1,2.0,3.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9837841_14,9837841,14,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9866027_08,9866027,8,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9866027_14,9866027,14,1,0,1,1.0,1,1.0,7.0,5.0,2,2,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9866027_15,9866027,15,1,0,1,1.0,1,1.0,5.0,5.0,2,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9866035_07,9866035,7,1,0,1,0.0,1,2.0,7.0,,0,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9866035_11,9866035,11,1,0,1,0.0,0,,,7.0,1,0,0,capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9868291_12,9868291,12,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,1,c1_9868291_14,9868291,14,1,1,2,2.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9868291_15,9868291,15,1,1,2,2.0,1,1.0,3.0,4.0,2,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,1,c1_9915583_08,9915583,8,1,0,1,1.0,1,1.0,4.0,4.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,1,c1_9966366_08,9966366,8,1,0,1,1.0,0,,,,0,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0000086_08,0000086,8,1,0,1,1.0,1,1.0,5.0,5.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0000701_01,0000701,1,1,0,1,1.0,1,1.0,7.0,7.0,10,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0002186_08,0002186,8,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0002208_08,0002208,8,1,1,2,2.0,1,1.0,5.0,5.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0002275_02,0002275,2,0,0,0,0.0,1,,,5.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0002275_15,0002275,15,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0002283_06,0002283,6,1,0,1,1.0,1,1.0,4.0,4.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0002534_01,0002534,1,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0002534_02,0002534,2,0,0,0,0.0,1,,,7.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0002534_08,0002534,8,1,0,1,1.0,1,1.0,3.0,3.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0002534_15,0002534,15,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0002534_16,0002534,16,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0008036_01,0008036,1,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0008923_01,0008923,1,2,3,5,5.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0008923_02,0008923,2,0,0,0,0.0,1,,,7.0,5,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0008923_04,0008923,4,1,1,2,2.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0008923_05,0008923,5,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0008923_11,0008923,11,2,3,5,5.0,0,,,6.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0008923_15,0008923,15,2,3,5,5.0,0,,,5.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0009709_02,0009709,2,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0009709_05,0009709,5,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0009776_07,0009776,7,1,1,2,2.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0010464_01,0010464,1,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0010499_01,0010499,1,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0010499_02,0010499,2,0,0,0,0.0,1,,,7.0,6,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0010502_11,0010502,11,1,0,1,1.0,1,1.0,7.0,7.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0011738_03,0011738,3,1,0,1,1.0,1,1.0,7.0,7.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0011738_16,0011738,16,1,1,2,2.0,1,1.0,3.0,7.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_0012505_01,0012505,1,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0012505_02,0012505,2,0,0,0,0.0,1,,,7.0,5,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0012505_03,0012505,3,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0012505_04,0012505,4,1,0,1,1.0,1,1.0,11.0,11.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0012505_07,0012505,7,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0012505_15,0012505,15,1,0,1,1.0,1,1.0,8.0,8.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0012513_07,0012513,7,0,0,0,0.0,1,,,9.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0012513_09,0012513,9,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0012556_02,0012556,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0015245_01,0015245,1,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0015245_02,0015245,2,0,0,0,0.0,1,,,7.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0015245_16,0015245,16,1,0,1,1.0,1,1.0,7.0,7.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0015369_01,0015369,1,1,1,2,2.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0015369_02,0015369,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0015369_07,0015369,7,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0015369_15,0015369,15,1,0,1,1.0,1,1.0,3.0,,0,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0015644_07,0015644,7,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0015644_08,0015644,8,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0015644_16,0015644,16,1,1,2,2.0,1,2.0,5.0,3.0,1,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0020516_01,0020516,1,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0022942_14,0022942,14,1,1,2,2.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0025747_14,0025747,14,1,2,3,3.0,0,,,7.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0086673_02,0086673,2,0,0,0,0.0,1,,,7.0,4,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0105317_02,0105317,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0105317_03,0105317,3,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0105317_07,0105317,7,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0105317_09,0105317,9,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0136581_01,0136581,1,2,3,5,5.0,0,,,5.0,4,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0136581_02,0136581,2,0,0,0,0.0,1,,,7.0,8,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0136581_05,0136581,5,1,1,2,2.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0136581_07,0136581,7,0,0,0,0.0,1,,,7.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0136581_09,0136581,9,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0136581_15,0136581,15,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0147907_02,0147907,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0220337_02,0220337,2,0,0,0,0.0,1,,,5.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0220337_03,0220337,3,1,0,1,1.0,1,1.0,9.0,9.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0220337_04,0220337,4,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0220337_05,0220337,5,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0220337_06,0220337,6,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0221015_07,0221015,7,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0250139_14,0250139,14,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0265500_02,0265500,2,0,0,0,0.0,1,,,9.0,21,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0265500_07,0265500,7,1,0,1,1.0,1,1.0,7.0,7.0,8,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0310921_07,0310921,7,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0310921_11,0310921,11,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0409642_10,0409642,10,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_0409642_11,0409642,11,1,0,1,1.0,1,1.0,9.0,9.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0409642_14,0409642,14,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0612227_09,0612227,9,1,0,1,1.0,1,1.0,9.0,9.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0786608_11,0786608,11,1,0,1,1.0,1,1.0,7.0,,0,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0806285_11,0806285,11,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0806285_15,0806285,15,1,0,1,1.0,1,1.0,7.0,7.0,9,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0829781_07,0829781,7,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0829781_08,0829781,8,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0829781_11,0829781,11,1,0,1,1.0,1,1.0,9.0,9.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0829781_14,0829781,14,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0884189_11,0884189,11,1,0,1,1.0,1,1.0,9.0,9.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_0951021_11,0951021,11,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_0969885_14,0969885,14,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2001063_08,2001063,8,1,2,3,3.0,1,1.0,5.0,5.0,14,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2001063_14,2001063,14,1,2,3,3.0,1,1.0,7.0,11.0,6,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2001063_16,2001063,16,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2001500_01,2001500,1,1,0,1,1.0,1,1.0,4.0,4.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2001500_02,2001500,2,1,2,3,3.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2001578_02,2001578,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2001586_02,2001586,2,0,0,0,0.0,1,,,7.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2001586_05,2001586,5,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2001586_12,2001586,12,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2001586_13,2001586,13,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2004968_08,2004968,8,1,0,1,1.0,1,1.0,5.0,5.0,8,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2005417_01,2005417,1,1,1,2,2.0,1,1.0,4.0,5.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2005417_03,2005417,3,1,2,3,3.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2005417_13,2005417,13,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2005417_16,2005417,16,1,0,1,1.0,1,1.0,7.0,5.0,1,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006197_01,2006197,1,2,3,5,5.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006197_03,2006197,3,0,0,0,0.0,1,,,7.0,1,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006197_04,2006197,4,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006197_05,2006197,5,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006197_07,2006197,7,0,0,0,0.0,1,,,8.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006197_09,2006197,9,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006197_11,2006197,11,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006197_12,2006197,12,2,2,4,4.0,1,1.0,7.0,8.0,5,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006197_13,2006197,13,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006197_14,2006197,14,1,1,2,2.0,1,1.0,7.0,7.0,3,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006197_16,2006197,16,1,1,2,2.0,1,1.0,4.0,5.0,5,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006448_01,2006448,1,2,3,5,5.0,0,,,,0,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006448_02,2006448,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006448_11,2006448,11,1,0,1,1.0,1,1.0,11.0,11.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2006448_15,2006448,15,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2009250_01,2009250,1,2,3,5,5.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2009250_08,2009250,8,1,0,1,1.0,1,1.0,7.0,7.0,7,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2012677_05,2012677,5,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2012677_08,2012677,8,1,1,2,2.0,1,1.0,5.0,5.0,7,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2012677_12,2012677,12,1,2,3,3.0,0,,,8.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2013258_01,2013258,1,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2013258_02,2013258,2,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2016893_01,2016893,1,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2016923_02,2016923,2,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2018144_02,2018144,2,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2019566_01,2019566,1,1,1,2,2.0,1,1.0,5.0,7.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2020076_01,2020076,1,1,2,3,3.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2021064_01,2021064,1,2,3,5,5.0,0,,,5.0,4,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2026651_08,2026651,8,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2040069_01,2040069,1,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2040573_02,2040573,2,0,0,0,0.0,1,,,7.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2053241_08,2053241,8,1,0,1,1.0,1,1.0,3.0,,0,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2054558_08,2054558,8,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2074257_08,2074257,8,1,0,1,1.0,1,1.0,5.0,5.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2078414_01,2078414,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2078538_01,2078538,1,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2079321_01,2079321,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2079836_01,2079836,1,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2079860_01,2079860,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2079860_02,2079860,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2080400_02,2080400,2,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2080400_03,2080400,3,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2080400_07,2080400,7,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2080400_15,2080400,15,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2080478_14,2080478,14,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2081164_02,2081164,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2081202_01,2081202,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2082632_02,2082632,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2082721_01,2082721,1,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2082861_02,2082861,2,0,0,0,0.0,1,,,3.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2082861_15,2082861,15,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2084228_01,2084228,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2084228_12,2084228,12,1,0,1,1.0,0,,,8.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2084414_01,2084414,1,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2084414_02,2084414,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2084414_15,2084414,15,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2084937_08,2084937,8,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2098326_15,2098326,15,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2098407_01,2098407,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2098407_02,2098407,2,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2100754_02,2100754,2,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2101777_02,2101777,2,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2105365_02,2105365,2,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2105578_14,2105578,14,1,1,2,2.0,0,,,6.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2105578_16,2105578,16,1,0,1,1.0,1,2.0,5.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2105780_01,2105780,1,2,3,5,5.0,0,,,3.0,1,2,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2105780_02,2105780,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2105780_03,2105780,3,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2105780_04,2105780,4,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2105780_05,2105780,5,1,1,2,2.0,0,,,9.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2105780_06,2105780,6,1,1,2,2.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2105780_11,2105780,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2105780_15,2105780,15,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2109867_02,2109867,2,1,1,2,2.0,1,1.0,3.0,5.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2109867_11,2109867,11,1,1,2,2.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2109867_15,2109867,15,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2115662_01,2115662,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2115662_02,2115662,2,0,0,0,0.0,1,,,6.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2115662_11,2115662,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2117312_02,2117312,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2118513_01,2118513,1,1,1,2,2.0,0,,,4.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2118513_02,2118513,2,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119404_01,2119404,1,1,2,3,3.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119404_02,2119404,2,1,1,2,2.0,1,1.0,3.0,7.0,2,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119404_08,2119404,8,1,1,2,2.0,1,1.0,5.0,7.0,7,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119420_01,2119420,1,1,1,2,2.0,1,1.0,5.0,6.0,5,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119420_02,2119420,2,1,1,2,2.0,1,1.0,4.0,5.0,2,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119420_08,2119420,8,1,1,2,2.0,1,1.0,7.0,7.0,17,2,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119420_09,2119420,9,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119420_15,2119420,15,1,1,2,2.0,1,1.0,3.0,7.0,2,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119471_01,2119471,1,1,0,1,1.0,1,1.0,7.0,7.0,8,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119471_07,2119471,7,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119471_09,2119471,9,1,0,1,1.0,1,1.0,9.0,9.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119471_15,2119471,15,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119501_08,2119501,8,1,1,2,2.0,0,,,9.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119501_14,2119501,14,1,1,2,2.0,0,,,8.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2119501_15,2119501,15,1,1,2,2.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2125943_08,2125943,8,1,0,1,1.0,1,1.0,6.0,6.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2125943_14,2125943,14,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2126494_01,2126494,1,4,6,10,10.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2126494_07,2126494,7,4,8,12,12.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2126494_11,2126494,11,4,6,10,10.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2126494_15,2126494,15,4,6,10,10.0,0,,,7.0,6,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2126494_16,2126494,16,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2134268_01,2134268,1,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2134268_02,2134268,2,1,1,2,2.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2134276_02,2134276,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2134276_08,2134276,8,1,0,1,1.0,1,2.0,5.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2134276_15,2134276,15,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2135124_02,2135124,2,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2135124_15,2135124,15,1,1,2,2.0,0,,,,0,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2135132_02,2135132,2,0,0,0,0.0,1,,,7.0,5,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2135132_07,2135132,7,2,2,4,4.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2135132_15,2135132,15,2,2,4,4.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2135930_08,2135930,8,1,0,1,1.0,1,1.0,5.0,5.0,4,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2135930_11,2135930,11,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2135930_15,2135930,15,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2138875_14,2138875,14,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2139626_02,2139626,2,0,0,0,0.0,1,,,4.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2139626_15,2139626,15,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140063_01,2140063,1,1,1,2,2.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140063_02,2140063,2,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140063_11,2140063,11,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140063_14,2140063,14,1,1,2,2.0,0,,,6.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140063_15,2140063,15,1,1,2,2.0,1,1.0,5.0,7.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140098_01,2140098,1,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140098_02,2140098,2,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140098_08,2140098,8,1,0,1,1.0,1,2.0,7.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140098_10,2140098,10,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140098_15,2140098,15,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140217_01,2140217,1,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140217_02,2140217,2,0,0,0,0.0,1,,,4.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2140217_11,2140217,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2144298_15,2144298,15,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2145960_01,2145960,1,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2146355_08,2146355,8,1,1,2,2.0,1,1.0,4.0,5.0,7,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2146355_15,2146355,15,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2146355_16,2146355,16,2,2,4,4.0,0,,,7.0,4,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153025_02,2153025,2,0,0,0,0.0,1,,,4.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153025_04,2153025,4,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153025_05,2153025,5,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153025_06,2153025,6,1,0,1,1.0,1,1.0,6.0,6.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153025_08,2153025,8,1,0,1,1.0,1,1.0,5.0,5.0,7,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153025_11,2153025,11,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153025_14,2153025,14,1,0,1,1.0,1,1.0,6.0,6.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153025_15,2153025,15,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153025_16,2153025,16,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153106_03,2153106,3,0,0,0,0.0,1,,,6.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153106_06,2153106,6,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153106_16,2153106,16,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153114_02,2153114,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153114_03,2153114,3,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153114_06,2153114,6,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153351_14,2153351,14,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153882_01,2153882,1,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2153882_11,2153882,11,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2159279_08,2159279,8,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2165058_02,2165058,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2165058_06,2165058,6,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2165058_07,2165058,7,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2165058_11,2165058,11,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2165058_12,2165058,12,1,1,2,2.0,0,,,8.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2167727_02,2167727,2,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2167727_14,2167727,14,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2168421_02,2168421,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2168553_01,2168553,1,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2172364_14,2172364,14,1,0,1,1.0,0,,,8.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2183803_02,2183803,2,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2184834_02,2184834,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2192128_01,2192128,1,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2192128_02,2192128,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2192896_02,2192896,2,0,0,0,0.0,1,,,5.0,4,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2192896_07,2192896,7,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2193183_08,2193183,8,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2193183_09,2193183,9,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2193310_02,2193310,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2193310_09,2193310,9,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2193310_11,2193310,11,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2193310_15,2193310,15,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2195585_08,2195585,8,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2206064_01,2206064,1,4,6,10,10.0,0,,,7.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2206064_02,2206064,2,0,0,0,0.0,1,,,7.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2206528_03,2206528,3,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2206595_01,2206595,1,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2208156_01,2208156,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2208156_07,2208156,7,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2208156_11,2208156,11,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2208172_02,2208172,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2211254_01,2211254,1,1,1,2,2.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2211254_15,2211254,15,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2218690_01,2218690,1,2,2,4,4.0,0,,,6.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2218690_07,2218690,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2218690_14,2218690,14,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2218941_09,2218941,9,1,1,2,2.0,1,2.0,9.0,7.0,1,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2219646_09,2219646,9,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2219646_10,2219646,10,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2219646_11,2219646,11,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2219646_14,2219646,14,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2219654_01,2219654,1,1,2,3,3.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2219654_15,2219654,15,1,2,3,3.0,1,1.0,5.0,5.0,6,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2221772_01,2221772,1,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2221772_14,2221772,14,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2221772_15,2221772,15,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2227762_01,2227762,1,2,2,4,4.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2227762_02,2227762,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2232073_15,2232073,15,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2232081_01,2232081,1,2,2,4,4.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2232154_01,2232154,1,0,0,0,0.0,1,,,4.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2232154_02,2232154,2,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2232162_02,2232162,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2239248_14,2239248,14,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2239248_16,2239248,16,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2244306_03,2244306,3,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2248190_06,2248190,6,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2252058_11,2252058,11,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2253046_02,2253046,2,0,0,0,0.0,1,,,7.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2254611_02,2254611,2,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2257815_02,2257815,2,0,0,0,0.0,1,,,4.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2267209_01,2267209,1,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2268922_01,2268922,1,2,3,5,5.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2268922_07,2268922,7,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2268922_11,2268922,11,1,0,1,1.0,1,1.0,6.0,6.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2269899_02,2269899,2,0,0,0,0.0,1,,,7.0,4,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2269899_03,2269899,3,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2269899_06,2269899,6,1,0,1,1.0,1,1.0,11.0,11.0,7,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2269899_08,2269899,8,1,0,1,1.0,1,1.0,5.0,5.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2272040_08,2272040,8,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2272784_02,2272784,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2272784_07,2272784,7,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2272784_08,2272784,8,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2272784_15,2272784,15,2,2,4,4.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2273748_01,2273748,1,1,2,3,3.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2278286_03,2278286,3,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2278855_16,2278855,16,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2280337_15,2280337,15,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2280396_02,2280396,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2280868_01,2280868,1,1,2,3,3.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2283395_02,2283395,2,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2287579_01,2287579,1,1,1,2,2.0,1,1.0,5.0,7.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2287579_02,2287579,2,0,0,0,0.0,1,,,7.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2287579_07,2287579,7,0,0,0,0.0,1,,,9.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2287579_10,2287579,10,0,0,0,0.0,1,,,7.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2287579_11,2287579,11,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2287579_15,2287579,15,1,1,2,2.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2287919_02,2287919,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2287927_01,2287927,1,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2288230_07,2288230,7,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2288885_01,2288885,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2288893_01,2288893,1,1,2,3,3.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2290227_01,2290227,1,4,8,12,12.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2290227_02,2290227,2,0,0,0,0.0,1,,,9.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2292084_01,2292084,1,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2292084_02,2292084,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2292084_04,2292084,4,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2292084_11,2292084,11,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2292084_15,2292084,15,1,0,1,1.0,1,2.0,7.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2292912_01,2292912,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2292912_02,2292912,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2296241_01,2296241,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2296241_04,2296241,4,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2296241_06,2296241,6,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2296241_08,2296241,8,1,0,1,1.0,1,1.0,3.0,3.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2296241_11,2296241,11,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2296241_12,2296241,12,1,2,3,3.0,0,,,8.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2296241_16,2296241,16,1,1,2,2.0,1,1.0,5.0,5.0,2,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2298317_01,2298317,1,1,1,2,2.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2308061_02,2308061,2,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2309475_14,2309475,14,1,1,2,2.0,1,1.0,3.0,4.0,2,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2313367_02,2313367,2,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2314584_08,2314584,8,1,0,1,1.0,1,2.0,5.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2315386_01,2315386,1,2,3,5,5.0,1,2.0,5.0,5.0,4,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2315793_03,2315793,3,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2315793_05,2315793,5,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2315793_06,2315793,6,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2316501_11,2316501,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2319659_01,2319659,1,2,3,5,5.0,0,,,5.0,2,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2319659_07,2319659,7,1,2,3,3.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2319659_09,2319659,9,2,4,6,6.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2319659_15,2319659,15,2,2,4,4.0,0,,,5.0,1,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2323443_01,2323443,1,1,1,2,2.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2323443_10,2323443,10,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2323494_08,2323494,8,1,0,1,1.0,1,1.0,7.0,7.0,22,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2323494_09,2323494,9,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2323494_14,2323494,14,1,0,1,1.0,1,1.0,9.0,9.0,9,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2323559_01,2323559,1,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2323915_02,2323915,2,0,0,0,0.0,1,,,,0,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2324075_02,2324075,2,0,0,0,0.0,1,,,7.0,6,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2328046_01,2328046,1,1,0,1,1.0,1,1.0,9.0,9.0,5,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2328046_02,2328046,2,1,1,2,2.0,1,1.0,7.0,7.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2328380_01,2328380,1,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2328402_01,2328402,1,1,1,2,2.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2328992_01,2328992,1,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2328992_02,2328992,2,1,1,2,2.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2330830_01,2330830,1,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2330830_15,2330830,15,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2331098_01,2331098,1,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2331292_01,2331292,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2332671_01,2332671,1,1,2,3,3.0,1,2.0,5.0,5.0,2,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2332671_02,2332671,2,0,0,0,0.0,1,,,7.0,5,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2332671_11,2332671,11,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2332981_01,2332981,1,2,3,5,5.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2332981_02,2332981,2,0,0,0,0.0,1,,,7.0,3,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2334321_03,2334321,3,1,1,2,2.0,0,,,,0,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2334321_06,2334321,6,1,1,2,2.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2334321_07,2334321,7,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2334321_09,2334321,9,1,1,2,2.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2336812_01,2336812,1,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2340038_07,2340038,7,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2340690_01,2340690,1,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2342642_01,2342642,1,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2343525_02,2343525,2,1,1,2,2.0,1,1.0,6.0,6.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2348489_01,2348489,1,1,1,2,2.0,1,1.0,5.0,7.0,7,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2351471_09,2351471,9,1,0,1,1.0,1,1.0,9.0,9.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2362287_01,2362287,1,2,3,5,5.0,0,,,7.0,4,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2362856_02,2362856,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2362880_02,2362880,2,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2364816_01,2364816,1,1,1,2,2.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2364816_02,2364816,2,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2364816_07,2364816,7,1,0,1,1.0,1,1.0,11.0,11.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2365146_01,2365146,1,1,2,3,3.0,0,,,5.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2365146_02,2365146,2,1,0,1,1.0,1,1.0,7.0,7.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2365146_07,2365146,7,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2365146_11,2365146,11,1,0,1,1.0,0,,,8.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2365154_01,2365154,1,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2365154_02,2365154,2,0,0,0,0.0,1,,,6.0,5,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2371707_01,2371707,1,1,2,3,3.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2371707_03,2371707,3,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2371707_08,2371707,8,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2371707_12,2371707,12,1,2,3,3.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2371707_14,2371707,14,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2372967_01,2372967,1,1,0,1,1.0,1,1.0,7.0,7.0,10,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2372967_11,2372967,11,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2374064_14,2374064,14,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2375265_01,2375265,1,1,1,2,2.0,1,1.0,7.0,7.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2381125_01,2381125,1,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2381303_01,2381303,1,2,2,4,4.0,0,,,4.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2381303_02,2381303,2,1,2,3,3.0,1,1.0,6.0,9.0,12,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2381303_08,2381303,8,1,0,1,1.0,1,1.0,5.0,5.0,8,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2381303_14,2381303,14,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2382466_01,2382466,1,1,1,2,2.0,1,1.0,7.0,7.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2383209_01,2383209,1,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2383209_02,2383209,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2390833_07,2390833,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2390833_08,2390833,8,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2391635_01,2391635,1,2,2,4,4.0,0,,,7.0,4,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2395037_01,2395037,1,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2395037_08,2395037,8,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2399318_02,2399318,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2399555_01,2399555,1,2,3,5,5.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2399555_02,2399555,2,0,0,0,0.0,1,,,9.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2399628_07,2399628,7,0,0,0,0.0,1,,,7.0,3,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2399644_01,2399644,1,2,3,5,5.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2399644_08,2399644,8,2,3,5,5.0,1,1.0,5.0,7.0,16,1,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2407205_12,2407205,12,1,0,1,1.0,1,1.0,9.0,9.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2408260_09,2408260,9,1,1,2,2.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2408260_10,2408260,10,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2408570_01,2408570,1,2,3,5,5.0,0,,,5.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2408570_10,2408570,10,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2409275_01,2409275,1,2,2,4,4.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2410443_01,2410443,1,1,1,2,2.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2410443_14,2410443,14,1,0,1,1.0,1,1.0,8.0,8.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2410486_01,2410486,1,2,2,4,4.0,1,1.0,3.0,5.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2414244_01,2414244,1,1,2,3,3.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2414244_02,2414244,2,0,0,0,0.0,1,,,5.0,5,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2414244_14,2414244,14,1,1,2,2.0,0,,,,0,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2425432_02,2425432,2,0,0,0,0.0,1,,,7.0,5,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2426315_14,2426315,14,1,0,1,1.0,1,1.0,4.0,4.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2426579_01,2426579,1,1,1,2,2.0,1,1.0,5.0,5.0,7,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2426579_02,2426579,2,1,1,2,2.0,1,1.0,7.0,9.0,6,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2426579_11,2426579,11,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2426579_14,2426579,14,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2427125_01,2427125,1,1,1,2,2.0,1,1.0,5.0,7.0,10,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2427125_07,2427125,7,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2427125_11,2427125,11,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2436450_01,2436450,1,1,1,2,2.0,0,,,,0,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2436469_01,2436469,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2436469_03,2436469,3,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2448521_12,2448521,12,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2453363_14,2453363,14,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2455463_07,2455463,7,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2455463_11,2455463,11,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2458055_01,2458055,1,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2459620_02,2459620,2,1,0,1,1.0,1,1.0,7.0,7.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2459647_07,2459647,7,0,0,0,0.0,1,,,9.0,5,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2460106_08,2460106,8,1,1,2,2.0,1,1.0,5.0,6.0,8,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2463016_01,2463016,1,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2463784_01,2463784,1,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2464594_02,2464594,2,0,0,0,0.0,1,,,7.0,8,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2464594_11,2464594,11,1,0,1,1.0,1,1.0,9.0,9.0,1,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2465469_08,2465469,8,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2468972_01,2468972,1,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2468972_02,2468972,2,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2468972_08,2468972,8,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2468972_10,2468972,10,1,0,1,1.0,1,1.0,9.0,9.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2468972_15,2468972,15,1,0,1,1.0,1,2.0,4.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2473380_01,2473380,1,1,0,1,1.0,1,2.0,7.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2473577_09,2473577,9,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2476487_01,2476487,1,2,3,5,5.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2476487_02,2476487,2,0,0,0,0.0,1,,,5.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2480646_01,2480646,1,1,1,2,2.0,1,1.0,4.0,5.0,2,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2480646_02,2480646,2,1,1,2,2.0,1,1.0,6.0,7.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2480646_14,2480646,14,1,1,2,2.0,1,1.0,7.0,9.0,2,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2480646_15,2480646,15,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2482339_01,2482339,1,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2495228_01,2495228,1,2,4,6,6.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2495228_08,2495228,8,1,0,1,1.0,1,1.0,4.0,,0,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2495279_01,2495279,1,1,2,3,3.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2495279_07,2495279,7,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2496046_01,2496046,1,4,6,10,10.0,0,,,5.0,4,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2496879_01,2496879,1,2,2,4,4.0,0,,,4.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2497654_01,2497654,1,2,4,6,6.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2497654_02,2497654,2,0,0,0,0.0,1,,,7.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2497654_07,2497654,7,1,1,2,2.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2497654_11,2497654,11,2,2,4,4.0,0,,,9.0,4,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2497654_12,2497654,12,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2504332_01,2504332,1,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2504502_01,2504502,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2504502_08,2504502,8,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2504502_15,2504502,15,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2504537_01,2504537,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2504537_02,2504537,2,0,0,0,0.0,1,,,7.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2520583_14,2520583,14,1,0,1,1.0,1,1.0,8.0,8.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2521792_01,2521792,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2522691_01,2522691,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2522691_03,2522691,3,1,2,3,3.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2529068_01,2529068,1,1,1,2,2.0,1,1.0,5.0,9.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2529475_01,2529475,1,1,1,2,2.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2530236_01,2530236,1,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2534460_08,2534460,8,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2547821_07,2547821,7,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2550792_01,2550792,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2552930_11,2552930,11,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2558610_02,2558610,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2560089_01,2560089,1,2,2,4,4.0,1,1.0,7.0,9.0,29,4,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2560828_01,2560828,1,1,1,2,2.0,1,1.0,5.0,5.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2560828_02,2560828,2,1,1,2,2.0,1,1.0,5.0,9.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2560828_11,2560828,11,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2560828_14,2560828,14,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2560828_15,2560828,15,1,0,1,1.0,1,1.0,9.0,9.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2561379_08,2561379,8,1,1,2,2.0,1,1.0,6.0,6.0,27,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2561379_14,2561379,14,1,1,2,2.0,1,1.0,7.0,9.0,16,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2561395_11,2561395,11,1,1,2,2.0,1,1.0,9.0,9.0,9,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2561433_11,2561433,11,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2563681_01,2563681,1,1,0,1,1.0,1,1.0,5.0,5.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2563681_02,2563681,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2563681_11,2563681,11,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2563681_15,2563681,15,1,0,1,1.0,1,1.0,7.0,7.0,8,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564211_01,2564211,1,1,1,2,2.0,1,1.0,5.0,5.0,7,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564211_02,2564211,2,0,0,0,0.0,1,,,6.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564211_03,2564211,3,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564211_05,2564211,5,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564211_06,2564211,6,1,0,1,1.0,1,1.0,7.0,7.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564211_09,2564211,9,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564211_11,2564211,11,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564211_12,2564211,12,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564211_14,2564211,14,1,0,1,1.0,1,1.0,9.0,9.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564211_15,2564211,15,1,1,2,2.0,1,1.0,6.0,7.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564238_01,2564238,1,1,1,2,2.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564238_02,2564238,2,0,0,0,0.0,1,,,6.0,5,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2564238_15,2564238,15,1,1,2,2.0,1,1.0,4.0,5.0,2,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2566168_01,2566168,1,2,3,5,5.0,0,,,5.0,4,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2568713_01,2568713,1,1,1,2,2.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2577763_02,2577763,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2580055_02,2580055,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2592460_02,2592460,2,1,0,1,1.0,1,1.0,7.0,7.0,2,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2592568_01,2592568,1,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2592746_01,2592746,1,1,2,3,3.0,1,1.0,5.0,7.0,5,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2592746_02,2592746,2,0,0,0,0.0,1,,,8.0,1,2,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2593262_01,2593262,1,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2593262_02,2593262,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2600331_01,2600331,1,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2600536_02,2600536,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2600536_08,2600536,8,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2600536_15,2600536,15,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2601680_12,2601680,12,1,0,1,1.0,1,1.0,9.0,9.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2604434_02,2604434,2,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2605163_07,2605163,7,1,1,2,2.0,0,,,9.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2605163_09,2605163,9,1,1,2,2.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2605414_01,2605414,1,1,0,1,1.0,1,1.0,3.0,3.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2605414_08,2605414,8,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2605473_02,2605473,2,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2605473_04,2605473,4,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2605473_05,2605473,5,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2605473_06,2605473,6,1,0,1,1.0,1,1.0,3.0,3.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2609061_07,2609061,7,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2609061_08,2609061,8,1,0,1,1.0,1,1.0,6.0,6.0,7,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2611686_01,2611686,1,1,1,2,2.0,1,1.0,5.0,5.0,3,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2611686_03,2611686,3,1,1,2,2.0,1,1.0,7.0,7.0,2,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2613476_01,2613476,1,1,0,1,1.0,1,1.0,9.0,9.0,1,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2615746_02,2615746,2,2,3,5,5.0,0,,,3.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2619717_01,2619717,1,1,1,2,2.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2619717_02,2619717,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2621614_01,2621614,1,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2636018_08,2636018,8,1,0,1,1.0,1,1.0,7.0,7.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2646358_14,2646358,14,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2646536_01,2646536,1,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2646536_02,2646536,2,0,0,0,0.0,1,,,6.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2646536_13,2646536,13,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2651351_01,2651351,1,1,1,2,2.0,1,2.0,4.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2653923_01,2653923,1,2,3,5,5.0,1,2.0,5.0,7.0,3,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2653931_01,2653931,1,1,1,2,2.0,1,2.0,5.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2653982_01,2653982,1,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2653982_03,2653982,3,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2654261_02,2654261,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2655918_02,2655918,2,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2659417_02,2659417,2,1,0,1,1.0,1,1.0,6.0,6.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2660253_09,2660253,9,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2660253_14,2660253,14,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2665778_02,2665778,2,0,0,0,0.0,1,,,7.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2665778_09,2665778,9,1,1,2,2.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2665778_14,2665778,14,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2667711_02,2667711,2,1,0,1,1.0,1,1.0,6.0,6.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2672839_15,2672839,15,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2675560_01,2675560,1,1,2,3,3.0,0,,,5.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2675560_02,2675560,2,0,0,0,0.0,1,,,7.0,6,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2675560_11,2675560,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2676060_07,2676060,7,1,1,2,2.0,1,1.0,9.0,9.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2676060_08,2676060,8,1,1,2,2.0,1,1.0,7.0,7.0,14,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2678667_08,2678667,8,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2678667_14,2678667,14,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2679469_01,2679469,1,1,2,3,3.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2679469_02,2679469,2,0,0,0,0.0,1,,,9.0,9,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2679469_07,2679469,7,0,0,0,0.0,1,,,9.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2679469_11,2679469,11,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2679639_01,2679639,1,1,2,3,3.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2679639_09,2679639,9,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2691841_15,2691841,15,1,1,2,2.0,0,,,3.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2696940_01,2696940,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2697696_01,2697696,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2697696_02,2697696,2,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2697696_03,2697696,3,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2697696_05,2697696,5,1,0,1,1.0,1,1.0,11.0,11.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2697696_06,2697696,6,1,0,1,1.0,1,1.0,7.0,7.0,11,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2697696_13,2697696,13,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2707527_01,2707527,1,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2707527_02,2707527,2,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2707675_02,2707675,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2707918_03,2707918,3,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2709848_02,2709848,2,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2710935_02,2710935,2,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2712040_01,2712040,1,1,0,1,1.0,1,1.0,7.0,7.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2720035_01,2720035,1,1,2,3,3.0,1,1.0,3.0,7.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2720035_07,2720035,7,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2720035_11,2720035,11,1,2,3,3.0,1,1.0,9.0,9.0,3,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2726971_01,2726971,1,2,3,5,5.0,0,,,5.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2730650_01,2730650,1,2,3,5,5.0,0,,,5.0,1,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2738368_01,2738368,1,1,1,2,2.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2738368_02,2738368,2,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2749319_06,2749319,6,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2752700_01,2752700,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2752700_09,2752700,9,1,0,1,1.0,0,,,8.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2755149_02,2755149,2,1,1,2,2.0,1,1.0,11.0,11.0,4,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2756749_08,2756749,8,2,3,5,5.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2756951_01,2756951,1,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2756951_02,2756951,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2757710_01,2757710,1,1,0,1,1.0,1,1.0,3.0,3.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2757710_02,2757710,2,0,0,0,0.0,1,,,7.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2758245_01,2758245,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2760924_02,2760924,2,3,5,8,8.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2760991_02,2760991,2,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2760991_07,2760991,7,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2761092_15,2761092,15,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2761203_02,2761203,2,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2761203_15,2761203,15,2,2,4,4.0,0,,,5.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2765098_01,2765098,1,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2772280_03,2772280,3,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2772299_01,2772299,1,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2772299_02,2772299,2,1,1,2,2.0,1,2.0,5.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2775980_15,2775980,15,1,1,2,2.0,0,,,4.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2776006_01,2776006,1,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2777312_11,2777312,11,3,5,8,8.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2777681_01,2777681,1,1,0,1,1.0,1,1.0,5.0,5.0,6,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2777681_02,2777681,2,0,0,0,0.0,1,,,9.0,4,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2777711_02,2777711,2,0,0,0,0.0,1,,,8.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2777746_01,2777746,1,2,2,4,4.0,1,1.0,3.0,5.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2777746_08,2777746,8,1,1,2,2.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2777746_09,2777746,9,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2777746_14,2777746,14,1,0,1,1.0,1,1.0,9.0,9.0,7,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2777754_09,2777754,9,1,0,1,1.0,0,,,11.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2777789_01,2777789,1,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2777789_02,2777789,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2781859_01,2781859,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2781859_15,2781859,15,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2785900_02,2785900,2,0,0,0,0.0,1,,,9.0,4,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2786095_02,2786095,2,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2786109_02,2786109,2,2,2,4,4.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2786435_07,2786435,7,0,0,0,0.0,1,,,15.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2792974_02,2792974,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2795655_01,2795655,1,3,6,9,9.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2795655_02,2795655,2,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2796112_06,2796112,6,2,3,5,5.0,0,,,7.0,1,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2796449_01,2796449,1,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2796562_02,2796562,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2796619_07,2796619,7,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2796619_08,2796619,8,1,0,1,1.0,1,1.0,4.0,4.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2798662_01,2798662,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2798662_02,2798662,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2798662_07,2798662,7,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2798662_08,2798662,8,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2806215_01,2806215,1,2,2,4,4.0,1,1.0,4.0,7.0,6,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_2806215_02,2806215,2,0,0,0,0.0,1,,,5.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2806215_07,2806215,7,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2806215_11,2806215,11,1,1,2,2.0,0,,,9.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2806215_14,2806215,14,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2808609_01,2808609,1,1,1,2,2.0,0,,,5.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2814218_12,2814218,12,1,2,3,3.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2814277_02,2814277,2,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2858185_01,2858185,1,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2858185_08,2858185,8,1,0,1,1.0,1,1.0,6.0,6.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2858185_11,2858185,11,1,0,1,1.0,1,1.0,6.0,6.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2858185_15,2858185,15,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_2882655_01,2882655,1,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_2882655_07,2882655,7,0,0,0,0.0,1,,,9.0,4,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_2939371_14,2939371,14,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3002187_02,3002187,2,0,0,0,0.0,1,,,9.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_3002187_04,3002187,4,1,1,2,2.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3002187_06,3002187,6,1,1,2,2.0,0,,,9.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3012212_02,3012212,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_3017745_07,3017745,7,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3021114_01,3021114,1,2,3,5,5.0,1,2.0,5.0,5.0,3,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3021114_02,3021114,2,1,1,2,2.0,1,1.0,7.0,9.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_3021114_04,3021114,4,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3021114_05,3021114,5,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3021114_06,3021114,6,1,1,2,2.0,1,1.0,4.0,5.0,5,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_3021114_12,3021114,12,2,2,4,4.0,0,,,9.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3021114_14,3021114,14,2,3,5,5.0,0,,,10.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3021114_16,3021114,16,1,0,1,1.0,1,1.0,7.0,7.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3021378_01,3021378,1,2,3,5,5.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3021378_02,3021378,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_3048675_07,3048675,7,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3054527_08,3054527,8,1,0,1,1.0,1,1.0,5.0,3.0,2,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3132358_08,3132358,8,1,0,1,1.0,1,1.0,6.0,6.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3194930_08,3194930,8,1,0,1,1.0,1,1.0,7.0,7.0,11,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3238431_02,3238431,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_3238431_11,3238431,11,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3285391_01,3285391,1,1,2,3,3.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3285391_02,3285391,2,0,0,0,0.0,1,,,15.0,3,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_3285391_03,3285391,3,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3285391_06,3285391,6,1,0,1,1.0,1,1.0,7.0,7.0,11,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3285391_08,3285391,8,1,0,1,1.0,1,1.0,7.0,7.0,10,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3285391_12,3285391,12,1,1,2,2.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3285391_13,3285391,13,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3314766_01,3314766,1,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3314766_07,3314766,7,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3387739_08,3387739,8,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3388301_02,3388301,2,0,0,0,0.0,1,,,5.0,1,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_3397874_09,3397874,9,2,3,5,5.0,0,,,11.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3432076_01,3432076,1,2,2,4,4.0,0,,,5.0,3,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3432076_02,3432076,2,0,0,0,0.0,1,,,7.0,7,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_3432076_07,3432076,7,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3432076_09,3432076,9,2,2,4,4.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3432076_10,3432076,10,2,2,4,4.0,0,,,11.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3432076_11,3432076,11,2,2,4,4.0,0,,,7.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3432076_14,3432076,14,1,1,2,2.0,0,,,7.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3515168_01,3515168,1,2,3,5,5.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3663051_01,3663051,1,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3663051_02,3663051,2,0,0,0,0.0,1,,,7.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_3675580_03,3675580,3,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3675580_08,3675580,8,1,0,1,1.0,1,1.0,7.0,7.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3675580_11,3675580,11,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3675580_13,3675580,13,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3675580_14,3675580,14,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3698548_02,3698548,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_3698548_11,3698548,11,1,1,2,2.0,1,1.0,8.0,9.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_3759148_02,3759148,2,1,0,1,1.0,1,1.0,7.0,7.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3759148_11,3759148,11,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3759148_14,3759148,14,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3841294_08,3841294,8,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_3950328_08,3950328,8,1,1,2,2.0,1,1.0,5.0,7.0,10,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_3950328_14,3950328,14,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_3970442_01,3970442,1,2,3,5,5.0,0,,,5.0,3,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4003039_01,4003039,1,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4003039_02,4003039,2,1,1,2,2.0,1,1.0,7.0,7.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4003039_07,4003039,7,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4003039_11,4003039,11,1,0,1,1.0,1,1.0,6.0,6.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4005775_01,4005775,1,2,2,4,4.0,1,1.0,5.0,5.0,7,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4005775_02,4005775,2,0,0,0,0.0,1,,,7.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_4009444_01,4009444,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4009444_02,4009444,2,0,0,0,0.0,1,,,9.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_4009444_03,4009444,3,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4009444_06,4009444,6,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4009444_07,4009444,7,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4009444_08,4009444,8,1,0,1,1.0,1,1.0,9.0,9.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4009444_09,4009444,9,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4009444_14,4009444,14,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4009444_15,4009444,15,1,0,1,1.0,1,1.0,7.0,7.0,7,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4010868_01,4010868,1,1,1,2,2.0,1,1.0,7.0,7.0,5,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4010868_09,4010868,9,1,1,2,2.0,1,1.0,9.0,9.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4013441_14,4013441,14,1,1,2,2.0,1,1.0,6.0,7.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_4013484_09,4013484,9,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4013484_11,4013484,11,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4014138_02,4014138,2,1,1,2,2.0,1,1.0,5.0,7.0,2,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_4022718_02,4022718,2,1,0,1,1.0,1,1.0,7.0,7.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4022718_11,4022718,11,1,0,1,1.0,1,1.0,9.0,9.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4022718_15,4022718,15,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4034236_07,4034236,7,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_4034236_14,4034236,14,2,2,4,4.0,0,,,9.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4044916_02,4044916,2,0,0,0,0.0,1,,,9.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_4062000_16,4062000,16,1,2,3,3.0,1,1.0,4.0,5.0,7,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_4093577_01,4093577,1,2,3,5,5.0,0,,,5.0,5,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4093577_07,4093577,7,1,2,3,3.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4093577_08,4093577,8,1,1,2,2.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4093577_10,4093577,10,1,2,3,3.0,0,,,11.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4093577_14,4093577,14,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_4381289_09,4381289,9,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_4412710_01,4412710,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_4412710_07,4412710,7,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_4412710_09,4412710,9,1,1,2,2.0,0,,,9.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4412710_11,4412710,11,1,1,2,2.0,1,1.0,6.0,9.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_4412710_14,4412710,14,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_4578732_12,4578732,12,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_4607767_02,4607767,2,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4963938_04,4963938,4,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_4963938_11,4963938,11,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_5200105_02,5200105,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_5200105_07,5200105,7,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_5200105_15,5200105,15,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_5372690_08,5372690,8,2,2,4,4.0,1,1.0,4.0,5.0,6,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_5384117_07,5384117,7,1,0,1,1.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_5437350_08,5437350,8,1,1,2,2.0,1,1.0,4.0,5.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_5523419_14,5523419,14,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_5703719_08,5703719,8,1,0,1,1.0,1,1.0,3.0,3.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_5709547_08,5709547,8,1,0,1,1.0,1,1.0,6.0,6.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_5817803_08,5817803,8,1,1,2,2.0,1,1.0,5.0,5.0,6,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_5828856_01,5828856,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_5828856_07,5828856,7,1,2,3,3.0,1,1.0,7.0,9.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_5828856_11,5828856,11,1,2,3,3.0,1,1.0,7.0,11.0,5,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_5828856_15,5828856,15,1,2,3,3.0,1,1.0,5.0,7.0,10,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_5844843_06,5844843,6,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_5844843_11,5844843,11,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_5851084_07,5851084,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_5860490_01,5860490,1,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_5860490_02,5860490,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_5860490_03,5860490,3,1,0,1,1.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_5860490_07,5860490,7,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_5893232_07,5893232,7,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_5893232_08,5893232,8,1,0,1,1.0,1,1.0,5.0,5.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_5903394_01,5903394,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_5917107_08,5917107,8,1,0,1,1.0,1,2.0,5.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_5917107_14,5917107,14,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_5922216_02,5922216,2,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_5944619_14,5944619,14,1,1,2,2.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6020917_02,6020917,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_6020917_08,6020917,8,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_6048692_01,6048692,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_6085423_02,6085423,2,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_6095666_07,6095666,7,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_6200702_01,6200702,1,1,2,3,3.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6200702_02,6200702,2,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_6200702_11,6200702,11,2,2,4,4.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6251803_14,6251803,14,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6257267_11,6257267,11,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_6423086_14,6423086,14,0,0,0,0.0,1,,,7.0,3,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_6483089_01,6483089,1,1,0,1,1.0,1,1.0,4.0,4.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_6542638_07,6542638,7,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6568343_07,6568343,7,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6601804_02,6601804,2,0,0,0,0.0,1,,,5.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_6644996_01,6644996,1,1,0,1,1.0,1,1.0,7.0,7.0,9,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_6679528_01,6679528,1,1,0,1,1.0,1,1.0,7.0,7.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_6697054_01,6697054,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6697054_02,6697054,2,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_6697054_15,6697054,15,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_6761240_09,6761240,9,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6778798_11,6778798,11,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6794327_02,6794327,2,0,0,0,0.0,1,,,6.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_6827756_09,6827756,9,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_6848710_01,6848710,1,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6848710_10,6848710,10,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_6853781_07,6853781,7,1,1,2,2.0,0,,,7.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6957501_02,6957501,2,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_6966594_01,6966594,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_7010028_08,7010028,8,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7013620_01,7013620,1,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7013620_02,7013620,2,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7047428_01,7047428,1,1,2,3,3.0,1,1.0,5.0,8.0,5,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_7047428_02,7047428,2,0,0,0,0.0,1,,,7.0,4,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_7047428_05,7047428,5,1,1,2,2.0,1,1.0,9.0,9.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7047428_07,7047428,7,1,2,3,3.0,1,1.0,7.0,8.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_7047428_08,7047428,8,1,2,3,3.0,1,1.0,7.0,7.0,11,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7047428_14,7047428,14,1,2,3,3.0,1,1.0,3.0,7.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_7051123_14,7051123,14,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7061021_01,7061021,1,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7061021_02,7061021,2,1,0,1,1.0,1,1.0,9.0,9.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7073224_01,7073224,1,0,0,0,0.0,0,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_7088302_11,7088302,11,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7227086_08,7227086,8,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7262698_11,7262698,11,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7288921_14,7288921,14,1,0,1,1.0,1,1.0,7.0,7.0,3,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7322879_16,7322879,16,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7352557_11,7352557,11,0,0,0,0.0,1,,,5.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_7354746_02,7354746,2,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_7366108_01,7366108,1,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7366108_02,7366108,2,0,0,0,0.0,1,,,5.0,4,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_7366108_10,7366108,10,0,0,0,0.0,1,,,11.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_7371586_08,7371586,8,1,2,3,3.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7376928_09,7376928,9,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7376928_11,7376928,11,1,1,2,2.0,0,,,8.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7386257_10,7386257,10,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_7386257_11,7386257,11,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7403224_08,7403224,8,1,1,2,2.0,1,1.0,7.0,7.0,18,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7403224_14,7403224,14,1,0,1,1.0,1,1.0,7.0,7.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7431325_11,7431325,11,1,0,1,1.0,0,,,11.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7459750_01,7459750,1,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7469683_11,7469683,11,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7486596_11,7486596,11,1,1,2,2.0,0,,,6.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7506996_14,7506996,14,1,0,1,1.0,1,1.0,6.0,6.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7618816_14,7618816,14,1,0,1,1.0,1,1.0,9.0,9.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7666772_01,7666772,1,1,0,1,1.0,1,1.0,7.0,7.0,11,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7666772_02,7666772,2,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7826060_02,7826060,2,1,0,1,1.0,1,1.0,5.0,5.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7864124_02,7864124,2,0,0,0,0.0,1,,,3.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_7891067_01,7891067,1,1,0,1,1.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7891067_02,7891067,2,0,0,0,0.0,1,,,5.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_7891067_05,7891067,5,1,0,1,1.0,1,1.0,7.0,7.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7891067_08,7891067,8,1,0,1,1.0,1,1.0,5.0,5.0,6,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_7891067_10,7891067,10,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_7891067_12,7891067,12,1,0,1,1.0,0,,,8.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_7958838_01,7958838,1,1,1,2,2.0,1,1.0,6.0,7.0,7,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_7993412_07,7993412,7,1,1,2,2.0,1,2.0,7.0,7.0,1,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_8015899_01,8015899,1,1,2,3,3.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_8015899_02,8015899,2,0,0,0,0.0,1,,,9.0,4,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_8015899_08,8015899,8,1,0,1,1.0,1,1.0,5.0,5.0,7,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9065768_02,9065768,2,1,0,1,1.0,1,1.0,7.0,7.0,4,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9065768_10,9065768,10,1,0,1,1.0,1,1.0,7.0,,0,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9066764_09,9066764,9,1,0,1,1.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9077413_10,9077413,10,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_9154388_08,9154388,8,1,0,1,1.0,0,,,4.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9154388_14,9154388,14,1,0,1,1.0,1,1.0,9.0,9.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9156836_08,9156836,8,1,1,2,2.0,0,,,4.0,2,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9158251_01,9158251,1,1,0,1,1.0,1,1.0,5.0,5.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9158251_02,9158251,2,0,0,0,0.0,1,,,7.0,3,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_9158251_14,9158251,14,1,1,2,2.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9228500_08,9228500,8,1,0,1,1.0,1,1.0,5.0,4.0,2,1,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9275134_01,9275134,1,1,0,1,1.0,1,1.0,5.0,5.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9296131_11,9296131,11,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9296131_14,9296131,14,1,0,1,1.0,1,1.0,9.0,9.0,5,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9373845_11,9373845,11,1,0,1,1.0,1,2.0,5.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9381317_09,9381317,9,1,1,2,2.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9511377_07,9511377,7,1,0,1,1.0,0,,,9.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9511377_11,9511377,11,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9580816_14,9580816,14,1,0,1,1.0,1,1.0,7.0,7.0,3,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9672427_02,9672427,2,1,0,1,1.0,1,1.0,7.0,7.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9681752_01,9681752,1,1,1,2,2.0,0,,,,0,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9681752_02,9681752,2,0,0,0,0.0,1,,,,0,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_9681752_07,9681752,7,0,0,0,0.0,1,,,9.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_9681752_11,9681752,11,1,2,3,3.0,0,,,5.0,1,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9681752_15,9681752,15,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9685871_08,9685871,8,1,0,1,1.0,1,2.0,4.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9685871_15,9685871,15,1,0,1,1.0,1,1.0,5.0,5.0,7,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9787925_14,9787925,14,1,2,3,3.0,1,1.0,4.0,6.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_9841903_02,9841903,2,0,0,0,0.0,1,,,7.0,2,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_9841903_15,9841903,15,1,1,2,2.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9864628_08,9864628,8,1,1,2,2.0,1,1.0,4.0,5.0,4,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_9866035_14,9866035,14,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9868291_14,9868291,14,1,2,3,3.0,0,,,5.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9915583_08,9915583,8,1,0,1,1.0,1,1.0,4.0,4.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9923837_01,9923837,1,4,7,11,11.0,0,,,5.0,4,1,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9923837_02,9923837,2,0,0,0,0.0,1,,,5.0,1,1,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_9923837_03,9923837,3,0,0,0,0.0,1,,,7.0,1,0,0,sem vaga efetiva
+EMPIRICO,EXPLORATORIO_P6,2,c2_9923837_06,9923837,6,1,1,2,2.0,1,1.0,7.0,7.0,9,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9923837_12,9923837,12,1,1,2,2.0,1,2.0,7.0,,0,0,0,corte entre candidatos de 2ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9923837_14,9923837,14,1,1,2,2.0,1,1.0,5.0,7.0,3,0,1,elegivel
+EMPIRICO,EXPLORATORIO_P6,2,c2_9939938_07,9939938,7,1,0,1,1.0,1,1.0,9.0,9.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9944095_14,9944095,14,1,0,1,1.0,0,,,3.0,1,0,0,sem corte ativo (nenhum proponente recusado)
+EMPIRICO,EXPLORATORIO_P6,2,c2_9944648_14,9944648,14,1,0,1,1.0,1,1.0,7.0,7.0,1,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
+EMPIRICO,EXPLORATORIO_P6,2,c2_9966366_14,9966366,14,1,0,1,1.0,1,1.0,6.0,6.0,2,0,0,corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção
