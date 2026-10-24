@@ -1,5 +1,30 @@
 # RDD da bolsa — estado, pendências e decisões em aberto
 
+> **Estado em 24/10/2026: perguntas reformuladas (doc 51) executadas, auditadas
+> e sintetizadas.** P1, P3x, P4, P5, P6, a realocação e o T1.6 rodaram sob
+> protocolos congelados (52, 47 §12, 54, 55, 56, 58 e o adendo §7 do 52), cada
+> um com auditoria independente (25 a 28; o T1.6 parou na validação). A síntese
+> está em [`57`](57_sintese_perguntas_reformuladas.md), gerada por
+> `scripts/rdd_bolsa/33_sintese_perguntas.py` a partir de `output/`: tabela por
+> pergunta, Holm e BKY refeitos dos p gravados (sem divergência), limites
+> superiores e MDE, e a leitura pela cadeia. Em resumo: nenhuma primária
+> rejeita zero depois do Holm nos protocolos 40, 47, 48, 52 e 58; para a
+> pergunta "os R$ 5 mil a mais aumentam a atração ou o preenchimento?", como
+> pacote do corte, não se detecta aumento, e os dados descartam só aumentos
+> grandes (números no doc 57, §4.2); o sinal de escolha segue só no ciclo 2;
+> P3 D2, P3x e P4 são associações com o pré falhando em parte; P5 é descritivo;
+> o T1.6 é falha de validação.
+> **Fila em 24/10/2026, toda dependente do autor ou do calendário:**
+> 1. decidir a hipótese central (doc 57, §7, proposta; doc 44, §7);
+> 2. decidir a revalidação do T1.6 (uma das quatro opções do doc 57b, §4, por
+>    adendo datado);
+> 3. decidir o envio dos pedidos externos (universo de inscritos, folha);
+> 4. se quiser, protocolo de sensibilidade de Rambachan–Roth e de outro grupo
+>    de comparação para P3/P4 (doc 57, §6; proposta, não executada);
+> 5. ciclo 3: só com a competência `202703` publicada, completa e madura.
+> Os slides da banca 2 estão sendo feitos pelo autor fora do repositório.
+> A síntese não entrou no `run_all.py` (é leitura de saídas já versionadas).
+
 > **Estado em 19/10/2026: rodada multi-outcome concluída.** D2 e D3(b) estão
 > feitos. O protocolo
 > [`40`](40_protocolo_multioutcome_rdd_bolsa.md) foi executado até o fim: E6
@@ -109,6 +134,14 @@ Nos slides, use um dos dois e diga qual.
 | Família N (protocolo [`48`](48_protocolo_contagem_vagas_preenchidas.md), pós-resultado): número de vagas preenchidas com e sem controle pelas vagas oferecidas, ciclos 1–3, Holm de N1–N4 | concluído; auditado ([`auditorias/20`](../auditorias/20_auditoria_contagem_vagas_N.md), aprovado com correções) | [`49`](49_resultados_contagem_vagas_preenchidas.md); `output/rdd_bolsa/N_*`; `scripts/rdd_bolsa/23_estimar_contagem_vagas.py` |
 | Família K (protocolo [`47`](47_protocolo_producao_especializada.md), pós-síntese, adendos §10–§11): produção especializada SUS e SUS + planos; D1 = DiRD nos cortes com Holm de K1–K3; D2 = chegada do especialista (Callaway–Sant'Anna, `EXPLORATORIO_PARTICIPACAO`) | concluído; auditado ([`auditorias/21`](../auditorias/21_auditoria_producao_K.md): aprovado com correções, D2 corrigido) | [`50`](50_resultados_producao_especializada.md); `output/rdd_bolsa/K_D1_*`, `K_D2_*`; `scripts/rdd_bolsa/21_producao_dird.py`, `22_chegada_pmme_evento.py` |
 | Adendo §7 do protocolo 48 (pós-resultado): abertura de vagas como seleção (A1–A4), ciclo 1 à parte pela correção §8 | concluído; auditado ([`auditorias/22`](../auditorias/22_auditoria_abertura_vagas_NA.md), aprovado com correções) | [`49`](49_resultados_contagem_vagas_preenchidas.md), seção 15; `output/rdd_bolsa/NA_*`; `scripts/rdd_bolsa/24_abertura_vagas_selecao.py` |
+| P5 (protocolo 55, descritivo): abertura e priorização de vagas | concluído; auditado ([`auditorias/23`](../auditorias/23_auditoria_P5_abertura.md)) | [`57e`](57e_resultados_P5_abertura.md); `output/rdd_bolsa/P5_*` |
+| P4 (protocolo 54, exploratório): trajetória dos médicos, origem e contabilidade líquida | concluído; auditado ([`auditorias/24`](../auditorias/24_auditoria_P4_trajetoria.md)) | [`57d`](57d_resultados_P4_trajetoria.md); `output/rdd_bolsa/P4_*` |
+| P3x (adendo §12 do protocolo 47): especialidade, residentes, controles alternativos, região | concluído; auditado ([`auditorias/25`](../auditorias/25_auditoria_P3_extensoes.md)) | [`57c`](57c_resultados_P3_extensoes.md); `output/rdd_bolsa/K_X_*` |
+| P1 (protocolo 52): escolha do candidato e DAP | concluído; auditado ([`auditorias/26`](../auditorias/26_auditoria_P1_escolha.md)) | [`57a`](57a_resultados_P1_escolha.md); `output/rdd_bolsa/P1_*` |
+| P6 (protocolo 56, exploratório): alocado por pouco contra não alocado por pouco | concluído; auditado ([`auditorias/27`](../auditorias/27_auditoria_P6_mecanismo.md)) | [`57f`](57f_resultados_P6_mecanismo.md); `output/rdd_bolsa/P6_*` |
+| T1.6 (adendo §7 do protocolo 52): cenários de bolsa | validação de base falhou; cenários não calculados; decisão do autor pendente | [`57b`](57b_cenarios_P1_bolsa.md); `output/cenarios/P1_*` |
+| Realocação (protocolo 58, exploratório) | concluído; auditado ([`auditorias/28`](../auditorias/28_auditoria_realocacao.md)); inconclusivo | [`57g`](57g_resultados_realocacao.md); `output/rdd_bolsa/R_*` |
+| Síntese das perguntas reformuladas (onda 5 do doc 51) | concluída em 24/10/2026 | [`57`](57_sintese_perguntas_reformuladas.md); `output/rdd_bolsa/S57_*`; `scripts/rdd_bolsa/33_sintese_perguntas.py` |
 
 O relatório tem:
 - **ordem:** a hipótese primeiro e a presença como secundário;

@@ -25,6 +25,9 @@
   e 0,400 mudam também outras regras federais
   (`docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md`): RDD em nível
   nesses cortes mede um pacote.
+  As perguntas reformuladas (doc 51: P1–P6, realocação, T1.6) terminaram em
+  24/10/2026; síntese, Holm/BKY refeitos, MDE e fila em
+  `docs/06_execucao/57_sintese_perguntas_reformuladas.md`.
 - `docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md` define a pergunta do artigo:
   salário anunciado é o instrumento candidato, IVS é gradiente territorial e
   oferta persistente no CNES não equivale a retenção individual.

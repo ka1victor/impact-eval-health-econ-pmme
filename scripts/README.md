@@ -66,6 +66,11 @@ com o registro profissional (cache local fora do Git):
 `18_permanencia_ativos.py` (X2 e X3), `19_escolha_heterogeneidade.py` (X4 e X5)
 e `20_poder_descartes.py` (X6, só aritmética sobre saídas existentes).
 
+Síntese das perguntas reformuladas (onda 5 do `docs/06_execucao/51`), fora do
+`run_all.py` por só ler saídas versionadas: `scripts/rdd_bolsa/33_sintese_perguntas.py`
+(tabela por pergunta, Holm e BKY refeitos dos p gravados, limite superior e MDE,
+pergunta central; gera `docs/06_execucao/57` inteiro e `output/rdd_bolsa/S57_*`).
+
 Saíram do pipeline em 18/10/2026, sem apagar os scripts: `scripts/rdd_bolsa/01_*`,
 `01b_*`, `02_*` e `03_*`. Eles usavam `data/ivs_ipea_2010_municipios.csv`, que não
 é o IVS do município (`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`),
