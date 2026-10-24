@@ -1,0 +1,837 @@
+natureza_dos_dados,tipo,familia,protocolo,descricao,linha,p_gravado,ajustado_gravado,ajustado_recalculado,diferenca,rejeita_5pct
+EMPIRICO,holm,H40,40,rodada multi-outcome: P1 (E6) e P2 (E7),P1 índice de atração-presença (E6),0.4257183116,0.8514366232,0.8514366232,0,False
+EMPIRICO,holm,H40,40,rodada multi-outcome: P1 (E6) e P2 (E7),P2 vínculos nas CBO-alvo por DiRD (E7),0.6770840008,0.8514366232,0.8514366232,0,False
+EMPIRICO,holm,H47,47,"família K (D1): K1, K2 e K3, U, cortes empilhados",K1,0.6619595832,1,1,0,False
+EMPIRICO,holm,H47,47,"família K (D1): K1, K2 e K3, U, cortes empilhados",K2,0.4147148158,1,1,0,False
+EMPIRICO,holm,H47,47,"família K (D1): K1, K2 e K3, U, cortes empilhados",K3,0.8630366578,1,1,0,False
+EMPIRICO,holm,H48,48,"família N: N1–N4 com controle das vagas oferecidas (S-a), empilhados",N1,0.03087896237,0.1235158495,0.1235158495,0,False
+EMPIRICO,holm,H48,48,"família N: N1–N4 com controle das vagas oferecidas (S-a), empilhados",N2,0.07827634361,0.2348290308,0.2348290308,0,False
+EMPIRICO,holm,H48,48,"família N: N1–N4 com controle das vagas oferecidas (S-a), empilhados",N3,0.1878825045,0.3757650091,0.3757650091,0,False
+EMPIRICO,holm,H48,48,"família N: N1–N4 com controle das vagas oferecidas (S-a), empilhados",N4,0.7167185406,0.7167185406,0.7167185406,0,False
+EMPIRICO,holm,H52,52,P1a: coeficiente da bolsa no M1 (família de um teste),M1 · bolsa_mil,0.06509051502,0.06509051502,0.06509051502,0,False
+EMPIRICO,holm,H58,58,realocação: R-P1 e R-P2 na principal,R_P1,0.3121163743,0.6242327487,0.6242327486,1.000000083e-10,False
+EMPIRICO,holm,H58,58,realocação: R-P1 e R-P2 na principal,R_P2,0.7601964905,0.7601964905,0.7601964905,0,False
+EMPIRICO,holm,H56,"56, relato",P6: Y1–Y5 × último mês e média no R1 (Holm pedido no relato; o protocolo pede BKY),y1_vinculo_mun_1a_opcao · ultimo,0.001,0.01,0.01,0,True
+EMPIRICO,holm,H56,"56, relato",P6: Y1–Y5 × último mês e média no R1 (Holm pedido no relato; o protocolo pede BKY),y1_vinculo_mun_1a_opcao · media,0.001,0.01,0.01,0,True
+EMPIRICO,holm,H56,"56, relato",P6: Y1–Y5 × último mês e média no R1 (Holm pedido no relato; o protocolo pede BKY),y2_horas_sus · ultimo,0.293,0.855,0.855,0,False
+EMPIRICO,holm,H56,"56, relato",P6: Y1–Y5 × último mês e média no R1 (Holm pedido no relato; o protocolo pede BKY),y2_horas_sus · media,0.191,0.764,0.764,0,False
+EMPIRICO,holm,H56,"56, relato",P6: Y1–Y5 × último mês e média no R1 (Holm pedido no relato; o protocolo pede BKY),y3_horas_totais · ultimo,0.113,0.678,0.678,0,False
+EMPIRICO,holm,H56,"56, relato",P6: Y1–Y5 × último mês e média no R1 (Holm pedido no relato; o protocolo pede BKY),y3_horas_totais · media,0.048,0.384,0.384,0,False
+EMPIRICO,holm,H56,"56, relato",P6: Y1–Y5 × último mês e média no R1 (Holm pedido no relato; o protocolo pede BKY),y4_vinculo_fora_origem · ultimo,0.124,0.678,0.678,0,False
+EMPIRICO,holm,H56,"56, relato",P6: Y1–Y5 × último mês e média no R1 (Holm pedido no relato; o protocolo pede BKY),y4_vinculo_fora_origem · media,0.073,0.511,0.511,0,False
+EMPIRICO,holm,H56,"56, relato",P6: Y1–Y5 × último mês e média no R1 (Holm pedido no relato; o protocolo pede BKY),y5_n_municipios · ultimo,0.299,0.855,0.855,0,False
+EMPIRICO,holm,H56,"56, relato",P6: Y1–Y5 × último mês e média no R1 (Holm pedido no relato; o protocolo pede BKY),y5_n_municipios · media,0.285,0.855,0.855,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#0,0.6296541537,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#15,0.164271659,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#33,0.1705849092,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#41,0.9652389809,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#56,0.9201747873,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#74,0.9709870893,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#82,0.2434740364,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#97,0.9396295018,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#115,0.4680534203,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#123,0.6921573464,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#139,0.08450501209,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#158,0.08509687795,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#166,0.9294944853,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#182,0.4666818998,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#201,0.5122716257,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#209,0.3863505843,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#225,0.4070907966,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#244,0.2628215912,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#252,0.6145773598,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#268,0.0176047042,0.639,0.639,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#287,0.01854914079,0.639,0.639,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#295,0.05724957468,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#311,0.3089050702,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#330,0.2036247795,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#338,0.3648284573,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#354,0.6609577983,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#373,0.9748178908,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#381,0.670378843,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#396,0.209742533,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#414,0.2444978781,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#422,0.9880118542,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#438,0.5030997467,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#457,0.8067413583,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#465,0.6568207199,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#481,0.3691935474,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#500,0.3366197134,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#552,0.9975432491,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#568,0.4795476102,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#587,0.6564694648,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#595,0.5373138763,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#611,0.5244066332,1,1,0,False
+EMPIRICO,bky,B40-F0,40,"E6, família F0 (implementação e seleção)",output/rdd_bolsa/E6_estimativas.csv#630,0.9313788363,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#638,0.4069063074,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#654,0.413171856,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#673,0.926931765,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#681,0.4519027895,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#697,0.9521970765,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#716,0.7958610233,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#724,0.8477456425,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#740,0.5668274941,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#759,0.5468171535,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#767,0.4263502175,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#778,0.5156565259,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#792,0.8302225699,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#800,0.5077233879,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#817,0.8283122299,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#837,0.8060349787,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#847,0.09989057769,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#864,0.3015772926,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#884,0.5609559205,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#894,0.3738284097,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#911,0.4821609743,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#931,0.2715967537,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#941,0.09714139719,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#954,0.9676285519,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#970,0.2471266577,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#980,0.4405155982,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#997,0.7478023489,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1017,0.4542417243,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1027,0.1546234022,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1044,0.3576545043,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1064,0.5883671461,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1074,0.9802535691,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1091,0.1260678509,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1111,0.2216508939,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1121,0.2116983821,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1134,0.5010366619,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1150,0.1809613024,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1160,0.604220246,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1177,0.6187398805,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1197,0.4721943913,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1207,0.05731151218,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1224,0.2233584153,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1244,0.4247757667,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1254,0.07659275676,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1267,0.6985853471,1,1,0,False
+EMPIRICO,bky,B40-F1,40,"E6, família F1 (atração)",output/rdd_bolsa/E6_estimativas.csv#1283,0.312759098,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1293,0.9302865448,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1309,0.9220369976,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1328,0.8973358133,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1336,0.3569950742,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1352,0.427055174,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1371,0.2530167195,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1379,0.5441183442,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1390,0.6035304891,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1404,0.4511334773,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1412,0.9169811051,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1428,0.7645884393,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1447,0.7862739828,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1455,0.01887091916,0.828,0.828,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1471,0.4259040811,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1490,0.3341415527,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1498,0.886684403,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1513,0.5661543799,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1531,0.6002247764,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1539,0.4107747105,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1554,0.3758886517,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1572,0.79789964,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1580,0.5010164305,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1591,0.9782321762,1,1,0,False
+EMPIRICO,bky,B40-F2,40,"E6, família F2 (presença)",output/rdd_bolsa/E6_estimativas.csv#1605,0.6102747037,1,1,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1613,0.8586619641,1,1,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1629,0.8052881885,1,1,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1648,0.7610151625,1,1,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1657,0.4681419952,1,1,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1673,0.6181082694,1,1,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1692,0.3850966596,0.953,0.953,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1701,0.2345438979,0.83,0.83,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1717,0.1829865974,0.83,0.83,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1736,0.07355879855,0.83,0.83,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1745,0.2574476551,0.83,0.83,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1756,0.3603923741,0.953,0.953,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1770,0.1524876202,0.83,0.83,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1781,0.8876674727,1,1,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1796,0.669759416,1,1,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1814,0.82090183,1,1,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1822,0.4389494754,1,1,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1837,0.3716235355,0.953,0.953,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1855,0.2361430046,0.83,0.83,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1863,0.2361326084,0.83,0.83,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1878,0.09443917476,0.83,0.83,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1896,0.04325334411,0.83,0.83,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1904,0.2228280122,0.83,0.83,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1915,0.08103615234,0.83,0.83,0,False
+EMPIRICO,bky,B40-F4,40,"E6, família F4 (seleção de quem chega)",output/rdd_bolsa/E6_estimativas.csv#1929,0.03462426163,0.83,0.83,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#0,0.2809171161,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#22,0.5558995648,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#47,0.6770840008,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#61,0.1193844469,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#83,0.478341523,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#108,0.148366181,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#122,0.7191563362,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#144,0.1364860945,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#169,0.163599462,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#183,0.6524545478,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#205,0.1131310058,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#230,0.3589938431,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#366,0.9393222245,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#388,0.8161040598,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#413,0.8752438305,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#427,0.4426850384,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#449,0.1737343067,1,1,0,False
+EMPIRICO,bky,B40-F3,40,"E7, família F3 (oferta no CNES)",output/rdd_bolsa/E7_estimativas.csv#474,0.7849417672,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#391,0.8863372083,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#475,0.524597647,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#559,0.9704992722,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#645,0.9092159188,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#733,0.2695482883,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#819,0.1813574165,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#911,0.6023823804,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#1005,0.8099839454,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#1093,0.9501007157,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#1181,0.475259054,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#1273,0.08374586775,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#1357,0.4030800263,1,1,0,False
+EMPIRICO,bky,B47-K,47,"K D1, secundárias",output/rdd_bolsa/K_D1_estimativas.csv#1441,0.2785712498,1,1,0,False
+EMPIRICO,bky,B47-12,47 §12,"P3x, linhas principais do adendo",output/rdd_bolsa/K_X_estimativas.csv#0,0.01253039117,0.101,0.101,0,False
+EMPIRICO,bky,B47-12,47 §12,"P3x, linhas principais do adendo",output/rdd_bolsa/K_X_estimativas.csv#35,0.4770451086,0.375,0.375,0,False
+EMPIRICO,bky,B47-12,47 §12,"P3x, linhas principais do adendo",output/rdd_bolsa/K_X_estimativas.csv#39,0.7419100756,0.464,0.464,0,False
+EMPIRICO,bky,B47-12,47 §12,"P3x, linhas principais do adendo",output/rdd_bolsa/K_X_estimativas.csv#50,0.09334629101,0.133,0.133,0,False
+EMPIRICO,bky,B47-12,47 §12,"P3x, linhas principais do adendo",output/rdd_bolsa/K_X_estimativas.csv#54,0.02276519771,0.101,0.101,0,False
+EMPIRICO,bky,B47-12,47 §12,"P3x, linhas principais do adendo",output/rdd_bolsa/K_X_estimativas.csv#108,0.2472089603,0.23,0.23,0,False
+EMPIRICO,bky,B47-12,47 §12,"P3x, linhas principais do adendo",output/rdd_bolsa/K_X_estimativas.csv#109,0.03912282335,0.101,0.101,0,False
+EMPIRICO,bky,B47-12,47 §12,"P3x, linhas principais do adendo",output/rdd_bolsa/K_X_estimativas.csv#112,0.1978961717,0.23,0.23,0,False
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#109,0.7639072745,0.264,0.264,0,False
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#127,0.001539779677,0.006,0.006,0,True
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#145,0.9897231327,0.329,0.329,0,False
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#163,0.05813377567,0.062,0.062,0,False
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#168,0.1292352565,0.098,0.098,0,False
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#169,0.3282119405,0.197,0.197,0,False
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#170,0.03360029478,0.047,0.047,0,True
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#171,0.1334082449,0.098,0.098,0,False
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#191,0.003052750069,0.007,0.007,0,True
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#306,0.01863183139,0.031,0.031,0,True
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#307,5.353828368e-18,0.001,0.001,0,True
+EMPIRICO,bky,B52,52,"P1, secundárias P1d–P1f",output/rdd_bolsa/P1_estimativas.csv#309,6.383260681e-72,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1842,2.630477931e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1843,8.966410686e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1844,5.865401651e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1845,2.965168529e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1846,8.678064293e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1847,1.239443413e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1848,1.206446144e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1912,3.059464123e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1913,5.7804459e-20,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1914,8.987179529e-22,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1915,7.88079968e-20,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1916,2.270381477e-21,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1917,2.881618865e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1918,2.360530214e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1982,0.7741902903,0.116,0.116,0,False
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1983,0.5790272878,0.094,0.094,0,False
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1984,0.3599818205,0.063,0.063,0,False
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1985,0.5613051866,0.092,0.092,0,False
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1986,0.1709906727,0.032,0.032,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1987,0.2249913589,0.039,0.039,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1988,0.7664001529,0.116,0.116,0,False
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2052,2.299474676e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2053,9.758520051e-23,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2054,1.190206669e-27,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2055,5.74366816e-25,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2056,3.690107528e-20,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2057,1.184067355e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2058,9.385488663e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2122,3.09747798e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2123,9.316232956e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2124,0.0002340076546,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2125,0.0001040311329,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2126,3.783494209e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2127,0.001062734328,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2128,0.0003641493376,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2192,3.668584726e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2193,9.55245574e-26,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2194,2.399146803e-20,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2195,2.974418489e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2196,1.682023235e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2197,2.208413872e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2198,0.0001031234935,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2262,2.999409631e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2263,5.433635998e-25,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2264,5.919817652e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2265,6.927078208e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2266,9.490856051e-15,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2267,5.316644561e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2268,0.0001090581744,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2332,1.544334833e-22,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2333,6.109368161e-29,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2334,1.797690501e-31,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2335,1.122314853e-29,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2336,6.239868904e-24,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2337,3.732782801e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2338,4.619585736e-13,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2402,6.503426696e-64,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2403,3.931786305e-103,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2404,6.37597486e-132,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2405,1.268435283e-150,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2406,1.713776648e-134,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2407,2.695398473e-95,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2408,3.151792425e-82,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2472,3.834484083e-53,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2473,3.357895639e-80,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2474,1.05393053e-89,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2475,1.309885792e-99,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2476,9.438684043e-96,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2477,7.678429063e-68,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2478,7.309729156e-57,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2542,0.02557829926,0.006,0.006,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2543,0.001276453699,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2544,0.0008233193559,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2545,5.559020997e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2546,3.087073168e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2547,0.002452503277,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2548,0.05649285266,0.012,0.012,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2612,5.536998473e-25,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2613,2.454490477e-29,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2614,3.633155287e-26,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2615,1.451015207e-23,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2616,2.529918158e-23,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2617,6.030474521e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2618,2.323704325e-15,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2682,0.2544957234,0.044,0.044,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2683,0.1231435055,0.024,0.024,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2684,0.2008123165,0.036,0.036,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2685,0.429196978,0.071,0.071,0,False
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2686,0.07722875414,0.015,0.015,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2687,0.1620064929,0.031,0.031,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2688,0.865102561,0.13,0.13,0,False
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2752,0.01054023318,0.003,0.003,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2753,0.003038964811,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2754,0.001379645827,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2755,0.002388159323,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2756,3.452331092e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2757,0.0003789332219,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b,54,"P4, T4.1b (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2758,0.001774511947,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1882,4.149495412e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1883,3.173961968e-09,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1884,2.984095053e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1885,1.031064596e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1886,3.237230023e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1887,3.162034902e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1888,0.0001387784427,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1897,1.155716429e-12,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1898,2.810212374e-13,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1899,2.964809517e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1900,2.461476331e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1901,5.202431516e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1902,2.582164381e-12,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1903,1.876756911e-15,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1952,4.344376967e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1953,1.937498279e-10,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1954,1.922853493e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1955,8.909851769e-09,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1956,1.329100176e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1957,3.119682734e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1958,0.0002976295544,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1967,2.103498638e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1968,1.237492266e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1969,1.049830914e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1970,1.068504087e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1971,8.921553074e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1972,1.728532203e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#1973,4.402462527e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2022,0.5523414762,0.106,0.106,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2023,0.4726999081,0.095,0.095,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2024,0.3540791015,0.073,0.073,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2025,0.5607488155,0.106,0.106,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2026,0.9480655646,0.147,0.147,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2027,0.6194131412,0.11,0.11,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2028,0.3117047272,0.067,0.067,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2037,0.9948760332,0.153,0.153,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2038,0.8315894962,0.128,0.128,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2039,0.5502776832,0.106,0.106,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2040,0.7050462324,0.115,0.115,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2041,0.01906546609,0.008,0.008,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2042,0.007094283318,0.004,0.004,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2043,0.1233315881,0.033,0.033,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2092,1.618570808e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2093,1.57546447e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2094,3.079914095e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2095,1.760586091e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2096,3.676077629e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2097,0.0003311945078,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2098,0.0005251115672,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2107,2.668018208e-15,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2108,4.395176791e-21,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2109,1.506068523e-25,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2110,7.283603148e-22,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2111,5.761771299e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2112,4.125197557e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2113,7.790231704e-20,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2162,0.0001406965612,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2163,0.0003464556111,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2164,0.03476002675,0.013,0.013,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2165,0.01682676377,0.008,0.008,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2166,0.0004025003859,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2167,0.01212602786,0.006,0.006,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2168,0.01584144693,0.007,0.007,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2177,0.0005438455443,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2178,0.008251649975,0.005,0.005,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2179,0.0001146276524,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2180,6.709971512e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2181,0.0001551345621,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2182,0.009995008481,0.005,0.005,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2183,0.001321481063,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2232,5.811789739e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2233,6.945757459e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2234,9.634516437e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2235,1.682030657e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2236,5.249268015e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2237,0.04932779874,0.017,0.017,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2238,0.3808720224,0.079,0.079,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2247,2.048883507e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2248,6.303700071e-27,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2249,5.966649596e-22,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2250,1.632829456e-21,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2251,9.242920737e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2252,8.186927333e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2253,7.391715265e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2302,0.001781614709,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2303,0.0001830665271,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2304,0.00443883379,0.003,0.003,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2305,0.002515440137,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2306,0.0207278255,0.009,0.009,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2307,0.5617700018,0.106,0.106,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2308,0.6852549882,0.115,0.115,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2317,3.023066449e-24,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2318,7.2068291e-34,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2319,1.065823082e-26,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2320,1.057570976e-25,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2321,3.747352902e-21,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2322,3.048723557e-10,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2323,2.527620077e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2372,0.004216167048,0.003,0.003,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2373,0.01530734512,0.007,0.007,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2374,0.005006900641,0.003,0.003,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2375,0.01101629711,0.006,0.006,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2376,0.01675405632,0.008,0.008,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2377,0.08763401974,0.025,0.025,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2378,0.005943321836,0.004,0.004,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2387,2.511229293e-44,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2388,1.7490932e-66,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2389,1.906393083e-80,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2390,2.815727625e-85,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2391,2.887459524e-66,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2392,3.192678343e-45,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2393,6.409137402e-36,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2442,1.247473908e-20,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2443,4.272488646e-37,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2444,1.799842167e-39,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2445,2.223318515e-46,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2446,9.519832059e-38,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2447,1.108576802e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2448,9.092886398e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2457,2.448723083e-61,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2458,8.428637526e-95,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2459,7.454071872e-117,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2460,4.630171808e-146,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2461,5.715970681e-144,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2462,3.735602747e-107,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2463,1.593256032e-95,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2512,4.257072928e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2513,6.842624169e-24,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2514,3.556711266e-24,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2515,5.376411217e-27,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2516,1.340636928e-24,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2517,1.626604773e-11,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2518,5.145030751e-11,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2527,1.545152957e-58,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2528,2.482065169e-96,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2529,4.046689267e-114,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2530,9.103328642e-134,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2531,3.381125931e-137,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2532,1.082111053e-108,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2533,4.115458641e-92,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2582,0.08051409431,0.023,0.023,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2583,0.0488542326,0.017,0.017,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2584,0.009163467795,0.005,0.005,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2585,0.0107388596,0.006,0.006,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2586,0.04900681428,0.017,0.017,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2587,0.1919223076,0.046,0.046,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2588,0.3897200718,0.08,0.08,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2597,0.08384288993,0.024,0.024,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2598,0.002817466792,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2599,0.005202159255,0.003,0.003,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2600,0.0001232871009,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2601,2.760808741e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2602,0.003081396296,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2603,0.05329950325,0.018,0.018,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2652,2.131976268e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2653,7.837833073e-09,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2654,8.627766621e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2655,9.789190436e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2656,6.251769857e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2657,0.002705321859,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2658,0.01102032258,0.006,0.006,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2667,6.03999606e-30,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2668,1.091923239e-27,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2669,4.591331996e-33,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2670,1.34376396e-29,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2671,7.401284483e-27,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2672,2.914201298e-20,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2673,7.068031773e-22,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2722,0.7842998172,0.121,0.121,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2723,0.969383225,0.15,0.15,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2724,0.9814415128,0.151,0.151,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2725,0.5956225731,0.11,0.11,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2726,0.9448367049,0.147,0.147,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2727,0.8042604368,0.124,0.124,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2728,0.2548368866,0.061,0.061,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2737,0.08891058352,0.025,0.025,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2738,0.0244382038,0.01,0.01,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2739,0.04945502746,0.017,0.017,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2740,0.07664739765,0.023,0.023,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2741,0.006572168267,0.004,0.004,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2742,0.02312139292,0.01,0.01,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2743,0.2096123491,0.05,0.05,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2792,0.0006183509229,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2793,0.004168468375,0.003,0.003,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2794,0.0009026692108,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2795,0.001431781636,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2796,2.56423853e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2797,0.0001763398963,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2798,0.003497276527,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2807,0.3420064596,0.071,0.071,0,False
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2808,0.0832742049,0.024,0.024,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2809,0.0694156017,0.022,0.022,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2810,0.08926111819,0.025,0.025,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2811,0.01696568091,0.008,0.008,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2812,0.0309253258,0.012,0.012,0,True
+EMPIRICO,bky,B54-T41c,54,"P4, T4.1c (regra D1)",output/rdd_bolsa/P4_estimativas.csv#2813,0.03019910227,0.012,0.012,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5427,4.05795764e-15,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5428,1.618587821e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5429,1.190571393e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5430,1.561887125e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5431,1.873771556e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5432,1.493123386e-12,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5433,3.781032291e-12,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5497,4.639896084e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5498,1.079347102e-20,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5499,1.060638369e-20,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5500,9.493260811e-20,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5501,1.858568119e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5502,1.227166623e-13,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5503,6.043688038e-13,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5567,0.6077122614,0.101,0.101,0,False
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5568,0.6328222699,0.103,0.103,0,False
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5569,0.4445007993,0.079,0.079,0,False
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5570,0.6237539396,0.103,0.103,0,False
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5571,0.2408405701,0.043,0.043,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5572,0.3206850755,0.058,0.058,0,False
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5573,0.9831448633,0.15,0.15,0,False
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5637,2.905584081e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5638,5.1346703e-23,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5639,1.157255023e-25,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5640,1.045430261e-22,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5641,1.229878358e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5642,2.896580603e-15,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5643,1.164915727e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5707,7.540547406e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5708,7.624402431e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5709,0.0001089002633,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5710,3.56946373e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5711,1.29990599e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5712,0.002165877899,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5713,0.001031812998,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5777,4.268569195e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5778,5.925883596e-24,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5779,7.748096449e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5780,6.109557932e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5781,5.76201748e-15,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5782,3.727876149e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5783,0.0004641579884,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5847,2.121662793e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5848,3.661693448e-24,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5849,3.994201841e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5850,2.22560422e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5851,2.333152277e-13,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5852,1.252901209e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5853,0.0005446368692,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5917,1.666538472e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5918,2.387048414e-25,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5919,4.183966202e-27,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5920,5.403166338e-26,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5921,7.409972975e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5922,2.805975119e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5923,1.591479145e-09,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5987,3.455395765e-61,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5988,2.678709867e-94,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5989,8.072529063e-117,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5990,5.583684403e-136,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5991,1.014060352e-118,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5992,2.407861107e-79,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5993,1.498348924e-67,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6057,4.957926377e-48,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6058,3.519231962e-73,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6059,4.370383002e-81,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6060,3.764549175e-87,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6061,5.393051804e-83,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6062,1.890583637e-54,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6063,8.881133543e-47,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6127,0.01996169924,0.005,0.005,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6128,0.002140202218,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6129,0.000879003424,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6130,0.000141540844,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6131,0.0001895039103,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6132,0.01193300474,0.004,0.004,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6133,0.07470575334,0.016,0.016,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6197,3.84974262e-21,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6198,1.822800412e-27,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6199,3.250194952e-24,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6200,3.968744117e-20,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6201,1.039677721e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6202,2.996500137e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6203,1.632180947e-12,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6267,0.3564717974,0.064,0.064,0,False
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6268,0.1763101069,0.033,0.033,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6269,0.364861713,0.064,0.064,0,False
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6270,0.7596738839,0.125,0.125,0,False
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6271,0.1058524808,0.022,0.022,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6272,0.2267012449,0.041,0.041,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6273,0.7893137568,0.129,0.129,0,False
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6337,0.0269526294,0.007,0.007,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6338,0.007563941108,0.003,0.003,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6339,0.002693747359,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6340,0.005199102999,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6341,5.712821404e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6342,0.0003149925378,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41b-lit,54,"P4, T4.1b (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6343,0.001842264355,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5467,1.49564011e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5468,8.40094795e-10,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5469,4.668056436e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5470,2.5911111e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5471,5.436586423e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5472,4.968749347e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5473,0.0002139172065,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5482,8.999401099e-11,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5483,8.647296562e-13,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5484,4.784582427e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5485,1.229934131e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5486,7.553530908e-13,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5487,2.298579545e-10,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5488,1.142328147e-11,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5537,1.596759683e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5538,3.294895913e-11,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5539,4.946105258e-09,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5540,2.616359413e-09,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5541,1.250735096e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5542,5.998294562e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5543,0.0005053269648,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5552,8.703417488e-12,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5553,5.772936516e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5554,1.178638826e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5555,5.026647003e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5556,5.80416935e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5557,3.103428303e-12,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5558,1.089740206e-13,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5607,0.5328436496,0.106,0.106,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5608,0.4298329208,0.091,0.091,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5609,0.389387192,0.082,0.082,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5610,0.5199761398,0.105,0.105,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5611,0.875088063,0.157,0.157,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5612,0.5762412386,0.115,0.115,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5613,0.2866938509,0.064,0.064,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5622,0.7773270406,0.145,0.145,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5623,0.9612460207,0.166,0.166,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5624,0.6731338497,0.134,0.134,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5625,0.8551326949,0.156,0.156,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5626,0.06167822494,0.021,0.021,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5627,0.02234670108,0.01,0.01,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5628,0.2591591656,0.061,0.061,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5677,1.026525163e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5678,2.313851085e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5679,2.84718872e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5680,1.934525e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5681,1.061551226e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5682,0.0005481378665,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5683,0.00104021537,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5692,1.881232241e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5693,4.983234185e-21,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5694,5.963913026e-23,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5695,2.041211822e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5696,2.987936798e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5697,4.28858157e-15,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5698,2.873291808e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5747,5.670385274e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5748,7.531275153e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5749,0.01305773215,0.007,0.007,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5750,0.007588495832,0.005,0.005,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5751,0.0004790282757,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5752,0.01125665942,0.006,0.006,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5753,0.01752587202,0.008,0.008,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5762,0.004385058706,0.003,0.003,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5763,0.02254306426,0.01,0.01,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5764,0.0002135202592,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5765,5.664865662e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5766,0.0005234061948,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5767,0.02296217673,0.01,0.01,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5768,0.005026152416,0.003,0.003,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5817,3.468094199e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5818,3.095146755e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5819,2.945387977e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5820,4.386539665e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5821,1.508504395e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5822,0.02639612912,0.012,0.012,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5823,0.2610514464,0.061,0.061,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5832,1.358854175e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5833,3.31784368e-23,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5834,1.329897723e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5835,8.914844295e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5836,4.388309921e-14,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5837,3.505015263e-07,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5838,0.000136033165,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5887,0.001090502873,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5888,8.91941627e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5889,0.002450502843,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5890,0.001188677664,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5891,0.01304997888,0.007,0.007,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5892,0.3826662077,0.082,0.082,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5893,0.8758666861,0.157,0.157,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5902,2.678270827e-19,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5903,3.073740972e-30,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5904,3.294665865e-22,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5905,1.516119614e-22,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5906,5.50704337e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5907,5.254682867e-09,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5908,2.249761926e-06,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5957,0.003005409841,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5958,0.01124351349,0.006,0.006,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5959,0.002617926166,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5960,0.009884391076,0.005,0.005,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5961,0.01297406698,0.007,0.007,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5962,0.1001961128,0.031,0.031,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5963,0.005740676579,0.004,0.004,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5972,3.439351157e-36,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5973,6.806257827e-55,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5974,1.2853282e-63,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5975,8.13770055e-69,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5976,5.772061514e-51,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5977,5.991566913e-32,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#5978,1.433195912e-24,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6027,5.978834427e-22,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6028,1.178595676e-35,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6029,7.87473672e-40,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6030,3.847237283e-45,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6031,1.922977306e-40,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6032,1.932438837e-18,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6033,3.140677702e-16,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6042,3.502801e-49,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6043,3.503685191e-78,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6044,1.088422311e-96,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6045,1.525452104e-122,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6046,4.179141972e-103,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6047,1.885978017e-75,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6048,5.410485474e-68,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6097,3.137453493e-15,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6098,3.450437067e-24,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6099,1.032005414e-23,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6100,9.70029612e-27,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6101,7.195919576e-24,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6102,6.938221027e-11,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6103,2.04096188e-10,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6112,1.247096587e-47,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6113,2.314215527e-78,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6114,1.576972843e-90,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6115,4.019970436e-102,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6116,9.394868646e-92,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6117,7.283634081e-72,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6118,3.158360777e-64,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6167,0.05888807022,0.02,0.02,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6168,0.04726040398,0.017,0.017,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6169,0.009849344116,0.005,0.005,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6170,0.008718189349,0.005,0.005,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6171,0.03764976172,0.015,0.015,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6172,0.1853883594,0.047,0.047,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6173,0.2951958656,0.066,0.066,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6182,0.07091820875,0.024,0.024,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6183,0.007471677186,0.004,0.004,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6184,0.007636446353,0.005,0.005,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6185,0.0007066839898,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6186,0.0004072854308,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6187,0.01920557737,0.009,0.009,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6188,0.1024430248,0.031,0.031,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6237,4.757425295e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6238,2.82591999e-08,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6239,1.923051349e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6240,1.85988252e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6241,2.730794697e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6242,0.006418710333,0.004,0.004,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6243,0.02330190613,0.01,0.01,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6252,5.911326012e-25,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6253,2.502371431e-27,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6254,2.422687349e-29,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6255,6.259564109e-26,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6256,1.800157869e-23,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6257,7.628737715e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6258,1.376454872e-17,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6307,0.5270359301,0.106,0.106,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6308,0.6253169247,0.124,0.124,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6309,0.6014520761,0.119,0.119,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6310,0.2863874387,0.064,0.064,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6311,0.9504039025,0.165,0.165,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6312,0.7055636125,0.137,0.137,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6313,0.2623547063,0.061,0.061,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6322,0.1194289428,0.034,0.034,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6323,0.03033419906,0.013,0.013,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6324,0.07569721865,0.025,0.025,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6325,0.1802989755,0.046,0.046,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6326,0.01793069423,0.009,0.009,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6327,0.03263121128,0.013,0.013,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6328,0.1842536325,0.047,0.047,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6377,0.0005827380393,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6378,0.004910125019,0.003,0.003,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6379,0.001202112413,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6380,0.001781761481,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6381,1.933953271e-05,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6382,0.000181703465,0.001,0.001,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6383,0.002888845479,0.002,0.002,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6392,0.600157939,0.119,0.119,0,False
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6393,0.1521738612,0.041,0.041,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6394,0.1138279427,0.032,0.032,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6395,0.1696847161,0.044,0.044,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6396,0.03988893207,0.015,0.015,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6397,0.03587838315,0.014,0.014,0,True
+EMPIRICO,bky,B54-T41c-lit,54,"P4, T4.1c (regra literal, sensibilidade)",output/rdd_bolsa/P4_estimativas.csv#6398,0.03248943527,0.013,0.013,0,True
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#279,0.02149145556,0.602,0.602,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#280,0.6679477291,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#281,0.02503395925,0.602,0.602,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#282,0.04922113419,0.85,0.85,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#283,0.2895354768,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#284,0.1082840807,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#285,0.9986651136,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#286,0.8912450442,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#287,0.9614575878,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#288,0.906684638,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#289,0.759823721,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#290,0.7521809771,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#297,0.9901791713,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#298,0.5559838525,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#299,0.6616149308,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#300,0.7481453071,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#301,0.4742334154,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#302,0.9216700265,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#303,0.7101974911,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#304,0.162482016,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#305,0.2075367328,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#306,0.9677890074,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#307,0.2504567471,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#308,0.3163295491,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#315,0.670378843,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#316,0.209742533,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#317,0.2444978781,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#318,0.4944192849,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#319,0.2129624033,1,1,0,False
+EMPIRICO,bky,B55,55,"P5, T5.2 (cortes, com e sem covariáveis)",output/rdd_bolsa/P5_estimativas.csv#320,0.2480951439,1,1,0,False
+EMPIRICO,bky,B56,56,"P6, Y1–Y5 no R1",output/rdd_bolsa/P6_estimativas.csv#52,0.001,0.006,0.006,0,True
+EMPIRICO,bky,B56,56,"P6, Y1–Y5 no R1",output/rdd_bolsa/P6_estimativas.csv#57,0.001,0.006,0.006,0,True
+EMPIRICO,bky,B56,56,"P6, Y1–Y5 no R1",output/rdd_bolsa/P6_estimativas.csv#62,0.293,0.224,0.224,0,False
+EMPIRICO,bky,B56,56,"P6, Y1–Y5 no R1",output/rdd_bolsa/P6_estimativas.csv#67,0.191,0.224,0.224,0,False
+EMPIRICO,bky,B56,56,"P6, Y1–Y5 no R1",output/rdd_bolsa/P6_estimativas.csv#72,0.113,0.191,0.191,0,False
+EMPIRICO,bky,B56,56,"P6, Y1–Y5 no R1",output/rdd_bolsa/P6_estimativas.csv#77,0.048,0.147,0.147,0,False
+EMPIRICO,bky,B56,56,"P6, Y1–Y5 no R1",output/rdd_bolsa/P6_estimativas.csv#82,0.124,0.191,0.191,0,False
+EMPIRICO,bky,B56,56,"P6, Y1–Y5 no R1",output/rdd_bolsa/P6_estimativas.csv#87,0.073,0.171,0.171,0,False
+EMPIRICO,bky,B56,56,"P6, Y1–Y5 no R1",output/rdd_bolsa/P6_estimativas.csv#92,0.299,0.224,0.224,0,False
+EMPIRICO,bky,B56,56,"P6, Y1–Y5 no R1",output/rdd_bolsa/P6_estimativas.csv#97,0.285,0.224,0.224,0,False
