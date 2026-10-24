@@ -8,7 +8,8 @@ Uso:
 A opção `--rdd-bolsa` roda a cadeia sobre os insumos já versionados das etapas
 anteriores (quadro de vagas, funil e tipologia do ciclo 1, população do Censo
 2022, painel do ciclo 1), inclusive as aquisições a07 a a11 e a rodada
-multi-outcome (12, 13, 16 e 14), a família N (23), a abertura (24 e o P5, 29), a trajetória dos médicos (P4, 28) e a família K (21, 22 e as extensões do P3, 27). Nenhuma etapa baixa o CNES nacional, o SIA, o SIH nem o
+multi-outcome (12, 13, 16 e 14), a família N (23), a abertura (24 e o P5, 29), a trajetória dos médicos (P4, 28), o mecanismo de alocação (P6, 30 em
+`--etapa verificar` e 31) e a família K (21, 22 e as extensões do P3, 27). Nenhuma etapa baixa o CNES nacional, o SIA, o SIH nem o
 TISS: o a09, o a12, o a12b, o a13, o a13b, o a14, o a15, o a16 (portão G5) e o a17 rodam em `--etapa verificar`;
 o a12b, o a13, o a13b, o a15 e o a17 não fazem parte da opção `--rdd-bolsa`.
 """
@@ -134,6 +135,12 @@ STEPS = [
     # Lê o painel médico × mês do a16 (conferido acima), X1_medicos.parquet (saída versionada do 17, fora do
     # run_all), as listas nominais só em memória (função do 17), o painel do a09 e a ponte curso–CBO. Não lê IVS.
     ROOT / "scripts" / "rdd_bolsa" / "28_trajetoria_medicos.py",
+    # P6 (protocolo 56, exploratório): amostra do mecanismo de alocação e passo 0. A amostra vem do cache privado
+    # do a16 e do dicionário do G1 (fora do Git); o run_all só confere as saídas versionadas contra o resumo do
+    # passo 0, sem rede e sem gravar (ver ARGUMENTOS). Lê o G1 e o G2 versionados. Não lê IVS.
+    ROOT / "scripts" / "rdd_bolsa" / "30_mecanismo_alocacao.py",
+    # P6: estimação R1–R5, balanço e doc 57f, só das saídas versionadas do 30.
+    ROOT / "scripts" / "rdd_bolsa" / "31_rd_mecanismo.py",
     # E7: lê o painel do a09, o IED do a10, a janela LR do E5 e confere a de U com a do E6 (13).
     ROOT / "scripts" / "rdd_bolsa" / "14_estimar_E7_dird_cnes.py",
     # Família K (protocolo 47, pós-síntese, Holm próprio): D1, DiRD da produção especializada nos cortes.
@@ -200,6 +207,10 @@ ARGUMENTOS = {
     # Portão G5 (a16): 27 ZIPs do CNES (~20 GB), apagados depois da extração; o cache com registro do
     # conselho fica fora do Git. O run_all só confere as saídas versionadas, sem rede e sem gravar.
     ROOT / "scripts" / "aquisicao" / "a16_cnes_profissional_mensal.py": ["--etapa", "verificar"],
+    # P6, passo 0 (30): a amostra exige o cache privado do a16 e o dicionário do G1, fora do Git. O run_all só
+    # confere as saídas versionadas contra P6_passo0_resumo.json, sem rede e sem gravar; refazer exige
+    # `--etapa aquisicao` e `--etapa construir`.
+    ROOT / "scripts" / "rdd_bolsa" / "30_mecanismo_alocacao.py": ["--etapa", "verificar"],
 }
 
 AQUISICAO_RDD_BOLSA = (

@@ -1,0 +1,326 @@
+{
+  "etapa": "P6_mecanismo_alocacao",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "EXPLORATORIO_P6",
+  "data_execucao": "2026-10-23",
+  "script": "scripts/rdd_bolsa/31_rd_mecanismo.py",
+  "documento": "docs/06_execucao/57f_resultados_P6_mecanismo.md",
+  "protocolo": {
+    "arquivo": "docs/06_execucao/56_protocolo_P6_mecanismo_alocacao.md",
+    "sha256": "6d5affaf2bf1bd73e02e38ce6ae6cd906c81c31fe1f835f9b23d1161ddb25ea7"
+  },
+  "contraste": "ser alocado na 1ª opção do PMM-E, candidatos de ampla concorrência perto da nota de corte da célula (r ∈ {−2, −1} contra {+1, +2}); não é o efeito da bolsa nem do PMM-E sobre o município; vínculo cadastrado não é presença nem retenção",
+  "leitura": {
+    "PE_por_r": "descritivo (proporção alocada por valor de r)",
+    "PE": "primeiro estágio (R1 aplicado ao tratamento)",
+    "BAL": "balanço de covariáveis pré-determinadas (R1); exploratório",
+    "R1": "efeito de ser alocado perto do corte (forma reduzida, randomização local); exploratório",
+    "R2": "efeito de ser alocado para os que obedecem à alocação (Wald); exploratório",
+    "R3": "robustez com tendência linear em r; exploratório",
+    "R4": "sensibilidade com os empatados no corte (desempate determinístico); exploratório",
+    "R5": "sensibilidade com a ligação só por nome; exploratório",
+    "R6": "não executado",
+    "T6.3": "não executado",
+    "medias_por_r": "descritivo (médias por valor de r, sem efeito fixo)"
+  },
+  "parametros": {
+    "janela_R1": [
+      -2,
+      -1,
+      1,
+      2
+    ],
+    "janela_R3": [
+      -3,
+      -2,
+      -1,
+      1,
+      2,
+      3
+    ],
+    "janela_R4": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
+    "permutacoes": 999,
+    "semente": 20261019,
+    "regras": [
+      "g1_cpf_nome",
+      "g1_so_nome"
+    ],
+    "familia": "R1, regra principal, Y1–Y5 × {ultimo, media}",
+    "limiar_F_T63": 10.0
+  },
+  "amostra": {
+    "principal": {
+      "acima": 64,
+      "abaixo": 70,
+      "celulas": 56,
+      "celulas_dois_lados": 27,
+      "acima_efetivo": 30,
+      "abaixo_efetivo": 68,
+      "por_ciclo": {
+        "1": 6,
+        "2": 128
+      },
+      "acima_todos": 64,
+      "abaixo_todos": 75
+    },
+    "so_nome": {
+      "acima": 62,
+      "abaixo": 69
+    }
+  },
+  "familia": {
+    "testes": 10,
+    "p_menor_005": 3,
+    "holm_menor_005": 2,
+    "q_bky_ate_005": 2
+  },
+  "principais": {
+    "R1_y1_vinculo_mun_1a_opcao_ultimo": {
+      "estimativa": 0.4197305115,
+      "ic95_inf": 0.2150870588,
+      "ic95_sup": 0.6243739643,
+      "p_valor": 0.001,
+      "q_bky": 0.006,
+      "p_holm": 0.01,
+      "n_obs": 134.0
+    },
+    "R1_y1_vinculo_mun_1a_opcao_media": {
+      "estimativa": 0.4048426985,
+      "ic95_inf": 0.2096420941,
+      "ic95_sup": 0.6000433029,
+      "p_valor": 0.001,
+      "q_bky": 0.006,
+      "p_holm": 0.01,
+      "n_obs": 134.0
+    },
+    "R1_y2_horas_sus_ultimo": {
+      "estimativa": 8.572737901,
+      "ic95_inf": -6.569636901,
+      "ic95_sup": 23.7151127,
+      "p_valor": 0.293,
+      "q_bky": 0.224,
+      "p_holm": 0.855,
+      "n_obs": 134.0
+    },
+    "R1_y2_horas_sus_media": {
+      "estimativa": 10.45140351,
+      "ic95_inf": -4.418927546,
+      "ic95_sup": 25.32173457,
+      "p_valor": 0.191,
+      "q_bky": 0.224,
+      "p_holm": 0.764,
+      "n_obs": 134.0
+    },
+    "R1_y3_horas_totais_ultimo": {
+      "estimativa": 13.19537913,
+      "ic95_inf": -3.125780796,
+      "ic95_sup": 29.51653905,
+      "p_valor": 0.113,
+      "q_bky": 0.191,
+      "p_holm": 0.678,
+      "n_obs": 134.0
+    },
+    "R1_y3_horas_totais_media": {
+      "estimativa": 15.52815976,
+      "ic95_inf": 0.626476677,
+      "ic95_sup": 30.42984284,
+      "p_valor": 0.048,
+      "q_bky": 0.147,
+      "p_holm": 0.384,
+      "n_obs": 134.0
+    },
+    "R1_y4_vinculo_fora_origem_ultimo": {
+      "estimativa": 0.2020116677,
+      "ic95_inf": -0.05289407317,
+      "ic95_sup": 0.4569174085,
+      "p_valor": 0.124,
+      "q_bky": 0.191,
+      "p_holm": 0.678,
+      "n_obs": 129.0
+    },
+    "R1_y4_vinculo_fora_origem_media": {
+      "estimativa": 0.2068557634,
+      "ic95_inf": -0.03591830699,
+      "ic95_sup": 0.4496298338,
+      "p_valor": 0.073,
+      "q_bky": 0.171,
+      "p_holm": 0.511,
+      "n_obs": 129.0
+    },
+    "R1_y5_n_municipios_ultimo": {
+      "estimativa": 0.4461697567,
+      "ic95_inf": -0.3712282074,
+      "ic95_sup": 1.263567721,
+      "p_valor": 0.299,
+      "q_bky": 0.224,
+      "p_holm": 0.855,
+      "n_obs": 134.0
+    },
+    "R1_y5_n_municipios_media": {
+      "estimativa": 0.4324884965,
+      "ic95_inf": -0.3497600669,
+      "ic95_sup": 1.21473706,
+      "p_valor": 0.285,
+      "q_bky": 0.224,
+      "p_holm": 0.855,
+      "n_obs": 134.0
+    },
+    "PE_d_alocado_1a_opcao": {
+      "estimativa": 1.0,
+      "ic95_inf": null,
+      "ic95_sup": null,
+      "p_valor": null,
+      "q_bky": null,
+      "p_holm": null,
+      "n_obs": 134.0
+    },
+    "BAL_ligado": {
+      "estimativa": 0.09132834539,
+      "ic95_inf": -0.008854715491,
+      "ic95_sup": 0.1915114063,
+      "p_valor": 0.093,
+      "q_bky": null,
+      "p_holm": null,
+      "n_obs": 139.0
+    }
+  },
+  "desvios": [
+    {
+      "data": "2026-10-23",
+      "item": "Unidade do corte: célula × ampla concorrência (§1 do protocolo)",
+      "descricao": "A modalidade está no dado (indicador de inscrição em reserva e tipo de vaga publicada, do G2). O corte da célula é o do G2: a nota do último admitido em vaga de ampla concorrência (inclusive remanescente de cota). Entram os candidatos de ampla concorrência; os inscritos em reserva (ER, PCD) ficam fora e são contados, porque o corte das vagas reservadas não é reconstruído. A regra foi fixada antes de ler qualquer outcome, depois de ver só as contagens de candidatos por r no G2 (todas as células elegíveis têm vaga reservada; sem esta leitura do §1 não sobraria nenhum candidato com r > 0)."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Corte efetivo (§2)",
+      "descricao": "Célula elegível: capacidade efetiva igual às vagas imediatas do quadro, corte ativo, corte entre candidatos de 1ª opção e nota de corte abaixo da maior nota de ampla concorrência entre os que puseram a célula em 1º lugar. Motivos de exclusão por célula em P6_celulas.csv."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Passo 0: painel em memória em vez de reconsolidar o a16",
+      "descricao": "O cache privado do a16 e o dicionário do G1 não existiam neste ambiente e foram refeitos pelos próprios scripts (mesmos ZIPs do a09, SHA-256 conferido). As chaves dos candidatos foram gravadas só no cache privado (chaves_extra_P6.parquet). Consolidar o a16 com --chaves-extra renumeraria o id_prof das saídas versionadas que o P4 usa; o painel dos candidatos foi montado em memória, do mesmo cache, e conferido contra agregar_medico_mes do a16. O cache refeito reproduz o painel versionado do a16 e a ligação versionada do G1."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Y4 e o município de origem",
+      "descricao": "Origem = todos os municípios com vínculo médico do candidato na competência de referência do ciclo (G1: 202506 no ciclo 1, 202510 no ciclo 2). Y4 = algum vínculo num município fora desse conjunto; candidato ligado sem vínculo na referência fica com Y4 ausente (motivo no resumo)."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "D, D' e desempate",
+      "descricao": "D = alocado na 1ª opção no resultado publicado da 1ª chamada (alvo do G2); D' = alocado em qualquer célula. Ganhou o desempate (r = 0, R4) = admitido na 1ª opção pela reconstrução principal do G2, que usa a classificação publicada como desempate."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Distância só na regra principal",
+      "descricao": "A distância origem–1ª opção vem de G1_distancias_opcoes.parquet, que só tem a regra principal; na regra só por nome (R5) ela fica ausente."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Família do BKY e do Holm",
+      "descricao": "O §5 pede BKY entre Y1 e Y5 no R1 e o §3 pede cada outcome no último mês e em média no seguimento. A família é a dos 10 testes do R1 (Y1–Y5 × duas medidas), regra principal; o Holm, pedido no relato, usa a mesma família. Fixado antes de abrir os outcomes."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Inferência do R1 e do R2",
+      "descricao": "O p principal do R1 é o da permutação dentro da célula (999, semente 20261019; estatística = o próprio coeficiente com efeito fixo). O IC usa EP agrupado por célula (CR1, graus de liberdade sem os efeitos fixos). O R2 usa o mesmo p (Anderson–Rubin) e EP agrupado da VI com efeito fixo."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "R4",
+      "descricao": "Tratamento = r > 0 ou (r = 0 e ganhou o desempate), com indicador de r = 0 e efeito fixo de célula, r ∈ [−2, +2]; EP agrupado, sem permutação (o desempate não é sorteio)."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "R6 não executado",
+      "descricao": "o escore de propensão do mecanismo (Abdulkadiroğlu et al., 2017) pressupõe desempate por sorteio ou um escore contínuo com banda; aqui a nota é inteira e o desempate é regra fixa (UF, idade), e com até duas opções e a prioridade da 1ª opção o escore local da 1ª opção vale 0 abaixo, 1 acima e é indefinido no empate: coincide com o R1 e não é uma forma de cálculo distinta e estável (§4: 'se a forma de calcular for estável')."
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "output/rdd_bolsa/P6_amostra.parquet",
+      "sha256": "4a9ffdd4a9ff458a26763542dccc14b3c8e45fd08cee9cec4411576b8bea7f87"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P6_celulas.csv",
+      "sha256": "444b292ae9f68585272c3991fece1285a03595883d1dc401c04de307b8a12777"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P6_cobertura_mensal.csv",
+      "sha256": "7d724decf6975777210c30eec8bf9ab532d0cec527dbb08ba4cfdec5d8249dd9"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P6_passo0_resumo.json",
+      "sha256": "15e3dea83209216af83c2b4753e0ed77a29a2483d28519030d4498a85846ac64"
+    },
+    {
+      "caminho": "docs/06_execucao/56_protocolo_P6_mecanismo_alocacao.md",
+      "sha256": "6d5affaf2bf1bd73e02e38ce6ae6cd906c81c31fe1f835f9b23d1161ddb25ea7"
+    }
+  ],
+  "contagens": {
+    "linhas": 218,
+    "por_especificacao": {
+      "BAL": 10,
+      "PE": 4,
+      "PE_por_r": 38,
+      "R1": 10,
+      "R2": 10,
+      "R3": 10,
+      "R4": 10,
+      "R5": 10,
+      "R6": 10,
+      "T6.3": 1,
+      "medias_por_r": 105
+    },
+    "por_status": {
+      "EXECUTADO": 207,
+      "NAO_EXECUTADO": 11
+    }
+  },
+  "saidas": {
+    "P6_estimativas.csv": {
+      "arquivo": "output/rdd_bolsa/P6_estimativas.csv",
+      "sha256": "275735381084d9860babe215143a85ebd999d99f016d4032da2bc066bce23fda"
+    },
+    "figuras": [
+      {
+        "arquivo": "output/rdd_bolsa/P6_figuras/P6_primeiro_estagio.png",
+        "descricao": "Primeiro estágio: alocação por r (regra principal, todos os candidatos)",
+        "como_ler": "Cada ponto é a fração de candidatos alocados na 1ª opção (azul) e em qualquer célula (laranja) para cada distância r da nota de corte. À direita do zero, a nota passou do corte; r = 0 são os empatados, decididos por regra fixa.",
+        "sha256": "fd6641b430cedde54ea4ddb73f8335ba840549c7286a214d7df4620d72a66b75"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/P6_figuras/P6_outcomes_media.png",
+        "descricao": "Outcomes Y1–Y5, média do seguimento, por r (regra principal)",
+        "como_ler": "Média de cada outcome nos meses de seguimento, por r, entre os candidatos ligados ao CNES. Um degrau entre r = −1 e r = +1 sugere efeito de ser alocado; barras são IC de 95% sem efeito fixo de célula.",
+        "sha256": "3246a44257c2f59454d6abb3732bf24d4b6ae7d00104933550e85a639e2917e3"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/P6_figuras/P6_outcomes_ultimo.png",
+        "descricao": "Outcomes Y1–Y5 em 202608, por r (regra principal)",
+        "como_ler": "Mesma leitura, com o valor de cada outcome no último mês, 202608.",
+        "sha256": "a0a617c9b3f0abdb05cb170192f6de00f07486b00e1bfcdc298e3224308946d5"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/P6_figuras/P6_balanco.png",
+        "descricao": "Balanço: covariáveis pré e taxa de ligação, por r (regra principal)",
+        "como_ler": "Covariáveis de antes do programa e taxa de ligação ao CNES, por r. Sem diferença entre os dois lados do corte, a comparação dos outcomes é mais crível.",
+        "sha256": "ba80521ed4d1dac3b246485bf998310103aa29e50b5fbd13b8205f1a1d8100d9"
+      }
+    ]
+  },
+  "como_ler": {
+    "P6_primeiro_estagio.png": "Cada ponto é a fração de candidatos alocados na 1ª opção (azul) e em qualquer célula (laranja) para cada distância r da nota de corte. À direita do zero, a nota passou do corte; r = 0 são os empatados, decididos por regra fixa.",
+    "P6_outcomes_media.png": "Média de cada outcome nos meses de seguimento, por r, entre os candidatos ligados ao CNES. Um degrau entre r = −1 e r = +1 sugere efeito de ser alocado; barras são IC de 95% sem efeito fixo de célula.",
+    "P6_outcomes_ultimo.png": "Mesma leitura, com o valor de cada outcome no último mês, 202608.",
+    "P6_balanco.png": "Covariáveis de antes do programa e taxa de ligação ao CNES, por r. Sem diferença entre os dois lados do corte, a comparação dos outcomes é mais crível."
+  },
+  "integridade": "nada simulado ou imputado; não ligados ficam fora dos outcomes e são contados; nenhuma competência >= 202609; o arquivo local de IVS não é lido; sem nome, CPF, CNS, CRM ou código do profissional nas saídas"
+}

@@ -61,6 +61,8 @@
     ".venv/bin/python scripts/rdd_bolsa/24_abertura_vagas_selecao.py",
     ".venv/bin/python scripts/rdd_bolsa/29_determinantes_abertura.py",
     ".venv/bin/python scripts/rdd_bolsa/28_trajetoria_medicos.py",
+    ".venv/bin/python scripts/rdd_bolsa/30_mecanismo_alocacao.py",
+    ".venv/bin/python scripts/rdd_bolsa/31_rd_mecanismo.py",
     ".venv/bin/python scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py",
     ".venv/bin/python scripts/rdd_bolsa/21_producao_dird.py",
     ".venv/bin/python scripts/rdd_bolsa/22_chegada_pmme_evento.py",

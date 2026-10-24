@@ -1,0 +1,458 @@
+{
+  "etapa": "P6_passo0_amostra",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "EXPLORATORIO_P6",
+  "data_execucao": "2026-10-23",
+  "script": "scripts/rdd_bolsa/30_mecanismo_alocacao.py",
+  "protocolo": {
+    "arquivo": "docs/06_execucao/56_protocolo_P6_mecanismo_alocacao.md",
+    "sha256": "6d5affaf2bf1bd73e02e38ce6ae6cd906c81c31fe1f835f9b23d1161ddb25ea7"
+  },
+  "parametros": {
+    "ciclos": [
+      1,
+      2
+    ],
+    "chamada": 1,
+    "seguimento": {
+      "1": [
+        "202510",
+        "202608"
+      ],
+      "2": [
+        "202604",
+        "202608"
+      ]
+    },
+    "ultimo_mes": "202608",
+    "pre_horas": [
+      "202406",
+      "202506"
+    ],
+    "regras": [
+      "g1_cpf_nome",
+      "g1_so_nome"
+    ],
+    "limite_exclusivo": "202609",
+    "competencias": [
+      "202406",
+      "202608"
+    ]
+  },
+  "outcomes": {
+    "y1_vinculo_mun_1a_opcao": {
+      "id": "Y1",
+      "rotulo": "tem vínculo cadastrado no município da 1ª opção",
+      "unidade": "fração"
+    },
+    "y2_horas_sus": {
+      "id": "Y2",
+      "rotulo": "horas SUS semanais totais",
+      "unidade": "h/sem"
+    },
+    "y3_horas_totais": {
+      "id": "Y3",
+      "rotulo": "horas totais",
+      "unidade": "h/sem"
+    },
+    "y4_vinculo_fora_origem": {
+      "id": "Y4",
+      "rotulo": "tem vínculo fora do município de origem pré-programa",
+      "unidade": "fração"
+    },
+    "y5_n_municipios": {
+      "id": "Y5",
+      "rotulo": "número de municípios com vínculo",
+      "unidade": "municípios"
+    }
+  },
+  "covariaveis": {
+    "cov_vinculo_medico_pre": {
+      "rotulo": "vínculo médico na competência de referência (G1)",
+      "unidade": "fração"
+    },
+    "cov_horas_pre": {
+      "rotulo": "horas totais no CNES, média de 202406 a 202506",
+      "unidade": "h/sem"
+    },
+    "cov_mesma_uf": {
+      "rotulo": "origem na mesma UF da 1ª opção",
+      "unidade": "fração"
+    },
+    "cov_dist_km": {
+      "rotulo": "distância origem–1ª opção (km)",
+      "unidade": "km"
+    }
+  },
+  "cache_privado": {
+    "cache_a16": "output/aquisicao/cnes_profissional/cache_privado",
+    "dicionario_g1": "output/rdd_bolsa/G1_cache",
+    "chaves_extra": "output/aquisicao/cnes_profissional/cache_privado/chaves_extra_P6.parquet",
+    "gitignore": {
+      "linhas_conferidas": [
+        "output/aquisicao/cnes_profissional/cache_privado/",
+        "output/rdd_bolsa/G1_cache/"
+      ],
+      "presentes": true
+    },
+    "competencias": [
+      "202406",
+      "202608"
+    ],
+    "n_competencias": 27,
+    "sha256_zip_igual_ao_a09_e_ao_manifesto_a16": true,
+    "linhas_vinculos_medicos_iguais_ao_manifesto_a16": true,
+    "datas_de_processamento": [
+      "2026-10-23"
+    ]
+  },
+  "reproducao_a16": {
+    "ligacao_x1_reproduzida_100pct": true,
+    "painel_medico_mes_identico": true,
+    "linhas_painel_medico_mes": 53136,
+    "chaves_origem_identicas": true,
+    "linhas_chaves": 3777,
+    "nota": "ligação da X1 refeita do cache com a função do a16 e painel agregado com agregar_medico_mes; comparação coluna a coluna com as saídas versionadas do a16"
+  },
+  "ligacao": {
+    "reproducao_g1": {
+      "g1_cpf_nome": {
+        "candidatos": 5776,
+        "ligados": 5573,
+        "diferencas_por_campo": {
+          "ligado": 0,
+          "etapa_ligacao": 0,
+          "motivo": 0,
+          "competencia_referencia": 0,
+          "vinculo_medico_na_referencia": 0,
+          "n_vinculos_referencia": 0,
+          "n_municipios_origem": 0,
+          "co_ibge_origem": 0,
+          "origem_principal_empatada": 0,
+          "motivo_origem_ausente": 0
+        }
+      },
+      "g1_so_nome": {
+        "candidatos": 5776,
+        "ligados": 5305,
+        "diferencas_por_campo": {
+          "ligado": 0,
+          "etapa_ligacao": 0,
+          "motivo": 0,
+          "competencia_referencia": 0,
+          "vinculo_medico_na_referencia": 0,
+          "n_vinculos_referencia": 0,
+          "n_municipios_origem": 0,
+          "co_ibge_origem": 0,
+          "origem_principal_empatada": 0,
+          "motivo_origem_ausente": 0
+        }
+      }
+    },
+    "dicionario_g1": {
+      "competencia": "202602",
+      "sha256_zip": "c77ca01fdcef62cdac9c1b73b04549a1e1b6d34096dd7268a3c191d9f4fd37f6",
+      "sha256_igual_ao_a09": true,
+      "data_download": "reaproveitado",
+      "data_processamento": "2026-10-23",
+      "padrao_co_cpf_dominante": "3-4-5-6-7-8",
+      "linhas_guardadas_no_cache": 64943
+    },
+    "conjunto_de_busca": "profissionais com vínculo médico nas competências da X1 até a referência, lidos do cache do a16"
+  },
+  "conferencia_agregacao_a16": {
+    "linhas_conferidas": 160542,
+    "diferencas": {
+      "horas_totais": 0,
+      "n_municipios": 0,
+      "tem_vinculo_medico": 0,
+      "horas_sus": 0
+    }
+  },
+  "contagens": {
+    "celulas_por_motivo": {
+      "1": {
+        "capacidade efetiva diferente das vagas imediatas do quadro (item 5.7)": 202,
+        "corte entre candidatos de 2ª opção": 8,
+        "corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção": 102,
+        "elegivel": 6,
+        "sem corte ativo (nenhum proponente recusado)": 155,
+        "sem vaga efetiva": 103
+      },
+      "2": {
+        "corte entre candidatos de 2ª opção": 21,
+        "corte não efetivo: a nota de corte é a maior nota de ampla concorrência de 1ª opção": 291,
+        "elegivel": 56,
+        "sem corte ativo (nenhum proponente recusado)": 360,
+        "sem vaga efetiva": 240
+      }
+    },
+    "celulas_elegiveis": {
+      "1": 6,
+      "2": 56
+    },
+    "celulas_elegiveis_com_vaga_reservada": 62,
+    "candidatos": {
+      "1": {
+        "candidatos_1a_chamada": 993,
+        "nao_elegiveis_sem_pontuacao": 114,
+        "1a_opcao_fora_das_celulas_elegiveis": 863,
+        "inscritos_em_reserva_na_celula_elegivel": 0,
+        "sub_judice_na_celula_elegivel": 0,
+        "no_universo_p6": 16
+      },
+      "2": {
+        "candidatos_1a_chamada": 2179,
+        "nao_elegiveis_sem_pontuacao": 0,
+        "1a_opcao_fora_das_celulas_elegiveis": 1870,
+        "inscritos_em_reserva_na_celula_elegivel": 5,
+        "sub_judice_na_celula_elegivel": 0,
+        "no_universo_p6": 304
+      }
+    }
+  },
+  "ligacao_no_universo": {
+    "g1_cpf_nome": {
+      "candidatos": 320,
+      "ligados": 308
+    },
+    "g1_so_nome": {
+      "candidatos": 320,
+      "ligados": 299
+    }
+  },
+  "universo_principal": {
+    "candidatos": 320,
+    "celulas": 62,
+    "por_ciclo": {
+      "1": 16,
+      "2": 304
+    }
+  },
+  "cobertura_universo": {
+    "g1_cpf_nome|1": {
+      "min": 0.9333333333333333,
+      "max": 1.0,
+      "candidatos_ligados": 15
+    },
+    "g1_cpf_nome|2": {
+      "min": 0.9488054607508533,
+      "max": 0.9761092150170648,
+      "candidatos_ligados": 293
+    },
+    "g1_so_nome|1": {
+      "min": 0.9285714285714286,
+      "max": 1.0,
+      "candidatos_ligados": 14
+    },
+    "g1_so_nome|2": {
+      "min": 0.9473684210526315,
+      "max": 0.9754385964912281,
+      "candidatos_ligados": 285
+    }
+  },
+  "candidatos_ligados_sem_origem": {
+    "g1_cpf_nome": 9,
+    "g1_so_nome": 9
+  },
+  "adendo": [
+    {
+      "data": "2026-10-23",
+      "item": "Unidade do corte: célula × ampla concorrência (§1 do protocolo)",
+      "descricao": "A modalidade está no dado (indicador de inscrição em reserva e tipo de vaga publicada, do G2). O corte da célula é o do G2: a nota do último admitido em vaga de ampla concorrência (inclusive remanescente de cota). Entram os candidatos de ampla concorrência; os inscritos em reserva (ER, PCD) ficam fora e são contados, porque o corte das vagas reservadas não é reconstruído. A regra foi fixada antes de ler qualquer outcome, depois de ver só as contagens de candidatos por r no G2 (todas as células elegíveis têm vaga reservada; sem esta leitura do §1 não sobraria nenhum candidato com r > 0)."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Corte efetivo (§2)",
+      "descricao": "Célula elegível: capacidade efetiva igual às vagas imediatas do quadro, corte ativo, corte entre candidatos de 1ª opção e nota de corte abaixo da maior nota de ampla concorrência entre os que puseram a célula em 1º lugar. Motivos de exclusão por célula em P6_celulas.csv."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Passo 0: painel em memória em vez de reconsolidar o a16",
+      "descricao": "O cache privado do a16 e o dicionário do G1 não existiam neste ambiente e foram refeitos pelos próprios scripts (mesmos ZIPs do a09, SHA-256 conferido). As chaves dos candidatos foram gravadas só no cache privado (chaves_extra_P6.parquet). Consolidar o a16 com --chaves-extra renumeraria o id_prof das saídas versionadas que o P4 usa; o painel dos candidatos foi montado em memória, do mesmo cache, e conferido contra agregar_medico_mes do a16. O cache refeito reproduz o painel versionado do a16 e a ligação versionada do G1."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Y4 e o município de origem",
+      "descricao": "Origem = todos os municípios com vínculo médico do candidato na competência de referência do ciclo (G1: 202506 no ciclo 1, 202510 no ciclo 2). Y4 = algum vínculo num município fora desse conjunto; candidato ligado sem vínculo na referência fica com Y4 ausente (motivo no resumo)."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "D, D' e desempate",
+      "descricao": "D = alocado na 1ª opção no resultado publicado da 1ª chamada (alvo do G2); D' = alocado em qualquer célula. Ganhou o desempate (r = 0, R4) = admitido na 1ª opção pela reconstrução principal do G2, que usa a classificação publicada como desempate."
+    },
+    {
+      "data": "2026-10-23",
+      "item": "Distância só na regra principal",
+      "descricao": "A distância origem–1ª opção vem de G1_distancias_opcoes.parquet, que só tem a regra principal; na regra só por nome (R5) ela fica ausente."
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/56_protocolo_P6_mecanismo_alocacao.md",
+      "sha256": "6d5affaf2bf1bd73e02e38ce6ae6cd906c81c31fe1f835f9b23d1161ddb25ea7",
+      "bytes": 4807,
+      "papel": "protocolo 56 (somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-19",
+      "cobertura": "§1–§7",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G2_alocacao_reconstruida.parquet",
+      "sha256": "aacd1c324e62cc72328be77bff7c0ba501229c75a6e16840dda2a1c86767ae55",
+      "bytes": 160231,
+      "papel": "candidatos, nota, margem da 1ª opção, alocação publicada e reconstruída",
+      "fonte": "G2",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3, 1ª e 2ª chamadas",
+      "unidade": "candidato × chamada",
+      "chaves": "ciclo, chamada, id_candidato",
+      "filtros": "ciclos 1 e 2, 1ª chamada"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G2_cortes_celula.csv",
+      "sha256": "238e8317195db182ac90606869c8b8feb5818d56df3b71eddaf611d0bdb429a3",
+      "bytes": 524353,
+      "papel": "corte de ampla concorrência e capacidade por célula",
+      "fonte": "G2",
+      "data_referencia": "2026-10-19",
+      "cobertura": "células",
+      "unidade": "célula × chamada",
+      "chaves": "ciclo, chamada, co_cnes_7d, cod_curso",
+      "filtros": "ciclos 1 e 2, 1ª chamada"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "bytes": 107325,
+      "papel": "ligação versionada do G1 (conferência fail closed)",
+      "fonte": "G1",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3, duas regras",
+      "unidade": "candidato × regra",
+      "chaves": "regra_ligacao, ciclo, id_candidato",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "sha256": "8faf60ed277beae815d1a13ac54d2dd70ab65a4c1a38d796aa8b361898e02a78",
+      "bytes": 166732,
+      "papel": "distância origem–opção (regra principal)",
+      "fonte": "G1",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "opcao_rank = 1"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "bytes": 128788,
+      "papel": "município da 1ª opção",
+      "fonte": "script 12",
+      "data_referencia": "2026-10-18",
+      "cobertura": "ciclos 1–3",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "opcao_rank = 1"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/painel_medico_mes.parquet",
+      "sha256": "7d042a793c006fe1252e2dddebb0ab7a97a20339b7be024cf456aecdaa87e55a",
+      "bytes": 146141,
+      "papel": "conferência do cache refeito (painel médico × mês da X1)",
+      "fonte": "a16",
+      "data_referencia": "2026-10-19",
+      "cobertura": "202406–202608",
+      "unidade": "médico × competência",
+      "chaves": "id_prof, competencia",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/chaves_origem.parquet",
+      "sha256": "7284a475530b3c9639a9f807baecd07a40b00561a8b21ddd7339767207f34f09",
+      "bytes": 19129,
+      "papel": "conferência do cache refeito (chaves da X1)",
+      "fonte": "a16",
+      "data_referencia": "2026-10-19",
+      "cobertura": "X1",
+      "unidade": "registro × regra",
+      "chaves": "id_prof, id_externo, regra_ligacao",
+      "filtros": "nenhum"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/a16_manifesto_cnes_profissional.json",
+      "sha256": "1f12702d8b49a216321bd484bc742072cb92c7525476388545d350358cc45d50",
+      "bytes": 102581,
+      "papel": "SHA-256 e linhas dos ZIPs por competência (conferência do cache)",
+      "fonte": "a16",
+      "data_referencia": "2026-10-19",
+      "cobertura": "27 competências",
+      "unidade": "competência",
+      "chaves": "competencia",
+      "filtros": "por_competencia"
+    }
+  ],
+  "integridade": "nada simulado ou imputado; mês sem vínculo numa competência lida = zero, com rótulo; hora vazia = ausente; não ligado fica na amostra com outcomes ausentes e motivo; nenhuma competência >= 202609; o arquivo local de IVS não é lido; sem nome, CPF, CNS, CRM ou código do profissional nas saídas",
+  "saidas": {
+    "P6_amostra.parquet": {
+      "arquivo": "output/rdd_bolsa/P6_amostra.parquet",
+      "sha256": "4a9ffdd4a9ff458a26763542dccc14b3c8e45fd08cee9cec4411576b8bea7f87",
+      "linhas": 640,
+      "colunas": [
+        "natureza_dos_dados",
+        "estatuto",
+        "regra_ligacao",
+        "ciclo",
+        "id_candidato",
+        "celula",
+        "co_cnes_7d",
+        "cod_curso",
+        "co_ibge_1a_opcao",
+        "vagas_total",
+        "corte_pontuacao",
+        "pontuacao",
+        "r",
+        "empatado_no_corte",
+        "ganhou_desempate",
+        "alocado_reconstruido_1a_opcao",
+        "d_alocado_1a_opcao",
+        "d_alocado_pmme",
+        "n_opcoes",
+        "ligado",
+        "etapa_ligacao",
+        "motivo_ligacao",
+        "cov_vinculo_medico_pre",
+        "cov_horas_pre",
+        "cov_mesma_uf",
+        "cov_dist_km",
+        "cov_n_meses_pre",
+        "y1_vinculo_mun_1a_opcao_ultimo",
+        "y1_vinculo_mun_1a_opcao_media",
+        "y2_horas_sus_ultimo",
+        "y2_horas_sus_media",
+        "y3_horas_totais_ultimo",
+        "y3_horas_totais_media",
+        "y4_vinculo_fora_origem_ultimo",
+        "y4_vinculo_fora_origem_media",
+        "y5_n_municipios_ultimo",
+        "y5_n_municipios_media",
+        "n_meses_seguimento",
+        "n_meses_seguimento_horas_ausentes",
+        "motivo_ausencia"
+      ]
+    },
+    "P6_celulas.csv": {
+      "arquivo": "output/rdd_bolsa/P6_celulas.csv",
+      "sha256": "444b292ae9f68585272c3991fece1285a03595883d1dc401c04de307b8a12777"
+    },
+    "P6_cobertura_mensal.csv": {
+      "arquivo": "output/rdd_bolsa/P6_cobertura_mensal.csv",
+      "sha256": "7d724decf6975777210c30eec8bf9ab532d0cec527dbb08ba4cfdec5d8249dd9"
+    }
+  }
+}
