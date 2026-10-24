@@ -134,6 +134,10 @@ STEPS = [
     # de escolha do 12, o a08, as saídas versionadas do portão G1 (fora do run_all), a CIR e os centroides brutos,
     # E9_estimativas (16, conferência) e NA_estimativas (24, conferência da RDD por célula); importa o 16, o 17 e o 19.
     ROOT / "scripts" / "rdd_bolsa" / "25_escolha_dap.py",
+    # Realocação (protocolo 58, exploratório): a bolsa das concorrentes do mesmo curso e ciclo na região de saúde
+    # desloca candidatos e preenchimento? Lê as células do 12, o a08, a grade de faixas (a03, a04), a CIR e os
+    # centroides brutos, o Censo 2022 (a06) e o CNES pré (a09, função do 24); importa o 16, o 17, o 19 e o 24.
+    ROOT / "scripts" / "rdd_bolsa" / "32_realocacao_bolsa.py",
     # P4 (protocolo 54, exploratório): trajetória individual dos médicos do PMM-E, origem e contabilidade líquida.
     # Lê o painel médico × mês do a16 (conferido acima), X1_medicos.parquet (saída versionada do 17, fora do
     # run_all), as listas nominais só em memória (função do 17), o painel do a09 e a ponte curso–CBO. Não lê IVS.
