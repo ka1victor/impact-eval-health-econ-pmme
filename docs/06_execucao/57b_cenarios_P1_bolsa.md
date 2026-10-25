@@ -57,7 +57,7 @@ Conferências em toda réplica: as listas sem mudança são iguais às observada
 
 **Subir a bolsa redistribui médicos entre vagas ou aumenta o total preenchido?**
 
-- **C1** (+R$ 5 mil na faixa de bolsa menor (Faixa 3: 10 → 15)): em média 117,2 médicos terminam numa vaga diferente; 33,4 vagas passam a ser preenchidas e 21,8 deixam de ser. O total preenchido muda +11,6 (faixa S3 [−0,0; +27,1]), e a faixa contém zero. A variação líquida equivale a 10% das mudanças de vaga: **a bolsa sobretudo redistribui médicos entre vagas**.
+- **C1** (+R$ 5 mil na faixa de bolsa menor (Faixa 3: 10 → 15)): em média 117,2 médicos terminam numa vaga diferente; 33,4 vagas passam a ser preenchidas e 21,8 deixam de ser. O total preenchido muda +11,6 (faixa S3 [−0,0; +27,1]), e a faixa toca o zero (um dos limites arredonda para 0,0). A variação líquida equivale a 10% das mudanças de vaga: **a bolsa sobretudo redistribui médicos entre vagas**.
 - **C2** (todas no maior valor (R$ 20 mil)): em média 223,3 médicos terminam numa vaga diferente; 53,3 vagas passam a ser preenchidas e 38,7 deixam de ser. O total preenchido muda +14,5 (faixa S3 [−2,0; +29,1]), e a faixa contém zero. A variação líquida equivale a 7% das mudanças de vaga: **a bolsa sobretudo redistribui médicos entre vagas**.
 - **C3** (+R$ 5 mil só na faixa 0,300–0,400 (Faixa 2: 15 → 20)): em média 150,2 médicos terminam numa vaga diferente; 28,8 vagas passam a ser preenchidas e 35,7 deixam de ser. O total preenchido muda −6,9 (faixa S3 [−26,0; +5,0]), e a faixa contém zero. A variação líquida equivale a 5% das mudanças de vaga: **a bolsa sobretudo redistribui médicos entre vagas**.
 - **C4** (bolsa uniforme de R$ 15 mil): em média 223,3 médicos terminam numa vaga diferente; 53,3 vagas passam a ser preenchidas e 38,7 deixam de ser. O total preenchido muda +14,5 (faixa S3 [−2,0; +29,1]), e a faixa contém zero. A variação líquida equivale a 7% das mudanças de vaga: **a bolsa sobretudo redistribui médicos entre vagas**.
@@ -162,7 +162,7 @@ Nenhuma figura traz texto de leitura dentro da imagem; o "Como ler" fica aqui e 
 - **Desempate.** Classificação publicada nos pares candidato × célula observados; nos pares novos, sorteio por candidato posicionado entre os observados empatados (adendo §8), no lugar da regra do edital (UF e idade), que não é pública. Em células com muitos empates de nota no corte, o resultado para pares novos depende desse sorteio.
 - **Só a 1ª chamada.** Sem 2ª chamada, desistência, homologação; o custo é só bolsa × alocados.
 - **Só redistribuição.** Com candidatos e vagas fixos, um aumento uniforme da bolsa não muda nenhuma escolha no logit condicional (só a diferença de bolsa entre as células do conjunto entra na utilidade): C2 e C4 dão o mesmo resultado. Os efeitos dos cenários vêm só da redistribuição de candidatos entre células e faixas, e a variação do total vem de candidatos que saem de células disputadas para células com vaga sobrando. Não é atração de médicos novos.
-- **Incerteza herdada do M1.** O IC 95% do β_bolsa contém zero; com β no limite inferior (S1) o efeito no total é nulo, e a faixa S3 (principal) contém zero em C1, C2 e C4 para o total. Os números são condicionais ao modelo; leia a faixa, não o ponto.
+- **Incerteza herdada do M1.** O IC 95% do β_bolsa contém zero; com β no limite inferior (S1) o efeito no total é nulo, e a faixa S3 (principal) contém ou toca o zero em C1, C2 e C4 para o total. Os números são condicionais ao modelo; leia a faixa, não o ponto.
 
 ## 8. Nota de processo
 

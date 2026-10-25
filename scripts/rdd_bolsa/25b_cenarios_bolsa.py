@@ -924,7 +924,9 @@ def leitura(t: pd.DataFrame) -> str:
         txt = (f"- **{c}** ({DESCRICAO_CENARIO[c]}): em média {_n(m['media'], 1)} médicos terminam numa vaga "
                f"diferente; {_n(ps, 1)} vagas passam a ser preenchidas e {_n(dx, 1)} deixam de ser. O total "
                f"preenchido muda {_n(p['media'], 1, True)} (faixa S3 {_faixa(s['p2_5'], s['p97_5'])})")
-        if zero:
+        if zero and min(abs(s["p2_5"]), abs(s["p97_5"])) < 0.05:
+            txt += ", e a faixa toca o zero (um dos limites arredonda para 0,0)."
+        elif zero:
             txt += ", e a faixa contém zero."
         else:
             txt += ", e a faixa não contém zero."
@@ -1160,7 +1162,7 @@ def gerar_doc(resumo: dict, val: pd.DataFrame, t: pd.DataFrame | None, fl: pd.Da
         "células e faixas, e a variação do total vem de candidatos que saem de células disputadas para células "
         "com vaga sobrando. Não é atração de médicos novos.",
         "- **Incerteza herdada do M1.** O IC 95% do β_bolsa contém zero; com β no limite inferior (S1) o efeito "
-        "no total é nulo, e a faixa S3 (principal) contém zero em C1, C2 e C4 para o total. Os números são "
+        "no total é nulo, e a faixa S3 (principal) contém ou toca o zero em C1, C2 e C4 para o total. Os números são "
         "condicionais ao modelo; leia a faixa, não o ponto.",
         "",
         "## 8. Nota de processo",
