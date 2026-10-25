@@ -8,6 +8,11 @@
 
 ---
 
+## 25/10/2026 — Auditoria 29: revalidação do T1.6
+
+Motivo: auditoria independente da revalidação do T1.6 (adendo §8 do protocolo 52). Arquivo novo:
+`docs/auditorias/29_auditoria_T16_revalidacao.md`. Nenhum arquivo movido, fundido ou removido.
+
 ## 25/10/2026 — T1.6: revalidação com o desempate do adendo §8 (agente E-P1d)
 
 Motivo: o autor escolheu a opção 1 do doc 57b, §4 (desempate pela classificação publicada nos pares observados e
