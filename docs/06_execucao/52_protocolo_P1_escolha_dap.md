@@ -270,3 +270,52 @@ O doc 57b diz no topo que é simulação. Os testes cobrem:
 - mercado sintético em memória com resultado conhecido.
 
 Fica fora do `run_all.py`.
+
+## 8. Adendo de 25/10/2026: T1.6, nova regra de desempate e revalidação
+
+> **Data:** 25/10/2026, antes de qualquer nova execução do script 25b.<br>
+> **O que já foi visto.** A execução com R = 200 de 24/10/2026 falhou na
+> validação de base (`FALHA_VALIDACAO_BASE`: ciclo 1, Faixa 3, desvio máximo 5
+> > tolerância 3,66; doc 57b, seção 4). Os cenários não foram calculados nessa
+> execução, mas as saídas de 2 réplicas de depuração foram vistas (doc 57b,
+> seção 5). Esta revalidação não é uma primeira tentativa.<br>
+> **Escolha do autor (25/10/2026):** opção 1 da seção 4 do doc 57b.
+
+### 8.1 Única mudança: o desempate
+
+Substitui o último parágrafo de "Desempate por regra fixa" da seção 7.3. O
+desempate de cada célula passa a ser:
+
+1. **par candidato × célula observado** (o candidato está na lista de opções
+   publicada daquela célula, em qualquer posição): usa a `classificacao_publicada`
+   dessa célula, como no G2 principal. Classificação ausente vale +∞, como no G2;
+2. **par novo** (a célula entrou na lista simulada e não está nas observadas do
+   candidato): sorteio por candidato u ~ U(0,1), fixo na réplica, comum a todas as
+   células, cenários e sensibilidades (mesmos números aleatórios da seção 7.2).
+   Para ficar na mesma escala da classificação, o sorteio é posicionado entre os
+   observados empatados: seja T o conjunto de candidatos com classificação
+   publicada naquela célula e a mesma pontuação do entrante; se T é vazio, o
+   desempate é u; senão, é (mín. T − 0,5) + u · (máx. T − mín. T + 1), em que
+   mín. e máx. são as classificações em T.
+
+A ordem na célula continua: ordem da opção, pontuação decrescente, desempate.
+A regra antiga (sorteio em todos os pares) deixa de ser usada.
+
+### 8.2 O que não muda
+
+Tolerância (max(3 vagas; 2% do observado)), regra de validação ("em todas as R
+réplicas", por ciclo × faixa e no total de cada ciclo), R = 200, semente
+20261024, modelos (M1 principal; S1 a S4), cenários C1 a C4, mecanismo do G2,
+capacidade efetiva, outcomes e limites declarados (seção 7.7).
+
+Consequência esperada, que não é calibração: no B0 todos os pares são
+observados, então o B0 tende a coincidir com a coluna do G2 principal em toda
+réplica. A validação passa a testar o mecanismo, não o desempate.
+
+### 8.3 Se falhar de novo
+
+O resultado é registrado como `FALHA_VALIDACAO_BASE`, os cenários não são
+calculados nem lidos, e nada mais é ajustado (nem tolerância, nem regra de
+validação, nem desempate, nem amostra). Só o autor decide o passo seguinte, em
+novo adendo. Execuções de depuração com R pequeno ficam registradas no doc 57b
+e só podem parar na validação de base.

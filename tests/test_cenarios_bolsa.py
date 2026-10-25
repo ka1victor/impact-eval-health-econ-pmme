@@ -145,6 +145,34 @@ class TestSintetico(unittest.TestCase):
         self.assertEqual((o["delta_preenchidas_FAIXA 3"], o["delta_preenchidas_FAIXA 1"]), (1, -1))
         self.assertEqual(fl, {("FAIXA 1", "FAIXA 3"): 1})
 
+    def test_desempate_do_adendo_8(self) -> None:
+        """SINTÉTICO: par observado usa a classificação publicada (ausente = +inf); par novo usa o sorteio
+        posicionado entre os observados empatados (u puro se não há empatados); sem `ref`, regra antiga."""
+        A, B = ("A", 1), ("B", 1)
+        eleg = pd.DataFrame({"id_candidato": ["x", "y", "z", "w"], "celula": [A, A, A, B],
+                             "opcao_rank": 1, "pontuacao": [80.0, 80.0, 70.0, 60.0],
+                             "tipo_inscricao": "AC", "classificacao_publicada": [4.0, 6.0, 9.0, np.nan]})
+        ref = T16.referencia_desempate(eleg)
+        self.assertEqual(T16.desempate_par(ref, "x", A, 80.0, 0.9), 4.0)
+        self.assertEqual(T16.desempate_par(ref, "w", B, 60.0, 0.1), np.inf)
+        # Entrante com nota 80 em A: entre os empatados x (4) e y (6): intervalo [3,5; 6,5].
+        self.assertAlmostEqual(T16.desempate_par(ref, "n", A, 80.0, 0.0), 3.5)
+        self.assertAlmostEqual(T16.desempate_par(ref, "n", A, 80.0, 1.0), 6.5)
+        self.assertAlmostEqual(T16.desempate_par(ref, "n", A, 80.0, 0.5), 5.0)
+        # Sem observado empatado: sorteio puro.
+        self.assertEqual(T16.desempate_par(ref, "n", A, 75.0, 0.3), 0.3)
+        # Montagem: pares observados mantêm a classificação, o par novo recebe o desempate posicionado.
+        resp = pd.DataFrame({"ciclo": [1], "id_candidato": ["x"], "pontuacao": [80.0], "tipo_inscricao": ["AC"],
+                             "L": [1], "obs1": [A], "obs2": [None]})
+        fixos = eleg.iloc[0:0]
+        e0 = T16.montar_entrada_mecanismo(fixos, resp, {}, [A, B], ref, {"x": 0.5})
+        self.assertEqual(e0["classificacao_publicada"].tolist(), [4.0])
+        e1 = T16.montar_entrada_mecanismo(fixos, resp, {(1, "x"): {1: 1}}, [A, B], ref, {"x": 0.5})
+        self.assertEqual(e1["celula"].tolist(), [B])
+        self.assertEqual(e1["classificacao_publicada"].tolist(), [0.5])   # B sem empatados com classificação: u
+        e2 = T16.montar_entrada_mecanismo(fixos, resp, {}, [A, B])
+        self.assertTrue(e2["classificacao_publicada"].isna().all())
+
     def test_ponta_a_ponta_com_utilidades(self) -> None:
         """SINTÉTICO: unidades sobre [A, B] com B observada; sem mudança a lista se repete; com bolsa de A muito
         maior (β grande), todo candidato passa a listar A."""
@@ -260,6 +288,17 @@ class TestSaidas(unittest.TestCase):
             self.assertEqual(int(tot[k]), c["preenchidas_publicadas"])
             fx = self.val[(self.val["ciclo"] == k) & (self.val["faixa"] != "total")]["observado"].sum()
             self.assertEqual(int(fx), c["preenchidas_publicadas"])   # nenhuma vaga publicada sem faixa
+
+    def test_b0_igual_ao_g2_principal_e_falha_de_24_10_preservada(self) -> None:
+        """Adendo §8: no B0 todos os pares são observados, então B0 = G2 principal em toda réplica; a saída da
+        falha de 24/10 (desempate antigo) continua em `output/cenarios/` e continua mostrando a falha."""
+        if self.passou:
+            self.assertTrue((self.val["b0_minimo"] == self.val["b0_maximo"]).all())
+            self.assertTrue((self.val["b0_minimo"] == self.val["g2_principal_classificacao_publicada"]).all())
+        antiga = pd.read_csv(T16.OUT_VALIDACAO_FALHA_1, dtype={"ciclo": str})
+        self.assertFalse(antiga["passa"].astype(bool).all())
+        linha = antiga[(antiga["ciclo"] == "1") & (antiga["faixa"] == "FAIXA 3")].iloc[0]
+        self.assertEqual((linha["observado"], linha["b0_maximo"], linha["desvio_maximo"]), (183, 188, 5))
 
     def test_conservacao_registrada(self) -> None:
         self.assertEqual(self.resumo["validacao_base"]["conservacao_b0"],
@@ -378,7 +417,10 @@ class TestDoc57b(unittest.TestCase):
         else:
             self.assertIn("`FALHA_VALIDACAO_BASE`", doc)
             self.assertIn("os cenários não foram calculados", doc)
-            self.assertIn("Decisões em aberto, do autor (nenhuma foi executada)", doc)
+            self.assertIn("Conforme o adendo §8.3", doc)
+        # A falha de 24/10 (desempate antigo) fica preservada como histórico, com a saída original.
+        self.assertIn("Histórico: falha da validação de 24/10/2026", doc)
+        self.assertIn("Decisões em aberto, do autor (nenhuma foi executada em 24/10)", doc)
         for como in resumo["como_ler"].values():
             self.assertIn(como, doc)
 
