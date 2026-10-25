@@ -8,6 +8,19 @@
 
 ---
 
+## 25/10/2026 — Protocolo 59: sensibilidade de Rambachan–Roth e comparação alternativa do P3/P4
+
+Motivo: os dois itens do doc 57, §6, sobre o P3 e o P4 com pré-tendências falhando. O protocolo é congelado e
+commitado sozinho, antes de qualquer estimativa nova.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md`](06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md) | protocolo: lista fechada de estudos de evento, restrições Δ^RM e Δ^SD, alvos, FLCI e teste condicional ARP próprios em scipy; P3-CA (chegada contra pares pedidos e não priorizados no ciclo 3) e P4-CA (alocado contra não alocado perto do corte, em diferenças); Holm nas 4 primárias; viabilidade conferida só com desenho |
+
+---
+
 ## 24/10/2026 — Síntese das perguntas reformuladas (onda 5 do doc 51)
 
 Motivo: síntese de P1, P2 (A3 e N), P3 (D1, D2 e P3x), P4, P5, P6, realocação e T1.6, com Holm e BKY refeitos
