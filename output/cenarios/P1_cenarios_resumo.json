@@ -3,7 +3,7 @@
   "natureza_dos_dados": "CENARIO_CONTRAFACTUAL",
   "estatuto": "ADENDO_52_T16_CENARIOS",
   "aviso": "SIMULAÇÃO: cenário contrafactual sob hipóteses fixas; nada aqui é observação",
-  "data_execucao": "2026-10-24",
+  "data_execucao": "2026-10-25",
   "script": "scripts/rdd_bolsa/25b_cenarios_bolsa.py",
   "protocolo": "docs/06_execucao/52_protocolo_P1_escolha_dap.md §7",
   "parametros": {
@@ -142,14 +142,14 @@
     "ess_minimo": 1.0
   },
   "validacao_base": {
-    "passou": false,
+    "passou": true,
     "regra": "|B0 − observado| ≤ max(3; 2% do observado) em todas as réplicas, por ciclo × faixa e no total do ciclo",
     "conservacao_b0": {
       "celulas_acima_da_capacidade": 0,
       "alocados_fora_da_lista": 0
     }
   },
-  "nota_processo": "Antes da execução com R = 200, o script foi rodado três vezes com R = 2 para depurar o código (24/10/2026, depois do commit do adendo). A 1ª parou numa conferência interna (instabilidade numérica no S4, corrigida no sorteio condicional); a 2ª parou num erro do código das figuras; a 3ª passou a validação de base com 2 réplicas e calculou os cenários, e o agente viu esses números de 2 réplicas. A execução com R = 200 falhou na validação de base. Depois disso só mudaram o texto do doc e a limpeza das saídas de cenário da depuração (apagadas); nada mudou no modelo, no mecanismo, na tolerância ou no desempate.",
+  "nota_processo": "Revalidação de 25/10/2026, depois do commit do adendo §8 (protocolo 52) e da escolha do autor pela opção 1. A falha de 24/10 já era conhecida (seção 9). Antes da execução com R = 200 houve uma depuração com R = 2 (opção `--depurar`, que só roda a validação de base e não grava nada); ela passou a validação e não calculou cenários, então nenhum número de cenário foi visto antes da execução com R = 200. A única mudança de código no cálculo foi o desempate (adendo §8); o doc passou a incluir a falha de 24/10 como histórico (seção 9), a partir da saída preservada. Modelo, mecanismo, tolerância, regra de validação, R e semente não mudaram.",
   "entradas": [
     {
       "caminho": "output/rdd_bolsa/P1_estimativas.csv",
@@ -216,14 +216,287 @@
     "capacidade efetiva fixa (inclui a redistribuição do item 5.7 publicada)",
     "M1 com IC de β_bolsa que contém zero; IIA dentro do curso"
   ],
-  "status": "FALHA_VALIDACAO_BASE",
-  "figuras": [],
-  "como_ler": {},
-  "leitura_geral": "",
+  "conservacao": {
+    "celulas_acima_da_capacidade": 0,
+    "alocados_fora_da_lista": 0,
+    "listas_base_iguais_as_observadas": 1000,
+    "unidades_conferidas": 5639000
+  },
+  "figuras": [
+    {
+      "arquivo": "output/cenarios/P1_figuras/P1_cenarios_total_e_mudancas.png",
+      "descricao": "médicos que mudam de vaga e variação do total preenchido, por cenário (principal; faixa S3)",
+      "como_ler": "Para cada cenário, a barra da esquerda é quantos médicos terminam numa vaga diferente da do cenário sem mudança, e a da direita é quanto muda o total de vagas preenchidas (ciclos 1–3, 1ª chamada). O traço é a faixa de 95% com a incerteza dos parâmetros (S3). Barra da esquerda alta e barra da direita perto de zero: a bolsa troca médicos de lugar, mas quase não aumenta o total."
+    },
+    {
+      "arquivo": "output/cenarios/P1_figuras/P1_cenarios_por_faixa.png",
+      "descricao": "variação das vagas preenchidas por faixa observada da célula, por cenário (principal; faixa S3)",
+      "como_ler": "Para cada cenário, cada barra é quanto muda o número de vagas preenchidas numa faixa de IVS (a faixa observada da célula), com a faixa de 95% do S3. Barras que se compensam (uma faixa ganha o que outra perde) indicam redistribuição entre faixas, não médicos a mais."
+    }
+  ],
+  "como_ler": {
+    "P1_cenarios_total_e_mudancas.png": "Para cada cenário, a barra da esquerda é quantos médicos terminam numa vaga diferente da do cenário sem mudança, e a da direita é quanto muda o total de vagas preenchidas (ciclos 1–3, 1ª chamada). O traço é a faixa de 95% com a incerteza dos parâmetros (S3). Barra da esquerda alta e barra da direita perto de zero: a bolsa troca médicos de lugar, mas quase não aumenta o total.",
+    "P1_cenarios_por_faixa.png": "Para cada cenário, cada barra é quanto muda o número de vagas preenchidas numa faixa de IVS (a faixa observada da célula), com a faixa de 95% do S3. Barras que se compensam (uma faixa ganha o que outra perde) indicam redistribuição entre faixas, não médicos a mais."
+  },
+  "principal": {
+    "C1": {
+      "delta_preenchidas_total": {
+        "media": 11.605,
+        "faixa_S3": [
+          -0.024999999999999467,
+          27.075000000000017
+        ]
+      },
+      "delta_preenchidas_FAIXA 3": {
+        "media": 32.74,
+        "faixa_S3": [
+          -1.0,
+          67.025
+        ]
+      },
+      "delta_preenchidas_FAIXA 2": {
+        "media": -15.06,
+        "faixa_S3": [
+          -32.025,
+          0.025000000000005684
+        ]
+      },
+      "delta_preenchidas_FAIXA 1": {
+        "media": -6.075,
+        "faixa_S3": [
+          -14.0,
+          0.0
+        ]
+      },
+      "medicos_mudam_de_vaga": {
+        "media": 117.22,
+        "faixa_S3": [
+          8.950000000000001,
+          220.07500000000002
+        ]
+      },
+      "vagas_deixam_de_ser_preenchidas": {
+        "media": 21.76,
+        "faixa_S3": [
+          1.0,
+          44.025000000000006
+        ]
+      },
+      "vagas_passam_a_ser_preenchidas": {
+        "media": 33.365,
+        "faixa_S3": [
+          1.0,
+          67.025
+        ]
+      },
+      "delta_custo_mensal_bolsas_mil": {
+        "media": 4988.7,
+        "faixa_S3": [
+          4815.0,
+          5215.625
+        ]
+      }
+    },
+    "C2": {
+      "delta_preenchidas_total": {
+        "media": 14.535,
+        "faixa_S3": [
+          -2.0,
+          29.075000000000017
+        ]
+      },
+      "delta_preenchidas_FAIXA 3": {
+        "media": 43.67,
+        "faixa_S3": [
+          -2.0,
+          87.025
+        ]
+      },
+      "delta_preenchidas_FAIXA 2": {
+        "media": -6.215,
+        "faixa_S3": [
+          -19.025,
+          3.0250000000000057
+        ]
+      },
+      "delta_preenchidas_FAIXA 1": {
+        "media": -22.92,
+        "faixa_S3": [
+          -49.05,
+          1.0500000000000114
+        ]
+      },
+      "medicos_mudam_de_vaga": {
+        "media": 223.33,
+        "faixa_S3": [
+          19.875000000000004,
+          400.15000000000003
+        ]
+      },
+      "vagas_deixam_de_ser_preenchidas": {
+        "media": 38.72,
+        "faixa_S3": [
+          3.950000000000001,
+          80.05000000000001
+        ]
+      },
+      "vagas_passam_a_ser_preenchidas": {
+        "media": 53.255,
+        "faixa_S3": [
+          4.0,
+          100.07500000000002
+        ]
+      },
+      "delta_custo_mensal_bolsas_mil": {
+        "media": 14410.7,
+        "faixa_S3": [
+          14080.0,
+          14701.5
+        ]
+      }
+    },
+    "C3": {
+      "delta_preenchidas_total": {
+        "media": -6.885,
+        "faixa_S3": [
+          -26.025,
+          5.025000000000006
+        ]
+      },
+      "delta_preenchidas_FAIXA 3": {
+        "media": -23.505,
+        "faixa_S3": [
+          -55.074999999999996,
+          1.0250000000000057
+        ]
+      },
+      "delta_preenchidas_FAIXA 2": {
+        "media": 27.685,
+        "faixa_S3": [
+          -1.0249999999999995,
+          59.07500000000002
+        ]
+      },
+      "delta_preenchidas_FAIXA 1": {
+        "media": -11.065,
+        "faixa_S3": [
+          -24.025,
+          0.025000000000005684
+        ]
+      },
+      "medicos_mudam_de_vaga": {
+        "media": 150.23,
+        "faixa_S3": [
+          10.975000000000001,
+          334.17500000000007
+        ]
+      },
+      "vagas_deixam_de_ser_preenchidas": {
+        "media": 35.725,
+        "faixa_S3": [
+          2.9750000000000005,
+          76.22500000000005
+        ]
+      },
+      "vagas_passam_a_ser_preenchidas": {
+        "media": 28.84,
+        "faixa_S3": [
+          2.0,
+          62.025000000000006
+        ]
+      },
+      "delta_custo_mensal_bolsas_mil": {
+        "media": 4527.35,
+        "faixa_S3": [
+          4309.75,
+          4770.5
+        ]
+      }
+    },
+    "C4": {
+      "delta_preenchidas_total": {
+        "media": 14.535,
+        "faixa_S3": [
+          -2.0,
+          29.075000000000017
+        ]
+      },
+      "delta_preenchidas_FAIXA 3": {
+        "media": 43.67,
+        "faixa_S3": [
+          -2.0,
+          87.025
+        ]
+      },
+      "delta_preenchidas_FAIXA 2": {
+        "media": -6.215,
+        "faixa_S3": [
+          -19.025,
+          3.0250000000000057
+        ]
+      },
+      "delta_preenchidas_FAIXA 1": {
+        "media": -22.92,
+        "faixa_S3": [
+          -49.05,
+          1.0500000000000114
+        ]
+      },
+      "medicos_mudam_de_vaga": {
+        "media": 223.33,
+        "faixa_S3": [
+          19.875000000000004,
+          400.15000000000003
+        ]
+      },
+      "vagas_deixam_de_ser_preenchidas": {
+        "media": 38.72,
+        "faixa_S3": [
+          3.950000000000001,
+          80.05000000000001
+        ]
+      },
+      "vagas_passam_a_ser_preenchidas": {
+        "media": 53.255,
+        "faixa_S3": [
+          4.0,
+          100.07500000000002
+        ]
+      },
+      "delta_custo_mensal_bolsas_mil": {
+        "media": 2883.025,
+        "faixa_S3": [
+          2635.0,
+          3101.1250000000005
+        ]
+      }
+    }
+  },
+  "leitura_geral": "**Resposta direta à pergunta do autor (C1, +R$ 5 mil na faixa de bolsa menor):** na simulação, o total de vagas preenchidas na 1ª chamada dos três ciclos muda +11,6 (faixa S3 [−0,0; +27,1]), enquanto 117,2 médicos trocam de vaga. Com o grupo de candidatos fixo, a bolsa só pode mudar o total se levar candidatos de células disputadas (onde perderiam para alguém de nota maior) para células que ficariam vazias, ou o contrário. Isto é simulação condicional ao modelo e às hipóteses da seção 1, não observação.",
   "saidas": [
     {
       "caminho": "output/cenarios/P1_cenarios_validacao_base.csv",
-      "sha256": "41960b0c7f1b8aea21e8aed130b951a6baa9edef48015558512db5cacdf2e532"
+      "sha256": "ec6e0749dd309da57d14c0711f7a251de8ec6481a43c82c7ac597e094c0643a3"
+    },
+    {
+      "caminho": "output/cenarios/P1_cenarios_tabela.csv",
+      "sha256": "d8fc9fb4f533e24db3b6d772f9b98270a5b6fd4c0af183dea55c33ea9fd9805f"
+    },
+    {
+      "caminho": "output/cenarios/P1_cenarios_replicas.parquet",
+      "sha256": "706ef44389853a91e7efc8ff3479bf11087d40ab1459560b4639c76a91b25a2a"
+    },
+    {
+      "caminho": "output/cenarios/P1_cenarios_fluxos.csv",
+      "sha256": "cb775a52a9858144fa0b6b8c6a088cfceb6d167e61c619ed4e07d80c14109925"
+    },
+    {
+      "caminho": "output/cenarios/P1_figuras/P1_cenarios_total_e_mudancas.png",
+      "sha256": "741cf959d47613056a03215595f5c2c1b82aaa681294b5b974c3e4d6944ab489"
+    },
+    {
+      "caminho": "output/cenarios/P1_figuras/P1_cenarios_por_faixa.png",
+      "sha256": "d1c2423c7f3cd9b6b201e17f3ad90bf1aea8ccf22b4ecc2376d685fc0533bff7"
     }
   ]
 }

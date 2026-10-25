@@ -8,6 +8,16 @@
 
 ---
 
+## 25/10/2026 — T1.6: revalidação com o desempate do adendo §8 (agente E-P1d)
+
+Motivo: o autor escolheu a opção 1 do doc 57b, §4 (desempate pela classificação publicada nos pares observados e
+sorteio só nos pares novos). Nenhum arquivo de documentação criado, movido ou removido; o doc 57b passa a ser gerado
+com a falha de 24/10 preservada como histórico (seção 9). Arquivos novos em `output/cenarios/` (gerados por
+`scripts/rdd_bolsa/25b_cenarios_bolsa.py`, todos `CENARIO_CONTRAFACTUAL`): `P1_cenarios_tabela.csv`,
+`P1_cenarios_replicas.parquet`, `P1_cenarios_fluxos.csv`, `P1_figuras/` e
+`P1_cenarios_validacao_base_falha_2026-10-24.csv` (saída preservada da 1ª validação). O doc 57 (síntese) e o 38
+apontam para o resultado; o doc 57 ganhou a categoria de força "cenário (simulação)" no lugar de "falha de validação".
+
 ## 24/10/2026 — Síntese das perguntas reformuladas (onda 5 do doc 51)
 
 Motivo: síntese de P1, P2 (A3 e N), P3 (D1, D2 e P3x), P4, P5, P6, realocação e T1.6, com Holm e BKY refeitos

@@ -31,7 +31,7 @@ OUT = ROOT / "output" / "rdd_bolsa"
 RESUMO = OUT / "S57_resumo.json"
 
 FORCAS = {"causal-limpo", "ATT sob tendências paralelas com pré falhando", "exploratório", "descritivo",
-          "inconclusivo", "falha de validação"}
+          "inconclusivo", "cenário (simulação)"}
 CONTRASTES = {"incentivo marginal", "pacote do corte", "ser alocado", "chegada do especialista", "descritivo"}
 
 # Números estruturais aceitos sem rastreio (parâmetros e rótulos, não resultados).
@@ -49,8 +49,8 @@ PROIBIDAS = {
     "exploratório": ["efeito", "causad"],
     "inconclusivo": ["efeito", "aumenta o preenchimento", "reduz o preenchimento", "descarta qualquer",
                      "ineficaz"],
-    "falha de validação": ["efeito", "vagas a mais seriam", "o cenário mostra", "a simulação mostra",
-                           "simulação indica"],
+    "cenário (simulação)": ["efeito", "vagas a mais seriam", "o cenário mostra", "a simulação mostra",
+                            "simulação indica"],
 }
 
 TOKEN = re.compile(r"[+−]?\d+(?:,\d+)?")
@@ -254,8 +254,8 @@ class TestSinteseDoc(unittest.TestCase):
         for chave in ("P1", "P2", "P3 (D1)", "P3 (D2", "P4", "P5", "P6", "Realocação", "T1.6"):
             self.assertIn(chave, perguntas)
         t16 = d[d["pergunta"].str.startswith("T1.6")].iloc[0]
-        self.assertEqual(t16["forca"], "falha de validação")
-        self.assertEqual(_ler("output/cenarios/P1_cenarios_resumo.json")["status"], "FALHA_VALIDACAO_BASE")
+        self.assertEqual(t16["forca"], "cenário (simulação)")
+        self.assertTrue(_ler("output/cenarios/P1_cenarios_resumo.json")["validacao_base"]["passou"])
 
 
 class TestRastreioNumeros(unittest.TestCase):

@@ -1,0 +1,641 @@
+natureza_dos_dados,variante,cenario,ciclo,outcome,media,p2_5,p97_5,minimo,maximo,replicas
+CENARIO_CONTRAFACTUAL,principal,C1,1,delta_preenchidas_total,-0.455,-5.0249999999999995,5.0,-6.0,6.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1,delta_preenchidas_FAIXA 3,5.945,2.0,11.0,1.0,13.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1,delta_preenchidas_FAIXA 2,-4.72,-9.0,-1.0,-12.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1,delta_preenchidas_FAIXA 1,-1.68,-4.0,0.0,-6.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1,medicos_mudam_de_vaga,23.015,12.0,37.0,9.0,42.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1,vagas_deixam_de_ser_preenchidas,6.49,2.0,12.0,1.0,16.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1,vagas_passam_a_ser_preenchidas,6.035,2.0,11.0,1.0,13.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1,delta_custo_mensal_bolsas_mil,904.775,824.875,985.25,810.0,1010.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,2,delta_preenchidas_total,5.485,-3.0,14.0,-5.0,17.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,2,delta_preenchidas_FAIXA 3,16.735,9.0,24.0,7.0,28.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,2,delta_preenchidas_FAIXA 2,-8.095,-14.0,-4.0,-16.0,-3.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,2,delta_preenchidas_FAIXA 1,-3.155,-7.0,0.0,-8.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,2,medicos_mudam_de_vaga,65.735,48.95,83.07500000000002,41.0,91.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,2,vagas_deixam_de_ser_preenchidas,11.68,6.0,18.0,5.0,20.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,2,vagas_passam_a_ser_preenchidas,17.165,10.0,25.0,7.0,28.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,2,delta_custo_mensal_bolsas_mil,2336.5,2214.75,2460.25,2180.0,2520.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,3,delta_preenchidas_total,6.575,1.9750000000000005,12.025000000000006,-1.0,16.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,3,delta_preenchidas_FAIXA 3,10.06,5.0,16.0,4.0,19.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,3,delta_preenchidas_FAIXA 2,-2.245,-5.0,0.0,-6.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,3,delta_preenchidas_FAIXA 1,-1.24,-3.0,0.0,-4.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,3,medicos_mudam_de_vaga,28.47,17.0,43.025000000000006,11.0,52.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,3,vagas_deixam_de_ser_preenchidas,3.59,1.0,7.0,0.0,8.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,3,vagas_passam_a_ser_preenchidas,10.165,5.0,16.025000000000006,4.0,20.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,3,delta_custo_mensal_bolsas_mil,1747.425,1664.875,1835.125,1625.0,1895.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1-3,delta_preenchidas_total,11.605,0.9750000000000005,21.0,-3.0,28.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1-3,delta_preenchidas_FAIXA 3,32.74,24.0,44.0,21.0,45.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1-3,delta_preenchidas_FAIXA 2,-15.06,-23.0,-8.974999999999994,-25.0,-7.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1-3,delta_preenchidas_FAIXA 1,-6.075,-10.024999999999999,-2.0,-14.0,-1.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1-3,medicos_mudam_de_vaga,117.22,87.0,144.0,76.0,154.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1-3,vagas_deixam_de_ser_preenchidas,21.76,14.0,30.025000000000006,12.0,38.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1-3,vagas_passam_a_ser_preenchidas,33.365,25.0,45.025000000000006,21.0,47.0,200
+CENARIO_CONTRAFACTUAL,principal,C1,1-3,delta_custo_mensal_bolsas_mil,4988.7,4814.75,5145.125,4730.0,5250.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1,delta_preenchidas_total,-2.27,-9.024999999999999,4.025000000000006,-13.0,5.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1,delta_preenchidas_FAIXA 3,8.02,4.0,13.0,2.0,16.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1,delta_preenchidas_FAIXA 2,-2.755,-8.0,2.0,-10.0,3.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1,delta_preenchidas_FAIXA 1,-7.535,-13.024999999999999,-3.0,-20.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1,medicos_mudam_de_vaga,47.805,31.975,65.05000000000001,26.0,72.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1,vagas_deixam_de_ser_preenchidas,12.65,6.9750000000000005,19.025000000000006,5.0,25.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1,vagas_passam_a_ser_preenchidas,10.38,5.0,16.0,4.0,19.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1,delta_custo_mensal_bolsas_mil,2854.6,2719.5,2980.5,2640.0,3000.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,2,delta_preenchidas_total,7.74,-2.0,17.025000000000006,-6.0,20.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,2,delta_preenchidas_FAIXA 3,22.385,15.0,30.025000000000006,13.0,35.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,2,delta_preenchidas_FAIXA 2,-4.315,-12.0,2.0,-14.0,6.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,2,delta_preenchidas_FAIXA 1,-10.33,-15.0,-6.0,-18.0,-5.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,2,medicos_mudam_de_vaga,115.825,88.9,142.05,79.0,157.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,2,vagas_deixam_de_ser_preenchidas,18.65,12.975000000000001,26.0,10.0,26.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,2,vagas_passam_a_ser_preenchidas,26.39,18.0,36.025000000000006,16.0,39.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,2,delta_custo_mensal_bolsas_mil,6819.8,6625.0,7005.5,6545.0,7065.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,3,delta_preenchidas_total,9.065,2.950000000000001,16.025000000000006,-1.0,18.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,3,delta_preenchidas_FAIXA 3,13.265,7.0,20.0,5.0,23.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,3,delta_preenchidas_FAIXA 2,0.855,-3.0,5.025000000000006,-5.0,7.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,3,delta_preenchidas_FAIXA 1,-5.055,-9.0,-2.0,-11.0,-1.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,3,medicos_mudam_de_vaga,59.7,38.0,78.0,31.0,90.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,3,vagas_deixam_de_ser_preenchidas,7.42,3.0,12.0,3.0,13.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,3,vagas_passam_a_ser_preenchidas,16.485,10.0,24.0,7.0,28.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,3,delta_custo_mensal_bolsas_mil,4736.3,4614.0,4875.5,4535.0,4915.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1-3,delta_preenchidas_total,14.535,0.0,27.0,-3.0,32.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1-3,delta_preenchidas_FAIXA 3,43.67,33.0,56.0,31.0,58.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1-3,delta_preenchidas_FAIXA 2,-6.215,-15.0,2.0,-19.0,7.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1-3,delta_preenchidas_FAIXA 1,-22.92,-32.0,-15.0,-36.0,-11.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1-3,medicos_mudam_de_vaga,223.33,181.975,264.0,170.0,283.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1-3,vagas_deixam_de_ser_preenchidas,38.72,29.0,49.025000000000006,24.0,53.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1-3,vagas_passam_a_ser_preenchidas,53.255,40.0,67.025,36.0,70.0,200
+CENARIO_CONTRAFACTUAL,principal,C2,1-3,delta_custo_mensal_bolsas_mil,14410.7,14120.0,14660.0,14060.0,14760.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1,delta_preenchidas_total,-1.875,-9.0,4.0,-10.0,7.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1,delta_preenchidas_FAIXA 3,-5.8,-10.0,-2.0,-12.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1,delta_preenchidas_FAIXA 2,7.81,3.0,13.0,2.0,15.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1,delta_preenchidas_FAIXA 1,-3.885,-7.0249999999999995,-1.0,-12.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1,medicos_mudam_de_vaga,42.16,25.975,59.0,22.0,64.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1,vagas_deixam_de_ser_preenchidas,10.445,5.0,17.0,3.0,21.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1,vagas_passam_a_ser_preenchidas,8.57,4.0,13.0,3.0,16.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1,delta_custo_mensal_bolsas_mil,1080.5,969.75,1190.0,950.0,1230.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,2,delta_preenchidas_total,-5.675,-13.024999999999999,3.0,-18.0,5.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,2,delta_preenchidas_FAIXA 3,-12.075,-19.0,-5.0,-21.0,-4.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,2,delta_preenchidas_FAIXA 2,10.735,5.0,16.0,4.0,20.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,2,delta_preenchidas_FAIXA 1,-4.335,-8.0,-1.0,-10.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,2,medicos_mudam_de_vaga,65.875,48.95,87.05000000000001,38.0,101.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,2,vagas_deixam_de_ser_preenchidas,16.64,8.975000000000001,23.025000000000006,6.0,27.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,2,vagas_passam_a_ser_preenchidas,10.965,5.0,17.0,4.0,21.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,2,delta_custo_mensal_bolsas_mil,2132.25,2005.0,2275.0,1955.0,2315.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,3,delta_preenchidas_total,0.665,-5.0,6.025000000000006,-9.0,9.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,3,delta_preenchidas_FAIXA 3,-5.63,-10.0,-2.0,-12.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,3,delta_preenchidas_FAIXA 2,9.14,4.0,16.0,3.0,17.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,3,delta_preenchidas_FAIXA 1,-2.845,-6.0,-1.0,-8.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,3,medicos_mudam_de_vaga,42.195,28.0,58.05000000000001,21.0,65.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,3,vagas_deixam_de_ser_preenchidas,8.64,5.0,13.0,0.0,17.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,3,vagas_passam_a_ser_preenchidas,9.305,4.0,16.0,4.0,17.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,3,delta_custo_mensal_bolsas_mil,1314.6,1215.0,1435.25,1155.0,1475.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1-3,delta_preenchidas_total,-6.885,-19.0,6.0,-21.0,8.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1-3,delta_preenchidas_FAIXA 3,-23.505,-32.0,-14.0,-33.0,-7.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1-3,delta_preenchidas_FAIXA 2,27.685,19.0,39.025000000000006,15.0,44.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1-3,delta_preenchidas_FAIXA 1,-11.065,-17.025,-6.0,-20.0,-3.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1-3,medicos_mudam_de_vaga,150.23,119.95,183.0,111.0,198.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1-3,vagas_deixam_de_ser_preenchidas,35.725,26.0,45.025000000000006,19.0,49.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1-3,vagas_passam_a_ser_preenchidas,28.84,20.0,40.0,17.0,44.0,200
+CENARIO_CONTRAFACTUAL,principal,C3,1-3,delta_custo_mensal_bolsas_mil,4527.35,4329.5,4750.75,4300.0,4840.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1,delta_preenchidas_total,-2.27,-9.024999999999999,4.025000000000006,-13.0,5.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1,delta_preenchidas_FAIXA 3,8.02,4.0,13.0,2.0,16.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1,delta_preenchidas_FAIXA 2,-2.755,-8.0,2.0,-10.0,3.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1,delta_preenchidas_FAIXA 1,-7.535,-13.024999999999999,-3.0,-20.0,0.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1,medicos_mudam_de_vaga,47.805,31.975,65.05000000000001,26.0,72.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1,vagas_deixam_de_ser_preenchidas,12.65,6.9750000000000005,19.025000000000006,5.0,25.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1,vagas_passam_a_ser_preenchidas,10.38,5.0,16.0,4.0,19.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1,delta_custo_mensal_bolsas_mil,220.95,119.625,315.3750000000001,60.0,330.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,2,delta_preenchidas_total,7.74,-2.0,17.025000000000006,-6.0,20.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,2,delta_preenchidas_FAIXA 3,22.385,15.0,30.025000000000006,13.0,35.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,2,delta_preenchidas_FAIXA 2,-4.315,-12.0,2.0,-14.0,6.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,2,delta_preenchidas_FAIXA 1,-10.33,-15.0,-6.0,-18.0,-5.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,2,medicos_mudam_de_vaga,115.825,88.9,142.05,79.0,157.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,2,vagas_deixam_de_ser_preenchidas,18.65,12.975000000000001,26.0,10.0,26.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,2,vagas_passam_a_ser_preenchidas,26.39,18.0,36.025000000000006,16.0,39.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,2,delta_custo_mensal_bolsas_mil,1496.1,1350.0,1635.375,1290.0,1680.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,3,delta_preenchidas_total,9.065,2.950000000000001,16.025000000000006,-1.0,18.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,3,delta_preenchidas_FAIXA 3,13.265,7.0,20.0,5.0,23.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,3,delta_preenchidas_FAIXA 2,0.855,-3.0,5.025000000000006,-5.0,7.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,3,delta_preenchidas_FAIXA 1,-5.055,-9.0,-2.0,-11.0,-1.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,3,medicos_mudam_de_vaga,59.7,38.0,78.0,31.0,90.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,3,vagas_deixam_de_ser_preenchidas,7.42,3.0,12.0,3.0,13.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,3,vagas_passam_a_ser_preenchidas,16.485,10.0,24.0,7.0,28.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,3,delta_custo_mensal_bolsas_mil,1165.975,1074.25,1270.375,1015.0,1300.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1-3,delta_preenchidas_total,14.535,0.0,27.0,-3.0,32.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1-3,delta_preenchidas_FAIXA 3,43.67,33.0,56.0,31.0,58.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1-3,delta_preenchidas_FAIXA 2,-6.215,-15.0,2.0,-19.0,7.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1-3,delta_preenchidas_FAIXA 1,-22.92,-32.0,-15.0,-36.0,-11.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1-3,medicos_mudam_de_vaga,223.33,181.975,264.0,170.0,283.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1-3,vagas_deixam_de_ser_preenchidas,38.72,29.0,49.025000000000006,24.0,53.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1-3,vagas_passam_a_ser_preenchidas,53.255,40.0,67.025,36.0,70.0,200
+CENARIO_CONTRAFACTUAL,principal,C4,1-3,delta_custo_mensal_bolsas_mil,2883.025,2665.0,3070.0,2620.0,3145.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1,delta_preenchidas_total,-0.01,-1.0,2.0,-2.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1,delta_preenchidas_FAIXA 3,-0.475,-2.0,0.0,-2.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1,delta_preenchidas_FAIXA 2,0.34,0.0,2.0,-1.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1,delta_preenchidas_FAIXA 1,0.125,0.0,1.0,0.0,2.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1,medicos_mudam_de_vaga,1.76,0.0,6.0,0.0,8.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1,vagas_deixam_de_ser_preenchidas,0.525,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1,vagas_passam_a_ser_preenchidas,0.515,0.0,2.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1,delta_custo_mensal_bolsas_mil,920.475,905.0,955.0,890.0,970.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,2,delta_preenchidas_total,-0.24,-2.0,2.0,-4.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,2,delta_preenchidas_FAIXA 3,-0.845,-3.0,0.0,-4.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,2,delta_preenchidas_FAIXA 2,0.405,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,2,delta_preenchidas_FAIXA 1,0.2,0.0,1.0,0.0,2.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,2,medicos_mudam_de_vaga,2.93,0.0,8.025000000000006,0.0,11.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,2,vagas_deixam_de_ser_preenchidas,0.855,0.0,3.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,2,vagas_passam_a_ser_preenchidas,0.615,0.0,3.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,2,delta_custo_mensal_bolsas_mil,2267.4,2240.0,2305.0,2210.0,2325.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,3,delta_preenchidas_total,0.03,-1.0,2.0,-3.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,3,delta_preenchidas_FAIXA 3,-0.365,-2.0,0.0,-3.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,3,delta_preenchidas_FAIXA 2,0.315,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,3,delta_preenchidas_FAIXA 1,0.08,0.0,1.0,0.0,1.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,3,medicos_mudam_de_vaga,1.585,0.0,5.025000000000006,0.0,6.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,3,vagas_deixam_de_ser_preenchidas,0.365,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,3,vagas_passam_a_ser_preenchidas,0.395,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,3,delta_custo_mensal_bolsas_mil,1655.85,1640.0,1685.0,1610.0,1700.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1-3,delta_preenchidas_total,-0.22,-3.0,3.0,-4.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1-3,delta_preenchidas_FAIXA 3,-1.685,-5.0,0.0,-5.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1-3,delta_preenchidas_FAIXA 2,1.06,0.0,4.0,-1.0,5.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1-3,delta_preenchidas_FAIXA 1,0.405,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1-3,medicos_mudam_de_vaga,6.275,1.0,14.0,1.0,16.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1-3,vagas_deixam_de_ser_preenchidas,1.745,0.0,5.0,0.0,5.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1-3,vagas_passam_a_ser_preenchidas,1.525,0.0,4.025000000000006,0.0,7.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C1,1-3,delta_custo_mensal_bolsas_mil,4843.725,4800.0,4900.0,4785.0,4915.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1,delta_preenchidas_total,0.005,-2.0,2.0,-2.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1,delta_preenchidas_FAIXA 3,-0.535,-2.0,0.0,-3.0,1.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1,delta_preenchidas_FAIXA 2,0.115,-1.0,2.0,-2.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1,delta_preenchidas_FAIXA 1,0.425,0.0,2.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1,medicos_mudam_de_vaga,3.375,0.0,8.0,0.0,10.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1,vagas_deixam_de_ser_preenchidas,0.83,0.0,3.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1,vagas_passam_a_ser_preenchidas,0.835,0.0,3.0250000000000057,0.0,5.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1,delta_custo_mensal_bolsas_mil,2900.1,2860.0,2940.0,2860.0,2960.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,2,delta_preenchidas_total,-0.255,-3.0,2.0,-4.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,2,delta_preenchidas_FAIXA 3,-1.1,-4.0,0.0,-5.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,2,delta_preenchidas_FAIXA 2,0.2,-1.0,2.0,-3.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,2,delta_preenchidas_FAIXA 1,0.645,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,2,medicos_mudam_de_vaga,5.005,0.9750000000000005,11.0,0.0,14.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,2,vagas_deixam_de_ser_preenchidas,1.315,0.0,4.0,0.0,5.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,2,vagas_passam_a_ser_preenchidas,1.06,0.0,3.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,2,delta_custo_mensal_bolsas_mil,6659.9,6605.0,6705.0,6585.0,6725.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,3,delta_preenchidas_total,0.03,-2.0,2.0,-3.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,3,delta_preenchidas_FAIXA 3,-0.465,-2.0,0.0,-3.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,3,delta_preenchidas_FAIXA 2,0.235,-1.0,2.0,-1.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,3,delta_preenchidas_FAIXA 1,0.26,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,3,medicos_mudam_de_vaga,2.845,0.0,8.025000000000006,0.0,11.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,3,vagas_deixam_de_ser_preenchidas,0.545,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,3,vagas_passam_a_ser_preenchidas,0.575,0.0,2.0250000000000057,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,3,delta_custo_mensal_bolsas_mil,4555.6,4515.0,4595.0,4495.0,4615.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1-3,delta_preenchidas_total,-0.22,-3.0249999999999995,3.0,-5.0,5.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1-3,delta_preenchidas_FAIXA 3,-2.1,-5.0249999999999995,0.0,-7.0,1.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1-3,delta_preenchidas_FAIXA 2,0.55,-2.0,3.0,-2.0,5.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1-3,delta_preenchidas_FAIXA 1,1.33,0.0,4.0,0.0,6.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1-3,medicos_mudam_de_vaga,11.225,3.9750000000000005,21.025000000000006,2.0,24.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1-3,vagas_deixam_de_ser_preenchidas,2.69,0.0,6.025000000000006,0.0,8.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1-3,vagas_passam_a_ser_preenchidas,2.47,0.0,6.0,0.0,8.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C2,1-3,delta_custo_mensal_bolsas_mil,14115.6,14059.5,14180.0,14020.0,14220.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1,delta_preenchidas_total,-0.035,-1.0,2.0,-2.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1,delta_preenchidas_FAIXA 3,0.255,0.0,2.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1,delta_preenchidas_FAIXA 2,-0.455,-2.0,0.0,-2.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1,delta_preenchidas_FAIXA 1,0.165,0.0,1.0,0.0,2.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1,medicos_mudam_de_vaga,2.24,0.0,7.0,0.0,11.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1,vagas_deixam_de_ser_preenchidas,0.46,0.0,2.0,0.0,2.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1,vagas_passam_a_ser_preenchidas,0.425,0.0,2.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1,delta_custo_mensal_bolsas_mil,1056.75,1030.0,1080.0,1020.0,1090.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,2,delta_preenchidas_total,0.115,-2.0249999999999995,2.0,-3.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,2,delta_preenchidas_FAIXA 3,0.595,0.0,3.0,-1.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,2,delta_preenchidas_FAIXA 2,-0.75,-3.0,0.0,-4.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,2,delta_preenchidas_FAIXA 1,0.27,0.0,2.0,0.0,2.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,2,medicos_mudam_de_vaga,3.74,0.0,11.025000000000006,0.0,13.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,2,vagas_deixam_de_ser_preenchidas,0.79,0.0,3.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,2,vagas_passam_a_ser_preenchidas,0.905,0.0,3.0250000000000057,0.0,5.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,2,delta_custo_mensal_bolsas_mil,2121.35,2084.5,2155.0,2055.0,2165.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,3,delta_preenchidas_total,0.365,-1.0,2.0250000000000057,-2.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,3,delta_preenchidas_FAIXA 3,0.48,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,3,delta_preenchidas_FAIXA 2,-0.23,-1.0249999999999995,0.0,-2.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,3,delta_preenchidas_FAIXA 1,0.115,0.0,1.0,-1.0,2.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,3,medicos_mudam_de_vaga,2.12,0.0,8.0,0.0,10.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,3,vagas_deixam_de_ser_preenchidas,0.25,0.0,1.0250000000000057,0.0,2.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,3,vagas_passam_a_ser_preenchidas,0.615,0.0,3.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,3,delta_custo_mensal_bolsas_mil,1247.5,1225.0,1275.0,1205.0,1295.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1-3,delta_preenchidas_total,0.445,-3.0,4.0,-4.0,8.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1-3,delta_preenchidas_FAIXA 3,1.33,0.0,4.0,-1.0,8.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1-3,delta_preenchidas_FAIXA 2,-1.435,-4.0,0.0,-6.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1-3,delta_preenchidas_FAIXA 1,0.55,0.0,2.0250000000000057,-1.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1-3,medicos_mudam_de_vaga,8.1,2.0,18.0,0.0,23.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1-3,vagas_deixam_de_ser_preenchidas,1.5,0.0,4.0,0.0,6.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1-3,vagas_passam_a_ser_preenchidas,1.945,0.0,6.0,0.0,10.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C3,1-3,delta_custo_mensal_bolsas_mil,4425.6,4369.75,4480.0,4340.0,4510.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1,delta_preenchidas_total,0.005,-2.0,2.0,-2.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1,delta_preenchidas_FAIXA 3,-0.535,-2.0,0.0,-3.0,1.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1,delta_preenchidas_FAIXA 2,0.115,-1.0,2.0,-2.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1,delta_preenchidas_FAIXA 1,0.425,0.0,2.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1,medicos_mudam_de_vaga,3.375,0.0,8.0,0.0,10.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1,vagas_deixam_de_ser_preenchidas,0.83,0.0,3.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1,vagas_passam_a_ser_preenchidas,0.835,0.0,3.0250000000000057,0.0,5.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1,delta_custo_mensal_bolsas_mil,255.075,225.0,285.0,225.0,300.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,2,delta_preenchidas_total,-0.255,-3.0,2.0,-4.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,2,delta_preenchidas_FAIXA 3,-1.1,-4.0,0.0,-5.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,2,delta_preenchidas_FAIXA 2,0.2,-1.0,2.0,-3.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,2,delta_preenchidas_FAIXA 1,0.645,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,2,medicos_mudam_de_vaga,5.005,0.9750000000000005,11.0,0.0,14.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,2,vagas_deixam_de_ser_preenchidas,1.315,0.0,4.0,0.0,5.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,2,vagas_passam_a_ser_preenchidas,1.06,0.0,3.0,0.0,4.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,2,delta_custo_mensal_bolsas_mil,1376.175,1335.0,1410.0,1320.0,1425.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,3,delta_preenchidas_total,0.03,-2.0,2.0,-3.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,3,delta_preenchidas_FAIXA 3,-0.465,-2.0,0.0,-3.0,0.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,3,delta_preenchidas_FAIXA 2,0.235,-1.0,2.0,-1.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,3,delta_preenchidas_FAIXA 1,0.26,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,3,medicos_mudam_de_vaga,2.845,0.0,8.025000000000006,0.0,11.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,3,vagas_deixam_de_ser_preenchidas,0.545,0.0,2.0,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,3,vagas_passam_a_ser_preenchidas,0.575,0.0,2.0250000000000057,0.0,3.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,3,delta_custo_mensal_bolsas_mil,1030.45,1000.0,1060.0,985.0,1075.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1-3,delta_preenchidas_total,-0.22,-3.0249999999999995,3.0,-5.0,5.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1-3,delta_preenchidas_FAIXA 3,-2.1,-5.0249999999999995,0.0,-7.0,1.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1-3,delta_preenchidas_FAIXA 2,0.55,-2.0,3.0,-2.0,5.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1-3,delta_preenchidas_FAIXA 1,1.33,0.0,4.0,0.0,6.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1-3,medicos_mudam_de_vaga,11.225,3.9750000000000005,21.025000000000006,2.0,24.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1-3,vagas_deixam_de_ser_preenchidas,2.69,0.0,6.025000000000006,0.0,8.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1-3,vagas_passam_a_ser_preenchidas,2.47,0.0,6.0,0.0,8.0,200
+CENARIO_CONTRAFACTUAL,S1_beta_inf,C4,1-3,delta_custo_mensal_bolsas_mil,2661.7,2619.625,2710.0,2590.0,2740.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1,delta_preenchidas_total,-0.75,-7.0,6.0,-10.0,8.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1,delta_preenchidas_FAIXA 3,10.76,6.0,16.025000000000006,3.0,17.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1,delta_preenchidas_FAIXA 2,-8.565,-14.0,-4.0,-18.0,0.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1,delta_preenchidas_FAIXA 1,-2.945,-7.0,0.0,-8.0,0.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1,medicos_mudam_de_vaga,41.855,28.0,57.025000000000006,26.0,73.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1,vagas_deixam_de_ser_preenchidas,11.705,6.0,19.025000000000006,4.0,21.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1,vagas_passam_a_ser_preenchidas,10.955,6.0,17.0,4.0,17.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1,delta_custo_mensal_bolsas_mil,894.025,784.875,1010.0,750.0,1030.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,2,delta_preenchidas_total,8.115,-1.0249999999999995,20.0,-7.0,24.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,2,delta_preenchidas_FAIXA 3,29.27,20.0,41.0,17.0,44.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,2,delta_preenchidas_FAIXA 2,-15.25,-23.025,-8.974999999999994,-25.0,-6.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,2,delta_preenchidas_FAIXA 1,-5.905,-11.0,-2.0,-13.0,-1.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,2,medicos_mudam_de_vaga,118.325,92.975,141.025,81.0,150.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,2,vagas_deixam_de_ser_preenchidas,21.68,14.975000000000001,30.0,11.0,31.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,2,vagas_passam_a_ser_preenchidas,29.795,20.975,41.025000000000006,18.0,44.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,2,delta_custo_mensal_bolsas_mil,2362.2,2204.875,2535.125,2130.0,2610.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,3,delta_preenchidas_total,11.215,3.9750000000000005,18.0,-1.0,22.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,3,delta_preenchidas_FAIXA 3,17.875,11.975000000000001,24.025000000000006,8.0,30.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,3,delta_preenchidas_FAIXA 2,-4.415,-8.0,-1.0,-10.0,-1.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,3,delta_preenchidas_FAIXA 1,-2.245,-4.0,0.0,-5.0,0.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,3,medicos_mudam_de_vaga,52.935,35.975,69.0,28.0,73.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,3,vagas_deixam_de_ser_preenchidas,6.815,3.0,11.0,2.0,12.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,3,vagas_passam_a_ser_preenchidas,18.03,11.975000000000001,24.025000000000006,8.0,30.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,3,delta_custo_mensal_bolsas_mil,1812.0,1694.875,1920.0,1625.0,1975.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1-3,delta_preenchidas_total,18.58,5.0,31.025000000000006,-1.0,40.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1-3,delta_preenchidas_FAIXA 3,57.905,46.0,73.0,44.0,75.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1-3,delta_preenchidas_FAIXA 2,-28.23,-37.0,-20.0,-42.0,-19.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1-3,delta_preenchidas_FAIXA 1,-11.095,-18.0,-6.0,-21.0,-3.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1-3,medicos_mudam_de_vaga,213.115,180.975,244.025,172.0,258.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1-3,vagas_deixam_de_ser_preenchidas,40.2,31.0,50.0,26.0,55.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1-3,vagas_passam_a_ser_preenchidas,58.78,47.975,73.0,44.0,77.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C1,1-3,delta_custo_mensal_bolsas_mil,5068.225,4859.625,5270.875,4725.0,5410.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1,delta_preenchidas_total,-6.035,-14.024999999999999,2.0,-18.0,5.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1,delta_preenchidas_FAIXA 3,14.055,8.0,20.0,7.0,22.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1,delta_preenchidas_FAIXA 2,-4.955,-11.0,1.0,-15.0,4.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1,delta_preenchidas_FAIXA 1,-15.135,-21.025,-9.974999999999994,-25.0,-8.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1,medicos_mudam_de_vaga,85.05,66.0,105.025,61.0,121.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1,vagas_deixam_de_ser_preenchidas,24.155,16.0,32.025000000000006,14.0,36.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1,vagas_passam_a_ser_preenchidas,18.12,12.0,25.025000000000006,10.0,28.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1,delta_custo_mensal_bolsas_mil,2779.3,2619.5,2940.0,2540.0,3000.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,2,delta_preenchidas_total,9.875,-1.0,22.025000000000006,-8.0,25.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,2,delta_preenchidas_FAIXA 3,38.275,28.975,50.0,24.0,52.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,2,delta_preenchidas_FAIXA 2,-8.775,-16.025,-1.0,-19.0,7.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,2,delta_preenchidas_FAIXA 1,-19.625,-25.0,-13.0,-26.0,-10.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,2,medicos_mudam_de_vaga,198.61,169.975,225.025,160.0,238.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,2,vagas_deixam_de_ser_preenchidas,34.15,26.0,42.025000000000006,23.0,47.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,2,vagas_passam_a_ser_preenchidas,44.025,34.0,55.025000000000006,28.0,58.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,2,delta_custo_mensal_bolsas_mil,6862.5,6645.0,7105.5,6505.0,7165.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,3,delta_preenchidas_total,14.22,5.0,23.0,-2.0,29.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,3,delta_preenchidas_FAIXA 3,22.74,16.0,30.0,13.0,33.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,3,delta_preenchidas_FAIXA 2,1.065,-3.0249999999999995,7.0,-7.0,9.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,3,delta_preenchidas_FAIXA 1,-9.585,-14.0,-5.0,-16.0,-4.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,3,medicos_mudam_de_vaga,107.965,87.0,129.05,67.0,140.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,3,vagas_deixam_de_ser_preenchidas,13.92,8.0,19.0,6.0,23.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,3,vagas_passam_a_ser_preenchidas,28.14,20.0,38.0,18.0,41.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,3,delta_custo_mensal_bolsas_mil,4839.4,4655.0,5015.0,4515.0,5135.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1-3,delta_preenchidas_total,18.06,1.9750000000000005,32.0,-8.0,41.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1-3,delta_preenchidas_FAIXA 3,75.07,62.0,89.025,57.0,92.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1-3,delta_preenchidas_FAIXA 2,-12.665,-23.025,-2.9499999999999886,-29.0,1.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1-3,delta_preenchidas_FAIXA 1,-44.345,-54.0,-33.0,-56.0,-32.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1-3,medicos_mudam_de_vaga,391.625,350.975,433.0,332.0,449.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1-3,vagas_deixam_de_ser_preenchidas,72.225,60.975,85.0,55.0,92.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1-3,vagas_passam_a_ser_preenchidas,90.285,76.0,104.025,73.0,111.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C2,1-3,delta_custo_mensal_bolsas_mil,14481.2,14159.5,14760.0,13960.0,14940.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1,delta_preenchidas_total,-4.745,-12.0,3.0,-16.0,11.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1,delta_preenchidas_FAIXA 3,-12.57,-18.025,-7.0,-21.0,-5.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1,delta_preenchidas_FAIXA 2,15.635,10.0,21.025000000000006,6.0,26.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1,delta_preenchidas_FAIXA 1,-7.81,-13.0,-3.0,-16.0,-2.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1,medicos_mudam_de_vaga,82.045,64.975,100.0,53.0,110.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1,vagas_deixam_de_ser_preenchidas,21.785,14.0,29.0,12.0,31.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1,vagas_passam_a_ser_preenchidas,17.04,11.0,23.0,9.0,27.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1,delta_custo_mensal_bolsas_mil,1090.8,940.0,1230.0,870.0,1360.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,2,delta_preenchidas_total,-14.245,-24.025,-2.9749999999999943,-26.0,3.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,2,delta_preenchidas_FAIXA 3,-27.635,-37.0,-19.0,-41.0,-16.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,2,delta_preenchidas_FAIXA 2,22.125,13.975000000000001,33.0,10.0,40.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,2,delta_preenchidas_FAIXA 1,-8.735,-14.0,-4.0,-15.0,-3.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,2,medicos_mudam_de_vaga,135.925,112.95,165.05,105.0,181.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,2,vagas_deixam_de_ser_preenchidas,36.71,26.0,47.0,24.0,52.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,2,vagas_passam_a_ser_preenchidas,22.465,14.950000000000001,33.025000000000006,11.0,41.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,2,delta_custo_mensal_bolsas_mil,2116.45,1955.0,2315.25,1855.0,2465.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,3,delta_preenchidas_total,-0.645,-10.0,8.0,-17.0,17.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,3,delta_preenchidas_FAIXA 3,-13.345,-20.0,-7.0,-23.0,-5.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,3,delta_preenchidas_FAIXA 2,18.43,11.0,27.025000000000006,9.0,31.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,3,delta_preenchidas_FAIXA 1,-5.73,-10.0,-2.0,-12.0,-1.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,3,medicos_mudam_de_vaga,85.41,65.0,105.0,60.0,119.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,3,vagas_deixam_de_ser_preenchidas,19.27,11.975000000000001,26.025000000000006,10.0,31.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,3,vagas_passam_a_ser_preenchidas,18.625,12.0,27.025000000000006,9.0,31.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,3,delta_custo_mensal_bolsas_mil,1365.55,1225.0,1535.0,1105.0,1635.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1-3,delta_preenchidas_total,-19.635,-36.025,-4.0,-44.0,-1.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1-3,delta_preenchidas_FAIXA 3,-53.55,-66.0,-41.94999999999999,-71.0,-34.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1-3,delta_preenchidas_FAIXA 2,56.19,45.0,70.025,39.0,75.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1-3,delta_preenchidas_FAIXA 1,-22.275,-30.0,-15.0,-32.0,-13.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1-3,medicos_mudam_de_vaga,303.38,269.975,337.025,248.0,352.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1-3,vagas_deixam_de_ser_preenchidas,77.765,63.0,92.0,56.0,99.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1-3,vagas_passam_a_ser_preenchidas,58.13,46.0,72.025,40.0,78.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C3,1-3,delta_custo_mensal_bolsas_mil,4572.8,4289.5,4880.25,4210.0,4950.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1,delta_preenchidas_total,-6.035,-14.024999999999999,2.0,-18.0,5.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1,delta_preenchidas_FAIXA 3,14.055,8.0,20.0,7.0,22.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1,delta_preenchidas_FAIXA 2,-4.955,-11.0,1.0,-15.0,4.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1,delta_preenchidas_FAIXA 1,-15.135,-21.025,-9.974999999999994,-25.0,-8.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1,medicos_mudam_de_vaga,85.05,66.0,105.025,61.0,121.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1,vagas_deixam_de_ser_preenchidas,24.155,16.0,32.025000000000006,14.0,36.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1,vagas_passam_a_ser_preenchidas,18.12,12.0,25.025000000000006,10.0,28.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1,delta_custo_mensal_bolsas_mil,164.475,44.62500000000001,285.0,-15.0,330.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,2,delta_preenchidas_total,9.875,-1.0,22.025000000000006,-8.0,25.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,2,delta_preenchidas_FAIXA 3,38.275,28.975,50.0,24.0,52.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,2,delta_preenchidas_FAIXA 2,-8.775,-16.025,-1.0,-19.0,7.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,2,delta_preenchidas_FAIXA 1,-19.625,-25.0,-13.0,-26.0,-10.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,2,medicos_mudam_de_vaga,198.61,169.975,225.025,160.0,238.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,2,vagas_deixam_de_ser_preenchidas,34.15,26.0,42.025000000000006,23.0,47.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,2,vagas_passam_a_ser_preenchidas,44.025,34.0,55.025000000000006,28.0,58.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,2,delta_custo_mensal_bolsas_mil,1528.125,1365.0,1710.375,1260.0,1755.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,3,delta_preenchidas_total,14.22,5.0,23.0,-2.0,29.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,3,delta_preenchidas_FAIXA 3,22.74,16.0,30.0,13.0,33.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,3,delta_preenchidas_FAIXA 2,1.065,-3.0249999999999995,7.0,-7.0,9.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,3,delta_preenchidas_FAIXA 1,-9.585,-14.0,-5.0,-16.0,-4.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,3,medicos_mudam_de_vaga,107.965,87.0,129.05,67.0,140.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,3,vagas_deixam_de_ser_preenchidas,13.92,8.0,19.0,6.0,23.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,3,vagas_passam_a_ser_preenchidas,28.14,20.0,38.0,18.0,41.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,3,delta_custo_mensal_bolsas_mil,1243.3,1105.0,1375.0,1000.0,1465.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1-3,delta_preenchidas_total,18.06,1.9750000000000005,32.0,-8.0,41.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1-3,delta_preenchidas_FAIXA 3,75.07,62.0,89.025,57.0,92.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1-3,delta_preenchidas_FAIXA 2,-12.665,-23.025,-2.9499999999999886,-29.0,1.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1-3,delta_preenchidas_FAIXA 1,-44.345,-54.0,-33.0,-56.0,-32.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1-3,medicos_mudam_de_vaga,391.625,350.975,433.0,332.0,449.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1-3,vagas_deixam_de_ser_preenchidas,72.225,60.975,85.0,55.0,92.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1-3,vagas_passam_a_ser_preenchidas,90.285,76.0,104.025,73.0,111.0,200
+CENARIO_CONTRAFACTUAL,S2_beta_sup,C4,1-3,delta_custo_mensal_bolsas_mil,2935.9,2694.625,3145.0,2545.0,3280.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1,delta_preenchidas_total,-0.185,-6.0,5.0,-10.0,7.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1,delta_preenchidas_FAIXA 3,6.04,-0.024999999999999467,14.0,-5.0,16.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1,delta_preenchidas_FAIXA 2,-4.61,-11.0,0.0,-18.0,4.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1,delta_preenchidas_FAIXA 1,-1.615,-5.0,0.0,-6.0,2.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1,medicos_mudam_de_vaga,23.565,0.9750000000000005,49.05000000000001,0.0,57.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1,vagas_deixam_de_ser_preenchidas,6.48,0.0,15.025000000000006,0.0,22.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1,vagas_passam_a_ser_preenchidas,6.295,0.0,14.025000000000006,0.0,17.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1,delta_custo_mensal_bolsas_mil,909.15,814.875,990.125,750.0,1025.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,2,delta_preenchidas_total,5.175,-3.0,15.0,-7.0,23.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,2,delta_preenchidas_FAIXA 3,16.54,-0.024999999999999467,35.05000000000001,-7.0,42.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,2,delta_preenchidas_FAIXA 2,-8.19,-18.025,0.0,-28.0,6.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,2,delta_preenchidas_FAIXA 1,-3.175,-9.0,0.0,-11.0,4.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,2,medicos_mudam_de_vaga,65.685,5.9750000000000005,124.025,0.0,164.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,2,vagas_deixam_de_ser_preenchidas,11.98,0.9750000000000005,26.025000000000006,0.0,36.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,2,vagas_passam_a_ser_preenchidas,17.155,1.0,36.025000000000006,0.0,42.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,2,delta_custo_mensal_bolsas_mil,2331.75,2209.75,2480.375,2130.0,2595.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,3,delta_preenchidas_total,6.645,0.0,14.025000000000006,-2.0,18.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,3,delta_preenchidas_FAIXA 3,10.085,0.0,22.0,-5.0,27.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,3,delta_preenchidas_FAIXA 2,-2.255,-7.0,0.025000000000005684,-9.0,6.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,3,delta_preenchidas_FAIXA 1,-1.185,-4.0,0.0,-5.0,2.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,3,medicos_mudam_de_vaga,29.085,0.0,61.0,0.0,69.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,3,vagas_deixam_de_ser_preenchidas,3.685,0.0,9.0,0.0,12.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,3,vagas_passam_a_ser_preenchidas,10.33,0.0,22.0,0.0,27.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,3,delta_custo_mensal_bolsas_mil,1748.75,1655.0,1860.375,1620.0,1925.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1-3,delta_preenchidas_total,11.635,-0.024999999999999467,27.075000000000017,-3.0,34.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1-3,delta_preenchidas_FAIXA 3,32.665,-1.0,67.025,-16.0,82.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1-3,delta_preenchidas_FAIXA 2,-15.055,-32.025,0.025000000000005684,-41.0,12.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1-3,delta_preenchidas_FAIXA 1,-5.975,-14.0,0.0,-17.0,7.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1-3,medicos_mudam_de_vaga,118.335,8.950000000000001,220.07500000000002,0.0,274.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1-3,vagas_deixam_de_ser_preenchidas,22.145,1.0,44.025000000000006,0.0,53.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1-3,vagas_passam_a_ser_preenchidas,33.78,1.0,67.025,0.0,83.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C1,1-3,delta_custo_mensal_bolsas_mil,4989.65,4815.0,5215.625,4795.0,5300.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1,delta_preenchidas_total,-2.58,-11.0,3.0,-16.0,6.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1,delta_preenchidas_FAIXA 3,7.975,-0.049999999999998934,17.025000000000006,-6.0,19.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1,delta_preenchidas_FAIXA 2,-2.81,-9.0,2.0,-12.0,3.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1,delta_preenchidas_FAIXA 1,-7.745,-19.025,0.025000000000005684,-23.0,8.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1,medicos_mudam_de_vaga,48.215,4.950000000000001,93.05000000000001,0.0,100.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1,vagas_deixam_de_ser_preenchidas,13.045,0.9750000000000005,28.0,0.0,37.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1,vagas_passam_a_ser_preenchidas,10.465,1.0,22.0,0.0,27.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1,delta_custo_mensal_bolsas_mil,2848.4,2680.0,2960.0,2580.0,3020.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,2,delta_preenchidas_total,7.445,-2.0,18.025000000000006,-5.0,24.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,2,delta_preenchidas_FAIXA 3,22.34,-0.049999999999998934,44.05000000000001,-11.0,60.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,2,delta_preenchidas_FAIXA 2,-4.405,-14.0,3.0,-23.0,5.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,2,delta_preenchidas_FAIXA 1,-10.49,-22.0,0.025000000000005684,-30.0,8.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,2,medicos_mudam_de_vaga,115.065,9.0,200.15000000000003,0.0,246.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,2,vagas_deixam_de_ser_preenchidas,19.06,1.0,36.05000000000001,0.0,51.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,2,vagas_passam_a_ser_preenchidas,26.505,1.9750000000000005,51.025000000000006,0.0,63.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,2,delta_custo_mensal_bolsas_mil,6813.9,6625.0,7025.5,6565.0,7145.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,3,delta_preenchidas_total,8.78,-0.024999999999999467,20.025000000000006,-4.0,32.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,3,delta_preenchidas_FAIXA 3,13.065,0.0,27.0,-6.0,35.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,3,delta_preenchidas_FAIXA 2,0.7,-4.0,6.0,-5.0,8.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,3,delta_preenchidas_FAIXA 1,-4.985,-11.0,0.025000000000005684,-13.0,5.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,3,medicos_mudam_de_vaga,60.385,1.9750000000000005,116.07500000000002,0.0,140.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,3,vagas_deixam_de_ser_preenchidas,7.565,0.0,16.0,0.0,19.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,3,vagas_passam_a_ser_preenchidas,16.345,0.9750000000000005,33.025000000000006,0.0,48.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,3,delta_custo_mensal_bolsas_mil,4730.6,4554.5,4955.5,4475.0,5195.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1-3,delta_preenchidas_total,13.645,-2.0,29.075000000000017,-5.0,46.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1-3,delta_preenchidas_FAIXA 3,43.38,-2.0,87.025,-20.0,111.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1-3,delta_preenchidas_FAIXA 2,-6.515,-19.025,3.0250000000000057,-24.0,7.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1-3,delta_preenchidas_FAIXA 1,-23.22,-49.05,1.0500000000000114,-60.0,21.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1-3,medicos_mudam_de_vaga,223.665,19.875000000000004,400.15000000000003,0.0,484.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1-3,vagas_deixam_de_ser_preenchidas,39.67,3.950000000000001,80.05000000000001,0.0,92.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1-3,vagas_passam_a_ser_preenchidas,53.315,4.0,100.07500000000002,0.0,135.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C2,1-3,delta_custo_mensal_bolsas_mil,14392.9,14080.0,14701.5,14020.0,15040.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1,delta_preenchidas_total,-2.12,-9.024999999999999,3.0,-12.0,8.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1,delta_preenchidas_FAIXA 3,-6.04,-14.0,1.0,-17.0,5.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1,delta_preenchidas_FAIXA 2,7.815,0.0,19.0,-9.0,23.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1,delta_preenchidas_FAIXA 1,-3.895,-10.0,0.0,-13.0,4.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1,medicos_mudam_de_vaga,43.19,4.9750000000000005,88.07500000000002,0.0,110.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1,vagas_deixam_de_ser_preenchidas,10.93,0.0,24.0,0.0,29.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1,vagas_passam_a_ser_preenchidas,8.81,1.0,19.025000000000006,0.0,27.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1,delta_custo_mensal_bolsas_mil,1078.0,960.0,1200.25,950.0,1260.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,2,delta_preenchidas_total,-5.975,-18.049999999999997,2.0,-27.0,8.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,2,delta_preenchidas_FAIXA 3,-12.615,-28.025,0.0,-43.0,11.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,2,delta_preenchidas_FAIXA 2,10.92,-1.0,25.0,-12.0,27.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,2,delta_preenchidas_FAIXA 1,-4.28,-11.0,0.0,-12.0,4.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,2,medicos_mudam_de_vaga,68.26,4.950000000000001,145.025,0.0,176.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,2,vagas_deixam_de_ser_preenchidas,17.385,1.0,37.10000000000002,0.0,52.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,2,vagas_passam_a_ser_preenchidas,11.41,1.0,25.0,0.0,28.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,2,delta_custo_mensal_bolsas_mil,2131.65,1974.75,2255.25,1915.0,2375.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,3,delta_preenchidas_total,0.475,-6.0,7.025000000000006,-13.0,14.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,3,delta_preenchidas_FAIXA 3,-5.745,-14.024999999999999,0.0,-21.0,4.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,3,delta_preenchidas_FAIXA 2,9.055,-0.024999999999999467,21.0,-3.0,26.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,3,delta_preenchidas_FAIXA 1,-2.835,-8.0,0.0,-8.0,4.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,3,medicos_mudam_de_vaga,43.445,2.0,95.025,0.0,108.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,3,vagas_deixam_de_ser_preenchidas,8.885,0.0,20.025000000000006,0.0,29.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,3,vagas_passam_a_ser_preenchidas,9.36,0.0,21.0,0.0,27.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,3,delta_custo_mensal_bolsas_mil,1311.95,1195.0,1465.5,1175.0,1575.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1-3,delta_preenchidas_total,-7.62,-26.025,5.025000000000006,-36.0,7.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1-3,delta_preenchidas_FAIXA 3,-24.4,-55.074999999999996,1.0250000000000057,-73.0,20.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1-3,delta_preenchidas_FAIXA 2,27.79,-1.0249999999999995,59.07500000000002,-24.0,67.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1-3,delta_preenchidas_FAIXA 1,-11.01,-24.025,0.025000000000005684,-28.0,10.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1-3,medicos_mudam_de_vaga,154.895,10.975000000000001,334.17500000000007,0.0,370.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1-3,vagas_deixam_de_ser_preenchidas,37.2,2.9750000000000005,76.22500000000005,0.0,97.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1-3,vagas_passam_a_ser_preenchidas,29.58,2.0,62.025000000000006,0.0,71.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C3,1-3,delta_custo_mensal_bolsas_mil,4521.6,4309.75,4770.5,4210.0,4920.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1,delta_preenchidas_total,-2.58,-11.0,3.0,-16.0,6.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1,delta_preenchidas_FAIXA 3,7.975,-0.049999999999998934,17.025000000000006,-6.0,19.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1,delta_preenchidas_FAIXA 2,-2.81,-9.0,2.0,-12.0,3.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1,delta_preenchidas_FAIXA 1,-7.745,-19.025,0.025000000000005684,-23.0,8.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1,medicos_mudam_de_vaga,48.215,4.950000000000001,93.05000000000001,0.0,100.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1,vagas_deixam_de_ser_preenchidas,13.045,0.9750000000000005,28.0,0.0,37.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1,vagas_passam_a_ser_preenchidas,10.465,1.0,22.0,0.0,27.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1,delta_custo_mensal_bolsas_mil,216.3,90.0,300.0,15.0,345.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,2,delta_preenchidas_total,7.445,-2.0,18.025000000000006,-5.0,24.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,2,delta_preenchidas_FAIXA 3,22.34,-0.049999999999998934,44.05000000000001,-11.0,60.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,2,delta_preenchidas_FAIXA 2,-4.405,-14.0,3.0,-23.0,5.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,2,delta_preenchidas_FAIXA 1,-10.49,-22.0,0.025000000000005684,-30.0,8.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,2,medicos_mudam_de_vaga,115.065,9.0,200.15000000000003,0.0,246.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,2,vagas_deixam_de_ser_preenchidas,19.06,1.0,36.05000000000001,0.0,51.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,2,vagas_passam_a_ser_preenchidas,26.505,1.9750000000000005,51.025000000000006,0.0,63.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,2,delta_custo_mensal_bolsas_mil,1491.675,1350.0,1650.375,1305.0,1740.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,3,delta_preenchidas_total,8.78,-0.024999999999999467,20.025000000000006,-4.0,32.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,3,delta_preenchidas_FAIXA 3,13.065,0.0,27.0,-6.0,35.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,3,delta_preenchidas_FAIXA 2,0.7,-4.0,6.0,-5.0,8.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,3,delta_preenchidas_FAIXA 1,-4.985,-11.0,0.025000000000005684,-13.0,5.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,3,medicos_mudam_de_vaga,60.385,1.9750000000000005,116.07500000000002,0.0,140.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,3,vagas_deixam_de_ser_preenchidas,7.565,0.0,16.0,0.0,19.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,3,vagas_passam_a_ser_preenchidas,16.345,0.9750000000000005,33.025000000000006,0.0,48.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,3,delta_custo_mensal_bolsas_mil,1161.7,1029.625,1330.375,970.0,1510.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1-3,delta_preenchidas_total,13.645,-2.0,29.075000000000017,-5.0,46.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1-3,delta_preenchidas_FAIXA 3,43.38,-2.0,87.025,-20.0,111.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1-3,delta_preenchidas_FAIXA 2,-6.515,-19.025,3.0250000000000057,-24.0,7.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1-3,delta_preenchidas_FAIXA 1,-23.22,-49.05,1.0500000000000114,-60.0,21.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1-3,medicos_mudam_de_vaga,223.665,19.875000000000004,400.15000000000003,0.0,484.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1-3,vagas_deixam_de_ser_preenchidas,39.67,3.950000000000001,80.05000000000001,0.0,92.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1-3,vagas_passam_a_ser_preenchidas,53.315,4.0,100.07500000000002,0.0,135.0,200
+CENARIO_CONTRAFACTUAL,S3_assintotico,C4,1-3,delta_custo_mensal_bolsas_mil,2869.675,2635.0,3101.1250000000005,2590.0,3355.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1,delta_preenchidas_total,-4.42,-11.024999999999999,3.0,-14.0,4.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1,delta_preenchidas_FAIXA 3,-0.57,-7.0,6.0,-11.0,10.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1,delta_preenchidas_FAIXA 2,-1.87,-8.024999999999999,4.0,-12.0,6.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1,delta_preenchidas_FAIXA 1,-1.98,-5.0,1.0,-7.0,2.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1,medicos_mudam_de_vaga,52.75,38.975,68.0,32.0,75.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1,vagas_deixam_de_ser_preenchidas,17.71,10.975000000000001,24.025000000000006,9.0,28.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1,vagas_passam_a_ser_preenchidas,13.29,7.9750000000000005,19.025000000000006,5.0,22.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1,delta_custo_mensal_bolsas_mil,843.8,734.375,960.125,675.0,985.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,2,delta_preenchidas_total,4.3,-6.049999999999999,14.025000000000006,-13.0,19.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,2,delta_preenchidas_FAIXA 3,15.97,5.0,26.025000000000006,-1.0,31.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,2,delta_preenchidas_FAIXA 2,-6.68,-15.0,0.0,-18.0,2.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,2,delta_preenchidas_FAIXA 1,-4.99,-10.0,0.0,-12.0,1.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,2,medicos_mudam_de_vaga,157.365,130.975,187.0,122.0,209.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,2,vagas_deixam_de_ser_preenchidas,28.64,20.0,39.0,19.0,41.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,2,vagas_passam_a_ser_preenchidas,32.94,23.0,44.025000000000006,21.0,48.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,2,delta_custo_mensal_bolsas_mil,2309.55,2149.25,2470.375,2030.0,2555.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,3,delta_preenchidas_total,6.5,-3.0,15.025000000000006,-6.0,19.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,3,delta_preenchidas_FAIXA 3,6.815,-1.0,15.0,-3.0,23.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,3,delta_preenchidas_FAIXA 2,0.96,-4.0,6.025000000000006,-6.0,8.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,3,delta_preenchidas_FAIXA 1,-1.275,-4.0,1.0250000000000057,-5.0,3.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,3,medicos_mudam_de_vaga,77.375,59.95,97.025,56.0,107.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,3,vagas_deixam_de_ser_preenchidas,13.595,9.0,19.025000000000006,6.0,23.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,3,vagas_passam_a_ser_preenchidas,20.095,11.975000000000001,29.0,9.0,32.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,3,delta_custo_mensal_bolsas_mil,1746.125,1604.625,1885.25,1550.0,1935.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1-3,delta_preenchidas_total,6.38,-13.024999999999999,21.0,-17.0,25.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1-3,delta_preenchidas_FAIXA 3,22.215,4.0,37.025000000000006,2.0,45.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1-3,delta_preenchidas_FAIXA 2,-7.59,-19.025,1.0,-23.0,6.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1-3,delta_preenchidas_FAIXA 1,-8.245,-16.0,-1.0,-17.0,1.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1-3,medicos_mudam_de_vaga,287.49,253.925,329.025,240.0,341.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1-3,vagas_deixam_de_ser_preenchidas,59.945,45.975,73.0,41.0,82.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1-3,vagas_passam_a_ser_preenchidas,66.325,52.975,80.0,45.0,86.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C1,1-3,delta_custo_mensal_bolsas_mil,4899.475,4600.0,5140.125,4555.0,5190.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1,delta_preenchidas_total,-10.23,-19.0,0.025000000000005684,-22.0,4.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1,delta_preenchidas_FAIXA 3,2.045,-5.0249999999999995,9.0,-6.0,13.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1,delta_preenchidas_FAIXA 2,-1.995,-9.024999999999999,4.025000000000006,-11.0,7.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1,delta_preenchidas_FAIXA 1,-10.28,-17.0,-3.9749999999999943,-21.0,-2.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1,medicos_mudam_de_vaga,103.425,83.0,126.0,71.0,137.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1,vagas_deixam_de_ser_preenchidas,32.475,23.0,43.0,20.0,47.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1,vagas_passam_a_ser_preenchidas,22.245,15.975000000000001,29.0,12.0,33.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1,delta_custo_mensal_bolsas_mil,2695.4,2520.0,2900.5,2460.0,2980.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,2,delta_preenchidas_total,7.835,-6.0249999999999995,20.025000000000006,-12.0,27.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,2,delta_preenchidas_FAIXA 3,25.16,13.975000000000001,36.0,9.0,39.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,2,delta_preenchidas_FAIXA 2,-1.44,-10.024999999999999,7.0,-13.0,13.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,2,delta_preenchidas_FAIXA 1,-15.885,-24.025,-8.0,-30.0,-5.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,2,medicos_mudam_de_vaga,274.5,244.95,307.025,237.0,325.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,2,vagas_deixam_de_ser_preenchidas,45.685,36.0,56.025000000000006,32.0,61.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,2,vagas_passam_a_ser_preenchidas,53.52,42.975,65.0,39.0,70.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,2,delta_custo_mensal_bolsas_mil,6821.7,6544.5,7065.5,6425.0,7205.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,3,delta_preenchidas_total,7.87,-1.0249999999999995,18.0,-5.0,24.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,3,delta_preenchidas_FAIXA 3,9.475,1.0,17.025000000000006,-2.0,27.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,3,delta_preenchidas_FAIXA 2,4.25,-2.0,10.0,-4.0,13.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,3,delta_preenchidas_FAIXA 1,-5.855,-11.0,0.0,-14.0,2.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,3,medicos_mudam_de_vaga,158.065,132.975,181.025,127.0,193.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,3,vagas_deixam_de_ser_preenchidas,22.785,15.975000000000001,30.025000000000006,12.0,36.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,3,vagas_passam_a_ser_preenchidas,30.655,21.0,39.025000000000006,15.0,45.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,3,delta_custo_mensal_bolsas_mil,4712.4,4534.5,4915.0,4455.0,5035.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1-3,delta_preenchidas_total,5.475,-14.049999999999999,23.05000000000001,-25.0,26.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1-3,delta_preenchidas_FAIXA 3,36.68,19.975,55.025000000000006,9.0,61.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1-3,delta_preenchidas_FAIXA 2,0.815,-14.0,12.025000000000006,-16.0,19.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1-3,delta_preenchidas_FAIXA 1,-32.02,-45.0,-19.0,-50.0,-17.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1-3,medicos_mudam_de_vaga,535.99,493.875,582.025,464.0,604.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1-3,vagas_deixam_de_ser_preenchidas,100.945,85.925,118.05000000000001,79.0,123.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1-3,vagas_passam_a_ser_preenchidas,106.42,91.0,123.0,76.0,127.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C2,1-3,delta_custo_mensal_bolsas_mil,14229.5,13839.0,14581.0,13620.0,14640.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1,delta_preenchidas_total,-5.3,-14.024999999999999,3.0,-20.0,5.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1,delta_preenchidas_FAIXA 3,0.135,-4.0,5.0,-7.0,9.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1,delta_preenchidas_FAIXA 2,2.21,-5.0,9.0,-7.0,12.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1,delta_preenchidas_FAIXA 1,-7.645,-14.0,-2.0,-14.0,0.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1,medicos_mudam_de_vaga,79.575,61.0,101.12500000000003,56.0,115.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1,vagas_deixam_de_ser_preenchidas,20.37,13.975000000000001,28.0,10.0,33.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1,vagas_passam_a_ser_preenchidas,15.07,8.0,22.0,4.0,25.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1,delta_custo_mensal_bolsas_mil,952.65,770.0,1080.25,720.0,1140.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,2,delta_preenchidas_total,-5.645,-17.025,8.0,-28.0,11.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,2,delta_preenchidas_FAIXA 3,-9.155,-19.025,0.0,-21.0,4.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,2,delta_preenchidas_FAIXA 2,14.17,4.0,25.0,1.0,27.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,2,delta_preenchidas_FAIXA 1,-10.66,-17.0,-5.0,-19.0,-3.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,2,medicos_mudam_de_vaga,179.965,154.0,212.025,148.0,220.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,2,vagas_deixam_de_ser_preenchidas,36.66,27.0,45.025000000000006,25.0,49.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,2,vagas_passam_a_ser_preenchidas,31.015,21.0,42.025000000000006,13.0,45.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,2,delta_custo_mensal_bolsas_mil,2103.65,1904.5,2345.0,1705.0,2395.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,3,delta_preenchidas_total,3.765,-5.0249999999999995,13.025000000000006,-9.0,16.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,3,delta_preenchidas_FAIXA 3,-1.935,-8.0,4.025000000000006,-11.0,9.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,3,delta_preenchidas_FAIXA 2,11.855,5.0,18.025000000000006,3.0,21.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,3,delta_preenchidas_FAIXA 1,-6.155,-11.024999999999999,-1.0,-14.0,0.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,3,medicos_mudam_de_vaga,107.265,84.975,130.0,82.0,138.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,3,vagas_deixam_de_ser_preenchidas,17.01,10.0,24.0,8.0,28.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,3,vagas_passam_a_ser_preenchidas,20.775,12.0,29.0,10.0,34.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,3,delta_custo_mensal_bolsas_mil,1339.65,1175.0,1505.0,1095.0,1535.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1-3,delta_preenchidas_total,-7.18,-24.025,10.025000000000006,-35.0,15.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1-3,delta_preenchidas_FAIXA 3,-10.955,-23.0,1.0500000000000114,-30.0,8.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1-3,delta_preenchidas_FAIXA 2,28.235,14.0,41.0,11.0,46.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1-3,delta_preenchidas_FAIXA 1,-24.46,-34.0,-14.974999999999994,-35.0,-12.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1-3,medicos_mudam_de_vaga,366.805,325.0,413.0,305.0,425.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1-3,vagas_deixam_de_ser_preenchidas,74.04,60.975,88.0,57.0,90.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1-3,vagas_passam_a_ser_preenchidas,66.86,53.0,82.0,48.0,91.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C3,1-3,delta_custo_mensal_bolsas_mil,4395.95,4089.75,4740.25,3890.0,4800.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1,delta_preenchidas_total,-10.23,-19.0,0.025000000000005684,-22.0,4.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1,delta_preenchidas_FAIXA 3,2.045,-5.0249999999999995,9.0,-6.0,13.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1,delta_preenchidas_FAIXA 2,-1.995,-9.024999999999999,4.025000000000006,-11.0,7.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1,delta_preenchidas_FAIXA 1,-10.28,-17.0,-3.9749999999999943,-21.0,-2.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1,medicos_mudam_de_vaga,103.425,83.0,126.0,71.0,137.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1,vagas_deixam_de_ser_preenchidas,32.475,23.0,43.0,20.0,47.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1,vagas_passam_a_ser_preenchidas,22.245,15.975000000000001,29.0,12.0,33.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1,delta_custo_mensal_bolsas_mil,101.55,-30.0,255.37500000000009,-75.0,315.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,2,delta_preenchidas_total,7.835,-6.0249999999999995,20.025000000000006,-12.0,27.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,2,delta_preenchidas_FAIXA 3,25.16,13.975000000000001,36.0,9.0,39.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,2,delta_preenchidas_FAIXA 2,-1.44,-10.024999999999999,7.0,-13.0,13.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,2,delta_preenchidas_FAIXA 1,-15.885,-24.025,-8.0,-30.0,-5.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,2,medicos_mudam_de_vaga,274.5,244.95,307.025,237.0,325.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,2,vagas_deixam_de_ser_preenchidas,45.685,36.0,56.025000000000006,32.0,61.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,2,vagas_passam_a_ser_preenchidas,53.52,42.975,65.0,39.0,70.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,2,delta_custo_mensal_bolsas_mil,1497.525,1289.625,1680.375,1200.0,1785.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,3,delta_preenchidas_total,7.87,-1.0249999999999995,18.0,-5.0,24.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,3,delta_preenchidas_FAIXA 3,9.475,1.0,17.025000000000006,-2.0,27.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,3,delta_preenchidas_FAIXA 2,4.25,-2.0,10.0,-4.0,13.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,3,delta_preenchidas_FAIXA 1,-5.855,-11.0,0.0,-14.0,2.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,3,medicos_mudam_de_vaga,158.065,132.975,181.025,127.0,193.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,3,vagas_deixam_de_ser_preenchidas,22.785,15.975000000000001,30.025000000000006,12.0,36.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,3,vagas_passam_a_ser_preenchidas,30.655,21.0,39.025000000000006,15.0,45.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,3,delta_custo_mensal_bolsas_mil,1148.05,1014.625,1300.0,955.0,1390.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1-3,delta_preenchidas_total,5.475,-14.049999999999999,23.05000000000001,-25.0,26.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1-3,delta_preenchidas_FAIXA 3,36.68,19.975,55.025000000000006,9.0,61.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1-3,delta_preenchidas_FAIXA 2,0.815,-14.0,12.025000000000006,-16.0,19.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1-3,delta_preenchidas_FAIXA 1,-32.02,-45.0,-19.0,-50.0,-17.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1-3,medicos_mudam_de_vaga,535.99,493.875,582.025,464.0,604.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1-3,vagas_deixam_de_ser_preenchidas,100.945,85.925,118.05000000000001,79.0,123.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1-3,vagas_passam_a_ser_preenchidas,106.42,91.0,123.0,76.0,127.0,200
+CENARIO_CONTRAFACTUAL,S4_M8,C4,1-3,delta_custo_mensal_bolsas_mil,2747.125,2454.25,3010.75,2290.0,3055.0,200

@@ -129,15 +129,15 @@
   },
   {
    "caminho": "output/cenarios/P1_cenarios_resumo.json",
-   "sha256": "301c4489e20df782e60191c15f79b4472a14c11ea17d1a2cb07e76d9a34873fe",
-   "bytes": 8241,
+   "sha256": "444a4bf36df2cf0742e21f7b7f517d87ab40ad5ec507fc9c8fadf3db1f8e183d",
+   "bytes": 16580,
    "papel": "T1.6: status da validação de base (só o status; nenhum número simulado é copiado)"
   },
   {
    "caminho": "output/cenarios/P1_cenarios_validacao_base.csv",
-   "sha256": "41960b0c7f1b8aea21e8aed130b951a6baa9edef48015558512db5cacdf2e532",
-   "bytes": 957,
-   "papel": "T1.6: linhas da validação de base (só o veredito por linha)"
+   "sha256": "ec6e0749dd309da57d14c0711f7a251de8ec6481a43c82c7ac597e094c0643a3",
+   "bytes": 942,
+   "papel": "T1.6: linhas da validação de base (só o veredito por linha; B0 igual ao G2 principal)"
   }
  ],
  "holm": [
@@ -3783,11 +3783,8 @@
     "y1_vinculo_mun_1a_opcao · media"
    ]
   },
-  "t16_falhas": [
-   "ciclo 1, faixa 3"
-  ],
   "t16_linhas": 12,
-  "t16_status": "FALHA_VALIDACAO_BASE"
+  "t16_status": "VALIDACAO_BASE_PASSOU"
  },
  "v": {
   "e6_p1_tau": {
@@ -17067,9 +17064,9 @@
     "ATT sob tendências paralelas com pré falhando",
     "descritivo",
     "exploratório",
-    "falha de validação"
+    "cenário (simulação)"
    ],
-   "texto": "Nenhuma pergunta tem hoje evidência causal limpa de mudança no resultado medido. Nas cinco famílias de primárias com Holm definidas nos protocolos (40, 47, 48, 52 e 58), nenhuma linha rejeita zero; na família do relato do P6, só as 2 linhas do Y1 rejeitam, e o Y1 é quase mecânico (ser alocado cria o vínculo cadastrado no município da vaga).\n\n**Pergunta central do autor: os R$ 5 mil a mais aumentam a atração ou o preenchimento?** Como pacote do corte, não se detecta aumento em nenhuma das duas margens, e os dados só descartam aumentos grandes em parte. Na célula aberta, com ciclos e cortes empilhados, o salto da probabilidade de preenchimento é −4,9 p.p. [−12,9; +3,2]: o maior aumento compatível com os dados é +3,2 p.p., e o desenho só detectaria com 80% de poder um salto de 11,5 p.p. Por corte, o limite superior é +1,7 p.p. em 0,300 e +11,3 p.p. em 0,400. Na atração, a probabilidade de a célula ter candidato de 1ª opção salta −7,1 p.p. [−19,6; +5,4]. Na escolha entre vagas já abertas, o coeficiente principal do P1 (M1) não se distingue de zero (razão de chances por +R$ 5 mil 1,24 [0,99; 1,55]); o sinal que resiste a vários testes continua só no ciclo 2 (E9: 1,95 [1,48; 2,57]), e escolha entre vagas não é preenchimento. A realocação entre concorrentes é inconclusiva, e os cenários do T1.6 não existem, porque a validação de base falhou.\n\nProdução, horas e vínculos depois da chegada do especialista (P3 D2, P3x e P4) aparecem como associações sob tendências paralelas, com o pré falhando em parte das linhas; nos cortes (P3 D1), nada se distingue de zero. A abertura de vagas (P5) é descrita, não explicada: o IVS contínuo não se distingue de zero no pedido nem na priorização."
+   "texto": "Nenhuma pergunta tem hoje evidência causal limpa de mudança no resultado medido. Nas cinco famílias de primárias com Holm definidas nos protocolos (40, 47, 48, 52 e 58), nenhuma linha rejeita zero; na família do relato do P6, só as 2 linhas do Y1 rejeitam, e o Y1 é quase mecânico (ser alocado cria o vínculo cadastrado no município da vaga).\n\n**Pergunta central do autor: os R$ 5 mil a mais aumentam a atração ou o preenchimento?** Como pacote do corte, não se detecta aumento em nenhuma das duas margens, e os dados só descartam aumentos grandes em parte. Na célula aberta, com ciclos e cortes empilhados, o salto da probabilidade de preenchimento é −4,9 p.p. [−12,9; +3,2]: o maior aumento compatível com os dados é +3,2 p.p., e o desenho só detectaria com 80% de poder um salto de 11,5 p.p. Por corte, o limite superior é +1,7 p.p. em 0,300 e +11,3 p.p. em 0,400. Na atração, a probabilidade de a célula ter candidato de 1ª opção salta −7,1 p.p. [−19,6; +5,4]. Na escolha entre vagas já abertas, o coeficiente principal do P1 (M1) não se distingue de zero (razão de chances por +R$ 5 mil 1,24 [0,99; 1,55]); o sinal que resiste a vários testes continua só no ciclo 2 (E9: 1,95 [1,48; 2,57]), e escolha entre vagas não é preenchimento. A realocação entre concorrentes é inconclusiva, os cenários do T1.6 são simulação (validação de base aprovada na revalidação) e ficam só no documento dos cenários, sem entrar nesta síntese empírica.\n\nProdução, horas e vínculos depois da chegada do especialista (P3 D2, P3x e P4) aparecem como associações sob tendências paralelas, com o pré falhando em parte das linhas; nos cortes (P3 D1), nada se distingue de zero. A abertura de vagas (P5) é descrita, não explicada: o IVS contínuo não se distingue de zero no pedido nem na priorização."
   },
   {
    "forcas": [
@@ -17121,16 +17118,16 @@
   },
   {
    "forcas": [
-    "falha de validação"
+    "cenário (simulação)"
    ],
-   "texto": "vagas preenchidas na 1ª chamada sob grades de bolsa alternativas, com candidatos e vagas fixos (cenário, não observação) validação de base reprovada (ciclo 1, faixa 3); cenários não calculados"
+   "texto": "vagas preenchidas na 1ª chamada sob grades de bolsa alternativas, com candidatos e vagas fixos (cenário, não observação) validação de base aprovada em todas as linhas (revalidação com o desempate do adendo; a primeira tentativa falhou e está registrada no documento dos cenários); os números dos cenários são simulação e não são copiados para esta síntese"
   },
   {
    "forcas": [
     "inconclusivo",
-    "falha de validação"
+    "cenário (simulação)"
    ],
-   "texto": "**Preenchimento: probabilidade de a célula aberta ser preenchida na 1ª chamada (A3, p.p.)**\n\n| Amostra e corte | Média abaixo do corte | Salto [IC 95%] | Maior aumento compatível | MDE 80% |\n|---|---|---|---|---|\n| ciclos 1–3, corte 0,300 | 33,3% | −8,4 [−18,5; +1,7] | +1,7 | 14,5 |\n| ciclos 1–3, corte 0,400 | 36,8% | −1,3 [−14,0; +11,3] | +11,3 | 18,1 |\n| ciclos 1–3, cortes empilhados | 34,7% | −4,9 [−12,9; +3,2] | +3,2 | 11,5 |\n| ciclo 1, corte 0,300 | 26,0% | +0,9 [−23,5; +25,3] | +25,3 | 34,9 |\n| ciclo 1, corte 0,400 | 37,2% | −12,4 [−37,5; +12,6] | +12,6 | 35,8 |\n| ciclo 1, cortes empilhados | 31,2% | −3,3 [−20,9; +14,2] | +14,2 | 25,1 |\n\n**Atração: probabilidade de a célula aberta ter candidato de 1ª opção (A3, p.p.)**\n\n| Amostra e corte | Média abaixo do corte | Salto [IC 95%] | Maior aumento compatível | MDE 80% |\n|---|---|---|---|---|\n| ciclos 1–3, corte 0,300 | 48,3% | −10,8 [−28,2; +6,7] | +6,7 | 24,9 |\n| ciclos 1–3, corte 0,400 | 49,6% | −2,7 [−19,7; +14,3] | +14,3 | 24,2 |\n| ciclos 1–3, cortes empilhados | 48,8% | −7,1 [−19,6; +5,4] | +5,4 | 17,9 |\n| ciclo 1, corte 0,300 | 36,5% | −10,6 [−31,6; +10,5] | +10,5 | 30,0 |\n| ciclo 1, corte 0,400 | 38,5% | −6,5 [−32,4; +19,4] | +19,4 | 37,0 |\n| ciclo 1, cortes empilhados | 37,4% | −6,5 [−22,7; +9,7] | +9,7 | 23,1 |\n\nCandidatos de 1ª opção por célula (E6, F1.1, ciclos e cortes empilhados): +0,063 [−0,511; +0,636]; maior aumento compatível +0,636 candidato; MDE 80% 0,819 (2,8 × EP, aqui).\n\n**Escolha entre vagas abertas (razão de chances por +R$ 5 mil)**\n\n| Modelo | Razão de chances [IC 95%] | Maior valor compatível | Leitura |\n|---|---|---|---|\n| P1, M1 (ciclos 1–3, com distância; primária) | 1,24 [0,99; 1,55] | 1,55 | IC contém 1; MDE 80% em razão de chances 1,38 |\n| P1, M5 (só o ciclo 2) | 1,70 [1,22; 2,37] | 2,37 | IC exclui 1; secundária |\n| E9 (ciclo 2, sem distância) | 1,95 [1,48; 2,57] | 2,57 | IC exclui 1; exploratório |\n\n**Realocação entre concorrentes (por +R$ 5 mil na bolsa média das concorrentes)**\n\n- R-P1, célula preenchida: −4,9 p.p. [−14,3; +4,6]; MDE 13,5 p.p., acima do limiar do protocolo: inconclusivo.\n- R-P2, candidatos de 1ª opção: −0,075 [−0,553; +0,404]; MDE 0,684, acima do limiar do protocolo: inconclusivo.\n\n**T1.6 (cenários)**\n\n- Status `FALHA_VALIDACAO_BASE`: a reconstrução sem mudança de bolsa não reproduziu as vagas publicadas dentro da tolerância em todas as réplicas (ciclo 1, faixa 3). Os cenários não foram calculados; não há resposta simulada à pergunta do total de vagas.\n- Mesmo validado, o modelo de escolha não responderia à margem extensiva: no logit condicional só diferenças de utilidade entre vagas contam, então somar o mesmo valor à bolsa de todas as vagas não muda nenhuma escolha com o grupo de candidatos fixo. Um aumento uniforme só poderia mover quem entra no programa, e isso o modelo não vê."
+   "texto": "**Preenchimento: probabilidade de a célula aberta ser preenchida na 1ª chamada (A3, p.p.)**\n\n| Amostra e corte | Média abaixo do corte | Salto [IC 95%] | Maior aumento compatível | MDE 80% |\n|---|---|---|---|---|\n| ciclos 1–3, corte 0,300 | 33,3% | −8,4 [−18,5; +1,7] | +1,7 | 14,5 |\n| ciclos 1–3, corte 0,400 | 36,8% | −1,3 [−14,0; +11,3] | +11,3 | 18,1 |\n| ciclos 1–3, cortes empilhados | 34,7% | −4,9 [−12,9; +3,2] | +3,2 | 11,5 |\n| ciclo 1, corte 0,300 | 26,0% | +0,9 [−23,5; +25,3] | +25,3 | 34,9 |\n| ciclo 1, corte 0,400 | 37,2% | −12,4 [−37,5; +12,6] | +12,6 | 35,8 |\n| ciclo 1, cortes empilhados | 31,2% | −3,3 [−20,9; +14,2] | +14,2 | 25,1 |\n\n**Atração: probabilidade de a célula aberta ter candidato de 1ª opção (A3, p.p.)**\n\n| Amostra e corte | Média abaixo do corte | Salto [IC 95%] | Maior aumento compatível | MDE 80% |\n|---|---|---|---|---|\n| ciclos 1–3, corte 0,300 | 48,3% | −10,8 [−28,2; +6,7] | +6,7 | 24,9 |\n| ciclos 1–3, corte 0,400 | 49,6% | −2,7 [−19,7; +14,3] | +14,3 | 24,2 |\n| ciclos 1–3, cortes empilhados | 48,8% | −7,1 [−19,6; +5,4] | +5,4 | 17,9 |\n| ciclo 1, corte 0,300 | 36,5% | −10,6 [−31,6; +10,5] | +10,5 | 30,0 |\n| ciclo 1, corte 0,400 | 38,5% | −6,5 [−32,4; +19,4] | +19,4 | 37,0 |\n| ciclo 1, cortes empilhados | 37,4% | −6,5 [−22,7; +9,7] | +9,7 | 23,1 |\n\nCandidatos de 1ª opção por célula (E6, F1.1, ciclos e cortes empilhados): +0,063 [−0,511; +0,636]; maior aumento compatível +0,636 candidato; MDE 80% 0,819 (2,8 × EP, aqui).\n\n**Escolha entre vagas abertas (razão de chances por +R$ 5 mil)**\n\n| Modelo | Razão de chances [IC 95%] | Maior valor compatível | Leitura |\n|---|---|---|---|\n| P1, M1 (ciclos 1–3, com distância; primária) | 1,24 [0,99; 1,55] | 1,55 | IC contém 1; MDE 80% em razão de chances 1,38 |\n| P1, M5 (só o ciclo 2) | 1,70 [1,22; 2,37] | 2,37 | IC exclui 1; secundária |\n| E9 (ciclo 2, sem distância) | 1,95 [1,48; 2,57] | 2,57 | IC exclui 1; exploratório |\n\n**Realocação entre concorrentes (por +R$ 5 mil na bolsa média das concorrentes)**\n\n- R-P1, célula preenchida: −4,9 p.p. [−14,3; +4,6]; MDE 13,5 p.p., acima do limiar do protocolo: inconclusivo.\n- R-P2, candidatos de 1ª opção: −0,075 [−0,553; +0,404]; MDE 0,684, acima do limiar do protocolo: inconclusivo.\n\n**T1.6 (cenários)**\n\n- A primeira validação de base falhou (desempate por sorteio); depois do adendo datado com o desempate pela classificação publicada nos pares observados, a reconstrução sem mudança de bolsa reproduziu as vagas publicadas dentro da tolerância em todas as réplicas. Os cenários foram simulados e estão no documento dos cenários, rotulados como simulação; nenhum número simulado entra nesta síntese empírica.\n- O modelo de escolha não responderia à margem extensiva: no logit condicional só diferenças de utilidade entre vagas contam, então somar o mesmo valor à bolsa de todas as vagas não muda nenhuma escolha com o grupo de candidatos fixo. Um aumento uniforme só poderia mover quem entra no programa, e isso o modelo não vê."
   },
   {
    "forcas": [
@@ -17168,9 +17165,9 @@
   },
   {
    "forcas": [
-    "falha de validação"
+    "cenário (simulação)"
    ],
-   "texto": "Nada foi estimado. O custo por candidato ou vaga adicional dependia dos cenários do T1.6, que não foram calculados porque a validação de base falhou."
+   "texto": "Nada foi estimado de forma empírica. O custo da bolsa por vaga preenchida no T1.6 é aritmética simples sobre uma simulação, e não é custo observado."
   },
   {
    "forcas": [
