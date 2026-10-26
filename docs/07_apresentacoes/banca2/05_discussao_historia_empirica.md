@@ -21,6 +21,8 @@
 | 26/10/2026 | **não mostrar o empilhado; mostrar o efeito de cada corte (0,300 e 0,400) separado** |
 | 26/10/2026 | diagrama causal e equações no apêndice ficam para a banca final (`../banca_final/`) |
 | 26/10/2026 | a história completa entra nos slides só depois de refinada e validada (protocolo 60 auditado) |
+| 26/10/2026 | cada estimador ganha nos slides a sua especificação explicada (outcome, amostra, equação em palavras, o que é por ciclo, erro-padrão, leitura, cuidado, sensibilidades); a equação formal fica no apêndice |
+| 26/10/2026 | a explicação da queda no corte 0,300 entra num slide próprio, logo depois do H1, com o diagnóstico do protocolo 61 |
 
 ## 2. Perguntas e respostas
 
@@ -186,3 +188,5 @@ queda desse tamanho não fica descartada. Com o IC honesto, nem isso se sustenta
 | Deck com os efeitos por corte | em produção |
 | Slides da história (seção 3) | depois da parte B auditada |
 | RDD das vagas oferecidas por município, por ciclo e corte (seção 2.2) | proposta; precisa de protocolo próprio |
+| Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | estimando; depois, auditoria e slide próprio |
+| Slides de especificação por estimador e da cronologia dos ciclos | em produção no gerador do deck |
