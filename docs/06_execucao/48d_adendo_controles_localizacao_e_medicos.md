@@ -104,6 +104,57 @@ como sorteado (randomização local condicional); não usa a reta.
 | CL-8 | oferta local pareada (ΔB1, ΔB2), por corte, janela 0,050 | secundária (BKY) |
 | CL-9 | CL-7 e CL-8 na janela 0,020 | sensibilidade |
 
+### 3.2 Nota datada de 26/10/2026: pareamento por escore de propensão (PSM) passa a ser o principal deste adendo
+
+Decisão do autor, **antes de qualquer resultado deste adendo ou do protocolo 64
+existir** (nenhuma saída `CL_*` ou `OC_*` em nenhum worktree no momento desta
+nota): "PSM, parear, em vez de colocar controle direto na regressão como soma".
+
+**O que muda:**
+- o **principal** deste adendo passa a ser o **pareamento por escore de
+  propensão** (linhas PS-1 e PS-2 abaixo), no lugar de CL-1 e CL-5;
+- os controles somados na regressão (CL-1 a CL-6) e o pareamento por
+  Mahalanobis (CL-7 a CL-9) continuam **relatados**, como secundários (BKY),
+  para comparação. O Holm passa para as linhas PS.
+
+**Especificação do PSM:**
+- **"Tratamento":** estar acima do corte (lado de bolsa maior), dentro da
+  janela |IVS − corte| ≤ 0,050, cada corte separado; 0,020 como sensibilidade.
+- **Escore:** logit de P(acima do corte | X) dentro da janela, com X = L+M
+  (capital, macrorregião, log da população, médicos por 10 mil, especialistas
+  do curso por 10 mil no município, especialistas no resto da região de
+  saúde). O IVS **não** entra no escore (separa os lados por construção).
+- **Pareamento:** 1:1, vizinho mais próximo no logit do escore, sem reposição,
+  *caliper* de 0,2 desvio-padrão do logit do escore (Austin, 2011). Na H1, exato
+  no ciclo (município × ciclo). Unidades sem par ou fora do suporte comum são
+  contadas e relatadas (com quem são: capitais, região).
+- **Suporte comum:** histograma do escore dos dois lados antes do pareamento;
+  relatar a fração descartada.
+- **Balanço:** diferença padronizada de cada variável de X antes e depois;
+  meta |DP| < 0,10; acima de 0,25 depois do pareamento, a linha não é lida como
+  comparação limpa.
+- **Outcomes:** os mesmos do §3.1 (H1 municipal e ΔB1, ΔB2 do protocolo 64).
+- **Estimador e inferência:** média das diferenças dentro dos pares (ATT do
+  lado de cima); IC por permutação de sinais dentro dos pares (9.999 sorteios,
+  semente 20261026), condicional aos pares, e IC t pareado; os dois relatados.
+  O *bootstrap* simples não é usado (inválido para vizinho mais próximo,
+  Abadie e Imbens, 2008).
+- **Sensibilidade:** ponderação pelo inverso do escore (IPW) na mesma janela,
+  com o mesmo escore aparado em [0,05; 0,95].
+
+| Id | Linha | Papel |
+|---|---|---|
+| **PS-1** | H1 por PSM, por corte, janela 0,050 | **principal deste adendo** (Holm com PS-2) |
+| **PS-2** | oferta local por PSM (ΔB1, ΔB2), por corte, janela 0,050 | **principal deste adendo** para a oferta local (Holm com PS-1) |
+| PS-3 | PS-1 e PS-2 na janela 0,020 | sensibilidade |
+| PS-4 | PS-1 e PS-2 por IPW | sensibilidade |
+
+**O que o PSM supõe, diferente da RDD:** que, perto do corte e com o mesmo X,
+estar de um lado ou do outro é como sorteado (randomização local condicional).
+A RDD supõe continuidade e usa a reta. O PSM não usa a reta, o que importa
+porque parte da queda da H1 vem da reta levada até o corte (doc 05, §2.1).
+Nenhum dos dois remove o pacote do corte (auditoria 18).
+
 **Leitura:** se o pareado concordar com a RDD (CL-1 e CL-5), a conclusão não
 depende da reta. Se discordar, relatar as duas, com o aviso de que o pareado
 supõe randomização local e a RDD supõe continuidade; nenhuma das duas passa a
