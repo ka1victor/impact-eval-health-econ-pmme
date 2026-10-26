@@ -8,6 +8,36 @@
 
 ---
 
+## 26/10/2026 — Banca 2: parte empírica no arco do plano (H1–H4), figuras com "Como ler" e deck
+
+Motivo: execução do [plano da entrega empírica](07_apresentacoes/banca2/04_plano_entrega_empirica.md)
+(§2 a §5 e decisões da §9): hipóteses pela cadeia do modelo, metodologia econométrica, descritivas por ciclo,
+resultados do doc 57 e correções no deck do grupo. A H3 fica PENDENTE (protocolo 52b, em outra sessão).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `scripts/apresentacao/gerar_deck_banca2.py` | monta o deck proposto e o arquivo só com os slides novos a partir do deck do grupo (`PMME_DECK_GRUPO`), do doc 02 e do registro de números; aplica as correções do plano, §2; grava manifesto com hashes |
+| `output/apresentacao_banca2/deck_banca2_proposta.pptx`, `slides_empiricos_banca2.pptx`, `manifesto_deck_banca2.json`, `qa_render/` | deck derivado, slides novos, manifesto e imagens de conferência |
+| `output/apresentacao_banca2/h1_preenchimento.png`, `h2_escolha.png`, `h4_horas_medico.png`, `cadeia_resumo_doc57.png` | figuras novas, com "Como ler" na imagem |
+| `output/apresentacao_banca2/tabela_descritiva_ciclos.{csv,png}`, `tabela_fontes.{csv,png}` | tabela descritiva por ciclo e tabela de fontes |
+
+### Reestruturado
+
+| Arquivo | O que mudou |
+|---|---|
+| [`07_apresentacoes/banca2/01_roteiro_narrativo.md`](07_apresentacoes/banca2/01_roteiro_narrativo.md) | reescrito no arco do plano: hipótese pela cadeia do modelo, dados, metodologia econométrica, resultados, robustez e discussão |
+| [`07_apresentacoes/banca2/02_conteudo_slides.md`](07_apresentacoes/banca2/02_conteudo_slides.md) | reescrito: só os slides novos (corpo e apêndice), com o lugar de cada um no deck do grupo e o quadro de correções; substitui o rascunho de 21 slides de 19/10 |
+| [`07_apresentacoes/banca2/03_proveniencia_figuras_e_numeros.md`](07_apresentacoes/banca2/03_proveniencia_figuras_e_numeros.md) | figuras novas, bloco de números regenerado com os códigos do doc 57, seção do deck |
+| [`07_apresentacoes/banca2/README.md`](07_apresentacoes/banca2/README.md) | estado, decisões e índice |
+| `scripts/apresentacao/gerar_figuras_banca2.py` | figuras e tabelas novas, códigos novos, seletores `descritiva` e `transf`; deixa de ler o arquivo de IVS errado (a figura do failure mode fica congelada) |
+| `tests/test_conteudo_banca2.py` | conferência do conteúdo novo, dos números desenhados nas figuras e do deck |
+| `tests/test_fonte_ivs_oficial.py` | `gerar_figuras_banca2.py` sai da lista de leitores autorizados do arquivo de IVS errado |
+| [`07_apresentacoes/README.md`](07_apresentacoes/README.md) | linha da banca 2 no índice da seção (estado e escopo novos) |
+
+---
+
 ## 26/10/2026 — Diagrama causal e reorganização dos slides de teoria (banca final)
 
 Motivo: pedido do grupo de incluir diagrama causal/teoria da mudança e deixar o slide de equações como apêndice. Conteúdo para a banca final, não para a banca 2.

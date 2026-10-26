@@ -76,15 +76,6 @@
       "chaves": "co_ibge"
     },
     {
-      "caminho": "data/ivs_ipea_2010_municipios.csv",
-      "sha256": "84d23a156d2afc327ad193fb71a165f1092cfc7e53c3dd7faca21d6aa131818c",
-      "papel": "SÓ FAILURE MODE: eixo da figura 2 e contagem do lado errado",
-      "data_referencia": "desconhecida (sem fonte)",
-      "cobertura": "5.565 municípios",
-      "unidade": "linha de subgrupo, não IVS do município",
-      "chaves": "cod_ibge6"
-    },
-    {
       "caminho": "docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md",
       "sha256": "9afe8cc10cc28edcd29016c7578140e28eaafc41713cea8cda6704adb6a66eb9",
       "papel": "parâmetros normativos citados (co-políticas)",
@@ -101,13 +92,134 @@
       "cobertura": "-",
       "unidade": "-",
       "chaves": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/S57_resumo.json",
+      "sha256": "67801270c9d4c1313554dfe007f207b1b444440d46b8721fc60971c3a7a43389",
+      "papel": "síntese vigente (doc 57): valores com arquivo e seletor de origem (chave v)",
+      "data_referencia": "2026-10-24",
+      "cobertura": "P1 a P6, realocação; ciclos 1–3",
+      "unidade": "várias (ver chaves)",
+      "chaves": "v.<chave>.v"
+    },
+    {
+      "caminho": "output/rdd_bolsa/N_estimativas.csv",
+      "sha256": "3490d69c568ed13eb2b03612100a24aeefd72fc5f5f7cb3ac84e301d94f684ed",
+      "papel": "família N (protocolo 48): N1 com e sem controle, robustez",
+      "data_referencia": "2026-10-19",
+      "cobertura": "municípios com célula, ciclos 1–3, cortes 0,300 e 0,400",
+      "unidade": "vagas por município",
+      "chaves": "outcome_id + populacao + corte + especificacao + variante"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1_estimativas.csv",
+      "sha256": "8c4ca2e98b671709ec208526ff4e58a8060d5643d8ce37776f1b7c1f4fcc1f24",
+      "papel": "P1 (protocolo 52): M1, M5 por ciclo, M0–M9",
+      "data_referencia": "2026-10-23",
+      "cobertura": "candidatos de 1ª opção, ciclos 1–3",
+      "unidade": "log-chance por R$ 1 mil",
+      "chaves": "modelo + ciclo + termo"
+    },
+    {
+      "caminho": "output/rdd_bolsa/H_estimativas.csv",
+      "sha256": "6ffd2298f2b2a738ce9aebe8b4d56ca3204e794ecc570de17c856c69e384bf25",
+      "papel": "Rambachan–Roth do P4 (protocolo 59, parte A)",
+      "data_referencia": "2026-10-25",
+      "cobertura": "médicos dos ciclos 1 e 2",
+      "unidade": "h/sem; M̄",
+      "chaves": "id_linha + alvo + restricao + parametro"
+    },
+    {
+      "caminho": "output/rdd_bolsa/CA_estimativas.csv",
+      "sha256": "f962551b196129cfaa98dd6fa33f0f259d0e8aa77f8526c663eca8e0d3ce8173",
+      "papel": "comparação alternativa P4-CA (protocolo 59, parte B)",
+      "data_referencia": "2026-10-25",
+      "cobertura": "candidatos perto da nota de corte",
+      "unidade": "h/sem",
+      "chaves": "id_linha + outcome + estatistica"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_resumo.json",
+      "sha256": "c8a88d469f818d364fdbe9b8405652987c0b90568af406050f08e8ead06d8529",
+      "papel": "portão G1: candidatos ligados ao CNES por ciclo",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3",
+      "unidade": "candidatos",
+      "chaves": "taxas_ligacao.g1_cpf_nome.<ciclo>"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/a16_manifesto_cnes_profissional.json",
+      "sha256": "1f12702d8b49a216321bd484bc742072cb92c7525476388545d350358cc45d50",
+      "papel": "manifesto do a16: lista de ativos do PMM-E",
+      "data_referencia": "2026-10-19",
+      "cobertura": "lista de 11/09/2026",
+      "unidade": "registros",
+      "chaves": "listas_pmme"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "papel": "quadro de células da 1ª chamada (descritivas por ciclo)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3",
+      "unidade": "célula estabelecimento × curso",
+      "chaves": "ciclo + co_cnes_7d + cod_curso"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "papel": "população do Censo 2022 (cobertura da tabela de fontes)",
+      "data_referencia": "2022",
+      "cobertura": "municípios",
+      "unidade": "habitantes",
+      "chaves": "co_ibge_7d"
     }
   ],
   "regra_bolsa": {
     "municipios_ciclo1": 368,
     "lado_errado_oficial": 0,
-    "lado_errado_arquivo_errado": 101,
-    "png_gerado": true
+    "png_gerado": true,
+    "descritivas": {
+      "C1_MUN": 368.0,
+      "C1_CEL": 1295.0,
+      "C1_VI": 678.0,
+      "C1_CR": 1145.0,
+      "C1_CAND1": 993.0,
+      "C1_PRE1": 393.0,
+      "C1_PRE1_PCT": 0.30347490347490347,
+      "C1_PRE2": 461.0,
+      "C1_PRE2_PCT": 0.355984555984556,
+      "C1_F3": 159.0,
+      "C1_F2": 107.0,
+      "C1_F1": 102.0,
+      "C1_SEM_IVS": 0.0,
+      "C2_MUN": 454.0,
+      "C2_CEL": 1547.0,
+      "C2_VI": 1836.0,
+      "C2_CR": 1053.0,
+      "C2_CAND1": 2140.0,
+      "C2_PRE1": 728.0,
+      "C2_PRE1_PCT": 0.47058823529411764,
+      "C2_PRE2": 867.0,
+      "C2_PRE2_PCT": 0.5604395604395604,
+      "C2_F3": 210.0,
+      "C2_F2": 115.0,
+      "C2_F1": 129.0,
+      "C2_SEM_IVS": 0.0,
+      "C3_MUN": 748.0,
+      "C3_CEL": 2293.0,
+      "C3_VI": 1132.0,
+      "C3_CR": 3999.0,
+      "C3_CAND1": 2581.0,
+      "C3_PRE1": 497.0,
+      "C3_PRE1_PCT": 0.21674662014827736,
+      "C3_F3": 276.0,
+      "C3_F2": 180.0,
+      "C3_F1": 291.0,
+      "C3_SEM_IVS": 1.0,
+      "IVS_MUN": 5565.0,
+      "POP_MUN": 5570.0
+    }
   },
   "cadeia_sintese_principal": [
     {
@@ -386,6 +498,581 @@
       "leitura": "descarta +10 p.p. só na principal"
     }
   ],
+  "figuras_novas": {
+    "h1_preenchimento.png": {
+      "linhas": [
+        {
+          "painel": "Vagas preenchidas por município (N1)",
+          "linha": "Com controle das vagas oferecidas",
+          "texto": "−0,76 [−1,44; −0,07]",
+          "codigos": [
+            "N1_SA_TAU",
+            "N1_SA_INF",
+            "N1_SA_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Vagas preenchidas por município (N1)",
+          "linha": "Sem controle",
+          "texto": "−1,45 [−2,90; −0,01]",
+          "codigos": [
+            "N1_SB_TAU",
+            "N1_SB_INF",
+            "N1_SB_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "Ciclos 1–3, cortes empilhados",
+          "texto": "−4,9 [−12,9; +3,2]",
+          "codigos": [
+            "A3_EMP_TAU",
+            "A3_EMP_INF",
+            "A3_EMP_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "Só o corte 0,300",
+          "texto": "−8,4 [−18,5; +1,7]",
+          "codigos": [
+            "A3_300_TAU",
+            "A3_300_INF",
+            "A3_300_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "Só o corte 0,400",
+          "texto": "−1,3 [−14,0; +11,3]",
+          "codigos": [
+            "A3_400_TAU",
+            "A3_400_INF",
+            "A3_400_SUP"
+          ],
+          "exclui_nulo": false
+        }
+      ],
+      "textos": [
+        "Vagas preenchidas por município (N1)",
+        "Com controle das vagas oferecidas",
+        "primária",
+        "−0,76 [−1,44; −0,07]",
+        "p de Holm 0,124",
+        "Sem controle",
+        "efeito total da faixa",
+        "−1,45 [−2,90; −0,01]",
+        "média abaixo do corte 2,16",
+        "diferença no corte (vagas por município)",
+        "Célula aberta preenchida (A3, p.p.)",
+        "+10 p.p. (protocolo)",
+        "Ciclos 1–3, cortes empilhados",
+        "principal",
+        "−4,9 [−12,9; +3,2]",
+        "MDE 11,5",
+        "Só o corte 0,300",
+        "R$ 10 mil → R$ 15 mil",
+        "−8,4 [−18,5; +1,7]",
+        "MDE 14,5",
+        "Só o corte 0,400",
+        "R$ 15 mil → R$ 20 mil",
+        "−1,3 [−14,0; +11,3]",
+        "MDE 18,1",
+        "diferença no corte (p.p.)",
+        "Como ler",
+        "•  Ponto: diferença no corte, bolsa maior menos bolsa menor.",
+        "•  Barra: IC 95%; a ponta direita é o maior aumento compatível.",
+        "•  Barra cruzando o zero: não se distingue de zero (não prova zero).",
+        "•  Cinza: o IC contém zero; verde: exclui. MDE: 80% de poder.",
+        "Fontes: N_estimativas.csv (doc 49); S57_resumo.json (A3; doc 57). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "−3",
+        "−2,5",
+        "−2",
+        "−1,5",
+        "−1",
+        "−0,5",
+        "0",
+        "−20",
+        "−15",
+        "−10",
+        "−5",
+        "0",
+        "+5",
+        "+10"
+      ]
+    },
+    "h2_escolha.png": {
+      "linhas": [
+        {
+          "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
+          "linha": "Ciclos 1–3, com distância (M1)",
+          "texto": "1,24 [0,99; 1,55]",
+          "codigos": [
+            "M1_RC",
+            "M1_RC_INF",
+            "M1_RC_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
+          "linha": "Só o ciclo 1 (M5)",
+          "texto": "1,07 [0,69; 1,65]",
+          "codigos": [
+            "M5_C1_RC",
+            "M5_C1_RCI",
+            "M5_C1_RCS"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
+          "linha": "Só o ciclo 2 (M5)",
+          "texto": "1,70 [1,22; 2,37]",
+          "codigos": [
+            "M5_C2_RC",
+            "M5_C2_RCI",
+            "M5_C2_RCS"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
+          "linha": "Só o ciclo 3 (M5)",
+          "texto": "1,00 [0,72; 1,39]",
+          "codigos": [
+            "M5_C3_RC",
+            "M5_C3_RCI",
+            "M5_C3_RCS"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
+          "linha": "Ciclo 2, sem distância (E9)",
+          "texto": "1,95 [1,48; 2,57]",
+          "codigos": [
+            "E9_C2_RC",
+            "E9_C2_RCI",
+            "E9_C2_RCS"
+          ],
+          "exclui_nulo": true
+        }
+      ],
+      "textos": [
+        "Razão de chances da 1ª opção por +R$ 5 mil",
+        "Ciclos 1–3, com distância (M1)",
+        "primária",
+        "1,24 [0,99; 1,55]",
+        "p 0,065",
+        "Só o ciclo 1 (M5)",
+        "1,07 [0,69; 1,65]",
+        "p 0,764",
+        "Só o ciclo 2 (M5)",
+        "1,70 [1,22; 2,37]",
+        "p 0,002",
+        "Só o ciclo 3 (M5)",
+        "1,00 [0,72; 1,39]",
+        "p 0,990",
+        "Ciclo 2, sem distância (E9)",
+        "exploratório",
+        "1,95 [1,48; 2,57]",
+        "p < 0,001",
+        "razão de chances (escala log); 1 = a bolsa não muda a escolha",
+        "Como ler",
+        "•  Cada linha compara vagas abertas",
+        "    do mesmo curso e ciclo que",
+        "    diferem só no degrau da bolsa,",
+        "    com o IVS contínuo controlado.",
+        "•  Acima de 1: a vaga de bolsa",
+        "    maior é mais escolhida como 1ª",
+        "    opção.",
+        "•  Barra: o intervalo de 95%. Se",
+        "    cruza a linha do 1, os dados não",
+        "    distinguem a bolsa de efeito",
+        "    nenhum.",
+        "•  Verde: o IC exclui 1; cinza:",
+        "    contém.",
+        "•  É a escolha de quem já se",
+        "    candidatou: não diz quantos",
+        "    médicos o programa atrai.",
+        "Fontes: P1_estimativas.csv (doc 57a); E8_resumo.json (E9). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "0,75",
+        "1",
+        "1,5",
+        "2"
+      ]
+    },
+    "h4_horas_medico.png": {
+      "linhas": [
+        {
+          "painel": "Horas semanais cadastradas do médico no CNES",
+          "linha": "Horas totais (P4)",
+          "texto": "+6,6 [+5,4; +7,8]",
+          "codigos": [
+            "P4_HT_ATT",
+            "P4_HT_INF",
+            "P4_HT_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Horas semanais cadastradas do médico no CNES",
+          "linha": "No município do posto (P4)",
+          "texto": "+8,7 [+7,9; +9,5]",
+          "codigos": [
+            "P4_HM_ATT",
+            "P4_HM_INF",
+            "P4_HM_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Horas semanais cadastradas do médico no CNES",
+          "linha": "Fora do município do posto (P4)",
+          "texto": "−2,1 [−3,2; −1,0]",
+          "codigos": [
+            "P4_HF_ATT",
+            "P4_HF_INF",
+            "P4_HF_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Horas semanais cadastradas do médico no CNES",
+          "linha": "Horas totais (P4-CA)",
+          "texto": "+7,91 [−0,63; +16,45]",
+          "codigos": [
+            "CA_HT_EST",
+            "CA_HT_INF",
+            "CA_HT_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Horas semanais cadastradas do médico no CNES",
+          "linha": "No município da 1ª opção (P4-CA)",
+          "texto": "+10,92 [+4,15; +17,68]",
+          "codigos": [
+            "CA_HM_EST",
+            "CA_HM_INF",
+            "CA_HM_SUP"
+          ],
+          "exclui_nulo": true
+        }
+      ],
+      "textos": [
+        "Horas semanais cadastradas do médico no CNES",
+        "Horas totais (P4)",
+        "+6,6 [+5,4; +7,8]",
+        "pré: p 0,310",
+        "No município do posto (P4)",
+        "+8,7 [+7,9; +9,5]",
+        "pré falha: p 0,001",
+        "Fora do município do posto (P4)",
+        "−2,1 [−3,2; −1,0]",
+        "pré: p 0,927",
+        "Horas totais (P4-CA)",
+        "+7,91 [−0,63; +16,45]",
+        "p de Holm 0,162",
+        "No município da 1ª opção (P4-CA)",
+        "+10,92 [+4,15; +17,68]",
+        "quase mecânico",
+        "diferença média depois da entrada (horas por semana)",
+        "Como ler",
+        "•  P4: médicos que já entraram no",
+        "    PMM-E contra os que ainda não",
+        "    tinham entrado.",
+        "•  P4-CA: aprovados contra não",
+        "    aprovados por um ou dois pontos",
+        "    na nota de corte.",
+        "•  Verde: o IC 95% exclui zero.",
+        "    'Pré falha': os grupos já se",
+        "    afastavam antes da entrada.",
+        "•  Leia como associação: horas",
+        "    cadastradas não são horas",
+        "    trabalhadas.",
+        "Fontes: S57_resumo.json (P4; doc 57d); CA_estimativas.csv (57h). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "0",
+        "+5",
+        "+10",
+        "+15"
+      ]
+    },
+    "cadeia_resumo_doc57.png": {
+      "linhas": [
+        {
+          "linha": "Peso da bolsa na 1ª opção (P1, M1)",
+          "texto": "1,24 [0,99; 1,55]",
+          "codigos": [
+            "M1_RC",
+            "M1_RC_INF",
+            "M1_RC_SUP"
+          ],
+          "forca": "inconclusivo",
+          "exclui_nulo": false
+        },
+        {
+          "linha": "Célula aberta preenchida (A3)",
+          "texto": "−4,9 p.p. [−12,9; +3,2]",
+          "codigos": [
+            "A3_EMP_TAU",
+            "A3_EMP_INF",
+            "A3_EMP_SUP"
+          ],
+          "forca": "inconclusivo",
+          "exclui_nulo": false
+        },
+        {
+          "linha": "Vagas preenchidas por município (N1)",
+          "texto": "−0,76 [−1,44; −0,07]",
+          "codigos": [
+            "N1_SA_TAU",
+            "N1_SA_INF",
+            "N1_SA_SUP"
+          ],
+          "forca": "inconclusivo",
+          "exclui_nulo": true
+        },
+        {
+          "linha": "Vínculo no município da vaga (P6, Y1)",
+          "texto": "+0,405 [+0,210; +0,600]",
+          "codigos": [
+            "P6_Y1_EST",
+            "P6_Y1_INF",
+            "P6_Y1_SUP"
+          ],
+          "forca": "exploratório",
+          "exclui_nulo": true
+        },
+        {
+          "linha": "Horas totais (P6, Y3)",
+          "texto": "+15,5 [+0,6; +30,4]",
+          "codigos": [
+            "P6_Y3_EST",
+            "P6_Y3_INF",
+            "P6_Y3_SUP"
+          ],
+          "forca": "exploratório",
+          "exclui_nulo": true
+        },
+        {
+          "linha": "Horas totais do médico (P4)",
+          "texto": "+6,6 [+5,4; +7,8]",
+          "codigos": [
+            "P4_HT_ATT",
+            "P4_HT_INF",
+            "P4_HT_SUP"
+          ],
+          "forca": "ATT com pré falhando",
+          "exclui_nulo": true
+        },
+        {
+          "linha": "Produção SUS nas CBO-alvo (K1)",
+          "texto": "+7,92 [−27,58; +43,42]",
+          "codigos": [
+            "K1_TAU",
+            "K1_INF",
+            "K1_SUP"
+          ],
+          "forca": "inconclusivo",
+          "exclui_nulo": false
+        },
+        {
+          "linha": "Concorrentes e preenchimento (R-P1)",
+          "texto": "−4,9 p.p. [−14,3; +4,6]",
+          "codigos": [
+            "R_P1_EST",
+            "R_P1_INF",
+            "R_P1_SUP"
+          ],
+          "forca": "inconclusivo",
+          "exclui_nulo": false
+        }
+      ],
+      "textos": [
+        "A cadeia em uma figura: o que os dados dizem, pergunta a pergunta",
+        "Cada linha tem a sua escala, simétrica em torno do nulo (0; 1 na razão de chances). Leia se a barra cruza a linha preta, não o tamanho entre linhas.",
+        "intervalo de 95%",
+        "estimativa [IC 95%]",
+        "força da evidência",
+        "ESCOLHA DO MÉDICO",
+        "Peso da bolsa na 1ª opção (P1, M1)",
+        "razão de chances por +R$ 5 mil · pacote do corte",
+        "1,24 [0,99; 1,55]",
+        "p de Holm 0,065",
+        "inconclusivo",
+        "PREENCHIMENTO",
+        "Célula aberta preenchida (A3)",
+        "p.p. · ciclos 1–3, cortes empilhados · pacote do corte",
+        "−4,9 p.p. [−12,9; +3,2]",
+        "MDE 11,5 p.p.",
+        "inconclusivo",
+        "Vagas preenchidas por município (N1)",
+        "com controle das vagas oferecidas · pacote do corte",
+        "−0,76 [−1,44; −0,07]",
+        "p de Holm 0,124",
+        "inconclusivo",
+        "ENTRADA DO MÉDICO",
+        "Vínculo no município da vaga (P6, Y1)",
+        "fração · alocado × não alocado por pouco",
+        "+0,405 [+0,210; +0,600]",
+        "p de Holm 0,010 · quase mecânico",
+        "exploratório",
+        "Horas totais (P6, Y3)",
+        "h/sem · alocado × não alocado por pouco",
+        "+15,5 [+0,6; +30,4]",
+        "p de Holm 0,384",
+        "exploratório",
+        "CAPACIDADE",
+        "Horas totais do médico (P4)",
+        "h/sem · entrada no PMM-E, coortes escalonadas",
+        "+6,6 [+5,4; +7,8]",
+        "pré: p 0,310; outros outcomes falham",
+        "ATT com pré falhando",
+        "ACESSO",
+        "Produção SUS nas CBO-alvo (K1)",
+        "por 10 mil hab./mês · DiRD nos cortes",
+        "+7,92 [−27,58; +43,42]",
+        "p de Holm 1,000",
+        "inconclusivo",
+        "REALOCAÇÃO",
+        "Concorrentes e preenchimento (R-P1)",
+        "p.p. por +R$ 5 mil · região de saúde",
+        "−4,9 p.p. [−14,3; +4,6]",
+        "p de Holm 0,624",
+        "inconclusivo",
+        "Força da evidência: categorias fixas do doc 57 (§2). Nenhuma linha é causal-limpa. Pacote do corte: a bolsa +R$ 5 mil e as outras regras dos mesmos cortes.",
+        "Nada aqui é efeito da participação no PMM-E. Verde: o IC 95% exclui o nulo; cinza: contém.",
+        "Fontes: S57_resumo.json (doc 57); P4_estimativas.csv. EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": []
+    },
+    "tabela_descritiva_ciclos.png": {
+      "textos": [
+        "Os três ciclos em números (descritivo)",
+        "Item",
+        "Ciclo 1",
+        "Ciclo 2",
+        "Ciclo 3",
+        "Municípios com célula no quadro",
+        "368",
+        "454",
+        "748",
+        "Células (estabelecimento × curso)",
+        "1.295",
+        "1.547",
+        "2.293",
+        "Vagas imediatas · cadastro reserva",
+        "678 · 1.145",
+        "1.836 · 1.053",
+        "1.132 · 3.999",
+        "Candidatos de 1ª opção numa célula",
+        "993",
+        "2.140",
+        "2.581",
+        "Candidatos ligados ao CNES (G1)",
+        "938 de 993",
+        "2.102 de 2.179",
+        "2.533 de 2.604",
+        "Células preenchidas na 1ª chamada",
+        "393 (30,3%)",
+        "728 (47,1%)",
+        "497 (21,7%)",
+        "Células preenchidas até a 2ª chamada",
+        "461 (35,6%)",
+        "867 (56,0%)",
+        "não observado",
+        "Municípios por faixa: R$ 10 · 15 · 20 mil",
+        "159 · 107 · 102",
+        "210 · 115 · 129",
+        "276 · 180 · 291 (e 1 sem IVS)",
+        "Célula = estabelecimento × curso no quadro da 1ª chamada; preenchida = alguma confirmação ou homologação. Faixa pela grade aplicada (cortes 0,300 e 0,400 no IVS 2010 oficial).",
+        "EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ]
+    },
+    "tabela_fontes.png": {
+      "textos": [
+        "Bases de dados",
+        "Base",
+        "Fonte oficial",
+        "Período",
+        "Unidade e chaves",
+        "Cobertura",
+        "Uso",
+        "Quadros de vagas e resultados",
+        "SGTES/MS: chamamentos dos ciclos 1, 2 e 3",
+        "2025–2026",
+        "célula = estabelecimento × curso",
+        "1.295 · 1.547 · 2.293 células",
+        "H1, descritivas",
+        "Candidatos e opções",
+        "SGTES/MS: classificação, alocação e homologação",
+        "2025–2026",
+        "candidato × opção; CPF mascarado só em memória",
+        "993 · 2.179 · 2.604 candidatos",
+        "H2, H3, P6",
+        "IVS 2010 oficial",
+        "Ipea, Plataforma IVS (Censo 2010)",
+        "2010",
+        "município (IBGE)",
+        "5.565 municípios",
+        "running variable",
+        "CNES: vínculos e horas",
+        "DATASUS/MS, base completa mensal",
+        "2022-01 a 2026-08",
+        "profissional × estabelecimento × mês; pseudônimo",
+        "ligados: 938 · 2.102 · 2.533",
+        "H2 (origem), H4",
+        "Especialistas ativos do PMM-E",
+        "MS, relação nominal",
+        "2026-09",
+        "médico × posto; CRM só em memória",
+        "1.957 registros",
+        "H4 (chegada)",
+        "Produção ambulatorial e hospitalar",
+        "DATASUS/MS: SIA e SIH",
+        "mensal, pré e pós",
+        "município × mês × grupo",
+        "nacional",
+        "K (acesso)",
+        "População",
+        "IBGE, Censo 2022 (SIDRA)",
+        "2022",
+        "município (IBGE)",
+        "5.570 municípios",
+        "denominadores",
+        "Atos com corte no IVS",
+        "portarias do MS (auditoria 18)",
+        "2023–2026",
+        "ato × corte",
+        "nos dois cortes",
+        "ameaça: pacote do corte",
+        "Todas as bases são oficiais e públicas; dados pessoais só em memória ou em cache fora do Git.",
+        "EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ]
+    }
+  },
+  "tabelas_csv": [
+    {
+      "arquivo": "output/apresentacao_banca2/tabela_descritiva_ciclos.csv",
+      "sha256": "4d60cb82a8a77256cba326dd6ece9236d7d0b998b0b7e0aad51f84a5594f195c"
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/tabela_fontes.csv",
+      "sha256": "366594a9c9747f0b9328326756bfb53df103458ba4e795b9000655126408e1ce"
+    }
+  ],
   "figuras": [
     {
       "arquivo": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.svg",
@@ -411,20 +1098,18 @@
       "arquivo": "output/apresentacao_banca2/failure_mode/regra_bolsa_arquivo_errado_FAILURE_MODE.svg",
       "sha256": "22d1f146391a9569c34a9c12946f7e5c17b0f6374265c96ba574b79c70a63e18",
       "natureza": "FAILURE_MODE",
-      "descricao": "a mesma figura com o arquivo errado no eixo; só documenta o failure mode (auditoria 16)",
+      "descricao": "a figura da regra com o arquivo de IVS errado no eixo; só documenta o failure mode (auditoria 16); gravada em 19/10/2026 (commit bacabdc) e não regenerada, para não ler o arquivo errado",
       "fontes": [
-        "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv",
-        "data/ivs_ipea_2010_municipios.csv"
+        "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv"
       ]
     },
     {
       "arquivo": "output/apresentacao_banca2/failure_mode/regra_bolsa_arquivo_errado_FAILURE_MODE.png",
       "sha256": "8b8503387ca32c34b2b6237c63a80c852972d2e709979a80fd5c6e8d8520b2b5",
       "natureza": "FAILURE_MODE",
-      "descricao": "rasterização do SVG acima",
+      "descricao": "a figura da regra com o arquivo de IVS errado no eixo; só documenta o failure mode (auditoria 16); gravada em 19/10/2026 (commit bacabdc) e não regenerada, para não ler o arquivo errado",
       "fontes": [
-        "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv",
-        "data/ivs_ipea_2010_municipios.csv"
+        "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv"
       ]
     },
     {
@@ -453,10 +1138,80 @@
       "fontes": [
         "output/rdd_bolsa/E8_resumo.json"
       ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/h1_preenchimento.png",
+      "sha256": "dc2d81feba3ebe5254fed77c1fa31432b53b75ad120d5348375d22c209e8c882",
+      "natureza": "EMPIRICO",
+      "descricao": "H1: N1 com e sem controle e A3, com 'Como ler'",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/h2_escolha.png",
+      "sha256": "9b5dbaf14f927209d2e57d388b2867be92e8ce2400f986d1f1612ee6cab21b1d",
+      "natureza": "EMPIRICO",
+      "descricao": "H2: razão de chances da 1ª opção por ciclo, com 'Como ler'",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/h4_horas_medico.png",
+      "sha256": "458fb6cc5500655a1175e0c92d91c292c3485386d14d4f8638bca206863a9723",
+      "natureza": "EMPIRICO",
+      "descricao": "H4: horas do médico (P4 e P4-CA), com 'Como ler'",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
+      "sha256": "1bbaafe323fa6a6cd908771f1dea1166f15aeb42ec06881ec6cd16f85f281376",
+      "natureza": "EMPIRICO",
+      "descricao": "cadeia-resumo com as linhas do doc 57",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/tabela_descritiva_ciclos.png",
+      "sha256": "c050408fa0f1359fa9a4ede36730408bb23c5c64a92a973b21105fdfebfb32a5",
+      "natureza": "EMPIRICO",
+      "descricao": "tabela descritiva por ciclo",
+      "fontes": [
+        "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/tabela_fontes.png",
+      "sha256": "df4c0b240908da4718a662b3fb798070d3aa31abf95895622e86cff9cf00c527",
+      "natureza": "EMPIRICO",
+      "descricao": "tabela de fontes",
+      "fontes": [
+        "output/rdd_bolsa/G1_resumo.json"
+      ]
     }
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "e1f7ed36452ae3903e3f79d7b05d9a40e0cbcc1b9811b9f09a3026d471b413ff"
+    "sha256": "a8d1b90d4af18ccc9d91d1336818b79ec231f5ed97fe62edcbc065f3238be91c"
   }
 }

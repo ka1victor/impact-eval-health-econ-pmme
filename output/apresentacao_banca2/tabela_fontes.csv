@@ -1,0 +1,9 @@
+Base,Fonte oficial,Período,Unidade e chaves,Cobertura,Uso,natureza_dos_dados
+Quadros de vagas e resultados,"SGTES/MS: chamamentos dos ciclos 1, 2 e 3",2025–2026,célula = estabelecimento × curso,1.295 · 1.547 · 2.293 células,"H1, descritivas",EMPIRICO
+Candidatos e opções,"SGTES/MS: classificação, alocação e homologação",2025–2026,candidato × opção; CPF mascarado só em memória,993 · 2.179 · 2.604 candidatos,"H2, H3, P6",EMPIRICO
+IVS 2010 oficial,"Ipea, Plataforma IVS (Censo 2010)",2010,município (IBGE),5.565 municípios,running variable,EMPIRICO
+CNES: vínculos e horas,"DATASUS/MS, base completa mensal",2022-01 a 2026-08,profissional × estabelecimento × mês; pseudônimo,ligados: 938 · 2.102 · 2.533,"H2 (origem), H4",EMPIRICO
+Especialistas ativos do PMM-E,"MS, relação nominal",2026-09,médico × posto; CRM só em memória,1.957 registros,H4 (chegada),EMPIRICO
+Produção ambulatorial e hospitalar,DATASUS/MS: SIA e SIH,"mensal, pré e pós",município × mês × grupo,nacional,K (acesso),EMPIRICO
+População,"IBGE, Censo 2022 (SIDRA)",2022,município (IBGE),5.570 municípios,denominadores,EMPIRICO
+Atos com corte no IVS,portarias do MS (auditoria 18),2023–2026,ato × corte,nos dois cortes,ameaça: pacote do corte,EMPIRICO
