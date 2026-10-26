@@ -62,6 +62,7 @@ CADEIA = [
     RDD / "36_equivalencia_H1.py",  # protocolo 60, parte A: TOST a partir de N_ (23) e NA_ (24)
     RDD / "38_diagnostico_queda_0300.py",  # protocolo 61: diagnóstico da queda em 0,300; reproduz N_, NA_ e ND_
     RDD / "39_gradiente_faixas.py",  # protocolo 62: gradiente dentro das faixas; importa carregar() do 38
+    RDD / "40_h1_vagas_imediatas.py",  # adendo 48b: H1 só com vagas imediatas; reproduz N_, NA_ e ND_
     RDD / "37_oferta_local_chegada.py",  # protocolo 60, parte B: importa o 22; lê K_D2, a09, a16 e a X1
     RDD / "15_sintese_E8.py",
     RDD / "09b_conferir_sinal.py",  # o 09 exige a conferência em dia com o E3
@@ -224,6 +225,12 @@ class TestCadeiaRddBolsa(unittest.TestCase):
             RDD / "39_gradiente_faixas.py": [RDD / "38_diagnostico_queda_0300.py", RDD / "24_abertura_vagas_selecao.py",
                                              RDD / "12_construir_outcomes_funil.py", RDD / "29_determinantes_abertura.py",
                                              RDD / "32_realocacao_bolsa.py", AQ / "a08_adquirir_ivs_2010_oficial.py"],
+            # Adendo 48b (40): reproduz N_ (23), NA_ (24) e ND_ (23b, versionada); importa o 23 e o 36; lê os
+            # outcomes (12) e o a08.
+            RDD / "40_h1_vagas_imediatas.py": [RDD / "23_estimar_contagem_vagas.py",
+                                               RDD / "24_abertura_vagas_selecao.py",
+                                               RDD / "36_equivalencia_H1.py", RDD / "12_construir_outcomes_funil.py",
+                                               AQ / "a08_adquirir_ivs_2010_oficial.py"],
             # Protocolo 60, parte B (37): importa o 22 e confere-se contra K_D2_resumo.json; B1/B2 contra o F3 do E7
             # (14); lê o painel do a09, o a16, a X1 (17, versionada) e os outcomes do 12.
             RDD / "37_oferta_local_chegada.py": [RDD / "22_chegada_pmme_evento.py", RDD / "14_estimar_E7_dird_cnes.py",

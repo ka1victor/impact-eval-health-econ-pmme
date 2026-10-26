@@ -182,6 +182,10 @@ STEPS = [
     # Importa carregar() do 38 (base do A3 e atributos) e acrescenta o G-b (origem dos candidatos do G1 versionado,
     # escolhas e quadro do 12, CIR do 29). Não regrava saídas de outros blocos.
     ROOT / "scripts" / "rdd_bolsa" / "39_gradiente_faixas.py",
+    # Adendo 48b (pós-resultado): H1 só com vagas imediatas (HI-1, HI-2, HI-s1 a HI-s8). Reproduz A3 (NA_, 24), N1 S-a
+    # (N_, 23) e o 49b §14 (ND_, 23b, saída versionada, fora do run_all) e para se não baterem; no ciclo 2, tipo de
+    # vaga pelo quadro de 13/02/2026 (nota §7), lido com scripts/auditoria_H1/a36_leitura.py; importa o 23 e o 36.
+    ROOT / "scripts" / "rdd_bolsa" / "40_h1_vagas_imediatas.py",
     # Protocolo 60, parte B (pós-resultado): oferta local de especialistas depois da chegada do 1º médico do PMM-E
     # (Callaway-Sant'Anna município × mês). Importa o 22 (que importa o 21 e o 14) e a honestdid_lib; confere as
     # coortes contra K_D2_resumo.json (22) e B1/B2 contra o F3 do E7 (14); lê o a09, o a16, a X1 (17, versionada),
