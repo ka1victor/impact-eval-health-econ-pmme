@@ -8,6 +8,18 @@
 
 ---
 
+## 26/10/2026 — Protocolo 62 (gradiente do preenchimento dentro das faixas)
+
+Motivo: o autor notou, na figura de dados crus (`output/apresentacao_banca2/exp_rdd_crua.png`), que o preenchimento parece subir com o IVS dentro das faixas de R$ 10 e 15 mil; protocolo descritivo congelado antes de calcular.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/62_protocolo_gradiente_dentro_das_faixas.md`](06_execucao/62_protocolo_gradiente_dentro_das_faixas.md) | inclinação do preenchimento no IVS dentro de cada faixa e seis explicações candidatas (região, candidatos por perto, composição, porte, concorrência, outras políticas) |
+
+---
+
 ## 26/10/2026 — Protocolo 61 executado: diagnóstico da queda no corte 0,300 (D-a a D-g)
 
 Motivo: execução do protocolo 61 (por que o preenchimento cai em 0,300), com Q1–Q3 reproduzidos antes de qualquer
