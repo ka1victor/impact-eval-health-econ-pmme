@@ -392,7 +392,7 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/02_conteudo_slides.md",
       "papel": "texto dos slides novos e quadro de correções",
-      "sha256": "da454c9be1e152fca437f3104ce200270ab54900b15fca097029c5c5ba6d1656"
+      "sha256": "5a637e18992f7f19e256604c9d69157bf930e1c83e767942ce0f9c209efc3e94"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
@@ -680,7 +680,7 @@
       "origem": "novo",
       "posicao": 37,
       "secao": "Robustez e discussão",
-      "titulo": "Robustez: as leituras resistem, com duas ressalvas declaradas"
+      "titulo": "Robustez: as leituras resistem, com ressalvas declaradas"
     },
     {
       "figura": null,
@@ -804,14 +804,14 @@
   "regra": "nada estimado; nada lido de data/; texto dos slides novos lido do doc 02; números das correções lidos de output/apresentacao_banca2/numeros_banca2.json; figuras de output/ como imagem",
   "saidas": [
     {
-      "bytes": 12101461,
+      "bytes": 12101374,
       "caminho": "output/apresentacao_banca2/deck_banca2_proposta.pptx",
-      "sha256": "4611876a6610d184a32858357ba6edb9fbc42412f0d55bea519862565b29c5da"
+      "sha256": "ce0dadfd3b921d3d4cd2233d2f4881857df52235815a648a04e76370349ca85e"
     },
     {
-      "bytes": 2346308,
+      "bytes": 2346221,
       "caminho": "output/apresentacao_banca2/slides_empiricos_banca2.pptx",
-      "sha256": "954e5d621b4f576397cf01072859d75f37c052b63285b7b14c5673033789471a"
+      "sha256": "01f75e1cc8e869410c90be85268ad17436d1b33995cb1afebf9f76c977694cd2"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py"

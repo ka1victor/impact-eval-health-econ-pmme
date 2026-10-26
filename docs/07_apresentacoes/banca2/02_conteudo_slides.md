@@ -91,7 +91,7 @@ teste confere este quadro contra o manifesto do deck.
 | 34 | novo | H3: no modelo de escolha, a UF de origem pesa mais que a bolsa | empírica: resultados |
 | 35 | novo | H4: o médico soma horas, mas metade já estava no município | empírica: resultados |
 | 36 | novo | Na cadeia, só a escolha e o registro do médico se movem | empírica: resultados |
-| 37 | novo | Robustez: as leituras resistem, com duas ressalvas declaradas | empírica: robustez |
+| 37 | novo | Robustez: as leituras resistem, com ressalvas declaradas | empírica: robustez |
 | 38 | novo | Discussão: o que não afirmamos e o que vem depois | empírica: discussão |
 | 39 | grupo 30 | Q&A | encerramento |
 | 40 | grupo 31 | Apêndice (divisor) | apêndice |
@@ -240,7 +240,7 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 | **H3** incentivo limitado | B contra o custo do lugar, dentro de V | o peso da bolsa é pequeno perto da distância e da origem | coeficientes do mesmo logit |
 | **H4** capacidade líquida | chegada → capacidade | o médico que chega soma horas ou só muda o registro | estudo de evento; comparação na nota de corte |
 
-> **H3 é a hipótese central (proposta do plano, delegada pelo autor e revisável por ele); H1 é o teste de consistência da cadeia.**
+> **H3 é a hipótese central; H1 testa a consistência da cadeia.**
 
 **Fontes:** plano da banca 2, §3; modelo da banca 1 (Moehling et al.; Redding e Rossi-Hansberg; Choné e Ma; Burdett, Shi e Wright).
 
@@ -555,7 +555,7 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 # Robustez e discussão
 
-## Robustez: as leituras resistem, com duas ressalvas declaradas
+## Robustez: as leituras resistem, com ressalvas declaradas
 
 `Robustez · Síntese`
 
@@ -568,7 +568,7 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 | H3 | D_UF positivo nas seis especificações, com q de BKY < 0,05 | pós-resultado: o M1 já era conhecido |
 | H4 | as horas totais aguentam violações de tendência até 1,30 vez a maior do pré | na nota de corte, o IC das horas totais contém zero |
 
-> **As ressalvas estão na tela; nenhuma especificação foi escolhida depois de ver o resultado.**
+> **Especificações fixadas em protocolo antes de estimar; a H3 é pós-resultado e está rotulada assim.**
 
 **Fontes:** `output/rdd_bolsa/N_estimativas.csv` (doc 49); `P1_estimativas.csv` (doc 57a); `E8_resumo.json` (E9); `P1h_magnitudes.csv` (doc 57i); `H_estimativas.csv` e `CA_estimativas.csv` (doc 57h). Teste a teste, com os números: apêndice.
 
