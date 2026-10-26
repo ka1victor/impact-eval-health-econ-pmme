@@ -16,8 +16,10 @@ Figuras e tabelas
 2. `h1_preenchimento.png`, `h2_escolha.png`, `h4_horas_medico.png` — uma linha por estimativa, com rótulo em
    português, o nulo marcado e o bloco "Como ler" na própria imagem (lição do grupo: gráficos de RDD sem
    explicação ficaram incompreensíveis).
-3. `cadeia_resumo_doc57.png` — as linhas do doc 57 (N1, A3, P1 M1, P4, P6, K1, realocação), cada uma na sua
-   escala, com a força da evidência.
+3. `cadeia_resumo_doc57.png` — as linhas do doc 57 (N1, A3, P1 M1, P4, P6, K1, realocação) e a da H3 (P1h,
+   D_UF), cada uma na sua escala, com a força da evidência dada por regra (`forca_da_linha`).
+   A figura da H3 não é desenhada aqui: o slide usa `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png`, gravada
+   pelo script 25c e auditada (auditoria 31); este script só confere o SHA-256 dela contra `P1h_resumo.json`.
 4. `tabela_descritiva_ciclos.{csv,png}` e `tabela_fontes.{csv,png}` — descritivas por ciclo (contadas aqui do
    quadro de células e do portão G1, faixa pela grade aplicada) e tabela de fontes.
 5. `cadeia_sintese_principal.png`, `cadeia_sintese_completa.png`, `descarte_preenchimento.png` — figuras do
@@ -31,7 +33,8 @@ Números
 Nenhum valor é digitado aqui: as listas NUMEROS e NUMEROS_NOVOS só declaram seletores (`json`, `json_lista`,
 `csv`, `texto`, `descritiva`, com `transf` opcional). Os números de texto citado (atos normativos e literatura)
 são extraídos por expressão regular do arquivo-fonte; se o trecho não existir, o script para. Os números do
-failure mode ficam num bloco separado. Nada da H3 (protocolo 52b) é lido ou calculado aqui.
+failure mode ficam num bloco separado. Os números da H3 (protocolo 52b) são lidos de `P1h_magnitudes.csv` e
+`P1h_resumo.json`, já auditados; nada da H3 é calculado aqui.
 
 Com `--atualizar-doc`, regrava o bloco `banca2:numeros` de
 `docs/07_apresentacoes/banca2/03_proveniencia_figuras_e_numeros.md` a partir do JSON.
@@ -436,7 +439,8 @@ NUMEROS_TEXTO: list[tuple[str, str, dict, str, str]] = [
 # --------------------------------------------------------------------------
 # Lidos da síntese vigente (doc 57, `S57_resumo.json`, chave "v": cada valor já traz o arquivo e o seletor de
 # origem) e dos CSVs de estimativas dos blocos (N, P1, P4/H, CA). As descritivas por ciclo são contadas aqui, do
-# quadro de células (`outcomes_V_celula.parquet`) e do resumo do portão G1. Nada da H3 (protocolo 52b) entra aqui.
+# quadro de células (`outcomes_V_celula.parquet`) e do resumo do portão G1. A H3 (protocolo 52b, doc 57i) é lida
+# de `P1h_magnitudes.csv` e `P1h_resumo.json` (auditoria 31), sem recálculo.
 
 def _v(chave: str) -> dict:
     return _j(S57, "v", chave, "v")
@@ -470,6 +474,20 @@ def _h(id_linha: str, restricao: str, coluna: str, parametro: str | None = None)
 
 def _ca(outcome: str, estatistica: str, coluna: str) -> dict:
     return _c(CA_EST, {"id_linha": "P4-CA", "outcome": outcome, "estatistica": estatistica}, coluna)
+
+
+P1H_CSV = "output/rdd_bolsa/P1h_magnitudes.csv"
+P1H_RES = "output/rdd_bolsa/P1h_resumo.json"
+P1H_FIG = "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png"
+
+
+def _p1h(filtro: dict, coluna: str) -> dict:
+    return _c(P1H_CSV, filtro, coluna)
+
+
+SENS_H3 = [("M2", "M2", "empilhado", "log da distância"), ("M4", "M4", "empilhado", "efeito fixo de UF da vaga"),
+           ("M5C1", "M5", "1", "só o ciclo 1"), ("M5C2", "M5", "2", "só o ciclo 2"), ("M5C3", "M5", "3", "só o ciclo 3"),
+           ("M7", "M7", "empilhado", "logit explodido, 1ª e 2ª opção")]
 
 
 NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
@@ -567,6 +585,31 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
                       ("M8", "media_bolsa_mil", "logit misto, média"), ("M9", "bolsa_mil", "logit aninhado"))],
     ("M7_INF", "EMPIRICO", _p1("M7", "empilhado", "ic95_inf"), "d4s", "M7: IC inferior"),
     ("M7_SUP", "EMPIRICO", _p1("M7", "empilhado", "ic95_sup"), "d4s", "M7: IC superior"),
+    # H3: peso da bolsa contra o da UF de origem no M1 (P1h, protocolo 52b; doc 57i; auditoria 31)
+    ("H3_ESTATUTO", "EMPIRICO", _j(P1H_RES, "estatuto"), "txt",
+     "P1h: estatuto do bloco (pós-resultado; regra da força da evidência na figura da cadeia)"),
+    ("H3_DUF", "EMPIRICO", _p1h({"id_linha": "P1h-1"}, "estimativa"), "d2",
+     "P1h-1: D_UF = θ_UF − 10·β no M1 (log-chance; mesma UF, outra região de saúde, contra toda a amplitude da bolsa)"),
+    ("H3_DUF_INF", "EMPIRICO", _p1h({"id_linha": "P1h-1"}, "ic95_inf"), "d2", "P1h-1: IC 95% inferior (cluster por conjunto)"),
+    ("H3_DUF_SUP", "EMPIRICO", _p1h({"id_linha": "P1h-1"}, "ic95_sup"), "d2", "P1h-1: IC 95% superior"),
+    ("H3_DUF_P", "EMPIRICO", _p1h({"id_linha": "P1h-1"}, "p_unilateral"), "p3", "P1h-1: p unilateral (H0: D_UF ≤ 0)"),
+    ("H3_DUF_HOLM", "EMPIRICO", _p1h({"id_linha": "P1h-1"}, "p_holm"), "p3",
+     "P1h-1: p de Holm (família de um teste; igual ao p unilateral)"),
+    *[(f"H3_{k}{s}", "EMPIRICO", _p1h({"id_linha": lin}, col), "d0", f"{lin}: {d}{dd} (km, método delta)")
+      for k, lin, d in (("K5", "P1h-2a", "K5, km a menos de distância com o peso de um degrau de R$ 5 mil (descritivo)"),
+                        ("K10", "P1h-2b", "K10, km a menos de distância com o peso de toda a amplitude (descritivo)"))
+      for s, col, dd in (("", "estimativa", ""), ("_INF", "ic95_inf", ", IC 95% inferior"),
+                         ("_SUP", "ic95_sup", ", IC 95% superior"))],
+    ("H3_K5_P", "EMPIRICO", _p1h({"id_linha": "P1h-2a"}, "p_unilateral"), "p3",
+     "P1h-2a: p unilateral de K5 (descritivo; não substitui o teste bilateral do P1a)"),
+    *[(f"H3_S_{k}", "EMPIRICO", _p1h({"id_linha": "P1h-3", "modelo": m, "ciclo": c}, "estimativa"), "d2",
+       f"P1h-3: D_UF em {m} ({d}), sensibilidade com BKY")
+      for k, m, c, d in SENS_H3],
+    *[(f"H3_{k}{s}", "EMPIRICO", _p1h({"id_linha": "FIG", "componente": comp}, col), "d2", f"peso no M1: {d}{dd}")
+      for k, comp, d in (("10B", "10β", "toda a amplitude da bolsa, 10·β"),
+                         ("THETA", "θ_UF", "mesma UF, outra região de saúde, θ_UF"))
+      for s, col, dd in (("", "estimativa", ""), ("_INF", "ic95_inf", ", IC 95% inferior"),
+                         ("_SUP", "ic95_sup", ", IC 95% superior"))],
     # H4: horas do médico (P4, protocolo 54; doc 57d), Rambachan–Roth e comparação local (protocolo 59; doc 57h)
     *[(f"P4_{o}_{s}", "EMPIRICO", _v(f"p4_{o.lower()}_{c}"), fm, f"P4 {d}: {dd}")
       for o, d in (("HT", "horas totais"), ("HM", "horas no município do posto"), ("HF", "horas fora do município do posto"))
@@ -1383,16 +1426,27 @@ def figura_h4(num: dict, destino: Path) -> dict:
 #   ("holm", código do p de Holm): p de Holm >= 0,05 -> "inconclusivo"; < 0,05 -> "rejeita zero (Holm)";
 #   ("ic", None): o IC 95% da própria linha contém o nulo -> "inconclusivo"; exclui -> "IC exclui o nulo";
 #   ("pre", código do p do Wald do pré): p >= 0,05 -> "ATT sob tendências paralelas"; < 0,05 -> "ATT com pré falhando";
-#   ("estatuto", código do estatuto do bloco): começa com EXPLORATORIO -> "exploratório".
+#   ("estatuto", código do estatuto do bloco): começa com EXPLORATORIO -> "exploratório";
+#   ("holm", código do p de Holm, código do estatuto): como "holm", mas se o estatuto do bloco termina em
+#   POS_RESULTADO e o Holm rejeita -> "rejeita zero, pós-resultado".
 # A regra é por linha; o doc 57 classifica a pergunta inteira (no P4, outros outcomes falham no pré).
 ALFA = 0.05
+POS_RESULTADO = "POS_RESULTADO"
 
 
 def forca_da_linha(num: dict, regra: tuple, codigos: tuple, nulo_valor: float) -> tuple[str, dict]:
-    tipo, cod = regra
+    tipo, cod = regra[:2]
     if tipo == "holm":
         p = float(num[cod]["valor_bruto"])
-        return ("inconclusivo" if p >= ALFA else "rejeita zero (Holm)"), {"regra": tipo, cod: p}
+        entradas = {"regra": tipo, cod: p}
+        if p >= ALFA:
+            return "inconclusivo", entradas
+        if len(regra) == 3:
+            e = str(num[regra[2]]["valor_bruto"])
+            entradas[regra[2]] = e
+            if e.endswith(POS_RESULTADO):
+                return "rejeita zero, pós-resultado", entradas
+        return "rejeita zero (Holm)", entradas
     if tipo == "ic":
         inf, sup = (float(num[c]["valor_bruto"]) for c in codigos[1:])
         return ("inconclusivo" if inf <= nulo_valor <= sup else "IC exclui o nulo"), {"regra": tipo, "inf": inf,
@@ -1412,6 +1466,9 @@ LINHAS_CADEIA_57 = [
     # (elo, rótulo, sub, est, inf, sup, nulo, log, sufixo, leitura curta, regra da força)
     ("ESCOLHA DO MÉDICO", "Peso da bolsa na 1ª opção (P1, M1)", "razão de chances por +R$ 5 mil · pacote do corte",
      "M1_RC", "M1_RC_INF", "M1_RC_SUP", 1.0, True, "", "p de Holm {M1_P}", ("holm", "M1_P")),
+    ("ESCOLHA DO MÉDICO", "UF de origem × bolsa (H3, D_UF)", "θ_UF − 10·β, log-chance · no modelo de escolha",
+     "H3_DUF", "H3_DUF_INF", "H3_DUF_SUP", 0.0, False, "", "p de Holm {H3_DUF_HOLM} (unilateral)",
+     ("holm", "H3_DUF_HOLM", "H3_ESTATUTO")),
     ("PREENCHIMENTO", "Célula aberta preenchida (A3)", "p.p. · ciclos 1–3, cortes empilhados · pacote do corte",
      "A3_EMP_TAU", "A3_EMP_INF", "A3_EMP_SUP", 0.0, False, " p.p.", "MDE {A3_EMP_MDE} p.p.", ("ic", None)),
     ("PREENCHIMENTO", "Vagas preenchidas por município (N1)", "com controle das vagas oferecidas · pacote do corte",
@@ -1435,7 +1492,7 @@ def figura_cadeia_57(num: dict, destino: Path) -> dict:
     reg = Registro()
     n = len(LINHAS_CADEIA_57)
     W, ALT = 12.4, 0.76
-    H = 1.15 + ALT * n + 0.95
+    H = 1.15 + ALT * n + 1.2
     fig = plt.figure(figsize=(W, H))
     reg.t(fig, 0.15 / W, (H - 0.18) / H, "A cadeia em uma figura: o que os dados dizem, pergunta a pergunta",
           fontsize=15, weight="bold", color=VERDE_ESC, va="top")
@@ -1449,7 +1506,8 @@ def figura_cadeia_57(num: dict, destino: Path) -> dict:
     registro = []
     cores_forca = {"inconclusivo": ("#e9ecef", "#3a3a3a"), "exploratório": ("#fff1d6", "#7a4a00"),
                    "ATT com pré falhando": ("#fde2e1", "#8a1c17"), "ATT sob tendências paralelas": ("#e3eefa", "#1f4f8a"),
-                   "rejeita zero (Holm)": ("#e3f2e7", "#0f5a2a"), "IC exclui o nulo": ("#e3f2e7", "#0f5a2a")}
+                   "rejeita zero (Holm)": ("#e3f2e7", "#0f5a2a"), "IC exclui o nulo": ("#e3f2e7", "#0f5a2a"),
+                   "rejeita zero, pós-resultado": ("#e3f2e7", "#0f5a2a")}
     for i, (elo, rot, sub, ce, ci, cs, v0, log, suf, leit, regra) in enumerate(LINHAS_CADEIA_57):
         forca, entradas_forca = forca_da_linha(num, regra, (ce, ci, cs), v0)
         y0 = topo - (i + 1) * ALT
@@ -1485,13 +1543,14 @@ def figura_cadeia_57(num: dict, destino: Path) -> dict:
         reg.t(fig, 10.55 / W, yc / H, forca, fontsize=10.5, color=frente, weight="bold", ha="center", va="center")
         registro.append({"linha": rot, "texto": txt, "codigos": [ce, ci, cs], "forca": forca,
                          "forca_regra": entradas_forca, "exclui_nulo": bool(excl)})
-    reg.t(fig, 0.15 / W, 0.68 / H, "Força da evidência, por linha: Holm ou IC com o nulo, inconclusivo; pré do Wald, ATT; "
-          "estatuto do bloco, exploratório. Nenhuma linha é causal-limpa.",
-          fontsize=10, color=TINTA2, va="center")
-    reg.t(fig, 0.15 / W, 0.4 / H, "Nada aqui é efeito da participação no PMM-E. Verde: o IC 95% exclui o nulo; "
-          "cinza: contém.", fontsize=10, color=TINTA2, va="center")
-    reg.t(fig, 0.15 / W, 0.08 / H, "Fontes: S57_resumo.json (doc 57); P4_estimativas.csv. " + FONTE_FIG, fontsize=8.5,
-          color=MUDO, va="bottom")
+    reg.t(fig, 0.15 / W, 0.93 / H, "Força da evidência, por linha: Holm ou IC com o nulo → inconclusivo; pré do Wald → ATT; "
+          "estatuto do bloco → exploratório;", fontsize=10, color=TINTA2, va="center")
+    reg.t(fig, 0.15 / W, 0.66 / H, "Holm < 0,05 num bloco pós-resultado → rejeita zero, pós-resultado. Nenhuma linha é "
+          "causal-limpa; a da H3 compara dois pesos do mesmo modelo de escolha.", fontsize=10, color=TINTA2, va="center")
+    reg.t(fig, 0.15 / W, 0.39 / H, "Nada aqui é efeito da participação no PMM-E nem da geografia. Verde: o IC 95% exclui "
+          "o nulo; cinza: contém.", fontsize=10, color=TINTA2, va="center")
+    reg.t(fig, 0.15 / W, 0.08 / H, "Fontes: S57_resumo.json (doc 57); P4_estimativas.csv; P1h_magnitudes.csv (doc 57i). "
+          + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
     fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
     plt.close(fig)
     return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
@@ -1619,7 +1678,24 @@ ENTRADAS = [
      "célula estabelecimento × curso", "ciclo + co_cnes_7d + cod_curso"),
     (POP2022, "população do Censo 2022 (cobertura da tabela de fontes)", "2022", "municípios", "habitantes",
      "co_ibge_7d"),
+    (RAIZ / P1H_CSV, "H3 (P1h, protocolo 52b; doc 57i; auditoria 31): D_UF, km equivalentes, sensibilidades e pesos",
+     "2026-10-26", "amostra do P1 (candidatos de 1ª opção, ciclos 1–3), M1 e sensibilidades", "log-chance; km",
+     "id_linha + modelo + ciclo (+ componente nas linhas FIG)"),
+    (RAIZ / P1H_RES, "H3: estatuto do bloco e hash da figura auditada", "2026-10-26", "P1h", "-", "estatuto; saidas"),
+    (RAIZ / P1H_FIG, "H3: figura dos pesos no M1, auditada (auditoria 31, A1 e A2); usada no slide sem redesenho",
+     "2026-10-26", "M1, ciclos 1–3", "log-chance", "-"),
 ]
+
+
+def conferir_p1h() -> None:
+    """A H3 entra só com as saídas auditadas: natureza EMPIRICO e figura com o hash gravado no resumo do P1h."""
+    res = _ler_json(P1H_RES)
+    if res.get("natureza_dos_dados") != "EMPIRICO":
+        raise SystemExit("ERRO: P1h_resumo.json sem natureza EMPIRICO")
+    if set(_ler_csv(P1H_CSV)["natureza_dos_dados"]) != {"EMPIRICO"}:
+        raise SystemExit("ERRO: P1h_magnitudes.csv com linha não EMPIRICO")
+    if sha256(RAIZ / P1H_FIG) != res["saidas"][P1H_FIG] or sha256(RAIZ / P1H_CSV) != res["saidas"][P1H_CSV]:
+        raise SystemExit("ERRO: figura ou CSV do P1h diferem do hash gravado em P1h_resumo.json")
 
 
 def _rel(p: Path) -> str:
@@ -1673,6 +1749,7 @@ def main() -> int:
     if set(tab["natureza_dos_dados"]) != {"EMPIRICO"}:
         raise SystemExit("ERRO: E8_tabela_sintese.csv com linha não EMPIRICO")
 
+    conferir_p1h()
     g = _galeria()
     figs, calc = figuras_regra(g)
 
@@ -1710,7 +1787,8 @@ def main() -> int:
         p = SAIDA / nome
         novas[nome] = fn(num, p)
         figs.append({"arquivo": p, "natureza": "EMPIRICO", "descricao": desc,
-                     "fontes": [RAIZ / S57, RAIZ / N_EST, RAIZ / P1_EST, RAIZ / CA_EST, E8_RESUMO]})
+                     "fontes": [RAIZ / S57, RAIZ / N_EST, RAIZ / P1_EST, RAIZ / CA_EST, E8_RESUMO]
+                     + ([RAIZ / P1H_CSV, RAIZ / P1H_RES] if nome == "cadeia_resumo_doc57.png" else [])})
     t_desc = linhas_tabela_descritiva(num)
     t_font = linhas_tabela_fontes(num)
     gravar_csv_tabela(t_desc, SAIDA / "tabela_descritiva_ciclos.csv")

@@ -433,11 +433,26 @@ class TestSlides(unittest.TestCase):
         for chave in ("regra é sharp", "H1:", "H2:", "H4:", "Na cadeia"):
             self.assertTrue(any(chave in t for t in com_figura), chave)
 
-    def test_h3_pendente_sem_numero(self) -> None:
+    def test_h3_com_o_p1h_auditado(self) -> None:
+        """A H3 sai do P1h auditado: título fiel à leitura pré-registrada, figura do P1h e cautelas obrigatórias."""
         h3 = next(s for s in self.slides if s["titulo"].startswith("## H3"))
-        self.assertIn("PENDENTE", h3["titulo"])
-        self.assertEqual(h3["codigos"], [])
-        self.assertIn("layout: pendente", h3["texto"])
+        self.assertNotIn("PENDENTE", h3["texto"])
+        self.assertIn("no modelo de escolha", h3["titulo"])
+        self.assertIn("output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png", h3["texto"])
+        for c in ("H3_DUF", "H3_DUF_INF", "H3_DUF_SUP", "H3_DUF_P", "H3_K10", "H3_K10_INF", "H3_K10_SUP",
+                  *[f"H3_S_{k}" for k, *_ in G.SENS_H3]):
+            self.assertIn(c, h3["codigos"])
+            self.assertTrue(self.todos[c]["arquivo"].startswith("output/rdd_bolsa/P1h_"), c)
+        corrido = " ".join(re.sub(r"(?m)^>\s?", "", h3["texto"]).split())
+        for frase in ("preferência revelada condicional ao modelo", "não efeito da geografia", "pacote do corte",
+                      "Escolha de quem se candidatou, entre vagas abertas", "mesma UF, outra região de saúde",
+                      "o IC contém zero", "não traz mais candidatos"):
+            self.assertIn(frase, corrido, frase)
+        # o limite unilateral do km só aparece ao lado do teste bilateral do P1a, que não rejeita
+        k5p, m1p = self.todos["H3_K5_P"]["valor"], self.todos["M1_P"]["valor"]
+        self.assertIn(f"p de {k5p} do km: é unilateral e descritivo", corrido)
+        self.assertIn(f"bilateral do P1a, com p {m1p}, que não rejeita", corrido)
+        self.assertGreaterEqual(float(self.todos["M1_P"]["valor_bruto"]), 0.05)
 
     def test_tabelas_do_doc_iguais_aos_csv(self) -> None:
         for titulo, csv in (("Oito bases oficiais", "tabela_fontes.csv"), ("Os três ciclos", "tabela_descritiva_ciclos.csv")):
@@ -489,7 +504,7 @@ class TestSlides(unittest.TestCase):
             "Vínculo não é presença",
             "pacote do corte",
             "Sem margem extensiva",
-            "PENDENTE",
+            "θ é preferência revelada condicional ao modelo, não efeito da geografia",
             "(estabelecimento × curso) com alguma confirmação ou homologação",
             "SGTES",
         ):
@@ -511,7 +526,8 @@ class TestOutrosDocs(unittest.TestCase):
 
     def test_readme_declara_estado_e_decisoes(self) -> None:
         t = README.read_text(encoding="utf-8")
-        self.assertIn("PENDENTE", t)
+        self.assertNotIn("PENDENTE", t)
+        self.assertIn("auditoria 31", t)
         self.assertIn("57_sintese_perguntas_reformuladas.md", t)
         self.assertIn("04_plano_entrega_empirica.md", t)
         self.assertIn("metodologia **econométrica**", t)
@@ -534,10 +550,12 @@ class TestOutrosDocs(unittest.TestCase):
 
 RESUMO_DA_ETAPA = {"E6_figuras": "output/rdd_bolsa/E6_resumo.json",
                    "E7_figuras": "output/rdd_bolsa/E7_resumo.json",
-                   "E9_figuras": "output/rdd_bolsa/E9_resumo.json"}
+                   "E9_figuras": "output/rdd_bolsa/E9_resumo.json",
+                   "P1h_figuras": "output/rdd_bolsa/P1h_resumo.json"}
 SCRIPT_DA_ETAPA = {"E6_figuras": "scripts/rdd_bolsa/13_estimar_E6_funil.py",
                    "E7_figuras": "scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py",
-                   "E9_figuras": "scripts/rdd_bolsa/16_estimar_E9_escolha.py"}
+                   "E9_figuras": "scripts/rdd_bolsa/16_estimar_E9_escolha.py",
+                   "P1h_figuras": "scripts/rdd_bolsa/25c_magnitudes_P1h.py"}
 
 
 @unittest.skipUnless(TEM_SAIDAS, "saídas da banca 2 ausentes")
@@ -597,12 +615,42 @@ class TestIntegridade(unittest.TestCase):
         for script in (SCRIPT, SCRIPT_DECK):
             self.assertNotIn('"data/', script.read_text(encoding="utf-8"), script.name)
 
-    def test_h3_fora_do_registro(self) -> None:
-        """Nada da H3 (protocolo 52b, saídas P1h) é calculado ou lido aqui."""
-        numeros = json.loads(NUMEROS.read_text(encoding="utf-8"))
-        texto = json.dumps(numeros, ensure_ascii=False)
-        self.assertNotIn("P1h", texto)
-        self.assertNotIn("25c_", SCRIPT.read_text(encoding="utf-8"))
+    def test_h3_lida_do_p1h_auditado(self) -> None:
+        """A H3 é lida das saídas do P1h, sem recálculo: nenhum código H3_ vem de outro arquivo, a figura e o CSV têm o
+        hash gravado no resumo do P1h, e o gerador não importa nem roda o script 25c."""
+        numeros = json.loads(NUMEROS.read_text(encoding="utf-8"))["numeros"]
+        h3 = {c: e for c, e in numeros.items() if c.startswith("H3_")}
+        self.assertGreaterEqual(len(h3), 20)
+        for c, e in h3.items():
+            self.assertIn(e["arquivo"], ("output/rdd_bolsa/P1h_magnitudes.csv", "output/rdd_bolsa/P1h_resumo.json"), c)
+        res = json.loads((ROOT / "output/rdd_bolsa/P1h_resumo.json").read_text(encoding="utf-8"))
+        self.assertEqual(res["natureza_dos_dados"], "EMPIRICO")
+        for rel in ("output/rdd_bolsa/P1h_magnitudes.csv", "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png"):
+            self.assertEqual(sha256(ROOT / rel), res["saidas"][rel], rel)
+        texto = SCRIPT.read_text(encoding="utf-8") + SCRIPT_DECK.read_text(encoding="utf-8")
+        self.assertNotIn("25c_", texto)
+
+    def test_h3_numeros_do_slide(self) -> None:
+        """Releitura independente do CSV do P1h: D_UF, IC do km com zero, sensibilidades todas positivas e com q < 0,05,
+        e a faixa da robustez vai do menor ao maior D_UF das sensibilidades."""
+        d = pd.read_csv(ROOT / "output/rdd_bolsa/P1h_magnitudes.csv", dtype=str, keep_default_na=False)
+        num = json.loads(NUMEROS.read_text(encoding="utf-8"))["numeros"]
+        p1 = d[d["id_linha"] == "P1h-1"].iloc[0]
+        self.assertEqual(num["H3_DUF"]["valor"], formatar(float(p1["estimativa"]), "d2"))
+        self.assertEqual(p1["rejeita_h0_5pct"], "True")
+        self.assertLess(float(p1["p_holm"]), 0.05)
+        k10 = d[d["id_linha"] == "P1h-2b"].iloc[0]
+        self.assertLess(float(k10["ic95_inf"]), 0.0)
+        self.assertGreater(float(k10["ic95_sup"]), 0.0)
+        sens = d[d["id_linha"] == "P1h-3"]
+        self.assertEqual(len(sens), len(G.SENS_H3))
+        self.assertTrue((sens["estimativa"].astype(float) > 0).all())
+        self.assertTrue((sens["q_bky"].astype(float) < 0.05).all())
+        est = {(r["modelo"], r["ciclo"]): float(r["estimativa"]) for _, r in sens.iterrows()}
+        self.assertEqual(min(est, key=est.get), ("M2", "empilhado"))
+        self.assertEqual(max(est, key=est.get), ("M5", "3"))
+        rob = next(s for s in slides() if s["titulo"].startswith("## Robustez"))
+        self.assertIn(f"de {num['H3_S_M2']['valor']} a {num['H3_S_M5C3']['valor']}", rob["texto"])
 
     def test_regra_desenhada_pela_funcao_do_relatorio(self) -> None:
         texto = SCRIPT.read_text(encoding="utf-8")
@@ -649,10 +697,12 @@ class TestFigurasNovas(unittest.TestCase):
         linhas = self.manifesto["figuras_novas"]["cadeia_resumo_doc57.png"]["linhas"]
         self.assertEqual(len(linhas), len(G.LINHAS_CADEIA_57))
         for ln, defin in zip(linhas, G.LINHAS_CADEIA_57):
-            tipo, cod = defin[-1]
+            tipo, cod = defin[-1][:2]
             nulo = defin[6]
             if tipo == "holm":
-                esperado = "inconclusivo" if float(todos[cod]["valor_bruto"]) >= 0.05 else "rejeita zero (Holm)"
+                pos = len(defin[-1]) == 3 and str(todos[defin[-1][2]]["valor_bruto"]).endswith("POS_RESULTADO")
+                esperado = ("inconclusivo" if float(todos[cod]["valor_bruto"]) >= 0.05
+                            else "rejeita zero, pós-resultado" if pos else "rejeita zero (Holm)")
             elif tipo == "ic":
                 inf, sup = (float(todos[c]["valor_bruto"]) for c in ln["codigos"][1:])
                 esperado = "inconclusivo" if inf <= nulo <= sup else "IC exclui o nulo"
@@ -734,9 +784,14 @@ class TestDeck(unittest.TestCase):
             achados = {x for x in tokens(limpar(texto.replace("\u00a0", " "))) if not ano(x)}
             self.assertEqual(achados - validos, set(), titulo)
 
-    def test_h3_pendente_no_deck(self) -> None:
+    def test_h3_no_deck(self) -> None:
         h3 = next(t for _, ti, t in self.novos if ti.startswith("H3"))
-        self.assertIn("PENDENTE", h3)
+        self.assertNotIn("PENDENTE", h3)
+        v = self.numeros["numeros"]
+        self.assertIn(f"{v['H3_DUF']['valor']} [{v['H3_DUF_INF']['valor']}; {v['H3_DUF_SUP']['valor']}]",
+                      h3.replace("\u00a0", " "))
+        fig = [e for e in self.manifesto["ordem_do_deck_proposto"] if e.get("titulo", "").startswith("H3")]
+        self.assertEqual([e["figura"] for e in fig], ["output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png"])
 
     def test_deck_proposto_ordem_e_correcoes(self) -> None:
         titulos = [t for _, t, _ in self.deck]

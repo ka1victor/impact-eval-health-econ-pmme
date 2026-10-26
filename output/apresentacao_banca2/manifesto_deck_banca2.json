@@ -70,18 +70,18 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/02_conteudo_slides.md",
       "papel": "texto dos slides novos e quadro de correções",
-      "sha256": "f12084dae27aea9d699416fd2456f64d2c7222f1df08cb4a4ea4e30d5e7ed795"
+      "sha256": "5a5f830f5b1caa12858755dd5267cdea27a8d79048b76bb75cd90b3274c78ec7"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
       "papel": "números das correções",
-      "sha256": "41a1a9d2753879ce5cdcf5998dcce40b45b3a9c0ea6a6c22354c8d7a98d3b533"
+      "sha256": "76306543df8b60df8b20e9c3ba19422e9dc56776525f2abd98ec67592a416099"
     },
     {
       "caminho": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
-      "no_pacote": "ppt/media/banca2_05_cadeia_resumo_doc57.png",
+      "no_pacote": "ppt/media/banca2_06_cadeia_resumo_doc57.png",
       "papel": "figura",
-      "sha256": "94ccdf93dab92ef1f8015f9b851c95597dc7188c6e82c3e2d6cde65943f62394"
+      "sha256": "d4a192a3f7e4d434b9f7d8cd40b9d6d912e919744de537e17d4f2944dc2a12c7"
     },
     {
       "caminho": "output/apresentacao_banca2/h1_preenchimento.png",
@@ -97,7 +97,7 @@
     },
     {
       "caminho": "output/apresentacao_banca2/h4_horas_medico.png",
-      "no_pacote": "ppt/media/banca2_04_h4_horas_medico.png",
+      "no_pacote": "ppt/media/banca2_05_h4_horas_medico.png",
       "papel": "figura",
       "sha256": "458fb6cc5500655a1175e0c92d91c292c3485386d14d4f8638bca206863a9723"
     },
@@ -106,6 +106,12 @@
       "no_pacote": "ppt/media/banca2_01_regra_bolsa_ivs_oficial.png",
       "papel": "figura",
       "sha256": "86cb89519386f64c74c2cb12961a7a1fa6090f63e6802c9e2a725b6bef20cd19"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
+      "no_pacote": "ppt/media/banca2_04_P1h_magnitudes.png",
+      "papel": "figura",
+      "sha256": "61bcc1b8f3c1d7f1ee831c136f24804619ead0e7ad95bab9174484f3ba07ce12"
     }
   ],
   "natureza_dos_dados": "EMPIRICO",
@@ -313,12 +319,12 @@
       "titulo": "H2: a bolsa pesa na escolha da vaga só no ciclo 2"
     },
     {
-      "figura": null,
-      "layout": "pendente",
+      "figura": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
+      "layout": "figura_esquerda",
       "origem": "novo",
       "posicao": 36,
       "secao": "Resultados",
-      "titulo": "H3: incentivo limitado — PENDENTE"
+      "titulo": "H3: no modelo de escolha, a UF de origem pesa mais que a bolsa"
     },
     {
       "figura": "output/apresentacao_banca2/h4_horas_medico.png",
@@ -447,14 +453,14 @@
   "regra": "nada estimado; nada lido de data/; texto dos slides novos lido do doc 02; números das correções lidos de output/apresentacao_banca2/numeros_banca2.json; figuras de output/ como imagem",
   "saidas": [
     {
-      "bytes": 11837028,
+      "bytes": 12115139,
       "caminho": "output/apresentacao_banca2/deck_banca2_proposta.pptx",
-      "sha256": "a77fb3c9e2e66990210afc4b6e3471163f915b69a006e24383f7994a174a87cc"
+      "sha256": "de3f0876862e764a109919cf6de4b5a9a68f2736bdb51906ec54964a1a918e45"
     },
     {
-      "bytes": 2063450,
+      "bytes": 2341561,
       "caminho": "output/apresentacao_banca2/slides_empiricos_banca2.pptx",
-      "sha256": "541819153317e3d08f0796e7b67a169861f21eb20ee4e56c7a0c66dad1cd5eed"
+      "sha256": "32ce87809fdbf50e227a308acf0c55ca6722cb05b026a11c57d02be46ba340c7"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py"

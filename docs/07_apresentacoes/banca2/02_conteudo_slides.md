@@ -3,7 +3,7 @@ documento: Conteúdo da apresentação — banca 2 (parte empírica)
 papel: fonte de verdade do que vai à tela; o deck é derivado
 escopo: hipótese econômica pela cadeia do modelo (H1–H4), base de dados e descritivas, metodologia econométrica e identificação, resultados, robustez e discussão; correções do deck do grupo
 slides: 15 novos no corpo (2 na hipótese, 13 na parte empírica) e 6 de apêndice; os demais são do deck do grupo
-estado: PRONTO para 28/10, com a H3 PENDENTE (protocolo 52b, em estimação e sujeito a auditoria)
+estado: PRONTO para 28/10; a H3 entrou com o P1h auditado (protocolo 52b, doc 57i, auditoria 31)
 atualizacao: 26 de outubro de 2026
 ---
 
@@ -51,7 +51,7 @@ econômica").
 | no lugar do 29 | Resultados | A bolsa é função exata do IVS: a regra é sharp | figura e tabela |
 | no lugar do 29 | Resultados | H1: o preenchimento não aumenta de forma detectável no corte | figura e texto |
 | no lugar do 29 | Resultados | H2: a bolsa pesa na escolha da vaga só no ciclo 2 | figura e texto |
-| no lugar do 29 | Resultados | H3: incentivo limitado — PENDENTE | pendente |
+| no lugar do 29 | Resultados | H3: no modelo de escolha, a UF de origem pesa mais que a bolsa | figura à esquerda e texto |
 | no lugar do 29 | Resultados | H4: o médico soma horas, mas metade já estava no município | figura e texto |
 | no lugar do 29 | Resultados | Na cadeia, só a escolha e o registro do médico se movem | figura |
 | no lugar do 29 | Resultados | Robustez: as leituras resistem, com duas ressalvas declaradas | tabela |
@@ -362,31 +362,42 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 
 ---
 
-## H3: incentivo limitado — PENDENTE
+## H3: no modelo de escolha, a UF de origem pesa mais que a bolsa
 
 `Resultados · H3`
 
-<!-- layout: pendente -->
+<!-- layout: figura_esquerda -->
 
-- **Teste congelado** no protocolo 52b em 26/10/2026, antes de calcular: o efeito de toda a amplitude da bolsa (R$ 10 mil → R$ 20 mil) é menor que o de a vaga ficar na UF de origem?
-- **Também:** a amplitude da bolsa expressa em km equivalentes de distância, com IC.
-- **Estado:** o script 25c (doc 57i) está sendo rodado por outra sessão e passa por auditoria independente antes de entrar aqui.
+![H3: pesos na utilidade da escolha da 1ª opção (M1), na mesma escala: bolsa, distância e lugar de origem](../../../output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png)
 
-> **PENDENTE: nenhum número da H3 neste slide até a auditoria.**
+- **Primária (P1h-1):** D_UF = θ_UF − 10·β = 1,98 [1,56; 2,40], p unilateral < 0,001 (Holm, família de um teste): toda a amplitude da bolsa (R$ 10 → 20 mil) pesa menos que a vaga estar na UF de origem.
+- **Lugar:** θ_UF é mesma UF, outra região de saúde, contra uma vaga em outra UF à mesma distância.
+- **Em km (descritivo):** toda a amplitude da bolsa vale 224 km a menos de distância [−18; 466]; o IC contém zero, como o de β.
+- **Sensibilidades:** D_UF positivo em todas: M2 1,18 · M4 1,73 · M5 por ciclo 2,34 · 1,31 · 2,37 · M7 2,07.
 
-**Fontes:** `docs/06_execucao/52b_protocolo_P1h_magnitudes.md`.
+> **Escolha de quem se candidatou, entre vagas abertas: θ é preferência revelada condicional ao modelo, não efeito da geografia; β é o pacote do corte.**
 
-**Números:** nenhum
+**Fontes:** `output/rdd_bolsa/P1h_magnitudes.csv` e `P1h_resumo.json` (doc 57i; protocolo 52b, pós-resultado); figura `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png`, gravada pelo script 25c, com os rótulos corrigidos pela auditoria 31 (achados A1 e A2).
+
+**Números:** `H3_DUF`, `H3_DUF_INF`, `H3_DUF_SUP`, `H3_DUF_P`, `H3_K10`, `H3_K10_INF`, `H3_K10_SUP`, `H3_S_M2`, `H3_S_M4`, `H3_S_M5C1`, `H3_S_M5C2`, `H3_S_M5C3`, `H3_S_M7`, `H3_10B`, `H3_10B_INF`, `H3_10B_SUP`, `H3_THETA`, `H3_THETA_INF`, `H3_THETA_SUP`, `H3_K5`, `H3_K5_P`, `M1_P`
 
 > [!NOTE]
-> **Nota de produção.** Slide reservado. Depois da auditoria, entra a figura
-> dos coeficientes do M1 na mesma escala de utilidade (plano, §5, item 3) e a
-> marca PENDENTE sai.
+> **Nota de produção.** A figura é a do P1h, sem redesenho; o gerador de
+> figuras confere o SHA-256 dela contra `P1h_resumo.json` antes de registrar
+> os números. O teste formal é pós-resultado: os coeficientes do M1 já eram
+> conhecidos quando o protocolo 52b foi congelado.
 
-> **Notas do apresentador.** Se perguntarem: a comparação usa os mesmos
-> coeficientes do M1. Uma comparação de magnitude com limite não depende de o
-> coeficiente da bolsa ser significativo, ao contrário da disposição a pagar,
-> que é uma razão e explode quando o denominador fica perto de zero.
+> **Notas do apresentador.** É a hipótese central: incentivo limitado. No
+> modelo de escolha, toda a amplitude da bolsa pesa 0,42 [−0,03; 0,87] na
+> utilidade, e a vaga na mesma UF de origem, fora da região de saúde, pesa
+> 2,40 [2,28; 2,53]. A bolsa pesa pouco perto do custo do lugar. Isso é
+> coerente com a H1 não detectar aumento de preenchimento: a bolsa reordena
+> os candidatos entre as vagas abertas (H2), e o que uma vaga ganha outra do
+> mesmo curso perde; ela não traz mais candidatos, e o logit não vê quem não
+> se inscreveu. Um degrau de R$ 5 mil vale 112 km, também com IC que contém
+> zero. Se perguntarem pelo p de 0,035 do km: é unilateral e descritivo; o
+> teste pré-registrado da bolsa é o bilateral do P1a, com p 0,065, que não
+> rejeita. Não usamos o km como prova de que a bolsa importa.
 
 ---
 
@@ -429,7 +440,7 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 
 > **Nenhuma pergunta tem hoje evidência causal limpa de mudança no resultado medido.**
 
-**Fontes:** `output/rdd_bolsa/S57_resumo.json` (doc 57, §2 e §4); figura por `scripts/apresentacao/gerar_figuras_banca2.py`.
+**Fontes:** `output/rdd_bolsa/S57_resumo.json` (doc 57, §2 e §4); `output/rdd_bolsa/P1h_magnitudes.csv` (doc 57i); figura por `scripts/apresentacao/gerar_figuras_banca2.py`.
 
 **Números:** nenhum
 
@@ -438,8 +449,10 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 > em P6 Y1 é quase mecânico. Verde em P4 é associação: nas horas totais o pré
 > passa e a conclusão aguenta violações de tendência do tamanho das do pré,
 > mas outros outcomes do P4 falham no pré. A força de cada linha sai de uma
-> regra fixa do gerador sobre os valores de `output/`. A escolha no ciclo 2
-> aparece no slide da H2.
+> regra fixa do gerador sobre os valores de `output/`. A linha da H3 rejeita
+> zero, mas é pós-resultado e compara dois pesos do mesmo modelo de escolha:
+> não é efeito da bolsa nem da geografia. A escolha no ciclo 2 aparece no
+> slide da H2.
 
 ---
 
@@ -457,21 +470,24 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 | H1 | IC honesto de N1 (M do protocolo) | [−79,58; +78,07] | **ressalva:** não informa |
 | H2 | outras especificações do logit (M0, M2, M4, M7, M8, M9) | de +0,0304 a +0,0759 por R$ 1 mil | positivo em todas; o IC contém zero só no M1 e no M7 |
 | H2 | E9 no ciclo 2: cortes placebo e spline cúbico | p por posto 0,036; spline cúbico p 0,083 | robusto a placebos; sensível à forma do IVS |
+| H3 | D_UF em M2, M4, M5 por ciclo e M7 (BKY entre as seis) | de 1,18 a 2,37 | positivo em todas, com q de BKY < 0,05; pós-resultado |
 | H4 | Rambachan–Roth (Δ^RM, média do pós) | ruptura de M̄: 1,30 (totais), 1,90 (posto), 0,78 (fora) | totais e posto aguentam violações do tamanho das do pré |
 | H4 | comparação na nota de corte (P4-CA) | totais +7,91 [−0,63; +16,45]; pré p 0,837 | mesma direção; o IC contém zero |
 | todas | Holm nas primárias; BKY nas secundárias | nenhuma primária rejeita zero, salvo o Y1 do P6 | o Y1 é quase mecânico |
 
 > **As ressalvas estão na tela: nenhuma especificação foi escolhida depois de ver o resultado.**
 
-**Fontes:** `output/rdd_bolsa/N_estimativas.csv` (doc 49, §3 e §7); `P1_estimativas.csv` (doc 57a); `E8_resumo.json` (E9); `H_estimativas.csv` e `CA_estimativas.csv` (doc 57h); doc 57, §3.
+**Fontes:** `output/rdd_bolsa/N_estimativas.csv` (doc 49, §3 e §7); `P1_estimativas.csv` (doc 57a); `E8_resumo.json` (E9); `P1h_magnitudes.csv` (doc 57i); `H_estimativas.csv` e `CA_estimativas.csv` (doc 57h); doc 57, §3.
 
-**Números:** `N1_H030_TAU`, `N1_H080_TAU`, `N1_DONUT_TAU`, `N1_DONUT_INF`, `N1_DONUT_SUP`, `N1_UNICO_TAU`, `N1_UNICO_INF`, `N1_UNICO_SUP`, `N1_HON_INF`, `N1_HON_SUP`, `M7_COEF`, `M4_COEF`, `E9_C2_PPOSTO`, `E9_C2_CUB_P`, `RR_HT`, `RR_HM`, `RR_HF`, `CA_HT_EST`, `CA_HT_INF`, `CA_HT_SUP`, `CA_HT_PRE`
+**Números:** `N1_H030_TAU`, `N1_H080_TAU`, `N1_DONUT_TAU`, `N1_DONUT_INF`, `N1_DONUT_SUP`, `N1_UNICO_TAU`, `N1_UNICO_INF`, `N1_UNICO_SUP`, `N1_HON_INF`, `N1_HON_SUP`, `M7_COEF`, `M4_COEF`, `E9_C2_PPOSTO`, `E9_C2_CUB_P`, `H3_S_M2`, `H3_S_M5C3`, `RR_HT`, `RR_HM`, `RR_HF`, `CA_HT_EST`, `CA_HT_INF`, `CA_HT_SUP`, `CA_HT_PRE`
 
 > **Notas do apresentador.** Duas ressalvas: com um só coeficiente do controle,
 > N1 rejeitaria zero depois do Holm, mas o Wald rejeita essa restrição; e o IC
 > honesto, com o M da regra de bolso, sai largo demais para informar. Ruptura
 > de M̄ igual a 1 quer dizer que a conclusão aguenta violações de tendência do
-> mesmo tamanho das vistas no pré.
+> mesmo tamanho das vistas no pré. Na H3, a faixa de 1,18 a 2,37 vai do M2
+> (distância em log) ao ciclo 3; o q de BKY é o piso da grade do algoritmo, e
+> o P1h é pós-resultado, porque os coeficientes do M1 já eram conhecidos.
 
 ---
 
@@ -507,7 +523,7 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 - **Dal Bó, Finan e Rossi (2013).** Salário anunciado sorteado, +33%: aceitação +15,1 p.p. e candidaturas +26%.
 - **Bobba et al.** Adicional de +13% por regra, numa RDD: o preenchimento não mudou; o professor que chegou era melhor.
 - **Aqui.** Degrau de +50% em 0,300 e +33% em 0,400; o IC da célula aberta admite no máximo +3,2 p.p., com os cortes empilhados.
-- **Próximos passos.** Ciclo 3 com a competência 202703 publicada, completa e madura; pedidos do universo de inscritos e da folha de pagamento; H3 depois da auditoria.
+- **Próximos passos.** Ciclo 3 com a competência 202703 publicada, completa e madura; pedidos do universo de inscritos e da folha de pagamento.
 
 > **Contextos e outcomes diferentes: lá, servidores e aceitação da oferta; aqui, especialistas e célula com confirmação ou homologação.**
 

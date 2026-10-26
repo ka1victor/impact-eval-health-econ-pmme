@@ -4347,6 +4347,398 @@
       "formato": "d4s",
       "descricao": "M7: IC superior"
     },
+    "H3_ESTATUTO": {
+      "valor": "PROTOCOLO_52B_POS_RESULTADO",
+      "valor_bruto": "PROTOCOLO_52B_POS_RESULTADO",
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1h_resumo.json",
+        "caminho": [
+          "estatuto"
+        ]
+      },
+      "formato": "txt",
+      "descricao": "P1h: estatuto do bloco (pós-resultado; regra da força da evidência na figura da cadeia)"
+    },
+    "H3_DUF": {
+      "valor": "1,98",
+      "valor_bruto": 1.978416458,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-1"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "P1h-1: D_UF = θ_UF − 10·β no M1 (log-chance; mesma UF, outra região de saúde, contra toda a amplitude da bolsa)"
+    },
+    "H3_DUF_INF": {
+      "valor": "1,56",
+      "valor_bruto": 1.56035674,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-1"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "P1h-1: IC 95% inferior (cluster por conjunto)"
+    },
+    "H3_DUF_SUP": {
+      "valor": "2,40",
+      "valor_bruto": 2.396476176,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-1"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "P1h-1: IC 95% superior"
+    },
+    "H3_DUF_P": {
+      "valor": "< 0,001",
+      "valor_bruto": 8.856848117e-21,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-1"
+        },
+        "coluna": "p_unilateral"
+      },
+      "formato": "p3",
+      "descricao": "P1h-1: p unilateral (H0: D_UF ≤ 0)"
+    },
+    "H3_DUF_HOLM": {
+      "valor": "< 0,001",
+      "valor_bruto": 8.856848117e-21,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-1"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "P1h-1: p de Holm (família de um teste; igual ao p unilateral)"
+    },
+    "H3_K5": {
+      "valor": "112",
+      "valor_bruto": 111.9797473,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-2a"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d0",
+      "descricao": "P1h-2a: K5, km a menos de distância com o peso de um degrau de R$ 5 mil (descritivo) (km, método delta)"
+    },
+    "H3_K5_INF": {
+      "valor": "−9",
+      "valor_bruto": -9.060073029,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-2a"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d0",
+      "descricao": "P1h-2a: K5, km a menos de distância com o peso de um degrau de R$ 5 mil (descritivo), IC 95% inferior (km, método delta)"
+    },
+    "H3_K5_SUP": {
+      "valor": "233",
+      "valor_bruto": 233.0195676,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-2a"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d0",
+      "descricao": "P1h-2a: K5, km a menos de distância com o peso de um degrau de R$ 5 mil (descritivo), IC 95% superior (km, método delta)"
+    },
+    "H3_K10": {
+      "valor": "224",
+      "valor_bruto": 223.9594946,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-2b"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d0",
+      "descricao": "P1h-2b: K10, km a menos de distância com o peso de toda a amplitude (descritivo) (km, método delta)"
+    },
+    "H3_K10_INF": {
+      "valor": "−18",
+      "valor_bruto": -18.12014606,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-2b"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d0",
+      "descricao": "P1h-2b: K10, km a menos de distância com o peso de toda a amplitude (descritivo), IC 95% inferior (km, método delta)"
+    },
+    "H3_K10_SUP": {
+      "valor": "466",
+      "valor_bruto": 466.0391352,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-2b"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d0",
+      "descricao": "P1h-2b: K10, km a menos de distância com o peso de toda a amplitude (descritivo), IC 95% superior (km, método delta)"
+    },
+    "H3_K5_P": {
+      "valor": "0,035",
+      "valor_bruto": 0.03489611501,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-2a"
+        },
+        "coluna": "p_unilateral"
+      },
+      "formato": "p3",
+      "descricao": "P1h-2a: p unilateral de K5 (descritivo; não substitui o teste bilateral do P1a)"
+    },
+    "H3_S_M2": {
+      "valor": "1,18",
+      "valor_bruto": 1.176271719,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-3",
+          "modelo": "M2",
+          "ciclo": "empilhado"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "P1h-3: D_UF em M2 (log da distância), sensibilidade com BKY"
+    },
+    "H3_S_M4": {
+      "valor": "1,73",
+      "valor_bruto": 1.732335186,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-3",
+          "modelo": "M4",
+          "ciclo": "empilhado"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "P1h-3: D_UF em M4 (efeito fixo de UF da vaga), sensibilidade com BKY"
+    },
+    "H3_S_M5C1": {
+      "valor": "2,34",
+      "valor_bruto": 2.343017749,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-3",
+          "modelo": "M5",
+          "ciclo": "1"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "P1h-3: D_UF em M5 (só o ciclo 1), sensibilidade com BKY"
+    },
+    "H3_S_M5C2": {
+      "valor": "1,31",
+      "valor_bruto": 1.310247553,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-3",
+          "modelo": "M5",
+          "ciclo": "2"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "P1h-3: D_UF em M5 (só o ciclo 2), sensibilidade com BKY"
+    },
+    "H3_S_M5C3": {
+      "valor": "2,37",
+      "valor_bruto": 2.372508452,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-3",
+          "modelo": "M5",
+          "ciclo": "3"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "P1h-3: D_UF em M5 (só o ciclo 3), sensibilidade com BKY"
+    },
+    "H3_S_M7": {
+      "valor": "2,07",
+      "valor_bruto": 2.067160415,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "P1h-3",
+          "modelo": "M7",
+          "ciclo": "empilhado"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "P1h-3: D_UF em M7 (logit explodido, 1ª e 2ª opção), sensibilidade com BKY"
+    },
+    "H3_10B": {
+      "valor": "0,42",
+      "valor_bruto": 0.4239598739,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "FIG",
+          "componente": "10β"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "peso no M1: toda a amplitude da bolsa, 10·β"
+    },
+    "H3_10B_INF": {
+      "valor": "−0,03",
+      "valor_bruto": -0.026506294,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "FIG",
+          "componente": "10β"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "peso no M1: toda a amplitude da bolsa, 10·β, IC 95% inferior"
+    },
+    "H3_10B_SUP": {
+      "valor": "0,87",
+      "valor_bruto": 0.8744260417,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "FIG",
+          "componente": "10β"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "peso no M1: toda a amplitude da bolsa, 10·β, IC 95% superior"
+    },
+    "H3_THETA": {
+      "valor": "2,40",
+      "valor_bruto": 2.402376332,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "FIG",
+          "componente": "θ_UF"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "peso no M1: mesma UF, outra região de saúde, θ_UF"
+    },
+    "H3_THETA_INF": {
+      "valor": "2,28",
+      "valor_bruto": 2.277667654,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "FIG",
+          "componente": "θ_UF"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "peso no M1: mesma UF, outra região de saúde, θ_UF, IC 95% inferior"
+    },
+    "H3_THETA_SUP": {
+      "valor": "2,53",
+      "valor_bruto": 2.52708501,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "FIG",
+          "componente": "θ_UF"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "peso no M1: mesma UF, outra região de saúde, θ_UF, IC 95% superior"
+    },
     "P4_HT_ATT": {
       "valor": "+6,6",
       "valor_bruto": 6.604264097,

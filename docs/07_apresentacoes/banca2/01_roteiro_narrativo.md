@@ -3,7 +3,7 @@
 > **Classificação:** decisão de comunicação, não de método<br>
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
 > **Plano que este roteiro executa:** [04_plano_entrega_empirica.md](04_plano_entrega_empirica.md), §3 a §5 e §9<br>
-> **Estado:** pronto para 28/10, com a H3 PENDENTE (protocolo 52b em estimação e auditoria)<br>
+> **Estado:** pronto para 28/10; a H3 entrou com o P1h auditado (doc 57i, auditoria 31)<br>
 > **Atualização:** 26 de outubro de 2026
 
 ---
@@ -26,7 +26,7 @@ da história e ganha explicação dentro do modelo.
 | Hipótese econômica | que setas do modelo testamos, e com que equação? | cadeia H1–H4; ponte modelo → equação |
 | Base de dados e descritivas | de onde vêm os dados e como são os três ciclos? | tabela de fontes; tabela descritiva por ciclo |
 | Metodologia econométrica | que estimador para cada hipótese, e o que precisa valer? | um estimador por hipótese; hipóteses de identificação |
-| Resultados | o que se move e o que não se move? | regra sharp; H1; H2; H3 (PENDENTE); H4; cadeia-resumo |
+| Resultados | o que se move e o que não se move? | regra sharp; H1; H2; H3; H4; cadeia-resumo |
 | Robustez e discussão | as leituras aguentam? o que o contraste não mede? | robustez; limites; magnitude e próximos passos |
 
 ## 2. Hipóteses pela cadeia do modelo (decisão de 26/10/2026)
@@ -35,7 +35,7 @@ da história e ganha explicação dentro do modelo.
 |---|---|---|
 | **H1** preenchimento | B → Pr(Y = 1) | inconclusiva: não se detecta aumento; o IC da célula aberta descarta ganhos grandes com os cortes empilhados |
 | **H2** escolha | B → V → π | inconclusiva na primária; o sinal robusto está só no ciclo 2 |
-| **H3** incentivo limitado | a bolsa contra o custo do lugar, dentro de V | **pendente** (protocolo 52b) |
+| **H3** incentivo limitado | a bolsa contra o custo do lugar, dentro de V | no modelo de escolha, a vaga na UF de origem pesa mais que toda a amplitude da bolsa; pós-resultado, e θ é preferência revelada, não efeito da geografia |
 | **H4** capacidade líquida | chegada → capacidade | associação: o médico soma horas cadastradas, mas metade já estava no município |
 
 A recomendação do plano (§3), delegada pelo autor e revisável por ele, é a H3
@@ -74,8 +74,10 @@ ameaça comum é o pacote do corte.
 A regra sharp abre o bloco, porque é ela que torna a descontinuidade
 possível. Depois, uma hipótese por slide, sempre com a mesma estrutura:
 título-afirmação, figura com "Como ler" dentro, duas linhas de leitura e a
-frase de cautela. A cadeia-resumo fecha o bloco com as linhas do doc 57 e a
-força da evidência de cada uma.
+frase de cautela. A H3 usa a figura do P1h, auditada, com os pesos na mesma
+escala; o km equivalente entra como descritivo, e o limite unilateral dele
+não substitui o teste bilateral do P1a. A cadeia-resumo fecha o bloco com as
+linhas do doc 57, a da H3 e a força da evidência de cada uma, dada por regra.
 
 As figuras foram refeitas para o grupo: cada linha diz em português o que
 compara, o nulo é uma linha preta, a referência do protocolo é tracejada, e
@@ -90,7 +92,7 @@ declaradas (o Holm de N1 depende do coeficiente do controle; o IC honesto não
 informa). Dois slides de discussão: os limites (pacote do corte, margem
 extensiva ausente, vínculo não é presença, não é participação no PMM-E) e a
 magnitude da literatura com os próximos passos (ciclo 3 em 202703; pedidos
-externos; H3 depois da auditoria).
+externos).
 
 ## 4. Frases que não podem mudar
 
@@ -129,3 +131,4 @@ IVS como running variable. O deck original não é alterado.
 |---|---|
 | 19/10/2026 | primeira versão, a partir do doc 44 e das saídas E3–E9; rascunho pendente das decisões do autor |
 | 26/10/2026 | reescrita no arco do plano da entrega empírica (H1–H4 pela cadeia do modelo; metodologia econométrica), com a síntese do doc 57; H3 pendente |
+| 26/10/2026 | H3 com o P1h auditado (doc 57i, auditoria 31): slide, linha na cadeia-resumo e linha na robustez |

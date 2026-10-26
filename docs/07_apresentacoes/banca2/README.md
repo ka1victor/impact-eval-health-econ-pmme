@@ -2,9 +2,10 @@
 
 > **Formato:** markdown com imagens, para ler no GitHub ou no Obsidian; o deck
 > `.pptx` é derivado<br>
-> **Estado:** **PRONTO** para 28/10, com a **H3 PENDENTE**: o resultado vem do
-> protocolo 52b (script 25c, doc 57i), em estimação em outra sessão e sujeito
-> a auditoria independente. O slide da H3 está reservado e marcado.<br>
+> **Estado:** **PRONTO** para 28/10. A H3 entrou com o P1h auditado
+> (protocolo 52b, doc 57i, auditoria 31 aprovada com correções de rótulo):
+> slide com a figura do P1h, os números lidos de `output/` e a força da
+> evidência na cadeia-resumo.<br>
 > **Escopo:** os slides novos da banca 2 (hipótese econômica pela cadeia do
 > modelo; base de dados e descritivas; metodologia econométrica e
 > identificação; resultados, robustez e discussão) e as correções no deck do
@@ -45,7 +46,8 @@ valendo para o E9, o E7 e a literatura de magnitude.
 | 26/10/2026 | "Metodologia" é a metodologia **econométrica** | autor |
 | 26/10/2026 | o arco testa cada seta do modelo: H1 preenchimento, H2 escolha, H3 incentivo limitado, H4 capacidade líquida; H3 central como proposta revisável | autor delegou (plano, §9) |
 | 26/10/2026 | a variável de efeito da H1 é o número de vagas preenchidas controlando as vagas oferecidas (N1), com a célula aberta (A3) e o que o IC descarta | grupo e autor |
-| 26/10/2026 | a H3 entra só depois da auditoria do protocolo 52b; até lá, slide PENDENTE | plano, §6.1 |
+| 26/10/2026 | a H3 entra só depois da auditoria do protocolo 52b; até lá, o slide ficou reservado | plano, §6.1 |
+| 26/10/2026 | a H3 entra com o P1h auditado (auditoria 31): título "no modelo de escolha", θ_UF como "mesma UF, outra região de saúde", o km sem valor de prova (o teste bilateral do P1a não rejeita) | coordenador |
 
 Em aberto com o autor: a hipótese central (H3 ou H1), já revisável; quem
 apresenta em 28/10 e quem em 04/11.
@@ -68,7 +70,9 @@ PMME_DECK_GRUPO="<deck do grupo>" python3 -m unittest tests.test_conteudo_banca2
 
 Saídas em `output/apresentacao_banca2/`: as figuras (`h1_preenchimento.png`,
 `h2_escolha.png`, `h4_horas_medico.png`, `cadeia_resumo_doc57.png`,
-`regra_bolsa_ivs_oficial.png`), as tabelas (`tabela_descritiva_ciclos` e
+`regra_bolsa_ivs_oficial.png`; a figura da H3 é a do P1h,
+`output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png`, usada sem redesenho e
+conferida pelo hash), as tabelas (`tabela_descritiva_ciclos` e
 `tabela_fontes`, em CSV e PNG), o registro de números
 (`numeros_banca2.json`), o manifesto das figuras, o deck proposto
 (`deck_banca2_proposta.pptx`), só os slides novos
@@ -83,8 +87,7 @@ inclusão fica para o coordenador do pipeline.
 | Hipótese econômica | ✅ | ✅ (formas nativas) | ✅ |
 | Base de dados e descritivas | ✅ | ✅ (tabelas nativas) | ✅ |
 | Metodologia econométrica | ✅ | ✅ (tabelas nativas) | ✅ |
-| Resultados: regra, H1, H2, H4, cadeia | ✅ | ✅ | ✅ |
-| Resultados: H3 | ⚠️ PENDENTE | ⚠️ | — |
+| Resultados: regra, H1, H2, H3, H4, cadeia | ✅ | ✅ | ✅ |
 | Robustez e discussão | ✅ | ✅ | ✅ |
 | Correções no deck do grupo | ✅ | — | ✅ |
 
@@ -101,7 +104,7 @@ e conferido por `tests/test_conteudo_banca2.py` contra os arquivos de
 | regra e failure mode | [`auditorias/16`](../../auditorias/16_ivs_2010_oficial_e_arquivo_local.md), [`auditorias/19`](../../auditorias/19_reestimacao_base_oficial_failure_mode.md) |
 | H1 | [`06_execucao/49`](../../06_execucao/49_resultados_contagem_vagas_preenchidas.md), §3 e §15; [`49b`](../../06_execucao/49b_diagnostico_contagem_porte.md) |
 | H2 | [`06_execucao/57a`](../../06_execucao/57a_resultados_P1_escolha.md); E9 no [doc 44](../../06_execucao/44_sintese_rdd_bolsa_multioutcome.md), §5.2 |
-| H3 | [`06_execucao/52b`](../../06_execucao/52b_protocolo_P1h_magnitudes.md) (protocolo; resultado pendente) |
+| H3 | [`06_execucao/57i`](../../06_execucao/57i_resultados_P1h_magnitudes.md) (resultado); [`52b`](../../06_execucao/52b_protocolo_P1h_magnitudes.md) (protocolo); [`auditorias/31`](../../auditorias/31_auditoria_P1h_magnitudes.md) |
 | H4 | [`06_execucao/57d`](../../06_execucao/57d_resultados_P4_trajetoria.md), [`57f`](../../06_execucao/57f_resultados_P6_mecanismo.md), [`57h`](../../06_execucao/57h_resultados_P3P4_sensibilidade.md) |
 | síntese e cadeia | [`06_execucao/57`](../../06_execucao/57_sintese_perguntas_reformuladas.md) |
 | co-políticas | [`auditorias/18`](../../auditorias/18_politicas_nos_mesmos_cortes_ivs.md) |

@@ -351,10 +351,11 @@ def montar(sl: dict, rid_img: str | None) -> str:
         if sl["marcadores"]:
             marcadores(s, sl["marcadores"], X0, Y0 + h + 0.2, X1 - X0, y_fim - (Y0 + h + 0.2), sz=12)
     elif lay == "figura_esquerda":
-        w, h = encaixar(sl["imagem"], 7.4, y_fim - Y0)
-        imagem(s, rid_img, X0, Y0, w, h, sl["alt"])
+        w, h = encaixar(sl["imagem"], 8.3, y_fim - Y0)
+        y_img = Y0 + max(0.0, (y_fim - Y0 - h) / 2)
+        imagem(s, rid_img, X0, y_img, w, h, sl["alt"])
         xm = X0 + w + 0.3
-        marcadores(s, sl["marcadores"], xm, Y0 + 0.1, X1 - xm, y_fim - Y0 - 0.1, sz=13)
+        marcadores(s, sl["marcadores"], xm, y_img + 0.05, X1 - xm, y_fim - y_img - 0.05, sz=12.5)
     elif lay == "figura_topo":
         h_tab = 0.0
         if sl["tabela"]:

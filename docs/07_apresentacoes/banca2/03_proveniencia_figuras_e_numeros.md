@@ -7,7 +7,7 @@
 > (figuras, tabelas e números) e [`scripts/apresentacao/gerar_deck_banca2.py`](../../../scripts/apresentacao/gerar_deck_banca2.py)
 > (deck)<br>
 > **Teste:** [`tests/test_conteudo_banca2.py`](../../../tests/test_conteudo_banca2.py)<br>
-> **Atualização:** 26 de outubro de 2026
+> **Atualização:** 26 de outubro de 2026 (H3 com o P1h auditado)
 
 > [!IMPORTANT]
 > **Como a conferência funciona.** O bloco da §2 é **gerado** pelo script a
@@ -31,7 +31,8 @@
 | `G2` | H1: N1 com e sem controle e A3 empilhado e por corte, com "Como ler" | H1 | `output/apresentacao_banca2/h1_preenchimento.png` | `scripts/apresentacao/gerar_figuras_banca2.py` | EMPIRICO |
 | `G3` | H2: razão de chances da 1ª opção (M1, M5 por ciclo, E9 ciclo 2), com "Como ler" | H2 | `output/apresentacao_banca2/h2_escolha.png` | idem | EMPIRICO |
 | `G4` | H4: horas do médico (P4) e comparação na nota de corte (P4-CA), com "Como ler" | H4 | `output/apresentacao_banca2/h4_horas_medico.png` | idem | EMPIRICO |
-| `G5` | cadeia-resumo com as linhas do doc 57 (N1, A3, P1 M1, P4, P6, K1, realocação) e a força da evidência | Na cadeia | `output/apresentacao_banca2/cadeia_resumo_doc57.png` | idem | EMPIRICO |
+| `G5` | cadeia-resumo com as linhas do doc 57 (N1, A3, P1 M1, P4, P6, K1, realocação), a da H3 (P1h, D_UF) e a força da evidência | Na cadeia | `output/apresentacao_banca2/cadeia_resumo_doc57.png` | idem | EMPIRICO |
+| `G12` | H3: pesos na utilidade da escolha (M1), na mesma escala, com os rótulos corrigidos pela auditoria 31 | H3 | `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png` | `scripts/rdd_bolsa/25c_magnitudes_P1h.py` (não é redesenhada aqui) | EMPIRICO |
 | `G6` | tabela descritiva por ciclo | (no deck, tabela nativa) | `output/apresentacao_banca2/tabela_descritiva_ciclos.png` e `.csv` | idem | EMPIRICO |
 | `G7` | tabela de fontes | (no deck, tabela nativa) | `output/apresentacao_banca2/tabela_fontes.png` e `.csv` | idem | EMPIRICO |
 | `G8` | a figura da regra com o arquivo de IVS errado no eixo | fora do deck | `output/apresentacao_banca2/failure_mode/regra_bolsa_arquivo_errado_FAILURE_MODE.png` | gravada em 19/10/2026 pela versão anterior do gerador; **não regenerada** | **FAILURE_MODE** |
@@ -63,7 +64,16 @@
   falhando"); o estatuto EXPLORATORIO do bloco dá "exploratório". A regra e as
   entradas de cada linha ficam no manifesto (`forca_regra`). Ela é por linha:
   o doc 57 classifica a pergunta inteira, e no P4 outros outcomes falham no
-  pré, o que a leitura curta da linha diz.
+  pré, o que a leitura curta da linha diz. Na linha da H3, a regra do Holm
+  recebe também o estatuto do bloco: Holm < 0,05 num bloco cujo estatuto
+  termina em `POS_RESULTADO` dá "rejeita zero, pós-resultado".
+- **`G12`.** É a figura do P1h, usada sem redesenho para não reabrir o que a
+  auditoria 31 corrigiu (A1: "no modelo de escolha", com a vaga como sujeito;
+  A2: θ_UF é "mesma UF, outra região de saúde", contra outra UF à mesma
+  distância). O gerador de figuras confere, antes de registrar os números,
+  que o SHA-256 dela e o do `P1h_magnitudes.csv` são os gravados em
+  `P1h_resumo.json` e que tudo tem natureza EMPIRICO; o teste confere o mesmo.
+  O "Como ler" dela está no resumo do P1h e no doc 57i, não na imagem.
 - **`G6` e `G7`.** As descritivas são contadas pelo gerador no quadro de
   células da 1ª chamada (`output/rdd_bolsa/outcomes/outcomes_V_celula.parquet`)
   e no resumo do portão G1. A faixa é a da **grade aplicada** (cortes 0,300 e
@@ -87,12 +97,16 @@ JSON: `EMPIRICO`; `FAILURE_MODE`, que só documenta o arquivo errado e nunca é
 resultado; e `TEXTO_NORMATIVO`/`CITACAO_LITERATURA`, extraídos por expressão
 regular do texto-fonte (auditoria 18; trechos do doc 20 copiados pelo E8).
 
-Os códigos da entrega de 26/10/2026 vêm de quatro tipos de fonte: a chave `v`
+Os códigos da entrega de 26/10/2026 vêm de cinco tipos de fonte: a chave `v`
 de `output/rdd_bolsa/S57_resumo.json` (a síntese vigente, doc 57, que já grava
 o arquivo e o seletor de origem de cada valor); os CSVs de estimativas dos
 blocos (`N_estimativas.csv`, `P1_estimativas.csv`, `H_estimativas.csv`,
 `CA_estimativas.csv`); o resumo do portão G1 e o manifesto do a16; e as
-descritivas contadas pelo gerador (seletor `descritiva`). A razão de chances
+descritivas contadas pelo gerador (seletor `descritiva`); e, para a H3
+(`H3_*`), `output/rdd_bolsa/P1h_magnitudes.csv` e `P1h_resumo.json`, sem
+recálculo. O limite unilateral do km (`H3_K5_P`) é registrado só para a nota
+do apresentador que diz por que ele não é prova: o teste pré-registrado da
+bolsa é o bilateral do P1a (`M1_P`). A razão de chances
 por +R$ 5 mil do M5 por ciclo é a transformação declarada no seletor
 (`transf`: multiplica o coeficiente por R$ 1 mil e exponencia).
 
@@ -356,6 +370,31 @@ milhar; `fracao` = "a/b" com separador de milhar; `txt` = trecho como está.
 | `M9_COEF` | +0,0434 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M9", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "coef"}` | `d4s` | M9: coeficiente da bolsa (logit aninhado) |
 | `M7_INF` | −0,0150 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M7", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "ic95_inf"}` | `d4s` | M7: IC inferior |
 | `M7_SUP` | +0,0758 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M7", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "ic95_sup"}` | `d4s` | M7: IC superior |
+| `H3_ESTATUTO` | PROTOCOLO_52B_POS_RESULTADO | EMPIRICO | `output/rdd_bolsa/P1h_resumo.json` | `{"caminho": ["estatuto"]}` | `txt` | P1h: estatuto do bloco (pós-resultado; regra da força da evidência na figura da cadeia) |
+| `H3_DUF` | 1,98 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-1"}, "coluna": "estimativa"}` | `d2` | P1h-1: D_UF = θ_UF − 10·β no M1 (log-chance; mesma UF, outra região de saúde, contra toda a amplitude da bolsa) |
+| `H3_DUF_INF` | 1,56 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-1"}, "coluna": "ic95_inf"}` | `d2` | P1h-1: IC 95% inferior (cluster por conjunto) |
+| `H3_DUF_SUP` | 2,40 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-1"}, "coluna": "ic95_sup"}` | `d2` | P1h-1: IC 95% superior |
+| `H3_DUF_P` | < 0,001 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-1"}, "coluna": "p_unilateral"}` | `p3` | P1h-1: p unilateral (H0: D_UF ≤ 0) |
+| `H3_DUF_HOLM` | < 0,001 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-1"}, "coluna": "p_holm"}` | `p3` | P1h-1: p de Holm (família de um teste; igual ao p unilateral) |
+| `H3_K5` | 112 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-2a"}, "coluna": "estimativa"}` | `d0` | P1h-2a: K5, km a menos de distância com o peso de um degrau de R$ 5 mil (descritivo) (km, método delta) |
+| `H3_K5_INF` | −9 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-2a"}, "coluna": "ic95_inf"}` | `d0` | P1h-2a: K5, km a menos de distância com o peso de um degrau de R$ 5 mil (descritivo), IC 95% inferior (km, método delta) |
+| `H3_K5_SUP` | 233 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-2a"}, "coluna": "ic95_sup"}` | `d0` | P1h-2a: K5, km a menos de distância com o peso de um degrau de R$ 5 mil (descritivo), IC 95% superior (km, método delta) |
+| `H3_K10` | 224 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-2b"}, "coluna": "estimativa"}` | `d0` | P1h-2b: K10, km a menos de distância com o peso de toda a amplitude (descritivo) (km, método delta) |
+| `H3_K10_INF` | −18 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-2b"}, "coluna": "ic95_inf"}` | `d0` | P1h-2b: K10, km a menos de distância com o peso de toda a amplitude (descritivo), IC 95% inferior (km, método delta) |
+| `H3_K10_SUP` | 466 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-2b"}, "coluna": "ic95_sup"}` | `d0` | P1h-2b: K10, km a menos de distância com o peso de toda a amplitude (descritivo), IC 95% superior (km, método delta) |
+| `H3_K5_P` | 0,035 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-2a"}, "coluna": "p_unilateral"}` | `p3` | P1h-2a: p unilateral de K5 (descritivo; não substitui o teste bilateral do P1a) |
+| `H3_S_M2` | 1,18 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-3", "modelo": "M2", "ciclo": "empilhado"}, "coluna": "estimativa"}` | `d2` | P1h-3: D_UF em M2 (log da distância), sensibilidade com BKY |
+| `H3_S_M4` | 1,73 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-3", "modelo": "M4", "ciclo": "empilhado"}, "coluna": "estimativa"}` | `d2` | P1h-3: D_UF em M4 (efeito fixo de UF da vaga), sensibilidade com BKY |
+| `H3_S_M5C1` | 2,34 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-3", "modelo": "M5", "ciclo": "1"}, "coluna": "estimativa"}` | `d2` | P1h-3: D_UF em M5 (só o ciclo 1), sensibilidade com BKY |
+| `H3_S_M5C2` | 1,31 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-3", "modelo": "M5", "ciclo": "2"}, "coluna": "estimativa"}` | `d2` | P1h-3: D_UF em M5 (só o ciclo 2), sensibilidade com BKY |
+| `H3_S_M5C3` | 2,37 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-3", "modelo": "M5", "ciclo": "3"}, "coluna": "estimativa"}` | `d2` | P1h-3: D_UF em M5 (só o ciclo 3), sensibilidade com BKY |
+| `H3_S_M7` | 2,07 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-3", "modelo": "M7", "ciclo": "empilhado"}, "coluna": "estimativa"}` | `d2` | P1h-3: D_UF em M7 (logit explodido, 1ª e 2ª opção), sensibilidade com BKY |
+| `H3_10B` | 0,42 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "10β"}, "coluna": "estimativa"}` | `d2` | peso no M1: toda a amplitude da bolsa, 10·β |
+| `H3_10B_INF` | −0,03 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "10β"}, "coluna": "ic95_inf"}` | `d2` | peso no M1: toda a amplitude da bolsa, 10·β, IC 95% inferior |
+| `H3_10B_SUP` | 0,87 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "10β"}, "coluna": "ic95_sup"}` | `d2` | peso no M1: toda a amplitude da bolsa, 10·β, IC 95% superior |
+| `H3_THETA` | 2,40 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "θ_UF"}, "coluna": "estimativa"}` | `d2` | peso no M1: mesma UF, outra região de saúde, θ_UF |
+| `H3_THETA_INF` | 2,28 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "θ_UF"}, "coluna": "ic95_inf"}` | `d2` | peso no M1: mesma UF, outra região de saúde, θ_UF, IC 95% inferior |
+| `H3_THETA_SUP` | 2,53 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "θ_UF"}, "coluna": "ic95_sup"}` | `d2` | peso no M1: mesma UF, outra região de saúde, θ_UF, IC 95% superior |
 | `P4_HT_ATT` | +6,6 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_ht_att", "v"]}` | `d1s` | P4 horas totais: média de θ(0..+6), h/sem |
 | `P4_HT_INF` | +5,4 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_ht_lo", "v"]}` | `d1s` | P4 horas totais: IC inferior |
 | `P4_HT_SUP` | +7,8 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_ht_hi", "v"]}` | `d1s` | P4 horas totais: IC superior |
@@ -515,6 +554,9 @@ regenerados.
 | `output/aquisicao/a08_ivs_2010_oficial_municipio.csv` | running variable |
 | `docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md` | parâmetros normativos das co-políticas |
 | `scripts/rdd_bolsa/10_galeria_figura_regra.py` | código da variante A colorida |
+| `output/rdd_bolsa/P1h_magnitudes.csv` | H3 (P1h, protocolo 52b): D_UF, km equivalentes, sensibilidades e pesos |
+| `output/rdd_bolsa/P1h_resumo.json` | H3: estatuto do bloco e hashes das saídas auditadas |
+| `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png` | H3: figura auditada (só o hash é conferido) |
 
 ## 5. Deck
 
@@ -536,9 +578,11 @@ estável, e duas execuções dão o mesmo SHA-256.
 
 ## 6. Pendências e ressalvas
 
-1. **H3.** O slide está reservado e marcado PENDENTE. O resultado vem do
-   protocolo 52b (script 25c, doc 57i), em estimação em outra sessão e
-   sujeito a auditoria independente; nenhum número da H3 está no registro.
+1. **H3.** Entrou com o P1h auditado (doc 57i; auditoria 31, aprovado com
+   correções de rótulo). O teste é pós-resultado: os coeficientes do M1 já
+   eram conhecidos quando o protocolo 52b foi congelado. O IC do km contém
+   zero, e o limite unilateral dele não é usado como evidência de que a bolsa
+   importa. O logit misto e o aninhado ficaram fora do P1h (doc 57i, §7).
 2. **`run_all.py`.** Os dois geradores não estão no pipeline ponta a ponta; a
    inclusão fica para o coordenador.
 3. **PNG da regra.** Depende do Chromium headless; sem ele o script grava só o

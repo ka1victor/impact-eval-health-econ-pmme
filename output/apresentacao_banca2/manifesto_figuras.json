@@ -173,6 +173,33 @@
       "cobertura": "municípios",
       "unidade": "habitantes",
       "chaves": "co_ibge_7d"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "sha256": "934d3931a7ad14047aa6764b19b1b7b7814e9a814417cd6e4ca9779861e5b89d",
+      "papel": "H3 (P1h, protocolo 52b; doc 57i; auditoria 31): D_UF, km equivalentes, sensibilidades e pesos",
+      "data_referencia": "2026-10-26",
+      "cobertura": "amostra do P1 (candidatos de 1ª opção, ciclos 1–3), M1 e sensibilidades",
+      "unidade": "log-chance; km",
+      "chaves": "id_linha + modelo + ciclo (+ componente nas linhas FIG)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1h_resumo.json",
+      "sha256": "992eb6a44ba36af256c6b6dabf36f4eac44980829a273266da654030948591ed",
+      "papel": "H3: estatuto do bloco e hash da figura auditada",
+      "data_referencia": "2026-10-26",
+      "cobertura": "P1h",
+      "unidade": "-",
+      "chaves": "estatuto; saidas"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
+      "sha256": "61bcc1b8f3c1d7f1ee831c136f24804619ead0e7ad95bab9174484f3ba07ce12",
+      "papel": "H3: figura dos pesos no M1, auditada (auditoria 31, A1 e A2); usada no slide sem redesenho",
+      "data_referencia": "2026-10-26",
+      "cobertura": "M1, ciclos 1–3",
+      "unidade": "log-chance",
+      "chaves": "-"
     }
   ],
   "regra_bolsa": {
@@ -827,6 +854,22 @@
           "exclui_nulo": false
         },
         {
+          "linha": "UF de origem × bolsa (H3, D_UF)",
+          "texto": "1,98 [1,56; 2,40]",
+          "codigos": [
+            "H3_DUF",
+            "H3_DUF_INF",
+            "H3_DUF_SUP"
+          ],
+          "forca": "rejeita zero, pós-resultado",
+          "forca_regra": {
+            "regra": "holm",
+            "H3_DUF_HOLM": 8.856848117e-21,
+            "H3_ESTATUTO": "PROTOCOLO_52B_POS_RESULTADO"
+          },
+          "exclui_nulo": true
+        },
+        {
           "linha": "Célula aberta preenchida (A3)",
           "texto": "−4,9 p.p. [−12,9; +3,2]",
           "codigos": [
@@ -945,6 +988,11 @@
         "1,24 [0,99; 1,55]",
         "p de Holm 0,065",
         "inconclusivo",
+        "UF de origem × bolsa (H3, D_UF)",
+        "θ_UF − 10·β, log-chance · no modelo de escolha",
+        "1,98 [1,56; 2,40]",
+        "p de Holm < 0,001 (unilateral)",
+        "rejeita zero, pós-resultado",
         "PREENCHIMENTO",
         "Célula aberta preenchida (A3)",
         "p.p. · ciclos 1–3, cortes empilhados · pacote do corte",
@@ -985,9 +1033,10 @@
         "−4,9 p.p. [−14,3; +4,6]",
         "p de Holm 0,624",
         "inconclusivo",
-        "Força da evidência, por linha: Holm ou IC com o nulo, inconclusivo; pré do Wald, ATT; estatuto do bloco, exploratório. Nenhuma linha é causal-limpa.",
-        "Nada aqui é efeito da participação no PMM-E. Verde: o IC 95% exclui o nulo; cinza: contém.",
-        "Fontes: S57_resumo.json (doc 57); P4_estimativas.csv. EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+        "Força da evidência, por linha: Holm ou IC com o nulo → inconclusivo; pré do Wald → ATT; estatuto do bloco → exploratório;",
+        "Holm < 0,05 num bloco pós-resultado → rejeita zero, pós-resultado. Nenhuma linha é causal-limpa; a da H3 compara dois pesos do mesmo modelo de escolha.",
+        "Nada aqui é efeito da participação no PMM-E nem da geografia. Verde: o IC 95% exclui o nulo; cinza: contém.",
+        "Fontes: S57_resumo.json (doc 57); P4_estimativas.csv; P1h_magnitudes.csv (doc 57i). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": []
     },
@@ -1221,7 +1270,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
-      "sha256": "94ccdf93dab92ef1f8015f9b851c95597dc7188c6e82c3e2d6cde65943f62394",
+      "sha256": "d4a192a3f7e4d434b9f7d8cd40b9d6d912e919744de537e17d4f2944dc2a12c7",
       "natureza": "EMPIRICO",
       "descricao": "cadeia-resumo com as linhas do doc 57",
       "fontes": [
@@ -1229,7 +1278,9 @@
         "output/rdd_bolsa/N_estimativas.csv",
         "output/rdd_bolsa/P1_estimativas.csv",
         "output/rdd_bolsa/CA_estimativas.csv",
-        "output/rdd_bolsa/E8_resumo.json"
+        "output/rdd_bolsa/E8_resumo.json",
+        "output/rdd_bolsa/P1h_magnitudes.csv",
+        "output/rdd_bolsa/P1h_resumo.json"
       ]
     },
     {
@@ -1253,6 +1304,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "41a1a9d2753879ce5cdcf5998dcce40b45b3a9c0ea6a6c22354c8d7a98d3b533"
+    "sha256": "76306543df8b60df8b20e9c3ba19422e9dc56776525f2abd98ec67592a416099"
   }
 }
