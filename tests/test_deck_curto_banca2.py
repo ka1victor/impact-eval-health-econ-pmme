@@ -11,13 +11,15 @@ O deck curto é o único usado na versão final (decisão do autor de 26/10/2026
    antes H4), a H1 central em destaque e H2 e H3 em cinza, como plano B (na hipótese, na especificação e no
    slide de planos B); cada seção começa pela H1;
 4. Dados numa tabela só, com as secundárias em cinza; os ciclos explicados; a Identificação com o tipo de vaga
-   (doc 05, §2.12) como premissa não testada;
-5. a H1 principal do adendo 48b (saídas HI_*, em auditoria: a cautela e a linha de fontes dizem isso), o scatter
-   só com vagas imediatas e o TOST HI-s7 numa linha, e a medida antiga como especificação secundária, em
-   Robustez;
-6. a queda em 0,300 (auditoria 36: as capitais; sem a explicação errada pelo cadastro reserva do ciclo 2;
-   auditoria 33: sem "escolhidas em 1º lugar" como fato), o doc 57m auditado (auditoria 37) nas notas, a H1 por
-   ciclo, a nota 52c da H2 só nas notas, a H3 nos dois níveis (doc 05, §2.13) e a Discussão;
+   (doc 05, §2.12) testado pelos limites de Lee (adendo 48f, auditoria 44);
+5. a H1 principal do adendo 48b (saídas HI_*, aprovadas pela auditoria 38: sem o rótulo "em auditoria"; o caso
+   intermediário da HI-2 em 0,300 nas notas), o scatter só com vagas imediatas e o TOST HI-s7 numa linha, e a
+   medida antiga como especificação secundária, em Robustez;
+6. a robustez comparando municípios parecidos (adendos 48d e 48e, auditorias 40 e 43; figura nova por corte), com
+   as capitais (auditoria 36) e a dummy de capital (auditoria 42) nas notas; sem a explicação errada pelo cadastro
+   reserva do ciclo 2; sem "escolhidas em 1º lugar" como fato (auditoria 33); o doc 57m auditado (auditoria 37)
+   nas notas, a H1 por ciclo, a nota 52c da H2 só nas notas, a H3 nos dois níveis (doc 05, §2.13; protocolo 64,
+   auditoria 39, sem a razão fuzzy) e a Discussão;
 7. a regra dos números: todo número do doc 04 e do deck é o valor de um código listado ou um parâmetro;
 8. o pacote gerado: títulos e texto iguais ao doc 04, rodapé com as oito seções, manifesto com hashes atuais e, se
    `PMME_DECK_GRUPO` apontar para o deck do grupo, o determinismo do `.pptx`.
@@ -76,7 +78,7 @@ SEQUENCIA = [  # (seção, título, layout)
     ("Resultados", "H1 · Só vagas imediatas: nada passa no Holm", "curto_figura"),
     ("Robustez", "H1 · Antes e depois do controle das vagas", "curto_figura"),
     ("Robustez", "H1 · Por ciclo: a queda em 0,300 vem do ciclo 2", "curto_figura"),
-    ("Robustez", "H1 · Controlando a capital, a queda encolhe", "curto_figura"),
+    ("Robustez", "H1 · Comparando municípios parecidos", "curto_figura"),
     ("Discussão", "H1 · Por que o sinal sai negativo", "curto_texto"),
     ("Discussão", "H2 e H3 · plano B: origem pesa; oferta incerta", "curto_texto"),
     ("Discussão", "Discussão: por que não sobe? Um incentivo limitado", "curto_texto"),
@@ -223,17 +225,34 @@ class TestConteudoCurto(unittest.TestCase):
             self.assertIn(k, notas, k)
 
     def test_identificacao(self) -> None:
-        """Premissas e aderência numa tabela, com o tipo de vaga (doc 05, §2.12) como premissa não testada."""
+        """Premissas e aderência numa tabela, com o tipo de vaga (doc 05, §2.12) testado pelos limites de Lee (adendo
+        48f, doc 57t, auditoria 44): os limites contêm zero nos dois cortes, relido do registro."""
         s = self.por_titulo["H1 · RDD: as premissas e o nosso caso"]
         linhas = {D.texto_puro(r[0]): D.texto_puro(r[1]) for r in s["tabela"][1:]}
         self.assertEqual(linhas["Regra sharp"], "368/368, 454/454")
         self.assertEqual(linhas["Só a bolsa"], "não: pacote")
         self.assertEqual(linhas["Outro incentivo individual em 0,300"], "nenhum")
-        self.assertEqual(linhas["Tipo de vaga (MS) exógeno"], "não testado")
+        self.assertEqual(linhas["Tipo de vaga"], "testado: Lee contém zero")
+        self.assertFalse(any("não testado" in v for v in linhas.values()))
         self.assertIn("capitais", linhas["Sem manipulação, balanço"])
         notas = corrido(s["notas"])
-        for k in ("auditoria 35", "auditoria 18", "§2.12", "pode responder ao corte", "limites de Lee"):
+        for k in ("auditoria 35", "auditoria 18", "§2.12", "pode responder ao corte", "limites de Lee",
+                  "auditoria 44", "monotonicidade dentro de cada ciclo", "troca entre ciclos",
+                  "inteiramente abaixo de zero", "piora o balanço em 0,300"):
             self.assertIn(k, notas, k)
+        v = {c: float(e["valor_bruto"]) for c, e in self.todos.items() if c.startswith("SV")}
+        for y in ("Y1", "Y2"):  # "Lee contém zero" na tela: os dois limites cercam o zero nos dois cortes
+            for c in ("300", "400"):
+                self.assertLess(v[f"SV3_{y}_{c}_LINF"], 0.0, (y, c))
+                self.assertGreater(v[f"SV3_{y}_{c}_LSUP"], 0.0, (y, c))
+                self.assertIn(self.todos[f"SV3_{y}_{c}_LINF"]["valor"], notas)
+        # sensibilidade com a reta: intervalo de um lado do zero, IC de Imbens–Manski com zero
+        self.assertLess(v["SV5_Y2_300_LSUP"], 0.0)
+        self.assertTrue(v["SV5_Y2_300_IMI"] < 0.0 < v["SV5_Y2_300_IMS"])
+        self.assertGreater(v["SV2_300_NS1"], v["SV2_300_NTODA"])
+        for c, e in self.todos.items():
+            if c.startswith("SV"):
+                self.assertIn("auditoria 44", e["auditoria"], c)
         self.assertEqual(self.todos["R_C1_REPR"]["valor"] + "/" + self.todos["R_C1_MUN"]["valor"], "368/368")
 
     def test_h1_central_e_hipoteses_contiguas(self) -> None:
@@ -248,8 +267,8 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertGreater(n["H1"], 2 * (n["H2"] + n["H3"]))  # a H1 tem o maior espaço
 
     def test_h1_principal_do_48b(self) -> None:
-        """A H1 principal é a do adendo 48b (HI_*), em auditoria, com o TOST numa linha; a medida antiga fica em
-        Robustez."""
+        """A H1 principal é a do adendo 48b (HI_*), aprovada pela auditoria 38 (sem o rótulo "em auditoria"), com o
+        TOST numa linha e o caso intermediário da HI-2 em 0,300 nas notas; a medida antiga fica em Robustez."""
         self.assertTrue(HI_RESUMO.exists())
         res = [s for s in self.slides if s["secao"] == "Resultados"]
         self.assertEqual(len(res), 1)
@@ -260,7 +279,8 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertEqual(D.texto_puro(h1["marcadores"][0]), "Nada passa no Holm; HI-1: IC contém zero nos dois cortes.")
         self.assertEqual(D.texto_puro(h1["marcadores"][1]),
                          "TOST: HI-2 em 0,300 descarta aumento ≥ 25% da média, não descarta queda.")
-        self.assertIn("Em auditoria", h1["cautela"])  # rótulo "em auditoria" na tela
+        self.assertNotIn("auditoria", h1["cautela"].lower())  # a auditoria 38 aprovou: o rótulo saiu da tela
+        self.assertIn("Pós-resultado (adendo 48b)", h1["cautela"])
         v = {c: float(e["valor_bruto"]) for c, e in self.todos.items() if c.startswith("HI") and "LEIT" not in c}
         self.assertTrue(all(v[f"HI{h}_{c}_HOLM"] >= 0.05 for h in "12" for c in ("300", "400")))
         self.assertTrue(v["HI1_300_INF"] < 0 < v["HI1_300_SUP"] and v["HI1_400_INF"] < 0 < v["HI1_400_SUP"])
@@ -268,15 +288,26 @@ class TestConteudoCurto(unittest.TestCase):
         leit = {c: self.todos[f"HI_EQ{c}_LEIT"]["valor"] for c in ("1_300", "1_400", "2_300", "2_400")}
         self.assertEqual(leit, {"1_300": "INCONCLUSIVO", "1_400": "INCONCLUSIVO", "2_300": "SO_AUMENTO",
                                 "2_400": "INCONCLUSIVO"})
-        self.assertIn("Não dá para dizer que nada mudou", corrido(h1["notas"]))
-        for s in self.slides:  # saídas do 48b ainda em auditoria: a linha de fontes diz isso
+        notas = corrido(h1["notas"])
+        self.assertIn("Não dá para dizer que nada mudou", notas)
+        # auditoria 38, achado 3: p sem correção e p de Holm da HI-2 em 0,300, e a leitura como decisão de implementação
+        self.assertEqual((self.todos["HI2_300_P"]["valor"], self.todos["HI2_300_HOLM"]["valor"]), ("0,032", "0,126"))
+        self.assertIn("p = 0,032 sem correção e p de Holm = 0,126", notas)
+        self.assertIn("decisão de implementação", notas)
+        self.assertIn("auditoria 38, achado 3", notas)
+        self.assertLess(v["HI2_300_P"], 0.05)
+        for s in self.slides:  # saídas do 48b aprovadas pela auditoria 38: a linha de fontes diz isso
             if s["imagem"] is not None and "HI_figuras" in s["imagem"].as_posix() or "HI_estimativas" in s["fontes"]:
-                self.assertIn("em auditoria", s["fontes"], s["titulo"])
+                self.assertIn("auditoria 38", s["fontes"], s["titulo"])
+                self.assertNotIn("em auditoria", s["fontes"], s["titulo"])
+        texto = DOC04.read_text(encoding="utf-8")
+        self.assertNotIn("em auditoria", texto[texto.index("<!-- deck:inicio -->"):].lower())
         for c, e in self.todos.items():
             if c.startswith("HI"):
-                self.assertIn("EM AUDITORIA", e["auditoria"], c)
+                self.assertIn("auditoria 38", e["auditoria"], c)
+                self.assertNotIn("EM AUDITORIA", e["descricao"], c)
         rob = [s["imagem"].name for s in self.slides if s["secao"] == "Robustez"]
-        self.assertEqual(rob, ["h1_controle.png", "curto_h1_por_ciclo.png", "curto_queda_capital.png"])
+        self.assertEqual(rob, ["h1_controle.png", "curto_h1_por_ciclo.png", "curto_h1_parecidos.png"])
         nomes = [s["imagem"].name for s in self.slides if s["imagem"] is not None]
         self.assertNotIn("HI_por_ciclo.png", nomes)  # uma figura por ciclo só: a do curto, mais legível no slide
         self.assertFalse(any("TOST" in s["titulo"] or "afirmar" in s["titulo"] for s in self.slides))
@@ -295,23 +326,54 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertEqual(self.todos["DQ_FUN_PRE_ABX0"]["valor"], "33")
         self.assertEqual(self.todos["DQ_FUN_PRE_ACI0"]["valor"], "33")
 
-    def test_queda_e_capitais(self) -> None:
-        """Auditoria 36: controlando a capital, a queda encolhe; a explicação pelo cadastro reserva do ciclo 2 saiu."""
-        c = self.por_titulo["H1 · Controlando a capital, a queda encolhe"]
-        self.assertEqual(c["imagem"].name, "curto_queda_capital.png")
-        self.assertIn("Controlando a capital, a queda encolhe e o IC contém zero; só com vagas imediatas, encolhe",
-                      tela(c))
-        self.assertIn("13 capitais abaixo de 0,300 e 6 acima", tela(c))
-        self.assertIn("Auditoria 36", c["cautela"])
+    def test_municipios_parecidos(self) -> None:
+        """Robustez da H1 comparando municípios parecidos (adendos 48d e 48e; auditorias 40 e 43): figura nova, um
+        painel por corte, com a fração preenchida em quatro versões; as capitais (auditoria 36) e a dummy de capital
+        (auditoria 42) nas notas; a explicação pelo cadastro reserva do ciclo 2 não volta."""
+        c = self.por_titulo["H1 · Comparando municípios parecidos"]
+        self.assertEqual(c["imagem"].name, "curto_h1_parecidos.png")
+        self.assertEqual([D.texto_puro(m) for m in c["marcadores"]],
+                         ["Perto de 0,300, os lados diferem em capital, Nordeste e especialistas na região.",
+                          "Comparando municípios parecidos, a diferença não aparece."])
+        self.assertIn("pós-resultado", c["cautela"])
+        self.assertIn("pacote do corte", c["cautela"])
+        # a figura: um painel por corte, quatro versões em 0,300 e três em 0,400 (o PSM do 48d não tem estimativa lá)
+        man = json.loads(MANIF_FIG.read_text(encoding="utf-8"))
+        reg = man["figuras_novas"]["curto_h1_parecidos.png"]
+        esperado = ["CL_HI1_300_SEM_TAU", "CL_HI1_300_LM_TAU", "PM_FRAC_300_TAU", "CL_PS1_300_TAU",
+                    "CL_HI1_400_SEM_TAU", "CL_HI1_400_LM_TAU", "PM_FRAC_400_TAU"]
+        self.assertEqual([ln["codigos"][0] for ln in reg["linhas"]], esperado)
+        self.assertIn("Como ler", reg["textos"])
+        self.assertIn("sem estimativa", reg["textos"])
+        v = {k: float(e["valor_bruto"]) for k, e in self.todos.items() if k.startswith(("CL_", "PM_", "HC_"))}
+        # a mensagem da tela: comparando municípios parecidos, nenhum IC exclui zero, nos dois cortes
+        for k in esperado:
+            base = k[:-4]
+            self.assertTrue(v[base + "_INF"] < 0.0 < v[base + "_SUP"], k)
+        # perto de 0,300, os lados diferem em capital, Nordeste e especialistas na região (balanço CL-0 do 48d)
+        self.assertLess(v["CL_BAL_CAP_300"], 0.0)
+        self.assertLess(v["CL_BAL_NE_300"], 0.0)
+        self.assertGreater(v["CL_BAL_ESP_300"], 0.0)
+        # HI-2: a queda deixa de excluir zero com localização e médicos
+        self.assertLess(v["CL_HI2_300_SEM_SUP"], 0.0)
+        self.assertGreater(v["CL_HI2_300_LM_SUP"], 0.0)
+        for k, e in self.todos.items():
+            if k.startswith("CL_"):
+                self.assertIn("auditoria 40", e["auditoria"], k)
+            if k.startswith("PM_"):
+                self.assertIn("auditoria 43", e["auditoria"], k)
+        notas = corrido(c["notas"])
+        for frase in ("(a) é robustez pós-resultado", "(b) o pareamento supõe randomização local condicional",
+                      "(c) em 0,400 vale só para municípios que não são capitais, fora do Sul e do Centro-Oeste",
+                      "(d) não separa a bolsa do pacote do corte", "(e) a capital sozinha explica pouco",
+                      "auditoria 42", "regra literal", "intervalo, não o ponto"):
+            self.assertIn(frase, notas, frase)
+        self.assertEqual(self.todos["HC_HI2_300_CAP_PCT"]["valor"], "73")
+        self.assertIn("73% do salto fica", notas)
+        self.assertAlmostEqual(v["HC_HI2_300_CAP_PCT"], v["HC_HI2_300_CAP"] / v["HC_HI2_300_BASE"])
+        # as capitais do slide antigo foram para as notas (auditoria 36)
+        self.assertIn("13 capitais abaixo de 0,300 e 6 acima", notas)
         self.assertEqual((self.todos["A36_CAP_ABX"]["valor"], self.todos["A36_CAP_ACI"]["valor"]), ("13", "6"))
-        for k in ("A3", "TX", "N1"):
-            self.assertGreater(float(self.todos[f"A36_{k}_CAP_SUP"]["valor_bruto"]), 0.0, k)  # IC com dummy contém zero
-            self.assertLess(abs(float(self.todos[f"A36_{k}_CAP_TAU"]["valor_bruto"])),
-                            abs(float(self.todos[f"A36_{k}_PIPE_TAU"]["valor_bruto"])), k)  # a queda encolhe
-        for k in ("A3", "TX"):
-            self.assertGreater(float(self.todos[f"A36_{k}_VI_SUP"]["valor_bruto"]), 0.0, k)
-            self.assertIn("auditoria 36", self.todos[f"A36_{k}_VI_TAU"]["auditoria"])
-        # as quatro capitais a menos de 0,010 abaixo do corte, e nenhuma acima, relidas da saída da auditoria 36
         import pandas as pd
         m = pd.read_csv(A36_MUN, dtype=str, keep_default_na=False)
         m = m[m["capital"] == "1"].drop_duplicates("co_ibge")
@@ -319,7 +381,7 @@ class TestConteudoCurto(unittest.TestCase):
         abaixo = sorted(m.loc[(ivs > 0.290) & (ivs <= 0.300), "nome_municipio_uf"].str.split(" (", regex=False).str[0])
         self.assertEqual(abaixo, ["Brasília", "Goiânia", "Natal", "São Paulo"])
         self.assertEqual(int(((ivs > 0.300) & (ivs < 0.310)).sum()), 0)
-        self.assertIn("São Paulo, Goiânia, Natal e Brasília", corrido(c["notas"]))
+        self.assertIn("São Paulo, Goiânia, Natal e Brasília", notas)
         # a ideia errada (auditoria 36) não volta, nem na tela nem nas notas
         texto = DOC04.read_text(encoding="utf-8")
         deck = corrido(re.sub(r"(?m)^>\s?", "", texto[texto.index("<!-- deck:inicio -->"):]))
@@ -356,11 +418,13 @@ class TestConteudoCurto(unittest.TestCase):
         disc = [s for s in self.slides if s["secao"] == "Discussão"]
         sinal = disc[0]
         self.assertEqual(rotulos(sinal), ["Reta", "Vagas", "Porte", "Incentivo"])
-        self.assertIn("capitais e Nordeste logo abaixo de 0,300", tela(sinal))
+        self.assertIn("em 0,300, lados diferem em localização e médicos na região", tela(sinal))
         self.assertIn("nenhum individual muda em 0,300", tela(sinal))
         notas = corrido(sinal["notas"])
         self.assertIn("auditoria 35", notas)
         self.assertIn("Nada disso mostra que a bolsa reduz o preenchimento", notas)
+        self.assertIn("capitais e Nordeste logo abaixo do corte", notas)
+        self.assertIn("adendo 48d (doc 63)", notas)
         self.assertIn(self.todos["DQ_FUN_PRE_ABX"]["valor"], notas)
         teoria = disc[-1]
         self.assertEqual(rotulos(teoria), ["Incentivo limitado", "Pacote do corte", "Oferta"])
@@ -368,7 +432,8 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertIn("A história parte da H1", corrido(teoria["notas"]))
 
     def test_planos_b(self) -> None:
-        """H2 com um número por ciclo; H3 nos dois níveis (doc 05, §2.13): o +6,6 h é do próprio médico."""
+        """H2 com um número por ciclo; H3 nos dois níveis (doc 05, §2.13): o +6,6 h é do próprio médico; no município,
+        o protocolo 64 (doc 57q, auditoria 39) com o Holm das primárias na tela e sem a razão fuzzy."""
         s = self.por_titulo["H2 e H3 · plano B: origem pesa; oferta incerta"]
         self.assertEqual(rotulos(s), ["H2", "H3", "H3 · município"])
         self.assertTrue(all(D.eh_plano_b(r) for r in rotulos(s)))
@@ -377,11 +442,22 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertIn(" · ".join(por_ciclo), h2)
         self.assertIn("ciclos 1–3", h2)
         self.assertIn(self.todos["P4_HT_ATT"]["valor"] + " h/sem do próprio médico", h3)
-        self.assertIn("aumento não afirmável; outros especialistas não saem", mun)
+        self.assertIn("oferta igual, Holm " + self.todos["OC_B1_300_HOLM"]["valor"] + "; outros ficam", mun)
+        for b in ("B1", "B2"):
+            for c in ("300", "400"):
+                self.assertEqual(self.todos[f"OC_{b}_{c}_HOLM"]["valor"], "1,000", (b, c))
+                self.assertIn("auditoria 39", self.todos[f"OC_{b}_{c}_HOLM"]["auditoria"])
+        for c in ("300", "400"):  # os outros especialistas não saem: IC com zero nos dois cortes
+            self.assertLess(float(self.todos[f"OC_B3_{c}_INF"]["valor_bruto"]), 0.0)
+            self.assertGreater(float(self.todos[f"OC_B3_{c}_SUP"]["valor_bruto"]), 0.0)
+            self.assertLess(float(self.todos[f"OC_F_{c}"]["valor_bruto"]), 10.0)  # instrumento fraco
         notas = corrido(s["notas"])
         for k in ("não diz nada sobre os outros médicos do município", "Rambachan–Roth", "parte B",
-                  self.todos["P4_ORIGEM"]["valor"] + "%"):
+                  self.todos["P4_ORIGEM"]["valor"] + "%", "protocolo 64", "auditoria 39", "instrumento é fraco"):
             self.assertIn(k, notas, k)
+        # a razão fuzzy não vai para o slide: nenhum código dela no registro e nada na tela
+        self.assertFalse(any("FUZZY" in k or "_AR_" in k for k in self.todos))
+        self.assertNotIn("fuzzy", tela(s).lower())
 
     def test_todo_numero_registrado_ou_parametro(self) -> None:
         sobra = {}
@@ -408,7 +484,7 @@ class TestConteudoCurto(unittest.TestCase):
                       "origem é preferência revelada, não efeito causal", "horas cadastradas não são presença",
                       "vínculo não é presença", "vínculo cadastrado não é presença", "Associação",
                       "não é a participação no PMM-E", "Nada disso mostra que a bolsa reduz o preenchimento",
-                      "não é efeito zero", "escolha não é expansão", "Em auditoria"):
+                      "não é efeito zero", "escolha não é expansão", "Robustez pós-resultado"):
             self.assertIn(frase.lower(), deck.lower(), frase)
         self.assertNotIn("bolsa não funciona", deck)
         self.assertEqual(deck.count("a bolsa reduz"), deck.count("mostra que a bolsa reduz"))

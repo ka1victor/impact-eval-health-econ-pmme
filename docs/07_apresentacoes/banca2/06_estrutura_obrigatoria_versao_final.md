@@ -69,10 +69,10 @@ canônico está em [`04_conteudo_deck_curto.md`](04_conteudo_deck_curto.md).
 | Dados | 2 | uma tabela só: variáveis principais e, em cinza, as secundárias, com a fonte de cada uma (unidade, período e cobertura nas notas) |
 | Análise descritiva | 3–5 | os três ciclos em números, com a explicação dos ciclos numa linha; IVS × faixa (regra *sharp*); scatter IVS × preenchimento só de vagas imediatas, com as retas de cada lado, por corte (a subida dentro das faixas, doc 57m, nas notas) |
 | Metodologia | 6 | H1 do adendo 48b em até 4 linhas, com a equação em palavras no centro, h, kernel e erro-padrão; H2 (logit da 1ª opção) e H3 (estudo de evento) numa linha cinza cada |
-| Identificação | 7 | da H1, numa tabela: regra *sharp*; sem manipulação e balanço, com a ressalva das capitais em 0,300 (auditoria 36); pacote do corte (auditoria 18); nenhum outro incentivo individual em 0,300 (auditoria 35); tipo de vaga decidido pelo MS, premissa não testada (doc 05, §2.12) |
-| Resultados | 8 | H1 principal do adendo 48b (HI-1 e HI-2 por corte), "em auditoria", com o TOST numa linha |
-| Robustez | 9–11 | H1: antes e depois do controle (com e sem controle em painéis separados); por ciclo; controlando a capital |
-| Discussão | 12–14 | por que o sinal é negativo, uma frase por explicação; planos B em cinza num slide (H2 com um número por ciclo; H3 nos dois níveis, doc 05, §2.13); a teoria: incentivo limitado, pacote do corte, vínculo cadastrado não é presença |
+| Identificação | 7 | da H1, numa tabela: regra *sharp*; sem manipulação e balanço, com a ressalva das capitais em 0,300 (auditoria 36); pacote do corte (auditoria 18); nenhum outro incentivo individual em 0,300 (auditoria 35); tipo de vaga decidido pelo MS, testado pelos limites de Lee, que contêm zero nos dois cortes (adendo 48f, auditoria 44; doc 05, §2.12) |
+| Resultados | 8 | H1 principal do adendo 48b (HI-1 e HI-2 por corte), aprovada pela auditoria 38, com o TOST numa linha |
+| Robustez | 9–11 | H1: antes e depois do controle (com e sem controle em painéis separados); por ciclo; comparando municípios parecidos (adendos 48d e 48e; as capitais nas notas) |
+| Discussão | 12–14 | por que o sinal é negativo, uma frase por explicação; planos B em cinza num slide (H2 com um número por ciclo; H3 nos dois níveis, doc 05, §2.13, o do município pelo protocolo 64); a teoria: incentivo limitado, pacote do corte, vínculo cadastrado não é presença |
 
 Saíram do rascunho de 26 slides, com o essencial nas notas: a capa, a tabela
 separada das secundárias, os dois slides da subida dentro das faixas, "H2 e
