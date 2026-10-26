@@ -170,6 +170,11 @@ STEPS = [
     # do 27 e do 28; no run_all os dois só conferem as saídas e o doc 57h contra o resumo (ver ARGUMENTOS).
     ROOT / "scripts" / "rdd_bolsa" / "35_comparacao_alternativa_P3P4.py",
     ROOT / "scripts" / "rdd_bolsa" / "34_sensibilidade_honestdid.py",
+    # Protocolo 60, parte B (pós-resultado): oferta local de especialistas depois da chegada do 1º médico do PMM-E
+    # (Callaway-Sant'Anna município × mês). Importa o 22 (que importa o 21 e o 14) e a honestdid_lib; confere as
+    # coortes contra K_D2_resumo.json (22) e B1/B2 contra o F3 do E7 (14); lê o a09, o a16, a X1 (17, versionada),
+    # os outcomes do 12, a lista nominal e a de ativos (só colunas sem nome). Não lê IVS como variável.
+    ROOT / "scripts" / "rdd_bolsa" / "37_oferta_local_chegada.py",
     # Síntese E8: lê E3, E5, E6, E7 e E9 e aplica o Holm às primárias P1 e P2.
     ROOT / "scripts" / "rdd_bolsa" / "15_sintese_E8.py",
     # O relatório para se a conferência do sinal não corresponder ao E3 atual.

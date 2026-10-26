@@ -8,6 +8,29 @@
 
 ---
 
+## 26/10/2026 — Execução do protocolo 60, parte B (oferta local de especialistas depois da chegada, H4)
+
+Motivo: execução da parte B do protocolo 60, com os portões de coerência (coortes do D2 e definições do F3 do
+E7) antes de abrir os resultados. As saídas dos blocos anteriores não foram regravadas.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57k_resultados_oferta_local.md`](06_execucao/57k_resultados_oferta_local.md) | resultados da parte B, com blocos gerados pelo script 37 entre marcadores `<!-- OL:... -->`: o que se mede, amostra e coortes, portões, leitura simples pela leitura pré-registrada, tabelas (ATT, Rambachan–Roth, estudo de evento, ligação do B3), figuras com "Como ler", limites e esclarecimentos datados |
+
+Também criados, fora de `docs/`:
+- `scripts/rdd_bolsa/37_oferta_local_chegada.py` (no `run_all.py`, depois do 34);
+- `output/rdd_bolsa/OL_estimativas.csv`, `OL_ligacao_municipio.csv`, `OL_resumo.json` e
+  `OL_figuras/OL_evento_B{1,2,3}.png`, todos `EMPIRICO`;
+- `tests/test_oferta_local_chegada.py` (e a linha dele em `tests/README.md`; o 37 entra na cadeia de
+  `tests/test_pipeline_rdd_bolsa.py`).
+
+O manifesto A6 (`output/tema_trabalho/A6_manifesto_reproducao.json`) foi regenerado pelo gerador para incluir o
+novo passo.
+
+---
+
 ## 26/10/2026 — Protocolo 60 (equivalência em H1 e oferta local depois da chegada)
 
 Motivo: perguntas do autor ("dá para dizer que não mudou nada?"; "aumentaram as horas, mas não os especialistas no município?"), congelado antes de calcular.

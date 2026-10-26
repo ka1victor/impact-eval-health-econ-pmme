@@ -1,0 +1,556 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "PROTOCOLO_60_POS_RESULTADO",
+  "gerador": "scripts/rdd_bolsa/37_oferta_local_chegada.py",
+  "data_execucao": "2026-10-26",
+  "protocolo": {
+    "texto": "docs/06_execucao/60_protocolo_equivalencia_e_oferta_local.md",
+    "sha256_texto": "4c7cb1d096805a01189f611e3d54ef3a97fb4f9030055af1f688625fa505699b",
+    "secao": "Parte B (H4)"
+  },
+  "contraste": "ATT da chegada do 1º médico do PMM-E ao município (Callaway-Sant'Anna, município x mês, controles nunca tratados e ainda não tratados) sob tendências paralelas; não é efeito da bolsa, nem do incentivo marginal, nem da participação no PMM-E como política",
+  "parametros": {
+    "meses": [
+      "202406",
+      "202608"
+    ],
+    "e_min": -6,
+    "e_max": 6,
+    "base": "universal, b = g − 1",
+    "coorte": "mês da chegada do 1º médico do PMM-E (lista nominal, ciclos 1 e 2)",
+    "controles": "nunca tratados + ainda não tratados (G > max(t, b)); quem tem início na lista de ativos sai dos controles nesse mês",
+    "bootstrap": {
+      "B": 9999,
+      "pesos": "Mammen",
+      "semente": 20261026,
+      "cluster": "município"
+    },
+    "holm": [
+      "B1",
+      "B2"
+    ],
+    "bky": [
+      "B3",
+      "B4",
+      "B5"
+    ],
+    "rambachan_roth": {
+      "restricao": "Δ^RM",
+      "grade": [
+        0.0,
+        0.5,
+        1.0,
+        1.5,
+        2.0
+      ],
+      "metodos": [
+        "condicional",
+        "hibrido"
+      ],
+      "alvo": "média do pós (e = 0..6)",
+      "pre": "e = −6..−2",
+      "ruptura": [
+        0,
+        4.0,
+        0.01
+      ]
+    },
+    "regra_ligacao": "d1_pos_hoc",
+    "cbos_alvo": [
+      "225120",
+      "225121",
+      "225148",
+      "225151",
+      "225165",
+      "225220",
+      "225225",
+      "225250",
+      "225255",
+      "225275",
+      "225280",
+      "225290",
+      "225305",
+      "225310",
+      "225320",
+      "225325",
+      "225330"
+    ]
+  },
+  "amostra": {
+    "municipios_com_celula_algum_ciclo": 1040,
+    "fora_de_U": [
+      "422000"
+    ],
+    "municipios_com_celula_por_ciclo": {
+      "1": 368,
+      "2": 454,
+      "3": 748
+    },
+    "so_ciclo_3_em_U": 441,
+    "municipios_em_U_com_celula": 1039,
+    "excluidos_tratados_fora_d2": 2,
+    "n_municipios": 1037,
+    "lista_nominal": {
+      "linhas_lista_nominal": 1480,
+      "linhas_sem_data_fora": 0,
+      "dt_referencia": [
+        "2026-08-12"
+      ],
+      "municipios_com_ativo": 325,
+      "municipios_com_ativo_fora_da_amostra": 8,
+      "especialistas_em_municipios_fora_da_amostra": 10,
+      "colunas_lidas": [
+        "co_ibge",
+        "dt_inicio_atividade",
+        "ciclo",
+        "dt_referencia"
+      ]
+    },
+    "lista_ativos": {
+      "registros": 1957,
+      "inicios_por_ciclo_e_mes": {
+        "1": {
+          "202509": 273,
+          "202510": 11,
+          "202511": 221,
+          "202512": 9,
+          "202601": 2,
+          "202602": 1,
+          "202603": 2
+        },
+        "2": {
+          "202603": 305,
+          "202604": 435,
+          "202605": 16,
+          "202606": 182,
+          "202607": 2,
+          "202608": 1
+        },
+        "3": {
+          "202608": 495,
+          "202609": 2
+        }
+      },
+      "colunas_lidas": [
+        "ciclo",
+        "co_ibge",
+        "dt_inicio_atividade"
+      ],
+      "membro_zip": "tb_profissionais_ativos_pmme.csv"
+    }
+  },
+  "coortes": {
+    "n_tratados": 315,
+    "n_controles_censurados": 80,
+    "n_nunca_tratados_no_horizonte": 642,
+    "controles_censurados_por_mes": {
+      "202509": 1,
+      "202608": 79
+    },
+    "coortes_mensais": {
+      "202509": 130,
+      "202510": 4,
+      "202511": 29,
+      "202512": 1,
+      "202601": 1,
+      "202603": 46,
+      "202604": 84,
+      "202606": 20
+    }
+  },
+  "portoes": {
+    "coortes": {
+      "referencia": "output/rdd_bolsa/K_D2_resumo.json",
+      "coortes_d2_gravadas": {
+        "202507": {
+          "municipios": 130,
+          "especialistas": 894
+        },
+        "202510": {
+          "municipios": 34,
+          "especialistas": 197
+        },
+        "202601": {
+          "municipios": 47,
+          "especialistas": 150
+        },
+        "202604": {
+          "municipios": 104,
+          "especialistas": 226
+        }
+      },
+      "coortes_deste_bloco": {
+        "202507": {
+          "municipios": 130,
+          "especialistas": 894
+        },
+        "202510": {
+          "municipios": 34,
+          "especialistas": 197
+        },
+        "202601": {
+          "municipios": 47,
+          "especialistas": 150
+        },
+        "202604": {
+          "municipios": 104,
+          "especialistas": 226
+        }
+      },
+      "conferencias": {
+        "coortes_d2_refeitas_iguais_ao_resumo": true,
+        "coortes_deste_bloco_iguais_ao_d2": true,
+        "mesmos_municipios_e_meses_de_chegada": true,
+        "n_tratados_igual": true,
+        "fora_da_amostra_igual": true
+      },
+      "aprovado": true
+    },
+    "definicoes": {
+      "mes": "202506",
+      "municipios": 1037,
+      "B1": {
+        "outcome_e7": "F3.1",
+        "dif_max_por_10mil": 0.0,
+        "mesmos_ausentes": true,
+        "ausentes": 0,
+        "total_e7": 417042.0,
+        "total_deste_bloco": 417042.0,
+        "aprovado": true
+      },
+      "B2": {
+        "outcome_e7": "F3.3",
+        "dif_max_por_10mil": 0.0,
+        "mesmos_ausentes": true,
+        "ausentes": 4,
+        "total_e7": 2719662.0,
+        "total_deste_bloco": 2719662.0,
+        "aprovado": true
+      },
+      "aprovado": true
+    }
+  },
+  "b3": {
+    "vinculos_ligados_sus_cbo_alvo": 141813,
+    "vinculos_com_hora_em_branco": 0,
+    "vinculos_fora_da_amostra": 17640,
+    "celulas_municipio_mes_com_subtracao": 12169,
+    "ligacao_x1": {
+      "registros_x1": 1990,
+      "registros_ligados": 1876,
+      "medicos_distintos_ligados": 1865,
+      "registros_por_ciclo": {
+        "1": 525,
+        "2": 968,
+        "3": 497
+      },
+      "ligados_por_ciclo": {
+        "1": 499,
+        "2": 909,
+        "3": 468
+      }
+    }
+  },
+  "ligacao": {
+    "municipios_tratados": 315,
+    "municipios_sem_registro_x1": 0,
+    "registros_x1_ciclos_1_2_nos_tratados": 1479,
+    "nao_ligados_nos_tratados": 84,
+    "fracao_nao_ligados_agregada": 0.056795131845841784,
+    "municipios_com_algum_nao_ligado": 53,
+    "municipios_com_todos_nao_ligados": 10,
+    "fracao_nao_ligados_por_municipio": {
+      "media": 0.0666299868167036,
+      "mediana": 0.0,
+      "p90": 0.2,
+      "max": 1.0
+    },
+    "parcela_subtraida_agregada_pre": 0.02696059897270322,
+    "parcela_subtraida_agregada_pos": 0.032248155017383213,
+    "parcela_subtraida_por_municipio_pre": {
+      "media": 0.06669684897128716,
+      "mediana": 0.029010385374645953,
+      "p90": 0.1816189290161893,
+      "max": 1.0
+    },
+    "parcela_subtraida_por_municipio_pos": {
+      "media": 0.09973401081102218,
+      "mediana": 0.0572737686139748,
+      "p90": 0.23718881247460338,
+      "max": 1.0
+    },
+    "definicao": "registros = linhas da X1 (regra D1), ciclos 1 e 2, com posto no município; parcela = Σ horas SUS subtraídas ÷ Σ horas SUS das CBO-alvo (B2 em nível) nos meses com os dois observados"
+  },
+  "leitura": {
+    "B1": {
+      "att": 0.39759753966120165,
+      "p_ajustado": 2.185445955512628e-06,
+      "pre_passa": true,
+      "ruptura_min": 0.0,
+      "significativo": true,
+      "sobe": true,
+      "cai": false,
+      "sobe_com_diagnosticos": false
+    },
+    "B2": {
+      "att": 7.003065166756217,
+      "p_ajustado": 2.185445955512628e-06,
+      "pre_passa": true,
+      "ruptura_min": 0.0,
+      "significativo": true,
+      "sobe": true,
+      "cai": false,
+      "sobe_com_diagnosticos": false
+    },
+    "B3": {
+      "att": 1.8822143001199372,
+      "p_ajustado": 0.04,
+      "pre_passa": true,
+      "ruptura_min": 0.0,
+      "significativo": true,
+      "sobe": true,
+      "cai": false,
+      "sobe_com_diagnosticos": false
+    },
+    "B4": {
+      "att": 7.265987660460509,
+      "p_ajustado": 0.001,
+      "pre_passa": true,
+      "ruptura_min": 0.6015625,
+      "significativo": true,
+      "sobe": true,
+      "cai": false,
+      "sobe_com_diagnosticos": false
+    },
+    "B5": {
+      "att": -0.1279754332392671,
+      "p_ajustado": 0.128,
+      "pre_passa": true,
+      "ruptura_min": 0.0,
+      "significativo": false,
+      "sobe": false,
+      "cai": false,
+      "sobe_com_diagnosticos": false
+    }
+  },
+  "entradas": [
+    {
+      "caminho": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+      "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
+      "bytes": 20167560,
+      "papel": "outcomes B1, B2, B4, B5 e base de B3",
+      "fonte": "CNES nacional (a09)",
+      "data_referencia": "202406-202608",
+      "cobertura": "municipios do a08",
+      "unidade": "municipio x grupo de CBO x mes",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "grupos alvo_pmme e generalistas; competencias 202406-202608"
+    },
+    {
+      "caminho": "output/aquisicao/a09_manifesto_cnes_nacional.json",
+      "sha256": "666d3283f36e323aedf4e4f3a1c85089f1ee7827211084b7a1a3baf0e315701f",
+      "bytes": 190325,
+      "papel": "CBO-alvo (ponte) e definições",
+      "fonte": "a09",
+      "data_referencia": "",
+      "cobertura": "",
+      "unidade": "",
+      "chaves": "",
+      "filtros": ""
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "população (por 10 mil hab.)",
+      "fonte": "IBGE, Censo 2022",
+      "data_referencia": "2022",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": ""
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "universo U (só a lista de municípios)",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "2010",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "IVS não é usado como variável"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "amostra (célula em algum ciclo)",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "V1, V2, V3",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": ""
+    },
+    {
+      "caminho": "data/pmm_especialistas_nominal.csv",
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
+      "bytes": 361832,
+      "papel": "tratamento: menor dt_inicio_atividade",
+      "fonte": "MS, lista nominal do PMM-E",
+      "data_referencia": "2026-08-12",
+      "cobertura": "ciclos 1 e 2",
+      "unidade": "especialista",
+      "chaves": "co_ibge",
+      "filtros": "só co_ibge, dt_inicio_atividade, ciclo, dt_referencia; nenhum nome lido"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip",
+      "sha256": "e57edeb50946395fa90fe510f4a658501f9b0e92069fcc53aa41b9e893e89c1c",
+      "bytes": 117155,
+      "papel": "início do ciclo 3 (saída dos controles)",
+      "fonte": "MS, lista de ativos",
+      "data_referencia": "2026-09-11",
+      "cobertura": "ciclos 1-3",
+      "unidade": "especialista",
+      "chaves": "co_ibge",
+      "filtros": "só ciclo, co_ibge, dt_inicio_atividade; nenhum nome lido"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/painel_vinculo_mes.parquet",
+      "sha256": "1760fbc496da008d574e0c9ea196144e320337f83e3568ba363980b0ca279132",
+      "bytes": 706598,
+      "papel": "B3: horas SUS dos ligados",
+      "fonte": "CNES profissional (a16)",
+      "data_referencia": "202406-202608",
+      "cobertura": "médicos ligados pela X1",
+      "unidade": "vinculo x mes",
+      "chaves": "id_prof, competencia",
+      "filtros": "regra D1; CBO-alvo; TP_SUS_NAO_SUS = 'S'"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/chaves_origem.parquet",
+      "sha256": "7284a475530b3c9639a9f807baecd07a40b00561a8b21ddd7339767207f34f09",
+      "bytes": 19129,
+      "papel": "B3: médicos ligados (pseudônimos, só em memória)",
+      "fonte": "a16",
+      "data_referencia": "",
+      "cobertura": "",
+      "unidade": "medico",
+      "chaves": "id_prof, id_externo",
+      "filtros": "origem X1, regra D1"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/a16_manifesto_cnes_profissional.json",
+      "sha256": "1f12702d8b49a216321bd484bc742072cb92c7525476388545d350358cc45d50",
+      "bytes": 102581,
+      "papel": "competências obtidas do a16",
+      "fonte": "a16",
+      "data_referencia": "",
+      "cobertura": "",
+      "unidade": "",
+      "chaves": "",
+      "filtros": ""
+    },
+    {
+      "caminho": "output/rdd_bolsa/X1_medicos.parquet",
+      "sha256": "b4d73a6ae6adce59d014b11bf5490072964b49d600782af3d96a8f2e12f91789",
+      "bytes": 79430,
+      "papel": "registros da X1 por posto (fração de não ligados)",
+      "fonte": "X1 (17)",
+      "data_referencia": "",
+      "cobertura": "",
+      "unidade": "registro",
+      "chaves": "id_medico",
+      "filtros": "regra D1"
+    },
+    {
+      "caminho": "output/rdd_bolsa/K_D2_resumo.json",
+      "sha256": "09cf2e0088ad84960c37c5cfe3147d64ea3e6d681628686ec143c57a6bda2b15",
+      "bytes": 11105,
+      "papel": "portão de coortes",
+      "fonte": "D2 (22)",
+      "data_referencia": "",
+      "cobertura": "",
+      "unidade": "",
+      "chaves": "",
+      "filtros": ""
+    }
+  ],
+  "desvios": [
+    {
+      "data": "2026-10-26",
+      "tipo": "esclarecimento",
+      "item": "coorte mensal",
+      "descricao": "o protocolo 60 fixa o mês de início do 1º médico como tratamento; o D2 agrupava as chegadas em trimestres. Aqui g = mês da chegada (base g − 1 = mês anterior à chegada). O portão de coortes leva as chegadas mensais ao trimestre pela regra do D2 e confere datas e contagens."
+    },
+    {
+      "data": "2026-10-26",
+      "tipo": "esclarecimento",
+      "item": "amostra",
+      "descricao": "U (IVS oficial a08 e população 2022 > 0) com célula em algum ciclo (1 a 3). Município da lista nominal sem célula nos ciclos 1 ou 2 (fora da amostra do D2) não é coorte do D2 nem pode ser controle, porque recebeu médico: fica fora e é contado no resumo."
+    },
+    {
+      "data": "2026-10-26",
+      "tipo": "esclarecimento",
+      "item": "ciclo 3 nos controles",
+      "descricao": "a lista de ativos de 11/09/2026 (só ciclo, co_ibge e dt_inicio_atividade lidos) mostra o início do ciclo 3 em 202608 (e 202609). O município sem chegada dos ciclos 1 e 2 na lista nominal deixa de ser controle a partir do 1º início registrado na lista de ativos, de qualquer ciclo, e não forma coorte (protocolo: controles 'inclusive o ciclo 3 antes do início')."
+    },
+    {
+      "data": "2026-10-26",
+      "tipo": "esclarecimento",
+      "item": "B3: quem é subtraído",
+      "descricao": "subtraem-se, em todos os meses, as horas SUS (ambulatorial + hospitalar, TP_SUS_NAO_SUS = 'S') em CBO-alvo dos médicos do PMM-E ligados ao CNES pela regra D1 da X1 (ciclos 1 a 3), nos vínculos em estabelecimento do próprio município da unidade. O conjunto de pessoas é fixo: subtrair só depois do início criaria uma queda mecânica igual às horas que o médico já tinha no município antes de entrar no programa (45-51% já estavam lá, X1). Médico não ligado não é subtraído (nada é imputado); vínculo ligado com hora em branco deixa B3 ausente naquele mês."
+    },
+    {
+      "data": "2026-10-26",
+      "tipo": "esclarecimento",
+      "item": "B4",
+      "descricao": "coluna horas_totais do a09: ambulatorial + hospitalar + outras, todos os vínculos (SUS e não SUS) das CBO-alvo; ausente se algum vínculo tem campo de hora em branco."
+    },
+    {
+      "data": "2026-10-26",
+      "tipo": "esclarecimento",
+      "item": "regras de leitura",
+      "descricao": "'sobe' = ATT médio do pós > 0 com p de Holm < 0,05 (B1, B2); 'pré passa' = p do Wald do pré >= 0,05; 'ruptura >= 1' = ponto de ruptura de Δ^RM >= 1 no teste condicional e no híbrido. 'B3 cai' = ATT < 0 com q BKY < 0,05; 'B3 não se distingue de zero' = q BKY >= 0,05."
+    },
+    {
+      "data": "2026-10-26",
+      "tipo": "esclarecimento",
+      "item": "Rambachan-Roth",
+      "descricao": "β = θ(e) de e = −6..−2 (5 do pré) e 0..6 (7 do pós); Σ = covariância analítica das funções de influência (IF'IF/N²), como no protocolo 59; alvo = média do pós. Ruptura por bisseção em M̄ ∈ [0; 4], tolerância 0,01."
+    }
+  ],
+  "figuras": [
+    {
+      "arquivo": "output/rdd_bolsa/OL_figuras/OL_evento_B1.png",
+      "outcome_id": "B1",
+      "sha256": "7632554af652da946e79c4245e755684934d7f9ab769e7b12ac71b95d322a95b",
+      "como_ler": "COMO LER. Cada ponto é quanto a mudança em vínculos de especialistas (CBO-alvo), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença."
+    },
+    {
+      "arquivo": "output/rdd_bolsa/OL_figuras/OL_evento_B2.png",
+      "outcome_id": "B2",
+      "sha256": "8cd6f15b7b3d63609c75a1dfc468dc49f1bda31a8301334ecdaf88e2b4a72e58",
+      "como_ler": "COMO LER. Cada ponto é quanto a mudança em horas SUS semanais de especialistas (CBO-alvo), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença."
+    },
+    {
+      "arquivo": "output/rdd_bolsa/OL_figuras/OL_evento_B3.png",
+      "outcome_id": "B3",
+      "sha256": "caf7916f08af34fa2c1de1d91e72b851ac6d4ee450cfa8fc9288a530524e91fd",
+      "como_ler": "COMO LER. Cada ponto é quanto a mudança em horas SUS semanais dos outros especialistas (sem os do PMM-E), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. Aqui saem as horas dos médicos do PMM-E ligados ao CNES: sobra o que os outros especialistas cadastram. Ponto abaixo de zero no pós seria sinal de que eles perderam horas. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença."
+    }
+  ],
+  "saidas": [
+    {
+      "arquivo": "output/rdd_bolsa/OL_estimativas.csv",
+      "sha256": "7e14188aa23665edd175851dbe069ae164edd830c9177f92a08fa418f72f7031"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/OL_ligacao_municipio.csv",
+      "sha256": "81fc8073b6dde9fd19d2197d822d9bf26e9cd6bc9b954553efe75f318f8dac4d"
+    }
+  ]
+}
