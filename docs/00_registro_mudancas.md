@@ -8,6 +8,19 @@
 
 ---
 
+## 26/10/2026 — Doc 57r: resultados do adendo 48d (controles de localização e de médicos, e pareamento)
+
+Motivo: execução do adendo 48d com a nota §3.2 (escore de propensão como principal). As decisões de implementação
+foram registradas no doc antes de qualquer estimativa; os números entram só nos blocos gerados pelo script 44.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57r_resultados_controles_localizacao_medicos.md`](06_execucao/57r_resultados_controles_localizacao_medicos.md) | resultados do adendo 48d (H1 com L, M e L+M; balanço no corte; pareamento por Mahalanobis e por escore de propensão); partes do protocolo 64 pendentes até existirem as saídas `OC_*` |
+
+---
+
 ## 26/10/2026 — Adendo 48d: controles de localização e de médicos na região, e pareamento perto do corte
 
 Motivo: o autor pediu "adicionar controle de localização, ou presença de médicos da região" e "fazer pareamento
