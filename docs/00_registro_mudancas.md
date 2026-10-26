@@ -8,6 +8,22 @@
 
 ---
 
+## 26/10/2026 — Adendos 48e (pareamento pela regra literal e PSM em 0,400) e 48f (seleção pelo tipo de vaga)
+
+Motivo: o autor aprovou as recomendações 1, 2 e 5 da §2.16 de `07_apresentacoes/banca2/05_discussao_historia_empirica.md`.
+O 48e corrige o desvio da regra de pareamento do 48d (auditoria 40, achado 4) e trata a separação em 0,400 tirando,
+antes do logit, as categorias que só aparecem de um lado do corte. O 48f mede a seleção pelo tipo de vaga (tipo como
+outcome da RDD, balanço na amostra selecionada) e dá limites de Lee para o salto da H1. Ambos congelados antes de rodar.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/48e_adendo_pareamento_regra_literal_e_0400.md`](06_execucao/48e_adendo_pareamento_regra_literal_e_0400.md) | adendo congelado; resultados irão para o doc 57s |
+| [`06_execucao/48f_adendo_selecao_tipo_de_vaga.md`](06_execucao/48f_adendo_selecao_tipo_de_vaga.md) | adendo congelado; resultados irão para o doc 57t |
+
+---
+
 ## 26/10/2026 — Auditoria 40: adendo 48d (controles de localização e de médicos, e pareamento), aprovado com correções
 
 Motivo: auditoria independente do script 44, das saídas `CL_*`, do doc 57r e dos testes. O recálculo próprio dos
