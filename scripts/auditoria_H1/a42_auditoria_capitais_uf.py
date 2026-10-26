@@ -44,7 +44,7 @@ HC_EST = RAIZ / "output" / "rdd_bolsa" / "HC_estimativas.csv"
 HC_RES = RAIZ / "output" / "rdd_bolsa" / "HC_resumo.json"
 HI_EST = RAIZ / "output" / "rdd_bolsa" / "HI_estimativas.csv"
 SAIDA = RAIZ / "output" / "auditoria_H1"
-ARQUIVO_PROIBIDO = "ivs_ipea_2010_municipios.csv"
+ARQUIVO_PROIBIDO = "ivs_ipea_2010_municipios"  # só o nome-base: guarda que confere arquivos abertos, não lê nada
 H = 50          # 0,050 em milésimos
 ROTULO = "AUDITORIA_42_RECALCULO"
 

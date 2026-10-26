@@ -283,6 +283,8 @@ OCORRENCIAS_AUTORIZADAS: dict[str, tuple[int, str]] = {
     "scripts/aquisicao/a08_adquirir_ivs_2010_oficial.py": (2, TXT),  # docstring e nota do manifesto
     "scripts/avaliacao_ciclo3/03_auditar_pre_e_potencia.py": (2, TXT),  # comentário e motivo da emenda de 18/10/2026
     "scripts/avaliacao_impacto/07_gerar_tabelas_e_figuras.py": (1, TXT),  # comentário: Tabela 1 lê a a08
+    "scripts/auditoria_H1/a36_reconstruir_H1.py": (1, TXT),  # guarda: confere que os scripts da H1 não citam o arquivo
+    "scripts/auditoria_H1/a42_auditoria_capitais_uf.py": (1, TXT),  # guarda: confere que nenhum arquivo aberto é o errado
     "scripts/rdd_bolsa/00_diagnosticar_viabilidade_salario_ivs.py": (1, RET),  # diagnóstico retirado (running variable errada)
     "scripts/rdd_bolsa/01_auditar_primeiro_estagio_publico.py": (1, RET),  # auditoria retirada (running variable errada)
     "scripts/rdd_bolsa/01_auditar_regra_e_suporte.py": (2, RET),  # auditoria retirada (running variable errada)

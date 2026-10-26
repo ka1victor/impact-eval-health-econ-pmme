@@ -1761,8 +1761,8 @@
     },
     {
       "caminho": "scripts/auditoria_H1/a36_reconstruir_H1.py",
-      "sha256": "f9b8254e3a035299ef5bfaca84fa8ded359b6e7fc4d83a71a39a203a1534ec8c",
-      "bytes": 48697,
+      "sha256": "5cdeabbd0cd261d7b7cf50d01c822227bc1954157773b5e487e679ff686bd8ea",
+      "bytes": 48637,
       "papel": "reconstrucao da auditoria 36 (importada, nao alterada)",
       "fonte": "scripts/auditoria_H1",
       "data_referencia": "2026-10-26",

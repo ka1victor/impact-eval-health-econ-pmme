@@ -1,0 +1,849 @@
+{
+ "etapa": "Adendo 48f: selecao pelo tipo de vaga na H1 (SV-1 a SV-5)",
+ "natureza_dos_dados": "EMPIRICO",
+ "estatuto": "ADENDO_48F_POS_RESULTADO",
+ "data_execucao": "2026-10-26",
+ "script": "scripts/rdd_bolsa/46_selecao_tipo_vaga.py",
+ "adendo": {
+  "arquivo": "docs/06_execucao/48f_adendo_selecao_tipo_de_vaga.md",
+  "sha256": "b96bbd2d2b1650281291ab8712360a99eb3412b2a5a591778fb1a8da0f51575c",
+  "commit_congelamento": "f97e1ca",
+  "commit_decisoes_57t": "efdeece"
+ },
+ "contraste": "pacote do corte: em 0,300 a bolsa anunciada sobe de R$ 10 mil para R$ 15 mil e em 0,400 de R$ 15 mil para R$ 20 mil, mas outras regras federais mudam nos mesmos cortes (auditoria 18); nao e efeito da participacao no PMM-E nem do Agora Tem Especialistas",
+ "salto": "lado com bolsa maior (IVS acima do corte) menos lado com bolsa menor; o corte fica no lado de baixo",
+ "parametros": {
+  "cortes": [
+   0.3,
+   0.4
+  ],
+  "h": 0.05,
+  "janela_sv4": 0.02,
+  "n_bootstrap": 1999,
+  "semente": 20261026,
+  "tolerancia_portao": 1e-08,
+  "limiar_q": 0.05,
+  "empates_aparo": "proporcional",
+  "bootstrap": "blocos de municipio, estratificado pelo lado do corte; gerador novo com a semente por corte x janela; mesmos sorteios para Y1, Y2, SV-3 e SV-5",
+  "ic": "Imbens e Manski (2004), funcao ic_imbens_manski do script 24"
+ },
+ "premissa": "monotonicidade (Lee, 2009): o corte muda a chance de ter vaga imediata numa so direcao para todos os municipios; nao testavel; relatada",
+ "entradas": [
+  {
+   "arquivo": "docs/06_execucao/48f_adendo_selecao_tipo_de_vaga.md",
+   "sha256": "b96bbd2d2b1650281291ab8712360a99eb3412b2a5a591778fb1a8da0f51575c"
+  },
+  {
+   "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+   "sha256": "7f5d0008790949a2acf3590c0aa17f5c44be9e4100e8bbbf6e0688795c26fe76"
+  },
+  {
+   "arquivo": "output/rdd_bolsa/CL_balanco.csv",
+   "sha256": "9f736d618e1896edfefbb13044d14bab03d195e5c086adbc2164fef311933b78"
+  },
+  {
+   "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+   "sha256": "81897f10c47355c9491293fa6493cd8258a8be097d5864992f14f10358db86de"
+  },
+  {
+   "arquivo": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+   "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe"
+  },
+  {
+   "arquivo": "output/aquisicao/populacao_censo2022_municipios.csv",
+   "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b"
+  },
+  {
+   "arquivo": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+   "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd"
+  },
+  {
+   "arquivo": "output/aquisicao/a09_manifesto_cnes_nacional.json",
+   "sha256": "666d3283f36e323aedf4e4f3a1c85089f1ee7827211084b7a1a3baf0e315701f"
+  },
+  {
+   "arquivo": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+   "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba"
+  },
+  {
+   "arquivo": "output/rdd_bolsa/X5_manifesto_regioes_saude_cir.json",
+   "sha256": "295a013b516ea5dd2af822c27304e4a86a6dc707bb84d5c97f286873f7c0af58"
+  },
+  {
+   "arquivo": "output/aquisicao/ibge_capitais_uf_regiao.csv",
+   "sha256": "e4c9ffb63c0eb14b4ddaae64550639d620e0cdd8caef7c793b2ee280963d1bd9"
+  },
+  {
+   "arquivo": "output/aquisicao/manifesto_ibge_capitais_uf_regiao.json",
+   "sha256": "d1b75dc54078312f1df5e3ff09314ca58438eacffde3e66c73412d5dbbe34637"
+  },
+  {
+   "arquivo": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+   "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d"
+  },
+  {
+   "arquivo": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+   "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc"
+  },
+  {
+   "arquivo": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",
+   "sha256": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8"
+  }
+ ],
+ "portao": {
+  "hi": {
+   "referencia": "output/rdd_bolsa/HI_estimativas.csv",
+   "sha256_referencia": "7f5d0008790949a2acf3590c0aa17f5c44be9e4100e8bbbf6e0688795c26fe76",
+   "tolerancia": 1e-08,
+   "linhas": [
+    {
+     "linha": "HI-1",
+     "corte": "0.300",
+     "tau_csv": -0.0367840865161759,
+     "tau_44": -0.0367840865161759,
+     "max_abs_dif": 6.938893903907228e-17,
+     "contagens": {
+      "n_abaixo": [
+       95,
+       95
+      ],
+      "n_acima": [
+       72,
+       72
+      ],
+      "n_obs": [
+       803,
+       803
+      ]
+     },
+     "reproduz": true
+    },
+    {
+     "linha": "HI-2",
+     "corte": "0.300",
+     "tau_csv": -1.1263257568590284,
+     "tau_44": -1.1263257568590284,
+     "max_abs_dif": 8.326672684688674e-17,
+     "contagens": {
+      "n_abaixo": [
+       95,
+       95
+      ],
+      "n_acima": [
+       72,
+       72
+      ],
+      "n_obs": [
+       257,
+       257
+      ]
+     },
+     "reproduz": true
+    },
+    {
+     "linha": "HI-1",
+     "corte": "0.400",
+     "tau_csv": -0.0231196495551224,
+     "tau_44": -0.023119649555122468,
+     "max_abs_dif": 6.938893903907228e-17,
+     "contagens": {
+      "n_abaixo": [
+       83,
+       83
+      ],
+      "n_acima": [
+       69,
+       69
+      ],
+      "n_obs": [
+       485,
+       485
+      ]
+     },
+     "reproduz": true
+    },
+    {
+     "linha": "HI-2",
+     "corte": "0.400",
+     "tau_csv": -0.156707347012577,
+     "tau_44": -0.156707347012577,
+     "max_abs_dif": 0.0,
+     "contagens": {
+      "n_abaixo": [
+       83,
+       83
+      ],
+      "n_acima": [
+       69,
+       69
+      ],
+      "n_obs": [
+       227,
+       227
+      ]
+     },
+     "reproduz": true
+    }
+   ],
+   "max_abs_dif": 8.326672684688674e-17,
+   "aprovado": true
+  },
+  "db": {
+   "referencia": "output/rdd_bolsa/DQ_estimativas.csv",
+   "sha256_referencia": "81897f10c47355c9491293fa6493cd8258a8be097d5864992f14f10358db86de",
+   "tolerancia": 1e-08,
+   "linhas": [
+    {
+     "quantidade": "so_cr",
+     "ciclo": "1",
+     "corte": "0.300",
+     "reproduz": true,
+     "max_abs_dif": 2.7755575615628914e-17,
+     "c2_19mar": {
+      "tau": 0.17883909146781374,
+      "ic95_inf": -0.07665489028454658,
+      "ic95_sup": 0.43433307322017406,
+      "media_abaixo": 0.5798611111111112,
+      "media_acima": 0.6232558139534884,
+      "n_abaixo": 61,
+      "n_acima": 53
+     },
+     "c2_13fev": {
+      "tau": 0.17883909146781374,
+      "ic95_inf": -0.07665489028454658,
+      "ic95_sup": 0.43433307322017406,
+      "media_abaixo": 0.5798611111111112,
+      "media_acima": 0.6232558139534884,
+      "n_abaixo": 61,
+      "n_acima": 53
+     }
+    },
+    {
+     "quantidade": "frac_cel_so_cr",
+     "ciclo": "1",
+     "corte": "0.300",
+     "reproduz": true,
+     "max_abs_dif": 8.326672684688674e-17,
+     "c2_19mar": {
+      "tau": 0.17883909146780907,
+      "ic95_inf": -0.07934053494402799,
+      "ic95_sup": 0.43701871787964613,
+      "media_abaixo": 0.5798611111111112,
+      "media_acima": 0.6232558139534884,
+      "n_abaixo": 61,
+      "n_acima": 53
+     },
+     "c2_13fev": {
+      "tau": 0.17883909146780907,
+      "ic95_inf": -0.07934053494402799,
+      "ic95_sup": 0.43701871787964613,
+      "media_abaixo": 0.5798611111111112,
+      "media_acima": 0.6232558139534884,
+      "n_abaixo": 61,
+      "n_acima": 53
+     }
+    },
+    {
+     "quantidade": "so_cr",
+     "ciclo": "2",
+     "corte": "0.300",
+     "reproduz": true,
+     "max_abs_dif": 5.551115123125783e-17,
+     "c2_19mar": {
+      "tau": 0.28377118909107857,
+      "ic95_inf": 0.08320137507911676,
+      "ic95_sup": 0.4843410031030404,
+      "media_abaixo": 0.33419689119170987,
+      "media_acima": 0.32950191570881227,
+      "n_abaixo": 82,
+      "n_acima": 61
+     },
+     "c2_13fev": {
+      "tau": 0.24082099481746466,
+      "ic95_inf": -0.04667681081093139,
+      "ic95_sup": 0.5283188004458608,
+      "media_abaixo": 0.5129533678756477,
+      "media_acima": 0.6091954022988506,
+      "n_abaixo": 82,
+      "n_acima": 61
+     }
+    },
+    {
+     "quantidade": "frac_cel_so_cr",
+     "ciclo": "2",
+     "corte": "0.300",
+     "reproduz": true,
+     "max_abs_dif": 5.551115123125783e-17,
+     "c2_19mar": {
+      "tau": 0.2837711890910748,
+      "ic95_inf": 0.08151977288624565,
+      "ic95_sup": 0.4860226052959039,
+      "media_abaixo": 0.33419689119170987,
+      "media_acima": 0.32950191570881227,
+      "n_abaixo": 82,
+      "n_acima": 61
+     },
+     "c2_13fev": {
+      "tau": 0.24082099481745378,
+      "ic95_inf": -0.04908722806525756,
+      "ic95_sup": 0.5307292177001651,
+      "media_abaixo": 0.5129533678756477,
+      "media_acima": 0.6091954022988506,
+      "n_abaixo": 82,
+      "n_acima": 61
+     }
+    },
+    {
+     "quantidade": "so_cr",
+     "ciclo": "3",
+     "corte": "0.300",
+     "reproduz": true,
+     "max_abs_dif": 9.71445146547012e-17,
+     "c2_19mar": {
+      "tau": 0.056121104928045895,
+      "ic95_inf": -0.15999294132767047,
+      "ic95_sup": 0.2722351511837623,
+      "media_abaixo": 0.6383399209486166,
+      "media_acima": 0.7211328976034859,
+      "n_abaixo": 102,
+      "n_acima": 82
+     },
+     "c2_13fev": {
+      "tau": 0.056121104928045895,
+      "ic95_inf": -0.15999294132767047,
+      "ic95_sup": 0.2722351511837623,
+      "media_abaixo": 0.6383399209486166,
+      "media_acima": 0.7211328976034859,
+      "n_abaixo": 102,
+      "n_acima": 82
+     }
+    },
+    {
+     "quantidade": "frac_cel_so_cr",
+     "ciclo": "3",
+     "corte": "0.300",
+     "reproduz": true,
+     "max_abs_dif": 4.85722573273506e-17,
+     "c2_19mar": {
+      "tau": 0.05612110492804745,
+      "ic95_inf": -0.16144711766187067,
+      "ic95_sup": 0.2736893275179656,
+      "media_abaixo": 0.6383399209486166,
+      "media_acima": 0.7211328976034859,
+      "n_abaixo": 102,
+      "n_acima": 82
+     },
+     "c2_13fev": {
+      "tau": 0.05612110492804745,
+      "ic95_inf": -0.16144711766187067,
+      "ic95_sup": 0.2736893275179656,
+      "media_abaixo": 0.6383399209486166,
+      "media_acima": 0.7211328976034859,
+      "n_abaixo": 102,
+      "n_acima": 82
+     }
+    },
+    {
+     "quantidade": "so_cr",
+     "ciclo": "1+2+3",
+     "corte": "0.300",
+     "reproduz": true,
+     "max_abs_dif": 4.163336342344337e-17,
+     "c2_19mar": {
+      "tau": 0.15367996483087643,
+      "ic95_inf": 0.02095702851115508,
+      "ic95_sup": 0.28640290115059774,
+      "media_abaixo": 0.5245762711864407,
+      "media_acima": 0.5893048128342246,
+      "n_abaixo": 145,
+      "n_acima": 120
+     },
+     "c2_13fev": {
+      "tau": 0.1404553302072573,
+      "ic95_inf": -0.0020557792644574635,
+      "ic95_sup": 0.28296643967897206,
+      "media_abaixo": 0.5830508474576271,
+      "media_acima": 0.667379679144385,
+      "n_abaixo": 145,
+      "n_acima": 120
+     }
+    },
+    {
+     "quantidade": "frac_cel_so_cr",
+     "ciclo": "1+2+3",
+     "corte": "0.300",
+     "reproduz": true,
+     "max_abs_dif": 5.551115123125783e-17,
+     "c2_19mar": {
+      "tau": 0.15367996483086266,
+      "ic95_inf": 0.019864211581415964,
+      "ic95_sup": 0.2874957180803094,
+      "media_abaixo": 0.5245762711864407,
+      "media_acima": 0.5893048128342246,
+      "n_abaixo": 145,
+      "n_acima": 120
+     },
+     "c2_13fev": {
+      "tau": 0.14045533020724266,
+      "ic95_inf": -0.0032291902620214807,
+      "ic95_sup": 0.2841398506765068,
+      "media_abaixo": 0.5830508474576271,
+      "media_acima": 0.667379679144385,
+      "n_abaixo": 145,
+      "n_acima": 120
+     }
+    },
+    {
+     "quantidade": "so_cr",
+     "ciclo": "1",
+     "corte": "0.400",
+     "reproduz": true,
+     "max_abs_dif": 1.3877787807814457e-17,
+     "c2_19mar": {
+      "tau": 0.3281256069707119,
+      "ic95_inf": 0.14282533119849494,
+      "ic95_sup": 0.5134258827429289,
+      "media_abaixo": 0.5546558704453441,
+      "media_acima": 0.6546762589928058,
+      "n_abaixo": 53,
+      "n_acima": 41
+     },
+     "c2_13fev": {
+      "tau": 0.3281256069707119,
+      "ic95_inf": 0.14282533119849494,
+      "ic95_sup": 0.5134258827429289,
+      "media_abaixo": 0.5546558704453441,
+      "media_acima": 0.6546762589928058,
+      "n_abaixo": 53,
+      "n_acima": 41
+     }
+    },
+    {
+     "quantidade": "frac_cel_so_cr",
+     "ciclo": "1",
+     "corte": "0.400",
+     "reproduz": true,
+     "max_abs_dif": 4.163336342344337e-17,
+     "c2_19mar": {
+      "tau": 0.3281256069707148,
+      "ic95_inf": 0.140497627433026,
+      "ic95_sup": 0.5157535865084036,
+      "media_abaixo": 0.5546558704453441,
+      "media_acima": 0.6546762589928058,
+      "n_abaixo": 53,
+      "n_acima": 41
+     },
+     "c2_13fev": {
+      "tau": 0.3281256069707148,
+      "ic95_inf": 0.140497627433026,
+      "ic95_sup": 0.5157535865084036,
+      "media_abaixo": 0.5546558704453441,
+      "media_acima": 0.6546762589928058,
+      "n_abaixo": 53,
+      "n_acima": 41
+     }
+    },
+    {
+     "quantidade": "so_cr",
+     "ciclo": "2",
+     "corte": "0.400",
+     "reproduz": true,
+     "max_abs_dif": 8.326672684688674e-17,
+     "c2_19mar": {
+      "tau": 0.0034513420973262265,
+      "ic95_inf": -0.21208809059153547,
+      "ic95_sup": 0.21899077478618792,
+      "media_abaixo": 0.27699530516431925,
+      "media_acima": 0.13445378151260504,
+      "n_abaixo": 53,
+      "n_acima": 53
+     },
+     "c2_13fev": {
+      "tau": -0.12859570050856206,
+      "ic95_inf": -0.5971488617601699,
+      "ic95_sup": 0.3399574607430458,
+      "media_abaixo": 0.49765258215962443,
+      "media_acima": 0.37815126050420167,
+      "n_abaixo": 53,
+      "n_acima": 53
+     }
+    },
+    {
+     "quantidade": "frac_cel_so_cr",
+     "ciclo": "2",
+     "corte": "0.400",
+     "reproduz": true,
+     "max_abs_dif": 5.551115123125783e-17,
+     "c2_19mar": {
+      "tau": 0.0034513420973272257,
+      "ic95_inf": -0.21424153744815091,
+      "ic95_sup": 0.22114422164280537,
+      "media_abaixo": 0.27699530516431925,
+      "media_acima": 0.13445378151260504,
+      "n_abaixo": 53,
+      "n_acima": 53
+     },
+     "c2_13fev": {
+      "tau": -0.12859570050855998,
+      "ic95_inf": -0.6018301598394455,
+      "ic95_sup": 0.34463875882232564,
+      "media_abaixo": 0.49765258215962443,
+      "media_acima": 0.37815126050420167,
+      "n_abaixo": 53,
+      "n_acima": 53
+     }
+    },
+    {
+     "quantidade": "so_cr",
+     "ciclo": "3",
+     "corte": "0.400",
+     "reproduz": true,
+     "max_abs_dif": 4.163336342344337e-17,
+     "c2_19mar": {
+      "tau": 0.059885292755020636,
+      "ic95_inf": -0.11968565593414224,
+      "ic95_sup": 0.2394562414441835,
+      "media_abaixo": 0.6858974358974359,
+      "media_acima": 0.7746478873239436,
+      "n_abaixo": 97,
+      "n_acima": 118
+     },
+     "c2_13fev": {
+      "tau": 0.059885292755020636,
+      "ic95_inf": -0.11968565593414224,
+      "ic95_sup": 0.2394562414441835,
+      "media_abaixo": 0.6858974358974359,
+      "media_acima": 0.7746478873239436,
+      "n_abaixo": 97,
+      "n_acima": 118
+     }
+    },
+    {
+     "quantidade": "frac_cel_so_cr",
+     "ciclo": "3",
+     "corte": "0.400",
+     "reproduz": true,
+     "max_abs_dif": 6.245004513516506e-17,
+     "c2_19mar": {
+      "tau": 0.059885292755025465,
+      "ic95_inf": -0.12043929759307442,
+      "ic95_sup": 0.24020988310312535,
+      "media_abaixo": 0.6858974358974359,
+      "media_acima": 0.7746478873239436,
+      "n_abaixo": 97,
+      "n_acima": 118
+     },
+     "c2_13fev": {
+      "tau": 0.059885292755025465,
+      "ic95_inf": -0.12043929759307442,
+      "ic95_sup": 0.24020988310312535,
+      "media_abaixo": 0.6858974358974359,
+      "media_acima": 0.7746478873239436,
+      "n_abaixo": 97,
+      "n_acima": 118
+     }
+    },
+    {
+     "quantidade": "so_cr",
+     "ciclo": "1+2+3",
+     "corte": "0.400",
+     "reproduz": true,
+     "max_abs_dif": 5.551115123125783e-17,
+     "c2_19mar": {
+      "tau": 0.11327841465188504,
+      "ic95_inf": -0.014634285108420325,
+      "ic95_sup": 0.2411911144121904,
+      "media_abaixo": 0.5310880829015544,
+      "media_acima": 0.5774946921443737,
+      "n_abaixo": 122,
+      "n_acima": 145
+     },
+     "c2_13fev": {
+      "tau": 0.07206816595251597,
+      "ic95_inf": -0.1281365712962858,
+      "ic95_sup": 0.27227290320131775,
+      "media_abaixo": 0.5919689119170984,
+      "media_acima": 0.6390658174097664,
+      "n_abaixo": 122,
+      "n_acima": 145
+     }
+    },
+    {
+     "quantidade": "frac_cel_so_cr",
+     "ciclo": "1+2+3",
+     "corte": "0.400",
+     "reproduz": true,
+     "max_abs_dif": 5.551115123125783e-17,
+     "c2_19mar": {
+      "tau": 0.11327841465188726,
+      "ic95_inf": -0.015578303079715389,
+      "ic95_sup": 0.2421351323834899,
+      "media_abaixo": 0.5310880829015544,
+      "media_acima": 0.5774946921443737,
+      "n_abaixo": 122,
+      "n_acima": 145
+     },
+     "c2_13fev": {
+      "tau": 0.07206816595251908,
+      "ic95_inf": -0.12961411707755313,
+      "ic95_sup": 0.27375044898259127,
+      "media_abaixo": 0.5919689119170984,
+      "media_acima": 0.6390658174097664,
+      "n_abaixo": 122,
+      "n_acima": 145
+     }
+    }
+   ],
+   "max_abs_dif": 9.71445146547012e-17,
+   "aprovado": true,
+   "diferenca_de_definicao": "o D-b do 57l mede a parte das celulas so de cadastro reserva (celula, ou fracao das celulas do municipio ponderada pelas celulas) com o quadro do ciclo 2 de 19/03/2026; o 48f mede S = municipio x ciclo com >= 1 celula com vaga imediata e usa, no ciclo 2, o quadro de 13/02/2026 (48b, par. 7)"
+  },
+  "aprovado": true
+ },
+ "amostra": {
+  "contagem": {
+   "V1": {
+    "municipio_ciclo": 368,
+    "com_vaga_imediata_S1": 215,
+    "so_cadastro_reserva_S0": 153
+   },
+   "V2": {
+    "municipio_ciclo": 454,
+    "com_vaga_imediata_S1": 328,
+    "so_cadastro_reserva_S0": 126
+   },
+   "V3": {
+    "municipio_ciclo": 747,
+    "com_vaga_imediata_S1": 307,
+    "so_cadastro_reserva_S0": 440
+   }
+  },
+  "janelas": {
+   "0.300|w=0.050": {
+    "unidades_na_janela": 441,
+    "municipios_abaixo": 145,
+    "municipios_acima": 120,
+    "S1_abaixo": 141,
+    "S1_acima": 116
+   },
+   "0.300|w=0.020": {
+    "unidades_na_janela": 169,
+    "municipios_abaixo": 54,
+    "municipios_acima": 47,
+    "S1_abaixo": 51,
+    "S1_acima": 44
+   },
+   "0.400|w=0.050": {
+    "unidades_na_janela": 415,
+    "municipios_abaixo": 122,
+    "municipios_acima": 145,
+    "S1_abaixo": 130,
+    "S1_acima": 97
+   },
+   "0.400|w=0.020": {
+    "unidades_na_janela": 176,
+    "municipios_abaixo": 52,
+    "municipios_acima": 53,
+    "S1_abaixo": 60,
+    "S1_acima": 42
+   }
+  }
+ },
+ "leitura": {
+  "sv1": {
+   "0.300": {
+    "codigo": "SELECAO_PEQUENA",
+    "q": 0.0420212537919804,
+    "ic_s_contem_zero": true,
+    "ic_celula_contem_zero": true,
+    "celula_discorda": false
+   },
+   "0.400": {
+    "codigo": "IC_CONTEM_ZERO_MAS_TAXAS_DIFEREM",
+    "q": 0.2039043101483036,
+    "ic_s_contem_zero": true,
+    "ic_celula_contem_zero": true,
+    "celula_discorda": false
+   }
+  },
+  "lee": {
+   "SV-3|Y1|0.300": {
+    "codigo": "NAO_SE_DETECTA_DIFERENCA",
+    "intervalo_contem_zero": true,
+    "ic_im_contem_zero": true,
+    "sinal": ""
+   },
+   "SV-3|Y1|0.400": {
+    "codigo": "NAO_SE_DETECTA_DIFERENCA",
+    "intervalo_contem_zero": true,
+    "ic_im_contem_zero": true,
+    "sinal": ""
+   },
+   "SV-3|Y2|0.300": {
+    "codigo": "NAO_SE_DETECTA_DIFERENCA",
+    "intervalo_contem_zero": true,
+    "ic_im_contem_zero": true,
+    "sinal": ""
+   },
+   "SV-3|Y2|0.400": {
+    "codigo": "NAO_SE_DETECTA_DIFERENCA",
+    "intervalo_contem_zero": true,
+    "ic_im_contem_zero": true,
+    "sinal": ""
+   },
+   "SV-4|Y1|0.300": {
+    "codigo": "NAO_SE_DETECTA_DIFERENCA",
+    "intervalo_contem_zero": true,
+    "ic_im_contem_zero": true,
+    "sinal": ""
+   },
+   "SV-4|Y1|0.400": {
+    "codigo": "NAO_SE_DETECTA_DIFERENCA",
+    "intervalo_contem_zero": true,
+    "ic_im_contem_zero": true,
+    "sinal": ""
+   },
+   "SV-4|Y2|0.300": {
+    "codigo": "NAO_SE_DETECTA_DIFERENCA",
+    "intervalo_contem_zero": true,
+    "ic_im_contem_zero": true,
+    "sinal": ""
+   },
+   "SV-4|Y2|0.400": {
+    "codigo": "NAO_SE_DETECTA_DIFERENCA",
+    "intervalo_contem_zero": true,
+    "ic_im_contem_zero": true,
+    "sinal": ""
+   },
+   "SV-5|Y1|0.300": {
+    "codigo": "NAO_SE_DETECTA_DIFERENCA",
+    "intervalo_contem_zero": true,
+    "ic_im_contem_zero": true,
+    "sinal": ""
+   },
+   "SV-5|Y1|0.400": {
+    "codigo": "NAO_SE_DETECTA_DIFERENCA",
+    "intervalo_contem_zero": true,
+    "ic_im_contem_zero": true,
+    "sinal": ""
+   },
+   "SV-5|Y2|0.300": {
+    "codigo": "INTERVALO_DE_UM_LADO_DO_ZERO",
+    "intervalo_contem_zero": false,
+    "ic_im_contem_zero": true,
+    "sinal": "negativo"
+   },
+   "SV-5|Y2|0.400": {
+    "codigo": "NAO_SE_DETECTA_DIFERENCA",
+    "intervalo_contem_zero": true,
+    "ic_im_contem_zero": true,
+    "sinal": ""
+   }
+  },
+  "sv2": {
+   "0.300": {
+    "codigo": "DESBALANCO_MAIOR_EM_S1",
+    "n_ic_sem_zero_S1": 3,
+    "n_ic_sem_zero_toda": 1,
+    "vars_ic_sem_zero_S1": [
+     "capital",
+     "regiao_Nordeste",
+     "esp_resto"
+    ],
+    "vars_ic_sem_zero_toda": [
+     "capital"
+    ],
+    "media_abs_padronizado_S1": 0.6538571932932846,
+    "media_abs_padronizado_toda": 0.3154027374312905
+   },
+   "0.400": {
+    "codigo": "DESBALANCO_NAO_MAIOR_EM_S1",
+    "n_ic_sem_zero_S1": 1,
+    "n_ic_sem_zero_toda": 1,
+    "vars_ic_sem_zero_S1": [
+     "esp_resto"
+    ],
+    "vars_ic_sem_zero_toda": [
+     "esp_resto"
+    ],
+    "media_abs_padronizado_S1": 0.24480427856489176,
+    "media_abs_padronizado_toda": 0.20560555717046913
+   }
+  },
+  "regras": {
+   "sv1": "IC 95% da RDD de S (municipio x ciclo) sem zero -> TIPO_RESPONDE_AO_CORTE; com zero e q < 0,05 -> SELECAO_PEQUENA; com zero e q >= 0,05 -> IC_CONTEM_ZERO_MAS_TAXAS_DIFEREM (fora da tabela do par. 4)",
+   "lee": "[inf; sup] contem zero -> NAO_SE_DETECTA_DIFERENCA; inteiro de um lado -> INTERVALO_DE_UM_LADO_DO_ZERO (sinal relatado como robusto a selecao, dizendo se o IC de Imbens-Manski exclui zero)",
+   "sv2": "n de covariaveis com IC 95% sem zero entre S = 1 > o da amostra toda -> DESBALANCO_MAIOR_EM_S1"
+  }
+ },
+ "contagens": {
+  "linhas": 68,
+  "por_linha": {
+   "SV-1": 12,
+   "SV-3": 16,
+   "SV-4": 24,
+   "SV-5": 16
+  },
+  "por_status": {
+   "EXECUTADO": 68
+  },
+  "linhas_balanco": 40
+ },
+ "integridade": {
+  "ivs": "IVS 2010 oficial (a08); o arquivo local de IVS da auditoria 16 nao e lido",
+  "cnes": "covariaveis do 44: competencias 202406-202506; nenhuma >= 202609",
+  "imputacao": "nada imputado; Y de unidade com S = 0 fica ausente, nunca zero",
+  "dados": "nada escrito em data/",
+  "saidas_nao_regravadas": [
+   "HI_*",
+   "CL_*",
+   "DQ_*"
+  ]
+ },
+ "saidas": {
+  "estimativas": "output/rdd_bolsa/SV_estimativas.csv",
+  "balanco": "output/rdd_bolsa/SV_balanco.csv",
+  "resumo": "output/rdd_bolsa/SV_resumo.json",
+  "figuras": "output/rdd_bolsa/SV_figuras",
+  "doc": "docs/06_execucao/57t_resultados_selecao_tipo_vaga.md"
+ },
+ "linguagem": "pacote do corte; 'nao se detecta' nao e 'zero'; nada de 'a bolsa reduz'",
+ "referencia_hi": {
+  "0.300": {
+   "HI-1": {
+    "tau": -0.0367840865161759,
+    "ic95_inf": -0.2125759196482602,
+    "ic95_sup": 0.1390077466159084
+   },
+   "HI-2": {
+    "tau": -1.1263257568590284,
+    "ic95_inf": -2.1534926445662546,
+    "ic95_sup": -0.0991588691518023
+   }
+  },
+  "0.400": {
+   "HI-1": {
+    "tau": -0.0231196495551224,
+    "ic95_inf": -0.240011419698559,
+    "ic95_sup": 0.1937721205883141
+   },
+   "HI-2": {
+    "tau": -0.156707347012577,
+    "ic95_inf": -0.9929537674925244,
+    "ic95_sup": 0.6795390734673705
+   }
+  }
+ },
+ "figuras": [
+  {
+   "arquivo": "output/rdd_bolsa/SV_figuras/SV_taxa_selecao.png",
+   "como_ler": "Como ler: em cada corte, a altura da barra é a parte dos municípios × ciclo perto do corte (janela de 0,050, com mais peso para quem está mais perto) que têm alguma vaga imediata. Azul: lado de bolsa menor; laranja: lado de bolsa maior. Se as barras de um par têm alturas diferentes, o tipo de vaga muda no corte, e a comparação só entre municípios com vaga imediata pode juntar grupos diferentes. q é a parte que os limites de Lee aparam no lado mais alto.",
+   "fonte": "SV_estimativas.csv: SV-1 (taxa_selecao, janela 0,050; salto de S)"
+  },
+  {
+   "arquivo": "output/rdd_bolsa/SV_figuras/SV_limites_lee.png",
+   "como_ler": "Como ler: a barra grossa vai do limite inferior ao superior de Lee (o salto no corte, lado de bolsa maior menos o de bolsa menor, que vale qualquer que tenha sido a regra do Ministério para o tipo de vaga, se ela empurra todos na mesma direção); a linha fina é o IC 95% de Imbens–Manski. Ponto com barra fina: diferença sem aparo e H1 do 48b com IC 95%, como referência (outra conta). Faixa que cruza o zero: não se detecta diferença, o que não quer dizer que ela seja zero. Pacote do corte, não só a bolsa.",
+   "fonte": "SV_estimativas.csv: SV-3, SV-4, SV-5 (limites_lee); HI_estimativas.csv: HI-1 e HI-2 principais (48b)"
+  }
+ ]
+}

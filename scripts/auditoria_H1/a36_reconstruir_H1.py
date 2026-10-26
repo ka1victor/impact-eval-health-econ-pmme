@@ -34,7 +34,6 @@ NAT = "EMPIRICO"
 PIPE_CEL = RAIZ / "output" / "rdd_bolsa" / "outcomes" / "outcomes_V_celula.parquet"
 PIPE_MUN = RAIZ / "output" / "rdd_bolsa" / "outcomes" / "outcomes_V_municipio.parquet"
 PIPE_EST = {k: RAIZ / "output" / "rdd_bolsa" / f"{k}_estimativas.csv" for k in ("N", "NA", "ND")}
-IVS_ERRADO = RAIZ / "data" / "ivs_ipea_2010_municipios.csv"
 CORTES = (300, 400)
 # Capitais das 27 UFs (IBGE, 6 dígitos). O quadro do ciclo 3 marca 'CAPITAL' e é conferido contra esta lista.
 CAPITAIS = set("110020 120040 130260 140010 150140 160030 172100 211130 221100 230440 240810 250750 261160 "

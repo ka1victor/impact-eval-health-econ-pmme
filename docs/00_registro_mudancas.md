@@ -8,6 +8,20 @@
 
 ---
 
+## 26/10/2026 — Doc 57t: resultados do adendo 48f (seleção pelo tipo de vaga na H1)
+
+Motivo: execução do adendo congelado 48f (tipo de vaga como outcome da RDD, balanço dos controles L e M na amostra
+selecionada e limites de Lee para o salto da H1). O bloco "Decisões de implementação" do 57t foi registrado em commit
+próprio antes de qualquer estimativa; os números entram só nos blocos gerados pelo script 46.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57t_resultados_selecao_tipo_vaga.md`](06_execucao/57t_resultados_selecao_tipo_vaga.md) | resultados do adendo 48f (SV-1 a SV-5), com decisões de implementação, leitura pré-registrada aplicada por regra no código e limites; auditoria pendente |
+
+---
+
 ## 26/10/2026 — Doc 57s: resultados do adendo 48e (pareamento pela regra literal e PSM em 0,400)
 
 Motivo: execução do adendo 48e. As decisões de implementação do 57s (seção 0) foram registradas e versionadas antes
