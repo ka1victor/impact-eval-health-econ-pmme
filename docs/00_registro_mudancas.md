@@ -8,6 +8,21 @@
 
 ---
 
+## 26/10/2026 — Doc 65: avaliação independente da força das hipóteses H1, H2 e H3 (banca 2)
+
+Motivo: pedido de avaliação cética do que dá para afirmar em cada hipótese da apresentação, para o autor escolher
+uma só na versão final da banca 2. É avaliação documental: nada foi estimado, e todo número é citado de doc gerado
+(com seção) ou de auditoria. Nenhum protocolo, resultado ou slide muda. A recomendação (H1 como hipótese única,
+apresentada como testada e não confirmada) é proposta; a escolha é do autor.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/65_avaliacao_forca_hipoteses.md`](06_execucao/65_avaliacao_forca_hipoteses.md) | tabela-resumo hipótese × estimando × resultado × força × frase defensável; uma seção por hipótese (estimando, identificação, resultado, robustez, ameaças, frase honesta, nota); comparação e recomendação |
+
+---
+
 ## 26/10/2026 — Doc 57v: execução do adendo 52d (sensibilidades da escolha no ciclo 2 com o quadro de 13/02)
 
 Motivo: execução do adendo 52d (script 48). O doc 57v foi criado primeiro só com o inventário do que usa o tipo de
