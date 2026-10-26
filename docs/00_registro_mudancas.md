@@ -8,6 +8,29 @@
 
 ---
 
+## 26/10/2026 — Auditoria 44: adendo 48f (seleção pelo tipo de vaga na H1), aprovado com correções
+
+Motivo: auditoria independente da execução do adendo 48f (script 46, saídas `SV_*`, doc 57t). O recálculo próprio,
+sem importar 46, 44, 40, 24 nem a `rdd_lib`, bate com o gravado. Nenhuma estimativa mudou: `SV_estimativas.csv`,
+`SV_balanco.csv` e `SV_limites_lee.png` ficaram iguais byte a byte. As correções foram de texto, nos blocos gerados
+do 57t:
+- `SELECAO_PEQUENA` em 0,300 vem do q dos ciclos juntos;
+- peso da linha do SV-5 que fica de um lado do zero;
+- reconciliação com o D-b do 57l;
+- p de Holm da H1 de referência;
+- para quem vale o intervalo de Lee;
+- "Como ler" da figura de taxas.
+
+Houve também uma correção de proveniência: duas entradas ganharam hash em `SV_resumo.json`.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/44_auditoria_selecao_tipo_vaga.md`](auditorias/44_auditoria_selecao_tipo_vaga.md) | auditoria do adendo 48f: veredito, achados por gravidade, integridade e tabela do que foi recalculado |
+
+---
+
 ## 26/10/2026 — Auditoria 43: adendo 48e (pareamento pela regra literal e PSM em 0,400), aprovado com correções
 
 Motivo: auditoria independente do adendo 48e (script 45, `PM_*`, doc 57s). O recálculo próprio, sem importar os
