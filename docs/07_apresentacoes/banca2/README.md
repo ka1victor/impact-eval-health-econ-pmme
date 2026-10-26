@@ -21,8 +21,8 @@
 > usado (`output/apresentacao_banca2/deck_banca2_curto.pptx` e `.pdf`), na
 > estrutura obrigatória do [06](06_estrutura_obrigatoria_versao_final.md)
 > (Hipótese, Dados, Análise descritiva, Metodologia, Identificação,
-> Resultados, Robustez, Discussão), com no máximo 30 palavras visíveis por
-> slide. Conteúdo canônico: [04](04_conteudo_deck_curto.md). O deck completo
+> Resultados, Robustez, Discussão), com no máximo 14 slides e 30 palavras
+> visíveis por slide. Conteúdo canônico: [04](04_conteudo_deck_curto.md). O deck completo
 > (doc 02) fica como registro e só é refeito com `--completo`.<br>
 > **Numeração da apresentação a partir de 26/10/2026:** H1 preenchimento; H2
 > bolsa × origem (antes H3); H3 oferta (antes H4). **A H1 é a candidata

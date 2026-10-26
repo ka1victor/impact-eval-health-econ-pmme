@@ -49,23 +49,36 @@ continuam, desde que caibam nesta estrutura:
   comparação e cuidado. Erro-padrão, o que é comum e o que é por ciclo,
   sensibilidades e detalhes de amostra vão para as notas do apresentador;
 - nos demais slides, o detalhe também vai para as notas; a cautela
-  obrigatória continua na tela, curta.
+  obrigatória continua na tela, curta;
+- **no máximo 14 slides** (decisão do autor de 26/10/2026: "esses últimos
+  decks tão muito grandes. pode deixar mais curtos mesmo, só com os
+  principais slides, idealmente <15 slides"). Só os slides principais; o
+  que for cortado vai para as notas do apresentador, não para um apêndice. O
+  teto é aplicado pelo gerador e pelo teste.
 
 ## 3. Como o conteúdo atual se encaixa (versão de 26/10/2026, a validar)
 
 Numeração nova (H1 preenchimento; H2 bolsa × origem; H3 oferta). O conteúdo
 canônico está em [`04_conteudo_deck_curto.md`](04_conteudo_deck_curto.md).
 
-| Seção | Conteúdo |
-|---|---|
-| Hipótese | candidata central, em destaque: **H1** (preenchimento). Em cinza, como plano B: H2 (a bolsa pesa pouco perto da origem do médico, "incentivo limitado"; antes H3) e H3 (oferta; antes H4). Decisão do autor de 26/10/2026; a escolha final vem depois da validação dos professores |
-| Dados | variáveis principais e secundárias, com fonte e unidade (detalhe de período e cobertura nas notas) |
-| Análise descritiva | os três ciclos em números; IVS × faixa; da H1: dados crus em volta dos cortes (scatter IVS × preenchimento com as retas) e subida do preenchimento dentro das faixas (doc 57m, auditoria 37) |
-| Metodologia | H1 do adendo 48b (só vagas imediatas) em até 4 linhas, com a equação no centro; H2 e H3, plano B, num slide só |
-| Identificação | da H1: regra *sharp*, densidade, balanço e placebos, com a ressalva das capitais em 0,300 (auditoria 36); o pacote do corte (auditorias 18 e 35); tendências paralelas da H3 (plano B) numa linha |
-| Resultados | H1 principal do adendo 48b (HI-1 e HI-2 por corte; "aguardando 48b" até as saídas existirem); depois H2 (P1h) e H3 (P4), plano B |
-| Robustez | o bloco da H1, junto: medidas antigas (A3, N1); antes e depois do controle; por ciclo; a queda em 0,300 em três ideias (dados crus iguais; a reta levada até o corte, puxada por capitais e Nordeste; controlando a capital ou só com vagas imediatas, a queda encolhe); o que dá para afirmar (TOST). Depois H2 por ciclo e H3 na nota de corte, plano B |
-| Discussão | a partir da H1: o sinal negativo em uma linha simples; por que não sobe: incentivo limitado (H2) e substituição na oferta (H3) |
+14 slides (versão de 26/10/2026, depois do teto de 14):
+
+| Seção | Slides | Conteúdo |
+|---|---|---|
+| Hipótese | 1 | candidata central, em destaque: **H1** (preenchimento). Em cinza, como plano B: H2 (a bolsa pesa pouco perto da origem do médico, "incentivo limitado"; antes H3) e H3 (oferta; antes H4). Decisão do autor de 26/10/2026; a escolha final vem depois da validação dos professores |
+| Dados | 2 | uma tabela só: variáveis principais e, em cinza, as secundárias, com a fonte de cada uma (unidade, período e cobertura nas notas) |
+| Análise descritiva | 3–5 | os três ciclos em números, com a explicação dos ciclos numa linha; IVS × faixa (regra *sharp*); scatter IVS × preenchimento só de vagas imediatas, com as retas de cada lado, por corte (a subida dentro das faixas, doc 57m, nas notas) |
+| Metodologia | 6 | H1 do adendo 48b em até 4 linhas, com a equação em palavras no centro, h, kernel e erro-padrão; H2 (logit da 1ª opção) e H3 (estudo de evento) numa linha cinza cada |
+| Identificação | 7 | da H1, numa tabela: regra *sharp*; sem manipulação e balanço, com a ressalva das capitais em 0,300 (auditoria 36); pacote do corte (auditoria 18); nenhum outro incentivo individual em 0,300 (auditoria 35); tipo de vaga decidido pelo MS, premissa não testada (doc 05, §2.12) |
+| Resultados | 8 | H1 principal do adendo 48b (HI-1 e HI-2 por corte), "em auditoria", com o TOST numa linha |
+| Robustez | 9–11 | H1: antes e depois do controle (com e sem controle em painéis separados); por ciclo; controlando a capital |
+| Discussão | 12–14 | por que o sinal é negativo, uma frase por explicação; planos B em cinza num slide (H2 com um número por ciclo; H3 nos dois níveis, doc 05, §2.13); a teoria: incentivo limitado, pacote do corte, vínculo cadastrado não é presença |
+
+Saíram do rascunho de 26 slides, com o essencial nas notas: a capa, a tabela
+separada das secundárias, os dois slides da subida dentro das faixas, "H2 e
+H3: como estimamos", o slide do pacote, os resultados e as robustezes de H2 e
+H3 em slides próprios, a medida antiga contra só vagas imediatas, a reta em
+0,300 e o TOST em slide próprio.
 
 Dentro de cada seção, os slides da mesma hipótese ficam juntos, em sequência (H1, depois H2, depois H3); o título
 leva a hipótese ("H1 · …"), e os de plano B levam "plano B", em cinza.
