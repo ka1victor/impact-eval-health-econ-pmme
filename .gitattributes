@@ -21,3 +21,7 @@ data/raw/**/*.zip binary
 data/ivs_ipea_2010_municipios.csv text eol=lf
 data/pmm_especialistas_nominal.csv text eol=lf
 data/pmm_especialistas_serie_historica.csv text eol=lf
+
+# Cópias de normas (a18): preservar os bytes capturados, cujo SHA-256 está no manifesto
+output/aquisicao/normas_incentivos/*.html binary
+output/aquisicao/normas_incentivos/*.pdf binary
