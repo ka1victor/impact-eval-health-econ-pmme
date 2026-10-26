@@ -668,7 +668,7 @@ FORCA_EXPL = "exploratório"
 FORCA_DESC = "descritivo"
 FORCA_INC = "inconclusivo"
 FORCA_CENARIO = "cenário (simulação)"   # o T1.6 passou a validação em 25/10/2026
-STATUS_CENARIO = "STATUS_DE_CENARIO_SEM_NUMERO_SIMULADO"
+TIPO_STATUS_CENARIO = "STATUS_DE_CENARIO_SEM_NUMERO_SIMULADO"
 
 # Contrastes (categorias fixas).
 C_MARG = "incentivo marginal"
@@ -1149,9 +1149,10 @@ def gravar(r: dict) -> None:
     r["rastreio"] = rastreio
     r["segmentos_linguagem"] = seg
     (out / NOME_RESUMO).write_text(json.dumps(r, ensure_ascii=False, indent=1, sort_keys=False) + "\n", encoding="utf-8")
-    # A linha do T1.6 só traz o status da validação de base de uma simulação (nenhum número simulado):
-    # rotulá-la EMPIRICO enganaria (auditoria 29); CENARIO_CONTRAFACTUAL fica reservado a output/cenarios/.
-    pd.DataFrame([{"natureza_dos_dados": STATUS_CENARIO if x["forca"] == FORCA_CENARIO else "EMPIRICO", **x}
+    # A linha do T1.6 só traz o status da validação de base de uma simulação (nenhum número simulado). Fora de
+    # output/cenarios/ a natureza é sempre EMPIRICO; tipo_linha diz que a linha é status de cenário (auditoria 29).
+    pd.DataFrame([{"natureza_dos_dados": "EMPIRICO",
+                   "tipo_linha": TIPO_STATUS_CENARIO if x["forca"] == FORCA_CENARIO else "resultado_empirico", **x}
                   for x in linhas_p]).to_csv(out / NOME_TABELA, index=False)
     _csv_mult(r).to_csv(out / NOME_MULT, index=False, float_format="%.10g")
     _csv_poder(r).to_csv(out / NOME_PODER, index=False, float_format="%.10g")

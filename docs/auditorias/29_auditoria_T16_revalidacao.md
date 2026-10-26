@@ -45,7 +45,9 @@ nenhuma saída de cenário fora de `output/cenarios/`.
 
 ## 4. Correções posteriores (26/10/2026)
 
-- Rótulo da linha T1.6 em `S57_tabela_perguntas.csv`: o script 33 grava agora
-  `natureza_dos_dados = STATUS_DE_CENARIO_SEM_NUMERO_SIMULADO` nessa linha (as demais seguem `EMPIRICO`). A constante
-  `FORCA_FALHA` virou `FORCA_CENARIO`, e o teste `test_saidas_rotuladas_empirico` passou a conferir os dois rótulos.
+- Rótulo da linha T1.6 em `S57_tabela_perguntas.csv`: o script 33 grava agora a coluna `tipo_linha`, com
+  `STATUS_DE_CENARIO_SEM_NUMERO_SIMULADO` na linha T1.6 e `resultado_empirico` nas demais. `natureza_dos_dados` segue
+  `EMPIRICO` em todas, porque fora de `output/cenarios/` o projeto só admite esse valor (`tests/test_integridade_dados.py`)
+  e a linha não traz número simulado. A constante `FORCA_FALHA` virou `FORCA_CENARIO`, e o teste
+  `test_saidas_rotuladas_empirico` confere as duas colunas.
 - A redação "contém zero" da faixa S3 já tinha sido corrigida para "toca o zero" no script 25b.

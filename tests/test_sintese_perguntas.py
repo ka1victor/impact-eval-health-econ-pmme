@@ -229,8 +229,9 @@ class TestSinteseDoc(unittest.TestCase):
             self.assertGreater(len(d), 0)
         d = pd.read_csv(OUT / "S57_tabela_perguntas.csv")
         t16 = d["pergunta"].str.startswith("T1.6")
-        self.assertEqual(set(d.loc[t16, "natureza_dos_dados"]), {"STATUS_DE_CENARIO_SEM_NUMERO_SIMULADO"})
-        self.assertEqual(set(d.loc[~t16, "natureza_dos_dados"]), {"EMPIRICO"})
+        self.assertEqual(set(d["natureza_dos_dados"]), {"EMPIRICO"})
+        self.assertEqual(set(d.loc[t16, "tipo_linha"]), {"STATUS_DE_CENARIO_SEM_NUMERO_SIMULADO"})
+        self.assertEqual(set(d.loc[~t16, "tipo_linha"]), {"resultado_empirico"})
         self.assertNotIn("CENARIO_CONTRAFACTUAL", RESUMO.read_text(encoding="utf-8"))
 
     def test_entradas_em_output_e_hash(self) -> None:
