@@ -42,7 +42,7 @@ estimado sob protocolo congelado, e a resposta, elo a elo, é a da síntese
 |---|---|
 | [Roteiro narrativo](01_roteiro_narrativo.md) | o arco, a lógica de cada bloco, as frases que não podem mudar e as que dependem do autor |
 | [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — 21 slides e 7 de apêndice, com título, afirmação, figura com caminho exato, linha de números e notas do apresentador |
-| [Plano da entrega empírica](04_plano_entrega_empirica.md) | revisão de 26/10/2026: o que falta por bloco da banca, erros do deck atual, proposta de hipóteses pela cadeia do modelo e tarefas até 28/10 e 04/11 |
+| [Plano da entrega empírica](04_plano_entrega_empirica.md) | o que falta por bloco da banca, erros do deck atual, proposta de hipóteses pela cadeia do modelo e tarefas por data de apresentação |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | cada figura → arquivo, script e natureza; cada número → arquivo, chave e formato, num bloco gerado pelo script |
 | [Relatório de validação para os professores](../../../output/apresentacao_validacao/relatorio_validacao_rdd_bolsa.pdf) | relatório curto (derivado, gerado por `scripts/apresentacao/gerar_relatorio_validacao_professores.py`) com o desenho, os diagnósticos e os resultados atuais, para validação metodológica; não é o deck |
 
