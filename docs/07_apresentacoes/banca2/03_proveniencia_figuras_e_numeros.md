@@ -32,6 +32,8 @@
 | `G3` | H2: razão de chances da 1ª opção (M1, M5 por ciclo, E9 ciclo 2), com "Como ler" | H2 | `output/apresentacao_banca2/h2_escolha.png` | idem | EMPIRICO |
 | `G4` | H4: horas do médico (P4) e comparação na nota de corte (P4-CA), com "Como ler" | H4 | `output/apresentacao_banca2/h4_horas_medico.png` | idem | EMPIRICO |
 | `G5` | cadeia-resumo com as linhas do doc 57 (N1, A3, P1 M1, P4, P6, K1, realocação), a da H3 (P1h, D_UF) e a força da evidência | Na cadeia | `output/apresentacao_banca2/cadeia_resumo_doc57.png` | idem | EMPIRICO |
+| `G13` | H1: antes e depois do controle das vagas oferecidas, por corte (total, via oferta, com controle) e o salto nas vagas oferecidas (S-c) | O controle muda a leitura | `output/apresentacao_banca2/h1_controle.png` | `scripts/apresentacao/gerar_figuras_banca2.py` | EMPIRICO |
+| `G14` | cronologia dos três ciclos (tabela) | O PMM-E já teve três chamamentos | `output/apresentacao_banca2/cronologia_ciclos.csv` | idem | registro documental |
 | `G12` | H3: pesos na utilidade da escolha (M1), na mesma escala, com os rótulos corrigidos pela auditoria 31 | H3 | `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png` | `scripts/rdd_bolsa/25c_magnitudes_P1h.py` (não é redesenhada aqui) | EMPIRICO |
 | `G6` | tabela descritiva por ciclo | (no deck, tabela nativa) | `output/apresentacao_banca2/tabela_descritiva_ciclos.png` e `.csv` | idem | EMPIRICO |
 | `G7` | tabela de fontes | (no deck, tabela nativa) | `output/apresentacao_banca2/tabela_fontes.png` e `.csv` | idem | EMPIRICO |
@@ -54,7 +56,10 @@
   empilhados; em cada linha, o rótulo à esquerda, o intervalo de 95% no meio
   e o valor à direita. Verde: o IC exclui
   o nulo; cinza: contém. A linha preta é o nulo; a tracejada laranja, a
-  referência de +10 p.p. do protocolo. O bloco "Como ler" fica na própria
+  referência de +10 p.p. do protocolo. A `G2` (H1) mostra cada corte
+  separado, 0,300 e 0,400, sem linha empilhada (decisão do autor de
+  26/10/2026), e a nota de cada linha de A3 e de N1 com controle é a leitura
+  pré-registrada do TOST do protocolo 60 (`EQ_*_LEIT`, doc 57j). O bloco "Como ler" fica na própria
   imagem: foi a lição do grupo, que achou incompreensíveis os gráficos de
   descontinuidade com faixas e pontos sem explicação. Todo texto desenhado é
   gravado no manifesto (`figuras_novas`), e o teste confere os números.
@@ -69,7 +74,25 @@
   o doc 57 classifica a pergunta inteira, e no P4 outros outcomes falham no
   pré, o que a leitura curta da linha diz. Na linha da H3, a regra do Holm
   recebe também o estatuto do bloco: Holm < 0,05 num bloco cujo estatuto
-  termina em `POS_RESULTADO` dá "rejeita zero, pós-resultado".
+  termina em `POS_RESULTADO` dá "rejeita zero, pós-resultado". As linhas do
+  preenchimento são por corte (A3 e N1 em 0,300 e em 0,400) e usam a regra
+  `tost`: a leitura pré-registrada do protocolo 60 (doc 57j; auditoria 32),
+  gravada em `EQ_estimativas.csv`, dá "sem aumento ≥ margem", "sem queda ≥
+  margem", "equivalente na margem" ou "inconclusivo". Por corte, as linhas são
+  secundárias, sem correção múltipla: o teste de zero não decide a força.
+- **`G13`.** Pedido do autor de 26/10/2026 ("mostrar o efeito da bolsa antes
+  e depois do controle"). Em cada corte: o total sem controle e o com
+  controle, com IC 95%, e a parte via vagas oferecidas, um losango sem IC,
+  porque é soma algébrica (Σ γ_g × salto das vagas). Os três valores vêm das
+  linhas `decomposicao` de `N_estimativas.csv` (`N1_*_DTOT`, `N1_*_VIA`,
+  `N1_*_DSA`), e o teste confere que total = via oferta + com controle. Ao
+  lado, o salto nas vagas oferecidas (S-c, `VIC_*`) e as médias na janela,
+  abaixo e acima do corte (`ND_estimativas.csv`, descritivo).
+- **`G14`.** A cronologia é montada pelo gerador a partir de códigos de
+  registro documental: as datas de publicação do inventário do A01, os
+  números dos editais (protocolo 48, §8, e A01) e as coortes de chegada do D2
+  (`K_D2_resumo.json`). Natureza `REGISTRO_DOCUMENTAL`, no bloco
+  `texto_citado` do registro; o teste confere a tabela do slide contra o CSV.
 - **`G12`.** É a figura do P1h, usada sem redesenho para não reabrir o que a
   auditoria 31 corrigiu (A1: "no modelo de escolha", com a vaga como sujeito;
   A2: θ_UF é "mesma UF, outra região de saúde", contra outra UF à mesma
@@ -105,11 +128,26 @@ de `output/rdd_bolsa/S57_resumo.json` (a síntese vigente, doc 57, que já grava
 o arquivo e o seletor de origem de cada valor); os CSVs de estimativas dos
 blocos (`N_estimativas.csv`, `P1_estimativas.csv`, `H_estimativas.csv`,
 `CA_estimativas.csv`); o resumo do portão G1 e o manifesto do a16; e as
-descritivas contadas pelo gerador (seletor `descritiva`); e, para a H3
+descritivas contadas pelo gerador (seletor `descritiva`); as datas e os
+editais da cronologia dos ciclos (`CR_*`, natureza `REGISTRO_DOCUMENTAL`,
+extraídos por expressão regular do A01, do protocolo 48 e do `K_D2_resumo.json`);
+a decomposição de N1 e as vagas oferecidas por corte (`N1_*_DTOT`, `N1_*_VIA`,
+`N1_*_DSA`, `N1_*_SF`, `VIC_*`); a H2 por ciclo (`M5_C*`); e, para a H3
 (`H3_*`), `output/rdd_bolsa/P1h_magnitudes.csv` e `P1h_resumo.json`, sem
 recálculo. O limite unilateral do km (`H3_K5_P`) é registrado só para a nota
 do apresentador que diz por que ele não é prova: o teste pré-registrado da
-bolsa é o bilateral do P1a (`M1_P`). A razão de chances
+bolsa é o bilateral do P1a (`M1_P`). Para a H1 por corte (decisão do autor
+de 26/10/2026: "não mostre o empilhado; mostre os efeitos separados para cada
+corte"), os códigos `N1_300_*`, `N1_400_*`, `N2_300_*` e `N2_400_*` vêm de
+`N_estimativas.csv`; `A3_C1_300_*`, `A3_C1_400_*`, `A3C_300_*` e `A3C_400_*`,
+da chave `v` do S57; `EQ_*`, do TOST do protocolo 60
+(`output/rdd_bolsa/EQ_estimativas.csv`, doc 57j, auditoria 32; a leitura
+pré-registrada é a célula de texto `leitura_codigo`, lida como está, com
+`texto_csv` no seletor); e `ND_*`, do diagnóstico do sinal negativo
+(`output/rdd_bolsa/ND_estimativas.csv`, doc 49b, §3). `ND_TX300_C2_PCT` é a
+razão declarada no seletor entre a contribuição do ciclo 2 e o salto da taxa
+em 0,300. Os códigos empilhados (`A3_EMP_*`, `N1_SA_*`, `N1_SB_*`) ficam só no
+apêndice, rotulados como referência. A razão de chances
 por +R$ 5 mil do M5 por ciclo é a transformação declarada no seletor
 (`transf`: multiplica o coeficiente por R$ 1 mil e exponencia).
 
@@ -346,6 +384,7 @@ milhar; `fracao` = "a/b" com separador de milhar; `txt` = trecho como está.
 | `M1_P` | 0,065 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_p", "v"]}` | `p3` | M1: p (família de um teste; p de Holm = p) |
 | `M1_RC` | 1,24 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_rc", "v"]}` | `d2` | M1: razão de chances por +R$ 5 mil |
 | `M1_RC_INF` | 0,99 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_rc_lo", "v"]}` | `d2` | M1: razão de chances, IC inferior |
+| `M1_RC_PCT` | 24 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_rc", "v"], "transf": [["add", -1], ["mul", 100]]}` | `d0` | M1: chance a mais de a vaga ser a 1ª opção com +R$ 5 mil, (razão de chances − 1) × 100 (%) |
 | `M1_RC_SUP` | 1,55 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_rc_hi", "v"]}` | `d2` | M1: razão de chances, IC superior |
 | `M1_RC_MDE` | 1,38 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_rc_mde", "v"]}` | `d2` | M1: MDE de 80% em razão de chances |
 | `M1_N` | 5.421 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M1", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "n_candidatos"}` | `int` | M1: candidatos de 1ª opção na amostra P1 |
@@ -392,12 +431,127 @@ milhar; `fracao` = "a/b" com separador de milhar; `txt` = trecho como está.
 | `H3_S_M5C2` | 1,31 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-3", "modelo": "M5", "ciclo": "2"}, "coluna": "estimativa"}` | `d2` | P1h-3: D_UF em M5 (só o ciclo 2), sensibilidade com BKY |
 | `H3_S_M5C3` | 2,37 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-3", "modelo": "M5", "ciclo": "3"}, "coluna": "estimativa"}` | `d2` | P1h-3: D_UF em M5 (só o ciclo 3), sensibilidade com BKY |
 | `H3_S_M7` | 2,07 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "P1h-3", "modelo": "M7", "ciclo": "empilhado"}, "coluna": "estimativa"}` | `d2` | P1h-3: D_UF em M7 (logit explodido, 1ª e 2ª opção), sensibilidade com BKY |
+| `H3_5B` | 0,21 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "5β"}, "coluna": "estimativa"}` | `d2` | peso no M1: um degrau da bolsa (+R$ 5 mil), 5·β |
+| `H3_5B_INF` | −0,01 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "5β"}, "coluna": "ic95_inf"}` | `d2` | peso no M1: um degrau da bolsa (+R$ 5 mil), 5·β, IC 95% inferior |
+| `H3_5B_SUP` | 0,44 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "5β"}, "coluna": "ic95_sup"}` | `d2` | peso no M1: um degrau da bolsa (+R$ 5 mil), 5·β, IC 95% superior |
 | `H3_10B` | 0,42 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "10β"}, "coluna": "estimativa"}` | `d2` | peso no M1: toda a amplitude da bolsa, 10·β |
 | `H3_10B_INF` | −0,03 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "10β"}, "coluna": "ic95_inf"}` | `d2` | peso no M1: toda a amplitude da bolsa, 10·β, IC 95% inferior |
 | `H3_10B_SUP` | 0,87 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "10β"}, "coluna": "ic95_sup"}` | `d2` | peso no M1: toda a amplitude da bolsa, 10·β, IC 95% superior |
 | `H3_THETA` | 2,40 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "θ_UF"}, "coluna": "estimativa"}` | `d2` | peso no M1: mesma UF, outra região de saúde, θ_UF |
 | `H3_THETA_INF` | 2,28 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "θ_UF"}, "coluna": "ic95_inf"}` | `d2` | peso no M1: mesma UF, outra região de saúde, θ_UF, IC 95% inferior |
 | `H3_THETA_SUP` | 2,53 | EMPIRICO | `output/rdd_bolsa/P1h_magnitudes.csv` | `{"filtro": {"id_linha": "FIG", "componente": "θ_UF"}, "coluna": "ic95_sup"}` | `d2` | peso no M1: mesma UF, outra região de saúde, θ_UF, IC 95% superior |
+| `N1_300_TAU` | −1,45 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "principal"}, "coluna": "tau"}` | `d2s` | N1 com controle (S-a), corte 0.300, ciclos 1–3: salto |
+| `N1_300_INF` | −2,67 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "principal"}, "coluna": "ic95_inf"}` | `d2s` | N1 com controle (S-a), corte 0.300, ciclos 1–3: IC 95% inferior |
+| `N1_300_SUP` | −0,22 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "principal"}, "coluna": "ic95_sup"}` | `d2s` | N1 com controle (S-a), corte 0.300, ciclos 1–3: IC 95% superior |
+| `N1_300_P` | 0,021 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "principal"}, "coluna": "p_valor"}` | `p3` | N1 com controle (S-a), corte 0.300, ciclos 1–3: p, sem correção múltipla (linha por corte) |
+| `N1_400_TAU` | −0,14 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "principal"}, "coluna": "tau"}` | `d2s` | N1 com controle (S-a), corte 0.400, ciclos 1–3: salto |
+| `N1_400_INF` | −0,82 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "principal"}, "coluna": "ic95_inf"}` | `d2s` | N1 com controle (S-a), corte 0.400, ciclos 1–3: IC 95% inferior |
+| `N1_400_SUP` | +0,54 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "principal"}, "coluna": "ic95_sup"}` | `d2s` | N1 com controle (S-a), corte 0.400, ciclos 1–3: IC 95% superior |
+| `N1_400_P` | 0,682 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "principal"}, "coluna": "p_valor"}` | `p3` | N1 com controle (S-a), corte 0.400, ciclos 1–3: p, sem correção múltipla (linha por corte) |
+| `N2_300_TAU` | −0,64 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N2", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "principal"}, "coluna": "tau"}` | `d2s` | N2 com controle (S-a), corte 0.300, ciclos 1–3: salto |
+| `N2_300_INF` | −1,23 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N2", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "principal"}, "coluna": "ic95_inf"}` | `d2s` | N2 com controle (S-a), corte 0.300, ciclos 1–3: IC 95% inferior |
+| `N2_300_SUP` | −0,05 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N2", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "principal"}, "coluna": "ic95_sup"}` | `d2s` | N2 com controle (S-a), corte 0.300, ciclos 1–3: IC 95% superior |
+| `N2_300_P` | 0,034 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N2", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "principal"}, "coluna": "p_valor"}` | `p3` | N2 com controle (S-a), corte 0.300, ciclos 1–3: p, sem correção múltipla (linha por corte) |
+| `N2_400_TAU` | −0,02 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N2", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "principal"}, "coluna": "tau"}` | `d2s` | N2 com controle (S-a), corte 0.400, ciclos 1–3: salto |
+| `N2_400_INF` | −0,40 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N2", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "principal"}, "coluna": "ic95_inf"}` | `d2s` | N2 com controle (S-a), corte 0.400, ciclos 1–3: IC 95% inferior |
+| `N2_400_SUP` | +0,36 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N2", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "principal"}, "coluna": "ic95_sup"}` | `d2s` | N2 com controle (S-a), corte 0.400, ciclos 1–3: IC 95% superior |
+| `N2_400_P` | 0,908 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N2", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "principal"}, "coluna": "p_valor"}` | `p3` | N2 com controle (S-a), corte 0.400, ciclos 1–3: p, sem correção múltipla (linha por corte) |
+| `N1_300_MEDIA` | 2,32 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "principal"}, "coluna": "media_abaixo"}` | `d2` | N1, corte 0.300: média do lado de bolsa menor (vagas por município) |
+| `N1_300_SB_TAU` | −1,56 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-b", "variante": "principal"}, "coluna": "tau"}` | `d2s` | N1, corte 0.300: sem controle (S-b, efeito total da faixa): salto |
+| `N1_300_SB_INF` | −3,73 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-b", "variante": "principal"}, "coluna": "ic95_inf"}` | `d2s` | N1, corte 0.300: sem controle: IC inferior |
+| `N1_300_SB_SUP` | +0,61 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-b", "variante": "principal"}, "coluna": "ic95_sup"}` | `d2s` | N1, corte 0.300: sem controle: IC superior |
+| `N1_300_H030` | −1,50 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "h=0.030"}, "coluna": "tau"}` | `d2s` | N1, corte 0.300: com controle, h = 0,030 |
+| `N1_300_H080` | −1,00 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "h=0.080"}, "coluna": "tau"}` | `d2s` | N1, corte 0.300: com controle, h = 0,080 |
+| `N1_300_DONUT` | −1,53 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-j", "variante": "donut (S-a)"}, "coluna": "tau"}` | `d2s` | N1, corte 0.300: com controle, sem os municípios colados ao corte (donut) |
+| `N1_300_DONUT_INF` | −2,85 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-j", "variante": "donut (S-a)"}, "coluna": "ic95_inf"}` | `d2s` | N1, corte 0.300: donut: IC inferior |
+| `N1_300_DONUT_SUP` | −0,20 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-j", "variante": "donut (S-a)"}, "coluna": "ic95_sup"}` | `d2s` | N1, corte 0.300: donut: IC superior |
+| `N1_300_UNICO` | −1,64 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "controle_coeficiente_unico"}, "coluna": "tau"}` | `d2s` | N1, corte 0.300: com um só coeficiente do controle |
+| `N1_300_UNICO_INF` | −3,00 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "controle_coeficiente_unico"}, "coluna": "ic95_inf"}` | `d2s` | N1, corte 0.300: um só coeficiente: IC inferior |
+| `N1_300_UNICO_SUP` | −0,27 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-a", "variante": "controle_coeficiente_unico"}, "coluna": "ic95_sup"}` | `d2s` | N1, corte 0.300: um só coeficiente: IC superior |
+| `N1_300_VIA` | −0,11 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "decomposicao", "variante": "via oferta (soma gamma x salto do controle)"}, "coluna": "tau"}` | `d2s` | N1, corte 0.300: decomposição exata: parte via oferta (Σ γ_g × salto das vagas oferecidas) |
+| `N1_300_DTOT` | −1,56 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "decomposicao", "variante": "total (= S-b na amostra de S-a)"}, "coluna": "tau"}` | `d2s` | N1, corte 0.300: decomposição exata: total (S-b na amostra de S-a) |
+| `N1_300_DSA` | −1,45 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "decomposicao", "variante": "preenchimento dado as vagas (= S-a)"}, "coluna": "tau"}` | `d2s` | N1, corte 0.300: decomposição exata: preenchimento dado as vagas (S-a) |
+| `N1_300_SF` | −1,38 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-f", "variante": "controle_com_inclinacao_por_lado"}, "coluna": "tau"}` | `d2s` | N1, corte 0.300: controle com inclinação diferente de cada lado (S-f) |
+| `N1_300_HON_INF` | −90,23 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-g", "variante": "S-a: ic_honesto_M_x1"}, "coluna": "ic95_inf"}` | `d2s` | N1, corte 0.300: IC honesto (M do protocolo), inferior |
+| `N1_300_HON_SUP` | +87,34 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-g", "variante": "S-a: ic_honesto_M_x1"}, "coluna": "ic95_sup"}` | `d2s` | N1, corte 0.300: IC honesto (M do protocolo), superior |
+| `N1_400_MEDIA` | 1,96 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "principal"}, "coluna": "media_abaixo"}` | `d2` | N1, corte 0.400: média do lado de bolsa menor (vagas por município) |
+| `N1_400_SB_TAU` | −1,36 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-b", "variante": "principal"}, "coluna": "tau"}` | `d2s` | N1, corte 0.400: sem controle (S-b, efeito total da faixa): salto |
+| `N1_400_SB_INF` | −3,30 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-b", "variante": "principal"}, "coluna": "ic95_inf"}` | `d2s` | N1, corte 0.400: sem controle: IC inferior |
+| `N1_400_SB_SUP` | +0,57 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-b", "variante": "principal"}, "coluna": "ic95_sup"}` | `d2s` | N1, corte 0.400: sem controle: IC superior |
+| `N1_400_H030` | −0,23 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "h=0.030"}, "coluna": "tau"}` | `d2s` | N1, corte 0.400: com controle, h = 0,030 |
+| `N1_400_H080` | +0,03 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "h=0.080"}, "coluna": "tau"}` | `d2s` | N1, corte 0.400: com controle, h = 0,080 |
+| `N1_400_DONUT` | +0,36 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-j", "variante": "donut (S-a)"}, "coluna": "tau"}` | `d2s` | N1, corte 0.400: com controle, sem os municípios colados ao corte (donut) |
+| `N1_400_DONUT_INF` | −0,23 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-j", "variante": "donut (S-a)"}, "coluna": "ic95_inf"}` | `d2s` | N1, corte 0.400: donut: IC inferior |
+| `N1_400_DONUT_SUP` | +0,94 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-j", "variante": "donut (S-a)"}, "coluna": "ic95_sup"}` | `d2s` | N1, corte 0.400: donut: IC superior |
+| `N1_400_UNICO` | −0,11 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "controle_coeficiente_unico"}, "coluna": "tau"}` | `d2s` | N1, corte 0.400: com um só coeficiente do controle |
+| `N1_400_UNICO_INF` | −0,88 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "controle_coeficiente_unico"}, "coluna": "ic95_inf"}` | `d2s` | N1, corte 0.400: um só coeficiente: IC inferior |
+| `N1_400_UNICO_SUP` | +0,67 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-a", "variante": "controle_coeficiente_unico"}, "coluna": "ic95_sup"}` | `d2s` | N1, corte 0.400: um só coeficiente: IC superior |
+| `N1_400_VIA` | −1,22 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "decomposicao", "variante": "via oferta (soma gamma x salto do controle)"}, "coluna": "tau"}` | `d2s` | N1, corte 0.400: decomposição exata: parte via oferta (Σ γ_g × salto das vagas oferecidas) |
+| `N1_400_DTOT` | −1,36 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "decomposicao", "variante": "total (= S-b na amostra de S-a)"}, "coluna": "tau"}` | `d2s` | N1, corte 0.400: decomposição exata: total (S-b na amostra de S-a) |
+| `N1_400_DSA` | −0,14 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "decomposicao", "variante": "preenchimento dado as vagas (= S-a)"}, "coluna": "tau"}` | `d2s` | N1, corte 0.400: decomposição exata: preenchimento dado as vagas (S-a) |
+| `N1_400_SF` | −0,04 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-f", "variante": "controle_com_inclinacao_por_lado"}, "coluna": "tau"}` | `d2s` | N1, corte 0.400: controle com inclinação diferente de cada lado (S-f) |
+| `N1_400_HON_INF` | −47,07 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-g", "variante": "S-a: ic_honesto_M_x1"}, "coluna": "ic95_inf"}` | `d2s` | N1, corte 0.400: IC honesto (M do protocolo), inferior |
+| `N1_400_HON_SUP` | +46,79 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-g", "variante": "S-a: ic_honesto_M_x1"}, "coluna": "ic95_sup"}` | `d2s` | N1, corte 0.400: IC honesto (M do protocolo), superior |
+| `VIC_300_TAU` | +0,39 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "VIC", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-c", "variante": "principal"}, "coluna": "tau"}` | `d2s` | vagas oferecidas por município, corte 0.300, ciclos 1–3 (S-c): salto |
+| `VIC_300_INF` | −6,69 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "VIC", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-c", "variante": "principal"}, "coluna": "ic95_inf"}` | `d2s` | vagas oferecidas por município, corte 0.300, ciclos 1–3 (S-c): IC 95% inferior |
+| `VIC_300_SUP` | +7,46 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "VIC", "populacao": "V1+V2+V3", "corte": "0.300", "especificacao": "S-c", "variante": "principal"}, "coluna": "ic95_sup"}` | `d2s` | vagas oferecidas por município, corte 0.300, ciclos 1–3 (S-c): IC 95% superior |
+| `VIC_400_TAU` | −3,59 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "VIC", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-c", "variante": "principal"}, "coluna": "tau"}` | `d2s` | vagas oferecidas por município, corte 0.400, ciclos 1–3 (S-c): salto |
+| `VIC_400_INF` | −8,94 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "VIC", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-c", "variante": "principal"}, "coluna": "ic95_inf"}` | `d2s` | vagas oferecidas por município, corte 0.400, ciclos 1–3 (S-c): IC 95% inferior |
+| `VIC_400_SUP` | +1,77 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "VIC", "populacao": "V1+V2+V3", "corte": "0.400", "especificacao": "S-c", "variante": "principal"}, "coluna": "ic95_sup"}` | `d2s` | vagas oferecidas por município, corte 0.400, ciclos 1–3 (S-c): IC 95% superior |
+| `VIC_300_MABX` | 10,08 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.300\|VIC\|sem_controle\|principal"}, "coluna": "media_abaixo"}` | `d2` | vagas oferecidas por município, corte 0.300: média na janela abaixo do corte (descritivo) |
+| `VIC_300_MACI` | 9,82 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.300\|VIC\|sem_controle\|principal"}, "coluna": "media_acima"}` | `d2` | vagas oferecidas por município, corte 0.300: média na janela acima do corte (descritivo) |
+| `VIC_400_MABX` | 7,05 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.400\|VIC\|sem_controle\|principal"}, "coluna": "media_abaixo"}` | `d2` | vagas oferecidas por município, corte 0.400: média na janela abaixo do corte (descritivo) |
+| `VIC_400_MACI` | 3,93 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.400\|VIC\|sem_controle\|principal"}, "coluna": "media_acima"}` | `d2` | vagas oferecidas por município, corte 0.400: média na janela acima do corte (descritivo) |
+| `A3_C1_300_TAU` | +0,9 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_300_tau", "v"]}` | `d1s` | A3 só ciclo 1, corte 0,300: salto (p.p.) |
+| `A3_C1_300_INF` | −23,5 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_300_lo", "v"]}` | `d1s` | A3 só ciclo 1, corte 0,300: IC inferior |
+| `A3_C1_300_SUP` | +25,3 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_300_hi", "v"]}` | `d1s` | A3 só ciclo 1, corte 0,300: IC superior |
+| `A3_C1_300_MEDIA` | 26,0 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_300_media", "v"]}` | `d1` | A3 só ciclo 1, corte 0,300: média abaixo do corte (%) |
+| `A3_C1_300_MDE` | 34,9 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_300_mde", "v"]}` | `d1` | A3 só ciclo 1, corte 0,300: MDE de 80% |
+| `A3_C1_400_TAU` | −12,4 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_400_tau", "v"]}` | `d1s` | A3 só ciclo 1, corte 0,400: salto (p.p.) |
+| `A3_C1_400_INF` | −37,5 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_400_lo", "v"]}` | `d1s` | A3 só ciclo 1, corte 0,400: IC inferior |
+| `A3_C1_400_SUP` | +12,6 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_400_hi", "v"]}` | `d1s` | A3 só ciclo 1, corte 0,400: IC superior |
+| `A3_C1_400_MEDIA` | 37,2 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_400_media", "v"]}` | `d1` | A3 só ciclo 1, corte 0,400: média abaixo do corte (%) |
+| `A3_C1_400_MDE` | 35,8 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_400_mde", "v"]}` | `d1` | A3 só ciclo 1, corte 0,400: MDE de 80% |
+| `A3C_300_TAU` | −10,8 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_300_tau", "v"]}` | `d1s` | A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,300: salto (p.p.) |
+| `A3C_300_INF` | −28,2 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_300_lo", "v"]}` | `d1s` | A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,300: IC inferior |
+| `A3C_300_SUP` | +6,7 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_300_hi", "v"]}` | `d1s` | A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,300: IC superior |
+| `A3C_300_MEDIA` | 48,3 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_300_media", "v"]}` | `d1` | A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,300: média abaixo do corte (%) |
+| `A3C_300_MDE` | 24,9 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_300_mde", "v"]}` | `d1` | A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,300: MDE de 80% |
+| `A3C_400_TAU` | −2,7 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_400_tau", "v"]}` | `d1s` | A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,400: salto (p.p.) |
+| `A3C_400_INF` | −19,7 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_400_lo", "v"]}` | `d1s` | A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,400: IC inferior |
+| `A3C_400_SUP` | +14,3 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_400_hi", "v"]}` | `d1s` | A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,400: IC superior |
+| `A3C_400_MEDIA` | 49,6 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_400_media", "v"]}` | `d1` | A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,400: média abaixo do corte (%) |
+| `A3C_400_MDE` | 24,2 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_400_mde", "v"]}` | `d1` | A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,400: MDE de 80% |
+| `EQ_A3_300_I90I` | −16,9 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "A3-300-123", "tipo_ic": "convencional_CR1"}, "coluna": "ic90_inf", "transf": [["mul", 100]]}` | `d1s` | TOST A3, corte 0,300, ciclos 1–3: IC 90% inferior (p.p.) |
+| `EQ_A3_300_I90S` | +0,1 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "A3-300-123", "tipo_ic": "convencional_CR1"}, "coluna": "ic90_sup", "transf": [["mul", 100]]}` | `d1s` | TOST A3, corte 0,300, ciclos 1–3: IC 90% superior (p.p.) |
+| `EQ_A3_300_MMIN` | 16,9 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "A3-300-123", "tipo_ic": "convencional_CR1"}, "coluna": "margem_minima", "transf": [["mul", 100]]}` | `d1` | TOST A3, corte 0,300, ciclos 1–3: margem mínima de equivalência (p.p.) |
+| `EQ_A3_300_MARG` | 10 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "A3-300-123", "tipo_ic": "convencional_CR1"}, "coluna": "margem", "transf": [["mul", 100]]}` | `d0` | TOST A3, corte 0,300, ciclos 1–3: margem de equivalência (p.p.) |
+| `EQ_A3_300_LEIT` | SO_AUMENTO | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "A3-300-123", "tipo_ic": "convencional_CR1"}, "coluna": "leitura_codigo", "texto_csv": true}` | `txt` | TOST A3, corte 0,300, ciclos 1–3: leitura pré-registrada (código) |
+| `EQ_A3_400_I90I` | −11,9 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "A3-400-123", "tipo_ic": "convencional_CR1"}, "coluna": "ic90_inf", "transf": [["mul", 100]]}` | `d1s` | TOST A3, corte 0,400, ciclos 1–3: IC 90% inferior (p.p.) |
+| `EQ_A3_400_I90S` | +9,3 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "A3-400-123", "tipo_ic": "convencional_CR1"}, "coluna": "ic90_sup", "transf": [["mul", 100]]}` | `d1s` | TOST A3, corte 0,400, ciclos 1–3: IC 90% superior (p.p.) |
+| `EQ_A3_400_MMIN` | 11,9 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "A3-400-123", "tipo_ic": "convencional_CR1"}, "coluna": "margem_minima", "transf": [["mul", 100]]}` | `d1` | TOST A3, corte 0,400, ciclos 1–3: margem mínima de equivalência (p.p.) |
+| `EQ_A3_400_MARG` | 10 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "A3-400-123", "tipo_ic": "convencional_CR1"}, "coluna": "margem", "transf": [["mul", 100]]}` | `d0` | TOST A3, corte 0,400, ciclos 1–3: margem de equivalência (p.p.) |
+| `EQ_A3_400_LEIT` | SO_AUMENTO | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "A3-400-123", "tipo_ic": "convencional_CR1"}, "coluna": "leitura_codigo", "texto_csv": true}` | `txt` | TOST A3, corte 0,400, ciclos 1–3: leitura pré-registrada (código) |
+| `EQ_N1_300_I90I` | −2,48 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "N1-300-123", "tipo_ic": "convencional_CR1"}, "coluna": "ic90_inf"}` | `d2s` | TOST N1, corte 0,300, ciclos 1–3: IC 90% inferior (vagas por município) |
+| `EQ_N1_300_I90S` | −0,42 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "N1-300-123", "tipo_ic": "convencional_CR1"}, "coluna": "ic90_sup"}` | `d2s` | TOST N1, corte 0,300, ciclos 1–3: IC 90% superior |
+| `EQ_N1_300_MARG` | 0,58 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "N1-300-123", "tipo_ic": "convencional_CR1"}, "coluna": "margem"}` | `d2` | TOST N1, corte 0,300, ciclos 1–3: margem: 25% da média abaixo do corte (vagas por município) |
+| `EQ_N1_300_MMIN` | 2,48 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "N1-300-123", "tipo_ic": "convencional_CR1"}, "coluna": "margem_minima"}` | `d2` | TOST N1, corte 0,300, ciclos 1–3: margem mínima de equivalência |
+| `EQ_N1_300_LEIT` | SO_AUMENTO | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "N1-300-123", "tipo_ic": "convencional_CR1"}, "coluna": "leitura_codigo", "texto_csv": true}` | `txt` | TOST N1, corte 0,300, ciclos 1–3: leitura pré-registrada (código) |
+| `EQ_N1_400_I90I` | −0,71 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "N1-400-123", "tipo_ic": "convencional_CR1"}, "coluna": "ic90_inf"}` | `d2s` | TOST N1, corte 0,400, ciclos 1–3: IC 90% inferior (vagas por município) |
+| `EQ_N1_400_I90S` | +0,43 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "N1-400-123", "tipo_ic": "convencional_CR1"}, "coluna": "ic90_sup"}` | `d2s` | TOST N1, corte 0,400, ciclos 1–3: IC 90% superior |
+| `EQ_N1_400_MARG` | 0,49 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "N1-400-123", "tipo_ic": "convencional_CR1"}, "coluna": "margem"}` | `d2` | TOST N1, corte 0,400, ciclos 1–3: margem: 25% da média abaixo do corte (vagas por município) |
+| `EQ_N1_400_MMIN` | 0,71 | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "N1-400-123", "tipo_ic": "convencional_CR1"}, "coluna": "margem_minima"}` | `d2` | TOST N1, corte 0,400, ciclos 1–3: margem mínima de equivalência |
+| `EQ_N1_400_LEIT` | SO_AUMENTO | EMPIRICO | `output/rdd_bolsa/EQ_estimativas.csv` | `{"filtro": {"id_linha": "N1-400-123", "tipo_ic": "convencional_CR1"}, "coluna": "leitura_codigo", "texto_csv": true}` | `txt` | TOST N1, corte 0,400, ciclos 1–3: leitura pré-registrada (código) |
+| `ND_TX300` | −16,0 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.300\|TAXA_VIC\|taxa_ponderada\|principal"}, "coluna": "tau", "transf": [["mul", 100]]}` | `d1s` | 0,300: salto na taxa de preenchimento por vaga oferecida (p.p., peso = vagas) |
+| `ND_TX300_INF` | −27,9 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.300\|TAXA_VIC\|taxa_ponderada\|principal"}, "coluna": "ic95_inf", "transf": [["mul", 100]]}` | `d1s` | IC inferior |
+| `ND_TX300_SUP` | −4,1 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.300\|TAXA_VIC\|taxa_ponderada\|principal"}, "coluna": "ic95_sup", "transf": [["mul", 100]]}` | `d1s` | IC superior |
+| `ND_TXVI300` | −19,2 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.300\|TAXA_VI\|taxa_ponderada\|principal"}, "coluna": "tau", "transf": [["mul", 100]]}` | `d1s` | 0,300: a mesma taxa com só as vagas imediatas no denominador (p.p.) |
+| `ND_TXVI300_INF` | −43,1 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.300\|TAXA_VI\|taxa_ponderada\|principal"}, "coluna": "ic95_inf", "transf": [["mul", 100]]}` | `d1s` | IC inferior |
+| `ND_TXVI300_SUP` | +4,7 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.300\|TAXA_VI\|taxa_ponderada\|principal"}, "coluna": "ic95_sup", "transf": [["mul", 100]]}` | `d1s` | IC superior |
+| `ND_TX300_C2` | −8,1 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "AD2_A3\|contribuicao\|POR_CORTE\|V1+V2+V3\|0.300\|TAXA_VIC\|taxa_ponderada\|grupo_c2"}, "coluna": "contribuicao", "transf": [["mul", 100]]}` | `d1s` | 0,300: contribuição do ciclo 2 ao salto da taxa por vaga oferecida (p.p.) |
+| `ND_TX300_C2_PCT` | 51 | EMPIRICO | calculado por este script | `{"razao": ["ND_TX300_C2", "ND_TX300"]}` | `pct0` | 0,300: parte do salto da taxa que vem do ciclo 2 (%) |
+| `ND_TX400` | +2,5 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.400\|TAXA_VIC\|taxa_ponderada\|principal"}, "coluna": "tau", "transf": [["mul", 100]]}` | `d1s` | 0,400: salto na taxa de preenchimento por vaga oferecida (p.p.) |
+| `ND_VIC400` | −3,59 | EMPIRICO | `output/rdd_bolsa/ND_estimativas.csv` | `{"filtro": {"id_linha": "D1\|estimativa\|POR_CORTE\|V1+V2+V3\|0.400\|VIC\|sem_controle\|principal"}, "coluna": "tau"}` | `d2s` | 0,400: salto nas vagas oferecidas (imediatas + cadastro reserva) por município |
 | `P4_HT_ATT` | +6,6 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_ht_att", "v"]}` | `d1s` | P4 horas totais: média de θ(0..+6), h/sem |
 | `P4_HT_INF` | +5,4 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_ht_lo", "v"]}` | `d1s` | P4 horas totais: IC inferior |
 | `P4_HT_SUP` | +7,8 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_ht_hi", "v"]}` | `d1s` | P4 horas totais: IC superior |
@@ -496,6 +650,14 @@ milhar; `fracao` = "a/b" com separador de milhar; `txt` = trecho como está.
 | `D_C2_P1` | 2.032 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "p1_por_ciclo", "2"]}` | `int` | ciclo 2: amostra da escolha (P1): 1ª opção numa célula, ligado ao CNES e com município de origem |
 | `D_C3_P1` | 2.474 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "p1_por_ciclo", "3"]}` | `int` | ciclo 3: amostra da escolha (P1): 1ª opção numa célula, ligado ao CNES e com município de origem |
 | `D_IVS_MUN` | 5.565 | EMPIRICO | `output/aquisicao/a08_ivs_2010_oficial_municipio.csv` | `{"descritiva": "IVS_MUN"}` | `int` | municípios com IVS 2010 oficial (a08) |
+| `ESC_N` | 5.425 | EMPIRICO | `output/rdd_bolsa/G1_distancias_opcoes.parquet` | `{"descritiva": "ESC_N"}` | `int` | candidatos com 1ª opção e município de origem no G1 (CPF e nome) |
+| `ESC_UF` | 79 | EMPIRICO | `output/rdd_bolsa/G1_distancias_opcoes.parquet` | `{"descritiva": "ESC_UF"}` | `pct0` | 1ª opção na UF de origem (%) |
+| `ESC_REG` | 46 | EMPIRICO | `output/rdd_bolsa/G1_distancias_opcoes.parquet` | `{"descritiva": "ESC_REG"}` | `pct0` | 1ª opção na região de saúde de origem (%) |
+| `ESC_MUN` | 36 | EMPIRICO | `output/rdd_bolsa/G1_distancias_opcoes.parquet` | `{"descritiva": "ESC_MUN"}` | `pct0` | 1ª opção no município de origem (%) |
+| `ESC_DIST_P50` | 51 | EMPIRICO | `output/rdd_bolsa/G1_distancias_opcoes.parquet` | `{"descritiva": "ESC_DIST_P50"}` | `d0` | distância origem–1ª opção: mediana (km) |
+| `ESC_DIST_P75` | 189 | EMPIRICO | `output/rdd_bolsa/G1_distancias_opcoes.parquet` | `{"descritiva": "ESC_DIST_P75"}` | `d0` | distância origem–1ª opção: 3º quartil (km) |
+| `E1_300_HOLM` | 0,707 | EMPIRICO | `output/rdd_bolsa/E1_densidade_estimativas.csv` | `{"filtro": {"ciclo": "1", "corte": "0.300", "papel": "principal"}, "coluna": "p_holm"}` | `p3` | E1, ciclo 1, corte 0.300: p de Holm do teste de densidade (Poisson local) |
+| `E1_400_HOLM` | 0,658 | EMPIRICO | `output/rdd_bolsa/E1_densidade_estimativas.csv` | `{"filtro": {"ciclo": "1", "corte": "0.400", "papel": "principal"}, "coluna": "p_holm"}` | `p3` | E1, ciclo 1, corte 0.400: p de Holm do teste de densidade (Poisson local) |
 | `D_POP_MUN` | 5.570 | EMPIRICO | `output/aquisicao/populacao_censo2022_municipios.csv` | `{"descritiva": "POP_MUN"}` | `int` | municípios com população do Censo 2022 |
 | `D_ATIVOS` | 1.957 | EMPIRICO | `output/aquisicao/cnes_profissional/a16_manifesto_cnes_profissional.json` | `{"caminho": ["listas_pmme", "registros_ativos_2026_09_11"]}` | `int` | registros na lista de especialistas ativos do PMM-E de 11/09/2026 |
 | `FM_NMU` | 4.362 | FAILURE_MODE | `output/rdd_bolsa/identificacao_arquivo_local_ivs.json` | `{"caminho": ["mecanismo", "linha_escolhida_por_municipio", "Negro / Mulher / Urbano"]}` | `int` | municípios em que o arquivo errado traz a linha Negro / Mulher / Urbano |
@@ -512,6 +674,22 @@ milhar; `fracao` = "a/b" com separador de milhar; `txt` = trecho como está.
 | `LIT_DALBO_ACEIT` | +15,1 | CITACAO_LITERATURA | `output/rdd_bolsa/E8_resumo.json` | `{"regex": "aceitação (\\+\\d+,\\d) p\\.p\\."}` | `txt` | Dal Bó, Finan e Rossi (2013): efeito na aceitação (p.p.) |
 | `LIT_DALBO_CAND` | +26% | CITACAO_LITERATURA | `output/rdd_bolsa/E8_resumo.json` | `{"regex": "candidaturas \\*\\*(\\+\\d+%)\\*\\*"}` | `txt` | Dal Bó, Finan e Rossi (2013): efeito nas candidaturas |
 | `LIT_BOBBA` | +13% | CITACAO_LITERATURA | `output/rdd_bolsa/E8_resumo.json` | `{"regex": "define adicional de (\\+\\d+%)"}` | `txt` | Bobba et al.: adicional por regra |
+| `CR_C1_EDITAL` | nº 3/2025 | REGISTRO_DOCUMENTAL | `docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md` | `{"regex": "Edital de Chamamento Público (nº \\d+/\\d{4}) \\(DOU de 24/07/2025"}` | `txt` | ciclo 1: edital de chamamento dos médicos |
+| `CR_C2_EDITAL` | nº 1/2026 | REGISTRO_DOCUMENTAL | `docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md` | `{"regex": "a cópia do Edital SGTES/MS (nº \\d+/\\d{4})"}` | `txt` | ciclo 2: edital de chamamento |
+| `CR_C3_EDITAL` | nº 28/2026 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "Oferta aos Médicos \\(Chamamento (nº \\d+/\\d{4})\\)"}` | `txt` | ciclo 3: chamamento dos médicos |
+| `CR_C1_QUADRO` | 24/07/2025 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "\\\| `vagas_2025_c1_ch1_original` \\\| `[^`]+` \\\| [^\|]+ \\\| (\\d{2}/\\d{2}/\\d{4}) \\\|"}` | `txt` | ciclo 1: quadro da 1ª chamada |
+| `CR_C1_RES` | 10/09/2025 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "\\\| `alocacao_2025_c1_ch1_retificada` \\\| `[^`]+` \\\| [^\|]+ \\\| (\\d{2}/\\d{2}/\\d{4}) \\\|"}` | `txt` | ciclo 1: alocação retificada da 1ª chamada |
+| `CR_C1_CH2` | 29/09/2025 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "\\\| `vagas_alocados_2025_c1_ch2` \\\| `[^`]+` \\\| [^\|]+ \\\| (\\d{2}/\\d{2}/\\d{4}) \\\|"}` | `txt` | ciclo 1: 2ª chamada (só cadastro reserva) |
+| `CR_C2_QUADRO` | 03/02/2026 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "\\\| `vagas_2026_c2_ch1_original` \\\| `[^`]+` \\\| [^\|]+ \\\| (\\d{2}/\\d{2}/\\d{4}) \\\|"}` | `txt` | ciclo 2: quadro original |
+| `CR_C2_RETIF` | 19/03/2026 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "\\\| `vagas_2026_c2_ch1_retificada` \\\| `[^`]+` \\\| [^\|]+ \\\| (\\d{2}/\\d{2}/\\d{4}) \\\|"}` | `txt` | ciclo 2: quadro retificado final |
+| `CR_C2_RES` | 05/05/2026 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "\\\| `resultado_2026_c2_ch1_remanescentes` \\\| `[^`]+` \\\| [^\|]+ \\\| (\\d{2}/\\d{2}/\\d{4}) \\\|"}` | `txt` | ciclo 2: resultado final de remanescentes da 1ª chamada |
+| `CR_C2_CH2` | 16/04/2026 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "\\\| `vagas_2026_c2_ch2` \\\| `[^`]+` \\\| [^\|]+ \\\| (\\d{2}/\\d{2}/\\d{4}) \\\|"}` | `txt` | ciclo 2: 2ª chamada (só cadastro reserva) |
+| `CR_C3_GEST` | 15/07/2026 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "\\\| `adesao_gestores_2026_c3_final` \\\| `[^`]+` \\\| [^\|]+ \\\| (\\d{2}/\\d{2}/\\d{4}) \\\|"}` | `txt` | ciclo 3: resultado da adesão dos gestores |
+| `CR_C3_QUADRO` | 16/07/2026 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "\\\| `vagas_2026_c3_medicos_original` \\\| `[^`]+` \\\| [^\|]+ \\\| (\\d{2}/\\d{2}/\\d{4}) \\\|"}` | `txt` | ciclo 3: quadro dos médicos |
+| `CR_C3_RETIF` | 24/07/2026 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "\\\| `vagas_2026_c3_retificada` \\\| `[^`]+` \\\| [^\|]+ \\\| (\\d{2}/\\d{2}/\\d{4}) \\\|"}` | `txt` | ciclo 3: quadro retificado |
+| `CR_C3_RES` | 25/08/2026 | REGISTRO_DOCUMENTAL | `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | `{"regex": "\\\| `resultado_2026_c3_sub_judice` \\\| `[^`]+` \\\| [^\|]+ \\\| (\\d{2}/\\d{2}/\\d{4}) \\\|"}` | `txt` | ciclo 3: resultado final, sub judice |
+| `CR_D2_INI` | 202507 | REGISTRO_DOCUMENTAL | `output/rdd_bolsa/K_D2_resumo.json` | `{"regex": "\"coortes\": \\{\"(\\d{6})\""}` | `txt` | primeira coorte trimestral de chegada dos médicos (lista de ativos; D2) |
+| `CR_D2_FIM` | 202604 | REGISTRO_DOCUMENTAL | `output/rdd_bolsa/K_D2_resumo.json` | `{"regex": "\"(\\d{6})\": \\{\"municipios\": \\d+, \"especialistas\": \\d+\\}\\}"}` | `txt` | última coorte trimestral de chegada dos médicos (lista de ativos; D2) |
 <!-- banca2:numeros:fim -->
 
 ## 3. Parâmetros que podem aparecer sem código
@@ -525,7 +703,7 @@ datas e nomes:
 | h = 0,050; sensibilidades 0,030 e 0,080 | protocolo 40, §6 |
 | bolsas de R$ 10, 15 e 20 mil; degrau de R$ 5 mil; R$ 1 mil como unidade do coeficiente | editais; protocolo 40, §3; protocolo 52 |
 | referências +10 p.p. e +25% | protocolo 40, §7 |
-| IC 95%, α = 0,05, valor crítico 1,96, limiar p < 0,001, MDE de 80%, M̄ = 1 | convenções de relato |
+| IC 95%, α = 0,05, valor crítico 1,96, limiar p < 0,001, MDE de 80%, M̄ = 1; IC 90% do TOST | convenções de relato; protocolo 60 |
 | ciclos 1, 2 e 3; chamadas 1ª e 2ª; "3 casas" decimais | desenho |
 | anos, datas, competências (`2025-10`, `202703`), números de atos (`752/2023`), seções (§), documentos, protocolos e códigos de outcome (F1.3, N1, Y1, M5, H1–H4) | nomes, não números |
 | números de slide do deck do grupo (até 36), nos quadros do doc 02 | posição, não resultado |
@@ -557,6 +735,10 @@ regenerados.
 | `output/aquisicao/a08_ivs_2010_oficial_municipio.csv` | running variable |
 | `docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md` | parâmetros normativos das co-políticas |
 | `scripts/rdd_bolsa/10_galeria_figura_regra.py` | código da variante A colorida |
+| `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` | datas de publicação dos quadros e resultados (cronologia) |
+| `output/rdd_bolsa/K_D2_resumo.json` | coortes trimestrais de chegada dos médicos (cronologia) |
+| `output/rdd_bolsa/EQ_estimativas.csv` | TOST por corte (protocolo 60, parte A; doc 57j; auditoria 32) |
+| `output/rdd_bolsa/ND_estimativas.csv` | por que o sinal de N1 sai negativo em cada corte (doc 49b, §3) |
 | `output/rdd_bolsa/P1h_magnitudes.csv` | H3 (P1h, protocolo 52b): D_UF, km equivalentes, sensibilidades e pesos |
 | `output/rdd_bolsa/P1h_resumo.json` | H3: estatuto do bloco e hashes das saídas auditadas |
 | `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png` | H3: figura auditada (só o hash é conferido) |

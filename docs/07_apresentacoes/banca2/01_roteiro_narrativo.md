@@ -28,16 +28,16 @@ da história e ganha explicação dentro do modelo.
 | Bloco da banca | Pergunta que responde | Slides novos |
 |---|---|---|
 | Hipótese econômica | que setas do modelo testamos? | cadeia H1–H4 (a ponte modelo → equação fica no apêndice) |
-| Base de dados e descritivas | como são os três ciclos? | tabela descritiva por ciclo (a tabela de fontes fica no apêndice) |
-| Metodologia econométrica | que estimador para cada hipótese, e o que precisa valer? | um estimador por hipótese; hipóteses de identificação; regra sharp |
-| Resultados | o que se move e o que não se move? | cadeia-síntese (o mapa); H1; H2; H3; H4 |
+| Base de dados e descritivas | o programa já rodou quantas vezes, e como são os ciclos? | cronologia dos três ciclos; tabela descritiva por ciclo (a tabela de fontes fica no apêndice) |
+| Metodologia econométrica | que estimador para cada hipótese, como ele é feito e o que precisa valer? | um estimador por hipótese; uma ficha de especificação por estimador (H1; H2 e H3; H4; TOST); hipóteses de identificação; regra sharp |
+| Resultados | o que se move e o que não se move? | cadeia-síntese (o mapa); H1 por corte; antes e depois do controle; [reservado: por que cai em 0,300]; H2 por ciclo; H3 com "É causal?"; H4 |
 | Robustez e discussão | as leituras aguentam? o que o contraste não mede? | robustez por hipótese; discussão em duas colunas (limites; literatura e próximos passos) |
 
 ## 2. Hipóteses pela cadeia do modelo (decisão de 26/10/2026)
 
 | Hipótese | Seta | Leitura hoje |
 |---|---|---|
-| **H1** preenchimento | B → Pr(Y = 1) | inconclusiva: não se detecta aumento; o IC da célula aberta descarta ganhos grandes com os cortes empilhados |
+| **H1** preenchimento | B → Pr(Y = 1) | sem aumento em nenhum dos dois cortes: pelo TOST, não houve aumento de +10 p.p. na célula aberta nem de +25% da média nas vagas preenchidas, em 0,300 e em 0,400 (IC convencional, pacote do corte); o sinal negativo de N1 em 0,300 não é queda |
 | **H2** escolha | B → V → π | inconclusiva na primária; o sinal robusto está só no ciclo 2 |
 | **H3** incentivo limitado | a bolsa contra o custo do lugar, dentro de V | no modelo de escolha, a vaga na UF de origem pesa mais que toda a amplitude da bolsa; pós-resultado, e θ é preferência revelada, não efeito da geografia |
 | **H4** capacidade líquida | chegada → capacidade | associação: o médico soma horas cadastradas, mas metade já estava no município |
@@ -142,3 +142,5 @@ IVS como running variable. O deck original não é alterado.
 | 26/10/2026 | H3 com o P1h auditado (doc 57i, auditoria 31): slide, linha na cadeia-resumo e linha na robustez |
 | 26/10/2026 | deck organizado a pedido do autor: prévios do grupo reutilizados; parte empírica cortada e sintetizada; apêndice por seção |
 | 26/10/2026 | um arquivo só; resultados abrem pela cadeia-síntese; bloco "O que isso quer dizer"; figuras no tamanho do slide e conteúdo ocupando a área útil |
+| 26/10/2026 | pedidos do autor: cronologia dos três ciclos na base; uma ficha de especificação por estimador na metodologia (equação em palavras; a formal no apêndice); slide de antes e depois do controle das vagas, por corte; H2 só por ciclo; H3 com "Como foi medido" e "É causal?" na tela |
+| 26/10/2026 | decisão do autor: "não mostre o empilhado; mostre os efeitos separados para cada corte". H1, cadeia e robustez por corte, com o TOST do protocolo 60 (doc 57j) e o porquê do sinal negativo (doc 49b); o empilhado só no apêndice, como referência |

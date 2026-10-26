@@ -3810,6 +3810,32 @@
       "formato": "d2",
       "descricao": "M1: razão de chances, IC inferior"
     },
+    "M1_RC_PCT": {
+      "valor": "24",
+      "valor_bruto": 23.612308443046693,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "m1_rc",
+          "v"
+        ],
+        "transf": [
+          [
+            "add",
+            -1
+          ],
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d0",
+      "descricao": "M1: chance a mais de a vaga ser a 1ª opção com +R$ 5 mil, (razão de chances − 1) × 100 (%)"
+    },
     "M1_RC_SUP": {
       "valor": "1,55",
       "valor_bruto": 1.5483858804039698,
@@ -4643,6 +4669,54 @@
       "formato": "d2",
       "descricao": "P1h-3: D_UF em M7 (logit explodido, 1ª e 2ª opção), sensibilidade com BKY"
     },
+    "H3_5B": {
+      "valor": "0,21",
+      "valor_bruto": 0.2119799369,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "FIG",
+          "componente": "5β"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "peso no M1: um degrau da bolsa (+R$ 5 mil), 5·β"
+    },
+    "H3_5B_INF": {
+      "valor": "−0,01",
+      "valor_bruto": -0.013253147,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "FIG",
+          "componente": "5β"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "peso no M1: um degrau da bolsa (+R$ 5 mil), 5·β, IC 95% inferior"
+    },
+    "H3_5B_SUP": {
+      "valor": "0,44",
+      "valor_bruto": 0.4372130209,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1h_magnitudes.csv",
+        "filtro": {
+          "id_linha": "FIG",
+          "componente": "5β"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "peso no M1: um degrau da bolsa (+R$ 5 mil), 5·β, IC 95% superior"
+    },
     "H3_10B": {
       "valor": "0,42",
       "valor_bruto": 0.4239598739,
@@ -4738,6 +4812,2057 @@
       },
       "formato": "d2",
       "descricao": "peso no M1: mesma UF, outra região de saúde, θ_UF, IC 95% superior"
+    },
+    "N1_300_TAU": {
+      "valor": "−1,45",
+      "valor_bruto": -1.4474679045007928,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1 com controle (S-a), corte 0.300, ciclos 1–3: salto"
+    },
+    "N1_300_INF": {
+      "valor": "−2,67",
+      "valor_bruto": -2.672827975560773,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N1 com controle (S-a), corte 0.300, ciclos 1–3: IC 95% inferior"
+    },
+    "N1_300_SUP": {
+      "valor": "−0,22",
+      "valor_bruto": -0.22210783344081264,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N1 com controle (S-a), corte 0.300, ciclos 1–3: IC 95% superior"
+    },
+    "N1_300_P": {
+      "valor": "0,021",
+      "valor_bruto": 0.020600590923158347,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "p_valor"
+      },
+      "formato": "p3",
+      "descricao": "N1 com controle (S-a), corte 0.300, ciclos 1–3: p, sem correção múltipla (linha por corte)"
+    },
+    "N1_400_TAU": {
+      "valor": "−0,14",
+      "valor_bruto": -0.142050222180193,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1 com controle (S-a), corte 0.400, ciclos 1–3: salto"
+    },
+    "N1_400_INF": {
+      "valor": "−0,82",
+      "valor_bruto": -0.8215047625406084,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N1 com controle (S-a), corte 0.400, ciclos 1–3: IC 95% inferior"
+    },
+    "N1_400_SUP": {
+      "valor": "+0,54",
+      "valor_bruto": 0.5374043181802224,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N1 com controle (S-a), corte 0.400, ciclos 1–3: IC 95% superior"
+    },
+    "N1_400_P": {
+      "valor": "0,682",
+      "valor_bruto": 0.6819819822382106,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "p_valor"
+      },
+      "formato": "p3",
+      "descricao": "N1 com controle (S-a), corte 0.400, ciclos 1–3: p, sem correção múltipla (linha por corte)"
+    },
+    "N2_300_TAU": {
+      "valor": "−0,64",
+      "valor_bruto": -0.6381818177773513,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N2",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N2 com controle (S-a), corte 0.300, ciclos 1–3: salto"
+    },
+    "N2_300_INF": {
+      "valor": "−1,23",
+      "valor_bruto": -1.229538340797614,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N2",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N2 com controle (S-a), corte 0.300, ciclos 1–3: IC 95% inferior"
+    },
+    "N2_300_SUP": {
+      "valor": "−0,05",
+      "valor_bruto": -0.04682529475708874,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N2",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N2 com controle (S-a), corte 0.300, ciclos 1–3: IC 95% superior"
+    },
+    "N2_300_P": {
+      "valor": "0,034",
+      "valor_bruto": 0.034416353883244793,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N2",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "p_valor"
+      },
+      "formato": "p3",
+      "descricao": "N2 com controle (S-a), corte 0.300, ciclos 1–3: p, sem correção múltipla (linha por corte)"
+    },
+    "N2_400_TAU": {
+      "valor": "−0,02",
+      "valor_bruto": -0.022398800032746913,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N2",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N2 com controle (S-a), corte 0.400, ciclos 1–3: salto"
+    },
+    "N2_400_INF": {
+      "valor": "−0,40",
+      "valor_bruto": -0.4018679396496718,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N2",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N2 com controle (S-a), corte 0.400, ciclos 1–3: IC 95% inferior"
+    },
+    "N2_400_SUP": {
+      "valor": "+0,36",
+      "valor_bruto": 0.357070339584178,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N2",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N2 com controle (S-a), corte 0.400, ciclos 1–3: IC 95% superior"
+    },
+    "N2_400_P": {
+      "valor": "0,908",
+      "valor_bruto": 0.9078981136644471,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N2",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "p_valor"
+      },
+      "formato": "p3",
+      "descricao": "N2 com controle (S-a), corte 0.400, ciclos 1–3: p, sem correção múltipla (linha por corte)"
+    },
+    "N1_300_MEDIA": {
+      "valor": "2,32",
+      "valor_bruto": 2.3224489795918366,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "media_abaixo"
+      },
+      "formato": "d2",
+      "descricao": "N1, corte 0.300: média do lado de bolsa menor (vagas por município)"
+    },
+    "N1_300_SB_TAU": {
+      "valor": "−1,56",
+      "valor_bruto": -1.5572657529735867,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-b",
+          "variante": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: sem controle (S-b, efeito total da faixa): salto"
+    },
+    "N1_300_SB_INF": {
+      "valor": "−3,73",
+      "valor_bruto": -3.7291197688397055,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-b",
+          "variante": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: sem controle: IC inferior"
+    },
+    "N1_300_SB_SUP": {
+      "valor": "+0,61",
+      "valor_bruto": 0.6145882628925321,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-b",
+          "variante": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: sem controle: IC superior"
+    },
+    "N1_300_H030": {
+      "valor": "−1,50",
+      "valor_bruto": -1.5036078412448735,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "h=0.030"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: com controle, h = 0,030"
+    },
+    "N1_300_H080": {
+      "valor": "−1,00",
+      "valor_bruto": -0.9968365582730563,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "h=0.080"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: com controle, h = 0,080"
+    },
+    "N1_300_DONUT": {
+      "valor": "−1,53",
+      "valor_bruto": -1.5265378521394817,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-j",
+          "variante": "donut (S-a)"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: com controle, sem os municípios colados ao corte (donut)"
+    },
+    "N1_300_DONUT_INF": {
+      "valor": "−2,85",
+      "valor_bruto": -2.8542987081049915,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-j",
+          "variante": "donut (S-a)"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: donut: IC inferior"
+    },
+    "N1_300_DONUT_SUP": {
+      "valor": "−0,20",
+      "valor_bruto": -0.19877699617397204,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-j",
+          "variante": "donut (S-a)"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: donut: IC superior"
+    },
+    "N1_300_UNICO": {
+      "valor": "−1,64",
+      "valor_bruto": -1.6393936950715684,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "controle_coeficiente_unico"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: com um só coeficiente do controle"
+    },
+    "N1_300_UNICO_INF": {
+      "valor": "−3,00",
+      "valor_bruto": -3.0046588646712125,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "controle_coeficiente_unico"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: um só coeficiente: IC inferior"
+    },
+    "N1_300_UNICO_SUP": {
+      "valor": "−0,27",
+      "valor_bruto": -0.27412852547192434,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-a",
+          "variante": "controle_coeficiente_unico"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: um só coeficiente: IC superior"
+    },
+    "N1_300_VIA": {
+      "valor": "−0,11",
+      "valor_bruto": -0.10979784847277482,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "decomposicao",
+          "variante": "via oferta (soma gamma x salto do controle)"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: decomposição exata: parte via oferta (Σ γ_g × salto das vagas oferecidas)"
+    },
+    "N1_300_DTOT": {
+      "valor": "−1,56",
+      "valor_bruto": -1.5572657529735867,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "decomposicao",
+          "variante": "total (= S-b na amostra de S-a)"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: decomposição exata: total (S-b na amostra de S-a)"
+    },
+    "N1_300_DSA": {
+      "valor": "−1,45",
+      "valor_bruto": -1.4474679045007928,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "decomposicao",
+          "variante": "preenchimento dado as vagas (= S-a)"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: decomposição exata: preenchimento dado as vagas (S-a)"
+    },
+    "N1_300_SF": {
+      "valor": "−1,38",
+      "valor_bruto": -1.3840755458555716,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-f",
+          "variante": "controle_com_inclinacao_por_lado"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: controle com inclinação diferente de cada lado (S-f)"
+    },
+    "N1_300_HON_INF": {
+      "valor": "−90,23",
+      "valor_bruto": -90.23433059507185,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-g",
+          "variante": "S-a: ic_honesto_M_x1"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: IC honesto (M do protocolo), inferior"
+    },
+    "N1_300_HON_SUP": {
+      "valor": "+87,34",
+      "valor_bruto": 87.33939478607023,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-g",
+          "variante": "S-a: ic_honesto_M_x1"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.300: IC honesto (M do protocolo), superior"
+    },
+    "N1_400_MEDIA": {
+      "valor": "1,96",
+      "valor_bruto": 1.9556650246305418,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "principal"
+        },
+        "coluna": "media_abaixo"
+      },
+      "formato": "d2",
+      "descricao": "N1, corte 0.400: média do lado de bolsa menor (vagas por município)"
+    },
+    "N1_400_SB_TAU": {
+      "valor": "−1,36",
+      "valor_bruto": -1.3628128492010596,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-b",
+          "variante": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: sem controle (S-b, efeito total da faixa): salto"
+    },
+    "N1_400_SB_INF": {
+      "valor": "−3,30",
+      "valor_bruto": -3.296398196561406,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-b",
+          "variante": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: sem controle: IC inferior"
+    },
+    "N1_400_SB_SUP": {
+      "valor": "+0,57",
+      "valor_bruto": 0.570772498159287,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-b",
+          "variante": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: sem controle: IC superior"
+    },
+    "N1_400_H030": {
+      "valor": "−0,23",
+      "valor_bruto": -0.2258974874268119,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "h=0.030"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: com controle, h = 0,030"
+    },
+    "N1_400_H080": {
+      "valor": "+0,03",
+      "valor_bruto": 0.028711742104471,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "h=0.080"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: com controle, h = 0,080"
+    },
+    "N1_400_DONUT": {
+      "valor": "+0,36",
+      "valor_bruto": 0.358168028439378,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-j",
+          "variante": "donut (S-a)"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: com controle, sem os municípios colados ao corte (donut)"
+    },
+    "N1_400_DONUT_INF": {
+      "valor": "−0,23",
+      "valor_bruto": -0.2267875477041028,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-j",
+          "variante": "donut (S-a)"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: donut: IC inferior"
+    },
+    "N1_400_DONUT_SUP": {
+      "valor": "+0,94",
+      "valor_bruto": 0.9431236045828588,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-j",
+          "variante": "donut (S-a)"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: donut: IC superior"
+    },
+    "N1_400_UNICO": {
+      "valor": "−0,11",
+      "valor_bruto": -0.10661426785421213,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "controle_coeficiente_unico"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: com um só coeficiente do controle"
+    },
+    "N1_400_UNICO_INF": {
+      "valor": "−0,88",
+      "valor_bruto": -0.8808450688606347,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "controle_coeficiente_unico"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: um só coeficiente: IC inferior"
+    },
+    "N1_400_UNICO_SUP": {
+      "valor": "+0,67",
+      "valor_bruto": 0.6676165331522105,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-a",
+          "variante": "controle_coeficiente_unico"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: um só coeficiente: IC superior"
+    },
+    "N1_400_VIA": {
+      "valor": "−1,22",
+      "valor_bruto": -1.2207626270208756,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "decomposicao",
+          "variante": "via oferta (soma gamma x salto do controle)"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: decomposição exata: parte via oferta (Σ γ_g × salto das vagas oferecidas)"
+    },
+    "N1_400_DTOT": {
+      "valor": "−1,36",
+      "valor_bruto": -1.3628128492010596,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "decomposicao",
+          "variante": "total (= S-b na amostra de S-a)"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: decomposição exata: total (S-b na amostra de S-a)"
+    },
+    "N1_400_DSA": {
+      "valor": "−0,14",
+      "valor_bruto": -0.142050222180193,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "decomposicao",
+          "variante": "preenchimento dado as vagas (= S-a)"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: decomposição exata: preenchimento dado as vagas (S-a)"
+    },
+    "N1_400_SF": {
+      "valor": "−0,04",
+      "valor_bruto": -0.03868650959081421,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-f",
+          "variante": "controle_com_inclinacao_por_lado"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: controle com inclinação diferente de cada lado (S-f)"
+    },
+    "N1_400_HON_INF": {
+      "valor": "−47,07",
+      "valor_bruto": -47.07059637805026,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-g",
+          "variante": "S-a: ic_honesto_M_x1"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: IC honesto (M do protocolo), inferior"
+    },
+    "N1_400_HON_SUP": {
+      "valor": "+46,79",
+      "valor_bruto": 46.786495933689885,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "N1",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-g",
+          "variante": "S-a: ic_honesto_M_x1"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "N1, corte 0.400: IC honesto (M do protocolo), superior"
+    },
+    "VIC_300_TAU": {
+      "valor": "+0,39",
+      "valor_bruto": 0.38811877512424786,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "VIC",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-c",
+          "variante": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "vagas oferecidas por município, corte 0.300, ciclos 1–3 (S-c): salto"
+    },
+    "VIC_300_INF": {
+      "valor": "−6,69",
+      "valor_bruto": -6.68660463923083,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "VIC",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-c",
+          "variante": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "vagas oferecidas por município, corte 0.300, ciclos 1–3 (S-c): IC 95% inferior"
+    },
+    "VIC_300_SUP": {
+      "valor": "+7,46",
+      "valor_bruto": 7.462842189479326,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "VIC",
+          "populacao": "V1+V2+V3",
+          "corte": "0.300",
+          "especificacao": "S-c",
+          "variante": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "vagas oferecidas por município, corte 0.300, ciclos 1–3 (S-c): IC 95% superior"
+    },
+    "VIC_400_TAU": {
+      "valor": "−3,59",
+      "valor_bruto": -3.5883468750985195,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "VIC",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-c",
+          "variante": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "vagas oferecidas por município, corte 0.400, ciclos 1–3 (S-c): salto"
+    },
+    "VIC_400_INF": {
+      "valor": "−8,94",
+      "valor_bruto": -8.941742016013135,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "VIC",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-c",
+          "variante": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "vagas oferecidas por município, corte 0.400, ciclos 1–3 (S-c): IC 95% inferior"
+    },
+    "VIC_400_SUP": {
+      "valor": "+1,77",
+      "valor_bruto": 1.7650482658160964,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/N_estimativas.csv",
+        "filtro": {
+          "outcome_id": "VIC",
+          "populacao": "V1+V2+V3",
+          "corte": "0.400",
+          "especificacao": "S-c",
+          "variante": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "vagas oferecidas por município, corte 0.400, ciclos 1–3 (S-c): IC 95% superior"
+    },
+    "VIC_300_MABX": {
+      "valor": "10,08",
+      "valor_bruto": 10.077551020408164,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.300|VIC|sem_controle|principal"
+        },
+        "coluna": "media_abaixo"
+      },
+      "formato": "d2",
+      "descricao": "vagas oferecidas por município, corte 0.300: média na janela abaixo do corte (descritivo)"
+    },
+    "VIC_300_MACI": {
+      "valor": "9,82",
+      "valor_bruto": 9.816326530612244,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.300|VIC|sem_controle|principal"
+        },
+        "coluna": "media_acima"
+      },
+      "formato": "d2",
+      "descricao": "vagas oferecidas por município, corte 0.300: média na janela acima do corte (descritivo)"
+    },
+    "VIC_400_MABX": {
+      "valor": "7,05",
+      "valor_bruto": 7.054187192118227,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.400|VIC|sem_controle|principal"
+        },
+        "coluna": "media_abaixo"
+      },
+      "formato": "d2",
+      "descricao": "vagas oferecidas por município, corte 0.400: média na janela abaixo do corte (descritivo)"
+    },
+    "VIC_400_MACI": {
+      "valor": "3,93",
+      "valor_bruto": 3.9292452830188678,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.400|VIC|sem_controle|principal"
+        },
+        "coluna": "media_acima"
+      },
+      "formato": "d2",
+      "descricao": "vagas oferecidas por município, corte 0.400: média na janela acima do corte (descritivo)"
+    },
+    "A3_C1_300_TAU": {
+      "valor": "+0,9",
+      "valor_bruto": 0.9120750507573661,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3p_c1_300_tau",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 só ciclo 1, corte 0,300: salto (p.p.)"
+    },
+    "A3_C1_300_INF": {
+      "valor": "−23,5",
+      "valor_bruto": -23.498257275767607,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3p_c1_300_lo",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 só ciclo 1, corte 0,300: IC inferior"
+    },
+    "A3_C1_300_SUP": {
+      "valor": "+25,3",
+      "valor_bruto": 25.322407377282342,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3p_c1_300_hi",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 só ciclo 1, corte 0,300: IC superior"
+    },
+    "A3_C1_300_MEDIA": {
+      "valor": "26,0",
+      "valor_bruto": 26.041666666666668,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3p_c1_300_media",
+          "v"
+        ]
+      },
+      "formato": "d1",
+      "descricao": "A3 só ciclo 1, corte 0,300: média abaixo do corte (%)"
+    },
+    "A3_C1_300_MDE": {
+      "valor": "34,9",
+      "valor_bruto": 34.872544114788624,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3p_c1_300_mde",
+          "v"
+        ]
+      },
+      "formato": "d1",
+      "descricao": "A3 só ciclo 1, corte 0,300: MDE de 80%"
+    },
+    "A3_C1_400_TAU": {
+      "valor": "−12,4",
+      "valor_bruto": -12.446578830294985,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3p_c1_400_tau",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 só ciclo 1, corte 0,400: salto (p.p.)"
+    },
+    "A3_C1_400_INF": {
+      "valor": "−37,5",
+      "valor_bruto": -37.496794800052285,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3p_c1_400_lo",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 só ciclo 1, corte 0,400: IC inferior"
+    },
+    "A3_C1_400_SUP": {
+      "valor": "+12,6",
+      "valor_bruto": 12.603637139462315,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3p_c1_400_hi",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 só ciclo 1, corte 0,400: IC superior"
+    },
+    "A3_C1_400_MEDIA": {
+      "valor": "37,2",
+      "valor_bruto": 37.24696356275304,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3p_c1_400_media",
+          "v"
+        ]
+      },
+      "formato": "d1",
+      "descricao": "A3 só ciclo 1, corte 0,400: média abaixo do corte (%)"
+    },
+    "A3_C1_400_MDE": {
+      "valor": "35,8",
+      "valor_bruto": 35.78668040258932,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3p_c1_400_mde",
+          "v"
+        ]
+      },
+      "formato": "d1",
+      "descricao": "A3 só ciclo 1, corte 0,400: MDE de 80%"
+    },
+    "A3C_300_TAU": {
+      "valor": "−10,8",
+      "valor_bruto": -10.754623952563014,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3c_todos_300_tau",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,300: salto (p.p.)"
+    },
+    "A3C_300_INF": {
+      "valor": "−28,2",
+      "valor_bruto": -28.187223457456973,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3c_todos_300_lo",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,300: IC inferior"
+    },
+    "A3C_300_SUP": {
+      "valor": "+6,7",
+      "valor_bruto": 6.6779755523309445,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3c_todos_300_hi",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,300: IC superior"
+    },
+    "A3C_300_MEDIA": {
+      "valor": "48,3",
+      "valor_bruto": 48.30508474576271,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3c_todos_300_media",
+          "v"
+        ]
+      },
+      "formato": "d1",
+      "descricao": "A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,300: média abaixo do corte (%)"
+    },
+    "A3C_300_MDE": {
+      "valor": "24,9",
+      "valor_bruto": 24.904171198409877,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3c_todos_300_mde",
+          "v"
+        ]
+      },
+      "formato": "d1",
+      "descricao": "A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,300: MDE de 80%"
+    },
+    "A3C_400_TAU": {
+      "valor": "−2,7",
+      "valor_bruto": -2.686400462131269,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3c_todos_400_tau",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,400: salto (p.p.)"
+    },
+    "A3C_400_INF": {
+      "valor": "−19,7",
+      "valor_bruto": -19.657326048816785,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3c_todos_400_lo",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,400: IC inferior"
+    },
+    "A3C_400_SUP": {
+      "valor": "+14,3",
+      "valor_bruto": 14.284525124554245,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3c_todos_400_hi",
+          "v"
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,400: IC superior"
+    },
+    "A3C_400_MEDIA": {
+      "valor": "49,6",
+      "valor_bruto": 49.611398963730565,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3c_todos_400_media",
+          "v"
+        ]
+      },
+      "formato": "d1",
+      "descricao": "A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,400: média abaixo do corte (%)"
+    },
+    "A3C_400_MDE": {
+      "valor": "24,2",
+      "valor_bruto": 24.244624910222853,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/S57_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/S57_resumo.json",
+        "caminho": [
+          "v",
+          "a3c_todos_400_mde",
+          "v"
+        ]
+      },
+      "formato": "d1",
+      "descricao": "A3 célula com candidato de 1ª opção, ciclos 1–3, corte 0,400: MDE de 80%"
+    },
+    "EQ_A3_300_I90I": {
+      "valor": "−16,9",
+      "valor_bruto": -16.88427587,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "A3-300-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "ic90_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "TOST A3, corte 0,300, ciclos 1–3: IC 90% inferior (p.p.)"
+    },
+    "EQ_A3_300_I90S": {
+      "valor": "+0,1",
+      "valor_bruto": 0.09623944947,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "A3-300-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "ic90_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "TOST A3, corte 0,300, ciclos 1–3: IC 90% superior (p.p.)"
+    },
+    "EQ_A3_300_MMIN": {
+      "valor": "16,9",
+      "valor_bruto": 16.88427587,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "A3-300-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "margem_minima",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1",
+      "descricao": "TOST A3, corte 0,300, ciclos 1–3: margem mínima de equivalência (p.p.)"
+    },
+    "EQ_A3_300_MARG": {
+      "valor": "10",
+      "valor_bruto": 10.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "A3-300-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "margem",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d0",
+      "descricao": "TOST A3, corte 0,300, ciclos 1–3: margem de equivalência (p.p.)"
+    },
+    "EQ_A3_300_LEIT": {
+      "valor": "SO_AUMENTO",
+      "valor_bruto": "SO_AUMENTO",
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "A3-300-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "leitura_codigo",
+        "texto_csv": true
+      },
+      "formato": "txt",
+      "descricao": "TOST A3, corte 0,300, ciclos 1–3: leitura pré-registrada (código)"
+    },
+    "EQ_A3_400_I90I": {
+      "valor": "−11,9",
+      "valor_bruto": -11.93757944,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "A3-400-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "ic90_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "TOST A3, corte 0,400, ciclos 1–3: IC 90% inferior (p.p.)"
+    },
+    "EQ_A3_400_I90S": {
+      "valor": "+9,3",
+      "valor_bruto": 9.301013219,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "A3-400-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "ic90_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "TOST A3, corte 0,400, ciclos 1–3: IC 90% superior (p.p.)"
+    },
+    "EQ_A3_400_MMIN": {
+      "valor": "11,9",
+      "valor_bruto": 11.93757944,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "A3-400-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "margem_minima",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1",
+      "descricao": "TOST A3, corte 0,400, ciclos 1–3: margem mínima de equivalência (p.p.)"
+    },
+    "EQ_A3_400_MARG": {
+      "valor": "10",
+      "valor_bruto": 10.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "A3-400-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "margem",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d0",
+      "descricao": "TOST A3, corte 0,400, ciclos 1–3: margem de equivalência (p.p.)"
+    },
+    "EQ_A3_400_LEIT": {
+      "valor": "SO_AUMENTO",
+      "valor_bruto": "SO_AUMENTO",
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "A3-400-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "leitura_codigo",
+        "texto_csv": true
+      },
+      "formato": "txt",
+      "descricao": "TOST A3, corte 0,400, ciclos 1–3: leitura pré-registrada (código)"
+    },
+    "EQ_N1_300_I90I": {
+      "valor": "−2,48",
+      "valor_bruto": -2.475822493,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "N1-300-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "ic90_inf"
+      },
+      "formato": "d2s",
+      "descricao": "TOST N1, corte 0,300, ciclos 1–3: IC 90% inferior (vagas por município)"
+    },
+    "EQ_N1_300_I90S": {
+      "valor": "−0,42",
+      "valor_bruto": -0.4191133158,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "N1-300-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "ic90_sup"
+      },
+      "formato": "d2s",
+      "descricao": "TOST N1, corte 0,300, ciclos 1–3: IC 90% superior"
+    },
+    "EQ_N1_300_MARG": {
+      "valor": "0,58",
+      "valor_bruto": 0.5806122449,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "N1-300-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "margem"
+      },
+      "formato": "d2",
+      "descricao": "TOST N1, corte 0,300, ciclos 1–3: margem: 25% da média abaixo do corte (vagas por município)"
+    },
+    "EQ_N1_300_MMIN": {
+      "valor": "2,48",
+      "valor_bruto": 2.475822493,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "N1-300-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "margem_minima"
+      },
+      "formato": "d2",
+      "descricao": "TOST N1, corte 0,300, ciclos 1–3: margem mínima de equivalência"
+    },
+    "EQ_N1_300_LEIT": {
+      "valor": "SO_AUMENTO",
+      "valor_bruto": "SO_AUMENTO",
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "N1-300-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "leitura_codigo",
+        "texto_csv": true
+      },
+      "formato": "txt",
+      "descricao": "TOST N1, corte 0,300, ciclos 1–3: leitura pré-registrada (código)"
+    },
+    "EQ_N1_400_I90I": {
+      "valor": "−0,71",
+      "valor_bruto": -0.7122664475,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "N1-400-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "ic90_inf"
+      },
+      "formato": "d2s",
+      "descricao": "TOST N1, corte 0,400, ciclos 1–3: IC 90% inferior (vagas por município)"
+    },
+    "EQ_N1_400_I90S": {
+      "valor": "+0,43",
+      "valor_bruto": 0.4281660032,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "N1-400-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "ic90_sup"
+      },
+      "formato": "d2s",
+      "descricao": "TOST N1, corte 0,400, ciclos 1–3: IC 90% superior"
+    },
+    "EQ_N1_400_MARG": {
+      "valor": "0,49",
+      "valor_bruto": 0.4889162562,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "N1-400-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "margem"
+      },
+      "formato": "d2",
+      "descricao": "TOST N1, corte 0,400, ciclos 1–3: margem: 25% da média abaixo do corte (vagas por município)"
+    },
+    "EQ_N1_400_MMIN": {
+      "valor": "0,71",
+      "valor_bruto": 0.7122664475,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "N1-400-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "margem_minima"
+      },
+      "formato": "d2",
+      "descricao": "TOST N1, corte 0,400, ciclos 1–3: margem mínima de equivalência"
+    },
+    "EQ_N1_400_LEIT": {
+      "valor": "SO_AUMENTO",
+      "valor_bruto": "SO_AUMENTO",
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/EQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/EQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "N1-400-123",
+          "tipo_ic": "convencional_CR1"
+        },
+        "coluna": "leitura_codigo",
+        "texto_csv": true
+      },
+      "formato": "txt",
+      "descricao": "TOST N1, corte 0,400, ciclos 1–3: leitura pré-registrada (código)"
+    },
+    "ND_TX300": {
+      "valor": "−16,0",
+      "valor_bruto": -15.993086270127254,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.300|TAXA_VIC|taxa_ponderada|principal"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "0,300: salto na taxa de preenchimento por vaga oferecida (p.p., peso = vagas)"
+    },
+    "ND_TX300_INF": {
+      "valor": "−27,9",
+      "valor_bruto": -27.895058313412935,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.300|TAXA_VIC|taxa_ponderada|principal"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "IC inferior"
+    },
+    "ND_TX300_SUP": {
+      "valor": "−4,1",
+      "valor_bruto": -4.091114226841574,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.300|TAXA_VIC|taxa_ponderada|principal"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "IC superior"
+    },
+    "ND_TXVI300": {
+      "valor": "−19,2",
+      "valor_bruto": -19.209139071466463,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.300|TAXA_VI|taxa_ponderada|principal"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "0,300: a mesma taxa com só as vagas imediatas no denominador (p.p.)"
+    },
+    "ND_TXVI300_INF": {
+      "valor": "−43,1",
+      "valor_bruto": -43.08320894884743,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.300|TAXA_VI|taxa_ponderada|principal"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "IC inferior"
+    },
+    "ND_TXVI300_SUP": {
+      "valor": "+4,7",
+      "valor_bruto": 4.664930805914502,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.300|TAXA_VI|taxa_ponderada|principal"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "IC superior"
+    },
+    "ND_TX300_C2": {
+      "valor": "−8,1",
+      "valor_bruto": -8.112362394615479,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "AD2_A3|contribuicao|POR_CORTE|V1+V2+V3|0.300|TAXA_VIC|taxa_ponderada|grupo_c2"
+        },
+        "coluna": "contribuicao",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "0,300: contribuição do ciclo 2 ao salto da taxa por vaga oferecida (p.p.)"
+    },
+    "ND_TX300_C2_PCT": {
+      "valor": "51",
+      "valor_bruto": 0.5072418329768024,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "razao": [
+          "ND_TX300_C2",
+          "ND_TX300"
+        ]
+      },
+      "formato": "pct0",
+      "descricao": "0,300: parte do salto da taxa que vem do ciclo 2 (%)"
+    },
+    "ND_TX400": {
+      "valor": "+2,5",
+      "valor_bruto": 2.5465381122180553,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.400|TAXA_VIC|taxa_ponderada|principal"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "0,400: salto na taxa de preenchimento por vaga oferecida (p.p.)"
+    },
+    "ND_VIC400": {
+      "valor": "−3,59",
+      "valor_bruto": -3.5883468750985195,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/ND_estimativas.csv",
+        "filtro": {
+          "id_linha": "D1|estimativa|POR_CORTE|V1+V2+V3|0.400|VIC|sem_controle|principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "0,400: salto nas vagas oferecidas (imediatas + cadastro reserva) por município"
     },
     "P4_HT_ATT": {
       "valor": "+6,6",
@@ -6153,6 +8278,106 @@
       "formato": "int",
       "descricao": "municípios com IVS 2010 oficial (a08)"
     },
+    "ESC_N": {
+      "valor": "5.425",
+      "valor_bruto": 5425.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "seletor": {
+        "descritiva": "ESC_N"
+      },
+      "formato": "int",
+      "descricao": "candidatos com 1ª opção e município de origem no G1 (CPF e nome)"
+    },
+    "ESC_UF": {
+      "valor": "79",
+      "valor_bruto": 0.791705069124424,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "seletor": {
+        "descritiva": "ESC_UF"
+      },
+      "formato": "pct0",
+      "descricao": "1ª opção na UF de origem (%)"
+    },
+    "ESC_REG": {
+      "valor": "46",
+      "valor_bruto": 0.4578801843317972,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "seletor": {
+        "descritiva": "ESC_REG"
+      },
+      "formato": "pct0",
+      "descricao": "1ª opção na região de saúde de origem (%)"
+    },
+    "ESC_MUN": {
+      "valor": "36",
+      "valor_bruto": 0.3583410138248848,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "seletor": {
+        "descritiva": "ESC_MUN"
+      },
+      "formato": "pct0",
+      "descricao": "1ª opção no município de origem (%)"
+    },
+    "ESC_DIST_P50": {
+      "valor": "51",
+      "valor_bruto": 51.42870289433125,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "seletor": {
+        "descritiva": "ESC_DIST_P50"
+      },
+      "formato": "d0",
+      "descricao": "distância origem–1ª opção: mediana (km)"
+    },
+    "ESC_DIST_P75": {
+      "valor": "189",
+      "valor_bruto": 188.50905838328913,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "seletor": {
+        "descritiva": "ESC_DIST_P75"
+      },
+      "formato": "d0",
+      "descricao": "distância origem–1ª opção: 3º quartil (km)"
+    },
+    "E1_300_HOLM": {
+      "valor": "0,707",
+      "valor_bruto": 0.706579,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/E1_densidade_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/E1_densidade_estimativas.csv",
+        "filtro": {
+          "ciclo": "1",
+          "corte": "0.300",
+          "papel": "principal"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "E1, ciclo 1, corte 0.300: p de Holm do teste de densidade (Poisson local)"
+    },
+    "E1_400_HOLM": {
+      "valor": "0,658",
+      "valor_bruto": 0.658291,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/E1_densidade_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/E1_densidade_estimativas.csv",
+        "filtro": {
+          "ciclo": "1",
+          "corte": "0.400",
+          "papel": "principal"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "E1, ciclo 1, corte 0.400: p de Holm do teste de densidade (Poisson local)"
+    },
     "D_POP_MUN": {
       "valor": "5.570",
       "valor_bruto": 5570.0,
@@ -6366,6 +8591,198 @@
       },
       "formato": "txt",
       "descricao": "Bobba et al.: adicional por regra"
+    },
+    "CR_C1_EDITAL": {
+      "valor": "nº 3/2025",
+      "valor_bruto": "nº 3/2025",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md",
+      "seletor": {
+        "texto": "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md",
+        "regex": "Edital de Chamamento Público (nº \\d+/\\d{4}) \\(DOU de 24/07/2025"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 1: edital de chamamento dos médicos"
+    },
+    "CR_C2_EDITAL": {
+      "valor": "nº 1/2026",
+      "valor_bruto": "nº 1/2026",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md",
+      "seletor": {
+        "texto": "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md",
+        "regex": "a cópia do Edital SGTES/MS (nº \\d+/\\d{4})"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 2: edital de chamamento"
+    },
+    "CR_C3_EDITAL": {
+      "valor": "nº 28/2026",
+      "valor_bruto": "nº 28/2026",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "Oferta aos Médicos \\(Chamamento (nº \\d+/\\d{4})\\)"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 3: chamamento dos médicos"
+    },
+    "CR_C1_QUADRO": {
+      "valor": "24/07/2025",
+      "valor_bruto": "24/07/2025",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `vagas_2025_c1_ch1_original` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 1: quadro da 1ª chamada"
+    },
+    "CR_C1_RES": {
+      "valor": "10/09/2025",
+      "valor_bruto": "10/09/2025",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `alocacao_2025_c1_ch1_retificada` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 1: alocação retificada da 1ª chamada"
+    },
+    "CR_C1_CH2": {
+      "valor": "29/09/2025",
+      "valor_bruto": "29/09/2025",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `vagas_alocados_2025_c1_ch2` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 1: 2ª chamada (só cadastro reserva)"
+    },
+    "CR_C2_QUADRO": {
+      "valor": "03/02/2026",
+      "valor_bruto": "03/02/2026",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `vagas_2026_c2_ch1_original` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 2: quadro original"
+    },
+    "CR_C2_RETIF": {
+      "valor": "19/03/2026",
+      "valor_bruto": "19/03/2026",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `vagas_2026_c2_ch1_retificada` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 2: quadro retificado final"
+    },
+    "CR_C2_RES": {
+      "valor": "05/05/2026",
+      "valor_bruto": "05/05/2026",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `resultado_2026_c2_ch1_remanescentes` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 2: resultado final de remanescentes da 1ª chamada"
+    },
+    "CR_C2_CH2": {
+      "valor": "16/04/2026",
+      "valor_bruto": "16/04/2026",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `vagas_2026_c2_ch2` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 2: 2ª chamada (só cadastro reserva)"
+    },
+    "CR_C3_GEST": {
+      "valor": "15/07/2026",
+      "valor_bruto": "15/07/2026",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `adesao_gestores_2026_c3_final` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 3: resultado da adesão dos gestores"
+    },
+    "CR_C3_QUADRO": {
+      "valor": "16/07/2026",
+      "valor_bruto": "16/07/2026",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `vagas_2026_c3_medicos_original` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 3: quadro dos médicos"
+    },
+    "CR_C3_RETIF": {
+      "valor": "24/07/2026",
+      "valor_bruto": "24/07/2026",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `vagas_2026_c3_retificada` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 3: quadro retificado"
+    },
+    "CR_C3_RES": {
+      "valor": "25/08/2026",
+      "valor_bruto": "25/08/2026",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `resultado_2026_c3_sub_judice` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 3: resultado final, sub judice"
+    },
+    "CR_D2_INI": {
+      "valor": "202507",
+      "valor_bruto": "202507",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "output/rdd_bolsa/K_D2_resumo.json",
+      "seletor": {
+        "texto": "output/rdd_bolsa/K_D2_resumo.json",
+        "regex": "\"coortes\": \\{\"(\\d{6})\""
+      },
+      "formato": "txt",
+      "descricao": "primeira coorte trimestral de chegada dos médicos (lista de ativos; D2)"
+    },
+    "CR_D2_FIM": {
+      "valor": "202604",
+      "valor_bruto": "202604",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "output/rdd_bolsa/K_D2_resumo.json",
+      "seletor": {
+        "texto": "output/rdd_bolsa/K_D2_resumo.json",
+        "regex": "\"(\\d{6})\": \\{\"municipios\": \\d+, \"especialistas\": \\d+\\}\\}"
+      },
+      "formato": "txt",
+      "descricao": "última coorte trimestral de chegada dos médicos (lista de ativos; D2)"
     }
   }
 }

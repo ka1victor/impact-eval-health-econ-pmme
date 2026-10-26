@@ -56,6 +56,8 @@ valendo para o E9, o E7 e a literatura de magnitude.
 | 26/10/2026 | a H3 entra com o P1h auditado (auditoria 31): título "no modelo de escolha", θ_UF como "mesma UF, outra região de saúde", o km sem valor de prova (o teste bilateral do P1a não rejeita) | coordenador |
 | 26/10/2026 | "Focar em fazer a parte empírica e ajustar o que precisa nos prévios; reutilizar tudo o que der": prévios do grupo na ordem e com a visibilidade do grupo, só com as correções; na parte empírica, título-afirmação, no máximo três marcadores, uma cautela, detalhe nas notas; o importante mas não central vai para o apêndice; discussão num slide; regra sharp na metodologia | autor |
 | 26/10/2026 | saem do deck só os três marcadores "X" e os dois slides "EXEMPLO" (aplicativo de vinhos), modelo de outro trabalho | autor (critério); agente (aplicação) |
+| 26/10/2026 | cronologia dos ciclos ("já rolou em 3 edições?"); fichas de especificação de cada estimador na metodologia ("esse tipo de coisa precisa estar toda nos slides"); antes e depois do controle, por corte; H2 só por ciclo; H3 responde na tela "qual a metodologia?" e "é causal?"; lugar reservado para "Por que o preenchimento cai em 0,300" (protocolo 61) | autor |
+| 26/10/2026 | "Não mostre o empilhado; mostre os efeitos separados para cada corte": na H1, no corpo, 0,300 e 0,400 separados, com o TOST do protocolo 60 (doc 57j, auditoria 32); o empilhado só no apêndice, rotulado "só referência" | autor |
 | 26/10/2026 | um arquivo só (`deck_banca2.pptx`); resultados abrem pela cadeia-síntese, e H1–H4 aprofundam cada linha; bloco "O que isso quer dizer" nos slides de hipótese, metodologia, resultados e robustez; conteúdo ocupando a área útil (corpo ≥ 16 pt, tabelas ≥ 14 pt, figuras no tamanho do slide) | autor |
 
 Em aberto com o autor: a hipótese central (H3 ou H1), já revisável; quem
@@ -111,7 +113,7 @@ e conferido por `tests/test_conteudo_banca2.py` contra os arquivos de
 |---|---|
 | hipótese e modelo | [`02_teoria/modelo_micro.md`](../../02_teoria/modelo_micro.md); plano, §3 e §4.3 |
 | regra e failure mode | [`auditorias/16`](../../auditorias/16_ivs_2010_oficial_e_arquivo_local.md), [`auditorias/19`](../../auditorias/19_reestimacao_base_oficial_failure_mode.md) |
-| H1 | [`06_execucao/49`](../../06_execucao/49_resultados_contagem_vagas_preenchidas.md), §3 e §15; [`49b`](../../06_execucao/49b_diagnostico_contagem_porte.md) |
+| H1 | [`06_execucao/49`](../../06_execucao/49_resultados_contagem_vagas_preenchidas.md), §3 e §15; [`49b`](../../06_execucao/49b_diagnostico_contagem_porte.md); TOST por corte em [`57j`](../../06_execucao/57j_resultados_equivalencia_H1.md) e [`auditorias/32`](../../auditorias/32_auditoria_equivalencia_H1.md) |
 | H2 | [`06_execucao/57a`](../../06_execucao/57a_resultados_P1_escolha.md); E9 no [doc 44](../../06_execucao/44_sintese_rdd_bolsa_multioutcome.md), §5.2 |
 | H3 | [`06_execucao/57i`](../../06_execucao/57i_resultados_P1h_magnitudes.md) (resultado); [`52b`](../../06_execucao/52b_protocolo_P1h_magnitudes.md) (protocolo); [`auditorias/31`](../../auditorias/31_auditoria_P1h_magnitudes.md) |
 | H4 | [`06_execucao/57d`](../../06_execucao/57d_resultados_P4_trajetoria.md), [`57f`](../../06_execucao/57f_resultados_P6_mecanismo.md), [`57h`](../../06_execucao/57h_resultados_P3P4_sensibilidade.md) |

@@ -2,7 +2,7 @@
 documento: Conteúdo da apresentação — banca 2 (parte empírica)
 papel: fonte de verdade do que vai à tela e da ordem do deck; o deck é derivado
 escopo: hipótese econômica pela cadeia do modelo (H1–H4), base de dados e descritivas, metodologia econométrica e identificação, resultados, robustez e discussão; organização, cortes e correções do deck do grupo
-slides: deck proposto com 53 (39 até o Q&A, 14 no apêndice); 12 novos na parte empírica e 10 no apêndice; os demais são do deck do grupo
+slides: deck proposto com 60 (45 até o Q&A, 15 no apêndice); 18 novos na parte empírica e 11 no apêndice; os demais são do deck do grupo
 estado: PRONTO para 28/10; prévios do grupo reutilizados com as correções e parte empírica organizada, cortada e sintetizada a pedido do autor; a H3 entrou com o P1h auditado (protocolo 52b, doc 57i, auditoria 31)
 atualizacao: 26 de outubro de 2026
 ---
@@ -46,6 +46,11 @@ atualizacao: 26 de outubro de 2026
 > empírica e o apêndice, na ordem deste arquivo. Divergência entre o deck e
 > este arquivo é erro do deck.
 >
+> **H1 por corte (decisão do autor, 26/10/2026).** "Não mostre o empilhado;
+> mostre os efeitos separados para cada corte." Na H1, todo slide do corpo
+> mostra 0,300 e 0,400 separados; o empilhado (média dos dois cortes) só
+> aparece no apêndice, rotulado como referência.
+>
 > **Leitura em linguagem simples.** O parágrafo `**O que isso quer dizer.**`
 > vai à tela num bloco próprio: uma ou duas frases sobre o que o número
 > significa para a pergunta. Os números dele seguem a regra dos números.
@@ -59,8 +64,8 @@ atualizacao: 26 de outubro de 2026
 
 ## Mapa do deck proposto
 
-O deck proposto tem 53 slides: 23 prévios do grupo, a parte empírica (com as
-três divisórias de sumário do grupo), o Q&A e 14 slides de apêndice. "Grupo N"
+O deck proposto tem 60 slides: 23 prévios do grupo, a parte empírica (com as
+três divisórias de sumário do grupo), o Q&A e 15 slides de apêndice. "Grupo N"
 é o slide N do deck do grupo (36 slides); "novo" é um slide deste arquivo. O
 teste confere este quadro contra o manifesto do deck.
 
@@ -91,34 +96,41 @@ teste confere este quadro contra o manifesto do deck.
 | 23 | grupo 23 | Da condição de aceitação, sai nossa hipótese econômica | prévios |
 | 24 | novo | Testamos cada seta do modelo: quatro hipóteses | empírica: hipótese |
 | 25 | grupo 24 | Sumário (Base de Dados) | empírica: divisória |
-| 26 | novo | Os três ciclos em números | empírica: base |
-| 27 | grupo 26 | Sumário (Metodologia) | empírica: divisória |
-| 28 | novo | Um estimador por hipótese | empírica: metodologia |
-| 29 | novo | Hipóteses de identificação e como foram testadas | empírica: metodologia |
-| 30 | novo | A bolsa é função exata do IVS: a regra é sharp | empírica: metodologia |
-| 31 | grupo 28 | Sumário (Resultados) | empírica: divisória |
-| 32 | novo | Na cadeia, só a escolha e o registro do médico se movem | empírica: resultados (mapa) |
-| 33 | novo | H1: o preenchimento não aumenta de forma detectável no corte | empírica: resultados |
-| 34 | novo | H2: a bolsa pesa na escolha da vaga só no ciclo 2 | empírica: resultados |
-| 35 | novo | H3: no modelo de escolha, a UF de origem pesa mais que a bolsa | empírica: resultados |
-| 36 | novo | H4: o médico soma horas, mas metade já estava no município | empírica: resultados |
-| 37 | novo | Robustez: as leituras resistem, com ressalvas declaradas | empírica: robustez |
-| 38 | novo | Discussão: o que não afirmamos e o que vem depois | empírica: discussão |
-| 39 | grupo 30 | Q&A | encerramento |
-| 40 | grupo 31 | Apêndice (divisor) | apêndice |
-| 41 | novo | Apêndice: do modelo às equações estimadas | apêndice: equações |
-| 42 | novo | Apêndice: oito bases oficiais, ligadas por município e médico | apêndice: dados |
-| 43 | grupo 36 | Apêndice: o IVS mede a vulnerabilidade social | apêndice: dados |
-| 44 | grupo 34 | Apêndice: plano de dados da banca 1, vagas e bolsa | apêndice: dados |
-| 45 | grupo 35 | Apêndice: plano de dados da banca 1, lugar e custo | apêndice: dados |
-| 46 | novo | Apêndice: o "IVS como piso" da banca 1 era um arquivo errado | apêndice: dados |
-| 47 | novo | Apêndice: nos mesmos cortes mudam outras regras federais | apêndice: metodologia |
-| 48 | novo | Apêndice: N1 a N4, com controle das vagas oferecidas | apêndice: resultados detalhados |
-| 49 | novo | Apêndice: A3 por corte e no ciclo 1 | apêndice: resultados detalhados |
-| 50 | novo | Apêndice: a bolsa em todas as especificações do logit | apêndice: resultados detalhados |
-| 51 | novo | Apêndice: robustez, teste a teste | apêndice: robustez |
-| 52 | novo | Apêndice: o E9 resiste no ciclo 2; o empilhado é frágil | apêndice: robustez |
-| 53 | novo | Apêndice: a magnitude da literatura e o IC empilhado | apêndice: robustez e discussão |
+| 26 | novo | O PMM-E já teve três chamamentos: os três ciclos | empírica: base |
+| 27 | novo | Os três ciclos em números | empírica: base |
+| 28 | grupo 26 | Sumário (Metodologia) | empírica: divisória |
+| 29 | novo | Um estimador por hipótese | empírica: metodologia |
+| 30 | novo | Especificação da H1: o salto no corte, com e sem as vagas | empírica: metodologia |
+| 31 | novo | Especificação da H2 e da H3: o logit da 1ª opção | empírica: metodologia |
+| 32 | novo | Especificação da H4: horas antes e depois de entrar | empírica: metodologia |
+| 33 | novo | Especificação do TOST: o IC de 90% cabe na margem? | empírica: metodologia |
+| 34 | novo | Hipóteses de identificação e como foram testadas | empírica: metodologia |
+| 35 | novo | A bolsa é função exata do IVS: a regra é sharp | empírica: metodologia |
+| 36 | grupo 28 | Sumário (Resultados) | empírica: divisória |
+| 37 | novo | Na cadeia, só a escolha e o registro do médico se movem | empírica: resultados |
+| 38 | novo | H1: o preenchimento não aumenta em nenhum dos dois cortes | empírica: resultados |
+| 39 | novo | O controle muda a leitura: em 0,400 a queda passa pelas vagas | empírica: resultados |
+| 40 | novo | H2: a bolsa pesa na escolha da vaga só no ciclo 2 | empírica: resultados |
+| 41 | novo | H3: no modelo de escolha, a UF de origem pesa mais que a bolsa | empírica: resultados |
+| 42 | novo | H4: o médico soma horas, mas metade já estava no município | empírica: resultados |
+| 43 | novo | Robustez: as leituras resistem, com ressalvas declaradas | empírica: robustez e discussão |
+| 44 | novo | Discussão: o que não afirmamos e o que vem depois | empírica: robustez e discussão |
+| 45 | grupo 30 | Q&A | encerramento |
+| 46 | grupo 31 | Apêndice (divisor) | apêndice |
+| 47 | novo | Apêndice: do modelo às equações estimadas | apêndice |
+| 48 | novo | Apêndice: especificações formais de cada estimador | apêndice |
+| 49 | novo | Apêndice: oito bases oficiais, ligadas por município e médico | apêndice |
+| 50 | grupo 36 | Apêndice: o IVS mede a vulnerabilidade social | apêndice: dados |
+| 51 | grupo 34 | Apêndice: plano de dados da banca 1, vagas e bolsa | apêndice: dados |
+| 52 | grupo 35 | Apêndice: plano de dados da banca 1, lugar e custo | apêndice: dados |
+| 53 | novo | Apêndice: o "IVS como piso" da banca 1 era um arquivo errado | apêndice |
+| 54 | novo | Apêndice: nos mesmos cortes mudam outras regras federais | apêndice |
+| 55 | novo | Apêndice: N1 a N4 por corte, com controle das vagas | apêndice |
+| 56 | novo | Apêndice: A3 por corte e no ciclo 1 | apêndice |
+| 57 | novo | Apêndice: a bolsa em todas as especificações do logit | apêndice |
+| 58 | novo | Apêndice: robustez, teste a teste | apêndice |
+| 59 | novo | Apêndice: o E9 resiste no ciclo 2; o empilhado é frágil | apêndice |
+| 60 | novo | Apêndice: a magnitude da literatura e o IC por corte | apêndice |
 
 Na parte empírica, os slides novos mudaram assim: os resultados abrem pela
 cadeia-síntese, que é o mapa ("o que encontramos, pergunta a pergunta"), e H1
@@ -167,17 +179,17 @@ do slide.
 | 23 | Da condição de aceitação, sai nossa hipótese econômica | corpo | 23 | — |
 | 24 | Sumário | corpo | 25 | divisória da Base de Dados, padrão do deck do grupo |
 | 25 | X | removido | — | marcador "X" da Base de Dados, substituído pelos slides novos |
-| 26 | Sumário | corpo | 27 | divisória da Metodologia |
+| 26 | Sumário | corpo | 28 | divisória da Metodologia |
 | 27 | X | removido | — | marcador "X" da Metodologia, substituído pelos slides novos |
-| 28 | Sumário | corpo | 31 | divisória dos Resultados |
+| 28 | Sumário | corpo | 36 | divisória dos Resultados |
 | 29 | X | removido | — | marcador "X" dos Resultados, substituído pelos slides novos |
-| 30 | Q&A | corpo | 39 | fecha a apresentação |
-| 31 | Apêndice | apêndice | 40 | divisor; as notas, que traziam uma conversa colada com a contagem do arquivo errado, viraram uma linha neutra |
+| 30 | Q&A | corpo | 45 | fecha a apresentação |
+| 31 | Apêndice | apêndice | 46 | divisor; as notas, que traziam uma conversa colada com a contagem do arquivo errado, viraram uma linha neutra |
 | 32 | EXEMPLO (aplicativo de vinhos) | removido | — | modelo de outro trabalho, marcado "EXEMPLO" (critério do autor: sai se for claramente de outro trabalho) |
 | 33 | EXEMPLO (aplicativo de vinhos) | removido | — | modelo de outro trabalho, como o 32 |
-| 34 | O desafio é separar o efeito da bolsa do efeito da vulnerabilidade | apêndice | 44 | plano de dados da banca 1, com título "Apêndice: plano de dados da banca 1, vagas e bolsa"; "proporção de vagas" → "proporção de células (estabelecimento × curso) com alguma confirmação ou homologação: 30,3% na 1ª chamada; 35,6% somando a 2ª" (eram "35,6%" num slide e "30%" no outro, de chamadas diferentes); "SGETS" → "SGTES"; "Especialidade" → "curso"; faixa pela regra aplicada |
-| 35 | O desafio é separar o efeito da bolsa do efeito da vulnerabilidade | apêndice | 45 | plano de dados da banca 1, com título "Apêndice: plano de dados da banca 1, lugar e custo"; as mesmas correções do 34; o IVS como running variable (entra contínuo e controla o custo do lugar; só a bolsa salta nos cortes), não como "custo territorial agregado" (doc 44, §2) |
-| 36 | O IVS mede a vulnerabilidade social dos territórios brasileiros | apêndice | 43 | componentes do IVS; título "Apêndice: o IVS mede a vulnerabilidade social" |
+| 34 | O desafio é separar o efeito da bolsa do efeito da vulnerabilidade | apêndice | 51 | plano de dados da banca 1, com título "Apêndice: plano de dados da banca 1, vagas e bolsa"; "proporção de vagas" → "proporção de células (estabelecimento × curso) com alguma confirmação ou homologação: 30,3% na 1ª chamada; 35,6% somando a 2ª" (eram "35,6%" num slide e "30%" no outro, de chamadas diferentes); "SGETS" → "SGTES"; "Especialidade" → "curso"; faixa pela regra aplicada |
+| 35 | O desafio é separar o efeito da bolsa do efeito da vulnerabilidade | apêndice | 52 | plano de dados da banca 1, com título "Apêndice: plano de dados da banca 1, lugar e custo"; as mesmas correções do 34; o IVS como running variable (entra contínuo e controla o custo do lugar; só a bolsa salta nos cortes), não como "custo territorial agregado" (doc 44, §2) |
+| 36 | O IVS mede a vulnerabilidade social dos territórios brasileiros | apêndice | 50 | componentes do IVS; título "Apêndice: o IVS mede a vulnerabilidade social" |
 
 O plano de dados da banca 1 (34 e 35) fica no apêndice como registro do que
 foi proposto; o que entrou em cada estimador está nos slides de metodologia.
@@ -273,6 +285,42 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 <!-- grupo: 24 -->
 
+## O PMM-E já teve três chamamentos: os três ciclos
+
+`Base de Dados · Ciclos`
+
+<!-- layout: tabela -->
+
+| Ciclo | Chamamento | Quadro de vagas (1ª chamada) | Resultado (1ª chamada) | 2ª chamada |
+|---|---|---|---|---|
+| 1 | Edital nº 3/2025 | 24/07/2025 | 10/09/2025 (alocação retificada) | 29/09/2025, só cadastro reserva |
+| 2 | Edital nº 1/2026 | 03/02/2026 (retificado em 19/03/2026) | 05/05/2026 (remanescentes) | 16/04/2026, só cadastro reserva |
+| 3 | Chamamento nº 28/2026, após adesão dos gestores (15/07/2026) | 16/07/2026 (retificado em 24/07/2026) | 25/08/2026, sub judice | não houve |
+
+- **Quadro, candidatos, escolhas e 1ª chamada:** temos dos ciclos 1, 2 e 3.
+- **2ª chamada e CNES depois do início:** só dos ciclos 1 e 2.
+
+**O que isso quer dizer.** Sim, o programa já rodou três vezes: cada ciclo é uma rodada nova de vagas e candidatos. O ciclo 3 entra no preenchimento e na escolha; o seguimento dele no CNES espera a competência 202703 madura.
+
+> **Cada ciclo é analisado dentro dele mesmo; o ciclo 3 pós-início segue congelado.**
+
+**Fontes:** `output/apresentacao_banca2/cronologia_ciclos.csv`, gerada por `scripts/apresentacao/gerar_figuras_banca2.py` a partir de `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` (datas de publicação), do protocolo 48, §8 (editais), e de `output/rdd_bolsa/K_D2_resumo.json` (coortes de chegada).
+
+**Números:** `CR_C1_EDITAL`, `CR_C2_EDITAL`, `CR_C3_EDITAL`, `CR_C1_QUADRO`, `CR_C1_RES`, `CR_C1_CH2`, `CR_C2_QUADRO`, `CR_C2_RETIF`, `CR_C2_RES`, `CR_C2_CH2`, `CR_C3_GEST`, `CR_C3_QUADRO`, `CR_C3_RETIF`, `CR_C3_RES`, `CR_D2_INI`, `CR_D2_FIM`
+
+> **Notas do apresentador.** Resposta à pergunta "já rolou em três
+> edições?": sim. Cada ciclo tem edital, quadro de vagas, escolha dos
+> candidatos e resultado próprios. O ciclo 1 abriu com o Edital nº 3/2025 e o
+> quadro de 24/07/2025; a 2ª chamada, em 29/09/2025, só teve vagas de cadastro
+> reserva. O ciclo 2 abriu em 03/02/2026, com o quadro retificado em
+> 19/03/2026. No ciclo 3, os gestores aderiram primeiro (resultado de
+> 15/07/2026) e o quadro dos médicos saiu em 16/07/2026; o resultado de
+> 25/08/2026 está sub judice. Os médicos dos ciclos 1 e 2 chegaram, na lista
+> de ativos, entre as coortes trimestrais de 202507 e 202604. O CNES depois do
+> início só existe para os ciclos 1 e 2.
+
+---
+
 ## Os três ciclos em números
 
 `Base de Dados · Descritivas`
@@ -335,7 +383,7 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 | Hipótese | Estimador | Unidade e amostra | Inferência |
 |---|---|---|---|
-| **H1** preenchimento | RDD sharp local linear nos cortes 0,300 e 0,400 do IVS 2010 oficial | célula aberta (A3) e município (N); ciclos 1–3 | CR1 por município; Holm nas primárias |
+| **H1** preenchimento | RDD sharp local linear em cada corte do IVS 2010 oficial, 0,300 e 0,400 separados | célula aberta (A3) e município (N); ciclos 1–3 | CR1 por município; TOST com IC 90% |
 | **H2 e H3** escolha e incentivo limitado | logit condicional (McFadden) da 1ª opção | candidato × célula do mesmo curso e ciclo; ciclos 1–3 | cluster por conjunto de escolha; H3 com a covariância conjunta |
 | **H4** capacidade líquida | estudo de evento escalonado (Callaway–Sant'Anna); comparação na nota de corte | médico × mês, ciclos 1 e 2 | bootstrap por médico; Rambachan–Roth |
 
@@ -349,14 +397,148 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 > **Notas do apresentador.** Todos os protocolos foram congelados antes de
 > estimar; o da H3 (52b) é pós-resultado. Especificações principais: na H1,
-> kernel triangular com h = 0,050, uma reta de cada lado por ciclo × corte,
-> salto comum e efeitos fixos de curso × ciclo e de tipo de vaga; na H2 e na
+> kernel triangular com h = 0,050, uma reta de cada lado por ciclo, um salto
+> por corte e efeitos fixos de curso × ciclo e de tipo de vaga; na H2 e na
 > H3, bolsa linear em R$ mil, IVS em spline com nós nos cortes, distância,
 > mesma UF, mesma região, mesmo município, porte, capital e vaga imediata; na
 > H4, controles ainda não tratados com base g − 1, efeito fixo de célula na
 > comparação local e permutação na célula. O IC honesto (Armstrong e Kolesár) protege contra curvatura no
 > corte; com o M do protocolo, ele sai largo demais para informar. Holm
 > controla o erro nas primárias de cada família.
+
+---
+
+## Especificação da H1: o salto no corte, com e sem as vagas
+
+`Metodologia · H1`
+
+<!-- layout: tabela -->
+
+| Campo | Como é feito |
+|---|---|
+| Outcome | N1: médicos alocados na 1ª chamada, por município e ciclo. A3: a célula aberta foi preenchida |
+| Amostra | municípios com célula no quadro, ciclos 1–3, até 0,050 do corte; cada corte separado |
+| Equação em palavras | vagas preenchidas = intercepto do ciclo + salto × (lado de bolsa maior) + reta de cada lado, por ciclo + coeficiente do ciclo × vagas oferecidas (imediatas + reserva) |
+| Comum e por ciclo | salto comum; intercepto, retas e coeficiente das vagas por ciclo. A3: efeitos fixos de curso × ciclo e de tipo de vaga |
+| Erro-padrão | CR1 por município; kernel triangular |
+| Leitura | sem as vagas: efeito total; com elas: preenchimento dado as vagas. Total = via oferta + com as vagas: 0,400: −1,36 = −1,22 + −0,14; 0,300: −1,56 = −0,11 + −1,45 |
+| Cuidado | se as vagas respondem ao corte, o controle compara municípios diferentes; pacote do corte |
+| Sensibilidades | coeficiente das vagas único; inclinação por lado; h = 0,030 e 0,080; donut; IC honesto |
+
+> **Em 0,400 quase todo o salto passa pela oferta de vagas; em 0,300, pelo preenchimento.**
+
+**Fontes:** protocolo 48, §1, §3 e §7; doc 49, §2, §3 e §5; `output/rdd_bolsa/N_estimativas.csv`; equação formal no apêndice.
+
+**Números:** `N1_400_SB_TAU`, `N1_400_VIA`, `N1_400_TAU`, `N1_300_SB_TAU`, `N1_300_VIA`, `N1_300_TAU`, `N1_300_UNICO`, `N1_400_UNICO`, `N1_300_SF`, `N1_400_SF`
+
+> **Notas do apresentador.** O controle é o número de vagas oferecidas no
+> quadro da 1ª chamada, imediatas mais cadastro reserva; a regra foi
+> verificada nos quadros antes de estimar (doc 49, §2), porque um alocado da
+> 1ª chamada pode ocupar vaga de reserva. A decomposição é exata
+> (Frisch–Waugh–Lovell): o salto sem controle é igual ao salto com controle
+> mais a soma, por ciclo, do coeficiente das vagas vezes o salto nas vagas. As
+> vagas são definidas pelo gestor antes da escolha dos candidatos, mas podem
+> responder ao corte; por isso relatamos as duas leituras. Sensibilidades em
+> cada corte: com um só coeficiente das vagas, −1,64 em 0,300 e −0,11 em
+> 0,400; com inclinação do controle diferente de cada lado, −1,38 e −0,04. O
+> IC honesto contém zero nos dois cortes.
+
+---
+
+## Especificação da H2 e da H3: o logit da 1ª opção
+
+`Metodologia · H2 e H3`
+
+<!-- layout: tabela -->
+
+| Campo | Como é feito |
+|---|---|
+| Outcome e alternativas | a 1ª opção de cada candidato, entre todas as células do mesmo curso e ciclo |
+| Amostra | candidatos de 1ª opção ligados ao CNES e com município de origem, ciclos 1–3 |
+| Equação em palavras | utilidade da vaga = peso da bolsa × bolsa + curva suave do IVS (spline com nós nos cortes, sem salto) + peso da distância × distância até a origem + pesos de mesma UF, mesma região e mesmo município + porte, capital e vaga imediata |
+| Comum e por ciclo | pesos comuns aos ciclos na principal; por ciclo numa sensibilidade |
+| Erro-padrão | agrupado por conjunto de escolha (curso × ciclo) |
+| Leitura | o peso da bolsa é quase-experimental: dado o IVS em curva suave, só a bolsa salta nos cortes (com as regras do mesmo corte). Os pesos de origem são preferência revelada, não efeito causal |
+| H3 | compara o peso de toda a amplitude da bolsa (10 × peso por R$ 1 mil) com o da UF de origem, com a covariância conjunta; teste unilateral, pós-resultado |
+| Cuidado | só quem se candidatou; independência de alternativas irrelevantes |
+| Sensibilidades | log da distância, efeito fixo de UF, por ciclo, explodido (1ª e 2ª opção), misto, aninhado e placebos de corte |
+
+> **Escolha entre vagas abertas, não entrada no programa; o peso da bolsa é o do pacote do corte.**
+
+**Fontes:** protocolos 52 e 52b; docs 57a e 57i; equação formal no apêndice.
+
+**Números:** `M1_N`
+
+> **Notas do apresentador.** Logit condicional de McFadden: cada candidato
+> escolhe a vaga de maior utilidade entre as do seu curso e ciclo. A amostra
+> tem 5.421 candidatos. O peso da bolsa é por R$ 1 mil por mês; um degrau é
+> R$ 5 mil. A curva do IVS absorve tudo o que muda suave com a
+> vulnerabilidade, e só o salto da bolsa nos cortes identifica o peso dela. A
+> H3 usa o mesmo modelo e soma dois coeficientes com a covariância conjunta;
+> é pós-resultado porque os coeficientes já eram conhecidos.
+
+---
+
+## Especificação da H4: horas antes e depois de entrar
+
+`Metodologia · H4`
+
+<!-- layout: tabela -->
+
+| Campo | Como é feito |
+|---|---|
+| Unidade e amostra | médico × mês; médicos dos ciclos 1 e 2 na lista de ativos, ligados ao CNES |
+| Tratamento | o mês de início no PMM-E |
+| Comparação | médicos que ainda vão começar (ainda não tratados) |
+| Equação em palavras | diferença nas horas do médico k meses depois de entrar, comparada com quem ainda não entrou, contada a partir do mês anterior à entrada (Callaway–Sant'Anna) |
+| Comum e por coorte | um efeito por coorte de entrada e por mês; o resultado é a média do pós |
+| Erro-padrão | bootstrap multiplicador por médico |
+| Pré | teste conjunto dos meses antes da entrada |
+| Leitura | associação da entrada, não efeito da bolsa nem da participação no PMM-E; horas cadastradas não são presença |
+| Sensibilidades | Rambachan–Roth: até que tamanho de violação de tendência a conclusão aguenta; comparação com os não alocados por pouco na nota de corte |
+
+> **Associação sob tendências paralelas: vínculo cadastrado não é presença.**
+
+**Fontes:** protocolos 54 e 59; docs 57d e 57h; equação formal no apêndice.
+
+**Números:** nenhum
+
+> **Notas do apresentador.** O estudo de evento escalonado compara cada
+> médico, depois de entrar, com os que ainda não entraram no mesmo mês,
+> usando como base o mês anterior à entrada. O pré testa se os grupos já se
+> afastavam antes. Rambachan–Roth diz até que tamanho de violação da
+> tendência paralela a conclusão continua de pé. A comparação na nota de
+> corte usa quem ficou um ou dois pontos abaixo da nota como controle.
+
+---
+
+## Especificação do TOST: o IC de 90% cabe na margem?
+
+`Metodologia · Equivalência`
+
+<!-- layout: tabela -->
+
+| Campo | Como é feito |
+|---|---|
+| Pergunta | o salto no corte é pequeno o bastante para dizer que não houve aumento? |
+| Equação em palavras | o IC de 90% cabe dentro de ±10 p.p. (A3) ou de ±25% da média abaixo do corte (N1)? |
+| Testes | dois testes unilaterais a 5%: aumento do tamanho da margem ou mais; queda do tamanho da margem ou mais |
+| Leitura | os dois rejeitam: equivalência. Só o do aumento rejeita: não houve aumento do tamanho da margem ou mais. Nenhum rejeita: inconclusivo |
+| Amostra | A3 e N1 em cada corte, ciclos 1–3, com o IC convencional da RDD |
+| Cuidado | vale sob a aproximação local linear; com o IC honesto, nem o descarte do aumento se sustenta. As margens foram fixadas depois de ver os IC |
+| Sensibilidades | IC honesto de N1; A3 no ciclo 1 |
+
+> **"Não houve aumento de X ou mais" só onde o teste do aumento rejeita; equivalência só onde os dois rejeitam.**
+
+**Fontes:** protocolo 60, parte A; doc 57j; auditoria 32.
+
+**Números:** nenhum
+
+> **Notas do apresentador.** O teste de zero pergunta se o salto é
+> diferente de zero; o TOST pergunta se ele é pequeno. Com IC que contém zero,
+> não dá para dizer "não mudou nada": só o TOST permite dizer que um aumento
+> de certo tamanho fica descartado. As margens são as do protocolo 60; a de
+> N1 foi transplantada da referência de candidaturas.
 
 ---
 
@@ -440,7 +622,7 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 ![A cadeia do doc 57: uma linha por pergunta, cada uma na sua escala, com a força da evidência](../../../output/apresentacao_banca2/cadeia_resumo_doc57.png)
 
 - **Escolha:** a bolsa reordena a 1ª opção só no ciclo 2.
-- **Preenchimento:** nenhum aumento detectável no corte.
+- **Preenchimento:** nenhum aumento detectável em nenhum dos dois cortes.
 - **Capacidade:** o médico soma horas, mas metade já estava lá.
 
 **O que isso quer dizer.** A bolsa muda quem escolhe qual vaga, não quantas vagas preenchem; metade de quem chega já trabalhava no município.
@@ -453,52 +635,108 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 > **Notas do apresentador.** É o mapa dos resultados: uma linha por
 > pergunta, na ordem da cadeia, e os próximos slides aprofundam cada uma.
-> Cinza: o IC contém o nulo. Verde em N1 é negativo e não passa no Holm. Verde
+> Cinza: o IC contém o nulo. O preenchimento aparece por corte, 0,300 e
+> 0,400 separados; ali a força sai do TOST do protocolo 60: nos quatro casos,
+> não houve aumento do tamanho da margem ou mais. Verde em N1 a 0,300 é
+> negativo, mas não é queda: linha por corte, sem correção múltipla, com IC
+> honesto que contém zero e pacote do corte. Verde
 > em P6 Y1 é quase mecânico. Verde em P4 é associação: nas horas totais o pré
 > passa e a conclusão aguenta violações de tendência do tamanho das do pré,
 > mas outros outcomes do P4 falham no pré. A linha da H3 rejeita zero, mas é
 > pós-resultado e compara dois pesos do mesmo modelo de escolha: não é efeito
 > da bolsa nem da geografia. A força de cada linha sai de uma regra fixa do
-> gerador sobre os valores de `output/`: Holm ou IC com o nulo, inconclusivo;
+> gerador sobre os valores de `output/`: TOST por corte, "sem aumento ≥
+> margem"; Holm ou IC com o nulo, inconclusivo;
 > pré do Wald, ATT; estatuto do bloco, exploratório; Holm abaixo de 0,05 num
 > bloco pós-resultado, "rejeita zero, pós-resultado". As linhas nos cortes de
 > IVS medem o pacote do corte.
 
 ---
 
-## H1: o preenchimento não aumenta de forma detectável no corte
+## H1: o preenchimento não aumenta em nenhum dos dois cortes
 
 `Resultados · H1`
 
-<!-- layout: figura_painel -->
+<!-- layout: figura_painel 7.8 -->
 
-![H1: vagas preenchidas por município (N1) e probabilidade de a célula aberta ser preenchida (A3), com "Como ler"](../../../output/apresentacao_banca2/h1_preenchimento.png)
+![H1 por corte: célula aberta preenchida (A3) e vagas preenchidas por município (N1), em 0,300 e em 0,400, com "Como ler"](../../../output/apresentacao_banca2/h1_preenchimento.png)
 
-- **A3:** o maior aumento compatível, +3,2 p.p., fica abaixo da referência de +10 p.p.
-- **N1:** o sinal é negativo, mas não passa no Holm (0,124) e depende da medida.
+- **TOST:** em cada corte, sem aumento de +10 p.p. (A3) nem de +25% da média (N1).
+- **N1 em 0,300 não é queda:** sem correção múltipla; IC honesto contém zero.
 
-**O que isso quer dizer.** Se a bolsa atraísse muito mais médicos, mais vagas seriam preenchidas do lado de bolsa maior. Não vemos isso, e um ganho de +10 p.p. fica descartado.
+**O que isso quer dizer.** Em 0,400, do lado de bolsa maior há menos vagas oferecidas (−3,59); com o controle, o salto quase some. Em 0,300, cai a taxa por vaga oferecida (−16,0 p.p.), 51% dela no ciclo 2; depende da medida.
 
-> **Inconclusivo: IC que contém zero não é efeito zero. O descarte de ganhos grandes vale com o IC convencional e para o pacote do corte.**
+> **Pacote do corte, com o IC convencional; uma queda do mesmo tamanho não fica descartada.**
 
-**Fontes:** `output/rdd_bolsa/N_estimativas.csv` (doc 49, §3); `output/rdd_bolsa/S57_resumo.json` (A3; doc 49, §15; doc 57, §4.2).
+**Fontes:** `output/rdd_bolsa/N_estimativas.csv` (doc 49, §3); `S57_resumo.json` (A3; doc 57, §4.2); `EQ_estimativas.csv` (TOST; doc 57j; auditoria 32); `ND_estimativas.csv` (doc 49b, §3).
 
-**Números:** `N1_SA_TAU`, `N1_SA_INF`, `N1_SA_SUP`, `N1_MEDIA`, `N1_SA_HOLM`, `A3_EMP_TAU`, `A3_EMP_INF`, `A3_EMP_SUP`, `A3_EMP_MDE`, `A3_300_SUP`, `A3_400_SUP`, `N1_SB_TAU`, `N1_SB_INF`, `N1_SB_SUP`
+**Números:** `A3_300_TAU`, `A3_300_INF`, `A3_300_SUP`, `A3_300_MDE`, `A3_400_TAU`, `A3_400_INF`, `A3_400_SUP`, `A3_400_MDE`, `N1_300_TAU`, `N1_300_INF`, `N1_300_SUP`, `N1_300_P`, `N1_300_MEDIA`, `N1_400_TAU`, `N1_400_INF`, `N1_400_SUP`, `N1_400_P`, `N1_400_MEDIA`, `N1_300_SB_TAU`, `N1_300_SB_INF`, `N1_300_SB_SUP`, `N1_400_SB_TAU`, `N1_400_SB_INF`, `N1_400_SB_SUP`, `N1_300_HON_INF`, `N1_300_HON_SUP`, `N1_400_HON_INF`, `N1_400_HON_SUP`, `EQ_A3_300_I90I`, `EQ_A3_300_I90S`, `EQ_A3_400_I90I`, `EQ_A3_400_I90S`, `EQ_N1_300_I90I`, `EQ_N1_300_I90S`, `EQ_N1_400_I90I`, `EQ_N1_400_I90S`, `EQ_N1_300_MARG`, `EQ_N1_400_MARG`, `ND_VIC400`, `ND_TX400`, `ND_TX300`, `ND_TX300_INF`, `ND_TX300_SUP`, `ND_TX300_C2`, `ND_TX300_C2_PCT`, `ND_TXVI300`, `ND_TXVI300_INF`, `ND_TXVI300_SUP`
 
-> **Notas do apresentador.** Esta é a variável que o grupo pediu: o número de
-> vagas preenchidas controlando o número de vagas oferecidas (N1): −0,76
-> [−1,44; −0,07] por município, sobre uma média de 2,16 do lado de bolsa
-> menor. Ao lado, a probabilidade de a célula aberta ser preenchida (A3), que
-> não depende do porte: −4,9 p.p. [−12,9; +3,2], MDE de 11,5 p.p. Nenhuma das
-> duas mostra aumento. O sinal de N1 é negativo, mas não sobrevive ao Holm e,
-> com um só coeficiente do controle, mudaria (ver Robustez); por isso a
-> leitura é "não detectamos aumento", não "a bolsa reduz". Sem controle,
-> −1,45 [−2,90; −0,01]: inclui a resposta da oferta de vagas. Por corte, o
-> maior aumento compatível da A3 é +1,7 em 0,300 e +11,3 em 0,400. O sinal de
-> N1 em 0,400 vem do porte; em 0,300, da taxa por vaga (doc 49b). É o pacote do
-> corte, não a bolsa isolada.
+> [!NOTE]
+> **Nota de produção.** Decisão do autor de 26/10/2026: só os cortes
+> separados; o empilhado fica no apêndice como referência. O TOST é o do
+> protocolo 60, parte A (doc 57j), com as correções da auditoria 32: o IC de
+> N1 abaixo de zero não é lido como queda.
+
+> **Notas do apresentador.** IC que contém zero não é efeito zero. Cada
+> corte separado, ciclos 1 a 3. A célula
+> aberta preenchida (A3): em 0,300, −8,4 p.p. [−18,5; +1,7], MDE 14,5; em
+> 0,400, −1,3 p.p. [−14,0; +11,3], MDE 18,1. As vagas preenchidas por
+> município com controle das vagas oferecidas (N1): em 0,300, −1,45
+> [−2,67; −0,22], p 0,021, sobre uma média de 2,32 do lado de bolsa menor; em
+> 0,400, −0,14 [−0,82; +0,54], p 0,682, sobre 1,96. Sem controle, −1,56
+> [−3,73; +0,61] e −1,36 [−3,30; +0,57]. No TOST, com IC 90%: A3 em 0,300,
+> [−16,9; +0,1]; em 0,400, [−11,9; +9,3]; N1 em 0,300, [−2,48; −0,42], margem
+> de 0,58 vaga; em 0,400, [−0,71; +0,43], margem de 0,49. Nos quatro, só o
+> teste do aumento rejeita: não houve aumento de +10 p.p. ou de +25% da média
+> ou mais, no IC convencional e para o pacote do corte; uma queda desse
+> tamanho não fica descartada. N1 em 0,300 não é queda: é linha por corte,
+> sem correção múltipla; o IC honesto vai de −90,23 a +87,34 (em 0,400, de
+> −47,07 a +46,79); e é o pacote do corte. Por que o sinal sai negativo
+> (doc 49b): em 0,400, do lado de bolsa maior há municípios menores e menos
+> vagas oferecidas (−3,59 por município); a taxa por vaga não salta (+2,5
+> p.p.), e com o controle o salto quase some. Em 0,300, o porte não explica:
+> cai a taxa de preenchimento por vaga oferecida, −16,0 p.p. [−27,9; −4,1];
+> −8,1 p.p. disso, 51%, vêm do ciclo 2, onde sobe a parte das vagas que é
+> cadastro reserva. O resultado depende da medida: com só as vagas imediatas
+> no denominador, −19,2 p.p. [−43,1; +4,7].
 
 ---
+
+## O controle muda a leitura: em 0,400 a queda passa pelas vagas
+
+`Resultados · H1 · Controle`
+
+<!-- layout: figura_larga -->
+
+![Antes e depois do controle das vagas oferecidas, por corte: total, via vagas oferecidas e com controle; ao lado, o salto nas vagas oferecidas](../../../output/apresentacao_banca2/h1_controle.png)
+
+**O que isso quer dizer.** **0,400:** −1,36 = −1,22 via vagas + −0,14: do lado de bolsa maior há menos vagas oferecidas (−3,59), e com o controle a diferença quase some. **0,300:** −1,56 = −0,11 + −1,45: a oferta não muda (+0,39); cai o preenchimento dado as vagas.
+
+> **Se as vagas respondem ao corte, o controle compara municípios diferentes: por isso as duas versões. Pacote do corte; nenhuma linha passa no Holm.**
+
+**Fontes:** `output/rdd_bolsa/N_estimativas.csv` (decomposição e S-c; doc 49, §3 a §5); `output/rdd_bolsa/ND_estimativas.csv` (médias na janela; doc 49b, §3); figura por `scripts/apresentacao/gerar_figuras_banca2.py`.
+
+**Números:** `N1_300_DTOT`, `N1_300_VIA`, `N1_300_DSA`, `N1_400_DTOT`, `N1_400_VIA`, `N1_400_DSA`, `VIC_300_TAU`, `VIC_300_INF`, `VIC_300_SUP`, `VIC_400_TAU`, `VIC_300_MABX`, `VIC_300_MACI`, `VIC_400_MABX`, `VIC_400_MACI`
+
+> **Notas do apresentador.** É a mesma regressão com e sem as vagas
+> oferecidas do quadro da 1ª chamada. A decomposição é exata
+> (Frisch–Waugh–Lovell): o salto sem controle é igual ao com controle mais a
+> parte que passa pelas vagas, que é a soma, por ciclo, do coeficiente das
+> vagas vezes o salto nas vagas; essa parte é uma soma algébrica, sem IC
+> próprio. Em 0,400, do lado de bolsa maior as vagas oferecidas caem de 7,05
+> para 3,93 por município na janela, e o lado de baixo tem alguns municípios
+> grandes; dado o número de vagas, a diferença quase some (−0,14). Em 0,300,
+> as médias de vagas oferecidas ficam em 10,08 e 9,82, e o salto nelas é
+> +0,39 [−6,69; +7,46]: a oferta não muda, e o que cai é o preenchimento dado
+> as vagas, que o slide seguinte tenta explicar. Nenhuma linha por corte tem
+> correção múltipla; no Holm pré-registrado da família N (empilhado, no
+> apêndice), N1 não rejeita zero.
+> É o pacote do corte.
+
+---
+
+<!-- reservado: slide "Por que o preenchimento cai em 0,300", com o diagnóstico do protocolo 61 (doc 57l, em execução); entra aqui, depois da H1, quando estiver auditado -->
 
 ## H2: a bolsa pesa na escolha da vaga só no ciclo 2
 
@@ -506,25 +744,28 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 <!-- layout: figura_painel 8.2 -->
 
-![H2: razão de chances da 1ª opção por +R$ 5 mil, ciclos empilhados e por ciclo, com "Como ler"](../../../output/apresentacao_banca2/h2_escolha.png)
+![H2: razão de chances da 1ª opção por +R$ 5 mil, um resultado por ciclo, com "Como ler"](../../../output/apresentacao_banca2/h2_escolha.png)
 
-- **Primária (M1):** 1,24 [0,99; 1,55] por +R$ 5 mil, p 0,065; ciclos iguais, p 0,058.
-- **Só o ciclo 2 exclui 1** e resiste a placebos de corte (E9); os ciclos 1 e 3 não o replicam.
+- **Ciclo 2:** 1,70 [1,22; 2,37] por +R$ 5 mil, p 0,002.
+- **Ciclos 1 e 3:** 1,07 [0,69; 1,65] e 1,00 [0,72; 1,39]; o IC contém 1.
 
-**O que isso quer dizer.** Na média dos ciclos, a bolsa não muda de forma clara a 1ª opção; só no ciclo 2, e isso ainda precisa se repetir no ciclo 3.
+**O que isso quer dizer.** Só no ciclo 2 a vaga de bolsa maior é mais escolhida como 1ª opção; nos ciclos 1 e 3, não. A igualdade entre ciclos tem p 0,058.
 
-> **Inconclusivo na primária. Escolha não é expansão: o que uma vaga ganha, outra do mesmo curso perde.**
+> **Escolha não é expansão: o que uma vaga ganha, outra do mesmo curso perde.**
 
-**Fontes:** `output/rdd_bolsa/P1_estimativas.csv` (doc 57a); `output/rdd_bolsa/E8_resumo.json` (E9, doc 44, §5.2).
+**Fontes:** `output/rdd_bolsa/P1_estimativas.csv` (M5; doc 57a); `output/rdd_bolsa/E8_resumo.json` (E9, doc 44, §5.2), nas notas.
 
-**Números:** `M1_RC`, `M1_RC_INF`, `M1_RC_SUP`, `M1_P`, `M5_C2_RC`, `M5_C2_RCI`, `M5_C2_RCS`, `M5_WALD_P`, `E9_C2_RC`, `E9_C2_RCI`, `E9_C2_RCS`, `M1_N`
+**Números:** `M5_C1_RC`, `M5_C1_RCI`, `M5_C1_RCS`, `M5_C2_RC`, `M5_C2_RCI`, `M5_C2_RCS`, `M5_C2_P`, `M5_C3_RC`, `M5_C3_RCI`, `M5_C3_RCS`, `M5_WALD_P`, `M1_RC`, `M1_RC_INF`, `M1_RC_SUP`, `M1_P`, `E9_C2_RC`, `E9_C2_RCI`, `E9_C2_RCS`, `M1_N`
 
-> **Notas do apresentador.** Logit condicional da 1ª opção de 5.421 candidatos
-> entre as vagas abertas do seu curso e ciclo. A razão de chances compara duas
-> vagas que diferem só no degrau de R$ 5 mil, com o IVS contínuo controlado.
-> No ciclo 2: 1,70 [1,22; 2,37]; sem distância (E9), 1,95 [1,48; 2,57]. O que
-> não mede: quem deixou de se candidatar e quantos médicos o programa atrai.
-> O sinal do ciclo 2 também resiste a poucos clusters (bootstrap de Webb).
+> **Notas do apresentador.** Um resultado por ciclo, do logit condicional
+> com distância (M5): a razão de chances compara duas vagas abertas do mesmo
+> curso e ciclo que diferem só no degrau de R$ 5 mil, com o IVS contínuo
+> controlado. O modelo com os três ciclos juntos (M1), que é a primária do
+> protocolo, dá 1,24 [0,99; 1,55], p 0,065: inconclusivo; ele está no
+> apêndice com as outras especificações. No ciclo 2 sem a distância (E9,
+> exploratório), 1,95 [1,48; 2,57]; o sinal do ciclo 2 resiste a placebos de
+> corte e a poucos clusters. São 5.421 candidatos de 1ª opção. O que não
+> mede: quem deixou de se candidatar e quantos médicos o programa atrai.
 
 ---
 
@@ -532,17 +773,18 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 `Resultados · H3`
 
-<!-- layout: figura_painel 8.0 -->
+<!-- layout: figura_blocos 4.8 -->
 
 ![H3: pesos na utilidade da escolha da 1ª opção (M1), na mesma escala: bolsa, distância e lugar de origem](../../../output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png)
 
-- **Primária, pós-resultado:** D_UF = θ_UF − 10·β = 1,98 [1,56; 2,40], p unilateral < 0,001 (Holm).
-- **Em km (descritivo):** toda a bolsa vale 224 km [−18; 466]; o IC contém zero.
-- **Sensibilidades:** D_UF positivo nas seis, de 1,18 a 2,37.
+- **D_UF = θ_UF − 10·β:** 1,98 [1,56; 2,40], p unilateral < 0,001 (Holm), pós-resultado.
+- **Em km:** toda a bolsa vale 224 km [−18; 466]; o IC contém zero.
 
-**O que isso quer dizer.** Para quem se candidata, a vaga na UF de origem pesa mais que R$ 10 mil a mais por mês.
+**Como foi medido.** Modelo de escolha da H2 (com distância, ciclos 1–3): cada candidato escolhe a 1ª opção entre as vagas do seu curso e ciclo; o modelo estima o peso de bolsa, distância, origem, porte, capital, vaga imediata e IVS em curva suave. ‖ A H3 compara dois pesos, toda a bolsa (R$ 10 → 20 mil) e a UF de origem: covariância conjunta, teste unilateral.
 
-> **Escolha de quem se candidatou, entre vagas abertas: θ é preferência revelada condicional ao modelo, não efeito da geografia; β é o pacote do corte.**
+**É causal?** **Bolsa, quase-experimental:** salta nos cortes e o resto varia suave; vale o pacote do corte, para quem se candidatou. ‖ **Origem, não:** preferência revelada (família, rede, registro, clientela), não sorteada. ‖ **Logo:** não é a geografia causando a escolha; é a bolsa pesando pouco perto de ficar perto de casa.
+
+> **Pós-resultado: θ é preferência revelada, não efeito da geografia; β é o pacote do corte.**
 
 **Fontes:** `output/rdd_bolsa/P1h_magnitudes.csv`, `P1h_resumo.json` e `P1h_figuras/P1h_magnitudes.png` (script 25c; doc 57i; protocolo 52b; auditoria 31).
 
@@ -557,17 +799,20 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 > **Notas do apresentador.** É a hipótese central: incentivo limitado. As seis
 > sensibilidades: M2 1,18; M4 1,73; M5 por ciclo 2,34, 1,31 e 2,37; M7 2,07. θ_UF
 > é mesma UF, outra região de saúde, contra uma vaga em outra UF à mesma
-> distância. O IC do km contém zero porque o de β contém. No
-> modelo de escolha, toda a amplitude da bolsa pesa 0,42 [−0,03; 0,87] na
-> utilidade, e a vaga na mesma UF de origem, fora da região de saúde, pesa
-> 2,40 [2,28; 2,53]. A bolsa pesa pouco perto do custo do lugar. Isso é
-> coerente com a H1 não detectar aumento de preenchimento: a bolsa reordena
-> os candidatos entre as vagas abertas (H2), e o que uma vaga ganha outra do
-> mesmo curso perde; ela não traz mais candidatos, e o logit não vê quem não
-> se inscreveu. Um degrau de R$ 5 mil vale 112 km, também com IC que contém
-> zero. Se perguntarem pelo p de 0,035 do km: é unilateral e descritivo; o
-> teste pré-registrado da bolsa é o bilateral do P1a, com p 0,065, que não
-> rejeita. Não usamos o km como prova de que a bolsa importa.
+> distância. No modelo de escolha, toda a amplitude da bolsa pesa 0,42
+> [−0,03; 0,87] na utilidade, e a vaga na mesma UF de origem, fora da região
+> de saúde, pesa 2,40 [2,28; 2,53]. A bolsa pesa pouco perto do custo do
+> lugar. Isso é coerente com a H1 não detectar aumento de preenchimento: a
+> bolsa reordena os candidatos entre as vagas abertas (H2), e o que uma vaga
+> ganha outra do mesmo curso perde; ela não traz mais candidatos, e o logit
+> não vê quem não se inscreveu. Um degrau de R$ 5 mil vale 112 km, também com
+> IC que contém zero. Se perguntarem pelo p de 0,035 do km: é unilateral e
+> descritivo; o teste pré-registrado da bolsa é o bilateral do P1a, com p
+> 0,065, que não rejeita. Não usamos o km como prova de que a bolsa importa.
+> θ é preferência revelada condicional ao modelo, não efeito da geografia.
+> É causal? O peso da bolsa tem identificação quase-experimental pelos saltos
+> nos cortes; o da origem é preferência revelada, porque a origem é onde o
+> médico já trabalhava, não uma condição sorteada.
 
 ---
 
@@ -612,7 +857,7 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 | Hipótese | O que resiste | Ressalva |
 |---|---|---|
-| H1 | mesmo sinal com h = 0,030 e 0,080 (−0,78 e −0,47) e no donut (−0,65) | o Holm depende do controle: com um só coeficiente, −1,03 [−1,79; −0,28]; o IC honesto não informa |
+| H1 | 0,300: negativo com h = 0,030 e 0,080 (−1,50 e −1,00), no donut (−1,53) e com um só coeficiente (−1,64); 0,400: perto de zero (−0,23, +0,03, +0,36, −0,11) | o IC honesto contém zero nos dois cortes; em 0,300 a leitura depende da medida da taxa |
 | H2 | coeficiente positivo em todas as especificações (de +0,0304 a +0,0759 por R$ 1 mil); o ciclo 2 resiste a placebos (p por posto 0,036) | o IC contém zero no M1 e no M7; ciclo 2 com spline cúbico: p 0,083 |
 | H3 | D_UF positivo nas seis especificações, de 1,18 a 2,37, com q de BKY < 0,05 | pós-resultado: os coeficientes do M1 já eram conhecidos |
 | H4 | horas totais aguentam violações até 1,30 vez a maior do pré; no posto, até 1,90 | fora do posto, só até 0,78; na nota de corte, +7,91 [−0,63; +16,45] |
@@ -623,11 +868,11 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 **Fontes:** `output/rdd_bolsa/N_estimativas.csv` (doc 49); `P1_estimativas.csv` (doc 57a); `E8_resumo.json` (E9); `P1h_magnitudes.csv` (doc 57i); `H_estimativas.csv` e `CA_estimativas.csv` (doc 57h). Teste a teste, com os números: apêndice.
 
-**Números:** `N1_H030_TAU`, `N1_H080_TAU`, `N1_DONUT_TAU`, `N1_UNICO_TAU`, `N1_UNICO_INF`, `N1_UNICO_SUP`, `M7_COEF`, `M4_COEF`, `E9_C2_PPOSTO`, `E9_C2_CUB_P`, `H3_S_M2`, `H3_S_M5C3`, `RR_HT`, `RR_HM`, `RR_HF`, `CA_HT_EST`, `CA_HT_INF`, `CA_HT_SUP`
+**Números:** `N1_300_H030`, `N1_300_H080`, `N1_300_DONUT`, `N1_300_UNICO`, `N1_400_H030`, `N1_400_H080`, `N1_400_DONUT`, `N1_400_UNICO`, `M7_COEF`, `M4_COEF`, `E9_C2_PPOSTO`, `E9_C2_CUB_P`, `H3_S_M2`, `H3_S_M5C3`, `RR_HT`, `RR_HM`, `RR_HF`, `CA_HT_EST`, `CA_HT_INF`, `CA_HT_SUP`
 
-> **Notas do apresentador.** Duas ressalvas da H1: com um só coeficiente do
-> controle, N1 rejeitaria zero depois do Holm, mas o Wald rejeita essa
-> restrição; e o IC honesto, com o M da regra de bolso, sai largo demais para
+> **Notas do apresentador.** Na H1, cada corte separado: em 0,300, N1 fica
+> negativo em todas as variantes; em 0,400, fica perto de zero em todas. O IC
+> honesto, com o M da regra de bolso, sai largo demais para
 > informar. Ruptura de M̄ igual a 1 quer dizer que a conclusão aguenta
 > violações de tendência do mesmo tamanho das vistas no pré. O apêndice traz
 > cada teste com o número. A H3 é pós-resultado porque os coeficientes do M1
@@ -649,7 +894,7 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 ### Literatura e próximos passos
 
-- **Dal Bó, Finan e Rossi (2013):** +33% no salário anunciado deu +15,1 p.p. na aceitação. Aqui, com degraus de +50% e +33%, o IC admite no máximo +3,2 p.p.
+- **Dal Bó, Finan e Rossi (2013):** +33% no salário anunciado deu +15,1 p.p. na aceitação. Aqui, com degraus de +50% e +33%, o IC admite no máximo +1,7 p.p. em 0,300 e +11,3 em 0,400.
 - **Escolha não é expansão.** A bolsa reordena candidatos entre vagas sem mudar quantas vagas preenchem.
 - **Próximos passos:** repetir o ciclo 2 no ciclo 3, com a competência 202703 madura; pedir o universo de inscritos e a folha de pagamento.
 
@@ -657,7 +902,7 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 **Fontes:** auditoria 18, §2 e §3; doc 44, §6 (trechos do doc 20 da seção 03 copiados em `output/rdd_bolsa/E8_resumo.json`); doc 57, §4.2, §6 e §7.
 
-**Números:** `LIT_DALBO_SAL`, `LIT_DALBO_ACEIT`, `MAG_DEG300`, `MAG_DEG400`, `A3_EMP_SUP`, `LIT_DALBO_CAND`, `LIT_BOBBA`, `CP_EMENDAS`, `CP_752_300`, `CP_752_400`
+**Números:** `LIT_DALBO_SAL`, `LIT_DALBO_ACEIT`, `MAG_DEG300`, `MAG_DEG400`, `A3_300_SUP`, `A3_400_SUP`, `LIT_DALBO_CAND`, `LIT_BOBBA`, `CP_EMENDAS`, `CP_752_300`, `CP_752_400`
 
 > **Notas do apresentador.** À esquerda, o que o contraste não mede. Nos
 > mesmos cortes mudam o teto de emendas e de custeio de MAC (+20% para IVS
@@ -670,7 +915,7 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 > anunciado, como pacote do corte. À direita: em Dal Bó et al., candidaturas
 > +26%; em Bobba et al., um adicional de +13% por regra não mudou o
 > preenchimento. Aqui o degrau é de +50% em 0,300 e +33% em 0,400; se a
-> resposta fosse da mesma ordem, o IC empilhado não a admitiria. Contextos e
+> resposta fosse da mesma ordem, nenhum dos dois IC por corte a admitiria. Contextos e
 > outcomes diferentes: lá, servidores e aceitação da oferta; aqui,
 > especialistas e célula com confirmação ou homologação. O detalhe da
 > literatura e das co-políticas está no apêndice.
@@ -718,6 +963,31 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 > spline com nós nos cortes, e a distância e a origem entram como custo. A
 > terceira é a descontinuidade do preenchimento. As equações completas do
 > modelo ficam no apêndice da banca final.
+
+---
+
+## Apêndice: especificações formais de cada estimador
+
+`Apêndice · Especificações`
+
+<!-- layout: equacoes -->
+
+```
+H1 com controle: N1_m = α_g + τ·D_m + β_g·(IVS_m − c) + δ_g·D_m·(IVS_m − c) + γ_g·V_m + ε_m
+H2 e H3: U_ij = β·B_j + f(IVS_j) − γ·dist_ij + θ·mesmaUF_ij + λ·X_j + ε_ij;  H3: θ_UF − 10·β > 0
+H4: ATT(g, t) = E[Y_t − Y_b | G = g] − E[Y_t − Y_b | G > t],  b = g − 1
+TOST: IC 90%(τ) ⊂ (−margem; +margem)
+```
+
+- **H1:** D_m = 1 se o IVS do município passa do corte c; g = ciclo; V_m = vagas oferecidas (imediatas + cadastro reserva); kernel triangular, h = 0,050; CR1 por município. Sem controle, tira-se γ_g·V_m.
+- **H2 e H3:** B_j = bolsa da vaga em R$ mil; f = spline do IVS com nós nos cortes; X_j = porte, capital, vaga imediata; erro agrupado por conjunto de escolha.
+- **H4:** g = mês de entrada; Y = horas do médico no CNES; controles ainda não tratados; bootstrap por médico.
+
+> **Em todas as RDD e no logit, o contraste nos cortes é o pacote do corte.**
+
+**Fontes:** protocolos 48, 52, 52b, 54, 59 e 60.
+
+**Números:** nenhum
 
 ---
 
@@ -806,25 +1076,33 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 
 <!-- apêndice: resultados detalhados -->
 
-## Apêndice: N1 a N4, com controle das vagas oferecidas
+## Apêndice: N1 a N4 por corte, com controle das vagas
 
 `Apêndice · Família N`
 
 <!-- layout: tabela -->
 
-| Outcome (ciclos e cortes empilhados) | Salto | IC 95% | p de Holm |
-|---|---|---|---|
-| N1 vagas preenchidas na 1ª chamada | −0,76 | [−1,44; −0,07] | 0,124 |
-| N2 células com alocado | −0,31 | [−0,66; +0,04] | 0,235 |
-| N3 células com alocado até a 2ª chamada | −0,35 | [−0,87; +0,17] | 0,376 |
-| N4 especialistas ativos | −0,21 | [−1,34; +0,92] | 0,717 |
-| N1 sem controle (efeito total da faixa) | −1,45 | [−2,90; −0,01] | fora do Holm |
+| Outcome, ciclos 1–3 | Corte | Salto | IC 95% | p |
+|---|---|---|---|---|
+| N1 vagas preenchidas na 1ª chamada | 0,300 | −1,45 | [−2,67; −0,22] | 0,021 |
+| N1 vagas preenchidas na 1ª chamada | 0,400 | −0,14 | [−0,82; +0,54] | 0,682 |
+| N2 células com alocado | 0,300 | −0,64 | [−1,23; −0,05] | 0,034 |
+| N2 células com alocado | 0,400 | −0,02 | [−0,40; +0,36] | 0,908 |
+| N1 sem controle (efeito total da faixa) | 0,300 | −1,56 | [−3,73; +0,61] | — |
+| N1 sem controle (efeito total da faixa) | 0,400 | −1,36 | [−3,30; +0,57] | — |
+| N1, empilhado (média dos dois cortes, só referência) | ambos | −0,76 | [−1,44; −0,07] | Holm 0,124 |
+| N3 células com alocado até a 2ª chamada, empilhado (só referência; sem estimativa por corte) | ambos | −0,35 | [−0,87; +0,17] | Holm 0,376 |
+| N4 especialistas ativos, empilhado (só referência; sem estimativa por corte) | ambos | −0,21 | [−1,34; +0,92] | Holm 0,717 |
 
-> **Nenhuma linha rejeita zero depois do Holm; o sinal é negativo em todas.**
+> **Por corte: negativo em 0,300, perto de zero em 0,400; p por corte sem correção múltipla.**
 
 **Fontes:** `output/rdd_bolsa/N_estimativas.csv` e `S57_resumo.json` (doc 49, §3).
 
-**Números:** `N1_SA_TAU`, `N1_SA_INF`, `N1_SA_SUP`, `N1_SA_HOLM`, `N2_SA_TAU`, `N2_SA_INF`, `N2_SA_SUP`, `N2_SA_HOLM`, `N3_SA_TAU`, `N3_SA_INF`, `N3_SA_SUP`, `N3_SA_HOLM`, `N4_SA_TAU`, `N4_SA_INF`, `N4_SA_SUP`, `N4_SA_HOLM`, `N1_SB_TAU`, `N1_SB_INF`, `N1_SB_SUP`
+**Números:** `N1_300_TAU`, `N1_300_INF`, `N1_300_SUP`, `N1_300_P`, `N1_400_TAU`, `N1_400_INF`, `N1_400_SUP`, `N1_400_P`, `N2_300_TAU`, `N2_300_INF`, `N2_300_SUP`, `N2_300_P`, `N2_400_TAU`, `N2_400_INF`, `N2_400_SUP`, `N2_400_P`, `N1_300_SB_TAU`, `N1_300_SB_INF`, `N1_300_SB_SUP`, `N1_400_SB_TAU`, `N1_400_SB_INF`, `N1_400_SB_SUP`, `N1_SA_TAU`, `N1_SA_INF`, `N1_SA_SUP`, `N1_SA_HOLM`, `N3_SA_TAU`, `N3_SA_INF`, `N3_SA_SUP`, `N3_SA_HOLM`, `N4_SA_TAU`, `N4_SA_INF`, `N4_SA_SUP`, `N4_SA_HOLM`
+
+> **Notas do apresentador.** O Holm pré-registrado é o da família N1–N4
+> empilhada; por corte, os p são sem correção. N3 e N4 só têm a estimativa
+> empilhada.
 
 ---
 
@@ -836,17 +1114,20 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 
 | Amostra (célula aberta) | Média abaixo do corte | Salto [IC 95%], p.p. | Maior aumento compatível | MDE de 80% |
 |---|---|---|---|---|
-| ciclos 1–3, cortes empilhados | 34,7% | −4,9 [−12,9; +3,2] | +3,2 | 11,5 |
 | ciclos 1–3, corte 0,300 | 33,3% | −8,4 [−18,5; +1,7] | +1,7 | 14,5 |
 | ciclos 1–3, corte 0,400 | 36,8% | −1,3 [−14,0; +11,3] | +11,3 | 18,1 |
-| ciclo 1, cortes empilhados | 31,2% | −3,3 [−20,9; +14,2] | +14,2 | 25,1 |
-| célula com candidato de 1ª opção, empilhado | — | −7,1 [−19,6; +5,4] | +5,4 | — |
+| ciclo 1, corte 0,300 | 26,0% | +0,9 [−23,5; +25,3] | +25,3 | 34,9 |
+| ciclo 1, corte 0,400 | 37,2% | −12,4 [−37,5; +12,6] | +12,6 | 35,8 |
+| célula com candidato de 1ª opção, corte 0,300 | 48,3% | −10,8 [−28,2; +6,7] | +6,7 | 24,9 |
+| célula com candidato de 1ª opção, corte 0,400 | 49,6% | −2,7 [−19,7; +14,3] | +14,3 | 24,2 |
+| ciclos 1–3, empilhado (média dos dois cortes, só referência) | 34,7% | −4,9 [−12,9; +3,2] | +3,2 | 11,5 |
+| ciclo 1, empilhado (média dos dois cortes, só referência) | 31,2% | −3,3 [−20,9; +14,2] | +14,2 | 25,1 |
 
 > **No ciclo 1, a faixa saiu depois do pedido dos gestores; ali a amostra não descarta efeitos moderados.**
 
 **Fontes:** `output/rdd_bolsa/S57_resumo.json` (doc 57, §4.2; doc 49, §15).
 
-**Números:** `A3_EMP_MEDIA`, `A3_EMP_TAU`, `A3_EMP_INF`, `A3_EMP_SUP`, `A3_EMP_MDE`, `A3_300_MEDIA`, `A3_300_TAU`, `A3_300_INF`, `A3_300_SUP`, `A3_300_MDE`, `A3_400_MEDIA`, `A3_400_TAU`, `A3_400_INF`, `A3_400_SUP`, `A3_400_MDE`, `A3_C1_MEDIA`, `A3_C1_TAU`, `A3_C1_INF`, `A3_C1_SUP`, `A3_C1_MDE`, `A3C_EMP_TAU`, `A3C_EMP_INF`, `A3C_EMP_SUP`
+**Números:** `A3_300_MEDIA`, `A3_300_TAU`, `A3_300_INF`, `A3_300_SUP`, `A3_300_MDE`, `A3_400_MEDIA`, `A3_400_TAU`, `A3_400_INF`, `A3_400_SUP`, `A3_400_MDE`, `A3_C1_300_MEDIA`, `A3_C1_300_TAU`, `A3_C1_300_INF`, `A3_C1_300_SUP`, `A3_C1_300_MDE`, `A3_C1_400_MEDIA`, `A3_C1_400_TAU`, `A3_C1_400_INF`, `A3_C1_400_SUP`, `A3_C1_400_MDE`, `A3C_300_MEDIA`, `A3C_300_TAU`, `A3C_300_INF`, `A3C_300_SUP`, `A3C_300_MDE`, `A3C_400_MEDIA`, `A3C_400_TAU`, `A3C_400_INF`, `A3C_400_SUP`, `A3C_400_MDE`, `A3_EMP_MEDIA`, `A3_EMP_TAU`, `A3_EMP_INF`, `A3_EMP_SUP`, `A3_EMP_MDE`, `A3_C1_MEDIA`, `A3_C1_TAU`, `A3_C1_INF`, `A3_C1_SUP`, `A3_C1_MDE`
 
 ---
 
@@ -866,12 +1147,13 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 | M8 | logit misto (média) | +0,0499 |
 | M9 | logit aninhado por região de saúde | +0,0434 |
 | M5 | por ciclo: 1 · 2 · 3 | +0,0132 · +0,1064 · −0,0004 |
+| E9 | ciclo 2, sem distância (exploratório) | razão de chances por +R$ 5 mil: 1,95 [1,48; 2,57] |
 
 > **A leitura da H2 é sensível à especificação; só o M1 é a principal, e as demais são relatadas, não escolhidas.**
 
 **Fontes:** `output/rdd_bolsa/P1_estimativas.csv` (doc 57a, §4).
 
-**Números:** `M1_COEF`, `M1_INF`, `M1_SUP`, `M0_COEF`, `M2_COEF`, `M4_COEF`, `M7_COEF`, `M7_INF`, `M7_SUP`, `M8_COEF`, `M9_COEF`, `M5_C1_COEF`, `M5_C2_COEF`, `M5_C3_COEF`
+**Números:** `E9_C2_RC`, `E9_C2_RCI`, `E9_C2_RCS`, `M1_COEF`, `M1_INF`, `M1_SUP`, `M0_COEF`, `M2_COEF`, `M4_COEF`, `M7_COEF`, `M7_INF`, `M7_SUP`, `M8_COEF`, `M9_COEF`, `M5_C1_COEF`, `M5_C2_COEF`, `M5_C3_COEF`
 
 ---
 
@@ -885,10 +1167,10 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 
 | Hipótese | Teste | Resultado | Leitura |
 |---|---|---|---|
-| H1 | N1 com outras janelas (h = 0,030 e 0,080) | −0,78 e −0,47 | mesmo sinal |
-| H1 | N1 sem os municípios colados ao corte (donut) | −0,65 [−1,43; +0,14] | mesmo sinal; o IC contém zero |
-| H1 | N1 com um só coeficiente do controle (fora do protocolo) | −1,03 [−1,79; −0,28] | **ressalva:** o "nenhuma rejeita zero depois do Holm" depende dessa escolha |
-| H1 | IC honesto de N1 (M do protocolo) | [−79,58; +78,07] | **ressalva:** não informa |
+| H1 | N1 com outras janelas (h = 0,030 e 0,080) | 0,300: −1,50 e −1,00; 0,400: −0,23 e +0,03 | mesmo sinal em cada corte |
+| H1 | N1 sem os municípios colados ao corte (donut) | 0,300: −1,53 [−2,85; −0,20]; 0,400: +0,36 [−0,23; +0,94] | em 0,300, mesmo sinal; em 0,400, perto de zero |
+| H1 | N1 com um só coeficiente do controle (fora do protocolo) | 0,300: −1,64 [−3,00; −0,27]; 0,400: −0,11 [−0,88; +0,67] | mesma leitura nas duas formas do controle |
+| H1 | IC honesto de N1 (M do protocolo) | 0,300: [−90,23; +87,34]; 0,400: [−47,07; +46,79] | **ressalva:** não informa |
 | H2 | outras especificações do logit (M0, M2, M4, M7, M8, M9) | de +0,0304 a +0,0759 por R$ 1 mil | positivo em todas; o IC contém zero só no M1 e no M7 |
 | H2 | E9 no ciclo 2: cortes placebo e spline cúbico | p por posto 0,036; spline cúbico p 0,083 | robusto a placebos; sensível à forma do IVS |
 | H3 | D_UF em M2, M4, M5 por ciclo e M7 (BKY entre as seis) | de 1,18 a 2,37 | positivo em todas, com q de BKY < 0,05; pós-resultado |
@@ -900,7 +1182,7 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 
 **Fontes:** `output/rdd_bolsa/N_estimativas.csv` (doc 49, §3 e §7); `P1_estimativas.csv` (doc 57a); `E8_resumo.json` (E9); `P1h_magnitudes.csv` (doc 57i); `H_estimativas.csv` e `CA_estimativas.csv` (doc 57h); doc 57, §3.
 
-**Números:** `N1_H030_TAU`, `N1_H080_TAU`, `N1_DONUT_TAU`, `N1_DONUT_INF`, `N1_DONUT_SUP`, `N1_UNICO_TAU`, `N1_UNICO_INF`, `N1_UNICO_SUP`, `N1_HON_INF`, `N1_HON_SUP`, `M7_COEF`, `M4_COEF`, `E9_C2_PPOSTO`, `E9_C2_CUB_P`, `H3_S_M2`, `H3_S_M5C3`, `RR_HT`, `RR_HM`, `RR_HF`, `CA_HT_EST`, `CA_HT_INF`, `CA_HT_SUP`, `CA_HT_PRE`
+**Números:** `N1_300_H030`, `N1_300_H080`, `N1_400_H030`, `N1_400_H080`, `N1_300_DONUT`, `N1_300_DONUT_INF`, `N1_300_DONUT_SUP`, `N1_400_DONUT`, `N1_400_DONUT_INF`, `N1_400_DONUT_SUP`, `N1_300_UNICO`, `N1_300_UNICO_INF`, `N1_300_UNICO_SUP`, `N1_400_UNICO`, `N1_400_UNICO_INF`, `N1_400_UNICO_SUP`, `N1_300_HON_INF`, `N1_300_HON_SUP`, `N1_400_HON_INF`, `N1_400_HON_SUP`, `M7_COEF`, `M4_COEF`, `E9_C2_PPOSTO`, `E9_C2_CUB_P`, `H3_S_M2`, `H3_S_M5C3`, `RR_HT`, `RR_HM`, `RR_HF`, `CA_HT_EST`, `CA_HT_INF`, `CA_HT_SUP`, `CA_HT_PRE`
 
 > **Notas do apresentador.** Duas ressalvas: com um só coeficiente do controle,
 > N1 rejeitaria zero depois do Holm, mas o Wald rejeita essa restrição; e o IC
@@ -935,7 +1217,7 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 
 ---
 
-## Apêndice: a magnitude da literatura e o IC empilhado
+## Apêndice: a magnitude da literatura e o IC por corte
 
 `Apêndice · Literatura`
 
@@ -943,19 +1225,20 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 
 - **Dal Bó, Finan e Rossi (2013).** Salário anunciado sorteado, +33%: aceitação +15,1 p.p. e candidaturas +26%.
 - **Bobba et al.** Adicional de +13% por regra, numa RDD: o preenchimento não mudou; o professor que chegou era melhor.
-- **Aqui.** Degrau de +50% em 0,300 e +33% em 0,400; o IC da célula aberta admite no máximo +3,2 p.p., com os cortes empilhados.
+- **Aqui.** Degrau de +50% em 0,300 e +33% em 0,400; o IC da célula aberta admite no máximo +1,7 p.p. em 0,300 e +11,3 p.p. em 0,400.
 - **Próximos passos.** Ciclo 3 com a competência 202703 publicada, completa e madura; pedidos do universo de inscritos e da folha de pagamento.
 
 > **Contextos e outcomes diferentes: lá, servidores e aceitação da oferta; aqui, especialistas e célula com confirmação ou homologação.**
 
 **Fontes:** doc 44, §6 (trechos do doc 20 da seção 03 copiados em `output/rdd_bolsa/E8_resumo.json`); doc 57, §6.
 
-**Números:** `LIT_DALBO_SAL`, `LIT_DALBO_ACEIT`, `LIT_DALBO_CAND`, `LIT_BOBBA`, `MAG_DEG300`, `MAG_DEG400`, `A3_EMP_SUP`
+**Números:** `LIT_DALBO_SAL`, `LIT_DALBO_ACEIT`, `LIT_DALBO_CAND`, `LIT_BOBBA`, `MAG_DEG300`, `MAG_DEG400`, `A3_300_SUP`, `A3_400_SUP`
 
 > **Notas do apresentador.** Em 0,400 o degrau relativo é do tamanho do
 > sorteio de Dal Bó et al.; em 0,300 é maior. Se a resposta aqui fosse da
-> mesma ordem, o salto passaria da referência de +10 p.p., e o IC empilhado
-> não admite isso, com o IC convencional. O ciclo 3 maduro é a replicação
+> ordem de Dal Bó et al. (+15,1 p.p.), nenhum dos dois IC por corte a
+> admitiria, com o IC convencional; um aumento de +10 p.p. fica fora do IC em
+> 0,300, mas não em 0,400. O ciclo 3 maduro é a replicação
 > fora da amostra do sinal do ciclo 2.
 
 <!-- apendice:fim -->
