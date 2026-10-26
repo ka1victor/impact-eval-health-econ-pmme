@@ -169,6 +169,47 @@ queda desse tamanho não fica descartada. Com o IC honesto, nem isso se sustenta
 | H4, oferta local | Callaway–Sant'Anna no município × mês | vínculos e horas das CBO-alvo; teste de deslocamento | doc 57k |
 | Produção | DiRD nos cortes e chegada | SUS e planos | docs 50, 57c |
 
+### 2.9 E a 2ª opção? E a chance de ir de fato depois de ser alocado? Por que mais escolha e menos preenchimento?
+
+- **Opções:** cada candidato lista no máximo duas opções, então não há 3ª. O
+  logit "explodido", que usa a 1ª e a 2ª opção (M7), dá um peso da bolsa
+  menor e não distinguível de zero (doc 57a, §4).
+- **Depois da alocação:** o preenchimento do ciclo 1 já exige confirmação ou
+  homologação. A presença do especialista ativo por célula (F2) não se
+  distingue de zero nos cortes (doc 44). Não há estimativa direta de "ir de
+  fato, dado alocado" por faixa da bolsa; é um ponto a acrescentar ao funil
+  num protocolo próprio, depois do diagnóstico 61.
+- **Os sinais opostos não se contradizem:**
+  - **amostras diferentes:** o logit compara todas as vagas do mesmo curso e
+    ciclo, com o IVS como curva suave; a RDD compara só municípios perto de
+    cada corte;
+  - **comparações diferentes:** o logit fixa a concorrência e mede a
+    atratividade relativa da vaga; a RDD absorve tudo o que muda no corte
+    (pacote de regras, composição das vagas, cadastro reserva, número de
+    vagas por município);
+  - **nenhum dos dois é firme:** o peso da bolsa na escolha encosta no zero, e
+    o salto do preenchimento não passa no Holm.
+
+### 2.10 Já existe uma conexão entre H1 e H2/H3?
+
+Existe uma ponte formal, a P1g (doc 57a, §9), que é leitura de consistência e
+não teste:
+- o modelo de escolha prevê quantos candidatos de 1ª opção a mais uma célula
+  teria no corte se só a bolsa subisse um degrau, com o resto fixo;
+- a RDD mede quantos a mais ela teve de fato.
+
+O previsto é positivo e pequeno; o observado é negativo. Os dois intervalos
+contêm zero e se sobrepõem.
+
+**Leitura:** a escolha implica um efeito pequeno demais para aparecer no
+preenchimento. O que se observa no corte é dominado pelo que muda além da
+bolsa (seções 2.1 e 2.2). A H3 dá o porquê: a bolsa pesa pouco perto da origem.
+
+A conexão empírica mais direta virá:
+- do funil do diagnóstico 61 (D-c): a célula fica vazia por falta de
+  candidato ou porque o candidato foi para outra?
+- da concorrência (D-d).
+
 ## 3. A história, na ordem dos slides (depois da validação)
 
 1. A regra é limpa: a bolsa salta só nos cortes de IVS.
