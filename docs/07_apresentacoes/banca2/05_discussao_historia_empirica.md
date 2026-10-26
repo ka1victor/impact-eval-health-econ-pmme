@@ -319,6 +319,53 @@ mostra o primeiro.**
   da H3 (e uma linha na Discussão: "não detectamos saída dos outros; não dá
   para afirmar que a oferta local subiu").
 
+### 2.14 E se usarmos o corte para separar quem recebe de quem não recebe, no nível do município?
+
+Pedido do autor, 26/10/2026: "gosto da ideia de olhar para esse desenho,
+especialmente se pudermos comparar quem recebeu e quem não recebeu a partir do
+corte como controle e tratamento. Roda se não tiver feito isso ainda."
+
+**O que já existia:**
+- **E7 (doc 43):** DiRD da bolsa sobre a oferta de especialistas do município
+  (mudança pós − pré, comparada nos dois lados do corte), em todos os
+  municípios (U) e nos do quadro do ciclo 1 (V1). Nenhuma linha rejeita zero.
+  É a forma reduzida do corte, mas sem os outcomes do doc 57k (horas dos
+  **outros** especialistas, B3) e sem a amostra dos três ciclos.
+- **Doc 57k:** compara pelo **mês da chegada**, não pelo corte; o pré já subia.
+
+**O que faltava e foi congelado no protocolo 64**
+([`../../06_execucao/64_protocolo_oferta_local_no_corte.md`](../../06_execucao/64_protocolo_oferta_local_no_corte.md)),
+antes de qualquer conta:
+- **forma reduzida** por corte nos municípios que ofereceram vaga em algum
+  ciclo (V, 1.037), com os outcomes do 57k (B1–B5): primárias B1 e B2, Holm;
+- **primeiro estágio:** o corte muda a chance de o município receber médico do
+  programa? Se o F robusto for < 10, o instrumento é fraco e só se relata o IC
+  de Anderson–Rubin;
+- **razão *fuzzy*:** efeito de receber médico para os municípios que recebem
+  por causa do corte, **só sob exclusão**, que o pacote do corte pode violar;
+  por isso é secundária e lida junto com o placebo de generalistas (B5);
+- **estudo de evento no corte**, mês a mês, para ver se o pré é plano;
+- **heterogeneidade da chegada por lado do corte** (o ATT do 57k acima e
+  abaixo de cada corte);
+- **seleção de V:** o corte muda a chance de oferecer vaga?
+
+**Cautelas a levar para a leitura:**
+- a H1 não detectou que o corte mude o preenchimento; se o corte quase não
+  muda quem recebe médico, o primeiro estágio será fraco e a razão *fuzzy* não
+  terá estimativa pontual útil. Isso já está previsto na leitura do protocolo;
+- o corte mede o **pacote** (bolsa e outras regras); a DiRD remove só a parte
+  constante no tempo das outras regras.
+
+**Estado:** em execução (script 43, saídas `OC_*`, doc 57q); depois, auditoria
+independente.
+
+### 2.15 Decisão de 26/10/2026: o deck tem no máximo 14 slides
+
+O autor: "esses últimos decks estão muito grandes. Pode deixar mais curtos
+mesmo, só com os principais slides, idealmente menos de 15". O deck curto passa
+a ter **no máximo 14 slides**, nas oito seções obrigatórias (doc 06), sem
+apêndice no PDF. O que sai do deck continua nos docs. Em execução.
+
 ## 3. A história, na ordem dos slides (depois da validação)
 
 1. A regra é limpa: a bolsa salta só nos cortes de IVS.
