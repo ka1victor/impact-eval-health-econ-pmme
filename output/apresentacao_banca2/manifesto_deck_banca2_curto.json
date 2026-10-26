@@ -10,12 +10,12 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md",
       "papel": "texto dos slides e notas",
-      "sha256": "14700c53c7dbdc9a2e49789375a86bbdfbf5d1f2c62ae39a4022c5559cb8a9c1"
+      "sha256": "bf906260dda8af9b81dbc325e1a07d6074b642676ecbd05d6a4e3de41d282a37"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
       "papel": "registro dos números citados (conferido pelo teste)",
-      "sha256": "33b20b7d9d0e7d7053805a36e470359010daf77b880d5c02b1389d68437dfe18"
+      "sha256": "0a1d0381146d1302e74f3622863a17d4b2a3e005bb2f4b9be42d4a6feae43cab"
     },
     {
       "caminho": "output/apresentacao_banca2/h1_controle.png",
@@ -109,9 +109,9 @@
       "figura": "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png",
       "layout": "curto_figura",
       "linhas": [
-        "Sem a reta: a fração preenchida é praticamente igual dos dois lados (33,3% e 33,5%); a queda aparece quando a reta é levada até o corte e depende de poucos municípios.",
-        "O que acompanha a queda: mais células só de cadastro reserva, cursos que preenchem pouco em qualquer lugar, menos células escolhidas em 1º lugar. Igualar esses fatores corta a queda pela metade ou mais em parte das medidas.",
-        "Leitura: acaso não está descartado; nada mostra que a bolsa reduz o preenchimento."
+        "É a estimativa no corte, não os dados: nas médias da janela, 33,3% das células são preenchidas abaixo e 33,5% acima; a queda vem da reta levada até o corte, com poucos municípios. O acaso não está descartado.",
+        "As vagas do lado de cima eram diferentes: cursos que preenchem pouco em qualquer lugar, mais células do mesmo curso na mesma UF disputando candidatos e, no ciclo 2, mais células só de reserva. Igualando esses fatores, a queda diminui pela metade ou mais em parte das medidas, mas nenhum fator faz isso nas três.",
+        "Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras regras."
       ],
       "posicao": 6,
       "secao": "Resultados",
@@ -200,14 +200,14 @@
   "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; no máximo 2 linhas curtas por slide de figura ou tabela e 4 por slide só de texto, contando a cautela; sem slides do grupo, sem divisórias, sem diagrama, sem apêndice",
   "saidas": [
     {
-      "bytes": 1382250,
+      "bytes": 1382403,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pptx",
-      "sha256": "f476625be6ae2c177e4796faa8bc3bea66ebd59054018e6da011d22802e55739"
+      "sha256": "9211760494b8d0cf95b7e8ee67021954893a1094dc4e67cdf84a7ed29ff81305"
     },
     {
-      "bytes": 899100,
+      "bytes": 898850,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pdf",
-      "sha256": "d8539515fdf6b6c3ecc1c9c9e8eedcea373a2e06edee6d3ef92f505da11bc69a"
+      "sha256": "fe354d2be1407d78ffbb6f4cf175f79eeffdf089dd6144b3e989c160243908df"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py --curto"

@@ -564,7 +564,7 @@ DQ_RES = "output/rdd_bolsa/DQ_resumo.json"
 DQ_FIG = "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png"
 DQ_FUNIL = "D-c|funil_bruto|funil_bruto|"
 DQ_COMP = "D-b|composicao|salto|"
-PRELIM = "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): "
+PRELIM = "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): "
 
 
 SENS_H3 = [("M2", "M2", "empilhado", "log da distância"), ("M4", "M4", "empilhado", "efeito fixo de UF da vaga"),
@@ -869,8 +869,8 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
     # E1: densidade do IVS no corte (ciclo 1)
     *[(f"E1_{c}_HOLM", "EMPIRICO", _c(E1_EST, {"ciclo": "1", "corte": ct, "papel": "principal"}, "p_holm"), "p3",
        f"E1, ciclo 1, corte {ct}: p de Holm do teste de densidade (Poisson local)") for c, ct in CORTES_TXT],
-    # PRELIMINAR: diagnóstico da queda em 0,300 (protocolo 61, doc 57l), em auditoria. Lido de DQ_estimativas.csv e
-    # DQ_resumo.json, sem recálculo; o slide leva o selo "PRELIMINAR: diagnóstico em auditoria".
+    # Diagnóstico da queda em 0,300 (protocolo 61, doc 57l), auditado (auditoria 33). Lido de DQ_estimativas.csv e
+    # DQ_resumo.json, sem recálculo; descritivo e pós-resultado.
     ("DQ_ESTATUTO", "EMPIRICO", _j(DQ_RES, "estatuto"), "txt", PRELIM + "estatuto do bloco"),
     *[(f"DQ_FUN_PRE_{s}", "EMPIRICO", _c(DQ_EST, {"id_linha": DQ_FUNIL + "preenchida|V1+V2+V3 (celulas)|1+2+3|0.300|media_simples_janela|preenchida|"}, col), "pct1",
        PRELIM + f"fração das células da janela de 0,300 preenchidas na 1ª chamada, {d}, sem reta (funil bruto)")
@@ -881,7 +881,15 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
                         ("CURSO", DQ_COMP + "idx_curso|V1+V2+V3 (celulas)|1+2+3|0.300|celula|ciclos_juntos|",
                          "salto no índice de curso (preenchimento do curso fora da janela, p.p.)"),
                         ("CAND1", "D-c|funil|salto|P_C|V1+V2+V3 (celulas)|1+2+3|0.300|celula|especificacao_Q3|",
-                         "salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.)"))
+                         "salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.; "
+                         "estimativa imprecisa)"),
+                        ("SOCR_C2", DQ_COMP + "so_cr|V2 (celulas)|2|0.300|celula|por_ciclo|",
+                         "ciclo 2: salto na parte das células só de cadastro reserva (p.p.)"))
+      for s, col, dd in (("TAU", "tau", ""), ("INF", "ic95_inf", ", IC 95% inferior"),
+                         ("SUP", "ic95_sup", ", IC 95% superior"))],
+    *[(f"DQ_CONCUF_{s}", "EMPIRICO",
+       _c(DQ_EST, {"id_linha": "D-d|medidas|salto|n_conc_uf|V1+V2+V3 (celulas)|1+2+3|0.300|celula|sem_efeitos_fixos|"},
+          col), "d1s", PRELIM + f"0,300: salto no número de células do mesmo curso e ciclo na mesma UF{dd}")
       for s, col, dd in (("TAU", "tau", ""), ("INF", "ic95_inf", ", IC 95% inferior"),
                          ("SUP", "ic95_sup", ", IC 95% superior"))],
     *[(f"DQ_FIX_{k}_{q}{s}", "EMPIRICO", _c(DQ_EST, {"id_linha": f"{ex}|fixar_fator|fixado|{q}|V1+V2+V3|1+2+3|0.300|"
@@ -1106,7 +1114,7 @@ def registrar_numeros(calculados: dict) -> dict:
                           "arquivo": arquivo_do_seletor(sel) or "calculado por este script", "seletor": sel,
                           "formato": formato, "descricao": desc}
             if cod.startswith("DQ_"):
-                saida[cod]["preliminar"] = "diagnóstico 61 (doc 57l), em auditoria"
+                saida[cod]["auditoria"] = "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
         blocos[nome] = saida
     todos = [c for b in blocos.values() for c in b]
     if len(todos) != len(set(todos)):
@@ -2336,11 +2344,11 @@ ENTRADAS = [
     (RAIZ / P1H_RES, "H3: estatuto do bloco e hash da figura auditada", "2026-10-26", "P1h", "-", "estatuto; saidas"),
     (RAIZ / P1H_FIG, "H3: figura dos pesos no M1, auditada (auditoria 31, A1 e A2); usada no slide sem redesenho",
      "2026-10-26", "M1, ciclos 1–3", "log-chance", "-"),
-    (RAIZ / DQ_EST, "PRELIMINAR, em auditoria: diagnóstico da queda em 0,300 (protocolo 61; doc 57l)", "2026-10-26",
+    (RAIZ / DQ_EST, "diagnóstico da queda em 0,300 (protocolo 61; doc 57l; auditoria 33)", "2026-10-26",
      "municípios e células na janela dos cortes, ciclos 1–3", "várias (coluna unidade)", "id_linha"),
-    (RAIZ / DQ_RES, "PRELIMINAR, em auditoria: estatuto e hashes das figuras do diagnóstico 61", "2026-10-26",
+    (RAIZ / DQ_RES, "estatuto e hashes das figuras do diagnóstico 61 (auditoria 33)", "2026-10-26",
      "protocolo 61", "-", "estatuto; saidas.figuras"),
-    (RAIZ / DQ_FIG, "PRELIMINAR, em auditoria: figura 'quanto da queda sobra' do diagnóstico 61, sem redesenho",
+    (RAIZ / DQ_FIG, "figura 'quanto da queda sobra' do diagnóstico 61 (auditoria 33), sem redesenho",
      "2026-10-26", "corte 0,300, ciclos 1–3", "vagas por município; p.p.", "-"),
 ]
 
@@ -2357,7 +2365,7 @@ def conferir_p1h() -> None:
 
 
 def conferir_dq() -> None:
-    """O diagnóstico 61 (PRELIMINAR, em auditoria) entra só com as saídas gravadas pelo script dele: natureza
+    """O diagnóstico 61 (auditoria 33) entra só com as saídas gravadas pelo script dele: natureza
     EMPIRICO e figura com o hash registrado em DQ_resumo.json. Nada é recalculado aqui."""
     res = _ler_json(DQ_RES)
     if res.get("natureza_dos_dados") != "EMPIRICO" or set(_ler_csv(DQ_EST)["natureza_dos_dados"]) != {"EMPIRICO"}:

@@ -113,7 +113,7 @@ teste confere este quadro contra o manifesto do deck.
 | 40 | novo | Na cadeia, só a escolha e o registro do médico se movem | empírica: resultados |
 | 41 | novo | H1: o preenchimento não aumenta em nenhum dos dois cortes | empírica: resultados |
 | 42 | novo | O controle muda a leitura: em 0,400 a queda passa pelas vagas | empírica: resultados |
-| 43 | novo | Por que o preenchimento cai em 0,300 (selo PRELIMINAR) | empírica: resultados |
+| 43 | novo | Por que o preenchimento cai em 0,300 | empírica: resultados |
 | 44 | novo | H2: a bolsa pesa na escolha da vaga só no ciclo 2 | empírica: resultados |
 | 45 | novo | H3: no modelo de escolha, a UF de origem pesa mais que a bolsa | empírica: resultados |
 | 46 | novo | H4: o médico soma horas, mas metade já estava no município | empírica: resultados |
@@ -144,8 +144,8 @@ distribuição do IVS dos municípios com vaga, o gráfico cru da RDD por corte 
 a escolha em relação à origem (pedido do autor de 26/10/2026); as fichas de
 especificação têm os mesmos campos em todos os estimadores, e as do deck curto
 são recortes delas, com o mesmo texto; depois de "antes e depois do controle"
-vem o slide "Por que o preenchimento cai em 0,300", com o selo PRELIMINAR
-(diagnóstico do protocolo 61, em auditoria); a tabela de
+vem o slide "Por que o preenchimento cai em 0,300", em duas ideias, com o
+diagnóstico do protocolo 61 auditado (auditoria 33); a tabela de
 fontes e as equações foram para o apêndice; a robustez teste a teste foi para
 o apêndice, e no corpo ficou uma síntese por hipótese; os slides "Limites" e
 "Um efeito do tamanho da literatura" foram fundidos no slide de discussão em
@@ -842,41 +842,33 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 <!-- layout: figura_painel 7.8 -->
 
-<!-- selo: PRELIMINAR: diagnóstico em auditoria -->
+![Diagnóstico do protocolo 61: quanto da queda em 0,300 sobra ao igualar cada fator entre os lados do corte, para Q1, Q2 e Q3, com IC 95%](../../../output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png)
 
-![Diagnóstico do protocolo 61 (preliminar): quanto da queda em 0,300 sobra ao igualar cada fator entre os lados do corte, para Q1, Q2 e Q3, com IC 95%](../../../output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png)
+- **É a estimativa no corte, não os dados:** nas médias da janela, 33,3% das células são preenchidas abaixo e 33,5% acima; a queda vem da reta levada até o corte, com poucos municípios. O acaso não está descartado.
+- **As vagas do lado de cima eram diferentes:** cursos que preenchem pouco em qualquer lugar, mais células do mesmo curso na mesma UF disputando candidatos e, no ciclo 2, mais células só de reserva. Igualando esses fatores, a queda diminui pela metade ou mais em parte das medidas, mas nenhum fator faz isso nas três.
 
-- **Sem a reta:** a fração preenchida é praticamente igual dos dois lados (33,3% e 33,5%); a queda aparece quando a reta é levada até o corte e depende de poucos municípios.
-- **O que acompanha a queda:** mais células só de cadastro reserva, cursos que preenchem pouco em qualquer lugar, menos células escolhidas em 1º lugar. Igualar esses fatores corta a queda pela metade ou mais em parte das medidas.
-- **Leitura:** acaso não está descartado; nada mostra que a bolsa reduz o preenchimento.
+> **Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras regras.**
 
-> **Preliminar e pós-resultado: descreve o que acompanha a queda, não a causa; pacote do corte.**
+**Fontes:** `output/rdd_bolsa/DQ_estimativas.csv`, `DQ_resumo.json` e `DQ_figuras/DQ_quanto_da_queda.png` (protocolo 61; doc 57l; auditoria 33, §8); figura usada sem redesenho, conferida pelo hash.
 
-**Fontes:** `output/rdd_bolsa/DQ_estimativas.csv`, `DQ_resumo.json` e `DQ_figuras/DQ_quanto_da_queda.png` (protocolo 61; doc 57l, em auditoria); figura usada sem redesenho, conferida pelo hash.
+**Números:** `DQ_FUN_PRE_ABX`, `DQ_FUN_PRE_ACI`, `DQ_CURSO_TAU`, `DQ_CURSO_INF`, `DQ_CURSO_SUP`, `DQ_CONCUF_TAU`, `DQ_CONCUF_INF`, `DQ_CONCUF_SUP`, `DQ_SOCR_C2_TAU`, `DQ_SOCR_C2_INF`, `DQ_SOCR_C2_SUP`, `DQ_CAND1_TAU`, `DQ_CAND1_INF`, `DQ_CAND1_SUP`, `DQ_FIX_COMP_Q2`, `DQ_FIX_COMP_Q2_PCT`, `DQ_FIX_CONC_Q2`, `DQ_FIX_CONC_Q2_PCT`, `DQ_FIX_FUNIL_Q1`, `DQ_FIX_FUNIL_Q1_PCT`, `DQ_PPOSTO_Q1`, `DQ_PCOMP_Q1`
 
-**Números:** `DQ_FUN_PRE_ABX`, `DQ_FUN_PRE_ACI`, `DQ_SOCR_TAU`, `DQ_SOCR_INF`, `DQ_SOCR_SUP`, `DQ_CURSO_TAU`, `DQ_CURSO_INF`, `DQ_CURSO_SUP`, `DQ_CAND1_TAU`, `DQ_CAND1_INF`, `DQ_CAND1_SUP`, `DQ_FIX_COMP_Q2`, `DQ_FIX_COMP_Q2_PCT`, `DQ_FIX_CONC_Q2`, `DQ_FIX_CONC_Q2_PCT`, `DQ_FIX_FUNIL_Q1`, `DQ_FIX_FUNIL_Q1_PCT`, `DQ_PPOSTO_Q1`, `DQ_PCOMP_Q1`
-
-> [!NOTE]
-> **Nota de produção.** Pedido do autor (26/10/2026): slide próprio logo
-> depois de "antes e depois do controle", com o selo "PRELIMINAR: diagnóstico
-> em auditoria". O diagnóstico do protocolo 61 (doc 57l) ainda está em auditoria: os
-> números podem mudar e vêm marcados como preliminares no registro e no doc 03.
-
-> **Notas do apresentador.** É o diagnóstico do protocolo 61, ainda em
-> auditoria. Q1 é N1 com controle; Q2, a taxa por vaga oferecida; Q3, a
-> célula aberta preenchida. Sem reta nem efeitos fixos, 33,3% das células da
-> janela são preenchidas abaixo de 0,300 e 33,5% acima. Acima do corte, a
-> parte das células só de cadastro reserva é +15,4 p.p. maior
-> [+2,1; +28,6], o índice de curso é −4,5 p.p. [−7,1; −2,0] (cursos que
-> preenchem menos fora da janela), e a chance de a célula ter candidato de 1ª
-> opção muda −10,8 p.p. [−28,2; +6,7], com IC que contém zero. Igualando a
-> composição, Q2 vai a −5,1 p.p., 32% do original; igualando a concorrência,
-> a −4,3 p.p., 27%; igualando quem teve candidato de 1ª opção, Q1 vai a
-> −0,49, 34%. Acaso: com os 3 cortes falsos do protocolo, o p por posto é
-> 0,250, o menor possível, então o teste não podia reprovar; numa grade
-> maior, fora do protocolo, 0,031. Esses fatores se formam depois do anúncio
-> da faixa: igualá-los descreve o que acompanha a queda, não a causa. O corte
-> junta a bolsa com outras regras federais.
+> **Notas do apresentador.** Diagnóstico do protocolo 61 (doc 57l),
+> auditado (auditoria 33, aprovado com correções de texto): descritivo e
+> pós-resultado. Q1 é N1 com controle; Q2, a taxa por vaga oferecida; Q3, a
+> célula aberta preenchida. Nas médias da janela, sem reta nem efeitos fixos,
+> 33,3% das células são preenchidas abaixo de 0,300 e 33,5% acima. Do lado de
+> cima: índice de curso −4,5 p.p. [−7,1; −2,0] (cursos que preenchem pouco em
+> qualquer lugar); +10,6 [+3,5; +17,8] células do mesmo curso na mesma UF; no
+> ciclo 2, +28,4 p.p. [+8,3; +48,4] de células só de reserva. Que menos
+> células tiveram candidato de 1ª opção é estimativa imprecisa: −10,8 p.p.
+> [−28,2; +6,7]. Igualando a composição, Q2 vai a −5,1 p.p., 32% do
+> original; a concorrência, Q2 a −4,3 p.p., 27%; quem teve candidato de 1ª
+> opção, Q1 a −0,49, 34%; nenhum fator reduz a queda à metade nas três
+> medidas. Acaso: com os 3 cortes falsos do protocolo, o p por posto é 0,250,
+> o menor possível; numa grade maior, fora do protocolo, 0,031. Esses
+> fatores se formam depois do anúncio da faixa: descrevem o que acompanha a
+> queda, não a causa.
 
 ---
 

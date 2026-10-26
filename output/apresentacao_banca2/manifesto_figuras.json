@@ -294,7 +294,7 @@
     {
       "caminho": "output/rdd_bolsa/DQ_estimativas.csv",
       "sha256": "81897f10c47355c9491293fa6493cd8258a8be097d5864992f14f10358db86de",
-      "papel": "PRELIMINAR, em auditoria: diagnóstico da queda em 0,300 (protocolo 61; doc 57l)",
+      "papel": "diagnóstico da queda em 0,300 (protocolo 61; doc 57l; auditoria 33)",
       "data_referencia": "2026-10-26",
       "cobertura": "municípios e células na janela dos cortes, ciclos 1–3",
       "unidade": "várias (coluna unidade)",
@@ -302,8 +302,8 @@
     },
     {
       "caminho": "output/rdd_bolsa/DQ_resumo.json",
-      "sha256": "b2e7170ec71e7ed8c85b9ca4863332a11e396ea705c29fc61d9d2a2c54d80158",
-      "papel": "PRELIMINAR, em auditoria: estatuto e hashes das figuras do diagnóstico 61",
+      "sha256": "ad5a3b531fdf3bdf8ba59af7df685e5086baeedcfe71e6ff9c3e6a58efbcd82e",
+      "papel": "estatuto e hashes das figuras do diagnóstico 61 (auditoria 33)",
       "data_referencia": "2026-10-26",
       "cobertura": "protocolo 61",
       "unidade": "-",
@@ -312,7 +312,7 @@
     {
       "caminho": "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png",
       "sha256": "806b888ca81297e85f003f9dab0d3d65628035bd986c07f680a5f4a5970b49a0",
-      "papel": "PRELIMINAR, em auditoria: figura 'quanto da queda sobra' do diagnóstico 61, sem redesenho",
+      "papel": "figura 'quanto da queda sobra' do diagnóstico 61 (auditoria 33), sem redesenho",
       "data_referencia": "2026-10-26",
       "cobertura": "corte 0,300, ciclos 1–3",
       "unidade": "vagas por município; p.p.",
@@ -1811,6 +1811,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "33b20b7d9d0e7d7053805a36e470359010daf77b880d5c02b1389d68437dfe18"
+    "sha256": "0a1d0381146d1302e74f3622863a17d4b2a3e005bb2f4b9be42d4a6feae43cab"
   }
 }

@@ -63,7 +63,7 @@ valendo para o E9, o E7 e a literatura de magnitude.
 | 26/10/2026 | um arquivo só (`deck_banca2.pptx`); resultados abrem pela cadeia-síntese, e H1–H4 aprofundam cada linha; bloco "O que isso quer dizer" nos slides de hipótese, metodologia, resultados e robustez; conteúdo ocupando a área útil (corpo ≥ 16 pt, tabelas ≥ 14 pt, figuras no tamanho do slide) | autor |
 
 | 26/10/2026 | especificação de cada estimador nos slides, numa ficha com os mesmos campos (outcome, amostra, equação em palavras, comum e por ciclo, erro-padrão, leitura, cuidado, sensibilidades); no curto, recortes dessas fichas, com o mesmo texto | autor |
-| 26/10/2026 | slide "Por que o preenchimento cai em 0,300" logo depois de "antes e depois do controle", nos dois decks, com o selo "PRELIMINAR: diagnóstico em auditoria" (protocolo 61, doc 57l) | autor |
+| 26/10/2026 | slide "Por que o preenchimento cai em 0,300" logo depois de "antes e depois do controle", nos dois decks (protocolo 61, doc 57l); com a auditoria 33, sai o selo de preliminar e a explicação fica em duas ideias, fiel à frase validada (§8) | autor |
 | 26/10/2026 | N1 sem controle ("efeito total: abrir vagas + preenchê-las") e com controle ("preenchimento dado o número de vagas") em dois gráficos separados, na mesma escala; a H3 traduz o 0,21 em chance (cerca de 24% maior), sem distinção de zero e sem ser efeito no preenchimento | autor |
 | 26/10/2026 | bloco exploratório no completo, entre Base de Dados e Metodologia: IVS × faixa, distribuição do IVS com o E1, RDD crua e escolha × origem | autor |
 | 26/10/2026 | deck curto em blocos antes → resultado → depois: capa; regra; H1 (ficha, antes e depois do controle com o TOST, queda em 0,300); H3, que absorve a H2 (ficha, resultado, incentivo limitado e a ponte P1g); H4 (ficha, resultado, substituição e "em análise"); conclusão. Saem a H2 como slide, "Um estimador por hipótese", "Quatro hipóteses" e os dados crus | autor |
@@ -99,8 +99,8 @@ só** (`deck_banca2.pptx`: slides do grupo, parte empírica e apêndice), o
 manifesto do deck e as imagens de conferência em `qa_render/`, com a grade de
 miniaturas da parte empírica (`grade_empirica.png`), e o deck curto
 (`deck_banca2_curto.pptx` e `.pdf`, com o manifesto e a grade
-`qa_render/grade_curto.png`). O slide da queda em 0,300 é **PRELIMINAR**: o
-diagnóstico do protocolo 61 ainda está em auditoria. Os geradores não estão no `run_all.py`; a
+`qa_render/grade_curto.png`). O slide da queda em 0,300 usa o diagnóstico do
+protocolo 61 auditado (auditoria 33). Os geradores não estão no `run_all.py`; a
 inclusão fica para o coordenador do pipeline.
 
 ## 5. Estado

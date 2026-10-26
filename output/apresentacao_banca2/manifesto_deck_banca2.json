@@ -392,12 +392,12 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/02_conteudo_slides.md",
       "papel": "texto dos slides novos e quadro de correções",
-      "sha256": "7a2e8ee633dd1351cb3c2811efdf6e566a4ab925359e33e9a64dbff5d1fabcf1"
+      "sha256": "fe8f11612b8d06360dcc834f9532eba035d6b21a252be678475f6dc7d4120d69"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
       "papel": "números das correções",
-      "sha256": "33b20b7d9d0e7d7053805a36e470359010daf77b880d5c02b1389d68437dfe18"
+      "sha256": "0a1d0381146d1302e74f3622863a17d4b2a3e005bb2f4b9be42d4a6feae43cab"
     },
     {
       "caminho": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
@@ -922,9 +922,9 @@
   "regra": "nada estimado; nada lido de data/; texto dos slides novos lido do doc 02; números das correções lidos de output/apresentacao_banca2/numeros_banca2.json; figuras de output/ como imagem",
   "saidas": [
     {
-      "bytes": 12763802,
+      "bytes": 12763796,
       "caminho": "output/apresentacao_banca2/deck_banca2.pptx",
-      "sha256": "0d3e1d922358949515cad448954d11885cf002f9f45a16041eb8977bc0d3c45c"
+      "sha256": "7aecd3ddc93923c84ab912efce126ea47893baa3a9d3c8b069243fa6715152e9"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py"

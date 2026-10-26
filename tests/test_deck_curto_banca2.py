@@ -9,7 +9,8 @@ O deck curto é derivado do doc 04 por `scripts/apresentacao/gerar_deck_banca2.p
 2. o formato: limites de linhas e de título, fichas só com tabela e letra de 14 pt ou mais;
 3. as fichas do curto são recortes das fichas do deck completo (doc 02), com o mesmo texto linha a linha;
 4. a regra dos números: todo número do doc 04 e do deck é o valor de um código listado ou um parâmetro;
-5. as cautelas obrigatórias, o selo do slide preliminar e a tradução do 0,21 da H3;
+5. as cautelas obrigatórias, o slide da queda em 0,300 em duas ideias (auditoria 33, sem selo) e a tradução do
+   0,21 da H3;
 6. o pacote gerado: títulos e texto iguais ao doc 04, manifesto com hashes atuais e, se `PMME_DECK_GRUPO`
    apontar para o deck do grupo, o determinismo do `.pptx`.
 """
@@ -66,7 +67,6 @@ SEQUENCIA = [  # (título, layout, papel no bloco)
     ("A bolsa muda a escolha, não o preenchimento", "curto_texto", "conclusão"),
 ]
 FICHA_COMPLETA = {"H1:": "## Especificação da H1", "H3:": "## Especificação da H2 e da H3", "H4:": "## Especificação da H4"}
-SELO = "PRELIMINAR: diagnóstico em auditoria"
 
 
 def sha256(p: Path) -> str:
@@ -148,17 +148,25 @@ class TestConteudoCurto(unittest.TestCase):
                 sobra[b.splitlines()[0]] = sorted(achados - permitidos)
         self.assertEqual(sobra, {})
 
-    def test_preliminar_com_selo(self) -> None:
+    def test_queda_em_0300_em_duas_ideias(self) -> None:
+        """Auditoria 33: sem selo, duas ideias e o fecho; "menos células com candidato" só como estimativa imprecisa."""
         dq = next(s for s in self.slides if s["titulo"].startswith("Por que o preenchimento"))
-        self.assertEqual(dq["selo"], SELO)
+        self.assertEqual(dq["selo"], "")
         self.assertTrue(dq["imagem"].as_posix().endswith("output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png"))
-        self.assertLessEqual(len(dq["marcadores"]), 3)
+        self.assertEqual([re.match(r"\*\*(.+?)\*\*", m).group(1) for m in dq["marcadores"]],
+                         ["É a estimativa no corte, não os dados:", "As vagas do lado de cima eram diferentes:"])
+        self.assertEqual(dq["cautela"], "**Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa "
+                                        "com outras regras.**")
+        tela = " ".join(dq["marcadores"])
+        self.assertNotIn("escolhidas em 1º lugar", tela)
+        self.assertNotIn("candidato de 1ª opção", tela)
+        self.assertIn("estimativa imprecisa", dq["notas"])
         bloco = next(b for b in self.blocos if b.startswith("## Por que o preenchimento"))
         codigos = re.findall(r"`(DQ_[A-Z0-9_]+)`", bloco)
         self.assertTrue(codigos)
         for c in codigos:
-            self.assertIn("em auditoria", self.todos[c].get("preliminar", ""), c)
-        self.assertEqual(sum(bool(s["selo"]) for s in self.slides), 1)
+            self.assertIn("auditoria 33", self.todos[c].get("auditoria", ""), c)
+        self.assertFalse(any(s["selo"] for s in self.slides))
 
     def test_h3_traduz_o_peso_e_absorve_a_h2(self) -> None:
         v = {c: e["valor"] for c, e in self.todos.items()}
@@ -174,11 +182,11 @@ class TestConteudoCurto(unittest.TestCase):
         corrido = " ".join(re.sub(r"(?m)^>\s?", "", DOC04.read_text(encoding="utf-8")).split())
         for frase in ("pacote do corte", "Pacote do corte", "Pós-resultado", "preferência revelada, não efeito causal",
                       "horas cadastradas não são presença", "vínculo não é presença", "Associação",
-                      "não é a participação no PMM-E", "nada mostra que a bolsa reduz o preenchimento",
+                      "não é a participação no PMM-E", "Nada disso mostra que a bolsa reduz o preenchimento",
                       "inconclusivo não é efeito zero", "Escolha não é expansão"):
             self.assertIn(frase, corrido, frase)
         self.assertNotIn("bolsa não funciona", corrido)
-        self.assertEqual(corrido.count("a bolsa reduz"), corrido.count("nada mostra que a bolsa reduz"))
+        self.assertEqual(corrido.count("a bolsa reduz"), corrido.count("mostra que a bolsa reduz"))
         h4 = next(b for b in self.blocos if b.startswith("## O que isso quer dizer: soma horas"))
         self.assertIn("ainda está em análise", h4)  # protocolo 60, parte B, sem resultado no deck
         self.assertNotIn("OL_", h4)

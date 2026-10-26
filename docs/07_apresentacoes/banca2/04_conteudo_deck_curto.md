@@ -3,7 +3,7 @@ documento: Conteúdo do deck curto — banca 2 (parte empírica)
 papel: fonte de verdade do deck curto; o deck é derivado
 escopo: capa curta, identificação, H1, H3 (que absorve a H2), H4 e conclusão, cada bloco na ordem antes → resultado → depois; sem os slides do grupo, sem divisórias, sem o diagrama da teoria e sem apêndice
 slides: 13
-estado: em produção; versão curta pedida pelo autor, ao lado do deck completo (doc 02); o slide da queda em 0,300 é PRELIMINAR (diagnóstico 61, em auditoria)
+estado: em produção; versão curta pedida pelo autor, ao lado do deck completo (doc 02); o slide da queda em 0,300 usa o diagnóstico 61 auditado (auditoria 33)
 atualizacao: 26 de outubro de 2026
 ---
 
@@ -38,7 +38,8 @@ atualizacao: 26 de outubro de 2026
 > parâmetro do protocolo ([03, §3](03_proveniencia_figuras_e_numeros.md#3-parâmetros-que-podem-aparecer-sem-código)).
 > `tests/test_deck_curto_banca2.py` confere isso, a ordem, a ausência dos
 > slides do grupo, do diagrama e do apêndice, o limite de linhas, as fichas
-> contra o doc 02 e o selo do slide preliminar.
+> contra o doc 02 e o slide da queda em 0,300 (duas ideias, sem selo, fiel à
+> frase validada da auditoria 33, §8).
 
 <!-- deck:inicio -->
 
@@ -188,31 +189,33 @@ atualizacao: 26 de outubro de 2026
 
 <!-- linhas: 3 -->
 
-<!-- selo: PRELIMINAR: diagnóstico em auditoria -->
+![Diagnóstico do protocolo 61: quanto da queda em 0,300 sobra ao igualar cada fator entre os lados do corte, para Q1, Q2 e Q3, com IC 95%](../../../output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png)
 
-![Diagnóstico do protocolo 61 (preliminar): quanto da queda em 0,300 sobra ao igualar cada fator entre os lados do corte, para Q1, Q2 e Q3, com IC 95%](../../../output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png)
+- **É a estimativa no corte, não os dados:** nas médias da janela, 33,3% das células são preenchidas abaixo e 33,5% acima; a queda vem da reta levada até o corte, com poucos municípios. O acaso não está descartado.
+- **As vagas do lado de cima eram diferentes:** cursos que preenchem pouco em qualquer lugar, mais células do mesmo curso na mesma UF disputando candidatos e, no ciclo 2, mais células só de reserva. Igualando esses fatores, a queda diminui pela metade ou mais em parte das medidas, mas nenhum fator faz isso nas três.
 
-- **Sem a reta:** a fração preenchida é praticamente igual dos dois lados (33,3% e 33,5%); a queda aparece quando a reta é levada até o corte e depende de poucos municípios.
-- **O que acompanha a queda:** mais células só de cadastro reserva, cursos que preenchem pouco em qualquer lugar, menos células escolhidas em 1º lugar. Igualar esses fatores corta a queda pela metade ou mais em parte das medidas.
-- **Leitura:** acaso não está descartado; nada mostra que a bolsa reduz o preenchimento.
+> **Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras regras.**
 
-**Fontes:** `output/rdd_bolsa/DQ_estimativas.csv`, `DQ_resumo.json` e `DQ_figuras/DQ_quanto_da_queda.png` (protocolo 61; doc 57l, em auditoria); figura sem redesenho, conferida pelo hash.
+**Fontes:** `output/rdd_bolsa/DQ_estimativas.csv`, `DQ_resumo.json` e `DQ_figuras/DQ_quanto_da_queda.png` (protocolo 61; doc 57l; auditoria 33, §8); figura usada sem redesenho, conferida pelo hash.
 
-**Números:** `DQ_FUN_PRE_ABX`, `DQ_FUN_PRE_ACI`, `DQ_SOCR_TAU`, `DQ_SOCR_INF`, `DQ_SOCR_SUP`, `DQ_CURSO_TAU`, `DQ_CURSO_INF`, `DQ_CURSO_SUP`, `DQ_CAND1_TAU`, `DQ_CAND1_INF`, `DQ_CAND1_SUP`, `DQ_FIX_COMP_Q2`, `DQ_FIX_COMP_Q2_PCT`, `DQ_FIX_CONC_Q2`, `DQ_FIX_CONC_Q2_PCT`, `DQ_FIX_FUNIL_Q1`, `DQ_FIX_FUNIL_Q1_PCT`, `DQ_PPOSTO_Q1`, `DQ_PCOMP_Q1`
+**Números:** `DQ_FUN_PRE_ABX`, `DQ_FUN_PRE_ACI`, `DQ_CURSO_TAU`, `DQ_CURSO_INF`, `DQ_CURSO_SUP`, `DQ_CONCUF_TAU`, `DQ_CONCUF_INF`, `DQ_CONCUF_SUP`, `DQ_SOCR_C2_TAU`, `DQ_SOCR_C2_INF`, `DQ_SOCR_C2_SUP`, `DQ_CAND1_TAU`, `DQ_CAND1_INF`, `DQ_CAND1_SUP`, `DQ_FIX_COMP_Q2`, `DQ_FIX_COMP_Q2_PCT`, `DQ_FIX_CONC_Q2`, `DQ_FIX_CONC_Q2_PCT`, `DQ_FIX_FUNIL_Q1`, `DQ_FIX_FUNIL_Q1_PCT`, `DQ_PPOSTO_Q1`, `DQ_PCOMP_Q1`
 
-> **Notas do apresentador.** PRELIMINAR: diagnóstico do protocolo 61, ainda
-> em auditoria; descreve o que acompanha a queda, não a causa, e é
+> **Notas do apresentador.** Diagnóstico do protocolo 61 (doc 57l),
+> auditado (auditoria 33, aprovado com correções de texto): descritivo e
 > pós-resultado. Q1 é N1 com controle; Q2, a taxa por vaga oferecida; Q3, a
-> célula aberta preenchida. Sem reta nem efeitos fixos, 33,3% das células da
-> janela são preenchidas abaixo de 0,300 e 33,5% acima. Acima do corte, a
-> parte das células só de cadastro reserva é +15,4 p.p. maior
-> [+2,1; +28,6], o índice de curso é −4,5 p.p. [−7,1; −2,0], e a chance de a
-> célula ter candidato de 1ª opção muda −10,8 p.p. [−28,2; +6,7], com IC que
-> contém zero. Igualando a composição, Q2 vai a −5,1 p.p., 32% do original;
-> igualando a concorrência, a −4,3 p.p., 27%; igualando quem teve candidato
-> de 1ª opção, Q1 vai a −0,49, 34%. Acaso: com os 3 cortes falsos do
-> protocolo, o p por posto é 0,250, o menor possível; numa grade maior, fora
-> do protocolo, 0,031. O corte junta a bolsa com outras regras federais.
+> célula aberta preenchida. Nas médias da janela, sem reta nem efeitos fixos,
+> 33,3% das células são preenchidas abaixo de 0,300 e 33,5% acima. Do lado de
+> cima: índice de curso −4,5 p.p. [−7,1; −2,0] (cursos que preenchem pouco em
+> qualquer lugar); +10,6 [+3,5; +17,8] células do mesmo curso na mesma UF; no
+> ciclo 2, +28,4 p.p. [+8,3; +48,4] de células só de reserva. Que menos
+> células tiveram candidato de 1ª opção é estimativa imprecisa: −10,8 p.p.
+> [−28,2; +6,7]. Igualando a composição, Q2 vai a −5,1 p.p., 32% do
+> original; a concorrência, Q2 a −4,3 p.p., 27%; quem teve candidato de 1ª
+> opção, Q1 a −0,49, 34%; nenhum fator reduz a queda à metade nas três
+> medidas. Acaso: com os 3 cortes falsos do protocolo, o p por posto é 0,250,
+> o menor possível; numa grade maior, fora do protocolo, 0,031. Esses
+> fatores se formam depois do anúncio da faixa: descrevem o que acompanha a
+> queda, não a causa.
 
 ---
 

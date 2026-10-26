@@ -8618,8 +8618,8 @@
         ]
       },
       "formato": "txt",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): estatuto do bloco",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): estatuto do bloco",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FUN_PRE_ABX": {
       "valor": "33,3",
@@ -8634,8 +8634,8 @@
         "coluna": "valor_abaixo"
       },
       "formato": "pct1",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): fração das células da janela de 0,300 preenchidas na 1ª chamada, abaixo do corte, sem reta (funil bruto)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): fração das células da janela de 0,300 preenchidas na 1ª chamada, abaixo do corte, sem reta (funil bruto)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FUN_PRE_ACI": {
       "valor": "33,5",
@@ -8650,8 +8650,8 @@
         "coluna": "valor_acima"
       },
       "formato": "pct1",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): fração das células da janela de 0,300 preenchidas na 1ª chamada, acima do corte, sem reta (funil bruto)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): fração das células da janela de 0,300 preenchidas na 1ª chamada, acima do corte, sem reta (funil bruto)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_SOCR_TAU": {
       "valor": "+15,4",
@@ -8672,8 +8672,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na parte das células só de cadastro reserva (p.p.)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto na parte das células só de cadastro reserva (p.p.)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_SOCR_INF": {
       "valor": "+2,1",
@@ -8694,8 +8694,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na parte das células só de cadastro reserva (p.p.), IC 95% inferior",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto na parte das células só de cadastro reserva (p.p.), IC 95% inferior",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_SOCR_SUP": {
       "valor": "+28,6",
@@ -8716,8 +8716,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na parte das células só de cadastro reserva (p.p.), IC 95% superior",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto na parte das células só de cadastro reserva (p.p.), IC 95% superior",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_CURSO_TAU": {
       "valor": "−4,5",
@@ -8738,8 +8738,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto no índice de curso (preenchimento do curso fora da janela, p.p.)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto no índice de curso (preenchimento do curso fora da janela, p.p.)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_CURSO_INF": {
       "valor": "−7,1",
@@ -8760,8 +8760,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto no índice de curso (preenchimento do curso fora da janela, p.p.), IC 95% inferior",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto no índice de curso (preenchimento do curso fora da janela, p.p.), IC 95% inferior",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_CURSO_SUP": {
       "valor": "−2,0",
@@ -8782,8 +8782,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto no índice de curso (preenchimento do curso fora da janela, p.p.), IC 95% superior",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto no índice de curso (preenchimento do curso fora da janela, p.p.), IC 95% superior",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_CAND1_TAU": {
       "valor": "−10,8",
@@ -8804,8 +8804,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.; estimativa imprecisa)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_CAND1_INF": {
       "valor": "−28,2",
@@ -8826,8 +8826,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.), IC 95% inferior",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.; estimativa imprecisa), IC 95% inferior",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_CAND1_SUP": {
       "valor": "+6,7",
@@ -8848,8 +8848,122 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.), IC 95% superior",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.; estimativa imprecisa), IC 95% superior",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
+    },
+    "DQ_SOCR_C2_TAU": {
+      "valor": "+28,4",
+      "valor_bruto": 28.377118909107857,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|composicao|salto|so_cr|V2 (celulas)|2|0.300|celula|por_ciclo|"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: ciclo 2: salto na parte das células só de cadastro reserva (p.p.)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
+    },
+    "DQ_SOCR_C2_INF": {
+      "valor": "+8,3",
+      "valor_bruto": 8.320137507911676,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|composicao|salto|so_cr|V2 (celulas)|2|0.300|celula|por_ciclo|"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: ciclo 2: salto na parte das células só de cadastro reserva (p.p.), IC 95% inferior",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
+    },
+    "DQ_SOCR_C2_SUP": {
+      "valor": "+48,4",
+      "valor_bruto": 48.43410031030404,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|composicao|salto|so_cr|V2 (celulas)|2|0.300|celula|por_ciclo|"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: ciclo 2: salto na parte das células só de cadastro reserva (p.p.), IC 95% superior",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
+    },
+    "DQ_CONCUF_TAU": {
+      "valor": "+10,6",
+      "valor_bruto": 10.638338154486576,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-d|medidas|salto|n_conc_uf|V1+V2+V3 (celulas)|1+2+3|0.300|celula|sem_efeitos_fixos|"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d1s",
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto no número de células do mesmo curso e ciclo na mesma UF",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
+    },
+    "DQ_CONCUF_INF": {
+      "valor": "+3,5",
+      "valor_bruto": 3.4993384602812903,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-d|medidas|salto|n_conc_uf|V1+V2+V3 (celulas)|1+2+3|0.300|celula|sem_efeitos_fixos|"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d1s",
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto no número de células do mesmo curso e ciclo na mesma UF, IC 95% inferior",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
+    },
+    "DQ_CONCUF_SUP": {
+      "valor": "+17,8",
+      "valor_bruto": 17.77733784869186,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-d|medidas|salto|n_conc_uf|V1+V2+V3 (celulas)|1+2+3|0.300|celula|sem_efeitos_fixos|"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d1s",
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300: salto no número de células do mesmo curso e ciclo na mesma UF, IC 95% superior",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FIX_COMP_Q2": {
       "valor": "−5,1",
@@ -8870,8 +8984,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2, igualando a composição das vagas: salto depois de igualar (p.p.)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q2, igualando a composição das vagas: salto depois de igualar (p.p.)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FIX_COMP_Q2_PCT": {
       "valor": "32",
@@ -8892,8 +9006,8 @@
         ]
       },
       "formato": "d0",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2, igualando a composição das vagas: quanto sobra do salto comparado (%)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q2, igualando a composição das vagas: quanto sobra do salto comparado (%)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FIX_SEMCR_Q3": {
       "valor": "−3,4",
@@ -8914,8 +9028,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q3, igualando sem as células só de cadastro reserva: salto depois de igualar (p.p.)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q3, igualando sem as células só de cadastro reserva: salto depois de igualar (p.p.)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FIX_SEMCR_Q3_PCT": {
       "valor": "40",
@@ -8936,8 +9050,8 @@
         ]
       },
       "formato": "d0",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q3, igualando sem as células só de cadastro reserva: quanto sobra do salto comparado (%)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q3, igualando sem as células só de cadastro reserva: quanto sobra do salto comparado (%)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FIX_FUNIL_Q1": {
       "valor": "−0,49",
@@ -8952,8 +9066,8 @@
         "coluna": "tau"
       },
       "formato": "d2s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q1, igualando quem teve candidato de 1ª opção: salto depois de igualar",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q1, igualando quem teve candidato de 1ª opção: salto depois de igualar",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FIX_FUNIL_Q1_PCT": {
       "valor": "34",
@@ -8974,8 +9088,8 @@
         ]
       },
       "formato": "d0",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q1, igualando quem teve candidato de 1ª opção: quanto sobra do salto comparado (%)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q1, igualando quem teve candidato de 1ª opção: quanto sobra do salto comparado (%)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FIX_FUNIL_Q3": {
       "valor": "−3,4",
@@ -8996,8 +9110,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q3, igualando quem teve candidato de 1ª opção: salto depois de igualar (p.p.)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q3, igualando quem teve candidato de 1ª opção: salto depois de igualar (p.p.)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FIX_FUNIL_Q3_PCT": {
       "valor": "41",
@@ -9018,8 +9132,8 @@
         ]
       },
       "formato": "d0",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q3, igualando quem teve candidato de 1ª opção: quanto sobra do salto comparado (%)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q3, igualando quem teve candidato de 1ª opção: quanto sobra do salto comparado (%)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FIX_CONC_Q2": {
       "valor": "−4,3",
@@ -9040,8 +9154,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2, igualando a concorrência: salto depois de igualar (p.p.)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q2, igualando a concorrência: salto depois de igualar (p.p.)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_FIX_CONC_Q2_PCT": {
       "valor": "27",
@@ -9062,8 +9176,8 @@
         ]
       },
       "formato": "d0",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2, igualando a concorrência: quanto sobra do salto comparado (%)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q2, igualando a concorrência: quanto sobra do salto comparado (%)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_PPOSTO_Q1": {
       "valor": "0,250",
@@ -9078,8 +9192,8 @@
         "coluna": "p_posto"
       },
       "formato": "p3",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q1: p por posto entre os 3 cortes placebo do protocolo (menor possível = 0,250)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q1: p por posto entre os 3 cortes placebo do protocolo (menor possível = 0,250)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_PPOSTO_Q2": {
       "valor": "0,250",
@@ -9094,8 +9208,8 @@
         "coluna": "p_posto"
       },
       "formato": "p3",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2: p por posto entre os 3 cortes placebo do protocolo (menor possível = 0,250)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q2: p por posto entre os 3 cortes placebo do protocolo (menor possível = 0,250)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_PCOMP_Q1": {
       "valor": "0,031",
@@ -9110,8 +9224,8 @@
         "coluna": "p_posto"
       },
       "formato": "p3",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q1: p por posto na grade complementar, fora do protocolo (31 cortes falsos)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q1: p por posto na grade complementar, fora do protocolo (31 cortes falsos)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "DQ_PCOMP_Q2": {
       "valor": "0,031",
@@ -9126,8 +9240,8 @@
         "coluna": "p_posto"
       },
       "formato": "p3",
-      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2: p por posto na grade complementar, fora do protocolo (31 cortes falsos)",
-      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+      "descricao": "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): 0,300, Q2: p por posto na grade complementar, fora do protocolo (31 cortes falsos)",
+      "auditoria": "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
     },
     "D_POP_MUN": {
       "valor": "5.570",

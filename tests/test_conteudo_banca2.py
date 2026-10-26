@@ -522,16 +522,25 @@ class TestSlides(unittest.TestCase):
         s = next(x for x in self.slides if x["titulo"].startswith("## O controle muda a leitura"))
         t = DOC02.read_text(encoding="utf-8")
         self.assertGreater(t.index(s["titulo"]), t.index("## H1:"))
-        # logo depois, o slide da queda em 0,300 (diagnóstico 61), com o selo de preliminar
+        # logo depois, o slide da queda em 0,300 (diagnóstico 61, auditoria 33): duas ideias e o fecho, sem selo
         titulos = [x["titulo"] for x in self.slides]
         k = titulos.index(s["titulo"])
         self.assertEqual(titulos[k + 1], "## Por que o preenchimento cai em 0,300")
         dq = self.slides[k + 1]["texto"]
-        self.assertIn("<!-- selo: PRELIMINAR: diagnóstico em auditoria -->", dq)
         self.assertIn("output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png", dq)
-        for frase in ("**Sem a reta:**", "**O que acompanha a queda:**", "acaso não está descartado",
-                      "nada mostra que a bolsa reduz o preenchimento", "pacote do corte"):
-            self.assertIn(frase, dq, frase)
+        for frase in ("**É a estimativa no corte, não os dados:**", "**As vagas do lado de cima eram diferentes:**",
+                      "O acaso não está descartado", "mas nenhum fator faz isso nas três",
+                      "Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras regras",
+                      "estimativa imprecisa", "auditoria 33"):
+            self.assertIn(frase, " ".join(dq.split()), frase)
+        # correção M1 da auditoria 33: "menos células escolhidas em 1º lugar" não vai à tela como fato
+        tela = dq.split("> **Notas do apresentador.**")[0]
+        self.assertNotIn("escolhidas em 1º lugar", tela)
+        itens = [ln for ln in tela.splitlines() if ln.startswith("- ")]
+        self.assertEqual(len(itens), 2)
+        self.assertFalse(any("candidato de 1ª opção" in ln for ln in itens))
+        self.assertNotIn("selo", dq)
+        self.assertNotIn("PRELIMINAR", dq)
 
     def test_corpo_sintetizado(self) -> None:
         """Na parte empírica (antes do apêndice): no máximo 3 marcadores (por coluna) e uma frase de cautela."""
@@ -792,22 +801,23 @@ class TestIntegridade(unittest.TestCase):
         rob = next(s for s in slides() if s["titulo"].startswith("## Apêndice: robustez"))
         self.assertIn(f"de {num['H3_S_M2']['valor']} a {num['H3_S_M5C3']['valor']}", rob["texto"])
 
-    def test_diagnostico_61_preliminar(self) -> None:
-        """O diagnóstico 61 (doc 57l) está em auditoria: todo código DQ_ é marcado como preliminar no registro e no
-        doc 03, a figura do slide tem o hash gravado em DQ_resumo.json e o deck leva o selo."""
+    def test_diagnostico_61_auditado(self) -> None:
+        """O diagnóstico 61 (doc 57l) foi auditado (auditoria 33): todo código DQ_ leva a auditoria no registro e no
+        doc 03, e a figura do slide tem o hash gravado em DQ_resumo.json."""
         numeros = json.loads(NUMEROS.read_text(encoding="utf-8"))["numeros"]
         dq = {c: e for c, e in numeros.items() if c.startswith("DQ_")}
         self.assertGreaterEqual(len(dq), 20)
         doc03 = blocos_do_doc03()
         for c, e in dq.items():
-            self.assertIn("em auditoria", e.get("preliminar", ""), c)
-            self.assertTrue(e["descricao"].startswith("PRELIMINAR"), c)
+            self.assertIn("auditoria 33", e.get("auditoria", ""), c)
+            self.assertIn("auditoria 33", e["descricao"], c)
+            self.assertNotIn("PRELIMINAR", e["descricao"], c)
             self.assertIn(e["arquivo"], ("output/rdd_bolsa/DQ_estimativas.csv", "output/rdd_bolsa/DQ_resumo.json"), c)
             self.assertIn(c, doc03)
         res = json.loads((ROOT / "output/rdd_bolsa/DQ_resumo.json").read_text(encoding="utf-8"))
         fig = "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png"
         self.assertEqual({f["arquivo"]: f["sha256"] for f in res["saidas"]["figuras"]}[fig], sha256(ROOT / fig))
-        self.assertIn("PRELIMINAR", DOC03.read_text(encoding="utf-8"))
+        self.assertNotIn("PRELIMINAR", DOC03.read_text(encoding="utf-8"))
 
     def test_regra_desenhada_pela_funcao_do_relatorio(self) -> None:
         texto = SCRIPT.read_text(encoding="utf-8")
@@ -957,11 +967,12 @@ class TestDeck(unittest.TestCase):
         fig = [e for e in self.manifesto["ordem_do_deck_proposto"] if e.get("titulo", "").startswith("H3")]
         self.assertEqual([e["figura"] for e in fig], ["output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png"])
 
-    def test_selo_preliminar_e_traducao_da_h3_no_deck(self) -> None:
-        """O slide da queda em 0,300 leva o selo bem visível; a H3 traduz o 0,21 em chance (pedidos do autor)."""
+    def test_queda_sem_selo_e_traducao_da_h3_no_deck(self) -> None:
+        """Com a auditoria 33, o slide da queda em 0,300 sai sem o selo de preliminar; a H3 traduz o 0,21 em chance."""
         dq = [t for _, ti, t in self.novos if ti.startswith("Por que o preenchimento cai em 0,300")]
         self.assertEqual(len(dq), 1)
-        self.assertIn("PRELIMINAR: diagnóstico em auditoria", dq[0])
+        self.assertNotIn("PRELIMINAR", dq[0])
+        self.assertIn("o corte junta a bolsa com outras regras", dq[0].replace("\u00a0", " "))
         v = self.numeros["numeros"]
         h3 = next(t for _, ti, t in self.novos if ti.startswith("H3")).replace(" ", " ")
         self.assertIn(f"{v['H3_5B']['valor']} ≈ chance cerca de {v['M1_RC_PCT']['valor']}% maior de a vaga ser a 1ª "

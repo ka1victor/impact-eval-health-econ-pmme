@@ -1055,13 +1055,19 @@ def plano_curto_figura(sl: dict) -> dict:
     w_baixo = min(W, h_area * a)
     if all(cabe_numa_linha(t) for t, _ in linhas) and w_baixo >= FRACAO_MIN_FIGURA * W:
         return dict(modo="baixo", y_lin=y_lin, w=w_baixo, h=w_baixo / a)
+    # ao lado: os itens numa coluna à direita; a cautela (e o selo) sob a figura, na largura dela
     h_tot = Y_FONTES - 0.1 - Y0
-    w_fig = min(W - W_COLUNA_MIN - 0.3, (h_tot - h_selo) * a)
+    itens = [t for t, c in linhas if not c]
+    caut = next((t for t, c in linhas if c), "")
+    w_fig = W - W_COLUNA_MIN - 0.3
     while w_fig > 4.0:
-        w_col = W - w_fig - 0.3
-        h_txt = sum(_altura_item_lado(t, w_col) for t, _ in linhas) + 0.18 * max(n - 1, 0)
+        h_caut = (_altura_item_lado(caut, w_fig) + 0.18) if caut else 0.0
+        w_f = min(w_fig, (h_tot - h_selo - h_caut) * a)
+        w_col = W - w_f - 0.3
+        h_txt = sum(_altura_item_lado(t, w_col) for t in itens) + 0.18 * max(len(itens) - 1, 0)
         if h_txt <= h_tot:
-            return dict(modo="lado", w=w_fig, h=w_fig / a, w_col=w_col, h_txt=h_txt, h_tot=h_tot, h_selo=h_selo)
+            return dict(modo="lado", w=w_f, h=w_f / a, w_col=w_col, h_txt=h_txt, h_tot=h_tot, h_selo=h_selo,
+                        h_caut=h_caut, caut=caut, itens=itens)
         w_fig -= 0.1
     raise SystemExit(f"ERRO: as linhas de {sl['titulo']!r} não cabem ao lado da figura")
 
@@ -1145,25 +1151,26 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
             if sl["selo"]:
                 caixa_selo(s, sl["selo"], x_img, y_img + p["h"] + 0.18, p["w"])
         else:
-            h_bloco = p["h"] + p["h_selo"]
+            h_bloco = p["h"] + p["h_selo"] + p["h_caut"]
             y_img = Y0 + max(0.0, (p["h_tot"] - h_bloco) / 2)
             imagem(s, rid_img, X0, y_img, p["w"], p["h"], sl["alt"])
+            y_b = y_img + p["h"] + 0.18
             if sl["selo"]:
-                caixa_selo(s, sl["selo"], X0, y_img + p["h"] + 0.18, p["w"])
+                caixa_selo(s, sl["selo"], X0, y_b, p["w"])
+                y_b += H_SELO + 0.18
+            if p["caut"]:
+                s.forma("Cautela", X0, y_b, p["w"], p["h_caut"] - 0.18, adj=8000, fill=CLARO2, anchor="ctr",
+                        ins=(0.2, 0.06, 0.2, 0.06),
+                        paras=[para(runs_md(p["caut"].replace("**", ""), SZ_LADO, VERDE_ESCURO, negrito=True), "l",
+                                    linha=100)])
             x_c, w_c = X0 + p["w"] + 0.3, p["w_col"]
-            folga = (p["h_tot"] - p["h_txt"]) / max(len(linhas), 1)
+            folga = (p["h_tot"] - p["h_txt"]) / max(len(p["itens"]), 1)
             y = Y0
-            for txt, caut in linhas:
+            for txt in p["itens"]:
                 h_it = _altura_item_lado(txt, w_c) + min(folga, 0.6)
-                if caut:
-                    s.forma("Cautela", x_c, y, w_c, h_it, adj=8000, fill=CLARO2, anchor="ctr",
-                            ins=(0.2, 0.06, 0.2, 0.06),
-                            paras=[para(runs_md(txt.replace("**", ""), SZ_LADO, VERDE_ESCURO, negrito=True), "l",
-                                        linha=100)])
-                else:
-                    s.forma("Linha", x_c, y, w_c, h_it, adj=6000, fill="F4F8F5", line=VERDE, line_w=1.0,
-                            anchor="ctr", ins=(0.2, 0.06, 0.2, 0.06),
-                            paras=[para(runs_md(txt, SZ_LADO, TEXTO, cor_neg=VERDE_ESCURO), "l", linha=100)])
+                s.forma("Linha", x_c, y, w_c, h_it, adj=6000, fill="F4F8F5", line=VERDE, line_w=1.0,
+                        anchor="ctr", ins=(0.2, 0.06, 0.2, 0.06),
+                        paras=[para(runs_md(txt, SZ_LADO, TEXTO, cor_neg=VERDE_ESCURO), "l", linha=100)])
                 y += h_it + 0.18
     else:
         n = len(linhas)
