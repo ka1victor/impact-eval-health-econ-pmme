@@ -70,6 +70,7 @@ CA_COV = OUT / "CA_covariancia.csv"
 CA_RESUMO = OUT / "CA_resumo.json"
 
 DATA_EXECUCAO = "2026-10-26"
+DATA_ADENDO = "2026-10-25"  # data do adendo ao protocolo 59, não da execução
 ESTATUTO = "PROTOCOLO_59_POS_RESULTADO"
 ROTULO = "SENSIBILIDADE"
 NATUREZA = "EMPIRICO"
@@ -775,12 +776,12 @@ def atualizar_doc() -> None:
 # ---------------------------------------------------------------------------
 
 DESVIOS: list[dict] = [
-    {"data": DATA_EXECUCAO, "tipo": "adendo", "item": "híbrido condicional–LF (parte A)",
+    {"data": DATA_ADENDO, "tipo": "adendo", "item": "híbrido condicional–LF (parte A)",
      "descricao": "o teste condicional puro congelado no §2.4 fica muito conservador quando outro momento está perto "
                   "de ativo (caso sintético em tests/test_honestdid.py; IC em M̄ = 0 mais largo que em M̄ = 0,25 na "
                   "primeira linha real). O condicional continua em todas as linhas; o híbrido de ARP (padrão do "
                   "HonestDiD) é acrescentado nas linhas principais e no CA. Adendo datado no protocolo 59."},
-    {"data": DATA_EXECUCAO, "tipo": "esclarecimento", "item": "covariância",
+    {"data": DATA_ADENDO, "tipo": "esclarecimento", "item": "covariância",
      "descricao": "Σ analítica das funções de influência; o EP analítico recalculado bate com a coluna ep_analitico "
                   "do K_X_estudo_evento.csv (diferença ≤ 1e−6) e os θ(e) com o versionado (≤ 1e−8)."},
 ]
