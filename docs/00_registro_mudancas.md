@@ -8,6 +8,20 @@
 
 ---
 
+## 26/10/2026 — Doc 57u: resultados do adendo 48g (heterogeneidade do salto pelo porte em que o estrato do IED muda)
+
+Motivo: execução do adendo 48g. O doc 57u nasce com o cabeçalho e as decisões de implementação, registradas em
+commit antes de qualquer estimativa; os blocos `<!-- PO:... -->` são depois gerados pelo script 47 a partir das
+saídas `PO_*`. Auditoria pendente.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57u_resultados_heterogeneidade_porte.md`](06_execucao/57u_resultados_heterogeneidade_porte.md) | resultados do adendo 48g (PO-1 a PO-5), blocos gerados por `scripts/rdd_bolsa/47_heterogeneidade_porte_ied.py` |
+
+---
+
 ## 26/10/2026 — Adendos 48g (heterogeneidade por porte do IED) e 52d (sensibilidades da escolha no ciclo 2 com o quadro de 13/02)
 
 Motivo: o autor aprovou rodar as pendências da §2.16 de `07_apresentacoes/banca2/05_discussao_historia_empirica.md`.
