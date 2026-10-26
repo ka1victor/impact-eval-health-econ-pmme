@@ -8,6 +8,18 @@
 
 ---
 
+## 26/10/2026 — Banca 2: registro da discussão da história empírica
+
+Motivo: o autor pediu para registrar no repositório tudo o que foi discutido sobre a parte empírica (sinal negativo, vagas abertas perto dos cortes, ciclo 2, origem do médico, horas × especialistas, equivalência, métodos) e as decisões de apresentação.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca2/05_discussao_historia_empirica.md`](07_apresentacoes/banca2/05_discussao_historia_empirica.md) | perguntas e respostas, decisões do autor, ordem da história nos slides e fila aberta; sem número fora dos docs gerados |
+
+---
+
 ## 26/10/2026 — Auditoria 32: equivalência no preenchimento (H1)
 
 Motivo: auditoria independente da parte A do protocolo 60 (script 36, `EQ_*`, doc 57j). Veredito: aprovado com

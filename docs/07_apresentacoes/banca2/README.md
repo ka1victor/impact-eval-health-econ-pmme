@@ -42,6 +42,7 @@ valendo para o E9, o E7 e a literatura de magnitude.
 | [Plano da entrega empírica](04_plano_entrega_empirica.md) | o que falta por bloco da banca, erros do deck, hipóteses pela cadeia do modelo, metodologia econométrica e o registro de decisões |
 | [Roteiro narrativo](01_roteiro_narrativo.md) | o arco, a lógica de cada bloco e as frases que não podem mudar |
 | [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — slides novos com título, figura, tabela, números, cautela e notas; o quadro de correções do deck do grupo |
+| [Discussão da história empírica](05_discussao_historia_empirica.md) | perguntas do autor sobre a parte empírica, respostas, decisões de apresentação e a ordem da história nos slides |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | cada figura → arquivo, script e natureza; cada número → arquivo, seletor e formato, num bloco gerado pelo script |
 | [Relatório de validação para os professores](../../../output/apresentacao_validacao/relatorio_validacao_rdd_bolsa.pdf) | relatório curto (derivado) com o desenho, os diagnósticos e os resultados de 19/10; não é o deck |
 
