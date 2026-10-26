@@ -221,6 +221,21 @@ A conexão empírica mais direta virá:
   candidato ou porque o candidato foi para outra?
 - da concorrência (D-d).
 
+### 2.11 Explicações da queda que têm apoio nos dados, e robustez a fazer
+
+Resumo preliminar do diagnóstico 61 (doc 57l, em auditoria). Os números estão no
+doc 57l e nas saídas `DQ_*`.
+
+| Explicação | Em uma frase | Robustez já feita (protocolo 61) | Robustez a fazer |
+|---|---|---|---|
+| **1. É a reta, não os dados** | nos dados crus a fração preenchida é igual dos dois lados; a queda aparece quando a reta é levada até o corte | cortes falsos (grade do protocolo e grade maior, esta fora do protocolo); randomização local em ±0,010 e ±0,020 | janelas h = 0,030 e 0,080 para Q2 e Q3; reta quadrática; retirar um município por vez perto do corte; donut |
+| **2. Vagas piores do lado de bolsa maior** | mais vagas só de cadastro reserva e de cursos que preenchem pouco em qualquer lugar | Q3 com efeitos fixos de composição; Q2 sem as células só de reserva | repetir por ciclo; índice de curso medido fora da amostra (outros ciclos); taxa só com as vagas imediatas |
+| **3. Cadastro reserva no ciclo 2** | no ciclo 2, a vaga de reserva não foi preenchida na 1ª chamada; mais reserva acima do corte derruba a taxa | ciclo 2 com e sem as células só de reserva | citar a regra do edital do ciclo 2; refazer Q1–Q3 só com as células de vaga imediata, por ciclo |
+| **4. Porte em 0,400** | municípios grandes logo abaixo do corte abrem e preenchem muitas vagas | doc 49b: retirada dos maiores; controle das vagas oferecidas | o mesmo com log(população) e vagas oferecidas juntas; retirar um por vez |
+
+Todas as linhas são descritivas e pós-resultado: medem o pacote do corte. A
+robustez a fazer precisa de adendo datado ao protocolo 61 antes de rodar.
+
 ## 3. A história, na ordem dos slides (depois da validação)
 
 1. A regra é limpa: a bolsa salta só nos cortes de IVS.
@@ -240,5 +255,6 @@ A conexão empírica mais direta virá:
 | Deck com os efeitos por corte | em produção |
 | Slides da história (seção 3) | depois da parte B auditada |
 | RDD das vagas oferecidas por município, por ciclo e corte (seção 2.2) | proposta; precisa de protocolo próprio |
-| Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | estimando; depois, auditoria e slide próprio |
+| Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | em auditoria (33); slide preliminar já no deck |
+| Robustez das explicações da queda (seção 2.11) | a fazer; adendo datado ao protocolo 61 antes de rodar |
 | Slides de especificação por estimador e da cronologia dos ciclos | em produção no gerador do deck |
