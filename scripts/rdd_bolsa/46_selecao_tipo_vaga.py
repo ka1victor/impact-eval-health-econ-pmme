@@ -835,8 +835,63 @@ def _frase_ciclos(est: pd.DataFrame) -> str:
                      f"{', '.join(lados['acima'])}; de baixo no(s) ciclo(s) {', '.join(lados['abaixo'])}): as "
                      "diferenças se compensam ao juntar os ciclos" if muda else
                      f", sempre com mais vaga imediata do lado {'de cima' if lados['acima'] else 'de baixo'}"))
-    return ("**Por ciclo.** " + "; ".join(fr)[0].upper() + "; ".join(fr)[1:] + ". Os limites de Lee aparam com o q "
-            "de cada ciclo, não com o dos ciclos juntos; a regra do §4 usa o dos ciclos juntos (decisão 16).")
+    txt = ("**Por ciclo.** " + "; ".join(fr)[0].upper() + "; ".join(fr)[1:] + ". Os limites de Lee aparam com o q "
+           "de cada ciclo, não com o dos ciclos juntos; a regra do §4 usa o dos ciclos juntos (decisão 16).")
+    # Auditoria 44, achado 1: "seleção pequena" pelo q dos ciclos juntos não quer dizer pequena dentro do ciclo.
+    pequenos = [TXT_CORTE[c] for c in CORTES if _q_ciclos_max(est, c) >= LIMIAR_Q and _f(_taxa(est, c)["q"]) < LIMIAR_Q]
+    if pequenos:
+        txt += (f" Por isso, em {', '.join(pequenos)}, o código `SELECAO_PEQUENA` vem da regra fixada antes das contas "
+                "e **não** quer dizer que a seleção seja pequena dentro de cada ciclo. O 48b compara dentro do ciclo "
+                "(intercepto e inclinações por ciclo), e uma seleção de um sentido num ciclo e do outro sentido em outro "
+                "não se anula necessariamente na H1. O que protege a H1 da seleção nesse corte são os limites de Lee, que aparam com o q "
+                "de cada ciclo.")
+    return txt
+
+
+def _q_ciclos_max(est: pd.DataFrame, c: int) -> float:
+    qs = [_f(_uma(est, linha="SV-1", tipo_linha="taxa_selecao", ciclo=str(k), corte=ROT_CORTE[c])["q"])
+          for k in CICLOS]
+    qs = [q for q in qs if np.isfinite(q)]
+    return max(qs) if qs else float("nan")
+
+
+def _nota_sens(est: pd.DataFrame, lid: str, oid: str, c: int, le: dict) -> str:
+    """Peso de uma sensibilidade que muda de leitura (auditoria 44, achado 2)."""
+    x = le["lee"][f"{lid}|{oid}|{ROT_CORTE[c]}"]
+    txt = ". Pela decisão 29 isso não muda a leitura do SV-3"
+    if x["codigo"] == "INTERVALO_DE_UM_LADO_DO_ZERO":
+        r = _lee(est, lid, oid, c)
+        e, k, u = _esc(r["unidade"])
+        perto = _f(r["limite_sup"]) if x["sinal"] == "negativo" else _f(r["limite_inf"])
+        txt += (f"; o limite mais perto de zero fica em {fn(e * perto, k)}{u}"
+                + (", e, com o IC de Imbens–Manski contendo zero, o sinal não se distingue do acaso"
+                   if x["ic_im_contem_zero"] else ""))
+    if lid == "SV-5":
+        r3, r5 = _lee(est, "SV-3", oid, c), _lee(est, "SV-5", oid, c)
+        e, k, u = _esc(r5["unidade"])
+        txt += (f". O SV-5 tira a reta de Y no IVS, como a HI-1 e a HI-2 do 48b: a diferença sem aparo passa de "
+                f"{fn(e * _f(r3['dif_sem_aparo']), k)}{u} (SV-3, sem a reta) para {fn(e * _f(r5['dif_sem_aparo']), k)}{u}; "
+                "a leitura do SV-3 depende da hipótese de randomização local na janela (seção 9)")
+        if oid == "Y2":
+            ref = _p_holm_hi()
+            hi2 = _referencia_hi2(c)
+            if np.sign(hi2) == np.sign(_f(r5["dif_sem_aparo"])):
+                txt += (f". O sentido é o da HI-2 do 48b nesse corte ({fn(hi2, 2)} médicos por município, p Holm "
+                        f"{fp(ref[(ROT_CORTE[c], 'HI-2')])}), em outra escala")
+    return txt
+
+
+def _referencia_hi2(c: int) -> float:
+    hi = pd.read_csv(HI_EST, dtype={"corte": str, "ciclo": str}, low_memory=False)
+    return _f(T40._uma(hi, linha="HI-2", outcome="HI-2", variante="principal", corte=ROT_CORTE[c])["tau"])
+
+
+def _p_holm_hi() -> dict:
+    """p de Holm das quatro primárias do 48b (só lido de HI_estimativas.csv; auditoria 44)."""
+    hi = pd.read_csv(HI_EST, dtype={"corte": str, "ciclo": str}, low_memory=False)
+    return {(ROT_CORTE[c], oid): _f(T40._uma(hi, linha=oid, outcome=oid, variante="principal",
+                                             corte=ROT_CORTE[c])["p_holm"])
+            for c in CORTES for oid in ("HI-1", "HI-2")}
 
 
 def resposta_curta(est: pd.DataFrame, bal: pd.DataFrame, resumo: dict) -> str:
@@ -846,6 +901,10 @@ def resposta_curta(est: pd.DataFrame, bal: pd.DataFrame, resumo: dict) -> str:
     resp = []
     for c in CORTES:
         cod = cods1[ROT_CORTE[c]]
+        ressalva = ""
+        if cod == "SELECAO_PEQUENA" and _q_ciclos_max(est, c) >= LIMIAR_Q:      # auditoria 44, achado 1
+            ressalva = (". Isso vale só com os ciclos juntos: dentro de cada ciclo as taxas diferem mais (q de até "
+                        f"{fn(_q_ciclos_max(est, c), 3, False)}; ver \"Por ciclo\")")
         resp.append(f"em {TXT_CORTE[c]}, " + {
             "TIPO_RESPONDE_AO_CORTE": "o tipo de vaga **responde ao corte** (o IC do salto de S exclui zero): a amostra "
                                       "só com vagas imediatas é selecionada, e os limites de Lee pesam mais",
@@ -854,7 +913,7 @@ def resposta_curta(est: pd.DataFrame, bal: pd.DataFrame, resumo: dict) -> str:
             "IC_CONTEM_ZERO_MAS_TAXAS_DIFEREM": "não se detecta salto no tipo de vaga (IC de S com zero), mas as taxas "
                                                 "de seleção na janela **diferem** (q ≥ 0,05): a seleção não é pequena "
                                                 "o bastante para ser ignorada, e os limites de Lee pesam mais",
-        }[cod])
+        }[cod] + ressalva)
     partes.append("**O tipo de vaga responde ao corte? (SV-1)** Pela regra pré-registrada, " + "; ".join(resp) + ".")
     partes += [f"- **Corte {TXT_CORTE[c]}** ({BOLSA[c]}): {_frase_sv1(est, c, le)}." for c in CORTES]
     partes.append(_frase_ciclos(est))
@@ -879,13 +938,16 @@ def resposta_curta(est: pd.DataFrame, bal: pd.DataFrame, resumo: dict) -> str:
     partes.append(cab)
     partes += lee
     ref = resumo["referencia_hi"]
+    ph = _p_holm_hi()                                                       # auditoria 44, achado 4
     partes.append("Para referência (outra conta: célula com a reta, e médicos por município com controle das vagas), a "
                   "H1 do 48b é " + "; ".join(
                       f"em {TXT_CORTE[c]}, HI-1 {fn(100 * ref[ROT_CORTE[c]]['HI-1']['tau'], 1)} p.p. "
                       f"[{fn(100 * ref[ROT_CORTE[c]]['HI-1']['ic95_inf'], 1)}; "
-                      f"{fn(100 * ref[ROT_CORTE[c]]['HI-1']['ic95_sup'], 1)}] e HI-2 "
-                      f"{fn(ref[ROT_CORTE[c]]['HI-2']['tau'], 2)} [{fn(ref[ROT_CORTE[c]]['HI-2']['ic95_inf'], 2)}; "
-                      f"{fn(ref[ROT_CORTE[c]]['HI-2']['ic95_sup'], 2)}]" for c in CORTES) + ".")
+                      f"{fn(100 * ref[ROT_CORTE[c]]['HI-1']['ic95_sup'], 1)}] (p Holm {fp(ph[(ROT_CORTE[c], 'HI-1')])}) e "
+                      f"HI-2 {fn(ref[ROT_CORTE[c]]['HI-2']['tau'], 2)} [{fn(ref[ROT_CORTE[c]]['HI-2']['ic95_inf'], 2)}; "
+                      f"{fn(ref[ROT_CORTE[c]]['HI-2']['ic95_sup'], 2)}] (p Holm {fp(ph[(ROT_CORTE[c], 'HI-2')])})"
+                      for c in CORTES) + "."
+                  + (" Nenhuma das quatro rejeita zero depois do Holm do 48b." if min(ph.values()) >= ALFA else ""))
     s2 = le["sv2"]
     fr2 = []
     for c in CORTES:
@@ -905,7 +967,8 @@ def resposta_curta(est: pd.DataFrame, bal: pd.DataFrame, resumo: dict) -> str:
                     r = _lee(est, lid, oid, c)
                     det.append(f"{NOME_Y[oid]} em {TXT_CORTE[c]}: {_frase_lee(r, le['lee'][f'{lid}|{oid}|{ROT_CORTE[c]}'])}"
                                + (", com IC de Imbens–Manski que contém zero" if le["lee"][
-                                   f"{lid}|{oid}|{ROT_CORTE[c]}"]["ic_im_contem_zero"] else ""))
+                                   f"{lid}|{oid}|{ROT_CORTE[c]}"]["ic_im_contem_zero"] else "")
+                               + _nota_sens(est, lid, oid, c, le))
         sens.append(f"{lid} ({'janela 0,020' if lid == 'SV-4' else 'com a reta'}): "
                     + ("mesma leitura do SV-3 em tudo" if not difere else "leitura diferente da do SV-3 em "
                        + "; ".join(det)))
@@ -915,7 +978,7 @@ def resposta_curta(est: pd.DataFrame, bal: pd.DataFrame, resumo: dict) -> str:
     return "\n\n".join(partes)
 
 
-def tab_portao(resumo: dict) -> str:
+def tab_portao(resumo: dict, est: pd.DataFrame) -> str:
     p = resumo["portao"]
     linhas = [[x["linha"], T44._corte_txt(x["corte"]), fn(x["tau_csv"], 6), fn(x["tau_44"], 6),
                f"{x['max_abs_dif']:.1e}", "sim" if x["reproduz"] else "não"] for x in p["hi"]["linhas"]]
@@ -939,7 +1002,29 @@ def tab_portao(resumo: dict) -> str:
               "só de cadastro reserva com o quadro do ciclo 2 de 19/03/2026; o 48f mede S (município × ciclo com "
               "alguma vaga imediata) e usa no ciclo 2 o quadro de 13/02/2026. As colunas \"13/02\" mostram a mesma "
               "medida do D-b com o quadro de 13/02 (descritivo). \"Abaixo / acima\" são as médias simples (célula) "
-              "ou ponderadas pelas células (municípios) nas linhas usadas de cada lado da janela.")
+              "ou ponderadas pelas células (municípios) nas linhas usadas de cada lado da janela."
+            + _reconciliar_db(p, est))
+
+
+def _reconciliar_db(p: dict, est: pd.DataFrame) -> str:
+    """Por que o D-b do 57l mostrava salto no tipo de vaga e o SV-1 não (auditoria 44, achado 3). Descritivo."""
+    fr = []
+    for c in CORTES:
+        x = [l for l in p["db"]["linhas"] if l["quantidade"] == "so_cr" and l["ciclo"] == "1+2+3"
+             and l["corte"] == ROT_CORTE[c]][0]
+        a, b = x["c2_19mar"], x["c2_13fev"]
+        cel = _uma(est, linha="SV-1", tipo_linha="salto", outcome="CELULA_IMEDIATA", corte=ROT_CORTE[c])
+        fr.append(f"em {TXT_CORTE[c]}, a parte das células só de CR salta {fn(100 * a['tau'], 1)} p.p. "
+                  f"[{fn(100 * a['ic95_inf'], 1)}; {fn(100 * a['ic95_sup'], 1)}] com o quadro de 19/03 e "
+                  f"{fn(100 * b['tau'], 1)} p.p. [{fn(100 * b['ic95_inf'], 1)}; {fn(100 * b['ic95_sup'], 1)}] com o de "
+                  f"13/02, sem efeitos fixos; com efeitos fixos de curso × ciclo (linha da célula do SV-1), o salto na "
+                  f"parte só de CR é {fn(-100 * _f(cel['tau']), 1)} p.p. [{fn(-100 * _f(cel['ic95_sup']), 1)}; "
+                  f"{fn(-100 * _f(cel['ic95_inf']), 1)}]")
+    return ("\n\n**Por que o D-b mostrava salto no tipo de vaga e o SV-1 não (auditoria 44).** Na célula, ter vaga "
+            "imediata é 1 menos ser só de CR, então as duas medidas são a mesma com o sinal trocado. Com os ciclos "
+            "juntos, " + "; ".join(fr) + ". Duas coisas mudam do 57l para cá: o quadro do ciclo 2 (o de 19/03 foi refeito "
+            "depois do resultado preliminar) e a comparação dentro do mesmo curso e ciclo, que reduz o salto: a parte só "
+            "de CR varia por curso, e a mistura de cursos não é a mesma dos dois lados do corte (descritivo). A linha principal do SV-1, S, é outra margem: o município × ciclo ter alguma vaga imediata.")
 
 
 def tab_amostra(resumo: dict) -> str:
@@ -1055,7 +1140,7 @@ def tab_lee(est: pd.DataFrame, lids: tuple) -> str:
     return t + "\n\nComponentes por ciclo (sem IC; o limite do corte é a média ponderada deles):\n\n" + t2
 
 
-def leitura_txt(resumo: dict) -> str:
+def leitura_txt(resumo: dict, est: pd.DataFrame) -> str:
     le = resumo["leitura"]
     out = []
     txt1 = {"TIPO_RESPONDE_AO_CORTE": "o tipo de vaga responde ao corte (ou a algo que muda nele): a amostra do 48b é "
@@ -1068,7 +1153,10 @@ def leitura_txt(resumo: dict) -> str:
         x = le["sv1"][ROT_CORTE[c]]
         out.append(f"- **SV-1, {TXT_CORTE[c]}:** `{x['codigo']}` — {txt1[x['codigo']]}."
                    + (" A linha da célula discorda da do município quanto a conter zero (relatado, não muda a leitura)."
-                      if x["celula_discorda"] else ""))
+                      if x["celula_discorda"] else "")
+                   + (f" Ressalva (auditoria 44): o q que entra na regra é o dos ciclos juntos; dentro de cada ciclo ele "
+                      f"chega a {fn(_q_ciclos_max(est, c), 3, False)}, e os limites de Lee usam o de cada ciclo."
+                      if x["codigo"] == "SELECAO_PEQUENA" and _q_ciclos_max(est, c) >= LIMIAR_Q else ""))
     for c in CORTES:
         for oid in OUTCOMES:
             x = le["lee"][f"SV-3|{oid}|{ROT_CORTE[c]}"]
@@ -1105,7 +1193,9 @@ def limites_txt(resumo: dict) -> str:
         "imediata do lado de taxa maior são os que teriam vaga de qualquer jeito mais um excesso, e aparar esse "
         "excesso nas duas pontas de Y dá o pior e o melhor caso. A premissa **não é testável** com estes dados; é "
         "relatada. Se o Ministério deu vaga imediata a alguns municípios por estarem acima do corte e tirou de outros "
-        "pelo mesmo motivo, os limites não valem.",
+        "pelo mesmo motivo, os limites não valem. **Para quem vale o intervalo:** para os municípios × ciclo que "
+        "teriam vaga imediata dos dois lados do corte (os \"sempre selecionados\" de Lee), não para todo município "
+        "com vaga imediata.",
         "**Pós-resultado.** A H1 do 48b e o salto da parte de células só de reserva (57l) já tinham sido vistos. As "
         "regras foram congeladas antes destas contas, mas a pergunta não é cega ao resultado.",
         "**Pacote do corte.** Em 0,300 e 0,400 mudam a bolsa e outras regras federais (auditoria 18). Nada aqui isola "
@@ -1125,7 +1215,9 @@ def limites_txt(resumo: dict) -> str:
         "**Combinação dos ciclos.** Os limites são calculados dentro de cada ciclo e combinados pelo número de "
         "unidades com S = 1; os limites de cada ciclo estão na seção 5. A monotonicidade é usada dentro de cada "
         "ciclo: o sentido da seleção pode mudar de um ciclo para outro (seção 3), mas dentro do ciclo tem de valer "
-        "para todos os municípios.",
+        "para todos os municípios. Juntar os ciclos num só conjunto, com um q só, exigiria o mesmo sentido em todos "
+        "os ciclos, o que os dados não mostram em todos os cortes (seção 3). A troca de sentido entre ciclos também é compatível com "
+        "acaso: cada ciclo tem poucos municípios na janela, e o lado aparado em cada ciclo é o da taxa estimada.",
         "**q dos ciclos juntos.** A regra \"q < 0,05\" do §4 é aplicada ao q dos ciclos juntos (decisão 16). Quando "
         "os ciclos têm seleção em sentidos opostos, esse q fica pequeno mesmo com q grande em cada ciclo; por isso "
         "o q de cada ciclo é relatado ao lado e é ele que entra nos limites.",
@@ -1143,13 +1235,13 @@ def gerar_blocos(est: pd.DataFrame, bal: pd.DataFrame, resumo: dict) -> dict[str
         t4.append(f"{TXT_CORTE[c]}: {fpct(r['p_abaixo'])} abaixo e {fpct(r['p_acima'])} acima, q = {fn(r['q'], 3, False)}")
     return {
         "resposta_curta": resposta_curta(est, bal, resumo),
-        "portao": tab_portao(resumo),
+        "portao": tab_portao(resumo, est),
         "amostra": tab_amostra(resumo),
         "sv1": tab_sv1(est),
         "sv2": tab_sv2(bal, resumo),
         "sv3": tab_lee(est, ("SV-3",)),
         "sv4_sv5": ("Taxas de seleção na janela de 0,020 (ciclos combinados): " + "; ".join(t4) + ".\n\n" + sv45),
-        "leitura": leitura_txt(resumo),
+        "leitura": leitura_txt(resumo, est),
         "figuras": figs,
         "limites": limites_txt(resumo),
     }
@@ -1182,9 +1274,10 @@ COMO_LER = {
     "SV_taxa_selecao.png": (
         "Como ler: em cada corte, a altura da barra é a parte dos municípios × ciclo perto do corte (janela de 0,050, "
         "com mais peso para quem está mais perto) que têm alguma vaga imediata. Azul: lado de bolsa menor; laranja: "
-        "lado de bolsa maior. Se as barras de um par têm alturas diferentes, o tipo de vaga muda no corte, e a "
-        "comparação só entre municípios com vaga imediata pode juntar grupos diferentes. q é a parte que os limites "
-        "de Lee aparam no lado mais alto."),
+        "lado de bolsa maior. Se as barras de um par têm alturas diferentes, a chance de ter vaga imediata difere "
+        "entre os lados na janela (pode ser acaso: cada ciclo tem poucos municípios), e a comparação só entre "
+        "municípios com vaga imediata pode juntar grupos diferentes. O q de cada ciclo é a parte que os limites de "
+        "Lee aparam no lado mais alto daquele ciclo; o q de \"juntos\" só entra na regra de leitura do §4."),
     "SV_limites_lee.png": (
         "Como ler: a barra grossa vai do limite inferior ao superior de Lee (o salto no corte, lado de bolsa maior "
         "menos o de bolsa menor, que vale qualquer que tenha sido a regra do Ministério para o tipo de vaga, se ela "
@@ -1349,7 +1442,8 @@ def gerar_figuras(est: pd.DataFrame) -> list[dict]:
 
 def entradas() -> list[dict]:
     arqs = [ADENDO, HI_EST, CL_BAL, DQ_EST, T44.A08, T44.POP22, T44.PAINEL, T44.MANIF_A09, T44.CIR_BRUTO,
-            T44.CIR_MANIF, T44.REF_IBGE, T44.REF_MANIF, T23.ARQ_VC, T23.ARQ_VM, T40.ARQ_C2_13FEV]
+            T44.CIR_MANIF, T44.REF_IBGE, T44.REF_MANIF, T23.ARQ_VC, T23.ARQ_VM, T40.ARQ_C2_13FEV,
+            T23.ARQ_U, T23.E6.ARQ_G3]       # U e G3: lidos por E6.chaves_populacoes (auditoria 44)
     return [{"arquivo": rotulo(p), "sha256": sha256(p)} for p in arqs]
 
 

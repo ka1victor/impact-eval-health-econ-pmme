@@ -6,7 +6,10 @@
 > **Estatuto:** `ADENDO_48F_POS_RESULTADO`. A H1 só com vagas imediatas (48b, doc 57n) e o salto da parte de células
 > só de reserva (doc 57l, D-b) já tinham sido vistos. Toda linha de `SV_estimativas.csv` e `SV_balanco.csv` tem
 > `natureza_dos_dados = EMPIRICO`.<br>
-> **Auditoria:** pendente.<br>
+> **Auditoria:** [auditoria 44](../auditorias/44_auditoria_selecao_tipo_vaga.md), aprovado com correções de texto
+> (nenhuma estimativa mudou). As ressalvas da auditoria entram nos blocos gerados: o código `SELECAO_PEQUENA` vem do q
+> dos ciclos juntos; o peso da linha do SV-5 que fica de um lado do zero; por que o D-b do 57l mostrava salto no tipo
+> de vaga e o SV-1 não; para quem vale o intervalo de Lee.<br>
 > **Script:** `scripts/rdd_bolsa/46_selecao_tipo_vaga.py` (construtores dos scripts 40 e 44, estimadores de
 > `rdd_lib.py` e o IC de Imbens–Manski do script 24, importados). **Saídas:** `output/rdd_bolsa/SV_estimativas.csv`,
 > `SV_balanco.csv`, `SV_resumo.json`, `SV_figuras/`. **Testes:** `tests/test_selecao_tipo_vaga.py`.<br>
@@ -151,13 +154,13 @@ conta do adendo, inclusive o portão. Nenhuma depende de resultado.
 ## 1. Resposta curta
 
 <!-- SV:resposta_curta:inicio -->
-**O tipo de vaga responde ao corte? (SV-1)** Pela regra pré-registrada, em 0,300, a seleção pelo tipo de vaga é **pequena** (IC do salto de S com zero e q < 0,05): o 48b não é muito afetado por ela; em 0,400, não se detecta salto no tipo de vaga (IC de S com zero), mas as taxas de seleção na janela **diferem** (q ≥ 0,05): a seleção não é pequena o bastante para ser ignorada, e os limites de Lee pesam mais.
+**O tipo de vaga responde ao corte? (SV-1)** Pela regra pré-registrada, em 0,300, a seleção pelo tipo de vaga é **pequena** (IC do salto de S com zero e q < 0,05): o 48b não é muito afetado por ela. Isso vale só com os ciclos juntos: dentro de cada ciclo as taxas diferem mais (q de até 0,216; ver "Por ciclo"); em 0,400, não se detecta salto no tipo de vaga (IC de S com zero), mas as taxas de seleção na janela **diferem** (q ≥ 0,05): a seleção não é pequena o bastante para ser ignorada, e os limites de Lee pesam mais.
 
 - **Corte 0,300** (R$ 10 mil → R$ 15 mil): chance de o município × ciclo ter vaga imediata: salto +8,8 p.p. (IC 95% [−14,7; +32,3]; abaixo do corte, 57,6% dos municípios × ciclo têm); chance de a célula ter vaga imediata: −4,3 p.p. (IC [−16,1; +7,5]); na janela, 57,9% abaixo e 60,4% acima, q = 0,042 (código `SELECAO_PEQUENA`).
 
 - **Corte 0,400** (R$ 15 mil → R$ 20 mil): chance de o município × ciclo ter vaga imediata: salto −12,5 p.p. (IC 95% [−29,1; +4,1]; abaixo do corte, 64,0% dos municípios × ciclo têm); chance de a célula ter vaga imediata: −2,3 p.p. (IC [−23,5; +18,9]); na janela, 65,9% abaixo e 52,5% acima, q = 0,204 (código `IC_CONTEM_ZERO_MAS_TAXAS_DIFEREM`).
 
-**Por ciclo.** Em 0,300, q vai de 0,111 a 0,216 nos ciclos (ciclos juntos: 0,042), e o lado com mais vaga imediata muda de ciclo para ciclo (de cima no(s) ciclo(s) 1, 3; de baixo no(s) ciclo(s) 2): as diferenças se compensam ao juntar os ciclos; em 0,400, q vai de 0,119 a 0,298 nos ciclos (ciclos juntos: 0,204), sempre com mais vaga imediata do lado de baixo. Os limites de Lee aparam com o q de cada ciclo, não com o dos ciclos juntos; a regra do §4 usa o dos ciclos juntos (decisão 16).
+**Por ciclo.** Em 0,300, q vai de 0,111 a 0,216 nos ciclos (ciclos juntos: 0,042), e o lado com mais vaga imediata muda de ciclo para ciclo (de cima no(s) ciclo(s) 1, 3; de baixo no(s) ciclo(s) 2): as diferenças se compensam ao juntar os ciclos; em 0,400, q vai de 0,119 a 0,298 nos ciclos (ciclos juntos: 0,204), sempre com mais vaga imediata do lado de baixo. Os limites de Lee aparam com o q de cada ciclo, não com o dos ciclos juntos; a regra do §4 usa o dos ciclos juntos (decisão 16). Por isso, em 0,300, o código `SELECAO_PEQUENA` vem da regra fixada antes das contas e **não** quer dizer que a seleção seja pequena dentro de cada ciclo. O 48b compara dentro do ciclo (intercepto e inclinações por ciclo), e uma seleção de um sentido num ciclo e do outro sentido em outro não se anula necessariamente na H1. O que protege a H1 da seleção nesse corte são os limites de Lee, que aparam com o q de cada ciclo.
 
 **Limites de Lee (SV-3, principal).** Nos dois cortes e nos dois outcomes, o intervalo identificado contém zero: mesmo sem supor nada sobre como o Ministério escolheu o tipo de vaga (além da monotonicidade), **não se detecta diferença de preenchimento no corte**. O intervalo é largo, e não detectar não é mostrar que a diferença é zero.
 
@@ -169,11 +172,11 @@ conta do adendo, inclusive o portão. Nenhuma depende de resultado.
 
 - **0,400, Y2 · médicos alocados por vaga imediata:** limites [−0,15; +0,16] (IC de Imbens–Manski [−0,30; +0,32]; sem aparo +0,02; código `NAO_SE_DETECTA_DIFERENCA`).
 
-Para referência (outra conta: célula com a reta, e médicos por município com controle das vagas), a H1 do 48b é em 0,300, HI-1 −3,7 p.p. [−21,3; +13,9] e HI-2 −1,13 [−2,15; −0,10]; em 0,400, HI-1 −2,3 p.p. [−24,0; +19,4] e HI-2 −0,16 [−0,99; +0,68].
+Para referência (outra conta: célula com a reta, e médicos por município com controle das vagas), a H1 do 48b é em 0,300, HI-1 −3,7 p.p. [−21,3; +13,9] (p Holm 1,000) e HI-2 −1,13 [−2,15; −0,10] (p Holm 0,126); em 0,400, HI-1 −2,3 p.p. [−24,0; +19,4] (p Holm 1,000) e HI-2 −0,16 [−0,99; +0,68] (p Holm 1,000). Nenhuma das quatro rejeita zero depois do Holm do 48b.
 
 **Balanço (SV-2).** Em 0,300, 3 covariável(is) com IC sem zero entre S = 1 contra 1 na amostra toda (`DESBALANCO_MAIOR_EM_S1`); em 0,400, 1 covariável(is) com IC sem zero entre S = 1 contra 1 na amostra toda (`DESBALANCO_NAO_MAIOR_EM_S1`).
 
-**Sensibilidades.** SV-4 (janela 0,020): mesma leitura do SV-3 em tudo; SV-5 (com a reta): leitura diferente da do SV-3 em Y2 · médicos alocados por vaga imediata em 0,300: limites [−0,19; −0,01] (IC de Imbens–Manski [−0,39; +0,19]; sem aparo −0,10; código `INTERVALO_DE_UM_LADO_DO_ZERO`), com IC de Imbens–Manski que contém zero.
+**Sensibilidades.** SV-4 (janela 0,020): mesma leitura do SV-3 em tudo; SV-5 (com a reta): leitura diferente da do SV-3 em Y2 · médicos alocados por vaga imediata em 0,300: limites [−0,19; −0,01] (IC de Imbens–Manski [−0,39; +0,19]; sem aparo −0,10; código `INTERVALO_DE_UM_LADO_DO_ZERO`), com IC de Imbens–Manski que contém zero. Pela decisão 29 isso não muda a leitura do SV-3; o limite mais perto de zero fica em −0,01, e, com o IC de Imbens–Manski contendo zero, o sinal não se distingue do acaso. O SV-5 tira a reta de Y no IVS, como a HI-1 e a HI-2 do 48b: a diferença sem aparo passa de +0,04 (SV-3, sem a reta) para −0,10; a leitura do SV-3 depende da hipótese de randomização local na janela (seção 9). O sentido é o da HI-2 do 48b nesse corte (−1,13 médicos por município, p Holm 0,126), em outra escala.
 
 Tudo depende da premissa de monotonicidade (seção 9) e se refere ao pacote do corte, não à bolsa isolada. O principal da H1 continua o 48b.
 <!-- SV:resposta_curta:fim -->
@@ -210,6 +213,8 @@ Resultado: **reproduz** (máx. dif. 8.3e-17).
 | parte das células só de CR (municípios) | 1+2+3 | 0,400 | 53,1% / 57,7% | +11,3 p.p. [−1,6; +24,2] | 5.6e-17 | 59,2% / 63,9% | +7,2 p.p. [−13,0; +27,4] |
 
 Resultado: as 16 linhas do D-b com o quadro de 19/03 **reproduzem** o 57l (máx. dif. 9.7e-17). **Diferença de definição:** o D-b mede a parte das células só de cadastro reserva com o quadro do ciclo 2 de 19/03/2026; o 48f mede S (município × ciclo com alguma vaga imediata) e usa no ciclo 2 o quadro de 13/02/2026. As colunas "13/02" mostram a mesma medida do D-b com o quadro de 13/02 (descritivo). "Abaixo / acima" são as médias simples (célula) ou ponderadas pelas células (municípios) nas linhas usadas de cada lado da janela.
+
+**Por que o D-b mostrava salto no tipo de vaga e o SV-1 não (auditoria 44).** Na célula, ter vaga imediata é 1 menos ser só de CR, então as duas medidas são a mesma com o sinal trocado. Com os ciclos juntos, em 0,300, a parte das células só de CR salta +15,4 p.p. [+2,1; +28,6] com o quadro de 19/03 e +14,0 p.p. [−0,2; +28,3] com o de 13/02, sem efeitos fixos; com efeitos fixos de curso × ciclo (linha da célula do SV-1), o salto na parte só de CR é +4,3 p.p. [−7,5; +16,1]; em 0,400, a parte das células só de CR salta +11,3 p.p. [−1,5; +24,1] com o quadro de 19/03 e +7,2 p.p. [−12,8; +27,2] com o de 13/02, sem efeitos fixos; com efeitos fixos de curso × ciclo (linha da célula do SV-1), o salto na parte só de CR é +2,3 p.p. [−18,9; +23,5]. Duas coisas mudam do 57l para cá: o quadro do ciclo 2 (o de 19/03 foi refeito depois do resultado preliminar) e a comparação dentro do mesmo curso e ciclo, que reduz o salto: a parte só de CR varia por curso, e a mistura de cursos não é a mesma dos dois lados do corte (descritivo). A linha principal do SV-1, S, é outra margem: o município × ciclo ter alguma vaga imediata.
 <!-- SV:portao:fim -->
 
 ## 2. Amostra
@@ -367,7 +372,7 @@ Componentes por ciclo (sem IC; o limite do corte é a média ponderada deles):
 <!-- SV:leitura:inicio -->
 Regras fixadas no código antes de rodar (decisões 24 e 27 a 29):
 
-- **SV-1, 0,300:** `SELECAO_PEQUENA` — a seleção pelo tipo de vaga é pequena no corte; o 48b não é muito afetado por ela.
+- **SV-1, 0,300:** `SELECAO_PEQUENA` — a seleção pelo tipo de vaga é pequena no corte; o 48b não é muito afetado por ela. Ressalva (auditoria 44): o q que entra na regra é o dos ciclos juntos; dentro de cada ciclo ele chega a 0,216, e os limites de Lee usam o de cada ciclo.
 - **SV-1, 0,400:** `IC_CONTEM_ZERO_MAS_TAXAS_DIFEREM` — caso fora da tabela do §4: não se detecta salto no tipo de vaga, mas as taxas de seleção na janela diferem (q ≥ 0,05); dar peso aos limites de SV-3.
 - **SV-3, 0,300, Y1 · fração das células com vaga imediata preenchidas:** `NAO_SE_DETECTA_DIFERENCA` — os dois limites e o IC de Imbens–Manski contêm zero: mesmo sem supor nada sobre como o Ministério escolheu o tipo (além da monotonicidade), não se detecta diferença de preenchimento no corte.
 - **SV-3, 0,300, Y2 · médicos alocados por vaga imediata:** `NAO_SE_DETECTA_DIFERENCA` — os dois limites e o IC de Imbens–Manski contêm zero: mesmo sem supor nada sobre como o Ministério escolheu o tipo (além da monotonicidade), não se detecta diferença de preenchimento no corte.
@@ -384,7 +389,7 @@ Regras fixadas no código antes de rodar (decisões 24 e 27 a 29):
 <!-- SV:figuras:inicio -->
 ![SV_taxa_selecao](../../output/rdd_bolsa/SV_figuras/SV_taxa_selecao.png)
 
-**Como ler: em cada corte, a altura da barra é a parte dos municípios × ciclo perto do corte (janela de 0,050, com mais peso para quem está mais perto) que têm alguma vaga imediata. Azul: lado de bolsa menor; laranja: lado de bolsa maior. Se as barras de um par têm alturas diferentes, o tipo de vaga muda no corte, e a comparação só entre municípios com vaga imediata pode juntar grupos diferentes. q é a parte que os limites de Lee aparam no lado mais alto.**
+**Como ler: em cada corte, a altura da barra é a parte dos municípios × ciclo perto do corte (janela de 0,050, com mais peso para quem está mais perto) que têm alguma vaga imediata. Azul: lado de bolsa menor; laranja: lado de bolsa maior. Se as barras de um par têm alturas diferentes, a chance de ter vaga imediata difere entre os lados na janela (pode ser acaso: cada ciclo tem poucos municípios), e a comparação só entre municípios com vaga imediata pode juntar grupos diferentes. O q de cada ciclo é a parte que os limites de Lee aparam no lado mais alto daquele ciclo; o q de "juntos" só entra na regra de leitura do §4.**
 
 ![SV_limites_lee](../../output/rdd_bolsa/SV_figuras/SV_limites_lee.png)
 
@@ -394,13 +399,13 @@ Regras fixadas no código antes de rodar (decisões 24 e 27 a 29):
 ## 9. Premissa e limites
 
 <!-- SV:limites:inicio -->
-- **Premissa de monotonicidade (Lee, 2009).** Os limites supõem que o corte muda a chance de um município ter vaga imediata **numa só direção para todos**: se do lado de cima a chance é maior, nenhum município que teria vaga imediata abaixo do corte deixaria de tê-la acima (e vice-versa). Com isso, os municípios com vaga imediata do lado de taxa maior são os que teriam vaga de qualquer jeito mais um excesso, e aparar esse excesso nas duas pontas de Y dá o pior e o melhor caso. A premissa **não é testável** com estes dados; é relatada. Se o Ministério deu vaga imediata a alguns municípios por estarem acima do corte e tirou de outros pelo mesmo motivo, os limites não valem.
+- **Premissa de monotonicidade (Lee, 2009).** Os limites supõem que o corte muda a chance de um município ter vaga imediata **numa só direção para todos**: se do lado de cima a chance é maior, nenhum município que teria vaga imediata abaixo do corte deixaria de tê-la acima (e vice-versa). Com isso, os municípios com vaga imediata do lado de taxa maior são os que teriam vaga de qualquer jeito mais um excesso, e aparar esse excesso nas duas pontas de Y dá o pior e o melhor caso. A premissa **não é testável** com estes dados; é relatada. Se o Ministério deu vaga imediata a alguns municípios por estarem acima do corte e tirou de outros pelo mesmo motivo, os limites não valem. **Para quem vale o intervalo:** para os municípios × ciclo que teriam vaga imediata dos dois lados do corte (os "sempre selecionados" de Lee), não para todo município com vaga imediata.
 - **Pós-resultado.** A H1 do 48b e o salto da parte de células só de reserva (57l) já tinham sido vistos. As regras foram congeladas antes destas contas, mas a pergunta não é cega ao resultado.
 - **Pacote do corte.** Em 0,300 e 0,400 mudam a bolsa e outras regras federais (auditoria 18). Nada aqui isola o incentivo de R$ 5 mil.
 - **Randomização local.** O SV-3 e o SV-4 comparam médias ponderadas dentro da janela, sem a reta: supõem que, perto do corte, Y não varia com o IVS entre os selecionados. O SV-5 tira a reta de cada lado e mostra o que muda; a HI-1 e a HI-2 do 48b usam a reta.
 - **Escalas diferentes das do 48b.** Y1 é a fração das células com vaga imediata do município (cada município × ciclo pesa igual), não a célula da HI-1; Y2 é médicos por vaga imediata, não médicos por município com controle das vagas (HI-2). As figuras põem a HI ao lado como referência, não como a mesma conta.
 - **Células mistas.** A base não diz em que tipo de vaga cada alocado entrou: nas células mistas contam todos os alocados da célula (limite herdado do 48b).
 - **Poucos municípios e mesmo município em ciclos diferentes.** A janela tem poucas unidades com vaga imediata de cada lado; o bootstrap sorteia municípios inteiros (todas as suas linhas município × ciclo), por isso a dependência entre ciclos do mesmo município entra no EP. O IC de Imbens–Manski usa EP de bootstrap e não leva em conta a incerteza de q além da que o bootstrap capta ao refazer a aparagem.
-- **Combinação dos ciclos.** Os limites são calculados dentro de cada ciclo e combinados pelo número de unidades com S = 1; os limites de cada ciclo estão na seção 5. A monotonicidade é usada dentro de cada ciclo: o sentido da seleção pode mudar de um ciclo para outro (seção 3), mas dentro do ciclo tem de valer para todos os municípios.
+- **Combinação dos ciclos.** Os limites são calculados dentro de cada ciclo e combinados pelo número de unidades com S = 1; os limites de cada ciclo estão na seção 5. A monotonicidade é usada dentro de cada ciclo: o sentido da seleção pode mudar de um ciclo para outro (seção 3), mas dentro do ciclo tem de valer para todos os municípios. Juntar os ciclos num só conjunto, com um q só, exigiria o mesmo sentido em todos os ciclos, o que os dados não mostram em todos os cortes (seção 3). A troca de sentido entre ciclos também é compatível com acaso: cada ciclo tem poucos municípios na janela, e o lado aparado em cada ciclo é o da taxa estimada.
 - **q dos ciclos juntos.** A regra "q < 0,05" do §4 é aplicada ao q dos ciclos juntos (decisão 16). Quando os ciclos têm seleção em sentidos opostos, esse q fica pequeno mesmo com q grande em cada ciclo; por isso o q de cada ciclo é relatado ao lado e é ele que entra nos limites.
 <!-- SV:limites:fim -->

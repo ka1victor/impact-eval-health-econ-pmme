@@ -88,6 +88,14 @@
   {
    "arquivo": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",
    "sha256": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8"
+  },
+  {
+   "arquivo": "output/rdd_bolsa/outcomes/outcomes_U_municipio.parquet",
+   "sha256": "5d4bf05a24e1b5f704aa50bbff4325b3997f1505f57c80f14f822e08e1c3db14"
+  },
+  {
+   "arquivo": "output/rdd_bolsa/outcomes/outcomes_G3_municipio.parquet",
+   "sha256": "b2133fbd60b3189f162ebe35b6e3650eb1d97fda0a5e267b965802e684866948"
   }
  ],
  "portao": {
@@ -837,7 +845,7 @@
  "figuras": [
   {
    "arquivo": "output/rdd_bolsa/SV_figuras/SV_taxa_selecao.png",
-   "como_ler": "Como ler: em cada corte, a altura da barra é a parte dos municípios × ciclo perto do corte (janela de 0,050, com mais peso para quem está mais perto) que têm alguma vaga imediata. Azul: lado de bolsa menor; laranja: lado de bolsa maior. Se as barras de um par têm alturas diferentes, o tipo de vaga muda no corte, e a comparação só entre municípios com vaga imediata pode juntar grupos diferentes. q é a parte que os limites de Lee aparam no lado mais alto.",
+   "como_ler": "Como ler: em cada corte, a altura da barra é a parte dos municípios × ciclo perto do corte (janela de 0,050, com mais peso para quem está mais perto) que têm alguma vaga imediata. Azul: lado de bolsa menor; laranja: lado de bolsa maior. Se as barras de um par têm alturas diferentes, a chance de ter vaga imediata difere entre os lados na janela (pode ser acaso: cada ciclo tem poucos municípios), e a comparação só entre municípios com vaga imediata pode juntar grupos diferentes. O q de cada ciclo é a parte que os limites de Lee aparam no lado mais alto daquele ciclo; o q de \"juntos\" só entra na regra de leitura do §4.",
    "fonte": "SV_estimativas.csv: SV-1 (taxa_selecao, janela 0,050; salto de S)"
   },
   {
