@@ -373,6 +373,30 @@ mesmo, só com os principais slides, idealmente menos de 15". O deck curto passa
 a ter **no máximo 14 slides**, nas oito seções obrigatórias (doc 06), sem
 apêndice no PDF. O que sai do deck continua nos docs. Em execução.
 
+### 2.16 Resultados do adendo 48d (controles e PSM) e decisões pendentes do autor
+
+Executado (doc 57r) e auditado (auditoria 40, aprovado com correções; nenhuma
+estimativa mudou). Em resumo:
+- **Balanço em 0,300:** do lado de bolsa maior há menos capitais, menos
+  Nordeste e mais especialistas no resto da região de saúde. É limite da RDD
+  em 0,300.
+- **Controles somados (secundário):** o HI-2 em 0,300 deixa de excluir zero;
+  a queda não se separa dessas diferenças de localização e médicos.
+- **PSM em 0,300 (principal do adendo):** nenhuma diferença na H1 nem na
+  oferta local.
+- **PSM em 0,400:** sem estimativa. Capitais, Sul e Centro-Oeste só aparecem
+  abaixo do corte na janela e o logit não converge (regra fixada antes).
+
+**Decisões que só o autor toma (cada uma vira adendo datado):**
+
+| # | Decisão | Opções | Recomendação |
+|---|---|---|---|
+| 1 | PSM em 0,400 | tirar antes do logit as categorias que só aparecem de um lado (relatando quem saiu), como a §3.2 previa para o suporte; parear exato em capital e região; deixar sem estimativa | tirar as categorias de um lado só (a auditoria testou só a convergência, sem olhar outcome) |
+| 2 | Regra do pareamento (decisão 11 do 57r desvia da §3.1: pareou primeiro o par mais próximo de todos, e não "o lado menor procura par") | voltar à regra literal do adendo como principal e manter a gulosa como sensibilidade; manter como está | voltar à regra literal; os IC contêm zero nas duas (auditoria 40, achado 4) |
+| 3 | Coluna da razão *fuzzy* do protocolo 64 quando o instrumento é fraco (auditoria 39, achado 1) | deixar vazia quando F < 10; manter com o aviso | deixar vazia, para não ir parar em slide |
+| 4 | Teste de heterogeneidade por porte (estrato da atenção primária) | rodar; não rodar | — |
+| 5 | Teste de seleção pelo tipo de vaga (§2.12) | congelar adendo; não | congelar |
+
 ## 3. A história, na ordem dos slides (depois da validação)
 
 1. A regra é limpa: a bolsa salta só nos cortes de IVS.
