@@ -3,11 +3,14 @@
   "natureza_dos_dados": "EMPIRICO",
   "estatuto": "PROTOCOLO_59_POS_RESULTADO",
   "gerador": "scripts/rdd_bolsa/35_comparacao_alternativa_P3P4.py",
-  "data_execucao": "2026-10-25",
+  "data_execucao": "2026-10-26",
   "protocolo": {
     "texto": "docs/06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md",
     "sha256_texto": "5a2ceafd84512cc7b5e91dec295705269c99221767030bacdfbe33e440c99cb5",
-    "secoes": "§3, §4, §6"
+    "secoes": "§3, §4, §6",
+    "sha256_texto_congelado": "f039e3f573e8acd504a7b2e9a6371428439a09ae05218d244956c2e434b8d4ed",
+    "commit_congelamento": "1cc4d68",
+    "nota_hash": "sha256_texto é o arquivo atual, já com o adendo datado; sha256_texto_congelado é o texto do commit de congelamento"
   },
   "leitura": {
     "P3-CA": "ATT da chegada contra pares que pediram o curso no ciclo 3 e não foram priorizados, sob tendências paralelas entre os dois grupos; priorização entre quem pediu, não participação no PMM-E nem bolsa",
