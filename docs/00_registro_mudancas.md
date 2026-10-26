@@ -8,6 +8,19 @@
 
 ---
 
+## 26/10/2026 — Resultados do adendo 48b: H1 só com vagas imediatas (script 40, doc 57n)
+
+Motivo: execução do adendo 48b (com a nota §7: no ciclo 2, tipo de vaga pelo quadro de 13/02/2026, vigente na inscrição). Reproduz A3, N1 S-a e o 49b §14 antes das contas; HI-1 e HI-2 por corte com Holm, HI-s1 a HI-s8 e a sensibilidade com o quadro de 19/03 ("tipo de vaga pós-resultado (não usar)").
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57n_resultados_H1_vagas_imediatas.md`](06_execucao/57n_resultados_H1_vagas_imediatas.md) | Resultados do adendo 48b, gerado inteiro por `scripts/rdd_bolsa/40_h1_vagas_imediatas.py --atualizar-doc` a partir de `output/rdd_bolsa/HI_*` |
+| `scripts/rdd_bolsa/40_h1_vagas_imediatas.py` e `tests/test_h1_vagas_imediatas.py` | Script (no `run_all.py`, depois do 39) e testes |
+
+---
+
 ## 26/10/2026 — Adendos 48c e 52c e nota §7 do 48b (achados da auditoria 36)
 
 Motivo: a auditoria 36 mostrou que o tipo de vaga do ciclo 2 vem de um quadro refeito depois do resultado preliminar, e que há capitais concentradas logo abaixo de 0,300; correções e robustez congeladas antes de calcular.

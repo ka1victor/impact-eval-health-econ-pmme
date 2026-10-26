@@ -75,6 +75,7 @@
     ".venv/bin/python scripts/rdd_bolsa/36_equivalencia_H1.py",
     ".venv/bin/python scripts/rdd_bolsa/38_diagnostico_queda_0300.py",
     ".venv/bin/python scripts/rdd_bolsa/39_gradiente_faixas.py",
+    ".venv/bin/python scripts/rdd_bolsa/40_h1_vagas_imediatas.py",
     ".venv/bin/python scripts/rdd_bolsa/37_oferta_local_chegada.py",
     ".venv/bin/python scripts/rdd_bolsa/15_sintese_E8.py",
     ".venv/bin/python scripts/rdd_bolsa/09b_conferir_sinal.py",
