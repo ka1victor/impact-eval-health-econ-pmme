@@ -835,6 +835,32 @@ def _fatores(lr) -> str:
     return ", ".join(f"{f} ({NOME_EXPL[f]})" for f in lr.get("fatores_que_reduzem_metade", [])) or "nenhum"
 
 
+def _media_nota(r) -> float:
+    """Média do fator na amostra do balanço, lida da nota da linha (`media do fator na amostra: x`)."""
+    return float(str(r["nota"]).split(": ")[-1])
+
+
+def norte_nordeste_na_janela(est) -> dict:
+    """Auditoria 37: quantas células do Norte e do Nordeste da faixa de R$ 10 mil estão nos últimos 0,050.
+
+    Lido das saídas: linhas `regiao` (faixa inteira) e a média do balanço `norte_ou_nordeste` na janela × células.
+    """
+    reg = _sel(est, tipo_linha="regiao", faixa="R$10mil")
+    n_faixa = int(reg[reg["variante"].isin(["NORTE", "NORDESTE"])]["n_obs"].astype(float).sum())
+    bj = _um(est, tipo_linha="balanco", faixa="R$10mil", janela="janela_0050_corte_superior",
+             variante="norte_ou_nordeste")
+    x = _media_nota(bj) * float(bj["n_obs"])
+    if abs(x - round(x)) > 0.01:
+        raise FalhaValidacao("celulas do Norte e Nordeste na janela nao sao inteiras")
+    return {"faixa": n_faixa, "janela": int(round(x))}
+
+
+def _rot_variante(txt: str) -> str:
+    """'G-a (uf)' -> 'G-a (UF)': rótulo legível da variante (auditoria 37)."""
+    e, v = txt.split(" (", 1)
+    return f"{e} ({ROT_VAR.get((e, v.rstrip(')')), v.rstrip(')'))})"
+
+
 def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
     lt = resumo["leitura"]
     o10, o10j = _orig(est, "R$10mil", "faixa_inteira"), _orig(est, "R$10mil", "janela_0050_corte_superior")
@@ -844,6 +870,9 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
     mac10 = _var(est, "R$10mil", "faixa_inteira", "G-a", "macrorregiao")
     t10 = _var(est, "R$10mil", "faixa_inteira", "TODOS", "todos_juntos")
     t10j = _var(est, "R$10mil", "janela_0050_corte_superior", "TODOS", "todos_juntos")
+    uf10j = _var(est, "R$10mil", "janela_0050_corte_superior", "G-a", "uf")
+    gb10j = _var(est, "R$10mil", "janela_0050_corte_superior", "G-b", "uf_e_cir")
+    nn = norte_nordeste_na_janela(est)
     bal = _um(est, tipo_linha="balanco", faixa="R$10mil", janela="faixa_inteira", variante="norte_ou_nordeste")
     l10, l10j = lt["R$10mil|faixa_inteira"], lt["R$10mil|janela_0050_corte_superior"]
     l15, l15j = lt["R$15mil|faixa_inteira"], lt["R$15mil|janela_0050_corte_superior"]
@@ -862,18 +891,27 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
               f"{_num(rd['ivs_max_outras'], 3, False)} nas outras)" if rd["maior_ivs"] else
               f"tem IVS médio de {_num(rd['ivs'], 3, False)}")
            + f"; são {rd['n']} células em só {rd['mun']} municípios. Cada 0,100 de IVS a mais vem com "
-           f"{_ppx(bal['inclinacao'], 0)} p.p. a mais de células no Norte ou no Nordeste. "
+           f"{_ppx(bal['inclinacao'], 0)} p.p. a mais de células no Norte ou no Nordeste (balanço, fora do "
+           f"protocolo). "
            if regiao10 else f"Fatores que reduzem a subida pela metade: {_fatores(l10)}. ")
-        + f"Com todos os fatores juntos, sobram {_ppx(t10['inclinacao'])} p.p.",
-        f"**Perto do corte de 0,300 (IVS de 0,251 a 0,300)** a subida é mais forte: {_ppx(o10j['inclinacao'])} p.p. "
-        f"por 0,100 (IC 95% {_ic(o10j)}). "
-        + (f"Ali nenhum fator a reduz pela metade; com todos juntos ainda sobram {_ppx(t10j['inclinacao'])} p.p. "
-           f"({_pct(t10j['fracao_da_subida_levada'])} levados). Esse trecho não se explica com os dados disponíveis. "
+        + f"Com todos os fatores juntos, sobram {_ppx(t10['inclinacao'])} p.p. A região e o trecho perto do corte "
+          f"são quase as mesmas células: das {nn['faixa']} células do Norte e do Nordeste na faixa, {nn['janela']} "
+          f"estão nos últimos 0,050 antes de 0,300.",
+        f"**Perto do corte de 0,300 (IVS de 0,251 a 0,300)** a subida é mais forte e imprecisa: "
+        f"{_ppx(o10j['inclinacao'])} p.p. por 0,100 (IC 95% {_ic(o10j)}; {_int(o10j['n_obs'])} células em "
+        f"{_int(o10j['n_municipios'])} municípios). "
+        + (f"Ali nenhum fator sozinho a reduz pela metade: comparando só células da mesma UF, sobram "
+           f"{_ppx(uf10j['inclinacao'])} p.p. (IC 95% {_ic(uf10j)}; {_pct(uf10j['fracao_da_subida_levada'])} "
+           f"levados); com os candidatos por perto, {_pct(gb10j['fracao_da_subida_levada'])} levados; com todos "
+           f"juntos ainda sobram {_ppx(t10j['inclinacao'])} p.p. ({_pct(t10j['fracao_da_subida_levada'])} levados). "
+           f"Pela regra do §3, esse trecho não se explica com os dados disponíveis. "
            if janela_sem else
            f"Fatores que a reduzem pela metade: {_fatores(l10j)}; com todos juntos sobram "
            f"{_ppx(t10j['inclinacao'])} p.p. ")
-        + "É o mesmo trecho que a RDD usa do lado de baixo de 0,300: quanto mais íngreme ele é, mais alto fica o "
-          "ponto de partida do lado de R$ 10 mil no corte.",
+        + "São as mesmas células que a RDD usa do lado de baixo de 0,300, mas não a mesma reta: a RDD pondera pelo "
+          "kernel triangular, ajusta uma reta por ciclo e tem efeitos fixos de curso × ciclo e tipo de vaga "
+          "(a auditoria 37 compara as duas). Quanto mais íngreme é a reta desse trecho, mais alto fica o ponto de "
+          "partida do lado de R$ 10 mil no corte.",
         f"**Faixa de R$ 15 mil (0,301 a 0,400).** A subida é menor e incerta: {_ppx(o15['inclinacao'])} p.p. por "
         f"0,100 (IC 95% {_ic(o15)}{'' if _excl(o15) else ', que inclui zero'}); nos últimos 0,050, "
         f"{_ppx(o15j['inclinacao'])} p.p. (IC 95% {_ic(o15j)}). Fatores que a reduzem pela metade: na faixa inteira, "
@@ -882,13 +920,17 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
         f"{_ppx(-float(o20['inclinacao']), 1, False)} p.p. a cada 0,100 de IVS (IC 95% {_ic(o20)}).",
     ]
     if regiao10 and janela_sem and rd["maior_ivs"]:
-        par.append("**Para dizer na banca:** \"Dentro da faixa de R$ 10 mil, onde a bolsa é a mesma, os municípios "
-                   "mais vulneráveis preenchem mais vagas. Isso anda junto com a região: os de IVS mais alto da faixa "
-                   f"estão mais no {rd['nome']}, onde as vagas preenchem mais, e comparando municípios da mesma UF a "
-                   "subida quase some. "
-                   "Só nos últimos 0,050 antes de 0,300 sobra uma subida forte que nenhum dado nosso acompanha. Na "
-                   "faixa de R$ 15 mil a subida é pequena e incerta; na de R$ 20 mil o preenchimento cai. É "
-                   "descrição: mostra com o que a subida anda junto, não por quê.\"")
+        par.append("**Para dizer na banca** (revista pela auditoria 37): \"Dentro da faixa de R$ 10 mil, onde a bolsa "
+                   "é a mesma, as células abertas dos municípios mais vulneráveis são preenchidas com mais frequência. "
+                   "Na faixa inteira, isso anda junto com a região: os de IVS mais alto da faixa estão mais no "
+                   f"{rd['nome']}, onde as células preenchem mais, e comparando municípios da mesma UF a subida quase "
+                   f"some. Mas as células do Norte e do Nordeste da faixa estão quase todas ({nn['janela']} de "
+                   f"{nn['faixa']}) nos últimos 0,050 antes de 0,300, e ali sobra uma subida forte e imprecisa "
+                   f"({_ppx(o10j['inclinacao'])} p.p. por 0,100, IC 95% {_ic(o10j)}) que nenhum fator sozinho reduz "
+                   f"pela metade: comparando dentro da mesma UF, sai {_pct(uf10j['fracao_da_subida_levada'])} dela; "
+                   f"com os candidatos por perto, {_pct(gb10j['fracao_da_subida_levada'])}. Na faixa de R$ 15 mil a subida é pequena e incerta; na "
+                   "de R$ 20 mil o preenchimento cai. É descrição: mostra com o que a subida anda junto, não por "
+                   "quê.\"")
     else:
         par.append("**Para dizer na banca:** ver a tabela da seção 9 e a leitura da seção 10; tudo é descritivo.")
     return "\n\n".join(par)
@@ -990,7 +1032,8 @@ def tabela_leitura(est, resumo) -> str:
                 continue
             o = _orig(est, fx, jan)
             linhas.append([ROT_FX[fx], ROT_JAN[jan], f"{_ppx(o['inclinacao'])} {_ic(o)}",
-                           ", ".join(lr.get("variantes_que_reduzem_metade", [])) or "nenhum",
+                           ", ".join(_rot_variante(x) for x in lr.get("variantes_que_reduzem_metade", []))
+                           or "nenhum",
                            _pct(lr["todos_juntos_fracao"]) if "todos_juntos_fracao" in lr else "—",
                            f"**{ROT_LEITURA[lr['leitura']]}**"])
     return _tab(["Faixa", "Trecho", "Subida original [IC 95%]", "Fatores que reduzem pela metade",
@@ -1050,6 +1093,11 @@ DECISOES = [
     "para mostrar se o proprio fator anda junto com o IVS dentro da faixa.",
     "G-f: relato. A pesquisa documental do mesmo dia roda em paralelo; o script procura docs/auditorias/35_* na "
     "execucao e registra o que achou no resumo.",
+    "Auditoria 37 (26/10/2026, so texto): a frase da banca e o paragrafo da janela de R$ 10 mil passam a dizer que a "
+    "subida da janela e imprecisa, quanto a mesma UF e os candidatos por perto levam (abaixo da metade, mas nao zero) "
+    "e quantas celulas do Norte e do Nordeste da faixa estao na janela (lido das linhas regiao e do balanco); "
+    "'mesmas celulas que a RDD usa do lado de baixo, nao a mesma reta'; 'celulas preenchidas', nao 'vagas'. "
+    "Nenhum numero de GF_estimativas.csv mudou.",
 ]
 
 
@@ -1104,7 +1152,7 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
         if expl == "G-a":
             corpo += "\n\n" + _bloco("a_regiao", tabela_regiao(est))
         corpo += ("\n\nO próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator no lugar do "
-                  "preenchimento (descritivo, fora do BKY):\n\n" + _bloco(f"{k}_balanco", tabela_balanco(est, expl)))
+                  "preenchimento (balanço fora do protocolo 62; descritivo, fora do BKY e fora da leitura do §3):\n\n" + _bloco(f"{k}_balanco", tabela_balanco(est, expl)))
         partes.append(f"## {tit}\n\n" + corpo)
     partes.append("## 8. G-f — outras políticas que variam com o IVS (só relato)\n\n"
                   + _bloco("f_relato", secao_gf(resumo)))

@@ -241,6 +241,44 @@ class TestDoc(unittest.TestCase):
             self.assertIn(f["arquivo"], t)
 
 
+class TestCorrecoesAuditoria37(unittest.TestCase):
+    """Correções de texto da auditoria 37 (docs/auditorias/37_auditoria_gradiente_faixas.md)."""
+
+    def _resposta(self) -> str:
+        t = DOC.read_text(encoding="utf-8")
+        return t.split("<!-- GF:resposta_curta:inicio -->")[1].split("<!-- GF:resposta_curta:fim -->")[0]
+
+    def test_frase_da_banca_nao_afirma_mais_que_o_csv(self):
+        r = self._resposta()
+        banca = r.split("**Para dizer na banca**")[1]
+        for proibida in ("nenhum dado nosso acompanha", "preenchem mais vagas", "as vagas preenchem"):
+            self.assertNotIn(proibida, r)
+        self.assertIn("imprecisa", banca)
+        self.assertIn("nenhum fator sozinho", banca)
+        o = GF._orig(EST, "R$10mil", "janela_0050_corte_superior")
+        self.assertIn(GF._ic(o), banca)
+        # a fração que a mesma UF e os candidatos por perto levam na janela fica abaixo de 50% e é dita
+        for e, v in (("G-a", "uf"), ("G-b", "uf_e_cir")):
+            f = float(GF._var(EST, "R$10mil", "janela_0050_corte_superior", e, v)["fracao_da_subida_levada"])
+            self.assertTrue(0 < f < GF.LIMIAR_METADE)
+            self.assertIn(GF._pct(f), banca)
+
+    def test_norte_nordeste_na_janela_lido_das_saidas(self):
+        nn = GF.norte_nordeste_na_janela(EST)
+        c = _celulas_independentes()
+        c["macro"] = c["co_ibge"].str[0]
+        f10 = c[(c["s_mil"] <= 300) & c["macro"].isin(["1", "2"])]
+        self.assertEqual(nn["faixa"], len(f10))
+        self.assertEqual(nn["janela"], int((f10["s_mil"] > 250).sum()))
+        self.assertIn(f"{nn['janela']} de {nn['faixa']}", self._resposta())
+
+    def test_mesmas_celulas_nao_a_mesma_reta_e_balanco_fora_do_protocolo(self):
+        t = DOC.read_text(encoding="utf-8")
+        self.assertIn("mas não a mesma reta", self._resposta())
+        self.assertEqual(t.count("balanço fora do protocolo 62"), 5)
+        self.assertNotIn("(so_cr)", t.split("<!-- GF:leitura:inicio -->")[1].split("<!-- GF:leitura:fim -->")[0])
+
+
 class TestSintetico(unittest.TestCase):
     """Casos sintéticos em memória (rotulados "sintético"); nada vai para output/."""
 

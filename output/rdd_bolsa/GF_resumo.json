@@ -413,7 +413,8 @@
     "Fracao da subida levada = 1 - depois / original na mesma amostra, so com original > 0; reduz pela metade = fracao >= 0,5. Leitura do §3 por faixa x trecho; 'todos juntos' e relatado, mas nao conta como fator.",
     "BKY entre todas as inclinacoes do preenchimento (originais e depois de cada fator); balancos e medias nao entram.",
     "Balanco (fora do protocolo, descritivo): cada fator continuo ou indicador no lugar do preenchimento, mesmo modelo, para mostrar se o proprio fator anda junto com o IVS dentro da faixa.",
-    "G-f: relato. A pesquisa documental do mesmo dia roda em paralelo; o script procura docs/auditorias/35_* na execucao e registra o que achou no resumo."
+    "G-f: relato. A pesquisa documental do mesmo dia roda em paralelo; o script procura docs/auditorias/35_* na execucao e registra o que achou no resumo.",
+    "Auditoria 37 (26/10/2026, so texto): a frase da banca e o paragrafo da janela de R$ 10 mil passam a dizer que a subida da janela e imprecisa, quanto a mesma UF e os candidatos por perto levam (abaixo da metade, mas nao zero) e quantas celulas do Norte e do Nordeste da faixa estao na janela (lido das linhas regiao e do balanco); 'mesmas celulas que a RDD usa do lado de baixo, nao a mesma reta'; 'celulas preenchidas', nao 'vagas'. Nenhum numero de GF_estimativas.csv mudou."
   ],
   "entradas": [
     {
