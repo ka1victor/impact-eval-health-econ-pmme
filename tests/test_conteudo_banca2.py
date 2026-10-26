@@ -120,7 +120,7 @@ def formatar(valor, formato: str) -> str:
 
 NUM = re.compile(r"(?<![\w.,/])[−+-]?(?:\d{1,3}(?:\.\d{3})+(?:,\d+)?|\d+(?:,\d+)?)(?!\w)")
 PERMITIDOS = {"0,300", "0,400", "0,3", "0,4", "0,301", "0,050", "0,030", "0,080", "0,05", "1,96", "0,001",
-              "1", "2", "3", "5", "10", "15", "20", "+10", "+25", "95", "80"}
+              "1", "2", "3", "5", "10", "15", "20", "+10", "+25", "25", "95", "90", "80"}
 MAX_SLIDE = 60  # números de slide (deck do grupo, até 36; deck proposto, até 53) nos quadros do doc 02
 
 
@@ -236,7 +236,7 @@ class TestFormatacaoSintetica(unittest.TestCase):
 def _transf(v, transf: list) -> float:
     x = float(v)
     for op in transf:
-        x = x * float(op[1]) if op[0] == "mul" else math.exp(x)
+        x = x * float(op[1]) if op[0] == "mul" else (x + float(op[1]) if op[0] == "add" else math.exp(x))
     return x
 
 
@@ -266,7 +266,7 @@ def _resolver_bruto(sel: dict, brutos: dict, calculados: dict):
         for k, v in sel["filtro"].items():
             d = d[d[k] == v]
         assert len(d) == 1, sel
-        return float(d[sel["coluna"]].iloc[0])
+        return d[sel["coluna"]].iloc[0] if sel.get("texto_csv") else float(d[sel["coluna"]].iloc[0])
     if "texto" in sel:
         p = ROOT / sel["texto"]
         txt = (json.dumps(json.loads(p.read_text(encoding="utf-8")), ensure_ascii=False) if p.suffix == ".json"
@@ -329,7 +329,7 @@ class TestNumerosContraFontes(unittest.TestCase):
         self.assertEqual({e["natureza"] for e in self.numeros["numeros"].values()}, {"EMPIRICO"})
         self.assertEqual({e["natureza"] for e in self.numeros["failure_mode"].values()}, {"FAILURE_MODE"})
         self.assertLessEqual({e["natureza"] for e in self.numeros["texto_citado"].values()},
-                             {"TEXTO_NORMATIVO", "CITACAO_LITERATURA"})
+                             {"TEXTO_NORMATIVO", "CITACAO_LITERATURA", "REGISTRO_DOCUMENTAL"})
 
     def test_cada_codigo_relido_da_fonte(self) -> None:
         calculados = {"lado_errado_oficial": _lado_errado("ivs", "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
@@ -410,9 +410,9 @@ class TestSlides(unittest.TestCase):
     def test_contagem(self) -> None:
         t = DOC02.read_text(encoding="utf-8")
         deck = t[t.index("<!-- deck:inicio -->"):t.index("<!-- deck:fim -->")]
-        self.assertEqual(len(re.findall(r"(?m)^## ", deck)), 12)
+        self.assertEqual(len(re.findall(r"(?m)^## ", deck)), 18)
         apend = t[t.index("<!-- apendice:inicio -->"):t.index("<!-- apendice:fim -->")]
-        self.assertEqual(len(re.findall(r"(?m)^## ", apend)), 10)
+        self.assertEqual(len(re.findall(r"(?m)^## ", apend)), 11)
         self.assertTrue(all(h.startswith("## Apêndice:") for h in re.findall(r"(?m)^## .*$", apend)))
 
     def test_secoes_na_ordem_da_banca(self) -> None:
@@ -423,6 +423,73 @@ class TestSlides(unittest.TestCase):
         # a regra sharp é evidência de identificação: fica na Metodologia
         met = deck[deck.index("# Metodologia"):deck.index("# Resultados")]
         self.assertIn("## A bolsa é função exata do IVS: a regra é sharp", met)
+
+    def test_h1_por_corte_sem_empilhado_no_corpo(self) -> None:
+        """Decisão do autor (26/10/2026): na H1, só os cortes separados no corpo; o empilhado, no apêndice, rotulado."""
+        t = DOC02.read_text(encoding="utf-8")
+        corpo = t[t.index("<!-- deck:inicio -->"):t.index("<!-- deck:fim -->")]
+        for cod in ("A3_EMP_", "N1_SA_", "N1_SB_", "N1_MEDIA", "N1_H030", "N1_H080", "N1_DONUT_", "N1_UNICO_", "N1_HON_"):
+            self.assertNotIn(f"`{cod}", corpo, cod)
+        self.assertNotIn("cortes empilhados", corpo)
+        for s in self.slides:
+            if s["titulo"].startswith(("## Apêndice: N1 a N4", "## Apêndice: A3")):
+                for linha in s["texto"].splitlines():
+                    if linha.startswith("|") and "empilhado" in linha:
+                        self.assertIn("só referência", linha)
+        h1 = next(s for s in self.slides if s["titulo"].startswith("## H1"))
+        for c in ("EQ_A3_300_I90I", "EQ_N1_300_I90I", "ND_TX300", "ND_VIC400", "N1_300_HON_INF"):
+            self.assertIn(c, h1["codigos"])
+        man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+        linhas = [ln["linha"] for ln in man["figuras_novas"]["h1_preenchimento.png"]["linhas"]]
+        self.assertTrue(linhas and all(("0,300" in x or "0,400" in x) for x in linhas), linhas)
+        cad = [ln["linha"] for ln in man["figuras_novas"]["cadeia_resumo_doc57.png"]["linhas"]]
+        self.assertFalse(any(("(A3)" in x or "(N1)" in x) and "0,300" not in x and "0,400" not in x for x in cad))
+
+    def test_especificacoes_por_estimador(self) -> None:
+        """Pedido do autor (26/10/2026): cada estimador tem a sua especificação explicada na metodologia."""
+        campos = {"Outcome", "Amostra", "Equação em palavras", "Erro-padrão", "Leitura", "Cuidado", "Sensibilidades"}
+        fichas = [s for s in self.slides if s["titulo"].startswith("## Especificação")]
+        self.assertEqual(len(fichas), 4)
+        for f in fichas:
+            linhas = [ln.split("|")[1].strip() for ln in f["texto"].splitlines() if ln.startswith("| ") and "---" not in ln]
+            achados = " ".join(linhas)
+            for c in ("Equação em palavras", "Erro-padrão" if "TOST" not in f["titulo"] else "Testes", "Leitura",
+                      "Cuidado" if "H4" not in f["titulo"] else "Pré", "Sensibilidades"):
+                self.assertIn(c, achados, (f["titulo"], c))
+        self.assertIn("## Apêndice: especificações formais de cada estimador", DOC02.read_text(encoding="utf-8"))
+        self.assertIn('<!-- reservado: slide "Por que o preenchimento cai em 0,300"', DOC02.read_text(encoding="utf-8"))
+
+    def test_h2_por_ciclo_e_h3_explica_causalidade(self) -> None:
+        h2 = next(s for s in self.slides if s["titulo"].startswith("## H2"))
+        corpo = h2["texto"].split("> **Notas do apresentador.**")[0]
+        num = json.loads(NUMEROS.read_text(encoding="utf-8"))["numeros"]
+        self.assertNotIn(num["M1_RC"]["valor"] + " [", corpo)
+        self.assertNotIn(num["E9_C2_RC"]["valor"] + " [", corpo)
+        man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+        self.assertEqual([ln["codigos"][0] for ln in man["figuras_novas"]["h2_escolha.png"]["linhas"]],
+                         ["M5_C1_RC", "M5_C2_RC", "M5_C3_RC"])
+        h3 = next(s for s in self.slides if s["titulo"].startswith("## H3"))
+        self.assertIn("**Como foi medido.**", h3["texto"])
+        self.assertIn("**É causal?**", h3["texto"])
+
+    def test_cronologia_dos_ciclos(self) -> None:
+        s = next(x for x in self.slides if x["titulo"].startswith("## O PMM-E já teve três chamamentos"))
+        linhas = [[c.strip() for c in re.split(r"(?<!\\)\|", ln)[1:-1]] for ln in s["texto"].splitlines()
+                  if ln.startswith("|") and not re.fullmatch(r"[|\-: ]+", ln)]
+        d = pd.read_csv(SAIDA / "cronologia_ciclos.csv", dtype=str, keep_default_na=False).drop(columns="natureza_dos_dados")
+        self.assertEqual(linhas, [list(d.columns)] + d.values.tolist())
+
+    def test_controle_por_corte_identidade_exata(self) -> None:
+        """Slide de antes e depois do controle: total = via oferta + com controle, em cada corte, lido do registro."""
+        num = json.loads(NUMEROS.read_text(encoding="utf-8"))["numeros"]
+        for c in ("300", "400"):
+            tot, via, sa = (float(num[f"N1_{c}_{k}"]["valor_bruto"]) for k in ("DTOT", "VIA", "DSA"))
+            self.assertAlmostEqual(tot, via + sa, places=9)
+            self.assertAlmostEqual(sa, float(num[f"N1_{c}_TAU"]["valor_bruto"]), places=9)
+        s = next(x for x in self.slides if x["titulo"].startswith("## O controle muda a leitura"))
+        t = DOC02.read_text(encoding="utf-8")
+        self.assertLess(t.index(s["titulo"]), t.index('<!-- reservado: slide "Por que o preenchimento cai em 0,300"'))
+        self.assertGreater(t.index(s["titulo"]), t.index("## H1:"))
 
     def test_corpo_sintetizado(self) -> None:
         """Na parte empírica (antes do apêndice): no máximo 3 marcadores (por coluna) e uma frase de cautela."""
@@ -703,7 +770,8 @@ class TestFigurasNovas(unittest.TestCase):
 
     def test_figuras_novas_registradas(self) -> None:
         novas = self.manifesto["figuras_novas"]
-        for nome in ("h1_preenchimento.png", "h2_escolha.png", "h4_horas_medico.png", "cadeia_resumo_doc57.png",
+        for nome in ("h1_preenchimento.png", "h1_controle.png", "h2_escolha.png", "h4_horas_medico.png",
+                     "cadeia_resumo_doc57.png",
                      "tabela_descritiva_ciclos.png", "tabela_fontes.png"):
             self.assertIn(nome, novas)
             self.assertIn(f"output/apresentacao_banca2/{nome}", {f["arquivo"] for f in self.manifesto["figuras"]})
@@ -735,6 +803,10 @@ class TestFigurasNovas(unittest.TestCase):
             elif tipo == "ic":
                 inf, sup = (float(todos[c]["valor_bruto"]) for c in ln["codigos"][1:])
                 esperado = "inconclusivo" if inf <= nulo <= sup else "IC exclui o nulo"
+            elif tipo == "tost":
+                esperado = {"SO_AUMENTO": "sem aumento ≥ margem", "SO_QUEDA": "sem queda ≥ margem",
+                            "EQUIVALENTE": "equivalente na margem",
+                            "INCONCLUSIVO": "inconclusivo"}[str(todos[cod]["valor_bruto"])]
             elif tipo == "pre":
                 p = float(todos[cod]["valor_bruto"])
                 esperado = "ATT sob tendências paralelas" if p >= 0.05 else "ATT com pré falhando"
@@ -863,7 +935,7 @@ class TestDeck(unittest.TestCase):
         self.assertEqual([e["caminho"] for e in self.manifesto["saidas"]], ["output/apresentacao_banca2/deck_banca2.pptx"])
 
     def test_resultados_abrem_pela_cadeia(self) -> None:
-        titulos = [t for _, t, _ in self.novos]
+        titulos = [t for _, t, _ in self.novos if not t.startswith("O controle muda")]
         i = titulos.index("Na cadeia, só a escolha e o registro do médico se movem")
         self.assertEqual([t[:3] for t in titulos[i + 1:i + 5]], ["H1:", "H2:", "H3:", "H4:"])
         self.assertTrue(titulos[i + 5].startswith("Robustez"))
@@ -886,7 +958,7 @@ class TestDeck(unittest.TestCase):
                 self.assertGreaterEqual(min(tamanhos), 1200, titulo)
                 for tab in re.findall(r"<a:tbl>.*?</a:tbl>", x, flags=re.S):
                     self.assertGreaterEqual(min(int(v) for v in re.findall(r' sz="(\d+)"', tab)), 1400, titulo)
-                if not titulo.startswith(("Os três ciclos", "Discussão")):
+                if not titulo.startswith(("Os três ciclos", "Discussão", "Especificação", "H3:")):
                     self.assertTrue(sl["explica"], f"sem 'O que isso quer dizer': {titulo}")
                     self.assertIn("O que isso quer dizer", texto, titulo)
 

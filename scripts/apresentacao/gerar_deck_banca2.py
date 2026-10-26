@@ -25,9 +25,18 @@ nada é lido de `data/`.
 
 Determinístico: XML montado por funções puras, zip com data fixa (a do gerador da banca final) e ordem estável.
 
+Modo `--curto` (pedido do autor de 26/10/2026: "só do 14 em diante, e MUITO menor, focado nas discussões que
+tivemos aqui, sem colocar um monte de texto, sem colocar o diagrama causal da teoria no meio"): lê
+`docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md` e grava `deck_banca2_curto.pptx`, o PDF dele (pelo
+LibreOffice, se houver) e `manifesto_deck_banca2_curto.json`. Usa o deck do grupo só como template (mestre,
+layout e rodapé): nenhum slide do grupo, nenhuma divisória, nenhum diagrama e nenhum apêndice. Cada slide tem
+título-afirmação, a figura (ou a tabela) grande e no máximo duas linhas curtas, contando a cautela; o resto vai
+para as notas. O script para se uma linha não couber numa linha só ou se um slide passar do limite de linhas.
+
 Uso:
 
     PMME_DECK_GRUPO="<caminho do deck do grupo>" python3 scripts/apresentacao/gerar_deck_banca2.py
+    PMME_DECK_GRUPO="<caminho do deck do grupo>" python3 scripts/apresentacao/gerar_deck_banca2.py --curto
 """
 
 from __future__ import annotations
@@ -51,6 +60,11 @@ DOC02 = ROOT / "docs" / "07_apresentacoes" / "banca2" / "02_conteudo_slides.md"
 NUMEROS = SAIDA / "numeros_banca2.json"
 ARQ_DECK = "deck_banca2.pptx"
 ARQ_MANIFESTO = "manifesto_deck_banca2.json"
+# deck curto (pedido do autor de 26/10/2026): só a parte empírica, figura grande e no máximo duas linhas curtas
+DOC_CURTO = ROOT / "docs" / "07_apresentacoes" / "banca2" / "04_conteudo_deck_curto.md"
+ARQ_CURTO = "deck_banca2_curto.pptx"
+ARQ_CURTO_PDF = "deck_banca2_curto.pdf"
+ARQ_MANIF_CURTO = "manifesto_deck_banca2_curto.json"
 
 _spec = importlib.util.spec_from_file_location("gerar_diagrama_banca_final",
                                                ROOT / "scripts" / "apresentacao" / "gerar_diagrama_banca_final.py")
@@ -127,7 +141,7 @@ def ler_slides(doc: Path = DOC02) -> list[dict]:
         elif ln.startswith("## "):
             atual = dict(secao=secao, titulo=ln[3:].strip(), rastreio="", layout="", imagem=None, alt="",
                          tabela=[], marcadores=[], paragrafos=[], codigo=[], cadeia="", cautela="", fontes="",
-                         notas="", colunas=[], explica="", apendice=secao == "Apêndice")
+                         notas="", colunas=[], explica="", blocos=[], apendice=secao == "Apêndice")
             slides.append(atual)
         elif atual is not None and ln.startswith("### "):
             atual["colunas"].append({"titulo": ln[4:].strip(), "itens": []})
@@ -172,6 +186,8 @@ def ler_slides(doc: Path = DOC02) -> list[dict]:
                     atual["fontes"] = texto
                 elif texto.startswith("**O que isso quer dizer.**"):
                     atual["explica"] = texto.replace("**O que isso quer dizer.**", "").strip()
+                elif m := re.match(r"\*\*(Como foi medido\.|É causal\?)\*\* (.*)", texto):
+                    atual["blocos"].append((m.group(1).rstrip("."), m.group(2).split(" ‖ ")))
                 elif texto.startswith("**Cadeia:**"):
                     atual["cadeia"] = texto.replace("**Cadeia:**", "").strip()
                 elif not texto.startswith("<!--"):
@@ -262,6 +278,19 @@ def caixa_cautela(s: Slide, txt: str) -> float:
 
 def altura_explica(txt: str, w: float, sz: float = SZ_CORPO) -> float:
     return 0.16 + sz * LINHA_PT + 0.06 + altura_texto(txt, sz, w - 0.36) + 0.14
+
+
+def altura_bloco(partes: list[str], w: float, sz: float = SZ_CORPO) -> float:
+    return 0.16 + sz * LINHA_PT + 0.06 + sum(altura_texto(p, sz, w - 0.36) + 0.06 for p in partes) + 0.12
+
+
+def caixa_bloco(s: Slide, titulo: str, partes: list[str], x: float, y: float, w: float, h: float,
+                sz: float = SZ_CORPO) -> None:
+    """Bloco com título e parágrafos curtos (por exemplo, "Como foi medido" e "É causal?")."""
+    s.forma(titulo, x, y, w, h, adj=6000, fill="F4F8F5", line=VERDE, line_w=1.25, anchor="t",
+            ins=(0.18, 0.12, 0.18, 0.08),
+            paras=[para([run(titulo, sz, VERDE, b=True)], depois=4)]
+            + [para(runs_md(pt, sz, TEXTO, cor_neg=VERDE_ESCURO), linha=102, depois=4) for pt in partes])
 
 
 def caixa_explica(s: Slide, txt: str, x: float, y: float, w: float, h: float, sz: float = SZ_CORPO) -> None:
@@ -408,8 +437,8 @@ def runs_equacao(txt: str, sz: float, cor: str = TEXTO) -> list[str]:
 # --------------------------------------------------------------------------------------------------
 
 def _nav(sl: dict) -> str:
-    return {"Hipótese": "Hipótese", "Base de Dados": "Base de Dados", "Metodologia": "Metodologia"}.get(
-        sl["secao"], "Resultados")
+    return {"Hipótese": "Hipótese", "Base de Dados": "Base de Dados", "Análise exploratória": "Base de Dados",
+            "Metodologia": "Metodologia"}.get(sl["secao"], "Resultados")
 
 
 def painel(s: Slide, sl: dict, x: float, y: float, w: float, y_fim: float, com_explica: bool = True,
@@ -466,6 +495,41 @@ def montar(sl: dict, rid_img: str | None) -> str:
         if explica_embaixo:
             caixa_explica(s, sl["explica"], X0, Y0 + h + 0.2, w, y_fim - (Y0 + h + 0.2))
         painel(s, sl, x_p, Y0, X1 - x_p, y_fim, com_explica=not explica_embaixo, sz_tab_min=sz_tab_min)
+    elif lay == "figura_larga":
+        # figura na largura toda, em cima; embaixo, os marcadores e o bloco "O que isso quer dizer"
+        h_exp = altura_explica(sl["explica"], W) if sl["explica"] else 0.0
+        h_marc = altura_marcadores(sl["marcadores"], SZ_CORPO, W) if sl["marcadores"] else 0.0
+        w, h = encaixar(sl["imagem"], W, y_fim - Y0 - h_exp - h_marc - 0.2 * (bool(h_exp) + bool(h_marc)))
+        imagem(s, rid_img, X0 + (W - w) / 2, Y0, w, h, sl["alt"])
+        y = Y0 + h + 0.15
+        if sl["marcadores"]:
+            marcadores(s, sl["marcadores"], X0 + 0.05, y, W - 0.05, h_marc)
+            y += h_marc + 0.1
+        if h_exp:
+            caixa_explica(s, sl["explica"], X0, y, W, max(h_exp, y_fim - y))
+    elif lay == "figura_blocos":
+        # figura e marcadores à esquerda; à direita, os blocos ("Como foi medido", "É causal?") até o fim da área
+        w_fig = sl.get("largura_fig") or 6.4
+        w, h = encaixar(sl["imagem"], w_fig, y_fim - Y0)
+        imagem(s, rid_img, X0, Y0, w, h, sl["alt"])
+        if sl["marcadores"]:
+            y_m = Y0 + h + 0.15
+            h_m = altura_marcadores(sl["marcadores"], SZ_CORPO, w)
+            if y_m + h_m > y_fim + 0.05:
+                raise SystemExit(f"ERRO: marcadores de {sl['titulo']!r} não cabem sob a figura")
+            marcadores(s, sl["marcadores"], X0 + 0.05, y_m, w - 0.05, y_fim - y_m)
+        x_b = X0 + w + 0.3
+        w_b = X1 - x_b
+        alturas = [altura_bloco(pt, w_b) for _, pt in sl["blocos"]]
+        gap = 0.15
+        sobra = y_fim - Y0 - sum(alturas) - gap * (len(alturas) - 1)
+        if sobra < -0.05:
+            raise SystemExit(f"ERRO: os blocos de {sl['titulo']!r} não cabem ({-sobra:.2f} pol. a mais)")
+        y = Y0
+        for (tit, pt), hb in zip(sl["blocos"], alturas):
+            hb += sobra / len(alturas)
+            caixa_bloco(s, tit, pt, x_b, y, w_b, hb)
+            y += hb + gap
     elif lay == "cadeia":
         y_tab = montar_cadeia(s, sl)
         h_exp = altura_explica(sl["explica"], W) if sl["explica"] else 0.0
@@ -531,8 +595,11 @@ def montar_equacoes(s: Slide, sl: dict, y_fim: float) -> None:
         y = Y0 + 0.3 + 0.62 * k
         s.texto(f"Rótulo {k + 1}", X0 + 0.25, y, 2.7, 0.5, [para([run(rot.strip(), 14, VERDE_ESCURO, b=True)])],
                 anchor="ctr")
-        s.texto(f"Equação {k + 1}", X0 + 3.05, y, X1 - X0 - 3.2, 0.5,
-                [para(runs_equacao(eq.strip(), 19, TEXTO))], anchor="ctr")
+        largura = X1 - X0 - 3.2
+        # a maior letra (até 19 pt, nunca abaixo de 14) em que a linha cabe na largura
+        sz_eq = max(14.0, min(19.0, largura * 72 / (0.5 * len(re.sub(r"[_^]", "", eq.strip())))))
+        s.texto(f"Equação {k + 1}", X0 + 3.05, y, largura, 0.5,
+                [para(runs_equacao(eq.strip(), sz_eq, TEXTO))], anchor="ctr")
     y2 = Y0 + h_cx + 0.3
     marcadores(s, sl["marcadores"], X0, y2, X1 - X0, y_fim - y2, sz=SZ_CORPO)
 
@@ -875,6 +942,233 @@ def numerar(xml: str, pos: int) -> tuple[str, int]:
     return xml, n
 
 
+# --------------------------------------------------------------------------------------------------
+# Deck curto
+# --------------------------------------------------------------------------------------------------
+
+SZ_LINHA_CURTA = 18.0       # pt das linhas curtas sob a figura
+SZ_ITEM_TEXTO = 24.0        # pt dos itens dos slides só de texto (hipóteses, conclusão)
+H_LINHA_CURTA = 0.46        # pol.
+MAX_LINHAS_FIGURA = 2       # linhas curtas por slide de figura ou tabela, contando a cautela
+MAX_LINHAS_TEXTO = 4        # itens por slide só de texto, contando a cautela
+LAYOUTS_CURTOS = ("curto_figura", "curto_tabela", "curto_texto")
+
+
+def linhas_curtas(sl: dict) -> list[tuple[str, bool]]:
+    """As linhas de texto do slide curto, na ordem: (texto, é_cautela)."""
+    return [(m, False) for m in sl["marcadores"]] + ([(sl["cautela"], True)] if sl["cautela"] else [])
+
+
+def conferir_curto(sl: dict) -> None:
+    """Para se o slide fugir do formato curto: layout, número de linhas, linha que quebra, blocos longos."""
+    lay = sl["layout"]
+    if lay not in LAYOUTS_CURTOS:
+        raise SystemExit(f"ERRO: layout {lay!r} fora do deck curto em {sl['titulo']!r}")
+    if sl["explica"] or sl["blocos"] or sl["paragrafos"] or sl["colunas"] or sl["cadeia"] or sl["codigo"]:
+        raise SystemExit(f"ERRO: o deck curto não leva blocos de texto ({sl['titulo']!r})")
+    n = len(linhas_curtas(sl))
+    limite = MAX_LINHAS_TEXTO if lay == "curto_texto" else MAX_LINHAS_FIGURA
+    if n > limite:
+        raise SystemExit(f"ERRO: {n} linhas em {sl['titulo']!r}; o limite é {limite}")
+    if lay == "curto_figura" and sl["imagem"] is None:
+        raise SystemExit(f"ERRO: slide de figura sem figura: {sl['titulo']!r}")
+    if lay == "curto_tabela" and not sl["tabela"]:
+        raise SystemExit(f"ERRO: slide de tabela sem tabela: {sl['titulo']!r}")
+    if lay != "curto_texto":
+        for txt, _ in linhas_curtas(sl):
+            if linhas_necessarias(texto_puro(txt), SZ_LINHA_CURTA, X1 - X0 - 0.5, fator=0.54) > 1:
+                raise SystemExit(f"ERRO: a linha {texto_puro(txt)!r} de {sl['titulo']!r} não cabe numa linha só")
+
+
+def _linha_curta(s: Slide, txt: str, cautela: bool, y: float) -> None:
+    if cautela:
+        s.forma("Cautela", X0, y, X1 - X0, H_LINHA_CURTA, adj=12000, fill=CLARO2, anchor="ctr",
+                ins=(0.18, 0.02, 0.18, 0.02),
+                paras=[para(runs_md(txt.replace("**", ""), SZ_LINHA_CURTA, VERDE_ESCURO, negrito=True), "l")])
+    else:
+        s.forma("Linha", X0, y, X1 - X0, H_LINHA_CURTA, geom="rect", anchor="ctr", ins=(0.18, 0.02, 0.18, 0.02),
+                paras=[para(runs_md(txt, SZ_LINHA_CURTA, TEXTO, cor_neg=VERDE_ESCURO), "l")])
+
+
+def montar_curto(sl: dict, rid_img: str | None) -> str:
+    conferir_curto(sl)
+    s = Slide()
+    W = X1 - X0
+    linhas = linhas_curtas(sl)
+    lay = sl["layout"]
+    if lay == "curto_texto":
+        itens = [t for t, c in linhas if not c]
+        caut = [t for t, c in linhas if c]
+        y_fim = Y_FONTES - 0.1
+        if caut:
+            y_c = y_fim - H_LINHA_CURTA
+            _linha_curta(s, caut[0], True, y_c)
+            y_fim = y_c - 0.25
+        gap = 0.22
+        h_item = min(1.05, (y_fim - Y0 - 0.1 - gap * (len(itens) - 1)) / len(itens))
+        y = Y0 + 0.1
+        rotulos = [re.match(r"\*\*(.+?)\*\*", it).group(1) for it in itens if re.match(r"\*\*(.+?)\*\*", it)]
+        w_rot_max = max([len(r) * 0.6 * SZ_ITEM_TEXTO / 72 + 0.5 for r in rotulos] + [1.2]) if rotulos else 0.0
+        for it in itens:
+            m = re.match(r"\*\*(.+?)\*\*\s*(.*)", it)
+            rotulo, corpo = (m.group(1), m.group(2)) if m else ("", it)
+            w_rot = w_rot_max if rotulo else 0.0
+            if rotulo:
+                s.forma("Rótulo", X0, y, w_rot, h_item, adj=10000, fill=VERDE_ESCURO, anchor="ctr",
+                        paras=[para([run(rotulo, SZ_ITEM_TEXTO, BRANCO, b=True)], "ctr")])
+            s.forma("Item", X0 + w_rot + 0.15, y, W - w_rot - 0.15, h_item, adj=6000, fill="F4F8F5", line=VERDE,
+                    line_w=1.0, anchor="ctr", ins=(0.25, 0.04, 0.25, 0.04),
+                    paras=[para(runs_md(corpo, SZ_ITEM_TEXTO, TEXTO, cor_neg=VERDE_ESCURO), "l")])
+            if linhas_necessarias(texto_puro(corpo), SZ_ITEM_TEXTO, W - w_rot - 0.65, fator=0.54) > 1:
+                raise SystemExit(f"ERRO: o item {texto_puro(corpo)!r} de {sl['titulo']!r} não cabe numa linha só")
+            y += h_item + gap
+    else:
+        n = len(linhas)
+        y_lin = Y_FONTES - 0.08 - n * H_LINHA_CURTA - max(n - 1, 0) * 0.06
+        for k, (txt, caut) in enumerate(linhas):
+            _linha_curta(s, txt, caut, y_lin + k * (H_LINHA_CURTA + 0.06))
+        y_fim = y_lin - 0.14
+        if lay == "curto_figura":
+            w, h = encaixar(sl["imagem"], W, y_fim - Y0)
+            imagem(s, rid_img, X0 + (W - w) / 2, Y0 + (y_fim - Y0 - h) / 2, w, h, sl["alt"])
+        else:
+            larg = larguras_colunas(sl["tabela"], W, 18)
+            h_nat, _ = altura_tabela(sl["tabela"], larg, 18)
+            tabela(s, sl["tabela"], X0, Y0 + 0.05, W, min(y_fim - Y0 - 0.05, h_nat * 1.35), sz_max=18,
+                   sz_min=SZ_TAB_CORPO, onde=sl["titulo"])
+    if sl["fontes"]:
+        linha_fontes(s, sl["fontes"])
+    return xml_slide(sl["titulo"], _nav(sl), s.partes)
+
+
+def construir_curto(deck: Path, saida: Path) -> dict:
+    """Deck curto: o deck do grupo entra só como template (mestre, layout, rodapé); os slides vêm do doc 04."""
+    slides_doc = ler_slides(DOC_CURTO)
+    if any(sl["apendice"] for sl in slides_doc):
+        raise SystemExit("ERRO: o deck curto não tem apêndice")
+    for sl in slides_doc:
+        conferir_curto(sl)
+    pk = Pacote(deck)
+    pres = pk.texto("ppt/presentation.xml")
+    rels = pk.texto("ppt/_rels/presentation.xml.rels")
+    ct = pk.texto("[Content_Types].xml")
+    entradas = re.findall(r'<p:sldId id="(\d+)" r:id="(rId\d+)"/>', re.search(r"<p:sldIdLst>(.*?)</p:sldIdLst>", pres,
+                                                                              flags=re.S).group(1))
+    if len(entradas) != N_GRUPO:
+        raise SystemExit(f"ERRO: o deck do grupo tinha 36 slides; este tem {len(entradas)}")
+    rid_alvo = {m.group(1): m.group(2) for m in re.finditer(r'<Relationship Id="(rId\d+)"[^>]*Target="([^"]*)"', rels)}
+    if 'Extension="png"' not in ct:
+        ct = ct.replace("</Types>", '<Default Extension="png" ContentType="image/png"/></Types>')
+    n_slide = max(int(re.search(r"slide(\d+)\.xml", n).group(1)) for n in pk.partes if re.fullmatch(r"ppt/slides/slide\d+\.xml", n))
+    n_notas = max(int(re.search(r"notesSlide(\d+)\.xml", n).group(1)) for n in pk.partes if re.fullmatch(r"ppt/notesSlides/notesSlide\d+\.xml", n))
+    prox_rid = max(int(r[3:]) for r in rid_alvo) + 1
+    prox_id = max(int(i) for i, _ in entradas) + 1
+    layout = "slideLayout14.xml"
+    if 'name="1_Title Slide"' not in pk.texto("ppt/slideLayouts/" + layout):
+        raise SystemExit("ERRO: layout 1_Title Slide não está em slideLayout14.xml")
+    # tira os slides do grupo da apresentação (o pacote é podado depois pelo que fica alcançável)
+    rels = re.sub(r'<Relationship Id="rId\d+" Type="[^"]*/relationships/slide" Target="slides/[^"]*"/>', "", rels)
+    itens, midias, lista = [], {}, []
+    for k, sl in enumerate(slides_doc):
+        ns, nn, rid = n_slide + 1 + k, n_notas + 1 + k, f"rId{prox_rid + k}"
+        rels_slide = [f'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout" Target="../slideLayouts/{layout}"/>',
+                      f'<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesSlide" Target="../notesSlides/notesSlide{nn}.xml"/>']
+        rid_img = None
+        if sl["imagem"] is not None:
+            if not sl["imagem"].exists() or "/output/" not in sl["imagem"].as_posix():
+                raise SystemExit(f"ERRO: figura fora de output/ ou ausente: {sl['imagem']}")
+            rel_out = sl["imagem"].relative_to(ROOT).as_posix()
+            if rel_out not in midias:
+                midias[rel_out] = f"ppt/media/curto_{len(midias) + 1:02d}_{sl['imagem'].stem}.png"
+                pk.gravar(midias[rel_out], sl["imagem"].read_bytes())
+            rid_img = "rId3"
+            rels_slide.append(f'<Relationship Id="rId3" Type="{REL_IMG}" Target="../media/{Path(midias[rel_out]).name}"/>')
+        pk.gravar(f"ppt/slides/slide{ns}.xml", montar_curto(sl, rid_img))
+        pk.gravar(f"ppt/slides/_rels/slide{ns}.xml.rels",
+                  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
+                  '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+                  + "".join(rels_slide) + "</Relationships>")
+        pk.gravar(f"ppt/notesSlides/notesSlide{nn}.xml", xml_notas(notas_do_slide(sl)))
+        pk.gravar(f"ppt/notesSlides/_rels/notesSlide{nn}.xml.rels",
+                  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
+                  '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+                  '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesMaster" Target="../notesMasters/notesMaster1.xml"/>'
+                  f'<Relationship Id="rId2" Type="{REL_SLIDE}" Target="../slides/slide{ns}.xml"/>'
+                  '</Relationships>')
+        rels = rels.replace("</Relationships>", f'<Relationship Id="{rid}" Type="{REL_SLIDE}" Target="slides/slide{ns}.xml"/></Relationships>')
+        ct = ct.replace("</Types>",
+                        f'<Override PartName="/ppt/slides/slide{ns}.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slide+xml"/>'
+                        f'<Override PartName="/ppt/notesSlides/notesSlide{nn}.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.notesSlide+xml"/></Types>')
+        itens.append((str(prox_id + k), rid))
+        lista.append(dict(posicao=k + 1, titulo=sl["titulo"], secao=sl["secao"], layout=sl["layout"],
+                          linhas=[texto_puro(t) for t, _ in linhas_curtas(sl)],
+                          figura=sl["imagem"].relative_to(ROOT).as_posix() if sl["imagem"] else None))
+    nova = "<p:sldIdLst>" + "".join(f'<p:sldId id="{i}" r:id="{r}"/>' for i, r in itens) + "</p:sldIdLst>"
+    pres = re.sub(r"<p:sldIdLst>.*?</p:sldIdLst>", lambda _m: nova, pres, count=1, flags=re.S)
+    # seções do PowerPoint do grupo apontariam para slides que saíram: a lista de seções sai junto
+    pres = re.sub(r"<p:ext uri=\"\{521415D9-36F7-43E2-AB2F-B90AF26B5E84\}\">.*?</p:ext>", "", pres, flags=re.S)
+    pk.gravar("ppt/presentation.xml", pres)
+    pk.gravar("ppt/_rels/presentation.xml.rels", rels)
+    pk.gravar("[Content_Types].xml", ct)
+    manter = BF.alcancaveis(pk)
+    ct_p = re.sub(r'<Override PartName="/([^"]+)"[^>]*/>',
+                  lambda m: m.group(0) if m.group(1) in manter or m.group(1) not in pk.partes else "", ct)
+    pk.gravar("[Content_Types].xml", ct_p)
+    saida.mkdir(parents=True, exist_ok=True)
+    pk.salvar(saida / ARQ_CURTO, manter=manter | {"[Content_Types].xml"})
+    return dict(ordem=lista, midias=midias)
+
+
+def converter_pdf(pptx: Path, destino: Path) -> bool:
+    """PDF do deck pelo LibreOffice (perfil temporário). Devolve False se o LibreOffice não estiver disponível."""
+    import shutil
+    import subprocess
+    import tempfile
+    exe = shutil.which("soffice") or shutil.which("libreoffice")
+    if not exe:
+        print("aviso: LibreOffice ausente; PDF do deck curto não gerado", file=sys.stderr)
+        return False
+    with tempfile.TemporaryDirectory() as tmp:
+        env = dict(os.environ, SAL_USE_VCLPLUGIN="svp")
+        r = subprocess.run([exe, f"-env:UserInstallation=file://{tmp}/perfil", "--headless", "--convert-to", "pdf",
+                            "--outdir", tmp, str(pptx)], env=env, capture_output=True, timeout=600)
+        gerado = Path(tmp) / (pptx.stem + ".pdf")
+        if r.returncode != 0 or not gerado.exists():
+            print("aviso: o LibreOffice não converteu o deck curto: " + r.stderr.decode("utf-8", "replace")[-300:],
+                  file=sys.stderr)
+            return False
+        destino.write_bytes(gerado.read_bytes())
+    return True
+
+
+def escrever_manifesto_curto(deck: Path, saida: Path, resumo: dict, com_pdf: bool) -> None:
+    man = {
+        "natureza_dos_dados": "EMPIRICO",
+        "script": "scripts/apresentacao/gerar_deck_banca2.py --curto",
+        "pedido": "autor, 26/10/2026: só do 14 em diante, muito menor, sem o diagrama causal da teoria no meio",
+        "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; no máximo "
+                 f"{MAX_LINHAS_FIGURA} linhas curtas por slide de figura ou tabela e {MAX_LINHAS_TEXTO} por slide "
+                 "só de texto, contando a cautela; sem slides do grupo, sem divisórias, sem diagrama, sem apêndice",
+        "conteudo_canonico": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md",
+        "entradas": [
+            {"caminho": "deck do grupo (fora do repositório; não é alterado)", "nome": deck.name,
+             "sha256": sha256_arq(deck), "papel": "só template: mestre, layout e rodapé"},
+            {"caminho": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md", "sha256": sha256_arq(DOC_CURTO),
+             "papel": "texto dos slides e notas"},
+            {"caminho": "output/apresentacao_banca2/numeros_banca2.json", "sha256": sha256_arq(NUMEROS),
+             "papel": "registro dos números citados (conferido pelo teste)"},
+        ] + [{"caminho": f, "sha256": sha256_arq(ROOT / f), "papel": "figura", "no_pacote": m}
+             for f, m in sorted(resumo["midias"].items())],
+        "saidas": [{"caminho": f"output/apresentacao_banca2/{n}", "sha256": sha256_arq(saida / n),
+                    "bytes": (saida / n).stat().st_size}
+                   for n in ((ARQ_CURTO, ARQ_CURTO_PDF) if com_pdf else (ARQ_CURTO,))],
+        "nota_pdf": "o PDF é renderizado pelo LibreOffice e não é byte a byte determinístico; o .pptx é",
+        "ordem": resumo["ordem"],
+    }
+    (saida / ARQ_MANIF_CURTO).write_text(json.dumps(man, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                                         encoding="utf-8")
+
+
 def sha256_arq(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
@@ -1066,10 +1360,21 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--deck", type=Path, default=os.environ.get("PMME_DECK_GRUPO"),
                     help="deck do grupo (.pptx); só leitura. Padrão: variável de ambiente PMME_DECK_GRUPO")
+    ap.add_argument("--curto", action="store_true",
+                    help="gera o deck curto (doc 04) em vez do deck completo")
+    ap.add_argument("--sem-pdf", action="store_true", help="com --curto: não converte o deck curto em PDF")
     a = ap.parse_args(argv)
     if not a.deck:
         ap.error("informe --deck ou a variável de ambiente PMME_DECK_GRUPO")
     deck = Path(a.deck)
+    if a.curto:
+        resumo = construir_curto(deck, SAIDA)
+        com_pdf = not a.sem_pdf and converter_pdf(SAIDA / ARQ_CURTO, SAIDA / ARQ_CURTO_PDF)
+        escrever_manifesto_curto(deck, SAIDA, resumo, com_pdf)
+        for n in (ARQ_CURTO, ARQ_CURTO_PDF, ARQ_MANIF_CURTO):
+            if (SAIDA / n).exists():
+                print(SAIDA.relative_to(ROOT) / n, (SAIDA / n).stat().st_size)
+        return 0
     resumo = construir(deck, SAIDA)
     escrever_manifesto(deck, SAIDA, resumo)
     for n in (ARQ_DECK, ARQ_MANIFESTO):

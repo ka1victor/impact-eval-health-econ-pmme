@@ -89,6 +89,11 @@ CA_EST = "output/rdd_bolsa/CA_estimativas.csv"
 G1_RES = "output/rdd_bolsa/G1_resumo.json"
 A16_MAN = "output/aquisicao/cnes_profissional/a16_manifesto_cnes_profissional.json"
 CELULAS = RAIZ / "output" / "rdd_bolsa" / "outcomes" / "outcomes_V_celula.parquet"
+MUNICIPIOS_V = RAIZ / "output" / "rdd_bolsa" / "outcomes" / "outcomes_V_municipio.parquet"
+G1_DIST = RAIZ / "output" / "rdd_bolsa" / "G1_distancias_opcoes.parquet"
+G1_ORIG = RAIZ / "output" / "rdd_bolsa" / "G1_candidatos_origem.parquet"
+MALHA_RS = RAIZ / "output" / "aquisicao" / "malha_municipios_regioes_saude.parquet"
+E1_EST = "output/rdd_bolsa/E1_densidade_estimativas.csv"
 POP2022 = RAIZ / "output" / "aquisicao" / "populacao_censo2022_municipios.csv"
 GALERIA = RAIZ / "scripts" / "rdd_bolsa" / "10_galeria_figura_regra.py"
 
@@ -407,6 +412,49 @@ NUMEROS_FM: list[tuple[str, str, dict, str, str]] = [
 ]
 
 # Texto citado: atos normativos (auditoria 18) e literatura (copiada pelo E8 do doc 20).
+A01 = "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md"
+P48 = "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md"
+K_D2 = "output/rdd_bolsa/K_D2_resumo.json"
+
+
+def _a01(id_doc: str) -> dict:
+    """Data de publicação de um documento no inventário do A01 (coluna "Data Publicação")."""
+    return _x(A01, rf"\| `{id_doc}` \| `[^`]+` \| [^|]+ \| (\d{{2}}/\d{{2}}/\d{{4}}) \|")
+
+
+# Cronologia dos ciclos (pedido do autor de 26/10/2026: "já rolou em 3 edições?"): datas do inventário oficial do
+# A01, números dos editais citados no protocolo 48 (§8) e no A01, e as coortes de chegada do D2 (lista de ativos)
+NUMEROS_CRONOLOGIA: list[tuple[str, str, dict, str, str]] = [
+    ("CR_C1_EDITAL", "REGISTRO_DOCUMENTAL", _x(P48, r"Edital de Chamamento Público (nº \d+/\d{4}) \(DOU de 24/07/2025"),
+     "txt", "ciclo 1: edital de chamamento dos médicos"),
+    ("CR_C2_EDITAL", "REGISTRO_DOCUMENTAL", _x(P48, r"a cópia do Edital SGTES/MS (nº \d+/\d{4})"), "txt",
+     "ciclo 2: edital de chamamento"),
+    ("CR_C3_EDITAL", "REGISTRO_DOCUMENTAL", _x(A01, r"Oferta aos Médicos \(Chamamento (nº \d+/\d{4})\)"), "txt",
+     "ciclo 3: chamamento dos médicos"),
+    ("CR_C1_QUADRO", "REGISTRO_DOCUMENTAL", _a01("vagas_2025_c1_ch1_original"), "txt", "ciclo 1: quadro da 1ª chamada"),
+    ("CR_C1_RES", "REGISTRO_DOCUMENTAL", _a01("alocacao_2025_c1_ch1_retificada"), "txt",
+     "ciclo 1: alocação retificada da 1ª chamada"),
+    ("CR_C1_CH2", "REGISTRO_DOCUMENTAL", _a01("vagas_alocados_2025_c1_ch2"), "txt",
+     "ciclo 1: 2ª chamada (só cadastro reserva)"),
+    ("CR_C2_QUADRO", "REGISTRO_DOCUMENTAL", _a01("vagas_2026_c2_ch1_original"), "txt", "ciclo 2: quadro original"),
+    ("CR_C2_RETIF", "REGISTRO_DOCUMENTAL", _a01("vagas_2026_c2_ch1_retificada"), "txt",
+     "ciclo 2: quadro retificado final"),
+    ("CR_C2_RES", "REGISTRO_DOCUMENTAL", _a01("resultado_2026_c2_ch1_remanescentes"), "txt",
+     "ciclo 2: resultado final de remanescentes da 1ª chamada"),
+    ("CR_C2_CH2", "REGISTRO_DOCUMENTAL", _a01("vagas_2026_c2_ch2"), "txt", "ciclo 2: 2ª chamada (só cadastro reserva)"),
+    ("CR_C3_GEST", "REGISTRO_DOCUMENTAL", _a01("adesao_gestores_2026_c3_final"), "txt",
+     "ciclo 3: resultado da adesão dos gestores"),
+    ("CR_C3_QUADRO", "REGISTRO_DOCUMENTAL", _a01("vagas_2026_c3_medicos_original"), "txt",
+     "ciclo 3: quadro dos médicos"),
+    ("CR_C3_RETIF", "REGISTRO_DOCUMENTAL", _a01("vagas_2026_c3_retificada"), "txt", "ciclo 3: quadro retificado"),
+    ("CR_C3_RES", "REGISTRO_DOCUMENTAL", _a01("resultado_2026_c3_sub_judice"), "txt",
+     "ciclo 3: resultado final, sub judice"),
+    ("CR_D2_INI", "REGISTRO_DOCUMENTAL", _x(K_D2, r'"coortes": \{"(\d{6})"'), "txt",
+     "primeira coorte trimestral de chegada dos médicos (lista de ativos; D2)"),
+    ("CR_D2_FIM", "REGISTRO_DOCUMENTAL", _x(K_D2, r'"(\d{6})": \{"municipios": \d+, "especialistas": \d+\}\}'), "txt",
+     "última coorte trimestral de chegada dos médicos (lista de ativos; D2)"),
+]
+
 NUMEROS_TEXTO: list[tuple[str, str, dict, str, str]] = [
     ("CP_EMENDAS", "TEXTO_NORMATIVO", _x("docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md",
                                           r"parcelas PAP e MAC (\+\d+%)"), "txt",
@@ -474,6 +522,32 @@ def _h(id_linha: str, restricao: str, coluna: str, parametro: str | None = None)
 
 def _ca(outcome: str, estatistica: str, coluna: str) -> dict:
     return _c(CA_EST, {"id_linha": "P4-CA", "outcome": outcome, "estatistica": estatistica}, coluna)
+
+
+EQ_EST = "output/rdd_bolsa/EQ_estimativas.csv"
+ND_EST = "output/rdd_bolsa/ND_estimativas.csv"
+PP = [["mul", 100]]  # fração -> p.p.
+
+
+def _eq(id_linha: str, coluna: str, tipo_ic: str = "convencional_CR1", transf: list | None = None) -> dict:
+    sel = _c(EQ_EST, {"id_linha": id_linha, "tipo_ic": tipo_ic}, coluna, transf)
+    if coluna == "leitura_codigo":
+        sel["texto_csv"] = True  # célula de texto: a leitura pré-registrada, como está no CSV
+    return sel
+
+
+def _nd(id_linha: str, coluna: str, transf: list | None = None) -> dict:
+    return _c(ND_EST, {"id_linha": id_linha}, coluna, transf)
+
+
+def _ncorte(outcome: str, corte: str, especificacao: str, variante: str, coluna: str) -> dict:
+    return _c(N_EST, {"outcome_id": outcome, "populacao": "V1+V2+V3", "corte": corte, "especificacao": especificacao,
+                      "variante": variante}, coluna)
+
+
+CORTES_TXT = (("300", "0.300"), ("400", "0.400"))
+ND300 = "D1|estimativa|POR_CORTE|V1+V2+V3|0.300|"
+ND400 = "D1|estimativa|POR_CORTE|V1+V2+V3|0.400|"
 
 
 P1H_CSV = "output/rdd_bolsa/P1h_magnitudes.csv"
@@ -567,6 +641,8 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
     ("M1_P", "EMPIRICO", _v("m1_p"), "p3", "M1: p (família de um teste; p de Holm = p)"),
     ("M1_RC", "EMPIRICO", _v("m1_rc"), "d2", "M1: razão de chances por +R$ 5 mil"),
     ("M1_RC_INF", "EMPIRICO", _v("m1_rc_lo"), "d2", "M1: razão de chances, IC inferior"),
+    ("M1_RC_PCT", "EMPIRICO", dict(_v("m1_rc"), transf=[["add", -1], ["mul", 100]]), "d0",
+     "M1: chance a mais de a vaga ser a 1ª opção com +R$ 5 mil, (razão de chances − 1) × 100 (%)"),
     ("M1_RC_SUP", "EMPIRICO", _v("m1_rc_hi"), "d2", "M1: razão de chances, IC superior"),
     ("M1_RC_MDE", "EMPIRICO", _v("m1_rc_mde"), "d2", "M1: MDE de 80% em razão de chances"),
     ("M1_N", "EMPIRICO", _p1("M1", "empilhado", "n_candidatos"), "int", "M1: candidatos de 1ª opção na amostra P1"),
@@ -606,10 +682,94 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
        f"P1h-3: D_UF em {m} ({d}), sensibilidade com BKY")
       for k, m, c, d in SENS_H3],
     *[(f"H3_{k}{s}", "EMPIRICO", _p1h({"id_linha": "FIG", "componente": comp}, col), "d2", f"peso no M1: {d}{dd}")
-      for k, comp, d in (("10B", "10β", "toda a amplitude da bolsa, 10·β"),
+      for k, comp, d in (("5B", "5β", "um degrau da bolsa (+R$ 5 mil), 5·β"),
+                         ("10B", "10β", "toda a amplitude da bolsa, 10·β"),
                          ("THETA", "θ_UF", "mesma UF, outra região de saúde, θ_UF"))
       for s, col, dd in (("", "estimativa", ""), ("_INF", "ic95_inf", ", IC 95% inferior"),
                          ("_SUP", "ic95_sup", ", IC 95% superior"))],
+    # H1 por corte (decisão do autor de 26/10/2026: "não mostre o empilhado; mostre os efeitos separados para cada
+    # corte"). N1 e N2 por corte (protocolo 48; doc 49, §3), com e sem controle e na robustez
+    *[(f"N{k}_{c}_{s}", "EMPIRICO", _ncorte(f"N{k}", ct, "S-a", "principal", col), fm,
+       f"N{k} com controle (S-a), corte {ct}, ciclos 1–3: {d}")
+      for k in (1, 2) for c, ct in CORTES_TXT
+      for s, col, fm, d in (("TAU", "tau", "d2s", "salto"), ("INF", "ic95_inf", "d2s", "IC 95% inferior"),
+                            ("SUP", "ic95_sup", "d2s", "IC 95% superior"),
+                            ("P", "p_valor", "p3", "p, sem correção múltipla (linha por corte)"))],
+    *[(f"N1_{c}_{s}", "EMPIRICO", _ncorte("N1", ct, esp, var, col), fm, f"N1, corte {ct}: {d}")
+      for c, ct in CORTES_TXT
+      for s, esp, var, col, fm, d in (
+          ("MEDIA", "S-a", "principal", "media_abaixo", "d2", "média do lado de bolsa menor (vagas por município)"),
+          ("SB_TAU", "S-b", "principal", "tau", "d2s", "sem controle (S-b, efeito total da faixa): salto"),
+          ("SB_INF", "S-b", "principal", "ic95_inf", "d2s", "sem controle: IC inferior"),
+          ("SB_SUP", "S-b", "principal", "ic95_sup", "d2s", "sem controle: IC superior"),
+          ("H030", "S-a", "h=0.030", "tau", "d2s", "com controle, h = 0,030"),
+          ("H080", "S-a", "h=0.080", "tau", "d2s", "com controle, h = 0,080"),
+          ("DONUT", "S-j", "donut (S-a)", "tau", "d2s", "com controle, sem os municípios colados ao corte (donut)"),
+          ("DONUT_INF", "S-j", "donut (S-a)", "ic95_inf", "d2s", "donut: IC inferior"),
+          ("DONUT_SUP", "S-j", "donut (S-a)", "ic95_sup", "d2s", "donut: IC superior"),
+          ("UNICO", "S-a", "controle_coeficiente_unico", "tau", "d2s", "com um só coeficiente do controle"),
+          ("UNICO_INF", "S-a", "controle_coeficiente_unico", "ic95_inf", "d2s", "um só coeficiente: IC inferior"),
+          ("UNICO_SUP", "S-a", "controle_coeficiente_unico", "ic95_sup", "d2s", "um só coeficiente: IC superior"),
+          ("VIA", "decomposicao", "via oferta (soma gamma x salto do controle)", "tau", "d2s",
+           "decomposição exata: parte via oferta (Σ γ_g × salto das vagas oferecidas)"),
+          ("DTOT", "decomposicao", "total (= S-b na amostra de S-a)", "tau", "d2s",
+           "decomposição exata: total (S-b na amostra de S-a)"),
+          ("DSA", "decomposicao", "preenchimento dado as vagas (= S-a)", "tau", "d2s",
+           "decomposição exata: preenchimento dado as vagas (S-a)"),
+          ("SF", "S-f", "controle_com_inclinacao_por_lado", "tau", "d2s",
+           "controle com inclinação diferente de cada lado (S-f)"),
+          ("HON_INF", "S-g", "S-a: ic_honesto_M_x1", "ic95_inf", "d2s", "IC honesto (M do protocolo), inferior"),
+          ("HON_SUP", "S-g", "S-a: ic_honesto_M_x1", "ic95_sup", "d2s", "IC honesto (M do protocolo), superior"))],
+    # vagas oferecidas (imediatas + cadastro reserva) no corte (S-c, protocolo 48), por corte
+    *[(f"VIC_{c}_{s}", "EMPIRICO", _ncorte("VIC", ct, "S-c", "principal", col), fm,
+       f"vagas oferecidas por município, corte {ct}, ciclos 1–3 (S-c): {d}")
+      for c, ct in CORTES_TXT
+      for s, col, fm, d in (("TAU", "tau", "d2s", "salto"), ("INF", "ic95_inf", "d2s", "IC 95% inferior"),
+                            ("SUP", "ic95_sup", "d2s", "IC 95% superior"))],
+    *[(f"VIC_{c}_{s}", "EMPIRICO", _nd((ND300 if c == "300" else ND400) + "VIC|sem_controle|principal", col), "d2",
+       f"vagas oferecidas por município, corte {ct}: média na janela {d} (descritivo)")
+      for c, ct in CORTES_TXT
+      for s, col, d in (("MABX", "media_abaixo", "abaixo do corte"), ("MACI", "media_acima", "acima do corte"))],
+    # A3 no ciclo 1 por corte e A3 na célula com candidato de 1ª opção por corte (doc 57, §4.2)
+    *[(f"A3{g}_{c}_{s}", "EMPIRICO", _v(f"a3{v}_{c}_{k}"), fm, f"A3 {d}, corte 0,{c}: {dd}")
+      for g, v, d in (("_C1", "p_c1", "só ciclo 1"), ("C", "c_todos", "célula com candidato de 1ª opção, ciclos 1–3"))
+      for c in ("300", "400")
+      for s, k, fm, dd in (("TAU", "tau", "d1s", "salto (p.p.)"), ("INF", "lo", "d1s", "IC inferior"),
+                           ("SUP", "hi", "d1s", "IC superior"), ("MEDIA", "media", "d1", "média abaixo do corte (%)"),
+                           ("MDE", "mde", "d1", "MDE de 80%"))],
+    # TOST por corte (protocolo 60, parte A; doc 57j; auditoria 32): IC 90%, margem e leitura pré-registrada
+    *[(f"EQ_A3_{c}_{s}", "EMPIRICO", _eq(f"A3-{c}-123", col, transf=t), fm, f"TOST A3, corte 0,{c}, ciclos 1–3: {d}")
+      for c in ("300", "400")
+      for s, col, t, fm, d in (("I90I", "ic90_inf", PP, "d1s", "IC 90% inferior (p.p.)"),
+                               ("I90S", "ic90_sup", PP, "d1s", "IC 90% superior (p.p.)"),
+                               ("MMIN", "margem_minima", PP, "d1", "margem mínima de equivalência (p.p.)"),
+                               ("MARG", "margem", PP, "d0", "margem de equivalência (p.p.)"),
+                               ("LEIT", "leitura_codigo", None, "txt", "leitura pré-registrada (código)"))],
+    *[(f"EQ_N1_{c}_{s}", "EMPIRICO", _eq(f"N1-{c}-123", col), fm, f"TOST N1, corte 0,{c}, ciclos 1–3: {d}")
+      for c in ("300", "400")
+      for s, col, fm, d in (("I90I", "ic90_inf", "d2s", "IC 90% inferior (vagas por município)"),
+                            ("I90S", "ic90_sup", "d2s", "IC 90% superior"),
+                            ("MARG", "margem", "d2", "margem: 25% da média abaixo do corte (vagas por município)"),
+                            ("MMIN", "margem_minima", "d2", "margem mínima de equivalência"),
+                            ("LEIT", "leitura_codigo", "txt", "leitura pré-registrada (código)"))],
+    # Por que o sinal sai negativo em cada corte (doc 49b, §3; ND_estimativas.csv)
+    ("ND_TX300", "EMPIRICO", _nd(ND300 + "TAXA_VIC|taxa_ponderada|principal", "tau", PP), "d1s",
+     "0,300: salto na taxa de preenchimento por vaga oferecida (p.p., peso = vagas)"),
+    ("ND_TX300_INF", "EMPIRICO", _nd(ND300 + "TAXA_VIC|taxa_ponderada|principal", "ic95_inf", PP), "d1s", "IC inferior"),
+    ("ND_TX300_SUP", "EMPIRICO", _nd(ND300 + "TAXA_VIC|taxa_ponderada|principal", "ic95_sup", PP), "d1s", "IC superior"),
+    ("ND_TXVI300", "EMPIRICO", _nd(ND300 + "TAXA_VI|taxa_ponderada|principal", "tau", PP), "d1s",
+     "0,300: a mesma taxa com só as vagas imediatas no denominador (p.p.)"),
+    ("ND_TXVI300_INF", "EMPIRICO", _nd(ND300 + "TAXA_VI|taxa_ponderada|principal", "ic95_inf", PP), "d1s", "IC inferior"),
+    ("ND_TXVI300_SUP", "EMPIRICO", _nd(ND300 + "TAXA_VI|taxa_ponderada|principal", "ic95_sup", PP), "d1s", "IC superior"),
+    ("ND_TX300_C2", "EMPIRICO", _nd("AD2_A3|contribuicao|POR_CORTE|V1+V2+V3|0.300|TAXA_VIC|taxa_ponderada|grupo_c2",
+                                    "contribuicao", PP), "d1s",
+     "0,300: contribuição do ciclo 2 ao salto da taxa por vaga oferecida (p.p.)"),
+    ("ND_TX300_C2_PCT", "EMPIRICO", {"razao": ["ND_TX300_C2", "ND_TX300"]}, "pct0",
+     "0,300: parte do salto da taxa que vem do ciclo 2 (%)"),
+    ("ND_TX400", "EMPIRICO", _nd(ND400 + "TAXA_VIC|taxa_ponderada|principal", "tau", PP), "d1s",
+     "0,400: salto na taxa de preenchimento por vaga oferecida (p.p.)"),
+    ("ND_VIC400", "EMPIRICO", _nd(ND400 + "VIC|sem_controle|principal", "tau"), "d2s",
+     "0,400: salto nas vagas oferecidas (imediatas + cadastro reserva) por município"),
     # H4: horas do médico (P4, protocolo 54; doc 57d), Rambachan–Roth e comparação local (protocolo 59; doc 57h)
     *[(f"P4_{o}_{s}", "EMPIRICO", _v(f"p4_{o.lower()}_{c}"), fm, f"P4 {d}: {dd}")
       for o, d in (("HT", "horas totais"), ("HM", "horas no município do posto"), ("HF", "horas fora do município do posto"))
@@ -682,6 +842,16 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
        f"ciclo {c}: amostra da escolha (P1): 1ª opção numa célula, ligado ao CNES e com município de origem")
       for c in (1, 2, 3)],
     ("D_IVS_MUN", "EMPIRICO", _d("IVS_MUN"), "int", "municípios com IVS 2010 oficial (a08)"),
+    # Análise exploratória da escolha (descritivo): 1ª opção × origem (G1)
+    ("ESC_N", "EMPIRICO", _d("ESC_N"), "int", "candidatos com 1ª opção e município de origem no G1 (CPF e nome)"),
+    ("ESC_UF", "EMPIRICO", _d("ESC_UF"), "pct0", "1ª opção na UF de origem (%)"),
+    ("ESC_REG", "EMPIRICO", _d("ESC_REG"), "pct0", "1ª opção na região de saúde de origem (%)"),
+    ("ESC_MUN", "EMPIRICO", _d("ESC_MUN"), "pct0", "1ª opção no município de origem (%)"),
+    ("ESC_DIST_P50", "EMPIRICO", _d("ESC_DIST_P50"), "d0", "distância origem–1ª opção: mediana (km)"),
+    ("ESC_DIST_P75", "EMPIRICO", _d("ESC_DIST_P75"), "d0", "distância origem–1ª opção: 3º quartil (km)"),
+    # E1: densidade do IVS no corte (ciclo 1)
+    *[(f"E1_{c}_HOLM", "EMPIRICO", _c(E1_EST, {"ciclo": "1", "corte": ct, "papel": "principal"}, "p_holm"), "p3",
+       f"E1, ciclo 1, corte {ct}: p de Holm do teste de densidade (Poisson local)") for c, ct in CORTES_TXT],
     ("D_POP_MUN", "EMPIRICO", _d("POP_MUN"), "int", "municípios com população do Censo 2022"),
     ("D_ATIVOS", "EMPIRICO", _j(A16_MAN, "listas_pmme", "registros_ativos_2026_09_11"), "int",
      "registros na lista de especialistas ativos do PMM-E de 11/09/2026"),
@@ -718,7 +888,38 @@ def descritivas() -> dict[str, float]:
         out[f"C{c}_SEM_IVS"] = g.loc[g["faixa_regra"] == "SEM_IVS", "co_ibge"].nunique()
     out["IVS_MUN"] = pd.read_csv(IVS_OFICIAL, dtype={"co_ibge": str})["ivs"].notna().sum()
     out["POP_MUN"] = len(pd.read_csv(POP2022, dtype=str))
+    out.update(descritivas_escolha())
     return {k: float(v) for k, v in out.items()}
+
+
+def escolha_origem() -> pd.DataFrame:
+    """1ª opção × município de origem (G1, ligação por CPF e nome): candidatos com distância à origem principal."""
+    d = pd.read_parquet(G1_DIST)
+    o = pd.read_parquet(G1_ORIG)
+    if set(d["natureza_dos_dados"]) != {"EMPIRICO"} or set(o["natureza_dos_dados"]) != {"EMPIRICO"}:
+        raise SystemExit("ERRO: G1 com linha não EMPIRICO")
+    o = o[o["regra_ligacao"] == "g1_cpf_nome"][["ciclo", "id_candidato", "co_ibge_origem"]]
+    r = d[(d["opcao_rank"] == 1) & d["dist_km_origem_principal"].notna()]
+    m = r.merge(o, on=["ciclo", "id_candidato"], how="left", validate="one_to_one")
+    if m["co_ibge_origem"].isna().any():
+        raise SystemExit("ERRO: 1ª opção com distância e sem município de origem no G1")
+    mal = pd.read_parquet(MALHA_RS)[["co_ibge_6d", "sg_uf", "no_regiao_saude"]]
+    reg = (mal["sg_uf"] + "|" + mal["no_regiao_saude"]).set_axis(mal["co_ibge_6d"].astype(str))
+    m["reg_origem"] = m["co_ibge_origem"].astype(str).map(reg)
+    m["reg_opcao"] = m["co_ibge_opcao"].astype(str).map(reg)
+    if m[["reg_origem", "reg_opcao"]].isna().any().any():
+        raise SystemExit("ERRO: município sem região de saúde na malha")
+    m["mesma_uf"] = m["co_ibge_origem"].astype(str).str[:2] == m["co_ibge_opcao"].astype(str).str[:2]
+    m["mesma_regiao"] = m["reg_origem"] == m["reg_opcao"]
+    m["mesmo_municipio"] = m["co_ibge_origem"].astype(str) == m["co_ibge_opcao"].astype(str)
+    return m
+
+
+def descritivas_escolha() -> dict[str, float]:
+    m = escolha_origem()
+    dist = m["dist_km_origem_principal"]
+    return {"ESC_N": len(m), "ESC_UF": m["mesma_uf"].mean(), "ESC_REG": m["mesma_regiao"].mean(),
+            "ESC_MUN": m["mesmo_municipio"].mean(), "ESC_DIST_P50": dist.median(), "ESC_DIST_P75": dist.quantile(0.75)}
 
 
 # --------------------------------------------------------------------------
@@ -763,11 +964,13 @@ def _navegar(obj, caminho):
 
 
 def aplicar_transf(valor, transf: list) -> float:
-    """Transformações declaradas no seletor: ["mul", k] multiplica; ["exp"] exponencia."""
+    """Transformações declaradas no seletor: ["mul", k] multiplica; ["add", k] soma; ["exp"] exponencia."""
     x = float(valor)
     for op in transf:
         if op[0] == "mul":
             x *= float(op[1])
+        elif op[0] == "add":
+            x += float(op[1])
         elif op[0] == "exp":
             x = math.exp(x)
         else:
@@ -804,7 +1007,7 @@ def _resolver_bruto(seletor: dict, calculados: dict, ja: dict):
         bruto = d.loc[m, seletor["coluna"]].iloc[0]
         if bruto == "":
             raise SystemExit(f"ERRO: valor vazio em {seletor}")
-        return float(bruto)
+        return bruto if seletor.get("texto_csv") else float(bruto)
     if "texto" in seletor:
         achados = re.findall(seletor["regex"], _texto(seletor["texto"]))
         if not achados:
@@ -823,6 +1026,8 @@ def _resolver_bruto(seletor: dict, calculados: dict, ja: dict):
 def arquivo_do_seletor(seletor: dict) -> str | None:
     if "descritiva" in seletor:
         chave = seletor["descritiva"]
+        if chave.startswith("ESC_"):
+            return "output/rdd_bolsa/G1_distancias_opcoes.parquet"
         if chave == "IVS_MUN":
             return "output/aquisicao/a08_ivs_2010_oficial_municipio.csv"
         if chave == "POP_MUN":
@@ -837,7 +1042,7 @@ def arquivo_do_seletor(seletor: dict) -> str | None:
 def registrar_numeros(calculados: dict) -> dict:
     blocos = {}
     for nome, lista in (("numeros", NUMEROS + NUMEROS_NOVOS), ("failure_mode", NUMEROS_FM),
-                        ("texto_citado", NUMEROS_TEXTO)):
+                        ("texto_citado", NUMEROS_TEXTO + NUMEROS_CRONOLOGIA)):
         brutos: dict[str, object] = {}
         saida = {}
         for cod, nat, sel, formato, desc in lista:
@@ -1212,7 +1417,8 @@ W_FIG_SLIDE, H_FIG_SLIDE = 8.6, 5.15
 
 
 def figura_forest(num: dict, paineis: list[dict], como_ler: list[str], fonte: str, destino: Path,
-                  W: float = W_FIG_SLIDE, H_max: float = H_FIG_SLIDE) -> dict:
+                  W: float = W_FIG_SLIDE, H_max: float = H_FIG_SLIDE, alt_lin_min: float = 0.46,
+                  w_val: float = 2.35, alt_lin_max: float = 0.62) -> dict:
     """Painéis empilhados; em cada linha, rótulo à esquerda, intervalo no meio e valor à direita (forest plot).
 
     Cada linha: dict(rot, sub, est, inf, sup, nota) com códigos do registro. Verde: o IC 95% exclui o nulo; cinza:
@@ -1223,7 +1429,7 @@ def figura_forest(num: dict, paineis: list[dict], como_ler: list[str], fonte: st
     reg = Registro()
     ALT_TIT, ALT_EIXO, ALT_FONTE = 0.32, 0.44, 0.24
     n_lin = sum(len(p["linhas"]) for p in paineis)
-    alt_lin = min(0.62, max(0.46, (H_max - ALT_FONTE - 1.15 - len(paineis) * (ALT_TIT + ALT_EIXO)) / n_lin))
+    alt_lin = min(alt_lin_max, max(alt_lin_min, (H_max - ALT_FONTE - 1.15 - len(paineis) * (ALT_TIT + ALT_EIXO)) / n_lin))
     larg_col = (W - 0.5) / 2
     chars = int(larg_col * 11)
     linhas_cl = [textwrap.wrap(c, width=chars) for c in como_ler]
@@ -1235,7 +1441,7 @@ def figura_forest(num: dict, paineis: list[dict], como_ler: list[str], fonte: st
         raise SystemExit(f"ERRO: figura {destino.name} com {H:.2f} pol. de altura; o slide comporta {H_max}")
     fig = plt.figure(figsize=(W, H))
     x_rot, w_rot = 0.1, 3.0
-    x_plot, w_plot = 3.2, W - 3.2 - 2.35
+    x_plot, w_plot = 3.2, W - 3.2 - w_val
     x_val = x_plot + w_plot + 0.12
     registro = []
     y = H - 0.08
@@ -1273,16 +1479,17 @@ def figura_forest(num: dict, paineis: list[dict], como_ler: list[str], fonte: st
             ax.plot([est], [i], "o", ms=11, color=cor, mec="white", mew=1.8, zorder=3)
             yc = y0 + ph - (i + 0.5) * alt_lin
             com_sub = bool(ln.get("sub"))
-            reg.t(fig, x_rot / W, (yc + (0.1 if com_sub else 0)) / H, ln["rot"], fontsize=13, weight="bold",
+            d_cima, d_baixo = (0.1, 0.13) if alt_lin >= 0.45 else (0.085, 0.1)
+            reg.t(fig, x_rot / W, (yc + (d_cima if com_sub else 0)) / H, ln["rot"], fontsize=13, weight="bold",
                   color=TINTA, va="center")
             if com_sub:
-                reg.t(fig, x_rot / W, (yc - 0.13) / H, ln["sub"], fontsize=12, color=TINTA2, va="center")
+                reg.t(fig, x_rot / W, (yc - d_baixo) / H, ln["sub"], fontsize=12, color=TINTA2, va="center")
             txt = f"{_val(num, ln['est'])} [{_val(num, ln['inf'])}; {_val(num, ln['sup'])}]"
             com_nota = bool(ln.get("nota"))
-            reg.t(fig, x_val / W, (yc + (0.1 if com_nota else 0)) / H, txt, fontsize=13, weight="bold", color=TINTA,
-                  va="center")
+            reg.t(fig, x_val / W, (yc + (d_cima if com_nota else 0)) / H, txt, fontsize=13, weight="bold",
+                  color=TINTA, va="center")
             if com_nota:
-                reg.t(fig, x_val / W, (yc - 0.13) / H, ln["nota"], fontsize=12, color=TINTA2, va="center")
+                reg.t(fig, x_val / W, (yc - d_baixo) / H, ln["nota"], fontsize=12, color=TINTA2, va="center")
             registro.append({"painel": p["titulo"], "linha": ln["rot"], "texto": txt,
                              "codigos": [ln["est"], ln["inf"], ln["sup"]], "exclui_nulo": bool(excl)})
         ax.set_yticks([])
@@ -1323,51 +1530,411 @@ def figura_forest(num: dict, paineis: list[dict], como_ler: list[str], fonte: st
     return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
 
 
+def leitura_tost(num: dict, cod: str, margem: str) -> str:
+    """Nota curta da leitura pré-registrada do TOST (protocolo 60), pela regra TOST_FORCA."""
+    e = str(num[cod]["valor_bruto"])
+    return {"SO_AUMENTO": f"TOST: sem aumento ≥ {margem}", "SO_QUEDA": f"TOST: sem queda ≥ {margem}",
+            "EQUIVALENTE": f"TOST: equivalente (±{margem})", "INCONCLUSIVO": "TOST: inconclusivo"}[e]
+
+
+def _bloco_forest(fig, reg: "Registro", num: dict, W: float, H: float, x: float, y_top: float, w: float,
+                  titulo: str, sub: str, linhas: list[dict], xlim: tuple[float, float], w_rot: float, w_val: float,
+                  alt: float = 0.56, refs: list | None = None, nulo: float = 0.0) -> tuple[float, list]:
+    """Um gráfico de intervalos com título próprio: rótulo à esquerda, intervalo no meio e valor à direita.
+    Linha sem IC (inf None) vira losango laranja. Devolve a altura de baixo e o registro das linhas."""
+    reg.t(fig, x / W, (y_top - 0.02) / H, titulo, fontsize=13.5, weight="bold", color=VERDE_ESC, va="top")
+    y = y_top - 0.3
+    if sub:
+        reg.t(fig, x / W, (y - 0.0) / H, sub, fontsize=12, color=TINTA2, va="top")
+        y -= 0.26
+    if refs:
+        y -= 0.16
+    n = len(linhas)
+    ph = alt * n
+    y0 = y - ph
+    xp, wp = x + w_rot, w - w_rot - w_val
+    ax = fig.add_axes([xp / W, y0 / H, wp / W, ph / H])
+    ax.set_xlim(*xlim)
+    ax.set_ylim(n - 0.5, -0.5)
+    ax.axvline(nulo, color="#2b2b2b", lw=1.4, zorder=1)
+    for xr, rot in refs or []:
+        ax.axvline(xr, color=LARANJA, lw=1.5, ls=(0, (4, 3)), zorder=1)
+        reg.textos.append(rot)
+        ax.text(xr, -0.5, rot, color=LARANJA, fontsize=11.5, ha="right", va="bottom", parse_math=False,
+                clip_on=False)
+    registro = []
+    for i, ln in enumerate(linhas):
+        yc = y0 + ph - (i + 0.5) * alt
+        est = _bruto(num, ln["est"])
+        if ln.get("inf"):
+            inf, sup = _bruto(num, ln["inf"]), _bruto(num, ln["sup"])
+            excl = inf > nulo or sup < nulo
+            cor = VERDE_DADO if excl else CINZA_DADO
+            ax.plot([inf, sup], [i, i], color=cor, lw=4.2, solid_capstyle="round", zorder=2)
+            ax.plot([est], [i], "o", ms=10, color=cor, mec="white", mew=1.6, zorder=3)
+            txt = f"{_val(num, ln['est'])} [{_val(num, ln['inf'])}; {_val(num, ln['sup'])}]"
+            registro.append({"painel": titulo, "linha": f"{titulo}: {ln['rot']}", "texto": txt,
+                             "codigos": [ln["est"], ln["inf"], ln["sup"]], "exclui_nulo": bool(excl)})
+        else:
+            ax.plot([est], [i], "D", ms=9, color=LARANJA, mec="white", mew=1.4, zorder=3)
+            txt = _val(num, ln["est"])
+        nota = ln.get("nota", "")
+        reg.t(fig, x / W, yc / H, ln["rot"], fontsize=12.5, weight="bold", color=TINTA, va="center")
+        reg.t(fig, (xp + wp + 0.12) / W, (yc + (0.1 if nota else 0)) / H, txt, fontsize=12.5, weight="bold",
+              color=TINTA if ln.get("inf") else LARANJA, va="center")
+        if nota:
+            reg.t(fig, (xp + wp + 0.12) / W, (yc - 0.13) / H, nota, fontsize=11.5, color=TINTA2, va="center")
+    ticks = [t for t in ax.get_xticks() if xlim[0] <= t <= xlim[1]]
+    ax.set_xticks(ticks)
+    rot = [_fmt_eixo(t, False) for t in ticks]
+    ax.set_xticklabels(rot, fontsize=11.5, color=TINTA2)
+    reg.eixos += rot
+    ax.set_yticks([])
+    ax.tick_params(axis="x", length=0, pad=3)
+    ax.grid(axis="x", color=GRADE, lw=0.8)
+    ax.set_axisbelow(True)
+    for lado in ("top", "right", "left"):
+        ax.spines[lado].set_visible(False)
+    ax.spines["bottom"].set_color(EIXO)
+    return y0 - 0.42, registro
+
+
+def _escala(num: dict, cods: list[str], extra: tuple = (0.0,), folga: float = 0.06) -> tuple[float, float]:
+    v = [_bruto(num, c) for c in cods] + list(extra)
+    lo, hi = min(v), max(v)
+    return lo - folga * (hi - lo), hi + folga * (hi - lo)
+
+
+def _caixa_como_ler(fig, reg: "Registro", W: float, linhas: list[str], y_base: float) -> None:
+    from matplotlib.patches import FancyBboxPatch
+    hb = 0.2 + 0.23 * len(linhas)
+    fig.patches.append(FancyBboxPatch((0.1 / W, y_base / fig.get_figheight()), (W - 0.2) / W,
+                                      hb / fig.get_figheight(), boxstyle="round,pad=0,rounding_size=0.012",
+                                      transform=fig.transFigure, facecolor=CLARO_FUNDO, edgecolor=LINHA_CLARA, lw=1))
+    H = fig.get_figheight()
+    for k, t in enumerate(linhas):
+        reg.t(fig, 0.22 / W, (y_base + hb - 0.21 - 0.23 * k) / H, ("Como ler: " if k == 0 else "") + t, fontsize=12,
+              color=TINTA, va="center")
+
+
+TIT_SEM = ("Sem controle: efeito total", "(abrir vagas + preenchê-las)")
+TIT_COM = ("Com controle: preenchimento", "dado o número de vagas")
+
+
 def figura_h1(num: dict, destino: Path) -> dict:
-    paineis = [
-        dict(titulo="Vagas preenchidas por município (N1)", nulo=0.0,
-             eixo="diferença no corte (vagas por município)",
-             linhas=[dict(rot="Com controle", sub="das vagas oferecidas · primária",
-                          est="N1_SA_TAU", inf="N1_SA_INF", sup="N1_SA_SUP",
-                          nota=f"p de Holm {_val(num, 'N1_SA_HOLM')}"),
-                     dict(rot="Sem controle", sub="efeito total da faixa",
-                          est="N1_SB_TAU", inf="N1_SB_INF", sup="N1_SB_SUP",
-                          nota=f"média abaixo do corte {_val(num, 'N1_MEDIA')}")]),
-        dict(titulo="Célula aberta preenchida (A3, p.p.)", nulo=0.0,
-             eixo="diferença no corte (p.p.)",
-             refs=[(10.0, "+10 p.p. (protocolo)")],
-             linhas=[dict(rot="Cortes empilhados", sub="ciclos 1–3 · principal",
-                          est="A3_EMP_TAU", inf="A3_EMP_INF", sup="A3_EMP_SUP",
-                          nota=f"MDE {_val(num, 'A3_EMP_MDE')}"),
-                     dict(rot="Só o corte 0,300", sub="R$ 10 mil → R$ 15 mil", est="A3_300_TAU", inf="A3_300_INF",
-                          sup="A3_300_SUP", nota=f"MDE {_val(num, 'A3_300_MDE')}"),
-                     dict(rot="Só o corte 0,400", sub="R$ 15 mil → R$ 20 mil", est="A3_400_TAU", inf="A3_400_INF",
-                          sup="A3_400_SUP", nota=f"MDE {_val(num, 'A3_400_MDE')}")]),
-    ]
-    como_ler = [
-        "Ponto: bolsa maior menos bolsa menor.",
-        "Ponta direita: maior aumento compatível.",
-        "Barra que cruza o zero: sem distinção.",
-        "Verde: IC 95% exclui zero; MDE: 80%.",
-    ]
-    return figura_forest(num, paineis, como_ler, "Fontes: N_estimativas.csv (doc 49); S57_resumo.json (A3; doc 57).",
-                         destino)
+    """H1 por corte (decisão do autor de 26/10/2026): nenhuma linha empilhada. A3 num gráfico próprio; N1 sem e
+    com controle das vagas oferecidas em dois gráficos separados, na mesma escala (pedido do autor de 26/10/2026)."""
+    reg = Registro()
+    W, H = W_FIG_SLIDE, 5.62
+    fig = plt.figure(figsize=(W, H))
+    faixa = {"300": "Corte 0,300: R$ 10 → 15 mil", "400": "Corte 0,400: R$ 15 → 20 mil"}
+    registro = []
+    a3 = [dict(rot=faixa[c], est=f"A3_{c}_TAU", inf=f"A3_{c}_INF", sup=f"A3_{c}_SUP",
+               nota=leitura_tost(num, f"EQ_A3_{c}_LEIT", "+10 p.p.")) for c in ("300", "400")]
+    y, r = _bloco_forest(fig, reg, num, W, H, 0.1, H - 0.06, W - 0.2, "Célula aberta preenchida (A3, p.p.)", "",
+                         a3, _escala(num, [f"A3_{c}_{k}" for c in ("300", "400") for k in ("INF", "SUP")],
+                                     (0.0, 10.0)), 2.75, 2.75, alt=0.5, refs=[(10.0, "+10 p.p. (protocolo)")])
+    registro += r
+    reg.t(fig, 0.1 / W, (y - 0.06) / H, "Vagas preenchidas por município (N1): mesma escala nos dois gráficos",
+          fontsize=13.5, weight="bold", color=TINTA, va="top")
+    y_top = y - 0.42
+    cods = [f"N1_{c}_{k}" for c in ("300", "400") for k in ("INF", "SUP", "SB_INF", "SB_SUP")]
+    xlim = _escala(num, cods)
+    sem = [dict(rot=f"0,{c}", est=f"N1_{c}_SB_TAU", inf=f"N1_{c}_SB_INF", sup=f"N1_{c}_SB_SUP",
+                nota=f"média abaixo {_val(num, f'N1_{c}_MEDIA')}") for c in ("300", "400")]
+    com = [dict(rot=f"0,{c}", est=f"N1_{c}_TAU", inf=f"N1_{c}_INF", sup=f"N1_{c}_SUP",
+                nota=leitura_tost(num, f"EQ_N1_{c}_LEIT", "+25%")) for c in ("300", "400")]
+    y1, r1 = _bloco_forest(fig, reg, num, W, H, 0.1, y_top, 4.05, *TIT_SEM, sem, xlim, 0.55, 2.05)
+    y2, r2 = _bloco_forest(fig, reg, num, W, H, 4.3, y_top, 4.2, *TIT_COM, com, xlim, 0.55, 2.42)
+    registro += r1 + r2
+    fig.add_artist(plt.Line2D([4.2 / W] * 2, [(y1 + 0.3) / H, y_top / H], color=LINHA_CLARA, lw=1))
+    _caixa_como_ler(fig, reg, W, ["ponto = bolsa maior menos menor, no corte; barra = IC 95%,",
+                                  "verde se exclui zero; TOST com IC 90%. Ciclos 1–3, cada corte separado."],
+                    min(y1, y2) - 0.82)
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: N_estimativas.csv (doc 49); S57_resumo.json (A3); EQ_estimativas.csv "
+          "(doc 57j). " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
+    plt.close(fig)
+    return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
+
+
+def figura_densidade_ivs(num: dict, destino: Path) -> dict:
+    """Municípios com célula no quadro, por faixa de IVS de 0,010, um traço por ciclo; cortes marcados."""
+    reg = Registro()
+    W, H = W_FIG_SLIDE, 4.6
+    d = pd.read_parquet(MUNICIPIOS_V)
+    d = d[d["tem_ivs_oficial"].astype(bool)]
+    fig = plt.figure(figsize=(W, H))
+    ax = fig.add_axes([0.75 / W, 1.45 / H, (W - 0.95) / W, (H - 1.85) / H])
+    bordas = np.arange(0.0, 0.92, 0.01)
+    cores = {1: "#2a78d6", 2: VERDE_DADO, 3: LARANJA}
+    for c in (1, 2, 3):
+        x = d.loc[d["ciclo"] == c, "ivs_2010_oficial"]
+        cont, _ = np.histogram(x, bins=bordas)
+        ax.step(bordas[:-1], cont, where="post", color=cores[c], lw=1.8, label=f"ciclo {c}")
+        reg.textos.append(f"ciclo {c}")
+    for corte in CORTES:
+        ax.axvline(corte, color="#2b2b2b", lw=1.4, ls=(0, (4, 3)))
+    reg.t(fig, (0.75 + (0.30 - 0.0) / 0.92 * (W - 0.95)) / W, (H - 0.32) / H, "0,300", fontsize=12, ha="center",
+          color=TINTA, weight="bold")
+    reg.t(fig, (0.75 + (0.40 - 0.0) / 0.92 * (W - 0.95)) / W, (H - 0.32) / H, "0,400", fontsize=12, ha="center",
+          color=TINTA, weight="bold")
+    ax.set_xlim(0, 0.92)
+    ax.legend(frameon=False, fontsize=12, loc="upper right")
+    xt = [0.0, 0.2, 0.3, 0.4, 0.6, 0.8]
+    ax.set_xticks(xt)
+    ax.set_xticklabels([_dec(v, 1) if v not in (0.3, 0.4) else _dec(v, 3) for v in xt], fontsize=12, color=TINTA2)
+    reg.eixos += [_dec(v, 1) if v not in (0.3, 0.4) else _dec(v, 3) for v in xt]
+    ax.tick_params(axis="y", labelsize=12, colors=TINTA2)
+    reg.eixos += [str(int(t)) for t in ax.get_yticks()]
+    for lado in ("top", "right"):
+        ax.spines[lado].set_visible(False)
+    reg.t(fig, 0.75 / W, 1.0 / H, "IVS 2010 oficial do município (faixas de 0,010)", fontsize=12, color=TINTA2)
+    reg.t(fig, 0.12 / W, (H - 0.12) / H, "municípios", fontsize=12, color=TINTA2, va="top")
+    reg.t(fig, 0.1 / W, 0.62 / H, "Como ler: cada traço conta os municípios com vaga em cada faixa de IVS; as linhas "
+          "tracejadas são os cortes.", fontsize=12, color=TINTA, va="center")
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: outcomes_V_municipio.parquet; E1_densidade_estimativas.csv. " + FONTE_FIG,
+          fontsize=8.5, color=MUDO, va="bottom")
+    fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
+    plt.close(fig)
+    return {"textos": reg.textos, "eixos": reg.eixos}
+
+
+def _bins_e_retas(x: np.ndarray, y: np.ndarray, peso: np.ndarray | None, corte: float, h: float = 0.05,
+                  largura: float = 0.01) -> tuple[list, list]:
+    """Médias por faixa de IVS (largura 0,010) e reta local de cada lado (kernel triangular, h), sobre dados crus."""
+    dist = x - corte
+    dentro = np.abs(dist) <= h + 1e-12
+    x, y, dist = x[dentro], y[dentro], dist[dentro]
+    w0 = np.ones_like(y) if peso is None else peso[dentro]
+    pontos = []
+    for a in np.arange(-h, h - 1e-9, largura):
+        m = (dist > a + 1e-12) & (dist <= a + largura + 1e-12)
+        if m.sum():
+            pontos.append((corte + a + largura / 2, np.average(y[m], weights=w0[m]), int(m.sum())))
+    retas = []
+    for lado in (-1, 1):
+        m = (dist <= 1e-12) if lado < 0 else (dist > 1e-12)
+        k = np.clip(1 - np.abs(dist[m]) / h, 0, None) * w0[m]
+        X = np.column_stack([np.ones(m.sum()), dist[m]])
+        beta = np.linalg.lstsq(X * np.sqrt(k)[:, None], y[m] * np.sqrt(k), rcond=None)[0]
+        xs = np.array([0.0, lado * h])
+        retas.append((corte + xs, beta[0] + beta[1] * xs))
+    return pontos, retas
+
+
+def figura_rdd_crua(num: dict, destino: Path) -> dict:
+    """O gráfico clássico da RDD com os dados crus, um bloco por corte: célula aberta preenchida e vagas oferecidas."""
+    reg = Registro()
+    W, H = 12.3, 4.7
+    cel = pd.read_parquet(CELULAS)
+    cel = cel[cel["ivs_2010_oficial"].notna()]
+    mun = pd.read_parquet(MUNICIPIOS_V)
+    mun = mun[mun["tem_ivs_oficial"].astype(bool)].assign(vic=lambda d: d["vagas_imediatas"] + d["vagas_cr"])
+    fig = plt.figure(figsize=(W, H))
+    paineis = [("Célula preenchida, 1ª chamada (%)", cel, "f1_3_preenchida_ch1", 100.0),
+               ("Vagas oferecidas por município", mun, "vic", 1.0)]
+    faixa = {0.3: "Corte 0,300: R$ 10 mil → R$ 15 mil", 0.4: "Corte 0,400: R$ 15 mil → R$ 20 mil"}
+    larg, alt, y_ax = 2.4, 2.45, 1.45
+    x_bloco = (0.55, 6.6)
+    for j, corte in enumerate(CORTES):
+        xb = x_bloco[j]
+        reg.t(fig, xb / W, (H - 0.1) / H, faixa[corte], fontsize=13.5, weight="bold", color=VERDE_ESC, va="top")
+        for i, (tit, dd, col, esc) in enumerate(paineis):
+            x0 = xb + i * (larg + 0.6)
+            ax = fig.add_axes([x0 / W, y_ax / H, larg / W, alt / H])
+            pontos, retas = _bins_e_retas(dd["ivs_2010_oficial"].to_numpy(float), dd[col].to_numpy(float) * esc,
+                                          None, corte)
+            nmax = max(n for _, _, n in pontos)
+            for xm, ym, n in pontos:
+                cor = "#2a78d6" if xm < corte else LARANJA
+                ax.scatter([xm], [ym], s=30 + 170 * n / nmax, color=cor, alpha=0.85, edgecolor="white", zorder=3)
+            for (xs, ys), cor in zip(retas, ("#2a78d6", LARANJA)):
+                ax.plot(xs, ys, color=cor, lw=2.2, zorder=2)
+            ax.axvline(corte, color="#2b2b2b", lw=1.2, ls=(0, (4, 3)))
+            ax.set_xlim(corte - 0.054, corte + 0.054)
+            xt = [corte - 0.05, corte, corte + 0.05]
+            ax.set_xticks(xt)
+            ax.set_xticklabels([_dec(v, 2) for v in xt], fontsize=12, color=TINTA2)
+            reg.eixos += [_dec(v, 2) for v in xt]
+            ax.tick_params(axis="y", labelsize=12, colors=TINTA2)
+            reg.eixos += [_fmt_eixo(t, False).lstrip("+") for t in ax.get_yticks()] + [f"{t:g}" for t in ax.get_yticks()]
+            for lado in ("top", "right"):
+                ax.spines[lado].set_visible(False)
+            reg.t(fig, (x0 - 0.3) / W, (y_ax + alt + 0.22) / H, tit, fontsize=11.5, color=TINTA, va="center")
+    reg.t(fig, 0.2 / W, 0.84 / H, "Como ler: cada ponto é a média de uma faixa de IVS de 0,010 (tamanho = número de "
+          "células ou de municípios); cada linha é a reta local de um lado;", fontsize=12, color=TINTA, va="center")
+    reg.t(fig, 0.2 / W, 0.58 / H, "o salto é a distância entre as duas retas no corte. Azul: bolsa menor; laranja: "
+          "bolsa maior. Dados crus, ciclos 1–3: sem controles nem efeitos fixos.", fontsize=12, color=TINTA,
+          va="center")
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: outcomes_V_celula.parquet; outcomes_V_municipio.parquet (ciclos 1–3). "
+          + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
+    plt.close(fig)
+    return {"textos": reg.textos, "eixos": reg.eixos}
+
+
+def figura_tost_curto(num: dict, destino: Path) -> dict:
+    """TOST por corte (protocolo 60, parte A; doc 57j; auditoria 32), sem linha empilhada: em cada linha, a faixa
+    cinza é a margem de equivalência, a barra é o IC 90% e o ponto é o salto no corte."""
+    reg = Registro()
+    W, H = 12.3, 4.75
+    fig = plt.figure(figsize=(W, H))
+    ALT, ALT_TIT, ALT_EIXO = 0.5, 0.36, 0.5
+    paineis = [("Célula aberta preenchida (A3, p.p.)", "A3", lambda c: (f"A3_{c}_TAU", f"EQ_A3_{c}_I90I",
+                                                                       f"EQ_A3_{c}_I90S", f"EQ_A3_{c}_MARG"), "p.p."),
+               ("Vagas preenchidas por município, com controle (N1)", "N1",
+                lambda c: (f"N1_{c}_TAU", f"EQ_N1_{c}_I90I", f"EQ_N1_{c}_I90S", f"EQ_N1_{c}_MARG"), "vaga")]
+    x_rot, x_plot, w_plot = 0.1, 2.3, 5.6
+    x_val = x_plot + w_plot + 0.25
+    y = H - 0.08
+    registro = []
+    for tit, oc, cods, unid in paineis:
+        reg.t(fig, x_rot / W, (y - 0.04) / H, tit, fontsize=14, weight="bold", color=VERDE_ESC, va="top")
+        y0 = y - ALT_TIT - 2 * ALT
+        ax = fig.add_axes([x_plot / W, y0 / H, w_plot / W, (2 * ALT) / H])
+        vals = [0.0]
+        for c in ("300", "400"):
+            e, i_, s_, m = (_bruto(num, k) for k in cods(c))
+            vals += [i_, s_, -m, m]
+        lo, hi = min(vals), max(vals)
+        pad = 0.08 * (hi - lo)
+        ax.set_xlim(lo - pad, hi + pad)
+        ax.set_ylim(1.5, -0.5)
+        ax.axvline(0, color="#2b2b2b", lw=1.4, zorder=1)
+        for k, c in enumerate(("300", "400")):
+            ce, ci, cs, cm = cods(c)
+            e, i_, s_, m = (_bruto(num, x) for x in (ce, ci, cs, cm))
+            ax.fill_between([-m, m], k - 0.38, k + 0.38, color="#e3e3e3", zorder=0, lw=0)
+            ax.plot([i_, s_], [k, k], color="#2a78d6", lw=4.5, solid_capstyle="round", zorder=2)
+            ax.plot([e], [k], "o", ms=11, color="#2a78d6", mec="white", mew=1.8, zorder=3)
+            yc = y0 + 2 * ALT - (k + 0.5) * ALT
+            reg.t(fig, x_rot / W, yc / H, f"Corte 0,{c}", fontsize=13, weight="bold", color=TINTA, va="center")
+            txt = f"{_val(num, ce)} [{_val(num, ci)}; {_val(num, cs)}]"
+            margem = f"faixa ±{_val(num, cm)} {unid}{'s' if unid == 'vaga' and _bruto(num, cm) >= 2 else ''}"
+            reg.t(fig, x_val / W, (yc + 0.1) / H, txt, fontsize=13, weight="bold", color=TINTA, va="center")
+            reg.t(fig, x_val / W, (yc - 0.13) / H, f"{margem} · {TOST_LEITURA[str(num[f'EQ_{oc}_{c}_LEIT']['valor_bruto'])]}",
+                  fontsize=12, color=TINTA2, va="center")
+            registro.append({"painel": tit, "linha": f"{oc} 0,{c}", "texto": txt, "codigos": [ce, ci, cs],
+                             "exclui_nulo": bool(i_ > 0 or s_ < 0)})
+        ticks = [t for t in ax.get_xticks() if lo - pad <= t <= hi + pad]
+        ax.set_xticks(ticks)
+        rot = [_fmt_eixo(t, False) for t in ticks]
+        ax.set_xticklabels(rot, fontsize=12, color=TINTA2)
+        reg.eixos += rot
+        ax.set_yticks([])
+        ax.tick_params(axis="x", length=0, pad=3)
+        ax.grid(axis="x", color=GRADE, lw=0.8)
+        for lado in ("top", "right", "left"):
+            ax.spines[lado].set_visible(False)
+        ax.spines["bottom"].set_color(EIXO)
+        y = y0 - ALT_EIXO
+    reg.t(fig, 0.1 / W, 0.52 / H, "Como ler: ponto = salto no corte (bolsa maior menos menor); barra = IC 90%; faixa "
+          "cinza = margem do protocolo 60.", fontsize=12, color=TINTA, va="center")
+    reg.t(fig, 0.1 / W, 0.26 / H, "Barra que não passa da borda direita da faixa: não houve aumento do tamanho da "
+          "margem ou mais. Barra que sai pela esquerda não é lida como queda.", fontsize=12, color=TINTA, va="center")
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: EQ_estimativas.csv (protocolo 60, parte A; doc 57j); N_estimativas.csv; "
+          "S57_resumo.json. IC convencional. " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
+    plt.close(fig)
+    return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
+
+
+TOST_LEITURA = {"SO_AUMENTO": "sem aumento ≥ margem", "SO_QUEDA": "sem queda ≥ margem",
+                "EQUIVALENTE": "equivalente na margem", "INCONCLUSIVO": "inconclusivo"}
+
+
+def figura_escolha_origem(num: dict, destino: Path) -> dict:
+    """Onde fica a 1ª opção em relação à origem do médico (descritivo)."""
+    reg = Registro()
+    W, H = W_FIG_SLIDE, 4.6
+    m = escolha_origem()
+    fig = plt.figure(figsize=(W, H))
+    ax = fig.add_axes([0.25 / W, 1.35 / H, 3.4 / W, (H - 1.85) / H])
+    rot = ["mesma UF", "mesma região\nde saúde", "mesmo\nmunicípio"]
+    cods = ["ESC_UF", "ESC_REG", "ESC_MUN"]
+    vals = [_bruto(num, c) * 100 for c in cods]
+    ax.bar(range(3), vals, color=[VERDE_DADO, "#3e7c4f", "#6b6b6b"], width=0.65)
+    for k, (v, c) in enumerate(zip(vals, cods)):
+        reg.t(fig, (0.25 + 3.4 * (k + 0.5) / 3) / W, (1.35 + (H - 1.85) * v / 100 + 0.08) / H, f"{_val(num, c)}%",
+              fontsize=13, weight="bold", ha="center", color=TINTA)
+    ax.set_xticks(range(3))
+    ax.set_xticklabels(rot, fontsize=12, color=TINTA)
+    reg.textos += [r.replace("\n", " ") for r in rot]
+    ax.set_ylim(0, 100)
+    ax.set_yticks([])
+    for lado in ("top", "right", "left"):
+        ax.spines[lado].set_visible(False)
+    reg.t(fig, 0.25 / W, (H - 0.12) / H, "1ª opção em relação à origem (%)", fontsize=12.5, weight="bold",
+          color=VERDE_ESC, va="top")
+    ax2 = fig.add_axes([4.55 / W, 1.35 / H, (W - 4.75) / W, (H - 1.85) / H])
+    dist = m["dist_km_origem_principal"].to_numpy(float)
+    bordas = np.concatenate([[0, 1], np.geomspace(10, 4000, 22)])
+    ax2.hist(np.clip(dist, 0, 3999), bins=bordas, color="#9fb8a6", edgecolor="white")
+    ax2.set_xscale("symlog", linthresh=10)
+    ax2.axvline(_bruto(num, "ESC_DIST_P50"), color=VERDE_ESC, lw=1.8)
+    xt = [0, 10, 100, 1000]
+    ax2.set_xticks(xt)
+    ax2.set_xticklabels([str(v) if v < 1000 else "1.000" for v in xt], fontsize=12, color=TINTA2)
+    reg.eixos += ["0", "10", "100", "1.000"]
+    ax2.set_yticks([])
+    for lado in ("top", "right", "left"):
+        ax2.spines[lado].set_visible(False)
+    reg.t(fig, 4.55 / W, (H - 0.12) / H, "Distância origem → 1ª opção (km)", fontsize=12.5, weight="bold",
+          color=VERDE_ESC, va="top")
+    reg.t(fig, 4.55 / W, (H - 0.42) / H, f"mediana {_val(num, 'ESC_DIST_P50')} km (linha)", fontsize=12, color=TINTA2,
+          va="top")
+    reg.t(fig, 4.55 / W, 0.95 / H, "escala log; 0 = o próprio município", fontsize=12, color=TINTA2)
+    reg.t(fig, 0.1 / W, 0.55 / H, f"Como ler: {_val(num, 'ESC_N')} candidatos com 1ª opção e município de origem "
+          "(onde trabalhavam antes, no CNES).", fontsize=12, color=TINTA, va="center")
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: G1_distancias_opcoes.parquet; G1_candidatos_origem.parquet. " + FONTE_FIG,
+          fontsize=8.5, color=MUDO, va="bottom")
+    fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
+    plt.close(fig)
+    return {"textos": reg.textos, "eixos": reg.eixos}
+
+
+def figura_controle(num: dict, destino: Path) -> dict:
+    """Antes e depois do controle das vagas oferecidas, por corte (decomposição exata de Frisch–Waugh–Lovell,
+    doc 49, §5): sem controle e com controle em dois gráficos separados, na mesma escala (pedido do autor de
+    26/10/2026); a parte via vagas oferecidas é a diferença entre os dois; ao lado, o salto nas vagas oferecidas."""
+    reg = Registro()
+    W, H = 12.3, 3.55
+    fig = plt.figure(figsize=(W, H))
+    y_top = H - 0.06
+    xlim = _escala(num, [f"N1_{c}_{k}" for c in ("300", "400") for k in ("INF", "SUP", "SB_INF", "SB_SUP")])
+    sem = [dict(rot=f"0,{c}", est=f"N1_{c}_DTOT", inf=f"N1_{c}_SB_INF", sup=f"N1_{c}_SB_SUP", nota="")
+           for c in ("300", "400")]
+    com = [dict(rot=f"0,{c}", est=f"N1_{c}_DSA", inf=f"N1_{c}_INF", sup=f"N1_{c}_SUP",
+                nota=f"via vagas: {_val(num, f'N1_{c}_VIA')}") for c in ("300", "400")]
+    vic = [dict(rot=f"0,{c}", est=f"VIC_{c}_TAU", inf=f"VIC_{c}_INF", sup=f"VIC_{c}_SUP",
+                nota=f"médias {_val(num, f'VIC_{c}_MABX')} → {_val(num, f'VIC_{c}_MACI')}") for c in ("300", "400")]
+    y1, r1 = _bloco_forest(fig, reg, num, W, H, 0.1, y_top, 4.0, *TIT_SEM, sem, xlim, 0.62, 2.0, alt=0.62)
+    y2, r2 = _bloco_forest(fig, reg, num, W, H, 4.3, y_top, 4.0, *TIT_COM, com, xlim, 0.62, 2.0, alt=0.62)
+    y3, r3 = _bloco_forest(fig, reg, num, W, H, 8.6, y_top, 3.6, "Vagas oferecidas (o controle)",
+                           "salto por município (S-c)", vic,
+                           _escala(num, [f"VIC_{c}_{k}" for c in ("300", "400") for k in ("INF", "SUP")]),
+                           0.62, 1.95, alt=0.62)
+    for xl in (4.18, 8.45):
+        fig.add_artist(plt.Line2D([xl / W] * 2, [(y1 + 0.3) / H, y_top / H], color=LINHA_CLARA, lw=1))
+    _caixa_como_ler(fig, reg, W, ["sem controle = via vagas + com controle (identidade exata). Ponto: salto no corte; "
+                                  "barra: IC 95%; N1 na mesma escala nos dois gráficos;",
+                                  "via vagas é uma soma algébrica, sem IC. Médias de vagas oferecidas na janela, "
+                                  "abaixo → acima do corte (descritivo)."], min(y1, y2, y3) - 0.82)
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: N_estimativas.csv (doc 49, §3 a §5); ND_estimativas.csv (doc 49b). "
+          + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
+    plt.close(fig)
+    return {"linhas": r1 + r2 + r3, "textos": reg.textos, "eixos": reg.eixos}
 
 
 def figura_h2(num: dict, destino: Path) -> dict:
+    """H2 só por ciclo (pedido do autor de 26/10/2026: "mostra só um por ciclo"): M5, com distância."""
     paineis = [
-        dict(titulo="Razão de chances da 1ª opção por +R$ 5 mil", nulo=1.0, log=True,
+        dict(titulo="Razão de chances da 1ª opção por +R$ 5 mil, por ciclo", nulo=1.0, log=True,
              eixo="razão de chances (escala log); 1 = a bolsa não muda a escolha",
-             linhas=[dict(rot="Ciclos 1–3 (M1)", sub="com distância · primária",
-                          est="M1_RC", inf="M1_RC_INF", sup="M1_RC_SUP", nota=f"p {_val(num, 'M1_P')}"),
-                     dict(rot="Só o ciclo 1 (M5)", est="M5_C1_RC", inf="M5_C1_RCI", sup="M5_C1_RCS",
-                          nota=f"p {_val(num, 'M5_C1_P')}"),
-                     dict(rot="Só o ciclo 2 (M5)", est="M5_C2_RC", inf="M5_C2_RCI", sup="M5_C2_RCS",
-                          nota=f"p {_val(num, 'M5_C2_P')}"),
-                     dict(rot="Só o ciclo 3 (M5)", est="M5_C3_RC", inf="M5_C3_RCI", sup="M5_C3_RCS",
-                          nota=f"p {_val(num, 'M5_C3_P')}"),
-                     dict(rot="Ciclo 2 (E9)", sub="sem distância · exploratório",
-                          est="E9_C2_RC", inf="E9_C2_RCI", sup="E9_C2_RCS", nota=f"p {_val(num, 'E9_C2_P')}")]),
+             linhas=[dict(rot=f"Ciclo {c}", sub="com distância", est=f"M5_C{c}_RC", inf=f"M5_C{c}_RCI",
+                          sup=f"M5_C{c}_RCS", nota=f"p {_val(num, f'M5_C{c}_P')}") for c in (1, 2, 3)]),
     ]
     como_ler = [
         "Mesmo curso e ciclo, um degrau de bolsa.",
@@ -1375,8 +1942,8 @@ def figura_h2(num: dict, destino: Path) -> dict:
         "Barra que cruza o 1: sem distinção.",
         "Verde: o IC 95% exclui 1.",
     ]
-    return figura_forest(num, paineis, como_ler, "Fontes: P1_estimativas.csv (doc 57a); E8_resumo.json (E9).",
-                         destino)
+    return figura_forest(num, paineis, como_ler, "Fontes: P1_estimativas.csv (M5; doc 57a).", destino, alt_lin_min=0.9,
+                         alt_lin_max=0.9)
 
 
 def figura_h4(num: dict, destino: Path) -> dict:
@@ -1412,8 +1979,13 @@ def figura_h4(num: dict, destino: Path) -> dict:
 #   ("estatuto", código do estatuto do bloco): começa com EXPLORATORIO -> "exploratório";
 #   ("holm", código do p de Holm, código do estatuto): como "holm", mas se o estatuto do bloco termina em
 #   POS_RESULTADO e o Holm rejeita -> "rejeita zero, pós-resultado".
+#   ("tost", código da leitura pré-registrada do protocolo 60): SO_AUMENTO -> "sem aumento ≥ margem";
+#   SO_QUEDA -> "sem queda ≥ margem"; EQUIVALENTE -> "equivalente na margem"; INCONCLUSIVO -> "inconclusivo".
+#   Vale para as linhas por corte da H1, que são secundárias, sem correção múltipla: o teste de zero não decide.
 # A regra é por linha; o doc 57 classifica a pergunta inteira (no P4, outros outcomes falham no pré).
 ALFA = 0.05
+TOST_FORCA = {"SO_AUMENTO": "sem aumento ≥ margem", "SO_QUEDA": "sem queda ≥ margem",
+              "EQUIVALENTE": "equivalente na margem", "INCONCLUSIVO": "inconclusivo"}
 POS_RESULTADO = "POS_RESULTADO"
 
 
@@ -1437,6 +2009,11 @@ def forca_da_linha(num: dict, regra: tuple, codigos: tuple, nulo_valor: float) -
     if tipo == "pre":
         p = float(num[cod]["valor_bruto"])
         return ("ATT sob tendências paralelas" if p >= ALFA else "ATT com pré falhando"), {"regra": tipo, cod: p}
+    if tipo == "tost":
+        e = str(num[cod]["valor_bruto"])
+        if e not in TOST_FORCA:
+            raise SystemExit(f"ERRO: leitura do TOST {e!r} desconhecida")
+        return TOST_FORCA[e], {"regra": tipo, cod: e}
     if tipo == "estatuto":
         e = str(num[cod]["valor_bruto"])
         if not e.startswith("EXPLORATORIO"):
@@ -1452,10 +2029,12 @@ LINHAS_CADEIA_57 = [
     ("ESCOLHA DO MÉDICO", "UF de origem × bolsa (H3)", "θ_UF − 10·β, no modelo de escolha",
      "H3_DUF", "H3_DUF_INF", "H3_DUF_SUP", 0.0, False, "", "Holm {H3_DUF_HOLM}, unilateral",
      ("holm", "H3_DUF_HOLM", "H3_ESTATUTO")),
-    ("PREENCHIMENTO", "Célula aberta preenchida (A3)", "p.p. · ciclos 1–3, cortes empilhados",
-     "A3_EMP_TAU", "A3_EMP_INF", "A3_EMP_SUP", 0.0, False, " p.p.", "MDE {A3_EMP_MDE} p.p.", ("ic", None)),
-    ("PREENCHIMENTO", "Vagas preenchidas (N1)", "com controle das vagas oferecidas",
-     "N1_SA_TAU", "N1_SA_INF", "N1_SA_SUP", 0.0, False, "", "p de Holm {N1_SA_HOLM}", ("holm", "N1_SA_HOLM")),
+    *[("PREENCHIMENTO", f"Célula aberta preenchida, 0,{c} (A3)", "p.p. · ciclos 1–3",
+       f"A3_{c}_TAU", f"A3_{c}_INF", f"A3_{c}_SUP", 0.0, False, " p.p.", f"MDE {{A3_{c}_MDE}} p.p.",
+       ("tost", f"EQ_A3_{c}_LEIT")) for c in ("300", "400")],
+    *[("PREENCHIMENTO", f"Vagas preenchidas, 0,{c} (N1)", "com controle das vagas oferecidas",
+       f"N1_{c}_TAU", f"N1_{c}_INF", f"N1_{c}_SUP", 0.0, False, "",
+       f"IC honesto [{{N1_{c}_HON_INF}}; {{N1_{c}_HON_SUP}}]", ("tost", f"EQ_N1_{c}_LEIT")) for c in ("300", "400")],
     ("ENTRADA DO MÉDICO", "Vínculo na vaga (P6, Y1)", "fração · quase mecânico",
      "P6_Y1_EST", "P6_Y1_INF", "P6_Y1_SUP", 0.0, False, "", "p de Holm {P6_Y1_HOLM}",
      ("estatuto", "P6_ESTATUTO")),
@@ -1476,7 +2055,7 @@ def figura_cadeia_57(num: dict, destino: Path) -> dict:
     import textwrap
     reg = Registro()
     n = len(LINHAS_CADEIA_57)
-    W, ALT, TOPO, BASE = 9.0, 0.47, 0.34, 0.5
+    W, ALT, TOPO, BASE = 9.0, 0.39, 0.32, 0.5
     H = TOPO + ALT * n + BASE
     if H > H_FIG_SLIDE + 1e-6:
         raise SystemExit(f"ERRO: cadeia com {H:.2f} pol. de altura; o slide comporta {H_FIG_SLIDE}")
@@ -1491,7 +2070,9 @@ def figura_cadeia_57(num: dict, destino: Path) -> dict:
     cores_forca = {"inconclusivo": ("#e9ecef", "#3a3a3a"), "exploratório": ("#fff1d6", "#7a4a00"),
                    "ATT com pré falhando": ("#fde2e1", "#8a1c17"), "ATT sob tendências paralelas": ("#e3eefa", "#1f4f8a"),
                    "rejeita zero (Holm)": ("#e3f2e7", "#0f5a2a"), "IC exclui o nulo": ("#e3f2e7", "#0f5a2a"),
-                   "rejeita zero, pós-resultado": ("#e3f2e7", "#0f5a2a")}
+                   "rejeita zero, pós-resultado": ("#e3f2e7", "#0f5a2a"),
+                   "sem aumento ≥ margem": ("#eef0f8", "#2c3e75"), "sem queda ≥ margem": ("#eef0f8", "#2c3e75"),
+                   "equivalente na margem": ("#e3f2e7", "#0f5a2a")}
     from matplotlib.patches import FancyBboxPatch
     for i, (elo, rot, sub, ce, ci, cs, v0, log, suf, leit, regra) in enumerate(LINHAS_CADEIA_57):
         forca, entradas_forca = forca_da_linha(num, regra, (ce, ci, cs), v0)
@@ -1500,8 +2081,8 @@ def figura_cadeia_57(num: dict, destino: Path) -> dict:
         if elo != elo_ant:
             fig.add_artist(plt.Line2D([0.08 / W, (W - 0.08) / W], [(y0 + ALT) / H] * 2, color=LINHA_CLARA, lw=0.9))
             elo_ant = elo
-        reg.t(fig, 0.1 / W, (yc + 0.1) / H, rot, fontsize=12.5, color=TINTA, weight="bold", va="center")
-        reg.t(fig, 0.1 / W, (yc - 0.12) / H, sub, fontsize=12, color=TINTA2, va="center")
+        reg.t(fig, 0.1 / W, (yc + 0.085) / H, rot, fontsize=12.5, color=TINTA, weight="bold", va="center")
+        reg.t(fig, 0.1 / W, (yc - 0.1) / H, sub, fontsize=12, color=TINTA2, va="center")
         est, inf, sup = (_bruto(num, c) for c in (ce, ci, cs))
         ax = fig.add_axes([X_BAR / W, (y0 + 0.08) / H, W_BAR / W, (ALT - 0.16) / H])
         lo, hi = limites_simetricos(inf, sup, v0, log)
@@ -1516,11 +2097,11 @@ def figura_cadeia_57(num: dict, destino: Path) -> dict:
         ax.plot([est], [0], "o", ms=9, color=cor, mec="white", mew=1.4)
         ax.set_axis_off()
         txt = f"{_val(num, ce)}{suf} [{_val(num, ci)}; {_val(num, cs)}]"
-        reg.t(fig, X_VAL / W, (yc + 0.1) / H, txt, fontsize=12.5, color=TINTA, weight="bold", va="center")
+        reg.t(fig, X_VAL / W, (yc + 0.085) / H, txt, fontsize=12.5, color=TINTA, weight="bold", va="center")
         leitura = leit.format(**{k: _val(num, k) for k in re.findall(r"\{(\w+)\}", leit)})
-        reg.t(fig, X_VAL / W, (yc - 0.12) / H, leitura, fontsize=12, color=TINTA2, va="center")
+        reg.t(fig, X_VAL / W, (yc - 0.1) / H, leitura, fontsize=12, color=TINTA2, va="center")
         fundo, frente = cores_forca[forca]
-        fig.patches.append(FancyBboxPatch((X_PILL / W, (yc - 0.19) / H), W_PILL / W, 0.38 / H,
+        fig.patches.append(FancyBboxPatch((X_PILL / W, (yc - 0.165) / H), W_PILL / W, 0.33 / H,
                                           boxstyle="round,pad=0,rounding_size=0.012", transform=fig.transFigure,
                                           facecolor=fundo, edgecolor="none"))
         reg.textos.append(forca)
@@ -1554,6 +2135,19 @@ def linhas_tabela_descritiva(num: dict) -> list[list[str]]:
               + [f"{v(f'D_C{c}_F3')} · {v(f'D_C{c}_F2')} · {v(f'D_C{c}_F1')}" for c in (1, 2)]
               + [f"{v('D_C3_F3')} · {v('D_C3_F2')} · {v('D_C3_F1')} (e {v('D_C3_SEM_IVS')} sem IVS)"]]
     return linhas
+
+
+def linhas_tabela_cronologia(num: dict) -> list[list[str]]:
+    v = lambda c: _val(num, c)  # noqa: E731
+    return [
+        ["Ciclo", "Chamamento", "Quadro de vagas (1ª chamada)", "Resultado (1ª chamada)", "2ª chamada"],
+        ["1", f"Edital {v('CR_C1_EDITAL')}", v("CR_C1_QUADRO"), f"{v('CR_C1_RES')} (alocação retificada)",
+         f"{v('CR_C1_CH2')}, só cadastro reserva"],
+        ["2", f"Edital {v('CR_C2_EDITAL')}", f"{v('CR_C2_QUADRO')} (retificado em {v('CR_C2_RETIF')})",
+         f"{v('CR_C2_RES')} (remanescentes)", f"{v('CR_C2_CH2')}, só cadastro reserva"],
+        ["3", f"Chamamento {v('CR_C3_EDITAL')}, após adesão dos gestores ({v('CR_C3_GEST')})",
+         f"{v('CR_C3_QUADRO')} (retificado em {v('CR_C3_RETIF')})", f"{v('CR_C3_RES')}, sub judice", "não houve"],
+    ]
 
 
 def linhas_tabela_fontes(num: dict) -> list[list[str]]:
@@ -1659,6 +2253,26 @@ ENTRADAS = [
      "célula estabelecimento × curso", "ciclo + co_cnes_7d + cod_curso"),
     (POP2022, "população do Censo 2022 (cobertura da tabela de fontes)", "2022", "municípios", "habitantes",
      "co_ibge_7d"),
+    (MUNICIPIOS_V, "municípios com célula, por ciclo (exploratória)", "2026-10-19", "ciclos 1–3", "município",
+     "ciclo + co_ibge"),
+    (G1_DIST, "distância da origem a cada opção (exploratória da escolha)", "2026-10-19", "ciclos 1–3",
+     "candidato × opção", "ciclo + id_candidato + opcao_rank"),
+    (G1_ORIG, "município de origem do candidato no CNES (exploratória da escolha)", "2026-10-19", "ciclos 1–3",
+     "candidato", "ciclo + id_candidato + regra_ligacao"),
+    (MALHA_RS, "região de saúde do município (exploratória da escolha)", "-", "5.565 municípios", "município",
+     "co_ibge_6d"),
+    (RAIZ / E1_EST, "E1: teste de densidade do IVS no corte (ciclo 1)", "2026-10-14", "ciclo 1, cortes 0,300 e 0,400",
+     "municípios", "ciclo + corte + papel"),
+    (RAIZ / A01, "inventário dos quadros e resultados por ciclo (datas de publicação)", "2026-08-25", "ciclos 1–3",
+     "documento", "ID do documento"),
+    (RAIZ / P48, "protocolo 48 (§8: editais e quando a faixa ficou conhecida)", "2026-10-19", "ciclos 1–3", "texto",
+     "trechos por regex"),
+    (RAIZ / K_D2, "coortes trimestrais de chegada dos médicos (D2)", "2026-10-19", "ciclos 1 e 2", "competência",
+     "coortes"),
+    (RAIZ / EQ_EST, "TOST por corte (protocolo 60, parte A; doc 57j; auditoria 32)", "2026-10-26",
+     "A3 e N1, ciclos 1–3 e ciclo 1, por corte", "p.p.; vagas por município", "id_linha + tipo_ic"),
+    (RAIZ / ND_EST, "diagnóstico do sinal negativo de N1 por corte (doc 49b)", "2026-10-21",
+     "municípios com célula, ciclos 1–3, por corte", "várias (coluna unidade)", "id_linha"),
     (RAIZ / P1H_CSV, "H3 (P1h, protocolo 52b; doc 57i; auditoria 31): D_UF, km equivalentes, sensibilidades e pesos",
      "2026-10-26", "amostra do P1 (candidatos de 1ª opção, ciclos 1–3), M1 e sensibilidades", "log-chance; km",
      "id_linha + modelo + ciclo (+ componente nas linhas FIG)"),
@@ -1762,6 +2376,16 @@ def main() -> int:
     num = {c: e for b in numeros.values() for c, e in b.items()}
     novas = {}
     for nome, fn, desc in (("h1_preenchimento.png", figura_h1, "H1: N1 com e sem controle e A3, com 'Como ler'"),
+                           ("exp_densidade_ivs.png", figura_densidade_ivs,
+                            "exploratória: municípios com vaga por faixa de IVS, por ciclo"),
+                           ("exp_rdd_crua.png", figura_rdd_crua,
+                            "exploratória: gráfico cru da RDD por corte (célula preenchida e vagas oferecidas)"),
+                           ("exp_escolha_origem.png", figura_escolha_origem,
+                            "exploratória: 1ª opção em relação à origem e distância"),
+                           ("curto_tost.png", figura_tost_curto,
+                            "deck curto: TOST por corte (IC 90% contra a margem do protocolo 60)"),
+                           ("h1_controle.png", figura_controle,
+                            "H1: antes e depois do controle das vagas oferecidas, por corte"),
                            ("h2_escolha.png", figura_h2, "H2: razão de chances da 1ª opção por ciclo, com 'Como ler'"),
                            ("h4_horas_medico.png", figura_h4, "H4: horas do médico (P4 e P4-CA), com 'Como ler'"),
                            ("cadeia_resumo_doc57.png", figura_cadeia_57, "cadeia-resumo com as linhas do doc 57")):
@@ -1772,6 +2396,7 @@ def main() -> int:
                      + ([RAIZ / P1H_CSV, RAIZ / P1H_RES] if nome == "cadeia_resumo_doc57.png" else [])})
     t_desc = linhas_tabela_descritiva(num)
     t_font = linhas_tabela_fontes(num)
+    gravar_csv_tabela(linhas_tabela_cronologia(num), SAIDA / "cronologia_ciclos.csv")
     gravar_csv_tabela(t_desc, SAIDA / "tabela_descritiva_ciclos.csv")
     gravar_csv_tabela(t_font, SAIDA / "tabela_fontes.csv")
     novas["tabela_descritiva_ciclos.png"] = tabela_png(
@@ -1803,7 +2428,7 @@ def main() -> int:
         "descarte_preenchimento": reg_desc,
         "figuras_novas": novas,
         "tabelas_csv": [{"arquivo": _rel(SAIDA / n), "sha256": sha256(SAIDA / n)}
-                        for n in ("tabela_descritiva_ciclos.csv", "tabela_fontes.csv")],
+                        for n in ("tabela_descritiva_ciclos.csv", "tabela_fontes.csv", "cronologia_ciclos.csv")],
         "figuras":[{"arquivo": _rel(f["arquivo"]), "sha256": sha256(f["arquivo"]), "natureza": f["natureza"],
                      "descricao": f["descricao"], "fontes": [_rel(p) for p in f["fontes"]]} for f in figs],
         "numeros": {"arquivo": "output/apresentacao_banca2/numeros_banca2.json",

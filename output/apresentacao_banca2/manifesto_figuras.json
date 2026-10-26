@@ -175,6 +175,96 @@
       "chaves": "co_ibge_7d"
     },
     {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "papel": "municípios com célula, por ciclo (exploratória)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3",
+      "unidade": "município",
+      "chaves": "ciclo + co_ibge"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "sha256": "8faf60ed277beae815d1a13ac54d2dd70ab65a4c1a38d796aa8b361898e02a78",
+      "papel": "distância da origem a cada opção (exploratória da escolha)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo + id_candidato + opcao_rank"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "papel": "município de origem do candidato no CNES (exploratória da escolha)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3",
+      "unidade": "candidato",
+      "chaves": "ciclo + id_candidato + regra_ligacao"
+    },
+    {
+      "caminho": "output/aquisicao/malha_municipios_regioes_saude.parquet",
+      "sha256": "beed0d11a1d367c97261aa20b798dd050473677a879fb3d6f69a3d8dfead9728",
+      "papel": "região de saúde do município (exploratória da escolha)",
+      "data_referencia": "-",
+      "cobertura": "5.565 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge_6d"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E1_densidade_estimativas.csv",
+      "sha256": "a7c1771cc7d208eb815fe3be2c85aa1bc1e2b1955dfce3847e598ae81f4c099b",
+      "papel": "E1: teste de densidade do IVS no corte (ciclo 1)",
+      "data_referencia": "2026-10-14",
+      "cobertura": "ciclo 1, cortes 0,300 e 0,400",
+      "unidade": "municípios",
+      "chaves": "ciclo + corte + papel"
+    },
+    {
+      "caminho": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "sha256": "e833f0e6708bc4f201a5ed9250d424166dfbdb7914c88985ea19626f834789b4",
+      "papel": "inventário dos quadros e resultados por ciclo (datas de publicação)",
+      "data_referencia": "2026-08-25",
+      "cobertura": "ciclos 1–3",
+      "unidade": "documento",
+      "chaves": "ID do documento"
+    },
+    {
+      "caminho": "docs/06_execucao/48_protocolo_contagem_vagas_preenchidas.md",
+      "sha256": "fd012a47da4f48e96638c128797d35b673f4952253822f669c6cb8d43fa41e50",
+      "papel": "protocolo 48 (§8: editais e quando a faixa ficou conhecida)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3",
+      "unidade": "texto",
+      "chaves": "trechos por regex"
+    },
+    {
+      "caminho": "output/rdd_bolsa/K_D2_resumo.json",
+      "sha256": "09cf2e0088ad84960c37c5cfe3147d64ea3e6d681628686ec143c57a6bda2b15",
+      "papel": "coortes trimestrais de chegada dos médicos (D2)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1 e 2",
+      "unidade": "competência",
+      "chaves": "coortes"
+    },
+    {
+      "caminho": "output/rdd_bolsa/EQ_estimativas.csv",
+      "sha256": "c3ec87e5229b494de3aa71bd72ebf134b2e405008552afaad6f5aeaa34c6aaf2",
+      "papel": "TOST por corte (protocolo 60, parte A; doc 57j; auditoria 32)",
+      "data_referencia": "2026-10-26",
+      "cobertura": "A3 e N1, ciclos 1–3 e ciclo 1, por corte",
+      "unidade": "p.p.; vagas por município",
+      "chaves": "id_linha + tipo_ic"
+    },
+    {
+      "caminho": "output/rdd_bolsa/ND_estimativas.csv",
+      "sha256": "0b78d4469229be4f42d275c626ba1782d01be74a985e862097cf0f7556837146",
+      "papel": "diagnóstico do sinal negativo de N1 por corte (doc 49b)",
+      "data_referencia": "2026-10-21",
+      "cobertura": "municípios com célula, ciclos 1–3, por corte",
+      "unidade": "várias (coluna unidade)",
+      "chaves": "id_linha"
+    },
+    {
       "caminho": "output/rdd_bolsa/P1h_magnitudes.csv",
       "sha256": "934d3931a7ad14047aa6764b19b1b7b7814e9a814417cd6e4ca9779861e5b89d",
       "papel": "H3 (P1h, protocolo 52b; doc 57i; auditoria 31): D_UF, km equivalentes, sensibilidades e pesos",
@@ -245,7 +335,13 @@
       "C3_F1": 291.0,
       "C3_SEM_IVS": 1.0,
       "IVS_MUN": 5565.0,
-      "POP_MUN": 5570.0
+      "POP_MUN": 5570.0,
+      "ESC_N": 5425.0,
+      "ESC_UF": 0.791705069124424,
+      "ESC_REG": 0.4578801843317972,
+      "ESC_MUN": 0.3583410138248848,
+      "ESC_DIST_P50": 51.42870289433125,
+      "ESC_DIST_P75": 188.50905838328913
     }
   },
   "cadeia_sintese_principal": [
@@ -529,41 +625,8 @@
     "h1_preenchimento.png": {
       "linhas": [
         {
-          "painel": "Vagas preenchidas por município (N1)",
-          "linha": "Com controle",
-          "texto": "−0,76 [−1,44; −0,07]",
-          "codigos": [
-            "N1_SA_TAU",
-            "N1_SA_INF",
-            "N1_SA_SUP"
-          ],
-          "exclui_nulo": true
-        },
-        {
-          "painel": "Vagas preenchidas por município (N1)",
-          "linha": "Sem controle",
-          "texto": "−1,45 [−2,90; −0,01]",
-          "codigos": [
-            "N1_SB_TAU",
-            "N1_SB_INF",
-            "N1_SB_SUP"
-          ],
-          "exclui_nulo": true
-        },
-        {
           "painel": "Célula aberta preenchida (A3, p.p.)",
-          "linha": "Cortes empilhados",
-          "texto": "−4,9 [−12,9; +3,2]",
-          "codigos": [
-            "A3_EMP_TAU",
-            "A3_EMP_INF",
-            "A3_EMP_SUP"
-          ],
-          "exclui_nulo": false
-        },
-        {
-          "painel": "Célula aberta preenchida (A3, p.p.)",
-          "linha": "Só o corte 0,300",
+          "linha": "Célula aberta preenchida (A3, p.p.): Corte 0,300: R$ 10 → 15 mil",
           "texto": "−8,4 [−18,5; +1,7]",
           "codigos": [
             "A3_300_TAU",
@@ -574,7 +637,7 @@
         },
         {
           "painel": "Célula aberta preenchida (A3, p.p.)",
-          "linha": "Só o corte 0,400",
+          "linha": "Célula aberta preenchida (A3, p.p.): Corte 0,400: R$ 15 → 20 mil",
           "texto": "−1,3 [−14,0; +11,3]",
           "codigos": [
             "A3_400_TAU",
@@ -582,74 +645,421 @@
             "A3_400_SUP"
           ],
           "exclui_nulo": false
+        },
+        {
+          "painel": "Sem controle: efeito total",
+          "linha": "Sem controle: efeito total: 0,300",
+          "texto": "−1,56 [−3,73; +0,61]",
+          "codigos": [
+            "N1_300_SB_TAU",
+            "N1_300_SB_INF",
+            "N1_300_SB_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Sem controle: efeito total",
+          "linha": "Sem controle: efeito total: 0,400",
+          "texto": "−1,36 [−3,30; +0,57]",
+          "codigos": [
+            "N1_400_SB_TAU",
+            "N1_400_SB_INF",
+            "N1_400_SB_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Com controle: preenchimento",
+          "linha": "Com controle: preenchimento: 0,300",
+          "texto": "−1,45 [−2,67; −0,22]",
+          "codigos": [
+            "N1_300_TAU",
+            "N1_300_INF",
+            "N1_300_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Com controle: preenchimento",
+          "linha": "Com controle: preenchimento: 0,400",
+          "texto": "−0,14 [−0,82; +0,54]",
+          "codigos": [
+            "N1_400_TAU",
+            "N1_400_INF",
+            "N1_400_SUP"
+          ],
+          "exclui_nulo": false
         }
       ],
       "textos": [
-        "Vagas preenchidas por município (N1)",
-        "Com controle",
-        "das vagas oferecidas · primária",
-        "−0,76 [−1,44; −0,07]",
-        "p de Holm 0,124",
-        "Sem controle",
-        "efeito total da faixa",
-        "−1,45 [−2,90; −0,01]",
-        "média abaixo do corte 2,16",
-        "diferença no corte (vagas por município)",
         "Célula aberta preenchida (A3, p.p.)",
         "+10 p.p. (protocolo)",
-        "Cortes empilhados",
-        "ciclos 1–3 · principal",
-        "−4,9 [−12,9; +3,2]",
-        "MDE 11,5",
-        "Só o corte 0,300",
-        "R$ 10 mil → R$ 15 mil",
+        "Corte 0,300: R$ 10 → 15 mil",
         "−8,4 [−18,5; +1,7]",
-        "MDE 14,5",
-        "Só o corte 0,400",
-        "R$ 15 mil → R$ 20 mil",
+        "TOST: sem aumento ≥ +10 p.p.",
+        "Corte 0,400: R$ 15 → 20 mil",
         "−1,3 [−14,0; +11,3]",
-        "MDE 18,1",
-        "diferença no corte (p.p.)",
-        "Como ler",
-        "•  Ponto: bolsa maior menos bolsa menor.",
-        "•  Ponta direita: maior aumento compatível.",
-        "•  Barra que cruza o zero: sem distinção.",
-        "•  Verde: IC 95% exclui zero; MDE: 80%.",
-        "Fontes: N_estimativas.csv (doc 49); S57_resumo.json (A3; doc 57). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+        "TOST: sem aumento ≥ +10 p.p.",
+        "Vagas preenchidas por município (N1): mesma escala nos dois gráficos",
+        "Sem controle: efeito total",
+        "(abrir vagas + preenchê-las)",
+        "0,300",
+        "−1,56 [−3,73; +0,61]",
+        "média abaixo 2,32",
+        "0,400",
+        "−1,36 [−3,30; +0,57]",
+        "média abaixo 1,96",
+        "Com controle: preenchimento",
+        "dado o número de vagas",
+        "0,300",
+        "−1,45 [−2,67; −0,22]",
+        "TOST: sem aumento ≥ +25%",
+        "0,400",
+        "−0,14 [−0,82; +0,54]",
+        "TOST: sem aumento ≥ +25%",
+        "Como ler: ponto = bolsa maior menos menor, no corte; barra = IC 95%,",
+        "verde se exclui zero; TOST com IC 90%. Ciclos 1–3, cada corte separado.",
+        "Fontes: N_estimativas.csv (doc 49); S57_resumo.json (A3); EQ_estimativas.csv (doc 57j). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
-        "−3",
+        "−20",
+        "−10",
+        "0",
+        "+10",
+        "−2",
+        "0",
+        "−2,5",
+        "0"
+      ]
+    },
+    "exp_densidade_ivs.png": {
+      "textos": [
+        "ciclo 1",
+        "ciclo 2",
+        "ciclo 3",
+        "0,300",
+        "0,400",
+        "IVS 2010 oficial do município (faixas de 0,010)",
+        "municípios",
+        "Como ler: cada traço conta os municípios com vaga em cada faixa de IVS; as linhas tracejadas são os cortes.",
+        "Fontes: outcomes_V_municipio.parquet; E1_densidade_estimativas.csv. EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "0,0",
+        "0,2",
+        "0,300",
+        "0,400",
+        "0,6",
+        "0,8",
+        "-5",
+        "0",
+        "5",
+        "10",
+        "15",
+        "20",
+        "25",
+        "30",
+        "35"
+      ]
+    },
+    "exp_rdd_crua.png": {
+      "textos": [
+        "Corte 0,300: R$ 10 mil → R$ 15 mil",
+        "Célula preenchida, 1ª chamada (%)",
+        "Vagas oferecidas por município",
+        "Corte 0,400: R$ 15 mil → R$ 20 mil",
+        "Célula preenchida, 1ª chamada (%)",
+        "Vagas oferecidas por município",
+        "Como ler: cada ponto é a média de uma faixa de IVS de 0,010 (tamanho = número de células ou de municípios); cada linha é a reta local de um lado;",
+        "o salto é a distância entre as duas retas no corte. Azul: bolsa menor; laranja: bolsa maior. Dados crus, ciclos 1–3: sem controles nem efeitos fixos.",
+        "Fontes: outcomes_V_celula.parquet; outcomes_V_municipio.parquet (ciclos 1–3). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "0,25",
+        "0,30",
+        "0,35",
+        "20",
+        "25",
+        "30",
+        "35",
+        "40",
+        "45",
+        "50",
+        "20",
+        "25",
+        "30",
+        "35",
+        "40",
+        "45",
+        "50",
+        "0,25",
+        "0,30",
+        "0,35",
+        "4",
+        "6",
+        "8",
+        "10",
+        "12",
+        "14",
+        "16",
+        "4",
+        "6",
+        "8",
+        "10",
+        "12",
+        "14",
+        "16",
+        "0,35",
+        "0,40",
+        "0,45",
+        "25",
+        "30",
+        "35",
+        "40",
+        "45",
+        "50",
+        "25",
+        "30",
+        "35",
+        "40",
+        "45",
+        "50",
+        "0,35",
+        "0,40",
+        "0,45",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    "exp_escolha_origem.png": {
+      "textos": [
+        "79%",
+        "46%",
+        "36%",
+        "mesma UF",
+        "mesma região de saúde",
+        "mesmo município",
+        "1ª opção em relação à origem (%)",
+        "Distância origem → 1ª opção (km)",
+        "mediana 51 km (linha)",
+        "escala log; 0 = o próprio município",
+        "Como ler: 5.425 candidatos com 1ª opção e município de origem (onde trabalhavam antes, no CNES).",
+        "Fontes: G1_distancias_opcoes.parquet; G1_candidatos_origem.parquet. EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "0",
+        "10",
+        "100",
+        "1.000"
+      ]
+    },
+    "curto_tost.png": {
+      "linhas": [
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "A3 0,300",
+          "texto": "−8,4 [−16,9; +0,1]",
+          "codigos": [
+            "A3_300_TAU",
+            "EQ_A3_300_I90I",
+            "EQ_A3_300_I90S"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "A3 0,400",
+          "texto": "−1,3 [−11,9; +9,3]",
+          "codigos": [
+            "A3_400_TAU",
+            "EQ_A3_400_I90I",
+            "EQ_A3_400_I90S"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Vagas preenchidas por município, com controle (N1)",
+          "linha": "N1 0,300",
+          "texto": "−1,45 [−2,48; −0,42]",
+          "codigos": [
+            "N1_300_TAU",
+            "EQ_N1_300_I90I",
+            "EQ_N1_300_I90S"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Vagas preenchidas por município, com controle (N1)",
+          "linha": "N1 0,400",
+          "texto": "−0,14 [−0,71; +0,43]",
+          "codigos": [
+            "N1_400_TAU",
+            "EQ_N1_400_I90I",
+            "EQ_N1_400_I90S"
+          ],
+          "exclui_nulo": false
+        }
+      ],
+      "textos": [
+        "Célula aberta preenchida (A3, p.p.)",
+        "Corte 0,300",
+        "−8,4 [−16,9; +0,1]",
+        "faixa ±10 p.p. · sem aumento ≥ margem",
+        "Corte 0,400",
+        "−1,3 [−11,9; +9,3]",
+        "faixa ±10 p.p. · sem aumento ≥ margem",
+        "Vagas preenchidas por município, com controle (N1)",
+        "Corte 0,300",
+        "−1,45 [−2,48; −0,42]",
+        "faixa ±0,58 vaga · sem aumento ≥ margem",
+        "Corte 0,400",
+        "−0,14 [−0,71; +0,43]",
+        "faixa ±0,49 vaga · sem aumento ≥ margem",
+        "Como ler: ponto = salto no corte (bolsa maior menos menor); barra = IC 90%; faixa cinza = margem do protocolo 60.",
+        "Barra que não passa da borda direita da faixa: não houve aumento do tamanho da margem ou mais. Barra que sai pela esquerda não é lida como queda.",
+        "Fontes: EQ_estimativas.csv (protocolo 60, parte A; doc 57j); N_estimativas.csv; S57_resumo.json. IC convencional. EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "−15",
+        "−10",
+        "−5",
+        "0",
+        "+5",
+        "+10",
         "−2,5",
         "−2",
         "−1,5",
         "−1",
         "−0,5",
         "0",
-        "−20",
-        "−15",
-        "−10",
+        "+0,5"
+      ]
+    },
+    "h1_controle.png": {
+      "linhas": [
+        {
+          "painel": "Sem controle: efeito total",
+          "linha": "Sem controle: efeito total: 0,300",
+          "texto": "−1,56 [−3,73; +0,61]",
+          "codigos": [
+            "N1_300_DTOT",
+            "N1_300_SB_INF",
+            "N1_300_SB_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Sem controle: efeito total",
+          "linha": "Sem controle: efeito total: 0,400",
+          "texto": "−1,36 [−3,30; +0,57]",
+          "codigos": [
+            "N1_400_DTOT",
+            "N1_400_SB_INF",
+            "N1_400_SB_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Com controle: preenchimento",
+          "linha": "Com controle: preenchimento: 0,300",
+          "texto": "−1,45 [−2,67; −0,22]",
+          "codigos": [
+            "N1_300_DSA",
+            "N1_300_INF",
+            "N1_300_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Com controle: preenchimento",
+          "linha": "Com controle: preenchimento: 0,400",
+          "texto": "−0,14 [−0,82; +0,54]",
+          "codigos": [
+            "N1_400_DSA",
+            "N1_400_INF",
+            "N1_400_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Vagas oferecidas (o controle)",
+          "linha": "Vagas oferecidas (o controle): 0,300",
+          "texto": "+0,39 [−6,69; +7,46]",
+          "codigos": [
+            "VIC_300_TAU",
+            "VIC_300_INF",
+            "VIC_300_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Vagas oferecidas (o controle)",
+          "linha": "Vagas oferecidas (o controle): 0,400",
+          "texto": "−3,59 [−8,94; +1,77]",
+          "codigos": [
+            "VIC_400_TAU",
+            "VIC_400_INF",
+            "VIC_400_SUP"
+          ],
+          "exclui_nulo": false
+        }
+      ],
+      "textos": [
+        "Sem controle: efeito total",
+        "(abrir vagas + preenchê-las)",
+        "0,300",
+        "−1,56 [−3,73; +0,61]",
+        "0,400",
+        "−1,36 [−3,30; +0,57]",
+        "Com controle: preenchimento",
+        "dado o número de vagas",
+        "0,300",
+        "−1,45 [−2,67; −0,22]",
+        "via vagas: −0,11",
+        "0,400",
+        "−0,14 [−0,82; +0,54]",
+        "via vagas: −1,22",
+        "Vagas oferecidas (o controle)",
+        "salto por município (S-c)",
+        "0,300",
+        "+0,39 [−6,69; +7,46]",
+        "médias 10,08 → 9,82",
+        "0,400",
+        "−3,59 [−8,94; +1,77]",
+        "médias 7,05 → 3,93",
+        "Como ler: sem controle = via vagas + com controle (identidade exata). Ponto: salto no corte; barra: IC 95%; N1 na mesma escala nos dois gráficos;",
+        "via vagas é uma soma algébrica, sem IC. Médias de vagas oferecidas na janela, abaixo → acima do corte (descritivo).",
+        "Fontes: N_estimativas.csv (doc 49, §3 a §5); ND_estimativas.csv (doc 49b). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "−2",
+        "0",
+        "−2",
+        "0",
         "−5",
         "0",
-        "+5",
-        "+10"
+        "+5"
       ]
     },
     "h2_escolha.png": {
       "linhas": [
         {
-          "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
-          "linha": "Ciclos 1–3 (M1)",
-          "texto": "1,24 [0,99; 1,55]",
-          "codigos": [
-            "M1_RC",
-            "M1_RC_INF",
-            "M1_RC_SUP"
-          ],
-          "exclui_nulo": false
-        },
-        {
-          "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
-          "linha": "Só o ciclo 1 (M5)",
+          "painel": "Razão de chances da 1ª opção por +R$ 5 mil, por ciclo",
+          "linha": "Ciclo 1",
           "texto": "1,07 [0,69; 1,65]",
           "codigos": [
             "M5_C1_RC",
@@ -659,8 +1069,8 @@
           "exclui_nulo": false
         },
         {
-          "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
-          "linha": "Só o ciclo 2 (M5)",
+          "painel": "Razão de chances da 1ª opção por +R$ 5 mil, por ciclo",
+          "linha": "Ciclo 2",
           "texto": "1,70 [1,22; 2,37]",
           "codigos": [
             "M5_C2_RC",
@@ -670,8 +1080,8 @@
           "exclui_nulo": true
         },
         {
-          "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
-          "linha": "Só o ciclo 3 (M5)",
+          "painel": "Razão de chances da 1ª opção por +R$ 5 mil, por ciclo",
+          "linha": "Ciclo 3",
           "texto": "1,00 [0,72; 1,39]",
           "codigos": [
             "M5_C3_RC",
@@ -679,45 +1089,29 @@
             "M5_C3_RCS"
           ],
           "exclui_nulo": false
-        },
-        {
-          "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
-          "linha": "Ciclo 2 (E9)",
-          "texto": "1,95 [1,48; 2,57]",
-          "codigos": [
-            "E9_C2_RC",
-            "E9_C2_RCI",
-            "E9_C2_RCS"
-          ],
-          "exclui_nulo": true
         }
       ],
       "textos": [
-        "Razão de chances da 1ª opção por +R$ 5 mil",
-        "Ciclos 1–3 (M1)",
-        "com distância · primária",
-        "1,24 [0,99; 1,55]",
-        "p 0,065",
-        "Só o ciclo 1 (M5)",
+        "Razão de chances da 1ª opção por +R$ 5 mil, por ciclo",
+        "Ciclo 1",
+        "com distância",
         "1,07 [0,69; 1,65]",
         "p 0,764",
-        "Só o ciclo 2 (M5)",
+        "Ciclo 2",
+        "com distância",
         "1,70 [1,22; 2,37]",
         "p 0,002",
-        "Só o ciclo 3 (M5)",
+        "Ciclo 3",
+        "com distância",
         "1,00 [0,72; 1,39]",
         "p 0,990",
-        "Ciclo 2 (E9)",
-        "sem distância · exploratório",
-        "1,95 [1,48; 2,57]",
-        "p < 0,001",
         "razão de chances (escala log); 1 = a bolsa não muda a escolha",
         "Como ler",
         "•  Mesmo curso e ciclo, um degrau de bolsa.",
         "•  Acima de 1: vaga de bolsa maior é preferida.",
         "•  Barra que cruza o 1: sem distinção.",
         "•  Verde: o IC 95% exclui 1.",
-        "Fontes: P1_estimativas.csv (doc 57a); E8_resumo.json (E9). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+        "Fontes: P1_estimativas.csv (M5; doc 57a). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
         "0,75",
@@ -855,35 +1249,64 @@
           "exclui_nulo": true
         },
         {
-          "linha": "Célula aberta preenchida (A3)",
-          "texto": "−4,9 p.p. [−12,9; +3,2]",
+          "linha": "Célula aberta preenchida, 0,300 (A3)",
+          "texto": "−8,4 p.p. [−18,5; +1,7]",
           "codigos": [
-            "A3_EMP_TAU",
-            "A3_EMP_INF",
-            "A3_EMP_SUP"
+            "A3_300_TAU",
+            "A3_300_INF",
+            "A3_300_SUP"
           ],
-          "forca": "inconclusivo",
+          "forca": "sem aumento ≥ margem",
           "forca_regra": {
-            "regra": "ic",
-            "inf": -12.907869229680703,
-            "sup": 3.1897741514714744
+            "regra": "tost",
+            "EQ_A3_300_LEIT": "SO_AUMENTO"
           },
           "exclui_nulo": false
         },
         {
-          "linha": "Vagas preenchidas (N1)",
-          "texto": "−0,76 [−1,44; −0,07]",
+          "linha": "Célula aberta preenchida, 0,400 (A3)",
+          "texto": "−1,3 p.p. [−14,0; +11,3]",
           "codigos": [
-            "N1_SA_TAU",
-            "N1_SA_INF",
-            "N1_SA_SUP"
+            "A3_400_TAU",
+            "A3_400_INF",
+            "A3_400_SUP"
           ],
-          "forca": "inconclusivo",
+          "forca": "sem aumento ≥ margem",
           "forca_regra": {
-            "regra": "holm",
-            "N1_SA_HOLM": 0.12351584949008355
+            "regra": "tost",
+            "EQ_A3_400_LEIT": "SO_AUMENTO"
+          },
+          "exclui_nulo": false
+        },
+        {
+          "linha": "Vagas preenchidas, 0,300 (N1)",
+          "texto": "−1,45 [−2,67; −0,22]",
+          "codigos": [
+            "N1_300_TAU",
+            "N1_300_INF",
+            "N1_300_SUP"
+          ],
+          "forca": "sem aumento ≥ margem",
+          "forca_regra": {
+            "regra": "tost",
+            "EQ_N1_300_LEIT": "SO_AUMENTO"
           },
           "exclui_nulo": true
+        },
+        {
+          "linha": "Vagas preenchidas, 0,400 (N1)",
+          "texto": "−0,14 [−0,82; +0,54]",
+          "codigos": [
+            "N1_400_TAU",
+            "N1_400_INF",
+            "N1_400_SUP"
+          ],
+          "forca": "sem aumento ≥ margem",
+          "forca_regra": {
+            "regra": "tost",
+            "EQ_N1_400_LEIT": "SO_AUMENTO"
+          },
+          "exclui_nulo": false
         },
         {
           "linha": "Vínculo na vaga (P6, Y1)",
@@ -975,16 +1398,26 @@
         "1,98 [1,56; 2,40]",
         "Holm < 0,001, unilateral",
         "rejeita zero, pós-resultado",
-        "Célula aberta preenchida (A3)",
-        "p.p. · ciclos 1–3, cortes empilhados",
-        "−4,9 p.p. [−12,9; +3,2]",
-        "MDE 11,5 p.p.",
-        "inconclusivo",
-        "Vagas preenchidas (N1)",
+        "Célula aberta preenchida, 0,300 (A3)",
+        "p.p. · ciclos 1–3",
+        "−8,4 p.p. [−18,5; +1,7]",
+        "MDE 14,5 p.p.",
+        "sem aumento ≥ margem",
+        "Célula aberta preenchida, 0,400 (A3)",
+        "p.p. · ciclos 1–3",
+        "−1,3 p.p. [−14,0; +11,3]",
+        "MDE 18,1 p.p.",
+        "sem aumento ≥ margem",
+        "Vagas preenchidas, 0,300 (N1)",
         "com controle das vagas oferecidas",
-        "−0,76 [−1,44; −0,07]",
-        "p de Holm 0,124",
-        "inconclusivo",
+        "−1,45 [−2,67; −0,22]",
+        "IC honesto [−90,23; +87,34]",
+        "sem aumento ≥ margem",
+        "Vagas preenchidas, 0,400 (N1)",
+        "com controle das vagas oferecidas",
+        "−0,14 [−0,82; +0,54]",
+        "IC honesto [−47,07; +46,79]",
+        "sem aumento ≥ margem",
         "Vínculo na vaga (P6, Y1)",
         "fração · quase mecânico",
         "+0,405 [+0,210; +0,600]",
@@ -1136,6 +1569,10 @@
     {
       "arquivo": "output/apresentacao_banca2/tabela_fontes.csv",
       "sha256": "366594a9c9747f0b9328326756bfb53df103458ba4e795b9000655126408e1ce"
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/cronologia_ciclos.csv",
+      "sha256": "61659931afb6276114889909c6ba759e315bc879658e01c9827a83e00b61126a"
     }
   ],
   "figuras": [
@@ -1206,7 +1643,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/h1_preenchimento.png",
-      "sha256": "3003872783f675050ed0a50f08137968dad09f59c7226a2ba0537a12f57c2bbe",
+      "sha256": "c966fe5af619e0455604eabcd8ede3ed27b5cc2efcfb3f70a06d9cf0a18e5b76",
       "natureza": "EMPIRICO",
       "descricao": "H1: N1 com e sem controle e A3, com 'Como ler'",
       "fontes": [
@@ -1218,8 +1655,73 @@
       ]
     },
     {
+      "arquivo": "output/apresentacao_banca2/exp_densidade_ivs.png",
+      "sha256": "3c8fe3fec85148cba603ed5a40974577417e3202c72cb6c03d5e13b4ee7d9990",
+      "natureza": "EMPIRICO",
+      "descricao": "exploratória: municípios com vaga por faixa de IVS, por ciclo",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/exp_rdd_crua.png",
+      "sha256": "1289e91dc8648cf79e10fea4d376747f821ba31bb6bd5ef1d2ec1ed968aac036",
+      "natureza": "EMPIRICO",
+      "descricao": "exploratória: gráfico cru da RDD por corte (célula preenchida e vagas oferecidas)",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/exp_escolha_origem.png",
+      "sha256": "1bc92ca206608e8d5030d2f2f7b0079ac415fbdb489b7b4c28cbbb81b0925213",
+      "natureza": "EMPIRICO",
+      "descricao": "exploratória: 1ª opção em relação à origem e distância",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/curto_tost.png",
+      "sha256": "d9a451fd6ab7a1a6426d6435c0d14ffcfaefe1d2ef007976e6ec52be681399af",
+      "natureza": "EMPIRICO",
+      "descricao": "deck curto: TOST por corte (IC 90% contra a margem do protocolo 60)",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/h1_controle.png",
+      "sha256": "7262b8c2d56e58d0ccd74702fddf8ff721ea0c00c28fcacd2558e7cb80ba4515",
+      "natureza": "EMPIRICO",
+      "descricao": "H1: antes e depois do controle das vagas oferecidas, por corte",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    },
+    {
       "arquivo": "output/apresentacao_banca2/h2_escolha.png",
-      "sha256": "4865043fe176266171c5b659ed3af85ec286781aa8c9861784ee0a8295500ead",
+      "sha256": "bc4af04fe9ae24aa4b8af976c1917c4e181154754102402344932bde421e2cdf",
       "natureza": "EMPIRICO",
       "descricao": "H2: razão de chances da 1ª opção por ciclo, com 'Como ler'",
       "fontes": [
@@ -1245,7 +1747,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
-      "sha256": "d73d3e942f49d523babe06af4ca2a3329cc208de3404aac1670d327551d76f67",
+      "sha256": "4a0ca644f4314bc3d5d7d4657a9980d00557f9f31ad8d0e418163a84f9f1877c",
       "natureza": "EMPIRICO",
       "descricao": "cadeia-resumo com as linhas do doc 57",
       "fontes": [
@@ -1279,6 +1781,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "76306543df8b60df8b20e9c3ba19422e9dc56776525f2abd98ec67592a416099"
+    "sha256": "e9e152e4763e75b34d7862a351927b71ac17f56d47757bc95358ec371afa9e02"
   }
 }
