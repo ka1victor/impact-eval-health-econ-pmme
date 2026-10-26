@@ -1,0 +1,28 @@
+cd_uf,sigla_uf,nome_uf,cd_regiao,nome_regiao,capital_co_ibge_7d,capital_co_ibge_6d,capital_nome,categoria_ibge,natureza_dos_dados
+11,RO,Rondônia,1,Norte,1100205,110020,Porto Velho,Capital Estadual,EMPIRICO
+12,AC,Acre,1,Norte,1200401,120040,Rio Branco,Capital Estadual,EMPIRICO
+13,AM,Amazonas,1,Norte,1302603,130260,Manaus,Capital Estadual,EMPIRICO
+14,RR,Roraima,1,Norte,1400100,140010,Boa Vista,Capital Estadual,EMPIRICO
+15,PA,Pará,1,Norte,1501402,150140,Belém,Capital Estadual,EMPIRICO
+16,AP,Amapá,1,Norte,1600303,160030,Macapá,Capital Estadual,EMPIRICO
+17,TO,Tocantins,1,Norte,1721000,172100,Palmas,Capital Estadual,EMPIRICO
+21,MA,Maranhão,2,Nordeste,2111300,211130,São Luís,Capital Estadual,EMPIRICO
+22,PI,Piauí,2,Nordeste,2211001,221100,Teresina,Capital Estadual,EMPIRICO
+23,CE,Ceará,2,Nordeste,2304400,230440,Fortaleza,Capital Estadual,EMPIRICO
+24,RN,Rio Grande do Norte,2,Nordeste,2408102,240810,Natal,Capital Estadual,EMPIRICO
+25,PB,Paraíba,2,Nordeste,2507507,250750,João Pessoa,Capital Estadual,EMPIRICO
+26,PE,Pernambuco,2,Nordeste,2611606,261160,Recife,Capital Estadual,EMPIRICO
+27,AL,Alagoas,2,Nordeste,2704302,270430,Maceió,Capital Estadual,EMPIRICO
+28,SE,Sergipe,2,Nordeste,2800308,280030,Aracaju,Capital Estadual,EMPIRICO
+29,BA,Bahia,2,Nordeste,2927408,292740,Salvador,Capital Estadual,EMPIRICO
+31,MG,Minas Gerais,3,Sudeste,3106200,310620,Belo Horizonte,Capital Estadual,EMPIRICO
+32,ES,Espírito Santo,3,Sudeste,3205309,320530,Vitória,Capital Estadual,EMPIRICO
+33,RJ,Rio de Janeiro,3,Sudeste,3304557,330455,Rio de Janeiro,Capital Estadual,EMPIRICO
+35,SP,São Paulo,3,Sudeste,3550308,355030,São Paulo,Capital Estadual,EMPIRICO
+41,PR,Paraná,4,Sul,4106902,410690,Curitiba,Capital Estadual,EMPIRICO
+42,SC,Santa Catarina,4,Sul,4205407,420540,Florianópolis,Capital Estadual,EMPIRICO
+43,RS,Rio Grande do Sul,4,Sul,4314902,431490,Porto Alegre,Capital Estadual,EMPIRICO
+50,MS,Mato Grosso do Sul,5,Centro-Oeste,5002704,500270,Campo Grande,Capital Estadual,EMPIRICO
+51,MT,Mato Grosso,5,Centro-Oeste,5103403,510340,Cuiabá,Capital Estadual,EMPIRICO
+52,GO,Goiás,5,Centro-Oeste,5208707,520870,Goiânia,Capital Estadual,EMPIRICO
+53,DF,Distrito Federal,5,Centro-Oeste,5300108,530010,Brasília,Capital Federal,EMPIRICO

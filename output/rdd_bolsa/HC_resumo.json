@@ -1,0 +1,1782 @@
+{
+  "etapa": "HC_h1_capitais_uf",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "ADENDO_48C_POS_RESULTADO",
+  "data_execucao": "2026-10-26",
+  "script": "scripts/rdd_bolsa/41_h1_capitais_uf.py",
+  "adendo": {
+    "texto": "docs/06_execucao/48c_adendo_capitais_e_UF.md",
+    "sha256": "771d72b2ad89f859707722c05372e9fe826065e5d2e80e3d946979512d0cd9be"
+  },
+  "pergunta": "a queda do preenchimento em 0,300 anda junto com a presenca de capitais (ou com a regiao) logo abaixo do corte?",
+  "contraste": "pacote do corte (incentivo marginal anunciado de R$ 5 mil e outras regras federais no mesmo corte, auditoria 18); nao identifica participacao no PMM-E nem o Agora Tem Especialistas",
+  "estimando": "salto no corte (lado de bolsa maior menos lado de bolsa menor) de HI-1 e HI-2 (48b) sem e com ajuste de capital, de UF e sem capitais; balanco de capital e regiao no corte",
+  "populacao": "celulas (CNES x curso) e municipios x ciclo do quadro da 1a chamada, ciclos 1-3, com IVS 2010",
+  "parametros": {
+    "cortes_mil": [
+      300,
+      400
+    ],
+    "h_mil": 50,
+    "kernel": "triangular",
+    "ciclos": [
+      1,
+      2,
+      3
+    ],
+    "ajustes": [
+      "sem_ajuste",
+      "capital",
+      "uf",
+      "sem_capitais"
+    ],
+    "tolerancia_conferencias": 1e-08
+  },
+  "medidas": {
+    "HI-1": {
+      "rotulo": "HI-1: célula com vaga imediata preenchida na 1ª chamada",
+      "unidade_analise": "celula",
+      "amostra": "H1",
+      "papel": "H1 principal (48b)",
+      "unidade": "fracao (x100 = p.p.)",
+      "y": "preenchida",
+      "fe": "fe_cc",
+      "z_ciclo": null,
+      "z": [],
+      "peso": null,
+      "especificacao": "celulas com >= 1 vaga imediata (c2: quadro de 13/02/2026); EF curso x ciclo"
+    },
+    "HI-2": {
+      "rotulo": "HI-2: médicos alocados em células com vaga imediata, por município",
+      "unidade_analise": "municipio",
+      "amostra": "H1",
+      "papel": "H1 principal (48b)",
+      "unidade": "medicos alocados por municipio",
+      "y": "n_aloc_imed_pre",
+      "fe": null,
+      "z_ciclo": "vi_pre",
+      "z": [],
+      "peso": null,
+      "especificacao": "municipio x ciclo com >= 1 celula com vaga imediata (c2: 13/02/2026); controle = vagas imediatas dessas celulas, um coeficiente por ciclo (como o S-a)"
+    },
+    "A3": {
+      "rotulo": "A3: célula aberta preenchida (tipo de vaga do pipeline)",
+      "unidade_analise": "celula",
+      "amostra": "quadro",
+      "papel": "medida antiga (C-5)",
+      "unidade": "fracao (x100 = p.p.)",
+      "y": "preenchida",
+      "fe": "fe_cc",
+      "z_ciclo": null,
+      "z": [
+        "com_imediata_pipe"
+      ],
+      "peso": null,
+      "especificacao": "todas as celulas; EF curso x ciclo + tipo de vaga do pipeline (c2: quadro de 19/03/2026, pos-resultado), como no adendo §7 do protocolo 48"
+    },
+    "A3-pre": {
+      "rotulo": "A3 com tipo de vaga de 13/02/2026",
+      "unidade_analise": "celula",
+      "amostra": "quadro",
+      "papel": "medida antiga (C-5), tipo de vaga pre-alocacao",
+      "unidade": "fracao (x100 = p.p.)",
+      "y": "preenchida",
+      "fe": "fe_cc",
+      "z_ciclo": null,
+      "z": [
+        "com_imediata_pre"
+      ],
+      "peso": null,
+      "especificacao": "todas as celulas; EF curso x ciclo + tipo de vaga pre-alocacao (c2: 13/02/2026, 48b §7)"
+    },
+    "N1": {
+      "rotulo": "N1 com controle (S-a): vagas preenchidas por município",
+      "unidade_analise": "municipio",
+      "amostra": "quadro",
+      "papel": "medida antiga (C-5)",
+      "unidade": "medicos alocados por municipio",
+      "y": "n_alocados",
+      "fe": null,
+      "z_ciclo": "vic",
+      "z": [],
+      "peso": null,
+      "especificacao": "municipio x ciclo do quadro; controle = vagas oferecidas (imediatas + CR), um coeficiente por ciclo (S-a do protocolo 48)"
+    },
+    "taxa": {
+      "rotulo": "Taxa por vaga oferecida (S-e)",
+      "unidade_analise": "municipio",
+      "amostra": "quadro",
+      "papel": "medida antiga (C-5)",
+      "unidade": "fracao (x100 = p.p.)",
+      "y": "taxa",
+      "fe": null,
+      "z_ciclo": null,
+      "z": [],
+      "peso": "vic",
+      "especificacao": "municipio x ciclo do quadro; alocados / vagas oferecidas, ponderado pelas vagas (S-e)"
+    }
+  },
+  "leitura": {
+    "0.300": {
+      "c1_salto_em_capital_ou_regiao": true,
+      "c1_linhas_com_salto": [
+        "é capital (município)",
+        "é do Nordeste (município)",
+        "é capital (célula)",
+        "é do Nordeste (célula)"
+      ],
+      "linhas_H1_com_queda_a_levar": [
+        "HI-2"
+      ],
+      "c2_ajustes_levam_a_ic_com_zero": true,
+      "por_medida": {
+        "HI-1": {
+          "tau_sem_ajuste": -0.03678408651620541,
+          "ic_sem_ajuste_exclui_zero": false,
+          "ic_contem_zero_por_ajuste": {
+            "capital": true,
+            "uf": true,
+            "sem_capitais": true
+          },
+          "ajustes_que_levam_a_zero": [
+            "capital",
+            "uf",
+            "sem_capitais"
+          ],
+          "levam_nos_tres": true
+        },
+        "HI-2": {
+          "tau_sem_ajuste": -1.126325756859003,
+          "ic_sem_ajuste_exclui_zero": true,
+          "ic_contem_zero_por_ajuste": {
+            "capital": true,
+            "uf": true,
+            "sem_capitais": true
+          },
+          "ajustes_que_levam_a_zero": [
+            "capital",
+            "uf",
+            "sem_capitais"
+          ],
+          "levam_nos_tres": true
+        }
+      },
+      "leitura": "ANDA_JUNTO_COM_CAPITAIS_OU_REGIAO",
+      "motivo": "as duas condições do §2 valem",
+      "texto": "a queda em 0,300 anda junto com a presença de capitais (ou região) logo abaixo do corte, que é desbalanceamento de poucos municípios grandes, e não com a bolsa"
+    },
+    "0.400": {
+      "c1_salto_em_capital_ou_regiao": false,
+      "c1_linhas_com_salto": [],
+      "linhas_H1_com_queda_a_levar": [],
+      "c2_ajustes_levam_a_ic_com_zero": false,
+      "por_medida": {
+        "HI-1": {
+          "tau_sem_ajuste": -0.023119649555094268,
+          "ic_sem_ajuste_exclui_zero": false,
+          "ic_contem_zero_por_ajuste": {
+            "capital": true,
+            "uf": true,
+            "sem_capitais": true
+          },
+          "ajustes_que_levam_a_zero": [
+            "capital",
+            "uf",
+            "sem_capitais"
+          ],
+          "levam_nos_tres": true
+        },
+        "HI-2": {
+          "tau_sem_ajuste": -0.15670734701256545,
+          "ic_sem_ajuste_exclui_zero": false,
+          "ic_contem_zero_por_ajuste": {
+            "capital": true,
+            "uf": true,
+            "sem_capitais": true
+          },
+          "ajustes_que_levam_a_zero": [
+            "capital",
+            "uf",
+            "sem_capitais"
+          ],
+          "levam_nos_tres": true
+        }
+      },
+      "leitura": "RELATAR_COMO_ESTA",
+      "motivo": "C-1 não mostra salto em capital nem em região na amostra da H1; nenhuma linha da H1 (HI-1, HI-2) tem IC que exclui zero sem ajuste: não há salto a levar",
+      "texto": "relatar como está"
+    }
+  },
+  "comparacao_medidas_antigas": {
+    "0.300": {
+      "A3": {
+        "sem_ajuste": {
+          "tau": -0.08394018208937415,
+          "ic_contem_zero": true
+        },
+        "capital": {
+          "tau": -0.026107407039096704,
+          "ic_contem_zero": true
+        },
+        "uf": {
+          "tau": -0.0260455822109662,
+          "ic_contem_zero": true
+        },
+        "sem_capitais": {
+          "tau": -0.017200198767960195,
+          "ic_contem_zero": true
+        }
+      },
+      "A3-pre": {
+        "sem_ajuste": {
+          "tau": -0.10119492381608808,
+          "ic_contem_zero": true
+        },
+        "capital": {
+          "tau": -0.029826530234424584,
+          "ic_contem_zero": true
+        },
+        "uf": {
+          "tau": -0.020884025952297325,
+          "ic_contem_zero": true
+        },
+        "sem_capitais": {
+          "tau": -0.021560361711108172,
+          "ic_contem_zero": true
+        }
+      },
+      "N1": {
+        "sem_ajuste": {
+          "tau": -1.447467904500826,
+          "ic_contem_zero": false
+        },
+        "capital": {
+          "tau": -0.9227290721147046,
+          "ic_contem_zero": true
+        },
+        "uf": {
+          "tau": -0.45728631941375314,
+          "ic_contem_zero": true
+        },
+        "sem_capitais": {
+          "tau": -0.5033614543497029,
+          "ic_contem_zero": true
+        }
+      },
+      "taxa": {
+        "sem_ajuste": {
+          "tau": -0.15993086270127255,
+          "ic_contem_zero": false
+        },
+        "capital": {
+          "tau": -0.10930374508335294,
+          "ic_contem_zero": true
+        },
+        "uf": {
+          "tau": 0.0052798455736831895,
+          "ic_contem_zero": true
+        },
+        "sem_capitais": {
+          "tau": -0.09726589369016381,
+          "ic_contem_zero": true
+        }
+      }
+    },
+    "0.400": {
+      "A3": {
+        "sem_ajuste": {
+          "tau": -0.013182831124363192,
+          "ic_contem_zero": true
+        },
+        "capital": {
+          "tau": 0.016375726769026044,
+          "ic_contem_zero": true
+        },
+        "uf": {
+          "tau": 0.02487227871734699,
+          "ic_contem_zero": true
+        },
+        "sem_capitais": {
+          "tau": 0.00411501369885503,
+          "ic_contem_zero": true
+        }
+      },
+      "A3-pre": {
+        "sem_ajuste": {
+          "tau": -0.04101134389758404,
+          "ic_contem_zero": true
+        },
+        "capital": {
+          "tau": -0.0012330882306131885,
+          "ic_contem_zero": true
+        },
+        "uf": {
+          "tau": 0.0073506681647884835,
+          "ic_contem_zero": true
+        },
+        "sem_capitais": {
+          "tau": -0.007255822859315586,
+          "ic_contem_zero": true
+        }
+      },
+      "N1": {
+        "sem_ajuste": {
+          "tau": -0.14205022218019647,
+          "ic_contem_zero": true
+        },
+        "capital": {
+          "tau": -0.10668603690968748,
+          "ic_contem_zero": true
+        },
+        "uf": {
+          "tau": -0.070671580867677,
+          "ic_contem_zero": true
+        },
+        "sem_capitais": {
+          "tau": -0.11835598789090948,
+          "ic_contem_zero": true
+        }
+      },
+      "taxa": {
+        "sem_ajuste": {
+          "tau": 0.025465381122180553,
+          "ic_contem_zero": true
+        },
+        "capital": {
+          "tau": 0.018947855415024417,
+          "ic_contem_zero": true
+        },
+        "uf": {
+          "tau": 0.04001509473149658,
+          "ic_contem_zero": true
+        },
+        "sem_capitais": {
+          "tau": 0.0016624781068099725,
+          "ic_contem_zero": true
+        }
+      }
+    }
+  },
+  "capitais_na_janela": [
+    {
+      "corte": "0.300",
+      "co_ibge": "410690",
+      "municipio": "Curitiba (PR)",
+      "regiao": "Sul",
+      "ivs": 0.253,
+      "distancia_ao_corte": -0.047,
+      "distancia_mil": -47,
+      "a_menos_de_0010": false,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "1,2,3",
+      "celulas": 35,
+      "celulas_com_vaga_imediata": 12,
+      "peso_kernel": 0.06000000000000005
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "140010",
+      "municipio": "Boa Vista (RR)",
+      "regiao": "Norte",
+      "ivs": 0.261,
+      "distancia_ao_corte": -0.039,
+      "distancia_mil": -39,
+      "a_menos_de_0010": false,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "1,2,3",
+      "celulas": 27,
+      "celulas_com_vaga_imediata": 21,
+      "peso_kernel": 0.21999999999999997
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "510340",
+      "municipio": "Cuiabá (MT)",
+      "regiao": "Centro-Oeste",
+      "ivs": 0.261,
+      "distancia_ao_corte": -0.039,
+      "distancia_mil": -39,
+      "a_menos_de_0010": false,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "2,3",
+      "celulas": 31,
+      "celulas_com_vaga_imediata": 23,
+      "peso_kernel": 0.21999999999999997
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "500270",
+      "municipio": "Campo Grande (MS)",
+      "regiao": "Centro-Oeste",
+      "ivs": 0.27,
+      "distancia_ao_corte": -0.03,
+      "distancia_mil": -30,
+      "a_menos_de_0010": false,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "1,2",
+      "celulas": 8,
+      "celulas_com_vaga_imediata": 6,
+      "peso_kernel": 0.4
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "310620",
+      "municipio": "Belo Horizonte (MG)",
+      "regiao": "Sudeste",
+      "ivs": 0.276,
+      "distancia_ao_corte": -0.024,
+      "distancia_mil": -24,
+      "a_menos_de_0010": false,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "2,3",
+      "celulas": 35,
+      "celulas_com_vaga_imediata": 1,
+      "peso_kernel": 0.52
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "250750",
+      "municipio": "João Pessoa (PB)",
+      "regiao": "Nordeste",
+      "ivs": 0.286,
+      "distancia_ao_corte": -0.014,
+      "distancia_mil": -14,
+      "a_menos_de_0010": false,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "2,3",
+      "celulas": 44,
+      "celulas_com_vaga_imediata": 11,
+      "peso_kernel": 0.72
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "280030",
+      "municipio": "Aracaju (SE)",
+      "regiao": "Nordeste",
+      "ivs": 0.287,
+      "distancia_ao_corte": -0.013,
+      "distancia_mil": -13,
+      "a_menos_de_0010": false,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "1,2,3",
+      "celulas": 21,
+      "celulas_com_vaga_imediata": 7,
+      "peso_kernel": 0.74
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "221100",
+      "municipio": "Teresina (PI)",
+      "regiao": "Nordeste",
+      "ivs": 0.288,
+      "distancia_ao_corte": -0.012,
+      "distancia_mil": -12,
+      "a_menos_de_0010": false,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "1,2,3",
+      "celulas": 67,
+      "celulas_com_vaga_imediata": 28,
+      "peso_kernel": 0.76
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "330455",
+      "municipio": "Rio de Janeiro (RJ)",
+      "regiao": "Sudeste",
+      "ivs": 0.29,
+      "distancia_ao_corte": -0.01,
+      "distancia_mil": -10,
+      "a_menos_de_0010": false,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "1,2,3",
+      "celulas": 27,
+      "celulas_com_vaga_imediata": 6,
+      "peso_kernel": 0.8
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "355030",
+      "municipio": "São Paulo (SP)",
+      "regiao": "Sudeste",
+      "ivs": 0.291,
+      "distancia_ao_corte": -0.009,
+      "distancia_mil": -9,
+      "a_menos_de_0010": true,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "2",
+      "celulas": 2,
+      "celulas_com_vaga_imediata": 0,
+      "peso_kernel": 0.8200000000000001
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "520870",
+      "municipio": "Goiânia (GO)",
+      "regiao": "Centro-Oeste",
+      "ivs": 0.291,
+      "distancia_ao_corte": -0.009,
+      "distancia_mil": -9,
+      "a_menos_de_0010": true,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "3",
+      "celulas": 15,
+      "celulas_com_vaga_imediata": 10,
+      "peso_kernel": 0.8200000000000001
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "240810",
+      "municipio": "Natal (RN)",
+      "regiao": "Nordeste",
+      "ivs": 0.292,
+      "distancia_ao_corte": -0.008,
+      "distancia_mil": -8,
+      "a_menos_de_0010": true,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "2,3",
+      "celulas": 34,
+      "celulas_com_vaga_imediata": 4,
+      "peso_kernel": 0.84
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "530010",
+      "municipio": "Brasília (DF)",
+      "regiao": "Centro-Oeste",
+      "ivs": 0.294,
+      "distancia_ao_corte": -0.006,
+      "distancia_mil": -6,
+      "a_menos_de_0010": true,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "1,2,3",
+      "celulas": 46,
+      "celulas_com_vaga_imediata": 22,
+      "peso_kernel": 0.88
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "150140",
+      "municipio": "Belém (PA)",
+      "regiao": "Norte",
+      "ivs": 0.317,
+      "distancia_ao_corte": 0.017,
+      "distancia_mil": 17,
+      "a_menos_de_0010": false,
+      "lado": "acima (bolsa maior)",
+      "ciclos": "1,2,3",
+      "celulas": 48,
+      "celulas_com_vaga_imediata": 7,
+      "peso_kernel": 0.6599999999999999
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "261160",
+      "municipio": "Recife (PE)",
+      "regiao": "Nordeste",
+      "ivs": 0.319,
+      "distancia_ao_corte": 0.019,
+      "distancia_mil": 19,
+      "a_menos_de_0010": false,
+      "lado": "acima (bolsa maior)",
+      "ciclos": "2,3",
+      "celulas": 40,
+      "celulas_com_vaga_imediata": 21,
+      "peso_kernel": 0.62
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "110020",
+      "municipio": "Porto Velho (RO)",
+      "regiao": "Norte",
+      "ivs": 0.322,
+      "distancia_ao_corte": 0.022,
+      "distancia_mil": 22,
+      "a_menos_de_0010": false,
+      "lado": "acima (bolsa maior)",
+      "ciclos": "1,2,3",
+      "celulas": 39,
+      "celulas_com_vaga_imediata": 17,
+      "peso_kernel": 0.56
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "230440",
+      "municipio": "Fortaleza (CE)",
+      "regiao": "Nordeste",
+      "ivs": 0.33,
+      "distancia_ao_corte": 0.03,
+      "distancia_mil": 30,
+      "a_menos_de_0010": false,
+      "lado": "acima (bolsa maior)",
+      "ciclos": "2,3",
+      "celulas": 104,
+      "celulas_com_vaga_imediata": 15,
+      "peso_kernel": 0.4
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "120040",
+      "municipio": "Rio Branco (AC)",
+      "regiao": "Norte",
+      "ivs": 0.339,
+      "distancia_ao_corte": 0.039,
+      "distancia_mil": 39,
+      "a_menos_de_0010": false,
+      "lado": "acima (bolsa maior)",
+      "ciclos": "1,2",
+      "celulas": 23,
+      "celulas_com_vaga_imediata": 19,
+      "peso_kernel": 0.21999999999999997
+    },
+    {
+      "corte": "0.300",
+      "co_ibge": "160030",
+      "municipio": "Macapá (AP)",
+      "regiao": "Norte",
+      "ivs": 0.339,
+      "distancia_ao_corte": 0.039,
+      "distancia_mil": 39,
+      "a_menos_de_0010": false,
+      "lado": "acima (bolsa maior)",
+      "ciclos": "1,2,3",
+      "celulas": 23,
+      "celulas_com_vaga_imediata": 11,
+      "peso_kernel": 0.21999999999999997
+    },
+    {
+      "corte": "0.400",
+      "co_ibge": "211130",
+      "municipio": "São Luís (MA)",
+      "regiao": "Nordeste",
+      "ivs": 0.372,
+      "distancia_ao_corte": -0.028,
+      "distancia_mil": -28,
+      "a_menos_de_0010": false,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "1,2,3",
+      "celulas": 38,
+      "celulas_com_vaga_imediata": 15,
+      "peso_kernel": 0.43999999999999995
+    },
+    {
+      "corte": "0.400",
+      "co_ibge": "130260",
+      "municipio": "Manaus (AM)",
+      "regiao": "Norte",
+      "ivs": 0.387,
+      "distancia_ao_corte": -0.013,
+      "distancia_mil": -13,
+      "a_menos_de_0010": false,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "1,2,3",
+      "celulas": 37,
+      "celulas_com_vaga_imediata": 22,
+      "peso_kernel": 0.74
+    },
+    {
+      "corte": "0.400",
+      "co_ibge": "270430",
+      "municipio": "Maceió (AL)",
+      "regiao": "Nordeste",
+      "ivs": 0.393,
+      "distancia_ao_corte": -0.007,
+      "distancia_mil": -7,
+      "a_menos_de_0010": true,
+      "lado": "abaixo (bolsa menor)",
+      "ciclos": "1,2,3",
+      "celulas": 73,
+      "celulas_com_vaga_imediata": 13,
+      "peso_kernel": 0.86
+    }
+  ],
+  "composicao_janela": [
+    {
+      "corte": "0.300",
+      "amostra": "H1",
+      "unidade_analise": "municipio",
+      "lado": "abaixo",
+      "linhas": 141,
+      "municipios": 95,
+      "frac_capital": 0.1702127659574468,
+      "frac_nordeste": 0.2624113475177305,
+      "frac_norte": 0.11347517730496454
+    },
+    {
+      "corte": "0.300",
+      "amostra": "H1",
+      "unidade_analise": "municipio",
+      "lado": "acima",
+      "linhas": 116,
+      "municipios": 72,
+      "frac_capital": 0.11206896551724138,
+      "frac_nordeste": 0.3879310344827586,
+      "frac_norte": 0.14655172413793102
+    },
+    {
+      "corte": "0.300",
+      "amostra": "H1",
+      "unidade_analise": "celula",
+      "lado": "abaixo",
+      "linhas": 492,
+      "municipios": 95,
+      "frac_capital": 0.30691056910569103,
+      "frac_nordeste": 0.44308943089430897,
+      "frac_norte": 0.11585365853658537
+    },
+    {
+      "corte": "0.300",
+      "amostra": "H1",
+      "unidade_analise": "celula",
+      "lado": "acima",
+      "linhas": 311,
+      "municipios": 72,
+      "frac_capital": 0.28938906752411575,
+      "frac_nordeste": 0.4662379421221865,
+      "frac_norte": 0.19935691318327975
+    },
+    {
+      "corte": "0.300",
+      "amostra": "quadro",
+      "unidade_analise": "municipio",
+      "lado": "abaixo",
+      "linhas": 245,
+      "municipios": 145,
+      "frac_capital": 0.12244897959183673,
+      "frac_nordeste": 0.19591836734693877,
+      "frac_norte": 0.10204081632653061
+    },
+    {
+      "corte": "0.300",
+      "amostra": "quadro",
+      "unidade_analise": "municipio",
+      "lado": "acima",
+      "linhas": 196,
+      "municipios": 120,
+      "frac_capital": 0.07653061224489796,
+      "frac_nordeste": 0.32653061224489793,
+      "frac_norte": 0.11734693877551021
+    },
+    {
+      "corte": "0.300",
+      "amostra": "quadro",
+      "unidade_analise": "celula",
+      "lado": "abaixo",
+      "linhas": 1180,
+      "municipios": 145,
+      "frac_capital": 0.33220338983050846,
+      "frac_nordeste": 0.3923728813559322,
+      "frac_norte": 0.0847457627118644
+    },
+    {
+      "corte": "0.300",
+      "amostra": "quadro",
+      "unidade_analise": "celula",
+      "lado": "acima",
+      "linhas": 935,
+      "municipios": 120,
+      "frac_capital": 0.2962566844919786,
+      "frac_nordeste": 0.46844919786096256,
+      "frac_norte": 0.1625668449197861
+    },
+    {
+      "corte": "0.400",
+      "amostra": "H1",
+      "unidade_analise": "municipio",
+      "lado": "abaixo",
+      "linhas": 130,
+      "municipios": 83,
+      "frac_capital": 0.06923076923076923,
+      "frac_nordeste": 0.6076923076923076,
+      "frac_norte": 0.19230769230769232
+    },
+    {
+      "corte": "0.400",
+      "amostra": "H1",
+      "unidade_analise": "municipio",
+      "lado": "acima",
+      "linhas": 97,
+      "municipios": 69,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.6804123711340206,
+      "frac_norte": 0.14432989690721648
+    },
+    {
+      "corte": "0.400",
+      "amostra": "H1",
+      "unidade_analise": "celula",
+      "lado": "abaixo",
+      "linhas": 315,
+      "municipios": 83,
+      "frac_capital": 0.15873015873015872,
+      "frac_nordeste": 0.6095238095238096,
+      "frac_norte": 0.2
+    },
+    {
+      "corte": "0.400",
+      "amostra": "H1",
+      "unidade_analise": "celula",
+      "lado": "acima",
+      "linhas": 170,
+      "municipios": 69,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.6058823529411764,
+      "frac_norte": 0.16470588235294117
+    },
+    {
+      "corte": "0.400",
+      "amostra": "quadro",
+      "unidade_analise": "municipio",
+      "lado": "abaixo",
+      "linhas": 203,
+      "municipios": 122,
+      "frac_capital": 0.04433497536945813,
+      "frac_nordeste": 0.5911330049261084,
+      "frac_norte": 0.16748768472906403
+    },
+    {
+      "corte": "0.400",
+      "amostra": "quadro",
+      "unidade_analise": "municipio",
+      "lado": "acima",
+      "linhas": 212,
+      "municipios": 145,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.7028301886792453,
+      "frac_norte": 0.11320754716981132
+    },
+    {
+      "corte": "0.400",
+      "amostra": "quadro",
+      "unidade_analise": "celula",
+      "lado": "abaixo",
+      "linhas": 772,
+      "municipios": 122,
+      "frac_capital": 0.19170984455958548,
+      "frac_nordeste": 0.6722797927461139,
+      "frac_norte": 0.16580310880829016
+    },
+    {
+      "corte": "0.400",
+      "amostra": "quadro",
+      "unidade_analise": "celula",
+      "lado": "acima",
+      "linhas": 471,
+      "municipios": 145,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.6666666666666666,
+      "frac_norte": 0.1337579617834395
+    }
+  ],
+  "referencia_ibge": {
+    "arquivo": "output/aquisicao/ibge_capitais_uf_regiao.csv",
+    "sha256": "e4c9ffb63c0eb14b4ddaae64550639d620e0cdd8caef7c793b2ee280963d1bd9",
+    "manifesto": "output/aquisicao/manifesto_ibge_capitais_uf_regiao.json",
+    "sha256_manifesto": "d1b75dc54078312f1df5e3ff09314ca58438eacffde3e66c73412d5dbbe34637",
+    "fontes": {
+      "capitais": {
+        "fonte": "IBGE, Localidades do Brasil 2022 (estrutura territorial, geoftp)",
+        "url": "https://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/localidades/Localidades_do_Brasil/2022/Localidades_Brasil_shp.zip",
+        "last_modified": "Wed, 19 Nov 2025 19:15:24 GMT",
+        "sha256_zip": "1c0bec392891f6f284675e1b72c761f1b4a976599bdd3f0cb87fabf471382ca9",
+        "arquivo_lido": "BR_localidades_2022.dbf",
+        "sha256_dbf": "6c2a8dda7de6b0dc69bca8a1763fb0b86b34d196e2807a63fc0095a4cfa4fe42",
+        "codificacao": "UTF-8",
+        "filtro": "CT_LOCALID == 'Cidade' e SCT_LOCALI em ['Capital Estadual', 'Capital Federal']",
+        "data_referencia": "2022",
+        "cobertura": "Brasil",
+        "unidade": "localidade (sede municipal)",
+        "chaves": "CD_UF; CD_MUN (7 dígitos)"
+      },
+      "regioes": {
+        "fonte": "IBGE, SIDRA, tabela 4709 (Censo 2022), níveis n2 (Grande Região) e n3 (UF)",
+        "regioes": {
+          "url": "https://apisidra.ibge.gov.br/values/t/4709/n2/all/v/93/p/2022/h/n",
+          "sha256_resposta": "1f8a223cbb80c7ffc9c7b2bb4046701e1f61c7f9b97f50cc470ffe165456844d"
+        },
+        "ufs_por_regiao": [
+          {
+            "regiao": "1",
+            "url": "https://apisidra.ibge.gov.br/values/t/4709/n3/in%20n2%201/v/93/p/2022/h/n",
+            "sha256_resposta": "ddd8eb8de5909e154fd54d8a9bc1338faa6bf1e749a1712defb1d6ebce80c670"
+          },
+          {
+            "regiao": "2",
+            "url": "https://apisidra.ibge.gov.br/values/t/4709/n3/in%20n2%202/v/93/p/2022/h/n",
+            "sha256_resposta": "8d3d2d84928a901fe8f1c54769145afbc1aedb9c751d051cce18a9b90e229036"
+          },
+          {
+            "regiao": "3",
+            "url": "https://apisidra.ibge.gov.br/values/t/4709/n3/in%20n2%203/v/93/p/2022/h/n",
+            "sha256_resposta": "a4fbebc8fed53a1ddd5c10bc676e53cf56bcdf30a75c569a6c00927b51fceef2"
+          },
+          {
+            "regiao": "4",
+            "url": "https://apisidra.ibge.gov.br/values/t/4709/n3/in%20n2%204/v/93/p/2022/h/n",
+            "sha256_resposta": "098fa2f1b1f67aca5f9091f9ec5086dfc3fbcc0fc6beda3c631b8e91d51c977a"
+          },
+          {
+            "regiao": "5",
+            "url": "https://apisidra.ibge.gov.br/values/t/4709/n3/in%20n2%205/v/93/p/2022/h/n",
+            "sha256_resposta": "2bfedd4fdcf1db2dfa90aa339c2415bae21b4e67878efa1d824636b6e37f333e"
+          }
+        ],
+        "data_referencia": "2022",
+        "cobertura": "27 UFs",
+        "unidade": "UF",
+        "chaves": "D1C (código da UF ou da Grande Região)",
+        "uso": "só a pertença territorial UF -> Grande Região; o valor da variável 93 não é usado"
+      }
+    },
+    "capitais": [
+      {
+        "capital_co_ibge_6d": "110020",
+        "capital_nome": "Porto Velho",
+        "sigla_uf": "RO",
+        "nome_regiao": "Norte"
+      },
+      {
+        "capital_co_ibge_6d": "120040",
+        "capital_nome": "Rio Branco",
+        "sigla_uf": "AC",
+        "nome_regiao": "Norte"
+      },
+      {
+        "capital_co_ibge_6d": "130260",
+        "capital_nome": "Manaus",
+        "sigla_uf": "AM",
+        "nome_regiao": "Norte"
+      },
+      {
+        "capital_co_ibge_6d": "140010",
+        "capital_nome": "Boa Vista",
+        "sigla_uf": "RR",
+        "nome_regiao": "Norte"
+      },
+      {
+        "capital_co_ibge_6d": "150140",
+        "capital_nome": "Belém",
+        "sigla_uf": "PA",
+        "nome_regiao": "Norte"
+      },
+      {
+        "capital_co_ibge_6d": "160030",
+        "capital_nome": "Macapá",
+        "sigla_uf": "AP",
+        "nome_regiao": "Norte"
+      },
+      {
+        "capital_co_ibge_6d": "172100",
+        "capital_nome": "Palmas",
+        "sigla_uf": "TO",
+        "nome_regiao": "Norte"
+      },
+      {
+        "capital_co_ibge_6d": "211130",
+        "capital_nome": "São Luís",
+        "sigla_uf": "MA",
+        "nome_regiao": "Nordeste"
+      },
+      {
+        "capital_co_ibge_6d": "221100",
+        "capital_nome": "Teresina",
+        "sigla_uf": "PI",
+        "nome_regiao": "Nordeste"
+      },
+      {
+        "capital_co_ibge_6d": "230440",
+        "capital_nome": "Fortaleza",
+        "sigla_uf": "CE",
+        "nome_regiao": "Nordeste"
+      },
+      {
+        "capital_co_ibge_6d": "240810",
+        "capital_nome": "Natal",
+        "sigla_uf": "RN",
+        "nome_regiao": "Nordeste"
+      },
+      {
+        "capital_co_ibge_6d": "250750",
+        "capital_nome": "João Pessoa",
+        "sigla_uf": "PB",
+        "nome_regiao": "Nordeste"
+      },
+      {
+        "capital_co_ibge_6d": "261160",
+        "capital_nome": "Recife",
+        "sigla_uf": "PE",
+        "nome_regiao": "Nordeste"
+      },
+      {
+        "capital_co_ibge_6d": "270430",
+        "capital_nome": "Maceió",
+        "sigla_uf": "AL",
+        "nome_regiao": "Nordeste"
+      },
+      {
+        "capital_co_ibge_6d": "280030",
+        "capital_nome": "Aracaju",
+        "sigla_uf": "SE",
+        "nome_regiao": "Nordeste"
+      },
+      {
+        "capital_co_ibge_6d": "292740",
+        "capital_nome": "Salvador",
+        "sigla_uf": "BA",
+        "nome_regiao": "Nordeste"
+      },
+      {
+        "capital_co_ibge_6d": "310620",
+        "capital_nome": "Belo Horizonte",
+        "sigla_uf": "MG",
+        "nome_regiao": "Sudeste"
+      },
+      {
+        "capital_co_ibge_6d": "320530",
+        "capital_nome": "Vitória",
+        "sigla_uf": "ES",
+        "nome_regiao": "Sudeste"
+      },
+      {
+        "capital_co_ibge_6d": "330455",
+        "capital_nome": "Rio de Janeiro",
+        "sigla_uf": "RJ",
+        "nome_regiao": "Sudeste"
+      },
+      {
+        "capital_co_ibge_6d": "355030",
+        "capital_nome": "São Paulo",
+        "sigla_uf": "SP",
+        "nome_regiao": "Sudeste"
+      },
+      {
+        "capital_co_ibge_6d": "410690",
+        "capital_nome": "Curitiba",
+        "sigla_uf": "PR",
+        "nome_regiao": "Sul"
+      },
+      {
+        "capital_co_ibge_6d": "420540",
+        "capital_nome": "Florianópolis",
+        "sigla_uf": "SC",
+        "nome_regiao": "Sul"
+      },
+      {
+        "capital_co_ibge_6d": "431490",
+        "capital_nome": "Porto Alegre",
+        "sigla_uf": "RS",
+        "nome_regiao": "Sul"
+      },
+      {
+        "capital_co_ibge_6d": "500270",
+        "capital_nome": "Campo Grande",
+        "sigla_uf": "MS",
+        "nome_regiao": "Centro-Oeste"
+      },
+      {
+        "capital_co_ibge_6d": "510340",
+        "capital_nome": "Cuiabá",
+        "sigla_uf": "MT",
+        "nome_regiao": "Centro-Oeste"
+      },
+      {
+        "capital_co_ibge_6d": "520870",
+        "capital_nome": "Goiânia",
+        "sigla_uf": "GO",
+        "nome_regiao": "Centro-Oeste"
+      },
+      {
+        "capital_co_ibge_6d": "530010",
+        "capital_nome": "Brasília",
+        "sigla_uf": "DF",
+        "nome_regiao": "Centro-Oeste"
+      }
+    ]
+  },
+  "info_dados": {
+    "celulas_por_ciclo": {
+      "1": 1295,
+      "2": 1547,
+      "3": 2293
+    },
+    "celulas_sem_ivs": {
+      "3": 1
+    },
+    "municipios_sem_ivs": [
+      "422000"
+    ],
+    "celulas_so_cr_pre_fora_da_H1": {
+      "1": 782,
+      "2": 833,
+      "3": 1599
+    },
+    "celulas_com_imediata_pre": {
+      "1": 513,
+      "2": 714,
+      "3": 694
+    },
+    "municipios_ciclo": {
+      "1": 368,
+      "2": 454,
+      "3": 748
+    },
+    "municipios_ciclo_sem_celula_com_imediata_fora_da_HI2": {
+      "1": 153,
+      "2": 126,
+      "3": 441
+    },
+    "capitais_em_algum_quadro": 27,
+    "capitais_marcadas_CAPITAL_no_quadro_c3": 22,
+    "marcadas_no_quadro_c3_estao_na_lista_ibge": true,
+    "lista_ibge_igual_a_da_auditoria_36": true,
+    "base_igual_a_auditoria_36": {
+      "celulas": true,
+      "municipios_ciclo": true
+    }
+  },
+  "conferencias": {
+    "auditoria_36": [
+      {
+        "linha": "HI-1 sem ajuste",
+        "corte": "0.300",
+        "aqui": -0.03678408651620541,
+        "auditoria_36": -0.0367840865162049,
+        "dif_tau": 5.134781488891349e-16,
+        "dif_ep": 6.938893903907228e-17
+      },
+      {
+        "linha": "A3 sem ajuste",
+        "corte": "0.300",
+        "aqui": -0.08394018208937415,
+        "auditoria_36": -0.0839401820893757,
+        "dif_tau": 1.5543122344752192e-15,
+        "dif_ep": 4.163336342344337e-17
+      },
+      {
+        "linha": "A3-pre sem ajuste",
+        "corte": "0.300",
+        "aqui": -0.10119492381608808,
+        "auditoria_36": -0.1011949238160891,
+        "dif_tau": 1.0269562977782698e-15,
+        "dif_ep": 7.632783294297951e-17
+      },
+      {
+        "linha": "A3 com dummy de capital (C-2)",
+        "corte": "0.300",
+        "aqui": -0.026107407039096704,
+        "auditoria_36": -0.0261074070390973,
+        "dif_tau": 5.967448757360216e-16,
+        "dif_ep": 2.0816681711721685e-17
+      },
+      {
+        "linha": "A3 sem as capitais (C-4)",
+        "corte": "0.300",
+        "aqui": -0.017200198767960195,
+        "auditoria_36": -0.0172001987679594,
+        "dif_tau": 7.945033519973776e-16,
+        "dif_ep": 6.245004513516506e-17
+      },
+      {
+        "linha": "N1 sem ajuste",
+        "corte": "0.300",
+        "aqui": -1.447467904500826,
+        "auditoria_36": -1.4474679045008167,
+        "dif_tau": 9.325873406851315e-15,
+        "dif_ep": 6.661338147750939e-16
+      },
+      {
+        "linha": "N1 com dummy de capital (C-2)",
+        "corte": "0.300",
+        "aqui": -0.9227290721147046,
+        "auditoria_36": -0.9227290721146486,
+        "dif_tau": 5.595524044110789e-14,
+        "dif_ep": 5.551115123125783e-16
+      },
+      {
+        "linha": "N1 sem as capitais (C-4)",
+        "corte": "0.300",
+        "aqui": -0.5033614543497029,
+        "auditoria_36": -0.5033614543497085,
+        "dif_tau": 5.551115123125783e-15,
+        "dif_ep": 1.887379141862766e-15
+      },
+      {
+        "linha": "taxa sem ajuste",
+        "corte": "0.300",
+        "aqui": -0.15993086270127255,
+        "auditoria_36": -0.1599308627012721,
+        "dif_tau": 4.440892098500626e-16,
+        "dif_ep": 3.469446951953614e-17
+      },
+      {
+        "linha": "taxa com dummy de capital (C-2)",
+        "corte": "0.300",
+        "aqui": -0.10930374508335294,
+        "auditoria_36": -0.1093037450833529,
+        "dif_tau": 4.163336342344337e-17,
+        "dif_ep": 3.191891195797325e-16
+      },
+      {
+        "linha": "taxa sem as capitais (C-4)",
+        "corte": "0.300",
+        "aqui": -0.09726589369016381,
+        "auditoria_36": -0.0972658936901647,
+        "dif_tau": 8.881784197001252e-16,
+        "dif_ep": 8.326672684688674e-17
+      },
+      {
+        "linha": "C-1 capital por municipio (quadro inteiro)",
+        "corte": "0.300",
+        "aqui": -0.17828636816237325,
+        "auditoria_36": -0.1782863681623736,
+        "dif_tau": 3.3306690738754696e-16,
+        "dif_ep": 1.942890293094024e-16
+      },
+      {
+        "linha": "C-1 capital por celula (quadro inteiro)",
+        "corte": "0.300",
+        "aqui": -0.5033107344734695,
+        "auditoria_36": -0.5033107344734673,
+        "dif_tau": 2.220446049250313e-15,
+        "dif_ep": 2.1371793224034263e-15
+      },
+      {
+        "linha": "HI-1 sem ajuste",
+        "corte": "0.400",
+        "aqui": -0.023119649555094268,
+        "auditoria_36": -0.0231196495550956,
+        "dif_tau": 1.3322676295501878e-15,
+        "dif_ep": 2.7755575615628914e-17
+      },
+      {
+        "linha": "A3 sem ajuste",
+        "corte": "0.400",
+        "aqui": -0.013182831124363192,
+        "auditoria_36": -0.0131828311243633,
+        "dif_tau": 1.0755285551056204e-16,
+        "dif_ep": 8.326672684688674e-17
+      },
+      {
+        "linha": "A3-pre sem ajuste",
+        "corte": "0.400",
+        "aqui": -0.04101134389758404,
+        "auditoria_36": -0.0410113438975842,
+        "dif_tau": 1.5959455978986625e-16,
+        "dif_ep": 1.5265566588595902e-16
+      },
+      {
+        "linha": "A3 com dummy de capital (C-2)",
+        "corte": "0.400",
+        "aqui": 0.016375726769026044,
+        "auditoria_36": 0.0163757267690258,
+        "dif_tau": 2.42861286636753e-16,
+        "dif_ep": 5.551115123125783e-17
+      },
+      {
+        "linha": "A3 sem as capitais (C-4)",
+        "corte": "0.400",
+        "aqui": 0.00411501369885503,
+        "auditoria_36": 0.0041150136988534,
+        "dif_tau": 1.6297727056802103e-15,
+        "dif_ep": 2.7755575615628914e-17
+      },
+      {
+        "linha": "N1 sem ajuste",
+        "corte": "0.400",
+        "aqui": -0.14205022218019647,
+        "auditoria_36": -0.1420502221801921,
+        "dif_tau": 4.385380947269368e-15,
+        "dif_ep": 3.2751579226442118e-15
+      },
+      {
+        "linha": "N1 com dummy de capital (C-2)",
+        "corte": "0.400",
+        "aqui": -0.10668603690968748,
+        "auditoria_36": -0.1066860369096817,
+        "dif_tau": 5.773159728050814e-15,
+        "dif_ep": 7.771561172376096e-16
+      },
+      {
+        "linha": "N1 sem as capitais (C-4)",
+        "corte": "0.400",
+        "aqui": -0.11835598789090948,
+        "auditoria_36": -0.1183559878909108,
+        "dif_tau": 1.3183898417423734e-15,
+        "dif_ep": 4.773959005888173e-15
+      },
+      {
+        "linha": "taxa sem ajuste",
+        "corte": "0.400",
+        "aqui": 0.025465381122180553,
+        "auditoria_36": 0.0254653811221816,
+        "dif_tau": 1.0477729794899915e-15,
+        "dif_ep": 2.636779683484747e-16
+      },
+      {
+        "linha": "taxa com dummy de capital (C-2)",
+        "corte": "0.400",
+        "aqui": 0.018947855415024417,
+        "auditoria_36": 0.0189478554150259,
+        "dif_tau": 1.4814538484841933e-15,
+        "dif_ep": 4.440892098500626e-16
+      },
+      {
+        "linha": "taxa sem as capitais (C-4)",
+        "corte": "0.400",
+        "aqui": 0.0016624781068099725,
+        "auditoria_36": 0.0016624781068099,
+        "dif_tau": 7.26415455565288e-17,
+        "dif_ep": 1.1102230246251565e-16
+      },
+      {
+        "linha": "C-1 capital por municipio (quadro inteiro)",
+        "corte": "0.400",
+        "aqui": -0.05903105128832807,
+        "auditoria_36": -0.0590310512883288,
+        "dif_tau": 7.28583859910259e-16,
+        "dif_ep": 6.38378239159465e-16
+      },
+      {
+        "linha": "C-1 capital por celula (quadro inteiro)",
+        "corte": "0.400",
+        "aqui": -0.32024917187495044,
+        "auditoria_36": -0.3202491718749494,
+        "dif_tau": 1.0547118733938987e-15,
+        "dif_ep": 7.494005416219807e-16
+      }
+    ],
+    "pipeline": [
+      {
+        "linha": "A3: célula aberta preenchida (tipo de vaga do pipeline)",
+        "corte": "0.300",
+        "arquivo": "NA_estimativas.csv",
+        "aqui": -0.08394018208937415,
+        "gravado": -0.08394018208934817,
+        "dif_tau": 2.5979218776228663e-14,
+        "dif_ep": 7.112366251504909e-15
+      },
+      {
+        "linha": "N1 com controle (S-a): vagas preenchidas por município",
+        "corte": "0.300",
+        "arquivo": "N_estimativas.csv (S-a)",
+        "aqui": -1.447467904500826,
+        "gravado": -1.4474679045007928,
+        "dif_tau": 3.3306690738754696e-14,
+        "dif_ep": 6.661338147750939e-16
+      },
+      {
+        "linha": "Taxa por vaga oferecida (S-e)",
+        "corte": "0.300",
+        "arquivo": "N_estimativas.csv (S-e)",
+        "aqui": -0.15993086270127255,
+        "gravado": -0.15993086270127255,
+        "dif_tau": 0.0,
+        "dif_ep": 0.0
+      },
+      {
+        "linha": "A3: célula aberta preenchida (tipo de vaga do pipeline)",
+        "corte": "0.400",
+        "arquivo": "NA_estimativas.csv",
+        "aqui": -0.013182831124363192,
+        "gravado": -0.013182831124327443,
+        "dif_tau": 3.574918139293004e-14,
+        "dif_ep": 1.6514567491299204e-15
+      },
+      {
+        "linha": "N1 com controle (S-a): vagas preenchidas por município",
+        "corte": "0.400",
+        "arquivo": "N_estimativas.csv (S-a)",
+        "aqui": -0.14205022218019647,
+        "gravado": -0.142050222180193,
+        "dif_tau": 3.469446951953614e-15,
+        "dif_ep": 1.3322676295501878e-15
+      },
+      {
+        "linha": "Taxa por vaga oferecida (S-e)",
+        "corte": "0.400",
+        "arquivo": "N_estimativas.csv (S-e)",
+        "aqui": 0.025465381122180553,
+        "gravado": 0.025465381122180553,
+        "dif_tau": 0.0,
+        "dif_ep": 0.0
+      }
+    ],
+    "HI": {
+      "status": "PENDENTE",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "motivo": "HI_estimativas.csv (script 40) não estava no branch nesta execução"
+    }
+  },
+  "decisoes": [
+    "Capital e região vêm de fontes do IBGE gravadas em `output/aquisicao/` com SHA-256 (nada digitado); a lista coincide com a que a auditoria 36 tinha digitado.",
+    "HI-1 e HI-2 seguem o 48b com a §7: amostra e controle pelo tipo de vaga do quadro de 13/02/2026 no ciclo 2.",
+    "C-1 é estimado na amostra da H1 (a que a leitura usa) e no quadro inteiro (a das medidas antigas); por município × ciclo e por célula, sem controle, com a mesma reta por ciclo e o mesmo kernel das outras linhas.",
+    "\"C-2 a C-4 levam o salto a um IC que contém zero\" foi lido como: nos três ajustes, para toda linha da H1 cujo IC sem ajuste exclui zero. Sem nenhuma linha assim, não há salto a levar e vale \"relatar como está\".",
+    "Efeito fixo de UF entra como uma dummy por UF (referência = a primeira em ordem de código); dummy sem variação ou colinear na janela é descartada e registrada em `covariaveis_descartadas`.",
+    "C-5 traz o A3 com o tipo de vaga do pipeline (19/03/2026, a medida antiga como foi gravada) e com o de 13/02/2026; N1 S-a e taxa S-e não dependem do tipo de vaga. C-5 fica fora do BKY e da leitura.",
+    "BKY entre as 12 linhas C-2 a C-4, como manda o adendo; sem Holm (o 48c não pede)."
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/48c_adendo_capitais_e_UF.md",
+      "sha256": "771d72b2ad89f859707722c05372e9fe826065e5d2e80e3d946979512d0cd9be",
+      "bytes": 2258,
+      "papel": "adendo 48c (especificacao, congelado antes)",
+      "fonte": "docs/06_execucao",
+      "data_referencia": "2026-10-26",
+      "cobertura": "-",
+      "unidade": "texto",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/48b_adendo_H1_vagas_imediatas.md",
+      "sha256": "0dc4a6737c364d411041f4733f86c0f578b742c972935ee62b8202daa7c1bb64",
+      "bytes": 6064,
+      "papel": "adendo 48b (definicao de HI-1 e HI-2, §7)",
+      "fonte": "docs/06_execucao",
+      "data_referencia": "2026-10-26",
+      "cobertura": "-",
+      "unidade": "texto",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/auditoria_H1/a36_reconstruir_H1.py",
+      "sha256": "f9b8254e3a035299ef5bfaca84fa8ded359b6e7fc4d83a71a39a203a1534ec8c",
+      "bytes": 48697,
+      "papel": "reconstrucao da auditoria 36 (importada, nao alterada)",
+      "fonte": "scripts/auditoria_H1",
+      "data_referencia": "2026-10-26",
+      "cobertura": "-",
+      "unidade": "codigo",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/auditoria_H1/a36_leitura.py",
+      "sha256": "422ab0354633e1ca58ad692e46bc026d04ba0184c6973493c8475a850732aeb0",
+      "bytes": 8957,
+      "papel": "leitor dos brutos da auditoria 36 (importado)",
+      "fonte": "scripts/auditoria_H1",
+      "data_referencia": "2026-10-26",
+      "cobertura": "-",
+      "unidade": "codigo",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial)",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "co_ibge (6 digitos)",
+      "filtros": "ivs"
+    },
+    {
+      "caminho": "output/aquisicao/ibge_capitais_uf_regiao.csv",
+      "sha256": "e4c9ffb63c0eb14b4ddaae64550639d620e0cdd8caef7c793b2ee280963d1bd9",
+      "bytes": 2233,
+      "papel": "capitais e macrorregiao das UFs",
+      "fonte": "IBGE (Localidades 2022; SIDRA 4709)",
+      "data_referencia": "2022",
+      "cobertura": "27 UFs",
+      "unidade": "UF",
+      "chaves": "cd_uf; capital_co_ibge_6d",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/manifesto_ibge_capitais_uf_regiao.json",
+      "sha256": "d1b75dc54078312f1df5e3ff09314ca58438eacffde3e66c73412d5dbbe34637",
+      "bytes": 3136,
+      "papel": "manifesto da referencia do IBGE (URLs e SHA-256 dos arquivos baixados)",
+      "fonte": "IBGE",
+      "data_referencia": "2022",
+      "cobertura": "27 UFs",
+      "unidade": "-",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/auditoria_H1/a36_celulas.csv",
+      "sha256": "9921cf98f32563de9e54c9630831fdf913cd2923944c33044cb8effce1aaf225",
+      "bytes": 974585,
+      "papel": "conferencia da base de celulas",
+      "fonte": "auditoria 36",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "5135 celulas",
+      "unidade": "celula x ciclo",
+      "chaves": "ciclo, chave",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/auditoria_H1/a36_municipios.csv",
+      "sha256": "5709b82429eec25987d9d46da10c893d64cca64016403f32c13836db7fa108d0",
+      "bytes": 169004,
+      "papel": "conferencia da base de municipios",
+      "fonte": "auditoria 36",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "municipios do quadro",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/auditoria_H1/a36_estimativas.csv",
+      "sha256": "09bd2c78249249120e4497ca150d729f28e046acc6760c13e2f92b8b21eaf197",
+      "bytes": 255630,
+      "papel": "conferencia das linhas ja estimadas pela auditoria 36",
+      "fonte": "auditoria 36",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "-",
+      "unidade": "estimativa",
+      "chaves": "-",
+      "filtros": "ciclo = 1+2+3"
+    },
+    {
+      "caminho": "output/rdd_bolsa/NA_estimativas.csv",
+      "sha256": "9f737d4c2a2850ddff6647dfb67ba7d7276758bf84b773ee0701a8d890000374",
+      "bytes": 538158,
+      "papel": "conferencia do A3 gravado (script 24)",
+      "fonte": "pipeline",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "-",
+      "unidade": "estimativa",
+      "chaves": "-",
+      "filtros": "A3_PREENCHIDA principal, V1+V2+V3"
+    },
+    {
+      "caminho": "output/rdd_bolsa/N_estimativas.csv",
+      "sha256": "3490d69c568ed13eb2b03612100a24aeefd72fc5f5f7cb3ac84e301d94f684ed",
+      "bytes": 1455159,
+      "papel": "conferencia do N1 S-a e da taxa S-e gravados (script 23)",
+      "fonte": "pipeline",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "-",
+      "unidade": "estimativa",
+      "chaves": "-",
+      "filtros": "N1 S-a principal e S-e, V1+V2+V3"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx",
+      "sha256": "51c6807f6bc2efa252b5236d89c5384ae484c4d47c8b65d4161c3facbfebe304",
+      "bytes": 129157,
+      "papel": "quadro da 1a chamada, ciclo 1 (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+      "sha256": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec",
+      "bytes": 165250,
+      "papel": "alocacao do ciclo 1 (sub judice) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada.xlsx",
+      "sha256": "0acfba2a89e0c269b754c0ca0fd5a2426be511f88a3c1a934a41345f8c9ffd0c",
+      "bytes": 165047,
+      "papel": "alocacao retificada do ciclo 1 (conferencia da a36) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_realocacao_retificado.xlsx",
+      "sha256": "7c31cb441b8668eca0c06a6c6a648c731e26d1f14162fe071fd9695ebfe89b86",
+      "bytes": 15559,
+      "papel": "realocacao do Quadro 2 do ciclo 1 (conferencia da a36) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2025_ciclo1_chamada1_homologados.xlsx",
+      "sha256": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b",
+      "bytes": 40259,
+      "papel": "homologados do ciclo 1 (conferencia da a36) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_original.xlsx",
+      "sha256": "cddad12d958963e29d3b9912814990c90a9220ba724f4657d9181cc1b9e3e049",
+      "bytes": 337149,
+      "papel": "quadro original do ciclo 2 de 03/02/2026 (conferencia da a36) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",
+      "sha256": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8",
+      "bytes": 157862,
+      "papel": "quadro do ciclo 2 de 13/02/2026 (tipo de vaga pre-alocacao) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+      "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+      "bytes": 153185,
+      "papel": "quadro do ciclo 2 de 19/03/2026 (celulas e total) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/pmm_e/resultado-final-pmme-2o-ciclo-25-05.xlsx",
+      "sha256": "8e85a28a57db1283cd3103065b04909b637cb76aab73482889e6b5fe50182e3c",
+      "bytes": 320107,
+      "papel": "resultado final do ciclo 2 (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/pmm_e/resultado-preliminar-pmme.xlsx",
+      "sha256": "90b4c863f6e07e3eb98dc221dfe1622a7a69041e31b54e95d036e44782144803",
+      "bytes": 292768,
+      "papel": "resultado preliminar do ciclo 2 (conferencia) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo2_chamada1_resultado_final_remanescentes.xlsx",
+      "sha256": "db39d51f9163fd8deedc8727ced37bf3fcdf19b4a6966d91a396e09f5f2a26e6",
+      "bytes": 17548,
+      "papel": "remanescentes do ciclo 2 (conferencia) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/pmm_e/resultado-final-vagas-remanescentes.xlsx",
+      "sha256": "70d67659cbfb7a3ec78452f76c70e9b9d0fce66ab5bb1b0b15934438edb83ad1",
+      "bytes": 33477,
+      "papel": "remanescentes do ciclo 2 (conferencia) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2026_ciclo3_chamada1_vagas_original.xlsx",
+      "sha256": "417eb9a459df88e4600992237c4b2dae5e9315e933eeaada7d8d6eb3faf96dda",
+      "bytes": 236751,
+      "papel": "quadro original do ciclo 3 de 16/07/2026 (conferencia) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo3_chamada1_vagas_retificadas.xlsx",
+      "sha256": "6bc07f48d0eaac37936fc827ebdefd12fb7bf2be86dc26f64a08e1f5b57f5371",
+      "bytes": 244948,
+      "papel": "quadro do ciclo 3 (24/07/2026) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx",
+      "sha256": "d74f268bb7192c80a02c94e54eb4407e60a0923ad7d0310c2c6b432b3dbbb6ee",
+      "bytes": 393041,
+      "papel": "resultado do ciclo 3 (sub judice) (lido pela auditoria 36)",
+      "fonte": "MS/SGTES (data/raw, so leitura)",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "linha do quadro/resultado",
+      "chaves": "CNES x curso",
+      "filtros": "sem colunas pessoais"
+    }
+  ],
+  "validacoes": {
+    "linhas": 72,
+    "sem_estimativa": 0,
+    "linhas_bky": 12
+  },
+  "saidas": {
+    "HC_estimativas.csv": {
+      "arquivo": "output/rdd_bolsa/HC_estimativas.csv",
+      "sha256": "74c3fd87b90ad1a8eb2dff50291cb646c1ce916ed4008a760f15555d7b347762"
+    },
+    "figuras": [
+      {
+        "arquivo": "output/rdd_bolsa/HC_figuras/HC_capitais_no_corte.png",
+        "como_ler": "Cada ponto é uma capital com IVS a menos de 0,050 do corte (todas as que têm célula no quadro de algum ciclo). À esquerda da linha tracejada a bolsa é menor; à direita, maior. O tamanho do ponto é o número de células da capital nos três ciclos. Quanto mais perto da linha, mais a capital pesa na estimativa do salto.",
+        "detalhe_tecnico": "Municípios × ciclo do quadro (a36), capitais pela lista do IBGE (Localidades 2022); IVS 2010 oficial (a08). Peso do kernel triangular = 1 − |IVS − corte| / 0,050.",
+        "sha256": "9c1ece1b50f41a2f01c714495ecc7ed2f6985ba74772a56ff3b15ced0dca28c3"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/HC_figuras/HC_balanco_corte.png",
+        "como_ler": "Cada ponto é o salto, no corte, da fração de municípios (ou de células) que são capital, do Nordeste ou do Norte, na amostra da H1. Traço = IC 95%. Num corte bem balanceado esses saltos ficam perto de zero; um ponto à esquerda de zero quer dizer que logo acima do corte (bolsa maior) há menos daquele grupo do que logo abaixo.",
+        "detalhe_tecnico": "Linhas C-1 com amostra = H1 de HC_estimativas.csv (local linear, h = 0,050, ciclos empilhados, CR1 por município); em p.p.",
+        "sha256": "eec90d3b896ba6ade4163868e0825a61884b9b17b3da7116318f463b43a5f206"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/HC_figuras/HC_salto_H1_ajustes.png",
+        "como_ler": "Cada ponto é o salto da H1 no corte: o lado de bolsa maior menos o de bolsa menor. Laranja: sem ajuste (48b). Azul: comparando só municípios iguais em ser ou não capital. Verde: comparando só municípios da mesma UF. Roxo: tirando as capitais. Traço = IC 95%; traço cruzando o zero quer dizer que a diferença não se distingue de zero.",
+        "detalhe_tecnico": "Linhas base, C-2, C-3 e C-4 de HC_estimativas.csv; HI-1 em p.p., HI-2 em médicos alocados por município.",
+        "sha256": "27a0c0f248d43d1acf45eeb93f09dac997a5aebe3aa2d4a6627f203e09d78c1a"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/HC_figuras/HC_salto_medidas_antigas.png",
+        "como_ler": "Igual à figura anterior, para as medidas antigas (que misturam vaga imediata e cadastro reserva), só para comparação: A3 (célula aberta preenchida), N1 com controle (médicos por município) e taxa por vaga oferecida.",
+        "detalhe_tecnico": "Linhas C-5 de HC_estimativas.csv (A3 com o tipo de vaga do pipeline, N1 S-a e taxa S-e); fora do BKY e da leitura pré-registrada.",
+        "sha256": "da819fc8e6db1fd9fbe4d7b980fb6b09d74a2a5c085ca12461431da8b9806123"
+      }
+    ]
+  },
+  "linguagem": "descritivo e pos-resultado: diz com o que a queda anda junto, nao o que a causa"
+}
