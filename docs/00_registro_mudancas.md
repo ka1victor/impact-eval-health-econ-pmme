@@ -8,6 +8,18 @@
 
 ---
 
+## 26/10/2026 — Adendo 48b: H1 só com vagas imediatas (nova principal)
+
+Motivo: decisão do autor de comparar só vagas do mesmo tipo (vaga imediata) e usar essa especificação como principal da H1 na apresentação; congelado antes de calcular.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/48b_adendo_H1_vagas_imediatas.md`](06_execucao/48b_adendo_H1_vagas_imediatas.md) | HI-1 (célula com vaga imediata) e HI-2 (alocados em vagas imediatas por município), por corte, com Holm; secundárias HI-s1 a HI-s8 |
+
+---
+
 ## 26/10/2026 — Auditoria 34: oferta local depois da chegada (H4)
 
 Motivo: auditoria independente da parte B do protocolo 60 (script 37, `OL_*`, doc 57k), sobre o retrato
