@@ -8,6 +8,28 @@
 
 ---
 
+## 26/10/2026 — Diagrama causal e reorganização dos slides de teoria (banca final)
+
+Motivo: pedido do grupo de incluir diagrama causal/teoria da mudança e deixar o slide de equações como apêndice. Conteúdo para a banca final, não para a banca 2.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca_final/README.md`](07_apresentacoes/banca_final/README.md) | índice do diretório, derivados e como regerar |
+| [`07_apresentacoes/banca_final/01_diagrama_teoria_mudanca.md`](07_apresentacoes/banca_final/01_diagrama_teoria_mudanca.md) | conteúdo canônico: caixas e setas, literatura por elo, ligação com as equações do apêndice, avisos de identificação e nova ordem dos slides de teoria |
+| `scripts/apresentacao/gerar_diagrama_banca_final.py` | gera os 2 slides em formas nativas, o deck reorganizado (proposta) e o manifesto; regrava o bloco gerado do doc 01 |
+| `output/apresentacao_banca_final/` | `slides_diagrama_teoria_mudanca.pptx`, `deck_proposta_reorganizada.pptx`, `manifesto_diagrama.json` e `qa_render/` |
+| `tests/test_diagrama_banca_final.py` | arquivos, ausência de número de resultado no diagrama, doc 01 contra o script, ordem do deck, hashes do manifesto |
+
+### Alterado
+
+| Arquivo | O que mudou |
+|---|---|
+| [`07_apresentacoes/README.md`](07_apresentacoes/README.md) | linha da banca final no índice da seção |
+
+---
+
 ## 26/10/2026 — Protocolo 52b (P1h: peso da bolsa contra o custo do lugar)
 
 Motivo: teste formal da H3 do plano da banca 2, congelado antes de calcular.
