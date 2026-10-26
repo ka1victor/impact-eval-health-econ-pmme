@@ -8,6 +8,21 @@
 
 ---
 
+## 26/10/2026 — Protocolo 64: oferta local de especialistas comparada no corte
+
+Motivo: o autor pediu para comparar a oferta local entre quem recebe e quem não recebe médico usando o lado do corte
+de IVS como fonte de variação, em vez do mês da chegada (doc 57k, cujo pré já subia). Congelado antes de qualquer
+conta: forma reduzida DiRD por corte em V (B1–B5 do doc 57k), primeiro estágio e razão *fuzzy* com IC de
+Anderson–Rubin, estudo de evento no corte, heterogeneidade da chegada por lado do corte, seleção de V.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/64_protocolo_oferta_local_no_corte.md`](06_execucao/64_protocolo_oferta_local_no_corte.md) | protocolo congelado; resultados irão para o doc 57q |
+
+---
+
 ## 26/10/2026 — Retrato WIP: adendo 48c (capitais e UF) e deck curto da banca 2
 
 Motivo: os agentes do adendo 48c e do deck curto foram interrompidos antes de terminar. O trabalho deles entra no
