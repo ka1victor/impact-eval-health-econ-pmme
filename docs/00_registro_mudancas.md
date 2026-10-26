@@ -8,6 +8,26 @@
 
 ---
 
+## 26/10/2026 — Auditoria 38: adendo 48b (H1 só com vagas imediatas), aprovado com correções
+
+Motivo: auditoria independente do adendo 48b (com a §7), do script 40, das saídas `HI_*`, do doc 57n e dos testes.
+Recálculo próprio, sem importar o script 40 nem a `rdd_lib`, de 58 das 68 linhas: tudo bate, com diferença máxima de
+1,2e−12. Também batem as contagens do quadro de 13/02 do ciclo 2. As correções são só de texto no gerador do 57n:
+- exposição à rodada com o quadro de 19/03 no cabeçalho;
+- justificativa à luz da auditoria 36;
+- seleção da amostra pelo tipo de vaga, com remissão ao 48f.
+
+Nenhuma saída em `output/` mudou.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/38_auditoria_h1_vagas_imediatas.md`](auditorias/38_auditoria_h1_vagas_imediatas.md) | relatório da auditoria 38 (veredito, achados, recálculo, integridade) |
+| `scripts/auditoria_H1/a38_recalculo.py`, `scripts/auditoria_H1/a38_comparar.py` | recálculo independente e comparação com `HI_estimativas.csv` (só leem; nada gravado) |
+
+---
+
 ## 26/10/2026 — Adendos 48e (pareamento pela regra literal e PSM em 0,400) e 48f (seleção pelo tipo de vaga)
 
 Motivo: o autor aprovou as recomendações 1, 2 e 5 da §2.16 de `07_apresentacoes/banca2/05_discussao_historia_empirica.md`.
