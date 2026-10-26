@@ -290,6 +290,33 @@
       "cobertura": "M1, ciclos 1–3",
       "unidade": "log-chance",
       "chaves": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/DQ_estimativas.csv",
+      "sha256": "81897f10c47355c9491293fa6493cd8258a8be097d5864992f14f10358db86de",
+      "papel": "diagnóstico da queda em 0,300 (protocolo 61; doc 57l; auditoria 33)",
+      "data_referencia": "2026-10-26",
+      "cobertura": "municípios e células na janela dos cortes, ciclos 1–3",
+      "unidade": "várias (coluna unidade)",
+      "chaves": "id_linha"
+    },
+    {
+      "caminho": "output/rdd_bolsa/DQ_resumo.json",
+      "sha256": "ad5a3b531fdf3bdf8ba59af7df685e5086baeedcfe71e6ff9c3e6a58efbcd82e",
+      "papel": "estatuto e hashes das figuras do diagnóstico 61 (auditoria 33)",
+      "data_referencia": "2026-10-26",
+      "cobertura": "protocolo 61",
+      "unidade": "-",
+      "chaves": "estatuto; saidas.figuras"
+    },
+    {
+      "caminho": "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png",
+      "sha256": "806b888ca81297e85f003f9dab0d3d65628035bd986c07f680a5f4a5970b49a0",
+      "papel": "figura 'quanto da queda sobra' do diagnóstico 61 (auditoria 33), sem redesenho",
+      "data_referencia": "2026-10-26",
+      "cobertura": "corte 0,300, ciclos 1–3",
+      "unidade": "vagas por município; p.p.",
+      "chaves": "-"
     }
   ],
   "regra_bolsa": {
@@ -717,7 +744,8 @@
         "0,400",
         "−0,14 [−0,82; +0,54]",
         "TOST: sem aumento ≥ +25%",
-        "Como ler: ponto = bolsa maior menos menor, no corte; barra = IC 95%,",
+        "Como ler",
+        "ponto = bolsa maior menos menor, no corte; barra = IC 95%,",
         "verde se exclui zero; TOST com IC 90%. Ciclos 1–3, cada corte separado.",
         "Fontes: N_estimativas.csv (doc 49); S57_resumo.json (A3); EQ_estimativas.csv (doc 57j). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
@@ -728,7 +756,7 @@
         "+10",
         "−2",
         "0",
-        "−2,5",
+        "−2",
         "0"
       ]
     },
@@ -741,7 +769,8 @@
         "0,400",
         "IVS 2010 oficial do município (faixas de 0,010)",
         "municípios",
-        "Como ler: cada traço conta os municípios com vaga em cada faixa de IVS; as linhas tracejadas são os cortes.",
+        "Como ler: cada traço conta os municípios com vaga em cada faixa de IVS de 0,010; as linhas",
+        "tracejadas são os cortes. Acúmulo de um lado indicaria seleção de quem entra no quadro.",
         "Fontes: outcomes_V_municipio.parquet; E1_densidade_estimativas.csv. EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
@@ -771,7 +800,7 @@
         "Célula preenchida, 1ª chamada (%)",
         "Vagas oferecidas por município",
         "Como ler: cada ponto é a média de uma faixa de IVS de 0,010 (tamanho = número de células ou de municípios); cada linha é a reta local de um lado;",
-        "o salto é a distância entre as duas retas no corte. Azul: bolsa menor; laranja: bolsa maior. Dados crus, ciclos 1–3: sem controles nem efeitos fixos.",
+        "o salto é a distância entre as duas retas no corte. Azul: bolsa menor; laranja: bolsa maior; tracejada: o corte. Dados crus, ciclos 1–3, sem controles.",
         "Fontes: outcomes_V_celula.parquet; outcomes_V_municipio.parquet (ciclos 1–3). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
@@ -1041,7 +1070,8 @@
         "0,400",
         "−3,59 [−8,94; +1,77]",
         "médias 7,05 → 3,93",
-        "Como ler: sem controle = via vagas + com controle (identidade exata). Ponto: salto no corte; barra: IC 95%; N1 na mesma escala nos dois gráficos;",
+        "Como ler",
+        "sem controle = via vagas + com controle (identidade exata). Ponto: salto no corte; barra: IC 95%; N1 na mesma escala nos dois gráficos;",
         "via vagas é uma soma algébrica, sem IC. Médias de vagas oferecidas na janela, abaixo → acima do corte (descritivo).",
         "Fontes: N_estimativas.csv (doc 49, §3 a §5); ND_estimativas.csv (doc 49b). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
@@ -1643,7 +1673,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/h1_preenchimento.png",
-      "sha256": "c966fe5af619e0455604eabcd8ede3ed27b5cc2efcfb3f70a06d9cf0a18e5b76",
+      "sha256": "0471ba799c98cfb6a736ac82f0b0fcea7da3fe19a08ba41db18ddb23fed8dee6",
       "natureza": "EMPIRICO",
       "descricao": "H1: N1 com e sem controle e A3, com 'Como ler'",
       "fontes": [
@@ -1656,7 +1686,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/exp_densidade_ivs.png",
-      "sha256": "3c8fe3fec85148cba603ed5a40974577417e3202c72cb6c03d5e13b4ee7d9990",
+      "sha256": "34db47371106edab4611aaea7a0cbd078b383dac404bb2b584c6b123b8bf0f13",
       "natureza": "EMPIRICO",
       "descricao": "exploratória: municípios com vaga por faixa de IVS, por ciclo",
       "fontes": [
@@ -1669,7 +1699,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/exp_rdd_crua.png",
-      "sha256": "1289e91dc8648cf79e10fea4d376747f821ba31bb6bd5ef1d2ec1ed968aac036",
+      "sha256": "c024e428f7688045b55c44231ad02e0113e02af3758670984f50164a1bbeee87",
       "natureza": "EMPIRICO",
       "descricao": "exploratória: gráfico cru da RDD por corte (célula preenchida e vagas oferecidas)",
       "fontes": [
@@ -1682,7 +1712,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/exp_escolha_origem.png",
-      "sha256": "1bc92ca206608e8d5030d2f2f7b0079ac415fbdb489b7b4c28cbbb81b0925213",
+      "sha256": "ced98d91e1960c882cfb636bf5e75a80de801b14d626ab4b6a44f4dcf6af9d6c",
       "natureza": "EMPIRICO",
       "descricao": "exploratória: 1ª opção em relação à origem e distância",
       "fontes": [
@@ -1708,7 +1738,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/h1_controle.png",
-      "sha256": "7262b8c2d56e58d0ccd74702fddf8ff721ea0c00c28fcacd2558e7cb80ba4515",
+      "sha256": "37078fefd9c97ac07f0d019c737d6abe62a19620c191960a6284043850dd02a8",
       "natureza": "EMPIRICO",
       "descricao": "H1: antes e depois do controle das vagas oferecidas, por corte",
       "fontes": [
@@ -1781,6 +1811,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "e9e152e4763e75b34d7862a351927b71ac17f56d47757bc95358ec371afa9e02"
+    "sha256": "0a1d0381146d1302e74f3622863a17d4b2a3e005bb2f4b9be42d4a6feae43cab"
   }
 }

@@ -559,6 +559,14 @@ def _p1h(filtro: dict, coluna: str) -> dict:
     return _c(P1H_CSV, filtro, coluna)
 
 
+DQ_EST = "output/rdd_bolsa/DQ_estimativas.csv"
+DQ_RES = "output/rdd_bolsa/DQ_resumo.json"
+DQ_FIG = "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png"
+DQ_FUNIL = "D-c|funil_bruto|funil_bruto|"
+DQ_COMP = "D-b|composicao|salto|"
+PRELIM = "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): "
+
+
 SENS_H3 = [("M2", "M2", "empilhado", "log da distância"), ("M4", "M4", "empilhado", "efeito fixo de UF da vaga"),
            ("M5C1", "M5", "1", "só o ciclo 1"), ("M5C2", "M5", "2", "só o ciclo 2"), ("M5C3", "M5", "3", "só o ciclo 3"),
            ("M7", "M7", "empilhado", "logit explodido, 1ª e 2ª opção")]
@@ -661,6 +669,15 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
                       ("M8", "media_bolsa_mil", "logit misto, média"), ("M9", "bolsa_mil", "logit aninhado"))],
     ("M7_INF", "EMPIRICO", _p1("M7", "empilhado", "ic95_inf"), "d4s", "M7: IC inferior"),
     ("M7_SUP", "EMPIRICO", _p1("M7", "empilhado", "ic95_sup"), "d4s", "M7: IC superior"),
+    # P1g (doc 57a, §9): ponte entre a escolha e o preenchimento, por corte, ciclos 1–3 (leitura de consistência)
+    *[(f"P1G_{c}_{k}{s}", "EMPIRICO",
+       _c(P1_EST, {"estimando": "P1g", "modelo": mod, "ciclo": "1+2+3", "amostra": am, "termo": f"corte_{c}"}, col),
+       "d2s", f"P1g, corte 0,{c}, ciclos 1–3: {d}{dd} (candidatos de 1ª opção por célula)")
+      for c in ("300", "400")
+      for k, mod, am, d in (("PREV", "M1_previsto", "P1 (G1 com origem)", "salto previsto pelo M1, só a bolsa muda"),
+                            ("OBS", "RDD_celula", "candidatos da amostra P1", "salto observado na RDD por célula"))
+      for s, col, dd in (("", "coef", ""), ("_INF", "ic95_inf", ", IC 95% inferior"),
+                         ("_SUP", "ic95_sup", ", IC 95% superior"))],
     # H3: peso da bolsa contra o da UF de origem no M1 (P1h, protocolo 52b; doc 57i; auditoria 31)
     ("H3_ESTATUTO", "EMPIRICO", _j(P1H_RES, "estatuto"), "txt",
      "P1h: estatuto do bloco (pós-resultado; regra da força da evidência na figura da cadeia)"),
@@ -852,6 +869,49 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
     # E1: densidade do IVS no corte (ciclo 1)
     *[(f"E1_{c}_HOLM", "EMPIRICO", _c(E1_EST, {"ciclo": "1", "corte": ct, "papel": "principal"}, "p_holm"), "p3",
        f"E1, ciclo 1, corte {ct}: p de Holm do teste de densidade (Poisson local)") for c, ct in CORTES_TXT],
+    # Diagnóstico da queda em 0,300 (protocolo 61, doc 57l), auditado (auditoria 33). Lido de DQ_estimativas.csv e
+    # DQ_resumo.json, sem recálculo; descritivo e pós-resultado.
+    ("DQ_ESTATUTO", "EMPIRICO", _j(DQ_RES, "estatuto"), "txt", PRELIM + "estatuto do bloco"),
+    *[(f"DQ_FUN_PRE_{s}", "EMPIRICO", _c(DQ_EST, {"id_linha": DQ_FUNIL + "preenchida|V1+V2+V3 (celulas)|1+2+3|0.300|media_simples_janela|preenchida|"}, col), "pct1",
+       PRELIM + f"fração das células da janela de 0,300 preenchidas na 1ª chamada, {d}, sem reta (funil bruto)")
+      for s, col, d in (("ABX", "valor_abaixo", "abaixo do corte"), ("ACI", "valor_acima", "acima do corte"))],
+    *[(f"DQ_{k}_{s}", "EMPIRICO", _c(DQ_EST, {"id_linha": lin}, col, PP), "d1s", PRELIM + f"0,300: {d}{dd}")
+      for k, lin, d in (("SOCR", DQ_COMP + "so_cr|V1+V2+V3 (celulas)|1+2+3|0.300|celula|ciclos_juntos|",
+                         "salto na parte das células só de cadastro reserva (p.p.)"),
+                        ("CURSO", DQ_COMP + "idx_curso|V1+V2+V3 (celulas)|1+2+3|0.300|celula|ciclos_juntos|",
+                         "salto no índice de curso (preenchimento do curso fora da janela, p.p.)"),
+                        ("CAND1", "D-c|funil|salto|P_C|V1+V2+V3 (celulas)|1+2+3|0.300|celula|especificacao_Q3|",
+                         "salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.; "
+                         "estimativa imprecisa)"),
+                        ("SOCR_C2", DQ_COMP + "so_cr|V2 (celulas)|2|0.300|celula|por_ciclo|",
+                         "ciclo 2: salto na parte das células só de cadastro reserva (p.p.)"))
+      for s, col, dd in (("TAU", "tau", ""), ("INF", "ic95_inf", ", IC 95% inferior"),
+                         ("SUP", "ic95_sup", ", IC 95% superior"))],
+    *[(f"DQ_CONCUF_{s}", "EMPIRICO",
+       _c(DQ_EST, {"id_linha": "D-d|medidas|salto|n_conc_uf|V1+V2+V3 (celulas)|1+2+3|0.300|celula|sem_efeitos_fixos|"},
+          col), "d1s", PRELIM + f"0,300: salto no número de células do mesmo curso e ciclo na mesma UF{dd}")
+      for s, col, dd in (("TAU", "tau", ""), ("INF", "ic95_inf", ", IC 95% inferior"),
+                         ("SUP", "ic95_sup", ", IC 95% superior"))],
+    *[(f"DQ_FIX_{k}_{q}{s}", "EMPIRICO", _c(DQ_EST, {"id_linha": f"{ex}|fixar_fator|fixado|{q}|V1+V2+V3|1+2+3|0.300|"
+                                                                f"fixar_fator|{var}|"}, col, t), fm,
+       PRELIM + f"0,300, {q}, igualando {d}: {dd}")
+      for k, ex, var, q, d in (("COMP", "D-b", "composicao", "Q2", "a composição das vagas"),
+                               ("SEMCR", "D-b", "sem_celulas_so_cr", "Q3", "sem as células só de cadastro reserva"),
+                               ("FUNIL", "D-c", "funil", "Q1", "quem teve candidato de 1ª opção"),
+                               ("FUNIL", "D-c", "funil", "Q3", "quem teve candidato de 1ª opção"),
+                               ("CONC", "D-d", "concorrencia", "Q2", "a concorrência"))
+      for s, col, t, fm, dd in (("", "tau", None if q == "Q1" else PP, "d2s" if q == "Q1" else "d1s",
+                                 "salto depois de igualar" + ("" if q == "Q1" else " (p.p.)")),
+                                ("_PCT", "razao_fixado_original", [["mul", 100]], "d0",
+                                 "quanto sobra do salto comparado (%)"))],
+    *[(f"DQ_PPOSTO_{q}", "EMPIRICO", _c(DQ_EST, {"id_linha": f"D-a|placebo|resumo_placebo|{q}||1+2+3|0.300|||"},
+                                        "p_posto"), "p3",
+       PRELIM + f"0,300, {q}: p por posto entre os 3 cortes placebo do protocolo (menor possível = 0,250)")
+      for q in ("Q1", "Q2")],
+    *[(f"DQ_PCOMP_{q}", "EMPIRICO", _c(DQ_EST, {"id_linha": f"D-a|placebo_complementar|resumo_placebo|{q}||1+2+3|"
+                                                            "0.300|||"}, "p_posto"), "p3",
+       PRELIM + f"0,300, {q}: p por posto na grade complementar, fora do protocolo (31 cortes falsos)")
+      for q in ("Q1", "Q2")],
     ("D_POP_MUN", "EMPIRICO", _d("POP_MUN"), "int", "municípios com população do Censo 2022"),
     ("D_ATIVOS", "EMPIRICO", _j(A16_MAN, "listas_pmme", "registros_ativos_2026_09_11"), "int",
      "registros na lista de especialistas ativos do PMM-E de 11/09/2026"),
@@ -1053,6 +1113,8 @@ def registrar_numeros(calculados: dict) -> dict:
             saida[cod] = {"valor": fmt(bruto, formato), "valor_bruto": bruto, "natureza": nat,
                           "arquivo": arquivo_do_seletor(sel) or "calculado por este script", "seletor": sel,
                           "formato": formato, "descricao": desc}
+            if cod.startswith("DQ_"):
+                saida[cod]["auditoria"] = "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
         blocos[nome] = saida
     todos = [c for b in blocos.values() for c in b]
     if len(todos) != len(set(todos)):
@@ -1612,9 +1674,10 @@ def _caixa_como_ler(fig, reg: "Registro", W: float, linhas: list[str], y_base: f
                                       hb / fig.get_figheight(), boxstyle="round,pad=0,rounding_size=0.012",
                                       transform=fig.transFigure, facecolor=CLARO_FUNDO, edgecolor=LINHA_CLARA, lw=1))
     H = fig.get_figheight()
+    reg.t(fig, 0.22 / W, (y_base + hb - 0.21) / H, "Como ler", fontsize=12, weight="bold", color=VERDE_ESC,
+          va="center")
     for k, t in enumerate(linhas):
-        reg.t(fig, 0.22 / W, (y_base + hb - 0.21 - 0.23 * k) / H, ("Como ler: " if k == 0 else "") + t, fontsize=12,
-              color=TINTA, va="center")
+        reg.t(fig, 1.15 / W, (y_base + hb - 0.21 - 0.23 * k) / H, t, fontsize=12, color=TINTA, va="center")
 
 
 TIT_SEM = ("Sem controle: efeito total", "(abrir vagas + preenchê-las)")
@@ -1644,8 +1707,8 @@ def figura_h1(num: dict, destino: Path) -> dict:
                 nota=f"média abaixo {_val(num, f'N1_{c}_MEDIA')}") for c in ("300", "400")]
     com = [dict(rot=f"0,{c}", est=f"N1_{c}_TAU", inf=f"N1_{c}_INF", sup=f"N1_{c}_SUP",
                 nota=leitura_tost(num, f"EQ_N1_{c}_LEIT", "+25%")) for c in ("300", "400")]
-    y1, r1 = _bloco_forest(fig, reg, num, W, H, 0.1, y_top, 4.05, *TIT_SEM, sem, xlim, 0.55, 2.05)
-    y2, r2 = _bloco_forest(fig, reg, num, W, H, 4.3, y_top, 4.2, *TIT_COM, com, xlim, 0.55, 2.42)
+    y1, r1 = _bloco_forest(fig, reg, num, W, H, 0.1, y_top, 4.05, *TIT_SEM, sem, xlim, 0.55, 2.15)
+    y2, r2 = _bloco_forest(fig, reg, num, W, H, 4.3, y_top, 4.2, *TIT_COM, com, xlim, 0.55, 2.3)
     registro += r1 + r2
     fig.add_artist(plt.Line2D([4.2 / W] * 2, [(y1 + 0.3) / H, y_top / H], color=LINHA_CLARA, lw=1))
     _caixa_como_ler(fig, reg, W, ["ponto = bolsa maior menos menor, no corte; barra = IC 95%,",
@@ -1691,8 +1754,10 @@ def figura_densidade_ivs(num: dict, destino: Path) -> dict:
         ax.spines[lado].set_visible(False)
     reg.t(fig, 0.75 / W, 1.0 / H, "IVS 2010 oficial do município (faixas de 0,010)", fontsize=12, color=TINTA2)
     reg.t(fig, 0.12 / W, (H - 0.12) / H, "municípios", fontsize=12, color=TINTA2, va="top")
-    reg.t(fig, 0.1 / W, 0.62 / H, "Como ler: cada traço conta os municípios com vaga em cada faixa de IVS; as linhas "
-          "tracejadas são os cortes.", fontsize=12, color=TINTA, va="center")
+    reg.t(fig, 0.1 / W, 0.72 / H, "Como ler: cada traço conta os municípios com vaga em cada faixa de IVS de 0,010; "
+          "as linhas", fontsize=12, color=TINTA, va="center")
+    reg.t(fig, 0.1 / W, 0.48 / H, "tracejadas são os cortes. Acúmulo de um lado indicaria seleção de quem entra no quadro.",
+          fontsize=12, color=TINTA, va="center")
     reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: outcomes_V_municipio.parquet; E1_densidade_estimativas.csv. " + FONTE_FIG,
           fontsize=8.5, color=MUDO, va="bottom")
     fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
@@ -1765,7 +1830,7 @@ def figura_rdd_crua(num: dict, destino: Path) -> dict:
     reg.t(fig, 0.2 / W, 0.84 / H, "Como ler: cada ponto é a média de uma faixa de IVS de 0,010 (tamanho = número de "
           "células ou de municípios); cada linha é a reta local de um lado;", fontsize=12, color=TINTA, va="center")
     reg.t(fig, 0.2 / W, 0.58 / H, "o salto é a distância entre as duas retas no corte. Azul: bolsa menor; laranja: "
-          "bolsa maior. Dados crus, ciclos 1–3: sem controles nem efeitos fixos.", fontsize=12, color=TINTA,
+          "bolsa maior; tracejada: o corte. Dados crus, ciclos 1–3, sem controles.", fontsize=12, color=TINTA,
           va="center")
     reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: outcomes_V_celula.parquet; outcomes_V_municipio.parquet (ciclos 1–3). "
           + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
@@ -1884,8 +1949,8 @@ def figura_escolha_origem(num: dict, destino: Path) -> dict:
           color=VERDE_ESC, va="top")
     reg.t(fig, 4.55 / W, (H - 0.42) / H, f"mediana {_val(num, 'ESC_DIST_P50')} km (linha)", fontsize=12, color=TINTA2,
           va="top")
-    reg.t(fig, 4.55 / W, 0.95 / H, "escala log; 0 = o próprio município", fontsize=12, color=TINTA2)
-    reg.t(fig, 0.1 / W, 0.55 / H, f"Como ler: {_val(num, 'ESC_N')} candidatos com 1ª opção e município de origem "
+    reg.t(fig, 4.55 / W, 0.82 / H, "escala log; 0 = o próprio município", fontsize=12, color=TINTA2, va="center")
+    reg.t(fig, 0.1 / W, 0.42 / H, f"Como ler: {_val(num, 'ESC_N')} candidatos com 1ª opção e município de origem "
           "(onde trabalhavam antes, no CNES).", fontsize=12, color=TINTA, va="center")
     reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: G1_distancias_opcoes.parquet; G1_candidatos_origem.parquet. " + FONTE_FIG,
           fontsize=8.5, color=MUDO, va="bottom")
@@ -2279,6 +2344,12 @@ ENTRADAS = [
     (RAIZ / P1H_RES, "H3: estatuto do bloco e hash da figura auditada", "2026-10-26", "P1h", "-", "estatuto; saidas"),
     (RAIZ / P1H_FIG, "H3: figura dos pesos no M1, auditada (auditoria 31, A1 e A2); usada no slide sem redesenho",
      "2026-10-26", "M1, ciclos 1–3", "log-chance", "-"),
+    (RAIZ / DQ_EST, "diagnóstico da queda em 0,300 (protocolo 61; doc 57l; auditoria 33)", "2026-10-26",
+     "municípios e células na janela dos cortes, ciclos 1–3", "várias (coluna unidade)", "id_linha"),
+    (RAIZ / DQ_RES, "estatuto e hashes das figuras do diagnóstico 61 (auditoria 33)", "2026-10-26",
+     "protocolo 61", "-", "estatuto; saidas.figuras"),
+    (RAIZ / DQ_FIG, "figura 'quanto da queda sobra' do diagnóstico 61 (auditoria 33), sem redesenho",
+     "2026-10-26", "corte 0,300, ciclos 1–3", "vagas por município; p.p.", "-"),
 ]
 
 
@@ -2291,6 +2362,19 @@ def conferir_p1h() -> None:
         raise SystemExit("ERRO: P1h_magnitudes.csv com linha não EMPIRICO")
     if sha256(RAIZ / P1H_FIG) != res["saidas"][P1H_FIG] or sha256(RAIZ / P1H_CSV) != res["saidas"][P1H_CSV]:
         raise SystemExit("ERRO: figura ou CSV do P1h diferem do hash gravado em P1h_resumo.json")
+
+
+def conferir_dq() -> None:
+    """O diagnóstico 61 (auditoria 33) entra só com as saídas gravadas pelo script dele: natureza
+    EMPIRICO e figura com o hash registrado em DQ_resumo.json. Nada é recalculado aqui."""
+    res = _ler_json(DQ_RES)
+    if res.get("natureza_dos_dados") != "EMPIRICO" or set(_ler_csv(DQ_EST)["natureza_dos_dados"]) != {"EMPIRICO"}:
+        raise SystemExit("ERRO: diagnóstico 61 com saída não EMPIRICO")
+    hashes = {f["arquivo"]: f["sha256"] for f in res["saidas"]["figuras"]}
+    if sha256(RAIZ / DQ_FIG) != hashes.get(DQ_FIG):
+        raise SystemExit("ERRO: figura do diagnóstico 61 difere do hash gravado em DQ_resumo.json")
+    if sha256(RAIZ / DQ_EST) != res["saidas"]["DQ_estimativas.csv"]["sha256"]:
+        raise SystemExit("ERRO: DQ_estimativas.csv difere do hash gravado em DQ_resumo.json")
 
 
 def _rel(p: Path) -> str:
@@ -2345,6 +2429,7 @@ def main() -> int:
         raise SystemExit("ERRO: E8_tabela_sintese.csv com linha não EMPIRICO")
 
     conferir_p1h()
+    conferir_dq()
     g = _galeria()
     figs, calc = figuras_regra(g)
 

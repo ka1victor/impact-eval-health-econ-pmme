@@ -178,7 +178,7 @@
     {
       "destino": "corpo",
       "motivo": "divisória da Metodologia",
-      "posicao": 28,
+      "posicao": 32,
       "slide_do_grupo": 26,
       "titulo_grupo": "Sumário"
     },
@@ -192,7 +192,7 @@
     {
       "destino": "corpo",
       "motivo": "divisória dos Resultados",
-      "posicao": 36,
+      "posicao": 39,
       "slide_do_grupo": 28,
       "titulo_grupo": "Sumário"
     },
@@ -206,14 +206,14 @@
     {
       "destino": "corpo",
       "motivo": "fecha a apresentação",
-      "posicao": 45,
+      "posicao": 49,
       "slide_do_grupo": 30,
       "titulo_grupo": "Q&A"
     },
     {
       "destino": "apêndice",
       "motivo": "divisor; as notas, que traziam uma conversa colada com a contagem do arquivo errado, viraram uma linha neutra",
-      "posicao": 46,
+      "posicao": 50,
       "slide_do_grupo": 31,
       "titulo_grupo": "Apêndice"
     },
@@ -234,21 +234,21 @@
     {
       "destino": "apêndice",
       "motivo": "plano de dados da banca 1, com título \"Apêndice: plano de dados da banca 1, vagas e bolsa\"; \"proporção de vagas\" → \"proporção de células (estabelecimento × curso) com alguma confirmação ou homologação: 30,3% na 1ª chamada; 35,6% somando a 2ª\" (eram \"35,6%\" num slide e \"30%\" no outro, de chamadas diferentes); \"SGETS\" → \"SGTES\"; \"Especialidade\" → \"curso\"; faixa pela regra aplicada",
-      "posicao": 51,
+      "posicao": 55,
       "slide_do_grupo": 34,
       "titulo_grupo": "O desafio é separar o efeito da bolsa do efeito da vulnerabilidade"
     },
     {
       "destino": "apêndice",
       "motivo": "plano de dados da banca 1, com título \"Apêndice: plano de dados da banca 1, lugar e custo\"; as mesmas correções do 34; o IVS como running variable (entra contínuo e controla o custo do lugar; só a bolsa salta nos cortes), não como \"custo territorial agregado\" (doc 44, §2)",
-      "posicao": 52,
+      "posicao": 56,
       "slide_do_grupo": 35,
       "titulo_grupo": "O desafio é separar o efeito da bolsa do efeito da vulnerabilidade"
     },
     {
       "destino": "apêndice",
       "motivo": "componentes do IVS; título \"Apêndice: o IVS mede a vulnerabilidade social\"",
-      "posicao": 50,
+      "posicao": 54,
       "slide_do_grupo": 36,
       "titulo_grupo": "O IVS mede a vulnerabilidade social dos territórios brasileiros"
     }
@@ -368,15 +368,15 @@
       "slide": 23
     },
     {
-      "correcao": "título: Apêndice: o IVS mede a vulnerabilidade social; número de página digitado → campo do número do slide (50)",
+      "correcao": "título: Apêndice: o IVS mede a vulnerabilidade social; número de página digitado → campo do número do slide (54)",
       "slide": 36
     },
     {
-      "correcao": "título: Apêndice: plano de dados da banca 1, vagas e bolsa; número de página digitado → campo do número do slide (51)",
+      "correcao": "título: Apêndice: plano de dados da banca 1, vagas e bolsa; número de página digitado → campo do número do slide (55)",
       "slide": 34
     },
     {
-      "correcao": "título: Apêndice: plano de dados da banca 1, lugar e custo; número de página digitado → campo do número do slide (52)",
+      "correcao": "título: Apêndice: plano de dados da banca 1, lugar e custo; número de página digitado → campo do número do slide (56)",
       "slide": 35
     }
   ],
@@ -392,40 +392,58 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/02_conteudo_slides.md",
       "papel": "texto dos slides novos e quadro de correções",
-      "sha256": "ca5f1ae5b681b6235494d6f5ae4f488d752d47ffd63ddbb40990b74240ff46fa"
+      "sha256": "fe8f11612b8d06360dcc834f9532eba035d6b21a252be678475f6dc7d4120d69"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
       "papel": "números das correções",
-      "sha256": "b079200c4d4d1e05c5db3dbd4139b8fcaf5e830e457395eabcfe16cdcd1576d7"
+      "sha256": "0a1d0381146d1302e74f3622863a17d4b2a3e005bb2f4b9be42d4a6feae43cab"
     },
     {
       "caminho": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
-      "no_pacote": "ppt/media/banca2_02_cadeia_resumo_doc57.png",
+      "no_pacote": "ppt/media/banca2_05_cadeia_resumo_doc57.png",
       "papel": "figura",
       "sha256": "4a0ca644f4314bc3d5d7d4657a9980d00557f9f31ad8d0e418163a84f9f1877c"
     },
     {
-      "caminho": "output/apresentacao_banca2/h1_controle.png",
-      "no_pacote": "ppt/media/banca2_04_h1_controle.png",
+      "caminho": "output/apresentacao_banca2/exp_densidade_ivs.png",
+      "no_pacote": "ppt/media/banca2_02_exp_densidade_ivs.png",
       "papel": "figura",
-      "sha256": "9f058966f1e1b30a69afb4e207b5e9686f3555fa7b47b28c1fbc6f3021bcb4d2"
+      "sha256": "34db47371106edab4611aaea7a0cbd078b383dac404bb2b584c6b123b8bf0f13"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/exp_escolha_origem.png",
+      "no_pacote": "ppt/media/banca2_04_exp_escolha_origem.png",
+      "papel": "figura",
+      "sha256": "ced98d91e1960c882cfb636bf5e75a80de801b14d626ab4b6a44f4dcf6af9d6c"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/exp_rdd_crua.png",
+      "no_pacote": "ppt/media/banca2_03_exp_rdd_crua.png",
+      "papel": "figura",
+      "sha256": "c024e428f7688045b55c44231ad02e0113e02af3758670984f50164a1bbeee87"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/h1_controle.png",
+      "no_pacote": "ppt/media/banca2_07_h1_controle.png",
+      "papel": "figura",
+      "sha256": "37078fefd9c97ac07f0d019c737d6abe62a19620c191960a6284043850dd02a8"
     },
     {
       "caminho": "output/apresentacao_banca2/h1_preenchimento.png",
-      "no_pacote": "ppt/media/banca2_03_h1_preenchimento.png",
+      "no_pacote": "ppt/media/banca2_06_h1_preenchimento.png",
       "papel": "figura",
-      "sha256": "200bdde74253de53e5005827ae14a79ab7ba6efa99a3563998c6b910c3f43378"
+      "sha256": "0471ba799c98cfb6a736ac82f0b0fcea7da3fe19a08ba41db18ddb23fed8dee6"
     },
     {
       "caminho": "output/apresentacao_banca2/h2_escolha.png",
-      "no_pacote": "ppt/media/banca2_05_h2_escolha.png",
+      "no_pacote": "ppt/media/banca2_09_h2_escolha.png",
       "papel": "figura",
       "sha256": "bc4af04fe9ae24aa4b8af976c1917c4e181154754102402344932bde421e2cdf"
     },
     {
       "caminho": "output/apresentacao_banca2/h4_horas_medico.png",
-      "no_pacote": "ppt/media/banca2_07_h4_horas_medico.png",
+      "no_pacote": "ppt/media/banca2_11_h4_horas_medico.png",
       "papel": "figura",
       "sha256": "9be92c374e3284fe515b6a0ad18fa770e03961edf520e897845b8ce6143f2556"
     },
@@ -436,8 +454,14 @@
       "sha256": "86cb89519386f64c74c2cb12961a7a1fa6090f63e6802c9e2a725b6bef20cd19"
     },
     {
+      "caminho": "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png",
+      "no_pacote": "ppt/media/banca2_08_DQ_quanto_da_queda.png",
+      "papel": "figura",
+      "sha256": "806b888ca81297e85f003f9dab0d3d65628035bd986c07f680a5f4a5970b49a0"
+    },
+    {
       "caminho": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
-      "no_pacote": "ppt/media/banca2_06_P1h_magnitudes.png",
+      "no_pacote": "ppt/media/banca2_10_P1h_magnitudes.png",
       "papel": "figura",
       "sha256": "61bcc1b8f3c1d7f1ee831c136f24804619ead0e7ad95bab9174484f3ba07ce12"
     }
@@ -613,42 +637,42 @@
       "titulo": "Os três ciclos em números"
     },
     {
-      "destino": "corpo",
-      "origem": "slide 26 do deck do grupo",
+      "figura": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
+      "layout": "figura_painel",
+      "origem": "novo",
       "posicao": 28,
-      "titulo": "Sumário"
+      "secao": "Análise exploratória",
+      "titulo": "A bolsa é função exata do IVS: a regra é sharp"
     },
     {
-      "figura": null,
-      "layout": "tabela",
+      "figura": "output/apresentacao_banca2/exp_densidade_ivs.png",
+      "layout": "figura_painel",
       "origem": "novo",
       "posicao": 29,
-      "secao": "Metodologia",
-      "titulo": "Um estimador por hipótese"
+      "secao": "Análise exploratória",
+      "titulo": "Ciclo 1: os municípios com vaga não se acumulam nos cortes"
     },
     {
-      "figura": null,
-      "layout": "tabela",
+      "figura": "output/apresentacao_banca2/exp_rdd_crua.png",
+      "layout": "figura_larga",
       "origem": "novo",
       "posicao": 30,
-      "secao": "Metodologia",
-      "titulo": "Especificação da H1: o salto no corte, com e sem as vagas"
+      "secao": "Análise exploratória",
+      "titulo": "Nos dados crus, o lado de bolsa maior não preenche mais"
     },
     {
-      "figura": null,
-      "layout": "tabela",
+      "figura": "output/apresentacao_banca2/exp_escolha_origem.png",
+      "layout": "figura_painel",
       "origem": "novo",
       "posicao": 31,
-      "secao": "Metodologia",
-      "titulo": "Especificação da H2 e da H3: o logit da 1ª opção"
+      "secao": "Análise exploratória",
+      "titulo": "A 1ª opção fica perto de onde o médico já trabalhava"
     },
     {
-      "figura": null,
-      "layout": "tabela",
-      "origem": "novo",
+      "destino": "corpo",
+      "origem": "slide 26 do deck do grupo",
       "posicao": 32,
-      "secao": "Metodologia",
-      "titulo": "Especificação da H4: horas antes e depois de entrar"
+      "titulo": "Sumário"
     },
     {
       "figura": null,
@@ -656,7 +680,7 @@
       "origem": "novo",
       "posicao": 33,
       "secao": "Metodologia",
-      "titulo": "Especificação do TOST: o IC de 90% cabe na margem?"
+      "titulo": "Um estimador por hipótese"
     },
     {
       "figura": null,
@@ -664,27 +688,51 @@
       "origem": "novo",
       "posicao": 34,
       "secao": "Metodologia",
-      "titulo": "Hipóteses de identificação e como foram testadas"
+      "titulo": "Especificação da H1: o salto no corte, com e sem as vagas"
     },
     {
-      "figura": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
-      "layout": "figura_painel",
+      "figura": null,
+      "layout": "tabela",
       "origem": "novo",
       "posicao": 35,
       "secao": "Metodologia",
-      "titulo": "A bolsa é função exata do IVS: a regra é sharp"
+      "titulo": "Especificação da H2 e da H3: o logit da 1ª opção"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 36,
+      "secao": "Metodologia",
+      "titulo": "Especificação da H4: horas antes e depois de entrar"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 37,
+      "secao": "Metodologia",
+      "titulo": "Especificação do TOST: o IC de 90% cabe na margem?"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 38,
+      "secao": "Metodologia",
+      "titulo": "Hipóteses de identificação e como foram testadas"
     },
     {
       "destino": "corpo",
       "origem": "slide 28 do deck do grupo",
-      "posicao": 36,
+      "posicao": 39,
       "titulo": "Sumário"
     },
     {
       "figura": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
       "layout": "figura_painel",
       "origem": "novo",
-      "posicao": 37,
+      "posicao": 40,
       "secao": "Resultados",
       "titulo": "Na cadeia, só a escolha e o registro do médico se movem"
     },
@@ -692,7 +740,7 @@
       "figura": "output/apresentacao_banca2/h1_preenchimento.png",
       "layout": "figura_painel",
       "origem": "novo",
-      "posicao": 38,
+      "posicao": 41,
       "secao": "Resultados",
       "titulo": "H1: o preenchimento não aumenta em nenhum dos dois cortes"
     },
@@ -700,15 +748,23 @@
       "figura": "output/apresentacao_banca2/h1_controle.png",
       "layout": "figura_larga",
       "origem": "novo",
-      "posicao": 39,
+      "posicao": 42,
       "secao": "Resultados",
       "titulo": "O controle muda a leitura: em 0,400 a queda passa pelas vagas"
+    },
+    {
+      "figura": "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png",
+      "layout": "figura_painel",
+      "origem": "novo",
+      "posicao": 43,
+      "secao": "Resultados",
+      "titulo": "Por que o preenchimento cai em 0,300"
     },
     {
       "figura": "output/apresentacao_banca2/h2_escolha.png",
       "layout": "figura_painel",
       "origem": "novo",
-      "posicao": 40,
+      "posicao": 44,
       "secao": "Resultados",
       "titulo": "H2: a bolsa pesa na escolha da vaga só no ciclo 2"
     },
@@ -716,7 +772,7 @@
       "figura": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
       "layout": "figura_blocos",
       "origem": "novo",
-      "posicao": 41,
+      "posicao": 45,
       "secao": "Resultados",
       "titulo": "H3: no modelo de escolha, a UF de origem pesa mais que a bolsa"
     },
@@ -724,7 +780,7 @@
       "figura": "output/apresentacao_banca2/h4_horas_medico.png",
       "layout": "figura_painel",
       "origem": "novo",
-      "posicao": 42,
+      "posicao": 46,
       "secao": "Resultados",
       "titulo": "H4: o médico soma horas, mas metade já estava no município"
     },
@@ -732,7 +788,7 @@
       "figura": null,
       "layout": "tabela",
       "origem": "novo",
-      "posicao": 43,
+      "posicao": 47,
       "secao": "Robustez e discussão",
       "titulo": "Robustez: as leituras resistem, com ressalvas declaradas"
     },
@@ -740,27 +796,27 @@
       "figura": null,
       "layout": "duas_colunas",
       "origem": "novo",
-      "posicao": 44,
+      "posicao": 48,
       "secao": "Robustez e discussão",
       "titulo": "Discussão: o que não afirmamos e o que vem depois"
     },
     {
       "destino": "corpo",
       "origem": "slide 30 do deck do grupo",
-      "posicao": 45,
+      "posicao": 49,
       "titulo": "(sem título)"
     },
     {
       "destino": "apêndice",
       "origem": "slide 31 do deck do grupo",
-      "posicao": 46,
+      "posicao": 50,
       "titulo": "Apêndice"
     },
     {
       "figura": null,
       "layout": "equacoes",
       "origem": "novo",
-      "posicao": 47,
+      "posicao": 51,
       "secao": "Apêndice",
       "titulo": "Apêndice: do modelo às equações estimadas"
     },
@@ -768,7 +824,7 @@
       "figura": null,
       "layout": "equacoes",
       "origem": "novo",
-      "posicao": 48,
+      "posicao": 52,
       "secao": "Apêndice",
       "titulo": "Apêndice: especificações formais de cada estimador"
     },
@@ -776,33 +832,33 @@
       "figura": null,
       "layout": "tabela",
       "origem": "novo",
-      "posicao": 49,
+      "posicao": 53,
       "secao": "Apêndice",
       "titulo": "Apêndice: oito bases oficiais, ligadas por município e médico"
     },
     {
       "destino": "apêndice",
       "origem": "slide 36 do deck do grupo",
-      "posicao": 50,
+      "posicao": 54,
       "titulo": "Apêndice: o IVS mede a vulnerabilidade social"
     },
     {
       "destino": "apêndice",
       "origem": "slide 34 do deck do grupo",
-      "posicao": 51,
+      "posicao": 55,
       "titulo": "Apêndice: plano de dados da banca 1, vagas e bolsa"
     },
     {
       "destino": "apêndice",
       "origem": "slide 35 do deck do grupo",
-      "posicao": 52,
+      "posicao": 56,
       "titulo": "Apêndice: plano de dados da banca 1, lugar e custo"
     },
     {
       "figura": null,
       "layout": "cartoes",
       "origem": "novo",
-      "posicao": 53,
+      "posicao": 57,
       "secao": "Apêndice",
       "titulo": "Apêndice: o \"IVS como piso\" da banca 1 era um arquivo errado"
     },
@@ -810,7 +866,7 @@
       "figura": null,
       "layout": "tabela",
       "origem": "novo",
-      "posicao": 54,
+      "posicao": 58,
       "secao": "Apêndice",
       "titulo": "Apêndice: nos mesmos cortes mudam outras regras federais"
     },
@@ -818,7 +874,7 @@
       "figura": null,
       "layout": "tabela",
       "origem": "novo",
-      "posicao": 55,
+      "posicao": 59,
       "secao": "Apêndice",
       "titulo": "Apêndice: N1 a N4 por corte, com controle das vagas"
     },
@@ -826,7 +882,7 @@
       "figura": null,
       "layout": "tabela",
       "origem": "novo",
-      "posicao": 56,
+      "posicao": 60,
       "secao": "Apêndice",
       "titulo": "Apêndice: A3 por corte e no ciclo 1"
     },
@@ -834,7 +890,7 @@
       "figura": null,
       "layout": "tabela",
       "origem": "novo",
-      "posicao": 57,
+      "posicao": 61,
       "secao": "Apêndice",
       "titulo": "Apêndice: a bolsa em todas as especificações do logit"
     },
@@ -842,7 +898,7 @@
       "figura": null,
       "layout": "tabela",
       "origem": "novo",
-      "posicao": 58,
+      "posicao": 62,
       "secao": "Apêndice",
       "titulo": "Apêndice: robustez, teste a teste"
     },
@@ -850,7 +906,7 @@
       "figura": null,
       "layout": "tabela",
       "origem": "novo",
-      "posicao": 59,
+      "posicao": 63,
       "secao": "Apêndice",
       "titulo": "Apêndice: o E9 resiste no ciclo 2; o empilhado é frágil"
     },
@@ -858,7 +914,7 @@
       "figura": null,
       "layout": "cartoes",
       "origem": "novo",
-      "posicao": 60,
+      "posicao": 64,
       "secao": "Apêndice",
       "titulo": "Apêndice: a magnitude da literatura e o IC por corte"
     }
@@ -866,9 +922,9 @@
   "regra": "nada estimado; nada lido de data/; texto dos slides novos lido do doc 02; números das correções lidos de output/apresentacao_banca2/numeros_banca2.json; figuras de output/ como imagem",
   "saidas": [
     {
-      "bytes": 12096395,
+      "bytes": 12763796,
       "caminho": "output/apresentacao_banca2/deck_banca2.pptx",
-      "sha256": "f7ee056a30cf15df39ce84fdb7b45a6d2e8be5a023386a0da12355af9a58e89d"
+      "sha256": "7aecd3ddc93923c84ab912efce126ea47893baa3a9d3c8b069243fa6715152e9"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py"

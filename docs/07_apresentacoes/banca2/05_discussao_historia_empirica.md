@@ -255,6 +255,6 @@ robustez a fazer precisa de adendo datado ao protocolo 61 antes de rodar.
 | Deck com os efeitos por corte | em produção |
 | Slides da história (seção 3) | depois da parte B auditada |
 | RDD das vagas oferecidas por município, por ciclo e corte (seção 2.2) | proposta; precisa de protocolo próprio |
-| Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | em auditoria (33); slide preliminar já no deck |
+| Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | auditado (auditoria 33, aprovado com correções de texto); slide próprio nos dois decks, sem selo, em duas ideias |
 | Robustez das explicações da queda (seção 2.11) | a fazer; adendo datado ao protocolo 61 antes de rodar |
-| Slides de especificação por estimador e da cronologia dos ciclos | em produção no gerador do deck |
+| Slides de especificação por estimador e da cronologia dos ciclos | feitos: fichas com os mesmos campos no completo e recortes delas no curto |
