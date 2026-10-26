@@ -8,6 +8,20 @@
 
 ---
 
+## 26/10/2026 — Auditoria 35 (incentivos educacionais e financeiros ligados à vulnerabilidade)
+
+Motivo: o autor perguntou se há incentivo ligado ao IVS, ou a critério parecido, além da bolsa, que mude a escolha ou o preenchimento das vagas de especialistas. A pergunta veio da queda em 0,300 e da subida dentro das faixas (protocolos 61 e 62). Pesquisa documental, sem estimação; complementa a auditoria 18.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/35_incentivos_ligados_a_vulnerabilidade.md`](auditorias/35_incentivos_ligados_a_vulnerabilidade.md) | tabela-resumo e uma seção por incentivo: Fies, bônus de residência, AgSUS, ajuda de custo das imersões do PMM-E, Pró-Residência, estados e municípios, Agora Tem Especialistas. Hipóteses para 0,300 e para o gradiente dentro das faixas |
+| `scripts/aquisicao/a18_normas_incentivos_vulnerabilidade.py` | manifesto das fontes (URL, data de acesso, SHA-256) e conferência das âncoras de texto citadas; com `--baixar`, baixa as cópias que faltarem. Fora do `run_all.py` |
+| `output/aquisicao/normas_incentivos/` | cópias das 17 fontes capturadas em 26/10/2026 e `a18_manifesto_normas_incentivos.json` |
+
+---
+
 ## 26/10/2026 — Protocolo 62 executado: gradiente do preenchimento dentro das faixas (G-a a G-f, descritivo)
 
 Motivo: execução do protocolo 62 (por que o preenchimento da célula aberta sobe com o IVS dentro das faixas da bolsa).
