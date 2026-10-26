@@ -328,6 +328,24 @@
       "chaves": "id_linha"
     },
     {
+      "caminho": "output/rdd_bolsa/HI_estimativas.csv",
+      "sha256": "7f5d0008790949a2acf3590c0aa17f5c44be9e4100e8bbbf6e0688795c26fe76",
+      "papel": "adendo 48b (doc 57n; em auditoria): H1 só com vagas imediatas, HI-1 e HI-2 por corte e TOST HI-s7",
+      "data_referencia": "2026-10-26",
+      "cobertura": "células e municípios com vaga imediata, ciclos 1–3, cortes 0,300 e 0,400",
+      "unidade": "p.p.; alocados por município",
+      "chaves": "id_linha"
+    },
+    {
+      "caminho": "output/auditoria_H1/a36_estimativas.csv",
+      "sha256": "09bd2c78249249120e4497ca150d729f28e046acc6760c13e2f92b8b21eaf197",
+      "papel": "auditoria 36: dados da H1 refeitos do zero; capitais e vaga imediata no corte 0,300 (diagnóstico pós-resultado)",
+      "data_referencia": "2026-10-26",
+      "cobertura": "células e municípios na janela de 0,300, ciclos 1–3",
+      "unidade": "p.p.; vagas por município; municípios",
+      "chaves": "unidade + outcome + variante + ciclo + corte"
+    },
+    {
       "caminho": "output/rdd_bolsa/NA_estimativas.csv",
       "sha256": "9f737d4c2a2850ddff6647dfb67ba7d7276758bf84b773ee0701a8d890000374",
       "papel": "família A (protocolo 48): A3 por ciclo e por corte",
@@ -1564,9 +1582,9 @@
           "linha": "0,300 · Célula aberta preenchida (A3, p.p.): Ciclo 1",
           "texto": "+0,9 [−23,5; +25,3]",
           "codigos": [
-            "HC_A3_1_300_TAU",
-            "HC_A3_1_300_INF",
-            "HC_A3_1_300_SUP"
+            "PC_A3_1_300_TAU",
+            "PC_A3_1_300_INF",
+            "PC_A3_1_300_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1575,9 +1593,9 @@
           "linha": "0,300 · Célula aberta preenchida (A3, p.p.): Ciclo 2",
           "texto": "−10,2 [−23,4; +2,9]",
           "codigos": [
-            "HC_A3_2_300_TAU",
-            "HC_A3_2_300_INF",
-            "HC_A3_2_300_SUP"
+            "PC_A3_2_300_TAU",
+            "PC_A3_2_300_INF",
+            "PC_A3_2_300_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1586,9 +1604,9 @@
           "linha": "0,300 · Célula aberta preenchida (A3, p.p.): Ciclo 3",
           "texto": "−7,1 [−18,6; +4,3]",
           "codigos": [
-            "HC_A3_3_300_TAU",
-            "HC_A3_3_300_INF",
-            "HC_A3_3_300_SUP"
+            "PC_A3_3_300_TAU",
+            "PC_A3_3_300_INF",
+            "PC_A3_3_300_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1597,9 +1615,9 @@
           "linha": "0,300 · Célula aberta preenchida (A3, p.p.): Juntos",
           "texto": "−8,4 [−18,5; +1,7]",
           "codigos": [
-            "HC_A3_J_300_TAU",
-            "HC_A3_J_300_INF",
-            "HC_A3_J_300_SUP"
+            "PC_A3_J_300_TAU",
+            "PC_A3_J_300_INF",
+            "PC_A3_J_300_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1608,9 +1626,9 @@
           "linha": "0,300 · Taxa por vaga oferecida (p.p.): Ciclo 1",
           "texto": "−12,5 [−34,4; +9,4]",
           "codigos": [
-            "HC_TX_1_300_TAU",
-            "HC_TX_1_300_INF",
-            "HC_TX_1_300_SUP"
+            "PC_TX_1_300_TAU",
+            "PC_TX_1_300_INF",
+            "PC_TX_1_300_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1619,9 +1637,9 @@
           "linha": "0,300 · Taxa por vaga oferecida (p.p.): Ciclo 2",
           "texto": "−27,8 [−49,0; −6,7]",
           "codigos": [
-            "HC_TX_2_300_TAU",
-            "HC_TX_2_300_INF",
-            "HC_TX_2_300_SUP"
+            "PC_TX_2_300_TAU",
+            "PC_TX_2_300_INF",
+            "PC_TX_2_300_SUP"
           ],
           "exclui_nulo": true
         },
@@ -1630,9 +1648,9 @@
           "linha": "0,300 · Taxa por vaga oferecida (p.p.): Ciclo 3",
           "texto": "−10,7 [−24,1; +2,6]",
           "codigos": [
-            "HC_TX_3_300_TAU",
-            "HC_TX_3_300_INF",
-            "HC_TX_3_300_SUP"
+            "PC_TX_3_300_TAU",
+            "PC_TX_3_300_INF",
+            "PC_TX_3_300_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1641,9 +1659,9 @@
           "linha": "0,300 · Taxa por vaga oferecida (p.p.): Juntos",
           "texto": "−16,0 [−27,9; −4,1]",
           "codigos": [
-            "HC_TX_J_300_TAU",
-            "HC_TX_J_300_INF",
-            "HC_TX_J_300_SUP"
+            "PC_TX_J_300_TAU",
+            "PC_TX_J_300_INF",
+            "PC_TX_J_300_SUP"
           ],
           "exclui_nulo": true
         },
@@ -1652,9 +1670,9 @@
           "linha": "0,400 · Célula aberta preenchida (A3, p.p.): Ciclo 1",
           "texto": "−12,4 [−37,5; +12,6]",
           "codigos": [
-            "HC_A3_1_400_TAU",
-            "HC_A3_1_400_INF",
-            "HC_A3_1_400_SUP"
+            "PC_A3_1_400_TAU",
+            "PC_A3_1_400_INF",
+            "PC_A3_1_400_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1663,9 +1681,9 @@
           "linha": "0,400 · Célula aberta preenchida (A3, p.p.): Ciclo 2",
           "texto": "+2,2 [−24,7; +29,2]",
           "codigos": [
-            "HC_A3_2_400_TAU",
-            "HC_A3_2_400_INF",
-            "HC_A3_2_400_SUP"
+            "PC_A3_2_400_TAU",
+            "PC_A3_2_400_INF",
+            "PC_A3_2_400_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1674,9 +1692,9 @@
           "linha": "0,400 · Célula aberta preenchida (A3, p.p.): Ciclo 3",
           "texto": "−4,3 [−12,8; +4,2]",
           "codigos": [
-            "HC_A3_3_400_TAU",
-            "HC_A3_3_400_INF",
-            "HC_A3_3_400_SUP"
+            "PC_A3_3_400_TAU",
+            "PC_A3_3_400_INF",
+            "PC_A3_3_400_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1685,9 +1703,9 @@
           "linha": "0,400 · Célula aberta preenchida (A3, p.p.): Juntos",
           "texto": "−1,3 [−14,0; +11,3]",
           "codigos": [
-            "HC_A3_J_400_TAU",
-            "HC_A3_J_400_INF",
-            "HC_A3_J_400_SUP"
+            "PC_A3_J_400_TAU",
+            "PC_A3_J_400_INF",
+            "PC_A3_J_400_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1696,9 +1714,9 @@
           "linha": "0,400 · Taxa por vaga oferecida (p.p.): Ciclo 1",
           "texto": "+3,6 [−22,9; +30,1]",
           "codigos": [
-            "HC_TX_1_400_TAU",
-            "HC_TX_1_400_INF",
-            "HC_TX_1_400_SUP"
+            "PC_TX_1_400_TAU",
+            "PC_TX_1_400_INF",
+            "PC_TX_1_400_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1707,9 +1725,9 @@
           "linha": "0,400 · Taxa por vaga oferecida (p.p.): Ciclo 2",
           "texto": "+9,5 [−15,8; +34,8]",
           "codigos": [
-            "HC_TX_2_400_TAU",
-            "HC_TX_2_400_INF",
-            "HC_TX_2_400_SUP"
+            "PC_TX_2_400_TAU",
+            "PC_TX_2_400_INF",
+            "PC_TX_2_400_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1718,9 +1736,9 @@
           "linha": "0,400 · Taxa por vaga oferecida (p.p.): Ciclo 3",
           "texto": "−1,9 [−15,6; +11,8]",
           "codigos": [
-            "HC_TX_3_400_TAU",
-            "HC_TX_3_400_INF",
-            "HC_TX_3_400_SUP"
+            "PC_TX_3_400_TAU",
+            "PC_TX_3_400_INF",
+            "PC_TX_3_400_SUP"
           ],
           "exclui_nulo": false
         },
@@ -1729,9 +1747,9 @@
           "linha": "0,400 · Taxa por vaga oferecida (p.p.): Juntos",
           "texto": "+2,5 [−9,9; +15,0]",
           "codigos": [
-            "HC_TX_J_400_TAU",
-            "HC_TX_J_400_INF",
-            "HC_TX_J_400_SUP"
+            "PC_TX_J_400_TAU",
+            "PC_TX_J_400_INF",
+            "PC_TX_J_400_SUP"
           ],
           "exclui_nulo": false
         }
@@ -1777,7 +1795,7 @@
         "+2,5 [−9,9; +15,0]",
         "Como ler",
         "ponto = salto no corte (bolsa maior menos menor); barra = IC 95%, verde se exclui zero; mesma escala nos dois cortes.",
-        "'Preenchida' muda entre ciclos: confirmação ou homologação no ciclo 1; alocado nos ciclos 2 e 3 (auditoria 36 em curso).",
+        "Preenchida = ao menos um alocado, nos três ciclos. Na A3, o ciclo 2 usa o tipo de vaga do quadro refeito depois do resultado (auditoria 36).",
         "Fontes: NA_estimativas.csv (A3); ND_estimativas.csv (taxa por vaga, adendo AD2; doc 49b). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
@@ -1797,6 +1815,229 @@
         "−20",
         "0",
         "+20"
+      ]
+    },
+    "curto_tost_hi.png": {
+      "linhas": [
+        {
+          "painel": "HI-1 · célula com vaga imediata preenchida (p.p.)",
+          "linha": "HI-1 0,300",
+          "texto": "−3,7 [−18,4; +11,1]",
+          "codigos": [
+            "HI1_300_TAU",
+            "HI_EQ1_300_I90I",
+            "HI_EQ1_300_I90S"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "HI-1 · célula com vaga imediata preenchida (p.p.)",
+          "linha": "HI-1 0,400",
+          "texto": "−2,3 [−20,5; +15,9]",
+          "codigos": [
+            "HI1_400_TAU",
+            "HI_EQ1_400_I90I",
+            "HI_EQ1_400_I90S"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "HI-2 · alocados em vagas imediatas por município",
+          "linha": "HI-2 0,300",
+          "texto": "−1,13 [−1,99; −0,26]",
+          "codigos": [
+            "HI2_300_TAU",
+            "HI_EQ2_300_I90I",
+            "HI_EQ2_300_I90S"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "HI-2 · alocados em vagas imediatas por município",
+          "linha": "HI-2 0,400",
+          "texto": "−0,16 [−0,86; +0,55]",
+          "codigos": [
+            "HI2_400_TAU",
+            "HI_EQ2_400_I90I",
+            "HI_EQ2_400_I90S"
+          ],
+          "exclui_nulo": false
+        }
+      ],
+      "textos": [
+        "HI-1 · célula com vaga imediata preenchida (p.p.)",
+        "Corte 0,300",
+        "−3,7 [−18,4; +11,1]",
+        "faixa ±10 p.p. · inconclusivo",
+        "Corte 0,400",
+        "−2,3 [−20,5; +15,9]",
+        "faixa ±10 p.p. · inconclusivo",
+        "HI-2 · alocados em vagas imediatas por município",
+        "Corte 0,300",
+        "−1,13 [−1,99; −0,26]",
+        "faixa ±0,69 · sem aumento ≥ margem",
+        "Corte 0,400",
+        "−0,16 [−0,86; +0,55]",
+        "faixa ±0,50 · inconclusivo",
+        "Como ler: ponto = salto no corte (bolsa maior menos menor); barra = IC 90%; faixa cinza = margem do protocolo 60 (±10 p.p.; ±25% da média abaixo).",
+        "Barra que não passa da borda direita da faixa: não houve aumento do tamanho da margem ou mais. Barra que sai pela esquerda não é lida como queda.",
+        "Fontes: HI_estimativas.csv (adendo 48b, HI-s7; doc 57n; em auditoria). IC convencional. EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "−20",
+        "−15",
+        "−10",
+        "−5",
+        "0",
+        "+5",
+        "+10",
+        "+15",
+        "−2",
+        "−1,5",
+        "−1",
+        "−0,5",
+        "0",
+        "+0,5"
+      ]
+    },
+    "curto_queda_capital.png": {
+      "linhas": [
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "Célula aberta preenchida (A3, p.p.): Como estimada",
+          "texto": "−8,4 [−18,5; +1,7]",
+          "codigos": [
+            "A36_A3_PIPE_TAU",
+            "A36_A3_PIPE_INF",
+            "A36_A3_PIPE_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "Célula aberta preenchida (A3, p.p.): Com dummy de capital",
+          "texto": "−2,6 [−11,8; +6,6]",
+          "codigos": [
+            "A36_A3_CAP_TAU",
+            "A36_A3_CAP_INF",
+            "A36_A3_CAP_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "Célula aberta preenchida (A3, p.p.): Só vaga imediata",
+          "texto": "−3,7 [−21,3; +13,9]",
+          "codigos": [
+            "A36_A3_VI_TAU",
+            "A36_A3_VI_INF",
+            "A36_A3_VI_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Taxa por vaga oferecida (p.p.)",
+          "linha": "Taxa por vaga oferecida (p.p.): Como estimada",
+          "texto": "−16,0 [−27,9; −4,1]",
+          "codigos": [
+            "A36_TX_PIPE_TAU",
+            "A36_TX_PIPE_INF",
+            "A36_TX_PIPE_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Taxa por vaga oferecida (p.p.)",
+          "linha": "Taxa por vaga oferecida (p.p.): Com dummy de capital",
+          "texto": "−10,9 [−22,6; +0,8]",
+          "codigos": [
+            "A36_TX_CAP_TAU",
+            "A36_TX_CAP_INF",
+            "A36_TX_CAP_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Taxa por vaga oferecida (p.p.)",
+          "linha": "Taxa por vaga oferecida (p.p.): Só vaga imediata",
+          "texto": "−13,2 [−29,0; +2,7]",
+          "codigos": [
+            "A36_TX_VI_TAU",
+            "A36_TX_VI_INF",
+            "A36_TX_VI_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Vagas preenchidas por município, com controle (N1)",
+          "linha": "Vagas preenchidas por município, com controle (N1): Como estimada",
+          "texto": "−1,45 [−2,67; −0,22]",
+          "codigos": [
+            "A36_N1_PIPE_TAU",
+            "A36_N1_PIPE_INF",
+            "A36_N1_PIPE_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Vagas preenchidas por município, com controle (N1)",
+          "linha": "Vagas preenchidas por município, com controle (N1): Com dummy de capital",
+          "texto": "−0,92 [−1,98; +0,14]",
+          "codigos": [
+            "A36_N1_CAP_TAU",
+            "A36_N1_CAP_INF",
+            "A36_N1_CAP_SUP"
+          ],
+          "exclui_nulo": false
+        }
+      ],
+      "textos": [
+        "Célula aberta preenchida (A3, p.p.)",
+        "Como estimada",
+        "−8,4 [−18,5; +1,7]",
+        "Com dummy de capital",
+        "−2,6 [−11,8; +6,6]",
+        "Só vaga imediata",
+        "−3,7 [−21,3; +13,9]",
+        "Taxa por vaga oferecida (p.p.)",
+        "Como estimada",
+        "−16,0 [−27,9; −4,1]",
+        "Com dummy de capital",
+        "−10,9 [−22,6; +0,8]",
+        "Só vaga imediata",
+        "−13,2 [−29,0; +2,7]",
+        "Vagas preenchidas por município, com controle (N1)",
+        "Como estimada",
+        "−1,45 [−2,67; −0,22]",
+        "Com dummy de capital",
+        "−0,92 [−1,98; +0,14]",
+        "Como ler",
+        "ponto = salto no corte; barra = IC 95%, verde se exclui zero. Dummy de capital: compara municípios da mesma condição;",
+        "só vaga imediata: células com vaga imediata antes da alocação. Diagnóstico pós-resultado da auditoria 36.",
+        "Fontes: output/auditoria_H1/a36_estimativas.csv (auditoria 36). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "−20",
+        "−15",
+        "−10",
+        "−5",
+        "0",
+        "+5",
+        "+10",
+        "+15",
+        "−30",
+        "−25",
+        "−20",
+        "−15",
+        "−10",
+        "−5",
+        "0",
+        "−2,5",
+        "−2",
+        "−1,5",
+        "−1",
+        "−0,5",
+        "0"
       ]
     },
     "curto_h3_horas.png": {
@@ -2273,7 +2514,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/curto_h1_por_ciclo.png",
-      "sha256": "37cb73f7eec0656ff592a9165b23458a7d5c677d25cda5528b18da89d1820566",
+      "sha256": "f517bff8e089ef461ad49e3fdfe8601b75d82d5470e307827893af4a0c96ed24",
       "natureza": "EMPIRICO",
       "descricao": "deck curto, robustez: H1 por ciclo e por corte (A3 e taxa por vaga oferecida)",
       "fontes": [
@@ -2284,6 +2525,34 @@
         "output/rdd_bolsa/E8_resumo.json",
         "output/rdd_bolsa/NA_estimativas.csv",
         "output/rdd_bolsa/ND_estimativas.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/curto_tost_hi.png",
+      "sha256": "b2aae025759468b9e5f54b4281a3e3896436764ce7a76154b68b85c9bce5e7bf",
+      "natureza": "EMPIRICO",
+      "descricao": "deck curto, robustez: TOST da H1 principal (adendo 48b, HI-s7), por corte",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json",
+        "output/rdd_bolsa/HI_estimativas.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/curto_queda_capital.png",
+      "sha256": "1e9fa8e233cdf1b1612c4ccb979760abc1b09d1ea5583aa984b4fc8b58134608",
+      "natureza": "EMPIRICO",
+      "descricao": "deck curto, robustez: queda em 0,300 como estimada, com dummy de capital e só com vaga imediata (auditoria 36, diagnóstico)",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json",
+        "output/auditoria_H1/a36_estimativas.csv"
       ]
     },
     {
@@ -2333,6 +2602,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "8e2f5b5cb8b11f75ce22a9a315252f266a50daf7cbbea9420f578c8b1204d714"
+    "sha256": "daa292750d2cefa61ad87a03bf9034827265b7d4210153cac89fa7e1cbe205e8"
   }
 }

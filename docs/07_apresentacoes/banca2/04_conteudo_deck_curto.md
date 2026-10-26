@@ -2,8 +2,8 @@
 documento: Conteúdo do deck curto — banca 2 (parte empírica)
 papel: fonte de verdade do deck curto, o único usado na versão final; o deck é derivado
 escopo: estrutura obrigatória da versão final (doc 06) — Hipótese, Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez e Discussão; sem os slides do grupo, sem divisórias, sem o diagrama da teoria e sem apêndice
-slides: 28
-estado: em produção; H1 principal do adendo 48b aguardando as saídas HI_* (slide marcado "aguardando 48b"); subida dentro das faixas (doc 57m) em auditoria
+slides: 26
+estado: em produção; H1 central; H1 principal com as saídas do adendo 48b (HI_*, em auditoria); queda em 0,300 explicada pelas capitais (auditoria 36, diagnóstico); doc 57m auditado (auditoria 37)
 atualizacao: 26 de outubro de 2026
 ---
 
@@ -18,11 +18,26 @@ atualizacao: 26 de outubro de 2026
 >   por ciclo) saiu como hipótese própria e virou robustez da H2. Os nomes dos
 >   documentos de análise (P1h, P4, protocolos) e dos códigos de número
 >   (`H3_*` é o P1h) não mudam.
-> - **H2 é a candidata central**, em destaque; H1 e H3 aparecem em cinza, como
->   plano B, até a validação dos professores.
+> - **H1 é a candidata central** (correção do autor de 26/10/2026), em
+>   destaque; H2 e H3 aparecem em cinza, como plano B, até a validação dos
+>   professores. Cada seção começa pela H1 e dá a ela o maior espaço; os slides
+>   da mesma hipótese ficam juntos, em sequência (H1, depois H2, depois H3); os
+>   de H2 e H3 levam "plano B" no título, em cinza, e foram cortados ao mínimo
+>   (o resto foi para as notas).
+> - **Auditoria 36:** sai do deck a explicação de que, no ciclo 2, a vaga de
+>   reserva não podia ser preenchida na 1ª chamada (está errada: o quadro do
+>   ciclo 2 foi refeito depois do resultado). A queda em 0,300 é explicada em
+>   três ideias: (a) nos dados crus, os dois lados preenchem igual; (b) o
+>   negativo vem da reta levada até o corte, puxada por poucos municípios
+>   (capitais e Nordeste logo abaixo); (c) controlando a capital, ou só com
+>   vagas imediatas, a queda encolhe e o IC contém zero. Diagnóstico
+>   pós-resultado; o adendo 48c fará a versão padronizada.
+> - **H2:** os números atuais valem até a reestimação do ciclo 2 (adendo 52c);
+>   a nota fica só nas notas do apresentador.
 > - **H1 principal = adendo 48b** (só vagas imediatas: HI-1 e HI-2 por corte,
->   com Holm). Enquanto as saídas `HI_*` não chegam, o slide principal da H1
->   fica marcado "aguardando 48b". As medidas antigas (A3, N1 com e sem
+>   com Holm), com as saídas `HI_*` e o doc 57n, ainda em auditoria: as linhas
+>   de fontes dizem "em auditoria". O scatter da análise descritiva e o TOST
+>   da H1 passam a ser os do 48b. As medidas antigas (A3, N1 com e sem
 >   controle, taxa por vaga oferecida) passam a especificações secundárias, em
 >   Robustez, com o passo a passo da queda em 0,300 e a H1 por ciclo.
 > - **"Texto demais":** no máximo **30 palavras visíveis por slide**, fora o
@@ -44,8 +59,8 @@ atualizacao: 26 de outubro de 2026
 > **Regra dos números.** Todo número de um slide, notas incluídas, é o valor de
 > um código listado na linha `**Números:**` ou um parâmetro do protocolo
 > ([03, §3](03_proveniencia_figuras_e_numeros.md#3-parâmetros-que-podem-aparecer-sem-código)).
-> As linhas que vêm do doc 57m (protocolo 62) estão **em auditoria** e levam
-> "(em auditoria)". `tests/test_deck_curto_banca2.py` confere a estrutura, a
+> As linhas do doc 57m (protocolo 62) vêm da versão auditada (auditoria 37).
+> `tests/test_deck_curto_banca2.py` confere a estrutura, a
 > contagem de palavras, os números, as cautelas e o pacote gerado.
 
 <!-- deck:inicio -->
@@ -67,35 +82,38 @@ atualizacao: 26 de outubro de 2026
 > **Notas do apresentador.** O efeito candidato é o incentivo marginal de
 > R$ 5 mil anunciado, como pacote do corte: em 0,300 e 0,400 mudam também
 > outras regras federais. Não é a participação no PMM-E nem o efeito do Agora
-> Tem Especialistas. A ordem segue a estrutura da versão final: hipótese,
+> Tem Especialistas. A H1 (preenchimento) é a hipótese central; H2 e H3
+> são plano B. A ordem segue a estrutura da versão final: hipótese,
 > dados, análise descritiva, metodologia, identificação, resultados, robustez e
 > discussão.
 
 ---
 
-## Hipóteses: a H2 é a candidata central
+## Hipóteses: a H1 é a candidata central
 
 `Hipótese`
 
 <!-- layout: curto_hipotese -->
 
-- **H2 · central** a bolsa pesa pouco perto da origem
-- **H1 · plano B** bolsa maior, mais vagas preenchidas
+- **H1 · central** bolsa maior, mais vagas preenchidas
+- **H2 · plano B** a bolsa pesa pouco perto da origem
 - **H3 · plano B** a chegada soma oferta ou remaneja?
 
 > **H2 é pós-resultado.**
 
-**Fontes:** doc 57i (P1h, protocolo 52b, auditoria 31); doc 06 da banca 2.
+**Fontes:** plano da banca 2, §3; doc 06 da banca 2; doc 57i (P1h, protocolo 52b, auditoria 31).
 
 **Números:** nenhum
 
 > **Notas do apresentador.** Numeração desta apresentação a partir de
 > 26/10/2026: H1 preenchimento; H2 bolsa × origem (antes H3);
-> H3 oferta (antes H4). A H2 é o "incentivo limitado" do modelo da banca 1: toda a bolsa pesa
-> menos que trabalhar na UF de origem do médico. Ela foi formulada depois de
-> ver os coeficientes do modelo de escolha, e por isso é pós-resultado. H1 e
-> H3 ficam em cinza, como plano B, até a validação dos professores; a escolha
-> final da hipótese é do autor.
+> H3 oferta (antes H4). A H1 é a hipótese central (decisão do autor de
+> 26/10/2026): onde a bolsa é maior, mais vagas são preenchidas. H2 e H3 ficam
+> em cinza, como plano B, até a validação dos professores. A H2 é o "incentivo
+> limitado" do modelo da banca 1: toda a bolsa pesa menos que trabalhar na UF
+> de origem do médico; foi formulada depois de ver os coeficientes do modelo
+> de escolha, e por isso é pós-resultado. A H3 pergunta se a chegada do
+> médico soma oferta ou só remaneja.
 
 ---
 
@@ -140,7 +158,7 @@ atualizacao: 26 de outubro de 2026
 | Variável | Fonte | Uso |
 |---|---|---|
 | Composição das vagas | quadros | diagnóstico |
-| Concorrência | quadros | diagnóstico |
+| Capital | IBGE | diagnóstico |
 | Região e porte | IBGE, Censo 2022 | controles |
 | Regras no mesmo corte | portarias do MS | pacote do corte |
 
@@ -149,8 +167,8 @@ atualizacao: 26 de outubro de 2026
 **Números:** nenhum
 
 > **Notas do apresentador.** Composição das vagas: curso, vaga imediata ou
-> de cadastro reserva, tipo de estabelecimento, lidos dos quadros. Concorrência:
-> células do mesmo curso e ciclo na mesma UF ou região de saúde. Região: UF,
+> de cadastro reserva, tipo de estabelecimento, lidos dos quadros; no ciclo 2,
+> o tipo de vaga vem do quadro de 13/02/2026, anterior à alocação (auditoria 36). Capital: as capitais, pelo código IBGE (auditoria 36). Região: UF,
 > macrorregião e região de saúde (malha do IBGE); porte: população do Censo
 > 2022. Regras no mesmo corte: portarias do MS com corte no IVS (auditoria 18)
 > e incentivos ligados à vulnerabilidade (auditoria 35). Servem para o
@@ -179,9 +197,10 @@ atualizacao: 26 de outubro de 2026
 **Números:** `D_C1_MUN`, `D_C2_MUN`, `D_C3_MUN`, `D_C1_CEL`, `D_C2_CEL`, `D_C3_CEL`, `D_C1_PRE1_PCT`, `D_C2_PRE1_PCT`, `D_C3_PRE1_PCT`, `D_C1_P1`, `D_C2_P1`, `D_C3_P1`
 
 > **Notas do apresentador.** Célula = estabelecimento × curso no quadro da
-> 1ª chamada. "Preenchida" muda de definição entre ciclos: no ciclo 1,
-> alguma confirmação ou homologação; nos ciclos 2 e 3, alocado (a
-> auditoria 36, em curso, refaz a conta com uma definição única). Amostra da escolha:
+> 1ª chamada. Nesta tabela, no ciclo 1, "preenchida" é alguma confirmação ou
+> homologação; nos ciclos 2 e 3, alocado. As estimativas da H1 usam ao menos
+> um alocado nos três ciclos (no ciclo 1, o confirmado), como conferiu a
+> auditoria 36. Amostra da escolha:
 > candidatos com 1ª opção numa célula do quadro, ligados ao CNES e com
 > município de origem.
 
@@ -209,56 +228,33 @@ atualizacao: 26 de outubro de 2026
 
 ---
 
-## A 1ª opção fica perto de onde o médico já trabalhava
+## H1 · Dados crus, só vagas imediatas
 
-`Análise descritiva · Origem`
-
-<!-- layout: curto_figura -->
-
-![1ª opção em relação ao município de origem do candidato (mesma UF, mesma região de saúde, mesmo município) e distância origem–1ª opção](../../../output/apresentacao_banca2/exp_escolha_origem.png)
-
-- **79%** das 1ª opções ficam na UF de origem; mediana de 51 km.
-
-> **Descritivo; origem é onde trabalhava no CNES.**
-
-**Fontes:** `output/rdd_bolsa/G1_distancias_opcoes.parquet` e `G1_candidatos_origem.parquet` (portão G1).
-
-**Números:** `ESC_UF`, `ESC_DIST_P50`, `ESC_N`, `ESC_REG`, `ESC_MUN`
-
-> **Notas do apresentador.** 5.425 candidatos com 1ª opção e município de
-> origem. 79% escolhem em 1º lugar uma vaga na UF de origem, 46% na região de
-> saúde de origem e 36% no próprio município; a distância mediana é 51 km. A
-> origem é o município do estabelecimento em que o candidato tinha vínculo
-> médico no CNES antes das inscrições; não é residência nem naturalidade. É a
-> base descritiva da H2.
-
----
-
-## Nos dados crus, os dois lados preenchem igual
-
-`Análise descritiva · Dados crus`
+`Análise descritiva · H1 · Dados crus`
 
 <!-- layout: curto_figura -->
 
-![IVS contra a fração de células abertas preenchidas na 1ª chamada, nos cortes 0,300 e 0,400: médias por faixa de 0,010, municípios em cinza e reta local de cada lado](../../../output/apresentacao_banca2/curto_dispersao_a3.png)
+![Só células com vaga imediata: médias por faixa de 0,010 de IVS e reta local de cada lado, nos cortes 0,300 e 0,400](../../../output/rdd_bolsa/HI_figuras/HI_scatter_imediatas.png)
 
-- **Em 0,300:** nos dados crus os dois lados preenchem igual (33% e 33%).
-- **O negativo** vem da reta levada até o corte.
+- **Em 0,300**, a reta de baixo sobe forte até o corte e chega alta.
+- Dados crus; com curso e ciclo, a HI-1 fica bem menor.
 
-**Fontes:** `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet`; `output/rdd_bolsa/DQ_estimativas.csv` (funil bruto; doc 57l; auditoria 33).
+**Fontes:** `output/rdd_bolsa/HI_figuras/HI_scatter_imediatas.png`, `HI_resumo.json` e `HI_estimativas.csv` (adendo 48b; doc 57n; em auditoria); figura usada sem redesenho.
 
-**Números:** `DQ_FUN_PRE_ABX0`, `DQ_FUN_PRE_ACI0`, `DQ_FUN_PRE_ABX`, `DQ_FUN_PRE_ACI`, `DQ_FUN400_PRE_ABX0`, `DQ_FUN400_PRE_ACI0`
+**Números:** `HI1_300_TAU`, `HI1_300_INF`, `HI1_300_SUP`, `HI1_400_TAU`, `HI1_300_MEDIA`
 
-> **Notas do apresentador.** Todas as células abertas dos ciclos 1–3, sem
-> controles. Nas médias simples da janela de 0,050, 33,3% das células são
-> preenchidas abaixo de 0,300 e 33,5% acima; em 0,400, 37% e 39%. A reta de
-> cada lado é a local, com kernel triangular; o salto é a distância entre as
-> retas no corte. Quando as saídas do adendo 48b chegarem, este gráfico passa
-> a usar só as células com vaga imediata (figura do script do adendo).
+> **Notas do apresentador.** Só células com pelo menos uma vaga imediata
+> (no ciclo 2, pelo quadro de 13/02/2026, anterior à alocação). Cada ponto é
+> a fração de células preenchidas numa faixa de 0,010 de IVS; cada linha, a
+> reta local de um lado. Abaixo de 0,300, 56,1% dessas células são
+> preenchidas. A distância crua entre as retas não é a estimativa: a HI-1
+> compara células do mesmo curso e ciclo, com uma reta por ciclo, e dá −3,7
+> p.p. [−21,3; +13,9] em 0,300 e −2,3 em 0,400. Saídas do adendo 48b, em
+> auditoria.
 
 ---
 
-## Dentro da faixa de R$ 10 mil, o preenchimento sobe
+## H1 · Dentro da faixa de R$ 10 mil, o preenchimento sobe
 
 `Análise descritiva · Subida dentro das faixas`
 
@@ -266,16 +262,16 @@ atualizacao: 26 de outubro de 2026
 
 ![Fração de células abertas preenchidas por faixa de 0,010 de IVS dentro de cada faixa da bolsa, com a reta da faixa e a que sobra depois dos fatores](../../../output/rdd_bolsa/GF_figuras/GF_medias_por_ivs.png)
 
-- **Faixa de R$ 10 mil:** a subida anda junto com a região (Nordeste); dentro da mesma UF, quase some (em auditoria).
+- **Faixa de R$ 10 mil:** a subida anda junto com a região (Nordeste); dentro da mesma UF, quase some.
 
 > **Descritivo: dentro da faixa, a bolsa é a mesma.**
 
-**Fontes:** `output/rdd_bolsa/GF_estimativas.csv`, `GF_resumo.json` e `GF_figuras/GF_medias_por_ivs.png` (protocolo 62; doc 57m; em auditoria); figura usada sem redesenho.
+**Fontes:** `output/rdd_bolsa/GF_estimativas.csv`, `GF_resumo.json` e `GF_figuras/GF_medias_por_ivs.png` (protocolo 62; doc 57m; auditoria 37); figura usada sem redesenho.
 
 **Números:** `GF_10_ORIG`, `GF_10_ORIG_INF`, `GF_10_ORIG_SUP`, `GF_10_UF`, `GF_10_NE_PRE`, `GF_10_TODOS`
 
-> **Notas do apresentador.** Em auditoria (protocolo 62, doc 57m),
-> descritivo e pós-resultado. Na faixa de R$ 10 mil, a fração de células
+> **Notas do apresentador.** Protocolo 62 (doc 57m), auditado (auditoria 37,
+> aprovado com correções de texto); descritivo e pós-resultado. Na faixa de R$ 10 mil, a fração de células
 > preenchidas sobe +11,9 p.p. a cada 0,100 de IVS [+6,0; +17,7]. Comparando
 > só células da mesma UF, sobram +1,3 p.p. O Nordeste é a região que mais
 > preenche nessa faixa (43% das células) e a de IVS mais alto. Com todos os
@@ -284,7 +280,7 @@ atualizacao: 26 de outubro de 2026
 
 ---
 
-## Perto de 0,300 sobra uma subida forte, sem explicação
+## H1 · Perto de 0,300 sobra uma subida forte
 
 `Análise descritiva · Últimos 0,050`
 
@@ -292,25 +288,28 @@ atualizacao: 26 de outubro de 2026
 
 ![Quanto da subida do preenchimento sobra depois de cada fator, nos últimos 0,050 de IVS antes do corte](../../../output/rdd_bolsa/GF_figuras/GF_inclinacao_fatores_janela.png)
 
-- **Últimos 0,050 antes de 0,300:** sobra uma subida forte, sem fator que a acompanhe (em auditoria).
-- É o trecho que a RDD usa do lado de baixo do corte.
+- **Últimos 0,050 antes de 0,300:** sobra uma subida forte e imprecisa, que nenhum fator sozinho reduz à metade.
+- São as células que a RDD usa abaixo do corte.
 
-**Fontes:** `output/rdd_bolsa/GF_estimativas.csv` e `GF_figuras/GF_inclinacao_fatores_janela.png` (protocolo 62; doc 57m; em auditoria); figura usada sem redesenho.
+**Fontes:** `output/rdd_bolsa/GF_estimativas.csv` e `GF_figuras/GF_inclinacao_fatores_janela.png` (protocolo 62; doc 57m; auditoria 37); figura usada sem redesenho.
 
-**Números:** `GF_10J_ORIG`, `GF_10J_ORIG_INF`, `GF_10J_ORIG_SUP`, `GF_10J_TODOS`
+**Números:** `GF_10J_ORIG`, `GF_10J_ORIG_INF`, `GF_10J_ORIG_SUP`, `GF_10J_TODOS`, `GF_10J_UF`
 
-> **Notas do apresentador.** Em auditoria (protocolo 62, doc 57m). Nos
+> **Notas do apresentador.** Protocolo 62 (doc 57m; auditoria 37). Nos
 > últimos 0,050 antes de 0,300, o preenchimento sobe +36,1 p.p. por 0,100 [+7,4;
-> +64,7]. Nenhum fator a reduz à metade; com todos juntos ainda sobram +26,1
-> p.p. Quanto mais íngreme esse trecho, mais alto fica o ponto de partida do
-> lado de R$ 10 mil no corte. Isso volta na Robustez, no passo a passo da
-> queda.
+> +64,7]. Nenhum fator sozinho a reduz à metade: comparando dentro da mesma
+> UF, sobram +21,6 p.p.; com todos juntos ainda sobram +26,1 p.p. As células
+> do Norte e do Nordeste da faixa estão quase todas nesse trecho. São as
+> mesmas células que a RDD usa do lado de baixo, mas não a mesma reta: a RDD
+> pondera pelo kernel e tem retas por ciclo. Quanto mais íngreme esse trecho,
+> mais alto fica o ponto de partida do lado de R$ 10 mil no corte. Isso volta
+> na Robustez, no passo a passo da queda.
 
 ---
 
 # Metodologia
 
-## H1: o salto no corte, só com vagas imediatas
+## H1 · O salto no corte, só com vagas imediatas
 
 `Metodologia · H1 · adendo 48b`
 
@@ -318,7 +317,7 @@ atualizacao: 26 de outubro de 2026
 
 - preenchida = salto + reta de cada lado
 - **Outcome** vaga imediata preenchida, por célula e município
-- **Razão** comparamos vagas do mesmo tipo: a de reserva não estava em jogo na 1ª chamada
+- **Razão** comparamos vagas do mesmo tipo; a reserva se preenche por outro caminho
 
 **Fontes:** adendo 48b ao protocolo 48 (`docs/06_execucao/48b_adendo_H1_vagas_imediatas.md`).
 
@@ -329,67 +328,48 @@ atualizacao: 26 de outubro de 2026
 > 1ª chamada, com efeitos fixos de curso × ciclo. HI-2: alocados em vagas
 > imediatas por município, com controle das vagas imediatas e coeficiente por
 > ciclo. Amostra: só células com pelo menos uma vaga imediata, ciclos 1–3; as
-> só de reserva ficam fora e são contadas. RDD sharp local linear, kernel
+> demais ficam fora e são contadas. RDD sharp local linear, kernel
 > triangular, h = 0,050, cada corte separado, intercepto e retas por ciclo,
 > erro-padrão agrupado por município; Holm entre as quatro linhas primárias.
-> Cuidado: pacote do corte; "preenchida" muda de definição entre ciclos.
+> As células de cadastro reserva se preenchem por remanejamento e pela priorização
+> da SGTES, outro mecanismo (doc 57n). No ciclo 2, o tipo de vaga é o do quadro de 13/02/2026, anterior à alocação
+> (auditoria 36). Cuidado: pacote do corte.
 
 ---
 
-## H2: o logit condicional da 1ª opção
+## H2 e H3 · plano B: como estimamos
 
-`Metodologia · H2`
+`Metodologia · H2 e H3 · plano B`
 
-<!-- layout: curto_espec -->
+<!-- layout: curto_texto -->
 
-- utilidade = bolsa + curva do IVS + distância + origem
-- **Outcome** 1ª opção de cada candidato
-- **Comparação** vagas do mesmo curso e ciclo
-- **Cuidado** só quem se candidatou; origem não é causal
+- **H2 · plano B** logit da 1ª opção: utilidade = bolsa + IVS + distância + origem
+- **H3 · plano B** estudo de evento das horas
 
-**Fontes:** protocolos 52 e 52b; docs 57a e 57i.
+> **Origem não é causal; horas cadastradas não são presença.**
+
+**Fontes:** protocolos 52, 52b, 54 e 59; docs 57a, 57i, 57d e 57h.
 
 **Números:** `M1_N`
 
-> **Notas do apresentador.** Logit condicional (McFadden): cada um dos 5.421
-> candidatos escolhe a vaga de maior utilidade entre as do seu curso e ciclo.
-> A curva do IVS é um spline com nós nos cortes: só o salto da bolsa nos
-> cortes identifica o peso dela. Origem: pesos de mesma UF, mesma região e
+> **Notas do apresentador.** H2: logit condicional (McFadden). Cada um dos
+> 5.421 candidatos escolhe a vaga de maior utilidade entre as do seu curso e
+> ciclo; a curva do IVS é um spline com nós nos cortes, e só o salto da bolsa
+> nos cortes identifica o peso dela. Origem: pesos de mesma UF, mesma região e
 > mesmo município. Pesos comuns aos ciclos na principal (M1); erro-padrão
-> agrupado por conjunto de escolha. A H2 é a diferença entre o peso da UF de
-> origem e o de toda a bolsa, teste unilateral e pós-resultado. Cuidado:
-> independência de alternativas irrelevantes.
-
----
-
-## H3: horas antes e depois de entrar
-
-`Metodologia · H3`
-
-<!-- layout: curto_espec -->
-
-- variação das horas = quem entrou − quem ainda não entrou
-- **Outcome** horas do médico no CNES
-- **Amostra** médicos dos ciclos 1 e 2
-- **Cuidado** horas cadastradas não são presença
-
-**Fontes:** protocolos 54 e 59; docs 57d e 57h.
-
-**Números:** nenhum
-
-> **Notas do apresentador.** Estudo de evento escalonado (Callaway e
-> Sant'Anna): o efeito k meses depois de entrar é a mudança das horas desde o
-> mês anterior à entrada, nos que entraram, menos a mesma mudança nos que
-> ainda não entraram. Horas totais, no município do posto e fora dele. Um
-> efeito por coorte de entrada e por mês; o resultado é a média do pós.
-> Erro-padrão por bootstrap multiplicador agrupado por médico. Sensibilidades:
-> Rambachan–Roth e a comparação na nota de corte.
+> agrupado por conjunto de escolha. Teste da H2: o peso da UF de origem menos o
+> de toda a bolsa, unilateral e pós-resultado. Cuidado: só quem se candidatou;
+> independência de alternativas irrelevantes. H3: estudo de evento escalonado
+> (Callaway e Sant'Anna), médicos dos ciclos 1 e 2: a mudança das horas desde o
+> mês anterior à entrada, nos que entraram, menos a mesma mudança nos que ainda
+> não entraram; erro-padrão por bootstrap multiplicador agrupado por médico;
+> sensibilidades: Rambachan–Roth e a comparação na nota de corte.
 
 ---
 
 # Identificação
 
-## RDD: as premissas do desenho valem
+## H1 · RDD: as premissas do desenho valem
 
 `Identificação · RDD`
 
@@ -397,26 +377,28 @@ atualizacao: 26 de outubro de 2026
 
 | Premissa | Aderência |
 |---|---|
-| Regra sharp | faixa reproduzida: 368/368 e 454/454 |
-| Sem manipulação | IVS de 2010; densidade sem acúmulo |
+| Regra sharp | 368/368 e 454/454 |
+| Sem manipulação | densidade sem acúmulo |
 | Continuidade | balanço e placebos passam |
 
-- **Ressalva:** seleção suspeita no ciclo 1 em 0,400.
+- **Ressalva:** em 0,300, menos capitais acima do corte (auditoria 36).
 
-**Fontes:** auditoria 16; docs 37, 41 e 49; `output/rdd_bolsa/E1_densidade_estimativas.csv`.
+**Fontes:** auditorias 16 e 36; docs 37, 41 e 49; `output/rdd_bolsa/E1_densidade_estimativas.csv`; `output/auditoria_H1/a36_estimativas.csv`.
 
-**Números:** `R_C1_REPR`, `R_C1_MUN`, `R_C2_REPR`, `R_C2_MUN`, `E1_300_HOLM`, `E1_400_HOLM`
+**Números:** `R_C1_REPR`, `R_C1_MUN`, `R_C2_REPR`, `R_C2_MUN`, `E1_300_HOLM`, `E1_400_HOLM`, `A36_CAPMUN_TAU`, `A36_CAPMUN_INF`, `A36_CAPMUN_SUP`
 
 > **Notas do apresentador.** Regra sharp: o IVS 2010 oficial reproduz a
 > faixa de todos os municípios dos ciclos 1 e 2. Sem manipulação: o IVS foi
 > medido em 2010, antes do programa, e o teste de densidade não acusa acúmulo
 > no ciclo 1 (p de Holm 0,707 em 0,300 e 0,658 em 0,400). Continuidade:
-> balanço de covariáveis pré e placebos de outcome e de corte. Para a H2, a
-> curva do IVS com nós nos cortes e o spline cúbico.
+> balanço de covariáveis pré e placebos de outcome e de corte. Ressalvas: em
+> 0,400, seleção suspeita no ciclo 1; em 0,300, a parte dos municípios que são
+> capitais cai −17,8 p.p. [−34,1; −1,5] no corte (auditoria 36, diagnóstico).
+> Para a H2, a curva do IVS com nós nos cortes e o spline cúbico.
 
 ---
 
-## O corte é um pacote; a H3 pede tendências paralelas
+## H1 · O corte é um pacote
 
 `Identificação · Pacote e tendências`
 
@@ -426,7 +408,7 @@ atualizacao: 26 de outubro de 2026
 |---|---|
 | Só a bolsa salta | não: em 0,300, teto de emendas |
 | Outro incentivo individual | nenhum em 0,300 |
-| Tendências paralelas (H3) | falham nas horas no posto |
+| Tendências (H3 · plano B) | falham nas horas no posto |
 
 **Fontes:** auditorias 18 e 35; docs 57d e 57h.
 
@@ -446,31 +428,35 @@ atualizacao: 26 de outubro de 2026
 
 # Resultados
 
-## H1: vagas imediatas, por corte (aguardando 48b)
+## H1 · Só vagas imediatas: nada passa no Holm
 
-`Resultados · H1`
+`Resultados · H1 · adendo 48b`
 
-<!-- layout: curto_capa -->
+<!-- layout: curto_figura -->
 
-- Aguardando 48b: HI-1 e HI-2 por corte, com Holm
+![H1 principal: HI-1 (célula com vaga imediata preenchida) e HI-2 (alocados em vagas imediatas por município), por corte, com IC 95% e p de Holm](../../../output/rdd_bolsa/HI_figuras/HI_principal.png)
 
-> **Pacote do corte; especificação pós-resultado.**
+- Comparando só vagas imediatas, nenhuma linha passa no Holm; a célula não se distingue de zero nos dois cortes.
+- HI-2 em 0,300: IC exclui zero; não sobrevive ao Holm.
 
-**Fontes:** adendo 48b; saídas `output/rdd_bolsa/HI_*` e doc 57n, ainda não gravados.
+**Fontes:** `output/rdd_bolsa/HI_estimativas.csv`, `HI_resumo.json` e `HI_figuras/HI_principal.png` (adendo 48b; doc 57n; em auditoria); figura usada sem redesenho.
 
-**Números:** nenhum
+**Números:** `HI1_300_TAU`, `HI1_300_INF`, `HI1_300_SUP`, `HI1_300_HOLM`, `HI1_400_TAU`, `HI1_400_INF`, `HI1_400_SUP`, `HI1_400_HOLM`, `HI2_300_TAU`, `HI2_300_INF`, `HI2_300_SUP`, `HI2_300_HOLM`, `HI2_400_TAU`, `HI2_400_INF`, `HI2_400_SUP`, `HI2_400_HOLM`, `HI2_300_MEDIA`
 
-> **Notas do apresentador.** A especificação principal da H1 passou a ser a
-> do adendo 48b: compara só vagas do mesmo tipo, as imediatas. O gráfico
-> principal (HI-1 e HI-2 por corte, com Holm) entra aqui quando as saídas
-> estiverem gravadas. Leitura pré-registrada: se as linhas primárias tiverem
-> IC que contém zero nos dois cortes, "comparando vagas do mesmo tipo, não se
-> detecta diferença de preenchimento no corte". As medidas antigas estão na
-> Robustez.
+> **Notas do apresentador.** Especificação principal da H1 (adendo 48b, em
+> auditoria; pós-resultado). HI-1, a chance de uma célula com vaga imediata
+> ser preenchida na 1ª chamada: −3,7 p.p. [−21,3; +13,9] em 0,300 e −2,3 p.p.
+> [−24,0; +19,4] em 0,400, p de Holm 1,000 nos dois. HI-2, médicos alocados
+> nessas vagas por município, comparando municípios com as mesmas vagas
+> imediatas: −1,13 [−2,15; −0,10] em 0,300, p de Holm 0,126 (média abaixo
+> 2,77); −0,16 [−0,99; +0,68] em 0,400, p de Holm 1,000. O IC convencional
+> exclui zero só em HI-2 em 0,300, mas o sinal não sobrevive à correção para
+> quatro testes. IC que contém zero não é efeito zero. Tudo se refere ao
+> pacote do corte, não à bolsa isolada.
 
 ---
 
-## H2: a UF de origem pesa mais que toda a bolsa
+## H2 · plano B: a origem pesa mais que a bolsa
 
 `Resultados · H2`
 
@@ -484,7 +470,7 @@ atualizacao: 26 de outubro de 2026
 
 **Fontes:** `output/rdd_bolsa/P1h_magnitudes.csv`, `P1h_resumo.json` e `P1h_figuras/P1h_magnitudes.png` (doc 57i; protocolo 52b; auditoria 31); figura usada sem redesenho.
 
-**Números:** `H3_10B`, `H3_THETA`, `H3_DUF`, `H3_DUF_INF`, `H3_DUF_SUP`, `H3_5B`, `H3_5B_INF`, `H3_5B_SUP`, `M1_RC`, `M1_RC_PCT`, `H3_10B_INF`, `H3_10B_SUP`, `H3_THETA_INF`, `H3_THETA_SUP`, `H3_DUF_P`
+**Números:** `ESC_UF`, `ESC_REG`, `ESC_MUN`, `ESC_DIST_P50`, `ESC_N`, `H3_10B`, `H3_THETA`, `H3_DUF`, `H3_DUF_INF`, `H3_DUF_SUP`, `H3_5B`, `H3_5B_INF`, `H3_5B_SUP`, `M1_RC`, `M1_RC_PCT`, `H3_10B_INF`, `H3_10B_SUP`, `H3_THETA_INF`, `H3_THETA_SUP`, `H3_DUF_P`
 
 > **Notas do apresentador.** Pesos na escolha da vaga, em log-chance, não
 > efeitos no preenchimento. Um degrau da bolsa pesa 0,21 [−0,01; 0,44]: a
@@ -493,11 +479,15 @@ atualizacao: 26 de outubro de 2026
 > na mesma UF de origem, fora da região de saúde, 2,40 [2,28; 2,53]. A
 > diferença, 1,98, p unilateral < 0,001, é o teste da H2, pós-resultado. O
 > peso da bolsa tem identificação nos cortes (pacote do corte); o da origem é
-> preferência revelada.
+> preferência revelada. Descritivo da origem: 79% das 1ª opções ficam na UF
+> de origem, 46% na região de saúde e 36% no próprio município; mediana de 51
+> km, entre 5.425 candidatos. Reestimação em curso (52c): o tipo de vaga imediata do
+> ciclo 2 entra no logit com o quadro de 13/02/2026; até lá, valem estes
+> números.
 
 ---
 
-## H3: o médico soma horas, mas metade já estava lá
+## H3 · plano B: soma horas, mas metade já estava lá
 
 `Resultados · H3`
 
@@ -524,31 +514,32 @@ atualizacao: 26 de outubro de 2026
 
 # Robustez
 
-## H1, medidas antigas: nenhum corte mostra aumento
+## H1 · Medida antiga × só vagas imediatas
 
-`Robustez · H1 · secundárias`
+`Robustez · H1 · medidas antigas`
 
 <!-- layout: curto_figura -->
 
-![H1 nas medidas antigas, por corte: célula aberta preenchida (A3) e vagas preenchidas por município (N1) sem e com controle](../../../output/apresentacao_banca2/h1_preenchimento.png)
+![Medida antiga (com cadastro reserva: A3 e N1) contra só vagas imediatas (HI-1 e HI-2), por corte, com IC 95%](../../../output/rdd_bolsa/HI_figuras/HI_antiga_vs_imediatas.png)
 
-- **Com a reserva** (A3, N1): sem aumento em nenhum corte; em 0,300, sinal negativo.
+- **Só vagas imediatas,** os saltos em 0,300 encolhem: −8,4 → −3,7 p.p. e −1,45 → −1,13.
 
 > **IC que contém zero não é efeito zero.**
 
-**Fontes:** `output/rdd_bolsa/N_estimativas.csv` (doc 49); `S57_resumo.json` (A3); `EQ_estimativas.csv` (doc 57j).
+**Fontes:** `output/rdd_bolsa/HI_figuras/HI_antiga_vs_imediatas.png` e `HI_estimativas.csv` (adendo 48b; doc 57n; em auditoria); `NA_estimativas.csv` e `N_estimativas.csv` (doc 49).
 
-**Números:** `A3_300_TAU`, `A3_300_INF`, `A3_300_SUP`, `N1_300_TAU`, `N1_300_INF`, `N1_300_SUP`, `N1_400_TAU`
+**Números:** `A3_300_TAU`, `A3_300_INF`, `A3_300_SUP`, `HI1_300_TAU`, `N1_300_TAU`, `N1_300_INF`, `N1_300_SUP`, `HI2_300_TAU`, `N1_400_TAU`
 
-> **Notas do apresentador.** Especificações secundárias da H1 desde o adendo
-> 48b: medidas que misturam vaga imediata e cadastro reserva. A3 em 0,300:
-> −8,4 p.p. [−18,5; +1,7]. N1 com controle em 0,300: −1,45 [−2,67; −0,22];
-> em 0,400, −0,14. Linhas por corte, sem correção múltipla; com IC honesto, o
-> intervalo contém zero.
+> **Notas do apresentador.** Especificações secundárias da H1: as medidas
+> antigas misturam vaga imediata e cadastro reserva. Em 0,300, a célula
+> aberta preenchida (A3) dá −8,4 p.p. [−18,5; +1,7] e, só com vagas imediatas
+> (HI-1), −3,7 p.p.; os alocados por município com controle (N1) dão −1,45
+> [−2,67; −0,22] e, só com vagas imediatas (HI-2), −1,13. Em 0,400, N1 dá
+> −0,14. Linhas por corte, sem correção múltipla.
 
 ---
 
-## Antes e depois do controle: em 0,400, passa pelas vagas
+## H1 · Antes e depois do controle das vagas
 
 `Robustez · H1 · controle`
 
@@ -572,7 +563,7 @@ atualizacao: 26 de outubro de 2026
 
 ---
 
-## H1 por ciclo: a queda em 0,300 vem do ciclo 2
+## H1 · Por ciclo: a queda em 0,300 vem do ciclo 2
 
 `Robustez · H1 · por ciclo`
 
@@ -580,117 +571,118 @@ atualizacao: 26 de outubro de 2026
 
 ![H1 por ciclo e por corte: célula aberta preenchida (A3) e taxa por vaga oferecida, ciclos 1, 2 e 3 e juntos, com IC 95%](../../../output/apresentacao_banca2/curto_h1_por_ciclo.png)
 
-- A queda em 0,300 vem sobretudo do ciclo 2 (vagas de reserva); por ciclo, os intervalos são largos.
+- A queda em 0,300 vem sobretudo do ciclo 2; por ciclo, os intervalos são largos.
 
-> **Preenchida: confirmada no ciclo 1; alocada nos ciclos 2 e 3.**
+> **Tipo de vaga do ciclo 2: quadro refeito depois do resultado (auditoria 36).**
 
-**Fontes:** `output/rdd_bolsa/NA_estimativas.csv` (A3 por ciclo); `ND_estimativas.csv` (taxa por vaga, adendo AD2; doc 49b, §14).
+**Fontes:** `output/rdd_bolsa/NA_estimativas.csv` (A3 por ciclo); `ND_estimativas.csv` (taxa por vaga, adendo AD2; doc 49b); auditoria 36.
 
-**Números:** `HC_TX_2_300_TAU`, `HC_TX_2_300_INF`, `HC_TX_2_300_SUP`, `HC_TX_J_300_TAU`, `ND_TX300_C2_PCT`, `HC_A3_2_300_TAU`
+**Números:** `PC_TX_2_300_TAU`, `PC_TX_2_300_INF`, `PC_TX_2_300_SUP`, `PC_TX_J_300_TAU`, `ND_TX300_C2_PCT`, `PC_A3_2_300_TAU`
 
 > **Notas do apresentador.** Todas as combinações de ciclo, corte e medida
 > estão gravadas; nada foi estimado para este slide. Na taxa por vaga
 > oferecida, o ciclo 2 dá −27,8 p.p. [−49,0; −6,7] em 0,300, contra −16,0
 > com os ciclos juntos, e responde por 51% do salto conjunto. Na A3, o ciclo 2
-> dá −10,2 p.p., com IC que contém zero. No ciclo 2, nenhuma célula só de
-> reserva foi preenchida na 1ª chamada. "Preenchida" muda de definição: no
-> ciclo 1, confirmação ou homologação; nos ciclos 2 e 3, alocado. A
-> auditoria 36, em curso, refaz a conta com uma definição única.
+> dá −10,2 p.p., com IC que contém zero. "Preenchida" é ao menos um alocado
+> nos três ciclos (no ciclo 1, o confirmado), conferido pela auditoria 36. A
+> A3 usa o tipo de vaga do ciclo 2 do quadro retificado de 19/03/2026, refeito
+> depois do resultado preliminar; com o tipo de vaga de antes da alocação, a
+> queda aumenta. A H1 principal (adendo 48b) usa o quadro de 13/02/2026.
 
 ---
 
-## Em 0,300 é a estimativa no corte
+## H1 · Em 0,300, o negativo vem da reta
 
-`Robustez · Queda em 0,300 · passo 1`
+`Robustez · Queda em 0,300 · (a) e (b)`
+
+<!-- layout: curto_figura -->
+
+![Corte 0,300: médias por faixa de 0,010, reta local de cada lado e médias da janela; a reta de baixo chega alta ao corte e a de cima começa baixa](../../../output/apresentacao_banca2/curto_reta_0300.png)
+
+- **(a)** Nos dados crus, os dois lados preenchem igual (33% e 33%).
+- **(b)** A reta leva até o corte uma subida puxada por poucos municípios: capitais e Nordeste logo abaixo.
+
+**Fontes:** `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet`; `DQ_estimativas.csv` (doc 57l; auditoria 33); `output/auditoria_H1/a36_estimativas.csv` (auditoria 36); doc 57m (auditoria 37).
+
+**Números:** `DQ_FUN_PRE_ABX0`, `DQ_FUN_PRE_ACI0`, `DQ_FUN_PRE_ABX`, `DQ_FUN_PRE_ACI`, `A36_CAP_ABX`, `A36_CAP_ACI`, `DQ_PPOSTO_Q1`, `DQ_PCOMP_Q1`
+
+> **Notas do apresentador.** (a) Nas médias simples da janela, 33,3% das
+> células são preenchidas abaixo de 0,300 e 33,5% acima. (b) A RDD compara as
+> duas retas no ponto do corte: a de baixo segue a subida forte dos últimos
+> 0,050 e chega alta; a de cima começa baixa. Essa subida é puxada por poucos
+> municípios: na janela há 13 capitais abaixo de 0,300 e 6 acima, e as
+> capitais têm muitas células e preenchem mais (auditoria 36); as células do
+> Norte e do Nordeste da faixa de R$ 10 mil estão quase todas nos últimos
+> 0,050 antes do corte (doc 57m; auditoria 37). Acaso: com os 3 cortes falsos
+> do protocolo, o p por posto é 0,250, o menor possível; numa grade maior,
+> fora do protocolo, 0,031. Acaso não fica descartado nem confirmado.
+
+---
+
+## H1 · Controlando a capital, a queda encolhe
+
+`Robustez · Queda em 0,300 · (c)`
 
 <!-- layout: curto_figura -->
 
 <!-- linhas: 3 -->
 
-![Corte 0,300: médias por faixa de 0,010, reta local de cada lado e médias da janela; a reta de baixo chega alta ao corte e a de cima começa baixa](../../../output/apresentacao_banca2/curto_reta_0300.png)
+![Queda em 0,300 nas três medidas: como estimada, com dummy de capital e só com células de vaga imediata, com IC 95% (auditoria 36)](../../../output/apresentacao_banca2/curto_queda_capital.png)
 
-- A reta de baixo leva até o corte a subida dos últimos 0,050: a ponta fica alta.
-- Médias iguais, salto negativo: poucos municípios.
+- **(c)** Controlando a capital, a queda encolhe e o IC contém zero; só com vagas imediatas, encolhe.
+- 13 capitais abaixo de 0,300 e 6 acima.
 
-> **O acaso não está descartado.**
+> **Auditoria 36, diagnóstico pós-resultado.**
 
-**Fontes:** `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet`; `DQ_estimativas.csv` (protocolo 61; doc 57l; auditoria 33).
+**Fontes:** `output/auditoria_H1/a36_estimativas.csv` e `a36_resumo.json` (auditoria 36); o adendo 48c fará a versão padronizada.
 
-**Números:** `DQ_FUN_PRE_ABX`, `DQ_FUN_PRE_ACI`, `DQ_FUN_PRE_ABX0`, `DQ_FUN_PRE_ACI0`, `DQ_PPOSTO_Q1`, `DQ_PCOMP_Q1`
+**Números:** `HI2_300_TAU`, `A36_CAP_ABX`, `A36_CAP_ACI`, `A36_A3_PIPE_TAU`, `A36_A3_CAP_TAU`, `A36_A3_CAP_INF`, `A36_A3_CAP_SUP`, `A36_A3_VI_TAU`, `A36_TX_PIPE_TAU`, `A36_TX_CAP_TAU`, `A36_TX_CAP_INF`, `A36_TX_CAP_SUP`, `A36_TX_VI_TAU`, `A36_N1_PIPE_TAU`, `A36_N1_CAP_TAU`, `A36_N1_CAP_INF`, `A36_N1_CAP_SUP`, `A36_CAPMUN_TAU`, `A36_CAPMUN_INF`, `A36_CAPMUN_SUP`
 
-> **Notas do apresentador.** Nas médias da janela, 33,3% das células são
-> preenchidas abaixo de 0,300 e 33,5% acima. A RDD compara as duas retas no
-> ponto do corte: a de baixo segue a subida forte dos últimos 0,050 (doc 57m)
-> e chega alta; a de cima começa baixa. O salto sai negativo mesmo com as
-> médias iguais, e depende de poucos municípios perto do corte. Acaso: com os
-> 3 cortes falsos do protocolo, o p por posto é 0,250, o menor possível; numa
-> grade maior, fora do protocolo, 0,031. Acaso não fica descartado nem
-> confirmado.
-
----
-
-## As vagas do lado de cima eram diferentes
-
-`Robustez · Queda em 0,300 · passo 2`
-
-<!-- layout: curto_figura -->
-
-<!-- linhas: 4 -->
-
-![Diagnóstico do protocolo 61: quanto da queda em 0,300 sobra ao igualar cada fator entre os lados do corte, para Q1, Q2 e Q3, com IC 95%](../../../output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png)
-
-- Cursos que preenchem pouco
-- Mais células do curso na UF
-- Ciclo 2: mais células só de reserva
-
-> **Igualando: queda pela metade ou mais em algumas medidas; nenhum fator nas três.**
-
-**Fontes:** `output/rdd_bolsa/DQ_estimativas.csv`, `DQ_resumo.json` e `DQ_figuras/DQ_quanto_da_queda.png` (protocolo 61; doc 57l; auditoria 33, §8); figura usada sem redesenho, conferida pelo hash.
-
-**Números:** `DQ_CURSO_TAU`, `DQ_CURSO_INF`, `DQ_CURSO_SUP`, `DQ_CONCUF_TAU`, `DQ_CONCUF_INF`, `DQ_CONCUF_SUP`, `DQ_SOCR_C2_TAU`, `DQ_SOCR_C2_INF`, `DQ_SOCR_C2_SUP`, `DQ_CAND1_TAU`, `DQ_CAND1_INF`, `DQ_CAND1_SUP`, `DQ_FIX_COMP_Q2`, `DQ_FIX_COMP_Q2_PCT`, `DQ_FIX_CONC_Q2`, `DQ_FIX_CONC_Q2_PCT`, `DQ_FIX_FUNIL_Q1`, `DQ_FIX_FUNIL_Q1_PCT`
-
-> **Notas do apresentador.** Diagnóstico do protocolo 61 (doc 57l),
-> auditado (auditoria 33): descritivo e pós-resultado. No corte, do lado de
-> cima: células de cursos que preenchem pouco em qualquer lugar (índice de
-> curso −4,5 p.p. [−7,1; −2,0]); mais células do mesmo curso na mesma UF
-> disputando candidatos (+10,6 [+3,5; +17,8]); no ciclo 2, mais células só de
-> reserva (+28,4 p.p. [+8,3; +48,4]). Que menos células tiveram candidato de
-> 1ª opção é estimativa imprecisa: −10,8 p.p. [−28,2; +6,7]. Igualando a
-> composição, Q2 vai a −5,1 p.p., 32% do original; a concorrência, Q2 a −4,3
-> p.p., 27%; quem teve candidato de 1ª opção, Q1 a −0,49, 34%. Esses fatores
-> se formam depois do anúncio da faixa: descrevem o que acompanha a queda, não
-> a causa.
+> **Notas do apresentador.** Diagnóstico da auditoria 36, descritivo e
+> pós-resultado, sem estatuto causal. Na janela de 0,050 há 13 capitais abaixo
+> de 0,300 e 6 acima; a menos de 0,010 do corte, São Paulo, Goiânia, Natal e
+> Brasília ficam abaixo e nenhuma capital acima. No corte, a parte dos
+> municípios que são capitais cai −17,8 p.p. [−34,1; −1,5]. Com uma dummy de
+> capital: A3 de −8,4 para −2,6 p.p. [−11,8; +6,6]; taxa por vaga de −16,0
+> para −10,9 p.p. [−22,6; +0,8]; N1 de −1,45 para −0,92 [−1,98; +0,14]. Só
+> com células de vaga imediata (tipo de vaga de antes da alocação): A3 −3,7
+> p.p. e taxa −13,2 p.p., com IC que contém zero; nos alocados por município
+> (HI-2, adendo 48b), −1,13, com IC que exclui zero, que não passa no Holm. O adendo 48c vai estimar
+> capitais e UF de forma padronizada; quando sair, a fonte deste slide muda.
 
 ---
 
-## O que dá para afirmar sobre a queda
+## H1 · O que dá para afirmar sobre a queda
 
-`Robustez · Queda em 0,300 · passo 3`
+`Robustez · H1 · TOST`
 
 <!-- layout: curto_figura -->
 
-![TOST por corte: salto no corte com IC 90% contra a margem do protocolo 60, para A3 e N1](../../../output/apresentacao_banca2/curto_tost.png)
+![TOST da H1 principal (adendo 48b, HI-s7): salto no corte com IC 90% contra a margem do protocolo 60, para HI-1 e HI-2](../../../output/apresentacao_banca2/curto_tost_hi.png)
 
-- **TOST:** sem aumento de 10 p.p. ou mais; "nada mudou" não se sustenta.
+- **TOST:** HI-1 inconclusivo; HI-2 em 0,300 descarta aumento ≥ 25% da média, não descarta queda.
 - **Em 0,300:** nenhum incentivo individual muda; muda o teto de emendas do município.
 
-**Fontes:** `output/rdd_bolsa/EQ_estimativas.csv` (TOST; protocolo 60; doc 57j; auditoria 32); auditorias 18 e 35; doc 57l.
+**Fontes:** `output/rdd_bolsa/HI_estimativas.csv` (HI-s7; adendo 48b; doc 57n; em auditoria); auditorias 18 e 35; doc 57l.
 
-**Números:** `EQ_A3_300_I90S`, `EQ_A3_400_I90S`, `EQ_N1_300_I90S`, `EQ_N1_400_I90S`
+**Números:** `HI_EQ1_300_I90I`, `HI_EQ1_300_I90S`, `HI_EQ1_400_I90I`, `HI_EQ1_400_I90S`, `HI_EQ2_300_I90I`, `HI_EQ2_300_I90S`, `HI_EQ2_300_MARG`, `HI_EQ2_400_MARG`, `HI2_300_MEDIA`
 
-> **Notas do apresentador.** TOST com IC de 90%: o limite de cima é +0,1 p.p.
-> e +9,3 p.p. na célula aberta (margem de 10 p.p.) e −0,42 e +0,43 nas vagas
-> por município (margem de 25% da média); só o teste do aumento rejeita. Uma
-> queda desse tamanho não fica descartada: não dá para dizer que nada mudou.
-> Nos atos lidos, nenhum incentivo individual além da bolsa muda em 0,300
-> (auditoria 35); a única regra federal que muda em 0,300 e não em 0,400 é o
-> teto de emendas e de parcelas de custeio do município (auditoria 18). Nada
-> disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com
-> outras regras.
+> **Notas do apresentador.** TOST da H1 principal (HI-s7), com IC de 90% e
+> as margens do protocolo 60. HI-1: [−18,4; +11,1] em 0,300 e [−20,5;
+> +15,9] em 0,400, contra ±10 p.p.: inconclusivo, nenhum dos dois testes
+> rejeita. HI-2 em 0,300: [−1,99; −0,26] contra ±0,69 médico por município
+> (25% da média abaixo, 2,77): não houve aumento igual ou maior que a margem,
+> mas uma queda desse tamanho não fica descartada. HI-2 em 0,400, contra
+> ±0,50: inconclusivo. No IC convencional, sob a aproximação local linear e
+> para o pacote do corte. Não dá para dizer que nada mudou. Nos atos lidos,
+> nenhum incentivo individual além da bolsa muda em 0,300 (auditoria 35); a
+> única regra federal que muda em 0,300 e não em 0,400 é o teto de emendas e
+> de parcelas de custeio do município (auditoria 18). Nada disso mostra que a
+> bolsa reduz o preenchimento: o corte junta a bolsa com outras regras.
 
 ---
 
-## H2: por ciclo, a bolsa pesa só no ciclo 2
+## H2 · plano B: por ciclo, só o ciclo 2
 
 `Robustez · H2`
 
@@ -712,11 +704,12 @@ atualizacao: 26 de outubro de 2026
 > igualdade entre ciclos tem p 0,058. A vantagem da UF de origem sobre toda a
 > bolsa fica entre 1,18 (distância em log) e 2,37 (só o ciclo 3) nas seis
 > variantes. Escolha não é expansão: o que uma vaga ganha, outra do mesmo
-> curso perde.
+> curso perde. Reestimação em curso (52c): o ciclo 2 será refeito com o tipo de
+> vaga do quadro de 13/02/2026.
 
 ---
 
-## H3: na nota de corte, a mesma direção
+## H3 · plano B: na nota de corte, mesma direção
 
 `Robustez · H3`
 
@@ -741,54 +734,56 @@ atualizacao: 26 de outubro de 2026
 
 # Discussão
 
-## Discussão: o sinal negativo da H1
+## H1 · Discussão: o sinal negativo
 
 `Discussão · Queda`
 
 <!-- layout: curto_capa -->
 
-- O sinal negativo não é a bolsa afastando médicos: é a estimativa no corte, com poucos municípios e vagas diferentes.
+- O sinal negativo não é a bolsa afastando médicos: é a estimativa no corte, puxada por poucos municípios, capitais logo abaixo.
 
 > **Nada disso mostra que a bolsa reduz o preenchimento.**
 
-**Fontes:** síntese da Robustez; docs 57l e 57m; auditoria 33.
+**Fontes:** síntese da Robustez; doc 57m; auditorias 36 e 37.
 
 **Números:** nenhum
 
 > **Notas do apresentador.** Em linguagem simples: nos dados crus os dois
 > lados preenchem igual; a reta de baixo carrega até o corte uma subida que
-> só existe nos últimos municípios antes de 0,300; e do lado de cima as vagas
-> eram de outro tipo (mais reserva, cursos que preenchem pouco, mais
-> concorrência). O corte junta a bolsa com outras regras: pacote do corte.
+> só existe nos últimos municípios antes de 0,300, com capitais e Nordeste
+> logo abaixo do corte; controlando a condição de capital, ou comparando
+> vagas do mesmo tipo, a queda encolhe e o intervalo passa a conter zero. O
+> corte junta a bolsa com outras regras: pacote do corte.
 
 ---
 
-## Discussão: um incentivo limitado
+## Discussão: por que não sobe? Um incentivo limitado
 
 `Discussão · Teoria`
 
 <!-- layout: curto_texto -->
 
-- **Limitado** a origem pesa mais que toda a bolsa
-- **Escolha** reordena candidatos, não enche vagas
-- **Substituição** metade já estava no município
+- **H1** o preenchimento não sobe no corte
+- **Por quê** a origem pesa mais que toda a bolsa
+- **Oferta** metade já estava no município
 
 > **Pacote do corte; vínculo não é presença.**
 
-**Fontes:** síntese dos slides anteriores; doc 57.
+**Fontes:** síntese dos slides anteriores; docs 57, 57d e 57i.
 
 **Números:** nenhum
 
-> **Notas do apresentador.** No modelo da banca 1, o médico aceita a vaga se
-> a bolsa compensa o custo do lugar. Incentivo limitado: a política mexe numa
-> variável, e o custo do lugar (longe da origem, da família e da rede)
-> continua contra. Escolha não é expansão: a bolsa reordena os candidatos
-> entre as vagas abertas, e o que uma vaga ganha outra do mesmo curso perde;
-> por isso não aparece no preenchimento. Substituição: o médico soma horas
-> cadastradas, mas metade já trabalhava no município do posto. Associação não
-> é efeito; inconclusivo não é efeito zero. Próximos passos: as saídas do
-> adendo 48b, o ciclo 3 com a competência 202703 madura e o universo de
-> inscritos.
+> **Notas do apresentador.** A história parte da H1. No modelo da banca 1, o
+> médico aceita a vaga se a bolsa compensa o custo do lugar. O preenchimento
+> não sobe no corte; o sinal negativo é a estimativa no corte, puxada por
+> poucos municípios. A escolha explica por quê (H2, plano B): a política mexe
+> numa variável, e o custo do lugar (longe da origem, da família e da rede)
+> continua contra; a bolsa reordena os candidatos entre as vagas abertas, e o
+> que uma vaga ganha outra do mesmo curso perde. Na oferta (H3, plano B), o
+> médico soma horas cadastradas, mas metade já trabalhava no município do
+> posto. Associação não é efeito; inconclusivo não é efeito zero. Próximos
+> passos: as saídas do adendo 48b, o ciclo 3 com a competência 202703 madura e
+> o universo de inscritos.
 
 <!-- deck:fim -->
 

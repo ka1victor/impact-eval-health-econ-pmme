@@ -566,15 +566,21 @@ DQ_FUNIL = "D-c|funil_bruto|funil_bruto|"
 DQ_COMP = "D-b|composicao|salto|"
 PRELIM = "Diagnóstico 61 (doc 57l; auditoria 33, aprovado com correções de texto): "
 GF_EST = "output/rdd_bolsa/GF_estimativas.csv"
-GF_PRE = "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): "
+GF_PRE = "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): "
 NA_EST = "output/rdd_bolsa/NA_estimativas.csv"
+A36_EST = "output/auditoria_H1/a36_estimativas.csv"
+HI_EST = "output/rdd_bolsa/HI_estimativas.csv"
+HI_PRE = "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): "
+A36_PRE = "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): "
+A36_A3 = "A3_pipeline (>=1 alocado; c1 = confirmado)"
+A36_0300 = {"ciclo": "1+2+3", "corte": "300"}
 # Numeração das hipóteses na apresentação a partir de 26/10/2026 (pedido do autor): H1 preenchimento; H2 bolsa ×
 # origem (antes H3; os códigos H3_* do P1h mantêm o nome); H3 oferta (antes H4). Gravada em cada código do registro.
 HIPOTESE_POR_PREFIXO = (("H3_", "H2"), ("M1_", "H2"), ("M5_", "H2"), ("M0_", "H2"), ("M2_", "H2"), ("M4_", "H2"),
                         ("M7_", "H2"), ("M8_", "H2"), ("M9_", "H2"), ("E9_", "H2"), ("P1G_", "H2"), ("ESC_", "H2"),
                         ("P4_", "H3"), ("CA_", "H3"), ("RR_", "H3"),
                         ("N1_", "H1"), ("A3_", "H1"), ("EQ_", "H1"), ("ND_", "H1"), ("VIC_", "H1"), ("DQ_", "H1"),
-                        ("GF_", "H1"), ("HC_", "H1"))
+                        ("GF_", "H1"), ("PC_", "H1"), ("A36_", "H1"), ("HI", "H1"))
 
 
 SENS_H3 = [("M2", "M2", "empilhado", "log da distância"), ("M4", "M4", "empilhado", "efeito fixo de UF da vaga"),
@@ -945,7 +951,7 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
      GF_PRE + "faixa de R$ 10 mil: células do Nordeste preenchidas na 1ª chamada (%)"),
     # H1 por ciclo (pedido do autor de 26/10/2026, robustez do deck curto): A3 de NA_estimativas.csv e taxa por vaga
     # oferecida de ND_estimativas.csv (adendo AD2), por ciclo e por corte, com os ciclos juntos como referência
-    *[(f"HC_A3_{cc}_{c}_{k}", "EMPIRICO",
+    *[(f"PC_A3_{cc}_{c}_{k}", "EMPIRICO",
        _c(NA_EST, {"outcome_id": "A3_PREENCHIDA", "populacao": pop, "ciclo": cic, "corte": ct, "especificacao": "A3",
                    "variante": "principal"}, col, PP), "d1s",
        f"A3 (célula aberta preenchida), {dcc}, corte {ct.replace('.', ',')}: salto (p.p.){dk}")
@@ -954,7 +960,7 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
                                 ("J", "V1+V2+V3 (celulas)", "1+2+3", "ciclos 1–3 juntos"))
       for c, ct in CORTES_TXT
       for k, col, dk in (("TAU", "tau", ""), ("INF", "ic95_inf", ", IC 95% inferior"), ("SUP", "ic95_sup", ", IC 95% superior"))],
-    *[(f"HC_TX_{cc}_{c}_{k}", "EMPIRICO",
+    *[(f"PC_TX_{cc}_{c}_{k}", "EMPIRICO",
        _c(ND_EST, {"id_linha": (f"AD2_A3|estimativa|APENDICE_POR_CICLO|V{cc}|{ct}|TAXA_VIC|taxa_ponderada|principal"
                                 if cc != "J" else
                                 f"D1|estimativa|POR_CORTE|V1+V2+V3|{ct}|TAXA_VIC|taxa_ponderada|principal")}, col, PP),
@@ -962,6 +968,62 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
       for cc, dcc in (("1", "só o ciclo 1"), ("2", "só o ciclo 2"), ("3", "só o ciclo 3"), ("J", "ciclos 1–3 juntos"))
       for c, ct in CORTES_TXT
       for k, col, dk in (("TAU", "tau", ""), ("INF", "ic95_inf", ", IC 95% inferior"), ("SUP", "ic95_sup", ", IC 95% superior"))],
+    # Auditoria 36 (dados da H1 refeitos do zero), diagnóstico pós-resultado da queda em 0,300: capitais no corte e
+    # as três medidas como estimadas, com dummy de capital e só com células de vaga imediata (tipo de vaga de antes da
+    # alocação, quadro de 13/02 no ciclo 2). Lido de output/auditoria_H1/a36_estimativas.csv, sem recálculo.
+    *[(f"A36_{k}_N{s}", "EMPIRICO", _c(A36_EST, {**A36_0300, "outcome": A36_A3, "variante": var}, col), "int",
+       A36_PRE + f"municípios {d} de 0,300 na janela, {dv}")
+      for k, var, dv in (("PIPE", "FE curso x ciclo + tipo de vaga (versão do pipeline: c2 = 19/03)", "A3 como estimado"),
+                         ("SEMCAP", "sem capitais; FE do pipeline", "A3 sem as capitais"))
+      for s, col, d in (("ABX", "n_mun_abaixo", "abaixo"), ("ACI", "n_mun_acima", "acima"))],
+    ("A36_CAP_ABX", "EMPIRICO", {"diferenca": ["A36_PIPE_NABX", "A36_SEMCAP_NABX"]}, "int",
+     A36_PRE + "capitais abaixo de 0,300 na janela de 0,050 (municípios do A3 menos os sem capitais)"),
+    ("A36_CAP_ACI", "EMPIRICO", {"diferenca": ["A36_PIPE_NACI", "A36_SEMCAP_NACI"]}, "int",
+     A36_PRE + "capitais acima de 0,300 na janela de 0,050 (municípios do A3 menos os sem capitais)"),
+    *[(f"A36_{m}_{k}_{s}", "EMPIRICO", _c(A36_EST, {**A36_0300, "outcome": out, "variante": var}, col,
+                                           PP if m != "N1" else None), "d2s" if m == "N1" else "d1s",
+       A36_PRE + f"0,300, {dm}, {dk}: salto{ds}")
+      for m, out, dm, linhas in (
+          ("A3", A36_A3, "célula aberta preenchida (A3, p.p.)",
+           (("PIPE", "FE curso x ciclo + tipo de vaga (versão do pipeline: c2 = 19/03)", "como estimado"),
+            ("CAP", "FE do pipeline + dummy de capital", "com dummy de capital"),
+            ("VI", "só células com vaga imediata pré-alocação (c2 = 13/02); FE curso x ciclo",
+             "só células com vaga imediata antes da alocação"))),
+          ("TX", "taxa N1/VIC ponderada (Q2)", "taxa por vaga oferecida (p.p.)",
+           (("PIPE", "pipeline", "como estimado"), ("CAP", "com dummy de capital", "com dummy de capital"),
+            ("VI", "só células com vaga imediata pré-alocação (alocados nelas / vagas delas)",
+             "só células com vaga imediata antes da alocação"))),
+          ("N1", "N1 com controle VIC (S-a/Q1)", "vagas preenchidas por município, com controle (N1)",
+           (("PIPE", "pipeline", "como estimado"), ("CAP", "com dummy de capital", "com dummy de capital"))))
+      for k, var, dk in linhas
+      for s, col, ds in (("TAU", "salto", ""), ("INF", "ic_inf", ", IC 95% inferior"), ("SUP", "ic_sup", ", IC 95% superior"))],
+    *[(f"A36_CAPMUN_{s}", "EMPIRICO", _c(A36_EST, {"unidade": "municipio", "outcome": "composicao",
+                                                   "variante": "município é capital", "ciclo": "1+2+3", "corte": "300"},
+                                         col, PP), "d1s",
+       A36_PRE + f"0,300: salto na parte dos municípios que são capitais (p.p.){ds}")
+      for s, col, ds in (("TAU", "salto", ""), ("INF", "ic_inf", ", IC 95% inferior"), ("SUP", "ic_sup", ", IC 95% superior"))],
+    # H1 principal do adendo 48b (só vagas imediatas; HI-1 célula, HI-2 município; no ciclo 2, tipo de vaga do quadro
+    # de 13/02/2026), por corte, com Holm; TOST HI-s7 com as margens do protocolo 60. Lido de HI_estimativas.csv.
+    *[(f"HI{h}_{c}_{k}", "EMPIRICO",
+       _c(HI_EST, {"id_linha": f"HI-{h}|HI-{h}|1+2+3|{ct}|principal|h=0.050|c2=13fev"}, col,
+          PP if (h == "1" and k in ("TAU", "INF", "SUP")) else None),
+       ("p3" if k == "HOLM" else ("d1s" if h == "1" else "d2s")) if k != "MEDIA" else ("pct1" if h == "1" else "d2"),
+       HI_PRE + f"HI-{h} ({dh}), corte {ct.replace('.', ',')}: {dk}")
+      for h, dh in (("1", "célula com vaga imediata preenchida, p.p."),
+                    ("2", "alocados em vagas imediatas por município, com controle das vagas imediatas"))
+      for c, ct in CORTES_TXT
+      for k, col, dk in (("TAU", "tau", "salto"), ("INF", "ic95_inf", "IC 95% inferior"),
+                         ("SUP", "ic95_sup", "IC 95% superior"), ("HOLM", "p_holm", "p de Holm (quatro primárias)"),
+                         ("MEDIA", "media_abaixo", "média abaixo do corte"))],
+    *[(f"HI_EQ{h}_{c}_{k}", "EMPIRICO",
+       {**_c(HI_EST, {"id_linha": f"HI-s7|HI-{h}|1+2+3|{ct}|TOST_convencional|h=0.050|c2=13fev"}, col,
+             PP if (h == "1" and k != "LEIT") else None), **({"texto_csv": True} if k == "LEIT" else {})},
+       "txt" if k == "LEIT" else ("d1s" if h == "1" and k != "MARG" else ("d0" if h == "1" else "d2s" if k != "MARG" else "d2")),
+       HI_PRE + f"HI-s7, TOST de HI-{h}, corte {ct.replace('.', ',')}: {dk}")
+      for h in ("1", "2")
+      for c, ct in CORTES_TXT
+      for k, col, dk in (("I90I", "ic90_inf", "IC 90% inferior"), ("I90S", "ic90_sup", "IC 90% superior"),
+                         ("MARG", "margem", "margem de equivalência"), ("LEIT", "leitura_tost", "leitura pré-registrada"))],
     ("D_POP_MUN", "EMPIRICO", _d("POP_MUN"), "int", "municípios com população do Censo 2022"),
     ("D_ATIVOS", "EMPIRICO", _j(A16_MAN, "listas_pmme", "registros_ativos_2026_09_11"), "int",
      "registros na lista de especialistas ativos do PMM-E de 11/09/2026"),
@@ -1130,6 +1192,9 @@ def _resolver_bruto(seletor: dict, calculados: dict, ja: dict):
     if "razao" in seletor:
         a, b = seletor["razao"]
         return float(ja[a]) / float(ja[b])
+    if "diferenca" in seletor:
+        a, b = seletor["diferenca"]
+        return float(ja[a]) - float(ja[b])
     raise SystemExit(f"ERRO: seletor desconhecido {seletor}")
 
 
@@ -1166,7 +1231,11 @@ def registrar_numeros(calculados: dict) -> dict:
             if cod.startswith("DQ_"):
                 saida[cod]["auditoria"] = "auditoria 33 (diagnóstico 61, doc 57l): aprovado com correções de texto"
             if cod.startswith("GF_"):
-                saida[cod]["auditoria"] = "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'"
+                saida[cod]["auditoria"] = "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto"
+            if cod.startswith("HI"):
+                saida[cod]["auditoria"] = "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes"
+            if cod.startswith("A36_"):
+                saida[cod]["auditoria"] = "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado"
             hip = next((h for p, h in HIPOTESE_POR_PREFIXO if cod.startswith(p)), None)
             if hip:
                 saida[cod]["hipotese_apresentacao"] = hip
@@ -2237,9 +2306,9 @@ def figura_h1_por_ciclo(num: dict, destino: Path) -> dict:
         reg.t(fig, x0 / W, (H - 0.06) / H, f"Corte 0,{c}", fontsize=14.5, weight="bold", color=TINTA, va="top")
         y = H - 0.42
         for m, tit in medidas:
-            cods = [f"HC_{m}_{cc}_{k}_{s}" for cc in rot for k, _ in CORTES_TXT for s in ("INF", "SUP")]
-            linhas = [dict(rot=rot[cc], est=f"HC_{m}_{cc}_{c}_TAU", inf=f"HC_{m}_{cc}_{c}_INF",
-                           sup=f"HC_{m}_{cc}_{c}_SUP") for cc in rot]
+            cods = [f"PC_{m}_{cc}_{k}_{s}" for cc in rot for k, _ in CORTES_TXT for s in ("INF", "SUP")]
+            linhas = [dict(rot=rot[cc], est=f"PC_{m}_{cc}_{c}_TAU", inf=f"PC_{m}_{cc}_{c}_INF",
+                           sup=f"PC_{m}_{cc}_{c}_SUP") for cc in rot]
             y, r = _bloco_forest(fig, reg, num, W, H, x0, y, 5.9, tit, "", linhas, _escala(num, cods), 0.95, 2.1,
                                  alt=0.38)
             registro += [dict(x, linha=f"0,{c} · {x['linha']}") for x in r]
@@ -2248,10 +2317,105 @@ def figura_h1_por_ciclo(num: dict, destino: Path) -> dict:
     fig.add_artist(plt.Line2D([6.1 / W] * 2, [(y_fim + 0.4) / H, (H - 0.1) / H], color=LINHA_CLARA, lw=1))
     _caixa_como_ler(fig, reg, W, ["ponto = salto no corte (bolsa maior menos menor); barra = IC 95%, verde se exclui "
                                   "zero; mesma escala nos dois cortes.",
-                                  "'Preenchida' muda entre ciclos: confirmação ou homologação no ciclo 1; alocado nos "
-                                  "ciclos 2 e 3 (auditoria 36 em curso)."], 0.28)
+                                  "Preenchida = ao menos um alocado, nos três ciclos. Na A3, o ciclo 2 usa o tipo de vaga do "
+                                  "quadro refeito depois do resultado (auditoria 36)."], 0.28)
     reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: NA_estimativas.csv (A3); ND_estimativas.csv (taxa por vaga, adendo AD2; doc "
           "49b). " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
+    plt.close(fig)
+    return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
+
+
+def figura_tost_hi(num: dict, destino: Path) -> dict:
+    """TOST da H1 principal (adendo 48b, HI-s7), por corte: faixa cinza = margem do protocolo 60, barra = IC 90%."""
+    reg = Registro()
+    W, H = 12.3, 4.75
+    fig = plt.figure(figsize=(W, H))
+    ALT, ALT_TIT, ALT_EIXO = 0.5, 0.36, 0.5
+    paineis = [("HI-1 · célula com vaga imediata preenchida (p.p.)", "1", "p.p."),
+               ("HI-2 · alocados em vagas imediatas por município", "2", "")]
+    x_rot, x_plot, w_plot = 0.1, 2.3, 5.6
+    x_val = x_plot + w_plot + 0.25
+    y = H - 0.08
+    registro = []
+    for tit, h, unid in paineis:
+        reg.t(fig, x_rot / W, (y - 0.04) / H, tit, fontsize=14, weight="bold", color=VERDE_ESC, va="top")
+        y0 = y - ALT_TIT - 2 * ALT
+        ax = fig.add_axes([x_plot / W, y0 / H, w_plot / W, (2 * ALT) / H])
+        cod = lambda c, k: f"HI_EQ{h}_{c}_{k}"  # noqa: E731
+        vals = [0.0]
+        for c in ("300", "400"):
+            vals += [_bruto(num, cod(c, "I90I")), _bruto(num, cod(c, "I90S")), _bruto(num, cod(c, "MARG")),
+                     -_bruto(num, cod(c, "MARG"))]
+        lo, hi = min(vals), max(vals)
+        pad = 0.08 * (hi - lo)
+        ax.set_xlim(lo - pad, hi + pad)
+        ax.set_ylim(1.5, -0.5)
+        ax.axvline(0, color="#2b2b2b", lw=1.4, zorder=1)
+        for k, c in enumerate(("300", "400")):
+            e, i_, s_, m = (_bruto(num, x) for x in (f"HI{h}_{c}_TAU", cod(c, "I90I"), cod(c, "I90S"), cod(c, "MARG")))
+            ax.fill_between([-m, m], k - 0.38, k + 0.38, color="#e3e3e3", zorder=0, lw=0)
+            ax.plot([i_, s_], [k, k], color="#2a78d6", lw=4.5, solid_capstyle="round", zorder=2)
+            ax.plot([e], [k], "o", ms=11, color="#2a78d6", mec="white", mew=1.8, zorder=3)
+            yc = y0 + 2 * ALT - (k + 0.5) * ALT
+            reg.t(fig, x_rot / W, yc / H, f"Corte 0,{c}", fontsize=13, weight="bold", color=TINTA, va="center")
+            txt = f"{_val(num, f'HI{h}_{c}_TAU')} [{_val(num, cod(c, 'I90I'))}; {_val(num, cod(c, 'I90S'))}]"
+            margem = f"faixa ±{_val(num, cod(c, 'MARG'))}{(' ' + unid) if unid else ''}"
+            reg.t(fig, x_val / W, (yc + 0.1) / H, txt, fontsize=13, weight="bold", color=TINTA, va="center")
+            reg.t(fig, x_val / W, (yc - 0.13) / H, f"{margem} · {TOST_LEITURA[str(num[cod(c, 'LEIT')]['valor_bruto'])]}",
+                  fontsize=12, color=TINTA2, va="center")
+            registro.append({"painel": tit, "linha": f"HI-{h} 0,{c}", "texto": txt,
+                             "codigos": [f"HI{h}_{c}_TAU", cod(c, "I90I"), cod(c, "I90S")],
+                             "exclui_nulo": bool(i_ > 0 or s_ < 0)})
+        ticks = [tk for tk in ax.get_xticks() if lo - pad <= tk <= hi + pad]
+        ax.set_xticks(ticks)
+        rot = [_fmt_eixo(tk, False) for tk in ticks]
+        ax.set_xticklabels(rot, fontsize=12, color=TINTA2)
+        reg.eixos += rot
+        ax.set_yticks([])
+        ax.tick_params(axis="x", length=0, pad=3)
+        ax.grid(axis="x", color=GRADE, lw=0.8)
+        for lado in ("top", "right", "left"):
+            ax.spines[lado].set_visible(False)
+        ax.spines["bottom"].set_color(EIXO)
+        y = y0 - ALT_EIXO
+    reg.t(fig, 0.1 / W, 0.66 / H, "Como ler: ponto = salto no corte (bolsa maior menos menor); barra = IC 90%; faixa "
+          "cinza = margem do protocolo 60 (±10 p.p.; ±25% da média abaixo).", fontsize=12, color=TINTA, va="center")
+    reg.t(fig, 0.1 / W, 0.4 / H, "Barra que não passa da borda direita da faixa: não houve aumento do tamanho da "
+          "margem ou mais. Barra que sai pela esquerda não é lida como queda.", fontsize=12, color=TINTA, va="center")
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: HI_estimativas.csv (adendo 48b, HI-s7; doc 57n; em auditoria). IC "
+          "convencional. " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
+    plt.close(fig)
+    return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
+
+
+def figura_queda_capital(num: dict, destino: Path) -> dict:
+    """A queda em 0,300 nas três medidas antigas: como estimada, com dummy de capital e só com células de vaga
+    imediata (tipo de vaga de antes da alocação). Diagnóstico pós-resultado da auditoria 36, lido do CSV dela."""
+    reg = Registro()
+    W, H = 12.3, 6.0
+    fig = plt.figure(figsize=(W, H))
+    rot = {"PIPE": "Como estimada", "CAP": "Com dummy de capital", "VI": "Só vaga imediata"}
+    blocos = (("A3", "Célula aberta preenchida (A3, p.p.)", ("PIPE", "CAP", "VI")),
+              ("TX", "Taxa por vaga oferecida (p.p.)", ("PIPE", "CAP", "VI")),
+              ("N1", "Vagas preenchidas por município, com controle (N1)", ("PIPE", "CAP")))
+    registro = []
+    y = H - 0.06
+    for m, tit, ks in blocos:
+        linhas = [dict(rot=rot[k], est=f"A36_{m}_{k}_TAU", inf=f"A36_{m}_{k}_INF", sup=f"A36_{m}_{k}_SUP")
+                  for k in ks]
+        cods = [f"A36_{m}_{k}_{s}" for k in ks for s in ("INF", "SUP")]
+        y, r = _bloco_forest(fig, reg, num, W, H, 0.1, y, W - 0.2, tit, "", linhas, _escala(num, cods), 3.0, 2.9,
+                             alt=0.36)
+        registro += r
+        y += 0.08
+    _caixa_como_ler(fig, reg, W, ["ponto = salto no corte; barra = IC 95%, verde se exclui zero. Dummy de capital: "
+                                  "compara municípios da mesma condição;",
+                                  "só vaga imediata: células com vaga imediata antes da alocação. Diagnóstico "
+                                  "pós-resultado da auditoria 36."], 0.28)
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: output/auditoria_H1/a36_estimativas.csv (auditoria 36). " + FONTE_FIG,
+          fontsize=8.5, color=MUDO, va="bottom")
     fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
     plt.close(fig)
     return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
@@ -2605,6 +2769,12 @@ ENTRADAS = [
      "2026-10-26", "corte 0,300, ciclos 1–3", "vagas por município; p.p.", "-"),
     (RAIZ / GF_EST, "subida do preenchimento dentro das faixas (protocolo 62; doc 57m; EM AUDITORIA)", "2026-10-26",
      "células abertas por faixa da bolsa, ciclos 1–3", "p.p. por 0,100 de IVS; fração", "id_linha"),
+    (RAIZ / HI_EST, "adendo 48b (doc 57n; em auditoria): H1 só com vagas imediatas, HI-1 e HI-2 por corte e TOST "
+     "HI-s7", "2026-10-26", "células e municípios com vaga imediata, ciclos 1–3, cortes 0,300 e 0,400",
+     "p.p.; alocados por município", "id_linha"),
+    (RAIZ / A36_EST, "auditoria 36: dados da H1 refeitos do zero; capitais e vaga imediata no corte 0,300 "
+     "(diagnóstico pós-resultado)", "2026-10-26", "células e municípios na janela de 0,300, ciclos 1–3",
+     "p.p.; vagas por município; municípios", "unidade + outcome + variante + ciclo + corte"),
     (RAIZ / NA_EST, "família A (protocolo 48): A3 por ciclo e por corte", "2026-10-19",
      "células abertas, ciclos 1, 2, 3 e juntos, cortes 0,300 e 0,400", "fração (x100 = p.p.)",
      "outcome_id + populacao + ciclo + corte + especificacao + variante"),
@@ -2739,6 +2909,11 @@ def main() -> int:
                             "deck curto, robustez: em 0,300 o salto sai negativo pela reta levada até o corte"),
                            ("curto_h1_por_ciclo.png", figura_h1_por_ciclo,
                             "deck curto, robustez: H1 por ciclo e por corte (A3 e taxa por vaga oferecida)"),
+                           ("curto_tost_hi.png", figura_tost_hi,
+                            "deck curto, robustez: TOST da H1 principal (adendo 48b, HI-s7), por corte"),
+                           ("curto_queda_capital.png", figura_queda_capital,
+                            "deck curto, robustez: queda em 0,300 como estimada, com dummy de capital e só com vaga "
+                            "imediata (auditoria 36, diagnóstico)"),
                            ("curto_h3_horas.png", figura_h3_horas,
                             "deck curto, resultados: H3 (antes H4), horas do médico, só o P4"),
                            ("curto_h3_nota_corte.png", figura_h3_nota_corte,
@@ -2749,7 +2924,9 @@ def main() -> int:
                      "fontes": [RAIZ / S57, RAIZ / N_EST, RAIZ / P1_EST, RAIZ / CA_EST, E8_RESUMO]
                      + ([RAIZ / P1H_CSV, RAIZ / P1H_RES] if nome == "cadeia_resumo_doc57.png" else [])
                      + ([CELULAS, RAIZ / DQ_EST] if nome in ("curto_dispersao_a3.png", "curto_reta_0300.png") else [])
-                     + ([RAIZ / NA_EST, RAIZ / ND_EST] if nome == "curto_h1_por_ciclo.png" else [])})
+                     + ([RAIZ / NA_EST, RAIZ / ND_EST] if nome == "curto_h1_por_ciclo.png" else [])
+                     + ([RAIZ / A36_EST] if nome == "curto_queda_capital.png" else [])
+                     + ([RAIZ / HI_EST] if nome == "curto_tost_hi.png" else [])})
     t_desc = linhas_tabela_descritiva(num)
     t_font = linhas_tabela_fontes(num)
     gravar_csv_tabela(linhas_tabela_cronologia(num), SAIDA / "cronologia_ciclos.csv")

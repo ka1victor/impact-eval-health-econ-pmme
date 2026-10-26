@@ -278,6 +278,9 @@ def _resolver_bruto(sel: dict, brutos: dict, calculados: dict):
     if "razao" in sel:
         a, b = sel["razao"]
         return float(brutos[a]) / float(brutos[b])
+    if "diferenca" in sel:
+        a, b = sel["diferenca"]
+        return float(brutos[a]) - float(brutos[b])
     if "calculado" in sel:
         return calculados[sel["calculado"]]
     raise AssertionError(sel)
@@ -698,12 +701,14 @@ class TestOutrosDocs(unittest.TestCase):
 
 RESUMO_DA_ETAPA = {"DQ_figuras": "output/rdd_bolsa/DQ_resumo.json",
                    "GF_figuras": "output/rdd_bolsa/GF_resumo.json",
+                   "HI_figuras": "output/rdd_bolsa/HI_resumo.json",
                    "E6_figuras": "output/rdd_bolsa/E6_resumo.json",
                    "E7_figuras": "output/rdd_bolsa/E7_resumo.json",
                    "E9_figuras": "output/rdd_bolsa/E9_resumo.json",
                    "P1h_figuras": "output/rdd_bolsa/P1h_resumo.json"}
 SCRIPT_DA_ETAPA = {"DQ_figuras": "scripts/rdd_bolsa/38_diagnostico_queda_0300.py",
                    "GF_figuras": "scripts/rdd_bolsa/39_gradiente_faixas.py",
+                   "HI_figuras": "scripts/rdd_bolsa/40_h1_vagas_imediatas.py",
                    "E6_figuras": "scripts/rdd_bolsa/13_estimar_E6_funil.py",
                    "E7_figuras": "scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py",
                    "E9_figuras": "scripts/rdd_bolsa/16_estimar_E9_escolha.py",

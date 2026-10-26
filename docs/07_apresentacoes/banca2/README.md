@@ -25,14 +25,17 @@
 > slide. Conteúdo canônico: [04](04_conteudo_deck_curto.md). O deck completo
 > (doc 02) fica como registro e só é refeito com `--completo`.<br>
 > **Numeração da apresentação a partir de 26/10/2026:** H1 preenchimento; H2
-> bolsa × origem (antes H3), a candidata central; H3 oferta (antes H4). H1 e
-> H3 aparecem em cinza, como plano B, até a validação dos professores. Nas
+> bolsa × origem (antes H3); H3 oferta (antes H4). **A H1 é a candidata
+> central**; H2 e H3 aparecem em cinza, como plano B, até a validação dos
+> professores. Os slides de cada hipótese ficam juntos dentro de cada seção. Nas
 > seções abaixo, escritas antes da troca, "H3" é a H2 de hoje e "H4", a H3.<br>
 > **H1 principal:** a do adendo 48b (só vagas imediatas); o slide está marcado
 > "aguardando 48b" até as saídas `HI_*` existirem. As medidas antigas (A3, N1,
 > taxa por vaga), o "antes e depois do controle", a H1 por ciclo e o passo a
-> passo da queda em 0,300 estão em Robustez. As linhas do doc 57m vão marcadas
-> "(em auditoria)".
+> passo da queda em 0,300 estão em Robustez. A queda em 0,300 é explicada pelas
+> capitais logo abaixo do corte (auditoria 36, diagnóstico); a explicação pelo
+> cadastro reserva do ciclo 2 saiu do deck. O doc 57m entra na versão auditada
+> (auditoria 37).
 
 ## 1. O que esta entrega é
 

@@ -8,11 +8,14 @@ O deck curto é o único usado na versão final (decisão do autor de 26/10/2026
 2. a regra do autor "texto demais": no máximo 30 palavras visíveis por slide, fora o título, a figura e a linha de
    fontes, no doc 04 e no próprio deck; especificações em até 4 linhas curtas, com a equação em palavras no centro;
 3. a numeração da apresentação a partir de 26/10/2026 (H1 preenchimento; H2 bolsa × origem, antes H3; H3 oferta,
-   antes H4), a H2 central em destaque e H1 e H3 em cinza;
-4. a H1 principal do adendo 48b (marcada "aguardando 48b" enquanto as saídas HI_* não existem) e as medidas antigas
-   como especificações secundárias, em Robustez;
-5. a explicação da queda em 0,300 passo a passo (auditoria 33: a correção M1, sem "escolhidas em 1º lugar" como
-   fato), as linhas do doc 57m marcadas "(em auditoria)", a H1 por ciclo e a linha simples da Discussão;
+   antes H4), a H1 central em destaque e H2 e H3 em cinza, como plano B; cada seção começa pela H1, e os slides
+   de uma hipótese ficam juntos, em sequência;
+4. a H1 principal do adendo 48b (saídas HI_*, em auditoria: a linha de fontes diz isso), o scatter só com vagas
+   imediatas e o TOST HI-s7, e as medidas antigas como especificações secundárias, em Robustez;
+5. a explicação da queda em 0,300 em três ideias (auditoria 36: dados crus iguais, a reta levada até o corte e as
+   capitais; sem a explicação errada pelo cadastro reserva do ciclo 2; auditoria 33: sem "escolhidas em 1º lugar"
+   como fato), o doc 57m na versão auditada (auditoria 37), a H1 por ciclo, a nota 52c da H2 só nas notas e a
+   linha simples da Discussão;
 6. a regra dos números: todo número do doc 04 e do deck é o valor de um código listado ou um parâmetro;
 7. o pacote gerado: títulos e texto iguais ao doc 04, rodapé com as oito seções, manifesto com hashes atuais e, se
    `PMME_DECK_GRUPO` apontar para o deck do grupo, o determinismo do `.pptx`.
@@ -61,39 +64,41 @@ SECOES = ("Hipótese", "Dados", "Análise descritiva", "Metodologia", "Identific
           "Discussão")
 SEQUENCIA = [  # (seção, título, layout)
     ("Hipótese", "O que a bolsa de R$ 5 mil faz", "curto_capa"),
-    ("Hipótese", "Hipóteses: a H2 é a candidata central", "curto_hipotese"),
+    ("Hipótese", "Hipóteses: a H1 é a candidata central", "curto_hipotese"),
     ("Dados", "Dados: as variáveis principais e de onde vêm", "curto_tabela"),
     ("Dados", "Dados: as variáveis secundárias", "curto_tabela"),
     ("Análise descritiva", "Os três ciclos em números", "curto_tabela"),
     ("Análise descritiva", "A bolsa é função exata do IVS: a regra é sharp", "curto_figura"),
-    ("Análise descritiva", "A 1ª opção fica perto de onde o médico já trabalhava", "curto_figura"),
-    ("Análise descritiva", "Nos dados crus, os dois lados preenchem igual", "curto_figura"),
-    ("Análise descritiva", "Dentro da faixa de R$ 10 mil, o preenchimento sobe", "curto_figura"),
-    ("Análise descritiva", "Perto de 0,300 sobra uma subida forte, sem explicação", "curto_figura"),
-    ("Metodologia", "H1: o salto no corte, só com vagas imediatas", "curto_espec"),
-    ("Metodologia", "H2: o logit condicional da 1ª opção", "curto_espec"),
-    ("Metodologia", "H3: horas antes e depois de entrar", "curto_espec"),
-    ("Identificação", "RDD: as premissas do desenho valem", "curto_tabela"),
-    ("Identificação", "O corte é um pacote; a H3 pede tendências paralelas", "curto_tabela"),
-    ("Resultados", "H1: vagas imediatas, por corte (aguardando 48b)", "curto_capa"),
-    ("Resultados", "H2: a UF de origem pesa mais que toda a bolsa", "curto_figura"),
-    ("Resultados", "H3: o médico soma horas, mas metade já estava lá", "curto_figura"),
-    ("Robustez", "H1, medidas antigas: nenhum corte mostra aumento", "curto_figura"),
-    ("Robustez", "Antes e depois do controle: em 0,400, passa pelas vagas", "curto_figura"),
-    ("Robustez", "H1 por ciclo: a queda em 0,300 vem do ciclo 2", "curto_figura"),
-    ("Robustez", "Em 0,300 é a estimativa no corte", "curto_figura"),
-    ("Robustez", "As vagas do lado de cima eram diferentes", "curto_figura"),
-    ("Robustez", "O que dá para afirmar sobre a queda", "curto_figura"),
-    ("Robustez", "H2: por ciclo, a bolsa pesa só no ciclo 2", "curto_figura"),
-    ("Robustez", "H3: na nota de corte, a mesma direção", "curto_figura"),
-    ("Discussão", "Discussão: o sinal negativo da H1", "curto_capa"),
-    ("Discussão", "Discussão: um incentivo limitado", "curto_texto"),
+    ("Análise descritiva", "H1 · Dados crus, só vagas imediatas", "curto_figura"),
+    ("Análise descritiva", "H1 · Dentro da faixa de R$ 10 mil, o preenchimento sobe", "curto_figura"),
+    ("Análise descritiva", "H1 · Perto de 0,300 sobra uma subida forte", "curto_figura"),
+    ("Metodologia", "H1 · O salto no corte, só com vagas imediatas", "curto_espec"),
+    ("Metodologia", "H2 e H3 · plano B: como estimamos", "curto_texto"),
+    ("Identificação", "H1 · RDD: as premissas do desenho valem", "curto_tabela"),
+    ("Identificação", "H1 · O corte é um pacote", "curto_tabela"),
+    ("Resultados", "H1 · Só vagas imediatas: nada passa no Holm", "curto_figura"),
+    ("Resultados", "H2 · plano B: a origem pesa mais que a bolsa", "curto_figura"),
+    ("Resultados", "H3 · plano B: soma horas, mas metade já estava lá", "curto_figura"),
+    ("Robustez", "H1 · Medida antiga × só vagas imediatas", "curto_figura"),
+    ("Robustez", "H1 · Antes e depois do controle das vagas", "curto_figura"),
+    ("Robustez", "H1 · Por ciclo: a queda em 0,300 vem do ciclo 2", "curto_figura"),
+    ("Robustez", "H1 · Em 0,300, o negativo vem da reta", "curto_figura"),
+    ("Robustez", "H1 · Controlando a capital, a queda encolhe", "curto_figura"),
+    ("Robustez", "H1 · O que dá para afirmar sobre a queda", "curto_figura"),
+    ("Robustez", "H2 · plano B: por ciclo, só o ciclo 2", "curto_figura"),
+    ("Robustez", "H3 · plano B: na nota de corte, mesma direção", "curto_figura"),
+    ("Discussão", "H1 · Discussão: o sinal negativo", "curto_capa"),
+    ("Discussão", "Discussão: por que não sobe? Um incentivo limitado", "curto_texto"),
 ]
-LINHA_DISCUSSAO = ("O sinal negativo não é a bolsa afastando médicos: é a estimativa no corte, com poucos municípios e "
-                   "vagas diferentes.")
-LINHA_POR_CICLO = ("A queda em 0,300 vem sobretudo do ciclo 2 (vagas de reserva); por ciclo, os intervalos são "
-                   "largos.")
-RAZAO_48B = "comparamos vagas do mesmo tipo: a de reserva não estava em jogo na 1ª chamada"
+LINHA_DISCUSSAO = ("O sinal negativo não é a bolsa afastando médicos: é a estimativa no corte, puxada por poucos "
+                   "municípios, capitais logo abaixo.")
+LINHA_POR_CICLO = "A queda em 0,300 vem sobretudo do ciclo 2; por ciclo, os intervalos são largos."
+# auditoria 36: a ideia "no ciclo 2, a vaga de reserva não podia ser preenchida" está errada e não pode voltar
+PROIBIDAS_A36 = ("não podia ser preenchida", "só de reserva", "só de cadastro reserva", "vagas de reserva",
+                 "células só de CR", "reserva não")
+A36_MUN = ROOT / "output" / "auditoria_H1" / "a36_municipios.csv"
+HIP = re.compile(r"^(H\d)(?: e (H\d))? ·")
+RAZAO_48B = "comparamos vagas do mesmo tipo; a reserva se preenche por outro caminho"
 
 
 def sha256(p: Path) -> str:
@@ -153,17 +158,19 @@ class TestConteudoCurto(unittest.TestCase):
         deck = corpo[corpo.index("<!-- deck:inicio -->"):]
         self.assertNotIn("H4", re.sub(r"\(antes H4\)", "", deck))
         for s in self.slides:
-            m = re.match(r"(H\d)\b", s["titulo"])
+            m = HIP.match(s["titulo"])
             if not m:
                 continue
             self.assertIn(m.group(1), ("H1", "H2", "H3"), s["titulo"])
-            if m.group(1) == "H2":
-                self.assertTrue(any(k in s["titulo"] for k in ("origem", "logit", "bolsa pesa")), s["titulo"])
+            # H2 e H3 são plano B (decisão do autor de 26/10/2026): o título diz isso
+            self.assertEqual("plano B" in s["titulo"], m.group(1) != "H1", s["titulo"])
+            if m.group(1) == "H2" and not m.group(2):
+                self.assertTrue(any(k in s["titulo"] for k in ("origem", "ciclo 2")), s["titulo"])
             if m.group(1) == "H3":
                 self.assertTrue(any(k in s["titulo"] for k in ("horas", "nota de corte")), s["titulo"])
-        hip = self.por_titulo["Hipóteses: a H2 é a candidata central"]
+        hip = self.por_titulo["Hipóteses: a H1 é a candidata central"]
         rotulos = [re.match(r"\*\*(.+?)\*\*", m).group(1) for m in hip["marcadores"]]
-        self.assertEqual(rotulos, ["H2 · central", "H1 · plano B", "H3 · plano B"])
+        self.assertEqual(rotulos, ["H1 · central", "H2 · plano B", "H3 · plano B"])
         self.assertIn("H2 bolsa × origem (antes H3); H3 oferta (antes", corrido(hip["notas"]))
         reg = self.registro["numeracao_das_hipoteses"]
         self.assertIn("H2 bolsa × origem (antes H3); H3 oferta (antes H4)", reg)
@@ -173,7 +180,7 @@ class TestConteudoCurto(unittest.TestCase):
 
     def test_especificacoes_curtas(self) -> None:
         espec = [s for s in self.slides if s["layout"] == "curto_espec"]
-        self.assertEqual([s["titulo"][:3] for s in espec], ["H1:", "H2:", "H3:"])
+        self.assertEqual([s["titulo"][:4] for s in espec], ["H1 ·"])
         for s in espec:
             self.assertLessEqual(len(s["marcadores"]), 4, s["titulo"])
             self.assertFalse(s["marcadores"][0].startswith("**"), s["titulo"])
@@ -182,97 +189,155 @@ class TestConteudoCurto(unittest.TestCase):
         h1 = espec[0]
         self.assertIn(RAZAO_48B, " ".join(h1["marcadores"]))
         self.assertIn("vaga imediata", " ".join(h1["marcadores"]))
-        for k in ("HI-1", "HI-2", "Holm", "h = 0,050", "cada corte separado"):
+        for k in ("HI-1", "HI-2", "Holm", "h = 0,050", "cada corte separado", "13/02/2026"):
             self.assertIn(k, corrido(h1["notas"]), k)
+        pb = self.por_titulo["H2 e H3 · plano B: como estimamos"]
+        self.assertTrue(all("plano B" in m for m in pb["marcadores"]))
+        for k in ("erro-padrão agrupado por conjunto de escolha", "bootstrap multiplicador", "Rambachan–Roth"):
+            self.assertIn(k, corrido(pb["notas"]), k)
+
+    def test_h1_central_e_hipoteses_contiguas(self) -> None:
+        """Cada seção de Metodologia a Discussão começa pela H1; dentro da seção, H1, depois H2, depois H3."""
+        for sec in ("Metodologia", "Identificação", "Resultados", "Robustez", "Discussão"):
+            hs = [int(HIP.match(s["titulo"]).group(1)[1]) for s in self.slides
+                  if s["secao"] == sec and HIP.match(s["titulo"])]
+            self.assertTrue(hs and hs[0] == 1, sec)
+            self.assertEqual(hs, sorted(hs), sec)
+        n = {h: sum(1 for s in self.slides if HIP.match(s["titulo"]) and HIP.match(s["titulo"]).group(1) == h)
+             for h in ("H1", "H2", "H3")}
+        self.assertGreater(n["H1"], 2 * (n["H2"] + n["H3"]))  # a H1 tem o maior espaço
 
     def test_h1_principal_do_48b(self) -> None:
+        """A H1 principal é a do adendo 48b (HI_*), em auditoria; as medidas antigas ficam em Robustez."""
+        self.assertTrue(HI_RESUMO.exists())
         res = [s for s in self.slides if s["secao"] == "Resultados"]
-        self.assertTrue(res[0]["titulo"].startswith("H1:"))
-        if HI_RESUMO.exists():
-            self.assertNotIn("aguardando 48b", res[0]["titulo"])
-            self.assertIn("HI_figuras", res[0]["imagem"].as_posix())
-        else:
-            self.assertIn("aguardando 48b", res[0]["titulo"])
-            self.assertIn("Aguardando 48b", res[0]["marcadores"][0])
-        # as medidas antigas (A3, N1, taxa por vaga) estão só em Robustez, como especificações secundárias
+        h1 = res[0]
+        self.assertTrue(h1["titulo"].startswith("H1 ·"))
+        self.assertNotIn("aguardando", h1["titulo"])
+        self.assertTrue(h1["imagem"].as_posix().endswith("output/rdd_bolsa/HI_figuras/HI_principal.png"))
+        self.assertEqual(D.texto_puro(h1["marcadores"][0]),
+                         "Comparando só vagas imediatas, nenhuma linha passa no Holm; a célula não se distingue de "
+                         "zero nos dois cortes.")
+        self.assertIn("HI-2 em 0,300: IC exclui zero; não sobrevive ao Holm", D.texto_puro(h1["marcadores"][1]))
+        v = {c: float(e["valor_bruto"]) for c, e in self.todos.items() if c.startswith("HI") and "LEIT" not in c}
+        self.assertTrue(all(v[f"HI{h}_{c}_HOLM"] >= 0.05 for h in "12" for c in ("300", "400")))
+        self.assertTrue(v["HI1_300_INF"] < 0 < v["HI1_300_SUP"] and v["HI1_400_INF"] < 0 < v["HI1_400_SUP"])
+        self.assertLess(v["HI2_300_SUP"], 0.0)
+        for s in self.slides:  # saídas do 48b ainda em auditoria: a linha de fontes diz isso
+            if s["imagem"] is not None and "HI_figuras" in s["imagem"].as_posix() or "HI_estimativas" in s["fontes"]:
+                self.assertIn("em auditoria", s["fontes"], s["titulo"])
+        for c, e in self.todos.items():
+            if c.startswith("HI"):
+                self.assertIn("EM AUDITORIA", e["auditoria"], c)
         for s in self.slides:
-            if s["imagem"] is not None and s["imagem"].name in ("h1_preenchimento.png", "h1_controle.png",
-                                                                "curto_h1_por_ciclo.png", "DQ_quanto_da_queda.png"):
+            if s["imagem"] is not None and s["imagem"].name in ("HI_antiga_vs_imediatas.png", "h1_controle.png",
+                                                                "curto_h1_por_ciclo.png", "curto_queda_capital.png"):
                 self.assertEqual(s["secao"], "Robustez", s["titulo"])
+        nomes = [s["imagem"].name for s in self.slides if s["imagem"] is not None]
+        self.assertNotIn("HI_por_ciclo.png", nomes)  # uma figura por ciclo só: a do curto, mais legível no slide
 
     def test_descritiva_dados_crus_e_subida(self) -> None:
-        crus = self.por_titulo["Nos dados crus, os dois lados preenchem igual"]
-        self.assertEqual(crus["imagem"].name, "curto_dispersao_a3.png")
-        self.assertIn("nos dados crus os dois lados preenchem igual (33% e 33%)", " ".join(crus["marcadores"]))
+        crus = self.por_titulo["H1 · Dados crus, só vagas imediatas"]
+        self.assertTrue(crus["imagem"].as_posix().endswith("output/rdd_bolsa/HI_figuras/HI_scatter_imediatas.png"))
+        self.assertIn("A distância crua entre as retas não é a estimativa", corrido(crus["notas"]))
         self.assertEqual(self.todos["DQ_FUN_PRE_ABX0"]["valor"], "33")
         self.assertEqual(self.todos["DQ_FUN_PRE_ACI0"]["valor"], "33")
         gf = [s for s in self.slides if s["imagem"] is not None and "GF_figuras" in s["imagem"].as_posix()]
         self.assertEqual(len(gf), 2)
         for s in gf:
             self.assertEqual(s["secao"], "Análise descritiva")
-            self.assertIn("(em auditoria)", s["marcadores"][0], s["titulo"])
-            self.assertIn("Em auditoria", s["notas"], s["titulo"])
+            self.assertNotIn("em auditoria", s["marcadores"][0], s["titulo"])
+            self.assertIn("auditoria 37", s["notas"] + s["fontes"], s["titulo"])
         for c, e in self.todos.items():
             if c.startswith("GF_"):
-                self.assertIn("EM AUDITORIA", e["auditoria"], c)
-                self.assertIn("EM AUDITORIA", e["descricao"], c)
+                self.assertIn("auditoria 37", e["auditoria"], c)
         self.assertIn("anda junto com a região (Nordeste)", gf[0]["marcadores"][0])
         self.assertIn("quase some", gf[0]["marcadores"][0])
-        self.assertIn("sem fator que a acompanhe", gf[1]["marcadores"][0])
+        self.assertIn("nenhum fator sozinho reduz à metade", gf[1]["marcadores"][0])
 
     def test_queda_passo_a_passo(self) -> None:
+        """Auditoria 36: a queda em 0,300 em três ideias; a explicação pelo cadastro reserva do ciclo 2 saiu."""
         rob = [s["titulo"] for s in self.slides if s["secao"] == "Robustez"]
-        passos = ["Antes e depois do controle: em 0,400, passa pelas vagas", "Em 0,300 é a estimativa no corte",
-                  "As vagas do lado de cima eram diferentes", "O que dá para afirmar sobre a queda"]
-        self.assertEqual([t for t in rob if t in passos], passos)
-        b = self.por_titulo["Em 0,300 é a estimativa no corte"]
-        self.assertEqual(b["imagem"].name, "curto_reta_0300.png")
-        tb = tela(b)
-        for k in ("reta de baixo leva até o corte a subida dos últimos 0,050", "a ponta fica alta", "Médias iguais",
-                  "salto negativo", "poucos municípios", "O acaso não está descartado"):
-            self.assertIn(k, tb, k)
-        c = self.por_titulo["As vagas do lado de cima eram diferentes"]
-        self.assertTrue(c["imagem"].as_posix().endswith("output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png"))
-        self.assertEqual(c["marcadores"], ["Cursos que preenchem pouco", "Mais células do curso na UF",
-                                           "Ciclo 2: mais células só de reserva"])
-        self.assertIn("nenhum fator nas três", c["cautela"])
-        self.assertIn("pela metade ou mais", c["cautela"])
+        passos = ["H1 · Em 0,300, o negativo vem da reta", "H1 · Controlando a capital, a queda encolhe",
+                  "H1 · O que dá para afirmar sobre a queda"]
+        self.assertEqual([x for x in rob if x in passos], passos)
+        ab = self.por_titulo["H1 · Em 0,300, o negativo vem da reta"]
+        self.assertEqual(ab["imagem"].name, "curto_reta_0300.png")
+        self.assertIn("(a) Nos dados crus, os dois lados preenchem igual (33% e 33%)", tela(ab))
+        self.assertIn("(b) A reta leva até o corte uma subida puxada por poucos municípios: capitais e Nordeste",
+                      tela(ab))
+        c = self.por_titulo["H1 · Controlando a capital, a queda encolhe"]
+        self.assertEqual(c["imagem"].name, "curto_queda_capital.png")
+        self.assertIn("(c) Controlando a capital, a queda encolhe e o IC contém zero; só com vagas imediatas, "
+                      "encolhe", tela(c))
+        self.assertIn("13 capitais abaixo de 0,300 e 6 acima", tela(c))
+        self.assertIn("auditoria 36", corrido(ab["notas"]))
+        self.assertEqual((self.todos["A36_CAP_ABX"]["valor"], self.todos["A36_CAP_ACI"]["valor"]), ("13", "6"))
+        for k in ("A3", "TX", "N1"):
+            self.assertGreater(float(self.todos[f"A36_{k}_CAP_SUP"]["valor_bruto"]), 0.0, k)  # IC com dummy contém zero
+            self.assertLess(abs(float(self.todos[f"A36_{k}_CAP_TAU"]["valor_bruto"])),
+                            abs(float(self.todos[f"A36_{k}_PIPE_TAU"]["valor_bruto"])), k)  # a queda encolhe
+        for k in ("A3", "TX"):
+            self.assertGreater(float(self.todos[f"A36_{k}_VI_SUP"]["valor_bruto"]), 0.0, k)
+            self.assertIn("auditoria 36", self.todos[f"A36_{k}_VI_TAU"]["auditoria"])
+        # as quatro capitais a menos de 0,010 abaixo do corte, e nenhuma acima, relidas da saída da auditoria 36
+        import pandas as pd
+        m = pd.read_csv(A36_MUN, dtype=str, keep_default_na=False)
+        m = m[m["capital"] == "1"].drop_duplicates("co_ibge")
+        ivs = m["ivs"].astype(float)
+        abaixo = sorted(m.loc[(ivs > 0.290) & (ivs <= 0.300), "nome_municipio_uf"].str.split(" (", regex=False).str[0])
+        self.assertEqual(abaixo, ["Brasília", "Goiânia", "Natal", "São Paulo"])
+        self.assertEqual(int(((ivs > 0.300) & (ivs < 0.310)).sum()), 0)
+        self.assertIn("São Paulo, Goiânia, Natal e Brasília", corrido(c["notas"]))
+        # a ideia errada (auditoria 36) não volta, nem na tela nem nas notas
+        texto = DOC04.read_text(encoding="utf-8")
+        deck = corrido(re.sub(r"(?m)^>\s?", "", texto[texto.index("<!-- deck:inicio -->"):]))
+        for proibida in PROIBIDAS_A36:
+            self.assertNotIn(proibida, deck, proibida)
+        self.assertNotIn("SOCR", texto[texto.index("<!-- deck:inicio -->"):])
         # correção M1 da auditoria 33: "menos células escolhidas em 1º lugar" não vai à tela como fato
         for s in self.slides:
             self.assertNotIn("escolhidas em 1º lugar", tela(s), s["titulo"])
             self.assertNotIn("candidato de 1ª opção", tela(s), s["titulo"])
-            self.assertNotIn("vagas de cursos", tela(s), s["titulo"])
-        self.assertIn("estimativa imprecisa", c["notas"])
-        for cod in re.findall(r"`(DQ_[A-Z0-9_]+)`", next(x for x in self.blocos if x.startswith("## As vagas"))):
-            self.assertIn("auditoria 33", self.todos[cod].get("auditoria", ""), cod)
-        d = self.por_titulo["O que dá para afirmar sobre a queda"]
+        d = self.por_titulo["H1 · O que dá para afirmar sobre a queda"]
         td = tela(d)
-        for k in ("TOST", "sem aumento de 10 p.p. ou mais", '"nada mudou" não se sustenta',
+        for k in ("TOST", "HI-1 inconclusivo", "HI-2 em 0,300 descarta aumento ≥ 25% da média, não descarta queda",
                   "nenhum incentivo individual muda", "teto de emendas"):
             self.assertIn(k, td, k)
+        self.assertEqual(d["imagem"].name, "curto_tost_hi.png")
+        leit = {c: self.todos[f"HI_EQ{c}_LEIT"]["valor"] for c in ("1_300", "1_400", "2_300", "2_400")}
+        self.assertEqual(leit, {"1_300": "INCONCLUSIVO", "1_400": "INCONCLUSIVO", "2_300": "SO_AUMENTO",
+                                "2_400": "INCONCLUSIVO"})
         self.assertIn("auditoria 35", d["notas"])
         self.assertIn("Nada disso mostra que a bolsa reduz o preenchimento", corrido(d["notas"]))
         self.assertFalse(any(s["selo"] for s in self.slides))
 
+    def test_h2_reestimacao_52c_so_nas_notas(self) -> None:
+        for s in self.slides:
+            if s["titulo"].startswith("H2 · plano B"):
+                self.assertIn("Reestimação em curso (52c)", corrido(s["notas"]), s["titulo"])
+            self.assertNotIn("52c", tela(s), s["titulo"])
+
     def test_h1_por_ciclo(self) -> None:
-        s = self.por_titulo["H1 por ciclo: a queda em 0,300 vem do ciclo 2"]
+        s = self.por_titulo["H1 · Por ciclo: a queda em 0,300 vem do ciclo 2"]
         self.assertEqual(s["imagem"].name, "curto_h1_por_ciclo.png")
         self.assertEqual(D.texto_puro(s["marcadores"][0]), LINHA_POR_CICLO)
-        self.assertIn("confirmada no ciclo 1; alocada nos ciclos 2 e 3", s["cautela"])
-        self.assertIn("auditoria 36", corrido(s["notas"]))
+        self.assertIn("quadro refeito depois do resultado (auditoria 36)", s["cautela"])
         man = json.loads(MANIF_FIG.read_text(encoding="utf-8"))
-        linhas = man["figuras_novas"]["curto_h1_por_ciclo.png"]["linhas"]
-        esperado = {f"HC_{m}_{c}_{k}_TAU" for m in ("A3", "TX") for c in ("1", "2", "3", "J") for k in ("300", "400")}
-        self.assertEqual({ln["codigos"][0] for ln in linhas}, esperado)
+        reg = man["figuras_novas"]["curto_h1_por_ciclo.png"]
+        esperado = {f"PC_{m}_{c}_{k}_TAU" for m in ("A3", "TX") for c in ("1", "2", "3", "J") for k in ("300", "400")}
+        self.assertEqual({ln["codigos"][0] for ln in reg["linhas"]}, esperado)
+        self.assertFalse(any("auditoria 36 em curso" in x for x in reg["textos"]))
         # os ciclos juntos repetem os números já publicados (A3 e taxa por vaga, doc 49b)
-        self.assertEqual(self.todos["HC_A3_J_300_TAU"]["valor"], self.todos["A3_300_TAU"]["valor"])
-        self.assertEqual(self.todos["HC_TX_J_300_TAU"]["valor"], self.todos["ND_TX300"]["valor"])
+        self.assertEqual(self.todos["PC_A3_J_300_TAU"]["valor"], self.todos["A3_300_TAU"]["valor"])
+        self.assertEqual(self.todos["PC_TX_J_300_TAU"]["valor"], self.todos["ND_TX300"]["valor"])
 
     def test_discussao(self) -> None:
         disc = [s for s in self.slides if s["secao"] == "Discussão"]
         self.assertEqual(D.texto_puro(disc[0]["marcadores"][0]), LINHA_DISCUSSAO)
         rot = [re.match(r"\*\*(.+?)\*\*", m).group(1) for m in disc[1]["marcadores"]]
-        self.assertEqual(rot, ["Limitado", "Escolha", "Substituição"])
+        self.assertEqual(rot, ["H1", "Por quê", "Oferta"])
+        self.assertIn("A história parte da H1", corrido(disc[1]["notas"]))
 
     def test_todo_numero_registrado_ou_parametro(self) -> None:
         sobra = {}
@@ -358,6 +423,7 @@ class TestDeckCurto(unittest.TestCase):
 
     def test_hipotese_central_em_destaque(self) -> None:
         parte = next(p for p, t, _ in self.deck if t.startswith("Hipóteses"))
+        self.assertIn("H1 · central", next(tx for _, t, tx in self.deck if t.startswith("Hipóteses")))
         with zipfile.ZipFile(CURTO) as z:
             x = z.read(parte).decode("utf-8")
         central = re.search(r'name="Rótulo central".*?</p:sp>', x, flags=re.S).group(0)
@@ -367,6 +433,15 @@ class TestDeckCurto(unittest.TestCase):
         for p in planos:
             self.assertIn(D.CINZA_TEXTO, p)
             self.assertIn(D.CINZA_FUNDO, p)
+
+    def test_plano_b_em_cinza(self) -> None:
+        with zipfile.ZipFile(CURTO) as z:
+            for parte, titulo, _ in self.deck:
+                x = z.read(parte).decode("utf-8")
+                tit = re.search(r'name="Título".*?</p:sp>', x, flags=re.S).group(0)
+                self.assertEqual(D.COR_TITULO_PLANO_B in tit, "plano B" in titulo, titulo)
+                if titulo.startswith("H2 e H3 · plano B"):
+                    self.assertEqual(len(re.findall(r'name="Item plano B"', x)), 2)
 
     def test_letra_minima(self) -> None:
         with zipfile.ZipFile(CURTO) as z:

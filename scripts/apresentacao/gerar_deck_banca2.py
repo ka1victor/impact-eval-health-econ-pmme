@@ -992,6 +992,8 @@ SECOES_CURTO = ("Hipótese", "Dados", "Análise descritiva", "Metodologia", "Ide
 MAX_PALAVRAS = 30           # palavras visíveis por slide, fora o título, a figura e a linha de fontes (doc 06, §2)
 MAX_LINHAS_ESPEC = 4        # linhas curtas por slide de especificação: equação, outcome, amostra ou comparação, cuidado
 CINZA_FUNDO, CINZA_LINHA, CINZA_TEXTO, CINZA_ROTULO = "F2F2F0", "C9C9C4", "8A8A85", "A3A39E"
+PLANO_B = "plano B"          # marca das hipóteses secundárias (H2 e H3): rótulo e título em cinza
+COR_TITULO_PLANO_B = "C4CCC6"  # título cinza-claro sobre a faixa verde do template
 
 
 def linhas_curtas(sl: dict) -> list[tuple[str, bool]]:
@@ -1171,12 +1173,16 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
         for (rotulo, corpo), h_item in zip(partes, alturas):
             h_item += extra
             w_r = w_rot if rotulo else 0.0
+            b_ = PLANO_B in rotulo  # plano B (decisão do autor de 26/10/2026): em cinza, visivelmente secundário
             if rotulo:
-                s.forma("Rótulo", X0, y, w_r, h_item, adj=10000, fill=VERDE_ESCURO, anchor="ctr",
+                s.forma("Rótulo plano B" if b_ else "Rótulo", X0, y, w_r, h_item, adj=10000,
+                        fill=CINZA_ROTULO if b_ else VERDE_ESCURO, anchor="ctr",
                         paras=[para([run(rotulo, sz, BRANCO, b=True)], "ctr")])
-            s.forma("Item", X0 + w_r + 0.15, y, W - w_r - 0.15, h_item, adj=6000, fill="F4F8F5", line=VERDE,
+            s.forma("Item plano B" if b_ else "Item", X0 + w_r + 0.15, y, W - w_r - 0.15, h_item, adj=6000,
+                    fill=CINZA_FUNDO if b_ else "F4F8F5", line=CINZA_LINHA if b_ else VERDE,
                     line_w=1.0, anchor="ctr", ins=(0.25, 0.04, 0.25, 0.04),
-                    paras=[para(runs_md(corpo, sz, TEXTO, cor_neg=VERDE_ESCURO), "l", linha=102)])
+                    paras=[para(runs_md(corpo, sz, CINZA_TEXTO if b_ else TEXTO,
+                                        cor_neg=CINZA_TEXTO if b_ else VERDE_ESCURO), "l", linha=102)])
             y += h_item + gap
     elif lay == "curto_capa":
         # capa curta e frase de destaque (pedidos do autor): uma linha grande no meio do slide e, se houver, a cautela
@@ -1300,6 +1306,9 @@ def xml_slide_curto(titulo: str, secao: str, partes: list[str]) -> str:
     """O slide do template, com a navegação do rodapé trocada pelas oito seções da estrutura obrigatória (doc 06) e
     a seção do slide em negrito."""
     x = xml_slide(titulo, "", partes)
+    if PLANO_B in titulo:  # plano B: o título fica cinza, visivelmente secundário (decisão do autor de 26/10/2026)
+        k = x.index('name="Título"')
+        x = x[:k] + x[k:].replace('<a:srgbClr val="FFFFFF"/>', f'<a:srgbClr val="{COR_TITULO_PLANO_B}"/>', 1)
     m = re.search(r'(<p:sp><p:nvSpPr><p:cNvPr id="4" name="Navegação do rodapé"/>.*?<a:p>)(.*?)(</a:p>)', x, flags=re.S)
     runs = []
     for k, sec in enumerate(SECOES_CURTO):

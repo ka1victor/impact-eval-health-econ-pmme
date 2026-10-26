@@ -58,11 +58,14 @@ canônico está em [`04_conteudo_deck_curto.md`](04_conteudo_deck_curto.md).
 
 | Seção | Conteúdo |
 |---|---|
-| Hipótese | candidata central, em destaque: H2 (a bolsa pesa pouco perto da origem do médico, "incentivo limitado"; antes H3). Em cinza, como plano B: H1 (preenchimento) e H3 (oferta; antes H4). A escolha final é do autor, depois da validação dos professores |
+| Hipótese | candidata central, em destaque: **H1** (preenchimento). Em cinza, como plano B: H2 (a bolsa pesa pouco perto da origem do médico, "incentivo limitado"; antes H3) e H3 (oferta; antes H4). Decisão do autor de 26/10/2026; a escolha final vem depois da validação dos professores |
 | Dados | variáveis principais e secundárias, com fonte e unidade (detalhe de período e cobertura nas notas) |
-| Análise descritiva | os três ciclos em números; IVS × faixa; 1ª opção em relação à origem; dados crus em volta dos cortes (scatter IVS × preenchimento com as retas); subida do preenchimento dentro das faixas (doc 57m, em auditoria) |
-| Metodologia | especificação de cada estimador em até 4 linhas: H1 do adendo 48b (só vagas imediatas), logit da H2, estudo de evento da H3 |
-| Identificação | regra *sharp*, densidade, balanço e placebos; pacote do corte (auditorias 18 e 35); tendências paralelas da H3 |
-| Resultados | H1 principal do adendo 48b (HI-1 e HI-2 por corte; "aguardando 48b" até as saídas existirem); H2 (P1h); H3 (P4) |
-| Robustez | H1 nas medidas antigas (A3, N1); antes e depois do controle; H1 por ciclo; o passo a passo da queda em 0,300 (estimativa no corte, vagas diferentes, o que dá para afirmar); H2 por ciclo e nas variantes do logit; H3 na nota de corte e Rambachan–Roth |
-| Discussão | o sinal negativo da H1 em uma linha simples; incentivo limitado, escolha × preenchimento e substituição |
+| Análise descritiva | os três ciclos em números; IVS × faixa; da H1: dados crus em volta dos cortes (scatter IVS × preenchimento com as retas) e subida do preenchimento dentro das faixas (doc 57m, auditoria 37) |
+| Metodologia | H1 do adendo 48b (só vagas imediatas) em até 4 linhas, com a equação no centro; H2 e H3, plano B, num slide só |
+| Identificação | da H1: regra *sharp*, densidade, balanço e placebos, com a ressalva das capitais em 0,300 (auditoria 36); o pacote do corte (auditorias 18 e 35); tendências paralelas da H3 (plano B) numa linha |
+| Resultados | H1 principal do adendo 48b (HI-1 e HI-2 por corte; "aguardando 48b" até as saídas existirem); depois H2 (P1h) e H3 (P4), plano B |
+| Robustez | o bloco da H1, junto: medidas antigas (A3, N1); antes e depois do controle; por ciclo; a queda em 0,300 em três ideias (dados crus iguais; a reta levada até o corte, puxada por capitais e Nordeste; controlando a capital ou só com vagas imediatas, a queda encolhe); o que dá para afirmar (TOST). Depois H2 por ciclo e H3 na nota de corte, plano B |
+| Discussão | a partir da H1: o sinal negativo em uma linha simples; por que não sobe: incentivo limitado (H2) e substituição na oferta (H3) |
+
+Dentro de cada seção, os slides da mesma hipótese ficam juntos, em sequência (H1, depois H2, depois H3); o título
+leva a hipótese ("H1 · …"), e os de plano B levam "plano B", em cinza.

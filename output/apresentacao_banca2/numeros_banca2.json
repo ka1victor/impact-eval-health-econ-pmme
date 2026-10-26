@@ -9648,8 +9648,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação original (p.p. por 0,100 de IVS)",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação original (p.p. por 0,100 de IVS)",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10_ORIG_INF": {
@@ -9671,8 +9671,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação original (p.p. por 0,100 de IVS), IC 95% inferior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação original (p.p. por 0,100 de IVS), IC 95% inferior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10_ORIG_SUP": {
@@ -9694,8 +9694,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação original (p.p. por 0,100 de IVS), IC 95% superior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação original (p.p. por 0,100 de IVS), IC 95% superior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10_UF": {
@@ -9717,8 +9717,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS)",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS)",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10_UF_INF": {
@@ -9740,8 +9740,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS), IC 95% inferior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS), IC 95% inferior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10_UF_SUP": {
@@ -9763,8 +9763,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS), IC 95% superior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS), IC 95% superior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10_TODOS": {
@@ -9786,8 +9786,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS)",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS)",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10_TODOS_INF": {
@@ -9809,8 +9809,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS), IC 95% inferior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS), IC 95% inferior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10_TODOS_SUP": {
@@ -9832,8 +9832,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS), IC 95% superior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, faixa inteira: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS), IC 95% superior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10J_ORIG": {
@@ -9855,8 +9855,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação original (p.p. por 0,100 de IVS)",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação original (p.p. por 0,100 de IVS)",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10J_ORIG_INF": {
@@ -9878,8 +9878,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação original (p.p. por 0,100 de IVS), IC 95% inferior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação original (p.p. por 0,100 de IVS), IC 95% inferior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10J_ORIG_SUP": {
@@ -9901,8 +9901,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação original (p.p. por 0,100 de IVS), IC 95% superior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação original (p.p. por 0,100 de IVS), IC 95% superior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10J_UF": {
@@ -9924,8 +9924,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS)",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS)",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10J_UF_INF": {
@@ -9947,8 +9947,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS), IC 95% inferior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS), IC 95% inferior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10J_UF_SUP": {
@@ -9970,8 +9970,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS), IC 95% superior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação comparando só células da mesma UF (p.p. por 0,100 de IVS), IC 95% superior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10J_TODOS": {
@@ -9993,8 +9993,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS)",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS)",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10J_TODOS_INF": {
@@ -10016,8 +10016,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS), IC 95% inferior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS), IC 95% inferior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10J_TODOS_SUP": {
@@ -10039,8 +10039,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS), IC 95% superior",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil, últimos 0,050 antes de 0,300: inclinação com todos os fatores juntos (p.p. por 0,100 de IVS), IC 95% superior",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "GF_10_NE_PRE": {
@@ -10056,11 +10056,11 @@
         "coluna": "media_preenchida"
       },
       "formato": "pct0",
-      "descricao": "Gradiente 62 (doc 57m; EM AUDITORIA, descritivo e pós-resultado): faixa de R$ 10 mil: células do Nordeste preenchidas na 1ª chamada (%)",
-      "auditoria": "EM AUDITORIA (protocolo 62, doc 57m): no deck, marcado '(em auditoria)'",
+      "descricao": "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto; descritivo e pós-resultado): faixa de R$ 10 mil: células do Nordeste preenchidas na 1ª chamada (%)",
+      "auditoria": "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_1_300_TAU": {
+    "PC_A3_1_300_TAU": {
       "valor": "+0,9",
       "valor_bruto": 0.9120750507573661,
       "natureza": "EMPIRICO",
@@ -10087,7 +10087,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 1, corte 0,300: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_1_300_INF": {
+    "PC_A3_1_300_INF": {
       "valor": "−23,5",
       "valor_bruto": -23.498257275767607,
       "natureza": "EMPIRICO",
@@ -10114,7 +10114,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 1, corte 0,300: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_1_300_SUP": {
+    "PC_A3_1_300_SUP": {
       "valor": "+25,3",
       "valor_bruto": 25.322407377282342,
       "natureza": "EMPIRICO",
@@ -10141,7 +10141,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 1, corte 0,300: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_1_400_TAU": {
+    "PC_A3_1_400_TAU": {
       "valor": "−12,4",
       "valor_bruto": -12.446578830294985,
       "natureza": "EMPIRICO",
@@ -10168,7 +10168,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 1, corte 0,400: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_1_400_INF": {
+    "PC_A3_1_400_INF": {
       "valor": "−37,5",
       "valor_bruto": -37.496794800052285,
       "natureza": "EMPIRICO",
@@ -10195,7 +10195,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 1, corte 0,400: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_1_400_SUP": {
+    "PC_A3_1_400_SUP": {
       "valor": "+12,6",
       "valor_bruto": 12.603637139462315,
       "natureza": "EMPIRICO",
@@ -10222,7 +10222,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 1, corte 0,400: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_2_300_TAU": {
+    "PC_A3_2_300_TAU": {
       "valor": "−10,2",
       "valor_bruto": -10.230391716222131,
       "natureza": "EMPIRICO",
@@ -10249,7 +10249,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 2, corte 0,300: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_2_300_INF": {
+    "PC_A3_2_300_INF": {
       "valor": "−23,4",
       "valor_bruto": -23.40275705814404,
       "natureza": "EMPIRICO",
@@ -10276,7 +10276,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 2, corte 0,300: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_2_300_SUP": {
+    "PC_A3_2_300_SUP": {
       "valor": "+2,9",
       "valor_bruto": 2.9419736256997786,
       "natureza": "EMPIRICO",
@@ -10303,7 +10303,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 2, corte 0,300: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_2_400_TAU": {
+    "PC_A3_2_400_TAU": {
       "valor": "+2,2",
       "valor_bruto": 2.2411289512629384,
       "natureza": "EMPIRICO",
@@ -10330,7 +10330,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 2, corte 0,400: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_2_400_INF": {
+    "PC_A3_2_400_INF": {
       "valor": "−24,7",
       "valor_bruto": -24.67952376839586,
       "natureza": "EMPIRICO",
@@ -10357,7 +10357,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 2, corte 0,400: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_2_400_SUP": {
+    "PC_A3_2_400_SUP": {
       "valor": "+29,2",
       "valor_bruto": 29.161781670921737,
       "natureza": "EMPIRICO",
@@ -10384,7 +10384,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 2, corte 0,400: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_3_300_TAU": {
+    "PC_A3_3_300_TAU": {
       "valor": "−7,1",
       "valor_bruto": -7.120642875029559,
       "natureza": "EMPIRICO",
@@ -10411,7 +10411,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 3, corte 0,300: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_3_300_INF": {
+    "PC_A3_3_300_INF": {
       "valor": "−18,6",
       "valor_bruto": -18.57737668354221,
       "natureza": "EMPIRICO",
@@ -10438,7 +10438,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 3, corte 0,300: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_3_300_SUP": {
+    "PC_A3_3_300_SUP": {
       "valor": "+4,3",
       "valor_bruto": 4.336090933483089,
       "natureza": "EMPIRICO",
@@ -10465,7 +10465,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 3, corte 0,300: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_3_400_TAU": {
+    "PC_A3_3_400_TAU": {
       "valor": "−4,3",
       "valor_bruto": -4.342693347347401,
       "natureza": "EMPIRICO",
@@ -10492,7 +10492,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 3, corte 0,400: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_3_400_INF": {
+    "PC_A3_3_400_INF": {
       "valor": "−12,8",
       "valor_bruto": -12.848535601309981,
       "natureza": "EMPIRICO",
@@ -10519,7 +10519,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 3, corte 0,400: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_3_400_SUP": {
+    "PC_A3_3_400_SUP": {
       "valor": "+4,2",
       "valor_bruto": 4.16314890661518,
       "natureza": "EMPIRICO",
@@ -10546,7 +10546,7 @@
       "descricao": "A3 (célula aberta preenchida), só o ciclo 3, corte 0,400: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_J_300_TAU": {
+    "PC_A3_J_300_TAU": {
       "valor": "−8,4",
       "valor_bruto": -8.394018208934817,
       "natureza": "EMPIRICO",
@@ -10573,7 +10573,7 @@
       "descricao": "A3 (célula aberta preenchida), ciclos 1–3 juntos, corte 0,300: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_J_300_INF": {
+    "PC_A3_J_300_INF": {
       "valor": "−18,5",
       "valor_bruto": -18.51078419788592,
       "natureza": "EMPIRICO",
@@ -10600,7 +10600,7 @@
       "descricao": "A3 (célula aberta preenchida), ciclos 1–3 juntos, corte 0,300: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_J_300_SUP": {
+    "PC_A3_J_300_SUP": {
       "valor": "+1,7",
       "valor_bruto": 1.7227477800162845,
       "natureza": "EMPIRICO",
@@ -10627,7 +10627,7 @@
       "descricao": "A3 (célula aberta preenchida), ciclos 1–3 juntos, corte 0,300: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_J_400_TAU": {
+    "PC_A3_J_400_TAU": {
       "valor": "−1,3",
       "valor_bruto": -1.3182831124327443,
       "natureza": "EMPIRICO",
@@ -10654,7 +10654,7 @@
       "descricao": "A3 (célula aberta preenchida), ciclos 1–3 juntos, corte 0,400: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_J_400_INF": {
+    "PC_A3_J_400_INF": {
       "valor": "−14,0",
       "valor_bruto": -13.971955153186988,
       "natureza": "EMPIRICO",
@@ -10681,7 +10681,7 @@
       "descricao": "A3 (célula aberta preenchida), ciclos 1–3 juntos, corte 0,400: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_A3_J_400_SUP": {
+    "PC_A3_J_400_SUP": {
       "valor": "+11,3",
       "valor_bruto": 11.3353889283215,
       "natureza": "EMPIRICO",
@@ -10708,7 +10708,7 @@
       "descricao": "A3 (célula aberta preenchida), ciclos 1–3 juntos, corte 0,400: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_1_300_TAU": {
+    "PC_TX_1_300_TAU": {
       "valor": "−12,5",
       "valor_bruto": -12.521687962692246,
       "natureza": "EMPIRICO",
@@ -10730,7 +10730,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 1, corte 0,300: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_1_300_INF": {
+    "PC_TX_1_300_INF": {
       "valor": "−34,4",
       "valor_bruto": -34.42869873613332,
       "natureza": "EMPIRICO",
@@ -10752,7 +10752,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 1, corte 0,300: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_1_300_SUP": {
+    "PC_TX_1_300_SUP": {
       "valor": "+9,4",
       "valor_bruto": 9.385322810748825,
       "natureza": "EMPIRICO",
@@ -10774,7 +10774,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 1, corte 0,300: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_1_400_TAU": {
+    "PC_TX_1_400_TAU": {
       "valor": "+3,6",
       "valor_bruto": 3.6046225541136456,
       "natureza": "EMPIRICO",
@@ -10796,7 +10796,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 1, corte 0,400: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_1_400_INF": {
+    "PC_TX_1_400_INF": {
       "valor": "−22,9",
       "valor_bruto": -22.851109425728644,
       "natureza": "EMPIRICO",
@@ -10818,7 +10818,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 1, corte 0,400: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_1_400_SUP": {
+    "PC_TX_1_400_SUP": {
       "valor": "+30,1",
       "valor_bruto": 30.060354533955934,
       "natureza": "EMPIRICO",
@@ -10840,7 +10840,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 1, corte 0,400: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_2_300_TAU": {
+    "PC_TX_2_300_TAU": {
       "valor": "−27,8",
       "valor_bruto": -27.837295045451114,
       "natureza": "EMPIRICO",
@@ -10862,7 +10862,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 2, corte 0,300: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_2_300_INF": {
+    "PC_TX_2_300_INF": {
       "valor": "−49,0",
       "valor_bruto": -49.00139868314901,
       "natureza": "EMPIRICO",
@@ -10884,7 +10884,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 2, corte 0,300: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_2_300_SUP": {
+    "PC_TX_2_300_SUP": {
       "valor": "−6,7",
       "valor_bruto": -6.673191407753218,
       "natureza": "EMPIRICO",
@@ -10906,7 +10906,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 2, corte 0,300: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_2_400_TAU": {
+    "PC_TX_2_400_TAU": {
       "valor": "+9,5",
       "valor_bruto": 9.51444155079033,
       "natureza": "EMPIRICO",
@@ -10928,7 +10928,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 2, corte 0,400: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_2_400_INF": {
+    "PC_TX_2_400_INF": {
       "valor": "−15,8",
       "valor_bruto": -15.818856074003657,
       "natureza": "EMPIRICO",
@@ -10950,7 +10950,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 2, corte 0,400: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_2_400_SUP": {
+    "PC_TX_2_400_SUP": {
       "valor": "+34,8",
       "valor_bruto": 34.847739175584316,
       "natureza": "EMPIRICO",
@@ -10972,7 +10972,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 2, corte 0,400: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_3_300_TAU": {
+    "PC_TX_3_300_TAU": {
       "valor": "−10,7",
       "valor_bruto": -10.735881065480854,
       "natureza": "EMPIRICO",
@@ -10994,7 +10994,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 3, corte 0,300: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_3_300_INF": {
+    "PC_TX_3_300_INF": {
       "valor": "−24,1",
       "valor_bruto": -24.0740198503758,
       "natureza": "EMPIRICO",
@@ -11016,7 +11016,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 3, corte 0,300: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_3_300_SUP": {
+    "PC_TX_3_300_SUP": {
       "valor": "+2,6",
       "valor_bruto": 2.6022577194140943,
       "natureza": "EMPIRICO",
@@ -11038,7 +11038,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 3, corte 0,300: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_3_400_TAU": {
+    "PC_TX_3_400_TAU": {
       "valor": "−1,9",
       "valor_bruto": -1.9160317943369116,
       "natureza": "EMPIRICO",
@@ -11060,7 +11060,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 3, corte 0,400: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_3_400_INF": {
+    "PC_TX_3_400_INF": {
       "valor": "−15,6",
       "valor_bruto": -15.628978075437328,
       "natureza": "EMPIRICO",
@@ -11082,7 +11082,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 3, corte 0,400: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_3_400_SUP": {
+    "PC_TX_3_400_SUP": {
       "valor": "+11,8",
       "valor_bruto": 11.796914486763505,
       "natureza": "EMPIRICO",
@@ -11104,7 +11104,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, só o ciclo 3, corte 0,400: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_J_300_TAU": {
+    "PC_TX_J_300_TAU": {
       "valor": "−16,0",
       "valor_bruto": -15.993086270127254,
       "natureza": "EMPIRICO",
@@ -11126,7 +11126,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, ciclos 1–3 juntos, corte 0,300: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_J_300_INF": {
+    "PC_TX_J_300_INF": {
       "valor": "−27,9",
       "valor_bruto": -27.895058313412935,
       "natureza": "EMPIRICO",
@@ -11148,7 +11148,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, ciclos 1–3 juntos, corte 0,300: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_J_300_SUP": {
+    "PC_TX_J_300_SUP": {
       "valor": "−4,1",
       "valor_bruto": -4.091114226841574,
       "natureza": "EMPIRICO",
@@ -11170,7 +11170,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, ciclos 1–3 juntos, corte 0,300: salto (p.p.), IC 95% superior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_J_400_TAU": {
+    "PC_TX_J_400_TAU": {
       "valor": "+2,5",
       "valor_bruto": 2.5465381122180553,
       "natureza": "EMPIRICO",
@@ -11192,7 +11192,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, ciclos 1–3 juntos, corte 0,400: salto (p.p.)",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_J_400_INF": {
+    "PC_TX_J_400_INF": {
       "valor": "−9,9",
       "valor_bruto": -9.923450332406759,
       "natureza": "EMPIRICO",
@@ -11214,7 +11214,7 @@
       "descricao": "taxa de preenchimento por vaga oferecida, ciclos 1–3 juntos, corte 0,400: salto (p.p.), IC 95% inferior",
       "hipotese_apresentacao": "H1"
     },
-    "HC_TX_J_400_SUP": {
+    "PC_TX_J_400_SUP": {
       "valor": "+15,0",
       "valor_bruto": 15.01652655684287,
       "natureza": "EMPIRICO",
@@ -11234,6 +11234,1475 @@
       },
       "formato": "d1s",
       "descricao": "taxa de preenchimento por vaga oferecida, ciclos 1–3 juntos, corte 0,400: salto (p.p.), IC 95% superior",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_PIPE_NABX": {
+      "valor": "145",
+      "valor_bruto": 145.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "FE curso x ciclo + tipo de vaga (versão do pipeline: c2 = 19/03)"
+        },
+        "coluna": "n_mun_abaixo"
+      },
+      "formato": "int",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): municípios abaixo de 0,300 na janela, A3 como estimado",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_PIPE_NACI": {
+      "valor": "120",
+      "valor_bruto": 120.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "FE curso x ciclo + tipo de vaga (versão do pipeline: c2 = 19/03)"
+        },
+        "coluna": "n_mun_acima"
+      },
+      "formato": "int",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): municípios acima de 0,300 na janela, A3 como estimado",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_SEMCAP_NABX": {
+      "valor": "132",
+      "valor_bruto": 132.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "sem capitais; FE do pipeline"
+        },
+        "coluna": "n_mun_abaixo"
+      },
+      "formato": "int",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): municípios abaixo de 0,300 na janela, A3 sem as capitais",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_SEMCAP_NACI": {
+      "valor": "114",
+      "valor_bruto": 114.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "sem capitais; FE do pipeline"
+        },
+        "coluna": "n_mun_acima"
+      },
+      "formato": "int",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): municípios acima de 0,300 na janela, A3 sem as capitais",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_CAP_ABX": {
+      "valor": "13",
+      "valor_bruto": 13.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "diferenca": [
+          "A36_PIPE_NABX",
+          "A36_SEMCAP_NABX"
+        ]
+      },
+      "formato": "int",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): capitais abaixo de 0,300 na janela de 0,050 (municípios do A3 menos os sem capitais)",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_CAP_ACI": {
+      "valor": "6",
+      "valor_bruto": 6.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "diferenca": [
+          "A36_PIPE_NACI",
+          "A36_SEMCAP_NACI"
+        ]
+      },
+      "formato": "int",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): capitais acima de 0,300 na janela de 0,050 (municípios do A3 menos os sem capitais)",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_A3_PIPE_TAU": {
+      "valor": "−8,4",
+      "valor_bruto": -8.39401820893757,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "FE curso x ciclo + tipo de vaga (versão do pipeline: c2 = 19/03)"
+        },
+        "coluna": "salto",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, célula aberta preenchida (A3, p.p.), como estimado: salto",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_A3_PIPE_INF": {
+      "valor": "−18,5",
+      "valor_bruto": -18.510784197887286,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "FE curso x ciclo + tipo de vaga (versão do pipeline: c2 = 19/03)"
+        },
+        "coluna": "ic_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, célula aberta preenchida (A3, p.p.), como estimado: salto, IC 95% inferior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_A3_PIPE_SUP": {
+      "valor": "+1,7",
+      "valor_bruto": 1.722747780012146,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "FE curso x ciclo + tipo de vaga (versão do pipeline: c2 = 19/03)"
+        },
+        "coluna": "ic_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, célula aberta preenchida (A3, p.p.), como estimado: salto, IC 95% superior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_A3_CAP_TAU": {
+      "valor": "−2,6",
+      "valor_bruto": -2.610740703909738,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "FE do pipeline + dummy de capital"
+        },
+        "coluna": "salto",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, célula aberta preenchida (A3, p.p.), com dummy de capital: salto",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_A3_CAP_INF": {
+      "valor": "−11,8",
+      "valor_bruto": -11.832512722575164,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "FE do pipeline + dummy de capital"
+        },
+        "coluna": "ic_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, célula aberta preenchida (A3, p.p.), com dummy de capital: salto, IC 95% inferior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_A3_CAP_SUP": {
+      "valor": "+6,6",
+      "valor_bruto": 6.611031314755689,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "FE do pipeline + dummy de capital"
+        },
+        "coluna": "ic_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, célula aberta preenchida (A3, p.p.), com dummy de capital: salto, IC 95% superior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_A3_VI_TAU": {
+      "valor": "−3,7",
+      "valor_bruto": -3.6784086516204964,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "só células com vaga imediata pré-alocação (c2 = 13/02); FE curso x ciclo"
+        },
+        "coluna": "salto",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, célula aberta preenchida (A3, p.p.), só células com vaga imediata antes da alocação: salto",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_A3_VI_INF": {
+      "valor": "−21,3",
+      "valor_bruto": -21.257591964828364,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "só células com vaga imediata pré-alocação (c2 = 13/02); FE curso x ciclo"
+        },
+        "coluna": "ic_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, célula aberta preenchida (A3, p.p.), só células com vaga imediata antes da alocação: salto, IC 95% inferior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_A3_VI_SUP": {
+      "valor": "+13,9",
+      "valor_bruto": 13.900774661587374,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "A3_pipeline (>=1 alocado; c1 = confirmado)",
+          "variante": "só células com vaga imediata pré-alocação (c2 = 13/02); FE curso x ciclo"
+        },
+        "coluna": "ic_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, célula aberta preenchida (A3, p.p.), só células com vaga imediata antes da alocação: salto, IC 95% superior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_TX_PIPE_TAU": {
+      "valor": "−16,0",
+      "valor_bruto": -15.993086270127211,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "taxa N1/VIC ponderada (Q2)",
+          "variante": "pipeline"
+        },
+        "coluna": "salto",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, taxa por vaga oferecida (p.p.), como estimado: salto",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_TX_PIPE_INF": {
+      "valor": "−27,9",
+      "valor_bruto": -27.895058313412896,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "taxa N1/VIC ponderada (Q2)",
+          "variante": "pipeline"
+        },
+        "coluna": "ic_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, taxa por vaga oferecida (p.p.), como estimado: salto, IC 95% inferior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_TX_PIPE_SUP": {
+      "valor": "−4,1",
+      "valor_bruto": -4.091114226841524,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "taxa N1/VIC ponderada (Q2)",
+          "variante": "pipeline"
+        },
+        "coluna": "ic_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, taxa por vaga oferecida (p.p.), como estimado: salto, IC 95% superior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_TX_CAP_TAU": {
+      "valor": "−10,9",
+      "valor_bruto": -10.930374508335294,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "taxa N1/VIC ponderada (Q2)",
+          "variante": "com dummy de capital"
+        },
+        "coluna": "salto",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, taxa por vaga oferecida (p.p.), com dummy de capital: salto",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_TX_CAP_INF": {
+      "valor": "−22,6",
+      "valor_bruto": -22.639713668958354,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "taxa N1/VIC ponderada (Q2)",
+          "variante": "com dummy de capital"
+        },
+        "coluna": "ic_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, taxa por vaga oferecida (p.p.), com dummy de capital: salto, IC 95% inferior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_TX_CAP_SUP": {
+      "valor": "+0,8",
+      "valor_bruto": 0.7789646522877656,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "taxa N1/VIC ponderada (Q2)",
+          "variante": "com dummy de capital"
+        },
+        "coluna": "ic_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, taxa por vaga oferecida (p.p.), com dummy de capital: salto, IC 95% superior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_TX_VI_TAU": {
+      "valor": "−13,2",
+      "valor_bruto": -13.171385451930151,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "taxa N1/VIC ponderada (Q2)",
+          "variante": "só células com vaga imediata pré-alocação (alocados nelas / vagas delas)"
+        },
+        "coluna": "salto",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, taxa por vaga oferecida (p.p.), só células com vaga imediata antes da alocação: salto",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_TX_VI_INF": {
+      "valor": "−29,0",
+      "valor_bruto": -29.028061495999147,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "taxa N1/VIC ponderada (Q2)",
+          "variante": "só células com vaga imediata pré-alocação (alocados nelas / vagas delas)"
+        },
+        "coluna": "ic_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, taxa por vaga oferecida (p.p.), só células com vaga imediata antes da alocação: salto, IC 95% inferior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_TX_VI_SUP": {
+      "valor": "+2,7",
+      "valor_bruto": 2.6852905921388475,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "taxa N1/VIC ponderada (Q2)",
+          "variante": "só células com vaga imediata pré-alocação (alocados nelas / vagas delas)"
+        },
+        "coluna": "ic_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, taxa por vaga oferecida (p.p.), só células com vaga imediata antes da alocação: salto, IC 95% superior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_N1_PIPE_TAU": {
+      "valor": "−1,45",
+      "valor_bruto": -1.4474679045008167,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "N1 com controle VIC (S-a/Q1)",
+          "variante": "pipeline"
+        },
+        "coluna": "salto"
+      },
+      "formato": "d2s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, vagas preenchidas por município, com controle (N1), como estimado: salto",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_N1_PIPE_INF": {
+      "valor": "−2,67",
+      "valor_bruto": -2.672827975560797,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "N1 com controle VIC (S-a/Q1)",
+          "variante": "pipeline"
+        },
+        "coluna": "ic_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, vagas preenchidas por município, com controle (N1), como estimado: salto, IC 95% inferior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_N1_PIPE_SUP": {
+      "valor": "−0,22",
+      "valor_bruto": -0.22210783344083662,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "N1 com controle VIC (S-a/Q1)",
+          "variante": "pipeline"
+        },
+        "coluna": "ic_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, vagas preenchidas por município, com controle (N1), como estimado: salto, IC 95% superior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_N1_CAP_TAU": {
+      "valor": "−0,92",
+      "valor_bruto": -0.9227290721146486,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "N1 com controle VIC (S-a/Q1)",
+          "variante": "com dummy de capital"
+        },
+        "coluna": "salto"
+      },
+      "formato": "d2s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, vagas preenchidas por município, com controle (N1), com dummy de capital: salto",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_N1_CAP_INF": {
+      "valor": "−1,98",
+      "valor_bruto": -1.984306218864836,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "N1 com controle VIC (S-a/Q1)",
+          "variante": "com dummy de capital"
+        },
+        "coluna": "ic_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, vagas preenchidas por município, com controle (N1), com dummy de capital: salto, IC 95% inferior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_N1_CAP_SUP": {
+      "valor": "+0,14",
+      "valor_bruto": 0.13884807463553872,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "ciclo": "1+2+3",
+          "corte": "300",
+          "outcome": "N1 com controle VIC (S-a/Q1)",
+          "variante": "com dummy de capital"
+        },
+        "coluna": "ic_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300, vagas preenchidas por município, com controle (N1), com dummy de capital: salto, IC 95% superior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_CAPMUN_TAU": {
+      "valor": "−17,8",
+      "valor_bruto": -17.828636816237363,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "unidade": "municipio",
+          "outcome": "composicao",
+          "variante": "município é capital",
+          "ciclo": "1+2+3",
+          "corte": "300"
+        },
+        "coluna": "salto",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300: salto na parte dos municípios que são capitais (p.p.)",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_CAPMUN_INF": {
+      "valor": "−34,1",
+      "valor_bruto": -34.14916190669348,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "unidade": "municipio",
+          "outcome": "composicao",
+          "variante": "município é capital",
+          "ciclo": "1+2+3",
+          "corte": "300"
+        },
+        "coluna": "ic_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300: salto na parte dos municípios que são capitais (p.p.), IC 95% inferior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "A36_CAPMUN_SUP": {
+      "valor": "−1,5",
+      "valor_bruto": -1.5081117257812526,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/auditoria_H1/a36_estimativas.csv",
+      "seletor": {
+        "csv": "output/auditoria_H1/a36_estimativas.csv",
+        "filtro": {
+          "unidade": "municipio",
+          "outcome": "composicao",
+          "variante": "município é capital",
+          "ciclo": "1+2+3",
+          "corte": "300"
+        },
+        "coluna": "ic_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): 0,300: salto na parte dos municípios que são capitais (p.p.), IC 95% superior",
+      "auditoria": "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI1_300_TAU": {
+      "valor": "−3,7",
+      "valor_bruto": -3.6784086516175902,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: salto",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI1_300_INF": {
+      "valor": "−21,3",
+      "valor_bruto": -21.257591964826023,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: IC 95% inferior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI1_300_SUP": {
+      "valor": "+13,9",
+      "valor_bruto": 13.900774661590843,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: IC 95% superior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI1_300_HOLM": {
+      "valor": "1,000",
+      "valor_bruto": 1.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: p de Holm (quatro primárias)",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI1_300_MEDIA": {
+      "valor": "56,1",
+      "valor_bruto": 0.5609756097560976,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "media_abaixo"
+      },
+      "formato": "pct1",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: média abaixo do corte",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI1_400_TAU": {
+      "valor": "−2,3",
+      "valor_bruto": -2.311964955512247,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.400|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: salto",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI1_400_INF": {
+      "valor": "−24,0",
+      "valor_bruto": -24.001141969855905,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.400|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: IC 95% inferior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI1_400_SUP": {
+      "valor": "+19,4",
+      "valor_bruto": 19.37721205883141,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.400|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: IC 95% superior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI1_400_HOLM": {
+      "valor": "1,000",
+      "valor_bruto": 1.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.400|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: p de Holm (quatro primárias)",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI1_400_MEDIA": {
+      "valor": "59,0",
+      "valor_bruto": 0.5904761904761905,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.400|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "media_abaixo"
+      },
+      "formato": "pct1",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: média abaixo do corte",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_300_TAU": {
+      "valor": "−1,13",
+      "valor_bruto": -1.1263257568590284,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-2|HI-2|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: salto",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_300_INF": {
+      "valor": "−2,15",
+      "valor_bruto": -2.1534926445662546,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-2|HI-2|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: IC 95% inferior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_300_SUP": {
+      "valor": "−0,10",
+      "valor_bruto": -0.09915886915180239,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-2|HI-2|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: IC 95% superior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_300_HOLM": {
+      "valor": "0,126",
+      "valor_bruto": 0.12648319412457296,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-2|HI-2|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: p de Holm (quatro primárias)",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_300_MEDIA": {
+      "valor": "2,77",
+      "valor_bruto": 2.773049645390071,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-2|HI-2|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "media_abaixo"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: média abaixo do corte",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_400_TAU": {
+      "valor": "−0,16",
+      "valor_bruto": -0.156707347012577,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-2|HI-2|1+2+3|0.400|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: salto",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_400_INF": {
+      "valor": "−0,99",
+      "valor_bruto": -0.9929537674925244,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-2|HI-2|1+2+3|0.400|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: IC 95% inferior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_400_SUP": {
+      "valor": "+0,68",
+      "valor_bruto": 0.6795390734673705,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-2|HI-2|1+2+3|0.400|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: IC 95% superior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_400_HOLM": {
+      "valor": "1,000",
+      "valor_bruto": 1.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-2|HI-2|1+2+3|0.400|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: p de Holm (quatro primárias)",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_400_MEDIA": {
+      "valor": "2,01",
+      "valor_bruto": 2.0076923076923077,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-2|HI-2|1+2+3|0.400|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "media_abaixo"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: média abaixo do corte",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ1_300_I90I": {
+      "valor": "−18,4",
+      "valor_bruto": -18.4313243478523,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-1|1+2+3|0.300|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "ic90_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: IC 90% inferior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ1_300_I90S": {
+      "valor": "+11,1",
+      "valor_bruto": 11.074507044617121,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-1|1+2+3|0.300|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "ic90_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: IC 90% superior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ1_300_MARG": {
+      "valor": "10",
+      "valor_bruto": 10.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-1|1+2+3|0.300|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "margem",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d0",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: margem de equivalência",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ1_300_LEIT": {
+      "valor": "INCONCLUSIVO",
+      "valor_bruto": "INCONCLUSIVO",
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-1|1+2+3|0.300|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "leitura_tost",
+        "texto_csv": true
+      },
+      "formato": "txt",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: leitura pré-registrada",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ1_400_I90I": {
+      "valor": "−20,5",
+      "valor_bruto": -20.51409609620648,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-1|1+2+3|0.400|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "ic90_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: IC 90% inferior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ1_400_I90S": {
+      "valor": "+15,9",
+      "valor_bruto": 15.890166185181986,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-1|1+2+3|0.400|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "ic90_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: IC 90% superior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ1_400_MARG": {
+      "valor": "10",
+      "valor_bruto": 10.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-1|1+2+3|0.400|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "margem",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d0",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: margem de equivalência",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ1_400_LEIT": {
+      "valor": "INCONCLUSIVO",
+      "valor_bruto": "INCONCLUSIVO",
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-1|1+2+3|0.400|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "leitura_tost",
+        "texto_csv": true
+      },
+      "formato": "txt",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: leitura pré-registrada",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ2_300_I90I": {
+      "valor": "−1,99",
+      "valor_bruto": -1.9883513828687693,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-2|1+2+3|0.300|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "ic90_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: IC 90% inferior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ2_300_I90S": {
+      "valor": "−0,26",
+      "valor_bruto": -0.2643001308492875,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-2|1+2+3|0.300|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "ic90_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: IC 90% superior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ2_300_MARG": {
+      "valor": "0,69",
+      "valor_bruto": 0.6932624113475178,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-2|1+2+3|0.300|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "margem"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: margem de equivalência",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ2_300_LEIT": {
+      "valor": "SO_AUMENTO",
+      "valor_bruto": "SO_AUMENTO",
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-2|1+2+3|0.300|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "leitura_tost",
+        "texto_csv": true
+      },
+      "formato": "txt",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: leitura pré-registrada",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ2_400_I90I": {
+      "valor": "−0,86",
+      "valor_bruto": -0.858507466097121,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-2|1+2+3|0.400|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "ic90_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: IC 90% inferior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ2_400_I90S": {
+      "valor": "+0,55",
+      "valor_bruto": 0.5450927720719672,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-2|1+2+3|0.400|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "ic90_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: IC 90% superior",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ2_400_MARG": {
+      "valor": "0,50",
+      "valor_bruto": 0.5019230769230769,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-2|1+2+3|0.400|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "margem"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: margem de equivalência",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI_EQ2_400_LEIT": {
+      "valor": "INCONCLUSIVO",
+      "valor_bruto": "INCONCLUSIVO",
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s7|HI-2|1+2+3|0.400|TOST_convencional|h=0.050|c2=13fev"
+        },
+        "coluna": "leitura_tost",
+        "texto_csv": true
+      },
+      "formato": "txt",
+      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: leitura pré-registrada",
+      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
       "hipotese_apresentacao": "H1"
     },
     "D_POP_MUN": {
