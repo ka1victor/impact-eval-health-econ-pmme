@@ -6,7 +6,7 @@
 > **Saídas:** `output/rdd_bolsa/OC_estimativas.csv`, `OC_estudo_evento.csv`, `OC_resumo.json` e `OC_figuras/`; toda linha tem `natureza_dos_dados = EMPIRICO`.<br>
 > **Testes:** `tests/test_oferta_local_corte.py`.<br>
 > **Estatuto:** `PROTOCOLO_64_POS_RESULTADO`. O lado do corte de IVS decide a bolsa e também outras regras federais (auditoria 18): o contraste é o **pacote do corte**.<br>
-> **Auditoria:** pendente.
+> **Auditoria:** [auditoria 39](../auditorias/39_auditoria_oferta_local_corte.md), aprovado com correções de texto; nenhum número mudou.
 
 Os blocos entre marcadores `<!-- OC:... -->` são gerados pelo script 43 a partir de `output/`
 (`python3 scripts/rdd_bolsa/43_oferta_local_corte.py --atualizar-doc`). Não edite esses blocos à mão. Fora
@@ -168,6 +168,12 @@ IC honesto: Armstrong–Kolesár, M da regra de bolso (fator 1), como no E7. Nen
 
 ### 5.3 Parte B: primeiro estágio (OC-B0)
 
+O que mede o D2 (sensibilidade): conta os médicos dos ciclos 1 e 2 ligados ao CNES que têm **qualquer** vínculo
+SUS em CBO-alvo em estabelecimento do município, do primeiro mês de chegada da lista nominal até 2026-08
+(decisão D6). Entra quem trabalha no município mas foi alocado em outro, e entra o vínculo de antes do início do
+próprio médico. Por isso o D2 é positivo em muito mais municípios do que os que receberam médico (D1). É a
+presença cadastrada de médicos do programa no município, não a intensidade da alocação (auditoria 39).
+
 <!-- OC:primeiro_estagio:inicio -->
 | Variável | Pop. | Corte | Salto | IC 95% | p | q BKY | F robusto | n abaixo / acima |
 |---|---|---|---|---|---|---|---|---|
@@ -182,6 +188,13 @@ D1 em pontos percentuais (fração de municípios que receberam médico); D2 em 
 <!-- OC:primeiro_estagio:fim -->
 
 ### 5.4 Parte B: razão *fuzzy* com IC de Anderson–Rubin (OC-B1 a OC-B5)
+
+Como ler "ilimitado": com primeiro estágio tão fraco, o conjunto de Anderson–Rubin não é só "toda a grade". A
+auditoria 39 resolveu a inversão de forma exata (a estatística é razão de duas quadráticas em β) e, nas dez
+linhas com D1 em V, o conjunto é a **reta inteira**: nenhum valor de β é rejeitado. A borda ±L da tabela é só o
+tamanho da grade, não um limite do IC. Em `OC_estimativas.csv`, a coluna `tau` das linhas `fuzzy_*` guarda a
+conta forma reduzida ÷ primeiro estágio, e `ar_ic_inf`/`ar_ic_sup` guardam a borda da grade (com
+`ar_aberto_* = True`). Nenhum dos dois é estimativa para relatar: não vão para o deck (protocolo 64, §4).
 
 <!-- OC:fuzzy:inicio -->
 | Id | Outcome | Variável / pop. | Corte | F robusto | Forma reduzida | Primeiro estágio | Razão | IC de Anderson–Rubin | p (β = 0) | q BKY |
@@ -223,6 +236,13 @@ Razão = forma reduzida ÷ primeiro estágio, na amostra com ΔY observado. Com 
 ### 5.5 Parte C: estudo de evento no corte (OC-C)
 
 Salto, mês a mês, de Y_t − Y_2025-06. O pré deve ficar plano. Por mês: `output/rdd_bolsa/OC_estudo_evento.csv`.
+
+A leitura usa o teste conjunto do pré (decisão D11), não os meses um a um. Na tabela mensal, alguns IC isolados
+excluem zero: no pré, B1 em 0,400 (fim de 2024 e começo de 2025); depois da referência, B2 em 0,300 (meio de
+2026) e B2 em 0,400 (virada de 2025-09 para 2025-10). São poucos entre os meses estimados das seis séries, perto do
+que se espera ao acaso com IC de 95%; não são lidos como efeito. No B1 em 0,300 o
+teste conjunto passa perto do limite de 0,05 e os pontos do pré ficam todos do mesmo lado: "plano" vale pela
+regra, com essa ressalva (auditoria 39).
 
 <!-- OC:evento:inicio -->
 | Outcome | Corte | Wald do pré (gl) | p | Municípios com todos os meses | Fora por falta de mês |
@@ -269,6 +289,10 @@ Salto, mês a mês, de Y_t − Y_2025-06. O pré deve ficar plano. Por mês: `ou
 
 ATT médio dos meses 0 a 6 depois da chegada (o estimador do doc 57k), só com os tratados a menos de 0,050 abaixo
 ou acima de cada corte. Pouca potência esperada: veja o número de tratados em cada grupo.
+
+Só a diferença entre lados é lida (protocolo 64, §4). O ATT de cada lado é o estimador do doc 57k numa
+subamostra e herda o problema dele: o pré já subia e a ruptura M̄ fica abaixo de 1. Um ATT de um lado com IC fora
+do zero não é efeito da chegada (auditoria 39).
 
 <!-- OC:chegada_lados:inicio -->
 | Outcome | Corte | Tratados abaixo / acima | ATT abaixo | ATT acima | Diferença (acima − abaixo) | p | q BKY |
@@ -323,6 +347,12 @@ Como ler: Cada ponto é a fração de municípios de V que receberam médico do 
 
 Nenhum desvio mudou o protocolo. As decisões de implementação da seção 9 foram fixadas antes de abrir as
 estimativas.
+
+**Esclarecimento da auditoria 39 (26/10/2026), sobre a decisão D5.** A D5 diz que, em U, "os dois tratados sem
+célula nos ciclos 1 ou 2 têm D1 = 1". Os tratados de U fora de V são mais que dois: além dos dois com célula só no
+ciclo 3, há municípios da lista nominal sem célula em nenhum ciclo do quadro (`outcomes_V_municipio`). O código já
+dá D1 = 1 a **todos** os tratados de U (`OC_resumo.json`, `primeiro_estagio`), que é a definição do protocolo
+(§2). Só o texto da D5 estava incompleto; nenhum número muda.
 
 <!-- OC:desvios:inicio -->
 Nenhum desvio registrado na execução.

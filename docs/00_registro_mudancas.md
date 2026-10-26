@@ -8,6 +8,24 @@
 
 ---
 
+## 26/10/2026 — Auditoria 39: oferta local comparada no corte (protocolo 64), aprovado com correções
+
+Motivo: auditoria independente do script 43, das saídas `OC_*`, do doc 57q e dos testes. Recálculo próprio da forma
+reduzida (V e U, com sensibilidades), do primeiro estágio, do p de Anderson–Rubin em β = 0, do Wald do pré, do OC-E,
+do Holm e do BKY, todos iguais ao gravado (diferença máxima 7e−12). Conjunto de Anderson–Rubin resolvido de forma
+exata: reta inteira nas dez linhas com D1 em V. O script 43 rodou de novo com saídas byte a byte iguais. Nenhum
+número mudou. Correções de texto no 57q, fora dos blocos gerados: o que o D2 mede, o "ilimitado" do AR e os números
+das linhas *fuzzy* do CSV, meses isolados do estudo de evento, os ATT de cada lado do OC-D e o esclarecimento da D5.
+Teste novo em `tests/test_oferta_local_corte.py`.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/39_auditoria_oferta_local_corte.md`](auditorias/39_auditoria_oferta_local_corte.md) | auditoria do protocolo 64: ordem dos commits, fidelidade ao protocolo e às decisões D1–D16, recálculo independente, Anderson–Rubin exato, integridade, determinismo, achados (6 baixos, 3 observações), veredito |
+
+---
+
 ## 26/10/2026 — Protocolo 64 executado: oferta local de especialistas comparada no corte
 
 Motivo: execução do protocolo 64. As decisões de implementação (seção 9 do 57q) foram gravadas antes de abrir as

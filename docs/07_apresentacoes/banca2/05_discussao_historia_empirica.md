@@ -357,8 +357,14 @@ antes de qualquer conta:
 - o corte mede o **pacote** (bolsa e outras regras); a DiRD remove só a parte
   constante no tempo das outras regras.
 
-**Estado:** em execução (script 43, saídas `OC_*`, doc 57q); depois, auditoria
-independente.
+**Estado (26/10/2026):** executado e auditado (doc 57q; auditoria 39, aprovado
+com correções de texto, nenhum número mudou). Resultado: o corte não muda a
+chance de o município receber médico do programa (F ≈ 0,2 e 0,0; instrumento
+fraco, IC de Anderson–Rubin ilimitado, sem razão *fuzzy* utilizável); a mudança
+na oferta local de especialistas não se distingue entre os lados (Holm = 1 nas
+quatro primárias); os outros especialistas não saem; placebo de generalistas
+zero; pré plano. Números no doc 57q. É ausência de efeito detectado, com IC
+largos, sobre o pacote do corte; não é prova de efeito zero.
 
 ### 2.15 Decisão de 26/10/2026: o deck tem no máximo 14 slides
 

@@ -302,6 +302,15 @@ class TestSaidasReais(unittest.TestCase):
                 self.assertAlmostEqual(r["tau_forma_reduzida"], a["tau"], places=10)
                 self.assertAlmostEqual(r["p_valor"], a["p_valor"], places=10)
 
+    def test_ar_ilimitado_quando_f_abaixo_do_critico(self):
+        """Auditoria 39: com F robusto (t² do primeiro estágio na mesma amostra) abaixo de z², o coeficiente de β²
+        da desigualdade de Anderson–Rubin é negativo e o conjunto é ilimitado dos dois lados."""
+        z2 = L.Z_975 ** 2
+        f = self.est[self.est["especificacao"].str.startswith("fuzzy")]
+        for _, r in f[f["f_robusto"] < z2].iterrows():
+            self.assertEqual(str(r["ar_aberto_inf"]), "True", (r["outcome_id"], r["populacao"], r["corte"]))
+            self.assertEqual(str(r["ar_aberto_sup"]), "True", (r["outcome_id"], r["populacao"], r["corte"]))
+
     def test_primeiro_estagio_f_robusto(self):
         for _, r in self.est[self.est["especificacao"] == "primeiro_estagio"].iterrows():
             self.assertAlmostEqual(r["f_robusto"], (r["tau"] / r["ep"]) ** 2, places=8)
@@ -386,7 +395,8 @@ class TestDoc57q(unittest.TestCase):
 
     def test_cabecalho_decisoes_e_limites(self):
         texto = DOC.read_text(encoding="utf-8")
-        for s in ("PROTOCOLO_64_POS_RESULTADO", "**Auditoria:** pendente", "64_protocolo_oferta_local_no_corte.md",
+        for s in ("PROTOCOLO_64_POS_RESULTADO", "**Auditoria:** [auditoria 39]", "conjunto é a **reta inteira**",
+                  "Esclarecimento da auditoria 39","64_protocolo_oferta_local_no_corte.md",
                   "43_oferta_local_corte.py", "test_oferta_local_corte.py", "## 9. Decisões de implementação",
                   "2026-10-26, antes de olhar qualquer estimativa", "## 7. Limites", "Pacote do corte", "Exclusão",
                   "Seleção de V", "Pouca potência da parte D"):
