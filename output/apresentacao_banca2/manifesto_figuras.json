@@ -317,6 +317,24 @@
       "cobertura": "corte 0,300, ciclos 1–3",
       "unidade": "vagas por município; p.p.",
       "chaves": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/GF_estimativas.csv",
+      "sha256": "aaa44638ea8ece30ad2489563695eefca4db1c325e731cae8c2a696a521ecdfe",
+      "papel": "subida do preenchimento dentro das faixas (protocolo 62; doc 57m; EM AUDITORIA)",
+      "data_referencia": "2026-10-26",
+      "cobertura": "células abertas por faixa da bolsa, ciclos 1–3",
+      "unidade": "p.p. por 0,100 de IVS; fração",
+      "chaves": "id_linha"
+    },
+    {
+      "caminho": "output/rdd_bolsa/NA_estimativas.csv",
+      "sha256": "9f737d4c2a2850ddff6647dfb67ba7d7276758bf84b773ee0701a8d890000374",
+      "papel": "família A (protocolo 48): A3 por ciclo e por corte",
+      "data_referencia": "2026-10-19",
+      "cobertura": "células abertas, ciclos 1, 2, 3 e juntos, cortes 0,300 e 0,400",
+      "unidade": "fração (x100 = p.p.)",
+      "chaves": "outcome_id + populacao + ciclo + corte + especificacao + variante"
     }
   ],
   "regra_bolsa": {
@@ -1478,6 +1496,439 @@
       ],
       "eixos": []
     },
+    "curto_dispersao_a3.png": {
+      "textos": [
+        "Corte 0,300: R$ 10 mil → R$ 15 mil",
+        "médias da janela (tracejadas): 33% abaixo · 33% acima",
+        "célula preenchida (%)",
+        "Corte 0,400: R$ 15 mil → R$ 20 mil",
+        "médias da janela (tracejadas): 37% abaixo · 39% acima",
+        "Como ler: ponto colorido = média de uma faixa de IVS de 0,010 (tamanho = número de células); cinza = um município.",
+        "Linha cheia = reta local de cada lado (janela de 0,050); seta = o salto no corte; tracejado = média da janela.",
+        "Azul: bolsa menor; laranja: bolsa maior. Dados crus, ciclos 1–3, sem controles nem efeitos fixos.",
+        "Fontes: outcomes_V_celula.parquet (ciclos 1–3); médias da janela: DQ_estimativas.csv (funil bruto, doc 57l). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "0,25",
+        "0,30",
+        "0,35",
+        "0",
+        "25",
+        "50",
+        "75",
+        "100",
+        "0,35",
+        "0,40",
+        "0,45",
+        "0",
+        "25",
+        "50",
+        "75",
+        "100"
+      ]
+    },
+    "curto_reta_0300.png": {
+      "textos": [
+        "Corte 0,300: célula aberta preenchida, 1ª chamada (%)",
+        "Ponta de baixo: alta",
+        "a reta azul leva até o corte a subida",
+        "forte dos últimos 0,050",
+        "Ponta de cima: baixa",
+        "a reta laranja começa onde os",
+        "pontos estão baixos",
+        "Seta: o salto sai negativo",
+        "mesmo com as médias da janela",
+        "iguais (tracejadas): 33% e 33%",
+        "Como ler: ponto = média de uma faixa de IVS de 0,010 (tamanho = células); linha cheia = reta local de cada lado (janela de 0,050). Dados crus, ciclos 1–3.",
+        "Fontes: outcomes_V_celula.parquet; DQ_estimativas.csv (funil bruto, doc 57l). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "0,25",
+        "0,30",
+        "0,35",
+        "15",
+        "20",
+        "25",
+        "30",
+        "35",
+        "40",
+        "45",
+        "50",
+        "55"
+      ]
+    },
+    "curto_h1_por_ciclo.png": {
+      "linhas": [
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "0,300 · Célula aberta preenchida (A3, p.p.): Ciclo 1",
+          "texto": "+0,9 [−23,5; +25,3]",
+          "codigos": [
+            "HC_A3_1_300_TAU",
+            "HC_A3_1_300_INF",
+            "HC_A3_1_300_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "0,300 · Célula aberta preenchida (A3, p.p.): Ciclo 2",
+          "texto": "−10,2 [−23,4; +2,9]",
+          "codigos": [
+            "HC_A3_2_300_TAU",
+            "HC_A3_2_300_INF",
+            "HC_A3_2_300_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "0,300 · Célula aberta preenchida (A3, p.p.): Ciclo 3",
+          "texto": "−7,1 [−18,6; +4,3]",
+          "codigos": [
+            "HC_A3_3_300_TAU",
+            "HC_A3_3_300_INF",
+            "HC_A3_3_300_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "0,300 · Célula aberta preenchida (A3, p.p.): Juntos",
+          "texto": "−8,4 [−18,5; +1,7]",
+          "codigos": [
+            "HC_A3_J_300_TAU",
+            "HC_A3_J_300_INF",
+            "HC_A3_J_300_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Taxa por vaga oferecida (p.p.)",
+          "linha": "0,300 · Taxa por vaga oferecida (p.p.): Ciclo 1",
+          "texto": "−12,5 [−34,4; +9,4]",
+          "codigos": [
+            "HC_TX_1_300_TAU",
+            "HC_TX_1_300_INF",
+            "HC_TX_1_300_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Taxa por vaga oferecida (p.p.)",
+          "linha": "0,300 · Taxa por vaga oferecida (p.p.): Ciclo 2",
+          "texto": "−27,8 [−49,0; −6,7]",
+          "codigos": [
+            "HC_TX_2_300_TAU",
+            "HC_TX_2_300_INF",
+            "HC_TX_2_300_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Taxa por vaga oferecida (p.p.)",
+          "linha": "0,300 · Taxa por vaga oferecida (p.p.): Ciclo 3",
+          "texto": "−10,7 [−24,1; +2,6]",
+          "codigos": [
+            "HC_TX_3_300_TAU",
+            "HC_TX_3_300_INF",
+            "HC_TX_3_300_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Taxa por vaga oferecida (p.p.)",
+          "linha": "0,300 · Taxa por vaga oferecida (p.p.): Juntos",
+          "texto": "−16,0 [−27,9; −4,1]",
+          "codigos": [
+            "HC_TX_J_300_TAU",
+            "HC_TX_J_300_INF",
+            "HC_TX_J_300_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "0,400 · Célula aberta preenchida (A3, p.p.): Ciclo 1",
+          "texto": "−12,4 [−37,5; +12,6]",
+          "codigos": [
+            "HC_A3_1_400_TAU",
+            "HC_A3_1_400_INF",
+            "HC_A3_1_400_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "0,400 · Célula aberta preenchida (A3, p.p.): Ciclo 2",
+          "texto": "+2,2 [−24,7; +29,2]",
+          "codigos": [
+            "HC_A3_2_400_TAU",
+            "HC_A3_2_400_INF",
+            "HC_A3_2_400_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "0,400 · Célula aberta preenchida (A3, p.p.): Ciclo 3",
+          "texto": "−4,3 [−12,8; +4,2]",
+          "codigos": [
+            "HC_A3_3_400_TAU",
+            "HC_A3_3_400_INF",
+            "HC_A3_3_400_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Célula aberta preenchida (A3, p.p.)",
+          "linha": "0,400 · Célula aberta preenchida (A3, p.p.): Juntos",
+          "texto": "−1,3 [−14,0; +11,3]",
+          "codigos": [
+            "HC_A3_J_400_TAU",
+            "HC_A3_J_400_INF",
+            "HC_A3_J_400_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Taxa por vaga oferecida (p.p.)",
+          "linha": "0,400 · Taxa por vaga oferecida (p.p.): Ciclo 1",
+          "texto": "+3,6 [−22,9; +30,1]",
+          "codigos": [
+            "HC_TX_1_400_TAU",
+            "HC_TX_1_400_INF",
+            "HC_TX_1_400_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Taxa por vaga oferecida (p.p.)",
+          "linha": "0,400 · Taxa por vaga oferecida (p.p.): Ciclo 2",
+          "texto": "+9,5 [−15,8; +34,8]",
+          "codigos": [
+            "HC_TX_2_400_TAU",
+            "HC_TX_2_400_INF",
+            "HC_TX_2_400_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Taxa por vaga oferecida (p.p.)",
+          "linha": "0,400 · Taxa por vaga oferecida (p.p.): Ciclo 3",
+          "texto": "−1,9 [−15,6; +11,8]",
+          "codigos": [
+            "HC_TX_3_400_TAU",
+            "HC_TX_3_400_INF",
+            "HC_TX_3_400_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Taxa por vaga oferecida (p.p.)",
+          "linha": "0,400 · Taxa por vaga oferecida (p.p.): Juntos",
+          "texto": "+2,5 [−9,9; +15,0]",
+          "codigos": [
+            "HC_TX_J_400_TAU",
+            "HC_TX_J_400_INF",
+            "HC_TX_J_400_SUP"
+          ],
+          "exclui_nulo": false
+        }
+      ],
+      "textos": [
+        "Corte 0,300",
+        "Célula aberta preenchida (A3, p.p.)",
+        "Ciclo 1",
+        "+0,9 [−23,5; +25,3]",
+        "Ciclo 2",
+        "−10,2 [−23,4; +2,9]",
+        "Ciclo 3",
+        "−7,1 [−18,6; +4,3]",
+        "Juntos",
+        "−8,4 [−18,5; +1,7]",
+        "Taxa por vaga oferecida (p.p.)",
+        "Ciclo 1",
+        "−12,5 [−34,4; +9,4]",
+        "Ciclo 2",
+        "−27,8 [−49,0; −6,7]",
+        "Ciclo 3",
+        "−10,7 [−24,1; +2,6]",
+        "Juntos",
+        "−16,0 [−27,9; −4,1]",
+        "Corte 0,400",
+        "Célula aberta preenchida (A3, p.p.)",
+        "Ciclo 1",
+        "−12,4 [−37,5; +12,6]",
+        "Ciclo 2",
+        "+2,2 [−24,7; +29,2]",
+        "Ciclo 3",
+        "−4,3 [−12,8; +4,2]",
+        "Juntos",
+        "−1,3 [−14,0; +11,3]",
+        "Taxa por vaga oferecida (p.p.)",
+        "Ciclo 1",
+        "+3,6 [−22,9; +30,1]",
+        "Ciclo 2",
+        "+9,5 [−15,8; +34,8]",
+        "Ciclo 3",
+        "−1,9 [−15,6; +11,8]",
+        "Juntos",
+        "+2,5 [−9,9; +15,0]",
+        "Como ler",
+        "ponto = salto no corte (bolsa maior menos menor); barra = IC 95%, verde se exclui zero; mesma escala nos dois cortes.",
+        "'Preenchida' muda entre ciclos: confirmação ou homologação no ciclo 1; alocado nos ciclos 2 e 3 (auditoria 36 em curso).",
+        "Fontes: NA_estimativas.csv (A3); ND_estimativas.csv (taxa por vaga, adendo AD2; doc 49b). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "−40",
+        "−20",
+        "0",
+        "+20",
+        "−40",
+        "−20",
+        "0",
+        "+20",
+        "−40",
+        "−20",
+        "0",
+        "+20",
+        "−40",
+        "−20",
+        "0",
+        "+20"
+      ]
+    },
+    "curto_h3_horas.png": {
+      "linhas": [
+        {
+          "painel": "Horas semanais cadastradas do médico no CNES (P4)",
+          "linha": "Horas totais",
+          "texto": "+6,6 [+5,4; +7,8]",
+          "codigos": [
+            "P4_HT_ATT",
+            "P4_HT_INF",
+            "P4_HT_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Horas semanais cadastradas do médico no CNES (P4)",
+          "linha": "No município do posto",
+          "texto": "+8,7 [+7,9; +9,5]",
+          "codigos": [
+            "P4_HM_ATT",
+            "P4_HM_INF",
+            "P4_HM_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Horas semanais cadastradas do médico no CNES (P4)",
+          "linha": "Fora do município do posto",
+          "texto": "−2,1 [−3,2; −1,0]",
+          "codigos": [
+            "P4_HF_ATT",
+            "P4_HF_INF",
+            "P4_HF_SUP"
+          ],
+          "exclui_nulo": true
+        }
+      ],
+      "textos": [
+        "Horas semanais cadastradas do médico no CNES (P4)",
+        "Horas totais",
+        "+6,6 [+5,4; +7,8]",
+        "pré: p 0,310",
+        "No município do posto",
+        "+8,7 [+7,9; +9,5]",
+        "pré falha: p 0,001",
+        "Fora do município do posto",
+        "−2,1 [−3,2; −1,0]",
+        "pré: p 0,927",
+        "diferença média depois da entrada (horas por semana)",
+        "Como ler",
+        "•  Quem já entrou × quem ainda não entrou.",
+        "•  Pré falha: os grupos já se afastavam antes.",
+        "•  Verde: o IC 95% exclui zero.",
+        "•  Horas cadastradas, não trabalhadas.",
+        "Fontes: S57_resumo.json (P4; doc 57d). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "−2",
+        "0",
+        "+2",
+        "+4",
+        "+6",
+        "+8",
+        "+10"
+      ]
+    },
+    "curto_h3_nota_corte.png": {
+      "linhas": [
+        {
+          "painel": "Aprovados × reprovados por pouco na nota de corte (P4-CA)",
+          "linha": "Horas totais",
+          "texto": "+7,91 [−0,63; +16,45]",
+          "codigos": [
+            "CA_HT_EST",
+            "CA_HT_INF",
+            "CA_HT_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Aprovados × reprovados por pouco na nota de corte (P4-CA)",
+          "linha": "No município da 1ª opção",
+          "texto": "+10,92 [+4,15; +17,68]",
+          "codigos": [
+            "CA_HM_EST",
+            "CA_HM_INF",
+            "CA_HM_SUP"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Aprovados × reprovados por pouco na nota de corte (P4-CA)",
+          "linha": "Fora do município da 1ª opção",
+          "texto": "−3,01 [−10,14; +4,12]",
+          "codigos": [
+            "CA_HF_EST",
+            "CA_HF_INF",
+            "CA_HF_SUP"
+          ],
+          "exclui_nulo": false
+        }
+      ],
+      "textos": [
+        "Aprovados × reprovados por pouco na nota de corte (P4-CA)",
+        "Horas totais",
+        "+7,91 [−0,63; +16,45]",
+        "p de Holm 0,162",
+        "No município da 1ª opção",
+        "+10,92 [+4,15; +17,68]",
+        "quase mecânico",
+        "Fora do município da 1ª opção",
+        "−3,01 [−10,14; +4,12]",
+        "p de Holm 0,527",
+        "diferença média depois da entrada (horas por semana)",
+        "Como ler",
+        "•  Compara quem passou com quem ficou logo",
+        "    abaixo.",
+        "•  Barra que cruza o zero: sem distinção.",
+        "•  Verde: o IC 95% exclui zero.",
+        "•  Horas cadastradas, não trabalhadas.",
+        "Fontes: CA_estimativas.csv (P4-CA; doc 57h). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "−10",
+        "−5",
+        "0",
+        "+5",
+        "+10",
+        "+15"
+      ]
+    },
     "tabela_descritiva_ciclos.png": {
       "textos": [
         "Os três ciclos em números (descritivo)",
@@ -1725,7 +2176,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/curto_tost.png",
-      "sha256": "d9a451fd6ab7a1a6426d6435c0d14ffcfaefe1d2ef007976e6ec52be681399af",
+      "sha256": "780c4d32bce710d86d42a09bc0d66034c152e48563571dd79b070b15831e4d7c",
       "natureza": "EMPIRICO",
       "descricao": "deck curto: TOST por corte (IC 90% contra a margem do protocolo 60)",
       "fontes": [
@@ -1791,6 +2242,77 @@
       ]
     },
     {
+      "arquivo": "output/apresentacao_banca2/curto_dispersao_a3.png",
+      "sha256": "35f329c601a1add8729c019ba893d151ec452f48af12dd72d9181d8fa97d7846",
+      "natureza": "EMPIRICO",
+      "descricao": "deck curto, análise descritiva: IVS × célula aberta preenchida nos dois cortes (médias por faixa de 0,010, municípios em cinza, retas locais)",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json",
+        "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+        "output/rdd_bolsa/DQ_estimativas.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/curto_reta_0300.png",
+      "sha256": "af4fc561bf9eba7f99f92a241cf6d7075b96450d6cdb08480327ef6602980245",
+      "natureza": "EMPIRICO",
+      "descricao": "deck curto, robustez: em 0,300 o salto sai negativo pela reta levada até o corte",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json",
+        "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+        "output/rdd_bolsa/DQ_estimativas.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/curto_h1_por_ciclo.png",
+      "sha256": "37cb73f7eec0656ff592a9165b23458a7d5c677d25cda5528b18da89d1820566",
+      "natureza": "EMPIRICO",
+      "descricao": "deck curto, robustez: H1 por ciclo e por corte (A3 e taxa por vaga oferecida)",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json",
+        "output/rdd_bolsa/NA_estimativas.csv",
+        "output/rdd_bolsa/ND_estimativas.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/curto_h3_horas.png",
+      "sha256": "5caa80e1ec5068096a3d73132694f9fa4a4e3e229671e000c928035a7dfbd486",
+      "natureza": "EMPIRICO",
+      "descricao": "deck curto, resultados: H3 (antes H4), horas do médico, só o P4",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/curto_h3_nota_corte.png",
+      "sha256": "0e728daea147456bc94ce19801e17dd648ad88f494b32f8c9aa3b8057a6ba3ce",
+      "natureza": "EMPIRICO",
+      "descricao": "deck curto, robustez: H3 (antes H4) na nota de corte (P4-CA)",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json"
+      ]
+    },
+    {
       "arquivo": "output/apresentacao_banca2/tabela_descritiva_ciclos.png",
       "sha256": "fc6a58a257c6935f5984a081844ae3c735393f9669284d91b4c17ed26e2b2a78",
       "natureza": "EMPIRICO",
@@ -1811,6 +2333,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "0a1d0381146d1302e74f3622863a17d4b2a3e005bb2f4b9be42d4a6feae43cab"
+    "sha256": "8e2f5b5cb8b11f75ce22a9a315252f266a50daf7cbbea9420f578c8b1204d714"
   }
 }

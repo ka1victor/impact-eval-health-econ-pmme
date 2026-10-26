@@ -10,24 +10,72 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md",
       "papel": "texto dos slides e notas",
-      "sha256": "bf906260dda8af9b81dbc325e1a07d6074b642676ecbd05d6a4e3de41d282a37"
+      "sha256": "17cecf29750d3f378429c484e963efbe796f46c16049816ef460258c677eb7da"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
       "papel": "registro dos números citados (conferido pelo teste)",
-      "sha256": "0a1d0381146d1302e74f3622863a17d4b2a3e005bb2f4b9be42d4a6feae43cab"
+      "sha256": "8e2f5b5cb8b11f75ce22a9a315252f266a50daf7cbbea9420f578c8b1204d714"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/curto_dispersao_a3.png",
+      "no_pacote": "ppt/media/curto_03_curto_dispersao_a3.png",
+      "papel": "figura",
+      "sha256": "35f329c601a1add8729c019ba893d151ec452f48af12dd72d9181d8fa97d7846"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/curto_h1_por_ciclo.png",
+      "no_pacote": "ppt/media/curto_10_curto_h1_por_ciclo.png",
+      "papel": "figura",
+      "sha256": "37cb73f7eec0656ff592a9165b23458a7d5c677d25cda5528b18da89d1820566"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/curto_h3_horas.png",
+      "no_pacote": "ppt/media/curto_07_curto_h3_horas.png",
+      "papel": "figura",
+      "sha256": "5caa80e1ec5068096a3d73132694f9fa4a4e3e229671e000c928035a7dfbd486"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/curto_h3_nota_corte.png",
+      "no_pacote": "ppt/media/curto_15_curto_h3_nota_corte.png",
+      "papel": "figura",
+      "sha256": "0e728daea147456bc94ce19801e17dd648ad88f494b32f8c9aa3b8057a6ba3ce"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/curto_reta_0300.png",
+      "no_pacote": "ppt/media/curto_11_curto_reta_0300.png",
+      "papel": "figura",
+      "sha256": "af4fc561bf9eba7f99f92a241cf6d7075b96450d6cdb08480327ef6602980245"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/curto_tost.png",
+      "no_pacote": "ppt/media/curto_13_curto_tost.png",
+      "papel": "figura",
+      "sha256": "780c4d32bce710d86d42a09bc0d66034c152e48563571dd79b070b15831e4d7c"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/exp_escolha_origem.png",
+      "no_pacote": "ppt/media/curto_02_exp_escolha_origem.png",
+      "papel": "figura",
+      "sha256": "ced98d91e1960c882cfb636bf5e75a80de801b14d626ab4b6a44f4dcf6af9d6c"
     },
     {
       "caminho": "output/apresentacao_banca2/h1_controle.png",
-      "no_pacote": "ppt/media/curto_02_h1_controle.png",
+      "no_pacote": "ppt/media/curto_09_h1_controle.png",
       "papel": "figura",
       "sha256": "37078fefd9c97ac07f0d019c737d6abe62a19620c191960a6284043850dd02a8"
     },
     {
-      "caminho": "output/apresentacao_banca2/h4_horas_medico.png",
-      "no_pacote": "ppt/media/curto_05_h4_horas_medico.png",
+      "caminho": "output/apresentacao_banca2/h1_preenchimento.png",
+      "no_pacote": "ppt/media/curto_08_h1_preenchimento.png",
       "papel": "figura",
-      "sha256": "9be92c374e3284fe515b6a0ad18fa770e03961edf520e897845b8ce6143f2556"
+      "sha256": "0471ba799c98cfb6a736ac82f0b0fcea7da3fe19a08ba41db18ddb23fed8dee6"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/h2_escolha.png",
+      "no_pacote": "ppt/media/curto_14_h2_escolha.png",
+      "papel": "figura",
+      "sha256": "bc4af04fe9ae24aa4b8af976c1917c4e181154754102402344932bde421e2cdf"
     },
     {
       "caminho": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
@@ -37,178 +85,380 @@
     },
     {
       "caminho": "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png",
-      "no_pacote": "ppt/media/curto_03_DQ_quanto_da_queda.png",
+      "no_pacote": "ppt/media/curto_12_DQ_quanto_da_queda.png",
       "papel": "figura",
       "sha256": "806b888ca81297e85f003f9dab0d3d65628035bd986c07f680a5f4a5970b49a0"
     },
     {
+      "caminho": "output/rdd_bolsa/GF_figuras/GF_inclinacao_fatores_janela.png",
+      "no_pacote": "ppt/media/curto_05_GF_inclinacao_fatores_janela.png",
+      "papel": "figura",
+      "sha256": "65c2c787142cf18e4833b03c49df9fa4887cb3b7d08686e9bc55d0ee3db931d2"
+    },
+    {
+      "caminho": "output/rdd_bolsa/GF_figuras/GF_medias_por_ivs.png",
+      "no_pacote": "ppt/media/curto_04_GF_medias_por_ivs.png",
+      "papel": "figura",
+      "sha256": "7e12cac3890c20fab08db79bb6265f23a0ac7ec84cc130bfd91d30ef018e9073"
+    },
+    {
       "caminho": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
-      "no_pacote": "ppt/media/curto_04_P1h_magnitudes.png",
+      "no_pacote": "ppt/media/curto_06_P1h_magnitudes.png",
       "papel": "figura",
       "sha256": "61bcc1b8f3c1d7f1ee831c136f24804619ead0e7ad95bab9174484f3ba07ce12"
     }
   ],
   "natureza_dos_dados": "EMPIRICO",
   "nota_pdf": "o PDF é renderizado pelo LibreOffice e não é byte a byte determinístico; o .pptx é",
+  "numeracao_das_hipoteses": "a partir de 26/10/2026: H1 preenchimento; H2 bolsa × origem (antes H3); H3 oferta (antes H4)",
   "ordem": [
     {
       "figura": null,
       "layout": "curto_capa",
       "linhas": [
-        "R$ 5 mil a mais nos cortes do IVS: preenchimento, escolha e oferta de especialistas"
+        "R$ 5 mil a mais nos cortes do IVS: escolha, preenchimento e oferta de especialistas"
       ],
+      "palavras": 15,
       "posicao": 1,
       "secao": "Hipótese",
       "titulo": "O que a bolsa de R$ 5 mil faz"
     },
     {
       "figura": null,
-      "layout": "curto_texto",
+      "layout": "curto_hipotese",
       "linhas": [
-        "Regra o IVS 2010 do município define a faixa: até 0,300, R$ 10 mil; até 0,400, R$ 15 mil; acima, R$ 20 mil",
-        "RDD perto de cada corte os municípios são parecidos; de um lado para o outro, só a bolsa (e as regras do mesmo corte) muda",
-        "Ciclos usamos os três: 368, 454 e 748 municípios com vaga; comparamos sempre dentro do ciclo",
-        "Pacote do corte: em 0,300 e 0,400 mudam também outras regras federais."
+        "H2 · central a bolsa pesa pouco perto da origem",
+        "H1 · plano B bolsa maior, mais vagas preenchidas",
+        "H3 · plano B a chegada soma oferta ou remaneja?",
+        "H2 é pós-resultado."
       ],
+      "palavras": 29,
       "posicao": 2,
-      "secao": "Metodologia",
-      "titulo": "A bolsa sai do IVS de 2010: dá para comparar no corte"
+      "secao": "Hipótese",
+      "titulo": "Hipóteses: a H2 é a candidata central"
+    },
+    {
+      "figura": null,
+      "layout": "curto_tabela",
+      "linhas": [],
+      "palavras": 29,
+      "posicao": 3,
+      "secao": "Dados",
+      "titulo": "Dados: as variáveis principais e de onde vêm"
+    },
+    {
+      "figura": null,
+      "layout": "curto_tabela",
+      "linhas": [],
+      "palavras": 28,
+      "posicao": 4,
+      "secao": "Dados",
+      "titulo": "Dados: as variáveis secundárias"
+    },
+    {
+      "figura": null,
+      "layout": "curto_tabela",
+      "linhas": [],
+      "palavras": 29,
+      "posicao": 5,
+      "secao": "Análise descritiva",
+      "titulo": "Os três ciclos em números"
     },
     {
       "figura": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
       "layout": "curto_figura",
       "linhas": [
-        "Ciclos 1 e 2: a regra reproduz a faixa de 368 de 368 e de 454 de 454 municípios.",
-        "Outras regras federais mudam nos mesmos cortes: pacote do corte."
+        "Ciclos 1 e 2: a regra reproduz a faixa de 368 de 368 e de 454 de 454 municípios."
       ],
-      "posicao": 3,
-      "secao": "Metodologia",
+      "palavras": 19,
+      "posicao": 6,
+      "secao": "Análise descritiva",
       "titulo": "A bolsa é função exata do IVS: a regra é sharp"
     },
     {
-      "figura": null,
-      "layout": "curto_ficha",
-      "linhas": [],
-      "posicao": 4,
-      "secao": "Metodologia",
-      "titulo": "H1: bolsa maior → mais vagas preenchidas?"
-    },
-    {
-      "figura": "output/apresentacao_banca2/h1_controle.png",
+      "figura": "output/apresentacao_banca2/exp_escolha_origem.png",
       "layout": "curto_figura",
       "linhas": [
-        "0,400: passa pelas vagas: o lado de bolsa maior oferece menos vagas (−3,59).",
-        "0,300: a oferta não muda; cai o preenchimento por vaga (pacote do corte).",
-        "TOST: sem aumento de 10 p.p. ou de 25% da média; não dá para dizer que nada mudou."
+        "79% das 1ª opções ficam na UF de origem; mediana de 51 km.",
+        "Descritivo; origem é onde trabalhava no CNES."
       ],
-      "posicao": 5,
-      "secao": "Resultados",
-      "titulo": "Antes e depois do controle: em 0,400, passa pelas vagas"
-    },
-    {
-      "figura": "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png",
-      "layout": "curto_figura",
-      "linhas": [
-        "É a estimativa no corte, não os dados: nas médias da janela, 33,3% das células são preenchidas abaixo e 33,5% acima; a queda vem da reta levada até o corte, com poucos municípios. O acaso não está descartado.",
-        "As vagas do lado de cima eram diferentes: cursos que preenchem pouco em qualquer lugar, mais células do mesmo curso na mesma UF disputando candidatos e, no ciclo 2, mais células só de reserva. Igualando esses fatores, a queda diminui pela metade ou mais em parte das medidas, mas nenhum fator faz isso nas três.",
-        "Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras regras."
-      ],
-      "posicao": 6,
-      "secao": "Resultados",
-      "titulo": "Por que o preenchimento cai em 0,300"
-    },
-    {
-      "figura": null,
-      "layout": "curto_ficha",
-      "linhas": [],
+      "palavras": 20,
       "posicao": 7,
+      "secao": "Análise descritiva",
+      "titulo": "A 1ª opção fica perto de onde o médico já trabalhava"
+    },
+    {
+      "figura": "output/apresentacao_banca2/curto_dispersao_a3.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "Em 0,300: nos dados crus os dois lados preenchem igual (33% e 33%).",
+        "O negativo vem da reta levada até o corte."
+      ],
+      "palavras": 22,
+      "posicao": 8,
+      "secao": "Análise descritiva",
+      "titulo": "Nos dados crus, os dois lados preenchem igual"
+    },
+    {
+      "figura": "output/rdd_bolsa/GF_figuras/GF_medias_por_ivs.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "Faixa de R$ 10 mil: a subida anda junto com a região (Nordeste); dentro da mesma UF, quase some (em auditoria).",
+        "Descritivo: dentro da faixa, a bolsa é a mesma."
+      ],
+      "palavras": 30,
+      "posicao": 9,
+      "secao": "Análise descritiva",
+      "titulo": "Dentro da faixa de R$ 10 mil, o preenchimento sobe"
+    },
+    {
+      "figura": "output/rdd_bolsa/GF_figuras/GF_inclinacao_fatores_janela.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "Últimos 0,050 antes de 0,300: sobra uma subida forte, sem fator que a acompanhe (em auditoria).",
+        "É o trecho que a RDD usa do lado de baixo do corte."
+      ],
+      "palavras": 29,
+      "posicao": 10,
+      "secao": "Análise descritiva",
+      "titulo": "Perto de 0,300 sobra uma subida forte, sem explicação"
+    },
+    {
+      "figura": null,
+      "layout": "curto_espec",
+      "linhas": [
+        "preenchida = salto + reta de cada lado",
+        "Outcome vaga imediata preenchida, por célula e município",
+        "Razão comparamos vagas do mesmo tipo: a de reserva não estava em jogo na 1ª chamada"
+      ],
+      "palavras": 30,
+      "posicao": 11,
       "secao": "Metodologia",
-      "titulo": "H3: a bolsa pesa pouco perto da origem do médico?"
+      "titulo": "H1: o salto no corte, só com vagas imediatas"
+    },
+    {
+      "figura": null,
+      "layout": "curto_espec",
+      "linhas": [
+        "utilidade = bolsa + curva do IVS + distância + origem",
+        "Outcome 1ª opção de cada candidato",
+        "Comparação vagas do mesmo curso e ciclo",
+        "Cuidado só quem se candidatou; origem não é causal"
+      ],
+      "palavras": 29,
+      "posicao": 12,
+      "secao": "Metodologia",
+      "titulo": "H2: o logit condicional da 1ª opção"
+    },
+    {
+      "figura": null,
+      "layout": "curto_espec",
+      "linhas": [
+        "variação das horas = quem entrou − quem ainda não entrou",
+        "Outcome horas do médico no CNES",
+        "Amostra médicos dos ciclos 1 e 2",
+        "Cuidado horas cadastradas não são presença"
+      ],
+      "palavras": 28,
+      "posicao": 13,
+      "secao": "Metodologia",
+      "titulo": "H3: horas antes e depois de entrar"
+    },
+    {
+      "figura": null,
+      "layout": "curto_tabela",
+      "linhas": [
+        "Ressalva: seleção suspeita no ciclo 1 em 0,400."
+      ],
+      "palavras": 30,
+      "posicao": 14,
+      "secao": "Identificação",
+      "titulo": "RDD: as premissas do desenho valem"
+    },
+    {
+      "figura": null,
+      "layout": "curto_tabela",
+      "linhas": [],
+      "palavras": 26,
+      "posicao": 15,
+      "secao": "Identificação",
+      "titulo": "O corte é um pacote; a H3 pede tendências paralelas"
+    },
+    {
+      "figura": null,
+      "layout": "curto_capa",
+      "linhas": [
+        "Aguardando 48b: HI-1 e HI-2 por corte, com Holm",
+        "Pacote do corte; especificação pós-resultado."
+      ],
+      "palavras": 14,
+      "posicao": 16,
+      "secao": "Resultados",
+      "titulo": "H1: vagas imediatas, por corte (aguardando 48b)"
     },
     {
       "figura": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
       "layout": "curto_figura",
       "linhas": [
-        "Log-chance: 0,21 ≈ chance cerca de 24% maior de a vaga ser a 1ª opção, sem distinção de zero; não é efeito no preenchimento.",
-        "Toda a bolsa: 0,42 [−0,03; 0,87]; a mesma UF de origem, 2,40 [2,28; 2,53]; a diferença, 1,98 [1,56; 2,40].",
-        "Pós-resultado; o peso da origem é preferência revelada, não efeito causal."
+        "Toda a bolsa: 0,42; a mesma UF de origem: 2,40; diferença 1,98 [1,56; 2,40].",
+        "Pós-resultado; origem é preferência revelada, não efeito causal."
       ],
-      "posicao": 8,
+      "palavras": 22,
+      "posicao": 17,
       "secao": "Resultados",
-      "titulo": "H3: a UF de origem pesa mais que toda a bolsa"
+      "titulo": "H2: a UF de origem pesa mais que toda a bolsa"
     },
     {
-      "figura": null,
-      "layout": "curto_texto",
-      "linhas": [
-        "Limitado toda a bolsa pesa menos que trabalhar na UF de origem",
-        "Escolha a bolsa empurra pouco a escolha: por ciclo, só o ciclo 2 mostra efeito, 1,70 [1,22; 2,37] por +R$ 5 mil; nos ciclos 1 e 3, 1,07 e 1,00",
-        "Preenchimento por isso não aparece nas vagas preenchidas: o modelo prevê só +0,20 e +0,24 candidato de 1ª opção por célula em 0,300 e 0,400",
-        "Escolha não é expansão: o que uma vaga ganha, outra do mesmo curso perde."
-      ],
-      "posicao": 9,
-      "secao": "Resultados",
-      "titulo": "O que isso quer dizer: incentivo limitado"
-    },
-    {
-      "figura": null,
-      "layout": "curto_ficha",
-      "linhas": [],
-      "posicao": 10,
-      "secao": "Metodologia",
-      "titulo": "H4: a chegada aumenta a oferta ou só remaneja?"
-    },
-    {
-      "figura": "output/apresentacao_banca2/h4_horas_medico.png",
+      "figura": "output/apresentacao_banca2/curto_h3_horas.png",
       "layout": "curto_figura",
       "linhas": [
-        "Horas totais: +6,6 h/sem [+5,4; +7,8] depois da entrada, sobretudo no município do posto.",
-        "Associação, não efeito da bolsa; horas cadastradas não são presença."
+        "+6,6 h/sem depois da entrada; 51,0% já tinham vínculo no município do posto.",
+        "Associação; horas cadastradas não são presença."
       ],
-      "posicao": 11,
+      "palavras": 19,
+      "posicao": 18,
       "secao": "Resultados",
-      "titulo": "H4: o médico soma horas, mas metade já estava lá"
+      "titulo": "H3: o médico soma horas, mas metade já estava lá"
+    },
+    {
+      "figura": "output/apresentacao_banca2/h1_preenchimento.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "Com a reserva (A3, N1): sem aumento em nenhum corte; em 0,300, sinal negativo.",
+        "IC que contém zero não é efeito zero."
+      ],
+      "palavras": 22,
+      "posicao": 19,
+      "secao": "Robustez",
+      "titulo": "H1, medidas antigas: nenhum corte mostra aumento"
+    },
+    {
+      "figura": "output/apresentacao_banca2/h1_controle.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "0,400: a queda passa pelas vagas: cidades grandes logo abaixo; com o controle, some.",
+        "0,300: a oferta não muda; cai o preenchimento por vaga."
+      ],
+      "palavras": 24,
+      "posicao": 20,
+      "secao": "Robustez",
+      "titulo": "Antes e depois do controle: em 0,400, passa pelas vagas"
+    },
+    {
+      "figura": "output/apresentacao_banca2/curto_h1_por_ciclo.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "A queda em 0,300 vem sobretudo do ciclo 2 (vagas de reserva); por ciclo, os intervalos são largos.",
+        "Preenchida: confirmada no ciclo 1; alocada nos ciclos 2 e 3."
+      ],
+      "palavras": 29,
+      "posicao": 21,
+      "secao": "Robustez",
+      "titulo": "H1 por ciclo: a queda em 0,300 vem do ciclo 2"
+    },
+    {
+      "figura": "output/apresentacao_banca2/curto_reta_0300.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "A reta de baixo leva até o corte a subida dos últimos 0,050: a ponta fica alta.",
+        "Médias iguais, salto negativo: poucos municípios.",
+        "O acaso não está descartado."
+      ],
+      "palavras": 28,
+      "posicao": 22,
+      "secao": "Robustez",
+      "titulo": "Em 0,300 é a estimativa no corte"
+    },
+    {
+      "figura": "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "Cursos que preenchem pouco",
+        "Mais células do curso na UF",
+        "Ciclo 2: mais células só de reserva",
+        "Igualando: queda pela metade ou mais em algumas medidas; nenhum fator nas três."
+      ],
+      "palavras": 30,
+      "posicao": 23,
+      "secao": "Robustez",
+      "titulo": "As vagas do lado de cima eram diferentes"
+    },
+    {
+      "figura": "output/apresentacao_banca2/curto_tost.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "TOST: sem aumento de 10 p.p. ou mais; \"nada mudou\" não se sustenta.",
+        "Em 0,300: nenhum incentivo individual muda; muda o teto de emendas do município."
+      ],
+      "palavras": 26,
+      "posicao": 24,
+      "secao": "Robustez",
+      "titulo": "O que dá para afirmar sobre a queda"
+    },
+    {
+      "figura": "output/apresentacao_banca2/h2_escolha.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "A origem pesa mais que a bolsa nas seis variantes: diferença de 1,18 a 2,37.",
+        "Pós-resultado; escolha não é expansão."
+      ],
+      "palavras": 20,
+      "posicao": 25,
+      "secao": "Robustez",
+      "titulo": "H2: por ciclo, a bolsa pesa só no ciclo 2"
+    },
+    {
+      "figura": "output/apresentacao_banca2/curto_h3_nota_corte.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "Nota de corte: +7,91 h/sem [−0,63; +16,45], mesma direção; IC contém zero.",
+        "Rambachan–Roth: horas totais aguentam a violação do pré (1,30)."
+      ],
+      "palavras": 21,
+      "posicao": 26,
+      "secao": "Robustez",
+      "titulo": "H3: na nota de corte, a mesma direção"
+    },
+    {
+      "figura": null,
+      "layout": "curto_capa",
+      "linhas": [
+        "O sinal negativo não é a bolsa afastando médicos: é a estimativa no corte, com poucos municípios e vagas diferentes.",
+        "Nada disso mostra que a bolsa reduz o preenchimento."
+      ],
+      "palavras": 29,
+      "posicao": 27,
+      "secao": "Discussão",
+      "titulo": "Discussão: o sinal negativo da H1"
     },
     {
       "figura": null,
       "layout": "curto_texto",
       "linhas": [
-        "Substituição metade já estava lá: 51,0% tinham vínculo no município do posto antes de entrar",
-        "Cadastro horas cadastradas no CNES não são presença nem horas trabalhadas",
-        "Município o efeito sobre os especialistas do município ainda está em análise",
-        "Associação sob tendências paralelas; não é a participação no PMM-E."
+        "Limitado a origem pesa mais que toda a bolsa",
+        "Escolha reordena candidatos, não enche vagas",
+        "Substituição metade já estava no município",
+        "Pacote do corte; vínculo não é presença."
       ],
-      "posicao": 12,
-      "secao": "Resultados",
-      "titulo": "O que isso quer dizer: soma horas, mas em parte remaneja"
-    },
-    {
-      "figura": null,
-      "layout": "curto_texto",
-      "linhas": [
-        "Escolha reordena candidatos entre vagas, só no ciclo 2",
-        "Preenchimento não aumenta em nenhum dos dois cortes",
-        "Oferta soma horas, mas metade dos médicos já estava lá",
-        "Pacote do corte; inconclusivo não é efeito zero; vínculo não é presença."
-      ],
-      "posicao": 13,
-      "secao": "Conclusão",
-      "titulo": "A bolsa muda a escolha, não o preenchimento"
+      "palavras": 28,
+      "posicao": 28,
+      "secao": "Discussão",
+      "titulo": "Discussão: um incentivo limitado"
     }
   ],
-  "pedido": "autor, 26/10/2026: só do 14 em diante, muito menor, sem o diagrama causal da teoria no meio",
-  "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; no máximo 2 linhas curtas por slide de figura ou tabela e 4 por slide só de texto, contando a cautela; sem slides do grupo, sem divisórias, sem diagrama, sem apêndice",
+  "pedido": "autor, 26/10/2026: só a parte empírica, muito menor, sem o diagrama causal da teoria; estrutura obrigatória da versão final (doc 06); no máximo cerca de 30 palavras por slide",
+  "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; seções na ordem Hipótese → Dados → Análise descritiva → Metodologia → Identificação → Resultados → Robustez → Discussão; no máximo 30 palavras visíveis por slide, fora o título, a figura e a linha de fontes; sem slides do grupo, sem divisórias, sem diagrama, sem apêndice",
   "saidas": [
     {
-      "bytes": 1382403,
+      "bytes": 3866879,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pptx",
-      "sha256": "9211760494b8d0cf95b7e8ee67021954893a1094dc4e67cdf84a7ed29ff81305"
+      "sha256": "fe53dd6a29d99b1ea1903e9f1eda998cf11ef895b68a31bcbed2f9cb26877738"
     },
     {
-      "bytes": 898850,
+      "bytes": 2900858,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pdf",
-      "sha256": "fe354d2be1407d78ffbb6f4cf175f79eeffdf089dd6144b3e989c160243908df"
+      "sha256": "4de7d3603749398d6bfae5bc8dda0afd9241b1e361508193d4c631e9ae7b8603"
     }
   ],
-  "script": "scripts/apresentacao/gerar_deck_banca2.py --curto"
+  "script": "scripts/apresentacao/gerar_deck_banca2.py (modo padrão: deck curto)"
 }

@@ -9,6 +9,14 @@
 > aparecem só parâmetros: cortes, valores da bolsa, margens e datas.<br>
 > **Estatuto:** registro de discussão. Não muda protocolo nem resultado.
 
+> [!NOTE]
+> **Numeração da apresentação a partir de 26/10/2026:** H1 preenchimento; H2
+> bolsa × origem (antes H3); H3 oferta (antes H4). Os nomes dos documentos de
+> análise (P1h, P4, protocolos) não mudam. Abaixo, as seções escritas antes da troca usam a numeração antiga.
+> O deck usado é o curto
+> ([04](04_conteudo_deck_curto.md)), na estrutura do
+> [06](06_estrutura_obrigatoria_versao_final.md).
+
 > **Estado do branch em 26/10/2026 (retrato de trabalho em andamento).** O
 > branch `claude/vigilant-mccarthy-dd92mc` contém commits marcados "WIP":
 > - o deck em produção (`deck_banca2.pptx` e `deck_banca2_curto.*`), ainda não
@@ -36,6 +44,11 @@
 | 26/10/2026 | a explicação da queda no corte 0,300 entra num slide próprio, logo depois do H1, com o diagnóstico do protocolo 61 |
 | 26/10/2026 | **estrutura obrigatória da versão final:** Hipótese (uma só depois da validação; planos B em cinza), Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez, Discussão ([`06`](06_estrutura_obrigatoria_versao_final.md)) |
 | 26/10/2026 | **só as versões curtas são usadas**; as longas não precisam mais ser geradas (o deck completo fica como registro, sem atualização) |
+| 26/10/2026 | **numeração da apresentação:** H1 preenchimento; H2 bolsa × origem (antes H3), candidata central; H3 oferta (antes H4); a H2 antiga (escolha por ciclo) vira robustez da H2 |
+| 26/10/2026 | **"texto demais":** no máximo cerca de 30 palavras visíveis por slide; especificação em até 4 linhas, com a equação em palavras no centro; o resto nas notas |
+| 26/10/2026 | explicação da queda em 0,300 passo a passo, em Robustez: antes e depois do controle; a estimativa no corte; as vagas do lado de cima eram diferentes; o que dá para afirmar. Na Discussão, uma linha simples |
+| 26/10/2026 | scatter IVS × preenchimento com as retas, em Análise descritiva; H1 por ciclo, em Robustez |
+| 26/10/2026 | **H1 principal = adendo 48b** (só vagas imediatas: HI-1 e HI-2 por corte, com Holm); medidas antigas viram especificações secundárias |
 
 ## 2. Perguntas e respostas
 
@@ -254,9 +267,10 @@ robustez a fazer precisa de adendo datado ao protocolo 61 antes de rodar.
 | Item | Estado |
 |---|---|
 | Protocolo 60, parte B (oferta local e deslocamento) | estimando; depois, auditoria |
-| Deck com os efeitos por corte | em produção |
+| Deck curto na estrutura obrigatória (doc 06), numeração nova, até 30 palavras por slide | feito em 26/10/2026; falta a H1 principal do adendo 48b (slide "aguardando 48b") e a troca do scatter pela versão só com vagas imediatas |
 | Slides da história (seção 3) | depois da parte B auditada |
 | RDD das vagas oferecidas por município, por ciclo e corte (seção 2.2) | proposta; precisa de protocolo próprio |
-| Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | auditado (auditoria 33, aprovado com correções de texto); slide próprio nos dois decks, sem selo, em duas ideias |
+| Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | auditado (auditoria 33, aprovado com correções de texto); no curto, passo a passo em quatro slides de Robustez |
 | Robustez das explicações da queda (seção 2.11) | a fazer; adendo datado ao protocolo 61 antes de rodar |
-| Slides de especificação por estimador e da cronologia dos ciclos | feitos: fichas com os mesmos campos no completo e recortes delas no curto |
+| Slides de especificação por estimador e da cronologia dos ciclos | feitos: fichas no completo; no curto, até 4 linhas com a equação em palavras no centro e o resto nas notas |
+| Subida dentro das faixas (protocolo 62, doc 57m) | em auditoria; no curto, marcada "(em auditoria)" |

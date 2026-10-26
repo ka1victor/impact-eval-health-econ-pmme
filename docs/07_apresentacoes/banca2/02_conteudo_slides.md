@@ -7,6 +7,14 @@ estado: PRONTO para 28/10; prévios do grupo reutilizados com as correções e p
 atualizacao: 26 de outubro de 2026
 ---
 
+> [!NOTE]
+> **Numeração da apresentação a partir de 26/10/2026:** H1 preenchimento; H2
+> bolsa × origem (antes H3); H3 oferta (antes H4). Os nomes dos documentos de
+> análise (P1h, P4, protocolos) não mudam. Este arquivo é o do deck completo, que fica como registro e
+> não é mais atualizado (só com `--completo`); o deck usado é o curto
+> ([04](04_conteudo_deck_curto.md)), na estrutura do
+> [06](06_estrutura_obrigatoria_versao_final.md).
+
 > [!IMPORTANT]
 > **Como ler este arquivo.** O deck do grupo (template Insper, Montserrat)
 > é a base do deck; este arquivo traz os slides novos, a **ordem do deck
