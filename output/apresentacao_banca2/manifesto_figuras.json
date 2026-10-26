@@ -530,7 +530,7 @@
       "linhas": [
         {
           "painel": "Vagas preenchidas por município (N1)",
-          "linha": "Com controle das vagas oferecidas",
+          "linha": "Com controle",
           "texto": "−0,76 [−1,44; −0,07]",
           "codigos": [
             "N1_SA_TAU",
@@ -552,7 +552,7 @@
         },
         {
           "painel": "Célula aberta preenchida (A3, p.p.)",
-          "linha": "Ciclos 1–3, cortes empilhados",
+          "linha": "Cortes empilhados",
           "texto": "−4,9 [−12,9; +3,2]",
           "codigos": [
             "A3_EMP_TAU",
@@ -586,8 +586,8 @@
       ],
       "textos": [
         "Vagas preenchidas por município (N1)",
-        "Com controle das vagas oferecidas",
-        "primária",
+        "Com controle",
+        "das vagas oferecidas · primária",
         "−0,76 [−1,44; −0,07]",
         "p de Holm 0,124",
         "Sem controle",
@@ -597,8 +597,8 @@
         "diferença no corte (vagas por município)",
         "Célula aberta preenchida (A3, p.p.)",
         "+10 p.p. (protocolo)",
-        "Ciclos 1–3, cortes empilhados",
-        "principal",
+        "Cortes empilhados",
+        "ciclos 1–3 · principal",
         "−4,9 [−12,9; +3,2]",
         "MDE 11,5",
         "Só o corte 0,300",
@@ -611,10 +611,10 @@
         "MDE 18,1",
         "diferença no corte (p.p.)",
         "Como ler",
-        "•  Ponto: diferença no corte, bolsa maior menos bolsa menor.",
-        "•  Barra: IC 95%; a ponta direita é o maior aumento compatível.",
-        "•  Barra cruzando o zero: não se distingue de zero (não prova zero).",
-        "•  Cinza: o IC contém zero; verde: exclui. MDE: 80% de poder.",
+        "•  Ponto: bolsa maior menos bolsa menor.",
+        "•  Ponta direita: maior aumento compatível.",
+        "•  Barra que cruza o zero: sem distinção.",
+        "•  Verde: IC 95% exclui zero; MDE: 80%.",
         "Fontes: N_estimativas.csv (doc 49); S57_resumo.json (A3; doc 57). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
@@ -638,7 +638,7 @@
       "linhas": [
         {
           "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
-          "linha": "Ciclos 1–3, com distância (M1)",
+          "linha": "Ciclos 1–3 (M1)",
           "texto": "1,24 [0,99; 1,55]",
           "codigos": [
             "M1_RC",
@@ -682,7 +682,7 @@
         },
         {
           "painel": "Razão de chances da 1ª opção por +R$ 5 mil",
-          "linha": "Ciclo 2, sem distância (E9)",
+          "linha": "Ciclo 2 (E9)",
           "texto": "1,95 [1,48; 2,57]",
           "codigos": [
             "E9_C2_RC",
@@ -694,8 +694,8 @@
       ],
       "textos": [
         "Razão de chances da 1ª opção por +R$ 5 mil",
-        "Ciclos 1–3, com distância (M1)",
-        "primária",
+        "Ciclos 1–3 (M1)",
+        "com distância · primária",
         "1,24 [0,99; 1,55]",
         "p 0,065",
         "Só o ciclo 1 (M5)",
@@ -707,28 +707,16 @@
         "Só o ciclo 3 (M5)",
         "1,00 [0,72; 1,39]",
         "p 0,990",
-        "Ciclo 2, sem distância (E9)",
-        "exploratório",
+        "Ciclo 2 (E9)",
+        "sem distância · exploratório",
         "1,95 [1,48; 2,57]",
         "p < 0,001",
         "razão de chances (escala log); 1 = a bolsa não muda a escolha",
         "Como ler",
-        "•  Cada linha compara vagas abertas",
-        "    do mesmo curso e ciclo que",
-        "    diferem só no degrau da bolsa,",
-        "    com o IVS contínuo controlado.",
-        "•  Acima de 1: a vaga de bolsa",
-        "    maior é mais escolhida como 1ª",
-        "    opção.",
-        "•  Barra: o intervalo de 95%. Se",
-        "    cruza a linha do 1, os dados não",
-        "    distinguem a bolsa de efeito",
-        "    nenhum.",
-        "•  Verde: o IC exclui 1; cinza:",
-        "    contém.",
-        "•  É a escolha de quem já se",
-        "    candidatou: não diz quantos",
-        "    médicos o programa atrai.",
+        "•  Mesmo curso e ciclo, um degrau de bolsa.",
+        "•  Acima de 1: vaga de bolsa maior é preferida.",
+        "•  Barra que cruza o 1: sem distinção.",
+        "•  Verde: o IC 95% exclui 1.",
         "Fontes: P1_estimativas.csv (doc 57a); E8_resumo.json (E9). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
@@ -742,7 +730,7 @@
       "linhas": [
         {
           "painel": "Horas semanais cadastradas do médico no CNES",
-          "linha": "Horas totais (P4)",
+          "linha": "Horas totais",
           "texto": "+6,6 [+5,4; +7,8]",
           "codigos": [
             "P4_HT_ATT",
@@ -753,7 +741,7 @@
         },
         {
           "painel": "Horas semanais cadastradas do médico no CNES",
-          "linha": "No município do posto (P4)",
+          "linha": "No município do posto",
           "texto": "+8,7 [+7,9; +9,5]",
           "codigos": [
             "P4_HM_ATT",
@@ -764,7 +752,7 @@
         },
         {
           "painel": "Horas semanais cadastradas do médico no CNES",
-          "linha": "Fora do município do posto (P4)",
+          "linha": "Fora do município do posto",
           "texto": "−2,1 [−3,2; −1,0]",
           "codigos": [
             "P4_HF_ATT",
@@ -775,7 +763,7 @@
         },
         {
           "painel": "Horas semanais cadastradas do médico no CNES",
-          "linha": "Horas totais (P4-CA)",
+          "linha": "Horas totais",
           "texto": "+7,91 [−0,63; +16,45]",
           "codigos": [
             "CA_HT_EST",
@@ -786,7 +774,7 @@
         },
         {
           "painel": "Horas semanais cadastradas do médico no CNES",
-          "linha": "No município da 1ª opção (P4-CA)",
+          "linha": "No município da 1ª opção",
           "texto": "+10,92 [+4,15; +17,68]",
           "codigos": [
             "CA_HM_EST",
@@ -798,35 +786,32 @@
       ],
       "textos": [
         "Horas semanais cadastradas do médico no CNES",
-        "Horas totais (P4)",
+        "Horas totais",
+        "P4",
         "+6,6 [+5,4; +7,8]",
         "pré: p 0,310",
-        "No município do posto (P4)",
+        "No município do posto",
+        "P4",
         "+8,7 [+7,9; +9,5]",
         "pré falha: p 0,001",
-        "Fora do município do posto (P4)",
+        "Fora do município do posto",
+        "P4",
         "−2,1 [−3,2; −1,0]",
         "pré: p 0,927",
-        "Horas totais (P4-CA)",
+        "Horas totais",
+        "P4-CA, na nota de corte",
         "+7,91 [−0,63; +16,45]",
         "p de Holm 0,162",
-        "No município da 1ª opção (P4-CA)",
+        "No município da 1ª opção",
+        "P4-CA, na nota de corte",
         "+10,92 [+4,15; +17,68]",
         "quase mecânico",
         "diferença média depois da entrada (horas por semana)",
         "Como ler",
-        "•  P4: médicos que já entraram no",
-        "    PMM-E contra os que ainda não",
-        "    tinham entrado.",
-        "•  P4-CA: aprovados contra não",
-        "    aprovados por um ou dois pontos",
-        "    na nota de corte.",
-        "•  Verde: o IC 95% exclui zero.",
-        "    'Pré falha': os grupos já se",
-        "    afastavam antes da entrada.",
-        "•  Leia como associação: horas",
-        "    cadastradas não são horas",
-        "    trabalhadas.",
+        "•  P4: quem já entrou × quem não entrou.",
+        "•  P4-CA: aprovados × reprovados por pouco.",
+        "•  Pré falha: grupos já se afastavam antes.",
+        "•  Horas cadastradas, não trabalhadas.",
         "Fontes: S57_resumo.json (P4; doc 57d); CA_estimativas.csv (57h). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
@@ -854,7 +839,7 @@
           "exclui_nulo": false
         },
         {
-          "linha": "UF de origem × bolsa (H3, D_UF)",
+          "linha": "UF de origem × bolsa (H3)",
           "texto": "1,98 [1,56; 2,40]",
           "codigos": [
             "H3_DUF",
@@ -886,7 +871,7 @@
           "exclui_nulo": false
         },
         {
-          "linha": "Vagas preenchidas por município (N1)",
+          "linha": "Vagas preenchidas (N1)",
           "texto": "−0,76 [−1,44; −0,07]",
           "codigos": [
             "N1_SA_TAU",
@@ -901,7 +886,7 @@
           "exclui_nulo": true
         },
         {
-          "linha": "Vínculo no município da vaga (P6, Y1)",
+          "linha": "Vínculo na vaga (P6, Y1)",
           "texto": "+0,405 [+0,210; +0,600]",
           "codigos": [
             "P6_Y1_EST",
@@ -946,7 +931,7 @@
           "exclui_nulo": true
         },
         {
-          "linha": "Produção SUS nas CBO-alvo (K1)",
+          "linha": "Produção SUS (K1)",
           "texto": "+7,92 [−27,58; +43,42]",
           "codigos": [
             "K1_TAU",
@@ -961,7 +946,7 @@
           "exclui_nulo": false
         },
         {
-          "linha": "Concorrentes e preenchimento (R-P1)",
+          "linha": "Concorrentes (R-P1)",
           "texto": "−4,9 p.p. [−14,3; +4,6]",
           "codigos": [
             "R_P1_EST",
@@ -977,65 +962,55 @@
         }
       ],
       "textos": [
-        "A cadeia em uma figura: o que os dados dizem, pergunta a pergunta",
-        "Cada linha tem a sua escala, simétrica em torno do nulo (0; 1 na razão de chances). Leia se a barra cruza a linha preta, não o tamanho entre linhas.",
-        "intervalo de 95%",
+        "intervalo",
         "estimativa [IC 95%]",
         "força da evidência",
-        "ESCOLHA DO MÉDICO",
         "Peso da bolsa na 1ª opção (P1, M1)",
-        "razão de chances por +R$ 5 mil · pacote do corte",
+        "razão de chances por +R$ 5 mil",
         "1,24 [0,99; 1,55]",
         "p de Holm 0,065",
         "inconclusivo",
-        "UF de origem × bolsa (H3, D_UF)",
-        "θ_UF − 10·β, log-chance · no modelo de escolha",
+        "UF de origem × bolsa (H3)",
+        "θ_UF − 10·β, no modelo de escolha",
         "1,98 [1,56; 2,40]",
-        "p de Holm < 0,001 (unilateral)",
+        "Holm < 0,001, unilateral",
         "rejeita zero, pós-resultado",
-        "PREENCHIMENTO",
         "Célula aberta preenchida (A3)",
-        "p.p. · ciclos 1–3, cortes empilhados · pacote do corte",
+        "p.p. · ciclos 1–3, cortes empilhados",
         "−4,9 p.p. [−12,9; +3,2]",
         "MDE 11,5 p.p.",
         "inconclusivo",
-        "Vagas preenchidas por município (N1)",
-        "com controle das vagas oferecidas · pacote do corte",
+        "Vagas preenchidas (N1)",
+        "com controle das vagas oferecidas",
         "−0,76 [−1,44; −0,07]",
         "p de Holm 0,124",
         "inconclusivo",
-        "ENTRADA DO MÉDICO",
-        "Vínculo no município da vaga (P6, Y1)",
-        "fração · alocado × não alocado por pouco",
+        "Vínculo na vaga (P6, Y1)",
+        "fração · quase mecânico",
         "+0,405 [+0,210; +0,600]",
-        "p de Holm 0,010 · quase mecânico",
+        "p de Holm 0,010",
         "exploratório",
         "Horas totais (P6, Y3)",
-        "h/sem · alocado × não alocado por pouco",
+        "h/sem · alocado × não alocado",
         "+15,5 [+0,6; +30,4]",
         "p de Holm 0,384",
         "exploratório",
-        "CAPACIDADE",
         "Horas totais do médico (P4)",
-        "h/sem · entrada no PMM-E, coortes escalonadas",
+        "h/sem · entrada no PMM-E",
         "+6,6 [+5,4; +7,8]",
-        "pré: p 0,310; ruptura M̄ = 1,30; outros outcomes falham",
+        "pré p 0,310; M̄ = 1,30",
         "ATT sob tendências paralelas",
-        "ACESSO",
-        "Produção SUS nas CBO-alvo (K1)",
-        "por 10 mil hab./mês · DiRD nos cortes",
+        "Produção SUS (K1)",
+        "por 10 mil hab./mês · DiRD",
         "+7,92 [−27,58; +43,42]",
         "p de Holm 1,000",
         "inconclusivo",
-        "REALOCAÇÃO",
-        "Concorrentes e preenchimento (R-P1)",
-        "p.p. por +R$ 5 mil · região de saúde",
+        "Concorrentes (R-P1)",
+        "p.p. por +R$ 5 mil na região",
         "−4,9 p.p. [−14,3; +4,6]",
         "p de Holm 0,624",
         "inconclusivo",
-        "Força da evidência, por linha: Holm ou IC com o nulo → inconclusivo; pré do Wald → ATT; estatuto do bloco → exploratório;",
-        "Holm < 0,05 num bloco pós-resultado → rejeita zero, pós-resultado. Nenhuma linha é causal-limpa; a da H3 compara dois pesos do mesmo modelo de escolha.",
-        "Nada aqui é efeito da participação no PMM-E nem da geografia. Verde: o IC 95% exclui o nulo; cinza: contém.",
+        "Cada linha na sua escala, simétrica em torno do nulo. Verde: o IC 95% exclui o nulo.",
         "Fontes: S57_resumo.json (doc 57); P4_estimativas.csv; P1h_magnitudes.csv (doc 57i). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": []
@@ -1047,11 +1022,11 @@
         "Ciclo 1",
         "Ciclo 2",
         "Ciclo 3",
-        "Municípios com célula no quadro",
+        "Municípios com célula",
         "368",
         "454",
         "748",
-        "Células (estabelecimento × curso)",
+        "Células (estab. × curso)",
         "1.295",
         "1.547",
         "2.293",
@@ -1059,7 +1034,7 @@
         "678 · 1.145",
         "1.836 · 1.053",
         "1.132 · 3.999",
-        "Candidatos nos resultados (universo G1)",
+        "Candidatos (universo G1)",
         "993",
         "2.179",
         "2.604",
@@ -1067,7 +1042,7 @@
         "938",
         "2.102",
         "2.533",
-        "… com 1ª opção numa célula do quadro",
+        "… com 1ª opção numa célula",
         "993",
         "2.140",
         "2.581",
@@ -1075,11 +1050,11 @@
         "915",
         "2.032",
         "2.474",
-        "Células preenchidas na 1ª chamada",
+        "Preenchidas na 1ª chamada",
         "393 (30,3%)",
         "728 (47,1%)",
         "497 (21,7%)",
-        "Células preenchidas até a 2ª chamada",
+        "Preenchidas até a 2ª chamada",
         "461 (35,6%)",
         "867 (56,0%)",
         "não observado",
@@ -1156,7 +1131,7 @@
   "tabelas_csv": [
     {
       "arquivo": "output/apresentacao_banca2/tabela_descritiva_ciclos.csv",
-      "sha256": "98672c342c53968951505fab8e684f69f8cff9db1f2bdf11b0da39c158259eec"
+      "sha256": "42fb0b31589332489f76d27a004fdf2991f16aa937871de85a4821c946694ffb"
     },
     {
       "arquivo": "output/apresentacao_banca2/tabela_fontes.csv",
@@ -1231,7 +1206,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/h1_preenchimento.png",
-      "sha256": "dc2d81feba3ebe5254fed77c1fa31432b53b75ad120d5348375d22c209e8c882",
+      "sha256": "3003872783f675050ed0a50f08137968dad09f59c7226a2ba0537a12f57c2bbe",
       "natureza": "EMPIRICO",
       "descricao": "H1: N1 com e sem controle e A3, com 'Como ler'",
       "fontes": [
@@ -1244,7 +1219,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/h2_escolha.png",
-      "sha256": "9b5dbaf14f927209d2e57d388b2867be92e8ce2400f986d1f1612ee6cab21b1d",
+      "sha256": "4865043fe176266171c5b659ed3af85ec286781aa8c9861784ee0a8295500ead",
       "natureza": "EMPIRICO",
       "descricao": "H2: razão de chances da 1ª opção por ciclo, com 'Como ler'",
       "fontes": [
@@ -1257,7 +1232,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/h4_horas_medico.png",
-      "sha256": "458fb6cc5500655a1175e0c92d91c292c3485386d14d4f8638bca206863a9723",
+      "sha256": "9be92c374e3284fe515b6a0ad18fa770e03961edf520e897845b8ce6143f2556",
       "natureza": "EMPIRICO",
       "descricao": "H4: horas do médico (P4 e P4-CA), com 'Como ler'",
       "fontes": [
@@ -1270,7 +1245,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
-      "sha256": "d4a192a3f7e4d434b9f7d8cd40b9d6d912e919744de537e17d4f2944dc2a12c7",
+      "sha256": "d73d3e942f49d523babe06af4ca2a3329cc208de3404aac1670d327551d76f67",
       "natureza": "EMPIRICO",
       "descricao": "cadeia-resumo com as linhas do doc 57",
       "fontes": [
@@ -1285,7 +1260,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/tabela_descritiva_ciclos.png",
-      "sha256": "9e834c5decc9056cf4933deb85b62ed12b7dd8193b28abce864c851c6dd0c9b5",
+      "sha256": "fc6a58a257c6935f5984a081844ae3c735393f9669284d91b4c17ed26e2b2a78",
       "natureza": "EMPIRICO",
       "descricao": "tabela descritiva por ciclo",
       "fontes": [

@@ -49,14 +49,17 @@
   municípios divergir do portão R1. A leitura dos dados agora é feita no
   próprio gerador (`dados_regra`), sem a função da galeria que também lia o
   arquivo de IVS errado; o PNG regenerado tem o mesmo SHA-256 de antes.
-- **`G2`, `G3` e `G4`.** Um painel por outcome; em cada linha, o rótulo em
-  cima e o intervalo de 95% embaixo, com o valor à direita. Verde: o IC exclui
+- **`G2`, `G3` e `G4`.** Desenhadas no tamanho em que entram no slide
+  (`W_FIG_SLIDE` × `H_FIG_SLIDE` no gerador), com letra de 12 pt ou mais: painéis
+  empilhados; em cada linha, o rótulo à esquerda, o intervalo de 95% no meio
+  e o valor à direita. Verde: o IC exclui
   o nulo; cinza: contém. A linha preta é o nulo; a tracejada laranja, a
   referência de +10 p.p. do protocolo. O bloco "Como ler" fica na própria
   imagem: foi a lição do grupo, que achou incompreensíveis os gráficos de
   descontinuidade com faixas e pontos sem explicação. Todo texto desenhado é
   gravado no manifesto (`figuras_novas`), e o teste confere os números.
-- **`G5`.** Uma linha por pergunta do doc 57, cada uma na sua escala,
+- **`G5`.** Desenhada no tamanho do slide, sem
+  título interno: uma linha por pergunta do doc 57, cada uma na sua escala,
   simétrica em torno do nulo. A "força da evidência" de cada **linha** sai de
   uma regra explícita do gerador (`forca_da_linha`) aplicada a valores
   registrados: p de Holm ≥ 0,05, ou IC com o nulo, dá "inconclusivo"; o p do
@@ -566,10 +569,9 @@ e grava em `output/apresentacao_banca2/`:
 
 | Arquivo | O que é |
 |---|---|
-| `deck_banca2_proposta.pptx` | o deck inteiro, na ordem do doc 02: prévios do grupo com as correções, parte empírica, Q&A e apêndice |
-| `slides_empiricos_banca2.pptx` | só os slides novos, na mesma ordem, para colar no deck em uso |
+| `deck_banca2.pptx` | o entregável, num arquivo só, na ordem do doc 02: prévios do grupo com as correções, parte empírica, Q&A e apêndice |
 | `manifesto_deck_banca2.json` | entradas (deck do grupo, doc 02, registro, figuras) e saídas com SHA-256; ordem dos slides; classificação de cada slide do grupo; correções aplicadas |
-| `qa_render/` | imagens de conferência de todos os slides até o Q&A (LibreOffice, com a Montserrat instalada; os ocultos do grupo também) |
+| `qa_render/` | imagens de conferência dos slides novos, do corpo e do apêndice (LibreOffice, com a Montserrat instalada), e `grade_empirica.png`, a grade de miniaturas da parte empírica |
 
 A ordem do deck inteiro é a do doc 02: cada `##` é um slide novo e cada
 marcador `<!-- grupo: N -->` põe ali o slide N do grupo (com `| título`, o

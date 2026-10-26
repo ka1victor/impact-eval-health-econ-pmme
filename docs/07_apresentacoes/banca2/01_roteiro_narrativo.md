@@ -30,7 +30,7 @@ da história e ganha explicação dentro do modelo.
 | Hipótese econômica | que setas do modelo testamos? | cadeia H1–H4 (a ponte modelo → equação fica no apêndice) |
 | Base de dados e descritivas | como são os três ciclos? | tabela descritiva por ciclo (a tabela de fontes fica no apêndice) |
 | Metodologia econométrica | que estimador para cada hipótese, e o que precisa valer? | um estimador por hipótese; hipóteses de identificação; regra sharp |
-| Resultados | o que se move e o que não se move? | H1; H2; H3; H4; cadeia-resumo |
+| Resultados | o que se move e o que não se move? | cadeia-síntese (o mapa); H1; H2; H3; H4 |
 | Robustez e discussão | as leituras aguentam? o que o contraste não mede? | robustez por hipótese; discussão em duas colunas (limites; literatura e próximos passos) |
 
 ## 2. Hipóteses pela cadeia do modelo (decisão de 26/10/2026)
@@ -76,12 +76,15 @@ ameaça comum é o pacote do corte.
 ### 3.4 Resultados
 
 A regra sharp fecha a metodologia, porque é ela que torna a
-descontinuidade possível. Nos resultados, uma hipótese por slide, sempre com a mesma estrutura:
-título-afirmação, figura com "Como ler" dentro, duas linhas de leitura e a
-frase de cautela. A H3 usa a figura do P1h, auditada, com os pesos na mesma
+descontinuidade possível. Os resultados abrem pela cadeia-síntese, o mapa
+do que encontramos pergunta a pergunta, com as linhas do doc 57, a da H3 e a
+força da evidência de cada uma, dada por regra, e três leituras curtas
+(escolha, preenchimento, capacidade). Depois, uma hipótese por slide, sempre
+com a mesma estrutura: título-afirmação, figura com "Como ler" dentro, no
+tamanho do slide; à direita, até três leituras e o bloco "O que isso quer
+dizer", em linguagem simples; embaixo, a frase de cautela. A H3 usa a figura do P1h, auditada, com os pesos na mesma
 escala; o km equivalente entra como descritivo, e o limite unilateral dele
-não substitui o teste bilateral do P1a. A cadeia-resumo fecha o bloco com as
-linhas do doc 57, a da H3 e a força da evidência de cada uma, dada por regra.
+não substitui o teste bilateral do P1a.
 
 As figuras foram refeitas para o grupo: cada linha diz em português o que
 compara, o nulo é uma linha preta, a referência do protocolo é tracejada, e
@@ -138,3 +141,4 @@ IVS como running variable. O deck original não é alterado.
 | 26/10/2026 | reescrita no arco do plano da entrega empírica (H1–H4 pela cadeia do modelo; metodologia econométrica), com a síntese do doc 57; H3 pendente |
 | 26/10/2026 | H3 com o P1h auditado (doc 57i, auditoria 31): slide, linha na cadeia-resumo e linha na robustez |
 | 26/10/2026 | deck organizado a pedido do autor: prévios do grupo reutilizados; parte empírica cortada e sintetizada; apêndice por seção |
+| 26/10/2026 | um arquivo só; resultados abrem pela cadeia-síntese; bloco "O que isso quer dizer"; figuras no tamanho do slide e conteúdo ocupando a área útil |

@@ -6,10 +6,9 @@ de ambiente `PMME_DECK_GRUPO`; o doc 02 da banca 2; as figuras e `numeros_banca2
 
 Saídas, em `output/apresentacao_banca2/`:
 
-* `deck_banca2_proposta.pptx`: os slides prévios do grupo reutilizados como estão, só com as correções, e a parte
+* `deck_banca2.pptx`: o entregável, um arquivo só com tudo: os slides prévios do grupo reutilizados como estão, só com as correções, e a parte
   empírica organizada, cortada e sintetizada (pedido do autor de 26/10/2026): hipóteses → base → metodologia →
   resultados → robustez e discussão; depois do divisor "Apêndice", o que é importante mas não central, por seção;
-* `slides_empiricos_banca2.pptx`: só os slides novos, na mesma ordem, no template do deck;
 * `manifesto_deck_banca2.json`: entradas e saídas com SHA-256, ordem dos slides, classificação de cada slide do
   deck do grupo e correções aplicadas.
 
@@ -50,8 +49,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SAIDA = ROOT / "output" / "apresentacao_banca2"
 DOC02 = ROOT / "docs" / "07_apresentacoes" / "banca2" / "02_conteudo_slides.md"
 NUMEROS = SAIDA / "numeros_banca2.json"
-ARQ_DECK = "deck_banca2_proposta.pptx"
-ARQ_SLIDES = "slides_empiricos_banca2.pptx"
+ARQ_DECK = "deck_banca2.pptx"
 ARQ_MANIFESTO = "manifesto_deck_banca2.json"
 
 _spec = importlib.util.spec_from_file_location("gerar_diagrama_banca_final",
@@ -66,7 +64,6 @@ Slide, xml_slide, xml_notas, Pacote = BF.Slide, BF.xml_slide, BF.xml_notas, BF.P
 pol, run, para = BF.pol, BF.Slide.run, BF.Slide.para
 VERDE_ESCURO, VERDE, CLARO, CLARO2, LINHA = BF.VERDE_ESCURO, BF.VERDE, BF.CLARO, BF.CLARO2, BF.LINHA
 TEXTO, MUDO, BRANCO, FONTE = BF.TEXTO, BF.MUDO, BF.BRANCO, BF.FONTE
-LARANJA_FORTE, LARANJA_FUNDO = "B5470F", "FDEBD9"
 
 # Títulos esperados no deck do grupo (conferência de que é o deck certo)
 TITULOS_ESPERADOS = {23: "Da condição de aceitação, sai nossa hipótese econômica",
@@ -78,7 +75,6 @@ DESTINOS = ("corpo", "apêndice", "removido")
 
 # Área útil do slide (polegadas); o slide é 13,333 × 7,5
 X0, X1, Y0 = 0.32, 13.0, 0.88
-Y_CAUTELA, H_CAUTELA = 6.12, 0.56
 Y_FONTES = 6.76
 
 
@@ -131,15 +127,16 @@ def ler_slides(doc: Path = DOC02) -> list[dict]:
         elif ln.startswith("## "):
             atual = dict(secao=secao, titulo=ln[3:].strip(), rastreio="", layout="", imagem=None, alt="",
                          tabela=[], marcadores=[], paragrafos=[], codigo=[], cadeia="", cautela="", fontes="",
-                         notas="", colunas=[], apendice=secao == "Apêndice")
+                         notas="", colunas=[], explica="", apendice=secao == "Apêndice")
             slides.append(atual)
         elif atual is not None and ln.startswith("### "):
             atual["colunas"].append({"titulo": ln[4:].strip(), "itens": []})
         elif atual is not None:
             if re.fullmatch(r"`[^`]+`", ln.strip()) and not atual["rastreio"]:
                 atual["rastreio"] = ln.strip().strip("`")
-            elif m := re.match(r"<!-- layout: (\w+) -->", ln.strip()):
+            elif m := re.match(r"<!-- layout: (\w+)(?: ([\d.]+))? -->", ln.strip()):
                 atual["layout"] = m.group(1)
+                atual["largura_fig"] = float(m.group(2)) if m.group(2) else None
             elif m := re.match(r"!\[([^\]]*)\]\(([^)]+)\)", ln.strip()):
                 atual["alt"], atual["imagem"] = m.group(1), (doc.parent / m.group(2)).resolve()
             elif ln.startswith("```"):
@@ -173,6 +170,8 @@ def ler_slides(doc: Path = DOC02) -> list[dict]:
                     atual["cautela"] = re.sub(r"\s*>\s*", " ", texto[1:]).strip()
                 elif texto.startswith("**Fontes:**"):
                     atual["fontes"] = texto
+                elif texto.startswith("**O que isso quer dizer.**"):
+                    atual["explica"] = texto.replace("**O que isso quer dizer.**", "").strip()
                 elif texto.startswith("**Cadeia:**"):
                     atual["cadeia"] = texto.replace("**Cadeia:**", "").strip()
                 elif not texto.startswith("<!--"):
@@ -229,9 +228,9 @@ def runs_md(txt: str, sz: float, cor: str = TEXTO, negrito: bool = False, cor_ne
     return out
 
 
-def linhas_necessarias(txt: str, sz: float, largura: float) -> int:
+def linhas_necessarias(txt: str, sz: float, largura: float, fator: float = 0.56) -> int:
     palavras, n, atual = txt.split(), 1, 0.0
-    esp = 0.56 * sz / 72
+    esp = fator * sz / 72
     for p in palavras:
         w = (len(p) + 1) * esp
         if atual + w > largura and atual > 0:
@@ -242,11 +241,35 @@ def linhas_necessarias(txt: str, sz: float, largura: float) -> int:
     return n
 
 
-def caixa_cautela(s: Slide, txt: str, x: float = X0, w: float = X1 - X0, y: float = Y_CAUTELA,
-                  h: float = H_CAUTELA, pendente: bool = False, sz: float = 12.5) -> None:
-    fundo, cor = (LARANJA_FUNDO, LARANJA_FORTE) if pendente else (CLARO2, VERDE_ESCURO)
-    s.forma("Cautela", x, y, w, h, adj=12000, fill=fundo, anchor="ctr", ins=(0.18, 0.04, 0.18, 0.04),
-            paras=[para(runs_md(txt.replace("**", ""), sz, cor, negrito=True), "l")])
+SZ_CORPO, SZ_TAB_CORPO, SZ_TAB_APENDICE = 16.0, 14.0, 10.0  # pt mínimos: corpo, tabela no corpo, tabela no apêndice
+LINHA_PT = 1.3 / 72  # altura de uma linha de texto, em polegadas por ponto
+
+
+def altura_texto(txt: str, sz: float, w: float) -> float:
+    """Altura de um parágrafo; a largura média do caractere da Montserrat é estimada com folga (0,54 em; medida no texto destes slides: 0,50 no regular e 0,53 no negrito)."""
+    return linhas_necessarias(texto_puro(txt), sz, w, fator=0.54) * sz * LINHA_PT
+
+
+def caixa_cautela(s: Slide, txt: str) -> float:
+    """Frase de cautela embaixo, logo acima da linha de fontes; a altura acompanha o texto. Devolve o topo."""
+    sz, w = SZ_CORPO, X1 - X0
+    h = altura_texto(txt.replace("**", ""), sz, w - 0.4) + 0.2
+    y = Y_FONTES - 0.06 - h
+    s.forma("Cautela", X0, y, w, h, adj=12000, fill=CLARO2, anchor="ctr", ins=(0.18, 0.04, 0.18, 0.04),
+            paras=[para(runs_md(txt.replace("**", ""), sz, VERDE_ESCURO, negrito=True), "l")])
+    return y
+
+
+def altura_explica(txt: str, w: float, sz: float = SZ_CORPO) -> float:
+    return 0.16 + sz * LINHA_PT + 0.06 + altura_texto(txt, sz, w - 0.36) + 0.14
+
+
+def caixa_explica(s: Slide, txt: str, x: float, y: float, w: float, h: float, sz: float = SZ_CORPO) -> None:
+    """Bloco "O que isso quer dizer": a leitura em linguagem simples do que o número significa para a pergunta."""
+    s.forma("O que isso quer dizer", x, y, w, h, adj=6000, fill="F4F8F5", line=VERDE, line_w=1.25, anchor="t",
+            ins=(0.18, 0.12, 0.18, 0.08),
+            paras=[para([run("O que isso quer dizer", sz, VERDE, b=True)], depois=4),
+                   para(runs_md(txt, sz, TEXTO, cor_neg=VERDE_ESCURO), linha=104)])
 
 
 def linha_fontes(s: Slide, txt: str) -> None:
@@ -301,13 +324,14 @@ def altura_tabela(tab: list[list[str]], larg: list[float], sz: float) -> tuple[f
     alturas = []
     for r in tab:
         nl = max(linhas_necessarias(texto_puro(c), sz, w - 0.16) for c, w in zip(r, larg))
-        alturas.append(nl * sz * 1.22 / 72 + 0.12)
+        alturas.append(nl * sz * 1.22 / 72 + 0.14)
     return sum(alturas), alturas
 
 
-def tabela(s: Slide, tab: list[list[str]], x: float, y: float, w: float, h_max: float,
-           sz_max: float = 14.0, sz_min: float = 9.0) -> float:
-    """Tabela nativa no estilo do deck; reduz a letra até caber em h_max. Devolve a altura usada."""
+def tabela(s: Slide, tab: list[list[str]], x: float, y: float, w: float, h_max: float, sz_max: float = 18.0,
+           sz_min: float = SZ_TAB_CORPO, preencher: bool = True, onde: str = "") -> float:
+    """Tabela nativa no estilo do deck: a maior letra (até sz_max) que cabe em h_max; com `preencher`, as linhas
+    crescem até ocupar h_max. Para se nem com sz_min a tabela cabe. Devolve a altura usada."""
     sz = sz_max
     while True:
         larg = larguras_colunas(tab, w, sz)
@@ -315,6 +339,10 @@ def tabela(s: Slide, tab: list[list[str]], x: float, y: float, w: float, h_max: 
         if h <= h_max or sz <= sz_min:
             break
         sz -= 0.5
+    if h > h_max + 0.02:
+        raise SystemExit(f"ERRO: tabela de {onde!r} não cabe ({h:.2f} > {h_max:.2f} pol.) com letra {sz} pt")
+    if preencher and h < h_max:
+        alturas = [a * h_max / h for a in alturas]
     i = s._id("Tabela")
     grid = "".join(f'<a:gridCol w="{pol(c)}"/>' for c in larg)
     borda = ''.join(f'<a:{lado} w="6350"><a:solidFill><a:srgbClr val="{LINHA}"/></a:solidFill></a:{lado}>'
@@ -328,7 +356,7 @@ def tabela(s: Slide, tab: list[list[str]], x: float, y: float, w: float, h_max: 
             cor = BRANCO if cab else TEXTO
             rr = runs_md(c, sz, cor, negrito=cab or j == 0, cor_neg=None if cab else VERDE_ESCURO)
             cels.append(f'<a:tc><a:txBody><a:bodyPr/><a:lstStyle/>{para(rr, "l", linha=100)}</a:txBody>'
-                        f'<a:tcPr marL="{pol(0.07)}" marR="{pol(0.07)}" marT="{pol(0.04)}" marB="{pol(0.04)}" anchor="ctr">'
+                        f'<a:tcPr marL="{pol(0.08)}" marR="{pol(0.08)}" marT="{pol(0.04)}" marB="{pol(0.04)}" anchor="ctr">'
                         f'{borda}<a:solidFill><a:srgbClr val="{fundo}"/></a:solidFill></a:tcPr></a:tc>')
         linhas_xml.append(f'<a:tr h="{pol(hr)}">{"".join(cels)}</a:tr>')
     h_total = sum(alturas)
@@ -342,20 +370,21 @@ def tabela(s: Slide, tab: list[list[str]], x: float, y: float, w: float, h_max: 
     return h_total
 
 
-def marcadores(s: Slide, itens: list[str], x: float, y: float, w: float, h: float, sz: float = 13.0,
-               nome: str = "Marcadores") -> None:
+def marcadores(s: Slide, itens: list[str], x: float, y: float, w: float, h: float, sz: float = SZ_CORPO,
+               nome: str = "Marcadores", depois: int = 900) -> None:
     paras = []
     for it in itens:
         rr = runs_md(it, sz, TEXTO, cor_neg=VERDE_ESCURO)
-        paras.append(f'<a:p><a:pPr marL="{pol(0.22)}" indent="-{pol(0.22)}" algn="l"><a:lnSpc><a:spcPct val="104000"/>'
-                     f'</a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="900"/></a:spcAft>'
+        paras.append(f'<a:p><a:pPr marL="{pol(0.24)}" indent="-{pol(0.24)}" algn="l"><a:lnSpc><a:spcPct val="104000"/>'
+                     f'</a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="{depois}"/></a:spcAft>'
                      f'<a:buClr><a:srgbClr val="{VERDE}"/></a:buClr><a:buFont typeface="Arial"/><a:buChar char="•"/>'
                      f'</a:pPr>{"".join(rr)}</a:p>')
     s.forma(nome, x, y, w, h, geom="rect", paras=paras, anchor="t", ins=(0, 0, 0, 0), txbox=True)
 
 
-def altura_marcadores(itens: list[str], sz: float, w: float) -> float:
-    return sum(linhas_necessarias(texto_puro(it), sz, w - 0.25) * sz * 1.25 / 72 + 0.125 for it in itens)
+def altura_marcadores(itens: list[str], sz: float, w: float, depois: int = 900) -> float:
+    """Altura dos marcadores, com um terço de linha de folga por item (o negrito do início é mais largo)."""
+    return sum((altura_texto(it, sz, w - 0.26) + 0.3 * sz * LINHA_PT) * 1.04 + depois / 100 / 72 for it in itens)
 
 
 # Equações: _x vira subscrito e ^x sobrescrito
@@ -383,134 +412,129 @@ def _nav(sl: dict) -> str:
         sl["secao"], "Resultados")
 
 
+def painel(s: Slide, sl: dict, x: float, y: float, w: float, y_fim: float, com_explica: bool = True,
+           sz_tab_min: float = SZ_TAB_CORPO) -> None:
+    """Coluna lateral: tabela (se houver), marcadores e o bloco "O que isso quer dizer", ocupando a altura toda.
+    O espaço que sobra vai para a tabela (linhas mais altas) ou é dividido entre os blocos."""
+    h_marc = altura_marcadores(sl["marcadores"], SZ_CORPO, w) if sl["marcadores"] else 0.0
+    h_exp = altura_explica(sl["explica"], w) if (com_explica and sl["explica"]) else 0.0
+    gap = 0.2
+    if sl["tabela"]:
+        h_tab = y_fim - y - h_marc - h_exp - gap * (bool(h_marc) + bool(h_exp))
+        h_tab = tabela(s, sl["tabela"], x, y, w, h_tab, sz_max=16, sz_min=sz_tab_min, onde=sl["titulo"])
+        y += h_tab + gap
+    if sl["marcadores"]:
+        marcadores(s, sl["marcadores"], x + 0.05, y, w - 0.05, h_marc)
+        y += h_marc + gap
+    if h_exp:
+        if y_fim - y < h_exp - 0.05:
+            raise SystemExit(f"ERRO: o painel de {sl['titulo']!r} não cabe ({y + h_exp - y_fim:.2f} pol. a mais)")
+        caixa_explica(s, sl["explica"], x, y, w, y_fim - y)  # o bloco vai até o fim da área
+
+
 def montar(sl: dict, rid_img: str | None) -> str:
     s = Slide()
     lay = sl["layout"]
-    tem_caut = bool(sl["cautela"])
-    y_fim = (Y_CAUTELA - 0.14) if tem_caut else (Y_FONTES - 0.1)
+    ap = sl["apendice"]
+    sz_tab_min = SZ_TAB_APENDICE if ap else SZ_TAB_CORPO
+    y_caut = caixa_cautela(s, sl["cautela"]) if sl["cautela"] else Y_FONTES - 0.1
+    y_fim = y_caut - 0.14
+    W = X1 - X0
     if lay == "tabela":
-        h_disp = y_fim - Y0
+        h_exp = altura_explica(sl["explica"], W) if sl["explica"] else 0.0
+        h_marc = altura_marcadores(sl["marcadores"], SZ_CORPO, W) if sl["marcadores"] else 0.0
+        h_tab = y_fim - Y0 - h_exp - h_marc - 0.2 * (bool(h_exp) + bool(h_marc))
+        h = tabela(s, sl["tabela"], X0, Y0, W, h_tab, sz_min=sz_tab_min, onde=sl["titulo"])
+        y = Y0 + h + 0.2
         if sl["marcadores"]:
-            h_marc = altura_marcadores(sl["marcadores"], 12, X1 - X0)
-            h_disp -= h_marc + 0.15
-        h = tabela(s, sl["tabela"], X0, Y0, X1 - X0, h_disp)
-        if sl["marcadores"]:
-            marcadores(s, sl["marcadores"], X0, Y0 + h + 0.2, X1 - X0, y_fim - (Y0 + h + 0.2), sz=12)
-    elif lay == "figura_esquerda":
-        w, h = encaixar(sl["imagem"], 8.3, y_fim - Y0)
-        y_img = Y0 + max(0.0, (y_fim - Y0 - h) / 2)
-        imagem(s, rid_img, X0, y_img, w, h, sl["alt"])
-        xm = X0 + w + 0.3
-        marcadores(s, sl["marcadores"], xm, y_img + 0.05, X1 - xm, y_fim - y_img - 0.05, sz=12.5)
-    elif lay == "figura_topo":
-        h_tab = 0.0
-        if sl["tabela"]:
-            larg = larguras_colunas(sl["tabela"], 8.0, 12)
-            h_tab, _ = altura_tabela(sl["tabela"], larg, 12)
-        h_marc = altura_marcadores(sl["marcadores"], 12, X1 - X0) if sl["marcadores"] else 0.0
-        h_img = y_fim - Y0 - max(h_tab, h_marc) - 0.25
-        w, h = encaixar(sl["imagem"], X1 - X0, h_img)
-        x_img = X0 + (X1 - X0 - w) / 2
-        imagem(s, rid_img, x_img, Y0, w, h, sl["alt"])
-        y2 = Y0 + h + 0.2
-        if sl["tabela"]:
-            tabela(s, sl["tabela"], X0 + (X1 - X0 - 8.0) / 2, y2, 8.0, y_fim - y2, sz_max=12)
-        if sl["marcadores"]:
-            marcadores(s, sl["marcadores"], X0, y2, X1 - X0, y_fim - y2, sz=12)
-    elif lay == "figura_faixa":
-        h_marc = altura_marcadores(sl["marcadores"], 13, X1 - X0)
-        w, h = encaixar(sl["imagem"], X1 - X0, y_fim - Y0 - h_marc - 0.2)
-        imagem(s, rid_img, X0 + (X1 - X0 - w) / 2, Y0, w, h, sl["alt"])
-        marcadores(s, sl["marcadores"], X0 + 0.1, Y0 + h + 0.18, X1 - X0 - 0.1, y_fim - (Y0 + h + 0.18), sz=13)
-    elif lay == "figura_cheia":
-        w, h = encaixar(sl["imagem"], X1 - X0, y_fim - Y0)
-        if tem_caut and X1 - X0 - w > 3.0:  # figura estreita: a cautela vira um cartão à direita
-            w, h = encaixar(sl["imagem"], X1 - X0 - 3.4, Y_FONTES - 0.15 - Y0)
-            imagem(s, rid_img, X0, Y0, w, h, sl["alt"])
-            caixa_cautela(s, sl["cautela"], x=X0 + w + 0.3, w=X1 - X0 - w - 0.3, y=Y0, h=h, sz=18)
-            tem_caut = False
-        else:
-            imagem(s, rid_img, X0 + (X1 - X0 - w) / 2, Y0, w, h, sl["alt"])
+            marcadores(s, sl["marcadores"], X0 + 0.05, y, W - 0.05, h_marc)
+            y += h_marc + 0.2
+        if h_exp:
+            caixa_explica(s, sl["explica"], X0, y_fim - h_exp, W, h_exp)
+    elif lay == "tabela_lateral":
+        w_tab = 8.5
+        tabela(s, sl["tabela"], X0, Y0, w_tab, y_fim - Y0, sz_min=sz_tab_min, onde=sl["titulo"])
+        sem_tab = dict(sl, tabela=[])
+        painel(s, sem_tab, X0 + w_tab + 0.3, Y0, W - w_tab - 0.3, y_fim)
+    elif lay == "figura_painel":
+        w_fig_max = sl.get("largura_fig") or 8.6
+        w, h = encaixar(sl["imagem"], w_fig_max, y_fim - Y0)
+        imagem(s, rid_img, X0, Y0, w, h, sl["alt"])
+        x_p = X0 + w + 0.3
+        sobra = y_fim - (Y0 + h) - 0.2
+        explica_embaixo = bool(sl["explica"]) and sobra >= altura_explica(sl["explica"], w)
+        if explica_embaixo:
+            caixa_explica(s, sl["explica"], X0, Y0 + h + 0.2, w, y_fim - (Y0 + h + 0.2))
+        painel(s, sl, x_p, Y0, X1 - x_p, y_fim, com_explica=not explica_embaixo, sz_tab_min=sz_tab_min)
     elif lay == "cadeia":
-        montar_cadeia(s, sl)
-        tabela(s, sl["tabela"], X0, 2.62, X1 - X0, y_fim - 2.62, sz_max=13)
+        y_tab = montar_cadeia(s, sl)
+        h_exp = altura_explica(sl["explica"], W) if sl["explica"] else 0.0
+        tabela(s, sl["tabela"], X0, y_tab, W, y_fim - y_tab - h_exp - 0.2 * bool(h_exp), sz_min=sz_tab_min,
+               onde=sl["titulo"])
+        if h_exp:
+            caixa_explica(s, sl["explica"], X0, y_fim - h_exp, W, h_exp)
     elif lay == "equacoes":
         montar_equacoes(s, sl, y_fim)
-    elif lay == "pendente":
-        montar_pendente(s, sl, y_fim)
     elif lay == "cartoes":
         montar_cartoes(s, sl, y_fim)
     elif lay == "duas_colunas":
         montar_duas_colunas(s, sl, y_fim)
     else:
         raise SystemExit(f"ERRO: layout desconhecido {lay!r} em {sl['titulo']!r}")
-    if tem_caut:
-        caixa_cautela(s, sl["cautela"], pendente=lay == "pendente")
     if sl["fontes"]:
         linha_fontes(s, sl["fontes"])
     return xml_slide(sl["titulo"], _nav(sl), s.partes)
 
 
-def montar_cadeia(s: Slide, sl: dict) -> None:
+def montar_cadeia(s: Slide, sl: dict) -> float:
+    """Diagrama da cadeia com as hipóteses sobre as setas. Devolve onde a tabela começa."""
     nos = []
     for parte in sl["cadeia"].split(" → "):
         parte = parte.strip()
         k_par = parte.rindex(" (")
         nos.append((parte[:k_par].strip(), parte[k_par + 2:-1].strip()))
     n = len(nos)
-    w_no, gap = 2.06, 0.58
+    w_no, gap = 2.18, 0.45
     total = n * w_no + (n - 1) * gap
     x = X0 + (X1 - X0 - total) / 2
-    y_no, h_no = 1.33, 0.78
+    y_no, h_no = Y0 + 0.4, 0.86
     xs = []
     for k, (sim, desc) in enumerate(nos):
         ultimo = k == n - 1
         s.forma(f"Nó {k + 1}", x, y_no, w_no, h_no, adj=14000, fill=CLARO2 if ultimo else VERDE_ESCURO, anchor="ctr",
                 ins=(0.06, 0.04, 0.06, 0.04),
-                paras=[para([run(sim, 16, VERDE_ESCURO if ultimo else BRANCO, b=True)], "ctr"),
-                       para([run(desc, 10, TEXTO if ultimo else "DDEFE0")], "ctr")])
+                paras=[para([run(sim, 20, VERDE_ESCURO if ultimo else BRANCO, b=True)], "ctr"),
+                       para([run(desc, 12, TEXTO if ultimo else "DDEFE0")], "ctr")])
         xs.append(x)
         if k:
-            s.seta(f"Seta {k}", x - gap + 0.06, y_no + h_no / 2, x - 0.06, y_no + h_no / 2, cor=VERDE, larg=2.25)
+            s.seta(f"Seta {k}", x - gap + 0.05, y_no + h_no / 2, x - 0.05, y_no + h_no / 2, cor=VERDE, larg=2.5)
         x += w_no + gap
-    # colchetes das hipóteses: H1 e H2 em cima; H3 e H4 embaixo
-    def colchete(nome, a, b, y, txt, em_cima, cor):
+
+    def colchete(nome, a, b, y, txt, cor):
         xa, xb = xs[a] + 0.05, xs[b] + w_no - 0.05
-        s.forma(nome, xa, y, xb - xa, 0.27, adj=50000, fill=cor, anchor="ctr", ins=(0.04, 0, 0.04, 0),
-                paras=[para([run(txt, 9.5, BRANCO, b=True)], "ctr")])
-    colchete("H1", 0, 3, 0.92, "H1 · preenchimento: B → Pr(Y = 1)", True, VERDE)
-    colchete("H2", 0, 2, 2.17, "H2 · escolha: B → V → π", False, "3E7C4F")
-    s.forma("H3", xs[1] + 0.25, y_no - 0.2, w_no - 0.5, 0.24, adj=50000, fill="C23B33", anchor="ctr",
-            ins=(0.02, 0, 0.02, 0), paras=[para([run("H3 · central", 9, BRANCO, b=True)], "ctr")])
-    colchete("H4", 3, 4, 2.17, "H4 · capacidade líquida", False, "6B6B6B")
+        s.forma(nome, xa, y, xb - xa, 0.32, adj=50000, fill=cor, anchor="ctr", ins=(0.04, 0, 0.04, 0),
+                paras=[para([run(txt, 12, BRANCO, b=True)], "ctr")])
+    colchete("H1", 0, 3, Y0, "H1 · preenchimento: B → Pr(Y = 1)", VERDE)
+    colchete("H2", 0, 2, y_no + h_no + 0.08, "H2 · escolha: B → V → π", "3E7C4F")
+    s.forma("H3", xs[1] + 0.2, y_no - 0.17, w_no - 0.4, 0.3, adj=50000, fill="C23B33", anchor="ctr",
+            ins=(0.02, 0, 0.02, 0), paras=[para([run("H3 · central", 12, BRANCO, b=True)], "ctr")])
+    colchete("H4", 3, 4, y_no + h_no + 0.08, "H4 · capacidade líquida", "6B6B6B")
+    return y_no + h_no + 0.5
 
 
 def montar_equacoes(s: Slide, sl: dict, y_fim: float) -> None:
     linhas = [ln for ln in sl["codigo"] if ln.strip()]
-    h_cx = 0.5 + 0.52 * len(linhas)
+    h_cx = 0.6 + 0.62 * len(linhas)
     s.forma("Caixa das equações", X0, Y0, X1 - X0, h_cx, adj=6000, fill=CLARO, line=LINHA, anchor="ctr")
     for k, ln in enumerate(linhas):
         rot, eq = ln.split(":", 1)
-        y = Y0 + 0.25 + 0.52 * k
-        s.texto(f"Rótulo {k + 1}", X0 + 0.25, y, 2.6, 0.45, [para([run(rot.strip(), 12, VERDE_ESCURO, b=True)])],
+        y = Y0 + 0.3 + 0.62 * k
+        s.texto(f"Rótulo {k + 1}", X0 + 0.25, y, 2.7, 0.5, [para([run(rot.strip(), 14, VERDE_ESCURO, b=True)])],
                 anchor="ctr")
-        s.texto(f"Equação {k + 1}", X0 + 2.95, y, X1 - X0 - 3.1, 0.45,
-                [para(runs_equacao(eq.strip(), 17, TEXTO))], anchor="ctr")
+        s.texto(f"Equação {k + 1}", X0 + 3.05, y, X1 - X0 - 3.2, 0.5,
+                [para(runs_equacao(eq.strip(), 19, TEXTO))], anchor="ctr")
     y2 = Y0 + h_cx + 0.3
-    marcadores(s, sl["marcadores"], X0, y2, X1 - X0, y_fim - y2, sz=13)
-
-
-def montar_pendente(s: Slide, sl: dict, y_fim: float) -> None:
-    s.forma("Selo PENDENTE", X0, Y0 + 0.05, 3.1, 0.62, adj=20000, fill=LARANJA_FORTE, anchor="ctr",
-            paras=[para([run("PENDENTE", 26, BRANCO, b=True, spc=200)], "ctr")])
-    s.texto("Selo texto", X0 + 3.35, Y0 + 0.05, X1 - X0 - 3.35, 0.62,
-            [para([run("Resultado do protocolo 52b em estimação e auditoria. Este slide será trocado.", 14,
-                       LARANJA_FORTE, b=True)])], anchor="ctr")
-    s.forma("Espaço da figura", X0, Y0 + 0.95, 5.4, y_fim - Y0 - 0.95, adj=4000, fill=LARANJA_FUNDO,
-            line=LARANJA_FORTE, line_w=1.5, dash="dash", anchor="ctr",
-            paras=[para([run("figura da H3", 16, LARANJA_FORTE, b=True)], "ctr"),
-                   para([run("coeficientes do M1 na mesma escala de utilidade", 11, LARANJA_FORTE)], "ctr")])
-    marcadores(s, sl["marcadores"], X0 + 5.75, Y0 + 1.05, X1 - X0 - 5.75, y_fim - Y0 - 1.05, sz=13)
+    marcadores(s, sl["marcadores"], X0, y2, X1 - X0, y_fim - y2, sz=SZ_CORPO)
 
 
 def montar_cartoes(s: Slide, sl: dict, y_fim: float) -> None:
@@ -519,35 +543,37 @@ def montar_cartoes(s: Slide, sl: dict, y_fim: float) -> None:
     rows = math.ceil(len(itens) / cols)
     w = (X1 - X0 - gap * (cols - 1)) / cols
     h = (y_fim - Y0 - gap * (rows - 1)) / rows
-    # cartão do tamanho do texto mais longo (com folga), sem passar da área útil
-    necessario = max(0.95 + linhas_necessarias(texto_puro(it), 15, w - 0.44) * 15 * 1.32 / 72 for it in itens)
-    h = min(h, max(necessario + 0.35, 1.9))
     for k, it in enumerate(itens):
         m = re.match(r"\*\*(.+?)\*\*\s*(.*)", it)
         lead, corpo = (m.group(1), m.group(2)) if m else ("", it)
         x = X0 + (k % cols) * (w + gap)
         y = Y0 + (k // cols) * (h + gap)
         s.forma(f"Cartão {k + 1}", x, y, w, h, adj=5000, fill=CLARO, line=LINHA, anchor="t",
-                ins=(0.22, 0.18, 0.22, 0.12),
-                paras=[para([run(lead if lead.endswith("al.") else lead.rstrip("."), 17, VERDE_ESCURO, b=True)],
-                            depois=8),
-                       para(runs_md(corpo, 15, TEXTO, cor_neg=VERDE_ESCURO), linha=110)])
+                ins=(0.24, 0.2, 0.24, 0.12),
+                paras=[para([run(lead if lead.endswith("al.") else lead.rstrip("."), 20, VERDE_ESCURO, b=True)],
+                            depois=10),
+                       para(runs_md(corpo, 18, TEXTO, cor_neg=VERDE_ESCURO), linha=112)])
 
 
 def montar_duas_colunas(s: Slide, sl: dict, y_fim: float) -> None:
-    """Duas colunas (### no doc 02), cada uma com um cabeçalho e seus marcadores, num cartão claro."""
+    """Duas colunas (### no doc 02), cada uma com um cabeçalho e seus marcadores, num cartão claro; o bloco
+    "O que isso quer dizer", se houver, ocupa a largura toda embaixo."""
     cols = sl["colunas"]
     if len(cols) != 2:
         raise SystemExit(f"ERRO: layout duas_colunas pede 2 colunas em {sl['titulo']!r}; achou {len(cols)}")
     gap = 0.35
     w = (X1 - X0 - gap) / 2
-    h = y_fim - Y0
+    h_exp = altura_explica(sl["explica"], X1 - X0) if sl["explica"] else 0.0
+    h = y_fim - Y0 - h_exp - 0.2 * bool(h_exp)
     for k, col in enumerate(cols):
         x = X0 + k * (w + gap)
         s.forma(f"Coluna {k + 1}", x, Y0, w, h, adj=4000, fill=CLARO, line=LINHA, anchor="t")
-        s.texto(f"Cabeçalho {k + 1}", x + 0.25, Y0 + 0.18, w - 0.5, 0.5,
-                [para([run(col["titulo"], 18, VERDE_ESCURO, b=True)])], anchor="t")
-        marcadores(s, col["itens"], x + 0.25, Y0 + 0.85, w - 0.5, h - 1.0, sz=15, nome=f"Marcadores {k + 1}")
+        s.texto(f"Cabeçalho {k + 1}", x + 0.25, Y0 + 0.16, w - 0.5, 0.5,
+                [para([run(col["titulo"], 20, VERDE_ESCURO, b=True)])], anchor="t")
+        marcadores(s, col["itens"], x + 0.25, Y0 + 0.78, w - 0.5, h - 0.9, sz=17, nome=f"Marcadores {k + 1}",
+                   depois=1400)
+    if h_exp:
+        caixa_explica(s, sl["explica"], X0, y_fim - h_exp, X1 - X0, h_exp)
 
 
 def notas_do_slide(sl: dict) -> str:
@@ -991,9 +1017,6 @@ def construir(deck: Path, saida: Path) -> dict:
     saida.mkdir(parents=True, exist_ok=True)
     # (a) deck proposto: na ordem do doc 02, só com os slides do grupo que ficam
     podar(com_lista([(i, r) for i, r, _ in ordem], pres), rels, {r for _, r, _ in ordem}, saida / ARQ_DECK)
-    # (b) só os slides novos
-    so_novos = [(nv["id"], nv["rid"]) for nv in novos]
-    podar(com_lista(so_novos, pres), rels, {r for _, r in so_novos}, saida / ARQ_SLIDES)
 
     titulos = {}
     for nv in novos:
@@ -1030,7 +1053,7 @@ def escrever_manifesto(deck: Path, saida: Path, resumo: dict) -> None:
         ] + [{"caminho": f, "sha256": sha256_arq(ROOT / f), "papel": "figura", "no_pacote": m}
              for f, m in sorted(resumo["midias"].items())],
         "saidas": [{"caminho": f"output/apresentacao_banca2/{n}", "sha256": sha256_arq(saida / n),
-                    "bytes": (saida / n).stat().st_size} for n in (ARQ_DECK, ARQ_SLIDES)],
+                    "bytes": (saida / n).stat().st_size} for n in (ARQ_DECK,)],
         "correcoes": resumo["correcoes"],
         "classificacao_deck_do_grupo": resumo["classificacao"],
         "ordem_do_deck_proposto": resumo["ordem"],
@@ -1049,7 +1072,7 @@ def main(argv: list[str] | None = None) -> int:
     deck = Path(a.deck)
     resumo = construir(deck, SAIDA)
     escrever_manifesto(deck, SAIDA, resumo)
-    for n in (ARQ_DECK, ARQ_SLIDES, ARQ_MANIFESTO):
+    for n in (ARQ_DECK, ARQ_MANIFESTO):
         print(SAIDA.relative_to(ROOT) / n, (SAIDA / n).stat().st_size)
     return 0
 

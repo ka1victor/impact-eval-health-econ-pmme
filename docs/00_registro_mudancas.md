@@ -8,6 +8,31 @@
 
 ---
 
+## 26/10/2026 — Banca 2: deck num arquivo só
+
+Motivo: pedido do autor ("por que tu não coloca tudo junto num só?"). O entregável passa a ser um único
+`.pptx`, com os slides do grupo, a parte empírica e o apêndice.
+
+### Renomeado
+
+| De | Para |
+|---|---|
+| `output/apresentacao_banca2/deck_banca2_proposta.pptx` | `output/apresentacao_banca2/deck_banca2.pptx` |
+
+### Removido
+
+| Arquivo | Motivo |
+|---|---|
+| `output/apresentacao_banca2/slides_empiricos_banca2.pptx` | só os slides novos; o deck num arquivo só os contém |
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `output/apresentacao_banca2/qa_render/grade_empirica.png` | grade de miniaturas da parte empírica do deck, para conferência visual |
+
+---
+
 ## 26/10/2026 — Auditoria 31: P1h (protocolo 52b)
 
 Motivo: auditoria independente da execução do P1h. Veredito: aprovado com correções. Nenhuma estimativa

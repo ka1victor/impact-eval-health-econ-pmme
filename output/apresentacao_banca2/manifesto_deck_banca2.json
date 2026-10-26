@@ -392,7 +392,7 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/02_conteudo_slides.md",
       "papel": "texto dos slides novos e quadro de correções",
-      "sha256": "5a637e18992f7f19e256604c9d69157bf930e1c83e767942ce0f9c209efc3e94"
+      "sha256": "a0a15d26937eb843b0a7746238a227a67050a2406136606d3f2a411481d9fa72"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
@@ -401,27 +401,27 @@
     },
     {
       "caminho": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
-      "no_pacote": "ppt/media/banca2_06_cadeia_resumo_doc57.png",
+      "no_pacote": "ppt/media/banca2_02_cadeia_resumo_doc57.png",
       "papel": "figura",
-      "sha256": "d4a192a3f7e4d434b9f7d8cd40b9d6d912e919744de537e17d4f2944dc2a12c7"
+      "sha256": "d73d3e942f49d523babe06af4ca2a3329cc208de3404aac1670d327551d76f67"
     },
     {
       "caminho": "output/apresentacao_banca2/h1_preenchimento.png",
-      "no_pacote": "ppt/media/banca2_02_h1_preenchimento.png",
+      "no_pacote": "ppt/media/banca2_03_h1_preenchimento.png",
       "papel": "figura",
-      "sha256": "dc2d81feba3ebe5254fed77c1fa31432b53b75ad120d5348375d22c209e8c882"
+      "sha256": "3003872783f675050ed0a50f08137968dad09f59c7226a2ba0537a12f57c2bbe"
     },
     {
       "caminho": "output/apresentacao_banca2/h2_escolha.png",
-      "no_pacote": "ppt/media/banca2_03_h2_escolha.png",
+      "no_pacote": "ppt/media/banca2_04_h2_escolha.png",
       "papel": "figura",
-      "sha256": "9b5dbaf14f927209d2e57d388b2867be92e8ce2400f986d1f1612ee6cab21b1d"
+      "sha256": "4865043fe176266171c5b659ed3af85ec286781aa8c9861784ee0a8295500ead"
     },
     {
       "caminho": "output/apresentacao_banca2/h4_horas_medico.png",
-      "no_pacote": "ppt/media/banca2_05_h4_horas_medico.png",
+      "no_pacote": "ppt/media/banca2_06_h4_horas_medico.png",
       "papel": "figura",
-      "sha256": "458fb6cc5500655a1175e0c92d91c292c3485386d14d4f8638bca206863a9723"
+      "sha256": "9be92c374e3284fe515b6a0ad18fa770e03961edf520e897845b8ce6143f2556"
     },
     {
       "caminho": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
@@ -431,7 +431,7 @@
     },
     {
       "caminho": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
-      "no_pacote": "ppt/media/banca2_04_P1h_magnitudes.png",
+      "no_pacote": "ppt/media/banca2_05_P1h_magnitudes.png",
       "papel": "figura",
       "sha256": "61bcc1b8f3c1d7f1ee831c136f24804619ead0e7ad95bab9174484f3ba07ce12"
     }
@@ -592,7 +592,7 @@
     },
     {
       "figura": null,
-      "layout": "tabela",
+      "layout": "tabela_lateral",
       "origem": "novo",
       "posicao": 26,
       "secao": "Base de Dados",
@@ -622,7 +622,7 @@
     },
     {
       "figura": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
-      "layout": "figura_topo",
+      "layout": "figura_painel",
       "origem": "novo",
       "posicao": 30,
       "secao": "Metodologia",
@@ -635,44 +635,44 @@
       "titulo": "Sumário"
     },
     {
-      "figura": "output/apresentacao_banca2/h1_preenchimento.png",
-      "layout": "figura_faixa",
+      "figura": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
+      "layout": "figura_painel",
       "origem": "novo",
       "posicao": 32,
+      "secao": "Resultados",
+      "titulo": "Na cadeia, só a escolha e o registro do médico se movem"
+    },
+    {
+      "figura": "output/apresentacao_banca2/h1_preenchimento.png",
+      "layout": "figura_painel",
+      "origem": "novo",
+      "posicao": 33,
       "secao": "Resultados",
       "titulo": "H1: o preenchimento não aumenta de forma detectável no corte"
     },
     {
       "figura": "output/apresentacao_banca2/h2_escolha.png",
-      "layout": "figura_faixa",
+      "layout": "figura_painel",
       "origem": "novo",
-      "posicao": 33,
+      "posicao": 34,
       "secao": "Resultados",
       "titulo": "H2: a bolsa pesa na escolha da vaga só no ciclo 2"
     },
     {
       "figura": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
-      "layout": "figura_esquerda",
+      "layout": "figura_painel",
       "origem": "novo",
-      "posicao": 34,
+      "posicao": 35,
       "secao": "Resultados",
       "titulo": "H3: no modelo de escolha, a UF de origem pesa mais que a bolsa"
     },
     {
       "figura": "output/apresentacao_banca2/h4_horas_medico.png",
-      "layout": "figura_faixa",
-      "origem": "novo",
-      "posicao": 35,
-      "secao": "Resultados",
-      "titulo": "H4: o médico soma horas, mas metade já estava no município"
-    },
-    {
-      "figura": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
-      "layout": "figura_cheia",
+      "layout": "figura_painel",
       "origem": "novo",
       "posicao": 36,
       "secao": "Resultados",
-      "titulo": "Na cadeia, só a escolha e o registro do médico se movem"
+      "titulo": "H4: o médico soma horas, mas metade já estava no município"
     },
     {
       "figura": null,
@@ -804,14 +804,9 @@
   "regra": "nada estimado; nada lido de data/; texto dos slides novos lido do doc 02; números das correções lidos de output/apresentacao_banca2/numeros_banca2.json; figuras de output/ como imagem",
   "saidas": [
     {
-      "bytes": 12101374,
-      "caminho": "output/apresentacao_banca2/deck_banca2_proposta.pptx",
-      "sha256": "ce0dadfd3b921d3d4cd2233d2f4881857df52235815a648a04e76370349ca85e"
-    },
-    {
-      "bytes": 2346221,
-      "caminho": "output/apresentacao_banca2/slides_empiricos_banca2.pptx",
-      "sha256": "01f75e1cc8e869410c90be85268ad17436d1b33995cb1afebf9f76c977694cd2"
+      "bytes": 11718281,
+      "caminho": "output/apresentacao_banca2/deck_banca2.pptx",
+      "sha256": "b189b8125926190befdc7475cde226b4632cc26b97508fa481f93d197be424f1"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py"

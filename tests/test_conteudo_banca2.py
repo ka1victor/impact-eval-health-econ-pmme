@@ -51,9 +51,8 @@ DOC01, DOC02, DOC03, README = (DOCS / "01_roteiro_narrativo.md", DOCS / "02_cont
                                DOCS / "03_proveniencia_figuras_e_numeros.md", DOCS / "README.md")
 ARQUIVO_ERRADO = "data/ivs_ipea_2010_municipios.csv"  # só citado: nenhum teste nem gerador o lê
 TEM_SAIDAS = NUMEROS.exists() and MANIFESTO.exists()
-DECK, SLIDES_NOVOS, MANIF_DECK = (SAIDA / "deck_banca2_proposta.pptx", SAIDA / "slides_empiricos_banca2.pptx",
-                                  SAIDA / "manifesto_deck_banca2.json")
-TEM_DECK = DECK.exists() and SLIDES_NOVOS.exists() and MANIF_DECK.exists()
+DECK, MANIF_DECK = SAIDA / "deck_banca2.pptx", SAIDA / "manifesto_deck_banca2.json"  # um arquivo só
+TEM_DECK = DECK.exists() and MANIF_DECK.exists()
 
 _bytecode = sys.dont_write_bytecode
 sys.dont_write_bytecode = True
@@ -790,7 +789,9 @@ class TestDeck(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.numeros = json.loads(NUMEROS.read_text(encoding="utf-8"))
         cls.manifesto = json.loads(MANIF_DECK.read_text(encoding="utf-8"))
-        cls.novos = _texto_slides(SLIDES_NOVOS)
+        cls.deck_ = _texto_slides(DECK)
+        pos_novos = [o["posicao"] for o in cls.manifesto["ordem_do_deck_proposto"] if o["origem"] == "novo"]
+        cls.novos = [cls.deck_[k - 1] for k in pos_novos]
         cls.deck = _texto_slides(DECK)
         cls.doc = slides()
 
@@ -802,7 +803,7 @@ class TestDeck(unittest.TestCase):
         D = importlib.import_module("gerar_deck_banca2")
         for sl, (_, titulo, texto) in zip(D.ler_slides(), self.novos):
             corrido = " ".join(texto.replace("\u00a0", " ").replace(".", "").split())
-            for item in sl["marcadores"] + ([sl["cautela"]] if sl["cautela"] else []):
+            for item in sl["marcadores"] + [x for x in (sl["cautela"], sl["explica"]) if x]:
                 self.assertIn(" ".join(D.texto_puro(item).replace("**", "").replace(".", "").split()), corrido, titulo)
             for linha in sl["tabela"]:
                 for cel in linha:
@@ -855,6 +856,40 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(mapa, manif)
         self.assertEqual(len(manif), len(self.deck))
 
+    def test_um_arquivo_so(self) -> None:
+        self.assertEqual(DECK.name, "deck_banca2.pptx")
+        for velho in ("deck_banca2_proposta.pptx", "slides_empiricos_banca2.pptx"):
+            self.assertFalse((SAIDA / velho).exists(), velho)
+        self.assertEqual([e["caminho"] for e in self.manifesto["saidas"]], ["output/apresentacao_banca2/deck_banca2.pptx"])
+
+    def test_resultados_abrem_pela_cadeia(self) -> None:
+        titulos = [t for _, t, _ in self.novos]
+        i = titulos.index("Na cadeia, só a escolha e o registro do médico se movem")
+        self.assertEqual([t[:3] for t in titulos[i + 1:i + 5]], ["H1:", "H2:", "H3:", "H4:"])
+        self.assertTrue(titulos[i + 5].startswith("Robustez"))
+
+    def test_letra_minima_e_explica_no_corpo(self) -> None:
+        """Nos slides novos do corpo: nada abaixo de 12 pt, salvo a linha de fontes; tabelas com 14 pt ou mais; o
+        bloco "O que isso quer dizer" nos slides de hipótese, metodologia, resultados e robustez."""
+        doc = {sl["titulo"]: sl for sl in _D.ler_slides()}
+        with zipfile.ZipFile(DECK) as z:
+            for parte, titulo, texto in self.novos:
+                sl = doc[titulo]
+                if sl["apendice"]:
+                    continue
+                x = z.read(parte).decode("utf-8")
+                # fora da regra: a linha de fontes e a navegação do rodapé, que é do template do deck
+                sem_fontes = re.sub(r'<p:sp><p:nvSpPr><p:cNvPr id="\d+" name="(?:Fontes|Navegação do rodapé)".*?</p:sp>',
+                                    "", x, flags=re.S)
+                tamanhos = [int(v) for v in re.findall(r'<a:rPr[^>]* sz="(\d+)"', sem_fontes)]
+                self.assertTrue(tamanhos, titulo)
+                self.assertGreaterEqual(min(tamanhos), 1200, titulo)
+                for tab in re.findall(r"<a:tbl>.*?</a:tbl>", x, flags=re.S):
+                    self.assertGreaterEqual(min(int(v) for v in re.findall(r' sz="(\d+)"', tab)), 1400, titulo)
+                if not titulo.startswith(("Os três ciclos", "Discussão")):
+                    self.assertTrue(sl["explica"], f"sem 'O que isso quer dizer': {titulo}")
+                    self.assertIn("O que isso quer dizer", texto, titulo)
+
     def test_exemplos_fora_e_visibilidade_do_grupo(self) -> None:
         """Os EXEMPLO de outro trabalho saem; os slides do grupo ficam com a visibilidade que o grupo deu a eles."""
         self.assertFalse(any("Wine" in tx or tx.startswith("EXEMPLO") for _, _, tx in self.deck))
@@ -902,7 +937,7 @@ class TestDeck(unittest.TestCase):
         D = importlib.import_module("gerar_deck_banca2")
         with tempfile.TemporaryDirectory() as tmp:
             D.construir(Path(os.environ["PMME_DECK_GRUPO"]), Path(tmp))
-            for n in (D.ARQ_DECK, D.ARQ_SLIDES):
+            for n in (D.ARQ_DECK,):
                 self.assertEqual(sha256(Path(tmp) / n), sha256(SAIDA / n), n)
 
 

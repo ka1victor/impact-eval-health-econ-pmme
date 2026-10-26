@@ -56,6 +56,7 @@ valendo para o E9, o E7 e a literatura de magnitude.
 | 26/10/2026 | a H3 entra com o P1h auditado (auditoria 31): título "no modelo de escolha", θ_UF como "mesma UF, outra região de saúde", o km sem valor de prova (o teste bilateral do P1a não rejeita) | coordenador |
 | 26/10/2026 | "Focar em fazer a parte empírica e ajustar o que precisa nos prévios; reutilizar tudo o que der": prévios do grupo na ordem e com a visibilidade do grupo, só com as correções; na parte empírica, título-afirmação, no máximo três marcadores, uma cautela, detalhe nas notas; o importante mas não central vai para o apêndice; discussão num slide; regra sharp na metodologia | autor |
 | 26/10/2026 | saem do deck só os três marcadores "X" e os dois slides "EXEMPLO" (aplicativo de vinhos), modelo de outro trabalho | autor (critério); agente (aplicação) |
+| 26/10/2026 | um arquivo só (`deck_banca2.pptx`); resultados abrem pela cadeia-síntese, e H1–H4 aprofundam cada linha; bloco "O que isso quer dizer" nos slides de hipótese, metodologia, resultados e robustez; conteúdo ocupando a área útil (corpo ≥ 16 pt, tabelas ≥ 14 pt, figuras no tamanho do slide) | autor |
 
 Em aberto com o autor: a hipótese central (H3 ou H1), já revisável; quem
 apresenta em 28/10 e quem em 04/11.
@@ -82,10 +83,10 @@ Saídas em `output/apresentacao_banca2/`: as figuras (`h1_preenchimento.png`,
 `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png`, usada sem redesenho e
 conferida pelo hash), as tabelas (`tabela_descritiva_ciclos` e
 `tabela_fontes`, em CSV e PNG), o registro de números
-(`numeros_banca2.json`), o manifesto das figuras, o deck proposto
-(`deck_banca2_proposta.pptx`), só os slides novos
-(`slides_empiricos_banca2.pptx`), o manifesto do deck e as imagens de
-conferência em `qa_render/`. Os geradores não estão no `run_all.py`; a
+(`numeros_banca2.json`), o manifesto das figuras, **o deck, num arquivo
+só** (`deck_banca2.pptx`: slides do grupo, parte empírica e apêndice), o
+manifesto do deck e as imagens de conferência em `qa_render/`, com a grade de
+miniaturas da parte empírica (`grade_empirica.png`). Os geradores não estão no `run_all.py`; a
 inclusão fica para o coordenador do pipeline.
 
 ## 5. Estado
