@@ -43,12 +43,10 @@ nas minhas contas. A ruptura 0 do P3 K_esp se reproduz: o IC de Δ^RM em M̄ = 0
 | P3-CA: controles (pedido no ciclo 3, nenhuma linha priorizada do curso no município, sem chegada na lista nominal, em U) | 761 (112/99/31/14/505 nos cursos 10–14); tratados 178 | idêntico, regra reescrita por mim a partir de `ler_adesao` e da lista nominal |
 | P3-CA: θ(e), e = −24..+9, CS próprio (coorte trimestral, base g − 1, controles do mesmo curso, peso = tratados) | média do pós +5,2873 | +5,2873; θ(e) idêntico, diferença máx. 4e−9 |
 | P4-CA: amostra (G1 CPF+nome, r ∈ ±1,2, células com os dois lados) em `P6_amostra.parquet` | 98 candidatos, 30/68, 27 células, ciclo 1: 2 e ciclo 2: 96 | idêntico |
-| P4-CA: θ(e) de horas (+10,92 [4,15; 17,68] no município da 1ª opção; +7,91 totais) | — | **não recomputado** |
+| P4-CA: média do pós de horas, DiD próprio com efeito fixo de célula (dummies, MQO, EP agrupado por célula, G/(G − 1)); painel de candidatos refeito pelo pipeline a partir do cache privado (lido via link simbólico para o cache do worktree do autor, sem cópia, removido ao fim) | totais +7,91 [−0,63; 16,45]; município da 1ª opção +10,92 [4,15; 17,68]; fora −3,01 [−10,14; 4,12] | +7,908 [−0,63; 16,45]; +10,917 [4,15; 17,68]; −3,009 [−10,14; 4,12]; θ(e) de e = −12..+5 idêntico (diferença máx. 3e−9) |
 | Holm sobre as 4 primárias (p 0,264; 0,054; 0,004; 0,412) | 0,527; 0,162; 0,016; 0,527 | idêntico |
 
-O painel mensal do P4-CA depende do cache privado (`output/aquisicao/cnes_profissional/cache_privado/`), que **não existe**
-neste worktree (gitignored, não versionado). O P6 versionado não tem série mensal. Portanto os θ(e) do P4-CA ficam
-verificados só pela estrutura (amostra, Holm, consistência interna das saídas), não por DiD próprio.
+O painel mensal do P4-CA vem do cache privado (ausente no meu worktree; usei o do worktree do autor, só leitura). A ligação candidato–CNES e a agregação mensal são as do pipeline (que confere o painel contra `P6_amostra.parquet`, diferenças 0); o DiD e o EP são meus. P-valor por permutação não recomputado (opcional).
 
 ## 3. Linguagem e contraste
 
@@ -76,7 +74,7 @@ cita as palavras apenas no texto de integridade). Os caches estão no `.gitignor
 | A1 | Média | O doc 57h explica o IC largo de Δ^RM em M̄ = 0 por o desvio da média poder ser "repartido em pequenos passos mensais". Em M̄ = 0 os passos são forçados a zero (o conjunto identificado é um ponto e a hipótese é paralelismo exato no pós); a largura vem da estatística sup-t sobre 2 × (nº de passos) momentos com parâmetros de perturbação, não de repartição. É um teste válido, mas pouco potente: nas horas totais o IC em M̄ = 0 é 3 vezes o IC convencional, e no P3 K_esp inclui zero embora o IC convencional [3,57; 25,11] não inclua. "Ruptura 0" do P3 é, em boa parte, perda de potência do teste, não evidência de viés. O resultado é conservador (não infla robustez). A conclusão de fragilidade do P3 se sustenta pelo Δ^SD (M/u = 0,02), que é independente do teste condicional. Sem correção no texto gerado (o 57h é gerado pelo script 34); recomenda-se reescrever a frase no script. |
 | A2 | Baixa | O híbrido foi acrescentado depois de ver o IC de M̄ = 0 mais largo que o de M̄ = 0,25 na primeira linha real. Isso é decisão guiada por resultado, mas o adendo declara, mantém o método congelado em todas as linhas e o híbrido quase não muda nada (rupturas 1,30 vs 1,29; 1,90 vs 1,89; 0,78 vs 0,76; P3 0 vs 0). Sem efeito na leitura. O híbrido roda só nas linhas principais e no CA, escolha declarada. |
 | A3 | Baixa | `sha256_texto` do `CA_resumo.json` (e a entrada de proveniência do 57h) referem o doc 59 já com o adendo (`5a2ceafd…`); o hash do texto congelado é `f039e3f5…`. A ordem de commits é a prova do congelamento, não o hash. Sugere-se gravar também o hash do commit de congelamento. |
-| A4 | Baixa | P4-CA não verificado por DiD próprio: cache privado ausente neste worktree. Amostra, tratamento por célula e Holm batem; θ(e) não. |
+| A4 | Resolvido | P4-CA recomputado com o cache privado do worktree do autor: médias do pós e ICs idênticos aos publicados (totais +7,91; município da 1ª opção +10,92 [4,15; 17,68]), θ(e) idêntico. Ressalva: a ligação e o painel mensal são do pipeline (conferidos contra o P6), não reimplementados. |
 | A5 | Baixa | A data de execução gravada é 2026-10-25 e o doc 57h traz "Data: 2026-10-25", mas o commit dos resultados é de 26/10 07:09 e o registro de mudanças usa 26/10. Inconsistência de data, sem efeito. |
 | A6 | Informativa | P3-CA primária: pré não passa (p = 0,009) e ressalva de sinal oposto; P4-CA horas no município da 1ª opção (Holm 0,016, pré passa) é a única que rejeita zero e é parcialmente mecânica; ruptura 0. O 57h diz isso corretamente. |
 
@@ -86,7 +84,6 @@ script 34 e pelo manifesto e ficam para o autor.
 ## 7. Veredito
 
 **Aprovado com ressalvas.** Ordem do protocolo respeitada, texto congelado intacto, adendo honesto e subordinado. Os números
-de θ(e), conjuntos identificados, FLCI de Δ^SD, controles e ATT do P3-CA e Holm se reproduzem com código próprio; os IC de
-Δ^RM publicados são coerentes com um teste LF independente (válidos e conservadores). Pendem: o DiD do P4-CA (sem cache
-privado aqui) e a explicação imprecisa da largura do IC de Δ^RM (A1). Resultados continuam associativos; nenhum vira
+de θ(e), conjuntos identificados, FLCI de Δ^SD, controles e ATT do P3-CA, DiD do P4-CA e Holm se reproduzem com código próprio; os IC de
+Δ^RM publicados são coerentes com um teste LF independente (válidos e conservadores). Pende só a explicação imprecisa da largura do IC de Δ^RM (A1). Resultados continuam associativos; nenhum vira
 efeito causal.
