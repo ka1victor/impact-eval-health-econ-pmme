@@ -5,7 +5,8 @@
 > **Script:** `scripts/rdd_bolsa/37_oferta_local_chegada.py`.<br>
 > **Saídas:** `output/rdd_bolsa/OL_estimativas.csv`, `OL_ligacao_municipio.csv`, `OL_resumo.json` e `OL_figuras/`; toda linha tem `natureza_dos_dados = EMPIRICO`.<br>
 > **Testes:** `tests/test_oferta_local_chegada.py`.<br>
-> **Estatuto:** `PROTOCOLO_60_POS_RESULTADO`. ATT sob tendências paralelas da chegada; nada aqui tem fonte de exogeneidade validada.
+> **Estatuto:** `PROTOCOLO_60_POS_RESULTADO`. ATT sob tendências paralelas da chegada; nada aqui tem fonte de exogeneidade validada.<br>
+> **Auditoria:** [34](../auditorias/34_auditoria_oferta_local.md), aprovado com correções de texto, rótulo e figura; nenhum número mudou.
 
 Os blocos entre marcadores `<!-- OL:... -->` são gerados pelo script 37 a partir de `output/`
 (`python3 scripts/rdd_bolsa/37_oferta_local_chegada.py --atualizar-doc`). Não edite esses blocos à mão.
@@ -75,13 +76,13 @@ Os dois portões rodam antes de qualquer outcome por tempo de evento; se um dele
 <!-- OL:portoes:inicio -->
 | Portão | Conferência | Resultado |
 |---|---|---|
-| 1. coortes do D2 | coortes d2 refeitas iguais ao resumo | sim |
-| 1. coortes do D2 | coortes deste bloco iguais ao d2 | sim |
-| 1. coortes do D2 | mesmos municipios e meses de chegada | sim |
-| 1. coortes do D2 | n tratados igual | sim |
-| 1. coortes do D2 | fora da amostra igual | sim |
-| 2. definições (202506) | B1 = F3.1 do E7: diferença máxima 0.0e+00 por 10 mil, ausentes iguais (0), total 417042 | sim |
-| 2. definições (202506) | B2 = F3.3 do E7: diferença máxima 0.0e+00 por 10 mil, ausentes iguais (4), total 2719662 | sim |
+| 1. coortes do D2 | coortes do D2 refeitas iguais às de K_D2_resumo.json | sim |
+| 1. coortes do D2 | chegadas deste bloco, levadas ao trimestre, iguais às coortes do D2 | sim |
+| 1. coortes do D2 | mesmos municípios e meses de chegada que o D2 | sim |
+| 1. coortes do D2 | mesmo número de tratados | sim |
+| 1. coortes do D2 | mesmos municípios com ativo fora da amostra | sim |
+| 2. definições (202506) | B1 = F3.1 do E7: diferença máxima 0,0e+00 por 10 mil, ausentes iguais (0), total 417042 | sim |
+| 2. definições (202506) | B2 = F3.3 do E7: diferença máxima 0,0e+00 por 10 mil, ausentes iguais (4), total 2719662 | sim |
 
 | Coorte trimestral do D2 | D2 (municípios / especialistas) | Este bloco |
 |---|---|---|
@@ -94,7 +95,7 @@ Os dois portões rodam antes de qualquer outcome por tempo de evento; se um dele
 ## 4. Leitura simples
 
 <!-- OL:leitura:inicio -->
-Depois que o 1º médico do PMM-E começou no município, em média nos meses 0 a 6: os vínculos de especialistas nas CBO-alvo (B1) ficaram maiores do que nos comparáveis, mas a ruptura M̄ fica abaixo de 1 (p de Holm = < 0,001); as horas SUS desses especialistas (B2) ficaram maiores do que nos comparáveis, mas a ruptura M̄ fica abaixo de 1 (p de Holm = < 0,001); as horas SUS dos outros especialistas, sem os do PMM-E (B3) ficaram maiores do que nos comparáveis, mas a ruptura M̄ fica abaixo de 1 (q BKY = 0,040); as horas totais, SUS e não SUS (B4) ficaram maiores do que nos comparáveis, mas a ruptura M̄ fica abaixo de 1 (q BKY = 0,001); os vínculos de generalistas, o placebo (B5) não se distinguem das dos comparáveis (q BKY = 0,128). Pela leitura pré-registrada, não dá para falar em aumento da oferta cadastrada local: nenhuma primária sobe com pré que passa e ruptura M̄ ≥ 1. B3 fica acima do comparável, o contrário de um deslocamento. Em B2 (condicional: M̄ = 0,5); B2 (hibrido: M̄ = 0,5), o IC robusto exclui zero em algum M̄ > 0 da grade, embora inclua zero em M̄ = 0: o teste de Andrews, Roth e Pakes não é monotônico em M̄ (doc 57h). A ruptura fica 0, como a biblioteca do protocolo 59 a define; em M̄ = 1 o IC inclui zero em todos eles. Tudo é ATT sob tendências paralelas da chegada, não efeito da bolsa nem da participação no programa; vínculo cadastrado não é presença.
+Depois que o 1º médico do PMM-E começou no município, em média nos meses 0 a 6: a mudança nos vínculos de especialistas nas CBO-alvo (B1) foi maior do que nos comparáveis, mas a ruptura M̄ fica abaixo de 1 (p de Holm < 0,001); a mudança nas horas SUS desses especialistas (B2) foi maior do que nos comparáveis, mas a ruptura M̄ fica abaixo de 1 (p de Holm < 0,001); a mudança nas horas SUS dos outros especialistas, sem os do PMM-E (B3) foi maior do que nos comparáveis, mas a ruptura M̄ fica abaixo de 1 (q BKY = 0,040); a mudança nas horas totais, SUS e não SUS (B4) foi maior do que nos comparáveis, mas a ruptura M̄ fica abaixo de 1 (q BKY = 0,001); a mudança nos vínculos de generalistas, o placebo (B5) não se distingue da que se vê nos comparáveis (q BKY = 0,128). Pela leitura pré-registrada, não dá para falar em aumento da oferta cadastrada local: nenhuma primária sobe com pré que passa e ruptura M̄ ≥ 1. B3 não cai: a mudança das horas dos outros especialistas fica acima da dos comparáveis, então não há sinal de deslocamento. Isso também não é lido como atração de outros especialistas pela chegada: sem ruptura M̄ ≥ 1, a diferença é compatível com uma tendência que já vinha de antes da chegada. No pré, há meses com IC que exclui zero em B1 (2 de 5 meses; θ(−6) = −0,28); B2 (3 de 5 meses; θ(−6) = −3,84); B3 (2 de 5 meses; θ(−6) = −2,80); B4 (2 de 5 meses; θ(−6) = −3,60): a diferença já vinha mudando antes da chegada, em relação ao mês-base, e o teste conjunto do pré tem pouco poder contra uma tendência suave. É mais uma razão para não ler a diferença do pós como causada pela chegada. Em B2 (condicional: M̄ = 0,5); B2 (híbrido: M̄ = 0,5), o IC robusto exclui zero em algum M̄ > 0 da grade, embora inclua zero em M̄ = 0: o teste de Andrews, Roth e Pakes não é monotônico em M̄ (doc 57h). A ruptura fica 0, como a biblioteca do protocolo 59 a define; em M̄ = 1 o IC inclui zero em todos eles. Em B1, B2 e B3, o IC robusto já inclui zero em M̄ = 0, embora o IC convencional da média do pós não inclua: isso vem em boa parte da pouca potência do teste de Andrews, Roth e Pakes com muitos momentos (auditoria 30, A1; auditoria 34), e não só do pré. A ruptura 0 fica como a biblioteca a define; em M̄ = 1 o IC inclui zero em todos eles, e a leitura pré-registrada não muda. Tudo é ATT sob tendências paralelas da chegada, não efeito da bolsa nem da participação no programa; vínculo cadastrado não é presença.
 <!-- OL:leitura:fim -->
 
 Leitura pré-registrada (protocolo 60, parte B):
@@ -120,11 +121,11 @@ consecutivos do pós não passa de x vezes a maior variação vista no pré.
 <!-- OL:principal:inicio -->
 | Id | Outcome | Papel | ATT médio do pós (e = 0..6) | IC 95% (bootstrap) | p | p Holm / q BKY | Pré: Wald (gl), p | Ruptura M̄ (cond. / híbr.) |
 |---|---|---|---|---|---|---|---|---|
-| B1 | vínculos nas CBO-alvo | primaria | +0,40 | [+0,24; +0,56] | < 0,001 | < 0,001 (Holm) | 6,9 (5), 0,228 | 0,00 / 0,00 |
-| B2 | horas SUS semanais nas CBO-alvo | primaria | +7,00 | [+4,19; +9,82] | < 0,001 | < 0,001 (Holm) | 10,1 (5), 0,072 | 0,00 / 0,00 |
-| B3 | horas SUS semanais nas CBO-alvo sem as dos médicos do PMM-E ligados (os outros especialistas) | secundaria | +1,88 | [+0,10; +3,66] | 0,038 | 0,040 (BKY) | 6,1 (5), 0,297 | 0,00 / 0,00 |
-| B4 | horas totais (SUS e não SUS; ambulatorial, hospitalar e outras) nas CBO-alvo | secundaria | +7,27 | [+4,47; +10,06] | < 0,001 | 0,001 (BKY) | 8,8 (5), 0,117 | 0,61 / 0,60 |
-| B5 | placebo: vínculos de generalistas (225125, 225142, 225170) | secundaria (placebo) | −0,13 | [−0,39; +0,13] | 0,339 | 0,128 (BKY) | 1,9 (5), 0,859 | 0,00 / 0,00 |
+| B1 | vínculos nas CBO-alvo | primária | +0,40 | [+0,24; +0,56] | < 0,001 | < 0,001 (Holm) | 6,9 (5), 0,228 | 0,00 / 0,00 |
+| B2 | horas SUS semanais nas CBO-alvo | primária | +7,00 | [+4,19; +9,82] | < 0,001 | < 0,001 (Holm) | 10,1 (5), 0,072 | 0,00 / 0,00 |
+| B3 | horas SUS semanais nas CBO-alvo sem as dos médicos do PMM-E ligados (os outros especialistas) | secundária | +1,88 | [+0,10; +3,66] | 0,038 | 0,040 (BKY) | 6,1 (5), 0,297 | 0,00 / 0,00 |
+| B4 | horas totais (SUS e não SUS; ambulatorial, hospitalar e outras) nas CBO-alvo | secundária | +7,27 | [+4,47; +10,06] | < 0,001 | 0,001 (BKY) | 8,8 (5), 0,117 | 0,61 / 0,60 |
+| B5 | placebo: vínculos de generalistas (225125, 225142, 225170) | secundária (placebo) | −0,13 | [−0,39; +0,13] | 0,339 | 0,128 (BKY) | 1,9 (5), 0,859 | 0,00 / 0,00 |
 <!-- OL:principal:fim -->
 
 ### 5.2 Rambachan–Roth (Δ^RM), IC robusto de 95% da média do pós
@@ -133,15 +134,15 @@ consecutivos do pós não passa de x vezes a maior variação vista no pré.
 | Id | Método | M̄ = 0,0 | M̄ = 0,5 | M̄ = 1,0 | M̄ = 1,5 | M̄ = 2,0 |
 |---|---|---|---|---|---|---|
 | B1 | condicional | [−0,20; +1,02] | [−0,10; +0,93] | [−0,55; +1,38] | [−1,02; +1,85] | [−1,49; +2,32] |
-| B1 | hibrido | [−0,20; +1,02] | [−0,10; +0,93] | [−0,56; +1,40] | [−1,03; +1,87] | [−1,50; +2,34] |
+| B1 | híbrido | [−0,20; +1,02] | [−0,10; +0,93] | [−0,56; +1,40] | [−1,03; +1,87] | [−1,50; +2,34] |
 | B2 | condicional | [−0,25; +14,54] | [+0,74; +13,02] | [−4,09; +17,59] | [−9,12; +22,60] | [−14,23; +27,70] |
-| B2 | hibrido | [−0,22; +14,40] | [+0,63; +13,12] | [−4,24; +17,74] | [−9,27; +22,75] | [−14,36; +27,83] |
+| B2 | híbrido | [−0,22; +14,40] | [+0,63; +13,12] | [−4,24; +17,74] | [−9,27; +22,75] | [−14,36; +27,83] |
 | B3 | condicional | [−3,08; +6,39] | [−3,54; +6,87] | [−8,16; +11,43] | [−12,87; +16,14] | [−17,62; +20,88] |
-| B3 | hibrido | [−3,11; +6,40] | [−3,63; +6,95] | [−8,27; +11,55] | [−13,06; +16,32] | [−17,83; +21,08] |
+| B3 | híbrido | [−3,11; +6,40] | [−3,63; +6,95] | [−8,27; +11,55] | [−13,06; +16,32] | [−17,83; +21,08] |
 | B4 | condicional | [+0,62; +14,07] | [+1,05; +13,15] | [−3,73; +17,86] | [−8,73; +22,84] | [−13,80; +27,91] |
-| B4 | hibrido | [+0,58; +14,11] | [+0,95; +13,24] | [−3,88; +18,01] | [−8,89; +23,00] | [−13,94; +28,05] |
+| B4 | híbrido | [+0,58; +14,11] | [+0,95; +13,24] | [−3,88; +18,01] | [−8,89; +23,00] | [−13,94; +28,05] |
 | B5 | condicional | [−0,56; +0,35] | [−0,55; +0,33] | [−0,83; +0,63] | [−1,16; +0,96] | [−1,49; +1,29] |
-| B5 | hibrido | [−0,57; +0,35] | [−0,55; +0,34] | [−0,84; +0,65] | [−1,17; +0,97] | [−1,50; +1,31] |
+| B5 | híbrido | [−0,57; +0,35] | [−0,55; +0,34] | [−0,84; +0,65] | [−1,17; +0,97] | [−1,50; +1,31] |
 <!-- OL:rr:fim -->
 
 ### 5.3 Estudo de evento, θ(e) e IC 95% (bootstrap)
@@ -189,15 +190,15 @@ Por município: `output/rdd_bolsa/OL_ligacao_municipio.csv`.
 <!-- OL:figuras:inicio -->
 **B1.** ![B1](../../output/rdd_bolsa/OL_figuras/OL_evento_B1.png)
 
-Como ler: Cada ponto é quanto a mudança em vínculos de especialistas (CBO-alvo), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença.
+Como ler: Cada ponto é quanto a mudança em vínculos de especialistas (CBO-alvo), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero; se eles já sobem em direção ao zero, a diferença vinha crescendo antes da chegada, e a do pós não pode ser atribuída a ela. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença.
 
 **B2.** ![B2](../../output/rdd_bolsa/OL_figuras/OL_evento_B2.png)
 
-Como ler: Cada ponto é quanto a mudança em horas SUS semanais de especialistas (CBO-alvo), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença.
+Como ler: Cada ponto é quanto a mudança em horas SUS semanais de especialistas (CBO-alvo), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero; se eles já sobem em direção ao zero, a diferença vinha crescendo antes da chegada, e a do pós não pode ser atribuída a ela. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença.
 
 **B3.** ![B3](../../output/rdd_bolsa/OL_figuras/OL_evento_B3.png)
 
-Como ler: Cada ponto é quanto a mudança em horas SUS semanais dos outros especialistas (sem os do PMM-E), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. Aqui saem as horas dos médicos do PMM-E ligados ao CNES: sobra o que os outros especialistas cadastram. Ponto abaixo de zero no pós seria sinal de que eles perderam horas. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença.
+Como ler: Cada ponto é quanto a mudança em horas SUS semanais dos outros especialistas (sem os do PMM-E), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero; se eles já sobem em direção ao zero, a diferença vinha crescendo antes da chegada, e a do pós não pode ser atribuída a ela. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. Aqui saem as horas dos médicos do PMM-E ligados ao CNES: sobra o que os outros especialistas cadastram. Ponto abaixo de zero no pós seria sinal de que eles perderam horas. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença.
 <!-- OL:figuras:fim -->
 
 ## 7. Limites
@@ -212,6 +213,9 @@ Como ler: Cada ponto é quanto a mudança em horas SUS semanais dos outros espec
   a oferta. O teste do pré e a sensibilidade de Rambachan–Roth medem parte desse risco, não o eliminam.
 - **Lista nominal como retrato.** A lista traz quem estava ativo em 12/08/2026. Quem saiu antes some, e o
   município pode contar como ainda não tratado.
+- **Tendência antes da chegada.** Nos meses −6 a −2, B1 a B4 ficam abaixo do mês-base e sobem em direção a
+  ele: os municípios que recebem médico já vinham crescendo mais. O teste conjunto do pré passa, mas tem pouco
+  poder contra uma rampa suave. É por isso que a ruptura de Rambachan–Roth fica abaixo de 1 (seção 4).
 - **B3 e a ligação.** O B3 só tira os médicos ligados. Na proporção dos não ligados (seção 5.4), ele
   superestima os outros especialistas e fica mais perto de B2.
 - **Composição do pós.** O mês 6 depois da chegada só existe para as coortes que chegaram até 2026-02, e o

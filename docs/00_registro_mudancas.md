@@ -8,6 +8,20 @@
 
 ---
 
+## 26/10/2026 — Auditoria 34: oferta local depois da chegada (H4)
+
+Motivo: auditoria independente da parte B do protocolo 60 (script 37, `OL_*`, doc 57k), sobre o retrato
+`886ac00`. Veredito: aprovado com correções. Nenhum número mudou. As correções de texto, rótulo, figura e teste
+foram feitas no script 37 e no teste, e as saídas foram regeneradas pelo script.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/34_auditoria_oferta_local.md`](auditorias/34_auditoria_oferta_local.md) | recálculo independente de B1–B5 (CS, Wald, Holm, BKY, B3, Rambachan–Roth), fidelidade à parte B do protocolo 60, achados M1–M4, B1 e B2, correções |
+
+---
+
 ## 26/10/2026 — Execução do protocolo 60, parte B (oferta local de especialistas depois da chegada, H4)
 
 Motivo: execução da parte B do protocolo 60, com os portões de coerência (coortes do D2 e definições do F3 do

@@ -156,6 +156,7 @@ OUTCOMES = [
 IDS = [o["id"] for o in OUTCOMES]
 SPEC = {o["id"]: o for o in OUTCOMES}
 FIGURAS = ("B1", "B2", "B3")
+LARGURA_COMO_LER = 155                    # caracteres por linha do "Como ler" na figura (auditoria 34)
 
 CONTRASTE = ("ATT da chegada do 1º médico do PMM-E ao município (Callaway-Sant'Anna, município x mês, controles "
              "nunca tratados e ainda não tratados) sob tendências paralelas; não é efeito da bolsa, nem do incentivo "
@@ -612,7 +613,8 @@ def como_ler(oid: str) -> str:
     return ("COMO LER. Cada ponto é quanto a mudança em " + o["curto"] + ", desde o mês antes da chegada (−1, zero "
             "por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º "
             "médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de "
-            "zero. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos." + extra +
+            "zero; se eles já sobem em direção ao zero, a diferença vinha crescendo antes da chegada, e a do pós não "
+            "pode ser atribuída a ela. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos." + extra +
             " É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é "
             "presença.")
 
@@ -666,11 +668,13 @@ def figura(oid: str, est: pd.DataFrame, caminho: Path) -> dict:
                Patch(color=S.COR_IC, alpha=0.15, label="banda de 95% (todos os meses)"),
                Line2D([], [], marker="s", linestyle="", color=S.TINTA, markersize=10, label="mês −1 = base (zero)"),
                Patch(color="#efece4", label="a partir da chegada")]
-    fig.legend(handles=handles, loc="center", ncol=3, fontsize=12, frameon=False, bbox_to_anchor=(0.5, 0.255))
+    fig.legend(handles=handles, loc="center", ncol=5, fontsize=11, frameon=False, bbox_to_anchor=(0.5, 0.265))
     fig.suptitle(f"{oid} — {SPEC[oid]['curto']}, por 10 mil hab.", fontsize=18, color=S.TINTA, x=0.09, y=0.965,
                  ha="left")
-    texto = "\n".join(textwrap.wrap(como_ler(oid), 150))
-    fig.text(0.02, 0.02, texto, fontsize=11.5, color=S.TINTA_2, va="bottom", ha="left", linespacing=1.3,
+    # Auditoria 34: com 150 caracteres a 11,5 pt o texto passava da borda direita; 155 a 11 pt cabe na largura,
+    # e a legenda numa linha só não encosta no texto.
+    texto = "\n".join(textwrap.wrap(como_ler(oid), LARGURA_COMO_LER))
+    fig.text(0.02, 0.02, texto, fontsize=11, color=S.TINTA_2, va="bottom", ha="left", linespacing=1.3,
              parse_math=False)
     fig.savefig(caminho, dpi=150, facecolor=S.SUPERFICIE)
     plt.close(fig)
@@ -730,6 +734,13 @@ def classificar(est: pd.DataFrame) -> dict:
 
 ROTULO_PAPEL = {"primaria": "primária", "secundaria": "secundária", "secundaria (placebo)": "secundária (placebo)"}
 ROTULO_METODO = {"condicional": "condicional", "hibrido": "híbrido"}
+ROTULO_CONFERENCIA = {  # auditoria 34: rótulos legíveis das chaves do portão 1
+    "coortes_d2_refeitas_iguais_ao_resumo": "coortes do D2 refeitas iguais às de K_D2_resumo.json",
+    "coortes_deste_bloco_iguais_ao_d2": "chegadas deste bloco, levadas ao trimestre, iguais às coortes do D2",
+    "mesmos_municipios_e_meses_de_chegada": "mesmos municípios e meses de chegada que o D2",
+    "n_tratados_igual": "mesmo número de tratados",
+    "fora_da_amostra_igual": "mesmos municípios com ativo fora da amostra",
+}
 
 
 def nota_pre(est: pd.DataFrame) -> str:
@@ -774,6 +785,36 @@ def nota_rm_nao_monotono(est: pd.DataFrame) -> str:
                   "; em M̄ = 1 o IC inclui zero em todos eles.")
 
 
+def nota_rm_potencia(est: pd.DataFrame) -> str:
+    """Auditoria 34: outcomes cujo IC convencional da média do pós exclui zero, mas o IC robusto em M̄ = 0 inclui.
+
+    Em M̄ = 0 o conjunto identificado de Δ^RM é o próprio ponto; a largura vem do teste de ARP sobre muitos momentos
+    (auditoria 30, A1). A ruptura 0 desses outcomes é, em boa parte, perda de potência, não um pré pior.
+    """
+    casos, inclui_1 = [], []
+    for oid in IDS:
+        g = est[est["outcome_id"] == oid]
+        pos = g[g["medida"] == "att_pos_medio"]
+        if not len(pos) or not H.exclui_zero(float(pos["ic95_inf"].iloc[0]), float(pos["ic95_sup"].iloc[0])):
+            continue
+        s0 = g[g["medida"].isin([f"RM_{m}" for m in METODOS_RM]) & (g["Mbar"] == 0.0)]
+        if len(s0) and not ((s0["ic95_inf"] > 0) | (s0["ic95_sup"] < 0)).all():
+            casos.append(oid)
+            s1 = g[g["medida"].isin([f"RM_{m}" for m in METODOS_RM]) & (g["Mbar"] == 1.0)]
+            if not ((s1["ic95_inf"] > 0) | (s1["ic95_sup"] < 0)).all():
+                inclui_1.append(oid)
+    if not casos:
+        return ""
+    lista = casos[0] if len(casos) == 1 else ", ".join(casos[:-1]) + " e " + casos[-1]
+    txt = (" Em " + lista + ", o IC robusto já inclui zero em M̄ = 0, embora o IC convencional da média "
+           "do pós não inclua: isso vem em boa parte da pouca potência do teste de Andrews, Roth e Pakes com muitos "
+           "momentos (auditoria 30, A1; auditoria 34), e não só do pré. A ruptura 0 fica como a biblioteca a define")
+    if set(inclui_1) == set(casos):
+        return txt + "; em M̄ = 1 o IC inclui zero em todos eles, e a leitura pré-registrada não muda."
+    return txt + (f"; em M̄ = 1 o IC inclui zero em {', '.join(inclui_1)}." if inclui_1 else
+                  "; em M̄ = 1 o IC exclui zero em todos eles.")
+
+
 def _exclui_em(est: pd.DataFrame, oid: str, mb: float) -> bool:
     s = est[(est["outcome_id"] == oid) & est["medida"].isin([f"RM_{m}" for m in METODOS_RM]) & (est["Mbar"] == mb)]
     return bool(((s["ic95_inf"] > 0) | (s["ic95_sup"] < 0)).any())
@@ -782,21 +823,24 @@ def _exclui_em(est: pd.DataFrame, oid: str, mb: float) -> bool:
 def gerar_leitura(est: pd.DataFrame) -> str:
     c = classificar(est)
     frases = []
-    nomes = {"B1": "os vínculos de especialistas nas CBO-alvo (B1)", "B2": "as horas SUS desses especialistas (B2)",
-             "B3": "as horas SUS dos outros especialistas, sem os do PMM-E (B3)",
-             "B4": "as horas totais, SUS e não SUS (B4)", "B5": "os vínculos de generalistas, o placebo (B5)"}
+    # Auditoria 34: a frase descreve a mudança desde o mês −1 (o que o ATT compara), não o nível.
+    nomes = {"B1": "a mudança nos vínculos de especialistas nas CBO-alvo (B1)",
+             "B2": "a mudança nas horas SUS desses especialistas (B2)",
+             "B3": "a mudança nas horas SUS dos outros especialistas, sem os do PMM-E (B3)",
+             "B4": "a mudança nas horas totais, SUS e não SUS (B4)",
+             "B5": "a mudança nos vínculos de generalistas, o placebo (B5)"}
     for oid in IDS:
         x = c[oid]
         aj = "p de Holm" if SPEC[oid]["familia"] == "holm" else "q BKY"
         if x["sobe_com_diagnosticos"]:
-            verbo = "ficaram maiores do que nos comparáveis, com pré que passa e ruptura M̄ ≥ 1"
+            verbo = "foi maior do que nos comparáveis, com pré que passa e ruptura M̄ ≥ 1"
         elif x["sobe"] or x["cai"]:
-            lado = "maiores" if x["sobe"] else "menores"
+            lado = "maior" if x["sobe"] else "menor"
             falta = [t for t, f in (("o pré não passa", not x["pre_passa"]),
                                     ("a ruptura M̄ fica abaixo de 1", not (x["ruptura_min"] >= 1.0))) if f]
-            verbo = f"ficaram {lado} do que nos comparáveis" + (f", mas {' e '.join(falta)}" if falta else "")
+            verbo = f"foi {lado} do que nos comparáveis" + (f", mas {' e '.join(falta)}" if falta else "")
         else:
-            verbo = "não se distinguem do que se vê nos comparáveis"
+            verbo = "não se distingue da que se vê nos comparáveis"
         t = _p(x["p_ajustado"])
         frases.append(f"{nomes[oid]} {verbo} ({aj} {t if t.startswith('<') else '= ' + t})")
     b1, b2, b3 = c["B1"], c["B2"], c["B3"]
@@ -815,12 +859,17 @@ def gerar_leitura(est: pd.DataFrame) -> str:
     elif not b3["significativo"]:
         conclusao += " B3 não se distingue de zero: não há sinal detectável de deslocamento dos outros especialistas."
     else:
-        conclusao += (" B3 não cai: a mudança das horas dos outros especialistas fica acima da dos comparáveis (sem "
-                      "ruptura M̄ ≥ 1), então não há sinal de deslocamento.")
+        conclusao += " B3 não cai: a mudança das horas dos outros especialistas fica acima da dos comparáveis"
+        if b3["ruptura_min"] >= 1.0 and b3["pre_passa"]:
+            conclusao += ", com pré que passa e ruptura M̄ ≥ 1, então não há sinal de deslocamento."
+        else:
+            conclusao += (", então não há sinal de deslocamento. Isso também não é lido como atração de outros "
+                          "especialistas pela chegada: sem ruptura M̄ ≥ 1, a diferença é compatível com uma "
+                          "tendência que já vinha de antes da chegada.")
     if c["B5"]["significativo"]:
         conclusao += (" O placebo (B5) também se move, o que sugere que os municípios que recebem médico já mudavam "
                       "por outro motivo.")
-    conclusao += nota_pre(est) + nota_rm_nao_monotono(est)
+    conclusao += nota_pre(est) + nota_rm_nao_monotono(est) + nota_rm_potencia(est)
     return ("Depois que o 1º médico do PMM-E começou no município, em média nos meses 0 a 6: " + "; ".join(frases)
             + ". " + conclusao + " Tudo é ATT sob tendências paralelas da chegada, não efeito da bolsa nem da "
             "participação no programa; vínculo cadastrado não é presença.")
@@ -847,11 +896,13 @@ def gerar_tabelas_doc(est: pd.DataFrame, lig: pd.DataFrame, resumo: dict) -> dic
     p1, p2 = resumo["portoes"]["coortes"], resumo["portoes"]["definicoes"]
     linhas = ["| Portão | Conferência | Resultado |", "|---|---|---|"]
     for c, v in p1["conferencias"].items():
-        linhas.append(f"| 1. coortes do D2 | {c.replace('_', ' ')} | {'sim' if v else 'NÃO'} |")
+        linhas.append(f"| 1. coortes do D2 | {ROTULO_CONFERENCIA.get(c, c.replace('_', ' '))} | "
+                      f"{'sim' if v else 'NÃO'} |")
     for oid in ("B1", "B2"):
         r = p2[oid]
+        dif = f"{r['dif_max_por_10mil']:.1e}".replace(".", ",")
         linhas.append(f"| 2. definições ({p2['mes']}) | {oid} = {r['outcome_e7']} do E7: diferença máxima "
-                      f"{r['dif_max_por_10mil']:.1e} por 10 mil, ausentes iguais ({r['ausentes']}), total "
+                      f"{dif} por 10 mil, ausentes iguais ({r['ausentes']}), total "
                       f"{_n(r['total_deste_bloco'], 0, False)} | {'sim' if r['aprovado'] else 'NÃO'} |")
     linhas.append("")
     linhas.append("| Coorte trimestral do D2 | D2 (municípios / especialistas) | Este bloco |")
