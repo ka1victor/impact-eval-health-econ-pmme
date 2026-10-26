@@ -136,65 +136,178 @@ tem suporte para ter retas próprias. Nenhuma decisão depende de resultado.
 ## 1. Resposta curta
 
 <!-- PO:resposta_curta:inicio -->
-(gerado pelo script)
+**Não se detecta que o salto da H1 dependa de o estrato do IED mudar** (leitura pré-registrada do primeiro caso): nas quatro linhas da PO-1 o IC 95% da diferença τ₁ contém zero. Pelo adendo, o IED não explica o sinal da H1, com pouca potência: os grupos são pequenos (contagens na seção 3).
+
+- **Corte 0,300** (R$ 10 mil → R$ 15 mil; o estrato muda nos portes 2 e 3 e não muda nos portes 1 e 4). HI-1: onde o estrato muda, +5,1 p.p. [−20,3; +30,5]; onde não muda, −7,4 p.p. [−27,9; +13,0]; diferença τ₁ = +12,5 p.p. [−19,1; +44,2], p Holm 0,876; HI-2: onde o estrato muda, −0,22 [−1,28; +0,84]; onde não muda, −1,88 [−3,50; −0,26]; diferença τ₁ = +1,67 [−0,27; +3,60], p Holm 0,366.
+
+- **Corte 0,400** (R$ 15 mil → R$ 20 mil; o estrato muda nos portes 1, 2 e 4 e não muda no porte 3). HI-1: onde o estrato muda, −7,9 p.p. [−34,5; +18,7]; onde não muda, +23,2 p.p. [−8,7; +55,0]; diferença τ₁ = −31,1 p.p. [−71,8; +9,7], p Holm 0,405; HI-2: onde o estrato muda, −0,25 [−1,31; +0,80]; onde não muda, +0,36 [−0,84; +1,56]; diferença τ₁ = −0,61 [−2,23; +1,01], p Holm 0,876.
+
+A própria H1, sem a divisão, não tem linha primária que rejeite zero depois do Holm (doc 57n, código `IC_CONVENCIONAL_EXCLUI_ZERO_SEM_HOLM`): não há um sinal firme da H1 para o IED explicar. A comparação entre grupos pergunta se o salto, seja qual for, difere entre eles.
+
+Na linha da H1 com IC convencional sem zero no 57n (HI-2 em 0,300), o IC 95% exclui zero onde o estrato não muda (não muda: −1,88 [−3,50; −0,26]; muda: −0,22 [−1,28; +0,84]). Descritivo: a PO-4 fica fora do Holm.
+
+**Generalistas (PO-3, o outcome que o IED deveria mover):** em 0,300, não há indício de salto só onde o estrato muda: onde muda, +1,81 [−2,02; +5,63]; onde não muda, −0,99 [−3,40; +1,42]; diferença +2,80 [−1,72; +7,32], q BKY 1,000; em 0,400, não há indício de salto só onde o estrato muda: onde muda, −0,93 [−2,84; +0,97]; onde não muda, −1,88 [−4,02; +0,27]; diferença +0,95 [−1,92; +3,82], q BKY 1,000 (vínculos por 10 mil hab., mudança pós − pré).
+
+Nas secundárias (ΔB1, ΔB2, ΔB5), nenhuma diferença τ₁ tem IC 95% convencional sem zero.
+
+**Potência.** O menor grupo × lado tem 15 municípios (HI-1, corte 0,400, estrato não muda, acima do corte); nenhum fica abaixo de 10. Não detectar diferença entre grupos não é mostrar que ela é zero.
+
+**O que isto é e o que não é.** Os grupos são definidos pelo porte, uma condição anterior ao tratamento, mas diferem também em tamanho, capital e região (seção 7). A diferença entre eles descreve heterogeneidade do salto do pacote do corte; não é o efeito do IED nem da bolsa isolada.
 <!-- PO:resposta_curta:fim -->
 
 ### 1.1 Portão
 
 <!-- PO:portao:inicio -->
-(gerado pelo script)
+| Linha de base | Como foi refeita | n abaixo / acima | Salto gravado | Salto refeito | Diferença absoluta no salto | Diferença absoluta no EP |
+|---|---|---|---|---|---|---|
+| HI-1 0,300 | est_celula do 40 | 95 / 72 | −0,036784 | −0,036784 | 0.0e+00 | 6.9e-17 |
+| HI-1 0,300 | estimador do 47 sem divisao | 95 / 72 | −0,036784 | −0,036784 | 0.0e+00 | 6.9e-17 |
+| HI-2 0,300 | est_municipio do 40 | 95 / 72 | −1,126326 | −1,126326 | 0.0e+00 | 0.0e+00 |
+| HI-2 0,300 | estimador do 47 sem divisao | 95 / 72 | −1,126326 | −1,126326 | 0.0e+00 | 0.0e+00 |
+| OC-A1 0,300 | rd_dird_delta (como o 43) | 144 / 119 | −0,229095 | −0,229095 | 2.8e-17 | 0.0e+00 |
+| OC-A1 0,300 | estimador do 47 sem divisao | 144 / 119 | −0,229095 | −0,229095 | 1.4e-15 | 6.7e-16 |
+
+Resultado: **aprovado** (máx |dif| = 1.4e-15, tolerância 1e−8). G vem de `output/aquisicao/a10_diagnostico_cortes_normas.json`; o estrato gravado no CSV do a10 bate com a regra código × porte em todos os municípios, e o código de IVS do Anexo VI está do lado certo do corte pelo IVS oficial (em 0,300, 265 municípios na janela conferidos, 0 divergentes; em 0,400, 267 municípios na janela conferidos, 0 divergentes).
 <!-- PO:portao:fim -->
 
 ## 2. Onde o estrato muda (regra lida do a10)
 
 <!-- PO:regra_g:inicio -->
-(gerado pelo script)
+| Corte | Porte (Anexo VI, IBGE 2022) | Código de IVS (abaixo → acima) | Estrato do IED (abaixo → acima) | Grupo |
+|---|---|---|---|---|
+| 0,300 | 1-Até 20mil hab. | 4 → 3 | 3 → 3 | não muda (G = 0) |
+| 0,300 | 2-Acima de 20mil até 50mil hab. | 4 → 3 | 4 → 3 | **muda (G = 1)** |
+| 0,300 | 3-Acima de 50mil até 100mil hab. | 4 → 3 | 4 → 3 | **muda (G = 1)** |
+| 0,300 | 4-Acima de 100mil hab. | 4 → 3 | 4 → 4 | não muda (G = 0) |
+| 0,400 | 1-Até 20mil hab. | 3 → 2 | 3 → 2 | **muda (G = 1)** |
+| 0,400 | 2-Acima de 20mil até 50mil hab. | 3 → 2 | 3 → 2 | **muda (G = 1)** |
+| 0,400 | 3-Acima de 50mil até 100mil hab. | 3 → 2 | 3 → 3 | não muda (G = 0) |
+| 0,400 | 4-Acima de 100mil hab. | 3 → 2 | 4 → 3 | **muda (G = 1)** |
+
+Código de IVS 1 = muito alta … 5 = muito baixa; estrato 1 recebe mais por equipe. Cada degrau de estrato vale R$ 2.000 por equipe de saúde da família por mês (auditoria 18, §2.5).
 <!-- PO:regra_g:fim -->
 
 ## 3. Contagens por grupo, lado e corte (PO-5)
 
 <!-- PO:contagens:inicio -->
-(gerado pelo script)
+| Outcome | Corte | Não muda, abaixo | Não muda, acima | Muda, abaixo | Muda, acima | Fora sem porte |
+|---|---|---|---|---|---|---|
+| HI-1 · célula com vaga imediata preenchida | 0,300 | 50 (330 células) | 42 (211 células) | 45 (162 células) | 30 (100 células) | 0 |
+| HI-1 · célula com vaga imediata preenchida | 0,400 | 18 (85 células) | 15 (39 células) | 65 (230 células) | 54 (131 células) | 0 |
+| HI-2 · alocados em vagas imediatas por município | 0,300 | 50 (80 mun. × ciclo) | 42 (68 mun. × ciclo) | 45 (61 mun. × ciclo) | 30 (48 mun. × ciclo) | 0 |
+| HI-2 · alocados em vagas imediatas por município | 0,400 | 18 (37 mun. × ciclo) | 15 (25 mun. × ciclo) | 65 (93 mun. × ciclo) | 54 (72 mun. × ciclo) | 0 |
+| ΔB1 · vínculos de especialistas | 0,300 | 73 | 72 | 71 | 47 | 0 |
+| ΔB1 · vínculos de especialistas | 0,400 | 22 | 22 | 100 | 123 | 0 |
+| ΔB2 · horas SUS de especialistas | 0,300 | 70 | 72 | 71 | 47 | 0 |
+| ΔB2 · horas SUS de especialistas | 0,400 | 22 | 22 | 100 | 123 | 0 |
+| ΔB5 · vínculos de generalistas | 0,300 | 73 | 72 | 71 | 47 | 0 |
+| ΔB5 · vínculos de generalistas | 0,400 | 22 | 22 | 100 | 123 | 0 |
+
+Municípios distintos na janela h = 0,050 com outcome observado (decisão 11); entre parênteses, as linhas da regressão. Grupo × lado com menos de 10 municípios deixaria a linha sem estimativa.
 <!-- PO:contagens:fim -->
 
 ## 4. PO-1 — a H1 depende de o estrato mudar? (primária, Holm)
 
 <!-- PO:po1:inicio -->
-(gerado pelo script)
+| Outcome | Corte | Municípios: não muda (abaixo / acima) · muda (abaixo / acima) | Linhas | Diferença τ₁ | IC 95% | p | p Holm |
+|---|---|---|---|---|---|---|---|
+| HI-1 · célula com vaga imediata preenchida | 0,300 | 50 / 42 · 45 / 30 | 803 | +12,5 p.p. | [−19,1; +44,2] | 0,438 | 0,876 |
+| HI-1 · célula com vaga imediata preenchida | 0,400 | 18 / 15 · 65 / 54 | 485 | −31,1 p.p. | [−71,8; +9,7] | 0,135 | 0,405 |
+| HI-2 · alocados em vagas imediatas por município | 0,300 | 50 / 42 · 45 / 30 | 257 | +1,67 | [−0,27; +3,60] | 0,091 | 0,366 |
+| HI-2 · alocados em vagas imediatas por município | 0,400 | 18 / 15 · 65 / 54 | 227 | −0,61 | [−2,23; +1,01] | 0,459 | 0,876 |
+
+τ₁ = salto onde o estrato muda − salto onde não muda. Holm entre as quatro linhas (decisão 12).
 <!-- PO:po1:fim -->
 
 ## 5. PO-2 e PO-3 — oferta local de especialistas e de generalistas (secundárias, BKY)
 
 <!-- PO:po2_po3:inicio -->
-(gerado pelo script)
+| Outcome | Corte | Municípios: não muda (abaixo / acima) · muda (abaixo / acima) | Linhas | Diferença τ₁ | IC 95% | p | q BKY |
+|---|---|---|---|---|---|---|---|
+| ΔB1 · vínculos de especialistas | 0,300 | 73 / 72 · 71 / 47 | 263 | +1,43 | [−1,10; +3,97] | 0,267 | 1,000 |
+| ΔB1 · vínculos de especialistas | 0,400 | 22 / 22 · 100 / 123 | 267 | +1,54 | [−0,94; +4,02] | 0,225 | 1,000 |
+| ΔB2 · horas SUS de especialistas | 0,300 | 70 / 72 · 71 / 47 | 260 | +0,30 | [−29,91; +30,51] | 0,984 | 1,000 |
+| ΔB2 · horas SUS de especialistas | 0,400 | 22 / 22 · 100 / 123 | 267 | +8,81 | [−35,12; +52,75] | 0,694 | 1,000 |
+| ΔB5 · vínculos de generalistas | 0,300 | 73 / 72 · 71 / 47 | 263 | +2,80 | [−1,72; +7,32] | 0,225 | 1,000 |
+| ΔB5 · vínculos de generalistas | 0,400 | 22 / 22 · 100 / 123 | 267 | +0,95 | [−1,92; +3,82] | 0,518 | 1,000 |
+
+BKY entre as seis linhas (ΔB1 e ΔB2 da PO-2; ΔB5 da PO-3). Um município por linha, EP HC1.
 <!-- PO:po2_po3:fim -->
 
 ## 6. PO-4 — o salto em cada grupo (descritivo)
 
 <!-- PO:po4:inicio -->
-(gerado pelo script)
+| Outcome | Corte | Salto onde o estrato não muda (τ₀) [IC 95%] | p | Salto onde o estrato muda (τ₀ + τ₁) [IC 95%] | p |
+|---|---|---|---|---|---|
+| HI-1 · célula com vaga imediata preenchida | 0,300 | −7,4 p.p. [−27,9; +13,0] | 0,475 | +5,1 p.p. [−20,3; +30,5] | 0,694 |
+| HI-1 · célula com vaga imediata preenchida | 0,400 | +23,2 p.p. [−8,7; +55,0] | 0,154 | −7,9 p.p. [−34,5; +18,7] | 0,560 |
+| HI-2 · alocados em vagas imediatas por município | 0,300 | −1,88 [−3,50; −0,26] | 0,023 | −0,22 [−1,28; +0,84] | 0,688 |
+| HI-2 · alocados em vagas imediatas por município | 0,400 | +0,36 [−0,84; +1,56] | 0,557 | −0,25 [−1,31; +0,80] | 0,639 |
+| ΔB1 · vínculos de especialistas | 0,300 | −0,85 [−2,54; +0,83] | 0,322 | +0,58 [−1,31; +2,47] | 0,547 |
+| ΔB1 · vínculos de especialistas | 0,400 | −1,71 [−3,54; +0,12] | 0,067 | −0,17 [−1,85; +1,51] | 0,841 |
+| ΔB2 · horas SUS de especialistas | 0,300 | −5,80 [−23,92; +12,33] | 0,531 | −5,50 [−29,66; +18,67] | 0,656 |
+| ΔB2 · horas SUS de especialistas | 0,400 | −13,02 [−45,26; +19,23] | 0,429 | −4,21 [−34,05; +25,63] | 0,782 |
+| ΔB5 · vínculos de generalistas | 0,300 | −0,99 [−3,40; +1,42] | 0,419 | +1,81 [−2,02; +5,63] | 0,354 |
+| ΔB5 · vínculos de generalistas | 0,400 | −1,88 [−4,02; +0,27] | 0,086 | −0,93 [−2,84; +0,97] | 0,337 |
+
+HI-1 em pontos percentuais; HI-2 em médicos alocados por município, comparando municípios com as mesmas vagas imediatas; ΔB1, ΔB2 e ΔB5 por 10 mil hab., mudança da média do pós menos a do pré. Descritivo: fora do Holm e do BKY.
 <!-- PO:po4:fim -->
 
 ## 7. PO-5 — quem está em cada grupo: capital e região (diagnóstico)
 
 <!-- PO:balanco:inicio -->
-(gerado pelo script)
+| População | Corte | Estrato | Lado | Municípios | Capitais | Centro-Oeste | Nordeste | Norte | Sudeste | Sul |
+|---|---|---|---|---|---|---|---|---|---|---|
+| H1 | 0,300 | não muda | abaixo | 50 | 24 % | 18 % | 24 % | 8 % | 40 % | 10 % |
+| H1 | 0,300 | não muda | acima | 42 | 14 % | 12 % | 31 % | 17 % | 36 % | 5 % |
+| H1 | 0,300 | muda | abaixo | 45 | 0 % | 40 % | 11 % | 11 % | 36 % | 2 % |
+| H1 | 0,300 | muda | acima | 30 | 0 % | 30 % | 40 % | 3 % | 23 % | 3 % |
+| V | 0,300 | não muda | abaixo | 73 | 16 % | 18 % | 18 % | 7 % | 47 % | 11 % |
+| V | 0,300 | não muda | acima | 72 | 8 % | 11 % | 22 % | 14 % | 46 % | 7 % |
+| V | 0,300 | muda | abaixo | 71 | 0 % | 35 % | 10 % | 8 % | 44 % | 3 % |
+| V | 0,300 | muda | acima | 47 | 0 % | 23 % | 32 % | 4 % | 34 % | 6 % |
+| H1 | 0,400 | não muda | abaixo | 18 | 0 % | 0 % | 78 % | 17 % | 6 % | 0 % |
+| H1 | 0,400 | não muda | acima | 15 | 0 % | 0 % | 93 % | 0 % | 7 % | 0 % |
+| H1 | 0,400 | muda | abaixo | 65 | 5 % | 12 % | 52 % | 17 % | 17 % | 2 % |
+| H1 | 0,400 | muda | acima | 54 | 0 % | 0 % | 65 % | 15 % | 20 % | 0 % |
+| V | 0,400 | não muda | abaixo | 22 | 0 % | 0 % | 82 % | 14 % | 5 % | 0 % |
+| V | 0,400 | não muda | acima | 22 | 0 % | 0 % | 91 % | 0 % | 9 % | 0 % |
+| V | 0,400 | muda | abaixo | 100 | 3 % | 9 % | 55 % | 15 % | 20 % | 1 % |
+| V | 0,400 | muda | acima | 123 | 0 % | 2 % | 72 % | 7 % | 18 % | 0 % |
+
+H1: municípios distintos da amostra da HI-2 (qualquer ciclo) na janela; V: municípios da amostra de ΔB1 na janela. Médias simples, sem teste. Capital e região pela referência do IBGE gravada (`output/aquisicao/ibge_capitais_uf_regiao.csv`).
 <!-- PO:balanco:fim -->
 
 ## 8. Leitura pela regra pré-registrada
 
 <!-- PO:leitura:inicio -->
-(gerado pelo script)
+**PO-1:** código `TAU1_TODOS_CONTEM_ZERO`. Regra (decisão 16): `TAU1_TODOS_CONTEM_ZERO` se as quatro τ₁ têm IC 95% que contém zero; `TAU1_REJEITA_HOLM_CONCENTRADO` se alguma τ₁ tem p de Holm abaixo de 0,05 e, nela, o IC de τ₀ + τ₁ exclui zero e o de τ₀ contém zero; `TAU1_REJEITA_HOLM_SEM_CONCENTRACAO` se rejeita depois do Holm sem essa concentração; `TAU1_IC_EXCLUI_ZERO_SEM_HOLM` se algum IC convencional de τ₁ exclui zero e nenhum p de Holm fica abaixo de 0,05.
+
+**Não se detecta que o salto da H1 dependa de o estrato do IED mudar** (leitura pré-registrada do primeiro caso): nas quatro linhas da PO-1 o IC 95% da diferença τ₁ contém zero. Pelo adendo, o IED não explica o sinal da H1, com pouca potência: os grupos são pequenos (contagens na seção 3).
+
+**PO-3 em 0,300:** código `SEM_INDICIO`; τ₁ com q BKY acima de 0,05. Regra: `INDICIO_IED_MOVE_APS` se o IC do salto de generalistas onde o estrato muda exclui zero e o IC onde não muda contém zero; senão `SEM_INDICIO`.
+
+**PO-3 em 0,400:** código `SEM_INDICIO`; τ₁ com q BKY acima de 0,05. Regra: `INDICIO_IED_MOVE_APS` se o IC do salto de generalistas onde o estrato muda exclui zero e o IC onde não muda contém zero; senão `SEM_INDICIO`.
+
+**Potência:** nenhum grupo × lado com menos de 10 municípios. Mesmo acima de 10, cada grupo tem poucas dezenas de municípios perto do corte.
 <!-- PO:leitura:fim -->
 
 ## 9. Figura
 
 <!-- PO:figura:inicio -->
-(gerado pelo script)
+![PO_salto_por_grupo](../../output/rdd_bolsa/PO_figuras/PO_salto_por_grupo.png)
+
+**Como ler: cada painel é um outcome; em cada corte há três linhas. "Não muda" é o salto no corte (lado de bolsa maior menos lado de bolsa menor) nos portes em que o estrato do IED fica igual dos dois lados; "muda" é o salto nos portes em que, acima do corte, o estrato passa a um degrau de repasse maior; "diferença" é muda menos não muda (τ₁). Ponto = estimativa; barra = IC 95%. Azul: o IC exclui zero; cinza: contém zero. Barra que cruza a linha do zero quer dizer que não se detecta diferença, não que ela seja zero. Os grupos diferem também em tamanho, capital e região: é heterogeneidade descritiva do pacote do corte, não o efeito do IED.**
 <!-- PO:figura:fim -->
 
 ## 10. Limites
 
 <!-- PO:limites:inicio -->
-(gerado pelo script)
+- **Descritivo, não causal do IED.** O porte é anterior ao tratamento, mas os portes em que o estrato muda diferem dos outros em tamanho, capital e região (seção 7) e em outras regras que dependem do porte. A diferença τ₁ mistura o canal do IED com tudo o que difere entre esses municípios perto do corte.
+- **Pacote do corte.** Em 0,300 e 0,400 mudam a bolsa anunciada e outras regras federais (auditoria 18). Mesmo onde o estrato não muda, o salto é de um pacote, não da bolsa isolada; nada aqui isola o incentivo de R$ 5 mil, a participação no PMM-E ou o Agora Tem Especialistas.
+- **Pós-resultado.** A H1 e a oferta local no corte já tinham sido vistas; só a divisão por porte é nova. A especificação e as decisões foram fixadas antes destas contas.
+- **Potência.** Cada grupo × lado tem poucas dezenas de municípios na janela (seção 3); os IC da diferença são mais largos que os da H1 sem divisão. Não detectar diferença não é mostrar que ela é zero.
+- **Retas por ciclo × grupo.** Na H1 cada ciclo × grupo tem retas próprias de cada lado; com poucos municípios por ciclo × grupo, as retas são imprecisas, e é isso que alarga os IC.
+- **IED e compensação.** O art. 12-T da 3.493/2024 compensa quem perderia recursos frente às doze parcelas anteriores (auditoria 18, §2.5): o degrau de estrato pode valer menos que R$ 2.000 por equipe no curto prazo. O grupo G marca onde a regra muda o estrato, não quanto dinheiro mudou.
+- **Porte de 2022.** O porte é o do Anexo VI (IBGE 2022). A H1 e a oferta local são de 2025–2026; um município que tenha mudado de porte depois não muda de grupo aqui.
 <!-- PO:limites:fim -->
