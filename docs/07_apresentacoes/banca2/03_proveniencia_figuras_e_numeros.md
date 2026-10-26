@@ -56,8 +56,14 @@
   descontinuidade com faixas e pontos sem explicação. Todo texto desenhado é
   gravado no manifesto (`figuras_novas`), e o teste confere os números.
 - **`G5`.** Uma linha por pergunta do doc 57, cada uma na sua escala,
-  simétrica em torno do nulo; a "força da evidência" é a categoria fixa do
-  doc 57, §2.
+  simétrica em torno do nulo. A "força da evidência" de cada **linha** sai de
+  uma regra explícita do gerador (`forca_da_linha`) aplicada a valores
+  registrados: p de Holm ≥ 0,05, ou IC com o nulo, dá "inconclusivo"; o p do
+  Wald do pré ≥ 0,05 dá "ATT sob tendências paralelas" (abaixo, "ATT com pré
+  falhando"); o estatuto EXPLORATORIO do bloco dá "exploratório". A regra e as
+  entradas de cada linha ficam no manifesto (`forca_regra`). Ela é por linha:
+  o doc 57 classifica a pergunta inteira, e no P4 outros outcomes falham no
+  pré, o que a leitura curta da linha diz.
 - **`G6` e `G7`.** As descritivas são contadas pelo gerador no quadro de
   células da 1ª chamada (`output/rdd_bolsa/outcomes/outcomes_V_celula.parquet`)
   e no resumo do portão G1. A faixa é a da **grade aplicada** (cortes 0,300 e
@@ -385,6 +391,7 @@ milhar; `fracao` = "a/b" com separador de milhar; `txt` = trecho como está.
 | `CA_HF_SUP` | +4,12 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_fora_1a", "estatistica": "efeito_pos_medio"}, "coluna": "ic95_sup"}` | `d2s` | P4-CA horas fora do município da 1ª opção: IC superior |
 | `CA_HF_HOLM` | 0,527 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_fora_1a", "estatistica": "efeito_pos_medio"}, "coluna": "p_holm"}` | `p3` | P4-CA horas fora do município da 1ª opção: p de Holm |
 | `CA_HF_PRE` | 0,200 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_fora_1a", "estatistica": "wald_pre"}, "coluna": "p_valor"}` | `p3` | P4-CA horas fora do município da 1ª opção: p do pré (permutação) |
+| `P6_ESTATUTO` | EXPLORATORIO_P6 | EMPIRICO | `output/rdd_bolsa/P6_resumo.json` | `{"caminho": ["estatuto"]}` | `txt` | P6: estatuto do bloco (regra da força da evidência na figura da cadeia) |
 | `P6_Y1_EST` | +0,405 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p6_y1_media_est", "v"]}` | `d3s` | P6 Y1 vínculo no município da vaga, média do seguimento |
 | `P6_Y1_INF` | +0,210 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p6_y1_media_lo", "v"]}` | `d3s` | P6 Y1: IC inferior |
 | `P6_Y1_SUP` | +0,600 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p6_y1_media_hi", "v"]}` | `d3s` | P6 Y1: IC superior |
@@ -443,6 +450,9 @@ milhar; `fracao` = "a/b" com separador de milhar; `txt` = trecho como está.
 | `D_C2_LIG` | 2.102 | EMPIRICO | `output/rdd_bolsa/G1_resumo.json` | `{"caminho": ["taxas_ligacao", "g1_cpf_nome", "2", "ligados"]}` | `int` | ciclo 2: candidatos ligados a um profissional do CNES (G1) |
 | `D_C3_CANDG1` | 2.604 | EMPIRICO | `output/rdd_bolsa/G1_resumo.json` | `{"caminho": ["taxas_ligacao", "g1_cpf_nome", "3", "candidatos"]}` | `int` | ciclo 3: candidatos no portão G1 |
 | `D_C3_LIG` | 2.533 | EMPIRICO | `output/rdd_bolsa/G1_resumo.json` | `{"caminho": ["taxas_ligacao", "g1_cpf_nome", "3", "ligados"]}` | `int` | ciclo 3: candidatos ligados a um profissional do CNES (G1) |
+| `D_C1_P1` | 915 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "p1_por_ciclo", "1"]}` | `int` | ciclo 1: amostra da escolha (P1): 1ª opção numa célula, ligado ao CNES e com município de origem |
+| `D_C2_P1` | 2.032 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "p1_por_ciclo", "2"]}` | `int` | ciclo 2: amostra da escolha (P1): 1ª opção numa célula, ligado ao CNES e com município de origem |
+| `D_C3_P1` | 2.474 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "p1_por_ciclo", "3"]}` | `int` | ciclo 3: amostra da escolha (P1): 1ª opção numa célula, ligado ao CNES e com município de origem |
 | `D_IVS_MUN` | 5.565 | EMPIRICO | `output/aquisicao/a08_ivs_2010_oficial_municipio.csv` | `{"descritiva": "IVS_MUN"}` | `int` | municípios com IVS 2010 oficial (a08) |
 | `D_POP_MUN` | 5.570 | EMPIRICO | `output/aquisicao/populacao_censo2022_municipios.csv` | `{"descritiva": "POP_MUN"}` | `int` | municípios com população do Censo 2022 |
 | `D_ATIVOS` | 1.957 | EMPIRICO | `output/aquisicao/cnes_profissional/a16_manifesto_cnes_profissional.json` | `{"caminho": ["listas_pmme", "registros_ativos_2026_09_11"]}` | `int` | registros na lista de especialistas ativos do PMM-E de 11/09/2026 |

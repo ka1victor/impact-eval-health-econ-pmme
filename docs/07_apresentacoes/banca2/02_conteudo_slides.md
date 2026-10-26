@@ -74,7 +74,7 @@ Aplicadas por `scripts/apresentacao/gerar_deck_banca2.py` no deck proposto
 | 34 e 35 | "proporção de **vagas** preenchidas"; "35,6%" num slide e "30%" no outro; "SGETS"; "Especialidade" | "proporção de **células** (estabelecimento × curso) com alguma confirmação ou homologação: 30,3% na 1ª chamada; 35,6% somando a 2ª"; "SGTES"; "curso"; faixa pela regra aplicada | célula não é vaga física; os dois números são de chamadas diferentes |
 | 35 | IVS como "custo territorial agregado" (proxy de desvantagens) | IVS como running variable: entra contínuo e controla o custo do lugar; só a bolsa salta nos cortes | é a hipótese de identificação (doc 44, §2) |
 | 31 (notas) | notas com uma conversa colada, que repetia a contagem do arquivo errado | notas trocadas por uma linha neutra | a contagem é artefato |
-| 32 e 33 | slides "EXEMPLO" de outro trabalho (Dinamarca, aplicativo de vinhos) | ocultos | não são deste trabalho; ficam no arquivo para o grupo decidir |
+| 32 e 33 | slides "EXEMPLO" de outro trabalho (Dinamarca, aplicativo de vinhos) | ocultos (`show="0"`), não apagados | **decisão do agente que montou o deck, não do grupo nem do autor; aguarda confirmação do grupo**: não são deste trabalho e estavam visíveis no apêndice |
 | 25, 27 e 29 | marcadores "X" | substituídos pelos slides novos | — |
 
 **Números:** `R_C1_REPR`, `R_C1_MUN`, `D_C1_PRE1_PCT`, `D_C1_PRE2_PCT`
@@ -190,21 +190,24 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 | Municípios com célula no quadro | 368 | 454 | 748 |
 | Células (estabelecimento × curso) | 1.295 | 1.547 | 2.293 |
 | Vagas imediatas · cadastro reserva | 678 · 1.145 | 1.836 · 1.053 | 1.132 · 3.999 |
-| Candidatos de 1ª opção numa célula | 993 | 2.140 | 2.581 |
-| Candidatos ligados ao CNES (G1) | 938 de 993 | 2.102 de 2.179 | 2.533 de 2.604 |
+| Candidatos nos resultados (universo G1) | 993 | 2.179 | 2.604 |
+| … ligados ao CNES | 938 | 2.102 | 2.533 |
+| … com 1ª opção numa célula do quadro | 993 | 2.140 | 2.581 |
+| Amostra da escolha (P1) | 915 | 2.032 | 2.474 |
 | Células preenchidas na 1ª chamada | 393 (30,3%) | 728 (47,1%) | 497 (21,7%) |
 | Células preenchidas até a 2ª chamada | 461 (35,6%) | 867 (56,0%) | não observado |
 | Municípios por faixa: R$ 10 · 15 · 20 mil | 159 · 107 · 102 | 210 · 115 · 129 | 276 · 180 · 291 (e 1 sem IVS) |
 
 - **Célula:** estabelecimento × curso no quadro da 1ª chamada; uma célula pode ter várias vagas.
 - **Preenchida:** alguma confirmação ou homologação; não é taxa de ocupação de vagas.
+- **Candidatos:** as linhas com "…" são partes do universo G1 (todos os candidatos nos resultados); a amostra do P1 exige 1ª opção numa célula do quadro, ligação ao CNES e município de origem.
 - **Faixa pela grade aplicada:** até 0,300 → R$ 10 mil; de 0,301 a 0,400 → R$ 15 mil; acima de 0,400 → R$ 20 mil.
 
 > **Descritivo: as diferenças entre ciclos não são efeito da bolsa.**
 
 **Fontes:** `output/apresentacao_banca2/tabela_descritiva_ciclos.csv`, contada de `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` e de `output/rdd_bolsa/G1_resumo.json`.
 
-**Números:** `D_C1_MUN`, `D_C2_MUN`, `D_C3_MUN`, `D_C1_CEL`, `D_C2_CEL`, `D_C3_CEL`, `D_C1_VI`, `D_C1_CR`, `D_C2_VI`, `D_C2_CR`, `D_C3_VI`, `D_C3_CR`, `D_C1_CAND1`, `D_C2_CAND1`, `D_C3_CAND1`, `D_C1_LIG`, `D_C1_CANDG1`, `D_C2_LIG`, `D_C2_CANDG1`, `D_C3_LIG`, `D_C3_CANDG1`, `D_C1_PRE1`, `D_C1_PRE1_PCT`, `D_C2_PRE1`, `D_C2_PRE1_PCT`, `D_C3_PRE1`, `D_C3_PRE1_PCT`, `D_C1_PRE2`, `D_C1_PRE2_PCT`, `D_C2_PRE2`, `D_C2_PRE2_PCT`, `D_C1_F3`, `D_C1_F2`, `D_C1_F1`, `D_C2_F3`, `D_C2_F2`, `D_C2_F1`, `D_C3_F3`, `D_C3_F2`, `D_C3_F1`, `D_C3_SEM_IVS`
+**Números:** `D_C1_MUN`, `D_C2_MUN`, `D_C3_MUN`, `D_C1_CEL`, `D_C2_CEL`, `D_C3_CEL`, `D_C1_VI`, `D_C1_CR`, `D_C2_VI`, `D_C2_CR`, `D_C3_VI`, `D_C3_CR`, `D_C1_CAND1`, `D_C2_CAND1`, `D_C3_CAND1`, `D_C1_LIG`, `D_C1_CANDG1`, `D_C2_LIG`, `D_C2_CANDG1`, `D_C3_LIG`, `D_C3_CANDG1`, `D_C1_P1`, `D_C2_P1`, `D_C3_P1`, `M1_N`, `D_C1_PRE1`, `D_C1_PRE1_PCT`, `D_C2_PRE1`, `D_C2_PRE1_PCT`, `D_C3_PRE1`, `D_C3_PRE1_PCT`, `D_C1_PRE2`, `D_C1_PRE2_PCT`, `D_C2_PRE2`, `D_C2_PRE2_PCT`, `D_C1_F3`, `D_C1_F2`, `D_C1_F1`, `D_C2_F3`, `D_C2_F2`, `D_C2_F1`, `D_C3_F3`, `D_C3_F2`, `D_C3_F1`, `D_C3_SEM_IVS`
 
 > [!NOTE]
 > **Nota de produção.** A faixa é contada pela regra no IVS 2010 oficial; o
@@ -213,7 +216,10 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 
 > **Notas do apresentador.** O ciclo 2 abriu mais vagas imediatas e preencheu
 > uma fração maior das células; o ciclo 3 tem muito cadastro reserva. A
-> ligação ao CNES passa de nove em cada dez candidatos em todos os ciclos.
+> ligação ao CNES passa de nove em cada dez candidatos em todos os ciclos. Se
+> perguntarem pelos universos: o G1 conta todos os candidatos dos resultados;
+> nos ciclos 2 e 3 alguns não têm a 1ª opção numa célula do quadro da 1ª
+> chamada e ficam fora da escolha. A amostra do P1 soma 5.421 candidatos.
 > Ciclo 3: só a 1ª chamada; o seguimento pós-início segue congelado.
 
 ---
@@ -429,8 +435,11 @@ Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×cicl
 
 > **Notas do apresentador.** Ler de cima para baixo, na ordem da cadeia.
 > Cinza: o IC contém o nulo. Verde em N1 é negativo e não passa no Holm. Verde
-> em P6 Y1 é quase mecânico. Verde em P4 é associação com tendências
-> paralelas. A escolha no ciclo 2 aparece no slide da H2.
+> em P6 Y1 é quase mecânico. Verde em P4 é associação: nas horas totais o pré
+> passa e a conclusão aguenta violações de tendência do tamanho das do pré,
+> mas outros outcomes do P4 falham no pré. A força de cada linha sai de uma
+> regra fixa do gerador sobre os valores de `output/`. A escolha no ciclo 2
+> aparece no slide da H2.
 
 ---
 

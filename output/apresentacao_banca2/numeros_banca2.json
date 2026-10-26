@@ -4929,6 +4929,20 @@
       "formato": "p3",
       "descricao": "P4-CA horas fora do município da 1ª opção: p do pré (permutação)"
     },
+    "P6_ESTATUTO": {
+      "valor": "EXPLORATORIO_P6",
+      "valor_bruto": "EXPLORATORIO_P6",
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P6_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P6_resumo.json",
+        "caminho": [
+          "estatuto"
+        ]
+      },
+      "formato": "txt",
+      "descricao": "P6: estatuto do bloco (regra da força da evidência na figura da cadeia)"
+    },
     "P6_Y1_EST": {
       "valor": "+0,405",
       "valor_bruto": 0.4048426985,
@@ -5687,6 +5701,54 @@
       },
       "formato": "int",
       "descricao": "ciclo 3: candidatos ligados a um profissional do CNES (G1)"
+    },
+    "D_C1_P1": {
+      "valor": "915",
+      "valor_bruto": 915,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "p1_por_ciclo",
+          "1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 1: amostra da escolha (P1): 1ª opção numa célula, ligado ao CNES e com município de origem"
+    },
+    "D_C2_P1": {
+      "valor": "2.032",
+      "valor_bruto": 2032,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "p1_por_ciclo",
+          "2"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 2: amostra da escolha (P1): 1ª opção numa célula, ligado ao CNES e com município de origem"
+    },
+    "D_C3_P1": {
+      "valor": "2.474",
+      "valor_bruto": 2474,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "p1_por_ciclo",
+          "3"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 3: amostra da escolha (P1): 1ª opção numa célula, ligado ao CNES e com município de origem"
     },
     "D_IVS_MUN": {
       "valor": "5.565",

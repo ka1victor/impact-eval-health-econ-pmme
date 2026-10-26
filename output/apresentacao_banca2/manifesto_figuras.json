@@ -820,6 +820,10 @@
             "M1_RC_SUP"
           ],
           "forca": "inconclusivo",
+          "forca_regra": {
+            "regra": "holm",
+            "M1_P": 0.06509051502
+          },
           "exclui_nulo": false
         },
         {
@@ -831,6 +835,11 @@
             "A3_EMP_SUP"
           ],
           "forca": "inconclusivo",
+          "forca_regra": {
+            "regra": "ic",
+            "inf": -12.907869229680703,
+            "sup": 3.1897741514714744
+          },
           "exclui_nulo": false
         },
         {
@@ -842,6 +851,10 @@
             "N1_SA_SUP"
           ],
           "forca": "inconclusivo",
+          "forca_regra": {
+            "regra": "holm",
+            "N1_SA_HOLM": 0.12351584949008355
+          },
           "exclui_nulo": true
         },
         {
@@ -853,6 +866,10 @@
             "P6_Y1_SUP"
           ],
           "forca": "exploratório",
+          "forca_regra": {
+            "regra": "estatuto",
+            "P6_ESTATUTO": "EXPLORATORIO_P6"
+          },
           "exclui_nulo": true
         },
         {
@@ -864,6 +881,10 @@
             "P6_Y3_SUP"
           ],
           "forca": "exploratório",
+          "forca_regra": {
+            "regra": "estatuto",
+            "P6_ESTATUTO": "EXPLORATORIO_P6"
+          },
           "exclui_nulo": true
         },
         {
@@ -874,7 +895,11 @@
             "P4_HT_INF",
             "P4_HT_SUP"
           ],
-          "forca": "ATT com pré falhando",
+          "forca": "ATT sob tendências paralelas",
+          "forca_regra": {
+            "regra": "pre",
+            "P4_HT_PRE": 0.3102080383
+          },
           "exclui_nulo": true
         },
         {
@@ -886,6 +911,10 @@
             "K1_SUP"
           ],
           "forca": "inconclusivo",
+          "forca_regra": {
+            "regra": "holm",
+            "K1_HOLM": 1.0
+          },
           "exclui_nulo": false
         },
         {
@@ -897,6 +926,10 @@
             "R_P1_SUP"
           ],
           "forca": "inconclusivo",
+          "forca_regra": {
+            "regra": "holm",
+            "R_P1_HOLM": 0.6242327487
+          },
           "exclui_nulo": false
         }
       ],
@@ -938,8 +971,8 @@
         "Horas totais do médico (P4)",
         "h/sem · entrada no PMM-E, coortes escalonadas",
         "+6,6 [+5,4; +7,8]",
-        "pré: p 0,310; outros outcomes falham",
-        "ATT com pré falhando",
+        "pré: p 0,310; ruptura M̄ = 1,30; outros outcomes falham",
+        "ATT sob tendências paralelas",
         "ACESSO",
         "Produção SUS nas CBO-alvo (K1)",
         "por 10 mil hab./mês · DiRD nos cortes",
@@ -952,7 +985,7 @@
         "−4,9 p.p. [−14,3; +4,6]",
         "p de Holm 0,624",
         "inconclusivo",
-        "Força da evidência: categorias fixas do doc 57 (§2). Nenhuma linha é causal-limpa. Pacote do corte: a bolsa +R$ 5 mil e as outras regras dos mesmos cortes.",
+        "Força da evidência, por linha: Holm ou IC com o nulo, inconclusivo; pré do Wald, ATT; estatuto do bloco, exploratório. Nenhuma linha é causal-limpa.",
         "Nada aqui é efeito da participação no PMM-E. Verde: o IC 95% exclui o nulo; cinza: contém.",
         "Fontes: S57_resumo.json (doc 57); P4_estimativas.csv. EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
@@ -977,14 +1010,22 @@
         "678 · 1.145",
         "1.836 · 1.053",
         "1.132 · 3.999",
-        "Candidatos de 1ª opção numa célula",
+        "Candidatos nos resultados (universo G1)",
+        "993",
+        "2.179",
+        "2.604",
+        "… ligados ao CNES",
+        "938",
+        "2.102",
+        "2.533",
+        "… com 1ª opção numa célula do quadro",
         "993",
         "2.140",
         "2.581",
-        "Candidatos ligados ao CNES (G1)",
-        "938 de 993",
-        "2.102 de 2.179",
-        "2.533 de 2.604",
+        "Amostra da escolha (P1)",
+        "915",
+        "2.032",
+        "2.474",
         "Células preenchidas na 1ª chamada",
         "393 (30,3%)",
         "728 (47,1%)",
@@ -997,7 +1038,7 @@
         "159 · 107 · 102",
         "210 · 115 · 129",
         "276 · 180 · 291 (e 1 sem IVS)",
-        "Célula = estabelecimento × curso no quadro da 1ª chamada; preenchida = alguma confirmação ou homologação. Faixa pela grade aplicada (cortes 0,300 e 0,400 no IVS 2010 oficial).",
+        "Célula = estabelecimento × curso no quadro da 1ª chamada; preenchida = alguma confirmação ou homologação. Faixa pela grade aplicada.\nAmostra P1 = 1ª opção numa célula do quadro, ligado ao CNES e com município de origem.",
         "EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ]
     },
@@ -1066,7 +1107,7 @@
   "tabelas_csv": [
     {
       "arquivo": "output/apresentacao_banca2/tabela_descritiva_ciclos.csv",
-      "sha256": "4d60cb82a8a77256cba326dd6ece9236d7d0b998b0b7e0aad51f84a5594f195c"
+      "sha256": "98672c342c53968951505fab8e684f69f8cff9db1f2bdf11b0da39c158259eec"
     },
     {
       "arquivo": "output/apresentacao_banca2/tabela_fontes.csv",
@@ -1180,7 +1221,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
-      "sha256": "1bbaafe323fa6a6cd908771f1dea1166f15aeb42ec06881ec6cd16f85f281376",
+      "sha256": "94ccdf93dab92ef1f8015f9b851c95597dc7188c6e82c3e2d6cde65943f62394",
       "natureza": "EMPIRICO",
       "descricao": "cadeia-resumo com as linhas do doc 57",
       "fontes": [
@@ -1193,7 +1234,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/tabela_descritiva_ciclos.png",
-      "sha256": "c050408fa0f1359fa9a4ede36730408bb23c5c64a92a973b21105fdfebfb32a5",
+      "sha256": "9e834c5decc9056cf4933deb85b62ed12b7dd8193b28abce864c851c6dd0c9b5",
       "natureza": "EMPIRICO",
       "descricao": "tabela descritiva por ciclo",
       "fontes": [
@@ -1212,6 +1253,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "a8d1b90d4af18ccc9d91d1336818b79ec231f5ed97fe62edcbc065f3238be91c"
+    "sha256": "41a1a9d2753879ce5cdcf5998dcce40b45b3a9c0ea6a6c22354c8d7a98d3b533"
   }
 }

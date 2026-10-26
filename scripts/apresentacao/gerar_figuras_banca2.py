@@ -594,6 +594,8 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
                                   ("HOLM", "efeito_pos_medio", "p_holm", "p3", "p de Holm"),
                                   ("PRE", "wald_pre", "p_valor", "p3", "p do pré (permutação)"))],
     # P6: alocado por pouco (protocolo 56; doc 57f)
+    ("P6_ESTATUTO", "EMPIRICO", _j("output/rdd_bolsa/P6_resumo.json", "estatuto"), "txt",
+     "P6: estatuto do bloco (regra da força da evidência na figura da cadeia)"),
     ("P6_Y1_EST", "EMPIRICO", _v("p6_y1_media_est"), "d3s", "P6 Y1 vínculo no município da vaga, média do seguimento"),
     ("P6_Y1_INF", "EMPIRICO", _v("p6_y1_media_lo"), "d3s", "P6 Y1: IC inferior"),
     ("P6_Y1_SUP", "EMPIRICO", _v("p6_y1_media_hi"), "d3s", "P6 Y1: IC superior"),
@@ -633,6 +635,9 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
       for c in (1, 2, 3)
       for s, k, d in (("CANDG1", "candidatos", "candidatos no portão G1"),
                       ("LIG", "ligados", "candidatos ligados a um profissional do CNES (G1)"))],
+    *[(f"D_C{c}_P1", "EMPIRICO", _j("output/rdd_bolsa/P1_resumo.json", "amostra", "p1_por_ciclo", str(c)), "int",
+       f"ciclo {c}: amostra da escolha (P1): 1ª opção numa célula, ligado ao CNES e com município de origem")
+      for c in (1, 2, 3)],
     ("D_IVS_MUN", "EMPIRICO", _d("IVS_MUN"), "int", "municípios com IVS 2010 oficial (a08)"),
     ("D_POP_MUN", "EMPIRICO", _d("POP_MUN"), "int", "municípios com população do Censo 2022"),
     ("D_ATIVOS", "EMPIRICO", _j(A16_MAN, "listas_pmme", "registros_ativos_2026_09_11"), "int",
@@ -1374,25 +1379,55 @@ def figura_h4(num: dict, destino: Path) -> dict:
 
 
 # Cadeia do doc 57: uma linha por pergunta, cada uma na sua escala (simétrica em torno do nulo)
+# A "força da evidência" de cada linha sai de uma regra explícita aplicada a valores de output/ (nunca digitada):
+#   ("holm", código do p de Holm): p de Holm >= 0,05 -> "inconclusivo"; < 0,05 -> "rejeita zero (Holm)";
+#   ("ic", None): o IC 95% da própria linha contém o nulo -> "inconclusivo"; exclui -> "IC exclui o nulo";
+#   ("pre", código do p do Wald do pré): p >= 0,05 -> "ATT sob tendências paralelas"; < 0,05 -> "ATT com pré falhando";
+#   ("estatuto", código do estatuto do bloco): começa com EXPLORATORIO -> "exploratório".
+# A regra é por linha; o doc 57 classifica a pergunta inteira (no P4, outros outcomes falham no pré).
+ALFA = 0.05
+
+
+def forca_da_linha(num: dict, regra: tuple, codigos: tuple, nulo_valor: float) -> tuple[str, dict]:
+    tipo, cod = regra
+    if tipo == "holm":
+        p = float(num[cod]["valor_bruto"])
+        return ("inconclusivo" if p >= ALFA else "rejeita zero (Holm)"), {"regra": tipo, cod: p}
+    if tipo == "ic":
+        inf, sup = (float(num[c]["valor_bruto"]) for c in codigos[1:])
+        return ("inconclusivo" if inf <= nulo_valor <= sup else "IC exclui o nulo"), {"regra": tipo, "inf": inf,
+                                                                                       "sup": sup}
+    if tipo == "pre":
+        p = float(num[cod]["valor_bruto"])
+        return ("ATT sob tendências paralelas" if p >= ALFA else "ATT com pré falhando"), {"regra": tipo, cod: p}
+    if tipo == "estatuto":
+        e = str(num[cod]["valor_bruto"])
+        if not e.startswith("EXPLORATORIO"):
+            raise SystemExit(f"ERRO: estatuto {e!r} não é exploratório; a regra da linha não se aplica")
+        return "exploratório", {"regra": tipo, cod: e}
+    raise SystemExit(f"ERRO: regra de força desconhecida {regra}")
+
+
 LINHAS_CADEIA_57 = [
-    # (elo, rótulo, sub, est, inf, sup, nulo, log, sufixo, leitura curta, força)
+    # (elo, rótulo, sub, est, inf, sup, nulo, log, sufixo, leitura curta, regra da força)
     ("ESCOLHA DO MÉDICO", "Peso da bolsa na 1ª opção (P1, M1)", "razão de chances por +R$ 5 mil · pacote do corte",
-     "M1_RC", "M1_RC_INF", "M1_RC_SUP", 1.0, True, "", "p de Holm {M1_P}", "inconclusivo"),
+     "M1_RC", "M1_RC_INF", "M1_RC_SUP", 1.0, True, "", "p de Holm {M1_P}", ("holm", "M1_P")),
     ("PREENCHIMENTO", "Célula aberta preenchida (A3)", "p.p. · ciclos 1–3, cortes empilhados · pacote do corte",
-     "A3_EMP_TAU", "A3_EMP_INF", "A3_EMP_SUP", 0.0, False, " p.p.", "MDE {A3_EMP_MDE} p.p.", "inconclusivo"),
+     "A3_EMP_TAU", "A3_EMP_INF", "A3_EMP_SUP", 0.0, False, " p.p.", "MDE {A3_EMP_MDE} p.p.", ("ic", None)),
     ("PREENCHIMENTO", "Vagas preenchidas por município (N1)", "com controle das vagas oferecidas · pacote do corte",
-     "N1_SA_TAU", "N1_SA_INF", "N1_SA_SUP", 0.0, False, "", "p de Holm {N1_SA_HOLM}", "inconclusivo"),
+     "N1_SA_TAU", "N1_SA_INF", "N1_SA_SUP", 0.0, False, "", "p de Holm {N1_SA_HOLM}", ("holm", "N1_SA_HOLM")),
     ("ENTRADA DO MÉDICO", "Vínculo no município da vaga (P6, Y1)", "fração · alocado × não alocado por pouco",
-     "P6_Y1_EST", "P6_Y1_INF", "P6_Y1_SUP", 0.0, False, "", "p de Holm {P6_Y1_HOLM} · quase mecânico", "exploratório"),
+     "P6_Y1_EST", "P6_Y1_INF", "P6_Y1_SUP", 0.0, False, "", "p de Holm {P6_Y1_HOLM} · quase mecânico",
+     ("estatuto", "P6_ESTATUTO")),
     ("ENTRADA DO MÉDICO", "Horas totais (P6, Y3)", "h/sem · alocado × não alocado por pouco",
-     "P6_Y3_EST", "P6_Y3_INF", "P6_Y3_SUP", 0.0, False, "", "p de Holm {P6_Y3_HOLM}", "exploratório"),
+     "P6_Y3_EST", "P6_Y3_INF", "P6_Y3_SUP", 0.0, False, "", "p de Holm {P6_Y3_HOLM}", ("estatuto", "P6_ESTATUTO")),
     ("CAPACIDADE", "Horas totais do médico (P4)", "h/sem · entrada no PMM-E, coortes escalonadas",
-     "P4_HT_ATT", "P4_HT_INF", "P4_HT_SUP", 0.0, False, "", "pré: p {P4_HT_PRE}; outros outcomes falham",
-     "ATT com pré falhando"),
+     "P4_HT_ATT", "P4_HT_INF", "P4_HT_SUP", 0.0, False, "",
+     "pré: p {P4_HT_PRE}; ruptura M̄ = {RR_HT}; outros outcomes falham", ("pre", "P4_HT_PRE")),
     ("ACESSO", "Produção SUS nas CBO-alvo (K1)", "por 10 mil hab./mês · DiRD nos cortes",
-     "K1_TAU", "K1_INF", "K1_SUP", 0.0, False, "", "p de Holm {K1_HOLM}", "inconclusivo"),
+     "K1_TAU", "K1_INF", "K1_SUP", 0.0, False, "", "p de Holm {K1_HOLM}", ("holm", "K1_HOLM")),
     ("REALOCAÇÃO", "Concorrentes e preenchimento (R-P1)", "p.p. por +R$ 5 mil · região de saúde",
-     "R_P1_EST", "R_P1_INF", "R_P1_SUP", 0.0, False, " p.p.", "p de Holm {R_P1_HOLM}", "inconclusivo"),
+     "R_P1_EST", "R_P1_INF", "R_P1_SUP", 0.0, False, " p.p.", "p de Holm {R_P1_HOLM}", ("holm", "R_P1_HOLM")),
 ]
 
 
@@ -1413,8 +1448,10 @@ def figura_cadeia_57(num: dict, destino: Path) -> dict:
     elo_ant = None
     registro = []
     cores_forca = {"inconclusivo": ("#e9ecef", "#3a3a3a"), "exploratório": ("#fff1d6", "#7a4a00"),
-                   "ATT com pré falhando": ("#fde2e1", "#8a1c17")}
-    for i, (elo, rot, sub, ce, ci, cs, v0, log, suf, leit, forca) in enumerate(LINHAS_CADEIA_57):
+                   "ATT com pré falhando": ("#fde2e1", "#8a1c17"), "ATT sob tendências paralelas": ("#e3eefa", "#1f4f8a"),
+                   "rejeita zero (Holm)": ("#e3f2e7", "#0f5a2a"), "IC exclui o nulo": ("#e3f2e7", "#0f5a2a")}
+    for i, (elo, rot, sub, ce, ci, cs, v0, log, suf, leit, regra) in enumerate(LINHAS_CADEIA_57):
+        forca, entradas_forca = forca_da_linha(num, regra, (ce, ci, cs), v0)
         y0 = topo - (i + 1) * ALT
         yc = y0 + ALT / 2
         if elo != elo_ant:
@@ -1446,9 +1483,10 @@ def figura_cadeia_57(num: dict, destino: Path) -> dict:
                                           boxstyle="round,pad=0,rounding_size=0.012", transform=fig.transFigure,
                                           facecolor=fundo, edgecolor="none"))
         reg.t(fig, 10.55 / W, yc / H, forca, fontsize=10.5, color=frente, weight="bold", ha="center", va="center")
-        registro.append({"linha": rot, "texto": txt, "codigos": [ce, ci, cs], "forca": forca, "exclui_nulo": bool(excl)})
-    reg.t(fig, 0.15 / W, 0.68 / H, "Força da evidência: categorias fixas do doc 57 (§2). Nenhuma linha é causal-limpa. "
-          "Pacote do corte: a bolsa +R$ 5 mil e as outras regras dos mesmos cortes.",
+        registro.append({"linha": rot, "texto": txt, "codigos": [ce, ci, cs], "forca": forca,
+                         "forca_regra": entradas_forca, "exclui_nulo": bool(excl)})
+    reg.t(fig, 0.15 / W, 0.68 / H, "Força da evidência, por linha: Holm ou IC com o nulo, inconclusivo; pré do Wald, ATT; "
+          "estatuto do bloco, exploratório. Nenhuma linha é causal-limpa.",
           fontsize=10, color=TINTA2, va="center")
     reg.t(fig, 0.15 / W, 0.4 / H, "Nada aqui é efeito da participação no PMM-E. Verde: o IC 95% exclui o nulo; "
           "cinza: contém.", fontsize=10, color=TINTA2, va="center")
@@ -1465,8 +1503,10 @@ def linhas_tabela_descritiva(num: dict) -> list[list[str]]:
               ["Municípios com célula no quadro"] + [v(f"D_C{c}_MUN") for c in (1, 2, 3)],
               ["Células (estabelecimento × curso)"] + [v(f"D_C{c}_CEL") for c in (1, 2, 3)],
               ["Vagas imediatas · cadastro reserva"] + [f"{v(f'D_C{c}_VI')} · {v(f'D_C{c}_CR')}" for c in (1, 2, 3)],
-              ["Candidatos de 1ª opção numa célula"] + [v(f"D_C{c}_CAND1") for c in (1, 2, 3)],
-              ["Candidatos ligados ao CNES (G1)"] + [f"{v(f'D_C{c}_LIG')} de {v(f'D_C{c}_CANDG1')}" for c in (1, 2, 3)],
+              ["Candidatos nos resultados (universo G1)"] + [v(f"D_C{c}_CANDG1") for c in (1, 2, 3)],
+              ["… ligados ao CNES"] + [v(f"D_C{c}_LIG") for c in (1, 2, 3)],
+              ["… com 1ª opção numa célula do quadro"] + [v(f"D_C{c}_CAND1") for c in (1, 2, 3)],
+              ["Amostra da escolha (P1)"] + [v(f"D_C{c}_P1") for c in (1, 2, 3)],
               ["Células preenchidas na 1ª chamada"] + [f"{v(f'D_C{c}_PRE1')} ({v(f'D_C{c}_PRE1_PCT')}%)" for c in (1, 2, 3)],
               ["Células preenchidas até a 2ª chamada"] + [f"{v(f'D_C{c}_PRE2')} ({v(f'D_C{c}_PRE2_PCT')}%)" for c in (1, 2)]
               + ["não observado"],
@@ -1678,7 +1718,7 @@ def main() -> int:
     novas["tabela_descritiva_ciclos.png"] = tabela_png(
         t_desc, [3.9, 2.2, 2.2, 2.9], SAIDA / "tabela_descritiva_ciclos.png", "Os três ciclos em números (descritivo)",
         "Célula = estabelecimento × curso no quadro da 1ª chamada; preenchida = alguma confirmação ou homologação. "
-        "Faixa pela grade aplicada (cortes 0,300 e 0,400 no IVS 2010 oficial).")
+        "Faixa pela grade aplicada.\nAmostra P1 = 1ª opção numa célula do quadro, ligado ao CNES e com município de origem.")
     novas["tabela_fontes.png"] = tabela_png(
         t_font, [2.6, 3.3, 1.5, 3.4, 2.3, 1.7], SAIDA / "tabela_fontes.png", "Bases de dados", "Todas as bases são "
         "oficiais e públicas; dados pessoais só em memória ou em cache fora do Git.", fs=9.2)

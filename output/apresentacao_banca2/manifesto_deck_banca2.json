@@ -70,18 +70,18 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/02_conteudo_slides.md",
       "papel": "texto dos slides novos e quadro de correções",
-      "sha256": "d581177e409454f5f483d4423b1fc453ef9b7c964b95acf78e10e3f561428751"
+      "sha256": "f12084dae27aea9d699416fd2456f64d2c7222f1df08cb4a4ea4e30d5e7ed795"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
       "papel": "números das correções",
-      "sha256": "a8d1b90d4af18ccc9d91d1336818b79ec231f5ed97fe62edcbc065f3238be91c"
+      "sha256": "41a1a9d2753879ce5cdcf5998dcce40b45b3a9c0ea6a6c22354c8d7a98d3b533"
     },
     {
       "caminho": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
       "no_pacote": "ppt/media/banca2_05_cadeia_resumo_doc57.png",
       "papel": "figura",
-      "sha256": "1bbaafe323fa6a6cd908771f1dea1166f15aeb42ec06881ec6cd16f85f281376"
+      "sha256": "94ccdf93dab92ef1f8015f9b851c95597dc7188c6e82c3e2d6cde65943f62394"
     },
     {
       "caminho": "output/apresentacao_banca2/h1_preenchimento.png",
@@ -447,14 +447,14 @@
   "regra": "nada estimado; nada lido de data/; texto dos slides novos lido do doc 02; números das correções lidos de output/apresentacao_banca2/numeros_banca2.json; figuras de output/ como imagem",
   "saidas": [
     {
-      "bytes": 11833538,
+      "bytes": 11837028,
       "caminho": "output/apresentacao_banca2/deck_banca2_proposta.pptx",
-      "sha256": "17dc1ab94612d58786c32bdd81da4b8c6e1460f07fd148373f2c389e4de67a50"
+      "sha256": "a77fb3c9e2e66990210afc4b6e3471163f915b69a006e24383f7994a174a87cc"
     },
     {
-      "bytes": 2059960,
+      "bytes": 2063450,
       "caminho": "output/apresentacao_banca2/slides_empiricos_banca2.pptx",
-      "sha256": "9631233bb5cd8d770b1239edfc811ece62b0d9b483a9c9bf3d561c7c52efed32"
+      "sha256": "541819153317e3d08f0796e7b67a169861f21eb20ee4e56c7a0c66dad1cd5eed"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py"

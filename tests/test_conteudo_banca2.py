@@ -515,6 +515,9 @@ class TestOutrosDocs(unittest.TestCase):
         self.assertIn("57_sintese_perguntas_reformuladas.md", t)
         self.assertIn("04_plano_entrega_empirica.md", t)
         self.assertIn("metodologia **econométrica**", t)
+        # slides "EXEMPLO" ocultos por decisão do agente: registrado e pendente de confirmação do grupo
+        self.assertIn("Aguarda confirmação do grupo", t)
+        self.assertIn("aguarda confirmação do grupo", DOC02.read_text(encoding="utf-8"))
 
     def test_indice_da_secao(self) -> None:
         t = (ROOT / "docs" / "07_apresentacoes" / "README.md").read_text(encoding="utf-8")
@@ -639,6 +642,37 @@ class TestFigurasNovas(unittest.TestCase):
             for t in reg["textos"]:
                 achados |= {x for x in tokens(limpar(t)) if not ano(x)}
             self.assertEqual(achados - validos, set(), nome)
+
+    def test_forca_da_evidencia_por_regra(self) -> None:
+        """Recalcula a categoria de cada linha da cadeia pela regra declarada, com os valores do registro."""
+        todos = {c: e for b in ("numeros", "failure_mode", "texto_citado") for c, e in self.numeros[b].items()}
+        linhas = self.manifesto["figuras_novas"]["cadeia_resumo_doc57.png"]["linhas"]
+        self.assertEqual(len(linhas), len(G.LINHAS_CADEIA_57))
+        for ln, defin in zip(linhas, G.LINHAS_CADEIA_57):
+            tipo, cod = defin[-1]
+            nulo = defin[6]
+            if tipo == "holm":
+                esperado = "inconclusivo" if float(todos[cod]["valor_bruto"]) >= 0.05 else "rejeita zero (Holm)"
+            elif tipo == "ic":
+                inf, sup = (float(todos[c]["valor_bruto"]) for c in ln["codigos"][1:])
+                esperado = "inconclusivo" if inf <= nulo <= sup else "IC exclui o nulo"
+            elif tipo == "pre":
+                p = float(todos[cod]["valor_bruto"])
+                esperado = "ATT sob tendências paralelas" if p >= 0.05 else "ATT com pré falhando"
+            else:
+                self.assertTrue(str(todos[cod]["valor_bruto"]).startswith("EXPLORATORIO"))
+                esperado = "exploratório"
+            self.assertEqual(ln["forca"], esperado, ln["linha"])
+            self.assertIn(ln["forca"], self.manifesto["figuras_novas"]["cadeia_resumo_doc57.png"]["textos"])
+
+    def test_universos_de_candidatos_encaixados(self) -> None:
+        n = {c: float(e["valor_bruto"]) for c, e in self.numeros["numeros"].items()
+             if c.startswith("D_C") or c == "M1_N"}
+        for c in (1, 2, 3):
+            self.assertLessEqual(n[f"D_C{c}_LIG"], n[f"D_C{c}_CANDG1"])
+            self.assertLessEqual(n[f"D_C{c}_CAND1"], n[f"D_C{c}_CANDG1"])
+            self.assertLessEqual(n[f"D_C{c}_P1"], min(n[f"D_C{c}_LIG"], n[f"D_C{c}_CAND1"]))
+        self.assertEqual(sum(n[f"D_C{c}_P1"] for c in (1, 2, 3)), n["M1_N"])
 
     def test_linhas_das_figuras_batem_com_o_registro(self) -> None:
         todos = {c: e for b in ("numeros", "failure_mode", "texto_citado") for c, e in self.numeros[b].items()}

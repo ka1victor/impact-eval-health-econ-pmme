@@ -50,6 +50,12 @@ valendo para o E9, o E7 e a literatura de magnitude.
 Em aberto com o autor: a hipótese central (H3 ou H1), já revisável; quem
 apresenta em 28/10 e quem em 04/11.
 
+**Aguarda confirmação do grupo:** os slides "EXEMPLO" 32 e 33 do deck do grupo
+(material de outro trabalho) foram **ocultados** no deck proposto por decisão
+do agente que montou o deck, não do grupo nem do autor. Não foram apagados;
+para reexibi-los, basta tirar a marca de oculto no PowerPoint ou retirar os
+números de `POS_OCULTAR` em `scripts/apresentacao/gerar_deck_banca2.py`.
+
 ## 4. Figuras, tabelas e deck
 
 Tudo sai do pipeline, lendo só de `output/`:
