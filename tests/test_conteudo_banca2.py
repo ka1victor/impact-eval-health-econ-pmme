@@ -122,7 +122,7 @@ def formatar(valor, formato: str) -> str:
 NUM = re.compile(r"(?<![\w.,/])[−+-]?(?:\d{1,3}(?:\.\d{3})+(?:,\d+)?|\d+(?:,\d+)?)(?!\w)")
 PERMITIDOS = {"0,300", "0,400", "0,3", "0,4", "0,301", "0,050", "0,030", "0,080", "0,05", "1,96", "0,001",
               "1", "2", "3", "5", "10", "15", "20", "+10", "+25", "95", "80"}
-MAX_SLIDE = 40  # números de slide do deck do grupo (até 36) nos quadros do doc 02
+MAX_SLIDE = 60  # números de slide (deck do grupo, até 36; deck proposto, até 53) nos quadros do doc 02
 
 
 def limpar(texto: str) -> str:
@@ -411,17 +411,46 @@ class TestSlides(unittest.TestCase):
     def test_contagem(self) -> None:
         t = DOC02.read_text(encoding="utf-8")
         deck = t[t.index("<!-- deck:inicio -->"):t.index("<!-- deck:fim -->")]
-        self.assertEqual(len(re.findall(r"(?m)^## ", deck)), 15)
-        corpo_empirico = deck[deck.index("# Base de Dados"):]
-        self.assertGreaterEqual(len(re.findall(r"(?m)^## ", corpo_empirico)), 12)
-        self.assertLessEqual(len(re.findall(r"(?m)^## ", corpo_empirico)), 14)
+        self.assertEqual(len(re.findall(r"(?m)^## ", deck)), 12)
         apend = t[t.index("<!-- apendice:inicio -->"):t.index("<!-- apendice:fim -->")]
-        self.assertEqual(len(re.findall(r"(?m)^## ", apend)), 6)
+        self.assertEqual(len(re.findall(r"(?m)^## ", apend)), 10)
+        self.assertTrue(all(h.startswith("## Apêndice:") for h in re.findall(r"(?m)^## .*$", apend)))
 
     def test_secoes_na_ordem_da_banca(self) -> None:
         t = DOC02.read_text(encoding="utf-8")
         deck = t[t.index("<!-- deck:inicio -->"):t.index("<!-- deck:fim -->")]
-        self.assertEqual(re.findall(r"(?m)^# (.+)$", deck), ["Hipótese", "Base de Dados", "Metodologia", "Resultados"])
+        self.assertEqual(re.findall(r"(?m)^# (.+)$", deck), ["Prévios do grupo", "Hipótese", "Base de Dados", "Metodologia",
+                                                             "Resultados", "Robustez e discussão"])
+        # a regra sharp é evidência de identificação: fica na Metodologia
+        met = deck[deck.index("# Metodologia"):deck.index("# Resultados")]
+        self.assertIn("## A bolsa é função exata do IVS: a regra é sharp", met)
+
+    def test_corpo_sintetizado(self) -> None:
+        """Na parte empírica (antes do apêndice): no máximo 3 marcadores (por coluna) e uma frase de cautela."""
+        for sl in _D.ler_slides():
+            if sl["apendice"]:
+                continue
+            grupos = [c["itens"] for c in sl["colunas"]] or [sl["marcadores"]]
+            for itens in grupos:
+                self.assertLessEqual(len(itens), 3, sl["titulo"])
+            self.assertTrue(sl["cautela"], sl["titulo"])
+        disc = [sl for sl in _D.ler_slides() if sl["titulo"].startswith("Discussão")]
+        self.assertEqual(len(disc), 1)
+        self.assertEqual(len(disc[0]["colunas"]), 2)
+
+    def test_ordem_e_classificacao_do_doc02(self) -> None:
+        """Marcadores de slide do grupo, tabela de classificação e mapa do deck dizem a mesma coisa."""
+        classif = _D.ler_classificacao()
+        self.assertEqual(sorted(classif), list(range(1, 37)))
+        removidos = {n for n, c in classif.items() if c["destino"] == "removido"}
+        self.assertEqual(removidos, {25, 27, 29, 32, 33})  # marcadores "X" e EXEMPLO de outro trabalho
+        ordem = _D.ler_ordem()
+        grupo = [n for t, n, *_ in ordem if t == "grupo"]
+        self.assertEqual(sorted(grupo), sorted(set(range(1, 37)) - removidos))
+        self.assertEqual(grupo[:23], list(range(1, 24)))  # prévios do grupo na ordem do grupo
+        for k, item in enumerate(ordem, 1):
+            if item[0] == "grupo":
+                self.assertEqual(classif[item[1]]["posicao"], k, item)
 
     def test_titulo_curto_e_cautela_em_todo_slide(self) -> None:
         for s in self.slides:
@@ -455,7 +484,7 @@ class TestSlides(unittest.TestCase):
         self.assertGreaterEqual(float(self.todos["M1_P"]["valor_bruto"]), 0.05)
 
     def test_tabelas_do_doc_iguais_aos_csv(self) -> None:
-        for titulo, csv in (("Oito bases oficiais", "tabela_fontes.csv"), ("Os três ciclos", "tabela_descritiva_ciclos.csv")):
+        for titulo, csv in (("oito bases oficiais", "tabela_fontes.csv"), ("Os três ciclos", "tabela_descritiva_ciclos.csv")):
             s = next(x for x in self.slides if titulo in x["titulo"])
             linhas = [[c.strip() for c in re.split(r"(?<!\\)\|", ln)[1:-1]] for ln in s["texto"].splitlines()
                       if ln.startswith("|") and not re.fullmatch(r"[|\-: ]+", ln)]
@@ -531,9 +560,10 @@ class TestOutrosDocs(unittest.TestCase):
         self.assertIn("57_sintese_perguntas_reformuladas.md", t)
         self.assertIn("04_plano_entrega_empirica.md", t)
         self.assertIn("metodologia **econométrica**", t)
-        # slides "EXEMPLO" ocultos por decisão do agente: registrado e pendente de confirmação do grupo
-        self.assertIn("Aguarda confirmação do grupo", t)
-        self.assertIn("aguarda confirmação do grupo", DOC02.read_text(encoding="utf-8"))
+        # organização do deck: escopo do autor registrado; EXEMPLO de outro trabalho fora do deck
+        self.assertIn("reutilizar tudo o que der", t)
+        self.assertIn("EXEMPLO", t)
+        self.assertIn("modelo de outro trabalho", DOC02.read_text(encoding="utf-8"))
 
     def test_indice_da_secao(self) -> None:
         t = (ROOT / "docs" / "07_apresentacoes" / "README.md").read_text(encoding="utf-8")
@@ -649,7 +679,7 @@ class TestIntegridade(unittest.TestCase):
         est = {(r["modelo"], r["ciclo"]): float(r["estimativa"]) for _, r in sens.iterrows()}
         self.assertEqual(min(est, key=est.get), ("M2", "empilhado"))
         self.assertEqual(max(est, key=est.get), ("M5", "3"))
-        rob = next(s for s in slides() if s["titulo"].startswith("## Robustez"))
+        rob = next(s for s in slides() if s["titulo"].startswith("## Apêndice: robustez"))
         self.assertIn(f"de {num['H3_S_M2']['valor']} a {num['H3_S_M5C3']['valor']}", rob["texto"])
 
     def test_regra_desenhada_pela_funcao_do_relatorio(self) -> None:
@@ -795,7 +825,7 @@ class TestDeck(unittest.TestCase):
 
     def test_deck_proposto_ordem_e_correcoes(self) -> None:
         titulos = [t for _, t, _ in self.deck]
-        self.assertEqual(len(self.deck), 36 - 3 + len(self.doc))
+        self.assertEqual(len(self.deck), 36 - 5 + len(self.doc))
         self.assertNotIn("X", titulos)
         tudo = "\n".join(t for _, _, t in self.deck)
         for proibido in ("SGETS", "177 dos 368", "O IVS é o piso", "indícios de efetividade", "renumeração",
@@ -806,18 +836,52 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(sum(alvo in t for _, _, t in self.deck), 2)
         self.assertEqual(sum(t == "O IVS 2010 define a bolsa do PMM-E por regra" for t in titulos), 4)
         self.assertIn(f"{v['R_C1_REPR']} de {v['R_C1_MUN']} municípios do ciclo 1", tudo.replace("\u00a0", " "))
-        # os slides novos entram depois do slide de hipótese e no lugar dos marcadores
+        # os slides novos entram depois do slide de hipótese; o apêndice vem depois do divisor
         i = titulos.index("Da condição de aceitação, sai nossa hipótese econômica")
+        self.assertEqual(i, 22)
         self.assertEqual(titulos[i + 1], self.doc[0]["titulo"][3:].strip())
         divisor = next(k for k, (_, ti, tx) in enumerate(self.deck) if not ti and "Apêndice" in tx)
         self.assertLess(divisor, titulos.index(next(s["titulo"][3:].strip() for s in self.doc
                                                     if s["titulo"].startswith("## Apêndice"))))
+        self.assertTrue(all(t.startswith("Apêndice:") for t in titulos[divisor + 1:]))
 
-    def test_exemplos_ocultos(self) -> None:
+    def test_mapa_do_doc02_igual_ao_deck(self) -> None:
+        t = DOC02.read_text(encoding="utf-8")
+        sec = t[t.index("## Mapa do deck proposto"):t.index("## Classificação dos slides do deck do grupo")]
+        mapa = [[c.strip() for c in ln.split("|")[1:3]] for ln in sec.splitlines()
+                if re.match(r"\| \d+ \|", ln)]
+        manif = [[str(o["posicao"]), "novo" if o["origem"] == "novo" else f"grupo {o['origem'].split()[1]}"]
+                 for o in self.manifesto["ordem_do_deck_proposto"]]
+        self.assertEqual(mapa, manif)
+        self.assertEqual(len(manif), len(self.deck))
+
+    def test_exemplos_fora_e_visibilidade_do_grupo(self) -> None:
+        """Os EXEMPLO de outro trabalho saem; os slides do grupo ficam com a visibilidade que o grupo deu a eles."""
+        self.assertFalse(any("Wine" in tx or tx.startswith("EXEMPLO") for _, _, tx in self.deck))
+        ocultos = []
         with zipfile.ZipFile(DECK) as z:
-            for parte, _, texto in self.deck:
-                if texto.startswith("EXEMPLO"):
-                    self.assertIn('show="0"', z.read(parte).decode("utf-8")[:800], parte)
+            for k, (parte, _, _) in enumerate(self.deck, 1):
+                if 'show="0"' in z.read(parte).decode("utf-8")[:800]:
+                    ocultos.append(k)
+        self.assertEqual(ocultos, [4, 8, 10, 11, 14, 19, 20, 21])  # os ocultos do grupo, nas mesmas posições
+
+    def test_numero_de_pagina_e_campo(self) -> None:
+        """Nos slides do grupo, o número digitado à mão no canto virou o campo do número do slide, com a posição nova."""
+        with zipfile.ZipFile(DECK) as z:
+            for k, (parte, _, _) in enumerate(self.deck, 1):
+                x = z.read(parte).decode("utf-8")
+                for sp in re.findall(r"<p:sp>.*?</p:sp>", x, flags=re.S):
+                    if 'name="Text Placeholder 1"' not in sp:
+                        continue
+                    xy = re.search(r'<a:off x="(\d+)" y="(\d+)"/>', sp)
+                    if not xy or int(xy.group(1)) < 11_000_000 or int(xy.group(2)) < 6_000_000:
+                        continue
+                    texto = "".join(re.findall(r"<a:t>([^<]*)</a:t>", sp)).strip()
+                    if re.fullmatch(r"\d{1,2}", texto):
+                        self.assertIn('type="slidenum"', sp, (k, parte))
+                        self.assertEqual(texto, str(k), (k, parte))
+        tudo = "\n".join(tx for _, _, tx in self.deck)
+        self.assertIn("Adições ao modelo do slide 19", tudo)
 
     def test_manifesto_do_deck(self) -> None:
         for e in self.manifesto["saidas"]:

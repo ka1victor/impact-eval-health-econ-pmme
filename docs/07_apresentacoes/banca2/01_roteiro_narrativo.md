@@ -13,8 +13,12 @@
 A banca 2 cobra, nesta ordem: hipótese econômica; base de dados e
 descritivas; metodologia econométrica e hipóteses de identificação;
 resultados, robustez e discussão. O deck do grupo já cobre motivação,
-pergunta, literatura e o modelo; os slides novos entram na seção de hipótese
-e nos três marcadores "X" (Base de Dados, Metodologia, Resultados).
+pergunta, literatura e o modelo, e esses slides prévios ficam como o grupo os
+pôs, só com as correções ("reutilizar tudo o que der", pedido do autor de
+26/10). A parte empírica entra depois do slide da hipótese e entre as
+divisórias de sumário do grupo, e é enxuta: título-afirmação, no máximo três
+marcadores, uma cautela e o detalhe nas notas. O que é importante mas não
+central vai para o apêndice, por seção.
 
 Fio condutor: **o modelo da banca 1 tem uma cadeia — bolsa maior, vaga que
 vale mais, mais médicos que a escolhem, vaga preenchida — e nós testamos cada
@@ -23,11 +27,11 @@ da história e ganha explicação dentro do modelo.
 
 | Bloco da banca | Pergunta que responde | Slides novos |
 |---|---|---|
-| Hipótese econômica | que setas do modelo testamos, e com que equação? | cadeia H1–H4; ponte modelo → equação |
-| Base de dados e descritivas | de onde vêm os dados e como são os três ciclos? | tabela de fontes; tabela descritiva por ciclo |
-| Metodologia econométrica | que estimador para cada hipótese, e o que precisa valer? | um estimador por hipótese; hipóteses de identificação |
-| Resultados | o que se move e o que não se move? | regra sharp; H1; H2; H3; H4; cadeia-resumo |
-| Robustez e discussão | as leituras aguentam? o que o contraste não mede? | robustez; limites; magnitude e próximos passos |
+| Hipótese econômica | que setas do modelo testamos? | cadeia H1–H4 (a ponte modelo → equação fica no apêndice) |
+| Base de dados e descritivas | como são os três ciclos? | tabela descritiva por ciclo (a tabela de fontes fica no apêndice) |
+| Metodologia econométrica | que estimador para cada hipótese, e o que precisa valer? | um estimador por hipótese; hipóteses de identificação; regra sharp |
+| Resultados | o que se move e o que não se move? | H1; H2; H3; H4; cadeia-resumo |
+| Robustez e discussão | as leituras aguentam? o que o contraste não mede? | robustez por hipótese; discussão em duas colunas (limites; literatura e próximos passos) |
 
 ## 2. Hipóteses pela cadeia do modelo (decisão de 26/10/2026)
 
@@ -71,8 +75,8 @@ ameaça comum é o pacote do corte.
 
 ### 3.4 Resultados
 
-A regra sharp abre o bloco, porque é ela que torna a descontinuidade
-possível. Depois, uma hipótese por slide, sempre com a mesma estrutura:
+A regra sharp fecha a metodologia, porque é ela que torna a
+descontinuidade possível. Nos resultados, uma hipótese por slide, sempre com a mesma estrutura:
 título-afirmação, figura com "Como ler" dentro, duas linhas de leitura e a
 frase de cautela. A H3 usa a figura do P1h, auditada, com os pesos na mesma
 escala; o km equivalente entra como descritivo, e o limite unilateral dele
@@ -87,12 +91,13 @@ incompreensíveis.
 
 ### 3.5 Robustez e discussão
 
-Um slide de tabela com as leituras que resistem e as duas ressalvas
-declaradas (o Holm de N1 depende do coeficiente do controle; o IC honesto não
-informa). Dois slides de discussão: os limites (pacote do corte, margem
-extensiva ausente, vínculo não é presença, não é participação no PMM-E) e a
-magnitude da literatura com os próximos passos (ciclo 3 em 202703; pedidos
-externos).
+Um slide de tabela com o que resiste e a ressalva de cada hipótese (na H1,
+o Holm de N1 depende do coeficiente do controle e o IC honesto não informa;
+na H3, pós-resultado); a robustez teste a teste fica no apêndice. Um slide de
+discussão em duas colunas: o que não podemos afirmar (pacote do corte,
+margem extensiva ausente, vínculo não é presença, não é participação no
+PMM-E) e a literatura com os próximos passos (ciclo 3 em 202703; pedidos
+externos); o detalhe da literatura fica no apêndice.
 
 ## 4. Frases que não podem mudar
 
@@ -132,3 +137,4 @@ IVS como running variable. O deck original não é alterado.
 | 19/10/2026 | primeira versão, a partir do doc 44 e das saídas E3–E9; rascunho pendente das decisões do autor |
 | 26/10/2026 | reescrita no arco do plano da entrega empírica (H1–H4 pela cadeia do modelo; metodologia econométrica), com a síntese do doc 57; H3 pendente |
 | 26/10/2026 | H3 com o P1h auditado (doc 57i, auditoria 31): slide, linha na cadeia-resumo e linha na robustez |
+| 26/10/2026 | deck organizado a pedido do autor: prévios do grupo reutilizados; parte empírica cortada e sintetizada; apêndice por seção |

@@ -5,7 +5,9 @@
 > **Estado:** **PRONTO** para 28/10. A H3 entrou com o P1h auditado
 > (protocolo 52b, doc 57i, auditoria 31 aprovada com correções de rótulo):
 > slide com a figura do P1h, os números lidos de `output/` e a força da
-> evidência na cadeia-resumo.<br>
+> evidência na cadeia-resumo. O deck proposto foi organizado a pedido do autor
+> (26/10): prévios do grupo reutilizados, parte empírica cortada e
+> sintetizada, apêndice por seção.<br>
 > **Escopo:** os slides novos da banca 2 (hipótese econômica pela cadeia do
 > modelo; base de dados e descritivas; metodologia econométrica e
 > identificação; resultados, robustez e discussão) e as correções no deck do
@@ -19,9 +21,13 @@
 O conteúdo canônico da parte empírica da banca 2, no padrão da
 [banca 1](../banca1/README.md): o roteiro, o conteúdo slide a slide e a
 proveniência de cada número e de cada figura. O deck do grupo (template
-Insper, 36 slides) continua sendo o deck: os slides novos entram nos
-marcadores "X" e na seção de hipótese. Divergência entre o deck e estes
-arquivos é erro do deck (`CLAUDE.md`).
+Insper, 36 slides) continua sendo a base: os slides prévios do grupo
+(capa até a hipótese, com sumários, teoria e ocultos) ficam como o grupo os
+pôs, só com as correções; a parte empírica é feita dos slides novos, nos
+marcadores "X" e entre as divisórias de sumário do grupo; o apêndice vem
+depois do divisor "Apêndice". A ordem do deck inteiro e a classificação de
+cada slide do grupo estão no [02](02_conteudo_slides.md). Divergência entre o
+deck e estes arquivos é erro do deck (`CLAUDE.md`).
 
 A síntese vigente dos resultados é a do
 [doc 57](../../06_execucao/57_sintese_perguntas_reformuladas.md), com os blocos
@@ -48,15 +54,17 @@ valendo para o E9, o E7 e a literatura de magnitude.
 | 26/10/2026 | a variável de efeito da H1 é o número de vagas preenchidas controlando as vagas oferecidas (N1), com a célula aberta (A3) e o que o IC descarta | grupo e autor |
 | 26/10/2026 | a H3 entra só depois da auditoria do protocolo 52b; até lá, o slide ficou reservado | plano, §6.1 |
 | 26/10/2026 | a H3 entra com o P1h auditado (auditoria 31): título "no modelo de escolha", θ_UF como "mesma UF, outra região de saúde", o km sem valor de prova (o teste bilateral do P1a não rejeita) | coordenador |
+| 26/10/2026 | "Focar em fazer a parte empírica e ajustar o que precisa nos prévios; reutilizar tudo o que der": prévios do grupo na ordem e com a visibilidade do grupo, só com as correções; na parte empírica, título-afirmação, no máximo três marcadores, uma cautela, detalhe nas notas; o importante mas não central vai para o apêndice; discussão num slide; regra sharp na metodologia | autor |
+| 26/10/2026 | saem do deck só os três marcadores "X" e os dois slides "EXEMPLO" (aplicativo de vinhos), modelo de outro trabalho | autor (critério); agente (aplicação) |
 
 Em aberto com o autor: a hipótese central (H3 ou H1), já revisável; quem
 apresenta em 28/10 e quem em 04/11.
 
-**Aguarda confirmação do grupo:** os slides "EXEMPLO" 32 e 33 do deck do grupo
-(material de outro trabalho) foram **ocultados** no deck proposto por decisão
-do agente que montou o deck, não do grupo nem do autor. Não foram apagados;
-para reexibi-los, basta tirar a marca de oculto no PowerPoint ou retirar os
-números de `POS_OCULTAR` em `scripts/apresentacao/gerar_deck_banca2.py`.
+**Slides "EXEMPLO" 32 e 33 do deck do grupo:** saíram do deck proposto pelo
+critério do autor (saem se forem claramente modelo de outro trabalho; são de
+um aplicativo de vinhos, marcados "EXEMPLO"). Para trazê-los de volta, basta
+mudar o destino deles na tabela de classificação do 02 e pôr os marcadores
+`<!-- grupo: 32 -->` e `<!-- grupo: 33 -->` onde devem entrar.
 
 ## 4. Figuras, tabelas e deck
 

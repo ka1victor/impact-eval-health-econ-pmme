@@ -6,11 +6,18 @@ de ambiente `PMME_DECK_GRUPO`; o doc 02 da banca 2; as figuras e `numeros_banca2
 
 Saídas, em `output/apresentacao_banca2/`:
 
-* `deck_banca2_proposta.pptx`: o deck inteiro, com as correções do plano da banca 2 (§2) e os slides novos no
-  lugar dos marcadores "X" (Base de Dados, Metodologia, Resultados), mais dois slides na seção de hipótese e o
-  apêndice depois do divisor "Apêndice";
-* `slides_empiricos_banca2.pptx`: só os slides novos, no template do deck, para colar no deck em uso;
-* `manifesto_deck_banca2.json`: entradas e saídas com SHA-256, ordem dos slides, correções aplicadas.
+* `deck_banca2_proposta.pptx`: os slides prévios do grupo reutilizados como estão, só com as correções, e a parte
+  empírica organizada, cortada e sintetizada (pedido do autor de 26/10/2026): hipóteses → base → metodologia →
+  resultados → robustez e discussão; depois do divisor "Apêndice", o que é importante mas não central, por seção;
+* `slides_empiricos_banca2.pptx`: só os slides novos, na mesma ordem, no template do deck;
+* `manifesto_deck_banca2.json`: entradas e saídas com SHA-256, ordem dos slides, classificação de cada slide do
+  deck do grupo e correções aplicadas.
+
+A ordem do deck inteiro vem do doc 02: cada cabeçalho `##` é um slide novo, e cada marcador
+`<!-- grupo: N -->` (ou `<!-- grupo: N | título -->`, que troca o título) põe ali o slide N do deck do grupo. A
+tabela de classificação do doc 02 diz o destino de cada um dos 36 slides do grupo (corpo, apêndice ou removido);
+o script para se ela e os marcadores divergirem. Os slides do grupo ficam com a visibilidade que o grupo deu a
+eles, e o número de página digitado à mão vira o campo de número do slide.
 
 O texto de cada slide novo vem do doc 02 (título, marcadores, tabelas, frase de cautela, fontes e notas do
 apresentador); o deck é derivado e divergência é erro do deck. Os números das correções vêm de
@@ -66,10 +73,8 @@ TITULOS_ESPERADOS = {23: "Da condição de aceitação, sai nossa hipótese econ
                      34: "O desafio é separar o efeito da bolsa do efeito da vulnerabilidade",
                      35: "O desafio é separar o efeito da bolsa do efeito da vulnerabilidade",
                      25: "X", 27: "X", 29: "X"}
-POS_DEPOIS_HIPOTESE = 23
-POS_PLACEHOLDER = {"Base de Dados": 25, "Metodologia": 27, "Resultados": 29}
-POS_APENDICE = 31
-POS_OCULTAR = [32, 33]  # slides "EXEMPLO" de outro trabalho
+N_GRUPO = 36
+DESTINOS = ("corpo", "apêndice", "removido")
 
 # Área útil do slide (polegadas); o slide é 13,333 × 7,5
 X0, X1, Y0 = 0.32, 13.0, 0.88
@@ -126,8 +131,10 @@ def ler_slides(doc: Path = DOC02) -> list[dict]:
         elif ln.startswith("## "):
             atual = dict(secao=secao, titulo=ln[3:].strip(), rastreio="", layout="", imagem=None, alt="",
                          tabela=[], marcadores=[], paragrafos=[], codigo=[], cadeia="", cautela="", fontes="",
-                         notas="", apendice=secao == "Apêndice")
+                         notas="", colunas=[], apendice=secao == "Apêndice")
             slides.append(atual)
+        elif atual is not None and ln.startswith("### "):
+            atual["colunas"].append({"titulo": ln[4:].strip(), "itens": []})
         elif atual is not None:
             if re.fullmatch(r"`[^`]+`", ln.strip()) and not atual["rastreio"]:
                 atual["rastreio"] = ln.strip().strip("`")
@@ -150,6 +157,8 @@ def ler_slides(doc: Path = DOC02) -> list[dict]:
                     i += 1
                     item += " " + linhas[i].strip()
                 atual["marcadores"].append(item)
+                if atual["colunas"]:
+                    atual["colunas"][-1]["itens"].append(item)
             elif ln.strip():
                 bloco = [ln]
                 while i + 1 < len(linhas) and linhas[i + 1].strip() and not linhas[i + 1].startswith(("#", "|", "- ")):
@@ -172,12 +181,49 @@ def ler_slides(doc: Path = DOC02) -> list[dict]:
     return slides
 
 
+MARCA_GRUPO = re.compile(r"<!-- grupo: (\d+)(?: \| (.+?))? -->")
+
+
+def ler_ordem(doc: Path = DOC02) -> list[tuple]:
+    """Ordem do deck inteiro: ("grupo", N, título novo ou None) para cada marcador e ("novo", k) para o k-ésimo `##`."""
+    t = doc.read_text(encoding="utf-8")
+    corpo = t[t.index("<!-- deck:inicio -->"):t.index("<!-- apendice:fim -->")]
+    ordem, k = [], 0
+    for ln in corpo.splitlines():
+        if m := MARCA_GRUPO.fullmatch(ln.strip()):
+            ordem.append(("grupo", int(m.group(1)), m.group(2)))
+        elif ln.startswith("## "):
+            ordem.append(("novo", k))
+            k += 1
+    return ordem
+
+
+def ler_classificacao(doc: Path = DOC02) -> dict[int, dict]:
+    """Tabela de classificação dos slides do deck do grupo: nº → destino, nº no deck proposto e motivo."""
+    t = doc.read_text(encoding="utf-8")
+    sec = t[t.index("## Classificação dos slides do deck do grupo"):t.index("<!-- deck:inicio -->")]
+    out = {}
+    for ln in sec.splitlines():
+        if not ln.startswith("| "):
+            continue
+        cel = _celulas(ln)
+        if not cel[0].isdigit():
+            continue
+        destino = texto_puro(cel[2]).strip()
+        if destino not in DESTINOS:
+            raise SystemExit(f"ERRO: destino {destino!r} do slide {cel[0]} do grupo fora de {DESTINOS}")
+        out[int(cel[0])] = {"titulo_grupo": texto_puro(cel[1]), "destino": destino,
+                            "posicao": int(cel[3]) if cel[3].isdigit() else None, "motivo": texto_puro(cel[4])}
+    return out
+
+
 # --------------------------------------------------------------------------------------------------
 # Peças de slide
 # --------------------------------------------------------------------------------------------------
 
 def runs_md(txt: str, sz: float, cor: str = TEXTO, negrito: bool = False, cor_neg: str | None = None) -> list[str]:
     out = []
+    txt = txt.replace("R$ ", "R$ ")  # "R$" não se separa do valor na quebra de linha
     for t, b, it in _inline(txt):
         out.append(run(t, sz, cor_neg if (b and cor_neg) else cor, b=b or negrito, i=it))
     return out
@@ -394,6 +440,8 @@ def montar(sl: dict, rid_img: str | None) -> str:
         montar_pendente(s, sl, y_fim)
     elif lay == "cartoes":
         montar_cartoes(s, sl, y_fim)
+    elif lay == "duas_colunas":
+        montar_duas_colunas(s, sl, y_fim)
     else:
         raise SystemExit(f"ERRO: layout desconhecido {lay!r} em {sl['titulo']!r}")
     if tem_caut:
@@ -484,6 +532,22 @@ def montar_cartoes(s: Slide, sl: dict, y_fim: float) -> None:
                 paras=[para([run(lead if lead.endswith("al.") else lead.rstrip("."), 17, VERDE_ESCURO, b=True)],
                             depois=8),
                        para(runs_md(corpo, 15, TEXTO, cor_neg=VERDE_ESCURO), linha=110)])
+
+
+def montar_duas_colunas(s: Slide, sl: dict, y_fim: float) -> None:
+    """Duas colunas (### no doc 02), cada uma com um cabeçalho e seus marcadores, num cartão claro."""
+    cols = sl["colunas"]
+    if len(cols) != 2:
+        raise SystemExit(f"ERRO: layout duas_colunas pede 2 colunas em {sl['titulo']!r}; achou {len(cols)}")
+    gap = 0.35
+    w = (X1 - X0 - gap) / 2
+    h = y_fim - Y0
+    for k, col in enumerate(cols):
+        x = X0 + k * (w + gap)
+        s.forma(f"Coluna {k + 1}", x, Y0, w, h, adj=4000, fill=CLARO, line=LINHA, anchor="t")
+        s.texto(f"Cabeçalho {k + 1}", x + 0.25, Y0 + 0.18, w - 0.5, 0.5,
+                [para([run(col["titulo"], 18, VERDE_ESCURO, b=True)])], anchor="t")
+        marcadores(s, col["itens"], x + 0.25, Y0 + 0.85, w - 0.5, h - 1.0, sz=15, nome=f"Marcadores {k + 1}")
 
 
 def notas_do_slide(sl: dict) -> str:
@@ -700,12 +764,6 @@ def corrigir(pk, nome_slide: dict[int, str], notas_de: dict[int, str], num: dict
     # slide 31: notas com conversa colada (repetia a contagem do arquivo errado)
     pk.gravar(notas_de[31], xml_notas("Divisor do apêndice."))
     reg.append({"slide": 31, "correcao": "notas trocadas por uma linha neutra"})
-    # slides 32 e 33: exemplos de outro trabalho ficam ocultos
-    for pos in POS_OCULTAR:
-        x = pk.texto(nome_slide[pos])
-        if 'show="0"' not in x[:800]:
-            x = x.replace("<p:sld ", '<p:sld show="0" ', 1)
-        gravar(pos, x, "slide 'EXEMPLO' de outro trabalho ocultado")
     return reg
 
 
@@ -733,6 +791,62 @@ def corrigir_grafico_slide10(pk, nome_slide: dict[int, str]) -> None:
 
 REL_SLIDE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide"
 REL_IMG = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+
+
+# Referências a outro slide, digitadas no texto de um slide do grupo: (texto, slide do grupo a que se refere)
+REFERENCIAS_A_SLIDE = {20: [("slide 11", 19)]}  # o 19 do grupo trazia o número 11 digitado
+NOME_NUMERO = "Text Placeholder 1"
+CANTO_NUMERO = (11_000_000, 6_000_000)  # EMU: a caixa do número fica no canto inferior direito
+LARGURA_NUMERO = 500_000  # EMU: largura mínima para dois dígitos não quebrarem
+GUID_SLIDENUM = "{B6F15528-21DE-4FAA-801E-634DDDAF4B2B}"
+
+
+def retitular(xml: str, novo: str) -> str:
+    """Troca o texto do título (placeholder de título) por `novo`, com a formatação do primeiro trecho."""
+    k = xml.find('<p:ph type="title"')
+    if k < 0:
+        raise SystemExit("ERRO: slide sem placeholder de título")
+    id_ = re.search(r'<p:cNvPr id="(\d+)"', xml[xml.rindex('<p:cNvPr id="', 0, k):]).group(1)
+    a, b = _span(xml, id_)
+    trecho = xml[a:b]
+    paras = [p for p in re.finditer(r"<a:p>(.*?)</a:p>", trecho, flags=re.S) if re.search(r"<a:t>[^<]+</a:t>", p.group(1))]
+    if not paras:
+        raise SystemExit("ERRO: título vazio")
+    corpo = paras[0].group(1)
+    ppr = re.match(r"\s*(<a:pPr[^>]*/>|<a:pPr[^>]*>.*?</a:pPr>)", corpo, flags=re.S)
+    rpr = re.search(r"<a:rPr[^>]*/>|<a:rPr[^>]*>.*?</a:rPr>", corpo, flags=re.S)
+    novo_p = f"<a:p>{ppr.group(1) if ppr else ''}<a:r>{rpr.group(0) if rpr else ''}<a:t>{escape(novo)}</a:t></a:r></a:p>"
+    out, ult = [], 0
+    for k, p in enumerate(paras):
+        out.append(trecho[ult:p.start()] + (novo_p if k == 0 else ""))
+        ult = p.end()
+    trecho = "".join(out) + trecho[ult:]
+    return xml[:a] + trecho + xml[b:]
+
+
+def numerar(xml: str, pos: int) -> tuple[str, int]:
+    """O número de página digitado à mão (caixa só com dígitos, no canto inferior direito) vira o campo do número do
+    slide; a caixa ganha largura para dois dígitos, mantendo a borda direita. Números dentro do conteúdo ficam."""
+    n = 0
+    for sp in re.findall(r"<p:sp>.*?</p:sp>", xml, flags=re.S):
+        nome = re.search(r'<p:cNvPr id="\d+" name="([^"]*)"', sp).group(1)
+        texto = "".join(re.findall(r"<a:t>([^<]*)</a:t>", sp)).strip()
+        pos_xfrm = re.search(r'<a:off x="(\d+)" y="(\d+)"/><a:ext cx="(\d+)" cy="(\d+)"/>', sp)
+        if (nome != NOME_NUMERO or not re.fullmatch(r"\d{1,2}", texto) or "<a:fld" in sp or not pos_xfrm
+                or int(pos_xfrm.group(1)) < CANTO_NUMERO[0] or int(pos_xfrm.group(2)) < CANTO_NUMERO[1]):
+            continue
+        novo, k = re.subn(r"<a:r>(<a:rPr[^>]*/>|<a:rPr[^>]*>.*?</a:rPr>)?<a:t>\d{1,2}</a:t></a:r>",
+                          lambda m: f'<a:fld id="{GUID_SLIDENUM}" type="slidenum">{m.group(1) or ""}<a:t>{pos}</a:t></a:fld>',
+                          sp, count=1, flags=re.S)
+        if k != 1:
+            raise SystemExit("ERRO: número de página em mais de um trecho")
+        x0, y0, cx, cy = (int(g) for g in pos_xfrm.groups())
+        if cx < LARGURA_NUMERO:
+            novo = novo.replace(pos_xfrm.group(0), f'<a:off x="{x0 + cx - LARGURA_NUMERO}" y="{y0}"/>'
+                                                   f'<a:ext cx="{LARGURA_NUMERO}" cy="{cy}"/>', 1)
+        xml = xml.replace(sp, novo, 1)
+        n += 1
+    return xml, n
 
 
 def sha256_arq(p: Path) -> str:
@@ -810,26 +924,53 @@ def construir(deck: Path, saida: Path) -> dict:
                         f'<Override PartName="/ppt/notesSlides/notesSlide{nn}.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.notesSlide+xml"/></Types>')
         novos.append(dict(sl=sl, id=str(prox_id + k), rid=rid, parte=f"ppt/slides/slide{ns}.xml"))
 
-    def item_orig(pos: int) -> tuple[str, str]:
-        return orig[pos - 1][0], orig[pos - 1][1]
-
-    # ordem do deck proposto
+    # ordem do deck proposto: a do doc 02, conferida contra a tabela de classificação
+    classif = ler_classificacao()
+    if sorted(classif) != list(range(1, N_GRUPO + 1)):
+        raise SystemExit("ERRO: a classificação do doc 02 não cobre os 36 slides do deck do grupo, um por linha")
+    ordem_doc = ler_ordem()
+    if [k for t, k, *_ in ordem_doc if t == "novo"] != list(range(len(novos))):
+        raise SystemExit("ERRO: a ordem do doc 02 não bate com os slides novos")
+    usados = [n for t, n, *_ in ordem_doc if t == "grupo"]
+    if len(usados) != len(set(usados)):
+        raise SystemExit("ERRO: slide do grupo repetido na ordem do doc 02")
+    for n, c in classif.items():
+        if (n in usados) != (c["destino"] != "removido"):
+            raise SystemExit(f"ERRO: slide {n} do grupo: destino {c['destino']!r} diverge dos marcadores do doc 02")
     ordem: list[tuple[str, str, str]] = []  # (id, rid, rótulo)
-    por_secao: dict[str, list[dict]] = {}
-    for nv in novos:
-        por_secao.setdefault(nv["sl"]["secao"], []).append(nv)
-    for pos in range(1, 37):
-        if pos in POS_PLACEHOLDER.values():
-            secao = next(s for s, p in POS_PLACEHOLDER.items() if p == pos)
-            ordem += [(nv["id"], nv["rid"], "novo") for nv in por_secao.get(secao, [])]
-            continue
-        ordem.append((*item_orig(pos), f"slide {pos} do deck do grupo"))
-        if pos == POS_DEPOIS_HIPOTESE:
-            ordem += [(nv["id"], nv["rid"], "novo") for nv in por_secao.get("Hipótese", [])]
-        if pos == POS_APENDICE:
-            ordem += [(nv["id"], nv["rid"], "novo") for nv in por_secao.get("Apêndice", [])]
+    pos_novo: dict[int, int] = {}
+    for k, item in enumerate(ordem_doc, 1):
+        if item[0] == "novo":
+            nv = novos[item[1]]
+            ordem.append((nv["id"], nv["rid"], "novo"))
+        else:
+            n = item[1]
+            pos_novo[n] = k
+            ordem.append((orig[n - 1][0], orig[n - 1][1], f"slide {n} do deck do grupo"))
+            esperada = classif[n]["posicao"]
+            if esperada != k:
+                raise SystemExit(f"ERRO: slide {n} do grupo vai para a posição {k}; o doc 02 diz {esperada}")
+    for item in ordem_doc:
+        if item[0] == "grupo":
+            n, titulo_novo = item[1], item[2]
+            x = pk.texto(nome_slide[n])
+            feito = []  # a visibilidade é a do deck do grupo (oculto continua oculto)
+            if titulo_novo:
+                x = retitular(x, titulo_novo)
+                feito.append(f"título: {titulo_novo}")
+            x, n_num = numerar(x, pos_novo[n])
+            if n_num:
+                feito.append(f"número de página digitado → campo do número do slide ({pos_novo[n]})")
+            for antigo, alvo_grupo in REFERENCIAS_A_SLIDE.get(n, []):
+                x, nr = trocar_texto_runs(x, antigo, f"slide {pos_novo[alvo_grupo]}")
+                if nr != 1:
+                    raise SystemExit(f"ERRO: referência {antigo!r} achada {nr} vezes no slide {n} do grupo")
+                feito.append(f"'{antigo}' → 'slide {pos_novo[alvo_grupo]}'")
+            pk.gravar(nome_slide[n], x)
+            if feito:
+                correcoes.append({"slide": n, "correcao": "; ".join(feito)})
     if len([o for o in ordem if o[2] == "novo"]) != len(novos):
-        raise SystemExit("ERRO: algum slide novo ficou fora da ordem (seção sem posição)")
+        raise SystemExit("ERRO: algum slide novo ficou fora da ordem")
 
     def com_lista(itens: list[tuple[str, str]], pres_txt: str) -> str:
         nova = "<p:sldIdLst>" + "".join(f'<p:sldId id="{i}" r:id="{r}"/>' for i, r in itens) + "</p:sldIdLst>"
@@ -848,7 +989,7 @@ def construir(deck: Path, saida: Path) -> dict:
         pk.salvar(destino, manter=manter | {"[Content_Types].xml"})
 
     saida.mkdir(parents=True, exist_ok=True)
-    # (a) deck proposto: sem os três marcadores "X"
+    # (a) deck proposto: na ordem do doc 02, só com os slides do grupo que ficam
     podar(com_lista([(i, r) for i, r, _ in ordem], pres), rels, {r for _, r, _ in ordem}, saida / ARQ_DECK)
     # (b) só os slides novos
     so_novos = [(nv["id"], nv["rid"]) for nv in novos]
@@ -866,8 +1007,10 @@ def construir(deck: Path, saida: Path) -> dict:
                               figura=nv["sl"]["imagem"].relative_to(ROOT).as_posix() if nv["sl"]["imagem"] else None))
         else:
             pos = int(rot.split()[1])
-            lista.append(dict(posicao=k, origem=rot, titulo=BF.titulo_do_slide(pk.texto(nome_slide[pos])).strip() or "(sem título)"))
-    return dict(ordem=lista, correcoes=correcoes, midias=midias)
+            lista.append(dict(posicao=k, origem=rot, destino=classif[pos]["destino"],
+                              titulo=BF.titulo_do_slide(pk.texto(nome_slide[pos])).strip() or "(sem título)"))
+    classificacao = [dict(slide_do_grupo=n, **classif[n]) for n in sorted(classif)]
+    return dict(ordem=lista, correcoes=correcoes, midias=midias, classificacao=classificacao)
 
 
 def escrever_manifesto(deck: Path, saida: Path, resumo: dict) -> None:
@@ -889,6 +1032,7 @@ def escrever_manifesto(deck: Path, saida: Path, resumo: dict) -> None:
         "saidas": [{"caminho": f"output/apresentacao_banca2/{n}", "sha256": sha256_arq(saida / n),
                     "bytes": (saida / n).stat().st_size} for n in (ARQ_DECK, ARQ_SLIDES)],
         "correcoes": resumo["correcoes"],
+        "classificacao_deck_do_grupo": resumo["classificacao"],
         "ordem_do_deck_proposto": resumo["ordem"],
     }
     (saida / ARQ_MANIFESTO).write_text(json.dumps(man, ensure_ascii=False, indent=2, sort_keys=True) + "\n",

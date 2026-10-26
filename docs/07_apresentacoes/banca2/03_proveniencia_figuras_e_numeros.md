@@ -566,13 +566,19 @@ e grava em `output/apresentacao_banca2/`:
 
 | Arquivo | O que é |
 |---|---|
-| `deck_banca2_proposta.pptx` | o deck inteiro, com as correções do quadro do doc 02 e os slides novos no lugar dos marcadores "X" |
-| `slides_empiricos_banca2.pptx` | só os slides novos, para colar no deck em uso |
-| `manifesto_deck_banca2.json` | entradas (deck do grupo, doc 02, registro, figuras) e saídas com SHA-256; ordem dos slides; correções aplicadas |
-| `qa_render/` | imagens de conferência dos slides novos e corrigidos (LibreOffice, com a Montserrat instalada) |
+| `deck_banca2_proposta.pptx` | o deck inteiro, na ordem do doc 02: prévios do grupo com as correções, parte empírica, Q&A e apêndice |
+| `slides_empiricos_banca2.pptx` | só os slides novos, na mesma ordem, para colar no deck em uso |
+| `manifesto_deck_banca2.json` | entradas (deck do grupo, doc 02, registro, figuras) e saídas com SHA-256; ordem dos slides; classificação de cada slide do grupo; correções aplicadas |
+| `qa_render/` | imagens de conferência de todos os slides até o Q&A (LibreOffice, com a Montserrat instalada; os ocultos do grupo também) |
 
-O texto dos slides novos é o do doc 02; os números das correções no deck do
-grupo vêm do registro. As figuras entram como imagem, a partir de `output/`;
+A ordem do deck inteiro é a do doc 02: cada `##` é um slide novo e cada
+marcador `<!-- grupo: N -->` põe ali o slide N do grupo (com `| título`, o
+título muda). O gerador confere a ordem contra a tabela de classificação do
+doc 02 e para se divergirem. Nos slides do grupo, o número de página digitado
+à mão no canto vira o campo de número do slide, e a referência "do slide 11"
+do slide 20 do grupo passa a apontar para a posição nova. O texto dos slides
+novos é o do doc 02; os números das correções no deck do grupo vêm do
+registro. As figuras entram como imagem, a partir de `output/`;
 as tabelas, como tabela nativa. O zip é gravado com data fixa e ordem
 estável, e duas execuções dão o mesmo SHA-256.
 
