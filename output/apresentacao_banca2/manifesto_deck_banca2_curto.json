@@ -10,7 +10,7 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md",
       "papel": "texto dos slides e notas",
-      "sha256": "d7f25bc7ebbc9c9a5fa8ee8c67ce13df9398bbcead0af19ef922e8147339e442"
+      "sha256": "b56cea7e188c2b2485266faa6da912706688ae4e7436ca385048f5f9dabb6de7"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
@@ -217,9 +217,9 @@
       "linhas": [
         "preenchida = salto + reta de cada lado",
         "Outcome vaga imediata preenchida, por célula e município",
-        "Razão comparamos vagas do mesmo tipo: a de reserva não estava em jogo na 1ª chamada"
+        "Razão comparamos vagas do mesmo tipo; a reserva se preenche por outro caminho"
       ],
-      "palavras": 30,
+      "palavras": 27,
       "posicao": 10,
       "secao": "Metodologia",
       "titulo": "H1 · O salto no corte, só com vagas imediatas"
@@ -421,14 +421,14 @@
   "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; seções na ordem Hipótese → Dados → Análise descritiva → Metodologia → Identificação → Resultados → Robustez → Discussão; no máximo 30 palavras visíveis por slide, fora o título, a figura e a linha de fontes; sem slides do grupo, sem divisórias, sem diagrama, sem apêndice",
   "saidas": [
     {
-      "bytes": 4296505,
+      "bytes": 4296559,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pptx",
-      "sha256": "a917d399b6094ebd1f052a81ab943d651cb7b88feb0f5e632373f200f6ccbdd0"
+      "sha256": "7c60e01b47a78107d3b34526bfee2ce769b7af66bdbba1b2e8b436151dfdbbff"
     },
     {
-      "bytes": 3242431,
+      "bytes": 3242426,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pdf",
-      "sha256": "e4ac8e52626cbe0115f741981b76282bc2d953da8e9bd37c9b20c96f9e93de66"
+      "sha256": "f5f1354add146330c1d2d8e50b961acb75c75ce09ac6da74bac78ecc5a2c7e37"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py (modo padrão: deck curto)"

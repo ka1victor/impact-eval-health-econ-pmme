@@ -8,6 +8,20 @@
 
 ---
 
+## 26/10/2026 — Retrato WIP: adendo 48c (capitais e UF) e deck curto da banca 2
+
+Motivo: os agentes do adendo 48c e do deck curto foram interrompidos antes de terminar. O trabalho deles entra no
+branch como **WIP**, para outras pessoas continuarem. O 48c ainda não tem auditoria nem testes próprios; os números
+de `HC_*` não são vigentes até a auditoria. O deck curto foi regerado pelo gerador para atualizar o manifesto.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57o_h1_capitais_uf.md`](06_execucao/57o_h1_capitais_uf.md) | resultados do adendo 48c (WIP, sem auditoria), gerado por `scripts/rdd_bolsa/41_h1_capitais_uf.py` |
+
+---
+
 ## 26/10/2026 — Adendo 52c executado: escolha com o tipo de vaga do ciclo 2 do quadro de 13/02/2026
 
 Motivo: o adendo 52c manda reestimar o E9 (ciclo 2 e empilhado), o P1 M1 e M5 e o P1h-1 com "tem vaga imediata" e
