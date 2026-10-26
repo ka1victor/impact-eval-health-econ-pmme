@@ -12036,8 +12036,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: salto",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: salto",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI1_300_INF": {
@@ -12059,8 +12059,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: IC 95% inferior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: IC 95% inferior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI1_300_SUP": {
@@ -12082,8 +12082,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: IC 95% superior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: IC 95% superior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI1_300_HOLM": {
@@ -12099,8 +12099,8 @@
         "coluna": "p_holm"
       },
       "formato": "p3",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: p de Holm (quatro primárias)",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: p de Holm (quatro primárias)",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI1_300_MEDIA": {
@@ -12116,8 +12116,8 @@
         "coluna": "media_abaixo"
       },
       "formato": "pct1",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: média abaixo do corte",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,300: média abaixo do corte",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI1_400_TAU": {
@@ -12139,8 +12139,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: salto",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: salto",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI1_400_INF": {
@@ -12162,8 +12162,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: IC 95% inferior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: IC 95% inferior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI1_400_SUP": {
@@ -12185,8 +12185,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: IC 95% superior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: IC 95% superior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI1_400_HOLM": {
@@ -12202,8 +12202,8 @@
         "coluna": "p_holm"
       },
       "formato": "p3",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: p de Holm (quatro primárias)",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: p de Holm (quatro primárias)",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI1_400_MEDIA": {
@@ -12219,8 +12219,8 @@
         "coluna": "media_abaixo"
       },
       "formato": "pct1",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: média abaixo do corte",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1 (célula com vaga imediata preenchida, p.p.), corte 0,400: média abaixo do corte",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI2_300_TAU": {
@@ -12236,8 +12236,8 @@
         "coluna": "tau"
       },
       "formato": "d2s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: salto",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: salto",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI2_300_INF": {
@@ -12253,8 +12253,8 @@
         "coluna": "ic95_inf"
       },
       "formato": "d2s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: IC 95% inferior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: IC 95% inferior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI2_300_SUP": {
@@ -12270,8 +12270,8 @@
         "coluna": "ic95_sup"
       },
       "formato": "d2s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: IC 95% superior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: IC 95% superior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI2_300_HOLM": {
@@ -12287,8 +12287,8 @@
         "coluna": "p_holm"
       },
       "formato": "p3",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: p de Holm (quatro primárias)",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: p de Holm (quatro primárias)",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI2_300_MEDIA": {
@@ -12304,8 +12304,8 @@
         "coluna": "media_abaixo"
       },
       "formato": "d2",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: média abaixo do corte",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,300: média abaixo do corte",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI2_400_TAU": {
@@ -12321,8 +12321,8 @@
         "coluna": "tau"
       },
       "formato": "d2s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: salto",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: salto",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI2_400_INF": {
@@ -12338,8 +12338,8 @@
         "coluna": "ic95_inf"
       },
       "formato": "d2s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: IC 95% inferior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: IC 95% inferior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI2_400_SUP": {
@@ -12355,8 +12355,8 @@
         "coluna": "ic95_sup"
       },
       "formato": "d2s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: IC 95% superior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: IC 95% superior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI2_400_HOLM": {
@@ -12372,8 +12372,8 @@
         "coluna": "p_holm"
       },
       "formato": "p3",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: p de Holm (quatro primárias)",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: p de Holm (quatro primárias)",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI2_400_MEDIA": {
@@ -12389,8 +12389,8 @@
         "coluna": "media_abaixo"
       },
       "formato": "d2",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: média abaixo do corte",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-2 (alocados em vagas imediatas por município, com controle das vagas imediatas), corte 0,400: média abaixo do corte",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ1_300_I90I": {
@@ -12412,8 +12412,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: IC 90% inferior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: IC 90% inferior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ1_300_I90S": {
@@ -12435,8 +12435,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: IC 90% superior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: IC 90% superior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ1_300_MARG": {
@@ -12458,8 +12458,8 @@
         ]
       },
       "formato": "d0",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: margem de equivalência",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: margem de equivalência",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ1_300_LEIT": {
@@ -12476,8 +12476,8 @@
         "texto_csv": true
       },
       "formato": "txt",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: leitura pré-registrada",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-1, corte 0,300: leitura pré-registrada",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ1_400_I90I": {
@@ -12499,8 +12499,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: IC 90% inferior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: IC 90% inferior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ1_400_I90S": {
@@ -12522,8 +12522,8 @@
         ]
       },
       "formato": "d1s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: IC 90% superior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: IC 90% superior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ1_400_MARG": {
@@ -12545,8 +12545,8 @@
         ]
       },
       "formato": "d0",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: margem de equivalência",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: margem de equivalência",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ1_400_LEIT": {
@@ -12563,8 +12563,8 @@
         "texto_csv": true
       },
       "formato": "txt",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: leitura pré-registrada",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-1, corte 0,400: leitura pré-registrada",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ2_300_I90I": {
@@ -12580,8 +12580,8 @@
         "coluna": "ic90_inf"
       },
       "formato": "d2s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: IC 90% inferior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: IC 90% inferior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ2_300_I90S": {
@@ -12597,8 +12597,8 @@
         "coluna": "ic90_sup"
       },
       "formato": "d2s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: IC 90% superior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: IC 90% superior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ2_300_MARG": {
@@ -12614,8 +12614,8 @@
         "coluna": "margem"
       },
       "formato": "d2",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: margem de equivalência",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: margem de equivalência",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ2_300_LEIT": {
@@ -12632,8 +12632,8 @@
         "texto_csv": true
       },
       "formato": "txt",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: leitura pré-registrada",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-2, corte 0,300: leitura pré-registrada",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ2_400_I90I": {
@@ -12649,8 +12649,8 @@
         "coluna": "ic90_inf"
       },
       "formato": "d2s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: IC 90% inferior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: IC 90% inferior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ2_400_I90S": {
@@ -12666,8 +12666,8 @@
         "coluna": "ic90_sup"
       },
       "formato": "d2s",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: IC 90% superior",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: IC 90% superior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ2_400_MARG": {
@@ -12683,8 +12683,8 @@
         "coluna": "margem"
       },
       "formato": "d2",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: margem de equivalência",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: margem de equivalência",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
     "HI_EQ2_400_LEIT": {
@@ -12701,9 +12701,1738 @@
         "texto_csv": true
       },
       "formato": "txt",
-      "descricao": "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: leitura pré-registrada",
-      "auditoria": "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s7, TOST de HI-2, corte 0,400: leitura pré-registrada",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
+    },
+    "HI2_300_P": {
+      "valor": "0,032",
+      "valor_bruto": 0.03162079853114324,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-2|HI-2|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "p_valor"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-2, corte 0,300: p sem correção múltipla (auditoria 38, achado 3: entre os dois casos do §4)",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_300_SEM_TAU": {
+      "valor": "−4,1",
+      "valor_bruto": -4.087000836403727,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-1|0.300|w=0.050|sem|RDD"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,300, sem controle, na amostra com todas as variáveis de L+M: salto",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_300_SEM_INF": {
+      "valor": "−23,6",
+      "valor_bruto": -23.561447904061456,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-1|0.300|w=0.050|sem|RDD"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,300, sem controle, na amostra com todas as variáveis de L+M: IC 95% inferior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_300_SEM_SUP": {
+      "valor": "+15,4",
+      "valor_bruto": 15.387446231254003,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-1|0.300|w=0.050|sem|RDD"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,300, sem controle, na amostra com todas as variáveis de L+M: IC 95% superior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_300_LM_TAU": {
+      "valor": "+3,6",
+      "valor_bruto": 3.5521344908290953,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-1|0.300|w=0.050|L+M|RDD"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,300, localização e médicos na região somados na regressão: salto",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_300_LM_INF": {
+      "valor": "−16,8",
+      "valor_bruto": -16.791352850126525,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-1|0.300|w=0.050|L+M|RDD"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,300, localização e médicos na região somados na regressão: IC 95% inferior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_300_LM_SUP": {
+      "valor": "+23,9",
+      "valor_bruto": 23.895621831784716,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-1|0.300|w=0.050|L+M|RDD"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,300, localização e médicos na região somados na regressão: IC 95% superior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_400_SEM_TAU": {
+      "valor": "+2,8",
+      "valor_bruto": 2.750117163738371,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-1|0.400|w=0.050|sem|RDD"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,400, sem controle, na amostra com todas as variáveis de L+M: salto",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_400_SEM_INF": {
+      "valor": "−20,3",
+      "valor_bruto": -20.292492956286434,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-1|0.400|w=0.050|sem|RDD"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,400, sem controle, na amostra com todas as variáveis de L+M: IC 95% inferior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_400_SEM_SUP": {
+      "valor": "+25,8",
+      "valor_bruto": 25.792727283763178,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-1|0.400|w=0.050|sem|RDD"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,400, sem controle, na amostra com todas as variáveis de L+M: IC 95% superior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_400_LM_TAU": {
+      "valor": "−1,5",
+      "valor_bruto": -1.4927253858327605,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-1|0.400|w=0.050|L+M|RDD"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,400, localização e médicos na região somados na regressão: salto",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_400_LM_INF": {
+      "valor": "−23,9",
+      "valor_bruto": -23.875331319256034,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-1|0.400|w=0.050|L+M|RDD"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,400, localização e médicos na região somados na regressão: IC 95% inferior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI1_400_LM_SUP": {
+      "valor": "+20,9",
+      "valor_bruto": 20.88988054759051,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-1|0.400|w=0.050|L+M|RDD"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-1 célula com vaga imediata preenchida (p.p.), corte 0,400, localização e médicos na região somados na regressão: IC 95% superior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_300_SEM_TAU": {
+      "valor": "−1,11",
+      "valor_bruto": -1.1064559262103255,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-2|0.300|w=0.050|sem|RDD"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-2 alocados em vagas imediatas por município, corte 0,300, sem controle, na amostra com todas as variáveis de L+M: salto",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_300_SEM_INF": {
+      "valor": "−2,17",
+      "valor_bruto": -2.166216940651501,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-2|0.300|w=0.050|sem|RDD"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-2 alocados em vagas imediatas por município, corte 0,300, sem controle, na amostra com todas as variáveis de L+M: IC 95% inferior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_300_SEM_SUP": {
+      "valor": "−0,05",
+      "valor_bruto": -0.04669491176914997,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-2|0.300|w=0.050|sem|RDD"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-2 alocados em vagas imediatas por município, corte 0,300, sem controle, na amostra com todas as variáveis de L+M: IC 95% superior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_300_LM_TAU": {
+      "valor": "−0,25",
+      "valor_bruto": -0.25013609960716376,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-2|0.300|w=0.050|L+M|RDD"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-2 alocados em vagas imediatas por município, corte 0,300, localização e médicos na região somados na regressão: salto",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_300_LM_INF": {
+      "valor": "−1,37",
+      "valor_bruto": -1.372021580889877,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-2|0.300|w=0.050|L+M|RDD"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-2 alocados em vagas imediatas por município, corte 0,300, localização e médicos na região somados na regressão: IC 95% inferior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_300_LM_SUP": {
+      "valor": "+0,87",
+      "valor_bruto": 0.8717493816755495,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-2|0.300|w=0.050|L+M|RDD"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-2 alocados em vagas imediatas por município, corte 0,300, localização e médicos na região somados na regressão: IC 95% superior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_400_SEM_TAU": {
+      "valor": "−0,16",
+      "valor_bruto": -0.156707347012577,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-2|0.400|w=0.050|sem|RDD"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-2 alocados em vagas imediatas por município, corte 0,400, sem controle, na amostra com todas as variáveis de L+M: salto",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_400_SEM_INF": {
+      "valor": "−0,99",
+      "valor_bruto": -0.9929537674925244,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-2|0.400|w=0.050|sem|RDD"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-2 alocados em vagas imediatas por município, corte 0,400, sem controle, na amostra com todas as variáveis de L+M: IC 95% inferior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_400_SEM_SUP": {
+      "valor": "+0,68",
+      "valor_bruto": 0.6795390734673705,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-4|HI-2|0.400|w=0.050|sem|RDD"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-4, HI-2 alocados em vagas imediatas por município, corte 0,400, sem controle, na amostra com todas as variáveis de L+M: IC 95% superior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_400_LM_TAU": {
+      "valor": "−0,38",
+      "valor_bruto": -0.3823970545544344,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-2|0.400|w=0.050|L+M|RDD"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-2 alocados em vagas imediatas por município, corte 0,400, localização e médicos na região somados na regressão: salto",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_400_LM_INF": {
+      "valor": "−1,11",
+      "valor_bruto": -1.1143499107950348,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-2|0.400|w=0.050|L+M|RDD"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-2 alocados em vagas imediatas por município, corte 0,400, localização e médicos na região somados na regressão: IC 95% inferior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_HI2_400_LM_SUP": {
+      "valor": "+0,35",
+      "valor_bruto": 0.34955580168616596,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "CL-1|HI-2|0.400|w=0.050|L+M|RDD"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-1, HI-2 alocados em vagas imediatas por município, corte 0,400, localização e médicos na região somados na regressão: IC 95% superior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_PS1_300_TAU": {
+      "valor": "−0,6",
+      "valor_bruto": -0.6088356088356085,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PS-1|H1M-FRAC|0.300|w=0.050|L+M|pareamento_psm"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): PS-1 (PSM, regra gulosa do 48d), fração das células com vaga imediata preenchidas por município × ciclo, corte 0,300: média das diferenças nos pares (p.p.)",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_PS1_300_INF": {
+      "valor": "−13,1",
+      "valor_bruto": -13.091106425554349,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PS-1|H1M-FRAC|0.300|w=0.050|L+M|pareamento_psm"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): PS-1 (PSM, regra gulosa do 48d), fração das células com vaga imediata preenchidas por município × ciclo, corte 0,300: IC 95% de permutação, inferior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_PS1_300_SUP": {
+      "valor": "+11,8",
+      "valor_bruto": 11.79320679911048,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PS-1|H1M-FRAC|0.300|w=0.050|L+M|pareamento_psm"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): PS-1 (PSM, regra gulosa do 48d), fração das células com vaga imediata preenchidas por município × ciclo, corte 0,300: IC 95% de permutação, superior",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_PS1_300_NPAR": {
+      "valor": "86",
+      "valor_bruto": 86.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PS-1|H1M-FRAC|0.300|w=0.050|L+M|pareamento_psm"
+        },
+        "coluna": "n_pares"
+      },
+      "formato": "int",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): PS-1 (PSM, regra gulosa do 48d), fração das células com vaga imediata preenchidas por município × ciclo, corte 0,300: pares",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_BAL_CAP_300": {
+      "valor": "−29,9",
+      "valor_bruto": -29.941017953106986,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_balanco.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_balanco.csv",
+        "filtro": {
+          "bloco": "CL-0",
+          "populacao": "H1 (municipio x ciclo, amostra da HI-2)",
+          "corte": "0.300",
+          "variavel": "capital"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-0, balanço no corte 0,300 na amostra da HI-2: salto em ser capital (p.p.)",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_BAL_NE_300": {
+      "valor": "−47,7",
+      "valor_bruto": -47.66317535005973,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_balanco.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_balanco.csv",
+        "filtro": {
+          "bloco": "CL-0",
+          "populacao": "H1 (municipio x ciclo, amostra da HI-2)",
+          "corte": "0.300",
+          "variavel": "regiao_Nordeste"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-0, balanço no corte 0,300 na amostra da HI-2: salto em ser do Nordeste (p.p.)",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_BAL_ESP_300": {
+      "valor": "+10,54",
+      "valor_bruto": 10.539770433817083,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_balanco.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_balanco.csv",
+        "filtro": {
+          "bloco": "CL-0",
+          "populacao": "H1 (municipio x ciclo, amostra da HI-2)",
+          "corte": "0.300",
+          "variavel": "esp_resto"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-0, balanço no corte 0,300 na amostra da HI-2: salto em especialistas nas CBO-alvo por 10 mil hab. no resto da região de saúde",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "CL_BAL_ESP_400": {
+      "valor": "+6,21",
+      "valor_bruto": 6.207289137233289,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/CL_balanco.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/CL_balanco.csv",
+        "filtro": {
+          "bloco": "CL-0",
+          "populacao": "H1 (municipio x ciclo, amostra da HI-2)",
+          "corte": "0.400",
+          "variavel": "esp_resto"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): CL-0, balanço no corte 0,400 na amostra da HI-2: salto em especialistas nas CBO-alvo por 10 mil hab. no resto da região de saúde",
+      "auditoria": "auditoria 40 (adendo 48d, doc 57r): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_FRAC_300_TAU": {
+      "valor": "+4,7",
+      "valor_bruto": 4.697669480278176,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-FRAC|0.300|w=0.050|pareamento_psm"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), fração das células com vaga imediata preenchidas por município × ciclo (p.p.), corte 0,300: média das diferenças nos pares",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_FRAC_300_INF": {
+      "valor": "−6,5",
+      "valor_bruto": -6.506377791513199,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-FRAC|0.300|w=0.050|pareamento_psm"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), fração das células com vaga imediata preenchidas por município × ciclo (p.p.), corte 0,300: IC 95% de permutação, inferior",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_FRAC_300_SUP": {
+      "valor": "+16,0",
+      "valor_bruto": 16.048335724816255,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-FRAC|0.300|w=0.050|pareamento_psm"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), fração das células com vaga imediata preenchidas por município × ciclo (p.p.), corte 0,300: IC 95% de permutação, superior",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_FRAC_300_HOLM": {
+      "valor": "1,000",
+      "valor_bruto": 1.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-FRAC|0.300|w=0.050|pareamento_psm"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), fração das células com vaga imediata preenchidas por município × ciclo (p.p.), corte 0,300: p de Holm (principais do 48e)",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_FRAC_300_NPAR": {
+      "valor": "92",
+      "valor_bruto": 92.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-FRAC|0.300|w=0.050|pareamento_psm"
+        },
+        "coluna": "n_pares"
+      },
+      "formato": "int",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), fração das células com vaga imediata preenchidas por município × ciclo (p.p.), corte 0,300: pares",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_FRAC_400_TAU": {
+      "valor": "+5,5",
+      "valor_bruto": 5.4557823129251695,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-FRAC|0.400|w=0.050|pareamento_psm"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), fração das células com vaga imediata preenchidas por município × ciclo (p.p.), corte 0,400: média das diferenças nos pares",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_FRAC_400_INF": {
+      "valor": "−9,7",
+      "valor_bruto": -9.739583338358168,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-FRAC|0.400|w=0.050|pareamento_psm"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), fração das células com vaga imediata preenchidas por município × ciclo (p.p.), corte 0,400: IC 95% de permutação, inferior",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_FRAC_400_SUP": {
+      "valor": "+20,7",
+      "valor_bruto": 20.735294121091275,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-FRAC|0.400|w=0.050|pareamento_psm"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), fração das células com vaga imediata preenchidas por município × ciclo (p.p.), corte 0,400: IC 95% de permutação, superior",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_FRAC_400_HOLM": {
+      "valor": "1,000",
+      "valor_bruto": 1.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-FRAC|0.400|w=0.050|pareamento_psm"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), fração das células com vaga imediata preenchidas por município × ciclo (p.p.), corte 0,400: p de Holm (principais do 48e)",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_FRAC_400_NPAR": {
+      "valor": "70",
+      "valor_bruto": 70.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-FRAC|0.400|w=0.050|pareamento_psm"
+        },
+        "coluna": "n_pares"
+      },
+      "formato": "int",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), fração das células com vaga imediata preenchidas por município × ciclo (p.p.), corte 0,400: pares",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_ALOC_300_TAU": {
+      "valor": "+0,10",
+      "valor_bruto": 0.1018878482440959,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-ALOC|0.300|w=0.050|pareamento_psm"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), médicos alocados por vaga imediata por município × ciclo, corte 0,300: média das diferenças nos pares",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_ALOC_300_INF": {
+      "valor": "−0,01",
+      "valor_bruto": -0.011988081519730881,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-ALOC|0.300|w=0.050|pareamento_psm"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), médicos alocados por vaga imediata por município × ciclo, corte 0,300: IC 95% de permutação, inferior",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_ALOC_300_SUP": {
+      "valor": "+0,22",
+      "valor_bruto": 0.21626420302295146,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-ALOC|0.300|w=0.050|pareamento_psm"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), médicos alocados por vaga imediata por município × ciclo, corte 0,300: IC 95% de permutação, superior",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_ALOC_300_HOLM": {
+      "valor": "0,636",
+      "valor_bruto": 0.636,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-ALOC|0.300|w=0.050|pareamento_psm"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), médicos alocados por vaga imediata por município × ciclo, corte 0,300: p de Holm (principais do 48e)",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_ALOC_300_NPAR": {
+      "valor": "92",
+      "valor_bruto": 92.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-ALOC|0.300|w=0.050|pareamento_psm"
+        },
+        "coluna": "n_pares"
+      },
+      "formato": "int",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), médicos alocados por vaga imediata por município × ciclo, corte 0,300: pares",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_ALOC_400_TAU": {
+      "valor": "+0,07",
+      "valor_bruto": 0.07136621315192743,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-ALOC|0.400|w=0.050|pareamento_psm"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), médicos alocados por vaga imediata por município × ciclo, corte 0,400: média das diferenças nos pares",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_ALOC_400_INF": {
+      "valor": "−0,09",
+      "valor_bruto": -0.0855862775752321,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-ALOC|0.400|w=0.050|pareamento_psm"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), médicos alocados por vaga imediata por município × ciclo, corte 0,400: IC 95% de permutação, inferior",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_ALOC_400_SUP": {
+      "valor": "+0,23",
+      "valor_bruto": 0.2294022818069883,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-ALOC|0.400|w=0.050|pareamento_psm"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), médicos alocados por vaga imediata por município × ciclo, corte 0,400: IC 95% de permutação, superior",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_ALOC_400_HOLM": {
+      "valor": "1,000",
+      "valor_bruto": 1.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-ALOC|0.400|w=0.050|pareamento_psm"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), médicos alocados por vaga imediata por município × ciclo, corte 0,400: p de Holm (principais do 48e)",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PM_ALOC_400_NPAR": {
+      "valor": "70",
+      "valor_bruto": 70.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PM_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PM_estimativas.csv",
+        "filtro": {
+          "id_linha": "PM-1|H1|H1M-ALOC|0.400|w=0.050|pareamento_psm"
+        },
+        "coluna": "n_pares"
+      },
+      "formato": "int",
+      "descricao": "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): PM-1 (PSM, regra literal; principal do 48e), médicos alocados por vaga imediata por município × ciclo, corte 0,400: pares",
+      "auditoria": "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "HC_HI2_300_BASE": {
+      "valor": "−1,13",
+      "valor_bruto": -1.126325756859003,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HC_estimativas.csv",
+        "filtro": {
+          "id_linha": "base|HI-2|municipio|H1|0.300|sem_ajuste"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48c (doc 57o; auditoria 42; pós-resultado): HI-2, corte 0,300, sem ajuste: salto (médicos alocados por município)",
+      "auditoria": "auditoria 42 (adendo 48c, doc 57o): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "HC_HI2_300_CAP": {
+      "valor": "−0,83",
+      "valor_bruto": -0.8276469015964376,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HC_estimativas.csv",
+        "filtro": {
+          "id_linha": "C-2|HI-2|municipio|H1|0.300|capital"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48c (doc 57o; auditoria 42; pós-resultado): HI-2, corte 0,300, com dummy de capital: salto (médicos alocados por município)",
+      "auditoria": "auditoria 42 (adendo 48c, doc 57o): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "HC_HI2_300_CAP_PCT": {
+      "valor": "73",
+      "valor_bruto": 0.7348201855069936,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "razao": [
+          "HC_HI2_300_CAP",
+          "HC_HI2_300_BASE"
+        ]
+      },
+      "formato": "pct0",
+      "descricao": "Adendo 48c (doc 57o; auditoria 42; pós-resultado): HI-2, corte 0,300: parte do salto sem ajuste que fica com a dummy de capital (%)",
+      "auditoria": "auditoria 42 (adendo 48c, doc 57o): aprovado com correções",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV3_Y1_300_LINF": {
+      "valor": "−7,4",
+      "valor_bruto": -7.35745616410735,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-3|limites_lee|Y1|1+2+3|0.300|w=0.050"
+        },
+        "coluna": "limite_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-3 (limites de Lee, principal), fração das células com vaga imediata preenchidas (p.p.), corte 0,300: limite inferior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV3_Y1_300_LSUP": {
+      "valor": "+9,6",
+      "valor_bruto": 9.58830126733098,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-3|limites_lee|Y1|1+2+3|0.300|w=0.050"
+        },
+        "coluna": "limite_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-3 (limites de Lee, principal), fração das células com vaga imediata preenchidas (p.p.), corte 0,300: limite superior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV3_Y2_300_LINF": {
+      "valor": "−0,05",
+      "valor_bruto": -0.0539065479421875,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-3|limites_lee|Y2|1+2+3|0.300|w=0.050"
+        },
+        "coluna": "limite_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-3 (limites de Lee, principal), médicos alocados por vaga imediata, corte 0,300: limite inferior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV3_Y2_300_LSUP": {
+      "valor": "+0,12",
+      "valor_bruto": 0.1189658775952255,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-3|limites_lee|Y2|1+2+3|0.300|w=0.050"
+        },
+        "coluna": "limite_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-3 (limites de Lee, principal), médicos alocados por vaga imediata, corte 0,300: limite superior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV3_Y1_400_LINF": {
+      "valor": "−13,0",
+      "valor_bruto": -12.974648308295231,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-3|limites_lee|Y1|1+2+3|0.400|w=0.050"
+        },
+        "coluna": "limite_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-3 (limites de Lee, principal), fração das células com vaga imediata preenchidas (p.p.), corte 0,400: limite inferior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV3_Y1_400_LSUP": {
+      "valor": "+16,2",
+      "valor_bruto": 16.23916870948138,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-3|limites_lee|Y1|1+2+3|0.400|w=0.050"
+        },
+        "coluna": "limite_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-3 (limites de Lee, principal), fração das células com vaga imediata preenchidas (p.p.), corte 0,400: limite superior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV3_Y2_400_LINF": {
+      "valor": "−0,15",
+      "valor_bruto": -0.1488629633786622,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-3|limites_lee|Y2|1+2+3|0.400|w=0.050"
+        },
+        "coluna": "limite_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-3 (limites de Lee, principal), médicos alocados por vaga imediata, corte 0,400: limite inferior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV3_Y2_400_LSUP": {
+      "valor": "+0,16",
+      "valor_bruto": 0.1590838187282211,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-3|limites_lee|Y2|1+2+3|0.400|w=0.050"
+        },
+        "coluna": "limite_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-3 (limites de Lee, principal), médicos alocados por vaga imediata, corte 0,400: limite superior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV5_Y2_300_LINF": {
+      "valor": "−0,19",
+      "valor_bruto": -0.1946633520012703,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-5|limites_lee|Y2|1+2+3|0.300|w=0.050"
+        },
+        "coluna": "limite_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-5 (limites de Lee com a reta, sensibilidade), médicos alocados por vaga imediata, corte 0,300: limite inferior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV5_Y2_300_LSUP": {
+      "valor": "−0,01",
+      "valor_bruto": -0.0133327010227528,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-5|limites_lee|Y2|1+2+3|0.300|w=0.050"
+        },
+        "coluna": "limite_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-5 (limites de Lee com a reta, sensibilidade), médicos alocados por vaga imediata, corte 0,300: limite superior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV5_Y2_300_IMI": {
+      "valor": "−0,39",
+      "valor_bruto": -0.3910419755055417,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-5|limites_lee|Y2|1+2+3|0.300|w=0.050"
+        },
+        "coluna": "ic_im_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-5 (limites de Lee com a reta, sensibilidade), médicos alocados por vaga imediata, corte 0,300: IC 95% de Imbens–Manski, inferior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV5_Y2_300_IMS": {
+      "valor": "+0,19",
+      "valor_bruto": 0.1933407242370712,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/SV_estimativas.csv",
+        "filtro": {
+          "id_linha": "SV-5|limites_lee|Y2|1+2+3|0.300|w=0.050"
+        },
+        "coluna": "ic_im_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-5 (limites de Lee com a reta, sensibilidade), médicos alocados por vaga imediata, corte 0,300: IC 95% de Imbens–Manski, superior",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV2_300_NS1": {
+      "valor": "3",
+      "valor_bruto": 3,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/SV_resumo.json",
+        "caminho": [
+          "leitura",
+          "sv2",
+          "0.300",
+          "n_ic_sem_zero_S1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-2, corte 0,300: covariáveis com IC 95% sem zero entre os municípios × ciclo com vaga imediata",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "SV2_300_NTODA": {
+      "valor": "1",
+      "valor_bruto": 1,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/SV_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/SV_resumo.json",
+        "caminho": [
+          "leitura",
+          "sv2",
+          "0.300",
+          "n_ic_sem_zero_toda"
+        ]
+      },
+      "formato": "int",
+      "descricao": "Adendo 48f (doc 57t; auditoria 44; pós-resultado): SV-2, corte 0,300: covariáveis com IC 95% sem zero na amostra toda",
+      "auditoria": "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "OC_B1_300_TAU": {
+      "valor": "−0,23",
+      "valor_bruto": -0.22909512889572392,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A1",
+          "populacao": "V",
+          "corte": "0.300",
+          "especificacao": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A1, vínculos de especialistas por 10 mil hab., mudança pós − pré, corte 0,300: salto",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B1_300_INF": {
+      "valor": "−1,51",
+      "valor_bruto": -1.5073079357487484,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A1",
+          "populacao": "V",
+          "corte": "0.300",
+          "especificacao": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A1, vínculos de especialistas por 10 mil hab., mudança pós − pré, corte 0,300: IC 95% inferior",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B1_300_SUP": {
+      "valor": "+1,05",
+      "valor_bruto": 1.0491176779573006,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A1",
+          "populacao": "V",
+          "corte": "0.300",
+          "especificacao": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A1, vínculos de especialistas por 10 mil hab., mudança pós − pré, corte 0,300: IC 95% superior",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B1_300_HOLM": {
+      "valor": "1,000",
+      "valor_bruto": 1.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A1",
+          "populacao": "V",
+          "corte": "0.300",
+          "especificacao": "principal"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A1, vínculos de especialistas por 10 mil hab., mudança pós − pré, corte 0,300: p de Holm (quatro primárias)",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B1_400_TAU": {
+      "valor": "−0,46",
+      "valor_bruto": -0.45582848688580146,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A1",
+          "populacao": "V",
+          "corte": "0.400",
+          "especificacao": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A1, vínculos de especialistas por 10 mil hab., mudança pós − pré, corte 0,400: salto",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B1_400_INF": {
+      "valor": "−1,86",
+      "valor_bruto": -1.8555355564174683,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A1",
+          "populacao": "V",
+          "corte": "0.400",
+          "especificacao": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A1, vínculos de especialistas por 10 mil hab., mudança pós − pré, corte 0,400: IC 95% inferior",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B1_400_SUP": {
+      "valor": "+0,94",
+      "valor_bruto": 0.9438785826458654,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A1",
+          "populacao": "V",
+          "corte": "0.400",
+          "especificacao": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A1, vínculos de especialistas por 10 mil hab., mudança pós − pré, corte 0,400: IC 95% superior",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B1_400_HOLM": {
+      "valor": "1,000",
+      "valor_bruto": 1.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A1",
+          "populacao": "V",
+          "corte": "0.400",
+          "especificacao": "principal"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A1, vínculos de especialistas por 10 mil hab., mudança pós − pré, corte 0,400: p de Holm (quatro primárias)",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B2_300_HOLM": {
+      "valor": "1,000",
+      "valor_bruto": 1.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A2",
+          "populacao": "V",
+          "corte": "0.300",
+          "especificacao": "principal"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A2, horas SUS de especialistas por 10 mil hab., mudança pós − pré, corte 0,300: p de Holm (quatro primárias)",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B2_400_HOLM": {
+      "valor": "1,000",
+      "valor_bruto": 1.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A2",
+          "populacao": "V",
+          "corte": "0.400",
+          "especificacao": "principal"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A2, horas SUS de especialistas por 10 mil hab., mudança pós − pré, corte 0,400: p de Holm (quatro primárias)",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B3_300_TAU": {
+      "valor": "−4,75",
+      "valor_bruto": -4.752174827152151,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A3",
+          "populacao": "V",
+          "corte": "0.300",
+          "especificacao": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A3, horas SUS dos outros especialistas (sem os do PMM-E), mudança pós − pré, corte 0,300: salto",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B3_300_INF": {
+      "valor": "−19,26",
+      "valor_bruto": -19.26150609202324,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A3",
+          "populacao": "V",
+          "corte": "0.300",
+          "especificacao": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A3, horas SUS dos outros especialistas (sem os do PMM-E), mudança pós − pré, corte 0,300: IC 95% inferior",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B3_300_SUP": {
+      "valor": "+9,76",
+      "valor_bruto": 9.757156437718937,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A3",
+          "populacao": "V",
+          "corte": "0.300",
+          "especificacao": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A3, horas SUS dos outros especialistas (sem os do PMM-E), mudança pós − pré, corte 0,300: IC 95% superior",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B3_400_TAU": {
+      "valor": "+0,37",
+      "valor_bruto": 0.3666888630490609,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A3",
+          "populacao": "V",
+          "corte": "0.400",
+          "especificacao": "principal"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A3, horas SUS dos outros especialistas (sem os do PMM-E), mudança pós − pré, corte 0,400: salto",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B3_400_INF": {
+      "valor": "−12,46",
+      "valor_bruto": -12.463403401271266,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A3",
+          "populacao": "V",
+          "corte": "0.400",
+          "especificacao": "principal"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A3, horas SUS dos outros especialistas (sem os do PMM-E), mudança pós − pré, corte 0,400: IC 95% inferior",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_B3_400_SUP": {
+      "valor": "+13,20",
+      "valor_bruto": 13.19678112736939,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-A3",
+          "populacao": "V",
+          "corte": "0.400",
+          "especificacao": "principal"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-A3, horas SUS dos outros especialistas (sem os do PMM-E), mudança pós − pré, corte 0,400: IC 95% superior",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_F_300": {
+      "valor": "0,2",
+      "valor_bruto": 0.15258803223314923,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-B0",
+          "outcome_id": "D1",
+          "populacao": "V",
+          "corte": "0.300",
+          "especificacao": "primeiro_estagio"
+        },
+        "coluna": "f_robusto"
+      },
+      "formato": "d1",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-B0, corte 0,300: F robusto do primeiro estágio (receber médico do programa)",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
+    },
+    "OC_F_400": {
+      "valor": "0,0",
+      "valor_bruto": 0.04916950761343235,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/OC_estimativas.csv",
+        "filtro": {
+          "id_oc": "OC-B0",
+          "outcome_id": "D1",
+          "populacao": "V",
+          "corte": "0.400",
+          "especificacao": "primeiro_estagio"
+        },
+        "coluna": "f_robusto"
+      },
+      "formato": "d1",
+      "descricao": "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): OC-B0, corte 0,400: F robusto do primeiro estágio (receber médico do programa)",
+      "auditoria": "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto",
+      "hipotese_apresentacao": "H3"
     },
     "D_POP_MUN": {
       "valor": "5.570",

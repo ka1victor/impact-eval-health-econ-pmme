@@ -448,10 +448,10 @@ parada antes dos retratos WIP.
 
 | # | Item | Estado | Próximo passo |
 |---|---|---|---|
-| 1 | Auditoria 38 do adendo 48b (`HI_*`, doc 57n) | feito: aprovado com correções de texto; nenhum número mudou | tirar "em auditoria" do slide 8 |
+| 1 | Auditoria 38 do adendo 48b (`HI_*`, doc 57n) | feito: aprovado com correções de texto; nenhum número mudou | **feito** (26/10/2026): "em auditoria" saiu do slide 8 e das linhas de fontes; nas notas, o p sem correção e o p de Holm da HI-2 em 0,300 e a leitura desse caso como decisão de implementação (achado 3) |
 | 2 | Adendo 48c (capitais e UF; script 41, `HC_*`, doc 57o) | feito: testes, pipeline e auditoria 42 (aprovado com correções; nenhum número mudou). Pendente: arquivar a fonte bruta do IBGE (capitais/regiões), que exige novo download autorizado pelo autor | — |
 | 3 | Adendo 52c (escolha com tipo de vaga do ciclo 2 de 13/02) | feito: auditoria 41 (aprovado com correções; nenhum número mudou); pendência do achado 1 na §2.16 | — |
-| 4 | Seleção pelo tipo de vaga (seção 2.12, canal 2) | adendo 48f congelado, em execução | adendo novo: limites de Lee, "ter vaga imediata" como outcome, balanço dentro da amostra imediata; congelar antes de rodar |
+| 4 | Seleção pelo tipo de vaga (seção 2.12, canal 2) | feito: adendo 48f, doc 57t, auditoria 44 (seção 2.12, linha 2a) | no deck curto, linha "Tipo de vaga · testado: Lee contém zero" na Identificação, com o detalhe nas notas |
 | 5 | H1 com covariáveis pré-determinadas (doc 63, §2 e §3) | proposto | congelar adendo com o conjunto fixo; balanço de cada controle no corte; relatar cada um isolado e todos juntos |
 | 6 | Controles a adquirir (doc 63, §3): escola médica e residência (e-MEC, CNRM), beneficiários ANS, PIB e receita municipal (só controle, nunca running variable), homicídios (SIM), leitos e estrutura se o CNES do repo não tiver | não adquiridos | scripts de aquisição com manifesto e hash, como os a0x |
 | 7 | Heterogeneidade por porte (estrato da atenção primária muda em 0,300 só para portes 2 e 3; auditoria 18) | oferecido, **não aprovado pelo autor** | aguardar decisão |
@@ -463,7 +463,7 @@ parada antes dos retratos WIP.
 
 | # | Item | Estado | Próximo passo |
 |---|---|---|---|
-| 11 | Nível 2 da H3 (oferta local, doc 57k) fora do deck curto | **frase feita** (26/10/2026): linha "H3 · município" no slide de planos B da Discussão, sem número na tela (57k em auditoria) | o gráfico de B1–B5 com B3 em destaque não cabe no teto de 14 slides; decidir com o autor depois da auditoria do 57k |
+| 11 | Nível 2 da H3 (oferta local, doc 57k) fora do deck curto | **frase com número** (26/10/2026): linha "H3 · município" no slide de planos B, pelo protocolo 64 (doc 57q, auditoria 39), com o Holm das primárias na tela; saltos de B1 e B3 nas notas; a razão *fuzzy* fica fora (instrumento fraco) | o gráfico de B1–B5 com B3 em destaque não cabe no teto de 14 slides |
 | 12 | Deixar explícito no slide da H3 que o +6,6 h é do próprio médico, não do município | **feito** (26/10/2026): "+6,6 h/sem do próprio médico" no slide de planos B | — |
 
 **Documentos com texto errado a corrigir**
@@ -480,8 +480,8 @@ parada antes dos retratos WIP.
 |---|---|---|
 | 16 | Revisar o WIP inteiro: ~30 palavras por slide, H1 agrupada, H2/H3 renumeradas, efeitos por corte | **feito** (26/10/2026): 14 slides, no máximo 30 palavras cada, H1 agrupada, H2/H3 em cinza, efeitos por corte; PDF renderizado e conferido slide a slide |
 | 17 | Slide 11 ("H2 e H3: como estimamos") pouco informativo; slides 2 e 25–26 ainda com espaço vazio | **feito** (26/10/2026): o slide 11 virou duas linhas cinzentas na especificação da H1; capa e secundárias fundidas; as colunas de texto ao lado das figuras e os slides de texto ocupam a área |
-| 18 | Incluir a seção 2.12 (tipo de vaga) em uma frase na Identificação ou Robustez da H1 | **feito** (26/10/2026): linha "Tipo de vaga (MS) exógeno · não testado" na tabela da Identificação, com o detalhe nas notas |
-| 19 | Quando sair a auditoria 38 e o 48c, trocar "em auditoria" e atualizar o slide de capitais com `HC_*` | depende de 1 e 2 |
+| 18 | Incluir a seção 2.12 (tipo de vaga) em uma frase na Identificação ou Robustez da H1 | **feito** (26/10/2026): linha na tabela da Identificação, com o detalhe nas notas; depois da auditoria 44, "Tipo de vaga · testado: Lee contém zero" |
+| 19 | Quando sair a auditoria 38 e o 48c, trocar "em auditoria" e atualizar o slide de capitais com `HC_*` | **feito** (26/10/2026): "em auditoria" saiu; o slide "Controlando a capital" virou "Comparando municípios parecidos" (figura nova dos adendos 48d e 48e, por corte); as capitais (auditoria 36) e o `HC_*` (auditoria 42: com a dummy de capital, a maior parte do salto da HI-2 fica) foram para as notas |
 
 **Infraestrutura**
 

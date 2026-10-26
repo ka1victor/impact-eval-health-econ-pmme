@@ -3,7 +3,7 @@ documento: Conteúdo do deck curto — banca 2 (parte empírica)
 papel: fonte de verdade do deck curto, o único usado na versão final; o deck é derivado
 escopo: estrutura obrigatória da versão final (doc 06) — Hipótese, Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez e Discussão; sem os slides do grupo, sem divisórias, sem o diagrama da teoria e sem apêndice
 slides: 14
-estado: em produção; H1 central; H1 principal com as saídas do adendo 48b (HI_*, em auditoria); queda em 0,300 explicada pelas capitais (auditoria 36, diagnóstico); doc 57m auditado (auditoria 37); reduzido a 14 slides em 26/10/2026
+estado: em produção; H1 central; H1 principal com as saídas do adendo 48b (HI_*, auditoria 38); tipo de vaga testado com os limites de Lee (adendo 48f, auditoria 44); robustez comparando municípios parecidos (adendos 48d e 48e, auditorias 40 e 43); H3 no município pelo protocolo 64 (auditoria 39); doc 57m auditado (auditoria 37); 14 slides
 atualizacao: 26 de outubro de 2026
 ---
 
@@ -37,20 +37,31 @@ atualizacao: 26 de outubro de 2026
 >   reserva não podia ser preenchida na 1ª chamada (está errada: o quadro do
 >   ciclo 2 foi refeito depois do resultado). A queda em 0,300 é explicada
 >   pela reta levada até o corte, puxada por poucos municípios (capitais e
->   Nordeste logo abaixo); controlando a capital, ou só com vagas imediatas, a
->   queda encolhe. Diagnóstico pós-resultado; o adendo 48c fará a versão
->   padronizada.
+>   Nordeste logo abaixo).
+> - **Comparar municípios parecidos** (atualização de 26/10/2026, depois das
+>   auditorias 40, 42 e 43): o slide "Controlando a capital" virou "Comparando
+>   municípios parecidos", com a figura nova `curto_h1_parecidos.png` (adendos
+>   48d e 48e: sem controle, com localização e médicos na regressão e
+>   pareada). Perto de 0,300 os lados diferem em capital, Nordeste e
+>   especialistas na região; comparando municípios parecidos, a diferença não
+>   aparece. As capitais (auditoria 36) e a dummy de capital (adendo 48c;
+>   auditoria 42: com ela, 73% do salto da HI-2 fica) foram para as notas.
 > - **Tipo de vaga** (doc 05, §2.12): o Ministério decide se a vaga é imediata
->   ou de reserva, e isso pode responder ao corte; a premissa entra na
->   Identificação como "não testado".
+>   ou de reserva, e isso pode responder ao corte. Testado no adendo 48f (doc
+>   57t, auditoria 44): os limites de Lee contêm zero nos dois cortes; a
+>   Identificação diz isso numa linha, e o detalhe vai para as notas.
 > - **H3 em dois níveis** (doc 05, §2.13): o +6,6 h/sem é do próprio médico;
->   no nível do município não dá para afirmar aumento de oferta, e os outros
->   especialistas não saem.
+>   no nível do município, comparando os lados do corte (protocolo 64, doc
+>   57q, auditoria 39), a oferta local muda igual dos dois lados e os outros
+>   especialistas não saem. A razão *fuzzy* não entra: o instrumento é fraco.
 > - **H2:** os números atuais valem até a reestimação do ciclo 2 (adendo 52c);
 >   a nota fica só nas notas do apresentador.
 > - **H1 principal = adendo 48b** (só vagas imediatas: HI-1 e HI-2 por corte,
->   com Holm), com as saídas `HI_*` e o doc 57n, ainda em auditoria: a
->   cautela do slide de resultados e as linhas de fontes dizem "em auditoria".
+>   com Holm), com as saídas `HI_*` e o doc 57n, aprovados pela auditoria 38
+>   (correções de texto; nenhum número mudou): o rótulo "em auditoria" saiu.
+>   A leitura do caso intermediário da HI-2 em 0,300 (p sem correção abaixo de
+>   0,05, Holm acima) foi decisão de implementação (auditoria 38, achado 3) e é
+>   dita nas notas.
 > - **"Texto demais":** no máximo **30 palavras visíveis por slide**, fora o
 >   título, a figura e a linha de fontes. Especificação em até 4 linhas
 >   curtas, com a equação em palavras grande no centro. O resto vai para as
@@ -218,7 +229,7 @@ atualizacao: 26 de outubro de 2026
 - **Em 0,300**, a reta de baixo sobe forte até o corte e chega alta.
 - Dados crus; com curso e ciclo, a HI-1 fica bem menor.
 
-**Fontes:** `output/rdd_bolsa/HI_figuras/HI_scatter_imediatas.png`, `HI_resumo.json` e `HI_estimativas.csv` (adendo 48b; doc 57n; em auditoria); doc 57m (auditoria 37); figura usada sem redesenho.
+**Fontes:** `output/rdd_bolsa/HI_figuras/HI_scatter_imediatas.png`, `HI_resumo.json` e `HI_estimativas.csv` (adendo 48b; doc 57n; auditoria 38); doc 57m (auditoria 37); figura usada sem redesenho.
 
 **Números:** `HI1_300_TAU`, `HI1_300_INF`, `HI1_300_SUP`, `HI1_400_TAU`, `HI1_300_MEDIA`, `GF_10_ORIG`, `GF_10_ORIG_INF`, `GF_10_ORIG_SUP`, `GF_10_UF`, `GF_10_NE_PRE`
 
@@ -228,8 +239,8 @@ atualizacao: 26 de outubro de 2026
 > reta local de um lado. Abaixo de 0,300, 56,1% dessas células são
 > preenchidas. A distância crua entre as retas não é a estimativa: a HI-1
 > compara células do mesmo curso e ciclo, com uma reta por ciclo, e dá −3,7
-> p.p. [−21,3; +13,9] em 0,300 e −2,3 em 0,400. Saídas do adendo 48b, em
-> auditoria. Por que a reta de baixo sobe (protocolo 62, doc 57m,
+> p.p. [−21,3; +13,9] em 0,300 e −2,3 em 0,400. Saídas do adendo 48b
+> (auditoria 38). Por que a reta de baixo sobe (protocolo 62, doc 57m,
 > auditoria 37; descritivo e pós-resultado): na faixa de R$ 10 mil, a fração de células
 > preenchidas sobe +11,9 p.p. a cada 0,100 de IVS [+6,0; +17,7]; comparando
 > só células da mesma UF, sobram +1,3 p.p. O Nordeste é a região que mais
@@ -294,11 +305,11 @@ atualizacao: 26 de outubro de 2026
 | Sem manipulação, balanço | passam, salvo capitais |
 | Só a bolsa | não: pacote |
 | Outro incentivo individual em 0,300 | nenhum |
-| Tipo de vaga (MS) exógeno | não testado |
+| Tipo de vaga | testado: Lee contém zero |
 
-**Fontes:** auditorias 16, 18, 35 e 36; docs 37, 41, 49 e 05 (§2.12) da banca 2; `output/rdd_bolsa/E1_densidade_estimativas.csv`; `output/auditoria_H1/a36_estimativas.csv`.
+**Fontes:** auditorias 16, 18, 35, 36 e 44; docs 37, 41, 49 e 05 (§2.12) da banca 2; `output/rdd_bolsa/E1_densidade_estimativas.csv`; `output/auditoria_H1/a36_estimativas.csv`; `output/rdd_bolsa/SV_estimativas.csv` e `SV_resumo.json` (adendo 48f; doc 57t).
 
-**Números:** `R_C1_REPR`, `R_C1_MUN`, `R_C2_REPR`, `R_C2_MUN`, `E1_300_HOLM`, `E1_400_HOLM`, `A36_CAPMUN_TAU`, `A36_CAPMUN_INF`, `A36_CAPMUN_SUP`
+**Números:** `R_C1_REPR`, `R_C1_MUN`, `R_C2_REPR`, `R_C2_MUN`, `E1_300_HOLM`, `E1_400_HOLM`, `A36_CAPMUN_TAU`, `A36_CAPMUN_INF`, `A36_CAPMUN_SUP`, `SV3_Y1_300_LINF`, `SV3_Y1_300_LSUP`, `SV3_Y2_300_LINF`, `SV3_Y2_300_LSUP`, `SV3_Y1_400_LINF`, `SV3_Y1_400_LSUP`, `SV3_Y2_400_LINF`, `SV3_Y2_400_LSUP`, `SV5_Y2_300_LINF`, `SV5_Y2_300_LSUP`, `SV5_Y2_300_IMI`, `SV5_Y2_300_IMS`, `SV2_300_NS1`, `SV2_300_NTODA`
 
 > **Notas do apresentador.** Regra sharp: o IVS 2010 oficial reproduz a
 > faixa de todos os municípios dos ciclos 1 e 2. Sem manipulação: o IVS foi
@@ -306,7 +317,9 @@ atualizacao: 26 de outubro de 2026
 > no ciclo 1 (p de Holm 0,707 em 0,300 e 0,658 em 0,400). Balanço: covariáveis
 > pré e placebos de outcome e de corte passam; ressalvas: em 0,400, seleção
 > suspeita no ciclo 1; em 0,300, a parte dos municípios que são capitais cai
-> −17,8 p.p. [−34,1; −1,5] no corte (auditoria 36, diagnóstico). Pacote do
+> −17,8 p.p. [−34,1; −1,5] no corte (auditoria 36, diagnóstico); o adendo 48d
+> acha também, do lado de cima, menos Nordeste e mais especialistas no resto
+> da região de saúde (slide 11). Pacote do
 > corte: a única regra federal que muda em 0,300 e não em 0,400 é o
 > acréscimo no teto de emendas e nas parcelas de custeio da APS e da MAC do
 > município (auditoria 18); nenhum incentivo individual ao especialista além
@@ -315,10 +328,19 @@ atualizacao: 26 de outubro de 2026
 > bolsa sozinha. Tipo de vaga: a SGTES/MS decide se a vaga é imediata ou de
 > cadastro reserva, por critério que não está nos dados nem nos editais, e a
 > decisão pode responder ao corte; comparar só vagas imediatas pode então
-> comparar grupos selecionados de forma diferente. O teste da seleção (limites
-> de Lee, "ter vaga imediata" como outcome, balanço dentro da amostra
-> imediata) está pendente e precisa de adendo congelado antes de rodar
-> (doc 05, §2.12). Na H3 (plano B), o teste conjunto do pré falha nas horas no
+> comparar grupos selecionados de forma diferente (doc 05, §2.12). Testado no
+> adendo 48f (doc 57t, auditoria 44). Os limites de Lee, que não supõem como o
+> Ministério escolheu o tipo, contêm zero nos dois cortes: em 0,300,
+> [−7,4; +9,6] p.p. na fração preenchida e [−0,05; +0,12] nos alocados por
+> vaga imediata; em 0,400, [−13,0; +16,2] p.p. e [−0,15; +0,16]. A premissa
+> é a monotonicidade dentro de cada ciclo: em cada ciclo, o corte empurra o
+> tipo de vaga num só sentido. Em 0,300, o lado com mais vaga imediata troca
+> entre ciclos, e por isso os limites aparam ciclo a ciclo. Na sensibilidade
+> com a reta, os alocados por vaga imediata em 0,300 ficam inteiramente
+> abaixo de zero, [−0,19; −0,01], mas o IC de Imbens–Manski contém zero
+> [−0,39; +0,19]. Restringir a vagas imediatas piora o balanço em 0,300: 3
+> covariáveis saltam no corte entre os municípios com vaga imediata (capital,
+> Nordeste, especialistas na região), contra 1 na amostra toda. Na H3 (plano B), o teste conjunto do pré falha nas horas no
 > município do posto; na H2, a independência de alternativas irrelevantes é
 > violada em parte, e o peso da bolsa muda pouco.
 
@@ -339,21 +361,27 @@ atualizacao: 26 de outubro de 2026
 - Nada passa no Holm; HI-1: IC contém zero nos dois cortes.
 - **TOST:** HI-2 em 0,300 descarta aumento ≥ 25% da média, não descarta queda.
 
-> **Em auditoria (adendo 48b); pacote do corte.**
+> **Pós-resultado (adendo 48b); pacote do corte.**
 
-**Fontes:** `output/rdd_bolsa/HI_estimativas.csv`, `HI_resumo.json` e `HI_figuras/HI_principal.png` (adendo 48b; doc 57n; em auditoria); figura usada sem redesenho.
+**Fontes:** `output/rdd_bolsa/HI_estimativas.csv`, `HI_resumo.json` e `HI_figuras/HI_principal.png` (adendo 48b; doc 57n; auditoria 38); figura usada sem redesenho.
 
-**Números:** `HI1_300_TAU`, `HI1_300_INF`, `HI1_300_SUP`, `HI1_300_HOLM`, `HI1_400_TAU`, `HI1_400_INF`, `HI1_400_SUP`, `HI1_400_HOLM`, `HI2_300_TAU`, `HI2_300_INF`, `HI2_300_SUP`, `HI2_300_HOLM`, `HI2_400_TAU`, `HI2_400_INF`, `HI2_400_SUP`, `HI2_400_HOLM`, `HI2_300_MEDIA`, `HI_EQ1_300_I90I`, `HI_EQ1_300_I90S`, `HI_EQ1_400_I90I`, `HI_EQ1_400_I90S`, `HI_EQ2_300_I90I`, `HI_EQ2_300_I90S`, `HI_EQ2_300_MARG`, `HI_EQ2_400_MARG`
+**Números:** `HI1_300_TAU`, `HI1_300_INF`, `HI1_300_SUP`, `HI1_300_HOLM`, `HI1_400_TAU`, `HI1_400_INF`, `HI1_400_SUP`, `HI1_400_HOLM`, `HI2_300_TAU`, `HI2_300_INF`, `HI2_300_SUP`, `HI2_300_HOLM`, `HI2_400_TAU`, `HI2_400_INF`, `HI2_400_SUP`, `HI2_400_HOLM`, `HI2_300_MEDIA`, `HI_EQ1_300_I90I`, `HI_EQ1_300_I90S`, `HI_EQ1_400_I90I`, `HI_EQ1_400_I90S`, `HI_EQ2_300_I90I`, `HI_EQ2_300_I90S`, `HI_EQ2_300_MARG`, `HI_EQ2_400_MARG`, `HI2_300_P`
 
-> **Notas do apresentador.** Especificação principal da H1 (adendo 48b, em
-> auditoria; pós-resultado). HI-1, a chance de uma célula com vaga imediata
+> **Notas do apresentador.** Especificação principal da H1 (adendo 48b;
+> auditoria 38, aprovado com correções de texto, nenhum número mudou;
+> pós-resultado). HI-1, a chance de uma célula com vaga imediata
 > ser preenchida na 1ª chamada: −3,7 p.p. [−21,3; +13,9] em 0,300 e −2,3 p.p.
 > [−24,0; +19,4] em 0,400, p de Holm 1,000 nos dois. HI-2, médicos alocados
 > nessas vagas por município, comparando municípios com as mesmas vagas
 > imediatas: −1,13 [−2,15; −0,10] em 0,300, p de Holm 0,126 (média abaixo
 > 2,77); −0,16 [−0,99; +0,68] em 0,400, p de Holm 1,000. O IC convencional
 > exclui zero só em HI-2 em 0,300, mas o sinal não sobrevive à correção para
-> quatro testes. IC que contém zero não é efeito zero. TOST (HI-s7), com IC de
+> quatro testes: p = 0,032 sem correção e p de Holm = 0,126. O adendo previa
+> só dois casos, as quatro com IC que contém zero ou alguma que rejeita zero
+> depois do Holm; este fica entre os dois. Ler esse caso intermediário como
+> "nem ausência de diferença, nem efeito confirmado" foi decisão de
+> implementação, não leitura pré-registrada (auditoria 38, achado 3). IC que
+> contém zero não é efeito zero. TOST (HI-s7), com IC de
 > 90% e as margens do protocolo 60: HI-1 [−18,4; +11,1] em 0,300 e [−20,5;
 > +15,9] em 0,400, contra ±10 p.p.: inconclusivo. HI-2 em 0,300: [−1,99;
 > −0,26] contra ±0,69 médico por município (25% da média abaixo): não houve
@@ -377,7 +405,7 @@ atualizacao: 26 de outubro de 2026
 - **0,400:** a queda passa pelas vagas: cidades grandes logo abaixo; com o controle, some.
 - **0,300:** a oferta não muda; cai o preenchimento por vaga.
 
-**Fontes:** `output/rdd_bolsa/N_estimativas.csv` (decomposição e S-c; doc 49, §3 a §5); `ND_estimativas.csv` (doc 49b, §3); `HI_estimativas.csv` (adendo 48b; doc 57n; em auditoria).
+**Fontes:** `output/rdd_bolsa/N_estimativas.csv` (decomposição e S-c; doc 49, §3 a §5); `ND_estimativas.csv` (doc 49b, §3); `HI_estimativas.csv` (adendo 48b; doc 57n; auditoria 38).
 
 **Números:** `VIC_400_TAU`, `N1_400_DTOT`, `N1_400_VIA`, `N1_400_DSA`, `N1_300_DTOT`, `N1_300_VIA`, `N1_300_DSA`, `VIC_300_TAU`, `A3_300_TAU`, `A3_300_INF`, `A3_300_SUP`, `HI1_300_TAU`, `N1_300_INF`, `N1_300_SUP`, `HI2_300_TAU`
 
@@ -423,36 +451,56 @@ atualizacao: 26 de outubro de 2026
 
 ---
 
-## H1 · Controlando a capital, a queda encolhe
+## H1 · Comparando municípios parecidos
 
-`Robustez · H1 · capitais`
+`Robustez · H1 · parecidos`
 
 <!-- layout: curto_figura -->
 
 <!-- linhas: 3 -->
 
-![Queda em 0,300 nas três medidas: como estimada, com dummy de capital e só com células de vaga imediata, com IC 95% (auditoria 36)](../../../output/apresentacao_banca2/curto_queda_capital.png)
+![H1 comparando municípios parecidos, por corte: fração das células com vaga imediata preenchidas sem controle, com localização e médicos na região na regressão e pareada (regra literal e regra do 48d), com IC 95%](../../../output/apresentacao_banca2/curto_h1_parecidos.png)
 
-- Controlando a capital, a queda encolhe e o IC contém zero; só com vagas imediatas, encolhe.
-- 13 capitais abaixo de 0,300 e 6 acima.
+- Perto de 0,300, os lados diferem em capital, Nordeste e especialistas na região.
+- Comparando municípios parecidos, a diferença não aparece.
 
-> **Auditoria 36, diagnóstico pós-resultado.**
+> **Robustez pós-resultado; pacote do corte.**
 
-**Fontes:** `output/auditoria_H1/a36_estimativas.csv` e `a36_resumo.json` (auditoria 36); o adendo 48c fará a versão padronizada.
+**Fontes:** `output/rdd_bolsa/CL_estimativas.csv` e `CL_balanco.csv` (adendo 48d; doc 57r; auditoria 40); `PM_estimativas.csv` (adendo 48e; doc 57s; auditoria 43); `HC_estimativas.csv` (adendo 48c; auditoria 42); `output/auditoria_H1/a36_estimativas.csv` (auditoria 36).
 
-**Números:** `HI2_300_TAU`, `A36_CAP_ABX`, `A36_CAP_ACI`, `A36_A3_PIPE_TAU`, `A36_A3_CAP_TAU`, `A36_A3_CAP_INF`, `A36_A3_CAP_SUP`, `A36_A3_VI_TAU`, `A36_TX_PIPE_TAU`, `A36_TX_CAP_TAU`, `A36_TX_CAP_INF`, `A36_TX_CAP_SUP`, `A36_TX_VI_TAU`, `A36_N1_PIPE_TAU`, `A36_N1_CAP_TAU`, `A36_N1_CAP_INF`, `A36_N1_CAP_SUP`, `A36_CAPMUN_TAU`, `A36_CAPMUN_INF`, `A36_CAPMUN_SUP`
+**Números:** `CL_HI1_300_SEM_TAU`, `CL_HI1_300_SEM_INF`, `CL_HI1_300_SEM_SUP`, `CL_HI1_400_SEM_TAU`, `CL_HI1_400_SEM_INF`, `CL_HI1_400_SEM_SUP`, `CL_HI1_300_LM_TAU`, `CL_HI1_300_LM_INF`, `CL_HI1_300_LM_SUP`, `CL_HI1_400_LM_TAU`, `CL_HI1_400_LM_INF`, `CL_HI1_400_LM_SUP`, `PM_FRAC_300_TAU`, `PM_FRAC_300_INF`, `PM_FRAC_300_SUP`, `PM_FRAC_300_NPAR`, `PM_FRAC_400_TAU`, `PM_FRAC_400_INF`, `PM_FRAC_400_SUP`, `PM_FRAC_400_NPAR`, `PM_FRAC_300_HOLM`, `CL_PS1_300_TAU`, `CL_PS1_300_INF`, `CL_PS1_300_SUP`, `CL_PS1_300_NPAR`, `HI1_300_TAU`, `HI1_400_TAU`, `CL_HI2_300_SEM_TAU`, `CL_HI2_300_SEM_INF`, `CL_HI2_300_SEM_SUP`, `CL_HI2_300_LM_TAU`, `CL_HI2_300_LM_INF`, `CL_HI2_300_LM_SUP`, `PM_ALOC_300_TAU`, `PM_ALOC_300_INF`, `PM_ALOC_300_SUP`, `PM_ALOC_300_HOLM`, `CL_BAL_CAP_300`, `CL_BAL_NE_300`, `CL_BAL_ESP_300`, `CL_BAL_ESP_400`, `HC_HI2_300_BASE`, `HC_HI2_300_CAP`, `HC_HI2_300_CAP_PCT`, `A36_CAP_ABX`, `A36_CAP_ACI`, `A36_CAPMUN_TAU`, `A36_CAPMUN_INF`, `A36_CAPMUN_SUP`
 
-> **Notas do apresentador.** Diagnóstico da auditoria 36, descritivo e
-> pós-resultado, sem estatuto causal. Na janela de 0,050 há 13 capitais abaixo
-> de 0,300 e 6 acima; a menos de 0,010 do corte, São Paulo, Goiânia, Natal e
-> Brasília ficam abaixo e nenhuma capital acima. No corte, a parte dos
-> municípios que são capitais cai −17,8 p.p. [−34,1; −1,5]. Com uma dummy de
-> capital: A3 de −8,4 para −2,6 p.p. [−11,8; +6,6]; taxa por vaga de −16,0
-> para −10,9 p.p. [−22,6; +0,8]; N1 de −1,45 para −0,92 [−1,98; +0,14]. Só
-> com células de vaga imediata (tipo de vaga de antes da alocação): A3 −3,7
-> p.p. e taxa −13,2 p.p., com IC que contém zero; nos alocados por município
-> (HI-2, adendo 48b), −1,13, com IC que exclui zero, que não passa no Holm. O adendo 48c vai estimar
-> capitais e UF de forma padronizada; quando sair, a fonte deste slide muda.
+> **Notas do apresentador.** Especificação secundária da H1: comparar
+> municípios parecidos dos dois lados do corte (adendos 48d e 48e). A figura
+> mostra, em cada corte, a fração das células com vaga imediata preenchidas
+> em quatro versões. RDD sem controle, na amostra com todas as variáveis:
+> −4,1 p.p. [−23,6; +15,4] em 0,300 e +2,8 [−20,3; +25,8] em 0,400; difere da
+> HI-1 do slide 8 (−3,7 e −2,3) porque saem as células sem as variáveis de
+> médicos. Com localização (capital, macrorregião, porte) e médicos na região
+> somados na regressão: +3,6 [−16,8; +23,9] e −1,5 [−23,9; +20,9]. Pareando
+> pela regra literal (PM-1, o principal do 48e), por município × ciclo: +4,7
+> [−6,5; +16,0] com 92 pares em 0,300 e +5,5 [−9,7; +20,7] com 70 pares em
+> 0,400, p de Holm 1,000. Pareando pela regra do 48d: −0,6 [−13,1; +11,8], 86
+> pares, só em 0,300; o ponto muda de sinal com a regra de pareamento, então
+> vale ler o intervalo, não o ponto. Nos alocados por município (HI-2) em
+> 0,300, a queda vai de −1,11 [−2,17; −0,05] sem controle a −0,25 [−1,37;
+> +0,87] com localização e médicos; pareando, os alocados por vaga imediata
+> ficam em +0,10 [−0,01; +0,22], p de Holm 0,636. Balanço no corte 0,300, na
+> amostra da HI-2: do lado de bolsa maior, a parte de capitais muda −29,9
+> p.p., a do Nordeste −47,7 p.p., e há +10,54 especialistas por 10 mil hab. no
+> resto da região de saúde; em 0,400, só os especialistas no resto da região
+> diferem (+6,21). Ressalvas: (a) é robustez pós-resultado, feita depois de
+> ver a H1; (b) o pareamento supõe randomização local condicional às
+> variáveis, não a continuidade da RDD; (c) em 0,400 vale só para municípios
+> que não são capitais, fora do Sul e do Centro-Oeste, porque essas
+> categorias só aparecem abaixo do corte; (d) não separa a bolsa do pacote do
+> corte; (e) a capital sozinha explica pouco: com a dummy de capital, a HI-2
+> em 0,300 vai de −1,13 a −0,83, e 73% do salto fica (auditoria 42).
+> Capitais (auditoria 36): na janela de 0,050 há 13 capitais abaixo de 0,300
+> e 6 acima; a menos de 0,010 do corte, São Paulo, Goiânia, Natal e Brasília
+> ficam abaixo e nenhuma capital acima; a parte dos municípios que são
+> capitais cai −17,8 p.p. [−34,1; −1,5] no corte. Nada disso mostra que a
+> localização explica a queda: é limite da RDD em 0,300.
 
 ---
 
@@ -464,12 +512,12 @@ atualizacao: 26 de outubro de 2026
 
 <!-- layout: curto_texto -->
 
-- **Reta** puxada por capitais e Nordeste logo abaixo de 0,300
+- **Reta** em 0,300, lados diferem em localização e médicos na região
 - **Vagas** diferentes do lado de cima
 - **Porte** municípios grandes logo abaixo de 0,400
 - **Incentivo** nenhum individual muda em 0,300
 
-**Fontes:** síntese da Robustez; doc 49b; doc 57l (auditoria 33); doc 57m (auditoria 37); auditorias 18, 35 e 36.
+**Fontes:** síntese da Robustez; doc 49b; doc 57l (auditoria 33); doc 57m (auditoria 37); doc 57r (auditoria 40); doc 57t (auditoria 44); doc 63; auditorias 18, 35 e 36.
 
 **Números:** `DQ_FUN_PRE_ABX`, `DQ_FUN_PRE_ACI`, `DQ_PPOSTO_Q1`, `DQ_PCOMP_Q1`
 
@@ -478,9 +526,14 @@ atualizacao: 26 de outubro de 2026
 > simples da janela, 33,3% das células são preenchidas abaixo de 0,300 e
 > 33,5% acima; a RDD compara as duas retas no ponto do corte, e a de baixo
 > carrega uma subida que só existe nos últimos municípios antes de 0,300, com
-> capitais e Nordeste logo abaixo do corte. Vagas: do lado de cima há mais
+> capitais e Nordeste logo abaixo do corte. Pelo adendo 48d (doc 63), em
+> 0,300 os lados diferem em localização (capital, Nordeste) e em
+> especialistas no resto da região de saúde; com essas variáveis na
+> regressão, a HI-2 deixa de excluir zero. É limite da RDD nesse corte, não
+> prova de que a localização explica a queda. Vagas: do lado de cima há mais
 > vagas de cadastro reserva e de cursos que preenchem pouco em qualquer lugar;
-> só com vagas imediatas, a queda encolhe. Porte: em 0,400, municípios grandes
+> só com vagas imediatas, a queda encolhe, e os limites de Lee da seleção pelo
+> tipo de vaga contêm zero (adendo 48f). Porte: em 0,400, municípios grandes
 > logo abaixo abrem e preenchem muitas vagas; com o controle das vagas, o
 > salto quase some. Incentivo: nos atos lidos, nenhum incentivo individual
 > além da bolsa muda em 0,300 (auditoria 35); muda o teto de emendas do
@@ -499,11 +552,11 @@ atualizacao: 26 de outubro de 2026
 
 - **H2** origem supera toda a bolsa: 2,34 · 1,31 · 2,37 (ciclos 1–3)
 - **H3** +6,6 h/sem do próprio médico; metade já estava lá
-- **H3 · município** aumento não afirmável; outros especialistas não saem
+- **H3 · município** corte: oferta igual, Holm 1,000; outros ficam
 
-**Fontes:** `output/rdd_bolsa/P1h_magnitudes.csv` (doc 57i; auditoria 31); `S57_resumo.json` (doc 57d); `CA_estimativas.csv` (doc 57h); `OL_resumo.json` (doc 57k; em auditoria).
+**Fontes:** `output/rdd_bolsa/P1h_magnitudes.csv` (doc 57i; auditoria 31); `S57_resumo.json` (doc 57d); `CA_estimativas.csv` (doc 57h); `OL_resumo.json` (doc 57k; auditoria 34); `OC_estimativas.csv` (protocolo 64; doc 57q; auditoria 39).
 
-**Números:** `H3_S_M5C1`, `H3_S_M5C2`, `H3_S_M5C3`, `H3_DUF`, `H3_DUF_INF`, `H3_DUF_SUP`, `H3_10B`, `H3_THETA`, `P4_HT_ATT`, `P4_HT_INF`, `P4_HT_SUP`, `P4_HM_ATT`, `P4_HF_ATT`, `P4_ORIGEM`, `P4_ORIGEM_INF`, `P4_ORIGEM_SUP`, `CA_HT_EST`, `CA_HT_INF`, `CA_HT_SUP`
+**Números:** `H3_S_M5C1`, `H3_S_M5C2`, `H3_S_M5C3`, `H3_DUF`, `H3_DUF_INF`, `H3_DUF_SUP`, `H3_10B`, `H3_THETA`, `P4_HT_ATT`, `P4_HT_INF`, `P4_HT_SUP`, `P4_HM_ATT`, `P4_HF_ATT`, `P4_ORIGEM`, `P4_ORIGEM_INF`, `P4_ORIGEM_SUP`, `CA_HT_EST`, `CA_HT_INF`, `CA_HT_SUP`, `OC_B1_300_HOLM`, `OC_B1_400_HOLM`, `OC_B2_300_HOLM`, `OC_B2_400_HOLM`, `OC_B1_300_TAU`, `OC_B1_300_INF`, `OC_B1_300_SUP`, `OC_B1_400_TAU`, `OC_B1_400_INF`, `OC_B1_400_SUP`, `OC_B3_300_TAU`, `OC_B3_300_INF`, `OC_B3_300_SUP`, `OC_B3_400_TAU`, `OC_B3_400_INF`, `OC_B3_400_SUP`, `OC_F_300`, `OC_F_400`
 
 > **Notas do apresentador.** Planos B, em cinza. H2 (P1h, pós-resultado):
 > diferença, em log-chance, entre o peso de a vaga ficar na mesma UF de
@@ -519,12 +572,20 @@ atualizacao: 26 de outubro de 2026
 > dele), e 51,0% [48,4; 53,7] já tinham vínculo no município do posto; na
 > comparação na nota de corte, +7,91 h/sem [−0,63; +16,45]. Associação; não
 > diz nada sobre os outros médicos do município e não é efeito da bolsa nem
-> da participação no PMM-E. H3, nível do município (protocolo 60, parte B,
-> em auditoria): depois da chegada do 1º médico do programa, vínculos e horas
-> dos especialistas sobem, mas o pré já vinha subindo e a conclusão não
-> aguenta Rambachan–Roth; não dá para afirmar aumento da oferta local; as
-> horas dos outros especialistas não caem. Horas cadastradas não são
-> presença.
+> da participação no PMM-E. H3, nível do município, comparando os lados do
+> corte (protocolo 64; doc 57q; auditoria 39): a mudança nos vínculos de
+> especialistas entre o pré e o pós é −0,23 [−1,51; +1,05] por 10 mil hab. em
+> 0,300 e −0,46 [−1,86; +0,94] em 0,400; nas horas SUS também não há
+> diferença; p de Holm 1,000 nas quatro primárias. Os outros especialistas,
+> sem os do programa, não saem: −4,75 [−19,26; +9,76] horas SUS por 10 mil
+> hab. em 0,300 e +0,37 [−12,46; +13,20] em 0,400. O placebo de generalistas
+> não se mexe e o pré é plano. A razão *fuzzy* (efeito de receber médico) não
+> entra: o corte quase não muda quem recebe médico do programa (F robusto 0,2
+> e 0,0), o instrumento é fraco e a estimativa fica vazia de propósito. É o
+> pacote do corte; não detectar diferença não é efeito zero. Pela chegada do
+> médico (protocolo 60, parte B; doc 57k; auditoria 34), vínculos e horas
+> sobem, mas o pré já vinha subindo e a conclusão não aguenta Rambachan–Roth.
+> Horas cadastradas não são presença.
 
 ---
 
@@ -552,9 +613,9 @@ atualizacao: 26 de outubro de 2026
 > contraste não isola a bolsa. Vínculo não é presença: na oferta (H3, plano
 > B), o médico soma horas cadastradas, mas metade já trabalhava no município
 > do posto, e no município não dá para afirmar aumento. Associação não é
-> efeito; inconclusivo não é efeito zero. Próximos passos: a auditoria 38 do
-> adendo 48b, o adendo 48c (capitais e UF), o teste da seleção pelo tipo de
-> vaga, o ciclo 3 com a competência 202703 madura e o universo de inscritos.
+> efeito; inconclusivo não é efeito zero. Próximos passos: as decisões do
+> autor que seguem abertas (doc 05, §4.1), o ciclo 3 com a competência 202703
+> madura e o universo de inscritos.
 
 <!-- deck:fim -->
 

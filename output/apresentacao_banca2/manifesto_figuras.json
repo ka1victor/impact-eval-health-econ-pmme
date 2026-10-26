@@ -321,7 +321,7 @@
     {
       "caminho": "output/rdd_bolsa/GF_estimativas.csv",
       "sha256": "aaa44638ea8ece30ad2489563695eefca4db1c325e731cae8c2a696a521ecdfe",
-      "papel": "subida do preenchimento dentro das faixas (protocolo 62; doc 57m; EM AUDITORIA)",
+      "papel": "subida do preenchimento dentro das faixas (protocolo 62; doc 57m; auditoria 37)",
       "data_referencia": "2026-10-26",
       "cobertura": "células abertas por faixa da bolsa, ciclos 1–3",
       "unidade": "p.p. por 0,100 de IVS; fração",
@@ -330,7 +330,7 @@
     {
       "caminho": "output/rdd_bolsa/HI_estimativas.csv",
       "sha256": "7f5d0008790949a2acf3590c0aa17f5c44be9e4100e8bbbf6e0688795c26fe76",
-      "papel": "adendo 48b (doc 57n; em auditoria): H1 só com vagas imediatas, HI-1 e HI-2 por corte e TOST HI-s7",
+      "papel": "adendo 48b (doc 57n; auditoria 38): H1 só com vagas imediatas, HI-1 e HI-2 por corte e TOST HI-s7",
       "data_referencia": "2026-10-26",
       "cobertura": "células e municípios com vaga imediata, ciclos 1–3, cortes 0,300 e 0,400",
       "unidade": "p.p.; alocados por município",
@@ -344,6 +344,69 @@
       "cobertura": "células e municípios na janela de 0,300, ciclos 1–3",
       "unidade": "p.p.; vagas por município; municípios",
       "chaves": "unidade + outcome + variante + ciclo + corte"
+    },
+    {
+      "caminho": "output/rdd_bolsa/CL_estimativas.csv",
+      "sha256": "f7702a0911342393b39769714bb91bff9d4108ac6acf0874b8b776b877d1bf15",
+      "papel": "adendo 48d (doc 57r; auditoria 40): H1 com localização e médicos na região e pareamento",
+      "data_referencia": "2026-10-26",
+      "cobertura": "células e municípios × ciclo com vaga imediata e municípios de V, janelas 0,050 e 0,020",
+      "unidade": "p.p.; alocados por município; alocados por vaga imediata",
+      "chaves": "id_linha"
+    },
+    {
+      "caminho": "output/rdd_bolsa/CL_balanco.csv",
+      "sha256": "9f736d618e1896edfefbb13044d14bab03d195e5c086adbc2164fef311933b78",
+      "papel": "adendo 48d (doc 57r; auditoria 40): balanço das covariáveis no corte (CL-0) e no pareamento",
+      "data_referencia": "2026-10-26",
+      "cobertura": "amostras da HI-1, da HI-2 e de V, cortes 0,300 e 0,400",
+      "unidade": "várias (por variável)",
+      "chaves": "bloco + populacao + corte + variavel"
+    },
+    {
+      "caminho": "output/rdd_bolsa/PM_estimativas.csv",
+      "sha256": "443bbdfe779168b76d56eb3c0422d7484e472dc1c80981d9ecd9a205f1880934",
+      "papel": "adendo 48e (doc 57s; auditoria 43): pareamento pela regra literal (PM-1, principal)",
+      "data_referencia": "2026-10-26",
+      "cobertura": "municípios × ciclo com vaga imediata e municípios de V, cortes 0,300 e 0,400",
+      "unidade": "p.p.; alocados por vaga imediata",
+      "chaves": "id_linha"
+    },
+    {
+      "caminho": "output/rdd_bolsa/HC_estimativas.csv",
+      "sha256": "74c3fd87b90ad1a8eb2dff50291cb646c1ce916ed4008a760f15555d7b347762",
+      "papel": "adendo 48c (doc 57o; auditoria 42): HI-2 com dummy de capital",
+      "data_referencia": "2026-10-26",
+      "cobertura": "municípios × ciclo com vaga imediata, cortes 0,300 e 0,400",
+      "unidade": "alocados por município",
+      "chaves": "id_linha"
+    },
+    {
+      "caminho": "output/rdd_bolsa/SV_estimativas.csv",
+      "sha256": "412e13a0087f5f73bcc0ff255f1148a047c193ae13a655678eda1973c10faf7e",
+      "papel": "adendo 48f (doc 57t; auditoria 44): limites de Lee da seleção pelo tipo de vaga",
+      "data_referencia": "2026-10-26",
+      "cobertura": "municípios × ciclo do quadro, cortes 0,300 e 0,400",
+      "unidade": "p.p.; alocados por vaga imediata",
+      "chaves": "id_linha"
+    },
+    {
+      "caminho": "output/rdd_bolsa/SV_resumo.json",
+      "sha256": "83fc4ae9a66062ac389d2b24fdcbd20c3aefbb8caf8bf33ff169e661a8610fd9",
+      "papel": "adendo 48f (doc 57t; auditoria 44): leitura do balanço dentro da amostra com vaga imediata",
+      "data_referencia": "2026-10-26",
+      "cobertura": "cortes 0,300 e 0,400",
+      "unidade": "covariáveis",
+      "chaves": "leitura.sv2.<corte>"
+    },
+    {
+      "caminho": "output/rdd_bolsa/OC_estimativas.csv",
+      "sha256": "bc2f455f871d184c63a1f22c02867ceb492453363e7c3d55883ec98c4826aa0a",
+      "papel": "protocolo 64 (doc 57q; auditoria 39): oferta local de especialistas comparada no corte",
+      "data_referencia": "2026-10-26",
+      "cobertura": "V (1.037 municípios) e U, cortes 0,300 e 0,400",
+      "unidade": "por 10 mil hab.; F robusto",
+      "chaves": "id_oc + populacao + corte + especificacao (+ outcome_id)"
     },
     {
       "caminho": "output/rdd_bolsa/NA_estimativas.csv",
@@ -1881,7 +1944,7 @@
         "faixa ±0,50 · inconclusivo",
         "Como ler: ponto = salto no corte (bolsa maior menos menor); barra = IC 90%; faixa cinza = margem do protocolo 60 (±10 p.p.; ±25% da média abaixo).",
         "Barra que não passa da borda direita da faixa: não houve aumento do tamanho da margem ou mais. Barra que sai pela esquerda não é lida como queda.",
-        "Fontes: HI_estimativas.csv (adendo 48b, HI-s7; doc 57n; em auditoria). IC convencional. EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+        "Fontes: HI_estimativas.csv (adendo 48b, HI-s7; doc 57n; auditoria 38). IC convencional. EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
         "−20",
@@ -2038,6 +2101,130 @@
         "−1",
         "−0,5",
         "0"
+      ]
+    },
+    "curto_h1_parecidos.png": {
+      "linhas": [
+        {
+          "painel": "",
+          "linha": "0,300 · Sem controle (RDD)",
+          "texto": "−4,1 [−23,6; +15,4]",
+          "codigos": [
+            "CL_HI1_300_SEM_TAU",
+            "CL_HI1_300_SEM_INF",
+            "CL_HI1_300_SEM_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "",
+          "linha": "0,300 · + localização e médicos",
+          "texto": "+3,6 [−16,8; +23,9]",
+          "codigos": [
+            "CL_HI1_300_LM_TAU",
+            "CL_HI1_300_LM_INF",
+            "CL_HI1_300_LM_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "",
+          "linha": "0,300 · Pareados: regra literal",
+          "texto": "+4,7 [−6,5; +16,0]",
+          "codigos": [
+            "PM_FRAC_300_TAU",
+            "PM_FRAC_300_INF",
+            "PM_FRAC_300_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "",
+          "linha": "0,300 · Pareados: regra do 48d",
+          "texto": "−0,6 [−13,1; +11,8]",
+          "codigos": [
+            "CL_PS1_300_TAU",
+            "CL_PS1_300_INF",
+            "CL_PS1_300_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "",
+          "linha": "0,400 · Sem controle (RDD)",
+          "texto": "+2,8 [−20,3; +25,8]",
+          "codigos": [
+            "CL_HI1_400_SEM_TAU",
+            "CL_HI1_400_SEM_INF",
+            "CL_HI1_400_SEM_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "",
+          "linha": "0,400 · + localização e médicos",
+          "texto": "−1,5 [−23,9; +20,9]",
+          "codigos": [
+            "CL_HI1_400_LM_TAU",
+            "CL_HI1_400_LM_INF",
+            "CL_HI1_400_LM_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "",
+          "linha": "0,400 · Pareados: regra literal",
+          "texto": "+5,5 [−9,7; +20,7]",
+          "codigos": [
+            "PM_FRAC_400_TAU",
+            "PM_FRAC_400_INF",
+            "PM_FRAC_400_SUP"
+          ],
+          "exclui_nulo": false
+        }
+      ],
+      "textos": [
+        "Corte 0,300: R$ 10 → 15 mil",
+        "",
+        "Sem controle (RDD)",
+        "−4,1 [−23,6; +15,4]",
+        "+ localização e médicos",
+        "+3,6 [−16,8; +23,9]",
+        "Pareados: regra literal",
+        "+4,7 [−6,5; +16,0]",
+        "principal · 92 pares",
+        "Pareados: regra do 48d",
+        "−0,6 [−13,1; +11,8]",
+        "86 pares",
+        "Corte 0,400: R$ 15 → 20 mil",
+        "",
+        " ",
+        "+2,8 [−20,3; +25,8]",
+        " ",
+        "−1,5 [−23,9; +20,9]",
+        " ",
+        "+5,5 [−9,7; +20,7]",
+        "principal · 70 pares",
+        " ",
+        "sem estimativa",
+        "o escore não converge",
+        "Como ler",
+        "ponto = lado de bolsa maior menos o de menor, em p.p. das células com vaga imediata preenchidas; barra = IC 95%.",
+        "Pareados: cada município ganha um par parecido do outro lado (capital, região, porte, médicos na região).",
+        "Em 0,400, o pareamento deixa fora capitais, Sul e Centro-Oeste, que só existem abaixo do corte.",
+        "Fontes: CL_estimativas.csv (adendo 48d; doc 57r; auditoria 40); PM_estimativas.csv (adendo 48e; doc 57s; auditoria 43). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "−20",
+        "−10",
+        "0",
+        "+10",
+        "+20",
+        "−20",
+        "−10",
+        "0",
+        "+10",
+        "+20"
       ]
     },
     "curto_h3_horas.png": {
@@ -2529,7 +2716,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/curto_tost_hi.png",
-      "sha256": "b2aae025759468b9e5f54b4281a3e3896436764ce7a76154b68b85c9bce5e7bf",
+      "sha256": "80aac58ed509a79ce264018a4b0206dbd7f946a9a3d34a9ed559ef1529f91265",
       "natureza": "EMPIRICO",
       "descricao": "deck curto, robustez: TOST da H1 principal (adendo 48b, HI-s7), por corte",
       "fontes": [
@@ -2553,6 +2740,21 @@
         "output/rdd_bolsa/CA_estimativas.csv",
         "output/rdd_bolsa/E8_resumo.json",
         "output/auditoria_H1/a36_estimativas.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/curto_h1_parecidos.png",
+      "sha256": "4f6cb3e2f3d6c2ea3c6e889c454e7c660eff9efb40e4de12b35501fb6acca2ce",
+      "natureza": "EMPIRICO",
+      "descricao": "deck curto, robustez: H1 comparando municípios parecidos, por corte (sem controle, com localização e médicos na regressão e pareada; adendos 48d e 48e)",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json",
+        "output/rdd_bolsa/CL_estimativas.csv",
+        "output/rdd_bolsa/PM_estimativas.csv"
       ]
     },
     {
@@ -2602,6 +2804,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "daa292750d2cefa61ad87a03bf9034827265b7d4210153cac89fa7e1cbe205e8"
+    "sha256": "03f3844a90977b7b617d044b267dfc966862b7f72bb6da1cbb499e8459da7ec9"
   }
 }

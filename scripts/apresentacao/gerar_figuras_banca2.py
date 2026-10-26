@@ -570,7 +570,7 @@ GF_PRE = "Gradiente 62 (doc 57m; auditoria 37, aprovado com correções de texto
 NA_EST = "output/rdd_bolsa/NA_estimativas.csv"
 A36_EST = "output/auditoria_H1/a36_estimativas.csv"
 HI_EST = "output/rdd_bolsa/HI_estimativas.csv"
-HI_PRE = "Adendo 48b (doc 57n; EM AUDITORIA; pós-resultado): "
+HI_PRE = "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): "
 A36_PRE = "Auditoria 36 (dados da H1 refeitos do zero; diagnóstico pós-resultado): "
 A36_A3 = "A3_pipeline (>=1 alocado; c1 = confirmado)"
 A36_0300 = {"ciclo": "1+2+3", "corte": "300"}
@@ -580,7 +580,28 @@ HIPOTESE_POR_PREFIXO = (("H3_", "H2"), ("M1_", "H2"), ("M5_", "H2"), ("M0_", "H2
                         ("M7_", "H2"), ("M8_", "H2"), ("M9_", "H2"), ("E9_", "H2"), ("P1G_", "H2"), ("ESC_", "H2"),
                         ("P4_", "H3"), ("CA_", "H3"), ("RR_", "H3"),
                         ("N1_", "H1"), ("A3_", "H1"), ("EQ_", "H1"), ("ND_", "H1"), ("VIC_", "H1"), ("DQ_", "H1"),
-                        ("GF_", "H1"), ("PC_", "H1"), ("A36_", "H1"), ("HI", "H1"))
+                        ("GF_", "H1"), ("PC_", "H1"), ("A36_", "H1"), ("HI", "H1"), ("CL_", "H1"), ("PM_", "H1"),
+                        ("HC_", "H1"), ("SV", "H1"), ("OC_", "H3"))
+# Saídas auditadas lidas a partir de 26/10/2026 (deck curto depois das auditorias 38 a 44): cada código leva, no campo
+# `auditoria` do registro, a auditoria que aprovou a etapa de onde ele vem.
+CL_EST = "output/rdd_bolsa/CL_estimativas.csv"
+CL_BAL = "output/rdd_bolsa/CL_balanco.csv"
+PM_EST = "output/rdd_bolsa/PM_estimativas.csv"
+HC_EST = "output/rdd_bolsa/HC_estimativas.csv"
+SV_EST = "output/rdd_bolsa/SV_estimativas.csv"
+SV_RES = "output/rdd_bolsa/SV_resumo.json"
+OC_EST = "output/rdd_bolsa/OC_estimativas.csv"
+CL_PRE = "Adendo 48d (doc 57r; auditoria 40; robustez pós-resultado da H1): "
+PM_PRE = "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): "
+HC_PRE = "Adendo 48c (doc 57o; auditoria 42; pós-resultado): "
+SV_PRE = "Adendo 48f (doc 57t; auditoria 44; pós-resultado): "
+OC_PRE = "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): "
+AUDITORIA_POR_PREFIXO = (("CL_", "auditoria 40 (adendo 48d, doc 57r): aprovado com correções"),
+                         ("PM_", "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto"),
+                         ("HC_", "auditoria 42 (adendo 48c, doc 57o): aprovado com correções"),
+                         ("SV", "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto"),
+                         ("OC_", "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto"))
+CORTES_LONGO = (("300", "0.300"), ("400", "0.400"))
 
 
 SENS_H3 = [("M2", "M2", "empilhado", "log da distância"), ("M4", "M4", "empilhado", "efeito fixo de UF da vaga"),
@@ -936,7 +957,7 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
                 "(funil bruto), arredondada")
       for k, ct in (("", "0.300"), ("400", "0.400"))
       for s, col, d in (("ABX", "valor_abaixo", "abaixo do corte"), ("ACI", "valor_acima", "acima do corte"))],
-    # Subida do preenchimento dentro das faixas (protocolo 62, doc 57m), EM AUDITORIA: lida de GF_estimativas.csv,
+    # Subida do preenchimento dentro das faixas (protocolo 62, doc 57m; auditoria 37): lida de GF_estimativas.csv,
     # sem recálculo; descritivo e pós-resultado
     *[(f"GF_10{j}_{k}{s}", "EMPIRICO", _c(GF_EST, {"id_linha": f"inclinacao|R$10mil|{jan}|{ex}|"}, col, PP), "d1s",
        GF_PRE + f"faixa de R$ 10 mil, {dj}: inclinação {dk} (p.p. por 0,100 de IVS){ds}")
@@ -1024,6 +1045,99 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
       for c, ct in CORTES_TXT
       for k, col, dk in (("I90I", "ic90_inf", "IC 90% inferior"), ("I90S", "ic90_sup", "IC 90% superior"),
                          ("MARG", "margem", "margem de equivalência"), ("LEIT", "leitura_tost", "leitura pré-registrada"))],
+    ("HI2_300_P", "EMPIRICO", _c(HI_EST, {"id_linha": "HI-2|HI-2|1+2+3|0.300|principal|h=0.050|c2=13fev"}, "p_valor"),
+     "p3", HI_PRE + "HI-2, corte 0,300: p sem correção múltipla (auditoria 38, achado 3: entre os dois casos do §4)"),
+    # Comparar municípios parecidos (deck curto, Robustez da H1): adendo 48d (CL_*: sem controle e com localização e
+    # médicos na regressão, PSM da regra do 48d, balanço no corte) e adendo 48e (PM_*: PSM pela regra literal, PM-1)
+    *[(f"CL_{o}_{c}_{v}_{s}", "EMPIRICO",
+       _c(CL_EST, {"id_linha": f"{lin}|{o[:2]}-{o[2]}|{ct}|w=0.050|{cj}|RDD"}, col, PP if o == "HI1" else None),
+       "d1s" if o == "HI1" else "d2s",
+       CL_PRE + f"{lin}, {do}, corte {ct.replace('.', ',')}, {dv}: {ds}")
+      for o, do in (("HI1", "HI-1 célula com vaga imediata preenchida (p.p.)"),
+                    ("HI2", "HI-2 alocados em vagas imediatas por município"))
+      for c, ct in CORTES_LONGO
+      for v, lin, cj, dv in (("SEM", "CL-4", "sem", "sem controle, na amostra com todas as variáveis de L+M"),
+                             ("LM", "CL-1", "L+M", "localização e médicos na região somados na regressão"))
+      for s, col, ds in (("TAU", "tau", "salto"), ("INF", "ic95_inf", "IC 95% inferior"),
+                         ("SUP", "ic95_sup", "IC 95% superior"))],
+    *[(f"CL_PS1_300_{s}", "EMPIRICO",
+       _c(CL_EST, {"id_linha": "PS-1|H1M-FRAC|0.300|w=0.050|L+M|pareamento_psm"}, col, t_), fm,
+       CL_PRE + f"PS-1 (PSM, regra gulosa do 48d), fração das células com vaga imediata preenchidas por município × "
+                f"ciclo, corte 0,300: {ds}")
+      for s, col, t_, fm, ds in (("TAU", "tau", PP, "d1s", "média das diferenças nos pares (p.p.)"),
+                                 ("INF", "ic95_inf", PP, "d1s", "IC 95% de permutação, inferior"),
+                                 ("SUP", "ic95_sup", PP, "d1s", "IC 95% de permutação, superior"),
+                                 ("NPAR", "n_pares", None, "int", "pares"))],
+    *[(f"CL_BAL_{k}_{c}", "EMPIRICO",
+       _c(CL_BAL, {"bloco": "CL-0", "populacao": "H1 (municipio x ciclo, amostra da HI-2)", "corte": ct,
+                   "variavel": var}, "tau", t_), fm,
+       CL_PRE + f"CL-0, balanço no corte {ct.replace('.', ',')} na amostra da HI-2: salto em {dv}")
+      for k, var, t_, fm, dv, cortes in (
+          ("CAP", "capital", PP, "d1s", "ser capital (p.p.)", ("300",)),
+          ("NE", "regiao_Nordeste", PP, "d1s", "ser do Nordeste (p.p.)", ("300",)),
+          ("ESP", "esp_resto", None, "d2s", "especialistas nas CBO-alvo por 10 mil hab. no resto da região de saúde",
+           ("300", "400")))
+      for c, ct in CORTES_LONGO if c in cortes],
+    *[(f"PM_{o}_{c}_{s}", "EMPIRICO",
+       _c(PM_EST, {"id_linha": f"PM-1|H1|H1M-{o}|{ct}|w=0.050|pareamento_psm"}, col,
+          PP if (o == "FRAC" and s in ("TAU", "INF", "SUP")) else None),
+       fm if s in ("HOLM", "NPAR") else ("d1s" if o == "FRAC" else "d2s"),
+       PM_PRE + f"PM-1 (PSM, regra literal; principal do 48e), {do}, corte {ct.replace('.', ',')}: {ds}")
+      for o, do in (("FRAC", "fração das células com vaga imediata preenchidas por município × ciclo (p.p.)"),
+                    ("ALOC", "médicos alocados por vaga imediata por município × ciclo"))
+      for c, ct in CORTES_LONGO
+      for s, col, fm, ds in (("TAU", "tau", "", "média das diferenças nos pares"),
+                             ("INF", "ic95_inf", "", "IC 95% de permutação, inferior"),
+                             ("SUP", "ic95_sup", "", "IC 95% de permutação, superior"),
+                             ("HOLM", "p_holm", "p3", "p de Holm (principais do 48e)"),
+                             ("NPAR", "n_pares", "int", "pares"))],
+    # Adendo 48c (auditoria 42): HI-2 em 0,300 sem ajuste e com dummy de capital; quanto do ponto fica
+    *[(f"HC_HI2_300_{k}", "EMPIRICO", _c(HC_EST, {"id_linha": f"{lin}|HI-2|municipio|H1|0.300|{aj}"}, "tau"), "d2s",
+       HC_PRE + f"HI-2, corte 0,300, {dk}: salto (médicos alocados por município)")
+      for k, lin, aj, dk in (("BASE", "base", "sem_ajuste", "sem ajuste"), ("CAP", "C-2", "capital",
+                                                                           "com dummy de capital"))],
+    ("HC_HI2_300_CAP_PCT", "EMPIRICO", {"razao": ["HC_HI2_300_CAP", "HC_HI2_300_BASE"]}, "pct0",
+     HC_PRE + "HI-2, corte 0,300: parte do salto sem ajuste que fica com a dummy de capital (%)"),
+    # Adendo 48f (auditoria 44): limites de Lee da seleção pelo tipo de vaga (SV-3, principal; SV-5 com a reta) e
+    # balanço dentro da amostra com vaga imediata (SV-2)
+    *[(f"SV{lin[-1]}_{y}_{c}_{s}", "EMPIRICO",
+       _c(SV_EST, {"id_linha": f"{lin}|limites_lee|{y}|1+2+3|{ct}|w=0.050"}, col, PP if y == "Y1" else None),
+       "d1s" if y == "Y1" else "d2s",
+       SV_PRE + f"{lin}{dl}, {dy}, corte {ct.replace('.', ',')}: {ds}")
+      for lin, dl, combos in (("SV-3", " (limites de Lee, principal)", (("Y1", "300"), ("Y2", "300"), ("Y1", "400"),
+                                                                       ("Y2", "400"))),
+                              ("SV-5", " (limites de Lee com a reta, sensibilidade)", (("Y2", "300"),)))
+      for y, c in combos
+      for ct in ("0." + c,)
+      for dy in ({"Y1": "fração das células com vaga imediata preenchidas (p.p.)",
+                  "Y2": "médicos alocados por vaga imediata"}[y],)
+      for s, col, ds in (("LINF", "limite_inf", "limite inferior"), ("LSUP", "limite_sup", "limite superior"),
+                         ("IMI", "ic_im_inf", "IC 95% de Imbens–Manski, inferior"),
+                         ("IMS", "ic_im_sup", "IC 95% de Imbens–Manski, superior"))
+      if lin == "SV-5" or s in ("LINF", "LSUP")],
+    *[(f"SV2_300_{k}", "EMPIRICO", _j(SV_RES, "leitura", "sv2", "0.300", campo), "int",
+       SV_PRE + f"SV-2, corte 0,300: covariáveis com IC 95% sem zero {dk}")
+      for k, campo, dk in (("NS1", "n_ic_sem_zero_S1", "entre os municípios × ciclo com vaga imediata"),
+                           ("NTODA", "n_ic_sem_zero_toda", "na amostra toda"))],
+    # Protocolo 64 (auditoria 39): oferta local de especialistas comparada no corte, em V (forma reduzida)
+    *[(f"OC_{b}_{c}_{s}", "EMPIRICO",
+       _c(OC_EST, {"id_oc": oc, "populacao": "V", "corte": ct, "especificacao": "principal"}, col), fm,
+       OC_PRE + f"{oc}, {db}, corte {ct.replace('.', ',')}: {ds}")
+      for b, oc, db, stats in (
+          ("B1", "OC-A1", "vínculos de especialistas por 10 mil hab., mudança pós − pré", ("TAU", "INF", "SUP", "HOLM")),
+          ("B2", "OC-A2", "horas SUS de especialistas por 10 mil hab., mudança pós − pré", ("HOLM",)),
+          ("B3", "OC-A3", "horas SUS dos outros especialistas (sem os do PMM-E), mudança pós − pré",
+           ("TAU", "INF", "SUP")))
+      for c, ct in CORTES_LONGO
+      for s, col, fm, ds in (("TAU", "tau", "d2s", "salto"), ("INF", "ic95_inf", "d2s", "IC 95% inferior"),
+                             ("SUP", "ic95_sup", "d2s", "IC 95% superior"),
+                             ("HOLM", "p_holm", "p3", "p de Holm (quatro primárias)"))
+      if s in stats],
+    *[(f"OC_F_{c}", "EMPIRICO",
+       _c(OC_EST, {"id_oc": "OC-B0", "outcome_id": "D1", "populacao": "V", "corte": ct,
+                   "especificacao": "primeiro_estagio"}, "f_robusto"), "d1",
+       OC_PRE + f"OC-B0, corte {ct.replace('.', ',')}: F robusto do primeiro estágio (receber médico do programa)")
+      for c, ct in CORTES_LONGO],
     ("D_POP_MUN", "EMPIRICO", _d("POP_MUN"), "int", "municípios com população do Censo 2022"),
     ("D_ATIVOS", "EMPIRICO", _j(A16_MAN, "listas_pmme", "registros_ativos_2026_09_11"), "int",
      "registros na lista de especialistas ativos do PMM-E de 11/09/2026"),
@@ -1233,9 +1347,12 @@ def registrar_numeros(calculados: dict) -> dict:
             if cod.startswith("GF_"):
                 saida[cod]["auditoria"] = "auditoria 37 (protocolo 62, doc 57m): aprovado com correções de texto"
             if cod.startswith("HI"):
-                saida[cod]["auditoria"] = "EM AUDITORIA (adendo 48b, doc 57n): no deck, '(em auditoria)' nas fontes"
+                saida[cod]["auditoria"] = "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto"
             if cod.startswith("A36_"):
                 saida[cod]["auditoria"] = "auditoria 36 (dados da H1 refeitos do zero): diagnóstico pós-resultado"
+            aud = next((a for p, a in AUDITORIA_POR_PREFIXO if cod.startswith(p)), None)
+            if aud:
+                saida[cod]["auditoria"] = aud
             hip = next((h for p, h in HIPOTESE_POR_PREFIXO if cod.startswith(p)), None)
             if hip:
                 saida[cod]["hipotese_apresentacao"] = hip
@@ -1751,6 +1868,13 @@ def _bloco_forest(fig, reg: "Registro", num: dict, W: float, H: float, x: float,
     registro = []
     for i, ln in enumerate(linhas):
         yc = y0 + ph - (i + 0.5) * alt
+        if ln.get("sem"):  # linha sem estimativa (regra fixada antes): só o rótulo e o motivo, em cinza
+            reg.t(fig, x / W, yc / H, ln["rot"], fontsize=12.5, weight="bold", color=MUDO, va="center")
+            reg.t(fig, (xp + wp + 0.12) / W, (yc + 0.1) / H, ln["sem"], fontsize=12.5, weight="bold", color=MUDO,
+                  va="center")
+            if ln.get("nota"):
+                reg.t(fig, (xp + wp + 0.12) / W, (yc - 0.13) / H, ln["nota"], fontsize=11.5, color=MUDO, va="center")
+            continue
         est = _bruto(num, ln["est"])
         if ln.get("inf"):
             inf, sup = _bruto(num, ln["inf"]), _bruto(num, ln["sup"])
@@ -2383,7 +2507,7 @@ def figura_tost_hi(num: dict, destino: Path) -> dict:
           "cinza = margem do protocolo 60 (±10 p.p.; ±25% da média abaixo).", fontsize=12, color=TINTA, va="center")
     reg.t(fig, 0.1 / W, 0.4 / H, "Barra que não passa da borda direita da faixa: não houve aumento do tamanho da "
           "margem ou mais. Barra que sai pela esquerda não é lida como queda.", fontsize=12, color=TINTA, va="center")
-    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: HI_estimativas.csv (adendo 48b, HI-s7; doc 57n; em auditoria). IC "
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: HI_estimativas.csv (adendo 48b, HI-s7; doc 57n; auditoria 38). IC "
           "convencional. " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
     fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
     plt.close(fig)
@@ -2416,6 +2540,59 @@ def figura_queda_capital(num: dict, destino: Path) -> dict:
                                   "pós-resultado da auditoria 36."], 0.28)
     reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: output/auditoria_H1/a36_estimativas.csv (auditoria 36). " + FONTE_FIG,
           fontsize=8.5, color=MUDO, va="bottom")
+    fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
+    plt.close(fig)
+    return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
+
+
+def figura_parecidos(num: dict, destino: Path) -> dict:
+    """Robustez da H1 no deck curto: comparar municípios parecidos. Um painel por corte, na mesma escala, com a fração
+    das vagas imediatas preenchidas em quatro versões: RDD sem controle e com localização e médicos na região
+    somados na regressão (adendo 48d, CL-4 e CL-1, na mesma amostra), pareamento pela regra literal (adendo 48e, PM-1,
+    o principal) e pareamento pela regra do 48d (PS-1; só em 0,300, porque em 0,400 o logit não converge). Lido de
+    CL_estimativas.csv e PM_estimativas.csv, sem recálculo."""
+    reg = Registro()
+    W, H = 12.3, 4.32
+    fig = plt.figure(figsize=(W, H))
+    faixa = {"300": "Corte 0,300: R$ 10 → 15 mil", "400": "Corte 0,400: R$ 15 → 20 mil"}
+    cods = [f"CL_HI1_{c}_{v}_{s}" for c, _ in CORTES_LONGO for v in ("SEM", "LM") for s in ("INF", "SUP")]
+    cods += [f"PM_FRAC_{c}_{s}" for c, _ in CORTES_LONGO for s in ("INF", "SUP")] + ["CL_PS1_300_INF", "CL_PS1_300_SUP"]
+    xlim = _escala(num, cods)
+    rotulos = ["Sem controle (RDD)", "+ localização e médicos", "Pareados: regra literal", "Pareados: regra do 48d"]
+    registro = []
+    y_top, w_val, w_plot = H - 0.06, 1.85, 2.85
+    # os dois cortes lado a lado, na mesma escala; os rótulos das linhas ficam só à esquerda do primeiro
+    blocos = (("300", 0.1, 2.55), ("400", 0.1 + 2.55 + w_plot + w_val + 0.15, 0.0))
+    y_fim = y_top
+    for c, x, w_rot in blocos:
+        linhas = [dict(est=f"CL_HI1_{c}_SEM_TAU", inf=f"CL_HI1_{c}_SEM_INF", sup=f"CL_HI1_{c}_SEM_SUP"),
+                  dict(est=f"CL_HI1_{c}_LM_TAU", inf=f"CL_HI1_{c}_LM_INF", sup=f"CL_HI1_{c}_LM_SUP"),
+                  dict(est=f"PM_FRAC_{c}_TAU", inf=f"PM_FRAC_{c}_INF", sup=f"PM_FRAC_{c}_SUP",
+                       nota=f"principal · {_val(num, f'PM_FRAC_{c}_NPAR')} pares")]
+        if c == "300":
+            linhas.append(dict(est="CL_PS1_300_TAU", inf="CL_PS1_300_INF", sup="CL_PS1_300_SUP",
+                               nota=f"{_val(num, 'CL_PS1_300_NPAR')} pares"))
+        else:
+            linhas.append(dict(sem="sem estimativa", nota="o escore não converge"))
+        for ln, rot in zip(linhas, rotulos):
+            ln["rot"] = rot if w_rot else ""
+        reg.t(fig, (x + w_rot) / W, (y_top - 0.02) / H, faixa[c], fontsize=13.5, weight="bold", color=VERDE_ESC,
+              va="top")
+        y, r = _bloco_forest(fig, reg, num, W, H, x, y_top, w_rot + w_plot + w_val, "", "",
+                             [dict(ln, rot=ln["rot"] or " ") for ln in linhas], xlim, max(w_rot, 0.01), w_val,
+                             alt=0.56)
+        registro += [dict(e, linha=f"0,{c} · {rot}") for e, rot in zip(r, rotulos)]
+        y_fim = min(y_fim, y)
+    xl = blocos[1][1] - 0.08
+    fig.add_artist(plt.Line2D([xl / W] * 2, [(y_fim + 0.3) / H, y_top / H], color=LINHA_CLARA, lw=1))
+    _caixa_como_ler(fig, reg, W, ["ponto = lado de bolsa maior menos o de menor, em p.p. das células com vaga imediata "
+                                  "preenchidas; barra = IC 95%.",
+                                  "Pareados: cada município ganha um par parecido do outro lado (capital, região, "
+                                  "porte, médicos na região).",
+                                  "Em 0,400, o pareamento deixa fora capitais, Sul e Centro-Oeste, que só existem "
+                                  "abaixo do corte."], 0.28)
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: CL_estimativas.csv (adendo 48d; doc 57r; auditoria 40); PM_estimativas.csv "
+          "(adendo 48e; doc 57s; auditoria 43). " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
     fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
     plt.close(fig)
     return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
@@ -2767,14 +2944,32 @@ ENTRADAS = [
      "protocolo 61", "-", "estatuto; saidas.figuras"),
     (RAIZ / DQ_FIG, "figura 'quanto da queda sobra' do diagnóstico 61 (auditoria 33), sem redesenho",
      "2026-10-26", "corte 0,300, ciclos 1–3", "vagas por município; p.p.", "-"),
-    (RAIZ / GF_EST, "subida do preenchimento dentro das faixas (protocolo 62; doc 57m; EM AUDITORIA)", "2026-10-26",
+    (RAIZ / GF_EST, "subida do preenchimento dentro das faixas (protocolo 62; doc 57m; auditoria 37)", "2026-10-26",
      "células abertas por faixa da bolsa, ciclos 1–3", "p.p. por 0,100 de IVS; fração", "id_linha"),
-    (RAIZ / HI_EST, "adendo 48b (doc 57n; em auditoria): H1 só com vagas imediatas, HI-1 e HI-2 por corte e TOST "
+    (RAIZ / HI_EST, "adendo 48b (doc 57n; auditoria 38): H1 só com vagas imediatas, HI-1 e HI-2 por corte e TOST "
      "HI-s7", "2026-10-26", "células e municípios com vaga imediata, ciclos 1–3, cortes 0,300 e 0,400",
      "p.p.; alocados por município", "id_linha"),
     (RAIZ / A36_EST, "auditoria 36: dados da H1 refeitos do zero; capitais e vaga imediata no corte 0,300 "
      "(diagnóstico pós-resultado)", "2026-10-26", "células e municípios na janela de 0,300, ciclos 1–3",
      "p.p.; vagas por município; municípios", "unidade + outcome + variante + ciclo + corte"),
+    (RAIZ / CL_EST, "adendo 48d (doc 57r; auditoria 40): H1 com localização e médicos na região e pareamento",
+     "2026-10-26", "células e municípios × ciclo com vaga imediata e municípios de V, janelas 0,050 e 0,020",
+     "p.p.; alocados por município; alocados por vaga imediata", "id_linha"),
+    (RAIZ / CL_BAL, "adendo 48d (doc 57r; auditoria 40): balanço das covariáveis no corte (CL-0) e no pareamento",
+     "2026-10-26", "amostras da HI-1, da HI-2 e de V, cortes 0,300 e 0,400", "várias (por variável)",
+     "bloco + populacao + corte + variavel"),
+    (RAIZ / PM_EST, "adendo 48e (doc 57s; auditoria 43): pareamento pela regra literal (PM-1, principal)",
+     "2026-10-26", "municípios × ciclo com vaga imediata e municípios de V, cortes 0,300 e 0,400",
+     "p.p.; alocados por vaga imediata", "id_linha"),
+    (RAIZ / HC_EST, "adendo 48c (doc 57o; auditoria 42): HI-2 com dummy de capital", "2026-10-26",
+     "municípios × ciclo com vaga imediata, cortes 0,300 e 0,400", "alocados por município", "id_linha"),
+    (RAIZ / SV_EST, "adendo 48f (doc 57t; auditoria 44): limites de Lee da seleção pelo tipo de vaga", "2026-10-26",
+     "municípios × ciclo do quadro, cortes 0,300 e 0,400", "p.p.; alocados por vaga imediata", "id_linha"),
+    (RAIZ / SV_RES, "adendo 48f (doc 57t; auditoria 44): leitura do balanço dentro da amostra com vaga imediata",
+     "2026-10-26", "cortes 0,300 e 0,400", "covariáveis", "leitura.sv2.<corte>"),
+    (RAIZ / OC_EST, "protocolo 64 (doc 57q; auditoria 39): oferta local de especialistas comparada no corte",
+     "2026-10-26", "V (1.037 municípios) e U, cortes 0,300 e 0,400", "por 10 mil hab.; F robusto", "id_oc + populacao "
+     "+ corte + especificacao (+ outcome_id)"),
     (RAIZ / NA_EST, "família A (protocolo 48): A3 por ciclo e por corte", "2026-10-19",
      "células abertas, ciclos 1, 2, 3 e juntos, cortes 0,300 e 0,400", "fração (x100 = p.p.)",
      "outcome_id + populacao + ciclo + corte + especificacao + variante"),
@@ -2914,6 +3109,9 @@ def main() -> int:
                            ("curto_queda_capital.png", figura_queda_capital,
                             "deck curto, robustez: queda em 0,300 como estimada, com dummy de capital e só com vaga "
                             "imediata (auditoria 36, diagnóstico)"),
+                           ("curto_h1_parecidos.png", figura_parecidos,
+                            "deck curto, robustez: H1 comparando municípios parecidos, por corte (sem controle, com "
+                            "localização e médicos na regressão e pareada; adendos 48d e 48e)"),
                            ("curto_h3_horas.png", figura_h3_horas,
                             "deck curto, resultados: H3 (antes H4), horas do médico, só o P4"),
                            ("curto_h3_nota_corte.png", figura_h3_nota_corte,
@@ -2926,6 +3124,7 @@ def main() -> int:
                      + ([CELULAS, RAIZ / DQ_EST] if nome in ("curto_dispersao_a3.png", "curto_reta_0300.png") else [])
                      + ([RAIZ / NA_EST, RAIZ / ND_EST] if nome == "curto_h1_por_ciclo.png" else [])
                      + ([RAIZ / A36_EST] if nome == "curto_queda_capital.png" else [])
+                     + ([RAIZ / CL_EST, RAIZ / PM_EST] if nome == "curto_h1_parecidos.png" else [])
                      + ([RAIZ / HI_EST] if nome == "curto_tost_hi.png" else [])})
     t_desc = linhas_tabela_descritiva(num)
     t_font = linhas_tabela_fontes(num)
