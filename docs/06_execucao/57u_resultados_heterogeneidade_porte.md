@@ -6,7 +6,8 @@
 > **Estatuto:** `ADENDO_48G_POS_RESULTADO`. A H1 só com vagas imediatas (48b, doc 57n), a oferta local no corte
 > (protocolo 64, doc 57q) e os controles e pareamentos (48d, 48e) já tinham sido vistos; a divisão por porte, não.
 > Toda linha de `PO_estimativas.csv` e `PO_contagens.csv` tem `natureza_dos_dados = EMPIRICO`.<br>
-> **Auditoria:** pendente.<br>
+> **Auditoria:** [auditoria 45](../auditorias/45_auditoria_heterogeneidade_porte.md), aprovado com correções de texto
+> e de proveniência; nenhuma estimativa mudou.<br>
 > **Script:** `scripts/rdd_bolsa/47_heterogeneidade_porte_ied.py` (construtores dos scripts 40 e 43 e estimadores de
 > `rdd_lib.py`, importados; a leitura de capitais e regiões vem do script 44). **Saídas:**
 > `output/rdd_bolsa/PO_estimativas.csv`, `PO_contagens.csv`, `PO_resumo.json`, `PO_figuras/`. **Testes:**
@@ -136,7 +137,7 @@ tem suporte para ter retas próprias. Nenhuma decisão depende de resultado.
 ## 1. Resposta curta
 
 <!-- PO:resposta_curta:inicio -->
-**Não se detecta que o salto da H1 dependa de o estrato do IED mudar** (leitura pré-registrada do primeiro caso): nas quatro linhas da PO-1 o IC 95% da diferença τ₁ contém zero. Pelo adendo, o IED não explica o sinal da H1, com pouca potência: os grupos são pequenos (contagens na seção 3).
+**Não se detecta que o salto da H1 dependa de o estrato do IED mudar** (leitura pré-registrada do primeiro caso): nas quatro linhas da PO-1 o IC 95% da diferença τ₁ contém zero. Pelo adendo, o IED não explica o sinal da H1, com pouca potência: os grupos são pequenos (contagens na seção 3). Com IC de τ₁ tão largos, "não explica" quer dizer que os dados não mostram que o IED explique o salto; não quer dizer que o canal do IED esteja descartado.
 
 - **Corte 0,300** (R$ 10 mil → R$ 15 mil; o estrato muda nos portes 2 e 3 e não muda nos portes 1 e 4). HI-1: onde o estrato muda, +5,1 p.p. [−20,3; +30,5]; onde não muda, −7,4 p.p. [−27,9; +13,0]; diferença τ₁ = +12,5 p.p. [−19,1; +44,2], p Holm 0,876; HI-2: onde o estrato muda, −0,22 [−1,28; +0,84]; onde não muda, −1,88 [−3,50; −0,26]; diferença τ₁ = +1,67 [−0,27; +3,60], p Holm 0,366.
 
@@ -144,7 +145,9 @@ tem suporte para ter retas próprias. Nenhuma decisão depende de resultado.
 
 A própria H1, sem a divisão, não tem linha primária que rejeite zero depois do Holm (doc 57n, código `IC_CONVENCIONAL_EXCLUI_ZERO_SEM_HOLM`): não há um sinal firme da H1 para o IED explicar. A comparação entre grupos pergunta se o salto, seja qual for, difere entre eles.
 
-Na linha da H1 com IC convencional sem zero no 57n (HI-2 em 0,300), o IC 95% exclui zero onde o estrato não muda (não muda: −1,88 [−3,50; −0,26]; muda: −0,22 [−1,28; +0,84]). Descritivo: a PO-4 fica fora do Holm.
+Na linha da H1 com IC convencional sem zero no 57n (HI-2 em 0,300), o IC 95% exclui zero onde o estrato não muda (não muda: −1,88 [−3,50; −0,26]; muda: −0,22 [−1,28; +0,84]). Isso é descritivo e não mostra que o salto da H1 venha de um grupo e não do outro: a PO-4 fica fora do Holm; a diferença entre os grupos nessa linha (τ₁) não se distingue de zero (p 0,091, p Holm 0,366); e em 0,300, o grupo em que o estrato não muda é formado pelos municípios dos portes 1 e 4, com 24 % e 14 % de capitais e 24 % e 31 % no Nordeste (abaixo e acima do corte), contra 0 % e 0 % de capitais e 11 % e 40 % no Nordeste onde o estrato muda (seção 7). A comparação entre grupos mistura o canal do IED com porte, capital e região.
+
+Na PO-4 inteira, 1 de 20 intervalos exclui zero; a 5%, cerca de um intervalo em vinte excluiria zero só por acaso, mesmo sem salto nenhum.
 
 **Generalistas (PO-3, o outcome que o IED deveria mover):** em 0,300, não há indício de salto só onde o estrato muda: onde muda, +1,81 [−2,02; +5,63]; onde não muda, −0,99 [−3,40; +1,42]; diferença +2,80 [−1,72; +7,32], q BKY 1,000; em 0,400, não há indício de salto só onde o estrato muda: onde muda, −0,93 [−2,84; +0,97]; onde não muda, −1,88 [−4,02; +0,27]; diferença +0,95 [−1,92; +3,82], q BKY 1,000 (vínculos por 10 mil hab., mudança pós − pré).
 
@@ -283,7 +286,7 @@ H1: municípios distintos da amostra da HI-2 (qualquer ciclo) na janela; V: muni
 <!-- PO:leitura:inicio -->
 **PO-1:** código `TAU1_TODOS_CONTEM_ZERO`. Regra (decisão 16): `TAU1_TODOS_CONTEM_ZERO` se as quatro τ₁ têm IC 95% que contém zero; `TAU1_REJEITA_HOLM_CONCENTRADO` se alguma τ₁ tem p de Holm abaixo de 0,05 e, nela, o IC de τ₀ + τ₁ exclui zero e o de τ₀ contém zero; `TAU1_REJEITA_HOLM_SEM_CONCENTRACAO` se rejeita depois do Holm sem essa concentração; `TAU1_IC_EXCLUI_ZERO_SEM_HOLM` se algum IC convencional de τ₁ exclui zero e nenhum p de Holm fica abaixo de 0,05.
 
-**Não se detecta que o salto da H1 dependa de o estrato do IED mudar** (leitura pré-registrada do primeiro caso): nas quatro linhas da PO-1 o IC 95% da diferença τ₁ contém zero. Pelo adendo, o IED não explica o sinal da H1, com pouca potência: os grupos são pequenos (contagens na seção 3).
+**Não se detecta que o salto da H1 dependa de o estrato do IED mudar** (leitura pré-registrada do primeiro caso): nas quatro linhas da PO-1 o IC 95% da diferença τ₁ contém zero. Pelo adendo, o IED não explica o sinal da H1, com pouca potência: os grupos são pequenos (contagens na seção 3). Com IC de τ₁ tão largos, "não explica" quer dizer que os dados não mostram que o IED explique o salto; não quer dizer que o canal do IED esteja descartado.
 
 **PO-3 em 0,300:** código `SEM_INDICIO`; τ₁ com q BKY acima de 0,05. Regra: `INDICIO_IED_MOVE_APS` se o IC do salto de generalistas onde o estrato muda exclui zero e o IC onde não muda contém zero; senão `SEM_INDICIO`.
 
@@ -304,6 +307,7 @@ H1: municípios distintos da amostra da HI-2 (qualquer ciclo) na janela; V: muni
 
 <!-- PO:limites:inicio -->
 - **Descritivo, não causal do IED.** O porte é anterior ao tratamento, mas os portes em que o estrato muda diferem dos outros em tamanho, capital e região (seção 7) e em outras regras que dependem do porte. A diferença τ₁ mistura o canal do IED com tudo o que difere entre esses municípios perto do corte.
+- **Os grupos não são os mesmos nos dois cortes.** Em 0,300, o grupo em que o estrato não muda é formado pelos municípios dos portes 1 e 4, com 24 % e 14 % de capitais e 24 % e 31 % no Nordeste (abaixo e acima do corte), contra 0 % e 0 % de capitais e 11 % e 40 % no Nordeste onde o estrato muda (seção 7); em 0,400, o grupo em que o estrato não muda é formado pelos municípios do porte 3, com 0 % e 0 % de capitais e 78 % e 93 % no Nordeste (abaixo e acima do corte), contra 5 % e 0 % de capitais e 52 % e 65 % no Nordeste onde o estrato muda (seção 7). A τ₁ de um corte e a do outro não comparam o mesmo tipo de município.
 - **Pacote do corte.** Em 0,300 e 0,400 mudam a bolsa anunciada e outras regras federais (auditoria 18). Mesmo onde o estrato não muda, o salto é de um pacote, não da bolsa isolada; nada aqui isola o incentivo de R$ 5 mil, a participação no PMM-E ou o Agora Tem Especialistas.
 - **Pós-resultado.** A H1 e a oferta local no corte já tinham sido vistas; só a divisão por porte é nova. A especificação e as decisões foram fixadas antes destas contas.
 - **Potência.** Cada grupo × lado tem poucas dezenas de municípios na janela (seção 3); os IC da diferença são mais largos que os da H1 sem divisão. Não detectar diferença não é mostrar que ela é zero.

@@ -624,6 +624,26 @@
     {
       "arquivo": "docs/06_execucao/48g_adendo_heterogeneidade_porte_ied.md",
       "sha256": "5a77d7645a73a06a6a70ec51e49de54b014c12c844f39c3ccfc5d9f2515559ea"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_U_municipio.parquet",
+      "sha256": "5d4bf05a24e1b5f704aa50bbff4325b3997f1505f57c80f14f822e08e1c3db14"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_G3_municipio.parquet",
+      "sha256": "b2133fbd60b3189f162ebe35b6e3650eb1d97fda0a5e267b965802e684866948"
+    },
+    {
+      "arquivo": "data/pmm_especialistas_nominal.csv",
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5"
+    },
+    {
+      "arquivo": "data/raw/aquisicao/ivs_administrativo/tb_profissionais_ativos_pmme_csv.zip",
+      "sha256": "e57edeb50946395fa90fe510f4a658501f9b0e92069fcc53aa41b9e893e89c1c"
+    },
+    {
+      "arquivo": "output/aquisicao/manifesto_ibge_capitais_uf_regiao.json",
+      "sha256": "d1b75dc54078312f1df5e3ff09314ca58438eacffde3e66c73412d5dbbe34637"
     }
   ],
   "integridade": {
