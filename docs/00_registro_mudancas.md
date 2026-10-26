@@ -8,6 +8,22 @@
 
 ---
 
+## 26/10/2026 — Protocolo 61 executado: diagnóstico da queda no corte 0,300 (D-a a D-g)
+
+Motivo: execução do protocolo 61 (por que o preenchimento cai em 0,300), com Q1–Q3 reproduzidos antes de qualquer
+teste.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57l_diagnostico_queda_0300.md`](06_execucao/57l_diagnostico_queda_0300.md) | resultados do protocolo 61, gerado por `scripts/rdd_bolsa/38_diagnostico_queda_0300.py --atualizar-doc` a partir de `output/rdd_bolsa/DQ_*` |
+| `scripts/rdd_bolsa/38_diagnostico_queda_0300.py` | reprodução de Q1–Q3, D-a a D-g, tabela "quanto da queda cada explicação leva", leitura pré-registrada, figuras e doc 57l; no `run_all.py` depois do 36 |
+| `output/rdd_bolsa/DQ_estimativas.csv`, `DQ_resumo.json`, `DQ_figuras/` | saídas `EMPIRICO`, estatuto `DIAGNOSTICO_61_POS_RESULTADO` |
+| `tests/test_diagnostico_queda_0300.py` | testes do script 38 e do doc 57l (com casos sintéticos em memória) |
+
+---
+
 ## 26/10/2026 — Protocolo 61 (diagnóstico da queda no corte 0,300)
 
 Motivo: o autor pediu uma explicação convincente para a queda do preenchimento no corte 0,300; lista fechada de explicações e testes, congelada antes de calcular.
