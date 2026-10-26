@@ -197,3 +197,5 @@ blocos 57a–57h e a síntese 57 (scripts 33–35). Para não haver retrabalho:
 | 26/10/2026 | fazer o necessário para deixar a entrega pronta; com isso, roda o teste formal de H3 (protocolo 52b) e o arco segue a recomendação da §3, com H1 apresentada como teste da cadeia | autor delegou; a hipótese central continua revisável por ele |
 | 26/10/2026 | diagrama causal e equações no apêndice ficam para a banca final ([`banca_final/`](../banca_final/README.md)) | autor |
 | 26/10/2026 | o Vinicius faz os dois slides que usam os resultados do modelo; o conteúdo daqui serve de fonte para eles | grupo |
+| 26/10/2026 | **plano A = H1** (preenchimento), com H2 (bolsa × origem, antes H3) e H3 (oferta, antes H4) em cinza como plano B; substitui a recomendação do §8 | autor |
+| 26/10/2026 | fila consolidada de pendências em [`05_discussao_historia_empirica.md`](05_discussao_historia_empirica.md), §4.1 | autor pediu o registro |
