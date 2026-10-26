@@ -313,5 +313,38 @@ class TestDoc57j(unittest.TestCase):
         self.assertIn(f"[{EQ._n(n1['ic90_inf'], 2)}; {EQ._n(n1['ic90_sup'], 2)}]", self.texto)
 
 
+@unittest.skipUnless(DOC.exists() and _existe("EQ_estimativas.csv", "EQ_resumo.json"), "saídas do EQ ainda não geradas")
+class TestCorrecoesAuditoria32(unittest.TestCase):
+    """Auditoria 32: qualificadores da leitura e o sinal negativo de N1 não vendido como queda."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.est = pd.read_csv(OUT / "EQ_estimativas.csv")
+        cls.res = json.loads((OUT / "EQ_resumo.json").read_text(encoding="utf-8"))
+        cls.texto = DOC.read_text(encoding="utf-8")
+        cls.leitura = re.search(r"<!-- EQ:leitura:inicio -->(.*?)<!-- EQ:leitura:fim -->", cls.texto, re.S).group(1)
+
+    def test_qualificador_em_toda_leitura_direcional(self):
+        conv = self.est[self.est["tipo_ic"] == "convencional_CR1"]
+        for _, r in conv[conv["leitura_codigo"].isin(["SO_AUMENTO", "SO_QUEDA"])].iterrows():
+            self.assertIn("sob a aproximação local linear e para o pacote do corte", r["leitura"], r["id_linha"])
+        for m in re.finditer(r"não houve (?:aumento|queda) de ", self.leitura):
+            janela = self.leitura[m.start():m.start() + 200]
+            self.assertIn("aproximação local linear", janela)
+
+    def test_n1_abaixo_de_zero_nao_vendido_como_queda(self):
+        n = pd.read_csv(OUT / "N_estimativas.csv", dtype={"ciclo": str, "corte": str})
+        o = n[(n["outcome_id"] == "N1") & (n["familia"] == "N") & (n["especificacao"] == "S-a")
+              & (n["variante"] == "principal") & (n["populacao"] == "V1+V2+V3") & (n["corte"] == "empilhado")].iloc[0]
+        z0 = self.res["teste_zero_do_bloco"]["N1-emp-123"]
+        self.assertAlmostEqual(z0["p_valor"], o["p_valor"], delta=1e-12)
+        self.assertAlmostEqual(z0["p_holm"], o["p_holm"], delta=1e-12)
+        n1 = self.est[(self.est["id_linha"] == "N1-emp-123") & (self.est["tipo_ic"] == "convencional_CR1")].iloc[0]
+        if n1["ic90_sup"] < 0:
+            self.assertIn("o IC 90% fica inteiro abaixo de zero", self.leitura)
+            self.assertIn("Isso não é lido como queda", self.leitura)
+        self.assertNotRegex(self.leitura.lower(), r"\bhouve queda\b(?! de)|\bcaiu\b|\breduz(iu)?\b")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -18,6 +18,8 @@
 | A3 | probabilidade de a célula aberta ser preenchida na 1ª chamada (unidade: célula do quadro) | ±10 p.p. |
 | N1 | vagas preenchidas na 1ª chamada por município, com controle linear das vagas oferecidas (S-a) | ±25% da média abaixo do corte na mesma amostra |
 
+O protocolo 40, §7, dá duas referências: +10 p.p. de preenchimento e +25% de candidaturas. O protocolo 60 aplica os 25% às vagas preenchidas (N1); a margem de N1 é, portanto, escolha do protocolo 60, não uma referência que o protocolo 40 tenha dado para esse outcome.
+
 **Os dois testes, a 5% cada:**
 - **teste do aumento** — H0: o salto é +margem ou mais. Rejeitar quer dizer "não houve aumento do tamanho da margem ou mais";
 - **teste da queda** — H0: o salto é −margem ou menos. Rejeitar quer dizer "não houve queda do tamanho da margem ou mais".
@@ -101,23 +103,23 @@ Pela leitura pré-registrada do protocolo 60.
 <!-- EQ:leitura:inicio -->
 **Primárias (Holm entre as duas).**
 
-- **A3, preenchimento da célula aberta (ciclos 1–3, cortes empilhados):** salto −4,9 p.p., IC 90% [−11,6; +1,9], margem ±10 p.p., margem mínima de equivalência 11,6 p.p. — **leitura:** só o teste do aumento rejeita; não houve aumento de 10 p.p. ou mais, mas uma queda de 10 p.p. não fica descartada.
-- **N1, vagas preenchidas por município com controle das vagas oferecidas (ciclos 1–3, cortes empilhados):** salto −0,76 vaga por município, IC 90% [−1,33; −0,18], margem ±25% da média (0,54 vaga por município), margem mínima de equivalência 1,33 (62% da média) — **leitura:** só o teste do aumento rejeita; não houve aumento de 25% da média (0,54 vaga por município) ou mais, mas uma queda de 25% da média (0,54 vaga por município) não fica descartada.
-  - A estimativa pontual de N1 (−0,76, −35% da média) já fica abaixo de −25%. O teste da queda não rejeita, mas isso não é evidência de queda: o teste de zero do bloco não rejeita depois do Holm (doc 49, §3), e o sinal negativo vem em boa parte do corte de 0,300 no ciclo 2, onde o placebo acusa forma não linear (doc 49, §9).
+- **A3, preenchimento da célula aberta (ciclos 1–3, cortes empilhados):** salto −4,9 p.p., IC 90% [−11,6; +1,9], margem ±10 p.p., margem mínima de equivalência 11,6 p.p. — **leitura:** só o teste do aumento rejeita; não houve aumento de 10 p.p. ou mais (no IC convencional, sob a aproximação local linear e para o pacote do corte), mas uma queda de 10 p.p. não fica descartada.
+- **N1, vagas preenchidas por município com controle das vagas oferecidas (ciclos 1–3, cortes empilhados):** salto −0,76 vaga por município, IC 90% [−1,33; −0,18], margem ±25% da média (0,54 vaga por município), margem mínima de equivalência 1,33 (62% da média) — **leitura:** só o teste do aumento rejeita; não houve aumento de 25% da média (0,54 vaga por município) ou mais (no IC convencional, sob a aproximação local linear e para o pacote do corte), mas uma queda de 25% da média (0,54 vaga por município) não fica descartada.
+  - A estimativa pontual de N1 (−0,76, −35% da média) fica abaixo de −25%, e o IC 90% fica inteiro abaixo de zero (sem ajuste, o teste de zero do bloco dá p = 0,031). Isso não é lido como queda, por quatro motivos. (i) No teste de zero pré-registrado, N1 não rejeita depois do Holm da família N1–N4 (p de Holm 0,124); essa conclusão depende do coeficiente do controle por grupo, e com coeficiente único N1 rejeitaria (doc 49, §3). (ii) O IC honesto contém zero. (iii) O sinal vem em boa parte do corte de 0,300 no ciclo 2: ali o corte placebo do segmento acusa salto sem controle e fica no limiar com controle, e a reta local não capta a forma do outcome (doc 49, §3 e §9). (iv) É o pacote do corte. O teste da queda não rejeita: uma queda de 25% da média ou mais não fica descartada, mas também não fica demonstrada.
 
 **Secundárias (sem ajuste).**
 
-- **A3, ciclos 1–3, corte 0,300:** salto −8,4 p.p., IC 90% [−16,9; +0,1], margem ±10 p.p., margem mínima de equivalência 16,9 p.p. — **leitura:** só o teste do aumento rejeita; não houve aumento de 10 p.p. ou mais, mas uma queda de 10 p.p. não fica descartada.
-- **A3, ciclos 1–3, corte 0,400:** salto −1,3 p.p., IC 90% [−11,9; +9,3], margem ±10 p.p., margem mínima de equivalência 11,9 p.p. — **leitura:** só o teste do aumento rejeita; não houve aumento de 10 p.p. ou mais, mas uma queda de 10 p.p. não fica descartada.
+- **A3, ciclos 1–3, corte 0,300:** salto −8,4 p.p., IC 90% [−16,9; +0,1], margem ±10 p.p., margem mínima de equivalência 16,9 p.p. — **leitura:** só o teste do aumento rejeita; não houve aumento de 10 p.p. ou mais (no IC convencional, sob a aproximação local linear e para o pacote do corte), mas uma queda de 10 p.p. não fica descartada.
+- **A3, ciclos 1–3, corte 0,400:** salto −1,3 p.p., IC 90% [−11,9; +9,3], margem ±10 p.p., margem mínima de equivalência 11,9 p.p. — **leitura:** só o teste do aumento rejeita; não houve aumento de 10 p.p. ou mais (no IC convencional, sob a aproximação local linear e para o pacote do corte), mas uma queda de 10 p.p. não fica descartada.
 - **A3, ciclo 1, corte 0,300:** salto +0,9 p.p., IC 90% [−19,6; +21,4], margem ±10 p.p., margem mínima de equivalência 21,4 p.p. — **leitura:** nenhum teste rejeita; inconclusivo.
-- **A3, ciclo 1, corte 0,400:** salto −12,4 p.p., IC 90% [−33,5; +8,6], margem ±10 p.p., margem mínima de equivalência 33,5 p.p. — **leitura:** só o teste do aumento rejeita; não houve aumento de 10 p.p. ou mais, mas uma queda de 10 p.p. não fica descartada.
+- **A3, ciclo 1, corte 0,400:** salto −12,4 p.p., IC 90% [−33,5; +8,6], margem ±10 p.p., margem mínima de equivalência 33,5 p.p. — **leitura:** só o teste do aumento rejeita; não houve aumento de 10 p.p. ou mais (no IC convencional, sob a aproximação local linear e para o pacote do corte), mas uma queda de 10 p.p. não fica descartada.
 - **A3, ciclo 1, cortes empilhados:** salto −3,3 p.p., IC 90% [−18,0; +11,4], margem ±10 p.p., margem mínima de equivalência 18,0 p.p. — **leitura:** nenhum teste rejeita; inconclusivo.
-- **N1, ciclos 1–3, corte 0,300:** salto −1,45 vaga por município, IC 90% [−2,48; −0,42], margem ±25% da média (0,58 vaga por município), margem mínima de equivalência 2,48 (107% da média) — **leitura:** só o teste do aumento rejeita; não houve aumento de 25% da média (0,58 vaga por município) ou mais, mas uma queda de 25% da média (0,58 vaga por município) não fica descartada.
-- **N1, ciclos 1–3, corte 0,400:** salto −0,14 vaga por município, IC 90% [−0,71; +0,43], margem ±25% da média (0,49 vaga por município), margem mínima de equivalência 0,71 (36% da média) — **leitura:** só o teste do aumento rejeita; não houve aumento de 25% da média (0,49 vaga por município) ou mais, mas uma queda de 25% da média (0,49 vaga por município) não fica descartada.
+- **N1, ciclos 1–3, corte 0,300:** salto −1,45 vaga por município, IC 90% [−2,48; −0,42], margem ±25% da média (0,58 vaga por município), margem mínima de equivalência 2,48 (107% da média) — **leitura:** só o teste do aumento rejeita; não houve aumento de 25% da média (0,58 vaga por município) ou mais (no IC convencional, sob a aproximação local linear e para o pacote do corte), mas uma queda de 25% da média (0,58 vaga por município) não fica descartada.
+- **N1, ciclos 1–3, corte 0,400:** salto −0,14 vaga por município, IC 90% [−0,71; +0,43], margem ±25% da média (0,49 vaga por município), margem mínima de equivalência 0,71 (36% da média) — **leitura:** só o teste do aumento rejeita; não houve aumento de 25% da média (0,49 vaga por município) ou mais (no IC convencional, sob a aproximação local linear e para o pacote do corte), mas uma queda de 25% da média (0,49 vaga por município) não fica descartada.
 
 **IC honesto (N1).** Com o viés máximo da regra do E6 gravado pelo bloco, nenhum dos dois testes rejeita em nenhuma das 3 linhas de N1: o viés máximo (B ≥ 46,4 vagas por município) já é maior que a margem, e nenhum IC honesto cabe nela. O doc 49 (§3, motivo ii) já registrava que esse IC é largo demais para informar. Ele não muda a leitura do IC convencional, mas mostra que ela vale sob a aproximação local linear. A3 não tem IC honesto gravado (o bloco não o calculou).
 
-**Em uma frase.** Nenhuma linha mostra equivalência. Nas duas primárias, os dados descartam um aumento do tamanho das margens (+10 p.p. no preenchimento da célula; +25% da média nas vagas preenchidas; protocolo 60, a partir das referências de magnitude do protocolo 40): não houve aumento desse tamanho ou mais. Mas não permitem dizer que "não mudou nada", porque uma queda do mesmo tamanho não fica descartada. É o pacote do corte, não a bolsa isolada, e nada aqui diz que a bolsa "funciona" ou "não funciona".
+**Em uma frase.** Nenhuma linha mostra equivalência. Nas duas primárias, no IC convencional e sob a aproximação local linear, os dados descartam um aumento do tamanho das margens (+10 p.p. no preenchimento da célula; +25% da média nas vagas preenchidas; margens do protocolo 60): não houve aumento desse tamanho ou mais. Com o IC honesto de N1, nem isso se sustenta. E os dados não permitem dizer que "não mudou nada", porque uma queda do mesmo tamanho não fica descartada. É o pacote do corte, não a bolsa isolada, e nada aqui diz que a bolsa "funciona" ou "não funciona".
 <!-- EQ:leitura:fim -->
 
 ## 4. Figura
@@ -127,9 +129,11 @@ Pela leitura pré-registrada do protocolo 60.
 **Como ler.**
 - Cada linha é uma amostra. O ponto é o salto estimado no corte; a barra azul é o IC 90%.
 - A faixa cinza é a margem de equivalência: ±10 p.p. em A3 (painel de cima) e ±25% da média abaixo do corte em N1 (painel de baixo; ali o salto e o IC estão divididos pela média abaixo do corte da mesma amostra, para que a faixa seja a mesma em todas as linhas).
-- **Barra inteira dentro da faixa:** equivalência. Não mudou além da margem, para o pacote do corte.
-- **Barra que passa da faixa só do lado esquerdo:** não houve aumento do tamanho da margem ou mais, mas uma queda desse tamanho não fica descartada.
+- **Barra inteira dentro da faixa:** equivalência. Não mudou além da margem, para o pacote do corte e sob a aproximação local linear.
+- **Barra que passa da faixa só do lado esquerdo:** não houve aumento do tamanho da margem ou mais (no IC convencional, sob a aproximação local linear e para o pacote do corte), mas uma queda desse tamanho não fica descartada.
+- **Barra que passa da faixa só do lado direito:** o espelho: não houve queda do tamanho da margem ou mais, mas um aumento desse tamanho não fica descartado.
 - **Barra que passa dos dois lados:** inconclusivo.
+- **Barra inteira à esquerda do zero:** a figura não é teste de zero, e a barra é de 90%. Para N1, a seção 3 diz por que esse sinal não é lido como queda.
 - A barra é o IC 90% (não o de 95% dos docs 49 e 57) porque cada um dos dois testes é a 5% num só sentido.
 - As linhas em negrito são as primárias. A figura usa o IC convencional; o IC honesto de N1 é tão largo que não caberia na escala (tabela 2.3).
 

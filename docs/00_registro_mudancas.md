@@ -8,6 +8,20 @@
 
 ---
 
+## 26/10/2026 — Auditoria 32: equivalência no preenchimento (H1)
+
+Motivo: auditoria independente da parte A do protocolo 60 (script 36, `EQ_*`, doc 57j). Veredito: aprovado com
+correções. Nenhum número mudou. As correções de texto, rótulo e figura foram feitas no script 36 e
+regeneradas por ele.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/32_auditoria_equivalencia_H1.md`](auditorias/32_auditoria_equivalencia_H1.md) | recálculo independente das 21 linhas, fidelidade ao protocolo 60 (parte A), achados M1, M2, B1 e B2 e correções |
+
+---
+
 ## 26/10/2026 — Protocolo 60, parte A: equivalência no preenchimento (H1)
 
 Motivo: execução da parte A do protocolo 60 (TOST de A3 e N1 com as margens do protocolo), só com as estimativas

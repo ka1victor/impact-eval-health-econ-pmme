@@ -493,6 +493,13 @@
       "margem_minima": 1.3318317526859274
     }
   },
+  "teste_zero_do_bloco": {
+    "N1-emp-123": {
+      "p_valor": 0.0308789623725208,
+      "p_holm": 0.1235158494900835,
+      "familia_holm": "N1–N4 do protocolo 48 (doc 49, §3)"
+    }
+  },
   "contagem_leituras": {
     "convencional": {
       "INCONCLUSIVO": 2,
@@ -504,12 +511,12 @@
   },
   "linhas": 21,
   "saidas": {
-    "output/rdd_bolsa/EQ_estimativas.csv": "9d0272f2e6cf4e4958e044f8e7fe0087afd628e223af5ce47cf1709707b74c8d"
+    "output/rdd_bolsa/EQ_estimativas.csv": "c3ec87e5229b494de3aa71bd72ebf134b2e405008552afaad6f5aeaa34c6aaf2"
   },
   "figuras": [
     {
       "arquivo": "output/rdd_bolsa/EQ_figuras/EQ_tost_ic90.png",
-      "sha256": "980e755c9591f02aa49688b2e5e15577f4b4ecd5384900d52b0990c7b05559be"
+      "sha256": "f1dd77922e358950cbae5e3799495536cf19219d73847bfe54eb1764b23c34d2"
     }
   ],
   "entradas": [

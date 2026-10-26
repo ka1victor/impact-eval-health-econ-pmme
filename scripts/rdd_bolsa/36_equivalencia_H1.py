@@ -117,8 +117,11 @@ DESCRICAO = {"A3": "célula aberta preenchida na 1ª chamada (A3_PREENCHIDA, uni
              "N1": "vagas preenchidas na 1ª chamada por município, com controle linear das vagas oferecidas (S-a)"}
 UNIDADE = {"A3": "fração (×100 = p.p.)", "N1": "vagas por município"}
 REGRA_MARGEM = {"A3": "±10 p.p. (protocolo 60, parte A; referência do protocolo 40, §7)",
-                "N1": "±25% da média abaixo do corte na mesma amostra (protocolo 60, parte A; referência do "
-                      "protocolo 40, §7)"}
+                "N1": "±25% da média abaixo do corte na mesma amostra (protocolo 60, parte A; no protocolo 40, §7, "
+                      "os 25% eram a referência para candidaturas)"}
+# Qualificador obrigatório de "não houve aumento/queda de X ou mais" (auditoria 32, M1): vale no IC convencional,
+# sob a aproximação local linear, e para o pacote do corte.
+QUALIF = "no IC convencional, sob a aproximação local linear e para o pacote do corte"
 
 COLUNAS = ["natureza_dos_dados", "estatuto", "id_linha", "outcome", "descricao_outcome", "papel", "populacao",
            "ciclo", "corte", "amostra", "tipo_ic", "nota_ic", "arquivo_origem", "especificacao_origem",
@@ -192,9 +195,9 @@ def tost(tau: float, ep: float, margem: float, vies_max: float = 0.0, z: float =
 
 LEITURAS = {
     "EQUIVALENTE": "os dois testes rejeitam: o salto está dentro de ±{m}",
-    "SO_AUMENTO": "só o teste do aumento rejeita: não houve aumento de {m} ou mais, mas uma queda de {m} não fica "
-                  "descartada",
-    "SO_QUEDA": "só o teste da queda rejeita: não houve queda de {m} ou mais, mas um aumento de {m} não fica "
+    "SO_AUMENTO": "só o teste do aumento rejeita: não houve aumento de {m} ou mais ({q}), mas uma queda de {m} não "
+                  "fica descartada",
+    "SO_QUEDA": "só o teste da queda rejeita: não houve queda de {m} ou mais ({q}), mas um aumento de {m} não fica "
                 "descartado",
     "INCONCLUSIVO": "nenhum teste rejeita: inconclusivo",
 }
@@ -401,8 +404,10 @@ def calcular(sel: dict) -> pd.DataFrame:
     if not (est.loc[prim, "equivalente"] == (est.loc[prim, "p_holm_tost"] < ALFA)).all():
         raise FalhaValidacao("Holm do p do TOST e Holm por direção discordam na equivalência das primárias")
     est["leitura_codigo"] = [classificar(a, q) for a, q in zip(est["rejeita_aumento"], est["rejeita_queda"])]
-    est["leitura"] = [LEITURAS[c].format(m=texto_margem(o, m, me)) for c, o, m, me in
-                      zip(est["leitura_codigo"], est["outcome"], est["margem"], est["media_abaixo"])]
+    est["leitura"] = [LEITURAS[c].format(m=texto_margem(o, m, me),
+                                         q=QUALIF if t == "convencional_CR1" else "no IC honesto, para o pacote do corte")
+                      for c, o, m, me, t in zip(est["leitura_codigo"], est["outcome"], est["margem"],
+                                                est["media_abaixo"], est["tipo_ic"])]
     est["nota"] = np.where(est["tipo_ic"] == "honesto_pos_resultado",
                            "POS_RESULTADO no bloco de origem (fora do protocolo 48); só registro", "")
     return est[COLUNAS]
@@ -422,7 +427,7 @@ def gerar_figura(est: pd.DataFrame, caminho: Path) -> dict:
                ("N1", "N1: vagas preenchidas por município, com controle (S-a)\n(salto em % da média abaixo do corte;"
                       " faixa = ±25%)", None, 25.0)]
     alturas = [int((conv["outcome"] == oc).sum()) for oc, *_ in paineis]
-    fig, axs = plt.subplots(2, 1, figsize=(8.2, 7.2), gridspec_kw={"height_ratios": alturas})
+    fig, axs = plt.subplots(2, 1, figsize=(8.2, 7.8), gridspec_kw={"height_ratios": alturas})
     tinta, sec, faixa, cor = "#1f1f1f", "#5c5c5c", "#d9d9d9", "#2a78d6"
     for ax, (oc, titulo, escala, m) in zip(axs, paineis):
         d = conv[conv["outcome"] == oc].reset_index(drop=True)
@@ -451,7 +456,18 @@ def gerar_figura(est: pd.DataFrame, caminho: Path) -> dict:
     axs[-1].set_xlabel("salto no corte (lado de bolsa maior menos lado de bolsa menor); ponto = estimativa, "
                        "barra = IC 90%", fontsize=8, color=sec)
     fig.suptitle("Equivalência (TOST): o IC 90% cabe na faixa cinza?", fontsize=10, color=tinta, x=0.01, ha="left")
-    fig.tight_layout()
+    # Rodapé com a ressalva de linguagem (auditoria 32, M2), a partir das saídas.
+    n_eq = int(conv["equivalente"].sum())
+    prim = conv[conv["papel"] == "primaria"]
+    r1 = ("Nenhuma barra cabe inteira na faixa: nenhuma linha é equivalente." if n_eq == 0
+          else f"{n_eq} linha(s) com a barra inteira na faixa (equivalência).")
+    if (prim["leitura_codigo"] == "SO_AUMENTO").all():
+        r1 += " Nas primárias, só o aumento do tamanho da margem fica descartado."
+    rodape = (r1 + "\nIC convencional: vale sob a aproximação local linear (o IC honesto de N1 não caberia na escala). "
+              "Contraste: pacote do corte,\nnão a bolsa isolada. A figura não é teste de zero: barra à esquerda do "
+              "zero não é lida como queda (doc 57j, §3).")
+    fig.tight_layout(rect=(0, 0.075, 1, 1))
+    fig.text(0.01, 0.008, rodape, fontsize=7.5, color=sec, ha="left", va="bottom")
     caminho.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(caminho, dpi=150, metadata={"Software": None})
     plt.close(fig)
@@ -559,15 +575,17 @@ def _frase(r) -> str:
         txt = (f"os dois testes rejeitam; o salto está dentro de ±{m}: não mudou além disso, para o pacote do corte "
                "e sob a aproximação local linear")
     elif cod == "SO_AUMENTO":
-        txt = f"só o teste do aumento rejeita; não houve aumento de {m} ou mais, mas uma queda de {m} não fica descartada"
+        txt = (f"só o teste do aumento rejeita; não houve aumento de {m} ou mais ({QUALIF}), mas uma queda de {m} "
+               "não fica descartada")
     elif cod == "SO_QUEDA":
-        txt = f"só o teste da queda rejeita; não houve queda de {m} ou mais, mas um aumento de {m} não fica descartado"
+        txt = (f"só o teste da queda rejeita; não houve queda de {m} ou mais ({QUALIF}), mas um aumento de {m} "
+               "não fica descartado")
     else:
         txt = "nenhum teste rejeita; inconclusivo"
     return f"{base} — **leitura:** {txt}."
 
 
-def leitura(est: pd.DataFrame) -> str:
+def leitura(est: pd.DataFrame, resumo: dict | None = None) -> str:
     conv = est[est["tipo_ic"] == "convencional_CR1"].set_index("id_linha")
     a3, n1 = conv.loc["A3-emp-123"], conv.loc["N1-emp-123"]
     linhas = [
@@ -577,11 +595,23 @@ def leitura(est: pd.DataFrame) -> str:
         f"- **N1, vagas preenchidas por município com controle das vagas oferecidas (ciclos 1–3, cortes "
         f"empilhados):** {_frase(n1)}",
     ]
-    if n1["tau"] < -n1["margem"]:
-        linhas.append(f"  - A estimativa pontual de N1 ({_n(n1['tau'], 2)}, {_n(100 * n1['tau'] / n1['media_abaixo'], 0)}% "
-                      "da média) já fica abaixo de −25%. O teste da queda não rejeita, mas isso não é evidência de "
-                      "queda: o teste de zero do bloco não rejeita depois do Holm (doc 49, §3), e o sinal negativo vem "
-                      "em boa parte do corte de 0,300 no ciclo 2, onde o placebo acusa forma não linear (doc 49, §9).")
+    if n1["tau"] < -n1["margem"] or n1["ic90_sup"] < 0:
+        # Auditoria 32, M2: dizer que o IC 90% fica inteiro abaixo de zero e por que isso não é lido como queda.
+        z0 = (resumo or {}).get("teste_zero_do_bloco", {}).get("N1-emp-123", {})
+        p0, ph = z0.get("p_valor"), z0.get("p_holm")
+        abaixo = ("o IC 90% fica inteiro abaixo de zero"
+                  + (f" (sem ajuste, o teste de zero do bloco dá p = {_p(p0)})" if p0 is not None else "")
+                  if n1["ic90_sup"] < 0 else "o IC 90% contém zero")
+        linhas.append(
+            f"  - A estimativa pontual de N1 ({_n(n1['tau'], 2)}, {_n(100 * n1['tau'] / n1['media_abaixo'], 0)}% da "
+            f"média) fica abaixo de −25%, e {abaixo}. Isso não é lido como queda, por quatro motivos. (i) No teste de "
+            "zero pré-registrado, N1 não rejeita depois do Holm da família N1–N4"
+            + (f" (p de Holm {_p(ph)})" if ph is not None else "")
+            + "; essa conclusão depende do coeficiente do controle por grupo, e com coeficiente único N1 rejeitaria "
+            "(doc 49, §3). (ii) O IC honesto contém zero. (iii) O sinal vem em boa parte do corte de 0,300 no ciclo 2: "
+            "ali o corte placebo do segmento acusa salto sem controle e fica no limiar com controle, e a reta local "
+            "não capta a forma do outcome (doc 49, §3 e §9). (iv) É o pacote do corte. O teste da queda não rejeita: "
+            "uma queda de 25% da média ou mais não fica descartada, mas também não fica demonstrada.")
     linhas += ["", "**Secundárias (sem ajuste).**", ""]
     for idl in [x[0] for x in LINHAS if x[2] == "secundaria"]:
         r = conv.loc[idl]
@@ -602,11 +632,11 @@ def leitura(est: pd.DataFrame) -> str:
     n_eq = int(conv["equivalente"].sum())
     p = conv[conv["papel"] == "primaria"]
     if n_eq == 0 and (p["leitura_codigo"] == "SO_AUMENTO").all():
-        frase = ("Nenhuma linha mostra equivalência. Nas duas primárias, os dados descartam um aumento do tamanho das "
-                 "margens (+10 p.p. no preenchimento da célula; +25% da média nas vagas preenchidas; protocolo 60, "
-                 "a partir das referências de magnitude do protocolo 40): não houve aumento desse tamanho ou mais. "
-                 "Mas não permitem dizer que \"não mudou nada\", porque uma queda do mesmo tamanho não fica "
-                 "descartada.")
+        frase = ("Nenhuma linha mostra equivalência. Nas duas primárias, no IC convencional e sob a aproximação local "
+                 "linear, os dados descartam um aumento do tamanho das margens (+10 p.p. no preenchimento da célula; "
+                 "+25% da média nas vagas preenchidas; margens do protocolo 60): não houve aumento desse tamanho ou "
+                 "mais. Com o IC honesto de N1, nem isso se sustenta. E os dados não permitem dizer que \"não mudou "
+                 "nada\", porque uma queda do mesmo tamanho não fica descartada.")
     else:
         cont = conv["leitura_codigo"].value_counts()
         frase = ("Contagem das leituras no IC convencional: "
@@ -638,6 +668,8 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
 |---|---|---|
 | A3 | probabilidade de a célula aberta ser preenchida na 1ª chamada (unidade: célula do quadro) | ±10 p.p. |
 | N1 | vagas preenchidas na 1ª chamada por município, com controle linear das vagas oferecidas (S-a) | ±25% da média abaixo do corte na mesma amostra |
+
+O protocolo 40, §7, dá duas referências: +10 p.p. de preenchimento e +25% de candidaturas. O protocolo 60 aplica os 25% às vagas preenchidas (N1); a margem de N1 é, portanto, escolha do protocolo 60, não uma referência que o protocolo 40 tenha dado para esse outcome.
 
 **Os dois testes, a 5% cada:**
 - **teste do aumento** — H0: o salto é +margem ou mais. Rejeitar quer dizer "não houve aumento do tamanho da margem ou mais";
@@ -679,7 +711,7 @@ O caso "só o teste da queda rejeita", que o protocolo não lista, é lido como 
           "POS_RESULTADO no bloco de origem.\n\n" + bloco("honesto", tabela_honesta(est)) + "\n\n"
           + bloco("conferencia", conf_txt))
     s3 = ("## 3. Leitura em linguagem simples\n\nPela leitura pré-registrada do protocolo 60.\n\n"
-          + bloco("leitura", leitura(est)))
+          + bloco("leitura", leitura(est, resumo)))
     fig_rel = f"../../output/rdd_bolsa/EQ_figuras/{NOME_FIG}"
     s4 = f"""## 4. Figura
 
@@ -688,9 +720,11 @@ O caso "só o teste da queda rejeita", que o protocolo não lista, é lido como 
 **Como ler.**
 - Cada linha é uma amostra. O ponto é o salto estimado no corte; a barra azul é o IC 90%.
 - A faixa cinza é a margem de equivalência: ±10 p.p. em A3 (painel de cima) e ±25% da média abaixo do corte em N1 (painel de baixo; ali o salto e o IC estão divididos pela média abaixo do corte da mesma amostra, para que a faixa seja a mesma em todas as linhas).
-- **Barra inteira dentro da faixa:** equivalência. Não mudou além da margem, para o pacote do corte.
-- **Barra que passa da faixa só do lado esquerdo:** não houve aumento do tamanho da margem ou mais, mas uma queda desse tamanho não fica descartada.
+- **Barra inteira dentro da faixa:** equivalência. Não mudou além da margem, para o pacote do corte e sob a aproximação local linear.
+- **Barra que passa da faixa só do lado esquerdo:** não houve aumento do tamanho da margem ou mais (no IC convencional, sob a aproximação local linear e para o pacote do corte), mas uma queda desse tamanho não fica descartada.
+- **Barra que passa da faixa só do lado direito:** o espelho: não houve queda do tamanho da margem ou mais, mas um aumento desse tamanho não fica descartado.
 - **Barra que passa dos dois lados:** inconclusivo.
+- **Barra inteira à esquerda do zero:** a figura não é teste de zero, e a barra é de 90%. Para N1, a seção 3 diz por que esse sinal não é lido como queda.
 - A barra é o IC 90% (não o de 95% dos docs 49 e 57) porque cada um dos dois testes é a 5% num só sentido.
 - As linhas em negrito são as primárias. A figura usa o IC convencional; o IC honesto de N1 é tão largo que não caberia na escala (tabela 2.3)."""
     s5 = """## 5. Limites
@@ -779,6 +813,11 @@ def executar(atualizar: bool) -> int:
                                                          "p_holm_tost", "rejeita_aumento", "rejeita_queda",
                                                          "equivalente", "leitura_codigo", "margem_minima")}
                       for _, r in conv[conv["papel"] == "primaria"].iterrows()},
+        # Teste de zero pré-registrado da linha de origem (só leitura; auditoria 32, M2).
+        "teste_zero_do_bloco": {idl: {"p_valor": float(sel[idl]["linha"]["p_valor"]),
+                                      "p_holm": float(sel[idl]["linha"]["p_holm"]),
+                                      "familia_holm": "N1–N4 do protocolo 48 (doc 49, §3)"}
+                                for idl in ("N1-emp-123",)},
         "contagem_leituras": {"convencional": conv["leitura_codigo"].value_counts().sort_index().to_dict(),
                               "honesto": est[est["tipo_ic"] != "convencional_CR1"]["leitura_codigo"]
                               .value_counts().sort_index().to_dict()},
