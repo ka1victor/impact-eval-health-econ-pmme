@@ -1,0 +1,7 @@
+nivel,ciclo,chave,campo,auditoria,pipeline,natureza_dos_dados,rotulo
+municipio,1,220770,n_celulas_preenchidas x n_celulas_preenchidas_ch1,7,8.0,EMPIRICO,AUDITORIA_36_RECONSTRUCAO
+municipio,1,241220,n_celulas_preenchidas x n_celulas_preenchidas_ch1,5,6.0,EMPIRICO,AUDITORIA_36_RECONSTRUCAO
+municipio,1,290070,n_celulas_preenchidas x n_celulas_preenchidas_ch1,1,2.0,EMPIRICO,AUDITORIA_36_RECONSTRUCAO
+municipio,1,313520,n_celulas_preenchidas x n_celulas_preenchidas_ch1,2,3.0,EMPIRICO,AUDITORIA_36_RECONSTRUCAO
+municipio,1,316860,n_celulas_preenchidas x n_celulas_preenchidas_ch1,5,6.0,EMPIRICO,AUDITORIA_36_RECONSTRUCAO
+municipio,1,350210,n_celulas_preenchidas x n_celulas_preenchidas_ch1,1,2.0,EMPIRICO,AUDITORIA_36_RECONSTRUCAO

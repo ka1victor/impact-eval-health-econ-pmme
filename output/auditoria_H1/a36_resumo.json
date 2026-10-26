@@ -1,0 +1,534 @@
+{
+ "rotulo": "AUDITORIA_36_RECONSTRUCAO",
+ "natureza_dos_dados": "EMPIRICO",
+ "scripts": [
+  "scripts/auditoria_H1/a36_reconstruir_H1.py",
+  "scripts/auditoria_H1/a36_leitura.py",
+  "scripts/auditoria_H1/a36_estimador.py"
+ ],
+ "nao_importa": "scripts/rdd_bolsa/* (12, 23, 24, 38, rdd_lib) nem scripts/aquisicao/*",
+ "ciclo1": {
+  "linhas_alocacao": 1671,
+  "pessoas": 993,
+  "classificados": 527,
+  "confirmados": 468,
+  "desconsiderados_quadro2": 59,
+  "classificado_igual_confirmado_ou_desconsiderado": true,
+  "pessoas_com_mais_de_uma_confirmacao": 0,
+  "confirmados_por_opcao": {
+   "1": 404,
+   "2": 64
+  },
+  "versao_sub_judice_igual_retificada_exceto_marca": true,
+  "linhas_marcadas_sub_judice": 1,
+  "realocados_quadro2": 59,
+  "realocados_em_celula_fora_do_quadro": 20,
+  "realocados_em_celula_so_cr": 21,
+  "realocados_sao_os_desconsiderados": 59,
+  "homologados": 316,
+  "homologados_mesma_pessoa_e_celula_confirmada": 279,
+  "homologados_mesma_pessoa_e_celula_realocada": 21,
+  "homologados_outros": 16,
+  "homologados_em_celula_fora_do_quadro": 20,
+  "confirmados_nao_homologados": 189
+ },
+ "ciclo2_versoes": {
+  "datas": {
+   "original": "03/02/2026",
+   "retificado_servicos": "13/02/2026",
+   "resultado_preliminar": "planilha criada 10/03/2026; recurso 12-13/03/2026 (manifesto a11)",
+   "retificado_final": "19/03/2026",
+   "resultado_final": "24/03/2026 (comunicado oficial)"
+  },
+  "vagas": {
+   "03fev": [
+    899,
+    1998
+   ],
+   "13fev": [
+    1206,
+    1686
+   ],
+   "19mar": [
+    1836,
+    1053
+   ]
+  },
+  "celulas": {
+   "03fev": 1550,
+   "13fev": 1547,
+   "19mar": 1547
+  },
+  "celulas_19mar_fora_de_13fev": 0,
+  "celulas_com_total_diferente_13fev_19mar": 2,
+  "final_contra_03fev": {
+   "alocados": 1057,
+   "fora_do_quadro": 0,
+   "alocados_em_celula_so_cr": 604,
+   "celulas_so_cr_com_alocado": 427,
+   "alocados_acima_das_imediatas": 607
+  },
+  "final_contra_13fev": {
+   "alocados": 1057,
+   "fora_do_quadro": 0,
+   "alocados_em_celula_so_cr": 442,
+   "celulas_so_cr_com_alocado": 297,
+   "alocados_acima_das_imediatas": 442
+  },
+  "final_contra_19mar": {
+   "alocados": 1057,
+   "fora_do_quadro": 0,
+   "alocados_em_celula_so_cr": 0,
+   "celulas_so_cr_com_alocado": 0,
+   "alocados_acima_das_imediatas": 0
+  },
+  "preliminar_contra_13fev": {
+   "alocados": 911,
+   "fora_do_quadro": 0,
+   "alocados_em_celula_so_cr": 286,
+   "celulas_so_cr_com_alocado": 235,
+   "alocados_acima_das_imediatas": 286
+  },
+  "preliminar_contra_19mar": {
+   "alocados": 911,
+   "fora_do_quadro": 0,
+   "alocados_em_celula_so_cr": 2,
+   "celulas_so_cr_com_alocado": 2,
+   "alocados_acima_das_imediatas": 5
+  },
+  "celulas_so_cr_em_13fev": 833,
+  "dessas_convertidas_em_imediatas_19mar": 301,
+  "convertidas_com_alocado_final": 297,
+  "nao_convertidas_com_alocado_final": 0,
+  "celulas_com_conversao": 301,
+  "vagas_convertidas": 630,
+  "celulas_com_conversao_e_alocado": 297,
+  "imediatas_19mar_maior_ou_igual_alocados_em_todas": true
+ },
+ "ciclo3": {
+  "linhas_resultado": 4532,
+  "alocados": 704,
+  "sub_judice": 2,
+  "situacoes": {
+   "CADASTRO RESERVA": 3826,
+   "ALOCADO - AC": 677,
+   "ALOCADO - ER": 17,
+   "ALOCADO - PCD": 10,
+   "SUB JUDICE": 2
+  },
+  "ufs_no_quadro": [
+   "AL",
+   "AM",
+   "AP",
+   "BA",
+   "CE",
+   "DF",
+   "ES",
+   "GO",
+   "MA",
+   "MG",
+   "MS",
+   "MT",
+   "PA",
+   "PB",
+   "PE",
+   "PI",
+   "PR",
+   "RJ",
+   "RN",
+   "RO",
+   "RR",
+   "RS",
+   "SC",
+   "SE",
+   "SP",
+   "TO"
+  ],
+  "ufs_no_resultado": [
+   "AL",
+   "AM",
+   "AP",
+   "BA",
+   "CE",
+   "DF",
+   "ES",
+   "GO",
+   "MA",
+   "MG",
+   "MS",
+   "MT",
+   "PA",
+   "PB",
+   "PE",
+   "PI",
+   "PR",
+   "RJ",
+   "RN",
+   "RO",
+   "RR",
+   "RS",
+   "SC",
+   "SE",
+   "SP",
+   "TO"
+  ],
+  "ufs_do_quadro_sem_nenhuma_linha_no_resultado": [],
+  "celulas_de_uf_sem_resultado": 0,
+  "cursos_no_quadro": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24
+  ],
+  "cursos_sem_linha_no_resultado": [],
+  "alocados_em_celula_so_cr": 131,
+  "celulas_vagas_imediatas_mudaram_16jul_24jul": 4,
+  "pessoas_com_mais_de_um_alocado": 0,
+  "alocados_por_opcao": {
+   "1": 628,
+   "2": 76
+  }
+ },
+ "capitais": {
+  "lista": "27 capitais (códigos IBGE de 6 dígitos)",
+  "marcadas_CAPITAL_no_quadro_c3": 22,
+  "capitais_em_algum_quadro": 27
+ },
+ "faixa_e_ivs": {
+  "regra": "IVS ≤ 0,300 → faixa 3; 0,300 < IVS ≤ 0,400 → faixa 2; IVS > 0,400 → faixa 1",
+  "municipios_por_ciclo": {
+   "1": 368,
+   "2": 454,
+   "3": 748
+  },
+  "sem_ivs_oficial": [
+   [
+    "3",
+    "422000"
+   ]
+  ],
+  "faixa_impressa_diferente_da_regra": 0,
+  "ivs_errado_lido_por_esta_auditoria": false
+ },
+ "chaves": {
+  "c1_original": {
+   "linhas": 1295,
+   "chaves_unicas": 1295,
+   "ibge_digitos": {
+    "6": 1295
+   },
+   "cnes_em_mais_de_um_municipio": 0,
+   "municipio_com_mais_de_uma_faixa": 0,
+   "codigo_de_curso_com_mais_de_um_nome": 0
+  },
+  "c2_03fev": {
+   "linhas": 1550,
+   "chaves_unicas": 1550,
+   "ibge_digitos": {
+    "6": 1550
+   },
+   "cnes_em_mais_de_um_municipio": 0,
+   "municipio_com_mais_de_uma_faixa": 0,
+   "codigo_de_curso_com_mais_de_um_nome": 0
+  },
+  "c2_13fev": {
+   "linhas": 1547,
+   "chaves_unicas": 1547,
+   "ibge_digitos": {
+    "6": 1547
+   },
+   "cnes_em_mais_de_um_municipio": 0,
+   "municipio_com_mais_de_uma_faixa": 0,
+   "codigo_de_curso_com_mais_de_um_nome": 0
+  },
+  "c2_19mar": {
+   "linhas": 1547,
+   "chaves_unicas": 1547,
+   "ibge_digitos": {
+    "6": 1547
+   },
+   "cnes_em_mais_de_um_municipio": 0,
+   "municipio_com_mais_de_uma_faixa": 0,
+   "codigo_de_curso_com_mais_de_um_nome": 0
+  },
+  "c3_24jul": {
+   "linhas": 2293,
+   "chaves_unicas": 2293,
+   "ibge_digitos": {
+    "6": 2293
+   },
+   "cnes_em_mais_de_um_municipio": 0,
+   "municipio_com_mais_de_uma_faixa": 0,
+   "codigo_de_curso_com_mais_de_um_nome": 0
+  },
+  "c3_16jul": {
+   "linhas": 2293,
+   "chaves_unicas": 2293,
+   "ibge_digitos": {
+    "6": 2293
+   },
+   "cnes_em_mais_de_um_municipio": 0,
+   "municipio_com_mais_de_uma_faixa": 0,
+   "codigo_de_curso_com_mais_de_um_nome": 0
+  },
+  "c2_ch2_quadro": {
+   "linhas": 1039,
+   "chaves_unicas": 1039,
+   "ibge_digitos": {
+    "6": 1039
+   },
+   "cnes_em_mais_de_um_municipio": 0,
+   "municipio_com_mais_de_uma_faixa": 0,
+   "codigo_de_curso_com_mais_de_um_nome": 0
+  },
+  "c1_ch2_quadro_cr": {
+   "linhas": 1762,
+   "chaves_unicas": 1762,
+   "ibge_digitos": {
+    "6": 1762
+   },
+   "cnes_em_mais_de_um_municipio": 0,
+   "municipio_com_mais_de_uma_faixa": 0,
+   "codigo_de_curso_com_mais_de_um_nome": 0
+  },
+  "c1_alocacao_sub_judice": {
+   "linhas": 1671,
+   "linhas_fora_do_quadro": 0,
+   "celulas_do_resultado_fora_do_quadro": 0,
+   "celulas_do_quadro_sem_linha_no_resultado": 659,
+   "codigo_de_curso_com_nome_diferente_do_quadro": 0,
+   "confirmados_fora_do_quadro": 0,
+   "ibge_impresso_digitos": {
+    "6": 1671
+   },
+   "linhas_com_ibge_impresso_diferente_do_quadro": 0,
+   "cnes_do_resultado_em_mais_de_um_municipio_no_quadro": 0
+  },
+  "c1_realocacao_quadro2": {
+   "linhas": 59,
+   "linhas_fora_do_quadro": 20,
+   "celulas_do_resultado_fora_do_quadro": 19,
+   "celulas_do_quadro_sem_linha_no_resultado": 1260,
+   "codigo_de_curso_com_nome_diferente_do_quadro": 0,
+   "ibge_impresso_digitos": {
+    "6": 59
+   },
+   "linhas_com_ibge_impresso_diferente_do_quadro": 0,
+   "cnes_do_resultado_em_mais_de_um_municipio_no_quadro": 0
+  },
+  "c1_homologados": {
+   "linhas": 316,
+   "linhas_fora_do_quadro": 20,
+   "celulas_do_resultado_fora_do_quadro": 18,
+   "celulas_do_quadro_sem_linha_no_resultado": 1045,
+   "codigo_de_curso_com_nome_diferente_do_quadro": 0,
+   "ibge_impresso_digitos": {
+    "6": 316
+   },
+   "linhas_com_ibge_impresso_diferente_do_quadro": 0,
+   "cnes_do_resultado_em_mais_de_um_municipio_no_quadro": 0
+  },
+  "c2_resultado_final": {
+   "linhas": 3646,
+   "linhas_fora_do_quadro": 0,
+   "celulas_do_resultado_fora_do_quadro": 0,
+   "celulas_do_quadro_sem_linha_no_resultado": 579,
+   "codigo_de_curso_com_nome_diferente_do_quadro": 0,
+   "alocados_fora_do_quadro": 0,
+   "cnes_do_resultado_em_mais_de_um_municipio_no_quadro": 0
+  },
+  "c2_resultado_preliminar": {
+   "linhas": 3442,
+   "linhas_fora_do_quadro": 0,
+   "celulas_do_resultado_fora_do_quadro": 0,
+   "celulas_do_quadro_sem_linha_no_resultado": 579,
+   "codigo_de_curso_com_nome_diferente_do_quadro": 0,
+   "alocados_fora_do_quadro": 0,
+   "ibge_impresso_digitos": {
+    "6": 3442
+   },
+   "linhas_com_ibge_impresso_diferente_do_quadro": 0,
+   "cnes_do_resultado_em_mais_de_um_municipio_no_quadro": 0
+  },
+  "c2_ch2_resultado_contra_quadro_ch1": {
+   "linhas": 1053,
+   "linhas_fora_do_quadro": 0,
+   "celulas_do_resultado_fora_do_quadro": 0,
+   "celulas_do_quadro_sem_linha_no_resultado": 1171,
+   "codigo_de_curso_com_nome_diferente_do_quadro": 0,
+   "alocados_fora_do_quadro": 0,
+   "ibge_impresso_digitos": {
+    "7": 1053
+   },
+   "linhas_com_ibge_impresso_diferente_do_quadro": 87,
+   "cnes_do_resultado_em_mais_de_um_municipio_no_quadro": 0
+  },
+  "c3_resultado_sub_judice": {
+   "linhas": 4532,
+   "linhas_fora_do_quadro": 0,
+   "celulas_do_resultado_fora_do_quadro": 0,
+   "celulas_do_quadro_sem_linha_no_resultado": 938,
+   "codigo_de_curso_com_nome_diferente_do_quadro": 0,
+   "alocados_fora_do_quadro": 0,
+   "ibge_impresso_digitos": {
+    "6": 4532
+   },
+   "linhas_com_ibge_impresso_diferente_do_quadro": 0,
+   "cnes_do_resultado_em_mais_de_um_municipio_no_quadro": 0
+  },
+  "cnes_em_mais_de_um_municipio_entre_todos_os_quadros": 0
+ },
+ "segunda_opcao": {
+  "c1_confirmados_2a_opcao": 64,
+  "c2_alocados_2a_opcao": 134,
+  "c3_alocados_2a_opcao": 76,
+  "c2_pessoas_com_mais_de_um_alocado": 0,
+  "nota": "cada linha do resultado é candidato × opção com a célula da opção; a linha marcada ALOCADO/CONFIRMADO é a da célula onde a pessoa ficou; contar por essa linha atribui o alocado de 2a opção à célula da 2a opção"
+ },
+ "comparacao_pipeline": {
+  "celulas_auditoria": 5135,
+  "celulas_pipeline": 5135,
+  "celulas_em_ambos": 5135,
+  "municipios_auditoria": 1570,
+  "municipios_pipeline": 1570,
+  "municipios_em_ambos": 1570,
+  "divergencias_por_campo": {
+   "municipio|n_celulas_preenchidas x n_celulas_preenchidas_ch1|ciclo1": 6
+  }
+ },
+ "ivs_errado_no_caminho_H1": {
+  "scripts/rdd_bolsa/12_construir_outcomes_funil.py": false,
+  "scripts/rdd_bolsa/23_estimar_contagem_vagas.py": false,
+  "scripts/rdd_bolsa/24_abertura_vagas_selecao.py": false,
+  "scripts/rdd_bolsa/38_diagnostico_queda_0300.py": false,
+  "scripts/rdd_bolsa/13_estimar_E6_funil.py": false,
+  "scripts/rdd_bolsa/rdd_lib.py": false
+ },
+ "gravado_contra_refeito": {
+  "linhas": 32,
+  "maior_diferenca_absoluta": 1.7719159473017498e-13,
+  "sem_correspondente": 0
+ },
+ "entradas": {
+  "c1_quadro": {
+   "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_vagas.xlsx",
+   "sha256": "51c6807f6bc2efa252b5236d89c5384ae484c4d47c8b65d4161c3facbfebe304"
+  },
+  "c1_aloc": {
+   "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada.xlsx",
+   "sha256": "0acfba2a89e0c269b754c0ca0fd5a2426be511f88a3c1a934a41345f8c9ffd0c"
+  },
+  "c1_aloc_sj": {
+   "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_alocacao_retificada_subjudice.xlsx",
+   "sha256": "bffd60b79b1ad1352d8bb636192311eecab484818da01fce8b821dde58793bec"
+  },
+  "c1_realoc": {
+   "caminho": "data/raw/aquisicao/vagas/2025_ciclo1_chamada1_realocacao_retificado.xlsx",
+   "sha256": "7c31cb441b8668eca0c06a6c6a648c731e26d1f14162fe071fd9695ebfe89b86"
+  },
+  "c1_homol": {
+   "caminho": "data/raw/pmm_e/2025_ciclo1_chamada1_homologados.xlsx",
+   "sha256": "4f4d0d3c621c0c540002aae8b6f453665dcad33be5856516ce299ad9b2484d9b"
+  },
+  "c1_ch2_quadro_aloc": {
+   "caminho": "data/raw/pmm_e/2025_ciclo1_chamada2_vagas_e_alocados.xlsx",
+   "sha256": "f1b8f7533cb13d8aba21d1100ab957e6accac52532fb8235e1b4231343a0588c"
+  },
+  "c1_ch2_homol": {
+   "caminho": "data/raw/pmm_e/2025_ciclo1_chamada2_homologados.xlsx",
+   "sha256": "4e85cfe45b2e5e1f7ebef78aa5dc90ba61b7adc5f7046f43a5066803f603e147"
+  },
+  "c2_quadro_orig": {
+   "caminho": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_original.xlsx",
+   "sha256": "cddad12d958963e29d3b9912814990c90a9220ba724f4657d9181cc1b9e3e049"
+  },
+  "c2_quadro_ret1": {
+   "caminho": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",
+   "sha256": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8"
+  },
+  "c2_quadro_ret2": {
+   "caminho": "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+   "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b"
+  },
+  "c2_prelim": {
+   "caminho": "data/raw/pmm_e/resultado-preliminar-pmme.xlsx",
+   "sha256": "90b4c863f6e07e3eb98dc221dfe1622a7a69041e31b54e95d036e44782144803"
+  },
+  "c2_final": {
+   "caminho": "data/raw/pmm_e/resultado-final-pmme-2o-ciclo-25-05.xlsx",
+   "sha256": "8e85a28a57db1283cd3103065b04909b637cb76aab73482889e6b5fe50182e3c"
+  },
+  "c2_reman9": {
+   "caminho": "data/raw/pmm_e/2026_ciclo2_chamada1_resultado_final_remanescentes.xlsx",
+   "sha256": "db39d51f9163fd8deedc8727ced37bf3fcdf19b4a6966d91a396e09f5f2a26e6"
+  },
+  "c2_reman81": {
+   "caminho": "data/raw/pmm_e/resultado-final-vagas-remanescentes.xlsx",
+   "sha256": "70d67659cbfb7a3ec78452f76c70e9b9d0fce66ab5bb1b0b15934438edb83ad1"
+  },
+  "c2_ch2_quadro": {
+   "caminho": "data/raw/pmm_e/2026_ciclo2_chamada2_vagas.xlsx",
+   "sha256": "4815e1558b515d4cdabf245b45e24062ab2e9531abd657b4f24f68bb45b3d3a4"
+  },
+  "c2_ch2_result": {
+   "caminho": "data/raw/pmm_e/2026_ciclo2_chamada2_resultado_final.xlsx",
+   "sha256": "8690d6fc381692fc20c59ae077ac8b80ca1ce27dd03d27fd8e1ef17c75abc85f"
+  },
+  "c3_quadro_orig": {
+   "caminho": "data/raw/aquisicao/vagas/2026_ciclo3_chamada1_vagas_original.xlsx",
+   "sha256": "417eb9a459df88e4600992237c4b2dae5e9315e933eeaada7d8d6eb3faf96dda"
+  },
+  "c3_quadro_ret": {
+   "caminho": "data/raw/pmm_e/2026_ciclo3_chamada1_vagas_retificadas.xlsx",
+   "sha256": "6bc07f48d0eaac37936fc827ebdefd12fb7bf2be86dc26f64a08e1f5b57f5371"
+  },
+  "c3_result_sj": {
+   "caminho": "data/raw/pmm_e/2026_ciclo3_chamada1_resultado_final_sub_judice.xlsx",
+   "sha256": "d74f268bb7192c80a02c94e54eb4407e60a0923ad7d0310c2c6b432b3dbbb6ee"
+  },
+  "c3_adesao": {
+   "caminho": "data/raw/pmm_e/2026_ciclo3_adesao_gestores_resultado_final.xlsx",
+   "sha256": "0c07d4c972d14bac8ae9b8c99d5edac32f9ea76996ec82e92198065ac63b1f74"
+  },
+  "ivs_oficial": {
+   "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+   "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe"
+  },
+  "pipeline_celula": {
+   "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+   "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d"
+  },
+  "pipeline_municipio": {
+   "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+   "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc"
+  }
+ },
+ "saidas": {
+  "a36_celulas.csv": "9921cf98f32563de9e54c9630831fdf913cd2923944c33044cb8effce1aaf225",
+  "a36_divergencias_pipeline.csv": "818361f6153a44d3240c58650d68db653f1704bc1d05d0503c430442349c646b",
+  "a36_estimativas.csv": "09bd2c78249249120e4497ca150d729f28e046acc6760c13e2f92b8b21eaf197",
+  "a36_gravado_contra_refeito.csv": "ebddd813a5dfecb964b0f899474874600da81cd3f186663823fe937610501711",
+  "a36_municipios.csv": "5709b82429eec25987d9d46da10c893d64cca64016403f32c13836db7fa108d0",
+  "a36_vizinhos_0300_0400.csv": "d33772080441bc72ece93d9f6a2ff6ab5b46add92b0cbff67a07402a86da9101"
+ }
+}

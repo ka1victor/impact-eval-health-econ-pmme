@@ -109,6 +109,7 @@ scripts/
 ├── 03_planejar_aquisicao_cnes.py       # Planejamento e manifesto de competências CNES
 ├── apresentacao/                       # Figuras da apresentação da banca 1, geradas de output/
 ├── aquisicao/                          # Tratamento de vagas, ponte CBO, malha, painel e população
+├── auditoria_H1/                       # Auditoria 36: reconstrução independente da H1 a partir dos brutos
 ├── avaliacao_ciclo3/                   # Protocolo prospectivo e piloto do ciclo 3
 ├── avaliacao_impacto/                  # Pipeline do diagnóstico histórico DDD agregada
 ├── rdd_bolsa/                          # RDD do adicional de bolsa nos cortes do IVS 2010 oficial
@@ -124,6 +125,7 @@ scripts/
 - **`tema_trabalho/`:** Contém a cadeia empírica central do artigo (A1 a A8), desde a auditoria inicial, tipologia territorial e resultados associativos até o cutoff estrito de seleção, seus placebos e a replicação pública.
 - **`avaliacao_impacto/`:** Reúne o pipeline do diagnóstico histórico DDD (imediatas vs reserva). Avalia portão de relevância, constrói painéis analíticos, estima modelos estáticos e dinâmicos (estudo de evento), testa mecanismos, gera figuras, nota técnica e infográfico.
 - **`rdd_bolsa/`:** RDD sharp do adicional de R$ 5 mil nos cortes 0,300 e 0,400 do IVS 2010 oficial do Ipea: portão R1, escore completo, estimações E1 a E5, conferência do sinal, relatório e galeria; na rodada multi-outcome, outcomes do funil (`12_`), E6 (`13_`), E7 (`14_`) e E9 (`16_`), com a biblioteca `rdd_lib.py`. Os scripts `00_` a `03_` são registro superado: usavam o arquivo de IVS errado ou o pedido de dados cancelado.
+- **`auditoria_H1/`:** Auditoria 36 (`docs/auditorias/36_auditoria_dados_H1.md`): reconstrução independente, dos arquivos brutos, das bases da H1 (célula e município) e dos saltos em 0,300 e 0,400, com leitor e estimador próprios; não importa `rdd_bolsa/` nem `aquisicao/`; saídas em `output/auditoria_H1/`; fora do `run_all.py`.
 - **`avaliacao_ciclo3/`:** Pipeline prospectivo do ciclo 3 (congelamento de coorte, ingestão de dados de procedimentos hospitalares SIH/SUS pré-tratamento e auditoria de potência).
 - **`revisao_literatura/`:** Mineração de referências (`01_minerar_literatura.py`) e subpasta `historico/` com os scripts de apoio que geraram tabelas de rúbrica e documentação teórica em estágios anteriores.
 - **`utils/`:** Módulos utilitários reutilizáveis:
