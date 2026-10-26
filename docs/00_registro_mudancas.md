@@ -8,6 +8,18 @@
 
 ---
 
+## 26/10/2026 — Plano da entrega empírica da banca 2
+
+Motivo: revisão, a pedido do autor, do que falta para a banca 2 (28/10 e 04/11) à luz do deck atual do grupo e da síntese 57.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca2/04_plano_entrega_empirica.md`](07_apresentacoes/banca2/04_plano_entrega_empirica.md) | estado por bloco da banca, erros do deck, proposta de hipóteses H1–H4 pela cadeia do modelo, tarefas até 28/10 e 04/11 |
+
+---
+
 ## 26/10/2026 — Auditoria independente do protocolo 59 (P3/P4)
 
 Motivo: auditoria do commit `b71468b` (sensibilidade de Rambachan–Roth e comparação alternativa).
