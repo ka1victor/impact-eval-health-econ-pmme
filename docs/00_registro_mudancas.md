@@ -8,6 +8,24 @@
 
 ---
 
+## 26/10/2026 — Auditoria 36: reconstrução independente dos dados da H1 a partir dos arquivos brutos
+
+Motivo: pergunta do autor ("a gente não entendeu errado ou fez alguma besteira com os dados?") sobre a queda em
+0,300. Leitor e estimador próprios, sem importar os scripts 12, 23, 24 e 38. Sem erro de dados: as 5.135 células,
+as 1.570 linhas município × ciclo e as 32 estimativas gravadas são reproduzidas. Há um erro de entendimento: o quadro
+de 19/03/2026 do ciclo 2 é posterior à alocação, e por isso o "tipo de vaga" do ciclo 2 não é pré-tratamento. Esse
+erro não cria o sinal. Pós-resultado: a queda coincide com um desequilíbrio de capitais no corte. Nenhum arquivo de
+`output/rdd_bolsa/` nem doc 57* foi alterado.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/36_auditoria_dados_H1.md`](auditorias/36_auditoria_dados_H1.md) | auditoria 36: resposta curta, checklist de 10 itens, divergências pipeline × reconstrução, saltos refeitos por ciclo e corte, recomendações |
+| `scripts/auditoria_H1/` (`a36_leitura.py`, `a36_estimador.py`, `a36_reconstruir_H1.py`) | reconstrução independente; saídas em `output/auditoria_H1/` (rótulo `AUDITORIA_36_RECONSTRUCAO`), fora do `run_all.py` |
+
+---
+
 ## 26/10/2026 — Auditoria 33: diagnóstico da queda no corte 0,300 (protocolo 61), aprovado com correções
 
 Motivo: auditoria independente do script 38, das saídas `DQ_*`, do doc 57l e dos testes. Recálculo próprio de
