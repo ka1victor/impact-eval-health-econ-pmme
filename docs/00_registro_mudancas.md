@@ -8,6 +8,19 @@
 
 ---
 
+## 26/10/2026 — Protocolo 64 executado: oferta local de especialistas comparada no corte
+
+Motivo: execução do protocolo 64. As decisões de implementação (seção 9 do 57q) foram gravadas antes de abrir as
+estimativas; os blocos de resultado são gerados pelo script 43 a partir de `output/rdd_bolsa/OC_*`.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57q_resultados_oferta_local_corte.md`](06_execucao/57q_resultados_oferta_local_corte.md) | resultados do protocolo 64 (forma reduzida no corte, primeiro estágio, razão *fuzzy* com IC de Anderson–Rubin, estudo de evento no corte, chegada por lado do corte, seleção de V), gerado por `scripts/rdd_bolsa/43_oferta_local_corte.py`; auditoria pendente |
+
+---
+
 ## 26/10/2026 — Adendo 48d: controles de localização e de médicos na região, e pareamento perto do corte
 
 Motivo: o autor pediu "adicionar controle de localização, ou presença de médicos da região" e "fazer pareamento
