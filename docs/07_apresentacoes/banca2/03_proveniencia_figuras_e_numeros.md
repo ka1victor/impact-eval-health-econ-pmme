@@ -3,9 +3,11 @@
 > **Regra aplicada:** toda figura e todo número exibido saem de arquivo de
 > `output/` gravado por script versionado (`CLAUDE.md`)<br>
 > **Conteúdo dos slides:** [02_conteudo_slides.md](02_conteudo_slides.md)<br>
-> **Gerador:** [`scripts/apresentacao/gerar_figuras_banca2.py`](../../../scripts/apresentacao/gerar_figuras_banca2.py)<br>
+> **Geradores:** [`scripts/apresentacao/gerar_figuras_banca2.py`](../../../scripts/apresentacao/gerar_figuras_banca2.py)
+> (figuras, tabelas e números) e [`scripts/apresentacao/gerar_deck_banca2.py`](../../../scripts/apresentacao/gerar_deck_banca2.py)
+> (deck)<br>
 > **Teste:** [`tests/test_conteudo_banca2.py`](../../../tests/test_conteudo_banca2.py)<br>
-> **Atualização:** 19 de outubro de 2026
+> **Atualização:** 26 de outubro de 2026
 
 > [!IMPORTANT]
 > **Como a conferência funciona.** O bloco da §2 é **gerado** pelo script a
@@ -15,56 +17,60 @@
 > confere o valor formatado contra o JSON e contra o bloco; (2) confere que
 > todo número de cada slide de [02](02_conteudo_slides.md) é o valor de um
 > código listado na linha `**Números:**` daquele slide ou um parâmetro da §3;
-> (3) confere que todo caminho de figura citado existe e foi produzido por
-> script do pipeline, com hash igual ao do manifesto quando a figura é deste
-> gerador.
+> (3) confere que todo número desenhado dentro das figuras novas é o valor de
+> um código ou um parâmetro; (4) confere que todo caminho de figura citado
+> existe e foi produzido por script do pipeline, com hash igual ao do
+> manifesto; (5) confere que o texto dos slides novos do deck é o do doc 02 e
+> que todo número do deck vem do registro.
 
-## 1. Figuras
+## 1. Figuras e tabelas
 
-| Código | Figura | Slide | Arquivo | Script gerador | Natureza |
-|---|---|:---:|---|---|---|
-| `G1` | bolsa anunciada contra o IVS 2010 oficial, ciclo 1 (variante A colorida, doc 38, D1) | 5 | `output/apresentacao_banca2/regra_bolsa_ivs_oficial.png` (vetor: `.svg`) | `scripts/apresentacao/gerar_figuras_banca2.py`, com `fig_regra_pontos` de `scripts/rdd_bolsa/09_gerar_relatorio_pdf.py` via `10_galeria_figura_regra.py` | EMPIRICO |
-| `G2` | a mesma figura com o arquivo errado no eixo | 6 | `output/apresentacao_banca2/failure_mode/regra_bolsa_arquivo_errado_FAILURE_MODE.png` (vetor: `.svg`) | idem | **FAILURE_MODE** |
-| `G3` | a cadeia em uma figura: um outcome por elo | 10 | `output/apresentacao_banca2/cadeia_sintese_principal.png` | `scripts/apresentacao/gerar_figuras_banca2.py` | EMPIRICO |
-| `G4` | índice P1 com ciclos e cortes agrupados (visual) | 11 | `output/rdd_bolsa/E6_figuras/E6_indice_P1_agrupado.png` | `scripts/rdd_bolsa/13_estimar_E6_funil.py` | EMPIRICO |
-| `G5` | F1.3 no ciclo 2, por corte | 12 | `output/rdd_bolsa/E6_figuras/E6_F1_3_V2.png` | `scripts/rdd_bolsa/13_estimar_E6_funil.py` | EMPIRICO |
-| `G6` | preenchimento: IC convencional contra +10 p.p. | 13 | `output/apresentacao_banca2/descarte_preenchimento.png` | `scripts/apresentacao/gerar_figuras_banca2.py` | EMPIRICO |
-| `G7` | utilidade estimada da célula contra o IVS (E9) | 14 | `output/rdd_bolsa/E9_figuras/E9_utilidade_ivs.png` | `scripts/rdd_bolsa/16_estimar_E9_escolha.py` | EMPIRICO |
-| `G8` | estudo de evento da DiRD, F3.1 em U | 15 | `output/rdd_bolsa/E7_figuras/E7_evento_F3_1_U.png` | `scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py` | EMPIRICO |
-| `G9` | as 23 linhas da tabela-síntese | B1 | `output/apresentacao_banca2/cadeia_sintese_completa.png` | `scripts/apresentacao/gerar_figuras_banca2.py` | EMPIRICO |
-| `G10` | F1.3 no ciclo 1, por corte (âncora do E3) | B2 | `output/rdd_bolsa/E6_figuras/E6_F1_3_V1.png` | `scripts/rdd_bolsa/13_estimar_E6_funil.py` | EMPIRICO |
-| `G11` | F3.1 em nível, por período e corte | B4 | `output/rdd_bolsa/E7_figuras/E7_nivel_F3_1_U.png` | `scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py` | EMPIRICO |
+| Código | Figura | Slide (doc 02) | Arquivo | Script gerador | Natureza |
+|---|---|---|---|---|---|
+| `G1` | bolsa anunciada contra o IVS 2010 oficial, ciclo 1 (variante A colorida, doc 38, D1) | A bolsa é função exata do IVS | `output/apresentacao_banca2/regra_bolsa_ivs_oficial.png` (vetor: `.svg`) | `scripts/apresentacao/gerar_figuras_banca2.py`, com `fig_regra_pontos` via `scripts/rdd_bolsa/10_galeria_figura_regra.py` | EMPIRICO |
+| `G2` | H1: N1 com e sem controle e A3 empilhado e por corte, com "Como ler" | H1 | `output/apresentacao_banca2/h1_preenchimento.png` | `scripts/apresentacao/gerar_figuras_banca2.py` | EMPIRICO |
+| `G3` | H2: razão de chances da 1ª opção (M1, M5 por ciclo, E9 ciclo 2), com "Como ler" | H2 | `output/apresentacao_banca2/h2_escolha.png` | idem | EMPIRICO |
+| `G4` | H4: horas do médico (P4) e comparação na nota de corte (P4-CA), com "Como ler" | H4 | `output/apresentacao_banca2/h4_horas_medico.png` | idem | EMPIRICO |
+| `G5` | cadeia-resumo com as linhas do doc 57 (N1, A3, P1 M1, P4, P6, K1, realocação) e a força da evidência | Na cadeia | `output/apresentacao_banca2/cadeia_resumo_doc57.png` | idem | EMPIRICO |
+| `G6` | tabela descritiva por ciclo | (no deck, tabela nativa) | `output/apresentacao_banca2/tabela_descritiva_ciclos.png` e `.csv` | idem | EMPIRICO |
+| `G7` | tabela de fontes | (no deck, tabela nativa) | `output/apresentacao_banca2/tabela_fontes.png` e `.csv` | idem | EMPIRICO |
+| `G8` | a figura da regra com o arquivo de IVS errado no eixo | fora do deck | `output/apresentacao_banca2/failure_mode/regra_bolsa_arquivo_errado_FAILURE_MODE.png` | gravada em 19/10/2026 pela versão anterior do gerador; **não regenerada** | **FAILURE_MODE** |
+| `G9` | as linhas da tabela-síntese do E8 (rascunho de 19/10) | fora do deck | `output/apresentacao_banca2/cadeia_sintese_completa.png` | `scripts/apresentacao/gerar_figuras_banca2.py` | EMPIRICO |
+| `G10` | um outcome por elo do E8 (rascunho de 19/10) | fora do deck | `output/apresentacao_banca2/cadeia_sintese_principal.png` | idem | EMPIRICO |
+| `G11` | preenchimento: IC convencional contra +10 p.p. (rascunho de 19/10) | fora do deck | `output/apresentacao_banca2/descarte_preenchimento.png` | idem | EMPIRICO |
 
 **Definições.**
-- **`G1` e `G2`.** Ciclo 1, chamada 1 (quadro `c1_ch1` de
+- **`G1`.** Ciclo 1, chamada 1 (quadro `c1_ch1` de
   `output/rdd_bolsa/matriz_municipio_escore_administrativo.csv`), um ponto por
-  município no valor exato da bolsa anunciada, sem deslocamento; cor = IVS do
-  eixo, verde → vermelho, com âncoras nos centros das classes do Ipea. Em
-  `G1` o eixo é o IVS 2010 oficial (`output/aquisicao/a08_ivs_2010_oficial_municipio.csv`);
-  o script para se algum município ficar do lado errado de um corte ou se o
-  número de municípios divergir do portão R1. Em `G2` o eixo é
-  `data/ivs_ipea_2010_municipios.csv`, que **não é o IVS do município**
-  (auditoria 16); a figura só documenta o failure mode, fica na subpasta
-  `failure_mode/` e tem natureza `FAILURE_MODE` no manifesto. Os PNG são a
-  rasterização dos SVG pelo Chromium headless, em escala 2.
-- **`G3` e `G9`.** Lidas de `output/rdd_bolsa/E8_tabela_sintese.csv`. Cada
-  linha tem a sua escala, simétrica em torno do nulo (0; 1 na razão de
-  chances, em escala log): a figura mostra se o IC contém o nulo, não compara
-  tamanhos entre linhas. Azul quando o IC 95% exclui o nulo. O texto de cada
-  linha repete a estimativa e o IC da tabela, e a leitura curta vem da coluna
-  `leitura` (primária com p Holm; q BKY; robustez do E9).
-- **`G6`.** Lida de `output/rdd_bolsa/E8_resumo.json` (`descarte`). Azul
-  quando o limite superior do IC convencional fica abaixo da referência do
-  protocolo; a leitura à direita diz se isso vale em todas as especificações
-  convencionais ou só na principal. O script para se algum IC honesto excluir
-  a referência, porque a nota da figura diz que nenhum exclui.
-- **`G4`.** O número no título da figura é o salto da reta comum do visual,
-  não a estimativa P1; o slide usa a estimativa P1 da tabela.
+  município no valor exato da bolsa anunciada; eixo = IVS 2010 oficial
+  (`output/aquisicao/a08_ivs_2010_oficial_municipio.csv`). O script para se
+  algum município ficar do lado errado de um corte ou se o número de
+  municípios divergir do portão R1. A leitura dos dados agora é feita no
+  próprio gerador (`dados_regra`), sem a função da galeria que também lia o
+  arquivo de IVS errado; o PNG regenerado tem o mesmo SHA-256 de antes.
+- **`G2`, `G3` e `G4`.** Um painel por outcome; em cada linha, o rótulo em
+  cima e o intervalo de 95% embaixo, com o valor à direita. Verde: o IC exclui
+  o nulo; cinza: contém. A linha preta é o nulo; a tracejada laranja, a
+  referência de +10 p.p. do protocolo. O bloco "Como ler" fica na própria
+  imagem: foi a lição do grupo, que achou incompreensíveis os gráficos de
+  descontinuidade com faixas e pontos sem explicação. Todo texto desenhado é
+  gravado no manifesto (`figuras_novas`), e o teste confere os números.
+- **`G5`.** Uma linha por pergunta do doc 57, cada uma na sua escala,
+  simétrica em torno do nulo; a "força da evidência" é a categoria fixa do
+  doc 57, §2.
+- **`G6` e `G7`.** As descritivas são contadas pelo gerador no quadro de
+  células da 1ª chamada (`output/rdd_bolsa/outcomes/outcomes_V_celula.parquet`)
+  e no resumo do portão G1. A faixa é a da **grade aplicada** (cortes 0,300 e
+  0,400 no IVS 2010 oficial); o script para se ela divergir da faixa publicada
+  em alguma célula com IVS. No deck, as duas tabelas entram como tabela nativa,
+  com o texto do doc 02, que o teste confere contra os CSVs.
+- **`G8`.** Não é regenerada: refazê-la exigiria ler o arquivo de IVS errado,
+  e a contagem desenhada nela não tem mais código no registro. Fica em
+  `failure_mode/`, com natureza FAILURE_MODE no manifesto, e não entra no deck.
 
 O manifesto `output/apresentacao_banca2/manifesto_figuras.json` registra, para
-cada figura gerada aqui, o SHA-256, a natureza e as fontes, e para cada
-entrada o SHA-256, o papel, a data de referência, a cobertura, a unidade e as
-chaves.
+cada figura, o SHA-256, a natureza e as fontes, e para cada entrada o
+SHA-256, o papel, a data de referência, a cobertura, a unidade e as chaves.
 
 ## 2. Números
 
@@ -75,8 +81,17 @@ JSON: `EMPIRICO`; `FAILURE_MODE`, que só documenta o arquivo errado e nunca é
 resultado; e `TEXTO_NORMATIVO`/`CITACAO_LITERATURA`, extraídos por expressão
 regular do texto-fonte (auditoria 18; trechos do doc 20 copiados pelo E8).
 
-Formatos: `pp1s` = fração multiplicada por cem, uma casa, com sinal (p.p.); `d2s`/`d3s`/`d1s` =
-duas, três ou uma casa, com sinal; `d2`/`d3` = sem sinal; `p3` = três casas,
+Os códigos da entrega de 26/10/2026 vêm de quatro tipos de fonte: a chave `v`
+de `output/rdd_bolsa/S57_resumo.json` (a síntese vigente, doc 57, que já grava
+o arquivo e o seletor de origem de cada valor); os CSVs de estimativas dos
+blocos (`N_estimativas.csv`, `P1_estimativas.csv`, `H_estimativas.csv`,
+`CA_estimativas.csv`); o resumo do portão G1 e o manifesto do a16; e as
+descritivas contadas pelo gerador (seletor `descritiva`). A razão de chances
+por +R$ 5 mil do M5 por ciclo é a transformação declarada no seletor
+(`transf`: multiplica o coeficiente por R$ 1 mil e exponencia).
+
+Formatos: `pp1s` = fração multiplicada por cem, uma casa, com sinal (p.p.); `d1s`/`d2s`/`d3s`/`d4s` =
+uma a quatro casas, com sinal; `d1`/`d2`/`d3` = sem sinal; `p3` = três casas,
 ou "< 0,001"; `pct0`/`pct1` = fração multiplicada por cem (%); `int` = inteiro com separador de
 milhar; `fracao` = "a/b" com separador de milhar; `txt` = trecho como está.
 
@@ -242,12 +257,200 @@ milhar; `fracao` = "a/b" com separador de milhar; `txt` = trecho como está.
 | `E8_LINHAS` | 23 | EMPIRICO | `output/rdd_bolsa/E8_resumo.json` | `{"caminho": ["saidas", "E8_tabela_sintese.csv", "linhas"]}` | `int` | linhas principais da tabela-síntese do E8 |
 | `MAG_DEG300` | +50 | EMPIRICO | `output/rdd_bolsa/E8_resumo.json` | `{"caminho": ["degrau_relativo_bolsa", "0.300", "relativo"]}` | `pct0s` | degrau relativo da bolsa em 0,300 (%) |
 | `MAG_DEG400` | +33 | EMPIRICO | `output/rdd_bolsa/E8_resumo.json` | `{"caminho": ["degrau_relativo_bolsa", "0.400", "relativo"]}` | `pct0s` | degrau relativo da bolsa em 0,400 (%) |
+| `A3_EMP_TAU` | −4,9 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_emp_tau", "v"]}` | `d1s` | A3 ciclos 1–3, cortes empilhados: salto (p.p.) |
+| `A3_EMP_INF` | −12,9 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_emp_lo", "v"]}` | `d1s` | A3 empilhado: IC 95% inferior |
+| `A3_EMP_SUP` | +3,2 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_emp_hi", "v"]}` | `d1s` | A3 empilhado: IC 95% superior (maior aumento compatível) |
+| `A3_EMP_MDE` | 11,5 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_emp_mde", "v"]}` | `d1` | A3 empilhado: MDE de 80% (p.p.) |
+| `A3_EMP_MEDIA` | 34,7 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_emp_media", "v"]}` | `d1` | A3 empilhado: média abaixo do corte (%) |
+| `A3_EMP_P` | 0,237 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_emp_p", "v"]}` | `p3` | A3 empilhado: p |
+| `A3_300_TAU` | −8,4 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_300_tau", "v"]}` | `d1s` | A3 ciclos 1–3, corte 0,300: salto (p.p.) |
+| `A3_300_INF` | −18,5 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_300_lo", "v"]}` | `d1s` | A3 0,300: IC inferior |
+| `A3_300_SUP` | +1,7 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_300_hi", "v"]}` | `d1s` | A3 0,300: IC superior |
+| `A3_300_MDE` | 14,5 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_300_mde", "v"]}` | `d1` | A3 0,300: MDE de 80% |
+| `A3_400_TAU` | −1,3 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_400_tau", "v"]}` | `d1s` | A3 ciclos 1–3, corte 0,400: salto (p.p.) |
+| `A3_400_INF` | −14,0 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_400_lo", "v"]}` | `d1s` | A3 0,400: IC inferior |
+| `A3_400_SUP` | +11,3 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_400_hi", "v"]}` | `d1s` | A3 0,400: IC superior |
+| `A3_400_MDE` | 18,1 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_400_mde", "v"]}` | `d1` | A3 0,400: MDE de 80% |
+| `A3_300_MEDIA` | 33,3 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_300_media", "v"]}` | `d1` | A3 0,300: média abaixo do corte (%) |
+| `A3_400_MEDIA` | 36,8 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_todos_400_media", "v"]}` | `d1` | A3 0,400: média abaixo do corte (%) |
+| `A3_C1_MEDIA` | 31,2 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_emp_media", "v"]}` | `d1` | A3 ciclo 1: média abaixo do corte (%) |
+| `A3_C1_TAU` | −3,3 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_emp_tau", "v"]}` | `d1s` | A3 só ciclo 1, cortes empilhados: salto (p.p.) |
+| `A3_C1_INF` | −20,9 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_emp_lo", "v"]}` | `d1s` | A3 ciclo 1: IC inferior |
+| `A3_C1_SUP` | +14,2 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_emp_hi", "v"]}` | `d1s` | A3 ciclo 1: IC superior |
+| `A3_C1_MDE` | 25,1 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3p_c1_emp_mde", "v"]}` | `d1` | A3 ciclo 1: MDE de 80% |
+| `A3C_EMP_TAU` | −7,1 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_emp_tau", "v"]}` | `d1s` | A3 célula com candidato de 1ª opção, empilhado (p.p.) |
+| `A3C_EMP_INF` | −19,6 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_emp_lo", "v"]}` | `d1s` | IC inferior |
+| `A3C_EMP_SUP` | +5,4 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "a3c_todos_emp_hi", "v"]}` | `d1s` | IC superior |
+| `N1_SA_TAU` | −0,76 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N1_tau", "v"]}` | `d2s` | N1 com controle das vagas oferecidas (S-a): salto (vagas por município) |
+| `N1_SA_INF` | −1,44 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N1_lo", "v"]}` | `d2s` | N1 S-a: IC 95% inferior |
+| `N1_SA_SUP` | −0,07 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N1_hi", "v"]}` | `d2s` | N1 S-a: IC 95% superior |
+| `N1_SA_P` | 0,031 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N1_p", "v"]}` | `p3` | N1 S-a: p |
+| `N1_SA_HOLM` | 0,124 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N1_holm", "v"]}` | `p3` | N1 S-a: p de Holm (família N1–N4) |
+| `N1_SA_MDE` | 0,98 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N1_mde", "v"]}` | `d2` | N1 S-a: MDE de 80% |
+| `N1_SB_TAU` | −1,45 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "especificacao": "S-b", "variante": "principal"}, "coluna": "tau"}` | `d2s` | N1 sem controle (S-b, efeito total da faixa): salto |
+| `N1_SB_INF` | −2,90 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "especificacao": "S-b", "variante": "principal"}, "coluna": "ic95_inf"}` | `d2s` | N1 S-b: IC inferior |
+| `N1_SB_SUP` | −0,01 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "especificacao": "S-b", "variante": "principal"}, "coluna": "ic95_sup"}` | `d2s` | N1 S-b: IC superior |
+| `N1_SB_P` | 0,048 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "especificacao": "S-b", "variante": "principal"}, "coluna": "p_valor"}` | `p3` | N1 S-b: p |
+| `N1_SB_MDE` | 2,06 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "especificacao": "S-b", "variante": "principal"}, "coluna": "mde"}` | `d2` | N1 S-b: MDE de 80% |
+| `N1_MEDIA` | 2,16 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "especificacao": "S-a", "variante": "principal"}, "coluna": "media_abaixo"}` | `d2` | N1: média do lado de bolsa menor, na janela (vagas por município) |
+| `N1_NABX` | 267 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "especificacao": "S-a", "variante": "principal"}, "coluna": "n_abaixo"}` | `int` | N1: municípios abaixo do corte (h = 0,050, ciclos e cortes empilhados) |
+| `N1_NACI` | 265 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "especificacao": "S-a", "variante": "principal"}, "coluna": "n_acima"}` | `int` | N1: municípios acima do corte |
+| `N1_UNICO_TAU` | −1,03 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "variante": "controle_coeficiente_unico"}, "coluna": "tau"}` | `d2s` | N1 com um só coeficiente do controle (auditoria 20, fora do protocolo): salto |
+| `N1_UNICO_INF` | −1,79 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "variante": "controle_coeficiente_unico"}, "coluna": "ic95_inf"}` | `d2s` | IC inferior |
+| `N1_UNICO_SUP` | −0,28 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "variante": "controle_coeficiente_unico"}, "coluna": "ic95_sup"}` | `d2s` | IC superior |
+| `N1_HON_INF` | −79,58 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "variante": "S-a: ic_honesto_M_x1"}, "coluna": "ic95_inf"}` | `d2s` | N1 S-a: IC honesto (M do protocolo), inferior |
+| `N1_HON_SUP` | +78,07 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "variante": "S-a: ic_honesto_M_x1"}, "coluna": "ic95_sup"}` | `d2s` | N1 S-a: IC honesto, superior |
+| `N1_H030_TAU` | −0,78 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "especificacao": "S-a", "variante": "h=0.030"}, "coluna": "tau"}` | `d2s` | N1 S-a com h = 0,030 |
+| `N1_H080_TAU` | −0,47 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "especificacao": "S-a", "variante": "h=0.080"}, "coluna": "tau"}` | `d2s` | N1 S-a com h = 0,080 |
+| `N1_DONUT_TAU` | −0,65 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "variante": "donut (S-a)"}, "coluna": "tau"}` | `d2s` | N1 S-a sem os municípios colados ao corte (donut) |
+| `N1_DONUT_INF` | −1,43 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "variante": "donut (S-a)"}, "coluna": "ic95_inf"}` | `d2s` | IC inferior |
+| `N1_DONUT_SUP` | +0,14 | EMPIRICO | `output/rdd_bolsa/N_estimativas.csv` | `{"filtro": {"outcome_id": "N1", "populacao": "V1+V2+V3", "corte": "empilhado", "variante": "donut (S-a)"}, "coluna": "ic95_sup"}` | `d2s` | IC superior |
+| `N2_SA_TAU` | −0,31 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N2_tau", "v"]}` | `d2s` | N2 S-a: salto |
+| `N2_SA_INF` | −0,66 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N2_lo", "v"]}` | `d2s` | N2 S-a: IC inferior |
+| `N2_SA_SUP` | +0,04 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N2_hi", "v"]}` | `d2s` | N2 S-a: IC superior |
+| `N2_SA_HOLM` | 0,235 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N2_holm", "v"]}` | `p3` | N2 S-a: p de Holm |
+| `N3_SA_TAU` | −0,35 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N3_tau", "v"]}` | `d2s` | N3 S-a: salto |
+| `N3_SA_INF` | −0,87 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N3_lo", "v"]}` | `d2s` | N3 S-a: IC inferior |
+| `N3_SA_SUP` | +0,17 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N3_hi", "v"]}` | `d2s` | N3 S-a: IC superior |
+| `N3_SA_HOLM` | 0,376 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N3_holm", "v"]}` | `p3` | N3 S-a: p de Holm |
+| `N4_SA_TAU` | −0,21 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N4_tau", "v"]}` | `d2s` | N4 S-a: salto |
+| `N4_SA_INF` | −1,34 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N4_lo", "v"]}` | `d2s` | N4 S-a: IC inferior |
+| `N4_SA_SUP` | +0,92 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N4_hi", "v"]}` | `d2s` | N4 S-a: IC superior |
+| `N4_SA_HOLM` | 0,717 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "n_N4_holm", "v"]}` | `p3` | N4 S-a: p de Holm |
+| `M1_COEF` | +0,0424 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_coef", "v"]}` | `d4s` | M1: coeficiente da bolsa por R$ 1 mil/mês |
+| `M1_INF` | −0,0027 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_lo", "v"]}` | `d4s` | M1: IC 95% inferior |
+| `M1_SUP` | +0,0874 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_hi", "v"]}` | `d4s` | M1: IC 95% superior |
+| `M1_P` | 0,065 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_p", "v"]}` | `p3` | M1: p (família de um teste; p de Holm = p) |
+| `M1_RC` | 1,24 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_rc", "v"]}` | `d2` | M1: razão de chances por +R$ 5 mil |
+| `M1_RC_INF` | 0,99 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_rc_lo", "v"]}` | `d2` | M1: razão de chances, IC inferior |
+| `M1_RC_SUP` | 1,55 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_rc_hi", "v"]}` | `d2` | M1: razão de chances, IC superior |
+| `M1_RC_MDE` | 1,38 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "m1_rc_mde", "v"]}` | `d2` | M1: MDE de 80% em razão de chances |
+| `M1_N` | 5.421 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M1", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "n_candidatos"}` | `int` | M1: candidatos de 1ª opção na amostra P1 |
+| `M5_C1_RC` | 1,07 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "1", "termo": "bolsa_mil"}, "coluna": "coef", "transf": [["mul", 5], ["exp"]]}` | `d2` | M5 ciclo 1: razão de chances por +R$ 5 mil |
+| `M5_C1_RCI` | 0,69 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "1", "termo": "bolsa_mil"}, "coluna": "ic95_inf", "transf": [["mul", 5], ["exp"]]}` | `d2` | M5 ciclo 1: IC inferior |
+| `M5_C1_RCS` | 1,65 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "1", "termo": "bolsa_mil"}, "coluna": "ic95_sup", "transf": [["mul", 5], ["exp"]]}` | `d2` | M5 ciclo 1: IC superior |
+| `M5_C1_P` | 0,764 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "1", "termo": "bolsa_mil"}, "coluna": "p"}` | `p3` | M5 ciclo 1: p |
+| `M5_C1_COEF` | +0,0132 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "1", "termo": "bolsa_mil"}, "coluna": "coef"}` | `d4s` | M5 ciclo 1: coeficiente por R$ 1 mil |
+| `M5_C2_RC` | 1,70 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "2", "termo": "bolsa_mil"}, "coluna": "coef", "transf": [["mul", 5], ["exp"]]}` | `d2` | M5 ciclo 2: razão de chances por +R$ 5 mil |
+| `M5_C2_RCI` | 1,22 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "2", "termo": "bolsa_mil"}, "coluna": "ic95_inf", "transf": [["mul", 5], ["exp"]]}` | `d2` | M5 ciclo 2: IC inferior |
+| `M5_C2_RCS` | 2,37 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "2", "termo": "bolsa_mil"}, "coluna": "ic95_sup", "transf": [["mul", 5], ["exp"]]}` | `d2` | M5 ciclo 2: IC superior |
+| `M5_C2_P` | 0,002 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "2", "termo": "bolsa_mil"}, "coluna": "p"}` | `p3` | M5 ciclo 2: p |
+| `M5_C2_COEF` | +0,1064 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "2", "termo": "bolsa_mil"}, "coluna": "coef"}` | `d4s` | M5 ciclo 2: coeficiente por R$ 1 mil |
+| `M5_C3_RC` | 1,00 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "3", "termo": "bolsa_mil"}, "coluna": "coef", "transf": [["mul", 5], ["exp"]]}` | `d2` | M5 ciclo 3: razão de chances por +R$ 5 mil |
+| `M5_C3_RCI` | 0,72 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "3", "termo": "bolsa_mil"}, "coluna": "ic95_inf", "transf": [["mul", 5], ["exp"]]}` | `d2` | M5 ciclo 3: IC inferior |
+| `M5_C3_RCS` | 1,39 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "3", "termo": "bolsa_mil"}, "coluna": "ic95_sup", "transf": [["mul", 5], ["exp"]]}` | `d2` | M5 ciclo 3: IC superior |
+| `M5_C3_P` | 0,990 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "3", "termo": "bolsa_mil"}, "coluna": "p"}` | `p3` | M5 ciclo 3: p |
+| `M5_C3_COEF` | −0,0004 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "ciclo": "3", "termo": "bolsa_mil"}, "coluna": "coef"}` | `d4s` | M5 ciclo 3: coeficiente por R$ 1 mil |
+| `M5_WALD_P` | 0,058 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M5", "tipo_linha": "wald_igualdade_ciclos"}, "coluna": "p"}` | `p3` | M5: Wald da igualdade do coeficiente da bolsa entre os ciclos, p |
+| `M0_COEF` | +0,0690 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M0", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "coef"}` | `d4s` | M0: coeficiente da bolsa (sem distância) |
+| `M2_COEF` | +0,0492 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M2", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "coef"}` | `d4s` | M2: coeficiente da bolsa (log da distância) |
+| `M4_COEF` | +0,0759 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M4", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "coef"}` | `d4s` | M4: coeficiente da bolsa (efeito fixo de UF) |
+| `M7_COEF` | +0,0304 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M7", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "coef"}` | `d4s` | M7: coeficiente da bolsa (logit explodido) |
+| `M8_COEF` | +0,0499 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M8", "ciclo": "empilhado", "termo": "media_bolsa_mil"}, "coluna": "coef"}` | `d4s` | M8: coeficiente da bolsa (logit misto, média) |
+| `M9_COEF` | +0,0434 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M9", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "coef"}` | `d4s` | M9: coeficiente da bolsa (logit aninhado) |
+| `M7_INF` | −0,0150 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M7", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "ic95_inf"}` | `d4s` | M7: IC inferior |
+| `M7_SUP` | +0,0758 | EMPIRICO | `output/rdd_bolsa/P1_estimativas.csv` | `{"filtro": {"modelo": "M7", "ciclo": "empilhado", "termo": "bolsa_mil"}, "coluna": "ic95_sup"}` | `d4s` | M7: IC superior |
+| `P4_HT_ATT` | +6,6 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_ht_att", "v"]}` | `d1s` | P4 horas totais: média de θ(0..+6), h/sem |
+| `P4_HT_INF` | +5,4 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_ht_lo", "v"]}` | `d1s` | P4 horas totais: IC inferior |
+| `P4_HT_SUP` | +7,8 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_ht_hi", "v"]}` | `d1s` | P4 horas totais: IC superior |
+| `P4_HT_PRE` | 0,310 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_ht_pre", "v"]}` | `p3` | P4 horas totais: p do Wald do pré |
+| `P4_HM_ATT` | +8,7 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_hm_att", "v"]}` | `d1s` | P4 horas no município do posto: média de θ(0..+6), h/sem |
+| `P4_HM_INF` | +7,9 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_hm_lo", "v"]}` | `d1s` | P4 horas no município do posto: IC inferior |
+| `P4_HM_SUP` | +9,5 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_hm_hi", "v"]}` | `d1s` | P4 horas no município do posto: IC superior |
+| `P4_HM_PRE` | 0,001 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_hm_pre", "v"]}` | `p3` | P4 horas no município do posto: p do Wald do pré |
+| `P4_HF_ATT` | −2,1 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_hf_att", "v"]}` | `d1s` | P4 horas fora do município do posto: média de θ(0..+6), h/sem |
+| `P4_HF_INF` | −3,2 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_hf_lo", "v"]}` | `d1s` | P4 horas fora do município do posto: IC inferior |
+| `P4_HF_SUP` | −1,0 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_hf_hi", "v"]}` | `d1s` | P4 horas fora do município do posto: IC superior |
+| `P4_HF_PRE` | 0,927 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_hf_pre", "v"]}` | `p3` | P4 horas fora do município do posto: p do Wald do pré |
+| `P4_ORIGEM` | 51,0 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_origem", "v"]}` | `d1` | P4: médicos que já tinham vínculo no município do posto (%) |
+| `P4_ORIGEM_INF` | 48,4 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_origem_lo", "v"]}` | `d1` | IC inferior (%) |
+| `P4_ORIGEM_SUP` | 53,7 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p4_origem_hi", "v"]}` | `d1` | IC superior (%) |
+| `RR_HT` | 1,30 | EMPIRICO | `output/rdd_bolsa/H_estimativas.csv` | `{"filtro": {"id_linha": "H-P4-horas_totais", "alvo": "media_pos", "restricao": "RM_ruptura"}, "coluna": "parametro"}` | `d2` | Rambachan–Roth, horas totais: ruptura de M̄ (Δ^RM, teste condicional) |
+| `RR_HM` | 1,90 | EMPIRICO | `output/rdd_bolsa/H_estimativas.csv` | `{"filtro": {"id_linha": "H-P4-horas_mun_posto", "alvo": "media_pos", "restricao": "RM_ruptura"}, "coluna": "parametro"}` | `d2` | Rambachan–Roth, horas no município do posto: ruptura de M̄ |
+| `RR_HF` | 0,78 | EMPIRICO | `output/rdd_bolsa/H_estimativas.csv` | `{"filtro": {"id_linha": "H-P4-horas_fora_mun_posto", "alvo": "media_pos", "restricao": "RM_ruptura"}, "coluna": "parametro"}` | `d2` | Rambachan–Roth, horas fora do município do posto: ruptura de M̄ |
+| `RR_HT_M1_INF` | +1,48 | EMPIRICO | `output/rdd_bolsa/H_estimativas.csv` | `{"filtro": {"id_linha": "H-P4-horas_totais", "alvo": "media_pos", "restricao": "RM", "parametro": "1"}, "coluna": "ic_inf"}` | `d2s` | Rambachan–Roth, horas totais, M̄ = 1: IC robusto inferior |
+| `RR_HT_M1_SUP` | +11,77 | EMPIRICO | `output/rdd_bolsa/H_estimativas.csv` | `{"filtro": {"id_linha": "H-P4-horas_totais", "alvo": "media_pos", "restricao": "RM", "parametro": "1"}, "coluna": "ic_sup"}` | `d2s` | Rambachan–Roth, horas totais, M̄ = 1: IC robusto superior |
+| `CA_HT_EST` | +7,91 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_totais", "estatistica": "efeito_pos_medio"}, "coluna": "valor"}` | `d2s` | P4-CA horas totais: efeito médio do pós (h/sem) |
+| `CA_HT_INF` | −0,63 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_totais", "estatistica": "efeito_pos_medio"}, "coluna": "ic95_inf"}` | `d2s` | P4-CA horas totais: IC inferior |
+| `CA_HT_SUP` | +16,45 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_totais", "estatistica": "efeito_pos_medio"}, "coluna": "ic95_sup"}` | `d2s` | P4-CA horas totais: IC superior |
+| `CA_HT_HOLM` | 0,162 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_totais", "estatistica": "efeito_pos_medio"}, "coluna": "p_holm"}` | `p3` | P4-CA horas totais: p de Holm |
+| `CA_HT_PRE` | 0,837 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_totais", "estatistica": "wald_pre"}, "coluna": "p_valor"}` | `p3` | P4-CA horas totais: p do pré (permutação) |
+| `CA_HM_EST` | +10,92 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_mun_1a", "estatistica": "efeito_pos_medio"}, "coluna": "valor"}` | `d2s` | P4-CA horas no município da 1ª opção: efeito médio do pós (h/sem) |
+| `CA_HM_INF` | +4,15 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_mun_1a", "estatistica": "efeito_pos_medio"}, "coluna": "ic95_inf"}` | `d2s` | P4-CA horas no município da 1ª opção: IC inferior |
+| `CA_HM_SUP` | +17,68 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_mun_1a", "estatistica": "efeito_pos_medio"}, "coluna": "ic95_sup"}` | `d2s` | P4-CA horas no município da 1ª opção: IC superior |
+| `CA_HM_HOLM` | 0,016 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_mun_1a", "estatistica": "efeito_pos_medio"}, "coluna": "p_holm"}` | `p3` | P4-CA horas no município da 1ª opção: p de Holm |
+| `CA_HM_PRE` | 0,297 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_mun_1a", "estatistica": "wald_pre"}, "coluna": "p_valor"}` | `p3` | P4-CA horas no município da 1ª opção: p do pré (permutação) |
+| `CA_HF_EST` | −3,01 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_fora_1a", "estatistica": "efeito_pos_medio"}, "coluna": "valor"}` | `d2s` | P4-CA horas fora do município da 1ª opção: efeito médio do pós (h/sem) |
+| `CA_HF_INF` | −10,14 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_fora_1a", "estatistica": "efeito_pos_medio"}, "coluna": "ic95_inf"}` | `d2s` | P4-CA horas fora do município da 1ª opção: IC inferior |
+| `CA_HF_SUP` | +4,12 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_fora_1a", "estatistica": "efeito_pos_medio"}, "coluna": "ic95_sup"}` | `d2s` | P4-CA horas fora do município da 1ª opção: IC superior |
+| `CA_HF_HOLM` | 0,527 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_fora_1a", "estatistica": "efeito_pos_medio"}, "coluna": "p_holm"}` | `p3` | P4-CA horas fora do município da 1ª opção: p de Holm |
+| `CA_HF_PRE` | 0,200 | EMPIRICO | `output/rdd_bolsa/CA_estimativas.csv` | `{"filtro": {"id_linha": "P4-CA", "outcome": "horas_fora_1a", "estatistica": "wald_pre"}, "coluna": "p_valor"}` | `p3` | P4-CA horas fora do município da 1ª opção: p do pré (permutação) |
+| `P6_Y1_EST` | +0,405 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p6_y1_media_est", "v"]}` | `d3s` | P6 Y1 vínculo no município da vaga, média do seguimento |
+| `P6_Y1_INF` | +0,210 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p6_y1_media_lo", "v"]}` | `d3s` | P6 Y1: IC inferior |
+| `P6_Y1_SUP` | +0,600 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p6_y1_media_hi", "v"]}` | `d3s` | P6 Y1: IC superior |
+| `P6_Y1_HOLM` | 0,010 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p6_y1_media_holm", "v"]}` | `p3` | P6 Y1: p de Holm |
+| `P6_Y3_EST` | +15,5 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p6_y3_media_est", "v"]}` | `d1s` | P6 Y3 horas totais, média do seguimento (h/sem) |
+| `P6_Y3_INF` | +0,6 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p6_y3_media_lo", "v"]}` | `d1s` | P6 Y3: IC inferior |
+| `P6_Y3_SUP` | +30,4 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p6_y3_media_hi", "v"]}` | `d1s` | P6 Y3: IC superior |
+| `P6_Y3_HOLM` | 0,384 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "p6_y3_media_holm", "v"]}` | `p3` | P6 Y3: p de Holm |
+| `K1_TAU` | +7,92 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "kd1_K1_tau", "v"]}` | `d2s` | K1 produção SUS nas CBO-alvo, DiRD nos cortes (por 10 mil hab./mês) |
+| `K1_INF` | −27,58 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "kd1_K1_lo", "v"]}` | `d2s` | K1: IC inferior |
+| `K1_SUP` | +43,42 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "kd1_K1_hi", "v"]}` | `d2s` | K1: IC superior |
+| `K1_HOLM` | 1,000 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "kd1_K1_holm", "v"]}` | `p3` | K1: p de Holm (família K1–K3) |
+| `R_P1_EST` | −4,9 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "R_P1_c5", "v"]}` | `d1s` | R-P1 célula preenchida por +R$ 5 mil na bolsa média das concorrentes (p.p.) |
+| `R_P1_INF` | −14,3 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "R_P1_lo", "v"]}` | `d1s` | R-P1: IC inferior |
+| `R_P1_SUP` | +4,6 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "R_P1_hi", "v"]}` | `d1s` | R-P1: IC superior |
+| `R_P1_HOLM` | 0,624 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "R_P1_holm", "v"]}` | `p3` | R-P1: p de Holm |
+| `R_P1_MDE` | 13,5 | EMPIRICO | `output/rdd_bolsa/S57_resumo.json` | `{"caminho": ["v", "R_P1_mde", "v"]}` | `d1` | R-P1: MDE de 80% (p.p.) |
+| `D_C1_MUN` | 368 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_MUN"}` | `int` | ciclo 1: municípios com célula no quadro da 1ª chamada |
+| `D_C1_CEL` | 1.295 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_CEL"}` | `int` | ciclo 1: células (estabelecimento × curso) no quadro da 1ª chamada |
+| `D_C1_VI` | 678 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_VI"}` | `int` | ciclo 1: vagas imediatas |
+| `D_C1_CR` | 1.145 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_CR"}` | `int` | ciclo 1: vagas de cadastro reserva |
+| `D_C1_CAND1` | 993 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_CAND1"}` | `int` | ciclo 1: candidatos com 1ª opção numa célula do quadro |
+| `D_C1_PRE1` | 393 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_PRE1"}` | `int` | ciclo 1: células com alguma confirmação ou homologação na 1ª chamada |
+| `D_C1_PRE1_PCT` | 30,3 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_PRE1_PCT"}` | `pct1` | ciclo 1: fração de células preenchidas na 1ª chamada (%) |
+| `D_C1_F3` | 159 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_F3"}` | `int` | ciclo 1: municípios na faixa de R$ 10 mil (IVS até 0,300) pela grade aplicada |
+| `D_C1_F2` | 107 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_F2"}` | `int` | ciclo 1: municípios na faixa de R$ 15 mil (IVS de 0,301 a 0,400) |
+| `D_C1_F1` | 102 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_F1"}` | `int` | ciclo 1: municípios na faixa de R$ 20 mil (IVS acima de 0,400) |
+| `D_C2_MUN` | 454 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_MUN"}` | `int` | ciclo 2: municípios com célula no quadro da 1ª chamada |
+| `D_C2_CEL` | 1.547 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_CEL"}` | `int` | ciclo 2: células (estabelecimento × curso) no quadro da 1ª chamada |
+| `D_C2_VI` | 1.836 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_VI"}` | `int` | ciclo 2: vagas imediatas |
+| `D_C2_CR` | 1.053 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_CR"}` | `int` | ciclo 2: vagas de cadastro reserva |
+| `D_C2_CAND1` | 2.140 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_CAND1"}` | `int` | ciclo 2: candidatos com 1ª opção numa célula do quadro |
+| `D_C2_PRE1` | 728 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_PRE1"}` | `int` | ciclo 2: células com alguma confirmação ou homologação na 1ª chamada |
+| `D_C2_PRE1_PCT` | 47,1 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_PRE1_PCT"}` | `pct1` | ciclo 2: fração de células preenchidas na 1ª chamada (%) |
+| `D_C2_F3` | 210 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_F3"}` | `int` | ciclo 2: municípios na faixa de R$ 10 mil (IVS até 0,300) pela grade aplicada |
+| `D_C2_F2` | 115 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_F2"}` | `int` | ciclo 2: municípios na faixa de R$ 15 mil (IVS de 0,301 a 0,400) |
+| `D_C2_F1` | 129 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_F1"}` | `int` | ciclo 2: municípios na faixa de R$ 20 mil (IVS acima de 0,400) |
+| `D_C3_MUN` | 748 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C3_MUN"}` | `int` | ciclo 3: municípios com célula no quadro da 1ª chamada |
+| `D_C3_CEL` | 2.293 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C3_CEL"}` | `int` | ciclo 3: células (estabelecimento × curso) no quadro da 1ª chamada |
+| `D_C3_VI` | 1.132 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C3_VI"}` | `int` | ciclo 3: vagas imediatas |
+| `D_C3_CR` | 3.999 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C3_CR"}` | `int` | ciclo 3: vagas de cadastro reserva |
+| `D_C3_CAND1` | 2.581 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C3_CAND1"}` | `int` | ciclo 3: candidatos com 1ª opção numa célula do quadro |
+| `D_C3_PRE1` | 497 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C3_PRE1"}` | `int` | ciclo 3: células com alguma confirmação ou homologação na 1ª chamada |
+| `D_C3_PRE1_PCT` | 21,7 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C3_PRE1_PCT"}` | `pct1` | ciclo 3: fração de células preenchidas na 1ª chamada (%) |
+| `D_C3_F3` | 276 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C3_F3"}` | `int` | ciclo 3: municípios na faixa de R$ 10 mil (IVS até 0,300) pela grade aplicada |
+| `D_C3_F2` | 180 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C3_F2"}` | `int` | ciclo 3: municípios na faixa de R$ 15 mil (IVS de 0,301 a 0,400) |
+| `D_C3_F1` | 291 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C3_F1"}` | `int` | ciclo 3: municípios na faixa de R$ 20 mil (IVS acima de 0,400) |
+| `D_C1_PRE2` | 461 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_PRE2"}` | `int` | ciclo 1: células com alguma confirmação ou homologação até a 2ª chamada |
+| `D_C1_PRE2_PCT` | 35,6 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C1_PRE2_PCT"}` | `pct1` | ciclo 1: fração de células preenchidas até a 2ª chamada (%) |
+| `D_C2_PRE2` | 867 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_PRE2"}` | `int` | ciclo 2: células com alguma confirmação ou homologação até a 2ª chamada |
+| `D_C2_PRE2_PCT` | 56,0 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C2_PRE2_PCT"}` | `pct1` | ciclo 2: fração de células preenchidas até a 2ª chamada (%) |
+| `D_C3_SEM_IVS` | 1 | EMPIRICO | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | `{"descritiva": "C3_SEM_IVS"}` | `int` | ciclo 3: municípios com célula e sem IVS 2010 (criados depois de 2010) |
+| `D_C1_CANDG1` | 993 | EMPIRICO | `output/rdd_bolsa/G1_resumo.json` | `{"caminho": ["taxas_ligacao", "g1_cpf_nome", "1", "candidatos"]}` | `int` | ciclo 1: candidatos no portão G1 |
+| `D_C1_LIG` | 938 | EMPIRICO | `output/rdd_bolsa/G1_resumo.json` | `{"caminho": ["taxas_ligacao", "g1_cpf_nome", "1", "ligados"]}` | `int` | ciclo 1: candidatos ligados a um profissional do CNES (G1) |
+| `D_C2_CANDG1` | 2.179 | EMPIRICO | `output/rdd_bolsa/G1_resumo.json` | `{"caminho": ["taxas_ligacao", "g1_cpf_nome", "2", "candidatos"]}` | `int` | ciclo 2: candidatos no portão G1 |
+| `D_C2_LIG` | 2.102 | EMPIRICO | `output/rdd_bolsa/G1_resumo.json` | `{"caminho": ["taxas_ligacao", "g1_cpf_nome", "2", "ligados"]}` | `int` | ciclo 2: candidatos ligados a um profissional do CNES (G1) |
+| `D_C3_CANDG1` | 2.604 | EMPIRICO | `output/rdd_bolsa/G1_resumo.json` | `{"caminho": ["taxas_ligacao", "g1_cpf_nome", "3", "candidatos"]}` | `int` | ciclo 3: candidatos no portão G1 |
+| `D_C3_LIG` | 2.533 | EMPIRICO | `output/rdd_bolsa/G1_resumo.json` | `{"caminho": ["taxas_ligacao", "g1_cpf_nome", "3", "ligados"]}` | `int` | ciclo 3: candidatos ligados a um profissional do CNES (G1) |
+| `D_IVS_MUN` | 5.565 | EMPIRICO | `output/aquisicao/a08_ivs_2010_oficial_municipio.csv` | `{"descritiva": "IVS_MUN"}` | `int` | municípios com IVS 2010 oficial (a08) |
+| `D_POP_MUN` | 5.570 | EMPIRICO | `output/aquisicao/populacao_censo2022_municipios.csv` | `{"descritiva": "POP_MUN"}` | `int` | municípios com população do Censo 2022 |
+| `D_ATIVOS` | 1.957 | EMPIRICO | `output/aquisicao/cnes_profissional/a16_manifesto_cnes_profissional.json` | `{"caminho": ["listas_pmme", "registros_ativos_2026_09_11"]}` | `int` | registros na lista de especialistas ativos do PMM-E de 11/09/2026 |
 | `FM_NMU` | 4.362 | FAILURE_MODE | `output/rdd_bolsa/identificacao_arquivo_local_ivs.json` | `{"caminho": ["mecanismo", "linha_escolhida_por_municipio", "Negro / Mulher / Urbano"]}` | `int` | municípios em que o arquivo errado traz a linha Negro / Mulher / Urbano |
 | `FM_MUN` | 5.565 | FAILURE_MODE | `output/rdd_bolsa/identificacao_arquivo_local_ivs.json` | `{"caminho": ["mecanismo", "conferencia_por_coluna", "municipios"]}` | `int` | municípios do arquivo |
 | `FM_NMU_PCT` | 78 | FAILURE_MODE | calculado por este script | `{"razao": ["FM_NMU", "FM_MUN"]}` | `pct0` | FM_NMU / FM_MUN (%) |
 | `FM_IGUAIS` | 38 | FAILURE_MODE | `output/tema_trabalho/failure_mode_ivs_resumo.json` | `{"caminho": ["arquivo_errado", "ivs_igual_3_casas"]}` | `int` | municípios em que o arquivo errado acerta o IVS oficial a 3 casas |
 | `FM_CORR` | 0,85 | FAILURE_MODE | `output/tema_trabalho/failure_mode_ivs_resumo.json` | `{"caminho": ["arquivo_errado", "correlacao_ivs"]}` | `d2` | correlação entre o arquivo errado e o IVS oficial |
-| `FM_LADO_ERRADO` | 101 | FAILURE_MODE | calculado por este script | `{"calculado": "lado_errado_arquivo_errado"}` | `int` | municípios do ciclo 1 do lado errado do corte com o arquivo errado no eixo |
 | `CP_EMENDAS` | +20% | TEXTO_NORMATIVO | `docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md` | `{"regex": "parcelas PAP e MAC (\\+\\d+%)"}` | `txt` | acréscimo no teto de emendas e parcelas de custeio para IVS > 0,3 |
 | `CP_752_300` | 10% → 40% | TEXTO_NORMATIVO | `docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md` | `{"regex": "\\((\\d+% → \\d+%) de teto de coparticipação"}` | `txt` | Portaria 752/2023: teto de coparticipação do PMMB em 0,3 |
 | `CP_752_400` | 40% → 100% | TEXTO_NORMATIVO | `docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md` | `{"regex": "texto da 752 \\((\\d+% → \\d+%)\\)"}` | `txt` | Portaria 752/2023: teto de coparticipação do PMMB em 0,4 |
@@ -266,48 +469,79 @@ datas e nomes:
 
 | Parâmetro | Onde está fixado |
 |---|---|
-| cortes 0,300 e 0,400 (e 0,3 e 0,4 no texto dos atos) | regra da bolsa; protocolo 40, §3 |
+| cortes 0,300 e 0,400 (e 0,3 e 0,4 no texto dos atos); limite 0,301 da faixa do meio | regra da bolsa; protocolo 40, §3 |
 | h = 0,050; sensibilidades 0,030 e 0,080 | protocolo 40, §6 |
-| bolsas de R$ 10, 15 e 20 mil; degrau de R$ 5 mil | editais; protocolo 40, §3 |
+| bolsas de R$ 10, 15 e 20 mil; degrau de R$ 5 mil; R$ 1 mil como unidade do coeficiente | editais; protocolo 40, §3; protocolo 52 |
 | referências +10 p.p. e +25% | protocolo 40, §7 |
-| IC 95%, α = 0,05, valor crítico 1,96, limiar p < 0,001, MDE de 80% | convenções de relato |
-| ciclos 1, 2 e 3; chamadas 1ª e 2ª | desenho |
-| anos, datas, competências (`2025-10`, `202703`), números de atos (`752/2023`), seções (§), documentos e códigos de outcome (F1.3, V1, E9) | nomes, não números |
+| IC 95%, α = 0,05, valor crítico 1,96, limiar p < 0,001, MDE de 80%, M̄ = 1 | convenções de relato |
+| ciclos 1, 2 e 3; chamadas 1ª e 2ª; "3 casas" decimais | desenho |
+| anos, datas, competências (`2025-10`, `202703`), números de atos (`752/2023`), seções (§), documentos, protocolos e códigos de outcome (F1.3, N1, Y1, M5, H1–H4) | nomes, não números |
+| números de slide do deck do grupo (até 36), nos quadros do doc 02 | posição, não resultado |
 
-## 4. Entradas lidas pelo gerador
+## 4. Entradas lidas pelo gerador de figuras
 
-Com SHA-256 no manifesto. O arquivo errado é lido **só** para `G2` e para o
-código `FM_LADO_ERRADO`.
+Com SHA-256 no manifesto. O arquivo de IVS errado (`data/`) **não é mais
+lido**: a figura e os números do failure mode que dependiam dele não são
+regenerados.
 
 | Arquivo | Papel |
 |---|---|
+| `output/rdd_bolsa/S57_resumo.json` | síntese vigente (doc 57): valores com arquivo e seletor de origem |
+| `output/rdd_bolsa/N_estimativas.csv` | família N (protocolo 48): N1 com e sem controle, robustez |
+| `output/rdd_bolsa/P1_estimativas.csv` | P1 (protocolo 52): M1, M5 por ciclo, M0–M9 |
+| `output/rdd_bolsa/H_estimativas.csv` | Rambachan–Roth do P4 (protocolo 59, parte A) |
+| `output/rdd_bolsa/CA_estimativas.csv` | comparação na nota de corte (protocolo 59, parte B) |
+| `output/rdd_bolsa/G1_resumo.json` | candidatos ligados ao CNES, por ciclo |
+| `output/aquisicao/cnes_profissional/a16_manifesto_cnes_profissional.json` | lista de ativos do PMM-E |
+| `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | quadro de células da 1ª chamada (descritivas) |
+| `output/aquisicao/populacao_censo2022_municipios.csv` | cobertura da tabela de fontes |
 | `output/rdd_bolsa/E8_resumo.json` | síntese E8: Holm, descarte, E9, E7, seleção, famílias, degrau, literatura |
-| `output/rdd_bolsa/E8_tabela_sintese.csv` | tabela-síntese por elo |
+| `output/rdd_bolsa/E8_tabela_sintese.csv` | tabela-síntese por elo (figuras de 19/10) |
 | `output/rdd_bolsa/E3_estimativas.csv` | municípios por lado na âncora do E3 |
 | `output/rdd_bolsa/portao_r1_ivs_oficial.json` | reprodução da regra com o IVS oficial |
 | `output/rdd_bolsa/identificacao_arquivo_local_ivs.json` | mecanismo do arquivo errado (só failure mode) |
 | `output/tema_trabalho/failure_mode_ivs_resumo.json` | registro do failure mode (auditoria 19) |
 | `output/rdd_bolsa/matriz_municipio_escore_administrativo.csv` | faixa anunciada por município |
 | `output/aquisicao/a08_ivs_2010_oficial_municipio.csv` | running variable |
-| `data/ivs_ipea_2010_municipios.csv` | **só failure mode** |
 | `docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md` | parâmetros normativos das co-políticas |
 | `scripts/rdd_bolsa/10_galeria_figura_regra.py` | código da variante A colorida |
 
-## 5. Pendências e ressalvas
+## 5. Deck
 
-1. **`run_all.py`.** O gerador não está no pipeline ponta a ponta; a inclusão
-   fica para o coordenador.
-2. **Decisões do autor.** Os slides 1, 20 e 21 dependem da revisão da
-   hipótese e da mensagem principal; nenhum número depende delas.
+`scripts/apresentacao/gerar_deck_banca2.py` lê o deck do grupo (caminho em
+`PMME_DECK_GRUPO` ou `--deck`; só leitura), o doc 02 e `numeros_banca2.json`,
+e grava em `output/apresentacao_banca2/`:
+
+| Arquivo | O que é |
+|---|---|
+| `deck_banca2_proposta.pptx` | o deck inteiro, com as correções do quadro do doc 02 e os slides novos no lugar dos marcadores "X" |
+| `slides_empiricos_banca2.pptx` | só os slides novos, para colar no deck em uso |
+| `manifesto_deck_banca2.json` | entradas (deck do grupo, doc 02, registro, figuras) e saídas com SHA-256; ordem dos slides; correções aplicadas |
+| `qa_render/` | imagens de conferência dos slides novos e corrigidos (LibreOffice, com a Montserrat instalada) |
+
+O texto dos slides novos é o do doc 02; os números das correções no deck do
+grupo vêm do registro. As figuras entram como imagem, a partir de `output/`;
+as tabelas, como tabela nativa. O zip é gravado com data fixa e ordem
+estável, e duas execuções dão o mesmo SHA-256.
+
+## 6. Pendências e ressalvas
+
+1. **H3.** O slide está reservado e marcado PENDENTE. O resultado vem do
+   protocolo 52b (script 25c, doc 57i), em estimação em outra sessão e
+   sujeito a auditoria independente; nenhum número da H3 está no registro.
+2. **`run_all.py`.** Os dois geradores não estão no pipeline ponta a ponta; a
+   inclusão fica para o coordenador.
 3. **PNG da regra.** Depende do Chromium headless; sem ele o script grava só o
    SVG e registra `png_gerado: false` no manifesto.
 4. **Texto citado.** Os números de atos e de literatura são conferidos pela
    presença do trecho no texto-fonte, não contra o ato ou o artigo originais;
    a conferência desses está na auditoria 18 e no doc 20 da seção 03.
+5. **Figura do failure mode.** Congelada (ver `G8`); não entra no deck.
 
-## 6. Reprodução
+## 7. Reprodução
 
 ```bash
 python3 scripts/apresentacao/gerar_figuras_banca2.py
-python3 -m unittest tests.test_conteudo_banca2
+PMME_DECK_GRUPO="<deck do grupo>" python3 scripts/apresentacao/gerar_deck_banca2.py
+PMME_DECK_GRUPO="<deck do grupo>" python3 -m unittest tests.test_conteudo_banca2
 ```

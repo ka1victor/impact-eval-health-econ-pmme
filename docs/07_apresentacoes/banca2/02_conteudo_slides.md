@@ -1,815 +1,655 @@
 ---
-documento: Conteúdo da apresentação — banca 2
-papel: fonte de verdade do que vai à tela
-escopo: resultados da RDD da bolsa (E3 a E9 e síntese E8), da hipótese da banca 1 às opções de revisão
-slides: 21, mais Q&A e 7 de apêndice fora da contagem
-estado: RASCUNHO — pendente da decisão do autor sobre a revisão da hipótese (doc 44, §7) e a mensagem principal
-atualizacao: 19 de outubro de 2026
+documento: Conteúdo da apresentação — banca 2 (parte empírica)
+papel: fonte de verdade do que vai à tela; o deck é derivado
+escopo: hipótese econômica pela cadeia do modelo (H1–H4), base de dados e descritivas, metodologia econométrica e identificação, resultados, robustez e discussão; correções do deck do grupo
+slides: 15 novos no corpo (2 na hipótese, 13 na parte empírica) e 6 de apêndice; os demais são do deck do grupo
+estado: PRONTO para 28/10, com a H3 PENDENTE (protocolo 52b, em estimação e sujeito a auditoria)
+atualizacao: 26 de outubro de 2026
 ---
 
 > [!IMPORTANT]
-> **Como ler este arquivo.** A convenção é a da banca 1. O deck começa e
-> termina nos comentários `deck:inicio` e `deck:fim`; o apêndice fica entre
-> `apendice:inicio` e `apendice:fim`. **Cada cabeçalho `#` ou `##` é um
-> slide** (`#` = capa ou divisória; `##` = conteúdo); `###` é um **build**
-> dentro do slide. Abaixo do título, a linha em `código` é o rastreio do
-> rodapé.
+> **Como ler este arquivo.** O deck do grupo (template Insper, Montserrat)
+> continua sendo o deck; este arquivo traz só os slides novos e o quadro de
+> correções. O corpo novo fica entre `deck:inicio` e `deck:fim`; o apêndice,
+> entre `apendice:inicio` e `apendice:fim`. **Cada cabeçalho `##` é um slide**;
+> `#` marca a seção do deck em que ele entra. Abaixo do título, a linha em
+> `código` é o rastreio do rodapé (seção · rótulo) e o comentário `layout`
+> diz ao gerador do deck como compor o slide.
 >
-> **O que não vai à tela:** a linha `**Fontes:**` (nota de rodapé pequena), a
-> linha `**Números:**` (códigos do bloco gerado de
-> [03](03_proveniencia_figuras_e_numeros.md)), os blocos `**Nota de
-> produção.**` e as `**Notas do apresentador.**`. Tudo o mais é tela.
+> **O que vai à tela:** título, figura, tabela, marcadores, a frase de cautela
+> (citação em negrito) e a linha `**Fontes:**`, em letra pequena. **Não vai à
+> tela:** a linha `**Números:**`, os blocos `**Nota de produção.**` e as
+> `**Notas do apresentador.**` (que vão para as notas do slide).
 >
 > **Regra dos números.** Todo número de um slide — título, corpo e notas — é
 > o valor de um código listado na sua linha `**Números:**` ou um parâmetro do
-> protocolo (cortes 0,300 e 0,400, h = 0,050 e as sensibilidades 0,030 e
-> 0,080, bolsas de R$ 10, 15 e 20 mil, o degrau de R$ 5 mil, IC 95%, MDE de
-> 80%, as referências +10 p.p. e +25%, ciclos, datas e competências).
-> `tests/test_conteudo_banca2.py` confere isso e confere cada valor contra o
-> arquivo de `output/` de onde ele vem.
+> protocolo ([03, §3](03_proveniencia_figuras_e_numeros.md#3-parâmetros-que-podem-aparecer-sem-código)).
+> `tests/test_conteudo_banca2.py` confere isso, confere cada valor contra o
+> arquivo de `output/` de onde ele vem e confere que o deck gerado traz o mesmo
+> texto deste arquivo.
 >
-> **Figuras.** Todas têm caminho em `output/` e script gerador
-> ([03, §1](03_proveniencia_figuras_e_numeros.md#1-figuras)). Número **dentro**
-> de uma figura é tela e vem do mesmo arquivo que a figura lê.
+> **Deck derivado.** `scripts/apresentacao/gerar_deck_banca2.py` lê este
+> arquivo e o deck do grupo e grava `output/apresentacao_banca2/deck_banca2_proposta.pptx`
+> (deck inteiro, corrigido) e `slides_empiricos_banca2.pptx` (só os slides
+> novos). Divergência entre o deck e este arquivo é erro do deck.
 
 ## Mapa da apresentação
 
-| # | Layout | Builds | Seção | Rótulo do roteiro | Título na tela |
-|:---:|:---:|:---:|:---:|---|---|
-| 1 | capa | 1 | — | — | Capa |
-| 2 | conteúdo | 1 | — | Sumário | Sumário |
-| 3 | capa | 1 | 1 | — | **Da hipótese à regra** |
-| 4 | conteúdo | 1 | 1 | Hipótese | Na banca 1, a hipótese era: mais bolsa, mais vagas preenchidas |
-| 5 | conteúdo | 1 | 1 | Regra | A bolsa segue o IVS 2010 oficial, sem exceção |
-| 6 | conteúdo | 2 | 1 | Failure mode | O "IVS como piso" da banca 1 era um arquivo errado |
-| 7 | capa | 1 | 2 | — | **Desenho** |
-| 8 | conteúdo | 1 | 2 | Contrastes | Três contrastes, e nenhum é "o efeito do PMM-E" |
-| 9 | capa | 1 | 3 | — | **Resultados, elo a elo** |
-| 10 | conteúdo | 1 | 3 | Cadeia | A cadeia em uma figura: o provimento não se move; a escolha se move no ciclo 2 |
-| 11 | conteúdo | 1 | 3 | Primárias | As duas primárias não rejeitam zero depois do Holm |
-| 12 | conteúdo | 1 | 3 | Atração | Candidaturas e preenchimento não se movem no corte |
-| 13 | conteúdo | 1 | 3 | Descarte | O IC convencional descarta +10 p.p. no preenchimento empilhado; o honesto, não |
-| 14 | conteúdo | 2 | 3 | Escolha | No ciclo 2, a 1ª opção vai para a célula de bolsa maior |
-| 15 | conteúdo | 2 | 3 | Presença e oferta | Presença e oferta no CNES: nada detectado, nem nos placebos |
-| 16 | conteúdo | 1 | 3 | Multiplicidade | Os p < 0,05 isolados não sobrevivem à família |
-| 17 | capa | 1 | 4 | — | **Leitura e revisão** |
-| 18 | conteúdo | 1 | 4 | Afirmações | O que podemos e o que não podemos afirmar |
-| 19 | conteúdo | 1 | 4 | Co-políticas | Nos mesmos cortes mudam outras regras federais |
-| 20 | conteúdo | 1 | 4 | Revisão da hipótese | Três formas de rever a hipótese — para discussão |
-| 21 | conteúdo | 1 | 4 | Próximos passos | O que vem depois |
+O deck do grupo tem 36 slides; os slides 25, 27 e 29 eram marcadores "X". A
+tabela diz onde cada slide novo entra. "Depois do 23" quer dizer: logo depois
+do slide 23 do deck do grupo ("Da condição de aceitação, sai nossa hipótese
+econômica").
 
-### Depois do deck, fora da contagem
+| Onde entra no deck do grupo | Seção (rodapé) | Slide novo | Layout |
+|---|---|---|---|
+| depois do 23 | Hipótese | Testamos cada seta do modelo: quatro hipóteses | cadeia |
+| depois do 23 | Hipótese | Do modelo às equações estimadas | equações |
+| no lugar do 25 | Base de Dados | Oito bases oficiais, ligadas por município, célula e médico | tabela |
+| no lugar do 25 | Base de Dados | Os três ciclos em números | tabela |
+| no lugar do 27 | Metodologia | Um estimador por hipótese | tabela |
+| no lugar do 27 | Metodologia | Hipóteses de identificação e como foram testadas | tabela |
+| no lugar do 29 | Resultados | A bolsa é função exata do IVS: a regra é sharp | figura e tabela |
+| no lugar do 29 | Resultados | H1: o preenchimento não aumenta de forma detectável no corte | figura e texto |
+| no lugar do 29 | Resultados | H2: a bolsa pesa na escolha da vaga só no ciclo 2 | figura e texto |
+| no lugar do 29 | Resultados | H3: incentivo limitado — PENDENTE | pendente |
+| no lugar do 29 | Resultados | H4: o médico soma horas, mas metade já estava no município | figura e texto |
+| no lugar do 29 | Resultados | Na cadeia, só a escolha e o registro do médico se movem | figura |
+| no lugar do 29 | Resultados | Robustez: as leituras resistem, com duas ressalvas declaradas | tabela |
+| no lugar do 29 | Resultados | Limites: pacote do corte, só candidatos, vínculo cadastrado | cartões |
+| no lugar do 29 | Resultados | Um efeito do tamanho da literatura não cabe no IC empilhado | cartões |
+| depois do 31 (Apêndice) | Resultados | seis slides de apêndice | tabela ou figura |
 
-| # | Título na tela | Para que serve |
-|:---:|---|---|
-| — | **Perguntas** | abre o Q&A |
-| B1 | A tabela-síntese inteira | as 23 linhas principais do E8 |
-| B2 | A âncora do E3: ciclo 1, por corte | o resultado do E3 e o efeito mínimo detectável |
-| B3 | Robustez do E9 | a tabela de robustez pós-auditoria |
-| B4 | Por que a sequência do E7 em 0,300 não vira efeito | descontinuidade pré-existente, generalistas, pré-tendência em V1 |
-| B5 | Magnitude: o degrau daqui e a literatura | Dal Bó et al. e Bobba et al. |
-| B6 | O que o arquivo errado contaminou, e o que foi refeito | auditoria 19 |
-| B7 | Limitações | doc 44, §8 |
+## Correções no deck do grupo
+
+Aplicadas por `scripts/apresentacao/gerar_deck_banca2.py` no deck proposto
+(o original não é alterado). Plano da banca 2, §2.
+
+| Slides | O que estava | O que ficou | Por quê |
+|---|---|---|---|
+| 5, 6, 7 (e 8, oculto) | título "a vulnerabilidade social define o **piso** da bolsa"; faixas por classe do Ipea ("Muito alta" → R$ 20 mil; "Alta" → R$ 15 mil; "Média, baixa e muito baixa" → R$ 10 mil), que é a grade do FAQ | título "O IVS 2010 define a bolsa do PMM-E por regra"; faixas pela grade aplicada: IVS até 0,300 → R$ 10 mil; de 0,301 a 0,400 → R$ 15 mil; acima de 0,400 → R$ 20 mil; nota "reproduz a faixa publicada em 368 de 368 municípios do ciclo 1"; "renumeração" → "remuneração" | a grade do FAQ não é a aplicada (auditoria 16, §2) |
+| 8 (oculto) | "O IVS é o piso, não o critério", com a contagem de municípios "acima da categoria" | frase retirada; no lugar, a regra aplicada e a reprodução no ciclo 1 | a contagem era artefato do arquivo de IVS errado (auditorias 16 e 19) |
+| 9 e 13 | gráfico "Maior presença nas regiões com maiores bolsas" (crescimento por faixa, 9 meses antes × 9 meses depois) | gráfico retirado; no lugar, uma caixa que diz por quê e remete à seção de resultados | não sai de `output/` por script e usa a faixa do FAQ; antes × depois sem comparação não é efeito |
+| 11 e 14 (ocultos) | "há indícios de efetividade"; "presença cresceu em todos os níveis sociais" | títulos rebaixados para "Descritivo: antes × depois por faixa, sem comparação"; gráficos e tabela retirados pelo mesmo motivo | doc 44, §5.3; plano, §2 |
+| 10 (oculto) | categorias do gráfico "Vulnerabilidade baixa, intermediária, alta" | "IVS até 0,300", "IVS de 0,301 a 0,400", "IVS acima de 0,400" | grade aplicada |
+| 34 e 35 | "proporção de **vagas** preenchidas"; "35,6%" num slide e "30%" no outro; "SGETS"; "Especialidade" | "proporção de **células** (estabelecimento × curso) com alguma confirmação ou homologação: 30,3% na 1ª chamada; 35,6% somando a 2ª"; "SGTES"; "curso"; faixa pela regra aplicada | célula não é vaga física; os dois números são de chamadas diferentes |
+| 35 | IVS como "custo territorial agregado" (proxy de desvantagens) | IVS como running variable: entra contínuo e controla o custo do lugar; só a bolsa salta nos cortes | é a hipótese de identificação (doc 44, §2) |
+| 31 (notas) | notas com uma conversa colada, que repetia a contagem do arquivo errado | notas trocadas por uma linha neutra | a contagem é artefato |
+| 32 e 33 | slides "EXEMPLO" de outro trabalho (Dinamarca, aplicativo de vinhos) | ocultos | não são deste trabalho; ficam no arquivo para o grupo decidir |
+| 25, 27 e 29 | marcadores "X" | substituídos pelos slides novos | — |
+
+**Números:** `R_C1_REPR`, `R_C1_MUN`, `D_C1_PRE1_PCT`, `D_C1_PRE2_PCT`
 
 ---
 
 <!-- deck:inicio -->
 
-# O degrau de R$ 5 mil da bolsa do PMM-E
+# Hipótese
 
-### O que a descontinuidade no IVS 2010 mostra, elo a elo
+## Testamos cada seta do modelo: quatro hipóteses
 
-**Grupo 2** · Bernardo Gomes · Bruno Manta · Felipe Barros · Felipe Marques ·
-Gabriel Benegra · Kauã Santos · Vinicius Sbruzzi
+`Hipótese · Cadeia`
 
-`sem rastreio`
+<!-- layout: cadeia -->
+
+**Cadeia:** B ↑ (bolsa maior) → V ↑ (a vaga vale mais) → π ↑ (mais médicos a escolhem) → Pr(Y = 1) ↑ (a vaga é preenchida) → capacidade ↑ (horas de especialista no SUS)
+
+| Hipótese | Seta do modelo | O que testa | Estimador |
+|---|---|---|---|
+| **H1** preenchimento | B → Pr(Y = 1) | a célula aberta do lado de bolsa maior preenche mais | RDD nos cortes do IVS |
+| **H2** escolha | B → V → π | a vaga de bolsa maior é mais escolhida como 1ª opção | logit condicional |
+| **H3** incentivo limitado | B contra o custo do lugar, dentro de V | o peso da bolsa é pequeno perto da distância e da origem | coeficientes do mesmo logit |
+| **H4** capacidade líquida | chegada → capacidade | o médico que chega soma horas ou só muda o registro | estudo de evento; comparação na nota de corte |
+
+> **H3 é a hipótese central (proposta do plano, delegada pelo autor e revisável por ele); H1 é o teste de consistência da cadeia.**
+
+**Fontes:** plano da banca 2, §3; modelo da banca 1 (Moehling et al.; Redding e Rossi-Hansberg; Choné e Ma; Burdett, Shi e Wright).
 
 **Números:** nenhum
+
+> **Notas do apresentador.** A banca 1 testava só a última seta. Testar cada
+> seta explica um resultado nulo no fim da cadeia: se a bolsa pesa pouco perto
+> do custo do lugar (H3), ela reordena candidatos entre vagas (H2) sem mudar
+> quantas vagas preenchem (H1). A H4 pergunta se o médico que chega aumenta a
+> capacidade ou só passa a ser registrado onde já estava.
+
+---
+
+## Do modelo às equações estimadas
+
+`Hipótese · Ponte`
+
+<!-- layout: equacoes -->
+
+```
+Modelo (Moehling):   V_rm = Σ_t δ^t [ E(w_m | B_m) / p_m − c_rm ]
+Escolha (H2, H3):    U_rm = β·B_m + f(IVS_m) − γ·dist_rm + θ·mesmaUF_rm + λ·X_m + ε_rm
+Preenchimento (H1):  Y_c = α + τ·D_m + f_±(IVS_m − corte) + μ_curso×ciclo + ε_c
+```
+
+- **β:** utilidade marginal da bolsa, o 1/p do modelo.
+- **γ e θ:** custo geográfico (Redding e Rossi-Hansberg): distância e mesma UF da origem.
+- **f(IVS):** contínua nos cortes; absorve o que varia suave com a vulnerabilidade (custo laboral de Choné e Ma, amenidades, preços).
+- **ε** tipo valor extremo dá o logit condicional; a agregação de Burdett, Shi e Wright leva de π a Pr(Y = 1).
+- **τ:** o salto no corte, com D = lado de bolsa maior; mede o pacote do corte, não a bolsa isolada.
+
+> **Hipótese de identificação comum: dado o IVS contínuo, só a bolsa (com as regras do mesmo corte) salta em 0,300 e 0,400.**
+
+**Fontes:** plano da banca 2, §4.3; protocolos 48 e 52.
+
+**Números:** nenhum
+
+> **Notas do apresentador.** A primeira linha é o modelo da banca 1. A segunda
+> é a equação que estimamos para a escolha: a bolsa entra linear, o IVS em
+> spline com nós nos cortes, e a distância e a origem entram como custo. A
+> terceira é a descontinuidade do preenchimento. As equações completas do
+> modelo ficam no apêndice da banca final.
+
+---
+
+# Base de Dados
+
+## Oito bases oficiais, ligadas por município, célula e médico
+
+`Base de Dados · Fontes`
+
+<!-- layout: tabela -->
+
+| Base | Fonte oficial | Período | Unidade e chaves | Cobertura | Uso |
+|---|---|---|---|---|---|
+| Quadros de vagas e resultados | SGTES/MS: chamamentos dos ciclos 1, 2 e 3 | 2025–2026 | célula = estabelecimento × curso | 1.295 · 1.547 · 2.293 células | H1, descritivas |
+| Candidatos e opções | SGTES/MS: classificação, alocação e homologação | 2025–2026 | candidato × opção; CPF mascarado só em memória | 993 · 2.179 · 2.604 candidatos | H2, H3, P6 |
+| IVS 2010 oficial | Ipea, Plataforma IVS (Censo 2010) | 2010 | município (IBGE) | 5.565 municípios | running variable |
+| CNES: vínculos e horas | DATASUS/MS, base completa mensal | 2022-01 a 2026-08 | profissional × estabelecimento × mês; pseudônimo | ligados: 938 · 2.102 · 2.533 | H2 (origem), H4 |
+| Especialistas ativos do PMM-E | MS, relação nominal | 2026-09 | médico × posto; CRM só em memória | 1.957 registros | H4 (chegada) |
+| Produção ambulatorial e hospitalar | DATASUS/MS: SIA e SIH | mensal, pré e pós | município × mês × grupo | nacional | K (acesso) |
+| População | IBGE, Censo 2022 (SIDRA) | 2022 | município (IBGE) | 5.570 municípios | denominadores |
+| Atos com corte no IVS | portarias do MS (auditoria 18) | 2023–2026 | ato × corte | nos dois cortes | ameaça: pacote do corte |
+
+> **Nome, CPF e CRM só ficam em memória ou em cache fora do Git; nenhuma saída os traz.**
+
+**Fontes:** `output/apresentacao_banca2/tabela_fontes.csv` (gerada por `scripts/apresentacao/gerar_figuras_banca2.py`); manifestos de aquisição em `output/aquisicao/`.
+
+**Números:** `D_C1_CEL`, `D_C2_CEL`, `D_C3_CEL`, `D_C1_CANDG1`, `D_C2_CANDG1`, `D_C3_CANDG1`, `D_IVS_MUN`, `D_C1_LIG`, `D_C2_LIG`, `D_C3_LIG`, `D_ATIVOS`, `D_POP_MUN`
+
+> **Notas do apresentador.** A célula (estabelecimento × curso) é a unidade
+> do quadro de vagas. O IVS é o oficial do Ipea, que coincide com o escore do
+> Ministério. O CNES liga o candidato ao seu município de origem e acompanha
+> as horas do médico mês a mês. A ligação usa CPF mascarado e nome só em
+> memória.
+
+---
+
+## Os três ciclos em números
+
+`Base de Dados · Descritivas`
+
+<!-- layout: tabela -->
+
+| Item | Ciclo 1 | Ciclo 2 | Ciclo 3 |
+|---|---|---|---|
+| Municípios com célula no quadro | 368 | 454 | 748 |
+| Células (estabelecimento × curso) | 1.295 | 1.547 | 2.293 |
+| Vagas imediatas · cadastro reserva | 678 · 1.145 | 1.836 · 1.053 | 1.132 · 3.999 |
+| Candidatos de 1ª opção numa célula | 993 | 2.140 | 2.581 |
+| Candidatos ligados ao CNES (G1) | 938 de 993 | 2.102 de 2.179 | 2.533 de 2.604 |
+| Células preenchidas na 1ª chamada | 393 (30,3%) | 728 (47,1%) | 497 (21,7%) |
+| Células preenchidas até a 2ª chamada | 461 (35,6%) | 867 (56,0%) | não observado |
+| Municípios por faixa: R$ 10 · 15 · 20 mil | 159 · 107 · 102 | 210 · 115 · 129 | 276 · 180 · 291 (e 1 sem IVS) |
+
+- **Célula:** estabelecimento × curso no quadro da 1ª chamada; uma célula pode ter várias vagas.
+- **Preenchida:** alguma confirmação ou homologação; não é taxa de ocupação de vagas.
+- **Faixa pela grade aplicada:** até 0,300 → R$ 10 mil; de 0,301 a 0,400 → R$ 15 mil; acima de 0,400 → R$ 20 mil.
+
+> **Descritivo: as diferenças entre ciclos não são efeito da bolsa.**
+
+**Fontes:** `output/apresentacao_banca2/tabela_descritiva_ciclos.csv`, contada de `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` e de `output/rdd_bolsa/G1_resumo.json`.
+
+**Números:** `D_C1_MUN`, `D_C2_MUN`, `D_C3_MUN`, `D_C1_CEL`, `D_C2_CEL`, `D_C3_CEL`, `D_C1_VI`, `D_C1_CR`, `D_C2_VI`, `D_C2_CR`, `D_C3_VI`, `D_C3_CR`, `D_C1_CAND1`, `D_C2_CAND1`, `D_C3_CAND1`, `D_C1_LIG`, `D_C1_CANDG1`, `D_C2_LIG`, `D_C2_CANDG1`, `D_C3_LIG`, `D_C3_CANDG1`, `D_C1_PRE1`, `D_C1_PRE1_PCT`, `D_C2_PRE1`, `D_C2_PRE1_PCT`, `D_C3_PRE1`, `D_C3_PRE1_PCT`, `D_C1_PRE2`, `D_C1_PRE2_PCT`, `D_C2_PRE2`, `D_C2_PRE2_PCT`, `D_C1_F3`, `D_C1_F2`, `D_C1_F1`, `D_C2_F3`, `D_C2_F2`, `D_C2_F1`, `D_C3_F3`, `D_C3_F2`, `D_C3_F1`, `D_C3_SEM_IVS`
 
 > [!NOTE]
-> **Nota de produção.** Título **provisório**, neutro em relação às três
-> mensagens candidatas ([01, §3](01_roteiro_narrativo.md#3-a-mensagem-principal-decisão-do-autor)).
-> Se o autor escolher M2, alternativa: *"A bolsa muda a escolha, não o
-> provimento"*. Decisão do autor.
+> **Nota de produção.** A faixa é contada pela regra no IVS 2010 oficial; o
+> script para se ela divergir da faixa publicada em alguma célula com IVS. O
+> município sem IVS do ciclo 3 foi criado depois de 2010.
+
+> **Notas do apresentador.** O ciclo 2 abriu mais vagas imediatas e preencheu
+> uma fração maior das células; o ciclo 3 tem muito cadastro reserva. A
+> ligação ao CNES passa de nove em cada dez candidatos em todos os ciclos.
+> Ciclo 3: só a 1ª chamada; o seguimento pós-início segue congelado.
 
 ---
 
-## Sumário
+# Metodologia
 
-`sem rastreio`
+## Um estimador por hipótese
 
-1. **Da hipótese à regra**
-2. **Desenho**
-3. **Resultados, elo a elo**
-4. **Leitura e revisão**
+`Metodologia · Estimadores`
+
+<!-- layout: tabela -->
+
+| Hipótese | Estimador | Unidade e amostra | Especificação principal | Inferência |
+|---|---|---|---|---|
+| **H1** preenchimento | RDD sharp local linear nos cortes 0,300 e 0,400 do IVS 2010 oficial | célula aberta (A3) e município (N); ciclos 1–3 | kernel triangular, h = 0,050; uma reta de cada lado por ciclo × corte; salto comum; efeitos fixos de curso × ciclo e de tipo de vaga | CR1 por município; IC honesto como sensibilidade; Holm nas primárias |
+| **H2 e H3** escolha e incentivo limitado | logit condicional (McFadden) da 1ª opção entre as células do conjunto de escolha | candidato × célula do mesmo curso e ciclo; ciclos 1–3; origem ligada ao CNES | bolsa linear em R$ mil; IVS em spline com nós nos cortes; distância, mesma UF, mesma região, mesmo município, porte, capital, vaga imediata | cluster por conjunto de escolha; H3 como combinação linear com a covariância conjunta |
+| **H4** capacidade líquida | estudo de evento escalonado (Callaway–Sant'Anna); comparação local na nota de corte | médico × mês, ciclos 1 e 2; candidato perto da nota de corte | controles ainda não tratados, base g − 1; efeito fixo de célula na comparação local | bootstrap multiplicador por médico; permutação na célula; Rambachan–Roth |
+
+> **Nos cortes, o contraste é sempre o pacote do corte; nenhum estimador mede a participação no PMM-E.**
+
+**Fontes:** plano da banca 2, §4.1; protocolos 40, 48, 52, 52b, 54, 56 e 59.
 
 **Números:** nenhum
 
+> **Notas do apresentador.** Todos os protocolos foram congelados antes de
+> estimar. O IC honesto (Armstrong e Kolesár) protege contra curvatura no
+> corte; com o M do protocolo, ele sai largo demais para informar. Holm
+> controla o erro nas primárias de cada família.
+
 ---
 
-# 1. Da hipótese à regra
+## Hipóteses de identificação e como foram testadas
 
-### A hipótese da banca 1, a regra com o IVS oficial e o que deu errado antes
+`Metodologia · Identificação`
 
-`sem rastreio`
+<!-- layout: tabela -->
+
+| Hipótese de identificação | Vale para | Teste ou argumento | Situação |
+|---|---|---|---|
+| a faixa é função determinística do IVS (regra sharp) | H1, H2, H3 | IVS oficial reproduz a faixa nos três ciclos | passa |
+| sem manipulação do IVS | H1, H2, H3 | IVS medido em 2010, antes do programa; teste de densidade | passa |
+| continuidade dos potenciais no corte | H1 | balanço de covariáveis; placebos de outcome e de corte | passa, com seleção suspeita no ciclo 1 em 0,400 |
+| dado o IVS contínuo, só a bolsa salta | H2, H3 | spline com nós nos cortes; placebos de corte; spline cúbico | o pacote do corte não se separa (co-políticas) |
+| independência de alternativas irrelevantes | H2, H3 | logit aninhado por região e logit misto | violada em parte; o coeficiente da bolsa muda pouco |
+| tendências paralelas entre coortes de entrada | H4 | teste conjunto do pré; Rambachan–Roth | falha em parte dos outcomes |
+| alocação quase aleatória perto da nota de corte | H4 (P6) | balanço; desempate por regra fixa | balanço passa; desempate não é sorteio |
+
+> **A ameaça comum aos cortes são as outras regras federais que mudam em 0,300 e 0,400: por isso "pacote do corte".**
+
+**Fontes:** plano da banca 2, §4.2; auditorias 16 e 18; docs 37, 41, 49, 57a, 57d, 57f e 57h.
 
 **Números:** nenhum
 
----
-
-## Na banca 1, a hipótese era: mais bolsa, mais vagas preenchidas
-
-`1. Da hipótese à regra · Hipótese`
-
-> **H1.** No corte de IVS, +R$ 5 mil na bolsa anunciada aumentam o
-> preenchimento das vagas e o provimento local de especialistas.
-
-- **No modelo:** o lado de bolsa maior preenche quando o degrau monetário
-  supera o degrau de custo latente, **ΔB/p > Δc₀**, com c₀ contínuo no corte.
-- **Na banca 1, apresentada assim:** *"municípios com maior remuneração
-  oferecida pelo PMM-E têm maior preenchimento de vagas"*.
-- **O que faltava para testar:** mostrar a regra efetiva, o corte, o primeiro
-  estágio e a ausência de manipulação.
-
-**Fontes:** `docs/02_teoria/modelo_micro.md`, §4.1 e §4.2; banca 1, versão
-apresentada (`docs/07_apresentacoes/banca1/04_versao_apresentada.md`).
-
-**Números:** nenhum
-
-> **Notas do apresentador.** Começar pelo que a banca já viu. A pergunta de
-> hoje é se a hipótese sobrevive ao teste que ela pedia. Lembrar que a
-> desigualdade do modelo não pergunta se o PMM-E funciona; pergunta se o preço
-> posto sobre a vulnerabilidade é suficiente.
+> **Notas do apresentador.** A regra sharp é o que torna a descontinuidade
+> possível. A ameaça que não se testa por inteiro é a das co-políticas: emendas,
+> custeio de MAC, o IED da APS e a coparticipação do PMMB mudam nos mesmos
+> cortes. Na DiRD, só a parte fixa no tempo delas sai.
 
 ---
 
-## A bolsa segue o IVS 2010 oficial, sem exceção
+# Resultados
 
-`1. Da hipótese à regra · Regra`
+## A bolsa é função exata do IVS: a regra é sharp
 
-![Bolsa anunciada contra o IVS 2010 oficial, ciclo 1, um ponto por município, colorido pelo IVS](../../../output/apresentacao_banca2/regra_bolsa_ivs_oficial.png)
+`Resultados · Regra`
+
+<!-- layout: figura_topo -->
+
+![Bolsa anunciada contra o IVS 2010 oficial, ciclo 1, um ponto por município](../../../output/apresentacao_banca2/regra_bolsa_ivs_oficial.png)
 
 | Conferência (portão R1) | Resultado |
 |---|---|
 | escore da relação nominal do MS = IVS 2010 oficial, a 3 casas | 404/404 |
-| categoria de IVS do consolidado PMMB = classe do IVS oficial | 5.565/5.565 |
-| ciclo 1: faixa reproduzida pela regra | 368 de 368 |
-| ciclo 2 | 454 de 454 |
-| ciclo 3 (congelado) | 747 de 748; o que falta foi criado depois de 2010 |
+| ciclo 1 · ciclo 2: faixa reproduzida pela regra | 368 de 368 · 454 de 454 |
+| ciclo 3 (congelado): o que falta foi criado depois de 2010 | 747 de 748 |
 
-Até 0,300 → R$ 10 mil; acima de 0,300 até 0,400 → R$ 15 mil; acima de 0,400
-→ R$ 20 mil. No ciclo 1, 0 municípios do lado errado de um corte.
+> **Primeiro estágio sharp: dois cortes, +R$ 5 mil em cada, 0 municípios do lado errado no ciclo 1.**
 
-> **Regra sharp: dois cortes, +R$ 5 mil em cada.**
+**Fontes:** `output/rdd_bolsa/portao_r1_ivs_oficial.json`; `output/aquisicao/a08_ivs_2010_oficial_municipio.csv`; auditoria 16; figura por `scripts/apresentacao/gerar_figuras_banca2.py`.
 
-**Fontes:** `output/rdd_bolsa/portao_r1_ivs_oficial.json`;
-`output/aquisicao/a08_ivs_2010_oficial_municipio.csv` (base completa da
-Plataforma IVS do Ipea); NT 122/2024 CGFAP/SAPS; auditoria 16; figura por
-`scripts/apresentacao/gerar_figuras_banca2.py` (variante A colorida, doc 38,
-D1).
+**Números:** `R_ESCORE_IGUAIS`, `R_C1_REPR`, `R_C1_MUN`, `R_C2_REPR`, `R_C2_MUN`, `R_C3_REPR`, `R_C3_MUN`, `R_LADO_ERRADO_OFICIAL`
 
-**Números:** `R_ESCORE_IGUAIS`, `R_CATEG_IGUAIS`, `R_C1_REPR`, `R_C1_MUN`,
-`R_C2_REPR`, `R_C2_MUN`, `R_C3_REPR`, `R_C3_MUN`, `R_LADO_ERRADO_OFICIAL`
-
-> [!NOTE]
-> **Nota de produção.** A figura é a variante A colorida (pontos no valor
-> exato da bolsa, sem deslocamento; cor = IVS do eixo, de verde a vermelho).
-> O SVG em `output/apresentacao_banca2/regra_bolsa_ivs_oficial.svg` é a
-> mesma figura em vetor, para o Slidev.
-
-> **Notas do apresentador.** O MS usa o IVS 2010 do Ipea com o limite na
-> classe de baixo: 0,300 fica com R$ 10 mil. O FAQ e a cláusula 11.1.4 do
-> edital descrevem uma grade um degrau menos generosa; a aplicada é esta.
-> Primeiro estágio sharp: a bolsa anunciada é função determinística do IVS.
+> **Notas do apresentador.** Cada ponto é um município do ciclo 1, na altura
+> da bolsa anunciada. Até 0,300, R$ 10 mil; até 0,400, R$ 15 mil; acima,
+> R$ 20 mil. O FAQ do edital descreve outra grade; a aplicada é esta.
 
 ---
 
-## O "IVS como piso" da banca 1 era um arquivo errado
+## H1: o preenchimento não aumenta de forma detectável no corte
 
-`1. Da hipótese à regra · Failure mode`
+`Resultados · H1`
 
-### O que era o arquivo
+<!-- layout: figura_faixa -->
 
-`data/ivs_ipea_2010_municipios.csv` vem da base oficial do Ipea, mas é **a
-linha errada**: em cada município, a última linha de subgrupo com IVS
-preenchido — *Negro / Mulher / Urbano* em 4.362 de 5.565 municípios (78%).
-Acerta o IVS oficial a 3 casas em 38 municípios; correlação 0,85.
+![H1: vagas preenchidas por município (N1) e probabilidade de a célula aberta ser preenchida (A3), com "Como ler"](../../../output/apresentacao_banca2/h1_preenchimento.png)
 
-> **O arquivo não é inventado: é a linha errada da base certa.**
+- **A3:** o maior aumento compatível, +3,2 p.p., fica abaixo da referência de +10 p.p.; por corte, +1,7 em 0,300 e +11,3 em 0,400.
+- **N1:** o sinal negativo não passa no Holm (0,124); em 0,400 vem do porte; em 0,300, da taxa por vaga, que depende da medida (doc 49b).
 
-### O que ele fez com a regra
+> **Inconclusivo: IC que contém zero não é efeito zero. O descarte de ganhos grandes vale com o IC convencional e para o pacote do corte.**
 
-![FAILURE MODE — a mesma figura com o arquivo errado no eixo: 101 municípios do lado errado de um corte](../../../output/apresentacao_banca2/failure_mode/regra_bolsa_arquivo_errado_FAILURE_MODE.png)
+**Fontes:** `output/rdd_bolsa/N_estimativas.csv` (doc 49, §3); `output/rdd_bolsa/S57_resumo.json` (A3; doc 49, §15; doc 57, §4.2).
 
-Com ele no eixo, 101 dos 368 municípios do ciclo 1 caem do lado errado de um
-corte. O "IVS como piso" que a banca 1 viu (errata E10) somava o arquivo
-errado à grade do FAQ do edital. Refeito com a base oficial: malha, tipologia, A4, A5 e
-a Tabela 1 do ciclo 1. A RDD (E3 em diante) já usava o IVS oficial: nenhuma
-estimativa dela muda.
+**Números:** `N1_SA_TAU`, `N1_SA_INF`, `N1_SA_SUP`, `N1_MEDIA`, `N1_SA_HOLM`, `A3_EMP_TAU`, `A3_EMP_INF`, `A3_EMP_SUP`, `A3_EMP_MDE`, `A3_300_SUP`, `A3_400_SUP`, `N1_SB_TAU`, `N1_SB_INF`, `N1_SB_SUP`
 
-**Fontes:** `output/rdd_bolsa/identificacao_arquivo_local_ivs.json`;
-`output/tema_trabalho/failure_mode_ivs_resumo.json`;
-`output/rdd_bolsa/portao_r1_ivs_oficial.json`; auditorias 16 e 19; errata E10
-da banca 1.
-
-**Números:** `FM_NMU`, `FM_MUN`, `FM_NMU_PCT`, `FM_IGUAIS`, `FM_CORR`,
-`FM_LADO_ERRADO`, `R_C1_MUN`
-
-> [!NOTE]
-> **Nota de produção.** A figura deste slide é **FAILURE_MODE** e vem de
-> `output/apresentacao_banca2/failure_mode/`. O título na tela deve dizer
-> "arquivo errado"; nunca rotular o eixo como IVS do município. Um slide só,
-> sem demorar.
-
-> **Notas do apresentador.** Dizer de uma vez: o diagnóstico que mostramos em
-> 05/10/2026 estava errado, e a causa foi um arquivo sem fonte registrada que
-> entrou no primeiro commit. A extração esqueceu o filtro da linha total
-> (cor, sexo e situação de domicílio "Total"). Os números antigos só existem
-> como registro do erro (auditoria 19); as estimativas da RDD são idênticas
-> byte a byte antes e depois da correção.
+> **Notas do apresentador.** Esta é a variável que o grupo pediu: o número de
+> vagas preenchidas controlando o número de vagas oferecidas (N1): −0,76
+> [−1,44; −0,07] por município, sobre uma média de 2,16 do lado de bolsa
+> menor. Ao lado, a probabilidade de a célula aberta ser preenchida (A3), que
+> não depende do porte: −4,9 p.p. [−12,9; +3,2], MDE de 11,5 p.p. Nenhuma das
+> duas mostra aumento. O sinal de N1 é negativo, mas não sobrevive ao Holm e,
+> com um só coeficiente do controle, mudaria (ver Robustez); por isso a
+> leitura é "não detectamos aumento", não "a bolsa reduz". Sem controle,
+> −1,45 [−2,90; −0,01]: inclui a resposta da oferta de vagas.
 
 ---
 
-# 2. Desenho
+## H2: a bolsa pesa na escolha da vaga só no ciclo 2
 
-### O que cada estimativa identifica
+`Resultados · H2`
 
-`sem rastreio`
+<!-- layout: figura_faixa -->
+
+![H2: razão de chances da 1ª opção por +R$ 5 mil, ciclos empilhados e por ciclo, com "Como ler"](../../../output/apresentacao_banca2/h2_escolha.png)
+
+- **Primária (M1):** 1,24 [0,99; 1,55] por +R$ 5 mil, p 0,065; a igualdade entre ciclos tem p 0,058.
+- **Só o ciclo 2 exclui 1**, e resiste a poucos clusters e a placebos de corte (E9); os ciclos 1 e 3 não o replicam.
+
+> **Inconclusivo na primária. Escolha não é expansão: o que uma vaga ganha, outra do mesmo curso perde.**
+
+**Fontes:** `output/rdd_bolsa/P1_estimativas.csv` (doc 57a); `output/rdd_bolsa/E8_resumo.json` (E9, doc 44, §5.2).
+
+**Números:** `M1_RC`, `M1_RC_INF`, `M1_RC_SUP`, `M1_P`, `M5_C2_RC`, `M5_C2_RCI`, `M5_C2_RCS`, `M5_WALD_P`, `E9_C2_RC`, `E9_C2_RCI`, `E9_C2_RCS`, `M1_N`
+
+> **Notas do apresentador.** Logit condicional da 1ª opção de 5.421 candidatos
+> entre as vagas abertas do seu curso e ciclo. A razão de chances compara duas
+> vagas que diferem só no degrau de R$ 5 mil, com o IVS contínuo controlado.
+> No ciclo 2: 1,70 [1,22; 2,37]; sem distância (E9), 1,95 [1,48; 2,57]. O que
+> não mede: quem deixou de se candidatar e quantos médicos o programa atrai.
+
+---
+
+## H3: incentivo limitado — PENDENTE
+
+`Resultados · H3`
+
+<!-- layout: pendente -->
+
+- **Teste congelado** no protocolo 52b em 26/10/2026, antes de calcular: o efeito de toda a amplitude da bolsa (R$ 10 mil → R$ 20 mil) é menor que o de a vaga ficar na UF de origem?
+- **Também:** a amplitude da bolsa expressa em km equivalentes de distância, com IC.
+- **Estado:** o script 25c (doc 57i) está sendo rodado por outra sessão e passa por auditoria independente antes de entrar aqui.
+
+> **PENDENTE: nenhum número da H3 neste slide até a auditoria.**
+
+**Fontes:** `docs/06_execucao/52b_protocolo_P1h_magnitudes.md`.
 
 **Números:** nenhum
 
----
-
-## Três contrastes, e nenhum é "o efeito do PMM-E"
-
-`2. Desenho · Contrastes`
-
-| Contraste | Etapa | O que identifica | População |
-|---|---|---|---|
-| **RDD em nível** | E3, E6 | o **pacote do corte**: +R$ 5 mil na bolsa anunciada e as outras regras federais que mudam no mesmo corte | U (todos os municípios com IVS oficial); V1–V3 (municípios com célula no quadro do ciclo) |
-| **DiRD no CNES** | E7 | a bolsa e a **variação**, entre pré (2024-06 a 2025-06) e pós (2025-10 a 2026-08), das descontinuidades das co-políticas | U; V1 |
-| **Escolha** | E9 | o degrau da bolsa na escolha da 1ª opção **entre células** do mesmo curso e ciclo: **realocação**, condicional a candidatar-se | candidatos de 1ª opção |
-
-Protocolo congelado em 18/10/2026, antes de abrir os outcomes novos: local
-linear, kernel triangular, h = 0,050, cortes 0,300 e 0,400 empilhados; **duas
-primárias com Holm** (P1, índice de atração-presença; P2, oferta no CNES por
-DiRD); secundárias com q BKY por família; referências de magnitude de +10 p.p.
-no preenchimento e +25% nas candidaturas.
-
-> **O efeito candidato é o incentivo marginal anunciado — não a participação
-> no PMM-E nem o Agora Tem Especialistas.**
-
-**Fontes:** `docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md`, §3, §6
-e §7; doc 44, §2.
-
-**Números:** nenhum
-
-> **Notas do apresentador.** Salto = lado de bolsa maior menos lado de bolsa
-> menor. Em U a amostra não é condicionada a ter vaga; em V_k é, e por isso a
-> família F0 testa se ter vaga salta no corte. Parte do ciclo 1 já tinha sido
-> vista antes do congelamento (protocolo, §10); o resto foi aberto depois.
-
----
-
-# 3. Resultados, elo a elo
-
-### Implementação → atração → escolha → presença → oferta → seleção
-
-`sem rastreio`
-
-**Números:** nenhum
-
----
-
-## A cadeia em uma figura: o provimento não se move; a escolha se move no ciclo 2
-
-`3. Resultados · Cadeia`
-
-![Um outcome por elo da cadeia, com IC 95%; azul quando o IC exclui o nulo](../../../output/apresentacao_banca2/cadeia_sintese_principal.png)
-
-Azul: o IC 95% exclui o nulo. Os dois azuis das pontas — vagas imediatas e
-nota dos candidatos — não sobrevivem ao controle por família (slide 16).
-
-**Fontes:** `output/rdd_bolsa/E8_tabela_sintese.csv`; figura por
-`scripts/apresentacao/gerar_figuras_banca2.py`.
-
-**Números:** `E8_LINHAS`
-
 > [!NOTE]
-> **Nota de produção.** Cada linha da figura tem a sua escala, simétrica em
-> torno do nulo; a figura diz isso no subtítulo. Não comparar comprimentos de
-> IC entre linhas. A versão com as 23 linhas está no apêndice B1.
+> **Nota de produção.** Slide reservado. Depois da auditoria, entra a figura
+> dos coeficientes do M1 na mesma escala de utilidade (plano, §5, item 3) e a
+> marca PENDENTE sai.
+
+> **Notas do apresentador.** Se perguntarem: a comparação usa os mesmos
+> coeficientes do M1. Uma comparação de magnitude com limite não depende de o
+> coeficiente da bolsa ser significativo, ao contrário da disposição a pagar,
+> que é uma razão e explode quando o denominador fica perto de zero.
+
+---
+
+## H4: o médico soma horas, mas metade já estava no município
+
+`Resultados · H4`
+
+<!-- layout: figura_faixa -->
+
+![H4: horas semanais cadastradas do médico depois da entrada (P4) e na nota de corte (P4-CA), com "Como ler"](../../../output/apresentacao_banca2/h4_horas_medico.png)
+
+- **Origem (descritivo):** 51,0% [48,4; 53,7] dos médicos já tinham vínculo no município do posto antes de entrar.
+- **Rambachan–Roth:** as horas totais aguentam violações de tendência até 1,30 vez a maior vista no pré.
+
+> **Associação sob tendências paralelas, não efeito da bolsa nem da participação no PMM-E: horas cadastradas não são presença.**
+
+**Fontes:** `output/rdd_bolsa/S57_resumo.json` (P4, doc 57d); `output/rdd_bolsa/H_estimativas.csv` e `CA_estimativas.csv` (doc 57h).
+
+**Números:** `P4_HT_ATT`, `P4_HT_INF`, `P4_HT_SUP`, `P4_HT_PRE`, `RR_HT`, `P4_HM_ATT`, `P4_HM_PRE`, `P4_HF_ATT`, `P4_ORIGEM`, `P4_ORIGEM_INF`, `P4_ORIGEM_SUP`, `CA_HT_EST`, `CA_HT_INF`, `CA_HT_SUP`, `CA_HT_HOLM`, `CA_HM_EST`
+
+> **Notas do apresentador.** A pergunta é se o programa cria oferta ou paga
+> quem já estava. O médico soma +6,6 h/sem [+5,4; +7,8] de horas totais
+> cadastradas (pré com p 0,310), sobretudo no município do posto (+8,7, com o
+> pré falhando, p 0,001), e perde −2,1 fora dele. Metade já trabalhava no
+> município. Na nota de corte (P4-CA), horas totais +7,91 [−0,63; +16,45], p
+> de Holm 0,162; no município da 1ª opção, +10,92. Na comparação
+> com quem ficou um ou dois pontos abaixo da nota de corte, o pré passa e a
+> direção é a mesma, mas o IC das horas totais contém zero. As horas no
+> município da 1ª opção são em parte mecânicas: ser alocado cria o vínculo.
+
+---
+
+## Na cadeia, só a escolha e o registro do médico se movem
+
+`Resultados · Cadeia`
+
+<!-- layout: figura_cheia -->
+
+![A cadeia do doc 57: uma linha por pergunta, cada uma na sua escala, com a força da evidência](../../../output/apresentacao_banca2/cadeia_resumo_doc57.png)
+
+> **Nenhuma pergunta tem hoje evidência causal limpa de mudança no resultado medido.**
+
+**Fontes:** `output/rdd_bolsa/S57_resumo.json` (doc 57, §2 e §4); figura por `scripts/apresentacao/gerar_figuras_banca2.py`.
+
+**Números:** nenhum
 
 > **Notas do apresentador.** Ler de cima para baixo, na ordem da cadeia.
-> Cinza no preenchimento, na presença e na oferta; azul na escolha. Esse é o
-> padrão que o resto da seção detalha.
+> Cinza: o IC contém o nulo. Verde em N1 é negativo e não passa no Holm. Verde
+> em P6 Y1 é quase mecânico. Verde em P4 é associação com tendências
+> paralelas. A escolha no ciclo 2 aparece no slide da H2.
 
 ---
 
-## As duas primárias não rejeitam zero depois do Holm
+## Robustez: as leituras resistem, com duas ressalvas declaradas
 
-`3. Resultados · Primárias`
+`Resultados · Robustez`
 
-| Primária | Contraste | Salto | IC 95% | p | p Holm |
-|---|---|---|---|---|---|
-| **P1** índice de atração-presença (F1.1, F1.2, F1.3, F2.1), ciclos e cortes empilhados | pacote do corte | −0,13 DP | [−0,44; +0,19] | 0,426 | 0,851 |
-| **P2** vínculos nas CBO-alvo por 10 mil hab. (U), cortes empilhados | DiRD | +0,083 | [−0,309; +0,476] | 0,677 | 0,851 |
+<!-- layout: tabela -->
 
-![Índice P1 com ciclos e cortes agrupados](../../../output/rdd_bolsa/E6_figuras/E6_indice_P1_agrupado.png)
-
-> **Nenhuma primária rejeita zero, e os dois IC contêm zero. Não é prova de
-> efeito zero.**
-
-**Fontes:** `output/rdd_bolsa/E8_resumo.json` (`holm`); E6 e E7; doc 44, §4.
-
-**Números:** `P1_TAU`, `P1_INF`, `P1_SUP`, `P1_P`, `P1_HOLM`, `P2_TAU`,
-`P2_INF`, `P2_SUP`, `P2_P`, `P2_HOLM`
-
-> [!NOTE]
-> **Nota de produção.** O número no título da figura é o salto da **reta
-> comum** do visual, não a estimativa P1 (que tem interceptos e inclinações
-> por ciclo e corte). A estimativa é a da tabela. Se a banca perguntar,
-> dizer isso; não trocar o número da tabela pelo da figura.
-
-> **Notas do apresentador.** P1 é pacote; P2 é DiRD e tira só a parte
-> constante das co-políticas. O Holm controla a taxa de erro das duas.
-
----
-
-## Candidaturas e preenchimento não se movem no corte
-
-`3. Resultados · Atração`
-
-| Outcome (ciclos e cortes empilhados) | Salto | IC 95% | q BKY |
+| Hipótese | Teste | Resultado | Leitura |
 |---|---|---|---|
-| F1.1 candidatos de 1ª opção por célula | +0,063 | [−0,511; +0,636] | 1,000 |
-| F1.2 fração de células com candidato | −7,0 p.p. | [−18,9; +4,9] | 1,000 |
-| F1.3 fração de células preenchidas na 1ª chamada | −7,3 p.p. | [−17,9; +3,4] | 1,000 |
-| F1.4 preenchidas até a 2ª chamada (ciclos 1 e 2) | −8,0 p.p. | [−23,6; +7,6] | 1,000 |
+| H1 | N1 com outras janelas (h = 0,030 e 0,080) | −0,78 e −0,47 | mesmo sinal |
+| H1 | N1 sem os municípios colados ao corte (donut) | −0,65 [−1,43; +0,14] | mesmo sinal; o IC contém zero |
+| H1 | N1 com um só coeficiente do controle (fora do protocolo) | −1,03 [−1,79; −0,28] | **ressalva:** o "nenhuma rejeita zero depois do Holm" depende dessa escolha |
+| H1 | IC honesto de N1 (M do protocolo) | [−79,58; +78,07] | **ressalva:** não informa |
+| H2 | outras especificações do logit (M0, M2, M4, M7, M8, M9) | de +0,0304 a +0,0759 por R$ 1 mil | positivo em todas; o IC contém zero só no M1 e no M7 |
+| H2 | E9 no ciclo 2: cortes placebo e spline cúbico | p por posto 0,036; spline cúbico p 0,083 | robusto a placebos; sensível à forma do IVS |
+| H4 | Rambachan–Roth (Δ^RM, média do pós) | ruptura de M̄: 1,30 (totais), 1,90 (posto), 0,78 (fora) | totais e posto aguentam violações do tamanho das do pré |
+| H4 | comparação na nota de corte (P4-CA) | totais +7,91 [−0,63; +16,45]; pré p 0,837 | mesma direção; o IC contém zero |
+| todas | Holm nas primárias; BKY nas secundárias | nenhuma primária rejeita zero, salvo o Y1 do P6 | o Y1 é quase mecânico |
 
-![F1.3 no ciclo 2, por corte](../../../output/rdd_bolsa/E6_figuras/E6_F1_3_V2.png)
+> **As ressalvas estão na tela: nenhuma especificação foi escolhida depois de ver o resultado.**
 
-> **Estimativas pontuais negativas, IC que contêm zero: nenhum efeito
-> detectável do pacote sobre candidaturas e preenchimento.**
+**Fontes:** `output/rdd_bolsa/N_estimativas.csv` (doc 49, §3 e §7); `P1_estimativas.csv` (doc 57a); `E8_resumo.json` (E9); `H_estimativas.csv` e `CA_estimativas.csv` (doc 57h); doc 57, §3.
 
-**Fontes:** `output/rdd_bolsa/E8_tabela_sintese.csv`; E6 (doc 41).
+**Números:** `N1_H030_TAU`, `N1_H080_TAU`, `N1_DONUT_TAU`, `N1_DONUT_INF`, `N1_DONUT_SUP`, `N1_UNICO_TAU`, `N1_UNICO_INF`, `N1_UNICO_SUP`, `N1_HON_INF`, `N1_HON_SUP`, `M7_COEF`, `M4_COEF`, `E9_C2_PPOSTO`, `E9_C2_CUB_P`, `RR_HT`, `RR_HM`, `RR_HF`, `CA_HT_EST`, `CA_HT_INF`, `CA_HT_SUP`, `CA_HT_PRE`
 
-**Números:** `F11_EST`, `F11_INF`, `F11_SUP`, `F11_Q`, `F12_EST`, `F12_INF`,
-`F12_SUP`, `F12_Q`, `F13_EST`, `F13_INF`, `F13_SUP`, `F13_Q`, `F14_EST`,
-`F14_INF`, `F14_SUP`, `F14_Q`
-
-> [!NOTE]
-> **Nota de produção.** A figura é do ciclo 2, a replicação que o autor pediu
-> (doc 38, D2), por corte; a tabela é empilhada. Os números no título da
-> figura são os do ciclo 2 por corte.
-
-> **Notas do apresentador.** Por que o salto sai negativo se a média bruta
-> do lado de cima é maior: o preenchimento sobe com o IVS dentro da janela, e
-> o salto compara as duas retas no próprio corte. "IC contém zero" quer dizer
-> que a amostra não distingue o efeito de zero, não que ele é zero.
+> **Notas do apresentador.** Duas ressalvas: com um só coeficiente do controle,
+> N1 rejeitaria zero depois do Holm, mas o Wald rejeita essa restrição; e o IC
+> honesto, com o M da regra de bolso, sai largo demais para informar. Ruptura
+> de M̄ igual a 1 quer dizer que a conclusão aguenta violações de tendência do
+> mesmo tamanho das vistas no pré.
 
 ---
 
-## O IC convencional descarta +10 p.p. no preenchimento empilhado; o honesto, não
+## Limites: pacote do corte, só candidatos, vínculo cadastrado
 
-`3. Resultados · Descarte`
+`Resultados · Limites`
 
-![Preenchimento: IC 95% convencional contra a referência de +10 p.p.](../../../output/apresentacao_banca2/descarte_preenchimento.png)
+<!-- layout: cartoes -->
 
-- **Empilhado:** o limite superior do F1.3 é +3,4 p.p.; entre as 6
-  especificações convencionais do protocolo, o maior é +7,8 p.p.
-- **Por ciclo e na âncora do E3:** o IC ainda admite +10 p.p. (até +14,0 e
-  +14,1 nos ciclos 1 e 2; +19,8 e +26,2 no E3, cortes 0,300 e 0,400).
-- **F1.4:** o descarte depende da janela (até +12,0 p.p. com h = 0,030).
-- **Três condições:** IC convencional (HC1/CR1); aproximação local linear boa
-  no corte; contraste = pacote. **O IC honesto com o M do protocolo não
-  descarta nada.**
+- **Pacote do corte.** Nos mesmos cortes mudam o teto de emendas e de custeio de MAC (+20% para IVS maior que 0,3), o estrato do IED da APS e o teto de coparticipação do PMMB (10% → 40% em 0,3; 40% → 100% em 0,4). A DiRD tira só a parte fixa no tempo.
+- **Sem margem extensiva.** A escolha é de quem já se candidatou: o logit não vê quem deixou de se inscrever, e um aumento igual da bolsa em todas as vagas não muda nenhuma escolha no modelo.
+- **Vínculo não é presença.** Horas e vínculos são cadastros do CNES; não são horas trabalhadas nem retenção individual.
+- **Não é a participação no PMM-E.** O efeito candidato é o incentivo marginal de R$ 5 mil anunciado, como pacote do corte; nem o Agora Tem Especialistas.
 
-> **O ganho de precisão veio de empilhar, e o descarte só vale com o IC
-> convencional.**
+> **Inconclusivo não quer dizer que a bolsa não funciona: é ausência de efeito detectável, nos limites acima.**
 
-**Fontes:** `output/rdd_bolsa/E8_resumo.json` (`descarte`); doc 44, §5.1;
-figura por `scripts/apresentacao/gerar_figuras_banca2.py`.
+**Fontes:** auditoria 18, §2 e §3; doc 57, §4.2 e §7; `CLAUDE.md`.
 
-**Números:** `F13_SUP`, `D_F13_NCONV`, `D_F13_MAXCONV`, `D_F13_V1_SUP`,
-`D_F13_V2_SUP`, `E3_300_SUP`, `E3_400_SUP`, `D_F14_MAXCONV`
+**Números:** `CP_EMENDAS`, `CP_752_300`, `CP_752_400`
 
-> **Notas do apresentador.** Descartar quer dizer: o limite superior do IC
-> 95% fica abaixo da referência. O IC honesto (Armstrong e Kolesár) protege
-> contra o viés de suavização com o M da regra de bolso; com ele, os limites
-> ficam fora de qualquer escala útil. Por isso a frase do slide tem a
-> condição embutida. Nunca dizer "descartamos +10 p.p." sem "com o IC
-> convencional".
+> **Notas do apresentador.** Cada cartão é uma pergunta que a banca pode
+> fazer. O universo de inscritos responderia à margem extensiva; o pedido está
+> pronto, mas depende do Ministério.
 
 ---
 
-## No ciclo 2, a 1ª opção vai para a célula de bolsa maior
+## Um efeito do tamanho da literatura não cabe no IC empilhado
 
-`3. Resultados · Escolha`
+`Resultados · Discussão`
 
-| Ciclo | Razão de chances por +R$ 5 mil | IC 95% | p |
-|---|---|---|---|
-| 1 | 1,39 | [0,90; 2,13] | 0,137 |
-| **2** | **1,95** | **[1,48; 2,57]** | **< 0,001** |
-| 3 | 1,05 | [0,77; 1,43] | 0,761 |
-| empilhado | 1,39 | [1,12; 1,73] | 0,003 |
+<!-- layout: cartoes -->
 
-### O ciclo 2 é robusto
+- **Dal Bó, Finan e Rossi (2013).** Salário anunciado sorteado, +33%: aceitação +15,1 p.p. e candidaturas +26%.
+- **Bobba et al.** Adicional de +13% por regra, numa RDD: o preenchimento não mudou; o professor que chegou era melhor.
+- **Aqui.** Degrau de +50% em 0,300 e +33% em 0,400; o IC da célula aberta admite no máximo +3,2 p.p., com os cortes empilhados.
+- **Próximos passos.** Ciclo 3 com a competência 202703 publicada, completa e madura; pedidos do universo de inscritos e da folha de pagamento; H3 depois da auditoria.
 
-Score bootstrap (Webb) p = 0,002; CV3 p < 0,001; 0 de 27 cortes placebo com
-|t| maior ou igual ao real (p por posto 0,036). Ressalva: com spline cúbico, o
-IC inclui 1 (p = 0,083).
+> **Contextos e outcomes diferentes: lá, servidores e aceitação da oferta; aqui, especialistas e célula com confirmação ou homologação.**
 
-### O empilhado é frágil
+**Fontes:** doc 44, §6 (trechos do doc 20 da seção 03 copiados em `output/rdd_bolsa/E8_resumo.json`); doc 57, §6.
 
-Sem o ciclo 2, p = 0,267; Q de Cochran rejeita ciclos iguais (p = 0,014);
-cortes placebo com |t| > 1,96 em 14,8% (p por posto 0,107); spline cúbico,
-p = 0,220.
+**Números:** `LIT_DALBO_SAL`, `LIT_DALBO_ACEIT`, `LIT_DALBO_CAND`, `LIT_BOBBA`, `MAG_DEG300`, `MAG_DEG400`, `A3_EMP_SUP`
 
-![Utilidade estimada da célula contra o IVS, por ciclo](../../../output/rdd_bolsa/E9_figuras/E9_utilidade_ivs.png)
-
-> **Escolha não é expansão: o que uma célula ganha, as outras do mesmo curso
-> perdem.**
-
-**Fontes:** `output/rdd_bolsa/E8_resumo.json` (`e9`); E9 (doc 42); doc 44,
-§5.2.
-
-**Números:** `E9_C1_RC`, `E9_C1_RCI`, `E9_C1_RCS`, `E9_C1_P`, `E9_C2_RC`,
-`E9_C2_RCI`, `E9_C2_RCS`, `E9_C2_P`, `E9_C3_RC`, `E9_C3_RCI`, `E9_C3_RCS`,
-`E9_C3_P`, `E9_EMP_RC`, `E9_EMP_RCI`, `E9_EMP_RCS`, `E9_EMP_P`, `E9_C2_WEBB`,
-`E9_C2_CV3`, `E9_C2_PLAC_GE`, `E9_C2_NPLAC`, `E9_C2_PPOSTO`, `E9_C2_CUB_P`,
-`E9_EMP_SEM2_P`, `E9_EMP_Q_P`, `E9_PLAC_FRAC`, `E9_EMP_PPOSTO`,
-`E9_EMP_CUB_P`, `E9_EMP_N`, `LIT_DALBO_CAND`
-
-> [!NOTE]
-> **Nota de produção.** Os dois builds têm o mesmo peso visual. Não mostrar o
-> empilhado sem o build "frágil".
-
-> **Notas do apresentador.** O E9 é secundário e exploratório; a robustez é
-> pós-auditoria, fora do protocolo. Logit condicional da 1ª opção, 5.714
-> candidatos empilhados, IVS em spline contínuo com nós nos cortes. Supõe IIA
-> e não tem distância. A variação relativa da probabilidade de escolha **não**
-> é comparável aos "+26% de candidaturas" de Dal Bó et al.: lá é o tamanho do
-> pool; aqui, a repartição de um pool dado.
-
----
-
-## Presença e oferta no CNES: nada detectado, nem nos placebos
-
-`3. Resultados · Presença e oferta`
-
-| Outcome | Contraste | Salto | IC 95% |
-|---|---|---|---|
-| F2.1 especialistas ativos por célula (V1+V2) | pacote | −0,136 | [−0,491; +0,218] |
-| F2.3 algum especialista ativo do ciclo (V1+V2) | pacote | −5,2 p.p. | [−25,0; +14,7] |
-| **P2** F3.1 vínculos nas CBO-alvo por 10 mil hab. (U) | DiRD | +0,083 | [−0,309; +0,476] |
-| F3.2 município com especialista nas CBO-alvo | DiRD | −2,5 p.p. | [−5,9; +1,0] |
-| F3.3 horas SUS nas CBO-alvo por 10 mil hab. | DiRD | −2,0 | [−6,4; +2,3] |
-| placebo: generalistas por 10 mil hab. | DiRD | −0,088 | [−1,190; +1,014] |
-| placebo: especialistas fora das CBO-alvo | DiRD | −0,059 | [−0,485; +0,367] |
-
-### Uma sequência que não vira efeito
-
-![Estudo de evento da DiRD, F3.1 em U](../../../output/rdd_bolsa/E7_figuras/E7_evento_F3_1_U.png)
-
-Em 0,300, 5 meses seguidos com p < 0,05 no início do pós (2025-10 a 2026-02);
-nos 6 meses seguintes, 0. A oferta já era menor do lado de cima antes de todas
-as regras com corte em 0,3 ou 0,4: pré extra −1,811 [−3,591; −0,030]. DiRD
-principal em 0,300: +0,287 [−0,235; +0,810].
-
-> **Vínculo no CNES não é médico do PMM-E; presença no retrato não é
-> retenção.**
-
-**Fontes:** `output/rdd_bolsa/E8_tabela_sintese.csv`;
-`output/rdd_bolsa/E8_resumo.json` (`e7`); E6 e E7 (docs 41 e 43).
-
-**Números:** `F21_EST`, `F21_INF`, `F21_SUP`, `F23_EST`, `F23_INF`,
-`F23_SUP`, `P2_TAU`, `P2_INF`, `P2_SUP`, `F32_EST`, `F32_INF`, `F32_SUP`,
-`F33_EST`, `F33_INF`, `F33_SUP`, `FP1_EST`, `FP1_INF`, `FP1_SUP`, `FP2_EST`,
-`FP2_INF`, `FP2_SUP`, `E7_SEQ_N`, `E7_DEPOIS_N`, `E7_DEPOIS_SIG`,
-`E7_PREEXT_TAU`, `E7_PREEXT_INF`, `E7_PREEXT_SUP`, `E7_DIRD300_TAU`,
-`E7_DIRD300_INF`, `E7_DIRD300_SUP`
-
-> **Notas do apresentador.** A referência do estudo de evento (2025-06) está
-> num vale: o salto do pós tem tamanho parecido com o do pré extra. Emendas e
-> parcelas de MAC com "IVS maior que 0,3" mudam a cada ano e podem mirar
-> especialistas; a DiRD só tira a parte constante. Detalhe no apêndice B4.
-
----
-
-## Os p < 0,05 isolados não sobrevivem à família
-
-`3. Resultados · Multiplicidade`
-
-| Família | Linhas no BKY | p < 0,05 | q BKY < 0,05 | Menor q |
-|---|---|---|---|---|
-| F0 implementação e seleção | 42 | 2 | 0 | 0,639 |
-| F1 atração | 45 | 0 | 0 | 1,000 |
-| F2 presença | 24 | 1 | 0 | 0,828 |
-| F3 oferta no CNES | 18 | 0 | 0 | 1,000 |
-| F4 seleção de quem chega | 24 | 2 | 0 | 0,830 |
-
-- **Vagas imediatas por 10 mil hab. (ciclo 1, U):** −0,035 [−0,065; −0,006],
-  q BKY 0,639. Em V1 no corte 0,400, razão de densidades 0,61 [0,29; 1,30] e 3
-  de 13 covariáveis desbalanceadas: V1 em 0,400 pode ser amostra selecionada
-  (peso de 12,3% no P1).
-- **Nota dos candidatos de 1ª opção:** −0,453 [−0,873; −0,033], p = 0,035,
-  q BKY 0,830. Não há seleção positiva.
-
-> **Um p < 0,05 isolado, com q BKY alto, é da ordem do esperado por acaso
-> numa família com dezenas de testes.**
-
-**Fontes:** `output/rdd_bolsa/E8_resumo.json` (`familias`, `selecao_v1_0400`);
-`output/rdd_bolsa/E8_tabela_sintese.csv`; doc 44, §3 e §5.4.
-
-**Números:** `FAM_F0_N`, `FAM_F0_P`, `FAM_F0_Q`, `FAM_F0_MINQ`, `FAM_F1_N`,
-`FAM_F1_P`, `FAM_F1_Q`, `FAM_F1_MINQ`, `FAM_F2_N`, `FAM_F2_P`, `FAM_F2_Q`,
-`FAM_F2_MINQ`, `FAM_F3_N`, `FAM_F3_P`, `FAM_F3_Q`, `FAM_F3_MINQ`, `FAM_F4_N`,
-`FAM_F4_P`, `FAM_F4_Q`, `FAM_F4_MINQ`, `F02_EST`, `F02_INF`, `F02_SUP`,
-`F02_Q`, `SEL_DENS`, `SEL_DENS_INF`, `SEL_DENS_SUP`, `SEL_BAL_P`,
-`SEL_BAL_N`, `SEL_PESO`, `F42_EST`, `F42_INF`, `F42_SUP`, `F42_P`, `F42_Q`
-
-> **Notas do apresentador.** O BKY supõe dependência positiva entre as linhas
-> por corte e empilhadas, o que não foi verificado. Os p < 0,05 isolados são
-> as vagas imediatas, a presença do ciclo 2 em 0,300 e a nota dos candidatos;
-> nenhum deles é efeito.
-
----
-
-# 4. Leitura e revisão
-
-### O que a evidência permite dizer, e que pergunta fazer agora
-
-`sem rastreio`
-
-**Números:** nenhum
-
----
-
-## O que podemos e o que não podemos afirmar
-
-`4. Leitura · Afirmações`
-
-| Podemos afirmar | Não podemos afirmar |
-|---|---|
-| Sob o protocolo, nenhum teste primário rejeita zero depois do Holm | Que a bolsa "não funciona" ou que o efeito é zero |
-| Com ciclos e cortes empilhados, IC convencional e linearidade local, saltos de +10 p.p. ou mais no preenchimento ficam fora do intervalo | Que esse descarte vale com o IC honesto, por ciclo isolado ou para a bolsa sem as co-políticas |
-| Nenhuma família do protocolo tem q BKY < 0,05 | Que os p < 0,05 isolados são efeitos |
-| No ciclo 2, a bolsa anunciada desloca a 1ª opção para células de bolsa maior, com inferência robusta a poucos clusters e a placebos | Que esse deslocamento aumenta candidatos, preenchimento ou oferta local; que vale nos ciclos 1 e 3 |
-| A DiRD no CNES não detecta mudança de oferta nas CBO-alvo nem nos placebos | Que a sequência de meses em 0,300 é efeito da bolsa |
-| O contraste é o incentivo marginal anunciado, como pacote do corte | Efeito da participação no PMM-E, do Agora Tem Especialistas ou do IVS |
-
-> **Perto dos cortes de IVS, não encontramos evidência de que o degrau de
-> R$ 5 mil, junto com as regras que mudam nos mesmos cortes, aumente o
-> preenchimento, a presença ou a oferta local de especialistas. IC que contém
-> zero não é efeito zero: por ciclo, a amostra não descarta efeitos moderados.
-> É ausência de efeito detectável, não prova de ineficácia.**
-
-**Fontes:** doc 44, §5.5 e §1.
-
-**Números:** nenhum
-
-> **Notas do apresentador.** A frase em destaque é a frase segura dos nulos;
-> ler sem parafrasear. Se perguntarem "então a bolsa não funciona?", a
-> resposta é a coluna da direita, primeira linha.
-
----
-
-## Nos mesmos cortes mudam outras regras federais
-
-`4. Leitura · Co-políticas`
-
-| Corte | Muda além da bolsa — verificado no texto do ato ou nos dados | Não verificado ou inferido |
-|---|---|---|
-| 0,300 | teto de emendas e de parcelas de custeio de MAC e APS +20% para "IVS maior que 0,3" (2024 em diante; em 2026 alcança o Agora Tem Especialistas); estrato do IED da APS nos portes 2 e 3; texto da Portaria 752/2023: teto de coparticipação do PMMB de 10% → 40% | como a Portaria 752/2023 foi aplicada no corte; priorização de eMulti |
-| 0,400 | estrato do IED nos portes 1, 2 e 4; texto da Portaria 752/2023: 40% → 100% | ajuda de custo e perfis de escolha do PMMB; Eixo Vínculo |
-
-- A RDD em nível mede um **pacote**. Em 0,300, o teto da MAC mira o mesmo
-  outcome do F3.
-- A DiRD tira só a parte **constante**; emendas, IED e ajuda de custo mudam no
-  tempo. Ela também não isola a bolsa.
-- O placebo de generalistas é o outcome que essas regras movem: a ausência de
-  salto não exclui o canal da MAC, que mira especialistas.
-
-**Fontes:** auditoria 18, §2 e §3; manifesto
-`output/aquisicao/a10_manifesto_normas_ivs.json`.
-
-**Números:** `CP_EMENDAS`, `CP_IED_300`, `CP_752_300`, `CP_IED_400`,
-`CP_752_400`
-
-> **Notas do apresentador.** "Verificado" quer dizer: o trecho está no texto
-> preservado do ato, ou o cálculo foi feito sobre a lista administrativa.
-> Onde há lista publicada, o MS aplica o limite como a bolsa, mesmo quando o
-> texto da portaria diz "maior ou igual".
-
----
-
-## Três formas de rever a hipótese — para discussão
-
-`4. Leitura · Revisão da hipótese`
-
-| | Formulação | O que testaria |
-|---|---|---|
-| **H1** (original) | +R$ 5 mil aumentam preenchimento e provimento local | — relatar o nulo, com as condições do slide 18 |
-| **A** realocação | a bolsa reordena a escolha entre vagas sem expansão líquida detectável: **atrai** ou **redistribui**? | universo de inscrições (margem extensiva); deslocamento entre células próximas; E9 replicado no ciclo 3 maduro |
-| **B** elasticidade relativa | quanto pesa a remuneração na escolha, comparada a c₀(IVS), distância e amenidades | distância candidato–vaga; razões de coeficientes pré-registradas; heterogeneidade por mercado privado local; remuneração paga |
-| **C** quanto e em que margem | de que tamanho é Δc₀ em reais, e que margem se move com o incentivo atual | contrafactual de grade de bolsa rotulado como cenário; a cadeia completa com o ciclo 3 e a ponte PMM-E–CNES |
-
-> **Proposta, não decisão.** Nenhuma muda o que foi estimado; o protocolo e os
-> resultados do E3 ao E9 não são reescritos.
-
-**Fontes:** doc 44, §7; protocolo 40, §9.
-
-**Números:** nenhum
-
-> [!NOTE]
-> **Nota de produção.** Slide **pendente da decisão do autor**. Se o autor
-> decidir antes da apresentação, o slide passa a mostrar a escolhida e as outras
-> vão ao apêndice.
-
-> **Notas do apresentador.** O protocolo permite rever a pergunta econômica
-> depois dos resultados, desde que a revisão seja registrada como tal. Em
-> todas as opções, o contraste continua sendo o incentivo marginal anunciado.
-
----
-
-## O que vem depois
-
-`4. Leitura · Próximos passos`
-
-1. **Decisão do autor:** H1, A, B ou C, e a mensagem principal.
-2. **Ciclo 3:** congelado até a maturidade. Seis meses de seguimento só com a
-   competência 202703 publicada, completa e madura; ali o E9 se replica fora da
-   amostra que o gerou.
-3. **Pedidos de dados** (universo de inscrições, distância, folha paga):
-   preparados, não enviados; decisão externa do autor.
-4. **Artigos:** atualizar a RDD da bolsa com a síntese E8.
-
-**Fontes:** doc 38, §4 e §5; doc 44, §9; `docs/pedidos_dados/`.
-
-**Números:** nenhum
+> **Notas do apresentador.** Em 0,400 o degrau relativo é do tamanho do
+> sorteio de Dal Bó et al.; em 0,300 é maior. Se a resposta aqui fosse da
+> mesma ordem, o salto passaria da referência de +10 p.p., e o IC empilhado
+> não admite isso, com o IC convencional. O ciclo 3 maduro é a replicação
+> fora da amostra do sinal do ciclo 2.
 
 <!-- deck:fim -->
 
 ---
 
-# Perguntas
-
-`sem rastreio`
-
-**Números:** nenhum
-
 <!-- apendice:inicio -->
 
----
+# Apêndice
 
-## A tabela-síntese inteira
+## Apêndice: N1 a N4, com controle das vagas oferecidas
 
-`Apêndice · B1`
+`Apêndice · Família N`
 
-![As 23 linhas principais da tabela-síntese do E8](../../../output/apresentacao_banca2/cadeia_sintese_completa.png)
+<!-- layout: tabela -->
 
-**Fontes:** `output/rdd_bolsa/E8_tabela_sintese.csv`; doc 44, §3.
+| Outcome (ciclos e cortes empilhados) | Salto | IC 95% | p de Holm |
+|---|---|---|---|
+| N1 vagas preenchidas na 1ª chamada | −0,76 | [−1,44; −0,07] | 0,124 |
+| N2 células com alocado | −0,31 | [−0,66; +0,04] | 0,235 |
+| N3 células com alocado até a 2ª chamada | −0,35 | [−0,87; +0,17] | 0,376 |
+| N4 especialistas ativos | −0,21 | [−1,34; +0,92] | 0,717 |
+| N1 sem controle (efeito total da faixa) | −1,45 | [−2,90; −0,01] | fora do Holm |
 
-**Números:** `E8_LINHAS`
+> **Nenhuma linha rejeita zero depois do Holm; o sinal é negativo em todas.**
 
----
+**Fontes:** `output/rdd_bolsa/N_estimativas.csv` e `S57_resumo.json` (doc 49, §3).
 
-## A âncora do E3: ciclo 1, por corte
-
-`Apêndice · B2`
-
-| Corte | Bolsa | Salto no preenchimento | IC 95% | Municípios (abaixo · acima) | MDE de 80% |
-|---|---|---|---|---|---|
-| 0,300 | R$ 10 mil → R$ 15 mil | −12,8 p.p. | [−45,5; +19,8] | 61 · 53 | 46,6 p.p. |
-| 0,400 | R$ 15 mil → R$ 20 mil | −5,1 p.p. | [−36,5; +26,2] | 53 · 41 | 44,8 p.p. |
-
-![F1.3 no ciclo 1, por corte (a âncora do E3)](../../../output/rdd_bolsa/E6_figuras/E6_F1_3_V1.png)
-
-> **Não encontramos evidência estatística de que +R$ 5 mil aumente o
-> preenchimento perto dos cortes; a amostra do ciclo 1 também não descarta
-> efeitos moderados.**
-
-**Fontes:** `output/rdd_bolsa/E8_resumo.json` (`descarte.ancora_E3_ciclo1`);
-`output/rdd_bolsa/E3_estimativas.csv`; docs 37 e 39.
-
-**Números:** `E3_300_TAU`, `E3_300_INF`, `E3_300_SUP`, `E3_300_NABX`,
-`E3_300_NACI`, `E3_300_MDE`, `E3_400_TAU`, `E3_400_INF`, `E3_400_SUP`,
-`E3_400_NABX`, `E3_400_NACI`, `E3_400_MDE`
-
-> **Notas do apresentador.** O MDE vem do E5, exploratório e pós-resultado.
-> Foi o resultado do E3 que levou à rodada multi-outcome.
+**Números:** `N1_SA_TAU`, `N1_SA_INF`, `N1_SA_SUP`, `N1_SA_HOLM`, `N2_SA_TAU`, `N2_SA_INF`, `N2_SA_SUP`, `N2_SA_HOLM`, `N3_SA_TAU`, `N3_SA_INF`, `N3_SA_SUP`, `N3_SA_HOLM`, `N4_SA_TAU`, `N4_SA_INF`, `N4_SA_SUP`, `N4_SA_HOLM`, `N1_SB_TAU`, `N1_SB_INF`, `N1_SB_SUP`
 
 ---
 
-## Robustez do E9
+## Apêndice: A3 por corte e no ciclo 1
 
-`Apêndice · B3`
+`Apêndice · A3`
+
+<!-- layout: tabela -->
+
+| Amostra (célula aberta) | Média abaixo do corte | Salto [IC 95%], p.p. | Maior aumento compatível | MDE de 80% |
+|---|---|---|---|---|
+| ciclos 1–3, cortes empilhados | 34,7% | −4,9 [−12,9; +3,2] | +3,2 | 11,5 |
+| ciclos 1–3, corte 0,300 | 33,3% | −8,4 [−18,5; +1,7] | +1,7 | 14,5 |
+| ciclos 1–3, corte 0,400 | 36,8% | −1,3 [−14,0; +11,3] | +11,3 | 18,1 |
+| ciclo 1, cortes empilhados | 31,2% | −3,3 [−20,9; +14,2] | +14,2 | 25,1 |
+| célula com candidato de 1ª opção, empilhado | — | −7,1 [−19,6; +5,4] | +5,4 | — |
+
+> **No ciclo 1, a faixa saiu depois do pedido dos gestores; ali a amostra não descarta efeitos moderados.**
+
+**Fontes:** `output/rdd_bolsa/S57_resumo.json` (doc 57, §4.2; doc 49, §15).
+
+**Números:** `A3_EMP_MEDIA`, `A3_EMP_TAU`, `A3_EMP_INF`, `A3_EMP_SUP`, `A3_EMP_MDE`, `A3_300_MEDIA`, `A3_300_TAU`, `A3_300_INF`, `A3_300_SUP`, `A3_300_MDE`, `A3_400_MEDIA`, `A3_400_TAU`, `A3_400_INF`, `A3_400_SUP`, `A3_400_MDE`, `A3_C1_MEDIA`, `A3_C1_TAU`, `A3_C1_INF`, `A3_C1_SUP`, `A3_C1_MDE`, `A3C_EMP_TAU`, `A3C_EMP_INF`, `A3C_EMP_SUP`
+
+---
+
+## Apêndice: a bolsa em todas as especificações do logit
+
+`Apêndice · P1`
+
+<!-- layout: tabela -->
+
+| Modelo | Especificação | Coeficiente por R$ 1 mil |
+|---|---|---|
+| M1 (primária) | ciclos 1–3, com distância e origem | +0,0424 [−0,0027; +0,0874] |
+| M0 | sem distância | +0,0690 |
+| M2 | log da distância | +0,0492 |
+| M4 | efeito fixo de UF da vaga | +0,0759 |
+| M7 | logit explodido (1ª e 2ª opção) | +0,0304 [−0,0150; +0,0758] |
+| M8 | logit misto (média) | +0,0499 |
+| M9 | logit aninhado por região de saúde | +0,0434 |
+| M5 | por ciclo: 1 · 2 · 3 | +0,0132 · +0,1064 · −0,0004 |
+
+> **A leitura da H2 é sensível à especificação; só o M1 é a principal, e as demais são relatadas, não escolhidas.**
+
+**Fontes:** `output/rdd_bolsa/P1_estimativas.csv` (doc 57a, §4).
+
+**Números:** `M1_COEF`, `M1_INF`, `M1_SUP`, `M0_COEF`, `M2_COEF`, `M4_COEF`, `M7_COEF`, `M7_INF`, `M7_SUP`, `M8_COEF`, `M9_COEF`, `M5_C1_COEF`, `M5_C2_COEF`, `M5_C3_COEF`
+
+---
+
+## Apêndice: o E9 resiste no ciclo 2; o empilhado é frágil
+
+`Apêndice · E9`
+
+<!-- layout: tabela -->
 
 | Teste (pós-auditoria, fora do protocolo) | Ciclo 2 | Empilhado |
 |---|---|---|
 | p do score bootstrap (Webb), cluster por conjunto | 0,002 | — |
-| p do CV3 | < 0,001 | — |
-| cortes placebo: fração com abs(t) > 1,96 | 14,8% | 14,8% |
 | cortes placebo: nº com abs(t) ≥ t real, de 27 | 0 | 2 |
 | p por posto contra os placebos | 0,036 | 0,107 |
 | spline cúbico: p | 0,083 | 0,220 |
 | ciclos 1 e 3 empilhados, sem o 2: p | — | 0,267 |
 | Q de Cochran (ciclos 1, 2, 3): p | — | 0,014 |
-| cluster por curso: p do score (Webb) | — | 0,047 |
 
-**Fontes:** `output/rdd_bolsa/E8_resumo.json` (`e9`); doc 44, §5.2; doc 42.
+> **O sinal da escolha vem do ciclo 2; o ciclo 3 maduro é a replicação fora da amostra.**
 
-**Números:** `E9_C2_WEBB`, `E9_C2_CV3`, `E9_C2_PLAC_FRAC`, `E9_PLAC_FRAC`, `E9_C2_NPLAC`,
-`E9_C2_PLAC_GE`, `E9_EMP_PLAC_GE`, `E9_C2_PPOSTO`, `E9_EMP_PPOSTO`,
-`E9_C2_CUB_P`, `E9_EMP_CUB_P`, `E9_EMP_SEM2_P`, `E9_EMP_Q_P`,
-`E9_CURSO_WEBB`
+**Fontes:** `output/rdd_bolsa/E8_resumo.json` (`e9`); doc 44, §5.2.
+
+**Números:** `E9_C2_WEBB`, `E9_C2_NPLAC`, `E9_C2_PLAC_GE`, `E9_EMP_PLAC_GE`, `E9_C2_PPOSTO`, `E9_EMP_PPOSTO`, `E9_C2_CUB_P`, `E9_EMP_CUB_P`, `E9_EMP_SEM2_P`, `E9_EMP_Q_P`
 
 ---
 
-## Por que a sequência do E7 em 0,300 não vira efeito
+## Apêndice: nos mesmos cortes mudam outras regras federais
 
-`Apêndice · B4`
+`Apêndice · Co-políticas`
 
-![F3.1 em nível, por período e corte](../../../output/rdd_bolsa/E7_figuras/E7_nivel_F3_1_U.png)
+<!-- layout: tabela -->
 
-- **Descontinuidade pré-existente:** em 0,300, a oferta já era menor do lado de
-  cima no pré extra, antes de todas as regras com corte em 0,3 ou 0,4:
-  −1,811 [−3,591; −0,030]. Antes da referência, 0 de 24 meses têm p < 0,05.
-- **Generalistas em 0,400:** 2 de 7 meses do pré extra com p < 0,05; o placebo
-  deriva antes do pré principal.
-- **Pré-tendência em V1, 0,300:** 12 de 12 meses do pré extra e do trecho até o
-  pré principal com p < 0,05. A DiRD em V1 nesse corte não é crível.
-
-**Fontes:** `output/rdd_bolsa/E8_resumo.json` (`e7`); doc 43; doc 44, §5.3.
-
-**Números:** `E7_PREEXT_TAU`, `E7_PREEXT_INF`, `E7_PREEXT_SUP`,
-`E7_ANTES_SIG`, `E7_ANTES_N`, `E7_GEN_SIG`, `E7_GEN_N`, `E7_V1_SIG`,
-`E7_V1_N`
-
----
-
-## Magnitude: o degrau daqui e a literatura
-
-`Apêndice · B5`
-
-- **O degrau daqui:** +50% da bolsa em 0,300 (R$ 10 mil → R$ 15 mil); +33% em
-  0,400 (R$ 15 mil → R$ 20 mil).
-- **Dal Bó, Finan e Rossi (2013):** salário anunciado sorteado, +33%;
-  aceitação +15,1 p.p. e candidaturas +26%.
-- **Bobba et al.:** adicional de +13% por regra, numa RDD; o preenchimento não
-  mudou, e o professor que chegou era melhor.
-- **Aqui:** com ciclos e cortes empilhados, o limite superior do preenchimento
-  na 1ª chamada é +3,4 p.p., sob as condições do slide 13.
-
-> **Contextos e outcomes diferentes: lá, servidores e aceitação da oferta;
-> aqui, especialistas e célula com confirmação ou homologação.**
-
-**Fontes:** doc 44, §6; `docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md`
-(trechos copiados em `output/rdd_bolsa/E8_resumo.json`, `literatura`).
-
-**Números:** `MAG_DEG300`, `MAG_DEG400`, `LIT_DALBO_SAL`, `LIT_DALBO_ACEIT`,
-`LIT_DALBO_CAND`, `LIT_BOBBA`, `F13_SUP`
-
----
-
-## O que o arquivo errado contaminou, e o que foi refeito
-
-`Apêndice · B6`
-
-| Etapa | O que herdou | Situação |
+| Corte | Muda além da bolsa (verificado no ato ou nos dados) | Não verificado ou inferido |
 |---|---|---|
-| malha municipal e painel | IVS, subíndices, IDHM, população 2010 | corrigida com a base oficial (a08) e o Censo 2022 |
-| tipologia territorial (A2) | IVS e estoque por habitante | corrigida; o estrato não dependia do arquivo |
-| atração (A4) e provimento (A5) | gradiente de IVS e covariáveis | reestimados; o ajuste completo antigo só existe como failure mode |
-| Tabela 1 do ciclo 1 | IVS e população | regenerada |
-| RDD da bolsa (E3 em diante) | nada | já usava o IVS oficial; estimativas idênticas byte a byte |
+| 0,300 | teto de emendas e de parcelas de custeio de MAC e APS +20% para "IVS maior que 0,3"; estrato do IED da APS nos portes 2 e 3; Portaria 752/2023: teto de coparticipação do PMMB de 10% → 40% | como a Portaria 752/2023 foi aplicada no corte; priorização de eMulti |
+| 0,400 | estrato do IED nos portes 1, 2 e 4; Portaria 752/2023: 40% → 100% | ajuda de custo e perfis de escolha do PMMB; Eixo Vínculo |
 
-**Fontes:** auditoria 19; `output/tema_trabalho/failure_mode_ivs_resumo.json`.
+> **A RDD em nível mede um pacote; a DiRD tira só a parte constante dessas regras.**
 
-**Números:** nenhum
+**Fontes:** auditoria 18, §2 e §3; `output/aquisicao/a10_manifesto_normas_ivs.json`.
+
+**Números:** `CP_EMENDAS`, `CP_IED_300`, `CP_752_300`, `CP_IED_400`, `CP_752_400`
 
 ---
 
-## Limitações
+## Apêndice: o "IVS como piso" da banca 1 era um arquivo errado
 
-`Apêndice · B7`
+`Apêndice · Failure mode`
 
-1. **Pacote, não bolsa:** nenhum resultado em nível isola a bolsa; a DiRD só
-   tira a parte constante das co-políticas.
-2. **Potência:** por corte e ciclo, poucas dezenas de municípios com vaga de
-   cada lado; só o empilhamento estreitou o IC.
-3. **IC honesto sem informação** com o M da regra de bolso.
-4. **Seleção em V_k:** V1 em 0,400 é suspeita.
-5. **Presença é retrato;** vínculo no CNES não é médico do PMM-E nem retenção.
-6. **E9:** IIA, sem distância, escolha possivelmente estratégica, robustez fora
-   do protocolo.
-7. **Exposição prévia:** parte do ciclo 1 já tinha sido vista antes do
-   congelamento.
-8. **Muitos testes:** o BKY supõe dependência positiva, não verificada.
+<!-- layout: cartoes -->
 
-**Fontes:** doc 44, §8.
+- **O que era o arquivo.** Em cada município, a última linha de subgrupo da base do Ipea com IVS preenchido; *Negro / Mulher / Urbano* em 4.362 de 5.565 municípios (78%).
+- **Quanto acerta.** O IVS oficial a 3 casas em 38 municípios; correlação 0,85.
+- **O que mudou.** Malha, tipologia, A4, A5 e a Tabela 1 do ciclo 1 foram refeitos; a RDD já usava o IVS oficial.
 
-**Números:** nenhum
+> **FAILURE MODE: o arquivo não é inventado; é a linha errada da base certa.**
+
+**Fontes:** `output/rdd_bolsa/identificacao_arquivo_local_ivs.json`; `output/tema_trabalho/failure_mode_ivs_resumo.json`; auditorias 16 e 19.
+
+**Números:** `FM_NMU`, `FM_MUN`, `FM_NMU_PCT`, `FM_IGUAIS`, `FM_CORR`
+
+> [!NOTE]
+> **Nota de produção.** Sem figura: a figura do failure mode é a de
+> 19/10/2026, traz uma contagem que só se refaz lendo o arquivo errado e por
+> isso não entra no deck. Fica em `failure_mode/`, com natureza FAILURE_MODE.
 
 <!-- apendice:fim -->

@@ -1,0 +1,461 @@
+{
+  "conteudo_canonico": "docs/07_apresentacoes/banca2/02_conteudo_slides.md",
+  "correcoes": [
+    {
+      "correcao": "grade da bolsa aplicada; título sem 'piso'; 'remuneração'",
+      "slide": 5
+    },
+    {
+      "correcao": "grade da bolsa aplicada; título sem 'piso'; 'remuneração'",
+      "slide": 6
+    },
+    {
+      "correcao": "grade da bolsa aplicada; título sem 'piso'; 'remuneração'",
+      "slide": 7
+    },
+    {
+      "correcao": "frase do 'IVS como piso' (artefato do arquivo errado) retirada; grade aplicada",
+      "slide": 8
+    },
+    {
+      "correcao": "categorias do gráfico pela grade aplicada",
+      "slide": 10
+    },
+    {
+      "correcao": "gráfico de crescimento por faixa (sem proveniência; grade do FAQ) retirado",
+      "slide": 9
+    },
+    {
+      "correcao": "gráfico de crescimento por faixa (sem proveniência; grade do FAQ) retirado",
+      "slide": 13
+    },
+    {
+      "correcao": "'indícios de efetividade' rebaixado para descritivo; gráfico retirado",
+      "slide": 11
+    },
+    {
+      "correcao": "'indícios de efetividade' rebaixado para descritivo; gráfico retirado",
+      "slide": 14
+    },
+    {
+      "correcao": "células, não vagas (30,3% e 35,6%); SGTES (2); curso (1); grade aplicada",
+      "slide": 34
+    },
+    {
+      "correcao": "células, não vagas (30,3% e 35,6%); SGTES (1); curso (1); IVS como running variable",
+      "slide": 35
+    },
+    {
+      "correcao": "notas trocadas por uma linha neutra",
+      "slide": 31
+    },
+    {
+      "correcao": "slide 'EXEMPLO' de outro trabalho ocultado",
+      "slide": 32
+    },
+    {
+      "correcao": "slide 'EXEMPLO' de outro trabalho ocultado",
+      "slide": 33
+    }
+  ],
+  "entradas": [
+    {
+      "bytes": 10291022,
+      "caminho": "deck do grupo (fora do repositório; não é alterado)",
+      "data_referencia": "2026-10-26",
+      "nome": "bbc23976-PEE_-_Modelo_econ_mico_1.pptx",
+      "papel": "template e deck de partida (36 slides)",
+      "sha256": "55045a82b9c1262a1d758b79db971fc63e99fee2c899663edbce9aefd3c8cb30"
+    },
+    {
+      "caminho": "docs/07_apresentacoes/banca2/02_conteudo_slides.md",
+      "papel": "texto dos slides novos e quadro de correções",
+      "sha256": "d581177e409454f5f483d4423b1fc453ef9b7c964b95acf78e10e3f561428751"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/numeros_banca2.json",
+      "papel": "números das correções",
+      "sha256": "a8d1b90d4af18ccc9d91d1336818b79ec231f5ed97fe62edcbc065f3238be91c"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
+      "no_pacote": "ppt/media/banca2_05_cadeia_resumo_doc57.png",
+      "papel": "figura",
+      "sha256": "1bbaafe323fa6a6cd908771f1dea1166f15aeb42ec06881ec6cd16f85f281376"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/h1_preenchimento.png",
+      "no_pacote": "ppt/media/banca2_02_h1_preenchimento.png",
+      "papel": "figura",
+      "sha256": "dc2d81feba3ebe5254fed77c1fa31432b53b75ad120d5348375d22c209e8c882"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/h2_escolha.png",
+      "no_pacote": "ppt/media/banca2_03_h2_escolha.png",
+      "papel": "figura",
+      "sha256": "9b5dbaf14f927209d2e57d388b2867be92e8ce2400f986d1f1612ee6cab21b1d"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/h4_horas_medico.png",
+      "no_pacote": "ppt/media/banca2_04_h4_horas_medico.png",
+      "papel": "figura",
+      "sha256": "458fb6cc5500655a1175e0c92d91c292c3485386d14d4f8638bca206863a9723"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
+      "no_pacote": "ppt/media/banca2_01_regra_bolsa_ivs_oficial.png",
+      "papel": "figura",
+      "sha256": "86cb89519386f64c74c2cb12961a7a1fa6090f63e6802c9e2a725b6bef20cd19"
+    }
+  ],
+  "natureza_dos_dados": "EMPIRICO",
+  "ordem_do_deck_proposto": [
+    {
+      "origem": "slide 1 do deck do grupo",
+      "posicao": 1,
+      "titulo": "(sem título)"
+    },
+    {
+      "origem": "slide 2 do deck do grupo",
+      "posicao": 2,
+      "titulo": "Sumário"
+    },
+    {
+      "origem": "slide 3 do deck do grupo",
+      "posicao": 3,
+      "titulo": "A escassez de especialistas já é tratada como urgência sanitária"
+    },
+    {
+      "origem": "slide 4 do deck do grupo",
+      "posicao": 4,
+      "titulo": "A escassez de especialistas já é tratada como urgência sanitária"
+    },
+    {
+      "origem": "slide 5 do deck do grupo",
+      "posicao": 5,
+      "titulo": "O IVS 2010 define a bolsa do PMM-E por regra"
+    },
+    {
+      "origem": "slide 6 do deck do grupo",
+      "posicao": 6,
+      "titulo": "O IVS 2010 define a bolsa do PMM-E por regra"
+    },
+    {
+      "origem": "slide 7 do deck do grupo",
+      "posicao": 7,
+      "titulo": "O IVS 2010 define a bolsa do PMM-E por regra"
+    },
+    {
+      "origem": "slide 8 do deck do grupo",
+      "posicao": 8,
+      "titulo": "O IVS 2010 define a bolsa do PMM-E por regra"
+    },
+    {
+      "origem": "slide 9 do deck do grupo",
+      "posicao": 9,
+      "titulo": "Política direciona incentivos aos territórios mais vulneráveis"
+    },
+    {
+      "origem": "slide 10 do deck do grupo",
+      "posicao": 10,
+      "titulo": "Política direciona incentivos aos territórios mais vulneráveis"
+    },
+    {
+      "origem": "slide 11 do deck do grupo",
+      "posicao": 11,
+      "titulo": "Descritivo: antes × depois por faixa, sem comparação"
+    },
+    {
+      "origem": "slide 12 do deck do grupo",
+      "posicao": 12,
+      "titulo": "Sumário"
+    },
+    {
+      "origem": "slide 13 do deck do grupo",
+      "posicao": 13,
+      "titulo": "Política direciona incentivos aos territórios mais vulneráveis"
+    },
+    {
+      "origem": "slide 14 do deck do grupo",
+      "posicao": 14,
+      "titulo": "Descritivo: antes × depois por faixa, sem comparação"
+    },
+    {
+      "origem": "slide 15 do deck do grupo",
+      "posicao": 15,
+      "titulo": "Sumário"
+    },
+    {
+      "origem": "slide 16 do deck do grupo",
+      "posicao": 16,
+      "titulo": "O modelo combina três elementos da teoria"
+    },
+    {
+      "origem": "slide 17 do deck do grupo",
+      "posicao": 17,
+      "titulo": "A escolha locacional maximiza a utilidade"
+    },
+    {
+      "origem": "slide 18 do deck do grupo",
+      "posicao": 18,
+      "titulo": "Da escolha individual ao preenchimento agregado"
+    },
+    {
+      "origem": "slide 19 do deck do grupo",
+      "posicao": 19,
+      "titulo": "A escolha locacional maximiza a renda real líquida"
+    },
+    {
+      "origem": "slide 20 do deck do grupo",
+      "posicao": 20,
+      "titulo": "Literatura divide o custo em dois tipos: geográfico e laboral"
+    },
+    {
+      "origem": "slide 21 do deck do grupo",
+      "posicao": 21,
+      "titulo": "Da escolha individual ao preenchimento agregado"
+    },
+    {
+      "origem": "slide 22 do deck do grupo",
+      "posicao": 22,
+      "titulo": "Sumário"
+    },
+    {
+      "origem": "slide 23 do deck do grupo",
+      "posicao": 23,
+      "titulo": "Da condição de aceitação, sai nossa hipótese econômica"
+    },
+    {
+      "figura": null,
+      "layout": "cadeia",
+      "origem": "novo",
+      "posicao": 24,
+      "secao": "Hipótese",
+      "titulo": "Testamos cada seta do modelo: quatro hipóteses"
+    },
+    {
+      "figura": null,
+      "layout": "equacoes",
+      "origem": "novo",
+      "posicao": 25,
+      "secao": "Hipótese",
+      "titulo": "Do modelo às equações estimadas"
+    },
+    {
+      "origem": "slide 24 do deck do grupo",
+      "posicao": 26,
+      "titulo": "Sumário"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 27,
+      "secao": "Base de Dados",
+      "titulo": "Oito bases oficiais, ligadas por município, célula e médico"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 28,
+      "secao": "Base de Dados",
+      "titulo": "Os três ciclos em números"
+    },
+    {
+      "origem": "slide 26 do deck do grupo",
+      "posicao": 29,
+      "titulo": "Sumário"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 30,
+      "secao": "Metodologia",
+      "titulo": "Um estimador por hipótese"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 31,
+      "secao": "Metodologia",
+      "titulo": "Hipóteses de identificação e como foram testadas"
+    },
+    {
+      "origem": "slide 28 do deck do grupo",
+      "posicao": 32,
+      "titulo": "Sumário"
+    },
+    {
+      "figura": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
+      "layout": "figura_topo",
+      "origem": "novo",
+      "posicao": 33,
+      "secao": "Resultados",
+      "titulo": "A bolsa é função exata do IVS: a regra é sharp"
+    },
+    {
+      "figura": "output/apresentacao_banca2/h1_preenchimento.png",
+      "layout": "figura_faixa",
+      "origem": "novo",
+      "posicao": 34,
+      "secao": "Resultados",
+      "titulo": "H1: o preenchimento não aumenta de forma detectável no corte"
+    },
+    {
+      "figura": "output/apresentacao_banca2/h2_escolha.png",
+      "layout": "figura_faixa",
+      "origem": "novo",
+      "posicao": 35,
+      "secao": "Resultados",
+      "titulo": "H2: a bolsa pesa na escolha da vaga só no ciclo 2"
+    },
+    {
+      "figura": null,
+      "layout": "pendente",
+      "origem": "novo",
+      "posicao": 36,
+      "secao": "Resultados",
+      "titulo": "H3: incentivo limitado — PENDENTE"
+    },
+    {
+      "figura": "output/apresentacao_banca2/h4_horas_medico.png",
+      "layout": "figura_faixa",
+      "origem": "novo",
+      "posicao": 37,
+      "secao": "Resultados",
+      "titulo": "H4: o médico soma horas, mas metade já estava no município"
+    },
+    {
+      "figura": "output/apresentacao_banca2/cadeia_resumo_doc57.png",
+      "layout": "figura_cheia",
+      "origem": "novo",
+      "posicao": 38,
+      "secao": "Resultados",
+      "titulo": "Na cadeia, só a escolha e o registro do médico se movem"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 39,
+      "secao": "Resultados",
+      "titulo": "Robustez: as leituras resistem, com duas ressalvas declaradas"
+    },
+    {
+      "figura": null,
+      "layout": "cartoes",
+      "origem": "novo",
+      "posicao": 40,
+      "secao": "Resultados",
+      "titulo": "Limites: pacote do corte, só candidatos, vínculo cadastrado"
+    },
+    {
+      "figura": null,
+      "layout": "cartoes",
+      "origem": "novo",
+      "posicao": 41,
+      "secao": "Resultados",
+      "titulo": "Um efeito do tamanho da literatura não cabe no IC empilhado"
+    },
+    {
+      "origem": "slide 30 do deck do grupo",
+      "posicao": 42,
+      "titulo": "(sem título)"
+    },
+    {
+      "origem": "slide 31 do deck do grupo",
+      "posicao": 43,
+      "titulo": "Apêndice"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 44,
+      "secao": "Apêndice",
+      "titulo": "Apêndice: N1 a N4, com controle das vagas oferecidas"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 45,
+      "secao": "Apêndice",
+      "titulo": "Apêndice: A3 por corte e no ciclo 1"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 46,
+      "secao": "Apêndice",
+      "titulo": "Apêndice: a bolsa em todas as especificações do logit"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 47,
+      "secao": "Apêndice",
+      "titulo": "Apêndice: o E9 resiste no ciclo 2; o empilhado é frágil"
+    },
+    {
+      "figura": null,
+      "layout": "tabela",
+      "origem": "novo",
+      "posicao": 48,
+      "secao": "Apêndice",
+      "titulo": "Apêndice: nos mesmos cortes mudam outras regras federais"
+    },
+    {
+      "figura": null,
+      "layout": "cartoes",
+      "origem": "novo",
+      "posicao": 49,
+      "secao": "Apêndice",
+      "titulo": "Apêndice: o \"IVS como piso\" da banca 1 era um arquivo errado"
+    },
+    {
+      "origem": "slide 32 do deck do grupo",
+      "posicao": 50,
+      "titulo": "(sem título)"
+    },
+    {
+      "origem": "slide 33 do deck do grupo",
+      "posicao": 51,
+      "titulo": "(sem título)"
+    },
+    {
+      "origem": "slide 34 do deck do grupo",
+      "posicao": 52,
+      "titulo": "O desafio é separar o efeito da bolsa do efeito da vulnerabilidade"
+    },
+    {
+      "origem": "slide 35 do deck do grupo",
+      "posicao": 53,
+      "titulo": "O desafio é separar o efeito da bolsa do efeito da vulnerabilidade"
+    },
+    {
+      "origem": "slide 36 do deck do grupo",
+      "posicao": 54,
+      "titulo": "O IVS mede a vulnerabilidade social dos territórios brasileiros"
+    }
+  ],
+  "regra": "nada estimado; nada lido de data/; texto dos slides novos lido do doc 02; números das correções lidos de output/apresentacao_banca2/numeros_banca2.json; figuras de output/ como imagem",
+  "saidas": [
+    {
+      "bytes": 11833538,
+      "caminho": "output/apresentacao_banca2/deck_banca2_proposta.pptx",
+      "sha256": "17dc1ab94612d58786c32bdd81da4b8c6e1460f07fd148373f2c389e4de67a50"
+    },
+    {
+      "bytes": 2059960,
+      "caminho": "output/apresentacao_banca2/slides_empiricos_banca2.pptx",
+      "sha256": "9631233bb5cd8d770b1239edfc811ece62b0d9b483a9c9bf3d561c7c52efed32"
+    }
+  ],
+  "script": "scripts/apresentacao/gerar_deck_banca2.py"
+}

@@ -15,7 +15,12 @@ Quatro partes:
    parâmetros.
 4. `TestFiguras` e `TestIntegridade`: toda figura citada existe e foi produzida
    por script do pipeline (hash do manifesto, ou listada no resumo da etapa);
-   o arquivo errado só aparece como failure mode, separado e rotulado.
+   todo número desenhado nas figuras novas é registrado ou parâmetro; o
+   gerador não lê o arquivo de IVS errado.
+5. `TestDeck`: o deck derivado (`gerar_deck_banca2.py`) traz os títulos e o
+   texto do doc 02, só números registrados, as correções do plano (§2) e
+   hashes atuais; se `PMME_DECK_GRUPO` apontar para o deck do grupo, confere
+   o determinismo refazendo o deck numa pasta temporária.
 """
 
 from __future__ import annotations
@@ -24,23 +29,31 @@ import hashlib
 import importlib.util
 import json
 import math
+import os
 import re
 import sys
+import tempfile
 import unittest
+import zipfile
+from html import unescape
 from pathlib import Path
 
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "apresentacao" / "gerar_figuras_banca2.py"
+SCRIPT_DECK = ROOT / "scripts" / "apresentacao" / "gerar_deck_banca2.py"
 SAIDA = ROOT / "output" / "apresentacao_banca2"
 NUMEROS = SAIDA / "numeros_banca2.json"
 MANIFESTO = SAIDA / "manifesto_figuras.json"
 DOCS = ROOT / "docs" / "07_apresentacoes" / "banca2"
 DOC01, DOC02, DOC03, README = (DOCS / "01_roteiro_narrativo.md", DOCS / "02_conteudo_slides.md",
                                DOCS / "03_proveniencia_figuras_e_numeros.md", DOCS / "README.md")
-ARQUIVO_ERRADO = "data/ivs_ipea_2010_municipios.csv"
+ARQUIVO_ERRADO = "data/ivs_ipea_2010_municipios.csv"  # só citado: nenhum teste nem gerador o lê
 TEM_SAIDAS = NUMEROS.exists() and MANIFESTO.exists()
+DECK, SLIDES_NOVOS, MANIF_DECK = (SAIDA / "deck_banca2_proposta.pptx", SAIDA / "slides_empiricos_banca2.pptx",
+                                  SAIDA / "manifesto_deck_banca2.json")
+TEM_DECK = DECK.exists() and SLIDES_NOVOS.exists() and MANIF_DECK.exists()
 
 _bytecode = sys.dont_write_bytecode
 sys.dont_write_bytecode = True
@@ -48,6 +61,10 @@ _spec = importlib.util.spec_from_file_location("gerar_figuras_banca2", SCRIPT)
 G = importlib.util.module_from_spec(_spec)
 sys.modules["gerar_figuras_banca2"] = G
 _spec.loader.exec_module(G)
+_spec_d = importlib.util.spec_from_file_location("gerar_deck_banca2", SCRIPT_DECK)
+_D = importlib.util.module_from_spec(_spec_d)
+sys.modules["gerar_deck_banca2"] = _D
+_spec_d.loader.exec_module(_D)
 sys.dont_write_bytecode = _bytecode
 
 MENOS = "−"
@@ -103,8 +120,9 @@ def formatar(valor, formato: str) -> str:
 # --------------------------------------------------------------------------
 
 NUM = re.compile(r"(?<![\w.,/])[−+-]?(?:\d{1,3}(?:\.\d{3})+(?:,\d+)?|\d+(?:,\d+)?)(?!\w)")
-PERMITIDOS = {"0,300", "0,400", "0,3", "0,4", "0,050", "0,030", "0,080", "0,05", "1,96", "0,001",
+PERMITIDOS = {"0,300", "0,400", "0,3", "0,4", "0,301", "0,050", "0,030", "0,080", "0,05", "1,96", "0,001",
               "1", "2", "3", "5", "10", "15", "20", "+10", "+25", "95", "80"}
+MAX_SLIDE = 40  # números de slide do deck do grupo (até 36) nos quadros do doc 02
 
 
 def limpar(texto: str) -> str:
@@ -123,7 +141,7 @@ def limpar(texto: str) -> str:
     t = re.sub(r"\b\d+(?:\.\d+)?/\d{4}\b", "", t)                           # atos normativos
     t = re.sub(r"§+\s?\d+(?:[.,–-]\d+)*", "", t)                            # seções
     t = re.sub(r"\b\d+(?:\.\d+){2,}\b", "", t)                              # itens de edital
-    t = re.sub(r"\b(?:docs?|seção|auditorias?|pedido|protocolo|tarefa|slides?|banca|errata)\s+\d+[a-z]?"
+    t = re.sub(r"\b(?:docs?|seção|auditorias?|pedido|protocolos?|tarefa|slides?|banca|errata)\s+\d+[a-z]?"
                r"(?:\s*(?:,|e|a|–|-)\s*\d+[a-z]?)*", "", t, flags=re.I)
     return t
 
@@ -152,7 +170,7 @@ def slides() -> list[dict]:
     partes = re.split(r"(?m)^(?=#{1,2} )", corpo)
     out = []
     for p in partes:
-        if not re.match(r"#{1,2} ", p):
+        if not re.match(r"## ", p):  # `#` marca a seção do deck do grupo, não é slide
             continue
         titulo = p.splitlines()[0]
         m = re.search(r"(?m)^\*\*Números:\*\*(.*?)(?=\n\n|\Z)", p, flags=re.S)
@@ -216,7 +234,21 @@ class TestFormatacaoSintetica(unittest.TestCase):
 # 2. Números contra as fontes
 # --------------------------------------------------------------------------
 
+def _transf(v, transf: list) -> float:
+    x = float(v)
+    for op in transf:
+        x = x * float(op[1]) if op[0] == "mul" else math.exp(x)
+    return x
+
+
 def _resolver_independente(sel: dict, brutos: dict, calculados: dict):
+    v = _resolver_bruto(sel, brutos, calculados)
+    return _transf(v, sel["transf"]) if "transf" in sel else v
+
+
+def _resolver_bruto(sel: dict, brutos: dict, calculados: dict):
+    if "descritiva" in sel:
+        return calculados["descritivas"][sel["descritiva"]]
     if "json" in sel:
         obj = json.loads((ROOT / sel["json"]).read_text(encoding="utf-8"))
         for k in sel["caminho"]:
@@ -251,6 +283,30 @@ def _resolver_independente(sel: dict, brutos: dict, calculados: dict):
     raise AssertionError(sel)
 
 
+def _descritivas_independentes() -> dict[str, float]:
+    """Recontagem independente das descritivas por ciclo (quadro de células e cobertura das fontes)."""
+    d = pd.read_parquet(ROOT / "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet")
+    c0, c1 = G.CORTES
+    out: dict[str, float] = {}
+    for c in (1, 2, 3):
+        g = d[d["ciclo"] == c]
+        faixa = g["ivs_2010_oficial"].map(lambda v: None if pd.isna(v) else
+                                          ("F3" if v <= c0 + 1e-9 else ("F2" if v <= c1 + 1e-9 else "F1")))
+        out.update({f"C{c}_MUN": g["co_ibge"].nunique(), f"C{c}_CEL": len(g),
+                    f"C{c}_VI": g["vagas_imediatas"].sum(), f"C{c}_CR": g["vagas_cr"].sum(),
+                    f"C{c}_CAND1": g["n_cand_1a_opcao"].sum(), f"C{c}_PRE1": g["f1_3_preenchida_ch1"].sum(),
+                    f"C{c}_PRE1_PCT": g["f1_3_preenchida_ch1"].sum() / len(g),
+                    f"C{c}_SEM_IVS": g.loc[faixa.isna(), "co_ibge"].nunique()})
+        if g["f1_4_preenchida_ate_ch2"].notna().all():
+            out[f"C{c}_PRE2"] = g["f1_4_preenchida_ate_ch2"].sum()
+            out[f"C{c}_PRE2_PCT"] = g["f1_4_preenchida_ate_ch2"].sum() / len(g)
+        for k in ("F1", "F2", "F3"):
+            out[f"C{c}_{k}"] = g.loc[faixa == k, "co_ibge"].nunique()
+    out["IVS_MUN"] = pd.read_csv(ROOT / "output/aquisicao/a08_ivs_2010_oficial_municipio.csv")["ivs"].notna().sum()
+    out["POP_MUN"] = len(pd.read_csv(ROOT / "output/aquisicao/populacao_censo2022_municipios.csv", dtype=str))
+    return {k: float(v) for k, v in out.items()}
+
+
 def _lado_errado(coluna_ivs: str, arquivo: str, chave: str) -> int:
     """Recontagem independente: municípios do quadro c1_ch1 cuja faixa anunciada não é a dos cortes."""
     m = pd.read_csv(ROOT / "output/rdd_bolsa/matriz_municipio_escore_administrativo.csv", dtype={"co_ibge": str})
@@ -279,8 +335,7 @@ class TestNumerosContraFontes(unittest.TestCase):
     def test_cada_codigo_relido_da_fonte(self) -> None:
         calculados = {"lado_errado_oficial": _lado_errado("ivs", "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
                                                           "co_ibge"),
-                      # failure mode: única leitura do arquivo errado neste teste
-                      "lado_errado_arquivo_errado": _lado_errado("ivs_2010", ARQUIVO_ERRADO, "cod_ibge6")}
+                      "descritivas": _descritivas_independentes()}
         for bloco in ("numeros", "failure_mode", "texto_citado"):
             brutos: dict = {}
             for cod, e in self.numeros[bloco].items():
@@ -356,9 +411,41 @@ class TestSlides(unittest.TestCase):
     def test_contagem(self) -> None:
         t = DOC02.read_text(encoding="utf-8")
         deck = t[t.index("<!-- deck:inicio -->"):t.index("<!-- deck:fim -->")]
-        self.assertEqual(len(re.findall(r"(?m)^#{1,2} ", deck)), 21)
+        self.assertEqual(len(re.findall(r"(?m)^## ", deck)), 15)
+        corpo_empirico = deck[deck.index("# Base de Dados"):]
+        self.assertGreaterEqual(len(re.findall(r"(?m)^## ", corpo_empirico)), 12)
+        self.assertLessEqual(len(re.findall(r"(?m)^## ", corpo_empirico)), 14)
         apend = t[t.index("<!-- apendice:inicio -->"):t.index("<!-- apendice:fim -->")]
-        self.assertEqual(len(re.findall(r"(?m)^## ", apend)), 7)
+        self.assertEqual(len(re.findall(r"(?m)^## ", apend)), 6)
+
+    def test_secoes_na_ordem_da_banca(self) -> None:
+        t = DOC02.read_text(encoding="utf-8")
+        deck = t[t.index("<!-- deck:inicio -->"):t.index("<!-- deck:fim -->")]
+        self.assertEqual(re.findall(r"(?m)^# (.+)$", deck), ["Hipótese", "Base de Dados", "Metodologia", "Resultados"])
+
+    def test_titulo_curto_e_cautela_em_todo_slide(self) -> None:
+        for s in self.slides:
+            self.assertLessEqual(len(s["titulo"][3:]), 62, s["titulo"])
+            self.assertRegex(s["texto"], r"(?m)^> \*\*(?!Notas do apresentador)", f"sem frase de cautela: {s['titulo']}")
+
+    def test_figura_com_caminho_exato_nos_resultados(self) -> None:
+        com_figura = [s["titulo"] for s in self.slides if re.search(r"!\[[^\]]*\]\(", s["texto"])]
+        for chave in ("regra é sharp", "H1:", "H2:", "H4:", "Na cadeia"):
+            self.assertTrue(any(chave in t for t in com_figura), chave)
+
+    def test_h3_pendente_sem_numero(self) -> None:
+        h3 = next(s for s in self.slides if s["titulo"].startswith("## H3"))
+        self.assertIn("PENDENTE", h3["titulo"])
+        self.assertEqual(h3["codigos"], [])
+        self.assertIn("layout: pendente", h3["texto"])
+
+    def test_tabelas_do_doc_iguais_aos_csv(self) -> None:
+        for titulo, csv in (("Oito bases oficiais", "tabela_fontes.csv"), ("Os três ciclos", "tabela_descritiva_ciclos.csv")):
+            s = next(x for x in self.slides if titulo in x["titulo"])
+            linhas = [[c.strip() for c in re.split(r"(?<!\\)\|", ln)[1:-1]] for ln in s["texto"].splitlines()
+                      if ln.startswith("|") and not re.fullmatch(r"[|\-: ]+", ln)]
+            d = pd.read_csv(SAIDA / csv, dtype=str, keep_default_na=False).drop(columns="natureza_dos_dados")
+            self.assertEqual(linhas, [list(d.columns)] + d.values.tolist(), csv)
 
     def test_todo_slide_tem_linha_de_numeros(self) -> None:
         for s in self.slides:
@@ -386,26 +473,27 @@ class TestSlides(unittest.TestCase):
         t = DOC02.read_text(encoding="utf-8")
         pre = t[:t.index("<!-- deck:inicio -->")]
         achados = {x for x in tokens(limpar(pre)) if not ano(x)}
-        livres = {x for x in achados if x.isdigit() and int(x) <= 21}  # números de slide no mapa
+        livres = {x for x in achados if x.isdigit() and int(x) <= MAX_SLIDE}  # números de slide no mapa
         self.assertEqual(achados - livres - PERMITIDOS - todos_valores(self.numeros), set())
 
     def test_frases_e_distincoes_obrigatorias(self) -> None:
         corrido = " ".join(re.sub(r"(?m)^>\s?", "", DOC02.read_text(encoding="utf-8")).split())
         for frase in (
             "IC que contém zero não é efeito zero",
-            "É ausência de efeito detectável, não prova de ineficácia.",
-            "não a participação no PMM-E nem o Agora Tem Especialistas",
-            "O IC honesto com o M do protocolo não descarta nada.",
-            "O empilhado é frágil",
-            "O ciclo 2 é robusto",
+            "é ausência de efeito detectável",
+            "Inconclusivo não quer dizer que a bolsa não funciona",
+            "Não é a participação no PMM-E",
+            "nem o Agora Tem Especialistas",
+            "Associação sob tendências paralelas",
             "Escolha não é expansão",
-            "Vínculo no CNES não é médico do PMM-E",
+            "Vínculo não é presença",
             "pacote do corte",
-            "DiRD",
-            "Proposta, não decisão.",
+            "Sem margem extensiva",
+            "PENDENTE",
+            "(estabelecimento × curso) com alguma confirmação ou homologação",
+            "SGTES",
         ):
             self.assertIn(frase, corrido)
-        self.assertIn("RASCUNHO", DOC02.read_text(encoding="utf-8"))
 
 
 @unittest.skipUnless(TEM_SAIDAS, "saídas da banca 2 ausentes")
@@ -418,14 +506,15 @@ class TestOutrosDocs(unittest.TestCase):
             if doc == DOC03:
                 t = t[:t.index(G.MARCA_INI)] + t[t.index(G.MARCA_FIM):]
             achados = {x for x in tokens(limpar(t)) if not ano(x)}
-            livres = {x for x in achados if x.lstrip("+").isdigit() and int(x.lstrip("+")) <= 21}
+            livres = {x for x in achados if x.lstrip("+").isdigit() and int(x.lstrip("+")) <= MAX_SLIDE}
             self.assertEqual(achados - livres - validos, set(), doc.name)
 
-    def test_readme_declara_rascunho_e_decisoes(self) -> None:
+    def test_readme_declara_estado_e_decisoes(self) -> None:
         t = README.read_text(encoding="utf-8")
-        self.assertIn("RASCUNHO", t)
-        self.assertIn("44_sintese_rdd_bolsa_multioutcome.md", t)
-        self.assertIn("mensagem principal", t)
+        self.assertIn("PENDENTE", t)
+        self.assertIn("57_sintese_perguntas_reformuladas.md", t)
+        self.assertIn("04_plano_entrega_empirica.md", t)
+        self.assertIn("metodologia **econométrica**", t)
 
     def test_indice_da_secao(self) -> None:
         t = (ROOT / "docs" / "07_apresentacoes" / "README.md").read_text(encoding="utf-8")
@@ -489,27 +578,179 @@ class TestFiguras(unittest.TestCase):
 
 @unittest.skipUnless(TEM_SAIDAS, "saídas da banca 2 ausentes")
 class TestIntegridade(unittest.TestCase):
-    def test_arquivo_errado_so_como_failure_mode(self) -> None:
+    def test_arquivo_errado_nao_e_lido(self) -> None:
         man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
         for f in man["figuras"]:
-            usa_errado = ARQUIVO_ERRADO in f["fontes"]
-            self.assertEqual(usa_errado, f["natureza"] == "FAILURE_MODE", f["arquivo"])
-            self.assertEqual(usa_errado, "/failure_mode/" in f["arquivo"], f["arquivo"])
-        for e in man["entradas"]:
-            if e["caminho"] == ARQUIVO_ERRADO:
-                self.assertIn("FAILURE MODE", e["papel"])
+            self.assertNotIn(ARQUIVO_ERRADO, f["fontes"], f["arquivo"])
+            self.assertEqual(f["natureza"] == "FAILURE_MODE", "/failure_mode/" in f["arquivo"], f["arquivo"])
+        self.assertFalse(any(e["caminho"].startswith("data/") for e in man["entradas"]))
+        for script in (SCRIPT, SCRIPT_DECK):
+            self.assertNotIn("ivs_ipea_2010_municipios", script.read_text(encoding="utf-8"), script.name)
 
     def test_nada_gravado_em_data(self) -> None:
         man = json.loads(MANIFESTO.read_text(encoding="utf-8"))
         for f in man["figuras"]:
             self.assertTrue(f["arquivo"].startswith("output/apresentacao_banca2/"))
-        self.assertNotIn('"data/', re.sub(r"IVS_ARQUIVO_ERRADO = .*", "", SCRIPT.read_text(encoding="utf-8")))
+        for script in (SCRIPT, SCRIPT_DECK):
+            self.assertNotIn('"data/', script.read_text(encoding="utf-8"), script.name)
+
+    def test_h3_fora_do_registro(self) -> None:
+        """Nada da H3 (protocolo 52b, saídas P1h) é calculado ou lido aqui."""
+        numeros = json.loads(NUMEROS.read_text(encoding="utf-8"))
+        texto = json.dumps(numeros, ensure_ascii=False)
+        self.assertNotIn("P1h", texto)
+        self.assertNotIn("25c_", SCRIPT.read_text(encoding="utf-8"))
 
     def test_regra_desenhada_pela_funcao_do_relatorio(self) -> None:
         texto = SCRIPT.read_text(encoding="utf-8")
         self.assertIn("var_pontos_cor", texto)
         galeria = (ROOT / "scripts/rdd_bolsa/10_galeria_figura_regra.py").read_text(encoding="utf-8")
         self.assertIn("R.fig_regra_pontos", galeria)
+
+
+# --------------------------------------------------------------------------
+# 5. Figuras novas e deck
+# --------------------------------------------------------------------------
+
+@unittest.skipUnless(TEM_SAIDAS, "saídas da banca 2 ausentes")
+class TestFigurasNovas(unittest.TestCase):
+    """Todo número desenhado nas figuras novas é o valor de um código do registro ou um parâmetro."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.manifesto = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+        cls.numeros = json.loads(NUMEROS.read_text(encoding="utf-8"))
+
+    def test_figuras_novas_registradas(self) -> None:
+        novas = self.manifesto["figuras_novas"]
+        for nome in ("h1_preenchimento.png", "h2_escolha.png", "h4_horas_medico.png", "cadeia_resumo_doc57.png",
+                     "tabela_descritiva_ciclos.png", "tabela_fontes.png"):
+            self.assertIn(nome, novas)
+            self.assertIn(f"output/apresentacao_banca2/{nome}", {f["arquivo"] for f in self.manifesto["figuras"]})
+
+    def test_como_ler_nas_figuras_de_hipotese(self) -> None:
+        for nome in ("h1_preenchimento.png", "h2_escolha.png", "h4_horas_medico.png"):
+            self.assertIn("Como ler", self.manifesto["figuras_novas"][nome]["textos"], nome)
+
+    def test_numeros_desenhados_sao_registrados(self) -> None:
+        validos = PERMITIDOS | todos_valores(self.numeros)
+        for nome, reg in self.manifesto["figuras_novas"].items():
+            achados = set()
+            for t in reg["textos"]:
+                achados |= {x for x in tokens(limpar(t)) if not ano(x)}
+            self.assertEqual(achados - validos, set(), nome)
+
+    def test_linhas_das_figuras_batem_com_o_registro(self) -> None:
+        todos = {c: e for b in ("numeros", "failure_mode", "texto_citado") for c, e in self.numeros[b].items()}
+        for nome, reg in self.manifesto["figuras_novas"].items():
+            for ln in reg.get("linhas", []):
+                est, inf, sup = (todos[c]["valor"] for c in ln["codigos"])
+                self.assertIn(f"{est}", ln["texto"], nome)
+                self.assertIn(f"[{inf}; {sup}]", ln["texto"], nome)
+                bruto = [float(todos[c]["valor_bruto"]) for c in ln["codigos"]]
+                nulo = 1.0 if ("razão" in ln.get("painel", "").lower() or ln["linha"].startswith("Peso da bolsa")) else 0.0
+                self.assertEqual(ln["exclui_nulo"], bruto[1] > nulo or bruto[2] < nulo, (nome, ln["linha"]))
+
+
+def _texto_slides(pptx: Path) -> list[tuple[str, str, str]]:
+    """(parte, título, texto) de cada slide, na ordem da apresentação; o texto junta os parágrafos."""
+    with zipfile.ZipFile(pptx) as z:
+        pres = z.read("ppt/presentation.xml").decode("utf-8")
+        rels = z.read("ppt/_rels/presentation.xml.rels").decode("utf-8")
+        alvo = dict(re.findall(r'<Relationship Id="(rId\d+)"[^>]*Target="([^"]*)"', rels))
+        out = []
+        for rid in re.findall(r'<p:sldId id="\d+" r:id="(rId\d+)"/>', pres):
+            parte = "ppt/" + alvo[rid]
+            xml = z.read(parte).decode("utf-8")
+            m = re.search(r'<p:ph type="title"[^>]*/>.*?</p:sp>', xml, flags=re.S)
+            titulo = "".join(re.findall(r"<a:t>([^<]*)</a:t>", m.group(0))) if m else ""
+            paras = ["".join(re.findall(r"<a:t>([^<]*)</a:t>", p)) for p in re.findall(r"<a:p>(.*?)</a:p>", xml, flags=re.S)]
+            texto = "\n".join(p for p in paras if p.strip())
+            out.append((parte, unescape(titulo), unescape(texto)))
+    return out
+
+
+@unittest.skipUnless(TEM_SAIDAS and TEM_DECK, "deck da banca 2 ausente")
+class TestDeck(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.numeros = json.loads(NUMEROS.read_text(encoding="utf-8"))
+        cls.manifesto = json.loads(MANIF_DECK.read_text(encoding="utf-8"))
+        cls.novos = _texto_slides(SLIDES_NOVOS)
+        cls.deck = _texto_slides(DECK)
+        cls.doc = slides()
+
+    def test_slides_novos_com_titulos_do_doc02(self) -> None:
+        self.assertEqual([t for _, t, _ in self.novos], [s["titulo"][3:].strip() for s in self.doc])
+
+    def test_texto_do_doc_no_deck(self) -> None:
+        import importlib
+        D = importlib.import_module("gerar_deck_banca2")
+        for sl, (_, titulo, texto) in zip(D.ler_slides(), self.novos):
+            corrido = " ".join(texto.replace("\u00a0", " ").replace(".", "").split())
+            for item in sl["marcadores"] + ([sl["cautela"]] if sl["cautela"] else []):
+                self.assertIn(" ".join(D.texto_puro(item).replace("**", "").replace(".", "").split()), corrido, titulo)
+            for linha in sl["tabela"]:
+                for cel in linha:
+                    self.assertIn(" ".join(D.texto_puro(cel).replace(".", "").split()), corrido, titulo)
+
+    def test_numeros_do_deck_sao_registrados(self) -> None:
+        validos = PERMITIDOS | todos_valores(self.numeros)
+        for _, titulo, texto in self.novos:
+            achados = {x for x in tokens(limpar(texto.replace("\u00a0", " "))) if not ano(x)}
+            self.assertEqual(achados - validos, set(), titulo)
+
+    def test_h3_pendente_no_deck(self) -> None:
+        h3 = next(t for _, ti, t in self.novos if ti.startswith("H3"))
+        self.assertIn("PENDENTE", h3)
+
+    def test_deck_proposto_ordem_e_correcoes(self) -> None:
+        titulos = [t for _, t, _ in self.deck]
+        self.assertEqual(len(self.deck), 36 - 3 + len(self.doc))
+        self.assertNotIn("X", titulos)
+        tudo = "\n".join(t for _, _, t in self.deck)
+        for proibido in ("SGETS", "177 dos 368", "O IVS é o piso", "indícios de efetividade", "renumeração",
+                         "Vulnerabilidade: Muito alta", "x Especialidade"):
+            self.assertNotIn(proibido, tudo, proibido)
+        v = {c: e["valor"] for c, e in self.numeros["numeros"].items()}
+        alvo = f"{v['D_C1_PRE1_PCT']}% na 1ª chamada · {v['D_C1_PRE2_PCT']}% somando a 2ª"
+        self.assertEqual(sum(alvo in t for _, _, t in self.deck), 2)
+        self.assertEqual(sum(t == "O IVS 2010 define a bolsa do PMM-E por regra" for t in titulos), 4)
+        self.assertIn(f"{v['R_C1_REPR']} de {v['R_C1_MUN']} municípios do ciclo 1", tudo.replace("\u00a0", " "))
+        # os slides novos entram depois do slide de hipótese e no lugar dos marcadores
+        i = titulos.index("Da condição de aceitação, sai nossa hipótese econômica")
+        self.assertEqual(titulos[i + 1], self.doc[0]["titulo"][3:].strip())
+        divisor = next(k for k, (_, ti, tx) in enumerate(self.deck) if not ti and "Apêndice" in tx)
+        self.assertLess(divisor, titulos.index(next(s["titulo"][3:].strip() for s in self.doc
+                                                    if s["titulo"].startswith("## Apêndice"))))
+
+    def test_exemplos_ocultos(self) -> None:
+        with zipfile.ZipFile(DECK) as z:
+            for parte, _, texto in self.deck:
+                if texto.startswith("EXEMPLO"):
+                    self.assertIn('show="0"', z.read(parte).decode("utf-8")[:800], parte)
+
+    def test_manifesto_do_deck(self) -> None:
+        for e in self.manifesto["saidas"]:
+            self.assertEqual(sha256(ROOT / e["caminho"]), e["sha256"], e["caminho"])
+        for e in self.manifesto["entradas"]:
+            if e["caminho"].startswith(("docs/", "output/")):
+                self.assertEqual(sha256(ROOT / e["caminho"]), e["sha256"], e["caminho"])
+        with zipfile.ZipFile(DECK) as z:
+            for e in self.manifesto["entradas"]:
+                if e.get("no_pacote"):
+                    self.assertEqual(hashlib.sha256(z.read(e["no_pacote"])).hexdigest(), e["sha256"], e["caminho"])
+                    self.assertTrue(e["caminho"].startswith("output/"))
+
+    @unittest.skipUnless(os.environ.get("PMME_DECK_GRUPO") and Path(os.environ.get("PMME_DECK_GRUPO", "")).exists(),
+                         "PMME_DECK_GRUPO não aponta para o deck do grupo")
+    def test_deterministico(self) -> None:
+        import importlib
+        D = importlib.import_module("gerar_deck_banca2")
+        with tempfile.TemporaryDirectory() as tmp:
+            D.construir(Path(os.environ["PMME_DECK_GRUPO"]), Path(tmp))
+            for n in (D.ARQ_DECK, D.ARQ_SLIDES):
+                self.assertEqual(sha256(Path(tmp) / n), sha256(SAIDA / n), n)
 
 
 if __name__ == "__main__":
