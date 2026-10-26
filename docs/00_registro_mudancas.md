@@ -8,6 +8,23 @@
 
 ---
 
+## 26/10/2026 — Auditoria 40: adendo 48d (controles de localização e de médicos, e pareamento), aprovado com correções
+
+Motivo: auditoria independente do script 44, das saídas `CL_*`, do doc 57r e dos testes. O recálculo próprio dos
+portões, do CL-0, da CL-1/CL-4 da HI-2 e do PSM em 0,300 (mesmos pares, mesma estimativa e mesmo IC de permutação)
+bateu com o gravado. Nenhuma estimativa mudou. Correções: o diagnóstico de separação em 0,400 passou a contar o
+Centro-Oeste (categoria de referência); o 57r ganhou, no bloco gerado, a explicação do limite da RDD em 0,300 e a
+frase sobre o que falta em 0,400, além da §7.1 com as notas da auditoria; o doc 63 foi corrigido. O remédio para o PSM
+em 0,400 ficou só como proposta, para decisão do autor.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/40_auditoria_controles_localizacao_medicos.md`](auditorias/40_auditoria_controles_localizacao_medicos.md) | auditoria do adendo 48d: veredito, achados por gravidade, recálculo independente e proposta para o PSM em 0,400 |
+
+---
+
 ## 26/10/2026 — Doc 57r: resultados do adendo 48d (controles de localização e de médicos, e pareamento)
 
 Motivo: execução do adendo 48d com a nota §3.2 (escore de propensão como principal). As decisões de implementação

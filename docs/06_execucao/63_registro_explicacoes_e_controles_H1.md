@@ -80,11 +80,13 @@ precisam ser medidos **antes do programa** (até 202506). Situação dos dados:
 
 **26/10/2026:** o conjunto de localização (capital, macrorregião, log da população) e de médicos na região (médicos e especialistas por 10 mil hab. no município e no resto da região de saúde) foi congelado no adendo [`48d`](48d_adendo_controles_localizacao_e_medicos.md), com pareamento perto do corte. Escola médica, ANS, PIB e receita, homicídios e leitos continuam fora até serem adquiridos.
 
-**26/10/2026, resultados do 48d (doc 57r; sem auditoria ainda):** no balanço do corte, saltam em 0,300 a
-capital, o Nordeste e os especialistas no resto da região de saúde (mais do lado de bolsa maior); em 0,400, só os
-especialistas no resto da região. Com localização e médicos na regressão, o HI-2 em 0,300 deixa de excluir zero, e o
-código aplica a leitura "anda junto com localização ou médicos". O PSM em 0,300 não detecta diferença na H1 nem na
-oferta local; em 0,400 não tem estimativa (capitais e Sul só de um lado, o logit não converge). Números no doc 57r.
+**26/10/2026, resultados do 48d (doc 57r; auditoria 40, aprovado com correções):** no balanço do corte, em 0,300
+o lado de bolsa maior tem menos capitais, menos municípios do Nordeste e mais especialistas no resto da região de
+saúde; em 0,400, só os especialistas no resto da região diferem (mais do lado de bolsa maior). Com localização e
+médicos na regressão, o HI-2 em 0,300 deixa de excluir zero, e o código aplica a leitura "anda junto com localização
+ou médicos": é limite da RDD nesse corte, não prova de que a localização explica a queda. O PSM em 0,300 não detecta
+diferença na H1 nem na oferta local; em 0,400 não tem estimativa (capitais, Sul e, na H1, Centro-Oeste só do lado
+de baixo; o logit não converge). Números no doc 57r.
 Explicações 1, 2 e 8 da tabela ganham apoio; "especialistas no resto da região" entra como explicação nova.
 
 Este registro é atualizado a cada explicação nova, com data.

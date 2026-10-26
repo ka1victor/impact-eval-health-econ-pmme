@@ -5599,11 +5599,19 @@
       {
        "variavel": "capital",
        "unidades": 10,
+       "municipios": 4,
+       "lado": "abaixo"
+      },
+      {
+       "variavel": "regiao[Centro-Oeste]",
+       "unidades": 8,
+       "municipios": 8,
        "lado": "abaixo"
       },
       {
        "variavel": "regiao[Sul]",
        "unidades": 1,
+       "municipios": 1,
        "lado": "abaixo"
       }
      ],
@@ -7025,6 +7033,13 @@
       {
        "variavel": "capital",
        "unidades": 6,
+       "municipios": 2,
+       "lado": "abaixo"
+      },
+      {
+       "variavel": "regiao[Centro-Oeste]",
+       "unidades": 1,
+       "municipios": 1,
        "lado": "abaixo"
       }
      ],
@@ -14792,11 +14807,13 @@
       {
        "variavel": "capital",
        "unidades": 4,
+       "municipios": 4,
        "lado": "abaixo"
       },
       {
        "variavel": "regiao[Sul]",
        "unidades": 1,
+       "municipios": 1,
        "lado": "abaixo"
       }
      ],
@@ -14854,6 +14871,13 @@
       {
        "variavel": "capital",
        "unidades": 2,
+       "municipios": 2,
+       "lado": "abaixo"
+      },
+      {
+       "variavel": "regiao[Centro-Oeste]",
+       "unidades": 1,
+       "municipios": 1,
        "lado": "abaixo"
       }
      ],
