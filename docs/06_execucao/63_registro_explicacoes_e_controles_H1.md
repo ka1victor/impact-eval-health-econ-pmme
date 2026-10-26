@@ -46,4 +46,35 @@ Ele roda HI-1 e HI-2 por corte e relata cada covariável isolada e todas juntas.
 Concorrência, candidatos e vagas oferecidas ficam fora do conjunto, porque não
 são pré-determinados, e aparecem só como diagnóstico.
 
+## 3. Controles que a literatura e o problema sugerem (atualização de 26/10/2026)
+
+Pedido do autor: pensar em controles que **já se sabe** que afetam a propensão
+do médico a atuar no município, como a presença de médicos na região. Todos
+precisam ser medidos **antes do programa** (até 202506). Situação dos dados:
+- **no repo:** já adquirido e auditado;
+- **adquirir:** fonte pública ainda não baixada.
+
+| Grupo | Controle | Por que importa | Fonte | Situação |
+|---|---|---|---|---|
+| Mercado de médicos | médicos por 10 mil hab. no município (todos) | densidade médica atrai e retém (rede, cobertura) | CNES nacional (a09), 202406–202506 | no repo |
+| | especialistas das CBO do curso por 10 mil hab. no município e na região de saúde | concorrência e rede da especialidade; também "médicos por perto" | a09 + ponte curso–CBO | no repo |
+| | generalistas do PMMB e da atenção primária no município | outra política no mesmo corte; carga e rede da atenção primária | a09 (CBO de eSF) | no repo |
+| Estrutura de trabalho | estabelecimentos com leitos, centro cirúrgico, UTI; leitos por 10 mil hab. | o especialista precisa de estrutura (custo laboral do modelo, Choné e Ma) | CNES (tabelas de estabelecimento e leito) | verificar se o a05/a09 trouxe essas tabelas; senão, adquirir |
+| | produção especializada pré (SIA e SIH) por 10 mil hab. | demanda e estrutura já existentes | SIA e SIH (a12–a13), 202406–202506 | no repo |
+| Formação | escola médica e programa de residência na região de saúde ou na UF | onde o médico se forma e faz residência explica onde ele fica | e-MEC e CNRM | adquirir |
+| Mercado privado | beneficiários de plano de saúde por habitante | renda privada complementar (as 20 h da bolsa são cumuláveis) | ANS (beneficiários por município) | adquirir; a TISS (a14) dá só um proxy de produção |
+| Lugar | porte (log pop. 2022), capital, metrópole, REGIC, distância à capital | amenidades, carreira e família (custo geográfico do modelo) | Censo 2022; IBGE território; REGIC 2018 | no repo |
+| | UF e região de saúde | diferenças regionais estáveis (Nordeste preenche mais) | malha de regiões de saúde | no repo |
+| Renda e fisco | PIB per capita; receita corrente municipal per capita | capacidade de complementar salário e pagar estrutura | IBGE PIB municipal; SICONFI | adquirir. Atenção: correlacionados com o IVS; só como controle, nunca no lugar da running variable (`CLAUDE.md`) |
+| Violência | taxa de homicídios | amenidade negativa forte | SIM/DATASUS | adquirir |
+
+**Regras:**
+- Esses controles entram no adendo "H1 com covariáveis pré-determinadas"
+  (seção 2) **só depois de congelados**, com o conjunto fixado antes de rodar.
+- Cada controle é relatado isolado e todos juntos.
+- Antes de usar como controle, cada um passa por um teste de balanço no corte:
+  se saltar no corte, também é explicação candidata.
+- Os itens "adquirir" precisam de script de aquisição com manifesto e hash,
+  como os a0x.
+
 Este registro é atualizado a cada explicação nova, com data.
