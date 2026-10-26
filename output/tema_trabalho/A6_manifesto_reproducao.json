@@ -62,6 +62,7 @@
     ".venv/bin/python scripts/rdd_bolsa/29_determinantes_abertura.py",
     ".venv/bin/python scripts/rdd_bolsa/25_escolha_dap.py",
     ".venv/bin/python scripts/rdd_bolsa/25c_magnitudes_P1h.py",
+    ".venv/bin/python scripts/rdd_bolsa/42_escolha_vaga_imediata_c2.py",
     ".venv/bin/python scripts/rdd_bolsa/32_realocacao_bolsa.py",
     ".venv/bin/python scripts/rdd_bolsa/28_trajetoria_medicos.py",
     ".venv/bin/python scripts/rdd_bolsa/30_mecanismo_alocacao.py",

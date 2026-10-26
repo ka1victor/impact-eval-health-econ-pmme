@@ -8,6 +8,22 @@
 
 ---
 
+## 26/10/2026 — Adendo 52c executado: escolha com o tipo de vaga do ciclo 2 do quadro de 13/02/2026
+
+Motivo: o adendo 52c manda reestimar o E9 (ciclo 2 e empilhado), o P1 M1 e M5 e o P1h-1 com "tem vaga imediata" e
+"log(vagas imediatas + 1)" do ciclo 2 tirados do quadro vigente na inscrição, e não do retificado de 19/03/2026,
+refeito depois do resultado preliminar. Portão de reprodução da versão antiga aprovado (≤ 1e−8). A leitura da H2
+(P1h-1) e do sinal do ciclo 2 (E9) não muda. Os docs 42, 57a, 57i e 57 e as saídas `E9_*`, `P1_*` e `P1h_*` não foram
+alterados.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57p_escolha_vaga_imediata_c2.md`](06_execucao/57p_escolha_vaga_imediata_c2.md) | resultados do adendo 52c, antigo e corrigido lado a lado, gerado por `scripts/rdd_bolsa/42_escolha_vaga_imediata_c2.py` |
+
+---
+
 ## 26/10/2026 — Registro de explicações e controles candidatos da H1
 
 Motivo: pedido do autor de anotar toda explicação possível para o sinal da H1 e como ela entraria como controle.
