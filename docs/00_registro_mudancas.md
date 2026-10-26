@@ -8,6 +8,26 @@
 
 ---
 
+## 26/10/2026 — Auditoria 31: P1h (protocolo 52b)
+
+Motivo: auditoria independente da execução do P1h. Veredito: aprovado com correções. Nenhuma estimativa
+mudou; as correções são de título, rótulo e texto da figura e do doc 57i.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/31_auditoria_P1h_magnitudes.md`](auditorias/31_auditoria_P1h_magnitudes.md) | recálculo independente do M1 e das sensibilidades, de D_UF, K5 e K10 (delta e Fieller) e do BKY; fidelidade ao protocolo 52b; linguagem; integridade; correções |
+
+Também, fora de `docs/`:
+- `scripts/rdd_bolsa/25c_magnitudes_P1h.py`: só textos (título, rótulos de lugar, "Como ler", legenda e
+  desvios);
+- saídas regeradas pelo script: `P1h_figuras/P1h_magnitudes.png`, `P1h_magnitudes.csv` (só a coluna
+  `estimando` de três linhas FIG) e `P1h_resumo.json`, além do doc 57i;
+- `tests/test_P1h_magnitudes.py`: classe `TestRecalculoIndependenteAuditoria31`.
+
+---
+
 ## 26/10/2026 — Execução do P1h (protocolo 52b): peso da bolsa contra o custo do lugar
 
 Motivo: execução do protocolo 52b (H3 do plano da banca 2), com portão de reprodução do M1 e das

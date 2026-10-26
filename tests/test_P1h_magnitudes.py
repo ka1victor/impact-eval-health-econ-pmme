@@ -12,6 +12,11 @@ Três partes:
    gravada no resumo (cujas diagonais batem com os EP do P1), Holm e BKY, hashes, P1 não regravado, sem
    identificador pessoal, sem o arquivo de IVS errado e sem mês CNES ≥ 202609.
 3. `TestDoc57i`: o doc 57i é igual ao gerado das saídas e traz a linguagem do protocolo.
+4. `TestRecalculoIndependenteAuditoria31`: monta a amostra do P1 das entradas do protocolo 52 §2 e reestima o
+   logit condicional com código próprio (sem importar os scripts 16, 17, 19, 25 nem 25c, nem a rdd_lib), com EP
+   sanduíche CR1 (G/(G−1)) por conjunto; compara com `P1_estimativas.csv` e refaz D_UF, K5, K10 (delta e Fieller)
+   e os pesos da figura contra `P1h_magnitudes.csv`. Por padrão, M1 e M5 ciclo 1; com `AUDITORIA31_TODAS=1`, as
+   sete especificações (M1, M2, M4, M5 por ciclo, M7) e o BKY do P1h-3.
 """
 
 from __future__ import annotations
@@ -501,6 +506,268 @@ class TestDoc57i(unittest.TestCase):
         t = DOC.read_text(encoding="utf-8")
         self.assertIn(res["como_ler"][FIG.name], t)
         self.assertIn("../../output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png", t)
+
+
+# ---------------------------------------------------------------------------
+# Auditoria 31: recálculo independente (código próprio, sem os scripts 16, 17, 19, 25, 25c nem a rdd_lib)
+# ---------------------------------------------------------------------------
+
+def _a31_insumos() -> dict:
+    """Entradas do protocolo 52 §2, lidas com leitores próprios. Só leitura; nada é gravado."""
+    O = ROOT / "output"
+    conj = pd.read_parquet(O / "rdd_bolsa" / "outcomes" / "escolhas_conjunto_principal.parquet")
+    cand = pd.read_parquet(O / "rdd_bolsa" / "outcomes" / "escolhas_candidatos.parquet")
+    org = pd.read_parquet(O / "rdd_bolsa" / "G1_candidatos_origem.parquet")
+    ivs = pd.read_csv(O / "aquisicao" / "a08_ivs_2010_oficial_municipio.csv", dtype={"co_ibge": str},
+                      usecols=["co_ibge", "ivs"])
+    ivs = ivs.assign(co_ibge=ivs["co_ibge"].str.zfill(6)).set_index("co_ibge")["ivs"]
+    cir = {}
+    bruto = (ROOT / "data" / "raw" / "aquisicao" / "territorio" / "datasus_tabnet_br_regsaud.cnv").read_bytes()
+    for ln in bruto.decode("latin1").splitlines()[1:]:
+        m = re.match(r"^\s*\d+\s+(\d{5})\s+.*?\s+(\d{6})\s*$", ln)
+        if m:
+            cir[m.group(2)] = m.group(1)
+    cir = pd.Series(cir)
+    js = json.loads((ROOT / "data" / "raw" / "aquisicao" / "territorio" /
+                     "ibge_api_v3_malhas_metadados_municipios.json").read_text(encoding="utf-8"))
+    xy = pd.DataFrame({"co": [str(d["id"])[:6] for d in js], "lon": [d["centroide"]["longitude"] for d in js],
+                       "lat": [d["centroide"]["latitude"] for d in js]}).set_index("co")
+    c = conj.copy()
+    c["ivs"] = c["co_ibge"].map(ivs)
+    c = c[c["ivs"].notna()].copy()
+    c["s"] = np.round(c["ivs"] * 1000)
+    c["bolsa_mil"] = c["faixa_anunciada"].map({"FAIXA 3": 10.0, "FAIXA 2": 15.0, "FAIXA 1": 20.0})
+    regra = np.where(c["s"] > 400, "FAIXA 1", np.where(c["s"] > 300, "FAIXA 2", "FAIXA 3"))
+    assert (regra == c["faixa_anunciada"]).all()
+    c["cir"] = c["co_ibge"].map(cir)
+    sem_cir = set(zip(c.loc[c["cir"].isna(), "ciclo"], c.loc[c["cir"].isna(), "co_cnes_7d"],
+                      c.loc[c["cir"].isna(), "cod_curso"]))
+    c = c[c["cir"].notna()].reset_index(drop=True)
+    c["cel_id"] = np.arange(len(c))
+    A = pd.DataFrame({"bolsa_mil": c["bolsa_mil"], "ivs_inclinacao": (c["s"] - 300) / 100.0,
+                      "ivs_mudanca_inclinacao_0300": np.maximum(c["s"] - 300, 0) / 100.0,
+                      "ivs_mudanca_inclinacao_0400": np.maximum(c["s"] - 400, 0) / 100.0,
+                      "tem_vaga_imediata": c["tem_vaga_imediata"].astype(float),
+                      "log_vagas_imediatas_mais_1": c["log_vagas_imediatas_mais_1"].astype(float),
+                      "log_populacao_2022": np.log(c["populacao_2022"].astype(float))})
+    for nome in sorted(c["macrorregiao"].unique()):
+        if nome != "SUDESTE":
+            A["macro_" + nome.lower().replace(" ", "_")] = (c["macrorregiao"] == nome).astype(float)
+    for e in sorted(c["estrato_territorial"].unique()):
+        if e != "interior_proximo_polo":
+            A["capital" if e == "capital" else "estrato_" + e] = (c["estrato_territorial"] == e).astype(float)
+    o = org[org["regra_ligacao"] == "g1_cpf_nome"][["ciclo", "id_candidato", "co_ibge_origem"]]
+    r1 = cand[cand["opcao_rank"] == 1].merge(o, on=["ciclo", "id_candidato"], how="left", validate="one_to_one")
+    r1 = r1[r1["co_ibge_origem"].notna()].copy()
+    r1["co_ibge_origem"] = r1["co_ibge_origem"].astype(str)
+    r1 = r1[r1["co_ibge_origem"].isin(cir.index)]
+    r1 = r1[[k not in sem_cir for k in zip(r1["ciclo"], r1["co_cnes_7d"], r1["cod_curso"])]].copy()
+    chave = c.set_index(["ciclo", "co_cnes_7d", "cod_curso"])["cel_id"]
+    r1["cel_esc"] = chave.reindex(pd.MultiIndex.from_frame(r1[["ciclo", "co_cnes_7d", "cod_curso"]])).to_numpy()
+    r2 = cand[(cand["opcao_rank"] == 2) & cand["id_candidato"].isin(set(r1["id_candidato"]))]
+    r2 = r2[[k not in sem_cir for k in zip(r2["ciclo"], r2["co_cnes_7d"], r2["cod_curso"])]].copy()
+    r2["cel_esc"] = chave.reindex(pd.MultiIndex.from_frame(r2[["ciclo", "co_cnes_7d", "cod_curso"]])).to_numpy()
+    assert r1["cel_esc"].notna().all() and r2["cel_esc"].notna().all()
+    return {"c": c, "A": A, "cir": cir, "xy": xy, "r1": r1, "r2": r2,
+            "uf_base": c["co_ibge"].str[:2].value_counts().sort_index().idxmax()}
+
+
+def _a31_estimar(I: dict, ciclos: tuple, modelo: str, com_r2: bool) -> dict:
+    c, r1, r2 = I["c"], I["r1"], I["r2"]
+    g1 = r1[r1["ciclo"].isin(ciclos)][["id_candidato", "id_conjunto_escolha", "co_ibge_origem", "cel_esc"]].copy()
+    g1["excl"], g1["posto"] = -1, 1
+    gs = [g1]
+    if com_r2:
+        g2 = r2[r2["ciclo"].isin(ciclos)][["id_candidato", "id_conjunto_escolha", "cel_esc"]].copy()
+        i1 = g1.set_index("id_candidato")
+        g2["co_ibge_origem"] = g2["id_candidato"].map(i1["co_ibge_origem"])
+        mesmo = g2["id_conjunto_escolha"].to_numpy() == g2["id_candidato"].map(i1["id_conjunto_escolha"]).to_numpy()
+        g2["excl"] = np.where(mesmo, g2["id_candidato"].map(i1["cel_esc"]).to_numpy(), -1)
+        g2["posto"] = 2
+        gs.append(g2)
+    g = pd.concat(gs, ignore_index=True)
+    g["gid"] = np.arange(len(g))
+    lg = g.merge(c[["id_conjunto_escolha", "cel_id"]], on="id_conjunto_escolha")
+    lg = lg[lg["cel_id"] != lg["excl"]].sort_values(["gid", "cel_id"]).reset_index(drop=True)
+    y = (lg["cel_id"] == lg["cel_esc"]).to_numpy(float)
+    cel = lg["cel_id"].to_numpy()
+    X = I["A"].iloc[cel].reset_index(drop=True).copy()
+    uf_c = c["co_ibge"].str[:2].to_numpy()
+    if modelo == "M4":
+        X = X.drop(columns=[k for k in X.columns if k.startswith("macro_")])
+        for u in sorted(set(uf_c)):
+            if u != I["uf_base"]:
+                X["uf_" + u] = (uf_c[cel] == u).astype(float)
+    oc, cc = lg["co_ibge_origem"].to_numpy(), c["co_ibge"].to_numpy()[cel]
+    rad = lambda s, k: np.radians(I["xy"].loc[s, k].to_numpy())  # noqa: E731
+    h = (np.sin((rad(cc, "lat") - rad(oc, "lat")) / 2) ** 2 + np.cos(rad(oc, "lat")) * np.cos(rad(cc, "lat")) *
+         np.sin((rad(cc, "lon") - rad(oc, "lon")) / 2) ** 2)
+    dist = 2 * 6371.0088 * np.arcsin(np.sqrt(np.clip(h, 0, 1)))
+    if modelo == "M2":
+        X["log1p_distancia_km"] = np.log1p(dist)
+    else:
+        X["distancia_100km"] = dist / 100.0
+    X["mesma_uf"] = (np.array([s[:2] for s in oc]) == np.array([s[:2] for s in cc])).astype(float)
+    X["mesma_regiao_saude"] = (I["cir"].reindex(oc).to_numpy() == I["cir"].reindex(cc).to_numpy()).astype(float)
+    X["mesmo_municipio"] = (oc == cc).astype(float)
+    gid = lg["gid"].to_numpy()
+    nG = len(g)
+    Xm = X.to_numpy(float)
+    amp = np.zeros(Xm.shape[1])
+    for j in range(Xm.shape[1]):
+        mx, mn = np.full(nG, -np.inf), np.full(nG, np.inf)
+        np.maximum.at(mx, gid, Xm[:, j])
+        np.minimum.at(mn, gid, Xm[:, j])
+        amp[j] = np.max(mx - mn)
+    termos = [t for t, a in zip(X.columns, amp) if a > 0]
+    Xm = X[termos].to_numpy(float)
+    k = Xm.shape[1]
+
+    def aval(b):
+        v = Xm @ b
+        vm = np.full(nG, -np.inf)
+        np.maximum.at(vm, gid, v)
+        ev = np.exp(v - vm[gid])
+        den = np.bincount(gid, ev, nG)
+        p = ev / den[gid]
+        xbar = np.column_stack([np.bincount(gid, p * Xm[:, j], nG) for j in range(k)])
+        xesc = np.column_stack([np.bincount(gid, y * Xm[:, j], nG) for j in range(k)])
+        H = (Xm * p[:, None]).T @ Xm - xbar.T @ xbar
+        return float(y @ v - np.sum(vm + np.log(den))), xesc - xbar, H
+
+    b = np.zeros(k)
+    for _ in range(100):
+        ll, sc, H = aval(b)
+        passo = np.linalg.solve(H, sc.sum(0))
+        if sc.sum(0) @ passo < 1e-20:
+            break
+        t = 1.0
+        while aval(b + t * passo)[0] < ll - 1e-10 and t > 1e-8:
+            t /= 2
+        b = b + t * passo
+    ll, sc, H = aval(b)
+    Hi = np.linalg.inv(H)
+
+    def cr1(cl):
+        cod, idx = np.unique(cl, return_inverse=True)
+        S = np.zeros((len(cod), k))
+        np.add.at(S, idx, sc)
+        return len(cod) / (len(cod) - 1) * Hi @ (S.T @ S) @ Hi, len(cod)
+
+    Vc, Gc = cr1(g["id_conjunto_escolha"].to_numpy())
+    Vk, _ = cr1(g["id_candidato"].to_numpy())
+    return {"termos": termos, "theta": b, "V_conj": Vc, "V_mle": Hi, "V_cand": Vk, "G": Gc, "n_linhas": len(lg)}
+
+
+class TestRecalculoIndependenteAuditoria31(unittest.TestCase):
+    """Recálculo da auditoria 31 com código próprio; compara com P1_estimativas.csv e P1h_magnitudes.csv."""
+
+    ESPECS = {"M1": ((1, 2, 3), "M1", False, "M1", "empilhado"), "M2": ((1, 2, 3), "M2", False, "M2", "empilhado"),
+              "M4": ((1, 2, 3), "M4", False, "M4", "empilhado"), "M5_1": ((1,), "M1", False, "M5", "1"),
+              "M5_2": ((2,), "M1", False, "M5", "2"), "M5_3": ((3,), "M1", False, "M5", "3"),
+              "M7": ((1, 2, 3), "M1", True, "M7", "empilhado")}
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        import os
+        cls.todas = os.environ.get("AUDITORIA31_TODAS") == "1"
+        chaves = list(cls.ESPECS) if cls.todas else ["M1", "M5_1"]
+        I = _a31_insumos()
+        cls.res = {kk: _a31_estimar(I, *cls.ESPECS[kk][:3]) for kk in chaves}
+        cls.p1 = pd.read_csv(P1_EST, dtype={"ciclo": str})
+        cls.p1h = pd.read_csv(CSV, dtype={"ciclo": str})
+
+    def _comb(self, r: dict, pesos: dict, V: str = "V_conj") -> tuple[float, float]:
+        a = np.zeros(len(r["termos"]))
+        for t, w in pesos.items():
+            a[r["termos"].index(t)] = w
+        return float(a @ r["theta"]), math.sqrt(float(a @ r[V] @ a))
+
+    def test_coeficientes_e_ep_contra_P1(self) -> None:
+        for kk, r in self.res.items():
+            m, ci = self.ESPECS[kk][3:]
+            g = self.p1[(self.p1["modelo"] == m) & (self.p1["ciclo"] == ci) &
+                        (self.p1["tipo_linha"] == "coeficiente")].set_index("termo")
+            self.assertEqual(list(g.index), r["termos"], kk)
+            self.assertEqual(int(g["n_linhas_candidato_celula"].iloc[0]), r["n_linhas"], kk)
+            np.testing.assert_allclose(r["theta"], g["coef"].to_numpy(), rtol=0, atol=1e-7, err_msg=kk)
+            for V, col in (("V_conj", "ep_cluster_conjunto"), ("V_mle", "ep_mle"), ("V_cand", "ep_cluster_candidato")):
+                np.testing.assert_allclose(np.sqrt(np.diag(r[V])), g[col].to_numpy(), rtol=1e-6, err_msg=f"{kk} {V}")
+
+    def _linha(self, id_linha: str, m: str, ci: str, comp: str | None = None) -> pd.Series:
+        s = self.p1h[(self.p1h["id_linha"] == id_linha) & (self.p1h["modelo"] == m) & (self.p1h["ciclo"] == ci)]
+        if comp is not None:
+            s = s[s["componente"] == comp]
+        self.assertEqual(len(s), 1)
+        return s.iloc[0]
+
+    def test_d_uf_e_pesos_da_figura(self) -> None:
+        z, zu = stats.norm.ppf(0.975), stats.norm.ppf(0.95)
+        alvos = [("P1h-1", kk, None, {"mesma_uf": 1, "bolsa_mil": -10}) for kk in ["M1"]]
+        alvos += [("P1h-3", kk, None, {"mesma_uf": 1, "bolsa_mil": -10}) for kk in self.res if kk != "M1"]
+        alvos += [("FIG", "M1", comp, p) for comp, p in (
+            ("5β", {"bolsa_mil": 5}), ("10β", {"bolsa_mil": 10}), ("−γ", {"distancia_100km": -1}),
+            ("θ_UF", {"mesma_uf": 1}), ("θ_UF + θ_reg", {"mesma_uf": 1, "mesma_regiao_saude": 1}),
+            ("θ_UF + θ_reg + θ_mun", {"mesma_uf": 1, "mesma_regiao_saude": 1, "mesmo_municipio": 1}))]
+        ps = {}
+        for id_linha, kk, comp, pesos in alvos:
+            r = self.res[kk]
+            e, s = self._comb(r, pesos)
+            g = self._linha(id_linha, *self.ESPECS[kk][3:], comp)
+            got = [e, s, self._comb(r, pesos, "V_mle")[1], self._comb(r, pesos, "V_cand")[1], e - z * s, e + z * s,
+                   e - zu * s, stats.norm.sf(e / s), stats.t.sf(e / s, r["G"] - 1)]
+            ref = g[["estimativa", "ep_cluster_conjunto", "ep_mle", "ep_cluster_candidato", "ic95_inf", "ic95_sup",
+                     "li95_unilateral", "p_unilateral", "p_unilateral_t_g_menos_1"]].to_numpy(float)
+            np.testing.assert_allclose(got, ref, rtol=1e-6, atol=1e-12, err_msg=f"{id_linha} {kk} {comp}")
+            if id_linha == "P1h-3":
+                ps[kk] = stats.norm.sf(e / s)
+        if self.todas:  # BKY (Anderson, 2008) refeito à mão sobre as seis linhas
+            ordem = ["M2", "M4", "M5_1", "M5_2", "M5_3", "M7"]
+            p = np.array([ps[kk] for kk in ordem])
+            m = len(p)
+            q = np.ones(m)
+            rk = np.arange(1, m + 1)
+            o = np.argsort(p)
+            for i in range(1000, 0, -1):
+                qq = i / 1000
+                q1 = qq / (1 + qq)
+                ok1 = p[o] <= q1 * rk / m
+                R1 = rk[ok1].max() if ok1.any() else 0
+                q2 = q1 * m / (m - R1) if R1 < m else np.inf
+                ok2 = p[o] <= q2 * rk / m
+                R2 = rk[ok2].max() if ok2.any() else 0
+                q[o[:R2]] = qq
+            for kk, qv in zip(ordem, q):
+                self.assertAlmostEqual(qv, float(self._linha("P1h-3", *self.ESPECS[kk][3:])["q_bky"]), places=9)
+
+    def test_km_delta_e_fieller(self) -> None:
+        r = self.res["M1"]
+        ib, ig = r["termos"].index("bolsa_mil"), r["termos"].index("distancia_100km")
+        b, gm, V = r["theta"][ib], r["theta"][ig], r["V_conj"]
+        for id_linha, passo in (("P1h-2a", 5.0), ("P1h-2b", 10.0)):
+            g = self._linha(id_linha, "M1", "empilhado")
+            K = 100 * passo * b / (-gm)
+            grad = np.zeros(len(r["theta"]))
+            grad[ib], grad[ig] = 100 * passo / (-gm), 100 * passo * b / gm ** 2
+            s = math.sqrt(grad @ V @ grad)
+            # Fieller: (a + K·γ)² ≤ z²·Var(a + K·γ), a = 100·passo·β
+            a, vaa, vgg, vag = 100 * passo * b, (100 * passo) ** 2 * V[ib, ib], V[ig, ig], 100 * passo * V[ib, ig]
+            pontas = {}
+            for nome, z in (("95", stats.norm.ppf(0.975)), ("90", stats.norm.ppf(0.95))):
+                qa, qb, qc = gm ** 2 - z ** 2 * vgg, 2 * (a * gm - z ** 2 * vag), a ** 2 - z ** 2 * vaa
+                self.assertGreater(qa, 0)  # conjunto limitado
+                d = math.sqrt(qb ** 2 - 4 * qa * qc)
+                pontas[nome] = sorted([(-qb - d) / (2 * qa), (-qb + d) / (2 * qa)])
+            got = [K, s, K - stats.norm.ppf(0.975) * s, K + stats.norm.ppf(0.975) * s, K - stats.norm.ppf(0.95) * s,
+                   stats.norm.sf(K / s), pontas["95"][0], pontas["95"][1], pontas["90"][0]]
+            ref = g[["estimativa", "ep_cluster_conjunto", "ic95_inf", "ic95_sup", "li95_unilateral", "p_unilateral",
+                     "ic95_fieller_inf", "ic95_fieller_sup", "li95_unilateral_fieller"]].to_numpy(float)
+            np.testing.assert_allclose(got, ref, rtol=1e-6, err_msg=id_linha)
+            # IC de β contém zero, e o de K também (§4); o LI unilateral > 0 não muda o P1a bilateral (p > 0,05)
+            sb = math.sqrt(V[ib, ib])
+            self.assertTrue(b - stats.norm.ppf(0.975) * sb < 0 < b + stats.norm.ppf(0.975) * sb)
+            self.assertTrue(pontas["95"][0] < 0 < pontas["95"][1])
+            self.assertGreater(2 * stats.norm.sf(abs(b / sb)), 0.05)
 
 
 if __name__ == "__main__":

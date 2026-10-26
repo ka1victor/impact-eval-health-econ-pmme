@@ -1235,16 +1235,16 @@
   },
   "figura": {
     "arquivo": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
-    "sha256": "12eafcc0a5852dcf61b026d3409643eceabae3a9427ba366604c56d577af4baa",
-    "como_ler": "Cada ponto é o peso de um atributo da vaga na utilidade da escolha da 1ª opção, no modelo principal (M1, ciclos 1–3), em log-chance; a barra é o IC 95% com cluster por conjunto de escolha. Todos os pesos estão na mesma escala: comparar a distância de cada ponto ao zero é comparar quanto cada atributo move a escolha. Um peso de 1 multiplica por e ≈ 2,7 a razão entre a probabilidade de escolher a vaga e a de escolher qualquer outra do conjunto, mantido o resto. As linhas de lugar são cumulativas (a região inclui a UF; o município inclui a região e a UF) e são preferência revelada condicional ao modelo, não efeito causal da geografia; as da bolsa são identificadas pelos cortes de IVS (pacote do corte). As linhas não incluem a distância, que entra à parte.",
-    "titulo": "Na escolha da vaga, ficar na UF de origem pesa mais\nque toda a amplitude da bolsa (R$ 10 → 20 mil)",
+    "sha256": "61bcc1b8f3c1d7f1ee831c136f24804619ead0e7ad95bab9174484f3ba07ce12",
+    "como_ler": "Cada ponto é o peso de um atributo da vaga na utilidade da escolha da 1ª opção, no modelo principal (M1, ciclos 1–3), em log-chance; a barra é o IC 95% com cluster por conjunto de escolha. Todos os pesos estão na mesma escala: um peso de 1 multiplica por e ≈ 2,7 a razão entre a probabilidade de escolher a vaga e a de escolher qualquer outra do conjunto, mantido o resto. As linhas de lugar comparam com uma vaga em outra UF, à mesma distância, e cada uma é uma categoria: mesma UF fora da região de saúde de origem; mesma região fora do município; mesmo município. São preferência revelada condicional ao modelo, não efeito causal da geografia; as da bolsa são identificadas pelos cortes de IVS (pacote do corte). O peso da distância depende da unidade escolhida (100 km).",
+    "titulo": "No modelo de escolha, a vaga estar na UF de origem pesa mais\nque toda a amplitude da bolsa (R$ 10 → 20 mil)",
     "descricao": "pesos na utilidade, na mesma escala, de um degrau e da amplitude da bolsa, 100 km a menos, mesma UF, mesma região e mesmo município (M1, IC 95% cluster por conjunto)"
   },
   "como_ler": {
-    "P1h_magnitudes.png": "Cada ponto é o peso de um atributo da vaga na utilidade da escolha da 1ª opção, no modelo principal (M1, ciclos 1–3), em log-chance; a barra é o IC 95% com cluster por conjunto de escolha. Todos os pesos estão na mesma escala: comparar a distância de cada ponto ao zero é comparar quanto cada atributo move a escolha. Um peso de 1 multiplica por e ≈ 2,7 a razão entre a probabilidade de escolher a vaga e a de escolher qualquer outra do conjunto, mantido o resto. As linhas de lugar são cumulativas (a região inclui a UF; o município inclui a região e a UF) e são preferência revelada condicional ao modelo, não efeito causal da geografia; as da bolsa são identificadas pelos cortes de IVS (pacote do corte). As linhas não incluem a distância, que entra à parte."
+    "P1h_magnitudes.png": "Cada ponto é o peso de um atributo da vaga na utilidade da escolha da 1ª opção, no modelo principal (M1, ciclos 1–3), em log-chance; a barra é o IC 95% com cluster por conjunto de escolha. Todos os pesos estão na mesma escala: um peso de 1 multiplica por e ≈ 2,7 a razão entre a probabilidade de escolher a vaga e a de escolher qualquer outra do conjunto, mantido o resto. As linhas de lugar comparam com uma vaga em outra UF, à mesma distância, e cada uma é uma categoria: mesma UF fora da região de saúde de origem; mesma região fora do município; mesmo município. São preferência revelada condicional ao modelo, não efeito causal da geografia; as da bolsa são identificadas pelos cortes de IVS (pacote do corte). O peso da distância depende da unidade escolhida (100 km)."
   },
   "saidas": {
-    "output/rdd_bolsa/P1h_magnitudes.csv": "dfa77c88be2cbf2121c4eb9bddbc1cb3b0acc3a8a1a63e7d598ea435e47ee38e",
-    "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png": "12eafcc0a5852dcf61b026d3409643eceabae3a9427ba366604c56d577af4baa"
+    "output/rdd_bolsa/P1h_magnitudes.csv": "934d3931a7ad14047aa6764b19b1b7b7814e9a814417cd6e4ca9779861e5b89d",
+    "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png": "61bcc1b8f3c1d7f1ee831c136f24804619ead0e7ad95bab9174484f3ba07ce12"
   }
 }

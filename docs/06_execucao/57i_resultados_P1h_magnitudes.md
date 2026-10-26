@@ -14,7 +14,7 @@
 - **Escolha condicional.** Tudo vale para quem se candidatou, dentro do conjunto de vagas abertas do seu curso e ciclo. Nada sobre quem não se candidatou.
 - **O que não se pode dizer.** Nada aqui diz se a bolsa "funciona" ou "não funciona". Um peso menor que o da UF de origem não é efeito nulo da bolsa, e um peso grande da UF não diz que a geografia causa a escolha.
 
-Notação: β = `bolsa_mil` (por R$ 1 mil/mês); γ = `distancia_100km` (negativo); θ_UF = `mesma_uf`; θ_reg = `mesma_regiao_saude` (incremento sobre a mesma UF); θ_mun = `mesmo_municipio` (incremento sobre a mesma região).
+Notação: β = `bolsa_mil` (por R$ 1 mil/mês); γ = `distancia_100km` (negativo); θ_UF = `mesma_uf`; θ_reg = `mesma_regiao_saude` (incremento sobre a mesma UF); θ_mun = `mesmo_municipio` (incremento sobre a mesma região). Assim, θ_UF é o peso de uma vaga na UF de origem, fora da região de saúde de origem, contra uma vaga em outra UF à mesma distância.
 
 ## 2. Amostra e portão de reprodução
 
@@ -43,7 +43,7 @@ Segue a leitura pré-registrada do §4 do protocolo 52b.
 
 **P1h-2 (km equivalentes, descritivo).** Um degrau da bolsa (R$ 5 mil por mês) pesa na escolha o mesmo que a vaga ficar 112 km mais perto da origem (IC 95% delta [−9; 233]; Fieller [−7; 237]); toda a amplitude (R$ 10 mil), 224 km (delta [−18; 466]; Fieller [−14; 474]). O IC 95% de β contém zero ([−0,0027; 0,0874]), e por isso o IC de K5 e o de K10 também contêm zero: os dados não descartam que a bolsa não valha nenhum km, nem que um degrau valha até cerca de 237 km. Pelo lado unilateral (H0: K ≤ 0), o limite inferior de 95% de K5 é 10 km pelo delta e 12 km pelo Fieller (p = 0,035, delta). Essas linhas são descritivas: o P1a foi pré-registrado como teste bilateral de β (protocolo 52, Holm; p = 0,065), e o lado unilateral das linhas de km não o substitui.
 
-**P1h-3 (sensibilidade, BKY entre as 6 linhas).** D_UF em M2: 1,18 (IC [0,81; 1,54]; p < 0,001; q BKY = 0,001); M4: 1,73 (IC [1,28; 2,18]; p < 0,001; q BKY = 0,001); M5 ciclo 1: 2,34 (IC [1,45; 3,24]; p < 0,001; q BKY = 0,001); M5 ciclo 2: 1,31 (IC [0,76; 1,86]; p < 0,001; q BKY = 0,001); M5 ciclo 3: 2,37 (IC [1,75; 3,00]; p < 0,001; q BKY = 0,001); M7: 2,07 (IC [1,63; 2,50]; p < 0,001; q BKY = 0,001). Com q BKY < 0,05, 6 de 6 especificações rejeitam H0: D_UF ≤ 0. O M2 mede a distância em log, então o seu θ_UF fica condicional a outra forma da distância; no M5, cada ciclo tem o seu β, e no ciclo em que β é perto de zero a diferença é quase só θ_UF.
+**P1h-3 (sensibilidade, BKY entre as 6 linhas).** D_UF em M2: 1,18 (IC [0,81; 1,54]; p < 0,001; q BKY = 0,001); M4: 1,73 (IC [1,28; 2,18]; p < 0,001; q BKY = 0,001); M5 ciclo 1: 2,34 (IC [1,45; 3,24]; p < 0,001; q BKY = 0,001); M5 ciclo 2: 1,31 (IC [0,76; 1,86]; p < 0,001; q BKY = 0,001); M5 ciclo 3: 2,37 (IC [1,75; 3,00]; p < 0,001; q BKY = 0,001); M7: 2,07 (IC [1,63; 2,50]; p < 0,001; q BKY = 0,001). Com q BKY < 0,05, 6 de 6 especificações rejeitam H0: D_UF ≤ 0. O M2 mede a distância em log, então o seu θ_UF fica condicional a outra forma da distância; no M5, cada ciclo tem o seu β, e nos ciclos em que β é perto de zero a diferença é quase só θ_UF.
 
 Tudo acima é escolha condicional a candidatar-se, dentro do conjunto de vagas abertas. Nada aqui diz se a bolsa "funciona" ou "não funciona": o contraste compara dois pesos dentro do mesmo modelo de escolha.
 <!-- P1h:leitura:fim -->
@@ -51,7 +51,7 @@ Tudo acima é escolha condicional a candidatar-se, dentro do conjunto de vagas a
 ## 4. Tabela
 
 <!-- P1h:tabela:inicio -->
-EP cluster = sanduíche com cluster por conjunto de escolha (curso × ciclo), a inferência principal; EP MV = máxima verossimilhança; EP candidato = cluster por candidato. IC, limite inferior (LI) unilateral e p unilateral (H0: estimando ≤ 0) usam o EP cluster pela normal; ao lado, o p unilateral pela t com G − 1 graus de liberdade. Linhas de km: estimativa, EP, IC e p pelo método delta; Fieller ao lado. Holm só no P1h-1 (família de um teste); BKY só entre as linhas P1h-3.
+EP cluster = sanduíche com cluster por conjunto de escolha (curso × ciclo), a inferência principal; EP MV = máxima verossimilhança; EP candidato = cluster por candidato. IC, limite inferior (LI) unilateral e p unilateral (H0: estimando ≤ 0) usam o EP cluster pela normal; ao lado, o p unilateral pela t com G − 1 graus de liberdade. Linhas de km: estimativa, EP, IC e p pelo método delta; Fieller ao lado. Holm só no P1h-1 (família de um teste); BKY só entre as linhas P1h-3, e q BKY = 0,001 é o piso da grade do algoritmo (Anderson, 2008), não um valor exato.
 
 | Linha | Modelo | Estimando | Estimativa | EP cluster | EP MV | EP candidato | IC 95% | LI unilateral 95% | p unilateral | p unil. (t, G−1) | Fieller: IC 95%; LI 95% | p Holm / q BKY | Rejeita H0 a 5% |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -72,25 +72,25 @@ Pesos da figura (M1, descritivos, mesma escala da utilidade):
 | Bolsa: um degrau (+R$ 5 mil/mês) | 5β | 0,212 | 0,115 | [−0,013; 0,437] |
 | Bolsa: toda a amplitude (R$ 10 → 20 mil) | 10β | 0,424 | 0,230 | [−0,027; 0,874] |
 | Vaga 100 km mais perto da origem | −γ | 0,189 | 0,012 | [0,166; 0,213] |
-| Vaga na mesma UF da origem | θ_UF | 2,402 | 0,064 | [2,278; 2,527] |
-| Vaga na mesma região de saúde | θ_UF + θ_reg | 4,048 | 0,195 | [3,665; 4,430] |
-| Vaga no mesmo município | θ_UF + θ_reg + θ_mun | 4,835 | 0,144 | [4,553; 5,117] |
+| Mesma UF, outra região de saúde | θ_UF | 2,402 | 0,064 | [2,278; 2,527] |
+| Mesma região de saúde, outro município | θ_UF + θ_reg | 4,048 | 0,195 | [3,665; 4,430] |
+| Mesmo município da origem | θ_UF + θ_reg + θ_mun | 4,835 | 0,144 | [4,553; 5,117] |
 <!-- P1h:tabela:fim -->
 
 ## 5. Figura
 
 <!-- P1h:figura:inicio -->
-![Na escolha da vaga, ficar na UF de origem pesa mais que toda a amplitude da bolsa (R$ 10 → 20 mil)](../../output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png)
+![No modelo de escolha, a vaga estar na UF de origem pesa mais que toda a amplitude da bolsa (R$ 10 → 20 mil)](../../output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png)
 
-Arquivo: `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png`. Título da figura: "Na escolha da vaga, ficar na UF de origem pesa mais que toda a amplitude da bolsa (R$ 10 → 20 mil)".
+Arquivo: `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png`. Título da figura: "No modelo de escolha, a vaga estar na UF de origem pesa mais que toda a amplitude da bolsa (R$ 10 → 20 mil)".
 
-**Como ler.** Cada ponto é o peso de um atributo da vaga na utilidade da escolha da 1ª opção, no modelo principal (M1, ciclos 1–3), em log-chance; a barra é o IC 95% com cluster por conjunto de escolha. Todos os pesos estão na mesma escala: comparar a distância de cada ponto ao zero é comparar quanto cada atributo move a escolha. Um peso de 1 multiplica por e ≈ 2,7 a razão entre a probabilidade de escolher a vaga e a de escolher qualquer outra do conjunto, mantido o resto. As linhas de lugar são cumulativas (a região inclui a UF; o município inclui a região e a UF) e são preferência revelada condicional ao modelo, não efeito causal da geografia; as da bolsa são identificadas pelos cortes de IVS (pacote do corte). As linhas não incluem a distância, que entra à parte.
+**Como ler.** Cada ponto é o peso de um atributo da vaga na utilidade da escolha da 1ª opção, no modelo principal (M1, ciclos 1–3), em log-chance; a barra é o IC 95% com cluster por conjunto de escolha. Todos os pesos estão na mesma escala: um peso de 1 multiplica por e ≈ 2,7 a razão entre a probabilidade de escolher a vaga e a de escolher qualquer outra do conjunto, mantido o resto. As linhas de lugar comparam com uma vaga em outra UF, à mesma distância, e cada uma é uma categoria: mesma UF fora da região de saúde de origem; mesma região fora do município; mesmo município. São preferência revelada condicional ao modelo, não efeito causal da geografia; as da bolsa são identificadas pelos cortes de IVS (pacote do corte). O peso da distância depende da unidade escolhida (100 km).
 <!-- P1h:figura:fim -->
 
 ## 6. Desvios e decisões de implementação
 
 <!-- P1h:desvios:inicio -->
-Nenhum desvio forçado pelos dados: a execução seguiu o protocolo 52b. Abaixo, as decisões de implementação onde o protocolo não fixava o detalhe, tomadas antes de ver os números do P1h.
+Nenhum desvio forçado pelos dados: a execução seguiu o protocolo 52b. Abaixo, as decisões de implementação onde o protocolo não fixava o detalhe. Elas estão no mesmo commit dos números, e por isso o Git não mostra se vieram antes deles. Nenhuma muda estimativa, EP, IC ou a decisão do P1h-1 (auditoria 31).
 
 1. **Linhas da figura no CSV** (26/10/2026). O §5 pede a figura dos pesos na mesma escala, mas o §3 só lista P1h-1 a P1h-3. *Resolução:* Os seis pesos da figura (5β, 10β, −γ, θ_UF, θ_UF + θ_reg, θ_UF + θ_reg + θ_mun) vão para o CSV com id_linha = FIG e papel descritivo, sem teste nem correção múltipla, para que a figura seja lida de output/ (regra de proveniência).
 2. **p unilateral das linhas de km** (26/10/2026). O §3 pede p unilateral em toda linha; para K5 e K10 o protocolo não diz o método. *Resolução:* p de H0: K ≤ 0 pelo método delta, como o EP e o IC dessas linhas; o Fieller dá o IC 95% e o limite inferior unilateral (conjunto de 90%). Pelo Fieller, H0: K ≤ 0 equivale a H0: β ≤ 0, porque γ < 0. As linhas são descritivas e não substituem o teste bilateral do P1a.

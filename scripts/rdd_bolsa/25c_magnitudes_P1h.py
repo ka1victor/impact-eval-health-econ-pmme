@@ -141,19 +141,21 @@ PESOS_FIGURA = [
     ("5β", "Bolsa: um degrau (+R$ 5 mil/mês)", "bolsa", {B: DEGRAU_MIL}),
     ("10β", "Bolsa: toda a amplitude (R$ 10 → 20 mil)", "bolsa", {B: AMPLITUDE_MIL}),
     ("−γ", "Vaga 100 km mais perto da origem", "lugar", {G: -1.0}),
-    ("θ_UF", "Vaga na mesma UF da origem", "lugar", {UF: 1.0}),
-    ("θ_UF + θ_reg", "Vaga na mesma região de saúde", "lugar", {UF: 1.0, REG: 1.0}),
-    ("θ_UF + θ_reg + θ_mun", "Vaga no mesmo município", "lugar", {UF: 1.0, REG: 1.0, MUN: 1.0}),
+    ("θ_UF", "Mesma UF, outra região de saúde", "lugar", {UF: 1.0}),
+    ("θ_UF + θ_reg", "Mesma região de saúde, outro município", "lugar", {UF: 1.0, REG: 1.0}),
+    ("θ_UF + θ_reg + θ_mun", "Mesmo município da origem", "lugar", {UF: 1.0, REG: 1.0, MUN: 1.0}),
 ]
 
+# Auditoria 31: rótulos de lugar com a categoria exata (θ_UF é a vaga na UF de origem fora da região de saúde de
+# origem), "Como ler" com a base de comparação e a unidade da distância, e título com "no modelo de escolha".
 COMO_LER = ("Cada ponto é o peso de um atributo da vaga na utilidade da escolha da 1ª opção, no modelo principal "
             "(M1, ciclos 1–3), em log-chance; a barra é o IC 95% com cluster por conjunto de escolha. Todos os pesos "
-            "estão na mesma escala: comparar a distância de cada ponto ao zero é comparar quanto cada atributo move a "
-            "escolha. Um peso de 1 multiplica por e ≈ 2,7 a razão entre a probabilidade de escolher a vaga e a de "
-            "escolher qualquer outra do conjunto, mantido o resto. As linhas de lugar são cumulativas (a região inclui "
-            "a UF; o município inclui a região e a UF) e são preferência revelada condicional ao modelo, não efeito "
-            "causal da geografia; as da bolsa são identificadas pelos cortes de IVS (pacote do corte). As linhas não "
-            "incluem a distância, que entra à parte.")
+            "estão na mesma escala: um peso de 1 multiplica por e ≈ 2,7 a razão entre a probabilidade de escolher a "
+            "vaga e a de escolher qualquer outra do conjunto, mantido o resto. As linhas de lugar comparam com uma vaga "
+            "em outra UF, à mesma distância, e cada uma é uma categoria: mesma UF fora da região de saúde de origem; "
+            "mesma região fora do município; mesmo município. São preferência revelada condicional ao modelo, não "
+            "efeito causal da geografia; as da bolsa são identificadas pelos cortes de IVS (pacote do corte). O peso "
+            "da distância depende da unidade escolhida (100 km).")
 
 
 class FalhaValidacao(RuntimeError):
@@ -420,8 +422,9 @@ def _plt():
 def titulo_figura(est: pd.DataFrame) -> str:
     p = est[est["id_linha"] == "P1h-1"].iloc[0]
     if bool(p["rejeita_h0_5pct"]):
-        return "Na escolha da vaga, ficar na UF de origem pesa mais\nque toda a amplitude da bolsa (R$ 10 → 20 mil)"
-    return "Na escolha da vaga, os dados não separam o peso da UF de origem\ndo de toda a amplitude da bolsa"
+        return ("No modelo de escolha, a vaga estar na UF de origem pesa mais\nque toda a amplitude da bolsa "
+                "(R$ 10 → 20 mil)")
+    return "No modelo de escolha, os dados não separam o peso da UF de origem\ndo de toda a amplitude da bolsa"
 
 
 def figura(est: pd.DataFrame) -> dict:
@@ -585,7 +588,7 @@ def texto_leitura(est: pd.DataFrame, resumo: dict) -> str:
     txt.append(f"**P1h-3 (sensibilidade, BKY entre as {len(sens)} linhas).** D_UF em " + "; ".join(partes) +
                f". Com q BKY < 0,05, {n_rej} de {len(sens)} especificações rejeitam H0: D_UF ≤ 0. O M2 mede a "
                "distância em log, então o seu θ_UF fica condicional a outra forma da distância; no M5, cada ciclo tem "
-               "o seu β, e no ciclo em que β é perto de zero a diferença é quase só θ_UF.")
+               "o seu β, e nos ciclos em que β é perto de zero a diferença é quase só θ_UF.")
     txt.append("Tudo acima é escolha condicional a candidatar-se, dentro do conjunto de vagas abertas. Nada aqui diz "
                "se a bolsa \"funciona\" ou \"não funciona\": o contraste compara dois pesos dentro do mesmo modelo de "
                "escolha.")
@@ -619,7 +622,8 @@ def texto_tabela(est: pd.DataFrame) -> str:
         "máxima verossimilhança; EP candidato = cluster por candidato. IC, limite inferior (LI) unilateral e p "
         "unilateral (H0: estimando ≤ 0) usam o EP cluster pela normal; ao lado, o p unilateral pela t com G − 1 graus "
         "de liberdade. Linhas de km: estimativa, EP, IC e p pelo método delta; Fieller ao lado. Holm só no P1h-1 "
-        "(família de um teste); BKY só entre as linhas P1h-3.",
+        "(família de um teste); BKY só entre as linhas P1h-3, e q BKY = 0,001 é o piso da grade do algoritmo "
+        "(Anderson, 2008), não um valor exato.",
         "", t, "",
         "Pesos da figura (M1, descritivos, mesma escala da utilidade):", "", t2])
 
@@ -661,7 +665,9 @@ def texto_desvios(resumo: dict) -> str:
         a, m, d = iso.split("-")
         return f"{d}/{m}/{a}"
     t = ["Nenhum desvio forçado pelos dados: a execução seguiu o protocolo 52b. Abaixo, as decisões de "
-         "implementação onde o protocolo não fixava o detalhe, tomadas antes de ver os números do P1h.", ""]
+         "implementação onde o protocolo não fixava o detalhe. Elas estão no mesmo commit dos números, e por isso o "
+         "Git não mostra se vieram antes deles. Nenhuma muda estimativa, EP, IC ou a decisão do P1h-1 (auditoria 31).",
+         ""]
     for i, d in enumerate(resumo["desvios"], 1):
         t.append(f"{i}. **{d['item']}** ({data_br(d['data'])}). {d['situacao']} *Resolução:* {d['resolucao']}")
     return "\n".join(t)
@@ -704,7 +710,8 @@ def gerar_doc(est: pd.DataFrame | None, resumo: dict) -> str:
         "",
         "Notação: β = `bolsa_mil` (por R$ 1 mil/mês); γ = `distancia_100km` (negativo); θ_UF = `mesma_uf`; θ_reg = "
         "`mesma_regiao_saude` (incremento sobre a mesma UF); θ_mun = `mesmo_municipio` (incremento sobre a mesma "
-        "região).",
+        "região). Assim, θ_UF é o peso de uma vaga na UF de origem, fora da região de saúde de origem, contra uma vaga "
+        "em outra UF à mesma distância.",
         "",
         "## 2. Amostra e portão de reprodução",
         "",
