@@ -8,6 +8,18 @@
 
 ---
 
+## 26/10/2026 — Protocolo 61 (diagnóstico da queda no corte 0,300)
+
+Motivo: o autor pediu uma explicação convincente para a queda do preenchimento no corte 0,300; lista fechada de explicações e testes, congelada antes de calcular.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/61_protocolo_diagnostico_queda_0300.md`](06_execucao/61_protocolo_diagnostico_queda_0300.md) | sete explicações candidatas (acaso, composição, funil, concorrência, médicos por perto, ciclo 2 e cadastro reserva, outras políticas), teste de cada uma e leitura pré-registrada |
+
+---
+
 ## 26/10/2026 — Banca 2: registro da discussão da história empírica
 
 Motivo: o autor pediu para registrar no repositório tudo o que foi discutido sobre a parte empírica (sinal negativo, vagas abertas perto dos cortes, ciclo 2, origem do médico, horas × especialistas, equivalência, métodos) e as decisões de apresentação.
