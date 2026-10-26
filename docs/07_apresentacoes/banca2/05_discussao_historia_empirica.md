@@ -9,6 +9,17 @@
 > aparecem só parâmetros: cortes, valores da bolsa, margens e datas.<br>
 > **Estatuto:** registro de discussão. Não muda protocolo nem resultado.
 
+> **Estado do branch em 26/10/2026 (retrato de trabalho em andamento).** O
+> branch `claude/vigilant-mccarthy-dd92mc` contém commits marcados "WIP":
+> - o deck em produção (`deck_banca2.pptx` e `deck_banca2_curto.*`), ainda não
+>   revisado;
+> - o diagnóstico 61 (`57l`, `DQ_*`), ainda não auditado;
+> - a oferta local, protocolo 60 parte B (`57k`, `OL_*`), ainda não auditada.
+>
+> Servem para continuar o trabalho, não como resultado final: números e textos
+> podem mudar até a auditoria. A `main` só recebe essas partes depois de
+> revisadas.
+
 ## 1. Decisões de apresentação tomadas pelo autor
 
 | Data | Decisão |
