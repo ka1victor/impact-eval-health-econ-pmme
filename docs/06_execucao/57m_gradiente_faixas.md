@@ -276,7 +276,7 @@ O próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator
 <!-- GF:f_relato:inicio -->
 Não há fator testável no nível da célula. Relato:
 
-- **Pesquisa documental do mesmo dia:** em andamento em paralelo; quando existir, fica em `docs/auditorias/35_*` (não existia nesta execução).
+- **Pesquisa documental do mesmo dia:** arquivada em `docs/auditorias/35_incentivos_ligados_a_vulnerabilidade.md`.
 - Na faixa de R$ 15 mil (0,301 a 0,400) todo município está na mesma classe de IVS ("média"): as regras por classe que a auditoria 18 lista (estrato do IED no cofinanciamento da APS, incentivo de nutrição, priorização de eMulti) não mudam dentro dela. ([auditoria 18](../auditorias/18_politicas_nos_mesmos_cortes_ivs.md), §2.5 e §2.7)
 - Dentro da faixa de R$ 10 mil há um degrau em 0,200 (muito baixa → baixa): o estrato do IED muda no porte 1 (até 20 mil hab.). Dentro da faixa de R$ 20 mil há um degrau em 0,500 (alta → muito alta), nos portes 1 a 3 do IED. São degraus, não uma subida contínua, e nenhum cai nos últimos 0,050 antes de 0,300 ou de 0,400. ([auditoria 18](../auditorias/18_politicas_nos_mesmos_cortes_ivs.md), §2.5)
 - A priorização de eMulti (Portaria 635/2023) tem cortes em 0,2, 0,3, 0,4 e 0,5: também degraus, em 0,200 dentro da faixa de R$ 10 mil e em 0,500 dentro da de R$ 20 mil. ([auditoria 18](../auditorias/18_politicas_nos_mesmos_cortes_ivs.md), §2.7)

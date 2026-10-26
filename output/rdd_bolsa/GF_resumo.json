@@ -311,9 +311,14 @@
     }
   },
   "G-f": {
-    "situacao": "pesquisa documental em andamento em paralelo; quando existir, fica em docs/auditorias/35_* (nao existia na execucao)",
-    "arquivos": [],
-    "situacao_doc": "em andamento em paralelo; quando existir, fica em `docs/auditorias/35_*` (não existia nesta execução)."
+    "situacao": "pesquisa documental arquivada: docs/auditorias/35_incentivos_ligados_a_vulnerabilidade.md",
+    "arquivos": [
+      {
+        "caminho": "docs/auditorias/35_incentivos_ligados_a_vulnerabilidade.md",
+        "sha256": "235cf377e052ba639b75798021eac86b570852423bc8bf0e81a4a33450d8b6f4"
+      }
+    ],
+    "situacao_doc": "arquivada em `docs/auditorias/35_incentivos_ligados_a_vulnerabilidade.md`."
   },
   "regras_gf_auditoria_18": [
     {
@@ -425,8 +430,8 @@
     },
     {
       "caminho": "output/apresentacao_banca2/exp_rdd_crua.png",
-      "sha256": "1289e91dc8648cf79e10fea4d376747f821ba31bb6bd5ef1d2ec1ed968aac036",
-      "bytes": 286855,
+      "sha256": "c024e428f7688045b55c44231ad02e0113e02af3758670984f50164a1bbeee87",
+      "bytes": 287128,
       "papel": "figura de dados crus que motivou o protocolo (so citada)",
       "fonte": "deck banca 2",
       "data_referencia": "2026-10-26",
@@ -437,8 +442,8 @@
     },
     {
       "caminho": "scripts/rdd_bolsa/38_diagnostico_queda_0300.py",
-      "sha256": "76ee988cd019325555ffc3600600067d269606e44985f5692f119cab28e50b50",
-      "bytes": 147454,
+      "sha256": "03bc52a04c85da13ef46d28f4ed914c7a876b9c74f1e4808b731fbe39f566c48",
+      "bytes": 152803,
       "papel": "script 38 (carregar() importado, nao alterado)",
       "fonte": "scripts/rdd_bolsa",
       "data_referencia": "2026-10-26",
@@ -625,7 +630,7 @@
   "saidas": {
     "GF_estimativas.csv": {
       "arquivo": "output/rdd_bolsa/GF_estimativas.csv",
-      "sha256": "f87a23057478ee4bd7132f89a41619ddb7aa5cb2d5ff7766e19d960ba8419b1c"
+      "sha256": "aaa44638ea8ece30ad2489563695eefca4db1c325e731cae8c2a696a521ecdfe"
     },
     "figuras": [
       {
