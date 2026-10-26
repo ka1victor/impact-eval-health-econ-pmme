@@ -34,9 +34,11 @@ meio". O modo curto lê
 LibreOffice, se houver) e `manifesto_deck_banca2_curto.json`. Usa o deck do grupo só como template (mestre,
 layout; o rodapé passa a listar as oito seções da estrutura obrigatória): nenhum slide do grupo, nenhuma
 divisória, nenhum diagrama e nenhum apêndice. Cada slide tem título-afirmação, a figura (ou a tabela) grande e
-poucas linhas curtas; o resto vai para as notas. O script para se as seções fugirem da estrutura obrigatória, se
-um slide passar de 30 palavras visíveis (fora título, figura e fontes), se uma linha não couber ou se um slide
-passar do limite de linhas.
+poucas linhas curtas; o resto vai para as notas. H2 e H3 (plano B) saem em cinza: no título, nos rótulos que
+começam por H2 ou H3 e, nas tabelas, nas linhas todas em itálico (variáveis secundárias). O script para se as
+seções fugirem da estrutura obrigatória, se o deck passar de 14 slides (decisão do autor de 26/10/2026:
+"idealmente <15 slides"), se um slide passar de 30 palavras visíveis (fora título, figura e fontes), se uma linha
+não couber ou se um slide passar do limite de linhas.
 
 Uso:
 
@@ -378,10 +380,17 @@ def altura_tabela(tab: list[list[str]], larg: list[float], sz: float) -> tuple[f
     return sum(alturas), alturas
 
 
+def _linha_italica(r: list[str]) -> bool:
+    """Linha de tabela toda em itálico (`*…*` em cada célula não vazia): no deck curto, variável secundária."""
+    cel = [c.strip() for c in r if c.strip()]
+    return bool(cel) and all(re.fullmatch(r"\*[^*].*\*", c) and not c.startswith("**") for c in cel)
+
+
 def tabela(s: Slide, tab: list[list[str]], x: float, y: float, w: float, h_max: float, sz_max: float = 18.0,
-           sz_min: float = SZ_TAB_CORPO, preencher: bool = True, onde: str = "") -> float:
+           sz_min: float = SZ_TAB_CORPO, preencher: bool = True, onde: str = "", cinza_italico: bool = False) -> float:
     """Tabela nativa no estilo do deck: a maior letra (até sz_max) que cabe em h_max; com `preencher`, as linhas
-    crescem até ocupar h_max. Para se nem com sz_min a tabela cabe. Devolve a altura usada."""
+    crescem até ocupar h_max. Para se nem com sz_min a tabela cabe. Devolve a altura usada. Com `cinza_italico`
+    (deck curto), a linha toda em itálico sai em cinza: é a variável secundária, visivelmente secundária."""
     sz = sz_max
     while True:
         larg = larguras_colunas(tab, w, sz)
@@ -400,11 +409,13 @@ def tabela(s: Slide, tab: list[list[str]], x: float, y: float, w: float, h_max: 
     linhas_xml = []
     for k, (r, hr) in enumerate(zip(tab, alturas)):
         cab = k == 0
+        cinza = cinza_italico and not cab and _linha_italica(r)
         fundo = VERDE_ESCURO if cab else (CLARO if k % 2 else BRANCO)
         cels = []
         for j, c in enumerate(r):
-            cor = BRANCO if cab else TEXTO
-            rr = runs_md(c, sz, cor, negrito=cab or j == 0, cor_neg=None if cab else VERDE_ESCURO)
+            cor = BRANCO if cab else (CINZA_TEXTO if cinza else TEXTO)
+            rr = runs_md(c, sz, cor, negrito=cab or (j == 0 and not cinza),
+                         cor_neg=None if cab else (CINZA_TEXTO if cinza else VERDE_ESCURO))
             cels.append(f'<a:tc><a:txBody><a:bodyPr/><a:lstStyle/>{para(rr, "l", linha=100)}</a:txBody>'
                         f'<a:tcPr marL="{pol(0.08)}" marR="{pol(0.08)}" marT="{pol(0.04)}" marB="{pol(0.04)}" anchor="ctr">'
                         f'{borda}<a:solidFill><a:srgbClr val="{fundo}"/></a:solidFill></a:tcPr></a:tc>')
@@ -990,10 +1001,16 @@ LAYOUTS_CURTOS = ("curto_figura", "curto_tabela", "curto_texto", "curto_ficha", 
 SECOES_CURTO = ("Hipótese", "Dados", "Análise descritiva", "Metodologia", "Identificação", "Resultados", "Robustez",
                 "Discussão")
 MAX_PALAVRAS = 30           # palavras visíveis por slide, fora o título, a figura e a linha de fontes (doc 06, §2)
+MAX_SLIDES_CURTO = 14       # slides no deck curto (decisão do autor de 26/10/2026: "idealmente <15 slides"; doc 06, §2)
 MAX_LINHAS_ESPEC = 4        # linhas curtas por slide de especificação: equação, outcome, amostra ou comparação, cuidado
 CINZA_FUNDO, CINZA_LINHA, CINZA_TEXTO, CINZA_ROTULO = "F2F2F0", "C9C9C4", "8A8A85", "A3A39E"
 PLANO_B = "plano B"          # marca das hipóteses secundárias (H2 e H3): rótulo e título em cinza
 COR_TITULO_PLANO_B = "C4CCC6"  # título cinza-claro sobre a faixa verde do template
+
+
+def eh_plano_b(rotulo: str) -> bool:
+    """Rótulo de hipótese secundária: diz "plano B" ou começa por H2 ou H3 (doc 06: H2 e H3 são plano B)."""
+    return PLANO_B in rotulo or bool(re.match(r"H[23]\b", rotulo))
 
 
 def linhas_curtas(sl: dict) -> list[tuple[str, bool]]:
@@ -1011,9 +1028,12 @@ def limite_linhas(sl: dict) -> int:
     return MAX_LINHAS_TEXTO if sl["layout"] in ("curto_texto", "curto_capa", "curto_hipotese") else MAX_LINHAS_FIGURA
 
 
+LETRA_OU_ALGARISMO = r"[0-9A-Za-zÀ-ÖØ-öø-ÿ]"  # Latin-1 sem "×" (U+00D7) e "÷" (U+00F7), que não são letras
+
+
 def palavras(txt: str) -> int:
     """Palavras visíveis de um texto: tokens com letra ou algarismo (setas, "·", "=", "×" e "+" soltos não contam)."""
-    return sum(1 for w in texto_puro(txt).replace("**", "").split() if re.search(r"[0-9A-Za-zÀ-ÿ]", w))
+    return sum(1 for w in texto_puro(txt).replace("**", "").split() if re.search(LETRA_OU_ALGARISMO, w))
 
 
 def palavras_visiveis(sl: dict) -> int:
@@ -1023,7 +1043,10 @@ def palavras_visiveis(sl: dict) -> int:
 
 
 def conferir_estrutura(slides: list[dict]) -> None:
-    """As seções do doc 04 são as da estrutura obrigatória (doc 06), nesta ordem, cada uma uma vez."""
+    """As seções do doc 04 são as da estrutura obrigatória (doc 06), nesta ordem, cada uma uma vez; no máximo
+    MAX_SLIDES_CURTO slides."""
+    if len(slides) > MAX_SLIDES_CURTO:
+        raise SystemExit(f"ERRO: {len(slides)} slides no deck curto; o máximo é {MAX_SLIDES_CURTO} (doc 06, §2)")
     vistas: list[str] = []
     for sl in slides:
         if not vistas or vistas[-1] != sl["secao"]:
@@ -1168,12 +1191,12 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
         disp = y_fim - Y0 - 0.1 - gap * (len(itens) - 1)
         if sum(alturas) > disp + 1e-6:
             raise SystemExit(f"ERRO: os itens de {sl['titulo']!r} não cabem ({sum(alturas) - disp:.2f} pol. a mais)")
-        extra = min(0.45, (disp - sum(alturas)) / len(itens))
+        extra = min(0.9, (disp - sum(alturas)) / len(itens))  # os itens ocupam a área, sem faixa vazia embaixo
         y = Y0 + 0.1
         for (rotulo, corpo), h_item in zip(partes, alturas):
             h_item += extra
             w_r = w_rot if rotulo else 0.0
-            b_ = PLANO_B in rotulo  # plano B (decisão do autor de 26/10/2026): em cinza, visivelmente secundário
+            b_ = eh_plano_b(rotulo)  # plano B (decisão do autor de 26/10/2026): em cinza, visivelmente secundário
             if rotulo:
                 s.forma("Rótulo plano B" if b_ else "Rótulo", X0, y, w_r, h_item, adj=10000,
                         fill=CINZA_ROTULO if b_ else VERDE_ESCURO, anchor="ctr",
@@ -1238,11 +1261,15 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
         y = Y0 + 0.05 + h_eq + 0.3
         h_i = (y_fim - y - gap * (len(rotuladas) - 1)) / len(rotuladas)
         for rot, corpo in rotuladas:
-            s.forma("Rótulo", X0, y, w_rot, h_i, adj=10000, fill=VERDE_ESCURO, anchor="ctr",
+            b_ = eh_plano_b(rot)  # H2 e H3 (plano B) numa linha cinza, sob a especificação da H1
+            s.forma("Rótulo plano B" if b_ else "Rótulo", X0, y, w_rot, h_i, adj=10000,
+                    fill=CINZA_ROTULO if b_ else VERDE_ESCURO, anchor="ctr",
                     paras=[para([run(rot, sz, BRANCO, b=True)], "ctr")])
-            s.forma("Item", X0 + w_rot + 0.15, y, W - w_rot - 0.15, h_i, adj=6000, fill="F4F8F5", line=VERDE,
-                    line_w=1.0, anchor="ctr", ins=(0.25, 0.04, 0.25, 0.04),
-                    paras=[para(runs_md(corpo, sz, TEXTO, cor_neg=VERDE_ESCURO), "l", linha=102)])
+            s.forma("Item plano B" if b_ else "Item", X0 + w_rot + 0.15, y, W - w_rot - 0.15, h_i, adj=6000,
+                    fill=CINZA_FUNDO if b_ else "F4F8F5", line=CINZA_LINHA if b_ else VERDE, line_w=1.0,
+                    anchor="ctr", ins=(0.25, 0.04, 0.25, 0.04),
+                    paras=[para(runs_md(corpo, sz, CINZA_TEXTO if b_ else TEXTO,
+                                        cor_neg=CINZA_TEXTO if b_ else VERDE_ESCURO), "l", linha=102)])
             y += h_i + gap
     elif lay == "curto_ficha":
         y_fim = Y_FONTES - 0.1
@@ -1279,11 +1306,13 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
                         ins=(0.2, 0.06, 0.2, 0.06),
                         paras=[para(runs_md(p["caut"].replace("**", ""), SZ_LADO, VERDE_ESCURO, negrito=True), "l",
                                     linha=100)])
+            # a coluna acompanha o bloco da figura (de cima da figura ao fim da cautela), sem faixa vazia embaixo
             x_c, w_c = X0 + p["w"] + 0.3, p["w_col"]
-            folga = (p["h_tot"] - p["h_txt"]) / max(len(p["itens"]), 1)
-            y = Y0
+            y_col, h_col = (y_img, h_bloco) if h_bloco >= p["h_txt"] else (Y0, p["h_tot"])
+            folga = (h_col - p["h_txt"]) / max(len(p["itens"]), 1)
+            y = y_col
             for txt in p["itens"]:
-                h_it = _altura_item_lado(txt, w_c) + min(folga, 0.6)
+                h_it = _altura_item_lado(txt, w_c) + folga
                 s.forma("Linha", x_c, y, w_c, h_it, adj=6000, fill="F4F8F5", line=VERDE, line_w=1.0,
                         anchor="ctr", ins=(0.2, 0.06, 0.2, 0.06),
                         paras=[para(runs_md(txt, SZ_LADO, TEXTO, cor_neg=VERDE_ESCURO), "l", linha=100)])
@@ -1296,7 +1325,7 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
         y_fim = y_lin - 0.14
         # poucas palavras (pedido do autor): letra grande e a tabela ocupando a área, sem faixa vazia embaixo
         tabela(s, sl["tabela"], X0, Y0 + 0.05, W, y_fim - Y0 - 0.05, sz_max=24, sz_min=SZ_TAB_CORPO,
-               onde=sl["titulo"])
+               onde=sl["titulo"], cinza_italico=True)
     if sl["fontes"]:
         linha_fontes(s, sl["fontes"])
     return xml_slide_curto(sl["titulo"], sl["secao"], s.partes)

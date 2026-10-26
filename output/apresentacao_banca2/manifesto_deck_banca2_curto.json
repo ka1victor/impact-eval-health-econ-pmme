@@ -10,7 +10,7 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md",
       "papel": "texto dos slides e notas",
-      "sha256": "b56cea7e188c2b2485266faa6da912706688ae4e7436ca385048f5f9dabb6de7"
+      "sha256": "1c9c736e8e7600c31e594e63e7aa09bea11429940e4c422a1cdaf946e62fa9d8"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
@@ -19,51 +19,21 @@
     },
     {
       "caminho": "output/apresentacao_banca2/curto_h1_por_ciclo.png",
-      "no_pacote": "ppt/media/curto_10_curto_h1_por_ciclo.png",
+      "no_pacote": "ppt/media/curto_05_curto_h1_por_ciclo.png",
       "papel": "figura",
       "sha256": "f517bff8e089ef461ad49e3fdfe8601b75d82d5470e307827893af4a0c96ed24"
     },
     {
-      "caminho": "output/apresentacao_banca2/curto_h3_horas.png",
-      "no_pacote": "ppt/media/curto_07_curto_h3_horas.png",
-      "papel": "figura",
-      "sha256": "5caa80e1ec5068096a3d73132694f9fa4a4e3e229671e000c928035a7dfbd486"
-    },
-    {
-      "caminho": "output/apresentacao_banca2/curto_h3_nota_corte.png",
-      "no_pacote": "ppt/media/curto_15_curto_h3_nota_corte.png",
-      "papel": "figura",
-      "sha256": "0e728daea147456bc94ce19801e17dd648ad88f494b32f8c9aa3b8057a6ba3ce"
-    },
-    {
       "caminho": "output/apresentacao_banca2/curto_queda_capital.png",
-      "no_pacote": "ppt/media/curto_12_curto_queda_capital.png",
+      "no_pacote": "ppt/media/curto_06_curto_queda_capital.png",
       "papel": "figura",
       "sha256": "1e9fa8e233cdf1b1612c4ccb979760abc1b09d1ea5583aa984b4fc8b58134608"
     },
     {
-      "caminho": "output/apresentacao_banca2/curto_reta_0300.png",
-      "no_pacote": "ppt/media/curto_11_curto_reta_0300.png",
-      "papel": "figura",
-      "sha256": "af4fc561bf9eba7f99f92a241cf6d7075b96450d6cdb08480327ef6602980245"
-    },
-    {
-      "caminho": "output/apresentacao_banca2/curto_tost_hi.png",
-      "no_pacote": "ppt/media/curto_13_curto_tost_hi.png",
-      "papel": "figura",
-      "sha256": "b2aae025759468b9e5f54b4281a3e3896436764ce7a76154b68b85c9bce5e7bf"
-    },
-    {
       "caminho": "output/apresentacao_banca2/h1_controle.png",
-      "no_pacote": "ppt/media/curto_09_h1_controle.png",
+      "no_pacote": "ppt/media/curto_04_h1_controle.png",
       "papel": "figura",
       "sha256": "37078fefd9c97ac07f0d019c737d6abe62a19620c191960a6284043850dd02a8"
-    },
-    {
-      "caminho": "output/apresentacao_banca2/h2_escolha.png",
-      "no_pacote": "ppt/media/curto_14_h2_escolha.png",
-      "papel": "figura",
-      "sha256": "bc4af04fe9ae24aa4b8af976c1917c4e181154754102402344932bde421e2cdf"
     },
     {
       "caminho": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
@@ -72,26 +42,8 @@
       "sha256": "86cb89519386f64c74c2cb12961a7a1fa6090f63e6802c9e2a725b6bef20cd19"
     },
     {
-      "caminho": "output/rdd_bolsa/GF_figuras/GF_inclinacao_fatores_janela.png",
-      "no_pacote": "ppt/media/curto_04_GF_inclinacao_fatores_janela.png",
-      "papel": "figura",
-      "sha256": "65c2c787142cf18e4833b03c49df9fa4887cb3b7d08686e9bc55d0ee3db931d2"
-    },
-    {
-      "caminho": "output/rdd_bolsa/GF_figuras/GF_medias_por_ivs.png",
-      "no_pacote": "ppt/media/curto_03_GF_medias_por_ivs.png",
-      "papel": "figura",
-      "sha256": "7e12cac3890c20fab08db79bb6265f23a0ac7ec84cc130bfd91d30ef018e9073"
-    },
-    {
-      "caminho": "output/rdd_bolsa/HI_figuras/HI_antiga_vs_imediatas.png",
-      "no_pacote": "ppt/media/curto_08_HI_antiga_vs_imediatas.png",
-      "papel": "figura",
-      "sha256": "272db318e50f7728ae935d6713b1f640f7516f0d46e7d228e9b342c1d748f63a"
-    },
-    {
       "caminho": "output/rdd_bolsa/HI_figuras/HI_principal.png",
-      "no_pacote": "ppt/media/curto_05_HI_principal.png",
+      "no_pacote": "ppt/media/curto_03_HI_principal.png",
       "papel": "figura",
       "sha256": "e946d3f79e3a6f5acd638f69e8a9420dd952e15baddccb31519af79e6a04b276"
     },
@@ -100,29 +52,12 @@
       "no_pacote": "ppt/media/curto_02_HI_scatter_imediatas.png",
       "papel": "figura",
       "sha256": "f29f2fd418a7e27de21c46777cfa930714802bab02be3070db749eb4105ecd9f"
-    },
-    {
-      "caminho": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
-      "no_pacote": "ppt/media/curto_06_P1h_magnitudes.png",
-      "papel": "figura",
-      "sha256": "61bcc1b8f3c1d7f1ee831c136f24804619ead0e7ad95bab9174484f3ba07ce12"
     }
   ],
   "natureza_dos_dados": "EMPIRICO",
   "nota_pdf": "o PDF é renderizado pelo LibreOffice e não é byte a byte determinístico; o .pptx é",
   "numeracao_das_hipoteses": "a partir de 26/10/2026: H1 preenchimento; H2 bolsa × origem (antes H3); H3 oferta (antes H4)",
   "ordem": [
-    {
-      "figura": null,
-      "layout": "curto_capa",
-      "linhas": [
-        "R$ 5 mil a mais nos cortes do IVS: escolha, preenchimento e oferta de especialistas"
-      ],
-      "palavras": 15,
-      "posicao": 1,
-      "secao": "Hipótese",
-      "titulo": "O que a bolsa de R$ 5 mil faz"
-    },
     {
       "figura": null,
       "layout": "curto_hipotese",
@@ -133,7 +68,7 @@
         "H2 é pós-resultado."
       ],
       "palavras": 29,
-      "posicao": 2,
+      "posicao": 1,
       "secao": "Hipótese",
       "titulo": "Hipóteses: a H1 é a candidata central"
     },
@@ -141,26 +76,19 @@
       "figura": null,
       "layout": "curto_tabela",
       "linhas": [],
-      "palavras": 29,
+      "palavras": 30,
+      "posicao": 2,
+      "secao": "Dados",
+      "titulo": "Dados: as variáveis e de onde vêm"
+    },
+    {
+      "figura": null,
+      "layout": "curto_tabela",
+      "linhas": [
+        "Ciclo = edital de vagas: 2025, início e meio de 2026"
+      ],
+      "palavras": 30,
       "posicao": 3,
-      "secao": "Dados",
-      "titulo": "Dados: as variáveis principais e de onde vêm"
-    },
-    {
-      "figura": null,
-      "layout": "curto_tabela",
-      "linhas": [],
-      "palavras": 28,
-      "posicao": 4,
-      "secao": "Dados",
-      "titulo": "Dados: as variáveis secundárias"
-    },
-    {
-      "figura": null,
-      "layout": "curto_tabela",
-      "linhas": [],
-      "palavras": 29,
-      "posicao": 5,
       "secao": "Análise descritiva",
       "titulo": "Os três ciclos em números"
     },
@@ -171,7 +99,7 @@
         "Ciclos 1 e 2: a regra reproduz a faixa de 368 de 368 e de 454 de 454 municípios."
       ],
       "palavras": 19,
-      "posicao": 6,
+      "posicao": 4,
       "secao": "Análise descritiva",
       "titulo": "A bolsa é função exata do IVS: a regra é sharp"
     },
@@ -183,127 +111,45 @@
         "Dados crus; com curso e ciclo, a HI-1 fica bem menor."
       ],
       "palavras": 25,
-      "posicao": 7,
+      "posicao": 5,
       "secao": "Análise descritiva",
       "titulo": "H1 · Dados crus, só vagas imediatas"
-    },
-    {
-      "figura": "output/rdd_bolsa/GF_figuras/GF_medias_por_ivs.png",
-      "layout": "curto_figura",
-      "linhas": [
-        "Faixa de R$ 10 mil: a subida anda junto com a região (Nordeste); dentro da mesma UF, quase some.",
-        "Descritivo: dentro da faixa, a bolsa é a mesma."
-      ],
-      "palavras": 28,
-      "posicao": 8,
-      "secao": "Análise descritiva",
-      "titulo": "H1 · Dentro da faixa de R$ 10 mil, o preenchimento sobe"
-    },
-    {
-      "figura": "output/rdd_bolsa/GF_figuras/GF_inclinacao_fatores_janela.png",
-      "layout": "curto_figura",
-      "linhas": [
-        "Últimos 0,050 antes de 0,300: sobra uma subida forte e imprecisa, que nenhum fator sozinho reduz à metade.",
-        "São as células que a RDD usa abaixo do corte."
-      ],
-      "palavras": 28,
-      "posicao": 9,
-      "secao": "Análise descritiva",
-      "titulo": "H1 · Perto de 0,300 sobra uma subida forte"
     },
     {
       "figura": null,
       "layout": "curto_espec",
       "linhas": [
-        "preenchida = salto + reta de cada lado",
-        "Outcome vaga imediata preenchida, por célula e município",
-        "Razão comparamos vagas do mesmo tipo; a reserva se preenche por outro caminho"
+        "alocados = ciclo + salto × lado de bolsa maior + retas por lado e ciclo + ciclo × vagas imediatas",
+        "h = 0,050 triangular; erro-padrão por município",
+        "H2 logit da 1ª opção",
+        "H3 estudo de evento"
       ],
-      "palavras": 27,
-      "posicao": 10,
+      "palavras": 30,
+      "posicao": 6,
       "secao": "Metodologia",
       "titulo": "H1 · O salto no corte, só com vagas imediatas"
     },
     {
       "figura": null,
-      "layout": "curto_texto",
-      "linhas": [
-        "H2 · plano B logit da 1ª opção: utilidade = bolsa + IVS + distância + origem",
-        "H3 · plano B estudo de evento das horas",
-        "Origem não é causal; horas cadastradas não são presença."
-      ],
-      "palavras": 29,
-      "posicao": 11,
-      "secao": "Metodologia",
-      "titulo": "H2 e H3 · plano B: como estimamos"
-    },
-    {
-      "figura": null,
-      "layout": "curto_tabela",
-      "linhas": [
-        "Ressalva: em 0,300, menos capitais acima do corte (auditoria 36)."
-      ],
-      "palavras": 27,
-      "posicao": 12,
-      "secao": "Identificação",
-      "titulo": "H1 · RDD: as premissas do desenho valem"
-    },
-    {
-      "figura": null,
       "layout": "curto_tabela",
       "linhas": [],
-      "palavras": 27,
-      "posicao": 13,
+      "palavras": 30,
+      "posicao": 7,
       "secao": "Identificação",
-      "titulo": "H1 · O corte é um pacote"
+      "titulo": "H1 · RDD: as premissas e o nosso caso"
     },
     {
       "figura": "output/rdd_bolsa/HI_figuras/HI_principal.png",
       "layout": "curto_figura",
       "linhas": [
-        "Comparando só vagas imediatas, nenhuma linha passa no Holm; a célula não se distingue de zero nos dois cortes.",
-        "HI-2 em 0,300: IC exclui zero; não sobrevive ao Holm."
+        "Nada passa no Holm; HI-1: IC contém zero nos dois cortes.",
+        "TOST: HI-2 em 0,300 descarta aumento ≥ 25% da média, não descarta queda.",
+        "Em auditoria (adendo 48b); pacote do corte."
       ],
-      "palavras": 29,
-      "posicao": 14,
+      "palavras": 30,
+      "posicao": 8,
       "secao": "Resultados",
       "titulo": "H1 · Só vagas imediatas: nada passa no Holm"
-    },
-    {
-      "figura": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
-      "layout": "curto_figura",
-      "linhas": [
-        "Toda a bolsa: 0,42; a mesma UF de origem: 2,40; diferença 1,98 [1,56; 2,40].",
-        "Pós-resultado; origem é preferência revelada, não efeito causal."
-      ],
-      "palavras": 22,
-      "posicao": 15,
-      "secao": "Resultados",
-      "titulo": "H2 · plano B: a origem pesa mais que a bolsa"
-    },
-    {
-      "figura": "output/apresentacao_banca2/curto_h3_horas.png",
-      "layout": "curto_figura",
-      "linhas": [
-        "+6,6 h/sem depois da entrada; 51,0% já tinham vínculo no município do posto.",
-        "Associação; horas cadastradas não são presença."
-      ],
-      "palavras": 19,
-      "posicao": 16,
-      "secao": "Resultados",
-      "titulo": "H3 · plano B: soma horas, mas metade já estava lá"
-    },
-    {
-      "figura": "output/rdd_bolsa/HI_figuras/HI_antiga_vs_imediatas.png",
-      "layout": "curto_figura",
-      "linhas": [
-        "Só vagas imediatas, os saltos em 0,300 encolhem: −8,4 → −3,7 p.p. e −1,45 → −1,13.",
-        "IC que contém zero não é efeito zero."
-      ],
-      "palavras": 22,
-      "posicao": 17,
-      "secao": "Robustez",
-      "titulo": "H1 · Medida antiga × só vagas imediatas"
     },
     {
       "figura": "output/apresentacao_banca2/h1_controle.png",
@@ -313,7 +159,7 @@
         "0,300: a oferta não muda; cai o preenchimento por vaga."
       ],
       "palavras": 24,
-      "posicao": 18,
+      "posicao": 9,
       "secao": "Robustez",
       "titulo": "H1 · Antes e depois do controle das vagas"
     },
@@ -325,94 +171,60 @@
         "Tipo de vaga do ciclo 2: quadro refeito depois do resultado (auditoria 36)."
       ],
       "palavras": 28,
-      "posicao": 19,
+      "posicao": 10,
       "secao": "Robustez",
       "titulo": "H1 · Por ciclo: a queda em 0,300 vem do ciclo 2"
-    },
-    {
-      "figura": "output/apresentacao_banca2/curto_reta_0300.png",
-      "layout": "curto_figura",
-      "linhas": [
-        "(a) Nos dados crus, os dois lados preenchem igual (33% e 33%).",
-        "(b) A reta leva até o corte uma subida puxada por poucos municípios: capitais e Nordeste logo abaixo."
-      ],
-      "palavras": 30,
-      "posicao": 20,
-      "secao": "Robustez",
-      "titulo": "H1 · Em 0,300, o negativo vem da reta"
     },
     {
       "figura": "output/apresentacao_banca2/curto_queda_capital.png",
       "layout": "curto_figura",
       "linhas": [
-        "(c) Controlando a capital, a queda encolhe e o IC contém zero; só com vagas imediatas, encolhe.",
+        "Controlando a capital, a queda encolhe e o IC contém zero; só com vagas imediatas, encolhe.",
         "13 capitais abaixo de 0,300 e 6 acima.",
         "Auditoria 36, diagnóstico pós-resultado."
       ],
-      "palavras": 29,
-      "posicao": 21,
+      "palavras": 28,
+      "posicao": 11,
       "secao": "Robustez",
       "titulo": "H1 · Controlando a capital, a queda encolhe"
-    },
-    {
-      "figura": "output/apresentacao_banca2/curto_tost_hi.png",
-      "layout": "curto_figura",
-      "linhas": [
-        "TOST: HI-1 inconclusivo; HI-2 em 0,300 descarta aumento ≥ 25% da média, não descarta queda.",
-        "Em 0,300: nenhum incentivo individual muda; muda o teto de emendas do município."
-      ],
-      "palavras": 27,
-      "posicao": 22,
-      "secao": "Robustez",
-      "titulo": "H1 · O que dá para afirmar sobre a queda"
-    },
-    {
-      "figura": "output/apresentacao_banca2/h2_escolha.png",
-      "layout": "curto_figura",
-      "linhas": [
-        "A origem pesa mais que a bolsa nas seis variantes: diferença de 1,18 a 2,37.",
-        "Pós-resultado; escolha não é expansão."
-      ],
-      "palavras": 20,
-      "posicao": 23,
-      "secao": "Robustez",
-      "titulo": "H2 · plano B: por ciclo, só o ciclo 2"
-    },
-    {
-      "figura": "output/apresentacao_banca2/curto_h3_nota_corte.png",
-      "layout": "curto_figura",
-      "linhas": [
-        "Nota de corte: +7,91 h/sem [−0,63; +16,45], mesma direção; IC contém zero.",
-        "Rambachan–Roth: horas totais aguentam a violação do pré (1,30)."
-      ],
-      "palavras": 21,
-      "posicao": 24,
-      "secao": "Robustez",
-      "titulo": "H3 · plano B: na nota de corte, mesma direção"
-    },
-    {
-      "figura": null,
-      "layout": "curto_capa",
-      "linhas": [
-        "O sinal negativo não é a bolsa afastando médicos: é a estimativa no corte, puxada por poucos municípios, capitais logo abaixo.",
-        "Nada disso mostra que a bolsa reduz o preenchimento."
-      ],
-      "palavras": 30,
-      "posicao": 25,
-      "secao": "Discussão",
-      "titulo": "H1 · Discussão: o sinal negativo"
     },
     {
       "figura": null,
       "layout": "curto_texto",
       "linhas": [
-        "H1 o preenchimento não sobe no corte",
-        "Por quê a origem pesa mais que toda a bolsa",
-        "Oferta metade já estava no município",
-        "Pacote do corte; vínculo não é presença."
+        "Reta puxada por capitais e Nordeste logo abaixo de 0,300",
+        "Vagas diferentes do lado de cima",
+        "Porte municípios grandes logo abaixo de 0,400",
+        "Incentivo nenhum individual muda em 0,300"
+      ],
+      "palavras": 29,
+      "posicao": 12,
+      "secao": "Discussão",
+      "titulo": "H1 · Por que o sinal sai negativo"
+    },
+    {
+      "figura": null,
+      "layout": "curto_texto",
+      "linhas": [
+        "H2 origem supera toda a bolsa: 2,34 · 1,31 · 2,37 (ciclos 1–3)",
+        "H3 +6,6 h/sem do próprio médico; metade já estava lá",
+        "H3 · município aumento não afirmável; outros especialistas não saem"
       ],
       "palavras": 30,
-      "posicao": 26,
+      "posicao": 13,
+      "secao": "Discussão",
+      "titulo": "H2 e H3 · plano B: origem pesa; oferta incerta"
+    },
+    {
+      "figura": null,
+      "layout": "curto_texto",
+      "linhas": [
+        "Incentivo limitado a bolsa mexe numa variável; o custo do lugar continua contra",
+        "Pacote do corte com a bolsa, mudam outras regras",
+        "Oferta vínculo cadastrado não é presença"
+      ],
+      "palavras": 28,
+      "posicao": 14,
       "secao": "Discussão",
       "titulo": "Discussão: por que não sobe? Um incentivo limitado"
     }
@@ -421,14 +233,14 @@
   "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; seções na ordem Hipótese → Dados → Análise descritiva → Metodologia → Identificação → Resultados → Robustez → Discussão; no máximo 30 palavras visíveis por slide, fora o título, a figura e a linha de fontes; sem slides do grupo, sem divisórias, sem diagrama, sem apêndice",
   "saidas": [
     {
-      "bytes": 4296559,
+      "bytes": 2088778,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pptx",
-      "sha256": "7c60e01b47a78107d3b34526bfee2ce769b7af66bdbba1b2e8b436151dfdbbff"
+      "sha256": "6ee258012e60a3c283ebfe536dcfd8d411e55f5786f7853287aba59270f84a9d"
     },
     {
-      "bytes": 3242426,
+      "bytes": 1455126,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pdf",
-      "sha256": "f5f1354add146330c1d2d8e50b961acb75c75ce09ac6da74bac78ecc5a2c7e37"
+      "sha256": "2b5f4f0d0be568651ce867b6f4175e39abcc69f58b472c1ed955c48d7da701d7"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py (modo padrão: deck curto)"

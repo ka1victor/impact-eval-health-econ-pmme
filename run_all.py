@@ -194,6 +194,11 @@ STEPS = [
     # coortes contra K_D2_resumo.json (22) e B1/B2 contra o F3 do E7 (14); lê o a09, o a16, a X1 (17, versionada),
     # os outcomes do 12, a lista nominal e a de ativos (só colunas sem nome). Não lê IVS como variável.
     ROOT / "scripts" / "rdd_bolsa" / "37_oferta_local_chegada.py",
+    # Protocolo 64 (pós-resultado): oferta local comparada no corte de IVS (DiRD, primeiro estágio, razão fuzzy com
+    # IC de Anderson–Rubin, estudo de evento no corte, chegada por lado do corte, seleção de V). Importa o 37 (que
+    # importa o 22, o 21 e o 14) para a amostra V e os outcomes B1–B5; reproduz o F3.1 do E7 (14) em U, 0,300, e
+    # confere V contra OL_resumo.json (37) antes de estimar; lê o a08, o a09, o a16 e a X1 (17, versionada).
+    ROOT / "scripts" / "rdd_bolsa" / "43_oferta_local_corte.py",
     # Síntese E8: lê E3, E5, E6, E7 e E9 e aplica o Holm às primárias P1 e P2.
     ROOT / "scripts" / "rdd_bolsa" / "15_sintese_E8.py",
     # O relatório para se a conferência do sinal não corresponder ao E3 atual.
