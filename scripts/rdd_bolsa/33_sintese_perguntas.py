@@ -667,7 +667,8 @@ FORCA_ATT = "ATT sob tendências paralelas com pré falhando"
 FORCA_EXPL = "exploratório"
 FORCA_DESC = "descritivo"
 FORCA_INC = "inconclusivo"
-FORCA_FALHA = "cenário (simulação)"   # nome histórico da constante; o T1.6 passou a validação em 25/10/2026
+FORCA_CENARIO = "cenário (simulação)"   # o T1.6 passou a validação em 25/10/2026
+STATUS_CENARIO = "STATUS_DE_CENARIO_SEM_NUMERO_SIMULADO"
 
 # Contrastes (categorias fixas).
 C_MARG = "incentivo marginal"
@@ -728,7 +729,7 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
         "zero. A abertura de vagas (P5) é descrita, não explicada: o IVS contínuo não se distingue de zero no pedido "
         "nem na priorização."
     )
-    partes.append("## 1. Resposta curta\n\n" + bloco("resposta_curta", S([FORCA_INC, FORCA_ATT, FORCA_DESC, FORCA_EXPL, FORCA_FALHA], txt)))
+    partes.append("## 1. Resposta curta\n\n" + bloco("resposta_curta", S([FORCA_INC, FORCA_ATT, FORCA_DESC, FORCA_EXPL, FORCA_CENARIO], txt)))
 
     # 2. Tabela por pergunta.
     linhas_p = []
@@ -818,7 +819,7 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
        "validação de base aprovada em todas as linhas (revalidação com o desempate do adendo; a primeira tentativa "
        "falhou e está registrada no documento dos cenários); os números dos cenários são simulação e não são "
        "copiados para esta síntese",
-       FORCA_FALHA, "[57b](57b_cenarios_P1_bolsa.md); sem auditoria própria")
+       FORCA_CENARIO, "[57b](57b_cenarios_P1_bolsa.md); sem auditoria própria")
 
     cab = ("| Pergunta | Estimando | Desenho | Unidade | Contraste identificado | Resultado principal [IC 95%] | "
            "Força da evidência | Doc e auditoria |\n|---|---|---|---|---|---|---|---|")
@@ -944,7 +945,7 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
             "muda nenhuma escolha com o grupo de candidatos fixo. Um aumento uniforme só poderia mover quem entra "
             "no programa, e isso o modelo não vê."]
     cen_txt = "\n".join(cen)
-    S([FORCA_INC, FORCA_FALHA], cen_txt)
+    S([FORCA_INC, FORCA_CENARIO], cen_txt)
     partes.append(
         "## 4. Poder e efeito mínimo detectável\n\n"
         "**Como ler.** O limite superior do IC 95% é o maior valor que os dados ainda admitem, com o IC "
@@ -1007,7 +1008,7 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
         "Nada foi medido. As internações dos residentes aproximam o uso, não o estado de saúde.",
         "horizonte longo; desfechos de saúde por residência depois da maturidade do ciclo 3.",
         rotulo_forca="não medido")
-    elo("Custos e bem-estar", [FORCA_FALHA],
+    elo("Custos e bem-estar", [FORCA_CENARIO],
         "Nada foi estimado de forma empírica. O custo da bolsa por vaga preenchida no T1.6 é aritmética simples sobre "
         "uma simulação, e não é custo observado.",
         "folha de pagamento (pedido externo); gasto do bolso não tem fonte municipal.",
@@ -1148,7 +1149,10 @@ def gravar(r: dict) -> None:
     r["rastreio"] = rastreio
     r["segmentos_linguagem"] = seg
     (out / NOME_RESUMO).write_text(json.dumps(r, ensure_ascii=False, indent=1, sort_keys=False) + "\n", encoding="utf-8")
-    pd.DataFrame([{"natureza_dos_dados": "EMPIRICO", **x} for x in linhas_p]).to_csv(out / NOME_TABELA, index=False)
+    # A linha do T1.6 só traz o status da validação de base de uma simulação (nenhum número simulado):
+    # rotulá-la EMPIRICO enganaria (auditoria 29); CENARIO_CONTRAFACTUAL fica reservado a output/cenarios/.
+    pd.DataFrame([{"natureza_dos_dados": STATUS_CENARIO if x["forca"] == FORCA_CENARIO else "EMPIRICO", **x}
+                  for x in linhas_p]).to_csv(out / NOME_TABELA, index=False)
     _csv_mult(r).to_csv(out / NOME_MULT, index=False, float_format="%.10g")
     _csv_poder(r).to_csv(out / NOME_PODER, index=False, float_format="%.10g")
     DOC.write_text(texto, encoding="utf-8")

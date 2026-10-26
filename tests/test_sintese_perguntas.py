@@ -223,10 +223,14 @@ class TestSinteseDoc(unittest.TestCase):
 
     def test_saidas_rotuladas_empirico(self) -> None:
         self.assertEqual(self.r["natureza_dos_dados"], "EMPIRICO")
-        for nome in ("S57_tabela_perguntas.csv", "S57_multiplicidade.csv", "S57_poder.csv"):
+        for nome in ("S57_multiplicidade.csv", "S57_poder.csv"):
             d = pd.read_csv(OUT / nome)
             self.assertEqual(set(d["natureza_dos_dados"]), {"EMPIRICO"}, nome)
             self.assertGreater(len(d), 0)
+        d = pd.read_csv(OUT / "S57_tabela_perguntas.csv")
+        t16 = d["pergunta"].str.startswith("T1.6")
+        self.assertEqual(set(d.loc[t16, "natureza_dos_dados"]), {"STATUS_DE_CENARIO_SEM_NUMERO_SIMULADO"})
+        self.assertEqual(set(d.loc[~t16, "natureza_dos_dados"]), {"EMPIRICO"})
         self.assertNotIn("CENARIO_CONTRAFACTUAL", RESUMO.read_text(encoding="utf-8"))
 
     def test_entradas_em_output_e_hash(self) -> None:
