@@ -138,6 +138,9 @@ STEPS = [
     # P1h (protocolo 52b, pós-resultado): peso da bolsa contra o custo do lugar (H3). Reestima M1, M2, M4, M5 e M7 com
     # as funções do 25 só para a covariância conjunta e para se não reproduzir P1_estimativas.csv (portão 1e-8).
     ROOT / "scripts" / "rdd_bolsa" / "25c_magnitudes_P1h.py",
+    # Adendo 52c (pós-resultado): tipo de vaga do ciclo 2 pelo quadro de 13/02/2026 (antes da alocação). Importa o 25c
+    # (que importa o 25 e o 16) e o ler_quadro do 12; portão contra E9_, P1_ e P1h_ (1e-8) antes de trocar a covariável.
+    ROOT / "scripts" / "rdd_bolsa" / "42_escolha_vaga_imediata_c2.py",
     # Realocação (protocolo 58, exploratório): a bolsa das concorrentes do mesmo curso e ciclo na região de saúde
     # desloca candidatos e preenchimento? Lê as células do 12, o a08, a grade de faixas (a03, a04), a CIR e os
     # centroides brutos, o Censo 2022 (a06) e o CNES pré (a09, função do 24); importa o 16, o 17, o 19 e o 24.
