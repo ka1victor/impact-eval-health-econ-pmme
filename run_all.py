@@ -199,6 +199,10 @@ STEPS = [
     # importa o 22, o 21 e o 14) para a amostra V e os outcomes B1–B5; reproduz o F3.1 do E7 (14) em U, 0,300, e
     # confere V contra OL_resumo.json (37) antes de estimar; lê o a08, o a09, o a16 e a X1 (17, versionada).
     ROOT / "scripts" / "rdd_bolsa" / "43_oferta_local_corte.py",
+    # Adendo 48d (pós-resultado na H1; pré-resultado no protocolo 64): H1 e oferta local com controles de localização
+    # e de médicos na região (CCFT) e pareamento (PSM principal, nota §3.2; Mahalanobis e IPW). Portões contra
+    # HI_estimativas (40) e OC_estimativas (43) antes de qualquer conta; importa o 19 (CIR), 23, 37, 40, 41 e 43.
+    ROOT / "scripts" / "rdd_bolsa" / "44_controles_localizacao_medicos.py",
     # Síntese E8: lê E3, E5, E6, E7 e E9 e aplica o Holm às primárias P1 e P2.
     ROOT / "scripts" / "rdd_bolsa" / "15_sintese_E8.py",
     # O relatório para se a conferência do sinal não corresponder ao E3 atual.
