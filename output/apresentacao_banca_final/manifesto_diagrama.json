@@ -1,0 +1,274 @@
+{
+  "conteudo_canonico": "docs/07_apresentacoes/banca_final/01_diagrama_teoria_mudanca.md",
+  "entradas": [
+    {
+      "bytes": 10291022,
+      "caminho": "deck do grupo (fora do repositório; não é alterado)",
+      "data_referencia": "2026-10-26",
+      "nome": "bbc23976-PEE_-_Modelo_econ_mico_1.pptx",
+      "papel": "template e deck de partida (36 slides)",
+      "sha256": "55045a82b9c1262a1d758b79db971fc63e99fee2c899663edbce9aefd3c8cb30"
+    }
+  ],
+  "natureza": "conteúdo teórico (teoria da mudança); nenhum número de resultado",
+  "ordem_do_deck_proposto": [
+    {
+      "apendice": false,
+      "origem": "slide 1 do deck do grupo",
+      "posicao_nova": 1,
+      "titulo": "(sem título)"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 2 do deck do grupo",
+      "posicao_nova": 2,
+      "titulo": "Sumário"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 3 do deck do grupo",
+      "posicao_nova": 3,
+      "titulo": "A escassez de especialistas já é tratada como urgência sanitária"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 4 do deck do grupo",
+      "posicao_nova": 4,
+      "titulo": "A escassez de especialistas já é tratada como urgência sanitária"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 5 do deck do grupo",
+      "posicao_nova": 5,
+      "titulo": "A vulnerabilidade social define o piso da bolsa do PMM-E"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 6 do deck do grupo",
+      "posicao_nova": 6,
+      "titulo": "A vulnerabilidade social define o piso da bolsa do PMM-E"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 7 do deck do grupo",
+      "posicao_nova": 7,
+      "titulo": "A vulnerabilidade social define o piso da bolsa do PMM-E"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 8 do deck do grupo",
+      "posicao_nova": 8,
+      "titulo": "A vulnerabilidade social define o piso da bolsa do PMM-E"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 9 do deck do grupo",
+      "posicao_nova": 9,
+      "titulo": "Política direciona incentivos aos territórios mais vulneráveis"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 10 do deck do grupo",
+      "posicao_nova": 10,
+      "titulo": "Política direciona incentivos aos territórios mais vulneráveis"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 11 do deck do grupo",
+      "posicao_nova": 11,
+      "titulo": "O programa é importante, e há indícios de efetividade"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 12 do deck do grupo",
+      "posicao_nova": 12,
+      "titulo": "Sumário"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 13 do deck do grupo",
+      "posicao_nova": 13,
+      "titulo": "Política direciona incentivos aos territórios mais vulneráveis"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 14 do deck do grupo",
+      "posicao_nova": 14,
+      "titulo": "Presença de especialistas cresceu em todos os níveis sociais"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 15 do deck do grupo",
+      "posicao_nova": 15,
+      "titulo": "Sumário"
+    },
+    {
+      "origem": "novo",
+      "posicao_nova": 16,
+      "titulo": "Da regra da bolsa à saúde: teoria da mudança"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 22 do deck do grupo",
+      "posicao_nova": 17,
+      "titulo": "Sumário"
+    },
+    {
+      "origem": "novo",
+      "posicao_nova": 18,
+      "titulo": "A hipótese e onde a identificação é fraca"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 24 do deck do grupo",
+      "posicao_nova": 19,
+      "titulo": "Sumário"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 25 do deck do grupo",
+      "posicao_nova": 20,
+      "titulo": "X"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 26 do deck do grupo",
+      "posicao_nova": 21,
+      "titulo": "Sumário"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 27 do deck do grupo",
+      "posicao_nova": 22,
+      "titulo": "X"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 28 do deck do grupo",
+      "posicao_nova": 23,
+      "titulo": "Sumário"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 29 do deck do grupo",
+      "posicao_nova": 24,
+      "titulo": "X"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 30 do deck do grupo",
+      "posicao_nova": 25,
+      "titulo": "(sem título)"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 31 do deck do grupo",
+      "posicao_nova": 26,
+      "titulo": "Apêndice"
+    },
+    {
+      "apendice": true,
+      "origem": "slide 16 do deck do grupo",
+      "posicao_nova": 27,
+      "titulo": "O modelo combina três elementos da teoria"
+    },
+    {
+      "apendice": true,
+      "origem": "slide 17 do deck do grupo",
+      "posicao_nova": 28,
+      "titulo": "A escolha locacional maximiza a utilidade"
+    },
+    {
+      "apendice": true,
+      "origem": "slide 18 do deck do grupo",
+      "posicao_nova": 29,
+      "titulo": "Da escolha individual ao preenchimento agregado"
+    },
+    {
+      "apendice": true,
+      "origem": "slide 19 do deck do grupo",
+      "posicao_nova": 30,
+      "titulo": "A escolha locacional maximiza a renda real líquida"
+    },
+    {
+      "apendice": true,
+      "origem": "slide 20 do deck do grupo",
+      "posicao_nova": 31,
+      "titulo": "Literatura divide o custo em dois tipos: geográfico e laboral"
+    },
+    {
+      "apendice": true,
+      "origem": "slide 21 do deck do grupo",
+      "posicao_nova": 32,
+      "titulo": "Da escolha individual ao preenchimento agregado"
+    },
+    {
+      "apendice": true,
+      "origem": "slide 23 do deck do grupo",
+      "posicao_nova": 33,
+      "titulo": "Da condição de aceitação, sai nossa hipótese econômica"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 32 do deck do grupo",
+      "posicao_nova": 34,
+      "titulo": "(sem título)"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 33 do deck do grupo",
+      "posicao_nova": 35,
+      "titulo": "(sem título)"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 34 do deck do grupo",
+      "posicao_nova": 36,
+      "titulo": "O desafio é separar o efeito da bolsa do efeito da vulnerabilidade"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 35 do deck do grupo",
+      "posicao_nova": 37,
+      "titulo": "O desafio é separar o efeito da bolsa do efeito da vulnerabilidade"
+    },
+    {
+      "apendice": false,
+      "origem": "slide 36 do deck do grupo",
+      "posicao_nova": 38,
+      "titulo": "O IVS mede a vulnerabilidade social dos territórios brasileiros"
+    }
+  ],
+  "regra": "nada estimado; nada lido de data/; só a regra da bolsa (cortes do IVS e valores) e citações aparecem como número",
+  "saidas": [
+    {
+      "bytes": 379962,
+      "caminho": "output/apresentacao_banca_final/slides_diagrama_teoria_mudanca.pptx",
+      "sha256": "c24306053c2851b4dd7f23c5532e16fd86f12ec944bb857de5d346226a6b9117"
+    },
+    {
+      "bytes": 10170164,
+      "caminho": "output/apresentacao_banca_final/deck_proposta_reorganizada.pptx",
+      "sha256": "9712bee04059d8823b4207211899059f85705c62598898c4cc3ea28d2c98ae4e"
+    }
+  ],
+  "script": "scripts/apresentacao/gerar_diagrama_banca_final.py",
+  "slides_novos": [
+    {
+      "formas": "nativas (sp e cxnSp), sem imagem",
+      "id": "A",
+      "layout": "1_Title Slide",
+      "titulo": "Da regra da bolsa à saúde: teoria da mudança"
+    },
+    {
+      "formas": "nativas (sp e cxnSp), sem imagem",
+      "id": "B",
+      "layout": "1_Title Slide",
+      "titulo": "A hipótese e onde a identificação é fraca"
+    }
+  ],
+  "slides_oculto_no_deck_do_grupo_e_exibidos_no_apendice": [
+    19,
+    20
+  ]
+}
