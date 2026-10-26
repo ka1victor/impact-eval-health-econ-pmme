@@ -404,8 +404,8 @@ auditoria independente:
 
 | Ordem | Tarefa aprovada | O que fazer | Estado |
 |---|---|---|---|
-| A | Item 2: regra do pareamento | adendo 48e: no PSM e no Mahalanobis do 48d, a regra literal da §3.1 ("o lado com menos municípios procura par") passa a ser a principal; a gulosa global (decisão 11 do 57r) vira sensibilidade; refazer PS-1 a PS-4 e CL-7 a CL-9 | **a fazer** |
-| B | Item 1: PSM em 0,400 | no mesmo adendo 48e: antes do logit, tirar as unidades das categorias que só aparecem de um lado do corte na janela (capitais, Sul, Centro-Oeste em 0,400; checar também 0,300), contá-las e relatar quem saiu; depois estimar PS-1 e PS-2 em 0,400 | **a fazer** |
+| A | Item 2: regra do pareamento | adendo 48e: no PSM e no Mahalanobis do 48d, a regra literal da §3.1 ("o lado com menos municípios procura par") passa a ser a principal; a gulosa global (decisão 11 do 57r) vira sensibilidade; refazer PS-1 a PS-4 e CL-7 a CL-9 | feito: adendo 48e, doc 57s, auditoria 43 (aprovado com correções de texto; nenhum número mudou). O CL-9 (Mahalanobis na janela de 0,020) não foi refeito: o 48e não o pede |
+| B | Item 1: PSM em 0,400 | no mesmo adendo 48e: antes do logit, tirar as unidades das categorias que só aparecem de um lado do corte na janela (capitais, Sul, Centro-Oeste em 0,400; checar também 0,300), contá-las e relatar quem saiu; depois estimar PS-1 e PS-2 em 0,400 | feito: adendo 48e, doc 57s, auditoria 43. Em 0,400 saíram 19 linhas da H1 e 5 municípios da oferta local; nenhuma linha principal detecta diferença |
 | C | Item 3: razão *fuzzy* do protocolo 64 | deixar `tau` e os limites de Anderson–Rubin vazios em `OC_estimativas.csv` quando o F robusto do primeiro estágio for < 10, com a nota "instrumento fraco"; ajustar teste e doc 57q; é mudança de formato de saída, não de especificação | **a fazer** |
 | D | Item 5: seleção pelo tipo de vaga | adendo novo à H1: limites de Lee por corte; "ter vaga imediata" como outcome da RDD; balanço dos controles L e M dentro da amostra só de vagas imediatas (§2.12) | **a fazer** |
 | — | Item 4: heterogeneidade por porte | sem recomendação; **continua aguardando decisão do autor** | aberto |
