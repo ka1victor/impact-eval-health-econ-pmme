@@ -1,5 +1,18 @@
 # RDD da bolsa — estado, pendências e decisões em aberto
 
+> **Estado em 26/10/2026: protocolo 59 executado (sem auditoria independente
+> ainda).** O item 4 da fila de 24/10 rodou sob protocolo congelado antes de
+> estimar ([`59`](59_protocolo_P3P4_sensibilidade_comparacao.md); resultados em
+> [`57h`](57h_resultados_P3P4_sensibilidade.md)). Sensibilidade de
+> Rambachan–Roth: a associação do 12.2 (P3) não aguenta nenhuma violação além
+> da do pré; no P4, horas totais e no município do posto aguentam violações do
+> tamanho das do pré, horas fora não. Comparação alternativa: o P3-CA (pares
+> pedidos e não priorizados no ciclo 3) falha no pré; no P4-CA (não alocados
+> perto do corte), só as horas no município da 1ª opção passam no Holm com pré
+> plano, em parte mecânicas, e sem ruptura ≥ 1. Números no doc 57h. Fila
+> seguinte: auditoria independente do protocolo 59; os itens 1, 2, 3 e 5 abaixo
+> continuam.
+
 > **Estado em 24/10/2026: perguntas reformuladas (doc 51) executadas, auditadas
 > e sintetizadas.** P1, P3x, P4, P5, P6, a realocação e o T1.6 rodaram sob
 > protocolos congelados (52, 47 §12, 54, 55, 56, 58 e o adendo §7 do 52), cada
@@ -20,7 +33,8 @@
 >    adendo datado);
 > 3. decidir o envio dos pedidos externos (universo de inscritos, folha);
 > 4. se quiser, protocolo de sensibilidade de Rambachan–Roth e de outro grupo
->    de comparação para P3/P4 (doc 57, §6; proposta, não executada);
+>    de comparação para P3/P4 (doc 57, §6) — executado em 25–26/10/2026
+>    (protocolo 59, doc 57h);
 > 5. ciclo 3: só com a competência `202703` publicada, completa e madura.
 > Os slides da banca 2 estão sendo feitos pelo autor fora do repositório.
 > A síntese não entrou no `run_all.py` (é leitura de saídas já versionadas).
@@ -142,6 +156,7 @@ Nos slides, use um dos dois e diga qual.
 | T1.6 (adendo §7 do protocolo 52): cenários de bolsa | validação de base falhou; cenários não calculados; decisão do autor pendente | [`57b`](57b_cenarios_P1_bolsa.md); `output/cenarios/P1_*` |
 | Realocação (protocolo 58, exploratório) | concluído; auditado ([`auditorias/28`](../auditorias/28_auditoria_realocacao.md)); inconclusivo | [`57g`](57g_resultados_realocacao.md); `output/rdd_bolsa/R_*` |
 | Síntese das perguntas reformuladas (onda 5 do doc 51) | concluída em 24/10/2026 | [`57`](57_sintese_perguntas_reformuladas.md); `output/rdd_bolsa/S57_*`; `scripts/rdd_bolsa/33_sintese_perguntas.py` |
+| Protocolo 59 (pós-resultado): sensibilidade de Rambachan–Roth do P3 e do P4 e grupo de comparação alternativo (P3-CA: pares pedidos e não priorizados no ciclo 3; P4-CA: não alocados perto do corte) | concluído em 25/10/2026; sem auditoria independente ainda | [`59`](59_protocolo_P3P4_sensibilidade_comparacao.md); [`57h`](57h_resultados_P3P4_sensibilidade.md); `output/rdd_bolsa/H_*`, `CA_*`; `scripts/rdd_bolsa/34_*`, `35_*` |
 
 O relatório tem:
 - **ordem:** a hipótese primeiro e a presença como secundário;

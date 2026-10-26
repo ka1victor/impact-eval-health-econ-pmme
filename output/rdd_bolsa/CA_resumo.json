@@ -1,0 +1,417 @@
+{
+  "etapa": "CA_comparacao_alternativa_P3P4",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "PROTOCOLO_59_POS_RESULTADO",
+  "gerador": "scripts/rdd_bolsa/35_comparacao_alternativa_P3P4.py",
+  "data_execucao": "2026-10-25",
+  "protocolo": {
+    "texto": "docs/06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md",
+    "sha256_texto": "5a2ceafd84512cc7b5e91dec295705269c99221767030bacdfbe33e440c99cb5",
+    "secoes": "§3, §4, §6"
+  },
+  "leitura": {
+    "P3-CA": "ATT da chegada contra pares que pediram o curso no ciclo 3 e não foram priorizados, sob tendências paralelas entre os dois grupos; priorização entre quem pediu, não participação no PMM-E nem bolsa",
+    "P4-CA": "efeito de ser alocado na 1ª opção perto da nota de corte sobre a trajetória cadastrada, em diferenças, sob tendências paralelas locais; não é efeito da bolsa nem do PMM-E no município"
+  },
+  "parametros": {
+    "P3": {
+      "e": [
+        -24,
+        9
+      ],
+      "controles": "nunca (só o grupo alternativo), mesmo curso",
+      "bootstrap": {
+        "B": 9999,
+        "pesos": "Mammen",
+        "semente": 20261019,
+        "cluster": "município"
+      }
+    },
+    "P4": {
+      "e": [
+        -12,
+        5
+      ],
+      "t0": {
+        "1": "202509",
+        "2": "202603"
+      },
+      "referencia": -1,
+      "permutacao": {
+        "B": 999,
+        "semente": 20261019,
+        "dentro": "célula"
+      },
+      "ep": "agrupado por célula, G/(G-1)"
+    }
+  },
+  "amostras": {
+    "P3": {
+      "pedidos": {
+        "linhas_adesao": 5534,
+        "pares_pedidos_cursos_especificos": 1238,
+        "pares_priorizados": 396,
+        "pares_nao_priorizados": 842
+      },
+      "pedidos_fora_de_U": 0,
+      "tratados_12_2_ate_fim": 298,
+      "a17": {
+        "municipios_formulario": 5571,
+        "celulas_ausentes": 0,
+        "meses": [
+          "202201",
+          "202605"
+        ]
+      },
+      "por_especificacao": {
+        "P3-CA": {
+          "cursos": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "cursos_fora": {
+            "7": {
+              "tratados": 46,
+              "controles": 0
+            },
+            "15": {
+              "tratados": 58,
+              "controles": 0
+            },
+            "16": {
+              "tratados": 16,
+              "controles": 0
+            }
+          },
+          "tratados": 178,
+          "controles": 761,
+          "municipios": 660,
+          "coortes": 18
+        },
+        "P3-CA-S1": {
+          "cursos": [
+            7,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "cursos_fora": {},
+          "tratados": 298,
+          "controles": 1120,
+          "municipios": 772,
+          "coortes": 29
+        },
+        "P3-CA-S2-curso10": {
+          "cursos": [
+            10
+          ],
+          "cursos_fora": {},
+          "tratados": 15,
+          "controles": 112,
+          "municipios": 127,
+          "coortes": 4
+        },
+        "P3-CA-S2-curso11": {
+          "cursos": [
+            11
+          ],
+          "cursos_fora": {},
+          "tratados": 64,
+          "controles": 99,
+          "municipios": 163,
+          "coortes": 4
+        },
+        "P3-CA-S2-curso12": {
+          "cursos": [
+            12
+          ],
+          "cursos_fora": {},
+          "tratados": 15,
+          "controles": 31,
+          "municipios": 46,
+          "coortes": 4
+        },
+        "P3-CA-S2-curso13": {
+          "cursos": [
+            13
+          ],
+          "cursos_fora": {},
+          "tratados": 8,
+          "controles": 14,
+          "municipios": 22,
+          "coortes": 2
+        },
+        "P3-CA-S2-curso14": {
+          "cursos": [
+            14
+          ],
+          "cursos_fora": {},
+          "tratados": 76,
+          "controles": 505,
+          "municipios": 581,
+          "coortes": 4
+        }
+      }
+    },
+    "P4": {
+      "gitignore": {
+        "linhas_conferidas": [
+          "output/aquisicao/cnes_profissional/cache_privado/",
+          "output/rdd_bolsa/G1_cache/"
+        ],
+        "presentes": true
+      },
+      "cache_a16": {
+        "competencias": [
+          "202406",
+          "202608"
+        ],
+        "n_competencias": 27,
+        "sha256_zip_igual_ao_a09_e_ao_manifesto_a16": true,
+        "linhas_vinculos_medicos_iguais_ao_manifesto_a16": true,
+        "datas_de_processamento": [
+          "2026-10-25"
+        ]
+      },
+      "reproducao_a16": {
+        "ligacao_x1_reproduzida_100pct": true,
+        "painel_medico_mes_identico": true,
+        "linhas_painel_medico_mes": 53136,
+        "chaves_origem_identicas": true,
+        "linhas_chaves": 3777,
+        "nota": "ligação da X1 refeita do cache com a função do a16 e painel agregado com agregar_medico_mes; comparação coluna a coluna com as saídas versionadas do a16"
+      },
+      "reproducao_g1": {
+        "g1_cpf_nome": {
+          "candidatos": 5776,
+          "ligados": 5573,
+          "diferencas_por_campo": {
+            "ligado": 0,
+            "etapa_ligacao": 0,
+            "motivo": 0,
+            "competencia_referencia": 0,
+            "vinculo_medico_na_referencia": 0,
+            "n_vinculos_referencia": 0,
+            "n_municipios_origem": 0,
+            "co_ibge_origem": 0,
+            "origem_principal_empatada": 0,
+            "motivo_origem_ausente": 0
+          }
+        },
+        "g1_so_nome": {
+          "candidatos": 5776,
+          "ligados": 5305,
+          "diferencas_por_campo": {
+            "ligado": 0,
+            "etapa_ligacao": 0,
+            "motivo": 0,
+            "competencia_referencia": 0,
+            "vinculo_medico_na_referencia": 0,
+            "n_vinculos_referencia": 0,
+            "n_municipios_origem": 0,
+            "co_ibge_origem": 0,
+            "origem_principal_empatada": 0,
+            "motivo_origem_ausente": 0
+          }
+        }
+      },
+      "conferencia_P6_amostra": {
+        "g1_cpf_nome|1|horas_totais": 0,
+        "g1_cpf_nome|1|horas_sus": 0,
+        "g1_cpf_nome|1|vinculo_mun_1a": 0,
+        "g1_cpf_nome|1|n_municipios": 0,
+        "g1_cpf_nome|2|horas_totais": 0,
+        "g1_cpf_nome|2|horas_sus": 0,
+        "g1_cpf_nome|2|vinculo_mun_1a": 0,
+        "g1_cpf_nome|2|n_municipios": 0,
+        "g1_cpf_nome|cov_horas_pre": 0,
+        "g1_so_nome|1|horas_totais": 0,
+        "g1_so_nome|1|horas_sus": 0,
+        "g1_so_nome|1|vinculo_mun_1a": 0,
+        "g1_so_nome|1|n_municipios": 0,
+        "g1_so_nome|2|horas_totais": 0,
+        "g1_so_nome|2|horas_sus": 0,
+        "g1_so_nome|2|vinculo_mun_1a": 0,
+        "g1_so_nome|2|n_municipios": 0,
+        "g1_so_nome|cov_horas_pre": 0
+      },
+      "linhas_painel_candidato_mes": 16389,
+      "competencias": [
+        "202406",
+        "202608"
+      ],
+      "por_especificacao": {
+        "P4-CA": {
+          "regra": "g1_cpf_nome",
+          "r": [
+            -2,
+            -1,
+            1,
+            2
+          ],
+          "candidatos": 98,
+          "alocados": 30,
+          "nao_alocados": 68,
+          "celulas": 27,
+          "por_ciclo": {
+            "1": 2,
+            "2": 96
+          },
+          "empatados": 0
+        },
+        "P4-CA-Sb": {
+          "regra": "g1_cpf_nome",
+          "r": [
+            -4,
+            -3,
+            -2,
+            -1,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "candidatos": 129,
+          "alocados": 36,
+          "nao_alocados": 93,
+          "celulas": 30,
+          "por_ciclo": {
+            "1": 2,
+            "2": 127
+          },
+          "empatados": 0
+        },
+        "P4-CA-Sc": {
+          "regra": "g1_cpf_nome",
+          "r": [
+            -4,
+            -3,
+            -2,
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "candidatos": 270,
+          "alocados": 108,
+          "nao_alocados": 162,
+          "celulas": 46,
+          "por_ciclo": {
+            "1": 10,
+            "2": 260
+          },
+          "empatados": 122
+        },
+        "P4-CA-Sd": {
+          "regra": "g1_so_nome",
+          "r": [
+            -2,
+            -1,
+            1,
+            2
+          ],
+          "candidatos": 96,
+          "alocados": 29,
+          "nao_alocados": 67,
+          "celulas": 27,
+          "por_ciclo": {
+            "1": 2,
+            "2": 94
+          },
+          "empatados": 0
+        }
+      }
+    }
+  },
+  "saidas": {
+    "output/rdd_bolsa/CA_estimativas.csv": "f962551b196129cfaa98dd6fa33f0f259d0e8aa77f8526c663eca8e0d3ce8173",
+    "output/rdd_bolsa/CA_estudo_evento.csv": "1837cd6356cfb596ad7ef2df2bbb243ce3f16d5de28f5a977c669636012bdb86",
+    "output/rdd_bolsa/CA_covariancia.csv": "3f9559711dfcd0c623a68c839222e3e157dc371ec5c8e61a60ad327ced363981"
+  },
+  "figuras": [
+    {
+      "arquivo": "output/rdd_bolsa/CA_figuras/CA_P3_evento.png",
+      "sha256": "d51385caf81476e7ae9fbac42200ba970f3e8e99c9ffb9701f4603f09947c118"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/CA_figuras/CA_P4_evento.png",
+      "sha256": "274005a4580a7e70803792232386f991629d917a42e1ebf2e8897c0f18f981b0"
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md",
+      "sha256": "5a2ceafd84512cc7b5e91dec295705269c99221767030bacdfbe33e440c99cb5",
+      "papel": "protocolo congelado"
+    },
+    {
+      "caminho": "output/aquisicao/sia_forma_curso/painel_sia_municipio_mes_forma_curso.parquet",
+      "sha256": "370a49fe3ba03c425754d224e4e318a97f465ebf5e1cee2b6f89d61535cbc1e2",
+      "papel": "K_esp: SIA por forma × curso (a17)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "papel": "células dos ciclos 1–2 (pares do 12.2)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G4_resumo.json",
+      "sha256": "9b576aaeed908bb38dc91835b4b51db5296562fa1b61b26be914051e9302ff85",
+      "papel": "cursos ESPECÍFICO do G4"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G4_mapa_especialidade_procedimento.csv",
+      "sha256": "7b7e9a46858748374fd7c7793a186d0db7b5bc7c2f9a7a75460ebf153280e6d7",
+      "papel": "formas típicas"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "papel": "universo U (IVS 2010 oficial)"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "papel": "população 2022"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo3_adesao_gestores_resultado_final.xlsx",
+      "sha256": "0c07d4c972d14bac8ae9b8c99d5edac32f9ea76996ec82e92198065ac63b1f74",
+      "papel": "adesão do ciclo 3 (pedido e priorização)"
+    },
+    {
+      "caminho": "data/pmm_especialistas_nominal.csv",
+      "sha256": "136f3ca3656e87facf11a6397f1444a9e57d839c2bab8691f446dfa9a6d95ee5",
+      "papel": "chegadas e t₀ (só município, curso, data de início)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P6_amostra.parquet",
+      "sha256": "4a9ffdd4a9ff458a26763542dccc14b3c8e45fd08cee9cec4411576b8bea7f87",
+      "papel": "universo do P6: r, D, célula, ligação (pseudônimo)"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/a16_manifesto_cnes_profissional.json",
+      "sha256": "1f12702d8b49a216321bd484bc742072cb92c7525476388545d350358cc45d50",
+      "papel": "manifesto do a16 (conferência do cache privado)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "papel": "ligação do G1 (conferência)"
+    }
+  ],
+  "dados_pessoais": "código do profissional, nome e CPF só em memória e no cache privado (gitignore); saídas só com estatísticas por e e por especificação",
+  "integridade": "nada imputado; ausente não vira zero; CNES < 202609; SIA até 202605; o arquivo local de IVS não é lido; nenhum outcome do ciclo 3 é lido",
+  "desvios": []
+}

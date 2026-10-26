@@ -162,6 +162,11 @@ STEPS = [
     # do SIH (a13b) e do SIA (a12b), controles alternativos, DiD sintético e região de saúde. Importa o 21 e o 22,
     # confere-se contra K_D1/K_D2 e lê o G4, a X1 (17) e as células do 12.
     ROOT / "scripts" / "rdd_bolsa" / "27_producao_extensoes.py",
+    # Protocolo 59 (pós-resultado): comparação alternativa do P3/P4 (35) e sensibilidade de Rambachan–Roth (34).
+    # O 35 refaz o painel dos candidatos do cache privado (fora do Git) e o 34 recalcula as funções de influência
+    # do 27 e do 28; no run_all os dois só conferem as saídas e o doc 57h contra o resumo (ver ARGUMENTOS).
+    ROOT / "scripts" / "rdd_bolsa" / "35_comparacao_alternativa_P3P4.py",
+    ROOT / "scripts" / "rdd_bolsa" / "34_sensibilidade_honestdid.py",
     # Síntese E8: lê E3, E5, E6, E7 e E9 e aplica o Holm às primárias P1 e P2.
     ROOT / "scripts" / "rdd_bolsa" / "15_sintese_E8.py",
     # O relatório para se a conferência do sinal não corresponder ao E3 atual.
@@ -219,6 +224,9 @@ ARGUMENTOS = {
     # confere as saídas versionadas contra P6_passo0_resumo.json, sem rede e sem gravar; refazer exige
     # `--etapa aquisicao` e `--etapa construir`.
     ROOT / "scripts" / "rdd_bolsa" / "30_mecanismo_alocacao.py": ["--etapa", "verificar"],
+    # Protocolo 59: o 35 exige o cache privado do a16 e do G1 para recalcular; o 34 leva cerca de uma hora.
+    ROOT / "scripts" / "rdd_bolsa" / "35_comparacao_alternativa_P3P4.py": ["--etapa", "verificar"],
+    ROOT / "scripts" / "rdd_bolsa" / "34_sensibilidade_honestdid.py": ["--etapa", "verificar"],
 }
 
 AQUISICAO_RDD_BOLSA = (

@@ -259,3 +259,29 @@ ligação, horas pré). Nenhum outcome pós e nenhuma série por grupo alternati
   regression models. *Econometrica*, 86(2), 655–683.
 - Callaway, B.; Sant'Anna, P. (2021). Difference-in-differences with multiple
   time periods. *Journal of Econometrics*, 225(2), 200–230.
+
+## Adendo de 25/10/2026: híbrido condicional–LF na parte A
+
+Escrito depois de calcular a primeira linha da parte A (H-P4, horas totais) e
+o P3-CA (rodada de desenvolvimento do script 35), e antes de qualquer
+estimativa do P4-CA.
+
+- **Achado.** O teste condicional puro de ARP, congelado no §2.4, fica muito
+  conservador quando outro momento está perto de ativo: num caso sintético
+  (M̄ = 0, um pré a 5 EP de zero, um pós) aceita θ̄ a quase 5 EP do ponto, e na
+  primeira linha real o IC em M̄ = 0 sai mais largo que em M̄ = 0,25. É a
+  limitação que Andrews, Roth e Pakes (2023) descrevem e que o híbrido
+  condicional–LF corrige; o híbrido é o padrão do pacote HonestDiD para Δ^RM.
+- **Decisão.** O condicional puro continua em todas as linhas, como congelado
+  (`RM`, `RM_ruptura`). Acrescenta-se o híbrido (`RM_hibrido`,
+  `RM_hibrido_ruptura`): κ = α/10, valor crítico LF por 1.000 simulações
+  (semente 20261025 + índice do poliedro), v_up truncado no valor crítico,
+  nível condicional (α − κ)/(1 − κ). Por custo, o híbrido roda nas linhas
+  principais (P3 K_esp; P4 horas totais, no município do posto e fora) e nas
+  quatro do CA; as secundárias ficam só com o condicional.
+- **Leitura.** O doc 57h mostra as duas rupturas lado a lado. A regra do §6
+  ("ruptura de Δ^RM ≥ 1") é aplicada com as duas e o doc diz qual satisfaz.
+  Nada muda na parte B.
+- **Validação.** `tests/test_honestdid.py` (classe `TestHibrido`): o caso
+  sintético acima, o valor crítico LF de uma desigualdade (≈ 2,576) e cobertura
+  ≥ 0,93 em Monte Carlo.

@@ -8,6 +8,33 @@
 
 ---
 
+## 26/10/2026 — Resultados do protocolo 59 (doc 57h)
+
+Motivo: execução do protocolo 59 (parte A: Rambachan–Roth; parte B: P3-CA e P4-CA) e adendo datado no próprio
+protocolo (híbrido condicional–LF de ARP acrescentado ao teste condicional congelado).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57h_resultados_P3P4_sensibilidade.md`](06_execucao/57h_resultados_P3P4_sensibilidade.md) | resultados gerados inteiros pelo script 34 a partir de `output/rdd_bolsa/H_*` e `CA_*` |
+
+### Alterado
+
+| Arquivo | O que mudou |
+|---|---|
+| [`06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md`](06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md) | adendo datado no fim (híbrido; o texto congelado não muda) |
+| [`06_execucao/57_sintese_perguntas_reformuladas.md`](06_execucao/57_sintese_perguntas_reformuladas.md) | §6: nota de atualização apontando para o doc 57h (regerado pelo script 33) |
+| [`06_execucao/38_estado_e_pendencias_rdd_bolsa.md`](06_execucao/38_estado_e_pendencias_rdd_bolsa.md) | estado de 26/10/2026 e linha do protocolo 59 |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/honestdid_lib.py`, `34_sensibilidade_honestdid.py`, `35_comparacao_alternativa_P3P4.py`;
+  saídas `output/rdd_bolsa/H_*` e `CA_*` (`EMPIRICO`);
+- testes `tests/test_honestdid.py` e `tests/test_comparacao_alternativa_P3P4.py`; `run_all.py` (34 e 35 em
+  `--etapa verificar`), `tests/test_pipeline_rdd_bolsa.py`, manifesto A6 regerado; READMEs de `scripts/` e `tests/`.
+
+---
+
 ## 25/10/2026 — Protocolo 59: sensibilidade de Rambachan–Roth e comparação alternativa do P3/P4
 
 Motivo: os dois itens do doc 57, §6, sobre o P3 e o P4 com pré-tendências falhando. O protocolo é congelado e
