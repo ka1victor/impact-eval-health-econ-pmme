@@ -8,6 +8,18 @@
 
 ---
 
+## 26/10/2026 — Registro de explicações e controles candidatos da H1
+
+Motivo: pedido do autor de anotar toda explicação possível para o sinal da H1 e como ela entraria como controle.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/63_registro_explicacoes_e_controles_H1.md`](06_execucao/63_registro_explicacoes_e_controles_H1.md) | registro vivo: explicação, evidência, variável de controle, se é pré-determinada e estado; próximo passo proposto |
+
+---
+
 ## 26/10/2026 — Resultados do adendo 48b: H1 só com vagas imediatas (script 40, doc 57n)
 
 Motivo: execução do adendo 48b (com a nota §7: no ciclo 2, tipo de vaga pelo quadro de 13/02/2026, vigente na inscrição). Reproduz A3, N1 S-a e o 49b §14 antes das contas; HI-1 e HI-2 por corte com Holm, HI-s1 a HI-s8 e a sensibilidade com o quadro de 19/03 ("tipo de vaga pós-resultado (não usar)").

@@ -1,0 +1,49 @@
+# 63. Registro: possíveis explicações para o sinal da H1 e controles candidatos
+
+> **Pedido do autor (26/10/2026):** "vai vendo tudo que temos de possível
+> explicação para a H1 e anotando para colocar como controle, por exemplo
+> UF".<br>
+> **Estatuto:** registro vivo. **Não é protocolo.** Lista as explicações já
+> levantadas, a evidência de cada uma e como ela entraria como controle. Para
+> rodar a H1 com um conjunto de controles, é preciso antes congelar um adendo
+> que fixe o conjunto (RDD com covariáveis à CCFT 2019, que exige covariáveis
+> pré-determinadas). Este registro é a lista de onde o adendo vai escolher.<br>
+> **Regra para entrar como controle:** a variável tem de ser **anterior ao
+> tratamento e à escolha** (pré-determinada). Variável que pode responder ao
+> corte ou ao resultado entra só como diagnóstico, nunca como controle da
+> principal.
+
+## 1. Tabela
+
+| # | Explicação | Evidência até agora | Variável de controle | Pré-determinada? | Estado |
+|---|---|---|---|---|---|
+| 1 | **Capitais logo abaixo de 0,300** (São Paulo, Goiânia, Natal, Brasília a menos de 0,010; nenhuma acima) | com uma dummy de capital, a queda encolhe e o IC contém zero (auditoria 36) | dummy de capital | sim | em teste formal (adendo 48c) |
+| 2 | **Região e UF**: o Nordeste se concentra nos últimos 0,050 antes de 0,300 e preenche mais | dentro da mesma UF, a subida da faixa de R$ 10 mil quase some; na janela sai 40% (auditoria 37) | efeito fixo de UF; ou de macrorregião | sim | em teste formal (48c, efeito fixo de UF) |
+| 3 | **Porte do município** (cidades grandes abrem e preenchem mais; em 0,400, três grandes logo abaixo do corte) | em 0,400, com o controle das vagas oferecidas, a queda some (doc 49b) | log(população 2022) | sim | a incluir |
+| 4 | **Hierarquia urbana** (REGIC) | no diagnóstico 61 não saltou no corte nem reduziu a queda (doc 57l) | categorias do REGIC 2018 | sim | testado; fraco |
+| 5 | **Tipo de vaga** (imediata, mista, só de reserva) | comparando só vagas imediatas, a célula preenchida em 0,300 vai de −8,4 a −3,7 p.p. (57n) | tipo de célula do **quadro de 13/02** no ciclo 2 (48b, §7) | sim, só com o quadro anterior à alocação | já é a principal (48b) |
+| 6 | **Curso** (cursos que preenchem pouco em qualquer lugar) | o índice de curso salta no corte em 0,300 (57l) | efeito fixo de curso × ciclo | sim | já no A3 e no HI-1; a incluir no HI-2 (por município, a parte de cada curso nas vagas) |
+| 7 | **Concorrência** (mais células do mesmo curso na mesma UF) | entre os fatores que mais reduzem a queda (57l) | nº de células do mesmo curso e ciclo na UF ou região de saúde | **depende**: o quadro é decidido pelo Ministério e pode responder ao corte | só diagnóstico |
+| 8 | **Candidatos por perto** (oferta de médicos da região) | tira 44% da subida na janela antes de 0,300 (auditoria 37); não salta no corte (57l) | candidatos do curso com origem na UF ou região, ou especialistas pré no CNES por 10 mil hab. (202406–202506) | os especialistas pré no CNES, sim; candidatos, **não** (é escolha) | especialistas pré: a incluir; candidatos: só diagnóstico |
+| 9 | **Vagas oferecidas** (o controle do S-a) | em 0,400 explica a queda (49b) | vagas imediatas pré-alocação | **duvidosa**: o quadro pode responder ao corte (protocolo 48, §2) | já na HI-2; manter com a ressalva |
+| 10 | **Ciclo** (o sinal varia por ciclo) | a taxa por vaga em 0,300 cai mais no ciclo 2 | efeito fixo de ciclo e parâmetros por ciclo | sim | já incluído |
+| 11 | **Outras políticas no mesmo corte** (estrato da atenção primária, emendas +20%, PMMB) | sem teste causal; o estrato da atenção primária só muda para portes 2 e 3 em 0,300 (auditoria 18) | porte × lado (heterogeneidade: onde o estrato muda e onde não) | sim | proposto ao autor; sem protocolo |
+| 12 | **Definição de "preenchida" diferente no ciclo 1** (confirmação ou homologação) | HI-1 usa ≥ 1 alocado; a F1.3 entra como sensibilidade (57n) | definição única | — | resolvido no 48b |
+| 13 | **Acaso / poucos municípios** | cortes placebo e randomização local não descartam (57l) | — | — | relatar |
+
+## 2. Próximo passo proposto
+
+Quando o adendo 48c (capitais e UF) e a auditoria 38 (48b) saírem, congelar um
+adendo "H1 com covariáveis pré-determinadas", com o conjunto fixado antes de
+rodar:
+- capital;
+- efeito fixo de UF;
+- log(população);
+- especialistas pré por 10 mil hab.;
+- composição de curso.
+
+Ele roda HI-1 e HI-2 por corte e relata cada covariável isolada e todas juntas.
+Concorrência, candidatos e vagas oferecidas ficam fora do conjunto, porque não
+são pré-determinados, e aparecem só como diagnóstico.
+
+Este registro é atualizado a cada explicação nova, com data.
