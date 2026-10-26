@@ -8,6 +8,20 @@
 
 ---
 
+## 26/10/2026 — Doc 57s: resultados do adendo 48e (pareamento pela regra literal e PSM em 0,400)
+
+Motivo: execução do adendo 48e. As decisões de implementação do 57s (seção 0) foram registradas e versionadas antes
+de qualquer estimativa; os resultados entram depois, em blocos gerados pelo script 45
+(`scripts/rdd_bolsa/45_pareamento_regra_literal.py`, saídas `output/rdd_bolsa/PM_*`).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57s_resultados_pareamento_regra_literal.md`](06_execucao/57s_resultados_pareamento_regra_literal.md) | resultados do adendo 48e: portão, quem saiu pela regra 2, pares, balanço, PM-1 a PM-7, leitura do §3 e limites; auditoria pendente |
+
+---
+
 ## 26/10/2026 — Adendos 48e (pareamento pela regra literal e PSM em 0,400) e 48f (seleção pelo tipo de vaga)
 
 Motivo: o autor aprovou as recomendações 1, 2 e 5 da §2.16 de `07_apresentacoes/banca2/05_discussao_historia_empirica.md`.
