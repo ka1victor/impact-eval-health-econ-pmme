@@ -69,7 +69,7 @@ CA_EVENTO = OUT / "CA_estudo_evento.csv"
 CA_COV = OUT / "CA_covariancia.csv"
 CA_RESUMO = OUT / "CA_resumo.json"
 
-DATA_EXECUCAO = "2026-10-25"
+DATA_EXECUCAO = "2026-10-26"
 ESTATUTO = "PROTOCOLO_59_POS_RESULTADO"
 ROTULO = "SENSIBILIDADE"
 NATUREZA = "EMPIRICO"
@@ -829,7 +829,7 @@ def executar() -> int:
     resumo = {
         "etapa": "H_sensibilidade_rambachan_roth", "natureza_dos_dados": NATUREZA, "estatuto": ESTATUTO,
         "rotulo": ROTULO, "gerador": rotulo(Path(__file__)), "data_execucao": DATA_EXECUCAO,
-        "protocolo": {"texto": rotulo(PROTOCOLO_MD), "sha256_texto": sha256(PROTOCOLO_MD), "secao": "§2"},
+        "protocolo": {"texto": rotulo(PROTOCOLO_MD), "sha256_texto": sha256(PROTOCOLO_MD), "secao": "§2", "sha256_texto_congelado": "f039e3f573e8acd504a7b2e9a6371428439a09ae05218d244956c2e434b8d4ed", "commit_congelamento": "1cc4d68", "nota_hash": "sha256_texto é o arquivo atual, já com o adendo datado; sha256_texto_congelado é o texto do commit de congelamento"},
         "metodo": {"RM": "teste condicional ARP (Andrews, Roth e Pakes, 2023), união dos poliedros, envelope",
                    "RM_hibrido": "híbrido condicional–LF de ARP, κ = α/10, 1.000 simulações (adendo de 25/10/2026; "
                                  "linhas principais e CA)",
