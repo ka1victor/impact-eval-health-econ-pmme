@@ -67,6 +67,7 @@ CADEIA = [
     RDD / "37_oferta_local_chegada.py",  # protocolo 60, parte B: importa o 22; lê K_D2, a09, a16 e a X1
     RDD / "43_oferta_local_corte.py",  # protocolo 64: importa o 37; reproduz o F3.1 do E7 e confere V com OL_
     RDD / "44_controles_localizacao_medicos.py",  # adendo 48d: portões contra HI_ (40) e OC_ (43)
+    RDD / "46_selecao_tipo_vaga.py",  # adendo 48f: portões contra HI_ (40) e DQ_ (38); confere CL_ (44)
     RDD / "15_sintese_E8.py",
     RDD / "09b_conferir_sinal.py",  # o 09 exige a conferência em dia com o E3
     RDD / "09_gerar_relatorio_pdf.py",  # lê E1 a E9 e a síntese E8
@@ -255,6 +256,13 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                                                           RDD / "43_oferta_local_corte.py",
                                                           RDD / "37_oferta_local_chegada.py",
                                                           RDD / "23_estimar_contagem_vagas.py"],
+            # Adendo 48f (46): portões contra HI_ (40) e o D-b de DQ_ (38); confere o CL-0 de CL_ (44); importa o 24
+            # (IC de Imbens–Manski), o 40 e o 44 (covariáveis L e M e H1 municipal).
+            RDD / "46_selecao_tipo_vaga.py": [RDD / "44_controles_localizacao_medicos.py",
+                                              RDD / "40_h1_vagas_imediatas.py",
+                                              RDD / "38_diagnostico_queda_0300.py",
+                                              RDD / "24_abertura_vagas_selecao.py",
+                                              AQ / "a08_adquirir_ivs_2010_oficial.py"],
             # E9 lê as tabelas de escolha do 12 e o manifesto do a11.
             RDD / "16_estimar_E9_escolha.py": [RDD / "12_construir_outcomes_funil.py",
                                               AQ / "a11_adquirir_resultado_ciclo2_chamada1.py"],
