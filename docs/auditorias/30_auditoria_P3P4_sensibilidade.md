@@ -87,3 +87,12 @@ script 34 e pelo manifesto e ficam para o autor.
 de θ(e), conjuntos identificados, FLCI de Δ^SD, controles e ATT do P3-CA, DiD do P4-CA e Holm se reproduzem com código próprio; os IC de
 Δ^RM publicados são coerentes com um teste LF independente (válidos e conservadores). Pende só a explicação imprecisa da largura do IC de Δ^RM (A1). Resultados continuam associativos; nenhum vira
 efeito causal.
+
+## 8. Correções posteriores (26/10/2026)
+
+- A1: a explicação da largura do IC de Δ^RM no doc 57h foi corrigida no script 34 antes do merge.
+- A3: `H_resumo.json` e `CA_resumo.json` registram agora, além de `sha256_texto` (arquivo atual, com o adendo), o
+  `sha256_texto_congelado` (`f039e3f5…`), o `commit_congelamento` (`1cc4d68`) e uma nota que distingue os dois.
+- A5: `DATA_EXECUCAO` dos scripts 34 e 35 passou a 2026-10-26, a data dos commits e do registro. As duas etapas foram
+  reestimadas; estimativas, eventos e covariâncias saíram idênticas byte a byte, e só os campos do resumo e a data do
+  57h mudaram.

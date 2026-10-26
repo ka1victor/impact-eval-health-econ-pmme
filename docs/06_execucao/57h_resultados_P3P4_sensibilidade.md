@@ -1,6 +1,6 @@
 # 57h. Resultados do protocolo 59: sensibilidade de Rambachan–Roth e comparação alternativa do P3/P4
 
-> **Data:** 2026-10-25.<br>
+> **Data:** 2026-10-26.<br>
 > **Protocolo:** [`59_protocolo_P3P4_sensibilidade_comparacao.md`](59_protocolo_P3P4_sensibilidade_comparacao.md), congelado e commitado sozinho antes de qualquer estimativa nova.<br>
 > **Scripts:** `scripts/rdd_bolsa/35_comparacao_alternativa_P3P4.py` (parte B) e `scripts/rdd_bolsa/34_sensibilidade_honestdid.py` (parte A; gera este documento inteiro a partir de `output/`).<br>
 > **Saídas:** `output/rdd_bolsa/H_*` e `CA_*`; toda linha tem `natureza_dos_dados = EMPIRICO`.<br>

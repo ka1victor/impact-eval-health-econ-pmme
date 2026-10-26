@@ -76,7 +76,7 @@ DIR_FIG = "CA_figuras"
 P6_AMOSTRA = OUT / "P6_amostra.parquet"
 NOMINAL = ROOT / "data" / "pmm_especialistas_nominal.csv"
 
-DATA_EXECUCAO = "2026-10-25"
+DATA_EXECUCAO = "2026-10-26"
 ESTATUTO = "PROTOCOLO_59_POS_RESULTADO"
 NATUREZA = "EMPIRICO"
 SEMENTE = 20261019
@@ -735,7 +735,7 @@ def executar() -> int:
     resumo = {
         "etapa": "CA_comparacao_alternativa_P3P4", "natureza_dos_dados": NATUREZA, "estatuto": ESTATUTO,
         "gerador": rotulo(Path(__file__)), "data_execucao": DATA_EXECUCAO,
-        "protocolo": {"texto": rotulo(PROTOCOLO_MD), "sha256_texto": sha256(PROTOCOLO_MD), "secoes": "§3, §4, §6"},
+        "protocolo": {"texto": rotulo(PROTOCOLO_MD), "sha256_texto": sha256(PROTOCOLO_MD), "secoes": "§3, §4, §6", "sha256_texto_congelado": "f039e3f573e8acd504a7b2e9a6371428439a09ae05218d244956c2e434b8d4ed", "commit_congelamento": "1cc4d68", "nota_hash": "sha256_texto é o arquivo atual, já com o adendo datado; sha256_texto_congelado é o texto do commit de congelamento"},
         "leitura": {"P3-CA": CONTRASTE_P3, "P4-CA": CONTRASTE_P4},
         "parametros": {"P3": {"e": [E3_MIN, E3_MAX], "controles": "nunca (só o grupo alternativo), mesmo curso",
                               "bootstrap": {"B": 9999, "pesos": "Mammen", "semente": SEMENTE, "cluster": "município"}},
