@@ -8,6 +8,22 @@
 
 ---
 
+## 26/10/2026 — Adendos 48g (heterogeneidade por porte do IED) e 52d (sensibilidades da escolha no ciclo 2 com o quadro de 13/02)
+
+Motivo: o autor aprovou rodar as pendências da §2.16 de `07_apresentacoes/banca2/05_discussao_historia_empirica.md`.
+O 48g compara o salto da H1 e da oferta local entre os portes onde o estrato do IED da atenção primária muda no corte
+e onde não muda (auditoria 18, recomendação 5). O 52d refaz as sensibilidades da escolha no ciclo 2 que ainda usavam o
+quadro de 19/03/2026 (auditoria 41, achado 1). Ambos congelados antes de rodar.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/48g_adendo_heterogeneidade_porte_ied.md`](06_execucao/48g_adendo_heterogeneidade_porte_ied.md) | adendo congelado; resultados irão para o doc 57u |
+| [`06_execucao/52d_adendo_sensibilidades_ciclo2_quadro_1302.md`](06_execucao/52d_adendo_sensibilidades_ciclo2_quadro_1302.md) | adendo congelado; resultados irão para o doc 57v |
+
+---
+
 ## 26/10/2026 — Auditoria 44: adendo 48f (seleção pelo tipo de vaga na H1), aprovado com correções
 
 Motivo: auditoria independente da execução do adendo 48f (script 46, saídas `SV_*`, doc 57t). O recálculo próprio,
